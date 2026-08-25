@@ -13,274 +13,133 @@ Priority: **finish Rhythm end-to-end before Bass/Lead**.
   - `a81190d05b5dbaa745e003a8c0c43c1b8f8edc629f3ce01975c4f1af8c51dfdb`
   - `07b12f807295219d39198641de3a9e170c684de60d274befd2b6f6f50af9588c`
 - Completion gate: score >= `0.99`, critical mismatches `0`, PDF fidelity `1.0`. **Rhythm is NOT complete.**
-- **No Modal/L4 without explicit user authorization.**
+- **No Modal/L4 without fresh explicit user authorization. None is currently authorized.**
+- Keep timing frozen unless new source-only evidence proves otherwise. Tempo remains exactly `129.19921875`.
 
-## Historical score state
+## Historical professional-score state — reference now closed
 - Score 1 retired: 725 attacks → 985 notes, 113 measures, PDF fidelity 1.0; pitch F1 `0.23718280683583634`; pitch+timing F1 `0.033143448990160536`; critical mismatches `1723`.
 - Score 2 retired after harmonic contradiction guard: 889 events, PDF fidelity 1.0; pitch F1 `0.24305177111716622`; pitch+timing F1 `0.03051771117166212`; critical mismatches `1635`.
+- Do not score/tune against either retired identity again.
 
-## Dominant source-only diagnosis
-- 725 retained attacks entered legacy precision with **7,535 observed pitch hypotheses**.
-- Legacy precision retained only `987`; **6,548 observed pitches were suppressed**.
-- Genuine optional-secondary universe = 6,666; only 118 survived (`1.7702%`).
-- Legacy non-harmonic secondaries require score AND attack AND body at `0.80`; exact upper-harmonic intervals `{12,19,24,28,31,36}` stay strict 3-of-3 at `0.92`.
-- Historical suppressed rows were not persisted; one new carrier capture is required for exact current-source replay.
+## Successful paid capture — preserved for CPU reuse
+- Authorized retry workflow run `32805316807` completed successfully.
+- Successful capture/replay commit: `c1451df43cc1162ed2b38aa3f3300b7af4d9b527`.
+- Exactly one Modal command was used for the successful retry; no automatic retry is allowed.
+- Final lock is `captureState=completed`, `singlePaidCaptureConsumed=true`, `automaticRetryAllowed=false`.
+- Capture counts: input/eligible attacks `984`; retained `725`; pruned `259`; original observed pitch hypotheses `7535`; eligible replay pitch hypotheses `10585`; stored selected pitches `970`; rendered pitches `967`; voicing drops `3`; fail-safe attacks `0`; measures `1–113`.
+- CPU replay comparison: legacy selected pitches `891`; precision-v2 selected `970`; v2 adds `79`, removes `0`, across `75` attacks.
+- All strict replay mismatch counts are zero. Deterministic voicing/string/fret/grid/onset replay is green.
+- Candidate SHA256 `a2d451a39391b797e55623bb3c616735a3f1b39648103cb630a9bb1035430951`.
+- Replay validation SHA256 `182247f2beda257a49cfb454b1e7fc920594ffe5ecce39f7b9517ed15b21b95a`.
+- Replay compare SHA256 `c77f923db45099f79df563e2c2d2487e46dceaef6f9469db8bd790f78f8cfcda`.
+- Capture lock SHA256 `49898a441aed8519d96a71bc46c3e85d5d6c64c4be6da5398e9749ab1d6287be`.
+- Actions artifact `v143-precision-v2-one-shot-32805316807`, artifact ID `9548666053`, is only a secondary copy.
 
-# Precision v2
+### Durable fixture
+- Permanent manifest: `analyzer/fixtures/v143_precision_v2_modal_capture_32805316807.json`, commit `87b4b698010fa11c62e76e061a2bbe91825de5ba`.
+- CPU-only materializer: `analyzer/materialize_v143_precision_fixture.py`, commit `72f43d8c82629b9ff388fa0013fe6e06b024a660`.
+- Materializer reconstructs the exact successful files from pinned commit `c1451df...` and verifies SHA256 before use.
+- Standard future workflow: materialize this fixture and do precision diagnostics/replay CPU-only first. A new paid capture requires fresh explicit authorization and should only be considered if a needed source-evidence dimension is absent from the preserved fixture.
+
+## Precision-v2 fixed-retained pitch policy
 Module: `analyzer/v143_contextual_prune_precision_shadow_v2.py`
-Policy: `envelope-balanced-secondary-v2`
+Policy: `envelope-balanced-secondary-v2`.
+- Non-harmonic observed secondaries use 2-of-3 score/attack/body at existing `0.80` floor.
+- Harmonic upper secondaries `{12,19,24,28,31,36}` remain strict 3-of-3 at `0.92`.
+- Primary/fundamental, no-invention and harmonic protections preserved.
+- Replay schema 2 persists eligible attacks, retained identities, source-view A/B evidence, candidate MIDI universe, attack/body/continuity/score, grid/onset/error, precision strength and support counts.
+- Exact replay scope is post existing `_best_rows_by_slot`; alternate raw carrier rows are not replayable.
 
-- Non-harmonic observed secondaries use 2-of-3 score/attack/body at the existing `0.80` floor.
-- Harmonic upper secondaries remain legacy 3-of-3 at `0.92`.
-- Attack selection, measure fail-safe, primary/fundamental promotion, no-invention invariants and harmonic protections remain unchanged.
-- No new numeric threshold, song/key/chord rule, runtime label, or professional information.
+## Exact CPU replay validators
+- `analyzer/v143_precision_replay_artifact_validator.py`: reconstructs source-view aggregation, score/strength, exact attack policy, render subset and measure coverage.
+- `analyzer/check_v143_precision_replay_corruption_rejection.py`: negative corruption guard.
+- `analyzer/v143_precision_replay_policy_compare.py`: independently recomputes primary and legacy/v2 pitch sets.
+- `analyzer/v143_precision_replay_voicing_validator.py`: exact deterministic string/fret plus grid/onset replay.
+- `analyzer/v143_precision_paid_capture_finalizer.py`: strict lock binding.
+- Successful paid product passed all of these before final lock.
 
-# Replay schema 2 — fixed-best-row precision-stage replay
-The future one-shot capture persists enough source evidence to continue precision-stage experiments CPU-only after the existing `_best_rows_by_slot` selection:
-- retained `attacks` plus full corrected-input `eligibleAttacks` that have a selected physical carrier row,
-- input/eligible/retained keys and counts plus carrier-missing input keys,
-- grid/onset/error, precision/candidate strength, stem/sweep/detection supports,
-- every observed candidate MIDI,
-- aggregate attack/early/sustain/body/continuity/score,
-- per-view A/B attack/early/sustain,
-- retained/fail-safe/selected/primary flags,
-- legitimate raw zero values preserved exactly.
+## Attack-pruning diagnosis
+Legacy precision attack gate:
+- positive best pitch requires attack `>0.0` and body `>-0.25`.
+- transient/body ratio `>=0.70`: retain.
+- ratio `<0.60`: prune.
+- ratio `0.60–0.70`: retain only if body-heavy composite `precisionStrength` beats all same-measure neighbors within ±2 sixteenth steps by `+0.20`.
+- `precisionStrength = strongest pitch score + .10*min(4,sweepSupportMax) + .03*min(16,detectionCountSum) - 2*gridError`.
+- Baseline CPU recomputation exactly reproduces all `725` retained attacks from the `984` eligible universe; mismatch count `0`.
+- Original prune reasons: `130` ratio<0.60; `123` ratio 0.60–0.70 but not local composite max; `6` nonpositive attack/body.
 
-Readiness flags:
-- `fixedRetainedAttackPitchReplayReady=true`
-- `attackPolicyReplayReady=true`
-- `sourceViewEvidenceReady=true`
-- `precisionStrengthRecomputeReady=true`
-- `zeroValuePreservationReady=true`
+### Attack shadow v1 — local transient peak
+- `analyzer/v143_contextual_prune_attack_shadow_v1.py`, commit `674dd4de5331e079f80e6f2fc798b9c80de9d289`.
+- `analyzer/v143_attack_shadow_v1_replay_validator.py`, commit `d917e1193bf57d3b31bebce2427fae9523ac7057`.
+- Durable validation: `debug/v143-contextual-prune/precision-attack-shadow-v1-validation.json`, commit `bf25366d68561fc7c995e2b115e5e1314f8e7ff4`.
+- Reuses the existing ±2-step radius and +0.20 local margin on the actual transient/attack dimension instead of composite strength; introduces no new numeric threshold.
+- Adds `26`, removes `0` => `751` shadow attacks. `25` are sub-0.60 local transient peaks; `1` is exception-band.
+- Independent pitch replay: `36` observed pitches; deterministic voicing drops `0`; unplayable primary `0`; invented pitch `0`; baseline grid-time collision `0`.
 
-Scope is intentionally **post existing best-row selection**. It is exact for precision attack/pitch policy experiments; it does not claim the alternate raw carrier-row universe is replayable.
+### Attack shadow v2 — existing exception band without composite-local-max
+- `analyzer/v143_contextual_prune_attack_shadow_v2.py`, commit `1f4477291b138ec04d843369bdc35f3dcb590167`.
+- `analyzer/v143_attack_shadow_v2_replay_validator.py`, commit `ab4642a463227385a28136767688b68ab7b42d0f`.
+- Durable validation: `debug/v143-contextual-prune/precision-attack-shadow-v2-validation.json`, commit `43beb3cbba6d576171614cd47ad03aac78a8baaf`.
+- Inside the already-existing `0.60–0.70` exception band, removes only the requirement to also be a composite-strength local maximum. Below `0.60`, retains only the v1 local-transient-peak rescue. **No new numeric threshold.**
+- Exception-band source comparison strongly argues composite local dominance is relative loudness rather than detection quality:
+  - retained band `33`, pruned band `123`;
+  - median grid error retained `0.028569614160971923` vs pruned `0.019600000607709944` (pruned tighter);
+  - median detection count retained `31` vs pruned `40`;
+  - median A/B attack consistency retained `0.9663834710211912` vs pruned `0.9965938158894608`;
+  - stemSupportMax=2: retained `32/33`, pruned `122/123`;
+  - sweepSupportMax=4: retained `29/33`, pruned `108/123`.
+- V2 adds `148` attacks total (`123` exception-band + `25` subfloor local transient peaks), removes `0`; shadow retained = `873`; remaining pruned = `111` (`105` positive subfloor nonlocal + `6` nonpositive).
+- Independent v2 pitch replay on the 148 rescues: `214` observed/source-supported selected pitches; pitch-count distribution `94×1`, `44×2`, `8×3`, `2×4`; invented/unobserved `0`.
+- Deterministic standard-tuning voicing renders `212`; only 2 drops:
+  - measure 19 step 6: selected `[52,86]` → rendered `[52]`;
+  - measure 113 step 14: selected `[43,44]` → rendered `[43]`.
+- Unplayable primaries `0`; baseline grid-time collisions `0`.
+- Structural recurrence is diagnostic only, not used for selection: `124/148` share step+primary with an already-retained attack elsewhere; `81/148` share exact step+primary+selected-pitch-set.
 
-Relevant commits:
-- eligible universe `b8e511e873ab6857e939b34381542300e219f7b9`
-- per-view evidence `fb953ef80bd2e7fb5ea652bd4fd67d804794f67b`
-- zero preservation `9714f48496334b6560aa4625987b00303b7d93da`
+## Upstream correction contract
+- Producer order: protected contextual prune → source-only correction → precision-v2 → promoted-harmonic guard → replay capture → deterministic voicing → downstream technique/sustain.
+- Successful product `correctionDiagnostics` stores counts only:
+  - `baseEventCount=952`
+  - `correctedEventCount=984`
+  - `rescuedEventCount=32`
+  - `observedSlotCount=1795`
+  - `strictSlotCount=1649`
+  - `baseEventsPreserved=true`
+  - `rescuesAreObservedSlots=true`
+  - `localPeakRescueEnabled=true`
+- Therefore the `984` precision inputs are already-selected/corrected attacks (`952` protected contextual-prune events + `32` strict source-only correction rescues), not raw slots. Precision then deletes `259` of those selected attacks.
+- The pinned product does **not** preserve identities distinguishing the 32 correction rescues from the 952 base events; only counts survive. Do not invent that split.
 
-# Exact CPU reconstruction
-## Source/replay artifact validator
-`analyzer/v143_precision_replay_artifact_validator.py`
+## Remaining unresolved attack group
+- After v2, `111` remain pruned: `105` physically positive ratio<0.60 nonlocal attacks plus `6` nonpositive.
+- The 105 positive subfloor nonlocal attacks are statistically very similar to the 25 subfloor local-peak rescues on precision strength, grid error, detections, stem/sweep support and A/B attack agreement.
+- However low transient/body ratio can still plausibly represent sustained bleed, so **do not broaden below the existing 0.60 floor without an independent source-only discriminator**.
+- Next CPU-only goal: find an existing persisted artifact/diagnostic that can distinguish upstream protected-base vs correction-rescue identities, or derive another independent onset/transient criterion from already-persisted evidence. If unavailable, stop at v2 rather than guessing.
 
-Independently checks/reconstructs:
-- source-view minima and aggregate evidence,
-- body/continuity/score formula,
-- grid error and precision strength,
-- exact input/eligible/retained identities/counts,
-- baseline attack pruning and exact fail-safe identity,
-- legacy zero-strength decision semantics while preserving raw `0.0`,
-- render subset and voicing-drop accounting,
-- exact audio-derived measure coverage.
+## Downstream replay boundary
+- Schema 2 exactly supports precision attack/pitch policy experiments and deterministic voicing/string/fret/grid timing/physical onset.
+- It does **not** persist the full downstream CQT/stem pitch-energy universe needed to recompute every bend/legato/sustain annotation for hypothetical newly retained attacks.
+- Attack shadows v1/v2 are therefore validated **precision shadows**, not freeze-ready candidates. Do not fabricate downstream technique/sustain evidence.
 
-## Negative corruption guard
-`analyzer/check_v143_precision_replay_corruption_rejection.py`, commit `392f5bc2dc35ded195f6adf92fb4f0c9304e6b7f`.
-- Forces true A/B aggregate corruption, precision-strength corruption and grid/onset corruption; validator must reject all.
-
-## Primary + strict stored-v2 replay
-`analyzer/v143_precision_replay_policy_compare.py`.
-- Primary/fundamental is independently recomputed from persisted physical evidence and must equal stored primary.
-- Legacy vs v2 secondary selection is independently recomputed on the fixed retained-attack universe.
-- Stored v2 selected pitch sets must equal independent CPU v2 replay exactly; mismatch is fatal.
-- Comparator now also runs deterministic voicing/timing validation on the actual product and stores it under `voicingValidation`.
-- Latest integration commit: `4f98150d253666ee0e8ee63d427ab3758abab43f`.
-
-## Deterministic voicing + timing replay
-`analyzer/v143_precision_replay_voicing_validator.py`.
-- Created at `17a650b86e461e7ecf21bb41c60219a7c8c06f7c`.
-- Exact voicing/string/fret replay added using the same deterministic `resolve_joint_chord_voicing` path.
-- Exact final event timing replay added in commit `681b8bcf4cb03ca188839aa6c1b383f3bb1f6bd7`.
-
-For every retained attack it independently verifies:
-- exact supported → playable rendered MIDI set,
-- exact `stringIndex`, `stringName`, and `fret`,
-- exact preserved primary/dominant MIDI and note-mapping markers,
-- exact `timeSeconds == replay.gridTime`,
-- exact `onsetTime == replay.onsetTime`,
-- rendered/voicing-dropped pitch accounting.
-
-Reports:
-- `stringFretReplayMatches=true`
-- `primaryPreservationMatches=true`
-- `gridTimingReplayMatches=true`
-- `physicalOnsetReplayMatches=true`
-
-Self-tests explicitly reject a corrupted fret, corrupted grid time, and corrupted physical onset.
-
-## Capture-order guard
-`analyzer/check_v143_precision_replay_capture_order.py`, commit `1e1d8f27f4720585ba73bb07a3eb1cb4c732be4f`.
-- Requires order: v2 precision → promoted-harmonic guard → replay capture → candidate voicing → semantic/sustain rendering.
-- Confirms replay source is `carrier.rows`, `carrier.grid`, and post-guard precision identity.
-
-# Paid one-shot workflow safety
-Workflow: `.github/workflows/v143-repaired-timing-precision-candidate-product.yml`
-- Manual dispatch only; `paid_capture_authorized=YES`, default NO.
-- Exact branch/head/remote SHA binding before reservation.
-- Approved-audio SHA and protected pipeline blob gates.
-- Exactly one `python -m modal run ...::approved_audio` command and one producer `.remote(`.
-- Reservation lock committed/pushed **before Modal**; `automaticRetryAllowed=false`.
-- Any reserved/completed lock blocks automatic repeat.
-- Failure outputs salvaged with `if: always()`.
-- Artifact validator runs after capture; strict replay comparator + deterministic voicing/timing replay run before final lock.
-- Final lock hashes candidate product, replay comparison and replay validation artifacts, so successful finalization binds those green postconditions.
-
-# CPU-only preflight — GREEN through timing/string/fret replay
-Workflow: `.github/workflows/v143-precision-shadow-v2-cpu-guard.yml`
-
-Key recent commits:
-- strict stored-v2 + capture-order guard `7b61b0778a2aa1eb8c9f031c2fb798828bda8054`
-- deterministic voicing workflow guard `4cb35e7211d907dc97e0a688b805042d5612c106`
-- deterministic timing workflow guard `69b24d6a978f27f5e40326d54145c7b4580e198e`
-- readiness guard requiring voicing + timing evidence `57d482a9f3a04829656176a8895b3dd7b2400a50`
-
-**Latest actual CPU-only guard run: `32799566642` — GREEN.**
-Persisted schema-6 result source SHA: `57d482a9f3a04829656176a8895b3dd7b2400a50`.
-Bot result commit / observed branch head: `3c64d1f95a7871c28fee9590b7ad7ca4c7c8889e`.
-
-Green result explicitly reports:
-- `passed=true`
-- `captureReadinessPassed=true`
-- `deterministicVoicingReplayPassed=true`
-- `deterministicTimingReplayPassed=true`
-- `storedV2ReplayStrictPassed=true`
-- `replayCaptureOrderPassed=true`
-- `replayArtifactValidatorSelfTestPassed=true`
-- `replayCorruptionRejectionPassed=true`
-- `sourceViewEvidenceBindingPassed=true`
-- `precisionStrengthRecomputePassed=true`
-- `zeroValuePreservationPassed=true`
-- `primaryRecomputePassed=true`
-- `fixedBestRowAttackReplayPassed=true`
-- `singlePaidCaptureStaticGuardPassed=true`
-- `modalInvoked=false`
-- `newInferenceUsed=false`
-- `professionalReferenceUsed=false`
-- `productionModified=false`
-- protected blob exact `7f72f8ed9b14af8bc93e95544195204d99c6bec1`.
-
-# Downstream technique/sustain replay scope
-Audit found that bend, legato and sustain evidence currently derives from temporary separated carrier stems / pitch-energy views after candidate voicing.
-- Current one-shot product persists the resulting technique/sustain annotations for the captured v2 render.
-- Schema-2 precision replay does **not** persist the full CQT/onset-view universe needed to recompute every downstream technique for hypothetical newly selected pitches later.
-- Persisting full stems/CQT would add substantial artifact size/cost and is not justified yet by the known dominant pitch/timing/string/fret failure metrics.
-- Therefore do not bloat the one-shot payload now. Treat future CPU replay guarantees as exact for precision attack/pitch + deterministic voicing/string/fret/grid timing/physical onset. Downstream technique re-analysis is a separate scope if source-only evidence later proves it necessary.
-
-# Timing remains frozen
+## Timing state
 - Relative sixteenth spacing remains strongly source-supported; at residual <=0.20 step, 697/697 pairs exactly match labeled grid gaps.
 - Tempo remains exactly `129.19921875`.
 - Beat repair has no leading phase-index error.
-- Absolute bar phase remains weak/section-dependent; no global timing mutation is justified.
+- Absolute bar phase remains weak/section-dependent; no global timing mutation justified.
 
-# Current cost/mutation state
-- No new candidate generated.
-- **No Modal/L4 invoked.**
+## Current mutation/cost state
+- No new Modal/L4 run after successful run `32805316807`.
 - No professional scorer/reference invoked.
-- No render events mutated.
-- `main` and Production untouched.
-- Protected runtime reverified after latest guard work at exact blob `7f72f8ed9b14af8bc93e95544195204d99c6bec1`.
+- No Production or `main` modification.
+- No protected runtime modification.
+- No freeze-ready candidate yet.
 
-## Checkpoint save — 2026-08-24 America/Montreal
-The one-shot capture path is now CPU-preflight green through source evidence, attack selection, primary selection, strict v2 pitch selection, deterministic playable voicing, exact string/fret assignment, grid timing, and physical onset. The paid budget remains untouched.
-
-# Next exact actions
-1. Reverify branch/protected blob immediately before any future paid dispatch.
-2. Keep timing frozen and professional reference closed.
-3. Avoid further low-value hardening/bloat unless a concrete pre-capture risk is found.
-4. **Do not dispatch Modal/L4 until the user explicitly authorizes paid usage.**
-5. If authorization is given: dispatch exactly once with `paid_capture_authorized=YES`; reservation must land before Modal.
-6. Require candidate product + schema-2 replay + exact artifact validator + strict replay/voicing/timing comparison to reconcile before any mutation/freeze.
-7. Use persisted replay evidence for subsequent precision experiments CPU-only.
-8. Only when source-only evidence supports a genuinely corrected candidate: immutable freeze/PDF → fidelity 1.0 → lock → exactly one professional score.
-9. Do not claim Rhythm complete until score >=0.99, critical mismatches=0, fidelity=1.0.
-
-## Revalidation — 2026-08-24 21:11 America/Montreal
-- Branch head before this checkpoint save: `38386637acb17a3437696cc3bee8839a67bd1ee4`.
-- Protected runtime reverified at exact required blob `7f72f8ed9b14af8bc93e95544195204d99c6bec1`.
-- Latest persisted CPU guard remains schema 6 / `passed=true`, run `32799566642`, with `modalInvoked=false`, `newInferenceUsed=false`, `professionalReferenceUsed=false`, `productionModified=false`.
-- `debug/v143-contextual-prune/precision-v2-capture-lock.json` is absent: no paid capture has been reserved or consumed.
-- No new concrete pre-capture defect was established during this revalidation; per the cost boundary, no speculative payload/runtime expansion was made.
-- Current legitimate progress boundary is the explicitly authorized one-shot capture. Until authorization is explicit, remain CPU-only and do not dispatch Modal/L4.
-
-## Strict paid-boundary checkpoint — 2026-08-24 21:22 America/Montreal
-- User explicitly authorized steps 1–5, including **exactly one** Modal/L4 carrier capture after CPU preflight is green.
-- Added CPU-only strict finalizer `analyzer/v143_precision_paid_capture_finalizer.py`; it refuses finalization unless source-view evidence, precision-strength recomputation, zero preservation, baseline attack replay, independently recomputed primary, strict stored-v2 pitch replay, deterministic playable voicing/string/fret, grid timing, and physical onset all reconcile exactly.
-- Paid workflow now records the new readiness flags in `preFreezeTrace` and invokes the strict finalizer only after artifact validation + replay comparison.
-- Final lock now binds the green postconditions and artifact SHA256 values; missing replay mismatch counters are rejected rather than treated as zero.
-- CPU guard run `32801119456` on source SHA `7d366e90019006bb0a98b83b1ba2039342eab8c9` is **GREEN**.
-- Persisted schema-7 CPU result reports `paidFinalLockBindingPassed=true`, `passed=true`, `modalInvoked=false`, `newInferenceUsed=false`, `professionalReferenceUsed=false`, `productionModified=false`.
-- CPU result commit / branch head immediately before this checkpoint save: `251933c9d1e592b9c875ea94c0227ea436e5cac9`.
-- The earlier run `32800965126` had all tests green but its result-persist step lost a concurrent JSON rebase race; run `32801119456` subsequently completed cleanly and is the authoritative preflight.
-- Paid capture has **not yet** been dispatched at this checkpoint. Next action is immediate protected-blob/head/lock reverification, then one manual dispatch with `paid_capture_authorized=YES` under the user's explicit authorization.
-
-## Paid-capture timeout recovery checkpoint — 2026-08-24 America/Montreal
-- The previously authorized one-shot paid workflow ran as GitHub Actions run `32801442757`. Reservation landed before Modal and exactly one Modal invocation occurred.
-- The Modal function timed out at exactly `1800s` while the second deterministic CPU Demucs pass was at `39/40`; the first direct Demucs pass had taken about 14m33s. This was a timeout-boundary failure, not a model crash.
-- No completed new candidate/replay product was accepted. Post-capture artifact validation, replay comparison, final lock, mutation/freeze and professional scoring were skipped.
-- Failure-path artifact salvage succeeded, but salvaged files are not a validated new capture product.
-- The paid attempt is now explicitly recorded as consumed in `debug/v143-contextual-prune/precision-v2-capture-lock.json`: schema 3, `captureState=failed_timeout`, `modalRunAttemptConsumed=true`, `singlePaidCaptureConsumed=true`, `automaticRetryAllowed=false`, `retryAuthorizationRequired=true`.
-- The temporary one-shot dispatch relay workflow and its authorization marker were deleted after use, preventing accidental reuse.
-- CPU-only timeout correction changed exactly one producer line: Modal function timeout `1800 -> 3000` seconds. Deterministic Demucs remains CPU-only/single-thread with its proven execution controls; no musical model/settings/path logic changed.
-- CPU guard run `32804303926` on source SHA `7bf45837aa6c784a24823d4dd4902a7744539444` is **GREEN**. Persisted schema-7 result reports `passed=true`, `paidFinalLockBindingPassed=true`, `modalInvoked=false`, `newInferenceUsed=false`, `professionalReferenceUsed=false`, `productionModified=false`.
-- A separate Product Proof run initially exposed a static anti-leakage false positive: its grep scanned checker code that intentionally contains a forbidden-token test string. Only that checker was removed from the grep target list; it remains compiled and executed as a safety checker.
-- Product Proof rerun `32804488611` is **GREEN** after the one-line workflow correction. The exact workflow diff was one deletion only.
-- Branch head immediately before this checkpoint save: `d568daaff3173a52d055467269677305f7a9b5f6`.
-- Protected runtime reverified at exact required blob `7f72f8ed9b14af8bc93e95544195204d99c6bec1`.
-- `main`/Production remain untouched. Professional reference/scorer remains closed.
-- **Do not run another Modal/L4 capture from a generic “continue”. A second paid attempt requires fresh explicit user authorization.** If authorized later, preserve attempt-1 history, establish a new one-shot authorization/reservation, and dispatch exactly once with the corrected `3000s` timeout.
-
-## CPU-only continuation revalidation — 2026-08-24 22:18 America/Montreal
-- Generic `Please continue` was treated as CPU-only continuation, not fresh paid authorization.
-- Branch head at revalidation: `85fc7bb9f71d3cb485dfa1009b430fa163e8cdcd`.
-- Protected runtime remains exact blob `7f72f8ed9b14af8bc93e95544195204d99c6bec1`.
-- Persisted CPU guard run `32804303926` remains schema 7 / `passed=true`, with all replay/final-lock checks green and `modalInvoked=false`, `newInferenceUsed=false`, `professionalReferenceUsed=false`, `productionModified=false`.
-- Product Proof run `32804488611` remains completed / `success`.
-- Attempt-1 lock remains schema 3 / `captureState=failed_timeout`, `singlePaidCaptureConsumed=true`, `automaticRetryAllowed=false`, `retryAuthorizationRequired=true`.
-- No second Modal/L4 invocation occurred. No scorer/reference, render mutation, freeze, Production, or `main` change occurred.
-- No further free algorithmic change is justified before the carrier/replay capture; avoid speculative hardening or payload growth.
-- Next paid boundary is a **new explicitly authorized one-shot retry** using the already-corrected `3000s` timeout, while preserving attempt-1 history.
-
-## Successful paid retry completion checkpoint — 2026-08-24 23:06 America/Montreal
-- User gave fresh explicit authorization for exactly one paid Modal retry after the attempt-1 timeout.
-- The attempt-1 failed lock was preserved separately before retry; the active one-shot lock was cleared only for the newly authorized retry.
-- Authorized retry workflow run `32805316807` completed **successfully**. Every workflow step passed, including the single paid capture, candidate invariant validation, replay artifact exact-binding validator, CPU replay policy comparison, strict final lock, branch commit, and artifact preservation.
-- The corrected producer timeout was `3000s`. Exactly one Modal command was run for this retry; no automatic retry is allowed.
-- Successful capture/replay commit: `c1451df43cc1162ed2b38aa3f3300b7af4d9b527` (`Record single repaired-timing precision v2 capture with replay evidence`).
-- Final lock `debug/v143-contextual-prune/precision-v2-capture-lock.json` is now `captureState=completed`, `singlePaidCaptureConsumed=true`, `automaticRetryAllowed=false`.
-- Strict final-lock replay checks are all green: baseline attack replay, attack-policy replay, source-view evidence, precision-strength recomputation, zero preservation, independent primary recomputation, strict stored-v2 replay, deterministic voicing/string/fret, grid timing, and physical onset.
-- Replay mismatch counts are exactly zero: `primaryRecomputeMismatchAttackCount=0`, `v2ReplayMismatchAttackCount=0`.
-- Capture counts: input/eligible attacks `984`, retained attacks `725`, pruned attacks `259`; original observed pitch hypotheses `7535`; eligible replay pitch hypotheses `10585`; stored selected pitches `970`; rendered pitches `967`; voicing drops `3`; fail-safe attacks `0`; measures `1–113`.
-- CPU replay comparison: legacy recomputed selected pitches `891`; v2 selected pitches `970`; v2 adds `79`, removes `0`, across `75` changed attacks. Added-pitch weak-dimension counts: attack `47`, body `32`.
-- Deterministic voicing validation: `passed=true`, `stringFretReplayMatches=true`, `primaryPreservationMatches=true`, `gridTimingReplayMatches=true`, `physicalOnsetReplayMatches=true`.
-- Final lock hashes: candidate product SHA256 `a2d451a39391b797e55623bb3c616735a3f1b39648103cb630a9bb1035430951`; replay validation SHA256 `182247f2beda257a49cfb454b1e7fc920594ffe5ecce39f7b9517ed15b21b95a`; replay policy compare SHA256 `c77f923db45099f79df563e2c2d2487e46dceaef6f9469db8bd790f78f8cfcda`; events SHA256 `20fef66fdfd48b4e26ae3ec34fe215a4538375e6e6541a4c3f94b97e6fd8d547`; replay evidence SHA256 `2c42c590bd9ddb47e304b385b67319cd15873b2dd75953d17e90b9b16bb140a2`.
-- GitHub artifact `v143-precision-v2-one-shot-32805316807`, artifact ID `9548666053`, was preserved successfully; ZIP SHA256 `5104522aab3e6193c6b06fe3abb807994065f858a945a81070c611fc63707d4f`.
-- `professionalReferenceUsed=false`, `newInferenceUsed=false`, `productionModified=false`. `main`/Production remain untouched and the professional scorer remains CLOSED.
-- The protected runtime remains the required blob `7f72f8ed9b14af8bc93e95544195204d99c6bec1`.
-- **No further Modal/L4 run is authorized.** All next precision work must use the persisted replay CPU-only until a new explicit authorization is given.
-- Immediate next work: remove the temporary retry relay/authorization marker after this checkpoint, then perform source-only CPU replay diagnostics/precision experiments from the saved schema-2 evidence. Do not professional-score yet.
-
-## Durable Modal-capture CPU fixture — 2026-08-24 23:24 America/Montreal
-- User requested preserving the last successful Modal work so future bug/precision testing can avoid repeated L4 runs.
-- Verified the expensive successful capture is already durable in Git at pinned commit `c1451df43cc1162ed2b38aa3f3300b7af4d9b527`; the commit contains the full `debug/v143-contextual-prune/repaired-timing-precision-candidate-product.json` including schema-2 `precisionReplayEvidence`, plus replay validation, replay policy comparison and final capture lock.
-- The Actions artifact `v143-precision-v2-one-shot-32805316807` (artifact `9548666053`) is a secondary copy only; future CPU testing must not depend on its retention window.
-- Added permanent fixture manifest `analyzer/fixtures/v143_precision_v2_modal_capture_32805316807.json` at commit `87b4b698010fa11c62e76e061a2bbe91825de5ba`.
-- Added CPU-only materializer `analyzer/materialize_v143_precision_fixture.py` at commit `72f43d8c82629b9ff388fa0013fe6e06b024a660`. It reconstructs the exact four successful-run files directly from the pinned Git commit and verifies their SHA256 values before use.
-- Pinned hashes: candidate product `a2d451a39391b797e55623bb3c616735a3f1b39648103cb630a9bb1035430951`; replay validation `182247f2beda257a49cfb454b1e7fc920594ffe5ecce39f7b9517ed15b21b95a`; replay comparison `c77f923db45099f79df563e2c2d2487e46dceaef6f9469db8bd790f78f8cfcda`; capture lock `49898a441aed8519d96a71bc46c3e85d5d6c64c4be6da5398e9749ab1d6287be`.
-- Standard future path: materialize this pinned fixture and run source-only CPU replay diagnostics/precision experiments against it before considering any new inference.
-- **No Modal/L4 run is authorized or required for fixture reuse.** A new paid capture still requires fresh explicit user authorization and should only be considered if a needed source evidence dimension is genuinely absent from the preserved fixture.
-- No professional scorer/reference was invoked. `main` and Production remain untouched. Protected runtime remains exact blob `7f72f8ed9b14af8bc93e95544195204d99c6bec1`.
-
-## Attack-pruning CPU shadow checkpoint — 2026-08-24 America/Montreal
-- Continued entirely from the pinned successful Modal fixture; **no new Modal/L4 inference and no professional scorer/reference use**.
-- Added source-only attack diagnostic `analyzer/v143_contextual_prune_attack_shadow_v1.py` at commit `674dd4de5331e079f80e6f2fc798b9c80de9d289`.
-- Baseline attack-policy CPU recomputation exactly reproduces all `725` retained attacks from the `984` eligible universe; baseline mismatch count `0`.
-- Diagnosis: legacy borderline attack pruning compares the body-heavy composite `precisionStrength` locally. A conservative shadow rescue instead reuses the existing local radius `2` and margin `0.20` on the actual two-view-minimum transient `attack` dimension, while preserving the existing positive attack/body gates. **No new numeric threshold was introduced.**
-- Shadow result: `26` of the `259` pruned attacks are local transient maxima; adds `26`, removes `0`, producing `751` shadow attacks. Reason split: `25` below legacy ratio `0.60` but local attack peaks; `1` in legacy `0.60–0.70` exception band but not a composite-strength maximum.
-- All `26` rescues have positive aggregate attack evidence from both source views; `19/26` have grid error tighter than the baseline-retained median.
-- Added independent rescued-attack pitch/voicing replay validator `analyzer/v143_attack_shadow_v1_replay_validator.py` at commit `d917e1193bf57d3b31bebce2427fae9523ac7057` and durable summary `debug/v143-contextual-prune/precision-attack-shadow-v1-validation.json` at commit `bf25366d68561fc7c995e2b115e5e1314f8e7ff4`.
-- Independent v2 pitch reconstruction for the 26 rescued attacks yields `36` observed/source-supported pitches total: `18` single-note attacks, `6` two-note attacks, `2` three-note attacks; unobserved/invented pitches `0`.
-- Deterministic standard-tuning voicing keeps all `36`; voicing drops `0`, unplayable primaries `0`, grid-time collisions with baseline attacks `0`.
-- Important boundary: schema-2 intentionally does not persist the full downstream CQT/stem universe needed to recompute technique/sustain for hypothetical newly retained attacks. Therefore this is a validated **precision shadow**, not a freeze-ready candidate; do not fabricate missing technique annotations.
-- A temporary connector-push CPU workflow/marker did not start and was removed cleanly (`081a18c8542b0f374416360ca616bb763b4123f5`, `30abd44f77fa1fd940b39fccfd869c40b50da038`); no result is claimed from that unused workflow.
-- Next CPU-only work: test whether the 26 rescues are structurally supported across repeated source patterns and inspect the remaining `233` pruned attacks for a second general source-only failure mode. Do not broaden the attack policy or authorize L4 from these results alone.
-- `main`/Production untouched. Protected runtime remains blob `7f72f8ed9b14af8bc93e95544195204d99c6bec1`.
+## Next exact actions
+1. Reverify branch head and protected runtime blob after this checkpoint.
+2. Stay CPU-only and use the pinned successful fixture.
+3. Search current/historical source-only correction artifacts for a persisted identity split or other independent onset evidence; do not infer missing identities from counts.
+4. Keep attack-shadow v2 as the strongest supported attack correction so far.
+5. Do not broaden the remaining 105 positive subfloor events unless independent source evidence supports it.
+6. Do not freeze or professional-score while newly rescued attacks lack recomputable downstream technique/sustain evidence.
+7. No Modal/L4 unless user gives fresh explicit authorization for a clearly identified missing evidence dimension.
+8. Do not claim Rhythm complete until score >=0.99, critical mismatches=0, fidelity=1.0.
