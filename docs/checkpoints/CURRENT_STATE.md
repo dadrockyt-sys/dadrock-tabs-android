@@ -65,27 +65,33 @@ Priority: **finish Rhythm end-to-end before Bass/Lead; musical accuracy first, P
 - No Modal/GPU was used. This capture enables CPU-only full-source trajectory experiments.
 
 ## Current live experiment
-- New preferred path: build the **same harmonic CQT pitch-energy view from the exact approved full mix**, run the unchanged sustain evidence logic against the exact 967 baseline event graph, and measure how faithfully full-mix trajectories reproduce the historical two-separated-view consensus.
+- New preferred path was to build the **same harmonic CQT pitch-energy view from the exact approved full mix**, run the unchanged sustain evidence logic against the exact 967 baseline event graph, and measure how faithfully full-mix trajectories reproduce the historical two-separated-view consensus.
 - This is materially stronger than scalar snapshots because it restores the full time trajectory while remaining reference-free and CPU-only.
-- First local exact full-mix CQT attempt exceeded the single tool-call timeout during harmonic/CQT construction; it made no branch/content change. Continue via an interactive CPU process, not Modal.
-- If full-mix holdout fidelity is insufficient, keep it shadow-only and record the blocker; do not invent a threshold to force agreement.
+- The exact full-mix CPU pass is now complete. It used the production view parameters: 22,050 Hz mono, harmonic margin `3.0`, hop `256`, 48 bins/octave, 240 CQT bins from C2, fundamental + `0.52` octave harmonic, width-5 smoothing, and the unchanged sustain constants above.
+
+## Full-mix sustain result — CLOSED as a promotion source
+- Exact approved full mix produced sustain evidence for `695/967` baseline events (`71.87%`).
+- Against the `669` historical two-separated-view shadows, full mix produced evidence for `580`; exact duration-step agreement was only **72.59%**, MAE `0.714` steps, within-one-step `87.59%`.
+- Against final promoted baseline duration, exact agreement with no-evidence conservatively treated as one step was only **74.77%**, MAE `0.724` steps, within-one-step `87.69%`.
+- Long-sustain discrimination is not reliable: at >=4 steps precision `49.5%`, recall `66.2%`; at >=8 steps precision `31.4%`, recall `55.0%`.
+- Failure structure contains both severe false extension and severe truncation (including isolated errors of 25 steps). Repeated `(step,midi,string)` groups also show materially inconsistent full-mix reproduction.
+- **Decision:** do not tune thresholds, do not promote, and do not generalize this full-mix sustain view to the 34 primary-corrected or 242 rescued V5 events. It remains diagnostic/shadow-only. This source-only route is insufficiently faithful and is closed without production change.
 
 ## Continuation checkpoint — resumed 2026-08-25
 - Re-downloaded/materialized the trusted authorized product artifact `9548666053` and approved source artifact `9570238003` for the CPU sustain investigation.
 - Reverified the approved source SHA256 exactly `215bd5a657c5326f08f132ae358595a95c30b39bb7493a52c2f910d5a608149f` before analysis.
-- Full-mix harmonic/CQT sustain evidence investigation is resumed locally. No protected runtime code, timing, main/Production, or Modal/L4 has been touched.
+- Full-mix harmonic/CQT sustain evidence investigation completed locally and failed the fidelity requirement above. No protected runtime code, timing, main/Production, or Modal/L4 has been touched.
 
 ## Current integrity
 - Protected runtime untouched.
 - `main`/Production untouched.
 - No professional reference/scorer used.
 - No Modal/L4 used in this continuation.
-- Only branch changes since the prior checkpoint were the temporary source-export workflow creation/removal and checkpoint commits.
+- Branch changes in this continuation are checkpoint-only.
 
 ## Next exact actions
-1. Complete the CPU full-mix harmonic-CQT sustain pass and compare event-by-event against the 967 exact source-derived baseline sustains.
-2. Evaluate exact duration-step accuracy, long-sustain discrimination, and failure structure under blocked holdout / repeated-riff consistency; no professional reference.
-3. Only if source-only full-mix evidence validates strongly, generalize it conservatively to the 34 corrected + 242 rescued V5 events as a shadow candidate.
-4. Separately validate bends/legato from full-mix evidence; techniques are sparse (25 baseline positives), so require conservative evidence and zero invented semantics.
-5. Re-render V5 PDF only after downstream metadata completeness is proven.
-6. Do not claim Rhythm complete until score >=0.99, critical mismatches=0, PDF fidelity=1.0.
+1. Keep sustain reconstruction frozen for the 933 exact-metadata V5 events; do not synthesize missing sustain from the failed full-mix view.
+2. Test whether sparse bends/legato can be independently recovered from exact approved full-mix trajectories with conservative source-only evidence. Require high precision and no invented semantics; otherwise close those routes too.
+3. Reassess the remaining 34 corrected + 242 rescued metadata gap after source-only technique tests, and prefer neutral metadata over fabricated performance semantics.
+4. Re-render V5 PDF only after downstream metadata completeness/fallback policy is explicitly proven safe.
+5. Do not claim Rhythm complete until score >=0.99, critical mismatches=0, PDF fidelity=1.0.
