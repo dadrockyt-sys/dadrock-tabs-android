@@ -1,0 +1,66 @@
+name: V143 V5 voicing feasibility audit
+
+on:
+  push:
+    branches:
+      - v143-contextual-prune-lobo
+    paths:
+      - '.github/workflows/v143-voicing-feasibility-audit.yml'
+      - 'analyzer/v143_contextual_prune_voicing_feasibility_audit.py'
+      - 'debug/v143-contextual-prune/combined-content-shadow-v5-validation.json'
+
+permissions:
+  contents: write
+
+jobs:
+  audit:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: v143-contextual-prune-lobo
+          fetch-depth: 1
+      - name: Reverify protected runtime and V5 identity
+        shell: bash
+        run: |
+          set -euo pipefail
+          test "$(git hash-object analyzer/v143_reference_free_rhythm_pipeline.py)" = '7f72f8ed9b14af8bc93e95544195204d99c6bec1'
+          test "$(sha256sum debug/v143-contextual-prune/combined-content-shadow-v5-validation.json | awk '{print $1}')" = 'eb2cd7172ec2edd49e37709b1a4b638c0eb61607524827b3192993ab4b0d52ee'
+      - name: Audit V5 voicing drops
+        shell: bash
+        run: |
+          set -euo pipefail
+          mkdir -p debug/v143-contextual-prune-ci
+          python3 analyzer/v143_contextual_prune_voicing_feasibility_audit.py \
+            debug/v143-contextual-prune/combined-content-shadow-v5-validation.json \
+            --output debug/v143-contextual-prune-ci/voicing-feasibility-audit.json
+      - name: Persist exact passing audit
+        shell: bash
+        run: |
+          set -euo pipefail
+          cp debug/v143-contextual-prune-ci/voicing-feasibility-audit.json \
+            debug/v143-contextual-prune/voicing-feasibility-audit.json
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add debug/v143-contextual-prune/voicing-feasibility-audit.json
+          if ! git diff --cached --quiet; then
+            git commit -m 'Persist V5 voicing feasibility audit'
+            git push origin HEAD:v143-contextual-prune-lobo
+          fi
+      - name: Show audit
+        if: always()
+        shell: bash
+        run: |
+          if test -f debug/v143-contextual-prune-ci/voicing-feasibility-audit.json; then
+            cat debug/v143-contextual-prune-ci/voicing-feasibility-audit.json
+            sha256sum debug/v143-contextual-prune-ci/voicing-feasibility-audit.json
+          fi
+      - name: Upload audit artifact
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: v143-v5-voicing-feasibility-audit
+          path: debug/v143-contextual-prune-ci/voicing-feasibility-audit.json
+          if-no-files-found: warn
+          retention-days: 1
