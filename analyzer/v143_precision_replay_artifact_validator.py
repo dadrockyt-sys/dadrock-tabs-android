@@ -10,6 +10,12 @@ from typing import Any, Mapping, Sequence
 EXPECTED_POLICY = "envelope-balanced-secondary-v2"
 EXPECTED_AUDIO_SHA256 = "215bd5a657c5326f08f132ae358595a95c30b39bb7493a52c2f910d5a608149f"
 EVIDENCE_FIELDS = ("attack", "early", "sustain", "body", "continuity", "score")
+ATTACK_TRANSIENT_RATIO_FLOOR = 0.70
+ATTACK_TRANSIENT_RATIO_EXCEPTION_FLOOR = 0.60
+LOCAL_STRENGTH_MARGIN = 0.20
+LOCAL_RADIUS_STEPS = 2
+POSITIVE_ATTACK_FLOOR = 0.0
+POSITIVE_BODY_FLOOR = -0.25
 
 
 class ReplayArtifactValidationError(ValueError):
@@ -30,10 +36,9 @@ def _int(value: Any, label: str) -> int:
     if isinstance(value, bool):
         raise ReplayArtifactValidationError(f"{label} is boolean, not integer")
     try:
-        number = int(value)
+        return int(value)
     except (TypeError, ValueError) as exc:
         raise ReplayArtifactValidationError(f"{label} is not integer-like") from exc
-    return number
 
 
 def _require(condition: bool, message: str) -> None:
@@ -50,6 +55,180 @@ def _canonical_sha256(value: Any) -> str:
         allow_nan=False,
     ).encode("utf-8")
     return hashlib.sha256(encoded).hexdigest()
+
+
+def _key_record(value: Mapping[str, Any], label: str) -> tuple[int, int]:
+    return (_int(value.get("measure"), f"{label}.measure"), _int(value.get("step"), f"{label}.step"))
+
+
+def _candidate_values(item: Mapping[str, Any], label: str) -> dict[str, float]:
+    values = {field: _finite(item.get(field), f"{label}.{field}") for field in EVIDENCE_FIELDS}
+    _require(
+        math.isclose(values["body"], max(values["early"], values["sustain"]), rel_tol=0.0, abs_tol=1e-12),
+        f"{label} body is not max(early,sustain)",
+    )
+    _require(
+        math.isclose(values["continuity"], min(values["early"], values["sustain"]), rel_tol=0.0, abs_tol=1e-12),
+        f"{label} continuity is not min(early,sustain)",
+    )
+    expected_score = values["attack"] + 0.65 * values["body"] + 0.15 * values["continuity"]
+    _require(
+        math.isclose(values["score"], expected_score, rel_tol=0.0, abs_tol=1e-10),
+        f"{label} score formula mismatch",
+    )
+    return values
+
+
+def _validate_attack_record(
+    attack: Mapping[str, Any],
+    *,
+    label: str,
+    require_retained: bool | None,
+) -> tuple[tuple[int, int], set[int], set[int], int | None]:
+    key = _key_record(attack, label)
+    _finite(attack.get("onsetTime"), f"{label}.onsetTime")
+    _finite(attack.get("precisionStrength"), f"{label}.precisionStrength")
+    grid_error = _finite(attack.get("precisionGridErrorSeconds"), f"{label}.precisionGridErrorSeconds")
+    _require(grid_error >= 0.0, f"{label}.precisionGridErrorSeconds is negative")
+    _require(isinstance(attack.get("retained"), bool), f"{label}.retained is not boolean")
+    _require(isinstance(attack.get("failSafe"), bool), f"{label}.failSafe is not boolean")
+    retained = attack.get("retained") is True
+    if require_retained is not None:
+        _require(retained is require_retained, f"{label}.retained flag mismatch")
+    if attack.get("failSafe") is True:
+        _require(retained, f"{label} marks a pruned attack as fail-safe")
+
+    candidate_midis_raw = attack.get("candidateMidis") or []
+    candidates = attack.get("candidates") or []
+    _require(
+        isinstance(candidate_midis_raw, Sequence) and not isinstance(candidate_midis_raw, (str, bytes, bytearray)),
+        f"{label}.candidateMidis is not a sequence",
+    )
+    _require(
+        isinstance(candidates, Sequence) and not isinstance(candidates, (str, bytes, bytearray)),
+        f"{label}.candidates is not a sequence",
+    )
+
+    candidate_midis = [_int(value, f"{label}.candidateMidi") for value in candidate_midis_raw]
+    candidate_records: list[int] = []
+    selected: set[int] = set()
+    primaries: list[int] = []
+    for index, item in enumerate(candidates):
+        _require(isinstance(item, Mapping), f"{label}.candidates[{index}] is not a mapping")
+        midi = _int(item.get("midi"), f"{label}.candidates[{index}].midi")
+        candidate_records.append(midi)
+        _candidate_values(item, f"{label}.MIDI{midi}")
+        _require(isinstance(item.get("selected"), bool), f"{label}.MIDI{midi}.selected is not boolean")
+        _require(isinstance(item.get("primary"), bool), f"{label}.MIDI{midi}.primary is not boolean")
+        if item.get("selected") is True:
+            selected.add(midi)
+        if item.get("primary") is True:
+            primaries.append(midi)
+
+    _require(candidate_midis == candidate_records, f"{label} candidate identity/order mismatch")
+    _require(len(candidate_records) == len(set(candidate_records)), f"{label} contains duplicate MIDI")
+    if retained:
+        _require(len(candidate_records) > 0, f"{label} retained attack has no pitch hypotheses")
+        _require(len(primaries) == 1, f"{label} retained attack must contain exactly one primary")
+        _require(primaries[0] in selected, f"{label} retained primary is not selected")
+        _require(selected, f"{label} retained attack has no selected pitch")
+    else:
+        _require(not selected, f"{label} pruned attack contains a selected pitch")
+        _require(not primaries, f"{label} pruned attack contains a primary")
+
+    return key, set(candidate_records), selected, (primaries[0] if primaries else None)
+
+
+def _candidate_map(attack: Mapping[str, Any]) -> dict[int, Mapping[str, Any]]:
+    return {int(item["midi"]): item for item in (attack.get("candidates") or [])}
+
+
+def _best_candidate(attack: Mapping[str, Any]) -> Mapping[str, Any] | None:
+    candidates = _candidate_map(attack)
+    if not candidates:
+        return None
+    midi = max(
+        candidates,
+        key=lambda value: (
+            float(candidates[value]["score"]),
+            float(candidates[value]["attack"]),
+            -int(value),
+        ),
+    )
+    return candidates[midi]
+
+
+def _transient_ratio(attack: Mapping[str, Any]) -> float:
+    item = _best_candidate(attack)
+    if item is None:
+        return 0.0
+    return float(max(0.0, float(item["attack"])) / max(1e-6, float(item["body"])))
+
+
+def _attack_is_precise(
+    key: tuple[int, int],
+    attack: Mapping[str, Any],
+    eligible: Mapping[tuple[int, int], Mapping[str, Any]],
+) -> bool:
+    item = _best_candidate(attack)
+    if item is None:
+        return False
+    if float(item["attack"]) <= POSITIVE_ATTACK_FLOOR or float(item["body"]) <= POSITIVE_BODY_FLOOR:
+        return False
+    ratio = _transient_ratio(attack)
+    if ratio >= ATTACK_TRANSIENT_RATIO_FLOOR:
+        return True
+    if ratio < ATTACK_TRANSIENT_RATIO_EXCEPTION_FLOOR:
+        return False
+    strength = float(attack["precisionStrength"])
+    neighbors = [
+        float(other["precisionStrength"])
+        for other_key, other in eligible.items()
+        if other_key != key
+        and other_key[0] == key[0]
+        and abs(int(other_key[1]) - int(key[1])) <= LOCAL_RADIUS_STEPS
+    ]
+    if not neighbors:
+        return True
+    return strength >= max(neighbors) + LOCAL_STRENGTH_MARGIN
+
+
+def _recompute_attack_policy(
+    eligible: Mapping[tuple[int, int], Mapping[str, Any]],
+    target_measures: set[int],
+) -> tuple[set[tuple[int, int]], set[tuple[int, int]]]:
+    scoped = {key: attack for key, attack in eligible.items() if key[0] in target_measures}
+    retained = {key for key, attack in scoped.items() if _attack_is_precise(key, attack, scoped)}
+    fail_safe: set[tuple[int, int]] = set()
+
+    for measure in sorted(target_measures):
+        measure_inputs = sorted(key for key in scoped if key[0] == measure)
+        if not measure_inputs or any(key in retained for key in measure_inputs):
+            continue
+        winner = max(
+            measure_inputs,
+            key=lambda key: (_transient_ratio(scoped[key]), float(scoped[key]["precisionStrength"]), -int(key[1])),
+        )
+        retained.add(winner)
+        fail_safe.add(winner)
+
+    for key in list(retained):
+        if not (scoped[key].get("candidateMidis") or []):
+            retained.remove(key)
+            fail_safe.discard(key)
+
+    retained_measures = {measure for measure, _step in retained}
+    for measure in sorted(target_measures - retained_measures):
+        candidates = [key for key in scoped if key[0] == measure and (scoped[key].get("candidateMidis") or [])]
+        _require(bool(candidates), f"no pitched eligible attack can preserve measure {measure}")
+        winner = max(
+            candidates,
+            key=lambda key: (_transient_ratio(scoped[key]), float(scoped[key]["precisionStrength"]), -int(key[1])),
+        )
+        retained.add(winner)
+        fail_safe.add(winner)
+
+    return retained, fail_safe
 
 
 def validate_product(product: Mapping[str, Any]) -> dict[str, Any]:
@@ -75,8 +254,11 @@ def validate_product(product: Mapping[str, Any]) -> dict[str, Any]:
     _require(candidate.get("runtimeLabelsRequired") is False, "candidate requires runtime labels")
     _require(candidate.get("productionModified") is False, "candidate indicates production mutation")
 
-    _require(replay.get("schemaVersion") == 1, "unexpected replay schemaVersion")
+    _require(replay.get("schemaVersion") == 2, "unexpected replay schemaVersion")
     _require(replay.get("policy") == EXPECTED_POLICY, "unexpected replay policy")
+    _require(replay.get("replayCompleteness") == "retained-pitch-plus-eligible-attack-source-universe", "unexpected replay completeness mode")
+    _require(replay.get("fixedRetainedAttackPitchReplayReady") is True, "fixed retained-attack replay is not ready")
+    _require(replay.get("attackPolicyReplayReady") is True, "attack-policy replay is not ready")
     _require(replay.get("referenceFree") is True, "replay is not reference-free")
     _require(replay.get("professionalReferenceUsed") is False, "replay indicates professional reference use")
     _require(replay.get("runtimeLabelsRequired") is False, "replay requires runtime labels")
@@ -84,110 +266,106 @@ def validate_product(product: Mapping[str, Any]) -> dict[str, Any]:
     _require(replay.get("candidateAddsUnobservedAttack") is False, "replay says attack was invented")
     _require(replay.get("candidateAddsUnobservedPitch") is False, "replay says pitch was invented")
 
-    attacks = replay.get("attacks") or []
-    _require(isinstance(attacks, Sequence) and not isinstance(attacks, (str, bytes, bytearray)), "replay attacks must be a sequence")
-    _require(len(attacks) == _int(replay.get("retainedAttackCount"), "replay.retainedAttackCount"), "replay attack count mismatch")
-    _require(len(attacks) > 0, "replay contains no attacks")
+    input_key_records = replay.get("inputAttackKeys") or []
+    missing_key_records = replay.get("carrierMissingInputAttackKeys") or []
+    eligible_attacks = replay.get("eligibleAttacks") or []
+    retained_attacks = replay.get("attacks") or []
+    for name, value in (("inputAttackKeys", input_key_records), ("carrierMissingInputAttackKeys", missing_key_records), ("eligibleAttacks", eligible_attacks), ("attacks", retained_attacks)):
+        _require(isinstance(value, Sequence) and not isinstance(value, (str, bytes, bytearray)), f"replay.{name} must be a sequence")
 
-    attack_candidates: dict[tuple[int, int], set[int]] = {}
-    attack_selected: dict[tuple[int, int], set[int]] = {}
-    candidate_total = 0
-    selected_total = 0
+    input_keys_list = [_key_record(item, f"inputAttackKeys[{index}]") for index, item in enumerate(input_key_records)]
+    missing_keys_list = [_key_record(item, f"carrierMissingInputAttackKeys[{index}]") for index, item in enumerate(missing_key_records)]
+    _require(len(input_keys_list) == len(set(input_keys_list)), "duplicate input attack key")
+    _require(len(missing_keys_list) == len(set(missing_keys_list)), "duplicate carrier-missing input key")
+    _require(input_keys_list == sorted(input_keys_list), "input attack keys are not canonical-sorted")
+    _require(missing_keys_list == sorted(missing_keys_list), "carrier-missing input keys are not canonical-sorted")
 
-    for attack_index, attack in enumerate(attacks):
-        _require(isinstance(attack, Mapping), f"attack[{attack_index}] is not a mapping")
-        measure = _int(attack.get("measure"), f"attack[{attack_index}].measure")
-        step = _int(attack.get("step"), f"attack[{attack_index}].step")
-        key = (measure, step)
-        _require(key not in attack_candidates, f"duplicate replay attack {key}")
-        _finite(attack.get("onsetTime"), f"attack[{attack_index}].onsetTime")
+    eligible_by_key: dict[tuple[int, int], Mapping[str, Any]] = {}
+    eligible_candidate_count = 0
+    eligible_selected_count = 0
+    stored_fail_safe: set[tuple[int, int]] = set()
+    eligible_key_order: list[tuple[int, int]] = []
+    for index, attack in enumerate(eligible_attacks):
+        _require(isinstance(attack, Mapping), f"eligibleAttacks[{index}] is not a mapping")
+        key, candidates, selected, _primary = _validate_attack_record(attack, label=f"eligibleAttacks[{index}]", require_retained=None)
+        _require(key not in eligible_by_key, f"duplicate eligible replay attack {key}")
+        eligible_by_key[key] = attack
+        eligible_key_order.append(key)
+        eligible_candidate_count += len(candidates)
+        eligible_selected_count += len(selected)
+        if attack.get("failSafe") is True:
+            stored_fail_safe.add(key)
 
-        candidate_midis_raw = attack.get("candidateMidis") or []
-        candidates = attack.get("candidates") or []
-        _require(
-            isinstance(candidate_midis_raw, Sequence) and not isinstance(candidate_midis_raw, (str, bytes, bytearray)),
-            f"attack {key} candidateMidis is not a sequence",
-        )
-        _require(
-            isinstance(candidates, Sequence) and not isinstance(candidates, (str, bytes, bytearray)),
-            f"attack {key} candidates is not a sequence",
-        )
-        candidate_midis = [_int(value, f"attack {key} candidateMidi") for value in candidate_midis_raw]
-        candidate_records: list[int] = []
-        selected: set[int] = set()
-        primaries: list[int] = []
+    retained_by_key: dict[tuple[int, int], Mapping[str, Any]] = {}
+    retained_candidates: dict[tuple[int, int], set[int]] = {}
+    retained_selected: dict[tuple[int, int], set[int]] = {}
+    retained_candidate_count = 0
+    retained_selected_count = 0
+    retained_key_order: list[tuple[int, int]] = []
+    for index, attack in enumerate(retained_attacks):
+        _require(isinstance(attack, Mapping), f"attacks[{index}] is not a mapping")
+        key, candidates, selected, _primary = _validate_attack_record(attack, label=f"attacks[{index}]", require_retained=True)
+        _require(key not in retained_by_key, f"duplicate retained replay attack {key}")
+        retained_by_key[key] = attack
+        retained_candidates[key] = candidates
+        retained_selected[key] = selected
+        retained_key_order.append(key)
+        retained_candidate_count += len(candidates)
+        retained_selected_count += len(selected)
 
-        for candidate_index, item in enumerate(candidates):
-            _require(isinstance(item, Mapping), f"attack {key} candidate[{candidate_index}] is not a mapping")
-            midi = _int(item.get("midi"), f"attack {key} candidate[{candidate_index}].midi")
-            candidate_records.append(midi)
-            values = {field: _finite(item.get(field), f"attack {key} MIDI {midi} {field}") for field in EVIDENCE_FIELDS}
-            _require(
-                math.isclose(values["body"], max(values["early"], values["sustain"]), rel_tol=0.0, abs_tol=1e-12),
-                f"attack {key} MIDI {midi} body is not max(early,sustain)",
-            )
-            _require(
-                math.isclose(values["continuity"], min(values["early"], values["sustain"]), rel_tol=0.0, abs_tol=1e-12),
-                f"attack {key} MIDI {midi} continuity is not min(early,sustain)",
-            )
-            expected_score = values["attack"] + 0.65 * values["body"] + 0.15 * values["continuity"]
-            _require(
-                math.isclose(values["score"], expected_score, rel_tol=0.0, abs_tol=1e-10),
-                f"attack {key} MIDI {midi} score formula mismatch",
-            )
-            if item.get("selected") is True:
-                selected.add(midi)
-            if item.get("primary") is True:
-                primaries.append(midi)
+    eligible_keys = set(eligible_by_key)
+    retained_keys = set(retained_by_key)
+    input_keys = set(input_keys_list)
+    missing_keys = set(missing_keys_list)
+    _require(eligible_keys.isdisjoint(missing_keys), "eligible and carrier-missing attack keys overlap")
+    _require(input_keys == eligible_keys | missing_keys, "input attack universe does not reconcile with eligible+missing keys")
+    _require(retained_keys.issubset(eligible_keys), "retained attack is absent from eligible source universe")
+    _require(eligible_key_order == sorted(eligible_keys), "eligible attacks are not canonical-sorted")
+    _require(retained_key_order == sorted(retained_keys), "retained attacks are not canonical-sorted")
+    for key in retained_keys:
+        _require(dict(retained_by_key[key]) == dict(eligible_by_key[key]), f"retained attack {key} differs from eligible source record")
+    for key, attack in eligible_by_key.items():
+        _require((attack.get("retained") is True) == (key in retained_keys), f"eligible retained flag disagrees at {key}")
 
-        _require(candidate_midis == candidate_records, f"attack {key} candidate identity/order mismatch")
-        _require(len(candidate_records) == len(set(candidate_records)), f"attack {key} contains duplicate MIDI")
-        _require(len(candidate_records) > 0, f"attack {key} has no pitch hypotheses")
-        _require(len(primaries) == 1, f"attack {key} must contain exactly one primary")
-        _require(primaries[0] in selected, f"attack {key} primary is not selected")
-        _require(selected, f"attack {key} has no selected pitch")
+    _require(len(input_keys) == _int(replay.get("inputAttackCount"), "replay.inputAttackCount"), "replay input attack count mismatch")
+    _require(len(eligible_keys) == _int(replay.get("eligibleAttackCount"), "replay.eligibleAttackCount"), "replay eligible attack count mismatch")
+    _require(len(retained_keys) == _int(replay.get("retainedAttackCount"), "replay.retainedAttackCount"), "replay retained attack count mismatch")
+    _require(len(input_keys - retained_keys) == _int(replay.get("prunedAttackCount"), "replay.prunedAttackCount"), "replay pruned attack count mismatch")
+    _require(eligible_candidate_count == _int(replay.get("eligiblePitchHypothesisCount"), "replay.eligiblePitchHypothesisCount"), "eligible pitch hypothesis count mismatch")
+    _require(retained_candidate_count == _int(replay.get("originalPitchHypothesisCount"), "replay.originalPitchHypothesisCount"), "retained original pitch count mismatch")
+    _require(retained_candidate_count == _int(replay.get("retainedOriginalPitchHypothesisCount"), "replay.retainedOriginalPitchHypothesisCount"), "retainedOriginalPitchHypothesisCount mismatch")
 
-        attack_candidates[key] = set(candidate_records)
-        attack_selected[key] = selected
-        candidate_total += len(candidate_records)
-        selected_total += len(selected)
+    _require(_int(precision.get("inputAttackCount"), "precision.inputAttackCount") == len(input_keys), "precision/replay input attack count mismatch")
+    _require(_int(precision.get("retainedAttackCount"), "precision.retainedAttackCount") == len(retained_keys), "precision/replay retained attack count mismatch")
+    _require(_int(precision.get("prunedAttackCount"), "precision.prunedAttackCount") == len(input_keys - retained_keys), "precision/replay pruned attack count mismatch")
+    _require(_int(precision.get("failSafeAttackCount"), "precision.failSafeAttackCount") == len(stored_fail_safe), "precision/replay fail-safe count mismatch")
+    _require(_int(precision.get("originalPitchHypothesisCount"), "precision.originalPitchHypothesisCount") == retained_candidate_count, "precision/replay original pitch count mismatch")
+    _require(_int(precision.get("retainedPitchHypothesisCount"), "precision.retainedPitchHypothesisCount") == retained_selected_count, "precision/replay selected pitch count mismatch")
+    _require(eligible_selected_count == retained_selected_count, "pruned eligible attacks unexpectedly contribute selected pitches")
 
-    _require(
-        candidate_total == _int(replay.get("originalPitchHypothesisCount"), "replay.originalPitchHypothesisCount"),
-        "replay original pitch count mismatch",
-    )
-    _require(
-        _int(precision.get("retainedAttackCount"), "precision.retainedAttackCount") == len(attacks),
-        "precision/replay retained attack count mismatch",
-    )
-    _require(
-        _int(precision.get("originalPitchHypothesisCount"), "precision.originalPitchHypothesisCount") == candidate_total,
-        "precision/replay original pitch count mismatch",
-    )
-    _require(
-        _int(precision.get("retainedPitchHypothesisCount"), "precision.retainedPitchHypothesisCount") == selected_total,
-        "precision/replay selected pitch count mismatch",
-    )
+    measure_start = _int(timing.get("measureStart"), "timing.measureStart")
+    measure_end = _int(timing.get("measureEnd"), "timing.measureEnd")
+    _require(measure_start <= measure_end, "timing measure range is inverted")
+    target_measures = set(range(measure_start, measure_end + 1))
+    _require(all(key[0] in target_measures for key in eligible_keys), "eligible attack lies outside audio-derived measure range")
+    recomputed_retained, recomputed_fail_safe = _recompute_attack_policy(eligible_by_key, target_measures)
+    _require(recomputed_retained == retained_keys, "baseline attack replay does not reproduce retained attack identity")
+    _require(recomputed_fail_safe == stored_fail_safe, "baseline attack replay does not reproduce fail-safe identity")
 
     event_keys: set[tuple[int, int]] = set()
-    emitted_by_key: dict[tuple[int, int], set[int]] = {}
-    for event_index, event in enumerate(events):
-        _require(isinstance(event, Mapping), f"event[{event_index}] is not a mapping")
-        key = (
-            _int(event.get("measure"), f"event[{event_index}].measure"),
-            _int(event.get("step"), f"event[{event_index}].step"),
-        )
-        midi = _int(event.get("midi"), f"event[{event_index}].midi")
-        _require(key in attack_candidates, f"render emitted attack absent from replay: {key}")
-        _require(midi in attack_candidates[key], f"render emitted unobserved pitch {midi} at {key}")
-        _require(midi in attack_selected[key], f"render emitted replay-unselected pitch {midi} at {key}")
-        emitted_by_key.setdefault(key, set()).add(midi)
+    for index, event in enumerate(events):
+        _require(isinstance(event, Mapping), f"event[{index}] is not a mapping")
+        key = _key_record(event, f"event[{index}]")
+        midi = _int(event.get("midi"), f"event[{index}].midi")
+        _require(key in retained_candidates, f"render emitted attack absent from retained replay: {key}")
+        _require(midi in retained_candidates[key], f"render emitted unobserved pitch {midi} at {key}")
+        _require(midi in retained_selected[key], f"render emitted replay-unselected pitch {midi} at {key}")
         event_keys.add(key)
 
-    _require(event_keys == set(attack_candidates), "render/replay attack identity mismatch")
+    _require(event_keys == retained_keys, "render/replay retained attack identity mismatch")
     _require(len(events) == _int(product.get("noteCount"), "product.noteCount"), "noteCount does not match events length")
-    _require(len(attacks) == _int(product.get("selectedCount"), "product.selectedCount"), "selectedCount does not match replay attacks")
-    _require(len(attacks) == _int(assembly.get("selectedAttackCount"), "assembly.selectedAttackCount"), "assembly selected attack count mismatch")
+    _require(len(retained_keys) == _int(product.get("selectedCount"), "product.selectedCount"), "selectedCount does not match retained replay attacks")
+    _require(len(retained_keys) == _int(assembly.get("selectedAttackCount"), "assembly.selectedAttackCount"), "assembly selected attack count mismatch")
     _require(len(events) == _int(assembly.get("renderNoteCount"), "assembly.renderNoteCount"), "assembly render note count mismatch")
 
     supported_pitch_count = _int(diagnostics.get("supportedPitchCount"), "candidateDiagnostics.supportedPitchCount")
@@ -195,35 +373,37 @@ def validate_product(product: Mapping[str, Any]) -> dict[str, Any]:
     rendered_note_count = _int(diagnostics.get("renderedNoteCount"), "candidateDiagnostics.renderedNoteCount")
     dropped_pitch_count = _int(diagnostics.get("voicingDroppedPitchCount"), "candidateDiagnostics.voicingDroppedPitchCount")
     _require(diagnostics.get("everyCorrectedAttackRendered") is True, "candidate did not render every retained attack")
-    _require(supported_pitch_count == selected_total, "candidate supported pitch count does not match replay selected total")
+    _require(supported_pitch_count == retained_selected_count, "candidate supported pitch count does not match replay selected total")
     _require(rendered_pitch_count == len(events), "candidate rendered pitch count mismatch")
     _require(rendered_note_count == len(events), "candidate rendered note count mismatch")
-    _require(dropped_pitch_count == selected_total - len(events), "candidate voicing drop accounting mismatch")
+    _require(dropped_pitch_count == retained_selected_count - len(events), "candidate voicing drop accounting mismatch")
     _require(dropped_pitch_count >= 0, "candidate voicing drop count is negative")
 
-    measure_start = _int(timing.get("measureStart"), "timing.measureStart")
-    measure_end = _int(timing.get("measureEnd"), "timing.measureEnd")
-    _require(measure_start <= measure_end, "timing measure range is inverted")
-    expected_measures = set(range(measure_start, measure_end + 1))
-    replay_measures = {measure for measure, _step in attack_candidates}
-    _require(replay_measures == expected_measures, "replay does not cover exact audio-derived measure range")
-    _require(
-        len(expected_measures) == _int(product.get("audioDerivedMeasureCount"), "product.audioDerivedMeasureCount"),
-        "audioDerivedMeasureCount mismatch",
-    )
+    replay_measures = {measure for measure, _step in retained_keys}
+    _require(replay_measures == target_measures, "retained replay does not cover exact audio-derived measure range")
+    _require(len(target_measures) == _int(product.get("audioDerivedMeasureCount"), "product.audioDerivedMeasureCount"), "audioDerivedMeasureCount mismatch")
 
     return {
-        "schemaVersion": 1,
+        "schemaVersion": 2,
         "classification": "v143-precision-replay-artifact-exact-binding",
         "passed": True,
         "policy": EXPECTED_POLICY,
-        "retainedAttackCount": len(attacks),
-        "originalPitchHypothesisCount": candidate_total,
-        "storedSelectedPitchCount": selected_total,
+        "inputAttackCount": len(input_keys),
+        "eligibleAttackCount": len(eligible_keys),
+        "carrierMissingInputAttackCount": len(missing_keys),
+        "retainedAttackCount": len(retained_keys),
+        "prunedAttackCount": len(input_keys - retained_keys),
+        "failSafeAttackCount": len(stored_fail_safe),
+        "eligiblePitchHypothesisCount": eligible_candidate_count,
+        "originalPitchHypothesisCount": retained_candidate_count,
+        "storedSelectedPitchCount": retained_selected_count,
         "renderedPitchCount": len(events),
         "voicingDroppedPitchCount": dropped_pitch_count,
         "measureStart": measure_start,
         "measureEnd": measure_end,
+        "baselineAttackReplayMatches": True,
+        "fixedRetainedAttackPitchReplayReady": True,
+        "attackPolicyReplayReady": True,
         "replayEvidenceSha256": _canonical_sha256(replay),
         "eventsSha256": _canonical_sha256(events),
         "referenceFree": True,
@@ -234,51 +414,71 @@ def validate_product(product: Mapping[str, Any]) -> dict[str, Any]:
     }
 
 
-def _self_test_product() -> dict[str, Any]:
-    attack = {
-        "measure": 1,
-        "step": 0,
-        "onsetTime": 0.25,
-        "candidateMidis": [60, 64],
-        "candidates": [
-            {
-                "midi": 60,
-                "attack": 1.0,
-                "early": 0.8,
-                "sustain": 0.6,
-                "body": 0.8,
-                "continuity": 0.6,
-                "score": 1.61,
-                "selected": True,
-                "primary": True,
-            },
-            {
-                "midi": 64,
-                "attack": 0.9,
-                "early": 0.7,
-                "sustain": 0.5,
-                "body": 0.7,
-                "continuity": 0.5,
-                "score": 1.43,
-                "selected": True,
-                "primary": False,
-            },
-        ],
-    }
+def _candidate(midi: int, attack: float, early: float, sustain: float, *, selected: bool, primary: bool) -> dict[str, Any]:
+    body = max(early, sustain)
+    continuity = min(early, sustain)
     return {
-        "candidate": {
-            "approvedFixture": True,
-            "sourceSha256": EXPECTED_AUDIO_SHA256,
-            "professionalReferenceUsed": False,
-            "runtimeLabelsRequired": False,
-            "productionModified": False,
-        },
+        "midi": midi,
+        "attack": attack,
+        "early": early,
+        "sustain": sustain,
+        "body": body,
+        "continuity": continuity,
+        "score": attack + 0.65 * body + 0.15 * continuity,
+        "selected": selected,
+        "primary": primary,
+    }
+
+
+def _attack_record(measure: int, step: int, candidates: list[dict[str, Any]], *, retained: bool, fail_safe: bool, strength: float) -> dict[str, Any]:
+    return {
+        "measure": measure,
+        "step": step,
+        "onsetTime": float(measure) + 0.01 * step,
+        "precisionStrength": strength,
+        "precisionGridErrorSeconds": 0.01,
+        "retained": retained,
+        "failSafe": fail_safe,
+        "candidateMidis": [int(item["midi"]) for item in candidates],
+        "candidates": candidates,
+    }
+
+
+def _self_test_product() -> dict[str, Any]:
+    strong = _attack_record(
+        1, 0,
+        [_candidate(60, 1.0, 0.8, 0.6, selected=True, primary=True), _candidate(64, 0.9, 0.7, 0.5, selected=True, primary=False)],
+        retained=True, fail_safe=False, strength=2.0,
+    )
+    weak_pruned = _attack_record(
+        1, 1, [_candidate(62, 0.3, 0.8, 0.7, selected=False, primary=False)],
+        retained=False, fail_safe=False, strength=1.0,
+    )
+    weak_fail_safe = _attack_record(
+        2, 0, [_candidate(65, 0.25, 0.8, 0.7, selected=True, primary=True)],
+        retained=True, fail_safe=True, strength=0.5,
+    )
+    retained = [strong, weak_fail_safe]
+    eligible = [strong, weak_pruned, weak_fail_safe]
+    return {
+        "candidate": {"approvedFixture": True, "sourceSha256": EXPECTED_AUDIO_SHA256, "professionalReferenceUsed": False, "runtimeLabelsRequired": False, "productionModified": False},
         "precisionReplayEvidence": {
-            "schemaVersion": 1,
+            "schemaVersion": 2,
             "policy": EXPECTED_POLICY,
-            "retainedAttackCount": 1,
-            "originalPitchHypothesisCount": 2,
-            "attacks": [attack],
+            "replayCompleteness": "retained-pitch-plus-eligible-attack-source-universe",
+            "inputAttackCount": 3,
+            "eligibleAttackCount": 3,
+            "retainedAttackCount": 2,
+            "prunedAttackCount": 1,
+            "originalPitchHypothesisCount": 3,
+            "retainedOriginalPitchHypothesisCount": 3,
+            "eligiblePitchHypothesisCount": 4,
+            "inputAttackKeys": [{"measure": 1, "step": 0}, {"measure": 1, "step": 1}, {"measure": 2, "step": 0}],
+            "carrierMissingInputAttackKeys": [],
+            "attacks": retained,
+            "eligibleAttacks": eligible,
+            "fixedRetainedAttackPitchReplayReady": True,
+            "attackPolicyReplayReady": True,
             "candidateAddsUnobservedAttack": False,
             "candidateAddsUnobservedPitch": False,
             "referenceFree": True,
@@ -286,30 +486,14 @@ def _self_test_product() -> dict[str, Any]:
             "runtimeLabelsRequired": False,
             "productionModified": False,
         },
-        "precisionDiagnostics": {
-            "retainedAttackCount": 1,
-            "originalPitchHypothesisCount": 2,
-            "retainedPitchHypothesisCount": 2,
-        },
-        "candidateDiagnostics": {
-            "supportedPitchCount": 2,
-            "renderedPitchCount": 1,
-            "renderedNoteCount": 1,
-            "voicingDroppedPitchCount": 1,
-            "everyCorrectedAttackRendered": True,
-        },
-        "assembly": {
-            "selectedAttackCount": 1,
-            "renderNoteCount": 1,
-        },
-        "timing": {
-            "measureStart": 1,
-            "measureEnd": 1,
-        },
-        "events": [{"measure": 1, "step": 0, "midi": 60}],
-        "noteCount": 1,
-        "selectedCount": 1,
-        "audioDerivedMeasureCount": 1,
+        "precisionDiagnostics": {"inputAttackCount": 3, "retainedAttackCount": 2, "prunedAttackCount": 1, "failSafeAttackCount": 1, "originalPitchHypothesisCount": 3, "retainedPitchHypothesisCount": 3},
+        "candidateDiagnostics": {"supportedPitchCount": 3, "renderedPitchCount": 2, "renderedNoteCount": 2, "voicingDroppedPitchCount": 1, "everyCorrectedAttackRendered": True},
+        "assembly": {"selectedAttackCount": 2, "renderNoteCount": 2},
+        "timing": {"measureStart": 1, "measureEnd": 2},
+        "events": [{"measure": 1, "step": 0, "midi": 60}, {"measure": 2, "step": 0, "midi": 65}],
+        "noteCount": 2,
+        "selectedCount": 2,
+        "audioDerivedMeasureCount": 2,
     }
 
 
@@ -317,21 +501,37 @@ def _self_test() -> None:
     product = _self_test_product()
     report = validate_product(product)
     assert report["passed"] is True
-    assert report["originalPitchHypothesisCount"] == 2
-    assert report["storedSelectedPitchCount"] == 2
-    assert report["renderedPitchCount"] == 1
+    assert report["baselineAttackReplayMatches"] is True
+    assert report["eligibleAttackCount"] == 3
+    assert report["retainedAttackCount"] == 2
+    assert report["failSafeAttackCount"] == 1
+    assert report["eligiblePitchHypothesisCount"] == 4
+    assert report["originalPitchHypothesisCount"] == 3
+    assert report["storedSelectedPitchCount"] == 3
+    assert report["renderedPitchCount"] == 2
     assert report["voicingDroppedPitchCount"] == 1
 
-    broken = json.loads(json.dumps(product))
-    broken["events"][0]["midi"] = 67
+    broken_pitch = json.loads(json.dumps(product))
+    broken_pitch["events"][0]["midi"] = 67
     try:
-        validate_product(broken)
+        validate_product(broken_pitch)
     except ReplayArtifactValidationError:
         pass
     else:
         raise AssertionError("validator failed to reject an invented rendered pitch")
 
-    print("PASS v143 precision replay artifact exact-binding self-test")
+    broken_attack = json.loads(json.dumps(product))
+    broken_attack["precisionReplayEvidence"]["eligibleAttacks"][1]["retained"] = True
+    broken_attack["precisionReplayEvidence"]["eligibleAttacks"][1]["candidates"][0]["selected"] = True
+    broken_attack["precisionReplayEvidence"]["eligibleAttacks"][1]["candidates"][0]["primary"] = True
+    try:
+        validate_product(broken_attack)
+    except ReplayArtifactValidationError:
+        pass
+    else:
+        raise AssertionError("validator failed to reject a corrupted retained-attack baseline")
+
+    print("PASS v143 precision replay artifact schema2 exact-binding self-test")
 
 
 def main() -> None:
@@ -340,19 +540,14 @@ def main() -> None:
     parser.add_argument("--output")
     parser.add_argument("--self-test", action="store_true")
     args = parser.parse_args()
-
     if args.self_test:
         _self_test()
         return
     if not args.input or not args.output:
         raise SystemExit("--input and --output are required unless --self-test is used")
-
     product = json.loads(Path(args.input).read_text(encoding="utf-8"))
     report = validate_product(product)
-    Path(args.output).write_text(
-        json.dumps(report, indent=2, sort_keys=True, allow_nan=False) + "\n",
-        encoding="utf-8",
-    )
+    Path(args.output).write_text(json.dumps(report, indent=2, sort_keys=True, allow_nan=False) + "\n", encoding="utf-8")
     print(json.dumps(report, sort_keys=True))
 
 
