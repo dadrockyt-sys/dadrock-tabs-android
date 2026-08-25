@@ -16,8 +16,8 @@ if (renderEvents.length !== 967) {
 }
 
 const summary = summarizeV143RhythmPresentation(renderEvents);
-if (Number(summary.measureCount) !== 113) {
-  throw new Error(`Expected 113 measures, received ${summary.measureCount}`);
+if (Number(summary.uniqueMeasureCount) !== 113) {
+  throw new Error(`Expected 113 populated measures, received ${summary.uniqueMeasureCount}`);
 }
 if (summary.oneNotePerMeasureCollapseDetected) {
   throw new Error('Refusing suspicious collapsed render stream.');
@@ -42,9 +42,15 @@ const report = {
   output,
   sourceEventCount: Array.isArray(product.events) ? product.events.length : 0,
   projectedEventCount: renderEvents.length,
-  measureCount: summary.measureCount,
-  maximumEventsInMeasure: summary.maximumEventsInMeasure,
-  denseMeasureCount: summary.denseMeasureCount,
+  uniqueMeasureCount: summary.uniqueMeasureCount,
+  uniqueOnsetCount: summary.uniqueOnsetCount,
+  averageNotesPerMeasure: summary.averageNotesPerMeasure,
+  maximumNotesPerPopulatedMeasure: summary.maximumNotesPerPopulatedMeasure,
+  maximumChordSize: summary.maximumChordSize,
+  multiNoteOnsetCount: summary.multiNoteOnsetCount,
+  techniqueEventCount: summary.techniqueEventCount,
+  techniqueTypes: summary.techniqueTypes,
+  sectionCount: summary.sectionCount,
   tempo: Number(product.tempo) || 129.19921875,
   tuning: product.tuning || 'E Standard',
   timeSignature: product.timeSignature || '4/4',
