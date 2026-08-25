@@ -60,79 +60,87 @@ Lock: `debug/v143-contextual-prune/precision-v2-capture-lock.json`
 - Capture outputs are preserved via `actions/upload-artifact@v4` with `if: always()`.
 - A failed/interrupted reserved attempt is intentionally not automatically retryable.
 
-## Replay completeness hole found and fixed — NEW
+## Replay schema 2 — full eligible attack universe
 Earlier replay persistence covered only retained attacks. That was sufficient for pitch-secondary policy experiments but **not** sufficient for future attack-pruning experiments without another separator/Basic Pitch run.
 
-`analyzer/v143_contextual_prune_precision_shadow_v2.py` now writes replay schema **2** and preserves both:
+`analyzer/v143_contextual_prune_precision_shadow_v2.py` now preserves both:
 1. `attacks`: retained-attack pitch replay contract, and
-2. `eligibleAttacks`: the full corrected-input attack universe that has a physical carrier row.
+2. `eligibleAttacks`: every corrected-input attack that has a physical carrier row.
 
-Each eligible attack now persists:
-- measure/step and onset time,
-- `_precisionStrength` as `precisionStrength`,
-- grid error,
-- retained/fail-safe flags,
-- every observed candidate MIDI,
-- physical attack/early/sustain/body/continuity/score evidence,
-- selected/primary flags.
-
-Schema-2 replay also persists:
-- `inputAttackKeys`,
-- `carrierMissingInputAttackKeys`,
-- `inputAttackCount`, `eligibleAttackCount`, `retainedAttackCount`, `prunedAttackCount`,
+Schema-2 replay persists:
+- exact input/eligible/retained attack keys and counts,
+- carrier-missing input keys,
 - retained and eligible pitch-hypothesis counts,
+- grid time, onset time and grid error,
+- row-level `precisionStrength` and `candidateStrength`,
+- stem/sweep/detection support counts,
+- every observed candidate MIDI,
+- aggregate attack/early/sustain/body/continuity/score evidence,
+- **per-view A/B attack/early/sustain evidence** used to derive the aggregate values,
+- retained/fail-safe/selected/primary flags,
 - `fixedRetainedAttackPitchReplayReady=true`,
 - `attackPolicyReplayReady=true`,
+- `sourceViewEvidenceReady=true`,
+- `precisionStrengthRecomputeReady=true`,
 - `replayCompleteness=retained-pitch-plus-eligible-attack-source-universe`.
 
-Latest replay-universe module commit returned by connector: `b8e511e873ab6857e939b34381542300e219f7b9`.
+Relevant replay serializer commits:
+- eligible-universe schema: `b8e511e873ab6857e939b34381542300e219f7b9`
+- per-view/source-strength evidence: `fb953ef80bd2e7fb5ea652bd4fd67d804794f67b`
 
-## Exact replay artifact validator — schema 2
-`analyzer/v143_precision_replay_artifact_validator.py` now validates:
+## Exact replay artifact validator — strengthened
+`analyzer/v143_precision_replay_artifact_validator.py` now validates/recomputes:
 - schema/policy/reference-free flags,
 - exact input = eligible ∪ carrier-missing attack universe,
 - unique/canonical attack identities,
 - retained attacks exactly equal their eligible source records,
-- observed candidate identity/order/uniqueness,
-- finite attack/early/sustain/body/continuity/score values,
+- candidate MIDI identity/order/uniqueness,
+- finite per-view and aggregate evidence,
+- aggregate attack/early/sustain as exact minima of view A/B,
 - body/continuity derivation and score formula,
+- grid error from onset/grid time,
+- `precisionStrength` from strongest score + support terms − grid error,
 - selected/primary invariants,
 - replay↔precision counts,
 - render attack/pitch subset binding,
 - voicing-drop accounting,
-- exact audio-derived measure coverage.
+- exact audio-derived measure coverage,
+- baseline precision attack policy and exact fail-safe identity.
 
-It also reconstructs the baseline precision **attack policy** from persisted eligible evidence using the exact current floors/radius/local-prominence/fail-safe rules and requires the recomputed retained and fail-safe identities to match the stored result exactly.
-- Independent CPU logic check for the synthetic strong/pruned/fail-safe case reproduced retained `{(1,0),(2,0)}` and fail-safe `{(2,0)}` as intended.
-- Latest validator commit returned by connector: `67b2da8968f1c000f4a8cb4384e87b2de97c5263`.
+Its self-test imports the actual legacy attack-policy constants so threshold/radius/local-prominence drift is detected.
+Latest validator commit: `d1a5fd29ed2e0f8116ec2264f902ad5fec039bbf`.
 
-## Workflow binding updated for schema 2
-- Inline candidate checks now require replay schema 2, completeness mode, fixed-retained pitch replay readiness and attack-policy replay readiness.
-- Pre-freeze trace binds input/eligible/retained attack counts plus eligible/retained pitch counts.
-- Final lock cannot complete unless validator reports `baselineAttackReplayMatches=true` and `attackPolicyReplayReady=true`.
-- Final lock binds input/eligible/retained attack counts, eligible/retained pitch counts, replay hash, event hash, candidate product hash, replay-policy compare hash and validation artifact hash.
-- Latest workflow commit returned by connector: `9cbeaf5f0b977f51adc9d8a5d030f983f59abbf5`.
+## Negative corruption guard — NEW
+A subtle self-test weakness was identified: increasing only one of two equal view values may leave `min(viewA, viewB)` unchanged and therefore does not guarantee corruption of the derived aggregate.
 
-## Replay policy comparison strengthened — NEW
-`analyzer/v143_precision_replay_policy_compare.py` now:
+Added `analyzer/check_v143_precision_replay_corruption_rejection.py`:
+- decreases one source view so the two-view minimum **must** change while stored aggregate remains untouched,
+- separately corrupts persisted `precisionStrength`,
+- separately corrupts grid time/onset error consistency,
+- requires the validator to reject all three.
+
+Commit: `392f5bc2dc35ded195f6adf92fb4f0c9304e6b7f`.
+
+`analyzer/check_v143_precision_capture_readiness.py` now directly calls that corruption guard, so the existing candidate workflow's pre-Modal readiness command runs the negative tests without adding any paid/model work. It also statically requires the new per-view/strength readiness flags and validator reports.
+Latest readiness commit: `7ff0b4ba78d0c4953d29e0f95d6aacf2f17245d7`.
+
+## Replay policy comparison
+`analyzer/v143_precision_replay_policy_compare.py`:
 - requires schema 2 and exact `envelope-balanced-secondary-v2` identity,
 - requires both retained-pitch and full attack replay readiness,
 - rejects duplicate retained attack keys and bad source flags,
-- remains explicitly scoped to pitch-policy comparison on the **fixed retained-attack universe**,
-- reports eligible attack/pitch universe sizes for provenance,
-- includes edge-case self-tests for all three non-harmonic 2-of-3 combinations, one-dimension rejection, strict harmonic 3-of-3 behavior, promoted-strongest-harmonic common guard, and no-positive fallback,
-- imports actual v143 thresholds during its self-test so constant drift is detected.
-- Latest replay-compare commit returned by connector: `59cbe8cd1309ec47f3a2a9d1c7de5838ed3225c5`.
+- is explicitly scoped to pitch-policy comparison on the **fixed retained-attack universe**,
+- reports eligible attack/pitch universe sizes,
+- edge-tests all non-harmonic 2-of-3 combinations, one-dimension rejection, strict harmonic 3-of-3 behavior, promoted-strongest-harmonic common guard and no-positive fallback,
+- imports actual v143 thresholds in self-test to detect drift.
+Latest replay-compare commit: `59cbe8cd1309ec47f3a2a9d1c7de5838ed3225c5`.
 
-## Static capture readiness checker strengthened
-`analyzer/check_v143_precision_capture_readiness.py` now requires:
-- full schema-2 serializer tokens (`eligibleAttacks`, input keys, strength, readiness flags),
-- validator attack-policy reconstruction/reporting,
-- eligible-universe counts in the final lock,
-- baseline attack replay before lock finalization,
-- exact producer replay function name `build_precision_replay_evidence(` (fixing a stale static-string check),
-- all prior branch/head/lock/single-paid-call/failure-salvage invariants.
-- Latest checker commit returned by connector: `c295107556da7fa5c3ef3a82818e967e34a2e23b`.
+## Workflow binding
+- Inline candidate checks require replay schema 2, completeness mode, fixed-retained pitch replay readiness and attack-policy replay readiness.
+- Pre-freeze trace binds input/eligible/retained attack counts plus eligible/retained pitch counts.
+- Final lock cannot complete unless validator reports `baselineAttackReplayMatches=true` and `attackPolicyReplayReady=true`.
+- Final lock binds input/eligible/retained attack counts, eligible/retained pitch counts, replay hash, event hash, candidate product hash, replay-policy compare hash and validation artifact hash.
+- Latest workflow integration commit: `9cbeaf5f0b977f51adc9d8a5d030f983f59abbf5`.
 
 # Timing remains frozen
 - Relative integer sixteenth spacing remains exceptionally well supported: at residual <=0.20 step, 697/697 consecutive pairs exactly match labeled grid gaps; all 8-measure windows have exact high-confidence gap-match rate `1.0`.
@@ -147,21 +155,25 @@ It also reconstructs the baseline precision **attack policy** from persisted eli
 - No professional scorer/reference invoked.
 - No render events mutated.
 - `main` and Production untouched.
+- No automatic GitHub Actions workflow run was associated with latest connector-written commit `d1a5fd29ed2e0f8116ec2264f902ad5fec039bbf`; the new CPU checks therefore still need an executable preflight run before any paid authorization.
 - Protected runtime must remain blob `7f72f8ed9b14af8bc93e95544195204d99c6bec1` and will be reverified before further mutation/capture work.
 
 ## Checkpoint save — 2026-08-24 America/Montreal
-- The one future paid carrier capture is now being made substantially more valuable: schema-2 replay is intended to preserve enough derived physical evidence for both pitch-policy and attack-policy experiments to continue CPU-only afterward.
+- The future one-shot capture now preserves per-view physical evidence and enough row-level inputs to independently recompute aggregate pitch evidence, precision strength and the baseline attack-policy decision on CPU afterward.
+- The weak negative corruption test has been replaced operationally by a separate guard that forces true source/aggregate divergence and is called by the pre-Modal readiness checker.
 - Paid budget protections remain in place; nothing paid was dispatched.
 - No completion claim is made.
 
 # Next exact actions
 1. Reverify branch head and protected runtime blob.
-2. Finish CPU-only schema-2 consistency audit across serializer, validator, workflow and replay comparator; fix any static/self-test mismatch.
-3. Add/verify drift checks tying attack replay constants to actual legacy precision constants.
-4. Keep timing frozen and professional reference closed.
-5. **Do not dispatch Modal/L4 unless the user explicitly authorizes paid usage.**
-6. If explicit authorization is later given: dispatch exactly once with `paid_capture_authorized=YES`; reservation must land before Modal.
-7. Require candidate product + schema-2 replay + exact artifact validation + replay-policy comparison to reconcile before any later mutation.
-8. Use persisted replay evidence for subsequent precision experiments CPU-only; avoid repeated separator/Basic Pitch inference.
-9. Only when source-only evidence supports a genuinely corrected candidate: immutable freeze/PDF → fidelity `1.0` → lock → exactly one professional score.
-10. Do not claim Rhythm complete until score >=0.99, critical mismatches=0, fidelity=1.0.
+2. Fix zero-value serialization hazards (`x or fallback`) so legitimate `0.0` onset/strength values cannot be rewritten in replay evidence.
+3. Add exact primary/fundamental recomputation from persisted candidate evidence so replay does not merely trust stored primary identity.
+4. Strengthen final lock/readiness requirements for per-view/source-strength validation outputs if needed.
+5. Find/run an existing CPU-only executable path for the schema-2 preflight; do not dispatch the paid workflow.
+6. Keep timing frozen and professional reference closed.
+7. **Do not dispatch Modal/L4 unless the user explicitly authorizes paid usage.**
+8. If explicit authorization is later given: dispatch exactly once with `paid_capture_authorized=YES`; reservation must land before Modal.
+9. Require candidate product + schema-2 replay + exact artifact validation + replay-policy comparison to reconcile before any later mutation.
+10. Use persisted replay evidence for subsequent precision experiments CPU-only; avoid repeated separator/Basic Pitch inference.
+11. Only when source-only evidence supports a genuinely corrected candidate: immutable freeze/PDF → fidelity `1.0` → lock → exactly one professional score.
+12. Do not claim Rhythm complete until score >=0.99, critical mismatches=0, fidelity=1.0.
