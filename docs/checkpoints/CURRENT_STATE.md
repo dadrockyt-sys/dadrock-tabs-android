@@ -62,16 +62,27 @@ Priority: **finish Rhythm end-to-end before Bass/Lead; produce genuinely profess
 - Visual inspection of first/middle/last pages: no clipping, dense chords and two-digit frets readable, clean headers/rehearsal marks/barlines, good commercial-tab appearance. Last page has extra lower whitespace but is acceptable. Internal title `V143 Approved Rhythm Reference` is inspection-only and **not final customer-facing metadata**.
 - Critical limitation: this successful real PDF renders the **baseline 967-event stream**, not strongest V5 `1209` rendered-note content. It proves the engraving renderer can carry a real 113-measure song professionally; it is not the final musical PDF.
 
+## V5 render-stream materializer + professional shadow PDF — PASSED
+- CPU-only render materializer `analyzer/materialize_v143_combined_content_shadow_v5_render_stream.py` added at commit `a6505ba21e30af1b0e985b945de71ae3698bf08f`.
+- It recomputes fresh V5, binds durable Attack V3 and Combined V5 SHA256 values, preserves baseline performance metadata only where exact `(measure, step, midi)` identity survives, remaps surviving legato targets, and emits neutral metadata for rescued content rather than inventing technique/sustain.
+- V5 PDF render script `scripts/v143-render-v5-shadow-pdf.mjs` commit `10916a1989478f1747c30fcc4d395c6d1522cb32`; workflow `.github/workflows/v143-render-v5-shadow-professional-pdf.yml` commit `a1b0f01b8f3adfee2fa63bda31ef39c5ba2a84bf`.
+- Successful workflow persisted evidence at bot commit `2fcfd22f729e14dcd0bf5469f5f0af0a4a44b646` in `debug/v143-contextual-prune/v5-professional-pdf/`.
+- Exact materialization: rendered events `1209`; retained onsets `891`; measures `113`; baseline events `967`; rescued rendered events `242`; baseline metadata preserved on `933`; neutral baseline events `34`; neutral rescued events `242`; technique events `21`; remapped legato links `20`; dropped legato links `1`; Primary V4 correction attacks `34`; validation passed.
+- Exact render: `1209` events, `891` onsets, `113` measures, max notes/populated measure `22`, max chord size `5`, multi-note onsets `272`, technique types hammer-on/pull-off/slide-down/slide-up, section count `7`.
+- V5 PDF: **6 Letter pages**, 1,748,093 bytes, SHA256 `bbd67f9054a3a112f4b24e5e22b3b3fc31b125e36ebdb97c36d693ace0ffa99b`; render-stream SHA256 `7c3399d3f5e05ecc8ac98d71d0e5300e1e78f63ae96c1642fe4a19debb4061b2`.
+- This PDF is explicitly `freezeReady=false`, `referenceFree=true`, `professionalReferenceUsed=false`, `modalInvoked=false`, `productionModified=false`.
+- The remaining blocker is downstream technique/sustain recomputation for the 166 rescued attacks; rescued events are intentionally neutral in this inspection render.
+
 ## Current integrity
-- Branch head before this checkpoint update: `2470225d9cb726e35a07459e29783997a3447699`.
-- Protected runtime guard passed in successful real render run `32821330353`.
+- Branch head before this checkpoint update: `2fcfd22f729e14dcd0bf5469f5f0af0a4a44b646`.
+- Protected runtime guard passed in both real baseline and V5 shadow render workflows.
 - No Production/main change; no professional scorer/reference; no new Modal/L4 usage.
 
 ## Next exact actions
-1. Build a CPU-only **V5 render-stream materializer** from the immutable pinned product + durable Attack V3 + Primary V4 evidence, preserving existing baseline event metadata where identity matches and emitting only validated deterministic V5 string/fret content.
-2. Render the V5 1209-note / 891-onset shadow through the proven professional PDF renderer; inspect first/middle/last pages and enforce exact content counts.
-3. Clearly mark any V5 inspection PDF as a **reference-free shadow / not freeze-ready** because rescued attacks still lack recomputed technique/sustain; do not invent techniques or durations for them.
-4. Then resolve downstream technique/sustain for all 166 rescued attacks before any freeze/professional scoring/final-customer PDF claim.
-5. Preserve timing/tempo and Attack V3 / Primary V4 criteria unless source-only evidence proves a defect.
+1. Visually inspect the persisted **V5** first/middle/last PDF pages and verify the denser 1209-event content introduces no clipping/collisions or unreadable systems.
+2. Build a CPU-only, source-only downstream **technique/sustain replay** for all 166 rescued attacks using existing runtime logic/evidence only; no professional reference and no new Modal/L4.
+3. Validate exact rescued-attack coverage and prove no technique/duration invention beyond what source/runtime evidence supports; preserve timing/tempo.
+4. Re-materialize V5 with recomputed downstream metadata, re-render the professional PDF, and enforce `1209/891/113` content identity plus renderer fidelity.
+5. Only after downstream completeness is proven consider the closed professional score gate; do not tune against the professional reference.
 6. No Modal/L4 without fresh explicit authorization.
 7. Do not claim Rhythm complete until score >=0.99, critical mismatches=0, PDF fidelity=1.0.
