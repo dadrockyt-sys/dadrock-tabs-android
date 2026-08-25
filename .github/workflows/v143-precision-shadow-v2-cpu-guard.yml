@@ -12,6 +12,7 @@ on:
       - analyzer/v143_precision_replay_policy_compare.py
       - analyzer/v143_precision_replay_artifact_validator.py
       - analyzer/v143_precision_replay_voicing_validator.py
+      - analyzer/v143_precision_paid_capture_finalizer.py
       - analyzer/check_v143_precision_replay_corruption_rejection.py
       - analyzer/check_v143_precision_replay_capture_order.py
       - analyzer/check_v143_precision_capture_readiness.py
@@ -43,6 +44,7 @@ jobs:
             analyzer/v143_precision_replay_policy_compare.py \
             analyzer/v143_precision_replay_artifact_validator.py \
             analyzer/v143_precision_replay_voicing_validator.py \
+            analyzer/v143_precision_paid_capture_finalizer.py \
             analyzer/check_v143_precision_replay_corruption_rejection.py \
             analyzer/check_v143_precision_replay_capture_order.py \
             analyzer/check_v143_precision_capture_readiness.py
@@ -50,6 +52,7 @@ jobs:
           PYTHONPATH=analyzer python analyzer/v143_precision_replay_policy_compare.py --self-test
           PYTHONPATH=analyzer python analyzer/v143_precision_replay_artifact_validator.py --self-test
           PYTHONPATH=analyzer python analyzer/v143_precision_replay_voicing_validator.py --self-test
+          PYTHONPATH=analyzer python analyzer/v143_precision_paid_capture_finalizer.py --self-test
           PYTHONPATH=analyzer python analyzer/check_v143_precision_replay_corruption_rejection.py
           PYTHONPATH=analyzer python analyzer/check_v143_precision_replay_capture_order.py
           PYTHONPATH=analyzer python analyzer/check_v143_precision_capture_readiness.py
@@ -65,6 +68,7 @@ jobs:
             analyzer/v143_precision_replay_policy_compare.py \
             analyzer/v143_precision_replay_artifact_validator.py \
             analyzer/v143_precision_replay_voicing_validator.py \
+            analyzer/v143_precision_paid_capture_finalizer.py \
             analyzer/check_v143_precision_replay_corruption_rejection.py \
             analyzer/check_v143_precision_replay_capture_order.py \
             analyzer/check_v143_precision_capture_readiness.py; then
@@ -78,6 +82,10 @@ jobs:
           grep -q 'replayEvidenceSha256' "$workflow"
           grep -q 'v143_precision_replay_policy_compare.py' "$workflow"
           grep -q 'v143_precision_replay_artifact_validator.py' "$workflow"
+          grep -q 'v143_precision_paid_capture_finalizer.py' "$workflow"
+          grep -q 'sourceViewEvidenceReady' "$workflow"
+          grep -q 'precisionStrengthRecomputeReady' "$workflow"
+          grep -q 'zeroValuePreservationReady' "$workflow"
           test "$(grep -c 'python -m modal run' "$workflow")" -eq 1
           test "$(grep -c '\.remote(' analyzer/v143_repaired_timing_precision_candidate_product_modal.py)" -eq 1
       - name: Persist green CPU guard
@@ -89,7 +97,7 @@ jobs:
           import json
           from pathlib import Path
           result = {
-              'schemaVersion': 6,
+              'schemaVersion': 7,
               'passed': True,
               'policy': 'envelope-balanced-secondary-v2',
               'sourceSha': '${{ github.sha }}',
@@ -108,6 +116,7 @@ jobs:
               'precisionStrengthRecomputePassed': True,
               'zeroValuePreservationPassed': True,
               'primaryRecomputePassed': True,
+              'paidFinalLockBindingPassed': True,
               'fixedBestRowAttackReplayPassed': True,
               'historicalOptionalAccountingPassed': True,
               'singlePaidCaptureStaticGuardPassed': True,
