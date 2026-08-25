@@ -92,6 +92,7 @@ Priority: **finish Rhythm end-to-end before Bass/Lead; professional musical accu
 - Re-opened this exact branch checkpoint before continuing.
 - Enumerated the first two 100-run pages of branch Actions history and began filtering retained precision/candidate runs; no workflow was rerun and no Modal/L4 resource was invoked.
 - Confirmed this branch already contains extensive retained-artifact/source-view archaeology machinery, so the continuation is consuming those retained results rather than creating duplicate probes.
+- Historical run `22239097880` now returns GitHub 404, and `fetch_workflow_run_artifacts` for that run also returns 404. Its recorded artifact `5205963324` is therefore not currently recoverable through the retained run; recovery focus has moved to still-retained runs plus commit/source history.
 - Immediate focus is to identify every distinct retained precision product/source view, test direct overlap with the exact `166` rescued attack positions / `242` rendered rescued V5 events, and only then decide whether any source-only downstream replay path remains.
 
 ## Current integrity
