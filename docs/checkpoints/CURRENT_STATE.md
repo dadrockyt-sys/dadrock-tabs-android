@@ -77,20 +77,22 @@ Priority: **finish Rhythm end-to-end before Bass/Lead; produce genuinely profess
 ## Downstream technique/sustain source investigation — ACTIVE
 - Modern V143 runtime wrapper imports `external_processing.v143_audio`, `external_processing.v143_models`, and `external_processing.v143_product`, but those implementation modules are not committed/searchable on this branch. Repository/commit search has not found a modern source copy of `build_reference_free_rhythm_product`; therefore **no replacement thresholds/rules will be invented**.
 - Historical Java commit `ac46281f8112cd16a959d9c37f8936270ad4f716` contains old sustain-engine work, but it is treated as historical context only, not V143 source truth.
-- Added evidence-only inspector `analyzer/inspect_v143_baseline_downstream_metadata.py` at commit `037e1c717ea1db34907984bda1013ef7f9de8302`. It reads the immutable pinned product only, validates exact `967/725/113`, summarizes all existing performance metadata distributions/signatures and non-neutral contexts, and scans non-event product fields for source/evidence/diagnostic paths. It performs **zero inference or musical mutation**.
-- Added guarded CPU-only workflow `.github/workflows/v143-inspect-baseline-downstream-metadata.yml` at commit `dfc2706d02e2ef192a424dbb039d5a505d2b1eb1`. It re-verifies the protected runtime blob, rematerializes the immutable paid capture from pinned commit `c1451df...`, runs only the inspector, persists compact JSON evidence, and invokes no Modal/professional reference.
-- Inspection workflow result is pending; next step is to use its exact evidence to determine whether a source-faithful replay is possible without guessing.
+- Evidence-only inspector `analyzer/inspect_v143_baseline_downstream_metadata.py` added at `037e1c717ea1db34907984bda1013ef7f9de8302`, then expanded at `fc7f2fbd7824dea13f9885cdf355701819efa77c` to inspect the actual nested V143 fields instead of generic flattened renderer fields.
+- Guarded workflow `.github/workflows/v143-inspect-baseline-downstream-metadata.yml` added at `dfc2706d02e2ef192a424dbb039d5a505d2b1eb1`. Run `32839317818` passed and confirmed exact candidate SHA plus `967/725/113`. First report also showed `precisionReplayEvidence` contains exact source-view attack/sustain values and is `sourceViewEvidenceReady=true`.
+- Expanded run `32839523194` completed all analysis successfully before a repository bot-push failure. Exact generated summary from logs: candidate SHA correct; `984` eligible attacks; `967` events; `725` onsets; `113` measures; **967 `rhythmSustain` objects; 669 `rhythmSustainShadow` objects; 25 technique-annotated events; 25 `legatoEvidence` objects**. Protected runtime guard and CPU-only immutable materialization both passed. Generated report SHA256 `8b3db80dc028188a06fafef50025b205a2649c53f41f95106e4970145bbc51d0`.
+- Event schema proves the real baseline product stores `duration`, `rhythmSustain`, `rhythmSustainShadow`, `rhythmTechniques`, legato target/continuation fields and `legatoEvidence`. The V5 renderer materializer already consumes `rhythmSustain.durationSteps/durationSeconds/tier` and `rhythmTechniques`; rescued content is neutral only because no exact replay has yet been bound.
+- The failed expanded run failed **only** at `git push` of generated inspection evidence (`remote: fatal error in commit_refs`), after analysis success. Workflow was changed at commit `07782c3339dd8072221a5c0fbb1f583204dc1bfb` to artifact-only/read-only so evidence capture no longer depends on bot branch writes. No musical/runtime code changed.
 
 ## Current integrity
-- Branch head before this checkpoint update: `dfc2706d02e2ef192a424dbb039d5a505d2b1eb1`.
-- Protected runtime guard passed in prior real baseline and V5 shadow render workflows; new metadata-inspection workflow also contains an explicit protected-runtime guard.
+- Branch head before this checkpoint update: `07782c3339dd8072221a5c0fbb1f583204dc1bfb`.
+- Protected runtime remained exact throughout inspection runs.
 - No Production/main change; no professional scorer/reference; no new Modal/L4 usage.
 
 ## Next exact actions
-1. Read the guarded baseline downstream-metadata inspection result and identify any exact candidate-side source/evidence/diagnostic fields supporting modern technique/sustain replay.
-2. If exact source support exists, build a CPU-only, source-only downstream **technique/sustain replay** for all 166 rescued attacks using that evidence only; no professional reference and no new Modal/L4. If it does not exist, do not invent thresholds—trace the V143 runtime packaging/provenance further.
-3. Validate exact rescued-attack coverage and prove no technique/duration invention beyond what source/runtime evidence supports; preserve timing/tempo.
-4. Re-materialize V5 with recomputed downstream metadata, re-render the professional PDF, and enforce `1209/891/113` content identity plus renderer fidelity.
+1. Collect the artifact-only expanded nested report and extract exact `rhythmSustain`, `rhythmSustainShadow`, `rhythmTechniques`, `legatoEvidence`, `sustainDiagnostics`, and precision replay policy fields.
+2. Determine whether those stored source-view structures provide a deterministic modern downstream replay for all 166 rescued attacks. **Do not infer thresholds from outcomes.**
+3. If exact source support is sufficient, implement CPU-only source-only downstream technique/sustain replay, validate every rescued attack, and preserve timing/tempo and `1209/891/113` musical identity.
+4. Re-render V5 professional PDF with recomputed downstream metadata and enforce content identity + renderer fidelity.
 5. Only after downstream completeness is proven consider the closed professional score gate; do not tune against the professional reference.
 6. No Modal/L4 without fresh explicit authorization.
 7. Do not claim Rhythm complete until score >=0.99, critical mismatches=0, PDF fidelity=1.0.
