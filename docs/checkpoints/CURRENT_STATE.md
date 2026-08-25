@@ -71,18 +71,18 @@ Priority: **finish Rhythm end-to-end before Bass/Lead; produce genuinely profess
 - Exact render: `1209` events, `891` onsets, `113` measures, max notes/populated measure `22`, max chord size `5`, multi-note onsets `272`, technique types hammer-on/pull-off/slide-down/slide-up, section count `7`.
 - V5 PDF: **6 Letter pages**, 1,748,093 bytes, SHA256 `bbd67f9054a3a112f4b24e5e22b3b3fc31b125e36ebdb97c36d693ace0ffa99b`; render-stream SHA256 `7c3399d3f5e05ecc8ac98d71d0e5300e1e78f63ae96c1642fe4a19debb4061b2`.
 - This PDF is explicitly `freezeReady=false`, `referenceFree=true`, `professionalReferenceUsed=false`, `modalInvoked=false`, `productionModified=false`.
+- Visual inspection of the **V5** first/middle/last persisted snapshots from workflow run `32821861294`, artifact `9553423573`, passed: no clipping, broken glyphs, unreadable dense systems, or obvious fret/text collisions at the higher 1209-event density; dense chords and two-digit frets remain legible. The final page retains acceptable lower whitespace.
 - The remaining blocker is downstream technique/sustain recomputation for the 166 rescued attacks; rescued events are intentionally neutral in this inspection render.
 
 ## Current integrity
-- Branch head before this checkpoint update: `2fcfd22f729e14dcd0bf5469f5f0af0a4a44b646`.
+- Branch head before this checkpoint update: `78d4f5be246b69560c4f62a9ba4e43a4ec5ae6e7`.
 - Protected runtime guard passed in both real baseline and V5 shadow render workflows.
 - No Production/main change; no professional scorer/reference; no new Modal/L4 usage.
 
 ## Next exact actions
-1. Visually inspect the persisted **V5** first/middle/last PDF pages and verify the denser 1209-event content introduces no clipping/collisions or unreadable systems.
-2. Build a CPU-only, source-only downstream **technique/sustain replay** for all 166 rescued attacks using existing runtime logic/evidence only; no professional reference and no new Modal/L4.
-3. Validate exact rescued-attack coverage and prove no technique/duration invention beyond what source/runtime evidence supports; preserve timing/tempo.
-4. Re-materialize V5 with recomputed downstream metadata, re-render the professional PDF, and enforce `1209/891/113` content identity plus renderer fidelity.
-5. Only after downstream completeness is proven consider the closed professional score gate; do not tune against the professional reference.
-6. No Modal/L4 without fresh explicit authorization.
-7. Do not claim Rhythm complete until score >=0.99, critical mismatches=0, PDF fidelity=1.0.
+1. Build a CPU-only, source-only downstream **technique/sustain replay** for all 166 rescued attacks using existing runtime logic/evidence only; no professional reference and no new Modal/L4.
+2. Validate exact rescued-attack coverage and prove no technique/duration invention beyond what source/runtime evidence supports; preserve timing/tempo.
+3. Re-materialize V5 with recomputed downstream metadata, re-render the professional PDF, and enforce `1209/891/113` content identity plus renderer fidelity.
+4. Only after downstream completeness is proven consider the closed professional score gate; do not tune against the professional reference.
+5. No Modal/L4 without fresh explicit authorization.
+6. Do not claim Rhythm complete until score >=0.99, critical mismatches=0, PDF fidelity=1.0.
