@@ -201,3 +201,14 @@ The one-shot capture path is now CPU-preflight green through source evidence, at
 - `debug/v143-contextual-prune/precision-v2-capture-lock.json` is absent: no paid capture has been reserved or consumed.
 - No new concrete pre-capture defect was established during this revalidation; per the cost boundary, no speculative payload/runtime expansion was made.
 - Current legitimate progress boundary is the explicitly authorized one-shot capture. Until authorization is explicit, remain CPU-only and do not dispatch Modal/L4.
+
+## Strict paid-boundary checkpoint — 2026-08-24 21:22 America/Montreal
+- User explicitly authorized steps 1–5, including **exactly one** Modal/L4 carrier capture after CPU preflight is green.
+- Added CPU-only strict finalizer `analyzer/v143_precision_paid_capture_finalizer.py`; it refuses finalization unless source-view evidence, precision-strength recomputation, zero preservation, baseline attack replay, independently recomputed primary, strict stored-v2 pitch replay, deterministic playable voicing/string/fret, grid timing, and physical onset all reconcile exactly.
+- Paid workflow now records the new readiness flags in `preFreezeTrace` and invokes the strict finalizer only after artifact validation + replay comparison.
+- Final lock now binds the green postconditions and artifact SHA256 values; missing replay mismatch counters are rejected rather than treated as zero.
+- CPU guard run `32801119456` on source SHA `7d366e90019006bb0a98b83b1ba2039342eab8c9` is **GREEN**.
+- Persisted schema-7 CPU result reports `paidFinalLockBindingPassed=true`, `passed=true`, `modalInvoked=false`, `newInferenceUsed=false`, `professionalReferenceUsed=false`, `productionModified=false`.
+- CPU result commit / branch head immediately before this checkpoint save: `251933c9d1e592b9c875ea94c0227ea436e5cac9`.
+- The earlier run `32800965126` had all tests green but its result-persist step lost a concurrent JSON rebase race; run `32801119456` subsequently completed cleanly and is the authoritative preflight.
+- Paid capture has **not yet** been dispatched at this checkpoint. Next action is immediate protected-blob/head/lock reverification, then one manual dispatch with `paid_capture_authorized=YES` under the user's explicit authorization.
