@@ -104,8 +104,10 @@ def _finalized_lock(
     _require(compare_source.get("newInferenceUsed") is False, "replay comparison indicates new inference use")
     _require(compare_source.get("primaryRecomputeMatches") is True, "primary recomputation mismatch")
     _require(compare_source.get("storedV2ReplayMatches") is True, "stored v2 replay mismatch")
-    _require(int(comparison.get("primaryRecomputeMismatchAttackCount") or 0) == 0, "primary recompute mismatch count is non-zero")
-    _require(int(comparison.get("v2ReplayMismatchAttackCount") or 0) == 0, "stored v2 replay mismatch count is non-zero")
+    _require("primaryRecomputeMismatchAttackCount" in comparison, "primary recompute mismatch counter is missing")
+    _require("v2ReplayMismatchAttackCount" in comparison, "stored v2 replay mismatch counter is missing")
+    _require(int(comparison["primaryRecomputeMismatchAttackCount"]) == 0, "primary recompute mismatch count is non-zero")
+    _require(int(comparison["v2ReplayMismatchAttackCount"]) == 0, "stored v2 replay mismatch count is non-zero")
 
     for field in (
         "passed",
@@ -305,6 +307,25 @@ def _self_test() -> None:
         pass
     else:
         raise AssertionError("paid finalizer accepted corrupted timing replay")
+
+    missing_counter = copy.deepcopy(compare)
+    del missing_counter["comparison"]["v2ReplayMismatchAttackCount"]
+    try:
+        _finalized_lock(
+            product=product,
+            compare=missing_counter,
+            validation=validation,
+            lock=lock,
+            run_id=123,
+            trigger_sha="abc",
+            product_sha256="product",
+            compare_sha256="compare",
+            validation_sha256="validation",
+        )
+    except PaidCaptureFinalizationError:
+        pass
+    else:
+        raise AssertionError("paid finalizer accepted missing replay mismatch counter")
 
     print("PASS v143 paid precision capture strict final-lock contract")
 
