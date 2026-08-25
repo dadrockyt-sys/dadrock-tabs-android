@@ -62,9 +62,9 @@ Priority: **finish Rhythm end-to-end before Bass/Lead; produce a genuinely profe
 - V3 corrected `43/725` primaries using same-measure local support OR stricter two-view extra-harmonic support; attacks unchanged; invented/unplayable 0.
 - V3 was deliberately not frozen because an independent source model had not yet confirmed the direction.
 
-### V4 — CURRENT STRONGEST PRIMARY SHADOW
-- Exact-approved robust electric TabCNN provides the missing independent criterion.
-- Decision: accept a V3 lower-primary correction only when the external electric model's **max legal string/fret probability for the proposed lower primary is strictly greater than that for the old upper primary** at the same exact grid frame. This is pairwise only; **no new numeric threshold**.
+### V4 — strongest independent primary correction
+- Exact-approved robust electric TabCNN supplies the independent criterion.
+- Decision: accept a V3 lower-primary correction only when the external electric model's **max legal string/fret probability for the proposed lower primary is strictly greater than that for the old upper primary** at the same exact grid frame. Pairwise only; **no new numeric threshold**.
 - Exact result: V3 proposed `43`; electric consensus accepts `34`, rejects `9`.
 - Across all 43 V3 proposals, electric model favors new lower `34`, old upper `9`; median new-minus-old probability `+0.104154`; its discrete top tablature chooses new `16` times vs old `2`.
 - V4 accepted intervals: octave `29`, 19 semitones `3`, two octaves `2`.
@@ -72,42 +72,56 @@ Priority: **finish Rhythm end-to-end before Bass/Lead; produce a genuinely profe
 - Exact replay after V4: attacks `725 -> 725`; selected pitches `970 -> 970`; rendered pitches `967 -> 967`; voicing drops remain `3`; invented pitch `0`; invalid primary `0`; unplayable primary `0`.
 - Validator: `analyzer/v143_contextual_harmonic_primary_shadow_v4_replay_validator.py`, commit `6a1dd9285dacc863ccb9f0a6a7e508b719ea2c38`.
 - Durable validation: `debug/v143-contextual-prune/contextual-harmonic-primary-shadow-v4-validation.json`, commit `a742a3df5b468ee54b6fadf72c0f111b8c824424`; local full validation SHA256 `7eea032a2bdc12fcb0d5e0c4693bdc7a6ea06db447d1a28c0044192e724cad99`.
-- V4 is still a **shadow**: not inserted into producer, not frozen, not professionally scored.
+- V4 remains a shadow and is now incorporated unchanged into the combined V5 content shadow below.
 
-## Attack shadow V3 — CPU replay PASSED and is durable
+## Attack shadow V3 — CPU replay PASSED and durable
 - Below the old 0.60 transient floor, the robust electric model's discrete predicted tablature pitch intersects the existing V143 candidate MIDI universe on `43` attacks: `5/25` V2 local-peak rescues + `38/105` previously-unrescued positive subfloor attacks; `0/6` nonpositive.
 - Durable source evidence: `debug/v143-contextual-prune/electric-tabcnn-subfloor-attack-evidence.json`, commit `bb7d5d2050bce1c6a5f3995df2c741468a43b014`.
 - Deterministic validator: `analyzer/v143_contextual_prune_attack_shadow_v3_replay_validator.py`, commit `d00e2699f07f60b6a5b76d81fc7197f9e5f23e8c`.
-- Temporary CPU workflow `.github/workflows/v143-attack-shadow-v3-replay.yml` first failed only because it was pointed at the compact manifest instead of the materialized pinned candidate product; protected-runtime identity guard passed. Workflow was corrected to materialize pinned commit `c1451df43cc1162ed2b38aa3f3300b7af4d9b527` first.
-- Passing replay run `32818611451`, job `97711880585`: validation passed; protected runtime guard passed; materializer reported `Modal/L4 invoked false` and `professional reference invoked false`.
-- Exact validation JSON SHA256: `039a42d06abdc60a111cd85f0db9ac07b81caf1c1d91fd65e260ffb6119b1892`.
+- Passing replay run `32818611451`, job `97711880585`; exact validation JSON SHA256 `039a42d06abdc60a111cd85f0db9ac07b81caf1c1d91fd65e260ffb6119b1892`.
 - Exact result: eligible `984`; baseline `725`; exception-band rescues `123`; electric subfloor rescues `43`; total rescues `166`; V3 retained `891`; remaining pruned `93`.
-- Exact content result: baseline selected/rendered `970/967`; V3 selected/rendered `1214/1209`; total voicing drops `5`; no invented pitch, invalid primary, unplayable primary, grid collision, or missing measure.
-- V3 introduces **no new numeric threshold**, does not relocate attacks, does not add unobserved attacks/pitches, uses no new inference, uses no professional reference, invokes no Modal, and does not modify Production.
-- Passing output is now durably committed at `debug/v143-contextual-prune/attack-shadow-v3-replay-validation.json`, commit `8c1a36f2254197adabc1ed1e1ef65ba62853d073`.
-- Durable-persist rerun `32818794431` also passed every step, including protected runtime guard, replay, exact validation commit, and artifact upload.
+- Exact content: selected/rendered `1214/1209`; total voicing drops `5`; no invented pitch, invalid primary, unplayable primary, grid collision, or missing measure.
+- Passing output durably committed at `debug/v143-contextual-prune/attack-shadow-v3-replay-validation.json`, commit `8c1a36f2254197adabc1ed1e1ef65ba62853d073`.
 - `freezeReady=false` because downstream technique/sustain was not recomputed for newly rescued attacks.
+
+## Combined content shadow V5 — CURRENT STRONGEST CONTENT SHADOW
+- New deterministic validator: `analyzer/v143_contextual_prune_combined_content_shadow_v5_replay_validator.py`, commit `3e15b4689cbaf72fd086b7142033b980c9ac401a`.
+- Policy: **Attack V3 + already-validated Primary V4**, with V4 applied only to its exact 34 matching pre-existing baseline attacks. No V4 correction touches a newly rescued attack.
+- CPU workflow `.github/workflows/v143-combined-content-shadow-v5-replay.yml`, commit `6f705afb5f9f83e4bd70e9fe648e5c3fb4236f64`, replayed the immutable pinned candidate and guarded the protected runtime plus exact durable V3/V4 evidence blobs.
+- Run `32819028013`, job `97713095027` passed every substantive step. Materializer again reported `Modal/L4 invoked false` and `professional reference invoked false`.
+- Exact combined validation JSON SHA256: `eb2cd7172ec2edd49e37709b1a4b638c0eb61607524827b3192993ab4b0d52ee`.
+- Exact combined counts: retained attacks `891`; selected pitches `1214`; rendered pitches `1209`; voicing drops `5`; remaining pruned attacks `93`; measures covered `113/113`.
+- Baseline portion after V4 remains selected/rendered `970/967`, drops `3`, primary MIDI64 `187`.
+- Rescued portion remains selected/rendered `244/242`, drops `2`, rescued primary MIDI64 `47`.
+- Combined primary MIDI64 count is `234`.
+- All `34` V4 primary corrections land on baseline attacks; corrections on rescued attacks `0`.
+- No invented pitch, invalid primary, unplayable primary, unobserved attack/pitch, attack relocation, new inference, or new numeric threshold. All validator invariants passed.
+- `referenceFree=true`, `professionalReferenceUsed=false`, `modalInvoked=false`, `productionModified=false`.
+- Exact output durably committed at `debug/v143-contextual-prune/combined-content-shadow-v5-validation.json`, commit `b0dce933d8686d0dbd1c1a7da78460053a71739f`.
+- Artifact ID `9552426114`; uploaded artifact ZIP digest `b829262dfc3f74dfb1c15d8f207ed32ff493d2185e296b0e9e5a3392b35ab1c2`.
+- V5 is **not freeze-ready** solely because the newly rescued attacks still lack recomputed downstream technique/sustain evidence; professional scoring remains closed.
 
 ## PDF/string-fret state
 - `lib/createV143RhythmPdf.js` is already a structured graphical six-line renderer; historical PDF fidelity reached `1.0`. Musical content correctness remains the main blocker.
-- Current stateless voicing resolver cannot infer performer-intended positions from MIDI alone. The electric TabCNN can now provide independent string/fret evidence; use it conservatively as consensus before any sequence voicing mutation.
+- Current stateless voicing resolver cannot infer performer-intended positions from MIDI alone. The electric TabCNN can provide independent string/fret evidence; use it conservatively as consensus only where it agrees with V143-observed pitch.
+- Current combined V5 voicing drops are exactly five attacks: m19/s6 `[52,86] -> [52]`; m40/s14 `[40,78] -> [40]`; m63/s14 `[47,78] -> [78]`; m113/s13 `[41,43] -> [41]`; m113/s14 `[43,44] -> [43]`.
 
 ## Research infrastructure / cleanup
 - Draft PR #20 `v143-research-checkpoint-fetch` exists only to trigger bounded CPU research workflows. **Never merge it.**
 - Temporary research workflows live only on `v143-contextual-prune-lobo`; remove them after needed public artifacts/provenance are durably captured.
-- No Modal/L4 used in this entire specialized-model / V3 replay phase.
+- No Modal/L4 used in this entire specialized-model / V3 / combined-V5 replay phase.
 
 ## Current integrity
-- Branch head immediately before this checkpoint update: `8c1a36f2254197adabc1ed1e1ef65ba62853d073`.
+- Branch head immediately before this checkpoint update: `b0dce933d8686d0dbd1c1a7da78460053a71739f`.
 - Protected runtime reverified exact blob `7f72f8ed9b14af8bc93e95544195204d99c6bec1` immediately before this checkpoint update.
 - No Production/main change; no professional scorer/reference; no freeze-ready candidate yet.
 
 ## Next exact actions
-1. Build a CPU-only **combined content shadow** that starts from Attack V3 (`891` retained) and applies the already-validated V4 harmonic-primary correction only to matching pre-existing retained attacks; do not change V4's pairwise criterion or introduce thresholds.
-2. Replay that combined shadow deterministically and persist attack/pitch/voicing invariants and exact validation output without touching protected production.
-3. Investigate electric-model string/fret consensus only where it agrees with V143-observed pitch; do not blindly replace current voicing.
-4. Resolve downstream technique/sustain evidence for any newly rescued attacks before freeze/professional scoring.
-5. Improve conventional notation appearance only after musical content is materially stronger.
+1. Investigate **electric-model string/fret consensus** on combined V5, but only where the model agrees with an already-observed/selected V143 MIDI; quantify whether any current deterministic voicing can be improved without changing pitch identity.
+2. Treat the five existing voicing-drop attacks as the first focused cases; do not invent notes or force model positions when the model lacks consensus.
+3. Resolve downstream technique/sustain evidence for the `166` rescued attacks before any freeze/professional scoring.
+4. Keep timing and tempo frozen; keep Attack V3 and Primary V4 criteria unchanged unless new source-only evidence proves a defect.
+5. Improve conventional notation appearance only after musical content and technique/sustain are materially stronger.
 6. Remove temporary CPU research workflows after their durable evidence is secured.
 7. No Modal/L4 without fresh explicit authorization.
 8. Do not claim Rhythm complete until score >=0.99, critical mismatches=0, PDF fidelity=1.0.
