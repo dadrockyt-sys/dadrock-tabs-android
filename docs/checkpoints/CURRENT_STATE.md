@@ -193,3 +193,11 @@ The one-shot capture path is now CPU-preflight green through source evidence, at
 7. Use persisted replay evidence for subsequent precision experiments CPU-only.
 8. Only when source-only evidence supports a genuinely corrected candidate: immutable freeze/PDF → fidelity 1.0 → lock → exactly one professional score.
 9. Do not claim Rhythm complete until score >=0.99, critical mismatches=0, fidelity=1.0.
+
+## Revalidation — 2026-08-24 21:11 America/Montreal
+- Branch head before this checkpoint save: `38386637acb17a3437696cc3bee8839a67bd1ee4`.
+- Protected runtime reverified at exact required blob `7f72f8ed9b14af8bc93e95544195204d99c6bec1`.
+- Latest persisted CPU guard remains schema 6 / `passed=true`, run `32799566642`, with `modalInvoked=false`, `newInferenceUsed=false`, `professionalReferenceUsed=false`, `productionModified=false`.
+- `debug/v143-contextual-prune/precision-v2-capture-lock.json` is absent: no paid capture has been reserved or consumed.
+- No new concrete pre-capture defect was established during this revalidation; per the cost boundary, no speculative payload/runtime expansion was made.
+- Current legitimate progress boundary is the explicitly authorized one-shot capture. Until authorization is explicit, remain CPU-only and do not dispatch Modal/L4.
