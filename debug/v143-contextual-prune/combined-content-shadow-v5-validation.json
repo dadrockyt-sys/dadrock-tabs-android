@@ -1,0 +1,145 @@
+{
+  "addsUnobservedAttack": false,
+  "addsUnobservedPitch": false,
+  "attackV3ValidationSha256": "039a42d06abdc60a111cd85f0db9ac07b81caf1c1d91fd65e260ffb6119b1892",
+  "baselinePrimaryMidi64CountAfterV4": 187,
+  "baselineRetainedAttackCount": 725,
+  "baselineV4RenderedPitchCount": 967,
+  "baselineV4SelectedPitchCount": 970,
+  "baselineV4VoicingDropCount": 3,
+  "classification": "v143-reference-free-combined-content-shadow-v5",
+  "combinedPrimaryMidi64Count": 234,
+  "combinedRenderedPitchCount": 1209,
+  "combinedRetainedAttackCount": 891,
+  "combinedSelectedPitchCount": 1214,
+  "combinedVoicingDropAttacks": [
+    {
+      "measure": 19,
+      "primary": 52,
+      "rendered": [
+        52
+      ],
+      "selected": [
+        52,
+        86
+      ],
+      "step": 6
+    },
+    {
+      "measure": 40,
+      "primary": 40,
+      "rendered": [
+        40
+      ],
+      "selected": [
+        40,
+        78
+      ],
+      "step": 14
+    },
+    {
+      "measure": 63,
+      "primary": 78,
+      "rendered": [
+        78
+      ],
+      "selected": [
+        47,
+        78
+      ],
+      "step": 14
+    },
+    {
+      "measure": 113,
+      "primary": 41,
+      "rendered": [
+        41
+      ],
+      "selected": [
+        41,
+        43
+      ],
+      "step": 13
+    },
+    {
+      "measure": 113,
+      "primary": 43,
+      "rendered": [
+        43
+      ],
+      "selected": [
+        43,
+        44
+      ],
+      "step": 14
+    }
+  ],
+  "combinedVoicingDropCount": 5,
+  "downstreamTechniqueSustainRecomputed": false,
+  "electricCheckpointSha256": "1470a308896629352a811082843eb708cbc2f1aa3092757340055ef76a53ed0c",
+  "eligibleAttackCount": 984,
+  "freezeReady": false,
+  "invalidPrimaryCount": 0,
+  "invariantChecks": {
+    "baselineV4RenderedMatches": true,
+    "baselineV4SelectedMatches": true,
+    "baselineV4VoicingDropsMatch": true,
+    "combinedRenderedExpected": true,
+    "combinedSelectedMatchesAttackV3": true,
+    "combinedVoicingDropsExpected": true,
+    "fullMeasureCoverage": true,
+    "noInventedPitch": true,
+    "playablePrimaries": true,
+    "rescuedRenderedUnchanged": true,
+    "rescuedSelectedUnchanged": true,
+    "rescuedVoicingDropsUnchanged": true,
+    "retained891": true,
+    "v4CorrectionCount34": true,
+    "v4TouchesOnlyBaseline": true,
+    "validPrimaries": true
+  },
+  "inventedPitchCount": 0,
+  "measureCoverageCount": 113,
+  "missingMeasures": [],
+  "modalInvoked": false,
+  "newInferenceUsed": false,
+  "newNumericThresholdIntroduced": false,
+  "policy": "attack-v3-plus-harmonic-primary-v4-combined-content-shadow-v5",
+  "primaryCorrectionReasons": {
+    "local+two-view-extra-harmonic-support": 4,
+    "same-measure-local-primary-support": 5,
+    "two-view-extra-harmonic-support": 25
+  },
+  "primaryTransitions": {
+    "52->40": 5,
+    "59->40": 1,
+    "62->50": 2,
+    "64->40": 2,
+    "64->52": 14,
+    "67->55": 3,
+    "69->50": 1,
+    "69->57": 2,
+    "71->52": 1,
+    "71->59": 2,
+    "76->64": 1
+  },
+  "primaryV4CorrectionCount": 34,
+  "primaryV4CorrectionsOnBaselineCount": 34,
+  "primaryV4CorrectionsOnRescuedCount": 0,
+  "productionModified": false,
+  "professionalReferenceUsed": false,
+  "referenceFree": true,
+  "relocatesAttack": false,
+  "remainingPrunedAttackCount": 93,
+  "rescuedAttackCount": 166,
+  "rescuedPrimaryMidi64Count": 47,
+  "rescuedRenderedPitchCount": 242,
+  "rescuedSelectedPitchCount": 244,
+  "rescuedVoicingDropCount": 2,
+  "schemaVersion": 1,
+  "sourceAttackPolicy": "existing-exception-band-plus-electric-tabcnn-subfloor-consensus-v3",
+  "sourceAudioSha256": "215bd5a657c5326f08f132ae358595a95c30b39bb7493a52c2f910d5a608149f",
+  "sourcePrimaryPolicy": "v3-physical-harmonic-plus-electric-tabcnn-pairwise-consensus-v4",
+  "unplayablePrimaryCount": 0,
+  "validationPassed": true
+}
