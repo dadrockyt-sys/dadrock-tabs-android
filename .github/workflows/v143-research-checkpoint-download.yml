@@ -30,7 +30,19 @@ jobs:
           printf 'source=ErenReyhanlioglu/Guitar-Transcription-Weights\nlicense=MIT\npath=cnn_mtl_20251210_113013/fold_1/model_best.pt\nbytes=%s\ngit_blob_sha1=%s\nsha256=%s\n' \
             "$bytes" "$(cat git-blob-sha1.txt)" "$(cat checkpoint-sha256.txt)" > checkpoint-manifest.txt
 
-      - name: Upload bounded research artifact
+      - name: Fetch public MIT source tree
+        shell: bash
+        run: |
+          set -euo pipefail
+          url='https://github.com/ErenReyhanlioglu/Guitar-Transcription/archive/refs/heads/main.tar.gz'
+          curl --fail --location --retry 3 --output Guitar-Transcription-main.tar.gz "$url"
+          test -s Guitar-Transcription-main.tar.gz
+          tar -tzf Guitar-Transcription-main.tar.gz >/dev/null
+          sha256sum Guitar-Transcription-main.tar.gz | awk '{print $1}' > source-tarball-sha256.txt
+          printf 'source=ErenReyhanlioglu/Guitar-Transcription\nlicense=MIT\nref=main\nsha256=%s\n' \
+            "$(cat source-tarball-sha256.txt)" > source-manifest.txt
+
+      - name: Upload bounded checkpoint artifact
         uses: actions/upload-artifact@v4
         with:
           name: v143-public-guitar-amt-fold1-checkpoint
@@ -39,5 +51,16 @@ jobs:
             checkpoint-manifest.txt
             checkpoint-sha256.txt
             git-blob-sha1.txt
+          if-no-files-found: error
+          retention-days: 1
+
+      - name: Upload bounded source artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: v143-public-guitar-amt-source
+          path: |
+            Guitar-Transcription-main.tar.gz
+            source-manifest.txt
+            source-tarball-sha256.txt
           if-no-files-found: error
           retention-days: 1
