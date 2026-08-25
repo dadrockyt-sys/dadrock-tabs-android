@@ -1,0 +1,261 @@
+{
+  "classification": "v143-combined-v5-voicing-feasibility-audit",
+  "classificationCounts": {
+    "individuallyUnplayable": 0,
+    "other": 0,
+    "resolverMidiSpanLimit": 3,
+    "resolverStringOrdering": 0,
+    "unavoidableStringCollision": 2
+  },
+  "dropCount": 5,
+  "drops": [
+    {
+      "classification": "resolverMidiSpanLimit",
+      "examplePhysicalAssignment": [
+        {
+          "fret": 2,
+          "midi": 52,
+          "stringIndexHighToLow": 3
+        },
+        {
+          "fret": 22,
+          "midi": 86,
+          "stringIndexHighToLow": 0
+        }
+      ],
+      "legalPositions": {
+        "52": [
+          {
+            "fret": 2,
+            "stringIndexHighToLow": 3
+          },
+          {
+            "fret": 7,
+            "stringIndexHighToLow": 4
+          },
+          {
+            "fret": 12,
+            "stringIndexHighToLow": 5
+          }
+        ],
+        "86": [
+          {
+            "fret": 22,
+            "stringIndexHighToLow": 0
+          }
+        ]
+      },
+      "measure": 19,
+      "midiSpan": 34,
+      "physicalInjectiveAssignmentCount": 3,
+      "primary": 52,
+      "reason": "a physical injective assignment exists, but the deterministic resolver rejects MIDI spans above 28 semitones",
+      "rendered": [
+        52
+      ],
+      "resolverAssignmentCount": 0,
+      "selected": [
+        52,
+        86
+      ],
+      "step": 6
+    },
+    {
+      "classification": "resolverMidiSpanLimit",
+      "examplePhysicalAssignment": [
+        {
+          "fret": 0,
+          "midi": 40,
+          "stringIndexHighToLow": 5
+        },
+        {
+          "fret": 14,
+          "midi": 78,
+          "stringIndexHighToLow": 0
+        }
+      ],
+      "legalPositions": {
+        "40": [
+          {
+            "fret": 0,
+            "stringIndexHighToLow": 5
+          }
+        ],
+        "78": [
+          {
+            "fret": 14,
+            "stringIndexHighToLow": 0
+          },
+          {
+            "fret": 19,
+            "stringIndexHighToLow": 1
+          },
+          {
+            "fret": 23,
+            "stringIndexHighToLow": 2
+          }
+        ]
+      },
+      "measure": 40,
+      "midiSpan": 38,
+      "physicalInjectiveAssignmentCount": 3,
+      "primary": 40,
+      "reason": "a physical injective assignment exists, but the deterministic resolver rejects MIDI spans above 28 semitones",
+      "rendered": [
+        40
+      ],
+      "resolverAssignmentCount": 0,
+      "selected": [
+        40,
+        78
+      ],
+      "step": 14
+    },
+    {
+      "classification": "resolverMidiSpanLimit",
+      "examplePhysicalAssignment": [
+        {
+          "fret": 2,
+          "midi": 47,
+          "stringIndexHighToLow": 4
+        },
+        {
+          "fret": 14,
+          "midi": 78,
+          "stringIndexHighToLow": 0
+        }
+      ],
+      "legalPositions": {
+        "47": [
+          {
+            "fret": 2,
+            "stringIndexHighToLow": 4
+          },
+          {
+            "fret": 7,
+            "stringIndexHighToLow": 5
+          }
+        ],
+        "78": [
+          {
+            "fret": 14,
+            "stringIndexHighToLow": 0
+          },
+          {
+            "fret": 19,
+            "stringIndexHighToLow": 1
+          },
+          {
+            "fret": 23,
+            "stringIndexHighToLow": 2
+          }
+        ]
+      },
+      "measure": 63,
+      "midiSpan": 31,
+      "physicalInjectiveAssignmentCount": 6,
+      "primary": 78,
+      "reason": "a physical injective assignment exists, but the deterministic resolver rejects MIDI spans above 28 semitones",
+      "rendered": [
+        78
+      ],
+      "resolverAssignmentCount": 0,
+      "selected": [
+        47,
+        78
+      ],
+      "step": 14
+    },
+    {
+      "classification": "unavoidableStringCollision",
+      "examplePhysicalAssignment": null,
+      "legalPositions": {
+        "41": [
+          {
+            "fret": 1,
+            "stringIndexHighToLow": 5
+          }
+        ],
+        "43": [
+          {
+            "fret": 3,
+            "stringIndexHighToLow": 5
+          }
+        ]
+      },
+      "measure": 113,
+      "midiSpan": 2,
+      "physicalInjectiveAssignmentCount": 0,
+      "primary": 41,
+      "reason": "all selected MIDIs are individually playable, but no injective string assignment exists",
+      "rendered": [
+        41
+      ],
+      "resolverAssignmentCount": 0,
+      "selected": [
+        41,
+        43
+      ],
+      "step": 13
+    },
+    {
+      "classification": "unavoidableStringCollision",
+      "examplePhysicalAssignment": null,
+      "legalPositions": {
+        "43": [
+          {
+            "fret": 3,
+            "stringIndexHighToLow": 5
+          }
+        ],
+        "44": [
+          {
+            "fret": 4,
+            "stringIndexHighToLow": 5
+          }
+        ]
+      },
+      "measure": 113,
+      "midiSpan": 1,
+      "physicalInjectiveAssignmentCount": 0,
+      "primary": 43,
+      "reason": "all selected MIDIs are individually playable, but no injective string assignment exists",
+      "rendered": [
+        43
+      ],
+      "resolverAssignmentCount": 0,
+      "selected": [
+        43,
+        44
+      ],
+      "step": 14
+    }
+  ],
+  "maxFret": 24,
+  "modalInvoked": false,
+  "newNumericThresholdIntroduced": false,
+  "pitchIdentityChanged": false,
+  "productionModified": false,
+  "professionalReferenceUsed": false,
+  "referenceFree": true,
+  "resolverMaxMidiSpan": 28,
+  "schemaVersion": 1,
+  "sourceV5ValidationSha256": "eb2cd7172ec2edd49e37709b1a4b638c0eb61607524827b3192993ab4b0d52ee",
+  "tuningOpenMidiHighToLow": [
+    64,
+    59,
+    55,
+    50,
+    45,
+    40
+  ],
+  "validationChecks": {
+    "allDropsExplained": true,
+    "exactFiveDrops": true,
+    "expectedResolverSpanCount": true,
+    "expectedStringCollisionCount": true,
+    "noIndividuallyUnplayablePitch": true,
+    "noOtherResolverOrderingFailure": true
+  },
+  "validationPassed": true
+}
