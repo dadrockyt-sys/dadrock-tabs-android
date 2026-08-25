@@ -12,6 +12,7 @@ POLICY = ROOT / "analyzer/v143_contextual_prune_precision_shadow_v2.py"
 REPLAY = ROOT / "analyzer/v143_precision_replay_policy_compare.py"
 VALIDATOR = ROOT / "analyzer/v143_precision_replay_artifact_validator.py"
 VOICING_VALIDATOR = ROOT / "analyzer/v143_precision_replay_voicing_validator.py"
+FINALIZER = ROOT / "analyzer/v143_precision_paid_capture_finalizer.py"
 CORRUPTION_CHECK = ROOT / "analyzer/check_v143_precision_replay_corruption_rejection.py"
 CAPTURE_ORDER_CHECK = ROOT / "analyzer/check_v143_precision_replay_capture_order.py"
 PROTECTED = ROOT / "analyzer/v143_reference_free_rhythm_pipeline.py"
@@ -46,6 +47,7 @@ def main() -> None:
     replay = REPLAY.read_text(encoding="utf-8")
     validator = VALIDATOR.read_text(encoding="utf-8")
     voicing_validator = VOICING_VALIDATOR.read_text(encoding="utf-8")
+    finalizer = FINALIZER.read_text(encoding="utf-8")
     corruption_check = CORRUPTION_CHECK.read_text(encoding="utf-8")
     capture_order_check = CAPTURE_ORDER_CHECK.read_text(encoding="utf-8")
 
@@ -60,14 +62,16 @@ def main() -> None:
     require("singlePaidCaptureConsumed" in workflow, "capture-consumption state missing")
     require("actions/upload-artifact@v4" in workflow and "if: always()" in workflow, "failure-path artifact salvage missing")
     require("python analyzer/v143_precision_replay_artifact_validator.py --self-test" in workflow, "replay validator self-test missing from pre-Modal gate")
-    require("replayArtifactValidationSha256" in workflow, "final lock does not bind replay validation artifact")
-    require("replayEligibleAttackCount" in workflow, "final lock does not bind eligible attack universe")
-    require("replayEligiblePitchHypothesisCount" in workflow, "final lock does not bind eligible pitch universe")
-    require("baselineAttackReplayMatches" in workflow, "final lock does not require exact baseline attack replay")
-    require("attackPolicyReplayReady" in workflow, "final lock does not require attack-policy replay readiness")
+    require("python analyzer/v143_precision_replay_voicing_validator.py --self-test" in workflow, "voicing/timing validator self-test missing from pre-Modal gate")
+    require("python analyzer/v143_precision_paid_capture_finalizer.py --self-test" in workflow, "strict finalizer self-test missing from pre-Modal gate")
+    require("replayEligibleAttackCount" in finalizer, "final lock does not bind eligible attack universe")
+    require("replayEligiblePitchHypothesisCount" in finalizer, "final lock does not bind eligible pitch universe")
+    require("replayArtifactValidationSha256" in finalizer, "final lock does not bind replay validation artifact")
 
     modal_command = "python -m modal run analyzer/v143_repaired_timing_precision_candidate_product_modal.py::approved_audio"
+    finalizer_command = "python analyzer/v143_precision_paid_capture_finalizer.py"
     require(workflow.count(modal_command) == 1, "workflow must contain exactly one paid Modal command")
+    require(workflow.count(finalizer_command) == 2, "workflow must contain one finalizer self-test and one finalization call")
     require(producer.count(".remote(") == 1, "producer must contain exactly one Modal .remote call")
     require("precisionReplayEvidence" in producer and "build_precision_replay_evidence(" in producer, "producer replay evidence persistence missing")
 
@@ -89,6 +93,7 @@ def main() -> None:
     require("import modal" not in replay and ".remote(" not in replay and "modal run" not in replay, "CPU replay path contains Modal usage")
     require("import modal" not in validator and ".remote(" not in validator and "modal run" not in validator, "replay validator contains Modal usage")
     require("import modal" not in voicing_validator and ".remote(" not in voicing_validator and "modal run" not in voicing_validator, "voicing/timing replay contains Modal usage")
+    require("import modal" not in finalizer and ".remote(" not in finalizer and "modal run" not in finalizer, "paid finalizer contains Modal usage")
 
     for token in (
         "validate_product(", "_self_test()", 'replay.get("schemaVersion") == 2',
@@ -115,6 +120,27 @@ def main() -> None:
     ):
         require(token in voicing_validator, f"voicing/timing replay token missing: {token}")
 
+    for token in (
+        "sourceViewEvidenceReady", "precisionStrengthRecomputeReady", "zeroValuePreservationReady",
+        "baselineAttackReplayMatches", "sourceViewEvidenceMatches", "precisionStrengthRecomputeMatches",
+        "zeroValuePreservationMatches", "storedV2ReplayMatches", "primaryRecomputeMatches",
+        "v2ReplayMismatchAttackCount", "primaryRecomputeMismatchAttackCount",
+        "deterministicVoicingReplayMatches", "stringFretReplayMatches", "primaryPreservationMatches",
+        "gridTimingReplayMatches", "physicalOnsetReplayMatches",
+        "candidateProductSha256", "replayPolicyCompareSha256", "replayArtifactValidationSha256",
+        "singlePaidCaptureConsumed", "automaticRetryAllowed", "professionalReferenceUsed",
+        "newInferenceUsed", "productionModified", "_self_test()",
+    ):
+        require(token in finalizer, f"strict final-lock token missing: {token}")
+
+    for token in (
+        "replay.sourceViewEvidenceReady", "replay.precisionStrengthRecomputeReady",
+        "replay.zeroValuePreservationReady", "'sourceViewEvidenceReady': replay.get('sourceViewEvidenceReady') is True",
+        "'precisionStrengthRecomputeReady': replay.get('precisionStrengthRecomputeReady') is True",
+        "'zeroValuePreservationReady': replay.get('zeroValuePreservationReady') is True",
+    ):
+        require(token in workflow, f"paid workflow pre-freeze binding missing: {token}")
+
     require("two-view aggregate mismatch" in corruption_check, "corruption guard lacks two-view mismatch test")
     require("precision strength mismatch" in corruption_check, "corruption guard lacks strength mismatch test")
     require("grid/onset error mismatch" in corruption_check, "corruption guard lacks grid/onset mismatch test")
@@ -127,6 +153,7 @@ def main() -> None:
             workflow,
             "Explicit paid-capture authorization and one-shot lock gate",
             "Safety and anti-leakage gate",
+            "python analyzer/v143_precision_paid_capture_finalizer.py --self-test",
             "Reserve the one-shot capture before Modal",
             "reserved_before_modal",
             'git push origin "HEAD:$TARGET_BRANCH"',
@@ -136,6 +163,7 @@ def main() -> None:
             "Validate replay artifact exact binding",
             "Build CPU replay policy comparison",
             "Finalize one-shot capture lock",
+            "--compare debug/v143-contextual-prune/precision-v2-replay-policy-compare.json",
             "Preserve one-shot capture outputs",
         ),
         "required reservation/capture/validation/finalization ordering is broken",
@@ -144,7 +172,8 @@ def main() -> None:
     reserve_pos = workflow.find("Reserve the one-shot capture before Modal")
     modal_pos = workflow.find(modal_command)
     finalize_pos = workflow.find("Finalize one-shot capture lock")
-    require(0 <= reserve_pos < modal_pos < finalize_pos, "lock is not reserved before the paid call")
+    preserve_pos = workflow.find("Preserve one-shot capture outputs")
+    require(0 <= reserve_pos < modal_pos < finalize_pos < preserve_pos, "lock is not reserved/finalized in the required order")
     require(workflow.find('test "$GITHUB_REF" = "refs/heads/$TARGET_BRANCH"') < reserve_pos, "branch identity gate must run before reservation")
     require(workflow.find('test "$(git rev-parse "origin/$TARGET_BRANCH")" = "$GITHUB_SHA"') < reserve_pos, "remote-head binding gate must run before reservation")
     require(workflow.find('if test -f "$lock"; then') < reserve_pos, "preexisting-lock refusal must run before reservation")
@@ -166,6 +195,7 @@ def main() -> None:
     print("deterministic_voicing_replay=true")
     print("deterministic_grid_timing_replay=true")
     print("deterministic_physical_onset_replay=true")
+    print("paid_final_lock_binding=true")
     print("negative_corruption_rejection=true")
     print("replay_capture_order_guarded=true")
     print("fixed_best_row_attack_replay_universe=true")
