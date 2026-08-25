@@ -1,0 +1,417 @@
+{
+  "candidateArrays": [
+    {
+      "length": 984,
+      "path": "$.precisionReplayEvidence.eligibleAttacks",
+      "sampleKeys": [
+        "candidateMidis",
+        "candidateStrength",
+        "candidates",
+        "detectionCountSum",
+        "failSafe",
+        "gridTime",
+        "measure",
+        "onsetTime",
+        "precisionGridErrorSeconds",
+        "precisionStrength",
+        "retained",
+        "stemSupportMax",
+        "step",
+        "sweepSupportMax"
+      ],
+      "sampleType": "dict"
+    },
+    {
+      "length": 984,
+      "path": "$.precisionReplayEvidence.inputAttackKeys",
+      "sampleKeys": [
+        "measure",
+        "step"
+      ],
+      "sampleType": "dict"
+    },
+    {
+      "length": 967,
+      "path": "$.events",
+      "sampleKeys": [
+        "candidateMode",
+        "dominantMidi",
+        "duration",
+        "end",
+        "eventIndex",
+        "fret",
+        "measure",
+        "midi",
+        "noteMapping",
+        "offsetTime",
+        "onsetTime",
+        "physicalOnsetDeltaFromGridSeconds",
+        "pitchHypotheses",
+        "rhythmSustain",
+        "rhythmSustainShadow",
+        "rhythmTechniques",
+        "semanticPrimaryNoteGuard",
+        "start",
+        "step",
+        "stringIndex",
+        "stringName",
+        "timeSeconds",
+        "v143Rank",
+        "v143Score",
+        "v143Selected"
+      ],
+      "sampleType": "dict"
+    },
+    {
+      "length": 725,
+      "path": "$.precisionReplayEvidence.attacks",
+      "sampleKeys": [
+        "candidateMidis",
+        "candidateStrength",
+        "candidates",
+        "detectionCountSum",
+        "failSafe",
+        "gridTime",
+        "measure",
+        "onsetTime",
+        "precisionGridErrorSeconds",
+        "precisionStrength",
+        "retained",
+        "stemSupportMax",
+        "step",
+        "sweepSupportMax"
+      ],
+      "sampleType": "dict"
+    },
+    {
+      "length": 9,
+      "path": "$.precisionReplayEvidence.attacks[2].candidateMidis",
+      "sampleType": "int"
+    },
+    {
+      "length": 9,
+      "path": "$.precisionReplayEvidence.attacks[2].candidates",
+      "sampleKeys": [
+        "attack",
+        "body",
+        "continuity",
+        "early",
+        "midi",
+        "primary",
+        "score",
+        "selected",
+        "sustain",
+        "viewA",
+        "viewB"
+      ],
+      "sampleType": "dict"
+    },
+    {
+      "length": 9,
+      "path": "$.precisionReplayEvidence.eligibleAttacks[2].candidateMidis",
+      "sampleType": "int"
+    },
+    {
+      "length": 9,
+      "path": "$.precisionReplayEvidence.eligibleAttacks[2].candidates",
+      "sampleKeys": [
+        "attack",
+        "body",
+        "continuity",
+        "early",
+        "midi",
+        "primary",
+        "score",
+        "selected",
+        "sustain",
+        "viewA",
+        "viewB"
+      ],
+      "sampleType": "dict"
+    },
+    {
+      "length": 7,
+      "path": "$.precisionReplayEvidence.attacks[1].candidateMidis",
+      "sampleType": "int"
+    },
+    {
+      "length": 7,
+      "path": "$.precisionReplayEvidence.attacks[1].candidates",
+      "sampleKeys": [
+        "attack",
+        "body",
+        "continuity",
+        "early",
+        "midi",
+        "primary",
+        "score",
+        "selected",
+        "sustain",
+        "viewA",
+        "viewB"
+      ],
+      "sampleType": "dict"
+    },
+    {
+      "length": 7,
+      "path": "$.precisionReplayEvidence.eligibleAttacks[1].candidateMidis",
+      "sampleType": "int"
+    },
+    {
+      "length": 7,
+      "path": "$.precisionReplayEvidence.eligibleAttacks[1].candidates",
+      "sampleKeys": [
+        "attack",
+        "body",
+        "continuity",
+        "early",
+        "midi",
+        "primary",
+        "score",
+        "selected",
+        "sustain",
+        "viewA",
+        "viewB"
+      ],
+      "sampleType": "dict"
+    },
+    {
+      "length": 6,
+      "path": "$.precisionReplayEvidence.attacks[0].candidateMidis",
+      "sampleType": "int"
+    },
+    {
+      "length": 6,
+      "path": "$.precisionReplayEvidence.attacks[0].candidates",
+      "sampleKeys": [
+        "attack",
+        "body",
+        "continuity",
+        "early",
+        "midi",
+        "primary",
+        "score",
+        "selected",
+        "sustain",
+        "viewA",
+        "viewB"
+      ],
+      "sampleType": "dict"
+    },
+    {
+      "length": 6,
+      "path": "$.precisionReplayEvidence.eligibleAttacks[0].candidateMidis",
+      "sampleType": "int"
+    },
+    {
+      "length": 6,
+      "path": "$.precisionReplayEvidence.eligibleAttacks[0].candidates",
+      "sampleKeys": [
+        "attack",
+        "body",
+        "continuity",
+        "early",
+        "midi",
+        "primary",
+        "score",
+        "selected",
+        "sustain",
+        "viewA",
+        "viewB"
+      ],
+      "sampleType": "dict"
+    },
+    {
+      "length": 4,
+      "path": "$.techniques",
+      "sampleType": "str"
+    },
+    {
+      "length": 2,
+      "path": "$.events[0].pitchHypotheses",
+      "sampleKeys": [
+        "detectionCount",
+        "midi",
+        "physicalAttack",
+        "physicalBody",
+        "physicalContinuity",
+        "physicalScore",
+        "precisionPrimary",
+        "source",
+        "stemSupport",
+        "sweepSupport"
+      ],
+      "sampleType": "dict"
+    },
+    {
+      "length": 2,
+      "path": "$.events[0].rhythmSustainShadow.views",
+      "sampleKeys": [
+        "attackPeak",
+        "durationSeconds",
+        "floorEnergy",
+        "hardEndSeconds",
+        "source",
+        "threshold"
+      ],
+      "sampleType": "dict"
+    },
+    {
+      "length": 2,
+      "path": "$.events[1].pitchHypotheses",
+      "sampleKeys": [
+        "detectionCount",
+        "midi",
+        "physicalAttack",
+        "physicalBody",
+        "physicalContinuity",
+        "physicalScore",
+        "precisionPrimary",
+        "source",
+        "stemSupport",
+        "sweepSupport"
+      ],
+      "sampleType": "dict"
+    },
+    {
+      "length": 2,
+      "path": "$.events[1].rhythmSustainShadow.views",
+      "sampleKeys": [
+        "attackPeak",
+        "durationSeconds",
+        "floorEnergy",
+        "hardEndSeconds",
+        "source",
+        "threshold"
+      ],
+      "sampleType": "dict"
+    },
+    {
+      "length": 2,
+      "path": "$.events[2].rhythmSustainShadow.views",
+      "sampleKeys": [
+        "attackPeak",
+        "durationSeconds",
+        "floorEnergy",
+        "hardEndSeconds",
+        "source",
+        "threshold"
+      ],
+      "sampleType": "dict"
+    },
+    {
+      "length": 1,
+      "path": "$.events[2].pitchHypotheses",
+      "sampleKeys": [
+        "detectionCount",
+        "midi",
+        "physicalAttack",
+        "physicalBody",
+        "physicalContinuity",
+        "physicalScore",
+        "precisionPrimary",
+        "source",
+        "stemSupport",
+        "sweepSupport"
+      ],
+      "sampleType": "dict"
+    },
+    {
+      "length": 0,
+      "path": "$.events[0].rhythmTechniques",
+      "sampleType": null
+    },
+    {
+      "length": 0,
+      "path": "$.events[1].rhythmTechniques",
+      "sampleType": null
+    },
+    {
+      "length": 0,
+      "path": "$.events[2].rhythmTechniques",
+      "sampleType": null
+    },
+    {
+      "length": 0,
+      "path": "$.preFreezeTrace.validationFailures",
+      "sampleType": null
+    },
+    {
+      "length": 0,
+      "path": "$.precisionReplayEvidence.carrierMissingInputAttackKeys",
+      "sampleType": null
+    }
+  ],
+  "eventLikeArrays": [
+    {
+      "length": 967,
+      "path": "$.events",
+      "sample": {
+        "eventIndex": "0",
+        "fret": "6",
+        "measure": "1",
+        "midi": "56",
+        "step": "12",
+        "stringIndex": "3"
+      },
+      "sampleKeys": [
+        "candidateMode",
+        "dominantMidi",
+        "duration",
+        "end",
+        "eventIndex",
+        "fret",
+        "measure",
+        "midi",
+        "noteMapping",
+        "offsetTime",
+        "onsetTime",
+        "physicalOnsetDeltaFromGridSeconds",
+        "pitchHypotheses",
+        "rhythmSustain",
+        "rhythmSustainShadow",
+        "rhythmTechniques",
+        "semanticPrimaryNoteGuard",
+        "start",
+        "step",
+        "stringIndex",
+        "stringName",
+        "timeSeconds",
+        "v143Rank",
+        "v143Score",
+        "v143Selected"
+      ],
+      "sampleType": "dict"
+    }
+  ],
+  "topLevelKeys": [
+    "assembly",
+    "audioDerivedMeasureCount",
+    "candidate",
+    "candidateCount",
+    "candidateDiagnostics",
+    "confidence",
+    "correctionDiagnostics",
+    "difficulty",
+    "events",
+    "generatedTab",
+    "keySignature",
+    "liveV143",
+    "noteCount",
+    "preFreezeTrace",
+    "precisionDiagnostics",
+    "precisionPolicy",
+    "precisionReplayEvidence",
+    "promotedHarmonicGuardDiagnostics",
+    "schemaVersion",
+    "selectedCount",
+    "semanticGuard",
+    "sustainDiagnostics",
+    "techniques",
+    "tempo",
+    "timeSignature",
+    "timing",
+    "tuning"
+  ],
+  "topLevelType": "dict"
+}
