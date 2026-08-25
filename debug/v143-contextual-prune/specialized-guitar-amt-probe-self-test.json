@@ -1,0 +1,10 @@
+{
+  "featureSelfTestPassed": true,
+  "frameCount": 44,
+  "hcqtShape": [6, 144, 44],
+  "melShape": [1, 256, 44],
+  "probe": "v143-specialized-guitar-amt-hcqt-mel-cascaded-mtl",
+  "productionModified": false,
+  "professionalReferenceUsed": false,
+  "schemaVersion": 1
+}
