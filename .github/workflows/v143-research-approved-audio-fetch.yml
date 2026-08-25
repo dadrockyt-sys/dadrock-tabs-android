@@ -1,0 +1,41 @@
+name: V143 research approved audio fetch
+
+on:
+  pull_request:
+    branches:
+      - v143-contextual-prune-lobo
+    paths:
+      - 'debug/v143-contextual-prune/research-approved-audio-trigger.txt'
+
+permissions:
+  contents: read
+
+jobs:
+  package-approved-audio:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: v143-contextual-prune-lobo
+          fetch-depth: 1
+      - name: Verify exact approved fixture
+        shell: bash
+        run: |
+          set -euo pipefail
+          test -f public/gomywayfullaitest.m4a
+          sha256sum public/gomywayfullaitest.m4a | awk '{print $1}' > approved-audio-sha256.txt
+          test "$(cat approved-audio-sha256.txt)" = '215bd5a657c5326f08f132ae358595a95c30b39bb7493a52c2f910d5a608149f'
+          bytes=$(wc -c < public/gomywayfullaitest.m4a | tr -d ' ')
+          printf 'path=public/gomywayfullaitest.m4a\nsha256=%s\nbytes=%s\nresearch_copy_only=true\nproduction_modified=false\n' \
+            "$(cat approved-audio-sha256.txt)" "$bytes" > approved-audio-manifest.txt
+      - name: Upload bounded approved-fixture copy
+        uses: actions/upload-artifact@v4
+        with:
+          name: v143-approved-audio-research-copy
+          path: |
+            public/gomywayfullaitest.m4a
+            approved-audio-sha256.txt
+            approved-audio-manifest.txt
+          if-no-files-found: error
+          retention-days: 1
