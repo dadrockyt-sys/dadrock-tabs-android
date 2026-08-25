@@ -1,0 +1,44 @@
+name: V143 validate source-only frozen candidate
+
+on:
+  push:
+    branches:
+      - v143-contextual-prune-lobo
+    paths:
+      - '.github/workflows/v143-validate-source-only-frozen-candidate.yml'
+      - 'analyzer/validate_v143_v5_source_only_frozen_candidate.py'
+      - 'debug/v143-contextual-prune/v5-professional-pdf/source-only-frozen-candidate-manifest.json'
+
+permissions:
+  contents: write
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: v143-contextual-prune-lobo
+          fetch-depth: 1
+      - name: Validate frozen candidate entirely from committed bytes
+        shell: bash
+        run: |
+          set -euo pipefail
+          OUT=debug/v143-contextual-prune/v5-professional-pdf
+          test "$(git hash-object analyzer/v143_reference_free_rhythm_pipeline.py)" = '7f72f8ed9b14af8bc93e95544195204d99c6bec1'
+          python3 analyzer/validate_v143_v5_source_only_frozen_candidate.py \
+            "$OUT/source-only-frozen-candidate-manifest.json" \
+            --output "$OUT/source-only-freeze-validation-report.json"
+      - name: Persist source-only freeze validation report
+        shell: bash
+        run: |
+          set -euo pipefail
+          OUT=debug/v143-contextual-prune/v5-professional-pdf
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add "$OUT/source-only-freeze-validation-report.json"
+          if ! git diff --cached --quiet; then
+            git commit -m 'Persist V143 source-only freeze validation'
+            git push origin HEAD:v143-contextual-prune-lobo
+          fi
