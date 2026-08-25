@@ -2,19 +2,19 @@
 
 Updated: 2026-08-25 America/Montreal
 Branch: `v143-contextual-prune-lobo`
-Priority: **finish Rhythm end-to-end before Bass/Lead; produce genuinely professional guitar tablature, not merely a polished-looking PDF.**
+Priority: **finish Rhythm end-to-end before Bass/Lead; professional musical accuracy first, professional PDF second.**
 
 ## Hard boundaries
 - Work only on `v143-contextual-prune-lobo`; never modify/merge `main` or Production.
 - Protected `analyzer/v143_reference_free_rhythm_pipeline.py` must remain Git blob `7f72f8ed9b14af8bc93e95544195204d99c6bec1`.
 - Approved audio SHA256: `215bd5a657c5326f08f132ae358595a95c30b39bb7493a52c2f910d5a608149f`.
-- Professional reference/scorer is CLOSED. No runtime/shadow tuning or selection from it.
+- Professional reference/scorer is CLOSED. No tuning/selection from it.
 - Completion gate: score >= `0.99`, critical mismatches `0`, PDF fidelity `1.0`. **Rhythm is NOT complete.**
 - **No Modal/L4 without fresh explicit user authorization. None is currently authorized.**
 - Timing frozen unless new source-only evidence proves otherwise; tempo exactly `129.19921875`.
 
 ## Preserved capture / baseline
-- Authorized historical run `32805316807`; pinned capture commit `c1451df43cc1162ed2b38aa3f3300b7af4d9b527`.
+- Authorized historical run `32805316807`; trigger SHA `74b0f815ff3f66f325220975c410621503de440f`; pinned capture commit `c1451df43cc1162edb38aa3f3300b7af4d9b527`.
 - Baseline: eligible `984`; retained attacks `725`; selected pitches `970`; rendered events `967`; voicing drops `3`; measures `1-113`.
 - Candidate SHA256 `a2d451a39391b797e55623bb3c616735a3f1b39648103cb630a9bb1035430951`.
 - Durable manifest `analyzer/fixtures/v143_precision_v2_modal_capture_32805316807.json`; CPU materializer `analyzer/materialize_v143_precision_fixture.py`.
@@ -24,75 +24,67 @@ Priority: **finish Rhythm end-to-end before Bass/Lead; produce genuinely profess
 - Robust electric TabCNN checkpoint SHA256 `1470a308896629352a811082843eb708cbc2f1aa3092757340055ef76a53ed0c`; exact-audio evidence `debug/v143-contextual-prune/electric-tabcnn-v3-consensus-evidence.json`.
 - Use only as independent positive consensus, never blind replacement.
 
-## Attack V3 — strongest attack shadow
-- Baseline `725` + exception-band `123` + electric-consensus subfloor `43` = **`891` retained**.
-- Durable validation `debug/v143-contextual-prune/attack-shadow-v3-replay-validation.json`, commit `8c1a36f2254197adabc1ed1e1ef65ba62853d073`, SHA256 `039a42d06abdc60a111cd85f0db9ac07b81caf1c1d91fd65e260ffb6119b1892`.
-- Exact: selected/rendered `1214/1209`; drops `5`; measures `113/113`; no invented/unplayable/invalid pitch.
-- `freezeReady=false`: 166 rescued attacks lack recomputed downstream technique/sustain.
-
-## Primary V4 — strongest primary correction
-- 34 lower-primary corrections accepted only where exact electric model pairwise favors new lower primary over old upper primary; no new scalar threshold.
-- Durable validation `debug/v143-contextual-prune/contextual-harmonic-primary-shadow-v4-validation.json`, commit `a742a3df5b468ee54b6fadf72c0f111b8c824424`, SHA256 `7eea032a2bdc12fcb0d5e0c4693bdc7a6ea06db447d1a28c0044192e724cad99`.
-- Baseline after V4 remains selected/rendered `970/967`, drops `3`.
-
-## Combined Content V5 — CURRENT STRONGEST MUSICAL CONTENT SHADOW
-- Attack V3 + validated Primary V4; all 34 V4 corrections touch baseline attacks only.
-- Durable validation `debug/v143-contextual-prune/combined-content-shadow-v5-validation.json`, commit `b0dce933d8686d0dbd1c1a7da78460053a71739f`, SHA256 `eb2cd7172ec2edd49e37709b1a4b638c0eb61607524827b3192993ab4b0d52ee`.
-- Exact: retained attacks `891`; selected/rendered `1214/1209`; drops `5`; measures `113/113`; no invented pitch, invalid/unplayable primary, unobserved attack/pitch, relocation, new inference, or new threshold.
+## Attack V3 / Primary V4 / Combined Content V5
+- Attack V3: baseline `725` + exception-band `123` + electric-consensus subfloor `43` = **`891` retained**; selected/rendered `1214/1209`; drops `5`; measures `113/113`; validation commit `8c1a36f2254197adabc1ed1e1ef65ba62853d073`, SHA256 `039a42d06abdc60a111cd85f0db9ac07b81caf1c1d91fd65e260ffb6119b1892`.
+- Primary V4: 34 lower-primary corrections accepted only where exact electric model pairwise favors new lower primary; validation commit `a742a3df5b468ee54b6fadf72c0f111b8c824424`, SHA256 `7eea032a2bdc12fcb0d5e0c4693bdc7a6ea06db447d1a28c0044192e724cad99`.
+- Combined V5 = Attack V3 + Primary V4; validation `debug/v143-contextual-prune/combined-content-shadow-v5-validation.json`, commit `b0dce933d8686d0dbd1c1a7da78460053a71739f`, SHA256 `eb2cd7172ec2edd49e37709b1a4b638c0eb61607524827b3192993ab4b0d52ee`.
+- V5 exact: retained attacks `891`; selected/rendered `1214/1209`; drops `5`; measures `113/113`; no invented/unplayable/invalid pitch, relocation, new inference, or new threshold.
 - `referenceFree=true`, `professionalReferenceUsed=false`, `modalInvoked=false`, `productionModified=false`.
-- V5 remains **not freeze-ready** because technique/sustain has not been recomputed for rescued attacks.
+- **V5 remains `freezeReady=false` only because downstream technique/sustain has not yet been recomputed for 166 rescued attacks.**
 
 ## V5 voicing feasibility
-- Five drops fully explained: 3 physically assignable but over resolver 28-semitone span (m19/s6 `[52,86]`, m40/s14 `[40,78]`, m63/s14 `[47,78]`); 2 unavoidable low-E same-string collisions (m113/s13 `[41,43]`, m113/s14 `[43,44]`).
-- Do not relax the resolver merely to force them through.
+- Five drops fully explained and should not drive resolver relaxation: m19/s6 `[52,86]`, m40/s14 `[40,78]`, m63/s14 `[47,78]` exceed 28-semitone resolver span; m113/s13 `[41,43]` and m113/s14 `[43,44]` are unavoidable low-E same-string collisions.
 
-## Professional PDF renderer — substantial upgrade complete
-- `lib/createV143RhythmPdf.js` upgraded at commit `08ee3bcc1cec3428641741a8281206aa4218cb8d` without changing analyzer/pitch/timing evidence.
-- New engraving: clean sheet-style header, 3 measures/system, TAB mark/barlines/measure numbers, rehearsal marks, rhythm stems + beat-local beaming, graphical slides/hammer/pull/bends/vibrato/sustain, technique lanes, compact continuation headers, professional footer/page numbering, and removal of full debug timing grid.
-- Synthetic fixture `scripts/v143-professional-pdf-fixture.mjs`; successful visual run `32820654412`, bot commit `a5655d56df411cd3011c42807dc9119019b9858d`. Visual inspection: no clipping/broken glyphs; major commercial-quality improvement. Synthetic PM/let-ring ranges can still be visually consolidated if those techniques become present in final content.
+## Professional renderer / V5 PDF
+- `lib/createV143RhythmPdf.js` upgraded commit `08ee3bcc1cec3428641741a8281206aa4218cb8d`.
+- V5 render materializer `analyzer/materialize_v143_combined_content_shadow_v5_render_stream.py`, commit `a6505ba21e30af1b0e985b945de71ae3698bf08f`.
+- Successful V5 PDF workflow run `32821861294`, artifact `9553423573`, persisted commit `2fcfd22f729e14dcd0bf5469f5f0af0a4a44b646`.
+- Exact render: `1209` events / `891` onsets / `113` measures; baseline metadata preserved `933`; neutral baseline `34`; neutral rescued `242`; technique events `21`; remapped legato `20`; dropped legato `1`.
+- PDF: 6 Letter pages, 1,748,093 bytes, SHA256 `bbd67f9054a3a112f4b24e5e22b3b3fc31b125e36ebdb97c36d693ace0ffa99b`; stream SHA256 `7c3399d3f5e05ecc8ac98d71d0e5300e1e78f63ae96c1642fe4a19debb4061b2`.
+- First/middle/last visual inspection passed at 1209-event density: no clipping, broken glyphs, unreadable systems, or obvious collisions. PDF remains inspection-only / not freeze-ready because rescued performance metadata is neutral.
 
-## Real preserved 113-measure PDF render — PASSED
-- Real candidate schema inspection run `32821063375`, job `97719080566`, bot commit `dc2c2ad...`: pinned product exposes a direct structured `events` array of **967** baseline render events with string/fret/measure/step/sustain/technique fields; no note reconstruction or guessing required.
-- Real render script `scripts/v143-render-real-candidate-pdf.mjs` commit `4b3b958d181ea37fa26bb1e4a083b061e8700ae5`; summary-field fix `e4e7b62e8d600d08d8a8c3ca3a690cab4ddc8c55`.
-- Workflow `.github/workflows/v143-render-real-candidate-pdf.yml` commit `abdebb07d1d1600efc8cdeb5cb1a89dfc09e53fb`.
-- **Passing real render run `32821330353`, job `97719895086`.** Protected runtime guard passed; materializer reported Modal/L4 false and professional reference false.
-- Exact render: source/projected events `967/967`; unique measures `113`; unique onsets `725`; max notes/populated measure `18`; max chord size `5`; multi-note onsets `209`; section count `8`; tempo `129.19921875`; E Standard; 4/4.
-- PDF: **6 Letter pages**, 1,738,077 bytes, SHA256 `3b47dfa93b8ad05b7de94c6d51f65acc9fa2d9a05701e1daecb3cdf78c0c768f`.
-- Durable render commit `2470225d9cb726e35a07459e29783997a3447699`: `debug/v143-contextual-prune/real-candidate-professional-pdf/` contains PDF, first/middle/last inspection PNGs, report, pdfinfo, and hashes. Artifact `9553226034`.
-- Visual inspection of first/middle/last pages: no clipping, dense chords and two-digit frets readable, clean headers/rehearsal marks/barlines, good commercial-tab appearance. Last page has extra lower whitespace but is acceptable. Internal title `V143 Approved Rhythm Reference` is inspection-only and **not final customer-facing metadata**.
-- Critical limitation: this successful real PDF renders the **baseline 967-event stream**, not strongest V5 `1209` rendered-note content. It proves the engraving renderer can carry a real 113-measure song professionally; it is not the final musical PDF.
+## Downstream evidence inspection — PASSED
+- Evidence-only inspector `analyzer/inspect_v143_baseline_downstream_metadata.py`: initial `037e1c717ea1db34907984bda1013ef7f9de8302`, expanded nested inspection `fc7f2fbd7824dea13f9885cdf355701819efa77c`.
+- Artifact-only guarded workflow `.github/workflows/v143-inspect-baseline-downstream-metadata.yml` current commit `07782c3339dd8072221a5c0fbb1f583204dc1bfb`.
+- Successful expanded run `32839631383`, artifact `9559978873`; protected runtime and pinned CPU materialization passed; no Modal/pro reference.
+- Baseline nested fields: all 967 events contain `duration`, `rhythmSustain`, `rhythmTechniques`; 669 contain `rhythmSustainShadow`; 25 contain `legatoEvidence` plus legato target/continuation fields.
+- `sustainDiagnostics`: annotated 669/967, event/pitch/attack timing unchanged, tie/let-ring not inferred, reference-free, runtime labels not required.
+- `semanticGuard`: primary events 725, secondary 242; stripped audio technique labels 18, invalid primary legato 8, secondary legato 21; pitch/string-fret/attack timing/event count unchanged.
+- `precisionReplayEvidence`: 984 eligible attacks / 10,585 candidate pitches / 970 selected / 725 primary; `sourceViewEvidenceReady=true`, `attackPolicyReplayReady=true`, `precisionStrengthRecomputeReady=true`.
+- Sustain distribution from exact baseline: durationSteps 1:679, 2:144, 3:64, 4:31, 5:9, 6:8, 7:12, 8:5, 9:4, 10:4, 11:2, 12:1, 15:1, 16:1, 21:1, 26:1; tiers short 679 / medium 144 / long 144.
+- Existing techniques: 942 empty; 25 one-technique events = hammer-on 4, pull-off 4, slide-down 7, slide-up 10; all source `reference-free-audio-legato-evidence`.
 
-## V5 render-stream materializer + professional shadow PDF — PASSED
-- CPU-only render materializer `analyzer/materialize_v143_combined_content_shadow_v5_render_stream.py` added at commit `a6505ba21e30af1b0e985b945de71ae3698bf08f`.
-- It recomputes fresh V5, binds durable Attack V3 and Combined V5 SHA256 values, preserves baseline performance metadata only where exact `(measure, step, midi)` identity survives, remaps surviving legato targets, and emits neutral metadata for rescued content rather than inventing technique/sustain.
-- V5 PDF render script `scripts/v143-render-v5-shadow-pdf.mjs` commit `10916a1989478f1747c30fcc4d395c6d1522cb32`; workflow `.github/workflows/v143-render-v5-shadow-professional-pdf.yml` commit `a1b0f01b8f3adfee2fa63bda31ef39c5ba2a84bf`.
-- Successful workflow persisted evidence at bot commit `2fcfd22f729e14dcd0bf5469f5f0af0a4a44b646` in `debug/v143-contextual-prune/v5-professional-pdf/`.
-- Exact materialization: rendered events `1209`; retained onsets `891`; measures `113`; baseline events `967`; rescued rendered events `242`; baseline metadata preserved on `933`; neutral baseline events `34`; neutral rescued events `242`; technique events `21`; remapped legato links `20`; dropped legato links `1`; Primary V4 correction attacks `34`; validation passed.
-- Exact render: `1209` events, `891` onsets, `113` measures, max notes/populated measure `22`, max chord size `5`, multi-note onsets `272`, technique types hammer-on/pull-off/slide-down/slide-up, section count `7`.
-- V5 PDF: **6 Letter pages**, 1,748,093 bytes, SHA256 `bbd67f9054a3a112f4b24e5e22b3b3fc31b125e36ebdb97c36d693ace0ffa99b`; render-stream SHA256 `7c3399d3f5e05ecc8ac98d71d0e5300e1e78f63ae96c1642fe4a19debb4061b2`.
-- This PDF is explicitly `freezeReady=false`, `referenceFree=true`, `professionalReferenceUsed=false`, `modalInvoked=false`, `productionModified=false`.
-- Visual inspection of the **V5** first/middle/last persisted snapshots from workflow run `32821861294`, artifact `9553423573`, passed: no clipping, broken glyphs, unreadable dense systems, or obvious fret/text collisions at the higher 1209-event density; dense chords and two-digit frets remain legible. The final page retains acceptable lower whitespace.
-- The remaining blocker is downstream technique/sustain recomputation for the 166 rescued attacks; rescued events are intentionally neutral in this inspection render.
+## Exact downstream implementation source — FOUND (major milestone)
+- The original authorized-run wrapper `analyzer/v143_repaired_timing_precision_candidate_product_modal.py` at trigger SHA `74b0f815ff3f66f325220975c410621503de440f` explicitly imports the exact downstream modules. We do **not** need to reverse-engineer thresholds.
+- Exact modules fetched from the historical trigger SHA (and key ones still exist on current branch):
+  - `analyzer/v143_rhythm_sustain_consensus_shadow.py`
+  - `analyzer/v143_precision_sustain_promotion.py`
+  - `analyzer/v143_rhythm_legato_evidence.py`
+  - `analyzer/v143_rhythm_semantic_primary_note_guard.py`
+  - `analyzer/v143_rhythm_bend_consensus.py`
+  - `analyzer/v143_rhythm_bend_evidence.py`
+- Exact sustain config in source: sample rate 44100, frame 4096, hop 512, harmonic count 4, sigma 38 cents, relative threshold 0.18, tail floor multiplier 2.4, absolute floor 1e-10, minimum view duration 0.04 s. Consensus requires both source views and max view-duration disagreement `<= max(0.06, 0.75 * stepSeconds)`; accepted duration is min(view durations), hard-ended before next same-string attack.
+- `v143_precision_sustain_promotion.py` promotes only when shadow duration exceeds detector duration and strict two-view agreement holds; attack/pitch are preserved.
+- `v143_rhythm_legato_evidence.py` is the exact reference-free cross-separated pitch-path/reattack implementation; bend and semantic guard source are also preserved.
+- **Do not invent or tune any replacement thresholds now that exact source is known.**
 
-## Downstream technique/sustain source investigation — ACTIVE
-- Modern V143 runtime wrapper imports `external_processing.v143_audio`, `external_processing.v143_models`, and `external_processing.v143_product`, but those implementation modules are not committed/searchable on this branch. Repository/commit search has not found a modern source copy of `build_reference_free_rhythm_product`; therefore **no replacement thresholds/rules will be invented**.
-- Historical Java commit `ac46281f8112cd16a959d9c37f8936270ad4f716` contains old sustain-engine work, but it is treated as historical context only, not V143 source truth.
-- Evidence-only inspector `analyzer/inspect_v143_baseline_downstream_metadata.py` added at `037e1c717ea1db34907984bda1013ef7f9de8302`, then expanded at `fc7f2fbd7824dea13f9885cdf355701819efa77c` to inspect the actual nested V143 fields instead of generic flattened renderer fields.
-- Guarded workflow `.github/workflows/v143-inspect-baseline-downstream-metadata.yml` added at `dfc2706d02e2ef192a424dbb039d5a505d2b1eb1`. Run `32839317818` passed and confirmed exact candidate SHA plus `967/725/113`. First report also showed `precisionReplayEvidence` contains exact source-view attack/sustain values and is `sourceViewEvidenceReady=true`.
-- Expanded run `32839523194` completed all analysis successfully before a repository bot-push failure. Exact generated summary from logs: candidate SHA correct; `984` eligible attacks; `967` events; `725` onsets; `113` measures; **967 `rhythmSustain` objects; 669 `rhythmSustainShadow` objects; 25 technique-annotated events; 25 `legatoEvidence` objects**. Protected runtime guard and CPU-only immutable materialization both passed. Generated report SHA256 `8b3db80dc028188a06fafef50025b205a2649c53f41f95106e4970145bbc51d0`.
-- Event schema proves the real baseline product stores `duration`, `rhythmSustain`, `rhythmSustainShadow`, `rhythmTechniques`, legato target/continuation fields and `legatoEvidence`. The V5 renderer materializer already consumes `rhythmSustain.durationSteps/durationSeconds/tier` and `rhythmTechniques`; rescued content is neutral only because no exact replay has yet been bound.
-- The failed expanded run failed **only** at `git push` of generated inspection evidence (`remote: fatal error in commit_refs`), after analysis success. Workflow was changed at commit `07782c3339dd8072221a5c0fbb1f583204dc1bfb` to artifact-only/read-only so evidence capture no longer depends on bot branch writes. No musical/runtime code changed.
+## Remaining blocker: exact separated source views
+- Exact downstream code needs the two separated guitar source views used by the authorized run: `direct-demucs6s-guitar.wav` and `bsroformer-demucs6s-guitar.wav`.
+- Original wrapper creates them via `analyzer/v143_deterministic_separator.py` and `analyzer/v143_seeded_separator.py`, seed `1430317`.
+- Current seeded BS-RoFormer separator requires CUDA; normal GitHub CPU cannot reproduce it exactly. No new Modal/GPU use is authorized.
+- Authorized run artifact `9548666053` was inspected and contains only manifest/product/guard/report/lock JSON, **not stems**.
+- Therefore the preferred path is to locate an earlier preserved workflow artifact containing the exact two guitar stems (or their byte-identical source arrays), then run exact downstream replay CPU-only from those preserved views.
 
 ## Current integrity
-- Branch head before this checkpoint update: `07782c3339dd8072221a5c0fbb1f583204dc1bfb`.
-- Protected runtime remained exact throughout inspection runs.
+- Branch head before this checkpoint update: `d6cecb794b93a3bbb6883948789f9dbcdbf3ecd0`.
+- Protected runtime remains exact.
 - No Production/main change; no professional scorer/reference; no new Modal/L4 usage.
 
 ## Next exact actions
-1. Collect the artifact-only expanded nested report and extract exact `rhythmSustain`, `rhythmSustainShadow`, `rhythmTechniques`, `legatoEvidence`, `sustainDiagnostics`, and precision replay policy fields.
-2. Determine whether those stored source-view structures provide a deterministic modern downstream replay for all 166 rescued attacks. **Do not infer thresholds from outcomes.**
-3. If exact source support is sufficient, implement CPU-only source-only downstream technique/sustain replay, validate every rescued attack, and preserve timing/tempo and `1209/891/113` musical identity.
-4. Re-render V5 professional PDF with recomputed downstream metadata and enforce content identity + renderer fidelity.
+1. Search historical V143 workflow runs/artifacts for preserved `direct-demucs6s` and `bsroformer-demucs6s` guitar stems or byte-identical analysis-view arrays; prioritize runs that introduced/tested deterministic/seeded separator repeatability.
+2. Fully map exact legato/bend/semantic-guard function signatures and dependencies from trigger SHA `74b0...` so the replay wrapper uses source unchanged.
+3. If exact source views are recovered, build a CPU-only V5 downstream replay using **only** preserved stems + exact existing algorithms; validate every rescued attack and preserve `1209/891/113`, timing and tempo.
+4. Re-render V5 PDF with recomputed downstream metadata and enforce renderer fidelity.
 5. Only after downstream completeness is proven consider the closed professional score gate; do not tune against the professional reference.
 6. No Modal/L4 without fresh explicit authorization.
 7. Do not claim Rhythm complete until score >=0.99, critical mismatches=0, PDF fidelity=1.0.
