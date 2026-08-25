@@ -6,6 +6,7 @@ ROOT = Path(__file__).resolve().parents[1]
 WORKFLOW = ROOT / ".github/workflows/v143-repaired-timing-precision-candidate-product.yml"
 PRODUCER = ROOT / "analyzer/v143_repaired_timing_precision_candidate_product_modal.py"
 REPLAY = ROOT / "analyzer/v143_precision_replay_policy_compare.py"
+VALIDATOR = ROOT / "analyzer/v143_precision_replay_artifact_validator.py"
 PROTECTED = ROOT / "analyzer/v143_reference_free_rhythm_pipeline.py"
 
 TARGET_BRANCH = "v143-contextual-prune-lobo"
@@ -32,6 +33,7 @@ def main() -> None:
     workflow = WORKFLOW.read_text(encoding="utf-8")
     producer = PRODUCER.read_text(encoding="utf-8")
     replay = REPLAY.read_text(encoding="utf-8")
+    validator = VALIDATOR.read_text(encoding="utf-8")
 
     require(TARGET_BRANCH in workflow, "target branch missing from workflow")
     require(f"refs/heads/{TARGET_BRANCH}" in workflow, "workflow dispatch ref is not pinned to target branch")
@@ -44,12 +46,22 @@ def main() -> None:
     require("singlePaidCaptureConsumed" in workflow, "capture-consumption state missing")
     require("actions/upload-artifact@v4" in workflow, "failure-path artifact salvage missing")
     require("if: always()" in workflow, "capture outputs are not preserved on failure")
+    require(
+        "python analyzer/v143_precision_replay_artifact_validator.py --self-test" in workflow,
+        "replay artifact validator self-test is not in the pre-Modal gate",
+    )
+    require(
+        "replayArtifactValidationSha256" in workflow,
+        "final lock does not bind replay artifact validation",
+    )
 
     modal_command = "python -m modal run analyzer/v143_repaired_timing_precision_candidate_product_modal.py::approved_audio"
     require(workflow.count(modal_command) == 1, "workflow must contain exactly one paid Modal command")
     require(producer.count(".remote(") == 1, "producer must contain exactly one Modal .remote call")
     require("precisionReplayEvidence" in producer and "build_replay_evidence(" in producer, "producer replay evidence persistence missing")
     require("import modal" not in replay and ".remote(" not in replay and "modal run" not in replay, "CPU replay path contains Modal usage")
+    require("import modal" not in validator and ".remote(" not in validator and "modal run" not in validator, "replay validator contains Modal usage")
+    require("validate_product(" in validator and "_self_test()" in validator, "replay validator API/self-test missing")
 
     require(
         ordered(
@@ -62,6 +74,7 @@ def main() -> None:
             "Run exactly one approved-audio candidate capture",
             modal_command,
             "Validate candidate invariants and replay evidence",
+            "Validate replay artifact exact binding",
             "Build CPU replay policy comparison",
             "Finalize one-shot capture lock",
             "Preserve one-shot capture outputs",
@@ -96,6 +109,7 @@ def main() -> None:
     print("automatic_retry_allowed=false")
     print("cpu_replay_modal_free=true")
     print("failure_path_artifact_salvage=true")
+    print("replay_artifact_exact_binding=true")
 
 
 if __name__ == "__main__":
