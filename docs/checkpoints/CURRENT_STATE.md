@@ -111,11 +111,15 @@ Priority: **finish Rhythm end-to-end before Bass/Lead; musical accuracy first, P
 ## Professional holdout/scorer audit — IN PROGRESS
 - Audit began on 2026-08-25 on the exact branch `v143-contextual-prune-lobo`, after the source-only freeze had already passed.
 - The frozen manifest/validator state explicitly records `professionalReferenceUsed=false` and `professionalHoldoutOpened=false`; therefore the source-only freeze did not invoke or depend on the professional scorer/reference.
-- Initial repository-wide path/content search found no authoritative file literally named `holdout`; generic `scorer` hits predominantly point at older Modal-era analyzer versions. Those paths are **not** being treated as authoritative because the current checkpoint forbids Modal/GPU use and authorizes only a source-only CPU audit.
+- Repository workflow inventory located the established V143 post-freeze scorer family, including `.github/workflows/v143-repaired-timing-precision-professional-score.yml`, plus the generic scorer source `validation/rhythm_holdout/score_rhythm_holdout.py`.
+- The generic scorer has the correct anti-leakage order: `validate_pre_reference(...)` first verifies a reference-free frozen manifest/snapshot, event hash, and exact PDF-event identity (`pdfEventFidelity == 1.0`) before it resolves/opens any professional reference JSON. It is post-hoc only and does not write corrections back into analyzer output.
+- **Do not trigger the existing repaired-timing workflow for V5.** Its pre-reference gate is hard-coded to historical freeze artifact `9511117529`, historical event hash `a81190d05b5dbaa745e003a8c0c43c1b8f8edc629f3ce01975c4f1af8c51dfdb`, and `985` events. That is an obsolete candidate, not the frozen V5.
+- Current V5 is independently pinned by `source-only-frozen-candidate-manifest.json` to `1209` rendered events, render-stream SHA256 `7c3399d3f5e05ecc8ac98d71d0e5300e1e78f63ae96c1642fe4a19debb4061b2`, and PDF SHA256 `f4c1238e868cadfb90b8a359b1555b0b90e7740b9ebaa276aa394c8991f37ce5`.
+- Historical professional-score heartbeat/log material was inspected only as implementation history; it predates the current V5 freeze and does not count as the final holdout.
 - No professional reference/holdout content has been opened. No scoring run has been triggered. No Modal/GPU has been used.
 - Frozen candidate content, timing, metadata, thresholds, renderer, and selection remain unchanged.
-- Audit must next identify the exact authoritative scorer entrypoint, invocation, reference completeness checks, scoring semantics, immutable-candidate binding, and one-time/no-retuning safeguards **without opening the reference data itself**.
-- This audit state was intentionally persisted before any deeper scorer inspection or any possible final holdout trigger.
+- Remaining scorer audit must determine whether V5 can be bound losslessly into the existing `rhythm-freeze-manifest.json` / `rhythm-frozen-analysis.json` scorer contract, while preserving current V5 event/PDF hashes, before any reference access. Any scorer adapter/control path must be reference-independent and may not alter candidate bytes or selection.
+- This audit state is intentionally persisted before any V5 scorer-adapter work or any possible final holdout trigger.
 
 ## Current integrity
 - Protected runtime untouched.
@@ -126,8 +130,8 @@ Priority: **finish Rhythm end-to-end before Bass/Lead; musical accuracy first, P
 - Current persisted hashes remain render stream `7c3399d3f5e05ecc8ac98d71d0e5300e1e78f63ae96c1642fe4a19debb4061b2`, PDF `f4c1238e868cadfb90b8a359b1555b0b90e7740b9ebaa276aa394c8991f37ce5`, inspection first `33693e32ee4a578e48f7e96360d0c06191bf0fff16f68d76d97e1e384f1aa5f3`, middle `1e265e8486e75505262de9ea33dea444f60731e025db20dea063dd1f75448775`, last `487df510c3931403017576dac2fe3e587479b9d827a496ea9d792fa5a2764671`.
 
 ## Next exact actions
-1. Continue the audit by locating the exact final professional holdout/reference/scorer entrypoint and reading scorer/control-path source only; do not open reference payloads.
-2. Save the completed audit state before triggering any final holdout.
-3. If and only if the reference is complete and the official holdout path is valid, run it once against the immutable frozen candidate. Persist the result; **do not tune, modify, or select a replacement candidate from failures.**
+1. Audit V5 render-stream compatibility with `validation/rhythm_holdout/canonical.py` and the legacy freeze manifest/snapshot contract without opening any professional reference payload.
+2. If a lossless, reference-independent V5 scorer adapter/control path is possible, create and validate it against only frozen V5 bytes/hashes; save checkpoint again before any final holdout trigger.
+3. If and only if the reference is complete and the official holdout path is valid for the exact V5 freeze, run it once against the immutable frozen candidate. Persist the result; **do not tune, modify, or select a replacement candidate from failures.**
 4. Keep final-gate `freezeReady=false` sentinels false unless score >=0.99, critical mismatches=0, PDF fidelity=1.0 are all independently proven.
 5. Do not claim Rhythm complete before all final completion gates pass.
