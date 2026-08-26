@@ -1,0 +1,82 @@
+name: V143 Dispatch V5 Final Professional Holdout Once
+
+# One-time launcher only. This workflow never opens or reads professional reference data.
+on:
+  push:
+    branches:
+      - v143-contextual-prune-lobo
+    paths:
+      - .github/workflows/v143-dispatch-v5-final-professional-holdout-once.yml
+
+permissions:
+  actions: write
+  contents: read
+
+concurrency:
+  group: v143-dispatch-v5-final-professional-holdout-once
+  cancel-in-progress: false
+
+jobs:
+  dispatch:
+    if: github.actor != 'github-actions[bot]'
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - name: Check out exact launcher revision
+        uses: actions/checkout@v4
+        with:
+          ref: ${{ github.sha }}
+          fetch-depth: 0
+
+      - name: Verify audited holdout state before dispatch
+        shell: bash
+        run: |
+          set -euo pipefail
+          test "$GITHUB_REF" = 'refs/heads/v143-contextual-prune-lobo'
+          git merge-base --is-ancestor 066743f7b0348a042d07cc837ca1679808c30b5f HEAD
+          git merge-base --is-ancestor 58b168aab9ff10a5eabcd3b0a04dfd6c05bdd2d0 HEAD
+          git fetch origin v143-contextual-prune-lobo
+          result='debug/v143-contextual-prune/v5-professional-pdf/final-professional-holdout-result.json'
+          if git cat-file -e "origin/v143-contextual-prune-lobo:${result}" 2>/dev/null; then
+            echo 'Final result sentinel already exists; refusing dispatch.' >&2
+            exit 90
+          fi
+          python - <<'PY'
+          from pathlib import Path
+          text=Path('.github/workflows/v143-v5-final-professional-holdout.yml').read_text(encoding='utf-8')
+          trigger=text.split('\npermissions:',1)[0]
+          assert 'workflow_dispatch:' in trigger
+          assert '\n  push:' not in trigger
+          for required in (
+              '7ed5166a73793e3a40c9a21f6532fee5ba784e43ef4180727404a37a038fb6d1',
+              '7c3399d3f5e05ecc8ac98d71d0e5300e1e78f63ae96c1642fe4a19debb4061b2',
+              'f4c1238e868cadfb90b8a359b1555b0b90e7740b9ebaa276aa394c8991f37ce5',
+              'aca2da3e8d551b2fd82b4ab3ecafa0c8932d6c0a27b54b6213ffc990ca08a9a9',
+              '18cdb4f8afb49562aac5b600730384636070d6ca8650823e759276a81ee4afc8',
+              '18fd868ae960dfcdd1ffb0110f1a9dfd8acc2ffeb46e247d1116cd54291526ac',
+              'candidateSelectionAllowedAfterHoldout',
+              'tuningAllowedAfterHoldout',
+              'thresholdAdjustmentAllowedAfterHoldout',
+          ):
+              assert required in text, required
+          PY
+
+      - name: Dispatch exactly the audited final workflow
+        env:
+          GH_TOKEN: ${{ github.token }}
+        shell: bash
+        run: |
+          set -euo pipefail
+          code=$(curl -sS -o /tmp/dispatch-response.txt -w '%{http_code}' \
+            -X POST \
+            -H "Authorization: Bearer $GH_TOKEN" \
+            -H 'Accept: application/vnd.github+json' \
+            -H 'X-GitHub-Api-Version: 2022-11-28' \
+            "https://api.github.com/repos/${GITHUB_REPOSITORY}/actions/workflows/v143-v5-final-professional-holdout.yml/dispatches" \
+            -d '{"ref":"v143-contextual-prune-lobo"}')
+          if [ "$code" != '204' ]; then
+            cat /tmp/dispatch-response.txt >&2 || true
+            echo "workflow dispatch failed with HTTP $code" >&2
+            exit 1
+          fi
+          echo 'Audited V5 final professional holdout dispatched exactly once.'
