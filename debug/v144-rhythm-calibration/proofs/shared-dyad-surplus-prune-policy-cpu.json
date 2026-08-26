@@ -1,0 +1,20 @@
+{
+  "branch": "v143-contextual-prune-lobo",
+  "contextSplitBlob": "2da58508f2132660ad317ee63d5cb043d58285f0",
+  "family": 14,
+  "fitSearchRun": false,
+  "job": "definitive-policy-proof",
+  "modalGpuUsed": false,
+  "pitchShiftBlob": "d9998c59acddba070069668d62bcb1c3cdaf2b05",
+  "policyBlob": "1f6cc7fcaf2d4ac7838b48b839c617b04cb1c34e",
+  "proof": "shared-dyad-surplus-prune-policy-cpu",
+  "runAttempt": 1,
+  "runId": 33025027635,
+  "runtimeReferenceInput": false,
+  "schemaVersion": 14426,
+  "status": "success",
+  "testBlob": "38d6804560755fcb0bcf26eeda5e1a5b77f31231",
+  "testModule": "modal.tests.test_v144_rhythm_shared_dyad_surplus_prune_policy",
+  "triggerSha": "15f44a9886acfbcca535281e6904241c411afff1",
+  "workflowSha": "15f44a9886acfbcca535281e6904241c411afff1"
+}
