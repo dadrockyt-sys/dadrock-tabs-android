@@ -2,7 +2,7 @@
 
 Updated: 2026-08-26 America/Montreal
 Branch: `v143-contextual-prune-lobo`
-Active phase: **V144 Rhythm gold calibration. Accepted 1144-event triple baseline remains locked. Single/pair/triple/quad deletion families are consumed and two fit-only diagnostics show deletion is structurally insufficient. A materially new reference-free contextual same-string pitch-shift family is now pre-registered and wired into the CPU gate; the final linked-technique regression gate is running. No pitch-shift candidate search has been executed or selected.**
+Active phase: **V144 Rhythm gold calibration. Accepted 1144-event triple baseline remains locked. Single/pair/triple/quad deletion families are consumed and two fit-only diagnostics show deletion is structurally insufficient. A materially new reference-free contextual same-string pitch-shift family is now fully pre-registered and CPU-gated, including linked-technique safety. No pitch-shift candidate search has been executed or selected yet. Next is implementation of the one-shot fit-only search under the unchanged selector/invariant gates.**
 
 ## Permanent safety boundary
 - Work only on `v143-contextual-prune-lobo`; never modify/merge `main` or Production.
@@ -43,43 +43,42 @@ Active phase: **V144 Rhythm gold calibration. Accepted 1144-event triple baselin
 1. Single-signature prune: fit winner failed validation; run `32935621669`.
 2. Two-signature conjunction prune: passed split but lost a generated measure and failed final invariant.
 3. Triple prune family: consumed by accepted baseline above; do not select another triple.
-4. Additive four-signature prune: actual one-shot run `32938769540` SUCCESS, exactly 512 fit-only candidates from 577 unmatched fit-generated notes; no candidate cleared fit, deterministic accepted-baseline fallback retained. Persisted report blob `5928e9687414c1e118653f139eda205237584ee0`; workflow sealed commit `69db5acad3e313610f22617f06fbb325e5b8941d`.
-5. Do not escalate to five-signature/deeper deletion families from current evidence.
+4. Additive four-signature prune: one-shot run `32938769540` SUCCESS; 512 fit-only candidates; no candidate cleared fit; deterministic baseline fallback retained. Report blob `5928e9687414c1e118653f139eda205237584ee0`; workflow sealed commit `69db5acad3e313610f22617f06fbb325e5b8941d`.
+5. Do not escalate to deeper deletion families from current evidence.
 
 ## Fit-only diagnostics — COMPLETE / SEALED
 ### Deletion/pruning ceiling
-- Run `32939218722` SUCCESS; report `debug/v144-rhythm-calibration/baseline/v144-fit-only-pruning-ceiling.json`, blob `6064ede57f4ec18a3c961f4c8b82b98aad26efdf`.
+- Run `32939218722` SUCCESS; report blob `6064ede57f4ec18a3c961f4c8b82b98aad26efdf`.
 - Fit: generated `643`, reference `594`, critical `1105`; pitch matched `138` / F1 `0.2231204527081649`; tight pitch/timing matched `28` / F1 `0.04527081649151172`; exact string/fret/timing matched `20` / F1 `0.03233629749393695`.
-- Perfect deletion-only oracle ceilings: pitch F1 `0.3770491803278689`; pitch/timing `0.09003215434083602`; string/fret/timing `0.06514657980456026`.
+- Perfect deletion-only oracle ceilings: pitch `0.3770491803278689`; pitch/timing `0.09003215434083602`; string/fret/timing `0.06514657980456026`.
 
 ### Error mechanisms
-- Run `32939297662` SUCCESS; report `debug/v144-rhythm-calibration/baseline/v144-fit-error-mechanisms.json`, blob `4d1f143142b15b3cb9270eca291dbc12d30dff80`.
-- Fit counts: generated `643`, reference `594`; pitch-content matched `138`; tight pitch/timing `28`; gross ±2-step pitch/timing `66`; exact string/fret/timing `20`.
-- Mechanisms: same-onset wrong-pitch substitution slots `184`; displaced same-measure pitch matches `110`; gross-only timing recovery `38`; correct pitch/timing but wrong string/fret `8`; gross unmatched generated/reference `577/528`; pitch FP/FN `505/456`.
-- Diagnostic oracle: perfect pitch-FP deletion ceiling `0.3770491803278688`; count-preserving pitch-correction ceiling `0.9603880355699272`.
-- Conclusion is shape-only: another deletion family is much less promising than correction. These oracle values are not runtime rules and are not generalization evidence.
+- Run `32939297662` SUCCESS; report blob `4d1f143142b15b3cb9270eca291dbc12d30dff80`.
+- Fit: pitch-content matched `138`; tight pitch/timing `28`; gross pitch/timing `66`; exact string/fret/timing `20`.
+- Mechanisms: same-onset wrong-pitch substitutions `184`; displaced same-measure pitch matches `110`; gross-only timing recovery `38`; correct pitch/timing but wrong string/fret `8`; gross unmatched gen/ref `577/528`; pitch FP/FN `505/456`.
+- Count-preserving pitch-correction diagnostic ceiling `0.9603880355699272`; shape guidance only, not a runtime oracle/generalization claim.
 
-## New contextual same-string pitch-shift family — PRE-REGISTERED, NOT SEARCHED
+## Contextual same-string pitch-shift family — PRE-REGISTERED / CPU-GATED / NOT SEARCHED
 - Canonical policy: `modal/v144_rhythm_pitch_shift_policy.py`.
-- Initial pre-registration commit `c03b94dbfa7169255893062a963b4a0aa56a30d3`; linked-technique safety hardening commit `fb2e07b3288e8e1a082281c48856ca004f892586`.
-- Duplicate temporary policy was removed in commit `883e5ed218c0ad245f364a4294428fd8926e14b3`; only the canonical module remains.
-- Rule shape is **source `pitchClass::<n>` + one reference-free structural context signature + fixed non-zero semitone shift**, bounded to ±12 semitones.
-- Construction-time fit evidence uses deterministic same-onset substitution pairing: exact MIDI matches are removed first, then remaining generated/reference notes at the same onset are paired by smallest absolute MIDI distance with deterministic tie-breaking.
-- Ranking is fit-only by correction precision/support with default minimum correction support `3` and maximum candidates `256`; validation/canary are not inputs to construction/ranking.
-- Runtime application receives only generated events + locked signatures + semitone shift; it never receives the professional reference.
-- Runtime transform is count-preserving and timing-preserving: same measure, step, duration, string, event order/count; shifts `midi` and `fret` together on the same string and skips out-of-range frets.
-- Bend/legato/slide/hammer/pull linked or labeled events are ineligible so target metadata cannot become inconsistent.
-- Tests: `modal/tests/test_v144_rhythm_pitch_shift_policy.py`; original concurrent test commit `9cb2d339702cebc5953b480b1c582eb0675ad012`; explicit linked-technique regression commit `bbb0b14af9c1b890319d26580d2e7bec8a19fd76`.
+- Initial pre-registration commit `c03b94dbfa7169255893062a963b4a0aa56a30d3`.
+- Linked-technique safety hardening commit `fb2e07b3288e8e1a082281c48856ca004f892586`.
+- Duplicate temporary policy removed commit `883e5ed218c0ad245f364a4294428fd8926e14b3`; only canonical module remains.
+- Rule shape: source `pitchClass::<n>` + one reference-free structural context signature + fixed non-zero semitone shift, bounded to ±12.
+- Construction-time fit evidence: deterministic same-onset substitution pairing; exact MIDI matches removed first, then smallest absolute MIDI distance with deterministic tie-breaking.
+- Fit-only ranking defaults: minimum correction support `3`, maximum candidates `256`.
+- Runtime receives only generated events + locked signatures + semitone shift; professional reference is not a runtime input.
+- Runtime is event-count/timing/string preserving and shifts `midi` + `fret` together; out-of-range shifts are skipped.
+- Bend/legato/slide/hammer/pull linked/labeled events are ineligible so target metadata cannot become inconsistent.
+- Tests: `modal/tests/test_v144_rhythm_pitch_shift_policy.py`; original test commit `9cb2d339702cebc5953b480b1c582eb0675ad012`; linked-technique regression commit `bbb0b14af9c1b890319d26580d2e7bec8a19fd76`.
 - CPU gate integration commit `18ad356ce8ca94e18d43f088ad9b7f0ebd560f18`.
 - Safety-hardened CPU gate run `32939793740` SUCCESS.
-- Final linked-technique regression CPU gate run `32939947264` is currently in progress at this checkpoint.
+- **Final linked-technique regression CPU gate run `32939947264` SUCCESS.**
 - **No pitch-shift one-shot search workflow/report exists yet. No correction candidate has been locked, validated, canaried, or promoted.**
 
 ## Immediate next actions
-1. Confirm CPU gate run `32939947264` passes. If it fails, fix only the policy/test defect and re-gate; do not search.
-2. After gate success, checkpoint again before creating any search implementation.
-3. Then implement a one-shot **fit-only contextual pitch-shift search** from the unchanged accepted 1144-event baseline. Construction/ranking may use fit labels only.
-4. Require event count `1144` and exact 113/113 generated-measure preservation for every candidate considered for fit lock.
-5. Lock exactly one fit winner under the existing fixed selector; then gate only that winner through validation → canary → full-gold → independent PDF-event fidelity. No alternate after failure.
-6. Seal the search workflow immediately after its single actual execution and never retune/replay this family from its result.
-7. Do not promote Rhythm, start Bass/Lead, claim near-100% quality, or use Modal/L4/GPU without fresh explicit user authorization.
+1. Implement a one-shot **fit-only contextual pitch-shift search** from the unchanged accepted 1144-event baseline; do not execute it until its isolation/safety assertions are committed.
+2. Construction/ranking may use fit labels only. Validation/canary/historical consumed-family outcomes must not construct or rank rules.
+3. Require candidate event count exactly `1144` and exact 113/113 generated-measure preservation before fit lock.
+4. Lock exactly one fit winner under the existing fixed selector; gate only it through validation → canary → full-gold → independent PDF-event fidelity. No alternate after failure.
+5. Persist exactly one search report, seal the workflow immediately after its single actual execution, and never retune/replay the family from its result.
+6. Do not promote Rhythm, start Bass/Lead, claim near-100% quality, or use Modal/L4/GPU without fresh explicit user authorization.
