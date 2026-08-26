@@ -188,3 +188,33 @@ Search the branch for the professional-reference/scorer/workflow assets named or
 3. Use synthetic/frozen non-reference fixtures first to prove deterministic fallback, split isolation, and no V5 mutation.
 4. Only after the CPU gate is green, reconstruct the gold structured reference into a V144-only temporary/calibration path and begin measured V144 musical calibration.
 5. Keep Bass/Lead disabled and keep `/ai-tab` frontend contract unchanged until Rhythm quality gate is genuinely reached.
+
+## V144 isolated scaffolding + first CPU gate — 2026-08-26 00:32 America/Montreal
+- Branch continuity check discovered that work had advanced beyond the preceding written checkpoint before this continuation. Existing V144 commits were preserved and treated as completed work rather than recreated:
+  - `9d29ba53466b721ce99f0265524b089b883b5f63` — added `debug/v144-rhythm-calibration/reference/professional-target-provenance.json`.
+  - `7b1edbe723943c3c397b29729a69841e95a151ea` — added `modal/v144_rhythm_context_split_policy.py`.
+  - `ed1b8b3251f351e61113878ae7eb388700f76756` — added `modal/v144_rhythm_context_split_selector.py`.
+  - `bd55ce88e9a62f5cdbd5c24615788e39f3753daf` — added `modal/configs/v144_rhythm_context_split_config.json`.
+  - `bde9c8900ce8ead11acab2e7a8fc838e1ee9e85f` — added synthetic regression fixture `modal/tests/fixtures/v144_rhythm_context_split_reference.json`.
+  - `f5e71c95071df15b3f975f77a59bc088b768f62b` — added split-policy unit tests.
+  - `87a0eb3956b09892b1722ab4248592c3bdf5448f` — added selector unit tests and was the branch head when this continuation resumed.
+- Added CPU-only workflow `.github/workflows/v144-rhythm-cpu-gate.yml` in commit `95e22b4f259861d31993687bb33c999f08d5181d`.
+- V144 CPU workflow run `32934411093` completed **SUCCESS**.
+- Successful gate coverage included:
+  - exact Git-blob guard for protected `analyzer/v143_reference_free_rhythm_pipeline.py` = `7f72f8ed9b14af8bc93e95544195204d99c6bec1`;
+  - exact Git-blob guard for consumed V5 final-result sentinel = `511fd244f231b66d08306f97b5a47ed41f5415c7`;
+  - SHA256 guard for frozen V5 render stream = `7c3399d3f5e05ecc8ac98d71d0e5300e1e78f63ae96c1642fe4a19debb4061b2`;
+  - SHA256 guard for frozen V5 PDF = `f4c1238e868cadfb90b8a359b1555b0b90e7740b9ebaa276aa394c8991f37ce5`;
+  - V144 provenance safety contract assertions, including `modalGpuAuthorized=false`, `mainMayBeModified=false`, and `productionMayBeModified=false`;
+  - both V144 split-policy and selector test suites;
+  - CPU-safe/fallback-first config assertions, including exact PDF-event fidelity `1.0`, holdout-closed requirement, no metric regression allowance, no critical-mismatch increase allowance, and a non-empty canary split.
+- The separate pre-existing `.github/workflows/cleanup-tab-preview.yml` workflow reported a failure on the same push; it is unrelated to the V144 CPU gate and was not modified here.
+- No V5 candidate/result/threshold/workflow, `main`, Production, `/ai-tab` frontend contract, Bass/Lead path, Modal/L4/GPU job, or `freezeReady` state was modified or invoked.
+
+### Immediate next resume action after CPU-gate success
+1. Inspect the existing professional structured-reference builder inputs/interfaces and scorer input schema in read-only mode.
+2. Reconstruct or stage the known verified gold structured reference only under `debug/v144-rhythm-calibration/reference/` (or another clearly V144-only calibration path), never under V5 holdout paths.
+3. Verify the V144 gold reference reproduces the known identity/completeness contract: SHA256 `18fd868ae960dfcdd1ffb0110f1a9dfd8acc2ffeb46e247d1116cd54291526ac`, 113 measures, 603 playable onsets, 946 playable notes, 104 populated measures.
+4. Build a V144-only reproducible baseline comparison/report from existing frozen repository evidence before changing musical candidate logic.
+5. Separate mismatch diagnostics into pitch-content/chord-set, timing/onset, string/fret voicing, and technique buckets; keep PDF-event fidelity as an independent invariant.
+6. Continue CPU/repository-only work; do not invoke Modal/L4/GPU without fresh explicit authorization.
