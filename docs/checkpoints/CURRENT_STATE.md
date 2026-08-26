@@ -2,7 +2,7 @@
 
 Updated: 2026-08-26 America/Montreal
 Branch: `v143-contextual-prune-lobo`
-Active phase: **V144 Rhythm gold calibration. The accepted 1144-event three-signature baseline remains locked. The additive four-signature conjunction family is now consumed and sealed: its single actual CPU search evaluated 512 fit-ranked candidates, none cleared the fixed fit lock, and the selector deterministically kept the accepted 1144-event baseline. No quad validation/canary candidate was opened and no quad promotion occurred. Do not begin Bass/Lead unless Rhythm quality is proven or the user explicitly redirects.**
+Active phase: **V144 Rhythm gold calibration. The accepted 1144-event three-signature baseline remains locked. The additive four-signature conjunction family is now consumed and sealed: its single actual CPU search evaluated 512 fit-ranked candidates, none cleared the fixed fit lock, and the selector deterministically kept the accepted 1144-event baseline. A new fit-only error-mechanism diagnostic has now been implemented but not yet executed; it performs no candidate construction/ranking/selection and is intended only to decide whether the next materially new family should target deletion, pitch/onset correction, or string/fret correction. Do not begin Bass/Lead unless Rhythm quality is proven or the user explicitly redirects.**
 
 ## Permanent safety boundary
 - Work only on `v143-contextual-prune-lobo`; never modify/merge `main` or Production.
@@ -74,10 +74,18 @@ Active phase: **V144 Rhythm gold calibration. The accepted 1144-event three-sign
 - Workflow archived/sealed commit `69db5acad3e313610f22617f06fbb325e5b8941d`, archived blob `abd950baf353da20ae581b5a524b54970abb9c8c`. The seal commit triggered no quad workflow run; only unrelated `cleanup-tab-preview` ran.
 - **No quad candidate was promoted. Accepted V144 baseline remains exactly the locked triple baseline.**
 
+## Fit-only error-mechanism diagnostic — PREPARED, NOT YET EXECUTED
+- Implementation `validation/v144_rhythm_calibration/analyze_fit_error_mechanisms.py`, commit `4dc645f7443fea9c5bb270419eb74488a121b6f6` (`v144: add fit-only error mechanism diagnostic`).
+- Hard-locks immutable V5 identity plus accepted baseline name/signatures/event count/SHA, reconstructs the accepted 1144-event baseline, and requires 113 generated measures.
+- Uses only **fit** rows for mechanism calculations. It performs no candidate construction, ranking, selection, promotion, or threshold adjustment.
+- Measures: pitch-content matches; tight ±0.5-step pitch/timing matches; gross ±2-step pitch/timing matches; exact string/fret/timing matches; exact-onset exact-pitch notes; same-onset wrong-pitch substitution slots; displaced same-measure pitch matches; gross-only timing recovery; correct-pitch/timing but wrong string/fret; gross unmatched generated/reference counts.
+- Also reports explicitly labeled **fit-only oracle ceilings** for perfect false-positive deletion and count-preserving pitch correction. These are diagnostic ceilings only, not legal runtime rules or generalization evidence.
+- Safety contract states validation/canary labels are not used for this diagnostic, historical consumed-family outcomes are not used to compute mechanisms, runtime reference input remains forbidden, fixed selector thresholds cannot be changed from this diagnostic, and the next family must be materially new and pre-registered.
+
 ## Immediate next actions
 1. Never replay/reselect from the consumed single/pair/triple/quad candidate families and do not alter their thresholds after seeing outcomes.
-2. Because the accepted baseline did not change, use only its already-authorized **fit** evidence for any next diagnostic/family construction; do not use validation/canary/full outcomes to invent or rank a new rule.
-3. Before another one-shot candidate search, define a **materially new, pre-registered correction family** (not an enlarged/reordered quad list), add deterministic tests, preserve all 113 accepted-baseline generated measures, and pass the CPU gate first.
-4. A safe next investigation is a fit-only error-mechanism diagnostic on the accepted 1144-event baseline (e.g. false-positive deletion vs pitch/onset/string-fret correction opportunity) to decide whether further pruning is structurally capable of meaningful improvement. Diagnostics must be labeled calibration-only and may not claim unseen generalization.
+2. Add deterministic tests for `analyze_fit_error_mechanisms.py`, then run it CPU-only against the accepted 1144-event baseline and persist exactly one diagnostic report.
+3. Use the resulting fit-only mechanism evidence only to choose the **shape** of a materially new pre-registered correction family; do not select any consumed-family runner-up and do not change fixed selector thresholds.
+4. Before any new one-shot candidate search, add deterministic policy tests, preserve all 113 accepted-baseline generated measures, and pass the CPU gate first.
 5. Do not promote Rhythm, do not start Bass/Lead, and do not claim near-100% quality; current full-gold accepted baseline remains pitch F1 `0.2909090909090909` with critical mismatch count `1810`.
 6. **No Modal/L4/GPU without fresh explicit user authorization.**
