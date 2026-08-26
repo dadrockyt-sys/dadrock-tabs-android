@@ -1,0 +1,135 @@
+name: V144 Rhythm Fit-Only Error Mechanism Diagnostic
+
+on:
+  push:
+    branches:
+      - v143-contextual-prune-lobo
+    paths:
+      - .github/workflows/v144-fit-error-mechanism-diagnostic.yml
+
+permissions:
+  contents: write
+
+concurrency:
+  group: v144-rhythm-fit-error-mechanism-diagnostic
+  cancel-in-progress: false
+
+jobs:
+  diagnose:
+    if: "${{ github.event.head_commit.message == 'v144 execute fit mechanism diagnostic' }}"
+    name: Diagnose accepted baseline fit mechanisms on CPU
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+
+    steps:
+      - name: Check out exact revision
+        uses: actions/checkout@v4
+        with:
+          ref: ${{ github.sha }}
+          fetch-depth: 0
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+
+      - name: Verify immutable identities and diagnostic tests
+        shell: bash
+        run: |
+          set -euo pipefail
+          test "$(git hash-object analyzer/v143_reference_free_rhythm_pipeline.py)" = "7f72f8ed9b14af8bc93e95544195204d99c6bec1"
+          test "$(git hash-object debug/v143-contextual-prune/v5-professional-pdf/final-professional-holdout-result.json)" = "511fd244f231b66d08306f97b5a47ed41f5415c7"
+          test "$(sha256sum debug/v143-contextual-prune/v5-professional-pdf/v5-render-stream.json | awk '{print $1}')" = "7c3399d3f5e05ecc8ac98d71d0e5300e1e78f63ae96c1642fe4a19debb4061b2"
+          test "$(sha256sum debug/v144-rhythm-calibration/reference/professional-rhythm-gold-reference.json | awk '{print $1}')" = "18fd868ae960dfcdd1ffb0110f1a9dfd8acc2ffeb46e247d1116cd54291526ac"
+          test "$(git hash-object debug/v144-rhythm-calibration/selected/v144-triple-selected-baseline.json)" = "ba8dec9a1c3155816f5841a32ee52ced7998c110"
+          python modal/tests/test_v144_rhythm_fit_error_mechanisms.py -v
+
+      - name: Run fit-only mechanism diagnostic
+        shell: bash
+        run: |
+          set -euo pipefail
+          python validation/v144_rhythm_calibration/analyze_fit_error_mechanisms.py \
+            debug/v143-contextual-prune/v5-professional-pdf/v5-render-stream.json \
+            debug/v144-rhythm-calibration/reference/professional-rhythm-gold-reference.json \
+            debug/v144-rhythm-calibration/selected/v144-triple-selected-baseline.json \
+            modal/configs/v144_rhythm_context_split_config.json \
+            debug/v144-rhythm-calibration/baseline/v144-fit-error-mechanisms.json \
+            > /tmp/v144-fit-error-mechanisms.log
+
+      - name: Verify diagnostic isolation and accounting
+        shell: bash
+        run: |
+          set -euo pipefail
+          python - <<'PY'
+          import json
+          from pathlib import Path
+
+          path = Path('debug/v144-rhythm-calibration/baseline/v144-fit-error-mechanisms.json')
+          report = json.loads(path.read_text(encoding='utf-8'))
+          assert report['classification'] == 'v144-rhythm-accepted-baseline-fit-error-mechanisms'
+          assert report['evaluationRole'] == 'gold-calibration-fit-only-mechanism-diagnostic'
+          assert report['mayClaimUnseenGeneralization'] is False
+          assert report['candidateConstructionPerformed'] is False
+          assert report['candidateRankingPerformed'] is False
+          assert report['candidateSelectionPerformed'] is False
+          assert report['baseline']['name'] == 'prune-triple-67348efe50436fc5'
+          assert report['baseline']['eventCount'] == 1144
+          assert report['baseline']['eventSha256'] == '68b8cdf14ed02265c5e3c204b2af51b0aae4849462e7b3e4243192d8855cc3c3'
+          assert report['baseline']['generatedMeasureCount'] == 113
+          assert report['baseline']['baselineGeneratedMeasureSetPreserved'] is True
+          fit = report['fit']
+          assert fit['generatedNoteCount'] == 643
+          assert fit['referenceNoteCount'] == 594
+          mechanisms = report['mechanisms']
+          assert mechanisms['grossUnmatchedGeneratedNotes'] == fit['generatedNoteCount'] - fit['grossPitchTimingMatchedNotes']
+          assert mechanisms['grossUnmatchedReferenceNotes'] == fit['referenceNoteCount'] - fit['grossPitchTimingMatchedNotes']
+          assert mechanisms['pitchContentFalsePositiveNotes'] == fit['generatedNoteCount'] - fit['pitchContentMatchedNotes']
+          assert mechanisms['pitchContentFalseNegativeNotes'] == fit['referenceNoteCount'] - fit['pitchContentMatchedNotes']
+          assert mechanisms['correctPitchTimingButWrongStringFret'] == fit['tightPitchTimingMatchedNotes'] - fit['exactStringFretTimingMatchedNotes']
+          assert mechanisms['sameOnsetWrongPitchSubstitutionSlots'] >= 0
+          assert mechanisms['sameMeasurePitchMatchesDisplacedFromExactOnset'] >= 0
+          oracles = report['fitOnlyOracles']
+          assert oracles['perfectPitchFalsePositiveDeletion']['pitchContentF1Ceiling'] >= fit['score']['pitchContent']['f1']
+          assert oracles['perfectGrossUnmatchedDeletion']['grossPitchTimingF1Ceiling'] >= fit['score']['pitchTiming']['f1']
+          boundary = report['constructionBoundary']
+          assert boundary['fitLabelsUsedForThisDiagnostic'] is True
+          assert boundary['validationLabelsUsedForThisDiagnostic'] is False
+          assert boundary['canaryLabelsUsedForThisDiagnostic'] is False
+          assert boundary['historicalConsumedFamilyOutcomesUsedToComputeMechanisms'] is False
+          assert boundary['runtimeReferenceInputAllowed'] is False
+          assert boundary['fixedSelectorThresholdsMayBeChangedFromThisDiagnostic'] is False
+          assert boundary['consumedFamilyRunnerUpSelectionAllowed'] is False
+          assert boundary['nextFamilyMustBeMateriallyNewAndPreRegistered'] is True
+          assert report['safety']['v5Modified'] is False
+          assert report['safety']['mainModified'] is False
+          assert report['safety']['productionModified'] is False
+          assert report['safety']['runtimeReferenceInputUsed'] is False
+          assert report['safety']['modalGpuInvoked'] is False
+          PY
+
+      - name: Reverify immutable identities after diagnostic
+        shell: bash
+        run: |
+          set -euo pipefail
+          test "$(git hash-object analyzer/v143_reference_free_rhythm_pipeline.py)" = "7f72f8ed9b14af8bc93e95544195204d99c6bec1"
+          test "$(git hash-object debug/v143-contextual-prune/v5-professional-pdf/final-professional-holdout-result.json)" = "511fd244f231b66d08306f97b5a47ed41f5415c7"
+          test "$(sha256sum debug/v143-contextual-prune/v5-professional-pdf/v5-render-stream.json | awk '{print $1}')" = "7c3399d3f5e05ecc8ac98d71d0e5300e1e78f63ae96c1642fe4a19debb4061b2"
+          test "$(git hash-object debug/v144-rhythm-calibration/selected/v144-triple-selected-baseline.json)" = "ba8dec9a1c3155816f5841a32ee52ced7998c110"
+
+      - name: Persist only fit mechanism diagnostic report
+        shell: bash
+        run: |
+          set -euo pipefail
+          report='debug/v144-rhythm-calibration/baseline/v144-fit-error-mechanisms.json'
+          git add "$report"
+          test "$(git diff --cached --name-only)" = "$report"
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git commit -m 'Persist V144 fit-only error mechanism diagnostic'
+          for attempt in 1 2 3 4 5; do
+            git fetch origin v143-contextual-prune-lobo
+            if git rebase origin/v143-contextual-prune-lobo && git push origin HEAD:v143-contextual-prune-lobo; then exit 0; fi
+            git rebase --abort 2>/dev/null || true
+            sleep $((attempt * 2))
+          done
+          exit 1
