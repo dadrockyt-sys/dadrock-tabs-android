@@ -2,7 +2,7 @@
 
 Updated: 2026-08-26 America/Montreal
 Branch: `v143-contextual-prune-lobo`
-Active phase: **V144 Rhythm gold calibration. Families #1–#13 are consumed/sealed. Accepted baseline remains family #10. Family #14 is preregistered/frozen. Its CPU-only policy and synthetic policy tests are implemented and blob-locked. A one-use branch-scoped CPU proof workflow is also blob-locked below, but its trigger has not yet been created. No family #14 FIT search has been run. Next safe step is to create the exact proof trigger once, observe the CPU result, seal the proof, and checkpoint before search implementation.**
+Active phase: **V144 Rhythm gold calibration. Families #1–#13 are consumed/sealed. Accepted baseline remains family #10. Family #14 is preregistered/frozen. Its policy/tests are blob-locked. The first branch-scoped CPU proof trigger was created exactly once, but this connector cannot enumerate the resulting private push-triggered Actions run; a local CPU reconstruction of the same family #14 logic/tests passed 9/9 but is intentionally not accepted as the definitive branch proof. No FIT search has run. Next safe step is a self-reporting, branch-scoped CPU proof that verifies exact dependency blobs and writes its own success/run identity only after the exact tests pass, then checkpoint before search implementation.**
 
 ## Permanent safety / fixed protocol
 - Work only on `v143-contextual-prune-lobo`; never modify/merge `main` or Production.
@@ -57,14 +57,17 @@ Active phase: **V144 Rhythm gold calibration. Families #1–#13 are consumed/sea
 - Candidate construction/ranking is FIT-only. Validation/canary may gate only one locked FIT winner. Any failure or no qualifying FIT winner => deterministic family #10 fallback; never alternate.
 - Promotion gates remain unchanged: FIT Pitch Content F1 gain >=0.005, no musical regression, critical delta <=0, exact 113-measure coverage, independent PDF event fidelity 1.0.
 
-### Family #14 implementation status — blob locked before CPU proof
+### Family #14 implementation/proof status
 - Policy path `modal/v144_rhythm_shared_dyad_surplus_prune_policy.py`; blob **`1f6cc7fcaf2d4ac7838b48b839c617b04cb1c34e`**; creation commit `3833c7dc08f0ae8366132b3e7268f3b22d876767`.
 - Synthetic policy tests path `modal/tests/test_v144_rhythm_shared_dyad_surplus_prune_policy.py`; blob **`38d6804560755fcb0bcf26eeda5e1a5b77f31231`**; creation commit `38ebdf635c5ae3673d5eebc58466f887c75a7a5b`.
-- One-use CPU proof workflow path `.github/workflows/v144-shared-dyad-surplus-prune-policy-cpu.yml`; blob **`ab443d87a53d7affdba23b86f22ec4a4f2035da8`**; creation commit `3ef18442ac8ca12b681f09f7c08d1af8daabf80c`.
-- Workflow is push-scoped only to branch `v143-contextual-prune-lobo` and trigger path `debug/v144-rhythm-calibration/triggers/shared-dyad-surplus-prune-policy-cpu.txt`; it uses Ubuntu CPU, Python 3.11, `py_compile`, and the exact family #14 unittest module. It contains no Modal/GPU step.
-- The trigger has **not** been created at this checkpoint. No proof run exists yet and no FIT candidate construction/search has run.
-- Next planned implementation paths after a successful CPU proof: `validation/v144_rhythm_calibration/search_atomic_shared_dyad_surplus_prunes.py` and `modal/tests/test_v144_rhythm_shared_dyad_surplus_prune_search.py`.
-- **Do not run FIT search until the CPU-only policy and synthetic policy proof are complete and checkpointed.**
+- First one-use CPU proof workflow path `.github/workflows/v144-shared-dyad-surplus-prune-policy-cpu.yml`; blob **`ab443d87a53d7affdba23b86f22ec4a4f2035da8`**; creation commit `3ef18442ac8ca12b681f09f7c08d1af8daabf80c`.
+- First trigger path `debug/v144-rhythm-calibration/triggers/shared-dyad-surplus-prune-policy-cpu.txt`; exact trigger commit **`221d5edb332746b41a24b21f7fd69a030f260258`**. Trigger was created once and must not be changed/retriggered.
+- Limitation: the available connector cannot enumerate private push-triggered workflow runs for this repository; classic commit status for `221d5edb...` returned no status entries, which is inconclusive rather than a pass/fail.
+- Independent local CPU reconstruction of the family #14 policy behavior and synthetic cases passed **9/9 tests**. Because that reconstruction did not execute the exact repository blobs in an authenticated checkout, it is supporting evidence only and is **not** the definitive blob proof.
+- Exact direct dependencies are still `modal/v144_rhythm_context_split_policy.py` blob `2da58508f2132660ad317ee63d5cb043d58285f0` and `modal/v144_rhythm_pitch_shift_policy.py` blob `d9998c59acddba070069668d62bcb1c3cdaf2b05`.
+- Definitive proof requirement is now explicit: a new self-reporting CPU-only workflow must verify the exact policy/test/dependency blobs, compile and run the exact unittest module, and only on success write a proof result containing its trigger SHA and run identity back to this branch. No FIT data/search may be accessed by that proof.
+- Next planned implementation paths after definitive CPU proof: `validation/v144_rhythm_calibration/search_atomic_shared_dyad_surplus_prunes.py` and `modal/tests/test_v144_rhythm_shared_dyad_surplus_prune_search.py`.
+- **Do not run FIT search until the definitive CPU-only policy proof is complete and checkpointed.**
 
 ## Family #13 — CONSUMED / SEALED / NO SCORE CHANGE
 ### Frozen family
@@ -107,20 +110,21 @@ Active phase: **V144 Rhythm gold calibration. Families #1–#13 are consumed/sea
 
 ## EXPLICIT NEXT STEPS — CONTINUATION CONTRACT
 1. Re-read this checkpoint and stay on `v143-contextual-prune-lobo` only.
-2. Never rerun/retrigger/reselect/retune families #1–#13 or established CPU proofs.
+2. Never rerun/retrigger/reselect/retune families #1–#13 or established CPU proofs. Do not alter/retrigger the first family #14 trigger `221d5edb...`.
 3. Accepted baseline remains family #10; headline scorer remains **35.4% Pitch Content F1**. Do not claim a gain from family #13 or family #14 unless all gates pass and the accepted baseline actually changes.
 4. Current aggregate residual diagnostic `b9794a7b...` remains valid/current because baseline did not change.
 5. Family #14 is frozen exactly as preregistered above. Do not retune its shape/support/cap/rule identity after looking at family #14 candidate outcomes.
-6. Create the exact family #14 policy CPU-proof trigger once, verify the run executes the blob-locked workflow/policy/tests above, record success/failure, seal the one-use proof, and checkpoint. Only on success implement FIT-only search + synthetic invariants; prove them; checkpoint. Only after those proofs may a one-shot FIT execution be armed.
-7. Candidate construction/ranking must remain FIT-only. Validation/canary may gate only one locked FIT winner. Any failure => family #10 fallback; never alternate.
-8. Promotion still requires FIT pitch gain >=0.005, no musical regression, critical delta <=0, coverage 1.0, exact 113 measures where applicable, and independent PDF event fidelity 1.0.
-9. Whenever a future accepted baseline changes, immediately recompute and checkpoint the percentage view and create a new aggregate accepted-baseline FIT residual before shaping its successor.
-10. Never modify main/Production/frontend/Bass/Lead or use Modal/L4/GPU without fresh explicit authorization.
+6. Build/blob-lock/checkpoint one self-reporting CPU proof workflow that verifies exact family #14 policy/test/dependency blobs, then trigger it once. Accept proof only if its success file appears and identifies the exact trigger/run. Seal/checkpoint the proof before search implementation.
+7. Only after definitive policy proof succeeds, implement FIT-only search + synthetic invariants; prove them; checkpoint. Only after those proofs may a one-shot FIT execution be armed.
+8. Candidate construction/ranking must remain FIT-only. Validation/canary may gate only one locked FIT winner. Any failure => family #10 fallback; never alternate.
+9. Promotion still requires FIT pitch gain >=0.005, no musical regression, critical delta <=0, coverage 1.0, exact 113 measures where applicable, and independent PDF event fidelity 1.0.
+10. Whenever a future accepted baseline changes, immediately recompute and checkpoint the percentage view and create a new aggregate accepted-baseline FIT residual before shaping its successor.
+11. Never modify main/Production/frontend/Bass/Lead or use Modal/L4/GPU without fresh explicit authorization.
 
 ## Current stop point
 - Accepted baseline: family #10 / `4e6f9f...`.
 - Motivational scorer view: **Pitch Content 35.4%**, Pitch+timing 6.7%, String/fret+timing 5.5%, Chord/voicing 5.8%, Measure coverage 100%, PDF event fidelity 100%.
 - Families #1–#13 consumed/sealed.
-- Family #14 frozen; implementation blob-locked; one-use CPU proof workflow blob `ab443d87...` is checkpointed and untriggered; no FIT search run.
+- Family #14 frozen; policy/tests blob-locked; first trigger `221d5edb...` is sealed/inconclusive via connector; local reconstruction passed 9/9; definitive self-reporting CPU proof still required; no FIT search run.
 - Current residual diagnostic remains `b9794a7b8a882ba9ade5e8095f112d4be45e47e6`.
-- Safe continuation: create the one-use CPU proof trigger exactly once, observe/seal/checkpoint the result before search implementation.
+- Safe continuation: build/checkpoint/trigger the self-reporting CPU-only family #14 policy proof, then continue only on recorded success.
