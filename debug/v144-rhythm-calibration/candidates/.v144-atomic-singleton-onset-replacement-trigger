@@ -1,0 +1,22 @@
+{
+  "classification": "v144-rhythm-atomic-singleton-onset-replacement-one-shot-trigger",
+  "baselineName": "pitch-position-shift-54a6e8d3aa91c422",
+  "baselineEventSha256": "5b36270aaeafa73b2e25722e2576a40424ce5951dcfd2b5d769746bd9eb07e0d",
+  "policyBlob": "1e05e66a3523f98944370837a59e5d6e7293f9ac",
+  "searchBlob": "70880d26418d907cc702233af37bcc4b643e3a57",
+  "policyTestBlob": "a4e1c52e5f63187e8bad5f853300e644f056e726",
+  "searchTestBlob": "3a2adbecbe810e6738718fc72e2cf231555e8c3e",
+  "cpuWorkflowBlob": "961f65cc31e64527fb0510d98211b2a7f2b990cc",
+  "oneShotWorkflowBlob": "a9bef022032f2d5195dc54ba2a5bd9d7629686da",
+  "searchCpuRunId": 32995017936,
+  "searchCpuJobId": 98261834131,
+  "minimumCorrectionSupport": 3,
+  "maximumCandidates": 256,
+  "maximumAbsSemitoneShift": 12,
+  "candidateConstructionFitOnly": true,
+  "validationMayConstructOrRank": false,
+  "canaryMayConstructOrRank": false,
+  "runtimeReferenceAllowed": false,
+  "modalGpuAllowed": false,
+  "replayAllowed": false
+}
