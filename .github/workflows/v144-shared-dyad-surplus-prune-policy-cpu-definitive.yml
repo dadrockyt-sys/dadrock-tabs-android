@@ -1,0 +1,90 @@
+name: V144 Family 14 Shared Dyad Surplus Policy Definitive CPU Proof
+
+on:
+  push:
+    branches:
+      - v143-contextual-prune-lobo
+    paths:
+      - debug/v144-rhythm-calibration/triggers/shared-dyad-surplus-prune-policy-cpu-definitive.txt
+
+permissions:
+  contents: write
+
+jobs:
+  definitive-policy-proof:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - name: Checkout exact trigger commit
+        uses: actions/checkout@v4
+        with:
+          ref: ${{ github.sha }}
+          fetch-depth: 0
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Verify exact frozen policy/test/dependency blobs
+        shell: bash
+        run: |
+          set -euo pipefail
+          test "$(git hash-object modal/v144_rhythm_shared_dyad_surplus_prune_policy.py)" = "1f6cc7fcaf2d4ac7838b48b839c617b04cb1c34e"
+          test "$(git hash-object modal/tests/test_v144_rhythm_shared_dyad_surplus_prune_policy.py)" = "38d6804560755fcb0bcf26eeda5e1a5b77f31231"
+          test "$(git hash-object modal/v144_rhythm_context_split_policy.py)" = "2da58508f2132660ad317ee63d5cb043d58285f0"
+          test "$(git hash-object modal/v144_rhythm_pitch_shift_policy.py)" = "d9998c59acddba070069668d62bcb1c3cdaf2b05"
+
+      - name: Compile exact frozen family 14 policy and tests
+        run: |
+          python -m py_compile \
+            modal/v144_rhythm_shared_dyad_surplus_prune_policy.py \
+            modal/tests/test_v144_rhythm_shared_dyad_surplus_prune_policy.py
+
+      - name: Run exact frozen family 14 synthetic policy proof
+        run: |
+          python -m unittest -v modal.tests.test_v144_rhythm_shared_dyad_surplus_prune_policy
+
+      - name: Write success proof only after all checks pass
+        env:
+          PROOF_TRIGGER_SHA: ${{ github.sha }}
+          PROOF_RUN_ID: ${{ github.run_id }}
+          PROOF_RUN_ATTEMPT: ${{ github.run_attempt }}
+          PROOF_WORKFLOW_SHA: ${{ github.workflow_sha }}
+          PROOF_JOB: ${{ github.job }}
+        run: |
+          python - <<'PY'
+          import json
+          import os
+          from pathlib import Path
+
+          path = Path('debug/v144-rhythm-calibration/proofs/shared-dyad-surplus-prune-policy-cpu.json')
+          path.parent.mkdir(parents=True, exist_ok=True)
+          payload = {
+              'schemaVersion': 14426,
+              'family': 14,
+              'proof': 'shared-dyad-surplus-prune-policy-cpu',
+              'status': 'success',
+              'branch': 'v143-contextual-prune-lobo',
+              'triggerSha': os.environ['PROOF_TRIGGER_SHA'],
+              'runId': int(os.environ['PROOF_RUN_ID']),
+              'runAttempt': int(os.environ['PROOF_RUN_ATTEMPT']),
+              'workflowSha': os.environ['PROOF_WORKFLOW_SHA'],
+              'job': os.environ['PROOF_JOB'],
+              'policyBlob': '1f6cc7fcaf2d4ac7838b48b839c617b04cb1c34e',
+              'testBlob': '38d6804560755fcb0bcf26eeda5e1a5b77f31231',
+              'contextSplitBlob': '2da58508f2132660ad317ee63d5cb043d58285f0',
+              'pitchShiftBlob': 'd9998c59acddba070069668d62bcb1c3cdaf2b05',
+              'testModule': 'modal.tests.test_v144_rhythm_shared_dyad_surplus_prune_policy',
+              'runtimeReferenceInput': False,
+              'modalGpuUsed': False,
+              'fitSearchRun': False,
+          }
+          path.write_text(json.dumps(payload, indent=2, sort_keys=True) + '\n', encoding='utf-8')
+          PY
+
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add debug/v144-rhythm-calibration/proofs/shared-dyad-surplus-prune-policy-cpu.json
+          git commit -m "v144 record family 14 policy CPU proof"
+          git push origin HEAD:v143-contextual-prune-lobo
