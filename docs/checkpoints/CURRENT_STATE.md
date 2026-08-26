@@ -2,7 +2,7 @@
 
 Updated: 2026-08-26 America/Montreal
 Branch: `v143-contextual-prune-lobo`
-Active phase: **V144 Rhythm gold calibration. The accepted 1144-event three-signature baseline remains locked. Single/pair/triple/quad pruning families are consumed; the quad family kept deterministic fallback. The fit-only error-mechanism diagnostic has now completed successfully and shows deletion/pruning has a much lower structural ceiling than pitch correction on fit. Next is to pre-register and CPU-test a materially new reference-free pitch-correction family; no new candidate search has started. Do not begin Bass/Lead unless Rhythm quality is proven or the user explicitly redirects.**
+Active phase: **V144 Rhythm gold calibration. The accepted 1144-event three-signature baseline remains locked. Single/pair/triple/quad pruning families are consumed; the quad family kept deterministic fallback. Two fit-only CPU diagnostics now show deletion/pruning has a much lower structural ceiling than pitch correction on fit. Next is to pre-register and CPU-test a materially new reference-free pitch-correction family; no new candidate search has started. Do not begin Bass/Lead unless Rhythm quality is proven or the user explicitly redirects.**
 
 ## Permanent safety boundary
 - Work only on `v143-contextual-prune-lobo`; never modify/merge `main` or Production.
@@ -39,6 +39,7 @@ Active phase: **V144 Rhythm gold calibration. The accepted 1144-event three-sign
 2. Two-signature conjunction family: `register::high && section16::1` passed split gates but lost one whole generated measure and failed later full invariant; full evaluated bot `e03d0d25a3c1e8ab8d68e51737e0abd84a920fb9`; workflow sealed `d13331984ff5b5108ab7e74e77889f79b9e76987`.
 3. Three-signature family is consumed by its accepted winner below. Do **not** use later evidence to choose another triple candidate.
 4. Four-signature additive family is consumed by run `32938769540`; no candidate cleared fit. Do **not** replay, retune thresholds, enlarge the same candidate list, or choose a quad runner-up later.
+5. Do **not** escalate to a five-signature/deeper conjunction pruning family from the current residuals; fit-only oracle evidence proves deletion-only correction cannot approach the target even under perfect false-positive deletion.
 
 ## Accepted V144 calibration baseline — locked
 - Triple policy commit `84dc62f7dc688c7a3e00133598f01a4f46930d2f`; tests `d6e9985dc4fe73547d545143d30c0efd36f22f46`; CPU gate `32937133401` SUCCESS.
@@ -61,6 +62,16 @@ Active phase: **V144 Rhythm gold calibration. The accepted 1144-event three-sign
 - Outcome: no candidate cleared fit; deterministic fallback kept accepted baseline. Validation/canary/fullCalibration were not opened. Report bot `fa272999273a5421901cdb4601f8ef33c8dd0dab`; report blob `5928e9687414c1e118653f139eda205237584ee0`.
 - Workflow archived/sealed commit `69db5acad3e313610f22617f06fbb325e5b8941d`, archived blob `abd950baf353da20ae581b5a524b54970abb9c8c`.
 
+## Fit-only deletion/pruning ceiling diagnostic — COMPLETE / SEALED
+- Implementation `validation/v144_rhythm_calibration/analyze_fit_only_pruning_ceiling.py`, commit `6bd4025aa585374fd5235844212dae90299b966d`; deterministic tests commit `4973e2768dcb15b06082bd12eb8ae71ad63366c3`.
+- CPU-only workflow trigger commit `a690ff83cb706a5fc73c1119f53f854b93b4ca96`; run **`32939218722` SUCCESS**.
+- Persisted report `debug/v144-rhythm-calibration/baseline/v144-fit-only-pruning-ceiling.json`; bot commit `d1a10cc98dbf9ffe859720f55180c8e7d307ee6f`; report blob `6064ede57f4ec18a3c961f4c8b82b98aad26efdf`.
+- Diagnostic performed no candidate construction/ranking/selection; validation/canary were not opened; full-gold did not choose the mechanism; thresholds were unchanged; runtime reference input false; Modal/GPU false.
+- Fit identity: generated `643`, reference `594`, critical mismatches `1105`; pitch-content matched `138` / F1 `0.2231204527081649`; tight pitch/timing matched `28` / F1 `0.04527081649151172`; exact string/fret/timing matched `20` / F1 `0.03233629749393695`.
+- **Perfect deletion-only oracle ceilings:** pitch-content F1 `0.3770491803278689`; pitch/timing F1 `0.09003215434083602`; string/fret/timing F1 `0.06514657980456026`. These ceilings assume every generated false positive can be deleted while every current match is perfectly retained.
+- Structural conclusion: deletion-only correction cannot recover missing reference notes, repitch notes, move onsets, or correct string/fret, and cannot approach 0.99 even on fit.
+- Diagnostic workflow archived/sealed commit `507bf1af318183af104903ffdb0b5ab68abf8bd1`; archived workflow blob `e3fdad7d8d889a57aa2cb085e870d073f70bf96d`.
+
 ## Fit-only error-mechanism diagnostic — COMPLETE / SEALED
 - Implementation `validation/v144_rhythm_calibration/analyze_fit_error_mechanisms.py`, commit `4dc645f7443fea9c5bb270419eb74488a121b6f6`; deterministic tests `modal/tests/test_v144_rhythm_fit_error_mechanisms.py`, commit `2cc3ef0c90fa34bc306a2ccf9fdbeaed93ea4991`.
 - CPU-only diagnostic trigger commit `251110e0c317ce4df69922f37bff36925a72f296`; run **`32939297662` SUCCESS**.
@@ -72,9 +83,10 @@ Active phase: **V144 Rhythm gold calibration. The accepted 1144-event three-sign
 - Diagnostic workflow archived/sealed commit `f391a52870c8e6eb8da5a476f4592a104dd15aae`; archived workflow blob `b900a3c2f8f408b20d560a41ebc69e4b2f938e1d`.
 
 ## Immediate next actions
-1. Never replay/reselect from consumed single/pair/triple/quad families or the completed diagnostic, and do not alter fixed selector thresholds after seeing outcomes.
+1. Never replay/reselect from consumed single/pair/triple/quad families or the completed diagnostics, and do not alter fixed selector thresholds after seeing outcomes.
 2. Pre-register a **materially new reference-free pitch-correction family** from accepted-baseline fit evidence only. The family may learn deterministic context-to-correction rules from fit labels, but runtime application must use only generated-event/context fields and must not consult the professional reference.
-3. Prefer pitch correction over more deletion: pitch correction changes note identity while preserving event count/measure coverage; any string/fret change must remain internally consistent with MIDI and the render contract.
-4. Add deterministic policy tests and pass a CPU-only safety gate before any one-shot correction search. No correction candidate has been searched or selected yet.
-5. Preserve one-winner fit lock and fixed validation → canary → full-gold → independent PDF-event invariant sequence; fallback remains the accepted 1144-event baseline.
-6. Do not promote Rhythm, start Bass/Lead, or claim near-100% quality. **No Modal/L4/GPU without fresh explicit user authorization.**
+3. Prefer pitch/onset correction over more deletion: fit contains `184` same-onset wrong-pitch substitution slots and `110` displaced same-measure pitch matches, versus only `8` correct-pitch/timing notes with wrong string/fret.
+4. Inspect which reference-free runtime fields already exist in the accepted event/analyzer stream, then define a small deterministic correction-policy search space. Any pitch change must keep MIDI/string/fret internally consistent and preserve the render contract.
+5. Add deterministic policy tests and pass a CPU-only safety gate before any one-shot correction search. Preserve all 113 accepted-baseline generated measures. No correction candidate has been searched or selected yet.
+6. Preserve one-winner fit lock and fixed validation → canary → full-gold → independent PDF-event invariant sequence; fallback remains the accepted 1144-event baseline.
+7. Do not promote Rhythm, start Bass/Lead, or claim near-100% quality. **No Modal/L4/GPU without fresh explicit user authorization.**
