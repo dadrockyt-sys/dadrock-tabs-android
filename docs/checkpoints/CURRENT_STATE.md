@@ -26,42 +26,50 @@ Priority: **repair Rhythm using the consumed V5 professional reference as calibr
 - Preserve branch `v143-github-modal-smoke`, workflow blob `11e8ab8cc9e34242a45442226c693a25fcb29b67`, and integration probe blob `ea3cd0bea0c9b43fc6a707f974c4d6d4a6925fc1`.
 - Do not run Modal/L4 blindly. Use it later for a specific hypothesis or end-to-end verification.
 
-## V144 calibration diagnostic — baseline complete
+## V144 calibration diagnostic V2 — COMPLETE
 - Script: `analyzer/v144_rhythm_calibration_diagnostics.py`.
 - Workflow: `.github/workflows/v144-rhythm-calibration-diagnostic.yml`.
-- Baseline trigger commit `0222b076fa99e7c1a51b40de90d0871741b1086d`; run `32920350517` = **SUCCESS**.
-- Persisted aggregate report: `debug/v144-rhythm-calibration/v5-diagnostic-baseline.json`, baseline Git blob `e8d7cbdc9ef2e78bda5c9e989adad10665b2142d`.
-- Exact consumed structured source was SHA-verified and deleted after diagnostics; only aggregates were persisted.
+- V2 trigger commit `7e73de6e87649bc3a6e958117c5bda4b7f86139d`; run `32920648462` = **SUCCESS**.
+- Persisted aggregate report: `debug/v144-rhythm-calibration/v5-diagnostic-baseline.json`, V2 Git blob `d1a5fa3d1584c104c23ba46508ac967532cf9418`.
+- Exact consumed structured source was SHA-verified and deleted after diagnostics; only aggregates persisted.
 - `candidateModified=false`, `modalInvoked=false`, `productionModified=false`, `unseenHoldout=false`.
 
-## Baseline findings — musical reconstruction is definitely poor
+## Confirmed V5 failure class — reconstruction / selection first
 - Pitch content ignoring timing: 644 matches, F1 `0.5976798143851508`.
 - Pitch-class content ignoring octave: 867 matches, F1 `0.8046403712296984`.
-- Exact string/fret/pitch content F1 is `0.4677494199535963`.
+- Exact string/fret/pitch content F1 `0.4677494199535963`.
 - Generated notes `1209` vs reference `946`; generated onsets `891` vs reference `603` — major over-generation.
-- Exact onset locations nevertheless have 360 matches; onset F1 `0.4819277108433735`. This is important: a large fraction of professional onsets already coincide with V5 grid locations.
-- Note density: 67 measures over-generated, 33 under-generated, 13 exact; mean absolute note-count error `4.4867` per measure.
-- Onset density: 74 measures over-generated, 20 under-generated, 19 exact; mean absolute onset-count error `3.0973` per measure.
-- Several measures contain many generated events while the professional rhythm track has zero playable notes (notably 110, 106, 111, 38, 69, 113), consistent with non-rhythm contamination / insufficient source gating.
-- Generated MIDI range `40-83` vs reference `40-71`; MIDI 64 is over-produced by `+205` notes, while important lower-register notes are under-produced.
-- Strong conclusion: V5 has substantial over-generation, register/octave bias, and voicing/pitch-selection errors.
+- Exact onset positions already match at 360 of the 603 reference onset locations: onset F1 `0.4819277108433735`.
+- At those 360 already-shared onset positions, pitch content F1 is only `0.562560620756547` while pitch-class F1 is `0.7720659553831232`; only 17 shared onsets have the exact pitch multiset and 59 have the exact pitch-class multiset.
+- This directly shows that many timing positions are usable but the notes assigned to them are wrong, in the wrong octave/register, or over/under-voiced.
+- Generated MIDI range `40-83` vs reference `40-71`; MIDI 64 is over-produced by `+205` notes. Several upper MIDI values occur repeatedly in V5 but never in this rhythm reference.
+- Note/onset density remains heavily over-generated, including many events in calibration-reference-silent measures.
 
-## Timing interpretation — first report required a correction
-- Baseline exact pitch+timing is only 48 matches / F1 `0.044547563805104405`.
-- A pitch+timing absolute-step search found a best shift of `-14` steps, but **do not treat that as proven global clock/measure error yet**.
-- Because the song contains repeated riffs and because 360 onset locations already match exactly, a pitch-conditioned shift search can prefer a repeated-pattern alias.
-- V143 timing code was inspected: `v143_reference_free_timing.py` chooses bar phase from four beat-accent classes; `v143_candidate_timing_adapter.py` then maps all notes using that phase. A real phase error here would propagate globally, but the current evidence is not sufficient to assert that happened.
-- Therefore no timing correction has been applied and `-14` will not be hardcoded.
+## Timing result — no global shift fix
+- Pitch-conditioned absolute-step search still prefers `-14`, but V2 proves it is not a safe global timing correction.
+- Unique-onset shift search improves onset F1 only from `0.4819277108433735` at zero shift to `0.4926372155287818` at `-26`; this tiny gain does not justify moving the grid.
+- Quarter-song best unique-onset shifts vary widely: `-12`, `+6`, `0`, `-8` rather than one stable phase.
+- Same-measure/same-pitch pairing: 305 pairs total; 48 exact-step, 85 within ±1 step, 140 within ±2; step deltas are broad rather than dominated by one offset.
+- A one-measure pitch-only shift improves F1 modestly from `0.2831` to `0.3165`, again consistent with repeated riff structure rather than proof of a measure-origin bug.
+- Conclusion: **do not apply a global timing or measure shift.** Keep timing stable for the first V6 experiment and attack reconstruction/selection first.
 
-## Alias-resistant diagnostic V2 — prepared
-- Updated `analyzer/v144_rhythm_calibration_diagnostics.py` in commit `06e09c8f14a9fb3b2028a2638e38c51edacb67b8`.
-- Added unique-onset absolute-step shift search (one vote per onset, not per note), measure-shift pitch search, same-measure/same-pitch nearest step-delta histogram, and pitch/pitch-class quality restricted to already-shared onset positions.
-- Goal: separate genuine grid phase error from repeated-riff aliasing and from wrong pitches placed on otherwise-correct onsets.
-- V5 remains unchanged; no Modal; no Production.
+## V143 path inspection
+- `analyzer/v143_reference_free_timing.py` estimates beat grid and bar phase from full-mix onset/low-frequency accents.
+- `analyzer/v143_candidate_timing_adapter.py` maps Basic Pitch candidates onto that grid.
+- `analyzer/v143_reference_free_rhythm_pipeline.py` uses caller-selected candidate rhythm stems plus paired carrier stems.
+- V5 overlay explicitly did not relocate attacks. No V144 timing change has been made.
+
+## V6 first target
+1. Reduce non-rhythm / lead contamination and false-positive onsets before changing timing.
+2. Reduce octave/register bias, especially unsupported upper-register hypotheses.
+3. Improve pitch selection/voicing at onset positions already supported by rhythm evidence.
+4. Make each rule depend only on source/model evidence; the consumed professional reference is used for grading/calibration, not copied into runtime decisions.
+5. Measure contamination gate and register/pitch changes as isolated V6 experiments.
+6. Keep scorer and Modal/L4 assets preserved; use L4 only for a specific separation hypothesis or later GPU verification.
+7. Final independent validation must use a different unseen professional song/reference.
 
 ## Next exact actions
-1. Re-run the CPU calibration diagnostic with schema V2 and persist aggregates.
-2. If unique-onset and same-measure pitch-step evidence confirms a timing-origin problem, design a reference-free V144 timing experiment. Otherwise prioritize contamination/register/pitch selection first.
-3. Build V6 changes as isolated experiments; never modify terminal V5 artifacts.
-4. Use Modal/L4 only when a specific separation/stem hypothesis justifies GPU testing.
-5. Final independent validation must use a new unseen professional song/reference.
+1. Trace V5 attack rescue and primary-pitch selection logic, especially why MIDI 64/high-register hypotheses dominate and why silent/lead-dominant regions survive.
+2. Build a V144 source-only diagnostic that scores V5 events by their original candidate evidence (source count, amplitude, grid error, carrier scores, model agreement) against calibration outcomes, without changing V5.
+3. Derive conservative V6 gating/register rules from those source-only features, then generate the first V6 candidate.
+4. Save checkpoint before V6 generation.
