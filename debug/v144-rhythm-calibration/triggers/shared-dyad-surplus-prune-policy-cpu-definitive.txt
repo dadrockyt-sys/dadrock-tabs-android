@@ -1,0 +1,8 @@
+family=14
+proof=shared-dyad-surplus-prune-policy-cpu-definitive
+policyBlob=1f6cc7fcaf2d4ac7838b48b839c617b04cb1c34e
+testBlob=38d6804560755fcb0bcf26eeda5e1a5b77f31231
+contextSplitBlob=2da58508f2132660ad317ee63d5cb043d58285f0
+pitchShiftBlob=d9998c59acddba070069668d62bcb1c3cdaf2b05
+workflowBlob=fe5ce9446ef06bbabf7e8f5b866ee05dab556d3c
+branch=v143-contextual-prune-lobo
