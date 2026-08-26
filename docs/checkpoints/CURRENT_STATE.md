@@ -2,7 +2,7 @@
 
 Updated: 2026-08-26 America/Montreal
 Branch: `v143-contextual-prune-lobo`
-Active phase: **V144 Rhythm gold calibration. Families 1–10 are consumed/sealed. Family #10 winner `singleton-onset-replace-be9e9aa7a734e3cd` is the ACCEPTED V144 RHYTHM CALIBRATION BASELINE. A new accepted-baseline FIT aggregate residual diagnostic is PRE-REGISTERED, its required pre-label CPU gate is GREEN, and its one-shot workflow is PRE-REGISTERED but NOT ARMED. The diagnostic has NOT read FIT labels yet. No family #11 is pre-registered/evaluated. Production/main/Bass/Lead remain untouched.**
+Active phase: **V144 Rhythm gold calibration. Families 1–10 are consumed/sealed. Accepted calibration baseline is family #10 winner `singleton-onset-replace-be9e9aa7a734e3cd` / event SHA `4e6f9f...`. The accepted-baseline FIT aggregate residual diagnostic is COMPLETE, SUCCESSFUL, PERSISTED, and SEALED. Its aggregate residuals justify pre-registering one materially distinct family #11 shape: atomic exact-singleton generated-only onset pruning. No family #11 candidate/rule has been constructed or evaluated yet. Production/main/Bass/Lead remain untouched.**
 
 ## Permanent safety boundary
 - Work only on `v143-contextual-prune-lobo`; never modify/merge `main` or Production.
@@ -14,59 +14,67 @@ Active phase: **V144 Rhythm gold calibration. Families 1–10 are consumed/seale
 - **No Modal/L4/GPU without fresh explicit user authorization. None used in V144.**
 
 ## Gold calibration / fixed selector
-- Professional target is a **gold calibration benchmark, not unseen holdout**.
-- Structured reference SHA256 `18fd868ae960dfcdd1ffb0110f1a9dfd8acc2ffeb46e247d1116cd54291526ac`; 113 measures / 603 playable onsets / 946 notes / 104 populated measures.
+- Professional target is a **gold calibration benchmark, not unseen holdout**; structured reference SHA256 `18fd868ae960dfcdd1ffb0110f1a9dfd8acc2ffeb46e247d1116cd54291526ac`.
 - Split measure+step seed 144: 60% fit / 20% validation / 20% canary.
 - FIT may construct/rank; validation/canary gate only ONE locked winner.
-- Fixed FIT gate: pitch-content gain >= `0.005`; no musical metric regression; no critical mismatch increase; PDF-event fidelity 1.0.
-- Preserve all 113 generated measures; count-preserving families preserve 1144 events.
-- Gate order fixed: fit → validation → canary → full-gold → independent PDF-event invariant.
-- Any later failure => deterministic accepted-baseline fallback; never select an alternate.
-- Never change thresholds/support from observed outcomes; never claim unseen generalization.
+- Fixed FIT gate: pitch-content gain >= `0.005`; no musical metric regression; no critical mismatch increase; PDF-event fidelity `1.0`.
+- Fixed order: fit → validation → canary → full-gold → independent PDF-event invariant. Later failure => accepted-baseline fallback, never alternate selection.
+- Never tune thresholds/support from observed outcomes; never claim unseen generalization.
 
 ## ACCEPTED V144 Rhythm calibration baseline — LOCKED / CALIBRATION ONLY
 - Name `singleton-onset-replace-be9e9aa7a734e3cd`.
-- Manifest `debug/v144-rhythm-calibration/selected/v144-singleton-onset-replacement-selected-baseline.json`; creation commit `3f38f6cbd6adce77eccece281b33ae6d315ec000`; blob `acd12ab68ad16b8faabf38ddc9e1cc0c1e7c4b68`.
-- Transform chain: frozen V5 → historical triple prune → same-string pitch shift → joint pitch+adjacent-string position revoice → exact-singleton replacement `stepParity::0`, source string `0`, source pitch class `4`, explicit target string `3`, semitone shift `-12`.
-- 1144 events / 113 measures; exact event+PDF SHA `4e6f9f247134f79f30a5448515c52a6ca1012c1f1314c3458b448582999e3881`; PDF fidelity `1.0`; 110 changed singleton events/onsets.
-- Full gold: critical `1712`; pitch `0.35406698564593303`; pitch/timing `0.06698564593301436`; string/fret/timing `0.05454545454545454`; chord pitch-set `0.0580511402902557`; exact voicing `0.0580511402902557`; coverage `1.0`; no regressions.
-- Calibration baseline `true`; Production `false`; Rhythm complete `false`; near-100 `false`; unseen-generalization `false`.
-
-## Accepted-baseline reconstruction proof — COMPLETE / CPU GREEN
-- Test `modal/tests/test_v144_rhythm_singleton_selected_baseline_reconstruction.py`; commit `7f815493a1bd055bad79cfd76f2cf875e3abd2e3`; blob `e6acdd8b49dc6d87f04f7cf89367c97a3ca49041`.
-- CPU run `32996069426`, job `98265545933`: SUCCESS. Reference-free V5 → accepted chain exactly reproduces `4e6f9f...`, 1144 events, 113 measures, 110 changes before gold labels.
+- Manifest `debug/v144-rhythm-calibration/selected/v144-singleton-onset-replacement-selected-baseline.json`; commit `3f38f6cbd6adce77eccece281b33ae6d315ec000`; blob `acd12ab68ad16b8faabf38ddc9e1cc0c1e7c4b68`.
+- Chain: frozen V5 → triple prune → same-string pitch shift → pitch+adjacent-string position revoice → singleton replacement `stepParity::0`, source string `0`, pitch class `4`, target string `3`, semitone `-12`.
+- 1144 events / 113 measures; event/PDF SHA `4e6f9f247134f79f30a5448515c52a6ca1012c1f1314c3458b448582999e3881`; PDF fidelity `1.0`; 110 changed singleton events/onsets.
+- Full gold: critical `1712`; pitch `0.35406698564593303`; pitch/timing `0.06698564593301436`; string/fret/timing `0.05454545454545454`; chord pitch-set/exact voicing `0.0580511402902557`; coverage `1.0`.
+- Reconstruction test blob `e6acdd8b49dc6d87f04f7cf89367c97a3ca49041`; CPU run `32996069426`, job `98265545933` SUCCESS; exact `4e6f9f...` reconstructed reference-free before labels.
+- Calibration baseline true; Production false; Rhythm complete false; near-100 false; unseen generalization false.
 
 ## Consumed families — NEVER REPLAY / RESELECT / RETUNE
-1. Single-signature prune — failed validation.
-2. Two-signature prune — failed measure-set invariant.
-3. Triple prune — historical accepted baseline.
-4. Additive four-signature prune — no fit-qualified; sealed `69db5acad3e313610f22617f06fbb325e5b8941d`.
-5. Same-string contextual pitch shift — prior accepted; sealed `21ca074f3917fb72614686ca5b46a3894ea53374`.
-6. Joint contextual pitch+step — failed canary; sealed `215fc49106ef3501b71452b1f6c9f6d638cafd77`.
-7. Joint contextual pitch+adjacent-string position — prior accepted; run `32971373324`; sealed `61422dea64ed4758999b3cd3c978d0db344e3ef6`.
-8. Joint contextual pitch+step+position — no fit-qualified; run `32974497513`; sealed `55a948fa97ab100bdca0b1338b36c9a43a4f5ce9`.
-9. Atomic exact-two-note onset dyad pitch rewrite — zero supported rules / zero candidates; run `32975912923`; report blob `9b1099e42f57127a9cf3168471fdb49415067f5f`; sealed `6e0e23254a4e6c845c681368a96e1623f04364bd`.
-10. Atomic singleton-onset pitch+explicit-string replacement — successful locked winner; one-shot `32995503662`; report commit `ff6165982e8e3036404489c954a7d06ab8a1b015`; report blob `92de07b1cac11cba87e923c18eebf9cce7b0cea7`; workflow deleted `bb7e96c849a21441547eff0cb2ac7da37eb6e223`; trigger deleted `deeef71043fecb34520e0c0b048eddc1497b1ef5`; consumed/sealed — never replay/reselect/retune or select another of its 25 candidates.
+1. Single-signature event prune — failed validation.
+2. Two-signature event prune — failed measure-set invariant.
+3. Triple event prune — historical accepted baseline.
+4. Additive four-signature event prune — no fit-qualified; sealed `69db5acad3e313610f22617f06fbb325e5b8941d`.
+5. Same-string contextual pitch shift — sealed `21ca074f3917fb72614686ca5b46a3894ea53374`.
+6. Joint pitch+step — failed canary; sealed `215fc49106ef3501b71452b1f6c9f6d638cafd77`.
+7. Joint pitch+adjacent-string position — prior accepted; sealed `61422dea64ed4758999b3cd3c978d0db344e3ef6`.
+8. Joint pitch+step+position — no fit-qualified; sealed `55a948fa97ab100bdca0b1338b36c9a43a4f5ce9`.
+9. Atomic exact-two-note onset dyad pitch rewrite — zero supported rules; sealed `6e0e23254a4e6c845c681368a96e1623f04364bd`.
+10. Atomic singleton pitch+explicit-string replacement — successful locked winner; run `32995503662`; report commit `ff6165982e8e3036404489c954a7d06ab8a1b015`; blob `92de07b1cac11cba87e923c18eebf9cce7b0cea7`; execution surfaces deleted; consumed/sealed; never choose another of its 25 candidates.
 
-## Prior FIT-only diagnostics — SEALED / HISTORICAL TO PRIOR `5b36270a...` BASELINE
-- Mechanism diagnostic run `32972033516`; report blob `dbc0c1ab0cfff943f95eab48720c7c2a5eb9d175`; sealed `a6d5ddf373de8a71facf8474d48550aa990d7d54`.
-- Onset topology diagnostic run `32992367811`; report blob `26e1265adf5c1c11838c207b4c5af0927f26b95b`; execution surfaces sealed/deleted.
-- They must NOT be treated as current residual-shape evidence after promotion to `4e6f9f...`.
-
-## Accepted-singleton-baseline FIT residual diagnostic — PRE-REGISTERED / PRE-LABEL CPU GREEN / ONE-SHOT UNARMED
+## Accepted-singleton-baseline FIT residual diagnostic — COMPLETE / SEALED
 - Diagnostic `validation/v144_rhythm_calibration/analyze_singleton_baseline_fit_residuals.py`; commit `dbc2ff96252a7069b928a31d0cf38771d45e9a1f`; blob `27ac8699279db8fc0208d067479ad3751da1a630`.
-- Synthetic tests `modal/tests/test_v144_rhythm_singleton_baseline_fit_residual_diagnostic.py`; commit `9dae8b40170d20d31a618bc2ea5bd5d61564fc79`; blob `6d45faeb70d1ed99de0d57161fa061e12b7f0a2f`; six synthetic tests.
-- Broad CPU wiring commit `4fafa26008ef6a9de9bb8a64a5660d8214c22f09`; workflow blob `ef39cad011796bcd0cb5f39a6f03e06fc7cde7b7`.
-- **Required pre-label CPU run `32996550172`, job `98267233982`: SUCCESS.** Logs explicitly confirm diagnostic compile, all six residual-diagnostic tests PASS, accepted-baseline reconstruction tests PASS, immutable V5/provenance/config guards PASS. The diagnostic was NOT executed against gold labels in this gate.
-- Output contract: aggregate note-match/mechanism/onset/cardinality counts only; candidate construction/ranking/selection false; rule/shift histogram false; validation/canary false; runtime reference false; GPU false.
-- One-shot `.github/workflows/v144-singleton-baseline-fit-residual-diagnostic.yml`; preregistration commit `f931f39b62ccbb6b8245f615e47ebf233480660e`; workflow blob `b3d00151d6082b8f8c5e182e3469b5d10b22bb3e`.
-- One-shot locks V5 analyzer/result/render/PDF, gold ref SHA, accepted manifest blob, diagnostic/test/reconstruction blobs, current counting helpers, canonical/scorer/split helpers, family #10 reconstruction dependencies, context split policy/config, and exact trigger identity before labels.
-- Target report `debug/v144-rhythm-calibration/diagnostics/singleton-baseline-fit-residuals.json` does not exist yet.
-- **One-shot is NOT ARMED at this checkpoint; no FIT labels have been read by this diagnostic; no family #11 exists.**
+- Synthetic tests commit `9dae8b40170d20d31a618bc2ea5bd5d61564fc79`; blob `6d45faeb70d1ed99de0d57161fa061e12b7f0a2f`.
+- Required pre-label CPU run `32996550172`, job `98267233982`: SUCCESS; compile + all six diagnostic tests + reconstruction guards passed without executing the FIT diagnostic.
+- One-shot workflow preregistration commit `f931f39b62ccbb6b8245f615e47ebf233480660e`; workflow blob `b3d00151d6082b8f8c5e182e3469b5d10b22bb3e`.
+- Trigger-only arming commit `517f81c227baa6c536fe82923d5a6a49b43cc44f`; trigger blob `2453a46d6832368ca10f499ba09834dffd58bfb6`; exact message `v144 execute singleton baseline fit residual diagnostic one-shot`.
+- One-shot run `32996989280`, job `98268733558`: **SUCCESS**. Pre-label identity checks, diagnostic execution, aggregate-only verification, protected-identity recheck, and report-only persistence all SUCCESS.
+- Report `debug/v144-rhythm-calibration/diagnostics/singleton-baseline-fit-residuals.json`; persistence commit `dd06bd96061170e6c25a8ffe6b4d91db941491fc`; blob `b9794a7b8a882ba9ade5e8095f112d4be45e47e6`.
+- Persistence commit is exactly one commit after the trigger and added **only** the 131-line report.
+- Isolation: candidate construction/ranking/selection false; candidate rule/shift histogram false; validation/canary false; runtime reference false; V5/main/Production false; GPU false.
+- Sealed immediately after success: executable workflow deleted commit `b5afca0960d5ee7d683d36d427de9d874585f0d7`; trigger deleted commit `68cc0165678cfe1d32afb9830b00a6c16dc615ec`; replay forbidden while baseline unchanged.
+
+### Current accepted-baseline FIT aggregate residuals
+- Generated notes `643`; reference `594`; pitch-content matched `176`; tight pitch/timing matched `41`; gross pitch/timing matched `90`; exact string/fret/timing matched `34`.
+- Same-measure pitch matches displaced from exact onset `135`; gross ±2-step recovered-only matches `49`; pitch matches still outside gross/competing `86`; correct-pitch/tight-timing but wrong string/fret only `7`.
+- Onset topology unchanged in count: generated onsets `485`; reference `370`; shared `190`; generated-only `295`; reference-only `180`; shared cardinality mismatch `84` (`27` generated-heavier / `57` reference-heavier).
+- Cardinality pair `g1-r0 = 203` generated-only singleton onsets; `g2-r0 = 79`; `g3-r0 = 12`; `g5-r0 = 1`.
+- Shared singleton→singleton `100`: exact pitch/same string `25`; wrong pitch/different string `62`; wrong pitch/same string `13`.
+- Same-onset wrong-pitch substitution slots `171`; same-string wrong-pitch slots `66`; extra generated slots after substitution `431`; missing reference slots `382`.
+
+## Family #11 shape decision — PRE-REGISTRATION BOUNDARY
+- A pure timing-only family is **not eligible** under the immutable selector because changing step without pitch cannot improve measure-level pitch-content and therefore cannot meet the fixed `>=0.005` FIT pitch-content gain gate, despite the large timing-displacement signal.
+- The strongest lower-complexity residual shape that can improve the required pitch-content metric is generated false-positive removal: `295` generated-only FIT onsets, including `203` exact-singleton generated-only onsets, plus `431` extra generated slots after same-onset substitution.
+- Proposed materially distinct family #11 unit: **atomic exact-singleton generated-only onset prune**.
+- Distinct from consumed prune families 1–4: those delete individual events based on event context signatures regardless of onset cardinality; family #11 must first group by `(measure, step)`, require exactly one generated event at the onset, and prune that entire singleton onset atomically.
+- Proposed fixed rule identity before any candidate outcomes: one structural onset context signature (`measurePhase`, `section16`, `stepParity`, `stepQuarter`, or `measurePhaseStep`) + explicit `sourceStringIndex` + `sourcePitchClass`. No validation/canary/consumed-family result may choose the identity.
+- Runtime must be reference-free; generated onset must remain exact singleton; source identity/context must match; linked/dangling-reference events must be ineligible; deleting the last event in a measure must be ineligible; all surviving event data/order/timing/metadata remain unchanged.
+- Fixed support/max candidates should remain pre-registered at `3` / `256`; no result-driven relaxation.
+- **No concrete family #11 context/string/pitch rule has been constructed/ranked/evaluated yet.**
 
 ## Immediate next actions
-1. Create exactly one trigger-only commit at `debug/v144-rhythm-calibration/diagnostics/.singleton-baseline-fit-residual-trigger` with exact message `v144 execute singleton baseline fit residual diagnostic one-shot`, locking workflow blob `b3d00151...` and pre-label run/job `32996550172` / `98267233982`.
-2. Poll that exact trigger SHA until the one-shot completes. Do not create duplicate trigger events.
-3. On SUCCESS, verify bot persistence commit added only `singleton-baseline-fit-residuals.json`; inspect aggregate report; immediately delete workflow + trigger and refuse replay while baseline unchanged.
-4. Use only the new accepted-baseline FIT aggregate report to decide whether a materially distinct family #11 shape exists. Never use validation/canary/consumed-family outcomes to choose it. If unclear, stop at diagnostic boundary.
+1. Implement only the family #11 atomic singleton-onset prune policy with the fixed shape above; add deterministic synthetic tests.
+2. Wire policy/tests into broad CPU gate and require SUCCESS before creating any FIT search.
+3. Only after policy CPU success, pre-register a deterministic FIT-only search with support `3`, max candidates `256`, accepted baseline `4e6f9f...`, exact measure-set guard, and unchanged staged selector thresholds/order.
+4. If no family #11 rule meets fixed support/gates, seal at FIT; do not relax or switch shapes based on outcomes.
 5. Never start Bass/Lead, modify main/Production, claim near-100%, or use Modal/L4/GPU without fresh explicit authorization.
