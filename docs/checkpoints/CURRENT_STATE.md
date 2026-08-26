@@ -2,7 +2,7 @@
 
 Updated: 2026-08-26 America/Montreal
 Branch: `v143-contextual-prune-lobo`
-Active phase: **V144 Rhythm gold calibration. Families 1–11 consumed/sealed. Accepted baseline remains family #10 `singleton-onset-replace-be9e9aa7a734e3cd` / SHA `4e6f9f...`. Family #12 — atomic exact-two-note generated-only dyad whole-onset prune — has pre-registered policy/search implementations and synthetic policy/search tests; BOTH broad CPU gates are GREEN. No family #12 one-shot exists yet and no family #12 candidate evaluation has executed.**
+Active phase: **V144 Rhythm gold calibration. Families 1–11 consumed/sealed. Accepted baseline remains family #10 `singleton-onset-replace-be9e9aa7a734e3cd` / SHA `4e6f9f...`. Family #12 — atomic exact-two-note generated-only dyad whole-onset prune — has pre-registered policy/search implementations and synthetic policy/search tests; BOTH broad CPU gates are GREEN. Its tightly locked one-shot workflow is PRE-REGISTERED but UNARMED. No family #12 candidate evaluation has executed.**
 
 ## Permanent safety / fixed protocol
 - Work only on `v143-contextual-prune-lobo`; never modify/merge `main` or Production.
@@ -34,24 +34,32 @@ Active phase: **V144 Rhythm gold calibration. Families 1–11 consumed/sealed. A
 - Construction: exact 2 generated events + zero FIT reference notes at same onset. Rule identity: one structural context + two sorted `(sourceStringIndex, sourcePitchClass)` identities.
 - Runtime reference forbidden; entire dyad deleted atomically; no partial deletion; invalid/linked/referenced events excluded; measure-erasing deletion refused; survivors preserve all metadata/order/timing. Event count may decrease but exact 113 generated measures are required.
 - Policy tests `modal/tests/test_v144_rhythm_generated_only_dyad_prune_policy.py`; commit `5325c25de53831ba148015875cca8875fa9c2c19`; blob `0ae23f3735b0ebca178eea81352ed2e83474f204`; seven synthetic tests.
-- Policy CPU wiring commit `885fa851e5a0d404fdfc41ff006448c8bc42c9b9`; workflow blob `84606b8425ba6227aa0454d35e9d3399a2728f8c`.
-- Policy CPU run `32999064437`, job `98275778909`: SUCCESS; policy compile + all seven policy tests + immutable/provenance/config guards passed.
+- Policy CPU run `32999064437`, job `98275778909`: SUCCESS; policy compile + all seven tests + immutable/provenance/config guards passed.
 
 ### FIT-only search — PRE-REGISTERED / CPU GREEN / NOT EXECUTED
-- Search `validation/v144_rhythm_calibration/search_atomic_generated_only_dyad_prunes.py`; creation commit `9dfafbbe460974b316f5ccd8a6c3f1a103ab60ac`; blob `6870c1ba34e0b3d9baa63c7f9bb036851ccca0ac`.
-- Search tests `modal/tests/test_v144_rhythm_generated_only_dyad_prune_search.py`; creation commit `f6358e99d4df4bc2e73f5d7bedbaeaae8c45cf82`; blob `2b45a35b75e340e21343d06728c1768325040be9`; seven synthetic invariant tests.
-- Search locks family #10 accepted baseline name/SHA/1144/113 and reconstructs it reference-free before opening gold.
-- Fixed support 3/max256 cannot be relaxed. FIT-only construction/ranking; validation/canary cannot construct/rank. Any later failure deterministically falls back to family #10 and never selects an alternate.
-- Deletion invariant: candidate is a survivor-identical ordered subsequence; no additions/mutations; removed event count must be even; every changed onset had exactly two baseline events and matches the locked rule; `removedEventCount = 2 * removedOnsetCount`; exact 113-measure guard.
-- Report schema `14424`; classification `v144-rhythm-fit-only-atomic-generated-only-dyad-onset-prune-search`; runtime reference false; GPU false.
-- Broad search-gate wiring/current head commit `d6f1f7cbc61c3c7a4b6a880b6f60a89e59acf9ed`; workflow blob `d607707fb802808c194137544aa68472e6ec49fb`.
-- Search CPU run `32999506459`, job `98277305962`: **SUCCESS**. Search compiled; all seven `AtomicGeneratedOnlyDyadPruneSearchInvariantTests` passed; all seven family #12 policy tests passed; accepted family #10 reconstruction tests passed; immutable V5/provenance/config guards passed.
-- Broad gate does NOT execute family #12 search. **No family #12 candidate rules have been constructed/ranked/evaluated. Validation/canary remain closed.**
+- Search `validation/v144_rhythm_calibration/search_atomic_generated_only_dyad_prunes.py`; commit `9dfafbbe460974b316f5ccd8a6c3f1a103ab60ac`; blob `6870c1ba34e0b3d9baa63c7f9bb036851ccca0ac`.
+- Search tests `modal/tests/test_v144_rhythm_generated_only_dyad_prune_search.py`; commit `f6358e99d4df4bc2e73f5d7bedbaeaae8c45cf82`; blob `2b45a35b75e340e21343d06728c1768325040be9`; seven synthetic invariant tests.
+- Fixed support 3/max256 cannot be relaxed. Search reconstructs family #10 reference-free before opening gold; FIT constructs/ranks; validation/canary cannot construct/rank; later failure falls back to family #10 only.
+- Deletion invariant: survivor-identical ordered subsequence; no additions/mutations; removed event count even; exact two baseline events per changed onset; locked rule identity; `removedEventCount = 2 * removedOnsetCount`; exact 113-measure guard.
+- Report schema `14424`; classification `v144-rhythm-fit-only-atomic-generated-only-dyad-onset-prune-search`.
+- Broad search-gate commit `d6f1f7cbc61c3c7a4b6a880b6f60a89e59acf9ed`; workflow blob `d607707fb802808c194137544aa68472e6ec49fb`.
+- Search CPU run `32999506459`, job `98277305962`: **SUCCESS**. Search compiled; all seven search tests and all seven policy tests passed; accepted family #10 reconstruction and immutable/provenance/config guards passed.
+- **No family #12 candidate rules have been constructed/ranked/evaluated. Validation/canary remain closed.**
+
+### One-shot — PRE-REGISTERED / UNARMED
+- Workflow `.github/workflows/v144-atomic-generated-only-dyad-onset-prune-search.yml`.
+- Pre-registration commit `a9ddb15614cc25a8c58b1aa1a417f81909ee2c6e`; workflow blob `cc3b07f3a6799dff75bb7052683f6722e56e7ff7`.
+- Exact trigger path `debug/v144-rhythm-calibration/candidates/.v144-atomic-generated-only-dyad-onset-prune-trigger`.
+- Exact trigger message `v144 execute atomic generated-only dyad onset prune one-shot`.
+- Locks V5/result/render/PDF, gold SHA, accepted family #10 manifest, family #12 policy/tests/search/tests, CPU workflow/run/job, reconstruction/scoring/staged-selector/measure-guard/freeze/PDF-render dependencies.
+- Trigger contract fixes support 3/max256; FIT-only construction; validation/canary no construction/ranking; event-count preservation false; exact 113 measures true; 2 removed events per changed onset; runtime reference false; GPU false; replay false.
+- Independent PDF proof uses actual locked event count/SHA. Final full invariant requires non-baseline candidate, positive even removed count, `removedOnsetCount*2=removedEventCount`, `eventCount=1144-removedEventCount`, exact 113 measures, exact dyad deletion semantics, no musical regressions, critical delta<=0, coverage 1.0, PDF fidelity 1.0.
+- Workflow persists only `debug/v144-rhythm-calibration/candidates/atomic-generated-only-dyad-onset-prune-search.json`.
+- **Trigger does not exist yet. One-shot is unarmed.**
 
 ## Immediate next actions
-1. Pre-register exactly one tightly locked CPU-only family #12 one-shot, unarmed first. It must pin accepted manifest `acd12...`, family #12 policy `21ece8...`, policy tests `0ae23f...`, search `6870c1...`, search tests `2b45a3...`, CPU workflow `d607707...`, CPU run/job `32999506459`/`98277305962`, support 3/max256, runtime reference/GPU/replay false.
-2. One-shot independent PDF proof must use the actual locked count-changing stream event count/SHA. Final promotion invariant requires non-baseline locked candidate, removedEventCount>0 even, removedOnsetCount*2=removedEventCount, eventCount=1144-removedEventCount, exact 113 measures, no musical regressions, critical delta<=0, coverage 1.0, PDF fidelity 1.0, exact atomic-two-note deletion semantics.
-3. Save checkpoint with unarmed workflow commit/blob before creating one trigger-only commit.
-4. Execute at most once; immediately delete workflow+trigger regardless outcome and mark family #12 consumed. Never select a runner-up.
-5. If no FIT winner/later failure, family #10 remains accepted. If fully passing, create a separate calibration-only promotion manifest + reference-free reconstruction proof before calling family #12 accepted.
-6. Never start Bass/Lead, main/Production, near-100 claims, or Modal/L4/GPU.
+1. Create exactly one trigger-only commit with the exact message and lock workflow blob `cc3b07f3...`, CPU `32999506459`/`98277305962`, support3/max256, baseline `4e6f9f...`, runtime reference/GPU/replay false.
+2. Freeze branch and poll only exact trigger SHA. No retrigger/retry.
+3. After single run, immediately delete workflow+trigger and mark family #12 consumed regardless outcome; never select runner-up.
+4. If no FIT winner/later failure, family #10 stays accepted. If fully passing, separately create calibration-only promotion manifest + reference-free reconstruction proof before calling family #12 accepted.
+5. Never start Bass/Lead, main/Production, near-100 claims, or Modal/L4/GPU.
