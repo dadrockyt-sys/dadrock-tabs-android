@@ -2,7 +2,7 @@
 
 Updated: 2026-08-26 America/Montreal
 Branch: `v143-contextual-prune-lobo`
-Active phase: **V144 Rhythm gold calibration. Families 1–10 are consumed/sealed. Accepted calibration baseline is family #10 `singleton-onset-replace-be9e9aa7a734e3cd` / SHA `4e6f9f...`. The accepted-baseline FIT residual diagnostic is complete/sealed. Family #11 — atomic exact-singleton generated-only onset prune — has pre-registered policy/search implementations, synthetic policy/search tests, and BOTH required broad CPU gates are GREEN. No family #11 one-shot/search execution has occurred yet. Production/main/Bass/Lead untouched.**
+Active phase: **V144 Rhythm gold calibration. Families 1–10 are consumed/sealed. Accepted calibration baseline is family #10 `singleton-onset-replace-be9e9aa7a734e3cd` / SHA `4e6f9f...`. The accepted-baseline FIT residual diagnostic is complete/sealed. Family #11 — atomic exact-singleton generated-only onset prune — has pre-registered policy/search implementations, synthetic policy/search tests, BOTH required broad CPU gates GREEN, and a tightly locked one-shot workflow PRE-REGISTERED but UNARMED. No family #11 search execution has occurred yet. Production/main/Bass/Lead untouched.**
 
 ## Permanent safety
 - Work only on `v143-contextual-prune-lobo`; never modify/merge `main` or Production.
@@ -42,25 +42,34 @@ Active phase: **V144 Rhythm gold calibration. Families 1–10 are consumed/seale
 - Fixed support `3`; max candidates `256`; no relaxation.
 - Policy `modal/v144_rhythm_singleton_onset_prune_policy.py`; commit `58eefa8204624f2d457ee2d29e6e8988a03b7920`; blob `1a9df07e29e20784d2b9b6111d22ae10e638a84e`.
 - Policy tests commit `2ffee7c2802f127648cd52b402f1d4984370846b`; blob `bffb1295c580e7d30d1068791b34b89baff28ae5`; seven synthetic tests.
-- Policy CPU run `32997504056`, job `98270480901`: **SUCCESS**; logs explicitly show policy compile and all seven policy tests PASS.
+- Policy CPU run `32997504056`, job `98270480901`: **SUCCESS**; policy compile + seven policy tests PASS.
 
 ### FIT-only search — PRE-REGISTERED / CPU GREEN / NOT EXECUTED
 - Search `validation/v144_rhythm_calibration/search_atomic_singleton_onset_prunes.py`; commit `eed0e96491033d3a4b643ae11d2c6c580c9bbc42`; blob `2f89bf3f310d60cb609a9556130d9f713942216e`.
 - Search tests `modal/tests/test_v144_rhythm_singleton_onset_prune_search.py`; commit `89dd6bd75b927e464fb222aa5d14a1e0dc8dd566`; blob `f1ecf0945519a5e4e8ef137ee5ef8f4b75cd620a`; seven synthetic invariant tests.
 - Search locks accepted family #10 baseline `4e6f9f...` / 1144 / 113, fixed support 3/max 256, deletion-only survivor subsequence, exact measure-set preservation, staged-selector fallback, and reference-free runtime transform.
-- Count-changing candidates are permitted only with exact 113-measure preservation; the existing staged selector requires measure-set preservation but not event-count preservation.
+- Count-changing candidates are permitted only with exact 113-measure preservation; event-count preservation is intentionally false for this family.
 - FIT constructs/ranks only after reference-free accepted-baseline reconstruction; validation/canary only gate the single FIT-locked winner; any later failure falls back to family #10, never an alternate.
 - Broad search-gate wiring commit `bb9e9846f4391520d2fae7c6085df052f56214cb`; workflow blob `54dd20748da1b9bf175e6bf46d3a85140bfe3c65`.
-- **Search CPU run `32997920717`, job `98271890149`: SUCCESS.** Logs explicitly show `search_atomic_singleton_onset_prunes.py` compiled; all seven `AtomicSingletonOnsetPruneSearchInvariantTests` PASSED; all seven policy tests PASSED; accepted singleton baseline reconstruction tests PASSED; immutable V5/provenance/config guards PASSED.
-- The broad CPU workflow only compiled and ran synthetic tests; it **did not execute family #11 search or open calibration labels for candidate construction**.
-- **No family #11 one-shot exists at this checkpoint. No candidate rules have been constructed/ranked/evaluated. Validation/canary remain closed.**
+- Search CPU run `32997920717`, job `98271890149`: **SUCCESS**. Search compiled; all seven `AtomicSingletonOnsetPruneSearchInvariantTests` PASSED; all seven policy tests PASSED; accepted singleton baseline reconstruction tests PASSED; immutable V5/provenance/config guards PASSED.
+- Broad CPU gate did not execute search or construct/rank candidates.
+
+### One-shot — PRE-REGISTERED / UNARMED
+- Workflow `.github/workflows/v144-atomic-singleton-onset-prune-search.yml`.
+- Pre-registration commit `1f8b2c8560116914f120ed64ac3252fa881a9e14`; workflow blob `d0202892a86faa97e3f37eb34b8adfb567bef40e`.
+- Exact trigger path: `debug/v144-rhythm-calibration/candidates/.v144-atomic-singleton-onset-prune-trigger`.
+- Exact trigger commit message: `v144 execute atomic singleton onset prune one-shot`.
+- Locks immutable V5/result/render/PDF, gold SHA, accepted family #10 manifest, residual/reconstruction chain, family #11 policy/search/tests, CPU workflow/run/job, staged selector/measure guard/context split/config, canonical/scorer/scoring helpers, freeze/PDF verifier, and renderer contract.
+- Search fixed support `3`, max candidates `256`; FIT-only construction/ranking; validation/canary cannot construct/rank; runtime reference false; GPU false; replay false.
+- Independent PDF-event proof accepts the locked count-changing stream only if renderer/frozen event count and SHA exactly match; full invariant requires 113 measures, deletion-only exact-singleton semantics, zero musical regressions, critical mismatch delta <= 0, coverage 1.0, PDF fidelity 1.0.
+- Workflow persists **only** `debug/v144-rhythm-calibration/candidates/atomic-singleton-onset-prune-search.json`.
+- **Trigger does not exist yet. No family #11 candidate evaluation has executed.**
 
 ## Immediate next actions
-1. Pre-register one tightly locked CPU-only family #11 one-shot workflow BEFORE creating a trigger.
-2. Lock V5 analyzer/result/render/PDF, gold ref SHA, accepted family #10 manifest blob `acd12ab...`, family #11 policy/test/search/test blobs, accepted reconstruction dependencies, staged selector/measure guard/context split/config/canonical/scorer/scoring helpers, and exact trigger identity.
-3. Save checkpoint with one-shot workflow commit/blob while still unarmed.
-4. Create exactly one trigger-only commit with exact message `v144 execute atomic singleton onset prune search one-shot`; freeze branch and poll only that SHA.
-5. Search once at support 3/max 256. If FIT baseline wins, later stages must remain null. If one FIT winner locks, only it may see validation then canary. Any later failure => family #10 fallback.
-6. If split gates survive, require full-gold no regression/critical increase and an independent PDF-event proof for the locked count-changing stream before any promotion.
-7. Persist report only first, immediately delete/archive workflow + trigger, refuse replay. Only after a fully passing result may a separate calibration-only promotion manifest + reconstruction proof be created.
-8. Never start Bass/Lead, main/Production, near-100 claims, or Modal/L4/GPU.
+1. Create exactly one trigger-only commit with exact message `v144 execute atomic singleton onset prune one-shot`; trigger must lock workflow blob `d0202892...`, search CPU `32997920717`/`98271890149`, support 3/max 256, baseline `4e6f9f...`, runtime reference/GPU/replay false.
+2. Freeze branch and poll only the exact trigger SHA. Do not retrigger/retry.
+3. Inspect one-shot result. If FIT baseline wins, validation/canary/full remain null. If one FIT winner locks, only it may see validation then canary. Any later failure => family #10 fallback.
+4. Require independent PDF proof regardless of gate outcome; promotion only if split gates + full invariant all pass.
+5. After the single run, immediately delete/archive workflow + trigger and mark family #11 consumed regardless outcome. Never select an alternate from its candidate list.
+6. If fully passing, create a separate calibration-only promotion manifest + reference-free reconstruction proof before calling family #11 accepted. Otherwise accepted baseline remains family #10.
+7. Never start Bass/Lead, main/Production, near-100 claims, or Modal/L4/GPU.
