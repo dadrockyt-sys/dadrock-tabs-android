@@ -14,6 +14,7 @@ on:
       - modal/v144_rhythm_quad_conjunction_policy.py
       - modal/v144_rhythm_pitch_shift_policy.py
       - modal/v144_rhythm_pitch_step_shift_policy.py
+      - modal/v144_rhythm_pitch_position_shift_policy.py
       - modal/v144_rhythm_measure_set_guard.py
       - modal/configs/v144_rhythm_context_split_config.json
       - modal/tests/test_v144_rhythm_context_split_policy.py
@@ -24,6 +25,7 @@ on:
       - modal/tests/test_v144_rhythm_quad_conjunction_policy.py
       - modal/tests/test_v144_rhythm_pitch_shift_policy.py
       - modal/tests/test_v144_rhythm_pitch_step_shift_policy.py
+      - modal/tests/test_v144_rhythm_pitch_position_shift_policy.py
       - modal/tests/test_v144_rhythm_pitch_shift_search.py
       - modal/tests/test_v144_rhythm_pitch_step_shift_search.py
       - modal/tests/test_v144_rhythm_current_baseline_fit_mechanisms.py
@@ -44,6 +46,7 @@ on:
       - modal/v144_rhythm_quad_conjunction_policy.py
       - modal/v144_rhythm_pitch_shift_policy.py
       - modal/v144_rhythm_pitch_step_shift_policy.py
+      - modal/v144_rhythm_pitch_position_shift_policy.py
       - modal/v144_rhythm_measure_set_guard.py
       - modal/configs/v144_rhythm_context_split_config.json
       - modal/tests/test_v144_rhythm_context_split_policy.py
@@ -54,6 +57,7 @@ on:
       - modal/tests/test_v144_rhythm_quad_conjunction_policy.py
       - modal/tests/test_v144_rhythm_pitch_shift_policy.py
       - modal/tests/test_v144_rhythm_pitch_step_shift_policy.py
+      - modal/tests/test_v144_rhythm_pitch_position_shift_policy.py
       - modal/tests/test_v144_rhythm_pitch_shift_search.py
       - modal/tests/test_v144_rhythm_pitch_step_shift_search.py
       - modal/tests/test_v144_rhythm_current_baseline_fit_mechanisms.py
@@ -123,6 +127,7 @@ jobs:
           python -m py_compile validation/v144_rhythm_calibration/search_contextual_pitch_step_shifts.py
           python -m py_compile validation/v144_rhythm_calibration/analyze_current_baseline_fit_mechanisms.py
           python -m py_compile modal/v144_rhythm_pitch_step_shift_policy.py
+          python -m py_compile modal/v144_rhythm_pitch_position_shift_policy.py
 
       - name: Run V144 rhythm CPU unit tests
         shell: bash
@@ -136,6 +141,7 @@ jobs:
           python modal/tests/test_v144_rhythm_quad_conjunction_policy.py -v
           python modal/tests/test_v144_rhythm_pitch_shift_policy.py -v
           python modal/tests/test_v144_rhythm_pitch_step_shift_policy.py -v
+          python modal/tests/test_v144_rhythm_pitch_position_shift_policy.py -v
           python modal/tests/test_v144_rhythm_pitch_shift_search.py -v
           python modal/tests/test_v144_rhythm_pitch_step_shift_search.py -v
           python modal/tests/test_v144_rhythm_current_baseline_fit_mechanisms.py -v
