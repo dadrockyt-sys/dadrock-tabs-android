@@ -42,6 +42,7 @@ def safety():
         "runtimeReferenceInputUsed": False,
         "modalGpuInvoked": False,
         "deterministic": True,
+        "baselineGeneratedMeasureSetPreserved": True,
     }
 
 
@@ -105,6 +106,7 @@ class StagedSelectorTests(unittest.TestCase):
         self.assertTrue(locked["fitOnlyRanking"])
         self.assertFalse(locked["validationReadDuringLock"])
         self.assertFalse(locked["canaryReadDuringLock"])
+        self.assertTrue(locked["baselineGeneratedMeasureSetPreservationRequired"])
 
     def test_validation_failure_falls_back_without_trying_second_candidate(self):
         baseline = self.baseline()
@@ -113,7 +115,6 @@ class StagedSelectorTests(unittest.TestCase):
             fit=metrics(0.21, pitch=0.24, critical=85),
             validation=metrics(0.19, pitch=0.21, critical=90),
         )
-        # Deliberately omit first.canary: validation failure must stop before canary access.
         second = candidate(
             "second",
             fit=metrics(0.205, pitch=0.22, critical=90),
@@ -200,6 +201,38 @@ class StagedSelectorTests(unittest.TestCase):
         evaluation = result["evaluations"][0]
         self.assertFalse(evaluation["passed"])
         self.assertIn("reference-used-as-runtime-input", evaluation["reasons"])
+
+    def test_measure_set_loss_cannot_fit_lock_even_with_large_musical_gain(self):
+        baseline = self.baseline()
+        drops_measure = candidate(
+            "drops-measure",
+            fit=metrics(0.24, pitch=0.30, critical=50),
+            validation=metrics(0.24, pitch=0.30, critical=50),
+            canary=metrics(0.24, pitch=0.30, critical=50),
+        )
+        drops_measure["safety"]["baselineGeneratedMeasureSetPreserved"] = False
+
+        result = lock_fit_candidate([baseline, drops_measure], config=self.config)
+        self.assertEqual(result["locked"], "no-prune")
+        evaluation = result["evaluations"][0]
+        self.assertFalse(evaluation["passed"])
+        self.assertGreater(evaluation["pitchContentGain"], 0.005)
+        self.assertIn(
+            "baseline-generated-measure-set-not-preserved",
+            evaluation["reasons"],
+        )
+
+    def test_missing_measure_preservation_proof_cannot_fit_lock(self):
+        baseline = self.baseline()
+        unproven = candidate("unproven", fit=metrics(0.24, pitch=0.30, critical=50))
+        del unproven["safety"]["baselineGeneratedMeasureSetPreserved"]
+
+        result = lock_fit_candidate([baseline, unproven], config=self.config)
+        self.assertEqual(result["locked"], "no-prune")
+        self.assertIn(
+            "baseline-generated-measure-set-not-preserved",
+            result["evaluations"][0]["reasons"],
+        )
 
 
 if __name__ == "__main__":
