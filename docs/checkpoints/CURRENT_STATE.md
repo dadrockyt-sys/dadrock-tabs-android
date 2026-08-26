@@ -2,7 +2,7 @@
 
 Updated: 2026-08-26 America/Montreal
 Branch: `v143-contextual-prune-lobo`
-Active phase: **V144 Rhythm gold calibration. Families 1–12 are consumed/sealed. Accepted baseline remains family #10 `singleton-onset-replace-be9e9aa7a734e3cd` / SHA `4e6f9f...`. Family #13 is pre-registered as an atomic exact-three-note generated-only whole-onset prune. Its established broad CPU gate is wired. The first exact gate attempt failed safely on a synthetic test import mismatch after immutable/provenance/compile checks passed; the test-only correction is committed with the policy unchanged, and the replacement exact CPU proof is in progress. No family #13 search, calibration evaluation, or execution authorization exists yet.**
+Active phase: **V144 Rhythm gold calibration. Families 1–12 are consumed/sealed. Accepted baseline remains family #10 `singleton-onset-replace-be9e9aa7a734e3cd` / SHA `4e6f9f...`. Family #13 is pre-registered as an atomic exact-three-note generated-only whole-onset prune. Its policy + corrected deterministic synthetic tests are now CPU-PROVEN on the established broad V144 CPU gate. No family #13 search file, calibration evaluation, or execution authorization exists yet.**
 
 ## Permanent safety / fixed protocol
 - Work only on `v143-contextual-prune-lobo`; never modify/merge `main` or Production.
@@ -61,12 +61,12 @@ Active phase: **V144 Rhythm gold calibration. Families 1–12 are consumed/seale
 - **Family #12 is consumed. Never rerun/replay/retune and never select a runner-up from its 23 candidates.**
 - Accepted baseline remains family #10, so current FIT residual diagnostic `b9794a7b...` remains current.
 
-## Family #13 — PRE-REGISTERED / POLICY CPU RECHECK IN PROGRESS
+## Family #13 — PRE-REGISTERED / POLICY CPU SUCCESS / SEARCH NOT YET CREATED
 ### Aggregate-only shape decision
 - The sole permitted current shape evidence remains the sealed accepted-baseline FIT residual diagnostic `b9794a7b...`.
 - `g3-r0=12` is a non-empty, materially distinct onset cardinality from consumed family #12 (`g2-r0`) and is large enough to preserve the established minimum support without relaxing it.
 - `g5-r0=1` remains excluded. Cardinalities may not be combined. No family #11/#12 candidate outcomes, runner-ups, gate behavior, context/string/pitch identities, or calibration labels were used for this decision.
-- Therefore family #13 is pre-registered as **atomic exact-three-note generated-only whole-onset prune**. This decision does not authorize candidate search or execution.
+- Therefore family #13 is pre-registered as **atomic exact-three-note generated-only whole-onset prune**. This decision does not authorize candidate search execution.
 
 ### Fixed family #13 semantics — FROZEN BEFORE SEARCH
 - Policy path: `modal/v144_rhythm_generated_only_triad_prune_policy.py`; policy blob remains **unchanged** at `622c839d0a833c3541007309ebf1203f1547b365`.
@@ -76,31 +76,27 @@ Active phase: **V144 Rhythm gold calibration. Families 1–12 are consumed/seale
 - Whole-onset deletion is atomic: either all three notes are deleted or none are. Partial deletion is forbidden.
 - Runtime reference is forbidden. Linked, externally referenced, invalid-position, and measure-erasing targets are ineligible. Survivors must remain immutable and in source order.
 - Any eventual search must enforce exact 113-measure preservation and deterministic family #10 fallback.
-- No candidate-specific family #13 search file exists by authorization at this checkpoint. No family #13 candidate labels/outcomes may be inspected until the broad CPU gate succeeds at the exact policy/test revision.
 
-### Established broad CPU gate wiring
+### Established broad CPU gate / synthetic policy proof
 - Reused existing `.github/workflows/v144-rhythm-cpu-gate.yml` (`V144 Rhythm CPU Gate`), not an ad-hoc substitute.
 - Gate wiring commit `4c0f11d150f93234df32101beeee691eed919817`; workflow blob `4cd6f7f868c7d6434564668d0031029211b2e62f`.
 - The commit changed only the gate workflow (+6 lines): add family #13 policy/test to push+PR paths, compile the family #13 policy, and run the family #13 synthetic policy test. It does not add or run a family #13 candidate search.
-
-### Synthetic policy tests / first failed proof / correction
-- Tests: `modal/tests/test_v144_rhythm_generated_only_triad_prune_policy.py`.
 - Initial strengthened test commit `9da8733dbcef8b226c562470b39b17577c450f8a`; blob `f6055f83e522cf2fcec441368fe201a2db28f566`.
-- First gate run `33006357625`, job `98301012386`, exact head `4c0f11d150f93234df32101beeee691eed919817`: **FAILURE**, safely at `Run V144 rhythm CPU unit tests`.
-- Before that failure, checkout, immutable V5 identities, V144 provenance safety contract, and compilation all passed. No family #13 candidate search/calibration labels were opened.
-- Exact failure: the synthetic test imported alias names not exported by the frozen policy (`MAX_CANDIDATES`, `MIN_SUPPORT`, `TARGET_GENERATED_NOTE_COUNT`). This was a test-interface error, not a policy compile failure.
+- First gate run `33006357625`, job `98301012386`, exact head `4c0f11d150f93234df32101beeee691eed919817`: **FAILURE**, safely at unit tests after immutable V5, provenance, and compilation all passed. Cause was test-only imports of alias names the frozen policy did not export. No calibration labels/search were opened.
 - Test-only correction commit `2c42917563a6779a996f7168067ba2b8ba49d91f`; corrected test blob `5adbcd39aacc181a6c0917654e754b582f8cca2e`.
 - Correction imports/asserts the policy's existing `DEFAULT_MIN_FALSE_POSITIVE_SUPPORT=3` and `DEFAULT_MAX_CANDIDATES=256`; exact-three cardinality remains asserted behaviorally by synthetic construction/match/apply tests. Policy blob `622c839d...` was not changed.
-- Replacement exact CPU proof started automatically from that test-path change: run `33006494479`, job `98301477632`, head `2c42917563a6779a996f7168067ba2b8ba49d91f`. At this checkpoint it is in progress. **Do not rerun/retrigger it; poll only this exact run.**
+- Replacement exact CPU proof: run `33006494479`, job `98301477632`, head `2c42917563a6779a996f7168067ba2b8ba49d91f`: **SUCCESS at job/step level**. Checkout, Python setup, immutable V5 identities, V144 provenance safety contract, compilation, all V144 CPU unit tests including family #13, CPU-safe/fallback-first config, and cleanup all completed with `success`. This is the definitive pre-search CPU proof for policy blob `622c839d...` + test blob `5adbcd39...` + workflow blob `4cd6f7f8...`.
+- GitHub's run-summary endpoint lagged and still reported the run envelope as in-progress immediately after the job had completed; the job record itself had every step completed successfully through `Complete job`. Do not rerun/retrigger this proof.
+- **Policy CPU prerequisite is satisfied.** No family #13 search file existed before this checkpoint.
 
 ## EXPLICIT NEXT STEPS — CONTINUATION CONTRACT
 1. **Re-read this checkpoint first.** Verify branch is exactly `v143-contextual-prune-lobo`, family #12 report blob is `9a4d17622047db77e373a21c40036adc42297482`, and both family #12 execution surfaces remain deleted.
 2. **Never rerun families #1–#12.** Do not use their candidate rankings, failed/passed gates, validation/canary/full outcomes, or runner-up behavior to construct/rank/retune family #13.
 3. Because family #12 did not change the accepted baseline, **do not create a new residual diagnostic yet**. The sealed current accepted-baseline FIT residual report `b9794a7b...` remains the sole permitted current shape evidence.
-4. Family #13 shape decision, support/cap preregistration, and policy semantics are frozen. Policy blob remains `622c839d...`; do not revise it from candidate outcomes.
-5. Poll only replacement policy CPU run `33006494479` / job `98301477632`. If it fails, inspect only implementation/test logs and fix only implementation/tests without calibration labels. If it succeeds, checkpoint exact run/job/head/workflow/policy/test identities before any search file exists.
-6. Only after definitive policy CPU SUCCESS, pre-register a FIT-only family #13 search. It must reconstruct accepted family #10 `4e6f9f...` reference-free before opening gold, construct/rank only from FIT, enforce exact 113-measure preservation, and use deterministic family #10 fallback.
-7. Add synthetic search invariant tests proving deletion-only ordered-subsequence semantics, exactly 3 removed events per changed onset, locked rule identity, no survivor mutation/addition/reordering, and fixed support/cap. Broad CPU-gate the exact search/test revision.
+4. Family #13 shape, support/cap, rule identity, and policy semantics are frozen. Policy blob remains `622c839d...`; do not revise it from candidate outcomes.
+5. Policy CPU prerequisite is complete at run `33006494479` / job `98301477632`. Do not rerun it.
+6. **Now pre-register a FIT-only family #13 search.** It must reconstruct accepted family #10 `4e6f9f...` reference-free before opening gold, construct/rank only from FIT, enforce exact 113-measure preservation, use deterministic family #10 fallback, and encode exactly three sorted source identities with atomic 3-event whole-onset deletion.
+7. Add synthetic search invariant tests proving deletion-only ordered-subsequence semantics, exactly 3 removed events per changed onset, locked rule identity, no survivor mutation/addition/reordering, exact-three rule shape, and frozen support 3/cap 256. Wire search + tests into the established broad CPU gate.
 8. **Do not execute candidate search until the exact search code/tests are CPU green.** If CPU fails, fix only implementation/tests; do not inspect calibration labels to debug it.
 9. After search CPU success, create a tightly locked CPU-only one-shot. Lock immutable V5/result/render/PDF, gold SHA, accepted manifest, family #13 policy/tests/search/tests, CPU workflow/run/job, reconstruction/scoring/staged-selector/measure/PDF dependencies, runtime-reference false, GPU false, and replay false.
 10. Save a **pre-arm checkpoint containing the exact one-shot workflow blob**. Then create exactly one trigger-only commit with the exact preregistered message/path. Freeze the branch and poll only that exact trigger SHA. No rerun/retrigger/retry.
@@ -114,5 +110,5 @@ Active phase: **V144 Rhythm gold calibration. Families 1–12 are consumed/seale
 - Accepted calibration baseline: family #10 `singleton-onset-replace-be9e9aa7a734e3cd` / `4e6f9f...`.
 - Families #1–#12: consumed/sealed.
 - Family #12: no FIT winner; baseline unchanged.
-- Family #13: **policy semantics frozen at blob `622c839d...`; gate wired at workflow blob `4cd6f7f8...`; initial CPU run `33006357625` failed only on a synthetic import mismatch; corrected synthetic test is commit `2c429175...` / blob `5adbcd39...`; replacement CPU run `33006494479` / job `98301477632` is in progress; no search/evaluation/execution authorization.**
-- Safe next action: poll only replacement run `33006494479`; if SUCCESS, checkpoint it before creating any family #13 search file.
+- Family #13: **policy semantics frozen at blob `622c839d...`; corrected synthetic policy tests blob `5adbcd39...`; established gate workflow blob `4cd6f7f8...`; policy CPU run `33006494479` / job `98301477632` SUCCESS; no search file yet; no evaluation/execution authorization.**
+- Safe next action: create the preregistered FIT-only family #13 search + synthetic invariant tests, wire both into the same broad CPU gate, then obtain exact-revision CPU SUCCESS before any candidate search execution.
