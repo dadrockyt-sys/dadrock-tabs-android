@@ -1,0 +1,129 @@
+{
+  "baseline": {
+    "eventCount": 1144,
+    "eventSha256": "68b8cdf14ed02265c5e3c204b2af51b0aae4849462e7b3e4243192d8855cc3c3",
+    "name": "prune-triple-67348efe50436fc5",
+    "reconstructedDeterministically": true
+  },
+  "classification": "v144-rhythm-fit-only-deletion-pruning-ceiling",
+  "evaluationRole": "accepted-baseline-fit-only-mechanism-diagnostic-not-unseen-holdout",
+  "fitOnly": {
+    "criticalMismatchCount": 1105,
+    "current": {
+      "pitchContent": {
+        "f1": 0.2231204527081649,
+        "falseNegative": 456,
+        "falsePositive": 505,
+        "generated": 643,
+        "matched": 138,
+        "precision": 0.21461897356143078,
+        "recall": 0.23232323232323232,
+        "reference": 594
+      },
+      "pitchTiming": {
+        "f1": 0.04527081649151172,
+        "falseNegative": 566,
+        "falsePositive": 615,
+        "generated": 643,
+        "matched": 28,
+        "precision": 0.04354587869362364,
+        "recall": 0.04713804713804714,
+        "reference": 594
+      },
+      "stringFretTiming": {
+        "f1": 0.03233629749393695,
+        "falseNegative": 574,
+        "falsePositive": 623,
+        "generated": 643,
+        "matched": 20,
+        "precision": 0.03110419906687403,
+        "recall": 0.03367003367003367,
+        "reference": 594
+      }
+    },
+    "noteCounts": {
+      "generated": 643,
+      "reference": 594
+    },
+    "oracleDeletionOnlyCeilings": {
+      "pitchContent": {
+        "f1": 0.3770491803278689,
+        "falseNegative": 456,
+        "falsePositive": 0,
+        "generated": 138,
+        "matched": 138,
+        "mayChangeStringOrFret": false,
+        "mayInsertMissingReferenceItems": false,
+        "mayMoveGeneratedOnsets": false,
+        "mayRepitchGeneratedItems": false,
+        "oracleDeletesAllGeneratedFalsePositives": true,
+        "oraclePreservesAllCurrentlyMatchedGeneratedItems": true,
+        "precision": 1.0,
+        "recall": 0.23232323232323232,
+        "reference": 594
+      },
+      "pitchTiming": {
+        "f1": 0.09003215434083602,
+        "falseNegative": 566,
+        "falsePositive": 0,
+        "generated": 28,
+        "matched": 28,
+        "mayChangeStringOrFret": false,
+        "mayInsertMissingReferenceItems": false,
+        "mayMoveGeneratedOnsets": false,
+        "mayRepitchGeneratedItems": false,
+        "oracleDeletesAllGeneratedFalsePositives": true,
+        "oraclePreservesAllCurrentlyMatchedGeneratedItems": true,
+        "precision": 1.0,
+        "recall": 0.04713804713804714,
+        "reference": 594
+      },
+      "stringFretTiming": {
+        "f1": 0.06514657980456026,
+        "falseNegative": 574,
+        "falsePositive": 0,
+        "generated": 20,
+        "matched": 20,
+        "mayChangeStringOrFret": false,
+        "mayInsertMissingReferenceItems": false,
+        "mayMoveGeneratedOnsets": false,
+        "mayRepitchGeneratedItems": false,
+        "oracleDeletesAllGeneratedFalsePositives": true,
+        "oraclePreservesAllCurrentlyMatchedGeneratedItems": true,
+        "precision": 1.0,
+        "recall": 0.03367003367003367,
+        "reference": 594
+      }
+    }
+  },
+  "isolation": {
+    "canaryLabelsOpened": false,
+    "candidateRankingPerformed": false,
+    "candidateSelectionPerformed": false,
+    "fitLabelsOpened": true,
+    "fullGoldUsedToChooseMechanism": false,
+    "numericThresholdsChanged": false,
+    "runtimeReferenceInputAllowed": false,
+    "validationLabelsOpened": false
+  },
+  "mayClaimUnseenGeneralization": false,
+  "mechanismConclusion": {
+    "materiallyDifferentCorrectionMechanismRequiredForNear100OnFit": true,
+    "near100Threshold": 0.99,
+    "pitchContentNear100ReachableByDeletionOnlyOnFit": false,
+    "pitchTimingNear100ReachableByDeletionOnlyOnFit": false,
+    "pureDeletionCanCorrectWrongOnset": false,
+    "pureDeletionCanCorrectWrongPitch": false,
+    "pureDeletionCanCorrectWrongStringOrFret": false,
+    "pureDeletionCanRecoverMissingReferenceNotes": false,
+    "stringFretTimingNear100ReachableByDeletionOnlyOnFit": false
+  },
+  "safety": {
+    "mainModified": false,
+    "modalGpuInvoked": false,
+    "productionModified": false,
+    "runtimeReferenceInputUsed": false,
+    "v5Modified": false
+  },
+  "schemaVersion": 14409
+}
