@@ -108,16 +108,26 @@ Priority: **finish Rhythm end-to-end before Bass/Lead; musical accuracy first, P
 - Existing final-gate `freezeReady=false` sentinels remain intentionally untouched.
 - **Candidate is now immutable. No content, timing, metadata, renderer-driven selection, threshold tuning, or candidate replacement is permitted before or after opening the final professional holdout.**
 
+## Professional holdout/scorer audit — IN PROGRESS
+- Audit began on 2026-08-25 on the exact branch `v143-contextual-prune-lobo`, after the source-only freeze had already passed.
+- The frozen manifest/validator state explicitly records `professionalReferenceUsed=false` and `professionalHoldoutOpened=false`; therefore the source-only freeze did not invoke or depend on the professional scorer/reference.
+- Initial repository-wide path/content search found no authoritative file literally named `holdout`; generic `scorer` hits predominantly point at older Modal-era analyzer versions. Those paths are **not** being treated as authoritative because the current checkpoint forbids Modal/GPU use and authorizes only a source-only CPU audit.
+- No professional reference/holdout content has been opened. No scoring run has been triggered. No Modal/GPU has been used.
+- Frozen candidate content, timing, metadata, thresholds, renderer, and selection remain unchanged.
+- Audit must next identify the exact authoritative scorer entrypoint, invocation, reference completeness checks, scoring semantics, immutable-candidate binding, and one-time/no-retuning safeguards **without opening the reference data itself**.
+- This audit state was intentionally persisted before any deeper scorer inspection or any possible final holdout trigger.
+
 ## Current integrity
 - Protected runtime untouched.
 - `main`/Production untouched.
 - Source-only freeze was completed without professional reference/scorer access.
+- Professional holdout/reference remains unopened; final scorer remains untriggered.
 - No Modal/L4 used in this continuation.
 - Current persisted hashes remain render stream `7c3399d3f5e05ecc8ac98d71d0e5300e1e78f63ae96c1642fe4a19debb4061b2`, PDF `f4c1238e868cadfb90b8a359b1555b0b90e7740b9ebaa276aa394c8991f37ce5`, inspection first `33693e32ee4a578e48f7e96360d0c06191bf0fff16f68d76d97e1e384f1aa5f3`, middle `1e265e8486e75505262de9ea33dea444f60731e025db20dea063dd1f75448775`, last `487df510c3931403017576dac2fe3e587479b9d827a496ea9d792fa5a2764671`.
 
 ## Next exact actions
-1. Locate and audit the exact final professional holdout/reference/scorer machinery, including reference completeness and scorer semantics, without changing the frozen candidate.
-2. Save the audit state before triggering any final holdout.
+1. Continue the audit by locating the exact final professional holdout/reference/scorer entrypoint and reading scorer/control-path source only; do not open reference payloads.
+2. Save the completed audit state before triggering any final holdout.
 3. If and only if the reference is complete and the official holdout path is valid, run it once against the immutable frozen candidate. Persist the result; **do not tune, modify, or select a replacement candidate from failures.**
 4. Keep final-gate `freezeReady=false` sentinels false unless score >=0.99, critical mismatches=0, PDF fidelity=1.0 are all independently proven.
 5. Do not claim Rhythm complete before all final completion gates pass.
