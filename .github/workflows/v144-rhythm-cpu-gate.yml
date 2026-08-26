@@ -20,6 +20,7 @@ on:
       - modal/v144_rhythm_singleton_onset_replacement_policy.py
       - modal/v144_rhythm_singleton_onset_prune_policy.py
       - modal/v144_rhythm_generated_only_dyad_prune_policy.py
+      - modal/v144_rhythm_generated_only_triad_prune_policy.py
       - modal/v144_rhythm_measure_set_guard.py
       - modal/configs/v144_rhythm_context_split_config.json
       - modal/tests/test_v144_rhythm_context_split_policy.py
@@ -36,6 +37,7 @@ on:
       - modal/tests/test_v144_rhythm_singleton_onset_replacement_policy.py
       - modal/tests/test_v144_rhythm_singleton_onset_prune_policy.py
       - modal/tests/test_v144_rhythm_generated_only_dyad_prune_policy.py
+      - modal/tests/test_v144_rhythm_generated_only_triad_prune_policy.py
       - modal/tests/test_v144_rhythm_generated_only_dyad_prune_search.py
       - modal/tests/test_v144_rhythm_singleton_onset_prune_search.py
       - modal/tests/test_v144_rhythm_singleton_onset_replacement_search.py
@@ -80,6 +82,7 @@ on:
       - modal/v144_rhythm_singleton_onset_replacement_policy.py
       - modal/v144_rhythm_singleton_onset_prune_policy.py
       - modal/v144_rhythm_generated_only_dyad_prune_policy.py
+      - modal/v144_rhythm_generated_only_triad_prune_policy.py
       - modal/v144_rhythm_measure_set_guard.py
       - modal/configs/v144_rhythm_context_split_config.json
       - modal/tests/test_v144_rhythm_context_split_policy.py
@@ -96,6 +99,7 @@ on:
       - modal/tests/test_v144_rhythm_singleton_onset_replacement_policy.py
       - modal/tests/test_v144_rhythm_singleton_onset_prune_policy.py
       - modal/tests/test_v144_rhythm_generated_only_dyad_prune_policy.py
+      - modal/tests/test_v144_rhythm_generated_only_triad_prune_policy.py
       - modal/tests/test_v144_rhythm_generated_only_dyad_prune_search.py
       - modal/tests/test_v144_rhythm_singleton_onset_prune_search.py
       - modal/tests/test_v144_rhythm_singleton_onset_replacement_search.py
@@ -196,6 +200,7 @@ jobs:
           python -m py_compile modal/v144_rhythm_singleton_onset_replacement_policy.py
           python -m py_compile modal/v144_rhythm_singleton_onset_prune_policy.py
           python -m py_compile modal/v144_rhythm_generated_only_dyad_prune_policy.py
+          python -m py_compile modal/v144_rhythm_generated_only_triad_prune_policy.py
 
       - name: Run V144 rhythm CPU unit tests
         shell: bash
@@ -215,6 +220,7 @@ jobs:
           python modal/tests/test_v144_rhythm_singleton_onset_replacement_policy.py -v
           python modal/tests/test_v144_rhythm_singleton_onset_prune_policy.py -v
           python modal/tests/test_v144_rhythm_generated_only_dyad_prune_policy.py -v
+          python modal/tests/test_v144_rhythm_generated_only_triad_prune_policy.py -v
           python modal/tests/test_v144_rhythm_pitch_shift_search.py -v
           python modal/tests/test_v144_rhythm_pitch_step_shift_search.py -v
           python modal/tests/test_v144_rhythm_pitch_position_shift_search.py -v
