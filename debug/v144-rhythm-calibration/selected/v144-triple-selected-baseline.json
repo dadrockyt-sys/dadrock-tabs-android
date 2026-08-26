@@ -1,0 +1,121 @@
+{
+  "schemaVersion": 14406,
+  "classification": "v144-rhythm-selected-calibration-baseline",
+  "instrument": "rhythm",
+  "status": "accepted-calibration-baseline-not-production",
+  "name": "prune-triple-67348efe50436fc5",
+  "sourceSearch": {
+    "workflowRunId": 32937262081,
+    "persistedCommit": "d40a181a0f85e780b08796e0be9d0bf371badf23",
+    "reportPath": "debug/v144-rhythm-calibration/candidates/triple-conjunction-search.json",
+    "reportGitBlob": "3df01c870198a78edc485acd9e2f5bbcaca0a8fe",
+    "candidateFamily": "three-signature-conjunction-prune",
+    "candidateCount": 384,
+    "constructionLabels": "fit-only-gross-unmatched-generated-notes",
+    "validationLabelsUsedForConstructionOrRanking": false,
+    "canaryLabelsUsedForConstructionOrRanking": false,
+    "historicalValidationOrFullInvariantResultsUsedForConstructionOrRanking": false
+  },
+  "sourceCandidate": {
+    "role": "immutable-v5-read-only-baseline",
+    "eventCount": 1209,
+    "eventSha256": "7ed5166a73793e3a40c9a21f6532fee5ba784e43ef4180727404a37a038fb6d1",
+    "generatedMeasureCount": 113
+  },
+  "transform": {
+    "type": "three-signature-conjunction-prune",
+    "signatures": [
+      "register::high",
+      "section16::1",
+      "stepParity::0"
+    ],
+    "runtimeInputs": "reference-free-event-context-only",
+    "professionalReferenceRuntimeInput": false
+  },
+  "selectedCandidate": {
+    "eventCount": 1144,
+    "eventSha256": "68b8cdf14ed02265c5e3c204b2af51b0aae4849462e7b3e4243192d8855cc3c3",
+    "pdfEventFidelity": 1.0,
+    "pdfEventSha256": "68b8cdf14ed02265c5e3c204b2af51b0aae4849462e7b3e4243192d8855cc3c3",
+    "generatedMeasureCount": 113,
+    "baselineGeneratedMeasureSetPreserved": true,
+    "missingBaselineGeneratedMeasures": [],
+    "extraCandidateGeneratedMeasures": []
+  },
+  "fitGate": {
+    "passed": true,
+    "pitchContentGain": 0.00783184116370314,
+    "pitchTimingTolerantF1Gain": 0.0015890692216209146,
+    "stringFretTimingTolerantF1Gain": 0.0011350494440149524,
+    "chordPitchSetTolerantF1Gain": 0.000872237089899891,
+    "exactVoicingTolerantF1Gain": 0.000872237089899891,
+    "criticalMismatchDelta": -45,
+    "metricRegressions": {}
+  },
+  "validationGate": {
+    "passed": true,
+    "pitchContentGain": 0.0011890827341471122,
+    "pitchTimingTolerantF1Gain": 0.0005202236961893494,
+    "stringFretTimingTolerantF1Gain": 0.00029727068353677805,
+    "chordPitchSetTolerantF1Gain": 0.00022105961240881378,
+    "exactVoicingTolerantF1Gain": 0.00022105961240881378,
+    "criticalMismatchDelta": -4,
+    "metricRegressions": {}
+  },
+  "canaryGate": {
+    "passed": true,
+    "pitchContentGain": 0.006233622601909045,
+    "pitchTimingTolerantF1Gain": 0.0012065076003694927,
+    "stringFretTimingTolerantF1Gain": 0.0010054230003079083,
+    "chordPitchSetTolerantF1Gain": 0.0007630259428820577,
+    "exactVoicingTolerantF1Gain": 0.0007630259428820577,
+    "criticalMismatchDelta": -16,
+    "metricRegressions": {}
+  },
+  "fullGoldCalibration": {
+    "passed": true,
+    "evaluationRole": "full-gold-calibration-not-unseen-holdout",
+    "criticalMismatchCount": 1810,
+    "criticalMismatchDelta": -65,
+    "criticalMismatchBreakdown": {
+      "grossUnmatchedGeneratedNotes": 1004,
+      "grossUnmatchedReferenceNotes": 806,
+      "missingReferenceMeasures": 0
+    },
+    "gatedMetrics": {
+      "pitchContentF1": 0.2909090909090909,
+      "pitchTimingTolerantF1": 0.045933014354066985,
+      "stringFretTimingTolerantF1": 0.031578947368421054,
+      "chordPitchSetTolerantF1": 0.023496890117484452,
+      "exactVoicingTolerantF1": 0.023496890117484452,
+      "measureCoverageRecall": 1.0,
+      "pdfEventFidelity": 1.0
+    },
+    "baselineDeltas": {
+      "pitchContentF1": 0.007846445897490006,
+      "pitchTimingTolerantF1": 0.0013854505489625801,
+      "stringFretTimingTolerantF1": 0.0009524972524117721,
+      "chordPitchSetTolerantF1": 0.0007391926609918165,
+      "exactVoicingTolerantF1": 0.0007391926609918165,
+      "measureCoverageRecall": 0.0
+    },
+    "metricRegressions": {},
+    "measureCoverageRecall": 1.0
+  },
+  "promotionScope": {
+    "calibrationBaseline": true,
+    "productionPromotionAllowed": false,
+    "rhythmComplete": false,
+    "near100CalibrationTargetReached": false,
+    "mayClaimUnseenGeneralization": false
+  },
+  "safety": {
+    "v5Modified": false,
+    "mainModified": false,
+    "productionModified": false,
+    "runtimeReferenceInputUsed": false,
+    "measureSetGuardUsesProfessionalReference": false,
+    "modalGpuInvoked": false,
+    "historicalSearchWorkflowReplayAllowed": false
+  }
+}
