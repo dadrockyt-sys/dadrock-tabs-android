@@ -32,37 +32,39 @@ Priority: **repair Rhythm using consumed V5 professional reference as calibratio
 - No timing relocation, pitch rewrite, octave ceiling, secondary prune, rescue rollback, professional-reference read during generation, Modal/L4, or Production modification.
 
 ## Frozen V6 calibration score — COMPLETE AND VERIFIED
-- Scorer `analyzer/v144_score_v6_calibration.py` commit `e5c215b741249c8acf8c9be360d987facb33a3df`; workflow commit `b6f616c36be13003225da3bf9e3904b2e4c68458`.
 - Trigger `6e17c83f656deb30b27c24fc07f158e1f3346067`; run `32922358891` = **SUCCESS**.
 - Score report `debug/v144-rhythm-calibration/v6-attack-gate/v6-calibration-score.json`; blob `6f336e2e1918c10ba86a406231ce1d6a9e34deef`; `predictionVerified=true`.
 - Every overall swept metric improved vs V5. V6: onset F1 `0.48682385575589454`; exact-event `0.04486873508353222`; pitch `0.6042959427207636`; pitch-class `0.8085918854415275`; measure+pitch `0.28544152744630075`; measure+pitch-class `0.4715990453460621`; position-content `0.469689737470167`.
 - Metrics improving on both odd/even splits: onset, pitch-class content, measure+pitch, measure+pitch-class. Even-split micro-regressions remain in exact-event, pitch-content, position-content.
 
 ## V6 pitch-opportunity diagnostic — COMPLETE
-- Script `analyzer/v144_v6_pitch_opportunity_diagnostic.py` commit `f2a462b919cf36b08f9e6b1829414c09b9d734f5`; workflow `.github/workflows/v144-v6-pitch-opportunity.yml` commit `423a83fb096c0b7951a2f18ecc86b6da7218499c`.
 - Trigger `cbaa555dfe11c7e89411dc01596b9535547a4640`; run `32922569934` = **SUCCESS**.
 - Report `debug/v144-rhythm-calibration/v6-attack-gate/v6-pitch-opportunity.json`; blob `8b95f34dd21121a3d81f1a34682e06920f0d8d5f`.
-- Frozen V6/reference exact shared onsets: **351**. V6-only onsets: **488**. Reference-only onsets: **252**.
-- At the 351 shared onsets:
-  - V6 primary exact-reference-pitch hit: **41**.
-  - Any current V6 event exact hit: **47**.
-  - Top V2 source-score candidate exact hit: **35**.
-  - Exact reference MIDI exists somewhere in the original V2 candidate pool: **162**.
-  - Correct reference pitch class exists somewhere in the original V2 candidate pool: **278**.
-  - Full reference MIDI set covered by candidates: **99**; full reference pitch-class set covered: **211**.
-- Of **310 wrong V6 primaries**:
-  - **121 selection-fixable**: exact reference MIDI is already in the V2 candidate set.
-  - **116 register-only opportunity**: exact MIDI absent, but correct reference pitch class exists in another register.
-  - **73 candidate-generation/separation misses**: no V2 candidate even matches a reference pitch class.
-- This opportunity split is similar on odd/even measures: selection-fixable `66/55`, register-only `51/65`, candidate-generation miss `37/36`.
-- Exact correct candidates are usually not the source-score winner: among 162 onsets with an exact candidate, best correct-candidate source-score rank median **4**, mean `5.10`, p75 `7`, p90 `11`; score gap from top median **2.47**, mean `2.27`.
-- Conclusion: **do not jump to L4 yet.** The existing candidate pool contains substantial recoverable pitch information; source-score ranking is the bigger immediate problem at shared onsets. However, 73 primary misses have no correct pitch class candidate and remain a concrete future separation/L4 target.
+- Shared exact V6/reference onsets: **351**; V6-only: **488**; reference-only: **252**.
+- V6 primary exact hit **41**; any current V6 exact hit **47**; top V2 score exact hit **35**.
+- Exact reference MIDI exists in V2 candidate pool at **162** shared onsets; correct pitch class exists at **278**.
+- Of 310 wrong primaries: **121 exact-selection opportunities**, **116 register-only opportunities**, **73 no-candidate-pitch-class misses**.
+- Opportunity split is balanced across odd/even measures. Correct exact candidates have source-score rank median **4** (mean `5.10`, p75 `7`, p90 `11`) and score-gap median **2.47** from the top source candidate.
+- Conclusion: source-score ranking is currently a larger immediate bottleneck than candidate generation at shared onsets. Do not jump to L4 yet; retain 73 no-pitch-class misses as explicit later separation target.
 
-## Next exact actions — context selection before L4
-1. Keep V6 immutable.
-2. Build a report-only CPU primary-selection/context sweep over frozen V6 + exact V2 evidence.
-3. Test source-only policies that can re-rank broad candidate pools without copying the calibration answer: local register continuity, sequence/Dynamic Programming continuity, nearby repeated-measure/step consensus, and recurring-riff candidate support.
-4. Score simulated primary replacement against calibration metrics using the reference only for grading, not runtime decisions. Do not score string/fret position for replaced-MIDI simulations until a fingering mapping is defined.
-5. Require improvement in multiple pitch metrics and odd/even internal splits before any V7 generation.
-6. If context cannot exploit the 121 exact-candidate + 116 pitch-class opportunities, then formulate a specific L4 experiment around the remaining candidate-generation/separation failure.
-7. Final legitimate validation still requires a different unseen professional song/reference.
+## V6 source-only primary context sweep — READY, NOT TRIGGERED
+- Script `analyzer/v144_v6_primary_context_sweep.py` commit `d9ec3317d42577528bbb4a30cc98190e5d815cb6`.
+- Workflow `.github/workflows/v144-v6-primary-context-sweep.yml` commit `4a12b809872e058b2f3130eb9c90dc481cfbe215`.
+- Frozen V6 and exact V2 identities are pinned. No V7 output.
+- 47 source-only policies are tested. Policy selectors do **not** read the calibration reference; reference is used only after selection for grading.
+- Families:
+  1. current V6 primary and raw top-source-score baselines;
+  2. local previous/next-register continuity over broad source-score bands;
+  3. time-weighted dynamic programming over candidate sequences with source-score + semitone-transition cost;
+  4. nearby repeated-measure/same-step candidate consensus using measure-onset-signature similarity, exact-MIDI support, and optional pitch-class support.
+- Pitch-only simulations replace/remove the V6 primary while preserving secondaries; fingering/position is intentionally not graded for replaced-MIDI simulations.
+- Metrics: exact event, pitch content, pitch-class content, measure+pitch, measure+pitch-class, odd/even split deltas, changed-primary count, primary exact-hit count.
+- A policy is considered robust for a metric only if overall improves and neither odd nor even split regresses.
+
+## Next exact actions
+1. Trigger `debug/v144-rhythm-calibration/run-v6-primary-context-sweep.txt` once.
+2. Inspect whether any context policy improves multiple pitch metrics on both odd/even splits without broad regressions.
+3. Save checkpoint immediately.
+4. Do not generate V7 unless a source-only policy survives those checks.
+5. If context cannot exploit the candidate opportunity, formulate a specific L4 separation experiment around the remaining candidate-generation misses rather than blindly re-running GPU separation.
+6. Final legitimate validation still requires a different unseen professional song/reference.
