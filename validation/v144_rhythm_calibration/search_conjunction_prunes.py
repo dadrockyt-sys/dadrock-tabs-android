@@ -8,9 +8,11 @@ import sys
 from typing import Any
 
 ROOT = Path(__file__).resolve().parents[2]
+HOLDOUT_DIR = ROOT / "validation" / "rhythm_holdout"
 MODAL_DIR = ROOT / "modal"
-if str(MODAL_DIR) not in sys.path:
-    sys.path.insert(0, str(MODAL_DIR))
+for entry in (HOLDOUT_DIR, MODAL_DIR):
+    if str(entry) not in sys.path:
+        sys.path.insert(0, str(entry))
 
 from canonical import canonical_events, sha256_json  # type: ignore  # noqa: E402
 from v144_rhythm_conjunction_prune_policy import (  # noqa: E402
