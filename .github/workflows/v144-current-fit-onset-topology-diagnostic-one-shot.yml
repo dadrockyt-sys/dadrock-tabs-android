@@ -1,0 +1,140 @@
+name: V144 Current FIT Onset Topology Diagnostic One Shot
+
+on:
+  push:
+    branches:
+      - v143-contextual-prune-lobo
+    paths:
+      - debug/v144-rhythm-calibration/diagnostics/.v144-current-fit-onset-topology-trigger
+
+permissions:
+  contents: write
+
+jobs:
+  fit-onset-topology-diagnostic:
+    if: github.event.head_commit.message == 'v144 execute current fit onset topology diagnostic one-shot'
+    name: Run current-baseline FIT onset topology diagnostic once
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+
+    steps:
+      - name: Check out exact arming revision
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 2
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+
+      - name: Verify immutable calibration identities and exact trigger shape
+        shell: bash
+        run: |
+          set -euo pipefail
+          test "${GITHUB_REF_NAME}" = "v143-contextual-prune-lobo"
+          test "$(git hash-object analyzer/v143_reference_free_rhythm_pipeline.py)" = "7f72f8ed9b14af8bc93e95544195204d99c6bec1"
+          test "$(git hash-object debug/v143-contextual-prune/v5-professional-pdf/final-professional-holdout-result.json)" = "511fd244f231b66d08306f97b5a47ed41f5415c7"
+          test "$(sha256sum debug/v143-contextual-prune/v5-professional-pdf/v5-render-stream.json | awk '{print $1}')" = "7c3399d3f5e05ecc8ac98d71d0e5300e1e78f63ae96c1642fe4a19debb4061b2"
+          test "$(sha256sum debug/v143-contextual-prune/v5-professional-pdf/v5-rhythm-shadow.pdf | awk '{print $1}')" = "f4c1238e868cadfb90b8a359b1555b0b90e7740b9ebaa276aa394c8991f37ce5"
+          test "$(git hash-object debug/v144-rhythm-calibration/reference/professional-rhythm-gold-reference.json)" = "248741bade9665a34648c59a2994bd27d73fc406"
+          test "$(git hash-object debug/v144-rhythm-calibration/reference/professional-rhythm-gold-reference-build.json)" = "5f1ec40176aa9b69676c7cd9e06b42c412731f37"
+          test "$(git hash-object debug/v144-rhythm-calibration/reference/professional-target-provenance.json)" = "3a346289d57c3cbe8de9d4bf5a86886d15774d9c"
+          test "$(git hash-object debug/v144-rhythm-calibration/selected/v144-pitch-position-selected-baseline.json)" = "45287a40fbbe88f411d2eca7db3cce072174eda8"
+          test "$(git hash-object modal/configs/v144_rhythm_context_split_config.json)" = "9b93205cb47bc7718685b9d41b263778107801ce"
+          test "$(git hash-object validation/v144_rhythm_calibration/analyze_current_baseline_fit_onset_topology.py)" = "b4ddb289e2e0e54177e51e1b4ff1140dd304ed46"
+          changed="$(git diff-tree --no-commit-id --name-only -r HEAD)"
+          test "${changed}" = "debug/v144-rhythm-calibration/diagnostics/.v144-current-fit-onset-topology-trigger"
+          python - <<'PY'
+          import json
+          from pathlib import Path
+          provenance = json.loads(Path('debug/v144-rhythm-calibration/reference/professional-target-provenance.json').read_text(encoding='utf-8'))
+          build = json.loads(Path('debug/v144-rhythm-calibration/reference/professional-rhythm-gold-reference-build.json').read_text(encoding='utf-8'))
+          manifest = json.loads(Path('debug/v144-rhythm-calibration/selected/v144-pitch-position-selected-baseline.json').read_text(encoding='utf-8'))
+          assert provenance['role'] == 'gold-calibration-reference-not-unseen-holdout'
+          assert provenance['structuredTarget']['builtReferenceSha256'] == '18fd868ae960dfcdd1ffb0110f1a9dfd8acc2ffeb46e247d1116cd54291526ac'
+          assert provenance['safety']['v5FinalHoldoutConsumed'] is True
+          assert provenance['safety']['v5WorkflowMayBeRetried'] is False
+          assert provenance['safety']['mainMayBeModified'] is False
+          assert provenance['safety']['productionMayBeModified'] is False
+          assert provenance['safety']['modalGpuAuthorized'] is False
+          assert build['referenceRole'] == 'gold-calibration-reference-not-unseen-holdout'
+          assert build['referenceSha256'] == '18fd868ae960dfcdd1ffb0110f1a9dfd8acc2ffeb46e247d1116cd54291526ac'
+          assert build['modalGpuInvoked'] is False
+          assert manifest['name'] == 'pitch-position-shift-54a6e8d3aa91c422'
+          assert manifest['canonicalEvents']['eventCount'] == 1144
+          assert manifest['canonicalEvents']['generatedMeasureCount'] == 113
+          assert manifest['canonicalEvents']['eventSha256'] == '5b36270aaeafa73b2e25722e2576a40424ce5951dcfd2b5d769746bd9eb07e0d'
+          assert manifest['promotionScope']['calibrationBaseline'] is True
+          assert manifest['promotionScope']['productionPromotionAllowed'] is False
+          PY
+
+      - name: Run FIT-only aggregate topology diagnostic once
+        shell: bash
+        run: |
+          set -euo pipefail
+          output="debug/v144-rhythm-calibration/diagnostics/current-pitch-position-baseline-fit-onset-topology.json"
+          test ! -e "${output}"
+          python validation/v144_rhythm_calibration/analyze_current_baseline_fit_onset_topology.py \
+            debug/v143-contextual-prune/v5-professional-pdf/v5-render-stream.json \
+            debug/v144-rhythm-calibration/reference/professional-rhythm-gold-reference.json \
+            debug/v144-rhythm-calibration/selected/v144-pitch-position-selected-baseline.json \
+            modal/configs/v144_rhythm_context_split_config.json \
+            "${output}"
+
+      - name: Verify diagnostic isolation and baseline identity
+        shell: bash
+        run: |
+          set -euo pipefail
+          python - <<'PY'
+          import json
+          from pathlib import Path
+          path = Path('debug/v144-rhythm-calibration/diagnostics/current-pitch-position-baseline-fit-onset-topology.json')
+          payload = json.loads(path.read_text(encoding='utf-8'))
+          assert payload['schemaVersion'] == 14419
+          assert payload['classification'] == 'v144-rhythm-current-baseline-fit-onset-topology'
+          assert payload['evaluationRole'] == 'gold-calibration-fit-only-current-baseline-topology-diagnostic'
+          assert payload['mayClaimUnseenGeneralization'] is False
+          assert payload['candidateConstructionPerformed'] is False
+          assert payload['candidateRankingPerformed'] is False
+          assert payload['candidateSelectionPerformed'] is False
+          assert payload['candidateRuleOrShiftHistogramEmitted'] is False
+          assert payload['validationLabelsUsedForDiagnostic'] is False
+          assert payload['canaryLabelsUsedForDiagnostic'] is False
+          assert payload['baseline']['name'] == 'pitch-position-shift-54a6e8d3aa91c422'
+          assert payload['baseline']['eventCount'] == 1144
+          assert payload['baseline']['generatedMeasureCount'] == 113
+          assert payload['baseline']['eventSha256'] == '5b36270aaeafa73b2e25722e2576a40424ce5951dcfd2b5d769746bd9eb07e0d'
+          assert payload['fit']['generatedNoteCount'] == 643
+          assert payload['fit']['referenceNoteCount'] == 594
+          boundary = payload['interpretationBoundary']
+          assert boundary['topologyOnly'] is True
+          assert boundary['mayInformMateriallyDistinctFamilyUnit'] is True
+          assert boundary['mayRankSpecificRuleOrShift'] is False
+          assert boundary['validationMayInformFamilyShape'] is False
+          assert boundary['canaryMayInformFamilyShape'] is False
+          assert boundary['consumedFamilyResultsMayInformFamilyShape'] is False
+          assert boundary['fixedSelectorThresholdsMayChange'] is False
+          assert boundary['runtimeReferenceInputAllowed'] is False
+          safety = payload['safety']
+          assert safety['v5Modified'] is False
+          assert safety['mainModified'] is False
+          assert safety['productionModified'] is False
+          assert safety['runtimeReferenceInputUsed'] is False
+          assert safety['modalGpuInvoked'] is False
+          PY
+
+      - name: Persist only the topology diagnostic report
+        shell: bash
+        run: |
+          set -euo pipefail
+          output="debug/v144-rhythm-calibration/diagnostics/current-pitch-position-baseline-fit-onset-topology.json"
+          status="$(git status --porcelain)"
+          test "${status}" = "?? ${output}"
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add -- "${output}"
+          staged="$(git diff --cached --name-only)"
+          test "${staged}" = "${output}"
+          git commit -m "v144: persist current fit onset topology diagnostic report"
+          git push origin HEAD:v143-contextual-prune-lobo
