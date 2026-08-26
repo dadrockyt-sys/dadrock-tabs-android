@@ -1,0 +1,17 @@
+{
+  "classification": "v144-rhythm-gold-calibration-reference-build",
+  "exactHistoricalReferenceIdentity": true,
+  "legacyReferenceFieldNote": "The exact historical reference bytes retain holdout=true for hash identity; V144 protocol usage is calibration-only.",
+  "measureCount": 113,
+  "modalGpuInvoked": false,
+  "playableNoteCount": 946,
+  "playableOnsetCount": 603,
+  "populatedMeasureCount": 104,
+  "productionModified": false,
+  "professionalImageSha256": "aca2da3e8d551b2fd82b4ab3ecafa0c8932d6c0a27b54b6213ffc990ca08a9a9",
+  "referenceRole": "gold-calibration-reference-not-unseen-holdout",
+  "referenceSha256": "18fd868ae960dfcdd1ffb0110f1a9dfd8acc2ffeb46e247d1116cd54291526ac",
+  "schemaVersion": 14401,
+  "structuredSourceSha256": "18cdb4f8afb49562aac5b600730384636070d6ca8650823e759276a81ee4afc8",
+  "v5Modified": false
+}
