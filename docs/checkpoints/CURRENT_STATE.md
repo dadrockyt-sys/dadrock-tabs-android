@@ -2,7 +2,7 @@
 
 Updated: 2026-08-26 America/Montreal
 Branch: `v143-contextual-prune-lobo`
-Active phase: **V144 Rhythm gold calibration. Accepted calibration baseline remains `pitch-position-shift-54a6e8d3aa91c422` (1144 events / 113 measures / SHA `5b36270a...`). Nine earlier candidate families are consumed/sealed. Both current-baseline FIT-only diagnostics are complete/sealed. A materially distinct family #10 — atomic singleton-onset pitch+explicit-string replacement — is now PRE-REGISTERED with synthetic tests and CPU-gate wiring, but its CPU gate has not yet delivered and no search/candidate evaluation exists. Production remains untouched.**
+Active phase: **V144 Rhythm gold calibration. Accepted calibration baseline remains `pitch-position-shift-54a6e8d3aa91c422` (1144 events / 113 measures / SHA `5b36270a...`). Nine earlier candidate families are consumed/sealed. Both current-baseline FIT-only diagnostics are complete/sealed. Family #10 — atomic singleton-onset pitch+explicit-string replacement — is PRE-REGISTERED and its policy CPU gate is now SUCCESS. No family #10 search exists yet; no FIT candidate rules have been constructed/ranked/evaluated. Production remains untouched.**
 
 ## Permanent safety boundary
 - Work only on `v143-contextual-prune-lobo`; never modify/merge `main` or Production.
@@ -43,54 +43,59 @@ Active phase: **V144 Rhythm gold calibration. Accepted calibration baseline rema
 8. Joint contextual pitch+step+adjacent-string position — no fit-qualified winner; run `32974497513`; sealed `55a948fa97ab100bdca0b1338b36c9a43a4f5ce9`.
 9. Atomic exact-two-note onset dyad pitch rewrite — zero supported rules / zero candidates; run `32975912923`; report blob `9b1099e42f57127a9cf3168471fdb49415067f5f`; sealed `6e0e23254a4e6c845c681368a96e1623f04364bd`.
 
-## Current-baseline FIT-only mechanism diagnostic — COMPLETE / SEALED
+## Current-baseline FIT-only diagnostics — COMPLETE / SEALED
+### Mechanism diagnostic
 - CPU gate `32971927840` SUCCESS; diagnostic run `32972033516` SUCCESS.
 - Report commit `3bed803a666d105cd95c96c94ab7beb192c2241e`; blob `dbc0c1ab0cfff943f95eab48720c7c2a5eb9d175`; workflow sealed `a6d5ddf373de8a71facf8474d48550aa990d7d54`.
 - Candidate construction/ranking/selection false; validation/canary false; runtime reference false; GPU false.
-- Fit: generated `643`, reference `594`, critical `1075`; pitch `161` / F1 `0.26030719482619236`; tight pitch/timing `41`; gross ±2-step matches `81`; exact string/fret/timing `29`; chord/voicing `0.03976608187134503`.
 - Shape signals: same-onset wrong-pitch substitutions `171`; displaced existing pitch matches `120`; tight pitch/string-fret mismatches `12`.
 
-## Current-baseline FIT onset-topology diagnostic — COMPLETE / SEALED
-- Analyzer commit `2fd4fffc17111be8acb1741985ff9ece32a630d5`; blob `b4ddb289e2e0e54177e51e1b4ff1140dd304ed46`; required pre-label CPU gate `32988449841` SUCCESS.
-- Successful one-shot run `32992367811`: CPU prerequisite job `98252843458` SUCCESS; diagnostic job `98252964359` SUCCESS.
-- Report `debug/v144-rhythm-calibration/diagnostics/current-pitch-position-baseline-fit-onset-topology.json`; persistence commit `cbe6bcf73862ef8f15bf1bad306f746f6f022301`; blob `26e1265adf5c1c11838c207b4c5af0927f26b95b`; bot commit added only the report.
-- Isolation held: candidate construction/ranking/selection false; no rule/shift histogram; validation/canary false; consumed-family outcomes excluded; runtime reference false; V5/main/Production false; GPU false.
-- FIT topology: generated onsets `485`; reference `370`; shared `190`; generated-only `295`; reference-only `180`; same-onset wrong-pitch slots `171`; same-string wrong-pitch slots `43`; singleton→singleton `100`; singleton exact-pitch same-string `17`; singleton wrong-pitch same-string `5`; singleton wrong-pitch different-string `78`; shared cardinality mismatch `84` (`27` generated-heavier / `57` reference-heavier); equal-cardinality multi-note only `6`; dyad→dyad only `5`; 3+ equal-cardinality only `1`.
-- Diagnostic sealing complete: standalone push one-shot deleted `1f50ad5273aaba453dfdc81e9f6e815971747a82`; broad CPU workflow restored at `f5403086ca4477a5bcd3a3b78a348e16004a031c`; trigger deleted `addb76e396d462b5bb1c94b4a03d1ed705b09fe7`; PR #21 closed/draft/unmerged against inert `noop`.
+### Onset-topology diagnostic
+- Analyzer commit `2fd4fffc17111be8acb1741985ff9ece32a630d5`; blob `b4ddb289e2e0e54177e51e1b4ff1140dd304ed46`; pre-label CPU gate `32988449841` SUCCESS.
+- Successful one-shot run `32992367811`: CPU prerequisite `98252843458` SUCCESS; diagnostic job `98252964359` SUCCESS.
+- Report persistence commit `cbe6bcf73862ef8f15bf1bad306f746f6f022301`; blob `26e1265adf5c1c11838c207b4c5af0927f26b95b`; bot commit added only the report.
+- FIT topology: generated onsets `485`; reference `370`; shared `190`; generated-only `295`; reference-only `180`; singleton→singleton `100`; singleton exact-pitch same-string `17`; singleton wrong-pitch same-string `5`; singleton wrong-pitch different-string `78`; shared cardinality mismatch `84`; equal-cardinality multi-note only `6`; dyad→dyad only `5`.
+- Diagnostic execution surfaces sealed/deleted; PR #21 closed/draft/unmerged against inert `noop`.
 
-## Family #10 — atomic singleton-onset pitch+explicit-string replacement — PRE-REGISTERED / PRE-CPU
-### Why this unit is permitted
-- Shape comes only from sealed FIT-only aggregate diagnostics while baseline is unchanged.
-- 78/100 shared singleton→singleton onsets are wrong-pitch + different-string, versus 5 wrong-pitch + same-string.
-- Unit is materially distinct from consumed dyad family #9: exactly one generated note at one shared singleton onset, not two notes.
-- Unit is materially distinct from consumed adjacent-string family #7: rule stores an explicit `sourceStringIndex` → `targetStringIndex`; non-adjacent moves are allowed and there is no adjacent-only `stringDelta` rule identity.
-- Cardinality-changing edits are deliberately excluded from this family.
+## Family #10 — atomic singleton-onset pitch+explicit-string replacement — POLICY CPU PASSED
+### Fixed family shape
+- Shape derived only from sealed FIT-only aggregate diagnostics while accepted baseline is unchanged.
+- Exactly one generated note and one reference note at the same FIT onset.
+- Both pitch and string must change.
+- Explicit `sourceStringIndex` → `targetStringIndex` rule identity; non-adjacent targets allowed. This is not a replay of adjacent-string family #7.
+- Atomic unit is one singleton onset, not dyad family #9.
+- Cardinality-changing edits excluded.
+- Runtime reference forbidden; linked pitch techniques excluded.
+- Only `stringIndex`, `fret`, `midi` may change; count/order/measure/step/timing/duration/techniques/other metadata preserved.
 
-### Fixed policy before any candidate search
+### Policy identity
 - Policy `modal/v144_rhythm_singleton_onset_replacement_policy.py`.
 - Pre-registration commit `9f1d4d609f62a6f75f0b708d9eb6efff2118a8d3`; blob `1e05e66a3523f98944370837a59e5d6e7293f9ac`.
 - Fixed support `3`; max candidates `256`; max absolute pitch shift `12` semitones.
-- Construction requires generated and reference each exactly one note at the same FIT onset.
-- Both pitch and string must change; generated linked-pitch techniques are excluded.
 - Rule identity: one structural onset context signature + `sourceStringIndex` + `sourcePitchClass` + explicit `targetStringIndex` + `semitoneShift`.
-- Structural signatures only: `measurePhase`, `section16`, `stepParity`, `stepQuarter`, or `measurePhaseStep`; no reference-derived runtime signature.
-- Runtime receives generated events + locked rule only; reference forbidden.
-- Runtime onset must contain exactly one generated event; source string/pitch-class/context must match; target fret is tuning-derived and must remain 0..36.
-- Only `stringIndex`, `fret`, and `midi` may change. Event count/order, measure, step, timing, duration, techniques, and all other metadata are preserved.
+- Structural signatures: `measurePhase`, `section16`, `stepParity`, `stepQuarter`, or `measurePhaseStep` only.
 
-### Synthetic tests / CPU wiring
+### Synthetic tests / CPU proof
 - Tests `modal/tests/test_v144_rhythm_singleton_onset_replacement_policy.py`; commit `4f6c22ac2c01227beebb75517aa50d48ac267696`; blob `a4e1c52e5f63187e8bad5f853300e644f056e726`.
-- Seven synthetic tests cover exact singleton/both-change construction, deterministic reversal, support/cap, explicit non-adjacent target, runtime singleton/context/source matching, metadata preservation, linked/invalid-target skip, and invalid-rule rejection.
-- Broad CPU-gate wiring commit `ba14cf61443bc32d7cdad2ab64af7df100a0b09b`; workflow blob `c552c378f40a6a86527e6af18db15f34dd880daa`.
-- Wiring only adds policy/test path filters, policy `py_compile`, and synthetic test execution. **No search/diagnostic execution surface was added.**
-- Push workflow delivery has not materialized yet at this checkpoint; CPU result is pending.
-- **No FIT candidate rules have been constructed/ranked/evaluated for family #10. Validation/canary remain closed.**
+- CPU wiring commit `ba14cf61443bc32d7cdad2ab64af7df100a0b09b`; workflow blob `c552c378f40a6a86527e6af18db15f34dd880daa`.
+- **Policy CPU gate run `32994157957` SUCCESS; job `98258911576` SUCCESS.**
+- Logs explicitly show policy `py_compile` SUCCESS and all 7 singleton policy tests SUCCESS:
+  - deterministic construction under reversal.
+  - shared-singleton + both pitch/string change requirement.
+  - invalid rule/context/shift rejection.
+  - linked/invalid target skip.
+  - supported/capped ranking with explicit non-adjacent target.
+  - exact singleton source/context runtime matching.
+  - non-adjacent atomic rewrite with metadata preservation.
+- Immutable V5/provenance/config guards all passed in the same job.
+- PR #21 was reopened only as inert `noop` CPU-delivery fallback, then immediately closed again; never merged, never targeted `main`.
+- **No family #10 search exists yet. No FIT candidate rule has been constructed/ranked/evaluated. Validation/canary remain closed.**
 
 ## Immediate next actions
-1. Obtain one CPU gate for commit `ba14cf61443bc32d7cdad2ab64af7df100a0b09b`. Push scheduling is delayed; it is safe to reopen existing draft PR #21 against inert `noop` solely to deliver the broad CPU gate because all executable one-shot jobs are removed.
-2. If CPU gate fails, fix policy/tests only. Do NOT create or execute a search.
-3. Only after CPU SUCCESS, pre-register the family #10 deterministic search with the already-fixed support `3`, max candidates `256`, pitch bound `12`, current accepted baseline reconstruction, fixed fit→validation→canary→full→PDF invariant order, and deterministic fallback.
-4. Add synthetic search tests and CPU-gate them before any one-shot candidate evaluation.
-5. If no singleton rule meets fixed support/shape requirements, seal family #10 at fit without relaxing support/thresholds or switching shapes.
+1. Pre-register deterministic family #10 search implementation before opening FIT labels. Fixed parameters remain support `3`, max candidates `256`, pitch bound `12`; no changes permitted from observed outcomes.
+2. Search must reconstruct the accepted baseline reference-free from frozen V5; rank rules using FIT only; lock at most one FIT winner; then gate exactly validation → canary → full gold → independent PDF-event fidelity; later failure => accepted-baseline fallback, never alternate selection.
+3. Add strict event invariant proving only the locked singleton event's `midi`, `fret`, and `stringIndex` may change; count/order/timing/measure/step/duration/techniques/metadata must remain exact; target fret must satisfy tuning identity.
+4. Add deterministic synthetic search/invariant tests and CPU-gate search + tests before any one-shot candidate evaluation.
+5. If no rule meets fixed support/shape or no FIT candidate passes the fixed gate, seal family #10 at FIT without relaxing anything.
 6. Keep `pitch-position-shift-54a6e8d3aa91c422` / SHA `5b36270a...` as baseline unless a future fully gated family passes every invariant.
 7. Never start Bass/Lead, modify main/Production, claim near-100%, or use Modal/L4/GPU without fresh explicit authorization.
