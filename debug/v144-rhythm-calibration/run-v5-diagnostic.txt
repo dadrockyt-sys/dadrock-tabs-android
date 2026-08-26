@@ -1,1 +1,1 @@
-Run the CPU-only V144 post-holdout calibration diagnostic once.
+Run the CPU-only V144 post-holdout calibration diagnostic schema V2.
