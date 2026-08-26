@@ -2,7 +2,7 @@
 
 Updated: 2026-08-26 America/Montreal
 Branch: `v143-contextual-prune-lobo`
-Active phase: **V144 Rhythm gold calibration. Current accepted calibration baseline remains `pitch-position-shift-54a6e8d3aa91c422` (1144 events / 113 measures / SHA `5b36270a...`). Nine candidate families are consumed and sealed. The diagnostic-only current-baseline FIT onset-topology analyzer passed its required pre-label CPU gate. Its exact CPU-only one-shot workflow is now pre-registered but NOT yet armed. It has still NOT read gold FIT labels, emitted no candidate/rule/shift/ranking, and no successor family is pre-registered. Production remains untouched.**
+Active phase: **V144 Rhythm gold calibration. Current accepted calibration baseline remains `pitch-position-shift-54a6e8d3aa91c422` (1144 events / 113 measures / SHA `5b36270a...`). Nine candidate families are consumed and sealed. The diagnostic-only current-baseline FIT onset-topology analyzer passed its required pre-label CPU gate. A temporary inert-base PR delivery run reached the one-shot wrapper but failed BEFORE the analyzer executed because the wrapper referenced a nonexistent manifest key (`canonicalEvents`). Gold FIT labels were NOT read by that failed attempt. No candidate/rule/shift/ranking was emitted and no successor family is pre-registered. Production remains untouched.**
 
 ## Permanent safety boundary
 - Work only on `v143-contextual-prune-lobo`; never modify/merge `main` or Production.
@@ -64,23 +64,27 @@ Active phase: **V144 Rhythm gold calibration. Current accepted calibration basel
 - `rankedRuleCount=0`; `evaluatedCandidateCount=0`; validation/canary/full all `null`; deterministic accepted-baseline fallback retained.
 - Workflow archived immediately: commit `6e0e23254a4e6c845c681368a96e1623f04364bd`; blob `869c625913625806555184beef8ff33943304ce4`; replay refused.
 
-## Current-baseline FIT onset-topology diagnostic — PRE-RUN / CPU GATE PASSED / ONE-SHOT PREREGISTERED
+## Current-baseline FIT onset-topology diagnostic — PRE-RUN / CPU GATE PASSED / WRAPPER FIX REQUIRED
 - Implementation `validation/v144_rhythm_calibration/analyze_current_baseline_fit_onset_topology.py`; commit `2fd4fffc17111be8acb1741985ff9ece32a630d5`; blob `b4ddb289e2e0e54177e51e1b4ff1140dd304ed46`.
 - Synthetic tests `modal/tests/test_v144_rhythm_current_baseline_fit_onset_topology.py`; initial commit `03becc266d7fe32980a8425ead72c0ce8f1fc3f3`; gate-tested blob `8c47a13f459832bbe564a080ab0e984edd3a9c25`.
-- Broad CPU-gate wiring commit `073d276bcae5873bfed104eda34aebe7c19a0b49`; workflow blob `0102223c67e4a489dda2e5c88808c0a1dad7c240`.
-- Temporary draft PR #21 targeted inert branch `noop`, never `main`, was never merged, and was closed. Its delayed `pull_request` event produced broad V144 CPU gate run `32988449841`.
+- Broad CPU-gate wiring commit `073d276bcae5873bfed104eda34aebe7c19a0b49`; original topology-wired workflow blob `0102223c67e4a489dda2e5c88808c0a1dad7c240`.
+- Temporary draft PR #21 targets inert branch `noop`, never `main`, and has never been merged.
 - **Pre-label CPU gate `32988449841` SUCCESS.** Job `98240070427` explicitly compiled the topology analyzer, ran all five topology synthetic tests successfully, verified immutable V5 identities/provenance, and kept config CPU-safe/fallback-first.
-- User manual retrigger commit `c58917b950cf5c5c3f173f49a9899c4b97eaeff8` added only one comment after `unittest.main()`; current test blob `5d0795e16989556b8bd0127b6ba34e899a54d840`. Executable analyzer remains exact blob `b4ddb289...`.
-- One-shot workflow `.github/workflows/v144-current-fit-onset-topology-diagnostic-one-shot.yml`; pre-registration commit `d16388a0bdd2996b594184ff519eea02b53de403`; blob `c66b4c782967c1b00b783cf43e4fefafd2fcfaa4`.
-- Exact one-shot trigger message: `v144 execute current fit onset topology diagnostic one-shot`; trigger path: `debug/v144-rhythm-calibration/diagnostics/.v144-current-fit-onset-topology-trigger`.
-- One-shot is CPU-only and checks immutable V5/reference/build/provenance/current-manifest/config/analyzer identities; exact trigger-path-only commit; accepted baseline name/count/measure/SHA; calibration-only promotion scope.
-- It refuses if output already exists, runs only the deterministic FIT topology analyzer, verifies all isolation/boundary/safety flags, asserts known fit counts 643/594, and stages/pushes only `debug/v144-rhythm-calibration/diagnostics/current-pitch-position-baseline-fit-onset-topology.json`.
-- **At this checkpoint the one-shot is NOT armed and the topology diagnostic has NOT read gold FIT labels. No successor candidate family is pre-registered or evaluated.**
+- User manual retrigger commit `c58917b950cf5c5c3f173f49a9899c4b97eaeff8` added only one comment after `unittest.main()`; executable analyzer remains exact blob `b4ddb289...`.
+- Standalone push one-shot workflow `.github/workflows/v144-current-fit-onset-topology-diagnostic-one-shot.yml`; pre-registration commit `d16388a0bdd2996b594184ff519eea02b53de403`; blob `c66b4c782967c1b00b783cf43e4fefafd2fcfaa4`. Repository push→Actions scheduling did not create its run.
+- Temporary PR-delivery one-shot job was added to `.github/workflows/v144-rhythm-cpu-gate.yml` at commit `bdc6840fb852525572079326acb48d767e51aa80`; workflow blob `53696e21d088dced1fb06d711b62f604e2c4fa6a`.
+- PR-delivery arming head `8fbf82580995f3c35e3ede37a6fd7158f07a152b`; exact message `v144 execute current fit onset topology diagnostic one-shot`; only trigger file changed. PR #21 was reopened against inert `noop`, then reclosed without merge.
+- Delayed PR run `32990041415` materialized. CPU prerequisite job `98245212543` **SUCCESS**: immutable guards, compilation, all topology tests, config guards passed.
+- One-shot job `98245334632` **FAILED BEFORE diagnostic execution** in `Verify exact one-shot arming commit and immutable identities`: wrapper used `manifest['canonicalEvents']`, but the accepted manifest stores identity under `manifest['selectedCandidate']`. Error was `KeyError: 'canonicalEvents'`.
+- Diagnostic step, isolation verification, and report persistence were all skipped. **No gold FIT labels were read by run `32990041415`; no topology report exists from that attempt.**
+- Fix scope is wrapper-only: change those three manifest assertions from `canonicalEvents` to `selectedCandidate`. Do not alter analyzer, tests, baseline, reference, selector, thresholds, or topology semantics.
+- Analyzer isolation remains: candidate construction/ranking/selection false; no rule/shift histogram; validation/canary false; runtime reference false; GPU false.
 
 ## Immediate next actions
-1. Create exactly one trigger-path commit with exact message `v144 execute current fit onset topology diagnostic one-shot` and no other changed path.
-2. Let the topology one-shot run exactly once. If it fails, do not replay blindly; inspect first. If it succeeds, verify the persisted report identity/isolation, then archive the executable workflow immediately and refuse replay.
-3. Interpret only aggregate FIT topology to decide whether a genuinely new transformation unit is justified. Never use consumed-family outcomes, validation, or canary to choose the shape.
-4. If a successor unit is justified, pre-register it before candidate evaluation and follow policy/tests → CPU gate → search/invariants → CPU gate → at most one one-shot → immediate archive.
-5. Keep `pitch-position-shift-54a6e8d3aa91c422` / SHA `5b36270a...` as baseline unless a future fully gated family passes every invariant.
-6. Never start Bass/Lead, modify main/Production, claim near-100%, or use Modal/L4/GPU without fresh explicit user authorization.
+1. Correct only the PR one-shot wrapper manifest assertions to use `selectedCandidate`; update the exact trigger workflow blob identity and checkpoint the fix.
+2. Re-arm via inert `noop` PR event only after the broad CPU prerequisite remains green; exact trigger commit must change only the trigger path and use the exact message.
+3. If the topology diagnostic succeeds, verify the persisted report identity/isolation, then immediately remove/archive both executable one-shot surfaces and refuse replay.
+4. Interpret only aggregate FIT topology to decide whether a genuinely new transformation unit is justified. Never use consumed-family outcomes, validation, or canary to choose the shape.
+5. If a successor unit is justified, pre-register it before candidate evaluation and follow policy/tests → CPU gate → search/invariants → CPU gate → at most one one-shot → immediate archive.
+6. Keep `pitch-position-shift-54a6e8d3aa91c422` / SHA `5b36270a...` as baseline unless a future fully gated family passes every invariant.
+7. Never start Bass/Lead, modify main/Production, claim near-100%, or use Modal/L4/GPU without fresh explicit user authorization.
