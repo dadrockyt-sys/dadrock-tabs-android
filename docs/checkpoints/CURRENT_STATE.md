@@ -20,36 +20,53 @@ Priority: **repair Rhythm using the consumed V5 professional reference as calibr
 - V5: 1209 rendered events / 113 measures; PDF fidelity 1.0.
 - Final musical result: pitch-content F1 `0.2830626450116009`; pitch/timing tolerant F1 `0.044547563805104405`; string/fret/timing tolerant F1 `0.03062645011600928`; critical mismatches `1875`; `rhythmComplete=false`.
 
-## What the failure strongly suggests
-- Only about 305 of the 1209 generated notes match reference MIDI content when timing is ignored (derived from the persisted pitch-content F1 and 1209/946 note counts).
-- Only about 48 generated/reference notes match under the scorer's pitch+timing tolerance (derived from the persisted pitch/timing F1).
-- Therefore this is not a PDF problem. It is primarily a musical reconstruction problem, with a likely additional alignment/placement problem.
-- First diagnostic priority: determine how much of the timing collapse is explained by global/bar/step alignment versus genuinely wrong pitches/onsets.
-- Second priority: quantify over-generation (1209 generated vs 946 reference notes), pitch/octave errors, onset density errors, and string/fret voicing errors.
-
-## Scorer preserved for future testing
+## Scorer + Modal/L4 preservation
 - Preservation manifest: `docs/testing/SCORER_MODAL_L4_ARCHIVE.md`.
-- Keep `validation/rhythm_holdout/score_rhythm_holdout.py`, `canonical.py`, freeze builder, PDF fidelity validator, completeness validator, and V5 scorer workflows/results intact.
-- The V5 final result must never be overwritten.
-- New calibration diagnostics may reuse scorer logic and may produce new files under a V144 calibration directory.
+- Keep the professional scorer/canonical/freeze/fidelity/completeness harness and all V5 scorer evidence intact.
+- Preserve branch `v143-github-modal-smoke`, workflow blob `11e8ab8cc9e34242a45442226c693a25fcb29b67`, and integration probe blob `ea3cd0bea0c9b43fc6a707f974c4d6d4a6925fc1`.
+- Do not run Modal/L4 blindly. Use it later for a specific hypothesis or end-to-end verification.
 
-## Modal/L4 preserved for future testing
-- Preserve branch `v143-github-modal-smoke`.
-- Preserve `.github/workflows/v143-modal-live-smoke.yml` blob `11e8ab8cc9e34242a45442226c693a25fcb29b67`.
-- Preserve `analyzer/v143_modal_http_live_smoke.py` on `v143-ai-tab-production-integration`, blob `ea3cd0bea0c9b43fc6a707f974c4d6d4a6925fc1`.
-- That probe explicitly expects `modalGpu == "L4"` and deterministic separator settings.
-- Do not run Modal/L4 yet just to iterate blindly. Use it after CPU diagnostics identify a concrete hypothesis or when a candidate is ready for GPU verification.
+## V144 calibration diagnostic — COMPLETE
+- Script: `analyzer/v144_rhythm_calibration_diagnostics.py`.
+- Workflow: `.github/workflows/v144-rhythm-calibration-diagnostic.yml`.
+- Trigger commit `0222b076fa99e7c1a51b40de90d0871741b1086d`.
+- Run `32920350517` = **SUCCESS**.
+- Persisted aggregate report: `debug/v144-rhythm-calibration/v5-diagnostic-baseline.json`, Git blob `e8d7cbdc9ef2e78bda5c9e989adad10665b2142d`.
+- Exact consumed structured source was SHA-verified and deleted after diagnostics; only aggregates were persisted.
+- `candidateModified=false`, `modalInvoked=false`, `productionModified=false`, `unseenHoldout=false`.
 
-## V144 diagnostic — READY TO TRIGGER
-- Diagnostic script: `analyzer/v144_rhythm_calibration_diagnostics.py`, added in commit `bbd153fbd4042475520b9721e12161df95188078`.
-- CPU workflow: `.github/workflows/v144-rhythm-calibration-diagnostic.yml`, added in commit `6dded05029b35b65b7be9355f12fba00566d388a`.
-- Workflow runs only manually or on exact trigger path `debug/v144-rhythm-calibration/run-v5-diagnostic.txt` on this branch.
-- It verifies the frozen V5 stream hash, verifies the existing terminal result, fetches and SHA-verifies the exact consumed structured source, runs aggregate diagnostics, deletes the transient source, and persists only `debug/v144-rhythm-calibration/v5-diagnostic-baseline.json`.
-- No Modal and no Production access.
+## Diagnostic findings — two independent failure classes
+### 1. Timing / structural phase problem
+- Baseline exact pitch+timing: 48 matches, F1 `0.044547563805104405`.
+- Best global pitch+timing step shift is `-14` sixteenth-note steps: 136 matches, F1 `0.1262180974477958`.
+- Best joint timing+semitone search is also `stepDelta=-14`, `semitoneDelta=0`; there is no global transposition error.
+- Quarter-song best pitch/timing shifts are remarkably stable: `-14`, `-13`, `-14`, `-14`.
+- This strongly indicates an approximately 14-step global phase/measure-origin error in V5 placement, not random local timing noise.
+- A global shift alone is insufficient: even after the best shift, pitch+timing F1 remains only `0.1262`.
+
+### 2. Musical reconstruction / contamination / register problem
+- Pitch content ignoring timing: 644 matches, F1 `0.5976798143851508`.
+- Pitch-class content ignoring octave: 867 matches, F1 `0.8046403712296984`.
+- Therefore the model often finds the correct pitch class but chooses the wrong octave/register or adds extra notes.
+- Exact string/fret/pitch content F1 is `0.4677494199535963`, below pitch-content F1, so voicing selection is another meaningful error source.
+- Generated notes `1209` vs reference `946`; generated onsets `891` vs reference `603` — major over-generation.
+- Note density: 67 measures over-generated, 33 under-generated, only 13 exact; mean absolute note-count error `4.4867` per measure.
+- Onset density: 74 measures over-generated, 20 under-generated, only 19 exact; mean absolute onset-count error `3.0973` per measure.
+- Several measures contain many generated events while the professional rhythm track has zero playable notes (notably 110, 106, 111, 38, 69, 113). This is strong evidence that V5 is following non-rhythm material/noise in parts of the song.
+- Register bias is severe: generated MIDI range `40-83` while reference is `40-71`.
+- MIDI 64 is over-produced by `+205` notes (291 generated vs 86 reference), while low/register notes such as MIDI 40, 55, and 57 are strongly under-produced.
+- This points to high-register/string bias plus insufficient rhythm-source isolation, not a simple pitch transpose bug.
+
+## Repair direction for V6
+1. Do **not** hardcode `-14` as a song-specific correction. Find the source of the measure/downbeat origin error and make phase alignment reference-free.
+2. Inspect the V143 timing/bar assignment code for how measure 1 / step 0 is chosen; create a new V144 analyzer path rather than altering terminal V5.
+3. Add stronger rhythm-source gating so silent/lead-dominant regions do not emit dense rhythm events.
+4. Rebalance pitch/register selection toward plausible rhythm-guitar register and penalize unsupported high-register notes, but derive rules from source-only evidence rather than copying the professional pitches.
+5. Re-run the calibration diagnostic after each isolated V6 change to measure which error class improves.
+6. Use Modal/L4 only once a concrete separation/stem hypothesis is ready to test.
+7. Final independent validation must use a new unseen professional song/reference.
 
 ## Next exact actions
-1. Create `debug/v144-rhythm-calibration/run-v5-diagnostic.txt` to run the CPU diagnostic once.
-2. Read the aggregate report and determine whether timing/alignment, pitch selection/over-generation, or both are the first V6 target.
-3. Keep terminal V5 artifacts unchanged.
-4. Use Modal/L4 only after a specific hypothesis justifies it.
-5. Once calibration performance is strong, freeze a candidate and validate once on a new unseen professional song/reference.
+1. Inspect V143 timing/downbeat/measure assignment and rhythm-carrier selection logic without modifying it.
+2. Design V144 timing-origin correction and contamination gate as separate experiments so their effects can be measured independently.
+3. Save checkpoint before any V6 candidate generation.
