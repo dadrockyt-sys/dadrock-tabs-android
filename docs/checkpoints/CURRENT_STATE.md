@@ -2,7 +2,7 @@
 
 Updated: 2026-08-26 America/Montreal
 Branch: `v143-contextual-prune-lobo`
-Active phase: **V144 Rhythm gold calibration. Families #1–#13 are consumed/sealed. Accepted baseline remains family #10. Family #14 is preregistered/frozen. Its CPU-only policy and synthetic policy tests are implemented and blob-locked, but the definitive CPU proof has not yet run. No family #14 FIT search has been run. Next safe step is a branch-scoped CPU-only policy proof, then checkpoint before search implementation.**
+Active phase: **V144 Rhythm gold calibration. Families #1–#13 are consumed/sealed. Accepted baseline remains family #10. Family #14 is preregistered/frozen. Its CPU-only policy and synthetic policy tests are implemented and blob-locked. A one-use branch-scoped CPU proof workflow is also blob-locked below, but its trigger has not yet been created. No family #14 FIT search has been run. Next safe step is to create the exact proof trigger once, observe the CPU result, seal the proof, and checkpoint before search implementation.**
 
 ## Permanent safety / fixed protocol
 - Work only on `v143-contextual-prune-lobo`; never modify/merge `main` or Production.
@@ -57,11 +57,13 @@ Active phase: **V144 Rhythm gold calibration. Families #1–#13 are consumed/sea
 - Candidate construction/ranking is FIT-only. Validation/canary may gate only one locked FIT winner. Any failure or no qualifying FIT winner => deterministic family #10 fallback; never alternate.
 - Promotion gates remain unchanged: FIT Pitch Content F1 gain >=0.005, no musical regression, critical delta <=0, exact 113-measure coverage, independent PDF event fidelity 1.0.
 
-### Family #14 implementation status — checkpoint before CPU proof
+### Family #14 implementation status — blob locked before CPU proof
 - Policy path `modal/v144_rhythm_shared_dyad_surplus_prune_policy.py`; blob **`1f6cc7fcaf2d4ac7838b48b839c617b04cb1c34e`**; creation commit `3833c7dc08f0ae8366132b3e7268f3b22d876767`.
 - Synthetic policy tests path `modal/tests/test_v144_rhythm_shared_dyad_surplus_prune_policy.py`; blob **`38d6804560755fcb0bcf26eeda5e1a5b77f31231`**; creation commit `38ebdf635c5ae3673d5eebc58466f887c75a7a5b`.
-- Policy/tests are implemented but **not yet CPU-proven**. No FIT candidate construction/search has run. This is the exact blob-locked state to prove.
-- Next planned implementation paths after CPU proof: `validation/v144_rhythm_calibration/search_atomic_shared_dyad_surplus_prunes.py` and `modal/tests/test_v144_rhythm_shared_dyad_surplus_prune_search.py`.
+- One-use CPU proof workflow path `.github/workflows/v144-shared-dyad-surplus-prune-policy-cpu.yml`; blob **`ab443d87a53d7affdba23b86f22ec4a4f2035da8`**; creation commit `3ef18442ac8ca12b681f09f7c08d1af8daabf80c`.
+- Workflow is push-scoped only to branch `v143-contextual-prune-lobo` and trigger path `debug/v144-rhythm-calibration/triggers/shared-dyad-surplus-prune-policy-cpu.txt`; it uses Ubuntu CPU, Python 3.11, `py_compile`, and the exact family #14 unittest module. It contains no Modal/GPU step.
+- The trigger has **not** been created at this checkpoint. No proof run exists yet and no FIT candidate construction/search has run.
+- Next planned implementation paths after a successful CPU proof: `validation/v144_rhythm_calibration/search_atomic_shared_dyad_surplus_prunes.py` and `modal/tests/test_v144_rhythm_shared_dyad_surplus_prune_search.py`.
 - **Do not run FIT search until the CPU-only policy and synthetic policy proof are complete and checkpointed.**
 
 ## Family #13 — CONSUMED / SEALED / NO SCORE CHANGE
@@ -109,7 +111,7 @@ Active phase: **V144 Rhythm gold calibration. Families #1–#13 are consumed/sea
 3. Accepted baseline remains family #10; headline scorer remains **35.4% Pitch Content F1**. Do not claim a gain from family #13 or family #14 unless all gates pass and the accepted baseline actually changes.
 4. Current aggregate residual diagnostic `b9794a7b...` remains valid/current because baseline did not change.
 5. Family #14 is frozen exactly as preregistered above. Do not retune its shape/support/cap/rule identity after looking at family #14 candidate outcomes.
-6. Definitively CPU-prove the exact family #14 policy/test blobs recorded above; checkpoint the run/job result. Then implement FIT-only search + synthetic invariants; prove them; checkpoint. Only after those proofs may a one-shot FIT execution be armed.
+6. Create the exact family #14 policy CPU-proof trigger once, verify the run executes the blob-locked workflow/policy/tests above, record success/failure, seal the one-use proof, and checkpoint. Only on success implement FIT-only search + synthetic invariants; prove them; checkpoint. Only after those proofs may a one-shot FIT execution be armed.
 7. Candidate construction/ranking must remain FIT-only. Validation/canary may gate only one locked FIT winner. Any failure => family #10 fallback; never alternate.
 8. Promotion still requires FIT pitch gain >=0.005, no musical regression, critical delta <=0, coverage 1.0, exact 113 measures where applicable, and independent PDF event fidelity 1.0.
 9. Whenever a future accepted baseline changes, immediately recompute and checkpoint the percentage view and create a new aggregate accepted-baseline FIT residual before shaping its successor.
@@ -119,6 +121,6 @@ Active phase: **V144 Rhythm gold calibration. Families #1–#13 are consumed/sea
 - Accepted baseline: family #10 / `4e6f9f...`.
 - Motivational scorer view: **Pitch Content 35.4%**, Pitch+timing 6.7%, String/fret+timing 5.5%, Chord/voicing 5.8%, Measure coverage 100%, PDF event fidelity 100%.
 - Families #1–#13 consumed/sealed.
-- Family #14 frozen and implementation blob-locked: policy `1f6cc7f...`, tests `38d6804...`; definitive CPU proof pending; no FIT search run.
+- Family #14 frozen; implementation blob-locked; one-use CPU proof workflow blob `ab443d87...` is checkpointed and untriggered; no FIT search run.
 - Current residual diagnostic remains `b9794a7b8a882ba9ade5e8095f112d4be45e47e6`.
-- Safe continuation: branch-scoped CPU-only proof of the exact family #14 policy/test blobs; checkpoint before search implementation.
+- Safe continuation: create the one-use CPU proof trigger exactly once, observe/seal/checkpoint the result before search implementation.
