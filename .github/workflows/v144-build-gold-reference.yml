@@ -1,0 +1,162 @@
+name: V144 Build Gold Rhythm Reference
+
+on:
+  push:
+    branches:
+      - v143-contextual-prune-lobo
+    paths:
+      - .github/workflows/v144-build-gold-reference.yml
+      - validation/v144_rhythm_calibration/build_gold_reference.py
+
+permissions:
+  contents: write
+
+concurrency:
+  group: v144-build-gold-rhythm-reference
+  cancel-in-progress: false
+
+jobs:
+  build-gold-reference:
+    name: Reproduce exact V144 gold reference on CPU
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+
+    steps:
+      - name: Check out exact pushed revision
+        uses: actions/checkout@v4
+        with:
+          ref: ${{ github.sha }}
+          fetch-depth: 0
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+
+      - name: Verify immutable V5 identities before source access
+        shell: bash
+        run: |
+          set -euo pipefail
+          test "$(git hash-object analyzer/v143_reference_free_rhythm_pipeline.py)" = "7f72f8ed9b14af8bc93e95544195204d99c6bec1"
+          test "$(git hash-object debug/v143-contextual-prune/v5-professional-pdf/final-professional-holdout-result.json)" = "511fd244f231b66d08306f97b5a47ed41f5415c7"
+          test "$(sha256sum debug/v143-contextual-prune/v5-professional-pdf/v5-render-stream.json | awk '{print $1}')" = "7c3399d3f5e05ecc8ac98d71d0e5300e1e78f63ae96c1642fe4a19debb4061b2"
+          test "$(sha256sum debug/v143-contextual-prune/v5-professional-pdf/v5-rhythm-shadow.pdf | awk '{print $1}')" = "f4c1238e868cadfb90b8a359b1555b0b90e7740b9ebaa276aa394c8991f37ce5"
+
+      - name: Fetch and verify immutable professional source
+        shell: bash
+        run: |
+          set -euo pipefail
+          mkdir -p .v144/source
+          python - <<'PY'
+          from __future__ import annotations
+          import gzip
+          import hashlib
+          import json
+          from pathlib import Path
+          import urllib.request
+
+          EXPECTED_IMAGE = 'aca2da3e8d551b2fd82b4ab3ecafa0c8932d6c0a27b54b6213ffc990ca08a9a9'
+          EXPECTED_STRUCTURED = '18cdb4f8afb49562aac5b600730384636070d6ca8650823e759276a81ee4afc8'
+
+          image_url = 'https://raw.githubusercontent.com/dadrockyt-sys/dadrock-tabs-android/e0f91e74c815b9ecdf0a72fae6d1523414b34577/public/Professionalexample.jpg'
+          req = urllib.request.Request(image_url, headers={'User-Agent': 'dadrock-v144-calibration'})
+          with urllib.request.urlopen(req, timeout=45) as response:
+              image_bytes = response.read()
+          image_sha = hashlib.sha256(image_bytes).hexdigest()
+          if image_sha != EXPECTED_IMAGE:
+              raise RuntimeError(f'professional image SHA mismatch: {image_sha}')
+
+          hosts = ['dqsljvtekg760', 'd34shlm8p2ums2', 'd3cqchs6g3b5ew']
+          errors = []
+          selected = None
+          for host in hosts:
+              url = f'https://{host}.cloudfront.net/243/7868948/v0-3-2-TvYYK-mMQgzBsDxG/3.json'
+              try:
+                  req = urllib.request.Request(
+                      url,
+                      headers={'User-Agent': 'Mozilla/5.0', 'Accept': '*/*', 'Accept-Encoding': 'gzip'},
+                  )
+                  with urllib.request.urlopen(req, timeout=30) as response:
+                      raw = response.read()
+                  if raw[:2] == b'\x1f\x8b':
+                      raw = gzip.decompress(raw)
+                  candidate = json.loads(raw)
+                  normalized = (json.dumps(candidate, separators=(',', ':')) + '\n').encode('utf-8')
+                  digest = hashlib.sha256(normalized).hexdigest()
+                  if digest == EXPECTED_STRUCTURED:
+                      selected = normalized
+                      break
+                  errors.append(f'{host}:sha={digest}')
+              except Exception as exc:
+                  errors.append(f'{host}:{type(exc).__name__}')
+
+          if selected is None:
+              raise RuntimeError('exact structured source unavailable/mismatched: ' + ';'.join(errors))
+          Path('.v144/source/rhythm-track.json').write_bytes(selected)
+          print('Verified exact professional visual and structured source for V144 calibration.')
+          PY
+
+      - name: Build exact V144 gold reference
+        shell: bash
+        run: |
+          set -euo pipefail
+          python validation/v144_rhythm_calibration/build_gold_reference.py \
+            .v144/source/rhythm-track.json \
+            debug/v144-rhythm-calibration/reference/professional-rhythm-gold-reference.json \
+            --report debug/v144-rhythm-calibration/reference/professional-rhythm-gold-reference-build.json
+
+      - name: Verify exact reference identity and calibration labels
+        shell: bash
+        run: |
+          set -euo pipefail
+          test "$(sha256sum debug/v144-rhythm-calibration/reference/professional-rhythm-gold-reference.json | awk '{print $1}')" = "18fd868ae960dfcdd1ffb0110f1a9dfd8acc2ffeb46e247d1116cd54291526ac"
+          python - <<'PY'
+          import json
+          from pathlib import Path
+
+          report = json.loads(Path('debug/v144-rhythm-calibration/reference/professional-rhythm-gold-reference-build.json').read_text(encoding='utf-8'))
+          assert report['referenceRole'] == 'gold-calibration-reference-not-unseen-holdout'
+          assert report['exactHistoricalReferenceIdentity'] is True
+          assert report['measureCount'] == 113
+          assert report['playableOnsetCount'] == 603
+          assert report['playableNoteCount'] == 946
+          assert report['populatedMeasureCount'] == 104
+          assert report['v5Modified'] is False
+          assert report['productionModified'] is False
+          assert report['modalGpuInvoked'] is False
+          PY
+
+      - name: Persist only V144 calibration reference outputs
+        shell: bash
+        run: |
+          set -euo pipefail
+          reference='debug/v144-rhythm-calibration/reference/professional-rhythm-gold-reference.json'
+          report='debug/v144-rhythm-calibration/reference/professional-rhythm-gold-reference-build.json'
+
+          git add "$reference" "$report"
+          if git diff --cached --quiet; then
+            echo 'Exact V144 gold reference already persisted; no commit required.'
+            exit 0
+          fi
+
+          changed="$(git diff --cached --name-only)"
+          test "$changed" = "$reference
+          $report" || {
+            echo "Unexpected staged paths:" >&2
+            printf '%s\n' "$changed" >&2
+            exit 91
+          }
+
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git commit -m 'Persist exact V144 gold rhythm calibration reference'
+
+          for attempt in 1 2 3 4 5; do
+            git fetch origin v143-contextual-prune-lobo
+            if git rebase origin/v143-contextual-prune-lobo && git push origin HEAD:v143-contextual-prune-lobo; then
+              exit 0
+            fi
+            git rebase --abort 2>/dev/null || true
+            sleep $((attempt * 2))
+          done
+          exit 1
