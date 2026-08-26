@@ -1,0 +1,132 @@
+{
+  "baseline": {
+    "baselineGeneratedMeasureSetPreserved": true,
+    "eventCount": 1144,
+    "eventSha256": "68b8cdf14ed02265c5e3c204b2af51b0aae4849462e7b3e4243192d8855cc3c3",
+    "generatedMeasureCount": 113,
+    "name": "prune-triple-67348efe50436fc5"
+  },
+  "candidateConstructionPerformed": false,
+  "candidateRankingPerformed": false,
+  "candidateSelectionPerformed": false,
+  "classification": "v144-rhythm-accepted-baseline-fit-error-mechanisms",
+  "constructionBoundary": {
+    "canaryLabelsUsedForThisDiagnostic": false,
+    "consumedFamilyRunnerUpSelectionAllowed": false,
+    "fitLabelsUsedForThisDiagnostic": true,
+    "fixedSelectorThresholdsMayBeChangedFromThisDiagnostic": false,
+    "historicalConsumedFamilyOutcomesUsedToComputeMechanisms": false,
+    "nextFamilyMustBeMateriallyNewAndPreRegistered": true,
+    "runtimeReferenceInputAllowed": false,
+    "validationLabelsUsedForThisDiagnostic": false
+  },
+  "evaluationRole": "gold-calibration-fit-only-mechanism-diagnostic",
+  "fit": {
+    "exactStringFretTimingMatchedNotes": 20,
+    "generatedNoteCount": 643,
+    "grossPitchTimingMatchedNotes": 66,
+    "pitchContentMatchedNotes": 138,
+    "referenceNoteCount": 594,
+    "score": {
+      "chordPitchSet": {
+        "f1": 0.025730994152046785,
+        "falseNegative": 359,
+        "falsePositive": 474,
+        "generated": 485,
+        "matched": 11,
+        "precision": 0.02268041237113402,
+        "recall": 0.02972972972972973,
+        "reference": 370
+      },
+      "criticalMismatchCount": 1105,
+      "exactChordVoicing": {
+        "f1": 0.025730994152046785,
+        "falseNegative": 359,
+        "falsePositive": 474,
+        "generated": 485,
+        "matched": 11,
+        "precision": 0.02268041237113402,
+        "recall": 0.02972972972972973,
+        "reference": 370
+      },
+      "grossMatchedPitchTimingNotes": 66,
+      "noteCounts": {
+        "generated": 643,
+        "reference": 594
+      },
+      "pitchContent": {
+        "f1": 0.2231204527081649,
+        "falseNegative": 456,
+        "falsePositive": 505,
+        "generated": 643,
+        "matched": 138,
+        "precision": 0.21461897356143078,
+        "recall": 0.23232323232323232,
+        "reference": 594
+      },
+      "pitchTiming": {
+        "f1": 0.04527081649151172,
+        "falseNegative": 566,
+        "falsePositive": 615,
+        "generated": 643,
+        "matched": 28,
+        "precision": 0.04354587869362364,
+        "recall": 0.04713804713804714,
+        "reference": 594
+      },
+      "stringFretTiming": {
+        "f1": 0.03233629749393695,
+        "falseNegative": 574,
+        "falsePositive": 623,
+        "generated": 643,
+        "matched": 20,
+        "precision": 0.03110419906687403,
+        "recall": 0.03367003367003367,
+        "reference": 594
+      }
+    },
+    "tightPitchTimingMatchedNotes": 28
+  },
+  "fitOnlyOracles": {
+    "interpretation": "Diagnostic ceilings only. They use fit labels and may not be implemented as runtime rules, used to change fixed selector thresholds, or represented as generalization evidence.",
+    "perfectCountPreservingPitchCorrection": {
+      "maximumMatchedNotesIgnoringRuntimeFeasibility": 594,
+      "pitchContentF1Ceiling": 0.9603880355699272
+    },
+    "perfectGrossUnmatchedDeletion": {
+      "deletedGeneratedNotes": 577,
+      "grossPitchTimingF1Ceiling": 0.2,
+      "matchedNotesHeldConstant": 66,
+      "remainingGeneratedNotes": 66
+    },
+    "perfectPitchFalsePositiveDeletion": {
+      "deletedGeneratedNotes": 505,
+      "matchedNotesHeldConstant": 138,
+      "pitchContentF1Ceiling": 0.3770491803278688,
+      "remainingGeneratedNotes": 138
+    }
+  },
+  "mayClaimUnseenGeneralization": false,
+  "mechanisms": {
+    "correctPitchTimingButWrongStringFret": 8,
+    "exactOnsetExactPitchNotes": 28,
+    "grossUnmatchedGeneratedNotes": 577,
+    "grossUnmatchedReferenceNotes": 528,
+    "pitchContentFalseNegativeNotes": 456,
+    "pitchContentFalsePositiveNotes": 505,
+    "sameMeasurePitchMatchesDisplacedFromExactOnset": 110,
+    "sameMeasurePitchMatchesStillOutsideGrossTwoStepToleranceOrCompeting": 72,
+    "sameOnsetExtraGeneratedSlotsAfterSubstitution": 431,
+    "sameOnsetMissingReferenceSlotsAfterSubstitution": 382,
+    "sameOnsetWrongPitchSubstitutionSlots": 184,
+    "samePitchTimingMatchesRecoveredOnlyByGrossTwoStepTolerance": 38
+  },
+  "safety": {
+    "mainModified": false,
+    "modalGpuInvoked": false,
+    "productionModified": false,
+    "runtimeReferenceInputUsed": false,
+    "v5Modified": false
+  },
+  "schemaVersion": 14409
+}
