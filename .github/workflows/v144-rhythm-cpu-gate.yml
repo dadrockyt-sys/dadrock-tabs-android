@@ -8,9 +8,11 @@ on:
       - .github/workflows/v144-rhythm-cpu-gate.yml
       - modal/v144_rhythm_context_split_policy.py
       - modal/v144_rhythm_context_split_selector.py
+      - modal/v144_rhythm_staged_selector.py
       - modal/configs/v144_rhythm_context_split_config.json
       - modal/tests/test_v144_rhythm_context_split_policy.py
       - modal/tests/test_v144_rhythm_context_split_selector.py
+      - modal/tests/test_v144_rhythm_staged_selector.py
       - modal/tests/fixtures/v144_rhythm_context_split_reference.json
       - debug/v144-rhythm-calibration/reference/professional-target-provenance.json
   pull_request:
@@ -18,9 +20,11 @@ on:
       - .github/workflows/v144-rhythm-cpu-gate.yml
       - modal/v144_rhythm_context_split_policy.py
       - modal/v144_rhythm_context_split_selector.py
+      - modal/v144_rhythm_staged_selector.py
       - modal/configs/v144_rhythm_context_split_config.json
       - modal/tests/test_v144_rhythm_context_split_policy.py
       - modal/tests/test_v144_rhythm_context_split_selector.py
+      - modal/tests/test_v144_rhythm_staged_selector.py
       - modal/tests/fixtures/v144_rhythm_context_split_reference.json
       - debug/v144-rhythm-calibration/reference/professional-target-provenance.json
 
@@ -84,6 +88,7 @@ jobs:
           set -euo pipefail
           python modal/tests/test_v144_rhythm_context_split_policy.py -v
           python modal/tests/test_v144_rhythm_context_split_selector.py -v
+          python modal/tests/test_v144_rhythm_staged_selector.py -v
 
       - name: Verify config stays CPU-safe and fallback-first
         shell: bash
