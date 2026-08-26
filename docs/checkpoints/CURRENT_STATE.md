@@ -2,7 +2,7 @@
 
 Updated: 2026-08-26 America/Montreal
 Branch: `v143-contextual-prune-lobo`
-Active phase: **V144 Rhythm gold calibration. The accepted 1144-event three-signature baseline remains locked. The new additive four-signature conjunction family is prepared through policy/tests/CPU gate/search implementation. Its first workflow registration failed before any job started, so the search itself has executed zero times; next is a narrowly scoped workflow-definition repair followed by the single actual CPU search execution. Do not begin Bass/Lead unless Rhythm quality is proven or the user explicitly redirects.**
+Active phase: **V144 Rhythm gold calibration. The accepted 1144-event three-signature baseline remains locked. The additive four-signature conjunction family is now consumed and sealed: its single actual CPU search evaluated 512 fit-ranked candidates, none cleared the fixed fit lock, and the selector deterministically kept the accepted 1144-event baseline. No quad validation/canary candidate was opened and no quad promotion occurred. Do not begin Bass/Lead unless Rhythm quality is proven or the user explicitly redirects.**
 
 ## Permanent safety boundary
 - Work only on `v143-contextual-prune-lobo`; never modify/merge `main` or Production.
@@ -38,6 +38,7 @@ Active phase: **V144 Rhythm gold calibration. The accepted 1144-event three-sign
 1. Single-signature family: `pitchClass::11` fit winner failed validation pitch; run `32935621669`; workflow sealed `7951564d3d46c99b74628ae1768575d1bbc15f1a`.
 2. Two-signature conjunction family: `register::high && section16::1` passed split gates but lost one whole generated measure and failed later full invariant; full evaluated bot `e03d0d25a3c1e8ab8d68e51737e0abd84a920fb9`; workflow sealed `d13331984ff5b5108ab7e74e77889f79b9e76987`.
 3. Three-signature family is consumed by its accepted winner below. Do **not** use later evidence to choose another triple candidate.
+4. Four-signature additive family is consumed by run `32938769540`; no candidate cleared fit. Do **not** replay, retune thresholds, enlarge the same candidate list, or choose a quad runner-up later.
 
 ## Accepted V144 calibration baseline — locked
 - Triple policy commit `84dc62f7dc688c7a3e00133598f01a4f46930d2f`; tests `d6e9985dc4fe73547d545143d30c0efd36f22f46`; CPU gate `32937133401` SUCCESS.
@@ -59,23 +60,24 @@ Active phase: **V144 Rhythm gold calibration. The accepted 1144-event three-sign
 - Largest fit-only false-positive signals begin `register::high` 356, `stepParity::0` 320, `stepParity::1` 257, `pitchClass::4` 228, `register::mid` 191.
 - These are diagnostics only; validation/canary/historical outcomes may not construct/rank the next family.
 
-## Additive four-signature conjunction family — CURRENT RESUME SURFACE
-- This is a **new family from the accepted 1144-event baseline**, not a replay or alternate selection from the consumed triple family.
-- Policy `modal/v144_rhythm_quad_conjunction_policy.py` commit `2932f6cdad713f70c4f24970274768efe6768b8a` (`v144: add accepted-baseline quad conjunction policy`).
-- Tests `modal/tests/test_v144_rhythm_quad_conjunction_policy.py` commit `d0f75fd2cd3a196be1ca22fbdf7a89a276f83da3`.
-- CPU-gate integration commit `5387cce022c7cb91ac0691a3a749668fbcc9921a`; **V144 CPU Gate run `32937890621` SUCCESS**.
-- Policy ranks deterministic four-signature rules solely from accepted-baseline fit unmatched-generated evidence; defaults: minimum false-positive support `3`, maximum candidates `512`. Runtime transform is reference-free.
-- Search implementation `validation/v144_rhythm_calibration/search_additive_quad_prunes.py`, commit `a95b1523143b5f38ce2a4c3e7a9fa7d7abd48944` (`v144: add accepted-baseline additive quad search`).
-- Search hard-locks immutable V5 identity, accepted baseline name/SHA/event count, reconstructs the accepted triple baseline, checks 113-measure self-preservation, constructs/ranks quads from fit-only evidence, applies the full-measure guard to every transformed candidate before fit lock, then uses the existing locked staged selector/gates.
-- New one-shot workflow path `.github/workflows/v144-additive-quad-search.yml` was created in commit `036a8cbded62ea1d004095d2dba696164e6b5686` with CPU-only execution, exact accepted-baseline/V5 identity checks, fit-only construction assertions, 113/113 measure guard, independent PDF-event proof, and single-report persistence.
-- Workflow registration run `32938601146` concluded `failure` **before any job existed** (`jobs=[]`). Therefore the search script, candidate construction/ranking, staged gates, PDF proof, and report persistence did not execute. This infrastructure-definition failure does **not** consume a quad candidate/search execution and must not be rerun as an Actions rerun.
-- Likely workflow-definition defect: the job-level `if:` expression contains a colon-bearing commit-message literal in an unquoted YAML scalar. Repair only the workflow definition and gate the repaired push to its exact repair commit message before allowing the one actual search execution.
-- **Quad search execution count remains 0. No quad candidate has been selected or promoted.**
+## Additive four-signature conjunction family — CONSUMED / SEALED
+- Policy `modal/v144_rhythm_quad_conjunction_policy.py` commit `2932f6cdad713f70c4f24970274768efe6768b8a`; tests commit `d0f75fd2cd3a196be1ca22fbdf7a89a276f83da3`; CPU-gate integration `5387cce022c7cb91ac0691a3a749668fbcc9921a`; CPU gate run `32937890621` SUCCESS.
+- Search implementation `validation/v144_rhythm_calibration/search_additive_quad_prunes.py`, commit `a95b1523143b5f38ce2a4c3e7a9fa7d7abd48944`.
+- Initial workflow creation `036a8cbded62ea1d004095d2dba696164e6b5686` produced infrastructure-only startup failure run `32938601146` with `jobs=[]`; search execution count remained zero. The YAML defect was the unquoted colon-bearing job-level `if:` scalar. Do not Actions-rerun this failed registration.
+- Narrow YAML repair/actual one-shot trigger commit `8a28b3af9f72a5b109b6988991f769f88bed1a4c`; **single actual search run `32938769540` SUCCESS**.
+- All substantive steps passed: immutable V5/accepted-baseline checks; selector/measure/triple/quad CPU tests; fit-only search; construction isolation assertions; exact 113-measure guard; independent PDF-event proof; final invariant handling; immutable recheck; single-report persistence.
+- Candidate construction: accepted 1144-event baseline only; fit unmatched-generated count `577`; minimum false-positive support `3`; maximum/evaluated candidate count **512**; validation/canary/historical consumed-family results used for construction/ranking = false; runtime rule input is reference-free four-signature context only.
+- **Outcome:** `selected="accepted-v144-baseline"`, `selectedReason="fit-no-qualified-additive-candidate"`, `stoppedAt="fit"`, `splitPromotionAllowed=false`, `calibrationPromotionAllowed=false`, `validation=null`, `canary=null`.
+- Locked stream is therefore unchanged accepted baseline: **1144 events**, SHA `68b8cdf14ed02265c5e3c204b2af51b0aae4849462e7b3e4243192d8855cc3c3`, signatures `null`, exact 113/113 generated measures preserved.
+- Independent locked-stream proof passed with PDF-event fidelity `1.0`, event count `1144`, event SHA `68b8cdf14ed02265c5e3c204b2af51b0aae4849462e7b3e4243192d8855cc3c3`, and no professional reference opened during PDF fidelity check.
+- Persisted report `debug/v144-rhythm-calibration/candidates/additive-quad-search.json`; bot commit `fa272999273a5421901cdb4601f8ef33c8dd0dab`; report blob `5928e9687414c1e118653f139eda205237584ee0`.
+- Workflow archived/sealed commit `69db5acad3e313610f22617f06fbb325e5b8941d`, archived blob `abd950baf353da20ae581b5a524b54970abb9c8c`. The seal commit triggered no quad workflow run; only unrelated `cleanup-tab-preview` ran.
+- **No quad candidate was promoted. Accepted V144 baseline remains exactly the locked triple baseline.**
 
 ## Immediate next actions
-1. Repair only `.github/workflows/v144-additive-quad-search.yml` so the job-level trigger expression is YAML-safe and tied to the exact repair commit message. Do not rerun `32938601146`.
-2. Treat the resulting repaired workflow run as the **single actual additive-quad search execution** only if it starts the search job; never retry it after candidate construction/ranking begins.
-3. Persist the full search report/locked events, then independently verify the locked candidate's canonical/PDF-event identity and exact 113/113 generated-measure preservation before any baseline promotion.
-4. If the locked candidate fails validation/canary/full/PDF/invariant gates, accept deterministic fallback to the accepted 1144-event baseline for this family; never choose a runner-up from the same consumed search.
-5. Seal/disable the additive-quad workflow immediately after the one-shot result and record the report/run/commit/blob IDs here.
+1. Never replay/reselect from the consumed single/pair/triple/quad candidate families and do not alter their thresholds after seeing outcomes.
+2. Because the accepted baseline did not change, use only its already-authorized **fit** evidence for any next diagnostic/family construction; do not use validation/canary/full outcomes to invent or rank a new rule.
+3. Before another one-shot candidate search, define a **materially new, pre-registered correction family** (not an enlarged/reordered quad list), add deterministic tests, preserve all 113 accepted-baseline generated measures, and pass the CPU gate first.
+4. A safe next investigation is a fit-only error-mechanism diagnostic on the accepted 1144-event baseline (e.g. false-positive deletion vs pitch/onset/string-fret correction opportunity) to decide whether further pruning is structurally capable of meaningful improvement. Diagnostics must be labeled calibration-only and may not claim unseen generalization.
+5. Do not promote Rhythm, do not start Bass/Lead, and do not claim near-100% quality; current full-gold accepted baseline remains pitch F1 `0.2909090909090909` with critical mismatch count `1810`.
 6. **No Modal/L4/GPU without fresh explicit user authorization.**
