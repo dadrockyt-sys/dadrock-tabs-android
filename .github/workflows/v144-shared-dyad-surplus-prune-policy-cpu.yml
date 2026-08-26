@@ -1,0 +1,36 @@
+name: V144 Family 14 Shared Dyad Surplus Policy CPU Proof
+
+on:
+  push:
+    branches:
+      - v143-contextual-prune-lobo
+    paths:
+      - debug/v144-rhythm-calibration/triggers/shared-dyad-surplus-prune-policy-cpu.txt
+
+permissions:
+  contents: read
+
+jobs:
+  policy-proof:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - name: Checkout exact trigger commit
+        uses: actions/checkout@v4
+        with:
+          ref: ${{ github.sha }}
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Compile frozen family 14 policy and tests
+        run: |
+          python -m py_compile \
+            modal/v144_rhythm_shared_dyad_surplus_prune_policy.py \
+            modal/tests/test_v144_rhythm_shared_dyad_surplus_prune_policy.py
+
+      - name: Run frozen family 14 policy synthetic proof
+        run: |
+          python -m unittest -v modal.tests.test_v144_rhythm_shared_dyad_surplus_prune_policy
