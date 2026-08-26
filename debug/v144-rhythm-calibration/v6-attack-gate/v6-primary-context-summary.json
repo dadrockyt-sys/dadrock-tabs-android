@@ -1,0 +1,816 @@
+{
+  "bestPolicyByOverallMetricDelta": {
+    "exactEvent": {
+      "changedPrimaryCount": 0,
+      "family": "baseline-current",
+      "improvementsVsV6F1": {
+        "exactEvent": 0.0,
+        "measurePitch": 0.0,
+        "measurePitchClass": 0.0,
+        "pitchClassContent": 0.0,
+        "pitchContent": 0.0
+      },
+      "policy": "v6-current-primary",
+      "primaryExactHitCount": 41,
+      "primaryExactHitDeltaVsV6": 0,
+      "regressedMetrics": [],
+      "robustImprovedMetrics": [],
+      "splitImprovementsVsV6F1": {
+        "evenMeasures": {
+          "exactEvent": 0.0,
+          "measurePitch": 0.0,
+          "measurePitchClass": 0.0,
+          "pitchClassContent": 0.0,
+          "pitchContent": 0.0
+        },
+        "oddMeasures": {
+          "exactEvent": 0.0,
+          "measurePitch": 0.0,
+          "measurePitchClass": 0.0,
+          "pitchClassContent": 0.0,
+          "pitchContent": 0.0
+        }
+      }
+    },
+    "measurePitch": {
+      "changedPrimaryCount": 0,
+      "family": "baseline-current",
+      "improvementsVsV6F1": {
+        "exactEvent": 0.0,
+        "measurePitch": 0.0,
+        "measurePitchClass": 0.0,
+        "pitchClassContent": 0.0,
+        "pitchContent": 0.0
+      },
+      "policy": "v6-current-primary",
+      "primaryExactHitCount": 41,
+      "primaryExactHitDeltaVsV6": 0,
+      "regressedMetrics": [],
+      "robustImprovedMetrics": [],
+      "splitImprovementsVsV6F1": {
+        "evenMeasures": {
+          "exactEvent": 0.0,
+          "measurePitch": 0.0,
+          "measurePitchClass": 0.0,
+          "pitchClassContent": 0.0,
+          "pitchContent": 0.0
+        },
+        "oddMeasures": {
+          "exactEvent": 0.0,
+          "measurePitch": 0.0,
+          "measurePitchClass": 0.0,
+          "pitchClassContent": 0.0,
+          "pitchContent": 0.0
+        }
+      }
+    },
+    "measurePitchClass": {
+      "changedPrimaryCount": 223,
+      "family": "repeat-consensus",
+      "improvementsVsV6F1": {
+        "exactEvent": -0.007207684538438071,
+        "measurePitch": -0.06145738473074078,
+        "measurePitchClass": 0.001146247022619784,
+        "pitchClassContent": -0.0058168606645204735,
+        "pitchContent": -0.08992527869697764
+      },
+      "policy": "repeat-gap4.0-w16-beta0.75-pc0.00",
+      "primaryExactHitCount": 35,
+      "primaryExactHitDeltaVsV6": -6,
+      "regressedMetrics": [
+        "exactEvent",
+        "pitchContent",
+        "pitchClassContent",
+        "measurePitch"
+      ],
+      "robustImprovedMetrics": [],
+      "splitImprovementsVsV6F1": {
+        "evenMeasures": {
+          "exactEvent": -0.011961888105518216,
+          "measurePitch": -0.05588165637354037,
+          "measurePitchClass": 0.005673061157566828,
+          "pitchClassContent": -0.0038257637864130833,
+          "pitchContent": -0.10316445318904738
+        },
+        "oddMeasures": {
+          "exactEvent": -0.00234461054287962,
+          "measurePitch": -0.0672010228166798,
+          "measurePitchClass": -0.0037391817466562727,
+          "pitchClassContent": -0.0014181746656175553,
+          "pitchContent": -0.08816089693154994
+        }
+      }
+    },
+    "pitchClassContent": {
+      "changedPrimaryCount": 226,
+      "family": "local-neighbor",
+      "improvementsVsV6F1": {
+        "exactEvent": -0.008034489190052882,
+        "measurePitch": -0.044525648899760184,
+        "measurePitchClass": -0.002709050323662865,
+        "pitchClassContent": 0.008730165330000594,
+        "pitchContent": -0.041827052725741276
+      },
+      "policy": "local-neighbor-gap4.0-lambda0.20",
+      "primaryExactHitCount": 34,
+      "primaryExactHitDeltaVsV6": -7,
+      "regressedMetrics": [
+        "exactEvent",
+        "pitchContent",
+        "measurePitch",
+        "measurePitchClass"
+      ],
+      "robustImprovedMetrics": [
+        "pitchClassContent"
+      ],
+      "splitImprovementsVsV6F1": {
+        "evenMeasures": {
+          "exactEvent": -0.008002336448598137,
+          "measurePitch": -0.04956921728971969,
+          "measurePitchClass": 0.004610835280373871,
+          "pitchClassContent": 0.0093092873831776,
+          "pitchContent": -0.055330023364486
+        },
+        "oddMeasures": {
+          "exactEvent": -0.008092113408443735,
+          "measurePitch": -0.03927200693326732,
+          "measurePitchClass": -0.010409805620898938,
+          "pitchClassContent": 0.016481366844125378,
+          "pitchContent": -0.04012380834468254
+        }
+      }
+    },
+    "pitchContent": {
+      "changedPrimaryCount": 0,
+      "family": "baseline-current",
+      "improvementsVsV6F1": {
+        "exactEvent": 0.0,
+        "measurePitch": 0.0,
+        "measurePitchClass": 0.0,
+        "pitchClassContent": 0.0,
+        "pitchContent": 0.0
+      },
+      "policy": "v6-current-primary",
+      "primaryExactHitCount": 41,
+      "primaryExactHitDeltaVsV6": 0,
+      "regressedMetrics": [],
+      "robustImprovedMetrics": [],
+      "splitImprovementsVsV6F1": {
+        "evenMeasures": {
+          "exactEvent": 0.0,
+          "measurePitch": 0.0,
+          "measurePitchClass": 0.0,
+          "pitchClassContent": 0.0,
+          "pitchContent": 0.0
+        },
+        "oddMeasures": {
+          "exactEvent": 0.0,
+          "measurePitch": 0.0,
+          "measurePitchClass": 0.0,
+          "pitchClassContent": 0.0,
+          "pitchContent": 0.0
+        }
+      }
+    }
+  },
+  "bestPolicyPerFamily": {
+    "baseline-current": {
+      "changedPrimaryCount": 0,
+      "family": "baseline-current",
+      "improvementsVsV6F1": {
+        "exactEvent": 0.0,
+        "measurePitch": 0.0,
+        "measurePitchClass": 0.0,
+        "pitchClassContent": 0.0,
+        "pitchContent": 0.0
+      },
+      "policy": "v6-current-primary",
+      "primaryExactHitCount": 41,
+      "primaryExactHitDeltaVsV6": 0,
+      "regressedMetrics": [],
+      "robustImprovedMetrics": [],
+      "splitImprovementsVsV6F1": {
+        "evenMeasures": {
+          "exactEvent": 0.0,
+          "measurePitch": 0.0,
+          "measurePitchClass": 0.0,
+          "pitchClassContent": 0.0,
+          "pitchContent": 0.0
+        },
+        "oddMeasures": {
+          "exactEvent": 0.0,
+          "measurePitch": 0.0,
+          "measurePitchClass": 0.0,
+          "pitchClassContent": 0.0,
+          "pitchContent": 0.0
+        }
+      }
+    },
+    "baseline-top-score": {
+      "changedPrimaryCount": 218,
+      "family": "baseline-top-score",
+      "improvementsVsV6F1": {
+        "exactEvent": -0.006426152530550455,
+        "measurePitch": -0.06365739733294443,
+        "measurePitchClass": -0.004373811240591385,
+        "pitchClassContent": -0.007211895298599891,
+        "pitchContent": -0.08482822463303563
+      },
+      "policy": "source-top-score",
+      "primaryExactHitCount": 35,
+      "primaryExactHitDeltaVsV6": -6,
+      "regressedMetrics": [
+        "exactEvent",
+        "pitchContent",
+        "pitchClassContent",
+        "measurePitch",
+        "measurePitchClass"
+      ],
+      "robustImprovedMetrics": [],
+      "splitImprovementsVsV6F1": {
+        "evenMeasures": {
+          "exactEvent": -0.012146818539595233,
+          "measurePitch": -0.06132578190733831,
+          "measurePitchClass": 0.0006459726230650387,
+          "pitchClassContent": -0.00486741276203051,
+          "pitchContent": -0.10262098415829046
+        },
+        "oddMeasures": {
+          "exactEvent": -0.0005309041042217688,
+          "measurePitch": -0.06605935938877464,
+          "measurePitchClass": -0.009722793613478331,
+          "pitchClassContent": 0.0013752571260654545,
+          "pitchContent": -0.0780154765403075
+        }
+      }
+    },
+    "dynamic-programming": {
+      "changedPrimaryCount": 281,
+      "family": "dynamic-programming",
+      "improvementsVsV6F1": {
+        "exactEvent": -0.009903700118497255,
+        "measurePitch": -0.09263433463910795,
+        "measurePitchClass": -0.006064579811596582,
+        "pitchClassContent": 0.004594927745285693,
+        "pitchContent": -0.10679344521826611
+      },
+      "policy": "dp-gap3.0-lambda0.35-tau0.5",
+      "primaryExactHitCount": 30,
+      "primaryExactHitDeltaVsV6": -11,
+      "regressedMetrics": [
+        "exactEvent",
+        "pitchContent",
+        "measurePitch",
+        "measurePitchClass"
+      ],
+      "robustImprovedMetrics": [
+        "pitchClassContent"
+      ],
+      "splitImprovementsVsV6F1": {
+        "evenMeasures": {
+          "exactEvent": -0.015722924683892255,
+          "measurePitch": -0.09569360454462164,
+          "measurePitchClass": 0.00443467106468759,
+          "pitchClassContent": 0.006322155030236476,
+          "pitchContent": -0.11988271944291728
+        },
+        "oddMeasures": {
+          "exactEvent": -0.0038885301276638043,
+          "measurePitch": -0.08944414087725402,
+          "measurePitchClass": -0.01708012518007057,
+          "pitchClassContent": 0.01899359197257977,
+          "pitchContent": -0.08944612786250056
+        }
+      }
+    },
+    "local-neighbor": {
+      "changedPrimaryCount": 226,
+      "family": "local-neighbor",
+      "improvementsVsV6F1": {
+        "exactEvent": -0.008034489190052882,
+        "measurePitch": -0.044525648899760184,
+        "measurePitchClass": -0.002709050323662865,
+        "pitchClassContent": 0.008730165330000594,
+        "pitchContent": -0.041827052725741276
+      },
+      "policy": "local-neighbor-gap4.0-lambda0.20",
+      "primaryExactHitCount": 34,
+      "primaryExactHitDeltaVsV6": -7,
+      "regressedMetrics": [
+        "exactEvent",
+        "pitchContent",
+        "measurePitch",
+        "measurePitchClass"
+      ],
+      "robustImprovedMetrics": [
+        "pitchClassContent"
+      ],
+      "splitImprovementsVsV6F1": {
+        "evenMeasures": {
+          "exactEvent": -0.008002336448598137,
+          "measurePitch": -0.04956921728971969,
+          "measurePitchClass": 0.004610835280373871,
+          "pitchClassContent": 0.0093092873831776,
+          "pitchContent": -0.055330023364486
+        },
+        "oddMeasures": {
+          "exactEvent": -0.008092113408443735,
+          "measurePitch": -0.03927200693326732,
+          "measurePitchClass": -0.010409805620898938,
+          "pitchClassContent": 0.016481366844125378,
+          "pitchContent": -0.04012380834468254
+        }
+      }
+    },
+    "repeat-consensus": {
+      "changedPrimaryCount": 225,
+      "family": "repeat-consensus",
+      "improvementsVsV6F1": {
+        "exactEvent": -0.005186195400992542,
+        "measurePitch": -0.060243114747888044,
+        "measurePitchClass": 0.000623176876160092,
+        "pitchClassContent": -0.005020456870098888,
+        "pitchContent": -0.08941499033981115
+      },
+      "policy": "repeat-gap4.0-w8-beta0.75-pc0.00",
+      "primaryExactHitCount": 37,
+      "primaryExactHitDeltaVsV6": -4,
+      "regressedMetrics": [
+        "exactEvent",
+        "pitchContent",
+        "pitchClassContent",
+        "measurePitch"
+      ],
+      "robustImprovedMetrics": [],
+      "splitImprovementsVsV6F1": {
+        "evenMeasures": {
+          "exactEvent": -0.011908586448598133,
+          "measurePitch": -0.05738171728971972,
+          "measurePitchClass": 0.004610835280373871,
+          "pitchClassContent": -0.004362587616822289,
+          "pitchContent": -0.104158148364486
+        },
+        "oddMeasures": {
+          "exactEvent": 0.0016876475216365053,
+          "measurePitch": -0.06316876475216371,
+          "measurePitchClass": -0.0037391817466562727,
+          "pitchClassContent": 0.0005979543666405629,
+          "pitchContent": -0.08614476789929182
+        }
+      }
+    }
+  },
+  "bestPrimaryExactHitPolicy": {
+    "changedPrimaryCount": 0,
+    "family": "baseline-current",
+    "improvementsVsV6F1": {
+      "exactEvent": 0.0,
+      "measurePitch": 0.0,
+      "measurePitchClass": 0.0,
+      "pitchClassContent": 0.0,
+      "pitchContent": 0.0
+    },
+    "policy": "v6-current-primary",
+    "primaryExactHitCount": 41,
+    "primaryExactHitDeltaVsV6": 0,
+    "regressedMetrics": [],
+    "robustImprovedMetrics": [],
+    "splitImprovementsVsV6F1": {
+      "evenMeasures": {
+        "exactEvent": 0.0,
+        "measurePitch": 0.0,
+        "measurePitchClass": 0.0,
+        "pitchClassContent": 0.0,
+        "pitchContent": 0.0
+      },
+      "oddMeasures": {
+        "exactEvent": 0.0,
+        "measurePitch": 0.0,
+        "measurePitchClass": 0.0,
+        "pitchClassContent": 0.0,
+        "pitchContent": 0.0
+      }
+    }
+  },
+  "calibrationReferenceUsedForGrading": true,
+  "candidateGenerated": false,
+  "candidateModified": false,
+  "classification": "v144-primary-context-sweep-compact-summary",
+  "maxRobustImprovedMetricCount": 1,
+  "modalInvoked": false,
+  "multiRobustPolicyCount": 0,
+  "overallRegressionCountsByMetric": {
+    "exactEvent": 46,
+    "measurePitch": 46,
+    "measurePitchClass": 31,
+    "pitchClassContent": 25,
+    "pitchContent": 46
+  },
+  "policyCount": 47,
+  "positivePrimaryExactHitPolicyCount": 0,
+  "productionModified": false,
+  "promotablePolicies": [],
+  "promotablePolicyCount": 0,
+  "robustImprovementCountsByMetric": {
+    "exactEvent": 0,
+    "measurePitch": 0,
+    "measurePitchClass": 0,
+    "pitchClassContent": 14,
+    "pitchContent": 0
+  },
+  "schemaVersion": 1,
+  "sourceReportClassification": "v144-v6-primary-context-source-only-calibration-sweep",
+  "top10ByOriginalRanking": [
+    {
+      "changedPrimaryCount": 226,
+      "family": "local-neighbor",
+      "improvementsVsV6F1": {
+        "exactEvent": -0.008034489190052882,
+        "measurePitch": -0.044525648899760184,
+        "measurePitchClass": -0.002709050323662865,
+        "pitchClassContent": 0.008730165330000594,
+        "pitchContent": -0.041827052725741276
+      },
+      "policy": "local-neighbor-gap4.0-lambda0.20",
+      "primaryExactHitCount": 34,
+      "primaryExactHitDeltaVsV6": -7,
+      "regressedMetrics": [
+        "exactEvent",
+        "pitchContent",
+        "measurePitch",
+        "measurePitchClass"
+      ],
+      "robustImprovedMetrics": [
+        "pitchClassContent"
+      ],
+      "splitImprovementsVsV6F1": {
+        "evenMeasures": {
+          "exactEvent": -0.008002336448598137,
+          "measurePitch": -0.04956921728971969,
+          "measurePitchClass": 0.004610835280373871,
+          "pitchClassContent": 0.0093092873831776,
+          "pitchContent": -0.055330023364486
+        },
+        "oddMeasures": {
+          "exactEvent": -0.008092113408443735,
+          "measurePitch": -0.03927200693326732,
+          "measurePitchClass": -0.010409805620898938,
+          "pitchClassContent": 0.016481366844125378,
+          "pitchContent": -0.04012380834468254
+        }
+      }
+    },
+    {
+      "changedPrimaryCount": 226,
+      "family": "local-neighbor",
+      "improvementsVsV6F1": {
+        "exactEvent": -0.008034489190052882,
+        "measurePitch": -0.044525648899760184,
+        "measurePitchClass": -0.002709050323662865,
+        "pitchClassContent": 0.008730165330000594,
+        "pitchContent": -0.041827052725741276
+      },
+      "policy": "local-neighbor-gap6.0-lambda0.20",
+      "primaryExactHitCount": 34,
+      "primaryExactHitDeltaVsV6": -7,
+      "regressedMetrics": [
+        "exactEvent",
+        "pitchContent",
+        "measurePitch",
+        "measurePitchClass"
+      ],
+      "robustImprovedMetrics": [
+        "pitchClassContent"
+      ],
+      "splitImprovementsVsV6F1": {
+        "evenMeasures": {
+          "exactEvent": -0.008002336448598137,
+          "measurePitch": -0.04956921728971969,
+          "measurePitchClass": 0.004610835280373871,
+          "pitchClassContent": 0.0093092873831776,
+          "pitchContent": -0.055330023364486
+        },
+        "oddMeasures": {
+          "exactEvent": -0.008092113408443735,
+          "measurePitch": -0.03927200693326732,
+          "measurePitchClass": -0.010409805620898938,
+          "pitchClassContent": 0.016481366844125378,
+          "pitchContent": -0.04012380834468254
+        }
+      }
+    },
+    {
+      "changedPrimaryCount": 222,
+      "family": "local-neighbor",
+      "improvementsVsV6F1": {
+        "exactEvent": -0.008034489190052882,
+        "measurePitch": -0.04651668921832661,
+        "measurePitchClass": -0.004700090642229371,
+        "pitchClassContent": 0.005743604852150863,
+        "pitchContent": -0.04381809304430773
+      },
+      "policy": "local-neighbor-gap2.5-lambda0.20",
+      "primaryExactHitCount": 34,
+      "primaryExactHitDeltaVsV6": -7,
+      "regressedMetrics": [
+        "exactEvent",
+        "pitchContent",
+        "measurePitch",
+        "measurePitchClass"
+      ],
+      "robustImprovedMetrics": [
+        "pitchClassContent"
+      ],
+      "splitImprovementsVsV6F1": {
+        "evenMeasures": {
+          "exactEvent": -0.008002336448598137,
+          "measurePitch": -0.04956921728971969,
+          "measurePitchClass": 0.0007045852803738151,
+          "pitchClassContent": 0.005403037383177489,
+          "pitchContent": -0.057283148364486114
+        },
+        "oddMeasures": {
+          "exactEvent": -0.008092113408443735,
+          "measurePitch": -0.04333292063885111,
+          "measurePitchClass": -0.010409805620898938,
+          "pitchClassContent": 0.014450909991333472,
+          "pitchContent": -0.04215426519747423
+        }
+      }
+    },
+    {
+      "changedPrimaryCount": 280,
+      "family": "local-neighbor",
+      "improvementsVsV6F1": {
+        "exactEvent": -0.00986873508353222,
+        "measurePitch": -0.05144152744630073,
+        "measurePitchClass": -0.009599045346062096,
+        "pitchClassContent": 0.007408114558472456,
+        "pitchContent": -0.03529594272076364
+      },
+      "policy": "local-neighbor-gap4.0-lambda0.35",
+      "primaryExactHitCount": 32,
+      "primaryExactHitDeltaVsV6": -9,
+      "regressedMetrics": [
+        "exactEvent",
+        "pitchContent",
+        "measurePitch",
+        "measurePitchClass"
+      ],
+      "robustImprovedMetrics": [
+        "pitchClassContent"
+      ],
+      "splitImprovementsVsV6F1": {
+        "evenMeasures": {
+          "exactEvent": -0.011774416919648183,
+          "measurePitch": -0.06017627690699151,
+          "measurePitchClass": 0.004881091045830233,
+          "pitchClassContent": 0.01293186466482632,
+          "pitchContent": -0.05661038401217977
+        },
+        "oddMeasures": {
+          "exactEvent": -0.007918251659580822,
+          "measurePitch": -0.04235598319285949,
+          "measurePitchClass": -0.024749260336640155,
+          "pitchClassContent": 0.027989358792670616,
+          "pitchContent": -0.02168618383431531
+        }
+      }
+    },
+    {
+      "changedPrimaryCount": 280,
+      "family": "local-neighbor",
+      "improvementsVsV6F1": {
+        "exactEvent": -0.00986873508353222,
+        "measurePitch": -0.05144152744630073,
+        "measurePitchClass": -0.009599045346062096,
+        "pitchClassContent": 0.007408114558472456,
+        "pitchContent": -0.03529594272076364
+      },
+      "policy": "local-neighbor-gap6.0-lambda0.35",
+      "primaryExactHitCount": 32,
+      "primaryExactHitDeltaVsV6": -9,
+      "regressedMetrics": [
+        "exactEvent",
+        "pitchContent",
+        "measurePitch",
+        "measurePitchClass"
+      ],
+      "robustImprovedMetrics": [
+        "pitchClassContent"
+      ],
+      "splitImprovementsVsV6F1": {
+        "evenMeasures": {
+          "exactEvent": -0.011774416919648183,
+          "measurePitch": -0.06017627690699151,
+          "measurePitchClass": 0.004881091045830233,
+          "pitchClassContent": 0.01293186466482632,
+          "pitchContent": -0.05661038401217977
+        },
+        "oddMeasures": {
+          "exactEvent": -0.007918251659580822,
+          "measurePitch": -0.04235598319285949,
+          "measurePitchClass": -0.024749260336640155,
+          "pitchClassContent": 0.027989358792670616,
+          "pitchContent": -0.02168618383431531
+        }
+      }
+    },
+    {
+      "changedPrimaryCount": 273,
+      "family": "local-neighbor",
+      "improvementsVsV6F1": {
+        "exactEvent": -0.00986873508353222,
+        "measurePitch": -0.05344152744630071,
+        "measurePitchClass": -0.010599045346062097,
+        "pitchClassContent": 0.005408114558472565,
+        "pitchContent": -0.040295942720763644
+      },
+      "policy": "local-neighbor-gap2.5-lambda0.35",
+      "primaryExactHitCount": 32,
+      "primaryExactHitDeltaVsV6": -9,
+      "regressedMetrics": [
+        "exactEvent",
+        "pitchContent",
+        "measurePitch",
+        "measurePitchClass"
+      ],
+      "robustImprovedMetrics": [
+        "pitchClassContent"
+      ],
+      "splitImprovementsVsV6F1": {
+        "evenMeasures": {
+          "exactEvent": -0.011774416919648183,
+          "measurePitch": -0.05821356836920938,
+          "measurePitchClass": 0.0029183825080481007,
+          "pitchClassContent": 0.010969156127044077,
+          "pitchContent": -0.0585730925499619
+        },
+        "oddMeasures": {
+          "exactEvent": -0.007918251659580822,
+          "measurePitch": -0.04847219114392984,
+          "measurePitchClass": -0.024749260336640155,
+          "pitchClassContent": 0.025950622808980528,
+          "pitchContent": -0.027802391785385683
+        }
+      }
+    },
+    {
+      "changedPrimaryCount": 281,
+      "family": "dynamic-programming",
+      "improvementsVsV6F1": {
+        "exactEvent": -0.009903700118497255,
+        "measurePitch": -0.09263433463910795,
+        "measurePitchClass": -0.006064579811596582,
+        "pitchClassContent": 0.004594927745285693,
+        "pitchContent": -0.10679344521826611
+      },
+      "policy": "dp-gap3.0-lambda0.35-tau0.5",
+      "primaryExactHitCount": 30,
+      "primaryExactHitDeltaVsV6": -11,
+      "regressedMetrics": [
+        "exactEvent",
+        "pitchContent",
+        "measurePitch",
+        "measurePitchClass"
+      ],
+      "robustImprovedMetrics": [
+        "pitchClassContent"
+      ],
+      "splitImprovementsVsV6F1": {
+        "evenMeasures": {
+          "exactEvent": -0.015722924683892255,
+          "measurePitch": -0.09569360454462164,
+          "measurePitchClass": 0.00443467106468759,
+          "pitchClassContent": 0.006322155030236476,
+          "pitchContent": -0.11988271944291728
+        },
+        "oddMeasures": {
+          "exactEvent": -0.0038885301276638043,
+          "measurePitch": -0.08944414087725402,
+          "measurePitchClass": -0.01708012518007057,
+          "pitchClassContent": 0.01899359197257977,
+          "pitchContent": -0.08944612786250056
+        }
+      }
+    },
+    {
+      "changedPrimaryCount": 281,
+      "family": "dynamic-programming",
+      "improvementsVsV6F1": {
+        "exactEvent": -0.009903700118497255,
+        "measurePitch": -0.09263433463910795,
+        "measurePitchClass": -0.006064579811596582,
+        "pitchClassContent": 0.005593928744286658,
+        "pitchContent": -0.1057944442192651
+      },
+      "policy": "dp-gap5.0-lambda0.35-tau0.5",
+      "primaryExactHitCount": 30,
+      "primaryExactHitDeltaVsV6": -11,
+      "regressedMetrics": [
+        "exactEvent",
+        "pitchContent",
+        "measurePitch",
+        "measurePitchClass"
+      ],
+      "robustImprovedMetrics": [
+        "pitchClassContent"
+      ],
+      "splitImprovementsVsV6F1": {
+        "evenMeasures": {
+          "exactEvent": -0.015722924683892255,
+          "measurePitch": -0.09569360454462164,
+          "measurePitchClass": 0.00443467106468759,
+          "pitchClassContent": 0.008282939343961848,
+          "pitchContent": -0.11792193512919191
+        },
+        "oddMeasures": {
+          "exactEvent": -0.0038885301276638043,
+          "measurePitch": -0.08944414087725402,
+          "measurePitchClass": -0.01708012518007057,
+          "pitchClassContent": 0.01899359197257977,
+          "pitchContent": -0.08944612786250056
+        }
+      }
+    },
+    {
+      "changedPrimaryCount": 299,
+      "family": "dynamic-programming",
+      "improvementsVsV6F1": {
+        "exactEvent": -0.009816156215229771,
+        "measurePitch": -0.10316811733112799,
+        "measurePitchClass": -0.014914017804750157,
+        "pitchClassContent": 0.0006219352895692198,
+        "pitchContent": -0.11456134081790931
+      },
+      "policy": "dp-gap3.0-lambda0.35-tau1.0",
+      "primaryExactHitCount": 29,
+      "primaryExactHitDeltaVsV6": -12,
+      "regressedMetrics": [
+        "exactEvent",
+        "pitchContent",
+        "measurePitch",
+        "measurePitchClass"
+      ],
+      "robustImprovedMetrics": [
+        "pitchClassContent"
+      ],
+      "splitImprovementsVsV6F1": {
+        "evenMeasures": {
+          "exactEvent": -0.017620084727850843,
+          "measurePitch": -0.10692618017074229,
+          "measurePitchClass": -0.004056276936931946,
+          "pitchClassContent": 0.0025914592120860336,
+          "pitchContent": -0.12634925886104453
+        },
+        "oddMeasures": {
+          "exactEvent": -0.0017521154803384897,
+          "measurePitch": -0.09925335988053763,
+          "measurePitchClass": -0.026311597809855702,
+          "pitchClassContent": 0.020676953708312795,
+          "pitchContent": -0.0966450970632155
+        }
+      }
+    },
+    {
+      "changedPrimaryCount": 299,
+      "family": "dynamic-programming",
+      "improvementsVsV6F1": {
+        "exactEvent": -0.009816156215229771,
+        "measurePitch": -0.10316811733112799,
+        "measurePitchClass": -0.014914017804750157,
+        "pitchClassContent": 0.002624939796329495,
+        "pitchContent": -0.1125583363111492
+      },
+      "policy": "dp-gap5.0-lambda0.35-tau1.0",
+      "primaryExactHitCount": 29,
+      "primaryExactHitDeltaVsV6": -12,
+      "regressedMetrics": [
+        "exactEvent",
+        "pitchContent",
+        "measurePitch",
+        "measurePitchClass"
+      ],
+      "robustImprovedMetrics": [
+        "pitchClassContent"
+      ],
+      "splitImprovementsVsV6F1": {
+        "evenMeasures": {
+          "exactEvent": -0.017620084727850843,
+          "measurePitch": -0.10692618017074229,
+          "measurePitchClass": -0.004056276936931946,
+          "pitchClassContent": 0.0045580275503359635,
+          "pitchContent": -0.12438269052279477
+        },
+        "oddMeasures": {
+          "exactEvent": -0.0017521154803384897,
+          "measurePitch": -0.09925335988053763,
+          "measurePitchClass": -0.026311597809855702,
+          "pitchClassContent": 0.020676953708312795,
+          "pitchContent": -0.09460428073668486
+        }
+      }
+    }
+  ],
+  "zeroRegressionPolicyCount": 1
+}
