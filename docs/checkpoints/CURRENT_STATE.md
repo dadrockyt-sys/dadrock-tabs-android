@@ -2,7 +2,7 @@
 
 Updated: 2026-08-26 America/Montreal
 Branch: `v143-contextual-prune-lobo`
-Active phase: **V144 Rhythm gold calibration. Current accepted calibration baseline remains `pitch-position-shift-54a6e8d3aa91c422` (1144 events / 113 measures / SHA `5b36270a...`). Nine candidate families are consumed and sealed. The current-baseline FIT onset-topology analyzer passed its required pre-label CPU gate. The PR-delivery wrapper manifest-key bug has been corrected and a trigger-only retry was armed, but its exact-SHA run `32991337100` executed the CPU prerequisite successfully and SKIPPED the one-shot job. Therefore the topology analyzer still has NOT read gold FIT labels and no topology report exists. PR #21 is closed, draft, unmerged, and targets only inert `noop`. No successor family is pre-registered. Production remains untouched.**
+Active phase: **V144 Rhythm gold calibration. Current accepted calibration baseline remains `pitch-position-shift-54a6e8d3aa91c422` (1144 events / 113 measures / SHA `5b36270a...`). Nine candidate families are consumed and sealed. The second current-baseline FIT-only diagnostic — onset topology — is now COMPLETE, persisted, and SEALED. It used FIT labels only, emitted aggregate topology only, constructed/ranked/selected no candidates, and used no validation/canary labels. No successor family has yet been evaluated. Production remains untouched.**
 
 ## Permanent safety boundary
 - Work only on `v143-contextual-prune-lobo`; never modify/merge `main` or Production.
@@ -52,29 +52,54 @@ Active phase: **V144 Rhythm gold calibration. Current accepted calibration basel
 - Candidate construction/ranking/selection false; validation/canary labels false; runtime reference false; GPU false.
 - Fit: generated `643`, reference `594`, critical `1075`; pitch `161` / F1 `0.26030719482619236`; tight pitch/timing `41` / F1 `0.06628940986257073`; gross ±2-step matches `81`; exact string/fret/timing `29` / F1 `0.04688763136620856`; chord/voicing `0.03976608187134503`.
 - Shape signals: same-onset wrong-pitch substitutions `171`; displaced existing pitch matches `120`; tight pitch/string-fret mismatches `12`.
-- This sealed fit-only diagnostic remains permissible while baseline is unchanged. Never use validation/canary/full outcomes from consumed searches to construct/rank a successor.
+- This sealed FIT-only diagnostic remains permissible while baseline is unchanged. Never use validation/canary/full outcomes from consumed searches to construct/rank a successor.
 
-## Current-baseline FIT onset-topology diagnostic — PRE-RUN / CPU GATED / DELIVERY EVENT ISSUE
-- Analyzer `validation/v144_rhythm_calibration/analyze_current_baseline_fit_onset_topology.py`; commit `2fd4fffc17111be8acb1741985ff9ece32a630d5`; blob `b4ddb289e2e0e54177e51e1b4ff1140dd304ed46`.
-- Synthetic tests `modal/tests/test_v144_rhythm_current_baseline_fit_onset_topology.py`; five deterministic tests. User manual comment commit `c58917b950cf5c5c3f173f49a9899c4b97eaeff8` changed only one comment; analyzer executable unchanged.
-- **Required pre-label CPU gate `32988449841` SUCCESS**, job `98240070427`: compiled analyzer, ran all five topology tests, immutable V5/provenance/config guards all passed.
-- Standalone push one-shot `.github/workflows/v144-current-fit-onset-topology-diagnostic-one-shot.yml`; pre-registration commit `d16388a0bdd2996b594184ff519eea02b53de403`; blob `c66b4c782967c1b00b783cf43e4fefafd2fcfaa4`. Push→Actions scheduling remains unreliable, so it has not executed.
-- Temporary PR-delivery one-shot job lives in `.github/workflows/v144-rhythm-cpu-gate.yml`; corrected current workflow blob `77f68a57ba55f0e2e0116c79b3b8e0e8d08b4b86`. Original topology-only broad workflow to restore after success is blob `0102223c67e4a489dda2e5c88808c0a1dad7c240` at commit `073d276bcae5873bfed104eda34aebe7c19a0b49`.
-- First PR-delivery attempt run `32990041415`: CPU job SUCCESS; one-shot wrapper FAILED before analyzer because it used nonexistent `manifest['canonicalEvents']`; diagnostic step skipped, so no FIT labels read.
-- Wrapper was corrected to `selected = manifest.get('selectedCandidate') or {}` and checks `eventCount=1144`, `generatedMeasureCount=113`, event SHA `5b36270a...`; analyzer/reference/baseline/selector unchanged.
-- Corrected trigger-only arming commit `f61b75a92392e7e6382787921c323c1a2fc94685`; parent `a41fa13255158bf13b140ddb6d14525b6db5ef9f`; exact message `v144 execute current fit onset topology diagnostic one-shot`; only trigger file changed. Trigger blob `4e5e8fa90535d9f901bd89dddf0e09b456b153c6`, locking workflow blob `77f68a57...` and analyzer blob `b4ddb289...`.
-- Exact-SHA run `32991337100`: CPU prerequisite job `98249351510` **SUCCESS** on head `f61b75a9...`; one-shot job `98249470077` was **SKIPPED** at job condition, with no steps executed. Therefore this run also read no FIT labels and created no report.
-- A separate earlier delayed CPU-only run `32990742872` corresponded to an older PR event/workflow head and did not execute the one-shot.
-- PR #21 is now **closed**, draft, unmerged, base `noop`, head branch `v143-contextual-prune-lobo`; it never targeted `main`.
-- Report path `debug/v144-rhythm-calibration/diagnostics/current-pitch-position-baseline-fit-onset-topology.json` does not exist at this checkpoint.
-- Analyzer isolation remains: candidate construction/ranking/selection false; no rule/shift histogram; validation/canary false; consumed-family outcomes excluded; runtime reference false; GPU false.
+## Current-baseline FIT onset-topology diagnostic — COMPLETE / SEALED
+- Analyzer `validation/v144_rhythm_calibration/analyze_current_baseline_fit_onset_topology.py`; implementation commit `2fd4fffc17111be8acb1741985ff9ece32a630d5`; blob `b4ddb289e2e0e54177e51e1b4ff1140dd304ed46`.
+- Synthetic tests `modal/tests/test_v144_rhythm_current_baseline_fit_onset_topology.py`; five deterministic synthetic tests. Required pre-label CPU gate `32988449841` SUCCESS.
+- Temporary PR #21 was draft, unmerged, and targeted only inert `noop`; it never targeted `main`.
+- Early PR-delivery run `32990041415` failed in wrapper verification before analyzer execution due to a nonexistent `canonicalEvents` manifest key. No FIT labels were read by that failed attempt.
+- Wrapper-only correction changed verification to `selectedCandidate`; analyzer/reference/baseline/selector/thresholds/topology semantics were unchanged.
+- Final exact trigger-only arming commit `6f889ab5fcc31a3cdac459a19b0933e9209e3559`; only trigger path changed; exact message `v144 execute current fit onset topology diagnostic one-shot`.
+- **Successful one-shot run `32992367811`**:
+  - CPU prerequisite job `98252843458` SUCCESS.
+  - One-shot job `98252964359` SUCCESS.
+  - Exact trigger/immutable checks SUCCESS.
+  - FIT-only aggregate topology analyzer SUCCESS.
+  - Isolation verification SUCCESS.
+  - Single-report persistence SUCCESS.
+- Report `debug/v144-rhythm-calibration/diagnostics/current-pitch-position-baseline-fit-onset-topology.json`; bot persistence commit `cbe6bcf73862ef8f15bf1bad306f746f6f022301`; report blob `26e1265adf5c1c11838c207b4c5af0927f26b95b`.
+- Persistence commit added **only** the 111-line report.
+- Isolation/safety all held: candidate construction false; ranking false; selection false; rule/shift histogram false; validation labels false; canary labels false; consumed-family outcomes excluded; runtime reference false; V5/main/Production false; Modal/GPU false.
+- FIT counts: generated notes `643`; reference notes `594`; generated onsets `485`; reference onsets `370`; union `665`; shared `190`; generated-only `295`; reference-only `180`.
+- Topology signals:
+  - same-onset wrong-pitch substitution slots `171`.
+  - same-string wrong-pitch slots `43`.
+  - singleton→singleton onsets `100`.
+  - singleton exact-pitch same-string `17`.
+  - singleton wrong-pitch same-string `5`.
+  - singleton wrong-pitch different-string `78`.
+  - shared cardinality mismatches `84` (`27` generated-heavier / `57` reference-heavier).
+  - equal-cardinality multi-note onsets only `6`; dyad→dyad only `5`; 3+ equal-cardinality only `1`.
+- Interpretation boundary remains topology-only: may inform a materially distinct family unit; may NOT rank a specific rule/shift; validation/canary/consumed-family outcomes may NOT inform family shape; selector thresholds may NOT change.
+- Sealing:
+  - obsolete standalone push one-shot deleted at commit `1f50ad5273aaba453dfdc81e9f6e815971747a82`.
+  - broad CPU workflow restored exactly to topology-test-only blob `0102223c67e4a489dda2e5c88808c0a1dad7c240` at commit `f5403086ca4477a5bcd3a3b78a348e16004a031c`.
+  - trigger file deleted at commit `addb76e396d462b5bb1c94b4a03d1ed705b09fe7`.
+  - PR #21 closed, draft, unmerged; replay surface removed.
+
+## Family-shape interpretation boundary after topology diagnostic
+- The new topology evidence supports examining a **singleton-onset atomic replacement unit** because 78/100 singleton→singleton shared onsets are wrong-pitch + different-string, versus only 5 wrong-pitch + same-string.
+- This would be materially distinct from the consumed dyad family because the atomic unit is exactly one generated note at one shared singleton onset, not a two-note chord/dyad.
+- To remain distinct from consumed contextual adjacent-string family #7, any successor must be pre-registered as an onset-scoped singleton replacement with an explicit source-string → target-string mapping; it must not merely replay an adjacent-string `stringDelta` contextual shift family.
+- Cardinality-changing onset edits are NOT yet pre-registered. Although 84 shared onsets have cardinality mismatch and 475 onsets are one-sided across the union, count-changing edits introduce a larger invariant surface and should not be mixed into the singleton replacement family.
+- No concrete singleton rule, source pitch class, semitone shift, source/target string pair, or structural signature has been selected or ranked yet.
 
 ## Immediate next actions
-1. Let already-queued PR events drain while PR #21 remains closed; do not emit duplicate events that could race a delayed one-shot.
-2. Determine why exact-SHA run `32991337100` skipped the one-shot condition. Fix delivery condition only; do not alter analyzer/tests/reference/baseline/selector/thresholds/topology semantics.
-3. Re-arm at most one safe event after the queue is drained. Ensure the CPU prerequisite succeeds before the one-shot and exact trigger-only identity is verified before labels are opened.
-4. If the topology diagnostic succeeds, verify the persisted report identity/isolation, immediately close PR #21, restore broad CPU workflow to topology-only form, archive/delete standalone executable one-shot and trigger surface, and refuse replay.
-5. Interpret only aggregate FIT topology to decide whether a materially distinct transformation unit is justified. Never use consumed-family outcomes, validation, or canary to choose the shape.
-6. If justified, pre-register the successor before candidate evaluation and follow policy/tests → CPU gate → search/invariants → CPU gate → at most one one-shot → archive.
-7. Keep `pitch-position-shift-54a6e8d3aa91c422` / SHA `5b36270a...` as baseline unless a future fully gated family passes every invariant.
-8. Never start Bass/Lead, modify main/Production, claim near-100%, or use Modal/L4/GPU without fresh explicit authorization.
+1. Pre-register one materially distinct **atomic singleton-onset pitch+string replacement policy** before opening FIT labels for candidate construction. Fixed shape only: shared singleton topology; one generated note → one replacement note; both pitch and string must change; target string is explicit, not adjacent-delta-only; timing/count/order/duration/techniques/metadata preserved; linked pitch techniques excluded; runtime reference forbidden.
+2. Add deterministic synthetic policy tests and wire policy/tests into `.github/workflows/v144-rhythm-cpu-gate.yml`.
+3. Run CPU gate. If it fails, fix policy/tests only; do not create or execute a search.
+4. Only after policy CPU SUCCESS, pre-register a deterministic FIT-only search with fixed support/max-candidate/pitch bounds before inspecting any candidate outcomes. Validation/canary remain closed until one FIT winner is locked.
+5. If no singleton rule meets the fixed support/shape requirements, seal the family at fit without relaxing thresholds/support or switching to a fallback shape.
+6. Keep `pitch-position-shift-54a6e8d3aa91c422` / SHA `5b36270a...` as baseline unless a future fully gated family passes every invariant.
+7. Never start Bass/Lead, modify main/Production, claim near-100%, or use Modal/L4/GPU without fresh explicit authorization.
