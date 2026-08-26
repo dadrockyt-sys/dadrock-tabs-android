@@ -1,0 +1,19 @@
+{
+  "classification": "v144-singleton-baseline-fit-residual-diagnostic-one-shot-trigger",
+  "baselineName": "singleton-onset-replace-be9e9aa7a734e3cd",
+  "baselineEventSha256": "4e6f9f247134f79f30a5448515c52a6ca1012c1f1314c3458b448582999e3881",
+  "acceptedManifestBlob": "acd12ab68ad16b8faabf38ddc9e1cc0c1e7c4b68",
+  "diagnosticBlob": "27ac8699279db8fc0208d067479ad3751da1a630",
+  "diagnosticTestBlob": "6d45faeb70d1ed99de0d57161fa061e12b7f0a2f",
+  "oneShotWorkflowBlob": "b3d00151d6082b8f8c5e182e3469b5d10b22bb3e",
+  "preLabelCpuRunId": 32996550172,
+  "preLabelCpuJobId": 98267233982,
+  "candidateConstructionAllowed": false,
+  "candidateRankingAllowed": false,
+  "candidateSelectionAllowed": false,
+  "validationLabelsAllowed": false,
+  "canaryLabelsAllowed": false,
+  "runtimeReferenceAllowed": false,
+  "modalGpuAllowed": false,
+  "replayAllowed": false
+}
