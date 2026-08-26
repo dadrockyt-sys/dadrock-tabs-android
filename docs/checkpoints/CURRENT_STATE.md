@@ -85,6 +85,15 @@ Priority: **Rhythm final gate is now closed; preserve the immutable result. Do n
 - Professional reference provenance/completeness proven exact.
 - Final musical gate failed; V5 is therefore **not promotable as Rhythm-complete**.
 
+## Continuation verification — 2026-08-25 22:40 America/Montreal
+- Resumed from this checkpoint on explicit user request to continue on `v143-contextual-prune-lobo` and save this file often.
+- Branch existed and was verified before further work; pre-continuation head was `12898eb6590067d06ded7620eb86964bd9124c10` (`docs: checkpoint immutable V5 final holdout result`).
+- Permanent final-result sentinel re-read successfully at Git blob `511fd244f231b66d08306f97b5a47ed41f5415c7`.
+- Sentinel still reports `professionalHoldoutOpened=true`, `finalCompletionGatePassed=false`, `rhythmComplete=false`, `tuningAllowedAfterHoldout=false`, `candidateSelectionAllowedAfterHoldout=false`, and `thresholdAdjustmentAllowedAfterHoldout=false`.
+- Protected analyzer re-read successfully and remains exactly Git blob `7f72f8ed9b14af8bc93e95544195204d99c6bec1`.
+- No V5 candidate, scorer, threshold, workflow trigger, Production/main content, Modal/L4 job, or `freezeReady` sentinel was changed during this verification.
+- Because the prior checkpoint explicitly requires new project-phase direction after the immutable failed gate, no automatic Bass/Lead transition or new Rhythm experiment was started in this continuation.
+
 ## Next exact actions
 1. **Stop V5 development under this final-holdout protocol.** Do not tune, modify, reselect, replace, or rescore it.
 2. Preserve the final result, scorer preflight, source-only freeze evidence, PDF, hashes, and this checkpoint as the terminal V5 record.
