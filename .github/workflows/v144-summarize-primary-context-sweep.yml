@@ -1,0 +1,61 @@
+name: V144 Summarize Primary Context Sweep
+
+on:
+  workflow_dispatch:
+  push:
+    branches:
+      - v144-rhythm-post-holdout-calibration
+    paths:
+      - debug/v144-rhythm-calibration/run-primary-context-summary.txt
+
+permissions:
+  contents: write
+
+concurrency:
+  group: v144-primary-context-summary
+  cancel-in-progress: false
+
+jobs:
+  summarize:
+    runs-on: ubuntu-latest
+    timeout-minutes: 8
+    steps:
+      - name: Check out exact summary revision
+        uses: actions/checkout@v4
+        with:
+          ref: ${{ github.sha }}
+          fetch-depth: 0
+
+      - name: Verify frozen context sweep report
+        shell: bash
+        run: |
+          set -euo pipefail
+          test -s debug/v144-rhythm-calibration/v6-attack-gate/v6-primary-context-sweep.json
+          blob=$(git hash-object debug/v144-rhythm-calibration/v6-attack-gate/v6-primary-context-sweep.json)
+          test "$blob" = 'c5875f8e3f0ee70816ed6c986b269fb3dc259820'
+
+      - name: Build compact decision summary
+        shell: bash
+        run: |
+          set -euo pipefail
+          python analyzer/v144_summarize_primary_context_sweep.py \
+            debug/v144-rhythm-calibration/v6-attack-gate/v6-primary-context-sweep.json \
+            --output debug/v144-rhythm-calibration/v6-attack-gate/v6-primary-context-summary.json
+
+      - name: Persist compact summary
+        shell: bash
+        run: |
+          set -euo pipefail
+          report='debug/v144-rhythm-calibration/v6-attack-gate/v6-primary-context-summary.json'
+          test -s "$report"
+          git add "$report"
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git commit -m 'Record compact V144 primary context sweep summary'
+          for attempt in 1 2 3 4 5; do
+            git fetch origin v144-rhythm-post-holdout-calibration
+            if git rebase origin/v144-rhythm-post-holdout-calibration && git push origin HEAD:v144-rhythm-post-holdout-calibration; then exit 0; fi
+            git rebase --abort 2>/dev/null || true
+            sleep $((attempt * 2))
+          done
+          exit 1
