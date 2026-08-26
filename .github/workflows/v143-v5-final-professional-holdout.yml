@@ -1,10 +1,15 @@
 name: V143 V5 Final Professional Holdout
 
-# MANUAL ONLY. Creating/editing this workflow must never open the holdout.
+# MANUAL OR DEDICATED ONE-TIME TRIGGER ONLY. Editing this workflow itself must never open the holdout.
 # Once a final-result sentinel exists on the branch, every future dispatch/rerun refuses
 # to open professional source material again.
 on:
   workflow_dispatch:
+  push:
+    branches:
+      - v143-contextual-prune-lobo
+    paths:
+      - debug/v143-contextual-prune/v5-professional-pdf/final-professional-holdout-trigger.txt
 
 permissions:
   contents: write
