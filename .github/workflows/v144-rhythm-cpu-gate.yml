@@ -34,6 +34,7 @@ on:
       - modal/tests/test_v144_rhythm_singleton_onset_replacement_policy.py
       - modal/tests/test_v144_rhythm_singleton_onset_replacement_search.py
       - modal/tests/test_v144_rhythm_singleton_selected_baseline_reconstruction.py
+      - modal/tests/test_v144_rhythm_singleton_baseline_fit_residual_diagnostic.py
       - modal/tests/test_v144_rhythm_pitch_shift_search.py
       - modal/tests/test_v144_rhythm_pitch_step_shift_search.py
       - modal/tests/test_v144_rhythm_pitch_position_shift_search.py
@@ -51,6 +52,7 @@ on:
       - validation/v144_rhythm_calibration/search_atomic_singleton_onset_replacements.py
       - validation/v144_rhythm_calibration/analyze_current_baseline_fit_mechanisms.py
       - validation/v144_rhythm_calibration/analyze_current_baseline_fit_onset_topology.py
+      - validation/v144_rhythm_calibration/analyze_singleton_baseline_fit_residuals.py
       - debug/v144-rhythm-calibration/reference/professional-target-provenance.json
       - debug/v144-rhythm-calibration/selected/v144-singleton-onset-replacement-selected-baseline.json
   pull_request:
@@ -84,6 +86,7 @@ on:
       - modal/tests/test_v144_rhythm_singleton_onset_replacement_policy.py
       - modal/tests/test_v144_rhythm_singleton_onset_replacement_search.py
       - modal/tests/test_v144_rhythm_singleton_selected_baseline_reconstruction.py
+      - modal/tests/test_v144_rhythm_singleton_baseline_fit_residual_diagnostic.py
       - modal/tests/test_v144_rhythm_pitch_shift_search.py
       - modal/tests/test_v144_rhythm_pitch_step_shift_search.py
       - modal/tests/test_v144_rhythm_pitch_position_shift_search.py
@@ -101,6 +104,7 @@ on:
       - validation/v144_rhythm_calibration/search_atomic_singleton_onset_replacements.py
       - validation/v144_rhythm_calibration/analyze_current_baseline_fit_mechanisms.py
       - validation/v144_rhythm_calibration/analyze_current_baseline_fit_onset_topology.py
+      - validation/v144_rhythm_calibration/analyze_singleton_baseline_fit_residuals.py
       - debug/v144-rhythm-calibration/reference/professional-target-provenance.json
       - debug/v144-rhythm-calibration/selected/v144-singleton-onset-replacement-selected-baseline.json
 
@@ -166,6 +170,7 @@ jobs:
           python -m py_compile validation/v144_rhythm_calibration/search_atomic_singleton_onset_replacements.py
           python -m py_compile validation/v144_rhythm_calibration/analyze_current_baseline_fit_mechanisms.py
           python -m py_compile validation/v144_rhythm_calibration/analyze_current_baseline_fit_onset_topology.py
+          python -m py_compile validation/v144_rhythm_calibration/analyze_singleton_baseline_fit_residuals.py
           python -m py_compile modal/v144_rhythm_pitch_step_shift_policy.py
           python -m py_compile modal/v144_rhythm_pitch_position_shift_policy.py
           python -m py_compile modal/v144_rhythm_pitch_step_position_shift_policy.py
@@ -195,6 +200,7 @@ jobs:
           python modal/tests/test_v144_rhythm_onset_dyad_pitch_search.py -v
           python modal/tests/test_v144_rhythm_singleton_onset_replacement_search.py -v
           python modal/tests/test_v144_rhythm_singleton_selected_baseline_reconstruction.py -v
+          python modal/tests/test_v144_rhythm_singleton_baseline_fit_residual_diagnostic.py -v
           python modal/tests/test_v144_rhythm_current_baseline_fit_mechanisms.py -v
           python modal/tests/test_v144_rhythm_current_baseline_fit_onset_topology.py -v
           python modal/tests/test_v144_rhythm_measure_set_guard.py -v
