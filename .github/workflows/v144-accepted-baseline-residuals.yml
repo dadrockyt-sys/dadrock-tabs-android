@@ -1,0 +1,187 @@
+name: V144 Accepted Rhythm Baseline Residual Diagnostics
+
+on:
+  push:
+    branches:
+      - v143-contextual-prune-lobo
+    paths:
+      - .github/workflows/v144-accepted-baseline-residuals.yml
+      - validation/v144_rhythm_calibration/analyze_selected_baseline_residuals.py
+      - debug/v144-rhythm-calibration/selected/v144-triple-selected-baseline.json
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: v144-accepted-rhythm-baseline-residuals
+  cancel-in-progress: false
+
+jobs:
+  residuals:
+    name: Rebuild accepted V144 baseline and persist CPU residuals
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+
+    steps:
+      - name: Check out exact revision
+        uses: actions/checkout@v4
+        with:
+          ref: ${{ github.sha }}
+          fetch-depth: 0
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+
+      - name: Verify immutable V5, gold reference, and accepted baseline manifest
+        shell: bash
+        run: |
+          set -euo pipefail
+          test "$(git hash-object analyzer/v143_reference_free_rhythm_pipeline.py)" = "7f72f8ed9b14af8bc93e95544195204d99c6bec1"
+          test "$(git hash-object debug/v143-contextual-prune/v5-professional-pdf/final-professional-holdout-result.json)" = "511fd244f231b66d08306f97b5a47ed41f5415c7"
+          test "$(sha256sum debug/v143-contextual-prune/v5-professional-pdf/v5-render-stream.json | awk '{print $1}')" = "7c3399d3f5e05ecc8ac98d71d0e5300e1e78f63ae96c1642fe4a19debb4061b2"
+          test "$(sha256sum debug/v144-rhythm-calibration/reference/professional-rhythm-gold-reference.json | awk '{print $1}')" = "18fd868ae960dfcdd1ffb0110f1a9dfd8acc2ffeb46e247d1116cd54291526ac"
+          test "$(git hash-object debug/v144-rhythm-calibration/selected/v144-triple-selected-baseline.json)" = "ba8dec9a1c3155816f5841a32ee52ced7998c110"
+
+      - name: Reconstruct accepted baseline and build residual diagnostics
+        shell: bash
+        run: |
+          set -euo pipefail
+          mkdir -p .v144/accepted-baseline
+          python validation/v144_rhythm_calibration/analyze_selected_baseline_residuals.py \
+            debug/v143-contextual-prune/v5-professional-pdf/v5-render-stream.json \
+            debug/v144-rhythm-calibration/reference/professional-rhythm-gold-reference.json \
+            debug/v144-rhythm-calibration/selected/v144-triple-selected-baseline.json \
+            modal/configs/v144_rhythm_context_split_config.json \
+            debug/v144-rhythm-calibration/baseline/v144-accepted-residual-diagnostics.json \
+            .v144/accepted-baseline/events.json \
+            > .v144/accepted-baseline/residuals.log
+
+      - name: Verify accepted baseline reconstruction and residual isolation
+        shell: bash
+        run: |
+          set -euo pipefail
+          python - <<'PY'
+          import json
+          from pathlib import Path
+
+          report = json.loads(Path('debug/v144-rhythm-calibration/baseline/v144-accepted-residual-diagnostics.json').read_text(encoding='utf-8'))
+          assert report['classification'] == 'v144-rhythm-accepted-baseline-residual-diagnostics'
+          assert report['mayClaimUnseenGeneralization'] is False
+          baseline = report['baseline']
+          assert baseline['name'] == 'prune-triple-67348efe50436fc5'
+          assert baseline['eventCount'] == 1144
+          assert baseline['eventSha256'] == '68b8cdf14ed02265c5e3c204b2af51b0aae4849462e7b3e4243192d8855cc3c3'
+          assert baseline['reconstructedDeterministically'] is True
+          assert baseline['generatedMeasureCount'] == 113
+          assert baseline['baselineGeneratedMeasureSetPreserved'] is True
+          full = report['fullCalibration']
+          assert full['criticalMismatchCount'] == 1810
+          assert full['gatedMetrics']['pitchContentF1'] == 0.2909090909090909
+          assert full['gatedMetrics']['pitchTimingTolerantF1'] == 0.045933014354066985
+          assert full['gatedMetrics']['stringFretTimingTolerantF1'] == 0.031578947368421054
+          assert full['gatedMetrics']['chordPitchSetTolerantF1'] == 0.023496890117484452
+          assert full['gatedMetrics']['exactVoicingTolerantF1'] == 0.023496890117484452
+          assert full['gatedMetrics']['measureCoverageRecall'] == 1.0
+          residual = report['fitOnlyResidualSignals']
+          assert residual['grossUnmatchedGeneratedNoteCount'] > 0
+          assert residual['grossUnmatchedReferenceNoteCount'] > 0
+          assert residual['falsePositiveContextSignatures']
+          assert residual['highestPitchErrorMeasures']
+          contract = report['nextCandidateConstructionContract']
+          assert contract['baselineMustBeThisAcceptedEventSha256'] == '68b8cdf14ed02265c5e3c204b2af51b0aae4849462e7b3e4243192d8855cc3c3'
+          assert contract['fitLabelsMayDriveConstructionAndRanking'] is True
+          assert contract['validationLabelsMayDriveConstructionOrRanking'] is False
+          assert contract['canaryLabelsMayDriveConstructionOrRanking'] is False
+          assert contract['runtimeReferenceInputAllowed'] is False
+          assert contract['baselineGeneratedMeasureSetMustBePreserved'] is True
+          assert contract['numericThresholdsMayBeChangedFromTheseResiduals'] is False
+          assert report['safety']['v5Modified'] is False
+          assert report['safety']['productionModified'] is False
+          assert report['safety']['mainModified'] is False
+          assert report['safety']['modalGpuInvoked'] is False
+          PY
+
+      - name: Reprove reconstructed accepted baseline PDF-event identity
+        shell: bash
+        run: |
+          set -euo pipefail
+          mkdir -p .v144/accepted-baseline/freeze
+          python - <<'PY'
+          import json
+          from pathlib import Path
+          selected = json.loads(Path('.v144/accepted-baseline/events.json').read_text(encoding='utf-8'))
+          events = selected['renderEvents']
+          assert len(events) == 1144
+          payload = {
+              'instrument': 'rhythm',
+              'renderEvents': events,
+              'tempoBpm': 129.19921875,
+              'timeSignature': '4/4',
+              'tuning': 'E Standard',
+              'structuredMode': True,
+              'sourceAudioSha256': '215bd5a657c5326f08f132ae358595a95c30b39bb7493a52c2f910d5a608149f',
+              'referenceFree': True,
+              'professionalReferenceUsed': False,
+              'referenceRuntimeInputUsed': False,
+              'runtimeLabelsRequired': False,
+              'v143RuntimeSafetyVerified': True,
+          }
+          Path('.v144/accepted-baseline/freeze-input.json').write_text(json.dumps(payload, separators=(',', ':')) + '\n', encoding='utf-8')
+          PY
+          python validation/rhythm_holdout/freeze_rhythm_analysis.py \
+            .v144/accepted-baseline/freeze-input.json .v144/accepted-baseline/freeze \
+            --source-commit "${GITHUB_SHA}" > .v144/accepted-baseline/freeze.log
+          cp lib/v143RenderContract.js .v144/accepted-baseline/v143RenderContract.mjs
+          node --input-type=module <<'NODE'
+          import fs from 'node:fs/promises';
+          import { validateV143RenderEvents } from './.v144/accepted-baseline/v143RenderContract.mjs';
+          const selected = JSON.parse(await fs.readFile('.v144/accepted-baseline/events.json', 'utf8'));
+          const events = validateV143RenderEvents(selected.renderEvents || []);
+          await fs.writeFile('.v144/accepted-baseline/renderer-event-evidence.json', JSON.stringify({
+            schemaVersion: 1,
+            renderEvents: events,
+            runtimeSafetyVerified: true,
+            runtimeLabelsRequired: false,
+            referenceOpened: false,
+            professionalReferenceUsed: false,
+            productionModified: false,
+          }) + '\n');
+          NODE
+          python validation/rhythm_holdout/verify_pdf_event_fidelity.py \
+            .v144/accepted-baseline/freeze .v144/accepted-baseline/renderer-event-evidence.json \
+            > .v144/accepted-baseline/pdf-event-fidelity.log
+          python - <<'PY'
+          import json
+          from pathlib import Path
+          d = json.loads(Path('.v144/accepted-baseline/freeze/rhythm-pdf-event-fidelity.json').read_text(encoding='utf-8'))
+          expected = '68b8cdf14ed02265c5e3c204b2af51b0aae4849462e7b3e4243192d8855cc3c3'
+          assert d['passed'] is True
+          assert d['pdfEventFidelity'] == 1.0
+          assert d['frozenEventCount'] == 1144
+          assert d['frozenEventSha256'] == expected
+          assert d['pdfEventSha256'] == expected
+          PY
+
+      - name: Reverify immutable V5 and persist only residual report
+        shell: bash
+        run: |
+          set -euo pipefail
+          test "$(git hash-object analyzer/v143_reference_free_rhythm_pipeline.py)" = "7f72f8ed9b14af8bc93e95544195204d99c6bec1"
+          test "$(git hash-object debug/v143-contextual-prune/v5-professional-pdf/final-professional-holdout-result.json)" = "511fd244f231b66d08306f97b5a47ed41f5415c7"
+          report='debug/v144-rhythm-calibration/baseline/v144-accepted-residual-diagnostics.json'
+          git add "$report"
+          if git diff --cached --quiet; then exit 0; fi
+          test "$(git diff --cached --name-only)" = "$report"
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git commit -m 'Persist V144 accepted-baseline residual diagnostics'
+          for attempt in 1 2 3 4 5; do
+            git fetch origin v143-contextual-prune-lobo
+            if git rebase origin/v143-contextual-prune-lobo && git push origin HEAD:v143-contextual-prune-lobo; then exit 0; fi
+            git rebase --abort 2>/dev/null || true
+            sleep $((attempt * 2))
+          done
+          exit 1
