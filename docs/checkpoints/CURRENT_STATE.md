@@ -2,7 +2,7 @@
 
 Updated: 2026-08-26 America/Montreal
 Branch: `v143-contextual-prune-lobo`
-Active phase: **V144 Rhythm gold calibration. Accepted 1144-event triple baseline remains locked. Single/pair/triple/quad deletion families are consumed and two fit-only diagnostics show deletion is structurally insufficient. A materially new reference-free contextual same-string pitch-shift family is now fully pre-registered and CPU-gated, including linked-technique safety. No pitch-shift candidate search has been executed or selected yet. Next is implementation of the one-shot fit-only search under the unchanged selector/invariant gates.**
+Active phase: **V144 Rhythm gold calibration. Accepted 1144-event triple baseline remains locked. Single/pair/triple/quad deletion families are consumed and two fit-only diagnostics show deletion is structurally insufficient. The reference-free contextual same-string pitch-shift family is fully pre-registered. Its one-shot search implementation now exists but has NOT executed. Initial compile gate passed; a linkage-preserving construction fix is committed and its final CPU gate is queued. Do not create/execute the one-shot workflow until that exact gate passes.**
 
 ## Permanent safety boundary
 - Work only on `v143-contextual-prune-lobo`; never modify/merge `main` or Production.
@@ -69,16 +69,25 @@ Active phase: **V144 Rhythm gold calibration. Accepted 1144-event triple baselin
 - Runtime receives only generated events + locked signatures + semitone shift; professional reference is not a runtime input.
 - Runtime is event-count/timing/string preserving and shifts `midi` + `fret` together; out-of-range shifts are skipped.
 - Bend/legato/slide/hammer/pull linked/labeled events are ineligible so target metadata cannot become inconsistent.
-- Tests: `modal/tests/test_v144_rhythm_pitch_shift_policy.py`; original test commit `9cb2d339702cebc5953b480b1c582eb0675ad012`; linked-technique regression commit `bbb0b14af9c1b890319d26580d2e7bec8a19fd76`.
+- Tests: `modal/tests/test_v144_rhythm_pitch_shift_policy.py`; linked-technique regression commit `bbb0b14af9c1b890319d26580d2e7bec8a19fd76`.
 - CPU gate integration commit `18ad356ce8ca94e18d43f088ad9b7f0ebd560f18`.
-- Safety-hardened CPU gate run `32939793740` SUCCESS.
-- **Final linked-technique regression CPU gate run `32939947264` SUCCESS.**
-- **No pitch-shift one-shot search workflow/report exists yet. No correction candidate has been locked, validated, canaried, or promoted.**
+- Linked-technique regression CPU gate run `32939947264` SUCCESS.
+
+## Contextual pitch-shift one-shot search — IMPLEMENTED / NOT EXECUTED
+- Search file: `validation/v144_rhythm_calibration/search_contextual_pitch_shifts.py`.
+- Initial implementation commit `377e1cd1e5f5dc4cce3c845286cf32dde3844529`.
+- CPU gate was extended to compile the search without executing it in commit `575b747dfb92e88e97a218f2c6ccd6256d993cf9`; compile/test run `32940191764` SUCCESS.
+- Important pre-execution safety correction: `scorer.flatten_generated()` drops bend/legato linkage targets, so construction/ranking now uses canonical fit events (linkage retained) while fit scoring still uses flattened fit notes. Fix commit `bb07310104426eae7718174db6204da214fda3fd`; search blob `27630a6eb6a331d1d30f7caf048ca53a47188781`.
+- The corrected search asserts canonical-fit-event and flattened-fit-note counts agree, ranks only from canonical fit events + fit reference rows, and records `canonicalGeneratedEventsUsedForConstructionAndEligibility=true`.
+- Every evaluated candidate must remain exactly `1144` events and preserve exact 113/113 generated measures before fit lock; zero-change rules are skipped.
+- Exactly one fit winner may lock under the unchanged selector. Only that winner may open validation → canary → full-gold. No alternate after failure.
+- **Corrected CPU gate run `32940294493` is currently queued. Do NOT create/execute the one-shot search workflow unless this exact run succeeds.**
+- **No pitch-shift search report exists, and no pitch-shift candidate has been locked, validated, canaried, or promoted.**
 
 ## Immediate next actions
-1. Implement a one-shot **fit-only contextual pitch-shift search** from the unchanged accepted 1144-event baseline; do not execute it until its isolation/safety assertions are committed.
-2. Construction/ranking may use fit labels only. Validation/canary/historical consumed-family outcomes must not construct or rank rules.
-3. Require candidate event count exactly `1144` and exact 113/113 generated-measure preservation before fit lock.
-4. Lock exactly one fit winner under the existing fixed selector; gate only it through validation → canary → full-gold → independent PDF-event fidelity. No alternate after failure.
-5. Persist exactly one search report, seal the workflow immediately after its single actual execution, and never retune/replay the family from its result.
+1. Confirm corrected CPU gate run `32940294493` SUCCESS. If it fails, fix only the defect and re-gate; do not search.
+2. After success, create the one-shot workflow with an exact commit-message push guard and CPU-only execution. It must verify immutable V5/gold/accepted-baseline identities and all construction-isolation assertions before fidelity proof.
+3. Run the fit-only search once with fixed pre-registered values: minimum correction support `3`, maximum candidates `256`, maximum absolute semitone shift `12`.
+4. Require locked event count `1144`, exact 113/113 measure preservation, then independently re-prove PDF-event fidelity `1.0` before any full invariant can promote calibration.
+5. Persist exactly one report, seal the workflow immediately, never retune/replay this family from its result, and checkpoint the outcome.
 6. Do not promote Rhythm, start Bass/Lead, claim near-100% quality, or use Modal/L4/GPU without fresh explicit user authorization.
