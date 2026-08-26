@@ -1,0 +1,150 @@
+{
+  "schemaVersion": 14411,
+  "classification": "v144-rhythm-selected-calibration-baseline",
+  "instrument": "rhythm",
+  "status": "accepted-calibration-baseline-not-production",
+  "name": "pitch-shift-41b7a7470fa3245a",
+  "previousBaseline": {
+    "name": "prune-triple-67348efe50436fc5",
+    "manifestPath": "debug/v144-rhythm-calibration/selected/v144-triple-selected-baseline.json",
+    "manifestGitBlob": "ba8dec9a1c3155816f5841a32ee52ced7998c110",
+    "eventCount": 1144,
+    "eventSha256": "68b8cdf14ed02265c5e3c204b2af51b0aae4849462e7b3e4243192d8855cc3c3",
+    "generatedMeasureCount": 113
+  },
+  "sourceSearch": {
+    "workflowRunId": 32940695879,
+    "armingCommit": "876ba06fdc557ba695d542bacc31a90aa244c5a3",
+    "persistedCommit": "8142a942c234c4f00fe7f53deff8a34f4122448b",
+    "reportPath": "debug/v144-rhythm-calibration/candidates/contextual-pitch-shift-search.json",
+    "reportGitBlob": "a49e48368d2a45276d09e5746ce7cb4798828470",
+    "candidateFamily": "same-string-contextual-pitch-shift",
+    "rankedCandidateCount": 41,
+    "evaluatedCandidateCount": 41,
+    "constructionLabels": "accepted-baseline-fit-only-same-onset-generated-reference-substitutions",
+    "validationLabelsUsedForConstructionOrRanking": false,
+    "canaryLabelsUsedForConstructionOrRanking": false,
+    "historicalConsumedFamilyResultsUsedForConstructionOrRanking": false,
+    "workflowSealedCommit": "21ca074f3917fb72614686ca5b46a3894ea53374",
+    "workflowArchivedGitBlob": "e960b0d97118de533f68271ccefdfa7766e4e17d"
+  },
+  "transform": {
+    "type": "same-string-contextual-pitch-shift",
+    "signatures": [
+      "pitchClass::4",
+      "stepQuarter::0"
+    ],
+    "semitoneShift": -2,
+    "changedEventCount": 68,
+    "runtimeInputs": "reference-free-source-pitch-class-plus-structural-context-and-fixed-shift-only",
+    "professionalReferenceRuntimeInput": false,
+    "eventCountPreserving": true,
+    "timingPreserving": true,
+    "stringPreserving": true,
+    "nonPitchMetadataPreserving": true,
+    "linkedPitchTechniqueEventsEligible": false
+  },
+  "selectedCandidate": {
+    "eventCount": 1144,
+    "eventSha256": "b6e1f8a8be150943d7224c74f9193b1b4050454620063846f6f5f5c773d4cbf6",
+    "pdfEventFidelity": 1.0,
+    "pdfEventSha256": "b6e1f8a8be150943d7224c74f9193b1b4050454620063846f6f5f5c773d4cbf6",
+    "generatedMeasureCount": 113,
+    "baselineGeneratedMeasureSetPreserved": true,
+    "missingBaselineGeneratedMeasures": [],
+    "extraCandidateGeneratedMeasures": []
+  },
+  "fitConstructionEvidence": {
+    "correctionSupport": 10,
+    "eligibleGeneratedSupport": 40,
+    "correctionPrecision": 0.25,
+    "minimumCorrectionSupport": 3,
+    "maximumCandidates": 256,
+    "maximumAbsSemitoneShift": 12
+  },
+  "fitGate": {
+    "passed": true,
+    "pitchContentGain": 0.008084074373484268,
+    "pitchTimingTolerantF1Gain": 0.008084074373484247,
+    "stringFretTimingTolerantF1Gain": 0.008084074373484233,
+    "chordPitchSetTolerantF1Gain": 0.011695906432748537,
+    "exactVoicingTolerantF1Gain": 0.011695906432748537,
+    "criticalMismatchDelta": -4,
+    "metricRegressions": {},
+    "pdfEventFidelity": 1.0
+  },
+  "validationGate": {
+    "passed": true,
+    "pitchContentGain": 0.017316017316017313,
+    "pitchTimingTolerantF1Gain": 0.008658008658008663,
+    "stringFretTimingTolerantF1Gain": 0.008658008658008663,
+    "chordPitchSetTolerantF1Gain": 0.01219512195121951,
+    "exactVoicingTolerantF1Gain": 0.01219512195121951,
+    "criticalMismatchDelta": -6,
+    "metricRegressions": {},
+    "pdfEventFidelity": 1.0,
+    "alternativeCandidatesRead": false
+  },
+  "canaryGate": {
+    "passed": true,
+    "pitchContentGain": 0.005115089514066473,
+    "pitchTimingTolerantF1Gain": 0.0,
+    "stringFretTimingTolerantF1Gain": 0.0051150895140664975,
+    "chordPitchSetTolerantF1Gain": 0.015151515151515152,
+    "exactVoicingTolerantF1Gain": 0.015151515151515152,
+    "criticalMismatchDelta": -2,
+    "metricRegressions": {},
+    "pdfEventFidelity": 1.0,
+    "alternativeCandidatesRead": false
+  },
+  "fullGoldCalibration": {
+    "passed": true,
+    "evaluationRole": "full-gold-calibration-not-unseen-holdout",
+    "criticalMismatchCount": 1802,
+    "criticalMismatchDelta": -8,
+    "criticalMismatchBreakdown": {
+      "grossUnmatchedGeneratedNotes": 1000,
+      "grossUnmatchedReferenceNotes": 802,
+      "missingReferenceMeasures": 0
+    },
+    "gatedMetrics": {
+      "pitchContentF1": 0.3043062200956938,
+      "pitchTimingTolerantF1": 0.052631578947368425,
+      "stringFretTimingTolerantF1": 0.03923444976076555,
+      "chordPitchSetTolerantF1": 0.0359364201796821,
+      "exactVoicingTolerantF1": 0.0359364201796821,
+      "measureCoverageRecall": 1.0,
+      "pdfEventFidelity": 1.0
+    },
+    "baselineDeltas": {
+      "pitchContentF1": 0.013397129186602907,
+      "pitchTimingTolerantF1": 0.00669856459330144,
+      "stringFretTimingTolerantF1": 0.007655502392344499,
+      "chordPitchSetTolerantF1": 0.012439530062197647,
+      "exactVoicingTolerantF1": 0.012439530062197647,
+      "measureCoverageRecall": 0.0
+    },
+    "metricRegressions": {},
+    "measureCoverageRecall": 1.0,
+    "baselineEventCountPreserved": true,
+    "baselineGeneratedMeasureSetPreserved": true,
+    "nonPitchEventMetadataPreservationRequired": true
+  },
+  "promotionScope": {
+    "calibrationBaseline": true,
+    "productionPromotionAllowed": false,
+    "rhythmComplete": false,
+    "near100CalibrationTargetReached": false,
+    "mayClaimUnseenGeneralization": false
+  },
+  "safety": {
+    "v5Modified": false,
+    "mainModified": false,
+    "productionModified": false,
+    "runtimeReferenceInputUsed": false,
+    "measureSetGuardUsesProfessionalReference": false,
+    "modalGpuInvoked": false,
+    "historicalSearchWorkflowReplayAllowed": false,
+    "consumedFamilyRunnerUpSelectionAllowed": false
+  }
+}
