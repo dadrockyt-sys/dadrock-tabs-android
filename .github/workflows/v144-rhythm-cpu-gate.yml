@@ -28,11 +28,13 @@ on:
       - modal/tests/test_v144_rhythm_pitch_position_shift_policy.py
       - modal/tests/test_v144_rhythm_pitch_shift_search.py
       - modal/tests/test_v144_rhythm_pitch_step_shift_search.py
+      - modal/tests/test_v144_rhythm_pitch_position_shift_search.py
       - modal/tests/test_v144_rhythm_current_baseline_fit_mechanisms.py
       - modal/tests/test_v144_rhythm_measure_set_guard.py
       - modal/tests/fixtures/v144_rhythm_context_split_reference.json
       - validation/v144_rhythm_calibration/search_contextual_pitch_shifts.py
       - validation/v144_rhythm_calibration/search_contextual_pitch_step_shifts.py
+      - validation/v144_rhythm_calibration/search_contextual_pitch_position_shifts.py
       - validation/v144_rhythm_calibration/analyze_current_baseline_fit_mechanisms.py
       - debug/v144-rhythm-calibration/reference/professional-target-provenance.json
   pull_request:
@@ -60,11 +62,13 @@ on:
       - modal/tests/test_v144_rhythm_pitch_position_shift_policy.py
       - modal/tests/test_v144_rhythm_pitch_shift_search.py
       - modal/tests/test_v144_rhythm_pitch_step_shift_search.py
+      - modal/tests/test_v144_rhythm_pitch_position_shift_search.py
       - modal/tests/test_v144_rhythm_current_baseline_fit_mechanisms.py
       - modal/tests/test_v144_rhythm_measure_set_guard.py
       - modal/tests/fixtures/v144_rhythm_context_split_reference.json
       - validation/v144_rhythm_calibration/search_contextual_pitch_shifts.py
       - validation/v144_rhythm_calibration/search_contextual_pitch_step_shifts.py
+      - validation/v144_rhythm_calibration/search_contextual_pitch_position_shifts.py
       - validation/v144_rhythm_calibration/analyze_current_baseline_fit_mechanisms.py
       - debug/v144-rhythm-calibration/reference/professional-target-provenance.json
 
@@ -102,7 +106,6 @@ jobs:
           python - <<'PY'
           import json
           from pathlib import Path
-
           payload = json.loads(Path('debug/v144-rhythm-calibration/reference/professional-target-provenance.json').read_text(encoding='utf-8'))
           assert payload['role'] == 'gold-calibration-reference-not-unseen-holdout'
           assert payload['visualTarget']['mainGitBlob'] == '16106197cc1269cca0b3c443908d5ef75e8b4d3e'
@@ -125,6 +128,7 @@ jobs:
           set -euo pipefail
           python -m py_compile validation/v144_rhythm_calibration/search_contextual_pitch_shifts.py
           python -m py_compile validation/v144_rhythm_calibration/search_contextual_pitch_step_shifts.py
+          python -m py_compile validation/v144_rhythm_calibration/search_contextual_pitch_position_shifts.py
           python -m py_compile validation/v144_rhythm_calibration/analyze_current_baseline_fit_mechanisms.py
           python -m py_compile modal/v144_rhythm_pitch_step_shift_policy.py
           python -m py_compile modal/v144_rhythm_pitch_position_shift_policy.py
@@ -144,6 +148,7 @@ jobs:
           python modal/tests/test_v144_rhythm_pitch_position_shift_policy.py -v
           python modal/tests/test_v144_rhythm_pitch_shift_search.py -v
           python modal/tests/test_v144_rhythm_pitch_step_shift_search.py -v
+          python modal/tests/test_v144_rhythm_pitch_position_shift_search.py -v
           python modal/tests/test_v144_rhythm_current_baseline_fit_mechanisms.py -v
           python modal/tests/test_v144_rhythm_measure_set_guard.py -v
 
