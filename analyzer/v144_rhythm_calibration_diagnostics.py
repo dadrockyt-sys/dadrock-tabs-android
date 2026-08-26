@@ -148,6 +148,24 @@ def best_shift(
     return best
 
 
+def best_unique_onset_shift(
+    generated: Sequence[Mapping[str, int]],
+    reference: Sequence[Mapping[str, int]],
+    low: int = -64,
+    high: int = 64,
+) -> dict[str, Any]:
+    generated_onsets = sorted({int(n["absStep"]) for n in generated})
+    reference_onsets = sorted({int(n["absStep"]) for n in reference})
+    best: dict[str, Any] | None = None
+    for delta in range(low, high + 1):
+        metric = counter_metric((step + delta for step in generated_onsets), reference_onsets)
+        row = {"stepDelta": delta, **metric}
+        if best is None or (row["matched"], -abs(delta)) > (best["matched"], -abs(best["stepDelta"])):
+            best = row
+    assert best is not None
+    return best
+
+
 def best_pitch_shift(
     generated: Sequence[Mapping[str, int]],
     reference: Sequence[Mapping[str, int]],
@@ -191,6 +209,118 @@ def best_joint_shift(
     return best
 
 
+def measure_shift_pitch_search(
+    generated: Sequence[Mapping[str, int]],
+    reference: Sequence[Mapping[str, int]],
+) -> dict[str, Any]:
+    rows: list[dict[str, Any]] = []
+    for delta in range(-4, 5):
+        metric = counter_metric(
+            ((n["measure"] + delta, n["midi"]) for n in generated),
+            ((n["measure"], n["midi"]) for n in reference),
+        )
+        rows.append({"measureDelta": delta, **metric})
+    best = max(rows, key=lambda row: (row["matched"], -abs(row["measureDelta"])))
+    return {"best": best, "all": rows}
+
+
+def _greedy_pairs(left: Sequence[int], right: Sequence[int]) -> list[tuple[int, int]]:
+    candidates = sorted(
+        (abs(a - b), i, j, a, b)
+        for i, a in enumerate(left)
+        for j, b in enumerate(right)
+    )
+    used_left: set[int] = set()
+    used_right: set[int] = set()
+    pairs: list[tuple[int, int]] = []
+    for _distance, i, j, a, b in candidates:
+        if i in used_left or j in used_right:
+            continue
+        used_left.add(i)
+        used_right.add(j)
+        pairs.append((a, b))
+    return pairs
+
+
+def same_measure_pitch_step_deltas(
+    generated: Sequence[Mapping[str, int]],
+    reference: Sequence[Mapping[str, int]],
+) -> dict[str, Any]:
+    g: dict[tuple[int, int], list[int]] = {}
+    r: dict[tuple[int, int], list[int]] = {}
+    for note in generated:
+        g.setdefault((note["measure"], note["midi"]), []).append(note["step"])
+    for note in reference:
+        r.setdefault((note["measure"], note["midi"]), []).append(note["step"])
+
+    deltas: Counter[int] = Counter()
+    distances: list[int] = []
+    pair_count = 0
+    for key in sorted(set(g) & set(r)):
+        pairs = _greedy_pairs(sorted(g[key]), sorted(r[key]))
+        pair_count += len(pairs)
+        for generated_step, reference_step in pairs:
+            delta = int(reference_step - generated_step)
+            deltas[delta] += 1
+            distances.append(abs(delta))
+
+    return {
+        "pairCount": pair_count,
+        "exactStepPairs": deltas[0],
+        "exactStepFraction": 0.0 if pair_count == 0 else deltas[0] / pair_count,
+        "withinOneStepPairs": sum(count for delta, count in deltas.items() if abs(delta) <= 1),
+        "withinTwoStepPairs": sum(count for delta, count in deltas.items() if abs(delta) <= 2),
+        "meanAbsoluteStepDelta": 0.0 if not distances else sum(distances) / len(distances),
+        "stepDeltaHistogram": [
+            {"stepDeltaReferenceMinusGenerated": delta, "count": count}
+            for delta, count in sorted(deltas.items(), key=lambda item: (-item[1], abs(item[0]), item[0]))
+        ],
+    }
+
+
+def exact_onset_pitch_quality(
+    generated: Sequence[Mapping[str, int]],
+    reference: Sequence[Mapping[str, int]],
+) -> dict[str, Any]:
+    g: dict[tuple[int, int], list[int]] = {}
+    r: dict[tuple[int, int], list[int]] = {}
+    for note in generated:
+        g.setdefault((note["measure"], note["step"]), []).append(note["midi"])
+    for note in reference:
+        r.setdefault((note["measure"], note["step"]), []).append(note["midi"])
+
+    shared = sorted(set(g) & set(r))
+    generated_midis: list[int] = []
+    reference_midis: list[int] = []
+    generated_pitch_classes: list[int] = []
+    reference_pitch_classes: list[int] = []
+    exact_pitch_set_onsets = 0
+    exact_pitch_class_set_onsets = 0
+    for onset in shared:
+        gp = list(g[onset])
+        rp = list(r[onset])
+        generated_midis.extend(gp)
+        reference_midis.extend(rp)
+        generated_pitch_classes.extend(midi % 12 for midi in gp)
+        reference_pitch_classes.extend(midi % 12 for midi in rp)
+        if Counter(gp) == Counter(rp):
+            exact_pitch_set_onsets += 1
+        if Counter(midi % 12 for midi in gp) == Counter(midi % 12 for midi in rp):
+            exact_pitch_class_set_onsets += 1
+
+    return {
+        "sharedOnsetCount": len(shared),
+        "generatedNotesAtSharedOnsets": len(generated_midis),
+        "referenceNotesAtSharedOnsets": len(reference_midis),
+        "pitchContentAtSharedOnsets": counter_metric(generated_midis, reference_midis),
+        "pitchClassContentAtSharedOnsets": counter_metric(
+            generated_pitch_classes, reference_pitch_classes
+        ),
+        "exactPitchSetOnsets": exact_pitch_set_onsets,
+        "exactPitchClassSetOnsets": exact_pitch_class_set_onsets,
+    }
+
+
 def segment_alignment(
     generated: Sequence[Mapping[str, int]],
     reference: Sequence[Mapping[str, int]],
@@ -207,7 +337,7 @@ def segment_alignment(
                 "generatedNotes": len(g),
                 "referenceNotes": len(r),
                 "bestPitchTimingShift": best_shift(g, r, -32, 32, pitch=True),
-                "bestOnsetShift": best_shift(g, r, -32, 32, pitch=False),
+                "bestUniqueOnsetShift": best_unique_onset_shift(g, r, -32, 32),
             }
         )
     return rows
@@ -293,7 +423,7 @@ def main() -> int:
     reference_onsets = sorted(set((n["measure"], n["step"]) for n in reference))
 
     report = {
-        "schemaVersion": 1,
+        "schemaVersion": 2,
         "classification": "v144-post-holdout-rhythm-calibration-diagnostics",
         "calibrationReferenceUsed": True,
         "unseenHoldout": False,
@@ -327,11 +457,14 @@ def main() -> int:
         },
         "alignmentSearch": {
             "bestGlobalPitchTimingStepShift": best_shift(generated, reference, -64, 64, pitch=True),
-            "bestGlobalOnsetStepShift": best_shift(generated, reference, -64, 64, pitch=False),
+            "bestUniqueOnsetStepShift": best_unique_onset_shift(generated, reference, -64, 64),
             "bestPitchSemitoneShiftIgnoringTiming": best_pitch_shift(generated, reference),
             "bestJointPitchAndTimingShift": best_joint_shift(generated, reference),
+            "measureShiftPitchSearch": measure_shift_pitch_search(generated, reference),
+            "sameMeasurePitchStepDeltas": same_measure_pitch_step_deltas(generated, reference),
             "quarterSongSegments": segment_alignment(generated, reference),
         },
+        "exactOnsetPitchQuality": exact_onset_pitch_quality(generated, reference),
         "density": measure_density(generated, reference),
         "pitchDiscrepancy": pitch_discrepancy(generated, reference),
     }
