@@ -1,0 +1,104 @@
+name: V144 Rhythm CPU Gate
+
+on:
+  push:
+    branches:
+      - v143-contextual-prune-lobo
+    paths:
+      - .github/workflows/v144-rhythm-cpu-gate.yml
+      - modal/v144_rhythm_context_split_policy.py
+      - modal/v144_rhythm_context_split_selector.py
+      - modal/configs/v144_rhythm_context_split_config.json
+      - modal/tests/test_v144_rhythm_context_split_policy.py
+      - modal/tests/test_v144_rhythm_context_split_selector.py
+      - modal/tests/fixtures/v144_rhythm_context_split_reference.json
+      - debug/v144-rhythm-calibration/reference/professional-target-provenance.json
+  pull_request:
+    paths:
+      - .github/workflows/v144-rhythm-cpu-gate.yml
+      - modal/v144_rhythm_context_split_policy.py
+      - modal/v144_rhythm_context_split_selector.py
+      - modal/configs/v144_rhythm_context_split_config.json
+      - modal/tests/test_v144_rhythm_context_split_policy.py
+      - modal/tests/test_v144_rhythm_context_split_selector.py
+      - modal/tests/fixtures/v144_rhythm_context_split_reference.json
+      - debug/v144-rhythm-calibration/reference/professional-target-provenance.json
+
+permissions:
+  contents: read
+
+jobs:
+  v144-rhythm-cpu-gate:
+    name: V144 rhythm CPU policy + frozen V5 guards
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+
+    steps:
+      - name: Checkout branch
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+
+      - name: Verify immutable V5 identities
+        shell: bash
+        run: |
+          set -euo pipefail
+
+          test "$(git hash-object analyzer/v143_reference_free_rhythm_pipeline.py)" = "7f72f8ed9b14af8bc93e95544195204d99c6bec1"
+          test "$(git hash-object debug/v143-contextual-prune/v5-professional-pdf/final-professional-holdout-result.json)" = "511fd244f231b66d08306f97b5a47ed41f5415c7"
+          test "$(sha256sum debug/v143-contextual-prune/v5-professional-pdf/v5-render-stream.json | awk '{print $1}')" = "7c3399d3f5e05ecc8ac98d71d0e5300e1e78f63ae96c1642fe4a19debb4061b2"
+          test "$(sha256sum debug/v143-contextual-prune/v5-professional-pdf/v5-rhythm-shadow.pdf | awk '{print $1}')" = "f4c1238e868cadfb90b8a359b1555b0b90e7740b9ebaa276aa394c8991f37ce5"
+
+      - name: Verify V144 provenance safety contract
+        shell: bash
+        run: |
+          set -euo pipefail
+          python - <<'PY'
+          import json
+          from pathlib import Path
+
+          path = Path('debug/v144-rhythm-calibration/reference/professional-target-provenance.json')
+          payload = json.loads(path.read_text(encoding='utf-8'))
+
+          assert payload['role'] == 'gold-calibration-reference-not-unseen-holdout'
+          assert payload['visualTarget']['mainGitBlob'] == '16106197cc1269cca0b3c443908d5ef75e8b4d3e'
+          assert payload['visualTarget']['verifiedFileSha256'] == 'aca2da3e8d551b2fd82b4ab3ecafa0c8932d6c0a27b54b6213ffc990ca08a9a9'
+          assert payload['structuredTarget']['builtReferenceSha256'] == '18fd868ae960dfcdd1ffb0110f1a9dfd8acc2ffeb46e247d1116cd54291526ac'
+          assert payload['safety']['v5FinalHoldoutConsumed'] is True
+          assert payload['safety']['v5ResultMayBeModified'] is False
+          assert payload['safety']['v5CandidateMayBeModified'] is False
+          assert payload['safety']['v5WorkflowMayBeRetried'] is False
+          assert payload['safety']['mainMayBeModified'] is False
+          assert payload['safety']['productionMayBeModified'] is False
+          assert payload['safety']['modalGpuAuthorized'] is False
+          assert payload['v144Usage']['mustLabelScoresAsCalibration'] is True
+          assert payload['v144Usage']['mayClaimUnseenGeneralization'] is False
+          PY
+
+      - name: Run V144 rhythm CPU unit tests
+        shell: bash
+        run: |
+          set -euo pipefail
+          python modal/tests/test_v144_rhythm_context_split_policy.py -v
+          python modal/tests/test_v144_rhythm_context_split_selector.py -v
+
+      - name: Verify config stays CPU-safe and fallback-first
+        shell: bash
+        run: |
+          set -euo pipefail
+          python - <<'PY'
+          import json
+          from pathlib import Path
+
+          payload = json.loads(Path('modal/configs/v144_rhythm_context_split_config.json').read_text(encoding='utf-8'))
+          assert payload['instrument'] == 'rhythm'
+          assert payload['requiredPdfEventFidelity'] == 1.0
+          assert payload['holdoutMustRemainClosed'] is True
+          assert payload['maximumPerMetricRegression'] == 0.0
+          assert payload['maximumCanaryRegression'] == 0.0
+          assert payload['maximumCriticalMismatchIncrease'] == 0
+          assert payload['fitPercent'] + payload['validationPercent'] < 100
+          PY
