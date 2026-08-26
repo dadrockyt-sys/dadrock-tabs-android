@@ -1,0 +1,107 @@
+{
+  "schemaVersion": 14401,
+  "classification": "v144-rhythm-context-split-synthetic-regression-fixture",
+  "referenceRole": "cpu-policy-fixture-not-professional-reference-payload",
+  "expectedSelected": "context-preserve",
+  "candidates": [
+    {
+      "name": "no-prune",
+      "policy": "baseline",
+      "calibration": {
+        "gatedMetrics": {
+          "pitchContentF1": 0.2830626450116009,
+          "pitchTimingTolerantF1": 0.044547563805104405,
+          "stringFretTimingTolerantF1": 0.03062645011600928,
+          "chordPitchSetTolerantF1": 0.022757697456492636,
+          "exactVoicingTolerantF1": 0.022757697456492636,
+          "pdfEventFidelity": 1.0
+        },
+        "criticalMismatchCount": 1875
+      },
+      "canary": {
+        "gatedMetrics": {
+          "pitchContentF1": 0.2830626450116009,
+          "pitchTimingTolerantF1": 0.044547563805104405,
+          "stringFretTimingTolerantF1": 0.03062645011600928,
+          "chordPitchSetTolerantF1": 0.022757697456492636,
+          "exactVoicingTolerantF1": 0.022757697456492636,
+          "pdfEventFidelity": 1.0
+        },
+        "criticalMismatchCount": 1875
+      },
+      "holdout": null,
+      "safety": {
+        "v5Modified": false,
+        "productionModified": false,
+        "runtimeReferenceInputUsed": false,
+        "deterministic": true
+      }
+    },
+    {
+      "name": "context-preserve",
+      "policy": "preserve-reference-free-context",
+      "calibration": {
+        "gatedMetrics": {
+          "pitchContentF1": 0.2935,
+          "pitchTimingTolerantF1": 0.0505,
+          "stringFretTimingTolerantF1": 0.0355,
+          "chordPitchSetTolerantF1": 0.0255,
+          "exactVoicingTolerantF1": 0.0255,
+          "pdfEventFidelity": 1.0
+        },
+        "criticalMismatchCount": 1810
+      },
+      "canary": {
+        "gatedMetrics": {
+          "pitchContentF1": 0.2840,
+          "pitchTimingTolerantF1": 0.0450,
+          "stringFretTimingTolerantF1": 0.0310,
+          "chordPitchSetTolerantF1": 0.0230,
+          "exactVoicingTolerantF1": 0.0230,
+          "pdfEventFidelity": 1.0
+        },
+        "criticalMismatchCount": 1868
+      },
+      "holdout": null,
+      "safety": {
+        "v5Modified": false,
+        "productionModified": false,
+        "runtimeReferenceInputUsed": false,
+        "deterministic": true
+      }
+    },
+    {
+      "name": "context-prune",
+      "policy": "prune-reference-free-context",
+      "calibration": {
+        "gatedMetrics": {
+          "pitchContentF1": 0.3050,
+          "pitchTimingTolerantF1": 0.0520,
+          "stringFretTimingTolerantF1": 0.0370,
+          "chordPitchSetTolerantF1": 0.0270,
+          "exactVoicingTolerantF1": 0.0270,
+          "pdfEventFidelity": 1.0
+        },
+        "criticalMismatchCount": 1780
+      },
+      "canary": {
+        "gatedMetrics": {
+          "pitchContentF1": 0.2850,
+          "pitchTimingTolerantF1": 0.0410,
+          "stringFretTimingTolerantF1": 0.0290,
+          "chordPitchSetTolerantF1": 0.0210,
+          "exactVoicingTolerantF1": 0.0210,
+          "pdfEventFidelity": 1.0
+        },
+        "criticalMismatchCount": 1884
+      },
+      "holdout": null,
+      "safety": {
+        "v5Modified": false,
+        "productionModified": false,
+        "runtimeReferenceInputUsed": false,
+        "deterministic": true
+      }
+    }
+  ]
+}
