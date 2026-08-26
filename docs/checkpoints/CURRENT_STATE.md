@@ -218,3 +218,25 @@ Search the branch for the professional-reference/scorer/workflow assets named or
 4. Build a V144-only reproducible baseline comparison/report from existing frozen repository evidence before changing musical candidate logic.
 5. Separate mismatch diagnostics into pitch-content/chord-set, timing/onset, string/fret voicing, and technique buckets; keep PDF-event fidelity as an independent invariant.
 6. Continue CPU/repository-only work; do not invoke Modal/L4/GPU without fresh explicit authorization.
+
+## V144 exact gold reference persisted — 2026-08-26 00:37 America/Montreal
+- Added V144-only exact reference builder `validation/v144_rhythm_calibration/build_gold_reference.py` in commit `2b0fb21245d5ef01d0a5b6e65c39fa2740df3e69`.
+- Added CPU-only source-verification/build/persistence workflow `.github/workflows/v144-build-gold-reference.yml` in commit `2fc0007caa73a23afc52450d4d0977b64c4dda1e`.
+- First V144 build run `32934616369` successfully verified the frozen V5 identities, fetched and hash-verified the immutable professional image and exact structured source, built the exact reference, and passed the SHA/completeness assertions. It failed only at the final staged-path ordering guard; no output commit occurred from that failed persistence step.
+- Fixed only that path-order assertion to be order-independent in commit `40fe83895ef76badde4409489a61b3c0a5a0fd1a`; reference construction and safety logic were unchanged.
+- Corrected V144 build run `32934718066` completed **SUCCESS** on CPU.
+- The successful run persisted only V144 calibration outputs in bot commit `0df6204909ca79bdd3a5bf1be4f1ca4d55cca53f` (`Persist exact V144 gold rhythm calibration reference`).
+- Persisted files:
+  - `debug/v144-rhythm-calibration/reference/professional-rhythm-gold-reference.json` — exact historical reference bytes with SHA256 `18fd868ae960dfcdd1ffb0110f1a9dfd8acc2ffeb46e247d1116cd54291526ac`.
+  - `debug/v144-rhythm-calibration/reference/professional-rhythm-gold-reference-build.json` — V144 calibration build report, Git blob `5f1ec40176aa9b69676c7cd9e06b42c412731f37`.
+- Reproduced completeness is exact: 113 measures, 603 playable onsets, 946 playable notes, 104 populated measures.
+- Build report explicitly classifies the persisted target as `gold-calibration-reference-not-unseen-holdout`. The exact historical reference JSON retains legacy `holdout=true` only because changing it would break the known reference SHA; V144 protocol semantics are calibration-only.
+- Build report records `v5Modified=false`, `productionModified=false`, and `modalGpuInvoked=false`.
+- No V5 workflow was rerun, no V5 result/candidate/threshold was changed, `main`/Production remain untouched, and no Modal/L4/GPU work occurred.
+
+### Immediate next resume action after gold-reference persistence
+1. Build a V144-only reproducible baseline scoring wrapper/report from the frozen V5 render stream and the persisted gold calibration reference without modifying or rerunning V5.
+2. Reuse generic freeze/PDF/scoring algorithms read-only where safe, but relabel final V144 output unambiguously as calibration rather than unseen holdout.
+3. Require the reproduced baseline to match the immutable historical metrics and critical mismatch count exactly before any V144 musical candidate change.
+4. Persist separate diagnostic buckets for pitch-content/chord-set, timing/onset, string/fret voicing, and technique, with PDF-event fidelity kept as an independent invariant.
+5. Continue CPU/repository-only work and checkpoint again before any candidate-policy modification.
