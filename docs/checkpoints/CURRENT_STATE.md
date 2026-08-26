@@ -4,6 +4,15 @@ Updated: 2026-08-25 America/Montreal
 Branch: `v144-rhythm-post-holdout-calibration`
 Priority: **repair Rhythm using consumed V5 professional reference as calibration data; preserve V5 history; never touch main/Production during calibration.**
 
+## Product focus — GOVERNING GOAL
+- Public product: `dadrocktabs.com/ai-tab`.
+- Page construction: `app/ai-tab/page.js`.
+- User flow: **upload audio -> choose Rhythm Guitar, Bass Guitar, or Lead Guitar -> generate transcription -> show a professional-quality watermarked PDF preview -> optionally purchase/unlock the full professionally rendered PDF.**
+- The scorer/professional reference is a development quality target for the transcription engine, not the end-user product itself.
+- Engineering success means the generated musical content is accurate enough that the preview and purchased PDF are genuinely professional quality; renderer fidelity alone is not sufficient if the transcription is musically wrong.
+- Current phase remains Rhythm-first calibration. Bass and Lead remain part of the product contract but are not the active calibration target until Rhythm reaches the required quality level or the user explicitly redirects the phase.
+- Preserve and reuse the best saved Modal/L4 outputs as read-only evaluation/calibration fixtures where possible to control testing cost. Do not spend fresh Modal/L4 compute merely to reproduce already-saved outputs.
+
 ## Boundaries
 - Terminal V5 stays immutable on `v143-contextual-prune-lobo`; V144 only for new calibration work.
 - `Are You Gonna Go My Way` professional reference is consumed calibration data, not unseen holdout. Final independent proof requires a different unseen professional song/reference.
@@ -50,7 +59,8 @@ Priority: **repair Rhythm using consumed V5 professional reference as calibratio
 
 ## Next exact actions
 1. Re-read `docs/testing/SCORER_MODAL_L4_ARCHIVE.md` and the preserved L4 workflow/probe implementation.
-2. Design a report-only targeted L4 calibration experiment pinned to frozen V6 and exact source/audio identities. No V7 output.
-3. Primary success tests should include: reduce the 73 no-pitch-class candidate misses; increase exact/reference pitch candidate coverage; improve correct-candidate rank/discrimination vs existing V2 evidence; require similar direction on odd/even internal splits.
-4. Only if L4 separation creates materially better source evidence should a later V7 policy/generator be considered.
-5. Final legitimate validation still requires a different unseen professional song/reference.
+2. Locate and inventory the saved best Modal/L4 outputs from prior expensive testing and determine which can be replayed locally against frozen V6 before any new Modal spend.
+3. Design a report-only targeted L4 calibration experiment pinned to frozen V6 and exact source/audio identities. No V7 output.
+4. Primary success tests should include: reduce the 73 no-pitch-class candidate misses; increase exact/reference pitch candidate coverage; improve correct-candidate rank/discrimination vs existing V2 evidence; require similar direction on odd/even internal splits.
+5. Only if saved/new L4 separation creates materially better source evidence should a later V7 policy/generator be considered.
+6. Final legitimate validation still requires a different unseen professional song/reference.
