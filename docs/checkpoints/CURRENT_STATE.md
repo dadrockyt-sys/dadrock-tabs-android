@@ -42,18 +42,26 @@ Priority: **repair Rhythm using consumed V5 professional reference as calibratio
 - Sweep tested primary-only, original-V2-selected, rank/relative-score/absolute-score/attack/sustain secondary gates and max-two voicing, with/without the conservative attack gate.
 - **No secondary-note pruning policy is clean enough to promote yet.** Each attractive secondary policy trades away other useful metrics/splits.
 - The only tested policy with **no overall metric regressions** is: keep all V5 voicing on attacks that pass `detection>=12 && gridError<=0.06`.
-- Expected calibration result from that policy: 1149 events / 839 onsets; onset F1 `0.48682385575589454`; pitch-content F1 `0.6042959427207636`; pitch-class F1 `0.8085918854415275`; measure+pitch F1 `0.28544152744630075`; measure+pitch-class F1 `0.4715990453460621`; position-content F1 `0.469689737470167`; exact-event F1 `0.04486873508353222`.
-- It improves every **overall** swept metric vs V5. Robust on both odd/even splits for onset, pitch-class content, measure+pitch, and measure+pitch-class; some even-split micro-regressions remain in exact-event/pitch/position, so this is a conservative V6 step, not a solved pipeline.
+- Expected calibration result: 1149 events / 839 onsets; onset F1 `0.48682385575589454`; pitch-content F1 `0.6042959427207636`; pitch-class F1 `0.8085918854415275`; measure+pitch F1 `0.28544152744630075`; measure+pitch-class F1 `0.4715990453460621`; position-content F1 `0.469689737470167`; exact-event F1 `0.04486873508353222`.
+- It improves every overall swept metric vs V5. Robust on both odd/even splits for onset, pitch-class content, measure+pitch, and measure+pitch-class; some even-split micro-regressions remain in exact-event/pitch/position.
 
 ## V6 decision locked
 - V6 first change = **attack gate only**: `detectionCountSum >= 12 && precisionGridErrorSeconds <= 0.06`.
 - Do not move attacks, rewrite pitches, impose MIDI ceiling, undo rescue logic, or prune secondary voicings in V6.
-- Generate V6 as a separate immutable candidate from frozen V5 + exact V2 evidence only. Generation must not read the professional reference.
-- Then independently calibration-score V6 against the consumed reference and verify the generated counts/metrics match the policy sweep prediction.
+- Generation must not read the professional reference.
+
+## V6 generation — READY, NOT TRIGGERED YET
+- Source-only generator: `analyzer/v144_generate_v6_attack_gate.py`, commit `7ba6cc7e59b7882fa99350f612e8ac5742f0286d`.
+- CPU generation workflow: `.github/workflows/v144-v6-generate.yml`, commit `82d8115f0bbc3cf8fbb049052419ff14c902ad00`.
+- Generator verifies frozen V5 has 1209 events / 891 onsets and exact V2 replay evidence has 984 attacks.
+- It applies only the locked attack gate and copies every surviving V5 event object unchanged.
+- It hard-fails unless output is exactly 1149 events / 839 onsets (60 events / 52 attacks removed).
+- Workflow SHA-verifies frozen V5, V2 artifact ZIP, and V2 candidate product; **does not fetch the professional reference**; no Modal/L4; no Production.
+- Planned outputs are separate under `debug/v144-rhythm-calibration/v6-attack-gate/`: `v6-render-stream.json`, `v6-generation-manifest.json`, and `v6-generation-sha256.txt`.
 
 ## Next exact actions
-1. Add a source-only V6 generator that verifies frozen V5/V2 identities, applies only the locked attack gate, and writes a separate V6 stream.
-2. Add/run a CPU workflow to persist the V6 candidate and a source-only generation manifest; no Modal/L4 and no Production.
-3. Calibration-score V6 separately against the consumed reference; verify counts and metrics against the sweep prediction.
+1. Trigger `debug/v144-rhythm-calibration/run-v6-generate.txt` once.
+2. Verify generation run success and persisted V6 SHA/counts.
+3. Add/run a separate calibration scorer that fetches the already-consumed professional reference only after generation; verify V6 metrics match the policy-sweep prediction.
 4. Save checkpoint immediately after V6 generation/scoring.
-5. Next repair target after V6: source separation / pitch-voicing discrimination. Use current source evidence first; bring preserved L4 back only for an explicit separation hypothesis if CPU views cannot distinguish contamination.
+5. Next repair target: source separation / pitch-voicing discrimination. Use current source evidence first; bring preserved L4 back only for an explicit separation hypothesis if CPU views cannot distinguish contamination.
