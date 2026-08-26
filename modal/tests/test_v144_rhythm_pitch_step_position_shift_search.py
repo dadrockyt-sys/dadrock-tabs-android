@@ -100,10 +100,10 @@ class PitchStepPositionSearchInvariantTests(unittest.TestCase):
         variants = [
             event(0, fret=3, midi=62),
             event(0, step=5),
-            event(0, string_index=2, fret=6, midi=61),
+            event(0, string_index=2, fret=5, midi=60),
             event(0, step=5, fret=3, midi=62),
             event(0, string_index=2, fret=7, midi=62),
-            event(0, step=5, string_index=2, fret=6, midi=61),
+            event(0, step=5, string_index=2, fret=5, midi=60),
         ]
         for candidate in variants:
             with self.assertRaises(ValueError):
