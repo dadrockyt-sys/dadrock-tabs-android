@@ -18,6 +18,7 @@ from canonical import canonical_events, sha256_json  # noqa: E402
 import score_rhythm_holdout as scorer  # noqa: E402
 from v144_rhythm_context_split_policy import ContextSplitConfig  # noqa: E402
 from v144_rhythm_measure_set_guard import measure_set_evidence  # noqa: E402
+from v144_rhythm_pitch_position_shift_policy import apply_pitch_position_rule  # noqa: E402
 from v144_rhythm_pitch_shift_policy import apply_pitch_shift_rule  # noqa: E402
 from v144_rhythm_triple_conjunction_policy import apply_triple_prune  # noqa: E402
 from analyze_split_baseline import score_subset, split_name  # noqa: E402
@@ -27,11 +28,15 @@ SOURCE_EVENT_SHA256 = "7ed5166a73793e3a40c9a21f6532fee5ba784e43ef4180727404a37a0
 TRIPLE_SIGNATURES = ["register::high", "section16::1", "stepParity::0"]
 TRIPLE_EVENT_COUNT = 1144
 TRIPLE_EVENT_SHA256 = "68b8cdf14ed02265c5e3c204b2af51b0aae4849462e7b3e4243192d8855cc3c3"
-BASELINE_NAME = "pitch-shift-41b7a7470fa3245a"
-BASELINE_SIGNATURES = ["pitchClass::4", "stepQuarter::0"]
-BASELINE_SHIFT = -2
+PITCH_BASELINE_SIGNATURES = ["pitchClass::4", "stepQuarter::0"]
+PITCH_BASELINE_SHIFT = -2
+PITCH_BASELINE_EVENT_SHA256 = "b6e1f8a8be150943d7224c74f9193b1b4050454620063846f6f5f5c773d4cbf6"
+BASELINE_NAME = "pitch-position-shift-54a6e8d3aa91c422"
+BASELINE_SIGNATURES = ["pitchClass::11", "stepParity::0"]
+BASELINE_SEMITONE_SHIFT = -2
+BASELINE_STRING_SHIFT = 1
 BASELINE_EVENT_COUNT = 1144
-BASELINE_EVENT_SHA256 = "b6e1f8a8be150943d7224c74f9193b1b4050454620063846f6f5f5c773d4cbf6"
+BASELINE_EVENT_SHA256 = "5b36270aaeafa73b2e25722e2576a40424ce5951dcfd2b5d769746bd9eb07e0d"
 BASELINE_MEASURE_COUNT = 113
 
 
@@ -88,11 +93,24 @@ def reconstruct_current_baseline(source_events: Sequence[Mapping[str, Any]]) -> 
     if sha256_json(triple_events) != TRIPLE_EVENT_SHA256:
         raise ValueError("historical triple reconstruction SHA changed")
 
-    baseline_events = canonical_events(
+    pitch_events = canonical_events(
         apply_pitch_shift_rule(
             triple_events,
+            PITCH_BASELINE_SIGNATURES,
+            PITCH_BASELINE_SHIFT,
+        )
+    )
+    if len(pitch_events) != BASELINE_EVENT_COUNT:
+        raise ValueError("previous pitch baseline reconstruction event count changed")
+    if sha256_json(pitch_events) != PITCH_BASELINE_EVENT_SHA256:
+        raise ValueError("previous pitch baseline reconstruction SHA changed")
+
+    baseline_events = canonical_events(
+        apply_pitch_position_rule(
+            pitch_events,
             BASELINE_SIGNATURES,
-            BASELINE_SHIFT,
+            BASELINE_SEMITONE_SHIFT,
+            BASELINE_STRING_SHIFT,
         )
     )
     if len(baseline_events) != BASELINE_EVENT_COUNT:
@@ -105,9 +123,9 @@ def reconstruct_current_baseline(source_events: Sequence[Mapping[str, Any]]) -> 
 def main() -> int:
     parser = argparse.ArgumentParser(
         description=(
-            "Fit-only mechanism diagnostic for the current accepted V144 Rhythm baseline. "
-            "This reconstructs the accepted triple+pitch-shift chain but does not construct, "
-            "rank, select, validate, canary, or promote any candidate."
+            "Fit-only mechanism diagnostic for the current accepted V144 Rhythm pitch-position baseline. "
+            "It reconstructs the accepted transform chain but does not construct, rank, select, "
+            "validate, canary, or promote any candidate."
         )
     )
     parser.add_argument("v5_render_stream", type=Path)
@@ -123,12 +141,14 @@ def main() -> int:
     if manifest.get("name") != BASELINE_NAME:
         raise ValueError("current accepted V144 baseline name changed")
     transform = manifest.get("transform") or {}
-    if transform.get("type") != "same-string-contextual-pitch-shift":
+    if transform.get("type") != "contextual-joint-pitch-adjacent-string-position-shift":
         raise ValueError("current accepted V144 transform type changed")
     if transform.get("signatures") != BASELINE_SIGNATURES:
-        raise ValueError("current accepted V144 pitch-shift signatures changed")
-    if int(transform.get("semitoneShift") or 0) != BASELINE_SHIFT:
+        raise ValueError("current accepted V144 pitch-position signatures changed")
+    if int(transform.get("semitoneShift") or 0) != BASELINE_SEMITONE_SHIFT:
         raise ValueError("current accepted V144 semitone shift changed")
+    if int(transform.get("stringShift") or 0) != BASELINE_STRING_SHIFT:
+        raise ValueError("current accepted V144 string shift changed")
     selected = manifest.get("selectedCandidate") or {}
     if int(selected.get("eventCount") or 0) != BASELINE_EVENT_COUNT:
         raise ValueError("current accepted V144 event count changed")
@@ -201,7 +221,7 @@ def main() -> int:
     position_matched = len(position_pairs)
 
     report = {
-        "schemaVersion": 14412,
+        "schemaVersion": 14415,
         "classification": "v144-rhythm-current-baseline-fit-error-mechanisms",
         "evaluationRole": "gold-calibration-fit-only-current-baseline-mechanism-diagnostic",
         "mayClaimUnseenGeneralization": False,
@@ -224,8 +244,15 @@ def main() -> int:
                 },
                 {
                     "type": "same-string-contextual-pitch-shift",
+                    "signatures": PITCH_BASELINE_SIGNATURES,
+                    "semitoneShift": PITCH_BASELINE_SHIFT,
+                    "outputEventSha256": PITCH_BASELINE_EVENT_SHA256,
+                },
+                {
+                    "type": "contextual-joint-pitch-adjacent-string-position-shift",
                     "signatures": BASELINE_SIGNATURES,
-                    "semitoneShift": BASELINE_SHIFT,
+                    "semitoneShift": BASELINE_SEMITONE_SHIFT,
+                    "stringShift": BASELINE_STRING_SHIFT,
                     "outputEventSha256": BASELINE_EVENT_SHA256,
                 },
             ],
@@ -241,15 +268,9 @@ def main() -> int:
         },
         "mechanisms": {
             **onset,
-            "sameMeasurePitchMatchesDisplacedFromExactOnset": max(
-                0, pitch_matched - onset["exactOnsetExactPitchNotes"]
-            ),
-            "samePitchTimingMatchesRecoveredOnlyByGrossTwoStepTolerance": max(
-                0, gross_matched - tight_matched
-            ),
-            "sameMeasurePitchMatchesStillOutsideGrossTwoStepToleranceOrCompeting": max(
-                0, pitch_matched - gross_matched
-            ),
+            "sameMeasurePitchMatchesDisplacedFromExactOnset": max(0, pitch_matched - onset["exactOnsetExactPitchNotes"]),
+            "samePitchTimingMatchesRecoveredOnlyByGrossTwoStepTolerance": max(0, gross_matched - tight_matched),
+            "sameMeasurePitchMatchesStillOutsideGrossTwoStepToleranceOrCompeting": max(0, pitch_matched - gross_matched),
             "correctPitchTimingButWrongStringFret": max(0, tight_matched - position_matched),
             "grossUnmatchedGeneratedNotes": generated_count - gross_matched,
             "grossUnmatchedReferenceNotes": reference_count - gross_matched,
@@ -262,26 +283,18 @@ def main() -> int:
                 "as runtime rules, used to change fixed selector thresholds, or represented as generalization evidence."
             ),
             "perfectPitchFalsePositiveDeletion": {
-                "pitchContentF1Ceiling": f1_from_matched(
-                    pitch_matched, pitch_matched, reference_count
-                ),
+                "pitchContentF1Ceiling": f1_from_matched(pitch_matched, pitch_matched, reference_count),
             },
             "perfectCountPreservingPitchCorrection": {
-                "pitchContentF1Ceiling": f1_from_matched(
-                    min(generated_count, reference_count), generated_count, reference_count
-                ),
+                "pitchContentF1Ceiling": f1_from_matched(min(generated_count, reference_count), generated_count, reference_count),
             },
             "perfectTimingAlignmentOfExistingPitchContentMatches": {
                 "matchedNotesHeldConstant": pitch_matched,
-                "pitchTimingF1Ceiling": f1_from_matched(
-                    pitch_matched, generated_count, reference_count
-                ),
+                "pitchTimingF1Ceiling": f1_from_matched(pitch_matched, generated_count, reference_count),
             },
             "perfectStringFretRemapOfCurrentTightPitchMatches": {
                 "matchedNotesHeldConstant": tight_matched,
-                "stringFretTimingF1Ceiling": f1_from_matched(
-                    tight_matched, generated_count, reference_count
-                ),
+                "stringFretTimingF1Ceiling": f1_from_matched(tight_matched, generated_count, reference_count),
             },
         },
         "nextFamilyShapeSignals": {
@@ -294,7 +307,7 @@ def main() -> int:
             "currentBaselineFitLabelsMayInformNextFamilyShape": True,
             "validationLabelsMayInformNextFamilyShape": False,
             "canaryLabelsMayInformNextFamilyShape": False,
-            "consumedPitchShiftFamilyMayBeReplayedOrRetuned": False,
+            "consumedFamiliesMayBeReplayedOrRetuned": False,
             "runtimeReferenceInputAllowed": False,
             "fixedSelectorThresholdsMayBeChangedFromThisDiagnostic": False,
             "nextFamilyMustBeMateriallyNewAndPreRegistered": True,
