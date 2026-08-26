@@ -21,18 +21,19 @@ Active phase: **V144 Rhythm gold calibration. Rhythm-first; do not begin Bass/Le
 - Exact reference build run `32934718066` SUCCESS; persisted bot commit `0df6204909ca79bdd3a5bf1be4f1ca4d55cca53f`.
 
 ## Immutable V5 → V144 calibration baseline
-- Historical V5 full-reference metrics: critical mismatches `1875`; PDF fidelity `1.0`; pitch F1 `0.2830626450116009`; pitch/timing `0.044547563805104405`; string/fret/timing `0.03062645011600928`; chord/voicing `0.022757697456492636`.
+- Historical V5 full-reference metrics: critical mismatches `1875`; PDF fidelity `1.0`; pitch F1 `0.2830626450116009`; pitch/timing `0.044547563805104405`; string/fret/timing `0.03062645011600928`; chord/voicing `0.022757697456492636`; measure coverage recall `1.0`.
 - Repro baseline run `32934939964` SUCCESS; report bot commit `4511f05493cff7dc8828e61329b4ba439db168aa`.
 - Deterministic split run `32935079594` SUCCESS; report bot commit `5dd431f65eec0dfb99fd3c3d8d77b5590190dd2a`.
 - Split by measure+step, seed 144: 60% fit / 20% validation / 20% canary; cross-split matching forbidden.
 - Fit baseline: 688 generated / 594 reference; pitch F1 `0.21528861154446177`; pitch/timing `0.043681747269890804`; string/fret/timing `0.031201248049921994`; chord/voicing `0.024858757062146894`; critical `1150`; gross unmatched 622 generated / 528 reference.
 - Validation baseline pitch F1 `0.13733905579399142`, critical `426`; canary baseline pitch F1 `0.15233415233415235`, critical `385`.
 
-## Leakage-safe staged selector — GREEN
+## Leakage-safe staged selector — GREEN, BUT FULL-MEASURE PRESERVATION GAP DISCOVERED
 - `modal/v144_rhythm_staged_selector.py` commit `68575a4c0d68f54392703a038bf909619a708177`.
 - CPU gate run `32935390792` SUCCESS.
 - Fit ranking cannot read validation/canary. Exactly one fit winner locks. Validation and canary are pass/fail only; failure returns to `no-prune` with no alternate selection.
-- Fixed gate: fit pitch gain >= `0.005`; no musical metric regression; no critical mismatch increase; exact PDF-event fidelity `1.0`.
+- Existing fixed split gate: fit pitch gain >= `0.005`; no split musical metric regression; no split critical mismatch increase; exact PDF-event fidelity `1.0`.
+- **Protocol gap now proven:** split metrics did not include/reference-free enforce preservation of the baseline generated measure set. Therefore a candidate could pass fit/validation/canary while deleting the last generated note from an entire measure. This must be fixed before another candidate search is trusted.
 
 ## First single-signature experiment — REJECTED
 - Run `32935621669` SUCCESS operationally; report bot commit `e19972d0df128852717bcc9506ae154586d4f4ee`.
@@ -46,57 +47,53 @@ Active phase: **V144 Rhythm gold calibration. Rhythm-first; do not begin Bass/Le
 - Construction is fit-only: exactly two distinct reference-free `context_signature(event)` values; default minimum fit FP support `3`; max family `256`; deterministic support/precision ranking; no validation/canary inputs to candidate construction.
 - Search implementation added in `c03ee8babcc61dca5aa510f5c64812430cad7ea8`; scorer import-path correction in `2bffc57a0fea7428ad21cd639936f4a4ace68c08`.
 
-## First all-stage V144 candidate — PASSED FIT + VALIDATION + CANARY
-- CPU search workflow `.github/workflows/v144-conjunction-prune-search.yml` added in commit `58ab544917d172a9cac1fc41b53b9af421e57a0b`.
-- Workflow run `32936171588` = **SUCCESS**.
-- Persisted report bot commit `b6f2f9213ac38bf70c568bdf78ec769f24fff46d`.
-- Report: `debug/v144-rhythm-calibration/candidates/conjunction-prune-search.json`, Git blob `b92a3638d5b8fff0e911df43fb381f89f088afd6`.
-- Candidate family was capped at 256 conjunction rules; construction/ranking used fit labels only and explicitly did **not** use validation/canary labels or the earlier single-signature validation result.
-- Locked candidate: `prune-conjunction-33ac980932c68313`.
-- Runtime rule: `register::high && section16::1`.
-- Fit evidence for that rule: fit FP precision `1.0`, fit FP support `62/62`; runtime rule removes 97 total events from the immutable 1209-event V5 baseline.
-- Locked candidate stream: **1112 events**, canonical SHA256 `db5c8e8fbbb767c386f14a00df188c89738230694840c48bed1bae32b2653b4f`.
-- Fit deltas versus no-prune:
-  - pitch-content F1 `+0.007662208127669379`
-  - pitch/timing F1 `+0.0022198920743714892`
-  - string/fret/timing F1 `+0.0015856371959796466`
-  - chord pitch-set F1 `+0.001207593648753582`
-  - exact voicing F1 `+0.001207593648753582`
-  - critical mismatches `-62`
-  - no fit metric regressions.
-- Validation gate **PASSED** with no regressions:
-  - pitch-content F1 `+0.0030118213989910325`
-  - pitch/timing F1 `+0.0013176718620585698`
-  - string/fret/timing F1 `+0.0007529553497477581`
-  - chord pitch-set F1 `+0.0005221737346611452`
-  - exact voicing F1 `+0.0005221737346611452`
-  - critical mismatches `-10`.
-- Canary gate **PASSED** with no regressions:
-  - pitch-content F1 `+0.009969512587313628`
-  - pitch/timing F1 `+0.0019295830814155396`
-  - string/fret/timing F1 `+0.0016079859011796163`
-  - chord pitch-set F1 `+0.0010555262353823518`
-  - exact voicing F1 `+0.0010555262353823518`
-  - critical mismatches `-25`.
-- Independent locked-stream renderer/PDF-event identity proof **PASSED**: PDF-event fidelity `1.0`, event count `1112`, event SHA exactly `db5c8e8fbbb767c386f14a00df188c89738230694840c48bed1bae32b2653b4f`, reference not opened during fidelity proof.
-- Protocol result: `selected=prune-conjunction-33ac980932c68313`, `promotionAllowed=true`, `stoppedAt=complete`.
-- This is a V144 **calibration candidate promotion**, not Production promotion and not evidence of unseen generalization.
+## Conjunction candidate — SPLIT-PASSED, FULL-INVARIANT REJECTED
+- CPU search workflow `.github/workflows/v144-conjunction-prune-search.yml` commit `58ab544917d172a9cac1fc41b53b9af421e57a0b`; run `32936171588` SUCCESS.
+- Split report bot commit `b6f2f9213ac38bf70c568bdf78ec769f24fff46d`; report blob `b92a3638d5b8fff0e911df43fb381f89f088afd6` at `debug/v144-rhythm-calibration/candidates/conjunction-prune-search.json`.
+- Split locked candidate `prune-conjunction-33ac980932c68313`, rule `register::high && section16::1`.
+- Fit FP precision `1.0`, support `62/62`; 97 total events removed; resulting stream 1112 events, SHA256 `db5c8e8fbbb767c386f14a00df188c89738230694840c48bed1bae32b2653b4f`.
+- Split fit deltas: pitch `+0.007662208127669379`; pitch/timing `+0.0022198920743714892`; string/fret/timing `+0.0015856371959796466`; chord/voicing `+0.001207593648753582`; critical `-62`.
+- Split validation PASSED: pitch `+0.0030118213989910325`; pitch/timing `+0.0013176718620585698`; string/fret/timing `+0.0007529553497477581`; chord/voicing `+0.0005221737346611452`; critical `-10`.
+- Split canary PASSED: pitch `+0.009969512587313628`; pitch/timing `+0.0019295830814155396`; string/fret/timing `+0.0016079859011796163`; chord/voicing `+0.0010555262353823518`; critical `-25`.
+- Independent locked-stream PDF/event fidelity proof PASSED at `1.0`, exact candidate SHA, reference not opened during fidelity proof.
+- **Do not treat the split `promotionAllowed=true` field as current promotion authority. It is superseded by the full-gold invariant result below.**
+
+## Full-gold selected-candidate invariant — FAILED / CANDIDATE REJECTED
+- Added full-score script `validation/v144_rhythm_calibration/score_selected_conjunction_candidate.py` in commit `f76635d1db58d5ed11a018c5ee461c566bb983ae`.
+- Added full-score workflow `.github/workflows/v144-selected-candidate-full-calibration.yml` in commit `4c01deac45d8df47f5f1a94c516f37aa7f005da5`.
+- First run `32936501819` successfully reconstructed/scored the candidate and independently proved PDF-event fidelity, but failed on an assertion that had assumed measure coverage remained `1.0`; no candidate artifacts were persisted by that failed run.
+- Workflow was corrected without weakening the invariant in commit `89ac9806b324160dda7c5a331e6e336c969049ea`: it now records the full invariant result explicitly rather than assuming it passes.
+- Corrected run `32936612852` = **SUCCESS** operationally and persisted the evaluated result in bot commit `e03d0d25a3c1e8ab8d68e51737e0abd84a920fb9`.
+- Persisted spec: `debug/v144-rhythm-calibration/selected/selected-rhythm-candidate.json`, Git blob `904b3fe644d3ed11c0ff03a3d680b8c1718e2ebd`.
+- Persisted full score: `debug/v144-rhythm-calibration/selected/selected-rhythm-full-gold-score.json`, Git blob `570d1d91410ac7452c5ed0d6f6ddd3c9ea6ecb4b`.
+- Full candidate absolute metrics:
+  - pitch-content F1 `0.293488824101069` (`+0.010426179089468135` vs V5 baseline)
+  - pitch/timing F1 `0.04664723032069971` (`+0.0020996665155953026`)
+  - string/fret/timing F1 `0.03206997084548104` (`+0.001443520729471761`)
+  - chord pitch-set F1 `0.023826208829712685` (`+0.0010685113732200498`)
+  - exact voicing F1 `0.023826208829712685` (`+0.0010685113732200498`)
+  - PDF-event fidelity `1.0`, exact event/PDF SHA `db5c8e8fbbb767c386f14a00df188c89738230694840c48bed1bae32b2653b4f`.
+- Full critical mismatches improved from `1875` to `1779` (`-96`): 972 gross unmatched generated + 806 gross unmatched reference + **1 missing reference measure**.
+- **Measure coverage regressed from `1.0` to `0.9911504424778761`: generated measure count 112/113; missing measure is exactly `28`.**
+- Full invariant therefore `passed=false`; `calibrationPromotionAllowed=false`; candidate spec says `splitSelectionSupersededByFullInvariant=true`.
+- Candidate is **REJECTED as the V144 calibration baseline** despite its musical-score improvements and split passes.
+- Do not repair this exact rule using knowledge that measure 28 was missing. Measure 28 is diagnostic evidence only; next candidate construction must remain fit/reference-free and satisfy a predeclared baseline-measure-preservation safety invariant.
 - V5/main/Production remain unchanged; no Modal/L4/GPU used.
 
 ## Current interpretation
-- Narrow contextual conjunction pruning is materially safer than the broad single-signature rule and has now produced the first candidate with positive fit, validation, and canary behavior simultaneously.
-- The accepted rule specifically suppresses high-register generated notes in section-16 bucket 1 while leaving the rest of the stream unchanged.
-- Rendering/event identity remains exact; musical transcription remains far from the near-100% product target, so this is a meaningful calibration increment, not Rhythm completion.
-- Because the professional reference and all three internal splits are calibration data, none of these results may be described as unbiased final generalization performance. A separate unseen professional example is still required for a true final holdout later.
+- Narrow conjunction pruning can improve musical precision substantially, but the current selector lacked a whole-stream structural invariant.
+- The next selector version must reject any candidate whose full generated measure-ID set differs from the immutable baseline generated measure-ID set, computed **without the gold reference**. Since V5 already spans all 113 measures, preserving the baseline-generated measure set safely protects full measure coverage without using professional labels at runtime or during fit selection.
+- Only after this reference-free measure-preservation gate is CPU-tested may a new candidate family be searched.
+- Rendering/event identity remains exact; musical transcription is still far from near-100% quality.
 
 ## Unrelated workflow noise
 - Pre-existing `.github/workflows/cleanup-tab-preview.yml` continues to fail on branch pushes. It is unrelated and untouched.
 
 ## Immediate next resume actions
-1. Persist a V144-only selected-candidate specification for `register::high && section16::1` plus its exact 1112-event identity; do not modify V5.
-2. Reproduce a **full gold-calibration score** for the selected 1112-event candidate and record absolute whole-reference metrics/critical mismatches, while keeping PDF fidelity as an independent exact gate.
-3. Treat that selected conjunction candidate as the new V144 calibration baseline for further residual analysis; keep its rule fixed.
-4. Generate residual fit-only diagnostics after applying the accepted rule, then predeclare the next incremental rule family before consulting later-stage labels.
-5. Any next candidate must be an additive V144-only transformation from the accepted 1112-event candidate, use reference-free runtime inputs, lock on fit first, and preserve exact candidate/PDF event identity.
-6. Save this checkpoint after the selected-candidate spec/full-score milestone and after each later calibration increment.
+1. Add `baselineGeneratedMeasureSetPreserved=true` (or equivalent) as a required staged-selector safety condition.
+2. Compute that condition reference-free for each candidate by comparing the candidate full event-stream measure IDs to the immutable source candidate measure IDs before fit lock.
+3. Add unit tests proving a candidate that drops a baseline-generated measure cannot lock even if all split musical metrics improve.
+4. Update single-signature/conjunction search helper safety payloads and CPU gate tests/fixtures as required; keep all numeric thresholds unchanged.
+5. Run the CPU gate and checkpoint the corrected selector protocol.
+6. Only then define/run a new fit-only candidate family. Do not hand-edit the rejected `register::high && section16::1` rule based on the discovered missing measure.
 7. Continue CPU/repository-only work; **no Modal/L4/GPU without fresh explicit authorization**.
