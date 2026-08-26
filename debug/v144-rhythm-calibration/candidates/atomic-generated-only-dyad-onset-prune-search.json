@@ -1,0 +1,1300 @@
+{
+  "alternateAfterGateFailureAllowed": false,
+  "baseline": {
+    "eventCount": 1144,
+    "eventSha256": "4e6f9f247134f79f30a5448515c52a6ca1012c1f1314c3458b448582999e3881",
+    "fit": {
+      "counts": {
+        "generatedNotes": 643,
+        "grossMatchedNotes": 90,
+        "referenceNotes": 594
+      },
+      "criticalMismatchCount": 1057,
+      "gatedMetrics": {
+        "chordPitchSetTolerantF1": 0.05847953216374269,
+        "exactVoicingTolerantF1": 0.05847953216374269,
+        "pdfEventFidelity": 1.0,
+        "pitchContentF1": 0.2845594179466451,
+        "pitchTimingTolerantF1": 0.06628940986257073,
+        "stringFretTimingTolerantF1": 0.05497170573969281
+      }
+    },
+    "generatedMeasureCount": 113,
+    "name": "accepted-v144-baseline"
+  },
+  "calibrationPromotionAllowed": false,
+  "canary": null,
+  "candidateConstruction": {
+    "atomicWholeOnsetDeletionRequired": true,
+    "canaryLabelsUsedForCandidateConstructionOrRanking": false,
+    "candidateRuleShape": "atomic-exact-two-note-generated-only-whole-onset-prune",
+    "evaluatedCandidateCount": 23,
+    "eventCountPreservationRequired": false,
+    "exactlyTwoGeneratedNotesOnsetRequired": true,
+    "fitGeneratedNoteCount": 643,
+    "fitReferenceNoteCount": 594,
+    "generatedMeasureSetPreservationRequired": true,
+    "historicalConsumedFamilyResultsUsedForConstructionOrRanking": false,
+    "linkedOrReferencedEventsEligible": false,
+    "maximumCandidates": 256,
+    "measureErasingOnsetsEligible": false,
+    "measureSetGuardUsesProfessionalReference": false,
+    "minimumFalsePositiveSupport": 3,
+    "rankedRuleCount": 23,
+    "removedEventsPerChangedOnset": 2,
+    "runtimeRuleInputs": "reference-free-exact-two-note-generated-onset-plus-structural-context-and-two-sorted-source-string-pitch-class-identities-only",
+    "sourceBaselineEventCount": 1144,
+    "sourceBaselineEventSha256": "4e6f9f247134f79f30a5448515c52a6ca1012c1f1314c3458b448582999e3881",
+    "sourceBaselineName": "singleton-onset-replace-be9e9aa7a734e3cd",
+    "sourceLabels": "accepted-baseline-fit-only-generated-only-exact-two-note-onsets",
+    "survivorMutationAllowed": false,
+    "validationLabelsUsedForCandidateConstructionOrRanking": false,
+    "zeroReferenceNoteOnsetRequiredForConstruction": true
+  },
+  "candidateMetadata": {
+    "generated-only-dyad-prune-01ee0048b5df47c1": {
+      "candidateEventSha256": "269542f7a0dca42e2c4c57efb58b674bda813ec509982e163ba44a6659b8a72d",
+      "contextSignature": "measurePhase::1",
+      "firstSourcePitchClass": 2,
+      "firstSourceStringIndex": 1,
+      "fitEligibleGeneratedSupport": 3,
+      "fitFalsePositivePrecision": 1.0,
+      "fitFalsePositiveSupport": 3,
+      "measureSet": {
+        "baselineGeneratedMeasureCount": 113,
+        "baselineGeneratedMeasureSetPreserved": true,
+        "candidateGeneratedMeasureCount": 113,
+        "extraCandidateGeneratedMeasures": [],
+        "missingBaselineGeneratedMeasures": [],
+        "professionalReferenceUsed": false
+      },
+      "remainingEventCount": 1138,
+      "removedEventCount": 6,
+      "removedOnsetCount": 3,
+      "secondSourcePitchClass": 11,
+      "secondSourceStringIndex": 2
+    },
+    "generated-only-dyad-prune-1a5ca3baae6ca268": {
+      "candidateEventSha256": "715d89841817916ddd06a6c4f73fd2619fd2c44af230356a1770cdd4b0956533",
+      "contextSignature": "stepParity::0",
+      "firstSourcePitchClass": 6,
+      "firstSourceStringIndex": 1,
+      "fitEligibleGeneratedSupport": 9,
+      "fitFalsePositivePrecision": 0.3333333333333333,
+      "fitFalsePositiveSupport": 3,
+      "measureSet": {
+        "baselineGeneratedMeasureCount": 113,
+        "baselineGeneratedMeasureSetPreserved": true,
+        "candidateGeneratedMeasureCount": 113,
+        "extraCandidateGeneratedMeasures": [],
+        "missingBaselineGeneratedMeasures": [],
+        "professionalReferenceUsed": false
+      },
+      "remainingEventCount": 1120,
+      "removedEventCount": 24,
+      "removedOnsetCount": 12,
+      "secondSourcePitchClass": 2,
+      "secondSourceStringIndex": 2
+    },
+    "generated-only-dyad-prune-44948e9a3ee65350": {
+      "candidateEventSha256": "7a8170b7630990bd1917772dc9d0aac680cea3f4fe1e95a74127b5ee4fa957fd",
+      "contextSignature": "stepQuarter::0",
+      "firstSourcePitchClass": 6,
+      "firstSourceStringIndex": 1,
+      "fitEligibleGeneratedSupport": 8,
+      "fitFalsePositivePrecision": 0.375,
+      "fitFalsePositiveSupport": 3,
+      "measureSet": {
+        "baselineGeneratedMeasureCount": 113,
+        "baselineGeneratedMeasureSetPreserved": true,
+        "candidateGeneratedMeasureCount": 113,
+        "extraCandidateGeneratedMeasures": [],
+        "missingBaselineGeneratedMeasures": [],
+        "professionalReferenceUsed": false
+      },
+      "remainingEventCount": 1124,
+      "removedEventCount": 20,
+      "removedOnsetCount": 10,
+      "secondSourcePitchClass": 2,
+      "secondSourceStringIndex": 2
+    },
+    "generated-only-dyad-prune-54d99a9896f96b9c": {
+      "candidateEventSha256": "9c47c8a90210ca4dc1d0ecf7c5dd9b83b2d20cbf06c96e7b08e9e56363c929bf",
+      "contextSignature": "measurePhaseStep::2:3",
+      "firstSourcePitchClass": 11,
+      "firstSourceStringIndex": 1,
+      "fitEligibleGeneratedSupport": 4,
+      "fitFalsePositivePrecision": 1.0,
+      "fitFalsePositiveSupport": 4,
+      "measureSet": {
+        "baselineGeneratedMeasureCount": 113,
+        "baselineGeneratedMeasureSetPreserved": true,
+        "candidateGeneratedMeasureCount": 113,
+        "extraCandidateGeneratedMeasures": [],
+        "missingBaselineGeneratedMeasures": [],
+        "professionalReferenceUsed": false
+      },
+      "remainingEventCount": 1136,
+      "removedEventCount": 8,
+      "removedOnsetCount": 4,
+      "secondSourcePitchClass": 4,
+      "secondSourceStringIndex": 3
+    },
+    "generated-only-dyad-prune-5618167b72cb3e1a": {
+      "candidateEventSha256": "b3a4e3ae8289cfde08bcee934196740b4680715c0e24093622d2a596ae9abac2",
+      "contextSignature": "measurePhase::3",
+      "firstSourcePitchClass": 6,
+      "firstSourceStringIndex": 1,
+      "fitEligibleGeneratedSupport": 4,
+      "fitFalsePositivePrecision": 0.75,
+      "fitFalsePositiveSupport": 3,
+      "measureSet": {
+        "baselineGeneratedMeasureCount": 113,
+        "baselineGeneratedMeasureSetPreserved": true,
+        "candidateGeneratedMeasureCount": 113,
+        "extraCandidateGeneratedMeasures": [],
+        "missingBaselineGeneratedMeasures": [],
+        "professionalReferenceUsed": false
+      },
+      "remainingEventCount": 1128,
+      "removedEventCount": 16,
+      "removedOnsetCount": 8,
+      "secondSourcePitchClass": 2,
+      "secondSourceStringIndex": 2
+    },
+    "generated-only-dyad-prune-575feb34913724b9": {
+      "candidateEventSha256": "ea30dbce293c7367ee70683d9e81b2e37fde4d5ed2f0b4b5008843e5308033c3",
+      "contextSignature": "measurePhase::2",
+      "firstSourcePitchClass": 4,
+      "firstSourceStringIndex": 0,
+      "fitEligibleGeneratedSupport": 8,
+      "fitFalsePositivePrecision": 0.75,
+      "fitFalsePositiveSupport": 6,
+      "measureSet": {
+        "baselineGeneratedMeasureCount": 113,
+        "baselineGeneratedMeasureSetPreserved": true,
+        "candidateGeneratedMeasureCount": 113,
+        "extraCandidateGeneratedMeasures": [],
+        "missingBaselineGeneratedMeasures": [],
+        "professionalReferenceUsed": false
+      },
+      "remainingEventCount": 1120,
+      "removedEventCount": 24,
+      "removedOnsetCount": 12,
+      "secondSourcePitchClass": 9,
+      "secondSourceStringIndex": 2
+    },
+    "generated-only-dyad-prune-627740bc2ed2b521": {
+      "candidateEventSha256": "dc90610d39a770b9e88cf72fe24d625648738684cb1d2e21aeda36b9bb4b3c37",
+      "contextSignature": "section16::6",
+      "firstSourcePitchClass": 4,
+      "firstSourceStringIndex": 0,
+      "fitEligibleGeneratedSupport": 7,
+      "fitFalsePositivePrecision": 0.8571428571428571,
+      "fitFalsePositiveSupport": 6,
+      "measureSet": {
+        "baselineGeneratedMeasureCount": 113,
+        "baselineGeneratedMeasureSetPreserved": true,
+        "candidateGeneratedMeasureCount": 113,
+        "extraCandidateGeneratedMeasures": [],
+        "missingBaselineGeneratedMeasures": [],
+        "professionalReferenceUsed": false
+      },
+      "remainingEventCount": 1122,
+      "removedEventCount": 22,
+      "removedOnsetCount": 11,
+      "secondSourcePitchClass": 9,
+      "secondSourceStringIndex": 2
+    },
+    "generated-only-dyad-prune-87fe7bd2dce58345": {
+      "candidateEventSha256": "50d5b102051b22d110480ff1802f9dc086087e3b16114dd9749ea694a0b1b7c5",
+      "contextSignature": "stepParity::1",
+      "firstSourcePitchClass": 2,
+      "firstSourceStringIndex": 1,
+      "fitEligibleGeneratedSupport": 5,
+      "fitFalsePositivePrecision": 1.0,
+      "fitFalsePositiveSupport": 5,
+      "measureSet": {
+        "baselineGeneratedMeasureCount": 113,
+        "baselineGeneratedMeasureSetPreserved": true,
+        "candidateGeneratedMeasureCount": 113,
+        "extraCandidateGeneratedMeasures": [],
+        "missingBaselineGeneratedMeasures": [],
+        "professionalReferenceUsed": false
+      },
+      "remainingEventCount": 1128,
+      "removedEventCount": 16,
+      "removedOnsetCount": 8,
+      "secondSourcePitchClass": 11,
+      "secondSourceStringIndex": 2
+    },
+    "generated-only-dyad-prune-88fe774d458d1c31": {
+      "candidateEventSha256": "44a5891f814de64995b7c51ab9eb142eb6e743b6a507f285279865bffcc923f5",
+      "contextSignature": "stepParity::0",
+      "firstSourcePitchClass": 4,
+      "firstSourceStringIndex": 0,
+      "fitEligibleGeneratedSupport": 9,
+      "fitFalsePositivePrecision": 0.3333333333333333,
+      "fitFalsePositiveSupport": 3,
+      "measureSet": {
+        "baselineGeneratedMeasureCount": 113,
+        "baselineGeneratedMeasureSetPreserved": true,
+        "candidateGeneratedMeasureCount": 113,
+        "extraCandidateGeneratedMeasures": [],
+        "missingBaselineGeneratedMeasures": [],
+        "professionalReferenceUsed": false
+      },
+      "remainingEventCount": 1106,
+      "removedEventCount": 38,
+      "removedOnsetCount": 19,
+      "secondSourcePitchClass": 9,
+      "secondSourceStringIndex": 2
+    },
+    "generated-only-dyad-prune-8b3a844d3a4a2b6f": {
+      "candidateEventSha256": "dad2e69c9785f41adeff7fc2b2322deb666e53f046ce87f5e17572e04acba83e",
+      "contextSignature": "stepParity::0",
+      "firstSourcePitchClass": 2,
+      "firstSourceStringIndex": 1,
+      "fitEligibleGeneratedSupport": 4,
+      "fitFalsePositivePrecision": 0.75,
+      "fitFalsePositiveSupport": 3,
+      "measureSet": {
+        "baselineGeneratedMeasureCount": 113,
+        "baselineGeneratedMeasureSetPreserved": true,
+        "candidateGeneratedMeasureCount": 113,
+        "extraCandidateGeneratedMeasures": [],
+        "missingBaselineGeneratedMeasures": [],
+        "professionalReferenceUsed": false
+      },
+      "remainingEventCount": 1128,
+      "removedEventCount": 16,
+      "removedOnsetCount": 8,
+      "secondSourcePitchClass": 9,
+      "secondSourceStringIndex": 3
+    },
+    "generated-only-dyad-prune-93f43cd6ecb8105d": {
+      "candidateEventSha256": "d12f4b920edd43eb26a7f5c9f2de8ccef14b6966b17237cddd66f1b083eb1fd2",
+      "contextSignature": "measurePhaseStep::2:3",
+      "firstSourcePitchClass": 4,
+      "firstSourceStringIndex": 0,
+      "fitEligibleGeneratedSupport": 3,
+      "fitFalsePositivePrecision": 1.0,
+      "fitFalsePositiveSupport": 3,
+      "measureSet": {
+        "baselineGeneratedMeasureCount": 113,
+        "baselineGeneratedMeasureSetPreserved": true,
+        "candidateGeneratedMeasureCount": 113,
+        "extraCandidateGeneratedMeasures": [],
+        "missingBaselineGeneratedMeasures": [],
+        "professionalReferenceUsed": false
+      },
+      "remainingEventCount": 1136,
+      "removedEventCount": 8,
+      "removedOnsetCount": 4,
+      "secondSourcePitchClass": 9,
+      "secondSourceStringIndex": 2
+    },
+    "generated-only-dyad-prune-9f10d6dce39f5563": {
+      "candidateEventSha256": "e6d94c5a1d6a534ddaed27675293f6b5aa61907468b6a58d539fc2b160e4b77f",
+      "contextSignature": "stepParity::0",
+      "firstSourcePitchClass": 9,
+      "firstSourceStringIndex": 2,
+      "fitEligibleGeneratedSupport": 7,
+      "fitFalsePositivePrecision": 0.42857142857142855,
+      "fitFalsePositiveSupport": 3,
+      "measureSet": {
+        "baselineGeneratedMeasureCount": 113,
+        "baselineGeneratedMeasureSetPreserved": true,
+        "candidateGeneratedMeasureCount": 113,
+        "extraCandidateGeneratedMeasures": [],
+        "missingBaselineGeneratedMeasures": [],
+        "professionalReferenceUsed": false
+      },
+      "remainingEventCount": 1124,
+      "removedEventCount": 20,
+      "removedOnsetCount": 10,
+      "secondSourcePitchClass": 4,
+      "secondSourceStringIndex": 3
+    },
+    "generated-only-dyad-prune-b438f40d65dc031f": {
+      "candidateEventSha256": "5da1de3d85503c4e28df8a575d5fe834c6f21818d2b0ecff9cca71f6a826b208",
+      "contextSignature": "stepParity::1",
+      "firstSourcePitchClass": 4,
+      "firstSourceStringIndex": 0,
+      "fitEligibleGeneratedSupport": 5,
+      "fitFalsePositivePrecision": 1.0,
+      "fitFalsePositiveSupport": 5,
+      "measureSet": {
+        "baselineGeneratedMeasureCount": 113,
+        "baselineGeneratedMeasureSetPreserved": true,
+        "candidateGeneratedMeasureCount": 113,
+        "extraCandidateGeneratedMeasures": [],
+        "missingBaselineGeneratedMeasures": [],
+        "professionalReferenceUsed": false
+      },
+      "remainingEventCount": 1132,
+      "removedEventCount": 12,
+      "removedOnsetCount": 6,
+      "secondSourcePitchClass": 9,
+      "secondSourceStringIndex": 2
+    },
+    "generated-only-dyad-prune-b5de7258df4877fc": {
+      "candidateEventSha256": "79c25990b5813a60ea032ca23458f43c2f3049f508ecdb002d0d2acd765f66d1",
+      "contextSignature": "stepParity::1",
+      "firstSourcePitchClass": 11,
+      "firstSourceStringIndex": 1,
+      "fitEligibleGeneratedSupport": 5,
+      "fitFalsePositivePrecision": 1.0,
+      "fitFalsePositiveSupport": 5,
+      "measureSet": {
+        "baselineGeneratedMeasureCount": 113,
+        "baselineGeneratedMeasureSetPreserved": true,
+        "candidateGeneratedMeasureCount": 113,
+        "extraCandidateGeneratedMeasures": [],
+        "missingBaselineGeneratedMeasures": [],
+        "professionalReferenceUsed": false
+      },
+      "remainingEventCount": 1130,
+      "removedEventCount": 14,
+      "removedOnsetCount": 7,
+      "secondSourcePitchClass": 4,
+      "secondSourceStringIndex": 3
+    },
+    "generated-only-dyad-prune-b78ec90db9bf92ec": {
+      "candidateEventSha256": "e6d94c5a1d6a534ddaed27675293f6b5aa61907468b6a58d539fc2b160e4b77f",
+      "contextSignature": "stepQuarter::2",
+      "firstSourcePitchClass": 9,
+      "firstSourceStringIndex": 2,
+      "fitEligibleGeneratedSupport": 7,
+      "fitFalsePositivePrecision": 0.42857142857142855,
+      "fitFalsePositiveSupport": 3,
+      "measureSet": {
+        "baselineGeneratedMeasureCount": 113,
+        "baselineGeneratedMeasureSetPreserved": true,
+        "candidateGeneratedMeasureCount": 113,
+        "extraCandidateGeneratedMeasures": [],
+        "missingBaselineGeneratedMeasures": [],
+        "professionalReferenceUsed": false
+      },
+      "remainingEventCount": 1124,
+      "removedEventCount": 20,
+      "removedOnsetCount": 10,
+      "secondSourcePitchClass": 4,
+      "secondSourceStringIndex": 3
+    },
+    "generated-only-dyad-prune-baf23c2feaabd30a": {
+      "candidateEventSha256": "3c77ca0c5fb83630a6eb61d23233b4eaf09715a107b2cf770f5b256599afbc8c",
+      "contextSignature": "stepParity::1",
+      "firstSourcePitchClass": 7,
+      "firstSourceStringIndex": 0,
+      "fitEligibleGeneratedSupport": 3,
+      "fitFalsePositivePrecision": 1.0,
+      "fitFalsePositiveSupport": 3,
+      "measureSet": {
+        "baselineGeneratedMeasureCount": 113,
+        "baselineGeneratedMeasureSetPreserved": true,
+        "candidateGeneratedMeasureCount": 113,
+        "extraCandidateGeneratedMeasures": [],
+        "missingBaselineGeneratedMeasures": [],
+        "professionalReferenceUsed": false
+      },
+      "remainingEventCount": 1132,
+      "removedEventCount": 12,
+      "removedOnsetCount": 6,
+      "secondSourcePitchClass": 2,
+      "secondSourceStringIndex": 1
+    },
+    "generated-only-dyad-prune-bbd4ad0f84b98466": {
+      "candidateEventSha256": "d12f4b920edd43eb26a7f5c9f2de8ccef14b6966b17237cddd66f1b083eb1fd2",
+      "contextSignature": "stepQuarter::3",
+      "firstSourcePitchClass": 4,
+      "firstSourceStringIndex": 0,
+      "fitEligibleGeneratedSupport": 3,
+      "fitFalsePositivePrecision": 1.0,
+      "fitFalsePositiveSupport": 3,
+      "measureSet": {
+        "baselineGeneratedMeasureCount": 113,
+        "baselineGeneratedMeasureSetPreserved": true,
+        "candidateGeneratedMeasureCount": 113,
+        "extraCandidateGeneratedMeasures": [],
+        "missingBaselineGeneratedMeasures": [],
+        "professionalReferenceUsed": false
+      },
+      "remainingEventCount": 1136,
+      "removedEventCount": 8,
+      "removedOnsetCount": 4,
+      "secondSourcePitchClass": 9,
+      "secondSourceStringIndex": 2
+    },
+    "generated-only-dyad-prune-bdad78edec6a9439": {
+      "candidateEventSha256": "24b1956b04e441307840d45bdf49b57cf42066b067227e57885469bf90c115fa",
+      "contextSignature": "section16::6",
+      "firstSourcePitchClass": 2,
+      "firstSourceStringIndex": 1,
+      "fitEligibleGeneratedSupport": 5,
+      "fitFalsePositivePrecision": 1.0,
+      "fitFalsePositiveSupport": 5,
+      "measureSet": {
+        "baselineGeneratedMeasureCount": 113,
+        "baselineGeneratedMeasureSetPreserved": true,
+        "candidateGeneratedMeasureCount": 113,
+        "extraCandidateGeneratedMeasures": [],
+        "missingBaselineGeneratedMeasures": [],
+        "professionalReferenceUsed": false
+      },
+      "remainingEventCount": 1132,
+      "removedEventCount": 12,
+      "removedOnsetCount": 6,
+      "secondSourcePitchClass": 11,
+      "secondSourceStringIndex": 2
+    },
+    "generated-only-dyad-prune-d0484039a67d1004": {
+      "candidateEventSha256": "9c47c8a90210ca4dc1d0ecf7c5dd9b83b2d20cbf06c96e7b08e9e56363c929bf",
+      "contextSignature": "measurePhase::2",
+      "firstSourcePitchClass": 11,
+      "firstSourceStringIndex": 1,
+      "fitEligibleGeneratedSupport": 4,
+      "fitFalsePositivePrecision": 1.0,
+      "fitFalsePositiveSupport": 4,
+      "measureSet": {
+        "baselineGeneratedMeasureCount": 113,
+        "baselineGeneratedMeasureSetPreserved": true,
+        "candidateGeneratedMeasureCount": 113,
+        "extraCandidateGeneratedMeasures": [],
+        "missingBaselineGeneratedMeasures": [],
+        "professionalReferenceUsed": false
+      },
+      "remainingEventCount": 1136,
+      "removedEventCount": 8,
+      "removedOnsetCount": 4,
+      "secondSourcePitchClass": 4,
+      "secondSourceStringIndex": 3
+    },
+    "generated-only-dyad-prune-d9c95a3bb31b61ed": {
+      "candidateEventSha256": "79c25990b5813a60ea032ca23458f43c2f3049f508ecdb002d0d2acd765f66d1",
+      "contextSignature": "stepQuarter::3",
+      "firstSourcePitchClass": 11,
+      "firstSourceStringIndex": 1,
+      "fitEligibleGeneratedSupport": 5,
+      "fitFalsePositivePrecision": 1.0,
+      "fitFalsePositiveSupport": 5,
+      "measureSet": {
+        "baselineGeneratedMeasureCount": 113,
+        "baselineGeneratedMeasureSetPreserved": true,
+        "candidateGeneratedMeasureCount": 113,
+        "extraCandidateGeneratedMeasures": [],
+        "missingBaselineGeneratedMeasures": [],
+        "professionalReferenceUsed": false
+      },
+      "remainingEventCount": 1130,
+      "removedEventCount": 14,
+      "removedOnsetCount": 7,
+      "secondSourcePitchClass": 4,
+      "secondSourceStringIndex": 3
+    },
+    "generated-only-dyad-prune-dd43f11e85a1cdb3": {
+      "candidateEventSha256": "0f54c8e948d8b7f3abc51fe397f458cd72de2fcf6c32545623832d79099eaf09",
+      "contextSignature": "stepParity::1",
+      "firstSourcePitchClass": 4,
+      "firstSourceStringIndex": 1,
+      "fitEligibleGeneratedSupport": 3,
+      "fitFalsePositivePrecision": 1.0,
+      "fitFalsePositiveSupport": 3,
+      "measureSet": {
+        "baselineGeneratedMeasureCount": 113,
+        "baselineGeneratedMeasureSetPreserved": true,
+        "candidateGeneratedMeasureCount": 113,
+        "extraCandidateGeneratedMeasures": [],
+        "missingBaselineGeneratedMeasures": [],
+        "professionalReferenceUsed": false
+      },
+      "remainingEventCount": 1134,
+      "removedEventCount": 10,
+      "removedOnsetCount": 5,
+      "secondSourcePitchClass": 1,
+      "secondSourceStringIndex": 2
+    },
+    "generated-only-dyad-prune-f6889e6e657451da": {
+      "candidateEventSha256": "fe2b3cf8dcd58042bbb29e6fada882066475cc5fbfdd9fe21d51df80ebef88e5",
+      "contextSignature": "stepParity::1",
+      "firstSourcePitchClass": 4,
+      "firstSourceStringIndex": 0,
+      "fitEligibleGeneratedSupport": 4,
+      "fitFalsePositivePrecision": 0.75,
+      "fitFalsePositiveSupport": 3,
+      "measureSet": {
+        "baselineGeneratedMeasureCount": 113,
+        "baselineGeneratedMeasureSetPreserved": true,
+        "candidateGeneratedMeasureCount": 113,
+        "extraCandidateGeneratedMeasures": [],
+        "missingBaselineGeneratedMeasures": [],
+        "professionalReferenceUsed": false
+      },
+      "remainingEventCount": 1132,
+      "removedEventCount": 12,
+      "removedOnsetCount": 6,
+      "secondSourcePitchClass": 11,
+      "secondSourceStringIndex": 1
+    },
+    "generated-only-dyad-prune-fe7cf61ca531731e": {
+      "candidateEventSha256": "71be9a8227c942784cf194fd267f79c66623ec015dc8e85cf3345cf4247eae07",
+      "contextSignature": "stepQuarter::1",
+      "firstSourcePitchClass": 2,
+      "firstSourceStringIndex": 1,
+      "fitEligibleGeneratedSupport": 4,
+      "fitFalsePositivePrecision": 1.0,
+      "fitFalsePositiveSupport": 4,
+      "measureSet": {
+        "baselineGeneratedMeasureCount": 113,
+        "baselineGeneratedMeasureSetPreserved": true,
+        "candidateGeneratedMeasureCount": 113,
+        "extraCandidateGeneratedMeasures": [],
+        "missingBaselineGeneratedMeasures": [],
+        "professionalReferenceUsed": false
+      },
+      "remainingEventCount": 1132,
+      "removedEventCount": 12,
+      "removedOnsetCount": 6,
+      "secondSourcePitchClass": 11,
+      "secondSourceStringIndex": 2
+    }
+  },
+  "classification": "v144-rhythm-fit-only-atomic-generated-only-dyad-onset-prune-search",
+  "evaluationRole": "accepted-singleton-baseline-atomic-generated-only-dyad-whole-onset-prune-gold-calibration",
+  "fitLock": {
+    "baseline": "accepted-v144-baseline",
+    "baselineGeneratedMeasureSetPreservationRequired": true,
+    "canaryReadDuringLock": false,
+    "evaluations": [
+      {
+        "criticalMismatchDelta": -6,
+        "deltas": {
+          "chordPitchSetTolerantF1": 0.000205913845646985,
+          "exactVoicingTolerantF1": 0.000205913845646985,
+          "pitchContentF1": 0.0013869671061574884,
+          "pitchTimingTolerantF1": 0.00032310029177533284,
+          "stringFretTimingTolerantF1": 0.0002679368273258778
+        },
+        "musicalFloorGain": 0.0002679368273258778,
+        "musicalMeanGain": 0.0004779663833105463,
+        "name": "generated-only-dyad-prune-01ee0048b5df47c1",
+        "passed": false,
+        "pdfEventFidelity": 1.0,
+        "pitchContentGain": 0.0013869671061574884,
+        "policy": "atomic-generated-only-dyad-onset-prune::measurePhase::1 | notes (1,2) (2,11)",
+        "ranking": {
+          "candidateMusicalFloor": 0.05523964256701869,
+          "candidateMusicalMean": 0.10503388595858934,
+          "musicalFloorGain": 0.0002679368273258778,
+          "musicalMeanGain": 0.0004779663833105463,
+          "pitchContentGain": 0.0013869671061574884
+        },
+        "reasons": [
+          "fit:insufficient-pitch-content-gain"
+        ],
+        "regressions": {}
+      },
+      {
+        "criticalMismatchDelta": -2,
+        "deltas": {
+          "chordPitchSetTolerantF1": 0.0006221226825930057,
+          "exactVoicingTolerantF1": 0.0006221226825930057,
+          "pitchContentF1": -0.008923650924495818,
+          "pitchTimingTolerantF1": 0.0009788428035490404,
+          "stringFretTimingTolerantF1": 0.0008117233005040733
+        },
+        "musicalFloorGain": 0.0008117233005040733,
+        "musicalMeanGain": -0.00117776789105134,
+        "name": "generated-only-dyad-prune-1a5ca3baae6ca268",
+        "passed": false,
+        "pdfEventFidelity": 1.0,
+        "pitchContentGain": -0.008923650924495818,
+        "policy": "atomic-generated-only-dyad-onset-prune::stepParity::0 | notes (1,6) (2,2)",
+        "ranking": {
+          "candidateMusicalFloor": 0.05578342904019688,
+          "candidateMusicalMean": 0.10337815168422745,
+          "musicalFloorGain": 0.0008117233005040733,
+          "musicalMeanGain": -0.00117776789105134,
+          "pitchContentGain": -0.008923650924495818
+        },
+        "reasons": [
+          "fit:musical-metric-regression",
+          "fit:insufficient-pitch-content-gain"
+        ],
+        "regressions": {
+          "pitchContentF1": -0.008923650924495818
+        }
+      },
+      {
+        "criticalMismatchDelta": 0,
+        "deltas": {
+          "chordPitchSetTolerantF1": 0.0005523450499527113,
+          "exactVoicingTolerantF1": 0.0005523450499527113,
+          "pitchContentF1": -0.007737141124368241,
+          "pitchTimingTolerantF1": 0.0008686572954964417,
+          "stringFretTimingTolerantF1": 0.0007203499523628851
+        },
+        "musicalFloorGain": 0.0007203499523628851,
+        "musicalMeanGain": -0.0010086887553207025,
+        "name": "generated-only-dyad-prune-44948e9a3ee65350",
+        "passed": false,
+        "pdfEventFidelity": 1.0,
+        "pitchContentGain": -0.007737141124368241,
+        "policy": "atomic-generated-only-dyad-onset-prune::stepQuarter::0 | notes (1,6) (2,2)",
+        "ranking": {
+          "candidateMusicalFloor": 0.055692055692055695,
+          "candidateMusicalMean": 0.10354723081995809,
+          "musicalFloorGain": 0.0007203499523628851,
+          "musicalMeanGain": -0.0010086887553207025,
+          "pitchContentGain": -0.007737141124368241
+        },
+        "reasons": [
+          "fit:musical-metric-regression",
+          "fit:insufficient-pitch-content-gain"
+        ],
+        "regressions": {
+          "pitchContentF1": -0.007737141124368241
+        }
+      },
+      {
+        "criticalMismatchDelta": -6,
+        "deltas": {
+          "chordPitchSetTolerantF1": 0.00027487441675085045,
+          "exactVoicingTolerantF1": 0.00027487441675085045,
+          "pitchContentF1": 0.00022495959607254923,
+          "pitchTimingTolerantF1": 0.00043150144743742125,
+          "stringFretTimingTolerantF1": 0.0003578304686066222
+        },
+        "musicalFloorGain": 0.0003578304686066222,
+        "musicalMeanGain": 0.000312808069123649,
+        "name": "generated-only-dyad-prune-54d99a9896f96b9c",
+        "passed": false,
+        "pdfEventFidelity": 1.0,
+        "pitchContentGain": 0.00022495959607254923,
+        "policy": "atomic-generated-only-dyad-onset-prune::measurePhaseStep::2:3 | notes (1,11) (3,4)",
+        "ranking": {
+          "candidateMusicalFloor": 0.05532953620829943,
+          "candidateMusicalMean": 0.10486872764440244,
+          "musicalFloorGain": 0.0003578304686066222,
+          "musicalMeanGain": 0.000312808069123649,
+          "pitchContentGain": 0.00022495959607254923
+        },
+        "reasons": [
+          "fit:insufficient-pitch-content-gain"
+        ],
+        "regressions": {}
+      },
+      {
+        "criticalMismatchDelta": 0,
+        "deltas": {
+          "chordPitchSetTolerantF1": 0.00027487441675085045,
+          "exactVoicingTolerantF1": 0.00027487441675085045,
+          "pitchContentF1": -0.004657058304659789,
+          "pitchTimingTolerantF1": 0.00043150144743742125,
+          "stringFretTimingTolerantF1": 0.0003578304686066222
+        },
+        "musicalFloorGain": 0.0003578304686066222,
+        "musicalMeanGain": -0.0006635955110227965,
+        "name": "generated-only-dyad-prune-5618167b72cb3e1a",
+        "passed": false,
+        "pdfEventFidelity": 1.0,
+        "pitchContentGain": -0.004657058304659789,
+        "policy": "atomic-generated-only-dyad-onset-prune::measurePhase::3 | notes (1,6) (2,2)",
+        "ranking": {
+          "candidateMusicalFloor": 0.05532953620829943,
+          "candidateMusicalMean": 0.103892324064256,
+          "musicalFloorGain": 0.0003578304686066222,
+          "musicalMeanGain": -0.0006635955110227965,
+          "pitchContentGain": -0.004657058304659789
+        },
+        "reasons": [
+          "fit:musical-metric-regression",
+          "fit:insufficient-pitch-content-gain"
+        ],
+        "regressions": {
+          "pitchContentF1": -0.004657058304659789
+        }
+      },
+      {
+        "criticalMismatchDelta": -16,
+        "deltas": {
+          "chordPitchSetTolerantF1": 0.0005523450499527113,
+          "exactVoicingTolerantF1": 0.0005523450499527113,
+          "pitchContentF1": 0.002090868703641613,
+          "pitchTimingTolerantF1": 0.0008686572954964417,
+          "stringFretTimingTolerantF1": 0.0007203499523628851
+        },
+        "musicalFloorGain": 0.0007203499523628851,
+        "musicalMeanGain": 0.0009569132102812822,
+        "name": "generated-only-dyad-prune-575feb34913724b9",
+        "passed": false,
+        "pdfEventFidelity": 1.0,
+        "pitchContentGain": 0.002090868703641613,
+        "policy": "atomic-generated-only-dyad-onset-prune::measurePhase::2 | notes (0,4) (2,9)",
+        "ranking": {
+          "candidateMusicalFloor": 0.055692055692055695,
+          "candidateMusicalMean": 0.10551283278556008,
+          "musicalFloorGain": 0.0007203499523628851,
+          "musicalMeanGain": 0.0009569132102812822,
+          "pitchContentGain": 0.002090868703641613
+        },
+        "reasons": [
+          "fit:insufficient-pitch-content-gain"
+        ],
+        "regressions": {}
+      },
+      {
+        "criticalMismatchDelta": -14,
+        "deltas": {
+          "chordPitchSetTolerantF1": 0.0004827319872007102,
+          "exactVoicingTolerantF1": 0.0004827319872007102,
+          "pitchContentF1": 0.001622102903722833,
+          "pitchTimingTolerantF1": 0.0007588321652297753,
+          "stringFretTimingTolerantF1": 0.0006292754540929701
+        },
+        "musicalFloorGain": 0.0006292754540929701,
+        "musicalMeanGain": 0.0007951348994894025,
+        "name": "generated-only-dyad-prune-627740bc2ed2b521",
+        "passed": false,
+        "pdfEventFidelity": 1.0,
+        "pitchContentGain": 0.001622102903722833,
+        "policy": "atomic-generated-only-dyad-onset-prune::section16::6 | notes (0,4) (2,9)",
+        "ranking": {
+          "candidateMusicalFloor": 0.05560098119378578,
+          "candidateMusicalMean": 0.1053510544747682,
+          "musicalFloorGain": 0.0006292754540929701,
+          "musicalMeanGain": 0.0007951348994894025,
+          "pitchContentGain": 0.001622102903722833
+        },
+        "reasons": [
+          "fit:insufficient-pitch-content-gain"
+        ],
+        "regressions": {}
+      },
+      {
+        "criticalMismatchDelta": -10,
+        "deltas": {
+          "chordPitchSetTolerantF1": 0.00034399724802201825,
+          "exactVoicingTolerantF1": 0.00034399724802201825,
+          "pitchContentF1": 0.0023191476605268213,
+          "pitchTimingTolerantF1": 0.0005402559891000136,
+          "stringFretTimingTolerantF1": 0.00044801716169268896
+        },
+        "musicalFloorGain": 0.00044801716169268896,
+        "musicalMeanGain": 0.0007990830614727079,
+        "name": "generated-only-dyad-prune-87fe7bd2dce58345",
+        "passed": false,
+        "pdfEventFidelity": 1.0,
+        "pitchContentGain": 0.0023191476605268213,
+        "policy": "atomic-generated-only-dyad-onset-prune::stepParity::1 | notes (1,2) (2,11)",
+        "ranking": {
+          "candidateMusicalFloor": 0.0554197229013855,
+          "candidateMusicalMean": 0.1053550026367515,
+          "musicalFloorGain": 0.00044801716169268896,
+          "musicalMeanGain": 0.0007990830614727079,
+          "pitchContentGain": 0.0023191476605268213
+        },
+        "reasons": [
+          "fit:insufficient-pitch-content-gain"
+        ],
+        "regressions": {}
+      },
+      {
+        "criticalMismatchDelta": -18,
+        "deltas": {
+          "chordPitchSetTolerantF1": 0.0006221226825930057,
+          "exactVoicingTolerantF1": 0.0006221226825930057,
+          "pitchContentF1": 0.002561172701427139,
+          "pitchTimingTolerantF1": 0.0009788428035490404,
+          "stringFretTimingTolerantF1": 0.0008117233005040733
+        },
+        "musicalFloorGain": 0.0008117233005040733,
+        "musicalMeanGain": 0.0011191968341332514,
+        "name": "generated-only-dyad-prune-88fe774d458d1c31",
+        "passed": false,
+        "pdfEventFidelity": 1.0,
+        "pitchContentGain": 0.002561172701427139,
+        "policy": "atomic-generated-only-dyad-onset-prune::stepParity::0 | notes (0,4) (2,9)",
+        "ranking": {
+          "candidateMusicalFloor": 0.05578342904019688,
+          "candidateMusicalMean": 0.10567511640941205,
+          "musicalFloorGain": 0.0008117233005040733,
+          "musicalMeanGain": 0.0011191968341332514,
+          "pitchContentGain": 0.002561172701427139
+        },
+        "reasons": [
+          "fit:insufficient-pitch-content-gain"
+        ],
+        "regressions": {}
+      },
+      {
+        "criticalMismatchDelta": -6,
+        "deltas": {
+          "chordPitchSetTolerantF1": 0.00027487441675085045,
+          "exactVoicingTolerantF1": 0.00027487441675085045,
+          "pitchContentF1": 0.00022495959607254923,
+          "pitchTimingTolerantF1": -0.0011958378528066915,
+          "stringFretTimingTolerantF1": 0.0003578304686066222
+        },
+        "musicalFloorGain": 0.0003578304686066222,
+        "musicalMeanGain": -1.26597909251569e-05,
+        "name": "generated-only-dyad-prune-8b3a844d3a4a2b6f",
+        "passed": false,
+        "pdfEventFidelity": 1.0,
+        "pitchContentGain": 0.00022495959607254923,
+        "policy": "atomic-generated-only-dyad-onset-prune::stepParity::0 | notes (1,2) (3,9)",
+        "ranking": {
+          "candidateMusicalFloor": 0.05532953620829943,
+          "candidateMusicalMean": 0.10454325978435364,
+          "musicalFloorGain": 0.0003578304686066222,
+          "musicalMeanGain": -1.26597909251569e-05,
+          "pitchContentGain": 0.00022495959607254923
+        },
+        "reasons": [
+          "fit:musical-metric-regression",
+          "fit:insufficient-pitch-content-gain"
+        ],
+        "regressions": {
+          "pitchTimingTolerantF1": -0.0011958378528066915
+        }
+      },
+      {
+        "criticalMismatchDelta": -6,
+        "deltas": {
+          "chordPitchSetTolerantF1": 0.000205913845646985,
+          "exactVoicingTolerantF1": 0.000205913845646985,
+          "pitchContentF1": 0.0013869671061574884,
+          "pitchTimingTolerantF1": 0.00032310029177533284,
+          "stringFretTimingTolerantF1": 0.0002679368273258778
+        },
+        "musicalFloorGain": 0.0002679368273258778,
+        "musicalMeanGain": 0.0004779663833105463,
+        "name": "generated-only-dyad-prune-93f43cd6ecb8105d",
+        "passed": false,
+        "pdfEventFidelity": 1.0,
+        "pitchContentGain": 0.0013869671061574884,
+        "policy": "atomic-generated-only-dyad-onset-prune::measurePhaseStep::2:3 | notes (0,4) (2,9)",
+        "ranking": {
+          "candidateMusicalFloor": 0.05523964256701869,
+          "candidateMusicalMean": 0.10503388595858934,
+          "musicalFloorGain": 0.0002679368273258778,
+          "musicalMeanGain": 0.0004779663833105463,
+          "pitchContentGain": 0.0013869671061574884
+        },
+        "reasons": [
+          "fit:insufficient-pitch-content-gain"
+        ],
+        "regressions": {}
+      },
+      {
+        "criticalMismatchDelta": -4,
+        "deltas": {
+          "chordPitchSetTolerantF1": 0.0004827319872007102,
+          "exactVoicingTolerantF1": 0.0004827319872007102,
+          "pitchContentF1": -0.004919189001428348,
+          "pitchTimingTolerantF1": -0.0025118137873458707,
+          "stringFretTimingTolerantF1": -0.002641370498482669
+        },
+        "musicalFloorGain": -0.002641370498482669,
+        "musicalMeanGain": -0.001821381862571081,
+        "name": "generated-only-dyad-prune-9f10d6dce39f5563",
+        "passed": false,
+        "pdfEventFidelity": 1.0,
+        "pitchContentGain": -0.004919189001428348,
+        "policy": "atomic-generated-only-dyad-onset-prune::stepParity::0 | notes (2,9) (3,4)",
+        "ranking": {
+          "candidateMusicalFloor": 0.05233033524121014,
+          "candidateMusicalMean": 0.10273453771270771,
+          "musicalFloorGain": -0.002641370498482669,
+          "musicalMeanGain": -0.001821381862571081,
+          "pitchContentGain": -0.004919189001428348
+        },
+        "reasons": [
+          "fit:musical-metric-regression",
+          "fit:insufficient-pitch-content-gain",
+          "fit:insufficient-musical-floor-gain"
+        ],
+        "regressions": {
+          "pitchContentF1": -0.004919189001428348,
+          "pitchTimingTolerantF1": -0.0025118137873458707,
+          "stringFretTimingTolerantF1": -0.002641370498482669
+        }
+      },
+      {
+        "criticalMismatchDelta": -10,
+        "deltas": {
+          "chordPitchSetTolerantF1": 0.00034399724802201825,
+          "exactVoicingTolerantF1": 0.00034399724802201825,
+          "pitchContentF1": 0.0023191476605268213,
+          "pitchTimingTolerantF1": 0.0005402559891000136,
+          "stringFretTimingTolerantF1": 0.00044801716169268896
+        },
+        "musicalFloorGain": 0.00044801716169268896,
+        "musicalMeanGain": 0.0007990830614727079,
+        "name": "generated-only-dyad-prune-b438f40d65dc031f",
+        "passed": false,
+        "pdfEventFidelity": 1.0,
+        "pitchContentGain": 0.0023191476605268213,
+        "policy": "atomic-generated-only-dyad-onset-prune::stepParity::1 | notes (0,4) (2,9)",
+        "ranking": {
+          "candidateMusicalFloor": 0.0554197229013855,
+          "candidateMusicalMean": 0.1053550026367515,
+          "musicalFloorGain": 0.00044801716169268896,
+          "musicalMeanGain": 0.0007990830614727079,
+          "pitchContentGain": 0.0023191476605268213
+        },
+        "reasons": [
+          "fit:insufficient-pitch-content-gain"
+        ],
+        "regressions": {}
+      },
+      {
+        "criticalMismatchDelta": -8,
+        "deltas": {
+          "chordPitchSetTolerantF1": 0.00034399724802201825,
+          "exactVoicingTolerantF1": 0.00034399724802201825,
+          "pitchContentF1": -0.0009408360395546378,
+          "pitchTimingTolerantF1": 0.0005402559891000136,
+          "stringFretTimingTolerantF1": 0.00044801716169268896
+        },
+        "musicalFloorGain": 0.00044801716169268896,
+        "musicalMeanGain": 0.00014708632145643552,
+        "name": "generated-only-dyad-prune-b5de7258df4877fc",
+        "passed": false,
+        "pdfEventFidelity": 1.0,
+        "pitchContentGain": -0.0009408360395546378,
+        "policy": "atomic-generated-only-dyad-onset-prune::stepParity::1 | notes (1,11) (3,4)",
+        "ranking": {
+          "candidateMusicalFloor": 0.0554197229013855,
+          "candidateMusicalMean": 0.10470300589673523,
+          "musicalFloorGain": 0.00044801716169268896,
+          "musicalMeanGain": 0.00014708632145643552,
+          "pitchContentGain": -0.0009408360395546378
+        },
+        "reasons": [
+          "fit:musical-metric-regression",
+          "fit:insufficient-pitch-content-gain"
+        ],
+        "regressions": {
+          "pitchContentF1": -0.0009408360395546378
+        }
+      },
+      {
+        "criticalMismatchDelta": -4,
+        "deltas": {
+          "chordPitchSetTolerantF1": 0.0004827319872007102,
+          "exactVoicingTolerantF1": 0.0004827319872007102,
+          "pitchContentF1": -0.004919189001428348,
+          "pitchTimingTolerantF1": -0.0025118137873458707,
+          "stringFretTimingTolerantF1": -0.002641370498482669
+        },
+        "musicalFloorGain": -0.002641370498482669,
+        "musicalMeanGain": -0.001821381862571081,
+        "name": "generated-only-dyad-prune-b78ec90db9bf92ec",
+        "passed": false,
+        "pdfEventFidelity": 1.0,
+        "pitchContentGain": -0.004919189001428348,
+        "policy": "atomic-generated-only-dyad-onset-prune::stepQuarter::2 | notes (2,9) (3,4)",
+        "ranking": {
+          "candidateMusicalFloor": 0.05233033524121014,
+          "candidateMusicalMean": 0.10273453771270771,
+          "musicalFloorGain": -0.002641370498482669,
+          "musicalMeanGain": -0.001821381862571081,
+          "pitchContentGain": -0.004919189001428348
+        },
+        "reasons": [
+          "fit:musical-metric-regression",
+          "fit:insufficient-pitch-content-gain",
+          "fit:insufficient-musical-floor-gain"
+        ],
+        "regressions": {
+          "pitchContentF1": -0.004919189001428348,
+          "pitchTimingTolerantF1": -0.0025118137873458707,
+          "stringFretTimingTolerantF1": -0.002641370498482669
+        }
+      },
+      {
+        "criticalMismatchDelta": -6,
+        "deltas": {
+          "chordPitchSetTolerantF1": 0.000205913845646985,
+          "exactVoicingTolerantF1": 0.000205913845646985,
+          "pitchContentF1": 0.0013869671061574884,
+          "pitchTimingTolerantF1": 0.00032310029177533284,
+          "stringFretTimingTolerantF1": 0.0002679368273258778
+        },
+        "musicalFloorGain": 0.0002679368273258778,
+        "musicalMeanGain": 0.0004779663833105463,
+        "name": "generated-only-dyad-prune-baf23c2feaabd30a",
+        "passed": false,
+        "pdfEventFidelity": 1.0,
+        "pitchContentGain": 0.0013869671061574884,
+        "policy": "atomic-generated-only-dyad-onset-prune::stepParity::1 | notes (0,7) (1,2)",
+        "ranking": {
+          "candidateMusicalFloor": 0.05523964256701869,
+          "candidateMusicalMean": 0.10503388595858934,
+          "musicalFloorGain": 0.0002679368273258778,
+          "musicalMeanGain": 0.0004779663833105463,
+          "pitchContentGain": 0.0013869671061574884
+        },
+        "reasons": [
+          "fit:insufficient-pitch-content-gain"
+        ],
+        "regressions": {}
+      },
+      {
+        "criticalMismatchDelta": -6,
+        "deltas": {
+          "chordPitchSetTolerantF1": 0.000205913845646985,
+          "exactVoicingTolerantF1": 0.000205913845646985,
+          "pitchContentF1": 0.0013869671061574884,
+          "pitchTimingTolerantF1": 0.00032310029177533284,
+          "stringFretTimingTolerantF1": 0.0002679368273258778
+        },
+        "musicalFloorGain": 0.0002679368273258778,
+        "musicalMeanGain": 0.0004779663833105463,
+        "name": "generated-only-dyad-prune-bbd4ad0f84b98466",
+        "passed": false,
+        "pdfEventFidelity": 1.0,
+        "pitchContentGain": 0.0013869671061574884,
+        "policy": "atomic-generated-only-dyad-onset-prune::stepQuarter::3 | notes (0,4) (2,9)",
+        "ranking": {
+          "candidateMusicalFloor": 0.05523964256701869,
+          "candidateMusicalMean": 0.10503388595858934,
+          "musicalFloorGain": 0.0002679368273258778,
+          "musicalMeanGain": 0.0004779663833105463,
+          "pitchContentGain": 0.0013869671061574884
+        },
+        "reasons": [
+          "fit:insufficient-pitch-content-gain"
+        ],
+        "regressions": {}
+      },
+      {
+        "criticalMismatchDelta": -10,
+        "deltas": {
+          "chordPitchSetTolerantF1": 0.00034399724802201825,
+          "exactVoicingTolerantF1": 0.00034399724802201825,
+          "pitchContentF1": 0.0023191476605268213,
+          "pitchTimingTolerantF1": 0.0005402559891000136,
+          "stringFretTimingTolerantF1": 0.00044801716169268896
+        },
+        "musicalFloorGain": 0.00044801716169268896,
+        "musicalMeanGain": 0.0007990830614727079,
+        "name": "generated-only-dyad-prune-bdad78edec6a9439",
+        "passed": false,
+        "pdfEventFidelity": 1.0,
+        "pitchContentGain": 0.0023191476605268213,
+        "policy": "atomic-generated-only-dyad-onset-prune::section16::6 | notes (1,2) (2,11)",
+        "ranking": {
+          "candidateMusicalFloor": 0.0554197229013855,
+          "candidateMusicalMean": 0.1053550026367515,
+          "musicalFloorGain": 0.00044801716169268896,
+          "musicalMeanGain": 0.0007990830614727079,
+          "pitchContentGain": 0.0023191476605268213
+        },
+        "reasons": [
+          "fit:insufficient-pitch-content-gain"
+        ],
+        "regressions": {}
+      },
+      {
+        "criticalMismatchDelta": -6,
+        "deltas": {
+          "chordPitchSetTolerantF1": 0.00027487441675085045,
+          "exactVoicingTolerantF1": 0.00027487441675085045,
+          "pitchContentF1": 0.00022495959607254923,
+          "pitchTimingTolerantF1": 0.00043150144743742125,
+          "stringFretTimingTolerantF1": 0.0003578304686066222
+        },
+        "musicalFloorGain": 0.0003578304686066222,
+        "musicalMeanGain": 0.000312808069123649,
+        "name": "generated-only-dyad-prune-d0484039a67d1004",
+        "passed": false,
+        "pdfEventFidelity": 1.0,
+        "pitchContentGain": 0.00022495959607254923,
+        "policy": "atomic-generated-only-dyad-onset-prune::measurePhase::2 | notes (1,11) (3,4)",
+        "ranking": {
+          "candidateMusicalFloor": 0.05532953620829943,
+          "candidateMusicalMean": 0.10486872764440244,
+          "musicalFloorGain": 0.0003578304686066222,
+          "musicalMeanGain": 0.000312808069123649,
+          "pitchContentGain": 0.00022495959607254923
+        },
+        "reasons": [
+          "fit:insufficient-pitch-content-gain"
+        ],
+        "regressions": {}
+      },
+      {
+        "criticalMismatchDelta": -8,
+        "deltas": {
+          "chordPitchSetTolerantF1": 0.00034399724802201825,
+          "exactVoicingTolerantF1": 0.00034399724802201825,
+          "pitchContentF1": -0.0009408360395546378,
+          "pitchTimingTolerantF1": 0.0005402559891000136,
+          "stringFretTimingTolerantF1": 0.00044801716169268896
+        },
+        "musicalFloorGain": 0.00044801716169268896,
+        "musicalMeanGain": 0.00014708632145643552,
+        "name": "generated-only-dyad-prune-d9c95a3bb31b61ed",
+        "passed": false,
+        "pdfEventFidelity": 1.0,
+        "pitchContentGain": -0.0009408360395546378,
+        "policy": "atomic-generated-only-dyad-onset-prune::stepQuarter::3 | notes (1,11) (3,4)",
+        "ranking": {
+          "candidateMusicalFloor": 0.0554197229013855,
+          "candidateMusicalMean": 0.10470300589673523,
+          "musicalFloorGain": 0.00044801716169268896,
+          "musicalMeanGain": 0.00014708632145643552,
+          "pitchContentGain": -0.0009408360395546378
+        },
+        "reasons": [
+          "fit:musical-metric-regression",
+          "fit:insufficient-pitch-content-gain"
+        ],
+        "regressions": {
+          "pitchContentF1": -0.0009408360395546378
+        }
+      },
+      {
+        "criticalMismatchDelta": -6,
+        "deltas": {
+          "chordPitchSetTolerantF1": 0.000205913845646985,
+          "exactVoicingTolerantF1": 0.000205913845646985,
+          "pitchContentF1": -0.00023772826346069031,
+          "pitchTimingTolerantF1": 0.00032310029177533284,
+          "stringFretTimingTolerantF1": 0.0002679368273258778
+        },
+        "musicalFloorGain": 0.0002679368273258778,
+        "musicalMeanGain": 0.000153027309386905,
+        "name": "generated-only-dyad-prune-dd43f11e85a1cdb3",
+        "passed": false,
+        "pdfEventFidelity": 1.0,
+        "pitchContentGain": -0.00023772826346069031,
+        "policy": "atomic-generated-only-dyad-onset-prune::stepParity::1 | notes (1,4) (2,1)",
+        "ranking": {
+          "candidateMusicalFloor": 0.05523964256701869,
+          "candidateMusicalMean": 0.1047089468846657,
+          "musicalFloorGain": 0.0002679368273258778,
+          "musicalMeanGain": 0.000153027309386905,
+          "pitchContentGain": -0.00023772826346069031
+        },
+        "reasons": [
+          "fit:musical-metric-regression",
+          "fit:insufficient-pitch-content-gain"
+        ],
+        "regressions": {
+          "pitchContentF1": -0.00023772826346069031
+        }
+      },
+      {
+        "criticalMismatchDelta": -8,
+        "deltas": {
+          "chordPitchSetTolerantF1": 0.00027487441675085045,
+          "exactVoicingTolerantF1": 0.00027487441675085045,
+          "pitchContentF1": 0.00022495959607254923,
+          "pitchTimingTolerantF1": 0.00043150144743742125,
+          "stringFretTimingTolerantF1": 0.0003578304686066222
+        },
+        "musicalFloorGain": 0.0003578304686066222,
+        "musicalMeanGain": 0.000312808069123649,
+        "name": "generated-only-dyad-prune-f6889e6e657451da",
+        "passed": false,
+        "pdfEventFidelity": 1.0,
+        "pitchContentGain": 0.00022495959607254923,
+        "policy": "atomic-generated-only-dyad-onset-prune::stepParity::1 | notes (0,4) (1,11)",
+        "ranking": {
+          "candidateMusicalFloor": 0.05532953620829943,
+          "candidateMusicalMean": 0.10486872764440244,
+          "musicalFloorGain": 0.0003578304686066222,
+          "musicalMeanGain": 0.000312808069123649,
+          "pitchContentGain": 0.00022495959607254923
+        },
+        "reasons": [
+          "fit:insufficient-pitch-content-gain"
+        ],
+        "regressions": {}
+      },
+      {
+        "criticalMismatchDelta": -8,
+        "deltas": {
+          "chordPitchSetTolerantF1": 0.00027487441675085045,
+          "exactVoicingTolerantF1": 0.00027487441675085045,
+          "pitchContentF1": 0.0018522988963167175,
+          "pitchTimingTolerantF1": 0.00043150144743742125,
+          "stringFretTimingTolerantF1": 0.0003578304686066222
+        },
+        "musicalFloorGain": 0.0003578304686066222,
+        "musicalMeanGain": 0.0006382759291724827,
+        "name": "generated-only-dyad-prune-fe7cf61ca531731e",
+        "passed": false,
+        "pdfEventFidelity": 1.0,
+        "pitchContentGain": 0.0018522988963167175,
+        "policy": "atomic-generated-only-dyad-onset-prune::stepQuarter::1 | notes (1,2) (2,11)",
+        "ranking": {
+          "candidateMusicalFloor": 0.05532953620829943,
+          "candidateMusicalMean": 0.10519419550445128,
+          "musicalFloorGain": 0.0003578304686066222,
+          "musicalMeanGain": 0.0006382759291724827,
+          "pitchContentGain": 0.0018522988963167175
+        },
+        "reasons": [
+          "fit:insufficient-pitch-content-gain"
+        ],
+        "regressions": {}
+      }
+    ],
+    "fitOnlyRanking": true,
+    "instrument": "rhythm",
+    "locked": "accepted-v144-baseline",
+    "lockedReason": "deterministic-no-prune-fallback",
+    "schemaVersion": 14404,
+    "validationReadDuringLock": false
+  },
+  "fullCalibration": null,
+  "locked": {
+    "contextSignature": null,
+    "eventCount": 1144,
+    "eventSha256": "4e6f9f247134f79f30a5448515c52a6ca1012c1f1314c3458b448582999e3881",
+    "firstSourcePitchClass": null,
+    "firstSourceStringIndex": null,
+    "measureSet": {
+      "baselineGeneratedMeasureCount": 113,
+      "baselineGeneratedMeasureSetPreserved": true,
+      "candidateGeneratedMeasureCount": 113,
+      "extraCandidateGeneratedMeasures": [],
+      "missingBaselineGeneratedMeasures": [],
+      "professionalReferenceUsed": false
+    },
+    "name": "accepted-v144-baseline",
+    "removedEventCount": 0,
+    "removedOnsetCount": 0,
+    "secondSourcePitchClass": null,
+    "secondSourceStringIndex": null
+  },
+  "lockedCandidatePdfFidelityProof": {
+    "eventCount": 1144,
+    "eventSha256": "4e6f9f247134f79f30a5448515c52a6ca1012c1f1314c3458b448582999e3881",
+    "passed": true,
+    "pdfEventFidelity": 1.0,
+    "referenceOpenedDuringPdfFidelityCheck": false
+  },
+  "mayClaimUnseenGeneralization": false,
+  "safety": {
+    "baselineEventCountPreserved": true,
+    "baselineGeneratedMeasureSetPreserved": true,
+    "deterministic": true,
+    "lockedCandidatePdfFidelityReproved": true,
+    "mainModified": false,
+    "modalGpuInvoked": false,
+    "productionModified": false,
+    "runtimeReferenceInputUsed": false,
+    "v5Modified": false
+  },
+  "schemaVersion": 14424,
+  "selected": "accepted-v144-baseline",
+  "selectedReason": "fit-no-qualified-atomic-generated-only-dyad-prune-candidate",
+  "splitPromotionAllowed": false,
+  "stoppedAt": "fit",
+  "validation": null
+}
