@@ -1,0 +1,410 @@
+{
+  "calibrationReferenceUsed": true,
+  "candidateModified": false,
+  "classification": "v144-v6-frozen-post-generation-calibration-score",
+  "improvementsVsV5F1": {
+    "exactEvent": 0.00032117127842781756,
+    "measurePitch": 0.0023788824346998583,
+    "measurePitchClass": 0.0029215511465260913,
+    "onsets": 0.00489614491252105,
+    "pitchClassContent": 0.003951514211829044,
+    "pitchContent": 0.006616128335612759,
+    "positionContent": 0.0019403175165706998
+  },
+  "modalInvoked": false,
+  "predictionVerified": true,
+  "productionModified": false,
+  "referenceNoteCount": 946,
+  "robustImprovedMetricsBothSplits": [
+    "onsets",
+    "pitchClassContent",
+    "measurePitch",
+    "measurePitchClass"
+  ],
+  "schemaVersion": 1,
+  "splitImprovementsVsV5F1": {
+    "evenMeasures": {
+      "exactEvent": -0.0010038392147138434,
+      "measurePitch": 0.0005677591469932519,
+      "measurePitchClass": 0.00033005275713754445,
+      "onsets": 0.0072098284724042006,
+      "pitchClassContent": 0.006190626843720848,
+      "pitchContent": -0.0039606330856511995,
+      "positionContent": -0.0052774238783764305
+    },
+    "oddMeasures": {
+      "exactEvent": 0.0017674888613292972,
+      "measurePitch": 0.0042074319048275854,
+      "measurePitchClass": 0.00589959119930189,
+      "onsets": 0.0027520538798733174,
+      "pitchClassContent": 0.005477010702310325,
+      "pitchContent": 0.010162142299389054,
+      "positionContent": 0.001093197372651622
+    }
+  },
+  "unseenHoldout": false,
+  "v5": {
+    "eventCount": 1209,
+    "exactEvent": {
+      "f1": 0.044547563805104405,
+      "generated": 1209,
+      "matched": 48,
+      "precision": 0.03970223325062035,
+      "recall": 0.0507399577167019,
+      "reference": 946
+    },
+    "measurePitch": {
+      "f1": 0.2830626450116009,
+      "generated": 1209,
+      "matched": 305,
+      "precision": 0.2522746071133168,
+      "recall": 0.3224101479915433,
+      "reference": 946
+    },
+    "measurePitchClass": {
+      "f1": 0.468677494199536,
+      "generated": 1209,
+      "matched": 505,
+      "precision": 0.41770057899090157,
+      "recall": 0.5338266384778013,
+      "reference": 946
+    },
+    "onsetCount": 891,
+    "onsets": {
+      "f1": 0.4819277108433735,
+      "generated": 891,
+      "matched": 360,
+      "precision": 0.40404040404040403,
+      "recall": 0.5970149253731343,
+      "reference": 603
+    },
+    "pitchClassContent": {
+      "f1": 0.8046403712296984,
+      "generated": 1209,
+      "matched": 867,
+      "precision": 0.71712158808933,
+      "recall": 0.9164904862579282,
+      "reference": 946
+    },
+    "pitchContent": {
+      "f1": 0.5976798143851508,
+      "generated": 1209,
+      "matched": 644,
+      "precision": 0.532671629445823,
+      "recall": 0.6807610993657506,
+      "reference": 946
+    },
+    "positionContent": {
+      "f1": 0.4677494199535963,
+      "generated": 1209,
+      "matched": 504,
+      "precision": 0.41687344913151364,
+      "recall": 0.53276955602537,
+      "reference": 946
+    }
+  },
+  "v5Splits": {
+    "evenMeasures": {
+      "eventCount": 629,
+      "exactEvent": {
+        "f1": 0.04025617566331198,
+        "generated": 629,
+        "matched": 22,
+        "precision": 0.034976152623211444,
+        "recall": 0.04741379310344827,
+        "reference": 464
+      },
+      "measurePitch": {
+        "f1": 0.28728270814272644,
+        "generated": 629,
+        "matched": 157,
+        "precision": 0.24960254372019078,
+        "recall": 0.33836206896551724,
+        "reference": 464
+      },
+      "measurePitchClass": {
+        "f1": 0.4501372369624886,
+        "generated": 629,
+        "matched": 246,
+        "precision": 0.39109697933227344,
+        "recall": 0.5301724137931034,
+        "reference": 464
+      },
+      "onsetCount": 460,
+      "onsets": {
+        "f1": 0.466403162055336,
+        "generated": 460,
+        "matched": 177,
+        "precision": 0.3847826086956522,
+        "recall": 0.5919732441471572,
+        "reference": 299
+      },
+      "pitchClassContent": {
+        "f1": 0.7227813357731016,
+        "generated": 629,
+        "matched": 395,
+        "precision": 0.6279809220985691,
+        "recall": 0.8512931034482759,
+        "reference": 464
+      },
+      "pitchContent": {
+        "f1": 0.5983531564501372,
+        "generated": 629,
+        "matched": 327,
+        "precision": 0.519872813990461,
+        "recall": 0.7047413793103449,
+        "reference": 464
+      },
+      "positionContent": {
+        "f1": 0.4501372369624886,
+        "generated": 629,
+        "matched": 246,
+        "precision": 0.39109697933227344,
+        "recall": 0.5301724137931034,
+        "reference": 464
+      }
+    },
+    "oddMeasures": {
+      "eventCount": 580,
+      "exactEvent": {
+        "f1": 0.04896421845574388,
+        "generated": 580,
+        "matched": 26,
+        "precision": 0.04482758620689655,
+        "recall": 0.05394190871369295,
+        "reference": 482
+      },
+      "measurePitch": {
+        "f1": 0.2787193973634651,
+        "generated": 580,
+        "matched": 148,
+        "precision": 0.25517241379310346,
+        "recall": 0.3070539419087137,
+        "reference": 482
+      },
+      "measurePitchClass": {
+        "f1": 0.487758945386064,
+        "generated": 580,
+        "matched": 259,
+        "precision": 0.44655172413793104,
+        "recall": 0.5373443983402489,
+        "reference": 482
+      },
+      "onsetCount": 431,
+      "onsets": {
+        "f1": 0.4979591836734695,
+        "generated": 431,
+        "matched": 183,
+        "precision": 0.4245939675174014,
+        "recall": 0.6019736842105263,
+        "reference": 304
+      },
+      "pitchClassContent": {
+        "f1": 0.8003766478342749,
+        "generated": 580,
+        "matched": 425,
+        "precision": 0.7327586206896551,
+        "recall": 0.8817427385892116,
+        "reference": 482
+      },
+      "pitchContent": {
+        "f1": 0.551789077212806,
+        "generated": 580,
+        "matched": 293,
+        "precision": 0.5051724137931034,
+        "recall": 0.6078838174273858,
+        "reference": 482
+      },
+      "positionContent": {
+        "f1": 0.40866290018832396,
+        "generated": 580,
+        "matched": 217,
+        "precision": 0.3741379310344828,
+        "recall": 0.45020746887966806,
+        "reference": 482
+      }
+    }
+  },
+  "v6": {
+    "eventCount": 1149,
+    "exactEvent": {
+      "f1": 0.04486873508353222,
+      "generated": 1149,
+      "matched": 47,
+      "precision": 0.040905134899912966,
+      "recall": 0.049682875264270614,
+      "reference": 946
+    },
+    "measurePitch": {
+      "f1": 0.28544152744630075,
+      "generated": 1149,
+      "matched": 299,
+      "precision": 0.26022628372497825,
+      "recall": 0.31606765327695563,
+      "reference": 946
+    },
+    "measurePitchClass": {
+      "f1": 0.4715990453460621,
+      "generated": 1149,
+      "matched": 494,
+      "precision": 0.4299390774586597,
+      "recall": 0.5221987315010571,
+      "reference": 946
+    },
+    "onsetCount": 839,
+    "onsets": {
+      "f1": 0.48682385575589454,
+      "generated": 839,
+      "matched": 351,
+      "precision": 0.41835518474374256,
+      "recall": 0.582089552238806,
+      "reference": 603
+    },
+    "pitchClassContent": {
+      "f1": 0.8085918854415275,
+      "generated": 1149,
+      "matched": 847,
+      "precision": 0.7371627502175805,
+      "recall": 0.8953488372093024,
+      "reference": 946
+    },
+    "pitchContent": {
+      "f1": 0.6042959427207636,
+      "generated": 1149,
+      "matched": 633,
+      "precision": 0.5509138381201044,
+      "recall": 0.6691331923890064,
+      "reference": 946
+    },
+    "positionContent": {
+      "f1": 0.469689737470167,
+      "generated": 1149,
+      "matched": 492,
+      "precision": 0.4281984334203655,
+      "recall": 0.5200845665961945,
+      "reference": 946
+    }
+  },
+  "v6Splits": {
+    "evenMeasures": {
+      "eventCount": 606,
+      "exactEvent": {
+        "f1": 0.03925233644859814,
+        "generated": 606,
+        "matched": 21,
+        "precision": 0.034653465346534656,
+        "recall": 0.04525862068965517,
+        "reference": 464
+      },
+      "measurePitch": {
+        "f1": 0.2878504672897197,
+        "generated": 606,
+        "matched": 154,
+        "precision": 0.25412541254125415,
+        "recall": 0.33189655172413796,
+        "reference": 464
+      },
+      "measurePitchClass": {
+        "f1": 0.45046728971962613,
+        "generated": 606,
+        "matched": 241,
+        "precision": 0.3976897689768977,
+        "recall": 0.5193965517241379,
+        "reference": 464
+      },
+      "onsetCount": 440,
+      "onsets": {
+        "f1": 0.4736129905277402,
+        "generated": 440,
+        "matched": 175,
+        "precision": 0.3977272727272727,
+        "recall": 0.5852842809364549,
+        "reference": 299
+      },
+      "pitchClassContent": {
+        "f1": 0.7289719626168224,
+        "generated": 606,
+        "matched": 390,
+        "precision": 0.6435643564356436,
+        "recall": 0.8405172413793104,
+        "reference": 464
+      },
+      "pitchContent": {
+        "f1": 0.594392523364486,
+        "generated": 606,
+        "matched": 318,
+        "precision": 0.5247524752475248,
+        "recall": 0.6853448275862069,
+        "reference": 464
+      },
+      "positionContent": {
+        "f1": 0.44485981308411215,
+        "generated": 606,
+        "matched": 238,
+        "precision": 0.3927392739273927,
+        "recall": 0.5129310344827587,
+        "reference": 464
+      }
+    },
+    "oddMeasures": {
+      "eventCount": 543,
+      "exactEvent": {
+        "f1": 0.050731707317073174,
+        "generated": 543,
+        "matched": 26,
+        "precision": 0.04788213627992634,
+        "recall": 0.05394190871369295,
+        "reference": 482
+      },
+      "measurePitch": {
+        "f1": 0.2829268292682927,
+        "generated": 543,
+        "matched": 145,
+        "precision": 0.26703499079189685,
+        "recall": 0.3008298755186722,
+        "reference": 482
+      },
+      "measurePitchClass": {
+        "f1": 0.4936585365853659,
+        "generated": 543,
+        "matched": 253,
+        "precision": 0.46593001841620624,
+        "recall": 0.524896265560166,
+        "reference": 482
+      },
+      "onsetCount": 399,
+      "onsets": {
+        "f1": 0.5007112375533428,
+        "generated": 399,
+        "matched": 176,
+        "precision": 0.44110275689223055,
+        "recall": 0.5789473684210527,
+        "reference": 304
+      },
+      "pitchClassContent": {
+        "f1": 0.8058536585365852,
+        "generated": 543,
+        "matched": 413,
+        "precision": 0.7605893186003683,
+        "recall": 0.8568464730290456,
+        "reference": 482
+      },
+      "pitchContent": {
+        "f1": 0.5619512195121951,
+        "generated": 543,
+        "matched": 288,
+        "precision": 0.5303867403314917,
+        "recall": 0.5975103734439834,
+        "reference": 482
+      },
+      "positionContent": {
+        "f1": 0.4097560975609756,
+        "generated": 543,
+        "matched": 210,
+        "precision": 0.3867403314917127,
+        "recall": 0.43568464730290457,
+        "reference": 482
+      }
+    }
+  }
+}
