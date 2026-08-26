@@ -2,7 +2,7 @@
 
 Updated: 2026-08-26 America/Montreal
 Branch: `v143-contextual-prune-lobo`
-Active phase: **V144 Rhythm gold calibration. Current accepted calibration baseline remains `pitch-position-shift-54a6e8d3aa91c422` (1144 events / 113 measures / SHA `5b36270a...`). Eight candidate families are consumed and sealed. A materially distinct atomic exact-two-note onset dyad pitch-rewrite family has now been pre-registered from the sealed current-baseline fit-only diagnostic; policy + deterministic tests exist and CPU policy gate `32975186364` is running. No search implementation or candidate evaluation for this family exists yet. Production remains untouched.**
+Active phase: **V144 Rhythm gold calibration. Current accepted calibration baseline remains `pitch-position-shift-54a6e8d3aa91c422` (1144 events / 113 measures / SHA `5b36270a...`). Eight candidate families are consumed and sealed. The materially distinct atomic exact-two-note onset dyad pitch-rewrite family is pre-registered; policy gate `32975186364` passed. Search + search-level invariant tests now exist and CPU search gate `32975651407` is queued/running. No candidate evaluation or one-shot workflow exists yet. Production remains untouched.**
 
 ## Permanent safety boundary
 - Work only on `v143-contextual-prune-lobo`; never modify/merge `main` or Production.
@@ -53,30 +53,27 @@ Active phase: **V144 Rhythm gold calibration. Current accepted calibration basel
 - Shape signals: same-onset wrong-pitch substitutions `171`; displaced existing pitch matches `120`; tight pitch/string-fret mismatches `12`.
 - This diagnostic is the only permissible family-shape evidence while the accepted baseline stays unchanged. **Consumed-family candidate/gate outcomes may not be used to construct/rank a successor.**
 
-## Joint pitch + step + adjacent-string family — COMPLETE / CONSUMED / SEALED
-- Policy blob `6701084d4d9f7f4630cce147f57e5d746342f8d4`; search blob `cc4343a8b55d4703a8524dff39a7c0d01ca5900f`; final search-test blob `9b1b4b802c5de0fe59a306e7ab76313c36c94416`.
-- Policy CPU gate `32972795739` SUCCESS; search CPU gate `32974163895` SUCCESS.
-- One-shot run `32974497513` SUCCESS infrastructure. 14 rules ranked / 14 fit candidates evaluated; none passed fixed fit gate.
-- Fit lock/selected `accepted-v144-baseline`; selected reason `fit-no-qualified-pitch-step-position-candidate`; stopped at fit; validation/canary/full null; calibration promotion false.
-- Fallback SHA remained `5b36270a...`; independent PDF fidelity `1.0`; V5/main/Production/runtime-reference/GPU safety clean.
-- Sealed commit `55a948fa97ab100bdca0b1338b36c9a43a4f5ce9`; replay refused. No selected manifest was created.
-
-## Atomic exact-two-note onset dyad pitch rewrite — PRE-REGISTERED / NOT SEARCHED
-- Materially distinct unit of transformation: **two events at one onset are an atomic unit**. This is not an individual-event pitch, pitch+step, pitch+position, or pitch+step+position retune.
-- Fit-only rationale comes only from the sealed current-baseline diagnostic: `171` same-onset wrong-pitch substitution slots plus low fit chord/voicing F1 `0.03976608187134503`.
+## Atomic exact-two-note onset dyad pitch rewrite — PRE-REGISTERED / SEARCH IMPLEMENTED / NOT EVALUATED
+- Materially distinct unit: exactly two events at one onset are transformed atomically; both pitch/fret changes happen together or neither happens.
+- Rationale uses only sealed current-baseline fit diagnostic: same-onset wrong-pitch substitutions `171` and fit chord/voicing F1 `0.03976608187134503`.
 - Policy `modal/v144_rhythm_onset_dyad_pitch_policy.py`; pre-registration commit `5ff7c68f1772150ce92d0bf9911c5145d6dda4b3`.
-- Deterministic synthetic tests `modal/tests/test_v144_rhythm_onset_dyad_pitch_policy.py`; commit `48818926a12505cc40f0dc534c15a71d09c72719`.
-- CPU-gate wiring commit `657f677af8321f1f7312f9e3280f7efae6f31fd9`; run `32975186364` currently IN PROGRESS.
-- Construction is deliberately narrow: generated and reference fit onsets must each contain exactly two notes, on the same two distinct strings; both notes must require non-zero pitch changes; target fret must equal the tuning-derived same-string fret; linked pitch-technique events are excluded.
-- Rule identity: one shared reference-free structural onset signature (`measurePhase`, `section16`, `stepParity`, `stepQuarter`, or `measurePhaseStep`) plus exactly two locked note rules `{stringIndex, sourcePitchClass, semitoneShift}` sorted by string.
-- Both note shifts are required non-zero; fixed pitch bound ±12; minimum support `3`; maximum candidates `256`.
-- Runtime receives generated onset + locked structural signature/note rules only; no professional reference. It requires an exact two-note onset matching both source strings/pitch classes and applies both fret/MIDI shifts atomically. If either event is linked or either target fret is invalid, the entire dyad is skipped.
-- Runtime preserves event count/order, measure, step/timing, strings, duration, techniques and all non-pitch metadata. MIDI/fret move together on each changed event.
-- Candidate construction/ranking has **not** been run. No search file, search tests, one-shot workflow, validation/canary result, or promotion exists.
+- Policy tests `modal/tests/test_v144_rhythm_onset_dyad_pitch_policy.py`; commit `48818926a12505cc40f0dc534c15a71d09c72719`.
+- Policy CPU gate wiring `657f677af8321f1f7312f9e3280f7efae6f31fd9`; run `32975186364` SUCCESS.
+- Search `validation/v144_rhythm_calibration/search_atomic_onset_dyad_pitch_rewrites.py`; commit `002e79d561e4404ea00d7a58ec591d006802bf00`.
+- Search invariants `modal/tests/test_v144_rhythm_onset_dyad_pitch_search.py`; commit `41f49951cb8b7325e608402f5cda69407c21ce22`.
+- Search CPU-gate wiring commit `2fd8e1c5752dc34968bf4ad51718ea194cfe4fa0`; run `32975651407` queued/running.
+- Construction requires generated/reference fit onsets each have exactly two notes on the same two distinct strings; both shifts non-zero; same-string target fret tuning-derived; linked pitch techniques excluded.
+- Rule identity: one shared reference-free structural onset signature plus two `{stringIndex, sourcePitchClass, semitoneShift}` note rules sorted by string.
+- Fixed values: support `3`; max candidates `256`; max abs semitone shift `12`.
+- Runtime receives generated onset + locked rule only; no professional reference. Exact two-note source dyad required. Invalid/linked either note => atomic skip.
+- Search reconstructs exact accepted baseline `5b36270a...` from immutable V5 via historical triple → accepted pitch shift → accepted pitch+position transform before construction.
+- Search-level invariants: 1144-event count/order; 113-measure set; measure/step/string/duration/techniques/all non-pitch metadata unchanged; MIDI/fret move together; changed onsets must contain exactly two baseline events and exactly two changed events; both changed strings distinct; locked context/source pitch classes/shifts enforced; tuning identity and ±12 bound enforced.
+- Search is fit-only for construction/ranking; validation/canary only gate one locked winner; full-gold is only reached after both split gates.
+- **No candidate evaluation workflow, one-shot result, validation/canary outcome, or promotion exists yet.**
 
 ## Immediate next actions
-1. Resolve policy CPU gate `32975186364`; if it fails, fix policy/tests only—do not implement search or evaluate candidates.
-2. Only after policy gate SUCCESS implement search-level logic/invariants against accepted SHA `5b36270a...`, then pass another CPU gate.
-3. Only after search gate SUCCESS allow at most one exact-message/path-gated CPU one-shot with fixed support `3`, max candidates `256`, pitch bound `12`; archive immediately after one run.
-4. Maintain fit-only construction/ranking → one locked winner → validation → canary → full-gold → independent PDF invariant; later failure means current-baseline fallback and no alternate selection.
+1. Resolve search CPU gate `32975651407`; if it fails, fix search/tests only and do not create a one-shot.
+2. After search gate SUCCESS, lock exact policy/search/test/config/accepted-manifest blobs and allow at most one exact-message/path-gated CPU one-shot with support `3`, max candidates `256`, pitch bound `12`.
+3. Persist only the dyad search report, independently reprove PDF-event identity without opening the reference, then archive the workflow immediately after the single run.
+4. Maintain deterministic fallback to current accepted baseline on any fit/validation/canary/full/PDF failure; never select an alternate.
 5. Never start Bass/Lead, modify main/Production, claim near-100%, or use Modal/L4/GPU without fresh explicit user authorization.
