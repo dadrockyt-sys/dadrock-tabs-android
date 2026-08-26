@@ -11,6 +11,7 @@ on:
       - modal/v144_rhythm_staged_selector.py
       - modal/v144_rhythm_conjunction_prune_policy.py
       - modal/v144_rhythm_triple_conjunction_policy.py
+      - modal/v144_rhythm_quad_conjunction_policy.py
       - modal/v144_rhythm_measure_set_guard.py
       - modal/configs/v144_rhythm_context_split_config.json
       - modal/tests/test_v144_rhythm_context_split_policy.py
@@ -18,6 +19,7 @@ on:
       - modal/tests/test_v144_rhythm_staged_selector.py
       - modal/tests/test_v144_rhythm_conjunction_prune_policy.py
       - modal/tests/test_v144_rhythm_triple_conjunction_policy.py
+      - modal/tests/test_v144_rhythm_quad_conjunction_policy.py
       - modal/tests/test_v144_rhythm_measure_set_guard.py
       - modal/tests/fixtures/v144_rhythm_context_split_reference.json
       - debug/v144-rhythm-calibration/reference/professional-target-provenance.json
@@ -29,6 +31,7 @@ on:
       - modal/v144_rhythm_staged_selector.py
       - modal/v144_rhythm_conjunction_prune_policy.py
       - modal/v144_rhythm_triple_conjunction_policy.py
+      - modal/v144_rhythm_quad_conjunction_policy.py
       - modal/v144_rhythm_measure_set_guard.py
       - modal/configs/v144_rhythm_context_split_config.json
       - modal/tests/test_v144_rhythm_context_split_policy.py
@@ -36,6 +39,7 @@ on:
       - modal/tests/test_v144_rhythm_staged_selector.py
       - modal/tests/test_v144_rhythm_conjunction_prune_policy.py
       - modal/tests/test_v144_rhythm_triple_conjunction_policy.py
+      - modal/tests/test_v144_rhythm_quad_conjunction_policy.py
       - modal/tests/test_v144_rhythm_measure_set_guard.py
       - modal/tests/fixtures/v144_rhythm_context_split_reference.json
       - debug/v144-rhythm-calibration/reference/professional-target-provenance.json
@@ -100,6 +104,7 @@ jobs:
           python modal/tests/test_v144_rhythm_staged_selector.py -v
           python modal/tests/test_v144_rhythm_conjunction_prune_policy.py -v
           python modal/tests/test_v144_rhythm_triple_conjunction_policy.py -v
+          python modal/tests/test_v144_rhythm_quad_conjunction_policy.py -v
           python modal/tests/test_v144_rhythm_measure_set_guard.py -v
 
       - name: Verify config stays CPU-safe and fallback-first
