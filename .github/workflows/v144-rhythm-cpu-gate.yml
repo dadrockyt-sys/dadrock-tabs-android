@@ -33,6 +33,7 @@ on:
       - modal/tests/test_v144_rhythm_onset_dyad_pitch_policy.py
       - modal/tests/test_v144_rhythm_singleton_onset_replacement_policy.py
       - modal/tests/test_v144_rhythm_singleton_onset_replacement_search.py
+      - modal/tests/test_v144_rhythm_singleton_selected_baseline_reconstruction.py
       - modal/tests/test_v144_rhythm_pitch_shift_search.py
       - modal/tests/test_v144_rhythm_pitch_step_shift_search.py
       - modal/tests/test_v144_rhythm_pitch_position_shift_search.py
@@ -51,6 +52,7 @@ on:
       - validation/v144_rhythm_calibration/analyze_current_baseline_fit_mechanisms.py
       - validation/v144_rhythm_calibration/analyze_current_baseline_fit_onset_topology.py
       - debug/v144-rhythm-calibration/reference/professional-target-provenance.json
+      - debug/v144-rhythm-calibration/selected/v144-singleton-onset-replacement-selected-baseline.json
   pull_request:
     paths:
       - .github/workflows/v144-rhythm-cpu-gate.yml
@@ -81,6 +83,7 @@ on:
       - modal/tests/test_v144_rhythm_onset_dyad_pitch_policy.py
       - modal/tests/test_v144_rhythm_singleton_onset_replacement_policy.py
       - modal/tests/test_v144_rhythm_singleton_onset_replacement_search.py
+      - modal/tests/test_v144_rhythm_singleton_selected_baseline_reconstruction.py
       - modal/tests/test_v144_rhythm_pitch_shift_search.py
       - modal/tests/test_v144_rhythm_pitch_step_shift_search.py
       - modal/tests/test_v144_rhythm_pitch_position_shift_search.py
@@ -99,6 +102,7 @@ on:
       - validation/v144_rhythm_calibration/analyze_current_baseline_fit_mechanisms.py
       - validation/v144_rhythm_calibration/analyze_current_baseline_fit_onset_topology.py
       - debug/v144-rhythm-calibration/reference/professional-target-provenance.json
+      - debug/v144-rhythm-calibration/selected/v144-singleton-onset-replacement-selected-baseline.json
 
 permissions:
   contents: read
@@ -190,6 +194,7 @@ jobs:
           python modal/tests/test_v144_rhythm_pitch_step_position_shift_search.py -v
           python modal/tests/test_v144_rhythm_onset_dyad_pitch_search.py -v
           python modal/tests/test_v144_rhythm_singleton_onset_replacement_search.py -v
+          python modal/tests/test_v144_rhythm_singleton_selected_baseline_reconstruction.py -v
           python modal/tests/test_v144_rhythm_current_baseline_fit_mechanisms.py -v
           python modal/tests/test_v144_rhythm_current_baseline_fit_onset_topology.py -v
           python modal/tests/test_v144_rhythm_measure_set_guard.py -v
