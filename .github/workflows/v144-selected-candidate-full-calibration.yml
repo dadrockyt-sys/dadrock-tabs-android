@@ -1,0 +1,239 @@
+name: V144 Selected Rhythm Candidate Full Calibration
+
+on:
+  push:
+    branches:
+      - v143-contextual-prune-lobo
+    paths:
+      - .github/workflows/v144-selected-candidate-full-calibration.yml
+      - validation/v144_rhythm_calibration/score_selected_conjunction_candidate.py
+      - modal/v144_rhythm_conjunction_prune_policy.py
+      - debug/v144-rhythm-calibration/candidates/conjunction-prune-search.json
+      - debug/v144-rhythm-calibration/reference/professional-rhythm-gold-reference.json
+      - debug/v144-rhythm-calibration/baseline/v5-frozen-calibration-baseline.json
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: v144-selected-rhythm-candidate-full-calibration
+  cancel-in-progress: false
+
+jobs:
+  score-selected:
+    name: Materialize and full-score selected V144 candidate on CPU
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+
+    steps:
+      - name: Check out exact revision
+        uses: actions/checkout@v4
+        with:
+          ref: ${{ github.sha }}
+          fetch-depth: 0
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+
+      - name: Verify immutable V5, gold reference, and accepted selection identities
+        shell: bash
+        run: |
+          set -euo pipefail
+          test "$(git hash-object analyzer/v143_reference_free_rhythm_pipeline.py)" = "7f72f8ed9b14af8bc93e95544195204d99c6bec1"
+          test "$(git hash-object debug/v143-contextual-prune/v5-professional-pdf/final-professional-holdout-result.json)" = "511fd244f231b66d08306f97b5a47ed41f5415c7"
+          test "$(sha256sum debug/v143-contextual-prune/v5-professional-pdf/v5-render-stream.json | awk '{print $1}')" = "7c3399d3f5e05ecc8ac98d71d0e5300e1e78f63ae96c1642fe4a19debb4061b2"
+          test "$(sha256sum debug/v143-contextual-prune/v5-professional-pdf/v5-rhythm-shadow.pdf | awk '{print $1}')" = "f4c1238e868cadfb90b8a359b1555b0b90e7740b9ebaa276aa394c8991f37ce5"
+          test "$(sha256sum debug/v144-rhythm-calibration/reference/professional-rhythm-gold-reference.json | awk '{print $1}')" = "18fd868ae960dfcdd1ffb0110f1a9dfd8acc2ffeb46e247d1116cd54291526ac"
+          test "$(git hash-object debug/v144-rhythm-calibration/candidates/conjunction-prune-search.json)" = "b92a3638d5b8fff0e911df43fb381f89f088afd6"
+          test "$(git hash-object debug/v144-rhythm-calibration/baseline/v5-frozen-calibration-baseline.json)" = "ad5fa9d0b6c552035405c1cca81ee4e3f25b5764"
+
+      - name: Materialize selected candidate and score full gold calibration reference
+        shell: bash
+        run: |
+          set -euo pipefail
+          mkdir -p .v144/selected
+          python validation/v144_rhythm_calibration/score_selected_conjunction_candidate.py \
+            debug/v143-contextual-prune/v5-professional-pdf/v5-render-stream.json \
+            debug/v144-rhythm-calibration/reference/professional-rhythm-gold-reference.json \
+            debug/v144-rhythm-calibration/baseline/v5-frozen-calibration-baseline.json \
+            debug/v144-rhythm-calibration/candidates/conjunction-prune-search.json \
+            debug/v144-rhythm-calibration/selected/selected-rhythm-candidate.json \
+            debug/v144-rhythm-calibration/selected/selected-rhythm-full-gold-score.json \
+            .v144/selected/events.json \
+            > .v144/selected/full-score.log
+
+      - name: Verify selected-candidate specification before PDF fidelity proof
+        shell: bash
+        run: |
+          set -euo pipefail
+          python - <<'PY'
+          import json
+          from pathlib import Path
+
+          spec = json.loads(Path('debug/v144-rhythm-calibration/selected/selected-rhythm-candidate.json').read_text(encoding='utf-8'))
+          score = json.loads(Path('debug/v144-rhythm-calibration/selected/selected-rhythm-full-gold-score.json').read_text(encoding='utf-8'))
+          assert spec['classification'] == 'v144-rhythm-selected-calibration-candidate'
+          assert spec['name'] == 'prune-conjunction-33ac980932c68313'
+          assert spec['transform']['signatures'] == ['register::high', 'section16::1']
+          assert spec['transform']['professionalReferenceRuntimeInput'] is False
+          assert spec['selectedCandidate']['eventCount'] == 1112
+          assert spec['selectedCandidate']['eventSha256'] == 'db5c8e8fbbb767c386f14a00df188c89738230694840c48bed1bae32b2653b4f'
+          assert spec['selectionEvidence']['fitPassed'] is True
+          assert spec['selectionEvidence']['validationPassed'] is True
+          assert spec['selectionEvidence']['canaryPassed'] is True
+          assert spec['selectionEvidence']['mayPromoteProduction'] is False
+          assert spec['selectionEvidence']['mayClaimUnseenGeneralization'] is False
+          assert score['classification'] == 'v144-rhythm-selected-candidate-full-gold-calibration-score'
+          assert score['evaluationRole'] == 'full-gold-calibration-not-unseen-holdout'
+          assert score['candidateEventCount'] == 1112
+          assert score['candidateEventSha256'] == 'db5c8e8fbbb767c386f14a00df188c89738230694840c48bed1bae32b2653b4f'
+          assert score['mayClaimUnseenGeneralization'] is False
+          assert score['pdfEventFidelity'] is None
+          assert score['safety']['pdfEventFidelityReproofRequired'] is True
+          PY
+
+      - name: Reprove selected candidate PDF-event identity independently
+        shell: bash
+        run: |
+          set -euo pipefail
+          mkdir -p .v144/selected/freeze
+          python - <<'PY'
+          import json
+          from pathlib import Path
+
+          selected = json.loads(Path('.v144/selected/events.json').read_text(encoding='utf-8'))
+          events = selected['renderEvents']
+          assert len(events) == 1112
+          payload = {
+              'instrument': 'rhythm',
+              'renderEvents': events,
+              'tempoBpm': 129.19921875,
+              'timeSignature': '4/4',
+              'tuning': 'E Standard',
+              'structuredMode': True,
+              'sourceAudioSha256': '215bd5a657c5326f08f132ae358595a95c30b39bb7493a52c2f910d5a608149f',
+              'referenceFree': True,
+              'professionalReferenceUsed': False,
+              'referenceRuntimeInputUsed': False,
+              'runtimeLabelsRequired': False,
+              'v143RuntimeSafetyVerified': True,
+          }
+          Path('.v144/selected/freeze-input.json').write_text(
+              json.dumps(payload, separators=(',', ':')) + '\n', encoding='utf-8'
+          )
+          PY
+          python validation/rhythm_holdout/freeze_rhythm_analysis.py \
+            .v144/selected/freeze-input.json .v144/selected/freeze \
+            --source-commit "${GITHUB_SHA}" \
+            > .v144/selected/freeze.log
+
+          cp lib/v143RenderContract.js .v144/selected/v143RenderContract.mjs
+          node --input-type=module <<'NODE'
+          import fs from 'node:fs/promises';
+          import { validateV143RenderEvents } from './.v144/selected/v143RenderContract.mjs';
+          const selected = JSON.parse(await fs.readFile('.v144/selected/events.json', 'utf8'));
+          const events = validateV143RenderEvents(selected.renderEvents || []);
+          if (events.length !== 1112) throw new Error(`expected 1112 events, got ${events.length}`);
+          await fs.writeFile('.v144/selected/renderer-event-evidence.json', JSON.stringify({
+            schemaVersion: 1,
+            renderEvents: events,
+            runtimeSafetyVerified: true,
+            runtimeLabelsRequired: false,
+            referenceOpened: false,
+            professionalReferenceUsed: false,
+            productionModified: false,
+          }) + '\n');
+          NODE
+          python validation/rhythm_holdout/verify_pdf_event_fidelity.py \
+            .v144/selected/freeze .v144/selected/renderer-event-evidence.json \
+            > .v144/selected/pdf-event-fidelity.log
+
+      - name: Attach exact PDF fidelity proof and enforce calibration safety
+        shell: bash
+        run: |
+          set -euo pipefail
+          python - <<'PY'
+          import json
+          from pathlib import Path
+
+          spec_path = Path('debug/v144-rhythm-calibration/selected/selected-rhythm-candidate.json')
+          score_path = Path('debug/v144-rhythm-calibration/selected/selected-rhythm-full-gold-score.json')
+          spec = json.loads(spec_path.read_text(encoding='utf-8'))
+          score = json.loads(score_path.read_text(encoding='utf-8'))
+          fidelity = json.loads(Path('.v144/selected/freeze/rhythm-pdf-event-fidelity.json').read_text(encoding='utf-8'))
+
+          expected = 'db5c8e8fbbb767c386f14a00df188c89738230694840c48bed1bae32b2653b4f'
+          assert fidelity['passed'] is True
+          assert fidelity['pdfEventFidelity'] == 1.0
+          assert fidelity['frozenEventCount'] == 1112
+          assert fidelity['frozenEventSha256'] == expected
+          assert fidelity['pdfEventSha256'] == expected
+
+          spec['selectedCandidate']['pdfEventFidelity'] = 1.0
+          spec['selectedCandidate']['pdfEventSha256'] = expected
+          spec['safety']['pdfEventFidelityProven'] = True
+
+          score['pdfEventFidelity'] = 1.0
+          score['pdfEventSha256'] = expected
+          score['score']['gatedMetrics']['pdfEventFidelity'] = 1.0
+          score['safety']['pdfEventFidelityReproofRequired'] = False
+          score['safety']['pdfEventFidelityReproved'] = True
+          score['near100CalibrationTargetReached'] = (
+              score['score']['criticalMismatchCount'] == 0
+              and all(float(value) >= 0.99 for value in score['score']['gatedMetrics'].values())
+          )
+
+          assert score['score']['gatedMetrics']['measureCoverageRecall'] == 1.0
+          assert score['score']['gatedMetrics']['pdfEventFidelity'] == 1.0
+          assert score['safety']['v5Modified'] is False
+          assert score['safety']['mainModified'] is False
+          assert score['safety']['productionModified'] is False
+          assert score['safety']['runtimeReferenceInputUsed'] is False
+          assert score['safety']['modalGpuInvoked'] is False
+
+          spec_path.write_text(json.dumps(spec, indent=2, sort_keys=True) + '\n', encoding='utf-8')
+          score_path.write_text(json.dumps(score, indent=2, sort_keys=True) + '\n', encoding='utf-8')
+          PY
+
+      - name: Reverify immutable V5 after selected-candidate scoring
+        shell: bash
+        run: |
+          set -euo pipefail
+          test "$(git hash-object analyzer/v143_reference_free_rhythm_pipeline.py)" = "7f72f8ed9b14af8bc93e95544195204d99c6bec1"
+          test "$(git hash-object debug/v143-contextual-prune/v5-professional-pdf/final-professional-holdout-result.json)" = "511fd244f231b66d08306f97b5a47ed41f5415c7"
+          test "$(sha256sum debug/v143-contextual-prune/v5-professional-pdf/v5-render-stream.json | awk '{print $1}')" = "7c3399d3f5e05ecc8ac98d71d0e5300e1e78f63ae96c1642fe4a19debb4061b2"
+          test "$(sha256sum debug/v143-contextual-prune/v5-professional-pdf/v5-rhythm-shadow.pdf | awk '{print $1}')" = "f4c1238e868cadfb90b8a359b1555b0b90e7740b9ebaa276aa394c8991f37ce5"
+
+      - name: Persist only V144 selected-candidate specification and full calibration score
+        shell: bash
+        run: |
+          set -euo pipefail
+          spec='debug/v144-rhythm-calibration/selected/selected-rhythm-candidate.json'
+          score='debug/v144-rhythm-calibration/selected/selected-rhythm-full-gold-score.json'
+          git add "$spec" "$score"
+          if git diff --cached --quiet; then
+            echo 'Selected V144 candidate artifacts already persisted.'
+            exit 0
+          fi
+          changed="$(git diff --cached --name-only | sort)"
+          expected="$(printf '%s\n%s\n' "$spec" "$score" | sort)"
+          test "$changed" = "$expected" || {
+            echo "Unexpected staged paths:" >&2
+            printf '%s\n' "$changed" >&2
+            exit 91
+          }
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git commit -m 'Persist selected V144 rhythm calibration candidate'
+          for attempt in 1 2 3 4 5; do
+            git fetch origin v143-contextual-prune-lobo
+            if git rebase origin/v143-contextual-prune-lobo && git push origin HEAD:v143-contextual-prune-lobo; then
+              exit 0
+            fi
+            git rebase --abort 2>/dev/null || true
+            sleep $((attempt * 2))
+          done
+          exit 1
