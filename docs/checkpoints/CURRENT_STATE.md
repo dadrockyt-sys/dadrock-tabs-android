@@ -119,3 +119,20 @@ Priority: **Active phase: V144 Rhythm calibration/retraining toward the professi
 6. Use existing repository evidence/archives before any new Modal/L4 work. Do not invoke Modal/L4/GPU without fresh explicit authorization.
 7. Save this checkpoint after each meaningful V144 increment.
 8. Do not start Bass/Lead until V144 Rhythm quality is proven or the user explicitly redirects.
+
+## Crash-resilient continuation queue — 2026-08-25
+This section is the immediate resume point if the GPT interface crashes. Complete items in order and update this file after each meaningful step.
+
+1. **Inventory V143/V5 reference/scorer assets without changing them.** Locate exact repository paths for the structured professional-reference builder, professional scorer, V5 final workflow, renderer-normalization/PDF-fidelity checks, and any archived calibration evidence that can be safely reused by V144.
+2. **Record the reusable-vs-frozen boundary.** For every located asset, classify it as read-only V5 evidence, safely reusable generic machinery, or V144-only code/artifact. Do not modify anything classified as V5 evidence.
+3. **Establish a V144-only professional target asset.** Copy/derive the verified `main/public/Professionalexample.jpg` into a clearly named V144 calibration area on this branch, preserving provenance and recording source blob/hash. Never change `main`.
+4. **Create the V144 protocol skeleton.** Add new V144-specific pipeline/scorer/config/result paths rather than replacing `analyzer/v143_reference_free_rhythm_pipeline.py` or any V5 sentinel/workflow.
+5. **Reconstruct the gold structured reference using existing machinery.** Keep V144 outputs outside the V5 final-holdout paths. Verify measure/onset/note completeness before using the reference for iterative calibration.
+6. **Establish a reproducible V143→V144 baseline comparison.** Use existing repository evidence first. Record musical mismatch categories separately from PDF-event fidelity so rendering success cannot mask transcription errors.
+7. **Prioritize highest-impact musical error classes.** Attack pitch-content/chord-set errors first, then onset/timing alignment, then exact string/fret voicing and technique notation. Make one interpretable V144 change at a time and persist diagnostics.
+8. **Keep compute authorization boundary explicit.** Repository inspection, branch-local code/config/reference setup, and non-GPU analysis are allowed; do not invoke Modal/L4/GPU until the user explicitly authorizes it.
+9. **Checkpoint frequently.** After inventory, provenance establishment, protocol skeleton, baseline reconstruction, and each material calibration increment, append exact files/SHAs/results plus the next resume action here.
+10. **Completion condition remains Rhythm-first.** Do not begin Bass/Lead unless V144 Rhythm quality is proven against the gold calibration target and rendering fidelity remains exact, or the user explicitly redirects.
+
+### Immediate next resume action
+Search the branch for the professional-reference/scorer/workflow assets named or implied by the V5 record, document their exact paths and classification in this checkpoint, then create only the minimum V144-isolated scaffolding needed for calibration. No V5 mutation and no GPU invocation.
