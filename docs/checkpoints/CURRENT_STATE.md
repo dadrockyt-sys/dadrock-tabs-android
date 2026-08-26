@@ -2,7 +2,7 @@
 
 Updated: 2026-08-26 America/Montreal
 Branch: `v143-contextual-prune-lobo`
-Active phase: **V144 Rhythm gold calibration. Families 1–12 are consumed/sealed. Accepted baseline remains family #10 `singleton-onset-replace-be9e9aa7a734e3cd` / SHA `4e6f9f...`. Family #12 atomic exact-two-note generated-only dyad whole-onset prune completed its single authorized one-shot and STOPPED AT FIT with deterministic family #10 fallback; validation/canary/full were never opened. Family #12 execution surfaces are deleted. No family #13 is pre-registered.**
+Active phase: **V144 Rhythm gold calibration. Families 1–12 are consumed/sealed. Accepted baseline remains family #10 `singleton-onset-replace-be9e9aa7a734e3cd` / SHA `4e6f9f...`. Family #12 atomic exact-two-note generated-only dyad whole-onset prune completed its single authorized one-shot and STOPPED AT FIT with deterministic family #10 fallback; validation/canary/full were never opened. Family #12 execution surfaces are deleted. Aggregate-only successor-shape review is complete: family #13 is now pre-registered as an atomic exact-three-note generated-only whole-onset prune, but it is not CPU-proven, searched, evaluated, or authorized for execution.**
 
 ## Permanent safety / fixed protocol
 - Work only on `v143-contextual-prune-lobo`; never modify/merge `main` or Production.
@@ -61,30 +61,43 @@ Active phase: **V144 Rhythm gold calibration. Families 1–12 are consumed/seale
 - **Family #12 is consumed. Never rerun/replay/retune and never select a runner-up from its 23 candidates.**
 - Accepted baseline remains family #10, so current FIT residual diagnostic `b9794a7b...` remains current.
 
+## Family #13 — PRE-REGISTERED / NOT YET CPU-PROVEN
+### Aggregate-only shape decision
+- The sole permitted current shape evidence remains the sealed accepted-baseline FIT residual diagnostic `b9794a7b...`.
+- `g3-r0=12` is a non-empty, materially distinct onset cardinality from consumed family #12 (`g2-r0`) and is large enough to preserve the established minimum support without relaxing it.
+- `g5-r0=1` remains excluded. Cardinalities may not be combined. No family #11/#12 candidate outcomes, runner-ups, gate behavior, context/string/pitch identities, or calibration labels were used for this decision.
+- Therefore family #13 is pre-registered as **atomic exact-three-note generated-only whole-onset prune**. This decision does not authorize candidate search or execution.
+
+### Fixed family #13 semantics — FROZEN BEFORE SEARCH
+- Policy path: `modal/v144_rhythm_generated_only_triad_prune_policy.py`; current policy blob `622c839d0a833c3541007309ebf1203f1547b365`.
+- Exact cardinality: 3 generated notes and 0 reference notes at one FIT onset.
+- Minimum false-positive support: **3**. Maximum candidate count: **256**. These are frozen now and may not be changed after seeing search outcomes.
+- Rule identity: exactly one structural onset context plus three sorted source `(stringIndex,pitchClass)` identities.
+- Whole-onset deletion is atomic: either all three notes are deleted or none are. Partial deletion is forbidden.
+- Runtime reference is forbidden. Linked, externally referenced, invalid-position, and measure-erasing targets are ineligible. Survivors must remain immutable and in source order.
+- Any eventual search must enforce exact 113-measure preservation and deterministic family #10 fallback.
+- No candidate-specific search file exists by authorization at this checkpoint. No family #13 candidate labels/outcomes may be inspected until policy tests and the broad CPU gate succeed at the exact policy/test revision.
+
 ## EXPLICIT NEXT STEPS — CONTINUATION CONTRACT
-1. **Re-read this checkpoint first.** Verify branch is exactly `v143-contextual-prune-lobo`, family #12 report blob is `9a4d17622047db77e373a21c40036adc42297482`, and both family #12 execution surfaces remain deleted. Do not begin new calibration work if those identities do not match.
+1. **Re-read this checkpoint first.** Verify branch is exactly `v143-contextual-prune-lobo`, family #12 report blob is `9a4d17622047db77e373a21c40036adc42297482`, and both family #12 execution surfaces remain deleted.
 2. **Never rerun families #1–#12.** Do not use their candidate rankings, failed/passed gates, validation/canary/full outcomes, or runner-up behavior to construct/rank/retune family #13.
 3. Because family #12 did not change the accepted baseline, **do not create a new residual diagnostic yet**. The sealed current accepted-baseline FIT residual report `b9794a7b...` remains the sole permitted current shape evidence.
-4. Use only that aggregate report to decide whether a materially distinct family #13 exists. The currently visible unexplored aggregate unit is `g3-r0=12`: exact-three-note generated-only onsets. A possible family shape is an **atomic exact-three-note generated-only whole-onset prune**, but this is only a shape hypothesis, not a preregistered family and not permission to search.
-5. Keep `g5-r0=1` out of family #13. Do not combine cardinalities or lower support just to create candidates. Do not infer any context/string/pitch rule from family #11/#12 search outcomes.
-6. **STOP if the shape is not clearly justified.** It is acceptable to end V144 Rhythm exploration at this checkpoint rather than invent a family, relax support, broaden the unit, or replay a consumed shape.
-7. If the exact-three-note unit is judged materially distinct and justified from the aggregate diagnostic alone, **pre-register policy first before any candidate-label inspection**. Fix: exact cardinality 3; generated-only FIT construction; one structural onset context; three sorted source `(stringIndex,pitchClass)` identities; minimum support and max candidates; whole-onset atomic deletion; reference-free runtime; linked/referenced/measure-erasing exclusions; immutable survivors; exact 113-measure preservation.
-8. The support threshold/candidate cap must be fixed before search and may not be changed after seeing outcomes. Reuse the established fixed-policy pattern; do not tune from family #12 results.
-9. Add deterministic synthetic-only family #13 policy tests. Wire policy/tests into the broad CPU gate. Require definitive **CPU SUCCESS** at the exact policy/test revision before a search file may exist.
-10. Only after policy CPU success, pre-register a FIT-only family #13 search. It must reconstruct accepted family #10 `4e6f9f...` reference-free before opening gold, construct/rank only from FIT, enforce exact 113-measure preservation, and use deterministic family #10 fallback.
-11. Add synthetic search invariant tests proving deletion-only ordered-subsequence semantics, exactly 3 removed events per changed onset, locked rule identity, no survivor mutation/addition/reordering, and fixed support/cap. Broad CPU-gate the exact search/test revision.
-12. **Do not execute candidate search until the exact search code/tests are CPU green.** If CPU fails, fix only implementation/tests; do not inspect calibration labels to debug it.
-13. After search CPU success, create a tightly locked CPU-only one-shot. Lock immutable V5/result/render/PDF, gold SHA, accepted manifest, family #13 policy/tests/search/tests, CPU workflow/run/job, reconstruction/scoring/staged-selector/measure/PDF dependencies, runtime-reference false, GPU false, and replay false.
-14. Save a **pre-arm checkpoint containing the exact one-shot workflow blob**. Then create exactly one trigger-only commit with the exact preregistered message/path. Freeze the branch and poll only that exact trigger SHA. No rerun/retrigger/retry.
-15. During the one-shot: FIT may rank all preregistered candidates and lock at most one. If no FIT winner, stop at FIT and fall back to family #10. If validation fails, fall back immediately. If canary fails, fall back immediately. Never select a runner-up after any failure.
-16. Only if FIT+validation+canary pass may full gold be read for the locked candidate. Calibration promotion additionally requires zero musical regressions, critical mismatch delta <=0, coverage 1.0, exact 113 generated measures, family-specific atomic invariants, and independent PDF-event fidelity 1.0.
-17. Immediately after the one-shot, persist only its report, then delete/seal the executable workflow and trigger regardless outcome. Mark family #13 consumed and checkpoint run ID, job ID, report commit/blob, workflow deletion commit, trigger deletion commit, and accepted-baseline result.
-18. If family #13 (or any future family) actually becomes the accepted calibration baseline, **the current residual report becomes historical immediately**. Before proposing another family, create a new accepted-baseline FIT-only aggregate residual diagnostic with synthetic tests, CPU pre-label gate, one-shot execution, report-only persistence, and immediate sealing.
-19. Never start Bass/Lead, modify `main`/Production or `/ai-tab` frontend, claim Rhythm-complete/near-100/unseen-generalization, or use Modal/L4/GPU without fresh explicit user authorization.
+4. Family #13 shape decision and fixed support/cap preregistration are now complete as recorded above. Do not revise them from candidate outcomes.
+5. Add deterministic synthetic-only family #13 policy tests. Wire policy/tests into the broad CPU gate. Require definitive **CPU SUCCESS** at the exact policy/test revision before a search file may exist.
+6. Only after policy CPU success, pre-register a FIT-only family #13 search. It must reconstruct accepted family #10 `4e6f9f...` reference-free before opening gold, construct/rank only from FIT, enforce exact 113-measure preservation, and use deterministic family #10 fallback.
+7. Add synthetic search invariant tests proving deletion-only ordered-subsequence semantics, exactly 3 removed events per changed onset, locked rule identity, no survivor mutation/addition/reordering, and fixed support/cap. Broad CPU-gate the exact search/test revision.
+8. **Do not execute candidate search until the exact search code/tests are CPU green.** If CPU fails, fix only implementation/tests; do not inspect calibration labels to debug it.
+9. After search CPU success, create a tightly locked CPU-only one-shot. Lock immutable V5/result/render/PDF, gold SHA, accepted manifest, family #13 policy/tests/search/tests, CPU workflow/run/job, reconstruction/scoring/staged-selector/measure/PDF dependencies, runtime-reference false, GPU false, and replay false.
+10. Save a **pre-arm checkpoint containing the exact one-shot workflow blob**. Then create exactly one trigger-only commit with the exact preregistered message/path. Freeze the branch and poll only that exact trigger SHA. No rerun/retrigger/retry.
+11. During the one-shot: FIT may rank all preregistered candidates and lock at most one. If no FIT winner, stop at FIT and fall back to family #10. If validation fails, fall back immediately. If canary fails, fall back immediately. Never select a runner-up after any failure.
+12. Only if FIT+validation+canary pass may full gold be read for the locked candidate. Calibration promotion additionally requires zero musical regressions, critical mismatch delta <=0, coverage 1.0, exact 113 generated measures, family-specific atomic invariants, and independent PDF-event fidelity 1.0.
+13. Immediately after the one-shot, persist only its report, then delete/seal the executable workflow and trigger regardless outcome. Mark family #13 consumed and checkpoint run ID, job ID, report commit/blob, workflow deletion commit, trigger deletion commit, and accepted-baseline result.
+14. If family #13 (or any future family) actually becomes the accepted calibration baseline, **the current residual report becomes historical immediately**. Before proposing another family, create a new accepted-baseline FIT-only aggregate residual diagnostic with synthetic tests, CPU pre-label gate, one-shot execution, report-only persistence, and immediate sealing.
+15. Never start Bass/Lead, modify `main`/Production or `/ai-tab` frontend, claim Rhythm-complete/near-100/unseen-generalization, or use Modal/L4/GPU without fresh explicit user authorization.
 
 ## Current stop point
 - Accepted calibration baseline: family #10 `singleton-onset-replace-be9e9aa7a734e3cd` / `4e6f9f...`.
 - Families #1–#12: consumed/sealed.
 - Family #12: no FIT winner; baseline unchanged.
-- Family #13: **not preregistered, not implemented, not searched, not evaluated**.
-- Safe next action: only the aggregate-evidence family-shape decision in steps 3–6 above.
+- Family #13: **aggregate-only shape decision complete and policy semantics pre-registered/frozen; policy blob `622c839d...`; support 3; cap 256; no policy CPU proof yet; no search; no evaluation; no execution authorization.**
+- Safe next action: add deterministic synthetic-only family #13 policy tests, wire them into the broad CPU gate, and obtain CPU SUCCESS before any search file exists.
