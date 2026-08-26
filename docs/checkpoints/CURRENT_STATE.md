@@ -11,6 +11,14 @@ Active phase: **V144 Rhythm gold calibration. Families #1–#12 are consumed/sea
 - Split seed 144: 60 fit / 20 validation / 20 canary. FIT constructs/ranks only; later stages gate one locked winner. FIT pitch gain >=0.005; no musical regression; critical delta <=0; PDF fidelity 1.0. Failure => accepted-baseline fallback, never alternate.
 - No Modal/L4/GPU without fresh explicit authorization. `/ai-tab` frontend, Bass/Lead, `freezeReady=false`, main, Production untouched.
 
+## Permanent progress-percentage reporting — USER MOTIVATION / UPDATE FORMAT
+- In future Rhythm calibration updates, always include easy-to-read scorer percentages alongside technical metrics so progress toward a professionally rendered/transcribed PDF remains visible and motivating.
+- Primary motivational Rhythm note-detection percentage = **Pitch Content F1 × 100**. For the current accepted family #10 baseline this is **35.4%** (`0.35406698564593303`).
+- Also report, when relevant: **Pitch + timing 6.7%** (`0.06698564593301436`), **String/fret + timing 5.5%** (`0.05454545454545454`), **Chord/voicing 5.8%** (`0.0580511402902557`), **Measure coverage 100%** (`1.0`), and **PDF event fidelity 100%** (`1.0`).
+- Clearly label these as separate scorer dimensions; do not combine them into a made-up overall percentage.
+- Whenever the accepted baseline changes, recompute these percentages from the newly accepted scorer values and state the change versus the previous accepted baseline (percentage points and direction) in the next user update and checkpoint.
+- Keep **Pitch Content F1 percentage** as the headline Rhythm detection progress number unless the scorer contract changes materially; if it does, explain the change before switching the headline metric.
+
 ## Accepted baseline — LOCKED / UNCHANGED
 - Family #10 `singleton-onset-replace-be9e9aa7a734e3cd`.
 - Manifest commit `3f38f6cbd6adce77eccece281b33ae6d315ec000`; blob `acd12ab68ad16b8faabf38ddc9e1cc0c1e7c4b68`.
