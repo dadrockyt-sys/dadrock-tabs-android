@@ -1,0 +1,206 @@
+name: V144 Reproduce Rhythm Calibration Baseline
+
+on:
+  push:
+    branches:
+      - v143-contextual-prune-lobo
+    paths:
+      - .github/workflows/v144-reproduce-calibration-baseline.yml
+      - validation/v144_rhythm_calibration/build_baseline_report.py
+      - debug/v144-rhythm-calibration/reference/professional-rhythm-gold-reference.json
+
+permissions:
+  contents: write
+
+concurrency:
+  group: v144-reproduce-rhythm-calibration-baseline
+  cancel-in-progress: false
+
+jobs:
+  reproduce-baseline:
+    name: Reproduce frozen V5 as V144 calibration baseline
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+
+    steps:
+      - name: Check out exact pushed revision
+        uses: actions/checkout@v4
+        with:
+          ref: ${{ github.sha }}
+          fetch-depth: 0
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+
+      - name: Verify immutable inputs
+        shell: bash
+        run: |
+          set -euo pipefail
+          test "$(git hash-object analyzer/v143_reference_free_rhythm_pipeline.py)" = "7f72f8ed9b14af8bc93e95544195204d99c6bec1"
+          test "$(git hash-object debug/v143-contextual-prune/v5-professional-pdf/final-professional-holdout-result.json)" = "511fd244f231b66d08306f97b5a47ed41f5415c7"
+          test "$(sha256sum debug/v143-contextual-prune/v5-professional-pdf/v5-render-stream.json | awk '{print $1}')" = "7c3399d3f5e05ecc8ac98d71d0e5300e1e78f63ae96c1642fe4a19debb4061b2"
+          test "$(sha256sum debug/v143-contextual-prune/v5-professional-pdf/v5-rhythm-shadow.pdf | awk '{print $1}')" = "f4c1238e868cadfb90b8a359b1555b0b90e7740b9ebaa276aa394c8991f37ce5"
+          test "$(sha256sum debug/v144-rhythm-calibration/reference/professional-rhythm-gold-reference.json | awk '{print $1}')" = "18fd868ae960dfcdd1ffb0110f1a9dfd8acc2ffeb46e247d1116cd54291526ac"
+          test "$(git hash-object validation/rhythm_holdout/score_rhythm_holdout.py)" = "cc4bf61a99f22bf87a6c255e5a81220fbc82223b"
+          test "$(git hash-object validation/rhythm_holdout/freeze_rhythm_analysis.py)" = "710bb6a3b15b99d3d11ceb4948d7c7175d208afc"
+          test "$(git hash-object validation/rhythm_holdout/verify_pdf_event_fidelity.py)" = "5e1564216873046237fb545078a04a6b18f72b27"
+          test "$(git hash-object lib/v143RenderContract.js)" = "ccbb93c48982798cc474309fd981f6ca02d5c8d4"
+
+      - name: Rebuild temporary frozen V5 scorer input without mutation
+        shell: bash
+        run: |
+          set -euo pipefail
+          mkdir -p .v144/baseline/freeze .v144/baseline/results
+          python - <<'PY'
+          import json
+          from pathlib import Path
+
+          root = Path('debug/v143-contextual-prune/v5-professional-pdf')
+          manifest = json.loads((root / 'source-only-frozen-candidate-manifest.json').read_text(encoding='utf-8'))
+          stream = json.loads((root / 'v5-render-stream.json').read_text(encoding='utf-8'))
+          assert len(stream.get('events') or []) == 1209
+          payload = {
+              'instrument': 'rhythm',
+              'renderEvents': stream['events'],
+              'tempoBpm': (manifest.get('boundaries') or {}).get('tempo'),
+              'timeSignature': '4/4',
+              'tuning': 'E Standard',
+              'structuredMode': True,
+              'sourceAudioSha256': (manifest.get('authorizedSource') or {}).get('approvedSourceSha256'),
+              'referenceFree': True,
+              'professionalReferenceUsed': False,
+              'referenceRuntimeInputUsed': False,
+              'runtimeLabelsRequired': False,
+              'v143RuntimeSafetyVerified': True,
+          }
+          Path('.v144/baseline/freeze-input.json').write_text(
+              json.dumps(payload, separators=(',', ':')) + '\n', encoding='utf-8'
+          )
+          PY
+          python validation/rhythm_holdout/freeze_rhythm_analysis.py \
+            .v144/baseline/freeze-input.json .v144/baseline/freeze \
+            --source-commit "${GITHUB_SHA}" \
+            > .v144/baseline/results/freeze.log
+
+      - name: Reprove PDF-event fidelity from frozen V5 stream
+        shell: bash
+        run: |
+          set -euo pipefail
+          cp lib/v143RenderContract.js .v144/baseline/v143RenderContract.mjs
+          node --input-type=module <<'NODE'
+          import fs from 'node:fs/promises';
+          import { validateV143RenderEvents } from './.v144/baseline/v143RenderContract.mjs';
+          const stream = JSON.parse(await fs.readFile('debug/v143-contextual-prune/v5-professional-pdf/v5-render-stream.json', 'utf8'));
+          const events = validateV143RenderEvents(stream.events || []);
+          if (events.length !== 1209) throw new Error(`expected 1209 renderer events, got ${events.length}`);
+          await fs.writeFile('.v144/baseline/renderer-event-evidence.json', JSON.stringify({
+            schemaVersion: 1,
+            renderEvents: events,
+            runtimeSafetyVerified: true,
+            runtimeLabelsRequired: false,
+            referenceOpened: false,
+            professionalReferenceUsed: false,
+            productionModified: false,
+          }) + '\n');
+          NODE
+          python validation/rhythm_holdout/verify_pdf_event_fidelity.py \
+            .v144/baseline/freeze .v144/baseline/renderer-event-evidence.json \
+            > .v144/baseline/results/pdf-event-fidelity.log
+          python - <<'PY'
+          import json
+          from pathlib import Path
+          manifest = json.loads(Path('.v144/baseline/freeze/rhythm-freeze-manifest.json').read_text(encoding='utf-8'))
+          assert manifest['eventSha256'] == '7ed5166a73793e3a40c9a21f6532fee5ba784e43ef4180727404a37a038fb6d1'
+          assert manifest['pdfEventSha256'] == manifest['eventSha256']
+          assert manifest['pdfEventFidelity'] == 1.0
+          assert manifest['eventCount'] == 1209
+          assert manifest['uniqueMeasureCount'] == 113
+          PY
+
+      - name: Score frozen bytes against V144 gold calibration reference
+        shell: bash
+        run: |
+          set -euo pipefail
+          legacy_reference='validation/rhythm_holdout/reference/v144-gold-calibration-reference.json'
+          test ! -e "$legacy_reference"
+          cp debug/v144-rhythm-calibration/reference/professional-rhythm-gold-reference.json "$legacy_reference"
+          trap 'rm -f "$legacy_reference"' EXIT
+
+          set +e
+          python validation/rhythm_holdout/score_rhythm_holdout.py \
+            .v144/baseline/freeze "$legacy_reference" \
+            --output .v144/baseline/results/legacy-score.json --minimum 0.99 \
+            > .v144/baseline/results/legacy-score.log
+          scorer_rc=$?
+          set -e
+          test "$scorer_rc" -eq 2
+          test "$(sha256sum "$legacy_reference" | awk '{print $1}')" = "18fd868ae960dfcdd1ffb0110f1a9dfd8acc2ffeb46e247d1116cd54291526ac"
+
+      - name: Build V144 calibration baseline report and require exact historical reproduction
+        shell: bash
+        run: |
+          set -euo pipefail
+          python validation/v144_rhythm_calibration/build_baseline_report.py \
+            .v144/baseline/results/legacy-score.json \
+            debug/v144-rhythm-calibration/reference/professional-rhythm-gold-reference.json \
+            debug/v143-contextual-prune/v5-professional-pdf/final-professional-holdout-result.json \
+            debug/v144-rhythm-calibration/baseline/v5-frozen-calibration-baseline.json \
+            > .v144/baseline/results/v144-baseline.log
+
+      - name: Verify V144 baseline semantics and guards
+        shell: bash
+        run: |
+          set -euo pipefail
+          python - <<'PY'
+          import json
+          from pathlib import Path
+          p = Path('debug/v144-rhythm-calibration/baseline/v5-frozen-calibration-baseline.json')
+          d = json.loads(p.read_text(encoding='utf-8'))
+          assert d['classification'] == 'v144-rhythm-gold-calibration-baseline'
+          assert d['evaluationRole'] == 'calibration-baseline-not-unseen-holdout'
+          assert d['sourceCandidateRole'] == 'immutable-v5-read-only-baseline'
+          assert d['reproducesImmutableHistoricalV5ScoreExactly'] is True
+          assert d['baseline']['criticalMismatchCount'] == 1875
+          assert d['baseline']['gatedMetrics']['pitchContentF1'] == 0.2830626450116009
+          assert d['baseline']['gatedMetrics']['pdfEventFidelity'] == 1.0
+          assert d['protocol']['v5WorkflowRerun'] is False
+          assert d['protocol']['v5CandidateModified'] is False
+          assert d['protocol']['v5ResultModified'] is False
+          assert d['protocol']['productionModified'] is False
+          assert d['protocol']['mainModified'] is False
+          assert d['protocol']['modalGpuInvoked'] is False
+          assert d['protocol']['mayClaimUnseenGeneralization'] is False
+          PY
+          test "$(git hash-object analyzer/v143_reference_free_rhythm_pipeline.py)" = "7f72f8ed9b14af8bc93e95544195204d99c6bec1"
+          test "$(git hash-object debug/v143-contextual-prune/v5-professional-pdf/final-professional-holdout-result.json)" = "511fd244f231b66d08306f97b5a47ed41f5415c7"
+
+      - name: Persist only V144 calibration baseline report
+        shell: bash
+        run: |
+          set -euo pipefail
+          report='debug/v144-rhythm-calibration/baseline/v5-frozen-calibration-baseline.json'
+          git add "$report"
+          if git diff --cached --quiet; then
+            echo 'Exact V144 calibration baseline already persisted; no commit required.'
+            exit 0
+          fi
+          changed="$(git diff --cached --name-only)"
+          test "$changed" = "$report" || {
+            echo "Unexpected staged paths:" >&2
+            printf '%s\n' "$changed" >&2
+            exit 91
+          }
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git commit -m 'Persist V144 frozen V5 calibration baseline'
+          for attempt in 1 2 3 4 5; do
+            git fetch origin v143-contextual-prune-lobo
+            if git rebase origin/v143-contextual-prune-lobo && git push origin HEAD:v143-contextual-prune-lobo; then
+              exit 0
+            fi
+            git rebase --abort 2>/dev/null || true
+            sleep $((attempt * 2))
+          done
+          exit 1
