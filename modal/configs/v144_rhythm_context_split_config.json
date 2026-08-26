@@ -1,0 +1,22 @@
+{
+  "schemaVersion": 14401,
+  "instrument": "rhythm",
+  "minimumPitchContentGain": 0.005,
+  "minimumMusicalFloorGain": 0.0,
+  "maximumPerMetricRegression": 0.0,
+  "maximumCanaryRegression": 0.0,
+  "maximumCriticalMismatchIncrease": 0,
+  "requiredPdfEventFidelity": 1.0,
+  "holdoutMustRemainClosed": true,
+  "splitSeed": 144,
+  "fitPercent": 60,
+  "validationPercent": 20,
+  "notes": [
+    "V144 calibration candidate must improve pitch-content F1 by at least 0.005 absolute.",
+    "No gated musical metric may regress on calibration or canary in this first CPU gate.",
+    "Critical mismatches may not increase.",
+    "PDF-event fidelity must remain exactly 1.0.",
+    "The no-prune baseline is mandatory and is selected whenever no candidate qualifies.",
+    "The consumed V5 holdout must remain closed; V144 gold-reference work is calibration, not unseen holdout evaluation."
+  ]
+}
