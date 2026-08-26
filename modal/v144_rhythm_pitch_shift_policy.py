@@ -9,6 +9,17 @@ DEFAULT_MIN_CORRECTION_SUPPORT = 3
 DEFAULT_MAX_CANDIDATES = 256
 DEFAULT_MAX_ABS_SEMITONE_SHIFT = 12
 OPEN_MIDI_BY_STRING_INDEX = {0: 64, 1: 59, 2: 55, 3: 50, 4: 45, 5: 40}
+LINKAGE_FIELDS = (
+    "bendSemitones",
+    "bendTargetFret",
+    "bendTargetMidi",
+    "legatoTargetEventIndex",
+    "legatoTargetFret",
+    "legatoTargetMidi",
+    "legatoContinuationFromEventIndex",
+    "legatoContinuationType",
+)
+BLOCKED_TECHNIQUE_TOKENS = ("bend", "hammer", "pull", "slide", "legato")
 
 
 def _rule_signatures(row: Mapping[str, Any]) -> tuple[tuple[str, str], ...]:
@@ -133,7 +144,24 @@ def _validate_event_position(event: Mapping[str, Any]) -> tuple[int, int, int]:
     return string_index, fret, midi
 
 
+def has_pitch_linkage(event: Mapping[str, Any]) -> bool:
+    """Return true when a pitch shift would require coordinated technique-target rewriting."""
+    for key in LINKAGE_FIELDS:
+        value = event.get(key)
+        if value is not None and value != "":
+            return True
+    techniques = event.get("techniques")
+    if isinstance(techniques, Sequence) and not isinstance(techniques, (str, bytes)):
+        for technique in techniques:
+            label = str(technique).strip().lower()
+            if any(token in label for token in BLOCKED_TECHNIQUE_TOKENS):
+                return True
+    return False
+
+
 def _eligible_for_shift(event: Mapping[str, Any], semitone_shift: int) -> bool:
+    if has_pitch_linkage(event):
+        return False
     _, fret, _ = _validate_event_position(event)
     shifted_fret = fret + int(semitone_shift)
     return 0 <= shifted_fret <= 36
@@ -237,23 +265,24 @@ def apply_pitch_shift_rule(
     transformed: list[dict[str, Any]] = []
     for event in events:
         row = dict(event)
-        if event_matches_pitch_shift_rule(row, signatures):
+        if event_matches_pitch_shift_rule(row, signatures) and _eligible_for_shift(row, shift):
             _, fret, midi = _validate_event_position(row)
-            shifted_fret = fret + shift
-            if 0 <= shifted_fret <= 36:
-                row["fret"] = shifted_fret
-                row["midi"] = midi + shift
+            row["fret"] = fret + shift
+            row["midi"] = midi + shift
         transformed.append(row)
     return transformed
 
 
 __all__ = [
+    "BLOCKED_TECHNIQUE_TOKENS",
     "DEFAULT_MAX_ABS_SEMITONE_SHIFT",
     "DEFAULT_MAX_CANDIDATES",
     "DEFAULT_MIN_CORRECTION_SUPPORT",
+    "LINKAGE_FIELDS",
     "OPEN_MIDI_BY_STRING_INDEX",
     "apply_pitch_shift_rule",
     "event_matches_pitch_shift_rule",
+    "has_pitch_linkage",
     "rank_fit_pitch_shift_rules",
     "same_onset_substitution_pairs",
 ]
