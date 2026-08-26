@@ -1,0 +1,340 @@
+name: V144 Rhythm Atomic Onset Dyad Pitch One-Shot
+
+on:
+  push:
+    branches:
+      - v143-contextual-prune-lobo
+    paths:
+      - .github/workflows/v144-atomic-onset-dyad-pitch-search.yml
+
+permissions:
+  contents: write
+
+concurrency:
+  group: v144-rhythm-atomic-onset-dyad-pitch-one-shot
+  cancel-in-progress: false
+
+jobs:
+  search:
+    if: "${{ github.event.head_commit.message == 'v144 execute atomic onset dyad pitch one-shot' }}"
+    name: Fit-lock atomic exact-two-note onset dyad pitch rewrite on CPU
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+
+    steps:
+      - name: Check out exact revision
+        uses: actions/checkout@v4
+        with:
+          ref: ${{ github.sha }}
+          fetch-depth: 0
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+
+      - name: Verify immutable inputs and exact pre-registered implementation
+        shell: bash
+        run: |
+          set -euo pipefail
+          test "$(git hash-object analyzer/v143_reference_free_rhythm_pipeline.py)" = "7f72f8ed9b14af8bc93e95544195204d99c6bec1"
+          test "$(git hash-object debug/v143-contextual-prune/v5-professional-pdf/final-professional-holdout-result.json)" = "511fd244f231b66d08306f97b5a47ed41f5415c7"
+          test "$(sha256sum debug/v143-contextual-prune/v5-professional-pdf/v5-render-stream.json | awk '{print $1}')" = "7c3399d3f5e05ecc8ac98d71d0e5300e1e78f63ae96c1642fe4a19debb4061b2"
+          test "$(sha256sum debug/v144-rhythm-calibration/reference/professional-rhythm-gold-reference.json | awk '{print $1}')" = "18fd868ae960dfcdd1ffb0110f1a9dfd8acc2ffeb46e247d1116cd54291526ac"
+          test "$(git hash-object debug/v144-rhythm-calibration/selected/v144-pitch-position-selected-baseline.json)" = "45287a40fbbe88f411d2eca7db3cce072174eda8"
+          test "$(git hash-object validation/v144_rhythm_calibration/search_atomic_onset_dyad_pitch_rewrites.py)" = "235f88fd4ed881231d23532e04cc148b756eebf4"
+          test "$(git hash-object modal/v144_rhythm_onset_dyad_pitch_policy.py)" = "09deedbb5f31c3a7f0573d9e68f78f956f692c1c"
+          test "$(git hash-object modal/tests/test_v144_rhythm_onset_dyad_pitch_policy.py)" = "0c4d7508267a4f06e71d518a50d6d67eafd44335"
+          test "$(git hash-object modal/tests/test_v144_rhythm_onset_dyad_pitch_search.py)" = "bc2583853b89b7422c7595b3218fc477177ed93a"
+          test "$(git hash-object modal/v144_rhythm_pitch_position_shift_policy.py)" = "f69755b61bdcdf3a669847ce7e425289b4b0927f"
+          test "$(git hash-object modal/v144_rhythm_pitch_shift_policy.py)" = "d9998c59acddba070069668d62bcb1c3cdaf2b05"
+          test "$(git hash-object modal/v144_rhythm_triple_conjunction_policy.py)" = "ef9768a127472d7ce0746fdf21164d33e5117ea4"
+          test "$(git hash-object modal/v144_rhythm_staged_selector.py)" = "d176a9a69366e192e6fa75bc1039661e977f0bfa"
+          test "$(git hash-object modal/v144_rhythm_measure_set_guard.py)" = "4a1364204dd1e720c09d835ec3995c165047de98"
+          test "$(git hash-object modal/v144_rhythm_context_split_policy.py)" = "2da58508f2132660ad317ee63d5cb043d58285f0"
+          test "$(git hash-object modal/configs/v144_rhythm_context_split_config.json)" = "9b93205cb47bc7718685b9d41b263778107801ce"
+          python -m py_compile validation/v144_rhythm_calibration/search_atomic_onset_dyad_pitch_rewrites.py
+          python modal/tests/test_v144_rhythm_staged_selector.py -v
+          python modal/tests/test_v144_rhythm_measure_set_guard.py -v
+          python modal/tests/test_v144_rhythm_onset_dyad_pitch_policy.py -v
+          python modal/tests/test_v144_rhythm_onset_dyad_pitch_search.py -v
+
+      - name: Run fit-only atomic onset dyad search and staged gates
+        shell: bash
+        run: |
+          set -euo pipefail
+          mkdir -p .v144/onset-dyad-search
+          python validation/v144_rhythm_calibration/search_atomic_onset_dyad_pitch_rewrites.py \
+            debug/v143-contextual-prune/v5-professional-pdf/v5-render-stream.json \
+            debug/v144-rhythm-calibration/reference/professional-rhythm-gold-reference.json \
+            debug/v144-rhythm-calibration/selected/v144-pitch-position-selected-baseline.json \
+            modal/configs/v144_rhythm_context_split_config.json \
+            debug/v144-rhythm-calibration/candidates/atomic-onset-dyad-pitch-search.json \
+            .v144/onset-dyad-search/locked-events.json \
+            --minimum-correction-support 3 \
+            --maximum-candidates 256 \
+            --maximum-abs-semitone-shift 12 \
+            > .v144/onset-dyad-search/search.log
+
+      - name: Verify construction isolation and locked-stream invariants
+        shell: bash
+        run: |
+          set -euo pipefail
+          python - <<'PY'
+          import json
+          from pathlib import Path
+
+          report = json.loads(Path('debug/v144-rhythm-calibration/candidates/atomic-onset-dyad-pitch-search.json').read_text(encoding='utf-8'))
+          assert report['classification'] == 'v144-rhythm-fit-only-atomic-onset-dyad-pitch-search'
+          assert report['evaluationRole'] == 'accepted-v144-baseline-atomic-two-note-onset-dyad-pitch-correction-gold-calibration'
+          assert report['mayClaimUnseenGeneralization'] is False
+          c = report['candidateConstruction']
+          assert c['sourceBaselineName'] == 'pitch-position-shift-54a6e8d3aa91c422'
+          assert c['sourceBaselineEventCount'] == 1144
+          assert c['sourceBaselineEventSha256'] == '5b36270aaeafa73b2e25722e2576a40424ce5951dcfd2b5d769746bd9eb07e0d'
+          assert c['sourceLabels'] == 'accepted-baseline-fit-only-exact-two-note-onset-same-string-reference-pairs'
+          assert c['runtimeRuleInputs'] == 'reference-free-exact-two-note-generated-onset-plus-structural-context-and-fixed-same-string-note-shifts-only'
+          assert c['candidateRuleShape'] == 'atomic-exact-two-note-onset-same-string-dyad-pitch-rewrite'
+          assert c['pairingPolicy'] == 'exact-two-note-generated-and-reference-onsets-same-two-distinct-strings-both-nonzero-tuning-derived-targets'
+          assert c['minimumCorrectionSupport'] == 3
+          assert c['maximumCandidates'] == 256
+          assert c['maximumAbsSemitoneShift'] == 12
+          assert 0 <= c['rankedRuleCount'] <= 256
+          assert 0 <= c['evaluatedCandidateCount'] <= c['rankedRuleCount']
+          assert c['fitGeneratedNoteCount'] == 643
+          assert c['fitGeneratedCanonicalEventCount'] == 643
+          assert c['fitReferenceNoteCount'] == 594
+          assert c['canonicalGeneratedEventsUsedForConstructionAndEligibility'] is True
+          assert c['validationLabelsUsedForCandidateConstructionOrRanking'] is False
+          assert c['canaryLabelsUsedForCandidateConstructionOrRanking'] is False
+          assert c['historicalConsumedFamilyResultsUsedForConstructionOrRanking'] is False
+          assert c['measureSetGuardUsesProfessionalReference'] is False
+          assert c['eventCountPreservationRequired'] is True
+          assert c['generatedMeasureSetPreservationRequired'] is True
+          assert c['exactlyTwoNoteOnsetRequired'] is True
+          assert c['sameTwoDistinctStringsRequired'] is True
+          assert c['atomicTwoEventChangeRequired'] is True
+          assert c['bothSemitoneShiftsNonZeroRequired'] is True
+          assert c['timingPreservationRequired'] is True
+          assert c['stringPreservationRequired'] is True
+          assert c['durationAndOtherMetadataPreservationRequired'] is True
+          assert c['tuningDerivedFretRequired'] is True
+          assert c['linkedPitchTechniqueEventsEligible'] is False
+          assert report['baseline']['eventCount'] == 1144
+          assert report['baseline']['eventSha256'] == '5b36270aaeafa73b2e25722e2576a40424ce5951dcfd2b5d769746bd9eb07e0d'
+          assert report['baseline']['generatedMeasureCount'] == 113
+          assert report['fitLock']['fitOnlyRanking'] is True
+          assert report['fitLock']['validationReadDuringLock'] is False
+          assert report['fitLock']['canaryReadDuringLock'] is False
+          assert report['fitLock']['baselineGeneratedMeasureSetPreservationRequired'] is True
+          assert report['alternateAfterGateFailureAllowed'] is False
+          locked = report['locked']
+          assert locked['eventCount'] == 1144
+          assert locked['changedEventCount'] % 2 == 0
+          assert locked['changedOnsetCount'] * 2 == locked['changedEventCount']
+          assert locked['measureSet']['baselineGeneratedMeasureCount'] == 113
+          assert locked['measureSet']['candidateGeneratedMeasureCount'] == 113
+          assert locked['measureSet']['missingBaselineGeneratedMeasures'] == []
+          assert locked['measureSet']['extraCandidateGeneratedMeasures'] == []
+          assert locked['measureSet']['baselineGeneratedMeasureSetPreserved'] is True
+          assert locked['measureSet']['professionalReferenceUsed'] is False
+          if locked['name'] != 'accepted-v144-baseline':
+              assert isinstance(locked['contextSignature'], str)
+              assert len(locked['noteRules']) == 2
+              assert len({int(rule['stringIndex']) for rule in locked['noteRules']}) == 2
+              assert all(int(rule['semitoneShift']) != 0 for rule in locked['noteRules'])
+              assert all(abs(int(rule['semitoneShift'])) <= 12 for rule in locked['noteRules'])
+          assert report['safety']['v5Modified'] is False
+          assert report['safety']['productionModified'] is False
+          assert report['safety']['mainModified'] is False
+          assert report['safety']['runtimeReferenceInputUsed'] is False
+          assert report['safety']['modalGpuInvoked'] is False
+          assert report['safety']['deterministic'] is True
+
+          if report['stoppedAt'] == 'fit':
+              assert report['selected'] == 'accepted-v144-baseline'
+              assert report['validation'] is None
+              assert report['canary'] is None
+              assert report['fullCalibration'] is None
+          elif report['stoppedAt'] == 'validation':
+              assert report['selected'] == 'accepted-v144-baseline'
+              assert report['validation']['passed'] is False
+              assert report['canary'] is None
+              assert report['fullCalibration'] is None
+          elif report['stoppedAt'] == 'canary':
+              assert report['selected'] == 'accepted-v144-baseline'
+              assert report['validation']['passed'] is True
+              assert report['canary']['passed'] is False
+              assert report['fullCalibration'] is None
+          elif report['stoppedAt'] == 'full-calibration':
+              assert report['selected'] == report['locked']['name']
+              assert report['validation']['passed'] is True
+              assert report['canary']['passed'] is True
+              assert report['fullCalibration'] is not None
+          else:
+              raise AssertionError(report['stoppedAt'])
+          PY
+
+      - name: Reprove locked candidate PDF-event identity independently
+        shell: bash
+        run: |
+          set -euo pipefail
+          mkdir -p .v144/onset-dyad-search/freeze
+          python - <<'PY'
+          import json
+          from pathlib import Path
+          locked = json.loads(Path('.v144/onset-dyad-search/locked-events.json').read_text(encoding='utf-8'))
+          assert locked['runtimeReferenceInputUsed'] is False
+          assert locked['baselineEventCountPreserved'] is True
+          assert locked['baselineGeneratedMeasureSetPreserved'] is True
+          assert len(locked['renderEvents']) == 1144
+          payload = {
+              'instrument': 'rhythm',
+              'renderEvents': locked['renderEvents'],
+              'tempoBpm': 129.19921875,
+              'timeSignature': '4/4',
+              'tuning': 'E Standard',
+              'structuredMode': True,
+              'sourceAudioSha256': '215bd5a657c5326f08f132ae358595a95c30b39bb7493a52c2f910d5a608149f',
+              'referenceFree': True,
+              'professionalReferenceUsed': False,
+              'referenceRuntimeInputUsed': False,
+              'runtimeLabelsRequired': False,
+              'v143RuntimeSafetyVerified': True,
+          }
+          Path('.v144/onset-dyad-search/freeze-input.json').write_text(json.dumps(payload, separators=(',', ':')) + '\n', encoding='utf-8')
+          PY
+          python validation/rhythm_holdout/freeze_rhythm_analysis.py \
+            .v144/onset-dyad-search/freeze-input.json .v144/onset-dyad-search/freeze \
+            --source-commit "${GITHUB_SHA}" > .v144/onset-dyad-search/freeze.log
+          cp lib/v143RenderContract.js .v144/onset-dyad-search/v143RenderContract.mjs
+          node --input-type=module <<'NODE'
+          import fs from 'node:fs/promises';
+          import { validateV143RenderEvents } from './.v144/onset-dyad-search/v143RenderContract.mjs';
+          const locked = JSON.parse(await fs.readFile('.v144/onset-dyad-search/locked-events.json', 'utf8'));
+          const events = validateV143RenderEvents(locked.renderEvents || []);
+          if (events.length !== 1144) throw new Error(`locked event count changed: ${events.length}`);
+          await fs.writeFile('.v144/onset-dyad-search/renderer-event-evidence.json', JSON.stringify({
+            schemaVersion: 1,
+            renderEvents: events,
+            runtimeSafetyVerified: true,
+            runtimeLabelsRequired: false,
+            referenceOpened: false,
+            professionalReferenceUsed: false,
+            productionModified: false,
+          }) + '\n');
+          NODE
+          python validation/rhythm_holdout/verify_pdf_event_fidelity.py \
+            .v144/onset-dyad-search/freeze .v144/onset-dyad-search/renderer-event-evidence.json \
+            > .v144/onset-dyad-search/pdf-event-fidelity.log
+
+      - name: Attach fidelity proof and evaluate final full-gold invariant
+        shell: bash
+        run: |
+          set -euo pipefail
+          python - <<'PY'
+          import json
+          from pathlib import Path
+          path = Path('debug/v144-rhythm-calibration/candidates/atomic-onset-dyad-pitch-search.json')
+          report = json.loads(path.read_text(encoding='utf-8'))
+          fidelity = json.loads(Path('.v144/onset-dyad-search/freeze/rhythm-pdf-event-fidelity.json').read_text(encoding='utf-8'))
+          assert fidelity['passed'] is True
+          assert fidelity['pdfEventFidelity'] == 1.0
+          assert fidelity['frozenEventSha256'] == fidelity['pdfEventSha256'] == report['locked']['eventSha256']
+          assert fidelity['frozenEventCount'] == report['locked']['eventCount'] == 1144
+          report['lockedCandidatePdfFidelityProof'] = {
+              'passed': True,
+              'pdfEventFidelity': 1.0,
+              'eventCount': fidelity['frozenEventCount'],
+              'eventSha256': fidelity['frozenEventSha256'],
+              'referenceOpenedDuringPdfFidelityCheck': False,
+          }
+          full = report['fullCalibration']
+          if full is not None:
+              full['pdfEventFidelity'] = 1.0
+              full['score']['gatedMetrics']['pdfEventFidelity'] = 1.0
+              deltas = full['baselineComparison']['gatedMetricDeltas']
+              regressions = {name: float(delta) for name, delta in deltas.items() if float(delta) < 0.0}
+              measure_coverage = float(full['score']['gatedMetrics']['measureCoverageRecall'])
+              critical_delta = int(full['baselineComparison']['criticalMismatchDelta'])
+              c = report['candidateConstruction']
+              invariant = (
+                  report['locked']['eventCount'] == 1144
+                  and report['locked']['measureSet']['baselineGeneratedMeasureSetPreserved'] is True
+                  and report['locked']['measureSet']['candidateGeneratedMeasureCount'] == 113
+                  and c['exactlyTwoNoteOnsetRequired'] is True
+                  and c['sameTwoDistinctStringsRequired'] is True
+                  and c['atomicTwoEventChangeRequired'] is True
+                  and c['bothSemitoneShiftsNonZeroRequired'] is True
+                  and c['timingPreservationRequired'] is True
+                  and c['stringPreservationRequired'] is True
+                  and c['durationAndOtherMetadataPreservationRequired'] is True
+                  and c['tuningDerivedFretRequired'] is True
+                  and report['locked']['changedEventCount'] % 2 == 0
+                  and measure_coverage == 1.0
+                  and not regressions
+                  and critical_delta <= 0
+                  and fidelity['pdfEventFidelity'] == 1.0
+              )
+              full['invariantPassed'] = invariant
+              full['invariantEvidence'] = {
+                  'baselineEventCountPreserved': report['locked']['eventCount'] == 1144,
+                  'baselineGeneratedMeasureSetPreserved': report['locked']['measureSet']['baselineGeneratedMeasureSetPreserved'],
+                  'candidateGeneratedMeasureCount': report['locked']['measureSet']['candidateGeneratedMeasureCount'],
+                  'exactlyTwoNoteOnsetRequired': c['exactlyTwoNoteOnsetRequired'],
+                  'sameTwoDistinctStringsRequired': c['sameTwoDistinctStringsRequired'],
+                  'atomicTwoEventChangeRequired': c['atomicTwoEventChangeRequired'],
+                  'bothSemitoneShiftsNonZeroRequired': c['bothSemitoneShiftsNonZeroRequired'],
+                  'timingPreservationRequired': c['timingPreservationRequired'],
+                  'stringPreservationRequired': c['stringPreservationRequired'],
+                  'durationAndOtherMetadataPreservationRequired': c['durationAndOtherMetadataPreservationRequired'],
+                  'tuningDerivedFretRequired': c['tuningDerivedFretRequired'],
+                  'changedEventCountIsEven': report['locked']['changedEventCount'] % 2 == 0,
+                  'measureCoverageRecall': measure_coverage,
+                  'metricRegressions': regressions,
+                  'criticalMismatchDelta': critical_delta,
+                  'pdfEventFidelity': 1.0,
+              }
+              report['calibrationPromotionAllowed'] = invariant
+              if invariant:
+                  report['selectedReason'] = 'locked-atomic-onset-dyad-candidate-passed-split-and-full-calibration-invariants'
+                  report['stoppedAt'] = 'complete'
+              else:
+                  report['selected'] = 'accepted-v144-baseline'
+                  report['selectedReason'] = 'locked-atomic-onset-dyad-candidate-failed-full-calibration-invariant'
+                  report['stoppedAt'] = 'full-calibration'
+          else:
+              report['calibrationPromotionAllowed'] = False
+          report['safety']['lockedCandidatePdfFidelityReproved'] = True
+          path.write_text(json.dumps(report, indent=2, sort_keys=True) + '\n', encoding='utf-8')
+          PY
+
+      - name: Reverify immutable V5 and accepted calibration baseline after search
+        shell: bash
+        run: |
+          set -euo pipefail
+          test "$(git hash-object analyzer/v143_reference_free_rhythm_pipeline.py)" = "7f72f8ed9b14af8bc93e95544195204d99c6bec1"
+          test "$(git hash-object debug/v143-contextual-prune/v5-professional-pdf/final-professional-holdout-result.json)" = "511fd244f231b66d08306f97b5a47ed41f5415c7"
+          test "$(sha256sum debug/v143-contextual-prune/v5-professional-pdf/v5-render-stream.json | awk '{print $1}')" = "7c3399d3f5e05ecc8ac98d71d0e5300e1e78f63ae96c1642fe4a19debb4061b2"
+          test "$(git hash-object debug/v144-rhythm-calibration/selected/v144-pitch-position-selected-baseline.json)" = "45287a40fbbe88f411d2eca7db3cce072174eda8"
+          test "$(git hash-object validation/v144_rhythm_calibration/search_atomic_onset_dyad_pitch_rewrites.py)" = "235f88fd4ed881231d23532e04cc148b756eebf4"
+          test "$(git hash-object modal/v144_rhythm_onset_dyad_pitch_policy.py)" = "09deedbb5f31c3a7f0573d9e68f78f956f692c1c"
+          test "$(git hash-object modal/tests/test_v144_rhythm_onset_dyad_pitch_search.py)" = "bc2583853b89b7422c7595b3218fc477177ed93a"
+
+      - name: Persist only atomic onset dyad search report
+        shell: bash
+        run: |
+          set -euo pipefail
+          report='debug/v144-rhythm-calibration/candidates/atomic-onset-dyad-pitch-search.json'
+          git add "$report"
+          test "$(git diff --cached --name-only)" = "$report"
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git commit -m 'Persist V144 atomic onset dyad pitch calibration result'
+          for attempt in 1 2 3 4 5; do
+            git fetch origin v143-contextual-prune-lobo
+            if git rebase origin/v143-contextual-prune-lobo && git push origin HEAD:v143-contextual-prune-lobo; then exit 0; fi
+            git rebase --abort 2>/dev/null || true
+            sleep $((attempt * 2))
+          done
+          exit 1
