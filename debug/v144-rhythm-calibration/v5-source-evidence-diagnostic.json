@@ -1,0 +1,2199 @@
+{
+  "attackEvidenceByOutcome": {
+    "allV5": {
+      "matched": {
+        "detectionCountSum": {
+          "count": 360,
+          "max": 83.0,
+          "mean": 34.50833333333333,
+          "median": 32.0,
+          "min": 4.0,
+          "p10": 17.0,
+          "p25": 24.0,
+          "p75": 43.0,
+          "p90": 54.10000000000002
+        },
+        "precisionGridErrorSeconds": {
+          "count": 360,
+          "max": 0.05917389046711996,
+          "mean": 0.027060458314417987,
+          "median": 0.02656088491723274,
+          "min": 0.0002472388117951141,
+          "p10": 0.004863531544441457,
+          "p25": 0.013104819136054768,
+          "p75": 0.04098994796485522,
+          "p90": 0.050016227561005884
+        },
+        "precisionStrength": {
+          "count": 360,
+          "max": 8.625445064657574,
+          "mean": 4.987720712537831,
+          "median": 4.849417103741492,
+          "min": 2.7938440975510157,
+          "p10": 3.808669086209069,
+          "p25": 4.206379791816331,
+          "p75": 5.661514613814054,
+          "p90": 6.387663136282534
+        },
+        "stemSupportMax": {
+          "count": 360,
+          "max": 2.0,
+          "mean": 1.9944444444444445,
+          "median": 2.0,
+          "min": 1.0,
+          "p10": 2.0,
+          "p25": 2.0,
+          "p75": 2.0,
+          "p90": 2.0
+        },
+        "sweepSupportMax": {
+          "count": 360,
+          "max": 4.0,
+          "mean": 3.808333333333333,
+          "median": 4.0,
+          "min": 1.0,
+          "p10": 3.0,
+          "p25": 4.0,
+          "p75": 4.0,
+          "p90": 4.0
+        }
+      },
+      "matchedCount": 360,
+      "rowCount": 891,
+      "unmatched": {
+        "detectionCountSum": {
+          "count": 531,
+          "max": 79.0,
+          "mean": 33.38229755178908,
+          "median": 32.0,
+          "min": 1.0,
+          "p10": 14.0,
+          "p25": 22.0,
+          "p75": 44.0,
+          "p90": 54.0
+        },
+        "precisionGridErrorSeconds": {
+          "count": 531,
+          "max": 0.14881793245578223,
+          "mean": 0.026146907074552795,
+          "median": 0.02398198484581826,
+          "min": 0.00021786954876290565,
+          "p10": 0.004438771011365361,
+          "p25": 0.01056246328118604,
+          "p75": 0.03938264410203729,
+          "p90": 0.05085526463491874
+        },
+        "precisionStrength": {
+          "count": 531,
+          "max": 9.753603039043067,
+          "mean": 5.055213874928107,
+          "median": 4.834757388308395,
+          "min": 0.8673809985260692,
+          "p10": 3.6557674696008995,
+          "p25": 4.211756417147378,
+          "p75": 5.696271906809523,
+          "p90": 6.769657041129252
+        },
+        "stemSupportMax": {
+          "count": 531,
+          "max": 2.0,
+          "mean": 1.9811676082862524,
+          "median": 2.0,
+          "min": 1.0,
+          "p10": 2.0,
+          "p25": 2.0,
+          "p75": 2.0,
+          "p90": 2.0
+        },
+        "sweepSupportMax": {
+          "count": 531,
+          "max": 4.0,
+          "mean": 3.7156308851224105,
+          "median": 4.0,
+          "min": 1.0,
+          "p10": 3.0,
+          "p25": 4.0,
+          "p75": 4.0,
+          "p90": 4.0
+        }
+      },
+      "unmatchedCount": 531
+    },
+    "baseline": {
+      "matched": {
+        "detectionCountSum": {
+          "count": 280,
+          "max": 83.0,
+          "mean": 32.46785714285714,
+          "median": 31.0,
+          "min": 4.0,
+          "p10": 17.0,
+          "p25": 23.75,
+          "p75": 41.0,
+          "p90": 51.19999999999999
+        },
+        "precisionGridErrorSeconds": {
+          "count": 280,
+          "max": 0.05917389046711996,
+          "mean": 0.029077885607669676,
+          "median": 0.029157073708621972,
+          "min": 0.0002472388117951141,
+          "p10": 0.0056088397682600545,
+          "p25": 0.015260854437066484,
+          "p75": 0.042995192493755496,
+          "p90": 0.051099752389112046
+        },
+        "precisionStrength": {
+          "count": 280,
+          "max": 8.625445064657574,
+          "mean": 5.109700382177517,
+          "median": 5.014877688986387,
+          "min": 2.7938440975510157,
+          "p10": 3.8246633591383183,
+          "p25": 4.299204430073688,
+          "p75": 5.805105764677998,
+          "p90": 6.620714752721089
+        },
+        "stemSupportMax": {
+          "count": 280,
+          "max": 2.0,
+          "mean": 1.9964285714285714,
+          "median": 2.0,
+          "min": 1.0,
+          "p10": 2.0,
+          "p25": 2.0,
+          "p75": 2.0,
+          "p90": 2.0
+        },
+        "sweepSupportMax": {
+          "count": 280,
+          "max": 4.0,
+          "mean": 3.789285714285714,
+          "median": 4.0,
+          "min": 1.0,
+          "p10": 3.0,
+          "p25": 4.0,
+          "p75": 4.0,
+          "p90": 4.0
+        }
+      },
+      "matchedCount": 280,
+      "rowCount": 725,
+      "unmatched": {
+        "detectionCountSum": {
+          "count": 445,
+          "max": 78.0,
+          "mean": 32.442696629213486,
+          "median": 32.0,
+          "min": 1.0,
+          "p10": 13.0,
+          "p25": 21.0,
+          "p75": 43.0,
+          "p90": 53.0
+        },
+        "precisionGridErrorSeconds": {
+          "count": 445,
+          "max": 0.14881793245578223,
+          "mean": 0.02659012879928657,
+          "median": 0.023992084598638996,
+          "min": 0.00021786954876290565,
+          "p10": 0.004521975630838427,
+          "p25": 0.010591659634940243,
+          "p75": 0.04020060470973874,
+          "p90": 0.0509595720331248
+        },
+        "precisionStrength": {
+          "count": 445,
+          "max": 9.753603039043067,
+          "mean": 5.186040345996933,
+          "median": 5.044807554335598,
+          "min": 0.8673809985260692,
+          "p10": 3.72605842114013,
+          "p25": 4.283385870009089,
+          "p75": 5.865464824104297,
+          "p90": 6.919610191779581
+        },
+        "stemSupportMax": {
+          "count": 445,
+          "max": 2.0,
+          "mean": 1.9775280898876404,
+          "median": 2.0,
+          "min": 1.0,
+          "p10": 2.0,
+          "p25": 2.0,
+          "p75": 2.0,
+          "p90": 2.0
+        },
+        "sweepSupportMax": {
+          "count": 445,
+          "max": 4.0,
+          "mean": 3.69438202247191,
+          "median": 4.0,
+          "min": 1.0,
+          "p10": 3.0,
+          "p25": 4.0,
+          "p75": 4.0,
+          "p90": 4.0
+        }
+      },
+      "unmatchedCount": 445
+    },
+    "rescued": {
+      "matched": {
+        "detectionCountSum": {
+          "count": 80,
+          "max": 79.0,
+          "mean": 41.65,
+          "median": 41.0,
+          "min": 7.0,
+          "p10": 22.900000000000002,
+          "p25": 31.25,
+          "p75": 52.0,
+          "p90": 63.400000000000034
+        },
+        "precisionGridErrorSeconds": {
+          "count": 80,
+          "max": 0.05379233135827377,
+          "mean": 0.019999462788037065,
+          "median": 0.016587982887770636,
+          "min": 0.00040893100454297837,
+          "p10": 0.004303862090465316,
+          "p25": 0.007520054746030791,
+          "p75": 0.030041901648523606,
+          "p90": 0.04112926447959167
+        },
+        "precisionStrength": {
+          "count": 80,
+          "max": 6.265654348480763,
+          "mean": 4.560791868798926,
+          "median": 4.43739430788889,
+          "min": 2.863307502902489,
+          "p10": 3.695189482628609,
+          "p25": 4.090226546487536,
+          "p75": 4.9171561858049735,
+          "p90": 5.690715263433583
+        },
+        "stemSupportMax": {
+          "count": 80,
+          "max": 2.0,
+          "mean": 1.9875,
+          "median": 2.0,
+          "min": 1.0,
+          "p10": 2.0,
+          "p25": 2.0,
+          "p75": 2.0,
+          "p90": 2.0
+        },
+        "sweepSupportMax": {
+          "count": 80,
+          "max": 4.0,
+          "mean": 3.875,
+          "median": 4.0,
+          "min": 2.0,
+          "p10": 3.0,
+          "p25": 4.0,
+          "p75": 4.0,
+          "p90": 4.0
+        }
+      },
+      "matchedCount": 80,
+      "rowCount": 166,
+      "unmatched": {
+        "detectionCountSum": {
+          "count": 86,
+          "max": 79.0,
+          "mean": 38.24418604651163,
+          "median": 37.0,
+          "min": 5.0,
+          "p10": 18.0,
+          "p25": 28.0,
+          "p75": 47.75,
+          "p90": 60.0
+        },
+        "precisionGridErrorSeconds": {
+          "count": 86,
+          "max": 0.06029064770521586,
+          "mean": 0.02385349233610477,
+          "median": 0.023936271087308114,
+          "min": 0.00027968641271058914,
+          "p10": 0.003677847164397008,
+          "p25": 0.010098044948417595,
+          "p75": 0.034573784709749145,
+          "p90": 0.04664240022449562
+        },
+        "precisionStrength": {
+          "count": 86,
+          "max": 7.436228121596381,
+          "mean": 4.378262949048721,
+          "median": 4.301982643845815,
+          "min": 2.866734206403636,
+          "p10": 3.3505224500340125,
+          "p25": 3.82162029508729,
+          "p75": 4.792992761899083,
+          "p90": 5.390876980197287
+        },
+        "stemSupportMax": {
+          "count": 86,
+          "max": 2.0,
+          "mean": 2.0,
+          "median": 2.0,
+          "min": 2.0,
+          "p10": 2.0,
+          "p25": 2.0,
+          "p75": 2.0,
+          "p90": 2.0
+        },
+        "sweepSupportMax": {
+          "count": 86,
+          "max": 4.0,
+          "mean": 3.8255813953488373,
+          "median": 4.0,
+          "min": 1.0,
+          "p10": 3.0,
+          "p25": 4.0,
+          "p75": 4.0,
+          "p90": 4.0
+        }
+      },
+      "unmatchedCount": 86
+    }
+  },
+  "attackMetrics": {
+    "allV5": {
+      "f1": 0.4819277108433735,
+      "generated": 891,
+      "matched": 360,
+      "precision": 0.40404040404040403,
+      "recall": 0.5970149253731343,
+      "reference": 603
+    },
+    "baselineOnly": {
+      "f1": 0.4216867469879518,
+      "generated": 725,
+      "matched": 280,
+      "precision": 0.38620689655172413,
+      "recall": 0.46434494195688225,
+      "reference": 603
+    },
+    "rescuedOnly": {
+      "f1": 0.20806241872561768,
+      "generated": 166,
+      "matched": 80,
+      "precision": 0.4819277108433735,
+      "recall": 0.13266998341625208,
+      "reference": 603
+    }
+  },
+  "attackRuleSweep": [
+    {
+      "crossSplitMinF1": 0.4736129905277402,
+      "evenMeasures": {
+        "f1": 0.4736129905277402,
+        "generated": 440,
+        "matched": 175,
+        "precision": 0.3977272727272727,
+        "recall": 0.5852842809364549,
+        "reference": 299
+      },
+      "keptAttackCount": 839,
+      "oddMeasures": {
+        "f1": 0.5007112375533428,
+        "generated": 399,
+        "matched": 176,
+        "precision": 0.44110275689223055,
+        "recall": 0.5789473684210527,
+        "reference": 304
+      },
+      "overall": {
+        "f1": 0.48682385575589454,
+        "generated": 839,
+        "matched": 351,
+        "precision": 0.41835518474374256,
+        "recall": 0.582089552238806,
+        "reference": 603
+      },
+      "rule": "detection>=12&grid<=0.06"
+    },
+    {
+      "crossSplitMinF1": 0.472972972972973,
+      "evenMeasures": {
+        "f1": 0.472972972972973,
+        "generated": 441,
+        "matched": 175,
+        "precision": 0.3968253968253968,
+        "recall": 0.5852842809364549,
+        "reference": 299
+      },
+      "keptAttackCount": 841,
+      "oddMeasures": {
+        "f1": 0.5,
+        "generated": 400,
+        "matched": 176,
+        "precision": 0.44,
+        "recall": 0.5789473684210527,
+        "reference": 304
+      },
+      "overall": {
+        "f1": 0.48614958448753465,
+        "generated": 841,
+        "matched": 351,
+        "precision": 0.4173602853745541,
+        "recall": 0.582089552238806,
+        "reference": 603
+      },
+      "rule": "detectionCountSum>=12"
+    },
+    {
+      "crossSplitMinF1": 0.472972972972973,
+      "evenMeasures": {
+        "f1": 0.472972972972973,
+        "generated": 441,
+        "matched": 175,
+        "precision": 0.3968253968253968,
+        "recall": 0.5852842809364549,
+        "reference": 299
+      },
+      "keptAttackCount": 841,
+      "oddMeasures": {
+        "f1": 0.5,
+        "generated": 400,
+        "matched": 176,
+        "precision": 0.44,
+        "recall": 0.5789473684210527,
+        "reference": 304
+      },
+      "overall": {
+        "f1": 0.48614958448753465,
+        "generated": 841,
+        "matched": 351,
+        "precision": 0.4173602853745541,
+        "recall": 0.582089552238806,
+        "reference": 603
+      },
+      "rule": "detection>=12&grid<=0.10"
+    },
+    {
+      "crossSplitMinF1": 0.472972972972973,
+      "evenMeasures": {
+        "f1": 0.472972972972973,
+        "generated": 441,
+        "matched": 175,
+        "precision": 0.3968253968253968,
+        "recall": 0.5852842809364549,
+        "reference": 299
+      },
+      "keptAttackCount": 841,
+      "oddMeasures": {
+        "f1": 0.5,
+        "generated": 400,
+        "matched": 176,
+        "precision": 0.44,
+        "recall": 0.5789473684210527,
+        "reference": 304
+      },
+      "overall": {
+        "f1": 0.48614958448753465,
+        "generated": 841,
+        "matched": 351,
+        "precision": 0.4173602853745541,
+        "recall": 0.582089552238806,
+        "reference": 603
+      },
+      "rule": "detection>=12&grid<=0.16"
+    },
+    {
+      "crossSplitMinF1": 0.47237569060773477,
+      "evenMeasures": {
+        "f1": 0.47237569060773477,
+        "generated": 425,
+        "matched": 171,
+        "precision": 0.4023529411764706,
+        "recall": 0.5719063545150501,
+        "reference": 299
+      },
+      "keptAttackCount": 798,
+      "oddMeasures": {
+        "f1": 0.48153618906942397,
+        "generated": 373,
+        "matched": 163,
+        "precision": 0.43699731903485256,
+        "recall": 0.5361842105263158,
+        "reference": 304
+      },
+      "overall": {
+        "f1": 0.476802284082798,
+        "generated": 798,
+        "matched": 334,
+        "precision": 0.41854636591478694,
+        "recall": 0.5538971807628524,
+        "reference": 603
+      },
+      "rule": "detection>=16&grid<=0.06"
+    },
+    {
+      "crossSplitMinF1": 0.47172413793103446,
+      "evenMeasures": {
+        "f1": 0.47172413793103446,
+        "generated": 426,
+        "matched": 171,
+        "precision": 0.4014084507042254,
+        "recall": 0.5719063545150501,
+        "reference": 299
+      },
+      "keptAttackCount": 800,
+      "oddMeasures": {
+        "f1": 0.4808259587020649,
+        "generated": 374,
+        "matched": 163,
+        "precision": 0.4358288770053476,
+        "recall": 0.5361842105263158,
+        "reference": 304
+      },
+      "overall": {
+        "f1": 0.47612259444048466,
+        "generated": 800,
+        "matched": 334,
+        "precision": 0.4175,
+        "recall": 0.5538971807628524,
+        "reference": 603
+      },
+      "rule": "detectionCountSum>=16"
+    },
+    {
+      "crossSplitMinF1": 0.47172413793103446,
+      "evenMeasures": {
+        "f1": 0.47172413793103446,
+        "generated": 426,
+        "matched": 171,
+        "precision": 0.4014084507042254,
+        "recall": 0.5719063545150501,
+        "reference": 299
+      },
+      "keptAttackCount": 800,
+      "oddMeasures": {
+        "f1": 0.4808259587020649,
+        "generated": 374,
+        "matched": 163,
+        "precision": 0.4358288770053476,
+        "recall": 0.5361842105263158,
+        "reference": 304
+      },
+      "overall": {
+        "f1": 0.47612259444048466,
+        "generated": 800,
+        "matched": 334,
+        "precision": 0.4175,
+        "recall": 0.5538971807628524,
+        "reference": 603
+      },
+      "rule": "detection>=16&grid<=0.10"
+    },
+    {
+      "crossSplitMinF1": 0.47172413793103446,
+      "evenMeasures": {
+        "f1": 0.47172413793103446,
+        "generated": 426,
+        "matched": 171,
+        "precision": 0.4014084507042254,
+        "recall": 0.5719063545150501,
+        "reference": 299
+      },
+      "keptAttackCount": 800,
+      "oddMeasures": {
+        "f1": 0.4808259587020649,
+        "generated": 374,
+        "matched": 163,
+        "precision": 0.4358288770053476,
+        "recall": 0.5361842105263158,
+        "reference": 304
+      },
+      "overall": {
+        "f1": 0.47612259444048466,
+        "generated": 800,
+        "matched": 334,
+        "precision": 0.4175,
+        "recall": 0.5538971807628524,
+        "reference": 603
+      },
+      "rule": "detection>=16&grid<=0.16"
+    },
+    {
+      "crossSplitMinF1": 0.47058823529411764,
+      "evenMeasures": {
+        "f1": 0.47058823529411764,
+        "generated": 449,
+        "matched": 176,
+        "precision": 0.39198218262806234,
+        "recall": 0.5886287625418061,
+        "reference": 299
+      },
+      "keptAttackCount": 863,
+      "oddMeasures": {
+        "f1": 0.5041782729805014,
+        "generated": 414,
+        "matched": 181,
+        "precision": 0.43719806763285024,
+        "recall": 0.5953947368421053,
+        "reference": 304
+      },
+      "overall": {
+        "f1": 0.4870395634379263,
+        "generated": 863,
+        "matched": 357,
+        "precision": 0.41367323290845887,
+        "recall": 0.5920398009950248,
+        "reference": 603
+      },
+      "rule": "detectionCountSum>=10"
+    },
+    {
+      "crossSplitMinF1": 0.47058823529411764,
+      "evenMeasures": {
+        "f1": 0.47058823529411764,
+        "generated": 449,
+        "matched": 176,
+        "precision": 0.39198218262806234,
+        "recall": 0.5886287625418061,
+        "reference": 299
+      },
+      "keptAttackCount": 868,
+      "oddMeasures": {
+        "f1": 0.5034578146611343,
+        "generated": 419,
+        "matched": 182,
+        "precision": 0.4343675417661098,
+        "recall": 0.5986842105263158,
+        "reference": 304
+      },
+      "overall": {
+        "f1": 0.48674371176070697,
+        "generated": 868,
+        "matched": 358,
+        "precision": 0.41244239631336405,
+        "recall": 0.593698175787728,
+        "reference": 603
+      },
+      "rule": "detection>=8&grid<=0.06"
+    },
+    {
+      "crossSplitMinF1": 0.47011952191235057,
+      "evenMeasures": {
+        "f1": 0.47011952191235057,
+        "generated": 454,
+        "matched": 177,
+        "precision": 0.3898678414096916,
+        "recall": 0.5919732441471572,
+        "reference": 299
+      },
+      "keptAttackCount": 879,
+      "oddMeasures": {
+        "f1": 0.4965706447187929,
+        "generated": 425,
+        "matched": 181,
+        "precision": 0.4258823529411765,
+        "recall": 0.5953947368421053,
+        "reference": 304
+      },
+      "overall": {
+        "f1": 0.4831309041835357,
+        "generated": 879,
+        "matched": 358,
+        "precision": 0.4072810011376564,
+        "recall": 0.593698175787728,
+        "reference": 603
+      },
+      "rule": "stemSupportMax>=2"
+    },
+    {
+      "crossSplitMinF1": 0.4699599465954606,
+      "evenMeasures": {
+        "f1": 0.4699599465954606,
+        "generated": 450,
+        "matched": 176,
+        "precision": 0.39111111111111113,
+        "recall": 0.5886287625418061,
+        "reference": 299
+      },
+      "keptAttackCount": 870,
+      "oddMeasures": {
+        "f1": 0.5027624309392266,
+        "generated": 420,
+        "matched": 182,
+        "precision": 0.43333333333333335,
+        "recall": 0.5986842105263158,
+        "reference": 304
+      },
+      "overall": {
+        "f1": 0.48608282416836385,
+        "generated": 870,
+        "matched": 358,
+        "precision": 0.4114942528735632,
+        "recall": 0.593698175787728,
+        "reference": 603
+      },
+      "rule": "detection>=8&grid<=0.10"
+    },
+    {
+      "crossSplitMinF1": 0.4699599465954606,
+      "evenMeasures": {
+        "f1": 0.4699599465954606,
+        "generated": 450,
+        "matched": 176,
+        "precision": 0.39111111111111113,
+        "recall": 0.5886287625418061,
+        "reference": 299
+      },
+      "keptAttackCount": 871,
+      "oddMeasures": {
+        "f1": 0.5020689655172415,
+        "generated": 421,
+        "matched": 182,
+        "precision": 0.4323040380047506,
+        "recall": 0.5986842105263158,
+        "reference": 304
+      },
+      "overall": {
+        "f1": 0.48575305291723203,
+        "generated": 871,
+        "matched": 358,
+        "precision": 0.41102181400688864,
+        "recall": 0.593698175787728,
+        "reference": 603
+      },
+      "rule": "detectionCountSum>=8"
+    },
+    {
+      "crossSplitMinF1": 0.4699599465954606,
+      "evenMeasures": {
+        "f1": 0.4699599465954606,
+        "generated": 450,
+        "matched": 176,
+        "precision": 0.39111111111111113,
+        "recall": 0.5886287625418061,
+        "reference": 299
+      },
+      "keptAttackCount": 871,
+      "oddMeasures": {
+        "f1": 0.5020689655172415,
+        "generated": 421,
+        "matched": 182,
+        "precision": 0.4323040380047506,
+        "recall": 0.5986842105263158,
+        "reference": 304
+      },
+      "overall": {
+        "f1": 0.48575305291723203,
+        "generated": 871,
+        "matched": 358,
+        "precision": 0.41102181400688864,
+        "recall": 0.593698175787728,
+        "reference": 603
+      },
+      "rule": "detection>=8&grid<=0.16"
+    },
+    {
+      "crossSplitMinF1": 0.4693333333333334,
+      "evenMeasures": {
+        "f1": 0.4693333333333334,
+        "generated": 451,
+        "matched": 176,
+        "precision": 0.3902439024390244,
+        "recall": 0.5886287625418061,
+        "reference": 299
+      },
+      "keptAttackCount": 872,
+      "oddMeasures": {
+        "f1": 0.5048275862068965,
+        "generated": 421,
+        "matched": 183,
+        "precision": 0.4346793349168646,
+        "recall": 0.6019736842105263,
+        "reference": 304
+      },
+      "overall": {
+        "f1": 0.4867796610169492,
+        "generated": 872,
+        "matched": 359,
+        "precision": 0.411697247706422,
+        "recall": 0.5953565505804311,
+        "reference": 603
+      },
+      "rule": "sweepSupportMax>=2"
+    },
+    {
+      "crossSplitMinF1": 0.4682539682539683,
+      "evenMeasures": {
+        "f1": 0.4682539682539683,
+        "generated": 457,
+        "matched": 177,
+        "precision": 0.387308533916849,
+        "recall": 0.5919732441471572,
+        "reference": 299
+      },
+      "keptAttackCount": 884,
+      "oddMeasures": {
+        "f1": 0.5006839945280437,
+        "generated": 427,
+        "matched": 183,
+        "precision": 0.42857142857142855,
+        "recall": 0.6019736842105263,
+        "reference": 304
+      },
+      "overall": {
+        "f1": 0.4841963685272361,
+        "generated": 884,
+        "matched": 360,
+        "precision": 0.4072398190045249,
+        "recall": 0.5970149253731343,
+        "reference": 603
+      },
+      "rule": "detectionCountSum>=4"
+    },
+    {
+      "crossSplitMinF1": 0.4674634794156707,
+      "evenMeasures": {
+        "f1": 0.4674634794156707,
+        "generated": 454,
+        "matched": 176,
+        "precision": 0.3876651982378855,
+        "recall": 0.5886287625418061,
+        "reference": 299
+      },
+      "keptAttackCount": 878,
+      "oddMeasures": {
+        "f1": 0.5027472527472527,
+        "generated": 424,
+        "matched": 183,
+        "precision": 0.43160377358490565,
+        "recall": 0.6019736842105263,
+        "reference": 304
+      },
+      "overall": {
+        "f1": 0.48480756245779877,
+        "generated": 878,
+        "matched": 359,
+        "precision": 0.40888382687927105,
+        "recall": 0.5953565505804311,
+        "reference": 603
+      },
+      "rule": "detectionCountSum>=6"
+    },
+    {
+      "crossSplitMinF1": 0.4670184696569921,
+      "evenMeasures": {
+        "f1": 0.4670184696569921,
+        "generated": 459,
+        "matched": 177,
+        "precision": 0.38562091503267976,
+        "recall": 0.5919732441471572,
+        "reference": 299
+      },
+      "keptAttackCount": 887,
+      "oddMeasures": {
+        "f1": 0.5,
+        "generated": 428,
+        "matched": 183,
+        "precision": 0.42757009345794394,
+        "recall": 0.6019736842105263,
+        "reference": 304
+      },
+      "overall": {
+        "f1": 0.4832214765100671,
+        "generated": 887,
+        "matched": 360,
+        "precision": 0.40586245772266066,
+        "recall": 0.5970149253731343,
+        "reference": 603
+      },
+      "rule": "gridError<=0.06"
+    },
+    {
+      "crossSplitMinF1": 0.4670184696569921,
+      "evenMeasures": {
+        "f1": 0.4670184696569921,
+        "generated": 459,
+        "matched": 177,
+        "precision": 0.38562091503267976,
+        "recall": 0.5919732441471572,
+        "reference": 299
+      },
+      "keptAttackCount": 888,
+      "oddMeasures": {
+        "f1": 0.49931787175989084,
+        "generated": 429,
+        "matched": 183,
+        "precision": 0.42657342657342656,
+        "recall": 0.6019736842105263,
+        "reference": 304
+      },
+      "overall": {
+        "f1": 0.482897384305835,
+        "generated": 888,
+        "matched": 360,
+        "precision": 0.40540540540540543,
+        "recall": 0.5970149253731343,
+        "reference": 603
+      },
+      "rule": "precisionStrength>=2.0"
+    },
+    {
+      "crossSplitMinF1": 0.466403162055336,
+      "evenMeasures": {
+        "f1": 0.466403162055336,
+        "generated": 460,
+        "matched": 177,
+        "precision": 0.3847826086956522,
+        "recall": 0.5919732441471572,
+        "reference": 299
+      },
+      "keptAttackCount": 889,
+      "oddMeasures": {
+        "f1": 0.49931787175989084,
+        "generated": 429,
+        "matched": 183,
+        "precision": 0.42657342657342656,
+        "recall": 0.6019736842105263,
+        "reference": 304
+      },
+      "overall": {
+        "f1": 0.4825737265415549,
+        "generated": 889,
+        "matched": 360,
+        "precision": 0.4049493813273341,
+        "recall": 0.5970149253731343,
+        "reference": 603
+      },
+      "rule": "gridError<=0.08"
+    },
+    {
+      "crossSplitMinF1": 0.466403162055336,
+      "evenMeasures": {
+        "f1": 0.466403162055336,
+        "generated": 460,
+        "matched": 177,
+        "precision": 0.3847826086956522,
+        "recall": 0.5919732441471572,
+        "reference": 299
+      },
+      "keptAttackCount": 889,
+      "oddMeasures": {
+        "f1": 0.49931787175989084,
+        "generated": 429,
+        "matched": 183,
+        "precision": 0.42657342657342656,
+        "recall": 0.6019736842105263,
+        "reference": 304
+      },
+      "overall": {
+        "f1": 0.4825737265415549,
+        "generated": 889,
+        "matched": 360,
+        "precision": 0.4049493813273341,
+        "recall": 0.5970149253731343,
+        "reference": 603
+      },
+      "rule": "gridError<=0.10"
+    },
+    {
+      "crossSplitMinF1": 0.466403162055336,
+      "evenMeasures": {
+        "f1": 0.466403162055336,
+        "generated": 460,
+        "matched": 177,
+        "precision": 0.3847826086956522,
+        "recall": 0.5919732441471572,
+        "reference": 299
+      },
+      "keptAttackCount": 890,
+      "oddMeasures": {
+        "f1": 0.4986376021798365,
+        "generated": 430,
+        "matched": 183,
+        "precision": 0.4255813953488372,
+        "recall": 0.6019736842105263,
+        "reference": 304
+      },
+      "overall": {
+        "f1": 0.4822505023442732,
+        "generated": 890,
+        "matched": 360,
+        "precision": 0.4044943820224719,
+        "recall": 0.5970149253731343,
+        "reference": 603
+      },
+      "rule": "gridError<=0.12"
+    },
+    {
+      "crossSplitMinF1": 0.466403162055336,
+      "evenMeasures": {
+        "f1": 0.466403162055336,
+        "generated": 460,
+        "matched": 177,
+        "precision": 0.3847826086956522,
+        "recall": 0.5919732441471572,
+        "reference": 299
+      },
+      "keptAttackCount": 891,
+      "oddMeasures": {
+        "f1": 0.4979591836734695,
+        "generated": 431,
+        "matched": 183,
+        "precision": 0.4245939675174014,
+        "recall": 0.6019736842105263,
+        "reference": 304
+      },
+      "overall": {
+        "f1": 0.4819277108433735,
+        "generated": 891,
+        "matched": 360,
+        "precision": 0.40404040404040403,
+        "recall": 0.5970149253731343,
+        "reference": 603
+      },
+      "rule": "all-v5"
+    },
+    {
+      "crossSplitMinF1": 0.466403162055336,
+      "evenMeasures": {
+        "f1": 0.466403162055336,
+        "generated": 460,
+        "matched": 177,
+        "precision": 0.3847826086956522,
+        "recall": 0.5919732441471572,
+        "reference": 299
+      },
+      "keptAttackCount": 891,
+      "oddMeasures": {
+        "f1": 0.4979591836734695,
+        "generated": 431,
+        "matched": 183,
+        "precision": 0.4245939675174014,
+        "recall": 0.6019736842105263,
+        "reference": 304
+      },
+      "overall": {
+        "f1": 0.4819277108433735,
+        "generated": 891,
+        "matched": 360,
+        "precision": 0.40404040404040403,
+        "recall": 0.5970149253731343,
+        "reference": 603
+      },
+      "rule": "stemSupportMax>=1"
+    },
+    {
+      "crossSplitMinF1": 0.466403162055336,
+      "evenMeasures": {
+        "f1": 0.466403162055336,
+        "generated": 460,
+        "matched": 177,
+        "precision": 0.3847826086956522,
+        "recall": 0.5919732441471572,
+        "reference": 299
+      },
+      "keptAttackCount": 891,
+      "oddMeasures": {
+        "f1": 0.4979591836734695,
+        "generated": 431,
+        "matched": 183,
+        "precision": 0.4245939675174014,
+        "recall": 0.6019736842105263,
+        "reference": 304
+      },
+      "overall": {
+        "f1": 0.4819277108433735,
+        "generated": 891,
+        "matched": 360,
+        "precision": 0.40404040404040403,
+        "recall": 0.5970149253731343,
+        "reference": 603
+      },
+      "rule": "sweepSupportMax>=1"
+    },
+    {
+      "crossSplitMinF1": 0.466403162055336,
+      "evenMeasures": {
+        "f1": 0.466403162055336,
+        "generated": 460,
+        "matched": 177,
+        "precision": 0.3847826086956522,
+        "recall": 0.5919732441471572,
+        "reference": 299
+      },
+      "keptAttackCount": 891,
+      "oddMeasures": {
+        "f1": 0.4979591836734695,
+        "generated": 431,
+        "matched": 183,
+        "precision": 0.4245939675174014,
+        "recall": 0.6019736842105263,
+        "reference": 304
+      },
+      "overall": {
+        "f1": 0.4819277108433735,
+        "generated": 891,
+        "matched": 360,
+        "precision": 0.40404040404040403,
+        "recall": 0.5970149253731343,
+        "reference": 603
+      },
+      "rule": "gridError<=0.16"
+    },
+    {
+      "crossSplitMinF1": 0.46549391069012175,
+      "evenMeasures": {
+        "f1": 0.46549391069012175,
+        "generated": 440,
+        "matched": 172,
+        "precision": 0.39090909090909093,
+        "recall": 0.5752508361204013,
+        "reference": 299
+      },
+      "keptAttackCount": 842,
+      "oddMeasures": {
+        "f1": 0.5014164305949008,
+        "generated": 402,
+        "matched": 177,
+        "precision": 0.44029850746268656,
+        "recall": 0.5822368421052632,
+        "reference": 304
+      },
+      "overall": {
+        "f1": 0.4830449826989619,
+        "generated": 842,
+        "matched": 349,
+        "precision": 0.4144893111638955,
+        "recall": 0.5787728026533997,
+        "reference": 603
+      },
+      "rule": "sweepSupportMax>=3"
+    },
+    {
+      "crossSplitMinF1": 0.4654255319148936,
+      "evenMeasures": {
+        "f1": 0.4654255319148936,
+        "generated": 453,
+        "matched": 175,
+        "precision": 0.38631346578366443,
+        "recall": 0.5852842809364549,
+        "reference": 299
+      },
+      "keptAttackCount": 877,
+      "oddMeasures": {
+        "f1": 0.5027472527472527,
+        "generated": 424,
+        "matched": 183,
+        "precision": 0.43160377358490565,
+        "recall": 0.6019736842105263,
+        "reference": 304
+      },
+      "overall": {
+        "f1": 0.4837837837837837,
+        "generated": 877,
+        "matched": 358,
+        "precision": 0.40820980615735464,
+        "recall": 0.593698175787728,
+        "reference": 603
+      },
+      "rule": "precisionStrength>=3.0"
+    },
+    {
+      "crossSplitMinF1": 0.45283018867924524,
+      "evenMeasures": {
+        "f1": 0.4586894586894587,
+        "generated": 403,
+        "matched": 161,
+        "precision": 0.39950372208436724,
+        "recall": 0.5384615384615384,
+        "reference": 299
+      },
+      "keptAttackCount": 735,
+      "oddMeasures": {
+        "f1": 0.45283018867924524,
+        "generated": 332,
+        "matched": 144,
+        "precision": 0.43373493975903615,
+        "recall": 0.47368421052631576,
+        "reference": 304
+      },
+      "overall": {
+        "f1": 0.4559043348281017,
+        "generated": 735,
+        "matched": 305,
+        "precision": 0.41496598639455784,
+        "recall": 0.5058043117744611,
+        "reference": 603
+      },
+      "rule": "detectionCountSum>=20"
+    },
+    {
+      "crossSplitMinF1": 0.44006568144499175,
+      "evenMeasures": {
+        "f1": 0.44613050075872535,
+        "generated": 360,
+        "matched": 147,
+        "precision": 0.4083333333333333,
+        "recall": 0.4916387959866221,
+        "reference": 299
+      },
+      "keptAttackCount": 665,
+      "oddMeasures": {
+        "f1": 0.44006568144499175,
+        "generated": 305,
+        "matched": 134,
+        "precision": 0.43934426229508194,
+        "recall": 0.4407894736842105,
+        "reference": 304
+      },
+      "overall": {
+        "f1": 0.4432176656151419,
+        "generated": 665,
+        "matched": 281,
+        "precision": 0.42255639097744363,
+        "recall": 0.4660033167495854,
+        "reference": 603
+      },
+      "rule": "detectionCountSum>=24"
+    }
+  ],
+  "calibrationReferenceUsed": true,
+  "candidateModified": false,
+  "classification": "v144-v5-source-evidence-calibration-diagnostic",
+  "eventMetrics": {
+    "allV5Exact": {
+      "f1": 0.044547563805104405,
+      "generated": 1209,
+      "matched": 48,
+      "precision": 0.03970223325062035,
+      "recall": 0.0507399577167019,
+      "reference": 946
+    },
+    "baselineExact": {
+      "f1": 0.0334553058024046,
+      "generated": 967,
+      "matched": 32,
+      "precision": 0.033092037228541885,
+      "recall": 0.03382663847780127,
+      "reference": 946
+    },
+    "rescuedExact": {
+      "f1": 0.02693602693602694,
+      "generated": 242,
+      "matched": 16,
+      "precision": 0.06611570247933884,
+      "recall": 0.016913319238900635,
+      "reference": 946
+    }
+  },
+  "missingPitchEvidenceEventCount": 0,
+  "modalInvoked": false,
+  "octaveConfusion": {
+    "allV5": {
+      "falseEventCount": 1161,
+      "falseWhereLowerOctaveCandidateIsReferencePitch": 26,
+      "falseWhereUpperOctaveCandidateIsReferencePitch": 5,
+      "falseWithLowerOctaveCandidate": 576,
+      "falseWithUpperOctaveCandidate": 524,
+      "lowerReferenceScoreDelta": {
+        "count": 26,
+        "max": 0.08303734999999968,
+        "mean": -3.1533040865384616,
+        "median": -2.901664425,
+        "min": -5.747100850000001,
+        "p10": -5.430582975,
+        "p25": -5.00813125,
+        "p75": -1.5866357499999997,
+        "p90": -1.3577196000000002
+      },
+      "upperReferenceScoreDelta": {
+        "count": 5,
+        "max": 1.26239275,
+        "mean": 0.9319902100000002,
+        "median": 0.9759184500000009,
+        "min": 0.5245565999999999,
+        "p10": 0.59915764,
+        "p25": 0.7110592000000002,
+        "p75": 1.1860240499999999,
+        "p90": 1.23184527
+      }
+    },
+    "baseline": {
+      "falseEventCount": 935,
+      "falseWhereLowerOctaveCandidateIsReferencePitch": 20,
+      "falseWhereUpperOctaveCandidateIsReferencePitch": 4,
+      "falseWithLowerOctaveCandidate": 454,
+      "falseWithUpperOctaveCandidate": 405,
+      "lowerReferenceScoreDelta": {
+        "count": 20,
+        "max": 0.03497760000000083,
+        "mean": -3.3412722649999997,
+        "median": -2.901664425,
+        "min": -5.747100850000001,
+        "p10": -5.431188635,
+        "p25": -5.0971039875,
+        "p75": -2.3512363,
+        "p90": -1.4410023749999998
+      },
+      "upperReferenceScoreDelta": {
+        "count": 4,
+        "max": 1.26239275,
+        "mean": 1.0338486125000004,
+        "median": 1.0809712500000004,
+        "min": 0.7110592000000002,
+        "p10": 0.7905169750000005,
+        "p25": 0.9097036375000007,
+        "p75": 1.2051162249999998,
+        "p90": 1.23948214
+      }
+    },
+    "rescued": {
+      "falseEventCount": 226,
+      "falseWhereLowerOctaveCandidateIsReferencePitch": 6,
+      "falseWhereUpperOctaveCandidateIsReferencePitch": 1,
+      "falseWithLowerOctaveCandidate": 122,
+      "falseWithUpperOctaveCandidate": 119,
+      "lowerReferenceScoreDelta": {
+        "count": 6,
+        "max": 0.08303734999999968,
+        "mean": -2.526743491666667,
+        "median": -2.3414560750000004,
+        "min": -5.43973435,
+        "p10": -4.591101125,
+        "p25": -3.6021755875,
+        "p75": -1.4091913000000007,
+        "p90": -0.6476732750000004
+      },
+      "upperReferenceScoreDelta": {
+        "count": 1,
+        "max": 0.5245565999999999,
+        "mean": 0.5245565999999999,
+        "median": 0.5245565999999999,
+        "min": 0.5245565999999999,
+        "p10": 0.5245565999999999,
+        "p25": 0.5245565999999999,
+        "p75": 0.5245565999999999,
+        "p90": 0.5245565999999999
+      }
+    }
+  },
+  "pitchEvidenceByOutcome": {
+    "allV5": {
+      "matched": {
+        "candidateAttack": {
+          "count": 48,
+          "max": 3.818792,
+          "mean": 1.907742625,
+          "median": 1.8831535000000001,
+          "min": 0.741279,
+          "p10": 1.042209,
+          "p25": 1.5168225,
+          "p75": 2.2996939999999997,
+          "p90": 2.6416413000000007
+        },
+        "candidateBody": {
+          "count": 48,
+          "max": 4.677765,
+          "mean": 2.5059771666666664,
+          "median": 2.6372985,
+          "min": 1.023858,
+          "p10": 1.4059163,
+          "p25": 1.9357565,
+          "p75": 3.03701825,
+          "p90": 3.5108078000000007
+        },
+        "candidateContinuity": {
+          "count": 48,
+          "max": 4.523386,
+          "mean": 2.1550552291666665,
+          "median": 2.272582,
+          "min": 0.520103,
+          "p10": 0.8808134000000001,
+          "p25": 1.5564165,
+          "p75": 2.6959584999999997,
+          "p90": 3.0971327
+        },
+        "candidateEarly": {
+          "count": 48,
+          "max": 4.523386,
+          "mean": 2.363705625,
+          "median": 2.331229,
+          "min": 0.901328,
+          "p10": 1.4059163,
+          "p25": 1.7524644999999999,
+          "p75": 2.9429555,
+          "p90": 3.2972742000000004
+        },
+        "candidateScore": {
+          "count": 48,
+          "max": 7.537847149999999,
+          "mean": 3.859886067708333,
+          "median": 3.7803319,
+          "min": 1.817023,
+          "p10": 2.2956429650000003,
+          "p25": 3.0011931499999998,
+          "p75": 4.6572666,
+          "p90": 5.431750090000001
+        },
+        "candidateScoreRank": {
+          "count": 48,
+          "max": 5.0,
+          "mean": 1.5833333333333333,
+          "median": 1.0,
+          "min": 1.0,
+          "p10": 1.0,
+          "p25": 1.0,
+          "p75": 2.0,
+          "p90": 3.0
+        },
+        "candidateSustain": {
+          "count": 48,
+          "max": 4.677765,
+          "mean": 2.2973267708333336,
+          "median": 2.427495,
+          "min": 0.520103,
+          "p10": 0.9372726,
+          "p25": 1.6076822499999999,
+          "p75": 2.9653012499999996,
+          "p90": 3.4990724000000006
+        },
+        "scoreDeltaFromBest": {
+          "count": 48,
+          "max": 2.0346383500000003,
+          "mean": 0.32001735625,
+          "median": 0.0,
+          "min": 0.0,
+          "p10": 0.0,
+          "p25": 0.0,
+          "p75": 0.46716538749999936,
+          "p90": 1.3486564800000005
+        },
+        "viewAttackDelta": {
+          "count": 48,
+          "max": 0.39824400000000004,
+          "mean": 0.07669208333333331,
+          "median": 0.023629999999999818,
+          "min": 4.000000000004e-06,
+          "p10": 1.399999999995849e-05,
+          "p25": 5.500000000002725e-05,
+          "p75": 0.10868175000000013,
+          "p90": 0.24405749999999993
+        },
+        "viewEarlyDelta": {
+          "count": 48,
+          "max": 0.40650499999999967,
+          "mean": 0.08786197916666671,
+          "median": 0.0338989999999999,
+          "min": 2.0000000000575113e-06,
+          "p10": 5.1400000000123574e-05,
+          "p25": 0.00012000000000000899,
+          "p75": 0.141042,
+          "p90": 0.2858778999999999
+        },
+        "viewSustainDelta": {
+          "count": 48,
+          "max": 0.714629,
+          "mean": 0.09170660416666666,
+          "median": 0.02778499999999995,
+          "min": 8.999999999925734e-06,
+          "p10": 6.64000000000109e-05,
+          "p25": 0.00012924999999996967,
+          "p75": 0.14312224999999978,
+          "p90": 0.2686635
+        }
+      },
+      "matchedCount": 48,
+      "matchedFlags": {
+        "originalV2Primary": 24,
+        "originalV2Selected": 27,
+        "v5Primary": 42,
+        "v5PrimaryCorrected": 5
+      },
+      "rowCount": 1209,
+      "unmatched": {
+        "candidateAttack": {
+          "count": 1161,
+          "max": 5.485154,
+          "mean": 1.9502824556416882,
+          "median": 1.83764,
+          "min": 0.504154,
+          "p10": 1.205633,
+          "p25": 1.495865,
+          "p75": 2.299344,
+          "p90": 2.832899
+        },
+        "candidateBody": {
+          "count": 1161,
+          "max": 5.535524,
+          "mean": 2.513229165374677,
+          "median": 2.409043,
+          "min": 0.311424,
+          "p10": 1.668138,
+          "p25": 2.052457,
+          "p75": 2.863442,
+          "p90": 3.425422
+        },
+        "candidateContinuity": {
+          "count": 1161,
+          "max": 5.476167,
+          "mean": 2.011038873385013,
+          "median": 1.972148,
+          "min": -0.715007,
+          "p10": 0.981982,
+          "p25": 1.438978,
+          "p75": 2.486208,
+          "p90": 3.13763
+        },
+        "candidateEarly": {
+          "count": 1161,
+          "max": 5.535524,
+          "mean": 2.4210610034453057,
+          "median": 2.322292,
+          "min": 0.274177,
+          "p10": 1.560992,
+          "p25": 1.925046,
+          "p75": 2.779403,
+          "p90": 3.39533
+        },
+        "candidateScore": {
+          "count": 1161,
+          "max": 9.100520249999999,
+          "mean": 3.8855372441429803,
+          "median": 3.66830895,
+          "min": 0.75502635,
+          "p10": 2.56873315,
+          "p25": 3.067832,
+          "p75": 4.456931600000001,
+          "p90": 5.39329415
+        },
+        "candidateScoreRank": {
+          "count": 1161,
+          "max": 6.0,
+          "mean": 1.5279931093884582,
+          "median": 1.0,
+          "min": 1.0,
+          "p10": 1.0,
+          "p25": 1.0,
+          "p75": 2.0,
+          "p90": 3.0
+        },
+        "candidateSustain": {
+          "count": 1161,
+          "max": 5.476167,
+          "mean": 2.103207035314384,
+          "median": 2.104902,
+          "min": -0.715007,
+          "p10": 1.003173,
+          "p25": 1.50792,
+          "p75": 2.622413,
+          "p90": 3.225329
+        },
+        "scoreDeltaFromBest": {
+          "count": 1161,
+          "max": 2.8762301499999996,
+          "mean": 0.22936311464254955,
+          "median": 0.0,
+          "min": 0.0,
+          "p10": 0.0,
+          "p25": 0.0,
+          "p75": 0.3564468000000005,
+          "p90": 0.7110592000000002
+        },
+        "viewAttackDelta": {
+          "count": 1161,
+          "max": 1.1049969999999998,
+          "mean": 0.0747936106804479,
+          "median": 0.008988999999999914,
+          "min": 9.999999999177334e-07,
+          "p10": 2.799999999991698e-05,
+          "p25": 0.00010599999999993948,
+          "p75": 0.0970200000000001,
+          "p90": 0.2514209999999999
+        },
+        "viewEarlyDelta": {
+          "count": 1161,
+          "max": 1.008086,
+          "mean": 0.08130424203273041,
+          "median": 0.010081000000000007,
+          "min": 0.0,
+          "p10": 3.399999999986747e-05,
+          "p25": 0.00013599999999991397,
+          "p75": 0.11286299999999994,
+          "p90": 0.26491700000000007
+        },
+        "viewSustainDelta": {
+          "count": 1161,
+          "max": 1.640716,
+          "mean": 0.09323816192937123,
+          "median": 0.009543999999999997,
+          "min": 0.0,
+          "p10": 3.399999999986747e-05,
+          "p25": 0.00014799999999981495,
+          "p75": 0.12660300000000002,
+          "p90": 0.28198100000000004
+        }
+      },
+      "unmatchedCount": 1161,
+      "unmatchedFlags": {
+        "originalV2Primary": 667,
+        "originalV2Selected": 906,
+        "v5Primary": 849,
+        "v5PrimaryCorrected": 36
+      }
+    },
+    "baseline": {
+      "matched": {
+        "candidateAttack": {
+          "count": 32,
+          "max": 3.818792,
+          "mean": 1.9515399375,
+          "median": 1.9327215,
+          "min": 0.801754,
+          "p10": 1.0515606,
+          "p25": 1.45931275,
+          "p75": 2.33558575,
+          "p90": 2.8736513000000006
+        },
+        "candidateBody": {
+          "count": 32,
+          "max": 4.677765,
+          "mean": 2.43519546875,
+          "median": 2.3065325,
+          "min": 1.281961,
+          "p10": 1.3749029000000001,
+          "p25": 1.9357565,
+          "p75": 2.956202,
+          "p90": 3.2662686
+        },
+        "candidateContinuity": {
+          "count": 32,
+          "max": 4.523386,
+          "mean": 2.09543940625,
+          "median": 2.003689,
+          "min": 0.520103,
+          "p10": 0.9093936,
+          "p25": 1.5564165,
+          "p75": 2.64391075,
+          "p90": 3.0889356
+        },
+        "candidateEarly": {
+          "count": 32,
+          "max": 4.523386,
+          "mean": 2.33408909375,
+          "median": 2.1863789999999996,
+          "min": 0.901328,
+          "p10": 1.3749029000000001,
+          "p25": 1.65748475,
+          "p75": 2.956202,
+          "p90": 3.2662686
+        },
+        "candidateScore": {
+          "count": 32,
+          "max": 7.537847149999999,
+          "mean": 3.848732903125,
+          "median": 3.6865463,
+          "min": 1.817023,
+          "p10": 2.261488085,
+          "p25": 2.9977388499999993,
+          "p75": 4.5595509875,
+          "p90": 5.604027530000001
+        },
+        "candidateScoreRank": {
+          "count": 32,
+          "max": 4.0,
+          "mean": 1.53125,
+          "median": 1.0,
+          "min": 1.0,
+          "p10": 1.0,
+          "p25": 1.0,
+          "p75": 2.0,
+          "p90": 2.900000000000002
+        },
+        "candidateSustain": {
+          "count": 32,
+          "max": 4.677765,
+          "mean": 2.1965457812499998,
+          "median": 2.300629,
+          "min": 0.520103,
+          "p10": 0.9819844999999999,
+          "p25": 1.6076822499999999,
+          "p75": 2.7100855,
+          "p90": 3.0889356
+        },
+        "scoreDeltaFromBest": {
+          "count": 32,
+          "max": 2.0346383500000003,
+          "mean": 0.3780410984375,
+          "median": 0.0,
+          "min": 0.0,
+          "p10": 0.0,
+          "p25": 0.0,
+          "p75": 0.6754190375,
+          "p90": 1.39964597
+        },
+        "viewAttackDelta": {
+          "count": 32,
+          "max": 0.3526659999999999,
+          "mean": 0.07469253124999997,
+          "median": 0.029033999999999893,
+          "min": 4.000000000004e-06,
+          "p10": 1.399999999995849e-05,
+          "p25": 3.999999999998449e-05,
+          "p75": 0.10912600000000028,
+          "p90": 0.22406410000000015
+        },
+        "viewEarlyDelta": {
+          "count": 32,
+          "max": 0.3160010000000002,
+          "mean": 0.09034356250000004,
+          "median": 0.0338989999999999,
+          "min": 2.0000000000575113e-06,
+          "p10": 6.0399999999960485e-05,
+          "p25": 8.950000000013114e-05,
+          "p75": 0.16409700000000027,
+          "p90": 0.2842096
+        },
+        "viewSustainDelta": {
+          "count": 32,
+          "max": 0.714629,
+          "mean": 0.11063934375,
+          "median": 0.023791000000000118,
+          "min": 1.0999999999983245e-05,
+          "p10": 5.9200000000003695e-05,
+          "p25": 0.00012624999999999442,
+          "p75": 0.18980499999999995,
+          "p90": 0.2953303000000001
+        }
+      },
+      "matchedCount": 32,
+      "matchedFlags": {
+        "originalV2Primary": 24,
+        "originalV2Selected": 27,
+        "v5Primary": 29,
+        "v5PrimaryCorrected": 5
+      },
+      "rowCount": 967,
+      "unmatched": {
+        "candidateAttack": {
+          "count": 935,
+          "max": 5.485154,
+          "mean": 2.058801475935829,
+          "median": 1.951186,
+          "min": 0.504154,
+          "p10": 1.3206274,
+          "p25": 1.611177,
+          "p75": 2.441427,
+          "p90": 2.940073
+        },
+        "candidateBody": {
+          "count": 935,
+          "max": 5.535524,
+          "mean": 2.5398211304812834,
+          "median": 2.429055,
+          "min": 0.311424,
+          "p10": 1.6630920000000002,
+          "p25": 2.0514289999999997,
+          "p75": 2.9506959999999998,
+          "p90": 3.4963656000000003
+        },
+        "candidateContinuity": {
+          "count": 935,
+          "max": 5.476167,
+          "mean": 2.033141470588235,
+          "median": 1.968233,
+          "min": -0.715007,
+          "p10": 0.9808948000000001,
+          "p25": 1.4232315,
+          "p75": 2.5263995,
+          "p90": 3.219632
+        },
+        "candidateEarly": {
+          "count": 935,
+          "max": 5.535524,
+          "mean": 2.480786264171123,
+          "median": 2.388678,
+          "min": 0.274177,
+          "p10": 1.5758532,
+          "p25": 1.9639505000000002,
+          "p75": 2.8784375,
+          "p90": 3.4468196
+        },
+        "candidateScore": {
+          "count": 935,
+          "max": 9.100520249999999,
+          "mean": 4.014656431336898,
+          "median": 3.8241285,
+          "min": 0.75502635,
+          "p10": 2.6244748,
+          "p25": 3.1502577250000003,
+          "p75": 4.6335083500000005,
+          "p90": 5.588319070000001
+        },
+        "candidateScoreRank": {
+          "count": 935,
+          "max": 6.0,
+          "mean": 1.5240641711229947,
+          "median": 1.0,
+          "min": 1.0,
+          "p10": 1.0,
+          "p25": 1.0,
+          "p75": 2.0,
+          "p90": 3.0
+        },
+        "candidateSustain": {
+          "count": 935,
+          "max": 5.476167,
+          "mean": 2.0921763368983957,
+          "median": 2.053474,
+          "min": -0.715007,
+          "p10": 0.9891116,
+          "p25": 1.464599,
+          "p75": 2.5991505000000004,
+          "p90": 3.3000410000000002
+        },
+        "scoreDeltaFromBest": {
+          "count": 935,
+          "max": 2.8762301499999996,
+          "mean": 0.2436860326737968,
+          "median": 0.0,
+          "min": 0.0,
+          "p10": 0.0,
+          "p25": 0.0,
+          "p75": 0.36227652499999996,
+          "p90": 0.7492191300000005
+        },
+        "viewAttackDelta": {
+          "count": 935,
+          "max": 1.1049969999999998,
+          "mean": 0.07418100962566845,
+          "median": 0.008921999999999874,
+          "min": 9.999999999177334e-07,
+          "p10": 2.7400000000099572e-05,
+          "p25": 9.999999999998899e-05,
+          "p75": 0.09751049999999994,
+          "p90": 0.2455196
+        },
+        "viewEarlyDelta": {
+          "count": 935,
+          "max": 1.008086,
+          "mean": 0.08202146417112299,
+          "median": 0.012054999999999705,
+          "min": 0.0,
+          "p10": 3.1400000000214595e-05,
+          "p25": 0.00011900000000020228,
+          "p75": 0.1172915000000001,
+          "p90": 0.2643954
+        },
+        "viewSustainDelta": {
+          "count": 935,
+          "max": 1.640716,
+          "mean": 0.09424804064171122,
+          "median": 0.008697999999999873,
+          "min": 0.0,
+          "p10": 3.300000000007186e-05,
+          "p25": 0.0001284999999997538,
+          "p75": 0.127784,
+          "p90": 0.2825876
+        }
+      },
+      "unmatchedCount": 935,
+      "unmatchedFlags": {
+        "originalV2Primary": 667,
+        "originalV2Selected": 906,
+        "v5Primary": 696,
+        "v5PrimaryCorrected": 36
+      }
+    },
+    "rescued": {
+      "matched": {
+        "candidateAttack": {
+          "count": 16,
+          "max": 2.593866,
+          "mean": 1.820148,
+          "median": 1.8598919999999999,
+          "min": 0.741279,
+          "p10": 1.2406220000000001,
+          "p25": 1.5411265,
+          "p75": 2.1205395,
+          "p90": 2.4258005000000002
+        },
+        "candidateBody": {
+          "count": 16,
+          "max": 3.782388,
+          "mean": 2.6475405625,
+          "median": 2.8488619999999996,
+          "min": 1.023858,
+          "p10": 1.5430225,
+          "p25": 1.9953410000000003,
+          "p75": 3.3548665,
+          "p90": 3.5594444999999997
+        },
+        "candidateContinuity": {
+          "count": 16,
+          "max": 3.656114,
+          "mean": 2.274286875,
+          "median": 2.6332565,
+          "min": 0.710003,
+          "p10": 0.915272,
+          "p25": 1.75011325,
+          "p75": 2.8322015,
+          "p90": 3.086455
+        },
+        "candidateEarly": {
+          "count": 16,
+          "max": 3.782388,
+          "mean": 2.4229386875,
+          "median": 2.6332565,
+          "min": 1.023858,
+          "p10": 1.5430225,
+          "p25": 1.85631275,
+          "p75": 2.8322015,
+          "p90": 3.2098294999999997
+        },
+        "candidateScore": {
+          "count": 16,
+          "max": 5.6008353,
+          "mean": 3.8821923968750003,
+          "median": 4.013861075,
+          "min": 1.95962445,
+          "p10": 2.344716675,
+          "p25": 3.0644255750000005,
+          "p75": 4.7224002249999995,
+          "p90": 5.153807725
+        },
+        "candidateScoreRank": {
+          "count": 16,
+          "max": 5.0,
+          "mean": 1.6875,
+          "median": 1.0,
+          "min": 1.0,
+          "p10": 1.0,
+          "p25": 1.0,
+          "p75": 2.0,
+          "p90": 3.0
+        },
+        "candidateSustain": {
+          "count": 16,
+          "max": 3.656114,
+          "mean": 2.49888875,
+          "median": 2.8488619999999996,
+          "min": 0.710003,
+          "p10": 0.915272,
+          "p25": 1.8807025,
+          "p75": 3.16980475,
+          "p90": 3.5594444999999997
+        },
+        "scoreDeltaFromBest": {
+          "count": 16,
+          "max": 1.1906732000000002,
+          "mean": 0.203969871875,
+          "median": 0.0,
+          "min": 0.0,
+          "p10": 0.0,
+          "p25": 0.0,
+          "p75": 0.23833475000000004,
+          "p90": 0.7180135999999999
+        },
+        "viewAttackDelta": {
+          "count": 16,
+          "max": 0.39824400000000004,
+          "mean": 0.08069118749999997,
+          "median": 0.016735999999999973,
+          "min": 1.09999999997612e-05,
+          "p10": 4.300000000001525e-05,
+          "p25": 8.500000000011276e-05,
+          "p75": 0.09426025000000005,
+          "p90": 0.2766799999999999
+        },
+        "viewEarlyDelta": {
+          "count": 16,
+          "max": 0.40650499999999967,
+          "mean": 0.08289881250000003,
+          "median": 0.03405950000000013,
+          "min": 2.300000000010627e-05,
+          "p10": 4.700000000013027e-05,
+          "p25": 0.0005017500000000785,
+          "p75": 0.10516875000000014,
+          "p90": 0.23249149999999985
+        },
+        "viewSustainDelta": {
+          "count": 16,
+          "max": 0.2075389999999997,
+          "mean": 0.05384112500000003,
+          "median": 0.038409499999999985,
+          "min": 8.999999999925734e-06,
+          "p10": 9.750000000013914e-05,
+          "p25": 0.00026775000000012206,
+          "p75": 0.08843925000000019,
+          "p90": 0.1354904999999999
+        }
+      },
+      "matchedCount": 16,
+      "matchedFlags": {
+        "originalV2Primary": 0,
+        "originalV2Selected": 0,
+        "v5Primary": 13,
+        "v5PrimaryCorrected": 0
+      },
+      "rowCount": 242,
+      "unmatched": {
+        "candidateAttack": {
+          "count": 226,
+          "max": 3.056877,
+          "mean": 1.5013210221238937,
+          "median": 1.490049,
+          "min": 0.516348,
+          "p10": 1.0057105,
+          "p25": 1.2514425,
+          "p75": 1.7178125,
+          "p90": 2.010294
+        },
+        "candidateBody": {
+          "count": 226,
+          "max": 4.724692,
+          "mean": 2.4032137345132742,
+          "median": 2.3602295,
+          "min": 0.971417,
+          "p10": 1.6785265,
+          "p25": 2.06526525,
+          "p75": 2.7441032499999998,
+          "p90": 3.100335
+        },
+        "candidateContinuity": {
+          "count": 226,
+          "max": 3.99894,
+          "mean": 1.9195967123893807,
+          "median": 1.9888985,
+          "min": -0.219774,
+          "p10": 1.010486,
+          "p25": 1.5508137499999999,
+          "p75": 2.2982605,
+          "p90": 2.7171325
+        },
+        "candidateEarly": {
+          "count": 226,
+          "max": 4.516969,
+          "mean": 2.173967557522124,
+          "median": 2.189543,
+          "min": 0.816879,
+          "p10": 1.526635,
+          "p25": 1.816812,
+          "p75": 2.46938575,
+          "p90": 2.7988470000000003
+        },
+        "candidateScore": {
+          "count": 226,
+          "max": 6.592747849999999,
+          "mean": 3.3513494564159294,
+          "median": 3.2801321750000003,
+          "min": 1.74242615,
+          "p10": 2.4136568499999997,
+          "p25": 2.8139833875000004,
+          "p75": 3.7622725875,
+          "p90": 4.307571424999999
+        },
+        "candidateScoreRank": {
+          "count": 226,
+          "max": 4.0,
+          "mean": 1.5442477876106195,
+          "median": 1.0,
+          "min": 1.0,
+          "p10": 1.0,
+          "p25": 1.0,
+          "p75": 2.0,
+          "p90": 3.0
+        },
+        "candidateSustain": {
+          "count": 226,
+          "max": 4.724692,
+          "mean": 2.1488428893805307,
+          "median": 2.242388,
+          "min": -0.219774,
+          "p10": 1.0206495,
+          "p25": 1.6648972499999999,
+          "p75": 2.7014834999999997,
+          "p90": 2.9872695
+        },
+        "scoreDeltaFromBest": {
+          "count": 226,
+          "max": 1.5497561999999991,
+          "mean": 0.17010679446902655,
+          "median": 0.0,
+          "min": 0.0,
+          "p10": 0.0,
+          "p25": 0.0,
+          "p75": 0.3309811250000003,
+          "p90": 0.5818892250000005
+        },
+        "viewAttackDelta": {
+          "count": 226,
+          "max": 0.653213,
+          "mean": 0.07732804424778762,
+          "median": 0.011371500000000034,
+          "min": 1.000000000139778e-06,
+          "p10": 2.799999999991698e-05,
+          "p25": 0.00017600000000000948,
+          "p75": 0.09592125000000007,
+          "p90": 0.2640125
+        },
+        "viewEarlyDelta": {
+          "count": 226,
+          "max": 0.7294179999999999,
+          "mean": 0.07833697345132742,
+          "median": 0.005997499999999878,
+          "min": 1.000000000139778e-06,
+          "p10": 4.550000000014265e-05,
+          "p25": 0.0002829999999998112,
+          "p75": 0.09589474999999992,
+          "p90": 0.2655710000000002
+        },
+        "viewSustainDelta": {
+          "count": 226,
+          "max": 0.807429,
+          "mean": 0.08906012389380531,
+          "median": 0.014065000000000216,
+          "min": 0.0,
+          "p10": 6.100000000008876e-05,
+          "p25": 0.0004215000000000746,
+          "p75": 0.10599450000000005,
+          "p90": 0.2801595000000001
+        }
+      },
+      "unmatchedCount": 226,
+      "unmatchedFlags": {
+        "originalV2Primary": 0,
+        "originalV2Selected": 0,
+        "v5Primary": 153,
+        "v5PrimaryCorrected": 0
+      }
+    }
+  },
+  "productionModified": false,
+  "provenanceCounts": {
+    "attackClass": {
+      "baseline": 725,
+      "rescued": 166
+    },
+    "metadataSource": {
+      "preserved-baseline-note": 933,
+      "v5-shadow-neutral": 276
+    },
+    "v5Primary": {
+      "False": 318,
+      "True": 891
+    },
+    "v5PrimaryCorrected": {
+      "False": 1168,
+      "True": 41
+    }
+  },
+  "referenceNoteCount": 946,
+  "referenceOnsetCount": 603,
+  "schemaVersion": 1,
+  "unseenHoldout": false,
+  "v2EligibleAttackCount": 984,
+  "v2OriginallyRetainedAttackCount": 725,
+  "v5AttackCount": 891,
+  "v5BaselineAttackCount": 725,
+  "v5EventCount": 1209,
+  "v5RescuedAttackCount": 166
+}
