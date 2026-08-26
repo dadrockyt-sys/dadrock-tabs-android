@@ -24,6 +24,7 @@ on:
       - modal/tests/test_v144_rhythm_pitch_shift_policy.py
       - modal/tests/test_v144_rhythm_measure_set_guard.py
       - modal/tests/fixtures/v144_rhythm_context_split_reference.json
+      - validation/v144_rhythm_calibration/search_contextual_pitch_shifts.py
       - debug/v144-rhythm-calibration/reference/professional-target-provenance.json
   pull_request:
     paths:
@@ -46,6 +47,7 @@ on:
       - modal/tests/test_v144_rhythm_pitch_shift_policy.py
       - modal/tests/test_v144_rhythm_measure_set_guard.py
       - modal/tests/fixtures/v144_rhythm_context_split_reference.json
+      - validation/v144_rhythm_calibration/search_contextual_pitch_shifts.py
       - debug/v144-rhythm-calibration/reference/professional-target-provenance.json
 
 permissions:
@@ -98,6 +100,12 @@ jobs:
           assert payload['v144Usage']['mustLabelScoresAsCalibration'] is True
           assert payload['v144Usage']['mayClaimUnseenGeneralization'] is False
           PY
+
+      - name: Compile one-shot pitch-shift search without executing it
+        shell: bash
+        run: |
+          set -euo pipefail
+          python -m py_compile validation/v144_rhythm_calibration/search_contextual_pitch_shifts.py
 
       - name: Run V144 rhythm CPU unit tests
         shell: bash
