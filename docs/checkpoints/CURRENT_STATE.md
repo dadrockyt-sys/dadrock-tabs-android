@@ -40,11 +40,17 @@ Priority: **repair Rhythm using the consumed V5 professional reference as calibr
 - That probe explicitly expects `modalGpu == "L4"` and deterministic separator settings.
 - Do not run Modal/L4 yet just to iterate blindly. Use it after CPU diagnostics identify a concrete hypothesis or when a candidate is ready for GPU verification.
 
+## V144 diagnostic — PREPARED, NOT RUN YET
+- Added `analyzer/v144_rhythm_calibration_diagnostics.py` in commit `bbd153fbd4042475520b9721e12161df95188078`.
+- It does not modify V5 and does not call Modal.
+- It compares the frozen V5 against the now-calibration professional structured source and emits aggregate diagnostics only.
+- It measures exact pitch content, pitch-class content, measure+pitch, exact pitch/timing, exact position content/timing, onset alignment, best global step shift, best semitone shift, best joint pitch+timing shift, quarter-song alignment drift, per-measure note/onset density error, and MIDI distribution deltas.
+- Expected counts are hard-checked: 1209 generated notes and 946 reference notes.
+
 ## Next exact actions
-1. Build a CPU-only V144 calibration diagnostic that reconstructs the already-consumed exact professional reference and compares it with frozen V5 without changing V5.
-2. Report: best global measure/step alignment; timing F1 under offset search; pitch F1 ignoring timing; best semitone/octave shift; pitch-class F1; per-measure density error; onset over/under-generation; string/fret mismatch patterns.
-3. Persist only aggregate diagnostics, not the professional reference payload itself.
-4. Use those diagnostics to design V6 changes in a separate analyzer path; do not modify the terminal V5 artifacts.
-5. Iterate V6/V7 against this calibration reference as needed.
-6. Use Modal/L4 only when justified by a specific test.
-7. Once calibration performance is strong, freeze a candidate and validate once on a new unseen professional song/reference.
+1. Add a CPU-only V144 workflow that fetches/verifies the exact previously consumed structured source SHA256 `18cdb4f8afb49562aac5b600730384636070d6ca8650823e759276a81ee4afc8`, runs the diagnostic, and persists only its aggregate report.
+2. Trigger that diagnostic once and inspect the report.
+3. Use the result to decide whether V6 first fixes timing/alignment, pitch selection/over-generation, or both.
+4. Keep terminal V5 artifacts unchanged.
+5. Use Modal/L4 only after a specific hypothesis justifies it.
+6. Once calibration performance is strong, freeze a candidate and validate once on a new unseen professional song/reference.
