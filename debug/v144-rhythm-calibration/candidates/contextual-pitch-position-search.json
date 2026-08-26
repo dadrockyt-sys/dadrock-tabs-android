@@ -1,0 +1,728 @@
+{
+  "alternateAfterGateFailureAllowed": false,
+  "baseline": {
+    "eventCount": 1144,
+    "eventSha256": "b6e1f8a8be150943d7224c74f9193b1b4050454620063846f6f5f5c773d4cbf6",
+    "fit": {
+      "counts": {
+        "generatedNotes": 643,
+        "grossMatchedNotes": 68,
+        "referenceNotes": 594
+      },
+      "criticalMismatchCount": 1101,
+      "gatedMetrics": {
+        "chordPitchSetTolerantF1": 0.03742690058479532,
+        "exactVoicingTolerantF1": 0.03742690058479532,
+        "pdfEventFidelity": 1.0,
+        "pitchContentF1": 0.23120452708164918,
+        "pitchTimingTolerantF1": 0.053354890864995966,
+        "stringFretTimingTolerantF1": 0.04042037186742118
+      }
+    },
+    "generatedMeasureCount": 113,
+    "name": "accepted-v144-baseline"
+  },
+  "calibrationPromotionAllowed": true,
+  "canary": {
+    "alternativeCandidatesRead": false,
+    "criticalMismatchDelta": -2,
+    "deltas": {
+      "chordPitchSetTolerantF1": 0.0,
+      "exactVoicingTolerantF1": 0.0,
+      "pitchContentF1": 0.0,
+      "pitchTimingTolerantF1": 0.010230179028132988,
+      "stringFretTimingTolerantF1": 0.010230179028132988
+    },
+    "musicalFloorGain": 0.0,
+    "musicalMeanGain": 0.00409207161125319,
+    "passed": true,
+    "pdfEventFidelity": 1.0,
+    "pitchContentGain": 0.0,
+    "reasons": [],
+    "regressions": {},
+    "stage": "canary"
+  },
+  "candidateConstruction": {
+    "adjacentStringOnlyRequired": true,
+    "canaryLabelsUsedForCandidateConstructionOrRanking": false,
+    "candidateRuleShape": "contextual-joint-pitch-adjacent-string-position-shift",
+    "canonicalGeneratedEventsUsedForConstructionAndEligibility": true,
+    "evaluatedCandidateCount": 9,
+    "eventCountPreservationRequired": true,
+    "fitGeneratedCanonicalEventCount": 643,
+    "fitGeneratedNoteCount": 643,
+    "fitReferenceNoteCount": 594,
+    "generatedMeasureSetPreservationRequired": true,
+    "historicalConsumedFamilyResultsUsedForConstructionOrRanking": false,
+    "jointNonZeroPitchAndStringDeltaRequired": true,
+    "linkedPitchTechniqueEventsEligible": false,
+    "maximumAbsSemitoneShift": 12,
+    "maximumAbsStringShift": 1,
+    "maximumCandidates": 256,
+    "measureSetGuardUsesProfessionalReference": false,
+    "minimumCorrectionSupport": 3,
+    "pairingPolicy": "exact-pitch-removal-then-minimum-absolute-midi-distance-deterministic-then-adjacent-string-target-filter",
+    "protectedNonPositionMetadataPreservationRequired": true,
+    "rankedRuleCount": 9,
+    "runtimeRuleInputs": "reference-free-source-pitch-class-plus-structural-context-and-fixed-pitch-string-shifts-only",
+    "sourceBaselineEventCount": 1144,
+    "sourceBaselineEventSha256": "b6e1f8a8be150943d7224c74f9193b1b4050454620063846f6f5f5c773d4cbf6",
+    "sourceBaselineName": "pitch-shift-41b7a7470fa3245a",
+    "sourceLabels": "accepted-baseline-fit-only-same-onset-generated-reference-substitutions",
+    "timingAndMeasurePreservationRequired": true,
+    "tuningDerivedFretRequired": true,
+    "validationLabelsUsedForCandidateConstructionOrRanking": false
+  },
+  "candidateMetadata": {
+    "pitch-position-shift-2595c7ba6fbdd471": {
+      "candidateEventSha256": "25a16f9f9ad981a9c4b52f48b7869e66eeaa067868bda8479b810657212f69c7",
+      "changedEventCount": 268,
+      "fitCorrectionPrecision": 0.019867549668874173,
+      "fitCorrectionSupport": 3,
+      "fitEligibleGeneratedSupport": 151,
+      "measureSet": {
+        "baselineGeneratedMeasureCount": 113,
+        "baselineGeneratedMeasureSetPreserved": true,
+        "candidateGeneratedMeasureCount": 113,
+        "extraCandidateGeneratedMeasures": [],
+        "missingBaselineGeneratedMeasures": [],
+        "professionalReferenceUsed": false
+      },
+      "remainingEventCount": 1144,
+      "semitoneShift": -2,
+      "signatures": [
+        "pitchClass::4",
+        "register::high"
+      ],
+      "stringShift": 1
+    },
+    "pitch-position-shift-54a6e8d3aa91c422": {
+      "candidateEventSha256": "5b36270aaeafa73b2e25722e2576a40424ce5951dcfd2b5d769746bd9eb07e0d",
+      "changedEventCount": 93,
+      "fitCorrectionPrecision": 0.07407407407407407,
+      "fitCorrectionSupport": 4,
+      "fitEligibleGeneratedSupport": 54,
+      "measureSet": {
+        "baselineGeneratedMeasureCount": 113,
+        "baselineGeneratedMeasureSetPreserved": true,
+        "candidateGeneratedMeasureCount": 113,
+        "extraCandidateGeneratedMeasures": [],
+        "missingBaselineGeneratedMeasures": [],
+        "professionalReferenceUsed": false
+      },
+      "remainingEventCount": 1144,
+      "semitoneShift": -2,
+      "signatures": [
+        "pitchClass::11",
+        "stepParity::0"
+      ],
+      "stringShift": 1
+    },
+    "pitch-position-shift-691c1e434a7b1592": {
+      "candidateEventSha256": "44c07a931fe1b757a17e5e57f012df9b4b1703c4062ea651c65fbd2ca04bcea3",
+      "changedEventCount": 59,
+      "fitCorrectionPrecision": 0.08333333333333333,
+      "fitCorrectionSupport": 3,
+      "fitEligibleGeneratedSupport": 36,
+      "measureSet": {
+        "baselineGeneratedMeasureCount": 113,
+        "baselineGeneratedMeasureSetPreserved": true,
+        "candidateGeneratedMeasureCount": 113,
+        "extraCandidateGeneratedMeasures": [],
+        "missingBaselineGeneratedMeasures": [],
+        "professionalReferenceUsed": false
+      },
+      "remainingEventCount": 1144,
+      "semitoneShift": -2,
+      "signatures": [
+        "pitchClass::4",
+        "section16::2"
+      ],
+      "stringShift": 1
+    },
+    "pitch-position-shift-a18a72cc778536e4": {
+      "candidateEventSha256": "42db38c93475076d5e35ee48940fb3bf27f8d7dd7350df90ae55035d3cff8319",
+      "changedEventCount": 114,
+      "fitCorrectionPrecision": 0.06153846153846154,
+      "fitCorrectionSupport": 4,
+      "fitEligibleGeneratedSupport": 65,
+      "measureSet": {
+        "baselineGeneratedMeasureCount": 113,
+        "baselineGeneratedMeasureSetPreserved": true,
+        "candidateGeneratedMeasureCount": 113,
+        "extraCandidateGeneratedMeasures": [],
+        "missingBaselineGeneratedMeasures": [],
+        "professionalReferenceUsed": false
+      },
+      "remainingEventCount": 1144,
+      "semitoneShift": -2,
+      "signatures": [
+        "pitchClass::11",
+        "register::mid"
+      ],
+      "stringShift": 1
+    },
+    "pitch-position-shift-aa8bd7378e9d1c35": {
+      "candidateEventSha256": "c56eb148b4c0bf6535db93bc36bf10ff4fd51a9fca826209aa75682c42e5308f",
+      "changedEventCount": 71,
+      "fitCorrectionPrecision": 0.07317073170731707,
+      "fitCorrectionSupport": 3,
+      "fitEligibleGeneratedSupport": 41,
+      "measureSet": {
+        "baselineGeneratedMeasureCount": 113,
+        "baselineGeneratedMeasureSetPreserved": true,
+        "candidateGeneratedMeasureCount": 113,
+        "extraCandidateGeneratedMeasures": [],
+        "missingBaselineGeneratedMeasures": [],
+        "professionalReferenceUsed": false
+      },
+      "remainingEventCount": 1144,
+      "semitoneShift": 3,
+      "signatures": [
+        "pitchClass::4",
+        "stepParity::1"
+      ],
+      "stringShift": -1
+    },
+    "pitch-position-shift-ae51a9e66d99efeb": {
+      "candidateEventSha256": "1b8dfa866aa157e4eec5333fb2e7f8d4d57e975a2b8904dabef9a58d68b10f30",
+      "changedEventCount": 29,
+      "fitCorrectionPrecision": 0.2222222222222222,
+      "fitCorrectionSupport": 4,
+      "fitEligibleGeneratedSupport": 18,
+      "measureSet": {
+        "baselineGeneratedMeasureCount": 113,
+        "baselineGeneratedMeasureSetPreserved": true,
+        "candidateGeneratedMeasureCount": 113,
+        "extraCandidateGeneratedMeasures": [],
+        "missingBaselineGeneratedMeasures": [],
+        "professionalReferenceUsed": false
+      },
+      "remainingEventCount": 1144,
+      "semitoneShift": -2,
+      "signatures": [
+        "pitchClass::11",
+        "registerStep::mid:0"
+      ],
+      "stringShift": 1
+    },
+    "pitch-position-shift-b7584c10d6e0e97c": {
+      "candidateEventSha256": "dd1d17e1bf4db2101ca020c24123ad57ab1648b18acc8fea34ae7b48c66aab91",
+      "changedEventCount": 192,
+      "fitCorrectionPrecision": 0.028037383177570093,
+      "fitCorrectionSupport": 3,
+      "fitEligibleGeneratedSupport": 107,
+      "measureSet": {
+        "baselineGeneratedMeasureCount": 113,
+        "baselineGeneratedMeasureSetPreserved": true,
+        "candidateGeneratedMeasureCount": 113,
+        "extraCandidateGeneratedMeasures": [],
+        "missingBaselineGeneratedMeasures": [],
+        "professionalReferenceUsed": false
+      },
+      "remainingEventCount": 1144,
+      "semitoneShift": -2,
+      "signatures": [
+        "pitchClass::4",
+        "stepParity::0"
+      ],
+      "stringShift": 1
+    },
+    "pitch-position-shift-c45e295cf685052f": {
+      "candidateEventSha256": "43dc4934e8be60a8167ccb60f7ec3364d2329cda5d706a8f2cf0e79cf439ee82",
+      "changedEventCount": 42,
+      "fitCorrectionPrecision": 0.16666666666666666,
+      "fitCorrectionSupport": 4,
+      "fitEligibleGeneratedSupport": 24,
+      "measureSet": {
+        "baselineGeneratedMeasureCount": 113,
+        "baselineGeneratedMeasureSetPreserved": true,
+        "candidateGeneratedMeasureCount": 113,
+        "extraCandidateGeneratedMeasures": [],
+        "missingBaselineGeneratedMeasures": [],
+        "professionalReferenceUsed": false
+      },
+      "remainingEventCount": 1144,
+      "semitoneShift": -2,
+      "signatures": [
+        "pitchClass::11",
+        "stepQuarter::0"
+      ],
+      "stringShift": 1
+    },
+    "pitch-position-shift-c7bcc77bf3e6d299": {
+      "candidateEventSha256": "3f1eee20715d669e9453b139433e2f77c5379ea3247e21ef3978633c4449e5eb",
+      "changedEventCount": 44,
+      "fitCorrectionPrecision": 0.10714285714285714,
+      "fitCorrectionSupport": 3,
+      "fitEligibleGeneratedSupport": 28,
+      "measureSet": {
+        "baselineGeneratedMeasureCount": 113,
+        "baselineGeneratedMeasureSetPreserved": true,
+        "candidateGeneratedMeasureCount": 113,
+        "extraCandidateGeneratedMeasures": [],
+        "missingBaselineGeneratedMeasures": [],
+        "professionalReferenceUsed": false
+      },
+      "remainingEventCount": 1144,
+      "semitoneShift": -2,
+      "signatures": [
+        "pitchClass::11",
+        "section16::6"
+      ],
+      "stringShift": 1
+    }
+  },
+  "classification": "v144-rhythm-fit-only-contextual-pitch-position-search",
+  "evaluationRole": "accepted-v144-baseline-contextual-pitch-position-correction-gold-calibration",
+  "fitLock": {
+    "baseline": "accepted-v144-baseline",
+    "baselineGeneratedMeasureSetPreservationRequired": true,
+    "canaryReadDuringLock": false,
+    "evaluations": [
+      {
+        "criticalMismatchDelta": -24,
+        "deltas": {
+          "chordPitchSetTolerantF1": 0.0,
+          "exactVoicingTolerantF1": 0.0,
+          "pitchContentF1": 0.0064672594987873755,
+          "pitchTimingTolerantF1": 0.008084074373484226,
+          "stringFretTimingTolerantF1": 0.0048504446240905386
+        },
+        "musicalFloorGain": 0.0,
+        "musicalMeanGain": 0.0038803556992724336,
+        "name": "pitch-position-shift-2595c7ba6fbdd471",
+        "passed": true,
+        "pdfEventFidelity": 1.0,
+        "pitchContentGain": 0.0064672594987873755,
+        "policy": "contextual-pitch-position-shift::pitchClass::4 && register::high => pitch -2, string +1",
+        "ranking": {
+          "candidateMusicalFloor": 0.03742690058479532,
+          "candidateMusicalMean": 0.08384707389600382,
+          "musicalFloorGain": 0.0,
+          "musicalMeanGain": 0.0038803556992724336,
+          "pitchContentGain": 0.0064672594987873755
+        },
+        "reasons": [],
+        "regressions": {}
+      },
+      {
+        "criticalMismatchDelta": -26,
+        "deltas": {
+          "chordPitchSetTolerantF1": 0.0023391812865497102,
+          "exactVoicingTolerantF1": 0.0023391812865497102,
+          "pitchContentF1": 0.029102667744543176,
+          "pitchTimingTolerantF1": 0.012934518997574765,
+          "stringFretTimingTolerantF1": 0.006467259498787382
+        },
+        "musicalFloorGain": 0.0023391812865497102,
+        "musicalMeanGain": 0.010636561762800964,
+        "name": "pitch-position-shift-54a6e8d3aa91c422",
+        "passed": true,
+        "pdfEventFidelity": 1.0,
+        "pitchContentGain": 0.029102667744543176,
+        "policy": "contextual-pitch-position-shift::pitchClass::11 && stepParity::0 => pitch -2, string +1",
+        "ranking": {
+          "candidateMusicalFloor": 0.03976608187134503,
+          "candidateMusicalMean": 0.09060327995953235,
+          "musicalFloorGain": 0.0023391812865497102,
+          "musicalMeanGain": 0.010636561762800964,
+          "pitchContentGain": 0.029102667744543176
+        },
+        "reasons": [],
+        "regressions": {}
+      },
+      {
+        "criticalMismatchDelta": -6,
+        "deltas": {
+          "chordPitchSetTolerantF1": -0.0023391812865497102,
+          "exactVoicingTolerantF1": -0.0023391812865497102,
+          "pitchContentF1": 0.0016168148746968092,
+          "pitchTimingTolerantF1": 0.004850444624090532,
+          "stringFretTimingTolerantF1": 0.0032336297493936947
+        },
+        "musicalFloorGain": -0.0023391812865497102,
+        "musicalMeanGain": 0.001004505335016323,
+        "name": "pitch-position-shift-691c1e434a7b1592",
+        "passed": false,
+        "pdfEventFidelity": 1.0,
+        "pitchContentGain": 0.0016168148746968092,
+        "policy": "contextual-pitch-position-shift::pitchClass::4 && section16::2 => pitch -2, string +1",
+        "ranking": {
+          "candidateMusicalFloor": 0.03508771929824561,
+          "candidateMusicalMean": 0.08097122353174771,
+          "musicalFloorGain": -0.0023391812865497102,
+          "musicalMeanGain": 0.001004505335016323,
+          "pitchContentGain": 0.0016168148746968092
+        },
+        "reasons": [
+          "fit:musical-metric-regression",
+          "fit:insufficient-pitch-content-gain",
+          "fit:insufficient-musical-floor-gain"
+        ],
+        "regressions": {
+          "chordPitchSetTolerantF1": -0.0023391812865497102,
+          "exactVoicingTolerantF1": -0.0023391812865497102
+        }
+      },
+      {
+        "criticalMismatchDelta": -26,
+        "deltas": {
+          "chordPitchSetTolerantF1": 0.0023391812865497102,
+          "exactVoicingTolerantF1": 0.0023391812865497102,
+          "pitchContentF1": 0.025869037995149557,
+          "pitchTimingTolerantF1": 0.011317704122877928,
+          "stringFretTimingTolerantF1": 0.006467259498787382
+        },
+        "musicalFloorGain": 0.0023391812865497102,
+        "musicalMeanGain": 0.009666472837982873,
+        "name": "pitch-position-shift-a18a72cc778536e4",
+        "passed": true,
+        "pdfEventFidelity": 1.0,
+        "pitchContentGain": 0.025869037995149557,
+        "policy": "contextual-pitch-position-shift::pitchClass::11 && register::mid => pitch -2, string +1",
+        "ranking": {
+          "candidateMusicalFloor": 0.03976608187134503,
+          "candidateMusicalMean": 0.08963319103471426,
+          "musicalFloorGain": 0.0023391812865497102,
+          "musicalMeanGain": 0.009666472837982873,
+          "pitchContentGain": 0.025869037995149557
+        },
+        "reasons": [],
+        "regressions": {}
+      },
+      {
+        "criticalMismatchDelta": -2,
+        "deltas": {
+          "chordPitchSetTolerantF1": 0.0046783625730994136,
+          "exactVoicingTolerantF1": 0.0046783625730994136,
+          "pitchContentF1": -0.008084074373484268,
+          "pitchTimingTolerantF1": 0.004850444624090532,
+          "stringFretTimingTolerantF1": 0.0048504446240905386
+        },
+        "musicalFloorGain": 0.0046783625730994136,
+        "musicalMeanGain": 0.002194708004179133,
+        "name": "pitch-position-shift-aa8bd7378e9d1c35",
+        "passed": false,
+        "pdfEventFidelity": 1.0,
+        "pitchContentGain": -0.008084074373484268,
+        "policy": "contextual-pitch-position-shift::pitchClass::4 && stepParity::1 => pitch +3, string -1",
+        "ranking": {
+          "candidateMusicalFloor": 0.042105263157894736,
+          "candidateMusicalMean": 0.08216142620091052,
+          "musicalFloorGain": 0.0046783625730994136,
+          "musicalMeanGain": 0.002194708004179133,
+          "pitchContentGain": -0.008084074373484268
+        },
+        "reasons": [
+          "fit:musical-metric-regression",
+          "fit:insufficient-pitch-content-gain"
+        ],
+        "regressions": {
+          "pitchContentF1": -0.008084074373484268
+        }
+      },
+      {
+        "criticalMismatchDelta": -14,
+        "deltas": {
+          "chordPitchSetTolerantF1": 0.0023391812865497102,
+          "exactVoicingTolerantF1": 0.0023391812865497102,
+          "pitchContentF1": 0.014551333872271588,
+          "pitchTimingTolerantF1": 0.009700889248181077,
+          "stringFretTimingTolerantF1": 0.006467259498787382
+        },
+        "musicalFloorGain": 0.0023391812865497102,
+        "musicalMeanGain": 0.007079569038467903,
+        "name": "pitch-position-shift-ae51a9e66d99efeb",
+        "passed": true,
+        "pdfEventFidelity": 1.0,
+        "pitchContentGain": 0.014551333872271588,
+        "policy": "contextual-pitch-position-shift::pitchClass::11 && registerStep::mid:0 => pitch -2, string +1",
+        "ranking": {
+          "candidateMusicalFloor": 0.03976608187134503,
+          "candidateMusicalMean": 0.08704628723519929,
+          "musicalFloorGain": 0.0023391812865497102,
+          "musicalMeanGain": 0.007079569038467903,
+          "pitchContentGain": 0.014551333872271588
+        },
+        "reasons": [],
+        "regressions": {}
+      },
+      {
+        "criticalMismatchDelta": -12,
+        "deltas": {
+          "chordPitchSetTolerantF1": -0.014035087719298244,
+          "exactVoicingTolerantF1": -0.014035087719298244,
+          "pitchContentF1": 0.017784963621665317,
+          "pitchTimingTolerantF1": -0.006467259498787403,
+          "stringFretTimingTolerantF1": -0.008084074373484233
+        },
+        "musicalFloorGain": -0.014035087719298244,
+        "musicalMeanGain": -0.0049673091378405615,
+        "name": "pitch-position-shift-b7584c10d6e0e97c",
+        "passed": false,
+        "pdfEventFidelity": 1.0,
+        "pitchContentGain": 0.017784963621665317,
+        "policy": "contextual-pitch-position-shift::pitchClass::4 && stepParity::0 => pitch -2, string +1",
+        "ranking": {
+          "candidateMusicalFloor": 0.023391812865497078,
+          "candidateMusicalMean": 0.07499940905889083,
+          "musicalFloorGain": -0.014035087719298244,
+          "musicalMeanGain": -0.0049673091378405615,
+          "pitchContentGain": 0.017784963621665317
+        },
+        "reasons": [
+          "fit:musical-metric-regression",
+          "fit:insufficient-musical-floor-gain"
+        ],
+        "regressions": {
+          "chordPitchSetTolerantF1": -0.014035087719298244,
+          "exactVoicingTolerantF1": -0.014035087719298244,
+          "pitchTimingTolerantF1": -0.006467259498787403,
+          "stringFretTimingTolerantF1": -0.008084074373484233
+        }
+      },
+      {
+        "criticalMismatchDelta": -16,
+        "deltas": {
+          "chordPitchSetTolerantF1": 0.0023391812865497102,
+          "exactVoicingTolerantF1": 0.0023391812865497102,
+          "pitchContentF1": 0.016168148746968425,
+          "pitchTimingTolerantF1": 0.011317704122877928,
+          "stringFretTimingTolerantF1": 0.006467259498787382
+        },
+        "musicalFloorGain": 0.0023391812865497102,
+        "musicalMeanGain": 0.007726294988346635,
+        "name": "pitch-position-shift-c45e295cf685052f",
+        "passed": true,
+        "pdfEventFidelity": 1.0,
+        "pitchContentGain": 0.016168148746968425,
+        "policy": "contextual-pitch-position-shift::pitchClass::11 && stepQuarter::0 => pitch -2, string +1",
+        "ranking": {
+          "candidateMusicalFloor": 0.03976608187134503,
+          "candidateMusicalMean": 0.08769301318507802,
+          "musicalFloorGain": 0.0023391812865497102,
+          "musicalMeanGain": 0.007726294988346635,
+          "pitchContentGain": 0.016168148746968425
+        },
+        "reasons": [],
+        "regressions": {}
+      },
+      {
+        "criticalMismatchDelta": -8,
+        "deltas": {
+          "chordPitchSetTolerantF1": 0.0023391812865497102,
+          "exactVoicingTolerantF1": 0.0023391812865497102,
+          "pitchContentF1": 0.008084074373484212,
+          "pitchTimingTolerantF1": 0.006467259498787382,
+          "stringFretTimingTolerantF1": 0.0048504446240905386
+        },
+        "musicalFloorGain": 0.0023391812865497102,
+        "musicalMeanGain": 0.0048160282138923205,
+        "name": "pitch-position-shift-c7bcc77bf3e6d299",
+        "passed": true,
+        "pdfEventFidelity": 1.0,
+        "pitchContentGain": 0.008084074373484212,
+        "policy": "contextual-pitch-position-shift::pitchClass::11 && section16::6 => pitch -2, string +1",
+        "ranking": {
+          "candidateMusicalFloor": 0.03976608187134503,
+          "candidateMusicalMean": 0.08478274641062371,
+          "musicalFloorGain": 0.0023391812865497102,
+          "musicalMeanGain": 0.0048160282138923205,
+          "pitchContentGain": 0.008084074373484212
+        },
+        "reasons": [],
+        "regressions": {}
+      }
+    ],
+    "fitOnlyRanking": true,
+    "instrument": "rhythm",
+    "locked": "pitch-position-shift-54a6e8d3aa91c422",
+    "lockedReason": "fit-qualified-candidate-locked",
+    "schemaVersion": 14404,
+    "validationReadDuringLock": false
+  },
+  "fullCalibration": {
+    "baselineComparison": {
+      "baselineEventSha256": "b6e1f8a8be150943d7224c74f9193b1b4050454620063846f6f5f5c773d4cbf6",
+      "baselineName": "pitch-shift-41b7a7470fa3245a",
+      "criticalMismatchDelta": -48,
+      "gatedMetricDeltas": {
+        "chordPitchSetTolerantF1": 0.0027643400138217047,
+        "exactVoicingTolerantF1": 0.0027643400138217047,
+        "measureCoverageRecall": 0.0,
+        "pitchContentF1": 0.02392344497607657,
+        "pitchTimingTolerantF1": 0.011483253588516741,
+        "stringFretTimingTolerantF1": 0.006698564593301433
+      }
+    },
+    "invariantEvidence": {
+      "adjacentStringOnlyRequired": true,
+      "baselineEventCountPreserved": true,
+      "baselineGeneratedMeasureSetPreserved": true,
+      "candidateGeneratedMeasureCount": 113,
+      "criticalMismatchDelta": -48,
+      "jointNonZeroPitchAndStringDeltaRequired": true,
+      "measureCoverageRecall": 1.0,
+      "metricRegressions": {},
+      "pdfEventFidelity": 1.0,
+      "protectedNonPositionMetadataPreservationRequired": true,
+      "timingAndMeasurePreservationRequired": true,
+      "tuningDerivedFretRequired": true
+    },
+    "invariantPassed": true,
+    "pdfEventFidelity": 1.0,
+    "score": {
+      "criticalMismatchBreakdown": {
+        "grossUnmatchedGeneratedNotes": 976,
+        "grossUnmatchedReferenceNotes": 778,
+        "missingReferenceMeasures": 0
+      },
+      "criticalMismatchCount": 1754,
+      "diagnostics": {
+        "chordPitchSet": {
+          "f1": 0.038700760193503804,
+          "falseNegative": 575,
+          "falsePositive": 816,
+          "generated": 844,
+          "matched": 28,
+          "precision": 0.03317535545023697,
+          "recall": 0.04643449419568822,
+          "reference": 603
+        },
+        "exactChordVoicing": {
+          "f1": 0.038700760193503804,
+          "falseNegative": 575,
+          "falsePositive": 816,
+          "generated": 844,
+          "matched": 28,
+          "precision": 0.03317535545023697,
+          "recall": 0.04643449419568822,
+          "reference": 603
+        },
+        "measureCoverage": {
+          "extraGeneratedMeasures": [],
+          "generatedMeasureCount": 113,
+          "matchedReferenceMeasures": 113,
+          "missingReferenceMeasures": [],
+          "recall": 1.0,
+          "referenceMeasureCount": 113
+        },
+        "pitchContent": {
+          "f1": 0.32822966507177037,
+          "falseNegative": 603,
+          "falsePositive": 801,
+          "generated": 1144,
+          "matched": 343,
+          "precision": 0.29982517482517484,
+          "recall": 0.36257928118393234,
+          "reference": 946
+        },
+        "pitchTiming": {
+          "f1": 0.06411483253588517,
+          "falseNegative": 879,
+          "falsePositive": 1077,
+          "generated": 1144,
+          "matched": 67,
+          "precision": 0.05856643356643357,
+          "recall": 0.0708245243128964,
+          "reference": 946
+        },
+        "stringFretTiming": {
+          "f1": 0.045933014354066985,
+          "falseNegative": 898,
+          "falsePositive": 1096,
+          "generated": 1144,
+          "matched": 48,
+          "precision": 0.04195804195804196,
+          "recall": 0.0507399577167019,
+          "reference": 946
+        },
+        "technique": {
+          "f1": 0.0,
+          "falseNegative": 0,
+          "falsePositive": 18,
+          "generated": 18,
+          "matched": 0,
+          "precision": 0.0,
+          "recall": 1.0,
+          "reference": 0
+        }
+      },
+      "gatedMetrics": {
+        "chordPitchSetTolerantF1": 0.038700760193503804,
+        "exactVoicingTolerantF1": 0.038700760193503804,
+        "measureCoverageRecall": 1.0,
+        "pdfEventFidelity": 1.0,
+        "pitchContentF1": 0.32822966507177037,
+        "pitchTimingTolerantF1": 0.06411483253588517,
+        "stringFretTimingTolerantF1": 0.045933014354066985
+      },
+      "generatedEventCount": 1144,
+      "referenceNoteCount": 946
+    }
+  },
+  "locked": {
+    "changedEventCount": 93,
+    "eventCount": 1144,
+    "eventSha256": "5b36270aaeafa73b2e25722e2576a40424ce5951dcfd2b5d769746bd9eb07e0d",
+    "measureSet": {
+      "baselineGeneratedMeasureCount": 113,
+      "baselineGeneratedMeasureSetPreserved": true,
+      "candidateGeneratedMeasureCount": 113,
+      "extraCandidateGeneratedMeasures": [],
+      "missingBaselineGeneratedMeasures": [],
+      "professionalReferenceUsed": false
+    },
+    "name": "pitch-position-shift-54a6e8d3aa91c422",
+    "semitoneShift": -2,
+    "signatures": [
+      "pitchClass::11",
+      "stepParity::0"
+    ],
+    "stringShift": 1
+  },
+  "lockedCandidatePdfFidelityProof": {
+    "eventCount": 1144,
+    "eventSha256": "5b36270aaeafa73b2e25722e2576a40424ce5951dcfd2b5d769746bd9eb07e0d",
+    "passed": true,
+    "pdfEventFidelity": 1.0,
+    "referenceOpenedDuringPdfFidelityCheck": false
+  },
+  "mayClaimUnseenGeneralization": false,
+  "safety": {
+    "baselineEventCountPreserved": true,
+    "baselineGeneratedMeasureSetPreserved": true,
+    "deterministic": true,
+    "lockedCandidatePdfFidelityReproved": true,
+    "mainModified": false,
+    "modalGpuInvoked": false,
+    "productionModified": false,
+    "runtimeReferenceInputUsed": false,
+    "v5Modified": false
+  },
+  "schemaVersion": 14413,
+  "selected": "pitch-position-shift-54a6e8d3aa91c422",
+  "selectedReason": "locked-pitch-position-candidate-passed-split-and-full-calibration-invariants",
+  "splitPromotionAllowed": true,
+  "stoppedAt": "complete",
+  "validation": {
+    "alternativeCandidatesRead": false,
+    "criticalMismatchDelta": -8,
+    "deltas": {
+      "chordPitchSetTolerantF1": 0.006097560975609755,
+      "exactVoicingTolerantF1": 0.006097560975609755,
+      "pitchContentF1": 0.00865800865800867,
+      "pitchTimingTolerantF1": 0.008658008658008656,
+      "stringFretTimingTolerantF1": 0.004329004329004328
+    },
+    "musicalFloorGain": 0.006097560975609755,
+    "musicalMeanGain": 0.00676802871924824,
+    "passed": true,
+    "pdfEventFidelity": 1.0,
+    "pitchContentGain": 0.00865800865800867,
+    "reasons": [],
+    "regressions": {},
+    "stage": "validation"
+  }
+}
