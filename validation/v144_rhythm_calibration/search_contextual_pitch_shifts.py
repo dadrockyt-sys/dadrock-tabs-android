@@ -91,14 +91,31 @@ def make_candidate(
 def changed_event_count(
     baseline_events: list[Mapping[str, Any]], candidate_events: list[Mapping[str, Any]]
 ) -> int:
+    """Count pitch shifts while proving every non-pitch event field stayed identical."""
     if len(baseline_events) != len(candidate_events):
         raise ValueError("pitch-shift candidate changed event count")
-    return sum(
-        1
-        for baseline, candidate in zip(baseline_events, candidate_events)
-        if int(baseline["midi"]) != int(candidate["midi"])
-        or int(baseline["fret"]) != int(candidate["fret"])
-    )
+
+    changed = 0
+    for baseline, candidate in zip(baseline_events, candidate_events):
+        if int(baseline["eventIndex"]) != int(candidate["eventIndex"]):
+            raise ValueError("pitch-shift candidate changed event ordering")
+
+        baseline_non_pitch = {
+            key: value for key, value in baseline.items() if key not in {"midi", "fret"}
+        }
+        candidate_non_pitch = {
+            key: value for key, value in candidate.items() if key not in {"midi", "fret"}
+        }
+        if baseline_non_pitch != candidate_non_pitch:
+            raise ValueError("pitch-shift candidate changed non-pitch event metadata")
+
+        midi_delta = int(candidate["midi"]) - int(baseline["midi"])
+        fret_delta = int(candidate["fret"]) - int(baseline["fret"])
+        if midi_delta != fret_delta:
+            raise ValueError("pitch-shift candidate changed midi/fret inconsistently")
+        if midi_delta != 0:
+            changed += 1
+    return changed
 
 
 def main() -> int:
@@ -273,6 +290,7 @@ def main() -> int:
     locked_measure_evidence = measure_set_evidence(baseline_events, locked_events)
     if not locked_measure_evidence["baselineGeneratedMeasureSetPreserved"]:
         raise ValueError("selector locked a candidate that violates accepted-baseline measure preservation")
+    locked_changed_count = changed_event_count(baseline_events, locked_events)
 
     validation_gate = None
     canary_gate = None
@@ -374,7 +392,7 @@ def main() -> int:
     report = {
         "schemaVersion": 14410,
         "classification": "v144-rhythm-fit-only-contextual-pitch-shift-search",
-        "evaluationRole": "accepted-v144-baseline-additive-gold-calibration",
+        "evaluationRole": "accepted-v144-baseline-contextual-pitch-correction-gold-calibration",
         "mayClaimUnseenGeneralization": False,
         "candidateConstruction": {
             "sourceBaselineName": ACCEPTED_BASELINE_NAME,
@@ -398,6 +416,7 @@ def main() -> int:
             "historicalConsumedFamilyResultsUsedForConstructionOrRanking": False,
             "measureSetGuardUsesProfessionalReference": False,
             "eventCountPreservationRequired": True,
+            "nonPitchEventMetadataPreservationRequired": True,
             "generatedMeasureSetPreservationRequired": True,
             "linkedPitchTechniqueEventsEligible": False,
         },
@@ -416,9 +435,7 @@ def main() -> int:
             "semitoneShift": locked_shift,
             "eventCount": len(locked_events),
             "eventSha256": sha256_json(locked_events),
-            "changedEventCount": 0
-            if locked_rule is None
-            else int(locked_rule["changedEventCount"]),
+            "changedEventCount": locked_changed_count,
             "measureSet": {
                 "baselineGeneratedMeasureCount": locked_measure_evidence["baselineGeneratedMeasureCount"],
                 "candidateGeneratedMeasureCount": locked_measure_evidence["candidateGeneratedMeasureCount"],
