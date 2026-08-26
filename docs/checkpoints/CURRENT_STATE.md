@@ -1,6 +1,6 @@
 # CURRENT STATE — DadRock `/ai-tab`
 
-Updated: 2026-08-25 America/Montreal
+Updated: 2026-08-26 America/Montreal
 Branch: `v143-contextual-prune-lobo`
 Priority: **Active phase: V144 Rhythm calibration/retraining toward the professional human-written reference target for the `/ai-tab` product. V5 remains permanently frozen and may not be modified or rescored. Do not start Bass/Lead until Rhythm V144 quality is proven or the user explicitly redirects.**
 
@@ -136,3 +136,11 @@ This section is the immediate resume point if the GPT interface crashes. Complet
 
 ### Immediate next resume action
 Search the branch for the professional-reference/scorer/workflow assets named or implied by the V5 record, document their exact paths and classification in this checkpoint, then create only the minimum V144-isolated scaffolding needed for calibration. No V5 mutation and no GPU invocation.
+
+## Resume log — 2026-08-26 00:05 America/Montreal
+- Branch re-verified: `v143-contextual-prune-lobo`.
+- Resumed at the crash-resilient continuation queue exactly as requested.
+- Current phase: inventorying V5 professional-reference, scorer, workflow, renderer-normalization/PDF-fidelity, and archived calibration machinery before any V144 source addition.
+- Guardrail remains active: no frozen V5 candidate, scorer result, threshold, protected analyzer, final-holdout sentinel/workflow trigger, `main`/Production content, or `freezeReady` state has been modified.
+- No Modal/L4/GPU invocation has occurred.
+- Next resume action: finish exact-path classification, save that classification here, then add only V144-isolated scaffolding.
