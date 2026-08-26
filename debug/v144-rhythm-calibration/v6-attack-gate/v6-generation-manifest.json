@@ -1,0 +1,36 @@
+{
+  "calibrationReferenceUsedDuringGeneration": false,
+  "candidateGenerated": true,
+  "classification": "v144-v6-source-only-generation-manifest",
+  "droppedEventCount": 60,
+  "droppedOnsetCount": 52,
+  "modalInvoked": false,
+  "policy": {
+    "detectionCountSumMinInclusive": 12.0,
+    "name": "conservative-source-evidence-attack-gate",
+    "pitchRewritten": false,
+    "precisionGridErrorSecondsMaxInclusive": 0.06,
+    "professionalReferenceReadDuringGeneration": false,
+    "secondaryVoicingPruned": false,
+    "timingRelocated": false
+  },
+  "productionModified": false,
+  "schemaVersion": 1,
+  "sourceV2CandidateProductSha256": "a2d451a39391b797e55623bb3c616735a3f1b39648103cb630a9bb1035430951",
+  "sourceV5Sha256": "7c3399d3f5e05ecc8ac98d71d0e5300e1e78f63ae96c1642fe4a19debb4061b2",
+  "unseenHoldout": false,
+  "v5AttackClassEventCounts": {
+    "baseline": 967,
+    "rescued": 242
+  },
+  "v5EventCount": 1209,
+  "v5OnsetCount": 891,
+  "v5PrimaryEventCount": 891,
+  "v6AttackClassEventCounts": {
+    "baseline": 913,
+    "rescued": 236
+  },
+  "v6EventCount": 1149,
+  "v6OnsetCount": 839,
+  "v6PrimaryEventCount": 839
+}
