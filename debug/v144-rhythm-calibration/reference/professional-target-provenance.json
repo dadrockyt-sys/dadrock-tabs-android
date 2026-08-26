@@ -1,0 +1,44 @@
+{
+  "schemaVersion": 14401,
+  "classification": "v144-rhythm-gold-calibration-reference-provenance",
+  "instrument": "rhythm",
+  "role": "gold-calibration-reference-not-unseen-holdout",
+  "visualTarget": {
+    "repositoryPath": "main:public/Professionalexample.jpg",
+    "mainGitBlob": "16106197cc1269cca0b3c443908d5ef75e8b4d3e",
+    "sizeBytes": 979757,
+    "verifiedFileSha256": "aca2da3e8d551b2fd82b4ab3ecafa0c8932d6c0a27b54b6213ffc990ca08a9a9",
+    "historicalImmutableCommit": "e0f91e74c815b9ecdf0a72fae6d1523414b34577"
+  },
+  "structuredTarget": {
+    "songId": 243,
+    "revisionId": 7868948,
+    "trackName": "Craig Ross | 1953 Gibson Les Paul Goldtop | Rhythm Guitar",
+    "structuredSourceSha256": "18cdb4f8afb49562aac5b600730384636070d6ca8650823e759276a81ee4afc8",
+    "builtReferenceSha256": "18fd868ae960dfcdd1ffb0110f1a9dfd8acc2ffeb46e247d1116cd54291526ac",
+    "measureCount": 113,
+    "playableOnsetCount": 603,
+    "playableNoteCount": 946,
+    "populatedMeasureCount": 104,
+    "tempoBpm": 129,
+    "timeSignature": "4/4",
+    "stepsPerMeasure": 16,
+    "tuningMidiHighToLow": [64, 59, 55, 50, 45, 40]
+  },
+  "safety": {
+    "v5FinalHoldoutConsumed": true,
+    "v5ResultMayBeModified": false,
+    "v5CandidateMayBeModified": false,
+    "v5WorkflowMayBeRetried": false,
+    "mainMayBeModified": false,
+    "productionMayBeModified": false,
+    "modalGpuAuthorized": false
+  },
+  "v144Usage": {
+    "iterativeCalibrationAllowed": true,
+    "mustLabelScoresAsCalibration": true,
+    "mayClaimUnseenGeneralization": false,
+    "requiresSeparateUnseenExampleForGeneralizationClaim": true,
+    "outputsMustStayUnderV144Paths": true
+  }
+}
