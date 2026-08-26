@@ -1,0 +1,101 @@
+name: V144 V6 Generate
+
+on:
+  workflow_dispatch:
+  push:
+    branches:
+      - v144-rhythm-post-holdout-calibration
+    paths:
+      - debug/v144-rhythm-calibration/run-v6-generate.txt
+
+permissions:
+  contents: write
+  actions: read
+
+concurrency:
+  group: v144-v6-generate
+  cancel-in-progress: false
+
+jobs:
+  generate:
+    runs-on: ubuntu-latest
+    timeout-minutes: 12
+    steps:
+      - name: Check out exact generation revision
+        uses: actions/checkout@v4
+        with:
+          ref: ${{ github.sha }}
+          fetch-depth: 0
+
+      - name: Verify frozen V5 input
+        shell: bash
+        run: |
+          set -euo pipefail
+          mkdir -p .v144v6 debug/v144-rhythm-calibration/v6-attack-gate
+          echo '7c3399d3f5e05ecc8ac98d71d0e5300e1e78f63ae96c1642fe4a19debb4061b2  debug/v143-contextual-prune/v5-professional-pdf/v5-render-stream.json' | sha256sum -c -
+
+      - name: Download exact authorized V2 evidence artifact
+        shell: bash
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          set -euo pipefail
+          curl -fL -sS \
+            -H "Authorization: Bearer ${GH_TOKEN}" \
+            -H 'Accept: application/vnd.github+json' \
+            -H 'X-GitHub-Api-Version: 2022-11-28' \
+            "https://api.github.com/repos/${GITHUB_REPOSITORY}/actions/artifacts/9548666053/zip" \
+            -o .v144v6/v2.zip
+          echo '5104522aab3e6193c6b06fe3abb807994065f858a945a81070c611fc63707d4f  .v144v6/v2.zip' | sha256sum -c -
+          unzip -q .v144v6/v2.zip -d .v144v6/v2
+          echo 'a2d451a39391b797e55623bb3c616735a3f1b39648103cb630a9bb1035430951  .v144v6/v2/repaired-timing-precision-candidate-product.json' | sha256sum -c -
+
+      - name: Generate V6 from source-only evidence
+        shell: bash
+        run: |
+          set -euo pipefail
+          python analyzer/v144_generate_v6_attack_gate.py \
+            debug/v143-contextual-prune/v5-professional-pdf/v5-render-stream.json \
+            .v144v6/v2/repaired-timing-precision-candidate-product.json \
+            --output debug/v144-rhythm-calibration/v6-attack-gate/v6-render-stream.json \
+            --manifest debug/v144-rhythm-calibration/v6-attack-gate/v6-generation-manifest.json
+
+      - name: Verify V6 generation boundary
+        shell: bash
+        run: |
+          set -euo pipefail
+          python - <<'PY'
+          import json
+          from pathlib import Path
+          m=json.loads(Path('debug/v144-rhythm-calibration/v6-attack-gate/v6-generation-manifest.json').read_text())
+          assert m['calibrationReferenceUsedDuringGeneration'] is False
+          assert m['modalInvoked'] is False
+          assert m['productionModified'] is False
+          assert m['v6EventCount'] == 1149
+          assert m['v6OnsetCount'] == 839
+          assert m['droppedEventCount'] == 60
+          assert m['droppedOnsetCount'] == 52
+          print(json.dumps(m, indent=2, sort_keys=True))
+          PY
+          sha256sum debug/v144-rhythm-calibration/v6-attack-gate/v6-render-stream.json \
+                    debug/v144-rhythm-calibration/v6-attack-gate/v6-generation-manifest.json \
+            > debug/v144-rhythm-calibration/v6-attack-gate/v6-generation-sha256.txt
+          rm -rf .v144v6
+
+      - name: Persist immutable V6 candidate
+        shell: bash
+        run: |
+          set -euo pipefail
+          git add debug/v144-rhythm-calibration/v6-attack-gate/v6-render-stream.json \
+                  debug/v144-rhythm-calibration/v6-attack-gate/v6-generation-manifest.json \
+                  debug/v144-rhythm-calibration/v6-attack-gate/v6-generation-sha256.txt
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git commit -m 'Record V144 V6 conservative attack-gate candidate'
+          for attempt in 1 2 3 4 5; do
+            git fetch origin v144-rhythm-post-holdout-calibration
+            if git rebase origin/v144-rhythm-post-holdout-calibration && git push origin HEAD:v144-rhythm-post-holdout-calibration; then exit 0; fi
+            git rebase --abort 2>/dev/null || true
+            sleep $((attempt * 2))
+          done
+          exit 1
