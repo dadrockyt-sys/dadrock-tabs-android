@@ -1,0 +1,122 @@
+name: V144 Rhythm Split Baseline Diagnostics
+
+on:
+  push:
+    branches:
+      - v143-contextual-prune-lobo
+    paths:
+      - .github/workflows/v144-split-baseline-diagnostics.yml
+      - validation/v144_rhythm_calibration/analyze_split_baseline.py
+      - modal/v144_rhythm_context_split_policy.py
+      - modal/configs/v144_rhythm_context_split_config.json
+      - debug/v144-rhythm-calibration/reference/professional-rhythm-gold-reference.json
+      - debug/v144-rhythm-calibration/baseline/v5-frozen-calibration-baseline.json
+
+permissions:
+  contents: write
+
+concurrency:
+  group: v144-rhythm-split-baseline-diagnostics
+  cancel-in-progress: false
+
+jobs:
+  split-baseline-diagnostics:
+    name: Build fit validation canary baseline diagnostics
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+
+    steps:
+      - name: Check out exact pushed revision
+        uses: actions/checkout@v4
+        with:
+          ref: ${{ github.sha }}
+          fetch-depth: 0
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+
+      - name: Verify immutable and calibration inputs
+        shell: bash
+        run: |
+          set -euo pipefail
+          test "$(git hash-object analyzer/v143_reference_free_rhythm_pipeline.py)" = "7f72f8ed9b14af8bc93e95544195204d99c6bec1"
+          test "$(git hash-object debug/v143-contextual-prune/v5-professional-pdf/final-professional-holdout-result.json)" = "511fd244f231b66d08306f97b5a47ed41f5415c7"
+          test "$(sha256sum debug/v143-contextual-prune/v5-professional-pdf/v5-render-stream.json | awk '{print $1}')" = "7c3399d3f5e05ecc8ac98d71d0e5300e1e78f63ae96c1642fe4a19debb4061b2"
+          test "$(sha256sum debug/v144-rhythm-calibration/reference/professional-rhythm-gold-reference.json | awk '{print $1}')" = "18fd868ae960dfcdd1ffb0110f1a9dfd8acc2ffeb46e247d1116cd54291526ac"
+          python - <<'PY'
+          import json
+          from pathlib import Path
+          baseline = json.loads(Path('debug/v144-rhythm-calibration/baseline/v5-frozen-calibration-baseline.json').read_text(encoding='utf-8'))
+          assert baseline['evaluationRole'] == 'calibration-baseline-not-unseen-holdout'
+          assert baseline['reproducesImmutableHistoricalV5ScoreExactly'] is True
+          assert baseline['baseline']['gatedMetrics']['pdfEventFidelity'] == 1.0
+          assert baseline['protocol']['modalGpuInvoked'] is False
+          PY
+
+      - name: Build split-isolated diagnostics
+        shell: bash
+        run: |
+          set -euo pipefail
+          python validation/v144_rhythm_calibration/analyze_split_baseline.py \
+            debug/v143-contextual-prune/v5-professional-pdf/v5-render-stream.json \
+            debug/v144-rhythm-calibration/reference/professional-rhythm-gold-reference.json \
+            debug/v144-rhythm-calibration/baseline/v5-frozen-calibration-baseline.json \
+            modal/configs/v144_rhythm_context_split_config.json \
+            debug/v144-rhythm-calibration/baseline/v5-split-isolated-diagnostics.json \
+            > /tmp/v144-split-baseline.log
+
+      - name: Verify split isolation and calibration semantics
+        shell: bash
+        run: |
+          set -euo pipefail
+          python - <<'PY'
+          import json
+          from pathlib import Path
+          p = Path('debug/v144-rhythm-calibration/baseline/v5-split-isolated-diagnostics.json')
+          d = json.loads(p.read_text(encoding='utf-8'))
+          assert d['classification'] == 'v144-rhythm-split-isolated-baseline-diagnostics'
+          assert d['mayClaimUnseenGeneralization'] is False
+          assert d['globalReproduction']['matchesPersistedFrozenV5BaselineExactly'] is True
+          assert d['globalReproduction']['criticalMismatchCount'] == 1875
+          assert d['globalReproduction']['pdfEventFidelity'] == 1.0
+          assert set(d['splits']) == {'fit', 'validation', 'canary'}
+          assert d['splitPolicy']['crossSplitMatchingAllowed'] is False
+          assert d['safety']['fitLabelsMayDriveCalibration'] is True
+          assert d['safety']['validationLabelsMayDriveCalibration'] is False
+          assert d['safety']['canaryLabelsMayDriveCalibration'] is False
+          assert d['safety']['v5Modified'] is False
+          assert d['safety']['modalGpuInvoked'] is False
+          fit = d['fitOnlyCalibrationSignals']
+          assert fit['grossUnmatchedGeneratedNoteCount'] > 0
+          assert fit['grossUnmatchedReferenceNoteCount'] > 0
+          assert fit['falsePositiveContextSignatures']
+          assert fit['highestPitchErrorMeasures']
+          PY
+          test "$(git hash-object analyzer/v143_reference_free_rhythm_pipeline.py)" = "7f72f8ed9b14af8bc93e95544195204d99c6bec1"
+          test "$(git hash-object debug/v143-contextual-prune/v5-professional-pdf/final-professional-holdout-result.json)" = "511fd244f231b66d08306f97b5a47ed41f5415c7"
+
+      - name: Persist only V144 split diagnostics
+        shell: bash
+        run: |
+          set -euo pipefail
+          report='debug/v144-rhythm-calibration/baseline/v5-split-isolated-diagnostics.json'
+          git add "$report"
+          if git diff --cached --quiet; then
+            echo 'Split baseline diagnostics already persisted; no commit required.'
+            exit 0
+          fi
+          test "$(git diff --cached --name-only)" = "$report"
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git commit -m 'Persist V144 split-isolated baseline diagnostics'
+          for attempt in 1 2 3 4 5; do
+            git fetch origin v143-contextual-prune-lobo
+            if git rebase origin/v143-contextual-prune-lobo && git push origin HEAD:v143-contextual-prune-lobo; then
+              exit 0
+            fi
+            git rebase --abort 2>/dev/null || true
+            sleep $((attempt * 2))
+          done
+          exit 1
