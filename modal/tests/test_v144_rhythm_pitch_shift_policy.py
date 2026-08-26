@@ -12,13 +12,14 @@ if str(MODAL_DIR) not in sys.path:
 from v144_rhythm_pitch_shift_policy import (  # noqa: E402
     apply_pitch_shift_rule,
     event_matches_pitch_shift_rule,
+    has_pitch_linkage,
     rank_fit_pitch_shift_rules,
     same_onset_substitution_pairs,
 )
 
 
-def generated_note(measure: int, step: int, midi: int, string_index: int, fret: int) -> dict:
-    return {
+def generated_note(measure: int, step: int, midi: int, string_index: int, fret: int, **extra) -> dict:
+    payload = {
         "measure": measure,
         "step": step,
         "midi": midi,
@@ -27,6 +28,8 @@ def generated_note(measure: int, step: int, midi: int, string_index: int, fret: 
         "durationSteps": 1,
         "techniques": [],
     }
+    payload.update(extra)
+    return payload
 
 
 def reference_note(measure: int, step: int, midi: int) -> dict:
@@ -89,6 +92,36 @@ class PitchShiftPolicyTests(unittest.TestCase):
         self.assertEqual((transformed[2]["midi"], transformed[2]["fret"]), (62, 3))
         for row in transformed:
             self.assertEqual(row["midi"], {0: 64, 1: 59, 2: 55, 3: 50, 4: 45, 5: 40}[row["stringIndex"]] + row["fret"])
+
+    def test_linked_bend_legato_and_slide_events_are_never_shifted(self) -> None:
+        bend = generated_note(
+            1, 0, 60, 1, 1,
+            bendSemitones=2.0,
+            bendTargetFret=3,
+            bendTargetMidi=62,
+        )
+        legato = generated_note(
+            1, 0, 60, 1, 1,
+            legatoTargetEventIndex=99,
+            legatoTargetFret=3,
+            legatoTargetMidi=62,
+        )
+        slide = generated_note(1, 0, 60, 1, 1)
+        slide["techniques"] = ["slide"]
+        plain = generated_note(1, 0, 60, 1, 1)
+        transformed = apply_pitch_shift_rule(
+            [bend, legato, slide, plain],
+            ["pitchClass::0", "measurePhase::1"],
+            2,
+        )
+        self.assertEqual(transformed[0], bend)
+        self.assertEqual(transformed[1], legato)
+        self.assertEqual(transformed[2], slide)
+        self.assertEqual((transformed[3]["midi"], transformed[3]["fret"]), (62, 3))
+        self.assertTrue(has_pitch_linkage(bend))
+        self.assertTrue(has_pitch_linkage(legato))
+        self.assertTrue(has_pitch_linkage(slide))
+        self.assertFalse(has_pitch_linkage(plain))
 
     def test_out_of_range_fret_shift_leaves_matching_event_unchanged(self) -> None:
         event = generated_note(1, 0, 99, 0, 35)
