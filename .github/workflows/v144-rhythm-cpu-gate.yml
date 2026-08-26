@@ -36,6 +36,7 @@ on:
       - modal/tests/test_v144_rhythm_singleton_onset_replacement_policy.py
       - modal/tests/test_v144_rhythm_singleton_onset_prune_policy.py
       - modal/tests/test_v144_rhythm_generated_only_dyad_prune_policy.py
+      - modal/tests/test_v144_rhythm_generated_only_dyad_prune_search.py
       - modal/tests/test_v144_rhythm_singleton_onset_prune_search.py
       - modal/tests/test_v144_rhythm_singleton_onset_replacement_search.py
       - modal/tests/test_v144_rhythm_singleton_selected_baseline_reconstruction.py
@@ -56,6 +57,7 @@ on:
       - validation/v144_rhythm_calibration/search_atomic_onset_dyad_pitch_rewrites.py
       - validation/v144_rhythm_calibration/search_atomic_singleton_onset_replacements.py
       - validation/v144_rhythm_calibration/search_atomic_singleton_onset_prunes.py
+      - validation/v144_rhythm_calibration/search_atomic_generated_only_dyad_prunes.py
       - validation/v144_rhythm_calibration/analyze_current_baseline_fit_mechanisms.py
       - validation/v144_rhythm_calibration/analyze_current_baseline_fit_onset_topology.py
       - validation/v144_rhythm_calibration/analyze_singleton_baseline_fit_residuals.py
@@ -94,6 +96,7 @@ on:
       - modal/tests/test_v144_rhythm_singleton_onset_replacement_policy.py
       - modal/tests/test_v144_rhythm_singleton_onset_prune_policy.py
       - modal/tests/test_v144_rhythm_generated_only_dyad_prune_policy.py
+      - modal/tests/test_v144_rhythm_generated_only_dyad_prune_search.py
       - modal/tests/test_v144_rhythm_singleton_onset_prune_search.py
       - modal/tests/test_v144_rhythm_singleton_onset_replacement_search.py
       - modal/tests/test_v144_rhythm_singleton_selected_baseline_reconstruction.py
@@ -114,6 +117,7 @@ on:
       - validation/v144_rhythm_calibration/search_atomic_onset_dyad_pitch_rewrites.py
       - validation/v144_rhythm_calibration/search_atomic_singleton_onset_replacements.py
       - validation/v144_rhythm_calibration/search_atomic_singleton_onset_prunes.py
+      - validation/v144_rhythm_calibration/search_atomic_generated_only_dyad_prunes.py
       - validation/v144_rhythm_calibration/analyze_current_baseline_fit_mechanisms.py
       - validation/v144_rhythm_calibration/analyze_current_baseline_fit_onset_topology.py
       - validation/v144_rhythm_calibration/analyze_singleton_baseline_fit_residuals.py
@@ -181,6 +185,7 @@ jobs:
           python -m py_compile validation/v144_rhythm_calibration/search_atomic_onset_dyad_pitch_rewrites.py
           python -m py_compile validation/v144_rhythm_calibration/search_atomic_singleton_onset_replacements.py
           python -m py_compile validation/v144_rhythm_calibration/search_atomic_singleton_onset_prunes.py
+          python -m py_compile validation/v144_rhythm_calibration/search_atomic_generated_only_dyad_prunes.py
           python -m py_compile validation/v144_rhythm_calibration/analyze_current_baseline_fit_mechanisms.py
           python -m py_compile validation/v144_rhythm_calibration/analyze_current_baseline_fit_onset_topology.py
           python -m py_compile validation/v144_rhythm_calibration/analyze_singleton_baseline_fit_residuals.py
@@ -217,6 +222,7 @@ jobs:
           python modal/tests/test_v144_rhythm_onset_dyad_pitch_search.py -v
           python modal/tests/test_v144_rhythm_singleton_onset_replacement_search.py -v
           python modal/tests/test_v144_rhythm_singleton_onset_prune_search.py -v
+          python modal/tests/test_v144_rhythm_generated_only_dyad_prune_search.py -v
           python modal/tests/test_v144_rhythm_singleton_selected_baseline_reconstruction.py -v
           python modal/tests/test_v144_rhythm_singleton_baseline_fit_residual_diagnostic.py -v
           python modal/tests/test_v144_rhythm_current_baseline_fit_mechanisms.py -v
