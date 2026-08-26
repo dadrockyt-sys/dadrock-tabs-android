@@ -2,7 +2,7 @@
 
 Updated: 2026-08-26 America/Montreal
 Branch: `v143-contextual-prune-lobo`
-Active phase: **V144 Rhythm gold calibration. Current accepted baseline is `pitch-shift-41b7a7470fa3245a` (1144 events / 113 measures / SHA `b6e1f8a8...`). Its consumed pitch-only family is sealed. Current-baseline fit diagnostics are complete. A materially new joint contextual pitch+within-measure-step correction family is now pre-registered, unit-tested, and CPU-gated successfully. No joint-family search implementation or candidate evaluation exists yet. Next: implement search-level logic/tests only, then CPU-gate again before any one-shot search.**
+Active phase: **V144 Rhythm gold calibration. Current accepted baseline is `pitch-shift-41b7a7470fa3245a` (1144 events / 113 measures / SHA `b6e1f8a8...`). Its consumed pitch-only family is sealed. Current-baseline fit diagnostics are complete. The materially new joint contextual pitch+within-measure-step correction family is pre-registered and policy-gated. Search-level implementation + deterministic invariant tests now exist and are wired into the CPU gate; CPU gate run `32969889867` is currently in progress. No joint-family candidate evaluation, one-shot workflow, report, locked candidate, validation, canary, or promotion exists yet.**
 
 ## Permanent safety boundary
 - Work only on `v143-contextual-prune-lobo`; never modify/merge `main` or Production.
@@ -53,11 +53,17 @@ Active phase: **V144 Rhythm gold calibration. Current accepted baseline is `pitc
 - Shape signals: timing opportunity `110`; position-remap opportunity `8`; same-onset wrong-pitch substitutions `179`.
 - Diagnostic ceilings only: timing alignment of existing pitch matches -> pitch/timing F1 `0.23120452708164915`; position remap of tight pitch matches -> string/fret/timing F1 `0.05335489086499596`; count-preserving pitch correction pitch ceiling `0.9603880355699272`.
 
-## Joint contextual pitch+step correction family — PRE-REGISTERED / CPU-GATED / NOT SEARCHED
+## Joint contextual pitch+step correction family — SEARCH LOGIC IMPLEMENTED / CPU GATE IN PROGRESS / NOT SEARCHED
 - Rationale: timing-only cannot pass the unchanged fit gate because it cannot improve pitch-content F1; pitch-only family is consumed. New family therefore requires **both** pitch and step changes.
 - Policy `modal/v144_rhythm_pitch_step_shift_policy.py`; pre-registration commit `6f1a8e633d052729c102d35fb487b903fe5af65c`; blob `b769522c1e083bd989e3b64297cb726ff6e6bf3c`.
-- Tests `modal/tests/test_v144_rhythm_pitch_step_shift_policy.py`; commit `1fe3d8e95cc8d3be587602328ed69e065796d7f3`; blob `fd8da156208deee90795519bc1e072efd10ec46d`.
-- CPU-gate integration commit `0dcd404607952ab73ab14cc238c5921bcc76289e`; run `32941861368` **SUCCESS**.
+- Policy tests `modal/tests/test_v144_rhythm_pitch_step_shift_policy.py`; commit `1fe3d8e95cc8d3be587602328ed69e065796d7f3`; blob `fd8da156208deee90795519bc1e072efd10ec46d`.
+- Initial CPU-gate integration commit `0dcd404607952ab73ab14cc238c5921bcc76289e`; run `32941861368` **SUCCESS**.
+- Search implementation `validation/v144_rhythm_calibration/search_contextual_pitch_step_shifts.py`; commit `80d055d0b1c1f4eec86a3ae11104222e0e4292e1`.
+- Search invariant tests `modal/tests/test_v144_rhythm_pitch_step_shift_search.py`; commit `8fe0e396c95d6a42c8c3af3310bb2bb12a0ebb51`.
+- CPU gate wiring commit `490a85256a6cb2e3e6df806188f1762c8e7eddec`; run `32969889867` currently **IN PROGRESS**.
+- Search reconstructs current accepted baseline reference-free from frozen V5 via historical triple + sealed pitch shift and hard-checks current event SHA `b6e1f8a8...` before any fit construction.
+- Search construction/ranking uses current-baseline **fit labels only** via the pre-registered deterministic same-measure pairing policy.
+- Search-level invariants require 1144 events, stable eventIndex/list order, protected measure/string/duration/other metadata, equal MIDI/fret delta, both pitch+step changing together, bounded non-zero deltas, within-measure step, and exact locked per-candidate deltas.
 - Rule identity: source `pitchClass::<n>` + one reference-free structural context signature + fixed semitone shift + fixed step shift.
 - Both shifts are required non-zero, preventing collapse into consumed pitch-only or timing-only families.
 - Fixed semantic bounds: semitone shift within ±12; step shift within ±2 (existing gross timing tolerance), zero excluded.
@@ -65,11 +71,11 @@ Active phase: **V144 Rhythm gold calibration. Current accepted baseline is `pitc
 - Runtime receives only generated events + locked signatures + fixed pitch/step shifts; no reference runtime input.
 - Runtime preserves event count, eventIndex/list order, measure, string, duration and other metadata; MIDI/fret move together; step stays within the same 16-step measure.
 - Linked bend/legato/slide/hammer/pull events are excluded; out-of-range fret/step transformations are skipped, never clamped.
-- **No joint-family search implementation, workflow, report, locked candidate, validation, canary, or promotion exists yet.**
+- **No joint-family candidate evaluation, report, locked candidate, validation, canary, full-gold result, PDF invariant, one-shot workflow, or promotion exists yet.**
 
 ## Immediate next actions
-1. Implement a calibration-only joint pitch+step search from current accepted baseline SHA `b6e1f8a8...`, using current-baseline **fit labels only** for construction/ranking.
-2. Add search-level invariants proving 1144 events, 113 measures, stable eventIndex/list order, stable measure/string/duration/non-pitch metadata, equal MIDI/fret delta, and bounded non-zero step delta.
-3. Add deterministic search-level tests and wire them into the CPU gate; candidate construction must still not execute during this gate.
-4. Only after that gate succeeds, create one exact-message/path-gated CPU one-shot workflow with fixed family values (support 3, max 256, pitch bound 12, step bound 2), one locked fit winner, validation → canary → full → PDF invariant, and immediate sealing.
+1. Resolve CPU gate run `32969889867`; if it fails, fix only search-level implementation/tests and gate again without evaluating candidates.
+2. Only after the search-level CPU gate succeeds, create one exact-message/path-gated CPU one-shot workflow with fixed family values: support `3`, max candidates `256`, pitch bound `12`, step bound `2`.
+3. That one-shot must use fit labels only for construction/ranking, lock exactly one fit winner, then gate validation → canary → full-gold → independent PDF-event invariant; later failure means current-baseline fallback with no alternate selection.
+4. Immediately seal/archive the one-shot workflow after its single run and record report/commit/blob/run identities here.
 5. Never replay/reselect consumed families; do not start Bass/Lead, modify main/Production, claim near-100%, or use Modal/L4/GPU without fresh explicit user authorization.
