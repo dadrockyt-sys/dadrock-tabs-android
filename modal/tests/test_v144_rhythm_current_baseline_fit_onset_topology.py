@@ -4,6 +4,7 @@ from pathlib import Path
 import sys
 import unittest
 
+# Synthetic-only gate coverage: importing the diagnostic does not read calibration labels.
 ROOT = Path(__file__).resolve().parents[2]
 DIAGNOSTIC_DIR = ROOT / "validation" / "v144_rhythm_calibration"
 if str(DIAGNOSTIC_DIR) not in sys.path:
