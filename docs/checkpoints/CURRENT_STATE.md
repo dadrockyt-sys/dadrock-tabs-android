@@ -2,7 +2,7 @@
 
 Updated: 2026-08-26 America/Montreal
 Branch: `v143-contextual-prune-lobo`
-Active phase: **V144 Rhythm gold calibration. Families #1–#13 are now consumed/sealed. Accepted baseline remains family #10 because family #13 produced zero qualifying FIT candidates and deterministically fell back before validation/canary/full calibration. Family #13 one-shot completed once successfully, report persisted, and both workflow + trigger were deleted. Current safe continuation is to design the next preregistered family only from still-permitted aggregate accepted-baseline residual evidence, never from consumed-family candidate outcomes.**
+Active phase: **V144 Rhythm gold calibration. Families #1–#13 are consumed/sealed. Accepted baseline remains family #10. Family #14 is now preregistered/frozen from the still-current aggregate accepted-baseline FIT residual only; no family #14 search has been run. Next safe step is CPU-only policy + synthetic tests for the frozen shared dyad-to-singleton surplus-note prune family, then checkpoint before any FIT search.**
 
 ## Permanent safety / fixed protocol
 - Work only on `v143-contextual-prune-lobo`; never modify/merge `main` or Production.
@@ -34,9 +34,30 @@ Active phase: **V144 Rhythm gold calibration. Families #1–#13 are now consumed
 
 ## Current accepted-baseline FIT residual diagnostic — SEALED / CURRENT
 - `debug/v144-rhythm-calibration/diagnostics/singleton-baseline-fit-residuals.json`; blob `b9794a7b8a882ba9ade5e8095f112d4be45e47e6`.
-- Generated-only onset cardinalities: g1-r0=203, g2-r0=79, g3-r0=12, g5-r0=1.
+- Aggregate topology includes: g1-r0=203, g2-r0=79, g3-r0=12, g5-r0=1; g2-r1=26; shared generated-heavier onsets=27; shared reference-heavier onsets=57; generated-only onsets=295; reference-only onsets=180.
+- Aggregate mechanism counts include 467 pitch-content false-positive notes, 418 pitch-content false-negative notes, 431 same-onset extra generated slots, and 382 same-onset missing reference slots.
 - Family #13 did not change the accepted baseline, therefore this diagnostic remains the current aggregate-only accepted-baseline residual. Do **not** create a replacement diagnostic yet.
 - Any successor family must be preregistered from permitted aggregate evidence only, without inspecting/using consumed-family candidate behavior.
+
+## Family #14 — PREREGISTERED / FROZEN / SEARCH NOT RUN
+### Independent structural rationale
+- Family shape was selected only from the still-permitted aggregate accepted-baseline residual and independent structural reasoning, not from any consumed-family candidate result.
+- The residual contains **26 `g2-r1` shared onsets** and **27 shared generated-heavier onsets**. A generated-heavy shared onset can contain one correct note plus one surplus note; deleting only a demonstrably surplus member is materially distinct from whole-onset generated-only pruning and preserves the shared onset.
+- No family #13 zero-candidate result, ranking, candidate identity, or behavior was used to choose this family.
+
+### Frozen family contract
+- Name/shape: **atomic shared dyad-to-singleton surplus-note prune**.
+- FIT construction unit: an onset with exactly **2 generated notes / 1 reference note**, where exactly one generated note has exact MIDI equality with the sole reference note. The exact-MIDI-matched generated note is the immutable survivor; the other generated note is the FIT-labeled surplus correction target.
+- Ambiguous cases are excluded: zero exact-MIDI matches, two exact-MIDI matches, duplicate/indistinguishable source identities, invalid source positions, linked pitch semantics, or a prune target referenced by another event.
+- Minimum FIT correction support **3**, maximum candidate rules **256**; frozen before any family #14 search.
+- Rule identity: exactly one allowed structural onset context signature + the two sorted source note identities `(sourceStringIndex, sourcePitchClass)` + the specific surplus/prune source identity. The prune identity must be exactly one member of the dyad identity and must uniquely identify one onset member.
+- Runtime application is **reference-free**. A rule may act only on an exact two-note generated onset whose structural context and complete dyad identity match the frozen rule; it removes only the uniquely identified surplus member. The survivor is otherwise byte-for-byte/source-order immutable.
+- Runtime reference input is forbidden. No pitch shifting, timing shifting, string/fret rewriting, onset creation, or survivor mutation is permitted.
+- Safety guards: source positions valid under the fixed tuning; prune target has no pitch linkage; prune target is not referenced by another event; the operation must not erase a generated measure. Result must preserve exactly **113 generated measures**.
+- Candidate construction/ranking is FIT-only. Validation/canary may gate only one locked FIT winner. Any failure or no qualifying FIT winner => deterministic family #10 fallback; never alternate.
+- Promotion gates remain unchanged: FIT Pitch Content F1 gain >=0.005, no musical regression, critical delta <=0, exact 113-measure coverage, independent PDF event fidelity 1.0.
+- Planned implementation paths: `modal/v144_rhythm_shared_dyad_surplus_prune_policy.py`, `modal/tests/test_v144_rhythm_shared_dyad_surplus_prune_policy.py`, then `validation/v144_rhythm_calibration/search_atomic_shared_dyad_surplus_prunes.py` and its synthetic search tests.
+- **Do not run FIT search until the CPU-only policy and synthetic policy proof are complete and checkpointed.**
 
 ## Family #13 — CONSUMED / SEALED / NO SCORE CHANGE
 ### Frozen family
@@ -80,10 +101,10 @@ Active phase: **V144 Rhythm gold calibration. Families #1–#13 are now consumed
 ## EXPLICIT NEXT STEPS — CONTINUATION CONTRACT
 1. Re-read this checkpoint and stay on `v143-contextual-prune-lobo` only.
 2. Never rerun/retrigger/reselect/retune families #1–#13 or established CPU proofs.
-3. Accepted baseline remains family #10; headline scorer remains **35.4% Pitch Content F1**. Do not claim a gain from family #13.
+3. Accepted baseline remains family #10; headline scorer remains **35.4% Pitch Content F1**. Do not claim a gain from family #13 or family #14 unless all gates pass and the accepted baseline actually changes.
 4. Current aggregate residual diagnostic `b9794a7b...` remains valid/current because baseline did not change.
-5. Design the next family only from still-permitted aggregate accepted-baseline evidence and independent structural reasoning. Do not use family #13 zero-candidate outcome, candidate behavior, or any consumed-family rankings to shape/rank it.
-6. Before any new search: preregister shape/support/cap/rule identity/safety/fallback; implement CPU-only policy + synthetic tests; prove them; implement FIT-only search + synthetic invariants; prove them; checkpoint often.
+5. Family #14 is frozen exactly as preregistered above. Do not retune its shape/support/cap/rule identity after looking at family #14 candidate outcomes.
+6. Implement CPU-only family #14 policy + synthetic tests; prove them; checkpoint. Then implement FIT-only search + synthetic invariants; prove them; checkpoint. Only after those proofs may a one-shot FIT execution be armed.
 7. Candidate construction/ranking must remain FIT-only. Validation/canary may gate only one locked FIT winner. Any failure => family #10 fallback; never alternate.
 8. Promotion still requires FIT pitch gain >=0.005, no musical regression, critical delta <=0, coverage 1.0, exact 113 measures where applicable, and independent PDF event fidelity 1.0.
 9. Whenever a future accepted baseline changes, immediately recompute and checkpoint the percentage view and create a new aggregate accepted-baseline FIT residual before shaping its successor.
@@ -93,7 +114,6 @@ Active phase: **V144 Rhythm gold calibration. Families #1–#13 are now consumed
 - Accepted baseline: family #10 / `4e6f9f...`.
 - Motivational scorer view: **Pitch Content 35.4%**, Pitch+timing 6.7%, String/fret+timing 5.5%, Chord/voicing 5.8%, Measure coverage 100%, PDF event fidelity 100%.
 - Families #1–#13 consumed/sealed.
-- Family #13 one-shot SUCCESS as an execution but **no qualifying FIT candidate**, therefore no score change and deterministic family #10 fallback.
-- Family #13 report blob `bb95b99f64a757b4bc96c86f4392e1e453e3b721`; run `33008934470`; job `98309848693`; workflow and trigger deleted.
+- Family #14 preregistered/frozen: shared exact dyad-to-singleton surplus-note prune; support 3; cap 256; reference-free runtime; no family #14 search run yet.
 - Current residual diagnostic remains `b9794a7b8a882ba9ade5e8095f112d4be45e47e6`.
-- Safe continuation: preregister the next independent family from permitted aggregate residual evidence only, checkpointing frequently.
+- Safe continuation: implement/prove family #14 CPU-only policy and synthetic tests, then checkpoint before search implementation.
