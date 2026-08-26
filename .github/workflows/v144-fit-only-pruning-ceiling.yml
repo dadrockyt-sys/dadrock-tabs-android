@@ -1,138 +1,18 @@
-name: V144 Rhythm Fit-Only Pruning Ceiling Diagnostic
+name: V144 Rhythm Fit-Only Pruning Ceiling Diagnostic — Archived
 
 on:
-  push:
-    branches:
-      - v143-contextual-prune-lobo
-    paths:
-      - .github/workflows/v144-fit-only-pruning-ceiling.yml
+  workflow_dispatch:
 
 permissions:
-  contents: write
-
-concurrency:
-  group: v144-rhythm-fit-only-pruning-ceiling
-  cancel-in-progress: false
+  contents: read
 
 jobs:
-  diagnostic:
-    if: "${{ github.event.head_commit.message == 'v144 run fit-only pruning ceiling diagnostic' }}"
-    name: Prove deletion-only fit ceiling on CPU
+  archived:
+    name: Refuse replay of completed pruning-ceiling diagnostic
     runs-on: ubuntu-latest
-    timeout-minutes: 10
-
     steps:
-      - name: Check out exact revision
-        uses: actions/checkout@v4
-        with:
-          ref: ${{ github.sha }}
-          fetch-depth: 0
-
-      - name: Set up Python
-        uses: actions/setup-python@v5
-        with:
-          python-version: '3.12'
-
-      - name: Verify immutable V5 and accepted V144 baseline
+      - name: Refuse replay
         shell: bash
         run: |
-          set -euo pipefail
-          test "$(git hash-object analyzer/v143_reference_free_rhythm_pipeline.py)" = "7f72f8ed9b14af8bc93e95544195204d99c6bec1"
-          test "$(git hash-object debug/v143-contextual-prune/v5-professional-pdf/final-professional-holdout-result.json)" = "511fd244f231b66d08306f97b5a47ed41f5415c7"
-          test "$(sha256sum debug/v143-contextual-prune/v5-professional-pdf/v5-render-stream.json | awk '{print $1}')" = "7c3399d3f5e05ecc8ac98d71d0e5300e1e78f63ae96c1642fe4a19debb4061b2"
-          test "$(sha256sum debug/v144-rhythm-calibration/reference/professional-rhythm-gold-reference.json | awk '{print $1}')" = "18fd868ae960dfcdd1ffb0110f1a9dfd8acc2ffeb46e247d1116cd54291526ac"
-          test "$(git hash-object debug/v144-rhythm-calibration/selected/v144-triple-selected-baseline.json)" = "ba8dec9a1c3155816f5841a32ee52ced7998c110"
-
-      - name: Run pruning-ceiling unit tests
-        shell: bash
-        run: |
-          set -euo pipefail
-          python validation/v144_rhythm_calibration/test_fit_only_pruning_ceiling.py -v
-
-      - name: Build fit-only deletion/pruning ceiling report
-        shell: bash
-        run: |
-          set -euo pipefail
-          mkdir -p .v144/pruning-ceiling
-          python validation/v144_rhythm_calibration/analyze_fit_only_pruning_ceiling.py \
-            debug/v143-contextual-prune/v5-professional-pdf/v5-render-stream.json \
-            debug/v144-rhythm-calibration/reference/professional-rhythm-gold-reference.json \
-            debug/v144-rhythm-calibration/selected/v144-triple-selected-baseline.json \
-            modal/configs/v144_rhythm_context_split_config.json \
-            debug/v144-rhythm-calibration/baseline/v144-fit-only-pruning-ceiling.json \
-            > .v144/pruning-ceiling/diagnostic.log
-
-      - name: Verify fit-only isolation and mathematical ceilings
-        shell: bash
-        run: |
-          set -euo pipefail
-          python - <<'PY'
-          import json
-          from pathlib import Path
-
-          report = json.loads(Path('debug/v144-rhythm-calibration/baseline/v144-fit-only-pruning-ceiling.json').read_text(encoding='utf-8'))
-          assert report['classification'] == 'v144-rhythm-fit-only-deletion-pruning-ceiling'
-          assert report['mayClaimUnseenGeneralization'] is False
-          assert report['baseline']['name'] == 'prune-triple-67348efe50436fc5'
-          assert report['baseline']['eventCount'] == 1144
-          assert report['baseline']['eventSha256'] == '68b8cdf14ed02265c5e3c204b2af51b0aae4849462e7b3e4243192d8855cc3c3'
-          fit = report['fitOnly']
-          assert fit['noteCounts'] == {'generated': 643, 'reference': 594}
-          assert fit['criticalMismatchCount'] == 1105
-          assert fit['current']['pitchContent']['matched'] == 138
-          assert fit['current']['pitchContent']['f1'] == 0.2231204527081649
-          assert fit['current']['pitchTiming']['matched'] == 28
-          assert fit['current']['pitchTiming']['f1'] == 0.04527081649151172
-          assert fit['current']['stringFretTiming']['matched'] == 20
-          assert fit['current']['stringFretTiming']['f1'] == 0.03233629749393695
-          ceilings = fit['oracleDeletionOnlyCeilings']
-          assert ceilings['pitchContent']['f1'] == 0.3770491803278689
-          assert ceilings['pitchTiming']['f1'] == 0.09003215434083602
-          assert ceilings['stringFretTiming']['f1'] == 0.06514657980456026
-          conclusion = report['mechanismConclusion']
-          assert conclusion['pitchContentNear100ReachableByDeletionOnlyOnFit'] is False
-          assert conclusion['pitchTimingNear100ReachableByDeletionOnlyOnFit'] is False
-          assert conclusion['stringFretTimingNear100ReachableByDeletionOnlyOnFit'] is False
-          assert conclusion['materiallyDifferentCorrectionMechanismRequiredForNear100OnFit'] is True
-          isolation = report['isolation']
-          assert isolation['fitLabelsOpened'] is True
-          assert isolation['validationLabelsOpened'] is False
-          assert isolation['canaryLabelsOpened'] is False
-          assert isolation['fullGoldUsedToChooseMechanism'] is False
-          assert isolation['candidateRankingPerformed'] is False
-          assert isolation['candidateSelectionPerformed'] is False
-          assert isolation['numericThresholdsChanged'] is False
-          assert isolation['runtimeReferenceInputAllowed'] is False
-          assert report['safety']['modalGpuInvoked'] is False
-          assert report['safety']['v5Modified'] is False
-          assert report['safety']['productionModified'] is False
-          assert report['safety']['mainModified'] is False
-          PY
-
-      - name: Reverify immutable inputs after diagnostic
-        shell: bash
-        run: |
-          set -euo pipefail
-          test "$(git hash-object analyzer/v143_reference_free_rhythm_pipeline.py)" = "7f72f8ed9b14af8bc93e95544195204d99c6bec1"
-          test "$(git hash-object debug/v143-contextual-prune/v5-professional-pdf/final-professional-holdout-result.json)" = "511fd244f231b66d08306f97b5a47ed41f5415c7"
-          test "$(sha256sum debug/v143-contextual-prune/v5-professional-pdf/v5-render-stream.json | awk '{print $1}')" = "7c3399d3f5e05ecc8ac98d71d0e5300e1e78f63ae96c1642fe4a19debb4061b2"
-          test "$(git hash-object debug/v144-rhythm-calibration/selected/v144-triple-selected-baseline.json)" = "ba8dec9a1c3155816f5841a32ee52ced7998c110"
-
-      - name: Persist only fit-only pruning ceiling report
-        shell: bash
-        run: |
-          set -euo pipefail
-          report='debug/v144-rhythm-calibration/baseline/v144-fit-only-pruning-ceiling.json'
-          git add "$report"
-          if git diff --cached --quiet; then exit 0; fi
-          test "$(git diff --cached --name-only)" = "$report"
-          git config user.name 'github-actions[bot]'
-          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
-          git commit -m 'Persist V144 fit-only pruning ceiling diagnostic'
-          for attempt in 1 2 3 4 5; do
-            git fetch origin v143-contextual-prune-lobo
-            if git rebase origin/v143-contextual-prune-lobo && git push origin HEAD:v143-contextual-prune-lobo; then exit 0; fi
-            git rebase --abort 2>/dev/null || true
-            sleep $((attempt * 2))
-          done
+          echo 'The V144 fit-only pruning-ceiling diagnostic is complete and archived. Use its persisted report; do not replay it.' >&2
           exit 1
