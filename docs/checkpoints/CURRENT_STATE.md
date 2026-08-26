@@ -2,7 +2,13 @@
 
 Updated: 2026-08-25 America/Montreal
 Branch: `v143-contextual-prune-lobo`
-Priority: **Rhythm final gate is now closed; preserve the immutable result. Do not move to Bass/Lead under the prior “finish Rhythm first” priority without new explicit direction.**
+Priority: **Active phase: V144 Rhythm calibration/retraining toward the professional human-written reference target for the `/ai-tab` product. V5 remains permanently frozen and may not be modified or rescored. Do not start Bass/Lead until Rhythm V144 quality is proven or the user explicitly redirects.**
+
+## Product focus — `/ai-tab`
+- User-facing product flow: `dadrocktabs.com/ai-tab` → user uploads audio → selects Rhythm, Bass, or Lead → receives a professional-quality PDF preview → optional purchase unlocks the full professionally rendered PDF.
+- Page construction is centered at `app/ai-tab/page.js`.
+- The scorer is an engineering quality/evaluation gate for the transcription engine. The scorer itself is not the end product.
+- The desired end result is a musically accurate, professionally readable tablature PDF preview and, after purchase/unlock, the full professionally rendered PDF.
 
 ## Hard boundaries — NOW PERMANENT FOR V5
 - Work only on `v143-contextual-prune-lobo`; never modify/merge `main` or Production.
@@ -29,7 +35,7 @@ Priority: **Rhythm final gate is now closed; preserve the immutable result. Do n
 - Reference-free scorer preflight run `32918988699` = SUCCESS.
 - Candidate/PDF identities remained unchanged through final scoring.
 
-## Professional reference — VERIFIED / HOLDOUT CONSUMED
+## Professional reference — VERIFIED / HOLDOUT CONSUMED FOR V5
 - Professional image source verified SHA256 `aca2da3e8d551b2fd82b4ab3ecafa0c8932d6c0a27b54b6213ffc990ca08a9a9`.
 - Structured source verified SHA256 `18cdb4f8afb49562aac5b600730384636070d6ca8650823e759276a81ee4afc8`.
 - Built reference verified SHA256 `18fd868ae960dfcdd1ffb0110f1a9dfd8acc2ffeb46e247d1116cd54291526ac`.
@@ -76,13 +82,13 @@ Priority: **Rhythm final gate is now closed; preserve the immutable result. Do n
 - Do **not** rerun the final workflow, recreate/change the trigger file to induce another attempt, or rerun the failed API launcher.
 - Earlier API launcher run `32919421673` failed before target workflow creation and did not consume the holdout; it is superseded by the completed one-shot final run above.
 
-## Current integrity
+## Current V5 integrity
 - Protected runtime untouched.
 - `main`/Production untouched.
 - Frozen V5 content/timing/metadata/thresholds/selection unchanged.
 - No Modal/L4 used.
 - PDF identity/fidelity proven exact.
-- Professional reference provenance/completeness proven exact.
+- Professional reference provenance/completeness proven exact for the consumed V5 protocol.
 - Final musical gate failed; V5 is therefore **not promotable as Rhythm-complete**.
 
 ## Continuation verification — 2026-08-25 22:40 America/Montreal
@@ -92,10 +98,24 @@ Priority: **Rhythm final gate is now closed; preserve the immutable result. Do n
 - Sentinel still reports `professionalHoldoutOpened=true`, `finalCompletionGatePassed=false`, `rhythmComplete=false`, `tuningAllowedAfterHoldout=false`, `candidateSelectionAllowedAfterHoldout=false`, and `thresholdAdjustmentAllowedAfterHoldout=false`.
 - Protected analyzer re-read successfully and remains exactly Git blob `7f72f8ed9b14af8bc93e95544195204d99c6bec1`.
 - No V5 candidate, scorer, threshold, workflow trigger, Production/main content, Modal/L4 job, or `freezeReady` sentinel was changed during this verification.
-- Because the prior checkpoint explicitly requires new project-phase direction after the immutable failed gate, no automatic Bass/Lead transition or new Rhythm experiment was started in this continuation.
+- Because the prior checkpoint explicitly required new project-phase direction after the immutable failed gate, no automatic Bass/Lead transition or new Rhythm experiment was started at that point.
+
+## V144 Rhythm phase — EXPLICITLY AUTHORIZED 2026-08-25
+- The user has now explicitly directed the next phase: retrain/calibrate **V144 Rhythm** toward the professional human-written transcription that represents the desired final quality level.
+- Professional human-written visual target is located on `main` at `public/Professionalexample.jpg`.
+- Verified repository identity from the `main` tree: Git blob `16106197cc1269cca0b3c443908d5ef75e8b4d3e`, size `979757` bytes.
+- The same path is not present on `v143-contextual-prune-lobo`; V144 work must not modify `main`. If local bytes are required, establish a verified branch-local calibration asset/reference without changing Production/main.
+- V144 target: **near-100% agreement with the professional transcription**, while preserving professional PDF layout/readability and exact PDF-event fidelity as an independent gate.
+- Protocol terminology: once V144 is iteratively changed while viewing/scoring against this professional page/reference, it is the V144 **gold calibration/reference benchmark**, not a statistically unseen holdout. Retain a separate unseen professional example for a true final generalization holdout if that validation is desired.
+- This new V144 phase does not reopen, replace, or modify V5. V5’s consumed one-shot result and sentinels remain immutable historical evidence.
+- No Modal/L4/GPU execution is authorized by this phase direction alone; fresh explicit user authorization is still required before any such run.
 
 ## Next exact actions
-1. **Stop V5 development under this final-holdout protocol.** Do not tune, modify, reselect, replace, or rescore it.
-2. Preserve the final result, scorer preflight, source-only freeze evidence, PDF, hashes, and this checkpoint as the terminal V5 record.
-3. Do not set any `freezeReady` sentinel true and do not claim Rhythm complete.
-4. Do not move to Bass/Lead automatically because the standing priority was to finish Rhythm first; await explicit user direction for what project phase should follow this failed immutable final gate.
+1. Keep V5 permanently immutable; never alter or rescore its candidate, thresholds, result sentinel, protected analyzer, or final holdout record.
+2. Establish V144 Rhythm as a separate calibration/pipeline protocol; never overwrite the protected V143/V5 analyzer.
+3. Establish verified branch-local provenance/access for the professional target from `main/public/Professionalexample.jpg` without modifying `main`.
+4. Reuse the existing structured professional-reference/scorer machinery where safe, but isolate V144 artifacts/results from V5’s consumed one-shot protocol.
+5. Drive V144 toward near-100% musical agreement with the gold professional reference while preserving PDF-event fidelity `1.0` and professional rendering quality.
+6. Use existing repository evidence/archives before any new Modal/L4 work. Do not invoke Modal/L4/GPU without fresh explicit authorization.
+7. Save this checkpoint after each meaningful V144 increment.
+8. Do not start Bass/Lead until V144 Rhythm quality is proven or the user explicitly redirects.
