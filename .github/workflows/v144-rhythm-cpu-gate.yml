@@ -22,6 +22,7 @@ on:
       - modal/tests/test_v144_rhythm_triple_conjunction_policy.py
       - modal/tests/test_v144_rhythm_quad_conjunction_policy.py
       - modal/tests/test_v144_rhythm_pitch_shift_policy.py
+      - modal/tests/test_v144_rhythm_pitch_shift_search.py
       - modal/tests/test_v144_rhythm_measure_set_guard.py
       - modal/tests/fixtures/v144_rhythm_context_split_reference.json
       - validation/v144_rhythm_calibration/search_contextual_pitch_shifts.py
@@ -45,6 +46,7 @@ on:
       - modal/tests/test_v144_rhythm_triple_conjunction_policy.py
       - modal/tests/test_v144_rhythm_quad_conjunction_policy.py
       - modal/tests/test_v144_rhythm_pitch_shift_policy.py
+      - modal/tests/test_v144_rhythm_pitch_shift_search.py
       - modal/tests/test_v144_rhythm_measure_set_guard.py
       - modal/tests/fixtures/v144_rhythm_context_split_reference.json
       - validation/v144_rhythm_calibration/search_contextual_pitch_shifts.py
@@ -118,6 +120,7 @@ jobs:
           python modal/tests/test_v144_rhythm_triple_conjunction_policy.py -v
           python modal/tests/test_v144_rhythm_quad_conjunction_policy.py -v
           python modal/tests/test_v144_rhythm_pitch_shift_policy.py -v
+          python modal/tests/test_v144_rhythm_pitch_shift_search.py -v
           python modal/tests/test_v144_rhythm_measure_set_guard.py -v
 
       - name: Verify config stays CPU-safe and fallback-first
