@@ -1,0 +1,478 @@
+{
+  "alignmentSearch": {
+    "bestGlobalOnsetStepShift": {
+      "f1": 0.37865429234338743,
+      "generated": 1209,
+      "matched": 408,
+      "precision": 0.337468982630273,
+      "recall": 0.4312896405919662,
+      "reference": 946,
+      "stepDelta": -26
+    },
+    "bestGlobalPitchTimingStepShift": {
+      "f1": 0.1262180974477958,
+      "generated": 1209,
+      "matched": 136,
+      "precision": 0.11248966087675766,
+      "recall": 0.14376321353065538,
+      "reference": 946,
+      "stepDelta": -14
+    },
+    "bestJointPitchAndTimingShift": {
+      "f1": 0.1262180974477958,
+      "generated": 1209,
+      "matched": 136,
+      "precision": 0.11248966087675766,
+      "recall": 0.14376321353065538,
+      "reference": 946,
+      "semitoneDelta": 0,
+      "stepDelta": -14
+    },
+    "bestPitchSemitoneShiftIgnoringTiming": {
+      "f1": 0.5976798143851508,
+      "generated": 1209,
+      "matched": 644,
+      "precision": 0.532671629445823,
+      "recall": 0.6807610993657506,
+      "reference": 946,
+      "semitoneDelta": 0
+    },
+    "quarterSongSegments": [
+      {
+        "bestOnsetShift": {
+          "f1": 0.5495867768595042,
+          "generated": 266,
+          "matched": 133,
+          "precision": 0.5,
+          "recall": 0.6100917431192661,
+          "reference": 218,
+          "stepDelta": -12
+        },
+        "bestPitchTimingShift": {
+          "f1": 0.12396694214876033,
+          "generated": 266,
+          "matched": 30,
+          "precision": 0.11278195488721804,
+          "recall": 0.13761467889908258,
+          "reference": 218,
+          "stepDelta": -14
+        },
+        "firstMeasure": 1,
+        "generatedNotes": 266,
+        "lastMeasure": 28,
+        "referenceNotes": 218
+      },
+      {
+        "bestOnsetShift": {
+          "f1": 0.4436229205175601,
+          "generated": 299,
+          "matched": 120,
+          "precision": 0.4013377926421405,
+          "recall": 0.49586776859504134,
+          "reference": 242,
+          "stepDelta": 6
+        },
+        "bestPitchTimingShift": {
+          "f1": 0.10720887245841036,
+          "generated": 299,
+          "matched": 29,
+          "precision": 0.09698996655518395,
+          "recall": 0.11983471074380166,
+          "reference": 242,
+          "stepDelta": -13
+        },
+        "firstMeasure": 29,
+        "generatedNotes": 299,
+        "lastMeasure": 56,
+        "referenceNotes": 242
+      },
+      {
+        "bestOnsetShift": {
+          "f1": 0.30796460176991153,
+          "generated": 282,
+          "matched": 87,
+          "precision": 0.30851063829787234,
+          "recall": 0.30742049469964666,
+          "reference": 283,
+          "stepDelta": -14
+        },
+        "bestPitchTimingShift": {
+          "f1": 0.16991150442477876,
+          "generated": 282,
+          "matched": 48,
+          "precision": 0.1702127659574468,
+          "recall": 0.1696113074204947,
+          "reference": 283,
+          "stepDelta": -14
+        },
+        "firstMeasure": 57,
+        "generatedNotes": 282,
+        "lastMeasure": 84,
+        "referenceNotes": 283
+      },
+      {
+        "bestOnsetShift": {
+          "f1": 0.30442477876106194,
+          "generated": 362,
+          "matched": 86,
+          "precision": 0.23756906077348067,
+          "recall": 0.4236453201970443,
+          "reference": 203,
+          "stepDelta": -24
+        },
+        "bestPitchTimingShift": {
+          "f1": 0.10973451327433628,
+          "generated": 362,
+          "matched": 31,
+          "precision": 0.0856353591160221,
+          "recall": 0.15270935960591134,
+          "reference": 203,
+          "stepDelta": -14
+        },
+        "firstMeasure": 85,
+        "generatedNotes": 362,
+        "lastMeasure": 113,
+        "referenceNotes": 203
+      }
+    ]
+  },
+  "baseline": {
+    "measurePitch": {
+      "f1": 0.2830626450116009,
+      "generated": 1209,
+      "matched": 305,
+      "precision": 0.2522746071133168,
+      "recall": 0.3224101479915433,
+      "reference": 946
+    },
+    "onsets": {
+      "f1": 0.4819277108433735,
+      "generated": 891,
+      "matched": 360,
+      "precision": 0.40404040404040403,
+      "recall": 0.5970149253731343,
+      "reference": 603
+    },
+    "pitchClassContent": {
+      "f1": 0.8046403712296984,
+      "generated": 1209,
+      "matched": 867,
+      "precision": 0.71712158808933,
+      "recall": 0.9164904862579282,
+      "reference": 946
+    },
+    "pitchContent": {
+      "f1": 0.5976798143851508,
+      "generated": 1209,
+      "matched": 644,
+      "precision": 0.532671629445823,
+      "recall": 0.6807610993657506,
+      "reference": 946
+    },
+    "pitchTimingExact": {
+      "f1": 0.044547563805104405,
+      "generated": 1209,
+      "matched": 48,
+      "precision": 0.03970223325062035,
+      "recall": 0.0507399577167019,
+      "reference": 946
+    },
+    "positionContent": {
+      "f1": 0.4677494199535963,
+      "generated": 1209,
+      "matched": 504,
+      "precision": 0.41687344913151364,
+      "recall": 0.53276955602537,
+      "reference": 946
+    },
+    "positionTimingExact": {
+      "f1": 0.03062645011600928,
+      "generated": 1209,
+      "matched": 33,
+      "precision": 0.02729528535980149,
+      "recall": 0.03488372093023256,
+      "reference": 946
+    }
+  },
+  "calibrationReferenceUsed": true,
+  "candidateModified": false,
+  "classification": "v144-post-holdout-rhythm-calibration-diagnostics",
+  "density": {
+    "noteDensity": {
+      "exactMeasures": 13,
+      "meanAbsoluteDelta": 4.486725663716814,
+      "overGeneratedMeasures": 67,
+      "underGeneratedMeasures": 33,
+      "worstMeasures": [
+        {
+          "delta": 19,
+          "generated": 19,
+          "measure": 110,
+          "reference": 0
+        },
+        {
+          "delta": 18,
+          "generated": 18,
+          "measure": 106,
+          "reference": 0
+        },
+        {
+          "delta": 17,
+          "generated": 17,
+          "measure": 111,
+          "reference": 0
+        },
+        {
+          "delta": 15,
+          "generated": 18,
+          "measure": 94,
+          "reference": 3
+        },
+        {
+          "delta": 14,
+          "generated": 14,
+          "measure": 38,
+          "reference": 0
+        },
+        {
+          "delta": 14,
+          "generated": 18,
+          "measure": 104,
+          "reference": 4
+        },
+        {
+          "delta": 13,
+          "generated": 13,
+          "measure": 69,
+          "reference": 0
+        },
+        {
+          "delta": 13,
+          "generated": 22,
+          "measure": 84,
+          "reference": 9
+        },
+        {
+          "delta": 13,
+          "generated": 13,
+          "measure": 113,
+          "reference": 0
+        },
+        {
+          "delta": 12,
+          "generated": 21,
+          "measure": 90,
+          "reference": 9
+        },
+        {
+          "delta": 12,
+          "generated": 12,
+          "measure": 93,
+          "reference": 0
+        },
+        {
+          "delta": 10,
+          "generated": 10,
+          "measure": 68,
+          "reference": 0
+        }
+      ]
+    },
+    "onsetDensity": {
+      "exactMeasures": 19,
+      "meanAbsoluteDelta": 3.0973451327433628,
+      "overGeneratedMeasures": 74,
+      "underGeneratedMeasures": 20,
+      "worstMeasures": [
+        {
+          "delta": 13,
+          "generated": 13,
+          "measure": 110,
+          "reference": 0
+        },
+        {
+          "delta": 12,
+          "generated": 12,
+          "measure": 69,
+          "reference": 0
+        },
+        {
+          "delta": 12,
+          "generated": 13,
+          "measure": 104,
+          "reference": 1
+        },
+        {
+          "delta": 12,
+          "generated": 12,
+          "measure": 106,
+          "reference": 0
+        },
+        {
+          "delta": 11,
+          "generated": 11,
+          "measure": 111,
+          "reference": 0
+        },
+        {
+          "delta": 11,
+          "generated": 11,
+          "measure": 113,
+          "reference": 0
+        },
+        {
+          "delta": 10,
+          "generated": 13,
+          "measure": 84,
+          "reference": 3
+        },
+        {
+          "delta": 9,
+          "generated": 9,
+          "measure": 38,
+          "reference": 0
+        },
+        {
+          "delta": 9,
+          "generated": 12,
+          "measure": 80,
+          "reference": 3
+        },
+        {
+          "delta": 8,
+          "generated": 11,
+          "measure": 82,
+          "reference": 3
+        },
+        {
+          "delta": 8,
+          "generated": 11,
+          "measure": 90,
+          "reference": 3
+        },
+        {
+          "delta": 8,
+          "generated": 8,
+          "measure": 93,
+          "reference": 0
+        }
+      ]
+    }
+  },
+  "generatedNoteCount": 1209,
+  "generatedOnsetCount": 891,
+  "modalInvoked": false,
+  "pitchDiscrepancy": {
+    "generatedMidiRange": [
+      40,
+      83
+    ],
+    "largestAbsoluteDeltas": [
+      {
+        "delta": 205,
+        "generated": 291,
+        "midi": 64,
+        "reference": 86
+      },
+      {
+        "delta": -73,
+        "generated": 27,
+        "midi": 40,
+        "reference": 100
+      },
+      {
+        "delta": -73,
+        "generated": 11,
+        "midi": 55,
+        "reference": 84
+      },
+      {
+        "delta": -68,
+        "generated": 67,
+        "midi": 57,
+        "reference": 135
+      },
+      {
+        "delta": -52,
+        "generated": 13,
+        "midi": 50,
+        "reference": 65
+      },
+      {
+        "delta": 52,
+        "generated": 118,
+        "midi": 59,
+        "reference": 66
+      },
+      {
+        "delta": 40,
+        "generated": 127,
+        "midi": 62,
+        "reference": 87
+      },
+      {
+        "delta": 34,
+        "generated": 34,
+        "midi": 69,
+        "reference": 0
+      },
+      {
+        "delta": 30,
+        "generated": 30,
+        "midi": 65,
+        "reference": 0
+      },
+      {
+        "delta": 24,
+        "generated": 24,
+        "midi": 76,
+        "reference": 0
+      },
+      {
+        "delta": 23,
+        "generated": 50,
+        "midi": 67,
+        "reference": 27
+      },
+      {
+        "delta": 23,
+        "generated": 26,
+        "midi": 71,
+        "reference": 3
+      },
+      {
+        "delta": 17,
+        "generated": 143,
+        "midi": 52,
+        "reference": 126
+      },
+      {
+        "delta": -16,
+        "generated": 30,
+        "midi": 68,
+        "reference": 46
+      },
+      {
+        "delta": 15,
+        "generated": 15,
+        "midi": 74,
+        "reference": 0
+      },
+      {
+        "delta": 15,
+        "generated": 15,
+        "midi": 78,
+        "reference": 0
+      }
+    ],
+    "referenceMidiRange": [
+      40,
+      71
+    ]
+  },
+  "productionModified": false,
+  "referenceNoteCount": 946,
+  "referenceOnsetCount": 603,
+  "schemaVersion": 1,
+  "unseenHoldout": false
+}
