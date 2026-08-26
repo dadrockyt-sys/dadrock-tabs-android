@@ -40,17 +40,16 @@ Priority: **repair Rhythm using the consumed V5 professional reference as calibr
 - That probe explicitly expects `modalGpu == "L4"` and deterministic separator settings.
 - Do not run Modal/L4 yet just to iterate blindly. Use it after CPU diagnostics identify a concrete hypothesis or when a candidate is ready for GPU verification.
 
-## V144 diagnostic — PREPARED, NOT RUN YET
-- Added `analyzer/v144_rhythm_calibration_diagnostics.py` in commit `bbd153fbd4042475520b9721e12161df95188078`.
-- It does not modify V5 and does not call Modal.
-- It compares the frozen V5 against the now-calibration professional structured source and emits aggregate diagnostics only.
-- It measures exact pitch content, pitch-class content, measure+pitch, exact pitch/timing, exact position content/timing, onset alignment, best global step shift, best semitone shift, best joint pitch+timing shift, quarter-song alignment drift, per-measure note/onset density error, and MIDI distribution deltas.
-- Expected counts are hard-checked: 1209 generated notes and 946 reference notes.
+## V144 diagnostic — READY TO TRIGGER
+- Diagnostic script: `analyzer/v144_rhythm_calibration_diagnostics.py`, added in commit `bbd153fbd4042475520b9721e12161df95188078`.
+- CPU workflow: `.github/workflows/v144-rhythm-calibration-diagnostic.yml`, added in commit `6dded05029b35b65b7be9355f12fba00566d388a`.
+- Workflow runs only manually or on exact trigger path `debug/v144-rhythm-calibration/run-v5-diagnostic.txt` on this branch.
+- It verifies the frozen V5 stream hash, verifies the existing terminal result, fetches and SHA-verifies the exact consumed structured source, runs aggregate diagnostics, deletes the transient source, and persists only `debug/v144-rhythm-calibration/v5-diagnostic-baseline.json`.
+- No Modal and no Production access.
 
 ## Next exact actions
-1. Add a CPU-only V144 workflow that fetches/verifies the exact previously consumed structured source SHA256 `18cdb4f8afb49562aac5b600730384636070d6ca8650823e759276a81ee4afc8`, runs the diagnostic, and persists only its aggregate report.
-2. Trigger that diagnostic once and inspect the report.
-3. Use the result to decide whether V6 first fixes timing/alignment, pitch selection/over-generation, or both.
-4. Keep terminal V5 artifacts unchanged.
-5. Use Modal/L4 only after a specific hypothesis justifies it.
-6. Once calibration performance is strong, freeze a candidate and validate once on a new unseen professional song/reference.
+1. Create `debug/v144-rhythm-calibration/run-v5-diagnostic.txt` to run the CPU diagnostic once.
+2. Read the aggregate report and determine whether timing/alignment, pitch selection/over-generation, or both are the first V6 target.
+3. Keep terminal V5 artifacts unchanged.
+4. Use Modal/L4 only after a specific hypothesis justifies it.
+5. Once calibration performance is strong, freeze a candidate and validate once on a new unseen professional song/reference.
