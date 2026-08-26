@@ -130,7 +130,7 @@ class PitchStepPositionPolicyTests(unittest.TestCase):
         )
         out = apply_pitch_step_position_rule(
             [source],
-            ["pitchClass::0", "stepQuarter::1"],
+            ["pitchClass::0", "stepQuarter::0"],
             2,
             1,
             1,
@@ -149,7 +149,7 @@ class PitchStepPositionPolicyTests(unittest.TestCase):
         linked = event(0, step=4, string_index=1, fret=1, midi=60, bendTargetMidi=62)
         boundary = event(1, step=15, string_index=1, fret=1, midi=60)
         out_linked = apply_pitch_step_position_rule(
-            [linked], ["pitchClass::0", "stepQuarter::1"], 2, 1, 1
+            [linked], ["pitchClass::0", "stepQuarter::0"], 2, 1, 1
         )
         out_boundary = apply_pitch_step_position_rule(
             [boundary], ["pitchClass::0", "stepQuarter::3"], 2, 1, 1
@@ -159,7 +159,7 @@ class PitchStepPositionPolicyTests(unittest.TestCase):
 
     def test_zero_or_out_of_bound_shift_is_rejected(self) -> None:
         source = event(0, step=4)
-        signatures = ["pitchClass::0", "stepQuarter::1"]
+        signatures = ["pitchClass::0", "stepQuarter::0"]
         cases = [
             (0, 1, 1),
             (2, 0, 1),
