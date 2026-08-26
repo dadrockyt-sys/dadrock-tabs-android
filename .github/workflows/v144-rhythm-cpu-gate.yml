@@ -23,9 +23,11 @@ on:
       - modal/tests/test_v144_rhythm_quad_conjunction_policy.py
       - modal/tests/test_v144_rhythm_pitch_shift_policy.py
       - modal/tests/test_v144_rhythm_pitch_shift_search.py
+      - modal/tests/test_v144_rhythm_current_baseline_fit_mechanisms.py
       - modal/tests/test_v144_rhythm_measure_set_guard.py
       - modal/tests/fixtures/v144_rhythm_context_split_reference.json
       - validation/v144_rhythm_calibration/search_contextual_pitch_shifts.py
+      - validation/v144_rhythm_calibration/analyze_current_baseline_fit_mechanisms.py
       - debug/v144-rhythm-calibration/reference/professional-target-provenance.json
   pull_request:
     paths:
@@ -47,9 +49,11 @@ on:
       - modal/tests/test_v144_rhythm_quad_conjunction_policy.py
       - modal/tests/test_v144_rhythm_pitch_shift_policy.py
       - modal/tests/test_v144_rhythm_pitch_shift_search.py
+      - modal/tests/test_v144_rhythm_current_baseline_fit_mechanisms.py
       - modal/tests/test_v144_rhythm_measure_set_guard.py
       - modal/tests/fixtures/v144_rhythm_context_split_reference.json
       - validation/v144_rhythm_calibration/search_contextual_pitch_shifts.py
+      - validation/v144_rhythm_calibration/analyze_current_baseline_fit_mechanisms.py
       - debug/v144-rhythm-calibration/reference/professional-target-provenance.json
 
 permissions:
@@ -103,11 +107,12 @@ jobs:
           assert payload['v144Usage']['mayClaimUnseenGeneralization'] is False
           PY
 
-      - name: Compile one-shot pitch-shift search without executing it
+      - name: Compile V144 calibration tools without executing searches or diagnostics
         shell: bash
         run: |
           set -euo pipefail
           python -m py_compile validation/v144_rhythm_calibration/search_contextual_pitch_shifts.py
+          python -m py_compile validation/v144_rhythm_calibration/analyze_current_baseline_fit_mechanisms.py
 
       - name: Run V144 rhythm CPU unit tests
         shell: bash
@@ -121,6 +126,7 @@ jobs:
           python modal/tests/test_v144_rhythm_quad_conjunction_policy.py -v
           python modal/tests/test_v144_rhythm_pitch_shift_policy.py -v
           python modal/tests/test_v144_rhythm_pitch_shift_search.py -v
+          python modal/tests/test_v144_rhythm_current_baseline_fit_mechanisms.py -v
           python modal/tests/test_v144_rhythm_measure_set_guard.py -v
 
       - name: Verify config stays CPU-safe and fallback-first
