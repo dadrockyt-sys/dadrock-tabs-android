@@ -1,0 +1,97 @@
+name: V144 Current Baseline Fit Onset Topology CPU Gate
+
+on:
+  push:
+    branches:
+      - v143-contextual-prune-lobo
+    paths:
+      - .github/workflows/v144-current-fit-onset-topology-cpu-gate.yml
+
+permissions:
+  contents: read
+
+jobs:
+  topology-cpu-gate:
+    if: github.event.head_commit.message == 'v144 gate current baseline fit onset topology diagnostic'
+    name: Gate fit-only onset topology diagnostic on CPU
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+
+    steps:
+      - name: Check out exact revision
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+
+      - name: Verify branch and immutable V5 identities
+        shell: bash
+        run: |
+          set -euo pipefail
+          test "${GITHUB_REF_NAME}" = "v143-contextual-prune-lobo"
+          test "$(git hash-object analyzer/v143_reference_free_rhythm_pipeline.py)" = "7f72f8ed9b14af8bc93e95544195204d99c6bec1"
+          test "$(git hash-object debug/v143-contextual-prune/v5-professional-pdf/final-professional-holdout-result.json)" = "511fd244f231b66d08306f97b5a47ed41f5415c7"
+          test "$(sha256sum debug/v143-contextual-prune/v5-professional-pdf/v5-render-stream.json | awk '{print $1}')" = "7c3399d3f5e05ecc8ac98d71d0e5300e1e78f63ae96c1642fe4a19debb4061b2"
+          test "$(sha256sum debug/v143-contextual-prune/v5-professional-pdf/v5-rhythm-shadow.pdf | awk '{print $1}')" = "f4c1238e868cadfb90b8a359b1555b0b90e7740b9ebaa276aa394c8991f37ce5"
+
+      - name: Verify exact diagnostic inputs without reading fit labels
+        shell: bash
+        run: |
+          set -euo pipefail
+          test "$(git hash-object debug/v144-rhythm-calibration/reference/professional-target-provenance.json)" = "3a346289d57c3cbe8de9d4bf5a86886d15774d9c"
+          test "$(git hash-object debug/v144-rhythm-calibration/selected/v144-pitch-position-selected-baseline.json)" = "45287a40fbbe88f411d2eca7db3cce072174eda8"
+          test "$(git hash-object modal/configs/v144_rhythm_context_split_config.json)" = "9b93205cb47bc7718685b9d41b263778107801ce"
+          test "$(git hash-object validation/v144_rhythm_calibration/analyze_current_baseline_fit_onset_topology.py)" = "b4ddb289e2e0e54177e51e1b4ff1140dd304ed46"
+          test "$(git hash-object modal/tests/test_v144_rhythm_current_baseline_fit_onset_topology.py)" = "8c47a13f459832bbe564a080ab0e984edd3a9c25"
+          python - <<'PY'
+          import json
+          from pathlib import Path
+          provenance = json.loads(Path('debug/v144-rhythm-calibration/reference/professional-target-provenance.json').read_text(encoding='utf-8'))
+          manifest = json.loads(Path('debug/v144-rhythm-calibration/selected/v144-pitch-position-selected-baseline.json').read_text(encoding='utf-8'))
+          assert provenance['role'] == 'gold-calibration-reference-not-unseen-holdout'
+          assert provenance['structuredTarget']['builtReferenceSha256'] == '18fd868ae960dfcdd1ffb0110f1a9dfd8acc2ffeb46e247d1116cd54291526ac'
+          assert provenance['safety']['v5FinalHoldoutConsumed'] is True
+          assert provenance['safety']['modalGpuAuthorized'] is False
+          assert manifest['name'] == 'pitch-position-shift-54a6e8d3aa91c422'
+          assert manifest['canonicalEvents']['eventCount'] == 1144
+          assert manifest['canonicalEvents']['generatedMeasureCount'] == 113
+          assert manifest['canonicalEvents']['eventSha256'] == '5b36270aaeafa73b2e25722e2576a40424ce5951dcfd2b5d769746bd9eb07e0d'
+          PY
+
+      - name: Compile diagnostic without executing it
+        shell: bash
+        run: |
+          set -euo pipefail
+          python -m py_compile validation/v144_rhythm_calibration/analyze_current_baseline_fit_onset_topology.py
+          test ! -e debug/v144-rhythm-calibration/diagnostics/current-pitch-position-baseline-fit-onset-topology.json
+
+      - name: Run synthetic topology tests only
+        shell: bash
+        run: |
+          set -euo pipefail
+          python modal/tests/test_v144_rhythm_current_baseline_fit_onset_topology.py -v
+
+      - name: Verify diagnostic remains aggregate-only
+        shell: bash
+        run: |
+          set -euo pipefail
+          python - <<'PY'
+          from pathlib import Path
+          source = Path('validation/v144_rhythm_calibration/analyze_current_baseline_fit_onset_topology.py').read_text(encoding='utf-8')
+          for required in (
+              'candidateConstructionPerformed',
+              'candidateRankingPerformed',
+              'candidateSelectionPerformed',
+              'ruleOrShiftHistogramProduced',
+              'validationLabelsUsed',
+              'canaryLabelsUsed',
+              'historicalConsumedFamilyResultsUsed',
+              'runtimeReferenceInputUsed',
+              'modalGpuInvoked',
+          ):
+              assert required in source
+          assert 'rankedCandidate' not in source
+          assert 'selectedCandidate' not in source
+          PY
