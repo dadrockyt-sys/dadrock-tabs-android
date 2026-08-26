@@ -42,25 +42,28 @@ Priority: **repair Rhythm using consumed V5 professional reference as calibratio
 - Scorer `analyzer/v144_score_v6_calibration.py` commit `e5c215b741249c8acf8c9be360d987facb33a3df`.
 - Workflow `.github/workflows/v144-v6-calibration-score.yml` commit `b6f616c36be13003225da3bf9e3904b2e4c68458`.
 - Trigger `6e17c83f656deb30b27c24fc07f158e1f3346067`; Actions run `32922358891` = **SUCCESS**.
-- Aggregate score: `debug/v144-rhythm-calibration/v6-attack-gate/v6-calibration-score.json`; blob `6f336e2e1918c10ba86a406231ce1d6a9e34deef`.
-- `predictionVerified=true`: independently re-scored frozen V5 and frozen V6 exactly reproduced the policy-sweep metrics to `1e-12`.
-- V6 overall calibration metrics vs V5:
-  - onset F1 `0.4819277108433735 -> 0.48682385575589454` (`+0.00489614491252105`)
-  - exact-event F1 `0.044547563805104405 -> 0.04486873508353222` (`+0.00032117127842781756`)
-  - pitch-content F1 `0.5976798143851508 -> 0.6042959427207636` (`+0.006616128335612759`)
-  - pitch-class F1 `0.8046403712296984 -> 0.8085918854415275` (`+0.003951514211829044`)
-  - measure+pitch F1 `0.2830626450116009 -> 0.28544152744630075` (`+0.0023788824346998583`)
-  - measure+pitch-class F1 `0.468677494199536 -> 0.4715990453460621` (`+0.0029215511465260913`)
-  - position-content F1 `0.4677494199535963 -> 0.469689737470167` (`+0.0019403175165706998`)
-- **Every overall swept metric improved.** Metrics improving on both odd/even splits: onset, pitch-class content, measure+pitch, measure+pitch-class.
+- Aggregate score `debug/v144-rhythm-calibration/v6-attack-gate/v6-calibration-score.json`; blob `6f336e2e1918c10ba86a406231ce1d6a9e34deef`.
+- `predictionVerified=true`; frozen V5 and V6 reproduced expected metrics to `1e-12`.
+- Every overall swept metric improved: onset `+0.0048961`, exact-event `+0.0003212`, pitch `+0.0066161`, pitch-class `+0.0039515`, measure+pitch `+0.0023789`, measure+pitch-class `+0.0029216`, position-content `+0.0019403` F1.
+- Metrics improving on both odd/even splits: onset, pitch-class content, measure+pitch, measure+pitch-class.
 - Even-split micro-regressions remain in exact-event, pitch-content, and position-content; V6 is a verified conservative improvement, not a solved transcription.
-- Calibration score used the consumed reference only after V6 was frozen. `candidateModified=false`, `modalInvoked=false`, `productionModified=false`, `unseenHoldout=false`.
+- Score used consumed reference only after V6 freeze. `candidateModified=false`, `modalInvoked=false`, `productionModified=false`, `unseenHoldout=false`.
 
-## Next repair target — pitch / voicing / source discrimination
-1. Keep V6 immutable as the new calibration baseline.
-2. Do **not** globally shift timing or use a song-derived MIDI ceiling/octave rewrite.
-3. Diagnose why current paired source views select the wrong pitch/register at otherwise usable attacks, especially the high-register contamination and MIDI-64 dominance.
-4. Prefer source-only structure not yet tested: recurring-riff consensus, local pitch continuity/harmonic context, cross-attack register stability, and independent-view disagreement patterns.
-5. Build report-only CPU diagnostics first; do not generate V7 until a policy improves multiple metrics and survives odd/even or equivalent internal splits.
-6. If the current paired views remain too correlated to separate rhythm guitar from contamination, formulate a specific L4 separation experiment and use the preserved Modal/L4 path only then.
-7. Final legitimate validation still requires a different unseen professional song/reference.
+## Pitch / voicing / source-discrimination diagnostic — READY, NOT TRIGGERED
+- Report-only script `analyzer/v144_v6_pitch_opportunity_diagnostic.py` commit `f2a462b919cf36b08f9e6b1829414c09b9d734f5`.
+- Workflow `.github/workflows/v144-v6-pitch-opportunity.yml` commit `423a83fb096c0b7951a2f18ecc86b6da7218499c`.
+- Pins frozen V6 SHA256 `c1e6389f...` and exact V2 artifact/candidate-product identities.
+- At the 351 exact shared V6/reference onsets it will classify primary pitch failures into:
+  1. **selection-fixable**: exact reference MIDI already exists in original V2 candidate set;
+  2. **register-only**: exact MIDI absent but correct pitch class exists in another octave/register;
+  3. **candidate-generation/separation miss**: no original V2 candidate even matches a reference pitch class at that onset.
+- Also measures current-primary hit, any-current-V6 hit, top-source-score hit, original-V2 selected/primary hit, full candidate-set coverage, correct-candidate source-score rank/gap, and odd/even split behavior.
+- No candidate generation/modification; no Modal/L4; aggregate calibration report only.
+
+## Next exact actions
+1. Trigger `debug/v144-rhythm-calibration/run-v6-pitch-opportunity.txt` once.
+2. If exact reference pitches commonly exist in V2 candidate pools, build source-only local/repetition/context selection sweeps before any V7.
+3. If correct pitch classes are commonly absent from V2 candidate pools, treat that as concrete evidence for a better-separation experiment and formulate the preserved L4 test around that failure.
+4. Save checkpoint immediately after the diagnostic.
+5. Do not generate V7 until a rule improves multiple calibration metrics and survives internal splits.
+6. Final legitimate validation still requires a different unseen professional song/reference.
