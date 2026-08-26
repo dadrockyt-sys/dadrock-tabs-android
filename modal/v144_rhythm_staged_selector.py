@@ -41,6 +41,8 @@ def _safety_reasons(candidate: Mapping[str, Any], config: ContextSplitConfig) ->
             reasons.append(reason)
     if safety.get("deterministic") is not True:
         reasons.append("determinism-not-proven")
+    if safety.get("baselineGeneratedMeasureSetPreserved") is not True:
+        reasons.append("baseline-generated-measure-set-not-preserved")
     if config.holdout_must_remain_closed and candidate.get("holdout") is not None:
         reasons.append("unseen-holdout-opened-before-final-gate")
     return reasons
@@ -138,7 +140,7 @@ def lock_fit_candidate(
         reason = "deterministic-no-prune-fallback"
 
     return {
-        "schemaVersion": 14402,
+        "schemaVersion": 14404,
         "instrument": "rhythm",
         "baseline": baseline_name,
         "locked": locked,
@@ -146,6 +148,7 @@ def lock_fit_candidate(
         "fitOnlyRanking": True,
         "validationReadDuringLock": False,
         "canaryReadDuringLock": False,
+        "baselineGeneratedMeasureSetPreservationRequired": True,
         "evaluations": evaluations,
     }
 
@@ -204,7 +207,7 @@ def staged_select_candidate(
     locked_name = str(fit_lock["locked"])
     if locked_name == baseline_name:
         return {
-            "schemaVersion": 14402,
+            "schemaVersion": 14404,
             "instrument": "rhythm",
             "baseline": baseline_name,
             "fitLock": fit_lock,
@@ -224,7 +227,7 @@ def staged_select_candidate(
     )
     if not validation["passed"]:
         return {
-            "schemaVersion": 14402,
+            "schemaVersion": 14404,
             "instrument": "rhythm",
             "baseline": baseline_name,
             "fitLock": fit_lock,
@@ -240,7 +243,7 @@ def staged_select_candidate(
     canary = gate_locked_candidate(baseline, locked, stage="canary", config=config)
     if not canary["passed"]:
         return {
-            "schemaVersion": 14402,
+            "schemaVersion": 14404,
             "instrument": "rhythm",
             "baseline": baseline_name,
             "fitLock": fit_lock,
@@ -254,7 +257,7 @@ def staged_select_candidate(
         }
 
     return {
-        "schemaVersion": 14402,
+        "schemaVersion": 14404,
         "instrument": "rhythm",
         "baseline": baseline_name,
         "fitLock": fit_lock,
