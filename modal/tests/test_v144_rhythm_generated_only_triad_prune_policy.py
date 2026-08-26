@@ -10,9 +10,8 @@ if str(MODAL_DIR) not in sys.path:
     sys.path.insert(0, str(MODAL_DIR))
 
 from v144_rhythm_generated_only_triad_prune_policy import (  # noqa: E402
-    MAX_CANDIDATES,
-    MIN_SUPPORT,
-    TARGET_GENERATED_NOTE_COUNT,
+    DEFAULT_MAX_CANDIDATES,
+    DEFAULT_MIN_FALSE_POSITIVE_SUPPORT,
     apply_generated_only_triad_prune_rule,
     generated_only_triad_corrections,
     onset_matches_generated_only_triad_prune_rule,
@@ -66,10 +65,9 @@ def reference(*, measure: int, step: int) -> dict:
 
 
 class GeneratedOnlyTriadPrunePolicyTests(unittest.TestCase):
-    def test_family_constants_are_frozen(self) -> None:
-        self.assertEqual(TARGET_GENERATED_NOTE_COUNT, 3)
-        self.assertEqual(MIN_SUPPORT, 3)
-        self.assertEqual(MAX_CANDIDATES, 256)
+    def test_family_defaults_are_frozen(self) -> None:
+        self.assertEqual(DEFAULT_MIN_FALSE_POSITIVE_SUPPORT, 3)
+        self.assertEqual(DEFAULT_MAX_CANDIDATES, 256)
 
     def test_construction_requires_generated_only_exact_triad_onset(self) -> None:
         generated = [
@@ -94,14 +92,14 @@ class GeneratedOnlyTriadPrunePolicyTests(unittest.TestCase):
         forward = rank_fit_generated_only_triad_prune_rules(
             generated,
             [],
-            minimum_false_positive_support=MIN_SUPPORT,
-            maximum_candidates=MAX_CANDIDATES,
+            minimum_false_positive_support=DEFAULT_MIN_FALSE_POSITIVE_SUPPORT,
+            maximum_candidates=DEFAULT_MAX_CANDIDATES,
         )
         reverse = rank_fit_generated_only_triad_prune_rules(
             list(reversed(generated)),
             [],
-            minimum_false_positive_support=MIN_SUPPORT,
-            maximum_candidates=MAX_CANDIDATES,
+            minimum_false_positive_support=DEFAULT_MIN_FALSE_POSITIVE_SUPPORT,
+            maximum_candidates=DEFAULT_MAX_CANDIDATES,
         )
         self.assertEqual(forward, reverse)
         self.assertTrue(forward)
@@ -117,13 +115,13 @@ class GeneratedOnlyTriadPrunePolicyTests(unittest.TestCase):
         rules = rank_fit_generated_only_triad_prune_rules(
             generated,
             [],
-            minimum_false_positive_support=MIN_SUPPORT,
-            maximum_candidates=MAX_CANDIDATES,
+            minimum_false_positive_support=DEFAULT_MIN_FALSE_POSITIVE_SUPPORT,
+            maximum_candidates=DEFAULT_MAX_CANDIDATES,
         )
         self.assertTrue(rules)
-        self.assertLessEqual(len(rules), MAX_CANDIDATES)
+        self.assertLessEqual(len(rules), DEFAULT_MAX_CANDIDATES)
         for rule in rules:
-            self.assertGreaterEqual(rule["fitFalsePositiveSupport"], MIN_SUPPORT)
+            self.assertGreaterEqual(rule["fitFalsePositiveSupport"], DEFAULT_MIN_FALSE_POSITIVE_SUPPORT)
             self.assertIn("thirdSourceStringIndex", rule)
             self.assertIn("thirdSourcePitchClass", rule)
             self.assertNotIn("semitoneShift", rule)
