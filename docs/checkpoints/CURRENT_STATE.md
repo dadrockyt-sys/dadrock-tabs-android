@@ -144,3 +144,47 @@ Search the branch for the professional-reference/scorer/workflow assets named or
 - Guardrail remains active: no frozen V5 candidate, scorer result, threshold, protected analyzer, final-holdout sentinel/workflow trigger, `main`/Production content, or `freezeReady` state has been modified.
 - No Modal/L4/GPU invocation has occurred.
 - Next resume action: finish exact-path classification, save that classification here, then add only V144-isolated scaffolding.
+
+## V144 exact-path inventory and reusable boundary — 2026-08-26
+### Frozen/read-only V5 evidence — never edit or rerun as a V144 tuning surface
+- `analyzer/v143_reference_free_rhythm_pipeline.py` — protected coordinator, Git blob `7f72f8ed9b14af8bc93e95544195204d99c6bec1`.
+- `debug/v143-contextual-prune/v5-professional-pdf/final-professional-holdout-result.json` — consumed one-shot V5 result, Git blob `511fd244f231b66d08306f97b5a47ed41f5415c7`.
+- `debug/v143-contextual-prune/v5-professional-pdf/v5-render-stream.json` — frozen raw V5 render stream, SHA256 `7c3399d3f5e05ecc8ac98d71d0e5300e1e78f63ae96c1642fe4a19debb4061b2`.
+- `debug/v143-contextual-prune/v5-professional-pdf/v5-rhythm-shadow.pdf` — frozen V5 PDF, SHA256 `f4c1238e868cadfb90b8a359b1555b0b90e7740b9ebaa276aa394c8991f37ce5`.
+- `.github/workflows/v143-v5-final-professional-holdout.yml` — consumed V5 one-shot protocol; do not dispatch/retry or edit it for calibration.
+- `.github/workflows/v143-dispatch-v5-final-professional-holdout-once.yml` and V5 trigger/sentinel paths — historical only; never reuse as V144 launch machinery.
+
+### Safely reusable generic validation machinery — consume as read-only interfaces first
+- `validation/rhythm_holdout/score_rhythm_holdout.py` — generic post-freeze professional scoring core, Git blob `cc4bf61a99f22bf87a6c255e5a81220fbc82223b`.
+- `validation/rhythm_holdout/freeze_rhythm_analysis.py` — generic reference-free freeze utility, Git blob `710bb6a3b15b99d3d11ceb4948d7c7175d208afc`.
+- `validation/rhythm_holdout/verify_pdf_event_fidelity.py` — exact PDF-event identity validator, Git blob `5e1564216873046237fb545078a04a6b18f72b27`.
+- `validation/rhythm_holdout/verify_reference_completeness.py` — structured professional-reference completeness validator, Git blob `2504581dd72b6c375fbc0b68d4d396fce58deb87`.
+- `lib/v143RenderContract.js` — existing renderer normalization/validation contract, Git blob `ccbb93c48982798cc474309fd981f6ca02d5c8d4`; V144 may validate compatibility against it but must not silently change V5 rendering semantics.
+- `analyzer/v143_production_engine.py` — current candidate ranker loader/interface, Git blob `9201f8bb5671183051322b1ee739717336be762c`; read-only V144 baseline dependency.
+- `analyzer/v143_rhythm_runtime.py` — current carrier-feature/rank/select runtime, Git blob `3f530da2c50c6b8c967a607a860c54135ee504af`; read-only V144 baseline dependency.
+
+### Archived research/calibration evidence — reusable for methodology, not production mutation
+- `analyzer/benchmark_gomyway_3161_microtiming_contextual_cv_v1.py` — deterministic contextual-signature/CV experiment, Git blob `df3c351c1293ea2188906b8810b4dbd327f75ef0`.
+- `analyzer/V143_CONTEXTUAL_PRUNE_17_113_RESEARCH_CLOSURE_CHECKPOINT.md` — proves historical/reference-free 17–113 contextual chain closure and explicitly forbids treating that research result as direct production promotion.
+- The historical contextual method conditions detection-side microtiming evidence on structural/register context and requires zero matched-note loss plus cross-validation/stability before accepting a prune. V144 can reuse this *methodological shape* while keeping all outputs/version gates new.
+
+### V144 calibration target and baseline facts
+- `main/public/Professionalexample.jpg` remains the verified visual gold target; main-tree Git blob `16106197cc1269cca0b3c443908d5ef75e8b4d3e`, size `979757` bytes. `main` remains untouched.
+- Exact professional source identity already verified in the consumed V5 protocol: image SHA256 `aca2da3e8d551b2fd82b4ab3ecafa0c8932d6c0a27b54b6213ffc990ca08a9a9`, structured source SHA256 `18cdb4f8afb49562aac5b600730384636070d6ca8650823e759276a81ee4afc8`, built reference SHA256 `18fd868ae960dfcdd1ffb0110f1a9dfd8acc2ffeb46e247d1116cd54291526ac`.
+- Gold reference completeness: 113 measures / 603 playable onsets / 946 playable notes / 104 populated measures.
+- V5 establishes that rendering is not the limiting problem: PDF-event fidelity `1.0` and measure coverage `1.0` already pass.
+- Musical baseline that V144 must materially beat: pitch-content F1 `0.2830626450116009`; pitch/timing tolerant F1 `0.044547563805104405`; string/fret/timing tolerant F1 `0.03062645011600928`; chord pitch-set tolerant F1 and exact-voicing tolerant F1 both `0.022757697456492636`; 1875 critical mismatches.
+- Therefore V144 priority is upstream musical transcription accuracy, not a renderer rewrite: first reduce false/missing pitch content, then timing alignment, then string/fret voicing and technique notation while holding PDF fidelity at `1.0`.
+
+### V144 isolation decision
+- V144 will add new calibration/protocol/config/test/result paths only. It will not replace or edit `analyzer/v143_reference_free_rhythm_pipeline.py`, V5 debug/sentinel paths, or V5 workflows.
+- The professional reference is now a **V144 gold calibration benchmark**, not a new unseen holdout. V144 results must never be described as unbiased generalization performance on that same reference.
+- A deterministic no-prune/baseline path must remain available. Any contextual/split policy must lose to or fall back to baseline unless it achieves configured minimum musical gain without unacceptable canary drift or matched-note loss.
+- No Modal/L4/GPU is authorized or invoked at this stage.
+
+### Immediate next resume action after this inventory checkpoint
+1. Establish a V144-only provenance manifest for the professional target without modifying `main`.
+2. Add minimum V144 split-policy/selector/config/tests plus a CPU-only GitHub Actions gate.
+3. Use synthetic/frozen non-reference fixtures first to prove deterministic fallback, split isolation, and no V5 mutation.
+4. Only after the CPU gate is green, reconstruct the gold structured reference into a V144-only temporary/calibration path and begin measured V144 musical calibration.
+5. Keep Bass/Lead disabled and keep `/ai-tab` frontend contract unchanged until Rhythm quality gate is genuinely reached.
