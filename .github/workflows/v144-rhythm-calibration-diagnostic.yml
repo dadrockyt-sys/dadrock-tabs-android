@@ -1,0 +1,106 @@
+name: V144 Rhythm Calibration Diagnostic
+
+on:
+  workflow_dispatch:
+  push:
+    branches:
+      - v144-rhythm-post-holdout-calibration
+    paths:
+      - debug/v144-rhythm-calibration/run-v5-diagnostic.txt
+
+permissions:
+  contents: write
+
+concurrency:
+  group: v144-rhythm-calibration-diagnostic
+  cancel-in-progress: false
+
+jobs:
+  diagnose:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - name: Check out exact diagnostic revision
+        uses: actions/checkout@v4
+        with:
+          ref: ${{ github.sha }}
+          fetch-depth: 0
+
+      - name: Verify terminal V5 inputs remain exact
+        shell: bash
+        run: |
+          set -euo pipefail
+          echo '7c3399d3f5e05ecc8ac98d71d0e5300e1e78f63ae96c1642fe4a19debb4061b2  debug/v143-contextual-prune/v5-professional-pdf/v5-render-stream.json' | sha256sum -c -
+          test -s debug/v143-contextual-prune/v5-professional-pdf/final-professional-holdout-result.json
+          python - <<'PY'
+          import json
+          from pathlib import Path
+          p=Path('debug/v143-contextual-prune/v5-professional-pdf/final-professional-holdout-result.json')
+          d=json.loads(p.read_text(encoding='utf-8'))
+          assert d.get('professionalHoldoutOpened') is True
+          assert d.get('executionCompleted') is True
+          assert d.get('candidateModified') is False
+          assert d.get('canonicalEventSha256') == '7ed5166a73793e3a40c9a21f6532fee5ba784e43ef4180727404a37a038fb6d1'
+          PY
+
+      - name: Fetch exact consumed structured source for calibration
+        shell: bash
+        run: |
+          set -euo pipefail
+          mkdir -p .v144cal debug/v144-rhythm-calibration
+          python - <<'PY'
+          import gzip, hashlib, json, urllib.request
+          from pathlib import Path
+          expected='18cdb4f8afb49562aac5b600730384636070d6ca8650823e759276a81ee4afc8'
+          hosts=['dqsljvtekg760','d34shlm8p2ums2','d3cqchs6g3b5ew']
+          errors=[]
+          for host in hosts:
+              url=f'https://{host}.cloudfront.net/243/7868948/v0-3-2-TvYYK-mMQgzBsDxG/3.json'
+              try:
+                  req=urllib.request.Request(url,headers={'User-Agent':'dadrock-v144-calibration','Accept':'*/*','Accept-Encoding':'gzip'})
+                  with urllib.request.urlopen(req,timeout=30) as r:
+                      raw=r.read()
+                  if raw[:2]==b'\x1f\x8b': raw=gzip.decompress(raw)
+                  obj=json.loads(raw)
+                  normalized=(json.dumps(obj,separators=(',',':'))+'\n').encode('utf-8')
+                  digest=hashlib.sha256(normalized).hexdigest()
+                  if digest==expected:
+                      Path('.v144cal/structured-source.json').write_bytes(normalized)
+                      print('verified exact consumed calibration source', digest)
+                      break
+                  errors.append(f'{host}:sha={digest}')
+              except Exception as exc:
+                  errors.append(f'{host}:{type(exc).__name__}')
+          else:
+              raise SystemExit('exact calibration source unavailable: '+';'.join(errors))
+          PY
+
+      - name: Run aggregate V144 diagnostics
+        shell: bash
+        run: |
+          set -euo pipefail
+          python analyzer/v144_rhythm_calibration_diagnostics.py \
+            debug/v143-contextual-prune/v5-professional-pdf/v5-render-stream.json \
+            .v144cal/structured-source.json \
+            --output debug/v144-rhythm-calibration/v5-diagnostic-baseline.json
+          rm -f .v144cal/structured-source.json
+
+      - name: Persist aggregate diagnostic report
+        shell: bash
+        run: |
+          set -euo pipefail
+          report='debug/v144-rhythm-calibration/v5-diagnostic-baseline.json'
+          test -s "$report"
+          git add "$report"
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git commit -m 'Record V144 V5 calibration diagnostics'
+          for attempt in 1 2 3 4 5; do
+            git fetch origin v144-rhythm-post-holdout-calibration
+            if git rebase origin/v144-rhythm-post-holdout-calibration && git push origin HEAD:v144-rhythm-post-holdout-calibration; then
+              exit 0
+            fi
+            git rebase --abort 2>/dev/null || true
+            sleep $((attempt * 2))
+          done
+          exit 1
