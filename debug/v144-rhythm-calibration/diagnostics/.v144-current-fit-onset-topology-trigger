@@ -1,0 +1,14 @@
+{
+  "classification": "v144-rhythm-current-baseline-fit-onset-topology-diagnostic-trigger",
+  "instrument": "rhythm",
+  "baselineName": "pitch-position-shift-54a6e8d3aa91c422",
+  "baselineEventSha256": "5b36270aaeafa73b2e25722e2576a40424ce5951dcfd2b5d769746bd9eb07e0d",
+  "analyzerBlob": "b4ddb289e2e0e54177e51e1b4ff1140dd304ed46",
+  "workflowBlob": "c66b4c782967c1b00b783cf43e4fefafd2fcfaa4",
+  "fitOnly": true,
+  "candidateConstructionAllowed": false,
+  "validationLabelsAllowed": false,
+  "canaryLabelsAllowed": false,
+  "modalGpuAllowed": false,
+  "replayAllowed": false
+}
