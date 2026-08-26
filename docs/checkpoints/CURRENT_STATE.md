@@ -27,7 +27,6 @@ Priority: **repair Rhythm using consumed V5 professional reference as calibratio
 - Run `32921577491` SUCCESS; report `debug/v144-rhythm-calibration/v6-policy-sweep.json` blob `544fb3cd35c49b09cdc5ed56a02980f18d375b34`.
 - No secondary-note pruning policy was clean enough to promote.
 - Locked V6 policy: keep all surviving V5 voicing, remove only attacks failing `detection>=12 && gridError<=0.06`.
-- Predicted calibration: 1149 events / 839 onsets; onset F1 `0.48682385575589454`; pitch F1 `0.6042959427207636`; pitch-class F1 `0.8085918854415275`; measure+pitch F1 `0.28544152744630075`; measure+pitch-class F1 `0.4715990453460621`; position-content F1 `0.469689737470167`; exact-event F1 `0.04486873508353222`.
 
 ## V6 source-only generation — COMPLETE
 - Generator `analyzer/v144_generate_v6_attack_gate.py` commit `7ba6cc7e59b7882fa99350f612e8ac5742f0286d`.
@@ -39,15 +38,29 @@ Priority: **repair Rhythm using consumed V5 professional reference as calibratio
 - Surviving event content unchanged. No timing relocation, pitch rewrite, octave ceiling, secondary prune, or rescue rollback.
 - Generation read no professional reference, invoked no Modal/L4, and touched no Production.
 
-## Frozen V6 calibration scorer — READY, NOT TRIGGERED
+## Frozen V6 calibration score — COMPLETE AND VERIFIED
 - Scorer `analyzer/v144_score_v6_calibration.py` commit `e5c215b741249c8acf8c9be360d987facb33a3df`.
 - Workflow `.github/workflows/v144-v6-calibration-score.yml` commit `b6f616c36be13003225da3bf9e3904b2e4c68458`.
-- Workflow pins V5 SHA256, V6 SHA256 `c1e6389f...`, and generation-manifest SHA256 before fetching the consumed calibration reference.
-- It independently scores frozen V5 and V6 with the same implementation and hard-fails unless both the historical V5 baseline and V6 policy-sweep prediction reproduce to `1e-12`.
-- It requires every overall V6 calibration metric to improve over V5, persists aggregates only, and cannot modify V6.
+- Trigger `6e17c83f656deb30b27c24fc07f158e1f3346067`; Actions run `32922358891` = **SUCCESS**.
+- Aggregate score: `debug/v144-rhythm-calibration/v6-attack-gate/v6-calibration-score.json`; blob `6f336e2e1918c10ba86a406231ce1d6a9e34deef`.
+- `predictionVerified=true`: independently re-scored frozen V5 and frozen V6 exactly reproduced the policy-sweep metrics to `1e-12`.
+- V6 overall calibration metrics vs V5:
+  - onset F1 `0.4819277108433735 -> 0.48682385575589454` (`+0.00489614491252105`)
+  - exact-event F1 `0.044547563805104405 -> 0.04486873508353222` (`+0.00032117127842781756`)
+  - pitch-content F1 `0.5976798143851508 -> 0.6042959427207636` (`+0.006616128335612759`)
+  - pitch-class F1 `0.8046403712296984 -> 0.8085918854415275` (`+0.003951514211829044`)
+  - measure+pitch F1 `0.2830626450116009 -> 0.28544152744630075` (`+0.0023788824346998583`)
+  - measure+pitch-class F1 `0.468677494199536 -> 0.4715990453460621` (`+0.0029215511465260913`)
+  - position-content F1 `0.4677494199535963 -> 0.469689737470167` (`+0.0019403175165706998`)
+- **Every overall swept metric improved.** Metrics improving on both odd/even splits: onset, pitch-class content, measure+pitch, measure+pitch-class.
+- Even-split micro-regressions remain in exact-event, pitch-content, and position-content; V6 is a verified conservative improvement, not a solved transcription.
+- Calibration score used the consumed reference only after V6 was frozen. `candidateModified=false`, `modalInvoked=false`, `productionModified=false`, `unseenHoldout=false`.
 
-## Next exact actions
-1. Trigger `debug/v144-rhythm-calibration/run-v6-calibration-score.txt` once.
-2. Verify scorer success and persist aggregate report.
-3. Save checkpoint immediately after scoring.
-4. Next repair target: source separation / pitch-voicing discrimination. Use CPU/source evidence first; bring preserved L4 back only for an explicit separation hypothesis if current views cannot distinguish contamination.
+## Next repair target — pitch / voicing / source discrimination
+1. Keep V6 immutable as the new calibration baseline.
+2. Do **not** globally shift timing or use a song-derived MIDI ceiling/octave rewrite.
+3. Diagnose why current paired source views select the wrong pitch/register at otherwise usable attacks, especially the high-register contamination and MIDI-64 dominance.
+4. Prefer source-only structure not yet tested: recurring-riff consensus, local pitch continuity/harmonic context, cross-attack register stability, and independent-view disagreement patterns.
+5. Build report-only CPU diagnostics first; do not generate V7 until a policy improves multiple metrics and survives odd/even or equivalent internal splits.
+6. If the current paired views remain too correlated to separate rhythm guitar from contamination, formulate a specific L4 separation experiment and use the preserved Modal/L4 path only then.
+7. Final legitimate validation still requires a different unseen professional song/reference.
