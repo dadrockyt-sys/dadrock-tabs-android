@@ -2,7 +2,7 @@
 
 Updated: 2026-08-26 America/Montreal
 Branch: `v143-contextual-prune-lobo`
-Active phase: **V144 Rhythm gold calibration. Current accepted calibration baseline is `pitch-position-shift-54a6e8d3aa91c422` (1144 events / 113 measures / SHA `5b36270a...`). Its family is consumed and archived. Fresh fit-only diagnostics are complete and sealed. A materially distinct three-way pitch + within-measure step + adjacent-string family is pre-registered; its policy CPU gate passed. Search implementation + invariant tests are now present. Initial search CPU gate `32974001538` failed only because one test fixture accidentally changed all three dimensions while labeled partial; corrected test-only commit `832dd701...` is under retry gate `32974163895`. No candidate evaluation has occurred. Production remains untouched.**
+Active phase: **V144 Rhythm gold calibration. Current accepted calibration baseline remains `pitch-position-shift-54a6e8d3aa91c422` (1144 events / 113 measures / SHA `5b36270a...`). The three-way contextual pitch + within-measure step + adjacent-string family is now COMPLETE / CONSUMED / SEALED: 14 fit-only candidates were evaluated, none passed the fixed fit gate, so validation/canary/full-gold were never opened and deterministic fallback retained the accepted baseline. Production remains untouched.**
 
 ## Permanent safety boundary
 - Work only on `v143-contextual-prune-lobo`; never modify/merge `main` or Production.
@@ -27,7 +27,7 @@ Active phase: **V144 Rhythm gold calibration. Current accepted calibration basel
 - Later failure means deterministic accepted-baseline fallback; never select an alternate.
 - Never change thresholds/support from observed outcomes.
 
-## Accepted V144 Rhythm calibration baseline — LOCKED
+## Accepted V144 Rhythm calibration baseline — LOCKED / UNCHANGED
 - Name `pitch-position-shift-54a6e8d3aa91c422`.
 - Manifest `debug/v144-rhythm-calibration/selected/v144-pitch-position-selected-baseline.json`; commit `0b55bc1f3e2fdefe179f3eb17bd81be2a0574d31`; blob `45287a40fbbe88f411d2eca7db3cce072174eda8`.
 - Transform chain: historical triple prune → same-string pitch shift → joint pitch+adjacent-string revoice `pitchClass::11 && stepParity::0 => pitch -2, string +1`.
@@ -44,6 +44,7 @@ Active phase: **V144 Rhythm gold calibration. Current accepted calibration basel
 5. Same-string contextual pitch shift — prior accepted baseline; sealed `21ca074f3917fb72614686ca5b46a3894ea53374`.
 6. Joint contextual pitch+step — failed canary; sealed `215fc49106ef3501b71452b1f6c9f6d638cafd77`.
 7. Joint contextual pitch+adjacent-string position — current accepted baseline; run `32971373324`; report blob `04a462983bf4c50364d0e4f39bcd08a5652c6b5e`; sealed `61422dea64ed4758999b3cd3c978d0db344e3ef6` / blob `6e18eaebf2f0a40e0d238fa1298b30c5be45915b`.
+8. Joint contextual pitch+step+adjacent-string position — **none fit-qualified**; one-shot run `32974497513`; persisted report commit `0cbf8c139d5123ecd27fe782c35f32cb33ff0f89`; report blob `c67bad28dea2ee7458a4e8159d5b7ab64fdce245`; sealed `55a948fa97ab100bdca0b1338b36c9a43a4f5ce9`; archived workflow blob `b1123f14555192cf9a0b51217af2146df62f8472`.
 
 ## Fresh current-baseline fit-only diagnostic — COMPLETE / SEALED
 - Diagnostic implementation blob `7b6b0e51e1f0b8cfb69f7c0019845b7dbea74755`; reconstruction test blob `e32a76b050d34761fdee3dd29f7115076ac90cf9`.
@@ -54,26 +55,27 @@ Active phase: **V144 Rhythm gold calibration. Current accepted calibration basel
 - Fit: generated `643`, reference `594`, critical `1075`; pitch matched `161` / F1 `0.26030719482619236`; tight pitch/timing `41` / F1 `0.06628940986257073`; gross ±2-step pitch/timing `81`; exact string/fret/timing `29` / F1 `0.04688763136620856`; chord/voicing `0.03976608187134503`.
 - Fit mechanisms: exact-onset exact-pitch `41`; same-onset wrong-pitch slots `171`; displaced same-measure pitch matches `120`; gross-only timing recoveries `40`; pitch matches beyond gross tolerance/competing `80`; tight pitch matches with wrong string/fret `12`.
 - Fit-only shape signals: timing opportunity `120`; same-onset pitch substitution `171`; position opportunity `12`.
-- **Validation/canary outcomes from consumed families may not inform successor construction/ranking.**
+- **Validation/canary outcomes from any consumed family may not inform successor construction/ranking.**
 
-## Joint pitch + step + adjacent-string family — PRE-REGISTERED / SEARCH GATE RETRY IN PROGRESS / NOT EVALUATED
-- Fit-only rationale: fresh current-baseline diagnostic independently exposes pitch (`171` same-onset substitutions), timing (`120` displaced existing pitch matches), and position (`12` tight pitch/string-fret mismatches) opportunity.
+## Joint pitch + step + adjacent-string family — COMPLETE / CONSUMED / SEALED
 - Policy `modal/v144_rhythm_pitch_step_position_shift_policy.py`; pre-registration commit `c5c78b0e23c275f997ce0c501b23a6797cd0d90d`; blob `6701084d4d9f7f4630cce147f57e5d746342f8d4`.
-- Policy-test correction commit `8cde106f359db42e1e83ea8aeae689630ad78d4b`; corrected policy test blob `e209141581724259f3bb0ed2a54792dd48c2894a`; policy retry CPU gate `32972795739` SUCCESS.
-- Search implementation `validation/v144_rhythm_calibration/search_contextual_pitch_step_position_shifts.py`; commit `b409d7965110444309aa3e5118fdb609cb404eaa`; blob `cc4343a8b55d4703a8524dff39a7c0d01ca5900f`.
-- Search invariant tests `modal/tests/test_v144_rhythm_pitch_step_position_shift_search.py`; original commit `d30bdeb1a83e69a548f0d0e0a8a88b9dfc8c5a9f`.
-- CPU-gate search wiring commit `c19779a47b0afd0589484d8383ce5b23441038da`; gate `32974001538` FAILED only in `test_partial_dimension_changes_are_rejected`. All immutable/provenance/compile guards and preceding tests passed. Root cause: the final supposed partial fixture accidentally changed pitch + step + string together and was correctly accepted by `changed_event_count`.
-- Test-only correction commit `832dd70123efc83116d2802bed06a613b82d5063`; corrected test blob `9b1b4b802c5de0fe59a306e7ab76313c36c94416`; retry search CPU gate `32974163895` IN PROGRESS.
-- Rule identity: source `pitchClass::<n>` + one reference-free structural context signature + fixed semitone shift + fixed step shift + fixed adjacent-string shift.
-- **All three shifts are required non-zero**, so this family cannot collapse into consumed pitch-only, pitch+step, or pitch+position families.
-- Fixed bounds/support: pitch ±12; step ±2; string exactly adjacent ±1; support 3; max candidates 256.
-- Runtime receives generated event + locked signatures/shifts only; no reference. It preserves event count/order, measure, duration and other metadata while changing step/string/fret/MIDI together; fret is recomputed from E-standard tuning.
-- Search reconstructs exact accepted baseline SHA `5b36270a...` before fit-only construction. `changed_event_count` requires pitch/step/string changes together, fixed deltas, in-measure step, adjacent string, tuning-derived fret, protected metadata, 1144 events and 113 measures.
-- **No one-shot workflow, candidate evaluation, validation/canary result, or promotion exists yet.**
+- Policy-test correction commit `8cde106f359db42e1e83ea8aeae689630ad78d4b`; corrected policy test blob `e209141581724259f3bb0ed2a54792dd48c2894a`; policy CPU gate `32972795739` SUCCESS.
+- Search `validation/v144_rhythm_calibration/search_contextual_pitch_step_position_shifts.py`; commit `b409d7965110444309aa3e5118fdb609cb404eaa`; blob `cc4343a8b55d4703a8524dff39a7c0d01ca5900f`.
+- Search invariants test-only final commit `832dd70123efc83116d2802bed06a613b82d5063`; test blob `9b1b4b802c5de0fe59a306e7ab76313c36c94416`; search retry CPU gate `32974163895` SUCCESS.
+- One-shot arming commit `7d5bb1bd113a18ffbaa1bd5d2d8412c0a1bd795d`; run `32974497513` SUCCESS infrastructure; fixed support `3`, max candidates `256`, pitch `12`, step `2`, string `1`; CPU only.
+- Report `debug/v144-rhythm-calibration/candidates/contextual-pitch-step-position-search.json`; persisted commit `0cbf8c139d5123ecd27fe782c35f32cb33ff0f89`; blob `c67bad28dea2ee7458a4e8159d5b7ab64fdce245`.
+- 14 rules ranked / 14 candidates evaluated on fit only. **None passed the fixed fit gate.**
+- Several candidates achieved pitch-content gains above `0.005` but regressed another protected musical metric; examples include `pitch-step-position-shift-2ed754f862841803` pitch `+0.005279849708220652` but exact-voicing regression `-0.008702760485443002`, and `pitch-step-position-shift-4622ef7252b6e5c5` pitch `+0.010357310846417` but chord/exact-voicing regression `-0.0018064140184387428`.
+- Fit lock: `accepted-v144-baseline`; locked reason `deterministic-no-prune-fallback`; selected reason `fit-no-qualified-pitch-step-position-candidate`; stopped at `fit`.
+- Validation `null`; canary `null`; full calibration `null`; split promotion false; calibration promotion false. No alternate candidate was selected/read after failure.
+- Locked fallback stream remained 1144 events / 113 measures / SHA `5b36270aaeafa73b2e25722e2576a40424ce5951dcfd2b5d769746bd9eb07e0d`; independent PDF-event proof passed at `1.0`; reference not opened during PDF proof.
+- Safety report: V5/main/Production unchanged; runtime reference false; Modal/GPU false; deterministic true.
+- Workflow archived immediately after the single run: commit `55a948fa97ab100bdca0b1338b36c9a43a4f5ce9`; blob `b1123f14555192cf9a0b51217af2146df62f8472`; replay explicitly refused.
+- **Do not create a selected-baseline manifest for this family because it never qualified at fit.**
 
 ## Immediate next actions
-1. Resolve retry search CPU gate `32974163895`; if it fails, fix search/tests only and do not arm candidate evaluation.
-2. Only after search gate SUCCESS create one exact-message/path-gated CPU one-shot with fixed support `3`, max candidates `256`, pitch `12`, step `2`, string `1`.
-3. Verify immutable V5/reference/current accepted manifest plus exact search/policy/test/config blobs before execution. Persist only the search report and archive the workflow immediately after the one run.
-4. Maintain fit-only construction/ranking → one locked winner → validation → canary → full-gold → independent PDF invariant; later failure means current-baseline fallback and no alternate selection.
+1. Keep `pitch-position-shift-54a6e8d3aa91c422` / SHA `5b36270a...` as the current accepted V144 Rhythm calibration baseline.
+2. Never replay/reselect/retune any of the eight consumed families.
+3. Any successor family must be materially distinct and pre-registered solely from permissible current-baseline fit-only evidence before candidate evaluation; validation/canary/full outcomes from consumed families may not be used for construction/ranking.
+4. Future family sequence remains policy + deterministic tests → CPU gate → search + search-level invariants → CPU gate → at most one exact-message/path-gated CPU one-shot with the same fixed selector/fallback semantics → immediate archive.
 5. Never start Bass/Lead, modify main/Production, claim near-100%, or use Modal/L4/GPU without fresh explicit user authorization.
