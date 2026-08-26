@@ -1,0 +1,933 @@
+{
+  "classification": "v144-rhythm-split-isolated-baseline-diagnostics",
+  "evaluationRole": "gold-calibration-fit-validation-canary-diagnostics",
+  "fitOnlyCalibrationSignals": {
+    "falseNegativeContextSignatures": [
+      {
+        "count": 436,
+        "signature": "stepParity::0"
+      },
+      {
+        "count": 271,
+        "signature": "register::mid"
+      },
+      {
+        "count": 225,
+        "signature": "stepQuarter::0"
+      },
+      {
+        "count": 211,
+        "signature": "stepQuarter::2"
+      },
+      {
+        "count": 182,
+        "signature": "register::high"
+      },
+      {
+        "count": 157,
+        "signature": "pitchClass::4"
+      },
+      {
+        "count": 150,
+        "signature": "measurePhase::0"
+      },
+      {
+        "count": 144,
+        "signature": "registerStep::mid:0"
+      },
+      {
+        "count": 132,
+        "signature": "measurePhase::2"
+      },
+      {
+        "count": 124,
+        "signature": "measurePhase::1"
+      },
+      {
+        "count": 122,
+        "signature": "measurePhase::3"
+      },
+      {
+        "count": 112,
+        "signature": "section16::4"
+      },
+      {
+        "count": 97,
+        "signature": "section16::2"
+      },
+      {
+        "count": 92,
+        "signature": "stepParity::1"
+      },
+      {
+        "count": 89,
+        "signature": "pitchClass::2"
+      },
+      {
+        "count": 87,
+        "signature": "pitchClass::9"
+      },
+      {
+        "count": 78,
+        "signature": "registerStep::high:0"
+      },
+      {
+        "count": 75,
+        "signature": "register::low"
+      },
+      {
+        "count": 74,
+        "signature": "section16::5"
+      },
+      {
+        "count": 72,
+        "signature": "registerStep::mid:2"
+      },
+      {
+        "count": 72,
+        "signature": "section16::0"
+      },
+      {
+        "count": 70,
+        "signature": "measurePhaseStep::0:0"
+      },
+      {
+        "count": 70,
+        "signature": "registerStep::low:2"
+      },
+      {
+        "count": 69,
+        "signature": "registerStep::high:2"
+      },
+      {
+        "count": 66,
+        "signature": "pitchClass::7"
+      },
+      {
+        "count": 62,
+        "signature": "section16::1"
+      },
+      {
+        "count": 61,
+        "signature": "stepQuarter::3"
+      },
+      {
+        "count": 60,
+        "signature": "measurePhaseStep::1:2"
+      },
+      {
+        "count": 59,
+        "signature": "section16::3"
+      },
+      {
+        "count": 57,
+        "signature": "measurePhaseStep::3:2"
+      },
+      {
+        "count": 55,
+        "signature": "measurePhaseStep::2:0"
+      },
+      {
+        "count": 52,
+        "signature": "section16::6"
+      },
+      {
+        "count": 51,
+        "signature": "measurePhaseStep::1:0"
+      },
+      {
+        "count": 49,
+        "signature": "measurePhaseStep::0:2"
+      },
+      {
+        "count": 49,
+        "signature": "measurePhaseStep::3:0"
+      },
+      {
+        "count": 48,
+        "signature": "registerStep::mid:3"
+      },
+      {
+        "count": 45,
+        "signature": "measurePhaseStep::2:2"
+      },
+      {
+        "count": 40,
+        "signature": "pitchClass::11"
+      },
+      {
+        "count": 31,
+        "signature": "stepQuarter::1"
+      },
+      {
+        "count": 29,
+        "signature": "pitchClass::8"
+      },
+      {
+        "count": 24,
+        "signature": "registerStep::high:1"
+      },
+      {
+        "count": 22,
+        "signature": "pitchClass::6"
+      },
+      {
+        "count": 21,
+        "signature": "pitchClass::1"
+      },
+      {
+        "count": 19,
+        "signature": "measurePhaseStep::0:3"
+      },
+      {
+        "count": 19,
+        "signature": "measurePhaseStep::2:3"
+      },
+      {
+        "count": 13,
+        "signature": "measurePhaseStep::1:3"
+      },
+      {
+        "count": 13,
+        "signature": "measurePhaseStep::2:1"
+      },
+      {
+        "count": 12,
+        "signature": "measurePhaseStep::0:1"
+      },
+      {
+        "count": 11,
+        "signature": "registerStep::high:3"
+      },
+      {
+        "count": 10,
+        "signature": "measurePhaseStep::3:3"
+      },
+      {
+        "count": 7,
+        "signature": "pitchClass::10"
+      },
+      {
+        "count": 7,
+        "signature": "registerStep::mid:1"
+      },
+      {
+        "count": 6,
+        "signature": "measurePhaseStep::3:1"
+      },
+      {
+        "count": 5,
+        "signature": "pitchClass::0"
+      },
+      {
+        "count": 5,
+        "signature": "pitchClass::5"
+      },
+      {
+        "count": 3,
+        "signature": "registerStep::low:0"
+      },
+      {
+        "count": 2,
+        "signature": "registerStep::low:3"
+      }
+    ],
+    "falsePositiveContextSignatures": [
+      {
+        "count": 401,
+        "signature": "register::high"
+      },
+      {
+        "count": 365,
+        "signature": "stepParity::0"
+      },
+      {
+        "count": 257,
+        "signature": "stepParity::1"
+      },
+      {
+        "count": 251,
+        "signature": "pitchClass::4"
+      },
+      {
+        "count": 193,
+        "signature": "stepQuarter::0"
+      },
+      {
+        "count": 191,
+        "signature": "register::mid"
+      },
+      {
+        "count": 172,
+        "signature": "stepQuarter::2"
+      },
+      {
+        "count": 168,
+        "signature": "measurePhase::0"
+      },
+      {
+        "count": 166,
+        "signature": "measurePhase::2"
+      },
+      {
+        "count": 149,
+        "signature": "measurePhase::3"
+      },
+      {
+        "count": 142,
+        "signature": "stepQuarter::3"
+      },
+      {
+        "count": 139,
+        "signature": "measurePhase::1"
+      },
+      {
+        "count": 125,
+        "signature": "registerStep::high:0"
+      },
+      {
+        "count": 122,
+        "signature": "section16::6"
+      },
+      {
+        "count": 116,
+        "signature": "registerStep::high:2"
+      },
+      {
+        "count": 115,
+        "signature": "stepQuarter::1"
+      },
+      {
+        "count": 93,
+        "signature": "section16::1"
+      },
+      {
+        "count": 90,
+        "signature": "pitchClass::11"
+      },
+      {
+        "count": 89,
+        "signature": "section16::2"
+      },
+      {
+        "count": 87,
+        "signature": "section16::5"
+      },
+      {
+        "count": 83,
+        "signature": "registerStep::high:3"
+      },
+      {
+        "count": 82,
+        "signature": "pitchClass::2"
+      },
+      {
+        "count": 77,
+        "signature": "registerStep::high:1"
+      },
+      {
+        "count": 77,
+        "signature": "section16::4"
+      },
+      {
+        "count": 76,
+        "signature": "section16::0"
+      },
+      {
+        "count": 68,
+        "signature": "section16::3"
+      },
+      {
+        "count": 62,
+        "signature": "pitchClass::9"
+      },
+      {
+        "count": 59,
+        "signature": "registerStep::mid:0"
+      },
+      {
+        "count": 52,
+        "signature": "measurePhaseStep::3:0"
+      },
+      {
+        "count": 51,
+        "signature": "registerStep::mid:3"
+      },
+      {
+        "count": 49,
+        "signature": "measurePhaseStep::0:0"
+      },
+      {
+        "count": 49,
+        "signature": "registerStep::mid:2"
+      },
+      {
+        "count": 48,
+        "signature": "measurePhaseStep::1:0"
+      },
+      {
+        "count": 47,
+        "signature": "measurePhaseStep::2:2"
+      },
+      {
+        "count": 44,
+        "signature": "measurePhaseStep::1:2"
+      },
+      {
+        "count": 44,
+        "signature": "measurePhaseStep::2:0"
+      },
+      {
+        "count": 42,
+        "signature": "measurePhaseStep::0:2"
+      },
+      {
+        "count": 42,
+        "signature": "measurePhaseStep::2:3"
+      },
+      {
+        "count": 41,
+        "signature": "measurePhaseStep::0:3"
+      },
+      {
+        "count": 39,
+        "signature": "measurePhaseStep::3:2"
+      },
+      {
+        "count": 36,
+        "signature": "measurePhaseStep::0:1"
+      },
+      {
+        "count": 34,
+        "signature": "pitchClass::7"
+      },
+      {
+        "count": 33,
+        "signature": "measurePhaseStep::2:1"
+      },
+      {
+        "count": 32,
+        "signature": "registerStep::mid:1"
+      },
+      {
+        "count": 31,
+        "signature": "measurePhaseStep::1:3"
+      },
+      {
+        "count": 30,
+        "signature": "measurePhaseStep::3:1"
+      },
+      {
+        "count": 30,
+        "signature": "register::low"
+      },
+      {
+        "count": 28,
+        "signature": "measurePhaseStep::3:3"
+      },
+      {
+        "count": 20,
+        "signature": "pitchClass::5"
+      },
+      {
+        "count": 19,
+        "signature": "pitchClass::6"
+      },
+      {
+        "count": 19,
+        "signature": "pitchClass::8"
+      },
+      {
+        "count": 17,
+        "signature": "pitchClass::1"
+      },
+      {
+        "count": 16,
+        "signature": "measurePhaseStep::1:1"
+      },
+      {
+        "count": 12,
+        "signature": "pitchClass::10"
+      },
+      {
+        "count": 10,
+        "signature": "section16::7"
+      },
+      {
+        "count": 9,
+        "signature": "pitchClass::0"
+      },
+      {
+        "count": 9,
+        "signature": "registerStep::low:0"
+      },
+      {
+        "count": 8,
+        "signature": "registerStep::low:3"
+      },
+      {
+        "count": 7,
+        "signature": "pitchClass::3"
+      },
+      {
+        "count": 7,
+        "signature": "registerStep::low:2"
+      },
+      {
+        "count": 6,
+        "signature": "registerStep::low:1"
+      }
+    ],
+    "grossUnmatchedGeneratedNoteCount": 622,
+    "grossUnmatchedReferenceNoteCount": 528,
+    "highestPitchErrorMeasures": [
+      {
+        "falseNegative": 12,
+        "falsePositive": 6,
+        "generated": 6,
+        "matched": 0,
+        "measure": 34,
+        "pitchContentF1": 0.0,
+        "reference": 12,
+        "totalPitchErrors": 18
+      },
+      {
+        "falseNegative": 0,
+        "falsePositive": 17,
+        "generated": 17,
+        "matched": 0,
+        "measure": 110,
+        "pitchContentF1": 0.0,
+        "reference": 0,
+        "totalPitchErrors": 17
+      },
+      {
+        "falseNegative": 7,
+        "falsePositive": 9,
+        "generated": 9,
+        "matched": 0,
+        "measure": 24,
+        "pitchContentF1": 0.0,
+        "reference": 7,
+        "totalPitchErrors": 16
+      },
+      {
+        "falseNegative": 4,
+        "falsePositive": 11,
+        "generated": 11,
+        "matched": 0,
+        "measure": 109,
+        "pitchContentF1": 0.0,
+        "reference": 4,
+        "totalPitchErrors": 15
+      },
+      {
+        "falseNegative": 10,
+        "falsePositive": 5,
+        "generated": 7,
+        "matched": 2,
+        "measure": 72,
+        "pitchContentF1": 0.2105263157894737,
+        "reference": 12,
+        "totalPitchErrors": 15
+      },
+      {
+        "falseNegative": 9,
+        "falsePositive": 6,
+        "generated": 9,
+        "matched": 3,
+        "measure": 73,
+        "pitchContentF1": 0.28571428571428575,
+        "reference": 12,
+        "totalPitchErrors": 15
+      },
+      {
+        "falseNegative": 7,
+        "falsePositive": 7,
+        "generated": 7,
+        "matched": 0,
+        "measure": 8,
+        "pitchContentF1": 0.0,
+        "reference": 7,
+        "totalPitchErrors": 14
+      },
+      {
+        "falseNegative": 6,
+        "falsePositive": 8,
+        "generated": 8,
+        "matched": 0,
+        "measure": 22,
+        "pitchContentF1": 0.0,
+        "reference": 6,
+        "totalPitchErrors": 14
+      },
+      {
+        "falseNegative": 9,
+        "falsePositive": 5,
+        "generated": 5,
+        "matched": 0,
+        "measure": 35,
+        "pitchContentF1": 0.0,
+        "reference": 9,
+        "totalPitchErrors": 14
+      },
+      {
+        "falseNegative": 7,
+        "falsePositive": 7,
+        "generated": 7,
+        "matched": 0,
+        "measure": 42,
+        "pitchContentF1": 0.0,
+        "reference": 7,
+        "totalPitchErrors": 14
+      },
+      {
+        "falseNegative": 11,
+        "falsePositive": 3,
+        "generated": 4,
+        "matched": 1,
+        "measure": 76,
+        "pitchContentF1": 0.125,
+        "reference": 12,
+        "totalPitchErrors": 14
+      },
+      {
+        "falseNegative": 5,
+        "falsePositive": 9,
+        "generated": 10,
+        "matched": 1,
+        "measure": 84,
+        "pitchContentF1": 0.125,
+        "reference": 6,
+        "totalPitchErrors": 14
+      },
+      {
+        "falseNegative": 10,
+        "falsePositive": 4,
+        "generated": 6,
+        "matched": 2,
+        "measure": 79,
+        "pitchContentF1": 0.2222222222222222,
+        "reference": 12,
+        "totalPitchErrors": 14
+      },
+      {
+        "falseNegative": 12,
+        "falsePositive": 2,
+        "generated": 5,
+        "matched": 3,
+        "measure": 108,
+        "pitchContentF1": 0.3,
+        "reference": 15,
+        "totalPitchErrors": 14
+      },
+      {
+        "falseNegative": 9,
+        "falsePositive": 4,
+        "generated": 4,
+        "matched": 0,
+        "measure": 77,
+        "pitchContentF1": 0.0,
+        "reference": 9,
+        "totalPitchErrors": 13
+      },
+      {
+        "falseNegative": 0,
+        "falsePositive": 13,
+        "generated": 13,
+        "matched": 0,
+        "measure": 111,
+        "pitchContentF1": 0.0,
+        "reference": 0,
+        "totalPitchErrors": 13
+      },
+      {
+        "falseNegative": 11,
+        "falsePositive": 2,
+        "generated": 3,
+        "matched": 1,
+        "measure": 74,
+        "pitchContentF1": 0.13333333333333333,
+        "reference": 12,
+        "totalPitchErrors": 13
+      },
+      {
+        "falseNegative": 3,
+        "falsePositive": 10,
+        "generated": 12,
+        "matched": 2,
+        "measure": 32,
+        "pitchContentF1": 0.23529411764705882,
+        "reference": 5,
+        "totalPitchErrors": 13
+      },
+      {
+        "falseNegative": 3,
+        "falsePositive": 9,
+        "generated": 9,
+        "matched": 0,
+        "measure": 82,
+        "pitchContentF1": 0.0,
+        "reference": 3,
+        "totalPitchErrors": 12
+      },
+      {
+        "falseNegative": 4,
+        "falsePositive": 8,
+        "generated": 8,
+        "matched": 0,
+        "measure": 95,
+        "pitchContentF1": 0.0,
+        "reference": 4,
+        "totalPitchErrors": 12
+      },
+      {
+        "falseNegative": 8,
+        "falsePositive": 4,
+        "generated": 5,
+        "matched": 1,
+        "measure": 16,
+        "pitchContentF1": 0.14285714285714285,
+        "reference": 9,
+        "totalPitchErrors": 12
+      },
+      {
+        "falseNegative": 4,
+        "falsePositive": 8,
+        "generated": 9,
+        "matched": 1,
+        "measure": 98,
+        "pitchContentF1": 0.14285714285714285,
+        "reference": 5,
+        "totalPitchErrors": 12
+      },
+      {
+        "falseNegative": 6,
+        "falsePositive": 6,
+        "generated": 7,
+        "matched": 1,
+        "measure": 102,
+        "pitchContentF1": 0.14285714285714285,
+        "reference": 7,
+        "totalPitchErrors": 12
+      },
+      {
+        "falseNegative": 4,
+        "falsePositive": 8,
+        "generated": 10,
+        "matched": 2,
+        "measure": 2,
+        "pitchContentF1": 0.25,
+        "reference": 6,
+        "totalPitchErrors": 12
+      }
+    ]
+  },
+  "globalReproduction": {
+    "criticalMismatchCount": 1875,
+    "gatedMetrics": {
+      "chordPitchSetTolerantF1": 0.022757697456492636,
+      "exactVoicingTolerantF1": 0.022757697456492636,
+      "pitchContentF1": 0.2830626450116009,
+      "pitchTimingTolerantF1": 0.044547563805104405,
+      "stringFretTimingTolerantF1": 0.03062645011600928
+    },
+    "matchesPersistedFrozenV5BaselineExactly": true,
+    "pdfEventFidelity": 1.0
+  },
+  "mayClaimUnseenGeneralization": false,
+  "safety": {
+    "canaryLabelsMayDriveCalibration": false,
+    "fitLabelsMayDriveCalibration": true,
+    "mainModified": false,
+    "modalGpuInvoked": false,
+    "productionModified": false,
+    "v5Modified": false,
+    "validationLabelsMayDriveCalibration": false
+  },
+  "schemaVersion": 14401,
+  "splitPolicy": {
+    "canaryPercent": 20,
+    "crossSplitMatchingAllowed": false,
+    "fitPercent": 60,
+    "locationKey": "measure+step",
+    "seed": 144,
+    "validationPercent": 20
+  },
+  "splits": {
+    "canary": {
+      "chordPitchSet": {
+        "f1": 0.014388489208633094,
+        "falseNegative": 98,
+        "falsePositive": 176,
+        "generated": 178,
+        "matched": 2,
+        "precision": 0.011235955056179775,
+        "recall": 0.02,
+        "reference": 100
+      },
+      "criticalMismatchCount": 385,
+      "exactChordVoicing": {
+        "f1": 0.014388489208633094,
+        "falseNegative": 98,
+        "falsePositive": 176,
+        "generated": 178,
+        "matched": 2,
+        "precision": 0.011235955056179775,
+        "recall": 0.02,
+        "reference": 100
+      },
+      "grossMatchedPitchTimingNotes": 11,
+      "noteCounts": {
+        "generated": 254,
+        "reference": 153
+      },
+      "pitchContent": {
+        "f1": 0.15233415233415235,
+        "falseNegative": 122,
+        "falsePositive": 223,
+        "generated": 254,
+        "matched": 31,
+        "precision": 0.1220472440944882,
+        "recall": 0.20261437908496732,
+        "reference": 153
+      },
+      "pitchTiming": {
+        "f1": 0.029484029484029485,
+        "falseNegative": 147,
+        "falsePositive": 248,
+        "generated": 254,
+        "matched": 6,
+        "precision": 0.023622047244094488,
+        "recall": 0.0392156862745098,
+        "reference": 153
+      },
+      "stringFretTiming": {
+        "f1": 0.024570024570024572,
+        "falseNegative": 148,
+        "falsePositive": 249,
+        "generated": 254,
+        "matched": 5,
+        "precision": 0.01968503937007874,
+        "recall": 0.032679738562091505,
+        "reference": 153
+      }
+    },
+    "fit": {
+      "chordPitchSet": {
+        "f1": 0.024858757062146894,
+        "falseNegative": 359,
+        "falsePositive": 504,
+        "generated": 515,
+        "matched": 11,
+        "precision": 0.021359223300970873,
+        "recall": 0.02972972972972973,
+        "reference": 370
+      },
+      "criticalMismatchCount": 1150,
+      "exactChordVoicing": {
+        "f1": 0.024858757062146894,
+        "falseNegative": 359,
+        "falsePositive": 504,
+        "generated": 515,
+        "matched": 11,
+        "precision": 0.021359223300970873,
+        "recall": 0.02972972972972973,
+        "reference": 370
+      },
+      "grossMatchedPitchTimingNotes": 66,
+      "noteCounts": {
+        "generated": 688,
+        "reference": 594
+      },
+      "pitchContent": {
+        "f1": 0.21528861154446177,
+        "falseNegative": 456,
+        "falsePositive": 550,
+        "generated": 688,
+        "matched": 138,
+        "precision": 0.2005813953488372,
+        "recall": 0.23232323232323232,
+        "reference": 594
+      },
+      "pitchTiming": {
+        "f1": 0.043681747269890804,
+        "falseNegative": 566,
+        "falsePositive": 660,
+        "generated": 688,
+        "matched": 28,
+        "precision": 0.040697674418604654,
+        "recall": 0.04713804713804714,
+        "reference": 594
+      },
+      "stringFretTiming": {
+        "f1": 0.031201248049921994,
+        "falseNegative": 574,
+        "falsePositive": 668,
+        "generated": 688,
+        "matched": 20,
+        "precision": 0.029069767441860465,
+        "recall": 0.03367003367003367,
+        "reference": 594
+      }
+    },
+    "validation": {
+      "chordPitchSet": {
+        "f1": 0.02416918429003021,
+        "falseNegative": 129,
+        "falsePositive": 194,
+        "generated": 198,
+        "matched": 4,
+        "precision": 0.020202020202020204,
+        "recall": 0.03007518796992481,
+        "reference": 133
+      },
+      "criticalMismatchCount": 426,
+      "exactChordVoicing": {
+        "f1": 0.02416918429003021,
+        "falseNegative": 129,
+        "falsePositive": 194,
+        "generated": 198,
+        "matched": 4,
+        "precision": 0.020202020202020204,
+        "recall": 0.03007518796992481,
+        "reference": 133
+      },
+      "grossMatchedPitchTimingNotes": 20,
+      "noteCounts": {
+        "generated": 267,
+        "reference": 199
+      },
+      "pitchContent": {
+        "f1": 0.13733905579399142,
+        "falseNegative": 167,
+        "falsePositive": 235,
+        "generated": 267,
+        "matched": 32,
+        "precision": 0.1198501872659176,
+        "recall": 0.16080402010050251,
+        "reference": 199
+      },
+      "pitchTiming": {
+        "f1": 0.06008583690987125,
+        "falseNegative": 185,
+        "falsePositive": 253,
+        "generated": 267,
+        "matched": 14,
+        "precision": 0.052434456928838954,
+        "recall": 0.07035175879396985,
+        "reference": 199
+      },
+      "stringFretTiming": {
+        "f1": 0.034334763948497854,
+        "falseNegative": 191,
+        "falsePositive": 259,
+        "generated": 267,
+        "matched": 8,
+        "precision": 0.0299625468164794,
+        "recall": 0.04020100502512563,
+        "reference": 199
+      }
+    }
+  }
+}
