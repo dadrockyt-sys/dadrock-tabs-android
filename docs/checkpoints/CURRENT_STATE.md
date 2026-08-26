@@ -2,7 +2,7 @@
 
 Updated: 2026-08-26 America/Montreal
 Branch: `v143-contextual-prune-lobo`
-Active phase: **V144 Rhythm gold calibration. Current accepted calibration baseline remains `pitch-position-shift-54a6e8d3aa91c422` (1144 events / 113 measures / SHA `5b36270a...`). Nine candidate families are consumed and sealed. The atomic exact-two-note onset dyad pitch-rewrite family produced zero rules at fixed support, so zero candidates were evaluated; validation/canary/full-gold were never opened and deterministic fallback retained the accepted baseline. No successor family is pre-registered yet. Production remains untouched.**
+Active phase: **V144 Rhythm gold calibration. Current accepted calibration baseline remains `pitch-position-shift-54a6e8d3aa91c422` (1144 events / 113 measures / SHA `5b36270a...`). Nine candidate families are consumed and sealed. A diagnostic-only current-baseline FIT onset-topology analyzer is now implemented and synthetically tested; CPU-gate wiring is committed. It has NOT yet read the gold fit labels, emitted no candidate/rule/shift/ranking, and no successor family is pre-registered. Production remains untouched.**
 
 ## Permanent safety boundary
 - Work only on `v143-contextual-prune-lobo`; never modify/merge `main` or Production.
@@ -52,7 +52,7 @@ Active phase: **V144 Rhythm gold calibration. Current accepted calibration basel
 - Candidate construction/ranking/selection false; validation/canary labels false; runtime reference false; GPU false.
 - Fit: generated `643`, reference `594`, critical `1075`; pitch `161` / F1 `0.26030719482619236`; tight pitch/timing `41` / F1 `0.06628940986257073`; gross ±2-step matches `81`; exact string/fret/timing `29` / F1 `0.04688763136620856`; chord/voicing `0.03976608187134503`.
 - Shape signals: same-onset wrong-pitch substitutions `171`; displaced existing pitch matches `120`; tight pitch/string-fret mismatches `12`.
-- This sealed fit-only diagnostic remains the permissible source for family-shape analysis while the accepted baseline is unchanged. **Do not use fit/validation/canary/full outcomes from consumed searches to construct/rank a successor.**
+- This sealed fit-only diagnostic remains a permissible source for family-shape analysis while the accepted baseline is unchanged. **Do not use fit/validation/canary/full outcomes from consumed searches to construct/rank a successor.**
 
 ## Atomic onset dyad family — COMPLETE / CONSUMED / SEALED
 - Policy `modal/v144_rhythm_onset_dyad_pitch_policy.py`; pre-registration commit `5ff7c68f1772150ce92d0bf9911c5145d6dda4b3`; blob `09deedbb5f31c3a7f0573d9e68f78f956f692c1c`.
@@ -69,9 +69,20 @@ Active phase: **V144 Rhythm gold calibration. Current accepted calibration basel
 - Workflow archived immediately: commit `6e0e23254a4e6c845c681368a96e1623f04364bd`; blob `869c625913625806555184beef8ff33943304ce4`; replay explicitly refused.
 - No selected-baseline manifest created.
 
+## Current-baseline fit onset-topology diagnostic — PRE-RUN / NO CANDIDATES
+- Implementation `validation/v144_rhythm_calibration/analyze_current_baseline_fit_onset_topology.py`; commit `2fd4fffc17111be8acb1741985ff9ece32a630d5`; blob `b4ddb289e2e0e54177e51e1b4ff1140dd304ed46`.
+- Synthetic tests `modal/tests/test_v144_rhythm_current_baseline_fit_onset_topology.py`; commit `03becc266d7fe32980a8425ead72c0ce8f1fc3f3`.
+- CPU-gate wiring commit `073d276bcae5873bfed104eda34aebe7c19a0b49`; workflow blob `0102223c67e4a489dda2e5c88808c0a1dad7c240`; gate pending at checkpoint time.
+- Analyzer reconstructs only the locked current baseline SHA `5b36270a...`, then examines the deterministic FIT split.
+- It reports onset cardinality pairs, singleton topology, dyad/3+ equal-cardinality topology, exact pitch/string/position multisets, same-onset wrong-pitch slots, same-string wrong-pitch slots, generated-only/reference-only onsets, and shared cardinality mismatches.
+- Explicit isolation: candidate construction false; candidate ranking false; candidate selection false; no rule/shift histogram; validation labels false; canary labels false; runtime reference false; GPU false.
+- Interpretation boundary: topology may inform only a materially distinct transformation **unit**; it may not rank a specific rule/shift or change selector thresholds/support.
+- **The diagnostic has not yet executed against the gold fit labels. No successor candidate family is pre-registered or evaluated.**
+
 ## Immediate next actions
-1. Keep `pitch-position-shift-54a6e8d3aa91c422` / SHA `5b36270a...` as current V144 Rhythm calibration baseline.
-2. Never replay/reselect/retune any of the nine consumed families.
-3. Before proposing another family, run only a **diagnostic-only current-baseline fit topology analysis** if needed to distinguish genuinely new transformation units; it must perform no candidate construction/ranking/selection and must not read validation/canary labels.
-4. Any successor family must then be materially distinct and pre-registered before candidate evaluation, following policy/tests → CPU gate → search/invariants → CPU gate → at most one exact-message/path-gated CPU one-shot → immediate archive.
-5. Never start Bass/Lead, modify main/Production, claim near-100%, or use Modal/L4/GPU without fresh explicit user authorization.
+1. Resolve the topology diagnostic CPU gate. If it fails, fix diagnostic/tests only; do not run the diagnostic.
+2. Only after CPU gate SUCCESS, create one exact-message/path-gated CPU diagnostic workflow that verifies immutable V5/reference/current-baseline identities, runs this topology analyzer once, persists only its report, then archive it immediately.
+3. Interpret only aggregate FIT topology to decide whether a genuinely new transformation unit is justified. Never use consumed-family outcomes, validation, or canary to choose the shape.
+4. If a successor unit is justified, pre-register it before any candidate evaluation and follow policy/tests → CPU gate → search/invariants → CPU gate → at most one exact-message/path-gated CPU one-shot → immediate archive.
+5. Keep `pitch-position-shift-54a6e8d3aa91c422` / SHA `5b36270a...` as baseline unless a future fully-gated family passes every invariant.
+6. Never start Bass/Lead, modify main/Production, claim near-100%, or use Modal/L4/GPU without fresh explicit user authorization.
