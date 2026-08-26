@@ -16,55 +16,37 @@ Priority: **repair Rhythm using consumed V5 professional reference as calibratio
 - 1209 events / 891 onsets / 113 measures vs calibration reference 946 notes / 603 playable onsets.
 - PDF fidelity `1.0`; terminal professional pitch-content F1 `0.2830626450116009`; pitch/timing tolerant F1 `0.044547563805104405`; string/fret/timing tolerant F1 `0.03062645011600928`; critical mismatches `1875`; `rhythmComplete=false`.
 
-## V144 calibration facts before V6
-- Baseline diagnostic run `32920648462` SUCCESS: content pitch F1 `0.5976798143851508`, pitch-class `0.8046403712296984`, position-content `0.4677494199535963`, exact-onset `0.4819277108433735`.
-- Major over-generation/register bias; no defensible global timing shift.
-- Exact V2 artifact `9548666053` from run `32805316807`; ZIP SHA256 `5104522aab3e6193c6b06fe3abb807994065f858a945a81070c611fc63707d4f`; V2 candidate-product SHA256 `a2d451a39391b797e55623bb3c616735a3f1b39648103cb630a9bb1035430951`.
-- Source-evidence run `32921346833` SUCCESS. Rescued attacks were useful; do not undo V3 rescue wholesale.
-- Best conservative gate: `detectionCountSum >= 12 && precisionGridErrorSeconds <= 0.06`.
-- V6 policy sweep run `32921577491` SUCCESS. No secondary-note pruning policy was clean enough to promote.
-
 ## V6 source-only generation — COMPLETE
-- Generator `analyzer/v144_generate_v6_attack_gate.py` commit `7ba6cc7e59b7882fa99350f612e8ac5742f0286d`; workflow `.github/workflows/v144-v6-generate.yml` commit `82d8115f0bbc3cf8fbb049052419ff14c902ad00`.
+- Conservative attack gate: `detectionCountSum >= 12 && precisionGridErrorSeconds <= 0.06`; no timing/pitch/voicing rewrite.
+- Generator `analyzer/v144_generate_v6_attack_gate.py` commit `7ba6cc7e59b7882fa99350f612e8ac5742f0286d`; workflow commit `82d8115f0bbc3cf8fbb049052419ff14c902ad00`.
 - Trigger `0e38d0266ebb4f86394823ffd7af19694176c670`; run `32922227911` = **SUCCESS**.
 - V6 stream `debug/v144-rhythm-calibration/v6-attack-gate/v6-render-stream.json`; Git blob `6b372e97e0d8e7c3f700099333886f0840a5ed35`; SHA256 **`c1e6389fdf9d7a18adb50407f248673fe494b236889d635a467100adb6070ddf`**.
-- V6 = **1149 events / 839 onsets**; removed 60 events / 52 attacks. Surviving V5 event content unchanged.
-- No timing relocation, pitch rewrite, octave ceiling, secondary prune, rescue rollback, professional-reference read during generation, Modal/L4, or Production modification.
+- V6 = **1149 events / 839 onsets**; removed 60 events / 52 attacks. No professional-reference read during generation, no Modal/L4, no Production modification.
 
 ## Frozen V6 calibration score — COMPLETE AND VERIFIED
-- Trigger `6e17c83f656deb30b27c24fc07f158e1f3346067`; run `32922358891` = **SUCCESS**.
-- Score report `debug/v144-rhythm-calibration/v6-attack-gate/v6-calibration-score.json`; blob `6f336e2e1918c10ba86a406231ce1d6a9e34deef`; `predictionVerified=true`.
-- Every overall swept metric improved vs V5. V6: onset F1 `0.48682385575589454`; exact-event `0.04486873508353222`; pitch `0.6042959427207636`; pitch-class `0.8085918854415275`; measure+pitch `0.28544152744630075`; measure+pitch-class `0.4715990453460621`; position-content `0.469689737470167`.
-- Metrics improving on both odd/even splits: onset, pitch-class content, measure+pitch, measure+pitch-class. Even-split micro-regressions remain in exact-event, pitch-content, position-content.
+- Run `32922358891` = **SUCCESS**; report `debug/v144-rhythm-calibration/v6-attack-gate/v6-calibration-score.json`, blob `6f336e2e1918c10ba86a406231ce1d6a9e34deef`; `predictionVerified=true`.
+- V6 metrics: onset F1 `0.48682385575589454`; exact-event `0.04486873508353222`; pitch `0.6042959427207636`; pitch-class `0.8085918854415275`; measure+pitch `0.28544152744630075`; measure+pitch-class `0.4715990453460621`; position-content `0.469689737470167`.
+- Every overall swept metric improved vs V5. Metrics improving on both odd/even splits: onset, pitch-class content, measure+pitch, measure+pitch-class.
 
 ## V6 pitch-opportunity diagnostic — COMPLETE
-- Trigger `cbaa555dfe11c7e89411dc01596b9535547a4640`; run `32922569934` = **SUCCESS**.
-- Report `debug/v144-rhythm-calibration/v6-attack-gate/v6-pitch-opportunity.json`; blob `8b95f34dd21121a3d81f1a34682e06920f0d8d5f`.
-- Shared exact V6/reference onsets: **351**; V6-only: **488**; reference-only: **252**.
-- V6 primary exact hit **41**; any current V6 exact hit **47**; top V2 score exact hit **35**.
-- Exact reference MIDI exists in V2 candidate pool at **162** shared onsets; correct pitch class exists at **278**.
+- Run `32922569934` = **SUCCESS**; report `debug/v144-rhythm-calibration/v6-attack-gate/v6-pitch-opportunity.json`, blob `8b95f34dd21121a3d81f1a34682e06920f0d8d5f`.
+- Shared exact V6/reference onsets **351**; V6-only **488**; reference-only **252**.
+- V6 primary exact hit **41**; exact reference MIDI exists in V2 candidate pool at **162** shared onsets; correct pitch class exists at **278**.
 - Of 310 wrong primaries: **121 exact-selection opportunities**, **116 register-only opportunities**, **73 no-candidate-pitch-class misses**.
-- Opportunity split is balanced across odd/even measures. Correct exact candidates have source-score rank median **4** (mean `5.10`, p75 `7`, p90 `11`) and score-gap median **2.47** from the top source candidate.
-- Conclusion: source-score ranking is currently a larger immediate bottleneck than candidate generation at shared onsets. Do not jump to L4 yet; retain 73 no-pitch-class misses as explicit later separation target.
+- Correct exact candidate source-score rank median **4**, mean `5.10`, p75 `7`, p90 `11`; source-score ranking is a major bottleneck.
 
-## V6 source-only primary context sweep — READY, NOT TRIGGERED
+## V6 source-only primary context sweep — COMPLETE, SUMMARY PENDING
 - Script `analyzer/v144_v6_primary_context_sweep.py` commit `d9ec3317d42577528bbb4a30cc98190e5d815cb6`.
 - Workflow `.github/workflows/v144-v6-primary-context-sweep.yml` commit `4a12b809872e058b2f3130eb9c90dc481cfbe215`.
-- Frozen V6 and exact V2 identities are pinned. No V7 output.
-- 47 source-only policies are tested. Policy selectors do **not** read the calibration reference; reference is used only after selection for grading.
-- Families:
-  1. current V6 primary and raw top-source-score baselines;
-  2. local previous/next-register continuity over broad source-score bands;
-  3. time-weighted dynamic programming over candidate sequences with source-score + semitone-transition cost;
-  4. nearby repeated-measure/same-step candidate consensus using measure-onset-signature similarity, exact-MIDI support, and optional pitch-class support.
-- Pitch-only simulations replace/remove the V6 primary while preserving secondaries; fingering/position is intentionally not graded for replaced-MIDI simulations.
-- Metrics: exact event, pitch content, pitch-class content, measure+pitch, measure+pitch-class, odd/even split deltas, changed-primary count, primary exact-hit count.
-- A policy is considered robust for a metric only if overall improves and neither odd nor even split regresses.
+- Trigger `e502af163de099b6824658fe7c58d6bee7ff5916`; run **`32922808616` = SUCCESS**.
+- Persisted full report: `debug/v144-rhythm-calibration/v6-attack-gate/v6-primary-context-sweep.json`; blob **`c5875f8e3f0ee70816ed6c986b269fb3dc259820`**.
+- 47 source-only selector policies tested: current/top-score baselines, local-neighbor continuity, time-weighted DP continuity, repeated-measure/same-step consensus. Selectors did not read the professional reference; reference used only for grading. No V7 candidate generated.
+- Preliminary read of sorted report is unfavorable: first-ranked `local-neighbor-gap4.0-lambda0.20` has only one robust improved metric (`pitchClassContent`) while exact-event, pitch-content, measure+pitch, and measure+pitch-class regress. It changes 226 primaries and lowers exact-primary hits from 41 to 34.
+- Search of the available report resource found **no policy with `regressedMetrics: []`**, but the large report output was truncated. Do not make a final V7/L4 decision until a compact all-policy summary is persisted.
 
 ## Next exact actions
-1. Trigger `debug/v144-rhythm-calibration/run-v6-primary-context-sweep.txt` once.
-2. Inspect whether any context policy improves multiple pitch metrics on both odd/even splits without broad regressions.
-3. Save checkpoint immediately.
-4. Do not generate V7 unless a source-only policy survives those checks.
-5. If context cannot exploit the candidate opportunity, formulate a specific L4 separation experiment around the remaining candidate-generation misses rather than blindly re-running GPU separation.
-6. Final legitimate validation still requires a different unseen professional song/reference.
+1. Produce a compact summary of all 47 context policies from the persisted full JSON: max robust metric count, zero-regression count, best deltas for each metric/primary-hit count, top 10, and best policy per family.
+2. Save checkpoint with that conclusion.
+3. If no context selector gives multi-metric split-robust improvement, do **not** generate V7 from these rules.
+4. Then inspect the preserved Modal/L4 archive and formulate a narrow separation experiment around the measured failure: 73 shared onsets with no correct pitch-class candidate plus the correlated source-score misranking problem.
+5. Final legitimate validation still requires a different unseen professional song/reference.
