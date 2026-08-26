@@ -2,91 +2,84 @@
 
 Updated: 2026-08-26 America/Montreal
 Branch: `v143-contextual-prune-lobo`
-Active phase: **V144 Rhythm gold calibration. The accepted 1144-event three-signature baseline remains locked. Single/pair/triple/quad pruning families are consumed; the quad family kept deterministic fallback. Two fit-only CPU diagnostics now show deletion/pruning has a much lower structural ceiling than pitch correction on fit. Next is to pre-register and CPU-test a materially new reference-free pitch-correction family; no new candidate search has started. Do not begin Bass/Lead unless Rhythm quality is proven or the user explicitly redirects.**
+Active phase: **V144 Rhythm gold calibration. Accepted 1144-event triple baseline remains locked. Single/pair/triple/quad deletion families are consumed and two fit-only diagnostics show deletion is structurally insufficient. A materially new reference-free contextual same-string pitch-shift family is now pre-registered and wired into the CPU gate; the final linked-technique regression gate is running. No pitch-shift candidate search has been executed or selected.**
 
 ## Permanent safety boundary
 - Work only on `v143-contextual-prune-lobo`; never modify/merge `main` or Production.
-- Protected V5 analyzer `analyzer/v143_reference_free_rhythm_pipeline.py`, Git blob `7f72f8ed9b14af8bc93e95544195204d99c6bec1`.
-- Frozen V5 final-result sentinel Git blob `511fd244f231b66d08306f97b5a47ed41f5415c7`.
-- Frozen V5 render SHA256 `7c3399d3f5e05ecc8ac98d71d0e5300e1e78f63ae96c1642fe4a19debb4061b2`; PDF SHA256 `f4c1238e868cadfb90b8a359b1555b0b90e7740b9ebaa276aa394c8991f37ce5`; canonical event SHA256 `7ed5166a73793e3a40c9a21f6532fee5ba784e43ef4180727404a37a038fb6d1`.
-- Original V5 professional one-shot holdout is permanently consumed. Never rerun/retry its final workflow, alter its candidate/thresholds/result, or retune V5 from V144 evidence.
+- Protected V5 analyzer blob: `7f72f8ed9b14af8bc93e95544195204d99c6bec1`.
+- Frozen V5 final-result sentinel blob: `511fd244f231b66d08306f97b5a47ed41f5415c7`.
+- Frozen V5 render SHA256: `7c3399d3f5e05ecc8ac98d71d0e5300e1e78f63ae96c1642fe4a19debb4061b2`.
+- Frozen V5 PDF SHA256: `f4c1238e868cadfb90b8a359b1555b0b90e7740b9ebaa276aa394c8991f37ce5`.
+- Frozen V5 canonical event SHA256: `7ed5166a73793e3a40c9a21f6532fee5ba784e43ef4180727404a37a038fb6d1`.
+- Original V5 professional one-shot holdout is permanently consumed; never rerun/retry or retune V5 from V144 evidence.
 - `main`, Production, `/ai-tab` frontend, Bass/Lead, and `freezeReady=false` remain untouched.
 - **No Modal/L4/GPU without fresh explicit user authorization. None has been used in V144.**
 
 ## Gold calibration reference
-- Read-only visual target remains `main/public/Professionalexample.jpg`, main blob `16106197cc1269cca0b3c443908d5ef75e8b4d3e`, image SHA256 `aca2da3e8d551b2fd82b4ab3ecafa0c8932d6c0a27b54b6213ffc990ca08a9a9`.
-- Structured source SHA256 `18cdb4f8afb49562aac5b600730384636070d6ca8650823e759276a81ee4afc8`; exact reference SHA256 `18fd868ae960dfcdd1ffb0110f1a9dfd8acc2ffeb46e247d1116cd54291526ac`.
+- Visual target: `main/public/Professionalexample.jpg`, main blob `16106197cc1269cca0b3c443908d5ef75e8b4d3e`, image SHA256 `aca2da3e8d551b2fd82b4ab3ecafa0c8932d6c0a27b54b6213ffc990ca08a9a9`.
+- Exact structured reference SHA256: `18fd868ae960dfcdd1ffb0110f1a9dfd8acc2ffeb46e247d1116cd54291526ac`.
 - Reference completeness: 113 measures / 603 playable onsets / 946 notes / 104 populated measures.
-- This is a **gold calibration benchmark, not an unseen holdout**. Never claim unbiased generalization from scores against it.
-- Exact reference build run `32934718066` SUCCESS; persisted bot commit `0df6204909ca79bdd3a5bf1be4f1ca4d55cca53f`.
+- This is a **gold calibration benchmark, not an unseen holdout**; never claim unbiased generalization from it.
 
-## Immutable V5 calibration baseline
-- Full V5: critical mismatches `1875`; pitch F1 `0.2830626450116009`; pitch/timing `0.044547563805104405`; string/fret/timing `0.03062645011600928`; chord/voicing `0.022757697456492636`; measure coverage `1.0`; PDF fidelity `1.0`.
-- Baseline run `32934939964` SUCCESS; report bot `4511f05493cff7dc8828e61329b4ba439db168aa`; baseline report blob `ad5fa9d0b6c552035405c1cca81ee4e3f25b5764`.
-- Deterministic split: measure+step, seed 144, 60% fit / 20% validation / 20% canary. Fit labels may construct/rank; validation/canary only gate the locked candidate.
-- V5 fit baseline: pitch `0.21528861154446177`; pitch/timing `0.043681747269890804`; string/fret/timing `0.031201248049921994`; chord/voicing `0.024858757062146894`; critical `1150`; gross unmatched generated/reference `622/528`.
+## Fixed selector / invariant safety
+- Deterministic split: measure+step, seed 144, 60% fit / 20% validation / 20% canary.
+- Fit labels may construct/rank; validation/canary only gate the one locked winner.
+- Fixed fit gate: pitch-content gain >= `0.005`; no musical metric regression; no critical mismatch increase; PDF-event fidelity must be `1.0`.
+- Candidate must preserve all 113 accepted-baseline generated measure IDs before fit lock.
+- Fixed order: fit → validation → canary → full-gold → independent PDF-event invariant.
+- Later gate failure returns to deterministic accepted-baseline fallback; never select an alternate.
+- Never change thresholds/support from observed candidate outcomes.
 
-## Selector / invariant safety
-- Fit ranking cannot read validation/canary; one winner locks; later failure returns to deterministic baseline fallback, never an alternate.
-- Fixed numeric gate: fit pitch gain >= `0.005`; no musical metric regression; no critical mismatch increase; PDF-event fidelity `1.0`.
-- Selector requires reference-free `baselineGeneratedMeasureSetPreserved=true` before fit lock.
-- Every accepted-baseline additive candidate must preserve the accepted baseline's full 113 generated-measure IDs before fit lock.
-- Fixed staged order remains fit → validation → canary → full-gold → PDF-event invariant. Do not change thresholds from residual/search outcomes.
-- Measure-set helper commit `702e5cb5477af2f44e940be9a80fea8fa8e7922d`; selector correction `c1bd13e790c3e9304d9dcb2d789b0953d158bc49`; corrected CPU gate run `32936974998` SUCCESS.
+## Accepted V144 Rhythm calibration baseline — LOCKED
+- Candidate: `prune-triple-67348efe50436fc5` = `register::high && section16::1 && stepParity::0`.
+- Event count: **1144**.
+- Canonical/PDF-event SHA256: `68b8cdf14ed02265c5e3c204b2af51b0aae4849462e7b3e4243192d8855cc3c3`.
+- Generated measures: exact 113/113; missing `[]`; extra `[]`; PDF-event fidelity `1.0`.
+- Full gold: critical mismatch `1810`; pitch F1 `0.2909090909090909`; pitch/timing `0.045933014354066985`; string/fret/timing `0.031578947368421054`; chord/voicing `0.023496890117484452`; measure coverage `1.0`; PDF fidelity `1.0`.
+- Manifest: `debug/v144-rhythm-calibration/selected/v144-triple-selected-baseline.json`, blob `ba8dec9a1c3155816f5841a32ee52ced7998c110`.
+- Promotion scope remains calibration-baseline only; Production false; Rhythm complete false; near-100% false.
 
-## Consumed historical candidate families — never replay/reselect
-1. Single-signature family: `pitchClass::11` fit winner failed validation pitch; run `32935621669`; workflow sealed `7951564d3d46c99b74628ae1768575d1bbc15f1a`.
-2. Two-signature conjunction family: `register::high && section16::1` passed split gates but lost one whole generated measure and failed later full invariant; full evaluated bot `e03d0d25a3c1e8ab8d68e51737e0abd84a920fb9`; workflow sealed `d13331984ff5b5108ab7e74e77889f79b9e76987`.
-3. Three-signature family is consumed by its accepted winner below. Do **not** use later evidence to choose another triple candidate.
-4. Four-signature additive family is consumed by run `32938769540`; no candidate cleared fit. Do **not** replay, retune thresholds, enlarge the same candidate list, or choose a quad runner-up later.
-5. Do **not** escalate to a five-signature/deeper conjunction pruning family from the current residuals; fit-only oracle evidence proves deletion-only correction cannot approach the target even under perfect false-positive deletion.
+## Consumed families — NEVER REPLAY / RESELECT
+1. Single-signature prune: fit winner failed validation; run `32935621669`.
+2. Two-signature conjunction prune: passed split but lost a generated measure and failed final invariant.
+3. Triple prune family: consumed by accepted baseline above; do not select another triple.
+4. Additive four-signature prune: actual one-shot run `32938769540` SUCCESS, exactly 512 fit-only candidates from 577 unmatched fit-generated notes; no candidate cleared fit, deterministic accepted-baseline fallback retained. Persisted report blob `5928e9687414c1e118653f139eda205237584ee0`; workflow sealed commit `69db5acad3e313610f22617f06fbb325e5b8941d`.
+5. Do not escalate to five-signature/deeper deletion families from current evidence.
 
-## Accepted V144 calibration baseline — locked
-- Triple policy commit `84dc62f7dc688c7a3e00133598f01a4f46930d2f`; tests `d6e9985dc4fe73547d545143d30c0efd36f22f46`; CPU gate `32937133401` SUCCESS.
-- One-shot triple search run `32937262081` SUCCESS; search report bot `d40a181a0f85e780b08796e0be9d0bf371badf23`; workflow sealed `abfe8ba4551440a333a24b03ae6c3dc833ccf506`.
-- **Accepted candidate:** `prune-triple-67348efe50436fc5` = `register::high && section16::1 && stepParity::0`.
-- Stream: **1144 events**, canonical/PDF-event SHA256 `68b8cdf14ed02265c5e3c204b2af51b0aae4849462e7b3e4243192d8855cc3c3`.
-- Generated measure set exactly 113/113, missing `[]`, extra `[]`; independent PDF-event identity proof `1.0`.
-- Fit gains: pitch `+0.00783184116370314`; pitch/timing `+0.0015890692216209146`; string/fret/timing `+0.0011350494440149524`; chord/voicing `+0.000872237089899891`; critical `-45`.
-- Validation gains: pitch `+0.0011890827341471122`; pitch/timing `+0.0005202236961893494`; string/fret/timing `+0.00029727068353677805`; chord/voicing `+0.00022105961240881378`; critical `-4`.
-- Canary gains: pitch `+0.006233622601909045`; pitch/timing `+0.0012065076003694927`; string/fret/timing `+0.0010054230003079083`; chord/voicing `+0.0007630259428820577`; critical `-16`.
-- Full gold: critical `1810` (`-65` vs V5); pitch `0.2909090909090909`; pitch/timing `0.045933014354066985`; string/fret/timing `0.031578947368421054`; chord/voicing `0.023496890117484452`; measure coverage `1.0`; PDF fidelity `1.0`.
-- Dedicated manifest `debug/v144-rhythm-calibration/selected/v144-triple-selected-baseline.json`, commit `e7355054949e36fd14fdb55ea28bff21d39e9924`, blob `ba8dec9a1c3155816f5841a32ee52ced7998c110`.
-- This is **calibration-baseline promotion only**. Production promotion false; Rhythm complete false; near-100% false; unseen generalization not proven.
+## Fit-only diagnostics — COMPLETE / SEALED
+### Deletion/pruning ceiling
+- Run `32939218722` SUCCESS; report `debug/v144-rhythm-calibration/baseline/v144-fit-only-pruning-ceiling.json`, blob `6064ede57f4ec18a3c961f4c8b82b98aad26efdf`.
+- Fit: generated `643`, reference `594`, critical `1105`; pitch matched `138` / F1 `0.2231204527081649`; tight pitch/timing matched `28` / F1 `0.04527081649151172`; exact string/fret/timing matched `20` / F1 `0.03233629749393695`.
+- Perfect deletion-only oracle ceilings: pitch F1 `0.3770491803278689`; pitch/timing `0.09003215434083602`; string/fret/timing `0.06514657980456026`.
 
-## Additive four-signature conjunction family — CONSUMED / SEALED
-- Policy `modal/v144_rhythm_quad_conjunction_policy.py` commit `2932f6cdad713f70c4f24970274768efe6768b8a`; tests commit `d0f75fd2cd3a196be1ca22fbdf7a89a276f83da3`; CPU-gate integration `5387cce022c7cb91ac0691a3a749668fbcc9921a`; CPU gate run `32937890621` SUCCESS.
-- Search implementation `validation/v144_rhythm_calibration/search_additive_quad_prunes.py`, commit `a95b1523143b5f38ce2a4c3e7a9fa7d7abd48944`.
-- Initial workflow registration run `32938601146` failed before any job existed; actual one-shot trigger commit `8a28b3af9f72a5b109b6988991f769f88bed1a4c`.
-- **Single actual search run `32938769540` SUCCESS**; exactly 512 fit-only candidates evaluated from 577 fit unmatched generated notes.
-- Outcome: no candidate cleared fit; deterministic fallback kept accepted baseline. Validation/canary/fullCalibration were not opened. Report bot `fa272999273a5421901cdb4601f8ef33c8dd0dab`; report blob `5928e9687414c1e118653f139eda205237584ee0`.
-- Workflow archived/sealed commit `69db5acad3e313610f22617f06fbb325e5b8941d`, archived blob `abd950baf353da20ae581b5a524b54970abb9c8c`.
+### Error mechanisms
+- Run `32939297662` SUCCESS; report `debug/v144-rhythm-calibration/baseline/v144-fit-error-mechanisms.json`, blob `4d1f143142b15b3cb9270eca291dbc12d30dff80`.
+- Fit counts: generated `643`, reference `594`; pitch-content matched `138`; tight pitch/timing `28`; gross ±2-step pitch/timing `66`; exact string/fret/timing `20`.
+- Mechanisms: same-onset wrong-pitch substitution slots `184`; displaced same-measure pitch matches `110`; gross-only timing recovery `38`; correct pitch/timing but wrong string/fret `8`; gross unmatched generated/reference `577/528`; pitch FP/FN `505/456`.
+- Diagnostic oracle: perfect pitch-FP deletion ceiling `0.3770491803278688`; count-preserving pitch-correction ceiling `0.9603880355699272`.
+- Conclusion is shape-only: another deletion family is much less promising than correction. These oracle values are not runtime rules and are not generalization evidence.
 
-## Fit-only deletion/pruning ceiling diagnostic — COMPLETE / SEALED
-- Implementation `validation/v144_rhythm_calibration/analyze_fit_only_pruning_ceiling.py`, commit `6bd4025aa585374fd5235844212dae90299b966d`; deterministic tests commit `4973e2768dcb15b06082bd12eb8ae71ad63366c3`.
-- CPU-only workflow trigger commit `a690ff83cb706a5fc73c1119f53f854b93b4ca96`; run **`32939218722` SUCCESS**.
-- Persisted report `debug/v144-rhythm-calibration/baseline/v144-fit-only-pruning-ceiling.json`; bot commit `d1a10cc98dbf9ffe859720f55180c8e7d307ee6f`; report blob `6064ede57f4ec18a3c961f4c8b82b98aad26efdf`.
-- Diagnostic performed no candidate construction/ranking/selection; validation/canary were not opened; full-gold did not choose the mechanism; thresholds were unchanged; runtime reference input false; Modal/GPU false.
-- Fit identity: generated `643`, reference `594`, critical mismatches `1105`; pitch-content matched `138` / F1 `0.2231204527081649`; tight pitch/timing matched `28` / F1 `0.04527081649151172`; exact string/fret/timing matched `20` / F1 `0.03233629749393695`.
-- **Perfect deletion-only oracle ceilings:** pitch-content F1 `0.3770491803278689`; pitch/timing F1 `0.09003215434083602`; string/fret/timing F1 `0.06514657980456026`. These ceilings assume every generated false positive can be deleted while every current match is perfectly retained.
-- Structural conclusion: deletion-only correction cannot recover missing reference notes, repitch notes, move onsets, or correct string/fret, and cannot approach 0.99 even on fit.
-- Diagnostic workflow archived/sealed commit `507bf1af318183af104903ffdb0b5ab68abf8bd1`; archived workflow blob `e3fdad7d8d889a57aa2cb085e870d073f70bf96d`.
-
-## Fit-only error-mechanism diagnostic — COMPLETE / SEALED
-- Implementation `validation/v144_rhythm_calibration/analyze_fit_error_mechanisms.py`, commit `4dc645f7443fea9c5bb270419eb74488a121b6f6`; deterministic tests `modal/tests/test_v144_rhythm_fit_error_mechanisms.py`, commit `2cc3ef0c90fa34bc306a2ccf9fdbeaed93ea4991`.
-- CPU-only diagnostic trigger commit `251110e0c317ce4df69922f37bff36925a72f296`; run **`32939297662` SUCCESS**.
-- Persisted report `debug/v144-rhythm-calibration/baseline/v144-fit-error-mechanisms.json`; bot commit `fea13223dadab7f8ef9932ad7feb6b803c9e9d0e`; report blob `4d1f143142b15b3cb9270eca291dbc12d30dff80`.
-- Diagnostic performed **no candidate construction, ranking, selection, promotion, or threshold adjustment**; validation/canary labels were not used; runtime reference input false; Modal GPU false.
-- Fit counts: generated `643`, reference `594`; pitch-content matched `138`; tight ±0.5-step pitch/timing matched `28`; gross ±2-step pitch/timing matched `66`; exact string/fret/timing matched `20`.
-- Fit mechanisms: same-onset wrong-pitch substitution slots `184`; same-measure pitch matches displaced from exact onset `110`; gross-only timing recovery `38`; same-measure pitch matches still outside gross tolerance/competing `72`; correct pitch/timing but wrong string/fret `8`; gross unmatched generated/reference `577/528`; pitch-content FP/FN `505/456`.
-- **Structural conclusion from fit-only oracle ceilings:** perfect pitch-FP deletion while holding matches fixed can reach only pitch F1 `0.3770491803278688`; perfect gross-unmatched deletion reaches gross timing F1 `0.2`; count-preserving pitch correction has a diagnostic pitch-content ceiling `0.9603880355699272`. This does not authorize an oracle runtime rule, but it does show that another deletion/pruning family is structurally much less promising than a materially new correction family.
-- Diagnostic workflow archived/sealed commit `f391a52870c8e6eb8da5a476f4592a104dd15aae`; archived workflow blob `b900a3c2f8f408b20d560a41ebc69e4b2f938e1d`.
+## New contextual same-string pitch-shift family — PRE-REGISTERED, NOT SEARCHED
+- Canonical policy: `modal/v144_rhythm_pitch_shift_policy.py`.
+- Initial pre-registration commit `c03b94dbfa7169255893062a963b4a0aa56a30d3`; linked-technique safety hardening commit `fb2e07b3288e8e1a082281c48856ca004f892586`.
+- Duplicate temporary policy was removed in commit `883e5ed218c0ad245f364a4294428fd8926e14b3`; only the canonical module remains.
+- Rule shape is **source `pitchClass::<n>` + one reference-free structural context signature + fixed non-zero semitone shift**, bounded to ±12 semitones.
+- Construction-time fit evidence uses deterministic same-onset substitution pairing: exact MIDI matches are removed first, then remaining generated/reference notes at the same onset are paired by smallest absolute MIDI distance with deterministic tie-breaking.
+- Ranking is fit-only by correction precision/support with default minimum correction support `3` and maximum candidates `256`; validation/canary are not inputs to construction/ranking.
+- Runtime application receives only generated events + locked signatures + semitone shift; it never receives the professional reference.
+- Runtime transform is count-preserving and timing-preserving: same measure, step, duration, string, event order/count; shifts `midi` and `fret` together on the same string and skips out-of-range frets.
+- Bend/legato/slide/hammer/pull linked or labeled events are ineligible so target metadata cannot become inconsistent.
+- Tests: `modal/tests/test_v144_rhythm_pitch_shift_policy.py`; original concurrent test commit `9cb2d339702cebc5953b480b1c582eb0675ad012`; explicit linked-technique regression commit `bbb0b14af9c1b890319d26580d2e7bec8a19fd76`.
+- CPU gate integration commit `18ad356ce8ca94e18d43f088ad9b7f0ebd560f18`.
+- Safety-hardened CPU gate run `32939793740` SUCCESS.
+- Final linked-technique regression CPU gate run `32939947264` is currently in progress at this checkpoint.
+- **No pitch-shift one-shot search workflow/report exists yet. No correction candidate has been locked, validated, canaried, or promoted.**
 
 ## Immediate next actions
-1. Never replay/reselect from consumed single/pair/triple/quad families or the completed diagnostics, and do not alter fixed selector thresholds after seeing outcomes.
-2. Pre-register a **materially new reference-free pitch-correction family** from accepted-baseline fit evidence only. The family may learn deterministic context-to-correction rules from fit labels, but runtime application must use only generated-event/context fields and must not consult the professional reference.
-3. Prefer pitch/onset correction over more deletion: fit contains `184` same-onset wrong-pitch substitution slots and `110` displaced same-measure pitch matches, versus only `8` correct-pitch/timing notes with wrong string/fret.
-4. Inspect which reference-free runtime fields already exist in the accepted event/analyzer stream, then define a small deterministic correction-policy search space. Any pitch change must keep MIDI/string/fret internally consistent and preserve the render contract.
-5. Add deterministic policy tests and pass a CPU-only safety gate before any one-shot correction search. Preserve all 113 accepted-baseline generated measures. No correction candidate has been searched or selected yet.
-6. Preserve one-winner fit lock and fixed validation → canary → full-gold → independent PDF-event invariant sequence; fallback remains the accepted 1144-event baseline.
-7. Do not promote Rhythm, start Bass/Lead, or claim near-100% quality. **No Modal/L4/GPU without fresh explicit user authorization.**
+1. Confirm CPU gate run `32939947264` passes. If it fails, fix only the policy/test defect and re-gate; do not search.
+2. After gate success, checkpoint again before creating any search implementation.
+3. Then implement a one-shot **fit-only contextual pitch-shift search** from the unchanged accepted 1144-event baseline. Construction/ranking may use fit labels only.
+4. Require event count `1144` and exact 113/113 generated-measure preservation for every candidate considered for fit lock.
+5. Lock exactly one fit winner under the existing fixed selector; then gate only that winner through validation → canary → full-gold → independent PDF-event fidelity. No alternate after failure.
+6. Seal the search workflow immediately after its single actual execution and never retune/replay this family from its result.
+7. Do not promote Rhythm, start Bass/Lead, claim near-100% quality, or use Modal/L4/GPU without fresh explicit user authorization.
