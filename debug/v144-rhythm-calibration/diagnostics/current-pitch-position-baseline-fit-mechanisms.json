@@ -1,0 +1,167 @@
+{
+  "baseline": {
+    "baselineGeneratedMeasureSetPreserved": true,
+    "eventCount": 1144,
+    "eventSha256": "5b36270aaeafa73b2e25722e2576a40424ce5951dcfd2b5d769746bd9eb07e0d",
+    "generatedMeasureCount": 113,
+    "name": "pitch-position-shift-54a6e8d3aa91c422",
+    "reconstructionChain": [
+      {
+        "outputEventSha256": "68b8cdf14ed02265c5e3c204b2af51b0aae4849462e7b3e4243192d8855cc3c3",
+        "signatures": [
+          "register::high",
+          "section16::1",
+          "stepParity::0"
+        ],
+        "type": "triple-conjunction-prune"
+      },
+      {
+        "outputEventSha256": "b6e1f8a8be150943d7224c74f9193b1b4050454620063846f6f5f5c773d4cbf6",
+        "semitoneShift": -2,
+        "signatures": [
+          "pitchClass::4",
+          "stepQuarter::0"
+        ],
+        "type": "same-string-contextual-pitch-shift"
+      },
+      {
+        "outputEventSha256": "5b36270aaeafa73b2e25722e2576a40424ce5951dcfd2b5d769746bd9eb07e0d",
+        "semitoneShift": -2,
+        "signatures": [
+          "pitchClass::11",
+          "stepParity::0"
+        ],
+        "stringShift": 1,
+        "type": "contextual-joint-pitch-adjacent-string-position-shift"
+      }
+    ]
+  },
+  "canaryLabelsUsedForDiagnostic": false,
+  "candidateConstructionPerformed": false,
+  "candidateRankingPerformed": false,
+  "candidateSelectionPerformed": false,
+  "classification": "v144-rhythm-current-baseline-fit-error-mechanisms",
+  "constructionBoundary": {
+    "canaryLabelsMayInformNextFamilyShape": false,
+    "consumedFamiliesMayBeReplayedOrRetuned": false,
+    "currentBaselineFitLabelsMayInformNextFamilyShape": true,
+    "fixedSelectorThresholdsMayBeChangedFromThisDiagnostic": false,
+    "nextFamilyMustBeMateriallyNewAndPreRegistered": true,
+    "runtimeReferenceInputAllowed": false,
+    "validationLabelsMayInformNextFamilyShape": false
+  },
+  "evaluationRole": "gold-calibration-fit-only-current-baseline-mechanism-diagnostic",
+  "fit": {
+    "exactStringFretTimingMatchedNotes": 29,
+    "generatedNoteCount": 643,
+    "grossPitchTimingMatchedNotes": 81,
+    "pitchContentMatchedNotes": 161,
+    "referenceNoteCount": 594,
+    "score": {
+      "chordPitchSet": {
+        "f1": 0.03976608187134503,
+        "falseNegative": 353,
+        "falsePositive": 468,
+        "generated": 485,
+        "matched": 17,
+        "precision": 0.03505154639175258,
+        "recall": 0.04594594594594595,
+        "reference": 370
+      },
+      "criticalMismatchCount": 1075,
+      "exactChordVoicing": {
+        "f1": 0.03976608187134503,
+        "falseNegative": 353,
+        "falsePositive": 468,
+        "generated": 485,
+        "matched": 17,
+        "precision": 0.03505154639175258,
+        "recall": 0.04594594594594595,
+        "reference": 370
+      },
+      "grossMatchedPitchTimingNotes": 81,
+      "noteCounts": {
+        "generated": 643,
+        "reference": 594
+      },
+      "pitchContent": {
+        "f1": 0.26030719482619236,
+        "falseNegative": 433,
+        "falsePositive": 482,
+        "generated": 643,
+        "matched": 161,
+        "precision": 0.25038880248833595,
+        "recall": 0.27104377104377103,
+        "reference": 594
+      },
+      "pitchTiming": {
+        "f1": 0.06628940986257073,
+        "falseNegative": 553,
+        "falsePositive": 602,
+        "generated": 643,
+        "matched": 41,
+        "precision": 0.06376360808709176,
+        "recall": 0.06902356902356903,
+        "reference": 594
+      },
+      "stringFretTiming": {
+        "f1": 0.04688763136620856,
+        "falseNegative": 565,
+        "falsePositive": 614,
+        "generated": 643,
+        "matched": 29,
+        "precision": 0.04510108864696734,
+        "recall": 0.04882154882154882,
+        "reference": 594
+      }
+    },
+    "tightPitchTimingMatchedNotes": 41
+  },
+  "fitOnlyOracles": {
+    "interpretation": "Diagnostic ceilings only. They use current-baseline fit labels and may not be implemented as runtime rules, used to change fixed selector thresholds, or represented as generalization evidence.",
+    "perfectCountPreservingPitchCorrection": {
+      "pitchContentF1Ceiling": 0.9603880355699272
+    },
+    "perfectPitchFalsePositiveDeletion": {
+      "pitchContentF1Ceiling": 0.42649006622516555
+    },
+    "perfectStringFretRemapOfCurrentTightPitchMatches": {
+      "matchedNotesHeldConstant": 41,
+      "stringFretTimingF1Ceiling": 0.06628940986257073
+    },
+    "perfectTimingAlignmentOfExistingPitchContentMatches": {
+      "matchedNotesHeldConstant": 161,
+      "pitchTimingF1Ceiling": 0.2603071948261924
+    }
+  },
+  "mayClaimUnseenGeneralization": false,
+  "mechanisms": {
+    "correctPitchTimingButWrongStringFret": 12,
+    "exactOnsetExactPitchNotes": 41,
+    "grossUnmatchedGeneratedNotes": 562,
+    "grossUnmatchedReferenceNotes": 513,
+    "pitchContentFalseNegativeNotes": 433,
+    "pitchContentFalsePositiveNotes": 482,
+    "sameMeasurePitchMatchesDisplacedFromExactOnset": 120,
+    "sameMeasurePitchMatchesStillOutsideGrossTwoStepToleranceOrCompeting": 80,
+    "sameOnsetExtraGeneratedSlotsAfterSubstitution": 431,
+    "sameOnsetMissingReferenceSlotsAfterSubstitution": 382,
+    "sameOnsetWrongPitchSubstitutionSlots": 171,
+    "samePitchTimingMatchesRecoveredOnlyByGrossTwoStepTolerance": 40
+  },
+  "nextFamilyShapeSignals": {
+    "diagnosticOnly": true,
+    "positionOpportunityWithinTightPitchMatches": 12,
+    "sameOnsetPitchSubstitutionOpportunity": 171,
+    "timingOpportunityExistingPitchMatches": 120
+  },
+  "safety": {
+    "mainModified": false,
+    "modalGpuInvoked": false,
+    "productionModified": false,
+    "runtimeReferenceInputUsed": false,
+    "v5Modified": false
+  },
+  "schemaVersion": 14415,
+  "validationLabelsUsedForDiagnostic": false
+}
