@@ -2,7 +2,7 @@
 
 Updated: 2026-08-26 America/Montreal
 Branch: `v143-contextual-prune-lobo`
-Active phase: **V144 Rhythm gold calibration. Families #1–#12 are consumed/sealed. Accepted baseline remains family #10. Family #13 exact-three generated-only atomic whole-onset prune has CPU-proven policy/tests AND CPU-proven preregistered FIT-only search/tests. No family #13 candidate search has executed yet. Safe next action is to create a tightly locked CPU-only one-shot, checkpoint its exact workflow blob before arming, then create one trigger-only commit.**
+Active phase: **V144 Rhythm gold calibration. Families #1–#12 are consumed/sealed. Accepted baseline remains family #10. Family #13 exact-three generated-only atomic whole-onset prune has CPU-proven policy/tests and CPU-proven preregistered FIT-only search/tests. Its tightly locked CPU-only one-shot workflow is now created but remains inert. No family #13 candidate search has executed yet. Required pre-arm checkpoint is saved with the exact workflow blob. Safe next action is exactly one trigger-only commit, then freeze/poll that exact trigger SHA with no rerun/retrigger/retry.**
 
 ## Permanent safety / fixed protocol
 - Work only on `v143-contextual-prune-lobo`; never modify/merge `main` or Production.
@@ -62,32 +62,42 @@ Active phase: **V144 Rhythm gold calibration. Families #1–#12 are consumed/sea
 - This broad gate only compiled/imported/tested helpers; it did **not** run family #13 search `main`, open candidate outputs, or inspect calibration candidate labels.
 - **Search CPU prerequisite is satisfied. Do not rerun/retrigger this proof.**
 
-## ONE-SHOT PREREGISTRATION REQUIREMENTS — NEXT
-- One-shot must be CPU-only and path-triggered by a new family #13 trigger file. It must run only if exact trigger commit message matches the preregistered message and trigger commit changes exactly one path.
-- It must lock: immutable V5/result/render/PDF identities; gold SHA; family #10 accepted manifest/blob/event SHA/count/measures; family #13 policy/test/search/test blobs; broad CPU workflow blob `94b546cf...`; search CPU run `33007127855` / job `98303667684`; reconstruction/scoring/staged-selector/measure/PDF dependencies; runtime-reference false; GPU false; replay false; support 3/cap 256; removed events per changed onset 3.
+### Family #13 one-shot workflow — CREATED / PRE-ARM / INERT
+- Workflow path: `.github/workflows/v144-atomic-generated-only-triad-onset-prune-search.yml`.
+- Creation commit: `318fc7bfcaee75b10d9ae70eb64a50175ea1a119`.
+- Exact workflow blob: **`b319441e8225513c510d6f46c19ccce9cd055662`**.
+- Workflow is CPU-only, path-triggered only by `debug/v144-rhythm-calibration/candidates/.v144-atomic-generated-only-triad-onset-prune-trigger`, and requires exact trigger commit message `v144 execute atomic generated-only triad onset prune one-shot` plus exactly one changed trigger path.
+- It locks immutable V5/result/render/PDF/gold identities, accepted family #10 manifest/event/count/measure identity, family #13 policy/test/search/test blobs, broad CPU workflow blob/run/job, reconstruction/scoring/staged-selector/measure/freeze/PDF/render dependencies, support 3, cap 256, atomic 3-event deletion, runtime-reference false, GPU false, replay false.
+- Verified current dependency blobs used by the one-shot include context split `2da58508f2132660ad317ee63d5cb043d58285f0`, config `9b93205cb47bc7718685b9d41b263778107801ce`, split analysis `1569bf01554be345ca9199a85f700db7743501a5`, signature prune scoring `699dd1a16725ecf11797e42829aa409ee5909000`, selected-candidate scoring `1ca2b8550d6c08e793f26b3aa91b99fb44fa7ddb`, canonical `088d44827fb23e20d9aeeb4944a672989af5846c`, scorer `cc4bf61a99f22bf87a6c255e5a81220fbc82223b`, freeze `710bb6a3b15b99d3d11ceb4948d7c7175d208afc`, PDF fidelity `5e1564216873046237fb545078a04a6b18f72b27`, render contract `ccbb93c48982798cc474309fd981f6ca02d5c8d4`.
+- Historical filename assumption was corrected safely: current dependency is `validation/rhythm_holdout/freeze_rhythm_analysis.py` (not nonexistent `analyze_rhythm_freeze_contract.py`); PDF fidelity is `validation/rhythm_holdout/verify_pdf_event_fidelity.py`; render contract is `lib/v143RenderContract.js`.
+- **PRE-ARM STATE:** trigger file does not exist yet; family #13 search has not executed; no candidate labels/outcomes inspected; accepted family #10 score remains unchanged.
+
+## ONE-SHOT EXECUTION REQUIREMENTS — ARMED NEXT, NOT YET TRIGGERED
 - Fixed trigger path: `debug/v144-rhythm-calibration/candidates/.v144-atomic-generated-only-triad-onset-prune-trigger`.
 - Fixed report path: `debug/v144-rhythm-calibration/candidates/atomic-generated-only-triad-onset-prune-search.json`.
 - Fixed exact trigger commit message: `v144 execute atomic generated-only triad onset prune one-shot`.
-- Create workflow first. **Before trigger creation, save a pre-arm checkpoint containing exact one-shot workflow blob.**
-- Then create exactly one trigger-only commit. Freeze branch and poll only that exact trigger SHA. No rerun/retrigger/retry.
+- Trigger payload must self-record workflow blob `b319441e8225513c510d6f46c19ccce9cd055662`, policy/test/search/test blobs, CPU workflow blob `94b546cf0b3a2ab2bc3a15d0a292a09c2bb6fb01`, search CPU run `33007127855` / job `98303667684`, support 3/cap 256, exact-three deletion, runtime-reference false, GPU false, replay false.
+- Create exactly one trigger-only commit. Freeze branch and poll only that exact trigger SHA. No rerun/retrigger/retry.
 - During one-shot: FIT ranks all preregistered candidates and locks at most one; no FIT winner => family #10 fallback+stop; validation fail => fallback+stop; canary fail => fallback+stop; never alternate. Full gold only after all split gates pass.
 - Promotion requires no musical regression, critical delta <=0, coverage 1.0, exact 113 measures, exact atomic-three invariants, independent PDF event fidelity 1.0.
 - Immediately after one-shot, persist only report, then delete workflow + trigger regardless outcome and mark family #13 consumed.
 
 ## EXPLICIT NEXT STEPS — CONTINUATION CONTRACT
-1. Re-read checkpoint; verify branch, family #12 report blob, and deleted family #12 execution surfaces.
-2. Never rerun families #1–#12; never tune family #13 from consumed-family outcomes.
-3. Create tightly locked family #13 CPU-only one-shot workflow using exact identities above. Do not trigger it yet.
-4. Fetch exact one-shot workflow blob and save a **pre-arm checkpoint** with it.
-5. Create exactly one trigger-only commit at the fixed trigger path with exact fixed commit message. Trigger payload must self-record workflow/search/policy/test/CPU identities, support 3/cap 256, exact-three deletion, runtime-reference false, GPU false, replay false.
-6. Freeze branch and poll only exact trigger SHA. Never rerun/retrigger/retry.
-7. After completion persist only report, delete/seal workflow + trigger, and checkpoint run/job/report/deletion identities and accepted baseline result.
-8. If family #13 changes accepted baseline, current residual `b9794a7b...` becomes historical immediately; create a new aggregate accepted-baseline FIT residual before any successor.
-9. Never modify main/Production/frontend/Bass/Lead or use Modal/L4/GPU without fresh explicit authorization.
+1. Never rerun families #1–#12 or the established family #13 CPU proofs; never tune family #13 from consumed-family outcomes.
+2. Required one-shot creation and exact-blob pre-arm checkpoint are complete: workflow `b319441e8225513c510d6f46c19ccce9cd055662`.
+3. Create exactly one trigger-only commit at the fixed trigger path with exact fixed commit message and immutable self-recording payload.
+4. Freeze branch and poll only the exact trigger SHA. Never rerun/retrigger/retry.
+5. After completion inspect only the persisted family #13 report, then delete/seal workflow + trigger and checkpoint run/job/report/deletion identities and accepted baseline result.
+6. Report scorer progress in percentages. Current headline remains **35.4% Pitch Content F1** until and unless family #13 passes every gate and is accepted.
+7. If family #13 changes accepted baseline, current residual `b9794a7b...` becomes historical immediately; create a new aggregate accepted-baseline FIT residual before any successor.
+8. Never modify main/Production/frontend/Bass/Lead or use Modal/L4/GPU without fresh explicit authorization.
 
 ## Current stop point
 - Accepted baseline: family #10 / `4e6f9f...`.
+- Motivational scorer view: **Pitch Content 35.4%**, Pitch+timing 6.7%, String/fret+timing 5.5%, Chord/voicing 5.8%, Measure coverage 100%, PDF event fidelity 100%.
 - Families #1–#12 consumed/sealed.
 - Family #13 policy CPU SUCCESS and search CPU SUCCESS (`33007127855` / `98303667684`).
+- Family #13 one-shot workflow exists inert: commit `318fc7bfcaee75b10d9ae70eb64a50175ea1a119`, blob `b319441e8225513c510d6f46c19ccce9cd055662`.
+- Required pre-arm checkpoint is saved before trigger creation.
 - Family #13 search has **not executed**; no candidate outcome inspected.
-- Safe next action: create locked one-shot workflow, checkpoint its exact blob, then one trigger-only commit.
+- Safe next action: exactly one trigger-only commit, then freeze/poll that exact trigger SHA with no rerun/retrigger/retry.
