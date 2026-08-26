@@ -1,0 +1,400 @@
+name: V144 Rhythm Atomic Singleton Onset Prune One-Shot
+
+on:
+  push:
+    branches:
+      - v143-contextual-prune-lobo
+    paths:
+      - debug/v144-rhythm-calibration/candidates/.v144-atomic-singleton-onset-prune-trigger
+
+permissions:
+  contents: write
+
+concurrency:
+  group: v144-rhythm-atomic-singleton-onset-prune-one-shot
+  cancel-in-progress: false
+
+jobs:
+  search:
+    if: "${{ github.event.head_commit.message == 'v144 execute atomic singleton onset prune one-shot' }}"
+    name: Fit-lock atomic singleton onset prune on CPU
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+
+    steps:
+      - name: Check out exact trigger revision
+        uses: actions/checkout@v4
+        with:
+          ref: ${{ github.sha }}
+          fetch-depth: 2
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+
+      - name: Verify exact trigger and immutable pre-registered implementation
+        shell: bash
+        run: |
+          set -euo pipefail
+          trigger='debug/v144-rhythm-calibration/candidates/.v144-atomic-singleton-onset-prune-trigger'
+          report='debug/v144-rhythm-calibration/candidates/atomic-singleton-onset-prune-search.json'
+          test "$(git log -1 --format=%s)" = 'v144 execute atomic singleton onset prune one-shot'
+          changed="$(git diff-tree --no-commit-id --name-only -r HEAD)"
+          test "${changed}" = "${trigger}"
+          test ! -e "${report}"
+
+          test "$(git hash-object analyzer/v143_reference_free_rhythm_pipeline.py)" = "7f72f8ed9b14af8bc93e95544195204d99c6bec1"
+          test "$(git hash-object debug/v143-contextual-prune/v5-professional-pdf/final-professional-holdout-result.json)" = "511fd244f231b66d08306f97b5a47ed41f5415c7"
+          test "$(sha256sum debug/v143-contextual-prune/v5-professional-pdf/v5-render-stream.json | awk '{print $1}')" = "7c3399d3f5e05ecc8ac98d71d0e5300e1e78f63ae96c1642fe4a19debb4061b2"
+          test "$(sha256sum debug/v143-contextual-prune/v5-professional-pdf/v5-rhythm-shadow.pdf | awk '{print $1}')" = "f4c1238e868cadfb90b8a359b1555b0b90e7740b9ebaa276aa394c8991f37ce5"
+          test "$(sha256sum debug/v144-rhythm-calibration/reference/professional-rhythm-gold-reference.json | awk '{print $1}')" = "18fd868ae960dfcdd1ffb0110f1a9dfd8acc2ffeb46e247d1116cd54291526ac"
+
+          test "$(git hash-object debug/v144-rhythm-calibration/selected/v144-singleton-onset-replacement-selected-baseline.json)" = "acd12ab68ad16b8faabf38ddc9e1cc0c1e7c4b68"
+          test "$(git hash-object validation/v144_rhythm_calibration/analyze_singleton_baseline_fit_residuals.py)" = "27ac8699279db8fc0208d067479ad3751da1a630"
+          test "$(git hash-object validation/v144_rhythm_calibration/search_atomic_singleton_onset_prunes.py)" = "2f89bf3f310d60cb609a9556130d9f713942216e"
+          test "$(git hash-object modal/v144_rhythm_singleton_onset_prune_policy.py)" = "1a9df07e29e20784d2b9b6111d22ae10e638a84e"
+          test "$(git hash-object modal/tests/test_v144_rhythm_singleton_onset_prune_policy.py)" = "bffb1295c580e7d30d1068791b34b89baff28ae5"
+          test "$(git hash-object modal/tests/test_v144_rhythm_singleton_onset_prune_search.py)" = "f1ecf0945519a5e4e8ef137ee5ef8f4b75cd620a"
+          test "$(git hash-object .github/workflows/v144-rhythm-cpu-gate.yml)" = "54dd20748da1b9bf175e6bf46d3a85140bfe3c65"
+
+          test "$(git hash-object validation/v144_rhythm_calibration/search_atomic_singleton_onset_replacements.py)" = "70880d26418d907cc702233af37bcc4b643e3a57"
+          test "$(git hash-object modal/v144_rhythm_singleton_onset_replacement_policy.py)" = "1e05e66a3523f98944370837a59e5d6e7293f9ac"
+          test "$(git hash-object modal/v144_rhythm_pitch_position_shift_policy.py)" = "f69755b61bdcdf3a669847ce7e425289b4b0927f"
+          test "$(git hash-object modal/v144_rhythm_pitch_shift_policy.py)" = "d9998c59acddba070069668d62bcb1c3cdaf2b05"
+          test "$(git hash-object modal/v144_rhythm_triple_conjunction_policy.py)" = "ef9768a127472d7ce0746fdf21164d33e5117ea4"
+          test "$(git hash-object modal/v144_rhythm_staged_selector.py)" = "d176a9a69366e192e6fa75bc1039661e977f0bfa"
+          test "$(git hash-object modal/v144_rhythm_measure_set_guard.py)" = "4a1364204dd1e720c09d835ec3995c165047de98"
+          test "$(git hash-object modal/v144_rhythm_context_split_policy.py)" = "2da58508f2132660ad317ee63d5cb043d58285f0"
+          test "$(git hash-object modal/configs/v144_rhythm_context_split_config.json)" = "9b93205cb47bc7718685b9d41b263778107801ce"
+          test "$(git hash-object validation/v144_rhythm_calibration/analyze_split_baseline.py)" = "1569bf01554be345ca9199a85f700db7743501a5"
+          test "$(git hash-object validation/v144_rhythm_calibration/search_single_signature_prunes.py)" = "699dd1a16725ecf11797e42829aa409ee5909000"
+          test "$(git hash-object validation/v144_rhythm_calibration/score_selected_conjunction_candidate.py)" = "1ca2b8550d6c08e793f26b3aa91b99fb44fa7ddb"
+          test "$(git hash-object validation/rhythm_holdout/canonical.py)" = "088d44827fb23e20d9aeeb4944a672989af5846c"
+          test "$(git hash-object validation/rhythm_holdout/score_rhythm_holdout.py)" = "cc4bf61a99f22bf87a6c255e5a81220fbc82223b"
+          test "$(git hash-object validation/rhythm_holdout/freeze_rhythm_analysis.py)" = "710bb6a3b15b99d3d11ceb4948d7c7175d208afc"
+          test "$(git hash-object validation/rhythm_holdout/verify_pdf_event_fidelity.py)" = "5e1564216873046237fb545078a04a6b18f72b27"
+          test "$(git hash-object lib/v143RenderContract.js)" = "ccbb93c48982798cc474309fd981f6ca02d5c8d4"
+
+          python - <<'PY'
+          import json
+          import subprocess
+          from pathlib import Path
+          trigger = json.loads(Path('debug/v144-rhythm-calibration/candidates/.v144-atomic-singleton-onset-prune-trigger').read_text(encoding='utf-8'))
+          assert trigger['classification'] == 'v144-rhythm-atomic-singleton-onset-prune-one-shot-trigger'
+          assert trigger['baselineName'] == 'singleton-onset-replace-be9e9aa7a734e3cd'
+          assert trigger['baselineEventSha256'] == '4e6f9f247134f79f30a5448515c52a6ca1012c1f1314c3458b448582999e3881'
+          assert trigger['baselineEventCount'] == 1144
+          assert trigger['baselineGeneratedMeasureCount'] == 113
+          assert trigger['policyBlob'] == '1a9df07e29e20784d2b9b6111d22ae10e638a84e'
+          assert trigger['searchBlob'] == '2f89bf3f310d60cb609a9556130d9f713942216e'
+          assert trigger['policyTestBlob'] == 'bffb1295c580e7d30d1068791b34b89baff28ae5'
+          assert trigger['searchTestBlob'] == 'f1ecf0945519a5e4e8ef137ee5ef8f4b75cd620a'
+          assert trigger['cpuWorkflowBlob'] == '54dd20748da1b9bf175e6bf46d3a85140bfe3c65'
+          assert trigger['searchCpuRunId'] == 32997920717
+          assert trigger['searchCpuJobId'] == 98271890149
+          workflow_blob = subprocess.check_output(['git', 'hash-object', '.github/workflows/v144-atomic-singleton-onset-prune-search.yml'], text=True).strip()
+          assert trigger['oneShotWorkflowBlob'] == workflow_blob
+          assert trigger['minimumFalsePositiveSupport'] == 3
+          assert trigger['maximumCandidates'] == 256
+          assert trigger['candidateConstructionFitOnly'] is True
+          assert trigger['validationMayConstructOrRank'] is False
+          assert trigger['canaryMayConstructOrRank'] is False
+          assert trigger['eventCountPreservationRequired'] is False
+          assert trigger['generatedMeasureSetPreservationRequired'] is True
+          assert trigger['runtimeReferenceAllowed'] is False
+          assert trigger['modalGpuAllowed'] is False
+          assert trigger['replayAllowed'] is False
+          PY
+
+          python -m py_compile validation/v144_rhythm_calibration/search_atomic_singleton_onset_prunes.py
+          python modal/tests/test_v144_rhythm_staged_selector.py -v
+          python modal/tests/test_v144_rhythm_measure_set_guard.py -v
+          python modal/tests/test_v144_rhythm_singleton_onset_prune_policy.py -v
+          python modal/tests/test_v144_rhythm_singleton_onset_prune_search.py -v
+          python modal/tests/test_v144_rhythm_singleton_selected_baseline_reconstruction.py -v
+
+      - name: Run fixed family eleven search and staged gates once
+        shell: bash
+        run: |
+          set -euo pipefail
+          mkdir -p .v144/singleton-onset-prune
+          python validation/v144_rhythm_calibration/search_atomic_singleton_onset_prunes.py \
+            debug/v143-contextual-prune/v5-professional-pdf/v5-render-stream.json \
+            debug/v144-rhythm-calibration/reference/professional-rhythm-gold-reference.json \
+            debug/v144-rhythm-calibration/selected/v144-singleton-onset-replacement-selected-baseline.json \
+            modal/configs/v144_rhythm_context_split_config.json \
+            debug/v144-rhythm-calibration/candidates/atomic-singleton-onset-prune-search.json \
+            .v144/singleton-onset-prune/locked-events.json \
+            --minimum-false-positive-support 3 \
+            --maximum-candidates 256 \
+            > .v144/singleton-onset-prune/search.log
+
+      - name: Verify construction isolation and staged-stop semantics
+        shell: bash
+        run: |
+          set -euo pipefail
+          python - <<'PY'
+          import json
+          from pathlib import Path
+          report = json.loads(Path('debug/v144-rhythm-calibration/candidates/atomic-singleton-onset-prune-search.json').read_text(encoding='utf-8'))
+          assert report['schemaVersion'] == 14423
+          assert report['classification'] == 'v144-rhythm-fit-only-atomic-singleton-onset-prune-search'
+          assert report['evaluationRole'] == 'accepted-singleton-baseline-atomic-generated-only-singleton-onset-prune-gold-calibration'
+          assert report['mayClaimUnseenGeneralization'] is False
+          c = report['candidateConstruction']
+          assert c['sourceBaselineName'] == 'singleton-onset-replace-be9e9aa7a734e3cd'
+          assert c['sourceBaselineEventCount'] == 1144
+          assert c['sourceBaselineEventSha256'] == '4e6f9f247134f79f30a5448515c52a6ca1012c1f1314c3458b448582999e3881'
+          assert c['sourceLabels'] == 'accepted-baseline-fit-only-generated-only-exact-singleton-onsets'
+          assert c['candidateRuleShape'] == 'atomic-exact-singleton-generated-only-onset-prune'
+          assert c['minimumFalsePositiveSupport'] == 3
+          assert c['maximumCandidates'] == 256
+          assert 0 <= c['rankedRuleCount'] <= 256
+          assert 0 <= c['evaluatedCandidateCount'] <= c['rankedRuleCount']
+          assert c['fitGeneratedNoteCount'] == 643
+          assert c['fitReferenceNoteCount'] == 594
+          assert c['validationLabelsUsedForCandidateConstructionOrRanking'] is False
+          assert c['canaryLabelsUsedForCandidateConstructionOrRanking'] is False
+          assert c['historicalConsumedFamilyResultsUsedForConstructionOrRanking'] is False
+          assert c['measureSetGuardUsesProfessionalReference'] is False
+          assert c['eventCountPreservationRequired'] is False
+          assert c['generatedMeasureSetPreservationRequired'] is True
+          assert c['exactlyOneGeneratedNoteOnsetRequired'] is True
+          assert c['zeroReferenceNoteOnsetRequiredForConstruction'] is True
+          assert c['atomicWholeOnsetDeletionRequired'] is True
+          assert c['linkedOrReferencedEventsEligible'] is False
+          assert c['lastEventInMeasureEligible'] is False
+          assert c['survivorMutationAllowed'] is False
+
+          assert report['baseline']['eventCount'] == 1144
+          assert report['baseline']['eventSha256'] == '4e6f9f247134f79f30a5448515c52a6ca1012c1f1314c3458b448582999e3881'
+          assert report['baseline']['generatedMeasureCount'] == 113
+          assert report['fitLock']['fitOnlyRanking'] is True
+          assert report['fitLock']['validationReadDuringLock'] is False
+          assert report['fitLock']['canaryReadDuringLock'] is False
+          assert report['fitLock']['baselineGeneratedMeasureSetPreservationRequired'] is True
+          assert report['alternateAfterGateFailureAllowed'] is False
+
+          locked = report['locked']
+          assert 0 < locked['eventCount'] <= 1144
+          assert locked['measureSet']['baselineGeneratedMeasureCount'] == 113
+          assert locked['measureSet']['candidateGeneratedMeasureCount'] == 113
+          assert locked['measureSet']['missingBaselineGeneratedMeasures'] == []
+          assert locked['measureSet']['extraCandidateGeneratedMeasures'] == []
+          assert locked['measureSet']['baselineGeneratedMeasureSetPreserved'] is True
+          assert locked['measureSet']['professionalReferenceUsed'] is False
+          if locked['name'] == 'accepted-v144-baseline':
+              assert locked['eventCount'] == 1144
+              assert locked['eventSha256'] == '4e6f9f247134f79f30a5448515c52a6ca1012c1f1314c3458b448582999e3881'
+              assert locked['removedEventCount'] == 0
+              assert locked['removedOnsetCount'] == 0
+          else:
+              assert isinstance(locked['contextSignature'], str)
+              assert isinstance(locked['sourceStringIndex'], int)
+              assert isinstance(locked['sourcePitchClass'], int)
+              assert locked['removedEventCount'] > 0
+              assert locked['removedOnsetCount'] == locked['removedEventCount']
+              assert locked['eventCount'] == 1144 - locked['removedEventCount']
+
+          assert report['safety']['v5Modified'] is False
+          assert report['safety']['productionModified'] is False
+          assert report['safety']['mainModified'] is False
+          assert report['safety']['runtimeReferenceInputUsed'] is False
+          assert report['safety']['modalGpuInvoked'] is False
+          assert report['safety']['deterministic'] is True
+          assert report['safety']['baselineGeneratedMeasureSetPreserved'] is True
+
+          if report['stoppedAt'] == 'fit':
+              assert report['selected'] == 'accepted-v144-baseline'
+              assert report['validation'] is None
+              assert report['canary'] is None
+              assert report['fullCalibration'] is None
+          elif report['stoppedAt'] == 'validation':
+              assert report['selected'] == 'accepted-v144-baseline'
+              assert report['validation']['passed'] is False
+              assert report['canary'] is None
+              assert report['fullCalibration'] is None
+          elif report['stoppedAt'] == 'canary':
+              assert report['selected'] == 'accepted-v144-baseline'
+              assert report['validation']['passed'] is True
+              assert report['canary']['passed'] is False
+              assert report['fullCalibration'] is None
+          elif report['stoppedAt'] == 'full-calibration':
+              assert report['selected'] == report['locked']['name']
+              assert report['locked']['name'] != 'accepted-v144-baseline'
+              assert report['validation']['passed'] is True
+              assert report['canary']['passed'] is True
+              assert report['fullCalibration'] is not None
+          else:
+              raise AssertionError(report['stoppedAt'])
+          PY
+
+      - name: Reprove locked candidate PDF-event identity independently
+        shell: bash
+        run: |
+          set -euo pipefail
+          mkdir -p .v144/singleton-onset-prune/freeze
+          python - <<'PY'
+          import json
+          from pathlib import Path
+          locked = json.loads(Path('.v144/singleton-onset-prune/locked-events.json').read_text(encoding='utf-8'))
+          report = json.loads(Path('debug/v144-rhythm-calibration/candidates/atomic-singleton-onset-prune-search.json').read_text(encoding='utf-8'))
+          assert locked['schemaVersion'] == 14423
+          assert locked['runtimeReferenceInputUsed'] is False
+          assert locked['baselineGeneratedMeasureSetPreserved'] is True
+          assert len(locked['renderEvents']) == report['locked']['eventCount']
+          payload = {
+              'instrument': 'rhythm',
+              'renderEvents': locked['renderEvents'],
+              'tempoBpm': 129.19921875,
+              'timeSignature': '4/4',
+              'tuning': 'E Standard',
+              'structuredMode': True,
+              'sourceAudioSha256': '215bd5a657c5326f08f132ae358595a95c30b39bb7493a52c2f910d5a608149f',
+              'referenceFree': True,
+              'professionalReferenceUsed': False,
+              'referenceRuntimeInputUsed': False,
+              'runtimeLabelsRequired': False,
+              'v143RuntimeSafetyVerified': True,
+          }
+          Path('.v144/singleton-onset-prune/freeze-input.json').write_text(json.dumps(payload, separators=(',', ':')) + '\n', encoding='utf-8')
+          PY
+          python validation/rhythm_holdout/freeze_rhythm_analysis.py \
+            .v144/singleton-onset-prune/freeze-input.json .v144/singleton-onset-prune/freeze \
+            --source-commit "${GITHUB_SHA}" > .v144/singleton-onset-prune/freeze.log
+          cp lib/v143RenderContract.js .v144/singleton-onset-prune/v143RenderContract.mjs
+          node --input-type=module <<'NODE'
+          import fs from 'node:fs/promises';
+          import { validateV143RenderEvents } from './.v144/singleton-onset-prune/v143RenderContract.mjs';
+          const locked = JSON.parse(await fs.readFile('.v144/singleton-onset-prune/locked-events.json', 'utf8'));
+          const report = JSON.parse(await fs.readFile('debug/v144-rhythm-calibration/candidates/atomic-singleton-onset-prune-search.json', 'utf8'));
+          const events = validateV143RenderEvents(locked.renderEvents || []);
+          if (events.length !== report.locked.eventCount) throw new Error(`locked event count changed: ${events.length}`);
+          await fs.writeFile('.v144/singleton-onset-prune/renderer-event-evidence.json', JSON.stringify({
+            schemaVersion: 1,
+            renderEvents: events,
+            runtimeSafetyVerified: true,
+            runtimeLabelsRequired: false,
+            referenceOpened: false,
+            professionalReferenceUsed: false,
+            productionModified: false,
+          }) + '\n');
+          NODE
+          python validation/rhythm_holdout/verify_pdf_event_fidelity.py \
+            .v144/singleton-onset-prune/freeze .v144/singleton-onset-prune/renderer-event-evidence.json \
+            > .v144/singleton-onset-prune/pdf-event-fidelity.log
+
+      - name: Attach fidelity proof and evaluate final full-gold invariant
+        shell: bash
+        run: |
+          set -euo pipefail
+          python - <<'PY'
+          import json
+          from pathlib import Path
+          path = Path('debug/v144-rhythm-calibration/candidates/atomic-singleton-onset-prune-search.json')
+          report = json.loads(path.read_text(encoding='utf-8'))
+          fidelity = json.loads(Path('.v144/singleton-onset-prune/freeze/rhythm-pdf-event-fidelity.json').read_text(encoding='utf-8'))
+          assert fidelity['passed'] is True
+          assert fidelity['pdfEventFidelity'] == 1.0
+          assert fidelity['frozenEventSha256'] == fidelity['pdfEventSha256'] == report['locked']['eventSha256']
+          assert fidelity['frozenEventCount'] == report['locked']['eventCount']
+          report['lockedCandidatePdfFidelityProof'] = {
+              'passed': True,
+              'pdfEventFidelity': 1.0,
+              'eventCount': fidelity['frozenEventCount'],
+              'eventSha256': fidelity['frozenEventSha256'],
+              'referenceOpenedDuringPdfFidelityCheck': False,
+          }
+          full = report['fullCalibration']
+          if full is not None:
+              full['pdfEventFidelity'] = 1.0
+              full['score']['gatedMetrics']['pdfEventFidelity'] = 1.0
+              deltas = full['baselineComparison']['gatedMetricDeltas']
+              regressions = {name: float(delta) for name, delta in deltas.items() if float(delta) < 0.0}
+              measure_coverage = float(full['score']['gatedMetrics']['measureCoverageRecall'])
+              critical_delta = int(full['baselineComparison']['criticalMismatchDelta'])
+              c = report['candidateConstruction']
+              locked = report['locked']
+              invariant = (
+                  locked['name'] != 'accepted-v144-baseline'
+                  and 0 < locked['eventCount'] < 1144
+                  and locked['removedEventCount'] > 0
+                  and locked['removedOnsetCount'] == locked['removedEventCount']
+                  and locked['eventCount'] == 1144 - locked['removedEventCount']
+                  and locked['measureSet']['baselineGeneratedMeasureSetPreserved'] is True
+                  and locked['measureSet']['candidateGeneratedMeasureCount'] == 113
+                  and c['eventCountPreservationRequired'] is False
+                  and c['generatedMeasureSetPreservationRequired'] is True
+                  and c['exactlyOneGeneratedNoteOnsetRequired'] is True
+                  and c['zeroReferenceNoteOnsetRequiredForConstruction'] is True
+                  and c['atomicWholeOnsetDeletionRequired'] is True
+                  and c['linkedOrReferencedEventsEligible'] is False
+                  and c['lastEventInMeasureEligible'] is False
+                  and c['survivorMutationAllowed'] is False
+                  and measure_coverage == 1.0
+                  and not regressions
+                  and critical_delta <= 0
+                  and fidelity['pdfEventFidelity'] == 1.0
+              )
+              full['invariantPassed'] = invariant
+              full['invariantEvidence'] = {
+                  'baselineEventCount': 1144,
+                  'candidateEventCount': locked['eventCount'],
+                  'removedEventCount': locked['removedEventCount'],
+                  'removedOnsetCount': locked['removedOnsetCount'],
+                  'baselineGeneratedMeasureSetPreserved': locked['measureSet']['baselineGeneratedMeasureSetPreserved'],
+                  'candidateGeneratedMeasureCount': locked['measureSet']['candidateGeneratedMeasureCount'],
+                  'atomicExactSingletonOnsetDeletion': c['atomicWholeOnsetDeletionRequired'],
+                  'zeroReferenceNoteConstructionRequired': c['zeroReferenceNoteOnsetRequiredForConstruction'],
+                  'linkedOrReferencedEventsEligible': c['linkedOrReferencedEventsEligible'],
+                  'lastEventInMeasureEligible': c['lastEventInMeasureEligible'],
+                  'survivorMutationAllowed': c['survivorMutationAllowed'],
+                  'measureCoverageRecall': measure_coverage,
+                  'metricRegressions': regressions,
+                  'criticalMismatchDelta': critical_delta,
+                  'pdfEventFidelity': 1.0,
+              }
+              report['calibrationPromotionAllowed'] = invariant
+              if invariant:
+                  report['selectedReason'] = 'locked-atomic-singleton-onset-prune-candidate-passed-split-and-full-calibration-invariants'
+                  report['stoppedAt'] = 'complete'
+              else:
+                  report['selected'] = 'accepted-v144-baseline'
+                  report['selectedReason'] = 'locked-atomic-singleton-onset-prune-candidate-failed-full-calibration-invariant'
+                  report['stoppedAt'] = 'full-calibration'
+          else:
+              report['calibrationPromotionAllowed'] = False
+          report['safety']['lockedCandidatePdfFidelityReproved'] = True
+          path.write_text(json.dumps(report, indent=2, sort_keys=True) + '\n', encoding='utf-8')
+          PY
+
+      - name: Reverify immutable V5 and accepted family ten baseline after search
+        shell: bash
+        run: |
+          set -euo pipefail
+          test "$(git hash-object analyzer/v143_reference_free_rhythm_pipeline.py)" = "7f72f8ed9b14af8bc93e95544195204d99c6bec1"
+          test "$(git hash-object debug/v143-contextual-prune/v5-professional-pdf/final-professional-holdout-result.json)" = "511fd244f231b66d08306f97b5a47ed41f5415c7"
+          test "$(sha256sum debug/v143-contextual-prune/v5-professional-pdf/v5-render-stream.json | awk '{print $1}')" = "7c3399d3f5e05ecc8ac98d71d0e5300e1e78f63ae96c1642fe4a19debb4061b2"
+          test "$(git hash-object debug/v144-rhythm-calibration/selected/v144-singleton-onset-replacement-selected-baseline.json)" = "acd12ab68ad16b8faabf38ddc9e1cc0c1e7c4b68"
+          test "$(git hash-object validation/v144_rhythm_calibration/search_atomic_singleton_onset_prunes.py)" = "2f89bf3f310d60cb609a9556130d9f713942216e"
+          test "$(git hash-object modal/v144_rhythm_singleton_onset_prune_policy.py)" = "1a9df07e29e20784d2b9b6111d22ae10e638a84e"
+          test "$(git hash-object modal/tests/test_v144_rhythm_singleton_onset_prune_search.py)" = "f1ecf0945519a5e4e8ef137ee5ef8f4b75cd620a"
+
+      - name: Persist only family eleven search report
+        shell: bash
+        run: |
+          set -euo pipefail
+          report='debug/v144-rhythm-calibration/candidates/atomic-singleton-onset-prune-search.json'
+          git add "$report"
+          test "$(git diff --cached --name-only)" = "$report"
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git commit -m 'Persist V144 atomic singleton onset prune calibration result'
+          for attempt in 1 2 3 4 5; do
+            git fetch origin v143-contextual-prune-lobo
+            if git rebase origin/v143-contextual-prune-lobo && git push origin HEAD:v143-contextual-prune-lobo; then exit 0; fi
+            git rebase --abort 2>/dev/null || true
+            sleep $((attempt * 2))
+          done
+          exit 1
