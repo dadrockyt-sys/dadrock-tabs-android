@@ -2,7 +2,7 @@
 
 Updated: 2026-08-26 America/Montreal
 Branch: `v143-contextual-prune-lobo`
-Active phase: **V144 Rhythm gold calibration. Current accepted calibration baseline remains `pitch-position-shift-54a6e8d3aa91c422` (1144 events / 113 measures / SHA `5b36270a...`). Nine candidate families are consumed and sealed. A diagnostic-only current-baseline FIT onset-topology analyzer is now implemented and synthetically tested; CPU-gate wiring is committed. It has NOT yet read the gold fit labels, emitted no candidate/rule/shift/ranking, and no successor family is pre-registered. Production remains untouched.**
+Active phase: **V144 Rhythm gold calibration. Current accepted calibration baseline remains `pitch-position-shift-54a6e8d3aa91c422` (1144 events / 113 measures / SHA `5b36270a...`). Nine candidate families are consumed and sealed. A diagnostic-only current-baseline FIT onset-topology analyzer is implemented and synthetically tested, but the required pre-label CPU gate is BLOCKED because this repository stopped scheduling GitHub Actions events after 2026-08-26 13:46 UTC. Push and pull_request trigger paths were both tested without any Actions run being created. The diagnostic has NOT read gold fit labels, emitted no candidate/rule/shift/ranking, and no successor family is pre-registered. Production remains untouched.**
 
 ## Permanent safety boundary
 - Work only on `v143-contextual-prune-lobo`; never modify/merge `main` or Production.
@@ -44,7 +44,7 @@ Active phase: **V144 Rhythm gold calibration. Current accepted calibration basel
 6. Joint contextual pitch+step — failed canary; sealed `215fc49106ef3501b71452b1f6c9f6d638cafd77`.
 7. Joint contextual pitch+adjacent-string position — current accepted baseline; run `32971373324`; report blob `04a462983bf4c50364d0e4f39bcd08a5652c6b5e`; sealed `61422dea64ed4758999b3cd3c978d0db344e3ef6`.
 8. Joint contextual pitch+step+adjacent-string position — 14 fit candidates, none qualified; run `32974497513`; report blob `c67bad28dea2ee7458a4e8159d5b7ab64fdce245`; sealed `55a948fa97ab100bdca0b1338b36c9a43a4f5ce9`.
-9. Atomic exact-two-note onset dyad pitch rewrite — **zero rules met pre-registered support/shape requirements; zero candidates evaluated**; run `32975912923`; report commit `8d4c65a3abd10a7c4cbd1e979c89457b9a557c1d`; report blob `9b1099e42f57127a9cf3168471fdb49415067f5f`; sealed `6e0e23254a4e6c845c681368a96e1623f04364bd`; archived workflow blob `869c625913625806555184beef8ff33943304ce4`.
+9. Atomic exact-two-note onset dyad pitch rewrite — zero rules met pre-registered support/shape requirements; zero candidates evaluated; run `32975912923`; report commit `8d4c65a3abd10a7c4cbd1e979c89457b9a557c1d`; report blob `9b1099e42f57127a9cf3168471fdb49415067f5f`; sealed `6e0e23254a4e6c845c681368a96e1623f04364bd`; archived workflow blob `869c625913625806555184beef8ff33943304ce4`.
 
 ## Current-baseline fit-only diagnostic — COMPLETE / SEALED
 - CPU gate `32971927840` SUCCESS; diagnostic run `32972033516` SUCCESS.
@@ -56,33 +56,40 @@ Active phase: **V144 Rhythm gold calibration. Current accepted calibration basel
 
 ## Atomic onset dyad family — COMPLETE / CONSUMED / SEALED
 - Policy `modal/v144_rhythm_onset_dyad_pitch_policy.py`; pre-registration commit `5ff7c68f1772150ce92d0bf9911c5145d6dda4b3`; blob `09deedbb5f31c3a7f0573d9e68f78f956f692c1c`.
-- Policy tests commit `48818926a12505cc40f0dc534c15a71d09c72719`; blob `0c4d7508267a4f06e71d518a50d6d67eafd44335`.
-- Policy CPU gate `32975186364` SUCCESS.
+- Policy tests commit `48818926a12505cc40f0dc534c15a71d09c72719`; blob `0c4d7508267a4f06e71d518a50d6d67eafd44335`; policy CPU gate `32975186364` SUCCESS.
 - Search `validation/v144_rhythm_calibration/search_atomic_onset_dyad_pitch_rewrites.py`; commit `002e79d561e4404ea00d7a58ec591d006802bf00`; blob `235f88fd4ed881231d23532e04cc148b756eebf4`.
 - Search tests commit `41f49951cb8b7325e608402f5cda69407c21ce22`; blob `bc2583853b89b7422c7595b3218fc477177ed93a`; search CPU gate `32975651407` SUCCESS.
 - One-shot arming commit `b84dedb8350a4568adc40d6e6b4787d409d6d30d`; run `32975912923` SUCCESS infrastructure; CPU only; fixed support `3`, max candidates `256`, pitch bound `12`.
 - Report `debug/v144-rhythm-calibration/candidates/atomic-onset-dyad-pitch-search.json`; persisted commit `8d4c65a3abd10a7c4cbd1e979c89457b9a557c1d`; blob `9b1099e42f57127a9cf3168471fdb49415067f5f`.
-- `rankedRuleCount=0`; `evaluatedCandidateCount=0`; fit lock `accepted-v144-baseline`; locked reason `deterministic-no-prune-fallback`; selected reason `fit-no-qualified-atomic-onset-dyad-candidate`; stopped at fit.
-- Validation `null`; canary `null`; full calibration `null`; split promotion false; calibration promotion false.
-- Fallback stream remained 1144 events / 113 measures / SHA `5b36270a...`; independent PDF-event fidelity proof passed `1.0`; reference not opened during PDF proof.
-- Safety: V5/main/Production unchanged; runtime reference false; GPU false; deterministic true.
-- Workflow archived immediately: commit `6e0e23254a4e6c845c681368a96e1623f04364bd`; blob `869c625913625806555184beef8ff33943304ce4`; replay explicitly refused.
-- No selected-baseline manifest created.
+- `rankedRuleCount=0`; `evaluatedCandidateCount=0`; validation/canary/full all `null`; deterministic accepted-baseline fallback retained.
+- Workflow archived immediately: commit `6e0e23254a4e6c845c681368a96e1623f04364bd`; blob `869c625913625806555184beef8ff33943304ce4`; replay refused.
 
-## Current-baseline fit onset-topology diagnostic — PRE-RUN / NO CANDIDATES
+## Current-baseline FIT onset-topology diagnostic — PRE-RUN / BLOCKED ON ACTIONS
 - Implementation `validation/v144_rhythm_calibration/analyze_current_baseline_fit_onset_topology.py`; commit `2fd4fffc17111be8acb1741985ff9ece32a630d5`; blob `b4ddb289e2e0e54177e51e1b4ff1140dd304ed46`.
-- Synthetic tests `modal/tests/test_v144_rhythm_current_baseline_fit_onset_topology.py`; commit `03becc266d7fe32980a8425ead72c0ce8f1fc3f3`.
-- CPU-gate wiring commit `073d276bcae5873bfed104eda34aebe7c19a0b49`; workflow blob `0102223c67e4a489dda2e5c88808c0a1dad7c240`; gate pending at checkpoint time.
-- Analyzer reconstructs only the locked current baseline SHA `5b36270a...`, then examines the deterministic FIT split.
-- It reports onset cardinality pairs, singleton topology, dyad/3+ equal-cardinality topology, exact pitch/string/position multisets, same-onset wrong-pitch slots, same-string wrong-pitch slots, generated-only/reference-only onsets, and shared cardinality mismatches.
-- Explicit isolation: candidate construction false; candidate ranking false; candidate selection false; no rule/shift histogram; validation labels false; canary labels false; runtime reference false; GPU false.
-- Interpretation boundary: topology may inform only a materially distinct transformation **unit**; it may not rank a specific rule/shift or change selector thresholds/support.
-- **The diagnostic has not yet executed against the gold fit labels. No successor candidate family is pre-registered or evaluated.**
+- Synthetic tests `modal/tests/test_v144_rhythm_current_baseline_fit_onset_topology.py`; initial commit `03becc266d7fe32980a8425ead72c0ce8f1fc3f3`; trigger-only follow-up `6eee0ab1b587c7b6f19658bf604fbe9383b02135`; current blob `8c47a13f459832bbe564a080ab0e984edd3a9c25`.
+- Broad CPU-gate wiring commit `073d276bcae5873bfed104eda34aebe7c19a0b49`; workflow blob `0102223c67e4a489dda2e5c88808c0a1dad7c240`.
+- Push scheduling anomaly: commits `073d276b...` and trigger-only `6eee0ab...` produced no GitHub Actions check suite/run at all, although Cloudflare/Vercel checks continued.
+- Current broad gate YAML was compared with last known-green blob `5575765edbeeb105de315e087ebbf8f541a243a5`; only expected topology path/compile/test additions are present. No structural workflow change was found.
+- Dedicated exact-message/path synthetic CPU gate `.github/workflows/v144-current-fit-onset-topology-cpu-gate.yml` created at commit `8f4d3704707cfacda19749860ccb284e1758ad7e`; blob from that commit `4a710cf5a91399ed9f9f264642f1c54b13a5b230`. It verifies immutable V5/provenance/current-baseline/config/diagnostic/test blobs, compiles the diagnostic without executing it, runs only synthetic topology tests, and checks aggregate-only isolation. That push also produced no GitHub Actions run.
+- A temporary **draft** PR #21 was opened from `v143-contextual-prune-lobo` to inert branch `noop` solely to test `pull_request` Actions scheduling. It never targeted `main`, never merged, and no calibration labels were read. It also produced zero Actions runs and was immediately closed.
+- GitHub public status reported Actions operational during this investigation, so evidence points to repository-specific Actions suppression/disablement rather than a platform-wide incident.
+- Analyzer itself reconstructs only locked baseline SHA `5b36270a...` and is designed to examine deterministic FIT onset/cardinality/string/pitch topology.
+- Explicit analyzer isolation: candidate construction/ranking/selection false; no rule/shift histogram; validation labels false; canary labels false; historical consumed-family results false; runtime reference false; GPU false.
+- Interpretation boundary: aggregate topology may inform only a materially distinct transformation **unit**; it may not rank a particular rule/shift or change selector support/thresholds.
+- **HARD STOP: do not execute the topology diagnostic against gold FIT labels until a required CPU gate has a definitive GitHub Actions SUCCESS. Do not substitute local/static validation for that gate.**
+- No successor candidate family is pre-registered or evaluated.
+
+## Repository Actions scheduling blocker
+- Last observed branch Actions event was cleanup workflow run `32976235345` at commit `2fd4fffc...` around 13:46 UTC.
+- Subsequent branch pushes produce Cloudflare/Vercel checks but no GitHub Actions check suite/run.
+- Pull-request event test via closed draft PR #21 also produced no Actions run.
+- Connector exposes rerun of existing runs/jobs but no workflow-dispatch action; rerunning an older job would execute its old commit and cannot validate the new topology files.
+- Do not work around this by modifying `main`, merging a PR, weakening the gate, or running the diagnostic ungated.
 
 ## Immediate next actions
-1. Resolve the topology diagnostic CPU gate. If it fails, fix diagnostic/tests only; do not run the diagnostic.
-2. Only after CPU gate SUCCESS, create one exact-message/path-gated CPU diagnostic workflow that verifies immutable V5/reference/current-baseline identities, runs this topology analyzer once, persists only its report, then archive it immediately.
+1. Re-check repository GitHub Actions scheduling/enablement. If Actions resumes, use the dedicated gate commit/message/path or a fresh exact trigger and require definitive SUCCESS.
+2. Only after CPU gate SUCCESS, create one exact-message/path-gated CPU topology diagnostic workflow that verifies immutable V5/reference/current-baseline identities, runs the topology analyzer once, persists only `debug/v144-rhythm-calibration/diagnostics/current-pitch-position-baseline-fit-onset-topology.json`, then archive it immediately.
 3. Interpret only aggregate FIT topology to decide whether a genuinely new transformation unit is justified. Never use consumed-family outcomes, validation, or canary to choose the shape.
-4. If a successor unit is justified, pre-register it before any candidate evaluation and follow policy/tests → CPU gate → search/invariants → CPU gate → at most one exact-message/path-gated CPU one-shot → immediate archive.
-5. Keep `pitch-position-shift-54a6e8d3aa91c422` / SHA `5b36270a...` as baseline unless a future fully-gated family passes every invariant.
+4. If a successor unit is justified, pre-register it before candidate evaluation and follow policy/tests → CPU gate → search/invariants → CPU gate → at most one one-shot → immediate archive.
+5. Keep `pitch-position-shift-54a6e8d3aa91c422` / SHA `5b36270a...` as baseline unless a future fully gated family passes every invariant.
 6. Never start Bass/Lead, modify main/Production, claim near-100%, or use Modal/L4/GPU without fresh explicit user authorization.
