@@ -1,0 +1,1 @@
+Trigger frozen V6 calibration score after checkpoint 457e614aa1992b411c7db6ccf1596a754f14b703.
