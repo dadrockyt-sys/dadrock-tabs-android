@@ -16,7 +16,7 @@ concurrency:
 
 jobs:
   search:
-    if: github.event.head_commit.message == 'v144: run additive quad one-shot'
+    if: "${{ github.event.head_commit.message == 'v144 execute additive quad one-shot after yaml fix' }}"
     name: Fit-lock additive quad candidate on CPU
     runs-on: ubuntu-latest
     timeout-minutes: 10
