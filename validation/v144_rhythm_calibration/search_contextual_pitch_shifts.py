@@ -168,18 +168,21 @@ def main() -> int:
     reference = scorer.validate_reference(load_json(args.gold_reference))
     reference_notes, _, _ = scorer.flatten_reference(reference)
     generated_notes, _ = scorer.flatten_generated(baseline_events)
-    generated_fit = subset(generated_notes, "fit", config)
+    generated_fit_notes = subset(generated_notes, "fit", config)
+    generated_fit_events = subset(baseline_events, "fit", config)
     reference_fit = subset(reference_notes, "fit", config)
+    if len(generated_fit_events) != len(generated_fit_notes):
+        raise ValueError("canonical fit-event and flattened fit-note counts diverged")
 
     ranked_rules = rank_fit_pitch_shift_rules(
-        generated_fit,
+        generated_fit_events,
         reference_fit,
         minimum_correction_support=args.minimum_correction_support,
         maximum_candidates=args.maximum_candidates,
         maximum_abs_semitone_shift=args.maximum_abs_semitone_shift,
     )
 
-    baseline_fit = score_notes(generated_fit, reference_fit)
+    baseline_fit = score_notes(generated_fit_notes, reference_fit)
     baseline = make_candidate(
         "accepted-v144-baseline",
         "accepted-v144-triple-baseline",
@@ -386,8 +389,10 @@ def main() -> int:
             "maximumAbsSemitoneShift": int(args.maximum_abs_semitone_shift),
             "rankedRuleCount": len(ranked_rules),
             "evaluatedCandidateCount": len(candidates) - 1,
-            "fitGeneratedNoteCount": len(generated_fit),
+            "fitGeneratedNoteCount": len(generated_fit_notes),
+            "fitGeneratedCanonicalEventCount": len(generated_fit_events),
             "fitReferenceNoteCount": len(reference_fit),
+            "canonicalGeneratedEventsUsedForConstructionAndEligibility": True,
             "validationLabelsUsedForCandidateConstructionOrRanking": False,
             "canaryLabelsUsedForCandidateConstructionOrRanking": False,
             "historicalConsumedFamilyResultsUsedForConstructionOrRanking": False,
