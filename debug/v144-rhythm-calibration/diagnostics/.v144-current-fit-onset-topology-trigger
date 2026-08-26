@@ -6,6 +6,7 @@
   "analyzerBlob": "b4ddb289e2e0e54177e51e1b4ff1140dd304ed46",
   "broadCpuWorkflowBlob": "77f68a57ba55f0e2e0116c79b3b8e0e8d08b4b86",
   "verificationFix": "selectedCandidate",
+  "deliveryAttempt": "fresh-reopen-after-skipped-exact-sha-event",
   "fitOnly": true,
   "candidateConstructionAllowed": false,
   "validationLabelsAllowed": false,
