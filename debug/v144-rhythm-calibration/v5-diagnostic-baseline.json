@@ -1,14 +1,5 @@
 {
   "alignmentSearch": {
-    "bestGlobalOnsetStepShift": {
-      "f1": 0.37865429234338743,
-      "generated": 1209,
-      "matched": 408,
-      "precision": 0.337468982630273,
-      "recall": 0.4312896405919662,
-      "reference": 946,
-      "stepDelta": -26
-    },
     "bestGlobalPitchTimingStepShift": {
       "f1": 0.1262180974477958,
       "generated": 1209,
@@ -37,17 +28,111 @@
       "reference": 946,
       "semitoneDelta": 0
     },
+    "bestUniqueOnsetStepShift": {
+      "f1": 0.4926372155287818,
+      "generated": 891,
+      "matched": 368,
+      "precision": 0.41301907968574636,
+      "recall": 0.6102819237147595,
+      "reference": 603,
+      "stepDelta": -26
+    },
+    "measureShiftPitchSearch": {
+      "all": [
+        {
+          "f1": 0.2208816705336427,
+          "generated": 1209,
+          "matched": 238,
+          "measureDelta": -4,
+          "precision": 0.1968569065343259,
+          "recall": 0.25158562367864695,
+          "reference": 946
+        },
+        {
+          "f1": 0.24779582366589328,
+          "generated": 1209,
+          "matched": 267,
+          "measureDelta": -3,
+          "precision": 0.22084367245657568,
+          "recall": 0.2822410147991543,
+          "reference": 946
+        },
+        {
+          "f1": 0.2505800464037123,
+          "generated": 1209,
+          "matched": 270,
+          "measureDelta": -2,
+          "precision": 0.22332506203473945,
+          "recall": 0.2854122621564482,
+          "reference": 946
+        },
+        {
+          "f1": 0.3164733178654292,
+          "generated": 1209,
+          "matched": 341,
+          "measureDelta": -1,
+          "precision": 0.28205128205128205,
+          "recall": 0.36046511627906974,
+          "reference": 946
+        },
+        {
+          "f1": 0.2830626450116009,
+          "generated": 1209,
+          "matched": 305,
+          "measureDelta": 0,
+          "precision": 0.2522746071133168,
+          "recall": 0.3224101479915433,
+          "reference": 946
+        },
+        {
+          "f1": 0.2821345707656612,
+          "generated": 1209,
+          "matched": 304,
+          "measureDelta": 1,
+          "precision": 0.25144747725392885,
+          "recall": 0.321353065539112,
+          "reference": 946
+        },
+        {
+          "f1": 0.24965197215777263,
+          "generated": 1209,
+          "matched": 269,
+          "measureDelta": 2,
+          "precision": 0.22249793217535152,
+          "recall": 0.2843551797040169,
+          "reference": 946
+        },
+        {
+          "f1": 0.2728538283062645,
+          "generated": 1209,
+          "matched": 294,
+          "measureDelta": 3,
+          "precision": 0.24317617866004962,
+          "recall": 0.3107822410147992,
+          "reference": 946
+        },
+        {
+          "f1": 0.2292343387470998,
+          "generated": 1209,
+          "matched": 247,
+          "measureDelta": 4,
+          "precision": 0.20430107526881722,
+          "recall": 0.26109936575052856,
+          "reference": 946
+        }
+      ],
+      "best": {
+        "f1": 0.3164733178654292,
+        "generated": 1209,
+        "matched": 341,
+        "measureDelta": -1,
+        "precision": 0.28205128205128205,
+        "recall": 0.36046511627906974,
+        "reference": 946
+      }
+    },
     "quarterSongSegments": [
       {
-        "bestOnsetShift": {
-          "f1": 0.5495867768595042,
-          "generated": 266,
-          "matched": 133,
-          "precision": 0.5,
-          "recall": 0.6100917431192661,
-          "reference": 218,
-          "stepDelta": -12
-        },
         "bestPitchTimingShift": {
           "f1": 0.12396694214876033,
           "generated": 266,
@@ -57,21 +142,21 @@
           "reference": 218,
           "stepDelta": -14
         },
+        "bestUniqueOnsetShift": {
+          "f1": 0.6376811594202898,
+          "generated": 212,
+          "matched": 132,
+          "precision": 0.6226415094339622,
+          "recall": 0.6534653465346535,
+          "reference": 202,
+          "stepDelta": -12
+        },
         "firstMeasure": 1,
         "generatedNotes": 266,
         "lastMeasure": 28,
         "referenceNotes": 218
       },
       {
-        "bestOnsetShift": {
-          "f1": 0.4436229205175601,
-          "generated": 299,
-          "matched": 120,
-          "precision": 0.4013377926421405,
-          "recall": 0.49586776859504134,
-          "reference": 242,
-          "stepDelta": 6
-        },
         "bestPitchTimingShift": {
           "f1": 0.10720887245841036,
           "generated": 299,
@@ -81,21 +166,21 @@
           "reference": 242,
           "stepDelta": -13
         },
+        "bestUniqueOnsetShift": {
+          "f1": 0.57356608478803,
+          "generated": 221,
+          "matched": 115,
+          "precision": 0.5203619909502263,
+          "recall": 0.6388888888888888,
+          "reference": 180,
+          "stepDelta": 6
+        },
         "firstMeasure": 29,
         "generatedNotes": 299,
         "lastMeasure": 56,
         "referenceNotes": 242
       },
       {
-        "bestOnsetShift": {
-          "f1": 0.30796460176991153,
-          "generated": 282,
-          "matched": 87,
-          "precision": 0.30851063829787234,
-          "recall": 0.30742049469964666,
-          "reference": 283,
-          "stepDelta": -14
-        },
         "bestPitchTimingShift": {
           "f1": 0.16991150442477876,
           "generated": 282,
@@ -105,21 +190,21 @@
           "reference": 283,
           "stepDelta": -14
         },
+        "bestUniqueOnsetShift": {
+          "f1": 0.4184615384615384,
+          "generated": 209,
+          "matched": 68,
+          "precision": 0.3253588516746411,
+          "recall": 0.5862068965517241,
+          "reference": 116,
+          "stepDelta": 0
+        },
         "firstMeasure": 57,
         "generatedNotes": 282,
         "lastMeasure": 84,
         "referenceNotes": 283
       },
       {
-        "bestOnsetShift": {
-          "f1": 0.30442477876106194,
-          "generated": 362,
-          "matched": 86,
-          "precision": 0.23756906077348067,
-          "recall": 0.4236453201970443,
-          "reference": 203,
-          "stepDelta": -24
-        },
         "bestPitchTimingShift": {
           "f1": 0.10973451327433628,
           "generated": 362,
@@ -129,12 +214,139 @@
           "reference": 203,
           "stepDelta": -14
         },
+        "bestUniqueOnsetShift": {
+          "f1": 0.40677966101694907,
+          "generated": 249,
+          "matched": 72,
+          "precision": 0.2891566265060241,
+          "recall": 0.6857142857142857,
+          "reference": 105,
+          "stepDelta": -8
+        },
         "firstMeasure": 85,
         "generatedNotes": 362,
         "lastMeasure": 113,
         "referenceNotes": 203
       }
-    ]
+    ],
+    "sameMeasurePitchStepDeltas": {
+      "exactStepFraction": 0.15737704918032788,
+      "exactStepPairs": 48,
+      "meanAbsoluteStepDelta": 4.862295081967213,
+      "pairCount": 305,
+      "stepDeltaHistogram": [
+        {
+          "count": 48,
+          "stepDeltaReferenceMinusGenerated": 0
+        },
+        {
+          "count": 33,
+          "stepDeltaReferenceMinusGenerated": -2
+        },
+        {
+          "count": 22,
+          "stepDeltaReferenceMinusGenerated": 2
+        },
+        {
+          "count": 22,
+          "stepDeltaReferenceMinusGenerated": -14
+        },
+        {
+          "count": 21,
+          "stepDeltaReferenceMinusGenerated": -1
+        },
+        {
+          "count": 17,
+          "stepDeltaReferenceMinusGenerated": -3
+        },
+        {
+          "count": 16,
+          "stepDeltaReferenceMinusGenerated": 1
+        },
+        {
+          "count": 13,
+          "stepDeltaReferenceMinusGenerated": 3
+        },
+        {
+          "count": 12,
+          "stepDeltaReferenceMinusGenerated": -4
+        },
+        {
+          "count": 11,
+          "stepDeltaReferenceMinusGenerated": -11
+        },
+        {
+          "count": 11,
+          "stepDeltaReferenceMinusGenerated": -12
+        },
+        {
+          "count": 10,
+          "stepDeltaReferenceMinusGenerated": -8
+        },
+        {
+          "count": 9,
+          "stepDeltaReferenceMinusGenerated": -9
+        },
+        {
+          "count": 8,
+          "stepDeltaReferenceMinusGenerated": 4
+        },
+        {
+          "count": 7,
+          "stepDeltaReferenceMinusGenerated": -6
+        },
+        {
+          "count": 6,
+          "stepDeltaReferenceMinusGenerated": -5
+        },
+        {
+          "count": 6,
+          "stepDeltaReferenceMinusGenerated": 6
+        },
+        {
+          "count": 6,
+          "stepDeltaReferenceMinusGenerated": -10
+        },
+        {
+          "count": 5,
+          "stepDeltaReferenceMinusGenerated": -7
+        },
+        {
+          "count": 5,
+          "stepDeltaReferenceMinusGenerated": 8
+        },
+        {
+          "count": 5,
+          "stepDeltaReferenceMinusGenerated": -13
+        },
+        {
+          "count": 5,
+          "stepDeltaReferenceMinusGenerated": -15
+        },
+        {
+          "count": 2,
+          "stepDeltaReferenceMinusGenerated": 9
+        },
+        {
+          "count": 2,
+          "stepDeltaReferenceMinusGenerated": 10
+        },
+        {
+          "count": 1,
+          "stepDeltaReferenceMinusGenerated": 5
+        },
+        {
+          "count": 1,
+          "stepDeltaReferenceMinusGenerated": 7
+        },
+        {
+          "count": 1,
+          "stepDeltaReferenceMinusGenerated": 11
+        }
+      ],
+      "withinOneStepPairs": 85,
+      "withinTwoStepPairs": 140
+    }
   },
   "baseline": {
     "measurePitch": {
@@ -359,6 +571,29 @@
       ]
     }
   },
+  "exactOnsetPitchQuality": {
+    "exactPitchClassSetOnsets": 59,
+    "exactPitchSetOnsets": 17,
+    "generatedNotesAtSharedOnsets": 469,
+    "pitchClassContentAtSharedOnsets": {
+      "f1": 0.7720659553831232,
+      "generated": 469,
+      "matched": 398,
+      "precision": 0.8486140724946695,
+      "recall": 0.708185053380783,
+      "reference": 562
+    },
+    "pitchContentAtSharedOnsets": {
+      "f1": 0.562560620756547,
+      "generated": 469,
+      "matched": 290,
+      "precision": 0.6183368869936035,
+      "recall": 0.5160142348754448,
+      "reference": 562
+    },
+    "referenceNotesAtSharedOnsets": 562,
+    "sharedOnsetCount": 360
+  },
   "generatedNoteCount": 1209,
   "generatedOnsetCount": 891,
   "modalInvoked": false,
@@ -473,6 +708,6 @@
   "productionModified": false,
   "referenceNoteCount": 946,
   "referenceOnsetCount": 603,
-  "schemaVersion": 1,
+  "schemaVersion": 2,
   "unseenHoldout": false
 }
