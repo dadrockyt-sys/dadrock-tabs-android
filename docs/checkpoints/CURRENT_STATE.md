@@ -2,7 +2,7 @@
 
 Updated: 2026-08-26 America/Montreal
 Branch: `v143-contextual-prune-lobo`
-Active phase: **V144 Rhythm gold calibration. Current accepted calibration baseline is `pitch-position-shift-54a6e8d3aa91c422` (1144 events / 113 measures / SHA `5b36270a...`). Its family is consumed and archived. Fresh fit-only diagnostics are complete and sealed. A materially distinct three-way pitch + within-measure step + adjacent-string family is pre-registered; its corrected policy CPU gate `32972795739` passed. Search implementation commit `b409d796...` now exists, but search-level invariant tests and CPU-gate integration are not yet complete. No candidate evaluation has occurred. Production remains untouched.**
+Active phase: **V144 Rhythm gold calibration. Current accepted calibration baseline is `pitch-position-shift-54a6e8d3aa91c422` (1144 events / 113 measures / SHA `5b36270a...`). Its family is consumed and archived. Fresh fit-only diagnostics are complete and sealed. A materially distinct three-way pitch + within-measure step + adjacent-string family is pre-registered; its policy CPU gate passed. Search implementation + invariant tests are now present. Initial search CPU gate `32974001538` failed only because one test fixture accidentally changed all three dimensions while labeled partial; corrected test-only commit `832dd701...` is under retry gate `32974163895`. No candidate evaluation has occurred. Production remains untouched.**
 
 ## Permanent safety boundary
 - Work only on `v143-contextual-prune-lobo`; never modify/merge `main` or Production.
@@ -56,26 +56,24 @@ Active phase: **V144 Rhythm gold calibration. Current accepted calibration basel
 - Fit-only shape signals: timing opportunity `120`; same-onset pitch substitution `171`; position opportunity `12`.
 - **Validation/canary outcomes from consumed families may not inform successor construction/ranking.**
 
-## Joint pitch + step + adjacent-string family — PRE-REGISTERED / SEARCH IMPLEMENTED / NOT EVALUATED
+## Joint pitch + step + adjacent-string family — PRE-REGISTERED / SEARCH GATE RETRY IN PROGRESS / NOT EVALUATED
 - Fit-only rationale: fresh current-baseline diagnostic independently exposes pitch (`171` same-onset substitutions), timing (`120` displaced existing pitch matches), and position (`12` tight pitch/string-fret mismatches) opportunity.
 - Policy `modal/v144_rhythm_pitch_step_position_shift_policy.py`; pre-registration commit `c5c78b0e23c275f997ce0c501b23a6797cd0d90d`; blob `6701084d4d9f7f4630cce147f57e5d746342f8d4`.
-- Original policy-test commit `c410b2f903fb3d62dba26b922546891eb685f8c3`.
-- Initial CPU gate `32972419227` failed only because a step-4 test fixture requested the wrong structural signature. Policy compilation, immutable V5 checks and provenance checks passed.
-- Test-only correction commit `8cde106f359db42e1e83ea8aeae689630ad78d4b`; corrected test blob `e209141581724259f3bb0ed2a54792dd48c2894a`; retry CPU gate `32972795739` **SUCCESS**.
+- Policy-test correction commit `8cde106f359db42e1e83ea8aeae689630ad78d4b`; corrected policy test blob `e209141581724259f3bb0ed2a54792dd48c2894a`; policy retry CPU gate `32972795739` SUCCESS.
 - Search implementation `validation/v144_rhythm_calibration/search_contextual_pitch_step_position_shifts.py`; commit `b409d7965110444309aa3e5118fdb609cb404eaa`; blob `cc4343a8b55d4703a8524dff39a7c0d01ca5900f`.
+- Search invariant tests `modal/tests/test_v144_rhythm_pitch_step_position_shift_search.py`; original commit `d30bdeb1a83e69a548f0d0e0a8a88b9dfc8c5a9f`.
+- CPU-gate search wiring commit `c19779a47b0afd0589484d8383ce5b23441038da`; gate `32974001538` FAILED only in `test_partial_dimension_changes_are_rejected`. All immutable/provenance/compile guards and preceding tests passed. Root cause: the final supposed partial fixture accidentally changed pitch + step + string together and was correctly accepted by `changed_event_count`.
+- Test-only correction commit `832dd70123efc83116d2802bed06a613b82d5063`; corrected test blob `9b1b4b802c5de0fe59a306e7ab76313c36c94416`; retry search CPU gate `32974163895` IN PROGRESS.
 - Rule identity: source `pitchClass::<n>` + one reference-free structural context signature + fixed semitone shift + fixed step shift + fixed adjacent-string shift.
 - **All three shifts are required non-zero**, so this family cannot collapse into consumed pitch-only, pitch+step, or pitch+position families.
-- Pre-registered bounds: pitch within ±12; step within ±2; string exactly adjacent ±1.
-- Construction uses deterministic same-measure pitch+step pairing, retaining only fit pairs whose target additionally requires a non-zero adjacent-string move and exactly matches a tuning-derived fret.
+- Fixed bounds/support: pitch ±12; step ±2; string exactly adjacent ±1; support 3; max candidates 256.
 - Runtime receives generated event + locked signatures/shifts only; no reference. It preserves event count/order, measure, duration and other metadata while changing step/string/fret/MIDI together; fret is recomputed from E-standard tuning.
-- Search implementation reconstructs the locked current baseline reference-free from V5 via historical triple → pitch shift → pitch+position transform and requires exact accepted SHA `5b36270a...` before any construction.
-- Search `changed_event_count` requires pitch/step/string changes to occur together, fixed locked deltas, step bounds 0..15, adjacent-string-only movement, tuning-derived fret identity, protected metadata preservation, 1144-event preservation and 113-measure preservation.
-- Fit-only ranking uses fixed support `3`, max candidates `256`, pitch bound `12`, step bound `2`, string bound `1`; validation/canary are not read during fit lock.
-- **Search-level invariant tests and CPU-gate wiring are the next prerequisite. No workflow, one-shot, candidate evaluation, validation/canary result, or promotion exists yet.**
+- Search reconstructs exact accepted baseline SHA `5b36270a...` before fit-only construction. `changed_event_count` requires pitch/step/string changes together, fixed deltas, in-measure step, adjacent string, tuning-derived fret, protected metadata, 1144 events and 113 measures.
+- **No one-shot workflow, candidate evaluation, validation/canary result, or promotion exists yet.**
 
 ## Immediate next actions
-1. Add deterministic search-level invariant tests for candidate naming, event count/order, protected metadata, joint three-way change, tuning identity, bounds, fixed deltas and expected-shift arity.
-2. Wire the new search + tests into `.github/workflows/v144-rhythm-cpu-gate.yml`, compile/test on CPU, and save checkpoint.
-3. Only after that search gate succeeds allow one exact-message/path-gated CPU one-shot with fixed support `3`, max candidates `256`, pitch `12`, step `2`, string `1`; archive immediately after one run.
+1. Resolve retry search CPU gate `32974163895`; if it fails, fix search/tests only and do not arm candidate evaluation.
+2. Only after search gate SUCCESS create one exact-message/path-gated CPU one-shot with fixed support `3`, max candidates `256`, pitch `12`, step `2`, string `1`.
+3. Verify immutable V5/reference/current accepted manifest plus exact search/policy/test/config blobs before execution. Persist only the search report and archive the workflow immediately after the one run.
 4. Maintain fit-only construction/ranking → one locked winner → validation → canary → full-gold → independent PDF invariant; later failure means current-baseline fallback and no alternate selection.
 5. Never start Bass/Lead, modify main/Production, claim near-100%, or use Modal/L4/GPU without fresh explicit user authorization.
