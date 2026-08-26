@@ -1,0 +1,158 @@
+{
+  "schemaVersion": 14414,
+  "classification": "v144-rhythm-selected-calibration-baseline",
+  "instrument": "rhythm",
+  "status": "accepted-calibration-baseline-not-production",
+  "name": "pitch-position-shift-54a6e8d3aa91c422",
+  "previousBaseline": {
+    "name": "pitch-shift-41b7a7470fa3245a",
+    "manifestPath": "debug/v144-rhythm-calibration/selected/v144-pitch-shift-selected-baseline.json",
+    "manifestGitBlob": "ee86c40d68e5c5b8e85bc4d008d9713c35e37a6c",
+    "eventCount": 1144,
+    "eventSha256": "b6e1f8a8be150943d7224c74f9193b1b4050454620063846f6f5f5c773d4cbf6",
+    "generatedMeasureCount": 113
+  },
+  "sourceSearch": {
+    "workflowRunId": 32971373324,
+    "armingCommit": "96e5b050b999346d7a2a6a32fd5f6f6680862e9e",
+    "persistedCommit": "3283d881304166cce9bb691e15557f3eb0e14d3e",
+    "reportPath": "debug/v144-rhythm-calibration/candidates/contextual-pitch-position-search.json",
+    "reportGitBlob": "04a462983bf4c50364d0e4f39bcd08a5652c6b5e",
+    "candidateFamily": "contextual-joint-pitch-adjacent-string-position-shift",
+    "rankedCandidateCount": 9,
+    "evaluatedCandidateCount": 9,
+    "constructionLabels": "accepted-baseline-fit-only-same-onset-generated-reference-substitutions",
+    "validationLabelsUsedForConstructionOrRanking": false,
+    "canaryLabelsUsedForConstructionOrRanking": false,
+    "historicalConsumedFamilyResultsUsedForConstructionOrRanking": false,
+    "workflowSealedCommit": "61422dea64ed4758999b3cd3c978d0db344e3ef6",
+    "workflowArchivedGitBlob": "6e18eaebf2f0a40e0d238fa1298b30c5be45915b"
+  },
+  "transform": {
+    "type": "contextual-joint-pitch-adjacent-string-position-shift",
+    "signatures": [
+      "pitchClass::11",
+      "stepParity::0"
+    ],
+    "semitoneShift": -2,
+    "stringShift": 1,
+    "changedEventCount": 93,
+    "runtimeInputs": "reference-free-source-pitch-class-plus-structural-context-and-fixed-pitch-string-shifts-only",
+    "professionalReferenceRuntimeInput": false,
+    "eventCountPreserving": true,
+    "timingPreserving": true,
+    "measurePreserving": true,
+    "adjacentStringOnly": true,
+    "tuningDerivedFret": true,
+    "protectedNonPositionMetadataPreserving": true,
+    "linkedPitchTechniqueEventsEligible": false
+  },
+  "selectedCandidate": {
+    "eventCount": 1144,
+    "eventSha256": "5b36270aaeafa73b2e25722e2576a40424ce5951dcfd2b5d769746bd9eb07e0d",
+    "pdfEventFidelity": 1.0,
+    "pdfEventSha256": "5b36270aaeafa73b2e25722e2576a40424ce5951dcfd2b5d769746bd9eb07e0d",
+    "generatedMeasureCount": 113,
+    "baselineGeneratedMeasureSetPreserved": true,
+    "missingBaselineGeneratedMeasures": [],
+    "extraCandidateGeneratedMeasures": []
+  },
+  "fitConstructionEvidence": {
+    "correctionSupport": 4,
+    "eligibleGeneratedSupport": 54,
+    "correctionPrecision": 0.07407407407407407,
+    "minimumCorrectionSupport": 3,
+    "maximumCandidates": 256,
+    "maximumAbsSemitoneShift": 12,
+    "maximumAbsStringShift": 1
+  },
+  "fitGate": {
+    "passed": true,
+    "pitchContentGain": 0.029102667744543176,
+    "pitchTimingTolerantF1Gain": 0.012934518997574765,
+    "stringFretTimingTolerantF1Gain": 0.006467259498787382,
+    "chordPitchSetTolerantF1Gain": 0.0023391812865497102,
+    "exactVoicingTolerantF1Gain": 0.0023391812865497102,
+    "criticalMismatchDelta": -26,
+    "metricRegressions": {},
+    "pdfEventFidelity": 1.0
+  },
+  "validationGate": {
+    "passed": true,
+    "pitchContentGain": 0.00865800865800867,
+    "pitchTimingTolerantF1Gain": 0.008658008658008656,
+    "stringFretTimingTolerantF1Gain": 0.004329004329004328,
+    "chordPitchSetTolerantF1Gain": 0.006097560975609755,
+    "exactVoicingTolerantF1Gain": 0.006097560975609755,
+    "criticalMismatchDelta": -8,
+    "metricRegressions": {},
+    "pdfEventFidelity": 1.0,
+    "alternativeCandidatesRead": false
+  },
+  "canaryGate": {
+    "passed": true,
+    "pitchContentGain": 0.0,
+    "pitchTimingTolerantF1Gain": 0.010230179028132988,
+    "stringFretTimingTolerantF1Gain": 0.010230179028132988,
+    "chordPitchSetTolerantF1Gain": 0.0,
+    "exactVoicingTolerantF1Gain": 0.0,
+    "criticalMismatchDelta": -2,
+    "metricRegressions": {},
+    "pdfEventFidelity": 1.0,
+    "alternativeCandidatesRead": false
+  },
+  "fullGoldCalibration": {
+    "passed": true,
+    "evaluationRole": "full-gold-calibration-not-unseen-holdout",
+    "criticalMismatchCount": 1754,
+    "criticalMismatchDelta": -48,
+    "criticalMismatchBreakdown": {
+      "grossUnmatchedGeneratedNotes": 976,
+      "grossUnmatchedReferenceNotes": 778,
+      "missingReferenceMeasures": 0
+    },
+    "gatedMetrics": {
+      "pitchContentF1": 0.32822966507177037,
+      "pitchTimingTolerantF1": 0.06411483253588517,
+      "stringFretTimingTolerantF1": 0.045933014354066985,
+      "chordPitchSetTolerantF1": 0.038700760193503804,
+      "exactVoicingTolerantF1": 0.038700760193503804,
+      "measureCoverageRecall": 1.0,
+      "pdfEventFidelity": 1.0
+    },
+    "baselineDeltas": {
+      "pitchContentF1": 0.02392344497607657,
+      "pitchTimingTolerantF1": 0.011483253588516741,
+      "stringFretTimingTolerantF1": 0.006698564593301433,
+      "chordPitchSetTolerantF1": 0.0027643400138217047,
+      "exactVoicingTolerantF1": 0.0027643400138217047,
+      "measureCoverageRecall": 0.0
+    },
+    "metricRegressions": {},
+    "measureCoverageRecall": 1.0,
+    "baselineEventCountPreserved": true,
+    "baselineGeneratedMeasureSetPreserved": true,
+    "timingAndMeasurePreservationRequired": true,
+    "protectedNonPositionMetadataPreservationRequired": true,
+    "jointNonZeroPitchAndStringDeltaRequired": true,
+    "adjacentStringOnlyRequired": true,
+    "tuningDerivedFretRequired": true
+  },
+  "promotionScope": {
+    "calibrationBaseline": true,
+    "productionPromotionAllowed": false,
+    "rhythmComplete": false,
+    "near100CalibrationTargetReached": false,
+    "mayClaimUnseenGeneralization": false
+  },
+  "safety": {
+    "v5Modified": false,
+    "mainModified": false,
+    "productionModified": false,
+    "runtimeReferenceInputUsed": false,
+    "measureSetGuardUsesProfessionalReference": false,
+    "modalGpuInvoked": false,
+    "historicalSearchWorkflowReplayAllowed": false,
+    "consumedFamilyRunnerUpSelectionAllowed": false
+  }
+}
