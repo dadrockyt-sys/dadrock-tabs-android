@@ -1,0 +1,117 @@
+{
+  "alternateAfterGateFailureAllowed": false,
+  "baseline": {
+    "eventCount": 1144,
+    "eventSha256": "4e6f9f247134f79f30a5448515c52a6ca1012c1f1314c3458b448582999e3881",
+    "fit": {
+      "counts": {
+        "generatedNotes": 643,
+        "grossMatchedNotes": 90,
+        "referenceNotes": 594
+      },
+      "criticalMismatchCount": 1057,
+      "gatedMetrics": {
+        "chordPitchSetTolerantF1": 0.05847953216374269,
+        "exactVoicingTolerantF1": 0.05847953216374269,
+        "pdfEventFidelity": 1.0,
+        "pitchContentF1": 0.2845594179466451,
+        "pitchTimingTolerantF1": 0.06628940986257073,
+        "stringFretTimingTolerantF1": 0.05497170573969281
+      }
+    },
+    "generatedMeasureCount": 113,
+    "name": "accepted-v144-baseline"
+  },
+  "calibrationPromotionAllowed": false,
+  "canary": null,
+  "candidateConstruction": {
+    "atomicWholeOnsetDeletionRequired": true,
+    "canaryLabelsUsedForCandidateConstructionOrRanking": false,
+    "candidateRuleShape": "atomic-exact-three-note-generated-only-whole-onset-prune",
+    "evaluatedCandidateCount": 0,
+    "eventCountPreservationRequired": false,
+    "exactlyThreeGeneratedNotesOnsetRequired": true,
+    "fitGeneratedNoteCount": 643,
+    "fitReferenceNoteCount": 594,
+    "generatedMeasureSetPreservationRequired": true,
+    "historicalConsumedFamilyResultsUsedForConstructionOrRanking": false,
+    "linkedOrReferencedEventsEligible": false,
+    "maximumCandidates": 256,
+    "measureErasingOnsetsEligible": false,
+    "measureSetGuardUsesProfessionalReference": false,
+    "minimumFalsePositiveSupport": 3,
+    "rankedRuleCount": 0,
+    "removedEventsPerChangedOnset": 3,
+    "runtimeRuleInputs": "reference-free-exact-three-note-generated-onset-plus-structural-context-and-three-sorted-source-string-pitch-class-identities-only",
+    "sourceBaselineEventCount": 1144,
+    "sourceBaselineEventSha256": "4e6f9f247134f79f30a5448515c52a6ca1012c1f1314c3458b448582999e3881",
+    "sourceBaselineName": "singleton-onset-replace-be9e9aa7a734e3cd",
+    "sourceLabels": "accepted-baseline-fit-only-generated-only-exact-three-note-onsets",
+    "survivorMutationAllowed": false,
+    "validationLabelsUsedForCandidateConstructionOrRanking": false,
+    "zeroReferenceNoteOnsetRequiredForConstruction": true
+  },
+  "candidateMetadata": {},
+  "classification": "v144-rhythm-fit-only-atomic-generated-only-triad-onset-prune-search",
+  "evaluationRole": "accepted-singleton-baseline-atomic-generated-only-triad-whole-onset-prune-gold-calibration",
+  "fitLock": {
+    "baseline": "accepted-v144-baseline",
+    "baselineGeneratedMeasureSetPreservationRequired": true,
+    "canaryReadDuringLock": false,
+    "evaluations": [],
+    "fitOnlyRanking": true,
+    "instrument": "rhythm",
+    "locked": "accepted-v144-baseline",
+    "lockedReason": "deterministic-no-prune-fallback",
+    "schemaVersion": 14404,
+    "validationReadDuringLock": false
+  },
+  "fullCalibration": null,
+  "locked": {
+    "contextSignature": null,
+    "eventCount": 1144,
+    "eventSha256": "4e6f9f247134f79f30a5448515c52a6ca1012c1f1314c3458b448582999e3881",
+    "firstSourcePitchClass": null,
+    "firstSourceStringIndex": null,
+    "measureSet": {
+      "baselineGeneratedMeasureCount": 113,
+      "baselineGeneratedMeasureSetPreserved": true,
+      "candidateGeneratedMeasureCount": 113,
+      "extraCandidateGeneratedMeasures": [],
+      "missingBaselineGeneratedMeasures": [],
+      "professionalReferenceUsed": false
+    },
+    "name": "accepted-v144-baseline",
+    "removedEventCount": 0,
+    "removedOnsetCount": 0,
+    "secondSourcePitchClass": null,
+    "secondSourceStringIndex": null,
+    "thirdSourcePitchClass": null,
+    "thirdSourceStringIndex": null
+  },
+  "lockedCandidatePdfFidelityProof": {
+    "eventCount": 1144,
+    "eventSha256": "4e6f9f247134f79f30a5448515c52a6ca1012c1f1314c3458b448582999e3881",
+    "passed": true,
+    "pdfEventFidelity": 1.0,
+    "referenceOpenedDuringPdfFidelityCheck": false
+  },
+  "mayClaimUnseenGeneralization": false,
+  "safety": {
+    "baselineEventCountPreserved": true,
+    "baselineGeneratedMeasureSetPreserved": true,
+    "deterministic": true,
+    "lockedCandidatePdfFidelityReproved": true,
+    "mainModified": false,
+    "modalGpuInvoked": false,
+    "productionModified": false,
+    "runtimeReferenceInputUsed": false,
+    "v5Modified": false
+  },
+  "schemaVersion": 14425,
+  "selected": "accepted-v144-baseline",
+  "selectedReason": "fit-no-qualified-atomic-generated-only-triad-prune-candidate",
+  "splitPromotionAllowed": false,
+  "stoppedAt": "fit",
+  "validation": null
+}
