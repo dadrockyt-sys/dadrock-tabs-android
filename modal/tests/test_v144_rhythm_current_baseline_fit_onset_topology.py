@@ -129,3 +129,4 @@ class CurrentBaselineFitOnsetTopologyTests(unittest.TestCase):
 
 if __name__ == "__main__":
     unittest.main()
+    # Manual Actions retrigger
