@@ -1,5 +1,6 @@
 name: V144 Rhythm Current-Baseline Fit Diagnostic
 
+# armed for the single fit-only diagnostic execution
 on:
   push:
     branches:
