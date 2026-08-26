@@ -1,0 +1,241 @@
+{
+  "calibrationReferenceUsed": true,
+  "candidateGenerated": false,
+  "candidateModified": false,
+  "classification": "v144-v6-pitch-opportunity-calibration-diagnostic",
+  "evenMeasures": {
+    "bestExactCandidateRank": {
+      "count": 74,
+      "max": 19.0,
+      "mean": 5.45945945945946,
+      "median": 4.5,
+      "min": 1.0,
+      "p10": 1.0,
+      "p25": 2.0,
+      "p75": 7.0,
+      "p90": 11.700000000000003
+    },
+    "bestExactCandidateScoreGapFromTop": {
+      "count": 74,
+      "max": 6.1432336,
+      "mean": 2.3596869344594595,
+      "median": 2.7115680499999995,
+      "min": 0.0,
+      "p10": 0.0,
+      "p25": 1.0164893874999996,
+      "p75": 3.3692151374999995,
+      "p90": 4.49239396
+    },
+    "candidateCount": {
+      "count": 175,
+      "max": 25.0,
+      "mean": 11.8,
+      "median": 11.0,
+      "min": 3.0,
+      "p10": 6.0,
+      "p25": 8.0,
+      "p75": 15.0,
+      "p90": 20.0
+    },
+    "flags": {
+      "allReferenceMidiSetCoveredByCandidates": 49,
+      "allReferencePitchClassSetCoveredByCandidates": 111,
+      "candidateExactHit": 74,
+      "candidatePitchClassHit": 139,
+      "originalV2PrimaryExactHit": 9,
+      "originalV2SelectedExactHit": 9,
+      "primaryExactHit": 19,
+      "topScoreExactHit": 13,
+      "v6AnyExactHit": 21
+    },
+    "primaryWrongButExactCandidateExists": 55,
+    "primaryWrongNoCandidatePitchClassMatch": 36,
+    "primaryWrongNoExactCandidateButPitchClassCandidateExists": 65,
+    "primaryWrongOnsetCount": 156,
+    "referenceEventCountAtOnset": {
+      "count": 175,
+      "max": 4.0,
+      "mean": 1.4742857142857142,
+      "median": 1.0,
+      "min": 1.0,
+      "p10": 1.0,
+      "p25": 1.0,
+      "p75": 2.0,
+      "p90": 3.0
+    },
+    "sharedOnsetCount": 175,
+    "v6EventCountAtOnset": {
+      "count": 175,
+      "max": 4.0,
+      "mean": 1.2971428571428572,
+      "median": 1.0,
+      "min": 1.0,
+      "p10": 1.0,
+      "p25": 1.0,
+      "p75": 2.0,
+      "p90": 2.0
+    }
+  },
+  "interpretationBuckets": {
+    "candidateGenerationMissDefinition": "V6 primary misses and no V2 candidate at that onset even matches a reference pitch class; selection logic alone cannot recover the target pitch class.",
+    "registerOnlyDefinition": "V6 primary misses and exact reference MIDI is absent, but the correct reference pitch class exists in another register in the V2 candidate set.",
+    "selectionFixableDefinition": "V6 primary misses, but exact reference MIDI exists in the original V2 candidate set at the same onset."
+  },
+  "modalInvoked": false,
+  "oddMeasures": {
+    "bestExactCandidateRank": {
+      "count": 88,
+      "max": 19.0,
+      "mean": 4.806818181818182,
+      "median": 4.0,
+      "min": 1.0,
+      "p10": 1.0,
+      "p25": 1.75,
+      "p75": 6.0,
+      "p90": 11.0
+    },
+    "bestExactCandidateScoreGapFromTop": {
+      "count": 88,
+      "max": 5.74877135,
+      "mean": 2.1917179039772727,
+      "median": 2.058317925,
+      "min": 0.0,
+      "p10": 0.0,
+      "p25": 0.004927387499999991,
+      "p75": 3.6298097875000006,
+      "p90": 5.00874099
+    },
+    "candidateCount": {
+      "count": 176,
+      "max": 26.0,
+      "mean": 11.102272727272727,
+      "median": 10.0,
+      "min": 2.0,
+      "p10": 5.0,
+      "p25": 7.0,
+      "p75": 15.0,
+      "p90": 19.0
+    },
+    "flags": {
+      "allReferenceMidiSetCoveredByCandidates": 50,
+      "allReferencePitchClassSetCoveredByCandidates": 100,
+      "candidateExactHit": 88,
+      "candidatePitchClassHit": 139,
+      "originalV2PrimaryExactHit": 16,
+      "originalV2SelectedExactHit": 19,
+      "primaryExactHit": 22,
+      "topScoreExactHit": 22,
+      "v6AnyExactHit": 26
+    },
+    "primaryWrongButExactCandidateExists": 66,
+    "primaryWrongNoCandidatePitchClassMatch": 37,
+    "primaryWrongNoExactCandidateButPitchClassCandidateExists": 51,
+    "primaryWrongOnsetCount": 154,
+    "referenceEventCountAtOnset": {
+      "count": 176,
+      "max": 4.0,
+      "mean": 1.6363636363636365,
+      "median": 1.0,
+      "min": 1.0,
+      "p10": 1.0,
+      "p25": 1.0,
+      "p75": 3.0,
+      "p90": 3.0
+    },
+    "sharedOnsetCount": 176,
+    "v6EventCountAtOnset": {
+      "count": 176,
+      "max": 4.0,
+      "mean": 1.3125,
+      "median": 1.0,
+      "min": 1.0,
+      "p10": 1.0,
+      "p25": 1.0,
+      "p75": 2.0,
+      "p90": 2.0
+    }
+  },
+  "overall": {
+    "bestExactCandidateRank": {
+      "count": 162,
+      "max": 19.0,
+      "mean": 5.104938271604938,
+      "median": 4.0,
+      "min": 1.0,
+      "p10": 1.0,
+      "p25": 2.0,
+      "p75": 7.0,
+      "p90": 11.0
+    },
+    "bestExactCandidateScoreGapFromTop": {
+      "count": 162,
+      "max": 6.1432336,
+      "mean": 2.268444498148148,
+      "median": 2.468802675,
+      "min": 0.0,
+      "p10": 0.0,
+      "p25": 0.34997387499999977,
+      "p75": 3.5588530374999996,
+      "p90": 4.810651315000001
+    },
+    "candidateCount": {
+      "count": 351,
+      "max": 26.0,
+      "mean": 11.450142450142451,
+      "median": 11.0,
+      "min": 2.0,
+      "p10": 5.0,
+      "p25": 7.0,
+      "p75": 15.0,
+      "p90": 20.0
+    },
+    "flags": {
+      "allReferenceMidiSetCoveredByCandidates": 99,
+      "allReferencePitchClassSetCoveredByCandidates": 211,
+      "candidateExactHit": 162,
+      "candidatePitchClassHit": 278,
+      "originalV2PrimaryExactHit": 25,
+      "originalV2SelectedExactHit": 28,
+      "primaryExactHit": 41,
+      "topScoreExactHit": 35,
+      "v6AnyExactHit": 47
+    },
+    "primaryWrongButExactCandidateExists": 121,
+    "primaryWrongNoCandidatePitchClassMatch": 73,
+    "primaryWrongNoExactCandidateButPitchClassCandidateExists": 116,
+    "primaryWrongOnsetCount": 310,
+    "referenceEventCountAtOnset": {
+      "count": 351,
+      "max": 4.0,
+      "mean": 1.5555555555555556,
+      "median": 1.0,
+      "min": 1.0,
+      "p10": 1.0,
+      "p25": 1.0,
+      "p75": 2.0,
+      "p90": 3.0
+    },
+    "sharedOnsetCount": 351,
+    "v6EventCountAtOnset": {
+      "count": 351,
+      "max": 4.0,
+      "mean": 1.3048433048433048,
+      "median": 1.0,
+      "min": 1.0,
+      "p10": 1.0,
+      "p25": 1.0,
+      "p75": 2.0,
+      "p90": 2.0
+    }
+  },
+  "productionModified": false,
+  "referenceEventCount": 946,
+  "referenceOnlyOnsetCount": 252,
+  "referenceOnsetCount": 603,
+  "schemaVersion": 1,
+  "sharedOnsetCount": 351,
+  "unseenHoldout": false,
+  "v6EventCount": 1149,
+  "v6OnlyOnsetCount": 488,
+  "v6OnsetCount": 839
+}
