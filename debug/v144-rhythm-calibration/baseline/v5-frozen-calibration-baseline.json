@@ -1,0 +1,126 @@
+{
+  "baseline": {
+    "criticalMismatchBreakdown": {
+      "grossUnmatchedGeneratedNotes": 1069,
+      "grossUnmatchedReferenceNotes": 806,
+      "missingReferenceMeasures": 0
+    },
+    "criticalMismatchCount": 1875,
+    "gatedMetrics": {
+      "chordPitchSetTolerantF1": 0.022757697456492636,
+      "exactVoicingTolerantF1": 0.022757697456492636,
+      "measureCoverageRecall": 1.0,
+      "pdfEventFidelity": 1.0,
+      "pitchContentF1": 0.2830626450116009,
+      "pitchTimingTolerantF1": 0.044547563805104405,
+      "stringFretTimingTolerantF1": 0.03062645011600928
+    },
+    "generatedEventCount": 1209,
+    "near100CalibrationTargetReached": false,
+    "referenceNoteCount": 946
+  },
+  "classification": "v144-rhythm-gold-calibration-baseline",
+  "diagnosticBuckets": {
+    "chordPitchSet": {
+      "f1": 0.022757697456492636,
+      "falseNegative": 586,
+      "falsePositive": 874,
+      "generated": 891,
+      "matched": 17,
+      "precision": 0.019079685746352413,
+      "recall": 0.028192371475953566,
+      "reference": 603
+    },
+    "exactChordVoicing": {
+      "f1": 0.022757697456492636,
+      "falseNegative": 586,
+      "falsePositive": 874,
+      "generated": 891,
+      "matched": 17,
+      "precision": 0.019079685746352413,
+      "recall": 0.028192371475953566,
+      "reference": 603
+    },
+    "measureCoverage": {
+      "extraGeneratedMeasures": [],
+      "generatedMeasureCount": 113,
+      "matchedReferenceMeasures": 113,
+      "missingReferenceMeasures": [],
+      "recall": 1.0,
+      "referenceMeasureCount": 113
+    },
+    "pitchContent": {
+      "f1": 0.2830626450116009,
+      "falseNegative": 641,
+      "falsePositive": 904,
+      "generated": 1209,
+      "matched": 305,
+      "precision": 0.2522746071133168,
+      "recall": 0.3224101479915433,
+      "reference": 946
+    },
+    "pitchTiming": {
+      "f1": 0.044547563805104405,
+      "falseNegative": 898,
+      "falsePositive": 1161,
+      "generated": 1209,
+      "matched": 48,
+      "precision": 0.03970223325062035,
+      "recall": 0.0507399577167019,
+      "reference": 946
+    },
+    "rendering": {
+      "pdfEventFidelity": 1.0,
+      "pdfEventSha256": "7ed5166a73793e3a40c9a21f6532fee5ba784e43ef4180727404a37a038fb6d1"
+    },
+    "stringFretTiming": {
+      "f1": 0.03062645011600928,
+      "falseNegative": 913,
+      "falsePositive": 1176,
+      "generated": 1209,
+      "matched": 33,
+      "precision": 0.02729528535980149,
+      "recall": 0.03488372093023256,
+      "reference": 946
+    },
+    "technique": {
+      "f1": 0.0,
+      "falseNegative": 0,
+      "falsePositive": 21,
+      "generated": 21,
+      "matched": 0,
+      "precision": 0.0,
+      "recall": 1.0,
+      "reference": 0
+    }
+  },
+  "evaluationRole": "calibration-baseline-not-unseen-holdout",
+  "identities": {
+    "frozenV5CanonicalEventSha256": "7ed5166a73793e3a40c9a21f6532fee5ba784e43ef4180727404a37a038fb6d1",
+    "goldReferenceSha256": "18fd868ae960dfcdd1ffb0110f1a9dfd8acc2ffeb46e247d1116cd54291526ac",
+    "pdfEventSha256": "7ed5166a73793e3a40c9a21f6532fee5ba784e43ef4180727404a37a038fb6d1"
+  },
+  "instrument": "rhythm",
+  "priorityOrder": [
+    "pitch-content-and-chord-set",
+    "timing-and-onset-alignment",
+    "string-fret-voicing",
+    "technique-notation"
+  ],
+  "protocol": {
+    "goldReferenceMayBeUsedForV144Calibration": true,
+    "legacyScorerTerminologyRetainedInternally": true,
+    "legacyScoringMode": "isolated-professional-human-holdout-post-freeze",
+    "mainModified": false,
+    "mayClaimUnseenGeneralization": false,
+    "modalGpuInvoked": false,
+    "productionModified": false,
+    "v5CandidateModified": false,
+    "v5ResultModified": false,
+    "v5ThresholdModified": false,
+    "v5WorkflowRerun": false
+  },
+  "reproducesImmutableHistoricalV5ScoreExactly": true,
+  "schemaVersion": 14401,
+  "sourceCandidateRole": "immutable-v5-read-only-baseline"
+}
