@@ -1,0 +1,47 @@
+{
+  "classification": "v144-rhythm-split-selected-candidate-full-invariant-evaluated",
+  "instrument": "rhythm",
+  "name": "prune-conjunction-33ac980932c68313",
+  "safety": {
+    "mainModified": false,
+    "modalGpuInvoked": false,
+    "pdfEventFidelityMustRemainExactlyOne": true,
+    "pdfEventFidelityProven": true,
+    "productionModified": false,
+    "runtimeReferenceInputUsed": false,
+    "v5Modified": false
+  },
+  "schemaVersion": 14403,
+  "selectedCandidate": {
+    "eventCount": 1112,
+    "eventSha256": "db5c8e8fbbb767c386f14a00df188c89738230694840c48bed1bae32b2653b4f",
+    "pdfEventFidelity": 1.0,
+    "pdfEventSha256": "db5c8e8fbbb767c386f14a00df188c89738230694840c48bed1bae32b2653b4f"
+  },
+  "selectionEvidence": {
+    "calibrationPromotionAllowed": false,
+    "canaryPassed": true,
+    "fitPassed": true,
+    "fullGoldCalibrationInvariantPassed": false,
+    "mayClaimUnseenGeneralization": false,
+    "mayPromoteProduction": false,
+    "promotionScope": "v144-calibration-only",
+    "splitSelectionSupersededByFullInvariant": true,
+    "validationPassed": true
+  },
+  "sourceCandidate": {
+    "eventCount": 1209,
+    "eventSha256": "7ed5166a73793e3a40c9a21f6532fee5ba784e43ef4180727404a37a038fb6d1",
+    "role": "immutable-v5-read-only-baseline"
+  },
+  "sourceSelectionReportGitBlob": "b92a3638d5b8fff0e911df43fb381f89f088afd6",
+  "transform": {
+    "professionalReferenceRuntimeInput": false,
+    "runtimeInputs": "reference-free-event-context-only",
+    "signatures": [
+      "register::high",
+      "section16::1"
+    ],
+    "type": "two-signature-conjunction-prune"
+  }
+}
