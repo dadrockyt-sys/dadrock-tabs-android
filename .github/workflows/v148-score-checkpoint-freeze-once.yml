@@ -1,0 +1,55 @@
+name: V148 score checkpoint freeze once
+
+on:
+  push:
+    branches:
+      - v143-contextual-prune-lobo
+    paths:
+      - .github/workflows/v148-score-checkpoint-freeze-once.yml
+
+permissions:
+  contents: write
+
+jobs:
+  checkpoint:
+    if: github.event.head_commit.message == 'ci: checkpoint frozen V148 scoring authorization'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: v143-contextual-prune-lobo
+          fetch-depth: 0
+      - name: Verify frozen identities
+        shell: bash
+        run: |
+          set -euo pipefail
+          test "$(git hash-object debug/v148-singleton-only/phase-c-scoring-authorization.json)" = "2647f1b985339f80b7b9d09afea3eebe49fdabb0"
+          test "$(git hash-object validation/v148_singleton_only/score_once.py)" = "8137734218a722bb12f364ecfea3d1b8e526cc2c"
+          test "$(git hash-object debug/v148-singleton-only/candidate/candidate.json)" = "0d3df7336db965dc111fec067d0abe75ea3926cc"
+      - name: Append checkpoint and self-seal
+        shell: bash
+        run: |
+          set -euo pipefail
+          marker='## V148 Phase C one-use Gold calibration score — AUTHORIZED / FROZEN / STOP BEFORE EXECUTION — 2026-08-27 UTC'
+          if grep -Fq "$marker" docs/checkpoints/CURRENT_STATE.md; then
+            echo 'Checkpoint marker already exists; refusing duplicate append.' >&2
+            exit 1
+          fi
+          cat >> docs/checkpoints/CURRENT_STATE.md <<'EOF'
+
+## V148 Phase C one-use Gold calibration score — AUTHORIZED / FROZEN / STOP BEFORE EXECUTION — 2026-08-27 UTC
+- Fresh user instruction `Please continue` was received immediately after the V148 construction checkpoint and the stated need for a frozen reference-facing score; this is recorded as authorization for **exactly one V148 singleton-only Gold calibration score** and nothing else.
+- Authorization record: `debug/v148-singleton-only/phase-c-scoring-authorization.json`; Git blob **`2647f1b985339f80b7b9d09afea3eebe49fdabb0`**; authorization commit `8cdbde7988c8ecfd867b1447f08d9982a2da66bd`.
+- Frozen one-use scorer: `validation/v148_singleton_only/score_once.py`; Git blob **`8137734218a722bb12f364ecfea3d1b8e526cc2c`**; freeze commit `ddd84c42858c6396b14a996663855446310e5269`.
+- Immutable candidate remains `debug/v148-singleton-only/candidate/candidate.json`; Git blob `0d3df7336db965dc111fec067d0abe75ea3926cc`; file SHA256 `b45034e2a4dd10a3d7784e584fccdbc7e49667a5b93c9a77ea42f5562ae139bb`; canonical event SHA256 **`1be67004dea62b14740241b536339bb7cad2ecf3ee9e98bfb6109f67e4e1b1fa`**; 1144 events / 113 measures / exactly 106 singleton changed events / 0 polyphonic changed events.
+- Frozen evaluator identities remain wrapper `1ca2b8550d6c08e793f26b3aa91b99fb44fa7ddb`, core scorer `cc4bf61a99f22bf87a6c255e5a81220fbc82223b`, canonical adapter `088d44827fb23e20d9aeeb4944a672989af5846c`; Gold expected SHA256 remains `18fd868ae960dfcddc1ffb0110f1a9dfd8acc2ffeb46e247d1116cd54291526ac`.
+- The scorer must complete all candidate/construction/PDF/completion/authorization/provenance/evaluator/baseline identity gates **before** reading Gold bytes, then verify the Gold SHA before parsing, and invoke the historical score exactly once.
+- Candidate search, alternate candidate, threshold/weight/filter retuning, audio reread/HPSS/CQT, Modal/L4/GPU, main/Production modification, automatic promotion, and any second score call remain **FORBIDDEN**.
+- At this checkpoint Gold/reference content opened by the V148 scoring phase: **NO**; score calls: **0**. Execution is not yet armed; next step is a one-use fail-closed workflow with a durable attempt sentinel.
+EOF
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git rm .github/workflows/v148-score-checkpoint-freeze-once.yml
+          git add docs/checkpoints/CURRENT_STATE.md
+          git commit -m 'docs: checkpoint frozen V148 scoring phase [skip ci]'
+          git push origin HEAD:v143-contextual-prune-lobo
