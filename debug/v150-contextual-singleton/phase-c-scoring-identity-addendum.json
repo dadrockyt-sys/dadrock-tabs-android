@@ -1,0 +1,18 @@
+{
+  "schema": "dadrock.tabs.v150.contextual-singleton.phase-c-scoring-identity-addendum.v1",
+  "classification": "reference-free-gold-identity-source-clarification",
+  "branch": "v143-contextual-prune-lobo",
+  "authorizationGitBlob": "5fbf389df62c89702e911dc38097f5833e6e9b05",
+  "authoritativeGoldIdentitySource": {
+    "path": "debug/v149-singleton-confidence/phase-c-score/score-result.json",
+    "gitBlob": "efaaeb781e99d4d5e89e601f9e3167869a0de7ad",
+    "fileSha256": "29c56823b4a3f81f5af6db20c562af9b3b59a646160711eb11ff368cbdd7b6df",
+    "field": "reference.sha256",
+    "requiredLength": 64,
+    "requiredEncoding": "lowercase-hex",
+    "provenance": "This field was produced by the successful V149 score from hashlib.sha256(actual Gold bytes).hexdigest() after the frozen V147 identity recovery."
+  },
+  "rule": "V150 scoring may load this already-persisted V149 result reference-free, validate reference.sha256 as 64 lowercase hex, then use it only as the expected identity when verifying Gold bytes before parsing. No literal Gold SHA is manually transcribed into V150 code.",
+  "scientificProtocolUnchanged": true,
+  "scoreCallMaximum": 1
+}
