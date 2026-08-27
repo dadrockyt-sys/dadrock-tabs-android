@@ -1,0 +1,90 @@
+name: V148 score hash constant diagnose once
+
+on:
+  push:
+    paths:
+      - '.github/workflows/v148-score-constant-diagnose-once.yml'
+
+permissions:
+  contents: write
+
+jobs:
+  diagnose:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: v143-contextual-prune-lobo
+          fetch-depth: 0
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12.14'
+      - name: Diagnose constants without Gold access
+        run: |
+          set -euo pipefail
+          test "$(git hash-object validation/v148_singleton_only/score_once.py)" = "8137734218a722bb12f364ecfea3d1b8e526cc2c"
+          test "$(git hash-object validation/v147_phase_d/score_once.py)" = "74b31168b629812acde874b89dfcdf022acf987d"
+          test "$(git hash-object debug/v148-singleton-only/phase-c-score-attempt-sentinel.json)" = "ff1bab2ab7c707bca28f955e1262ce16e2424ca6"
+          python - <<'PY'
+          import importlib.util
+          import json
+          from pathlib import Path
+
+          def load(path, name):
+              spec = importlib.util.spec_from_file_location(name, path)
+              mod = importlib.util.module_from_spec(spec)
+              assert spec.loader is not None
+              spec.loader.exec_module(mod)
+              return mod
+
+          v148 = load('validation/v148_singleton_only/score_once.py', 'v148_score_once_diagnostic')
+          v147 = load('validation/v147_phase_d/score_once.py', 'v147_score_once_diagnostic')
+          a = v148.EXPECTED['goldSha256']
+          b = v147.EXPECTED['goldSha256']
+          report = {
+              'schema': 'dadrock.tabs.v148.phase-c-score-constant-diagnosis.v1',
+              'classification': 'reference-free-infrastructure-diagnosis',
+              'v148ExpectedGoldSha': a,
+              'v148ExpectedGoldShaLength': len(a),
+              'v148ExpectedGoldShaAsciiCodepoints': [ord(c) for c in a],
+              'v148ExpectedGoldShaIsLowerHex': all(c in '0123456789abcdef' for c in a),
+              'v148ExpectedGoldShaHasSha256HexLength': len(a) == 64,
+              'v147ExpectedGoldSha': b,
+              'v147ExpectedGoldShaLength': len(b),
+              'v147AndV148ConstantsEqual': a == b,
+              'goldRead': False,
+              'referenceParsed': False,
+              'scoreCallCount': 0,
+              'candidateSearchRun': False,
+              'retuningRun': False,
+              'audioRead': False,
+              'modalGpuUsed': False,
+              'productionIntegrated': False
+          }
+          out = Path('debug/v148-singleton-only/phase-c-score-constant-diagnosis.json')
+          out.write_text(json.dumps(report, indent=2, sort_keys=True) + '\n')
+          print(json.dumps(report, indent=2, sort_keys=True))
+          PY
+      - name: Persist diagnosis and checkpoint
+        run: |
+          set -euo pipefail
+          python - <<'PY'
+          import hashlib, json
+          from pathlib import Path
+          p = Path('debug/v148-singleton-only/phase-c-score-constant-diagnosis.json')
+          r = json.loads(p.read_text())
+          sha = hashlib.sha256(p.read_bytes()).hexdigest()
+          cp = Path('docs/checkpoints/CURRENT_STATE.md')
+          text = cp.read_text()
+          marker = '## V148 Phase C score failure — REFERENCE-FREE CONSTANT DIAGNOSIS COMPLETE — 2026-08-27 UTC'
+          if marker in text:
+              raise SystemExit('diagnosis checkpoint already exists')
+          text += f'''\n\n{marker}\n- Recovery run `33045568440` consumed the attempt sentinel before Gold access, then read Gold bytes but failed **before reference parsing and before any score call** at the frozen expected-Gold-SHA equality check. Runtime-computed Gold SHA was printed as the historically expected value; no result was persisted.\n- Reference-free diagnosis file: `debug/v148-singleton-only/phase-c-score-constant-diagnosis.json`; SHA256 **`{sha}`**.\n- Frozen V148 expected-Gold string length: **{r['v148ExpectedGoldShaLength']}**; valid SHA256 hex length: **{r['v148ExpectedGoldShaHasSha256HexLength']}**; lowercase-hex-only: **{r['v148ExpectedGoldShaIsLowerHex']}**.\n- Historical V147 runner expected-Gold string length: **{r['v147ExpectedGoldShaLength']}**; V147/V148 constants byte-for-byte equal: **{r['v147AndV148ConstantsEqual']}**.\n- This diagnosis did **not** read Gold/reference, parse reference, invoke the scorer, inspect audio, use Modal/GPU, search candidates, retune, touch main/Production, or promote. Total V148 score calls remain **0**.\n- Any recovery must remain infrastructure-only and preserve the original limit of **at most one historical score call**.\n'''
+          cp.write_text(text)
+          PY
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git rm .github/workflows/v148-score-constant-diagnose-once.yml
+          git add debug/v148-singleton-only/phase-c-score-constant-diagnosis.json docs/checkpoints/CURRENT_STATE.md
+          git commit -m 'debug: persist V148 score constant diagnosis [skip ci]'
+          git push origin HEAD:v143-contextual-prune-lobo
