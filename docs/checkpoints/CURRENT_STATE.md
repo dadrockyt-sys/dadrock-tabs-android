@@ -2,15 +2,15 @@
 
 Updated: 2026-08-26 America/Montreal / 2026-08-27 UTC
 Branch: `v143-contextual-prune-lobo`
-Active phase: **V147 Phase C REAL-AUDIO ARTIFACT-FIRST CONSTRUCTION = GO / SEALED, and the fresh V147 durable replay bundle = COMPLETE / SEALED. Exactly one immutable candidate was constructed from the exact historical audio. The completed 13-file evidence artifact has been hash-gated and permanently mirrored into the branch for future reference-free replay without audio/Modal/L4/GPU access. Both one-use Phase-C workflows are deleted. Phase D REFERENCE-FREE DESIGN/FREEZE = COMPLETE / NO-GO FOR REFERENCE-FACING SCORING. The exact historical full calibration evaluator + candidate adapter are unresolved, and the checkpoint-claimed Gold path is unavailable on the live branch. No reference/gold was opened and no score was run.**
+Active phase: **V147 Phase C REAL-AUDIO ARTIFACT-FIRST CONSTRUCTION = GO / SEALED, and the fresh V147 durable replay bundle = COMPLETE / SEALED. Exactly one immutable candidate was constructed from the exact historical audio. The completed 13-file evidence artifact has been hash-gated and permanently mirrored into the branch for future reference-free replay without audio/Modal/L4/GPU access. Both one-use Phase-C workflows are deleted. Phase D REFERENCE-FREE DESIGN/FREEZE = COMPLETE. Historical provenance recovery now hash-binds the exact pre-candidate Gold builder, Gold identity, full Rhythm calibration evaluator, and canonical V143 render-event adapter. Technical gates 1–3 are TRUE. Reference-facing scoring remains STOPPED because fresh explicit user authorization gate 4 is FALSE. The professional image body and Gold JSON body were not opened in this recovery, and no new score was run.**
 
 ## Permanent safety / fixed protocol
 - Work only on `v143-contextual-prune-lobo`; never modify/merge `main` or Production.
 - `/ai-tab` frontend, Bass/Lead, `freezeReady=false`, main, Production untouched.
 - Phase C authorization covered artifact-first construction only and is now consumed/sealed.
-- Phase D/reference/gold scoring remains unauthorized.
+- Phase D/reference/gold scoring remains unauthorized until fresh explicit user authorization.
 - Any future Modal/L4/GPU execution requires a separately frozen protocol and fresh explicit user authorization; **do not infer Modal authorization from the completed Phase-C audio authorization.**
-- Gold SHA256 `18fd868ae960dfcddc1ffb0110f1a9dfd8acc2ffeb46e247d1116cd54291526ac` was not opened/used.
+- Gold SHA256 `18fd868ae960dfcddc1ffb0110f1a9dfd8acc2ffeb46e247d1116cd54291526ac` is now provenance-verified from the frozen pre-candidate builder/workflow/persistence chain, but its JSON body was not opened in the current Phase-D recovery.
 - No automatic promotion, candidate search, alternate candidate, post-result retuning, Modal/L4/GPU, or Production integration.
 
 ## Accepted Rhythm baseline — UNCHANGED
@@ -183,7 +183,7 @@ Active phase: **V147 Phase C REAL-AUDIO ARTIFACT-FIRST CONSTRUCTION = GO / SEALE
 - Freeze commit: **`be51a2cdb9ac0d4f7bf145213703b24a9cf808ea`**.
 - Preregistration Git blob: **`51ce1bf65b46b1d44e4307080d45b3658da17c7f`**.
 - Source HEAD before freeze: `8d884ce03b9806775fd264f76b9ba40f541ebd8b`.
-- Status: **`NO_GO_FOR_REFERENCE_FACING_SCORING`**.
+- Status at that time: **`NO_GO_FOR_REFERENCE_FACING_SCORING`**; the technical gate values below are historical and superseded by the latest provenance recovery addendum.
 
 ### Reference-free discovery results frozen into the preregistration
 - Immutable candidate is bound to:
@@ -192,54 +192,88 @@ Active phase: **V147 Phase C REAL-AUDIO ARTIFACT-FIRST CONSTRUCTION = GO / SEALE
   - file SHA256 `c0215690d5bfd9d2d47b8784eee886e942fbd28c499f25c643635c45ff7a9636`
   - canonical event SHA256 `ca35c3492295a3079c17c35124df7a483166315e85649e95ded095c6c06b2b77`
   - event count `1144`, instrument `rhythm`.
-- Candidate input shape is proven as a rhythm `renderEvents` document with event fields including event index, measure/step, duration steps/seconds, MIDI, string/fret, sustain tier, and techniques. **No evaluator adapter has been invented or inferred from that shape.**
+- Candidate input shape is proven as a rhythm `renderEvents` document with event fields including event index, measure/step, duration steps/seconds, MIDI, string/fret, sustain tier, and techniques.
 - The checkpoint-claimed evaluator path `debug/history/v143-v147/src/run_v143_local_calibration.py` is absent and a branch-scoped commit-history query for that exact path returned no matching commits.
-- The checkpoint-claimed Gold path `debug/history/v143-v147/preserved-gold/tabs_Full_calibration_report-gold.json` is absent from the live tree and a branch-scoped commit-history query for that exact path returned no matching commits. Gold content was not opened and the expected SHA256 was therefore not reverified from bytes.
+- The checkpoint-claimed Gold path `debug/history/v143-v147/preserved-gold/tabs_Full_calibration_report-gold.json` is absent from the live tree and a branch-scoped commit-history query for that exact path returned no matching commits.
 - Current live `debug/` has no `debug/history` directory. The authoritative tree contains `v143-contextual-prune`, `v143-grading`, `v144-rhythm-calibration`, and later V145–V147 debug directories instead.
 - `debug/v143-grading/last_grade_cmd.py` is frozen/excluded as a substitute at Git blob `bfa8129e78d65d0e21b31dd3ddb1ef2a22ccebe5` because it is the exact temporary rhythm-segment WAV/rubric grader, not the full accepted-anchor evaluator.
-- `debug/v143-grading/grade_current_reference.py` is frozen/excluded as a substitute at Git blob `990e6388acf574abd9501e7257d056b03e2d8739` because it is the `v1.4.3-rhythm-reference-grader-v1` wrapper, not a proven full calibration evaluator.
-- Recursive metadata inspection of V1.4.4 rhythm-calibration tree `2b6a6172d9c5b2d95bf620e2710dc0c5498dddec` found baselines/candidates/diagnostics/proofs/reference/selected artifacts but no executable `.py` scorer. Its reference and selected-score JSON contents were **not opened**.
-- `public/training/v143-musical-reconstruction-calibration/` likewise presented frozen models/events/reports in metadata inspection; no executable scorer was established from it and calibration/reference artifact bodies were not used to construct a scorer.
+- `debug/v143-grading/grade_current_reference.py` is frozen/excluded as a substitute at Git blob `990e6388acf574abd9501e7257d056b03e2d8739` because it is the `v1.4.3-rhythm-reference-grader-v1` wrapper, not the full Gold calibration scorer used for the accepted V144 family.
+- Recursive metadata inspection of V1.4.4 rhythm-calibration tree originally appeared artifact-only; later provenance recovery found the executable scorer under `validation/`, not under `debug/`.
 
-### Frozen GO gates — all must be true before scoring can even be requested
-1. Recover and hash-bind the **exact historical full calibration evaluator** from independently verifiable pre-candidate provenance. Current value: **false**.
-2. Recover and hash-bind the **exact historical candidate adapter contract** expected by that evaluator. Current value: **false**.
-3. Locate/restore the intended Gold artifact and verify its bytes match SHA256 `18fd868ae960dfcddc1ffb0110f1a9dfd8acc2ffeb46e247d1116cd54291526ac` without using its contents for tuning/reconstruction. Current value: **false**.
+### Frozen GO gates — historical values, superseded by latest addendum
+1. Recover and hash-bind the **exact historical full calibration evaluator** from independently verifiable pre-candidate provenance. Historical value: **false**; latest addendum: **true**.
+2. Recover and hash-bind the **exact historical candidate adapter contract** expected by that evaluator. Historical value: **false**; latest addendum: **true**.
+3. Locate/restore the intended Gold artifact and verify its bytes match SHA256 `18fd868ae960dfcddc1ffb0110f1a9dfd8acc2ffeb46e247d1116cd54291526ac` without using its contents for tuning/reconstruction. Historical value: **false**; latest addendum: **true from the immutable pre-candidate build/persistence proof chain**.
 4. After gates 1–3 are frozen true, obtain **fresh explicit user authorization** for the one-use reference-facing score. Current value: **false**.
 
 ### Frozen fail-closed rules
-- Any false GO gate means **STOP** before opening reference/gold content or computing a score.
+- Any false current GO gate means **STOP** before reference-facing scoring.
 - Do not reconstruct a scorer from accepted scores, Gold/reference contents, selected-score artifacts, or post-candidate observations.
-- Do not substitute either known rhythm-only grader merely because it is executable.
-- Do not create a candidate-format adapter unless it is the already-fixed historical adapter proven by independent provenance.
+- Do not substitute either known V143 rhythm-segment grader merely because it is executable.
+- Do not create a musical candidate-format conversion; only the already-fixed historical V143 `canonical_events` / `flatten_generated` adapter may be used.
 - Do not alter the immutable candidate, search variants, retune thresholds, recompute audio/CQT, or run Modal/L4/GPU.
 - Do not integrate/promote to main or Production.
 
-### Exact future evaluation order if gates 1–3 are repaired and gate 4 is explicitly authorized
-1. Verify branch and this preregistration identity.
+### Exact future evaluation order if gate 4 is explicitly authorized
+1. Verify branch plus latest Phase-D provenance addendum identity.
 2. Verify immutable candidate file SHA256 and canonical event SHA256.
-3. Verify recovered evaluator + adapter identities against independently frozen historical provenance.
-4. Verify Gold bytes SHA256 equals the frozen expected Gold SHA256.
-5. Run **exactly one** comparison of the immutable candidate using the frozen evaluator/adapter and Gold.
-6. Persist criterion-wise evidence, exact score vector/deltas, all input/evaluator/adapter hashes, environment identity, and execution log.
-7. No tuning/search/second candidate/threshold change/audio recomputation after result visibility.
-8. Seal the one-use scoring path and checkpoint the result. No automatic promotion.
+3. Verify recovered full-calibration wrapper, core scorer, and canonical adapter Git blobs.
+4. Verify Gold bytes SHA256 equals `18fd868ae960dfcddc1ffb0110f1a9dfd8acc2ffeb46e247d1116cd54291526ac` before JSON parsing.
+5. Load V147 `renderEvents` through the frozen V143 canonical adapter only; no new musical conversion.
+6. Validate Gold with the frozen `validate_reference` routine and run **exactly one** `score_full_candidate` comparison.
+7. Persist fixed gated metrics, `criticalMismatchCount`, exact baseline deltas, all input/evaluator/adapter hashes, environment identity, and execution log.
+8. No tuning/search/second candidate/threshold change/audio recomputation after result visibility.
+9. Seal the one-use scoring path and checkpoint the result. No automatic promotion.
+
+## Phase-D provenance recovery addendum — TECHNICAL GATES 1–3 TRUE / AWAITING AUTHORIZATION — 2026-08-27 UTC
+- User clarified that the professional human-written reference source is on `main` at `public/Professionalexample.jpg` (actual case-sensitive repository path; the typed path was `prefessionalexample.jpg`).
+- Current observed `main` commit: `5d9c97af1391686fe27726f524180b533a53d63d`.
+- `public/Professionalexample.jpg`: Git blob `16106197cc1269cca0b3c443908d5ef75e8b4d3e`, `979815` bytes.
+- Image introduction commit: `e0f91e74c815b9ecdf0a72fae6d1523414b34577` at `2026-07-30T22:59:58Z`, before all V144/V147 scorer/candidate work.
+- Frozen professional-image SHA256 from the historical builder/workflow: `aca2da3e8d551b2fd82b4ab3ecafa0c8932d6c0a27b54b6213ffc990ca08a9a9`.
+- Exact Gold builder: `validation/v144_rhythm_calibration/build_gold_reference.py`; current Git blob `1c6e02aa311cf58181d0ff348553bd99025a56f9`; introduced at commit `2b0fb21245d5ef01d0a5b6e65c39fa2740df3e69`.
+- The builder hard-binds structured source SHA256 `18cdb4f8afb49562aac5b600730384636070d6ca8650823e759276a81ee4afc8`, professional image SHA256 `aca2...a9a9`, and Gold reference SHA256 `18fd...526ac` and rejects identity drift.
+- Historical CPU build workflow commit `2fc0007caa73a23afc52450d4d0977b64c4dda1e` explicitly fetched the image at immutable commit `e0f91e74...`, SHA256-verified the image, fetched/hash-verified the exact structured source, ran the builder, SHA256-verified the resulting Gold JSON as `18fd...526ac`, and staged only the Gold JSON + build report.
+- Gold persistence commit: `0df6204909ca79bdd3a5bf1be4f1ca4d55cca53f` (`Persist exact V144 gold rhythm calibration reference`).
+- Gold build report: `debug/v144-rhythm-calibration/reference/professional-rhythm-gold-reference-build.json`, blob `5f1ec40176aa9b69676c7cd9e06b42c412731f37`; it records `exactHistoricalReferenceIdentity=true`, professional-image SHA `aca2...a9a9`, and Gold SHA `18fd...526ac`.
+- Intended Gold JSON: `debug/v144-rhythm-calibration/reference/professional-rhythm-gold-reference.json`, current Git blob `248741bade9665a34648c59a2994bd27d73fc406`; its body was **not opened** in this recovery.
+- An attempted tool-only opaque current-byte download was blocked before access; rather than weaken the no-view rule, gate 3 is established from the immutable historical workflow's explicit SHA256 verification plus same-commit persisted report and unchanged Git blob/history. No Gold musical content was inspected.
+- Exact historical full-calibration wrapper: `validation/v144_rhythm_calibration/score_selected_conjunction_candidate.py`, Git blob `1ca2b8550d6c08e793f26b3aa91b99fb44fa7ddb`; introduced at commit `f76635d1db58d5ed11a018c5ee461c566bb983ae` on `2026-08-26T06:02:31Z`, before V147 candidate construction.
+- Core professional Rhythm scorer: `validation/rhythm_holdout/score_rhythm_holdout.py`, Git blob `cc4bf61a99f22bf87a6c255e5a81220fbc82223b`; originally introduced at `e085296ac107f98dde2b67bc076bec3fbd240d57`, then aligned to V143 render events at `01c0644bf9b111920d40db96ae171360059ab714`, both on `2026-08-23`.
+- Exact candidate adapter/canonical contract: `validation/rhythm_holdout/canonical.py`, Git blob `088d44827fb23e20d9aeeb4944a672989af5846c`; aligned to V143 render contract at commit `20779870327370b204529a2582e1b6ec7d75c4ea` on `2026-08-23`.
+- Critically, `088d448...` is the **same canonical helper blob already frozen in the V147 Phase-C protocol**, so V147 `candidate.json` is already in the historical scorer's V143 `renderEvents` contract. No new musical adapter or conversion is required.
+- Historical scoring path is therefore fixed as `candidate.renderEvents -> canonical_events -> flatten_generated -> score_full_candidate`.
+- Fixed gated metrics are `pitchContentF1`, `pitchTimingTolerantF1`, `stringFretTimingTolerantF1`, `chordPitchSetTolerantF1`, `exactVoicingTolerantF1`, `measureCoverageRecall`, plus `criticalMismatchCount`; scorer tolerances remain step `0.5`, gross step `2.0`, duration `0.25`.
+- Accepted family #10 manifest `debug/v144-rhythm-calibration/selected/v144-singleton-onset-replacement-selected-baseline.json`, blob `acd12ab68ad16b8faabf38ddc9e1cc0c1e7c4b68`, confirms the exact accepted anchors: pitch content `0.35406698564593303`, pitch timing `0.06698564593301436`, string/fret timing `0.05454545454545454`, chord pitch-set `0.0580511402902557`, exact voicing `0.0580511402902557`, measure coverage `1.0`, PDF event fidelity `1.0`, and critical mismatch count `1712`.
+- Recovery addendum path: `debug/v147-phase-d-reference-free/phase-d-provenance-recovery-1.json`.
+- Recovery addendum commit: **`1ef7d1cb6ea5ce820353b515d1c8ef64749b0387`**.
+- Recovery addendum Git blob: **`ecb2539778fe5aa547a8fa88c1216b8562faaebc`**.
+
+### Current Phase-D gates after provenance recovery
+1. Exact historical full calibration evaluator recovered + hash-bound: **TRUE**.
+2. Exact historical candidate adapter contract recovered + hash-bound: **TRUE**.
+3. Intended professional-image → structured Gold → persisted Gold identity/provenance chain recovered and Gold SHA256 pre-candidate verified: **TRUE**.
+4. Fresh explicit user authorization for the one-use reference-facing V147 score: **FALSE**.
 
 ## LATEST FRESH-CHAT HANDOFF — AUTHORITATIVE
-1. Re-read this checkpoint and re-fetch `v143-contextual-prune-lobo`; verify candidate SHA `ca35c3492295a3079c17c35124df7a483166315e85649e95ded095c6c06b2b77`, durable manifest blob `9f67507b448eb3a36f6e5d2d96572af425c42cb5`, and Phase-D preregistration blob `51ce1bf65b46b1d44e4307080d45b3658da17c7f`.
-2. **Do not score.** Phase-D design/freeze is complete but technical GO gates 1–3 are false and scoring authorization gate 4 is also false.
-3. If continuing reference-free preparation, only recover provenance/identities for the exact historical full evaluator, exact historical adapter, and intended Gold storage location. Do not open Gold/reference contents and do not derive a scorer from result artifacts.
-4. Once gates 1–3 can be proven true, update the frozen preregistration/checkpoint **before** any reference-facing action, then STOP and ask for fresh explicit user authorization.
-5. No Modal/L4/GPU/audio recomputation, candidate search, retuning, main/Production change, or automatic promotion is authorized.
+1. Re-read this checkpoint and re-fetch `v143-contextual-prune-lobo`; verify candidate SHA `ca35c3492295a3079c17c35124df7a483166315e85649e95ded095c6c06b2b77`, durable manifest blob `9f67507b448eb3a36f6e5d2d96572af425c42cb5`, original Phase-D preregistration blob `51ce1bf65b46b1d44e4307080d45b3658da17c7f`, and provenance-recovery addendum blob `ecb2539778fe5aa547a8fa88c1216b8562faaebc`.
+2. Technical gates 1–3 are now **TRUE** from independently verifiable historical pre-candidate provenance. Do not reopen the earlier technical search unless an identity has changed.
+3. **Do not score until the user gives fresh explicit authorization.** Gate 4 is the only remaining Phase-D gate.
+4. If explicitly authorized, create/use the smallest one-use CPU scoring path implementing only the frozen evaluation order above; score exactly the immutable V147 candidate once against Gold SHA `18fd...526ac` with the frozen evaluator/adapter identities. No candidate variants, search, retuning, audio recomputation, Modal/L4/GPU, or Production integration.
+5. Persist exact result/proof identities, seal/delete any one-use scoring workflow immediately after execution, update this checkpoint, then decide from the score whether any future large Modal/L4 experiment is scientifically justified. Any such Modal/L4 run remains a separate preregistered phase requiring separate fresh authorization.
 
 ## AUTHORITATIVE CURRENT STOP POINT
 - V147 Phase C real-audio construction = **GO / SEALED**.
 - Durable V147 replay preservation = **COMPLETE / SEALED**.
 - Phase-D reference-free design/freeze = **COMPLETE**.
-- Phase-D reference-facing scoring = **NO-GO / BLOCKED**.
-- Gold/reference content opened in this continuation: **NO**.
-- Calibration score run in this continuation: **NO**.
+- Phase-D historical evaluator/adapter/Gold provenance recovery = **COMPLETE**.
+- Phase-D technical gates 1–3 = **TRUE**.
+- Phase-D reference-facing scoring authorization gate 4 = **FALSE / STOP**.
+- Professional image body opened in this recovery: **NO**.
+- Gold JSON body opened in this recovery: **NO**.
+- Historical non-reference build metadata/scorer code/baseline report inspected: **YES, for provenance/identity only**.
+- New V147 calibration score run: **NO**.
 - New Modal/L4/GPU/audio execution: **NO**.
 - Candidate variants/search/retuning: **NO**.
-- Main/Production integration: **NO**.
-- Next safe work, if resumed: reference-free recovery of exact historical evaluator/adapter/Gold storage provenance only; otherwise STOP.
+- Main/Production modification: **NO**.
+- Next action requires the user's fresh explicit authorization for exactly one frozen Phase-D V147 Gold calibration score.
