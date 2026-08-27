@@ -1,0 +1,21 @@
+{
+  "acceptedBaselineChanged": false,
+  "branch": "v143-contextual-prune-lobo",
+  "canaryLabelsRead": false,
+  "coreBlob": "2fd979aebb4685e86c7f24a0162f69de306c06e9",
+  "cpuContractTestsPassed": true,
+  "fitLabelsRead": false,
+  "goldInputUsed": false,
+  "liveAudioBenchmarkRun": false,
+  "modalDependency": false,
+  "modalGpuUsed": false,
+  "preregistrationCommit": "5a5c59d305dffba16090bc7dc37d33ecbb17e295",
+  "proofType": "v145-rhythm-decoder-cpu-core",
+  "runtimeReferenceInput": false,
+  "schemaVersion": 14501,
+  "testBlob": "9d48b02316f4eb364b163b3027c6c4d79304ac27",
+  "validationLabelsRead": false,
+  "workflowHeadSha": "8aac002fd53ae65a245ffe932fc543909218b910",
+  "workflowJob": "cpu-proof",
+  "workflowRunId": 33026865312
+}
