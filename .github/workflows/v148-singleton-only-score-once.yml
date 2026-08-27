@@ -1,0 +1,181 @@
+name: V148 singleton-only Gold score once
+
+on:
+  push:
+    paths:
+      - '.github/workflows/v148-singleton-only-score-once.yml'
+
+permissions:
+  contents: write
+
+jobs:
+  score-once:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: v143-contextual-prune-lobo
+          fetch-depth: 0
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12.14'
+
+      - name: Reference-free preflight before consuming attempt
+        run: |
+          set -euo pipefail
+          test ! -e debug/v148-singleton-only/phase-c-score/score-result.json
+          test ! -e debug/v148-singleton-only/phase-c-score-complete-sentinel.json
+          test "$(git hash-object debug/v148-singleton-only/phase-c-score-attempt-sentinel.json)" = "5b4d6d7fd0af210f4ffa96618c2d7e7905e33469"
+          test "$(git hash-object debug/v148-singleton-only/phase-c-scoring-authorization.json)" = "2647f1b985339f80b7b9d09afea3eebe49fdabb0"
+          test "$(git hash-object validation/v148_singleton_only/score_once.py)" = "8137734218a722bb12f364ecfea3d1b8e526cc2c"
+          test "$(git hash-object debug/v148-singleton-only/candidate/candidate.json)" = "0d3df7336db965dc111fec067d0abe75ea3926cc"
+          test "$(git hash-object debug/v148-singleton-only/candidate/construction-proof.json)" = "e736afa242d597dddc4aa82cc3245d665ad0861f"
+          test "$(git hash-object debug/v148-singleton-only/candidate/pdf-event-fidelity.json)" = "9397d5ff55d09194e7e8553ed0a714ce1962e8c7"
+          test "$(git hash-object debug/v148-singleton-only/import-path-recovery-complete-sentinel.json)" = "46389ac79a09c889202537d27036a651b550603f"
+          test "$(git hash-object validation/v144_rhythm_calibration/score_selected_conjunction_candidate.py)" = "1ca2b8550d6c08e793f26b3aa91b99fb44fa7ddb"
+          test "$(git hash-object validation/rhythm_holdout/score_rhythm_holdout.py)" = "cc4bf61a99f22bf87a6c255e5a81220fbc82223b"
+          test "$(git hash-object validation/rhythm_holdout/canonical.py)" = "088d44827fb23e20d9aeeb4944a672989af5846c"
+          python validation/v148_singleton_only/score_once.py --help >/dev/null
+          if [ -e public/Professionalexample.jpg ]; then chmod a-rwx public/Professionalexample.jpg; fi
+          if [ -e public/gomywayfullaitest.m4a ]; then chmod a-rwx public/gomywayfullaitest.m4a; fi
+          if [ -d validation/rhythm_holdout/reference ]; then chmod -R a-rwx validation/rhythm_holdout/reference; fi
+
+      - name: Consume one-use attempt and checkpoint before Gold access
+        env:
+          ATTEMPT_RUN_ID: ${{ github.run_id }}
+          ATTEMPT_HEAD_SHA: ${{ github.sha }}
+        run: |
+          set -euo pipefail
+          python - <<'PY'
+          import json, os
+          from datetime import datetime, timezone
+          from pathlib import Path
+
+          sentinel_path = Path('debug/v148-singleton-only/phase-c-score-attempt-sentinel.json')
+          sentinel = json.loads(sentinel_path.read_text())
+          if sentinel.get('status') != 'ARMED_NOT_CONSUMED':
+              raise SystemExit('attempt sentinel is not armed')
+          if sentinel.get('goldOpened') is not False or sentinel.get('scoreCallCount') != 0:
+              raise SystemExit('pre-consumption safety state mismatch')
+          sentinel['status'] = 'CONSUMED_BEFORE_REFERENCE_ACCESS'
+          sentinel['attemptRunId'] = os.environ['ATTEMPT_RUN_ID']
+          sentinel['attemptHeadSha'] = os.environ['ATTEMPT_HEAD_SHA']
+          sentinel['consumedAtUtc'] = datetime.now(timezone.utc).isoformat()
+          sentinel_path.write_text(json.dumps(sentinel, indent=2, sort_keys=True) + '\n')
+
+          checkpoint = Path('docs/checkpoints/CURRENT_STATE.md')
+          marker = '## V148 Phase C Gold score attempt — CONSUMED BEFORE REFERENCE ACCESS — 2026-08-27 UTC'
+          text = checkpoint.read_text()
+          if marker in text:
+              raise SystemExit('pre-score checkpoint marker already exists')
+          text += f'''\n\n{marker}\n- One-use V148 scoring workflow run `{os.environ['ATTEMPT_RUN_ID']}` is now fail-closed.\n- The durable attempt sentinel was consumed **before Gold/reference access** and before any score call.\n- Candidate/scorer/construction/PDF/completion/authorization/provenance identities and the scorer import preflight all passed reference-free.\n- Gold/reference content opened at this checkpoint: **NO**. Score calls at this checkpoint: **0**.\n- Candidate search/variants/retuning/audio/HPSS/CQT/Modal/L4/GPU/main/Production/promotion remain **NO / FORBIDDEN**.\n'''
+          checkpoint.write_text(text)
+          PY
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add debug/v148-singleton-only/phase-c-score-attempt-sentinel.json docs/checkpoints/CURRENT_STATE.md
+          git commit -m 'debug: consume V148 score attempt before Gold access [skip ci]'
+          git push origin HEAD:v143-contextual-prune-lobo
+          echo "CONSUMED_COMMIT=$(git rev-parse HEAD)" >> "$GITHUB_ENV"
+
+      - name: Run exactly one frozen V148 Gold score
+        run: |
+          set -euo pipefail
+          python validation/v148_singleton_only/score_once.py --output debug/v148-singleton-only/phase-c-score/score-result.json | tee /tmp/v148-score-output.json
+
+      - name: Verify and durably persist score result
+        env:
+          ATTEMPT_RUN_ID: ${{ github.run_id }}
+          ATTEMPT_HEAD_SHA: ${{ github.sha }}
+        run: |
+          set -euo pipefail
+          python - <<'PY'
+          import hashlib, json, os
+          from datetime import datetime, timezone
+          from pathlib import Path
+
+          result_path = Path('debug/v148-singleton-only/phase-c-score/score-result.json')
+          payload = result_path.read_bytes()
+          result_sha = hashlib.sha256(payload).hexdigest()
+          report = json.loads(payload)
+          if report.get('classification') != 'v148-singleton-only-authorized-single-gold-calibration-score':
+              raise SystemExit('result classification mismatch')
+          if report.get('authorizationScope') != 'exactly-one-v148-singleton-only-gold-calibration-score':
+              raise SystemExit('authorization scope mismatch')
+          chain = report.get('scoringChain') or {}
+          safety = report.get('safety') or {}
+          reference = report.get('reference') or {}
+          candidate = report.get('candidate') or {}
+          if chain.get('scoreCallCount') != 1 or safety.get('scoreCallCount') != 1:
+              raise SystemExit('score-call count mismatch')
+          if reference.get('sha256') != '18fd868ae960dfcddc1ffb0110f1a9dfd8acc2ffeb46e247d1116cd54291526ac':
+              raise SystemExit('Gold SHA mismatch in report')
+          if candidate.get('canonicalEventSha256') != '1be67004dea62b14740241b536339bb7cad2ecf3ee9e98bfb6109f67e4e1b1fa':
+              raise SystemExit('candidate event SHA mismatch in report')
+          if candidate.get('changedEventsVersusAccepted') != 106 or candidate.get('polyphonicChangedEventsVersusAccepted') != 0:
+              raise SystemExit('candidate structural facts mismatch in report')
+          for key in ('candidateSearchRun', 'alternateCandidateConstructed', 'retuningRun', 'audioRecomputed', 'modalGpuUsed', 'productionIntegrated', 'automaticPromotionAllowed'):
+              if safety.get(key) is not False:
+                  raise SystemExit(f'safety flag mismatch: {key}')
+
+          completion = {
+              'schema': 'dadrock.tabs.v148.phase-c-score-completion.v1',
+              'classification': 'one-use-v148-gold-score-complete',
+              'status': 'COMPLETE_SEALED_AFTER_ONE_SCORE',
+              'branch': 'v143-contextual-prune-lobo',
+              'attemptRunId': os.environ['ATTEMPT_RUN_ID'],
+              'attemptHeadSha': os.environ['ATTEMPT_HEAD_SHA'],
+              'consumedAttemptCommit': os.environ['CONSUMED_COMMIT'],
+              'completedAtUtc': datetime.now(timezone.utc).isoformat(),
+              'resultPath': str(result_path),
+              'resultSha256': result_sha,
+              'candidateCanonicalEventSha256': candidate.get('canonicalEventSha256'),
+              'goldSha256': reference.get('sha256'),
+              'scoreCallCount': 1,
+              'candidateSearchRun': False,
+              'alternateCandidateConstructed': False,
+              'retuningRun': False,
+              'audioRecomputed': False,
+              'modalGpuUsed': False,
+              'productionIntegrated': False,
+              'automaticPromotion': False,
+          }
+          Path('debug/v148-singleton-only/phase-c-score-complete-sentinel.json').write_text(json.dumps(completion, indent=2, sort_keys=True) + '\n')
+          Path('/tmp/v148-result-sha.txt').write_text(result_sha + '\n')
+          PY
+          git add debug/v148-singleton-only/phase-c-score/score-result.json debug/v148-singleton-only/phase-c-score-complete-sentinel.json
+          git commit -m 'debug: persist one-use V148 Gold score result [skip ci]'
+          git push origin HEAD:v143-contextual-prune-lobo
+          echo "RESULT_COMMIT=$(git rev-parse HEAD)" >> "$GITHUB_ENV"
+          echo "RESULT_SHA=$(cat /tmp/v148-result-sha.txt)" >> "$GITHUB_ENV"
+
+      - name: Final checkpoint and self-seal workflow
+        env:
+          ATTEMPT_RUN_ID: ${{ github.run_id }}
+        run: |
+          set -euo pipefail
+          python - <<'PY'
+          import json, os
+          from pathlib import Path
+
+          report = json.loads(Path('debug/v148-singleton-only/phase-c-score/score-result.json').read_text())
+          comparison = report['comparison']
+          candidate_vector = comparison['candidateDisplayVectorPercent']
+          baseline_vector = comparison['acceptedBaselineDisplayVectorPercent']
+          deltas = comparison['gatedMetricDeltas']
+          critical = report['score']['criticalMismatchCount']
+          critical_delta = comparison['criticalMismatchDelta']
+          marker = '## V148 Phase C singleton-only Gold calibration score — COMPLETE / SEALED — 2026-08-27 UTC'
+          checkpoint = Path('docs/checkpoints/CURRENT_STATE.md')
+          text = checkpoint.read_text()
+          if marker in text:
+              raise SystemExit('final V148 score checkpoint marker already exists')
+          fmt = lambda xs: ' / '.join(f'{float(x):.3f}' for x in xs)
+          text += f'''\n\n{marker}\n- Exactly one frozen historical Gold calibration score completed in GitHub Actions run `{os.environ['ATTEMPT_RUN_ID']}`.\n- Durable score result: `debug/v148-singleton-only/phase-c-score/score-result.json`; SHA256 **`{os.environ['RESULT_SHA']}`**; persistence commit **`{os.environ['RESULT_COMMIT']}`**.\n- Immutable V148 candidate remained 1144 events / canonical SHA `1be67004dea62b14740241b536339bb7cad2ecf3ee9e98bfb6109f67e4e1b1fa` / 106 singleton changes / 0 polyphonic changes.\n- Candidate display vector (pitch content / pitch timing / string-fret timing / chord pitch-set / measure coverage / PDF fidelity): **{fmt(candidate_vector)}**.\n- Accepted baseline display vector: **{fmt(baseline_vector)}**.\n- Critical mismatch count: **{critical}**; delta versus accepted baseline: **{critical_delta:+d}**.\n- Raw F1 deltas versus accepted baseline: pitch content `{deltas['pitchContentF1']:+.9f}`, pitch timing `{deltas['pitchTimingTolerantF1']:+.9f}`, string/fret `{deltas['stringFretTimingTolerantF1']:+.9f}`, chord pitch-set `{deltas['chordPitchSetTolerantF1']:+.9f}`, exact voicing `{deltas['exactVoicingTolerantF1']:+.9f}`, measure coverage `{deltas['measureCoverageRecall']:+.9f}`.\n- Gold SHA was verified immediately before parsing/scoring as `18fd868ae960dfcddc1ffb0110f1a9dfd8acc2ffeb46e247d1116cd54291526ac`; historical wrapper/core scorer/canonical adapter identities stayed frozen.\n- Safety: exactly one score call; candidate search **NO**; alternate candidate **NO**; retuning **NO**; audio/HPSS/CQT recomputation **NO**; Modal/L4/GPU **NO**; main/Production integration **NO**; automatic promotion **NO**.\n- V148 scoring authorization is consumed. The one-use scoring workflow is deleted in this self-seal commit. Any further reference-facing comparison, candidate change, search/retuning, audio/Modal experiment, Production integration, or promotion requires a new separately frozen phase and fresh explicit user authorization.\n'''
+          checkpoint.write_text(text)
+          PY
+          git rm .github/workflows/v148-singleton-only-score-once.yml
+          git add docs/checkpoints/CURRENT_STATE.md
+          git commit -m 'docs: checkpoint and seal completed V148 Gold score [skip ci]'
+          git push origin HEAD:v143-contextual-prune-lobo
