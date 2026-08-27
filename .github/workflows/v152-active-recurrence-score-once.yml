@@ -1,0 +1,88 @@
+name: V152 active recurrence Gold score once
+
+on:
+  push:
+    paths:
+      - '.github/workflows/v152-active-recurrence-score-once.yml'
+
+permissions:
+  contents: write
+
+jobs:
+  score-once:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: v143-contextual-prune-lobo
+          fetch-depth: 0
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12.14'
+      - name: Reference-free preflight before score attempt consumption
+        run: |
+          set -euo pipefail
+          test ! -e debug/v152-active-recurrence/phase-c-score/score-result.json
+          test ! -e debug/v152-active-recurrence/phase-c-score-complete-sentinel.json
+          test "$(git hash-object debug/v152-active-recurrence/phase-c-scoring-authorization.json)" = "c6fdcd4e56f6c8a2129912508ae1dc444e303c2c"
+          test "$(git hash-object validation/v152_active_recurrence/score_once.py)" = "5213abebef251632ddf272a40136a9076b15acdb"
+          test "$(git hash-object debug/v152-active-recurrence/phase-c-score-attempt-sentinel.json)" = "aaf57a532ea1dca3dd10e58aaa69169a0a598fdd"
+          test "$(git hash-object debug/v152-active-recurrence/candidate/candidate.json)" = "8486188bc7c2f5d0d7649e98b0970b64dd0eebed"
+          test "$(git hash-object debug/v152-active-recurrence/candidate/construction-proof.json)" = "3530c931bee9ab5888f350cd30d793388ebb5eca"
+          test "$(git hash-object debug/v152-active-recurrence/candidate/pdf-event-fidelity.json)" = "d6d4e287d7165ba52e7c1f58cf046a3328af6b29"
+          test "$(git hash-object debug/v152-active-recurrence/phase-b-complete-sentinel.json)" = "c39828b7e829918106f43d14cdd1790a87c32934"
+          test "$(git hash-object debug/v151-positive-consensus/phase-c-score/score-result.json)" = "23c451cf570a82333940e7dcc7f08afa583f52af"
+          python validation/v152_active_recurrence/score_once.py --help >/dev/null
+      - name: Consume one-use attempt and checkpoint before Gold access
+        env:
+          RUN_ID: ${{ github.run_id }}
+          HEAD_SHA: ${{ github.sha }}
+        run: |
+          set -euo pipefail
+          python - <<'PY'
+          import json,os
+          from datetime import datetime,timezone
+          from pathlib import Path
+          p=Path('debug/v152-active-recurrence/phase-c-score-attempt-sentinel.json'); d=json.loads(p.read_text())
+          if d.get('status')!='ARMED_NOT_CONSUMED' or d.get('goldOrReferenceRead') is not False or d.get('referenceParsed') is not False or d.get('scoreCallCount')!=0: raise SystemExit('V152 score attempt not cleanly armed')
+          d['status']='CONSUMED_BEFORE_GOLD_ACCESS'; d['runId']=os.environ['RUN_ID']; d['runHeadSha']=os.environ['HEAD_SHA']; d['consumedAtUtc']=datetime.now(timezone.utc).isoformat(); p.write_text(json.dumps(d,indent=2,sort_keys=True)+'\n')
+          cp=Path('docs/checkpoints/CURRENT_STATE.md'); text=cp.read_text(); marker='## V152 Phase C three-note Gold score — AUTHORIZED / CONSUMED / BEFORE GOLD — 2026-08-27 UTC'
+          if marker not in text:
+              text += f'''\n\n{marker}\n- User instruction `Let's make a major breakthrough 🙏` is bound to exactly **one** Gold calibration score of sealed V152 candidate `5ebedfb173730bb5e2639e7450841fb113f7db9af2acec19b88e58cca50679e6`.\n- Candidate has **3 singleton changes / 0 polyphonic changes / 100% PDF fidelity**. Authorization blob `c6fdcd4e56f6c8a2129912508ae1dc444e303c2c`; scorer blob `5213abebef251632ddf272a40136a9076b15acdb`; run `{os.environ['RUN_ID']}`.\n- Expected Gold SHA will be taken from the sealed V151 score result; at this checkpoint Gold opened **NO**, reference parsed **NO**, score calls **0**.\n- Search/alternate candidate/class/filter/threshold/retuning/audio/GPU/Production/promotion remain **NO**.\n'''
+              cp.write_text(text)
+          PY
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add debug/v152-active-recurrence/phase-c-score-attempt-sentinel.json docs/checkpoints/CURRENT_STATE.md
+          git commit -m 'debug: checkpoint consumed V152 score attempt [skip ci]'
+          git push origin HEAD:v143-contextual-prune-lobo
+      - name: Run exactly one frozen V152 Gold score
+        run: |
+          set -euo pipefail
+          python validation/v152_active_recurrence/score_once.py --output debug/v152-active-recurrence/phase-c-score/score-result.json | tee /tmp/v152-score-summary.json
+      - name: Verify persist final checkpoint and self-seal
+        env:
+          RUN_ID: ${{ github.run_id }}
+        run: |
+          set -euo pipefail
+          python - <<'PY'
+          import hashlib,json,os
+          from datetime import datetime,timezone
+          from pathlib import Path
+          p=Path('debug/v152-active-recurrence/phase-c-score/score-result.json'); b=p.read_bytes(); sha=hashlib.sha256(b).hexdigest(); r=json.loads(b)
+          if r.get('authorizationScope')!='exactly-one-v152-three-note-active-recurrence-gold-calibration-score': raise SystemExit('scope mismatch')
+          if (r.get('safety') or {}).get('scoreCallCount')!=1 or (r.get('scoringChain') or {}).get('scoreCallCount')!=1: raise SystemExit('score-call mismatch')
+          c=r['comparison']; vec=c['candidateDisplayVectorPercent']; base=c['acceptedBaselineDisplayVectorPercent']; prior=c['v151DisplayVectorPercent']; critical=int(r['score']['criticalMismatchCount']); db=int(c['criticalMismatchDeltaVsAcceptedBaseline']); dp=int(c['criticalMismatchDeltaVsV151'])
+          complete={'schema':'dadrock.tabs.v152.active-recurrence.phase-c-score-completion.v1','status':'COMPLETE_SEALED','runId':os.environ['RUN_ID'],'completedAtUtc':datetime.now(timezone.utc).isoformat(),'scoreResultSha256':sha,'candidateEventSha256':'5ebedfb173730bb5e2639e7450841fb113f7db9af2acec19b88e58cca50679e6','candidateDisplayVectorPercent':vec,'acceptedBaselineDisplayVectorPercent':base,'v151DisplayVectorPercent':prior,'criticalMismatchCount':critical,'criticalMismatchDeltaVsAcceptedBaseline':db,'criticalMismatchDeltaVsV151':dp,'scoreCallCount':1,'candidateSearchRun':False,'alternateCandidateConstructed':False,'automaticPromotion':False}
+          Path('debug/v152-active-recurrence/phase-c-score-complete-sentinel.json').write_text(json.dumps(complete,indent=2,sort_keys=True)+'\n')
+          cp=Path('docs/checkpoints/CURRENT_STATE.md'); text=cp.read_text(); marker='## V152 Phase C three-note active-recurrence Gold score — COMPLETE / SEALED — 2026-08-27 UTC'
+          if marker in text: raise SystemExit('duplicate V152 score checkpoint')
+          text += f'''\n\n{marker}\n- Exactly one historical Gold calibration score completed in run `{os.environ['RUN_ID']}`; result SHA256 **`{sha}`**.\n- V152 percentages (pitch content / pitch timing / string-fret timing / chord pitch-set / measure coverage / PDF fidelity): **{vec[0]:.3f} / {vec[1]:.3f} / {vec[2]:.3f} / {vec[3]:.3f} / {vec[4]:.3f} / {vec[5]:.3f}**.\n- Accepted baseline: **{base[0]:.3f} / {base[1]:.3f} / {base[2]:.3f} / {base[3]:.3f} / {base[4]:.3f} / {base[5]:.3f}**. V151: **{prior[0]:.3f} / {prior[1]:.3f} / {prior[2]:.3f} / {prior[3]:.3f} / {prior[4]:.3f} / {prior[5]:.3f}**.\n- Critical mismatches **{critical}**; delta vs accepted baseline **{db:+d}**; delta vs V151 **{dp:+d}**.\n- Safety: V152 score calls **1**; candidate search/alternate candidate/class/filter/threshold/retuning/audio/GPU/main/Production/promotion **NO**. No automatic promotion even if calibration baseline is crossed.\n- V152 score authorization is consumed and sealed.\n'''
+          cp.write_text(text)
+          PY
+          git rm .github/workflows/v152-active-recurrence-score-once.yml
+          if [ -e .github/workflows/v152-local-modal-recovery-once.yml ]; then git rm .github/workflows/v152-local-modal-recovery-once.yml; fi
+          if [ -e .github/workflows/v152-active-recurrence-construct-once.yml ]; then git rm .github/workflows/v152-active-recurrence-construct-once.yml; fi
+          git add debug/v152-active-recurrence/phase-c-score debug/v152-active-recurrence/phase-c-score-complete-sentinel.json docs/checkpoints/CURRENT_STATE.md
+          git commit -m 'docs: checkpoint and seal completed V152 Gold score [skip ci]'
+          git push origin HEAD:v143-contextual-prune-lobo
