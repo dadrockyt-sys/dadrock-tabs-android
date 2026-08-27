@@ -1,0 +1,6403 @@
+{
+  "schema": "dadrock.tabs.v154.professional-lead-reference.visual-machine-readable.v1",
+  "status": "COMPLETE_VISUAL_MACHINE_READABLE_NOT_SCORING_NORMALIZED",
+  "song": {
+    "artist": "Lenny Kravitz",
+    "title": "Are You Gonna Go My Way"
+  },
+  "part": "lead",
+  "instrument": {
+    "stringsHighToLow": [
+      "e",
+      "B",
+      "G",
+      "D",
+      "A",
+      "E"
+    ],
+    "openMidiHighToLow": [
+      64,
+      59,
+      55,
+      50,
+      45,
+      40
+    ],
+    "stringIndexConvention": {
+      "0": "e",
+      "1": "B",
+      "2": "G",
+      "3": "D",
+      "4": "A",
+      "5": "E"
+    },
+    "midiRule": "midi = openMidi[stringIndex] + fret"
+  },
+  "source": {
+    "receiptPath": "research/v154-professional-references/lead-source-set-receipt.json",
+    "previousReceiptPath": "debug/v154-cpu-autonomous/reference-receipts/lead-user-upload-20260827.json",
+    "pageCount": 22,
+    "previousFrozenSetSha256": "de2f20c330e52aca6125e29ca2cf5c4b719406fc267a98d43d98f3ab1453ff3c",
+    "currentRenderedSetSha256": "e54a76bca81fdcfc8333d774a66175a00da5090fb32200a980c25f8e78b616cb",
+    "currentCopiesByteIdentityMatchedPreviousFrozenReceipt": false,
+    "visualLandmarksConsistentWithFrozenReceipt": true
+  },
+  "representation": {
+    "eventOrder": "left-to-right visual order within each measure, including printed-system wraps",
+    "timing": "visual order only; exact V154 16-step onset values are intentionally not present",
+    "scoringReady": false,
+    "requiresTimingNormalizationBeforeScoring": true,
+    "whyNoStepValues": "avoid inventing exact onset timing from horizontal screenshot spacing before a dedicated timing-normalization pass",
+    "deadNotesHaveNullMidi": true,
+    "continuationOnlyMeans": "parenthesized tie/sustain/bend continuation visible with no new attack inferred",
+    "simultaneousChordGroups": "shared chordGroup identifiers preserve stacked chord voicings without inferring exact step onset",
+    "techniques": "visible bends, slides/slurs, vibrato, palm-mute markings and selected picking marks are preserved as flags/raw labels; bend labels are not semitone-normalized here"
+  },
+  "measureRange": {
+    "first": 1,
+    "last": 113,
+    "measureCount": 113
+  },
+  "audit": {
+    "storedMeasureObjects": 113,
+    "eventObjects": 486,
+    "pitchedEventObjects": 475,
+    "deadNoteObjects": 11,
+    "continuationOnlyObjects": 23,
+    "observedMidiMin": 45,
+    "observedMidiMax": 79,
+    "midiMappingErrors": 0,
+    "measureSequenceContinuous": true,
+    "scoringStepFieldsPresent": false
+  },
+  "knownUncertainties": [
+    {
+      "measure": 10,
+      "type": "ui-overlay",
+      "action": "green selection highlight ignored as interface overlay"
+    },
+    {
+      "measures": [
+        39,
+        40
+      ],
+      "type": "source-annotation",
+      "text": "Probably a mistake they left in",
+      "action": "preserve source uncertainty; do not silently correct",
+      "excludeFromScoringUntilTimingNormalizationResolved": true
+    },
+    {
+      "measure": 81,
+      "type": "detached-gray-dot",
+      "action": "not assigned to a note; meaning ambiguous between notation and UI"
+    }
+  ],
+  "measures": [
+    {
+      "measure": 1,
+      "timeSignature": "4/4",
+      "events": [],
+      "section": "Intro",
+      "sourcePage": 1,
+      "timingNormalizationStatus": "not-yet-normalized-for-v154-step-scorer",
+      "annotations": [
+        "opening tempo quarter-note = 129",
+        "opening 4/4 time signature visible"
+      ],
+      "eventCount": 0,
+      "attackLikeEventCount": 0
+    },
+    {
+      "measure": 2,
+      "timeSignature": "4/4",
+      "events": [],
+      "section": "Intro",
+      "sourcePage": 1,
+      "timingNormalizationStatus": "not-yet-normalized-for-v154-step-scorer",
+      "annotations": [
+        "intentional blank/rest measure"
+      ],
+      "eventCount": 0,
+      "attackLikeEventCount": 0
+    },
+    {
+      "measure": 3,
+      "timeSignature": "4/4",
+      "events": [],
+      "section": "Intro",
+      "sourcePage": 1,
+      "timingNormalizationStatus": "not-yet-normalized-for-v154-step-scorer",
+      "annotations": [
+        "intentional blank/rest measure"
+      ],
+      "eventCount": 0,
+      "attackLikeEventCount": 0
+    },
+    {
+      "measure": 4,
+      "timeSignature": "4/4",
+      "events": [],
+      "section": "Intro",
+      "sourcePage": 1,
+      "timingNormalizationStatus": "not-yet-normalized-for-v154-step-scorer",
+      "annotations": [
+        "intentional blank/rest measure"
+      ],
+      "eventCount": 0,
+      "attackLikeEventCount": 0
+    },
+    {
+      "measure": 5,
+      "timeSignature": "4/4",
+      "events": [
+        {
+          "string": "G",
+          "stringIndex": 2,
+          "kind": "note",
+          "fret": 14,
+          "midi": 69,
+          "bendLabel": "full",
+          "slurToNext": true,
+          "visualOrder": 0
+        },
+        {
+          "string": "G",
+          "stringIndex": 2,
+          "kind": "note",
+          "fret": 12,
+          "midi": 67,
+          "slurFromPrevious": true,
+          "visualOrder": 1
+        },
+        {
+          "string": "D",
+          "stringIndex": 3,
+          "kind": "note",
+          "fret": 14,
+          "midi": 64,
+          "visualOrder": 2
+        },
+        {
+          "string": "A",
+          "stringIndex": 4,
+          "kind": "note",
+          "fret": 14,
+          "midi": 59,
+          "visualOrder": 3
+        },
+        {
+          "string": "D",
+          "stringIndex": 3,
+          "kind": "note",
+          "fret": 12,
+          "midi": 62,
+          "visualOrder": 4
+        },
+        {
+          "string": "D",
+          "stringIndex": 3,
+          "kind": "note",
+          "fret": 14,
+          "midi": 64,
+          "vibrato": true,
+          "visualOrder": 5
+        },
+        {
+          "string": "D",
+          "stringIndex": 3,
+          "kind": "note",
+          "fret": 12,
+          "midi": 62,
+          "visualOrder": 6
+        }
+      ],
+      "section": "Intro",
+      "sourcePage": 1,
+      "timingNormalizationStatus": "not-yet-normalized-for-v154-step-scorer",
+      "annotations": [
+        "Em riff",
+        "P.M. marking visible over later notes",
+        "vibrato marking visible near right side"
+      ],
+      "chordSymbols": [
+        "Em"
+      ],
+      "eventCount": 7,
+      "attackLikeEventCount": 7
+    },
+    {
+      "measure": 6,
+      "timeSignature": "4/4",
+      "events": [
+        {
+          "string": "G",
+          "stringIndex": 2,
+          "kind": "note",
+          "fret": 14,
+          "midi": 69,
+          "bendLabel": "full",
+          "slurToNext": true,
+          "visualOrder": 0
+        },
+        {
+          "string": "G",
+          "stringIndex": 2,
+          "kind": "note",
+          "fret": 12,
+          "midi": 67,
+          "slurFromPrevious": true,
+          "visualOrder": 1
+        },
+        {
+          "string": "D",
+          "stringIndex": 3,
+          "kind": "note",
+          "fret": 14,
+          "midi": 64,
+          "visualOrder": 2
+        },
+        {
+          "string": "A",
+          "stringIndex": 4,
+          "kind": "note",
+          "fret": 14,
+          "midi": 59,
+          "visualOrder": 3
+        },
+        {
+          "string": "D",
+          "stringIndex": 3,
+          "kind": "note",
+          "fret": 12,
+          "midi": 62,
+          "visualOrder": 4
+        },
+        {
+          "string": "D",
+          "stringIndex": 3,
+          "kind": "note",
+          "fret": 14,
+          "midi": 64,
+          "vibrato": true,
+          "visualOrder": 5
+        },
+        {
+          "string": "D",
+          "stringIndex": 3,
+          "kind": "note",
+          "fret": 12,
+          "midi": 62,
+          "visualOrder": 6
+        }
+      ],
+      "section": "Intro",
+      "sourcePage": 1,
+      "timingNormalizationStatus": "not-yet-normalized-for-v154-step-scorer",
+      "annotations": [
+        "Em riff",
+        "P.M. marking visible over later notes",
+        "vibrato marking visible near right side"
+      ],
+      "eventCount": 7,
+      "attackLikeEventCount": 7
+    },
+    {
+      "measure": 7,
+      "timeSignature": "4/4",
+      "events": [
+        {
+          "string": "G",
+          "stringIndex": 2,
+          "kind": "note",
+          "fret": 14,
+          "midi": 69,
+          "bendLabel": "full",
+          "slurToNext": true,
+          "visualOrder": 0
+        },
+        {
+          "string": "G",
+          "stringIndex": 2,
+          "kind": "note",
+          "fret": 12,
+          "midi": 67,
+          "slurFromPrevious": true,
+          "visualOrder": 1
+        },
+        {
+          "string": "D",
+          "stringIndex": 3,
+          "kind": "note",
+          "fret": 14,
+          "midi": 64,
+          "visualOrder": 2
+        },
+        {
+          "string": "A",
+          "stringIndex": 4,
+          "kind": "note",
+          "fret": 14,
+          "midi": 59,
+          "visualOrder": 3
+        },
+        {
+          "string": "D",
+          "stringIndex": 3,
+          "kind": "note",
+          "fret": 12,
+          "midi": 62,
+          "visualOrder": 4
+        },
+        {
+          "string": "D",
+          "stringIndex": 3,
+          "kind": "note",
+          "fret": 14,
+          "midi": 64,
+          "vibrato": true,
+          "visualOrder": 5
+        },
+        {
+          "string": "D",
+          "stringIndex": 3,
+          "kind": "note",
+          "fret": 12,
+          "midi": 62,
+          "visualOrder": 6
+        }
+      ],
+      "section": "Intro",
+      "sourcePage": 1,
+      "timingNormalizationStatus": "not-yet-normalized-for-v154-step-scorer",
+      "annotations": [
+        "Em riff",
+        "P.M. marking visible over later notes",
+        "vibrato marking visible near right side"
+      ],
+      "eventCount": 7,
+      "attackLikeEventCount": 7
+    },
+    {
+      "measure": 8,
+      "timeSignature": "4/4",
+      "events": [
+        {
+          "string": "G",
+          "stringIndex": 2,
+          "kind": "note",
+          "fret": 14,
+          "midi": 69,
+          "bendLabel": "full",
+          "slurToNext": true,
+          "visualOrder": 0
+        },
+        {
+          "string": "G",
+          "stringIndex": 2,
+          "kind": "note",
+          "fret": 12,
+          "midi": 67,
+          "slurFromPrevious": true,
+          "visualOrder": 1
+        },
+        {
+          "string": "D",
+          "stringIndex": 3,
+          "kind": "note",
+          "fret": 14,
+          "midi": 64,
+          "visualOrder": 2
+        },
+        {
+          "string": "A",
+          "stringIndex": 4,
+          "kind": "note",
+          "fret": 14,
+          "midi": 59,
+          "visualOrder": 3
+        },
+        {
+          "string": "D",
+          "stringIndex": 3,
+          "kind": "note",
+          "fret": 12,
+          "midi": 62,
+          "visualOrder": 4
+        },
+        {
+          "string": "D",
+          "stringIndex": 3,
+          "kind": "note",
+          "fret": 14,
+          "midi": 64,
+          "vibrato": true,
+          "visualOrder": 5
+        },
+        {
+          "string": "D",
+          "stringIndex": 3,
+          "kind": "note",
+          "fret": 12,
+          "midi": 62,
+          "visualOrder": 6
+        }
+      ],
+      "section": "Intro",
+      "sourcePage": 2,
+      "timingNormalizationStatus": "not-yet-normalized-for-v154-step-scorer",
+      "annotations": [
+        "Em riff",
+        "P.M. marking visible over later notes",
+        "vibrato marking visible near right side"
+      ],
+      "eventCount": 7,
+      "attackLikeEventCount": 7
+    },
+    {
+      "measure": 9,
+      "timeSignature": "4/4",
+      "events": [
+        {
+          "string": "G",
+          "stringIndex": 2,
+          "kind": "note",
+          "fret": 14,
+          "midi": 69,
+          "bendLabel": "full",
+          "slurToNext": true,
+          "visualOrder": 0
+        },
+        {
+          "string": "G",
+          "stringIndex": 2,
+          "kind": "note",
+          "fret": 12,
+          "midi": 67,
+          "slurFromPrevious": true,
+          "visualOrder": 1
+        },
+        {
+          "string": "D",
+          "stringIndex": 3,
+          "kind": "note",
+          "fret": 14,
+          "midi": 64,
+          "visualOrder": 2
+        },
+        {
+          "string": "A",
+          "stringIndex": 4,
+          "kind": "note",
+          "fret": 14,
+          "midi": 59,
+          "visualOrder": 3
+        },
+        {
+          "string": "D",
+          "stringIndex": 3,
+          "kind": "note",
+          "fret": 12,
+          "midi": 62,
+          "visualOrder": 4
+        },
+        {
+          "string": "D",
+          "stringIndex": 3,
+          "kind": "note",
+          "fret": 14,
+          "midi": 64,
+          "vibrato": true,
+          "visualOrder": 5
+        },
+        {
+          "string": "D",
+          "stringIndex": 3,
+          "kind": "note",
+          "fret": 12,
+          "midi": 62,
+          "visualOrder": 6
+        }
+      ],
+      "section": "Intro",
+      "sourcePage": 2,
+      "timingNormalizationStatus": "not-yet-normalized-for-v154-step-scorer",
+      "annotations": [
+        "Em riff",
+        "P.M. marking visible over later notes",
+        "vibrato marking visible near right side"
+      ],
+      "eventCount": 7,
+      "attackLikeEventCount": 7
+    },
+    {
+      "measure": 10,
+      "timeSignature": "4/4",
+      "events": [
+        {
+          "string": "G",
+          "stringIndex": 2,
+          "kind": "note",
+          "fret": 14,
+          "midi": 69,
+          "bendLabel": "full",
+          "slurToNext": true,
+          "visualOrder": 0
+        },
+        {
+          "string": "G",
+          "stringIndex": 2,
+          "kind": "note",
+          "fret": 12,
+          "midi": 67,
+          "slurFromPrevious": true,
+          "visualOrder": 1
+        },
+        {
+          "string": "D",
+          "stringIndex": 3,
+          "kind": "note",
+          "fret": 14,
+          "midi": 64,
+          "visualOrder": 2
+        },
+        {
+          "string": "A",
+          "stringIndex": 4,
+          "kind": "note",
+          "fret": 14,
+          "midi": 59,
+          "visualOrder": 3
+        },
+        {
+          "string": "D",
+          "stringIndex": 3,
+          "kind": "note",
+          "fret": 12,
+          "midi": 62,
+          "visualOrder": 4
+        },
+        {
+          "string": "D",
+          "stringIndex": 3,
+          "kind": "note",
+          "fret": 14,
+          "midi": 64,
+          "vibrato": true,
+          "visualOrder": 5
+        },
+        {
+          "string": "D",
+          "stringIndex": 3,
+          "kind": "note",
+          "fret": 12,
+          "midi": 62,
+          "visualOrder": 6
+        }
+      ],
+      "section": "Intro",
+      "sourcePage": 2,
+      "timingNormalizationStatus": "not-yet-normalized-for-v154-step-scorer",
+      "annotations": [
+        "Em riff",
+        "P.M. marking visible over later notes",
+        "vibrato marking visible near right side",
+        "green selection highlight is interface UI and is excluded from notation"
+      ],
+      "eventCount": 7,
+      "attackLikeEventCount": 7
+    },
+    {
+      "measure": 11,
+      "timeSignature": "4/4",
+      "events": [
+        {
+          "string": "G",
+          "stringIndex": 2,
+          "kind": "note",
+          "fret": 14,
+          "midi": 69,
+          "bendLabel": "full",
+          "slurToNext": true,
+          "visualOrder": 0
+        },
+        {
+          "string": "G",
+          "stringIndex": 2,
+          "kind": "note",
+          "fret": 12,
+          "midi": 67,
+          "slurFromPrevious": true,
+          "visualOrder": 1
+        },
+        {
+          "string": "D",
+          "stringIndex": 3,
+          "kind": "note",
+          "fret": 14,
+          "midi": 64,
+          "visualOrder": 2
+        },
+        {
+          "string": "A",
+          "stringIndex": 4,
+          "kind": "note",
+          "fret": 14,
+          "midi": 59,
+          "visualOrder": 3
+        },
+        {
+          "string": "D",
+          "stringIndex": 3,
+          "kind": "note",
+          "fret": 12,
+          "midi": 62,
+          "visualOrder": 4
+        },
+        {
+          "string": "D",
+          "stringIndex": 3,
+          "kind": "note",
+          "fret": 14,
+          "midi": 64,
+          "vibrato": true,
+          "visualOrder": 5
+        },
+        {
+          "string": "D",
+          "stringIndex": 3,
+          "kind": "note",
+          "fret": 12,
+          "midi": 62,
+          "visualOrder": 6
+        }
+      ],
+      "section": "Intro",
+      "sourcePage": 2,
+      "timingNormalizationStatus": "not-yet-normalized-for-v154-step-scorer",
+      "annotations": [
+        "Em riff",
+        "P.M. marking visible over later notes",
+        "vibrato marking visible near right side"
+      ],
+      "eventCount": 7,
+      "attackLikeEventCount": 7
+    },
+    {
+      "measure": 12,
+      "timeSignature": "4/4",
+      "events": [
+        {
+          "string": "G",
+          "stringIndex": 2,
+          "kind": "note",
+          "fret": 14,
+          "midi": 69,
+          "bendLabel": "full",
+          "slurToNext": true,
+          "visualOrder": 0
+        },
+        {
+          "string": "G",
+          "stringIndex": 2,
+          "kind": "note",
+          "fret": 12,
+          "midi": 67,
+          "slurFromPrevious": true,
+          "visualOrder": 1
+        },
+        {
+          "string": "D",
+          "stringIndex": 3,
+          "kind": "note",
+          "fret": 14,
+          "midi": 64,
+          "visualOrder": 2
+        },
+        {
+          "string": "A",
+          "stringIndex": 4,
+          "kind": "note",
+          "fret": 14,
+          "midi": 59,
+          "visualOrder": 3
+        },
+        {
+          "string": "D",
+          "stringIndex": 3,
+          "kind": "note",
+          "fret": 12,
+          "midi": 62,
+          "visualOrder": 4
+        },
+        {
+          "string": "D",
+          "stringIndex": 3,
+          "kind": "note",
+          "fret": 14,
+          "midi": 64,
+          "vibrato": true,
+          "visualOrder": 5
+        }
+      ],
+      "section": "Intro",
+      "sourcePage": 3,
+      "timingNormalizationStatus": "not-yet-normalized-for-v154-step-scorer",
+      "annotations": [
+        "Em riff variant",
+        "P.M. marking visible",
+        "visible rest at measure end",
+        "vibrato marking visible"
+      ],
+      "eventCount": 6,
+      "attackLikeEventCount": 6
+    },
+    {
+      "measure": 13,
+      "timeSignature": "4/4",
+      "events": [
+        {
+          "string": "G",
+          "stringIndex": 2,
+          "kind": "note",
+          "fret": 14,
+          "midi": 69,
+          "bendLabel": "full",
+          "slurToNext": true,
+          "visualOrder": 0
+        },
+        {
+          "string": "G",
+          "stringIndex": 2,
+          "kind": "note",
+          "fret": 12,
+          "midi": 67,
+          "slurFromPrevious": true,
+          "visualOrder": 1
+        },
+        {
+          "string": "D",
+          "stringIndex": 3,
+          "kind": "note",
+          "fret": 14,
+          "midi": 64,
+          "visualOrder": 2
+        },
+        {
+          "string": "A",
+          "stringIndex": 4,
+          "kind": "note",
+          "fret": 14,
+          "midi": 59,
+          "visualOrder": 3
+        },
+        {
+          "string": "D",
+          "stringIndex": 3,
+          "kind": "note",
+          "fret": 12,
+          "midi": 62,
+          "visualOrder": 4
+        },
+        {
+          "string": "D",
+          "stringIndex": 3,
+          "kind": "note",
+          "fret": 14,
+          "midi": 64,
+          "vibrato": true,
+          "visualOrder": 5
+        },
+        {
+          "string": "D",
+          "stringIndex": 3,
+          "kind": "note",
+          "fret": 12,
+          "midi": 62,
+          "visualOrder": 6
+        }
+      ],
+      "section": "Intro",
+      "sourcePage": 3,
+      "timingNormalizationStatus": "not-yet-normalized-for-v154-step-scorer",
+      "annotations": [
+        "Em riff",
+        "P.M. marking visible",
+        "vibrato marking visible"
+      ],
+      "eventCount": 7,
+      "attackLikeEventCount": 7
+    },
+    {
+      "measure": 14,
+      "timeSignature": "4/4",
+      "events": [
+        {
+          "string": "G",
+          "stringIndex": 2,
+          "kind": "note",
+          "fret": 14,
+          "midi": 69,
+          "bendLabel": "full",
+          "slurToNext": true,
+          "visualOrder": 0
+        },
+        {
+          "string": "G",
+          "stringIndex": 2,
+          "kind": "note",
+          "fret": 12,
+          "midi": 67,
+          "slurFromPrevious": true,
+          "visualOrder": 1
+        },
+        {
+          "string": "D",
+          "stringIndex": 3,
+          "kind": "note",
+          "fret": 14,
+          "midi": 64,
+          "visualOrder": 2
+        },
+        {
+          "string": "A",
+          "stringIndex": 4,
+          "kind": "note",
+          "fret": 14,
+          "midi": 59,
+          "visualOrder": 3
+        },
+        {
+          "string": "D",
+          "stringIndex": 3,
+          "kind": "note",
+          "fret": 12,
+          "midi": 62,
+          "visualOrder": 4
+        },
+        {
+          "string": "D",
+          "stringIndex": 3,
+          "kind": "note",
+          "fret": 14,
+          "midi": 64,
+          "vibrato": true,
+          "visualOrder": 5
+        }
+      ],
+      "section": "Intro",
+      "sourcePage": 3,
+      "timingNormalizationStatus": "not-yet-normalized-for-v154-step-scorer",
+      "annotations": [
+        "Em riff variant",
+        "P.M. marking visible",
+        "visible rest at measure end",
+        "vibrato marking visible"
+      ],
+      "eventCount": 6,
+      "attackLikeEventCount": 6
+    },
+    {
+      "measure": 15,
+      "timeSignature": "4/4",
+      "events": [
+        {
+          "string": "G",
+          "stringIndex": 2,
+          "kind": "note",
+          "fret": 14,
+          "midi": 69,
+          "bendLabel": "full",
+          "slurToNext": true,
+          "visualOrder": 0
+        },
+        {
+          "string": "G",
+          "stringIndex": 2,
+          "kind": "note",
+          "fret": 12,
+          "midi": 67,
+          "slurFromPrevious": true,
+          "visualOrder": 1
+        },
+        {
+          "string": "D",
+          "stringIndex": 3,
+          "kind": "note",
+          "fret": 14,
+          "midi": 64,
+          "visualOrder": 2
+        },
+        {
+          "string": "A",
+          "stringIndex": 4,
+          "kind": "note",
+          "fret": 14,
+          "midi": 59,
+          "visualOrder": 3
+        },
+        {
+          "string": "D",
+          "stringIndex": 3,
+          "kind": "note",
+          "fret": 12,
+          "midi": 62,
+          "visualOrder": 4
+        },
+        {
+          "string": "D",
+          "stringIndex": 3,
+          "kind": "note",
+          "fret": 14,
+          "midi": 64,
+          "vibrato": true,
+          "visualOrder": 5
+        }
+      ],
+      "section": "Intro",
+      "sourcePage": 3,
+      "timingNormalizationStatus": "not-yet-normalized-for-v154-step-scorer",
+      "annotations": [
+        "Em riff variant",
+        "P.M. marking visible",
+        "visible rest at measure end",
+        "vibrato marking visible"
+      ],
+      "eventCount": 6,
+      "attackLikeEventCount": 6
+    },
+    {
+      "measure": 16,
+      "timeSignature": "4/4",
+      "events": [
+        {
+          "string": "G",
+          "stringIndex": 2,
+          "kind": "note",
+          "fret": 14,
+          "midi": 69,
+          "bendLabel": "full",
+          "slurToNext": true,
+          "visualOrder": 0
+        },
+        {
+          "string": "G",
+          "stringIndex": 2,
+          "kind": "note",
+          "fret": 12,
+          "midi": 67,
+          "slurFromPrevious": true,
+          "visualOrder": 1
+        },
+        {
+          "string": "D",
+          "stringIndex": 3,
+          "kind": "note",
+          "fret": 14,
+          "midi": 64,
+          "visualOrder": 2
+        },
+        {
+          "string": "A",
+          "stringIndex": 4,
+          "kind": "note",
+          "fret": 14,
+          "midi": 59,
+          "visualOrder": 3
+        },
+        {
+          "string": "D",
+          "stringIndex": 3,
+          "kind": "note",
+          "fret": 12,
+          "midi": 62,
+          "visualOrder": 4
+        },
+        {
+          "string": "D",
+          "stringIndex": 3,
+          "kind": "note",
+          "fret": 14,
+          "midi": 64,
+          "vibrato": true,
+          "slideOut": true,
+          "visualOrder": 5
+        }
+      ],
+      "section": "Intro",
+      "sourcePage": 4,
+      "timingNormalizationStatus": "not-yet-normalized-for-v154-step-scorer",
+      "annotations": [
+        "Em riff section ending",
+        "P.M. marking visible",
+        "vibrato marking visible",
+        "final D14 has visible slide/release mark",
+        "double barline/section boundary follows"
+      ],
+      "eventCount": 6,
+      "attackLikeEventCount": 6
+    },
+    {
+      "measure": 17,
+      "timeSignature": "4/4",
+      "events": [],
+      "section": "Verse 1",
+      "sourcePage": 4,
+      "timingNormalizationStatus": "not-yet-normalized-for-v154-step-scorer",
+      "annotations": [
+        "intentional blank/rest measure; lyric alignment visible"
+      ],
+      "eventCount": 0,
+      "attackLikeEventCount": 0
+    },
+    {
+      "measure": 18,
+      "timeSignature": "4/4",
+      "events": [],
+      "section": "Verse 1",
+      "sourcePage": 4,
+      "timingNormalizationStatus": "not-yet-normalized-for-v154-step-scorer",
+      "annotations": [
+        "intentional blank/rest measure; lyric alignment visible"
+      ],
+      "eventCount": 0,
+      "attackLikeEventCount": 0
+    },
+    {
+      "measure": 19,
+      "timeSignature": "4/4",
+      "events": [],
+      "section": "Verse 1",
+      "sourcePage": 4,
+      "timingNormalizationStatus": "not-yet-normalized-for-v154-step-scorer",
+      "annotations": [
+        "intentional blank/rest measure; lyric alignment visible"
+      ],
+      "eventCount": 0,
+      "attackLikeEventCount": 0
+    },
+    {
+      "measure": 20,
+      "timeSignature": "4/4",
+      "events": [],
+      "section": "Verse 1",
+      "sourcePage": 4,
+      "timingNormalizationStatus": "not-yet-normalized-for-v154-step-scorer",
+      "annotations": [
+        "intentional blank/rest measure; lyric alignment visible"
+      ],
+      "eventCount": 0,
+      "attackLikeEventCount": 0
+    },
+    {
+      "measure": 21,
+      "timeSignature": "4/4",
+      "events": [],
+      "section": "Verse 1",
+      "sourcePage": 4,
+      "timingNormalizationStatus": "not-yet-normalized-for-v154-step-scorer",
+      "annotations": [
+        "intentional blank/rest measure; lyric alignment visible"
+      ],
+      "eventCount": 0,
+      "attackLikeEventCount": 0
+    },
+    {
+      "measure": 22,
+      "timeSignature": "4/4",
+      "events": [],
+      "section": "Verse 1",
+      "sourcePage": 4,
+      "timingNormalizationStatus": "not-yet-normalized-for-v154-step-scorer",
+      "annotations": [
+        "intentional blank/rest measure; lyric alignment visible"
+      ],
+      "eventCount": 0,
+      "attackLikeEventCount": 0
+    },
+    {
+      "measure": 23,
+      "timeSignature": "4/4",
+      "events": [],
+      "section": "Verse 1",
+      "sourcePage": 4,
+      "timingNormalizationStatus": "not-yet-normalized-for-v154-step-scorer",
+      "annotations": [
+        "intentional blank/rest measure; lyric alignment visible"
+      ],
+      "eventCount": 0,
+      "attackLikeEventCount": 0
+    },
+    {
+      "measure": 24,
+      "timeSignature": "4/4",
+      "events": [],
+      "section": "Verse 1",
+      "sourcePage": 5,
+      "timingNormalizationStatus": "not-yet-normalized-for-v154-step-scorer",
+      "annotations": [
+        "intentional blank/rest measure; lyric alignment visible"
+      ],
+      "eventCount": 0,
+      "attackLikeEventCount": 0
+    },
+    {
+      "measure": 25,
+      "timeSignature": "4/4",
+      "events": [
+        {
+          "string": "G",
+          "stringIndex": 2,
+          "kind": "note",
+          "fret": 13,
+          "midi": 68,
+          "bendLabel": "full",
+          "slurToNext": true,
+          "visualOrder": 0
+        },
+        {
+          "string": "G",
+          "stringIndex": 2,
+          "kind": "note",
+          "fret": 11,
+          "midi": 66,
+          "slurFromPrevious": true,
+          "visualOrder": 1
+        },
+        {
+          "string": "D",
+          "stringIndex": 3,
+          "kind": "note",
+          "fret": 12,
+          "midi": 62,
+          "visualOrder": 2
+        },
+        {
+          "string": "A",
+          "stringIndex": 4,
+          "kind": "note",
+          "fret": 12,
+          "midi": 57,
+          "visualOrder": 3
+        },
+        {
+          "string": "D",
+          "stringIndex": 3,
+          "kind": "note",
+          "fret": 10,
+          "midi": 60,
+          "visualOrder": 4
+        },
+        {
+          "string": "D",
+          "stringIndex": 3,
+          "kind": "note",
+          "fret": 12,
+          "midi": 62,
+          "vibrato": true,
+          "visualOrder": 5
+        }
+      ],
+      "section": "Verse 1",
+      "sourcePage": 5,
+      "timingNormalizationStatus": "not-yet-normalized-for-v154-step-scorer",
+      "annotations": [
+        "full bend on G13",
+        "P.M. marking visible",
+        "vibrato marking visible",
+        "visible rest at end"
+      ],
+      "eventCount": 6,
+      "attackLikeEventCount": 6
+    },
+    {
+      "measure": 26,
+      "timeSignature": "4/4",
+      "events": [
+        {
+          "string": "G",
+          "stringIndex": 2,
+          "kind": "note",
+          "fret": 13,
+          "midi": 68,
+          "bendLabel": "full",
+          "slurToNext": true,
+          "visualOrder": 0
+        },
+        {
+          "string": "G",
+          "stringIndex": 2,
+          "kind": "note",
+          "fret": 11,
+          "midi": 66,
+          "slurFromPrevious": true,
+          "visualOrder": 1
+        },
+        {
+          "string": "D",
+          "stringIndex": 3,
+          "kind": "note",
+          "fret": 12,
+          "midi": 62,
+          "visualOrder": 2
+        },
+        {
+          "string": "A",
+          "stringIndex": 4,
+          "kind": "note",
+          "fret": 12,
+          "midi": 57,
+          "visualOrder": 3
+        },
+        {
+          "string": "D",
+          "stringIndex": 3,
+          "kind": "note",
+          "fret": 10,
+          "midi": 60,
+          "visualOrder": 4
+        },
+        {
+          "string": "D",
+          "stringIndex": 3,
+          "kind": "note",
+          "fret": 12,
+          "midi": 62,
+          "vibrato": true,
+          "visualOrder": 5
+        }
+      ],
+      "section": "Verse 1",
+      "sourcePage": 5,
+      "timingNormalizationStatus": "not-yet-normalized-for-v154-step-scorer",
+      "annotations": [
+        "full bend on G13",
+        "P.M. marking visible",
+        "vibrato marking visible",
+        "visible rest at end"
+      ],
+      "eventCount": 6,
+      "attackLikeEventCount": 6
+    },
+    {
+      "measure": 27,
+      "timeSignature": "4/4",
+      "events": [
+        {
+          "string": "G",
+          "stringIndex": 2,
+          "kind": "note",
+          "fret": 13,
+          "midi": 68,
+          "bendLabel": "full",
+          "slurToNext": true,
+          "visualOrder": 0
+        },
+        {
+          "string": "G",
+          "stringIndex": 2,
+          "kind": "note",
+          "fret": 11,
+          "midi": 66,
+          "slurFromPrevious": true,
+          "visualOrder": 1
+        },
+        {
+          "string": "D",
+          "stringIndex": 3,
+          "kind": "note",
+          "fret": 12,
+          "midi": 62,
+          "visualOrder": 2
+        },
+        {
+          "string": "A",
+          "stringIndex": 4,
+          "kind": "note",
+          "fret": 12,
+          "midi": 57,
+          "visualOrder": 3
+        },
+        {
+          "string": "D",
+          "stringIndex": 3,
+          "kind": "note",
+          "fret": 10,
+          "midi": 60,
+          "visualOrder": 4
+        },
+        {
+          "string": "D",
+          "stringIndex": 3,
+          "kind": "note",
+          "fret": 12,
+          "midi": 62,
+          "vibrato": true,
+          "visualOrder": 5
+        }
+      ],
+      "section": "Verse 1",
+      "sourcePage": 5,
+      "timingNormalizationStatus": "not-yet-normalized-for-v154-step-scorer",
+      "annotations": [
+        "full bend on G13",
+        "P.M. marking visible",
+        "vibrato marking visible"
+      ],
+      "eventCount": 6,
+      "attackLikeEventCount": 6
+    },
+    {
+      "measure": 28,
+      "timeSignature": "4/4",
+      "events": [
+        {
+          "string": "D",
+          "stringIndex": 3,
+          "kind": "deadNote",
+          "fret": null,
+          "midi": null,
+          "notation": "x",
+          "visualOrder": 0
+        },
+        {
+          "string": "G",
+          "stringIndex": 2,
+          "kind": "note",
+          "fret": 12,
+          "midi": 67,
+          "visualOrder": 1
+        },
+        {
+          "string": "D",
+          "stringIndex": 3,
+          "kind": "deadNote",
+          "fret": null,
+          "midi": null,
+          "notation": "x",
+          "visualOrder": 2
+        },
+        {
+          "string": "G",
+          "stringIndex": 2,
+          "kind": "note",
+          "fret": 10,
+          "midi": 65,
+          "visualOrder": 3
+        },
+        {
+          "string": "G",
+          "stringIndex": 2,
+          "kind": "note",
+          "fret": 9,
+          "midi": 64,
+          "slurToNext": true,
+          "visualOrder": 4
+        },
+        {
+          "string": "D",
+          "stringIndex": 3,
+          "kind": "deadNote",
+          "fret": null,
+          "midi": null,
+          "notation": "x",
+          "visualOrder": 5
+        },
+        {
+          "string": "G",
+          "stringIndex": 2,
+          "kind": "note",
+          "fret": 10,
+          "midi": 65,
+          "visualOrder": 6
+        },
+        {
+          "string": "D",
+          "stringIndex": 3,
+          "kind": "deadNote",
+          "fret": null,
+          "midi": null,
+          "notation": "x",
+          "visualOrder": 7
+        },
+        {
+          "string": "G",
+          "stringIndex": 2,
+          "kind": "note",
+          "fret": 12,
+          "midi": 67,
+          "visualOrder": 8
+        },
+        {
+          "string": "D",
+          "stringIndex": 3,
+          "kind": "deadNote",
+          "fret": null,
+          "midi": null,
+          "notation": "x",
+          "visualOrder": 9
+        }
+      ],
+      "section": "Verse 1",
+      "sourcePage": 5,
+      "timingNormalizationStatus": "not-yet-normalized-for-v154-step-scorer",
+      "annotations": [
+        "dead-note riff; a visible rest occurs before G9",
+        "curved articulation/slur visible at G9",
+        "exact rhythmic placement deferred"
+      ],
+      "eventCount": 10,
+      "attackLikeEventCount": 10
+    },
+    {
+      "measure": 29,
+      "timeSignature": "4/4",
+      "events": [],
+      "section": "Verse 1",
+      "sourcePage": 6,
+      "timingNormalizationStatus": "not-yet-normalized-for-v154-step-scorer",
+      "annotations": [
+        "intentional blank/rest measure; lyric alignment visible"
+      ],
+      "eventCount": 0,
+      "attackLikeEventCount": 0
+    },
+    {
+      "measure": 30,
+      "timeSignature": "4/4",
+      "events": [],
+      "section": "Verse 1",
+      "sourcePage": 6,
+      "timingNormalizationStatus": "not-yet-normalized-for-v154-step-scorer",
+      "annotations": [
+        "intentional blank/rest measure; lyric alignment visible"
+      ],
+      "eventCount": 0,
+      "attackLikeEventCount": 0
+    },
+    {
+      "measure": 31,
+      "timeSignature": "4/4",
+      "events": [],
+      "section": "Verse 1",
+      "sourcePage": 6,
+      "timingNormalizationStatus": "not-yet-normalized-for-v154-step-scorer",
+      "annotations": [
+        "intentional blank/rest measure; lyric alignment visible"
+      ],
+      "eventCount": 0,
+      "attackLikeEventCount": 0
+    },
+    {
+      "measure": 32,
+      "timeSignature": "4/4",
+      "events": [],
+      "section": "Verse 1",
+      "sourcePage": 6,
+      "timingNormalizationStatus": "not-yet-normalized-for-v154-step-scorer",
+      "annotations": [
+        "intentional blank/rest measure; lyric alignment visible"
+      ],
+      "eventCount": 0,
+      "attackLikeEventCount": 0
+    },
+    {
+      "measure": 33,
+      "timeSignature": "4/4",
+      "events": [],
+      "section": "Chorus",
+      "sourcePage": 6,
+      "timingNormalizationStatus": "not-yet-normalized-for-v154-step-scorer",
+      "annotations": [
+        "rest/sustain glyph visible; no pitch inferred"
+      ],
+      "chordSymbols": [
+        "G6"
+      ],
+      "eventCount": 0,
+      "attackLikeEventCount": 0
+    },
+    {
+      "measure": 34,
+      "timeSignature": "4/4",
+      "events": [],
+      "section": "Chorus",
+      "sourcePage": 6,
+      "timingNormalizationStatus": "not-yet-normalized-for-v154-step-scorer",
+      "annotations": [
+        "rest/sustain glyph visible; no pitch inferred"
+      ],
+      "chordSymbols": [
+        "A(tp2)"
+      ],
+      "eventCount": 0,
+      "attackLikeEventCount": 0
+    },
+    {
+      "measure": 35,
+      "timeSignature": "4/4",
+      "events": [
+        {
+          "string": "e",
+          "stringIndex": 0,
+          "kind": "note",
+          "fret": 9,
+          "midi": 73,
+          "chordGroup": "E-1",
+          "simultaneous": true,
+          "chordLabel": "E",
+          "visualOrder": 0
+        },
+        {
+          "string": "B",
+          "stringIndex": 1,
+          "kind": "note",
+          "fret": 9,
+          "midi": 68,
+          "chordGroup": "E-1",
+          "simultaneous": true,
+          "chordLabel": "E",
+          "visualOrder": 1
+        },
+        {
+          "string": "G",
+          "stringIndex": 2,
+          "kind": "note",
+          "fret": 9,
+          "midi": 64,
+          "chordGroup": "E-1",
+          "simultaneous": true,
+          "chordLabel": "E",
+          "visualOrder": 2
+        },
+        {
+          "string": "e",
+          "stringIndex": 0,
+          "kind": "note",
+          "fret": 9,
+          "midi": 73,
+          "chordGroup": "E-2",
+          "simultaneous": true,
+          "chordLabel": "E",
+          "visualOrder": 3
+        },
+        {
+          "string": "B",
+          "stringIndex": 1,
+          "kind": "note",
+          "fret": 9,
+          "midi": 68,
+          "chordGroup": "E-2",
+          "simultaneous": true,
+          "chordLabel": "E",
+          "visualOrder": 4
+        },
+        {
+          "string": "G",
+          "stringIndex": 2,
+          "kind": "note",
+          "fret": 9,
+          "midi": 64,
+          "chordGroup": "E-2",
+          "simultaneous": true,
+          "chordLabel": "E",
+          "visualOrder": 5
+        },
+        {
+          "string": "e",
+          "stringIndex": 0,
+          "kind": "note",
+          "fret": 9,
+          "midi": 73,
+          "chordGroup": "E-3",
+          "simultaneous": true,
+          "chordLabel": "E",
+          "visualOrder": 6
+        },
+        {
+          "string": "B",
+          "stringIndex": 1,
+          "kind": "note",
+          "fret": 9,
+          "midi": 68,
+          "chordGroup": "E-3",
+          "simultaneous": true,
+          "chordLabel": "E",
+          "visualOrder": 7
+        },
+        {
+          "string": "G",
+          "stringIndex": 2,
+          "kind": "note",
+          "fret": 9,
+          "midi": 64,
+          "chordGroup": "E-3",
+          "simultaneous": true,
+          "chordLabel": "E",
+          "visualOrder": 8
+        },
+        {
+          "string": "e",
+          "stringIndex": 0,
+          "kind": "note",
+          "fret": 9,
+          "midi": 73,
+          "chordGroup": "E-4",
+          "simultaneous": true,
+          "chordLabel": "E",
+          "visualOrder": 9
+        },
+        {
+          "string": "B",
+          "stringIndex": 1,
+          "kind": "note",
+          "fret": 9,
+          "midi": 68,
+          "chordGroup": "E-4",
+          "simultaneous": true,
+          "chordLabel": "E",
+          "visualOrder": 10
+        },
+        {
+          "string": "G",
+          "stringIndex": 2,
+          "kind": "note",
+          "fret": 9,
+          "midi": 64,
+          "chordGroup": "E-4",
+          "simultaneous": true,
+          "chordLabel": "E",
+          "visualOrder": 11
+        },
+        {
+          "string": "e",
+          "stringIndex": 0,
+          "kind": "note",
+          "fret": 7,
+          "midi": 71,
+          "chordGroup": "D-1",
+          "simultaneous": true,
+          "chordLabel": "D",
+          "visualOrder": 12
+        },
+        {
+          "string": "B",
+          "stringIndex": 1,
+          "kind": "note",
+          "fret": 7,
+          "midi": 66,
+          "chordGroup": "D-1",
+          "simultaneous": true,
+          "chordLabel": "D",
+          "visualOrder": 13
+        },
+        {
+          "string": "G",
+          "stringIndex": 2,
+          "kind": "note",
+          "fret": 7,
+          "midi": 62,
+          "chordGroup": "D-1",
+          "simultaneous": true,
+          "chordLabel": "D",
+          "visualOrder": 14
+        },
+        {
+          "string": "e",
+          "stringIndex": 0,
+          "kind": "note",
+          "fret": 9,
+          "midi": 73,
+          "chordGroup": "E-final",
+          "simultaneous": true,
+          "slideOut": true,
+          "chordLabel": "E",
+          "visualOrder": 15
+        },
+        {
+          "string": "B",
+          "stringIndex": 1,
+          "kind": "note",
+          "fret": 9,
+          "midi": 68,
+          "chordGroup": "E-final",
+          "simultaneous": true,
+          "slideOut": true,
+          "chordLabel": "E",
+          "visualOrder": 16
+        },
+        {
+          "string": "G",
+          "stringIndex": 2,
+          "kind": "note",
+          "fret": 9,
+          "midi": 64,
+          "chordGroup": "E-final",
+          "simultaneous": true,
+          "slideOut": true,
+          "chordLabel": "E",
+          "visualOrder": 17
+        }
+      ],
+      "section": "Chorus",
+      "sourcePage": 7,
+      "timingNormalizationStatus": "not-yet-normalized-for-v154-step-scorer",
+      "annotations": [
+        "stacked notes in each chordGroup are simultaneous",
+        "final E voicing has visible release/slide arcs",
+        "visible rest follows"
+      ],
+      "chordSymbols": [
+        "E",
+        "D",
+        "E"
+      ],
+      "eventCount": 18,
+      "attackLikeEventCount": 18
+    },
+    {
+      "measure": 36,
+      "timeSignature": "4/4",
+      "events": [
+        {
+          "string": "e",
+          "stringIndex": 0,
+          "kind": "note",
+          "fret": 9,
+          "midi": 73,
+          "chordGroup": "E-1",
+          "simultaneous": true,
+          "chordLabel": "E",
+          "visualOrder": 0
+        },
+        {
+          "string": "B",
+          "stringIndex": 1,
+          "kind": "note",
+          "fret": 9,
+          "midi": 68,
+          "chordGroup": "E-1",
+          "simultaneous": true,
+          "chordLabel": "E",
+          "visualOrder": 1
+        },
+        {
+          "string": "G",
+          "stringIndex": 2,
+          "kind": "note",
+          "fret": 9,
+          "midi": 64,
+          "chordGroup": "E-1",
+          "simultaneous": true,
+          "chordLabel": "E",
+          "visualOrder": 2
+        },
+        {
+          "string": "e",
+          "stringIndex": 0,
+          "kind": "note",
+          "fret": 9,
+          "midi": 73,
+          "chordGroup": "E-2",
+          "simultaneous": true,
+          "chordLabel": "E",
+          "visualOrder": 3
+        },
+        {
+          "string": "B",
+          "stringIndex": 1,
+          "kind": "note",
+          "fret": 9,
+          "midi": 68,
+          "chordGroup": "E-2",
+          "simultaneous": true,
+          "chordLabel": "E",
+          "visualOrder": 4
+        },
+        {
+          "string": "G",
+          "stringIndex": 2,
+          "kind": "note",
+          "fret": 9,
+          "midi": 64,
+          "chordGroup": "E-2",
+          "simultaneous": true,
+          "chordLabel": "E",
+          "visualOrder": 5
+        },
+        {
+          "string": "e",
+          "stringIndex": 0,
+          "kind": "note",
+          "fret": 9,
+          "midi": 73,
+          "chordGroup": "E-3",
+          "simultaneous": true,
+          "chordLabel": "E",
+          "visualOrder": 6
+        },
+        {
+          "string": "B",
+          "stringIndex": 1,
+          "kind": "note",
+          "fret": 9,
+          "midi": 68,
+          "chordGroup": "E-3",
+          "simultaneous": true,
+          "chordLabel": "E",
+          "visualOrder": 7
+        },
+        {
+          "string": "G",
+          "stringIndex": 2,
+          "kind": "note",
+          "fret": 9,
+          "midi": 64,
+          "chordGroup": "E-3",
+          "simultaneous": true,
+          "chordLabel": "E",
+          "visualOrder": 8
+        },
+        {
+          "string": "e",
+          "stringIndex": 0,
+          "kind": "note",
+          "fret": 9,
+          "midi": 73,
+          "chordGroup": "E-4",
+          "simultaneous": true,
+          "chordLabel": "E",
+          "visualOrder": 9
+        },
+        {
+          "string": "B",
+          "stringIndex": 1,
+          "kind": "note",
+          "fret": 9,
+          "midi": 68,
+          "chordGroup": "E-4",
+          "simultaneous": true,
+          "chordLabel": "E",
+          "visualOrder": 10
+        },
+        {
+          "string": "G",
+          "stringIndex": 2,
+          "kind": "note",
+          "fret": 9,
+          "midi": 64,
+          "chordGroup": "E-4",
+          "simultaneous": true,
+          "chordLabel": "E",
+          "visualOrder": 11
+        },
+        {
+          "string": "e",
+          "stringIndex": 0,
+          "kind": "note",
+          "fret": 12,
+          "midi": 76,
+          "chordGroup": "G-1",
+          "simultaneous": true,
+          "chordLabel": "G",
+          "visualOrder": 12
+        },
+        {
+          "string": "B",
+          "stringIndex": 1,
+          "kind": "note",
+          "fret": 12,
+          "midi": 71,
+          "chordGroup": "G-1",
+          "simultaneous": true,
+          "chordLabel": "G",
+          "visualOrder": 13
+        },
+        {
+          "string": "G",
+          "stringIndex": 2,
+          "kind": "note",
+          "fret": 12,
+          "midi": 67,
+          "chordGroup": "G-1",
+          "simultaneous": true,
+          "chordLabel": "G",
+          "visualOrder": 14
+        },
+        {
+          "string": "e",
+          "stringIndex": 0,
+          "kind": "note",
+          "fret": 9,
+          "midi": 73,
+          "chordGroup": "E-final",
+          "simultaneous": true,
+          "slideOut": true,
+          "chordLabel": "E",
+          "visualOrder": 15
+        },
+        {
+          "string": "B",
+          "stringIndex": 1,
+          "kind": "note",
+          "fret": 9,
+          "midi": 68,
+          "chordGroup": "E-final",
+          "simultaneous": true,
+          "slideOut": true,
+          "chordLabel": "E",
+          "visualOrder": 16
+        },
+        {
+          "string": "G",
+          "stringIndex": 2,
+          "kind": "note",
+          "fret": 9,
+          "midi": 64,
+          "chordGroup": "E-final",
+          "simultaneous": true,
+          "slideOut": true,
+          "chordLabel": "E",
+          "visualOrder": 17
+        }
+      ],
+      "section": "Chorus",
+      "sourcePage": 7,
+      "timingNormalizationStatus": "not-yet-normalized-for-v154-step-scorer",
+      "annotations": [
+        "stacked notes in each chordGroup are simultaneous",
+        "final E voicing has visible release/slide arcs",
+        "visible rest follows"
+      ],
+      "chordSymbols": [
+        "E",
+        "G",
+        "E"
+      ],
+      "eventCount": 18,
+      "attackLikeEventCount": 18
+    },
+    {
+      "measure": 37,
+      "timeSignature": "4/4",
+      "events": [],
+      "section": "Chorus",
+      "sourcePage": 7,
+      "timingNormalizationStatus": "not-yet-normalized-for-v154-step-scorer",
+      "annotations": [
+        "rests only; chord symbols visible"
+      ],
+      "chordSymbols": [
+        "G6",
+        "A(tp2)"
+      ],
+      "eventCount": 0,
+      "attackLikeEventCount": 0
+    },
+    {
+      "measure": 38,
+      "timeSignature": "4/4",
+      "events": [],
+      "section": "Chorus",
+      "sourcePage": 7,
+      "timingNormalizationStatus": "not-yet-normalized-for-v154-step-scorer",
+      "annotations": [
+        "intentional blank/rest measure",
+        "double barline follows"
+      ],
+      "eventCount": 0,
+      "attackLikeEventCount": 0
+    },
+    {
+      "measure": 39,
+      "timeSignature": "4/4",
+      "events": [
+        {
+          "string": "D",
+          "stringIndex": 3,
+          "kind": "note",
+          "fret": 12,
+          "midi": 62,
+          "parenthesized": true,
+          "ghostLike": true,
+          "visualOrder": 0
+        }
+      ],
+      "section": "Riff",
+      "sourcePage": 8,
+      "timingNormalizationStatus": "not-yet-normalized-for-v154-step-scorer",
+      "annotations": [
+        "mostly rests",
+        "parenthesized D12 is preserved exactly as visible",
+        "source annotation above measures 39–40 says “Probably a mistake they left in”",
+        "do not silently correct source"
+      ],
+      "excludeFromScoringUntilTimingNormalizationResolved": true,
+      "eventCount": 1,
+      "attackLikeEventCount": 1
+    },
+    {
+      "measure": 40,
+      "timeSignature": "4/4",
+      "events": [],
+      "section": "Riff",
+      "sourcePage": 8,
+      "timingNormalizationStatus": "not-yet-normalized-for-v154-step-scorer",
+      "annotations": [
+        "intentional blank/rest measure",
+        "source annotation above measures 39–40 says “Probably a mistake they left in”",
+        "do not silently correct source"
+      ],
+      "excludeFromScoringUntilTimingNormalizationResolved": true,
+      "eventCount": 0,
+      "attackLikeEventCount": 0
+    },
+    {
+      "measure": 41,
+      "timeSignature": "4/4",
+      "events": [
+        {
+          "string": "G",
+          "stringIndex": 2,
+          "kind": "note",
+          "fret": 14,
+          "midi": 69,
+          "bendLabel": "full",
+          "slurToNext": true,
+          "visualOrder": 0
+        },
+        {
+          "string": "G",
+          "stringIndex": 2,
+          "kind": "note",
+          "fret": 12,
+          "midi": 67,
+          "slurFromPrevious": true,
+          "visualOrder": 1
+        },
+        {
+          "string": "D",
+          "stringIndex": 3,
+          "kind": "note",
+          "fret": 14,
+          "midi": 64,
+          "visualOrder": 2
+        },
+        {
+          "string": "A",
+          "stringIndex": 4,
+          "kind": "note",
+          "fret": 14,
+          "midi": 59,
+          "visualOrder": 3
+        },
+        {
+          "string": "D",
+          "stringIndex": 3,
+          "kind": "note",
+          "fret": 12,
+          "midi": 62,
+          "visualOrder": 4
+        },
+        {
+          "string": "D",
+          "stringIndex": 3,
+          "kind": "note",
+          "fret": 14,
+          "midi": 64,
+          "vibrato": true,
+          "visualOrder": 5
+        }
+      ],
+      "section": "Riff",
+      "sourcePage": 8,
+      "timingNormalizationStatus": "not-yet-normalized-for-v154-step-scorer",
+      "annotations": [
+        "Em riff",
+        "P.M. marking visible",
+        "vibrato marking visible",
+        "visible rest at end"
+      ],
+      "chordSymbols": [
+        "Em"
+      ],
+      "eventCount": 6,
+      "attackLikeEventCount": 6
+    },
+    {
+      "measure": 42,
+      "timeSignature": "4/4",
+      "events": [
+        {
+          "string": "G",
+          "stringIndex": 2,
+          "kind": "note",
+          "fret": 14,
+          "midi": 69,
+          "bendLabel": "full",
+          "slurToNext": true,
+          "visualOrder": 0
+        },
+        {
+          "string": "G",
+          "stringIndex": 2,
+          "kind": "note",
+          "fret": 12,
+          "midi": 67,
+          "slurFromPrevious": true,
+          "visualOrder": 1
+        },
+        {
+          "string": "D",
+          "stringIndex": 3,
+          "kind": "note",
+          "fret": 14,
+          "midi": 64,
+          "visualOrder": 2
+        },
+        {
+          "string": "A",
+          "stringIndex": 4,
+          "kind": "note",
+          "fret": 14,
+          "midi": 59,
+          "visualOrder": 3
+        },
+        {
+          "string": "D",
+          "stringIndex": 3,
+          "kind": "note",
+          "fret": 12,
+          "midi": 62,
+          "visualOrder": 4
+        },
+        {
+          "string": "D",
+          "stringIndex": 3,
+          "kind": "note",
+          "fret": 14,
+          "midi": 64,
+          "vibrato": true,
+          "slideOut": true,
+          "visualOrder": 5
+        }
+      ],
+      "section": "Riff",
+      "sourcePage": 8,
+      "timingNormalizationStatus": "not-yet-normalized-for-v154-step-scorer",
+      "annotations": [
+        "Em riff",
+        "P.M. marking visible",
+        "vibrato marking visible",
+        "final D14 has visible slide/release mark"
+      ],
+      "eventCount": 6,
+      "attackLikeEventCount": 6
+    },
+    {
+      "measure": 43,
+      "timeSignature": "4/4",
+      "events": [
+        {
+          "string": "G",
+          "stringIndex": 2,
+          "kind": "note",
+          "fret": 14,
+          "midi": 69,
+          "bendLabel": "full",
+          "slurToNext": true,
+          "visualOrder": 0
+        },
+        {
+          "string": "G",
+          "stringIndex": 2,
+          "kind": "note",
+          "fret": 12,
+          "midi": 67,
+          "slurFromPrevious": true,
+          "visualOrder": 1
+        },
+        {
+          "string": "D",
+          "stringIndex": 3,
+          "kind": "note",
+          "fret": 14,
+          "midi": 64,
+          "visualOrder": 2
+        },
+        {
+          "string": "A",
+          "stringIndex": 4,
+          "kind": "note",
+          "fret": 14,
+          "midi": 59,
+          "visualOrder": 3
+        },
+        {
+          "string": "D",
+          "stringIndex": 3,
+          "kind": "note",
+          "fret": 12,
+          "midi": 62,
+          "visualOrder": 4
+        },
+        {
+          "string": "D",
+          "stringIndex": 3,
+          "kind": "note",
+          "fret": 14,
+          "midi": 64,
+          "vibrato": true,
+          "visualOrder": 5
+        }
+      ],
+      "section": "Riff",
+      "sourcePage": 8,
+      "timingNormalizationStatus": "not-yet-normalized-for-v154-step-scorer",
+      "annotations": [
+        "Em riff",
+        "P.M. marking visible",
+        "vibrato marking visible",
+        "visible rest at end"
+      ],
+      "eventCount": 6,
+      "attackLikeEventCount": 6
+    },
+    {
+      "measure": 44,
+      "timeSignature": "4/4",
+      "events": [
+        {
+          "string": "G",
+          "stringIndex": 2,
+          "kind": "note",
+          "fret": 14,
+          "midi": 69,
+          "bendLabel": "full",
+          "slurToNext": true,
+          "visualOrder": 0
+        },
+        {
+          "string": "G",
+          "stringIndex": 2,
+          "kind": "note",
+          "fret": 12,
+          "midi": 67,
+          "slurFromPrevious": true,
+          "visualOrder": 1
+        },
+        {
+          "string": "D",
+          "stringIndex": 3,
+          "kind": "note",
+          "fret": 14,
+          "midi": 64,
+          "visualOrder": 2
+        },
+        {
+          "string": "A",
+          "stringIndex": 4,
+          "kind": "note",
+          "fret": 14,
+          "midi": 59,
+          "visualOrder": 3
+        },
+        {
+          "string": "D",
+          "stringIndex": 3,
+          "kind": "note",
+          "fret": 12,
+          "midi": 62,
+          "visualOrder": 4
+        },
+        {
+          "string": "D",
+          "stringIndex": 3,
+          "kind": "note",
+          "fret": 14,
+          "midi": 64,
+          "vibrato": true,
+          "visualOrder": 5
+        }
+      ],
+      "section": "Riff",
+      "sourcePage": 9,
+      "timingNormalizationStatus": "not-yet-normalized-for-v154-step-scorer",
+      "annotations": [
+        "Em riff",
+        "P.M. marking visible",
+        "vibrato marking visible",
+        "visible rest at end"
+      ],
+      "eventCount": 6,
+      "attackLikeEventCount": 6
+    },
+    {
+      "measure": 45,
+      "timeSignature": "4/4",
+      "events": [
+        {
+          "string": "G",
+          "stringIndex": 2,
+          "kind": "note",
+          "fret": 14,
+          "midi": 69,
+          "bendLabel": "full",
+          "slurToNext": true,
+          "visualOrder": 0
+        },
+        {
+          "string": "G",
+          "stringIndex": 2,
+          "kind": "note",
+          "fret": 12,
+          "midi": 67,
+          "slurFromPrevious": true,
+          "visualOrder": 1
+        },
+        {
+          "string": "D",
+          "stringIndex": 3,
+          "kind": "note",
+          "fret": 14,
+          "midi": 64,
+          "visualOrder": 2
+        },
+        {
+          "string": "A",
+          "stringIndex": 4,
+          "kind": "note",
+          "fret": 14,
+          "midi": 59,
+          "visualOrder": 3
+        },
+        {
+          "string": "D",
+          "stringIndex": 3,
+          "kind": "note",
+          "fret": 12,
+          "midi": 62,
+          "visualOrder": 4
+        },
+        {
+          "string": "D",
+          "stringIndex": 3,
+          "kind": "note",
+          "fret": 14,
+          "midi": 64,
+          "vibrato": true,
+          "visualOrder": 5
+        }
+      ],
+      "section": "Riff",
+      "sourcePage": 9,
+      "timingNormalizationStatus": "not-yet-normalized-for-v154-step-scorer",
+      "annotations": [
+        "Em riff",
+        "P.M. marking visible",
+        "vibrato marking visible",
+        "visible rest at end"
+      ],
+      "eventCount": 6,
+      "attackLikeEventCount": 6
+    },
+    {
+      "measure": 46,
+      "timeSignature": "4/4",
+      "events": [
+        {
+          "string": "G",
+          "stringIndex": 2,
+          "kind": "note",
+          "fret": 14,
+          "midi": 69,
+          "bendLabel": "full",
+          "slurToNext": true,
+          "visualOrder": 0
+        },
+        {
+          "string": "G",
+          "stringIndex": 2,
+          "kind": "note",
+          "fret": 12,
+          "midi": 67,
+          "slurFromPrevious": true,
+          "visualOrder": 1
+        },
+        {
+          "string": "D",
+          "stringIndex": 3,
+          "kind": "note",
+          "fret": 14,
+          "midi": 64,
+          "visualOrder": 2
+        },
+        {
+          "string": "A",
+          "stringIndex": 4,
+          "kind": "note",
+          "fret": 14,
+          "midi": 59,
+          "visualOrder": 3
+        },
+        {
+          "string": "D",
+          "stringIndex": 3,
+          "kind": "note",
+          "fret": 12,
+          "midi": 62,
+          "visualOrder": 4
+        },
+        {
+          "string": "D",
+          "stringIndex": 3,
+          "kind": "note",
+          "fret": 14,
+          "midi": 64,
+          "vibrato": true,
+          "slideOut": true,
+          "visualOrder": 5
+        }
+      ],
+      "section": "Riff",
+      "sourcePage": 9,
+      "timingNormalizationStatus": "not-yet-normalized-for-v154-step-scorer",
+      "annotations": [
+        "Em riff",
+        "P.M. marking visible",
+        "vibrato marking visible",
+        "final D14 has visible slide/release mark",
+        "double barline/section boundary follows"
+      ],
+      "eventCount": 6,
+      "attackLikeEventCount": 6
+    },
+    {
+      "measure": 47,
+      "timeSignature": "4/4",
+      "events": [],
+      "section": "Verse 2",
+      "sourcePage": 9,
+      "timingNormalizationStatus": "not-yet-normalized-for-v154-step-scorer",
+      "annotations": [
+        "intentional blank/rest measure; lyric alignment visible"
+      ],
+      "eventCount": 0,
+      "attackLikeEventCount": 0
+    },
+    {
+      "measure": 48,
+      "timeSignature": "4/4",
+      "events": [],
+      "section": "Verse 2",
+      "sourcePage": 9,
+      "timingNormalizationStatus": "not-yet-normalized-for-v154-step-scorer",
+      "annotations": [
+        "intentional blank/rest measure; lyric alignment visible"
+      ],
+      "eventCount": 0,
+      "attackLikeEventCount": 0
+    },
+    {
+      "measure": 49,
+      "timeSignature": "4/4",
+      "events": [],
+      "section": "Verse 2",
+      "sourcePage": 10,
+      "timingNormalizationStatus": "not-yet-normalized-for-v154-step-scorer",
+      "annotations": [
+        "intentional blank/rest measure; lyric alignment visible"
+      ],
+      "eventCount": 0,
+      "attackLikeEventCount": 0
+    },
+    {
+      "measure": 50,
+      "timeSignature": "4/4",
+      "events": [],
+      "section": "Verse 2",
+      "sourcePage": 10,
+      "timingNormalizationStatus": "not-yet-normalized-for-v154-step-scorer",
+      "annotations": [
+        "intentional blank/rest measure; lyric alignment visible"
+      ],
+      "eventCount": 0,
+      "attackLikeEventCount": 0
+    },
+    {
+      "measure": 51,
+      "timeSignature": "4/4",
+      "events": [],
+      "section": "Verse 2",
+      "sourcePage": 10,
+      "timingNormalizationStatus": "not-yet-normalized-for-v154-step-scorer",
+      "annotations": [
+        "intentional blank/rest measure; lyric alignment visible"
+      ],
+      "eventCount": 0,
+      "attackLikeEventCount": 0
+    },
+    {
+      "measure": 52,
+      "timeSignature": "4/4",
+      "events": [],
+      "section": "Verse 2",
+      "sourcePage": 10,
+      "timingNormalizationStatus": "not-yet-normalized-for-v154-step-scorer",
+      "annotations": [
+        "intentional blank/rest measure; lyric alignment visible"
+      ],
+      "eventCount": 0,
+      "attackLikeEventCount": 0
+    },
+    {
+      "measure": 53,
+      "timeSignature": "4/4",
+      "events": [],
+      "section": "Verse 2",
+      "sourcePage": 10,
+      "timingNormalizationStatus": "not-yet-normalized-for-v154-step-scorer",
+      "annotations": [
+        "intentional blank/rest measure; lyric alignment visible"
+      ],
+      "eventCount": 0,
+      "attackLikeEventCount": 0
+    },
+    {
+      "measure": 54,
+      "timeSignature": "4/4",
+      "events": [],
+      "section": "Verse 2",
+      "sourcePage": 10,
+      "timingNormalizationStatus": "not-yet-normalized-for-v154-step-scorer",
+      "annotations": [
+        "intentional blank/rest measure; lyric alignment visible"
+      ],
+      "eventCount": 0,
+      "attackLikeEventCount": 0
+    },
+    {
+      "measure": 55,
+      "timeSignature": "4/4",
+      "events": [
+        {
+          "string": "G",
+          "stringIndex": 2,
+          "kind": "note",
+          "fret": 13,
+          "midi": 68,
+          "bendLabel": "full",
+          "slurToNext": true,
+          "visualOrder": 0
+        },
+        {
+          "string": "G",
+          "stringIndex": 2,
+          "kind": "note",
+          "fret": 11,
+          "midi": 66,
+          "slurFromPrevious": true,
+          "visualOrder": 1
+        },
+        {
+          "string": "D",
+          "stringIndex": 3,
+          "kind": "note",
+          "fret": 12,
+          "midi": 62,
+          "visualOrder": 2
+        },
+        {
+          "string": "A",
+          "stringIndex": 4,
+          "kind": "note",
+          "fret": 12,
+          "midi": 57,
+          "visualOrder": 3
+        },
+        {
+          "string": "D",
+          "stringIndex": 3,
+          "kind": "note",
+          "fret": 10,
+          "midi": 60,
+          "visualOrder": 4
+        },
+        {
+          "string": "D",
+          "stringIndex": 3,
+          "kind": "note",
+          "fret": 12,
+          "midi": 62,
+          "vibrato": true,
+          "visualOrder": 5
+        }
+      ],
+      "section": "Verse 2",
+      "sourcePage": 10,
+      "timingNormalizationStatus": "not-yet-normalized-for-v154-step-scorer",
+      "annotations": [
+        "full bend on G13",
+        "P.M. marking visible",
+        "vibrato marking visible",
+        "visible rest at end"
+      ],
+      "eventCount": 6,
+      "attackLikeEventCount": 6
+    },
+    {
+      "measure": 56,
+      "timeSignature": "4/4",
+      "events": [
+        {
+          "string": "G",
+          "stringIndex": 2,
+          "kind": "note",
+          "fret": 13,
+          "midi": 68,
+          "bendLabel": "full",
+          "slurToNext": true,
+          "visualOrder": 0
+        },
+        {
+          "string": "G",
+          "stringIndex": 2,
+          "kind": "note",
+          "fret": 11,
+          "midi": 66,
+          "slurFromPrevious": true,
+          "visualOrder": 1
+        },
+        {
+          "string": "D",
+          "stringIndex": 3,
+          "kind": "note",
+          "fret": 12,
+          "midi": 62,
+          "visualOrder": 2
+        },
+        {
+          "string": "A",
+          "stringIndex": 4,
+          "kind": "note",
+          "fret": 12,
+          "midi": 57,
+          "visualOrder": 3
+        },
+        {
+          "string": "D",
+          "stringIndex": 3,
+          "kind": "note",
+          "fret": 10,
+          "midi": 60,
+          "visualOrder": 4
+        },
+        {
+          "string": "D",
+          "stringIndex": 3,
+          "kind": "note",
+          "fret": 12,
+          "midi": 62,
+          "vibrato": true,
+          "visualOrder": 5
+        }
+      ],
+      "section": "Verse 2",
+      "sourcePage": 11,
+      "timingNormalizationStatus": "not-yet-normalized-for-v154-step-scorer",
+      "annotations": [
+        "full bend on G13",
+        "P.M. marking visible",
+        "vibrato marking visible",
+        "visible rest at end"
+      ],
+      "eventCount": 6,
+      "attackLikeEventCount": 6
+    },
+    {
+      "measure": 57,
+      "timeSignature": "4/4",
+      "events": [
+        {
+          "string": "G",
+          "stringIndex": 2,
+          "kind": "note",
+          "fret": 13,
+          "midi": 68,
+          "bendLabel": "full",
+          "slurToNext": true,
+          "visualOrder": 0
+        },
+        {
+          "string": "G",
+          "stringIndex": 2,
+          "kind": "note",
+          "fret": 11,
+          "midi": 66,
+          "slurFromPrevious": true,
+          "visualOrder": 1
+        },
+        {
+          "string": "D",
+          "stringIndex": 3,
+          "kind": "note",
+          "fret": 12,
+          "midi": 62,
+          "visualOrder": 2
+        },
+        {
+          "string": "A",
+          "stringIndex": 4,
+          "kind": "note",
+          "fret": 12,
+          "midi": 57,
+          "visualOrder": 3
+        },
+        {
+          "string": "D",
+          "stringIndex": 3,
+          "kind": "note",
+          "fret": 10,
+          "midi": 60,
+          "visualOrder": 4
+        },
+        {
+          "string": "D",
+          "stringIndex": 3,
+          "kind": "note",
+          "fret": 12,
+          "midi": 62,
+          "vibrato": true,
+          "visualOrder": 5
+        },
+        {
+          "string": "D",
+          "stringIndex": 3,
+          "kind": "deadNote",
+          "fret": null,
+          "midi": null,
+          "notation": "x",
+          "visualOrder": 6
+        },
+        {
+          "string": "D",
+          "stringIndex": 3,
+          "kind": "deadNote",
+          "fret": null,
+          "midi": null,
+          "notation": "x",
+          "visualOrder": 7
+        }
+      ],
+      "section": "Verse 2",
+      "sourcePage": 11,
+      "timingNormalizationStatus": "not-yet-normalized-for-v154-step-scorer",
+      "annotations": [
+        "full bend on G13",
+        "P.M. marking visible",
+        "vibrato marking visible",
+        "two D-string dead notes at end"
+      ],
+      "eventCount": 8,
+      "attackLikeEventCount": 8
+    },
+    {
+      "measure": 58,
+      "timeSignature": "4/4",
+      "events": [
+        {
+          "string": "G",
+          "stringIndex": 2,
+          "kind": "note",
+          "fret": 12,
+          "midi": 67,
+          "visualOrder": 0
+        },
+        {
+          "string": "G",
+          "stringIndex": 2,
+          "kind": "note",
+          "fret": 12,
+          "midi": 67,
+          "visualOrder": 1
+        },
+        {
+          "string": "G",
+          "stringIndex": 2,
+          "kind": "note",
+          "fret": 10,
+          "midi": 65,
+          "visualOrder": 2
+        },
+        {
+          "string": "G",
+          "stringIndex": 2,
+          "kind": "note",
+          "fret": 10,
+          "midi": 65,
+          "visualOrder": 3
+        },
+        {
+          "string": "D",
+          "stringIndex": 3,
+          "kind": "deadNote",
+          "fret": null,
+          "midi": null,
+          "notation": "x",
+          "visualOrder": 4
+        },
+        {
+          "string": "G",
+          "stringIndex": 2,
+          "kind": "note",
+          "fret": 9,
+          "midi": 64,
+          "slurToNext": true,
+          "visualOrder": 5
+        },
+        {
+          "string": "D",
+          "stringIndex": 3,
+          "kind": "deadNote",
+          "fret": null,
+          "midi": null,
+          "notation": "x",
+          "visualOrder": 6
+        },
+        {
+          "string": "G",
+          "stringIndex": 2,
+          "kind": "note",
+          "fret": 10,
+          "midi": 65,
+          "visualOrder": 7
+        },
+        {
+          "string": "D",
+          "stringIndex": 3,
+          "kind": "deadNote",
+          "fret": null,
+          "midi": null,
+          "notation": "x",
+          "visualOrder": 8
+        },
+        {
+          "string": "G",
+          "stringIndex": 2,
+          "kind": "note",
+          "fret": 12,
+          "midi": 67,
+          "visualOrder": 9
+        },
+        {
+          "string": "G",
+          "stringIndex": 2,
+          "kind": "note",
+          "fret": 12,
+          "midi": 67,
+          "visualOrder": 10
+        },
+        {
+          "string": "G",
+          "stringIndex": 2,
+          "kind": "note",
+          "fret": 12,
+          "midi": 67,
+          "slideOut": true,
+          "visualOrder": 11
+        }
+      ],
+      "section": "Verse 2",
+      "sourcePage": 11,
+      "timingNormalizationStatus": "not-yet-normalized-for-v154-step-scorer",
+      "annotations": [
+        "mixed fretted/dead-note riff",
+        "visible curved articulation at G9",
+        "final G12 has visible slide/release mark"
+      ],
+      "eventCount": 12,
+      "attackLikeEventCount": 12
+    },
+    {
+      "measure": 59,
+      "timeSignature": "4/4",
+      "events": [],
+      "section": "Verse 2",
+      "sourcePage": 11,
+      "timingNormalizationStatus": "not-yet-normalized-for-v154-step-scorer",
+      "annotations": [
+        "intentional blank/rest measure; lyric alignment visible"
+      ],
+      "eventCount": 0,
+      "attackLikeEventCount": 0
+    },
+    {
+      "measure": 60,
+      "timeSignature": "4/4",
+      "events": [],
+      "section": "Verse 2",
+      "sourcePage": 11,
+      "timingNormalizationStatus": "not-yet-normalized-for-v154-step-scorer",
+      "annotations": [
+        "intentional blank/rest measure; lyric alignment visible"
+      ],
+      "eventCount": 0,
+      "attackLikeEventCount": 0
+    },
+    {
+      "measure": 61,
+      "timeSignature": "4/4",
+      "events": [],
+      "section": "Verse 2",
+      "sourcePage": 12,
+      "timingNormalizationStatus": "not-yet-normalized-for-v154-step-scorer",
+      "annotations": [
+        "intentional blank/rest measure; lyric alignment visible"
+      ],
+      "eventCount": 0,
+      "attackLikeEventCount": 0
+    },
+    {
+      "measure": 62,
+      "timeSignature": "4/4",
+      "events": [],
+      "section": "Verse 2",
+      "sourcePage": 12,
+      "timingNormalizationStatus": "not-yet-normalized-for-v154-step-scorer",
+      "annotations": [
+        "intentional blank/rest measure before Chorus",
+        "double barline into Chorus"
+      ],
+      "eventCount": 0,
+      "attackLikeEventCount": 0
+    },
+    {
+      "measure": 63,
+      "timeSignature": "4/4",
+      "events": [],
+      "section": "Chorus",
+      "sourcePage": 12,
+      "timingNormalizationStatus": "not-yet-normalized-for-v154-step-scorer",
+      "annotations": [
+        "rest/sustain glyph visible; no pitch inferred"
+      ],
+      "chordSymbols": [
+        "G6"
+      ],
+      "eventCount": 0,
+      "attackLikeEventCount": 0
+    },
+    {
+      "measure": 64,
+      "timeSignature": "4/4",
+      "events": [],
+      "section": "Chorus",
+      "sourcePage": 12,
+      "timingNormalizationStatus": "not-yet-normalized-for-v154-step-scorer",
+      "annotations": [
+        "rest/sustain glyph visible; no pitch inferred"
+      ],
+      "chordSymbols": [
+        "A(tp2)"
+      ],
+      "eventCount": 0,
+      "attackLikeEventCount": 0
+    },
+    {
+      "measure": 65,
+      "timeSignature": "4/4",
+      "events": [
+        {
+          "string": "e",
+          "stringIndex": 0,
+          "kind": "note",
+          "fret": 9,
+          "midi": 73,
+          "chordGroup": "E-1",
+          "simultaneous": true,
+          "chordLabel": "E",
+          "visualOrder": 0
+        },
+        {
+          "string": "B",
+          "stringIndex": 1,
+          "kind": "note",
+          "fret": 9,
+          "midi": 68,
+          "chordGroup": "E-1",
+          "simultaneous": true,
+          "chordLabel": "E",
+          "visualOrder": 1
+        },
+        {
+          "string": "G",
+          "stringIndex": 2,
+          "kind": "note",
+          "fret": 9,
+          "midi": 64,
+          "chordGroup": "E-1",
+          "simultaneous": true,
+          "chordLabel": "E",
+          "visualOrder": 2
+        },
+        {
+          "string": "e",
+          "stringIndex": 0,
+          "kind": "note",
+          "fret": 9,
+          "midi": 73,
+          "chordGroup": "E-2",
+          "simultaneous": true,
+          "chordLabel": "E",
+          "visualOrder": 3
+        },
+        {
+          "string": "B",
+          "stringIndex": 1,
+          "kind": "note",
+          "fret": 9,
+          "midi": 68,
+          "chordGroup": "E-2",
+          "simultaneous": true,
+          "chordLabel": "E",
+          "visualOrder": 4
+        },
+        {
+          "string": "G",
+          "stringIndex": 2,
+          "kind": "note",
+          "fret": 9,
+          "midi": 64,
+          "chordGroup": "E-2",
+          "simultaneous": true,
+          "chordLabel": "E",
+          "visualOrder": 5
+        },
+        {
+          "string": "e",
+          "stringIndex": 0,
+          "kind": "note",
+          "fret": 9,
+          "midi": 73,
+          "chordGroup": "E-3",
+          "simultaneous": true,
+          "chordLabel": "E",
+          "visualOrder": 6
+        },
+        {
+          "string": "B",
+          "stringIndex": 1,
+          "kind": "note",
+          "fret": 9,
+          "midi": 68,
+          "chordGroup": "E-3",
+          "simultaneous": true,
+          "chordLabel": "E",
+          "visualOrder": 7
+        },
+        {
+          "string": "G",
+          "stringIndex": 2,
+          "kind": "note",
+          "fret": 9,
+          "midi": 64,
+          "chordGroup": "E-3",
+          "simultaneous": true,
+          "chordLabel": "E",
+          "visualOrder": 8
+        },
+        {
+          "string": "e",
+          "stringIndex": 0,
+          "kind": "note",
+          "fret": 9,
+          "midi": 73,
+          "chordGroup": "E-4",
+          "simultaneous": true,
+          "chordLabel": "E",
+          "visualOrder": 9
+        },
+        {
+          "string": "B",
+          "stringIndex": 1,
+          "kind": "note",
+          "fret": 9,
+          "midi": 68,
+          "chordGroup": "E-4",
+          "simultaneous": true,
+          "chordLabel": "E",
+          "visualOrder": 10
+        },
+        {
+          "string": "G",
+          "stringIndex": 2,
+          "kind": "note",
+          "fret": 9,
+          "midi": 64,
+          "chordGroup": "E-4",
+          "simultaneous": true,
+          "chordLabel": "E",
+          "visualOrder": 11
+        },
+        {
+          "string": "e",
+          "stringIndex": 0,
+          "kind": "note",
+          "fret": 7,
+          "midi": 71,
+          "chordGroup": "D-1",
+          "simultaneous": true,
+          "chordLabel": "D",
+          "visualOrder": 12
+        },
+        {
+          "string": "B",
+          "stringIndex": 1,
+          "kind": "note",
+          "fret": 7,
+          "midi": 66,
+          "chordGroup": "D-1",
+          "simultaneous": true,
+          "chordLabel": "D",
+          "visualOrder": 13
+        },
+        {
+          "string": "G",
+          "stringIndex": 2,
+          "kind": "note",
+          "fret": 7,
+          "midi": 62,
+          "chordGroup": "D-1",
+          "simultaneous": true,
+          "chordLabel": "D",
+          "visualOrder": 14
+        },
+        {
+          "string": "e",
+          "stringIndex": 0,
+          "kind": "note",
+          "fret": 9,
+          "midi": 73,
+          "chordGroup": "E-final",
+          "simultaneous": true,
+          "slideOut": true,
+          "chordLabel": "E",
+          "visualOrder": 15
+        },
+        {
+          "string": "B",
+          "stringIndex": 1,
+          "kind": "note",
+          "fret": 9,
+          "midi": 68,
+          "chordGroup": "E-final",
+          "simultaneous": true,
+          "slideOut": true,
+          "chordLabel": "E",
+          "visualOrder": 16
+        },
+        {
+          "string": "G",
+          "stringIndex": 2,
+          "kind": "note",
+          "fret": 9,
+          "midi": 64,
+          "chordGroup": "E-final",
+          "simultaneous": true,
+          "slideOut": true,
+          "chordLabel": "E",
+          "visualOrder": 17
+        }
+      ],
+      "section": "Chorus",
+      "sourcePage": 12,
+      "timingNormalizationStatus": "not-yet-normalized-for-v154-step-scorer",
+      "annotations": [
+        "stacked notes in each chordGroup are simultaneous",
+        "final E voicing has visible release/slide arcs",
+        "visible rest follows"
+      ],
+      "chordSymbols": [
+        "E",
+        "D",
+        "E"
+      ],
+      "eventCount": 18,
+      "attackLikeEventCount": 18
+    },
+    {
+      "measure": 66,
+      "timeSignature": "4/4",
+      "events": [
+        {
+          "string": "e",
+          "stringIndex": 0,
+          "kind": "note",
+          "fret": 9,
+          "midi": 73,
+          "chordGroup": "E-1",
+          "simultaneous": true,
+          "chordLabel": "E",
+          "visualOrder": 0
+        },
+        {
+          "string": "B",
+          "stringIndex": 1,
+          "kind": "note",
+          "fret": 9,
+          "midi": 68,
+          "chordGroup": "E-1",
+          "simultaneous": true,
+          "chordLabel": "E",
+          "visualOrder": 1
+        },
+        {
+          "string": "G",
+          "stringIndex": 2,
+          "kind": "note",
+          "fret": 9,
+          "midi": 64,
+          "chordGroup": "E-1",
+          "simultaneous": true,
+          "chordLabel": "E",
+          "visualOrder": 2
+        },
+        {
+          "string": "e",
+          "stringIndex": 0,
+          "kind": "note",
+          "fret": 9,
+          "midi": 73,
+          "chordGroup": "E-2",
+          "simultaneous": true,
+          "chordLabel": "E",
+          "visualOrder": 3
+        },
+        {
+          "string": "B",
+          "stringIndex": 1,
+          "kind": "note",
+          "fret": 9,
+          "midi": 68,
+          "chordGroup": "E-2",
+          "simultaneous": true,
+          "chordLabel": "E",
+          "visualOrder": 4
+        },
+        {
+          "string": "G",
+          "stringIndex": 2,
+          "kind": "note",
+          "fret": 9,
+          "midi": 64,
+          "chordGroup": "E-2",
+          "simultaneous": true,
+          "chordLabel": "E",
+          "visualOrder": 5
+        },
+        {
+          "string": "e",
+          "stringIndex": 0,
+          "kind": "note",
+          "fret": 9,
+          "midi": 73,
+          "chordGroup": "E-3",
+          "simultaneous": true,
+          "chordLabel": "E",
+          "visualOrder": 6
+        },
+        {
+          "string": "B",
+          "stringIndex": 1,
+          "kind": "note",
+          "fret": 9,
+          "midi": 68,
+          "chordGroup": "E-3",
+          "simultaneous": true,
+          "chordLabel": "E",
+          "visualOrder": 7
+        },
+        {
+          "string": "G",
+          "stringIndex": 2,
+          "kind": "note",
+          "fret": 9,
+          "midi": 64,
+          "chordGroup": "E-3",
+          "simultaneous": true,
+          "chordLabel": "E",
+          "visualOrder": 8
+        },
+        {
+          "string": "e",
+          "stringIndex": 0,
+          "kind": "note",
+          "fret": 9,
+          "midi": 73,
+          "chordGroup": "E-4",
+          "simultaneous": true,
+          "chordLabel": "E",
+          "visualOrder": 9
+        },
+        {
+          "string": "B",
+          "stringIndex": 1,
+          "kind": "note",
+          "fret": 9,
+          "midi": 68,
+          "chordGroup": "E-4",
+          "simultaneous": true,
+          "chordLabel": "E",
+          "visualOrder": 10
+        },
+        {
+          "string": "G",
+          "stringIndex": 2,
+          "kind": "note",
+          "fret": 9,
+          "midi": 64,
+          "chordGroup": "E-4",
+          "simultaneous": true,
+          "chordLabel": "E",
+          "visualOrder": 11
+        },
+        {
+          "string": "e",
+          "stringIndex": 0,
+          "kind": "note",
+          "fret": 12,
+          "midi": 76,
+          "chordGroup": "G-1",
+          "simultaneous": true,
+          "chordLabel": "G",
+          "visualOrder": 12
+        },
+        {
+          "string": "B",
+          "stringIndex": 1,
+          "kind": "note",
+          "fret": 12,
+          "midi": 71,
+          "chordGroup": "G-1",
+          "simultaneous": true,
+          "chordLabel": "G",
+          "visualOrder": 13
+        },
+        {
+          "string": "G",
+          "stringIndex": 2,
+          "kind": "note",
+          "fret": 12,
+          "midi": 67,
+          "chordGroup": "G-1",
+          "simultaneous": true,
+          "chordLabel": "G",
+          "visualOrder": 14
+        },
+        {
+          "string": "e",
+          "stringIndex": 0,
+          "kind": "note",
+          "fret": 9,
+          "midi": 73,
+          "chordGroup": "E-final",
+          "simultaneous": true,
+          "slideOut": true,
+          "chordLabel": "E",
+          "visualOrder": 15
+        },
+        {
+          "string": "B",
+          "stringIndex": 1,
+          "kind": "note",
+          "fret": 9,
+          "midi": 68,
+          "chordGroup": "E-final",
+          "simultaneous": true,
+          "slideOut": true,
+          "chordLabel": "E",
+          "visualOrder": 16
+        },
+        {
+          "string": "G",
+          "stringIndex": 2,
+          "kind": "note",
+          "fret": 9,
+          "midi": 64,
+          "chordGroup": "E-final",
+          "simultaneous": true,
+          "slideOut": true,
+          "chordLabel": "E",
+          "visualOrder": 17
+        }
+      ],
+      "section": "Chorus",
+      "sourcePage": 13,
+      "timingNormalizationStatus": "not-yet-normalized-for-v154-step-scorer",
+      "annotations": [
+        "stacked notes in each chordGroup are simultaneous",
+        "final E voicing has visible release/slide arcs",
+        "visible rest follows"
+      ],
+      "chordSymbols": [
+        "E",
+        "G",
+        "E"
+      ],
+      "eventCount": 18,
+      "attackLikeEventCount": 18
+    },
+    {
+      "measure": 67,
+      "timeSignature": "4/4",
+      "events": [
+        {
+          "string": "B",
+          "stringIndex": 1,
+          "kind": "note",
+          "fret": 2,
+          "midi": 61,
+          "chordGroup": "A-sustain-start",
+          "simultaneous": true,
+          "tieToNext": true,
+          "chordLabel": "A(tp2)",
+          "visualOrder": 0
+        },
+        {
+          "string": "G",
+          "stringIndex": 2,
+          "kind": "note",
+          "fret": 2,
+          "midi": 57,
+          "chordGroup": "A-sustain-start",
+          "simultaneous": true,
+          "tieToNext": true,
+          "chordLabel": "A(tp2)",
+          "visualOrder": 1
+        },
+        {
+          "string": "D",
+          "stringIndex": 3,
+          "kind": "note",
+          "fret": 2,
+          "midi": 52,
+          "chordGroup": "A-sustain-start",
+          "simultaneous": true,
+          "tieToNext": true,
+          "chordLabel": "A(tp2)",
+          "visualOrder": 2
+        },
+        {
+          "string": "A",
+          "stringIndex": 4,
+          "kind": "note",
+          "fret": 0,
+          "midi": 45,
+          "chordGroup": "A-sustain-start",
+          "simultaneous": true,
+          "tieToNext": true,
+          "chordLabel": "A(tp2)",
+          "visualOrder": 3
+        }
+      ],
+      "section": "Chorus",
+      "sourcePage": 13,
+      "timingNormalizationStatus": "not-yet-normalized-for-v154-step-scorer",
+      "annotations": [
+        "rests precede the final A voicing",
+        "stacked chord tones are simultaneous",
+        "ties continue into measure 68"
+      ],
+      "chordSymbols": [
+        "G6",
+        "A(tp2)"
+      ],
+      "eventCount": 4,
+      "attackLikeEventCount": 4
+    },
+    {
+      "measure": 68,
+      "timeSignature": "4/4",
+      "events": [
+        {
+          "string": "B",
+          "stringIndex": 1,
+          "kind": "note",
+          "fret": 2,
+          "midi": 61,
+          "parenthesized": true,
+          "continuationOnly": true,
+          "tieFromPrevious": true,
+          "tieToNext": true,
+          "visualOrder": 0
+        },
+        {
+          "string": "G",
+          "stringIndex": 2,
+          "kind": "note",
+          "fret": 2,
+          "midi": 57,
+          "parenthesized": true,
+          "continuationOnly": true,
+          "tieFromPrevious": true,
+          "tieToNext": true,
+          "visualOrder": 1
+        },
+        {
+          "string": "D",
+          "stringIndex": 3,
+          "kind": "note",
+          "fret": 2,
+          "midi": 52,
+          "parenthesized": true,
+          "continuationOnly": true,
+          "tieFromPrevious": true,
+          "tieToNext": true,
+          "visualOrder": 2
+        },
+        {
+          "string": "A",
+          "stringIndex": 4,
+          "kind": "note",
+          "fret": 0,
+          "midi": 45,
+          "parenthesized": true,
+          "continuationOnly": true,
+          "tieFromPrevious": true,
+          "tieToNext": true,
+          "visualOrder": 3
+        }
+      ],
+      "section": "Chorus",
+      "sourcePage": 13,
+      "timingNormalizationStatus": "not-yet-normalized-for-v154-step-scorer",
+      "annotations": [
+        "parenthesized A-voicing continuation; no new attack inferred",
+        "long ties visible across measure"
+      ],
+      "eventCount": 4,
+      "attackLikeEventCount": 0
+    },
+    {
+      "measure": 69,
+      "timeSignature": "4/4",
+      "events": [
+        {
+          "string": "B",
+          "stringIndex": 1,
+          "kind": "note",
+          "fret": 2,
+          "midi": 61,
+          "parenthesized": true,
+          "continuationOnly": true,
+          "tieFromPrevious": true,
+          "visualOrder": 0
+        },
+        {
+          "string": "G",
+          "stringIndex": 2,
+          "kind": "note",
+          "fret": 2,
+          "midi": 57,
+          "parenthesized": true,
+          "continuationOnly": true,
+          "tieFromPrevious": true,
+          "visualOrder": 1
+        },
+        {
+          "string": "D",
+          "stringIndex": 3,
+          "kind": "note",
+          "fret": 2,
+          "midi": 52,
+          "parenthesized": true,
+          "continuationOnly": true,
+          "tieFromPrevious": true,
+          "visualOrder": 2
+        }
+      ],
+      "section": "Chorus",
+      "sourcePage": 13,
+      "timingNormalizationStatus": "not-yet-normalized-for-v154-step-scorer",
+      "annotations": [
+        "only three parenthesized upper chord tones remain visibly printed at left",
+        "continuation only; no new attack inferred",
+        "double barline into Bridge"
+      ],
+      "eventCount": 3,
+      "attackLikeEventCount": 0
+    },
+    {
+      "measure": 70,
+      "timeSignature": "4/4",
+      "events": [],
+      "section": "Bridge",
+      "sourcePage": 13,
+      "timingNormalizationStatus": "not-yet-normalized-for-v154-step-scorer",
+      "annotations": [
+        "intentional blank/rest Bridge measure"
+      ],
+      "eventCount": 0,
+      "attackLikeEventCount": 0
+    },
+    {
+      "measure": 71,
+      "timeSignature": "4/4",
+      "events": [],
+      "section": "Bridge",
+      "sourcePage": 13,
+      "timingNormalizationStatus": "not-yet-normalized-for-v154-step-scorer",
+      "annotations": [
+        "intentional blank/rest Bridge measure"
+      ],
+      "eventCount": 0,
+      "attackLikeEventCount": 0
+    },
+    {
+      "measure": 72,
+      "timeSignature": "4/4",
+      "events": [],
+      "section": "Bridge",
+      "sourcePage": 13,
+      "timingNormalizationStatus": "not-yet-normalized-for-v154-step-scorer",
+      "annotations": [
+        "intentional blank/rest Bridge measure"
+      ],
+      "eventCount": 0,
+      "attackLikeEventCount": 0
+    },
+    {
+      "measure": 73,
+      "timeSignature": "4/4",
+      "events": [],
+      "section": "Bridge",
+      "sourcePage": 13,
+      "timingNormalizationStatus": "not-yet-normalized-for-v154-step-scorer",
+      "annotations": [
+        "intentional blank/rest Bridge measure"
+      ],
+      "eventCount": 0,
+      "attackLikeEventCount": 0
+    },
+    {
+      "measure": 74,
+      "timeSignature": "4/4",
+      "events": [],
+      "section": "Bridge",
+      "sourcePage": 13,
+      "timingNormalizationStatus": "not-yet-normalized-for-v154-step-scorer",
+      "annotations": [
+        "intentional blank/rest Bridge measure"
+      ],
+      "eventCount": 0,
+      "attackLikeEventCount": 0
+    },
+    {
+      "measure": 75,
+      "timeSignature": "4/4",
+      "events": [],
+      "section": "Bridge",
+      "sourcePage": 13,
+      "timingNormalizationStatus": "not-yet-normalized-for-v154-step-scorer",
+      "annotations": [
+        "intentional blank/rest Bridge measure"
+      ],
+      "eventCount": 0,
+      "attackLikeEventCount": 0
+    },
+    {
+      "measure": 76,
+      "timeSignature": "4/4",
+      "events": [],
+      "section": "Bridge",
+      "sourcePage": 13,
+      "timingNormalizationStatus": "not-yet-normalized-for-v154-step-scorer",
+      "annotations": [
+        "intentional blank/rest Bridge measure"
+      ],
+      "eventCount": 0,
+      "attackLikeEventCount": 0
+    },
+    {
+      "measure": 77,
+      "timeSignature": "4/4",
+      "events": [],
+      "section": "Bridge",
+      "sourcePage": 13,
+      "timingNormalizationStatus": "not-yet-normalized-for-v154-step-scorer",
+      "annotations": [
+        "intentional blank/rest Bridge measure"
+      ],
+      "eventCount": 0,
+      "attackLikeEventCount": 0
+    },
+    {
+      "measure": 78,
+      "timeSignature": "4/4",
+      "events": [
+        {
+          "string": "D",
+          "stringIndex": 3,
+          "kind": "note",
+          "fret": 12,
+          "midi": 62,
+          "slurToNext": true,
+          "visualOrder": 0
+        },
+        {
+          "string": "D",
+          "stringIndex": 3,
+          "kind": "note",
+          "fret": 14,
+          "midi": 64,
+          "slurFromPrevious": true,
+          "visualOrder": 1
+        },
+        {
+          "string": "G",
+          "stringIndex": 2,
+          "kind": "note",
+          "fret": 12,
+          "midi": 67,
+          "slurToNext": true,
+          "visualOrder": 2
+        },
+        {
+          "string": "G",
+          "stringIndex": 2,
+          "kind": "note",
+          "fret": 14,
+          "midi": 69,
+          "slurFromPrevious": true,
+          "slurToNext": true,
+          "visualOrder": 3
+        },
+        {
+          "string": "G",
+          "stringIndex": 2,
+          "kind": "note",
+          "fret": 12,
+          "midi": 67,
+          "slurFromPrevious": true,
+          "tieToNext": true,
+          "visualOrder": 4
+        }
+      ],
+      "section": "Solo",
+      "sourcePage": 14,
+      "timingNormalizationStatus": "not-yet-normalized-for-v154-step-scorer",
+      "annotations": [
+        "Solo begins",
+        "vibrato marking visible above passage",
+        "curved slur/legato arcs preserved; exact onset timing deferred"
+      ],
+      "eventCount": 5,
+      "attackLikeEventCount": 5
+    },
+    {
+      "measure": 79,
+      "timeSignature": "4/4",
+      "events": [
+        {
+          "string": "G",
+          "stringIndex": 2,
+          "kind": "note",
+          "fret": 12,
+          "midi": 67,
+          "parenthesized": true,
+          "continuationOnly": true,
+          "tieFromPrevious": true,
+          "bendLabel": "full",
+          "visualOrder": 0
+        },
+        {
+          "string": "D",
+          "stringIndex": 3,
+          "kind": "note",
+          "fret": 14,
+          "midi": 64,
+          "slurToNext": true,
+          "visualOrder": 1
+        },
+        {
+          "string": "D",
+          "stringIndex": 3,
+          "kind": "note",
+          "fret": 12,
+          "midi": 62,
+          "slurFromPrevious": true,
+          "visualOrder": 2
+        },
+        {
+          "string": "A",
+          "stringIndex": 4,
+          "kind": "note",
+          "fret": 14,
+          "midi": 59,
+          "visualOrder": 3
+        },
+        {
+          "string": "D",
+          "stringIndex": 3,
+          "kind": "note",
+          "fret": 12,
+          "midi": 62,
+          "visualOrder": 4
+        }
+      ],
+      "section": "Solo",
+      "sourcePage": 14,
+      "timingNormalizationStatus": "not-yet-normalized-for-v154-step-scorer",
+      "annotations": [
+        "opening parenthesized G12 continues from measure 78 and carries a visible full-bend arrow",
+        "rests separate the continuation from later fast-note group",
+        "tiny mark near bend label is not interpreted beyond raw full-bend label"
+      ],
+      "eventCount": 5,
+      "attackLikeEventCount": 4
+    },
+    {
+      "measure": 80,
+      "timeSignature": "4/4",
+      "events": [
+        {
+          "string": "D",
+          "stringIndex": 3,
+          "kind": "note",
+          "fret": 14,
+          "midi": 64,
+          "slideOut": true,
+          "visualOrder": 0
+        },
+        {
+          "string": "A",
+          "stringIndex": 4,
+          "kind": "note",
+          "fret": 12,
+          "midi": 57,
+          "bendLabel": "1/4",
+          "visualOrder": 1
+        },
+        {
+          "string": "A",
+          "stringIndex": 4,
+          "kind": "note",
+          "fret": 12,
+          "midi": 57,
+          "visualOrder": 2
+        },
+        {
+          "string": "A",
+          "stringIndex": 4,
+          "kind": "note",
+          "fret": 10,
+          "midi": 55,
+          "bendLabel": "1/4",
+          "visualOrder": 3
+        },
+        {
+          "string": "A",
+          "stringIndex": 4,
+          "kind": "note",
+          "fret": 10,
+          "midi": 55,
+          "visualOrder": 4
+        },
+        {
+          "string": "E",
+          "stringIndex": 5,
+          "kind": "note",
+          "fret": 12,
+          "midi": 52,
+          "bendLabel": "1/4",
+          "visualOrder": 5
+        },
+        {
+          "string": "E",
+          "stringIndex": 5,
+          "kind": "note",
+          "fret": 12,
+          "midi": 52,
+          "visualOrder": 6
+        }
+      ],
+      "section": "Solo",
+      "sourcePage": 14,
+      "timingNormalizationStatus": "not-yet-normalized-for-v154-step-scorer",
+      "annotations": [
+        "vibrato marking visible at left",
+        "three visible quarter-bend labels preserved as raw “1/4”"
+      ],
+      "eventCount": 7,
+      "attackLikeEventCount": 7
+    },
+    {
+      "measure": 81,
+      "timeSignature": "4/4",
+      "events": [
+        {
+          "string": "E",
+          "stringIndex": 5,
+          "kind": "note",
+          "fret": 10,
+          "midi": 50,
+          "slurToNext": true,
+          "visualOrder": 0
+        },
+        {
+          "string": "E",
+          "stringIndex": 5,
+          "kind": "note",
+          "fret": 12,
+          "midi": 52,
+          "slurFromPrevious": true,
+          "visualOrder": 1
+        },
+        {
+          "string": "E",
+          "stringIndex": 5,
+          "kind": "note",
+          "fret": 10,
+          "midi": 50,
+          "slurToNext": true,
+          "visualOrder": 2
+        },
+        {
+          "string": "E",
+          "stringIndex": 5,
+          "kind": "note",
+          "fret": 12,
+          "midi": 52,
+          "slurFromPrevious": true,
+          "slideOut": true,
+          "visualOrder": 3
+        },
+        {
+          "string": "A",
+          "stringIndex": 4,
+          "kind": "note",
+          "fret": 11,
+          "midi": 56,
+          "slideIn": true,
+          "visualOrder": 4
+        },
+        {
+          "string": "D",
+          "stringIndex": 3,
+          "kind": "note",
+          "fret": 9,
+          "midi": 59,
+          "visualOrder": 5
+        }
+      ],
+      "section": "Solo",
+      "sourcePage": 14,
+      "timingNormalizationStatus": "not-yet-normalized-for-v154-step-scorer",
+      "annotations": [
+        "vibrato marking visible above middle/right",
+        "detached small gray dot above far right is not assigned to a note because its notation/UI meaning is ambiguous"
+      ],
+      "visualUncertainty": true,
+      "eventCount": 6,
+      "attackLikeEventCount": 6
+    },
+    {
+      "measure": 82,
+      "timeSignature": "4/4",
+      "events": [
+        {
+          "string": "D",
+          "stringIndex": 3,
+          "kind": "deadNote",
+          "fret": null,
+          "midi": null,
+          "notation": "x",
+          "visualOrder": 0
+        },
+        {
+          "string": "D",
+          "stringIndex": 3,
+          "kind": "note",
+          "fret": 11,
+          "midi": 61,
+          "slurToNext": true,
+          "visualOrder": 1
+        },
+        {
+          "string": "D",
+          "stringIndex": 3,
+          "kind": "note",
+          "fret": 9,
+          "midi": 59,
+          "slurFromPrevious": true,
+          "visualOrder": 2
+        },
+        {
+          "string": "A",
+          "stringIndex": 4,
+          "kind": "note",
+          "fret": 11,
+          "midi": 56,
+          "visualOrder": 3
+        },
+        {
+          "string": "D",
+          "stringIndex": 3,
+          "kind": "note",
+          "fret": 9,
+          "midi": 59,
+          "visualOrder": 4
+        },
+        {
+          "string": "D",
+          "stringIndex": 3,
+          "kind": "note",
+          "fret": 11,
+          "midi": 61,
+          "visualOrder": 5
+        },
+        {
+          "string": "G",
+          "stringIndex": 2,
+          "kind": "note",
+          "fret": 9,
+          "midi": 64,
+          "visualOrder": 6
+        },
+        {
+          "string": "G",
+          "stringIndex": 2,
+          "kind": "note",
+          "fret": 11,
+          "midi": 66,
+          "visualOrder": 7
+        },
+        {
+          "string": "G",
+          "stringIndex": 2,
+          "kind": "note",
+          "fret": 11,
+          "midi": 66,
+          "bendLabel": "full",
+          "visualOrder": 8
+        },
+        {
+          "string": "G",
+          "stringIndex": 2,
+          "kind": "note",
+          "fret": 11,
+          "midi": 66,
+          "parenthesized": true,
+          "continuationOnly": true,
+          "bendReleaseContext": true,
+          "visualOrder": 9
+        },
+        {
+          "string": "G",
+          "stringIndex": 2,
+          "kind": "note",
+          "fret": 9,
+          "midi": 64,
+          "visualOrder": 10
+        },
+        {
+          "string": "D",
+          "stringIndex": 3,
+          "kind": "note",
+          "fret": 11,
+          "midi": 61,
+          "visualOrder": 11
+        }
+      ],
+      "section": "Solo",
+      "sourcePage": 15,
+      "timingNormalizationStatus": "not-yet-normalized-for-v154-step-scorer",
+      "annotations": [
+        "visible rests are omitted from attack-event list",
+        "full-bend/release context on G11 preserved without inventing exact bend timing"
+      ],
+      "eventCount": 12,
+      "attackLikeEventCount": 11
+    },
+    {
+      "measure": 83,
+      "timeSignature": "4/4",
+      "events": [
+        {
+          "string": "G",
+          "stringIndex": 2,
+          "kind": "note",
+          "fret": 9,
+          "midi": 64,
+          "slurToNext": true,
+          "visualOrder": 0
+        },
+        {
+          "string": "G",
+          "stringIndex": 2,
+          "kind": "note",
+          "fret": 11,
+          "midi": 66,
+          "slurFromPrevious": true,
+          "slurToNext": true,
+          "visualOrder": 1
+        },
+        {
+          "string": "G",
+          "stringIndex": 2,
+          "kind": "note",
+          "fret": 9,
+          "midi": 64,
+          "slurFromPrevious": true,
+          "visualOrder": 2
+        },
+        {
+          "string": "D",
+          "stringIndex": 3,
+          "kind": "note",
+          "fret": 11,
+          "midi": 61,
+          "visualOrder": 3
+        },
+        {
+          "string": "G",
+          "stringIndex": 2,
+          "kind": "note",
+          "fret": 9,
+          "midi": 64,
+          "visualOrder": 4
+        },
+        {
+          "string": "G",
+          "stringIndex": 2,
+          "kind": "note",
+          "fret": 11,
+          "midi": 66,
+          "visualOrder": 5
+        },
+        {
+          "string": "G",
+          "stringIndex": 2,
+          "kind": "note",
+          "fret": 13,
+          "midi": 68,
+          "slideIn": true,
+          "visualOrder": 6
+        },
+        {
+          "string": "B",
+          "stringIndex": 1,
+          "kind": "note",
+          "fret": 12,
+          "midi": 71,
+          "visualOrder": 7
+        },
+        {
+          "string": "e",
+          "stringIndex": 0,
+          "kind": "note",
+          "fret": 12,
+          "midi": 76,
+          "visualOrder": 8
+        },
+        {
+          "string": "B",
+          "stringIndex": 1,
+          "kind": "note",
+          "fret": 12,
+          "midi": 71,
+          "visualOrder": 9
+        },
+        {
+          "string": "B",
+          "stringIndex": 1,
+          "kind": "note",
+          "fret": 17,
+          "midi": 76,
+          "slideIn": true,
+          "visualOrder": 10
+        },
+        {
+          "string": "B",
+          "stringIndex": 1,
+          "kind": "note",
+          "fret": 17,
+          "midi": 76,
+          "vibrato": true,
+          "visualOrder": 11
+        }
+      ],
+      "section": "Solo",
+      "sourcePage": 15,
+      "timingNormalizationStatus": "not-yet-normalized-for-v154-step-scorer",
+      "annotations": [
+        "vibrato marking visible over final high-register notes",
+        "curved articulation under final B17 preserved generically as vibrato/slur context"
+      ],
+      "eventCount": 12,
+      "attackLikeEventCount": 12
+    },
+    {
+      "measure": 84,
+      "timeSignature": "4/4",
+      "events": [
+        {
+          "string": "B",
+          "stringIndex": 1,
+          "kind": "note",
+          "fret": 17,
+          "midi": 76,
+          "vibrato": true,
+          "visualOrder": 0
+        },
+        {
+          "string": "B",
+          "stringIndex": 1,
+          "kind": "note",
+          "fret": 17,
+          "midi": 76,
+          "visualOrder": 1
+        },
+        {
+          "string": "e",
+          "stringIndex": 0,
+          "kind": "note",
+          "fret": 15,
+          "midi": 79,
+          "visualOrder": 2
+        },
+        {
+          "string": "B",
+          "stringIndex": 1,
+          "kind": "note",
+          "fret": 17,
+          "midi": 76,
+          "vibrato": true,
+          "visualOrder": 3
+        },
+        {
+          "string": "B",
+          "stringIndex": 1,
+          "kind": "note",
+          "fret": 17,
+          "midi": 76,
+          "visualOrder": 4
+        },
+        {
+          "string": "G",
+          "stringIndex": 2,
+          "kind": "note",
+          "fret": 16,
+          "midi": 71,
+          "visualOrder": 5
+        },
+        {
+          "string": "e",
+          "stringIndex": 0,
+          "kind": "note",
+          "fret": 15,
+          "midi": 79,
+          "visualOrder": 6
+        },
+        {
+          "string": "B",
+          "stringIndex": 1,
+          "kind": "note",
+          "fret": 17,
+          "midi": 76,
+          "tieToNext": true,
+          "visualOrder": 7
+        }
+      ],
+      "section": "Solo",
+      "sourcePage": 15,
+      "timingNormalizationStatus": "not-yet-normalized-for-v154-step-scorer",
+      "annotations": [
+        "multiple vibrato markings visible",
+        "final B17 carries curved continuation into measure 85"
+      ],
+      "eventCount": 8,
+      "attackLikeEventCount": 8
+    },
+    {
+      "measure": 85,
+      "timeSignature": "4/4",
+      "events": [
+        {
+          "string": "B",
+          "stringIndex": 1,
+          "kind": "note",
+          "fret": 17,
+          "midi": 76,
+          "parenthesized": true,
+          "continuationOnly": true,
+          "tieFromPrevious": true,
+          "bendLabel": "full",
+          "visualOrder": 0
+        },
+        {
+          "string": "B",
+          "stringIndex": 1,
+          "kind": "note",
+          "fret": 17,
+          "midi": 76,
+          "bendLabel": "full",
+          "visualOrder": 1
+        },
+        {
+          "string": "B",
+          "stringIndex": 1,
+          "kind": "note",
+          "fret": 17,
+          "midi": 76,
+          "bendLabel": "full",
+          "visualOrder": 2
+        },
+        {
+          "string": "B",
+          "stringIndex": 1,
+          "kind": "note",
+          "fret": 17,
+          "midi": 76,
+          "bendLabel": "full",
+          "visualOrder": 3
+        }
+      ],
+      "section": "Solo",
+      "sourcePage": 15,
+      "timingNormalizationStatus": "not-yet-normalized-for-v154-step-scorer",
+      "annotations": [
+        "four visible full-bend indications; first is a parenthesized continuation from measure 84"
+      ],
+      "eventCount": 4,
+      "attackLikeEventCount": 3
+    },
+    {
+      "measure": 86,
+      "timeSignature": "4/4",
+      "events": [
+        {
+          "string": "B",
+          "stringIndex": 1,
+          "kind": "note",
+          "fret": 17,
+          "midi": 76,
+          "bendLabel": "full",
+          "slurToNext": true,
+          "visualOrder": 0
+        },
+        {
+          "string": "B",
+          "stringIndex": 1,
+          "kind": "note",
+          "fret": 15,
+          "midi": 74,
+          "slurFromPrevious": true,
+          "visualOrder": 1
+        },
+        {
+          "string": "G",
+          "stringIndex": 2,
+          "kind": "note",
+          "fret": 17,
+          "midi": 72,
+          "visualOrder": 2
+        },
+        {
+          "string": "G",
+          "stringIndex": 2,
+          "kind": "note",
+          "fret": 17,
+          "midi": 72,
+          "vibrato": true,
+          "tieToNext": true,
+          "visualOrder": 3
+        },
+        {
+          "string": "G",
+          "stringIndex": 2,
+          "kind": "note",
+          "fret": 17,
+          "midi": 72,
+          "parenthesized": true,
+          "continuationOnly": true,
+          "tieFromPrevious": true,
+          "bendLabel": "2",
+          "visualOrder": 4
+        }
+      ],
+      "section": "Solo",
+      "sourcePage": 16,
+      "timingNormalizationStatus": "not-yet-normalized-for-v154-step-scorer",
+      "annotations": [
+        "vibrato marking visible across middle",
+        "parenthesized final G17 has raw bend label “2”",
+        "visible rest follows"
+      ],
+      "eventCount": 5,
+      "attackLikeEventCount": 4
+    },
+    {
+      "measure": 87,
+      "timeSignature": "4/4",
+      "events": [
+        {
+          "string": "G",
+          "stringIndex": 2,
+          "kind": "note",
+          "fret": 17,
+          "midi": 72,
+          "bendLabel": "2",
+          "slurToNext": true,
+          "visualOrder": 0
+        },
+        {
+          "string": "G",
+          "stringIndex": 2,
+          "kind": "note",
+          "fret": 17,
+          "midi": 72,
+          "bendLabel": "2",
+          "visualOrder": 1
+        },
+        {
+          "string": "G",
+          "stringIndex": 2,
+          "kind": "note",
+          "fret": 17,
+          "midi": 72,
+          "bendLabel": "1 3/4",
+          "visualOrder": 2
+        },
+        {
+          "string": "G",
+          "stringIndex": 2,
+          "kind": "note",
+          "fret": 17,
+          "midi": 72,
+          "bendLabel": "2",
+          "slurToNext": true,
+          "visualOrder": 3
+        },
+        {
+          "string": "G",
+          "stringIndex": 2,
+          "kind": "note",
+          "fret": 17,
+          "midi": 72,
+          "bendLabel": "2",
+          "visualOrder": 4
+        }
+      ],
+      "section": "Solo",
+      "sourcePage": 16,
+      "timingNormalizationStatus": "not-yet-normalized-for-v154-step-scorer",
+      "annotations": [
+        "raw bend labels are preserved exactly as visible; no semitone normalization yet",
+        "visible initial rest"
+      ],
+      "eventCount": 5,
+      "attackLikeEventCount": 5
+    },
+    {
+      "measure": 88,
+      "timeSignature": "4/4",
+      "events": [
+        {
+          "string": "B",
+          "stringIndex": 1,
+          "kind": "note",
+          "fret": 17,
+          "midi": 76,
+          "bendLabel": "2",
+          "slurToNext": true,
+          "visualOrder": 0
+        },
+        {
+          "string": "B",
+          "stringIndex": 1,
+          "kind": "note",
+          "fret": 15,
+          "midi": 74,
+          "slurFromPrevious": true,
+          "visualOrder": 1
+        },
+        {
+          "string": "G",
+          "stringIndex": 2,
+          "kind": "note",
+          "fret": 16,
+          "midi": 71,
+          "visualOrder": 2
+        },
+        {
+          "string": "B",
+          "stringIndex": 1,
+          "kind": "note",
+          "fret": 15,
+          "midi": 74,
+          "slurToNext": true,
+          "visualOrder": 3
+        },
+        {
+          "string": "B",
+          "stringIndex": 1,
+          "kind": "note",
+          "fret": 17,
+          "midi": 76,
+          "visualOrder": 4
+        },
+        {
+          "string": "G",
+          "stringIndex": 2,
+          "kind": "note",
+          "fret": 16,
+          "midi": 71,
+          "slideToNext": true,
+          "visualOrder": 5
+        },
+        {
+          "string": "G",
+          "stringIndex": 2,
+          "kind": "note",
+          "fret": 14,
+          "midi": 69,
+          "slideFromPrevious": true,
+          "slideToNext": true,
+          "visualOrder": 6
+        },
+        {
+          "string": "G",
+          "stringIndex": 2,
+          "kind": "note",
+          "fret": 12,
+          "midi": 67,
+          "slideFromPrevious": true,
+          "visualOrder": 7
+        },
+        {
+          "string": "D",
+          "stringIndex": 3,
+          "kind": "note",
+          "fret": 14,
+          "midi": 64,
+          "visualOrder": 8
+        }
+      ],
+      "section": "Solo",
+      "sourcePage": 16,
+      "timingNormalizationStatus": "not-yet-normalized-for-v154-step-scorer",
+      "annotations": [
+        "descending G16–G14–G12 is under a visible curved/slide-like phrase mark",
+        "raw bend label “2” preserved"
+      ],
+      "eventCount": 9,
+      "attackLikeEventCount": 9
+    },
+    {
+      "measure": 89,
+      "timeSignature": "4/4",
+      "events": [
+        {
+          "string": "G",
+          "stringIndex": 2,
+          "kind": "note",
+          "fret": 12,
+          "midi": 67,
+          "slurToNext": true,
+          "visualOrder": 0
+        },
+        {
+          "string": "G",
+          "stringIndex": 2,
+          "kind": "note",
+          "fret": 14,
+          "midi": 69,
+          "slurFromPrevious": true,
+          "slurToNext": true,
+          "visualOrder": 1
+        },
+        {
+          "string": "G",
+          "stringIndex": 2,
+          "kind": "note",
+          "fret": 12,
+          "midi": 67,
+          "slurFromPrevious": true,
+          "visualOrder": 2
+        },
+        {
+          "string": "D",
+          "stringIndex": 3,
+          "kind": "note",
+          "fret": 14,
+          "midi": 64,
+          "visualOrder": 3
+        },
+        {
+          "string": "G",
+          "stringIndex": 2,
+          "kind": "note",
+          "fret": 12,
+          "midi": 67,
+          "visualOrder": 4
+        },
+        {
+          "string": "G",
+          "stringIndex": 2,
+          "kind": "note",
+          "fret": 14,
+          "midi": 69,
+          "visualOrder": 5
+        },
+        {
+          "string": "G",
+          "stringIndex": 2,
+          "kind": "note",
+          "fret": 14,
+          "midi": 69,
+          "parenthesized": true,
+          "continuationOnly": true,
+          "bendLabel": "full",
+          "visualOrder": 6
+        },
+        {
+          "string": "e",
+          "stringIndex": 0,
+          "kind": "note",
+          "fret": 12,
+          "midi": 76,
+          "visualOrder": 7
+        },
+        {
+          "string": "B",
+          "stringIndex": 1,
+          "kind": "note",
+          "fret": 12,
+          "midi": 71,
+          "visualOrder": 8
+        },
+        {
+          "string": "B",
+          "stringIndex": 1,
+          "kind": "note",
+          "fret": 15,
+          "midi": 74,
+          "visualOrder": 9
+        },
+        {
+          "string": "B",
+          "stringIndex": 1,
+          "kind": "note",
+          "fret": 15,
+          "midi": 74,
+          "parenthesized": true,
+          "continuationOnly": true,
+          "bendLabel": "full",
+          "visualOrder": 10
+        },
+        {
+          "string": "e",
+          "stringIndex": 0,
+          "kind": "note",
+          "fret": 12,
+          "midi": 76,
+          "visualOrder": 11
+        },
+        {
+          "string": "B",
+          "stringIndex": 1,
+          "kind": "note",
+          "fret": 15,
+          "midi": 74,
+          "visualOrder": 12
+        },
+        {
+          "string": "B",
+          "stringIndex": 1,
+          "kind": "note",
+          "fret": 12,
+          "midi": 71,
+          "visualOrder": 13
+        },
+        {
+          "string": "G",
+          "stringIndex": 2,
+          "kind": "note",
+          "fret": 14,
+          "midi": 69,
+          "slideOut": true,
+          "visualOrder": 14
+        }
+      ],
+      "section": "Solo",
+      "sourcePages": [
+        16,
+        17
+      ],
+      "timingNormalizationStatus": "not-yet-normalized-for-v154-step-scorer",
+      "annotations": [
+        "measure wraps from source page 16 onto source page 17",
+        "parenthesized notes are preserved as visible bend/release continuations",
+        "exact wrapped-system timing intentionally deferred"
+      ],
+      "eventCount": 15,
+      "attackLikeEventCount": 13
+    },
+    {
+      "measure": 90,
+      "timeSignature": "4/4",
+      "events": [
+        {
+          "string": "G",
+          "stringIndex": 2,
+          "kind": "note",
+          "fret": 14,
+          "midi": 69,
+          "parenthesized": true,
+          "continuationOnly": true,
+          "bendLabel": "full",
+          "visualOrder": 0
+        },
+        {
+          "string": "B",
+          "stringIndex": 1,
+          "kind": "note",
+          "fret": 12,
+          "midi": 71,
+          "visualOrder": 1
+        },
+        {
+          "string": "e",
+          "stringIndex": 0,
+          "kind": "note",
+          "fret": 12,
+          "midi": 76,
+          "visualOrder": 2
+        },
+        {
+          "string": "B",
+          "stringIndex": 1,
+          "kind": "note",
+          "fret": 12,
+          "midi": 71,
+          "visualOrder": 3
+        },
+        {
+          "string": "B",
+          "stringIndex": 1,
+          "kind": "note",
+          "fret": 15,
+          "midi": 74,
+          "slurToNext": true,
+          "visualOrder": 4
+        },
+        {
+          "string": "B",
+          "stringIndex": 1,
+          "kind": "note",
+          "fret": 15,
+          "midi": 74,
+          "parenthesized": true,
+          "continuationOnly": true,
+          "bendLabel": "full",
+          "visualOrder": 5
+        },
+        {
+          "string": "e",
+          "stringIndex": 0,
+          "kind": "note",
+          "fret": 12,
+          "midi": 76,
+          "visualOrder": 6
+        },
+        {
+          "string": "B",
+          "stringIndex": 1,
+          "kind": "note",
+          "fret": 15,
+          "midi": 74,
+          "visualOrder": 7
+        },
+        {
+          "string": "B",
+          "stringIndex": 1,
+          "kind": "note",
+          "fret": 12,
+          "midi": 71,
+          "visualOrder": 8
+        },
+        {
+          "string": "G",
+          "stringIndex": 2,
+          "kind": "note",
+          "fret": 14,
+          "midi": 69,
+          "slurToNext": true,
+          "visualOrder": 9
+        },
+        {
+          "string": "G",
+          "stringIndex": 2,
+          "kind": "note",
+          "fret": 14,
+          "midi": 69,
+          "parenthesized": true,
+          "continuationOnly": true,
+          "bendLabel": "full",
+          "visualOrder": 10
+        },
+        {
+          "string": "B",
+          "stringIndex": 1,
+          "kind": "note",
+          "fret": 12,
+          "midi": 71,
+          "visualOrder": 11
+        },
+        {
+          "string": "e",
+          "stringIndex": 0,
+          "kind": "note",
+          "fret": 12,
+          "midi": 76,
+          "visualOrder": 12
+        },
+        {
+          "string": "B",
+          "stringIndex": 1,
+          "kind": "note",
+          "fret": 12,
+          "midi": 71,
+          "visualOrder": 13
+        },
+        {
+          "string": "B",
+          "stringIndex": 1,
+          "kind": "note",
+          "fret": 15,
+          "midi": 74,
+          "slurToNext": true,
+          "visualOrder": 14
+        },
+        {
+          "string": "B",
+          "stringIndex": 1,
+          "kind": "note",
+          "fret": 15,
+          "midi": 74,
+          "parenthesized": true,
+          "continuationOnly": true,
+          "bendLabel": "full",
+          "visualOrder": 15
+        }
+      ],
+      "section": "Solo",
+      "sourcePage": 17,
+      "timingNormalizationStatus": "not-yet-normalized-for-v154-step-scorer",
+      "annotations": [
+        "measure spans two printed systems on source page 17",
+        "visual order is preserved across the wrap; exact onset timing deferred"
+      ],
+      "eventCount": 16,
+      "attackLikeEventCount": 12
+    },
+    {
+      "measure": 91,
+      "timeSignature": "4/4",
+      "events": [
+        {
+          "string": "e",
+          "stringIndex": 0,
+          "kind": "note",
+          "fret": 12,
+          "midi": 76,
+          "visualOrder": 0
+        },
+        {
+          "string": "B",
+          "stringIndex": 1,
+          "kind": "note",
+          "fret": 15,
+          "midi": 74,
+          "visualOrder": 1
+        },
+        {
+          "string": "e",
+          "stringIndex": 0,
+          "kind": "note",
+          "fret": 12,
+          "midi": 76,
+          "visualOrder": 2
+        },
+        {
+          "string": "B",
+          "stringIndex": 1,
+          "kind": "note",
+          "fret": 15,
+          "midi": 74,
+          "slurToNext": true,
+          "visualOrder": 3
+        },
+        {
+          "string": "B",
+          "stringIndex": 1,
+          "kind": "note",
+          "fret": 15,
+          "midi": 74,
+          "parenthesized": true,
+          "continuationOnly": true,
+          "bendLabel": "full",
+          "visualOrder": 4
+        },
+        {
+          "string": "e",
+          "stringIndex": 0,
+          "kind": "note",
+          "fret": 12,
+          "midi": 76,
+          "visualOrder": 5
+        },
+        {
+          "string": "B",
+          "stringIndex": 1,
+          "kind": "note",
+          "fret": 15,
+          "midi": 74,
+          "tieToNext": true,
+          "visualOrder": 6
+        },
+        {
+          "string": "B",
+          "stringIndex": 1,
+          "kind": "note",
+          "fret": 15,
+          "midi": 74,
+          "parenthesized": true,
+          "continuationOnly": true,
+          "bendLabel": "full",
+          "visualOrder": 7
+        },
+        {
+          "string": "e",
+          "stringIndex": 0,
+          "kind": "note",
+          "fret": 12,
+          "midi": 76,
+          "visualOrder": 8
+        },
+        {
+          "string": "B",
+          "stringIndex": 1,
+          "kind": "note",
+          "fret": 15,
+          "midi": 74,
+          "visualOrder": 9
+        },
+        {
+          "string": "B",
+          "stringIndex": 1,
+          "kind": "note",
+          "fret": 15,
+          "midi": 74,
+          "parenthesized": true,
+          "continuationOnly": true,
+          "bendLabel": "full",
+          "visualOrder": 10
+        },
+        {
+          "string": "e",
+          "stringIndex": 0,
+          "kind": "note",
+          "fret": 12,
+          "midi": 76,
+          "visualOrder": 11
+        },
+        {
+          "string": "B",
+          "stringIndex": 1,
+          "kind": "note",
+          "fret": 15,
+          "midi": 74,
+          "visualOrder": 12
+        },
+        {
+          "string": "B",
+          "stringIndex": 1,
+          "kind": "note",
+          "fret": 15,
+          "midi": 74,
+          "parenthesized": true,
+          "continuationOnly": true,
+          "bendLabel": "full",
+          "visualOrder": 13
+        },
+        {
+          "string": "e",
+          "stringIndex": 0,
+          "kind": "note",
+          "fret": 12,
+          "midi": 76,
+          "visualOrder": 14
+        }
+      ],
+      "section": "Solo",
+      "sourcePages": [
+        17,
+        18
+      ],
+      "timingNormalizationStatus": "not-yet-normalized-for-v154-step-scorer",
+      "annotations": [
+        "measure wraps from source page 17 to source page 18",
+        "downstroke/upstroke symbols are visible on portions of the figure and are preserved at measure level",
+        "exact picking-to-note alignment is not forced where the wrapped screenshot is ambiguous"
+      ],
+      "pickingMarksVisible": [
+        "downstroke",
+        "upstroke"
+      ],
+      "eventCount": 15,
+      "attackLikeEventCount": 11
+    },
+    {
+      "measure": 92,
+      "timeSignature": "4/4",
+      "events": [
+        {
+          "string": "e",
+          "stringIndex": 0,
+          "kind": "note",
+          "fret": 15,
+          "midi": 79,
+          "slurToNext": true,
+          "picking": "downstroke",
+          "visualOrder": 0
+        },
+        {
+          "string": "e",
+          "stringIndex": 0,
+          "kind": "note",
+          "fret": 12,
+          "midi": 76,
+          "slurFromPrevious": true,
+          "visualOrder": 1
+        },
+        {
+          "string": "B",
+          "stringIndex": 1,
+          "kind": "note",
+          "fret": 15,
+          "midi": 74,
+          "picking": "downstroke",
+          "visualOrder": 2
+        },
+        {
+          "string": "e",
+          "stringIndex": 0,
+          "kind": "note",
+          "fret": 12,
+          "midi": 76,
+          "picking": "upstroke",
+          "visualOrder": 3
+        },
+        {
+          "string": "B",
+          "stringIndex": 1,
+          "kind": "note",
+          "fret": 15,
+          "midi": 74,
+          "slurToNext": true,
+          "picking": "downstroke",
+          "visualOrder": 4
+        },
+        {
+          "string": "B",
+          "stringIndex": 1,
+          "kind": "note",
+          "fret": 12,
+          "midi": 71,
+          "slurFromPrevious": true,
+          "visualOrder": 5
+        },
+        {
+          "string": "G",
+          "stringIndex": 2,
+          "kind": "note",
+          "fret": 14,
+          "midi": 69,
+          "visualOrder": 6
+        },
+        {
+          "string": "B",
+          "stringIndex": 1,
+          "kind": "note",
+          "fret": 15,
+          "midi": 74,
+          "slurToNext": true,
+          "picking": "upstroke",
+          "visualOrder": 7
+        },
+        {
+          "string": "B",
+          "stringIndex": 1,
+          "kind": "note",
+          "fret": 12,
+          "midi": 71,
+          "picking": "upstroke",
+          "visualOrder": 8
+        },
+        {
+          "string": "G",
+          "stringIndex": 2,
+          "kind": "note",
+          "fret": 14,
+          "midi": 69,
+          "visualOrder": 9
+        },
+        {
+          "string": "B",
+          "stringIndex": 1,
+          "kind": "note",
+          "fret": 12,
+          "midi": 71,
+          "picking": "downstroke",
+          "visualOrder": 10
+        },
+        {
+          "string": "G",
+          "stringIndex": 2,
+          "kind": "note",
+          "fret": 14,
+          "midi": 69,
+          "bendLabel": "full",
+          "picking": "upstroke",
+          "visualOrder": 11
+        },
+        {
+          "string": "D",
+          "stringIndex": 3,
+          "kind": "note",
+          "fret": 14,
+          "midi": 64,
+          "visualOrder": 12
+        },
+        {
+          "string": "G",
+          "stringIndex": 2,
+          "kind": "note",
+          "fret": 12,
+          "midi": 67,
+          "tripletGroup": "m92-triplet-1",
+          "slurToNext": true,
+          "visualOrder": 13
+        },
+        {
+          "string": "G",
+          "stringIndex": 2,
+          "kind": "note",
+          "fret": 14,
+          "midi": 69,
+          "tripletGroup": "m92-triplet-1",
+          "slurFromPrevious": true,
+          "slurToNext": true,
+          "visualOrder": 14
+        },
+        {
+          "string": "G",
+          "stringIndex": 2,
+          "kind": "note",
+          "fret": 12,
+          "midi": 67,
+          "tripletGroup": "m92-triplet-1",
+          "slurFromPrevious": true,
+          "tieToNext": true,
+          "visualOrder": 15
+        }
+      ],
+      "section": "Solo",
+      "sourcePage": 18,
+      "timingNormalizationStatus": "not-yet-normalized-for-v154-step-scorer",
+      "annotations": [
+        "measure spans two printed systems",
+        "visible downstroke/upstroke marks preserved where alignment is clear",
+        "last three G-string notes are under a visible triplet bracket marked 3",
+        "final G12 ties into measure 93"
+      ],
+      "eventCount": 16,
+      "attackLikeEventCount": 16
+    },
+    {
+      "measure": 93,
+      "timeSignature": "4/4",
+      "events": [
+        {
+          "string": "G",
+          "stringIndex": 2,
+          "kind": "note",
+          "fret": 12,
+          "midi": 67,
+          "parenthesized": true,
+          "continuationOnly": true,
+          "tieFromPrevious": true,
+          "tieToNext": true,
+          "vibrato": true,
+          "visualOrder": 0
+        }
+      ],
+      "section": "Solo",
+      "sourcePage": 18,
+      "timingNormalizationStatus": "not-yet-normalized-for-v154-step-scorer",
+      "annotations": [
+        "parenthesized G12 is continuation only from measure 92",
+        "vibrato marking extends over measures 93–94"
+      ],
+      "eventCount": 1,
+      "attackLikeEventCount": 0
+    },
+    {
+      "measure": 94,
+      "timeSignature": "4/4",
+      "events": [
+        {
+          "string": "G",
+          "stringIndex": 2,
+          "kind": "note",
+          "fret": 12,
+          "midi": 67,
+          "parenthesized": true,
+          "continuationOnly": true,
+          "tieFromPrevious": true,
+          "vibrato": true,
+          "visualOrder": 0
+        }
+      ],
+      "section": "Solo",
+      "sourcePage": 18,
+      "timingNormalizationStatus": "not-yet-normalized-for-v154-step-scorer",
+      "annotations": [
+        "parenthesized G12 is continuation only from measure 93",
+        "vibrato marking extends over measures 93–94"
+      ],
+      "eventCount": 1,
+      "attackLikeEventCount": 0
+    },
+    {
+      "measure": 95,
+      "timeSignature": "4/4",
+      "events": [
+        {
+          "string": "G",
+          "stringIndex": 2,
+          "kind": "note",
+          "fret": 14,
+          "midi": 69,
+          "bendLabel": "full",
+          "slurToNext": true,
+          "visualOrder": 0
+        },
+        {
+          "string": "G",
+          "stringIndex": 2,
+          "kind": "note",
+          "fret": 12,
+          "midi": 67,
+          "slurFromPrevious": true,
+          "visualOrder": 1
+        },
+        {
+          "string": "D",
+          "stringIndex": 3,
+          "kind": "note",
+          "fret": 14,
+          "midi": 64,
+          "visualOrder": 2
+        },
+        {
+          "string": "A",
+          "stringIndex": 4,
+          "kind": "note",
+          "fret": 14,
+          "midi": 59,
+          "visualOrder": 3
+        },
+        {
+          "string": "D",
+          "stringIndex": 3,
+          "kind": "note",
+          "fret": 12,
+          "midi": 62,
+          "visualOrder": 4
+        },
+        {
+          "string": "D",
+          "stringIndex": 3,
+          "kind": "note",
+          "fret": 14,
+          "midi": 64,
+          "vibrato": true,
+          "visualOrder": 5
+        }
+      ],
+      "section": "Post-solo Riff",
+      "sourcePage": 18,
+      "timingNormalizationStatus": "not-yet-normalized-for-v154-step-scorer",
+      "annotations": [
+        "Em riff",
+        "P.M. marking visible",
+        "vibrato marking visible",
+        "visible rest at end"
+      ],
+      "chordSymbols": [
+        "Em"
+      ],
+      "eventCount": 6,
+      "attackLikeEventCount": 6
+    },
+    {
+      "measure": 96,
+      "timeSignature": "4/4",
+      "events": [
+        {
+          "string": "G",
+          "stringIndex": 2,
+          "kind": "note",
+          "fret": 14,
+          "midi": 69,
+          "bendLabel": "full",
+          "slurToNext": true,
+          "visualOrder": 0
+        },
+        {
+          "string": "G",
+          "stringIndex": 2,
+          "kind": "note",
+          "fret": 12,
+          "midi": 67,
+          "slurFromPrevious": true,
+          "visualOrder": 1
+        },
+        {
+          "string": "D",
+          "stringIndex": 3,
+          "kind": "note",
+          "fret": 14,
+          "midi": 64,
+          "visualOrder": 2
+        },
+        {
+          "string": "A",
+          "stringIndex": 4,
+          "kind": "note",
+          "fret": 14,
+          "midi": 59,
+          "visualOrder": 3
+        },
+        {
+          "string": "D",
+          "stringIndex": 3,
+          "kind": "note",
+          "fret": 12,
+          "midi": 62,
+          "visualOrder": 4
+        },
+        {
+          "string": "D",
+          "stringIndex": 3,
+          "kind": "note",
+          "fret": 14,
+          "midi": 64,
+          "vibrato": true,
+          "visualOrder": 5
+        }
+      ],
+      "section": "Post-solo Riff",
+      "sourcePage": 19,
+      "timingNormalizationStatus": "not-yet-normalized-for-v154-step-scorer",
+      "annotations": [
+        "Em riff",
+        "P.M. marking visible",
+        "vibrato marking visible",
+        "visible rest at end"
+      ],
+      "eventCount": 6,
+      "attackLikeEventCount": 6
+    },
+    {
+      "measure": 97,
+      "timeSignature": "4/4",
+      "events": [
+        {
+          "string": "G",
+          "stringIndex": 2,
+          "kind": "note",
+          "fret": 14,
+          "midi": 69,
+          "bendLabel": "full",
+          "slurToNext": true,
+          "visualOrder": 0
+        },
+        {
+          "string": "G",
+          "stringIndex": 2,
+          "kind": "note",
+          "fret": 12,
+          "midi": 67,
+          "slurFromPrevious": true,
+          "visualOrder": 1
+        },
+        {
+          "string": "D",
+          "stringIndex": 3,
+          "kind": "note",
+          "fret": 14,
+          "midi": 64,
+          "visualOrder": 2
+        },
+        {
+          "string": "A",
+          "stringIndex": 4,
+          "kind": "note",
+          "fret": 14,
+          "midi": 59,
+          "visualOrder": 3
+        },
+        {
+          "string": "D",
+          "stringIndex": 3,
+          "kind": "note",
+          "fret": 12,
+          "midi": 62,
+          "visualOrder": 4
+        },
+        {
+          "string": "D",
+          "stringIndex": 3,
+          "kind": "note",
+          "fret": 14,
+          "midi": 64,
+          "vibrato": true,
+          "visualOrder": 5
+        }
+      ],
+      "section": "Post-solo Riff",
+      "sourcePage": 19,
+      "timingNormalizationStatus": "not-yet-normalized-for-v154-step-scorer",
+      "annotations": [
+        "Em riff",
+        "P.M. marking visible",
+        "vibrato marking visible",
+        "visible rest at end"
+      ],
+      "eventCount": 6,
+      "attackLikeEventCount": 6
+    },
+    {
+      "measure": 98,
+      "timeSignature": "4/4",
+      "events": [
+        {
+          "string": "G",
+          "stringIndex": 2,
+          "kind": "note",
+          "fret": 14,
+          "midi": 69,
+          "bendLabel": "full",
+          "slurToNext": true,
+          "visualOrder": 0
+        },
+        {
+          "string": "G",
+          "stringIndex": 2,
+          "kind": "note",
+          "fret": 12,
+          "midi": 67,
+          "slurFromPrevious": true,
+          "visualOrder": 1
+        },
+        {
+          "string": "D",
+          "stringIndex": 3,
+          "kind": "note",
+          "fret": 14,
+          "midi": 64,
+          "visualOrder": 2
+        },
+        {
+          "string": "A",
+          "stringIndex": 4,
+          "kind": "note",
+          "fret": 14,
+          "midi": 59,
+          "visualOrder": 3
+        },
+        {
+          "string": "D",
+          "stringIndex": 3,
+          "kind": "note",
+          "fret": 12,
+          "midi": 62,
+          "visualOrder": 4
+        },
+        {
+          "string": "D",
+          "stringIndex": 3,
+          "kind": "note",
+          "fret": 14,
+          "midi": 64,
+          "vibrato": true,
+          "visualOrder": 5
+        }
+      ],
+      "section": "Post-solo Riff",
+      "sourcePage": 19,
+      "timingNormalizationStatus": "not-yet-normalized-for-v154-step-scorer",
+      "annotations": [
+        "Em riff",
+        "P.M. marking visible",
+        "vibrato marking visible",
+        "visible rest at end"
+      ],
+      "eventCount": 6,
+      "attackLikeEventCount": 6
+    },
+    {
+      "measure": 99,
+      "timeSignature": "4/4",
+      "events": [
+        {
+          "string": "G",
+          "stringIndex": 2,
+          "kind": "note",
+          "fret": 14,
+          "midi": 69,
+          "bendLabel": "full",
+          "slurToNext": true,
+          "visualOrder": 0
+        },
+        {
+          "string": "G",
+          "stringIndex": 2,
+          "kind": "note",
+          "fret": 12,
+          "midi": 67,
+          "slurFromPrevious": true,
+          "visualOrder": 1
+        },
+        {
+          "string": "D",
+          "stringIndex": 3,
+          "kind": "note",
+          "fret": 14,
+          "midi": 64,
+          "visualOrder": 2
+        },
+        {
+          "string": "A",
+          "stringIndex": 4,
+          "kind": "note",
+          "fret": 14,
+          "midi": 59,
+          "visualOrder": 3
+        },
+        {
+          "string": "D",
+          "stringIndex": 3,
+          "kind": "note",
+          "fret": 12,
+          "midi": 62,
+          "visualOrder": 4
+        },
+        {
+          "string": "D",
+          "stringIndex": 3,
+          "kind": "note",
+          "fret": 14,
+          "midi": 64,
+          "vibrato": true,
+          "visualOrder": 5
+        }
+      ],
+      "section": "Post-solo Riff",
+      "sourcePage": 19,
+      "timingNormalizationStatus": "not-yet-normalized-for-v154-step-scorer",
+      "annotations": [
+        "Em riff",
+        "P.M. marking visible",
+        "vibrato marking visible",
+        "visible rest at end"
+      ],
+      "eventCount": 6,
+      "attackLikeEventCount": 6
+    },
+    {
+      "measure": 100,
+      "timeSignature": "4/4",
+      "events": [
+        {
+          "string": "G",
+          "stringIndex": 2,
+          "kind": "note",
+          "fret": 14,
+          "midi": 69,
+          "bendLabel": "full",
+          "slurToNext": true,
+          "visualOrder": 0
+        },
+        {
+          "string": "G",
+          "stringIndex": 2,
+          "kind": "note",
+          "fret": 12,
+          "midi": 67,
+          "slurFromPrevious": true,
+          "visualOrder": 1
+        },
+        {
+          "string": "D",
+          "stringIndex": 3,
+          "kind": "note",
+          "fret": 14,
+          "midi": 64,
+          "visualOrder": 2
+        },
+        {
+          "string": "A",
+          "stringIndex": 4,
+          "kind": "note",
+          "fret": 14,
+          "midi": 59,
+          "visualOrder": 3
+        },
+        {
+          "string": "D",
+          "stringIndex": 3,
+          "kind": "note",
+          "fret": 12,
+          "midi": 62,
+          "visualOrder": 4
+        },
+        {
+          "string": "D",
+          "stringIndex": 3,
+          "kind": "note",
+          "fret": 14,
+          "midi": 64,
+          "vibrato": true,
+          "visualOrder": 5
+        }
+      ],
+      "section": "Post-solo Riff",
+      "sourcePage": 20,
+      "timingNormalizationStatus": "not-yet-normalized-for-v154-step-scorer",
+      "annotations": [
+        "Em riff",
+        "P.M. marking visible",
+        "vibrato marking visible",
+        "visible rest at end"
+      ],
+      "eventCount": 6,
+      "attackLikeEventCount": 6
+    },
+    {
+      "measure": 101,
+      "timeSignature": "4/4",
+      "events": [
+        {
+          "string": "G",
+          "stringIndex": 2,
+          "kind": "note",
+          "fret": 14,
+          "midi": 69,
+          "bendLabel": "full",
+          "slurToNext": true,
+          "visualOrder": 0
+        },
+        {
+          "string": "G",
+          "stringIndex": 2,
+          "kind": "note",
+          "fret": 12,
+          "midi": 67,
+          "slurFromPrevious": true,
+          "visualOrder": 1
+        },
+        {
+          "string": "D",
+          "stringIndex": 3,
+          "kind": "note",
+          "fret": 14,
+          "midi": 64,
+          "visualOrder": 2
+        },
+        {
+          "string": "A",
+          "stringIndex": 4,
+          "kind": "note",
+          "fret": 14,
+          "midi": 59,
+          "visualOrder": 3
+        },
+        {
+          "string": "D",
+          "stringIndex": 3,
+          "kind": "note",
+          "fret": 12,
+          "midi": 62,
+          "visualOrder": 4
+        },
+        {
+          "string": "D",
+          "stringIndex": 3,
+          "kind": "note",
+          "fret": 14,
+          "midi": 64,
+          "vibrato": true,
+          "visualOrder": 5
+        }
+      ],
+      "section": "Post-solo Riff",
+      "sourcePage": 20,
+      "timingNormalizationStatus": "not-yet-normalized-for-v154-step-scorer",
+      "annotations": [
+        "Em riff",
+        "P.M. marking visible",
+        "vibrato marking visible",
+        "visible rest at end"
+      ],
+      "eventCount": 6,
+      "attackLikeEventCount": 6
+    },
+    {
+      "measure": 102,
+      "timeSignature": "4/4",
+      "events": [
+        {
+          "string": "G",
+          "stringIndex": 2,
+          "kind": "note",
+          "fret": 14,
+          "midi": 69,
+          "bendLabel": "full",
+          "slurToNext": true,
+          "visualOrder": 0
+        },
+        {
+          "string": "G",
+          "stringIndex": 2,
+          "kind": "note",
+          "fret": 12,
+          "midi": 67,
+          "slurFromPrevious": true,
+          "visualOrder": 1
+        },
+        {
+          "string": "D",
+          "stringIndex": 3,
+          "kind": "note",
+          "fret": 14,
+          "midi": 64,
+          "visualOrder": 2
+        },
+        {
+          "string": "A",
+          "stringIndex": 4,
+          "kind": "note",
+          "fret": 14,
+          "midi": 59,
+          "visualOrder": 3
+        },
+        {
+          "string": "D",
+          "stringIndex": 3,
+          "kind": "note",
+          "fret": 12,
+          "midi": 62,
+          "visualOrder": 4
+        },
+        {
+          "string": "D",
+          "stringIndex": 3,
+          "kind": "note",
+          "fret": 14,
+          "midi": 64,
+          "vibrato": true,
+          "slideOut": true,
+          "visualOrder": 5
+        }
+      ],
+      "section": "Post-solo Riff",
+      "sourcePage": 20,
+      "timingNormalizationStatus": "not-yet-normalized-for-v154-step-scorer",
+      "annotations": [
+        "Em riff section ending",
+        "P.M. marking visible",
+        "final D14 has visible curved slide/release",
+        "double barline into Out-Chorus"
+      ],
+      "eventCount": 6,
+      "attackLikeEventCount": 6
+    },
+    {
+      "measure": 103,
+      "timeSignature": "4/4",
+      "events": [],
+      "section": "Out-Chorus",
+      "sourcePage": 20,
+      "timingNormalizationStatus": "not-yet-normalized-for-v154-step-scorer",
+      "annotations": [
+        "Out-Chorus begins; intentional blank/rest measure"
+      ],
+      "eventCount": 0,
+      "attackLikeEventCount": 0
+    },
+    {
+      "measure": 104,
+      "timeSignature": "2/4",
+      "events": [],
+      "section": "Out-Chorus",
+      "sourcePage": 20,
+      "timingNormalizationStatus": "not-yet-normalized-for-v154-step-scorer",
+      "annotations": [
+        "explicit 2/4 time signature visible",
+        "intentional blank/rest measure"
+      ],
+      "eventCount": 0,
+      "attackLikeEventCount": 0
+    },
+    {
+      "measure": 105,
+      "timeSignature": "4/4",
+      "events": [],
+      "section": "Out-Chorus",
+      "sourcePage": 20,
+      "timingNormalizationStatus": "not-yet-normalized-for-v154-step-scorer",
+      "annotations": [
+        "explicit return to 4/4 time signature visible",
+        "intentional blank/rest measure"
+      ],
+      "eventCount": 0,
+      "attackLikeEventCount": 0
+    },
+    {
+      "measure": 106,
+      "timeSignature": "4/4",
+      "events": [],
+      "section": "Out-Chorus",
+      "sourcePage": 20,
+      "timingNormalizationStatus": "not-yet-normalized-for-v154-step-scorer",
+      "annotations": [
+        "intentional blank/rest measure"
+      ],
+      "eventCount": 0,
+      "attackLikeEventCount": 0
+    },
+    {
+      "measure": 107,
+      "timeSignature": "4/4",
+      "events": [
+        {
+          "string": "e",
+          "stringIndex": 0,
+          "kind": "note",
+          "fret": 9,
+          "midi": 73,
+          "chordGroup": "E-1",
+          "simultaneous": true,
+          "chordLabel": "E",
+          "visualOrder": 0
+        },
+        {
+          "string": "B",
+          "stringIndex": 1,
+          "kind": "note",
+          "fret": 9,
+          "midi": 68,
+          "chordGroup": "E-1",
+          "simultaneous": true,
+          "chordLabel": "E",
+          "visualOrder": 1
+        },
+        {
+          "string": "G",
+          "stringIndex": 2,
+          "kind": "note",
+          "fret": 9,
+          "midi": 64,
+          "chordGroup": "E-1",
+          "simultaneous": true,
+          "chordLabel": "E",
+          "visualOrder": 2
+        },
+        {
+          "string": "e",
+          "stringIndex": 0,
+          "kind": "note",
+          "fret": 9,
+          "midi": 73,
+          "chordGroup": "E-2",
+          "simultaneous": true,
+          "chordLabel": "E",
+          "visualOrder": 3
+        },
+        {
+          "string": "B",
+          "stringIndex": 1,
+          "kind": "note",
+          "fret": 9,
+          "midi": 68,
+          "chordGroup": "E-2",
+          "simultaneous": true,
+          "chordLabel": "E",
+          "visualOrder": 4
+        },
+        {
+          "string": "G",
+          "stringIndex": 2,
+          "kind": "note",
+          "fret": 9,
+          "midi": 64,
+          "chordGroup": "E-2",
+          "simultaneous": true,
+          "chordLabel": "E",
+          "visualOrder": 5
+        },
+        {
+          "string": "e",
+          "stringIndex": 0,
+          "kind": "note",
+          "fret": 9,
+          "midi": 73,
+          "chordGroup": "E-3",
+          "simultaneous": true,
+          "chordLabel": "E",
+          "visualOrder": 6
+        },
+        {
+          "string": "B",
+          "stringIndex": 1,
+          "kind": "note",
+          "fret": 9,
+          "midi": 68,
+          "chordGroup": "E-3",
+          "simultaneous": true,
+          "chordLabel": "E",
+          "visualOrder": 7
+        },
+        {
+          "string": "G",
+          "stringIndex": 2,
+          "kind": "note",
+          "fret": 9,
+          "midi": 64,
+          "chordGroup": "E-3",
+          "simultaneous": true,
+          "chordLabel": "E",
+          "visualOrder": 8
+        },
+        {
+          "string": "e",
+          "stringIndex": 0,
+          "kind": "note",
+          "fret": 9,
+          "midi": 73,
+          "chordGroup": "E-4",
+          "simultaneous": true,
+          "chordLabel": "E",
+          "visualOrder": 9
+        },
+        {
+          "string": "B",
+          "stringIndex": 1,
+          "kind": "note",
+          "fret": 9,
+          "midi": 68,
+          "chordGroup": "E-4",
+          "simultaneous": true,
+          "chordLabel": "E",
+          "visualOrder": 10
+        },
+        {
+          "string": "G",
+          "stringIndex": 2,
+          "kind": "note",
+          "fret": 9,
+          "midi": 64,
+          "chordGroup": "E-4",
+          "simultaneous": true,
+          "chordLabel": "E",
+          "visualOrder": 11
+        },
+        {
+          "string": "e",
+          "stringIndex": 0,
+          "kind": "note",
+          "fret": 7,
+          "midi": 71,
+          "chordGroup": "D-1",
+          "simultaneous": true,
+          "chordLabel": "D",
+          "visualOrder": 12
+        },
+        {
+          "string": "B",
+          "stringIndex": 1,
+          "kind": "note",
+          "fret": 7,
+          "midi": 66,
+          "chordGroup": "D-1",
+          "simultaneous": true,
+          "chordLabel": "D",
+          "visualOrder": 13
+        },
+        {
+          "string": "G",
+          "stringIndex": 2,
+          "kind": "note",
+          "fret": 7,
+          "midi": 62,
+          "chordGroup": "D-1",
+          "simultaneous": true,
+          "chordLabel": "D",
+          "visualOrder": 14
+        },
+        {
+          "string": "e",
+          "stringIndex": 0,
+          "kind": "note",
+          "fret": 9,
+          "midi": 73,
+          "chordGroup": "E-final",
+          "simultaneous": true,
+          "slideOut": true,
+          "chordLabel": "E",
+          "visualOrder": 15
+        },
+        {
+          "string": "B",
+          "stringIndex": 1,
+          "kind": "note",
+          "fret": 9,
+          "midi": 68,
+          "chordGroup": "E-final",
+          "simultaneous": true,
+          "slideOut": true,
+          "chordLabel": "E",
+          "visualOrder": 16
+        },
+        {
+          "string": "G",
+          "stringIndex": 2,
+          "kind": "note",
+          "fret": 9,
+          "midi": 64,
+          "chordGroup": "E-final",
+          "simultaneous": true,
+          "slideOut": true,
+          "chordLabel": "E",
+          "visualOrder": 17
+        }
+      ],
+      "section": "Out-Chorus",
+      "sourcePage": 21,
+      "timingNormalizationStatus": "not-yet-normalized-for-v154-step-scorer",
+      "annotations": [
+        "stacked notes in each chordGroup are simultaneous",
+        "final E voicing has visible release/slide arcs",
+        "visible rest follows"
+      ],
+      "chordSymbols": [
+        "E",
+        "D",
+        "E"
+      ],
+      "eventCount": 18,
+      "attackLikeEventCount": 18
+    },
+    {
+      "measure": 108,
+      "timeSignature": "4/4",
+      "events": [
+        {
+          "string": "e",
+          "stringIndex": 0,
+          "kind": "note",
+          "fret": 9,
+          "midi": 73,
+          "chordGroup": "E-1",
+          "simultaneous": true,
+          "chordLabel": "E",
+          "visualOrder": 0
+        },
+        {
+          "string": "B",
+          "stringIndex": 1,
+          "kind": "note",
+          "fret": 9,
+          "midi": 68,
+          "chordGroup": "E-1",
+          "simultaneous": true,
+          "chordLabel": "E",
+          "visualOrder": 1
+        },
+        {
+          "string": "G",
+          "stringIndex": 2,
+          "kind": "note",
+          "fret": 9,
+          "midi": 64,
+          "chordGroup": "E-1",
+          "simultaneous": true,
+          "chordLabel": "E",
+          "visualOrder": 2
+        },
+        {
+          "string": "e",
+          "stringIndex": 0,
+          "kind": "note",
+          "fret": 9,
+          "midi": 73,
+          "chordGroup": "E-2",
+          "simultaneous": true,
+          "chordLabel": "E",
+          "visualOrder": 3
+        },
+        {
+          "string": "B",
+          "stringIndex": 1,
+          "kind": "note",
+          "fret": 9,
+          "midi": 68,
+          "chordGroup": "E-2",
+          "simultaneous": true,
+          "chordLabel": "E",
+          "visualOrder": 4
+        },
+        {
+          "string": "G",
+          "stringIndex": 2,
+          "kind": "note",
+          "fret": 9,
+          "midi": 64,
+          "chordGroup": "E-2",
+          "simultaneous": true,
+          "chordLabel": "E",
+          "visualOrder": 5
+        },
+        {
+          "string": "e",
+          "stringIndex": 0,
+          "kind": "note",
+          "fret": 9,
+          "midi": 73,
+          "chordGroup": "E-3",
+          "simultaneous": true,
+          "chordLabel": "E",
+          "visualOrder": 6
+        },
+        {
+          "string": "B",
+          "stringIndex": 1,
+          "kind": "note",
+          "fret": 9,
+          "midi": 68,
+          "chordGroup": "E-3",
+          "simultaneous": true,
+          "chordLabel": "E",
+          "visualOrder": 7
+        },
+        {
+          "string": "G",
+          "stringIndex": 2,
+          "kind": "note",
+          "fret": 9,
+          "midi": 64,
+          "chordGroup": "E-3",
+          "simultaneous": true,
+          "chordLabel": "E",
+          "visualOrder": 8
+        },
+        {
+          "string": "e",
+          "stringIndex": 0,
+          "kind": "note",
+          "fret": 9,
+          "midi": 73,
+          "chordGroup": "E-4",
+          "simultaneous": true,
+          "chordLabel": "E",
+          "visualOrder": 9
+        },
+        {
+          "string": "B",
+          "stringIndex": 1,
+          "kind": "note",
+          "fret": 9,
+          "midi": 68,
+          "chordGroup": "E-4",
+          "simultaneous": true,
+          "chordLabel": "E",
+          "visualOrder": 10
+        },
+        {
+          "string": "G",
+          "stringIndex": 2,
+          "kind": "note",
+          "fret": 9,
+          "midi": 64,
+          "chordGroup": "E-4",
+          "simultaneous": true,
+          "chordLabel": "E",
+          "visualOrder": 11
+        },
+        {
+          "string": "e",
+          "stringIndex": 0,
+          "kind": "note",
+          "fret": 12,
+          "midi": 76,
+          "chordGroup": "G-1",
+          "simultaneous": true,
+          "chordLabel": "G",
+          "visualOrder": 12
+        },
+        {
+          "string": "B",
+          "stringIndex": 1,
+          "kind": "note",
+          "fret": 12,
+          "midi": 71,
+          "chordGroup": "G-1",
+          "simultaneous": true,
+          "chordLabel": "G",
+          "visualOrder": 13
+        },
+        {
+          "string": "G",
+          "stringIndex": 2,
+          "kind": "note",
+          "fret": 12,
+          "midi": 67,
+          "chordGroup": "G-1",
+          "simultaneous": true,
+          "chordLabel": "G",
+          "visualOrder": 14
+        },
+        {
+          "string": "e",
+          "stringIndex": 0,
+          "kind": "note",
+          "fret": 9,
+          "midi": 73,
+          "chordGroup": "E-final",
+          "simultaneous": true,
+          "slideOut": true,
+          "chordLabel": "E",
+          "visualOrder": 15
+        },
+        {
+          "string": "B",
+          "stringIndex": 1,
+          "kind": "note",
+          "fret": 9,
+          "midi": 68,
+          "chordGroup": "E-final",
+          "simultaneous": true,
+          "slideOut": true,
+          "chordLabel": "E",
+          "visualOrder": 16
+        },
+        {
+          "string": "G",
+          "stringIndex": 2,
+          "kind": "note",
+          "fret": 9,
+          "midi": 64,
+          "chordGroup": "E-final",
+          "simultaneous": true,
+          "slideOut": true,
+          "chordLabel": "E",
+          "visualOrder": 17
+        }
+      ],
+      "section": "Out-Chorus",
+      "sourcePage": 21,
+      "timingNormalizationStatus": "not-yet-normalized-for-v154-step-scorer",
+      "annotations": [
+        "stacked notes in each chordGroup are simultaneous",
+        "final E voicing has visible release/slide arcs",
+        "visible rest follows"
+      ],
+      "chordSymbols": [
+        "E",
+        "G",
+        "E"
+      ],
+      "eventCount": 18,
+      "attackLikeEventCount": 18
+    },
+    {
+      "measure": 109,
+      "timeSignature": "4/4",
+      "events": [],
+      "section": "Out-Chorus",
+      "sourcePage": 21,
+      "timingNormalizationStatus": "not-yet-normalized-for-v154-step-scorer",
+      "annotations": [
+        "intentional blank/rest measure; lyric alignment visible"
+      ],
+      "eventCount": 0,
+      "attackLikeEventCount": 0
+    },
+    {
+      "measure": 110,
+      "timeSignature": "4/4",
+      "events": [],
+      "section": "Out-Chorus",
+      "sourcePage": 21,
+      "timingNormalizationStatus": "not-yet-normalized-for-v154-step-scorer",
+      "annotations": [
+        "intentional blank/rest measure; lyric alignment visible"
+      ],
+      "eventCount": 0,
+      "attackLikeEventCount": 0
+    },
+    {
+      "measure": 111,
+      "timeSignature": "4/4",
+      "events": [],
+      "section": "Out-Chorus",
+      "sourcePage": 21,
+      "timingNormalizationStatus": "not-yet-normalized-for-v154-step-scorer",
+      "annotations": [
+        "intentional blank/rest measure; lyric alignment visible"
+      ],
+      "eventCount": 0,
+      "attackLikeEventCount": 0
+    },
+    {
+      "measure": 112,
+      "timeSignature": "4/4",
+      "events": [],
+      "section": "Out-Chorus",
+      "sourcePage": 21,
+      "timingNormalizationStatus": "not-yet-normalized-for-v154-step-scorer",
+      "annotations": [
+        "intentional blank/rest measure; lyric alignment visible"
+      ],
+      "eventCount": 0,
+      "attackLikeEventCount": 0
+    },
+    {
+      "measure": 113,
+      "timeSignature": "4/4",
+      "events": [],
+      "section": "Out-Chorus",
+      "sourcePage": 22,
+      "timingNormalizationStatus": "not-yet-normalized-for-v154-step-scorer",
+      "annotations": [
+        "final blank measure with final barline"
+      ],
+      "eventCount": 0,
+      "attackLikeEventCount": 0
+    }
+  ]
+}

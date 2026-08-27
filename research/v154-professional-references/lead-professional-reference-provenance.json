@@ -1,0 +1,68 @@
+{
+  "authorization": {
+    "userExplicitlyRequestedMachineReadableLeadSavedToResearchBranch": true,
+    "userProvidedScreenshots": true
+  },
+  "machineReadableReference": {
+    "continuationOnlyObjects": 23,
+    "deadNoteObjects": 11,
+    "eventObjects": 486,
+    "exactStepTimingFrozen": false,
+    "gitBlobSha": "c1c173cae68e12e768377de87b0ac855d3af34f4",
+    "measureCount": 113,
+    "observedMidiRange": [
+      45,
+      79
+    ],
+    "pitchedEventObjects": 475,
+    "repositoryPath": "research/v154-professional-references/lead-professional-reference-machine-readable.json",
+    "scoringReady": false,
+    "sha256": "c737c78dbd200e4c759765fbe7c73cd36b674fdcde7c29c6772d40765b4b50a1"
+  },
+  "part": "lead",
+  "preservedAtUtc": "2026-08-27T21:33:29.825583+00:00",
+  "researchBranch": "v143-contextual-prune-lobo",
+  "safety": {
+    "candidateGenerationMayReadReference": false,
+    "cudaGpuUsed": false,
+    "generatedCandidateModified": false,
+    "mainOrProductionModified": false,
+    "modalUsed": false,
+    "referenceFacingScoreCallsDuringPreservation": 0,
+    "screenshotBytesCommitted": false
+  },
+  "schema": "dadrock.tabs.v154.professional-reference-provenance.v1",
+  "song": {
+    "artist": "Lenny Kravitz",
+    "title": "Are You Gonna Go My Way"
+  },
+  "sourceSet": {
+    "currentCopiesByteIdentityMatchedPreviousFrozenReceipt": false,
+    "currentRenderedSetSha256": "e54a76bca81fdcfc8333d774a66175a00da5090fb32200a980c25f8e78b616cb",
+    "previousFrozenPageCount": 22,
+    "previousFrozenSetSha256": "de2f20c330e52aca6125e29ca2cf5c4b719406fc267a98d43d98f3ab1453ff3c",
+    "receiptPath": "research/v154-professional-references/lead-source-set-receipt.json",
+    "visualLandmarksConsistentWithFrozenReceipt": true
+  },
+  "uncertainties": [
+    {
+      "excludedFromNotation": true,
+      "measure": 10,
+      "type": "ui-overlay"
+    },
+    {
+      "excludeFromScoringUntilTimingNormalizationResolved": true,
+      "measures": [
+        39,
+        40
+      ],
+      "text": "Probably a mistake they left in",
+      "type": "source-annotation"
+    },
+    {
+      "assignedToNote": false,
+      "measure": 81,
+      "type": "detached-gray-dot"
+    }
+  ]
+}

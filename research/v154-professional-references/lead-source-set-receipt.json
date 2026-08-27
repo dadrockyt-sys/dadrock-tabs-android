@@ -1,0 +1,249 @@
+{
+  "schema": "dadrock.tabs.v154.professional-reference-source-set.v1",
+  "song": {
+    "artist": "Lenny Kravitz",
+    "title": "Are You Gonna Go My Way"
+  },
+  "part": "lead",
+  "researchBranch": "v143-contextual-prune-lobo",
+  "previousReceipt": "debug/v154-cpu-autonomous/reference-receipts/lead-user-upload-20260827.json",
+  "previousFrozenSetSha256": "de2f20c330e52aca6125e29ca2cf5c4b719406fc267a98d43d98f3ab1453ff3c",
+  "previousFrozenPageCount": 22,
+  "currentRenderedPageCount": 22,
+  "currentRenderedSetSha256": "e54a76bca81fdcfc8333d774a66175a00da5090fb32200a980c25f8e78b616cb",
+  "currentRenderedSetHashMethod": "sha256 over newline-joined page:currentFilename:pageSha256 records in page order",
+  "byteIdentityMatchPreviousFrozenReceipt": false,
+  "byteIdentityNote": "The current conversation copies are platform-rendered/re-encoded images, so their bytes/hashes are not claimed to match the earlier frozen upload bytes. Page order, 22-page count, measure 1–113 coverage, tempo/time-signature opening, green UI overlay, and measures 39–40 source annotation visually corroborate the frozen receipt identity.",
+  "visualLandmarksConsistentWithPreviousReceipt": true,
+  "measureCoverageVisible": {
+    "start": 1,
+    "end": 113
+  },
+  "openingNotation": {
+    "timeSignature": "4/4",
+    "tempoQuarterBpm": 129
+  },
+  "currentRenderedPages": [
+    {
+      "page": 1,
+      "currentFilename": "84.jpg",
+      "previousReceiptFilename": "1000120332.jpg",
+      "bytes": 132772,
+      "width": 1314,
+      "height": 2048,
+      "sha256": "c12ee1f9e7499c5f8a85551295dd657f4e6736730670ac8d1132841903de31a1"
+    },
+    {
+      "page": 2,
+      "currentFilename": "85.jpg",
+      "previousReceiptFilename": "1000120334.jpg",
+      "bytes": 136397,
+      "width": 1269,
+      "height": 2048,
+      "sha256": "7187a049373bc7f2ffad8aaf0a2ba44e4e9d61933df108106c7669d7b6ec71b1"
+    },
+    {
+      "page": 3,
+      "currentFilename": "86.jpg",
+      "previousReceiptFilename": "1000120336.jpg",
+      "bytes": 126641,
+      "width": 1263,
+      "height": 2048,
+      "sha256": "87cb8ad414d3f57430ac79bb4558c68e79b92299a9665e9f8d654aae5a483f64"
+    },
+    {
+      "page": 4,
+      "currentFilename": "87.jpg",
+      "previousReceiptFilename": "1000120338.jpg",
+      "bytes": 111422,
+      "width": 1182,
+      "height": 2048,
+      "sha256": "bc3bd6e3f76a56768a75868f6dc8bfd128e3f6fc1e6cde0fc1be123341254e00"
+    },
+    {
+      "page": 5,
+      "currentFilename": "88.jpg",
+      "previousReceiptFilename": "1000120340.jpg",
+      "bytes": 139045,
+      "width": 1256,
+      "height": 2048,
+      "sha256": "d4600a8206301e51b5dcbdc87fcea00c23304b9707f78c09e9520a5cf112b1e8"
+    },
+    {
+      "page": 6,
+      "currentFilename": "89.jpg",
+      "previousReceiptFilename": "1000120342.jpg",
+      "bytes": 97029,
+      "width": 1193,
+      "height": 2048,
+      "sha256": "0b790a779e0c162fb97a941ea09f0e493ac9704aeb9e57d0bdb23bdd9ae1c0eb"
+    },
+    {
+      "page": 7,
+      "currentFilename": "90.jpg",
+      "previousReceiptFilename": "1000120344.jpg",
+      "bytes": 133211,
+      "width": 1258,
+      "height": 2048,
+      "sha256": "af8f166218a563e380a21b7f905f36b5ddfa14cb5db7d44bab09e8172587c7fa"
+    },
+    {
+      "page": 8,
+      "currentFilename": "91.jpg",
+      "previousReceiptFilename": "1000120346.jpg",
+      "bytes": 132061,
+      "width": 1211,
+      "height": 2048,
+      "sha256": "5c22a764908f32560611390d70fadbcc3fa47c0553bbfcfc426dc418963e7e36"
+    },
+    {
+      "page": 9,
+      "currentFilename": "92.jpg",
+      "previousReceiptFilename": "1000120348.jpg",
+      "bytes": 127704,
+      "width": 1267,
+      "height": 2048,
+      "sha256": "a3bacc0ebec9175cb0b40e45c19b3e8a091d3b8ef0cdccf41b47e32b7e843c83"
+    },
+    {
+      "page": 10,
+      "currentFilename": "93.jpg",
+      "previousReceiptFilename": "1000120350.jpg",
+      "bytes": 105430,
+      "width": 1178,
+      "height": 2048,
+      "sha256": "e014461a3732bcb66fb2003e803a85feb000ccfd0755f27aea726b78a3a4bd09"
+    },
+    {
+      "page": 11,
+      "currentFilename": "94.jpg",
+      "previousReceiptFilename": "1000120352.jpg",
+      "bytes": 134817,
+      "width": 1291,
+      "height": 2048,
+      "sha256": "3a81e498b089a4dc6181c8b6c04f286672eec2e208894843dcb3a7673f36c2d7"
+    },
+    {
+      "page": 12,
+      "currentFilename": "95.jpg",
+      "previousReceiptFilename": "1000120354.jpg",
+      "bytes": 123619,
+      "width": 1402,
+      "height": 2048,
+      "sha256": "f3f65df2bda07220778c8554b39a9d951d4c9d160af68a732fdef285b97569ab"
+    },
+    {
+      "page": 13,
+      "currentFilename": "96.jpg",
+      "previousReceiptFilename": "1000120356.jpg",
+      "bytes": 144083,
+      "width": 1285,
+      "height": 2048,
+      "sha256": "4509444500fa18c223e6e0d738c2980d3ea08be8eabe69bc1c0914afbcb7b0a1"
+    },
+    {
+      "page": 14,
+      "currentFilename": "97.jpg",
+      "previousReceiptFilename": "1000120358.jpg",
+      "bytes": 127461,
+      "width": 1286,
+      "height": 2048,
+      "sha256": "ee7554668bbe26ffd5feedeaf981b5dcc049c0ce79b15d311c5c387edf22a922"
+    },
+    {
+      "page": 15,
+      "currentFilename": "98.jpg",
+      "previousReceiptFilename": "1000120360.jpg",
+      "bytes": 146132,
+      "width": 1329,
+      "height": 2048,
+      "sha256": "fa7e1f209c43be02efb69e15413537a97cd3ee89789e8cea0839ee3af76b875a"
+    },
+    {
+      "page": 16,
+      "currentFilename": "99.jpg",
+      "previousReceiptFilename": "1000120362.jpg",
+      "bytes": 125829,
+      "width": 1196,
+      "height": 2048,
+      "sha256": "88951693127de7e5416b493eeff1e746dcfef8d8a334d8bc5b7f2dd9fca43952"
+    },
+    {
+      "page": 17,
+      "currentFilename": "100.jpg",
+      "previousReceiptFilename": "1000120364.jpg",
+      "bytes": 124075,
+      "width": 1237,
+      "height": 2048,
+      "sha256": "9419f7ccb07511f4ed0b8f0751733dd316fe94fd25947e48fc578e0dc38559cd"
+    },
+    {
+      "page": 18,
+      "currentFilename": "101.jpg",
+      "previousReceiptFilename": "1000120366.jpg",
+      "bytes": 142060,
+      "width": 1228,
+      "height": 2048,
+      "sha256": "5acf5ec50fb3a1ed6670ef43639ee1b7641fe8cee20bb939e4e57a23f04cf60f"
+    },
+    {
+      "page": 19,
+      "currentFilename": "102.jpg",
+      "previousReceiptFilename": "1000120368.jpg",
+      "bytes": 130098,
+      "width": 1272,
+      "height": 2048,
+      "sha256": "5e15d93c4cb5d134bc6fa78d2b08bc52c552f78cd764c6a39abad13b4f78d377"
+    },
+    {
+      "page": 20,
+      "currentFilename": "103.jpg",
+      "previousReceiptFilename": "1000120370.jpg",
+      "bytes": 133694,
+      "width": 1321,
+      "height": 2048,
+      "sha256": "d42a7d2e9ff0b710ee910d42acd454734e9ba40d12a9599b4050cd6ddbd0b59e"
+    },
+    {
+      "page": 21,
+      "currentFilename": "104.jpg",
+      "previousReceiptFilename": "1000120372.jpg",
+      "bytes": 127954,
+      "width": 1290,
+      "height": 2048,
+      "sha256": "f5d52aacb8c0d30e659c481abb42fcfa9eeb0dbd2f99e0b23cb628e1ca688a0e"
+    },
+    {
+      "page": 22,
+      "currentFilename": "105.jpg",
+      "previousReceiptFilename": "1000120374.jpg",
+      "bytes": 17590,
+      "width": 2048,
+      "height": 668,
+      "sha256": "a64d3af572fb45a533004f81b68f8aee737cf2bddd75d2c89139a57d65a70df7"
+    }
+  ],
+  "visualAnnotations": [
+    {
+      "measure": 10,
+      "note": "green selection highlight is interface overlay, not notation"
+    },
+    {
+      "measures": [
+        39,
+        40
+      ],
+      "note": "visible source annotation says “Probably a mistake they left in”; preserve as uncertainty and do not silently repair"
+    },
+    {
+      "measure": 81,
+      "note": "small detached gray dot visible above far right; not assigned to a note because notation/UI meaning is ambiguous"
+    }
+  ],
+  "storagePolicy": {
+    "candidateGenerationMayReadReference": false,
+    "machineReadableReferenceMayBeCommittedToResearchBranchByExplicitUserDirection": true,
+    "mainOrProductionModified": false,
+    "screenshotBytesCommitted": false
+  }
+}
