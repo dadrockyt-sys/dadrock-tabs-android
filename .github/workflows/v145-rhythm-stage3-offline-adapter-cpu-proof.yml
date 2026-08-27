@@ -1,0 +1,159 @@
+name: V145 Rhythm Stage3 Offline Adapter CPU Proof
+
+on:
+  push:
+    branches:
+      - v143-contextual-prune-lobo
+    paths:
+      - .github/workflows/v145-rhythm-stage3-offline-adapter-cpu-proof.yml
+
+permissions:
+  contents: write
+
+concurrency:
+  group: v145-rhythm-stage3-offline-adapter-cpu-proof
+  cancel-in-progress: false
+
+jobs:
+  cpu-proof:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - name: Checkout exact proof revision
+        uses: actions/checkout@v4
+        with:
+          ref: ${{ github.sha }}
+          fetch-depth: 1
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+
+      - name: Verify frozen Stage3 identities and isolation
+        shell: bash
+        run: |
+          set -euo pipefail
+          test "$(git hash-object docs/v145-rhythm-decoder-stage3-offline-preregistration.md)" = "bb60a3bcc5f6e136eb6efb5706828379e007ec1d"
+          test "$(git hash-object modal/v145_rhythm_decoder.py)" = "2fd979aebb4685e86c7f24a0162f69de306c06e9"
+          test "$(git hash-object modal/v145_rhythm_sequence_decoder.py)" = "5f86f57d0fd10774690d50528d51bad6e0392bf3"
+          test "$(git hash-object validation/v145_rhythm_decoder/offline_stage3_adapter.py)" = "434d4b2582991c216df411455f232b8d211337c6"
+          test "$(git hash-object modal/tests/test_v145_rhythm_stage3_offline_adapter.py)" = "3eee7ae5253ad0eecbeb492eaa24216f0fa21fee"
+          test "$(git hash-object validation/rhythm_holdout/canonical.py)" = "088d44827fb23e20d9aeeb4944a672989af5846c"
+          test "$(git hash-object validation/rhythm_holdout/freeze_rhythm_analysis.py)" = "710bb6a3b15b99d3d11ceb4948d7c7175d208afc"
+          test "$(git hash-object validation/rhythm_holdout/score_rhythm_holdout.py)" = "cc4bf61a99f22bf87a6c255e5a81220fbc82223b"
+          test "$(git hash-object validation/rhythm_holdout/verify_pdf_event_fidelity.py)" = "5e1564216873046237fb545078a04a6b18f72b27"
+          test "$(git hash-object lib/v143RenderContract.js)" = "ccbb93c48982798cc474309fd981f6ca02d5c8d4"
+          test "$(git hash-object debug/v143-contextual-prune/v5-professional-pdf/v5-render-stream.json)" = "fe61f7ad53a4d71348a5113ecc9e3876eaad98d4"
+          test "$(sha256sum debug/v143-contextual-prune/v5-professional-pdf/v5-render-stream.json | awk '{print $1}')" = "7c3399d3f5e05ecc8ac98d71d0e5300e1e78f63ae96c1642fe4a19debb4061b2"
+          ! grep -Fq 'professional-rhythm-gold-reference.json' validation/v145_rhythm_decoder/offline_stage3_adapter.py
+          ! grep -Eq '^[[:space:]]*(from|import)[[:space:]].*(score_rhythm_holdout|score_selected_conjunction_candidate)' validation/v145_rhythm_decoder/offline_stage3_adapter.py
+          ! grep -Fq 'debug/v144-rhythm-calibration/reference/' modal/tests/test_v145_rhythm_stage3_offline_adapter.py
+
+      - name: Compile frozen CPU modules and tests
+        run: |
+          python -m py_compile \
+            modal/v145_rhythm_decoder.py \
+            modal/v145_rhythm_sequence_decoder.py \
+            validation/v145_rhythm_decoder/offline_stage3_adapter.py \
+            modal/tests/test_v145_rhythm_stage3_offline_adapter.py
+
+      - name: Prove Stage3 constructor API has no calibration input
+        shell: bash
+        run: |
+          set -euo pipefail
+          python - <<'PY'
+          import ast
+          import inspect
+          from pathlib import Path
+          import sys
+          sys.path.insert(0, 'validation/v145_rhythm_decoder')
+          import offline_stage3_adapter as adapter
+
+          assert list(inspect.signature(adapter.build_stage3_candidate).parameters) == ['source_payload']
+          tree = ast.parse(Path('validation/v145_rhythm_decoder/offline_stage3_adapter.py').read_text(encoding='utf-8'))
+          forbidden = {'score_rhythm_holdout', 'score_selected_conjunction_candidate'}
+          for node in ast.walk(tree):
+              if isinstance(node, ast.Import):
+                  assert not any(alias.name in forbidden for alias in node.names)
+              elif isinstance(node, ast.ImportFrom):
+                  assert node.module not in forbidden
+          assert adapter.EXPECTED_SOURCE_RAW_SHA256 == '7c3399d3f5e05ecc8ac98d71d0e5300e1e78f63ae96c1642fe4a19debb4061b2'
+          assert adapter.EXPECTED_SOURCE_EVENT_COUNT == 1209
+          assert adapter.EXPECTED_MEASURE_COUNT == 113
+          assert adapter.MAX_CONVERSION_RESIDUAL_STEPS == 0.01
+          PY
+
+      - name: Run Stage1 Stage2 and Stage3 CPU contract tests
+        run: |
+          python -m unittest modal.tests.test_v145_rhythm_decoder -v
+          python -m unittest modal.tests.test_v145_rhythm_sequence_decoder -v
+          python -m unittest modal.tests.test_v145_rhythm_stage3_offline_adapter -v
+
+      - name: Persist Stage3 CPU proof only
+        shell: bash
+        env:
+          RUN_ID: ${{ github.run_id }}
+          RUN_ATTEMPT: ${{ github.run_attempt }}
+          JOB: ${{ github.job }}
+          HEAD_SHA: ${{ github.sha }}
+        run: |
+          set -euo pipefail
+          mkdir -p debug/v145-rhythm-decoder/proofs
+          python - <<'PY'
+          import json
+          import os
+          import subprocess
+          from pathlib import Path
+
+          workflow_blob = subprocess.check_output(
+              ['git','hash-object','.github/workflows/v145-rhythm-stage3-offline-adapter-cpu-proof.yml'],
+              text=True,
+          ).strip()
+          proof = {
+              'schemaVersion': 14503,
+              'proofType': 'v145-rhythm-stage3-offline-adapter-cpu',
+              'branch': 'v143-contextual-prune-lobo',
+              'workflowRunId': int(os.environ['RUN_ID']),
+              'workflowRunAttempt': int(os.environ['RUN_ATTEMPT']),
+              'workflowJob': os.environ['JOB'],
+              'workflowHeadSha': os.environ['HEAD_SHA'],
+              'workflowBlob': workflow_blob,
+              'stage3PreregistrationBlob': 'bb60a3bcc5f6e136eb6efb5706828379e007ec1d',
+              'stage1Blob': '2fd979aebb4685e86c7f24a0162f69de306c06e9',
+              'stage2Blob': '5f86f57d0fd10774690d50528d51bad6e0392bf3',
+              'adapterBlob': '434d4b2582991c216df411455f232b8d211337c6',
+              'adapterTestBlob': '3eee7ae5253ad0eecbeb492eaa24216f0fa21fee',
+              'sourceRenderStreamGitBlob': 'fe61f7ad53a4d71348a5113ecc9e3876eaad98d4',
+              'sourceRenderStreamRawSha256': '7c3399d3f5e05ecc8ac98d71d0e5300e1e78f63ae96c1642fe4a19debb4061b2',
+              'cpuContractTestsPassed': True,
+              'candidateConstructorApiHasReferenceInput': False,
+              'realV5CandidateBuilt': False,
+              'calibrationScoreRun': False,
+              'runtimeReferenceInput': False,
+              'goldInputUsed': False,
+              'fitLabelsRead': False,
+              'validationLabelsRead': False,
+              'canaryLabelsRead': False,
+              'newPitchGeneration': False,
+              'modalDependency': False,
+              'modalGpuUsed': False,
+              'liveAudioBenchmarkRun': False,
+              'acceptedBaselineChanged': False,
+          }
+          Path('debug/v145-rhythm-decoder/proofs/cpu-stage3-offline-adapter-proof.json').write_text(
+              json.dumps(proof, indent=2, sort_keys=True) + '\n', encoding='utf-8'
+          )
+          PY
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add debug/v145-rhythm-decoder/proofs/cpu-stage3-offline-adapter-proof.json
+          test "$(git diff --cached --name-only)" = "debug/v145-rhythm-decoder/proofs/cpu-stage3-offline-adapter-proof.json"
+          git commit -m 'v145 persist stage3 offline adapter cpu proof'
+          for attempt in 1 2 3 4 5; do
+            git fetch origin v143-contextual-prune-lobo
+            if git rebase origin/v143-contextual-prune-lobo && git push origin HEAD:v143-contextual-prune-lobo; then exit 0; fi
+            git rebase --abort 2>/dev/null || true
+            sleep $((attempt * 2))
+          done
+          exit 1
