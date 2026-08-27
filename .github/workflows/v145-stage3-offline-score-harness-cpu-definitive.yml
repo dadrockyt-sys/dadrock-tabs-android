@@ -1,0 +1,136 @@
+name: V145 Stage3 Offline Score Harness CPU Definitive Proof
+
+on:
+  push:
+    branches:
+      - v143-contextual-prune-lobo
+    paths:
+      - debug/v145-rhythm-decoder/proofs/.v145-stage3-offline-score-harness-cpu-trigger
+
+permissions:
+  contents: write
+
+concurrency:
+  group: v145-stage3-offline-score-harness-cpu-definitive
+  cancel-in-progress: false
+
+jobs:
+  prove:
+    if: "${{ github.event.head_commit.message == 'v145 prove stage3 offline score harness cpu once' }}"
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+
+    steps:
+      - name: Check out exact trigger revision
+        uses: actions/checkout@v4
+        with:
+          ref: ${{ github.sha }}
+          fetch-depth: 2
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+
+      - name: Verify preregistration, trigger, and frozen implementation
+        shell: bash
+        run: |
+          set -euo pipefail
+          trigger='debug/v145-rhythm-decoder/proofs/.v145-stage3-offline-score-harness-cpu-trigger'
+          proof='debug/v145-rhythm-decoder/proofs/cpu-stage3-offline-score-harness-proof.json'
+          test "$(git log -1 --format=%s)" = 'v145 prove stage3 offline score harness cpu once'
+          test "$(git diff-tree --no-commit-id --name-only -r HEAD)" = "${trigger}"
+          test ! -e "${proof}"
+
+          test "$(git hash-object docs/v145-rhythm-decoder-stage3-evaluation-preregistration.md)" = "9b3542f33fb0f9149056b1eafb8c5db1864299ca"
+          test "$(git hash-object validation/v145_rhythm_decoder/score_offline_stage3_candidate.py)" = "d208abb3f180f8375d57d786941ff49d6813de1c"
+          test "$(git hash-object modal/tests/test_v145_rhythm_stage3_offline_score.py)" = "d8b3770ac7f3ba18123122f19fad895257998c25"
+          test "$(git hash-object validation/v145_rhythm_decoder/offline_stage3_adapter.py)" = "434d4b2582991c216df411455f232b8d211337c6"
+          test "$(git hash-object debug/v145-rhythm-decoder/proofs/cpu-stage3-offline-adapter-proof.json)" = "f55dcd1087f108d0d93c4a5a1a86cb5058ef4eb4"
+          test "$(git hash-object modal/v145_rhythm_decoder.py)" = "2fd979aebb4685e86c7f24a0162f69de306c06e9"
+          test "$(git hash-object modal/v145_rhythm_sequence_decoder.py)" = "5f86f57d0fd10774690d50528d51bad6e0392bf3"
+          test "$(git hash-object validation/rhythm_holdout/canonical.py)" = "088d44827fb23e20d9aeeb4944a672989af5846c"
+          test "$(git hash-object validation/rhythm_holdout/freeze_rhythm_analysis.py)" = "710bb6a3b15b99d3d11ceb4948d7c7175d208afc"
+          test "$(git hash-object validation/rhythm_holdout/score_rhythm_holdout.py)" = "cc4bf61a99f22bf87a6c255e5a81220fbc82223b"
+          test "$(git hash-object validation/v144_rhythm_calibration/score_selected_conjunction_candidate.py)" = "1ca2b8550d6c08e793f26b3aa91b99fb44fa7ddb"
+          test "$(git hash-object validation/rhythm_holdout/verify_pdf_event_fidelity.py)" = "5e1564216873046237fb545078a04a6b18f72b27"
+          test "$(git hash-object lib/v143RenderContract.js)" = "ccbb93c48982798cc474309fd981f6ca02d5c8d4"
+
+          python - <<'PY'
+          import json, subprocess
+          from pathlib import Path
+          trigger_path = Path('debug/v145-rhythm-decoder/proofs/.v145-stage3-offline-score-harness-cpu-trigger')
+          trigger = json.loads(trigger_path.read_text(encoding='utf-8'))
+          assert trigger['classification'] == 'v145-rhythm-stage3-offline-score-harness-cpu-trigger'
+          assert trigger['preregBlob'] == '9b3542f33fb0f9149056b1eafb8c5db1864299ca'
+          assert trigger['harnessBlob'] == 'd208abb3f180f8375d57d786941ff49d6813de1c'
+          assert trigger['testBlob'] == 'd8b3770ac7f3ba18123122f19fad895257998c25'
+          assert trigger['adapterBlob'] == '434d4b2582991c216df411455f232b8d211337c6'
+          assert trigger['adapterProofBlob'] == 'f55dcd1087f108d0d93c4a5a1a86cb5058ef4eb4'
+          assert trigger['realV5CandidateAllowed'] is False
+          assert trigger['realGoldReadAllowed'] is False
+          assert trigger['acceptedManifestReadAllowed'] is False
+          assert trigger['modalGpuAllowed'] is False
+          assert trigger['liveAudioAllowed'] is False
+          assert trigger['replayAllowed'] is False
+          workflow_blob = subprocess.check_output(['git','hash-object','.github/workflows/v145-stage3-offline-score-harness-cpu-definitive.yml'], text=True).strip()
+          assert trigger['workflowBlob'] == workflow_blob
+          assert trigger['preArmCheckpointCommit'] == subprocess.check_output(['git','rev-parse','HEAD^'], text=True).strip()
+          checkpoint = subprocess.check_output(['git','show',f"{trigger['preArmCheckpointCommit']}:docs/checkpoints/CURRENT_STATE.md"], text=True)
+          assert trigger['workflowBlob'] in checkpoint
+          PY
+
+      - name: Compile and run only synthetic harness tests
+        shell: bash
+        run: |
+          set -euo pipefail
+          python -m py_compile validation/v145_rhythm_decoder/score_offline_stage3_candidate.py
+          python modal/tests/test_v145_rhythm_stage3_offline_score.py -v
+
+      - name: Persist definitive CPU proof only
+        shell: bash
+        run: |
+          set -euo pipefail
+          proof='debug/v145-rhythm-decoder/proofs/cpu-stage3-offline-score-harness-proof.json'
+          python - <<'PY'
+          import json, os
+          from pathlib import Path
+          path = Path('debug/v145-rhythm-decoder/proofs/cpu-stage3-offline-score-harness-proof.json')
+          payload = {
+              'schemaVersion': 14505,
+              'classification': 'v145-rhythm-stage3-offline-score-harness-cpu-proof',
+              'evaluationRole': 'synthetic-ordering-and-invariant-proof-only',
+              'preregBlob': '9b3542f33fb0f9149056b1eafb8c5db1864299ca',
+              'harnessBlob': 'd208abb3f180f8375d57d786941ff49d6813de1c',
+              'testBlob': 'd8b3770ac7f3ba18123122f19fad895257998c25',
+              'adapterBlob': '434d4b2582991c216df411455f232b8d211337c6',
+              'adapterProofBlob': 'f55dcd1087f108d0d93c4a5a1a86cb5058ef4eb4',
+              'testsPassed': True,
+              'pyCompilePassed': True,
+              'realV5CandidateBuilt': False,
+              'calibrationScoreRun': False,
+              'realGoldRead': False,
+              'acceptedManifestRead': False,
+              'modalGpuUsed': False,
+              'liveAudioBenchmarkRun': False,
+              'acceptedBaselineChanged': False,
+              'promotionAllowed': False,
+              'runId': int(os.environ['GITHUB_RUN_ID']),
+              'runAttempt': int(os.environ['GITHUB_RUN_ATTEMPT']),
+              'triggerSha': os.environ['GITHUB_SHA'],
+          }
+          path.parent.mkdir(parents=True, exist_ok=True)
+          path.write_text(json.dumps(payload, indent=2, sort_keys=True) + '\n', encoding='utf-8')
+          PY
+          git add "$proof"
+          test "$(git diff --cached --name-only)" = "$proof"
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git commit -m 'Persist V145 Stage3 offline score harness CPU proof'
+          for attempt in 1 2 3 4 5; do
+            git fetch origin v143-contextual-prune-lobo
+            if git rebase origin/v143-contextual-prune-lobo && git push origin HEAD:v143-contextual-prune-lobo; then exit 0; fi
+            git rebase --abort 2>/dev/null || true
+            sleep $((attempt * 2))
+          done
+          exit 1
