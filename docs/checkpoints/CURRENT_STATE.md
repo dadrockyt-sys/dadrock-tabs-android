@@ -2,7 +2,7 @@
 
 Updated: 2026-08-26 America/Montreal
 Branch: `v143-contextual-prune-lobo`
-Active phase: **V147 Phase C REAL-AUDIO ARTIFACT-FIRST CONSTRUCTION = GO / SEALED, and the fresh V147 durable replay bundle is PRESERVED. Exactly one immutable candidate was constructed from the exact historical audio. The completed 13-file evidence artifact has been hash-gated and permanently mirrored into the branch for future reference-free replay without audio/Modal/L4/GPU access. STOP before Phase D/reference/gold scoring.**
+Active phase: **V147 Phase C REAL-AUDIO ARTIFACT-FIRST CONSTRUCTION = GO / SEALED, and the fresh V147 durable replay bundle = COMPLETE / SEALED. Exactly one immutable candidate was constructed from the exact historical audio. The completed 13-file evidence artifact has been hash-gated and permanently mirrored into the branch for future reference-free replay without audio/Modal/L4/GPU access. Both one-use Phase-C workflows are deleted. STOP before Phase D/reference/gold scoring.**
 
 ## Permanent safety / fixed protocol
 - Work only on `v143-contextual-prune-lobo`; never modify/merge `main` or Production.
@@ -98,12 +98,13 @@ Active phase: **V147 Phase C REAL-AUDIO ARTIFACT-FIRST CONSTRUCTION = GO / SEALE
 - GitHub artifact digest SHA256 `ea4c8b3a63b8798ec7bd3a88b1b16964d341064eac231266edc5d4e92a1cb68b`.
 - Actions retention expiry `2026-09-26T04:13:57Z`; durable branch preservation below removes dependence on that expiry for the replay evidence.
 
-## Durable V147 replay preservation — COMPLETE
+## Durable V147 replay preservation — COMPLETE / SEALED
 - Fresh V147 replay preservation was required because the V144 preserved data belongs to a different pipeline/front end and is historical only.
 - Durable path: `debug/v147-phase-c-real-audio/preserved-run-33038518285/`.
 - Successful archival workflow run `33039052920`, job `98408266298`: **SUCCESS**.
 - Preservation commit: **`5ad9b4eba040219e89be9286587756d81f5a9015`** (`debug: preserve V147 Phase C replay evidence`).
 - Preservation manifest: `debug/v147-phase-c-real-audio/preserved-run-33038518285/preservation-manifest.json`; Git blob **`9f67507b448eb3a36f6e5d2d96572af425c42cb5`**.
+- One-use archival workflow `.github/workflows/v147-phase-c-preserve-replay-once.yml` deleted/sealed at commit **`2ca2e9ebcdff768869d6a2935f909a755b3dfcfa`**.
 - Manifest schema `14741`; classification `v147-phase-c-durable-reference-free-replay-preservation`.
 - Exactly 13 original artifact files are hash/byte-bound in the manifest; `decisionCount=1144` and candidate event SHA remains `ca35c3492295a3079c17c35124df7a483166315e85649e95ded095c6c06b2b77`.
 - Preserved core identities include:
@@ -132,16 +133,15 @@ Active phase: **V147 Phase C REAL-AUDIO ARTIFACT-FIRST CONSTRUCTION = GO / SEALE
 - Accepted baseline scores therefore remain unchanged.
 
 ## EXPLICIT NEXT STEPS
-1. Delete/seal `.github/workflows/v147-phase-c-preserve-replay-once.yml`; do not rerun it.
-2. Checkpoint the archival-workflow deletion commit while preserving durable replay commit `5ad9b4eba040219e89be9286587756d81f5a9015` and manifest blob `9f67507b448eb3a36f6e5d2d96572af425c42cb5`.
-3. Keep V147 A/B, Phase-C pre-audio, Phase-C real-audio construction, and durable replay preservation sealed.
-4. **STOP before Phase D/reference scoring.** A new Phase-D preregistration must freeze candidate/freeze/PDF identities and evaluation order before any reference/gold access.
-5. Phase D requires separate explicit authorization after its preregistration is frozen; no automatic promotion.
+1. Keep V147 A/B, Phase-C pre-audio, Phase-C real-audio construction, and durable replay preservation sealed; do not recreate/rerun either deleted Phase-C one-use workflow.
+2. Use `debug/v147-phase-c-real-audio/preserved-run-33038518285/` for future reference-free V147 decision/fingering/candidate-validation replay where applicable, avoiding new real-audio/Modal/L4/GPU work.
+3. **STOP before Phase D/reference scoring.** A new Phase-D preregistration must freeze candidate/freeze/PDF identities and evaluation order before any reference/gold access.
+4. Phase D requires separate explicit authorization after its preregistration is frozen; no automatic promotion.
 
 ## Current stop point
-- V147 A GO/SEALED; V147 B GO/SEALED; Phase-C pre-audio GO/SEALED; **V147 Phase C REAL-AUDIO = GO/SEALED; durable V147 replay preservation = COMPLETE**.
+- V147 A GO/SEALED; V147 B GO/SEALED; Phase-C pre-audio GO/SEALED; **V147 Phase C REAL-AUDIO = GO/SEALED; durable V147 replay preservation = COMPLETE/SEALED**.
 - Immutable candidate SHA `ca35c3492295a3079c17c35124df7a483166315e85649e95ded095c6c06b2b77`.
 - Durable preservation commit `5ad9b4eba040219e89be9286587756d81f5a9015`; manifest blob `9f67507b448eb3a36f6e5d2d96572af425c42cb5`.
+- One-use real-audio workflow sealed at `4b125f42dfa447e1fe86741c8f41c09dcaffc895`; one-use replay-preservation workflow sealed at `2ca2e9ebcdff768869d6a2935f909a755b3dfcfa`.
 - 247 observational ±1 pitch changes; all structural/position/PDF/determinism gates green.
-- One-use real-audio workflow sealed at `4b125f42dfa447e1fe86741c8f41c09dcaffc895`.
 - Reference/gold/scoring remain untouched and unauthorized.
