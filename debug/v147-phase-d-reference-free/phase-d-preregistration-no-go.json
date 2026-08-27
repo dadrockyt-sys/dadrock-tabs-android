@@ -1,0 +1,123 @@
+{
+  "schema": "dadrock.tabs.v147.phase-d-preregistration.v1",
+  "classification": "reference-free-design-freeze-no-go",
+  "frozenAtUtc": "2026-08-27T05:00:00Z",
+  "sourceBranch": "v143-contextual-prune-lobo",
+  "sourceHeadBeforeFreeze": "8d884ce03b9806775fd264f76b9ba40f541ebd8b",
+  "phase": "V147 Phase D",
+  "status": "NO_GO_FOR_REFERENCE_FACING_SCORING",
+  "candidate": {
+    "path": "debug/v147-phase-c-real-audio/preserved-run-33038518285/candidate.json",
+    "gitBlob": "3091d4b1468260746d6629af67b7b92599d5134e",
+    "fileSha256": "c0215690d5bfd9d2d47b8784eee886e942fbd28c499f25c643635c45ff7a9636",
+    "canonicalEventSha256": "ca35c3492295a3079c17c35124df7a483166315e85649e95ded095c6c06b2b77",
+    "eventCount": 1144,
+    "instrument": "rhythm",
+    "immutableForFirstComparison": true
+  },
+  "candidateAdapterContract": {
+    "status": "INPUT_SHAPE_PROVEN_EVALUATOR_ADAPTER_NOT_PROVEN",
+    "topLevelInstrument": "rhythm",
+    "topLevelEventArray": "renderEvents",
+    "observedRequiredEventFields": [
+      "eventIndex",
+      "measure",
+      "step",
+      "durationSteps",
+      "durationSeconds",
+      "midi",
+      "stringIndex",
+      "fret",
+      "sustainTier",
+      "techniques"
+    ],
+    "rule": "Do not invent a conversion to a scorer input format. Only use an adapter that is already fixed by independently verifiable historical code/provenance before reference/gold is opened."
+  },
+  "acceptedBaseline": {
+    "family": "singleton-onset-replace-be9e9aa7a734e3cd",
+    "canonicalEventCount": 1144,
+    "canonicalEventSha256": "4e6f9f247134f79f30a5448515c52a6ca1012c1f1314c3458b448582999e3881",
+    "generatedMeasures": 113,
+    "scores": {
+      "melody": 35.4,
+      "bass": 6.7,
+      "chords": 5.5,
+      "rhythm": 5.8,
+      "anchor5": 100,
+      "anchor6": 100
+    },
+    "rule": "Baseline identity and accepted scores are frozen context only; do not reinterpret or retune them during Phase D."
+  },
+  "gold": {
+    "expectedSha256": "18fd868ae960dfcddc1ffb0110f1a9dfd8acc2ffeb46e247d1116cd54291526ac",
+    "checkpointPath": "debug/history/v143-v147/preserved-gold/tabs_Full_calibration_report-gold.json",
+    "liveTreeStatusAtFreeze": "UNAVAILABLE_AT_CHECKPOINT_PATH",
+    "branchPathCommitHistoryQueryStatus": "NO_MATCHING_COMMITS_RETURNED",
+    "contentOpenedDuringDesign": false,
+    "shaReverifiedFromBytesDuringDesign": false,
+    "rule": "Gold bytes must be restored/located and SHA256-reverified without exposing content to candidate construction/tuning before any score is authorized."
+  },
+  "evaluator": {
+    "required": "The exact pre-existing full calibration evaluator that produced/defines the accepted Melody/Bass/Chords/Rhythm/overall comparison, plus its exact candidate adapter contract.",
+    "status": "UNRESOLVED",
+    "missingCheckpointClaimedPath": "debug/history/v143-v147/src/run_v143_local_calibration.py",
+    "missingPathCommitHistoryQueryStatus": "NO_MATCHING_COMMITS_RETURNED",
+    "excludedSubstitutes": [
+      {
+        "path": "debug/v143-grading/last_grade_cmd.py",
+        "gitBlob": "bfa8129e78d65d0e21b31dd3ddb1ef2a22ccebe5",
+        "reason": "Exact temporary V1.4.3 rhythm-segment grading program; WAV/rubric evidence with manual consistency component, not the established full calibration evaluator."
+      },
+      {
+        "path": "debug/v143-grading/grade_current_reference.py",
+        "gitBlob": "990e6388acf574abd9501e7257d056b03e2d8739",
+        "reason": "v1.4.3-rhythm-reference-grader-v1 wrapper; not proven to produce the accepted full calibration anchor vector."
+      }
+    ],
+    "v144RhythmCalibrationTree": {
+      "gitTree": "2b6a6172d9c5b2d95bf620e2710dc0c5498dddec",
+      "executablePythonScorerFound": false,
+      "referenceAndSelectedScoreArtifactsOpened": false
+    },
+    "rule": "No reconstructed, reverse-engineered, newly authored, or post-candidate scorer may substitute for the exact historical evaluator."
+  },
+  "durablePhaseCEvidence": {
+    "path": "debug/v147-phase-c-real-audio/preserved-run-33038518285/",
+    "preservationManifestGitBlob": "9f67507b448eb3a36f6e5d2d96572af425c42cb5",
+    "referenceOrGoldRead": false,
+    "calibrationScoreComputed": false,
+    "gpuExecutionUsed": false
+  },
+  "frozenEvaluationOrderIfAndOnlyIfUnblockedAndFreshlyAuthorized": [
+    "Verify branch and preregistration identity without editing candidate or baseline.",
+    "Verify immutable candidate file SHA256 and canonical event SHA256.",
+    "Verify recovered exact evaluator and adapter identities against pre-frozen historical provenance.",
+    "Verify Gold bytes SHA256 equals the frozen expected Gold SHA256 before evaluator execution.",
+    "Run exactly one comparison of the immutable candidate using the frozen evaluator/adapter and Gold.",
+    "Persist criterion-wise evidence, exact score vector/deltas, input hashes, evaluator/adapter hashes, environment identity, and execution log.",
+    "Do not tune, search, generate a second candidate, alter thresholds, rerun audio/CQT, or automatically promote after viewing the result.",
+    "Seal the one-use scoring path and checkpoint the result."
+  ],
+  "goGates": {
+    "exactHistoricalFullEvaluatorRecoveredAndHashBound": false,
+    "exactHistoricalCandidateAdapterRecoveredAndHashBound": false,
+    "goldArtifactLocatedAndSha256Reverified": false,
+    "freshExplicitUserAuthorizationForReferenceFacingScoring": false
+  },
+  "stopRules": [
+    "Any false GO gate means STOP before opening reference/gold content or computing a score.",
+    "A plausible substitute scorer is not sufficient.",
+    "A scorer reconstructed from accepted scores or Gold contents is prohibited.",
+    "No Modal/L4/GPU/audio recomputation is authorized by this preregistration.",
+    "No Production/main integration or automatic promotion is authorized."
+  ],
+  "designSafetyAttestation": {
+    "goldOrReferenceContentOpened": false,
+    "calibrationScoreRun": false,
+    "candidateSearchRun": false,
+    "alternateCandidateConstructed": false,
+    "modalL4GpuRun": false,
+    "audioRecomputed": false,
+    "productionIntegrated": false
+  }
+}
