@@ -550,3 +550,10 @@ Active phase: **V147 Phase C REAL-AUDIO ARTIFACT-FIRST CONSTRUCTION = GO / SEALE
 - Deterministic replay **TRUE**; PDF/render fidelity **100.00%**. Candidate file SHA256 **`8366b8bd0f3df71ca38dee7ffd1274761e73521bfde740eff9c46637651187b5`**.
 - Gold/reference/prior score result read **NO**; scorer calls **0**; variants **1**; no search/alternate rule/threshold sweep/retuning/audio/GPU/Production.
 - Construction authorization consumed; workflow deleted in this sealing commit. Exact-candidate scoring still requires its separate one-use binding.
+
+
+## V150 Phase C Gold score — AUTHORIZED / CONSUMED BEFORE REFERENCE ACCESS — 2026-08-27 UTC
+- Exactly one score authorized for immutable V150 candidate SHA `72a0582cfc7d03d84cd2f878f191a69b7262b200ce248d1a896207444a3c5e4e`: 1144 events / **33 singleton changes / 0 polyphonic changes / 100.00% PDF fidelity**.
+- Scorer blob `8baab9c30b947690d9d2f5876448f4224f69280c`; authorization blob `5fbf389df62c89702e911dc38097f5833e6e9b05`; identity addendum blob `f296197fc5738838d91b968a4fe0465121fa4f9c`; run `33047762065`.
+- Expected Gold identity will be read reference-free from the persisted V149 result and required to be 64 lowercase hex.
+- Attempt consumed before Gold. Gold/reference opened **NO**; reference parsed **NO**; score calls **0**. No search/alternate rule/threshold/retuning/audio/GPU/Production.
