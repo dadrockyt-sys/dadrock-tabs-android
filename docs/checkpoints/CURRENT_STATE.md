@@ -2,12 +2,12 @@
 
 Updated: 2026-08-26 America/Montreal
 Branch: `v143-contextual-prune-lobo`
-Active phase: **V144 Rhythm baseline preserved; Families #1–#14 fully consumed/sealed. V145 Stage 1 and Stage 2 are preregistered, implemented, CPU-proven, and sealed. Offline Stage 3 feasibility is now established from the already-saved V5 Rhythm render stream; Stage 3 adapter/scoring protocol is not yet preregistered or run. No Modal/L4/GPU without fresh explicit authorization.**
+Active phase: **V144 Rhythm baseline preserved; Families #1–#14 fully consumed/sealed. V145 Stage 1 and Stage 2 are preregistered, implemented, CPU-proven, and sealed. V145 Stage 3 offline trial is now preregistered before implementation/scoring; adapter, proof, and one-shot score are still pending. No Modal/L4/GPU without fresh explicit authorization.**
 
 ## Permanent safety / fixed protocol
 - Work only on `v143-contextual-prune-lobo`; never modify/merge `main` or Production.
 - `/ai-tab` frontend, Bass/Lead, `freezeReady=false`, main, Production untouched.
-- No Modal/L4/GPU without fresh explicit authorization.
+- No Modal/L4/GPU/live audio without fresh explicit authorization.
 - V5 analyzer blob `7f72f8ed9b14af8bc93e95544195204d99c6bec1`; V5 holdout-result metadata blob `511fd244f231b66d08306f97b5a47ed41f5415c7`.
 - Gold SHA256 `18fd868ae960dfcdd1ffb0110f1a9dfd8acc2ffeb46e247d1116cd54291526ac`; calibration benchmark only.
 
@@ -46,29 +46,39 @@ Active phase: **V144 Rhythm baseline preserved; Families #1–#14 fully consumed
 - Stage1 frozen blob remained unchanged through Stage2.
 
 ## V145 Stage 3 offline feasibility — ESTABLISHED / SCORE-FREE
-- Saved V5 render stream located at `debug/v143-contextual-prune/v5-professional-pdf/v5-render-stream.json`.
-- Git blob **`fe61f7ad53a4d71348a5113ecc9e3876eaad98d4`**; pre-existing raw stream SHA256 **`7c3399d3f5e05ecc8ac98d71d0e5300e1e78f63ae96c1642fe4a19debb4061b2`**.
-- Stream is the exact source-only frozen V5 renderer input previously validated at 1209 events /113 measures; tempo `129.19921875`, time signature `4/4`, standard tuning.
-- Each event has `measure`, 16-step `step`, `midi`, `durationSteps`; many also carry `durationSeconds`. Therefore absolute generated-only seconds can be reconstructed deterministically as `((measure-1)*16 + step) * (60/tempo/4)` without audio, gold, or labels.
-- Stage1/Stage2 can consume reconstructed `{midi,onset,duration}` evidence. Stage1 guitar string numbers are human 1..6, so renderer `stringIndex` mapping is frozen as `decoded.string - 1`.
-- Frozen validation/render identities reverified on branch:
-  - canonical `validation/rhythm_holdout/canonical.py` blob `088d44827fb23e20d9aeeb4944a672989af5846c`;
-  - freeze `validation/rhythm_holdout/freeze_rhythm_analysis.py` blob `710bb6a3b15b99d3d11ceb4948d7c7175d208afc`;
-  - scorer `validation/rhythm_holdout/score_rhythm_holdout.py` blob `cc4bf61a99f22bf87a6c255e5a81220fbc82223b`;
-  - PDF fidelity `validation/rhythm_holdout/verify_pdf_event_fidelity.py` blob `5e1564216873046237fb545078a04a6b18f72b27`;
-  - render contract `lib/v143RenderContract.js` blob `ccbb93c48982798cc474309fd981f6ca02d5c8d4`.
-- Investigation opened no gold/reference data and produced no V145 score/candidate.
+- Saved V5 render stream: `debug/v143-contextual-prune/v5-professional-pdf/v5-render-stream.json`.
+- Git blob **`fe61f7ad53a4d71348a5113ecc9e3876eaad98d4`**; raw SHA256 **`7c3399d3f5e05ecc8ac98d71d0e5300e1e78f63ae96c1642fe4a19debb4061b2`**.
+- Exact source-only V5 renderer input: 1209 events /113 measures; tempo `129.19921875`; `4/4`; standard tuning.
+- Absolute generated-only seconds can be reconstructed from `(measure, step, tempo)` without audio, gold, or labels.
+- Frozen validation/render identities remain canonical `088d44827fb23e20d9aeeb4944a672989af5846c`, freeze `710bb6a3b15b99d3d11ceb4948d7c7175d208afc`, scorer `cc4bf61a99f22bf87a6c255e5a81220fbc82223b`, PDF fidelity `5e1564216873046237fb545078a04a6b18f72b27`, render contract `ccbb93c48982798cc474309fd981f6ca02d5c8d4`.
+- Calibration reference path identified without opening contents: `debug/v144-rhythm-calibration/reference/professional-rhythm-gold-reference.json`; raw SHA256 `18fd868ae960dfcdd1ffb0110f1a9dfd8acc2ffeb46e247d1116cd54291526ac`.
+- Generic holdout scorer CLI intentionally requires references under `validation/rhythm_holdout/reference`; Stage3 therefore preregisters an evaluation-only harness using frozen scorer primitives/full scoring function after freeze/PDF proof, rather than moving/copying gold.
+
+## V145 Stage 3 — PREREGISTERED / NOT IMPLEMENTED / NOT SCORED
+- Preregistration: `docs/v145-rhythm-decoder-stage3-offline-preregistration.md`.
+- Preregistration creation commit **`64319400dcaa7d23850e8eda8985e823d24ff9a1`**.
+- Preregistration blob **`bb60a3bcc5f6e136eb6efb5706828379e007ec1d`**.
+- Frozen implementation path: `validation/v145_rhythm_decoder/offline_stage3_adapter.py`.
+- Frozen tests path: `modal/tests/test_v145_rhythm_stage3_offline_adapter.py`.
+- Exactly one decoder call on reconstructed generated-only V5 evidence; no candidate search/ranking/alternate.
+- Event count fixed at 1209; eventIndex/list order/MIDI immutable; only unprotected atomic decoded groups may change `measure`, `step`, `stringIndex`, `fret`.
+- Technique/bend/legato events and referenced link targets are protected; any selected group containing a protected event is copied source-exact.
+- Selected seconds map back to source 16th grid with frozen half-up conversion and residual <=0.01 source steps; out-of-range/residual/collision groups preserve source unchanged.
+- Physical pitch/string/fret inconsistency or new cell multiplicity/measure-set failure is fail-closed before scoring.
+- Final generated measure set must equal source and contain all 113 measures; no additions/deletions/new pitches.
+- Mandatory CPU proof before real candidate/score; proof cannot build/score the real V5 Stage3 candidate.
+- One-shot real execution order is fixed: verify -> CPU tests -> build generated-only candidate -> invariant check -> freeze -> renderer contract -> PDF event fidelity1.0 -> scorer pre-reference validation -> only then open/hash/validate calibration gold -> score -> immutable recheck -> persist explicit Stage3 artifacts -> seal workflow/trigger.
+- Score is calibration benchmark only, never unseen holdout; no score-driven retuning/replay; report must keep `acceptedBaselineChanged=false` and `promotionAllowed=false` regardless of result.
 
 ## EXPLICIT NEXT STEPS
-1. Stay only on `v143-contextual-prune-lobo`; preserve family #10, Stage1, and Stage2 frozen blobs.
-2. Preregister the CPU-only V145 Stage 3 offline adapter/scoring protocol **before implementation or scoring**.
-3. Adapter must use only the pinned saved V5 generated stream for candidate construction; no reference/gold/FIT/validation/canary input may enter Stage1/Stage2.
-4. Freeze the complete V145 candidate and prove render/PDF event identity before any calibration reference is opened by the external scorer.
-5. Treat any Stage 3 result as benchmark evidence only; accepted family #10 baseline changes only through explicit later promotion.
-6. Checkpoint before and after the offline trial.
-7. No Modal/L4/GPU/live audio until separately and explicitly authorized.
+1. Implement the preregistered CPU-only Stage3 adapter exactly; do not change Stage1/Stage2.
+2. Add synthetic invariant tests at the frozen test path.
+3. Create/run one definitive self-reporting CPU proof, persist proof, delete/seal proof workflow immediately, checkpoint.
+4. Only after successful sealed proof, arm one one-shot offline Stage3 execution using the exact preregistered order.
+5. Checkpoint immediately before and after the offline trial and after sealing.
+6. No Modal/L4/GPU/live audio; do not touch main/Production/frontend/Bass/Lead/freezeReady=false.
 
 ## Current stop point
 - Accepted scores remain **35.4 / 6.7 / 5.5 / 5.8 / 100 / 100**.
-- V145 Stage1 and Stage2 CPU proofs both SUCCESS/sealed.
-- Offline V5 input feasibility is confirmed, but Stage3 is not yet preregistered, implemented, or scored.
+- V145 Stage1 and Stage2 CPU proofs SUCCESS/sealed.
+- V145 Stage3 protocol is frozen before code/score; adapter/proof/trial still pending.
