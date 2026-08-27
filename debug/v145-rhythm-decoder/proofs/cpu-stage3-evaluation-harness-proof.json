@@ -16,9 +16,9 @@
   "stage3AdapterProofBlob": "f55dcd1087f108d0d93c4a5a1a86cb5058ef4eb4",
   "stage3EvaluationPreregistrationBlob": "9b3542f33fb0f9149056b1eafb8c5db1864299ca",
   "syntheticOrderingTestsPassed": true,
-  "workflowBlob": "0302ece5ea705d1d65e7e29dc64ae6913a488165",
-  "workflowHeadSha": "d1c5d718c586bee313da6181a8ae91d1f22d3981",
+  "workflowBlob": "bda53b2d332a52f36e10fe53ecf323c1dcebad44",
+  "workflowHeadSha": "47a0a74e1f55330652c15efb0b40accce080f78f",
   "workflowJob": "cpu-proof",
   "workflowRunAttempt": 1,
-  "workflowRunId": 33030890743
+  "workflowRunId": 33031101564
 }
