@@ -2,7 +2,7 @@
 
 Updated: 2026-08-26 America/Montreal
 Branch: `v143-contextual-prune-lobo`
-Active phase: **V146 is CLOSED/SEALED after regression. V147 Phase A preregistration is frozen and implemented. The single-use CPU/reference-free GitHub Actions proof workflow is now committed and execution is pending/being observed. No calibration/gold access, no Modal/L4/GPU/live audio, no production promotion.**
+Active phase: **V146 is CLOSED/SEALED after regression. V147 Phase A preregistration and implementation are frozen. Repository-native CPU attempt 1 is consumed/failed closed because the proof harness was invoked with an import-path error after all 13 tests passed; no generated proof result existed in that run. A separately frozen execution-only repair is the next permissible step. No calibration/gold access, no Modal/L4/GPU/live audio, no production promotion.**
 
 ## Permanent safety / fixed protocol
 - Work only on `v143-contextual-prune-lobo`; never modify/merge `main` or Production.
@@ -54,7 +54,7 @@ Active phase: **V146 is CLOSED/SEALED after regression. V147 Phase A preregistra
 - Candidate minus accepted: pitch `-0.07100434063433214`; pitch/timing `-0.02243808212790995`; string/fret/timing `-0.048048934823876815`; chord pitch-set `-0.03529344283376307`; exact voicing `-0.05403507603322759`; critical mismatches `+163`.
 - Interpretation: V146 materially regressed musical calibration metrics. No replay, retuning, alternate construction, or promotion is authorized.
 
-## V147 Phase A — PITCH HYPOTHESIS BEFORE FINGERING / FROZEN / IMPLEMENTED / CPU PROOF IN PROGRESS
+## V147 Phase A — PITCH HYPOTHESIS BEFORE FINGERING / FROZEN / IMPLEMENTED
 - Preregistration: `docs/v147-pitch-hypothesis-preregistration.md`; initial freeze commit `a0bb5412be8830fca27726ad2067a713e8441089`; pre-implementation aggregation clarification `d1dcb96943af758cdd54843637366701f25b4b22`; prereg blob `026d3bdbbebd385b7bdd4e896da569091b0265b7`.
 - Both prereg commits occurred before any V147 implementation code.
 - Structural diagnosis: `modal/v145_rhythm_decoder.py` preserves incoming event MIDI and optimizes timing/playable string-fret states around that immutable pitch. This explains V146 `pitchChanges = 0` and establishes the V147 signal boundary.
@@ -71,13 +71,21 @@ Active phase: **V146 is CLOSED/SEALED after regression. V147 Phase A preregistra
 - Standalone generated proof harness: `modal/v147_pitch_hypothesis_cpu_proof.py`; creation commit `ac6b92618f2cc52971e6b42c769f0345617d51bf`; blob `e9d28739cd19f095cb83807fd0b23c2b14b7c966`; schema14701.
 - Implementation keeps V145 files untouched and has no calibration/gold, Modal/GPU, live-audio, or production integration path.
 - Tests cover: original-control keep; strong ±1 recovery; ambiguous/weak/tie keep; low/high guitar boundaries; missing/non-finite evidence fail closed; deterministic serialization; prepared-CQT strong-neighbor smoke; prepared-CQT shape-error fail closed.
-- Proof harness contains only generated evidence and reports the frozen metrics + payload SHA and `GO`/`STOP` gate.
 
-### V147 CPU proof execution state
-- Single-use workflow `.github/workflows/v147-phase-a-cpu-proof.yml` created in commit `aa7c3dc69367749a228137b7e2cb14cbf72c8610`.
-- Workflow is restricted to this branch/path and runs only the frozen V147 contract tests + generated proof on CPU; it records source blob identities and uploads proof/runtime/log artifacts.
-- A local reconstruction preflight using the exact three frozen GitHub file contents completed before the workflow commit: `13 passed`; generated proof gate `GO`; 11/11 proof cases passed; proof payload SHA256 `3843912f0c8e5da95c3993783a84762ba01b046120a48db5e5a5c6c16a3d883e`; formatted proof file SHA256 `2cba17eaf5158fdcbe73f3207eb8a58c6b3100429c1065e524a42c2937cab67d`. This is supporting preflight evidence only; repository-native GitHub Actions evidence remains the authoritative Phase-A execution to persist.
-- No calibration/gold reference, Modal/L4/GPU, live audio, V145 modification, or production integration was used in this execution path.
+### V147 local exact-source preflight — SUPPORTING ONLY
+- Using exact contents of the three frozen GitHub blobs above, CPU-only local reconstruction produced `13 passed` and generated proof gate `GO` with 11/11 proof cases passed.
+- Proof payload SHA256 `3843912f0c8e5da95c3993783a84762ba01b046120a48db5e5a5c6c16a3d883e`; formatted proof file SHA256 `2cba17eaf5158fdcbe73f3207eb8a58c6b3100429c1065e524a42c2937cab67d`.
+- This does not replace repository-native proof evidence.
+
+### V147 repository-native attempt 1 — CONSUMED / FAILED CLOSED BEFORE PROOF
+- Single-use workflow creation commit `aa7c3dc69367749a228137b7e2cb14cbf72c8610`.
+- Run `33034467868`, job `98394054352`, artifact `9631482983`: **FAILURE**.
+- Frozen contract tests completed successfully: `13 passed in 0.14s`.
+- The generated proof itself did **not** execute: direct file invocation `python modal/v147_pitch_hypothesis_cpu_proof.py` made Python set the script directory as `sys.path[0]`, so `from modal.v147_pitch_hypothesis ...` failed with `ModuleNotFoundError: No module named 'modal'`.
+- Runtime evidence therefore recorded `pytestExitCode=0`, `proofExitCode=1`, `proofFileSha256=null`, gate `STOP`; this is an execution-harness/import-path failure before proof construction, not a failed generated musical case.
+- Exact execution record persisted at `debug/v147-pitch-hypothesis/phase-a-attempt1-execution-record.json` in commit `69f8019154014b8fa19de9b5eeebc92e1eb8ba71`.
+- No calibration/gold reference was read; no Modal/L4/GPU/live audio, V145 modification, or production integration occurred.
+- This exact execution MUST NOT be rerun or reinterpreted as a pass.
 
 ## Frozen validation/render identities
 - canonical `088d44827fb23e20d9aeeb4944a672989af5846c`
@@ -92,14 +100,15 @@ Active phase: **V146 is CLOSED/SEALED after regression. V147 Phase A preregistra
 
 ## EXPLICIT NEXT STEPS
 1. Keep V146 sealed; accepted family #10 remains active.
-2. Observe only the single-use V147 CPU/reference-free workflow created at `aa7c3dc69367749a228137b7e2cb14cbf72c8610`; do not read calibration/gold evidence.
-3. Persist exact GitHub Actions proof/runtime evidence and checkpoint the run/job/artifact identities.
-4. If Phase A fails, STOP rather than retuning frozen thresholds. If it passes, checkpoint `GO`, delete/seal the single-use workflow, and stop. Any later live/reference/Modal/GPU evaluation or production integration requires a separately authorized/frozen next phase.
-5. Continue frequent checkpoint saves on this branch.
+2. Do not rerun V147 attempt 1.
+3. Before any new repository-native execution, freeze an execution-only repair revision that changes **only** proof invocation/package-path handling; V147 implementation blobs, thresholds, generated cases, and preregistered gate must remain unchanged.
+4. After that repair freeze, execute one fresh CPU/reference-free run, persist exact run/job/artifact/proof/runtime identities, and checkpoint GO/STOP.
+5. If the repaired proof reaches the frozen generated cases and any gate condition fails, STOP with no retuning. If it passes, checkpoint `GO`, delete/seal the single-use workflow, and stop. Any later live/reference/Modal/GPU evaluation or production integration requires a separately authorized/frozen next phase.
+6. Continue frequent checkpoint saves on this branch.
 
 ## Current stop point
 - Accepted scores remain **35.4 / 6.7 / 5.5 / 5.8 / 100 / 100**.
 - V146 remains consumed/closed/sealed with regression.
-- V147 preregistration and implementation are frozen.
-- Local exact-source CPU preflight passed; repository-native single-use CPU proof workflow is committed and is the next authoritative evidence source.
-- **Next: capture the GitHub Actions V147 Phase-A run result, persist artifacts, checkpoint GO/STOP, then seal the workflow.**
+- V147 musical/decision implementation remains frozen and unchanged.
+- Repository-native attempt 1 is consumed/failed closed at the proof import boundary after all 13 tests passed; no proof result existed.
+- **Next: freeze an execution-only import-path repair, then perform one fresh CPU/reference-free proof execution.**
