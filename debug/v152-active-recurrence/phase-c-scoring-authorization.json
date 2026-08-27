@@ -1,0 +1,47 @@
+{
+  "schema": "dadrock.tabs.v152.active-recurrence.phase-c-scoring-authorization.v1",
+  "classification": "one-use-reference-facing-score-authorized",
+  "branch": "v143-contextual-prune-lobo",
+  "userInstruction": "Let's make a major breakthrough 🙏",
+  "authorization": {
+    "received": true,
+    "scope": "exactly-one-v152-three-note-active-recurrence-gold-calibration-score",
+    "candidateSearchAllowed": false,
+    "alternateCandidateAllowed": false,
+    "alternateClassCombinationAllowed": false,
+    "additionalFilterAllowed": false,
+    "alternateThresholdAllowed": false,
+    "retuningAllowed": false,
+    "audioRecomputeAllowed": false,
+    "modalGpuAllowed": false,
+    "productionPromotionAllowed": false
+  },
+  "candidateBinding": {
+    "path": "debug/v152-active-recurrence/candidate/candidate.json",
+    "gitBlob": "8486188bc7c2f5d0d7649e98b0970b64dd0eebed",
+    "fileSha256": "9b15ab3aa9540438db0750bb11c592a686e87b00b3acba491c80791badd349cb",
+    "canonicalEventSha256": "5ebedfb173730bb5e2639e7450841fb113f7db9af2acec19b88e58cca50679e6",
+    "eventCount": 1144,
+    "changedEventsVersusAccepted": 3,
+    "changedOnsetsVersusAccepted": 3,
+    "polyphonicChangedEventsVersusAccepted": 0
+  },
+  "constructionProofBinding": {
+    "gitBlob": "3530c931bee9ab5888f350cd30d793388ebb5eca",
+    "sha256": "e30a7a43d77c28760d2e8cd9e2df6c5114ad05cfc4e40f2bf59af15721186127"
+  },
+  "pdfEvidenceBinding": {
+    "gitBlob": "d6d4e287d7165ba52e7c1f58cf046a3328af6b29",
+    "sha256": "82872d9a3e7cb5a56c4a85db12ac8805aed49c88876227a57f1161de85fa500c",
+    "fidelity": 1.0
+  },
+  "constructionCompletionGitBlob": "c39828b7e829918106f43d14cdd1790a87c32934",
+  "referenceIdentityAndPriorScoreSource": {
+    "path": "debug/v151-positive-consensus/phase-c-score/score-result.json",
+    "gitBlob": "23c451cf570a82333940e7dcc7f08afa583f52af",
+    "sha256": "3dadedfe887612be86518e3c7b8e8c96a58e3e5ed7d8c12fd68e026b1aaf5f68",
+    "referenceField": "reference.sha256"
+  },
+  "maximumScoreCalls": 1,
+  "automaticPromotion": false
+}
