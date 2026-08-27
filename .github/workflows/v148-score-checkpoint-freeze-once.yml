@@ -12,7 +12,7 @@ permissions:
 
 jobs:
   checkpoint:
-    if: github.event.head_commit.message == 'ci: checkpoint frozen V148 scoring authorization'
+    if: "${{ github.event.head_commit.message == 'ci checkpoint frozen V148 scoring authorization' }}"
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
