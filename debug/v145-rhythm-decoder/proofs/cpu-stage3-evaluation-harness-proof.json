@@ -1,0 +1,20 @@
+{
+  "acceptedBaselineChanged": false,
+  "calibrationScoreRun": false,
+  "classification": "v145-rhythm-stage3-evaluation-harness-definitive-cpu-proof",
+  "harnessBlob": "d208abb3f180f8375d57d786941ff49d6813de1c",
+  "instrument": "rhythm",
+  "liveAudioBenchmarkRun": false,
+  "modalGpuUsed": false,
+  "preregistrationBlob": "9b3542f33fb0f9149056b1eafb8c5db1864299ca",
+  "promotionAllowed": false,
+  "realGoldRead": false,
+  "realStage3CandidateBuilt": false,
+  "referenceLabelsRead": false,
+  "runAttempt": 1,
+  "runId": 33030626348,
+  "schemaVersion": 14505,
+  "syntheticTestsPassed": true,
+  "testBlob": "d8b3770ac7f3ba18123122f19fad895257998c25",
+  "triggerSha": "6d1fa53da76a2fdc26ea668bfa12192568a356e4"
+}
