@@ -1,0 +1,17 @@
+{
+  "schema": "dadrock.tabs.multitrack-reference.v1",
+  "song": {
+    "artist": "Lenny Kravitz",
+    "title": "Are You Gonna Go My Way"
+  },
+  "referenceAuthorization": {
+    "userProvidedOrAuthorized": false,
+    "privateScoringOnly": true,
+    "sourceDescription": "Replace only with user-provided or otherwise authorized professional transcription data. Do not scrape third-party tablature sites."
+  },
+  "parts": {
+    "rhythm": [],
+    "lead": [],
+    "bass": []
+  }
+}
