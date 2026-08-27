@@ -1,0 +1,44 @@
+{
+  "schema": "dadrock.tabs.v153.phase-e-measure35-temporal-map-preregistration.v1",
+  "classification": "cpu-reference-facing-measure-temporal-diagnostic",
+  "branch": "v143-contextual-prune-lobo",
+  "authorizationPolicy": {
+    "cpuWorkAtAssistantDiscretion": true,
+    "modalL4CudaGpuRequiresFreshAuthorization": true
+  },
+  "purpose": "Map the complete temporal content of Gold measure 35 against the accepted baseline and immutable V153 event-347 candidate, locate the Gold MIDI-62 note responsible for the measure-level pitch-content credit, and quantify its timing distance from event 347.",
+  "frozenInputs": {
+    "candidatePath": "debug/v153-reference-free-strength/candidate/candidate.json",
+    "candidateGitBlob": "975ab36c234b423d1b56e59588e960f7d9d7103f",
+    "candidateCanonicalEventSha256": "df40a771219fb69ae3c129c90ef5351e64b89006ff678e484741ecf0418e3d4b",
+    "phaseDResultPath": "debug/v153-reference-free-strength/phase-d-event347-attribution.json",
+    "phaseDResultGitBlob": "46d934ee48e125ec91b6fd5a070b081477f34472",
+    "acceptedCanonicalEventSha256": "4e6f9f247134f79f30a5448515c52a6ca1012c1f1314c3458b448582999e3881",
+    "goldPath": "debug/v144-rhythm-calibration/reference/professional-rhythm-gold-reference.json",
+    "goldSha256": "18fd868ae960dfcdd1ffb0110f1a9dfd8acc2ffeb46e247d1116cd54291526ac",
+    "coreScorerGitBlob": "cc4bf61a99f22bf87a6c255e5a81220fbc82223b",
+    "canonicalAdapterGitBlob": "088d44827fb23e20d9aeeb4944a672989af5846c",
+    "acceptedFamilySupportGitBlob": "f4278ffaacaca3f66baf7a3112e2af0f3bc387cf"
+  },
+  "frozenAnalysis": [
+    "emit all accepted generated notes in measure 35 with eventIndex, step, MIDI, string and fret",
+    "emit all immutable V153 generated notes in measure 35",
+    "emit all Gold reference notes in measure 35",
+    "locate every Gold MIDI-62 and MIDI-61 note in measure 35",
+    "for event 347 original MIDI-62 and selected MIDI-61, calculate nearest same-MIDI Gold timing distance within the measure",
+    "replay tolerant pitch, tolerant position and gross pitch greedy matches and emit all pairs touching measure 35",
+    "for every generated measure-35 note, calculate nearest same-MIDI Gold timing distance and timing-class membership",
+    "classify the event-347 pitch-content delta as locally timing-supported, locally timing-unsupported, or ambiguous under the frozen scorer tolerances"
+  ],
+  "forbidden": [
+    "candidate modification",
+    "candidate construction or variants",
+    "score wrapper invocation",
+    "threshold/weight/filter/rule tuning",
+    "audio read/decode or HPSS/CQT recomputation",
+    "Modal/L4/CUDA/GPU execution",
+    "main/Production modification",
+    "automatic promotion"
+  ],
+  "postResultBoundary": "Persist and seal the measure-35 temporal map. CPU-only interpretation may continue. Fresh explicit authorization is required before any Modal/L4/CUDA/GPU execution."
+}
