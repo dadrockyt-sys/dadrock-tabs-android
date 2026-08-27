@@ -1,0 +1,86 @@
+name: V152 active recurrence analysis once
+
+on:
+  push:
+    paths:
+      - '.github/workflows/v152-active-recurrence-analysis-once.yml'
+
+permissions:
+  contents: write
+
+jobs:
+  analyze-once:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: v143-contextual-prune-lobo
+          fetch-depth: 0
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12.14'
+      - name: Verify frozen V152 identities
+        run: |
+          set -euo pipefail
+          test ! -e debug/v152-active-recurrence/phase-a-analysis.json
+          test "$(git hash-object debug/v152-active-recurrence/phase-a-preregistration.json)" = "df236c175986432e06e00ce40decb14605932686"
+          test "$(git hash-object validation/v152_active_recurrence/analyze_reference_free.py)" = "9be76f30264b6bf29cf75587cb2d640b0ff70a6d"
+          test "$(git hash-object debug/v152-active-recurrence/phase-a-attempt-sentinel.json)" = "25a9ebfad3ae129271fd232865033ff8a6f82852"
+          test "$(git hash-object debug/v151-positive-consensus/phase-a-analysis.json)" != ""
+          test "$(git hash-object debug/v151-positive-consensus/candidate/construction-proof.json)" = "0e090cf16534eb6f7f61b07bb1ae34f062f7fea8"
+          python validation/v152_active_recurrence/analyze_reference_free.py --help >/dev/null
+      - name: Consume analysis attempt and checkpoint
+        env:
+          RUN_ID: ${{ github.run_id }}
+          HEAD_SHA: ${{ github.sha }}
+        run: |
+          set -euo pipefail
+          python - <<'PY'
+          import json, os
+          from datetime import datetime, timezone
+          from pathlib import Path
+          p=Path('debug/v152-active-recurrence/phase-a-attempt-sentinel.json')
+          d=json.loads(p.read_text())
+          if d.get('status')!='ARMED_NOT_CONSUMED' or d.get('scoreCallCount')!=0:
+              raise SystemExit('V152 attempt not cleanly armed')
+          d['status']='CONSUMED_BEFORE_REFERENCE_FREE_ANALYSIS'
+          d['runId']=os.environ['RUN_ID']; d['runHeadSha']=os.environ['HEAD_SHA']; d['consumedAtUtc']=datetime.now(timezone.utc).isoformat()
+          p.write_text(json.dumps(d,indent=2,sort_keys=True)+'\n')
+          cp=Path('docs/checkpoints/CURRENT_STATE.md'); text=cp.read_text()
+          marker='## V152 Phase A active-recurrence analysis — ARMED / REFERENCE-FREE — 2026-08-27 UTC'
+          if marker not in text:
+              text += f'''\n\n{marker}\n- V151 is sealed at **34.928 / 6.603 / 5.455 / 5.805 / 100 / 100** with **1714 critical mismatches**, only **+2** versus accepted baseline.\n- V152 profiles exactly the 12 V151 positive-consensus edits by active local recurrence strength: both-selected, one-selected, or both-tied.\n- Preregistration blob `df236c175986432e06e00ce40decb14605932686`; analyzer blob `9be76f30264b6bf29cf75587cb2d640b0ff70a6d`; run `{os.environ['RUN_ID']}`.\n- Gold/reference **NO**; V151 score-result read by analyzer **NO**; scorer calls **0**; candidate construction/search **NO**; threshold sweep/audio/GPU/Production **NO**.\n'''
+              cp.write_text(text)
+          PY
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add debug/v152-active-recurrence/phase-a-attempt-sentinel.json docs/checkpoints/CURRENT_STATE.md
+          git commit -m 'debug: checkpoint V152 active-recurrence analysis [skip ci]'
+          git push origin HEAD:v143-contextual-prune-lobo
+      - name: Run frozen reference-free active-recurrence analysis
+        run: |
+          set -euo pipefail
+          python validation/v152_active_recurrence/analyze_reference_free.py --output debug/v152-active-recurrence/phase-a-analysis.json | tee /tmp/v152-analysis-summary.json
+      - name: Verify persist checkpoint and self-seal
+        env:
+          RUN_ID: ${{ github.run_id }}
+        run: |
+          set -euo pipefail
+          python - <<'PY'
+          import hashlib,json,os
+          from pathlib import Path
+          p=Path('debug/v152-active-recurrence/phase-a-analysis.json'); b=p.read_bytes(); sha=hashlib.sha256(b).hexdigest(); r=json.loads(b)
+          if r.get('population')!=12: raise SystemExit('V152 population mismatch')
+          s=r.get('safety') or {}
+          if s.get('goldOrReferenceRead') is not False or s.get('v151ScoreResultRead') is not False or s.get('scoreCallCount')!=0 or s.get('candidateConstructed') is not False:
+              raise SystemExit('V152 safety mismatch')
+          c=r['counts']; q=r['percentages']; groups=r['eventIndicesByStrength']
+          cp=Path('docs/checkpoints/CURRENT_STATE.md'); text=cp.read_text(); marker='## V152 Phase A active-recurrence analysis — COMPLETE / SEALED — 2026-08-27 UTC'
+          if marker in text: raise SystemExit('duplicate V152 checkpoint')
+          text += f'''\n\n{marker}\n- Frozen reference-free analysis completed in run `{os.environ['RUN_ID']}` over exactly **12/12 V151 positive-consensus events**. Result SHA256 **`{sha}`**.\n- Active recurrence supports selected in both channels: **{c['both-selected']}/12 = {q['both-selected']:.2f}%**; indices `{groups['both-selected']}`.\n- Exactly one recurrence channel supports selected: **{c['one-selected']}/12 = {q['one-selected']:.2f}%**; indices `{groups['one-selected']}`.\n- Both recurrence channels tied: **{c['both-tied']}/12 = {q['both-tied']:.2f}%**; indices `{groups['both-tied']}`.\n- These are reference-free support percentages, not accuracy scores. Gold/reference **NO**; V151 score result read **NO**; scorer calls **0**; no candidate/search/threshold sweep/audio/GPU/Production.\n- If both-selected events exist, the sole preregistered next candidate is accepted baseline plus exactly that event set.\n'''
+          cp.write_text(text)
+          PY
+          git rm .github/workflows/v152-active-recurrence-analysis-once.yml
+          git add debug/v152-active-recurrence/phase-a-analysis.json docs/checkpoints/CURRENT_STATE.md
+          git commit -m 'debug: persist and seal V152 active-recurrence analysis [skip ci]'
+          git push origin HEAD:v143-contextual-prune-lobo
