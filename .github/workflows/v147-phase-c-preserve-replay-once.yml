@@ -16,7 +16,7 @@ concurrency:
 
 jobs:
   preserve:
-    if: github.event.head_commit.message == 'chore: trigger one-use V147 replay preservation v2'
+    if: github.event.head_commit.message == 'trigger V147 replay preservation v3'
     runs-on: ubuntu-latest
     timeout-minutes: 15
     env:
