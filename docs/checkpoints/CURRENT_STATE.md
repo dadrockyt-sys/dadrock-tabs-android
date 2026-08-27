@@ -3,7 +3,7 @@
 Updated: 2026-08-27 UTC
 Branch: `v143-contextual-prune-lobo`
 
-Active phase: **V154 broad-Other CPU recognition is COMPLETE / FROZEN / STRUCTURAL-QC PASS. Professional Rhythm/Bass/Lead visual references are preserved. Rhythm is now FROZEN SCORER-READY. Bass exact timing normalization is next. Lead timing remains blocked until its actual source pages are recovered. Reference-facing scoring has NOT run.**
+Active phase: **V154 broad-Other CPU recognition is COMPLETE / FROZEN / STRUCTURAL-QC PASS. Professional Rhythm/Bass/Lead visual references are preserved. Rhythm is FROZEN SCORER-READY. Bass canonical pages are recovered, a reference-only timing skeleton and meter audit are FROZEN, and exact attack timing normalization is in progress. Lead timing remains blocked until its actual source pages are recovered. Reference-facing scoring has NOT run.**
 
 ## History preservation
 - Immediate pre-continuation checkpoint blob: `2f506ec99dbad7ec6fbf64b43ea1624df7fdffc3`.
@@ -52,20 +52,22 @@ Song: **Lenny Kravitz — Are You Gonna Go My Way**.
 - Visual/timing source: `research/v154-professional-references/rhythm-professional-reference.json`; Git blob `248741bade9665a34648c59a2994bd27d73fc406`; SHA256 `18fd868ae960dfcdd1ffb0110f1a9dfd8acc2ffeb46e247d1116cd54291526ac`.
 - Source identity also traces to `main:public/Professionalexample.jpg`; Git blob `16106197cc1269cca0b3c443908d5ef75e8b4d3e`.
 - CPU one-use normalization run `33121683834`, job `98689826186`: SUCCESS.
-- Frozen scorer part: `research/v154-professional-references/scorer-ready/rhythm-scorer-ready.json`.
+- **Authoritative frozen scorer part:** `research/v154-professional-references/scorer-ready/rhythm-scorer-ready.json`; current Git blob `99623721b13e63770829b91d0409b919b88aaa53`.
 - Frozen normalization receipt: `research/v154-professional-references/scorer-ready/rhythm-scorer-ready-receipt.json`; current Git blob `0125726643b3b8f455f6a0e38e1ba4873c05d9c1`.
-- Output SHA256 `d51083800bfcf30ee15f31a4349eaa2c439f1b8662acd91618ab31bdca321555`.
+- Authoritative output SHA256 `d51083800bfcf30ee15f31a4349eaa2c439f1b8662acd91618ab31bdca321555`.
 - Counts verified: 113 measures, 603 source events, **946 scorer note rows**.
 - Policy verified by receipt: `timingInferred=false`, `generatedCandidateRead=false`, `scoringPerformed=false`.
-- The one-use workflow self-sealed/deleted. Same-branch V154 automation also landed follow-up commits; branch state was reconciled and the frozen Rhythm receipt/output identity remains valid.
+- A later independently frozen flatten exists at `research/v154-professional-references/rhythm-professional-reference-scorer-ready.json` (SHA256 `d6c9416979f25e6a81b9cd4583389b584a59421a0529fcccb4ca6f5dd47e679f`). It is supplemental/redundant until a row-identity equivalence audit is frozen; do not replace the authoritative `scorer-ready/rhythm-scorer-ready.json` with it.
 
-### Bass — visual machine-readable, exact timing normalization NEXT
+### Bass — canonical pages recovered; timing normalization IN PROGRESS
 - Canonical 17-page set SHA256 `abd1748066966ceb93fe40bf8c8df3168f6c871ba006e44d28f8840184e3cde3`.
 - `research/v154-professional-references/bass-professional-reference-machine-readable.json`; Git blob `0773c98556d00837eaea28ee77cfc513498cc21f`; SHA256 `a8e1d123f8a19e69d9c160d78aea7637b5a2012232b23e1f1ddff051e9bc40b3`.
 - 113 measure objects; 569 event objects; 562 pitched; 7 dead notes; 8 continuation-only; observed MIDI 28–56.
 - Measure 88 source annotation `Timing mishap here` remains an uncertainty and must not be silently repaired.
 - Canonical Bass screenshots are recoverable in the user Library: `1000120387.jpg` through `1000120403.jpg` cover measures 1–113; `1000120386.jpg` is the known supplemental overlapping view and is excluded from canonical identity.
-- All canonical Bass pages have now been visually reopened in this continuation. Their explicit stems, beams, rests, ties, time-signature change at measure 104, and continuation notation are available for exact timing normalization.
+- All canonical Bass pages have been visually reopened in this continuation. Their explicit stems, beams, rests, ties, meter change at measure 104, and continuation notation are available for exact timing normalization.
+- Frozen reference-only timing skeleton: `research/v154-professional-references/bass-timing-normalization-skeleton.json`; commit `635da435f8c87a625539d4e40d27707247621399`; Git blob `79bf9ef3706bee13e3cf61c2bedabec561031ac8`; schema `dadrock.tabs.v154.bass-timing-normalization-skeleton.v1`.
+- Skeleton preserves source measure/page, visual event order, pitched/dead/continuation class, MIDI where present, ties/slurs/grace flags, and source exclusion flags. It read no generated candidate and performed no scoring.
 
 ### Lead — visual machine-readable, exact timing blocked on source recovery
 - Frozen 22-page set SHA256 `de2f20c330e52aca6125e29ca2cf5c4b719406fc267a98d43d98f3ab1453ff3c`.
@@ -74,27 +76,36 @@ Song: **Lenny Kravitz — Are You Gonna Go My Way**.
 - Measures 39–40 `Probably a mistake they left in` remains source uncertainty; detached gray dot at measure 81 remains unassigned.
 - The current Library exposes the Bass page set but not the prior 22 Lead source pages. **Do not invent Lead timing from visual-order JSON alone.** Recover actual Lead pages before freezing Lead timing.
 
+## V154 reference meter audit — COMPLETE / FROZEN
+- Frozen reference-only audit: `research/v154-professional-references/reference-meter-audit.json`; commit `a438eba76c2dc2749b44257689c941665d6590db`; Git blob `cc0bb40ee8af9094ba78f7e9ced9cbbcc9d88f55`.
+- Bass and Lead independently declare **measure 104 = 2/4**; their other song measures are 4/4 under the preserved metadata.
+- The preregistered generation/scorer coordinate system remains fixed at 4 steps/beat, 16 steps/measure, nominal 4/4.
+- This audit intentionally made **no meter-to-fixed-grid mapping decision**. A deterministic source-meter -> frozen scorer-grid transform must be frozen before Bass scorer rows are finalized; the generated candidate must not be read to choose that transform.
+- Audit policy: generated candidate read NO; generated candidate modified NO; reference-facing score calls 0; human correction NO; GPU NO; main/Production NO.
+
 ## Current continuation status
 - Reference-facing score calls: **0**.
 - Frozen generated candidate modified: **NO**.
 - `main` / Production modified: **NO**.
 - Modal/L4/CUDA/GPU used: **NO**.
-- Rhythm timing normalization: **COMPLETE / FROZEN / SCORER-READY**.
-- Bass source-page recovery/inspection: **COMPLETE**; exact step-map construction is next.
+- Rhythm timing normalization: **COMPLETE / FROZEN / SCORER-READY**; authoritative artifact identified above; supplemental flatten awaits equivalence audit.
+- Bass source-page recovery/inspection: **COMPLETE**.
+- Bass timing skeleton: **COMPLETE / FROZEN**; exact source-local attack steps + deterministic 2/4-to-fixed-grid mapping are next.
 - Lead source-page recovery: **BLOCKED / not present in current Library**.
 
 ## Exact next steps
-1. Build and validate Bass exact 16-step attack timing from canonical notation page-by-page. Preserve dead-note attacks for ordering, suppress continuation-only non-attacks, and exclude measure 88 from scoring unless its source timing can be resolved without invention. Freeze scorer-ready Bass rows + receipt. Save checkpoint frequently.
-2. Recover actual 22 Lead source pages. Normalize Lead from source notation, preserve uncertainty flags, then freeze scorer-ready Lead rows + receipt. Save checkpoint.
-3. Assemble one immutable scorer reference payload with authorization flags and frozen Rhythm/Lead/Bass rows. Verify its identity before any score call.
-4. Score exact frozen combined Guitar first and Bass second **exactly once** with `score_frontend_reference.py`; interpret preregistered gates; never retune this consumed output afterward.
-5. Only after acoustic recognition is scored/frozen: continue Rhythm/Lead role separation, fret/string assignment, techniques, and PDF work.
+1. Freeze a reference-only deterministic mapping from source-local meter/16th positions into the preregistered fixed 16-step scorer coordinate space, explicitly accounting for measure 104 = 2/4. Do not read the generated candidate and do not score while choosing this mapping. Save checkpoint.
+2. Build Bass exact source-local 16th attack timing page-by-page from canonical notation. Preserve dead-note attacks for rhythmic ordering, suppress continuation-only non-attacks, and exclude measure 88 unless its source timing can be resolved without invention. Apply only the frozen meter mapping; freeze scorer-ready Bass rows + receipt. Save checkpoint frequently.
+3. Freeze a reference-only row-identity equivalence audit between the authoritative Rhythm scorer-ready artifact and the later supplemental Rhythm flatten. Preserve both frozen files; do not silently rewrite either.
+4. Recover actual 22 Lead source pages. Normalize Lead from source notation, preserve uncertainty flags, then freeze scorer-ready Lead rows + receipt. Save checkpoint.
+5. Assemble one immutable scorer reference payload with authorization flags and frozen Rhythm/Lead/Bass rows. Verify its identity before any score call.
+6. Score exact frozen combined Guitar first and Bass second **exactly once** with `score_frontend_reference.py`; interpret preregistered gates; never retune this consumed output afterward.
+7. Only after acoustic recognition is scored/frozen: continue Rhythm/Lead role separation, fret/string assignment, techniques, and PDF work.
 
-## V154 Rhythm scorer-ready normalization — COMPLETE / FROZEN
+## V154 supplemental Rhythm normalization — COMPLETE / FROZEN
 - One-use CPU GitHub Actions run `33121732460` completed successfully and sealed its workflow.
 - Frozen source: `research/v154-professional-references/rhythm-professional-reference.json`, SHA256 `18fd868ae960dfcdd1ffb0110f1a9dfd8acc2ffeb46e247d1116cd54291526ac`.
-- Frozen scorer-ready output: `research/v154-professional-references/rhythm-professional-reference-scorer-ready.json`, SHA256 `d6c9416979f25e6a81b9cd4583389b584a59421a0529fcccb4ca6f5dd47e679f`.
+- Supplemental frozen output: `research/v154-professional-references/rhythm-professional-reference-scorer-ready.json`, SHA256 `d6c9416979f25e6a81b9cd4583389b584a59421a0529fcccb4ca6f5dd47e679f`.
 - Receipt: `research/v154-professional-references/rhythm-professional-reference-scorer-ready-receipt.json`; Git blob `a62aad39bbc8a05c38c03c1461fc750246110270`.
 - Deterministic flatten: 113 measures, 603 source events, **946 scorer rows**, MIDI 40–71, step range 0–15, exact duplicate-row extras 0.
 - Candidate read **NO**; generated candidate modified **NO**; reference-facing score calls **0**; human correction **NO**; threshold sweep **NO**; Modal/L4/CUDA/GPU **NO**; `main`/Production modified **NO**.
-- Next active task: Bass exact rhythmic normalization from canonical source notation. Lead timing remains blocked until the actual 22 Lead source pages are recovered.
