@@ -1,0 +1,133 @@
+name: V154 reference meter audit once
+
+on:
+  push:
+    branches:
+      - v143-contextual-prune-lobo
+    paths:
+      - .github/workflows/v154-reference-meter-audit-once.yml
+
+permissions:
+  contents: write
+
+jobs:
+  audit:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: v143-contextual-prune-lobo
+          fetch-depth: 0
+
+      - name: Audit reference meters only
+        shell: bash
+        run: |
+          set -euo pipefail
+          python3 - <<'PY'
+          import hashlib
+          import json
+          from collections import defaultdict
+          from pathlib import Path
+
+          root = Path('research/v154-professional-references')
+          paths = {
+              'rhythmOriginal': root / 'rhythm-professional-reference.json',
+              'rhythmScorerReady': root / 'rhythm-professional-reference-scorer-ready.json',
+              'bass': root / 'bass-professional-reference-machine-readable.json',
+              'lead': root / 'lead-professional-reference-machine-readable.json',
+          }
+          data = {k: json.loads(p.read_text(encoding='utf-8')) for k, p in paths.items()}
+          hashes = {k: hashlib.sha256(paths[k].read_bytes()).hexdigest() for k in paths}
+
+          def measure_meter_map(payload):
+              out = {}
+              for m in payload.get('measures') or []:
+                  if not isinstance(m, dict) or 'measure' not in m:
+                      continue
+                  out[int(m['measure'])] = m.get('timeSignature')
+              return out
+
+          rhythm_meter = measure_meter_map(data['rhythmOriginal'])
+          bass_meter = measure_meter_map(data['bass'])
+          lead_meter = measure_meter_map(data['lead'])
+
+          rhythm_rows = data['rhythmScorerReady'].get('rows') or []
+          rhythm_steps = defaultdict(list)
+          for row in rhythm_rows:
+              rhythm_steps[int(row['measure'])].append(float(row['step']))
+
+          parts = {}
+          for name, meter_map in [('rhythm', rhythm_meter), ('bass', bass_meter), ('lead', lead_meter)]:
+              declared = {str(m): sig for m, sig in sorted(meter_map.items()) if sig is not None}
+              non44 = {m: sig for m, sig in declared.items() if sig != '4/4'}
+              missing = [m for m in range(1, 114) if m not in meter_map or meter_map.get(m) is None]
+              parts[name] = {
+                  'declaredTimeSignatures': declared,
+                  'nonFourFourMeasures': non44,
+                  'missingOrNullTimeSignatureMeasures': missing,
+              }
+
+          focus = {}
+          for m in range(100, 114):
+              steps = rhythm_steps.get(m, [])
+              focus[str(m)] = {
+                  'rhythmDeclaredTimeSignature': rhythm_meter.get(m),
+                  'bassDeclaredTimeSignature': bass_meter.get(m),
+                  'leadDeclaredTimeSignature': lead_meter.get(m),
+                  'rhythmScorerReadyRowCount': len(steps),
+                  'rhythmScorerReadyStepMin': min(steps) if steps else None,
+                  'rhythmScorerReadyStepMax': max(steps) if steps else None,
+                  'rhythmScorerReadyDistinctSteps': sorted(set(steps)),
+              }
+
+          output = {
+              'schema': 'dadrock.tabs.v154.reference-meter-audit.v1',
+              'song': {'artist': 'Lenny Kravitz', 'title': 'Are You Gonna Go My Way'},
+              'purpose': 'Reference-only meter audit before exact Bass/Lead timing normalization. No generated candidate read and no scoring.',
+              'frozenGenerationGrid': {
+                  'stepsPerBeat': 4,
+                  'stepsPerMeasure': 16,
+                  'nominalTimeSignature': '4/4',
+              },
+              'sourcePaths': {k: str(v) for k, v in paths.items()},
+              'sourceSha256': hashes,
+              'parts': parts,
+              'focusMeasures100to113': focus,
+              'policy': {
+                  'candidateRead': False,
+                  'scoreCalls': 0,
+                  'generatedCandidateModified': False,
+                  'humanCorrection': False,
+                  'gpuUsed': False,
+                  'mainOrProductionModified': False,
+                  'noMeterMappingDecisionMadeByThisAudit': True,
+              },
+          }
+          out_path = root / 'reference-meter-audit.json'
+          out_bytes = (json.dumps(output, indent=2, sort_keys=True) + '\n').encode('utf-8')
+          out_path.write_bytes(out_bytes)
+          receipt = {
+              'outputPath': str(out_path),
+              'outputSha256': hashlib.sha256(out_bytes).hexdigest(),
+              'rhythmNon44': parts['rhythm']['nonFourFourMeasures'],
+              'bassNon44': parts['bass']['nonFourFourMeasures'],
+              'leadNon44': parts['lead']['nonFourFourMeasures'],
+              'focus104': focus['104'],
+              'candidateRead': False,
+              'scoreCalls': 0,
+              'gpuUsed': False,
+          }
+          print(json.dumps(receipt, indent=2, sort_keys=True))
+          PY
+
+      - name: Commit audit and seal workflow
+        shell: bash
+        run: |
+          set -euo pipefail
+          git config user.name "dadrock-v154-bot"
+          git config user.email "actions@users.noreply.github.com"
+          git add research/v154-professional-references/reference-meter-audit.json
+          git rm .github/workflows/v154-reference-meter-audit-once.yml
+          git commit -m "v154: freeze professional reference meter audit"
+          git push origin HEAD:v143-contextual-prune-lobo
