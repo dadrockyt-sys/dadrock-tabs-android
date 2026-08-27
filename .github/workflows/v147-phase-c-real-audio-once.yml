@@ -1,0 +1,160 @@
+name: V147 Phase C Real Audio Once
+
+on:
+  push:
+    branches:
+      - v143-contextual-prune-lobo
+    paths:
+      - .github/workflows/v147-phase-c-real-audio-once.yml
+
+permissions:
+  contents: read
+
+concurrency:
+  group: v147-phase-c-real-audio-once
+  cancel-in-progress: false
+
+jobs:
+  phase-c-real-audio:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+      - name: Checkout exact Phase C execution revision
+        uses: actions/checkout@v4
+        with:
+          ref: ${{ github.sha }}
+          fetch-depth: 1
+
+      - name: Set up pinned Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.12.14'
+
+      - name: Verify frozen runner and accepted source before audio checkout
+        shell: bash
+        run: |
+          set -euo pipefail
+          test "$(git rev-parse HEAD)" = "$GITHUB_SHA"
+          test "$(git hash-object modal/v147_phase_c_real_audio.py)" = "79c631a41ee8863322376604aa1d69e6abe59ca3"
+          test "$(git hash-object modal/v147_phase_c_artifact_support.py)" = "f4278ffaacaca3f66baf7a3112e2af0f3bc387cf"
+          test "$(git hash-object modal/v147_pitch_hypothesis.py)" = "49bce8b968406bb0d61ab61394954ef8a8303eb7"
+          test "$(git hash-object modal/v145_rhythm_decoder.py)" = "2fd979aebb4685e86c7f24a0162f69de306c06e9"
+          test "$(git hash-object validation/rhythm_holdout/canonical.py)" = "088d44827fb23e20d9aeeb4944a672989af5846c"
+          test "$(git hash-object validation/rhythm_holdout/verify_pdf_event_fidelity.py)" = "5e1564216873046237fb545078a04a6b18f72b27"
+          test "$(git hash-object lib/v143RenderContract.js)" = "ccbb93c48982798cc474309fd981f6ca02d5c8d4"
+          test "$(git hash-object debug/v144-rhythm-calibration/selected/v144-singleton-onset-replacement-selected-baseline.json)" = "acd12ab68ad16b8faabf38ddc9e1cc0c1e7c4b68"
+          mkdir -p debug/v147-phase-c-real-audio
+          python -m py_compile modal/v147_phase_c_real_audio.py
+          python -m modal.v147_phase_c_real_audio --mode preflight 2>&1 | tee debug/v147-phase-c-real-audio/preflight-output.txt
+          grep -Fq '"eventCount":1144' debug/v147-phase-c-real-audio/preflight-output.txt
+          grep -Fq '"eventSha256":"4e6f9f247134f79f30a5448515c52a6ca1012c1f1314c3458b448582999e3881"' debug/v147-phase-c-real-audio/preflight-output.txt
+          grep -Fq '"audioRead":false' debug/v147-phase-c-real-audio/preflight-output.txt
+
+      - name: Make calibration reference files unreadable
+        shell: bash
+        run: |
+          set -euo pipefail
+          if test -d validation/rhythm_holdout/reference; then
+            find validation/rhythm_holdout/reference -type f -exec chmod 000 {} +
+          fi
+
+      - name: Checkout exact historical audio source only
+        uses: actions/checkout@v4
+        with:
+          repository: dadrockyt-sys/dadrock-tabs-android
+          ref: 74b0f815ff3f66f325220975c410621503de440f
+          path: _phase_c_source
+          fetch-depth: 1
+          sparse-checkout: |
+            public/gomywayfullaitest.m4a
+          sparse-checkout-cone-mode: false
+          persist-credentials: false
+
+      - name: Verify exact historical audio bytes before decode
+        shell: bash
+        run: |
+          set -euo pipefail
+          audio='_phase_c_source/public/gomywayfullaitest.m4a'
+          test -f "$audio"
+          test "$(wc -c < "$audio" | tr -d ' ')" = "3478611"
+          actual_sha="$(sha256sum "$audio" | awk '{print $1}')"
+          test "$actual_sha" = "215bd5a657c5326f08f132ae358595a95c30b39bb7493a52c2f910d5a608149f"
+          printf '{"bytes":3478611,"sha256":"%s","historicalCommit":"74b0f815ff3f66f325220975c410621503de440f","historicalPath":"public/gomywayfullaitest.m4a"}\n' "$actual_sha" > debug/v147-phase-c-real-audio/raw-audio-identity.json
+
+      - name: Install pinned Phase C CPU audio stack
+        shell: bash
+        run: |
+          set -euo pipefail
+          python -m pip install --disable-pip-version-check \
+            numpy==2.2.6 \
+            scipy==1.15.3 \
+            librosa==0.11.0 \
+            soundfile==0.13.1 \
+            imageio-ffmpeg==0.6.0 \
+            numba==0.61.2 \
+            llvmlite==0.44.0
+          python -m pip freeze | sort > debug/v147-phase-c-real-audio/pip-freeze.txt
+
+      - name: Execute exactly one frozen Phase C candidate construction
+        shell: bash
+        run: |
+          set -euo pipefail
+          python -m modal.v147_phase_c_real_audio \
+            --mode execute \
+            --audio _phase_c_source/public/gomywayfullaitest.m4a \
+            --output-dir debug/v147-phase-c-real-audio \
+            2>&1 | tee debug/v147-phase-c-real-audio/execution-output.txt
+          grep -Fq '"gate":"GO"' debug/v147-phase-c-real-audio/execution-output.txt
+          python - <<'PY'
+          import hashlib
+          import json
+          from pathlib import Path
+          root = Path('debug/v147-phase-c-real-audio')
+          evidence = json.loads((root / 'phase-c-evidence.json').read_text())
+          if evidence.get('gate') != 'GO':
+              raise SystemExit('Phase C evidence gate is not GO')
+          required_false = (
+              'referenceRead', 'goldRead', 'calibrationScoreRun',
+              'candidateSearchRun', 'alternateCandidateConstructed',
+              'modalGpuUsed', 'productionIntegrated',
+          )
+          for key in required_false:
+              if evidence.get(key) is not False:
+                  raise SystemExit(f'unsafe Phase C flag {key}={evidence.get(key)!r}')
+          if evidence.get('deterministic') is not True:
+              raise SystemExit('Phase C determinism failed')
+          if float((evidence.get('metrics') or {}).get('pdfEventFidelity') or 0.0) != 1.0:
+              raise SystemExit('Phase C PDF event fidelity failed')
+          identities = {}
+          for name in (
+              'candidate.json', 'decisions.json', 'construction-proof.json',
+              'phase-c-evidence.json', 'pdf-render-evidence.json',
+              'raw-audio-identity.json', 'pip-freeze.txt',
+          ):
+              payload = (root / name).read_bytes()
+              identities[name] = {'bytes': len(payload), 'sha256': hashlib.sha256(payload).hexdigest()}
+          (root / 'artifact-identities.json').write_text(json.dumps(identities, indent=2, sort_keys=True) + '\n')
+          print('V147_PHASE_C_ARTIFACT_IDENTITIES=' + json.dumps(identities, sort_keys=True, separators=(',', ':')))
+          PY
+
+      - name: Upload immutable Phase C evidence only
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: v147-phase-c-real-audio-${{ github.run_id }}
+          path: |
+            debug/v147-phase-c-real-audio/candidate.json
+            debug/v147-phase-c-real-audio/decisions.json
+            debug/v147-phase-c-real-audio/construction-proof.json
+            debug/v147-phase-c-real-audio/phase-c-evidence.json
+            debug/v147-phase-c-real-audio/pdf-render-evidence.json
+            debug/v147-phase-c-real-audio/freeze/rhythm-frozen-analysis.json
+            debug/v147-phase-c-real-audio/freeze/rhythm-freeze-manifest.json
+            debug/v147-phase-c-real-audio/freeze/rhythm-pdf-event-fidelity.json
+            debug/v147-phase-c-real-audio/raw-audio-identity.json
+            debug/v147-phase-c-real-audio/pip-freeze.txt
+            debug/v147-phase-c-real-audio/preflight-output.txt
+            debug/v147-phase-c-real-audio/execution-output.txt
+            debug/v147-phase-c-real-audio/artifact-identities.json
+          if-no-files-found: error
+          retention-days: 30
