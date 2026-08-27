@@ -1,0 +1,54 @@
+{
+  "schema": "dadrock.tabs.v154.cpu-autonomous.phase-a2-failure.v1",
+  "classification": "sealed-engineering-serialization-failure-after-cpu-inference-before-persistence-and-before-gold",
+  "branch": "v143-contextual-prune-lobo",
+  "runId": 33088418439,
+  "jobId": 98574330124,
+  "armingCommit": "ff7945b54bd1a617fae42a55359d70fa60f46eb2",
+  "attemptSentinelCommit": "d1e92f8d",
+  "failedStep": "Run frozen Basic Pitch on original mix CPU",
+  "failure": {
+    "type": "json-serialization-only",
+    "rootCause": "Basic Pitch CPU inference completed, but pitchBend contained NumPy int64 values nested inside a Python list; json.dumps rejected them as not JSON serializable",
+    "exception": "TypeError: Object of type int64 is not JSON serializable",
+    "scientificInferenceCompleted": true,
+    "scientificModelFailure": false,
+    "repair": "recursively convert NumPy scalar values to native JSON numbers while preserving the exact inference output and all frozen model thresholds"
+  },
+  "runtimeRepairA2Verified": {
+    "numpyVersion": "1.26.4",
+    "torchVersion": "2.8.0+cpu",
+    "torchCudaVersion": null,
+    "cudaAvailable": false,
+    "tfliteModelLoaded": true,
+    "basicPitchInferenceRan": true
+  },
+  "progressBeforeFailure": {
+    "historicalAudioIdentityVerified": true,
+    "audioNormalizedOnCpu": true,
+    "basicPitchRawInferenceCompleted": true,
+    "rawTranscriptionJsonPersisted": false,
+    "demucsSeparationStarted": false,
+    "goldOrReferenceOpened": false,
+    "scoreCallCount": 0
+  },
+  "artifact": {
+    "name": "v154-cpu-pretrained-reset-a2-33088418439",
+    "id": 9653270384,
+    "zipSha256": "27bba88a521976548ca0ca532d572a765b8f86f4d2504d55708f07b57f0b3c7b"
+  },
+  "safety": {
+    "humanCorrection": false,
+    "thresholdSweep": false,
+    "goldGuidedConstruction": false,
+    "goldOrReferenceRead": false,
+    "scoreCallCount": 0,
+    "modalUsed": false,
+    "l4Used": false,
+    "cudaExecutionUsed": false,
+    "gpuUsed": false,
+    "mainOrProductionModified": false
+  },
+  "replayAllowed": false,
+  "nextBoundary": "Fresh CPU-only Phase A3 serialization repair with unchanged scientific inference protocol."
+}
