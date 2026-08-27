@@ -1,0 +1,15 @@
+{
+  "channels": 2,
+  "cudaGpuUsed": false,
+  "format": "pcm_s16le",
+  "historicalCommit": "74b0f815ff3f66f325220975c410621503de440f",
+  "historicalM4aBytes": 3478611,
+  "historicalM4aSha256": "215bd5a657c5326f08f132ae358595a95c30b39bb7493a52c2f910d5a608149f",
+  "historicalPath": "public/gomywayfullaitest.m4a",
+  "imageioFfmpegVersion": "0.6.0",
+  "modalUsed": false,
+  "normalizedWavBytes": 37298398,
+  "normalizedWavSha256": "3e61b7926eabc21b758c750f826c7426a29d6de5aafdd5c93f8045ecdc67f87e",
+  "referenceRead": false,
+  "sampleRate": 44100
+}

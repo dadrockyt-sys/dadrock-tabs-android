@@ -1,0 +1,19 @@
+{
+  "bassNoteCount": 635,
+  "classification": "reference-free-frozen-generated-output",
+  "combinedGuitarNoteCount": 1089,
+  "cudaGpuUsed": false,
+  "generatedJsonBytes": 1145129,
+  "generatedJsonSha256": "1be86f86bb08e164342aa0c52db7a4d77beb938621e00d7d2e3b0e03f2dbfc37",
+  "humanCorrection": false,
+  "mainOrProductionModified": false,
+  "modalUsed": false,
+  "preregistrationGitBlob": "eb81efbb1ed25b023b5bce6e1159ae7785875b4a",
+  "referenceFacingScoreCalls": 0,
+  "referenceRead": false,
+  "runHeadSha": "986e2a69a6cb877a203d2f8b04115914dc8fd2e6",
+  "runId": "33096559281",
+  "schema": "dadrock.tabs.v154.broad-other-cpu-generation-manifest.v1",
+  "thresholdSweep": false,
+  "transcriberGitBlob": "2f09ca1b8bc012749468f0079497ded71d318782"
+}
