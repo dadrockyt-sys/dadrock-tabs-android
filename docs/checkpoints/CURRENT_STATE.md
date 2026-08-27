@@ -3,7 +3,7 @@
 Updated: 2026-08-27 UTC
 Branch: `v143-contextual-prune-lobo`
 
-Active phase: **V154 broad-Other CPU benchmark ARMED / REFERENCE-FREE. Stage-one contract tests are sealed PASS. No reference-facing score has run.**
+Active phase: **V154 broad-Other CPU benchmark RUN `33096559281` IN PROGRESS / REFERENCE-FREE. Stage-one contract tests are sealed PASS. No reference-facing score has run.**
 
 ## History preservation
 - Full checkpoint before this compact continuation: commit `3705b8aba3f166000867f7c68e5dfc104bc71fd9`; checkpoint blob `5a19f89583af89e777380d5ddb453c4957afe5f5`.
@@ -67,24 +67,27 @@ Song: **Lenny Kravitz — Are You Gonna Go My Way**.
 - Later conditional string/fret correctness target: **>= 0.85**.
 - Missing a gate diagnoses the responsible architecture stage; it is not permission to tune the consumed output against reference truth.
 
-## Broad-Other CPU benchmark — ARMED / BEFORE AUDIO RESULT
+## Broad-Other CPU benchmark — RUNNING / CONSUMED ONE-USE RUN
 - One-use workflow: `.github/workflows/v154-broad-other-cpu-once.yml`.
 - Arming commit: `986e2a69a6cb877a203d2f8b04115914dc8fd2e6`.
+- Authoritative benchmark run: **`33096559281`**, job **`98602884120`**. Treat this run as consumed; **do not rerun** it regardless of outcome.
 - Workflow is reference-free and read-only to repository contents. It does **not** push generated data back to the branch; this deliberately avoids A3's non-fast-forward persistence failure.
-- It verifies the preregistration/transcriber Git blobs and exact historical audio identity; installs the frozen CPU-only stack; asserts `torch.version.cuda is None` and `torch.cuda.is_available()==False`; normalizes to the A3-established 44.1k/stereo/PCM-s16le path; runs CPU `htdemucs`; transcribes `other.wav` and `bass.wav`; freezes hashes/counts in `generation-manifest.json`; and uploads an immutable workflow artifact.
+- Passed steps at this checkpoint: checkout/setup; frozen protocol Git-blob verification; exact historical audio materialization/bytes/SHA verification; frozen CPU-only stack installation and CUDA assertions; deterministic 44.1k/stereo/PCM-s16le normalization.
+- Current step at this checkpoint: **CPU Demucs `htdemucs` broad Other + Bass separation**.
+- Pending only after separation: frozen Basic Pitch transcription, generation manifest, immutable workflow-artifact upload.
 - No reference/Gold input exists in the workflow. Reference-facing score calls remain `0`.
-- At this checkpoint the benchmark result has not yet been classified. Do not rerun the one-use workflow after it is consumed; seal/delete it after the run regardless of success/failure.
+- Seal/delete the one-use workflow after the run regardless of success/failure.
 
 ## Current execution status
 - Reference-facing score calls this continuation: **0**.
 - Professional reference note data opened this continuation: **NO**.
 - Stage-one synthetic tests: **PASS / SEALED**.
-- Broad-Other CPU benchmark: **ARMED**.
+- Broad-Other CPU benchmark run `33096559281`: **IN PROGRESS — CPU DEMUCS**.
 - Modal/L4/CUDA/GPU used: **NO**.
 - `main` / Production modified: **NO**.
 
 ## Exact next steps
-1. Observe/classify the one-use broad-Other CPU run; never rerun it after consumption.
+1. Observe/classify run `33096559281`; never rerun it after consumption.
 2. Seal/delete `.github/workflows/v154-broad-other-cpu-once.yml` after the run.
 3. If successful, freeze the artifact identity plus `generated.json`/manifest hashes and note counts into a unique public-repo result manifest without exposing third-party reference data.
 4. Do **not** reference-score generated outputs until the privately normalized Rhythm/Lead/Bass payload is accessible and its normalized identity is frozen.
