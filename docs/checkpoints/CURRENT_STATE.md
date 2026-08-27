@@ -3,106 +3,91 @@
 Updated: 2026-08-27 UTC
 Branch: `v143-contextual-prune-lobo`
 
-Active phase: **V154 CPU multitrack architecture reset — broad-Other protocol and stage-one contract are frozen/tested; reference-facing scoring has NOT run in this continuation.**
+Active phase: **V154 broad-Other CPU benchmark ARMED / REFERENCE-FREE. Stage-one contract tests are sealed PASS. No reference-facing score has run.**
 
 ## History preservation
-- The full checkpoint immediately before this compact continuation is preserved in Git at branch commit `3705b8aba3f166000867f7c68e5dfc104bc71fd9`; checkpoint Git blob `5a19f89583af89e777380d5ddb453c4957afe5f5`.
-- Earlier pre-compaction history remains preserved at `docs/checkpoints/archive/CURRENT_STATE-pre-phase-c-auth-intake-20260827.md`; historical Git blob `f71ba11394e6f2f46843055e748e8717ff484158`.
-- Do not reinterpret old consumed one-use V147–V153 runs as reusable. Their sealed status remains in force.
+- Full checkpoint before this compact continuation: commit `3705b8aba3f166000867f7c68e5dfc104bc71fd9`; checkpoint blob `5a19f89583af89e777380d5ddb453c4957afe5f5`.
+- Immediately preceding compact checkpoint before benchmark arming: blob `f64ee7e35536449026b3c208475c3e5083d33458`.
+- Earlier pre-compaction history: `docs/checkpoints/archive/CURRENT_STATE-pre-phase-c-auth-intake-20260827.md`; blob `f71ba11394e6f2f46843055e748e8717ff484158`.
+- Old consumed V147–V153 one-use runs remain sealed and non-reusable.
 
-## Standing authorization / safety policy
+## Standing authorization / safety
 - CPU-only work and CPU scoring are at assistant discretion.
 - Fresh explicit user authorization is required immediately before **Modal, NVIDIA L4, CUDA, or any GPU execution**.
-- Never modify, merge, promote, or otherwise touch `main` or Production unless the user explicitly changes that policy.
-- Professional references are scoring-only. Candidate generation/transcription must not read them.
-- Freeze generated outputs before reference access. No silent variant search and no post-score retuning of the same scored output.
-- Do not commit user-uploaded professional-tab screenshot bytes or note-by-note copyrighted reference data to this public repository.
-- Target remains fully automatic audio -> professional-quality Rhythm/Lead/Bass tablature PDF with **no human correction**.
+- Never modify/merge/promote `main` or Production without explicit user direction.
+- Professional references are scoring-only. Generation/transcription must not read them.
+- Freeze generated outputs before reference access. No silent variant search; no post-score retuning of the same scored output.
+- Do not commit user-uploaded professional-tab screenshots or note-by-note copyrighted reference data to this public repository.
+- Target: fully automatic audio -> professional-quality Rhythm/Lead/Bass tablature PDF with no human correction.
 
-## Sealed V153 conclusion
-- V153 Phase D event-347 CPU Gold attribution is COMPLETE / SEALED.
-- The V153 aggregate pitch-content deficit was explained as a measure-level `(measure, MIDI)` histogram effect rather than a local event timing/chord correctness loss.
-- Per-measure pitch-content/histogram scoring is therefore **diagnostic only** for V154 and must not drive event-level candidate selection.
-- V153 one-event Gold-guided micro-correction is not the main path anymore; V154 is an architecture benchmark/reset.
+## V153 sealed conclusion
+- V153 event-347 attribution proved the aggregate pitch-content deficit was a coarse measure-level `(measure, MIDI)` histogram effect, not local event timing/chord evidence.
+- Per-measure pitch-content is diagnostic only for V154 and must not drive event-level selection.
+- V154 is an architecture reset, not another one-event Gold-guided micro-correction path.
 
 ## V154 pre-reset engineering history
-- A1 run `33087772583`: engineering failure before transcription due TFLite / NumPy ABI mismatch; reference access NO; sealed.
-- A2 run `33088418439`: CPU Basic Pitch inference succeeded after runtime repair, but JSON persistence failed on nested NumPy scalar pitch-bend metadata; reference access NO; sealed.
-- A3 run `33088829644`: CPU Basic Pitch 0.4.0 inference succeeded on the raw normalized mix with **572 note events**; persistence commit was rejected non-fast-forward after local write; Demucs did not run; reference access NO; score calls `0`; sealed as engineering/concurrency failure. Do not rerun consumed A3 as-is.
-- A3 runtime evidence: Python 3.10, NumPy 1.26.4, PyTorch 2.8.0+cpu, `torch.version.cuda=None`, CUDA unavailable.
+- A1 `33087772583`: TFLite/NumPy ABI engineering failure before transcription; sealed.
+- A2 `33088418439`: Basic Pitch CPU inference succeeded; JSON persistence failed on nested NumPy scalar metadata; sealed.
+- A3 `33088829644`: raw Basic Pitch CPU inference succeeded with **572 notes**, but repository persistence push failed non-fast-forward; Demucs/reference scoring did not run; score calls `0`; sealed and must not be rerun as-is.
+- A3 established deterministic normalization: **44.1 kHz, stereo, PCM s16le**, using imageio-ffmpeg. Runtime evidence: Python 3.10, NumPy 1.26.4, PyTorch 2.8.0+cpu, CUDA unavailable.
 
 ## Frozen professional reference identities
 Song: **Lenny Kravitz — Are You Gonna Go My Way**.
+- Rhythm: existing `main:public/Professionalexample.jpg`; Git blob `16106197cc1269cca0b3c443908d5ef75e8b4d3e`; receipt `debug/v154-cpu-autonomous/reference-receipts/rhythm-existing-professionalexample-20260827.json`.
+- Bass: 17 user screenshots, visible measures 1–113; set SHA256 `abd1748066966ceb93fe40bf8c8df3168f6c871ba006e44d28f8840184e3cde3`; measure-88 `Timing mishap here` remains an uncertainty flag.
+- Lead: 22 user screenshots, visible measures 1–113; set SHA256 `de2f20c330e52aca6125e29ca2cf5c4b719406fc267a98d43d98f3ab1453ff3c`; opening tempo quarter=129, 4/4; visible measures 39–40 uncertainty annotation remains flagged.
+- Three-part manifest: `debug/v154-cpu-autonomous/reference-receipts/reference-set-manifest-20260827.json`; commit `4eae3fa541c1cbede282db20c113a22f7b906fbb`.
+- Raw Bass/Lead screenshot bytes are not available in this active ChatGPT conversation/Library. Do not guess or reconstruct their note content from receipts or memory.
 
-- Rhythm identity: existing `main:public/Professionalexample.jpg`; Git blob `16106197cc1269cca0b3c443908d5ef75e8b4d3e`. Research receipt: `debug/v154-cpu-autonomous/reference-receipts/rhythm-existing-professionalexample-20260827.json`; receipt blob `258eb10fe44951d5f1f5969959ff0ca69bd852db`.
-- Bass identity: user-provided 17 screenshots, visible measures 1–113; frozen set SHA256 `abd1748066966ceb93fe40bf8c8df3168f6c871ba006e44d28f8840184e3cde3`. Receipt: `debug/v154-cpu-autonomous/reference-receipts/bass-user-upload-20260827.json`; receipt blob `0cd7a2e451ae4ea17b4ba15e6c2e2508f27518fd`. Visible measure-88 `Timing mishap here` remains an uncertainty flag.
-- Lead identity: user-provided 22 screenshots, visible measures 1–113, opening tempo quarter=129, 4/4; frozen set SHA256 `de2f20c330e52aca6125e29ca2cf5c4b719406fc267a98d43d98f3ab1453ff3c`. Receipt: `debug/v154-cpu-autonomous/reference-receipts/lead-user-upload-20260827.json`; receipt blob `e4cfa0a3c1f9c53bcdcb5b6ae8d73f9def5f7937`. Visible `Probably a mistake they left in` near measures 39–40 remains an uncertainty flag.
-- Three-part manifest: `debug/v154-cpu-autonomous/reference-receipts/reference-set-manifest-20260827.json`; creation commit `4eae3fa541c1cbede282db20c113a22f7b906fbb`.
-- The raw Bass/Lead screenshot bytes are **not attached to the current ChatGPT conversation** as of this checkpoint. Their frozen identities remain valid, but private note-by-note normalization cannot be faithfully reconstructed here by guessing from receipts or memory.
+## V154 frozen broad-Other protocol
+- Preregistration: `debug/v154-cpu-autonomous/broad-other-preregistration.json`; creation commit `69102364d79c315044c994ff0acaf52dbc827dd5`; current Git blob `eb81efbb1ed25b023b5bce6e1159ae7785875b4a`.
+- Historical audio: commit `74b0f815ff3f66f325220975c410621503de440f`, `public/gomywayfullaitest.m4a`, `3478611` bytes, SHA256 `215bd5a657c5326f08f132ae358595a95c30b39bb7493a52c2f910d5a608149f`.
+- Grid: tempo `129.19921875`, 4 steps/beat, 16 steps/measure, 113 measures.
+- Separator: CPU `demucs==4.1.0`, model `htdemucs`, shifts `1`, jobs `1`; `Other` = combined Rhythm+Lead acoustic source; `Bass` independent.
+- Transcriber: Basic Pitch `0.4.0`, onset `0.5`, frame `0.3`, minimum note length `127.7 ms`, melodia enabled, no threshold sweep; combined Guitar MIDI `40–88`, Bass MIDI `28–67`.
+- Runtime: Python 3.10, NumPy 1.26.4, PyTorch 2.8.0+cpu, imageio-ffmpeg 0.6.0; CUDA must be absent/unavailable.
+- Transcriber: `validation/v154_cpu_multitrack/transcribe_broad_other.py`; creation commit `c4a707d34b1a44dc34a8245f922773d43f0538cf`; blob `2f09ca1b8bc012749468f0079497ded71d318782`.
+- Generated schema: `dadrock.tabs.v154.cpu-multitrack-generated.v1`; anti-leakage flags must remain false for reference read, human correction, reference-guided filtering, Modal, CUDA/GPU.
 
-## V154 reference/scoring contract
-- Contract: `validation/v154_cpu_multitrack/REFERENCE_FORMAT.md`.
-- Empty copyright-safe template: `validation/v154_cpu_multitrack/reference-template.json`.
-- Existing post-role scorer: `validation/v154_cpu_multitrack/score_multitrack_reference.py`; Git blob `f58b6cf7349a6f6e5f49b241a585ba5bf3648966`.
-- Dedicated stage-one scorer now exists so combined Guitar can be evaluated **before** role splitting.
-
-## Broad-Other CPU preregistration — FROZEN / REFERENCE-INDEPENDENT
-- File: `debug/v154-cpu-autonomous/broad-other-preregistration.json`.
-- Creation commit: `69102364d79c315044c994ff0acaf52dbc827dd5`.
-- Historical audio is frozen to commit `74b0f815ff3f66f325220975c410621503de440f`, path `public/gomywayfullaitest.m4a`, bytes `3478611`, SHA256 `215bd5a657c5326f08f132ae358595a95c30b39bb7493a52c2f910d5a608149f`.
-- Grid stays frozen at tempo `129.19921875`, 4 steps/beat, 16 steps/measure, 113 measures.
-- Separator is frozen to CPU `demucs==4.1.0`, model `htdemucs`, shifts `1`, jobs `1`.
-- `Other` is intentionally the **combined Rhythm+Lead acoustic source**; `Bass` is independent. Do not ask the separator to split Rhythm versus Lead at this stage.
-- Basic Pitch is frozen to `0.4.0`, onset threshold `0.5`, frame threshold `0.3`, minimum note length `127.7 ms`, melodia trick enabled, no threshold sweep.
-- Combined Guitar MIDI range is frozen to `40–88`; Bass MIDI range is frozen separately to `28–67`.
-- Runtime target remains Python 3.10, NumPy 1.26.4, PyTorch 2.8.0+cpu, imageio-ffmpeg 0.6.0; CUDA must be absent/unavailable.
-
-## New reference-free transcriber
-- File: `validation/v154_cpu_multitrack/transcribe_broad_other.py`.
-- Creation commit: `c4a707d34b1a44dc34a8245f922773d43f0538cf`.
-- Inputs: already-separated `Other` and `Bass` audio stems.
-- Output schema: `dadrock.tabs.v154.cpu-multitrack-generated.v1` with frozen `combinedGuitar` and `bass` note/onset streams.
-- It contains no reference input and records `referenceRead=false`, `humanCorrection=false`, `referenceGuidedFiltering=false`, `modalUsed=false`, `cudaGpuUsed=false`.
-- NumPy/nested Basic Pitch metadata is converted recursively to JSON-native values, preserving the A3 serialization repair.
-
-## New stage-one combined-Guitar/Bass scorer
-- File: `validation/v154_cpu_multitrack/score_frontend_reference.py`.
-- Creation commit: `a5cab589b3efca8ec454311c49120543c04277fb`.
-- It scores frozen generated `combinedGuitar` directly against the private union of professional Rhythm+Lead, **before any generated Rhythm/Lead role split**.
-- It scores frozen generated `bass` independently against professional Bass.
-- Primary metric: same-MIDI one-to-one timing-aware F1 within ±0.5 grid step. Gross ±2-step F1 and per-measure pitch-content are diagnostics.
-- Optional private reference events may carry `excludeFromScoring=true` for explicitly uncertain annotated spots; this masks uncertainty without silently correcting/replacing the reference note.
-- The scorer checks private-reference authorization flags and generated anti-leakage flags before scoring.
-
-## Stage-one contract validation — SUCCESS / SEALED
-- Synthetic/reference-free test file: `validation/v154_cpu_multitrack/test_frontend_contract.py`; creation commit `69457239e304970a4b0c933dcaf708351d6b220b`.
-- One-use workflow run `33096282137`, job `98601930286`: **SUCCESS**.
-- Tests verified: combined-Guitar scoring ignores Rhythm/Lead role labels at stage one; ±0.5 primary vs ±2 gross tolerance behavior; uncertainty exclusion without reference repair; pitch mismatch cannot match; Bass low-E range is retained; continuous grid mapping; recursive JSON-safe conversion.
-- One-use test workflow is absent/sealed at branch head commit `5dd4182ed0eaaa5d6e8da5da19c26fc2b5b1a7d7`.
-- Earlier temporary checkpoint writer failed before any job and was removed at commit `99ff71c864cbc674c5af55d092b2f4aca9a29863`.
+## Stage-one scorer / validation
+- Scorer: `validation/v154_cpu_multitrack/score_frontend_reference.py`; creation commit `a5cab589b3efca8ec454311c49120543c04277fb`; blob `13936b70555bb1b3a9e4f83767376fd5d8b1bc51`.
+- Combined Guitar is scored against private Rhythm+Lead union before role splitting; Bass scored independently.
+- Primary metric: same-MIDI one-to-one onset matching within ±0.5 grid step; ±2 gross timing diagnostic; per-measure pitch-content diagnostic only.
+- Explicit uncertain reference events may use `excludeFromScoring=true`; no silent repair.
+- Synthetic/reference-free tests: `validation/v154_cpu_multitrack/test_frontend_contract.py`; commit `69457239e304970a4b0c933dcaf708351d6b220b`.
+- Authoritative one-use test run `33096282137`, job `98601930286`: **SUCCESS**. Workflow sealed at commit `5dd4182ed0eaaa5d6e8da5da19c26fc2b5b1a7d7`.
+- A redundant synthetic run `33096281645` executed tests successfully but its persistence/seal step failed after concurrent branch movement. It is non-scientific duplicate validation and must not be rerun. Its workflow was explicitly removed at commit `477be95555d13e24621349b1b9edfaf834dc2a8d`.
+- Earlier failed checkpoint-writer workflow was removed at commit `99ff71c864cbc674c5af55d092b2f4aca9a29863`.
 
 ## V154 architecture decision gates — FROZEN
 - Combined Rhythm+Lead timing-aware note/pitch F1 target: **>= 0.80**.
 - Bass timing-aware note/pitch F1 target: **>= 0.80**.
 - Onset-aware note F1 target: **>= 0.75**.
-- Rhythm/Lead role accuracy conditional on correctly recognized guitar notes: **>= 0.85** (later stage only).
-- String/fret correctness conditional on correct pitch+role: **>= 0.85** (later stage only).
-- Missing a gate is evidence about the responsible architecture stage, not permission to tune the already-scored output against reference truth.
+- Later conditional Rhythm/Lead role accuracy target: **>= 0.85**.
+- Later conditional string/fret correctness target: **>= 0.85**.
+- Missing a gate diagnoses the responsible architecture stage; it is not permission to tune the consumed output against reference truth.
+
+## Broad-Other CPU benchmark — ARMED / BEFORE AUDIO RESULT
+- One-use workflow: `.github/workflows/v154-broad-other-cpu-once.yml`.
+- Arming commit: `986e2a69a6cb877a203d2f8b04115914dc8fd2e6`.
+- Workflow is reference-free and read-only to repository contents. It does **not** push generated data back to the branch; this deliberately avoids A3's non-fast-forward persistence failure.
+- It verifies the preregistration/transcriber Git blobs and exact historical audio identity; installs the frozen CPU-only stack; asserts `torch.version.cuda is None` and `torch.cuda.is_available()==False`; normalizes to the A3-established 44.1k/stereo/PCM-s16le path; runs CPU `htdemucs`; transcribes `other.wav` and `bass.wav`; freezes hashes/counts in `generation-manifest.json`; and uploads an immutable workflow artifact.
+- No reference/Gold input exists in the workflow. Reference-facing score calls remain `0`.
+- At this checkpoint the benchmark result has not yet been classified. Do not rerun the one-use workflow after it is consumed; seal/delete it after the run regardless of success/failure.
 
 ## Current execution status
-- Reference-facing score calls in this continuation: **0**.
-- Professional reference note data opened in this continuation: **NO**.
-- Demucs separation executed in this continuation: **NO**.
-- Broad-Other/Bass Basic Pitch transcription executed in this continuation: **NO**.
-- Reference-free stage-one synthetic tests: **PASS / SEALED**.
+- Reference-facing score calls this continuation: **0**.
+- Professional reference note data opened this continuation: **NO**.
+- Stage-one synthetic tests: **PASS / SEALED**.
+- Broad-Other CPU benchmark: **ARMED**.
 - Modal/L4/CUDA/GPU used: **NO**.
 - `main` / Production modified: **NO**.
 
 ## Exact next steps
-1. Create a **new one-use** broad-Other CPU benchmark workflow from the frozen preregistration; do not rerun A3.
-2. The workflow must verify exact historical audio identity and CPU-only runtime, normalize audio, run `htdemucs` to produce `other` + `bass`, then run `transcribe_broad_other.py` and persist/hash generated outputs **before any professional reference access**.
-3. Avoid A3's non-fast-forward persistence failure: prefer immutable workflow artifact output first; if repository persistence is needed, rebase/fetch immediately before a unique-path push and never overwrite a sealed output.
-4. Do not score generated outputs until the privately normalized Rhythm/Lead/Bass reference payload is accessible and its normalized identity is frozen. The current conversation has no attached Bass/Lead screenshots, so do not reconstruct note content from memory.
-5. Once private normalized references are accessible, score combined Guitar first and Bass second with `score_frontend_reference.py`. Freeze the score as one consumed evaluation of the generated output; no post-score retuning of that output.
-6. Only after acoustic recognition is frozen should Rhythm/Lead role separation, fret/string assignment, techniques, and PDF work continue.
-7. Continue saving this file frequently after each meaningful freeze/run/result.
+1. Observe/classify the one-use broad-Other CPU run; never rerun it after consumption.
+2. Seal/delete `.github/workflows/v154-broad-other-cpu-once.yml` after the run.
+3. If successful, freeze the artifact identity plus `generated.json`/manifest hashes and note counts into a unique public-repo result manifest without exposing third-party reference data.
+4. Do **not** reference-score generated outputs until the privately normalized Rhythm/Lead/Bass payload is accessible and its normalized identity is frozen.
+5. Once private normalized references are accessible, score frozen combined Guitar first and Bass second exactly once with `score_frontend_reference.py`; no post-score retuning of that output.
+6. Only after recognition is frozen should Rhythm/Lead role separation, fret/string assignment, techniques, and PDF work continue.
+7. Save this checkpoint again after run classification/seal and after any generated-output identity persistence.
