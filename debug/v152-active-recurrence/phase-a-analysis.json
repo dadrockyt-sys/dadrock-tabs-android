@@ -1,0 +1,174 @@
+{
+  "classification": "reference-free-active-recurrence-analysis",
+  "counts": {
+    "both-selected": 3,
+    "both-tied": 9,
+    "one-selected": 0
+  },
+  "eventIndicesByStrength": {
+    "both-selected": [
+      132,
+      347,
+      457
+    ],
+    "both-tied": [
+      46,
+      141,
+      282,
+      610,
+      811,
+      1004,
+      1049,
+      1206,
+      1207
+    ],
+    "one-selected": []
+  },
+  "inputSha256": {
+    "v151ConstructionProof": "187cb046988df7cc96ff1e909d2d76fd7ec9c4a802f93ceea1277085cf464342",
+    "v151PhaseAAnalysis": "701a46ffa8c0b50eb829fa64e7b192f6ae29e00bca7340856956d22bff5dc6d9"
+  },
+  "percentages": {
+    "both-selected": 25.0,
+    "both-tied": 75.0,
+    "one-selected": 0.0
+  },
+  "population": 12,
+  "rows": [
+    {
+      "eventIndex": 46,
+      "exactPitchSupportClass": "exact-pitch-support-tied",
+      "measure": 4,
+      "originalMidi": 69,
+      "pitchClassSupportClass": "pitch-class-support-tied",
+      "selectedMidi": 68,
+      "step": 14,
+      "strengthClass": "both-tied"
+    },
+    {
+      "eventIndex": 132,
+      "exactPitchSupportClass": "selected-exact-pitch-more-supported",
+      "measure": 13,
+      "originalMidi": 65,
+      "pitchClassSupportClass": "selected-pitch-class-more-supported",
+      "selectedMidi": 64,
+      "step": 8,
+      "strengthClass": "both-selected"
+    },
+    {
+      "eventIndex": 141,
+      "exactPitchSupportClass": "exact-pitch-support-tied",
+      "measure": 14,
+      "originalMidi": 50,
+      "pitchClassSupportClass": "pitch-class-support-tied",
+      "selectedMidi": 51,
+      "step": 12,
+      "strengthClass": "both-tied"
+    },
+    {
+      "eventIndex": 282,
+      "exactPitchSupportClass": "exact-pitch-support-tied",
+      "measure": 30,
+      "originalMidi": 50,
+      "pitchClassSupportClass": "pitch-class-support-tied",
+      "selectedMidi": 51,
+      "step": 12,
+      "strengthClass": "both-tied"
+    },
+    {
+      "eventIndex": 347,
+      "exactPitchSupportClass": "selected-exact-pitch-more-supported",
+      "measure": 35,
+      "originalMidi": 62,
+      "pitchClassSupportClass": "selected-pitch-class-more-supported",
+      "selectedMidi": 61,
+      "step": 9,
+      "strengthClass": "both-selected"
+    },
+    {
+      "eventIndex": 457,
+      "exactPitchSupportClass": "selected-exact-pitch-more-supported",
+      "measure": 45,
+      "originalMidi": 65,
+      "pitchClassSupportClass": "selected-pitch-class-more-supported",
+      "selectedMidi": 64,
+      "step": 9,
+      "strengthClass": "both-selected"
+    },
+    {
+      "eventIndex": 610,
+      "exactPitchSupportClass": "exact-pitch-support-tied",
+      "measure": 62,
+      "originalMidi": 50,
+      "pitchClassSupportClass": "pitch-class-support-tied",
+      "selectedMidi": 51,
+      "step": 12,
+      "strengthClass": "both-tied"
+    },
+    {
+      "eventIndex": 811,
+      "exactPitchSupportClass": "exact-pitch-support-tied",
+      "measure": 82,
+      "originalMidi": 57,
+      "pitchClassSupportClass": "pitch-class-support-tied",
+      "selectedMidi": 58,
+      "step": 14,
+      "strengthClass": "both-tied"
+    },
+    {
+      "eventIndex": 1004,
+      "exactPitchSupportClass": "exact-pitch-support-tied",
+      "measure": 98,
+      "originalMidi": 50,
+      "pitchClassSupportClass": "pitch-class-support-tied",
+      "selectedMidi": 51,
+      "step": 12,
+      "strengthClass": "both-tied"
+    },
+    {
+      "eventIndex": 1049,
+      "exactPitchSupportClass": "exact-pitch-support-tied",
+      "measure": 102,
+      "originalMidi": 50,
+      "pitchClassSupportClass": "pitch-class-support-tied",
+      "selectedMidi": 51,
+      "step": 0,
+      "strengthClass": "both-tied"
+    },
+    {
+      "eventIndex": 1206,
+      "exactPitchSupportClass": "exact-pitch-support-tied",
+      "measure": 113,
+      "originalMidi": 41,
+      "pitchClassSupportClass": "pitch-class-support-tied",
+      "selectedMidi": 42,
+      "step": 13,
+      "strengthClass": "both-tied"
+    },
+    {
+      "eventIndex": 1207,
+      "exactPitchSupportClass": "exact-pitch-support-tied",
+      "measure": 113,
+      "originalMidi": 43,
+      "pitchClassSupportClass": "pitch-class-support-tied",
+      "selectedMidi": 42,
+      "step": 14,
+      "strengthClass": "both-tied"
+    }
+  ],
+  "safety": {
+    "audioReadOrDecoded": false,
+    "automaticPromotion": false,
+    "candidateConstructed": false,
+    "candidateSearchRun": false,
+    "goldOrReferenceRead": false,
+    "hpssOrCqtRecomputed": false,
+    "mainOrProductionModified": false,
+    "modalOrGpuUsed": false,
+    "scoreCallCount": 0,
+    "thresholdSweep": false,
+    "v151ScoreResultRead": false
+  },
+  "schema": "dadrock.tabs.v152.active-recurrence.phase-a-analysis.v1",
+  "v151CandidateEventSha256": "e6c437f534dfb5523610797c67f8f69176be903456ef4940c3032567b949156b"
+}

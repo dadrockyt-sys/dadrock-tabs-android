@@ -628,3 +628,12 @@ Active phase: **V147 Phase C REAL-AUDIO ARTIFACT-FIRST CONSTRUCTION = GO / SEALE
 - V152 profiles exactly the 12 V151 positive-consensus edits by active local recurrence strength: both-selected, one-selected, or both-tied.
 - Preregistration blob `df236c175986432e06e00ce40decb14605932686`; analyzer blob `9be76f30264b6bf29cf75587cb2d640b0ff70a6d`; run `33049309717`.
 - Gold/reference **NO**; V151 score-result read by analyzer **NO**; scorer calls **0**; candidate construction/search **NO**; threshold sweep/audio/GPU/Production **NO**.
+
+
+## V152 Phase A active-recurrence analysis — COMPLETE / SEALED — 2026-08-27 UTC
+- Frozen reference-free analysis completed in run `33049309717` over exactly **12/12 V151 positive-consensus events**. Result SHA256 **`d56fb557406a986b3026e698ded9aa1820b062f13ab82175e249abd421c7137c`**.
+- Active recurrence supports selected in both channels: **3/12 = 25.00%**; indices `[132, 347, 457]`.
+- Exactly one recurrence channel supports selected: **0/12 = 0.00%**; indices `[]`.
+- Both recurrence channels tied: **9/12 = 75.00%**; indices `[46, 141, 282, 610, 811, 1004, 1049, 1206, 1207]`.
+- These are reference-free support percentages, not accuracy scores. Gold/reference **NO**; V151 score result read **NO**; scorer calls **0**; no candidate/search/threshold sweep/audio/GPU/Production.
+- If both-selected events exist, the sole preregistered next candidate is accepted baseline plus exactly that event set.
