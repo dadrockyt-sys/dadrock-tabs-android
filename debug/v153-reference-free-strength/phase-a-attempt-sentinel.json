@@ -1,0 +1,13 @@
+{
+  "analyzerGitBlob": "0525ce4a9d441a8fe8c6ffeb7fc99c8b70ebee73",
+  "populationEventIndices": [
+    132,
+    347,
+    457
+  ],
+  "preregistrationGitBlob": "449d668c5959e97f8f1172bc697a9578c4df03f6",
+  "runId": "33052235521",
+  "schema": "dadrock.tabs.v153.reference-free-strength.phase-a-attempt-sentinel.v1",
+  "status": "CONSUMED_BEFORE_ANALYSIS",
+  "triggerCommit": "e802bada9798b49d70ba9540bac0955fb46b4b4f"
+}
