@@ -60,12 +60,12 @@
   },
   "audit": {
     "storedMeasureObjects": 113,
-    "eventObjects": 486,
-    "pitchedEventObjects": 475,
+    "eventObjects": 487,
+    "pitchedEventObjects": 476,
     "deadNoteObjects": 11,
     "continuationOnlyObjects": 23,
     "observedMidiMin": 45,
-    "observedMidiMax": 79,
+    "observedMidiMax": 81,
     "midiMappingErrors": 0,
     "measureSequenceContinuous": true,
     "scoringStepFieldsPresent": false
@@ -1145,54 +1145,54 @@
       "timeSignature": "4/4",
       "events": [
         {
-          "string": "G",
-          "stringIndex": 2,
+          "string": "B",
+          "stringIndex": 1,
           "kind": "note",
           "fret": 13,
-          "midi": 68,
+          "midi": 72,
           "bendLabel": "full",
           "slurToNext": true,
           "visualOrder": 0
         },
         {
-          "string": "G",
-          "stringIndex": 2,
+          "string": "B",
+          "stringIndex": 1,
           "kind": "note",
           "fret": 11,
-          "midi": 66,
+          "midi": 70,
           "slurFromPrevious": true,
           "visualOrder": 1
         },
         {
-          "string": "D",
-          "stringIndex": 3,
+          "string": "G",
+          "stringIndex": 2,
           "kind": "note",
           "fret": 12,
-          "midi": 62,
+          "midi": 67,
           "visualOrder": 2
         },
         {
-          "string": "A",
-          "stringIndex": 4,
-          "kind": "note",
-          "fret": 12,
-          "midi": 57,
-          "visualOrder": 3
-        },
-        {
-          "string": "D",
-          "stringIndex": 3,
-          "kind": "note",
-          "fret": 10,
-          "midi": 60,
-          "visualOrder": 4
-        },
-        {
           "string": "D",
           "stringIndex": 3,
           "kind": "note",
           "fret": 12,
           "midi": 62,
+          "visualOrder": 3
+        },
+        {
+          "string": "G",
+          "stringIndex": 2,
+          "kind": "note",
+          "fret": 10,
+          "midi": 65,
+          "visualOrder": 4
+        },
+        {
+          "string": "G",
+          "stringIndex": 2,
+          "kind": "note",
+          "fret": 12,
+          "midi": 67,
           "vibrato": true,
           "visualOrder": 5
         }
@@ -1214,54 +1214,54 @@
       "timeSignature": "4/4",
       "events": [
         {
-          "string": "G",
-          "stringIndex": 2,
+          "string": "B",
+          "stringIndex": 1,
           "kind": "note",
           "fret": 13,
-          "midi": 68,
+          "midi": 72,
           "bendLabel": "full",
           "slurToNext": true,
           "visualOrder": 0
         },
         {
-          "string": "G",
-          "stringIndex": 2,
+          "string": "B",
+          "stringIndex": 1,
           "kind": "note",
           "fret": 11,
-          "midi": 66,
+          "midi": 70,
           "slurFromPrevious": true,
           "visualOrder": 1
         },
         {
-          "string": "D",
-          "stringIndex": 3,
+          "string": "G",
+          "stringIndex": 2,
           "kind": "note",
           "fret": 12,
-          "midi": 62,
+          "midi": 67,
           "visualOrder": 2
         },
         {
-          "string": "A",
-          "stringIndex": 4,
-          "kind": "note",
-          "fret": 12,
-          "midi": 57,
-          "visualOrder": 3
-        },
-        {
-          "string": "D",
-          "stringIndex": 3,
-          "kind": "note",
-          "fret": 10,
-          "midi": 60,
-          "visualOrder": 4
-        },
-        {
           "string": "D",
           "stringIndex": 3,
           "kind": "note",
           "fret": 12,
           "midi": 62,
+          "visualOrder": 3
+        },
+        {
+          "string": "G",
+          "stringIndex": 2,
+          "kind": "note",
+          "fret": 10,
+          "midi": 65,
+          "visualOrder": 4
+        },
+        {
+          "string": "G",
+          "stringIndex": 2,
+          "kind": "note",
+          "fret": 12,
+          "midi": 67,
           "vibrato": true,
           "visualOrder": 5
         }
@@ -1283,54 +1283,54 @@
       "timeSignature": "4/4",
       "events": [
         {
-          "string": "G",
-          "stringIndex": 2,
+          "string": "B",
+          "stringIndex": 1,
           "kind": "note",
           "fret": 13,
-          "midi": 68,
+          "midi": 72,
           "bendLabel": "full",
           "slurToNext": true,
           "visualOrder": 0
         },
         {
-          "string": "G",
-          "stringIndex": 2,
+          "string": "B",
+          "stringIndex": 1,
           "kind": "note",
           "fret": 11,
-          "midi": 66,
+          "midi": 70,
           "slurFromPrevious": true,
           "visualOrder": 1
         },
         {
-          "string": "D",
-          "stringIndex": 3,
+          "string": "G",
+          "stringIndex": 2,
           "kind": "note",
           "fret": 12,
-          "midi": 62,
+          "midi": 67,
           "visualOrder": 2
         },
         {
-          "string": "A",
-          "stringIndex": 4,
-          "kind": "note",
-          "fret": 12,
-          "midi": 57,
-          "visualOrder": 3
-        },
-        {
-          "string": "D",
-          "stringIndex": 3,
-          "kind": "note",
-          "fret": 10,
-          "midi": 60,
-          "visualOrder": 4
-        },
-        {
           "string": "D",
           "stringIndex": 3,
           "kind": "note",
           "fret": 12,
           "midi": 62,
+          "visualOrder": 3
+        },
+        {
+          "string": "G",
+          "stringIndex": 2,
+          "kind": "note",
+          "fret": 10,
+          "midi": 65,
+          "visualOrder": 4
+        },
+        {
+          "string": "G",
+          "stringIndex": 2,
+          "kind": "note",
+          "fret": 12,
+          "midi": 67,
           "vibrato": true,
           "visualOrder": 5
         }
@@ -1537,114 +1537,103 @@
       "timeSignature": "4/4",
       "events": [
         {
-          "string": "e",
-          "stringIndex": 0,
+          "string": "B",
+          "stringIndex": 1,
           "kind": "note",
           "fret": 9,
-          "midi": 73,
+          "midi": 68,
           "chordGroup": "E-1",
           "simultaneous": true,
           "chordLabel": "E",
           "visualOrder": 0
         },
         {
-          "string": "B",
-          "stringIndex": 1,
+          "string": "G",
+          "stringIndex": 2,
           "kind": "note",
           "fret": 9,
-          "midi": 68,
+          "midi": 64,
           "chordGroup": "E-1",
           "simultaneous": true,
           "chordLabel": "E",
           "visualOrder": 1
         },
         {
-          "string": "G",
-          "stringIndex": 2,
+          "string": "D",
+          "stringIndex": 3,
           "kind": "note",
           "fret": 9,
-          "midi": 64,
+          "midi": 59,
           "chordGroup": "E-1",
           "simultaneous": true,
           "chordLabel": "E",
           "visualOrder": 2
         },
         {
-          "string": "e",
-          "stringIndex": 0,
+          "string": "B",
+          "stringIndex": 1,
           "kind": "note",
           "fret": 9,
-          "midi": 73,
+          "midi": 68,
           "chordGroup": "E-2",
           "simultaneous": true,
           "chordLabel": "E",
           "visualOrder": 3
         },
         {
-          "string": "B",
-          "stringIndex": 1,
+          "string": "G",
+          "stringIndex": 2,
           "kind": "note",
           "fret": 9,
-          "midi": 68,
+          "midi": 64,
           "chordGroup": "E-2",
           "simultaneous": true,
           "chordLabel": "E",
           "visualOrder": 4
         },
         {
-          "string": "G",
-          "stringIndex": 2,
+          "string": "D",
+          "stringIndex": 3,
           "kind": "note",
           "fret": 9,
-          "midi": 64,
+          "midi": 59,
           "chordGroup": "E-2",
           "simultaneous": true,
           "chordLabel": "E",
           "visualOrder": 5
         },
         {
-          "string": "e",
-          "stringIndex": 0,
+          "string": "B",
+          "stringIndex": 1,
           "kind": "note",
           "fret": 9,
-          "midi": 73,
+          "midi": 68,
           "chordGroup": "E-3",
           "simultaneous": true,
           "chordLabel": "E",
           "visualOrder": 6
         },
         {
-          "string": "B",
-          "stringIndex": 1,
+          "string": "G",
+          "stringIndex": 2,
           "kind": "note",
           "fret": 9,
-          "midi": 68,
+          "midi": 64,
           "chordGroup": "E-3",
           "simultaneous": true,
           "chordLabel": "E",
           "visualOrder": 7
         },
         {
-          "string": "G",
-          "stringIndex": 2,
+          "string": "D",
+          "stringIndex": 3,
           "kind": "note",
           "fret": 9,
-          "midi": 64,
+          "midi": 59,
           "chordGroup": "E-3",
           "simultaneous": true,
           "chordLabel": "E",
           "visualOrder": 8
-        },
-        {
-          "string": "e",
-          "stringIndex": 0,
-          "kind": "note",
-          "fret": 9,
-          "midi": 73,
-          "chordGroup": "E-4",
-          "simultaneous": true,
-          "chordLabel": "E",
-          "visualOrder": 9
         },
         {
           "string": "B",
@@ -1655,7 +1644,7 @@
           "chordGroup": "E-4",
           "simultaneous": true,
           "chordLabel": "E",
-          "visualOrder": 10
+          "visualOrder": 9
         },
         {
           "string": "G",
@@ -1666,18 +1655,18 @@
           "chordGroup": "E-4",
           "simultaneous": true,
           "chordLabel": "E",
-          "visualOrder": 11
+          "visualOrder": 10
         },
         {
-          "string": "e",
-          "stringIndex": 0,
+          "string": "D",
+          "stringIndex": 3,
           "kind": "note",
-          "fret": 7,
-          "midi": 71,
-          "chordGroup": "D-1",
+          "fret": 9,
+          "midi": 59,
+          "chordGroup": "E-4",
           "simultaneous": true,
-          "chordLabel": "D",
-          "visualOrder": 12
+          "chordLabel": "E",
+          "visualOrder": 11
         },
         {
           "string": "B",
@@ -1688,7 +1677,7 @@
           "chordGroup": "D-1",
           "simultaneous": true,
           "chordLabel": "D",
-          "visualOrder": 13
+          "visualOrder": 12
         },
         {
           "string": "G",
@@ -1699,19 +1688,18 @@
           "chordGroup": "D-1",
           "simultaneous": true,
           "chordLabel": "D",
-          "visualOrder": 14
+          "visualOrder": 13
         },
         {
-          "string": "e",
-          "stringIndex": 0,
+          "string": "D",
+          "stringIndex": 3,
           "kind": "note",
-          "fret": 9,
-          "midi": 73,
-          "chordGroup": "E-final",
+          "fret": 7,
+          "midi": 57,
+          "chordGroup": "D-1",
           "simultaneous": true,
-          "slideOut": true,
-          "chordLabel": "E",
-          "visualOrder": 15
+          "chordLabel": "D",
+          "visualOrder": 14
         },
         {
           "string": "B",
@@ -1723,7 +1711,7 @@
           "simultaneous": true,
           "slideOut": true,
           "chordLabel": "E",
-          "visualOrder": 16
+          "visualOrder": 15
         },
         {
           "string": "G",
@@ -1731,6 +1719,18 @@
           "kind": "note",
           "fret": 9,
           "midi": 64,
+          "chordGroup": "E-final",
+          "simultaneous": true,
+          "slideOut": true,
+          "chordLabel": "E",
+          "visualOrder": 16
+        },
+        {
+          "string": "D",
+          "stringIndex": 3,
+          "kind": "note",
+          "fret": 9,
+          "midi": 59,
           "chordGroup": "E-final",
           "simultaneous": true,
           "slideOut": true,
@@ -1759,114 +1759,103 @@
       "timeSignature": "4/4",
       "events": [
         {
-          "string": "e",
-          "stringIndex": 0,
+          "string": "B",
+          "stringIndex": 1,
           "kind": "note",
           "fret": 9,
-          "midi": 73,
+          "midi": 68,
           "chordGroup": "E-1",
           "simultaneous": true,
           "chordLabel": "E",
           "visualOrder": 0
         },
         {
-          "string": "B",
-          "stringIndex": 1,
+          "string": "G",
+          "stringIndex": 2,
           "kind": "note",
           "fret": 9,
-          "midi": 68,
+          "midi": 64,
           "chordGroup": "E-1",
           "simultaneous": true,
           "chordLabel": "E",
           "visualOrder": 1
         },
         {
-          "string": "G",
-          "stringIndex": 2,
+          "string": "D",
+          "stringIndex": 3,
           "kind": "note",
           "fret": 9,
-          "midi": 64,
+          "midi": 59,
           "chordGroup": "E-1",
           "simultaneous": true,
           "chordLabel": "E",
           "visualOrder": 2
         },
         {
-          "string": "e",
-          "stringIndex": 0,
+          "string": "B",
+          "stringIndex": 1,
           "kind": "note",
           "fret": 9,
-          "midi": 73,
+          "midi": 68,
           "chordGroup": "E-2",
           "simultaneous": true,
           "chordLabel": "E",
           "visualOrder": 3
         },
         {
-          "string": "B",
-          "stringIndex": 1,
+          "string": "G",
+          "stringIndex": 2,
           "kind": "note",
           "fret": 9,
-          "midi": 68,
+          "midi": 64,
           "chordGroup": "E-2",
           "simultaneous": true,
           "chordLabel": "E",
           "visualOrder": 4
         },
         {
-          "string": "G",
-          "stringIndex": 2,
+          "string": "D",
+          "stringIndex": 3,
           "kind": "note",
           "fret": 9,
-          "midi": 64,
+          "midi": 59,
           "chordGroup": "E-2",
           "simultaneous": true,
           "chordLabel": "E",
           "visualOrder": 5
         },
         {
-          "string": "e",
-          "stringIndex": 0,
+          "string": "B",
+          "stringIndex": 1,
           "kind": "note",
           "fret": 9,
-          "midi": 73,
+          "midi": 68,
           "chordGroup": "E-3",
           "simultaneous": true,
           "chordLabel": "E",
           "visualOrder": 6
         },
         {
-          "string": "B",
-          "stringIndex": 1,
+          "string": "G",
+          "stringIndex": 2,
           "kind": "note",
           "fret": 9,
-          "midi": 68,
+          "midi": 64,
           "chordGroup": "E-3",
           "simultaneous": true,
           "chordLabel": "E",
           "visualOrder": 7
         },
         {
-          "string": "G",
-          "stringIndex": 2,
+          "string": "D",
+          "stringIndex": 3,
           "kind": "note",
           "fret": 9,
-          "midi": 64,
+          "midi": 59,
           "chordGroup": "E-3",
           "simultaneous": true,
           "chordLabel": "E",
           "visualOrder": 8
-        },
-        {
-          "string": "e",
-          "stringIndex": 0,
-          "kind": "note",
-          "fret": 9,
-          "midi": 73,
-          "chordGroup": "E-4",
-          "simultaneous": true,
-          "chordLabel": "E",
-          "visualOrder": 9
         },
         {
           "string": "B",
@@ -1877,7 +1866,7 @@
           "chordGroup": "E-4",
           "simultaneous": true,
           "chordLabel": "E",
-          "visualOrder": 10
+          "visualOrder": 9
         },
         {
           "string": "G",
@@ -1888,18 +1877,18 @@
           "chordGroup": "E-4",
           "simultaneous": true,
           "chordLabel": "E",
-          "visualOrder": 11
+          "visualOrder": 10
         },
         {
-          "string": "e",
-          "stringIndex": 0,
+          "string": "D",
+          "stringIndex": 3,
           "kind": "note",
-          "fret": 12,
-          "midi": 76,
-          "chordGroup": "G-1",
+          "fret": 9,
+          "midi": 59,
+          "chordGroup": "E-4",
           "simultaneous": true,
-          "chordLabel": "G",
-          "visualOrder": 12
+          "chordLabel": "E",
+          "visualOrder": 11
         },
         {
           "string": "B",
@@ -1910,7 +1899,7 @@
           "chordGroup": "G-1",
           "simultaneous": true,
           "chordLabel": "G",
-          "visualOrder": 13
+          "visualOrder": 12
         },
         {
           "string": "G",
@@ -1921,19 +1910,18 @@
           "chordGroup": "G-1",
           "simultaneous": true,
           "chordLabel": "G",
-          "visualOrder": 14
+          "visualOrder": 13
         },
         {
-          "string": "e",
-          "stringIndex": 0,
+          "string": "D",
+          "stringIndex": 3,
           "kind": "note",
-          "fret": 9,
-          "midi": 73,
-          "chordGroup": "E-final",
+          "fret": 12,
+          "midi": 62,
+          "chordGroup": "G-1",
           "simultaneous": true,
-          "slideOut": true,
-          "chordLabel": "E",
-          "visualOrder": 15
+          "chordLabel": "G",
+          "visualOrder": 14
         },
         {
           "string": "B",
@@ -1945,7 +1933,7 @@
           "simultaneous": true,
           "slideOut": true,
           "chordLabel": "E",
-          "visualOrder": 16
+          "visualOrder": 15
         },
         {
           "string": "G",
@@ -1953,6 +1941,18 @@
           "kind": "note",
           "fret": 9,
           "midi": 64,
+          "chordGroup": "E-final",
+          "simultaneous": true,
+          "slideOut": true,
+          "chordLabel": "E",
+          "visualOrder": 16
+        },
+        {
+          "string": "D",
+          "stringIndex": 3,
+          "kind": "note",
+          "fret": 9,
+          "midi": 59,
           "chordGroup": "E-final",
           "simultaneous": true,
           "slideOut": true,
@@ -2580,54 +2580,54 @@
       "timeSignature": "4/4",
       "events": [
         {
-          "string": "G",
-          "stringIndex": 2,
+          "string": "B",
+          "stringIndex": 1,
           "kind": "note",
           "fret": 13,
-          "midi": 68,
+          "midi": 72,
           "bendLabel": "full",
           "slurToNext": true,
           "visualOrder": 0
         },
         {
-          "string": "G",
-          "stringIndex": 2,
+          "string": "B",
+          "stringIndex": 1,
           "kind": "note",
           "fret": 11,
-          "midi": 66,
+          "midi": 70,
           "slurFromPrevious": true,
           "visualOrder": 1
         },
         {
-          "string": "D",
-          "stringIndex": 3,
+          "string": "G",
+          "stringIndex": 2,
           "kind": "note",
           "fret": 12,
-          "midi": 62,
+          "midi": 67,
           "visualOrder": 2
         },
         {
-          "string": "A",
-          "stringIndex": 4,
-          "kind": "note",
-          "fret": 12,
-          "midi": 57,
-          "visualOrder": 3
-        },
-        {
-          "string": "D",
-          "stringIndex": 3,
-          "kind": "note",
-          "fret": 10,
-          "midi": 60,
-          "visualOrder": 4
-        },
-        {
           "string": "D",
           "stringIndex": 3,
           "kind": "note",
           "fret": 12,
           "midi": 62,
+          "visualOrder": 3
+        },
+        {
+          "string": "G",
+          "stringIndex": 2,
+          "kind": "note",
+          "fret": 10,
+          "midi": 65,
+          "visualOrder": 4
+        },
+        {
+          "string": "G",
+          "stringIndex": 2,
+          "kind": "note",
+          "fret": 12,
+          "midi": 67,
           "vibrato": true,
           "visualOrder": 5
         }
@@ -2649,54 +2649,54 @@
       "timeSignature": "4/4",
       "events": [
         {
-          "string": "G",
-          "stringIndex": 2,
+          "string": "B",
+          "stringIndex": 1,
           "kind": "note",
           "fret": 13,
-          "midi": 68,
+          "midi": 72,
           "bendLabel": "full",
           "slurToNext": true,
           "visualOrder": 0
         },
         {
-          "string": "G",
-          "stringIndex": 2,
+          "string": "B",
+          "stringIndex": 1,
           "kind": "note",
           "fret": 11,
-          "midi": 66,
+          "midi": 70,
           "slurFromPrevious": true,
           "visualOrder": 1
         },
         {
-          "string": "D",
-          "stringIndex": 3,
+          "string": "G",
+          "stringIndex": 2,
           "kind": "note",
           "fret": 12,
-          "midi": 62,
+          "midi": 67,
           "visualOrder": 2
         },
         {
-          "string": "A",
-          "stringIndex": 4,
-          "kind": "note",
-          "fret": 12,
-          "midi": 57,
-          "visualOrder": 3
-        },
-        {
-          "string": "D",
-          "stringIndex": 3,
-          "kind": "note",
-          "fret": 10,
-          "midi": 60,
-          "visualOrder": 4
-        },
-        {
           "string": "D",
           "stringIndex": 3,
           "kind": "note",
           "fret": 12,
           "midi": 62,
+          "visualOrder": 3
+        },
+        {
+          "string": "G",
+          "stringIndex": 2,
+          "kind": "note",
+          "fret": 10,
+          "midi": 65,
+          "visualOrder": 4
+        },
+        {
+          "string": "G",
+          "stringIndex": 2,
+          "kind": "note",
+          "fret": 12,
+          "midi": 67,
           "vibrato": true,
           "visualOrder": 5
         }
@@ -2718,54 +2718,54 @@
       "timeSignature": "4/4",
       "events": [
         {
-          "string": "G",
-          "stringIndex": 2,
+          "string": "B",
+          "stringIndex": 1,
           "kind": "note",
           "fret": 13,
-          "midi": 68,
+          "midi": 72,
           "bendLabel": "full",
           "slurToNext": true,
           "visualOrder": 0
         },
         {
-          "string": "G",
-          "stringIndex": 2,
+          "string": "B",
+          "stringIndex": 1,
           "kind": "note",
           "fret": 11,
-          "midi": 66,
+          "midi": 70,
           "slurFromPrevious": true,
           "visualOrder": 1
         },
         {
-          "string": "D",
-          "stringIndex": 3,
+          "string": "G",
+          "stringIndex": 2,
           "kind": "note",
           "fret": 12,
-          "midi": 62,
+          "midi": 67,
           "visualOrder": 2
         },
         {
-          "string": "A",
-          "stringIndex": 4,
-          "kind": "note",
-          "fret": 12,
-          "midi": 57,
-          "visualOrder": 3
-        },
-        {
-          "string": "D",
-          "stringIndex": 3,
-          "kind": "note",
-          "fret": 10,
-          "midi": 60,
-          "visualOrder": 4
-        },
-        {
           "string": "D",
           "stringIndex": 3,
           "kind": "note",
           "fret": 12,
           "midi": 62,
+          "visualOrder": 3
+        },
+        {
+          "string": "G",
+          "stringIndex": 2,
+          "kind": "note",
+          "fret": 10,
+          "midi": 65,
+          "visualOrder": 4
+        },
+        {
+          "string": "G",
+          "stringIndex": 2,
+          "kind": "note",
+          "fret": 12,
+          "midi": 67,
           "vibrato": true,
           "visualOrder": 5
         },
@@ -3007,114 +3007,103 @@
       "timeSignature": "4/4",
       "events": [
         {
-          "string": "e",
-          "stringIndex": 0,
+          "string": "B",
+          "stringIndex": 1,
           "kind": "note",
           "fret": 9,
-          "midi": 73,
+          "midi": 68,
           "chordGroup": "E-1",
           "simultaneous": true,
           "chordLabel": "E",
           "visualOrder": 0
         },
         {
-          "string": "B",
-          "stringIndex": 1,
+          "string": "G",
+          "stringIndex": 2,
           "kind": "note",
           "fret": 9,
-          "midi": 68,
+          "midi": 64,
           "chordGroup": "E-1",
           "simultaneous": true,
           "chordLabel": "E",
           "visualOrder": 1
         },
         {
-          "string": "G",
-          "stringIndex": 2,
+          "string": "D",
+          "stringIndex": 3,
           "kind": "note",
           "fret": 9,
-          "midi": 64,
+          "midi": 59,
           "chordGroup": "E-1",
           "simultaneous": true,
           "chordLabel": "E",
           "visualOrder": 2
         },
         {
-          "string": "e",
-          "stringIndex": 0,
+          "string": "B",
+          "stringIndex": 1,
           "kind": "note",
           "fret": 9,
-          "midi": 73,
+          "midi": 68,
           "chordGroup": "E-2",
           "simultaneous": true,
           "chordLabel": "E",
           "visualOrder": 3
         },
         {
-          "string": "B",
-          "stringIndex": 1,
+          "string": "G",
+          "stringIndex": 2,
           "kind": "note",
           "fret": 9,
-          "midi": 68,
+          "midi": 64,
           "chordGroup": "E-2",
           "simultaneous": true,
           "chordLabel": "E",
           "visualOrder": 4
         },
         {
-          "string": "G",
-          "stringIndex": 2,
+          "string": "D",
+          "stringIndex": 3,
           "kind": "note",
           "fret": 9,
-          "midi": 64,
+          "midi": 59,
           "chordGroup": "E-2",
           "simultaneous": true,
           "chordLabel": "E",
           "visualOrder": 5
         },
         {
-          "string": "e",
-          "stringIndex": 0,
+          "string": "B",
+          "stringIndex": 1,
           "kind": "note",
           "fret": 9,
-          "midi": 73,
+          "midi": 68,
           "chordGroup": "E-3",
           "simultaneous": true,
           "chordLabel": "E",
           "visualOrder": 6
         },
         {
-          "string": "B",
-          "stringIndex": 1,
+          "string": "G",
+          "stringIndex": 2,
           "kind": "note",
           "fret": 9,
-          "midi": 68,
+          "midi": 64,
           "chordGroup": "E-3",
           "simultaneous": true,
           "chordLabel": "E",
           "visualOrder": 7
         },
         {
-          "string": "G",
-          "stringIndex": 2,
+          "string": "D",
+          "stringIndex": 3,
           "kind": "note",
           "fret": 9,
-          "midi": 64,
+          "midi": 59,
           "chordGroup": "E-3",
           "simultaneous": true,
           "chordLabel": "E",
           "visualOrder": 8
-        },
-        {
-          "string": "e",
-          "stringIndex": 0,
-          "kind": "note",
-          "fret": 9,
-          "midi": 73,
-          "chordGroup": "E-4",
-          "simultaneous": true,
-          "chordLabel": "E",
-          "visualOrder": 9
         },
         {
           "string": "B",
@@ -3125,7 +3114,7 @@
           "chordGroup": "E-4",
           "simultaneous": true,
           "chordLabel": "E",
-          "visualOrder": 10
+          "visualOrder": 9
         },
         {
           "string": "G",
@@ -3136,18 +3125,18 @@
           "chordGroup": "E-4",
           "simultaneous": true,
           "chordLabel": "E",
-          "visualOrder": 11
+          "visualOrder": 10
         },
         {
-          "string": "e",
-          "stringIndex": 0,
+          "string": "D",
+          "stringIndex": 3,
           "kind": "note",
-          "fret": 7,
-          "midi": 71,
-          "chordGroup": "D-1",
+          "fret": 9,
+          "midi": 59,
+          "chordGroup": "E-4",
           "simultaneous": true,
-          "chordLabel": "D",
-          "visualOrder": 12
+          "chordLabel": "E",
+          "visualOrder": 11
         },
         {
           "string": "B",
@@ -3158,7 +3147,7 @@
           "chordGroup": "D-1",
           "simultaneous": true,
           "chordLabel": "D",
-          "visualOrder": 13
+          "visualOrder": 12
         },
         {
           "string": "G",
@@ -3169,19 +3158,18 @@
           "chordGroup": "D-1",
           "simultaneous": true,
           "chordLabel": "D",
-          "visualOrder": 14
+          "visualOrder": 13
         },
         {
-          "string": "e",
-          "stringIndex": 0,
+          "string": "D",
+          "stringIndex": 3,
           "kind": "note",
-          "fret": 9,
-          "midi": 73,
-          "chordGroup": "E-final",
+          "fret": 7,
+          "midi": 57,
+          "chordGroup": "D-1",
           "simultaneous": true,
-          "slideOut": true,
-          "chordLabel": "E",
-          "visualOrder": 15
+          "chordLabel": "D",
+          "visualOrder": 14
         },
         {
           "string": "B",
@@ -3193,7 +3181,7 @@
           "simultaneous": true,
           "slideOut": true,
           "chordLabel": "E",
-          "visualOrder": 16
+          "visualOrder": 15
         },
         {
           "string": "G",
@@ -3201,6 +3189,18 @@
           "kind": "note",
           "fret": 9,
           "midi": 64,
+          "chordGroup": "E-final",
+          "simultaneous": true,
+          "slideOut": true,
+          "chordLabel": "E",
+          "visualOrder": 16
+        },
+        {
+          "string": "D",
+          "stringIndex": 3,
+          "kind": "note",
+          "fret": 9,
+          "midi": 59,
           "chordGroup": "E-final",
           "simultaneous": true,
           "slideOut": true,
@@ -3229,114 +3229,103 @@
       "timeSignature": "4/4",
       "events": [
         {
-          "string": "e",
-          "stringIndex": 0,
+          "string": "B",
+          "stringIndex": 1,
           "kind": "note",
           "fret": 9,
-          "midi": 73,
+          "midi": 68,
           "chordGroup": "E-1",
           "simultaneous": true,
           "chordLabel": "E",
           "visualOrder": 0
         },
         {
-          "string": "B",
-          "stringIndex": 1,
+          "string": "G",
+          "stringIndex": 2,
           "kind": "note",
           "fret": 9,
-          "midi": 68,
+          "midi": 64,
           "chordGroup": "E-1",
           "simultaneous": true,
           "chordLabel": "E",
           "visualOrder": 1
         },
         {
-          "string": "G",
-          "stringIndex": 2,
+          "string": "D",
+          "stringIndex": 3,
           "kind": "note",
           "fret": 9,
-          "midi": 64,
+          "midi": 59,
           "chordGroup": "E-1",
           "simultaneous": true,
           "chordLabel": "E",
           "visualOrder": 2
         },
         {
-          "string": "e",
-          "stringIndex": 0,
+          "string": "B",
+          "stringIndex": 1,
           "kind": "note",
           "fret": 9,
-          "midi": 73,
+          "midi": 68,
           "chordGroup": "E-2",
           "simultaneous": true,
           "chordLabel": "E",
           "visualOrder": 3
         },
         {
-          "string": "B",
-          "stringIndex": 1,
+          "string": "G",
+          "stringIndex": 2,
           "kind": "note",
           "fret": 9,
-          "midi": 68,
+          "midi": 64,
           "chordGroup": "E-2",
           "simultaneous": true,
           "chordLabel": "E",
           "visualOrder": 4
         },
         {
-          "string": "G",
-          "stringIndex": 2,
+          "string": "D",
+          "stringIndex": 3,
           "kind": "note",
           "fret": 9,
-          "midi": 64,
+          "midi": 59,
           "chordGroup": "E-2",
           "simultaneous": true,
           "chordLabel": "E",
           "visualOrder": 5
         },
         {
-          "string": "e",
-          "stringIndex": 0,
+          "string": "B",
+          "stringIndex": 1,
           "kind": "note",
           "fret": 9,
-          "midi": 73,
+          "midi": 68,
           "chordGroup": "E-3",
           "simultaneous": true,
           "chordLabel": "E",
           "visualOrder": 6
         },
         {
-          "string": "B",
-          "stringIndex": 1,
+          "string": "G",
+          "stringIndex": 2,
           "kind": "note",
           "fret": 9,
-          "midi": 68,
+          "midi": 64,
           "chordGroup": "E-3",
           "simultaneous": true,
           "chordLabel": "E",
           "visualOrder": 7
         },
         {
-          "string": "G",
-          "stringIndex": 2,
+          "string": "D",
+          "stringIndex": 3,
           "kind": "note",
           "fret": 9,
-          "midi": 64,
+          "midi": 59,
           "chordGroup": "E-3",
           "simultaneous": true,
           "chordLabel": "E",
           "visualOrder": 8
-        },
-        {
-          "string": "e",
-          "stringIndex": 0,
-          "kind": "note",
-          "fret": 9,
-          "midi": 73,
-          "chordGroup": "E-4",
-          "simultaneous": true,
-          "chordLabel": "E",
-          "visualOrder": 9
         },
         {
           "string": "B",
@@ -3347,7 +3336,7 @@
           "chordGroup": "E-4",
           "simultaneous": true,
           "chordLabel": "E",
-          "visualOrder": 10
+          "visualOrder": 9
         },
         {
           "string": "G",
@@ -3358,18 +3347,18 @@
           "chordGroup": "E-4",
           "simultaneous": true,
           "chordLabel": "E",
-          "visualOrder": 11
+          "visualOrder": 10
         },
         {
-          "string": "e",
-          "stringIndex": 0,
+          "string": "D",
+          "stringIndex": 3,
           "kind": "note",
-          "fret": 12,
-          "midi": 76,
-          "chordGroup": "G-1",
+          "fret": 9,
+          "midi": 59,
+          "chordGroup": "E-4",
           "simultaneous": true,
-          "chordLabel": "G",
-          "visualOrder": 12
+          "chordLabel": "E",
+          "visualOrder": 11
         },
         {
           "string": "B",
@@ -3380,7 +3369,7 @@
           "chordGroup": "G-1",
           "simultaneous": true,
           "chordLabel": "G",
-          "visualOrder": 13
+          "visualOrder": 12
         },
         {
           "string": "G",
@@ -3391,19 +3380,18 @@
           "chordGroup": "G-1",
           "simultaneous": true,
           "chordLabel": "G",
-          "visualOrder": 14
+          "visualOrder": 13
         },
         {
-          "string": "e",
-          "stringIndex": 0,
+          "string": "D",
+          "stringIndex": 3,
           "kind": "note",
-          "fret": 9,
-          "midi": 73,
-          "chordGroup": "E-final",
+          "fret": 12,
+          "midi": 62,
+          "chordGroup": "G-1",
           "simultaneous": true,
-          "slideOut": true,
-          "chordLabel": "E",
-          "visualOrder": 15
+          "chordLabel": "G",
+          "visualOrder": 14
         },
         {
           "string": "B",
@@ -3415,7 +3403,7 @@
           "simultaneous": true,
           "slideOut": true,
           "chordLabel": "E",
-          "visualOrder": 16
+          "visualOrder": 15
         },
         {
           "string": "G",
@@ -3423,6 +3411,18 @@
           "kind": "note",
           "fret": 9,
           "midi": 64,
+          "chordGroup": "E-final",
+          "simultaneous": true,
+          "slideOut": true,
+          "chordLabel": "E",
+          "visualOrder": 16
+        },
+        {
+          "string": "D",
+          "stringIndex": 3,
+          "kind": "note",
+          "fret": 9,
+          "midi": 59,
           "chordGroup": "E-final",
           "simultaneous": true,
           "slideOut": true,
@@ -4299,11 +4299,11 @@
           "visualOrder": 6
         },
         {
-          "string": "B",
-          "stringIndex": 1,
+          "string": "e",
+          "stringIndex": 0,
           "kind": "note",
           "fret": 17,
-          "midi": 76,
+          "midi": 81,
           "tieToNext": true,
           "visualOrder": 7
         }
@@ -4323,11 +4323,11 @@
       "timeSignature": "4/4",
       "events": [
         {
-          "string": "B",
-          "stringIndex": 1,
+          "string": "e",
+          "stringIndex": 0,
           "kind": "note",
           "fret": 17,
-          "midi": 76,
+          "midi": 81,
           "parenthesized": true,
           "continuationOnly": true,
           "tieFromPrevious": true,
@@ -4335,29 +4335,29 @@
           "visualOrder": 0
         },
         {
-          "string": "B",
-          "stringIndex": 1,
+          "string": "e",
+          "stringIndex": 0,
           "kind": "note",
           "fret": 17,
-          "midi": 76,
+          "midi": 81,
           "bendLabel": "full",
           "visualOrder": 1
         },
         {
-          "string": "B",
-          "stringIndex": 1,
+          "string": "e",
+          "stringIndex": 0,
           "kind": "note",
           "fret": 17,
-          "midi": 76,
+          "midi": 81,
           "bendLabel": "full",
           "visualOrder": 2
         },
         {
-          "string": "B",
-          "stringIndex": 1,
+          "string": "e",
+          "stringIndex": 0,
           "kind": "note",
           "fret": 17,
-          "midi": 76,
+          "midi": 81,
           "bendLabel": "full",
           "visualOrder": 3
         }
@@ -4376,48 +4376,48 @@
       "timeSignature": "4/4",
       "events": [
         {
-          "string": "B",
-          "stringIndex": 1,
+          "string": "e",
+          "stringIndex": 0,
           "kind": "note",
           "fret": 17,
-          "midi": 76,
+          "midi": 81,
           "bendLabel": "full",
           "slurToNext": true,
           "visualOrder": 0
         },
         {
-          "string": "B",
-          "stringIndex": 1,
+          "string": "e",
+          "stringIndex": 0,
           "kind": "note",
           "fret": 15,
-          "midi": 74,
+          "midi": 79,
           "slurFromPrevious": true,
           "visualOrder": 1
         },
         {
-          "string": "G",
-          "stringIndex": 2,
+          "string": "B",
+          "stringIndex": 1,
           "kind": "note",
           "fret": 17,
-          "midi": 72,
+          "midi": 76,
           "visualOrder": 2
         },
         {
-          "string": "G",
-          "stringIndex": 2,
+          "string": "B",
+          "stringIndex": 1,
           "kind": "note",
           "fret": 17,
-          "midi": 72,
+          "midi": 76,
           "vibrato": true,
           "tieToNext": true,
           "visualOrder": 3
         },
         {
-          "string": "G",
-          "stringIndex": 2,
+          "string": "B",
+          "stringIndex": 1,
           "kind": "note",
           "fret": 17,
-          "midi": 72,
+          "midi": 76,
           "parenthesized": true,
           "continuationOnly": true,
           "tieFromPrevious": true,
@@ -4441,49 +4441,49 @@
       "timeSignature": "4/4",
       "events": [
         {
-          "string": "G",
-          "stringIndex": 2,
+          "string": "B",
+          "stringIndex": 1,
           "kind": "note",
           "fret": 17,
-          "midi": 72,
+          "midi": 76,
           "bendLabel": "2",
           "slurToNext": true,
           "visualOrder": 0
         },
         {
-          "string": "G",
-          "stringIndex": 2,
+          "string": "B",
+          "stringIndex": 1,
           "kind": "note",
           "fret": 17,
-          "midi": 72,
+          "midi": 76,
           "bendLabel": "2",
           "visualOrder": 1
         },
         {
-          "string": "G",
-          "stringIndex": 2,
+          "string": "B",
+          "stringIndex": 1,
           "kind": "note",
           "fret": 17,
-          "midi": 72,
+          "midi": 76,
           "bendLabel": "1 3/4",
           "visualOrder": 2
         },
         {
-          "string": "G",
-          "stringIndex": 2,
+          "string": "B",
+          "stringIndex": 1,
           "kind": "note",
           "fret": 17,
-          "midi": 72,
+          "midi": 76,
           "bendLabel": "2",
           "slurToNext": true,
           "visualOrder": 3
         },
         {
-          "string": "G",
-          "stringIndex": 2,
+          "string": "B",
+          "stringIndex": 1,
           "kind": "note",
           "fret": 17,
-          "midi": 72,
+          "midi": 76,
           "bendLabel": "2",
           "visualOrder": 4
         }
@@ -4661,12 +4661,20 @@
           "visualOrder": 6
         },
         {
+          "string": "B",
+          "stringIndex": 1,
+          "kind": "note",
+          "fret": 12,
+          "midi": 71,
+          "visualOrder": 7
+        },
+        {
           "string": "e",
           "stringIndex": 0,
           "kind": "note",
           "fret": 12,
           "midi": 76,
-          "visualOrder": 7
+          "visualOrder": 8
         },
         {
           "string": "B",
@@ -4674,7 +4682,7 @@
           "kind": "note",
           "fret": 12,
           "midi": 71,
-          "visualOrder": 8
+          "visualOrder": 9
         },
         {
           "string": "B",
@@ -4682,7 +4690,7 @@
           "kind": "note",
           "fret": 15,
           "midi": 74,
-          "visualOrder": 9
+          "visualOrder": 10
         },
         {
           "string": "B",
@@ -4693,7 +4701,7 @@
           "parenthesized": true,
           "continuationOnly": true,
           "bendLabel": "full",
-          "visualOrder": 10
+          "visualOrder": 11
         },
         {
           "string": "e",
@@ -4701,7 +4709,7 @@
           "kind": "note",
           "fret": 12,
           "midi": 76,
-          "visualOrder": 11
+          "visualOrder": 12
         },
         {
           "string": "B",
@@ -4709,7 +4717,7 @@
           "kind": "note",
           "fret": 15,
           "midi": 74,
-          "visualOrder": 12
+          "visualOrder": 13
         },
         {
           "string": "B",
@@ -4717,7 +4725,7 @@
           "kind": "note",
           "fret": 12,
           "midi": 71,
-          "visualOrder": 13
+          "visualOrder": 14
         },
         {
           "string": "G",
@@ -4726,7 +4734,7 @@
           "fret": 14,
           "midi": 69,
           "slideOut": true,
-          "visualOrder": 14
+          "visualOrder": 15
         }
       ],
       "section": "Solo",
@@ -4738,10 +4746,11 @@
       "annotations": [
         "measure wraps from source page 16 onto source page 17",
         "parenthesized notes are preserved as visible bend/release continuations",
-        "exact wrapped-system timing intentionally deferred"
+        "exact wrapped-system timing intentionally deferred",
+        "visual recheck: first printed system ends B12; wrapped continuation begins with a distinct e12; both are retained"
       ],
-      "eventCount": 15,
-      "attackLikeEventCount": 13
+      "eventCount": 16,
+      "attackLikeEventCount": 14
     },
     {
       "measure": 90,
@@ -5895,114 +5904,103 @@
       "timeSignature": "4/4",
       "events": [
         {
-          "string": "e",
-          "stringIndex": 0,
+          "string": "B",
+          "stringIndex": 1,
           "kind": "note",
           "fret": 9,
-          "midi": 73,
+          "midi": 68,
           "chordGroup": "E-1",
           "simultaneous": true,
           "chordLabel": "E",
           "visualOrder": 0
         },
         {
-          "string": "B",
-          "stringIndex": 1,
+          "string": "G",
+          "stringIndex": 2,
           "kind": "note",
           "fret": 9,
-          "midi": 68,
+          "midi": 64,
           "chordGroup": "E-1",
           "simultaneous": true,
           "chordLabel": "E",
           "visualOrder": 1
         },
         {
-          "string": "G",
-          "stringIndex": 2,
+          "string": "D",
+          "stringIndex": 3,
           "kind": "note",
           "fret": 9,
-          "midi": 64,
+          "midi": 59,
           "chordGroup": "E-1",
           "simultaneous": true,
           "chordLabel": "E",
           "visualOrder": 2
         },
         {
-          "string": "e",
-          "stringIndex": 0,
+          "string": "B",
+          "stringIndex": 1,
           "kind": "note",
           "fret": 9,
-          "midi": 73,
+          "midi": 68,
           "chordGroup": "E-2",
           "simultaneous": true,
           "chordLabel": "E",
           "visualOrder": 3
         },
         {
-          "string": "B",
-          "stringIndex": 1,
+          "string": "G",
+          "stringIndex": 2,
           "kind": "note",
           "fret": 9,
-          "midi": 68,
+          "midi": 64,
           "chordGroup": "E-2",
           "simultaneous": true,
           "chordLabel": "E",
           "visualOrder": 4
         },
         {
-          "string": "G",
-          "stringIndex": 2,
+          "string": "D",
+          "stringIndex": 3,
           "kind": "note",
           "fret": 9,
-          "midi": 64,
+          "midi": 59,
           "chordGroup": "E-2",
           "simultaneous": true,
           "chordLabel": "E",
           "visualOrder": 5
         },
         {
-          "string": "e",
-          "stringIndex": 0,
+          "string": "B",
+          "stringIndex": 1,
           "kind": "note",
           "fret": 9,
-          "midi": 73,
+          "midi": 68,
           "chordGroup": "E-3",
           "simultaneous": true,
           "chordLabel": "E",
           "visualOrder": 6
         },
         {
-          "string": "B",
-          "stringIndex": 1,
+          "string": "G",
+          "stringIndex": 2,
           "kind": "note",
           "fret": 9,
-          "midi": 68,
+          "midi": 64,
           "chordGroup": "E-3",
           "simultaneous": true,
           "chordLabel": "E",
           "visualOrder": 7
         },
         {
-          "string": "G",
-          "stringIndex": 2,
+          "string": "D",
+          "stringIndex": 3,
           "kind": "note",
           "fret": 9,
-          "midi": 64,
+          "midi": 59,
           "chordGroup": "E-3",
           "simultaneous": true,
           "chordLabel": "E",
           "visualOrder": 8
-        },
-        {
-          "string": "e",
-          "stringIndex": 0,
-          "kind": "note",
-          "fret": 9,
-          "midi": 73,
-          "chordGroup": "E-4",
-          "simultaneous": true,
-          "chordLabel": "E",
-          "visualOrder": 9
         },
         {
           "string": "B",
@@ -6013,7 +6011,7 @@
           "chordGroup": "E-4",
           "simultaneous": true,
           "chordLabel": "E",
-          "visualOrder": 10
+          "visualOrder": 9
         },
         {
           "string": "G",
@@ -6024,18 +6022,18 @@
           "chordGroup": "E-4",
           "simultaneous": true,
           "chordLabel": "E",
-          "visualOrder": 11
+          "visualOrder": 10
         },
         {
-          "string": "e",
-          "stringIndex": 0,
+          "string": "D",
+          "stringIndex": 3,
           "kind": "note",
-          "fret": 7,
-          "midi": 71,
-          "chordGroup": "D-1",
+          "fret": 9,
+          "midi": 59,
+          "chordGroup": "E-4",
           "simultaneous": true,
-          "chordLabel": "D",
-          "visualOrder": 12
+          "chordLabel": "E",
+          "visualOrder": 11
         },
         {
           "string": "B",
@@ -6046,7 +6044,7 @@
           "chordGroup": "D-1",
           "simultaneous": true,
           "chordLabel": "D",
-          "visualOrder": 13
+          "visualOrder": 12
         },
         {
           "string": "G",
@@ -6057,19 +6055,18 @@
           "chordGroup": "D-1",
           "simultaneous": true,
           "chordLabel": "D",
-          "visualOrder": 14
+          "visualOrder": 13
         },
         {
-          "string": "e",
-          "stringIndex": 0,
+          "string": "D",
+          "stringIndex": 3,
           "kind": "note",
-          "fret": 9,
-          "midi": 73,
-          "chordGroup": "E-final",
+          "fret": 7,
+          "midi": 57,
+          "chordGroup": "D-1",
           "simultaneous": true,
-          "slideOut": true,
-          "chordLabel": "E",
-          "visualOrder": 15
+          "chordLabel": "D",
+          "visualOrder": 14
         },
         {
           "string": "B",
@@ -6081,7 +6078,7 @@
           "simultaneous": true,
           "slideOut": true,
           "chordLabel": "E",
-          "visualOrder": 16
+          "visualOrder": 15
         },
         {
           "string": "G",
@@ -6089,6 +6086,18 @@
           "kind": "note",
           "fret": 9,
           "midi": 64,
+          "chordGroup": "E-final",
+          "simultaneous": true,
+          "slideOut": true,
+          "chordLabel": "E",
+          "visualOrder": 16
+        },
+        {
+          "string": "D",
+          "stringIndex": 3,
+          "kind": "note",
+          "fret": 9,
+          "midi": 59,
           "chordGroup": "E-final",
           "simultaneous": true,
           "slideOut": true,
@@ -6117,114 +6126,103 @@
       "timeSignature": "4/4",
       "events": [
         {
-          "string": "e",
-          "stringIndex": 0,
+          "string": "B",
+          "stringIndex": 1,
           "kind": "note",
           "fret": 9,
-          "midi": 73,
+          "midi": 68,
           "chordGroup": "E-1",
           "simultaneous": true,
           "chordLabel": "E",
           "visualOrder": 0
         },
         {
-          "string": "B",
-          "stringIndex": 1,
+          "string": "G",
+          "stringIndex": 2,
           "kind": "note",
           "fret": 9,
-          "midi": 68,
+          "midi": 64,
           "chordGroup": "E-1",
           "simultaneous": true,
           "chordLabel": "E",
           "visualOrder": 1
         },
         {
-          "string": "G",
-          "stringIndex": 2,
+          "string": "D",
+          "stringIndex": 3,
           "kind": "note",
           "fret": 9,
-          "midi": 64,
+          "midi": 59,
           "chordGroup": "E-1",
           "simultaneous": true,
           "chordLabel": "E",
           "visualOrder": 2
         },
         {
-          "string": "e",
-          "stringIndex": 0,
+          "string": "B",
+          "stringIndex": 1,
           "kind": "note",
           "fret": 9,
-          "midi": 73,
+          "midi": 68,
           "chordGroup": "E-2",
           "simultaneous": true,
           "chordLabel": "E",
           "visualOrder": 3
         },
         {
-          "string": "B",
-          "stringIndex": 1,
+          "string": "G",
+          "stringIndex": 2,
           "kind": "note",
           "fret": 9,
-          "midi": 68,
+          "midi": 64,
           "chordGroup": "E-2",
           "simultaneous": true,
           "chordLabel": "E",
           "visualOrder": 4
         },
         {
-          "string": "G",
-          "stringIndex": 2,
+          "string": "D",
+          "stringIndex": 3,
           "kind": "note",
           "fret": 9,
-          "midi": 64,
+          "midi": 59,
           "chordGroup": "E-2",
           "simultaneous": true,
           "chordLabel": "E",
           "visualOrder": 5
         },
         {
-          "string": "e",
-          "stringIndex": 0,
+          "string": "B",
+          "stringIndex": 1,
           "kind": "note",
           "fret": 9,
-          "midi": 73,
+          "midi": 68,
           "chordGroup": "E-3",
           "simultaneous": true,
           "chordLabel": "E",
           "visualOrder": 6
         },
         {
-          "string": "B",
-          "stringIndex": 1,
+          "string": "G",
+          "stringIndex": 2,
           "kind": "note",
           "fret": 9,
-          "midi": 68,
+          "midi": 64,
           "chordGroup": "E-3",
           "simultaneous": true,
           "chordLabel": "E",
           "visualOrder": 7
         },
         {
-          "string": "G",
-          "stringIndex": 2,
+          "string": "D",
+          "stringIndex": 3,
           "kind": "note",
           "fret": 9,
-          "midi": 64,
+          "midi": 59,
           "chordGroup": "E-3",
           "simultaneous": true,
           "chordLabel": "E",
           "visualOrder": 8
-        },
-        {
-          "string": "e",
-          "stringIndex": 0,
-          "kind": "note",
-          "fret": 9,
-          "midi": 73,
-          "chordGroup": "E-4",
-          "simultaneous": true,
-          "chordLabel": "E",
-          "visualOrder": 9
         },
         {
           "string": "B",
@@ -6235,7 +6233,7 @@
           "chordGroup": "E-4",
           "simultaneous": true,
           "chordLabel": "E",
-          "visualOrder": 10
+          "visualOrder": 9
         },
         {
           "string": "G",
@@ -6246,18 +6244,18 @@
           "chordGroup": "E-4",
           "simultaneous": true,
           "chordLabel": "E",
-          "visualOrder": 11
+          "visualOrder": 10
         },
         {
-          "string": "e",
-          "stringIndex": 0,
+          "string": "D",
+          "stringIndex": 3,
           "kind": "note",
-          "fret": 12,
-          "midi": 76,
-          "chordGroup": "G-1",
+          "fret": 9,
+          "midi": 59,
+          "chordGroup": "E-4",
           "simultaneous": true,
-          "chordLabel": "G",
-          "visualOrder": 12
+          "chordLabel": "E",
+          "visualOrder": 11
         },
         {
           "string": "B",
@@ -6268,7 +6266,7 @@
           "chordGroup": "G-1",
           "simultaneous": true,
           "chordLabel": "G",
-          "visualOrder": 13
+          "visualOrder": 12
         },
         {
           "string": "G",
@@ -6279,19 +6277,18 @@
           "chordGroup": "G-1",
           "simultaneous": true,
           "chordLabel": "G",
-          "visualOrder": 14
+          "visualOrder": 13
         },
         {
-          "string": "e",
-          "stringIndex": 0,
+          "string": "D",
+          "stringIndex": 3,
           "kind": "note",
-          "fret": 9,
-          "midi": 73,
-          "chordGroup": "E-final",
+          "fret": 12,
+          "midi": 62,
+          "chordGroup": "G-1",
           "simultaneous": true,
-          "slideOut": true,
-          "chordLabel": "E",
-          "visualOrder": 15
+          "chordLabel": "G",
+          "visualOrder": 14
         },
         {
           "string": "B",
@@ -6303,7 +6300,7 @@
           "simultaneous": true,
           "slideOut": true,
           "chordLabel": "E",
-          "visualOrder": 16
+          "visualOrder": 15
         },
         {
           "string": "G",
@@ -6311,6 +6308,18 @@
           "kind": "note",
           "fret": 9,
           "midi": 64,
+          "chordGroup": "E-final",
+          "simultaneous": true,
+          "slideOut": true,
+          "chordLabel": "E",
+          "visualOrder": 16
+        },
+        {
+          "string": "D",
+          "stringIndex": 3,
+          "kind": "note",
+          "fret": 9,
+          "midi": 59,
           "chordGroup": "E-final",
           "simultaneous": true,
           "slideOut": true,
@@ -6399,5 +6408,29 @@
       "eventCount": 0,
       "attackLikeEventCount": 0
     }
-  ]
+  ],
+  "visualCorrectionAudit": {
+    "status": "REVIEWED_AGAINST_REPROVIDED_SCREENSHOTS",
+    "correctedMeasures": [
+      25,
+      26,
+      27,
+      35,
+      36,
+      55,
+      56,
+      57,
+      65,
+      66,
+      84,
+      85,
+      86,
+      87,
+      89,
+      107,
+      108
+    ],
+    "basis": "direct staff-line/string-line visual recheck; no horizontal-spacing timing inference",
+    "referenceFacingScoreCalls": 0
+  }
 }

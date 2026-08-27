@@ -6,18 +6,18 @@
   "machineReadableReference": {
     "continuationOnlyObjects": 23,
     "deadNoteObjects": 11,
-    "eventObjects": 486,
+    "eventObjects": 487,
     "exactStepTimingFrozen": false,
-    "gitBlobSha": "c1c173cae68e12e768377de87b0ac855d3af34f4",
+    "gitBlobSha": "b018d93bb5e2119ee843fbd3fbc9139484fde0d1",
     "measureCount": 113,
     "observedMidiRange": [
       45,
-      79
+      81
     ],
-    "pitchedEventObjects": 475,
+    "pitchedEventObjects": 476,
     "repositoryPath": "research/v154-professional-references/lead-professional-reference-machine-readable.json",
     "scoringReady": false,
-    "sha256": "c737c78dbd200e4c759765fbe7c73cd36b674fdcde7c29c6772d40765b4b50a1"
+    "sha256": "122e0f6b2fa63fb2ea701e9cefe897dd4337fd08de0792e11579f4933804b716"
   },
   "part": "lead",
   "preservedAtUtc": "2026-08-27T21:33:29.825583+00:00",
@@ -64,5 +64,30 @@
       "measure": 81,
       "type": "detached-gray-dot"
     }
-  ]
+  ],
+  "visualCorrectionAudit": {
+    "correctedAtUtc": "2026-08-27T21:45:47.735114+00:00",
+    "correctedMeasures": [
+      25,
+      26,
+      27,
+      35,
+      36,
+      55,
+      56,
+      57,
+      65,
+      66,
+      84,
+      85,
+      86,
+      87,
+      89,
+      107,
+      108
+    ],
+    "generatedCandidateModified": false,
+    "reason": "direct visual staff-line/string-line recheck and split-system measure-89 continuity review",
+    "referenceFacingScoreCallsDuringCorrection": 0
+  }
 }
