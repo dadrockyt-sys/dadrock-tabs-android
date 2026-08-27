@@ -1,0 +1,184 @@
+name: V147 Phase C Preserve Replay Once
+
+on:
+  push:
+    branches:
+      - v143-contextual-prune-lobo
+    paths:
+      - .github/workflows/v147-phase-c-preserve-replay-once.yml
+
+permissions:
+  contents: write
+  actions: read
+
+concurrency:
+  group: v147-phase-c-preserve-replay-once
+  cancel-in-progress: false
+
+jobs:
+  preserve:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    env:
+      TARGET_BRANCH: v143-contextual-prune-lobo
+      SOURCE_RUN_ID: '33038518285'
+      SOURCE_JOB_ID: '98406611428'
+      SOURCE_ARTIFACT_ID: '9633030568'
+      SOURCE_ARTIFACT_NAME: v147-phase-c-real-audio-33038518285
+      SOURCE_ARTIFACT_DIGEST: ea4c8b3a63b8798ec7bd3a88b1b16964d341064eac231266edc5d4e92a1cb68b
+      CANDIDATE_EVENT_SHA256: ca35c3492295a3079c17c35124df7a483166315e85649e95ded095c6c06b2b77
+      DEST: debug/v147-phase-c-real-audio/preserved-run-33038518285
+      GH_TOKEN: ${{ github.token }}
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ github.sha }}
+          fetch-depth: 0
+
+      - name: Gate archival-only execution
+        shell: bash
+        run: |
+          set -euo pipefail
+          test "$GITHUB_REF" = "refs/heads/$TARGET_BRANCH"
+          test "$(git rev-parse HEAD)" = "$GITHUB_SHA"
+          test ! -e "$DEST"
+          git fetch origin "$TARGET_BRANCH"
+          test "$(git rev-parse origin/$TARGET_BRANCH)" = "$GITHUB_SHA"
+
+      - name: Download finished Phase C artifact only
+        shell: bash
+        run: |
+          set -euo pipefail
+          rm -rf /tmp/v147-phase-c-preserve
+          mkdir -p /tmp/v147-phase-c-preserve
+          gh run download "$SOURCE_RUN_ID" \
+            --repo "$GITHUB_REPOSITORY" \
+            --name "$SOURCE_ARTIFACT_NAME" \
+            --dir /tmp/v147-phase-c-preserve
+
+      - name: Verify exact 13-file artifact and preserve
+        shell: bash
+        run: |
+          set -euo pipefail
+          python - <<'PY'
+          import hashlib
+          import json
+          import os
+          import shutil
+          from pathlib import Path
+
+          src = Path('/tmp/v147-phase-c-preserve')
+          dest = Path(os.environ['DEST'])
+          expected = {
+              'decisions.json': ('3ec6c42730bf571c29258eca131c4e32da257c1ac6073e5319073818e8ac49b9', 954471),
+              'candidate.json': ('c0215690d5bfd9d2d47b8784eee886e942fbd28c499f25c643635c45ff7a9636', 280933),
+              'construction-proof.json': ('16b7d6a258e07900bf033a922b4239c6270900221aa60f433cacd61b9a5bb448', 4589),
+              'phase-c-evidence.json': ('135e655e915ef4008e0544601a382b54c4104038f053ca5f0ffb6f2b121e193e', 6576),
+              'pdf-render-evidence.json': ('4d25a8346a40009ec5bdaf34c89f5d09e41ba9504e4264b0fd7cb21d7c25e4b9', 181386),
+              'freeze/rhythm-frozen-analysis.json': ('b6bce95abeb83b9c9839ed649adc51368a67720a5b072a8ea3717606e3825103', 280888),
+              'freeze/rhythm-freeze-manifest.json': ('882d8da86d500c68510d2b21a0721588072244d15d6f71cfe4bd3f093b5abbd8', 446),
+              'freeze/rhythm-pdf-event-fidelity.json': ('3d11f039a197df964a22c6ed085957d9277e1a814fe5b9fbadad79252e87379a', 445),
+              'raw-audio-identity.json': ('4ed7880b99fdeab8a1830efdbe3519024fcee0bc182213e18151ec0ad491c612', 204),
+              'pip-freeze.txt': ('14bcc9531c91cdcf5388a0b6c0f996907f46e039627b39adad051aa23b906c69', 455),
+              'preflight-output.txt': ('99211766cd16460d96d6daae9f3863e99c0d7a0f5a55a62020b00377b9832953', 813),
+              'execution-output.txt': ('7e07d371eb29e5b525a0e4a2844ca086ae8c343899266f53dd8c7d533e2cebe7', 5137),
+              'artifact-identities.json': ('26fa6529d748c706db2b9df53342988c8a5fd22abd4520eccf7c5b2104cf6200', 931),
+          }
+          actual_paths = sorted(
+              str(path.relative_to(src)).replace('\\', '/')
+              for path in src.rglob('*') if path.is_file()
+          )
+          if actual_paths != sorted(expected):
+              raise SystemExit(f'artifact file set mismatch: {actual_paths}')
+
+          forbidden_suffixes = {'.m4a', '.mp3', '.wav', '.flac', '.aac', '.ogg'}
+          for rel in actual_paths:
+              if Path(rel).suffix.lower() in forbidden_suffixes:
+                  raise SystemExit(f'raw/decoded audio unexpectedly present: {rel}')
+
+          dest.mkdir(parents=True, exist_ok=False)
+          manifest_files = {}
+          for rel, (expected_sha, expected_bytes) in expected.items():
+              source = src / rel
+              payload = source.read_bytes()
+              actual_sha = hashlib.sha256(payload).hexdigest()
+              if actual_sha != expected_sha or len(payload) != expected_bytes:
+                  raise SystemExit(
+                      f'identity mismatch {rel}: sha={actual_sha} bytes={len(payload)}'
+                  )
+              target = dest / rel
+              target.parent.mkdir(parents=True, exist_ok=True)
+              shutil.copyfile(source, target)
+              if target.read_bytes() != payload:
+                  raise SystemExit(f'copy mismatch: {rel}')
+              manifest_files[rel] = {
+                  'bytes': expected_bytes,
+                  'sha256': expected_sha,
+              }
+
+          candidate = json.loads((dest / 'candidate.json').read_text())
+          evidence = json.loads((dest / 'phase-c-evidence.json').read_text())
+          decisions = json.loads((dest / 'decisions.json').read_text())
+          if len(decisions) != 1144:
+              raise SystemExit(f'decision count mismatch: {len(decisions)}')
+          candidate_identity = (
+              evidence.get('candidate', {}).get('eventSha256')
+              or evidence.get('candidateEventSha256')
+              or evidence.get('candidateSha256')
+          )
+          if candidate_identity and candidate_identity != os.environ['CANDIDATE_EVENT_SHA256']:
+              raise SystemExit(f'candidate identity mismatch in evidence: {candidate_identity}')
+
+          manifest = {
+              'schemaVersion': 14741,
+              'classification': 'v147-phase-c-durable-reference-free-replay-preservation',
+              'sourceRunId': int(os.environ['SOURCE_RUN_ID']),
+              'sourceJobId': int(os.environ['SOURCE_JOB_ID']),
+              'sourceArtifactId': int(os.environ['SOURCE_ARTIFACT_ID']),
+              'sourceArtifactName': os.environ['SOURCE_ARTIFACT_NAME'],
+              'sourceArtifactDigestSha256': os.environ['SOURCE_ARTIFACT_DIGEST'],
+              'candidateEventSha256': os.environ['CANDIDATE_EVENT_SHA256'],
+              'preservedFileCount': len(manifest_files),
+              'files': manifest_files,
+              'decisionCount': len(decisions),
+              'rawAudioStored': False,
+              'normalizedPcmStored': False,
+              'fullCqtMatrixStored': False,
+              'perEventCqtDerivedEvidenceStored': True,
+              'referenceStoredOrRead': False,
+              'goldStoredOrRead': False,
+              'calibrationScoreRun': False,
+              'candidateReconstructed': False,
+              'audioDecodedOrRead': False,
+              'hpssOrCqtRecomputed': False,
+              'modalGpuUsed': False,
+              'productionIntegrated': False,
+              'futureReplayPurpose': 'reference-free replay of frozen V147 decision/fingering and candidate validation without real-audio or Modal/L4/GPU access',
+              'frontEndRetestRequiresSeparateAudioAuthorization': True,
+          }
+          (dest / 'preservation-manifest.json').write_text(
+              json.dumps(manifest, indent=2, sort_keys=True) + '\n',
+              encoding='utf-8',
+          )
+          print(json.dumps({
+              'preserved': True,
+              'artifactFiles': len(manifest_files),
+              'decisionCount': len(decisions),
+              'candidateEventSha256': os.environ['CANDIDATE_EVENT_SHA256'],
+              'audioRead': False,
+              'modalGpuUsed': False,
+          }, sort_keys=True))
+          PY
+
+      - name: Commit durable replay snapshot
+        shell: bash
+        run: |
+          set -euo pipefail
+          git fetch origin "$TARGET_BRANCH"
+          test "$(git rev-parse origin/$TARGET_BRANCH)" = "$GITHUB_SHA"
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add "$DEST"
+          git diff --cached --check
+          git commit -m 'debug: preserve V147 Phase C replay evidence'
+          git push origin "HEAD:$TARGET_BRANCH"
