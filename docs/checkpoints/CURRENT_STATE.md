@@ -2,13 +2,14 @@
 
 Updated: 2026-08-26 America/Montreal
 Branch: `v143-contextual-prune-lobo`
-Active phase: **V147 Phase C REAL-AUDIO ARTIFACT-FIRST CONSTRUCTION = GO / SEALED, and the fresh V147 durable replay bundle = COMPLETE / SEALED. Exactly one immutable candidate was constructed from the exact historical audio. The completed 13-file evidence artifact has been hash-gated and permanently mirrored into the branch for future reference-free replay without audio/Modal/L4/GPU access. Both one-use Phase-C workflows are deleted. STOP before Phase D/reference/gold scoring.**
+Active phase: **V147 Phase C REAL-AUDIO ARTIFACT-FIRST CONSTRUCTION = GO / SEALED, and the fresh V147 durable replay bundle = COMPLETE / SEALED. Exactly one immutable candidate was constructed from the exact historical audio. The completed 13-file evidence artifact has been hash-gated and permanently mirrored into the branch for future reference-free replay without audio/Modal/L4/GPU access. Both one-use Phase-C workflows are deleted. FRESH-CHAT HANDOFF IS READY. STOP before Phase D/reference/gold scoring and before any new Modal/L4 run.**
 
 ## Permanent safety / fixed protocol
 - Work only on `v143-contextual-prune-lobo`; never modify/merge `main` or Production.
 - `/ai-tab` frontend, Bass/Lead, `freezeReady=false`, main, Production untouched.
 - Phase C authorization covered artifact-first construction only and is now consumed/sealed.
 - Phase D/reference/gold scoring remains unauthorized.
+- Any future Modal/L4/GPU execution requires a separately frozen protocol and fresh explicit user authorization; **do not infer Modal authorization from the completed Phase-C audio authorization.**
 - Gold SHA256 `18fd868ae960dfcddc1ffb0110f1a9dfd8acc2ffeb46e247d1116cd54291526ac` was not opened/used.
 - No automatic promotion, candidate search, alternate candidate, post-result retuning, Modal/L4/GPU, or Production integration.
 
@@ -132,11 +133,24 @@ Active phase: **V147 Phase C REAL-AUDIO ARTIFACT-FIRST CONSTRUCTION = GO / SEALE
 - It does not establish musical improvement; no candidate accuracy score or accepted-baseline comparison was run.
 - Accepted baseline scores therefore remain unchanged.
 
+## FRESH-CHAT HANDOFF — DO THIS NEXT, IN ORDER
+1. **Start by reading this checkpoint and re-fetching branch head.** Confirm branch is still `v143-contextual-prune-lobo`; do not touch `main`/Production. Confirm candidate SHA `ca35c3492295a3079c17c35124df7a483166315e85649e95ded095c6c06b2b77` and durable manifest blob `9f67507b448eb3a36f6e5d2d96572af425c42cb5` are unchanged.
+2. **Prefer preserved V147 evidence before any expensive compute.** Use `debug/v147-phase-c-real-audio/preserved-run-33038518285/` for all reference-free decision/fingering/candidate-validation work that can be answered from it. Do not re-read/decode the song or use Modal/L4 merely to reproduce evidence already preserved.
+3. **Design and freeze V147 Phase D before opening any reference/gold.** Create a Phase-D preregistration that binds the immutable candidate/freeze/PDF identities, accepted baseline identity, frozen scorer/evaluator identities, Gold SHA, exact evaluation order, exact metrics/gates, no retuning/search after seeing results, no automatic promotion, and fail-closed behavior. Phase-D design/freeze itself must remain reference-free.
+4. **Checkpoint the Phase-D preregistration freeze, then STOP.** Phase D/reference/gold scoring requires fresh explicit user authorization after the preregistration is frozen. Do not treat this handoff as authorization to score.
+5. **If Phase D is explicitly authorized, run the smallest one-use scoring job possible.** Score only the immutable V147 candidate against the frozen calibration reference using the frozen scorer/evaluator; no candidate variants, no search, no threshold changes, no audio recomputation, and no Modal/L4 unless the frozen Phase-D protocol proves it is actually required. Persist exact score/delta/proof identities and seal the scoring workflow immediately afterward.
+6. **Use the Phase-D result to decide whether the planned “big Modal/L4 run” is justified.** Do not launch a large Modal job merely because it was anticipated. First determine what unresolved question remains after preserved replay + Phase-D scoring and whether CPU/reference-free replay can answer it.
+7. **Before any big Modal/L4 run, freeze a separate next-phase preregistration and preservation plan.** It must specify: the single scientific/engineering question, exact immutable inputs, model/code/blob identities, L4/GPU class and maximum run count, fixed parameters, allowed outputs, GO/STOP gates, no post-result retuning, no Production promotion, and a one-use execution workflow. It must also define durable preservation *before execution* so expensive output is reusable later.
+8. **For the future Modal/L4 preservation plan, preserve enough to avoid paying twice.** At minimum bind the source/input SHA(s), model/code identities, runtime/environment, raw model output or deterministic intermediate output needed for replay, candidate/event output, proof/metrics, and per-file hashes in a durable manifest. Mirror non-sensitive/non-audio replay outputs into a durable branch path rather than relying only on expiring Actions artifacts. If a large intermediate is too large for Git, define an alternate durable store plus immutable digest before the run. Do not regenerate audio/CQT merely for archival purposes.
+9. **Checkpoint immediately before the Modal/L4 execution boundary and ask for fresh explicit authorization.** No Modal/L4/GPU execution is currently authorized. After authorization, execute exactly once unless the preregistration explicitly permits more, persist the result, seal/delete the one-use workflow, and checkpoint again.
+10. **Phase D or later GO never means automatic Production promotion.** Any integration/promotion remains a separate preregistered and explicitly authorized phase.
+
 ## EXPLICIT NEXT STEPS
 1. Keep V147 A/B, Phase-C pre-audio, Phase-C real-audio construction, and durable replay preservation sealed; do not recreate/rerun either deleted Phase-C one-use workflow.
-2. Use `debug/v147-phase-c-real-audio/preserved-run-33038518285/` for future reference-free V147 decision/fingering/candidate-validation replay where applicable, avoiding new real-audio/Modal/L4/GPU work.
-3. **STOP before Phase D/reference scoring.** A new Phase-D preregistration must freeze candidate/freeze/PDF identities and evaluation order before any reference/gold access.
-4. Phase D requires separate explicit authorization after its preregistration is frozen; no automatic promotion.
+2. In a fresh chat, follow the handoff above: first freeze Phase D reference-free; then obtain explicit authorization before scoring.
+3. Use preserved V147 replay evidence to minimize audio/Modal/L4 usage wherever technically sufficient.
+4. Treat any future large Modal/L4 execution as a separate phase with a frozen preservation plan and fresh authorization before compute.
+5. No automatic promotion.
 
 ## Current stop point
 - V147 A GO/SEALED; V147 B GO/SEALED; Phase-C pre-audio GO/SEALED; **V147 Phase C REAL-AUDIO = GO/SEALED; durable V147 replay preservation = COMPLETE/SEALED**.
@@ -144,4 +158,4 @@ Active phase: **V147 Phase C REAL-AUDIO ARTIFACT-FIRST CONSTRUCTION = GO / SEALE
 - Durable preservation commit `5ad9b4eba040219e89be9286587756d81f5a9015`; manifest blob `9f67507b448eb3a36f6e5d2d96572af425c42cb5`.
 - One-use real-audio workflow sealed at `4b125f42dfa447e1fe86741c8f41c09dcaffc895`; one-use replay-preservation workflow sealed at `2ca2e9ebcdff768869d6a2935f909a755b3dfcfa`.
 - 247 observational ±1 pitch changes; all structural/position/PDF/determinism gates green.
-- Reference/gold/scoring remain untouched and unauthorized.
+- **Fresh-chat next action: design/freeze Phase D reference-free. Reference/gold scoring and all new Modal/L4/GPU execution remain unauthorized until their respective fresh explicit authorizations.**
