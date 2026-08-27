@@ -1,0 +1,52 @@
+{
+  "schema": "dadrock.tabs.v153.event347.phase-b-construction-preregistration.v1",
+  "classification": "reference-free-single-event-construction-preregistration",
+  "branch": "v143-contextual-prune-lobo",
+  "populationEventIndices": [347],
+  "sourceIdentities": {
+    "acceptedCanonicalEventSha256": "4e6f9f247134f79f30a5448515c52a6ca1012c1f1314c3458b448582999e3881",
+    "v152CandidateFileSha256": "9b15ab3aa9540438db0750bb11c592a686e87b00b3acba491c80791badd349cb",
+    "v152CandidateGitBlob": "8486188bc7c2f5d0d7649e98b0970b64dd0eebed",
+    "v152CandidateCanonicalEventSha256": "5ebedfb173730bb5e2639e7450841fb113f7db9af2acec19b88e58cca50679e6",
+    "v153PhaseAResultGitBlob": "012353df21573a4e34f50500c1fa5deb4b63422b",
+    "v153PhaseAResultFileSha256": "cd2cef3fd1491f950ad795cab6e39b4013d137abfa2f4c94c1d96db133783c53",
+    "constructionAuthorizationGitBlob": "ee74c80e0d50c01a8ca5deddee0fd04d7c9d005d"
+  },
+  "frozenPolicy": "accepted-baseline-plus-only-v152-event-347",
+  "constructionRule": [
+    "materialize and canonicalize the accepted baseline",
+    "load and canonicalize the immutable V152 candidate",
+    "verify V153 Phase A says uniqueStrongestEventIndex=347 and rankedEventIndices begins with 347",
+    "replace accepted eventIndex 347 with exactly the V152 eventIndex 347 row",
+    "leave every other accepted row byte-equivalent at the canonical-event level",
+    "construct no alternate candidate"
+  ],
+  "requiredGates": {
+    "candidateEventCount": 1144,
+    "generatedMeasureCount": 113,
+    "changedEventIndicesVersusAccepted": [347],
+    "changedEventCountVersusAccepted": 1,
+    "changedOnsetCountVersusAccepted": 1,
+    "polyphonicChangedEventsVersusAccepted": 0,
+    "timingMetadataInvariantViolations": 0,
+    "positionIdentityViolations": 0,
+    "v152ProjectionViolations": 0,
+    "deterministicReplayMatch": true,
+    "pdfEventFidelity": 1.0,
+    "candidateVariantsConstructed": 1,
+    "scoreCallCount": 0
+  },
+  "forbidden": [
+    "Gold/reference/professional-image access",
+    "prior score-result inspection",
+    "reference-facing scoring",
+    "audio reread/decode",
+    "HPSS/CQT recomputation",
+    "Modal/L4/CUDA/GPU",
+    "candidate search or variants",
+    "threshold/weight/filter/rule tuning",
+    "main/Production modification",
+    "automatic promotion"
+  ],
+  "postResultBoundary": "Persist and seal the one candidate, then STOP. Scoring requires separate fresh explicit authorization."
+}
