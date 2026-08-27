@@ -1,0 +1,83 @@
+name: V154 Bass timing batch 06-10 once
+
+on:
+  push:
+    branches: [v143-contextual-prune-lobo]
+    paths: [.github/workflows/v154-bass-timing-batch-06-10-once.yml]
+
+permissions:
+  contents: write
+
+jobs:
+  freeze:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: v143-contextual-prune-lobo
+          fetch-depth: 0
+      - name: Validate and freeze source-local Bass attacks pages 06-10
+        shell: bash
+        run: |
+          set -euo pipefail
+          python3 - <<'PY'
+          import hashlib, json
+          from pathlib import Path
+          skeleton_path=Path('research/v154-professional-references/bass-timing-normalization-skeleton.json')
+          skeleton=json.loads(skeleton_path.read_text())
+          expected='a8e1d123f8a19e69d9c160d78aea7637b5a2012232b23e1f1ddff051e9bc40b3'
+          if skeleton.get('sourceSha256')!=expected: raise SystemExit('Bass skeleton source identity mismatch')
+          steps={
+            34:[2,4,6,8,10,12],35:[0,4,6,8,10,12,14],36:[0,4,6,8,10,12,14],37:[0,2,4,6,8,10,14],
+            38:[],39:[],40:[],41:[],42:[8,9,10,11,12,14],43:[0,4,7,8,10],44:[0,4,7,8,10,12,14],45:[0,4,7,8,10],46:[0,4,7,8,10,12,14],47:[0,4,8,10,12,14],
+            48:[0,4,8,10,12,14],49:[0,4,8,10,12,14],50:[0,4,6,8,10,12,14],51:[0,4,8,10,12,14],52:[0,4,8,10,12,14],
+            53:[0,4,8,10,12,14],54:[0,4,8,10,12,14],55:[0,4,8,10,14],56:[0,4,8,10,12,14],57:[0,4,8,12,14],
+            58:[0,4,8,12,14],59:[0,4,8,12,14],60:[0,4,8,10,12,14],61:[0,4,8,12,14],62:[0,4,8,12]
+          }
+          source_files={6:'1000120392.jpg',7:'1000120393.jpg',8:'1000120394.jpg',9:'1000120395.jpg',10:'1000120396.jpg'}
+          ranges=[(34,41,6),(42,47,7),(48,52,8),(53,57,9),(58,62,10)]
+          page_for={m:p for a,b,p in ranges for m in range(a,b+1)}
+          by={int(m['measure']):m for m in skeleton['measures']}
+          measures=[]; metered_total=grace_total=dead_total=cont_total=0
+          for m in range(34,63):
+              mo=by[m]
+              attacks=[e for e in mo.get('events',[]) if e.get('k') in ('N','X')]
+              metered=[e for e in attacks if not e.get('grace',False)]
+              grace=[e for e in attacks if e.get('grace',False)]
+              cont=[e for e in mo.get('events',[]) if e.get('k')=='C']
+              if len(metered)!=len(steps[m]):
+                  raise SystemExit(f'm{m}: metered attack count {len(metered)} != source steps {len(steps[m])}; total attacks {len(attacks)}, grace {len(grace)}')
+              if steps[m]!=sorted(steps[m]) or len(set(steps[m]))!=len(steps[m]) or any(s<0 or s>15 for s in steps[m]):
+                  raise SystemExit(f'm{m}: invalid source-local step sequence')
+              step_by_o={e['o']:s for e,s in zip(metered,steps[m])}
+              ev=[]
+              for e in attacks:
+                  if e.get('grace',False):
+                      next_metered=next((x for x in metered if x['o']>e['o']),None)
+                      anchor=step_by_o.get(next_metered['o']) if next_metered else None
+                      ev.append({'visualOrder':e['o'],'kind':'grace-pitched' if e['k']=='N' else 'grace-dead-note','midi':e.get('m'),'sourceLocalStep':None,'graceBeforeSourceLocalStep':anchor,'excludeFromScoring':True})
+                  else:
+                      kind='pitched' if e['k']=='N' else 'dead-note'
+                      if e['k']=='X': dead_total+=1
+                      ev.append({'visualOrder':e['o'],'kind':kind,'midi':e.get('m'),'sourceLocalStep':step_by_o[e['o']],'excludeFromScoring':False})
+              measures.append({'measure':m,'timeSignature':mo.get('timeSignature'),'sourcePage':page_for[m],'sourceFile':source_files[page_for[m]],'excludeFromScoring':bool(mo.get('excludeFromScoring',False)),'attacks':ev,'continuationOnlyCount':len(cont)})
+              metered_total+=len(metered); grace_total+=len(grace); cont_total+=len(cont)
+          payload={'schema':'dadrock.tabs.v154.bass-source-local-timing-batch.v1','part':'bass','measureRange':{'first':34,'last':62,'count':29},'sourceAuthority':'Canonical professional Bass notation pages; timing decoded from explicit rests, stems, beams, dots, grace notation, and ties. Generated candidate was not read.','canonicalPageSetSha256':'abd1748066966ceb93fe40bf8c8df3168f6c871ba006e44d28f8840184e3cde3','skeletonSourceSha256':expected,'timingResolution':'16th-note source-local steps; unmetered grace attacks preserved but excluded from scorer rows','measures':measures,'policy':{'generatedCandidateRead':False,'scoringPerformed':False,'generatedCandidateModified':False,'humanCandidateCorrection':False,'gpuUsed':False,'mainOrProductionModified':False}}
+          out=Path('research/v154-professional-references/scorer-ready/bass-source-local-timing-pages-06-10.json'); out.parent.mkdir(parents=True,exist_ok=True)
+          b=(json.dumps(payload,indent=2,sort_keys=True)+'\n').encode(); out.write_bytes(b)
+          receipt={'schema':'dadrock.tabs.v154.bass-source-local-timing-batch-receipt.v1','outputPath':str(out),'outputSha256':hashlib.sha256(b).hexdigest(),'measureCount':29,'meteredAttackCount':metered_total,'graceAttackCount':grace_total,'deadNoteAttackCount':dead_total,'continuationOnlyCount':cont_total,'sourcePages':[6,7,8,9,10],'sourceFiles':[source_files[i] for i in range(6,11)],'countAndOrderValidation':'PASS','gracePolicy':'preserved-unmetered-excluded-from-scorer','generatedCandidateRead':False,'scoreCalls':0,'gpuUsed':False,'mainOrProductionModified':False}
+          rp=Path('research/v154-professional-references/scorer-ready/bass-source-local-timing-pages-06-10-receipt.json'); rp.write_text(json.dumps(receipt,indent=2,sort_keys=True)+'\n')
+          print(json.dumps(receipt,indent=2,sort_keys=True))
+          PY
+      - name: Commit batch and seal workflow
+        shell: bash
+        run: |
+          set -euo pipefail
+          git config user.name "dadrock-v154-bot"
+          git config user.email "actions@users.noreply.github.com"
+          git add research/v154-professional-references/scorer-ready/bass-source-local-timing-pages-06-10.json
+          git add research/v154-professional-references/scorer-ready/bass-source-local-timing-pages-06-10-receipt.json
+          git rm .github/workflows/v154-bass-timing-batch-06-10-once.yml
+          git commit -m "v154: freeze Bass timing pages 06-10"
+          git push origin HEAD:v143-contextual-prune-lobo
