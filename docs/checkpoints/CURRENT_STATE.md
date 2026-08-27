@@ -2,7 +2,7 @@
 
 Updated: 2026-08-26 America/Montreal
 Branch: `v143-contextual-prune-lobo`
-Active phase: **V144 Rhythm baseline preserved; Families #1–#14 fully consumed/sealed. V145 Stage 1 and Stage 2 are preregistered, implemented, CPU-proven, and sealed. V145 Stage 3 offline trial is now preregistered before implementation/scoring; adapter, proof, and one-shot score are still pending. No Modal/L4/GPU without fresh explicit authorization.**
+Active phase: **V144 Rhythm baseline preserved; Families #1–#14 fully consumed/sealed. V145 Stage 1, Stage 2, and the preregistered Stage 3 offline adapter are implemented, CPU-proven, and sealed. The real Stage 3 V5 candidate/calibration trial has NOT run yet. No Modal/L4/GPU/live audio without fresh explicit authorization.**
 
 ## Permanent safety / fixed protocol
 - Work only on `v143-contextual-prune-lobo`; never modify/merge `main` or Production.
@@ -33,52 +33,45 @@ Active phase: **V144 Rhythm baseline preserved; Families #1–#14 fully consumed
 
 ## V145 Stage 2 — FROZEN / CPU-PROVEN / SEALED
 - Preregistration `docs/v145-rhythm-decoder-stage2-preregistration.md`; commit `9fe0396fc1c320e3da5f5955d823df615a787603`.
-- Stage2 module `modal/v145_rhythm_sequence_decoder.py`; frozen blob **`5f86f57d0fd10774690d50528d51bad6e0392bf3`**.
-- Stage2 tests `modal/tests/test_v145_rhythm_sequence_decoder.py`; frozen blob **`b16b8d2060e1ea3b47225f1c7c6072cb260c0db8`**.
-- Architecture: generated Rhythm evidence -> frozen Stage1 normalization -> runtime timing-grid inference -> simultaneity clusters -> common-onset guitar-state options -> global bounded sequence search.
-- Grid inference: quantum0.050..0.500s; candidates from generated consecutive onset deltas + median /1..4; support>=0.80 within normalized residual<=0.18; median<=0.12; min4 events.
-- Cluster window `0.30*quantum`; common selected onset required for all cluster members; exact MIDI only; unique strings; max fret24/max span7.
-- Global beam width64; strict increasing separate attack onsets; Stage1 continuity transition cost.
-- Definitive CPU proof workflow run **`33027229509`**, job **`98371326572`**: **COMPLETED / SUCCESS**.
-- Proof `debug/v145-rhythm-decoder/proofs/cpu-stage2-proof.json`; blob **`0522dd00598fcd5916349cb9747ca3588eaedb90`**; persistence commit **`e3ff86765cb4e072aef7b99f68435c1fb07400fc`**; schema14502.
-- Proof states: cpuContractTestsPassed=true; runtimeReferenceInput=false; goldInputUsed=false; fit/validation/canary labels not read; newPitchGeneration=false; modalDependency=false; modalGpuUsed=false; liveAudioBenchmarkRun=false; acceptedBaselineChanged=false.
-- Stage2 proof workflow creation commit `3ada879b29c1de58d62077494138a830f6c4ee27`; workflow blob `a354bc4fdc8927995de9d48ea90f810c9e74435d`; deletion/sealing commit **`68d1d95859e511f183bf857e5035b8b7635c8bc2`**. Never rerun it.
-- Stage1 frozen blob remained unchanged through Stage2.
+- Stage2 `modal/v145_rhythm_sequence_decoder.py`; frozen blob `5f86f57d0fd10774690d50528d51bad6e0392bf3`.
+- Stage2 tests blob `b16b8d2060e1ea3b47225f1c7c6072cb260c0db8`.
+- Proof run `33027229509`, job `98371326572`: SUCCESS.
+- Proof `debug/v145-rhythm-decoder/proofs/cpu-stage2-proof.json`; blob `0522dd00598fcd5916349cb9747ca3588eaedb90`; persistence `e3ff86765cb4e072aef7b99f68435c1fb07400fc`; schema14502.
+- Proof workflow deletion/sealing commit `68d1d95859e511f183bf857e5035b8b7635c8bc2`. Never rerun it.
 
-## V145 Stage 3 offline feasibility — ESTABLISHED / SCORE-FREE
-- Saved V5 render stream: `debug/v143-contextual-prune/v5-professional-pdf/v5-render-stream.json`.
-- Git blob **`fe61f7ad53a4d71348a5113ecc9e3876eaad98d4`**; raw SHA256 **`7c3399d3f5e05ecc8ac98d71d0e5300e1e78f63ae96c1642fe4a19debb4061b2`**.
-- Exact source-only V5 renderer input: 1209 events /113 measures; tempo `129.19921875`; `4/4`; standard tuning.
-- Absolute generated-only seconds can be reconstructed from `(measure, step, tempo)` without audio, gold, or labels.
-- Frozen validation/render identities remain canonical `088d44827fb23e20d9aeeb4944a672989af5846c`, freeze `710bb6a3b15b99d3d11ceb4948d7c7175d208afc`, scorer `cc4bf61a99f22bf87a6c255e5a81220fbc82223b`, PDF fidelity `5e1564216873046237fb545078a04a6b18f72b27`, render contract `ccbb93c48982798cc474309fd981f6ca02d5c8d4`.
-- Calibration reference path identified without opening contents: `debug/v144-rhythm-calibration/reference/professional-rhythm-gold-reference.json`; raw SHA256 `18fd868ae960dfcdd1ffb0110f1a9dfd8acc2ffeb46e247d1116cd54291526ac`.
-- Generic holdout scorer CLI intentionally requires references under `validation/rhythm_holdout/reference`; Stage3 therefore preregisters an evaluation-only harness using frozen scorer primitives/full scoring function after freeze/PDF proof, rather than moving/copying gold.
+## V145 Stage 3 offline source / fixed validation chain
+- V5 stream path `debug/v143-contextual-prune/v5-professional-pdf/v5-render-stream.json`.
+- Git blob `fe61f7ad53a4d71348a5113ecc9e3876eaad98d4`; raw SHA256 `7c3399d3f5e05ecc8ac98d71d0e5300e1e78f63ae96c1642fe4a19debb4061b2`.
+- Source-only V5 renderer input: 1209 events /113 measures; tempo `129.19921875`; `4/4`; E Standard.
+- Calibration reference path `debug/v144-rhythm-calibration/reference/professional-rhythm-gold-reference.json`; raw SHA256 `18fd868ae960dfcdd1ffb0110f1a9dfd8acc2ffeb46e247d1116cd54291526ac`. Reference contents are evaluation-only after freeze/PDF gate.
+- Frozen validation/render identities: canonical `088d44827fb23e20d9aeeb4944a672989af5846c`; freeze `710bb6a3b15b99d3d11ceb4948d7c7175d208afc`; scorer `cc4bf61a99f22bf87a6c255e5a81220fbc82223b`; full-score helper `1ca2b8550d6c08e793f26b3aa91b99fb44fa7ddb`; PDF fidelity `5e1564216873046237fb545078a04a6b18f72b27`; render contract `ccbb93c48982798cc474309fd981f6ca02d5c8d4`.
 
-## V145 Stage 3 — PREREGISTERED / NOT IMPLEMENTED / NOT SCORED
-- Preregistration: `docs/v145-rhythm-decoder-stage3-offline-preregistration.md`.
-- Preregistration creation commit **`64319400dcaa7d23850e8eda8985e823d24ff9a1`**.
-- Preregistration blob **`bb60a3bcc5f6e136eb6efb5706828379e007ec1d`**.
-- Frozen implementation path: `validation/v145_rhythm_decoder/offline_stage3_adapter.py`.
-- Frozen tests path: `modal/tests/test_v145_rhythm_stage3_offline_adapter.py`.
-- Exactly one decoder call on reconstructed generated-only V5 evidence; no candidate search/ranking/alternate.
-- Event count fixed at 1209; eventIndex/list order/MIDI immutable; only unprotected atomic decoded groups may change `measure`, `step`, `stringIndex`, `fret`.
-- Technique/bend/legato events and referenced link targets are protected; any selected group containing a protected event is copied source-exact.
-- Selected seconds map back to source 16th grid with frozen half-up conversion and residual <=0.01 source steps; out-of-range/residual/collision groups preserve source unchanged.
-- Physical pitch/string/fret inconsistency or new cell multiplicity/measure-set failure is fail-closed before scoring.
-- Final generated measure set must equal source and contain all 113 measures; no additions/deletions/new pitches.
-- Mandatory CPU proof before real candidate/score; proof cannot build/score the real V5 Stage3 candidate.
-- One-shot real execution order is fixed: verify -> CPU tests -> build generated-only candidate -> invariant check -> freeze -> renderer contract -> PDF event fidelity1.0 -> scorer pre-reference validation -> only then open/hash/validate calibration gold -> score -> immutable recheck -> persist explicit Stage3 artifacts -> seal workflow/trigger.
-- Score is calibration benchmark only, never unseen holdout; no score-driven retuning/replay; report must keep `acceptedBaselineChanged=false` and `promotionAllowed=false` regardless of result.
+## V145 Stage 3 — PREREGISTERED / ADAPTER CPU-PROVEN / SEALED / REAL TRIAL NOT RUN
+- Preregistration `docs/v145-rhythm-decoder-stage3-offline-preregistration.md`.
+- Prereg creation commit `64319400dcaa7d23850e8eda8985e823d24ff9a1`; frozen blob `bb60a3bcc5f6e136eb6efb5706828379e007ec1d`.
+- Adapter `validation/v145_rhythm_decoder/offline_stage3_adapter.py`.
+- Initial creation `65ce96f716b44d07c93affa5676d7508b59cb7ad`; source-schema tempo-key correction before proof `5388ebd4ff0b617ae54d40270c799f5a3150e500`.
+- Frozen adapter blob **`434d4b2582991c216df411455f232b8d211337c6`**.
+- Synthetic tests `modal/tests/test_v145_rhythm_stage3_offline_adapter.py`; frozen blob **`3eee7ae5253ad0eecbeb492eaa24216f0fa21fee`**.
+- Adapter contract: exactly one Stage2 call; generated-only seconds from source grid; event count/eventIndex/list order/MIDI immutable; technique/bend/legato/link targets protected; decoded common-onset groups applied atomically; only `measure`,`step`,`stringIndex`,`fret` may change; 0.01-step conversion residual; collision/range groups preserve source; physical-position and coverage failures fail closed; exactly 113 generated measures; no add/delete/new pitch.
+- Definitive CPU proof workflow creation/head commit **`d034b96bc97b76df2046ddd41423b48c03199d5a`**; workflow blob **`1e1b386824ba4bcdab7e51a4ed14f361e39e2457`**.
+- CPU proof run **`33029862099`**, job **`98379640869`**, attempt1: **COMPLETED / SUCCESS**.
+- Every proof step succeeded: exact identity/isolation checks, compile, constructor API anti-reference proof, Stage1 tests, Stage2 tests, Stage3 synthetic invariant tests, proof persistence.
+- Proof `debug/v145-rhythm-decoder/proofs/cpu-stage3-offline-adapter-proof.json`; blob **`f55dcd1087f108d0d93c4a5a1a86cb5058ef4eb4`**; persistence commit **`03a0cfcc5eceae64cc37a02e84481c5a8a2ec1de`**; schema14503.
+- Proof explicitly states realV5CandidateBuilt=false, calibrationScoreRun=false, candidateConstructorApiHasReferenceInput=false, runtimeReferenceInput=false, goldInputUsed=false, modalGpuUsed=false, liveAudioBenchmarkRun=false, acceptedBaselineChanged=false.
+- Proof workflow deletion/sealing commit **`39d20843a6d4211e2aa629afa3fedbc45c36e82a`**. Never rerun it.
+- No real Stage3 candidate, PDF-fidelity trial, or calibration score exists yet.
 
 ## EXPLICIT NEXT STEPS
-1. Implement the preregistered CPU-only Stage3 adapter exactly; do not change Stage1/Stage2.
-2. Add synthetic invariant tests at the frozen test path.
-3. Create/run one definitive self-reporting CPU proof, persist proof, delete/seal proof workflow immediately, checkpoint.
-4. Only after successful sealed proof, arm one one-shot offline Stage3 execution using the exact preregistered order.
-5. Checkpoint immediately before and after the offline trial and after sealing.
-6. No Modal/L4/GPU/live audio; do not touch main/Production/frontend/Bass/Lead/freezeReady=false.
+1. Preserve frozen Stage1/Stage2/Stage3 adapter/test/prereg/proof identities exactly.
+2. Implement/freeze the evaluation-only Stage3 score harness before the real one-shot; it must first validate the completed freeze/PDF gate, then and only then open/hash/validate the V144 calibration gold and score the frozen candidate.
+3. Checkpoint the evaluation harness identity before arming the one-shot.
+4. Arm exactly one CPU-only Stage3 real execution workflow with sole trigger; verify all frozen identities, re-run CPU tests, build the real generated-only V5 candidate once, validate invariants, freeze, renderer-contract proof, PDF event fidelity=1.0, scorer pre-reference gate, then calibration score.
+5. Persist explicit Stage3 candidate/report artifacts, seal/delete workflow and trigger immediately, checkpoint.
+6. Regardless of score: no retune/replay, `acceptedBaselineChanged=false`, `promotionAllowed=false`; family #10 remains accepted unless a separate later promotion protocol is frozen and succeeds.
+7. No Modal/L4/GPU/live audio; do not touch main/Production/frontend/Bass/Lead/freezeReady=false.
 
 ## Current stop point
 - Accepted scores remain **35.4 / 6.7 / 5.5 / 5.8 / 100 / 100**.
-- V145 Stage1 and Stage2 CPU proofs SUCCESS/sealed.
-- V145 Stage3 protocol is frozen before code/score; adapter/proof/trial still pending.
+- V145 Stage1/Stage2/Stage3-adapter CPU proofs all SUCCESS and sealed.
+- Next safe step is the evaluation-only harness; real Stage3 V5 candidate/score has not run.
