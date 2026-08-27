@@ -2,7 +2,7 @@
 
 Updated: 2026-08-26 America/Montreal
 Branch: `v143-contextual-prune-lobo`
-Active phase: **V146 is CLOSED/SEALED after regression. V147 Phase A preregistration and musical implementation remain frozen. Repository-native attempt 1 is consumed/failed closed at the proof import boundary after all 13 tests passed. An execution-only repair revision is now frozen before workflow modification; it authorizes exactly one fresh CPU/reference-free run with only module-style proof invocation changed. No calibration/gold access, no Modal/L4/GPU/live audio, no production promotion.**
+Active phase: **V146 is CLOSED/SEALED after regression. V147 Phase A preregistration and musical implementation remain frozen. Repository-native attempt 1 is consumed/failed closed at the proof import boundary after all 13 tests passed. The separately frozen execution-only repair has now been applied exactly; the single fresh CPU/reference-free run is pending/being observed. No calibration/gold access, no Modal/L4/GPU/live audio, no production promotion.**
 
 ## Permanent safety / fixed protocol
 - Work only on `v143-contextual-prune-lobo`; never modify/merge `main` or Production.
@@ -56,20 +56,15 @@ Active phase: **V146 is CLOSED/SEALED after regression. V147 Phase A preregistra
 
 ## V147 Phase A — PITCH HYPOTHESIS BEFORE FINGERING / FROZEN / IMPLEMENTED
 - Preregistration: `docs/v147-pitch-hypothesis-preregistration.md`; initial freeze commit `a0bb5412be8830fca27726ad2067a713e8441089`; pre-implementation aggregation clarification `d1dcb96943af758cdd54843637366701f25b4b22`; prereg blob `026d3bdbbebd385b7bdd4e896da569091b0265b7`.
-- Both prereg commits occurred before any V147 implementation code.
-- Structural diagnosis: `modal/v145_rhythm_decoder.py` preserves incoming event MIDI and optimizes timing/playable string-fret states around that immutable pitch. This explains V146 `pitchChanges = 0` and establishes the V147 signal boundary.
-- Existing reference-free signal path:
-  - `analyzer/modal_analyzer.py`: Basic Pitch event MIDI/confidence.
-  - `analyzer/modal_bend_harmonic_evidence_benchmark.py`: HPSS harmonic audio + 48-bin/octave CQT evidence.
-  - `modal/v144_rhythm_pitch_shift_policy.py`: precedent for bounded ±1 alternatives only; its sequence/slope heuristic is not reused.
 - Frozen candidate family `{midi-1,midi,midi+1}` within `[40,88]`; fail closed on missing/non-finite/tied/weak/ambiguous evidence.
 - Frozen CQT aggregation: explicit frames; ±0.30 summed candidate band; ±2.0 baseline excluding ±0.75; width-normalized median baseline; per-frame dB delta; median across frames; +12 octave support only when fully represented.
 
-### V147 implementation committed
-- Pure decision + prepared-CQT adapter: `modal/v147_pitch_hypothesis.py`; creation commit `ef08f480eea0bc0907ca5c686bc65bae60e858eb`; blob `49bce8b968406bb0d61ab61394954ef8a8303eb7`.
-- Contract tests: `modal/tests/test_v147_pitch_hypothesis.py`; creation commit `e02823b82ff259b0bf3cb173245f382c37f5dda1`; blob `f71d1da6c52a6a737faca7ab4f8989fb702be96d`.
-- Standalone generated proof harness: `modal/v147_pitch_hypothesis_cpu_proof.py`; creation commit `ac6b92618f2cc52971e6b42c769f0345617d51bf`; blob `e9d28739cd19f095cb83807fd0b23c2b14b7c966`; schema14701.
-- Implementation keeps V145 files untouched and has no calibration/gold, Modal/GPU, live-audio, or production integration path.
+### V147 implementation committed / still unchanged
+- `modal/v147_pitch_hypothesis.py`: blob `49bce8b968406bb0d61ab61394954ef8a8303eb7`.
+- `modal/tests/test_v147_pitch_hypothesis.py`: blob `f71d1da6c52a6a737faca7ab4f8989fb702be96d`.
+- `modal/v147_pitch_hypothesis_cpu_proof.py`: blob `e9d28739cd19f095cb83807fd0b23c2b14b7c966`; schema14701.
+- All three blobs were re-fetched and re-verified unchanged after the workflow repair commit.
+- V145 files, thresholds, cases, evidence representation, scoring rules, and production paths remain untouched.
 
 ### V147 local exact-source preflight — SUPPORTING ONLY
 - Exact frozen source reconstruction: `13 passed`; generated proof gate `GO`; 11/11 proof cases passed.
@@ -77,22 +72,19 @@ Active phase: **V146 is CLOSED/SEALED after regression. V147 Phase A preregistra
 - This does not replace repository-native proof evidence.
 
 ### V147 repository-native attempt 1 — CONSUMED / FAILED CLOSED BEFORE PROOF
-- Single-use workflow creation commit `aa7c3dc69367749a228137b7e2cb14cbf72c8610`.
+- Workflow creation commit `aa7c3dc69367749a228137b7e2cb14cbf72c8610`.
 - Run `33034467868`, job `98394054352`, artifact `9631482983`: **FAILURE**.
-- Frozen contract tests completed successfully: `13 passed in 0.14s`.
-- Generated proof did not execute because direct file invocation caused `ModuleNotFoundError: No module named 'modal'`.
-- Runtime evidence: `pytestExitCode=0`, `proofExitCode=1`, `proofFileSha256=null`, gate `STOP`; execution-harness/import-path failure before proof construction.
+- Tests: `13 passed in 0.14s`; generated proof did not execute because direct file invocation caused `ModuleNotFoundError: No module named 'modal'`.
+- Runtime evidence: `pytestExitCode=0`, `proofExitCode=1`, `proofFileSha256=null`, gate `STOP`; execution-harness failure before proof construction.
 - Exact execution record: `debug/v147-pitch-hypothesis/phase-a-attempt1-execution-record.json`; persistence commit `69f8019154014b8fa19de9b5eeebc92e1eb8ba71`.
-- No calibration/gold read, Modal/L4/GPU, live audio, V145 modification, or production integration occurred.
 - Attempt 1 MUST NOT be rerun or reinterpreted.
 
-### V147 execution-only repair — FROZEN BEFORE WORKFLOW CHANGE
-- Preregistration: `docs/v147-phase-a-execution-repair-preregistration.md`.
-- Freeze commit `a26525ec9a1320d320ca6afa5f649ee281e2af1c`; blob `a68e94eec9799aa334cce4d19df44ee768c4f21e`.
-- Authorized change is exactly one line of execution semantics: replace direct file invocation with `python -m modal.v147_pitch_hypothesis_cpu_proof --output ...` from repository root.
-- Frozen implementation/test/proof blobs remain `49bce8...`, `f71d1d...`, `e9d287...`; original V147 prereg blob remains `026d3b...`.
-- No threshold, candidate family, generated case, evidence representation, scoring rule, gate, or musical code may change.
-- Exactly one fresh repaired repository-native CPU/reference-free run is authorized; then persist evidence and delete/seal the workflow.
+### V147 execution-only repair — FROZEN AND APPLIED
+- Repair prereg: `docs/v147-phase-a-execution-repair-preregistration.md`; freeze commit `a26525ec9a1320d320ca6afa5f649ee281e2af1c`; blob `a68e94eec9799aa334cce4d19df44ee768c4f21e`.
+- Workflow repair commit `5782eabd3b515f0cca022522cd628fce55a548cc`; repaired workflow blob `03dcefc46af1a9629eb222fb9beceea83b93930f`.
+- The only workflow behavior change was exactly the preregistered invocation: `python -m modal.v147_pitch_hypothesis_cpu_proof --output ...`.
+- Frozen implementation/test/proof blobs were re-verified unchanged as `49bce8...`, `f71d1d...`, `e9d287...` after the repair.
+- This repair commit is authorized to trigger exactly one fresh CPU/reference-free repository-native run.
 
 ## Frozen validation/render identities
 - canonical `088d44827fb23e20d9aeeb4944a672989af5846c`
@@ -108,8 +100,8 @@ Active phase: **V146 is CLOSED/SEALED after regression. V147 Phase A preregistra
 ## EXPLICIT NEXT STEPS
 1. Keep V146 sealed; accepted family #10 remains active.
 2. Do not rerun V147 attempt 1.
-3. Apply only the frozen workflow invocation repair from `docs/v147-phase-a-execution-repair-preregistration.md`; verify V147 implementation/test/proof blobs are unchanged.
-4. Observe the one fresh CPU/reference-free run; persist exact run/job/artifact/proof/runtime identities and checkpoint GO/STOP.
+3. Observe only the one fresh run triggered by workflow repair commit `5782eabd3b515f0cca022522cd628fce55a548cc`.
+4. Persist exact run/job/artifact/proof/runtime identities and checkpoint GO/STOP.
 5. If the repaired proof reaches the frozen generated cases and any gate condition fails, STOP with no retuning or second repaired run. If it passes, checkpoint `GO`, delete/seal the single-use workflow, and stop. Any later live/reference/Modal/GPU evaluation or production integration requires a separately authorized/frozen next phase.
 6. Continue frequent checkpoint saves on this branch.
 
@@ -117,5 +109,5 @@ Active phase: **V146 is CLOSED/SEALED after regression. V147 Phase A preregistra
 - Accepted scores remain **35.4 / 6.7 / 5.5 / 5.8 / 100 / 100**.
 - V146 remains consumed/closed/sealed with regression.
 - V147 musical/decision implementation remains frozen and unchanged.
-- Attempt 1 is consumed/failed closed; the import-path repair is now preregistered and frozen before workflow modification.
-- **Next: change only the proof invocation to module mode, verify frozen blobs unchanged, and capture the single repaired CPU/reference-free run.**
+- Attempt 1 is consumed/failed closed; execution-only repair is frozen/applied; source blobs remain unchanged.
+- **Next: capture the single repaired GitHub Actions CPU/reference-free run, persist exact evidence, checkpoint GO/STOP, then seal the workflow.**
