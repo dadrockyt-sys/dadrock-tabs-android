@@ -1,0 +1,23 @@
+{
+  "artifactDigest": "sha256:b08ad3adbce6269ef7337361ff123c0d364f63ac12ec74c7204ac3e94b936279",
+  "artifactId": 9631715259,
+  "artifactName": "v147-phase-b-generated-integration-proof",
+  "artifactSizeBytes": 3476,
+  "calibrationReferenceRead": false,
+  "commitSha": "dcdde07273bfc3c287f3b285015447c84d055601",
+  "frozenSourceIdentityMatch": true,
+  "gate": "GO",
+  "goldRead": false,
+  "jobId": 98396067875,
+  "modalGpuUsed": false,
+  "phase": "V147-Phase-B",
+  "productionIntegrated": false,
+  "proofFileSha256": "e88f8e6e67494acf9aa97389f91fc27156cc3c834cf2e9d717f638f47796a366",
+  "proofPayloadSha256": "07848295a7a0b82cee4701db8ddf4505910d4955c2c6bd9587833cbb1656435a",
+  "pytestResult": "8 passed in 0.06s",
+  "realAudioRead": false,
+  "referenceFree": true,
+  "runConclusion": "success",
+  "runId": 33035123962,
+  "schema": 14713
+}
