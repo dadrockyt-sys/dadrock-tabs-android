@@ -1,0 +1,152 @@
+name: V147 Phase C Pre-Audio CPU Proof
+
+on:
+  push:
+    branches:
+      - v143-contextual-prune-lobo
+    paths:
+      - .github/workflows/v147-phase-c-pre-audio-proof.yml
+
+permissions:
+  contents: read
+
+concurrency:
+  group: v147-phase-c-pre-audio-proof
+  cancel-in-progress: false
+
+jobs:
+  cpu-generated-pre-audio-proof:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - name: Checkout exact proof revision
+        uses: actions/checkout@v4
+        with:
+          ref: ${{ github.sha }}
+          fetch-depth: 1
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+
+      - name: Install generated-proof dependencies only
+        run: python -m pip install --disable-pip-version-check numpy pytest
+
+      - name: Verify frozen Phase C pre-audio identities
+        shell: bash
+        run: |
+          set -euo pipefail
+          test "$(git hash-object docs/v147-phase-c-real-audio-artifact-preregistration.md)" = "5c19ed572d17cc9a760f1b63ee03c1b2c4543d30"
+          test "$(git hash-object docs/v147-phase-c-preregistration-clarification.md)" = "6ced1bae4cdaad8306b008827657afbb27a87dbc"
+          test "$(git hash-object modal/v145_rhythm_decoder.py)" = "2fd979aebb4685e86c7f24a0162f69de306c06e9"
+          test "$(git hash-object modal/v147_pitch_hypothesis.py)" = "49bce8b968406bb0d61ab61394954ef8a8303eb7"
+          test "$(git hash-object modal/v147_phase_c_artifact_support.py)" = "f4278ffaacaca3f66baf7a3112e2af0f3bc387cf"
+          test "$(git hash-object modal/tests/test_v147_phase_c_artifact_support.py)" = "e99f791cd0ab401a9e393ab9b89a6b167cee3c7f"
+          test "$(git hash-object modal/v147_phase_c_cpu_proof.py)" = "531384706b8b7444cf7ed22f414b47215e59b653"
+          test "$(git hash-object validation/rhythm_holdout/canonical.py)" = "088d44827fb23e20d9aeeb4944a672989af5846c"
+          test "$(git hash-object modal/v144_rhythm_triple_conjunction_policy.py)" = "ef9768a127472d7ce0746fdf21164d33e5117ea4"
+          test "$(git hash-object modal/v144_rhythm_pitch_shift_policy.py)" = "d9998c59acddba070069668d62bcb1c3cdaf2b05"
+          test "$(git hash-object modal/v144_rhythm_pitch_position_shift_policy.py)" = "f69755b61bdcdf3a669847ce7e425289b4b0927f"
+          test "$(git hash-object modal/v144_rhythm_singleton_onset_replacement_policy.py)" = "1e05e66a3523f98944370837a59e5d6e7293f9ac"
+
+      - name: Prove workflow has no real-audio or reference input
+        shell: bash
+        run: |
+          set -euo pipefail
+          test ! -e debug/v147-phase-c-real-audio
+          ! grep -q 'professional-rhythm-gold-reference.json' .github/workflows/v147-phase-c-pre-audio-proof.yml
+          ! grep -q '215bd5a657c5326f08f132ae358595a95c30b39bb7493a52c2f910d5a608149f' .github/workflows/v147-phase-c-pre-audio-proof.yml
+
+      - name: Run frozen Phase C generated tests and proof
+        shell: bash
+        run: |
+          set -uo pipefail
+          mkdir -p debug/v147-phase-c-pre-audio
+          python -m pytest -q modal/tests/test_v147_phase_c_artifact_support.py 2>&1 | tee debug/v147-phase-c-pre-audio/pytest-output.txt
+          pytest_status=${PIPESTATUS[0]}
+          python -m modal.v147_phase_c_cpu_proof --output debug/v147-phase-c-pre-audio/generated-proof.json 2>&1 | tee debug/v147-phase-c-pre-audio/proof-output.txt
+          proof_status=${PIPESTATUS[0]}
+          export PYTEST_STATUS="$pytest_status"
+          export PROOF_STATUS="$proof_status"
+          export GITHUB_SHA_VALUE="$GITHUB_SHA"
+          export RUNNER_OS_VALUE="$RUNNER_OS"
+          export RUNNER_ARCH_VALUE="$RUNNER_ARCH"
+          python - <<'PY'
+          import hashlib
+          import json
+          import os
+          import platform
+          import subprocess
+          from pathlib import Path
+          import numpy
+          import pytest
+
+          def blob(path):
+              return subprocess.check_output(['git','hash-object',path], text=True).strip()
+
+          proof_path = Path('debug/v147-phase-c-pre-audio/generated-proof.json')
+          proof_bytes = proof_path.read_bytes() if proof_path.exists() else b''
+          runtime = {
+              'schema': 14722,
+              'phase': 'V147-Phase-C-pre-audio',
+              'evidenceClass': 'github-actions-cpu-generated-reference-free-pre-audio-contract',
+              'commitSha': os.environ['GITHUB_SHA_VALUE'],
+              'runnerOs': os.environ['RUNNER_OS_VALUE'],
+              'runnerArch': os.environ['RUNNER_ARCH_VALUE'],
+              'pythonVersion': platform.python_version(),
+              'numpyVersion': numpy.__version__,
+              'pytestVersion': pytest.__version__,
+              'pytestExitCode': int(os.environ['PYTEST_STATUS']),
+              'proofExitCode': int(os.environ['PROOF_STATUS']),
+              'proofFileSha256': hashlib.sha256(proof_bytes).hexdigest() if proof_bytes else None,
+              'phaseCPreregBlob': blob('docs/v147-phase-c-real-audio-artifact-preregistration.md'),
+              'phaseCClarificationBlob': blob('docs/v147-phase-c-preregistration-clarification.md'),
+              'v145DecoderBlob': blob('modal/v145_rhythm_decoder.py'),
+              'v147PitchHypothesisBlob': blob('modal/v147_pitch_hypothesis.py'),
+              'phaseCSupportBlob': blob('modal/v147_phase_c_artifact_support.py'),
+              'phaseCTestsBlob': blob('modal/tests/test_v147_phase_c_artifact_support.py'),
+              'phaseCProofHarnessBlob': blob('modal/v147_phase_c_cpu_proof.py'),
+              'referenceFree': True,
+              'realAudioRead': False,
+              'audioDecoded': False,
+              'calibrationReferenceRead': False,
+              'goldRead': False,
+              'calibrationScoreRun': False,
+              'candidateConstructed': False,
+              'modalGpuUsed': False,
+              'productionIntegrated': False,
+          }
+          runtime['frozenSourceIdentityMatch'] = (
+              runtime['phaseCPreregBlob'] == '5c19ed572d17cc9a760f1b63ee03c1b2c4543d30'
+              and runtime['phaseCClarificationBlob'] == '6ced1bae4cdaad8306b008827657afbb27a87dbc'
+              and runtime['v145DecoderBlob'] == '2fd979aebb4685e86c7f24a0162f69de306c06e9'
+              and runtime['v147PitchHypothesisBlob'] == '49bce8b968406bb0d61ab61394954ef8a8303eb7'
+              and runtime['phaseCSupportBlob'] == 'f4278ffaacaca3f66baf7a3112e2af0f3bc387cf'
+              and runtime['phaseCTestsBlob'] == 'e99f791cd0ab401a9e393ab9b89a6b167cee3c7f'
+              and runtime['phaseCProofHarnessBlob'] == '531384706b8b7444cf7ed22f414b47215e59b653'
+          )
+          runtime['gate'] = 'GO' if (
+              runtime['pytestExitCode'] == 0
+              and runtime['proofExitCode'] == 0
+              and runtime['frozenSourceIdentityMatch']
+          ) else 'STOP'
+          Path('debug/v147-phase-c-pre-audio/runtime-evidence.json').write_text(
+              json.dumps(runtime, indent=2, sort_keys=True) + '\n', encoding='utf-8'
+          )
+          print('V147_PHASE_C_PRE_AUDIO_RUNTIME_JSON=' + json.dumps(runtime, sort_keys=True, separators=(',', ':')))
+          PY
+          test "$pytest_status" -eq 0
+          test "$proof_status" -eq 0
+
+      - name: Upload exact pre-audio evidence
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: v147-phase-c-pre-audio-proof
+          path: |
+            debug/v147-phase-c-pre-audio/generated-proof.json
+            debug/v147-phase-c-pre-audio/runtime-evidence.json
+            debug/v147-phase-c-pre-audio/pytest-output.txt
+            debug/v147-phase-c-pre-audio/proof-output.txt
+          if-no-files-found: error
