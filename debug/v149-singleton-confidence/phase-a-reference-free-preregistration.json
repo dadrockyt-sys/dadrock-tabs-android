@@ -1,0 +1,69 @@
+{
+  "schema": "dadrock.tabs.v149.singleton-confidence.phase-a-preregistration.v1",
+  "classification": "reference-free-singleton-confidence-analysis-frozen",
+  "branch": "v143-contextual-prune-lobo",
+  "sourceHead": "3a8060c9568a3e72b633244b74047b927b4cb578",
+  "userAuthorization": {
+    "received": true,
+    "instruction": "Let's keep working towards a breakthrough. Please continue to show score percentages when possible.",
+    "scope": "continue V149 research from sealed V148 result; begin with reference-free analysis of the remaining 106 singleton edits"
+  },
+  "fixedInputs": {
+    "acceptedFamily": "singleton-onset-replace-be9e9aa7a734e3cd",
+    "acceptedEventCount": 1144,
+    "acceptedCanonicalEventSha256": "4e6f9f247134f79f30a5448515c52a6ca1012c1f1314c3458b448582999e3881",
+    "v148CandidatePath": "debug/v148-singleton-only/candidate/candidate.json",
+    "v148CandidateFileSha256": "b45034e2a4dd10a3d7784e584fccdbc7e49667a5b93c9a77ea42f5562ae139bb",
+    "v148CandidateCanonicalEventSha256": "1be67004dea62b14740241b536339bb7cad2ecf3ee9e98bfb6109f67e4e1b1fa",
+    "v148ChangedSingletonEvents": 106,
+    "v147DecisionsPath": "debug/v147-phase-c-real-audio/preserved-run-33038518285/decisions.json",
+    "v147DecisionsFileSha256": "3ec6c42730bf571c29258eca131c4e32da257c1ac6073e5319073818e8ac49b9"
+  },
+  "frozenAnalysis": {
+    "population": "exactly the 106 event indices changed by V148 versus accepted family #10",
+    "features": [
+      "direction",
+      "original-midi-register",
+      "original-pitch-class",
+      "original-string",
+      "same-vs-different-string-reassignment",
+      "absolute-fret-move",
+      "frame-count",
+      "alternate-fundamental-gate-excess-db",
+      "score-margin-gate-excess-db",
+      "fundamental-margin-gate-excess-db",
+      "nearest-gate-excess-db",
+      "octave-margin-contribution-db"
+    ],
+    "nearestGateBucketsDb": [
+      "[0,0.5)",
+      "[0.5,1)",
+      "[1,2)",
+      "[2,3)",
+      "[3,6)",
+      "[6,+inf)"
+    ],
+    "registerBucketsMidi": ["40-51", "52-63", "64-75", "76+"],
+    "absoluteFretMoveBuckets": ["0", "1-3", "4-7", "8+"],
+    "outputs": [
+      "population counts and percentages",
+      "bucket counts and percentages",
+      "descriptive quantiles",
+      "ranked weakest-gate and strongest-gate event rows"
+    ]
+  },
+  "interpretationRule": "This phase is descriptive and reference-free. It may identify a single simple V149 construction hypothesis, but must not construct or score a candidate in the same analysis run.",
+  "forbidden": {
+    "goldOrReferenceRead": true,
+    "professionalImageRead": true,
+    "audioReadOrDecode": true,
+    "hpssOrCqtRecompute": true,
+    "scorerInvocation": true,
+    "candidateConstruction": true,
+    "candidateSearchOrVariants": true,
+    "thresholdRetuningAgainstGold": true,
+    "modalOrGpu": true,
+    "mainOrProductionModification": true,
+    "automaticPromotion": true
+  }
+}
