@@ -1,0 +1,17 @@
+{
+  "audioRead": false,
+  "consumedAtUtc": "2026-08-27T15:37:47.055722+00:00",
+  "cudaExecutionUsed": false,
+  "goldOrReferenceRead": false,
+  "gpuUsed": false,
+  "humanCorrection": false,
+  "modalUsed": false,
+  "preregistrationGitBlob": "823e7d2c23db336565244b79fec8ac7b6f5ebf92",
+  "runHeadSha": "d7a2f99f57876e8aff78550dd36888cd1c2c78e9",
+  "runId": "33088829644",
+  "schema": "dadrock.tabs.v154.cpu-autonomous.phase-a3-attempt.v1",
+  "scoreCallCount": 0,
+  "serializationWrapperGitBlob": "991e286c38454ab4ae7d63565914913dfe89442d",
+  "status": "CONSUMED_BEFORE_AUDIO_AND_BEFORE_GOLD",
+  "thresholdSweep": false
+}

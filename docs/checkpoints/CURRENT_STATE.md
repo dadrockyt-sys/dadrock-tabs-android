@@ -182,3 +182,17 @@ Active phase: **V153 Phase D EVENT-347 CPU GOLD ATTRIBUTION = COMPLETE / SEALED.
 - A2 preregistration blob `d877f0f1b2afc90c10d924806ec50aa5efb5d2a7`; benchmark blob `ca0c26dd3cf786585bea615f4bd565a9d1980d4e`; run `33088418439`.
 - Raw transcription will be persisted before Demucs; guitar-stem transcription will be persisted before Gold. No Gold-guided construction or threshold sweep.
 - At this checkpoint audio opened **NO**, Gold/reference opened **NO**, score calls `0`, human correction/Modal/L4/CUDA execution/GPU/main/Production **NO**.
+
+
+## V154 Phase A2 CPU pretrained reset — ENGINEERING FAILURE / SEALED — 2026-08-27 UTC
+- Run `33088418439`, job `98574330124`: Basic Pitch CPU inference **completed successfully**, but persistence failed afterward because nested NumPy `int64` pitch-bend metadata was not JSON serializable.
+- A2 verified NumPy `1.26.4`, PyTorch `2.8.0+cpu`, `torch.version.cuda=None`, and `torch.cuda.is_available()==False`. This fixed the A1 runtime problem.
+- No transcription JSON was committed, Demucs did not start, Gold/reference opened **NO**, score calls **0**. Artifact ID `9653270384`, ZIP SHA256 `27bba88a521976548ca0ca532d572a765b8f86f4d2504d55708f07b57f0b3c7b`; failure blob `ff50e30a4eb92e733d687f45a4fd3e0118d33f42`.
+- A2 workflow was deleted/sealed at commit `7142722725766a43931a3299d52d5e6ef07d6bca`; replay **NO**.
+
+
+## V154 Phase A3 JSON persistence repair — FROZEN / CONSUMED / BEFORE AUDIO — 2026-08-27 UTC
+- Scientific protocol remains unchanged. A3 only wraps pitch-bend metadata serialization so NumPy scalar values become JSON-native numbers.
+- Preregistration blob `823e7d2c23db336565244b79fec8ac7b6f5ebf92`; parent benchmark blob `ca0c26dd3cf786585bea615f4bd565a9d1980d4e`; serializer wrapper blob `991e286c38454ab4ae7d63565914913dfe89442d`; run `33088829644`.
+- Basic Pitch thresholds and Demucs settings remain frozen. Raw branch persists before separation; guitar branch persists before Gold.
+- At this checkpoint audio opened **NO**, Gold/reference opened **NO**, score calls `0`, human correction/threshold tuning/Modal/L4/CUDA execution/GPU/main/Production **NO**.
