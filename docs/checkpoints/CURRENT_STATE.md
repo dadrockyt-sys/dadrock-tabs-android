@@ -494,3 +494,13 @@ Active phase: **V147 Phase C REAL-AUDIO ARTIFACT-FIRST CONSTRUCTION = GO / SEALE
 - `candidate.json` SHA256 **`1add3ffacf9048dd597a47820baeb3ef8cb0e67fa83d12b1b8d8303a8d808278`**; construction proof SHA256 **`1efae460dcb93129dcd6717ccad8eb9e496767a78a68eddddecd0121e1261d6e`**; PDF fidelity SHA256 **`23d087a2d902c6a4a10f80ffca9765139d7c021f8ac59996225c3ad7dcd478f9`**.
 - Gold/reference read **NO**; score calls **0**; candidate variants **1**; search/retuning/audio/HPSS/CQT/Modal/GPU/main/Production/promotion **NO**.
 - V149 construction authorization is consumed; this construction workflow is deleted in the same sealing commit. The exact candidate may now receive a separately frozen one-use score.
+
+
+## V149 Phase C exact Gold score — AUTHORIZED / CONSUMED BEFORE REFERENCE ACCESS — 2026-08-27 UTC
+- User authorized continued breakthrough work and requested score percentages when possible; this phase is exactly **one** Gold calibration score of the already-persisted V149 candidate.
+- Immutable V149 candidate: 1144 events / canonical SHA `4dd13556d580a315c728e7333823eec9644195da5a345689cc44a566ef33d998` / **54 singleton changes / 0 polyphonic changes / 100.00% PDF fidelity**.
+- The first score workflow run `33046911217` failed reference-free before attempt consumption because a manually transcribed V149 expected-Gold literal was 65 characters. Gold/reference reads **0** and score calls **0** in that failed run.
+- Infrastructure-only recovery is frozen at prereg blob `a61bf77de2cd903a971b759d100f3dfbe36fa642` and launcher blob `3ee193f3b9db4c13dc8ce076ac616a6709707a03`; it sources only the already-proven 64-character Gold identity from frozen V147 scorer blob `74b31168b629812acde874b89dfcdf022acf987d` in memory.
+- Authorization blob `d6af61782ab9acea1a43a554a19846e58b3f3110`; unchanged V149 scorer blob `94854131aa9f35f0822c028166eb69f5304d9f44`; recovery run `33047086701`.
+- Attempt sentinel is consumed before Gold access. Gold/reference opened **NO**; reference parsed **NO**; score calls **0**.
+- Search/alternate candidate/alternate threshold/retuning/audio/HPSS/CQT/Modal/GPU/main/Production/promotion remain **NO / FORBIDDEN**.
