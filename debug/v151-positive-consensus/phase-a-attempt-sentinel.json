@@ -1,0 +1,15 @@
+{
+  "schema": "dadrock.tabs.v151.positive-consensus.phase-a-attempt.v1",
+  "classification": "one-use-reference-free-analysis-attempt",
+  "branch": "v143-contextual-prune-lobo",
+  "status": "ARMED_NOT_CONSUMED",
+  "analysisPopulation": 33,
+  "goldOrReferenceRead": false,
+  "priorScoreResultRead": false,
+  "candidateConstructed": false,
+  "scoreCallCount": 0,
+  "audioRead": false,
+  "modalGpuUsed": false,
+  "productionIntegrated": false,
+  "automaticPromotion": false
+}
