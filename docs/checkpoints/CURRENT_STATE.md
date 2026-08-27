@@ -2,13 +2,13 @@
 
 Updated: 2026-08-26 America/Montreal
 Branch: `v143-contextual-prune-lobo`
-Active phase: **V144 Rhythm baseline preserved; Families #1–#14 fully consumed/sealed. V145 Stage 1 and Stage 2 are both preregistered, implemented, CPU-proven, and their temporary proof workflows are sealed. Next safe work is an offline benchmark adapter using already-saved V5 Rhythm output if available; no Modal/L4/GPU without fresh explicit authorization.**
+Active phase: **V144 Rhythm baseline preserved; Families #1–#14 fully consumed/sealed. V145 Stage 1 and Stage 2 are preregistered, implemented, CPU-proven, and sealed. Offline Stage 3 feasibility is now established from the already-saved V5 Rhythm render stream; Stage 3 adapter/scoring protocol is not yet preregistered or run. No Modal/L4/GPU without fresh explicit authorization.**
 
 ## Permanent safety / fixed protocol
 - Work only on `v143-contextual-prune-lobo`; never modify/merge `main` or Production.
 - `/ai-tab` frontend, Bass/Lead, `freezeReady=false`, main, Production untouched.
 - No Modal/L4/GPU without fresh explicit authorization.
-- V5 analyzer blob `7f72f8ed9b14af8bc93e95544195204d99c6bec1`; result blob `511fd244f231b66d08306f97b5a47ed41f5415c7`.
+- V5 analyzer blob `7f72f8ed9b14af8bc93e95544195204d99c6bec1`; V5 holdout-result metadata blob `511fd244f231b66d08306f97b5a47ed41f5415c7`.
 - Gold SHA256 `18fd868ae960dfcdd1ffb0110f1a9dfd8acc2ffeb46e247d1116cd54291526ac`; calibration benchmark only.
 
 ## Permanent progress percentages — ACCEPTED BASELINE UNCHANGED
@@ -40,28 +40,35 @@ Active phase: **V144 Rhythm baseline preserved; Families #1–#14 fully consumed
 - Cluster window `0.30*quantum`; common selected onset required for all cluster members; exact MIDI only; unique strings; max fret24/max span7.
 - Global beam width64; strict increasing separate attack onsets; Stage1 continuity transition cost.
 - Definitive CPU proof workflow run **`33027229509`**, job **`98371326572`**: **COMPLETED / SUCCESS**.
-- Exact Stage1/Stage2/test identity verification, py_compile, all Stage2 contract tests, and proof persistence succeeded.
 - Proof `debug/v145-rhythm-decoder/proofs/cpu-stage2-proof.json`; blob **`0522dd00598fcd5916349cb9747ca3588eaedb90`**; persistence commit **`e3ff86765cb4e072aef7b99f68435c1fb07400fc`**; schema14502.
 - Proof states: cpuContractTestsPassed=true; runtimeReferenceInput=false; goldInputUsed=false; fit/validation/canary labels not read; newPitchGeneration=false; modalDependency=false; modalGpuUsed=false; liveAudioBenchmarkRun=false; acceptedBaselineChanged=false.
 - Stage2 proof workflow creation commit `3ada879b29c1de58d62077494138a830f6c4ee27`; workflow blob `a354bc4fdc8927995de9d48ea90f810c9e74435d`; deletion/sealing commit **`68d1d95859e511f183bf857e5035b8b7635c8bc2`**. Never rerun it.
 - Stage1 frozen blob remained unchanged through Stage2.
 
-## Next safe hurdle — OFFLINE V145 TRIAL, NOT YET PREREGISTERED
-- Before asking for Modal/GPU authorization, first determine whether the repository already contains the saved V5 Rhythm result and the calibration scorer/gold artifacts needed to evaluate Stage2 offline.
-- If available, preregister an offline adapter that reads the saved generated V5 result, constructs a complete V145 candidate without reference input, locks it, then opens gold only in the external scorer stage.
-- Offline trial must not change the accepted family #10 baseline merely by running. It is benchmark evidence only until all existing scorer/render/PDF gates are satisfied and explicitly promoted.
-- If the saved V5 event schema lacks sufficient timing fields for Stage2, document that limitation rather than invoking Modal automatically.
-- No live Modal/L4/GPU/audio benchmark is authorized.
+## V145 Stage 3 offline feasibility — ESTABLISHED / SCORE-FREE
+- Saved V5 render stream located at `debug/v143-contextual-prune/v5-professional-pdf/v5-render-stream.json`.
+- Git blob **`fe61f7ad53a4d71348a5113ecc9e3876eaad98d4`**; pre-existing raw stream SHA256 **`7c3399d3f5e05ecc8ac98d71d0e5300e1e78f63ae96c1642fe4a19debb4061b2`**.
+- Stream is the exact source-only frozen V5 renderer input previously validated at 1209 events /113 measures; tempo `129.19921875`, time signature `4/4`, standard tuning.
+- Each event has `measure`, 16-step `step`, `midi`, `durationSteps`; many also carry `durationSeconds`. Therefore absolute generated-only seconds can be reconstructed deterministically as `((measure-1)*16 + step) * (60/tempo/4)` without audio, gold, or labels.
+- Stage1/Stage2 can consume reconstructed `{midi,onset,duration}` evidence. Stage1 guitar string numbers are human 1..6, so renderer `stringIndex` mapping is frozen as `decoded.string - 1`.
+- Frozen validation/render identities reverified on branch:
+  - canonical `validation/rhythm_holdout/canonical.py` blob `088d44827fb23e20d9aeeb4944a672989af5846c`;
+  - freeze `validation/rhythm_holdout/freeze_rhythm_analysis.py` blob `710bb6a3b15b99d3d11ceb4948d7c7175d208afc`;
+  - scorer `validation/rhythm_holdout/score_rhythm_holdout.py` blob `cc4bf61a99f22bf87a6c255e5a81220fbc82223b`;
+  - PDF fidelity `validation/rhythm_holdout/verify_pdf_event_fidelity.py` blob `5e1564216873046237fb545078a04a6b18f72b27`;
+  - render contract `lib/v143RenderContract.js` blob `ccbb93c48982798cc474309fd981f6ca02d5c8d4`.
+- Investigation opened no gold/reference data and produced no V145 score/candidate.
 
 ## EXPLICIT NEXT STEPS
 1. Stay only on `v143-contextual-prune-lobo`; preserve family #10, Stage1, and Stage2 frozen blobs.
-2. Locate/verify the saved V5 result blob `511fd244...`, gold/calibration artifacts, and current scorer interfaces using repository data only.
-3. If offline evaluation is feasible, preregister a CPU-only offline V145 adapter before implementation.
-4. Keep candidate construction runtime-reference-free; open gold only after candidate lock for scoring.
-5. Checkpoint before and after any offline trial.
-6. No Modal/L4/GPU/live audio until separately and explicitly authorized.
+2. Preregister the CPU-only V145 Stage 3 offline adapter/scoring protocol **before implementation or scoring**.
+3. Adapter must use only the pinned saved V5 generated stream for candidate construction; no reference/gold/FIT/validation/canary input may enter Stage1/Stage2.
+4. Freeze the complete V145 candidate and prove render/PDF event identity before any calibration reference is opened by the external scorer.
+5. Treat any Stage 3 result as benchmark evidence only; accepted family #10 baseline changes only through explicit later promotion.
+6. Checkpoint before and after the offline trial.
+7. No Modal/L4/GPU/live audio until separately and explicitly authorized.
 
 ## Current stop point
 - Accepted scores remain **35.4 / 6.7 / 5.5 / 5.8 / 100 / 100**.
 - V145 Stage1 and Stage2 CPU proofs both SUCCESS/sealed.
-- Safe next action: investigate offline scoring feasibility from existing saved artifacts only.
+- Offline V5 input feasibility is confirmed, but Stage3 is not yet preregistered, implemented, or scored.
