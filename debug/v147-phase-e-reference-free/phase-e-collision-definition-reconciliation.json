@@ -1,0 +1,41 @@
+{
+  "schema": "dadrock.tabs.v147.phase-e-collision-definition-reconciliation.v1",
+  "classification": "reference-free-diagnostic-definition-reconciliation",
+  "sourceHead": "4a1acee863dd77c7960b98aa2200a0a17e0ba1ec",
+  "failedPersistenceRun": {
+    "githubRunId": 33042691252,
+    "analysisStepSucceeded": true,
+    "persistenceStepFailed": true,
+    "failureReason": "The persistence assertion expected 18 collision onsets, while the normalized analyzer reported 19 under a different collision definition.",
+    "ephemeralAnalysisSummary": {
+      "collisionOnsetsNewDuplicateMidiIdentity": 19,
+      "collisionCauseCounts": {
+        "changed-events-converged": 2,
+        "changed-into-unchanged-existing-pitch": 17
+      },
+      "overallEventChangeRate": 0.2159090909090909,
+      "overallOnsetChangeRate": 0.2571090047393365
+    }
+  },
+  "definitions": {
+    "netPitchSetCardinalityLossOnset": "after unique MIDI pitch-set cardinality is smaller than before; the first-pass failure-analysis counted 18 such changed onsets",
+    "newDuplicateMidiIdentityOnset": "at least one MIDI value that was not duplicated before becomes duplicated after; the normalized analyzer counted 19 such changed onsets",
+    "whyCountsMayDiffer": "A changed onset can replace an existing duplicate MIDI identity with a different duplicate MIDI identity while keeping total pitch-set cardinality unchanged. Such an onset is counted by the new-duplicate-identity definition but not by the net-cardinality-loss definition."
+  },
+  "frozenExpectedCounts": {
+    "netPitchSetCardinalityLossOnsets": 18,
+    "newDuplicateMidiIdentityOnsets": 19
+  },
+  "recoveryRule": "Do not rerun the failed workflow. Re-materialize the deterministic normalized analysis once under a separate recovery workflow solely because the successful output was not persisted. Use the exact existing analyzer blob and immutable preserved inputs; verify both collision definitions explicitly; persist outputs; update the original sentinel; delete both workflow files; do not alter analysis thresholds or construct a candidate.",
+  "safety": {
+    "goldReferenceAllowed": false,
+    "professionalImageAllowed": false,
+    "audioReadOrDecodeAllowed": false,
+    "hpssCqtAllowed": false,
+    "modalGpuAllowed": false,
+    "candidateConstructionAllowed": false,
+    "candidateSearchAllowed": false,
+    "thresholdRetuningAllowed": false,
+    "mainProductionModificationAllowed": false
+  }
+}
