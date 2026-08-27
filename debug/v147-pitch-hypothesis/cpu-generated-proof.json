@@ -1,0 +1,334 @@
+{
+  "calibrationReferenceRead": false,
+  "cases": [
+    {
+      "category": "correct-control",
+      "expectedMidi": 60,
+      "name": "correct-control",
+      "originalMidi": 60,
+      "passed": true,
+      "result": {
+        "candidates": [
+          {
+            "fundamentalDeltaDb": 1.0,
+            "midi": 59,
+            "octaveDeltaDb": 0.0,
+            "scoreDb": 1.0
+          },
+          {
+            "fundamentalDeltaDb": 7.0,
+            "midi": 60,
+            "octaveDeltaDb": 0.0,
+            "scoreDb": 7.0
+          },
+          {
+            "fundamentalDeltaDb": 2.0,
+            "midi": 61,
+            "octaveDeltaDb": 0.0,
+            "scoreDb": 2.0
+          }
+        ],
+        "changed": false,
+        "originalMidi": 60,
+        "reason": "original-best",
+        "selectedMidi": 60,
+        "semitoneDelta": 0
+      }
+    },
+    {
+      "category": "deliberate-mislabel",
+      "expectedMidi": 59,
+      "name": "down-one-recovery",
+      "originalMidi": 60,
+      "passed": true,
+      "result": {
+        "candidates": [
+          {
+            "fundamentalDeltaDb": 8.0,
+            "midi": 59,
+            "octaveDeltaDb": 0.0,
+            "scoreDb": 8.0
+          },
+          {
+            "fundamentalDeltaDb": 3.0,
+            "midi": 60,
+            "octaveDeltaDb": 0.0,
+            "scoreDb": 3.0
+          },
+          {
+            "fundamentalDeltaDb": 1.0,
+            "midi": 61,
+            "octaveDeltaDb": 0.0,
+            "scoreDb": 1.0
+          }
+        ],
+        "changed": true,
+        "originalMidi": 60,
+        "reason": "alternate-supported",
+        "selectedMidi": 59,
+        "semitoneDelta": -1
+      }
+    },
+    {
+      "category": "deliberate-mislabel",
+      "expectedMidi": 61,
+      "name": "up-one-recovery",
+      "originalMidi": 60,
+      "passed": true,
+      "result": {
+        "candidates": [
+          {
+            "fundamentalDeltaDb": 1.0,
+            "midi": 59,
+            "octaveDeltaDb": 0.0,
+            "scoreDb": 1.0
+          },
+          {
+            "fundamentalDeltaDb": 3.0,
+            "midi": 60,
+            "octaveDeltaDb": 0.0,
+            "scoreDb": 3.0
+          },
+          {
+            "fundamentalDeltaDb": 8.0,
+            "midi": 61,
+            "octaveDeltaDb": 0.0,
+            "scoreDb": 8.0
+          }
+        ],
+        "changed": true,
+        "originalMidi": 60,
+        "reason": "alternate-supported",
+        "selectedMidi": 61,
+        "semitoneDelta": 1
+      }
+    },
+    {
+      "category": "ambiguous",
+      "expectedMidi": 60,
+      "name": "ambiguous-neighbor",
+      "originalMidi": 60,
+      "passed": true,
+      "result": {
+        "candidates": [
+          {
+            "fundamentalDeltaDb": 1.0,
+            "midi": 59,
+            "octaveDeltaDb": 0.0,
+            "scoreDb": 1.0
+          },
+          {
+            "fundamentalDeltaDb": 4.0,
+            "midi": 60,
+            "octaveDeltaDb": 0.0,
+            "scoreDb": 4.0
+          },
+          {
+            "fundamentalDeltaDb": 6.5,
+            "midi": 61,
+            "octaveDeltaDb": 0.0,
+            "scoreDb": 6.5
+          }
+        ],
+        "changed": false,
+        "originalMidi": 60,
+        "reason": "alternate-score-margin-too-small",
+        "selectedMidi": 60,
+        "semitoneDelta": 0
+      }
+    },
+    {
+      "category": "ambiguous",
+      "expectedMidi": 60,
+      "name": "weak-evidence",
+      "originalMidi": 60,
+      "passed": true,
+      "result": {
+        "candidates": [
+          {
+            "fundamentalDeltaDb": 0.0,
+            "midi": 59,
+            "octaveDeltaDb": 0.0,
+            "scoreDb": 0.0
+          },
+          {
+            "fundamentalDeltaDb": 0.0,
+            "midi": 60,
+            "octaveDeltaDb": 0.0,
+            "scoreDb": 0.0
+          },
+          {
+            "fundamentalDeltaDb": 2.9,
+            "midi": 61,
+            "octaveDeltaDb": 0.0,
+            "scoreDb": 2.9
+          }
+        ],
+        "changed": false,
+        "originalMidi": 60,
+        "reason": "alternate-fundamental-too-weak",
+        "selectedMidi": 60,
+        "semitoneDelta": 0
+      }
+    },
+    {
+      "category": "ambiguous",
+      "expectedMidi": 60,
+      "name": "tie",
+      "originalMidi": 60,
+      "passed": true,
+      "result": {
+        "candidates": [
+          {
+            "fundamentalDeltaDb": 7.0,
+            "midi": 59,
+            "octaveDeltaDb": 0.0,
+            "scoreDb": 7.0
+          },
+          {
+            "fundamentalDeltaDb": 2.0,
+            "midi": 60,
+            "octaveDeltaDb": 0.0,
+            "scoreDb": 2.0
+          },
+          {
+            "fundamentalDeltaDb": 7.0,
+            "midi": 61,
+            "octaveDeltaDb": 0.0,
+            "scoreDb": 7.0
+          }
+        ],
+        "changed": false,
+        "originalMidi": 60,
+        "reason": "tied-best-score",
+        "selectedMidi": 60,
+        "semitoneDelta": 0
+      }
+    },
+    {
+      "category": "boundary",
+      "expectedMidi": 41,
+      "name": "low-guitar-boundary",
+      "originalMidi": 40,
+      "passed": true,
+      "result": {
+        "candidates": [
+          {
+            "fundamentalDeltaDb": 2.0,
+            "midi": 40,
+            "octaveDeltaDb": 0.0,
+            "scoreDb": 2.0
+          },
+          {
+            "fundamentalDeltaDb": 7.0,
+            "midi": 41,
+            "octaveDeltaDb": 0.0,
+            "scoreDb": 7.0
+          }
+        ],
+        "changed": true,
+        "originalMidi": 40,
+        "reason": "alternate-supported",
+        "selectedMidi": 41,
+        "semitoneDelta": 1
+      }
+    },
+    {
+      "category": "boundary",
+      "expectedMidi": 87,
+      "name": "high-guitar-boundary",
+      "originalMidi": 88,
+      "passed": true,
+      "result": {
+        "candidates": [
+          {
+            "fundamentalDeltaDb": 7.0,
+            "midi": 87,
+            "octaveDeltaDb": 0.0,
+            "scoreDb": 7.0
+          },
+          {
+            "fundamentalDeltaDb": 2.0,
+            "midi": 88,
+            "octaveDeltaDb": 0.0,
+            "scoreDb": 2.0
+          }
+        ],
+        "changed": true,
+        "originalMidi": 88,
+        "reason": "alternate-supported",
+        "selectedMidi": 87,
+        "semitoneDelta": -1
+      }
+    },
+    {
+      "category": "malformed",
+      "expectedMidi": 60,
+      "name": "missing-candidate-evidence",
+      "originalMidi": 60,
+      "passed": true,
+      "result": {
+        "candidates": [],
+        "changed": false,
+        "originalMidi": 60,
+        "reason": "missing-or-malformed-candidate",
+        "selectedMidi": 60,
+        "semitoneDelta": 0
+      }
+    },
+    {
+      "category": "malformed",
+      "expectedMidi": 60,
+      "name": "non-finite-evidence",
+      "originalMidi": 60,
+      "passed": true,
+      "result": {
+        "candidates": [],
+        "changed": false,
+        "originalMidi": 60,
+        "reason": "non-finite-evidence",
+        "selectedMidi": 60,
+        "semitoneDelta": 0
+      }
+    },
+    {
+      "category": "malformed",
+      "expectedMidi": 60,
+      "name": "malformed-container",
+      "originalMidi": 60,
+      "passed": true,
+      "result": {
+        "candidates": [],
+        "changed": false,
+        "originalMidi": 60,
+        "reason": "malformed-evidence",
+        "selectedMidi": 60,
+        "semitoneDelta": 0
+      }
+    }
+  ],
+  "evidenceClass": "cpu-generated-reference-free",
+  "gate": "GO",
+  "goldRead": false,
+  "liveAudioUsed": false,
+  "metrics": {
+    "ambiguousCases": 3,
+    "ambiguousCasesKept": 3,
+    "casesPassed": 11,
+    "casesTotal": 11,
+    "correctControls": 1,
+    "correctControlsFlipped": 0,
+    "deliberateMislabels": 2,
+    "deliberateMislabelsRecovered": 2,
+    "deterministic": true,
+    "malformedCases": 3,
+    "malformedFailClosed": 3,
+    "rangeViolations": 0
+  },
+  "modalGpuUsed": false,
+  "phase": "V147-Phase-A",
+  "productionIntegrated": false,
+  "proofPayloadSha256": "3843912f0c8e5da95c3993783a84762ba01b046120a48db5e5a5c6c16a3d883e",
+  "referenceFree": true,
+  "schema": 14701
+}
