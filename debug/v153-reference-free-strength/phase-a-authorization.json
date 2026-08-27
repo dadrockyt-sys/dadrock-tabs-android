@@ -1,0 +1,26 @@
+{
+  "schema": "dadrock.tabs.v153.reference-free-strength.phase-a-authorization.v1",
+  "classification": "explicit-user-authorization",
+  "branch": "v143-contextual-prune-lobo",
+  "authorizedPhase": "V153 Phase A reference-free strength ranking",
+  "authorizedPopulationEventIndices": [132, 347, 457],
+  "authorizedActions": [
+    "freeze deterministic reference-free ranking protocol",
+    "execute exactly one reference-free ranking over the frozen three-event population",
+    "persist ranking evidence and unique-winner decision if produced",
+    "checkpoint before and after execution"
+  ],
+  "notAuthorized": [
+    "candidate construction",
+    "Gold or reference access",
+    "reference-facing scoring",
+    "audio reread or decode",
+    "HPSS or CQT recomputation",
+    "Modal, L4, CUDA, or GPU execution",
+    "candidate search or variants",
+    "threshold or weight tuning",
+    "main or Production modification",
+    "automatic promotion"
+  ],
+  "authorizationConsumedBy": "one V153 Phase A ranking execution only"
+}
