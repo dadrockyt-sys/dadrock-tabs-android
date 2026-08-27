@@ -1,0 +1,54 @@
+{
+  "schema": "dadrock.tabs.v154.cpu-autonomous.phase-a1-failure.v1",
+  "classification": "sealed-engineering-runtime-failure-before-transcription-and-before-gold",
+  "branch": "v143-contextual-prune-lobo",
+  "runId": 33087772583,
+  "jobId": 98572047257,
+  "runConclusion": "failure",
+  "armingCommit": "6213c0e1ff480b28774a9ecce0d3329964404f51",
+  "attemptSentinelCommit": "bb70e066",
+  "failedStep": "Run frozen Basic Pitch on original mix CPU",
+  "failure": {
+    "type": "runtime-binary-compatibility",
+    "rootCause": "tflite-runtime 2.14.0 was compiled against the NumPy 1.x ABI but pip resolved NumPy 2.2.6; TFLite model load failed with AttributeError: _ARRAY_API not found",
+    "basicPitchVersion": "0.4.0",
+    "tfliteRuntimeVersion": "2.14.0",
+    "resolvedNumpyVersion": "2.2.6",
+    "repair": "pin NumPy 1.26.4 and use a PyTorch CPU wheel before installing Demucs dependencies; scientific model thresholds and branch definitions remain unchanged"
+  },
+  "progressBeforeFailure": {
+    "historicalAudioIdentityVerified": true,
+    "audioNormalizedOnCpu": true,
+    "basicPitchRawInferenceCompleted": false,
+    "demucsSeparationStarted": false,
+    "basicPitchGuitarStemInferenceStarted": false,
+    "transcriptionBranchesPersisted": false,
+    "goldOrReferenceOpened": false,
+    "scoreCallCount": 0
+  },
+  "runtimeCostObservation": {
+    "defaultPyPiTorchResolvedCudaLibraries": true,
+    "cudaLibrariesExecuted": false,
+    "gpuUsed": false,
+    "nextAttemptUsesOfficialCpuOnlyTorchIndex": true
+  },
+  "safety": {
+    "humanCorrection": false,
+    "thresholdSweep": false,
+    "goldGuidedConstruction": false,
+    "goldOrReferenceRead": false,
+    "scoreCallCount": 0,
+    "modalUsed": false,
+    "l4Used": false,
+    "cudaExecutionUsed": false,
+    "gpuUsed": false,
+    "mainOrProductionModified": false
+  },
+  "artifact": {
+    "name": "v154-cpu-pretrained-reset-33087772583",
+    "id": 9653047980,
+    "zipSha256": "a10194ad5029f2990e791834a028218c6d2249d7cb2a617015cdd836f4ebad60"
+  },
+  "replayAllowed": false,
+  "nextBoundary": "Fresh CPU-only Phase A2 runtime repair preserving the exact scientific branch definitions and thresholds."
+}
