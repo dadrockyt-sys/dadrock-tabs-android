@@ -1,0 +1,361 @@
+{
+  "analyzerIntegrated": false,
+  "calibrationReferenceRead": false,
+  "cases": [
+    {
+      "cardinalityOk": true,
+      "category": "control",
+      "expectedMidi": 60,
+      "inputMutated": false,
+      "integration": {
+        "correctedEvents": [
+          {
+            "confidence": 0.9,
+            "duration": 0.2,
+            "midi": 60,
+            "onset": 0.1
+          }
+        ],
+        "decisions": [
+          {
+            "candidates": [
+              {
+                "fundamentalDeltaDb": 1.0,
+                "midi": 59,
+                "octaveDeltaDb": 0.0,
+                "scoreDb": 1.0
+              },
+              {
+                "fundamentalDeltaDb": 8.0,
+                "midi": 60,
+                "octaveDeltaDb": 0.0,
+                "scoreDb": 8.0
+              },
+              {
+                "fundamentalDeltaDb": 2.0,
+                "midi": 61,
+                "octaveDeltaDb": 0.0,
+                "scoreDb": 2.0
+              }
+            ],
+            "changed": false,
+            "originalMidi": 60,
+            "reason": "original-best",
+            "selectedMidi": 60,
+            "semitoneDelta": 0,
+            "sourceIndex": 0
+          }
+        ],
+        "decodeResult": {
+          "decodedEvidenceCount": 1,
+          "decodedNotes": [
+            {
+              "confidence": 0.9,
+              "duration": 0.2,
+              "fret": 1,
+              "midi": 60,
+              "onset": 0.0,
+              "rawOnset": 0.1,
+              "sourceIndex": 0,
+              "string": 2,
+              "timingCost": 0.4
+            }
+          ],
+          "evidenceCount": 1,
+          "undecodedOnsets": []
+        },
+        "normalizedEvidenceCount": 1
+      },
+      "name": "control-passthrough",
+      "passed": true,
+      "positionIdentityViolations": 0
+    },
+    {
+      "cardinalityOk": true,
+      "category": "strong-alternate",
+      "expectedMidi": 59,
+      "inputMutated": false,
+      "integration": {
+        "correctedEvents": [
+          {
+            "confidence": 0.9,
+            "duration": 0.2,
+            "midi": 59,
+            "onset": 0.1
+          }
+        ],
+        "decisions": [
+          {
+            "candidates": [
+              {
+                "fundamentalDeltaDb": 8.0,
+                "midi": 59,
+                "octaveDeltaDb": 0.0,
+                "scoreDb": 8.0
+              },
+              {
+                "fundamentalDeltaDb": 3.0,
+                "midi": 60,
+                "octaveDeltaDb": 0.0,
+                "scoreDb": 3.0
+              },
+              {
+                "fundamentalDeltaDb": 1.0,
+                "midi": 61,
+                "octaveDeltaDb": 0.0,
+                "scoreDb": 1.0
+              }
+            ],
+            "changed": true,
+            "originalMidi": 60,
+            "reason": "alternate-supported",
+            "selectedMidi": 59,
+            "semitoneDelta": -1,
+            "sourceIndex": 0
+          }
+        ],
+        "decodeResult": {
+          "decodedEvidenceCount": 1,
+          "decodedNotes": [
+            {
+              "confidence": 0.9,
+              "duration": 0.2,
+              "fret": 0,
+              "midi": 59,
+              "onset": 0.0,
+              "rawOnset": 0.1,
+              "sourceIndex": 0,
+              "string": 2,
+              "timingCost": 0.4
+            }
+          ],
+          "evidenceCount": 1,
+          "undecodedOnsets": []
+        },
+        "normalizedEvidenceCount": 1
+      },
+      "name": "down-one-end-to-end",
+      "passed": true,
+      "positionIdentityViolations": 0
+    },
+    {
+      "cardinalityOk": true,
+      "category": "strong-alternate",
+      "expectedMidi": 61,
+      "inputMutated": false,
+      "integration": {
+        "correctedEvents": [
+          {
+            "confidence": 0.9,
+            "duration": 0.2,
+            "midi": 61,
+            "onset": 0.1
+          }
+        ],
+        "decisions": [
+          {
+            "candidates": [
+              {
+                "fundamentalDeltaDb": 1.0,
+                "midi": 59,
+                "octaveDeltaDb": 0.0,
+                "scoreDb": 1.0
+              },
+              {
+                "fundamentalDeltaDb": 3.0,
+                "midi": 60,
+                "octaveDeltaDb": 0.0,
+                "scoreDb": 3.0
+              },
+              {
+                "fundamentalDeltaDb": 8.0,
+                "midi": 61,
+                "octaveDeltaDb": 0.0,
+                "scoreDb": 8.0
+              }
+            ],
+            "changed": true,
+            "originalMidi": 60,
+            "reason": "alternate-supported",
+            "selectedMidi": 61,
+            "semitoneDelta": 1,
+            "sourceIndex": 0
+          }
+        ],
+        "decodeResult": {
+          "decodedEvidenceCount": 1,
+          "decodedNotes": [
+            {
+              "confidence": 0.9,
+              "duration": 0.2,
+              "fret": 2,
+              "midi": 61,
+              "onset": 0.0,
+              "rawOnset": 0.1,
+              "sourceIndex": 0,
+              "string": 2,
+              "timingCost": 0.4
+            }
+          ],
+          "evidenceCount": 1,
+          "undecodedOnsets": []
+        },
+        "normalizedEvidenceCount": 1
+      },
+      "name": "up-one-end-to-end",
+      "passed": true,
+      "positionIdentityViolations": 0
+    },
+    {
+      "cardinalityOk": true,
+      "category": "ambiguous",
+      "expectedMidi": 60,
+      "inputMutated": false,
+      "integration": {
+        "correctedEvents": [
+          {
+            "confidence": 0.9,
+            "duration": 0.2,
+            "midi": 60,
+            "onset": 0.1
+          }
+        ],
+        "decisions": [
+          {
+            "candidates": [
+              {
+                "fundamentalDeltaDb": 1.0,
+                "midi": 59,
+                "octaveDeltaDb": 0.0,
+                "scoreDb": 1.0
+              },
+              {
+                "fundamentalDeltaDb": 4.0,
+                "midi": 60,
+                "octaveDeltaDb": 0.0,
+                "scoreDb": 4.0
+              },
+              {
+                "fundamentalDeltaDb": 6.5,
+                "midi": 61,
+                "octaveDeltaDb": 0.0,
+                "scoreDb": 6.5
+              }
+            ],
+            "changed": false,
+            "originalMidi": 60,
+            "reason": "alternate-score-margin-too-small",
+            "selectedMidi": 60,
+            "semitoneDelta": 0,
+            "sourceIndex": 0
+          }
+        ],
+        "decodeResult": {
+          "decodedEvidenceCount": 1,
+          "decodedNotes": [
+            {
+              "confidence": 0.9,
+              "duration": 0.2,
+              "fret": 1,
+              "midi": 60,
+              "onset": 0.0,
+              "rawOnset": 0.1,
+              "sourceIndex": 0,
+              "string": 2,
+              "timingCost": 0.4
+            }
+          ],
+          "evidenceCount": 1,
+          "undecodedOnsets": []
+        },
+        "normalizedEvidenceCount": 1
+      },
+      "name": "ambiguous-fail-closed",
+      "passed": true,
+      "positionIdentityViolations": 0
+    },
+    {
+      "cardinalityOk": true,
+      "category": "malformed",
+      "expectedMidi": 60,
+      "inputMutated": false,
+      "integration": {
+        "correctedEvents": [
+          {
+            "confidence": 0.9,
+            "duration": 0.2,
+            "midi": 60,
+            "onset": 0.1
+          }
+        ],
+        "decisions": [
+          {
+            "candidates": [],
+            "changed": false,
+            "originalMidi": 60,
+            "reason": "malformed-evidence",
+            "selectedMidi": 60,
+            "semitoneDelta": 0,
+            "sourceIndex": 0
+          }
+        ],
+        "decodeResult": {
+          "decodedEvidenceCount": 1,
+          "decodedNotes": [
+            {
+              "confidence": 0.9,
+              "duration": 0.2,
+              "fret": 1,
+              "midi": 60,
+              "onset": 0.0,
+              "rawOnset": 0.1,
+              "sourceIndex": 0,
+              "string": 2,
+              "timingCost": 0.4
+            }
+          ],
+          "evidenceCount": 1,
+          "undecodedOnsets": []
+        },
+        "normalizedEvidenceCount": 1
+      },
+      "name": "missing-evidence-fail-closed",
+      "passed": true,
+      "positionIdentityViolations": 0
+    }
+  ],
+  "evidenceClass": "cpu-generated-reference-free-decoder-integration",
+  "gate": "GO",
+  "goldRead": false,
+  "metrics": {
+    "ambiguousCases": 1,
+    "ambiguousKept": 1,
+    "casesPassed": 5,
+    "casesTotal": 5,
+    "controlFlips": 0,
+    "decisions": 5,
+    "deterministic": true,
+    "frozenSourceIdentityMatch": true,
+    "inputEvents": 5,
+    "inputMutationViolations": 0,
+    "malformedCases": 1,
+    "malformedKept": 1,
+    "normalizedEvidence": 5,
+    "pitchChanges": 2,
+    "positionIdentityViolations": 0,
+    "sourceCardinalityViolations": 0,
+    "strongAlternates": 2,
+    "strongAlternatesRecovered": 2
+  },
+  "modalGpuUsed": false,
+  "phase": "V147-Phase-B",
+  "productionIntegrated": false,
+  "proofPayloadSha256": "07848295a7a0b82cee4701db8ddf4505910d4955c2c6bd9587833cbb1656435a",
+  "realAudioRead": false,
+  "referenceFree": true,
+  "schema": 14711,
+  "sourceBlobs": {
+    "v145Decoder": "2fd979aebb4685e86c7f24a0162f69de306c06e9",
+    "v147PitchHypothesis": "49bce8b968406bb0d61ab61394954ef8a8303eb7"
+  }
+}
