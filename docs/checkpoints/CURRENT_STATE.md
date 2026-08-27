@@ -484,3 +484,13 @@ Active phase: **V147 Phase C REAL-AUDIO ARTIFACT-FIRST CONSTRUCTION = GO / SEALE
 - Frozen V149 policy keeps exactly those 54 high-confidence singleton overrides and reverts the other 52 to accepted family #10; no other filter/threshold is allowed.
 - Preregistration blob `d8ebc3d4535ec1484ef64e946089027792715c5c`; construction authorization blob `7f1d47ecee87cd7508addcf86bed5ae56230835e`; constructor blob `c3337550509532a64ed496cc28a1e80bf1642292`; run `33046653117`.
 - At this checkpoint: candidate count **0**; Gold/reference **NO**; scorer calls **0**; audio/HPSS/CQT/Modal/GPU **NO**; main/Production/promotion **NO**.
+
+
+## V149 Phase B high-confidence singleton construction — COMPLETE / SEALED / STOP BEFORE SCORING — 2026-08-27 UTC
+- Exactly one frozen V149 candidate was constructed reference-free in run `33046653117`.
+- Candidate canonical event SHA256 **`4dd13556d580a315c728e7333823eec9644195da5a345689cc44a566ef33d998`**; 1144 events / 113 measures.
+- Delta vs accepted baseline: exactly **54 changed singleton events / 54 changed onsets / 0 polyphonic changes**. This retains **50.94%** of V148 changes and reverts **52/106 = 49.06%**.
+- Deterministic replay **TRUE**; PDF/render event fidelity **100.00%**.
+- `candidate.json` SHA256 **`1add3ffacf9048dd597a47820baeb3ef8cb0e67fa83d12b1b8d8303a8d808278`**; construction proof SHA256 **`1efae460dcb93129dcd6717ccad8eb9e496767a78a68eddddecd0121e1261d6e`**; PDF fidelity SHA256 **`23d087a2d902c6a4a10f80ffca9765139d7c021f8ac59996225c3ad7dcd478f9`**.
+- Gold/reference read **NO**; score calls **0**; candidate variants **1**; search/retuning/audio/HPSS/CQT/Modal/GPU/main/Production/promotion **NO**.
+- V149 construction authorization is consumed; this construction workflow is deleted in the same sealing commit. The exact candidate may now receive a separately frozen one-use score.

@@ -1,0 +1,41 @@
+{
+  "audioRead": false,
+  "automaticPromotion": false,
+  "branch": "v143-contextual-prune-lobo",
+  "candidateEventSha256": "4dd13556d580a315c728e7333823eec9644195da5a345689cc44a566ef33d998",
+  "candidateSearchRun": false,
+  "candidateVariantsConstructed": 1,
+  "changedEvents": 54,
+  "changedOnsets": 54,
+  "classification": "one-use-reference-free-construction-complete",
+  "completedAtUtc": "2026-08-27T06:39:33.950595+00:00",
+  "goldOrReferenceRead": false,
+  "modalGpuUsed": false,
+  "outputIdentities": {
+    "candidate.json": {
+      "bytes": 280916,
+      "sha256": "1add3ffacf9048dd597a47820baeb3ef8cb0e67fa83d12b1b8d8303a8d808278"
+    },
+    "construction-proof.json": {
+      "bytes": 2602,
+      "sha256": "1efae460dcb93129dcd6717ccad8eb9e496767a78a68eddddecd0121e1261d6e"
+    },
+    "pdf-event-fidelity.json": {
+      "bytes": 447,
+      "sha256": "23d087a2d902c6a4a10f80ffca9765139d7c021f8ac59996225c3ad7dcd478f9"
+    },
+    "preservation-manifest.json": {
+      "bytes": 661,
+      "sha256": "d80b577f1d7e919ed45fdb004d407662db2da1da85e9a437303dc630f9afe5f6"
+    }
+  },
+  "pdfEventFidelity": 1.0,
+  "polyphonicChangedEvents": 0,
+  "productionIntegrated": false,
+  "referenceFacingScoringAuthorization": false,
+  "retainedPercentOfV148Changes": 50.943396226415096,
+  "runId": "33046653117",
+  "schema": "dadrock.tabs.v149.singleton-confidence.phase-b-completion.v1",
+  "scoreCallCount": 0,
+  "status": "COMPLETE_SEALED_STOP_BEFORE_SCORING"
+}
