@@ -1,0 +1,51 @@
+{
+  "schema": "dadrock.tabs.v153.reference-free-strength.phase-a-preregistration.v1",
+  "classification": "reference-free-strength-ranking-preregistration",
+  "branch": "v143-contextual-prune-lobo",
+  "populationEventIndices": [132, 347, 457],
+  "v152CandidateCanonicalEventSha256": "5ebedfb173730bb5e2639e7450841fb113f7db9af2acec19b88e58cca50679e6",
+  "frozenInputGitBlobs": {
+    "authorization": "46f38b384d47e9ffc38de3e2bc6c3cfe60bf9642",
+    "v150ContextAnalysis": "67ad55d005415be2248a57238109a3d8745e4061",
+    "v149ConfidenceAnalysis": "cd3b52493aa5e3b1945b0a30ba8d6d9dbf492f1a",
+    "v152ConstructionProof": "3530c931bee9ab5888f350cd30d793388ebb5eca"
+  },
+  "rankingRule": {
+    "type": "descending-lexicographic-no-tunable-weights",
+    "criteriaInOrder": [
+      "selectedMinusOriginalExactPitchRecurrenceCount",
+      "selectedMinusOriginalPitchClassRecurrenceCount",
+      "twoSidedVoiceLeadingImprovementSemitones",
+      "nearestFrozenV147GateExcessDb"
+    ],
+    "definitions": {
+      "selectedMinusOriginalExactPitchRecurrenceCount": "V150 windowSelectedExactMidiCount - windowOriginalExactMidiCount",
+      "selectedMinusOriginalPitchClassRecurrenceCount": "V150 windowSelectedPitchClassCount - windowOriginalPitchClassCount",
+      "twoSidedVoiceLeadingImprovementSemitones": "negative of V150 totalVoiceLeadingCostDelta; larger positive values are stronger",
+      "nearestFrozenV147GateExcessDb": "V149 nearestGateExcessDb; used only if all preceding criteria tie"
+    },
+    "selection": "rank all three by the four-value tuple descending; if the top evidence tuple is exactly tied with another event, return NO_UNIQUE_WINNER and stop; eventIndex is never a scientific tie-breaker"
+  },
+  "expectedStructuralGates": {
+    "populationCount": 3,
+    "allMustBeV152ChangedEvents": true,
+    "allMustBeSingleton": true,
+    "allMustHaveV152BothSelectedActiveRecurrence": true,
+    "candidateConstructionCount": 0,
+    "scoreCallCount": 0
+  },
+  "forbidden": [
+    "Gold/reference/professional-image read",
+    "V151/V152 score-result read",
+    "reference-facing per-event correctness inspection",
+    "candidate construction or variants",
+    "candidate search",
+    "threshold/weight/filter tuning",
+    "audio reread/decode",
+    "HPSS/CQT recomputation",
+    "Modal/L4/CUDA/GPU",
+    "main/Production modification",
+    "automatic promotion"
+  ],
+  "postResultBoundary": "If and only if a unique strongest event is produced, stop before construction. Construction requires separate fresh explicit authorization."
+}
