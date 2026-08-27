@@ -659,3 +659,12 @@ Active phase: **V147 Phase C REAL-AUDIO ARTIFACT-FIRST CONSTRUCTION = GO / SEALE
 - Candidate has **3 singleton changes / 0 polyphonic changes / 100% PDF fidelity**. Authorization blob `c6fdcd4e56f6c8a2129912508ae1dc444e303c2c`; scorer blob `5213abebef251632ddf272a40136a9076b15acdb`; run `33050114109`.
 - Expected Gold SHA will be taken from the sealed V151 score result; at this checkpoint Gold opened **NO**, reference parsed **NO**, score calls **0**.
 - Search/alternate candidate/class/filter/threshold/retuning/audio/GPU/Production/promotion remain **NO**.
+
+
+## V152 Phase C three-note active-recurrence Gold score — COMPLETE / SEALED — 2026-08-27 UTC
+- Exactly one historical Gold calibration score completed in run `33050114109`; result SHA256 **`cc549c6f0a33c0b90648433494ef36a31b5647191058e28b9ea089f12cab7ef4`**.
+- V152 percentages (pitch content / pitch timing / string-fret timing / chord pitch-set / measure coverage / PDF fidelity): **35.311 / 6.699 / 5.455 / 5.805 / 100.000 / 100.000**.
+- Accepted baseline: **35.407 / 6.699 / 5.455 / 5.805 / 100.000 / 100.000**. V151: **34.928 / 6.603 / 5.455 / 5.805 / 100.000 / 100.000**.
+- Critical mismatches **1712**; delta vs accepted baseline **+0**; delta vs V151 **-2**.
+- Safety: V152 score calls **1**; candidate search/alternate candidate/class/filter/threshold/retuning/audio/GPU/main/Production/promotion **NO**. No automatic promotion even if calibration baseline is crossed.
+- V152 score authorization is consumed and sealed.
