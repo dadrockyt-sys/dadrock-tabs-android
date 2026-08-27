@@ -1,0 +1,13 @@
+{
+  "frozenEventCount": 1144,
+  "frozenEventSha256": "ca35c3492295a3079c17c35124df7a483166315e85649e95ded095c6c06b2b77",
+  "instrument": "rhythm",
+  "passed": true,
+  "pdfEventCount": 1144,
+  "pdfEventFidelity": 1.0,
+  "pdfEventSha256": "ca35c3492295a3079c17c35124df7a483166315e85649e95ded095c6c06b2b77",
+  "referenceOpenedDuringPdfFidelityCheck": false,
+  "runtimeLabelsRequired": false,
+  "runtimeSafetyVerified": true,
+  "schemaVersion": 2
+}

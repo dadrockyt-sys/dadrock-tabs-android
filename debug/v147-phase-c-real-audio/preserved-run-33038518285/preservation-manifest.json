@@ -1,0 +1,80 @@
+{
+  "audioDecodedOrRead": false,
+  "calibrationScoreRun": false,
+  "candidateEventSha256": "ca35c3492295a3079c17c35124df7a483166315e85649e95ded095c6c06b2b77",
+  "candidateReconstructed": false,
+  "classification": "v147-phase-c-durable-reference-free-replay-preservation",
+  "decisionCount": 1144,
+  "files": {
+    "artifact-identities.json": {
+      "bytes": 931,
+      "sha256": "26fa6529d748c706db2b9df53342988c8a5fd22abd4520eccf7c5b2104cf6200"
+    },
+    "candidate.json": {
+      "bytes": 280933,
+      "sha256": "c0215690d5bfd9d2d47b8784eee886e942fbd28c499f25c643635c45ff7a9636"
+    },
+    "construction-proof.json": {
+      "bytes": 4589,
+      "sha256": "16b7d6a258e07900bf033a922b4239c6270900221aa60f433cacd61b9a5bb448"
+    },
+    "decisions.json": {
+      "bytes": 954471,
+      "sha256": "3ec6c42730bf571c29258eca131c4e32da257c1ac6073e5319073818e8ac49b9"
+    },
+    "execution-output.txt": {
+      "bytes": 5137,
+      "sha256": "7e07d371eb29e5b525a0e4a2844ca086ae8c343899266f53dd8c7d533e2cebe7"
+    },
+    "freeze/rhythm-freeze-manifest.json": {
+      "bytes": 446,
+      "sha256": "882d8da86d500c68510d2b21a0721588072244d15d6f71cfe4bd3f093b5abbd8"
+    },
+    "freeze/rhythm-frozen-analysis.json": {
+      "bytes": 280888,
+      "sha256": "b6bce95abeb83b9c9839ed649adc51368a67720a5b072a8ea3717606e3825103"
+    },
+    "freeze/rhythm-pdf-event-fidelity.json": {
+      "bytes": 445,
+      "sha256": "3d11f039a197df964a22c6ed085957d9277e1a814fe5b9fbadad79252e87379a"
+    },
+    "pdf-render-evidence.json": {
+      "bytes": 181386,
+      "sha256": "4d25a8346a40009ec5bdaf34c89f5d09e41ba9504e4264b0fd7cb21d7c25e4b9"
+    },
+    "phase-c-evidence.json": {
+      "bytes": 6576,
+      "sha256": "135e655e915ef4008e0544601a382b54c4104038f053ca5f0ffb6f2b121e193e"
+    },
+    "pip-freeze.txt": {
+      "bytes": 455,
+      "sha256": "14bcc9531c91cdcf5388a0b6c0f996907f46e039627b39adad051aa23b906c69"
+    },
+    "preflight-output.txt": {
+      "bytes": 813,
+      "sha256": "99211766cd16460d96d6daae9f3863e99c0d7a0f5a55a62020b00377b9832953"
+    },
+    "raw-audio-identity.json": {
+      "bytes": 204,
+      "sha256": "4ed7880b99fdeab8a1830efdbe3519024fcee0bc182213e18151ec0ad491c612"
+    }
+  },
+  "frontEndRetestRequiresSeparateAudioAuthorization": true,
+  "fullCqtMatrixStored": false,
+  "futureReplayPurpose": "reference-free replay of frozen V147 decision/fingering and candidate validation without real-audio or Modal/L4/GPU access",
+  "goldStoredOrRead": false,
+  "hpssOrCqtRecomputed": false,
+  "modalGpuUsed": false,
+  "normalizedPcmStored": false,
+  "perEventCqtDerivedEvidenceStored": true,
+  "preservedFileCount": 13,
+  "productionIntegrated": false,
+  "rawAudioStored": false,
+  "referenceStoredOrRead": false,
+  "schemaVersion": 14741,
+  "sourceArtifactDigestSha256": "ea4c8b3a63b8798ec7bd3a88b1b16964d341064eac231266edc5d4e92a1cb68b",
+  "sourceArtifactId": 9633030568,
+  "sourceArtifactName": "v147-phase-c-real-audio-33038518285",
+  "sourceJobId": 98406611428,
+  "sourceRunId": 33038518285
+}

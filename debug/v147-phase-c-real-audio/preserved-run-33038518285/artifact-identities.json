@@ -1,0 +1,30 @@
+{
+  "candidate.json": {
+    "bytes": 280933,
+    "sha256": "c0215690d5bfd9d2d47b8784eee886e942fbd28c499f25c643635c45ff7a9636"
+  },
+  "construction-proof.json": {
+    "bytes": 4589,
+    "sha256": "16b7d6a258e07900bf033a922b4239c6270900221aa60f433cacd61b9a5bb448"
+  },
+  "decisions.json": {
+    "bytes": 954471,
+    "sha256": "3ec6c42730bf571c29258eca131c4e32da257c1ac6073e5319073818e8ac49b9"
+  },
+  "pdf-render-evidence.json": {
+    "bytes": 181386,
+    "sha256": "4d25a8346a40009ec5bdaf34c89f5d09e41ba9504e4264b0fd7cb21d7c25e4b9"
+  },
+  "phase-c-evidence.json": {
+    "bytes": 6576,
+    "sha256": "135e655e915ef4008e0544601a382b54c4104038f053ca5f0ffb6f2b121e193e"
+  },
+  "pip-freeze.txt": {
+    "bytes": 455,
+    "sha256": "14bcc9531c91cdcf5388a0b6c0f996907f46e039627b39adad051aa23b906c69"
+  },
+  "raw-audio-identity.json": {
+    "bytes": 204,
+    "sha256": "4ed7880b99fdeab8a1830efdbe3519024fcee0bc182213e18151ec0ad491c612"
+  }
+}

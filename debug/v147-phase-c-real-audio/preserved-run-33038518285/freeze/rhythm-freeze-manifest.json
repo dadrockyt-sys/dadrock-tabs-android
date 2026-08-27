@@ -1,0 +1,12 @@
+{
+  "eventSha256": "ca35c3492295a3079c17c35124df7a483166315e85649e95ded095c6c06b2b77",
+  "pdfEventFidelity": 1.0,
+  "pdfEventSha256": "ca35c3492295a3079c17c35124df7a483166315e85649e95ded095c6c06b2b77",
+  "pdfFidelityVerified": true,
+  "professionalReferenceUsed": false,
+  "referenceFree": true,
+  "referenceOpenedDuringFreeze": false,
+  "referenceRuntimeInputUsed": false,
+  "runtimeLabelsRequired": false,
+  "v143RuntimeSafetyVerified": true
+}
