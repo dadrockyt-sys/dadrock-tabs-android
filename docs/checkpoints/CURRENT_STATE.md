@@ -288,3 +288,16 @@ Active phase: **V147 Phase C REAL-AUDIO ARTIFACT-FIRST CONSTRUCTION = GO / SEALE
 - Attempt sentinel persisted before Gold access. GitHub Actions run `33042036491`; workflow arming commit `269b3b59b38c0c71199a5aebf93655439843fca3`.
 - At this checkpoint: Gold/reference content opened by this execution = **NO**; score calls = **0**.
 - Reruns are fail-closed once the attempt sentinel exists. No search, alternate candidate, retuning, audio/CQT recomputation, Modal/L4/GPU, main/Production change, or promotion is allowed.
+
+## Phase-D V147 Gold calibration score — COMPLETE / ONE-USE PATH SELF-SEALED — 2026-08-27 UTC
+- Exactly one historical score call completed in GitHub Actions run `33042036491`.
+- Result path: `debug/v147-phase-d-scoring/phase-d-score-result.json`; SHA256 `265c6c573efd1abb9d8ecea171e72593269a7e6f1439e2abfb5a44dbe82dbf58`.
+- Candidate display vector (pitch content / pitch timing / string-fret timing / chord pitch-set / measure coverage / PDF fidelity): **31.196 / 5.455 / 4.593 / 4.976 / 100.000 / 100.000**.
+- Accepted baseline display vector: **35.407 / 6.699 / 5.455 / 5.805 / 100.000 / 100.000**.
+- Critical mismatch count: **1776**; delta vs accepted baseline: **+64**.
+- Raw F1 deltas vs accepted baseline: pitch content `-0.042105263`, pitch timing `-0.012440191`, string/fret `-0.008612440`, chord pitch-set `-0.008293020`, exact voicing `-0.008293020`, measure coverage `+0.000000000`.
+- Gold SHA verified immediately before parsing/scoring as `18fd868ae960dfcddc1ffb0110f1a9dfd8acc2ffeb46e247d1116cd54291526ac`.
+- Historical scoring chain remained blob-bound: wrapper `1ca2b8550d6c08e793f26b3aa91b99fb44fa7ddb`, core scorer `cc4bf61a99f22bf87a6c255e5a81220fbc82223b`, canonical adapter `088d44827fb23e20d9aeeb4944a672989af5846c`.
+- Safety: candidate search **NO**; alternate candidate **NO**; retuning **NO**; audio/CQT recomputation **NO**; Modal/L4/GPU **NO**; main/Production integration **NO**; automatic promotion **NO**.
+- The one-use workflow is removed in the same persistence commit as this checkpoint. The attempt sentinel remains durable and makes reruns fail closed.
+- Phase-D scoring authorization is consumed. Any further reference-facing comparison, candidate change, calibration search, or promotion requires a new separately frozen phase and fresh explicit authorization.

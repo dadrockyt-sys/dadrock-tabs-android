@@ -1,0 +1,46 @@
+{
+  "acceptedBaselineDisplayVectorPercent": [
+    35.406698564593306,
+    6.698564593301436,
+    5.454545454545454,
+    5.80511402902557,
+    100.0,
+    100.0
+  ],
+  "candidateCanonicalEventSha256": "ca35c3492295a3079c17c35124df7a483166315e85649e95ded095c6c06b2b77",
+  "candidateDisplayVectorPercent": [
+    31.196172248803833,
+    5.454545454545454,
+    4.5933014354066986,
+    4.97581202487906,
+    100.0,
+    100.0
+  ],
+  "classification": "single-score-execution-complete",
+  "criticalMismatchDelta": 64,
+  "gatedMetricDeltas": {
+    "chordPitchSetTolerantF1": -0.0082930200414651,
+    "exactVoicingTolerantF1": -0.0082930200414651,
+    "measureCoverageRecall": 0.0,
+    "pitchContentF1": -0.0421052631578947,
+    "pitchTimingTolerantF1": -0.012440191387559814,
+    "stringFretTimingTolerantF1": -0.008612440191387558
+  },
+  "githubRunId": "33042036491",
+  "goldSha256": "18fd868ae960dfcdd1ffb0110f1a9dfd8acc2ffeb46e247d1116cd54291526ac",
+  "python": "3.12.14",
+  "resultSha256": "265c6c573efd1abb9d8ecea171e72593269a7e6f1439e2abfb5a44dbe82dbf58",
+  "safety": {
+    "alternateCandidateConstructed": false,
+    "audioRecomputed": false,
+    "automaticPromotionAllowed": false,
+    "candidateSearchRun": false,
+    "modalGpuUsed": false,
+    "productionIntegrated": false,
+    "retuningRun": false,
+    "scoreCallCount": 1
+  },
+  "schema": "dadrock.tabs.v147.phase-d-score-execution-envelope.v1",
+  "scoreCallCount": 1,
+  "workflowArmingCommit": "269b3b59b38c0c71199a5aebf93655439843fca3"
+}

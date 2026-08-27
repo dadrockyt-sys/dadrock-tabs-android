@@ -1,0 +1,29 @@
+{
+  "acceptedBaselineDisplayVectorPercent": [
+    35.406698564593306,
+    6.698564593301436,
+    5.454545454545454,
+    5.80511402902557,
+    100.0,
+    100.0
+  ],
+  "candidateDisplayVectorPercent": [
+    31.196172248803833,
+    5.454545454545454,
+    4.5933014354066986,
+    4.97581202487906,
+    100.0,
+    100.0
+  ],
+  "classification": "v147-phase-d-authorized-single-gold-calibration-score",
+  "criticalMismatchDelta": 64,
+  "gatedMetricDeltas": {
+    "chordPitchSetTolerantF1": -0.0082930200414651,
+    "exactVoicingTolerantF1": -0.0082930200414651,
+    "measureCoverageRecall": 0.0,
+    "pitchContentF1": -0.0421052631578947,
+    "pitchTimingTolerantF1": -0.012440191387559814,
+    "stringFretTimingTolerantF1": -0.008612440191387558
+  },
+  "scoreCallCount": 1
+}
