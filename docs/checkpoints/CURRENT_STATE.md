@@ -2,7 +2,7 @@
 
 Updated: 2026-08-26 America/Montreal
 Branch: `v143-contextual-prune-lobo`
-Active phase: **V144 Rhythm gold calibration baseline preserved; Families #1–#14 consumed and fully sealed. Family #14 one-shot workflow and trigger are deleted. Accepted baseline remains family #10. V145 Rhythm Decoder is now preregistered as a separate CPU-only architecture experiment using the existing V5 three-way separation output as protected input. No Modal/L4/GPU without fresh explicit authorization.**
+Active phase: **V144 Rhythm baseline preserved; Families #1–#14 fully consumed/sealed. V145 Rhythm Decoder is preregistered and its first CPU-only core + unit tests are implemented. CPU proof is the immediate next step. No Modal/L4/GPU without fresh explicit authorization.**
 
 ## Permanent safety / fixed protocol
 - Work only on `v143-contextual-prune-lobo`; never modify/merge `main` or Production.
@@ -10,11 +10,10 @@ Active phase: **V144 Rhythm gold calibration baseline preserved; Families #1–#
 - No Modal/L4/GPU without fresh explicit authorization.
 - V5 analyzer blob `7f72f8ed9b14af8bc93e95544195204d99c6bec1`; result blob `511fd244f231b66d08306f97b5a47ed41f5415c7`; render SHA256 `7c3399d3f5e05ecc8ac98d71d0e5300e1e78f63ae96c1642fe4a19debb4061b2`; PDF SHA256 `f4c1238e868cadfb90b8a359b1555b0b90e7740b9ebaa276aa394c8991f37ce5`; canonical V5 event SHA `7ed5166a73793e3a40c9a21f6532fee5ba784e43ef4180727404a37a038fb6d1`.
 - Gold SHA256 `18fd868ae960dfcdd1ffb0110f1a9dfd8acc2ffeb46e247d1116cd54291526ac`; calibration benchmark, not unseen holdout. V5 holdout permanently consumed.
-- Split seed 144: 60 fit /20 validation /20 canary. FIT constructs/ranks only; later stages gate one locked winner. FIT pitch gain >=0.005; no musical regression; critical delta <=0; PDF fidelity1.0. Failure => family #10 fallback, never alternate.
 
 ## Permanent progress-percentage reporting
-- Current accepted family #10: **Pitch Content 35.4%** (`0.35406698564593303`), **Pitch + timing 6.7%** (`0.06698564593301436`), **String/fret + timing 5.5%** (`0.05454545454545454`), **Chord/voicing 5.8%** (`0.0580511402902557`), **Measure coverage 100%**, **PDF event fidelity 100%**.
-- Keep dimensions separate; never invent a combined overall percentage. Recompute only when the accepted baseline changes.
+- Accepted family #10: **Pitch Content 35.4%** (`0.35406698564593303`), **Pitch + timing 6.7%** (`0.06698564593301436`), **String/fret + timing 5.5%** (`0.05454545454545454`), **Chord/voicing 5.8%** (`0.0580511402902557`), **Measure coverage 100%**, **PDF event fidelity 100%**.
+- Keep dimensions separate; recompute only if accepted baseline changes.
 
 ## Accepted baseline — LOCKED / UNCHANGED
 - Family #10 `singleton-onset-replace-be9e9aa7a734e3cd`.
@@ -22,61 +21,59 @@ Active phase: **V144 Rhythm gold calibration baseline preserved; Families #1–#
 - 1144 events /113 measures / event+PDF SHA `4e6f9f247134f79f30a5448515c52a6ca1012c1f1314c3458b448582999e3881`; PDF fidelity1.0.
 - Full gold critical1712; pitch0.35406698564593303; pitch/timing0.06698564593301436; string/fret/timing0.05454545454545454; chord/voicing0.0580511402902557; coverage1.0.
 
-## Consumed families — NEVER REPLAY / RESELECT / RETUNE
-- Families #1–#14 are consumed. Never use their candidate rankings, runners-up, gate outcomes, candidate identities, or observed candidate behavior to shape/rank a successor.
-- Family #12 run `32999986666` / job `98278991573`; no FIT winner; sealed.
-- Family #13 run `33008934470` / job `98309848693`; no FIT winner; sealed.
-- Family #14 run `33025902769` / job `98367025091`; infrastructure SUCCESS, zero qualifying FIT rules, accepted baseline unchanged; fully sealed below.
+## V144 consumed state
+- Families #1–#14 are consumed. Never replay/reselect/retune them or use their candidate rankings/outcomes to shape a successor.
+- Family #14 run `33025902769` / job `98367025091`; no qualifying FIT rule; accepted baseline unchanged.
+- Family #14 one-shot workflow deletion commit `443031fd2294e05b23290c71b0e2b712198d842a`.
+- Family #14 trigger deletion commit `e9536f2b4c122741f50aa317e2bbd332d0a9d03b`.
+- Family #14 report remains preserved at blob `a13df8e17ae2c813d4602dd10dd642327a5d2b75`; CPU proof blobs remain preserved.
+- Current accepted-baseline FIT residual remains `debug/v144-rhythm-calibration/diagnostics/singleton-baseline-fit-residuals.json`, blob `b9794a7b8a882ba9ade5e8095f112d4be45e47e6`.
 
-## Current accepted-baseline FIT residual — STILL CURRENT
-- `debug/v144-rhythm-calibration/diagnostics/singleton-baseline-fit-residuals.json`; blob `b9794a7b8a882ba9ade5e8095f112d4be45e47e6`.
-- Aggregate topology: g1-r0=203, g2-r0=79, g3-r0=12, g5-r0=1; g2-r1=26; shared generated-heavier=27; shared reference-heavier=57; generated-only=295; reference-only=180.
-- Aggregate mechanisms: pitch FP467, pitch FN418, same-onset extra generated slots431, same-onset missing reference slots382.
-- Because accepted baseline did not change through family #14, this residual remains the current permissible aggregate V144 evidence. Family #14's observed zero-rule outcome must not shape successor rules.
-
-## Family #14 — CONSUMED / FULLY SEALED / NO SCORE CHANGE
-- Frozen contract: atomic shared dyad-to-singleton surplus-note prune; exact g2-r1 FIT onset with one exact-MIDI survivor; support3/cap256; runtime reference-free; remove one member only; survivor immutable; exact113 measures; deterministic family #10 fallback.
-- Policy blob `1f6cc7fcaf2d4ac7838b48b839c617b04cb1c34e`; tests blob `38d6804560755fcb0bcf26eeda5e1a5b77f31231`; policy proof run `33025027635` / job `98364261256`; proof blob `cafd2b51e75ba0895dde995f0730ef8554976516`.
-- Search blob `dd02c492ecfef26bbb15e8d345346ff75bb5fa30`; tests blob `77758ead57a2735ba653bbba64e78c4124d34798`; search CPU proof run `33025495483` / job `98365711683`; proof blob `73c2e863f5dc8404fab8985d05f360a2093f588c`.
-- One-shot report `debug/v144-rhythm-calibration/candidates/atomic-shared-dyad-surplus-prune-search.json`; persistence commit `2ebb31c85d4c164b24f929818d402c7fc763b49d`; report blob `a13df8e17ae2c813d4602dd10dd642327a5d2b75`.
-- Result: rankedRuleCount0; evaluatedCandidateCount0; stoppedAt=fit; family #10 fallback; validation/canary/full unopened; split/calibration promotion false.
-- One-shot workflow deletion commit **`443031fd2294e05b23290c71b0e2b712198d842a`**.
-- One-shot trigger deletion commit **`e9536f2b4c122741f50aa317e2bbd332d0a9d03b`**.
-- Report and CPU proof JSONs remain preserved. Never rerun/retrigger/reselect/retune Family #14.
-
-## V145 Rhythm Decoder — PREREGISTERED / CPU-ONLY
-- Frozen preregistration: `docs/v145-rhythm-decoder-preregistration.md`.
+## V145 Rhythm Decoder — FROZEN CPU ARCHITECTURE
+- Preregistration: `docs/v145-rhythm-decoder-preregistration.md`.
 - Preregistration commit: **`5a5c59d305dffba16090bc7dc37d33ecbb17e295`**.
-- Goal: get beyond local post-hoc prune/rewrite families by changing the Rhythm architecture while preserving V144 family #10 as immutable fallback.
-- Protected front end: reuse current V5 three-way separation benchmark Rhythm output. Existing V5 is register-gated event separation, not neural waveform/stem separation: bass MIDI28-51, rhythm52-63, lead64-76, each analyzer pass protected.
 - Frozen architecture: **V5 Rhythm-separated events -> normalized evidence -> timing/onset lattice -> pitch lattice -> constrained guitar-state decoder -> candidate event stream -> existing scorer/render/PDF gates**.
-- Initial timing lattice uses a caller-supplied grid quantum; automatic tempo estimation is deferred until the deterministic lattice contract is proven.
-- Initial pitch lattice does not invent new pitches; it carries generated MIDI evidence through nearby timing candidates.
-- Standard tuning initially frozen to MIDI `(40,45,50,55,59,64)` strings6->1, max fret24; simultaneous notes must use unique strings and preserve exact MIDI.
-- Runtime core may not accept gold/reference/FIT/validation/canary/scorer-derived inputs.
-- Primary hurdle suggested by accepted metrics: Pitch Content35.4% is much higher than Pitch+timing6.7%, so timing/onset alignment is treated as first-class before string/fret/voicing assignment.
-- V145 is separate from V144 Family #15; consumed-family outcomes are not used to shape it.
-- No live audio/Modal/L4/GPU benchmark is authorized by this preregistration.
+- Protected input: current V5 Rhythm-separated output; V5 itself remains immutable.
+- V5 is register-gated event separation, not waveform/stem separation. Current ranges: bass28-51, rhythm52-63, lead64-76.
+- Initial timing lattice uses caller-supplied quantum and proposes nearest + neighboring grid points without reference data.
+- Initial pitch lattice carries generated MIDI only; no new pitch invention in this proof.
+- Standard tuning frozen initially to MIDI `(40,45,50,55,59,64)` strings6->1, max fret24.
+- Runtime core may not accept gold/reference/FIT/validation/canary inputs.
+- V145 remains separate from V144 Family #15.
+
+## V145 CPU implementation — IMPLEMENTED / PROOF PENDING
+- Core module: `modal/v145_rhythm_decoder.py`.
+- Core implementation commit: **`17f08592ece48ee2519d3449f5f6f7d5ff8ffa39`**.
+- Unit tests: `modal/tests/test_v145_rhythm_decoder.py`.
+- Test creation commit: **`42cb52a86c4f364bdd042620ee13f65a8f43f971`**.
+- Implemented deterministic generated-event normalization with frozen aliases/defaults and input immutability.
+- Implemented explicit-grid timing candidates with raw-onset preservation, nearest + neighbor proposals, non-negative timing cost, deterministic selection.
+- Implemented physically valid guitar-position enumeration for standard tuning and max fret.
+- Implemented bounded simultaneous guitar-state enumeration: exact MIDI preservation, unique strings, fret-span guard, deterministic ranking.
+- Implemented continuity-aware state selection using hand-position transition cost without changing MIDI.
+- Implemented nearest-timing CPU proof decoder that groups simultaneous evidence, assigns valid guitar states, and leaves unplayable onsets undecoded rather than fabricating notes.
+- Core has no Modal dependency.
+- 12 unit tests cover aliases/defaults/invalid input, lattice construction, timing validation, MIDI preservation, unique strings, continuity, grouped decode, fail-closed unplayable events, >6-note refusal, runtime API label isolation, no Modal dependency, determinism.
+- These tests have not yet been executed by a definitive branch CPU workflow at this checkpoint.
 
 ## Fixed dependency identities
 - Residual analyzer `27ac8699279db8fc0208d067479ad3751da1a630`; singleton reconstruction search `70880d26418d907cc702233af37bcc4b643e3a57`; singleton policy `1e05e66a3523f98944370837a59e5d6e7293f9ac`.
 - Pitch-position shift `f69755b61bdcdf3a669847ce7e425289b4b0927f`; pitch shift `d9998c59acddba070069668d62bcb1c3cdaf2b05`; triple conjunction `ef9768a127472d7ce0746fdf21164d33e5117ea4`.
 - Staged selector `d176a9a69366e192e6fa75bc1039661e977f0bfa`; measure guard `4a1364204dd1e720c09d835ec3995c165047de98`; context split `2da58508f2132660ad317ee63d5cb043d58285f0`; config `9b93205cb47bc7718685b9d41b263778107801ce`.
-- Split analysis `1569bf01554be345ca9199a85f700db7743501a5`; signature prune scoring `699dd1a16725ecf11797e42829aa409ee5909000`; selected scoring `1ca2b8550d6c08e793f26b3aa91b99fb44fa7ddb`.
 - Canonical `088d44827fb23e20d9aeeb4944a672989af5846c`; scorer `cc4bf61a99f22bf87a6c255e5a81220fbc82223b`; freeze `710bb6a3b15b99d3d11ceb4948d7c7175d208afc`; PDF fidelity `5e1564216873046237fb545078a04a6b18f72b27`; render contract `ccbb93c48982798cc474309fd981f6ca02d5c8d4`.
 
 ## EXPLICIT NEXT STEPS — CONTINUATION CONTRACT
-1. Stay only on `v143-contextual-prune-lobo`; never main/Production/frontend/Bass/Lead; no Modal/L4/GPU without fresh explicit authorization.
-2. Family #14 is fully sealed. Preserve its report/proofs and never replay it.
-3. Preserve accepted family #10 baseline and percentages **35.4 / 6.7 / 5.5 / 5.8 / 100 / 100**.
-4. Implement the frozen V145 CPU core and unit tests exactly to preregistration commit `5a5c59d...`.
-5. Reuse V5 Rhythm-separated output as protected input; do not mutate V5 itself.
-6. First CPU targets: deterministic normalization, explicit-grid onset lattice, pitch evidence carry-through, physically valid guitar-position enumeration, deterministic unique-string chord states, continuity cost, fail-closed behavior, input immutability.
-7. Checkpoint after implementation and again after CPU proof.
-8. No live Modal/L4/GPU benchmark until separately and explicitly authorized.
+1. Stay only on `v143-contextual-prune-lobo`; never main/Production/frontend/Bass/Lead.
+2. Preserve family #10 accepted baseline and percentages **35.4 / 6.7 / 5.5 / 5.8 / 100 / 100**.
+3. Run a definitive GitHub CPU-only proof for `modal/v145_rhythm_decoder.py` + `modal/tests/test_v145_rhythm_decoder.py`.
+4. If the proof fails, fix only within the frozen preregistered contract and rerun CPU proof; checkpoint changes.
+5. If proof passes, persist proof metadata and checkpoint it.
+6. Only after CPU proof, design the next CPU stage for better timing inference/sequence decoding; do not use gold at runtime.
+7. No live Modal/L4/GPU/audio benchmark until separately and explicitly authorized by the user.
 
 ## Current stop point
-- V144 accepted baseline family #10 unchanged; Families #1–#14 fully consumed/sealed.
-- Family #14 workflow deletion `443031fd...`; trigger deletion `e9536f2b...`.
-- V145 CPU architecture preregistered at commit `5a5c59d...`.
-- Safe next work: implement and CPU-test the frozen V145 Rhythm-decoder core.
+- V144 accepted baseline unchanged and fully protected.
+- Family #14 fully sealed.
+- V145 preregistration frozen at `5a5c59d...`.
+- V145 core implementation commit `17f08592...`; tests commit `42cb52a8...`.
+- Immediate next action: definitive CPU unit-test proof only.
