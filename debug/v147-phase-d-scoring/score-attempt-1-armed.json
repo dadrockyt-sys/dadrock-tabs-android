@@ -1,0 +1,12 @@
+{
+  "schema": "dadrock.tabs.v147.phase-d-score-attempt.v1",
+  "classification": "armed-before-reference-access",
+  "attempt": 1,
+  "githubRunId": "33042036491",
+  "armingWorkflowCommit": "269b3b59b38c0c71199a5aebf93655439843fca3",
+  "candidateCanonicalEventSha256": "ca35c3492295a3079c17c35124df7a483166315e85649e95ded095c6c06b2b77",
+  "goldExpectedSha256": "18fd868ae960dfcddc1ffb0110f1a9dfd8acc2ffeb46e247d1116cd54291526ac",
+  "scoreCallLimit": 1,
+  "referenceOpenedAtArmTime": false,
+  "scoreRunAtArmTime": false
+}

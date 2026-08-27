@@ -277,3 +277,14 @@ Active phase: **V147 Phase C REAL-AUDIO ARTIFACT-FIRST CONSTRUCTION = GO / SEALE
 - Candidate variants/search/retuning: **NO**.
 - Main/Production modification: **NO**.
 - Next action requires the user's fresh explicit authorization for exactly one frozen Phase-D V147 Gold calibration score.
+
+## Phase-D one-use scoring authorization boundary — ARMED — 2026-08-27 UTC
+- Fresh explicit user authorization was received for **exactly one Phase-D V147 Gold calibration score**.
+- Authorization record: `debug/v147-phase-d-reference-free/phase-d-scoring-authorization.json`; Git blob `0ee49e632c0246667363672d35f7b28b1482730c`.
+- Provenance recovery addendum: `debug/v147-phase-d-reference-free/phase-d-provenance-recovery-1.json`; Git blob `ecb2539778fe5aa547a8fa88c1216b8562faaebc`.
+- Frozen one-use runner: `validation/v147_phase_d/score_once.py`; Git blob `74b31168b629812acde874b89dfcdf022acf987d`.
+- Historical wrapper/core scorer/canonical adapter remain `1ca2b8550d6c08e793f26b3aa91b99fb44fa7ddb` / `cc4bf61a99f22bf87a6c255e5a81220fbc82223b` / `088d44827fb23e20d9aeeb4944a672989af5846c`.
+- Immutable candidate remains 1144 events / canonical SHA `ca35c3492295a3079c17c35124df7a483166315e85649e95ded095c6c06b2b77`.
+- Attempt sentinel persisted before Gold access. GitHub Actions run `33042036491`; workflow arming commit `269b3b59b38c0c71199a5aebf93655439843fca3`.
+- At this checkpoint: Gold/reference content opened by this execution = **NO**; score calls = **0**.
+- Reruns are fail-closed once the attempt sentinel exists. No search, alternate candidate, retuning, audio/CQT recomputation, Modal/L4/GPU, main/Production change, or promotion is allowed.
