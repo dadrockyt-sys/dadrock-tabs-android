@@ -557,3 +557,13 @@ Active phase: **V147 Phase C REAL-AUDIO ARTIFACT-FIRST CONSTRUCTION = GO / SEALE
 - Scorer blob `8baab9c30b947690d9d2f5876448f4224f69280c`; authorization blob `5fbf389df62c89702e911dc38097f5833e6e9b05`; identity addendum blob `f296197fc5738838d91b968a4fe0465121fa4f9c`; run `33047762065`.
 - Expected Gold identity will be read reference-free from the persisted V149 result and required to be 64 lowercase hex.
 - Attempt consumed before Gold. Gold/reference opened **NO**; reference parsed **NO**; score calls **0**. No search/alternate rule/threshold/retuning/audio/GPU/Production.
+
+
+## V150 Phase C contextual singleton Gold score — COMPLETE / SEALED — 2026-08-27 UTC
+- Exactly one historical Gold score completed in run `33047762065`; result SHA256 **`c29c83571c68c8e850f3a2c30de0c9b0a706ab02e35342e8e39151949b576e40`**; persistence commit **`535bedd73d6deebf7ee9a82bd3c9f08bc765f858`**.
+- V150 percentages (pitch content / pitch timing / string-fret timing / chord pitch-set / measure coverage / PDF fidelity): **34.641 / 6.507 / 5.359 / 5.667 / 100.000 / 100.000**.
+- Accepted baseline percentages: **35.407 / 6.699 / 5.455 / 5.805 / 100.000 / 100.000**. V149 percentages: **34.450 / 6.507 / 5.359 / 5.667 / 100.000 / 100.000**.
+- Critical mismatches: **1720**; delta vs baseline **+8**; delta vs V149 **-2**.
+- Runtime Gold SHA verified from persisted V149 reference identity: **`18fd868ae960dfcdd1ffb0110f1a9dfd8acc2ffeb46e247d1116cd54291526ac`** (64 chars).
+- Safety: total score calls **1**; search/alternate candidate/context rule/threshold/retuning/audio/HPSS/CQT/Modal/GPU/Production/promotion **NO**.
+- V150 score authorization consumed; workflow deleted in this sealing commit. No automatic promotion even if the score crosses baseline.
