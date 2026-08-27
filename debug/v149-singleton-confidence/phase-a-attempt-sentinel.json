@@ -1,0 +1,18 @@
+{
+  "schema": "dadrock.tabs.v149.singleton-confidence.phase-a-attempt.v1",
+  "classification": "one-use-reference-free-analysis-attempt",
+  "branch": "v143-contextual-prune-lobo",
+  "status": "ARMED_NOT_CONSUMED",
+  "sourceHeadBeforeSentinel": "3f6eeae4cff9de94891afe2773ef91afcfbe85d1",
+  "preregistrationGitBlob": "324e9f5bcd7264b3d50f54c51a86ebbf173b5ef6",
+  "analyzerGitBlob": "1f13b85110c2ccb6fccdd24bb87b63e64ec490ca",
+  "expectedPopulation": 106,
+  "goldOrReferenceRead": false,
+  "scoreCallCount": 0,
+  "candidateConstructed": false,
+  "candidateSearchOrVariants": false,
+  "audioRead": false,
+  "modalGpuUsed": false,
+  "productionIntegrated": false,
+  "automaticPromotion": false
+}
