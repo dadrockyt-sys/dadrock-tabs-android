@@ -2,7 +2,7 @@
 
 Updated: 2026-08-26 America/Montreal
 Branch: `v143-contextual-prune-lobo`
-Active phase: **V147 Phase C real-audio artifact-first protocol is FROZEN BEFORE REAL-AUDIO ACCESS. Phase A and Phase B remain COMPLETE/GO/SEALED. Current authorization permits only reference-free implementation/tests for Phase C; actual audio decoding/analysis remains STOP pending fresh explicit authorization. Accepted Rhythm family #10 remains active.**
+Active phase: **V147 Phase C real-audio artifact-first protocol plus pre-execution evidence clarification are FROZEN BEFORE REAL-AUDIO ACCESS. Phase A and Phase B remain COMPLETE/GO/SEALED. Current authorization permits only reference-free implementation/tests for Phase C; actual audio decoding/analysis remains STOP pending fresh explicit authorization. Accepted Rhythm family #10 remains active.**
 
 ## Permanent safety / fixed protocol
 - Work only on `v143-contextual-prune-lobo`; never modify/merge `main` or Production.
@@ -41,13 +41,25 @@ Active phase: **V147 Phase C real-audio artifact-first protocol is FROZEN BEFORE
 - Prereg: `docs/v147-phase-c-real-audio-artifact-preregistration.md`.
 - Freeze commit: `9a452bc29f6e1edcad9ef2a45a1c2a52267277b4`.
 - Frozen prereg Git blob: `5c19ed572d17cc9a760f1b63ee03c1b2c4543d30`.
+- Pre-execution clarification: `docs/v147-phase-c-preregistration-clarification.md`; freeze commit `fe16ac54a80cadd6f0b59bbec6251a24236fc476`; blob `6ced1bae4cdaad8306b008827657afbb27a87dbc`.
+- Clarification was frozen before Phase-C implementation/audio access after detecting a prose transcription mismatch. The authoritative V147 blob `49bce8...` uses `OCTAVE_WEIGHT=0.25`, not 0.5, and its existing CQT extractor must be called directly. No V147 code/threshold changed.
 - Purpose: construct exactly one real-audio-derived candidate from accepted family #10, then seal it **without opening gold/reference or scoring**. A later separately frozen Phase D would score the immutable artifact exactly once.
 - Exact accepted source must materialize to 1144 canonical events and SHA `4e6f9f247134f79f30a5448515c52a6ca1012c1f1314c3458b448582999e3881` before any audio read.
 - Historical source-audio raw SHA recovered from sealed V144 workflow blob `a9bef022032f2d5195dc54ba2a5bd9d7629686da`: `215bd5a657c5326f08f132ae358595a95c30b39bb7493a52c2f910d5a608149f`.
 - Raw source audio bytes are not present on the current branch. No substitute encode/song/upload is allowed; exact bytes must hash to the frozen value before decoding.
-- Frozen Phase-C front end: 22050 Hz mono; harmonic component via HPSS margin `(1.0,6.0)`; CQT hop 128; 48 bins/octave; fmin MIDI 40; 243 bins; fixed event-time mapping at 129.19921875 BPM, 4 steps/beat; frozen frame window and frozen Phase-A candidate evidence aggregation/thresholds.
+- Frozen Phase-C front end: 22050 Hz mono; harmonic component via HPSS margin `(1.0,6.0)`; CQT hop 128; 48 bins/octave; fmin MIDI 40; 243 bins; fixed event-time mapping at 129.19921875 BPM, 4 steps/beat; frozen frame window.
+- Frozen evidence extraction/selection is the existing V147 blob exactly: ±1 family, band `±0.30`, baseline `±2.0` excluding `±0.75`, `DB_FLOOR=1e-8`, octave weight `0.25`, thresholds `3.0/3.0/2.0 dB`, fail closed.
 - Candidate timing/order/count/measure/metadata must remain fixed; only MIDI/string/fret may change; V145 timing lattice is forbidden in Phase C.
 - Real-audio analysis has **NOT** run. Calibration/gold/reference has **NOT** been opened. Modal/GPU has **NOT** been used.
+
+## Frozen accepted-family reconstruction chain
+Reference-free materialization may reconstruct the accepted 1144-event stream from immutable V5 using the already-selected transforms only, with identity checks after each stage:
+1. V5 canonical source: 1209 events, SHA `7ed5166a73793e3a40c9a21f6532fee5ba784e43ef4180727404a37a038fb6d1`.
+2. Triple prune signatures `register::high`, `section16::1`, `stepParity::0` -> 1144 events, SHA `68b8cdf14ed02265c5e3c204b2af51b0aae4849462e7b3e4243192d8855cc3c3`.
+3. Same-string pitch shift signatures `pitchClass::4`, `stepQuarter::0`, semitone `-2` -> SHA `b6e1f8a8be150943d7224c74f9193b1b4050454620063846f6f5f5c773d4cbf6`.
+4. Joint pitch/position shift signatures `pitchClass::11`, `stepParity::0`, semitone `-2`, string shift `+1` -> SHA `5b36270aaeafa73b2e25722e2576a40424ce5951dcfd2b5d769746bd9eb07e0d`.
+5. Singleton onset replacement: context `stepParity::0`, source stringIndex `0`, source pitch class `4`, target stringIndex `3`, semitone `-12` -> accepted SHA `4e6f9f247134f79f30a5448515c52a6ca1012c1f1314c3458b448582999e3881`.
+No reference/gold input is permitted during this replay.
 
 ## Frozen validation/render identities
 - canonical `088d44827fb23e20d9aeeb4944a672989af5846c`
@@ -61,8 +73,8 @@ Active phase: **V147 Phase C real-audio artifact-first protocol is FROZEN BEFORE
 
 ## EXPLICIT NEXT STEPS
 1. Keep V146, V147 Phase A, and V147 Phase B sealed; accepted family #10 remains active.
-2. Keep V147 Phase C prereg frozen; do not change its CQT/window/threshold/candidate rules after future real-audio results.
-3. Without reading audio, implement and CPU-test only: (a) reference-free accepted-family materialization/identity guard, (b) fixed-time fingering adapter, (c) generated numeric/CQT evidence aggregation, (d) raw-audio SHA guard.
+2. Keep Phase-C prereg + clarification frozen; V147 blob `49bce8...` is authoritative for evidence scoring/extraction.
+3. Without reading audio, implement and CPU-test only: (a) reference-free accepted-family materialization/identity guard, (b) fixed-time fingering adapter, (c) frame-selection wrapper that calls the frozen V147 CQT extractor directly, (d) raw-audio SHA guard.
 4. Checkpoint all Phase-C support-code/test/proof identities before any real-audio execution.
 5. **STOP before actual audio decoding/CQT analysis. Fresh explicit authorization is required for real-audio execution.**
 6. Phase D/reference scoring remains unauthorized and requires a separate frozen preregistration after a Phase-C GO artifact exists.
@@ -70,6 +82,6 @@ Active phase: **V147 Phase C real-audio artifact-first protocol is FROZEN BEFORE
 ## Current stop point
 - Accepted scores remain **35.4 / 6.7 / 5.5 / 5.8 / 100 / 100**.
 - V147 A = GO/SEALED; V147 B = GO/SEALED.
-- V147 Phase C protocol is now frozen but has not touched real audio.
+- V147 Phase C protocol and clarification are frozen; no real audio has been touched.
 - No calibration/gold/reference access, real-audio decode, analyzer integration, Modal/L4/GPU, main, or Production changes occurred in Phase C.
 - Proceed only with generated/reference-free Phase-C implementation/tests, then STOP before real audio.
