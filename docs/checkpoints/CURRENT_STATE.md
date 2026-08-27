@@ -2,7 +2,7 @@
 
 Updated: 2026-08-26 America/Montreal
 Branch: `v143-contextual-prune-lobo`
-Active phase: **V144 Rhythm baseline preserved; Families #1–#14 fully consumed/sealed. V145 Stage 1, Stage 2, and Stage 3 generated-only adapter are CPU-proven/sealed. Stage 3 evaluation harness is now preregistered before implementation and before any real V5 candidate/score. No Modal/L4/GPU/live audio without fresh explicit authorization.**
+Active phase: **V144 Rhythm baseline preserved; Families #1–#14 fully consumed/sealed. V145 Stage 1, Stage 2, and Stage 3 generated-only adapter are CPU-proven/sealed. Stage 3 evaluation harness is preregistered and now implemented with synthetic tests, but not yet CPU-proven. No real Stage 3 candidate/score has run. No Modal/L4/GPU/live audio without fresh explicit authorization.**
 
 ## Permanent safety / fixed protocol
 - Work only on `v143-contextual-prune-lobo`; never modify/merge `main` or Production.
@@ -50,25 +50,30 @@ Active phase: **V144 Rhythm baseline preserved; Families #1–#14 fully consumed
 - render contract `ccbb93c48982798cc474309fd981f6ca02d5c8d4`
 - calibration gold path `debug/v144-rhythm-calibration/reference/professional-rhythm-gold-reference.json`, raw SHA256 `18fd868ae960dfcdd1ffb0110f1a9dfd8acc2ffeb46e247d1116cd54291526ac`.
 
-## V145 Stage 3 evaluation harness — PREREGISTERED / NOT IMPLEMENTED / REAL TRIAL NOT RUN
+## V145 Stage 3 evaluation harness — PREREGISTERED / IMPLEMENTED / NOT YET CPU-PROVEN
 - Prereg `docs/v145-rhythm-decoder-stage3-evaluation-preregistration.md`.
-- Creation commit **`d40aecf6fdfd784b3c918c3ee2586fc5904cc147`**.
-- Frozen prereg blob **`9b3542f33fb0f9149056b1eafb8c5db1864299ca`**.
-- Frozen implementation path `validation/v145_rhythm_decoder/score_offline_stage3_candidate.py`.
-- Frozen synthetic-test path `modal/tests/test_v145_rhythm_stage3_offline_score.py`.
-- Mandatory order: candidate-only validation -> frozen `validate_pre_reference(freeze_dir)` -> candidate/freeze/PDF identity -> accepted baseline manifest -> only then read/hash/validate gold -> score already-frozen candidate exactly once -> deterministic report.
-- Report schema14504/classification `v145-rhythm-stage3-offline-calibration-score`; role calibration benchmark not unseen holdout; `acceptedBaselineChanged=false`, `promotionAllowed=false`, `candidateMutatedDuringEvaluation=false`, `referenceOpenedOnlyAfterPreReferenceGate=true`.
-- Synthetic proof must show failed pre-reference/candidate identity gates prevent both baseline/gold reads; wrong baseline/wrong gold fail before score; valid path scores once without mutation. Real gold cannot be read in synthetic proof.
+- Creation commit `d40aecf6fdfd784b3c918c3ee2586fc5904cc147`; frozen prereg blob `9b3542f33fb0f9149056b1eafb8c5db1864299ca`.
+- Implementation `validation/v145_rhythm_decoder/score_offline_stage3_candidate.py`.
+- Implementation commit `11873b539784d997ff03749ac8c2bfd8e2cef99f`; blob `d208abb3f180f8375d57d786941ff49d6813de1c`.
+- Synthetic ordering/invariant tests `modal/tests/test_v145_rhythm_stage3_offline_score.py`.
+- Test creation commit `6aea9f2435743c7399720d0b0c746a2bb68a1f4a`; blob `d8b3770ac7f3ba18123122f19fad895257998c25`.
+- Mandatory runtime order implemented: candidate-only validation -> frozen `validate_pre_reference(freeze_dir)` -> candidate/freeze/PDF identity -> accepted baseline manifest -> only then read/hash/validate gold -> score already-frozen candidate exactly once -> deterministic report.
+- Harness CLI remains exactly five positional paths. Synthetic dependency injection exists only to prove ordering without touching real gold.
+- Candidate gate requires 1209 canonical events, exact metadata SHA, exact measures1..113, eventIndex0..1208, PDF/freeze SHA identity and fidelity1.0, and safety `referenceFree=true`, `professionalReferenceUsed=false`, `referenceRuntimeInputUsed=false`, `goldInputUsed=false`, `acceptedBaselineChanged=false`.
+- Accepted comparison constants are frozen to family #10 values; report schema14504/classification `v145-rhythm-stage3-offline-calibration-score`; role calibration benchmark not unseen holdout; no promotion.
+- Synthetic tests cover: valid ordered path with exactly one score and no mutation; failed pre-reference prevents both calibration reads; candidate/freeze mismatch prevents both calibration reads; wrong accepted manifest fails before gold; wrong gold SHA fails before parse/score; candidate-only safety failure prevents pre-reference/calibration reads.
+- **No real V5 Stage3 candidate has been built by this harness work; no real calibration gold has been read/scored.**
 
 ## EXPLICIT NEXT STEPS
-1. Implement the preregistered evaluation-only harness exactly; add synthetic ordering/invariant tests.
-2. CPU-prove the harness with a self-reporting workflow, persist proof, delete/seal workflow, checkpoint immediately.
+1. Create a self-reporting CPU-only proof workflow that verifies exact prereg/harness/test/frozen dependency blobs, py_compiles harness, and runs only `modal/tests/test_v145_rhythm_stage3_offline_score.py`; it must not read real gold or build a real V5 candidate.
+2. Persist proof JSON, delete/seal the proof workflow, checkpoint immediately.
 3. Only after the harness proof is sealed: freeze one real Stage3 one-shot workflow + sole trigger and checkpoint before arming.
-4. Real one-shot order: verify immutables/tests -> build generated-only V5 candidate once -> invariant validate -> freeze -> renderer contract -> PDF fidelity1.0 -> pre-reference scorer gate -> then gold read/hash/validate -> score -> immutable recheck -> persist explicit Stage3 candidate/report -> seal workflow/trigger -> checkpoint.
+4. Real one-shot order: verify immutables/tests -> build generated-only V5 candidate once -> invariant validate -> freeze -> renderer contract -> PDF fidelity1.0 -> pre-reference scorer gate -> then accepted manifest -> gold read/hash/validate -> score -> immutable recheck -> persist explicit Stage3 candidate/report -> seal workflow/trigger -> checkpoint.
 5. Regardless of score, do not retune/replay or auto-promote; family #10 remains accepted unless a separate later promotion protocol is frozen and succeeds.
 6. No Modal/L4/GPU/live audio; protected surfaces stay untouched.
 
 ## Current stop point
 - Accepted scores remain **35.4 / 6.7 / 5.5 / 5.8 / 100 / 100**.
 - V145 Stage1/Stage2/Stage3-adapter proofs are SUCCESS/sealed.
-- Evaluation harness preregistration is frozen before code/score; harness implementation/proof and real Stage3 trial are still pending.
+- Stage3 evaluation harness is preregistered and implemented; CPU proof is the immediate next action.
+- Real Stage3 candidate build/evaluation has not run.
