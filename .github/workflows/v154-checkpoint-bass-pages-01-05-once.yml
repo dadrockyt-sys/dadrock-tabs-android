@@ -1,0 +1,44 @@
+name: V154 checkpoint Bass pages 01-05 once
+
+on:
+  push:
+    branches: [v143-contextual-prune-lobo]
+    paths: [.github/workflows/v154-checkpoint-bass-pages-01-05-once.yml]
+
+permissions:
+  contents: write
+
+jobs:
+  checkpoint:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: v143-contextual-prune-lobo
+          fetch-depth: 0
+      - name: Update CURRENT_STATE
+        shell: bash
+        run: |
+          set -euo pipefail
+          python3 - <<'PY'
+          from pathlib import Path
+          p=Path('docs/checkpoints/CURRENT_STATE.md')
+          t=p.read_text()
+          t=t.replace('Bass exact source-local attack normalization is next/in progress.', 'Bass exact source-local attack normalization is IN PROGRESS; canonical pages 1–5 / measures 1–33 are COMPLETE / FROZEN / VALIDATED.', 1)
+          t=t.replace('- Bass exact source-local attack timing: **IN PROGRESS / next active task**.', '- Bass exact source-local attack timing: **IN PROGRESS**. Pages 1–5 / measures 1–33 are COMPLETE / FROZEN / VALIDATED; pages 6–10 are next.', 1)
+          section='''\n## V154 Bass source-local timing batch pages 01–05 — COMPLETE / FROZEN\n- One-use CPU validation run `33123146413`: SUCCESS; freeze commit `4b05b50c913834ff1c036ae097804338c4e7a7ea`.\n- Artifact: `research/v154-professional-references/scorer-ready/bass-source-local-timing-pages-01-05.json`; SHA256 `327316cc677468bfbbd0b59e29e0cb5b9c3619dc49613be2241f491c14f09e5e`.\n- Receipt: `research/v154-professional-references/scorer-ready/bass-source-local-timing-pages-01-05-receipt.json`; Git blob `abafb5607a3293b2cfe58f3f18e3906330d23201`.\n- Coverage: canonical source pages 1–5 (`1000120387.jpg`–`1000120391.jpg`), measures 1–33.\n- Validation: **PASS** against the frozen timing skeleton: 33 measures, 153 source attacks, 5 dead-note attacks, 0 continuation-only events in this range; source-local steps strictly ordered/unique and inside 0–15.\n- Timing was decoded from the canonical notation's explicit rests, stems, beams, dots, and ties. Generated candidate read NO; score calls 0; candidate modified NO; GPU NO; main/Production NO.\n'''
+          if '## V154 Bass source-local timing batch pages 01–05 — COMPLETE / FROZEN' not in t:
+              t=t.rstrip()+section
+          p.write_text(t.rstrip()+'\n')
+          PY
+      - name: Commit and seal
+        shell: bash
+        run: |
+          set -euo pipefail
+          git config user.name "dadrock-v154-bot"
+          git config user.email "actions@users.noreply.github.com"
+          git add docs/checkpoints/CURRENT_STATE.md
+          git rm .github/workflows/v154-checkpoint-bass-pages-01-05-once.yml
+          git commit -m "v154: checkpoint Bass timing pages 01-05"
+          git push origin HEAD:v143-contextual-prune-lobo
