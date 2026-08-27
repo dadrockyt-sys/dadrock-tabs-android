@@ -621,3 +621,10 @@ Active phase: **V147 Phase C REAL-AUDIO ARTIFACT-FIRST CONSTRUCTION = GO / SEALE
 - Critical mismatches: **1714**; delta vs accepted baseline **+2**; delta vs V150 **-6**.
 - Safety: total V151 score calls **1**; candidate search/alternate candidate/subset/additional filter/alternate threshold/retuning/audio/HPSS/CQT/Modal/GPU/main/Production/promotion **NO**.
 - V151 score authorization is consumed and this one-use scoring workflow is deleted. No automatic promotion even if V151 crosses baseline.
+
+
+## V152 Phase A active-recurrence analysis — ARMED / REFERENCE-FREE — 2026-08-27 UTC
+- V151 is sealed at **34.928 / 6.603 / 5.455 / 5.805 / 100 / 100** with **1714 critical mismatches**, only **+2** versus accepted baseline.
+- V152 profiles exactly the 12 V151 positive-consensus edits by active local recurrence strength: both-selected, one-selected, or both-tied.
+- Preregistration blob `df236c175986432e06e00ce40decb14605932686`; analyzer blob `9be76f30264b6bf29cf75587cb2d640b0ff70a6d`; run `33049309717`.
+- Gold/reference **NO**; V151 score-result read by analyzer **NO**; scorer calls **0**; candidate construction/search **NO**; threshold sweep/audio/GPU/Production **NO**.
