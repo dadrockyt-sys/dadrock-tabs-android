@@ -3,7 +3,7 @@
 Updated: 2026-08-27 UTC
 Branch: `v143-contextual-prune-lobo`
 
-Active phase: **V153 Phase C CPU GOLD SCORE = PREREGISTERED / FROZEN / ARMED / BEFORE GOLD. CPU-only scoring is permitted at assistant discretion under the standing user policy; fresh authorization is required only before Modal/L4/CUDA/GPU execution. V153 Phase B event-347 candidate construction remains COMPLETE / SEALED and immutable.**
+Active phase: **V153 Phase C CPU GOLD SCORE = CONSUMED / BEFORE GOLD. CPU-only scoring is permitted at assistant discretion under the standing user policy; fresh authorization is required only before Modal/L4/CUDA/GPU execution. V153 Phase B event-347 candidate construction remains COMPLETE / SEALED and immutable.**
 
 ## Preserved historical checkpoint
 - Full pre-compaction history remains preserved at `docs/checkpoints/archive/CURRENT_STATE-pre-phase-c-auth-intake-20260827.md`; Git blob `f71ba11394e6f2f46843055e748e8717ff484158`.
@@ -91,7 +91,7 @@ Active phase: **V153 Phase C CPU GOLD SCORE = PREREGISTERED / FROZEN / ARMED / B
 ## Authoritative stop point
 - V153 Phase A ranking: **COMPLETE / SEALED; UNIQUE WINNER = EVENT 347**.
 - V153 Phase B construction: **COMPLETE / SEALED; IMMUTABLE CANDIDATE SHA = `df40a771219fb69ae3c129c90ef5351e64b89006ff678e484741ecf0418e3d4b`**.
-- V153 Phase C CPU Gold score: **FROZEN / ARMED / BEFORE GOLD**.
+- V153 Phase C CPU Gold score: **ATTEMPT CONSUMED / BEFORE GOLD**.
 - Gold/reference read: **NO**.
 - V153 score call count: **0**.
 - Modal/L4/CUDA/GPU execution: **REQUIRES FRESH EXPLICIT USER AUTHORIZATION**.
