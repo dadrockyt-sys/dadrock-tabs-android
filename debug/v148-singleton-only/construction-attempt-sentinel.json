@@ -1,0 +1,13 @@
+{
+  "schema": "dadrock.tabs.v148.singleton-only-construction-attempt.v1",
+  "status": "ARMED_NOT_CONSUMED",
+  "branch": "v143-contextual-prune-lobo",
+  "preregistrationGitBlob": "fd3fb330d3aa80d1058656e3b2dd7eaa201f8e1c",
+  "authorizationGitBlob": "006f719c8c71570142cf6990c7542f3d8692d5e4",
+  "constructorGitBlob": "bb43464f48cc8e0eade0f9e98229c859cb117986",
+  "candidateConstructionCountAllowed": 1,
+  "referenceFacingScoreCountAllowed": 0,
+  "consumedByRunId": null,
+  "consumedAtUtc": null,
+  "completionPersisted": false
+}
