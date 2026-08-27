@@ -1,0 +1,92 @@
+{
+  "schema": "dadrock.tabs.v154.broad-other-cpu-result.v1",
+  "classification": "reference-free-frozen-generated-output-identity",
+  "branch": "v143-contextual-prune-lobo",
+  "run": {
+    "id": 33096559281,
+    "jobId": 98602884120,
+    "conclusion": "success",
+    "headSha": "986e2a69a6cb877a203d2f8b04115914dc8fd2e6",
+    "workflow": ".github/workflows/v154-broad-other-cpu-once.yml",
+    "workflowSealedAfterRun": true,
+    "workflowSealCommit": "e969790e760dba4cf544521f2640cc130dc05d44"
+  },
+  "artifact": {
+    "id": 9656706944,
+    "name": "v154-broad-other-cpu-33096559281",
+    "sizeInBytes": 99782,
+    "digest": "sha256:f0944432c37b369ac38cd25d058265a76f36b23e2f0bcf9808880d9e141dc518",
+    "verifiedDownloadedZipSha256": "f0944432c37b369ac38cd25d058265a76f36b23e2f0bcf9808880d9e141dc518",
+    "createdAt": "2026-08-27T17:07:48Z",
+    "expiresAt": "2026-09-26T17:07:48Z"
+  },
+  "protocol": {
+    "preregistrationGitBlob": "eb81efbb1ed25b023b5bce6e1159ae7785875b4a",
+    "transcriberGitBlob": "2f09ca1b8bc012749468f0079497ded71d318782",
+    "historicalAudioCommit": "74b0f815ff3f66f325220975c410621503de440f",
+    "historicalAudioPath": "public/gomywayfullaitest.m4a",
+    "historicalAudioBytes": 3478611,
+    "historicalAudioSha256": "215bd5a657c5326f08f132ae358595a95c30b39bb7493a52c2f910d5a608149f"
+  },
+  "normalization": {
+    "sampleRate": 44100,
+    "channels": 2,
+    "format": "pcm_s16le",
+    "normalizedWavBytes": 37298398,
+    "normalizedWavSha256": "3e61b7926eabc21b758c750f826c7426a29d6de5aafdd5c93f8045ecdc67f87e",
+    "imageioFfmpegVersion": "0.6.0"
+  },
+  "separation": {
+    "package": "demucs",
+    "version": "4.1.0",
+    "model": "htdemucs",
+    "device": "cpu",
+    "shifts": 1,
+    "jobs": 1,
+    "combinedGuitarStem": "other",
+    "combinedGuitarStemBytes": 37298220,
+    "combinedGuitarStemSha256": "c288232d1fff42f0fcf57e3e46dfd274428cb2d4e1c916f7fe663d28d42b1440",
+    "bassStemBytes": 37298220,
+    "bassStemSha256": "918670e9293b5aa633593fbe491ff520a045774ead7cbdba0a851301d4e86b0f"
+  },
+  "transcription": {
+    "package": "basic-pitch",
+    "version": "0.4.0",
+    "modelSha256": "3db297d54af8e01c6e5618245c956b1d71b6a2b978cb2dedb527173186552676",
+    "combinedGuitarMidiRange": [40, 88],
+    "bassMidiRange": [28, 67],
+    "onsetThreshold": 0.5,
+    "frameThreshold": 0.3,
+    "minimumNoteLengthMs": 127.7,
+    "multiplePitchBends": false,
+    "melodiaTrick": true,
+    "thresholdSweep": false,
+    "combinedGuitarNoteCount": 1089,
+    "bassNoteCount": 635
+  },
+  "generated": {
+    "schema": "dadrock.tabs.v154.cpu-multitrack-generated.v1",
+    "jsonBytes": 1145129,
+    "jsonSha256": "1be86f86bb08e164342aa0c52db7a4d77beb938621e00d7d2e3b0e03f2dbfc37"
+  },
+  "runtime": {
+    "python": "3.10",
+    "numpy": "1.26.4",
+    "torch": "2.8.0+cpu",
+    "tfliteRuntime": "2.14.0",
+    "torchCudaVersion": null,
+    "cudaAvailable": false
+  },
+  "safety": {
+    "referenceRead": false,
+    "referenceFacingScoreCalls": 0,
+    "humanCorrection": false,
+    "referenceGuidedFiltering": false,
+    "thresholdSweep": false,
+    "modalUsed": false,
+    "cudaGpuUsed": false,
+    "mainOrProductionModified": false,
+    "postScoreRetuning": false
+  },
+  "interpretationBoundary": "This manifest freezes generated-output identity only. The 1089/635 note counts are not accuracy scores and must not be treated as quality evidence until the privately normalized professional references are accessible and scored exactly once under the preregistered scorer."
+}
