@@ -3,10 +3,18 @@
 Updated: 2026-08-27 UTC
 Branch: `v143-contextual-prune-lobo`
 
-Active phase: **V153 Phase B EVENT-347 CANDIDATE CONSTRUCTION = COMPLETE / SEALED. Exactly one immutable candidate was constructed with only event 347 changed. STOP BEFORE GOLD/REFERENCE SCORING. V153 Phase A ranking remains COMPLETE / SEALED. V152 remains COMPLETE / SEALED.**
+Active phase: **V153 Phase B EVENT-347 CANDIDATE CONSTRUCTION = COMPLETE / SEALED. Exactly one immutable candidate was constructed with only event 347 changed. CPU-only scoring/work may proceed at assistant discretion under the user's standing policy. Explicit authorization is required only before Modal/L4/CUDA/GPU execution. V153 Phase A ranking remains COMPLETE / SEALED. V152 remains COMPLETE / SEALED.**
 
 ## Preserved historical checkpoint
 - Full pre-compaction history remains preserved at `docs/checkpoints/archive/CURRENT_STATE-pre-phase-c-auth-intake-20260827.md`; Git blob `f71ba11394e6f2f46843055e748e8717ff484158`.
+
+## Standing execution-authorization policy — 2026-08-27
+- User instruction: **`You only need authorization for l4 gpu modal runs. Scoring and cpu work is at your discretion`**.
+- Effective immediately, **CPU-only work and scoring do not require a fresh user authorization boundary**. The assistant may preregister, execute, persist, compare, checkpoint, and seal CPU-only analysis/construction/scoring phases at its discretion.
+- **Fresh explicit user authorization is required before any execution using Modal, NVIDIA L4, CUDA, or any GPU resource.**
+- This policy supersedes older checkpoint language that required fresh authorization for CPU scoring or other CPU-only work.
+- Scientific safeguards remain in force unless explicitly changed: immutable candidate identity once sealed, preregistration before reference-facing scoring when appropriate, no silent candidate search/variants, no post-score tuning of the scored candidate, no automatic Production promotion, and no rerun of consumed one-use workflows.
+- Historical sealed runs remain sealed; this policy does not reopen or legitimize rerunning already-consumed V147–V153 one-use executions.
 
 ## Historical V147 real-audio boundary
 - V147 Phase C real-audio execution is COMPLETE / SEALED; run `33038518285`, job `98406611428`; workflow seal commit `4b125f42dfa447e1fe86741c8f41c09dcaffc895`.
@@ -59,11 +67,11 @@ Active phase: **V153 Phase B EVENT-347 CANDIDATE CONSTRUCTION = COMPLETE / SEALE
 - PDF event fidelity: **`1.0` / 100%**.
 
 ### Safety record
-- Gold/reference read: **NO**.
+- Gold/reference read during construction: **NO**.
 - Professional image read: **NO**.
 - Prior score-result read by constructor: **NO**.
-- Scorer invoked: **NO**.
-- Score calls: **0**.
+- Scorer invoked during construction: **NO**.
+- Score calls during construction: **0**.
 - Candidate variants constructed: exactly **1**.
 - Candidate search/variants: **NO**.
 - Threshold/weight/filter/rule tuning: **NO**.
@@ -78,14 +86,15 @@ Active phase: **V153 Phase B EVENT-347 CANDIDATE CONSTRUCTION = COMPLETE / SEALE
 - `/ai-tab` frontend, Bass/Lead, and `freezeReady=false` remain untouched.
 - Do not rerun any consumed V147–V153 Phase A/Phase B one-use execution.
 - Do not modify the immutable V153 candidate after construction.
-- Do not open Gold/reference or score the V153 candidate without a separate fresh explicit one-use scoring authorization and a frozen scoring protocol.
-- No audio/HPSS/CQT/Modal/L4/GPU unless separately preregistered and freshly authorized.
+- CPU-only scoring/analysis/construction may proceed at assistant discretion under the standing policy above.
+- Explicit authorization is required before **Modal/L4/CUDA/GPU execution**.
+- No automatic Production promotion from a calibration result.
 
 ## Authoritative stop point
 - V153 Phase A ranking: **COMPLETE / SEALED; UNIQUE WINNER = EVENT 347**.
 - V153 Phase B construction: **COMPLETE / SEALED; IMMUTABLE CANDIDATE SHA = `df40a771219fb69ae3c129c90ef5351e64b89006ff678e484741ecf0418e3d4b`**.
-- Gold/reference read for V153: **NO**.
-- V153 score call count: **0**.
-- New audio/GPU execution: **NO**.
+- V153 Gold/reference score call count: **0** at this checkpoint.
+- CPU-only V153 Gold scoring: **PERMITTED AT ASSISTANT DISCRETION; no fresh user authorization required**.
+- Modal/L4/CUDA/GPU execution: **REQUIRES FRESH EXPLICIT USER AUTHORIZATION**.
 - Main/Production modification: **NO**.
-- Next executable boundary requires fresh explicit authorization for exactly **one reference-facing Gold score of this immutable V153 candidate**, after freezing the scorer inputs/identity and one-use score protocol. No candidate modification or tuning is permitted before or after that one score.
+- Next CPU-only executable action may be a frozen one-use Gold calibration score of this immutable V153 candidate, with no candidate modification or post-score tuning of the scored candidate.
