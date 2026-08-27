@@ -1,0 +1,130 @@
+{
+  "schema": "dadrock.tabs.v148.phase-a-singleton-only-hypothesis.v1",
+  "classification": "reference-free-single-hypothesis-preregistration-no-candidate-yet",
+  "sourceHead": "1372953b04959cfcee0adeeb4ca4cc822c5237c2",
+  "status": "FROZEN_HYPOTHESIS_AWAITING_CONSTRUCTION_BOUNDARY",
+  "scientificQuestion": "Does restricting the already-frozen V147 audio-driven +/-1 pitch overrides to accepted-baseline singleton onsets avoid the reference-free polyphonic-mixture failure mechanism while preserving the strong structural invariants of family #10?",
+  "hypothesis": "Independent note-wise pitch overrides are structurally unreliable in polyphonic onset mixtures because each note is evaluated against onset-local mixed-spectrum evidence without a joint chord-coherence model. Therefore polyphonic onsets should fail closed to the accepted family #10 baseline; only singleton onsets may inherit an already-frozen V147 override.",
+  "evidenceBasis": {
+    "phaseEFailureAnalysis": {
+      "path": "debug/v147-phase-e-reference-free/failure-analysis.json",
+      "gitBlob": "817189a1ec1d3aa6e6c15dc6e9f116becbf12690",
+      "changedEvents": 247,
+      "changedOnsets": 217,
+      "singletonChangedOnsets": 106,
+      "polyphonicChangedOnsets": 111,
+      "nearFrozenGateWithin1Db": 30,
+      "octaveBonusDependentWinners": 2
+    },
+    "phaseENormalizedContext": {
+      "path": "debug/v147-phase-e-reference-free/normalized-context-analysis.json",
+      "sha256": "03add61b3fef99edb9cfae7815b83207436fa85cbf8d11a4e1f4d540ab8ad088",
+      "recoveryEnvelopeGitBlob": "47d7ba37a3a7ae2c985cb5adfbb5e5b0e74eec86",
+      "overallEventChangeRate": 0.2159090909090909,
+      "eventChangeRatesByAcceptedOnsetSize": {
+        "1": 0.1799660441426146,
+        "2": 0.2304147465437788,
+        "3": 0.3541666666666667,
+        "4+": 0.28
+      },
+      "onsetChangeRatesByAcceptedOnsetSize": {
+        "1": 0.1799660441426146,
+        "2": 0.4009216589861751,
+        "3": 0.625,
+        "4+": 0.6666666666666666
+      },
+      "netPitchSetCardinalityLossOnsets": 18,
+      "newDuplicateMidiIdentityOnsets": 19,
+      "newDuplicateCauseCounts": {
+        "changed-into-unchanged-existing-pitch": 17,
+        "changed-events-converged": 2
+      }
+    },
+    "interpretation": [
+      "The failure is not primarily explained by marginal gate crossings: only 30 of 247 changes were within 1 dB of any frozen V147 decision gate.",
+      "The failure is not primarily explained by octave weighting: only 2 of 247 selected winners depended on the octave bonus to beat the fundamental-only winner.",
+      "Change incidence rises materially with polyphonic onset size, especially at the onset level.",
+      "New duplicated-pitch identities provide a concrete chord-coherence failure mode; 17 of 19 occurred when a changed note moved onto an unchanged simultaneous pitch.",
+      "These observations are reference-free mechanism evidence only; no individual substitution has been labeled correct or incorrect."
+    ]
+  },
+  "immutableInputsForFutureConstruction": {
+    "acceptedBaseline": {
+      "family": "singleton-onset-replace-be9e9aa7a734e3cd",
+      "eventCount": 1144,
+      "canonicalEventSha256": "4e6f9f247134f79f30a5448515c52a6ca1012c1f1314c3458b448582999e3881",
+      "reconstructionSource": "debug/v143-contextual-prune/v5-professional-pdf/v5-render-stream.json",
+      "reconstructionFunction": "modal.v147_phase_c_artifact_support.materialize_accepted_family"
+    },
+    "v147Candidate": {
+      "path": "debug/v147-phase-c-real-audio/preserved-run-33038518285/candidate.json",
+      "fileSha256": "c0215690d5bfd9d2d47b8784eee886e942fbd28c499f25c643635c45ff7a9636",
+      "canonicalEventSha256": "ca35c3492295a3079c17c35124df7a483166315e85649e95ded095c6c06b2b77",
+      "eventCount": 1144
+    },
+    "v147Decisions": {
+      "path": "debug/v147-phase-c-real-audio/preserved-run-33038518285/decisions.json",
+      "fileSha256": "3ec6c42730bf571c29258eca131c4e32da257c1ac6073e5319073818e8ac49b9",
+      "decisionCount": 1144
+    },
+    "canonicalAdapterGitBlob": "088d44827fb23e20d9aeeb4944a672989af5846c",
+    "phaseCArtifactSupportGitBlob": "f4278ffaacaca3f66baf7a3112e2af0f3bc387cf"
+  },
+  "singleFrozenConstructionPolicy": {
+    "name": "accepted-onset-singleton-only-v147-projection",
+    "startingStream": "accepted family #10",
+    "rule": [
+      "Group the accepted baseline by exact (measure, step) onset.",
+      "If and only if the accepted onset contains exactly one event AND the corresponding immutable V147 decision has changed=true, copy that event's already-materialized canonical V147 candidate row.",
+      "For every polyphonic accepted onset, preserve every accepted family #10 event exactly regardless of V147 decision evidence.",
+      "For unchanged singleton decisions, preserve the accepted family #10 event exactly.",
+      "Do not recalculate pitch evidence, alter any V147 decision threshold, alter octave weight, or infer a new fingering.",
+      "Do not apply pitch-class, register, string, section, score-margin, fundamental-margin, or any other post-hoc filter. Singleton-vs-polyphonic is the only construction discriminator."
+    ],
+    "expectedStructuralFactsBeforeConstruction": {
+      "eventCount": 1144,
+      "generatedMeasureCount": 113,
+      "changedEventCountVersusAccepted": 106,
+      "changedOnsetCountVersusAccepted": 106,
+      "allChangedOnsetsAcceptedCardinality": 1,
+      "polyphonicChangedEventsVersusAccepted": 0,
+      "candidateVariants": 1
+    }
+  },
+  "requiredConstructionGates": [
+    "accepted baseline identity reverified before reading V147 projection inputs",
+    "V147 candidate and decisions byte SHA256 identities reverified",
+    "exactly 1144 canonical events and 113 generated measures",
+    "exactly 106 changed events / 106 changed onsets versus accepted family #10",
+    "every changed accepted onset has cardinality exactly one",
+    "every polyphonic accepted onset is byte-equivalent at canonical event level to family #10",
+    "every changed singleton row is exactly the corresponding immutable V147 candidate row after canonicalization",
+    "all timing and protected non-position metadata remain invariant versus accepted family #10",
+    "all string/fret/MIDI positions satisfy the frozen V143 render contract",
+    "deterministic replay produces identical canonical event SHA256",
+    "PDF event fidelity equals 1.0 and PDF event SHA equals candidate event SHA"
+  ],
+  "futureConstructionOutputs": {
+    "directory": "debug/v148-singleton-only/candidate/",
+    "candidate": "candidate.json",
+    "proof": "construction-proof.json",
+    "pdfFidelity": "pdf-event-fidelity.json",
+    "manifest": "preservation-manifest.json"
+  },
+  "forbiddenDuringConstruction": [
+    "Gold/reference/professional image access",
+    "reference scorer invocation",
+    "audio reread/decode",
+    "HPSS/CQT recomputation",
+    "Modal/L4/GPU execution",
+    "threshold or octave-weight changes",
+    "candidate sweep/search/variants",
+    "pitch-class/register/string-specific filtering",
+    "post-result retuning",
+    "main/Production modification",
+    "automatic promotion"
+  ],
+  "postConstructionBoundary": "After exactly one immutable V148 candidate is constructed, hash-bound, replay-verified, PDF-fidelity-verified, and durably preserved, STOP. Any Gold/reference-facing comparison requires a new explicit one-use scoring authorization. No score is authorized by this preregistration.",
+  "constructionAuthorization": false,
+  "referenceFacingScoringAuthorization": false
+}
