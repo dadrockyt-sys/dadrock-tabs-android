@@ -1,0 +1,54 @@
+name: V154 checkpoint Rhythm v2
+
+on:
+  push:
+    branches:
+      - v143-contextual-prune-lobo
+    paths:
+      - .github/workflows/v154-checkpoint-rhythm-v2.yml
+
+permissions:
+  contents: write
+
+jobs:
+  checkpoint:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: v143-contextual-prune-lobo
+          fetch-depth: 0
+      - name: Update checkpoint
+        run: |
+          python3 - <<'PY'
+          from pathlib import Path
+          p = Path("docs/checkpoints/CURRENT_STATE.md")
+          t = p.read_text(encoding="utf-8")
+          old = "Active phase: **V154 broad-Other CPU recognition output is COMPLETE / FROZEN / STRUCTURAL-QC PASS. Rhythm, Bass, and Lead are now preserved machine-readably. Bass and Lead remain visual-order references without frozen exact 16-step scorer timing. Professional-reference scoring has NOT run.**"
+          new = "Active phase: **V154 broad-Other CPU recognition output is COMPLETE / FROZEN / STRUCTURAL-QC PASS. Rhythm scorer-ready timing normalization is COMPLETE / FROZEN. Bass and Lead remain visual-order references without frozen exact 16-step scorer timing. Professional-reference scoring has NOT run.**"
+          if old in t:
+              t = t.replace(old, new, 1)
+          marker = "## V154 Rhythm scorer-ready normalization — COMPLETE / FROZEN"
+          if marker not in t:
+              t = t.rstrip() + "\n\n" + marker + "\n" + (
+                  "- One-use CPU GitHub Actions run `33121732460` completed successfully and sealed its workflow.\n"
+                  "- Frozen source: `research/v154-professional-references/rhythm-professional-reference.json`, SHA256 `18fd868ae960dfcdd1ffb0110f1a9dfd8acc2ffeb46e247d1116cd54291526ac`.\n"
+                  "- Frozen scorer-ready output: `research/v154-professional-references/rhythm-professional-reference-scorer-ready.json`, SHA256 `d6c9416979f25e6a81b9cd4583389b584a59421a0529fcccb4ca6f5dd47e679f`.\n"
+                  "- Receipt: `research/v154-professional-references/rhythm-professional-reference-scorer-ready-receipt.json`; Git blob `a62aad39bbc8a05c38c03c1461fc750246110270`.\n"
+                  "- Deterministic flatten: 113 measures, 603 source events, **946 scorer rows**, MIDI 40–71, step range 0–15, exact duplicate-row extras 0.\n"
+                  "- Candidate read **NO**; generated candidate modified **NO**; reference-facing score calls **0**; human correction **NO**; threshold sweep **NO**; Modal/L4/CUDA/GPU **NO**; `main`/Production modified **NO**.\n"
+                  "- Next active task: Bass exact rhythmic normalization from canonical source notation. Lead timing remains blocked until the actual 22 Lead source pages are recovered.\n"
+              )
+          p.write_text(t.rstrip() + "\n", encoding="utf-8")
+          PY
+      - name: Commit and seal
+        run: |
+          set -euo pipefail
+          git config user.name "dadrock-v154-bot"
+          git config user.email "actions@users.noreply.github.com"
+          git add docs/checkpoints/CURRENT_STATE.md
+          git rm -f .github/workflows/v154-checkpoint-rhythm-v2.yml
+          if [ -f .github/workflows/v154-checkpoint-rhythm-once.yml ]; then git rm -f .github/workflows/v154-checkpoint-rhythm-once.yml; fi
+          git commit -m "v154: checkpoint frozen Rhythm scorer normalization"
+          git push origin HEAD:v143-contextual-prune-lobo
