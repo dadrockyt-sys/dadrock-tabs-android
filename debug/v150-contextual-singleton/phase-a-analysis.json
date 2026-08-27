@@ -1,0 +1,3452 @@
+{
+  "allRows": [
+    {
+      "contextRelationship": "mixed",
+      "eventIndex": 10,
+      "exactPitchSupportClass": "exact-pitch-support-tied",
+      "measure": 2,
+      "nextDistanceDelta": -1,
+      "nextOnset": {
+        "measure": 2,
+        "midis": [
+          40
+        ],
+        "step": 9
+      },
+      "originalMidi": 50,
+      "originalNextDistance": 10,
+      "originalPreviousDistance": 2,
+      "pitchClassSupportClass": "pitch-class-support-tied",
+      "previousDistanceDelta": 1,
+      "previousOnset": {
+        "measure": 2,
+        "midis": [
+          52
+        ],
+        "step": 7
+      },
+      "selectedMidi": 49,
+      "selectedNextDistance": 9,
+      "selectedPreviousDistance": 3,
+      "step": 8,
+      "totalVoiceLeadingCostDelta": 0,
+      "windowOriginalExactMidiCount": 0,
+      "windowOriginalPitchClassCount": 0,
+      "windowSelectedExactMidiCount": 0,
+      "windowSelectedPitchClassCount": 0
+    },
+    {
+      "contextRelationship": "strict-both-sides-better",
+      "eventIndex": 11,
+      "exactPitchSupportClass": "exact-pitch-support-tied",
+      "measure": 2,
+      "nextDistanceDelta": -1,
+      "nextOnset": {
+        "measure": 2,
+        "midis": [
+          52
+        ],
+        "step": 10
+      },
+      "originalMidi": 40,
+      "originalNextDistance": 12,
+      "originalPreviousDistance": 10,
+      "pitchClassSupportClass": "original-pitch-class-more-supported",
+      "previousDistanceDelta": -1,
+      "previousOnset": {
+        "measure": 2,
+        "midis": [
+          50
+        ],
+        "step": 8
+      },
+      "selectedMidi": 41,
+      "selectedNextDistance": 11,
+      "selectedPreviousDistance": 9,
+      "step": 9,
+      "totalVoiceLeadingCostDelta": -2,
+      "windowOriginalExactMidiCount": 0,
+      "windowOriginalPitchClassCount": 3,
+      "windowSelectedExactMidiCount": 0,
+      "windowSelectedPitchClassCount": 0
+    },
+    {
+      "contextRelationship": "mixed",
+      "eventIndex": 14,
+      "exactPitchSupportClass": "exact-pitch-support-tied",
+      "measure": 2,
+      "nextDistanceDelta": -1,
+      "nextOnset": {
+        "measure": 2,
+        "midis": [
+          40
+        ],
+        "step": 13
+      },
+      "originalMidi": 50,
+      "originalNextDistance": 10,
+      "originalPreviousDistance": 2,
+      "pitchClassSupportClass": "pitch-class-support-tied",
+      "previousDistanceDelta": 1,
+      "previousOnset": {
+        "measure": 2,
+        "midis": [
+          52
+        ],
+        "step": 11
+      },
+      "selectedMidi": 49,
+      "selectedNextDistance": 9,
+      "selectedPreviousDistance": 3,
+      "step": 12,
+      "totalVoiceLeadingCostDelta": 0,
+      "windowOriginalExactMidiCount": 0,
+      "windowOriginalPitchClassCount": 0,
+      "windowSelectedExactMidiCount": 0,
+      "windowSelectedPitchClassCount": 0
+    },
+    {
+      "contextRelationship": "strict-both-sides-worse",
+      "eventIndex": 21,
+      "exactPitchSupportClass": "exact-pitch-support-tied",
+      "measure": 3,
+      "nextDistanceDelta": 1,
+      "nextOnset": {
+        "measure": 3,
+        "midis": [
+          57
+        ],
+        "step": 2
+      },
+      "originalMidi": 50,
+      "originalNextDistance": 7,
+      "originalPreviousDistance": 3,
+      "pitchClassSupportClass": "pitch-class-support-tied",
+      "previousDistanceDelta": 1,
+      "previousOnset": {
+        "measure": 2,
+        "midis": [
+          67,
+          57,
+          53,
+          41
+        ],
+        "step": 15
+      },
+      "selectedMidi": 49,
+      "selectedNextDistance": 8,
+      "selectedPreviousDistance": 4,
+      "step": 0,
+      "totalVoiceLeadingCostDelta": 2,
+      "windowOriginalExactMidiCount": 0,
+      "windowOriginalPitchClassCount": 0,
+      "windowSelectedExactMidiCount": 0,
+      "windowSelectedPitchClassCount": 0
+    },
+    {
+      "contextRelationship": "strict-both-sides-better",
+      "eventIndex": 22,
+      "exactPitchSupportClass": "original-exact-pitch-more-supported",
+      "measure": 3,
+      "nextDistanceDelta": -1,
+      "nextOnset": {
+        "measure": 3,
+        "midis": [
+          40
+        ],
+        "step": 3
+      },
+      "originalMidi": 57,
+      "originalNextDistance": 17,
+      "originalPreviousDistance": 7,
+      "pitchClassSupportClass": "original-pitch-class-more-supported",
+      "previousDistanceDelta": -1,
+      "previousOnset": {
+        "measure": 3,
+        "midis": [
+          50
+        ],
+        "step": 0
+      },
+      "selectedMidi": 56,
+      "selectedNextDistance": 16,
+      "selectedPreviousDistance": 6,
+      "step": 2,
+      "totalVoiceLeadingCostDelta": -2,
+      "windowOriginalExactMidiCount": 1,
+      "windowOriginalPitchClassCount": 1,
+      "windowSelectedExactMidiCount": 0,
+      "windowSelectedPitchClassCount": 0
+    },
+    {
+      "contextRelationship": "strict-both-sides-better",
+      "eventIndex": 46,
+      "exactPitchSupportClass": "exact-pitch-support-tied",
+      "measure": 4,
+      "nextDistanceDelta": -1,
+      "nextOnset": {
+        "measure": 4,
+        "midis": [
+          55
+        ],
+        "step": 15
+      },
+      "originalMidi": 69,
+      "originalNextDistance": 14,
+      "originalPreviousDistance": 29,
+      "pitchClassSupportClass": "pitch-class-support-tied",
+      "previousDistanceDelta": -1,
+      "previousOnset": {
+        "measure": 4,
+        "midis": [
+          40
+        ],
+        "step": 12
+      },
+      "selectedMidi": 68,
+      "selectedNextDistance": 13,
+      "selectedPreviousDistance": 28,
+      "step": 14,
+      "totalVoiceLeadingCostDelta": -2,
+      "windowOriginalExactMidiCount": 0,
+      "windowOriginalPitchClassCount": 0,
+      "windowSelectedExactMidiCount": 0,
+      "windowSelectedPitchClassCount": 0
+    },
+    {
+      "contextRelationship": "strict-both-sides-worse",
+      "eventIndex": 54,
+      "exactPitchSupportClass": "original-exact-pitch-more-supported",
+      "measure": 5,
+      "nextDistanceDelta": 1,
+      "nextOnset": {
+        "measure": 6,
+        "midis": [
+          52
+        ],
+        "step": 0
+      },
+      "originalMidi": 67,
+      "originalNextDistance": 15,
+      "originalPreviousDistance": 0,
+      "pitchClassSupportClass": "original-pitch-class-more-supported",
+      "previousDistanceDelta": 1,
+      "previousOnset": {
+        "measure": 5,
+        "midis": [
+          67,
+          62
+        ],
+        "step": 10
+      },
+      "selectedMidi": 68,
+      "selectedNextDistance": 16,
+      "selectedPreviousDistance": 1,
+      "step": 15,
+      "totalVoiceLeadingCostDelta": 2,
+      "windowOriginalExactMidiCount": 1,
+      "windowOriginalPitchClassCount": 1,
+      "windowSelectedExactMidiCount": 0,
+      "windowSelectedPitchClassCount": 0
+    },
+    {
+      "contextRelationship": "strict-both-sides-worse",
+      "eventIndex": 67,
+      "exactPitchSupportClass": "original-exact-pitch-more-supported",
+      "measure": 6,
+      "nextDistanceDelta": 1,
+      "nextOnset": {
+        "measure": 7,
+        "midis": [
+          52
+        ],
+        "step": 0
+      },
+      "originalMidi": 67,
+      "originalNextDistance": 15,
+      "originalPreviousDistance": 0,
+      "pitchClassSupportClass": "original-pitch-class-more-supported",
+      "previousDistanceDelta": 1,
+      "previousOnset": {
+        "measure": 6,
+        "midis": [
+          67
+        ],
+        "step": 14
+      },
+      "selectedMidi": 68,
+      "selectedNextDistance": 16,
+      "selectedPreviousDistance": 1,
+      "step": 15,
+      "totalVoiceLeadingCostDelta": 2,
+      "windowOriginalExactMidiCount": 1,
+      "windowOriginalPitchClassCount": 1,
+      "windowSelectedExactMidiCount": 0,
+      "windowSelectedPitchClassCount": 0
+    },
+    {
+      "contextRelationship": "mixed",
+      "eventIndex": 95,
+      "exactPitchSupportClass": "exact-pitch-support-tied",
+      "measure": 9,
+      "nextDistanceDelta": -1,
+      "nextOnset": {
+        "measure": 9,
+        "midis": [
+          71
+        ],
+        "step": 13
+      },
+      "originalMidi": 62,
+      "originalNextDistance": 9,
+      "originalPreviousDistance": 10,
+      "pitchClassSupportClass": "pitch-class-support-tied",
+      "previousDistanceDelta": 1,
+      "previousOnset": {
+        "measure": 9,
+        "midis": [
+          52
+        ],
+        "step": 8
+      },
+      "selectedMidi": 63,
+      "selectedNextDistance": 8,
+      "selectedPreviousDistance": 11,
+      "step": 10,
+      "totalVoiceLeadingCostDelta": 0,
+      "windowOriginalExactMidiCount": 0,
+      "windowOriginalPitchClassCount": 0,
+      "windowSelectedExactMidiCount": 0,
+      "windowSelectedPitchClassCount": 0
+    },
+    {
+      "contextRelationship": "mixed",
+      "eventIndex": 115,
+      "exactPitchSupportClass": "exact-pitch-support-tied",
+      "measure": 11,
+      "nextDistanceDelta": 1,
+      "nextOnset": {
+        "measure": 12,
+        "midis": [
+          52
+        ],
+        "step": 0
+      },
+      "originalMidi": 67,
+      "originalNextDistance": 15,
+      "originalPreviousDistance": 2,
+      "pitchClassSupportClass": "pitch-class-support-tied",
+      "previousDistanceDelta": -1,
+      "previousOnset": {
+        "measure": 11,
+        "midis": [
+          69
+        ],
+        "step": 12
+      },
+      "selectedMidi": 68,
+      "selectedNextDistance": 16,
+      "selectedPreviousDistance": 1,
+      "step": 15,
+      "totalVoiceLeadingCostDelta": 0,
+      "windowOriginalExactMidiCount": 0,
+      "windowOriginalPitchClassCount": 0,
+      "windowSelectedExactMidiCount": 0,
+      "windowSelectedPitchClassCount": 0
+    },
+    {
+      "contextRelationship": "strict-both-sides-better",
+      "eventIndex": 132,
+      "exactPitchSupportClass": "selected-exact-pitch-more-supported",
+      "measure": 13,
+      "nextDistanceDelta": -1,
+      "nextOnset": {
+        "measure": 13,
+        "midis": [
+          64
+        ],
+        "step": 9
+      },
+      "originalMidi": 65,
+      "originalNextDistance": 1,
+      "originalPreviousDistance": 13,
+      "pitchClassSupportClass": "selected-pitch-class-more-supported",
+      "previousDistanceDelta": -1,
+      "previousOnset": {
+        "measure": 13,
+        "midis": [
+          52
+        ],
+        "step": 6
+      },
+      "selectedMidi": 64,
+      "selectedNextDistance": 0,
+      "selectedPreviousDistance": 12,
+      "step": 8,
+      "totalVoiceLeadingCostDelta": -2,
+      "windowOriginalExactMidiCount": 0,
+      "windowOriginalPitchClassCount": 0,
+      "windowSelectedExactMidiCount": 1,
+      "windowSelectedPitchClassCount": 2
+    },
+    {
+      "contextRelationship": "strict-both-sides-worse",
+      "eventIndex": 136,
+      "exactPitchSupportClass": "exact-pitch-support-tied",
+      "measure": 14,
+      "nextDistanceDelta": 1,
+      "nextOnset": {
+        "measure": 14,
+        "midis": [
+          62
+        ],
+        "step": 4
+      },
+      "originalMidi": 57,
+      "originalNextDistance": 5,
+      "originalPreviousDistance": 12,
+      "pitchClassSupportClass": "original-pitch-class-more-supported",
+      "previousDistanceDelta": 1,
+      "previousOnset": {
+        "measure": 13,
+        "midis": [
+          69
+        ],
+        "step": 14
+      },
+      "selectedMidi": 56,
+      "selectedNextDistance": 6,
+      "selectedPreviousDistance": 13,
+      "step": 2,
+      "totalVoiceLeadingCostDelta": 2,
+      "windowOriginalExactMidiCount": 0,
+      "windowOriginalPitchClassCount": 1,
+      "windowSelectedExactMidiCount": 0,
+      "windowSelectedPitchClassCount": 0
+    },
+    {
+      "contextRelationship": "strict-both-sides-better",
+      "eventIndex": 141,
+      "exactPitchSupportClass": "exact-pitch-support-tied",
+      "measure": 14,
+      "nextDistanceDelta": -1,
+      "nextOnset": {
+        "measure": 14,
+        "midis": [
+          57
+        ],
+        "step": 14
+      },
+      "originalMidi": 50,
+      "originalNextDistance": 7,
+      "originalPreviousDistance": 2,
+      "pitchClassSupportClass": "pitch-class-support-tied",
+      "previousDistanceDelta": -1,
+      "previousOnset": {
+        "measure": 14,
+        "midis": [
+          52
+        ],
+        "step": 10
+      },
+      "selectedMidi": 51,
+      "selectedNextDistance": 6,
+      "selectedPreviousDistance": 1,
+      "step": 12,
+      "totalVoiceLeadingCostDelta": -2,
+      "windowOriginalExactMidiCount": 0,
+      "windowOriginalPitchClassCount": 0,
+      "windowSelectedExactMidiCount": 0,
+      "windowSelectedPitchClassCount": 0
+    },
+    {
+      "contextRelationship": "mixed",
+      "eventIndex": 162,
+      "exactPitchSupportClass": "exact-pitch-support-tied",
+      "measure": 16,
+      "nextDistanceDelta": 1,
+      "nextOnset": {
+        "measure": 16,
+        "midis": [
+          69,
+          50
+        ],
+        "step": 12
+      },
+      "originalMidi": 65,
+      "originalNextDistance": 4,
+      "originalPreviousDistance": 13,
+      "pitchClassSupportClass": "selected-pitch-class-more-supported",
+      "previousDistanceDelta": -1,
+      "previousOnset": {
+        "measure": 16,
+        "midis": [
+          52
+        ],
+        "step": 8
+      },
+      "selectedMidi": 64,
+      "selectedNextDistance": 5,
+      "selectedPreviousDistance": 12,
+      "step": 10,
+      "totalVoiceLeadingCostDelta": 0,
+      "windowOriginalExactMidiCount": 0,
+      "windowOriginalPitchClassCount": 0,
+      "windowSelectedExactMidiCount": 0,
+      "windowSelectedPitchClassCount": 1
+    },
+    {
+      "contextRelationship": "mixed",
+      "eventIndex": 166,
+      "exactPitchSupportClass": "exact-pitch-support-tied",
+      "measure": 17,
+      "nextDistanceDelta": -1,
+      "nextOnset": {
+        "measure": 17,
+        "midis": [
+          64
+        ],
+        "step": 9
+      },
+      "originalMidi": 57,
+      "originalNextDistance": 7,
+      "originalPreviousDistance": 7,
+      "pitchClassSupportClass": "original-pitch-class-more-supported",
+      "previousDistanceDelta": 1,
+      "previousOnset": {
+        "measure": 16,
+        "midis": [
+          69,
+          50
+        ],
+        "step": 12
+      },
+      "selectedMidi": 58,
+      "selectedNextDistance": 6,
+      "selectedPreviousDistance": 8,
+      "step": 2,
+      "totalVoiceLeadingCostDelta": 0,
+      "windowOriginalExactMidiCount": 0,
+      "windowOriginalPitchClassCount": 1,
+      "windowSelectedExactMidiCount": 0,
+      "windowSelectedPitchClassCount": 0
+    },
+    {
+      "contextRelationship": "mixed",
+      "eventIndex": 218,
+      "exactPitchSupportClass": "original-exact-pitch-more-supported",
+      "measure": 22,
+      "nextDistanceDelta": -1,
+      "nextOnset": {
+        "measure": 22,
+        "midis": [
+          52
+        ],
+        "step": 7
+      },
+      "originalMidi": 57,
+      "originalNextDistance": 5,
+      "originalPreviousDistance": 0,
+      "pitchClassSupportClass": "original-pitch-class-more-supported",
+      "previousDistanceDelta": 1,
+      "previousOnset": {
+        "measure": 22,
+        "midis": [
+          57
+        ],
+        "step": 2
+      },
+      "selectedMidi": 56,
+      "selectedNextDistance": 4,
+      "selectedPreviousDistance": 1,
+      "step": 4,
+      "totalVoiceLeadingCostDelta": 0,
+      "windowOriginalExactMidiCount": 2,
+      "windowOriginalPitchClassCount": 2,
+      "windowSelectedExactMidiCount": 0,
+      "windowSelectedPitchClassCount": 0
+    },
+    {
+      "contextRelationship": "strict-both-sides-worse",
+      "eventIndex": 279,
+      "exactPitchSupportClass": "exact-pitch-support-tied",
+      "measure": 30,
+      "nextDistanceDelta": 1,
+      "nextOnset": {
+        "measure": 30,
+        "midis": [
+          59,
+          52
+        ],
+        "step": 11
+      },
+      "originalMidi": 57,
+      "originalNextDistance": 2,
+      "originalPreviousDistance": 11,
+      "pitchClassSupportClass": "selected-pitch-class-more-supported",
+      "previousDistanceDelta": 1,
+      "previousOnset": {
+        "measure": 30,
+        "midis": [
+          78,
+          68
+        ],
+        "step": 5
+      },
+      "selectedMidi": 56,
+      "selectedNextDistance": 3,
+      "selectedPreviousDistance": 12,
+      "step": 10,
+      "totalVoiceLeadingCostDelta": 2,
+      "windowOriginalExactMidiCount": 0,
+      "windowOriginalPitchClassCount": 0,
+      "windowSelectedExactMidiCount": 0,
+      "windowSelectedPitchClassCount": 1
+    },
+    {
+      "contextRelationship": "strict-both-sides-better",
+      "eventIndex": 282,
+      "exactPitchSupportClass": "exact-pitch-support-tied",
+      "measure": 30,
+      "nextDistanceDelta": -1,
+      "nextOnset": {
+        "measure": 30,
+        "midis": [
+          77,
+          70,
+          64,
+          59
+        ],
+        "step": 13
+      },
+      "originalMidi": 50,
+      "originalNextDistance": 9,
+      "originalPreviousDistance": 2,
+      "pitchClassSupportClass": "pitch-class-support-tied",
+      "previousDistanceDelta": -1,
+      "previousOnset": {
+        "measure": 30,
+        "midis": [
+          59,
+          52
+        ],
+        "step": 11
+      },
+      "selectedMidi": 51,
+      "selectedNextDistance": 8,
+      "selectedPreviousDistance": 1,
+      "step": 12,
+      "totalVoiceLeadingCostDelta": -2,
+      "windowOriginalExactMidiCount": 0,
+      "windowOriginalPitchClassCount": 0,
+      "windowSelectedExactMidiCount": 0,
+      "windowSelectedPitchClassCount": 0
+    },
+    {
+      "contextRelationship": "strict-both-sides-better",
+      "eventIndex": 310,
+      "exactPitchSupportClass": "exact-pitch-support-tied",
+      "measure": 32,
+      "nextDistanceDelta": -1,
+      "nextOnset": {
+        "measure": 32,
+        "midis": [
+          52
+        ],
+        "step": 13
+      },
+      "originalMidi": 50,
+      "originalNextDistance": 2,
+      "originalPreviousDistance": 2,
+      "pitchClassSupportClass": "original-pitch-class-more-supported",
+      "previousDistanceDelta": -1,
+      "previousOnset": {
+        "measure": 32,
+        "midis": [
+          52
+        ],
+        "step": 11
+      },
+      "selectedMidi": 51,
+      "selectedNextDistance": 1,
+      "selectedPreviousDistance": 1,
+      "step": 12,
+      "totalVoiceLeadingCostDelta": -2,
+      "windowOriginalExactMidiCount": 0,
+      "windowOriginalPitchClassCount": 1,
+      "windowSelectedExactMidiCount": 0,
+      "windowSelectedPitchClassCount": 0
+    },
+    {
+      "contextRelationship": "strict-both-sides-better",
+      "eventIndex": 347,
+      "exactPitchSupportClass": "selected-exact-pitch-more-supported",
+      "measure": 35,
+      "nextDistanceDelta": -1,
+      "nextOnset": {
+        "measure": 35,
+        "midis": [
+          52
+        ],
+        "step": 12
+      },
+      "originalMidi": 62,
+      "originalNextDistance": 10,
+      "originalPreviousDistance": 1,
+      "pitchClassSupportClass": "selected-pitch-class-more-supported",
+      "previousDistanceDelta": -1,
+      "previousOnset": {
+        "measure": 35,
+        "midis": [
+          61
+        ],
+        "step": 7
+      },
+      "selectedMidi": 61,
+      "selectedNextDistance": 9,
+      "selectedPreviousDistance": 0,
+      "step": 9,
+      "totalVoiceLeadingCostDelta": -2,
+      "windowOriginalExactMidiCount": 0,
+      "windowOriginalPitchClassCount": 0,
+      "windowSelectedExactMidiCount": 2,
+      "windowSelectedPitchClassCount": 2
+    },
+    {
+      "contextRelationship": "strict-both-sides-worse",
+      "eventIndex": 351,
+      "exactPitchSupportClass": "exact-pitch-support-tied",
+      "measure": 35,
+      "nextDistanceDelta": 1,
+      "nextOnset": {
+        "measure": 36,
+        "midis": [
+          66
+        ],
+        "step": 0
+      },
+      "originalMidi": 63,
+      "originalNextDistance": 3,
+      "originalPreviousDistance": 1,
+      "pitchClassSupportClass": "pitch-class-support-tied",
+      "previousDistanceDelta": 1,
+      "previousOnset": {
+        "measure": 35,
+        "midis": [
+          68,
+          64
+        ],
+        "step": 13
+      },
+      "selectedMidi": 62,
+      "selectedNextDistance": 4,
+      "selectedPreviousDistance": 2,
+      "step": 15,
+      "totalVoiceLeadingCostDelta": 2,
+      "windowOriginalExactMidiCount": 0,
+      "windowOriginalPitchClassCount": 0,
+      "windowSelectedExactMidiCount": 0,
+      "windowSelectedPitchClassCount": 0
+    },
+    {
+      "contextRelationship": "strict-both-sides-worse",
+      "eventIndex": 374,
+      "exactPitchSupportClass": "original-exact-pitch-more-supported",
+      "measure": 38,
+      "nextDistanceDelta": 1,
+      "nextOnset": {
+        "measure": 38,
+        "midis": [
+          57
+        ],
+        "step": 6
+      },
+      "originalMidi": 57,
+      "originalNextDistance": 0,
+      "originalPreviousDistance": 0,
+      "pitchClassSupportClass": "original-pitch-class-more-supported",
+      "previousDistanceDelta": 1,
+      "previousOnset": {
+        "measure": 38,
+        "midis": [
+          62,
+          57
+        ],
+        "step": 0
+      },
+      "selectedMidi": 56,
+      "selectedNextDistance": 1,
+      "selectedPreviousDistance": 1,
+      "step": 4,
+      "totalVoiceLeadingCostDelta": 2,
+      "windowOriginalExactMidiCount": 2,
+      "windowOriginalPitchClassCount": 2,
+      "windowSelectedExactMidiCount": 0,
+      "windowSelectedPitchClassCount": 0
+    },
+    {
+      "contextRelationship": "strict-both-sides-worse",
+      "eventIndex": 430,
+      "exactPitchSupportClass": "exact-pitch-support-tied",
+      "measure": 42,
+      "nextDistanceDelta": 1,
+      "nextOnset": {
+        "measure": 43,
+        "midis": [
+          67
+        ],
+        "step": 0
+      },
+      "originalMidi": 69,
+      "originalNextDistance": 2,
+      "originalPreviousDistance": 5,
+      "pitchClassSupportClass": "original-pitch-class-more-supported",
+      "previousDistanceDelta": 1,
+      "previousOnset": {
+        "measure": 42,
+        "midis": [
+          64,
+          60
+        ],
+        "step": 13
+      },
+      "selectedMidi": 70,
+      "selectedNextDistance": 3,
+      "selectedPreviousDistance": 6,
+      "step": 14,
+      "totalVoiceLeadingCostDelta": 2,
+      "windowOriginalExactMidiCount": 0,
+      "windowOriginalPitchClassCount": 2,
+      "windowSelectedExactMidiCount": 0,
+      "windowSelectedPitchClassCount": 0
+    },
+    {
+      "contextRelationship": "strict-both-sides-better",
+      "eventIndex": 457,
+      "exactPitchSupportClass": "selected-exact-pitch-more-supported",
+      "measure": 45,
+      "nextDistanceDelta": -1,
+      "nextOnset": {
+        "measure": 45,
+        "midis": [
+          55
+        ],
+        "step": 11
+      },
+      "originalMidi": 65,
+      "originalNextDistance": 10,
+      "originalPreviousDistance": 1,
+      "pitchClassSupportClass": "selected-pitch-class-more-supported",
+      "previousDistanceDelta": -1,
+      "previousOnset": {
+        "measure": 45,
+        "midis": [
+          64
+        ],
+        "step": 8
+      },
+      "selectedMidi": 64,
+      "selectedNextDistance": 9,
+      "selectedPreviousDistance": 0,
+      "step": 9,
+      "totalVoiceLeadingCostDelta": -2,
+      "windowOriginalExactMidiCount": 0,
+      "windowOriginalPitchClassCount": 0,
+      "windowSelectedExactMidiCount": 1,
+      "windowSelectedPitchClassCount": 1
+    },
+    {
+      "contextRelationship": "mixed",
+      "eventIndex": 460,
+      "exactPitchSupportClass": "exact-pitch-support-tied",
+      "measure": 45,
+      "nextDistanceDelta": 1,
+      "nextOnset": {
+        "measure": 46,
+        "midis": [
+          64
+        ],
+        "step": 1
+      },
+      "originalMidi": 69,
+      "originalNextDistance": 5,
+      "originalPreviousDistance": 2,
+      "pitchClassSupportClass": "pitch-class-support-tied",
+      "previousDistanceDelta": -1,
+      "previousOnset": {
+        "measure": 45,
+        "midis": [
+          71
+        ],
+        "step": 12
+      },
+      "selectedMidi": 70,
+      "selectedNextDistance": 6,
+      "selectedPreviousDistance": 1,
+      "step": 14,
+      "totalVoiceLeadingCostDelta": 0,
+      "windowOriginalExactMidiCount": 0,
+      "windowOriginalPitchClassCount": 0,
+      "windowSelectedExactMidiCount": 0,
+      "windowSelectedPitchClassCount": 0
+    },
+    {
+      "contextRelationship": "mixed",
+      "eventIndex": 482,
+      "exactPitchSupportClass": "original-exact-pitch-more-supported",
+      "measure": 48,
+      "nextDistanceDelta": 1,
+      "nextOnset": {
+        "measure": 49,
+        "midis": [
+          80,
+          57
+        ],
+        "step": 0
+      },
+      "originalMidi": 57,
+      "originalNextDistance": 0,
+      "originalPreviousDistance": 17,
+      "pitchClassSupportClass": "pitch-class-support-tied",
+      "previousDistanceDelta": -1,
+      "previousOnset": {
+        "measure": 48,
+        "midis": [
+          40
+        ],
+        "step": 12
+      },
+      "selectedMidi": 56,
+      "selectedNextDistance": 1,
+      "selectedPreviousDistance": 16,
+      "step": 14,
+      "totalVoiceLeadingCostDelta": 0,
+      "windowOriginalExactMidiCount": 1,
+      "windowOriginalPitchClassCount": 1,
+      "windowSelectedExactMidiCount": 0,
+      "windowSelectedPitchClassCount": 1
+    },
+    {
+      "contextRelationship": "mixed",
+      "eventIndex": 493,
+      "exactPitchSupportClass": "exact-pitch-support-tied",
+      "measure": 49,
+      "nextDistanceDelta": 1,
+      "nextOnset": {
+        "measure": 50,
+        "midis": [
+          65,
+          64
+        ],
+        "step": 2
+      },
+      "originalMidi": 57,
+      "originalNextDistance": 7,
+      "originalPreviousDistance": 7,
+      "pitchClassSupportClass": "pitch-class-support-tied",
+      "previousDistanceDelta": -1,
+      "previousOnset": {
+        "measure": 49,
+        "midis": [
+          50
+        ],
+        "step": 12
+      },
+      "selectedMidi": 56,
+      "selectedNextDistance": 8,
+      "selectedPreviousDistance": 6,
+      "step": 14,
+      "totalVoiceLeadingCostDelta": 0,
+      "windowOriginalExactMidiCount": 0,
+      "windowOriginalPitchClassCount": 0,
+      "windowSelectedExactMidiCount": 0,
+      "windowSelectedPitchClassCount": 0
+    },
+    {
+      "contextRelationship": "strict-both-sides-worse",
+      "eventIndex": 578,
+      "exactPitchSupportClass": "selected-exact-pitch-more-supported",
+      "measure": 58,
+      "nextDistanceDelta": 1,
+      "nextOnset": {
+        "measure": 59,
+        "midis": [
+          69
+        ],
+        "step": 0
+      },
+      "originalMidi": 71,
+      "originalNextDistance": 2,
+      "originalPreviousDistance": 11,
+      "pitchClassSupportClass": "selected-pitch-class-more-supported",
+      "previousDistanceDelta": 1,
+      "previousOnset": {
+        "measure": 58,
+        "midis": [
+          60
+        ],
+        "step": 13
+      },
+      "selectedMidi": 72,
+      "selectedNextDistance": 3,
+      "selectedPreviousDistance": 12,
+      "step": 15,
+      "totalVoiceLeadingCostDelta": 2,
+      "windowOriginalExactMidiCount": 0,
+      "windowOriginalPitchClassCount": 0,
+      "windowSelectedExactMidiCount": 1,
+      "windowSelectedPitchClassCount": 2
+    },
+    {
+      "contextRelationship": "mixed",
+      "eventIndex": 587,
+      "exactPitchSupportClass": "original-exact-pitch-more-supported",
+      "measure": 60,
+      "nextDistanceDelta": 1,
+      "nextOnset": {
+        "measure": 60,
+        "midis": [
+          50
+        ],
+        "step": 8
+      },
+      "originalMidi": 50,
+      "originalNextDistance": 0,
+      "originalPreviousDistance": 2,
+      "pitchClassSupportClass": "original-pitch-class-more-supported",
+      "previousDistanceDelta": -1,
+      "previousOnset": {
+        "measure": 60,
+        "midis": [
+          52
+        ],
+        "step": 0
+      },
+      "selectedMidi": 51,
+      "selectedNextDistance": 1,
+      "selectedPreviousDistance": 1,
+      "step": 4,
+      "totalVoiceLeadingCostDelta": 0,
+      "windowOriginalExactMidiCount": 1,
+      "windowOriginalPitchClassCount": 1,
+      "windowSelectedExactMidiCount": 0,
+      "windowSelectedPitchClassCount": 0
+    },
+    {
+      "contextRelationship": "strict-both-sides-better",
+      "eventIndex": 597,
+      "exactPitchSupportClass": "original-exact-pitch-more-supported",
+      "measure": 61,
+      "nextDistanceDelta": -1,
+      "nextOnset": {
+        "measure": 61,
+        "midis": [
+          52
+        ],
+        "step": 6
+      },
+      "originalMidi": 50,
+      "originalNextDistance": 2,
+      "originalPreviousDistance": 2,
+      "pitchClassSupportClass": "original-pitch-class-more-supported",
+      "previousDistanceDelta": -1,
+      "previousOnset": {
+        "measure": 61,
+        "midis": [
+          57,
+          52
+        ],
+        "step": 2
+      },
+      "selectedMidi": 51,
+      "selectedNextDistance": 1,
+      "selectedPreviousDistance": 1,
+      "step": 4,
+      "totalVoiceLeadingCostDelta": -2,
+      "windowOriginalExactMidiCount": 1,
+      "windowOriginalPitchClassCount": 1,
+      "windowSelectedExactMidiCount": 0,
+      "windowSelectedPitchClassCount": 0
+    },
+    {
+      "contextRelationship": "strict-both-sides-better",
+      "eventIndex": 610,
+      "exactPitchSupportClass": "exact-pitch-support-tied",
+      "measure": 62,
+      "nextDistanceDelta": -1,
+      "nextOnset": {
+        "measure": 62,
+        "midis": [
+          69,
+          57
+        ],
+        "step": 14
+      },
+      "originalMidi": 50,
+      "originalNextDistance": 7,
+      "originalPreviousDistance": 2,
+      "pitchClassSupportClass": "pitch-class-support-tied",
+      "previousDistanceDelta": -1,
+      "previousOnset": {
+        "measure": 62,
+        "midis": [
+          52
+        ],
+        "step": 11
+      },
+      "selectedMidi": 51,
+      "selectedNextDistance": 6,
+      "selectedPreviousDistance": 1,
+      "step": 12,
+      "totalVoiceLeadingCostDelta": -2,
+      "windowOriginalExactMidiCount": 0,
+      "windowOriginalPitchClassCount": 0,
+      "windowSelectedExactMidiCount": 0,
+      "windowSelectedPitchClassCount": 0
+    },
+    {
+      "contextRelationship": "strict-both-sides-better",
+      "eventIndex": 618,
+      "exactPitchSupportClass": "exact-pitch-support-tied",
+      "measure": 63,
+      "nextDistanceDelta": -1,
+      "nextOnset": {
+        "measure": 63,
+        "midis": [
+          53,
+          52
+        ],
+        "step": 10
+      },
+      "originalMidi": 50,
+      "originalNextDistance": 2,
+      "originalPreviousDistance": 12,
+      "pitchClassSupportClass": "original-pitch-class-more-supported",
+      "previousDistanceDelta": -1,
+      "previousOnset": {
+        "measure": 63,
+        "midis": [
+          82,
+          62
+        ],
+        "step": 5
+      },
+      "selectedMidi": 51,
+      "selectedNextDistance": 1,
+      "selectedPreviousDistance": 11,
+      "step": 8,
+      "totalVoiceLeadingCostDelta": -2,
+      "windowOriginalExactMidiCount": 0,
+      "windowOriginalPitchClassCount": 2,
+      "windowSelectedExactMidiCount": 0,
+      "windowSelectedPitchClassCount": 0
+    },
+    {
+      "contextRelationship": "strict-both-sides-worse",
+      "eventIndex": 640,
+      "exactPitchSupportClass": "exact-pitch-support-tied",
+      "measure": 65,
+      "nextDistanceDelta": 1,
+      "nextOnset": {
+        "measure": 65,
+        "midis": [
+          69
+        ],
+        "step": 4
+      },
+      "originalMidi": 57,
+      "originalNextDistance": 12,
+      "originalPreviousDistance": 4,
+      "pitchClassSupportClass": "original-pitch-class-more-supported",
+      "previousDistanceDelta": 1,
+      "previousOnset": {
+        "measure": 64,
+        "midis": [
+          69,
+          64,
+          61
+        ],
+        "step": 14
+      },
+      "selectedMidi": 56,
+      "selectedNextDistance": 13,
+      "selectedPreviousDistance": 5,
+      "step": 1,
+      "totalVoiceLeadingCostDelta": 2,
+      "windowOriginalExactMidiCount": 0,
+      "windowOriginalPitchClassCount": 3,
+      "windowSelectedExactMidiCount": 0,
+      "windowSelectedPitchClassCount": 0
+    },
+    {
+      "contextRelationship": "strict-both-sides-worse",
+      "eventIndex": 776,
+      "exactPitchSupportClass": "original-exact-pitch-more-supported",
+      "measure": 79,
+      "nextDistanceDelta": 1,
+      "nextOnset": {
+        "measure": 79,
+        "midis": [
+          52
+        ],
+        "step": 6
+      },
+      "originalMidi": 52,
+      "originalNextDistance": 0,
+      "originalPreviousDistance": 10,
+      "pitchClassSupportClass": "original-pitch-class-more-supported",
+      "previousDistanceDelta": 1,
+      "previousOnset": {
+        "measure": 79,
+        "midis": [
+          65,
+          62
+        ],
+        "step": 0
+      },
+      "selectedMidi": 51,
+      "selectedNextDistance": 1,
+      "selectedPreviousDistance": 11,
+      "step": 2,
+      "totalVoiceLeadingCostDelta": 2,
+      "windowOriginalExactMidiCount": 1,
+      "windowOriginalPitchClassCount": 3,
+      "windowSelectedExactMidiCount": 0,
+      "windowSelectedPitchClassCount": 0
+    },
+    {
+      "contextRelationship": "strict-both-sides-better",
+      "eventIndex": 811,
+      "exactPitchSupportClass": "exact-pitch-support-tied",
+      "measure": 82,
+      "nextDistanceDelta": -1,
+      "nextOnset": {
+        "measure": 82,
+        "midis": [
+          68,
+          64,
+          59
+        ],
+        "step": 15
+      },
+      "originalMidi": 57,
+      "originalNextDistance": 2,
+      "originalPreviousDistance": 2,
+      "pitchClassSupportClass": "pitch-class-support-tied",
+      "previousDistanceDelta": -1,
+      "previousOnset": {
+        "measure": 82,
+        "midis": [
+          59
+        ],
+        "step": 13
+      },
+      "selectedMidi": 58,
+      "selectedNextDistance": 1,
+      "selectedPreviousDistance": 1,
+      "step": 14,
+      "totalVoiceLeadingCostDelta": -2,
+      "windowOriginalExactMidiCount": 1,
+      "windowOriginalPitchClassCount": 1,
+      "windowSelectedExactMidiCount": 1,
+      "windowSelectedPitchClassCount": 1
+    },
+    {
+      "contextRelationship": "strict-both-sides-worse",
+      "eventIndex": 817,
+      "exactPitchSupportClass": "original-exact-pitch-more-supported",
+      "measure": 83,
+      "nextDistanceDelta": 1,
+      "nextOnset": {
+        "measure": 83,
+        "midis": [
+          64,
+          61
+        ],
+        "step": 7
+      },
+      "originalMidi": 61,
+      "originalNextDistance": 0,
+      "originalPreviousDistance": 3,
+      "pitchClassSupportClass": "original-pitch-class-more-supported",
+      "previousDistanceDelta": 1,
+      "previousOnset": {
+        "measure": 83,
+        "midis": [
+          57,
+          58
+        ],
+        "step": 0
+      },
+      "selectedMidi": 62,
+      "selectedNextDistance": 1,
+      "selectedPreviousDistance": 4,
+      "step": 2,
+      "totalVoiceLeadingCostDelta": 2,
+      "windowOriginalExactMidiCount": 1,
+      "windowOriginalPitchClassCount": 1,
+      "windowSelectedExactMidiCount": 0,
+      "windowSelectedPitchClassCount": 0
+    },
+    {
+      "contextRelationship": "strict-both-sides-worse",
+      "eventIndex": 854,
+      "exactPitchSupportClass": "exact-pitch-support-tied",
+      "measure": 85,
+      "nextDistanceDelta": 1,
+      "nextOnset": {
+        "measure": 86,
+        "midis": [
+          52
+        ],
+        "step": 4
+      },
+      "originalMidi": 82,
+      "originalNextDistance": 30,
+      "originalPreviousDistance": 20,
+      "pitchClassSupportClass": "pitch-class-support-tied",
+      "previousDistanceDelta": 1,
+      "previousOnset": {
+        "measure": 85,
+        "midis": [
+          62
+        ],
+        "step": 13
+      },
+      "selectedMidi": 83,
+      "selectedNextDistance": 31,
+      "selectedPreviousDistance": 21,
+      "step": 14,
+      "totalVoiceLeadingCostDelta": 2,
+      "windowOriginalExactMidiCount": 0,
+      "windowOriginalPitchClassCount": 0,
+      "windowSelectedExactMidiCount": 0,
+      "windowSelectedPitchClassCount": 0
+    },
+    {
+      "contextRelationship": "strict-both-sides-worse",
+      "eventIndex": 858,
+      "exactPitchSupportClass": "original-exact-pitch-more-supported",
+      "measure": 86,
+      "nextDistanceDelta": 1,
+      "nextOnset": {
+        "measure": 86,
+        "midis": [
+          83,
+          62
+        ],
+        "step": 11
+      },
+      "originalMidi": 52,
+      "originalNextDistance": 10,
+      "originalPreviousDistance": 29,
+      "pitchClassSupportClass": "original-pitch-class-more-supported",
+      "previousDistanceDelta": 1,
+      "previousOnset": {
+        "measure": 86,
+        "midis": [
+          81
+        ],
+        "step": 8
+      },
+      "selectedMidi": 51,
+      "selectedNextDistance": 11,
+      "selectedPreviousDistance": 30,
+      "step": 10,
+      "totalVoiceLeadingCostDelta": 2,
+      "windowOriginalExactMidiCount": 1,
+      "windowOriginalPitchClassCount": 1,
+      "windowSelectedExactMidiCount": 0,
+      "windowSelectedPitchClassCount": 0
+    },
+    {
+      "contextRelationship": "mixed",
+      "eventIndex": 888,
+      "exactPitchSupportClass": "exact-pitch-support-tied",
+      "measure": 89,
+      "nextDistanceDelta": 1,
+      "nextOnset": {
+        "measure": 89,
+        "midis": [
+          81
+        ],
+        "step": 10
+      },
+      "originalMidi": 75,
+      "originalNextDistance": 6,
+      "originalPreviousDistance": 13,
+      "pitchClassSupportClass": "selected-pitch-class-more-supported",
+      "previousDistanceDelta": -1,
+      "previousOnset": {
+        "measure": 89,
+        "midis": [
+          62
+        ],
+        "step": 4
+      },
+      "selectedMidi": 74,
+      "selectedNextDistance": 7,
+      "selectedPreviousDistance": 12,
+      "step": 6,
+      "totalVoiceLeadingCostDelta": 0,
+      "windowOriginalExactMidiCount": 0,
+      "windowOriginalPitchClassCount": 0,
+      "windowSelectedExactMidiCount": 0,
+      "windowSelectedPitchClassCount": 1
+    },
+    {
+      "contextRelationship": "mixed",
+      "eventIndex": 915,
+      "exactPitchSupportClass": "exact-pitch-support-tied",
+      "measure": 91,
+      "nextDistanceDelta": -1,
+      "nextOnset": {
+        "measure": 91,
+        "midis": [
+          83,
+          71
+        ],
+        "step": 9
+      },
+      "originalMidi": 69,
+      "originalNextDistance": 2,
+      "originalPreviousDistance": 17,
+      "pitchClassSupportClass": "pitch-class-support-tied",
+      "previousDistanceDelta": 1,
+      "previousOnset": {
+        "measure": 91,
+        "midis": [
+          52
+        ],
+        "step": 0
+      },
+      "selectedMidi": 70,
+      "selectedNextDistance": 1,
+      "selectedPreviousDistance": 18,
+      "step": 7,
+      "totalVoiceLeadingCostDelta": 0,
+      "windowOriginalExactMidiCount": 0,
+      "windowOriginalPitchClassCount": 0,
+      "windowSelectedExactMidiCount": 0,
+      "windowSelectedPitchClassCount": 0
+    },
+    {
+      "contextRelationship": "strict-both-sides-worse",
+      "eventIndex": 972,
+      "exactPitchSupportClass": "exact-pitch-support-tied",
+      "measure": 95,
+      "nextDistanceDelta": 1,
+      "nextOnset": {
+        "measure": 95,
+        "midis": [
+          50
+        ],
+        "step": 11
+      },
+      "originalMidi": 68,
+      "originalNextDistance": 18,
+      "originalPreviousDistance": 2,
+      "pitchClassSupportClass": "pitch-class-support-tied",
+      "previousDistanceDelta": 1,
+      "previousOnset": {
+        "measure": 95,
+        "midis": [
+          66,
+          62
+        ],
+        "step": 6
+      },
+      "selectedMidi": 69,
+      "selectedNextDistance": 19,
+      "selectedPreviousDistance": 3,
+      "step": 9,
+      "totalVoiceLeadingCostDelta": 2,
+      "windowOriginalExactMidiCount": 0,
+      "windowOriginalPitchClassCount": 0,
+      "windowSelectedExactMidiCount": 0,
+      "windowSelectedPitchClassCount": 0
+    },
+    {
+      "contextRelationship": "strict-both-sides-better",
+      "eventIndex": 985,
+      "exactPitchSupportClass": "original-exact-pitch-more-supported",
+      "measure": 96,
+      "nextDistanceDelta": -1,
+      "nextOnset": {
+        "measure": 96,
+        "midis": [
+          52
+        ],
+        "step": 14
+      },
+      "originalMidi": 65,
+      "originalNextDistance": 13,
+      "originalPreviousDistance": 13,
+      "pitchClassSupportClass": "selected-pitch-class-more-supported",
+      "previousDistanceDelta": -1,
+      "previousOnset": {
+        "measure": 96,
+        "midis": [
+          52
+        ],
+        "step": 12
+      },
+      "selectedMidi": 64,
+      "selectedNextDistance": 12,
+      "selectedPreviousDistance": 12,
+      "step": 13,
+      "totalVoiceLeadingCostDelta": -2,
+      "windowOriginalExactMidiCount": 1,
+      "windowOriginalPitchClassCount": 1,
+      "windowSelectedExactMidiCount": 0,
+      "windowSelectedPitchClassCount": 2
+    },
+    {
+      "contextRelationship": "strict-both-sides-better",
+      "eventIndex": 1004,
+      "exactPitchSupportClass": "exact-pitch-support-tied",
+      "measure": 98,
+      "nextDistanceDelta": -1,
+      "nextOnset": {
+        "measure": 98,
+        "midis": [
+          57,
+          52
+        ],
+        "step": 14
+      },
+      "originalMidi": 50,
+      "originalNextDistance": 2,
+      "originalPreviousDistance": 2,
+      "pitchClassSupportClass": "pitch-class-support-tied",
+      "previousDistanceDelta": -1,
+      "previousOnset": {
+        "measure": 98,
+        "midis": [
+          52
+        ],
+        "step": 11
+      },
+      "selectedMidi": 51,
+      "selectedNextDistance": 1,
+      "selectedPreviousDistance": 1,
+      "step": 12,
+      "totalVoiceLeadingCostDelta": -2,
+      "windowOriginalExactMidiCount": 0,
+      "windowOriginalPitchClassCount": 0,
+      "windowSelectedExactMidiCount": 0,
+      "windowSelectedPitchClassCount": 0
+    },
+    {
+      "contextRelationship": "strict-both-sides-worse",
+      "eventIndex": 1015,
+      "exactPitchSupportClass": "exact-pitch-support-tied",
+      "measure": 99,
+      "nextDistanceDelta": 1,
+      "nextOnset": {
+        "measure": 99,
+        "midis": [
+          64,
+          62
+        ],
+        "step": 9
+      },
+      "originalMidi": 62,
+      "originalNextDistance": 0,
+      "originalPreviousDistance": 5,
+      "pitchClassSupportClass": "pitch-class-support-tied",
+      "previousDistanceDelta": 1,
+      "previousOnset": {
+        "measure": 99,
+        "midis": [
+          57,
+          52
+        ],
+        "step": 6
+      },
+      "selectedMidi": 63,
+      "selectedNextDistance": 1,
+      "selectedPreviousDistance": 6,
+      "step": 8,
+      "totalVoiceLeadingCostDelta": 2,
+      "windowOriginalExactMidiCount": 1,
+      "windowOriginalPitchClassCount": 1,
+      "windowSelectedExactMidiCount": 1,
+      "windowSelectedPitchClassCount": 1
+    },
+    {
+      "contextRelationship": "mixed",
+      "eventIndex": 1039,
+      "exactPitchSupportClass": "selected-exact-pitch-more-supported",
+      "measure": 101,
+      "nextDistanceDelta": -1,
+      "nextOnset": {
+        "measure": 101,
+        "midis": [
+          64
+        ],
+        "step": 11
+      },
+      "originalMidi": 65,
+      "originalNextDistance": 1,
+      "originalPreviousDistance": 16,
+      "pitchClassSupportClass": "selected-pitch-class-more-supported",
+      "previousDistanceDelta": 1,
+      "previousOnset": {
+        "measure": 101,
+        "midis": [
+          81
+        ],
+        "step": 8
+      },
+      "selectedMidi": 64,
+      "selectedNextDistance": 0,
+      "selectedPreviousDistance": 17,
+      "step": 10,
+      "totalVoiceLeadingCostDelta": 0,
+      "windowOriginalExactMidiCount": 0,
+      "windowOriginalPitchClassCount": 0,
+      "windowSelectedExactMidiCount": 2,
+      "windowSelectedPitchClassCount": 3
+    },
+    {
+      "contextRelationship": "strict-both-sides-better",
+      "eventIndex": 1049,
+      "exactPitchSupportClass": "exact-pitch-support-tied",
+      "measure": 102,
+      "nextDistanceDelta": -1,
+      "nextOnset": {
+        "measure": 102,
+        "midis": [
+          52
+        ],
+        "step": 4
+      },
+      "originalMidi": 50,
+      "originalNextDistance": 2,
+      "originalPreviousDistance": 2,
+      "pitchClassSupportClass": "pitch-class-support-tied",
+      "previousDistanceDelta": -1,
+      "previousOnset": {
+        "measure": 101,
+        "midis": [
+          65,
+          60,
+          59,
+          53,
+          52
+        ],
+        "step": 15
+      },
+      "selectedMidi": 51,
+      "selectedNextDistance": 1,
+      "selectedPreviousDistance": 1,
+      "step": 0,
+      "totalVoiceLeadingCostDelta": -2,
+      "windowOriginalExactMidiCount": 0,
+      "windowOriginalPitchClassCount": 0,
+      "windowSelectedExactMidiCount": 0,
+      "windowSelectedPitchClassCount": 0
+    },
+    {
+      "contextRelationship": "strict-both-sides-worse",
+      "eventIndex": 1070,
+      "exactPitchSupportClass": "exact-pitch-support-tied",
+      "measure": 104,
+      "nextDistanceDelta": 1,
+      "nextOnset": {
+        "measure": 104,
+        "midis": [
+          62,
+          59
+        ],
+        "step": 5
+      },
+      "originalMidi": 57,
+      "originalNextDistance": 2,
+      "originalPreviousDistance": 2,
+      "pitchClassSupportClass": "pitch-class-support-tied",
+      "previousDistanceDelta": 1,
+      "previousOnset": {
+        "measure": 104,
+        "midis": [
+          59
+        ],
+        "step": 3
+      },
+      "selectedMidi": 56,
+      "selectedNextDistance": 3,
+      "selectedPreviousDistance": 3,
+      "step": 4,
+      "totalVoiceLeadingCostDelta": 2,
+      "windowOriginalExactMidiCount": 0,
+      "windowOriginalPitchClassCount": 0,
+      "windowSelectedExactMidiCount": 0,
+      "windowSelectedPitchClassCount": 0
+    },
+    {
+      "contextRelationship": "strict-both-sides-worse",
+      "eventIndex": 1103,
+      "exactPitchSupportClass": "original-exact-pitch-more-supported",
+      "measure": 106,
+      "nextDistanceDelta": 1,
+      "nextOnset": {
+        "measure": 106,
+        "midis": [
+          64,
+          57
+        ],
+        "step": 7
+      },
+      "originalMidi": 62,
+      "originalNextDistance": 2,
+      "originalPreviousDistance": 0,
+      "pitchClassSupportClass": "original-pitch-class-more-supported",
+      "previousDistanceDelta": 1,
+      "previousOnset": {
+        "measure": 106,
+        "midis": [
+          62,
+          59
+        ],
+        "step": 1
+      },
+      "selectedMidi": 61,
+      "selectedNextDistance": 3,
+      "selectedPreviousDistance": 1,
+      "step": 4,
+      "totalVoiceLeadingCostDelta": 2,
+      "windowOriginalExactMidiCount": 2,
+      "windowOriginalPitchClassCount": 3,
+      "windowSelectedExactMidiCount": 0,
+      "windowSelectedPitchClassCount": 0
+    },
+    {
+      "contextRelationship": "strict-both-sides-worse",
+      "eventIndex": 1106,
+      "exactPitchSupportClass": "exact-pitch-support-tied",
+      "measure": 106,
+      "nextDistanceDelta": 1,
+      "nextOnset": {
+        "measure": 106,
+        "midis": [
+          57
+        ],
+        "step": 9
+      },
+      "originalMidi": 50,
+      "originalNextDistance": 7,
+      "originalPreviousDistance": 7,
+      "pitchClassSupportClass": "original-pitch-class-more-supported",
+      "previousDistanceDelta": 1,
+      "previousOnset": {
+        "measure": 106,
+        "midis": [
+          64,
+          57
+        ],
+        "step": 7
+      },
+      "selectedMidi": 49,
+      "selectedNextDistance": 8,
+      "selectedPreviousDistance": 8,
+      "step": 8,
+      "totalVoiceLeadingCostDelta": 2,
+      "windowOriginalExactMidiCount": 0,
+      "windowOriginalPitchClassCount": 1,
+      "windowSelectedExactMidiCount": 0,
+      "windowSelectedPitchClassCount": 0
+    },
+    {
+      "contextRelationship": "strict-both-sides-worse",
+      "eventIndex": 1113,
+      "exactPitchSupportClass": "original-exact-pitch-more-supported",
+      "measure": 106,
+      "nextDistanceDelta": 1,
+      "nextOnset": {
+        "measure": 106,
+        "midis": [
+          64,
+          57
+        ],
+        "step": 14
+      },
+      "originalMidi": 57,
+      "originalNextDistance": 0,
+      "originalPreviousDistance": 0,
+      "pitchClassSupportClass": "original-pitch-class-more-supported",
+      "previousDistanceDelta": 1,
+      "previousOnset": {
+        "measure": 106,
+        "midis": [
+          64,
+          57
+        ],
+        "step": 12
+      },
+      "selectedMidi": 58,
+      "selectedNextDistance": 1,
+      "selectedPreviousDistance": 1,
+      "step": 13,
+      "totalVoiceLeadingCostDelta": 2,
+      "windowOriginalExactMidiCount": 3,
+      "windowOriginalPitchClassCount": 3,
+      "windowSelectedExactMidiCount": 0,
+      "windowSelectedPitchClassCount": 0
+    },
+    {
+      "contextRelationship": "strict-both-sides-worse",
+      "eventIndex": 1121,
+      "exactPitchSupportClass": "original-exact-pitch-more-supported",
+      "measure": 107,
+      "nextDistanceDelta": 1,
+      "nextOnset": {
+        "measure": 107,
+        "midis": [
+          52
+        ],
+        "step": 8
+      },
+      "originalMidi": 45,
+      "originalNextDistance": 7,
+      "originalPreviousDistance": 0,
+      "pitchClassSupportClass": "original-pitch-class-more-supported",
+      "previousDistanceDelta": 1,
+      "previousOnset": {
+        "measure": 107,
+        "midis": [
+          45
+        ],
+        "step": 4
+      },
+      "selectedMidi": 44,
+      "selectedNextDistance": 8,
+      "selectedPreviousDistance": 1,
+      "step": 6,
+      "totalVoiceLeadingCostDelta": 2,
+      "windowOriginalExactMidiCount": 2,
+      "windowOriginalPitchClassCount": 3,
+      "windowSelectedExactMidiCount": 0,
+      "windowSelectedPitchClassCount": 1
+    },
+    {
+      "contextRelationship": "mixed",
+      "eventIndex": 1205,
+      "exactPitchSupportClass": "original-exact-pitch-more-supported",
+      "measure": 113,
+      "nextDistanceDelta": -1,
+      "nextOnset": {
+        "measure": 113,
+        "midis": [
+          41
+        ],
+        "step": 13
+      },
+      "originalMidi": 45,
+      "originalNextDistance": 4,
+      "originalPreviousDistance": 5,
+      "pitchClassSupportClass": "original-pitch-class-more-supported",
+      "previousDistanceDelta": 1,
+      "previousOnset": {
+        "measure": 113,
+        "midis": [
+          57,
+          50
+        ],
+        "step": 9
+      },
+      "selectedMidi": 44,
+      "selectedNextDistance": 3,
+      "selectedPreviousDistance": 6,
+      "step": 10,
+      "totalVoiceLeadingCostDelta": 0,
+      "windowOriginalExactMidiCount": 1,
+      "windowOriginalPitchClassCount": 2,
+      "windowSelectedExactMidiCount": 0,
+      "windowSelectedPitchClassCount": 0
+    },
+    {
+      "contextRelationship": "strict-both-sides-better",
+      "eventIndex": 1206,
+      "exactPitchSupportClass": "exact-pitch-support-tied",
+      "measure": 113,
+      "nextDistanceDelta": -1,
+      "nextOnset": {
+        "measure": 113,
+        "midis": [
+          43
+        ],
+        "step": 14
+      },
+      "originalMidi": 41,
+      "originalNextDistance": 2,
+      "originalPreviousDistance": 4,
+      "pitchClassSupportClass": "pitch-class-support-tied",
+      "previousDistanceDelta": -1,
+      "previousOnset": {
+        "measure": 113,
+        "midis": [
+          45
+        ],
+        "step": 10
+      },
+      "selectedMidi": 42,
+      "selectedNextDistance": 1,
+      "selectedPreviousDistance": 3,
+      "step": 13,
+      "totalVoiceLeadingCostDelta": -2,
+      "windowOriginalExactMidiCount": 0,
+      "windowOriginalPitchClassCount": 0,
+      "windowSelectedExactMidiCount": 0,
+      "windowSelectedPitchClassCount": 0
+    },
+    {
+      "contextRelationship": "strict-both-sides-better",
+      "eventIndex": 1207,
+      "exactPitchSupportClass": "exact-pitch-support-tied",
+      "measure": 113,
+      "nextDistanceDelta": -1,
+      "nextOnset": {
+        "measure": 113,
+        "midis": [
+          40
+        ],
+        "step": 15
+      },
+      "originalMidi": 43,
+      "originalNextDistance": 3,
+      "originalPreviousDistance": 2,
+      "pitchClassSupportClass": "pitch-class-support-tied",
+      "previousDistanceDelta": -1,
+      "previousOnset": {
+        "measure": 113,
+        "midis": [
+          41
+        ],
+        "step": 13
+      },
+      "selectedMidi": 42,
+      "selectedNextDistance": 2,
+      "selectedPreviousDistance": 1,
+      "step": 14,
+      "totalVoiceLeadingCostDelta": -2,
+      "windowOriginalExactMidiCount": 0,
+      "windowOriginalPitchClassCount": 0,
+      "windowSelectedExactMidiCount": 0,
+      "windowSelectedPitchClassCount": 0
+    }
+  ],
+  "classification": "reference-free-local-context-profile",
+  "contextRelationship": [
+    {
+      "count": 15,
+      "key": "mixed",
+      "percentOf54": 27.77777777777778
+    },
+    {
+      "count": 18,
+      "key": "strict-both-sides-better",
+      "percentOf54": 33.333333333333336
+    },
+    {
+      "count": 21,
+      "key": "strict-both-sides-worse",
+      "percentOf54": 38.888888888888886
+    }
+  ],
+  "exactPitchWindowSupport": [
+    {
+      "count": 33,
+      "key": "exact-pitch-support-tied",
+      "percentOf54": 61.111111111111114
+    },
+    {
+      "count": 16,
+      "key": "original-exact-pitch-more-supported",
+      "percentOf54": 29.62962962962963
+    },
+    {
+      "count": 5,
+      "key": "selected-exact-pitch-more-supported",
+      "percentOf54": 9.25925925925926
+    }
+  ],
+  "gate": "GO",
+  "identities": {
+    "acceptedCanonicalEventSha256": "4e6f9f247134f79f30a5448515c52a6ca1012c1f1314c3458b448582999e3881",
+    "preregistrationGitBlob": "33f382e4880fd5c563c712d0ad3f33b167a58e68",
+    "v149CandidateCanonicalEventSha256": "4dd13556d580a315c728e7333823eec9644195da5a345689cc44a566ef33d998",
+    "v149CandidateFileSha256": "1add3ffacf9048dd597a47820baeb3ef8cb0e67fa83d12b1b8d8303a8d808278"
+  },
+  "pitchClassWindowSupport": [
+    {
+      "count": 22,
+      "key": "original-pitch-class-more-supported",
+      "percentOf54": 40.74074074074074
+    },
+    {
+      "count": 23,
+      "key": "pitch-class-support-tied",
+      "percentOf54": 42.592592592592595
+    },
+    {
+      "count": 9,
+      "key": "selected-pitch-class-more-supported",
+      "percentOf54": 16.666666666666668
+    }
+  ],
+  "population": {
+    "eventCount": 54,
+    "percentOfAll1144Events": 4.72027972027972
+  },
+  "safety": {
+    "audioReadOrDecoded": false,
+    "automaticPromotion": false,
+    "candidateConstructed": false,
+    "candidateSearchOrVariants": false,
+    "evidenceMarginThresholdSweep": false,
+    "goldOrReferenceRead": false,
+    "hpssOrCqtRecomputed": false,
+    "mainOrProductionModified": false,
+    "modalOrGpuUsed": false,
+    "priorScoreResultRead": false,
+    "scoreCallCount": 0,
+    "scorerInvoked": false
+  },
+  "schema": "dadrock.tabs.v150.contextual-singleton.phase-a-analysis.v1",
+  "strictBothSidesBetterEvents": [
+    {
+      "contextRelationship": "strict-both-sides-better",
+      "eventIndex": 11,
+      "exactPitchSupportClass": "exact-pitch-support-tied",
+      "measure": 2,
+      "nextDistanceDelta": -1,
+      "nextOnset": {
+        "measure": 2,
+        "midis": [
+          52
+        ],
+        "step": 10
+      },
+      "originalMidi": 40,
+      "originalNextDistance": 12,
+      "originalPreviousDistance": 10,
+      "pitchClassSupportClass": "original-pitch-class-more-supported",
+      "previousDistanceDelta": -1,
+      "previousOnset": {
+        "measure": 2,
+        "midis": [
+          50
+        ],
+        "step": 8
+      },
+      "selectedMidi": 41,
+      "selectedNextDistance": 11,
+      "selectedPreviousDistance": 9,
+      "step": 9,
+      "totalVoiceLeadingCostDelta": -2,
+      "windowOriginalExactMidiCount": 0,
+      "windowOriginalPitchClassCount": 3,
+      "windowSelectedExactMidiCount": 0,
+      "windowSelectedPitchClassCount": 0
+    },
+    {
+      "contextRelationship": "strict-both-sides-better",
+      "eventIndex": 22,
+      "exactPitchSupportClass": "original-exact-pitch-more-supported",
+      "measure": 3,
+      "nextDistanceDelta": -1,
+      "nextOnset": {
+        "measure": 3,
+        "midis": [
+          40
+        ],
+        "step": 3
+      },
+      "originalMidi": 57,
+      "originalNextDistance": 17,
+      "originalPreviousDistance": 7,
+      "pitchClassSupportClass": "original-pitch-class-more-supported",
+      "previousDistanceDelta": -1,
+      "previousOnset": {
+        "measure": 3,
+        "midis": [
+          50
+        ],
+        "step": 0
+      },
+      "selectedMidi": 56,
+      "selectedNextDistance": 16,
+      "selectedPreviousDistance": 6,
+      "step": 2,
+      "totalVoiceLeadingCostDelta": -2,
+      "windowOriginalExactMidiCount": 1,
+      "windowOriginalPitchClassCount": 1,
+      "windowSelectedExactMidiCount": 0,
+      "windowSelectedPitchClassCount": 0
+    },
+    {
+      "contextRelationship": "strict-both-sides-better",
+      "eventIndex": 46,
+      "exactPitchSupportClass": "exact-pitch-support-tied",
+      "measure": 4,
+      "nextDistanceDelta": -1,
+      "nextOnset": {
+        "measure": 4,
+        "midis": [
+          55
+        ],
+        "step": 15
+      },
+      "originalMidi": 69,
+      "originalNextDistance": 14,
+      "originalPreviousDistance": 29,
+      "pitchClassSupportClass": "pitch-class-support-tied",
+      "previousDistanceDelta": -1,
+      "previousOnset": {
+        "measure": 4,
+        "midis": [
+          40
+        ],
+        "step": 12
+      },
+      "selectedMidi": 68,
+      "selectedNextDistance": 13,
+      "selectedPreviousDistance": 28,
+      "step": 14,
+      "totalVoiceLeadingCostDelta": -2,
+      "windowOriginalExactMidiCount": 0,
+      "windowOriginalPitchClassCount": 0,
+      "windowSelectedExactMidiCount": 0,
+      "windowSelectedPitchClassCount": 0
+    },
+    {
+      "contextRelationship": "strict-both-sides-better",
+      "eventIndex": 132,
+      "exactPitchSupportClass": "selected-exact-pitch-more-supported",
+      "measure": 13,
+      "nextDistanceDelta": -1,
+      "nextOnset": {
+        "measure": 13,
+        "midis": [
+          64
+        ],
+        "step": 9
+      },
+      "originalMidi": 65,
+      "originalNextDistance": 1,
+      "originalPreviousDistance": 13,
+      "pitchClassSupportClass": "selected-pitch-class-more-supported",
+      "previousDistanceDelta": -1,
+      "previousOnset": {
+        "measure": 13,
+        "midis": [
+          52
+        ],
+        "step": 6
+      },
+      "selectedMidi": 64,
+      "selectedNextDistance": 0,
+      "selectedPreviousDistance": 12,
+      "step": 8,
+      "totalVoiceLeadingCostDelta": -2,
+      "windowOriginalExactMidiCount": 0,
+      "windowOriginalPitchClassCount": 0,
+      "windowSelectedExactMidiCount": 1,
+      "windowSelectedPitchClassCount": 2
+    },
+    {
+      "contextRelationship": "strict-both-sides-better",
+      "eventIndex": 141,
+      "exactPitchSupportClass": "exact-pitch-support-tied",
+      "measure": 14,
+      "nextDistanceDelta": -1,
+      "nextOnset": {
+        "measure": 14,
+        "midis": [
+          57
+        ],
+        "step": 14
+      },
+      "originalMidi": 50,
+      "originalNextDistance": 7,
+      "originalPreviousDistance": 2,
+      "pitchClassSupportClass": "pitch-class-support-tied",
+      "previousDistanceDelta": -1,
+      "previousOnset": {
+        "measure": 14,
+        "midis": [
+          52
+        ],
+        "step": 10
+      },
+      "selectedMidi": 51,
+      "selectedNextDistance": 6,
+      "selectedPreviousDistance": 1,
+      "step": 12,
+      "totalVoiceLeadingCostDelta": -2,
+      "windowOriginalExactMidiCount": 0,
+      "windowOriginalPitchClassCount": 0,
+      "windowSelectedExactMidiCount": 0,
+      "windowSelectedPitchClassCount": 0
+    },
+    {
+      "contextRelationship": "strict-both-sides-better",
+      "eventIndex": 282,
+      "exactPitchSupportClass": "exact-pitch-support-tied",
+      "measure": 30,
+      "nextDistanceDelta": -1,
+      "nextOnset": {
+        "measure": 30,
+        "midis": [
+          77,
+          70,
+          64,
+          59
+        ],
+        "step": 13
+      },
+      "originalMidi": 50,
+      "originalNextDistance": 9,
+      "originalPreviousDistance": 2,
+      "pitchClassSupportClass": "pitch-class-support-tied",
+      "previousDistanceDelta": -1,
+      "previousOnset": {
+        "measure": 30,
+        "midis": [
+          59,
+          52
+        ],
+        "step": 11
+      },
+      "selectedMidi": 51,
+      "selectedNextDistance": 8,
+      "selectedPreviousDistance": 1,
+      "step": 12,
+      "totalVoiceLeadingCostDelta": -2,
+      "windowOriginalExactMidiCount": 0,
+      "windowOriginalPitchClassCount": 0,
+      "windowSelectedExactMidiCount": 0,
+      "windowSelectedPitchClassCount": 0
+    },
+    {
+      "contextRelationship": "strict-both-sides-better",
+      "eventIndex": 310,
+      "exactPitchSupportClass": "exact-pitch-support-tied",
+      "measure": 32,
+      "nextDistanceDelta": -1,
+      "nextOnset": {
+        "measure": 32,
+        "midis": [
+          52
+        ],
+        "step": 13
+      },
+      "originalMidi": 50,
+      "originalNextDistance": 2,
+      "originalPreviousDistance": 2,
+      "pitchClassSupportClass": "original-pitch-class-more-supported",
+      "previousDistanceDelta": -1,
+      "previousOnset": {
+        "measure": 32,
+        "midis": [
+          52
+        ],
+        "step": 11
+      },
+      "selectedMidi": 51,
+      "selectedNextDistance": 1,
+      "selectedPreviousDistance": 1,
+      "step": 12,
+      "totalVoiceLeadingCostDelta": -2,
+      "windowOriginalExactMidiCount": 0,
+      "windowOriginalPitchClassCount": 1,
+      "windowSelectedExactMidiCount": 0,
+      "windowSelectedPitchClassCount": 0
+    },
+    {
+      "contextRelationship": "strict-both-sides-better",
+      "eventIndex": 347,
+      "exactPitchSupportClass": "selected-exact-pitch-more-supported",
+      "measure": 35,
+      "nextDistanceDelta": -1,
+      "nextOnset": {
+        "measure": 35,
+        "midis": [
+          52
+        ],
+        "step": 12
+      },
+      "originalMidi": 62,
+      "originalNextDistance": 10,
+      "originalPreviousDistance": 1,
+      "pitchClassSupportClass": "selected-pitch-class-more-supported",
+      "previousDistanceDelta": -1,
+      "previousOnset": {
+        "measure": 35,
+        "midis": [
+          61
+        ],
+        "step": 7
+      },
+      "selectedMidi": 61,
+      "selectedNextDistance": 9,
+      "selectedPreviousDistance": 0,
+      "step": 9,
+      "totalVoiceLeadingCostDelta": -2,
+      "windowOriginalExactMidiCount": 0,
+      "windowOriginalPitchClassCount": 0,
+      "windowSelectedExactMidiCount": 2,
+      "windowSelectedPitchClassCount": 2
+    },
+    {
+      "contextRelationship": "strict-both-sides-better",
+      "eventIndex": 457,
+      "exactPitchSupportClass": "selected-exact-pitch-more-supported",
+      "measure": 45,
+      "nextDistanceDelta": -1,
+      "nextOnset": {
+        "measure": 45,
+        "midis": [
+          55
+        ],
+        "step": 11
+      },
+      "originalMidi": 65,
+      "originalNextDistance": 10,
+      "originalPreviousDistance": 1,
+      "pitchClassSupportClass": "selected-pitch-class-more-supported",
+      "previousDistanceDelta": -1,
+      "previousOnset": {
+        "measure": 45,
+        "midis": [
+          64
+        ],
+        "step": 8
+      },
+      "selectedMidi": 64,
+      "selectedNextDistance": 9,
+      "selectedPreviousDistance": 0,
+      "step": 9,
+      "totalVoiceLeadingCostDelta": -2,
+      "windowOriginalExactMidiCount": 0,
+      "windowOriginalPitchClassCount": 0,
+      "windowSelectedExactMidiCount": 1,
+      "windowSelectedPitchClassCount": 1
+    },
+    {
+      "contextRelationship": "strict-both-sides-better",
+      "eventIndex": 597,
+      "exactPitchSupportClass": "original-exact-pitch-more-supported",
+      "measure": 61,
+      "nextDistanceDelta": -1,
+      "nextOnset": {
+        "measure": 61,
+        "midis": [
+          52
+        ],
+        "step": 6
+      },
+      "originalMidi": 50,
+      "originalNextDistance": 2,
+      "originalPreviousDistance": 2,
+      "pitchClassSupportClass": "original-pitch-class-more-supported",
+      "previousDistanceDelta": -1,
+      "previousOnset": {
+        "measure": 61,
+        "midis": [
+          57,
+          52
+        ],
+        "step": 2
+      },
+      "selectedMidi": 51,
+      "selectedNextDistance": 1,
+      "selectedPreviousDistance": 1,
+      "step": 4,
+      "totalVoiceLeadingCostDelta": -2,
+      "windowOriginalExactMidiCount": 1,
+      "windowOriginalPitchClassCount": 1,
+      "windowSelectedExactMidiCount": 0,
+      "windowSelectedPitchClassCount": 0
+    },
+    {
+      "contextRelationship": "strict-both-sides-better",
+      "eventIndex": 610,
+      "exactPitchSupportClass": "exact-pitch-support-tied",
+      "measure": 62,
+      "nextDistanceDelta": -1,
+      "nextOnset": {
+        "measure": 62,
+        "midis": [
+          69,
+          57
+        ],
+        "step": 14
+      },
+      "originalMidi": 50,
+      "originalNextDistance": 7,
+      "originalPreviousDistance": 2,
+      "pitchClassSupportClass": "pitch-class-support-tied",
+      "previousDistanceDelta": -1,
+      "previousOnset": {
+        "measure": 62,
+        "midis": [
+          52
+        ],
+        "step": 11
+      },
+      "selectedMidi": 51,
+      "selectedNextDistance": 6,
+      "selectedPreviousDistance": 1,
+      "step": 12,
+      "totalVoiceLeadingCostDelta": -2,
+      "windowOriginalExactMidiCount": 0,
+      "windowOriginalPitchClassCount": 0,
+      "windowSelectedExactMidiCount": 0,
+      "windowSelectedPitchClassCount": 0
+    },
+    {
+      "contextRelationship": "strict-both-sides-better",
+      "eventIndex": 618,
+      "exactPitchSupportClass": "exact-pitch-support-tied",
+      "measure": 63,
+      "nextDistanceDelta": -1,
+      "nextOnset": {
+        "measure": 63,
+        "midis": [
+          53,
+          52
+        ],
+        "step": 10
+      },
+      "originalMidi": 50,
+      "originalNextDistance": 2,
+      "originalPreviousDistance": 12,
+      "pitchClassSupportClass": "original-pitch-class-more-supported",
+      "previousDistanceDelta": -1,
+      "previousOnset": {
+        "measure": 63,
+        "midis": [
+          82,
+          62
+        ],
+        "step": 5
+      },
+      "selectedMidi": 51,
+      "selectedNextDistance": 1,
+      "selectedPreviousDistance": 11,
+      "step": 8,
+      "totalVoiceLeadingCostDelta": -2,
+      "windowOriginalExactMidiCount": 0,
+      "windowOriginalPitchClassCount": 2,
+      "windowSelectedExactMidiCount": 0,
+      "windowSelectedPitchClassCount": 0
+    },
+    {
+      "contextRelationship": "strict-both-sides-better",
+      "eventIndex": 811,
+      "exactPitchSupportClass": "exact-pitch-support-tied",
+      "measure": 82,
+      "nextDistanceDelta": -1,
+      "nextOnset": {
+        "measure": 82,
+        "midis": [
+          68,
+          64,
+          59
+        ],
+        "step": 15
+      },
+      "originalMidi": 57,
+      "originalNextDistance": 2,
+      "originalPreviousDistance": 2,
+      "pitchClassSupportClass": "pitch-class-support-tied",
+      "previousDistanceDelta": -1,
+      "previousOnset": {
+        "measure": 82,
+        "midis": [
+          59
+        ],
+        "step": 13
+      },
+      "selectedMidi": 58,
+      "selectedNextDistance": 1,
+      "selectedPreviousDistance": 1,
+      "step": 14,
+      "totalVoiceLeadingCostDelta": -2,
+      "windowOriginalExactMidiCount": 1,
+      "windowOriginalPitchClassCount": 1,
+      "windowSelectedExactMidiCount": 1,
+      "windowSelectedPitchClassCount": 1
+    },
+    {
+      "contextRelationship": "strict-both-sides-better",
+      "eventIndex": 985,
+      "exactPitchSupportClass": "original-exact-pitch-more-supported",
+      "measure": 96,
+      "nextDistanceDelta": -1,
+      "nextOnset": {
+        "measure": 96,
+        "midis": [
+          52
+        ],
+        "step": 14
+      },
+      "originalMidi": 65,
+      "originalNextDistance": 13,
+      "originalPreviousDistance": 13,
+      "pitchClassSupportClass": "selected-pitch-class-more-supported",
+      "previousDistanceDelta": -1,
+      "previousOnset": {
+        "measure": 96,
+        "midis": [
+          52
+        ],
+        "step": 12
+      },
+      "selectedMidi": 64,
+      "selectedNextDistance": 12,
+      "selectedPreviousDistance": 12,
+      "step": 13,
+      "totalVoiceLeadingCostDelta": -2,
+      "windowOriginalExactMidiCount": 1,
+      "windowOriginalPitchClassCount": 1,
+      "windowSelectedExactMidiCount": 0,
+      "windowSelectedPitchClassCount": 2
+    },
+    {
+      "contextRelationship": "strict-both-sides-better",
+      "eventIndex": 1004,
+      "exactPitchSupportClass": "exact-pitch-support-tied",
+      "measure": 98,
+      "nextDistanceDelta": -1,
+      "nextOnset": {
+        "measure": 98,
+        "midis": [
+          57,
+          52
+        ],
+        "step": 14
+      },
+      "originalMidi": 50,
+      "originalNextDistance": 2,
+      "originalPreviousDistance": 2,
+      "pitchClassSupportClass": "pitch-class-support-tied",
+      "previousDistanceDelta": -1,
+      "previousOnset": {
+        "measure": 98,
+        "midis": [
+          52
+        ],
+        "step": 11
+      },
+      "selectedMidi": 51,
+      "selectedNextDistance": 1,
+      "selectedPreviousDistance": 1,
+      "step": 12,
+      "totalVoiceLeadingCostDelta": -2,
+      "windowOriginalExactMidiCount": 0,
+      "windowOriginalPitchClassCount": 0,
+      "windowSelectedExactMidiCount": 0,
+      "windowSelectedPitchClassCount": 0
+    },
+    {
+      "contextRelationship": "strict-both-sides-better",
+      "eventIndex": 1049,
+      "exactPitchSupportClass": "exact-pitch-support-tied",
+      "measure": 102,
+      "nextDistanceDelta": -1,
+      "nextOnset": {
+        "measure": 102,
+        "midis": [
+          52
+        ],
+        "step": 4
+      },
+      "originalMidi": 50,
+      "originalNextDistance": 2,
+      "originalPreviousDistance": 2,
+      "pitchClassSupportClass": "pitch-class-support-tied",
+      "previousDistanceDelta": -1,
+      "previousOnset": {
+        "measure": 101,
+        "midis": [
+          65,
+          60,
+          59,
+          53,
+          52
+        ],
+        "step": 15
+      },
+      "selectedMidi": 51,
+      "selectedNextDistance": 1,
+      "selectedPreviousDistance": 1,
+      "step": 0,
+      "totalVoiceLeadingCostDelta": -2,
+      "windowOriginalExactMidiCount": 0,
+      "windowOriginalPitchClassCount": 0,
+      "windowSelectedExactMidiCount": 0,
+      "windowSelectedPitchClassCount": 0
+    },
+    {
+      "contextRelationship": "strict-both-sides-better",
+      "eventIndex": 1206,
+      "exactPitchSupportClass": "exact-pitch-support-tied",
+      "measure": 113,
+      "nextDistanceDelta": -1,
+      "nextOnset": {
+        "measure": 113,
+        "midis": [
+          43
+        ],
+        "step": 14
+      },
+      "originalMidi": 41,
+      "originalNextDistance": 2,
+      "originalPreviousDistance": 4,
+      "pitchClassSupportClass": "pitch-class-support-tied",
+      "previousDistanceDelta": -1,
+      "previousOnset": {
+        "measure": 113,
+        "midis": [
+          45
+        ],
+        "step": 10
+      },
+      "selectedMidi": 42,
+      "selectedNextDistance": 1,
+      "selectedPreviousDistance": 3,
+      "step": 13,
+      "totalVoiceLeadingCostDelta": -2,
+      "windowOriginalExactMidiCount": 0,
+      "windowOriginalPitchClassCount": 0,
+      "windowSelectedExactMidiCount": 0,
+      "windowSelectedPitchClassCount": 0
+    },
+    {
+      "contextRelationship": "strict-both-sides-better",
+      "eventIndex": 1207,
+      "exactPitchSupportClass": "exact-pitch-support-tied",
+      "measure": 113,
+      "nextDistanceDelta": -1,
+      "nextOnset": {
+        "measure": 113,
+        "midis": [
+          40
+        ],
+        "step": 15
+      },
+      "originalMidi": 43,
+      "originalNextDistance": 3,
+      "originalPreviousDistance": 2,
+      "pitchClassSupportClass": "pitch-class-support-tied",
+      "previousDistanceDelta": -1,
+      "previousOnset": {
+        "measure": 113,
+        "midis": [
+          41
+        ],
+        "step": 13
+      },
+      "selectedMidi": 42,
+      "selectedNextDistance": 2,
+      "selectedPreviousDistance": 1,
+      "step": 14,
+      "totalVoiceLeadingCostDelta": -2,
+      "windowOriginalExactMidiCount": 0,
+      "windowOriginalPitchClassCount": 0,
+      "windowSelectedExactMidiCount": 0,
+      "windowSelectedPitchClassCount": 0
+    }
+  ],
+  "strictBothSidesWorseEvents": [
+    {
+      "contextRelationship": "strict-both-sides-worse",
+      "eventIndex": 21,
+      "exactPitchSupportClass": "exact-pitch-support-tied",
+      "measure": 3,
+      "nextDistanceDelta": 1,
+      "nextOnset": {
+        "measure": 3,
+        "midis": [
+          57
+        ],
+        "step": 2
+      },
+      "originalMidi": 50,
+      "originalNextDistance": 7,
+      "originalPreviousDistance": 3,
+      "pitchClassSupportClass": "pitch-class-support-tied",
+      "previousDistanceDelta": 1,
+      "previousOnset": {
+        "measure": 2,
+        "midis": [
+          67,
+          57,
+          53,
+          41
+        ],
+        "step": 15
+      },
+      "selectedMidi": 49,
+      "selectedNextDistance": 8,
+      "selectedPreviousDistance": 4,
+      "step": 0,
+      "totalVoiceLeadingCostDelta": 2,
+      "windowOriginalExactMidiCount": 0,
+      "windowOriginalPitchClassCount": 0,
+      "windowSelectedExactMidiCount": 0,
+      "windowSelectedPitchClassCount": 0
+    },
+    {
+      "contextRelationship": "strict-both-sides-worse",
+      "eventIndex": 54,
+      "exactPitchSupportClass": "original-exact-pitch-more-supported",
+      "measure": 5,
+      "nextDistanceDelta": 1,
+      "nextOnset": {
+        "measure": 6,
+        "midis": [
+          52
+        ],
+        "step": 0
+      },
+      "originalMidi": 67,
+      "originalNextDistance": 15,
+      "originalPreviousDistance": 0,
+      "pitchClassSupportClass": "original-pitch-class-more-supported",
+      "previousDistanceDelta": 1,
+      "previousOnset": {
+        "measure": 5,
+        "midis": [
+          67,
+          62
+        ],
+        "step": 10
+      },
+      "selectedMidi": 68,
+      "selectedNextDistance": 16,
+      "selectedPreviousDistance": 1,
+      "step": 15,
+      "totalVoiceLeadingCostDelta": 2,
+      "windowOriginalExactMidiCount": 1,
+      "windowOriginalPitchClassCount": 1,
+      "windowSelectedExactMidiCount": 0,
+      "windowSelectedPitchClassCount": 0
+    },
+    {
+      "contextRelationship": "strict-both-sides-worse",
+      "eventIndex": 67,
+      "exactPitchSupportClass": "original-exact-pitch-more-supported",
+      "measure": 6,
+      "nextDistanceDelta": 1,
+      "nextOnset": {
+        "measure": 7,
+        "midis": [
+          52
+        ],
+        "step": 0
+      },
+      "originalMidi": 67,
+      "originalNextDistance": 15,
+      "originalPreviousDistance": 0,
+      "pitchClassSupportClass": "original-pitch-class-more-supported",
+      "previousDistanceDelta": 1,
+      "previousOnset": {
+        "measure": 6,
+        "midis": [
+          67
+        ],
+        "step": 14
+      },
+      "selectedMidi": 68,
+      "selectedNextDistance": 16,
+      "selectedPreviousDistance": 1,
+      "step": 15,
+      "totalVoiceLeadingCostDelta": 2,
+      "windowOriginalExactMidiCount": 1,
+      "windowOriginalPitchClassCount": 1,
+      "windowSelectedExactMidiCount": 0,
+      "windowSelectedPitchClassCount": 0
+    },
+    {
+      "contextRelationship": "strict-both-sides-worse",
+      "eventIndex": 136,
+      "exactPitchSupportClass": "exact-pitch-support-tied",
+      "measure": 14,
+      "nextDistanceDelta": 1,
+      "nextOnset": {
+        "measure": 14,
+        "midis": [
+          62
+        ],
+        "step": 4
+      },
+      "originalMidi": 57,
+      "originalNextDistance": 5,
+      "originalPreviousDistance": 12,
+      "pitchClassSupportClass": "original-pitch-class-more-supported",
+      "previousDistanceDelta": 1,
+      "previousOnset": {
+        "measure": 13,
+        "midis": [
+          69
+        ],
+        "step": 14
+      },
+      "selectedMidi": 56,
+      "selectedNextDistance": 6,
+      "selectedPreviousDistance": 13,
+      "step": 2,
+      "totalVoiceLeadingCostDelta": 2,
+      "windowOriginalExactMidiCount": 0,
+      "windowOriginalPitchClassCount": 1,
+      "windowSelectedExactMidiCount": 0,
+      "windowSelectedPitchClassCount": 0
+    },
+    {
+      "contextRelationship": "strict-both-sides-worse",
+      "eventIndex": 279,
+      "exactPitchSupportClass": "exact-pitch-support-tied",
+      "measure": 30,
+      "nextDistanceDelta": 1,
+      "nextOnset": {
+        "measure": 30,
+        "midis": [
+          59,
+          52
+        ],
+        "step": 11
+      },
+      "originalMidi": 57,
+      "originalNextDistance": 2,
+      "originalPreviousDistance": 11,
+      "pitchClassSupportClass": "selected-pitch-class-more-supported",
+      "previousDistanceDelta": 1,
+      "previousOnset": {
+        "measure": 30,
+        "midis": [
+          78,
+          68
+        ],
+        "step": 5
+      },
+      "selectedMidi": 56,
+      "selectedNextDistance": 3,
+      "selectedPreviousDistance": 12,
+      "step": 10,
+      "totalVoiceLeadingCostDelta": 2,
+      "windowOriginalExactMidiCount": 0,
+      "windowOriginalPitchClassCount": 0,
+      "windowSelectedExactMidiCount": 0,
+      "windowSelectedPitchClassCount": 1
+    },
+    {
+      "contextRelationship": "strict-both-sides-worse",
+      "eventIndex": 351,
+      "exactPitchSupportClass": "exact-pitch-support-tied",
+      "measure": 35,
+      "nextDistanceDelta": 1,
+      "nextOnset": {
+        "measure": 36,
+        "midis": [
+          66
+        ],
+        "step": 0
+      },
+      "originalMidi": 63,
+      "originalNextDistance": 3,
+      "originalPreviousDistance": 1,
+      "pitchClassSupportClass": "pitch-class-support-tied",
+      "previousDistanceDelta": 1,
+      "previousOnset": {
+        "measure": 35,
+        "midis": [
+          68,
+          64
+        ],
+        "step": 13
+      },
+      "selectedMidi": 62,
+      "selectedNextDistance": 4,
+      "selectedPreviousDistance": 2,
+      "step": 15,
+      "totalVoiceLeadingCostDelta": 2,
+      "windowOriginalExactMidiCount": 0,
+      "windowOriginalPitchClassCount": 0,
+      "windowSelectedExactMidiCount": 0,
+      "windowSelectedPitchClassCount": 0
+    },
+    {
+      "contextRelationship": "strict-both-sides-worse",
+      "eventIndex": 374,
+      "exactPitchSupportClass": "original-exact-pitch-more-supported",
+      "measure": 38,
+      "nextDistanceDelta": 1,
+      "nextOnset": {
+        "measure": 38,
+        "midis": [
+          57
+        ],
+        "step": 6
+      },
+      "originalMidi": 57,
+      "originalNextDistance": 0,
+      "originalPreviousDistance": 0,
+      "pitchClassSupportClass": "original-pitch-class-more-supported",
+      "previousDistanceDelta": 1,
+      "previousOnset": {
+        "measure": 38,
+        "midis": [
+          62,
+          57
+        ],
+        "step": 0
+      },
+      "selectedMidi": 56,
+      "selectedNextDistance": 1,
+      "selectedPreviousDistance": 1,
+      "step": 4,
+      "totalVoiceLeadingCostDelta": 2,
+      "windowOriginalExactMidiCount": 2,
+      "windowOriginalPitchClassCount": 2,
+      "windowSelectedExactMidiCount": 0,
+      "windowSelectedPitchClassCount": 0
+    },
+    {
+      "contextRelationship": "strict-both-sides-worse",
+      "eventIndex": 430,
+      "exactPitchSupportClass": "exact-pitch-support-tied",
+      "measure": 42,
+      "nextDistanceDelta": 1,
+      "nextOnset": {
+        "measure": 43,
+        "midis": [
+          67
+        ],
+        "step": 0
+      },
+      "originalMidi": 69,
+      "originalNextDistance": 2,
+      "originalPreviousDistance": 5,
+      "pitchClassSupportClass": "original-pitch-class-more-supported",
+      "previousDistanceDelta": 1,
+      "previousOnset": {
+        "measure": 42,
+        "midis": [
+          64,
+          60
+        ],
+        "step": 13
+      },
+      "selectedMidi": 70,
+      "selectedNextDistance": 3,
+      "selectedPreviousDistance": 6,
+      "step": 14,
+      "totalVoiceLeadingCostDelta": 2,
+      "windowOriginalExactMidiCount": 0,
+      "windowOriginalPitchClassCount": 2,
+      "windowSelectedExactMidiCount": 0,
+      "windowSelectedPitchClassCount": 0
+    },
+    {
+      "contextRelationship": "strict-both-sides-worse",
+      "eventIndex": 578,
+      "exactPitchSupportClass": "selected-exact-pitch-more-supported",
+      "measure": 58,
+      "nextDistanceDelta": 1,
+      "nextOnset": {
+        "measure": 59,
+        "midis": [
+          69
+        ],
+        "step": 0
+      },
+      "originalMidi": 71,
+      "originalNextDistance": 2,
+      "originalPreviousDistance": 11,
+      "pitchClassSupportClass": "selected-pitch-class-more-supported",
+      "previousDistanceDelta": 1,
+      "previousOnset": {
+        "measure": 58,
+        "midis": [
+          60
+        ],
+        "step": 13
+      },
+      "selectedMidi": 72,
+      "selectedNextDistance": 3,
+      "selectedPreviousDistance": 12,
+      "step": 15,
+      "totalVoiceLeadingCostDelta": 2,
+      "windowOriginalExactMidiCount": 0,
+      "windowOriginalPitchClassCount": 0,
+      "windowSelectedExactMidiCount": 1,
+      "windowSelectedPitchClassCount": 2
+    },
+    {
+      "contextRelationship": "strict-both-sides-worse",
+      "eventIndex": 640,
+      "exactPitchSupportClass": "exact-pitch-support-tied",
+      "measure": 65,
+      "nextDistanceDelta": 1,
+      "nextOnset": {
+        "measure": 65,
+        "midis": [
+          69
+        ],
+        "step": 4
+      },
+      "originalMidi": 57,
+      "originalNextDistance": 12,
+      "originalPreviousDistance": 4,
+      "pitchClassSupportClass": "original-pitch-class-more-supported",
+      "previousDistanceDelta": 1,
+      "previousOnset": {
+        "measure": 64,
+        "midis": [
+          69,
+          64,
+          61
+        ],
+        "step": 14
+      },
+      "selectedMidi": 56,
+      "selectedNextDistance": 13,
+      "selectedPreviousDistance": 5,
+      "step": 1,
+      "totalVoiceLeadingCostDelta": 2,
+      "windowOriginalExactMidiCount": 0,
+      "windowOriginalPitchClassCount": 3,
+      "windowSelectedExactMidiCount": 0,
+      "windowSelectedPitchClassCount": 0
+    },
+    {
+      "contextRelationship": "strict-both-sides-worse",
+      "eventIndex": 776,
+      "exactPitchSupportClass": "original-exact-pitch-more-supported",
+      "measure": 79,
+      "nextDistanceDelta": 1,
+      "nextOnset": {
+        "measure": 79,
+        "midis": [
+          52
+        ],
+        "step": 6
+      },
+      "originalMidi": 52,
+      "originalNextDistance": 0,
+      "originalPreviousDistance": 10,
+      "pitchClassSupportClass": "original-pitch-class-more-supported",
+      "previousDistanceDelta": 1,
+      "previousOnset": {
+        "measure": 79,
+        "midis": [
+          65,
+          62
+        ],
+        "step": 0
+      },
+      "selectedMidi": 51,
+      "selectedNextDistance": 1,
+      "selectedPreviousDistance": 11,
+      "step": 2,
+      "totalVoiceLeadingCostDelta": 2,
+      "windowOriginalExactMidiCount": 1,
+      "windowOriginalPitchClassCount": 3,
+      "windowSelectedExactMidiCount": 0,
+      "windowSelectedPitchClassCount": 0
+    },
+    {
+      "contextRelationship": "strict-both-sides-worse",
+      "eventIndex": 817,
+      "exactPitchSupportClass": "original-exact-pitch-more-supported",
+      "measure": 83,
+      "nextDistanceDelta": 1,
+      "nextOnset": {
+        "measure": 83,
+        "midis": [
+          64,
+          61
+        ],
+        "step": 7
+      },
+      "originalMidi": 61,
+      "originalNextDistance": 0,
+      "originalPreviousDistance": 3,
+      "pitchClassSupportClass": "original-pitch-class-more-supported",
+      "previousDistanceDelta": 1,
+      "previousOnset": {
+        "measure": 83,
+        "midis": [
+          57,
+          58
+        ],
+        "step": 0
+      },
+      "selectedMidi": 62,
+      "selectedNextDistance": 1,
+      "selectedPreviousDistance": 4,
+      "step": 2,
+      "totalVoiceLeadingCostDelta": 2,
+      "windowOriginalExactMidiCount": 1,
+      "windowOriginalPitchClassCount": 1,
+      "windowSelectedExactMidiCount": 0,
+      "windowSelectedPitchClassCount": 0
+    },
+    {
+      "contextRelationship": "strict-both-sides-worse",
+      "eventIndex": 854,
+      "exactPitchSupportClass": "exact-pitch-support-tied",
+      "measure": 85,
+      "nextDistanceDelta": 1,
+      "nextOnset": {
+        "measure": 86,
+        "midis": [
+          52
+        ],
+        "step": 4
+      },
+      "originalMidi": 82,
+      "originalNextDistance": 30,
+      "originalPreviousDistance": 20,
+      "pitchClassSupportClass": "pitch-class-support-tied",
+      "previousDistanceDelta": 1,
+      "previousOnset": {
+        "measure": 85,
+        "midis": [
+          62
+        ],
+        "step": 13
+      },
+      "selectedMidi": 83,
+      "selectedNextDistance": 31,
+      "selectedPreviousDistance": 21,
+      "step": 14,
+      "totalVoiceLeadingCostDelta": 2,
+      "windowOriginalExactMidiCount": 0,
+      "windowOriginalPitchClassCount": 0,
+      "windowSelectedExactMidiCount": 0,
+      "windowSelectedPitchClassCount": 0
+    },
+    {
+      "contextRelationship": "strict-both-sides-worse",
+      "eventIndex": 858,
+      "exactPitchSupportClass": "original-exact-pitch-more-supported",
+      "measure": 86,
+      "nextDistanceDelta": 1,
+      "nextOnset": {
+        "measure": 86,
+        "midis": [
+          83,
+          62
+        ],
+        "step": 11
+      },
+      "originalMidi": 52,
+      "originalNextDistance": 10,
+      "originalPreviousDistance": 29,
+      "pitchClassSupportClass": "original-pitch-class-more-supported",
+      "previousDistanceDelta": 1,
+      "previousOnset": {
+        "measure": 86,
+        "midis": [
+          81
+        ],
+        "step": 8
+      },
+      "selectedMidi": 51,
+      "selectedNextDistance": 11,
+      "selectedPreviousDistance": 30,
+      "step": 10,
+      "totalVoiceLeadingCostDelta": 2,
+      "windowOriginalExactMidiCount": 1,
+      "windowOriginalPitchClassCount": 1,
+      "windowSelectedExactMidiCount": 0,
+      "windowSelectedPitchClassCount": 0
+    },
+    {
+      "contextRelationship": "strict-both-sides-worse",
+      "eventIndex": 972,
+      "exactPitchSupportClass": "exact-pitch-support-tied",
+      "measure": 95,
+      "nextDistanceDelta": 1,
+      "nextOnset": {
+        "measure": 95,
+        "midis": [
+          50
+        ],
+        "step": 11
+      },
+      "originalMidi": 68,
+      "originalNextDistance": 18,
+      "originalPreviousDistance": 2,
+      "pitchClassSupportClass": "pitch-class-support-tied",
+      "previousDistanceDelta": 1,
+      "previousOnset": {
+        "measure": 95,
+        "midis": [
+          66,
+          62
+        ],
+        "step": 6
+      },
+      "selectedMidi": 69,
+      "selectedNextDistance": 19,
+      "selectedPreviousDistance": 3,
+      "step": 9,
+      "totalVoiceLeadingCostDelta": 2,
+      "windowOriginalExactMidiCount": 0,
+      "windowOriginalPitchClassCount": 0,
+      "windowSelectedExactMidiCount": 0,
+      "windowSelectedPitchClassCount": 0
+    },
+    {
+      "contextRelationship": "strict-both-sides-worse",
+      "eventIndex": 1015,
+      "exactPitchSupportClass": "exact-pitch-support-tied",
+      "measure": 99,
+      "nextDistanceDelta": 1,
+      "nextOnset": {
+        "measure": 99,
+        "midis": [
+          64,
+          62
+        ],
+        "step": 9
+      },
+      "originalMidi": 62,
+      "originalNextDistance": 0,
+      "originalPreviousDistance": 5,
+      "pitchClassSupportClass": "pitch-class-support-tied",
+      "previousDistanceDelta": 1,
+      "previousOnset": {
+        "measure": 99,
+        "midis": [
+          57,
+          52
+        ],
+        "step": 6
+      },
+      "selectedMidi": 63,
+      "selectedNextDistance": 1,
+      "selectedPreviousDistance": 6,
+      "step": 8,
+      "totalVoiceLeadingCostDelta": 2,
+      "windowOriginalExactMidiCount": 1,
+      "windowOriginalPitchClassCount": 1,
+      "windowSelectedExactMidiCount": 1,
+      "windowSelectedPitchClassCount": 1
+    },
+    {
+      "contextRelationship": "strict-both-sides-worse",
+      "eventIndex": 1070,
+      "exactPitchSupportClass": "exact-pitch-support-tied",
+      "measure": 104,
+      "nextDistanceDelta": 1,
+      "nextOnset": {
+        "measure": 104,
+        "midis": [
+          62,
+          59
+        ],
+        "step": 5
+      },
+      "originalMidi": 57,
+      "originalNextDistance": 2,
+      "originalPreviousDistance": 2,
+      "pitchClassSupportClass": "pitch-class-support-tied",
+      "previousDistanceDelta": 1,
+      "previousOnset": {
+        "measure": 104,
+        "midis": [
+          59
+        ],
+        "step": 3
+      },
+      "selectedMidi": 56,
+      "selectedNextDistance": 3,
+      "selectedPreviousDistance": 3,
+      "step": 4,
+      "totalVoiceLeadingCostDelta": 2,
+      "windowOriginalExactMidiCount": 0,
+      "windowOriginalPitchClassCount": 0,
+      "windowSelectedExactMidiCount": 0,
+      "windowSelectedPitchClassCount": 0
+    },
+    {
+      "contextRelationship": "strict-both-sides-worse",
+      "eventIndex": 1103,
+      "exactPitchSupportClass": "original-exact-pitch-more-supported",
+      "measure": 106,
+      "nextDistanceDelta": 1,
+      "nextOnset": {
+        "measure": 106,
+        "midis": [
+          64,
+          57
+        ],
+        "step": 7
+      },
+      "originalMidi": 62,
+      "originalNextDistance": 2,
+      "originalPreviousDistance": 0,
+      "pitchClassSupportClass": "original-pitch-class-more-supported",
+      "previousDistanceDelta": 1,
+      "previousOnset": {
+        "measure": 106,
+        "midis": [
+          62,
+          59
+        ],
+        "step": 1
+      },
+      "selectedMidi": 61,
+      "selectedNextDistance": 3,
+      "selectedPreviousDistance": 1,
+      "step": 4,
+      "totalVoiceLeadingCostDelta": 2,
+      "windowOriginalExactMidiCount": 2,
+      "windowOriginalPitchClassCount": 3,
+      "windowSelectedExactMidiCount": 0,
+      "windowSelectedPitchClassCount": 0
+    },
+    {
+      "contextRelationship": "strict-both-sides-worse",
+      "eventIndex": 1106,
+      "exactPitchSupportClass": "exact-pitch-support-tied",
+      "measure": 106,
+      "nextDistanceDelta": 1,
+      "nextOnset": {
+        "measure": 106,
+        "midis": [
+          57
+        ],
+        "step": 9
+      },
+      "originalMidi": 50,
+      "originalNextDistance": 7,
+      "originalPreviousDistance": 7,
+      "pitchClassSupportClass": "original-pitch-class-more-supported",
+      "previousDistanceDelta": 1,
+      "previousOnset": {
+        "measure": 106,
+        "midis": [
+          64,
+          57
+        ],
+        "step": 7
+      },
+      "selectedMidi": 49,
+      "selectedNextDistance": 8,
+      "selectedPreviousDistance": 8,
+      "step": 8,
+      "totalVoiceLeadingCostDelta": 2,
+      "windowOriginalExactMidiCount": 0,
+      "windowOriginalPitchClassCount": 1,
+      "windowSelectedExactMidiCount": 0,
+      "windowSelectedPitchClassCount": 0
+    },
+    {
+      "contextRelationship": "strict-both-sides-worse",
+      "eventIndex": 1113,
+      "exactPitchSupportClass": "original-exact-pitch-more-supported",
+      "measure": 106,
+      "nextDistanceDelta": 1,
+      "nextOnset": {
+        "measure": 106,
+        "midis": [
+          64,
+          57
+        ],
+        "step": 14
+      },
+      "originalMidi": 57,
+      "originalNextDistance": 0,
+      "originalPreviousDistance": 0,
+      "pitchClassSupportClass": "original-pitch-class-more-supported",
+      "previousDistanceDelta": 1,
+      "previousOnset": {
+        "measure": 106,
+        "midis": [
+          64,
+          57
+        ],
+        "step": 12
+      },
+      "selectedMidi": 58,
+      "selectedNextDistance": 1,
+      "selectedPreviousDistance": 1,
+      "step": 13,
+      "totalVoiceLeadingCostDelta": 2,
+      "windowOriginalExactMidiCount": 3,
+      "windowOriginalPitchClassCount": 3,
+      "windowSelectedExactMidiCount": 0,
+      "windowSelectedPitchClassCount": 0
+    },
+    {
+      "contextRelationship": "strict-both-sides-worse",
+      "eventIndex": 1121,
+      "exactPitchSupportClass": "original-exact-pitch-more-supported",
+      "measure": 107,
+      "nextDistanceDelta": 1,
+      "nextOnset": {
+        "measure": 107,
+        "midis": [
+          52
+        ],
+        "step": 8
+      },
+      "originalMidi": 45,
+      "originalNextDistance": 7,
+      "originalPreviousDistance": 0,
+      "pitchClassSupportClass": "original-pitch-class-more-supported",
+      "previousDistanceDelta": 1,
+      "previousOnset": {
+        "measure": 107,
+        "midis": [
+          45
+        ],
+        "step": 4
+      },
+      "selectedMidi": 44,
+      "selectedNextDistance": 8,
+      "selectedPreviousDistance": 1,
+      "step": 6,
+      "totalVoiceLeadingCostDelta": 2,
+      "windowOriginalExactMidiCount": 2,
+      "windowOriginalPitchClassCount": 3,
+      "windowSelectedExactMidiCount": 0,
+      "windowSelectedPitchClassCount": 1
+    }
+  ],
+  "totalCostDeltaClass": [
+    {
+      "count": 21,
+      "key": "selected-total-cost-higher",
+      "percentOf54": 38.888888888888886
+    },
+    {
+      "count": 18,
+      "key": "selected-total-cost-lower",
+      "percentOf54": 33.333333333333336
+    },
+    {
+      "count": 15,
+      "key": "selected-total-cost-tied",
+      "percentOf54": 27.77777777777778
+    }
+  ],
+  "totalVoiceLeadingCostDeltaQuantiles": {
+    "max": 2.0,
+    "mean": 0.1111111111111111,
+    "min": -2.0,
+    "p10": -2.0,
+    "p25": -2.0,
+    "p50": 0.0,
+    "p75": 2.0,
+    "p90": 2.0
+  }
+}

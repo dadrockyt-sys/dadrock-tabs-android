@@ -525,3 +525,12 @@ Active phase: **V147 Phase C REAL-AUDIO ARTIFACT-FIRST CONSTRUCTION = GO / SEALE
 - V150 does not tune another evidence threshold. It profiles exactly the 54 V149 edits using immediate accepted-neighbor voice-leading context only.
 - Preregistration blob `33f382e4880fd5c563c712d0ad3f33b167a58e68`; analyzer blob `ddb7a21db5d4bb58e349bd543ff787f8986d06e6`; run `33047302398`.
 - Gold/reference **NO**; prior score-result read by analyzer **NO**; scorer calls **0**; candidate construction/search **NO**; audio/HPSS/CQT/Modal/GPU/main/Production/promotion **NO**.
+
+
+## V150 Phase A local-context analysis — COMPLETE / SEALED — 2026-08-27 UTC
+- Frozen reference-free analysis completed in run `33047302398` over exactly **54/54 V149 changed singleton events**. Result SHA256 **`f1e61d3f16d69aab3f6ac9fa5aabaa6ae12839be3061a8ec3521e94d1529b396`**.
+- Strictly worse to both immediate neighboring onsets: **21/54 = 38.89%**; strictly better to both: **18/54 = 33.33%**; mixed: **15/54 = 27.78%**.
+- Total voice-leading cost higher after V149 change: **21/54 = 38.89%**; lower: **18/54 = 33.33%**; median total cost delta **0.000 semitones**.
+- Local +/-2-onset pitch-class support favors original: **22/54 = 40.74%**; favors selected: **9/54 = 16.67%**.
+- These are context percentages, **not accuracy scores**. Gold/reference **NO**; prior score result read by analyzer **NO**; scorer calls **0**; no candidate/search/threshold sweep/audio/GPU/Production.
+- Phase A is sealed and this workflow is deleted. If strict-both-sides-worse cases exist, the preregistered next candidate may revert exactly that set and nothing else.
