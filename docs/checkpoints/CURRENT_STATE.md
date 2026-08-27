@@ -167,3 +167,14 @@ Active phase: **V147 Phase C REAL-AUDIO ARTIFACT-FIRST CONSTRUCTION = GO / SEALE
 - One-use real-audio workflow sealed at `4b125f42dfa447e1fe86741c8f41c09dcaffc895`; one-use replay-preservation workflow sealed at `2ca2e9ebcdff768869d6a2935f909a755b3dfcfa`.
 - 247 observational ±1 pitch changes; all structural/position/PDF/determinism gates green.
 - **Phase D reference-free design/freeze is active. Reference/gold scoring and all new Modal/L4/GPU execution remain unauthorized until their respective fresh explicit authorizations.**
+
+## Phase-D scorer discovery checkpoint — 2026-08-27 UTC
+- Re-fetched authoritative live branch head `b334dbc6e3160ad646c2c5744cbbd9117fdee50d` immediately before this update; no branch other than `v143-contextual-prune-lobo` was touched.
+- A guarded earlier checkpoint write encountered a blob-SHA conflict and was abandoned; the newer live checkpoint was re-read before this write, so no concurrent state was overwritten.
+- Gold/reference content remains unopened. No calibration score, workflow execution, Modal, L4, CUDA, GPU work, candidate search, alternate candidate, or Production integration was run.
+- `debug/history/v143-v147/src/run_v143_local_calibration.py` is absent on this authoritative branch and is **not** accepted as a frozen scorer identity.
+- `debug/v143-grading/grade_current_reference.py` identifies itself as `v1.4.3-rhythm-reference-grader-v1`; it is a rhythm-reference wrapper and is not proven to be the full Melody/Bass/Chords/Rhythm/Overall calibration evaluator required for Phase D.
+- `debug/v143-grading/README.md` identifies `last_grade_cmd.py` as the copied exact temporary grading program for that isolated V1.4.3 grading capture.
+- Safe code inspection of `debug/v143-grading/last_grade_cmd.py` shows it computes WAV-level pitch-class, onset, spectral/MFCC, and energy-envelope evidence and maps those to four automatic 0–5 rubric components, with segment consistency remaining manual. This is a rhythm-segment grading program (automatic subtotal up to 20), not the established four-subscore calibration evaluator that produced the accepted `35.4 / 6.7 / 5.5 / 5.8` anchors.
+- Therefore the first Phase-D full calibration score remains **BLOCKED** until an existing full evaluator plus candidate adapter contract can be proven from code/docs/non-reference evidence. Do not invent or reconstruct a new scorer after candidate construction.
+- Active task: continue reference-free discovery of an immutable existing evaluator/adapter. If no such evaluator can be proven without opening Gold/reference content, freeze a deterministic **NO-GO** and stop rather than score with a substitute.
