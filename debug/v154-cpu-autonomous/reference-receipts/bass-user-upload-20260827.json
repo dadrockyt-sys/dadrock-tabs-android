@@ -1,0 +1,40 @@
+{
+  "schema": "dadrock.tabs.v154.reference-receipt.v1",
+  "song": {
+    "title": "Are You Gonna Go My Way",
+    "artist": "Lenny Kravitz"
+  },
+  "part": "bass",
+  "source": "user-provided screenshot set",
+  "pageCount": 17,
+  "measureCoverageVisible": {
+    "start": 1,
+    "end": 113
+  },
+  "referenceUse": "private/scoring-only; do not expose to candidate generation",
+  "publicRepoContentPolicy": "hashes/metadata only; no screenshot bytes or note-by-note transcription",
+  "setSha256": "abd1748066966ceb93fe40bf8c8df3168f6c871ba006e44d28f8840184e3cde3",
+  "pages": [
+    {"page":1,"filename":"1000120296.jpg","bytes":72414,"sha256":"d4f215d6584707c1db0ae333634ac7cd7dd357b800069c56c75d0fcf26216ca1","width":907,"height":1536},
+    {"page":2,"filename":"1000120298.jpg","bytes":70273,"sha256":"0ca057389c450e8fc5799c240916c94d687db1c994783957049cbc06c4c613a0","width":851,"height":1536},
+    {"page":3,"filename":"1000120300.jpg","bytes":72044,"sha256":"73c52523937ae32f0064e8da4325cf75a0ecc9f201dd05b6113203ea06990eb6","width":922,"height":1536},
+    {"page":4,"filename":"1000120302.jpg","bytes":75746,"sha256":"448cd8110d6c1b9abc6de73c9aedde0e8335e9c1fb3eac43f4c5facf6132655e","width":952,"height":1536},
+    {"page":5,"filename":"1000120304.jpg","bytes":75306,"sha256":"c53cafaa943374eb209f5c001435d44e99e272c4183395f454739d2399d27ee2","width":941,"height":1536},
+    {"page":6,"filename":"1000120306.jpg","bytes":74020,"sha256":"6891980c7135c306e786c0b3a736e2fc0e5aba237cd3308f37722e8f7e7afadd","width":921,"height":1536},
+    {"page":7,"filename":"1000120308.jpg","bytes":70179,"sha256":"ed783111be4515e194b948008b20025e1bf24e3584101da64775bff636f46a93","width":879,"height":1536},
+    {"page":8,"filename":"1000120310.jpg","bytes":74194,"sha256":"c044c7ea28797c5c64edecc41ba5f4bb519495e7075dff8367e3be65a1e84b92","width":979,"height":1536},
+    {"page":9,"filename":"1000120312.jpg","bytes":74869,"sha256":"344194c8e8a6fe6396139d4308844676e7ca96f039a81987ef1eb27c2df52913","width":974,"height":1536},
+    {"page":10,"filename":"1000120314.jpg","bytes":75563,"sha256":"de548e212ae825dc639f1f8b8e66d4dafda782768f38fa7280e32a82710ff1aa","width":1006,"height":1536},
+    {"page":11,"filename":"1000120316.jpg","bytes":77975,"sha256":"d7349a06999ceeabc922c42cc85524c7ae5ee57a62a627669c6ec9b58f0428cb","width":966,"height":1536},
+    {"page":12,"filename":"1000120320.jpg","bytes":67861,"sha256":"ea729c2f82ccecee4dab1d03971313154d11ece08316967079d1f52bc5ca0850","width":878,"height":1536},
+    {"page":13,"filename":"1000120322.jpg","bytes":74277,"sha256":"783be15725e23e7e6aaaed5615f57ff11c422ca03251a1b79511315269a2a54a","width":891,"height":1536},
+    {"page":14,"filename":"1000120324.jpg","bytes":77239,"sha256":"608c8ab83ecc12335cf914bd66a31573db341957e5a4d64244b5e2f312b3bf6c","width":883,"height":1536},
+    {"page":15,"filename":"1000120326.jpg","bytes":73571,"sha256":"113002c9936e58759b882cf1fb106449ba7f66050ebc60babd1d34aced64e209","width":903,"height":1536},
+    {"page":16,"filename":"1000120328.jpg","bytes":72368,"sha256":"8ad0a119daf2ba965096751fd2ea888fdc1e3f1ff734f09c621cd6075d59ae7a","width":864,"height":1536},
+    {"page":17,"filename":"1000120330.jpg","bytes":72954,"sha256":"c6c7bed2ea8acdf6901e6658791f678aec9c0ff4cd981abcf0448976e271a1f8","width":864,"height":1536}
+  ],
+  "visualNotes": [
+    "Page 1 contains a green UI selection highlight around a note in measure 10; treat as interface overlay, not notation.",
+    "A visible annotation near measure 88 says 'Timing mishap here'; preserve as an uncertainty/annotation flag rather than silently correcting the reference."
+  ]
+}
