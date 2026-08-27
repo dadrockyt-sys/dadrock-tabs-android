@@ -2,12 +2,12 @@
 
 Updated: 2026-08-26 America/Montreal
 Branch: `v143-contextual-prune-lobo`
-Active phase: **V147 Phase C preregistration, pre-execution clarification, and reference-free pre-audio support implementation are FROZEN. Phase A and Phase B remain COMPLETE/GO/SEALED. The first repository-native pre-audio workflow attempt stopped at a procedural self-matching no-audio guard before tests/proof execution; a minimal workflow-only guard repair is allowed, followed by the single actual generated/CPU proof. Actual audio decoding/analysis remains STOP pending fresh explicit authorization. Accepted Rhythm family #10 remains active.**
+Active phase: **V147 Phase C preregistration/clarification/support are FROZEN. Pre-audio attempt #1 is CONSUMED/FAILED CLOSED at a workflow-only self-matching input guard before tests/proof. A minimal workflow-only repair is now FROZEN BEFORE CHANGE. Actual audio decoding/analysis remains STOP pending fresh explicit authorization. Accepted Rhythm family #10 remains active.**
 
 ## Permanent safety / fixed protocol
 - Work only on `v143-contextual-prune-lobo`; never modify/merge `main` or Production.
 - `/ai-tab` frontend, Bass/Lead, `freezeReady=false`, main, Production untouched.
-- No Modal/L4/GPU/live audio without fresh explicit authorization.
+- No Modal/L4/GPU/live/real audio without fresh explicit authorization.
 - Gold SHA256 `18fd868ae960dfcddc1ffb0110f1a9dfd8acc2ffeb46e247d1116cd54291526ac`; calibration benchmark only, never unseen holdout.
 - No automatic promotion.
 
@@ -36,43 +36,49 @@ Active phase: **V147 Phase C preregistration, pre-execution clarification, and r
 - Proof payload SHA `07848295a7a0b82cee4701db8ddf4505910d4955c2c6bd9587833cbb1656435a`.
 - Workflow deleted/sealed `7259c433589d505d9e9de56f45b0e1db9d4c975e`.
 
-## V147 Phase C — REAL-AUDIO ARTIFACT-FIRST / PRE-AUDIO CONTRACT FROZEN / NOT EXECUTED ON AUDIO
+## V147 Phase C — REAL-AUDIO ARTIFACT-FIRST / PRE-AUDIO CONTRACT FROZEN / NO AUDIO EXECUTION
 ### Protocol
 - Prereg `docs/v147-phase-c-real-audio-artifact-preregistration.md`; freeze commit `9a452bc29f6e1edcad9ef2a45a1c2a52267277b4`; blob `5c19ed572d17cc9a760f1b63ee03c1b2c4543d30`.
-- Pre-execution clarification `docs/v147-phase-c-preregistration-clarification.md`; freeze commit `fe16ac54a80cadd6f0b59bbec6251a24236fc476`; blob `6ced1bae4cdaad8306b008827657afbb27a87dbc`.
-- Clarification corrects only a prereg prose transcription: authoritative frozen V147 blob uses octave weight `0.25`, not `0.5`; all CQT evidence extraction/decision math must call V147 directly. No code/threshold/result was changed or observed.
-- Historical exact raw source-audio SHA: `215bd5a657c5326f08f132ae358595a95c30b39bb7493a52c2f910d5a608149f`, recovered from sealed V144 workflow blob `a9bef022032f2d5195dc54ba2a5bd9d7629686da`.
-- Raw audio bytes are not present on this branch; no substitute encode/song/upload is permitted.
+- Clarification `docs/v147-phase-c-preregistration-clarification.md`; freeze `fe16ac54a80cadd6f0b59bbec6251a24236fc476`; blob `6ced1bae4cdaad8306b008827657afbb27a87dbc`.
+- Authoritative V147 blob uses octave weight `0.25`; all CQT evidence extraction/decision math delegates to that frozen implementation.
+- Historical exact raw source-audio SHA `215bd5a657c5326f08f132ae358595a95c30b39bb7493a52c2f910d5a608149f`, from sealed V144 workflow blob `a9bef022032f2d5195dc54ba2a5bd9d7629686da`.
+- Raw source audio bytes are not present on branch; no substitute permitted.
 
 ### Frozen accepted-family reconstruction chain — reference-free
-1. V5 1209 canonical events SHA `7ed5166a73793e3a40c9a21f6532fee5ba784e43ef4180727404a37a038fb6d1`.
-2. Triple prune `register::high + section16::1 + stepParity::0` -> 1144 / SHA `68b8cdf14ed02265c5e3c204b2af51b0aae4849462e7b3e4243192d8855cc3c3`.
-3. Same-string pitch shift `pitchClass::4 + stepQuarter::0`, `-2` -> SHA `b6e1f8a8be150943d7224c74f9193b1b4050454620063846f6f5f5c773d4cbf6`.
-4. Pitch-position shift `pitchClass::11 + stepParity::0`, semitone `-2`, string `+1` -> SHA `5b36270aaeafa73b2e25722e2576a40424ce5951dcfd2b5d769746bd9eb07e0d`.
-5. Singleton replacement `stepParity::0`, source stringIndex `0`, source pitch class `4`, target stringIndex `3`, semitone `-12` -> accepted 1144 / SHA `4e6f9f247134f79f30a5448515c52a6ca1012c1f1314c3458b448582999e3881`.
+1. V5 1209 events SHA `7ed5166a73793e3a40c9a21f6532fee5ba784e43ef4180727404a37a038fb6d1`.
+2. Triple prune -> 1144 / SHA `68b8cdf14ed02265c5e3c204b2af51b0aae4849462e7b3e4243192d8855cc3c3`.
+3. Same-string pitch shift -> SHA `b6e1f8a8be150943d7224c74f9193b1b4050454620063846f6f5f5c773d4cbf6`.
+4. Pitch-position shift -> SHA `5b36270aaeafa73b2e25722e2576a40424ce5951dcfd2b5d769746bd9eb07e0d`.
+5. Singleton replacement -> accepted 1144 / SHA `4e6f9f247134f79f30a5448515c52a6ca1012c1f1314c3458b448582999e3881`.
 
-### Frozen pre-audio support implementation identities
-- Support `modal/v147_phase_c_artifact_support.py`; creation commit `23bfd83abb2e94ab677709adc3ec1dc7d38fbe07`; blob `f4278ffaacaca3f66baf7a3112e2af0f3bc387cf`.
-- Tests `modal/tests/test_v147_phase_c_artifact_support.py`; creation commit `f0a47d6197692d58fb5f101f310dd412d46e1978`; blob `e99f791cd0ab401a9e393ab9b89a6b167cee3c7f`.
-- CPU proof harness `modal/v147_phase_c_cpu_proof.py`; creation commit `223afb80c91423101102d60196707afc698f7a76`; blob `531384706b8b7444cf7ed22f414b47215e59b653`; schema `14721`.
-- Support code contains **no audio decode/CQT creation**. It only: verifies byte SHA; reconstructs accepted family #10 reference-free with hash gates; maps fixed event timing; selects frozen frames; delegates prepared-CQT evidence/selection directly to frozen V147; and applies fixed-timing guitar positions without V145 timing-lattice use.
-- Real audio read=false; audio decoded=false; gold/reference read=false; Modal/GPU=false; candidate not constructed.
+### Frozen pre-audio support identities
+- Support `modal/v147_phase_c_artifact_support.py`; blob `f4278ffaacaca3f66baf7a3112e2af0f3bc387cf`.
+- Tests `modal/tests/test_v147_phase_c_artifact_support.py`; blob `e99f791cd0ab401a9e393ab9b89a6b167cee3c7f`.
+- Proof harness `modal/v147_phase_c_cpu_proof.py`; blob `531384706b8b7444cf7ed22f414b47215e59b653`; schema `14721`.
+- No audio decode/CQT creation exists in this support code.
 
-### Pre-audio workflow attempt #1 — PROCEDURAL PREFLIGHT FAILURE / NO PROOF EXECUTED
-- Workflow creation/run commit `d523387cbbca0ab3b97d03beee93e0cae6d5527f`; workflow `.github/workflows/v147-phase-c-pre-audio-proof.yml` blob `1ebe1a637d16aed29a6583538b98533f14dfbd75`.
-- GitHub Actions run `33036467967`, job `98400119788`: `failure`.
-- Frozen identity verification step passed for prereg, clarification, V145, V147, Phase-C support/tests/proof harness, canonical helper, and selected V144 transform helpers.
-- Failure occurred in `Prove workflow has no real-audio or reference input` before pytest/proof execution. The negative grep for the historical raw-audio SHA matched the SHA literal embedded in that grep command itself.
-- Generated tests/proof step was skipped; no generated proof payload/result was observed. Artifact upload then failed because the proof step never created files.
-- This is a workflow guard construction error only. Frozen Phase-C prereg/clarification/support/tests/proof-harness identities remain untouched and must not be loosened.
-- Safe repair scope: edit only the one-use workflow guard so it proves absence of real-audio/reference inputs without self-matching; then allow the still-unexecuted single CPU/generated/reference-free proof.
-- Real audio read=false; audio decoded=false; gold/reference read=false; calibration score=false; candidate constructed=false; Modal/GPU=false.
+### Pre-audio attempt #1 — CONSUMED / PROCEDURAL FAILURE BEFORE TESTS/PROOF
+- Workflow creation/run commit `d523387cbbca0ab3b97d03beee93e0cae6d5527f`; workflow blob `1ebe1a637d16aed29a6583538b98533f14dfbd75`.
+- Run `33036467967`, job `98400119788`: FAILURE.
+- Frozen identity verification passed.
+- `Prove workflow has no real-audio or reference input` failed because the negative greps embedded the exact forbidden strings they searched for, so the workflow matched itself.
+- Tests/proof were skipped. Artifact upload failed because no proof files existed.
+- No proof payload, candidate, audio read/decode, reference/gold access, score, Modal/GPU, or Production work occurred.
+- Never rerun/reinterpret this consumed attempt.
 
-## Frozen Phase-C front end for later authorized audio execution
-- mono 22050 Hz; HPSS harmonic margin `(1.0,6.0)`; CQT hop 128; 48 bins/octave; fmin MIDI 40; 243 bins.
-- event-time mapping 129.19921875 BPM, 4 steps/beat, 16 steps/measure; frozen frame window.
-- evidence extraction is exactly V147 blob `49bce8...`: candidate ±1, band ±0.30, baseline ±2.0 excluding ±0.75, DB floor `1e-8`, octave weight `0.25`, thresholds `3.0 / 3.0 / 2.0 dB`, fail closed.
-- candidate timing/order/count/measure/metadata fixed; only MIDI/string/fret may change; V145 timing lattice forbidden.
+### Workflow-only repair — FROZEN BEFORE CHANGE
+- Repair prereg `docs/v147-phase-c-pre-audio-workflow-repair-preregistration.md`.
+- Freeze commit `4db0900fbcd140c6b68ed5bf240c990225293f76`.
+- Frozen repair prereg blob `d36b49e3e1519fd68e524a4ec12eba300c14b0da`.
+- Authorized behavior change only: replace the two self-matching negative grep assertions with an inline Python source-text guard that reconstructs the forbidden reference filename and raw-audio SHA from split fragments, then asserts the complete strings are absent. Keep `test ! -e debug/v147-phase-c-real-audio` unchanged.
+- All prereg/clarification/V145/V147/support/test/proof/canonical/V144 transform identities and all generated cases/algorithms/thresholds remain unchanged.
+- One fresh repository-native CPU/generated/reference-free execution is allowed after repair. If it reaches tests/proof and fails, STOP; no second proof run.
+
+## Frozen Phase-C front end for later separately authorized audio execution
+- mono 22050 Hz; HPSS margin `(1.0,6.0)`; CQT hop 128; 48 bins/octave; fmin MIDI 40; 243 bins.
+- time mapping 129.19921875 BPM, 4 steps/beat; frozen frame window.
+- V147 candidate ±1; band ±0.30; baseline ±2.0 excluding ±0.75; DB floor `1e-8`; octave weight `0.25`; thresholds `3.0/3.0/2.0 dB`; fail closed.
+- timing/order/count/measure/metadata fixed; only MIDI/string/fret may change; V145 timing lattice forbidden.
 
 ## Frozen validation/render identities
 - canonical `088d44827fb23e20d9aeeb4944a672989af5846c`
@@ -82,20 +88,17 @@ Active phase: **V147 Phase C preregistration, pre-execution clarification, and r
 - PDF fidelity `5e1564216873046237fb545078a04a6b18f72b27`
 - render contract `ccbb93c48982798cc474309fd981f6ca02d5c8d4`
 - evaluator `d208abb3f180f8375d57d786941ff49d6813de1c`
-- accepted manifest `acd12ab68ad16b8faabf38ddc9e1cc0c1e7c4b68`
 
 ## EXPLICIT NEXT STEPS
 1. Keep V146, V147 A, and V147 B sealed; family #10 remains accepted.
-2. Keep Phase-C prereg/clarification/support/tests/proof-harness identities frozen; do not edit them after observing any future audio result.
-3. Make only the minimal workflow guard repair needed to avoid the self-match recorded in run `33036467967`; do not change frozen identities, algorithms, thresholds, generated cases, or proof logic.
-4. Execute the still-unexecuted single repository-native **CPU/generated/reference-free pre-audio proof**. No actual source audio may be supplied/read.
-5. Persist exact proof/runtime/run evidence and delete/seal its one-use workflow.
-6. **STOP before actual audio decoding/CQT analysis. Fresh explicit authorization is required for real-audio execution.**
-7. Phase D/reference scoring remains unauthorized and requires a separate preregistration only after a Phase-C real-audio GO artifact exists.
+2. Apply exactly the frozen workflow-only repair; checkpoint repaired workflow identity.
+3. Execute exactly one fresh CPU/generated/reference-free pre-audio run. No real audio may be supplied/read.
+4. Persist exact proof/runtime/run evidence; checkpoint; delete/seal workflow; checkpoint again.
+5. **STOP before actual audio decoding/CQT analysis. Fresh explicit authorization is required for real-audio execution.**
+6. Phase D/reference scoring remains unauthorized until a separately frozen protocol after a Phase-C real-audio GO artifact.
 
 ## Current stop point
-- Accepted scores remain **35.4 / 6.7 / 5.5 / 5.8 / 100 / 100**.
-- V147 A = GO/SEALED; V147 B = GO/SEALED.
-- V147 C pre-audio protocol/support code is frozen; no real audio has been touched.
-- Attempt #1 failed at workflow-only no-input preflight before tests/proof; no proof result exists yet.
-- No calibration/gold/reference access, real-audio decode, analyzer integration, Modal/L4/GPU, main, or Production changes occurred in Phase C.
+- Accepted scores **35.4 / 6.7 / 5.5 / 5.8 / 100 / 100**.
+- V147 A GO/SEALED; V147 B GO/SEALED.
+- Phase C pre-audio attempt #1 failed only at procedural self-matching guard before tests/proof; repair is frozen but not yet applied.
+- No calibration/gold/reference access, real-audio decode, analyzer integration, Modal/L4/GPU, main, or Production changes occurred.
