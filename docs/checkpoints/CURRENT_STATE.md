@@ -2,7 +2,7 @@
 
 Updated: 2026-08-26 America/Montreal
 Branch: `v143-contextual-prune-lobo`
-Active phase: **V144 Rhythm baseline preserved. V145 Stage1/Stage2/adapter/evaluator are CPU-proven/sealed. Consumed V145 real one-shot remains sealed with no candidate/score. V146 Phase A generated-only candidate is fixed/sealed. V146 Phase B fixed-artifact calibration executed exactly once on CPU and succeeded; result is observational only and is worse than accepted family #10 on all musical metrics. Phase B workflow sealing/deletion is the immediate next action. No Modal/L4/GPU/live audio without fresh explicit authorization.**
+Active phase: **V144 Rhythm baseline preserved. V145 Stage1/Stage2/adapter/evaluator are CPU-proven/sealed. Consumed V145 real one-shot remains sealed with no candidate/score. V146 Phase A generated-only candidate is fixed/sealed. V146 Phase B fixed-artifact calibration executed exactly once on CPU, succeeded, persisted observational evidence, and is now sealed. The V146 artifact regressed all musical calibration metrics versus accepted family #10, so family #10 remains accepted unchanged. STOP V146; no replay, retuning, candidate search, promotion, Modal/L4/GPU, or live audio without a separately frozen future protocol and any required fresh authorization.**
 
 ## Permanent safety / fixed protocol
 - Work only on `v143-contextual-prune-lobo`; never modify/merge `main` or Production.
@@ -16,7 +16,7 @@ Active phase: **V144 Rhythm baseline preserved. V145 Stage1/Stage2/adapter/evalu
 - **Pitch Content 35.4%**, **Pitch + timing 6.7%**, **String/fret + timing 5.5%**, **Chord/voicing 5.8%**, **Measure coverage 100%**, **PDF event fidelity 100%**.
 - Exact: pitch `0.35406698564593303`; pitch/timing `0.06698564593301436`; string/fret/timing `0.05454545454545454`; chord pitch-set `0.0580511402902557`; exact voicing `0.0580511402902557`; coverage/PDF `1.0`.
 - 1144 events /113 measures / event+PDF SHA `4e6f9f247134f79f30a5448515c52a6ca1012c1f1314c3458b448582999e3881`; critical mismatch count 1712.
-- Accepted manifest blob `acd12ab68ad16b8faabf38ddc9e1cc0c1e7c4b68`.
+- Accepted manifest blob `acd12ab68ad16b8faabf38ddc9e1cc0c1e7c4b68` (re-verified unchanged after V146 sealing).
 
 ## V145 frozen/proven foundation
 - Stage1 blob `2fd979aebb4685e86c7f24a0162f69de306c06e9`; proof run `33026865312` SUCCESS.
@@ -43,13 +43,14 @@ Active phase: **V144 Rhythm baseline preserved. V145 Stage1/Stage2/adapter/evalu
 - Generated-only changes vs V5 source: 871 events changed; stringIndex871; fret871; measure0; step0. MIDI/event count/order/measure set preserved.
 - Phase A proof: referenceFree=true, acceptedManifestRead=false, realGoldRead=false, calibrationScoreRun=false, alternateCandidateConstructed=false, acceptedBaselineChanged=false, modalGpuUsed=false.
 
-### Phase B — FIXED-ARTIFACT CALIBRATION / SUCCESS / CONSUMED / PENDING WORKFLOW SEAL
+### Phase B — FIXED-ARTIFACT CALIBRATION / SUCCESS / CONSUMED / SEALED
 - Prereg `docs/v146-rhythm-phase-b-calibration-evaluation-preregistration.md`; creation commit `791aef9a0e8f48cd7d1e3672b2fa0b2469fa6a2c`; frozen prereg blob `82bd04d819f26106a831f67a1a61ccba6e876c08`.
 - Workflow creation commit `0008c69cc05e7dac67eb9684ef022e10dc375336`; workflow blob `1331b350525865008907b1f9107b9363a2cc91dc`.
 - Run `33032332238`, job `98387433761`, attempt1: **SUCCESS**. Every step through dependency identity, independent candidate validation, freeze, renderer contract, PDF fidelity, exactly-one evaluator call, proof creation, and two-file persistence succeeded.
 - Persistence commit `6e6bc3fd0831b149d3e99323c20162ccd32fddc8`.
-- Score `debug/v146-rhythm-artifact/calibration-score.json`; blob `bed3325573e86748c3fc409d4bca00970e087ce2`.
-- Proof `debug/v146-rhythm-artifact/calibration-evaluation-proof.json`; blob `7bfd6fe6eee33cd2012652c4aeb2186ed5657b5b`; schema14602.
+- Workflow deletion/sealing commit `9f2f1aeef4a730e919cceee2eccc31c3a25dfd37`. Workflow is absent on branch after sealing. No second V146 Phase B run was observed; run `33032332238` remains the sole Phase B calibration execution.
+- Score `debug/v146-rhythm-artifact/calibration-score.json`; blob `bed3325573e86748c3fc409d4bca00970e087ce2` (re-verified unchanged after sealing).
+- Proof `debug/v146-rhythm-artifact/calibration-evaluation-proof.json`; blob `7bfd6fe6eee33cd2012652c4aeb2186ed5657b5b`; schema14602 (re-verified unchanged after sealing).
 - Candidate identity remained exact: 1209 events /113 measures / event+PDF SHA `2de0a686cfd797a19aa02af735aa2bfaf0e65245ec85a5148c71f8b8b3a77c40`; PDF fidelity `1.0`; candidateMutatedDuringEvaluation=false; referenceOpenedOnlyAfterPreReferenceGate=true; acceptedBaselineChanged=false; promotionAllowed=false; modalGpuUsed=false; liveAudioBenchmarkRun=false.
 - V146 metrics: pitch `0.2830626450116009`; pitch/timing `0.044547563805104405`; string/fret/timing `0.0064965197215777265`; chord pitch-set `0.022757697456492636`; exact voicing `0.004016064257028112`; coverage/PDF `1.0`; critical mismatch count1875.
 - Candidate minus accepted deltas: pitch `-0.07100434063433214`; pitch/timing `-0.02243808212790995`; string/fret/timing `-0.048048934823876815`; chord pitch-set `-0.03529344283376307`; exact voicing `-0.05403507603322759`; coverage/PDF `0`; critical mismatches `+163`.
@@ -67,14 +68,15 @@ Active phase: **V144 Rhythm baseline preserved. V145 Stage1/Stage2/adapter/evalu
 - calibration gold SHA256 `18fd868ae960dfcdd1ffb0110f1a9dfd8acc2ffeb46e247d1116cd54291526ac`.
 
 ## EXPLICIT NEXT STEPS
-1. Seal/delete `.github/workflows/v146-rhythm-phase-b-calibration.yml`; never replay run `33032332238` or this consumed Phase B execution.
-2. Re-fetch branch head and verify score/proof blobs and accepted family #10 are unchanged after sealing.
-3. Update this checkpoint with the workflow deletion/sealing commit.
-4. Stop V146. Do not auto-promote, retune, search, construct another candidate, or access calibration again without a separately frozen future protocol.
-5. Accepted family #10 remains the active Rhythm baseline.
+1. **STOP V146.** Do not replay run `33032332238`, rerun Phase B, retune from this calibration result, search/construct another V146 candidate, or promote V146.
+2. Keep accepted family #10 as the active Rhythm baseline.
+3. Any later Rhythm experiment must begin with a separately frozen protocol that defines its allowed construction/evaluation boundaries before access to calibration evidence; no calibration-guided adaptation from this consumed V146 result unless that future protocol explicitly and safely authorizes it.
+4. No Modal/L4/GPU/live audio without fresh explicit authorization.
+5. Preserve this checkpoint before any future phase starts.
 
 ## Current stop point
 - Accepted scores remain **35.4 / 6.7 / 5.5 / 5.8 / 100 / 100**.
 - V146 observed scores are **28.3 / 4.5 / 0.65 / 2.28 / 0.40 / 100 / 100** (pitch / pitch+timing / string-fret+timing / chord / exact voicing / coverage / PDF).
-- V146 Phase B run `33032332238` is consumed and successful; output persisted at commit `6e6bc3fd0831b149d3e99323c20162ccd32fddc8`.
-- Immediate action: delete/seal the Phase B workflow, then checkpoint and stop.
+- V146 Phase B run `33032332238` is consumed, successful, persisted, and sealed; workflow deletion commit `9f2f1aeef4a730e919cceee2eccc31c3a25dfd37`.
+- Score/proof blobs and accepted family #10 were re-verified unchanged after sealing.
+- **V146 is complete. Stop here until a separately frozen future protocol is intentionally started.**
