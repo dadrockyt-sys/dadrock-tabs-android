@@ -1,0 +1,4750 @@
+{
+  "grid": {
+    "stepsPerBeat": 4,
+    "stepsPerMeasure": 16,
+    "timeSignature": "4/4"
+  },
+  "part": "rhythm",
+  "rows": [
+    {
+      "measure": 1,
+      "midi": 57,
+      "step": 0.0
+    },
+    {
+      "measure": 1,
+      "midi": 55,
+      "step": 3.0
+    },
+    {
+      "measure": 1,
+      "midi": 52,
+      "step": 4.0
+    },
+    {
+      "measure": 1,
+      "midi": 40,
+      "step": 6.0
+    },
+    {
+      "measure": 1,
+      "midi": 50,
+      "step": 8.0
+    },
+    {
+      "measure": 1,
+      "midi": 52,
+      "step": 10.0
+    },
+    {
+      "measure": 1,
+      "midi": 40,
+      "step": 14.0
+    },
+    {
+      "measure": 2,
+      "midi": 57,
+      "step": 0.0
+    },
+    {
+      "measure": 2,
+      "midi": 55,
+      "step": 3.0
+    },
+    {
+      "measure": 2,
+      "midi": 52,
+      "step": 4.0
+    },
+    {
+      "measure": 2,
+      "midi": 40,
+      "step": 6.0
+    },
+    {
+      "measure": 2,
+      "midi": 50,
+      "step": 8.0
+    },
+    {
+      "measure": 2,
+      "midi": 52,
+      "step": 10.0
+    },
+    {
+      "measure": 2,
+      "midi": 62,
+      "step": 12.0
+    },
+    {
+      "measure": 2,
+      "midi": 67,
+      "step": 12.0
+    },
+    {
+      "measure": 2,
+      "midi": 62,
+      "step": 13.0
+    },
+    {
+      "measure": 2,
+      "midi": 67,
+      "step": 13.0
+    },
+    {
+      "measure": 3,
+      "midi": 57,
+      "step": 0.0
+    },
+    {
+      "measure": 3,
+      "midi": 55,
+      "step": 3.0
+    },
+    {
+      "measure": 3,
+      "midi": 52,
+      "step": 4.0
+    },
+    {
+      "measure": 3,
+      "midi": 40,
+      "step": 6.0
+    },
+    {
+      "measure": 3,
+      "midi": 50,
+      "step": 8.0
+    },
+    {
+      "measure": 3,
+      "midi": 52,
+      "step": 10.0
+    },
+    {
+      "measure": 3,
+      "midi": 40,
+      "step": 14.0
+    },
+    {
+      "measure": 4,
+      "midi": 57,
+      "step": 0.0
+    },
+    {
+      "measure": 4,
+      "midi": 55,
+      "step": 3.0
+    },
+    {
+      "measure": 4,
+      "midi": 52,
+      "step": 4.0
+    },
+    {
+      "measure": 4,
+      "midi": 40,
+      "step": 6.0
+    },
+    {
+      "measure": 4,
+      "midi": 50,
+      "step": 8.0
+    },
+    {
+      "measure": 4,
+      "midi": 52,
+      "step": 10.0
+    },
+    {
+      "measure": 4,
+      "midi": 62,
+      "step": 12.0
+    },
+    {
+      "measure": 4,
+      "midi": 67,
+      "step": 12.0
+    },
+    {
+      "measure": 4,
+      "midi": 62,
+      "step": 13.0
+    },
+    {
+      "measure": 4,
+      "midi": 67,
+      "step": 13.0
+    },
+    {
+      "measure": 5,
+      "midi": 57,
+      "step": 0.0
+    },
+    {
+      "measure": 5,
+      "midi": 55,
+      "step": 3.0
+    },
+    {
+      "measure": 5,
+      "midi": 52,
+      "step": 4.0
+    },
+    {
+      "measure": 5,
+      "midi": 40,
+      "step": 6.0
+    },
+    {
+      "measure": 5,
+      "midi": 50,
+      "step": 8.0
+    },
+    {
+      "measure": 5,
+      "midi": 52,
+      "step": 10.0
+    },
+    {
+      "measure": 5,
+      "midi": 40,
+      "step": 14.0
+    },
+    {
+      "measure": 6,
+      "midi": 57,
+      "step": 0.0
+    },
+    {
+      "measure": 6,
+      "midi": 55,
+      "step": 3.0
+    },
+    {
+      "measure": 6,
+      "midi": 52,
+      "step": 4.0
+    },
+    {
+      "measure": 6,
+      "midi": 40,
+      "step": 6.0
+    },
+    {
+      "measure": 6,
+      "midi": 50,
+      "step": 8.0
+    },
+    {
+      "measure": 6,
+      "midi": 52,
+      "step": 10.0
+    },
+    {
+      "measure": 6,
+      "midi": 62,
+      "step": 12.0
+    },
+    {
+      "measure": 6,
+      "midi": 67,
+      "step": 12.0
+    },
+    {
+      "measure": 6,
+      "midi": 62,
+      "step": 13.0
+    },
+    {
+      "measure": 6,
+      "midi": 67,
+      "step": 13.0
+    },
+    {
+      "measure": 7,
+      "midi": 57,
+      "step": 0.0
+    },
+    {
+      "measure": 7,
+      "midi": 55,
+      "step": 3.0
+    },
+    {
+      "measure": 7,
+      "midi": 52,
+      "step": 4.0
+    },
+    {
+      "measure": 7,
+      "midi": 40,
+      "step": 6.0
+    },
+    {
+      "measure": 7,
+      "midi": 50,
+      "step": 8.0
+    },
+    {
+      "measure": 7,
+      "midi": 52,
+      "step": 10.0
+    },
+    {
+      "measure": 7,
+      "midi": 40,
+      "step": 14.0
+    },
+    {
+      "measure": 8,
+      "midi": 57,
+      "step": 0.0
+    },
+    {
+      "measure": 8,
+      "midi": 55,
+      "step": 3.0
+    },
+    {
+      "measure": 8,
+      "midi": 52,
+      "step": 4.0
+    },
+    {
+      "measure": 8,
+      "midi": 40,
+      "step": 6.0
+    },
+    {
+      "measure": 8,
+      "midi": 50,
+      "step": 8.0
+    },
+    {
+      "measure": 8,
+      "midi": 52,
+      "step": 10.0
+    },
+    {
+      "measure": 8,
+      "midi": 62,
+      "step": 12.0
+    },
+    {
+      "measure": 8,
+      "midi": 67,
+      "step": 12.0
+    },
+    {
+      "measure": 8,
+      "midi": 62,
+      "step": 13.0
+    },
+    {
+      "measure": 8,
+      "midi": 67,
+      "step": 13.0
+    },
+    {
+      "measure": 9,
+      "midi": 57,
+      "step": 0.0
+    },
+    {
+      "measure": 9,
+      "midi": 55,
+      "step": 3.0
+    },
+    {
+      "measure": 9,
+      "midi": 52,
+      "step": 4.0
+    },
+    {
+      "measure": 9,
+      "midi": 40,
+      "step": 6.0
+    },
+    {
+      "measure": 9,
+      "midi": 50,
+      "step": 8.0
+    },
+    {
+      "measure": 9,
+      "midi": 52,
+      "step": 10.0
+    },
+    {
+      "measure": 9,
+      "midi": 40,
+      "step": 14.0
+    },
+    {
+      "measure": 10,
+      "midi": 57,
+      "step": 0.0
+    },
+    {
+      "measure": 10,
+      "midi": 55,
+      "step": 3.0
+    },
+    {
+      "measure": 10,
+      "midi": 52,
+      "step": 4.0
+    },
+    {
+      "measure": 10,
+      "midi": 40,
+      "step": 6.0
+    },
+    {
+      "measure": 10,
+      "midi": 50,
+      "step": 8.0
+    },
+    {
+      "measure": 10,
+      "midi": 52,
+      "step": 10.0
+    },
+    {
+      "measure": 10,
+      "midi": 62,
+      "step": 12.0
+    },
+    {
+      "measure": 10,
+      "midi": 67,
+      "step": 12.0
+    },
+    {
+      "measure": 10,
+      "midi": 62,
+      "step": 13.0
+    },
+    {
+      "measure": 10,
+      "midi": 67,
+      "step": 13.0
+    },
+    {
+      "measure": 11,
+      "midi": 57,
+      "step": 0.0
+    },
+    {
+      "measure": 11,
+      "midi": 55,
+      "step": 3.0
+    },
+    {
+      "measure": 11,
+      "midi": 52,
+      "step": 4.0
+    },
+    {
+      "measure": 11,
+      "midi": 40,
+      "step": 6.0
+    },
+    {
+      "measure": 11,
+      "midi": 50,
+      "step": 8.0
+    },
+    {
+      "measure": 11,
+      "midi": 52,
+      "step": 10.0
+    },
+    {
+      "measure": 11,
+      "midi": 40,
+      "step": 14.0
+    },
+    {
+      "measure": 12,
+      "midi": 57,
+      "step": 0.0
+    },
+    {
+      "measure": 12,
+      "midi": 55,
+      "step": 3.0
+    },
+    {
+      "measure": 12,
+      "midi": 52,
+      "step": 4.0
+    },
+    {
+      "measure": 12,
+      "midi": 40,
+      "step": 6.0
+    },
+    {
+      "measure": 12,
+      "midi": 50,
+      "step": 8.0
+    },
+    {
+      "measure": 12,
+      "midi": 52,
+      "step": 10.0
+    },
+    {
+      "measure": 12,
+      "midi": 62,
+      "step": 12.0
+    },
+    {
+      "measure": 12,
+      "midi": 67,
+      "step": 12.0
+    },
+    {
+      "measure": 12,
+      "midi": 62,
+      "step": 13.0
+    },
+    {
+      "measure": 12,
+      "midi": 67,
+      "step": 13.0
+    },
+    {
+      "measure": 13,
+      "midi": 57,
+      "step": 0.0
+    },
+    {
+      "measure": 13,
+      "midi": 55,
+      "step": 3.0
+    },
+    {
+      "measure": 13,
+      "midi": 52,
+      "step": 4.0
+    },
+    {
+      "measure": 13,
+      "midi": 40,
+      "step": 6.0
+    },
+    {
+      "measure": 13,
+      "midi": 50,
+      "step": 8.0
+    },
+    {
+      "measure": 13,
+      "midi": 52,
+      "step": 10.0
+    },
+    {
+      "measure": 13,
+      "midi": 40,
+      "step": 14.0
+    },
+    {
+      "measure": 14,
+      "midi": 57,
+      "step": 0.0
+    },
+    {
+      "measure": 14,
+      "midi": 55,
+      "step": 3.0
+    },
+    {
+      "measure": 14,
+      "midi": 52,
+      "step": 4.0
+    },
+    {
+      "measure": 14,
+      "midi": 40,
+      "step": 6.0
+    },
+    {
+      "measure": 14,
+      "midi": 50,
+      "step": 8.0
+    },
+    {
+      "measure": 14,
+      "midi": 52,
+      "step": 10.0
+    },
+    {
+      "measure": 14,
+      "midi": 62,
+      "step": 12.0
+    },
+    {
+      "measure": 14,
+      "midi": 67,
+      "step": 12.0
+    },
+    {
+      "measure": 14,
+      "midi": 62,
+      "step": 13.0
+    },
+    {
+      "measure": 14,
+      "midi": 67,
+      "step": 13.0
+    },
+    {
+      "measure": 15,
+      "midi": 57,
+      "step": 0.0
+    },
+    {
+      "measure": 15,
+      "midi": 55,
+      "step": 3.0
+    },
+    {
+      "measure": 15,
+      "midi": 52,
+      "step": 4.0
+    },
+    {
+      "measure": 15,
+      "midi": 40,
+      "step": 6.0
+    },
+    {
+      "measure": 15,
+      "midi": 50,
+      "step": 8.0
+    },
+    {
+      "measure": 15,
+      "midi": 52,
+      "step": 10.0
+    },
+    {
+      "measure": 15,
+      "midi": 40,
+      "step": 14.0
+    },
+    {
+      "measure": 16,
+      "midi": 57,
+      "step": 0.0
+    },
+    {
+      "measure": 16,
+      "midi": 55,
+      "step": 3.0
+    },
+    {
+      "measure": 16,
+      "midi": 52,
+      "step": 4.0
+    },
+    {
+      "measure": 16,
+      "midi": 40,
+      "step": 6.0
+    },
+    {
+      "measure": 16,
+      "midi": 50,
+      "step": 8.0
+    },
+    {
+      "measure": 16,
+      "midi": 52,
+      "step": 10.0
+    },
+    {
+      "measure": 16,
+      "midi": 62,
+      "step": 12.0
+    },
+    {
+      "measure": 16,
+      "midi": 67,
+      "step": 12.0
+    },
+    {
+      "measure": 16,
+      "midi": 62,
+      "step": 13.0
+    },
+    {
+      "measure": 16,
+      "midi": 67,
+      "step": 13.0
+    },
+    {
+      "measure": 17,
+      "midi": 57,
+      "step": 0.0
+    },
+    {
+      "measure": 17,
+      "midi": 55,
+      "step": 3.0
+    },
+    {
+      "measure": 17,
+      "midi": 52,
+      "step": 4.0
+    },
+    {
+      "measure": 17,
+      "midi": 40,
+      "step": 6.0
+    },
+    {
+      "measure": 17,
+      "midi": 50,
+      "step": 8.0
+    },
+    {
+      "measure": 17,
+      "midi": 52,
+      "step": 10.0
+    },
+    {
+      "measure": 17,
+      "midi": 40,
+      "step": 14.0
+    },
+    {
+      "measure": 18,
+      "midi": 57,
+      "step": 0.0
+    },
+    {
+      "measure": 18,
+      "midi": 55,
+      "step": 3.0
+    },
+    {
+      "measure": 18,
+      "midi": 52,
+      "step": 4.0
+    },
+    {
+      "measure": 18,
+      "midi": 40,
+      "step": 6.0
+    },
+    {
+      "measure": 18,
+      "midi": 50,
+      "step": 8.0
+    },
+    {
+      "measure": 18,
+      "midi": 52,
+      "step": 10.0
+    },
+    {
+      "measure": 18,
+      "midi": 40,
+      "step": 14.0
+    },
+    {
+      "measure": 19,
+      "midi": 57,
+      "step": 0.0
+    },
+    {
+      "measure": 19,
+      "midi": 55,
+      "step": 3.0
+    },
+    {
+      "measure": 19,
+      "midi": 52,
+      "step": 4.0
+    },
+    {
+      "measure": 19,
+      "midi": 40,
+      "step": 6.0
+    },
+    {
+      "measure": 19,
+      "midi": 50,
+      "step": 8.0
+    },
+    {
+      "measure": 19,
+      "midi": 52,
+      "step": 10.0
+    },
+    {
+      "measure": 19,
+      "midi": 40,
+      "step": 14.0
+    },
+    {
+      "measure": 20,
+      "midi": 57,
+      "step": 0.0
+    },
+    {
+      "measure": 20,
+      "midi": 55,
+      "step": 3.0
+    },
+    {
+      "measure": 20,
+      "midi": 52,
+      "step": 4.0
+    },
+    {
+      "measure": 20,
+      "midi": 40,
+      "step": 6.0
+    },
+    {
+      "measure": 20,
+      "midi": 50,
+      "step": 8.0
+    },
+    {
+      "measure": 20,
+      "midi": 52,
+      "step": 10.0
+    },
+    {
+      "measure": 20,
+      "midi": 40,
+      "step": 14.0
+    },
+    {
+      "measure": 21,
+      "midi": 57,
+      "step": 0.0
+    },
+    {
+      "measure": 21,
+      "midi": 55,
+      "step": 3.0
+    },
+    {
+      "measure": 21,
+      "midi": 52,
+      "step": 4.0
+    },
+    {
+      "measure": 21,
+      "midi": 40,
+      "step": 6.0
+    },
+    {
+      "measure": 21,
+      "midi": 50,
+      "step": 8.0
+    },
+    {
+      "measure": 21,
+      "midi": 52,
+      "step": 10.0
+    },
+    {
+      "measure": 21,
+      "midi": 40,
+      "step": 14.0
+    },
+    {
+      "measure": 22,
+      "midi": 57,
+      "step": 0.0
+    },
+    {
+      "measure": 22,
+      "midi": 55,
+      "step": 3.0
+    },
+    {
+      "measure": 22,
+      "midi": 52,
+      "step": 4.0
+    },
+    {
+      "measure": 22,
+      "midi": 40,
+      "step": 6.0
+    },
+    {
+      "measure": 22,
+      "midi": 50,
+      "step": 8.0
+    },
+    {
+      "measure": 22,
+      "midi": 52,
+      "step": 10.0
+    },
+    {
+      "measure": 22,
+      "midi": 40,
+      "step": 14.0
+    },
+    {
+      "measure": 23,
+      "midi": 57,
+      "step": 0.0
+    },
+    {
+      "measure": 23,
+      "midi": 55,
+      "step": 3.0
+    },
+    {
+      "measure": 23,
+      "midi": 52,
+      "step": 4.0
+    },
+    {
+      "measure": 23,
+      "midi": 40,
+      "step": 6.0
+    },
+    {
+      "measure": 23,
+      "midi": 50,
+      "step": 8.0
+    },
+    {
+      "measure": 23,
+      "midi": 52,
+      "step": 10.0
+    },
+    {
+      "measure": 23,
+      "midi": 40,
+      "step": 14.0
+    },
+    {
+      "measure": 24,
+      "midi": 57,
+      "step": 0.0
+    },
+    {
+      "measure": 24,
+      "midi": 55,
+      "step": 3.0
+    },
+    {
+      "measure": 24,
+      "midi": 52,
+      "step": 4.0
+    },
+    {
+      "measure": 24,
+      "midi": 40,
+      "step": 6.0
+    },
+    {
+      "measure": 24,
+      "midi": 50,
+      "step": 8.0
+    },
+    {
+      "measure": 24,
+      "midi": 52,
+      "step": 10.0
+    },
+    {
+      "measure": 24,
+      "midi": 40,
+      "step": 14.0
+    },
+    {
+      "measure": 25,
+      "midi": 60,
+      "step": 0.0
+    },
+    {
+      "measure": 25,
+      "midi": 58,
+      "step": 3.0
+    },
+    {
+      "measure": 25,
+      "midi": 55,
+      "step": 4.0
+    },
+    {
+      "measure": 25,
+      "midi": 43,
+      "step": 6.0
+    },
+    {
+      "measure": 25,
+      "midi": 53,
+      "step": 8.0
+    },
+    {
+      "measure": 25,
+      "midi": 55,
+      "step": 10.0
+    },
+    {
+      "measure": 25,
+      "midi": 43,
+      "step": 14.0
+    },
+    {
+      "measure": 26,
+      "midi": 60,
+      "step": 0.0
+    },
+    {
+      "measure": 26,
+      "midi": 58,
+      "step": 3.0
+    },
+    {
+      "measure": 26,
+      "midi": 55,
+      "step": 4.0
+    },
+    {
+      "measure": 26,
+      "midi": 43,
+      "step": 6.0
+    },
+    {
+      "measure": 26,
+      "midi": 53,
+      "step": 8.0
+    },
+    {
+      "measure": 26,
+      "midi": 55,
+      "step": 10.0
+    },
+    {
+      "measure": 26,
+      "midi": 43,
+      "step": 14.0
+    },
+    {
+      "measure": 27,
+      "midi": 60,
+      "step": 0.0
+    },
+    {
+      "measure": 27,
+      "midi": 58,
+      "step": 3.0
+    },
+    {
+      "measure": 27,
+      "midi": 55,
+      "step": 4.0
+    },
+    {
+      "measure": 27,
+      "midi": 43,
+      "step": 6.0
+    },
+    {
+      "measure": 27,
+      "midi": 53,
+      "step": 8.0
+    },
+    {
+      "measure": 27,
+      "midi": 55,
+      "step": 10.0
+    },
+    {
+      "measure": 27,
+      "midi": 43,
+      "step": 14.0
+    },
+    {
+      "measure": 28,
+      "midi": 60,
+      "step": 1.0
+    },
+    {
+      "measure": 28,
+      "midi": 59,
+      "step": 4.0
+    },
+    {
+      "measure": 28,
+      "midi": 58,
+      "step": 7.0
+    },
+    {
+      "measure": 28,
+      "midi": 57,
+      "step": 10.0
+    },
+    {
+      "measure": 28,
+      "midi": 59,
+      "step": 13.0
+    },
+    {
+      "measure": 29,
+      "midi": 57,
+      "step": 0.0
+    },
+    {
+      "measure": 29,
+      "midi": 55,
+      "step": 3.0
+    },
+    {
+      "measure": 29,
+      "midi": 52,
+      "step": 4.0
+    },
+    {
+      "measure": 29,
+      "midi": 40,
+      "step": 6.0
+    },
+    {
+      "measure": 29,
+      "midi": 50,
+      "step": 8.0
+    },
+    {
+      "measure": 29,
+      "midi": 52,
+      "step": 10.0
+    },
+    {
+      "measure": 29,
+      "midi": 40,
+      "step": 14.0
+    },
+    {
+      "measure": 30,
+      "midi": 57,
+      "step": 0.0
+    },
+    {
+      "measure": 30,
+      "midi": 55,
+      "step": 3.0
+    },
+    {
+      "measure": 30,
+      "midi": 52,
+      "step": 4.0
+    },
+    {
+      "measure": 30,
+      "midi": 40,
+      "step": 6.0
+    },
+    {
+      "measure": 30,
+      "midi": 50,
+      "step": 8.0
+    },
+    {
+      "measure": 30,
+      "midi": 52,
+      "step": 10.0
+    },
+    {
+      "measure": 30,
+      "midi": 40,
+      "step": 14.0
+    },
+    {
+      "measure": 31,
+      "midi": 57,
+      "step": 0.0
+    },
+    {
+      "measure": 31,
+      "midi": 55,
+      "step": 3.0
+    },
+    {
+      "measure": 31,
+      "midi": 52,
+      "step": 4.0
+    },
+    {
+      "measure": 31,
+      "midi": 40,
+      "step": 6.0
+    },
+    {
+      "measure": 31,
+      "midi": 50,
+      "step": 8.0
+    },
+    {
+      "measure": 31,
+      "midi": 52,
+      "step": 10.0
+    },
+    {
+      "measure": 31,
+      "midi": 40,
+      "step": 14.0
+    },
+    {
+      "measure": 32,
+      "midi": 57,
+      "step": 0.0
+    },
+    {
+      "measure": 32,
+      "midi": 55,
+      "step": 3.0
+    },
+    {
+      "measure": 32,
+      "midi": 52,
+      "step": 4.0
+    },
+    {
+      "measure": 32,
+      "midi": 40,
+      "step": 6.0
+    },
+    {
+      "measure": 32,
+      "midi": 50,
+      "step": 8.0
+    },
+    {
+      "measure": 32,
+      "midi": 52,
+      "step": 10.0
+    },
+    {
+      "measure": 32,
+      "midi": 40,
+      "step": 14.0
+    },
+    {
+      "measure": 33,
+      "midi": 55,
+      "step": 0.0
+    },
+    {
+      "measure": 33,
+      "midi": 59,
+      "step": 0.0
+    },
+    {
+      "measure": 33,
+      "midi": 62,
+      "step": 0.0
+    },
+    {
+      "measure": 33,
+      "midi": 64,
+      "step": 0.0
+    },
+    {
+      "measure": 33,
+      "midi": 55,
+      "step": 3.0
+    },
+    {
+      "measure": 33,
+      "midi": 59,
+      "step": 3.0
+    },
+    {
+      "measure": 33,
+      "midi": 62,
+      "step": 3.0
+    },
+    {
+      "measure": 33,
+      "midi": 64,
+      "step": 3.0
+    },
+    {
+      "measure": 33,
+      "midi": 55,
+      "step": 4.0
+    },
+    {
+      "measure": 33,
+      "midi": 59,
+      "step": 4.0
+    },
+    {
+      "measure": 33,
+      "midi": 62,
+      "step": 4.0
+    },
+    {
+      "measure": 33,
+      "midi": 64,
+      "step": 4.0
+    },
+    {
+      "measure": 34,
+      "midi": 45,
+      "step": 0.0
+    },
+    {
+      "measure": 34,
+      "midi": 52,
+      "step": 0.0
+    },
+    {
+      "measure": 34,
+      "midi": 57,
+      "step": 0.0
+    },
+    {
+      "measure": 34,
+      "midi": 61,
+      "step": 0.0
+    },
+    {
+      "measure": 34,
+      "midi": 45,
+      "step": 3.0
+    },
+    {
+      "measure": 34,
+      "midi": 52,
+      "step": 3.0
+    },
+    {
+      "measure": 34,
+      "midi": 57,
+      "step": 3.0
+    },
+    {
+      "measure": 34,
+      "midi": 61,
+      "step": 3.0
+    },
+    {
+      "measure": 34,
+      "midi": 45,
+      "step": 4.0
+    },
+    {
+      "measure": 34,
+      "midi": 52,
+      "step": 4.0
+    },
+    {
+      "measure": 34,
+      "midi": 57,
+      "step": 4.0
+    },
+    {
+      "measure": 34,
+      "midi": 61,
+      "step": 4.0
+    },
+    {
+      "measure": 35,
+      "midi": 59,
+      "step": 0.0
+    },
+    {
+      "measure": 35,
+      "midi": 64,
+      "step": 0.0
+    },
+    {
+      "measure": 35,
+      "midi": 68,
+      "step": 0.0
+    },
+    {
+      "measure": 35,
+      "midi": 59,
+      "step": 1.0
+    },
+    {
+      "measure": 35,
+      "midi": 64,
+      "step": 1.0
+    },
+    {
+      "measure": 35,
+      "midi": 68,
+      "step": 1.0
+    },
+    {
+      "measure": 35,
+      "midi": 59,
+      "step": 2.0
+    },
+    {
+      "measure": 35,
+      "midi": 64,
+      "step": 2.0
+    },
+    {
+      "measure": 35,
+      "midi": 68,
+      "step": 2.0
+    },
+    {
+      "measure": 35,
+      "midi": 59,
+      "step": 3.0
+    },
+    {
+      "measure": 35,
+      "midi": 64,
+      "step": 3.0
+    },
+    {
+      "measure": 35,
+      "midi": 68,
+      "step": 3.0
+    },
+    {
+      "measure": 35,
+      "midi": 57,
+      "step": 4.0
+    },
+    {
+      "measure": 35,
+      "midi": 62,
+      "step": 4.0
+    },
+    {
+      "measure": 35,
+      "midi": 66,
+      "step": 4.0
+    },
+    {
+      "measure": 35,
+      "midi": 59,
+      "step": 6.0
+    },
+    {
+      "measure": 35,
+      "midi": 64,
+      "step": 6.0
+    },
+    {
+      "measure": 35,
+      "midi": 68,
+      "step": 6.0
+    },
+    {
+      "measure": 36,
+      "midi": 59,
+      "step": 0.0
+    },
+    {
+      "measure": 36,
+      "midi": 64,
+      "step": 0.0
+    },
+    {
+      "measure": 36,
+      "midi": 68,
+      "step": 0.0
+    },
+    {
+      "measure": 36,
+      "midi": 59,
+      "step": 1.0
+    },
+    {
+      "measure": 36,
+      "midi": 64,
+      "step": 1.0
+    },
+    {
+      "measure": 36,
+      "midi": 68,
+      "step": 1.0
+    },
+    {
+      "measure": 36,
+      "midi": 59,
+      "step": 2.0
+    },
+    {
+      "measure": 36,
+      "midi": 64,
+      "step": 2.0
+    },
+    {
+      "measure": 36,
+      "midi": 68,
+      "step": 2.0
+    },
+    {
+      "measure": 36,
+      "midi": 59,
+      "step": 3.0
+    },
+    {
+      "measure": 36,
+      "midi": 64,
+      "step": 3.0
+    },
+    {
+      "measure": 36,
+      "midi": 68,
+      "step": 3.0
+    },
+    {
+      "measure": 36,
+      "midi": 62,
+      "step": 4.0
+    },
+    {
+      "measure": 36,
+      "midi": 67,
+      "step": 4.0
+    },
+    {
+      "measure": 36,
+      "midi": 71,
+      "step": 4.0
+    },
+    {
+      "measure": 36,
+      "midi": 59,
+      "step": 6.0
+    },
+    {
+      "measure": 36,
+      "midi": 64,
+      "step": 6.0
+    },
+    {
+      "measure": 36,
+      "midi": 68,
+      "step": 6.0
+    },
+    {
+      "measure": 37,
+      "midi": 55,
+      "step": 0.0
+    },
+    {
+      "measure": 37,
+      "midi": 59,
+      "step": 0.0
+    },
+    {
+      "measure": 37,
+      "midi": 62,
+      "step": 0.0
+    },
+    {
+      "measure": 37,
+      "midi": 64,
+      "step": 0.0
+    },
+    {
+      "measure": 37,
+      "midi": 55,
+      "step": 3.0
+    },
+    {
+      "measure": 37,
+      "midi": 59,
+      "step": 3.0
+    },
+    {
+      "measure": 37,
+      "midi": 62,
+      "step": 3.0
+    },
+    {
+      "measure": 37,
+      "midi": 64,
+      "step": 3.0
+    },
+    {
+      "measure": 37,
+      "midi": 55,
+      "step": 4.0
+    },
+    {
+      "measure": 37,
+      "midi": 59,
+      "step": 4.0
+    },
+    {
+      "measure": 37,
+      "midi": 62,
+      "step": 4.0
+    },
+    {
+      "measure": 37,
+      "midi": 64,
+      "step": 4.0
+    },
+    {
+      "measure": 37,
+      "midi": 45,
+      "step": 14.0
+    },
+    {
+      "measure": 37,
+      "midi": 52,
+      "step": 14.0
+    },
+    {
+      "measure": 37,
+      "midi": 57,
+      "step": 14.0
+    },
+    {
+      "measure": 37,
+      "midi": 61,
+      "step": 14.0
+    },
+    {
+      "measure": 39,
+      "midi": 57,
+      "step": 0.0
+    },
+    {
+      "measure": 39,
+      "midi": 55,
+      "step": 3.0
+    },
+    {
+      "measure": 39,
+      "midi": 52,
+      "step": 4.0
+    },
+    {
+      "measure": 39,
+      "midi": 40,
+      "step": 6.0
+    },
+    {
+      "measure": 39,
+      "midi": 50,
+      "step": 8.0
+    },
+    {
+      "measure": 39,
+      "midi": 52,
+      "step": 10.0
+    },
+    {
+      "measure": 39,
+      "midi": 40,
+      "step": 14.0
+    },
+    {
+      "measure": 40,
+      "midi": 57,
+      "step": 0.0
+    },
+    {
+      "measure": 40,
+      "midi": 55,
+      "step": 3.0
+    },
+    {
+      "measure": 40,
+      "midi": 52,
+      "step": 4.0
+    },
+    {
+      "measure": 40,
+      "midi": 40,
+      "step": 6.0
+    },
+    {
+      "measure": 40,
+      "midi": 50,
+      "step": 8.0
+    },
+    {
+      "measure": 40,
+      "midi": 52,
+      "step": 10.0
+    },
+    {
+      "measure": 40,
+      "midi": 62,
+      "step": 12.0
+    },
+    {
+      "measure": 40,
+      "midi": 67,
+      "step": 12.0
+    },
+    {
+      "measure": 40,
+      "midi": 62,
+      "step": 13.0
+    },
+    {
+      "measure": 40,
+      "midi": 67,
+      "step": 13.0
+    },
+    {
+      "measure": 41,
+      "midi": 57,
+      "step": 0.0
+    },
+    {
+      "measure": 41,
+      "midi": 55,
+      "step": 3.0
+    },
+    {
+      "measure": 41,
+      "midi": 52,
+      "step": 4.0
+    },
+    {
+      "measure": 41,
+      "midi": 40,
+      "step": 6.0
+    },
+    {
+      "measure": 41,
+      "midi": 50,
+      "step": 8.0
+    },
+    {
+      "measure": 41,
+      "midi": 52,
+      "step": 10.0
+    },
+    {
+      "measure": 41,
+      "midi": 40,
+      "step": 14.0
+    },
+    {
+      "measure": 42,
+      "midi": 57,
+      "step": 0.0
+    },
+    {
+      "measure": 42,
+      "midi": 55,
+      "step": 3.0
+    },
+    {
+      "measure": 42,
+      "midi": 52,
+      "step": 4.0
+    },
+    {
+      "measure": 42,
+      "midi": 40,
+      "step": 6.0
+    },
+    {
+      "measure": 42,
+      "midi": 50,
+      "step": 8.0
+    },
+    {
+      "measure": 42,
+      "midi": 52,
+      "step": 10.0
+    },
+    {
+      "measure": 42,
+      "midi": 62,
+      "step": 12.0
+    },
+    {
+      "measure": 42,
+      "midi": 67,
+      "step": 12.0
+    },
+    {
+      "measure": 42,
+      "midi": 62,
+      "step": 13.0
+    },
+    {
+      "measure": 42,
+      "midi": 67,
+      "step": 13.0
+    },
+    {
+      "measure": 43,
+      "midi": 57,
+      "step": 0.0
+    },
+    {
+      "measure": 43,
+      "midi": 55,
+      "step": 3.0
+    },
+    {
+      "measure": 43,
+      "midi": 52,
+      "step": 4.0
+    },
+    {
+      "measure": 43,
+      "midi": 40,
+      "step": 6.0
+    },
+    {
+      "measure": 43,
+      "midi": 50,
+      "step": 8.0
+    },
+    {
+      "measure": 43,
+      "midi": 52,
+      "step": 10.0
+    },
+    {
+      "measure": 43,
+      "midi": 40,
+      "step": 14.0
+    },
+    {
+      "measure": 44,
+      "midi": 57,
+      "step": 0.0
+    },
+    {
+      "measure": 44,
+      "midi": 55,
+      "step": 3.0
+    },
+    {
+      "measure": 44,
+      "midi": 52,
+      "step": 4.0
+    },
+    {
+      "measure": 44,
+      "midi": 40,
+      "step": 6.0
+    },
+    {
+      "measure": 44,
+      "midi": 50,
+      "step": 8.0
+    },
+    {
+      "measure": 44,
+      "midi": 52,
+      "step": 10.0
+    },
+    {
+      "measure": 44,
+      "midi": 62,
+      "step": 12.0
+    },
+    {
+      "measure": 44,
+      "midi": 67,
+      "step": 12.0
+    },
+    {
+      "measure": 44,
+      "midi": 62,
+      "step": 13.0
+    },
+    {
+      "measure": 44,
+      "midi": 67,
+      "step": 13.0
+    },
+    {
+      "measure": 45,
+      "midi": 57,
+      "step": 0.0
+    },
+    {
+      "measure": 45,
+      "midi": 55,
+      "step": 3.0
+    },
+    {
+      "measure": 45,
+      "midi": 52,
+      "step": 4.0
+    },
+    {
+      "measure": 45,
+      "midi": 40,
+      "step": 6.0
+    },
+    {
+      "measure": 45,
+      "midi": 50,
+      "step": 8.0
+    },
+    {
+      "measure": 45,
+      "midi": 52,
+      "step": 10.0
+    },
+    {
+      "measure": 45,
+      "midi": 40,
+      "step": 14.0
+    },
+    {
+      "measure": 46,
+      "midi": 57,
+      "step": 0.0
+    },
+    {
+      "measure": 46,
+      "midi": 55,
+      "step": 3.0
+    },
+    {
+      "measure": 46,
+      "midi": 52,
+      "step": 4.0
+    },
+    {
+      "measure": 46,
+      "midi": 40,
+      "step": 6.0
+    },
+    {
+      "measure": 46,
+      "midi": 50,
+      "step": 8.0
+    },
+    {
+      "measure": 46,
+      "midi": 52,
+      "step": 10.0
+    },
+    {
+      "measure": 46,
+      "midi": 62,
+      "step": 12.0
+    },
+    {
+      "measure": 46,
+      "midi": 67,
+      "step": 12.0
+    },
+    {
+      "measure": 46,
+      "midi": 62,
+      "step": 13.0
+    },
+    {
+      "measure": 46,
+      "midi": 67,
+      "step": 13.0
+    },
+    {
+      "measure": 47,
+      "midi": 57,
+      "step": 0.0
+    },
+    {
+      "measure": 47,
+      "midi": 55,
+      "step": 3.0
+    },
+    {
+      "measure": 47,
+      "midi": 52,
+      "step": 4.0
+    },
+    {
+      "measure": 47,
+      "midi": 40,
+      "step": 6.0
+    },
+    {
+      "measure": 47,
+      "midi": 50,
+      "step": 8.0
+    },
+    {
+      "measure": 47,
+      "midi": 52,
+      "step": 10.0
+    },
+    {
+      "measure": 47,
+      "midi": 40,
+      "step": 14.0
+    },
+    {
+      "measure": 48,
+      "midi": 57,
+      "step": 0.0
+    },
+    {
+      "measure": 48,
+      "midi": 55,
+      "step": 3.0
+    },
+    {
+      "measure": 48,
+      "midi": 52,
+      "step": 4.0
+    },
+    {
+      "measure": 48,
+      "midi": 40,
+      "step": 6.0
+    },
+    {
+      "measure": 48,
+      "midi": 50,
+      "step": 8.0
+    },
+    {
+      "measure": 48,
+      "midi": 52,
+      "step": 10.0
+    },
+    {
+      "measure": 48,
+      "midi": 40,
+      "step": 14.0
+    },
+    {
+      "measure": 49,
+      "midi": 57,
+      "step": 0.0
+    },
+    {
+      "measure": 49,
+      "midi": 55,
+      "step": 3.0
+    },
+    {
+      "measure": 49,
+      "midi": 52,
+      "step": 4.0
+    },
+    {
+      "measure": 49,
+      "midi": 40,
+      "step": 6.0
+    },
+    {
+      "measure": 49,
+      "midi": 50,
+      "step": 8.0
+    },
+    {
+      "measure": 49,
+      "midi": 52,
+      "step": 10.0
+    },
+    {
+      "measure": 49,
+      "midi": 40,
+      "step": 14.0
+    },
+    {
+      "measure": 50,
+      "midi": 57,
+      "step": 0.0
+    },
+    {
+      "measure": 50,
+      "midi": 55,
+      "step": 3.0
+    },
+    {
+      "measure": 50,
+      "midi": 52,
+      "step": 4.0
+    },
+    {
+      "measure": 50,
+      "midi": 40,
+      "step": 6.0
+    },
+    {
+      "measure": 50,
+      "midi": 50,
+      "step": 8.0
+    },
+    {
+      "measure": 50,
+      "midi": 52,
+      "step": 10.0
+    },
+    {
+      "measure": 50,
+      "midi": 40,
+      "step": 14.0
+    },
+    {
+      "measure": 51,
+      "midi": 57,
+      "step": 0.0
+    },
+    {
+      "measure": 51,
+      "midi": 55,
+      "step": 3.0
+    },
+    {
+      "measure": 51,
+      "midi": 52,
+      "step": 4.0
+    },
+    {
+      "measure": 51,
+      "midi": 40,
+      "step": 6.0
+    },
+    {
+      "measure": 51,
+      "midi": 50,
+      "step": 8.0
+    },
+    {
+      "measure": 51,
+      "midi": 52,
+      "step": 10.0
+    },
+    {
+      "measure": 51,
+      "midi": 40,
+      "step": 14.0
+    },
+    {
+      "measure": 52,
+      "midi": 57,
+      "step": 0.0
+    },
+    {
+      "measure": 52,
+      "midi": 55,
+      "step": 3.0
+    },
+    {
+      "measure": 52,
+      "midi": 52,
+      "step": 4.0
+    },
+    {
+      "measure": 52,
+      "midi": 40,
+      "step": 6.0
+    },
+    {
+      "measure": 52,
+      "midi": 50,
+      "step": 8.0
+    },
+    {
+      "measure": 52,
+      "midi": 52,
+      "step": 10.0
+    },
+    {
+      "measure": 52,
+      "midi": 40,
+      "step": 14.0
+    },
+    {
+      "measure": 53,
+      "midi": 57,
+      "step": 0.0
+    },
+    {
+      "measure": 53,
+      "midi": 55,
+      "step": 3.0
+    },
+    {
+      "measure": 53,
+      "midi": 52,
+      "step": 4.0
+    },
+    {
+      "measure": 53,
+      "midi": 40,
+      "step": 6.0
+    },
+    {
+      "measure": 53,
+      "midi": 50,
+      "step": 8.0
+    },
+    {
+      "measure": 53,
+      "midi": 52,
+      "step": 10.0
+    },
+    {
+      "measure": 53,
+      "midi": 40,
+      "step": 14.0
+    },
+    {
+      "measure": 54,
+      "midi": 57,
+      "step": 0.0
+    },
+    {
+      "measure": 54,
+      "midi": 55,
+      "step": 3.0
+    },
+    {
+      "measure": 54,
+      "midi": 52,
+      "step": 4.0
+    },
+    {
+      "measure": 54,
+      "midi": 40,
+      "step": 6.0
+    },
+    {
+      "measure": 54,
+      "midi": 50,
+      "step": 8.0
+    },
+    {
+      "measure": 54,
+      "midi": 52,
+      "step": 10.0
+    },
+    {
+      "measure": 54,
+      "midi": 40,
+      "step": 14.0
+    },
+    {
+      "measure": 55,
+      "midi": 60,
+      "step": 0.0
+    },
+    {
+      "measure": 55,
+      "midi": 58,
+      "step": 3.0
+    },
+    {
+      "measure": 55,
+      "midi": 55,
+      "step": 4.0
+    },
+    {
+      "measure": 55,
+      "midi": 43,
+      "step": 6.0
+    },
+    {
+      "measure": 55,
+      "midi": 53,
+      "step": 8.0
+    },
+    {
+      "measure": 55,
+      "midi": 55,
+      "step": 10.0
+    },
+    {
+      "measure": 55,
+      "midi": 43,
+      "step": 14.0
+    },
+    {
+      "measure": 56,
+      "midi": 60,
+      "step": 0.0
+    },
+    {
+      "measure": 56,
+      "midi": 58,
+      "step": 3.0
+    },
+    {
+      "measure": 56,
+      "midi": 55,
+      "step": 4.0
+    },
+    {
+      "measure": 56,
+      "midi": 43,
+      "step": 6.0
+    },
+    {
+      "measure": 56,
+      "midi": 53,
+      "step": 8.0
+    },
+    {
+      "measure": 56,
+      "midi": 55,
+      "step": 10.0
+    },
+    {
+      "measure": 56,
+      "midi": 43,
+      "step": 14.0
+    },
+    {
+      "measure": 57,
+      "midi": 60,
+      "step": 0.0
+    },
+    {
+      "measure": 57,
+      "midi": 58,
+      "step": 3.0
+    },
+    {
+      "measure": 57,
+      "midi": 55,
+      "step": 4.0
+    },
+    {
+      "measure": 57,
+      "midi": 43,
+      "step": 6.0
+    },
+    {
+      "measure": 57,
+      "midi": 53,
+      "step": 8.0
+    },
+    {
+      "measure": 57,
+      "midi": 55,
+      "step": 10.0
+    },
+    {
+      "measure": 57,
+      "midi": 43,
+      "step": 14.0
+    },
+    {
+      "measure": 58,
+      "midi": 60,
+      "step": 0.0
+    },
+    {
+      "measure": 58,
+      "midi": 60,
+      "step": 1.0
+    },
+    {
+      "measure": 58,
+      "midi": 59,
+      "step": 3.0
+    },
+    {
+      "measure": 58,
+      "midi": 59,
+      "step": 4.0
+    },
+    {
+      "measure": 58,
+      "midi": 58,
+      "step": 7.0
+    },
+    {
+      "measure": 58,
+      "midi": 57,
+      "step": 10.0
+    },
+    {
+      "measure": 58,
+      "midi": 59,
+      "step": 13.0
+    },
+    {
+      "measure": 58,
+      "midi": 55,
+      "step": 15.0
+    },
+    {
+      "measure": 59,
+      "midi": 57,
+      "step": 0.0
+    },
+    {
+      "measure": 59,
+      "midi": 55,
+      "step": 3.0
+    },
+    {
+      "measure": 59,
+      "midi": 52,
+      "step": 4.0
+    },
+    {
+      "measure": 59,
+      "midi": 40,
+      "step": 6.0
+    },
+    {
+      "measure": 59,
+      "midi": 50,
+      "step": 8.0
+    },
+    {
+      "measure": 59,
+      "midi": 52,
+      "step": 10.0
+    },
+    {
+      "measure": 59,
+      "midi": 40,
+      "step": 14.0
+    },
+    {
+      "measure": 60,
+      "midi": 57,
+      "step": 0.0
+    },
+    {
+      "measure": 60,
+      "midi": 55,
+      "step": 3.0
+    },
+    {
+      "measure": 60,
+      "midi": 52,
+      "step": 4.0
+    },
+    {
+      "measure": 60,
+      "midi": 40,
+      "step": 6.0
+    },
+    {
+      "measure": 60,
+      "midi": 50,
+      "step": 8.0
+    },
+    {
+      "measure": 60,
+      "midi": 52,
+      "step": 10.0
+    },
+    {
+      "measure": 60,
+      "midi": 40,
+      "step": 14.0
+    },
+    {
+      "measure": 61,
+      "midi": 57,
+      "step": 0.0
+    },
+    {
+      "measure": 61,
+      "midi": 55,
+      "step": 3.0
+    },
+    {
+      "measure": 61,
+      "midi": 52,
+      "step": 4.0
+    },
+    {
+      "measure": 61,
+      "midi": 40,
+      "step": 6.0
+    },
+    {
+      "measure": 61,
+      "midi": 50,
+      "step": 8.0
+    },
+    {
+      "measure": 61,
+      "midi": 52,
+      "step": 10.0
+    },
+    {
+      "measure": 61,
+      "midi": 40,
+      "step": 14.0
+    },
+    {
+      "measure": 62,
+      "midi": 57,
+      "step": 0.0
+    },
+    {
+      "measure": 62,
+      "midi": 55,
+      "step": 3.0
+    },
+    {
+      "measure": 62,
+      "midi": 52,
+      "step": 4.0
+    },
+    {
+      "measure": 62,
+      "midi": 40,
+      "step": 6.0
+    },
+    {
+      "measure": 62,
+      "midi": 50,
+      "step": 8.0
+    },
+    {
+      "measure": 62,
+      "midi": 52,
+      "step": 10.0
+    },
+    {
+      "measure": 62,
+      "midi": 40,
+      "step": 14.0
+    },
+    {
+      "measure": 63,
+      "midi": 55,
+      "step": 0.0
+    },
+    {
+      "measure": 63,
+      "midi": 59,
+      "step": 0.0
+    },
+    {
+      "measure": 63,
+      "midi": 62,
+      "step": 0.0
+    },
+    {
+      "measure": 63,
+      "midi": 64,
+      "step": 0.0
+    },
+    {
+      "measure": 63,
+      "midi": 55,
+      "step": 3.0
+    },
+    {
+      "measure": 63,
+      "midi": 59,
+      "step": 3.0
+    },
+    {
+      "measure": 63,
+      "midi": 62,
+      "step": 3.0
+    },
+    {
+      "measure": 63,
+      "midi": 64,
+      "step": 3.0
+    },
+    {
+      "measure": 63,
+      "midi": 55,
+      "step": 4.0
+    },
+    {
+      "measure": 63,
+      "midi": 59,
+      "step": 4.0
+    },
+    {
+      "measure": 63,
+      "midi": 62,
+      "step": 4.0
+    },
+    {
+      "measure": 63,
+      "midi": 64,
+      "step": 4.0
+    },
+    {
+      "measure": 64,
+      "midi": 45,
+      "step": 0.0
+    },
+    {
+      "measure": 64,
+      "midi": 52,
+      "step": 0.0
+    },
+    {
+      "measure": 64,
+      "midi": 57,
+      "step": 0.0
+    },
+    {
+      "measure": 64,
+      "midi": 61,
+      "step": 0.0
+    },
+    {
+      "measure": 64,
+      "midi": 45,
+      "step": 3.0
+    },
+    {
+      "measure": 64,
+      "midi": 52,
+      "step": 3.0
+    },
+    {
+      "measure": 64,
+      "midi": 57,
+      "step": 3.0
+    },
+    {
+      "measure": 64,
+      "midi": 61,
+      "step": 3.0
+    },
+    {
+      "measure": 64,
+      "midi": 45,
+      "step": 4.0
+    },
+    {
+      "measure": 64,
+      "midi": 52,
+      "step": 4.0
+    },
+    {
+      "measure": 64,
+      "midi": 57,
+      "step": 4.0
+    },
+    {
+      "measure": 64,
+      "midi": 61,
+      "step": 4.0
+    },
+    {
+      "measure": 65,
+      "midi": 59,
+      "step": 0.0
+    },
+    {
+      "measure": 65,
+      "midi": 64,
+      "step": 0.0
+    },
+    {
+      "measure": 65,
+      "midi": 68,
+      "step": 0.0
+    },
+    {
+      "measure": 65,
+      "midi": 59,
+      "step": 1.0
+    },
+    {
+      "measure": 65,
+      "midi": 64,
+      "step": 1.0
+    },
+    {
+      "measure": 65,
+      "midi": 68,
+      "step": 1.0
+    },
+    {
+      "measure": 65,
+      "midi": 59,
+      "step": 2.0
+    },
+    {
+      "measure": 65,
+      "midi": 64,
+      "step": 2.0
+    },
+    {
+      "measure": 65,
+      "midi": 68,
+      "step": 2.0
+    },
+    {
+      "measure": 65,
+      "midi": 59,
+      "step": 3.0
+    },
+    {
+      "measure": 65,
+      "midi": 64,
+      "step": 3.0
+    },
+    {
+      "measure": 65,
+      "midi": 68,
+      "step": 3.0
+    },
+    {
+      "measure": 65,
+      "midi": 57,
+      "step": 4.0
+    },
+    {
+      "measure": 65,
+      "midi": 62,
+      "step": 4.0
+    },
+    {
+      "measure": 65,
+      "midi": 66,
+      "step": 4.0
+    },
+    {
+      "measure": 65,
+      "midi": 59,
+      "step": 6.0
+    },
+    {
+      "measure": 65,
+      "midi": 64,
+      "step": 6.0
+    },
+    {
+      "measure": 65,
+      "midi": 68,
+      "step": 6.0
+    },
+    {
+      "measure": 66,
+      "midi": 59,
+      "step": 0.0
+    },
+    {
+      "measure": 66,
+      "midi": 64,
+      "step": 0.0
+    },
+    {
+      "measure": 66,
+      "midi": 68,
+      "step": 0.0
+    },
+    {
+      "measure": 66,
+      "midi": 59,
+      "step": 1.0
+    },
+    {
+      "measure": 66,
+      "midi": 64,
+      "step": 1.0
+    },
+    {
+      "measure": 66,
+      "midi": 68,
+      "step": 1.0
+    },
+    {
+      "measure": 66,
+      "midi": 59,
+      "step": 2.0
+    },
+    {
+      "measure": 66,
+      "midi": 64,
+      "step": 2.0
+    },
+    {
+      "measure": 66,
+      "midi": 68,
+      "step": 2.0
+    },
+    {
+      "measure": 66,
+      "midi": 59,
+      "step": 3.0
+    },
+    {
+      "measure": 66,
+      "midi": 64,
+      "step": 3.0
+    },
+    {
+      "measure": 66,
+      "midi": 68,
+      "step": 3.0
+    },
+    {
+      "measure": 66,
+      "midi": 62,
+      "step": 4.0
+    },
+    {
+      "measure": 66,
+      "midi": 67,
+      "step": 4.0
+    },
+    {
+      "measure": 66,
+      "midi": 71,
+      "step": 4.0
+    },
+    {
+      "measure": 66,
+      "midi": 59,
+      "step": 6.0
+    },
+    {
+      "measure": 66,
+      "midi": 64,
+      "step": 6.0
+    },
+    {
+      "measure": 66,
+      "midi": 68,
+      "step": 6.0
+    },
+    {
+      "measure": 67,
+      "midi": 55,
+      "step": 0.0
+    },
+    {
+      "measure": 67,
+      "midi": 59,
+      "step": 0.0
+    },
+    {
+      "measure": 67,
+      "midi": 62,
+      "step": 0.0
+    },
+    {
+      "measure": 67,
+      "midi": 64,
+      "step": 0.0
+    },
+    {
+      "measure": 67,
+      "midi": 55,
+      "step": 3.0
+    },
+    {
+      "measure": 67,
+      "midi": 59,
+      "step": 3.0
+    },
+    {
+      "measure": 67,
+      "midi": 62,
+      "step": 3.0
+    },
+    {
+      "measure": 67,
+      "midi": 64,
+      "step": 3.0
+    },
+    {
+      "measure": 67,
+      "midi": 55,
+      "step": 4.0
+    },
+    {
+      "measure": 67,
+      "midi": 59,
+      "step": 4.0
+    },
+    {
+      "measure": 67,
+      "midi": 62,
+      "step": 4.0
+    },
+    {
+      "measure": 67,
+      "midi": 64,
+      "step": 4.0
+    },
+    {
+      "measure": 70,
+      "midi": 52,
+      "step": 0.0
+    },
+    {
+      "measure": 70,
+      "midi": 59,
+      "step": 0.0
+    },
+    {
+      "measure": 70,
+      "midi": 64,
+      "step": 0.0
+    },
+    {
+      "measure": 70,
+      "midi": 68,
+      "step": 0.0
+    },
+    {
+      "measure": 70,
+      "midi": 50,
+      "step": 6.0
+    },
+    {
+      "measure": 70,
+      "midi": 57,
+      "step": 6.0
+    },
+    {
+      "measure": 70,
+      "midi": 62,
+      "step": 6.0
+    },
+    {
+      "measure": 70,
+      "midi": 66,
+      "step": 6.0
+    },
+    {
+      "measure": 70,
+      "midi": 50,
+      "step": 14.0
+    },
+    {
+      "measure": 70,
+      "midi": 57,
+      "step": 14.0
+    },
+    {
+      "measure": 70,
+      "midi": 62,
+      "step": 14.0
+    },
+    {
+      "measure": 70,
+      "midi": 66,
+      "step": 14.0
+    },
+    {
+      "measure": 71,
+      "midi": 57,
+      "step": 6.0
+    },
+    {
+      "measure": 71,
+      "midi": 61,
+      "step": 6.0
+    },
+    {
+      "measure": 71,
+      "midi": 64,
+      "step": 6.0
+    },
+    {
+      "measure": 71,
+      "midi": 57,
+      "step": 10.0
+    },
+    {
+      "measure": 71,
+      "midi": 62,
+      "step": 10.0
+    },
+    {
+      "measure": 71,
+      "midi": 66,
+      "step": 10.0
+    },
+    {
+      "measure": 71,
+      "midi": 57,
+      "step": 12.0
+    },
+    {
+      "measure": 71,
+      "midi": 61,
+      "step": 12.0
+    },
+    {
+      "measure": 71,
+      "midi": 64,
+      "step": 12.0
+    },
+    {
+      "measure": 71,
+      "midi": 59,
+      "step": 14.0
+    },
+    {
+      "measure": 71,
+      "midi": 64,
+      "step": 14.0
+    },
+    {
+      "measure": 71,
+      "midi": 68,
+      "step": 14.0
+    },
+    {
+      "measure": 72,
+      "midi": 52,
+      "step": 0.0
+    },
+    {
+      "measure": 72,
+      "midi": 59,
+      "step": 0.0
+    },
+    {
+      "measure": 72,
+      "midi": 64,
+      "step": 0.0
+    },
+    {
+      "measure": 72,
+      "midi": 68,
+      "step": 0.0
+    },
+    {
+      "measure": 72,
+      "midi": 50,
+      "step": 6.0
+    },
+    {
+      "measure": 72,
+      "midi": 57,
+      "step": 6.0
+    },
+    {
+      "measure": 72,
+      "midi": 62,
+      "step": 6.0
+    },
+    {
+      "measure": 72,
+      "midi": 66,
+      "step": 6.0
+    },
+    {
+      "measure": 72,
+      "midi": 50,
+      "step": 14.0
+    },
+    {
+      "measure": 72,
+      "midi": 57,
+      "step": 14.0
+    },
+    {
+      "measure": 72,
+      "midi": 62,
+      "step": 14.0
+    },
+    {
+      "measure": 72,
+      "midi": 66,
+      "step": 14.0
+    },
+    {
+      "measure": 73,
+      "midi": 57,
+      "step": 6.0
+    },
+    {
+      "measure": 73,
+      "midi": 61,
+      "step": 6.0
+    },
+    {
+      "measure": 73,
+      "midi": 64,
+      "step": 6.0
+    },
+    {
+      "measure": 73,
+      "midi": 57,
+      "step": 10.0
+    },
+    {
+      "measure": 73,
+      "midi": 62,
+      "step": 10.0
+    },
+    {
+      "measure": 73,
+      "midi": 66,
+      "step": 10.0
+    },
+    {
+      "measure": 73,
+      "midi": 57,
+      "step": 12.0
+    },
+    {
+      "measure": 73,
+      "midi": 61,
+      "step": 12.0
+    },
+    {
+      "measure": 73,
+      "midi": 64,
+      "step": 12.0
+    },
+    {
+      "measure": 73,
+      "midi": 59,
+      "step": 14.0
+    },
+    {
+      "measure": 73,
+      "midi": 64,
+      "step": 14.0
+    },
+    {
+      "measure": 73,
+      "midi": 68,
+      "step": 14.0
+    },
+    {
+      "measure": 74,
+      "midi": 52,
+      "step": 0.0
+    },
+    {
+      "measure": 74,
+      "midi": 59,
+      "step": 0.0
+    },
+    {
+      "measure": 74,
+      "midi": 64,
+      "step": 0.0
+    },
+    {
+      "measure": 74,
+      "midi": 68,
+      "step": 0.0
+    },
+    {
+      "measure": 74,
+      "midi": 50,
+      "step": 6.0
+    },
+    {
+      "measure": 74,
+      "midi": 57,
+      "step": 6.0
+    },
+    {
+      "measure": 74,
+      "midi": 62,
+      "step": 6.0
+    },
+    {
+      "measure": 74,
+      "midi": 66,
+      "step": 6.0
+    },
+    {
+      "measure": 74,
+      "midi": 50,
+      "step": 14.0
+    },
+    {
+      "measure": 74,
+      "midi": 57,
+      "step": 14.0
+    },
+    {
+      "measure": 74,
+      "midi": 62,
+      "step": 14.0
+    },
+    {
+      "measure": 74,
+      "midi": 66,
+      "step": 14.0
+    },
+    {
+      "measure": 75,
+      "midi": 57,
+      "step": 6.0
+    },
+    {
+      "measure": 75,
+      "midi": 61,
+      "step": 6.0
+    },
+    {
+      "measure": 75,
+      "midi": 64,
+      "step": 6.0
+    },
+    {
+      "measure": 75,
+      "midi": 57,
+      "step": 10.0
+    },
+    {
+      "measure": 75,
+      "midi": 62,
+      "step": 10.0
+    },
+    {
+      "measure": 75,
+      "midi": 66,
+      "step": 10.0
+    },
+    {
+      "measure": 75,
+      "midi": 57,
+      "step": 12.0
+    },
+    {
+      "measure": 75,
+      "midi": 61,
+      "step": 12.0
+    },
+    {
+      "measure": 75,
+      "midi": 64,
+      "step": 12.0
+    },
+    {
+      "measure": 75,
+      "midi": 59,
+      "step": 14.0
+    },
+    {
+      "measure": 75,
+      "midi": 64,
+      "step": 14.0
+    },
+    {
+      "measure": 75,
+      "midi": 68,
+      "step": 14.0
+    },
+    {
+      "measure": 76,
+      "midi": 52,
+      "step": 0.0
+    },
+    {
+      "measure": 76,
+      "midi": 59,
+      "step": 0.0
+    },
+    {
+      "measure": 76,
+      "midi": 64,
+      "step": 0.0
+    },
+    {
+      "measure": 76,
+      "midi": 68,
+      "step": 0.0
+    },
+    {
+      "measure": 76,
+      "midi": 50,
+      "step": 6.0
+    },
+    {
+      "measure": 76,
+      "midi": 57,
+      "step": 6.0
+    },
+    {
+      "measure": 76,
+      "midi": 62,
+      "step": 6.0
+    },
+    {
+      "measure": 76,
+      "midi": 66,
+      "step": 6.0
+    },
+    {
+      "measure": 76,
+      "midi": 50,
+      "step": 14.0
+    },
+    {
+      "measure": 76,
+      "midi": 57,
+      "step": 14.0
+    },
+    {
+      "measure": 76,
+      "midi": 62,
+      "step": 14.0
+    },
+    {
+      "measure": 76,
+      "midi": 66,
+      "step": 14.0
+    },
+    {
+      "measure": 77,
+      "midi": 57,
+      "step": 6.0
+    },
+    {
+      "measure": 77,
+      "midi": 61,
+      "step": 6.0
+    },
+    {
+      "measure": 77,
+      "midi": 64,
+      "step": 6.0
+    },
+    {
+      "measure": 77,
+      "midi": 57,
+      "step": 10.0
+    },
+    {
+      "measure": 77,
+      "midi": 62,
+      "step": 10.0
+    },
+    {
+      "measure": 77,
+      "midi": 66,
+      "step": 10.0
+    },
+    {
+      "measure": 77,
+      "midi": 57,
+      "step": 12.0
+    },
+    {
+      "measure": 77,
+      "midi": 61,
+      "step": 12.0
+    },
+    {
+      "measure": 77,
+      "midi": 64,
+      "step": 12.0
+    },
+    {
+      "measure": 77,
+      "midi": 59,
+      "step": 14.0
+    },
+    {
+      "measure": 77,
+      "midi": 64,
+      "step": 14.0
+    },
+    {
+      "measure": 77,
+      "midi": 68,
+      "step": 14.0
+    },
+    {
+      "measure": 78,
+      "midi": 59,
+      "step": 0.0
+    },
+    {
+      "measure": 78,
+      "midi": 64,
+      "step": 0.0
+    },
+    {
+      "measure": 78,
+      "midi": 68,
+      "step": 0.0
+    },
+    {
+      "measure": 78,
+      "midi": 57,
+      "step": 6.0
+    },
+    {
+      "measure": 78,
+      "midi": 62,
+      "step": 6.0
+    },
+    {
+      "measure": 78,
+      "midi": 66,
+      "step": 6.0
+    },
+    {
+      "measure": 78,
+      "midi": 57,
+      "step": 14.0
+    },
+    {
+      "measure": 78,
+      "midi": 62,
+      "step": 14.0
+    },
+    {
+      "measure": 78,
+      "midi": 66,
+      "step": 14.0
+    },
+    {
+      "measure": 79,
+      "midi": 57,
+      "step": 6.0
+    },
+    {
+      "measure": 79,
+      "midi": 61,
+      "step": 6.0
+    },
+    {
+      "measure": 79,
+      "midi": 64,
+      "step": 6.0
+    },
+    {
+      "measure": 79,
+      "midi": 57,
+      "step": 10.0
+    },
+    {
+      "measure": 79,
+      "midi": 62,
+      "step": 10.0
+    },
+    {
+      "measure": 79,
+      "midi": 66,
+      "step": 10.0
+    },
+    {
+      "measure": 79,
+      "midi": 57,
+      "step": 12.0
+    },
+    {
+      "measure": 79,
+      "midi": 61,
+      "step": 12.0
+    },
+    {
+      "measure": 79,
+      "midi": 64,
+      "step": 12.0
+    },
+    {
+      "measure": 79,
+      "midi": 57,
+      "step": 14.0
+    },
+    {
+      "measure": 79,
+      "midi": 62,
+      "step": 14.0
+    },
+    {
+      "measure": 79,
+      "midi": 66,
+      "step": 14.0
+    },
+    {
+      "measure": 80,
+      "midi": 59,
+      "step": 0.0
+    },
+    {
+      "measure": 80,
+      "midi": 64,
+      "step": 0.0
+    },
+    {
+      "measure": 80,
+      "midi": 68,
+      "step": 0.0
+    },
+    {
+      "measure": 80,
+      "midi": 57,
+      "step": 6.0
+    },
+    {
+      "measure": 80,
+      "midi": 62,
+      "step": 6.0
+    },
+    {
+      "measure": 80,
+      "midi": 66,
+      "step": 6.0
+    },
+    {
+      "measure": 80,
+      "midi": 57,
+      "step": 14.0
+    },
+    {
+      "measure": 80,
+      "midi": 62,
+      "step": 14.0
+    },
+    {
+      "measure": 80,
+      "midi": 66,
+      "step": 14.0
+    },
+    {
+      "measure": 81,
+      "midi": 57,
+      "step": 6.0
+    },
+    {
+      "measure": 81,
+      "midi": 61,
+      "step": 6.0
+    },
+    {
+      "measure": 81,
+      "midi": 64,
+      "step": 6.0
+    },
+    {
+      "measure": 81,
+      "midi": 57,
+      "step": 10.0
+    },
+    {
+      "measure": 81,
+      "midi": 62,
+      "step": 10.0
+    },
+    {
+      "measure": 81,
+      "midi": 66,
+      "step": 10.0
+    },
+    {
+      "measure": 81,
+      "midi": 57,
+      "step": 12.0
+    },
+    {
+      "measure": 81,
+      "midi": 61,
+      "step": 12.0
+    },
+    {
+      "measure": 81,
+      "midi": 64,
+      "step": 12.0
+    },
+    {
+      "measure": 81,
+      "midi": 57,
+      "step": 14.0
+    },
+    {
+      "measure": 81,
+      "midi": 62,
+      "step": 14.0
+    },
+    {
+      "measure": 81,
+      "midi": 66,
+      "step": 14.0
+    },
+    {
+      "measure": 82,
+      "midi": 59,
+      "step": 0.0
+    },
+    {
+      "measure": 82,
+      "midi": 64,
+      "step": 0.0
+    },
+    {
+      "measure": 82,
+      "midi": 68,
+      "step": 0.0
+    },
+    {
+      "measure": 82,
+      "midi": 57,
+      "step": 6.0
+    },
+    {
+      "measure": 82,
+      "midi": 62,
+      "step": 6.0
+    },
+    {
+      "measure": 82,
+      "midi": 66,
+      "step": 6.0
+    },
+    {
+      "measure": 82,
+      "midi": 57,
+      "step": 14.0
+    },
+    {
+      "measure": 82,
+      "midi": 62,
+      "step": 14.0
+    },
+    {
+      "measure": 82,
+      "midi": 66,
+      "step": 14.0
+    },
+    {
+      "measure": 83,
+      "midi": 57,
+      "step": 6.0
+    },
+    {
+      "measure": 83,
+      "midi": 61,
+      "step": 6.0
+    },
+    {
+      "measure": 83,
+      "midi": 64,
+      "step": 6.0
+    },
+    {
+      "measure": 83,
+      "midi": 57,
+      "step": 10.0
+    },
+    {
+      "measure": 83,
+      "midi": 62,
+      "step": 10.0
+    },
+    {
+      "measure": 83,
+      "midi": 66,
+      "step": 10.0
+    },
+    {
+      "measure": 83,
+      "midi": 57,
+      "step": 12.0
+    },
+    {
+      "measure": 83,
+      "midi": 61,
+      "step": 12.0
+    },
+    {
+      "measure": 83,
+      "midi": 64,
+      "step": 12.0
+    },
+    {
+      "measure": 83,
+      "midi": 57,
+      "step": 14.0
+    },
+    {
+      "measure": 83,
+      "midi": 62,
+      "step": 14.0
+    },
+    {
+      "measure": 83,
+      "midi": 66,
+      "step": 14.0
+    },
+    {
+      "measure": 84,
+      "midi": 59,
+      "step": 0.0
+    },
+    {
+      "measure": 84,
+      "midi": 64,
+      "step": 0.0
+    },
+    {
+      "measure": 84,
+      "midi": 68,
+      "step": 0.0
+    },
+    {
+      "measure": 84,
+      "midi": 57,
+      "step": 6.0
+    },
+    {
+      "measure": 84,
+      "midi": 62,
+      "step": 6.0
+    },
+    {
+      "measure": 84,
+      "midi": 66,
+      "step": 6.0
+    },
+    {
+      "measure": 84,
+      "midi": 57,
+      "step": 14.0
+    },
+    {
+      "measure": 84,
+      "midi": 62,
+      "step": 14.0
+    },
+    {
+      "measure": 84,
+      "midi": 66,
+      "step": 14.0
+    },
+    {
+      "measure": 85,
+      "midi": 57,
+      "step": 6.0
+    },
+    {
+      "measure": 85,
+      "midi": 61,
+      "step": 6.0
+    },
+    {
+      "measure": 85,
+      "midi": 64,
+      "step": 6.0
+    },
+    {
+      "measure": 85,
+      "midi": 57,
+      "step": 10.0
+    },
+    {
+      "measure": 85,
+      "midi": 62,
+      "step": 10.0
+    },
+    {
+      "measure": 85,
+      "midi": 66,
+      "step": 10.0
+    },
+    {
+      "measure": 85,
+      "midi": 57,
+      "step": 12.0
+    },
+    {
+      "measure": 85,
+      "midi": 61,
+      "step": 12.0
+    },
+    {
+      "measure": 85,
+      "midi": 64,
+      "step": 12.0
+    },
+    {
+      "measure": 85,
+      "midi": 57,
+      "step": 14.0
+    },
+    {
+      "measure": 85,
+      "midi": 62,
+      "step": 14.0
+    },
+    {
+      "measure": 85,
+      "midi": 66,
+      "step": 14.0
+    },
+    {
+      "measure": 86,
+      "midi": 59,
+      "step": 0.0
+    },
+    {
+      "measure": 86,
+      "midi": 64,
+      "step": 0.0
+    },
+    {
+      "measure": 86,
+      "midi": 68,
+      "step": 0.0
+    },
+    {
+      "measure": 86,
+      "midi": 57,
+      "step": 6.0
+    },
+    {
+      "measure": 86,
+      "midi": 62,
+      "step": 6.0
+    },
+    {
+      "measure": 86,
+      "midi": 66,
+      "step": 6.0
+    },
+    {
+      "measure": 86,
+      "midi": 57,
+      "step": 14.0
+    },
+    {
+      "measure": 86,
+      "midi": 62,
+      "step": 14.0
+    },
+    {
+      "measure": 86,
+      "midi": 66,
+      "step": 14.0
+    },
+    {
+      "measure": 87,
+      "midi": 57,
+      "step": 6.0
+    },
+    {
+      "measure": 87,
+      "midi": 61,
+      "step": 6.0
+    },
+    {
+      "measure": 87,
+      "midi": 64,
+      "step": 6.0
+    },
+    {
+      "measure": 87,
+      "midi": 57,
+      "step": 10.0
+    },
+    {
+      "measure": 87,
+      "midi": 62,
+      "step": 10.0
+    },
+    {
+      "measure": 87,
+      "midi": 66,
+      "step": 10.0
+    },
+    {
+      "measure": 87,
+      "midi": 57,
+      "step": 12.0
+    },
+    {
+      "measure": 87,
+      "midi": 61,
+      "step": 12.0
+    },
+    {
+      "measure": 87,
+      "midi": 64,
+      "step": 12.0
+    },
+    {
+      "measure": 87,
+      "midi": 57,
+      "step": 14.0
+    },
+    {
+      "measure": 87,
+      "midi": 62,
+      "step": 14.0
+    },
+    {
+      "measure": 87,
+      "midi": 66,
+      "step": 14.0
+    },
+    {
+      "measure": 88,
+      "midi": 59,
+      "step": 0.0
+    },
+    {
+      "measure": 88,
+      "midi": 64,
+      "step": 0.0
+    },
+    {
+      "measure": 88,
+      "midi": 68,
+      "step": 0.0
+    },
+    {
+      "measure": 88,
+      "midi": 57,
+      "step": 6.0
+    },
+    {
+      "measure": 88,
+      "midi": 62,
+      "step": 6.0
+    },
+    {
+      "measure": 88,
+      "midi": 66,
+      "step": 6.0
+    },
+    {
+      "measure": 88,
+      "midi": 57,
+      "step": 14.0
+    },
+    {
+      "measure": 88,
+      "midi": 62,
+      "step": 14.0
+    },
+    {
+      "measure": 88,
+      "midi": 66,
+      "step": 14.0
+    },
+    {
+      "measure": 89,
+      "midi": 57,
+      "step": 6.0
+    },
+    {
+      "measure": 89,
+      "midi": 61,
+      "step": 6.0
+    },
+    {
+      "measure": 89,
+      "midi": 64,
+      "step": 6.0
+    },
+    {
+      "measure": 89,
+      "midi": 57,
+      "step": 10.0
+    },
+    {
+      "measure": 89,
+      "midi": 62,
+      "step": 10.0
+    },
+    {
+      "measure": 89,
+      "midi": 66,
+      "step": 10.0
+    },
+    {
+      "measure": 89,
+      "midi": 57,
+      "step": 12.0
+    },
+    {
+      "measure": 89,
+      "midi": 61,
+      "step": 12.0
+    },
+    {
+      "measure": 89,
+      "midi": 64,
+      "step": 12.0
+    },
+    {
+      "measure": 89,
+      "midi": 57,
+      "step": 14.0
+    },
+    {
+      "measure": 89,
+      "midi": 62,
+      "step": 14.0
+    },
+    {
+      "measure": 89,
+      "midi": 66,
+      "step": 14.0
+    },
+    {
+      "measure": 90,
+      "midi": 59,
+      "step": 0.0
+    },
+    {
+      "measure": 90,
+      "midi": 64,
+      "step": 0.0
+    },
+    {
+      "measure": 90,
+      "midi": 68,
+      "step": 0.0
+    },
+    {
+      "measure": 90,
+      "midi": 57,
+      "step": 6.0
+    },
+    {
+      "measure": 90,
+      "midi": 62,
+      "step": 6.0
+    },
+    {
+      "measure": 90,
+      "midi": 66,
+      "step": 6.0
+    },
+    {
+      "measure": 90,
+      "midi": 57,
+      "step": 14.0
+    },
+    {
+      "measure": 90,
+      "midi": 62,
+      "step": 14.0
+    },
+    {
+      "measure": 90,
+      "midi": 66,
+      "step": 14.0
+    },
+    {
+      "measure": 91,
+      "midi": 57,
+      "step": 6.0
+    },
+    {
+      "measure": 91,
+      "midi": 61,
+      "step": 6.0
+    },
+    {
+      "measure": 91,
+      "midi": 64,
+      "step": 6.0
+    },
+    {
+      "measure": 91,
+      "midi": 57,
+      "step": 10.0
+    },
+    {
+      "measure": 91,
+      "midi": 62,
+      "step": 10.0
+    },
+    {
+      "measure": 91,
+      "midi": 66,
+      "step": 10.0
+    },
+    {
+      "measure": 91,
+      "midi": 57,
+      "step": 12.0
+    },
+    {
+      "measure": 91,
+      "midi": 61,
+      "step": 12.0
+    },
+    {
+      "measure": 91,
+      "midi": 64,
+      "step": 12.0
+    },
+    {
+      "measure": 91,
+      "midi": 57,
+      "step": 14.0
+    },
+    {
+      "measure": 91,
+      "midi": 62,
+      "step": 14.0
+    },
+    {
+      "measure": 91,
+      "midi": 66,
+      "step": 14.0
+    },
+    {
+      "measure": 92,
+      "midi": 59,
+      "step": 0.0
+    },
+    {
+      "measure": 92,
+      "midi": 64,
+      "step": 0.0
+    },
+    {
+      "measure": 92,
+      "midi": 68,
+      "step": 0.0
+    },
+    {
+      "measure": 92,
+      "midi": 57,
+      "step": 6.0
+    },
+    {
+      "measure": 92,
+      "midi": 62,
+      "step": 6.0
+    },
+    {
+      "measure": 92,
+      "midi": 66,
+      "step": 6.0
+    },
+    {
+      "measure": 92,
+      "midi": 57,
+      "step": 14.0
+    },
+    {
+      "measure": 92,
+      "midi": 62,
+      "step": 14.0
+    },
+    {
+      "measure": 92,
+      "midi": 66,
+      "step": 14.0
+    },
+    {
+      "measure": 94,
+      "midi": 49,
+      "step": 9.0
+    },
+    {
+      "measure": 94,
+      "midi": 50,
+      "step": 12.0
+    },
+    {
+      "measure": 94,
+      "midi": 51,
+      "step": 14.0
+    },
+    {
+      "measure": 95,
+      "midi": 57,
+      "step": 0.0
+    },
+    {
+      "measure": 95,
+      "midi": 55,
+      "step": 3.0
+    },
+    {
+      "measure": 95,
+      "midi": 52,
+      "step": 4.0
+    },
+    {
+      "measure": 95,
+      "midi": 40,
+      "step": 6.0
+    },
+    {
+      "measure": 95,
+      "midi": 50,
+      "step": 8.0
+    },
+    {
+      "measure": 95,
+      "midi": 52,
+      "step": 10.0
+    },
+    {
+      "measure": 95,
+      "midi": 40,
+      "step": 14.0
+    },
+    {
+      "measure": 96,
+      "midi": 57,
+      "step": 0.0
+    },
+    {
+      "measure": 96,
+      "midi": 55,
+      "step": 3.0
+    },
+    {
+      "measure": 96,
+      "midi": 52,
+      "step": 4.0
+    },
+    {
+      "measure": 96,
+      "midi": 40,
+      "step": 6.0
+    },
+    {
+      "measure": 96,
+      "midi": 50,
+      "step": 8.0
+    },
+    {
+      "measure": 96,
+      "midi": 52,
+      "step": 10.0
+    },
+    {
+      "measure": 96,
+      "midi": 40,
+      "step": 14.0
+    },
+    {
+      "measure": 97,
+      "midi": 57,
+      "step": 0.0
+    },
+    {
+      "measure": 97,
+      "midi": 55,
+      "step": 3.0
+    },
+    {
+      "measure": 97,
+      "midi": 52,
+      "step": 4.0
+    },
+    {
+      "measure": 97,
+      "midi": 40,
+      "step": 6.0
+    },
+    {
+      "measure": 97,
+      "midi": 50,
+      "step": 8.0
+    },
+    {
+      "measure": 97,
+      "midi": 52,
+      "step": 10.0
+    },
+    {
+      "measure": 97,
+      "midi": 40,
+      "step": 14.0
+    },
+    {
+      "measure": 98,
+      "midi": 57,
+      "step": 0.0
+    },
+    {
+      "measure": 98,
+      "midi": 55,
+      "step": 3.0
+    },
+    {
+      "measure": 98,
+      "midi": 52,
+      "step": 4.0
+    },
+    {
+      "measure": 98,
+      "midi": 40,
+      "step": 6.0
+    },
+    {
+      "measure": 98,
+      "midi": 50,
+      "step": 8.0
+    },
+    {
+      "measure": 98,
+      "midi": 52,
+      "step": 10.0
+    },
+    {
+      "measure": 98,
+      "midi": 40,
+      "step": 14.0
+    },
+    {
+      "measure": 99,
+      "midi": 57,
+      "step": 0.0
+    },
+    {
+      "measure": 99,
+      "midi": 55,
+      "step": 3.0
+    },
+    {
+      "measure": 99,
+      "midi": 52,
+      "step": 4.0
+    },
+    {
+      "measure": 99,
+      "midi": 40,
+      "step": 6.0
+    },
+    {
+      "measure": 99,
+      "midi": 50,
+      "step": 8.0
+    },
+    {
+      "measure": 99,
+      "midi": 52,
+      "step": 10.0
+    },
+    {
+      "measure": 99,
+      "midi": 40,
+      "step": 14.0
+    },
+    {
+      "measure": 100,
+      "midi": 57,
+      "step": 0.0
+    },
+    {
+      "measure": 100,
+      "midi": 55,
+      "step": 3.0
+    },
+    {
+      "measure": 100,
+      "midi": 52,
+      "step": 4.0
+    },
+    {
+      "measure": 100,
+      "midi": 40,
+      "step": 6.0
+    },
+    {
+      "measure": 100,
+      "midi": 50,
+      "step": 8.0
+    },
+    {
+      "measure": 100,
+      "midi": 52,
+      "step": 10.0
+    },
+    {
+      "measure": 100,
+      "midi": 40,
+      "step": 14.0
+    },
+    {
+      "measure": 101,
+      "midi": 57,
+      "step": 0.0
+    },
+    {
+      "measure": 101,
+      "midi": 55,
+      "step": 3.0
+    },
+    {
+      "measure": 101,
+      "midi": 52,
+      "step": 4.0
+    },
+    {
+      "measure": 101,
+      "midi": 40,
+      "step": 6.0
+    },
+    {
+      "measure": 101,
+      "midi": 50,
+      "step": 8.0
+    },
+    {
+      "measure": 101,
+      "midi": 52,
+      "step": 10.0
+    },
+    {
+      "measure": 101,
+      "midi": 40,
+      "step": 14.0
+    },
+    {
+      "measure": 102,
+      "midi": 57,
+      "step": 0.0
+    },
+    {
+      "measure": 102,
+      "midi": 55,
+      "step": 3.0
+    },
+    {
+      "measure": 102,
+      "midi": 52,
+      "step": 4.0
+    },
+    {
+      "measure": 102,
+      "midi": 40,
+      "step": 6.0
+    },
+    {
+      "measure": 102,
+      "midi": 50,
+      "step": 8.0
+    },
+    {
+      "measure": 102,
+      "midi": 52,
+      "step": 10.0
+    },
+    {
+      "measure": 102,
+      "midi": 40,
+      "step": 14.0
+    },
+    {
+      "measure": 103,
+      "midi": 55,
+      "step": 0.0
+    },
+    {
+      "measure": 103,
+      "midi": 59,
+      "step": 0.0
+    },
+    {
+      "measure": 103,
+      "midi": 62,
+      "step": 0.0
+    },
+    {
+      "measure": 103,
+      "midi": 64,
+      "step": 0.0
+    },
+    {
+      "measure": 104,
+      "midi": 52,
+      "step": 0.0
+    },
+    {
+      "measure": 104,
+      "midi": 57,
+      "step": 0.0
+    },
+    {
+      "measure": 104,
+      "midi": 61,
+      "step": 0.0
+    },
+    {
+      "measure": 104,
+      "midi": 64,
+      "step": 0.0
+    },
+    {
+      "measure": 105,
+      "midi": 55,
+      "step": 0.0
+    },
+    {
+      "measure": 105,
+      "midi": 59,
+      "step": 0.0
+    },
+    {
+      "measure": 105,
+      "midi": 62,
+      "step": 0.0
+    },
+    {
+      "measure": 105,
+      "midi": 64,
+      "step": 0.0
+    },
+    {
+      "measure": 105,
+      "midi": 52,
+      "step": 14.0
+    },
+    {
+      "measure": 105,
+      "midi": 57,
+      "step": 14.0
+    },
+    {
+      "measure": 105,
+      "midi": 61,
+      "step": 14.0
+    },
+    {
+      "measure": 105,
+      "midi": 64,
+      "step": 14.0
+    },
+    {
+      "measure": 107,
+      "midi": 59,
+      "step": 0.0
+    },
+    {
+      "measure": 107,
+      "midi": 64,
+      "step": 0.0
+    },
+    {
+      "measure": 107,
+      "midi": 68,
+      "step": 0.0
+    },
+    {
+      "measure": 107,
+      "midi": 59,
+      "step": 1.0
+    },
+    {
+      "measure": 107,
+      "midi": 64,
+      "step": 1.0
+    },
+    {
+      "measure": 107,
+      "midi": 68,
+      "step": 1.0
+    },
+    {
+      "measure": 107,
+      "midi": 59,
+      "step": 2.0
+    },
+    {
+      "measure": 107,
+      "midi": 64,
+      "step": 2.0
+    },
+    {
+      "measure": 107,
+      "midi": 68,
+      "step": 2.0
+    },
+    {
+      "measure": 107,
+      "midi": 59,
+      "step": 3.0
+    },
+    {
+      "measure": 107,
+      "midi": 64,
+      "step": 3.0
+    },
+    {
+      "measure": 107,
+      "midi": 68,
+      "step": 3.0
+    },
+    {
+      "measure": 107,
+      "midi": 57,
+      "step": 4.0
+    },
+    {
+      "measure": 107,
+      "midi": 62,
+      "step": 4.0
+    },
+    {
+      "measure": 107,
+      "midi": 66,
+      "step": 4.0
+    },
+    {
+      "measure": 107,
+      "midi": 59,
+      "step": 6.0
+    },
+    {
+      "measure": 107,
+      "midi": 64,
+      "step": 6.0
+    },
+    {
+      "measure": 107,
+      "midi": 68,
+      "step": 6.0
+    },
+    {
+      "measure": 108,
+      "midi": 59,
+      "step": 0.0
+    },
+    {
+      "measure": 108,
+      "midi": 64,
+      "step": 0.0
+    },
+    {
+      "measure": 108,
+      "midi": 68,
+      "step": 0.0
+    },
+    {
+      "measure": 108,
+      "midi": 59,
+      "step": 1.0
+    },
+    {
+      "measure": 108,
+      "midi": 64,
+      "step": 1.0
+    },
+    {
+      "measure": 108,
+      "midi": 68,
+      "step": 1.0
+    },
+    {
+      "measure": 108,
+      "midi": 59,
+      "step": 2.0
+    },
+    {
+      "measure": 108,
+      "midi": 64,
+      "step": 2.0
+    },
+    {
+      "measure": 108,
+      "midi": 68,
+      "step": 2.0
+    },
+    {
+      "measure": 108,
+      "midi": 59,
+      "step": 3.0
+    },
+    {
+      "measure": 108,
+      "midi": 64,
+      "step": 3.0
+    },
+    {
+      "measure": 108,
+      "midi": 68,
+      "step": 3.0
+    },
+    {
+      "measure": 108,
+      "midi": 62,
+      "step": 4.0
+    },
+    {
+      "measure": 108,
+      "midi": 67,
+      "step": 4.0
+    },
+    {
+      "measure": 108,
+      "midi": 71,
+      "step": 4.0
+    },
+    {
+      "measure": 108,
+      "midi": 59,
+      "step": 6.0
+    },
+    {
+      "measure": 108,
+      "midi": 64,
+      "step": 6.0
+    },
+    {
+      "measure": 108,
+      "midi": 68,
+      "step": 6.0
+    },
+    {
+      "measure": 109,
+      "midi": 55,
+      "step": 0.0
+    },
+    {
+      "measure": 109,
+      "midi": 59,
+      "step": 0.0
+    },
+    {
+      "measure": 109,
+      "midi": 62,
+      "step": 0.0
+    },
+    {
+      "measure": 109,
+      "midi": 64,
+      "step": 0.0
+    },
+    {
+      "measure": 109,
+      "midi": 52,
+      "step": 14.0
+    },
+    {
+      "measure": 109,
+      "midi": 57,
+      "step": 14.0
+    },
+    {
+      "measure": 109,
+      "midi": 61,
+      "step": 14.0
+    },
+    {
+      "measure": 109,
+      "midi": 64,
+      "step": 14.0
+    }
+  ],
+  "schema": "dadrock.tabs.v154.professional-reference-scorer-part.v1",
+  "song": {
+    "artist": "Lenny Kravitz",
+    "title": "Are You Gonna Go My Way"
+  },
+  "source": {
+    "derivation": "deterministic flatten of frozen measure/event/note identities; no candidate access; no scoring",
+    "path": "research/v154-professional-references/rhythm-professional-reference.json",
+    "sha256": "18fd868ae960dfcdd1ffb0110f1a9dfd8acc2ffeb46e247d1116cd54291526ac"
+  }
+}

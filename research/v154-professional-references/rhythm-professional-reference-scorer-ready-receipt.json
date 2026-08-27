@@ -1,0 +1,23 @@
+{
+  "candidateRead": false,
+  "exactDuplicateRowExtras": 0,
+  "gpuUsed": false,
+  "humanCorrection": false,
+  "mainOrProductionModified": false,
+  "measureCount": 113,
+  "midiMaximum": 71,
+  "midiMinimum": 40,
+  "notes": "Scorer-ready Rhythm timing identity frozen directly from the already-frozen Rhythm reference. No generated candidate was consulted or altered.",
+  "outputPath": "research/v154-professional-references/rhythm-professional-reference-scorer-ready.json",
+  "outputSha256": "d6c9416979f25e6a81b9cd4583389b584a59421a0529fcccb4ca6f5dd47e679f",
+  "part": "rhythm",
+  "rowCount": 946,
+  "schema": "dadrock.tabs.v154.professional-reference-scorer-part-receipt.v1",
+  "scoreCalls": 0,
+  "sourceEventCount": 603,
+  "sourcePath": "research/v154-professional-references/rhythm-professional-reference.json",
+  "sourceSha256": "18fd868ae960dfcdd1ffb0110f1a9dfd8acc2ffeb46e247d1116cd54291526ac",
+  "stepMaximum": 15.0,
+  "stepMinimum": 0.0,
+  "thresholdSweep": false
+}
