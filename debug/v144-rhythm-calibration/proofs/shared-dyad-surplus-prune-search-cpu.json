@@ -1,0 +1,22 @@
+{
+  "branch": "v143-contextual-prune-lobo",
+  "canaryLabelsRead": false,
+  "family": 14,
+  "fitLabelsRead": false,
+  "job": "definitive-search-proof",
+  "liveSearchRun": false,
+  "modalGpuUsed": false,
+  "policyBlob": "1f6cc7fcaf2d4ac7838b48b839c617b04cb1c34e",
+  "proof": "shared-dyad-surplus-prune-search-cpu",
+  "runAttempt": 1,
+  "runId": 33025495483,
+  "runtimeReferenceInput": false,
+  "schemaVersion": 14428,
+  "searchBlob": "dd02c492ecfef26bbb15e8d345346ff75bb5fa30",
+  "status": "success",
+  "testBlob": "77758ead57a2735ba653bbba64e78c4124d34798",
+  "testModule": "modal.tests.test_v144_rhythm_shared_dyad_surplus_prune_search",
+  "triggerSha": "fdd5006e58dc7ca3fbbbe3aaff2370fae2fbd2f2",
+  "validationLabelsRead": false,
+  "workflowSha": "fdd5006e58dc7ca3fbbbe3aaff2370fae2fbd2f2"
+}
