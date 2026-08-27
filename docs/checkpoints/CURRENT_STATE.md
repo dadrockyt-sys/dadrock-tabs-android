@@ -3,7 +3,7 @@
 Updated: 2026-08-27 UTC
 Branch: `v143-contextual-prune-lobo`
 
-Active phase: **V153 Phase C CPU GOLD SCORE = COMPLETE / SEALED. Exactly one CPU Gold calibration score was executed; no Modal/L4/CUDA/GPU was used. V153 event-347 candidate remains immutable. CPU-only follow-up work may proceed at assistant discretion; fresh authorization is required only before Modal/L4/CUDA/GPU execution.**
+Active phase: **V153 Phase D EVENT-347 CPU GOLD ATTRIBUTION = FROZEN / STOP BEFORE EXECUTION. V153 Phase C CPU Gold score is COMPLETE / SEALED. No Modal/L4/CUDA/GPU is authorized or required for Phase D.**
 
 ## Preserved historical checkpoint
 - Full pre-compaction history remains preserved at `docs/checkpoints/archive/CURRENT_STATE-pre-phase-c-auth-intake-20260827.md`; Git blob `f71ba11394e6f2f46843055e748e8717ff484158`.
@@ -105,6 +105,15 @@ Active phase: **V153 Phase C CPU GOLD SCORE = COMPLETE / SEALED. Exactly one CPU
 - Automatic promotion: **NO**.
 - The scored V153 candidate is immutable and must not be retuned or rescored.
 
+## V153 Phase D event-347 CPU Gold attribution — FROZEN / BEFORE EXECUTION
+- Purpose: explain the exact metric mechanism behind event `347` without modifying or rescoring the sealed V153 candidate.
+- Preregistration: `debug/v153-reference-free-strength/phase-d-event347-attribution-preregistration.json`; Git blob **`5060106c4bf8646562c35dd9b9586e94550de454`**; commit **`6e444d82cc96ddaeb1b864cdb31b378c530ea1bb`**.
+- Frozen analyzer: `validation/v153_reference_free_strength/analyze_event347_gold_attribution.py`; Git blob **`d9847158e4e00ea551d004840f105f65e3b134e1`**; freeze commit **`1fe5ed0ad29cc95b77992224472585fd7e56bdef`**.
+- Inputs are frozen to the immutable V153 candidate, sealed V153 score result, accepted baseline canonical event SHA, Gold SHA `18fd868ae960dfcdd1ffb0110f1a9dfd8acc2ffeb46e247d1116cd54291526ac`, frozen core scorer blob `cc4bf61a99f22bf87a6c255e5a81220fbc82223b`, canonical adapter blob `088d44827fb23e20d9aeeb4944a672989af5846c`, and accepted-family support blob `f4278ffaacaca3f66baf7a3112e2af0f3bc387cf`.
+- Frozen diagnostic computes measure-35 MIDI `62`/`61` multiset contribution, global pitch-content matched-count delta, tolerant pitch/position matching, gross-pitch matching, chord pitch-set/voicing matching, critical-mismatch attribution, and nearby Gold notes.
+- It does **not** invoke the score wrapper, construct candidates, search variants, tune rules, read audio, or use Modal/L4/CUDA/GPU.
+- At this checkpoint Phase D has **not executed** and no attribution output exists yet.
+
 ## Fixed safety boundary
 - Work only on `v143-contextual-prune-lobo`; never modify/merge/promote `main` or Production.
 - `/ai-tab` frontend, Bass/Lead, and `freezeReady=false` remain untouched.
@@ -118,8 +127,9 @@ Active phase: **V153 Phase C CPU GOLD SCORE = COMPLETE / SEALED. Exactly one CPU
 - V153 Phase A ranking: **COMPLETE / SEALED; UNIQUE WINNER = EVENT 347**.
 - V153 Phase B construction: **COMPLETE / SEALED; IMMUTABLE CANDIDATE SHA = `df40a771219fb69ae3c129c90ef5351e64b89006ff678e484741ecf0418e3d4b`**.
 - V153 Phase C CPU Gold score: **COMPLETE / SEALED; V153 == V152 on all reported aggregate score metrics and critical mismatch count**.
+- V153 Phase D CPU Gold attribution: **FROZEN / NOT EXECUTED**.
 - V153 score call count: **1 / SEALED / DO NOT RERUN**.
 - CPU-only follow-up analysis: **PERMITTED AT ASSISTANT DISCRETION**.
 - Modal/L4/CUDA/GPU execution: **REQUIRES FRESH EXPLICIT USER AUTHORIZATION**.
 - Main/Production modification: **NO**.
-- Next CPU-only scientific work should focus on diagnosing why event `347` loses one pitch-content match versus accepted baseline while leaving pitch timing, string/fret timing, chord pitch-set, coverage, and critical mismatch count unchanged. This diagnostic may proceed without a fresh user authorization; stop only if a proposed next action requires Modal/L4/CUDA/GPU.
+- Next executable action is the frozen Phase D CPU attribution only; after persistence and sealing, continue CPU-only interpretation if useful and stop only if the next scientifically justified action requires Modal/L4/CUDA/GPU.
