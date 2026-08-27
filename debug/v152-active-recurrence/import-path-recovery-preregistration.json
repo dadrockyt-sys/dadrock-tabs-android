@@ -1,0 +1,18 @@
+{
+  "schema": "dadrock.tabs.v152.active-recurrence.import-path-recovery.v1",
+  "classification": "infrastructure-only-import-path-recovery-frozen",
+  "branch": "v143-contextual-prune-lobo",
+  "failedRunId": "33049594534",
+  "failedJobId": "98441566650",
+  "failurePoint": "reference-free construction preflight at python validation/v152_active_recurrence/construct_once.py --help",
+  "identityChecksBeforeFailure": "passed",
+  "attemptSentinelConsumed": false,
+  "candidateConstructedCount": 0,
+  "goldOrReferenceRead": false,
+  "scoreCallCount": 0,
+  "scientificConstructorGitBlob": "7cb83979e693203b7f6254a790831b1ca4938420",
+  "scientificPolicyChanged": false,
+  "recoveryChange": "prepend repository root to sys.path unconditionally, then execute unchanged frozen constructor with runpy",
+  "maximumTotalV152Candidates": 1,
+  "referenceFacingScoringAuthorization": false
+}
