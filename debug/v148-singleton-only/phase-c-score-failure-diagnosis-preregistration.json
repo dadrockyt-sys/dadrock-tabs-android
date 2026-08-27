@@ -1,0 +1,45 @@
+{
+  "schema": "dadrock.tabs.v148.phase-c-score-failure-diagnosis-preregistration.v1",
+  "classification": "reference-free-infrastructure-diagnosis",
+  "branch": "v143-contextual-prune-lobo",
+  "sourceHead": "e34a3b7b8920cdce5f627bc20ad993b144cffc48",
+  "failedAttempts": [
+    {
+      "runId": "33045467996",
+      "jobId": "98428325436",
+      "failureStage": "reference-free-preflight-permission-guard",
+      "attemptSentinelConsumed": false,
+      "goldRead": false,
+      "referenceParsed": false,
+      "scoreCallCount": 0
+    },
+    {
+      "runId": "33045568440",
+      "jobId": "98428639824",
+      "failureStage": "gold-sha-equality-check-before-parse-and-score",
+      "attemptSentinelConsumedCommit": "e34a3b7b8920cdce5f627bc20ad993b144cffc48",
+      "goldRead": true,
+      "computedGoldShaPrintedByRunner": "18fd868ae960dfcddc1ffb0110f1a9dfd8acc2ffeb46e247d1116cd54291526ac",
+      "referenceParsed": false,
+      "scoreCallCount": 0,
+      "resultPersisted": false
+    }
+  ],
+  "frozenScorer": {
+    "path": "validation/v148_singleton_only/score_once.py",
+    "gitBlob": "8137734218a722bb12f364ecfea3d1b8e526cc2c"
+  },
+  "diagnosticScope": {
+    "inspectOnlyPythonConstantRepresentation": true,
+    "compareV148AndHistoricalV147ExpectedConstantRepresentations": true,
+    "readGoldAgain": false,
+    "parseReference": false,
+    "invokeScorer": false,
+    "candidateSearch": false,
+    "retuning": false,
+    "audioOrCqt": false,
+    "modalOrGpu": false,
+    "production": false
+  },
+  "recoveryBoundary": "No scoring recovery may execute until this reference-free constant diagnosis is persisted and the infrastructure-only recovery is separately frozen. The original user authorization permits at most one score call; zero score calls have occurred so far."
+}
