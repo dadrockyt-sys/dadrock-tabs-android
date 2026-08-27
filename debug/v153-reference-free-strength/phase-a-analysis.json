@@ -1,0 +1,109 @@
+{
+  "classification": "reference-free-deterministic-strength-ranking",
+  "gate": "GO_UNIQUE_WINNER",
+  "inputGitBlobs": {
+    "debug/v149-singleton-confidence/phase-a-analysis.json": "cd3b52493aa5e3b1945b0a30ba8d6d9dbf492f1a",
+    "debug/v150-contextual-singleton/phase-a-analysis.json": "67ad55d005415be2248a57238109a3d8745e4061",
+    "debug/v152-active-recurrence/candidate/construction-proof.json": "3530c931bee9ab5888f350cd30d793388ebb5eca",
+    "debug/v153-reference-free-strength/phase-a-authorization.json": "46f38b384d47e9ffc38de3e2bc6c3cfe60bf9642",
+    "debug/v153-reference-free-strength/phase-a-preregistration.json": "449d668c5959e97f8f1172bc697a9578c4df03f6"
+  },
+  "nextBoundary": "STOP_BEFORE_CONSTRUCTION_FRESH_AUTHORIZATION_REQUIRED",
+  "populationEventIndices": [
+    132,
+    347,
+    457
+  ],
+  "rankedEventIndices": [
+    347,
+    132,
+    457
+  ],
+  "rankingRule": {
+    "criteriaInOrder": [
+      "selectedMinusOriginalExactPitchRecurrenceCount",
+      "selectedMinusOriginalPitchClassRecurrenceCount",
+      "twoSidedVoiceLeadingImprovementSemitones",
+      "nearestFrozenV147GateExcessDb"
+    ],
+    "definitions": {
+      "nearestFrozenV147GateExcessDb": "V149 nearestGateExcessDb; used only if all preceding criteria tie",
+      "selectedMinusOriginalExactPitchRecurrenceCount": "V150 windowSelectedExactMidiCount - windowOriginalExactMidiCount",
+      "selectedMinusOriginalPitchClassRecurrenceCount": "V150 windowSelectedPitchClassCount - windowOriginalPitchClassCount",
+      "twoSidedVoiceLeadingImprovementSemitones": "negative of V150 totalVoiceLeadingCostDelta; larger positive values are stronger"
+    },
+    "selection": "rank all three by the four-value tuple descending; if the top evidence tuple is exactly tied with another event, return NO_UNIQUE_WINNER and stop; eventIndex is never a scientific tie-breaker",
+    "type": "descending-lexicographic-no-tunable-weights"
+  },
+  "rows": [
+    {
+      "eventIndex": 347,
+      "evidenceTuple": [
+        2,
+        2,
+        2,
+        3.5114020000000004
+      ],
+      "measure": 35,
+      "nearestFrozenV147GateExcessDb": 3.5114020000000004,
+      "originalMidi": 62,
+      "selectedMidi": 61,
+      "selectedMinusOriginalExactPitchRecurrenceCount": 2,
+      "selectedMinusOriginalPitchClassRecurrenceCount": 2,
+      "step": 9,
+      "twoSidedVoiceLeadingImprovementSemitones": 2
+    },
+    {
+      "eventIndex": 132,
+      "evidenceTuple": [
+        1,
+        2,
+        2,
+        26.004246
+      ],
+      "measure": 13,
+      "nearestFrozenV147GateExcessDb": 26.004246,
+      "originalMidi": 65,
+      "selectedMidi": 64,
+      "selectedMinusOriginalExactPitchRecurrenceCount": 1,
+      "selectedMinusOriginalPitchClassRecurrenceCount": 2,
+      "step": 8,
+      "twoSidedVoiceLeadingImprovementSemitones": 2
+    },
+    {
+      "eventIndex": 457,
+      "evidenceTuple": [
+        1,
+        1,
+        2,
+        6.516224999999999
+      ],
+      "measure": 45,
+      "nearestFrozenV147GateExcessDb": 6.516224999999999,
+      "originalMidi": 65,
+      "selectedMidi": 64,
+      "selectedMinusOriginalExactPitchRecurrenceCount": 1,
+      "selectedMinusOriginalPitchClassRecurrenceCount": 1,
+      "step": 9,
+      "twoSidedVoiceLeadingImprovementSemitones": 2
+    }
+  ],
+  "safety": {
+    "audioReadOrDecoded": false,
+    "automaticPromotion": false,
+    "candidateConstructed": false,
+    "candidateSearchOrVariants": false,
+    "goldOrReferenceRead": false,
+    "hpssOrCqtRecomputed": false,
+    "mainOrProductionModified": false,
+    "modalL4CudaOrGpuUsed": false,
+    "priorScoreResultRead": false,
+    "professionalImageRead": false,
+    "scoreCallCount": 0,
+    "thresholdOrWeightTuning": false
+  },
+  "schema": "dadrock.tabs.v153.reference-free-strength.phase-a-analysis.v1",
+  "uniqueStrongestEvent": true,
+  "uniqueStrongestEventIndex": 347,
+  "v152CandidateCanonicalEventSha256": "5ebedfb173730bb5e2639e7450841fb113f7db9af2acec19b88e58cca50679e6"
+}
