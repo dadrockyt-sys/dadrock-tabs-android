@@ -534,3 +534,10 @@ Active phase: **V147 Phase C REAL-AUDIO ARTIFACT-FIRST CONSTRUCTION = GO / SEALE
 - Local +/-2-onset pitch-class support favors original: **22/54 = 40.74%**; favors selected: **9/54 = 16.67%**.
 - These are context percentages, **not accuracy scores**. Gold/reference **NO**; prior score result read by analyzer **NO**; scorer calls **0**; no candidate/search/threshold sweep/audio/GPU/Production.
 - Phase A is sealed and this workflow is deleted. If strict-both-sides-worse cases exist, the preregistered next candidate may revert exactly that set and nothing else.
+
+
+## V150 Phase B strict-context construction — ARMED / REFERENCE-FREE — 2026-08-27 UTC
+- Frozen rule: revert exactly the **21/54 = 38.89%** V149 edits that were strictly worse to both immediate neighboring accepted onsets; keep the other **33/54 = 61.11%**.
+- Expected candidate: 1144 events / 113 measures / 33 singleton changes / 0 polyphonic changes / one candidate only.
+- Prereg blob `56f19421897cee8f4d991a982dfdadfaef94c19c`; auth blob `fa7ce907c580bde9d6b109024724161cc31a43e2`; constructor blob `be75a11468e177c1ed851e1545f8093a0ceca0c1`; run `33047473531`.
+- Gold/reference/prior score result **NO**; score calls **0**; candidate count before construction **0**; no search/alternate rule/threshold sweep/audio/GPU/Production.
