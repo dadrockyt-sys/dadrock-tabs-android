@@ -1,0 +1,211 @@
+{
+  "acceptedBaseline": {
+    "criticalMismatchCount": 1712,
+    "gatedMetrics": {
+      "chordPitchSetTolerantF1": 0.0580511402902557,
+      "exactVoicingTolerantF1": 0.0580511402902557,
+      "measureCoverageRecall": 1.0,
+      "pdfEventFidelity": 1.0,
+      "pitchContentF1": 0.35406698564593303,
+      "pitchTimingTolerantF1": 0.06698564593301436,
+      "stringFretTimingTolerantF1": 0.05454545454545454
+    },
+    "name": "singleton-onset-replace-be9e9aa7a734e3cd"
+  },
+  "authorizationScope": "exactly-one-v151-positive-consensus-gold-calibration-score",
+  "candidate": {
+    "canonicalEventSha256": "e6c437f534dfb5523610797c67f8f69176be903456ef4940c3032567b949156b",
+    "changedEventsVersusAccepted": 12,
+    "changedOnsetsVersusAccepted": 12,
+    "eventCount": 1144,
+    "fileSha256": "ac96ec4edc3e9b67c047e7e9012139bfa46d0d6d164ffa1443960f8fbcb19ae9",
+    "pdfEventFidelity": 1.0,
+    "pdfEvidenceSha256": "c594a733131af3e34e4c937b90d148cfd4b4673c5cb050def4293b6f97d290e7",
+    "polyphonicChangedEventsVersusAccepted": 0,
+    "retainedPercentOfV150Changes": 36.36363636363637
+  },
+  "classification": "v151-positive-consensus-authorized-single-gold-calibration-score",
+  "comparison": {
+    "acceptedBaselineDisplayVectorPercent": [
+      35.406698564593306,
+      6.698564593301436,
+      5.454545454545454,
+      5.80511402902557,
+      100.0,
+      100.0
+    ],
+    "candidateDisplayVectorPercent": [
+      34.928229665071775,
+      6.602870813397129,
+      5.454545454545454,
+      5.80511402902557,
+      100.0,
+      100.0
+    ],
+    "criticalMismatchDeltaVsAcceptedBaseline": 2,
+    "criticalMismatchDeltaVsV150": -6,
+    "displayVectorOrder": [
+      "pitch-content",
+      "pitch-timing",
+      "string-fret-timing",
+      "chord-pitch-set",
+      "measure-coverage",
+      "pdf-event-fidelity"
+    ],
+    "gatedMetricDeltasVsAcceptedBaseline": {
+      "chordPitchSetTolerantF1": 0.0,
+      "exactVoicingTolerantF1": 0.0,
+      "measureCoverageRecall": 0.0,
+      "pitchContentF1": -0.0047846889952152805,
+      "pitchTimingTolerantF1": -0.0009569377990430727,
+      "stringFretTimingTolerantF1": 0.0
+    },
+    "gatedMetricDeltasVsV150": {
+      "chordPitchSetTolerantF1": 0.001382170006910849,
+      "exactVoicingTolerantF1": 0.001382170006910849,
+      "measureCoverageRecall": 0.0,
+      "pitchContentF1": 0.002870813397129246,
+      "pitchTimingTolerantF1": 0.0009569377990430589,
+      "stringFretTimingTolerantF1": 0.0009569377990430658
+    },
+    "v150DisplayVectorPercent": [
+      34.64114832535885,
+      6.507177033492822,
+      5.358851674641148,
+      5.6668970283344855,
+      100.0,
+      100.0
+    ]
+  },
+  "environment": {
+    "gitHead": "ec22232bb5bccfde0c6c0f4ff8f2dc6ad77dbc7b",
+    "platform": "Linux-6.17.0-1022-azure-x86_64-with-glibc2.39",
+    "python": "3.12.14"
+  },
+  "evaluationRole": "full-gold-calibration-not-unseen-holdout",
+  "priorV150": {
+    "criticalMismatchCount": 1720,
+    "gatedMetrics": {
+      "chordPitchSetTolerantF1": 0.056668970283344854,
+      "exactVoicingTolerantF1": 0.056668970283344854,
+      "measureCoverageRecall": 1.0,
+      "pitchContentF1": 0.3464114832535885,
+      "pitchTimingTolerantF1": 0.06507177033492823,
+      "stringFretTimingTolerantF1": 0.05358851674641148
+    }
+  },
+  "reference": {
+    "identitySource": "persisted-v150-score-result-reference-sha256",
+    "role": "gold-calibration-reference-not-unseen-holdout",
+    "sha256": "18fd868ae960dfcdd1ffb0110f1a9dfd8acc2ffeb46e247d1116cd54291526ac"
+  },
+  "safety": {
+    "additionalFilterTested": false,
+    "alternateCandidateConstructed": false,
+    "alternateSubsetTested": false,
+    "alternateThresholdTested": false,
+    "audioRecomputed": false,
+    "automaticPromotionAllowed": false,
+    "candidateSearchRun": false,
+    "modalGpuUsed": false,
+    "productionIntegrated": false,
+    "retuningRun": false,
+    "scoreCallCount": 1
+  },
+  "schemaVersion": 15150,
+  "score": {
+    "criticalMismatchBreakdown": {
+      "grossUnmatchedGeneratedNotes": 956,
+      "grossUnmatchedReferenceNotes": 758,
+      "missingReferenceMeasures": 0
+    },
+    "criticalMismatchCount": 1714,
+    "diagnostics": {
+      "chordPitchSet": {
+        "f1": 0.0580511402902557,
+        "falseNegative": 561,
+        "falsePositive": 802,
+        "generated": 844,
+        "matched": 42,
+        "precision": 0.04976303317535545,
+        "recall": 0.06965174129353234,
+        "reference": 603
+      },
+      "exactChordVoicing": {
+        "f1": 0.0580511402902557,
+        "falseNegative": 561,
+        "falsePositive": 802,
+        "generated": 844,
+        "matched": 42,
+        "precision": 0.04976303317535545,
+        "recall": 0.06965174129353234,
+        "reference": 603
+      },
+      "measureCoverage": {
+        "extraGeneratedMeasures": [],
+        "generatedMeasureCount": 113,
+        "matchedReferenceMeasures": 113,
+        "missingReferenceMeasures": [],
+        "recall": 1.0,
+        "referenceMeasureCount": 113
+      },
+      "pitchContent": {
+        "f1": 0.34928229665071775,
+        "falseNegative": 581,
+        "falsePositive": 779,
+        "generated": 1144,
+        "matched": 365,
+        "precision": 0.31905594405594406,
+        "recall": 0.3858350951374207,
+        "reference": 946
+      },
+      "pitchTiming": {
+        "f1": 0.06602870813397128,
+        "falseNegative": 877,
+        "falsePositive": 1075,
+        "generated": 1144,
+        "matched": 69,
+        "precision": 0.06031468531468531,
+        "recall": 0.07293868921775898,
+        "reference": 946
+      },
+      "stringFretTiming": {
+        "f1": 0.05454545454545454,
+        "falseNegative": 889,
+        "falsePositive": 1087,
+        "generated": 1144,
+        "matched": 57,
+        "precision": 0.049825174825174824,
+        "recall": 0.06025369978858351,
+        "reference": 946
+      },
+      "technique": {
+        "f1": 0.0,
+        "falseNegative": 0,
+        "falsePositive": 18,
+        "generated": 18,
+        "matched": 0,
+        "precision": 0.0,
+        "recall": 1.0,
+        "reference": 0
+      }
+    },
+    "gatedMetrics": {
+      "chordPitchSetTolerantF1": 0.0580511402902557,
+      "exactVoicingTolerantF1": 0.0580511402902557,
+      "measureCoverageRecall": 1.0,
+      "pitchContentF1": 0.34928229665071775,
+      "pitchTimingTolerantF1": 0.06602870813397128,
+      "stringFretTimingTolerantF1": 0.05454545454545454
+    },
+    "generatedEventCount": 1144,
+    "referenceNoteCount": 946
+  },
+  "scoringChain": {
+    "canonicalAdapterGitBlob": "088d44827fb23e20d9aeeb4944a672989af5846c",
+    "coreScorerGitBlob": "cc4bf61a99f22bf87a6c255e5a81220fbc82223b",
+    "fullCalibrationWrapperGitBlob": "1ca2b8550d6c08e793f26b3aa91b99fb44fa7ddb",
+    "historicalFunction": "score_selected_conjunction_candidate.score_full_candidate",
+    "scoreCallCount": 1
+  }
+}

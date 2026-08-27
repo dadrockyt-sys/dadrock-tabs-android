@@ -612,3 +612,12 @@ Active phase: **V147 Phase C REAL-AUDIO ARTIFACT-FIRST CONSTRUCTION = GO / SEALE
 - Authorization blob `6c40b25934f5fe83853ea47959fd765b6b7af5af`; scorer blob `d26f82546c7cfb3873ef23d8ea567dd23deb06e0`; run `33049143052`.
 - Expected Gold identity will be sourced from the already-verified persisted V150 score result before Gold bytes are accepted.
 - At this checkpoint Gold/reference opened **NO**; reference parsed **NO**; score calls **0**; search/alternate candidate/subset/filter/threshold/retuning/audio/GPU/Production/promotion **NO**.
+
+
+## V151 Phase C positive-consensus Gold score — COMPLETE / SEALED — 2026-08-27 UTC
+- Exactly one frozen historical Gold calibration score completed in run `33049143052`; result SHA256 **`3dadedfe887612be86518e3c7b8e8c96a58e3e5ed7d8c12fd68e026b1aaf5f68`**.
+- V151 percentages (pitch content / pitch timing / string-fret timing / chord pitch-set / measure coverage / PDF fidelity): **34.928 / 6.603 / 5.455 / 5.805 / 100.000 / 100.000**.
+- Accepted baseline percentages: **35.407 / 6.699 / 5.455 / 5.805 / 100.000 / 100.000**. V150 percentages: **34.641 / 6.507 / 5.359 / 5.667 / 100.000 / 100.000**.
+- Critical mismatches: **1714**; delta vs accepted baseline **+2**; delta vs V150 **-6**.
+- Safety: total V151 score calls **1**; candidate search/alternate candidate/subset/additional filter/alternate threshold/retuning/audio/HPSS/CQT/Modal/GPU/main/Production/promotion **NO**.
+- V151 score authorization is consumed and this one-use scoring workflow is deleted. No automatic promotion even if V151 crosses baseline.

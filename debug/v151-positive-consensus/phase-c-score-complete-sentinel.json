@@ -1,0 +1,40 @@
+{
+  "acceptedBaselineDisplayVectorPercent": [
+    35.406698564593306,
+    6.698564593301436,
+    5.454545454545454,
+    5.80511402902557,
+    100.0,
+    100.0
+  ],
+  "alternateCandidateConstructed": false,
+  "automaticPromotion": false,
+  "candidateDisplayVectorPercent": [
+    34.928229665071775,
+    6.602870813397129,
+    5.454545454545454,
+    5.80511402902557,
+    100.0,
+    100.0
+  ],
+  "candidateEventSha256": "e6c437f534dfb5523610797c67f8f69176be903456ef4940c3032567b949156b",
+  "candidateSearchRun": false,
+  "classification": "one-use-reference-facing-score-complete",
+  "completedAtUtc": "2026-08-27T07:18:09.578149+00:00",
+  "criticalMismatchCount": 1714,
+  "criticalMismatchDeltaVsAcceptedBaseline": 2,
+  "criticalMismatchDeltaVsV150": -6,
+  "runId": "33049143052",
+  "schema": "dadrock.tabs.v151.positive-consensus.phase-c-score-completion.v1",
+  "scoreCallCount": 1,
+  "scoreResultSha256": "3dadedfe887612be86518e3c7b8e8c96a58e3e5ed7d8c12fd68e026b1aaf5f68",
+  "status": "COMPLETE_SEALED",
+  "v150DisplayVectorPercent": [
+    34.64114832535885,
+    6.507177033492822,
+    5.358851674641148,
+    5.6668970283344855,
+    100.0,
+    100.0
+  ]
+}
