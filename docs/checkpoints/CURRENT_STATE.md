@@ -3,7 +3,7 @@
 Updated: 2026-08-27 UTC
 Branch: `v143-contextual-prune-lobo`
 
-Active phase: **V154 broad-Other CPU recognition is COMPLETE / FROZEN / STRUCTURAL-QC PASS. Professional Rhythm/Bass/Lead visual references are preserved. Rhythm is FROZEN SCORER-READY. Bass canonical pages are recovered, the reference-only timing skeleton and meter audit are FROZEN, and the deterministic source-meter -> fixed scorer-grid mapping is now FROZEN. Bass exact source-local attack normalization is next/in progress. Lead timing remains blocked until its actual source pages are recovered. Reference-facing scoring has NOT run.**
+Active phase: **V154 broad-Other CPU recognition is COMPLETE / FROZEN / STRUCTURAL-QC PASS. Professional Rhythm/Bass/Lead visual references are preserved. Rhythm is FROZEN SCORER-READY. Bass canonical pages are recovered, the reference-only timing skeleton and meter audit are FROZEN, and the deterministic source-meter -> fixed scorer-grid mapping is now FROZEN. Bass exact source-local attack normalization is IN PROGRESS; canonical pages 1–5 / measures 1–33 are COMPLETE / FROZEN / VALIDATED. Lead timing remains blocked until its actual source pages are recovered. Reference-facing scoring has NOT run.**
 
 ## History preservation
 - Immediate pre-continuation checkpoint blob: `2f506ec99dbad7ec6fbf64b43ea1624df7fdffc3`.
@@ -105,7 +105,7 @@ Song: **Lenny Kravitz — Are You Gonna Go My Way**.
 - Bass source-page recovery/inspection: **COMPLETE**.
 - Bass timing skeleton: **COMPLETE / FROZEN**.
 - Source-meter -> fixed-grid mapping: **COMPLETE / FROZEN**.
-- Bass exact source-local attack timing: **IN PROGRESS / next active task**.
+- Bass exact source-local attack timing: **IN PROGRESS**. Pages 1–5 / measures 1–33 are COMPLETE / FROZEN / VALIDATED; pages 6–10 are next.
 - Lead source-page recovery: **BLOCKED / not present in current Library**.
 
 ## Exact next steps
@@ -124,3 +124,10 @@ Song: **Lenny Kravitz — Are You Gonna Go My Way**.
 - Receipt: `research/v154-professional-references/rhythm-professional-reference-scorer-ready-receipt.json`; Git blob `a62aad39bbc8a05c38c03c1461fc750246110270`.
 - Deterministic flatten: 113 measures, 603 source events, 946 scorer rows, MIDI 40–71, step range 0–15, exact duplicate-row extras 0.
 - Candidate read NO; generated candidate modified NO; reference-facing score calls 0; human correction NO; threshold sweep NO; Modal/L4/CUDA/GPU NO; main/Production modified NO.
+## V154 Bass source-local timing batch pages 01–05 — COMPLETE / FROZEN
+- One-use CPU validation run `33123146413`: SUCCESS; freeze commit `4b05b50c913834ff1c036ae097804338c4e7a7ea`.
+- Artifact: `research/v154-professional-references/scorer-ready/bass-source-local-timing-pages-01-05.json`; SHA256 `327316cc677468bfbbd0b59e29e0cb5b9c3619dc49613be2241f491c14f09e5e`.
+- Receipt: `research/v154-professional-references/scorer-ready/bass-source-local-timing-pages-01-05-receipt.json`; Git blob `abafb5607a3293b2cfe58f3f18e3906330d23201`.
+- Coverage: canonical source pages 1–5 (`1000120387.jpg`–`1000120391.jpg`), measures 1–33.
+- Validation: **PASS** against the frozen timing skeleton: 33 measures, 153 source attacks, 5 dead-note attacks, 0 continuation-only events in this range; source-local steps strictly ordered/unique and inside 0–15.
+- Timing was decoded from the canonical notation's explicit rests, stems, beams, dots, and ties. Generated candidate read NO; score calls 0; candidate modified NO; GPU NO; main/Production NO.
