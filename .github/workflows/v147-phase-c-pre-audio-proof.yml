@@ -42,7 +42,7 @@ jobs:
           test "$(git hash-object modal/v145_rhythm_decoder.py)" = "2fd979aebb4685e86c7f24a0162f69de306c06e9"
           test "$(git hash-object modal/v147_pitch_hypothesis.py)" = "49bce8b968406bb0d61ab61394954ef8a8303eb7"
           test "$(git hash-object modal/v147_phase_c_artifact_support.py)" = "f4278ffaacaca3f66baf7a3112e2af0f3bc387cf"
-          test "$(git hash-object modal/tests/test_v147_phase_c_artifact_support.py)" = "e99f791cd0ab401a9e393ab9b89a6b167cee3c7f"
+          test "$(git hash-object modal/tests/test_v147_phase_c_artifact_support.py)" = "cbcc8fa90480b2a3b12546cf2193519fb46ade87"
           test "$(git hash-object modal/v147_phase_c_cpu_proof.py)" = "531384706b8b7444cf7ed22f414b47215e59b653"
           test "$(git hash-object validation/rhythm_holdout/canonical.py)" = "088d44827fb23e20d9aeeb4944a672989af5846c"
           test "$(git hash-object modal/v144_rhythm_triple_conjunction_policy.py)" = "ef9768a127472d7ce0746fdf21164d33e5117ea4"
@@ -129,7 +129,7 @@ jobs:
               and runtime['v145DecoderBlob'] == '2fd979aebb4685e86c7f24a0162f69de306c06e9'
               and runtime['v147PitchHypothesisBlob'] == '49bce8b968406bb0d61ab61394954ef8a8303eb7'
               and runtime['phaseCSupportBlob'] == 'f4278ffaacaca3f66baf7a3112e2af0f3bc387cf'
-              and runtime['phaseCTestsBlob'] == 'e99f791cd0ab401a9e393ab9b89a6b167cee3c7f'
+              and runtime['phaseCTestsBlob'] == 'cbcc8fa90480b2a3b12546cf2193519fb46ade87'
               and runtime['phaseCProofHarnessBlob'] == '531384706b8b7444cf7ed22f414b47215e59b653'
           )
           runtime['gate'] = 'GO' if (
