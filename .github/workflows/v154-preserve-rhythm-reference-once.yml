@@ -1,0 +1,138 @@
+name: V154 preserve rhythm reference once
+
+on:
+  push:
+    branches:
+      - v143-contextual-prune-lobo
+    paths:
+      - .github/workflows/v154-preserve-rhythm-reference-once.yml
+
+permissions:
+  contents: write
+
+env:
+  BRANCH: v143-contextual-prune-lobo
+  SOURCE_IMAGE: public/Professionalexample.jpg
+  SOURCE_JSON: debug/v144-rhythm-calibration/reference/professional-rhythm-gold-reference.json
+  DEST_DIR: research/v154-professional-references
+  DEST_JSON: research/v154-professional-references/rhythm-professional-reference.json
+  DEST_RECEIPT: research/v154-professional-references/rhythm-professional-reference-provenance.json
+
+jobs:
+  preserve:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: v143-contextual-prune-lobo
+          fetch-depth: 0
+
+      - name: Verify authoritative rhythm sources
+        shell: bash
+        run: |
+          set -euo pipefail
+          test -f "$SOURCE_IMAGE"
+          test -f "$SOURCE_JSON"
+          test "$(git hash-object "$SOURCE_IMAGE")" = "16106197cc1269cca0b3c443908d5ef75e8b4d3e"
+          test "$(sha256sum "$SOURCE_JSON" | awk '{print $1}')" = "18fd868ae960dfcdd1ffb0110f1a9dfd8acc2ffeb46e247d1116cd54291526ac"
+          python - <<'PY'
+          import json
+          from pathlib import Path
+          p = Path('debug/v144-rhythm-calibration/reference/professional-rhythm-gold-reference.json')
+          d = json.loads(p.read_text(encoding='utf-8'))
+          assert d.get('completeReference') is True
+          assert d.get('instrument') == 'rhythm'
+          r = d.get('measureRange') or {}
+          assert r.get('firstMeasure') == 1
+          assert r.get('lastMeasure') == 113
+          assert r.get('measureCount') == 113
+          assert len(d.get('measures') or []) == 113
+          PY
+
+      - name: Preserve exact research copy and provenance
+        shell: bash
+        run: |
+          set -euo pipefail
+          test ! -e "$DEST_JSON"
+          test ! -e "$DEST_RECEIPT"
+          mkdir -p "$DEST_DIR"
+          cp "$SOURCE_JSON" "$DEST_JSON"
+          python - <<'PY'
+          import hashlib, json
+          from datetime import datetime, timezone
+          from pathlib import Path
+
+          source = Path('debug/v144-rhythm-calibration/reference/professional-rhythm-gold-reference.json')
+          dest = Path('research/v154-professional-references/rhythm-professional-reference.json')
+          src_bytes = source.read_bytes()
+          dst_bytes = dest.read_bytes()
+          assert src_bytes == dst_bytes
+          d = json.loads(dst_bytes.decode('utf-8'))
+          event_count = sum(len(m.get('events') or []) for m in d.get('measures') or [])
+          note_count = sum(len(e.get('notes') or []) for m in d.get('measures') or [] for e in m.get('events') or [])
+          receipt = {
+            'schema': 'dadrock.tabs.v154.professional-reference-provenance.v1',
+            'part': 'rhythm',
+            'song': {'artist': 'Lenny Kravitz', 'title': 'Are You Gonna Go My Way'},
+            'branch': 'v143-contextual-prune-lobo',
+            'preservedAtUtc': datetime.now(timezone.utc).isoformat(),
+            'sourceImage': {
+              'repositoryPath': 'public/Professionalexample.jpg',
+              'gitBlob': '16106197cc1269cca0b3c443908d5ef75e8b4d3e'
+            },
+            'sourceMachineReadableReference': {
+              'repositoryPath': 'debug/v144-rhythm-calibration/reference/professional-rhythm-gold-reference.json',
+              'sha256': hashlib.sha256(src_bytes).hexdigest()
+            },
+            'preservedResearchReference': {
+              'repositoryPath': 'research/v154-professional-references/rhythm-professional-reference.json',
+              'sha256': hashlib.sha256(dst_bytes).hexdigest(),
+              'byteIdenticalToSourceMachineReadableReference': True
+            },
+            'coverage': {
+              'firstMeasure': 1,
+              'lastMeasure': 113,
+              'measureCount': 113,
+              'eventCount': event_count,
+              'noteCount': note_count
+            },
+            'authorization': {
+              'userExplicitlyRequestedResearchBranchPreservation': True,
+              'intendedForReferenceResearchAndScoring': True
+            },
+            'safety': {
+              'generatedCandidateModified': False,
+              'referenceFacingScoreCallsDuringPreservation': 0,
+              'mainOrProductionModified': False,
+              'modalUsed': False,
+              'cudaGpuUsed': False
+            }
+          }
+          Path('research/v154-professional-references/rhythm-professional-reference-provenance.json').write_text(
+              json.dumps(receipt, indent=2, sort_keys=True) + '\n', encoding='utf-8')
+          PY
+          test "$(sha256sum "$DEST_JSON" | awk '{print $1}')" = "18fd868ae960dfcdd1ffb0110f1a9dfd8acc2ffeb46e247d1116cd54291526ac"
+
+      - name: Checkpoint and self-seal
+        shell: bash
+        run: |
+          set -euo pipefail
+          python - <<'PY'
+          import json
+          from pathlib import Path
+          receipt = json.loads(Path('research/v154-professional-references/rhythm-professional-reference-provenance.json').read_text())
+          cp = Path('docs/checkpoints/CURRENT_STATE.md')
+          text = cp.read_text(encoding='utf-8')
+          marker = '## V154 professional Rhythm preservation — COMPLETE / FROZEN'
+          if marker not in text:
+              text += f'''\n\n{marker}\n- User explicitly requested the professional Rhythm reconstruction be durably saved on research branch `v143-contextual-prune-lobo` before re-providing Bass and Lead.\n- Source image remains `public/Professionalexample.jpg`, Git blob `16106197cc1269cca0b3c443908d5ef75e8b4d3e`.\n- Existing complete machine-readable Rhythm reconstruction was verified as instrument `rhythm`, measures 1–113 / 113 measures, then copied byte-for-byte to `research/v154-professional-references/rhythm-professional-reference.json`.\n- Preserved Rhythm SHA256 `{receipt['preservedResearchReference']['sha256']}`; events `{receipt['coverage']['eventCount']}`; note entries `{receipt['coverage']['noteCount']}`.\n- Provenance receipt: `research/v154-professional-references/rhythm-professional-reference-provenance.json`.\n- This preservation performed no candidate modification and no reference-facing score; score calls remain `0`. `main`/Production, Modal/L4/CUDA/GPU remain untouched.\n- Bass and Lead may be reconstructed into sibling research files when the user re-provides those screenshots.\n'''
+          cp.write_text(text, encoding='utf-8')
+          PY
+          rm .github/workflows/v154-preserve-rhythm-reference-once.yml
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add research/v154-professional-references docs/checkpoints/CURRENT_STATE.md .github/workflows/v154-preserve-rhythm-reference-once.yml
+          git commit -m "research: preserve professional Rhythm reference [skip ci]"
+          git fetch origin "$BRANCH"
+          git rebase "origin/$BRANCH"
+          git push origin HEAD:"$BRANCH"
