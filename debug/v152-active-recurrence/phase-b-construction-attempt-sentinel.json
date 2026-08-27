@@ -1,0 +1,18 @@
+{
+  "schema": "dadrock.tabs.v152.active-recurrence.phase-b-construction-attempt.v1",
+  "classification": "one-use-reference-free-construction-attempt",
+  "branch": "v143-contextual-prune-lobo",
+  "status": "ARMED_NOT_CONSUMED",
+  "preregistrationGitBlob": "b16e730eb5e647a6d06f36e2a7e9902451a1cd76",
+  "authorizationGitBlob": "e8ff4dc4dca664a0ba76678bf7049769dd701d7e",
+  "constructorGitBlob": "7cb83979e693203b7f6254a790831b1ca4938420",
+  "expectedChangedEvents": 3,
+  "candidateConstructedCount": 0,
+  "goldOrReferenceRead": false,
+  "priorScoreResultRead": false,
+  "scoreCallCount": 0,
+  "audioRead": false,
+  "modalGpuUsed": false,
+  "productionIntegrated": false,
+  "automaticPromotion": false
+}
