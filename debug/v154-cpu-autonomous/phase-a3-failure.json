@@ -1,0 +1,50 @@
+{
+  "schema": "dadrock.tabs.v154.cpu-autonomous.phase-a3-failure.v1",
+  "classification": "sealed-engineering-branch-concurrency-failure-after-raw-cpu-inference-before-demucs-and-before-gold",
+  "branch": "v143-contextual-prune-lobo",
+  "runId": 33088829644,
+  "jobId": 98575791648,
+  "armingCommit": "d7a2f99f57876e8aff78550dd36888cd1c2c78e9",
+  "attemptSentinelCommit": "ff75e30f",
+  "failedStep": "Persist raw branch before Demucs",
+  "failure": {
+    "type": "git-non-fast-forward-concurrency",
+    "rootCause": "Another workflow advanced v143-contextual-prune-lobo after the A3 attempt checkpoint push and before the raw-transcription persistence push. The local persistence commit was rejected with fetch-first/non-fast-forward.",
+    "scientificModelFailure": false,
+    "serializationRepairFailure": false,
+    "repair": "fresh A4 workflow rebases/cherry-picks each persistence commit onto the latest remote branch before pushing; scientific model, thresholds, branch definitions, and scoring remain unchanged"
+  },
+  "scientificProgress": {
+    "historicalAudioIdentityVerified": true,
+    "cpuOnlyRuntimeVerified": true,
+    "basicPitchRawInferenceCompleted": true,
+    "basicPitchRawSerializationCompleted": true,
+    "rawNoteEventCount": 572,
+    "rawModelSha256": "3db297d54af8e01c6e5618245c956b1d71b6a2b978cb2dedb527173186552676",
+    "normalizedAudioSha256": "3e61b7926eabc21b758c750f826c7426a29d6de5aafdd5c93f8045ecdc67f87e",
+    "rawOutputCommittedToBranch": false,
+    "demucsSeparationStarted": false,
+    "goldOrReferenceOpened": false,
+    "scoreCallCount": 0
+  },
+  "artifact": {
+    "name": "v154-cpu-pretrained-reset-a3-33088829644",
+    "id": 9653448751,
+    "zipSha256": "4f5164093744796de5a3a124b1c9cea62f65e71d0418e924218f83e490d61a84",
+    "containsRawBasicPitchJson": true
+  },
+  "safety": {
+    "humanCorrection": false,
+    "thresholdSweep": false,
+    "goldGuidedConstruction": false,
+    "goldOrReferenceRead": false,
+    "scoreCallCount": 0,
+    "modalUsed": false,
+    "l4Used": false,
+    "cudaExecutionUsed": false,
+    "gpuUsed": false,
+    "mainOrProductionModified": false
+  },
+  "replayAllowed": false,
+  "nextBoundary": "Fresh CPU-only Phase A4 branch-race repair preserving the exact scientific protocol."
+}
