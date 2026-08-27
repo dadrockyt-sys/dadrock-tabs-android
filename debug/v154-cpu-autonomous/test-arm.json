@@ -1,0 +1,9 @@
+{
+  "schema": "dadrock.tabs.v154.reference-free-contract-test-arm.v1",
+  "branch": "v143-contextual-prune-lobo",
+  "referenceRead": false,
+  "audioRead": false,
+  "modalUsed": false,
+  "cudaGpuUsed": false,
+  "purpose": "Trigger exactly one synthetic/reference-free contract validation before broad-Other CPU audio execution."
+}
