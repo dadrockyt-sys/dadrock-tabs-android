@@ -1,0 +1,159 @@
+name: V154 Rhythm normalize once
+
+on:
+  push:
+    branches:
+      - v143-contextual-prune-lobo
+    paths:
+      - .github/workflows/v154-rhythm-normalize-once.yml
+
+permissions:
+  contents: write
+
+jobs:
+  normalize-rhythm:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: v143-contextual-prune-lobo
+          fetch-depth: 0
+
+      - name: Freeze scorer-ready Rhythm rows
+        shell: bash
+        run: |
+          set -euo pipefail
+          python3 - <<'PY'
+          import hashlib
+          import json
+          from collections import Counter
+          from pathlib import Path
+
+          source_path = Path('research/v154-professional-references/rhythm-professional-reference.json')
+          output_path = Path('research/v154-professional-references/rhythm-professional-reference-scorer-ready.json')
+          receipt_path = Path('research/v154-professional-references/rhythm-professional-reference-scorer-ready-receipt.json')
+          expected_source_sha256 = '18fd868ae960dfcdd1ffb0110f1a9dfd8acc2ffeb46e247d1116cd54291526ac'
+
+          source_bytes = source_path.read_bytes()
+          source_sha256 = hashlib.sha256(source_bytes).hexdigest()
+          if source_sha256 != expected_source_sha256:
+              raise SystemExit(f'Rhythm source SHA256 mismatch: {source_sha256}')
+
+          payload = json.loads(source_bytes)
+          if payload.get('instrument') != 'rhythm':
+              raise SystemExit('Rhythm source instrument mismatch')
+          mr = payload.get('measureRange') or {}
+          if (mr.get('firstMeasure'), mr.get('lastMeasure'), mr.get('measureCount')) != (1, 113, 113):
+              raise SystemExit(f'Rhythm source measure range mismatch: {mr}')
+          measures = payload.get('measures')
+          if not isinstance(measures, list) or len(measures) != 113:
+              raise SystemExit('Rhythm source must contain exactly 113 measure objects')
+
+          rows = []
+          event_count = 0
+          note_count = 0
+          seen_measures = []
+          for measure_index, measure_obj in enumerate(measures):
+              if not isinstance(measure_obj, dict):
+                  raise SystemExit(f'Invalid measure object at index {measure_index}')
+              measure = int(measure_obj['measure'])
+              seen_measures.append(measure)
+              events = measure_obj.get('events') or []
+              if not isinstance(events, list):
+                  raise SystemExit(f'events must be a list in measure {measure}')
+              for event_index, event in enumerate(events):
+                  event_count += 1
+                  if 'step' not in event:
+                      raise SystemExit(f'Missing step in measure {measure} event {event_index}')
+                  step = float(event['step'])
+                  if not 0.0 <= step <= 15.999999:
+                      raise SystemExit(f'Invalid step {step} in measure {measure} event {event_index}')
+                  notes = event.get('notes') or []
+                  if not isinstance(notes, list) or not notes:
+                      raise SystemExit(f'Rhythm event without pitched notes in measure {measure} event {event_index}')
+                  for note_index, note in enumerate(notes):
+                      midi = int(note['midi'])
+                      if not 0 <= midi <= 127:
+                          raise SystemExit(f'Invalid MIDI {midi} in measure {measure}')
+                      note_count += 1
+                      rows.append({
+                          'measure': measure,
+                          'step': step,
+                          'midi': midi,
+                      })
+
+          if seen_measures != list(range(1, 114)):
+              raise SystemExit('Rhythm measures are not exactly 1..113 in order')
+          if event_count != 603:
+              raise SystemExit(f'Rhythm event count changed: {event_count} != 603')
+          if note_count != 946:
+              raise SystemExit(f'Rhythm note count changed: {note_count} != 946')
+
+          rows.sort(key=lambda row: (row['measure'], row['step'], row['midi']))
+          exact_counter = Counter((r['measure'], r['step'], r['midi']) for r in rows)
+          duplicate_extras = sum(count - 1 for count in exact_counter.values() if count > 1)
+          midi_values = [r['midi'] for r in rows]
+          step_values = [r['step'] for r in rows]
+
+          frozen = {
+              'schema': 'dadrock.tabs.v154.professional-reference-scorer-part.v1',
+              'song': {
+                  'artist': 'Lenny Kravitz',
+                  'title': 'Are You Gonna Go My Way',
+              },
+              'part': 'rhythm',
+              'grid': {
+                  'stepsPerBeat': 4,
+                  'stepsPerMeasure': 16,
+                  'timeSignature': '4/4',
+              },
+              'source': {
+                  'path': str(source_path),
+                  'sha256': source_sha256,
+                  'derivation': 'deterministic flatten of frozen measure/event/note identities; no candidate access; no scoring',
+              },
+              'rows': rows,
+          }
+          output_bytes = (json.dumps(frozen, indent=2, sort_keys=True) + '\n').encode('utf-8')
+          output_path.write_bytes(output_bytes)
+          output_sha256 = hashlib.sha256(output_bytes).hexdigest()
+
+          receipt = {
+              'schema': 'dadrock.tabs.v154.professional-reference-scorer-part-receipt.v1',
+              'part': 'rhythm',
+              'sourcePath': str(source_path),
+              'sourceSha256': source_sha256,
+              'outputPath': str(output_path),
+              'outputSha256': output_sha256,
+              'measureCount': 113,
+              'sourceEventCount': event_count,
+              'rowCount': len(rows),
+              'midiMinimum': min(midi_values),
+              'midiMaximum': max(midi_values),
+              'stepMinimum': min(step_values),
+              'stepMaximum': max(step_values),
+              'exactDuplicateRowExtras': duplicate_extras,
+              'candidateRead': False,
+              'scoreCalls': 0,
+              'humanCorrection': False,
+              'thresholdSweep': False,
+              'gpuUsed': False,
+              'mainOrProductionModified': False,
+              'notes': 'Scorer-ready Rhythm timing identity frozen directly from the already-frozen Rhythm reference. No generated candidate was consulted or altered.',
+          }
+          receipt_path.write_text(json.dumps(receipt, indent=2, sort_keys=True) + '\n', encoding='utf-8')
+          print(json.dumps(receipt, indent=2, sort_keys=True))
+          PY
+
+      - name: Commit frozen Rhythm normalization and seal workflow
+        shell: bash
+        run: |
+          set -euo pipefail
+          git config user.name "dadrock-v154-bot"
+          git config user.email "actions@users.noreply.github.com"
+          git add research/v154-professional-references/rhythm-professional-reference-scorer-ready.json
+          git add research/v154-professional-references/rhythm-professional-reference-scorer-ready-receipt.json
+          git rm .github/workflows/v154-rhythm-normalize-once.yml
+          git commit -m "v154: freeze scorer-ready Rhythm reference"
+          git push origin HEAD:v143-contextual-prune-lobo
