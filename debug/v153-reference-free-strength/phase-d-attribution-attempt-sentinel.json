@@ -1,0 +1,13 @@
+{
+  "analyzerGitBlob": "d9847158e4e00ea551d004840f105f65e3b134e1",
+  "candidateModified": false,
+  "consumedAtUtc": "2026-08-27T14:58:07.337411+00:00",
+  "modalL4CudaGpuUsed": false,
+  "preregistrationGitBlob": "5060106c4bf8646562c35dd9b9586e94550de454",
+  "runHeadSha": "cac1ec74bb72c57fd9c1ab6f5eafb16bd90bee59",
+  "runId": "33085177853",
+  "schema": "dadrock.tabs.v153.event347.phase-d-attribution-attempt.v1",
+  "scoreCallCount": 0,
+  "scoreWrapperInvoked": false,
+  "status": "CONSUMED_BEFORE_GOLD_ATTRIBUTION"
+}
