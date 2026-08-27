@@ -1,0 +1,33 @@
+{
+  "schema": "dadrock.tabs.v147.phase-e-normalized-context-addendum.v1",
+  "classification": "reference-free-normalized-denominator-analysis-preregistration",
+  "sourceHead": "c47618ccbed16edfb41ac1b3bec5af91802565da",
+  "parentAnalysis": {
+    "path": "debug/v147-phase-e-reference-free/failure-analysis.json",
+    "gitBlob": "817189a1ec1d3aa6e6c15dc6e9f116becbf12690"
+  },
+  "purpose": "Normalize the already-observed V147 substitution counts by the accepted baseline population so raw counts are not mistaken for overrepresentation, and characterize the 18 pitch-collision onsets without Gold/reference labels.",
+  "allowed": [
+    "reconstruct accepted family #10 from the frozen V5 stream",
+    "verify immutable candidate and decisions identities",
+    "compute changed-event rates by accepted register, pitch class, string and onset size",
+    "compute changed-onset rates by accepted onset size",
+    "compute descriptive rate ratios relative to the overall 247/1144 event-change rate",
+    "characterize pitch-collision onsets and the changed transitions that collapse pitch-set cardinality"
+  ],
+  "forbidden": [
+    "Gold/reference access or scoring",
+    "professional image access",
+    "audio read/decode/HPSS/CQT",
+    "Modal/L4/GPU",
+    "threshold or octave-weight changes",
+    "candidate construction/search/retuning",
+    "per-event correctness labeling",
+    "main/Production modification or promotion"
+  ],
+  "output": {
+    "json": "debug/v147-phase-e-reference-free/normalized-context-analysis.json",
+    "markdown": "debug/v147-phase-e-reference-free/normalized-context-analysis.md"
+  },
+  "interpretationBoundary": "Rates may identify concentrated reference-free mechanisms worth preregistering later, but they may not be used to choose post-hoc score-improving thresholds or to construct V148 in this phase."
+}
