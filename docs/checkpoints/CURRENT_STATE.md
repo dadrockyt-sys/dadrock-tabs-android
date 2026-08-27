@@ -2,7 +2,7 @@
 
 Updated: 2026-08-26 America/Montreal
 Branch: `v143-contextual-prune-lobo`
-Active phase: **V146 is CLOSED/SEALED after regression. V147 Phase A preregistration and implementation are frozen. Repository-native CPU attempt 1 is consumed/failed closed because the proof harness was invoked with an import-path error after all 13 tests passed; no generated proof result existed in that run. A separately frozen execution-only repair is the next permissible step. No calibration/gold access, no Modal/L4/GPU/live audio, no production promotion.**
+Active phase: **V146 is CLOSED/SEALED after regression. V147 Phase A preregistration and musical implementation remain frozen. Repository-native attempt 1 is consumed/failed closed at the proof import boundary after all 13 tests passed. An execution-only repair revision is now frozen before workflow modification; it authorizes exactly one fresh CPU/reference-free run with only module-style proof invocation changed. No calibration/gold access, no Modal/L4/GPU/live audio, no production promotion.**
 
 ## Permanent safety / fixed protocol
 - Work only on `v143-contextual-prune-lobo`; never modify/merge `main` or Production.
@@ -70,10 +70,9 @@ Active phase: **V146 is CLOSED/SEALED after regression. V147 Phase A preregistra
 - Contract tests: `modal/tests/test_v147_pitch_hypothesis.py`; creation commit `e02823b82ff259b0bf3cb173245f382c37f5dda1`; blob `f71d1da6c52a6a737faca7ab4f8989fb702be96d`.
 - Standalone generated proof harness: `modal/v147_pitch_hypothesis_cpu_proof.py`; creation commit `ac6b92618f2cc52971e6b42c769f0345617d51bf`; blob `e9d28739cd19f095cb83807fd0b23c2b14b7c966`; schema14701.
 - Implementation keeps V145 files untouched and has no calibration/gold, Modal/GPU, live-audio, or production integration path.
-- Tests cover: original-control keep; strong ±1 recovery; ambiguous/weak/tie keep; low/high guitar boundaries; missing/non-finite evidence fail closed; deterministic serialization; prepared-CQT strong-neighbor smoke; prepared-CQT shape-error fail closed.
 
 ### V147 local exact-source preflight — SUPPORTING ONLY
-- Using exact contents of the three frozen GitHub blobs above, CPU-only local reconstruction produced `13 passed` and generated proof gate `GO` with 11/11 proof cases passed.
+- Exact frozen source reconstruction: `13 passed`; generated proof gate `GO`; 11/11 proof cases passed.
 - Proof payload SHA256 `3843912f0c8e5da95c3993783a84762ba01b046120a48db5e5a5c6c16a3d883e`; formatted proof file SHA256 `2cba17eaf5158fdcbe73f3207eb8a58c6b3100429c1065e524a42c2937cab67d`.
 - This does not replace repository-native proof evidence.
 
@@ -81,11 +80,19 @@ Active phase: **V146 is CLOSED/SEALED after regression. V147 Phase A preregistra
 - Single-use workflow creation commit `aa7c3dc69367749a228137b7e2cb14cbf72c8610`.
 - Run `33034467868`, job `98394054352`, artifact `9631482983`: **FAILURE**.
 - Frozen contract tests completed successfully: `13 passed in 0.14s`.
-- The generated proof itself did **not** execute: direct file invocation `python modal/v147_pitch_hypothesis_cpu_proof.py` made Python set the script directory as `sys.path[0]`, so `from modal.v147_pitch_hypothesis ...` failed with `ModuleNotFoundError: No module named 'modal'`.
-- Runtime evidence therefore recorded `pytestExitCode=0`, `proofExitCode=1`, `proofFileSha256=null`, gate `STOP`; this is an execution-harness/import-path failure before proof construction, not a failed generated musical case.
-- Exact execution record persisted at `debug/v147-pitch-hypothesis/phase-a-attempt1-execution-record.json` in commit `69f8019154014b8fa19de9b5eeebc92e1eb8ba71`.
-- No calibration/gold reference was read; no Modal/L4/GPU/live audio, V145 modification, or production integration occurred.
-- This exact execution MUST NOT be rerun or reinterpreted as a pass.
+- Generated proof did not execute because direct file invocation caused `ModuleNotFoundError: No module named 'modal'`.
+- Runtime evidence: `pytestExitCode=0`, `proofExitCode=1`, `proofFileSha256=null`, gate `STOP`; execution-harness/import-path failure before proof construction.
+- Exact execution record: `debug/v147-pitch-hypothesis/phase-a-attempt1-execution-record.json`; persistence commit `69f8019154014b8fa19de9b5eeebc92e1eb8ba71`.
+- No calibration/gold read, Modal/L4/GPU, live audio, V145 modification, or production integration occurred.
+- Attempt 1 MUST NOT be rerun or reinterpreted.
+
+### V147 execution-only repair — FROZEN BEFORE WORKFLOW CHANGE
+- Preregistration: `docs/v147-phase-a-execution-repair-preregistration.md`.
+- Freeze commit `a26525ec9a1320d320ca6afa5f649ee281e2af1c`; blob `a68e94eec9799aa334cce4d19df44ee768c4f21e`.
+- Authorized change is exactly one line of execution semantics: replace direct file invocation with `python -m modal.v147_pitch_hypothesis_cpu_proof --output ...` from repository root.
+- Frozen implementation/test/proof blobs remain `49bce8...`, `f71d1d...`, `e9d287...`; original V147 prereg blob remains `026d3b...`.
+- No threshold, candidate family, generated case, evidence representation, scoring rule, gate, or musical code may change.
+- Exactly one fresh repaired repository-native CPU/reference-free run is authorized; then persist evidence and delete/seal the workflow.
 
 ## Frozen validation/render identities
 - canonical `088d44827fb23e20d9aeeb4944a672989af5846c`
@@ -101,14 +108,14 @@ Active phase: **V146 is CLOSED/SEALED after regression. V147 Phase A preregistra
 ## EXPLICIT NEXT STEPS
 1. Keep V146 sealed; accepted family #10 remains active.
 2. Do not rerun V147 attempt 1.
-3. Before any new repository-native execution, freeze an execution-only repair revision that changes **only** proof invocation/package-path handling; V147 implementation blobs, thresholds, generated cases, and preregistered gate must remain unchanged.
-4. After that repair freeze, execute one fresh CPU/reference-free run, persist exact run/job/artifact/proof/runtime identities, and checkpoint GO/STOP.
-5. If the repaired proof reaches the frozen generated cases and any gate condition fails, STOP with no retuning. If it passes, checkpoint `GO`, delete/seal the single-use workflow, and stop. Any later live/reference/Modal/GPU evaluation or production integration requires a separately authorized/frozen next phase.
+3. Apply only the frozen workflow invocation repair from `docs/v147-phase-a-execution-repair-preregistration.md`; verify V147 implementation/test/proof blobs are unchanged.
+4. Observe the one fresh CPU/reference-free run; persist exact run/job/artifact/proof/runtime identities and checkpoint GO/STOP.
+5. If the repaired proof reaches the frozen generated cases and any gate condition fails, STOP with no retuning or second repaired run. If it passes, checkpoint `GO`, delete/seal the single-use workflow, and stop. Any later live/reference/Modal/GPU evaluation or production integration requires a separately authorized/frozen next phase.
 6. Continue frequent checkpoint saves on this branch.
 
 ## Current stop point
 - Accepted scores remain **35.4 / 6.7 / 5.5 / 5.8 / 100 / 100**.
 - V146 remains consumed/closed/sealed with regression.
 - V147 musical/decision implementation remains frozen and unchanged.
-- Repository-native attempt 1 is consumed/failed closed at the proof import boundary after all 13 tests passed; no proof result existed.
-- **Next: freeze an execution-only import-path repair, then perform one fresh CPU/reference-free proof execution.**
+- Attempt 1 is consumed/failed closed; the import-path repair is now preregistered and frozen before workflow modification.
+- **Next: change only the proof invocation to module mode, verify frozen blobs unchanged, and capture the single repaired CPU/reference-free run.**
