@@ -3,7 +3,7 @@
 Updated: 2026-08-27 UTC
 Branch: `v143-contextual-prune-lobo`
 
-Active phase: **V153 Phase C CPU GOLD SCORE = CONSUMED / BEFORE GOLD. CPU-only scoring is permitted at assistant discretion under the standing user policy; fresh authorization is required only before Modal/L4/CUDA/GPU execution. V153 Phase B event-347 candidate construction remains COMPLETE / SEALED and immutable.**
+Active phase: **V153 Phase C CPU GOLD SCORE = COMPLETE / RESULT PERSISTED / WORKFLOW SEAL PENDING. Exactly one CPU Gold calibration score was executed; no Modal/L4/CUDA/GPU was used. V153 event-347 candidate remains immutable.**
 
 ## Preserved historical checkpoint
 - Full pre-compaction history remains preserved at `docs/checkpoints/archive/CURRENT_STATE-pre-phase-c-auth-intake-20260827.md`; Git blob `f71ba11394e6f2f46843055e748e8717ff484158`.
@@ -91,9 +91,17 @@ Active phase: **V153 Phase C CPU GOLD SCORE = CONSUMED / BEFORE GOLD. CPU-only s
 ## Authoritative stop point
 - V153 Phase A ranking: **COMPLETE / SEALED; UNIQUE WINNER = EVENT 347**.
 - V153 Phase B construction: **COMPLETE / SEALED; IMMUTABLE CANDIDATE SHA = `df40a771219fb69ae3c129c90ef5351e64b89006ff678e484741ecf0418e3d4b`**.
-- V153 Phase C CPU Gold score: **ATTEMPT CONSUMED / BEFORE GOLD**.
-- Gold/reference read: **NO**.
-- V153 score call count: **0**.
+- V153 Phase C CPU Gold score: **COMPLETE / RESULT PERSISTED / WORKFLOW SEAL PENDING**.
+- Gold/reference read: **YES — exactly one sealed CPU calibration score boundary crossed**.
+- V153 score call count: **1**.
 - Modal/L4/CUDA/GPU execution: **REQUIRES FRESH EXPLICIT USER AUTHORIZATION**.
 - Main/Production modification: **NO**.
 - Next CPU-only executable action is exactly one score run using frozen scorer blob `50f08090631ccd14701ff9f3a5d3324c7cf1f3b7`; the run must consume the sentinel before Gold access, persist the single result, delete/seal its workflow, checkpoint, and never rerun or retune the scored candidate.
+
+## V153 Phase C CPU Gold score — COMPLETE / RESULT PERSISTED / SEAL PENDING — 2026-08-27 UTC
+- Exactly one CPU-only Gold calibration score completed in run `33084013810`; score-result SHA256 **`1a6a18a338498f3d5015f9f56869319156cd31c6f77caf328bf70111caa0b501`**.
+- V153 percentages (pitch content / pitch timing / string-fret timing / chord pitch-set / measure coverage / PDF fidelity): **35.311 / 6.699 / 5.455 / 5.805 / 100.000 / 100.000**.
+- Accepted baseline: **35.407 / 6.699 / 5.455 / 5.805 / 100.000 / 100.000**. V152: **35.311 / 6.699 / 5.455 / 5.805 / 100.000 / 100.000**.
+- Critical mismatches **1712**; delta vs accepted baseline **+0**; delta vs V152 **+0**.
+- Safety: score calls **1**; candidate search/alternate candidate/candidate modification/tuning/audio recomputation/Modal/L4/CUDA/GPU/main/Production/promotion **NO**.
+- The scored V153 candidate is immutable and must not be retuned or rescored. CPU-only follow-up analysis may proceed at assistant discretion. Modal/L4/CUDA/GPU still requires fresh explicit user authorization.

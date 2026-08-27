@@ -1,0 +1,41 @@
+{
+  "acceptedBaselineDisplayVectorPercent": [
+    35.406698564593306,
+    6.698564593301436,
+    5.454545454545454,
+    5.80511402902557,
+    100.0,
+    100.0
+  ],
+  "alternateCandidateConstructed": false,
+  "automaticPromotion": false,
+  "candidateDisplayVectorPercent": [
+    35.31100478468899,
+    6.698564593301436,
+    5.454545454545454,
+    5.80511402902557,
+    100.0,
+    100.0
+  ],
+  "candidateEventSha256": "df40a771219fb69ae3c129c90ef5351e64b89006ff678e484741ecf0418e3d4b",
+  "candidateModified": false,
+  "candidateSearchRun": false,
+  "completedAtUtc": "2026-08-27T14:45:41.518567+00:00",
+  "criticalMismatchCount": 1712,
+  "criticalMismatchDeltaVsAcceptedBaseline": 0,
+  "criticalMismatchDeltaVsV152": 0,
+  "modalL4CudaGpuUsed": false,
+  "runId": "33084013810",
+  "schema": "dadrock.tabs.v153.event347.phase-c-score-completion.v1",
+  "scoreCallCount": 1,
+  "scoreResultSha256": "1a6a18a338498f3d5015f9f56869319156cd31c6f77caf328bf70111caa0b501",
+  "status": "COMPLETE_RESULT_PERSISTED_SEAL_PENDING",
+  "v152DisplayVectorPercent": [
+    35.31100478468899,
+    6.698564593301436,
+    5.454545454545454,
+    5.80511402902557,
+    100.0,
+    100.0
+  ]
+}
