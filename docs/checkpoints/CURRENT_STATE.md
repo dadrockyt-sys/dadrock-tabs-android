@@ -325,3 +325,9 @@ Active phase: **V147 Phase C REAL-AUDIO ARTIFACT-FIRST CONSTRUCTION = GO / SEALE
 - This phase does **not** label any individual change correct/incorrect and does not use Gold/reference content to tune anything. It identifies only reference-free mechanism/risk patterns.
 - Safety: Gold/reference read **NO**; professional image read **NO**; audio decode/HPSS/CQT recompute **NO**; Modal/L4/GPU **NO**; candidate construction/search **NO**; threshold retuning **NO**; main/Production change **NO**.
 - Phase E one-use workflow is deleted in the same persistence commit. Any V148 hypothesis/candidate must be a separate frozen phase before construction.
+
+## V147 Phase E normalized-context addendum — ARMED / PRE-EXECUTION — 2026-08-27 UTC
+- Purpose: normalize Phase-E raw change counts by accepted-baseline denominators and characterize the 18 introduced pitch-collision onsets; no candidate construction.
+- Addendum prereg blob `5e0dffcea24662c7b10288e2fe1d993aeb693dd7`; analyzer blob `ff35b44b004e407a1ce09e83828061325d0f9947`.
+- Run `33042691252`; arming commit `0c9ecb3e1400dd22597356b04e927493d80d9cd3`; durable rerun sentinel committed before analysis.
+- Gold/reference/professional image unreadable; audio/HPSS/CQT/Modal/GPU unused; thresholds unchanged; analysis completed: **NO**.
