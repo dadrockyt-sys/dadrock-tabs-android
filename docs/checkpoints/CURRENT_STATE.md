@@ -80,7 +80,7 @@ Song: **Lenny Kravitz — Are You Gonna Go My Way**.
 
 ## Current execution status
 - Reference-facing score calls this continuation: **0**.
-- Professional reference note data opened this continuation: **NO**.
+- Professional reference note data opened this continuation: **YES — Bass only, for explicit user-authorized research preservation; no scoring performed. Rhythm was already preserved. Lead remains unopened/unavailable.**
 - Frozen recognition generation: **PASS / PERSISTED / SEALED**.
 - Reference-free structural QC: **PASS / FROZEN**.
 - Modal/L4/CUDA/GPU used: **NO**.
@@ -88,8 +88,8 @@ Song: **Lenny Kravitz — Are You Gonna Go My Way**.
 
 ## Exact next steps
 1. Do not alter or retune `debug/v154-cpu-autonomous/broad-other-run-33096559281/generated.json`.
-2. Do not perform professional-reference scoring until the frozen Bass/Lead screenshot bytes (or an already normalized private reference payload with verifiable frozen identity) are accessible again.
-3. When private normalized references become accessible, freeze their normalized identity privately, then score this exact combined Guitar first and Bass second **exactly once** with `score_frontend_reference.py`.
+2. Do not perform professional-reference scoring yet. Bass is now preserved visually machine-readably but does not have frozen 16-step scorer timing; Lead screenshots still need to be re-provided and preserved.
+3. After Lead is preserved, run a dedicated reference-normalization pass that freezes exact scorer-ready `(measure, step, MIDI)` identities for Rhythm/Lead/Bass without consulting or altering the frozen generated candidate. Then score this exact combined Guitar first and Bass second **exactly once** with `score_frontend_reference.py`.
 4. Interpret the prerecorded >=0.80 recognition gates; no post-score tuning of this consumed output.
 5. Only after acoustic recognition is scored/frozen should Rhythm/Lead role separation, fret/string assignment, techniques, and PDF work continue.
 6. Continue saving this checkpoint after every meaningful private-reference normalization, score, or architecture decision.
