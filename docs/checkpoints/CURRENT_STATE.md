@@ -3,7 +3,7 @@
 Updated: 2026-08-27 UTC
 Branch: `v143-contextual-prune-lobo`
 
-Active phase: **V154 CPU multitrack architecture reset — broad-Other protocol is frozen; reference-facing scoring has NOT run in this continuation.**
+Active phase: **V154 CPU multitrack architecture reset — broad-Other protocol and stage-one contract are frozen/tested; reference-facing scoring has NOT run in this continuation.**
 
 ## History preservation
 - The full checkpoint immediately before this compact continuation is preserved in Git at branch commit `3705b8aba3f166000867f7c68e5dfc104bc71fd9`; checkpoint Git blob `5a19f89583af89e777380d5ddb453c4957afe5f5`.
@@ -40,15 +40,13 @@ Song: **Lenny Kravitz — Are You Gonna Go My Way**.
 - Three-part manifest: `debug/v154-cpu-autonomous/reference-receipts/reference-set-manifest-20260827.json`; creation commit `4eae3fa541c1cbede282db20c113a22f7b906fbb`.
 - The raw Bass/Lead screenshot bytes are **not attached to the current ChatGPT conversation** as of this checkpoint. Their frozen identities remain valid, but private note-by-note normalization cannot be faithfully reconstructed here by guessing from receipts or memory.
 
-## V154 reference/scoring contract already present
+## V154 reference/scoring contract
 - Contract: `validation/v154_cpu_multitrack/REFERENCE_FORMAT.md`.
 - Empty copyright-safe template: `validation/v154_cpu_multitrack/reference-template.json`.
 - Existing post-role scorer: `validation/v154_cpu_multitrack/score_multitrack_reference.py`; Git blob `f58b6cf7349a6f6e5f49b241a585ba5bf3648966`.
-- Existing scorer separates combined recognition, role separation, per-part transcription, and fretboard assignment, but it assumes Rhythm/Lead generated parts exist. V154 now also has a dedicated stage-one scorer so combined Guitar can be evaluated **before** role splitting.
+- Dedicated stage-one scorer now exists so combined Guitar can be evaluated **before** role splitting.
 
-## New continuation work — 2026-08-27
-
-### Broad-Other CPU preregistration — FROZEN / REFERENCE-INDEPENDENT
+## Broad-Other CPU preregistration — FROZEN / REFERENCE-INDEPENDENT
 - File: `debug/v154-cpu-autonomous/broad-other-preregistration.json`.
 - Creation commit: `69102364d79c315044c994ff0acaf52dbc827dd5`.
 - Historical audio is frozen to commit `74b0f815ff3f66f325220975c410621503de440f`, path `public/gomywayfullaitest.m4a`, bytes `3478611`, SHA256 `215bd5a657c5326f08f132ae358595a95c30b39bb7493a52c2f910d5a608149f`.
@@ -56,25 +54,32 @@ Song: **Lenny Kravitz — Are You Gonna Go My Way**.
 - Separator is frozen to CPU `demucs==4.1.0`, model `htdemucs`, shifts `1`, jobs `1`.
 - `Other` is intentionally the **combined Rhythm+Lead acoustic source**; `Bass` is independent. Do not ask the separator to split Rhythm versus Lead at this stage.
 - Basic Pitch is frozen to `0.4.0`, onset threshold `0.5`, frame threshold `0.3`, minimum note length `127.7 ms`, melodia trick enabled, no threshold sweep.
-- Combined Guitar MIDI range is frozen to `40–88`; Bass MIDI range is frozen separately to `28–67` so the stage does not inherit the old guitar-only lower bound for Bass.
+- Combined Guitar MIDI range is frozen to `40–88`; Bass MIDI range is frozen separately to `28–67`.
 - Runtime target remains Python 3.10, NumPy 1.26.4, PyTorch 2.8.0+cpu, imageio-ffmpeg 0.6.0; CUDA must be absent/unavailable.
 
-### New reference-free transcriber
+## New reference-free transcriber
 - File: `validation/v154_cpu_multitrack/transcribe_broad_other.py`.
 - Creation commit: `c4a707d34b1a44dc34a8245f922773d43f0538cf`.
 - Inputs: already-separated `Other` and `Bass` audio stems.
 - Output schema: `dadrock.tabs.v154.cpu-multitrack-generated.v1` with frozen `combinedGuitar` and `bass` note/onset streams.
-- The transcriber contains no reference input and records `referenceRead=false`, `humanCorrection=false`, `referenceGuidedFiltering=false`, `modalUsed=false`, `cudaGpuUsed=false`.
+- It contains no reference input and records `referenceRead=false`, `humanCorrection=false`, `referenceGuidedFiltering=false`, `modalUsed=false`, `cudaGpuUsed=false`.
 - NumPy/nested Basic Pitch metadata is converted recursively to JSON-native values, preserving the A3 serialization repair.
 
-### New stage-one combined-Guitar/Bass scorer
+## New stage-one combined-Guitar/Bass scorer
 - File: `validation/v154_cpu_multitrack/score_frontend_reference.py`.
 - Creation commit: `a5cab589b3efca8ec454311c49120543c04277fb`.
 - It scores frozen generated `combinedGuitar` directly against the private union of professional Rhythm+Lead, **before any generated Rhythm/Lead role split**.
 - It scores frozen generated `bass` independently against professional Bass.
 - Primary metric: same-MIDI one-to-one timing-aware F1 within ±0.5 grid step. Gross ±2-step F1 and per-measure pitch-content are diagnostics.
-- Optional private reference events can carry `excludeFromScoring=true` for explicitly uncertain annotated spots; this masks uncertainty without silently correcting/replacing the reference note.
+- Optional private reference events may carry `excludeFromScoring=true` for explicitly uncertain annotated spots; this masks uncertainty without silently correcting/replacing the reference note.
 - The scorer checks private-reference authorization flags and generated anti-leakage flags before scoring.
+
+## Stage-one contract validation — SUCCESS / SEALED
+- Synthetic/reference-free test file: `validation/v154_cpu_multitrack/test_frontend_contract.py`; creation commit `69457239e304970a4b0c933dcaf708351d6b220b`.
+- One-use workflow run `33096282137`, job `98601930286`: **SUCCESS**.
+- Tests verified: combined-Guitar scoring ignores Rhythm/Lead role labels at stage one; ±0.5 primary vs ±2 gross tolerance behavior; uncertainty exclusion without reference repair; pitch mismatch cannot match; Bass low-E range is retained; continuous grid mapping; recursive JSON-safe conversion.
+- One-use test workflow is absent/sealed at branch head commit `5dd4182ed0eaaa5d6e8da5da19c26fc2b5b1a7d7`.
+- Earlier temporary checkpoint writer failed before any job and was removed at commit `99ff71c864cbc674c5af55d092b2f4aca9a29863`.
 
 ## V154 architecture decision gates — FROZEN
 - Combined Rhythm+Lead timing-aware note/pitch F1 target: **>= 0.80**.
@@ -89,15 +94,15 @@ Song: **Lenny Kravitz — Are You Gonna Go My Way**.
 - Professional reference note data opened in this continuation: **NO**.
 - Demucs separation executed in this continuation: **NO**.
 - Broad-Other/Bass Basic Pitch transcription executed in this continuation: **NO**.
+- Reference-free stage-one synthetic tests: **PASS / SEALED**.
 - Modal/L4/CUDA/GPU used: **NO**.
 - `main` / Production modified: **NO**.
-- A temporary checkpoint-writer workflow was attempted at commit `1088abf215d71cda2231120abd8bca4c00f1811a`; GitHub marked the run failed before any job started, so it did not alter this checkpoint. Remove/seal that workflow before further execution.
 
 ## Exact next steps
-1. Remove/seal `.github/workflows/v154-resume-checkpoint-writer-once.yml`; it is a failed temporary writer and must not remain armed.
-2. Validate the new stage-one scorer/transcriber with reference-free synthetic/unit tests only.
-3. If CPU execution proceeds, create a **new one-use** broad-Other benchmark workflow from the frozen preregistration; do not rerun A3. It must verify exact historical audio identity, CPU-only runtime, normalize audio, run `htdemucs` to produce `other` + `bass`, then run `transcribe_broad_other.py` and persist/hash generated outputs **before any professional reference access**.
-4. Do not score those outputs until the privately normalized Rhythm/Lead/Bass reference payload is accessible and its normalized identity is frozen. The current conversation has no attached Bass/Lead screenshots, so do not reconstruct note content from memory.
+1. Create a **new one-use** broad-Other CPU benchmark workflow from the frozen preregistration; do not rerun A3.
+2. The workflow must verify exact historical audio identity and CPU-only runtime, normalize audio, run `htdemucs` to produce `other` + `bass`, then run `transcribe_broad_other.py` and persist/hash generated outputs **before any professional reference access**.
+3. Avoid A3's non-fast-forward persistence failure: prefer immutable workflow artifact output first; if repository persistence is needed, rebase/fetch immediately before a unique-path push and never overwrite a sealed output.
+4. Do not score generated outputs until the privately normalized Rhythm/Lead/Bass reference payload is accessible and its normalized identity is frozen. The current conversation has no attached Bass/Lead screenshots, so do not reconstruct note content from memory.
 5. Once private normalized references are accessible, score combined Guitar first and Bass second with `score_frontend_reference.py`. Freeze the score as one consumed evaluation of the generated output; no post-score retuning of that output.
 6. Only after acoustic recognition is frozen should Rhythm/Lead role separation, fret/string assignment, techniques, and PDF work continue.
 7. Continue saving this file frequently after each meaningful freeze/run/result.
