@@ -1,0 +1,68 @@
+{
+  "schema": "dadrock.tabs.v148.phase-c-scoring-authorization.v1",
+  "classification": "one-use-reference-facing-score-authorized",
+  "branch": "v143-contextual-prune-lobo",
+  "sourceHeadBeforeAuthorizationRecord": "ae4667c512b009481394fdc06772decc270e1e3e",
+  "authorization": {
+    "received": true,
+    "scope": "exactly-one-v148-singleton-only-gold-calibration-score",
+    "candidateSearchAllowed": false,
+    "alternateCandidateAllowed": false,
+    "retuningAllowed": false,
+    "audioRecomputeAllowed": false,
+    "modalGpuAllowed": false,
+    "productionPromotionAllowed": false
+  },
+  "candidate": {
+    "path": "debug/v148-singleton-only/candidate/candidate.json",
+    "gitBlob": "0d3df7336db965dc111fec067d0abe75ea3926cc",
+    "fileSha256": "b45034e2a4dd10a3d7784e584fccdbc7e49667a5b93c9a77ea42f5562ae139bb",
+    "canonicalEventSha256": "1be67004dea62b14740241b536339bb7cad2ecf3ee9e98bfb6109f67e4e1b1fa",
+    "eventCount": 1144,
+    "generatedMeasureCount": 113,
+    "changedEventsVersusAccepted": 106,
+    "changedOnsetsVersusAccepted": 106,
+    "polyphonicChangedEventsVersusAccepted": 0
+  },
+  "constructionProof": {
+    "path": "debug/v148-singleton-only/candidate/construction-proof.json",
+    "gitBlob": "e736afa242d597dddc4aa82cc3245d665ad0861f",
+    "fileSha256": "688b77376b8aac6b27fe40b93f1f661b4e71cdd2d76f56ac7bfea3c5b15807a4"
+  },
+  "pdfEvidence": {
+    "path": "debug/v148-singleton-only/candidate/pdf-event-fidelity.json",
+    "gitBlob": "9397d5ff55d09194e7e8553ed0a714ce1962e8c7",
+    "fileSha256": "45cd279822835a1246c0f90bd8af9838ea9a4c72bb07e1fa7db50d8998bcaa46",
+    "eventFidelity": 1.0
+  },
+  "completionSentinel": {
+    "path": "debug/v148-singleton-only/import-path-recovery-complete-sentinel.json",
+    "gitBlob": "46389ac79a09c889202537d27036a651b550603f",
+    "status": "COMPLETE_SEALED_STOP_BEFORE_SCORING"
+  },
+  "gold": {
+    "path": "debug/v144-rhythm-calibration/reference/professional-rhythm-gold-reference.json",
+    "expectedSha256": "18fd868ae960dfcddc1ffb0110f1a9dfd8acc2ffeb46e247d1116cd54291526ac"
+  },
+  "historicalScoringChain": {
+    "fullCalibrationWrapper": {
+      "path": "validation/v144_rhythm_calibration/score_selected_conjunction_candidate.py",
+      "gitBlob": "1ca2b8550d6c08e793f26b3aa91b99fb44fa7ddb"
+    },
+    "coreScorer": {
+      "path": "validation/rhythm_holdout/score_rhythm_holdout.py",
+      "gitBlob": "cc4bf61a99f22bf87a6c255e5a81220fbc82223b"
+    },
+    "canonicalAdapter": {
+      "path": "validation/rhythm_holdout/canonical.py",
+      "gitBlob": "088d44827fb23e20d9aeeb4944a672989af5846c"
+    }
+  },
+  "acceptedBaseline": {
+    "path": "debug/v144-rhythm-calibration/selected/v144-singleton-onset-replacement-selected-baseline.json",
+    "gitBlob": "acd12ab68ad16b8faabf38ddc9e1cc0c1e7c4b68",
+    "name": "singleton-onset-replace-be9e9aa7a734e3cd",
+    "eventSha256": "4e6f9f247134f79f30a5448515c52a6ca1012c1f1314c3458b448582999e3881"
+  },
+  "executionRule": "Verify all immutable V148 candidate and historical scorer identities before Gold access, run exactly one score, persist result and proof, then seal the one-use workflow."
+}
