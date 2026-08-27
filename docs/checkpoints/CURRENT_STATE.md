@@ -363,3 +363,13 @@ Active phase: **V147 Phase C REAL-AUDIO ARTIFACT-FIRST CONSTRUCTION = GO / SEALE
 - Expected preconstruction structural facts: 1144 events, 113 measures, exactly **106 changed events / 106 changed onsets**, zero polyphonic changes, one candidate only. No threshold/weight/pitch-class/register/string/margin filtering is allowed.
 - V148 construction must use preserved artifacts only: no audio reread, no HPSS/CQT, no Modal/L4/GPU, no Gold/reference/image, no scorer, no candidate sweep/search, no retuning, no main/Production modification.
 - **V148 construction authorization: FALSE. V148 reference-facing scoring authorization: FALSE. STOP here until fresh explicit user authorization to construct the single frozen V148 candidate.**
+
+## V148 Phase B singleton-only construction — AUTHORIZED / ARMED — 2026-08-27 UTC
+- Fresh user instruction to continue from this checkpoint is recorded as authorization for **exactly one construction of the already-frozen V148 singleton-only candidate**, and not for any reference-facing score.
+- Authorization record: `debug/v148-singleton-only/construction-authorization.json`; Git blob **`006f719c8c71570142cf6990c7542f3d8692d5e4`**; authorization-record commit `c68361f709c31e7d5d0eb8ba6cd90bf7e06c4d0b`.
+- Frozen constructor: `validation/v148_singleton_only/construct_once.py`; Git blob **`bb43464f48cc8e0eade0f9e98229c859cb117986`**; constructor freeze commit `5bbcbaba3433de231fc33bd6d1f587f5773bf5e7`.
+- Constructor is bound to preregistration blob `fd3fb330d3aa80d1058656e3b2dd7eaa201f8e1c`, Phase-C support blob `f4278ffaacaca3f66baf7a3112e2af0f3bc387cf`, canonical adapter blob `088d44827fb23e20d9aeeb4944a672989af5846c`, and render-contract blob `ccbb93c48982798cc474309fd981f6ca02d5c8d4`.
+- Execution may use only the accepted family #10 reconstruction plus preserved V147 `candidate.json` and `decisions.json`; it must reverify their fixed byte/canonical hashes before projection.
+- Expected gate remains exactly 1144 events / 113 measures / **106 changed singleton events on 106 singleton onsets / 0 polyphonic changes / 1 candidate variant**, deterministic replay, and PDF event fidelity `1.0`.
+- Gold/reference/professional image, scorer invocation, audio reread/decode, HPSS/CQT, Modal/L4/GPU, threshold/weight changes, filtering/search/variants, retuning, main/Production, and automatic promotion remain **FORBIDDEN**.
+- At this checkpoint the V148 candidate has **not yet been constructed**. Reference-facing scoring authorization remains **FALSE**.
