@@ -1,7 +1,0 @@
-family=14
-proof=shared-dyad-surplus-prune-search-cpu
-searchBlob=dd02c492ecfef26bbb15e8d345346ff75bb5fa30
-testBlob=77758ead57a2735ba653bbba64e78c4124d34798
-policyBlob=1f6cc7fcaf2d4ac7838b48b839c617b04cb1c34e
-workflowBlob=251b9f3a001ddd80d1045e5e80d2c833d0227f91
-branch=v143-contextual-prune-lobo
