@@ -3,7 +3,7 @@
 Updated: 2026-08-27 UTC
 Branch: `v143-contextual-prune-lobo`
 
-Active phase: **V154 broad-Other CPU recognition output is COMPLETE / FROZEN / STRUCTURAL-QC PASS. Professional-reference scoring has NOT run because the private Bass/Lead screenshot bytes are not accessible in this active conversation.**
+Active phase: **V154 broad-Other CPU recognition output is COMPLETE / FROZEN / STRUCTURAL-QC PASS. Rhythm is preserved machine-readably; Bass screenshots have been re-provided and the complete Bass visual reference is now preserved machine-readably. Lead still needs to be re-provided before three-part scoring normalization. Professional-reference scoring has NOT run.**
 
 ## History preservation
 - Full earlier checkpoint: commit `3705b8aba3f166000867f7c68e5dfc104bc71fd9`; checkpoint blob `5a19f89583af89e777380d5ddb453c4957afe5f5`.
@@ -17,7 +17,7 @@ Active phase: **V154 broad-Other CPU recognition output is COMPLETE / FROZEN / S
 - Never modify/merge/promote `main` or Production without explicit user direction.
 - Professional references are scoring-only; candidate generation/transcription must not read them.
 - Freeze generated outputs before reference access. No silent variant search and no post-score retuning of a consumed output.
-- Do not commit user-provided professional-tab screenshot bytes or note-by-note copyrighted reference content to this public repository.
+- Do not commit user-provided professional-tab screenshot bytes. By explicit user direction, machine-readable reference transcriptions may be stored only under `research/v154-professional-references/` on research branch `v143-contextual-prune-lobo`; never promote them to `main`/Production and never expose them to candidate generation.
 - Target remains fully automatic audio -> professional-quality Rhythm/Lead/Bass tablature PDF with no human correction.
 
 ## V153 sealed conclusion
@@ -36,7 +36,7 @@ Song: **Lenny Kravitz — Are You Gonna Go My Way**.
 - Bass: 17 user screenshots, visible measures 1–113; frozen set SHA256 `abd1748066966ceb93fe40bf8c8df3168f6c871ba006e44d28f8840184e3cde3`; measure-88 `Timing mishap here` is an uncertainty flag.
 - Lead: 22 user screenshots, visible measures 1–113; frozen set SHA256 `de2f20c330e52aca6125e29ca2cf5c4b719406fc267a98d43d98f3ab1453ff3c`; opening tempo quarter=129, 4/4; measures 39–40 annotation remains an uncertainty flag.
 - Reference-set manifest: `debug/v154-cpu-autonomous/reference-receipts/reference-set-manifest-20260827.json`; commit `4eae3fa541c1cbede282db20c113a22f7b906fbb`.
-- **Current blocking boundary:** raw Bass/Lead screenshot bytes are absent from the active ChatGPT conversation and Library. Their identities remain frozen, but private note-by-note normalization must not be guessed from receipts/memory.
+- Bass screenshot bytes are now re-provided and identity-matched; its visual-order machine-readable transcription is preserved under `research/v154-professional-references/`. Lead screenshot bytes remain the current missing reference input. Exact 16-step Bass timing is intentionally not frozen yet, so the Bass file is not scorer-ready.
 
 ## V154 frozen broad-Other protocol
 - Preregistration: `debug/v154-cpu-autonomous/broad-other-preregistration.json`; Git blob `eb81efbb1ed25b023b5bce6e1159ae7785875b4a`.
@@ -104,3 +104,16 @@ Song: **Lenny Kravitz — Are You Gonna Go My Way**.
 - Failed preservation runs `33098155353` and `33098431086` wrote no reference copy and were sealed before this v3.
 - Preservation modified no generated candidate, made no reference-facing score call, and did not modify `main`/Production or use Modal/L4/CUDA/GPU.
 - When Bass and Lead screenshots are re-provided, reconstruct them into sibling files in `research/v154-professional-references/` and checkpoint each identity.
+
+
+## V154 professional Bass preservation — COMPLETE VISUAL MACHINE-READABLE / TIMING NOT YET SCORER-NORMALIZED
+- User re-provided the complete Bass reference and explicitly requested machine-readable preservation on research branch `v143-contextual-prune-lobo`.
+- The 17 canonical pages match the previously frozen page SHA256 identities exactly; prior set SHA256 remains `abd1748066966ceb93fe40bf8c8df3168f6c871ba006e44d28f8840184e3cde3`. A supplemental overlapping screenshot `1000120386.jpg` covers measures 63–67 but is excluded from the canonical 17-page identity.
+- Source-set receipt: `research/v154-professional-references/bass-source-set-receipt.json`. Screenshot bytes are **not committed**.
+- Complete visual machine-readable Bass reference: `research/v154-professional-references/bass-professional-reference-machine-readable.json`; SHA256 `a8e1d123f8a19e69d9c160d78aea7637b5a2012232b23e1f1ddff051e9bc40b3`; Git blob `0773c98556d00837eaea28ee77cfc513498cc21f`.
+- Coverage: measures 1–113 / 113 measure objects; 569 event objects; 562 pitched event objects; 7 dead-note objects; 8 tie/sustain continuation-only objects; observed MIDI 28–56; tuning/MIDI mapping errors 0.
+- Measure 10 green selection UI is ignored as interface overlay. Measure 88 retains the visible `Timing mishap here` uncertainty and is explicitly excluded from scoring until timing normalization is resolved.
+- This file preserves left-to-right note/string/fret/MIDI/technique identity but intentionally contains **no `step` onset fields**. It is machine-readable but **not yet V154 scorer-normalized**; a dedicated timing-normalization pass must occur before scoring.
+- Provenance: `research/v154-professional-references/bass-professional-reference-provenance.json`.
+- Candidate generation remains frozen and reference-blind. Reference-facing score calls remain `0`; generated candidate unchanged; `main`/Production unchanged; Modal/L4/CUDA/GPU not used.
+- Current missing professional input is Lead. Once Lead screenshots are re-provided and preserved, freeze exact three-part scoring timing identity before the one-time reference-facing score.

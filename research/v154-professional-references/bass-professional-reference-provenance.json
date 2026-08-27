@@ -1,0 +1,58 @@
+{
+  "authorization": {
+    "userExplicitlyRequestedMachineReadableBassSavedToResearchBranch": true,
+    "userProvidedScreenshots": true
+  },
+  "machineReadableReference": {
+    "continuationOnlyObjects": 8,
+    "deadNoteObjects": 7,
+    "eventObjects": 569,
+    "exactStepTimingFrozen": false,
+    "gitBlobSha": "0773c98556d00837eaea28ee77cfc513498cc21f",
+    "measureCount": 113,
+    "observedMidiRange": [
+      28,
+      56
+    ],
+    "pitchedEventObjects": 562,
+    "repositoryPath": "research/v154-professional-references/bass-professional-reference-machine-readable.json",
+    "scoringReady": false,
+    "sha256": "a8e1d123f8a19e69d9c160d78aea7637b5a2012232b23e1f1ddff051e9bc40b3"
+  },
+  "part": "bass",
+  "preservedAtUtc": "2026-08-27T17:50:55.664302+00:00",
+  "researchBranch": "v143-contextual-prune-lobo",
+  "safety": {
+    "candidateGenerationMayReadReference": false,
+    "cudaGpuUsed": false,
+    "generatedCandidateModified": false,
+    "mainOrProductionModified": false,
+    "modalUsed": false,
+    "referenceFacingScoreCallsDuringPreservation": 0,
+    "screenshotBytesCommitted": false
+  },
+  "schema": "dadrock.tabs.v154.professional-reference-provenance.v1",
+  "song": {
+    "artist": "Lenny Kravitz",
+    "title": "Are You Gonna Go My Way"
+  },
+  "sourceSet": {
+    "allCanonicalPagesReprovidedAndHashMatched": true,
+    "canonicalPageCount": 17,
+    "canonicalSetSha256": "abd1748066966ceb93fe40bf8c8df3168f6c871ba006e44d28f8840184e3cde3",
+    "receiptPath": "research/v154-professional-references/bass-source-set-receipt.json",
+    "supplementalView": "1000120386.jpg"
+  },
+  "uncertainties": [
+    {
+      "excludedFromNotation": true,
+      "measure": 10,
+      "type": "ui-overlay"
+    },
+    {
+      "excludeFromScoringUntilResolved": true,
+      "measure": 88,
+      "type": "source-timing-annotation"
+    }
+  ]
+}
