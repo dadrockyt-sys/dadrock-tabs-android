@@ -1,0 +1,22 @@
+{
+  "artifactDigest": "sha256:7df04ef5e771000c966bef807ab624f9de108f8c76701163a4312e2aaa9d4825",
+  "artifactId": 9631542077,
+  "artifactName": "v147-phase-a-cpu-proof",
+  "artifactSizeBytes": 2980,
+  "calibrationReferenceRead": false,
+  "commitSha": "5782eabd3b515f0cca022522cd628fce55a548cc",
+  "gate": "GO",
+  "goldRead": false,
+  "jobId": 98394561968,
+  "liveAudioUsed": false,
+  "modalGpuUsed": false,
+  "phase": "V147-Phase-A-repaired-execution",
+  "productionIntegrated": false,
+  "proofFileSha256": "2cba17eaf5158fdcbe73f3207eb8a58c6b3100429c1065e524a42c2937cab67d",
+  "proofPayloadSha256": "3843912f0c8e5da95c3993783a84762ba01b046120a48db5e5a5c6c16a3d883e",
+  "pytestResult": "13 passed in 0.13s",
+  "referenceFree": true,
+  "runConclusion": "success",
+  "runId": 33034629948,
+  "schema": 14704
+}
