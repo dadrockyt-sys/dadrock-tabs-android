@@ -1,4 +1,3 @@
-# armed 2026-08-27
 name: V152 active recurrence construct once
 
 on:
@@ -20,7 +19,7 @@ jobs:
       - uses: actions/setup-python@v5
         with:
           python-version: '3.12.14'
-      - name: Reference-free construction preflight
+      - name: Infrastructure-only recovery preflight
         run: |
           set -euo pipefail
           test ! -e debug/v152-active-recurrence/candidate
@@ -29,7 +28,9 @@ jobs:
           test "$(git hash-object debug/v152-active-recurrence/phase-b-construction-authorization.json)" = "e8ff4dc4dca664a0ba76678bf7049769dd701d7e"
           test "$(git hash-object validation/v152_active_recurrence/construct_once.py)" = "7cb83979e693203b7f6254a790831b1ca4938420"
           test "$(git hash-object debug/v152-active-recurrence/phase-b-construction-attempt-sentinel.json)" = "c1ebc95e55807260f3b13fefa1652c97476ef6de"
-          python validation/v152_active_recurrence/construct_once.py --help >/dev/null
+          test "$(git hash-object debug/v152-active-recurrence/import-path-recovery-preregistration.json)" = "fd50a9af55ed29598e37e0435ef1cc6afd9275f0"
+          test "$(git hash-object validation/v152_active_recurrence/recover_import_path_once.py)" = "f01f3fb3edf38745edbdb52ee95aaec109bd018e"
+          python validation/v152_active_recurrence/recover_import_path_once.py --help >/dev/null
       - name: Consume construction attempt and checkpoint
         env:
           RUN_ID: ${{ github.run_id }}
@@ -42,21 +43,21 @@ jobs:
           from pathlib import Path
           p=Path('debug/v152-active-recurrence/phase-b-construction-attempt-sentinel.json'); d=json.loads(p.read_text())
           if d.get('status')!='ARMED_NOT_CONSUMED' or d.get('candidateConstructedCount')!=0 or d.get('scoreCallCount')!=0: raise SystemExit('V152 attempt not cleanly armed')
-          d['status']='CONSUMED_BEFORE_CONSTRUCTION'; d['runId']=os.environ['RUN_ID']; d['runHeadSha']=os.environ['HEAD_SHA']; d['consumedAtUtc']=datetime.now(timezone.utc).isoformat(); p.write_text(json.dumps(d,indent=2,sort_keys=True)+'\n')
-          cp=Path('docs/checkpoints/CURRENT_STATE.md'); text=cp.read_text(); marker='## V152 Phase B three-note active-recurrence construction — AUTHORIZED / CONSUMED / REFERENCE-FREE — 2026-08-27 UTC'
+          d['status']='CONSUMED_BEFORE_CONSTRUCTION'; d['runId']=os.environ['RUN_ID']; d['runHeadSha']=os.environ['HEAD_SHA']; d['consumedAtUtc']=datetime.now(timezone.utc).isoformat(); d['infrastructureRecovery']='repository-root-sys.path-launcher'; p.write_text(json.dumps(d,indent=2,sort_keys=True)+'\n')
+          cp=Path('docs/checkpoints/CURRENT_STATE.md'); text=cp.read_text(); marker='## V152 Phase B three-note construction — IMPORT RECOVERY CONSUMED / REFERENCE-FREE — 2026-08-27 UTC'
           if marker not in text:
-              text += f'''\n\n{marker}\n- User instruction `Let's make a major breakthrough 🙏` authorizes exactly one frozen candidate: accepted family #10 plus V151 rows **[132, 347, 457]** only.\n- These 3 events are the complete V152 `both-selected` class: active selected-note support in both exact-pitch and pitch-class recurrence, after V151 two-sided voice-leading consensus.\n- Preregistration blob `b16e730eb5e647a6d06f36e2a7e9902451a1cd76`; authorization blob `e8ff4dc4dca664a0ba76678bf7049769dd701d7e`; constructor blob `7cb83979e693203b7f6254a790831b1ca4938420`; run `{os.environ['RUN_ID']}`.\n- Gold/reference **NO**; prior score result **NO**; scorer calls **0**; search/variants/alternate combination/filter/threshold/audio/GPU/Production/promotion **NO**.\n'''
+              text += f'''\n\n{marker}\n- Original run `33049594534` failed during preflight at direct constructor import, **before sentinel consumption and before construction**; candidates remained **0**, Gold reads **0**, score calls **0**.\n- Recovery changes only Python module discovery via launcher blob `f01f3fb3edf38745edbdb52ee95aaec109bd018e`; frozen scientific constructor remains blob `7cb83979e693203b7f6254a790831b1ca4938420`.\n- Candidate policy remains exactly events **[132, 347, 457]** and no others; recovery run `{os.environ['RUN_ID']}`.\n- Gold/reference/prior score result **NO**; search/variants/retuning/audio/GPU/Production/promotion **NO**.\n'''
               cp.write_text(text)
           PY
           git config user.name 'github-actions[bot]'
           git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
           git add debug/v152-active-recurrence/phase-b-construction-attempt-sentinel.json docs/checkpoints/CURRENT_STATE.md
-          git commit -m 'debug: checkpoint consumed V152 construction [skip ci]'
+          git commit -m 'debug: checkpoint V152 import recovery construction [skip ci]'
           git push origin HEAD:v143-contextual-prune-lobo
       - name: Construct exactly one frozen V152 candidate
         run: |
           set -euo pipefail
-          python validation/v152_active_recurrence/construct_once.py --output-dir debug/v152-active-recurrence/candidate | tee /tmp/v152-construction.json
+          python validation/v152_active_recurrence/recover_import_path_once.py --output-dir debug/v152-active-recurrence/candidate | tee /tmp/v152-construction.json
       - name: Verify persist checkpoint and self-seal
         env:
           RUN_ID: ${{ github.run_id }}
@@ -77,7 +78,7 @@ jobs:
           Path('debug/v152-active-recurrence/phase-b-complete-sentinel.json').write_text(json.dumps(complete,indent=2,sort_keys=True)+'\n')
           cp=Path('docs/checkpoints/CURRENT_STATE.md'); text=cp.read_text(); marker='## V152 Phase B three-note active-recurrence construction — COMPLETE / SEALED / STOP BEFORE SCORING — 2026-08-27 UTC'
           if marker in text: raise SystemExit('duplicate V152 construction checkpoint')
-          text += f'''\n\n{marker}\n- Exactly one V152 candidate constructed in run `{os.environ['RUN_ID']}`: **3 changed singleton events / 3 onsets / 0 polyphonic changes / 1144 events / 113 measures**.\n- Canonical candidate SHA256 **`{proof['candidateEventSha256']}`**; deterministic replay TRUE; invariant/position/projection violations **0**.\n- PDF/render fidelity **100.000%**. Candidate file SHA256 **`{files['candidate.json']['sha256']}`**.\n- Gold/reference **NO**; prior score result read **NO**; score calls **0**; candidate search/alternate combination/filter/threshold/audio/GPU/Production/promotion **NO**.\n- Construction is sealed; next boundary is one exact-identity Gold calibration score.\n'''
+          text += f'''\n\n{marker}\n- Infrastructure-recovery run `{os.environ['RUN_ID']}` constructed exactly one frozen V152 candidate after the prior preflight-only failure constructed zero candidates.\n- Structure: **1144 events / 113 measures / 3 changed singleton events / 3 onsets / 0 polyphonic changes**.\n- Canonical candidate SHA256 **`{proof['candidateEventSha256']}`**; deterministic replay TRUE; invariant/position/projection violations **0**; PDF/render fidelity **100.000%**.\n- Candidate file SHA256 **`{files['candidate.json']['sha256']}`**; construction proof SHA256 **`{files['construction-proof.json']['sha256']}`**; PDF proof SHA256 **`{files['pdf-event-fidelity.json']['sha256']}`**.\n- Gold/reference/prior score result **NO**; score calls **0**; candidate search/alternate class/filter/threshold/audio/GPU/Production/promotion **NO**.\n- Construction authorization consumed; scoring remains a separate exact-identity phase.\n'''
           cp.write_text(text)
           PY
           git rm .github/workflows/v152-active-recurrence-construct-once.yml
