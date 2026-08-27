@@ -389,3 +389,25 @@ Active phase: **V147 Phase C REAL-AUDIO ARTIFACT-FIRST CONSTRUCTION = GO / SEALE
 - Recovery keeps the same single candidate policy and expected gates: 1144 events, 113 measures, exactly **106 changed singleton events / 106 changed singleton onsets / 0 polyphonic changes**, deterministic replay, PDF event fidelity `1.0`, and maximum total constructed V148 candidates across failed+recovery runs = **1**.
 - Reference-facing scoring authorization remains **FALSE**. Recovery must not score, inspect Gold/reference/image, use audio/HPSS/CQT/Modal/L4/GPU, change thresholds/weights/filters, construct variants, retune, touch main/Production, or promote.
 - The failed original workflow remains present but its consumed sentinel prevents a legitimate rerun. Any recovery execution must use the separately frozen recovery boundary above and preserve the zero-prior-candidate proof.
+
+## V148 Phase B singleton-only construction — RECOVERED / COMPLETE / SEALED / STOP BEFORE SCORING — 2026-08-27 UTC
+- The first authorized construction run `33043698461` / job `98422759855` failed closed at Python module import (`ModuleNotFoundError: No module named 'modal'`) **before any V148 candidate was constructed**. Its one-use sentinel had already been consumed at commit `3fa9175a2a9b334dda48f63877ee9ef7e9ef703d`; prior constructed-candidate count remained **0**.
+- Infrastructure-only recovery was separately frozen without changing the scientific policy: recovery preregistration blob `c5825e8a345a52c2aa15f38527334d24eef409af`; launcher blob `0bc6ab8795539eaab084cae5e60680ac0a2cba66`; original frozen constructor stayed blob `bb43464f48cc8e0eade0f9e98229c859cb117986`.
+- Recovery arming commit `8042a1c31a01c8eb2ddeadca267fefb369a54ea5`; successful GitHub Actions run **`33044069767`**, job **`98423910956`**; recovery sentinel consumed before construction at commit `de0c9daecc26037725fee9406f56cd99f32f73b6`.
+- Final persistence/self-seal commit: **`9ebb46556a4e13ae00faef4116b3a444801c7d8d`**.
+- Exactly **one** V148 candidate was constructed across the failed original run plus recovery run.
+- V148 canonical candidate event SHA256: **`1be67004dea62b14740241b536339bb7cad2ecf3ee9e98bfb6109f67e4e1b1fa`**.
+- Candidate structure: **1144 events / 113 generated measures / 844 accepted onsets**.
+- Delta versus accepted family #10: exactly **106 changed events / 106 changed onsets / 0 polyphonic changed events**. Every changed onset had accepted cardinality exactly one, and every changed singleton row exactly matched the already-materialized immutable V147 row.
+- Protected timing/metadata invariant violations: **0**. Position-identity violations: **0**.
+- Deterministic replay: **TRUE**; replay event SHA is the same `1be67004...b1fa`.
+- V143 PDF/render projection fidelity: **1.0**; PDF event count `1144`; PDF event SHA is the same `1be67004...b1fa`; reference opened during fidelity check: **NO**.
+- Durable candidate path: `debug/v148-singleton-only/candidate/`.
+- `candidate.json`: 280975 bytes; SHA256 **`b45034e2a4dd10a3d7784e584fccdbc7e49667a5b93c9a77ea42f5562ae139bb`**.
+- `construction-proof.json`: 3569 bytes; SHA256 **`688b77376b8aac6b27fe40b93f1f661b4e71cdd2d76f56ac7bfea3c5b15807a4`**; Git blob `e736afa242d597dddc4aa82cc3245d665ad0861f`.
+- `pdf-event-fidelity.json`: 507 bytes; SHA256 **`45cd279822835a1246c0f90bd8af9838ea9a4c72bb07e1fa7db50d8998bcaa46`**; Git blob `9397d5ff55d09194e7e8553ed0a714ce1962e8c7`.
+- `preservation-manifest.json`: 1060 bytes; SHA256 **`756dd9854d68839a7fce29e9964b45186c92c3346ea7ee29516c0762feedfbb3`**; Git blob `a9d580c1d46a418b8fca8a19bcd0edd73a4bd4b5`.
+- Recovery completion sentinel: `debug/v148-singleton-only/import-path-recovery-complete-sentinel.json`; Git blob **`46389ac79a09c889202537d27036a651b550603f`**; status `COMPLETE_SEALED_STOP_BEFORE_SCORING`.
+- Safety remained clean: Gold/reference read **NO**; professional image read **NO**; calibration scoring **NO**; audio read/decode **NO**; HPSS/CQT recomputation **NO**; Modal/L4/GPU **NO**; candidate search/variants **NO**; threshold/weight/filter retuning **NO**; main/Production modification **NO**; automatic promotion **NO**.
+- Both one-use construction workflows are deleted from the branch and therefore sealed: `.github/workflows/v148-singleton-only-construct-once.yml` and `.github/workflows/v148-singleton-only-recovery-once.yml`.
+- **V148 construction authorization is consumed. V148 reference-facing scoring authorization remains FALSE / STOP.** Do not open Gold/reference or score this candidate without a new separately frozen scoring phase and fresh explicit user authorization.
