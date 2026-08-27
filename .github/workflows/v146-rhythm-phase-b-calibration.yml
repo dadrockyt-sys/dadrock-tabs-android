@@ -1,0 +1,266 @@
+name: V146 Rhythm Phase B Fixed Artifact Calibration
+
+on:
+  push:
+    branches:
+      - v143-contextual-prune-lobo
+    paths:
+      - .github/workflows/v146-rhythm-phase-b-calibration.yml
+
+permissions:
+  contents: write
+
+concurrency:
+  group: v146-rhythm-phase-b-fixed-artifact-calibration
+  cancel-in-progress: false
+
+jobs:
+  evaluate:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - name: Checkout exact evaluation revision
+        uses: actions/checkout@v4
+        with:
+          ref: ${{ github.sha }}
+          fetch-depth: 1
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+
+      - name: Verify fixed artifact and frozen evaluation dependencies
+        shell: bash
+        run: |
+          set -euo pipefail
+          report='debug/v146-rhythm-artifact/calibration-score.json'
+          proof='debug/v146-rhythm-artifact/calibration-evaluation-proof.json'
+          test ! -e "$report"
+          test ! -e "$proof"
+          test "$(git hash-object docs/v146-rhythm-phase-b-calibration-evaluation-preregistration.md)" = "82bd04d819f26106a831f67a1a61ccba6e876c08"
+          test "$(git hash-object debug/v146-rhythm-artifact/generated-only-candidate.json)" = "61bda87e4a16b752bfaaf68c2d51e7020f31a7f8"
+          test "$(git hash-object debug/v146-rhythm-artifact/generated-only-candidate-proof.json)" = "abb8fcd1726bf9b8caa5bf8432adae2c6915a483"
+          test "$(git hash-object validation/rhythm_holdout/canonical.py)" = "088d44827fb23e20d9aeeb4944a672989af5846c"
+          test "$(git hash-object validation/rhythm_holdout/freeze_rhythm_analysis.py)" = "710bb6a3b15b99d3d11ceb4948d7c7175d208afc"
+          test "$(git hash-object validation/rhythm_holdout/verify_pdf_event_fidelity.py)" = "5e1564216873046237fb545078a04a6b18f72b27"
+          test "$(git hash-object lib/v143RenderContract.js)" = "ccbb93c48982798cc474309fd981f6ca02d5c8d4"
+          test "$(git hash-object validation/v145_rhythm_decoder/score_offline_stage3_candidate.py)" = "d208abb3f180f8375d57d786941ff49d6813de1c"
+          test "$(git hash-object modal/tests/test_v145_rhythm_stage3_offline_score.py)" = "d8b3770ac7f3ba18123122f19fad895257998c25"
+          test "$(git hash-object debug/v145-rhythm-decoder/proofs/cpu-stage3-evaluation-harness-proof.json)" = "81c10bdcc39ce9e371fda60d2c3d107e671b8790"
+          test "$(git hash-object validation/rhythm_holdout/score_rhythm_holdout.py)" = "cc4bf61a99f22bf87a6c255e5a81220fbc82223b"
+          test "$(git hash-object validation/v144_rhythm_calibration/score_selected_conjunction_candidate.py)" = "1ca2b8550d6c08e793f26b3aa91b99fb44fa7ddb"
+
+      - name: Independently validate sealed Phase A artifact before calibration
+        shell: bash
+        run: |
+          set -euo pipefail
+          python - <<'PY'
+          import json, sys
+          from pathlib import Path
+          sys.path.insert(0, 'validation/rhythm_holdout')
+          from canonical import canonical_events, sha256_json
+          candidate = json.loads(Path('debug/v146-rhythm-artifact/generated-only-candidate.json').read_text(encoding='utf-8'))
+          proof = json.loads(Path('debug/v146-rhythm-artifact/generated-only-candidate-proof.json').read_text(encoding='utf-8'))
+          assert candidate['schemaVersion'] == 14503
+          assert candidate['classification'] == 'v145-rhythm-stage3-offline-generated-only-candidate'
+          assert candidate['evaluationRole'] == 'generated-only-pre-reference-candidate'
+          assert candidate['instrument'] == 'rhythm'
+          events = canonical_events(candidate['renderEvents'])
+          event_sha = sha256_json(events)
+          assert len(events) == 1209
+          assert event_sha == '2de0a686cfd797a19aa02af735aa2bfaf0e65245ec85a5148c71f8b8b3a77c40'
+          assert event_sha == candidate['candidate']['eventSha256'] == proof['candidateEventSha256']
+          assert [int(row['eventIndex']) for row in events] == list(range(1209))
+          assert {int(row['measure']) for row in events} == set(range(1,114))
+          assert candidate['candidate']['generatedMeasureCount'] == proof['generatedMeasureCount'] == 113
+          assert proof['schemaVersion'] == 14601
+          assert proof['referenceFree'] is True
+          assert proof['acceptedManifestRead'] is False
+          assert proof['realGoldRead'] is False
+          assert proof['calibrationScoreRun'] is False
+          assert proof['alternateCandidateConstructed'] is False
+          assert proof['acceptedBaselineChanged'] is False
+          assert candidate['safety']['referenceFree'] is True
+          assert candidate['safety']['professionalReferenceUsed'] is False
+          assert candidate['safety']['referenceRuntimeInputUsed'] is False
+          assert candidate['safety']['goldInputUsed'] is False
+          assert candidate['safety']['acceptedBaselineChanged'] is False
+          PY
+
+      - name: Re-prove frozen evaluator synthetic ordering
+        run: |
+          python -m py_compile validation/v145_rhythm_decoder/score_offline_stage3_candidate.py
+          python -m unittest modal.tests.test_v145_rhythm_stage3_offline_score -v
+
+      - name: Freeze exact persisted candidate before calibration access
+        shell: bash
+        run: |
+          set -euo pipefail
+          mkdir -p .v146/phase-b/freeze
+          python - <<'PY'
+          import json
+          from pathlib import Path
+          candidate = json.loads(Path('debug/v146-rhythm-artifact/generated-only-candidate.json').read_text(encoding='utf-8'))
+          payload = {
+              'instrument': 'rhythm',
+              'renderEvents': candidate['renderEvents'],
+              'tempoBpm': 129.19921875,
+              'timeSignature': '4/4',
+              'tuning': 'E Standard',
+              'structuredMode': True,
+              'referenceFree': True,
+              'professionalReferenceUsed': False,
+              'referenceRuntimeInputUsed': False,
+              'runtimeLabelsRequired': False,
+              'v143RuntimeSafetyVerified': True,
+          }
+          Path('.v146/phase-b/freeze-input.json').write_text(json.dumps(payload,separators=(',',':'))+'\n', encoding='utf-8')
+          PY
+          python validation/rhythm_holdout/freeze_rhythm_analysis.py \
+            .v146/phase-b/freeze-input.json .v146/phase-b/freeze \
+            --source-commit "${GITHUB_SHA}" \
+            > .v146/phase-b/freeze.log
+
+      - name: Validate exact persisted candidate through renderer contract
+        shell: bash
+        run: |
+          set -euo pipefail
+          cp lib/v143RenderContract.js .v146/phase-b/v143RenderContract.mjs
+          node --input-type=module <<'NODE'
+          import fs from 'node:fs/promises';
+          import { validateV143RenderEvents } from './.v146/phase-b/v143RenderContract.mjs';
+          const candidate = JSON.parse(await fs.readFile('debug/v146-rhythm-artifact/generated-only-candidate.json','utf8'));
+          const events = validateV143RenderEvents(candidate.renderEvents || []);
+          if (events.length !== 1209) throw new Error(`renderer contract rejected event count: ${events.length}`);
+          await fs.writeFile('.v146/phase-b/renderer-event-evidence.json', JSON.stringify({
+            schemaVersion:1,
+            renderEvents:events,
+            runtimeSafetyVerified:true,
+            runtimeLabelsRequired:false,
+            referenceOpened:false,
+            professionalReferenceUsed:false,
+            productionModified:false
+          })+'\n');
+          NODE
+
+      - name: Prove PDF event fidelity before calibration access
+        shell: bash
+        run: |
+          set -euo pipefail
+          python validation/rhythm_holdout/verify_pdf_event_fidelity.py \
+            .v146/phase-b/freeze .v146/phase-b/renderer-event-evidence.json \
+            > .v146/phase-b/pdf-event-fidelity.log
+          python - <<'PY'
+          import json
+          from pathlib import Path
+          candidate = json.loads(Path('debug/v146-rhythm-artifact/generated-only-candidate.json').read_text(encoding='utf-8'))
+          fidelity = json.loads(Path('.v146/phase-b/freeze/rhythm-pdf-event-fidelity.json').read_text(encoding='utf-8'))
+          expected = '2de0a686cfd797a19aa02af735aa2bfaf0e65245ec85a5148c71f8b8b3a77c40'
+          assert fidelity['passed'] is True
+          assert fidelity['pdfEventFidelity'] == 1.0
+          assert fidelity['frozenEventCount'] == fidelity['pdfEventCount'] == 1209
+          assert fidelity['frozenEventSha256'] == fidelity['pdfEventSha256'] == expected
+          assert candidate['candidate']['eventSha256'] == expected
+          PY
+
+      - name: Evaluate the already-frozen artifact exactly once
+        shell: bash
+        run: |
+          set -euo pipefail
+          python validation/v145_rhythm_decoder/score_offline_stage3_candidate.py \
+            .v146/phase-b/freeze \
+            debug/v146-rhythm-artifact/generated-only-candidate.json \
+            debug/v144-rhythm-calibration/reference/professional-rhythm-gold-reference.json \
+            debug/v144-rhythm-calibration/selected/v144-singleton-onset-replacement-selected-baseline.json \
+            debug/v146-rhythm-artifact/calibration-score.json \
+            > .v146/phase-b/evaluation.log
+
+      - name: Verify score report and create observational Phase B proof
+        shell: bash
+        env:
+          RUN_ID: ${{ github.run_id }}
+          RUN_ATTEMPT: ${{ github.run_attempt }}
+          JOB: ${{ github.job }}
+          HEAD_SHA: ${{ github.sha }}
+        run: |
+          set -euo pipefail
+          python - <<'PY'
+          import json
+          import os
+          from pathlib import Path
+          candidate = json.loads(Path('debug/v146-rhythm-artifact/generated-only-candidate.json').read_text(encoding='utf-8'))
+          construction = json.loads(Path('debug/v146-rhythm-artifact/generated-only-candidate-proof.json').read_text(encoding='utf-8'))
+          fidelity = json.loads(Path('.v146/phase-b/freeze/rhythm-pdf-event-fidelity.json').read_text(encoding='utf-8'))
+          report = json.loads(Path('debug/v146-rhythm-artifact/calibration-score.json').read_text(encoding='utf-8'))
+          expected = '2de0a686cfd797a19aa02af735aa2bfaf0e65245ec85a5148c71f8b8b3a77c40'
+          assert report['schemaVersion'] == 14504
+          assert report['classification'] == 'v145-rhythm-stage3-offline-calibration-score'
+          assert report['evaluationRole'] == 'calibration-benchmark-not-unseen-holdout'
+          assert report['mayClaimUnseenGeneralization'] is False
+          assert report['candidate']['eventCount'] == 1209
+          assert report['candidate']['eventSha256'] == expected
+          assert report['candidate']['generatedMeasureCount'] == 113
+          assert report['candidate']['pdfEventFidelity'] == 1.0
+          assert report['reference']['openedOnlyAfterPreReferenceGate'] is True
+          assert report['safety']['referenceOpenedOnlyAfterPreReferenceGate'] is True
+          assert report['safety']['candidateMutatedDuringEvaluation'] is False
+          assert report['safety']['acceptedBaselineChanged'] is False
+          assert report['safety']['promotionAllowed'] is False
+          assert report['safety']['modalGpuUsed'] is False
+          assert report['safety']['liveAudioBenchmarkRun'] is False
+          proof = {
+              'schemaVersion': 14602,
+              'proofType': 'v146-rhythm-fixed-artifact-calibration-evaluation',
+              'branch': 'v143-contextual-prune-lobo',
+              'workflowRunId': int(os.environ['RUN_ID']),
+              'workflowRunAttempt': int(os.environ['RUN_ATTEMPT']),
+              'workflowJob': os.environ['JOB'],
+              'workflowHeadSha': os.environ['HEAD_SHA'],
+              'phaseBPreregistrationBlob': '82bd04d819f26106a831f67a1a61ccba6e876c08',
+              'phaseACandidateGitBlob': '61bda87e4a16b752bfaaf68c2d51e7020f31a7f8',
+              'phaseAProofGitBlob': 'abb8fcd1726bf9b8caa5bf8432adae2c6915a483',
+              'candidateEventCount': 1209,
+              'candidateEventSha256': expected,
+              'generatedMeasureCount': 113,
+              'phaseAChangedEventCount': construction['changedEventCount'],
+              'phaseAChangedFieldCounts': construction['changedFieldCounts'],
+              'pdfEventFidelity': fidelity['pdfEventFidelity'],
+              'pdfEventSha256': fidelity['pdfEventSha256'],
+              'candidateGatedMetrics': report['candidate']['gatedMetrics'],
+              'candidateCriticalMismatchCount': report['candidate']['criticalMismatchCount'],
+              'candidateMinusAcceptedGatedMetricDeltas': report['acceptedComparison']['candidateMinusAcceptedGatedMetricDeltas'],
+              'criticalMismatchDelta': report['acceptedComparison']['criticalMismatchDelta'],
+              'acceptedBaselineChanged': False,
+              'promotionAllowed': False,
+              'mayClaimUnseenGeneralization': False,
+              'candidateMutatedDuringEvaluation': False,
+              'referenceOpenedOnlyAfterPreReferenceGate': True,
+              'modalGpuUsed': False,
+              'liveAudioBenchmarkRun': False,
+          }
+          Path('debug/v146-rhythm-artifact/calibration-evaluation-proof.json').write_text(
+              json.dumps(proof, indent=2, sort_keys=True)+'\n', encoding='utf-8'
+          )
+          PY
+
+      - name: Persist only Phase B score and proof
+        shell: bash
+        run: |
+          set -euo pipefail
+          git add \
+            debug/v146-rhythm-artifact/calibration-score.json \
+            debug/v146-rhythm-artifact/calibration-evaluation-proof.json
+          staged="$(git diff --cached --name-only)"
+          expected=$'debug/v146-rhythm-artifact/calibration-evaluation-proof.json\ndebug/v146-rhythm-artifact/calibration-score.json'
+          test "$staged" = "$expected"
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git commit -m 'v146 persist fixed-artifact calibration evaluation'
+          for attempt in 1 2 3 4 5; do
+            git fetch origin v143-contextual-prune-lobo
+            if git rebase origin/v143-contextual-prune-lobo && git push origin HEAD:v143-contextual-prune-lobo; then exit 0; fi
+            git rebase --abort 2>/dev/null || true
+            sleep $((attempt * 2))
+          done
+          exit 1
