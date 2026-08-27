@@ -1,0 +1,53 @@
+{
+  "schema": "dadrock.tabs.v148.phase-c-score-recovery-preregistration.v1",
+  "classification": "infrastructure-only-score-recovery-frozen",
+  "branch": "v143-contextual-prune-lobo",
+  "sourceHead": "76b433fb91eb6d29775eb69b1b542738c268562e",
+  "authorizationScopePreserved": "exactly-one-v148-singleton-only-gold-calibration-score",
+  "priorExecution": {
+    "firstReferenceFreePreflightFailureRunId": "33045467996",
+    "consumedAttemptRunId": "33045568440",
+    "consumedAttemptCommit": "e34a3b7b8920cdce5f627bc20ad993b144cffc48",
+    "goldReadCountKnown": 1,
+    "referenceParsed": false,
+    "historicalScoreCallCount": 0,
+    "scoreResultPersisted": false
+  },
+  "diagnosis": {
+    "path": "debug/v148-singleton-only/phase-c-score-constant-diagnosis.json",
+    "gitBlob": "aaf74ffe149ec0c5943d3f665611c5dad70cba80",
+    "v148ExpectedGoldShaLength": 65,
+    "v147ExpectedGoldShaLength": 64,
+    "v147AndV148ConstantsEqual": false,
+    "rootCause": "V148 frozen runner contains a malformed 65-character expected Gold SHA constant; historical V147 runner contains the valid 64-character expected SHA used successfully by the same historical scoring chain."
+  },
+  "frozenScientificInputs": {
+    "candidateCanonicalEventSha256": "1be67004dea62b14740241b536339bb7cad2ecf3ee9e98bfb6109f67e4e1b1fa",
+    "candidateGitBlob": "0d3df7336db965dc111fec067d0abe75ea3926cc",
+    "constructionProofGitBlob": "e736afa242d597dddc4aa82cc3245d665ad0861f",
+    "pdfEvidenceGitBlob": "9397d5ff55d09194e7e8553ed0a714ce1962e8c7",
+    "authorizationGitBlob": "2647f1b985339f80b7b9d09afea3eebe49fdabb0",
+    "v148FrozenScorerGitBlob": "8137734218a722bb12f364ecfea3d1b8e526cc2c",
+    "historicalV147ScorerGitBlob": "74b31168b629812acde874b89dfcdf022acf987d",
+    "historicalV147ScoreResultGitBlob": "971359f7dc645169f0f2ef5f084d0610af8e5cc3",
+    "historicalWrapperGitBlob": "1ca2b8550d6c08e793f26b3aa91b99fb44fa7ddb",
+    "coreScorerGitBlob": "cc4bf61a99f22bf87a6c255e5a81220fbc82223b",
+    "canonicalAdapterGitBlob": "088d44827fb23e20d9aeeb4944a672989af5846c"
+  },
+  "recoveryPolicy": {
+    "changeScientificCandidate": false,
+    "changeScoringFunction": false,
+    "changeMetrics": false,
+    "changeBaseline": false,
+    "changeThresholdsOrWeights": false,
+    "candidateSearch": false,
+    "audioOrCqt": false,
+    "modalOrGpu": false,
+    "production": false,
+    "patchOnlyMalformedExpectedGoldShaInMemory": true,
+    "patchSource": "validated 64-character historical V147 expected Gold SHA, cross-checked against the already-persisted successful V147 score result reference SHA",
+    "maximumAdditionalHistoricalScoreCalls": 1,
+    "maximumTotalV148HistoricalScoreCalls": 1
+  },
+  "executionRule": "Verify all frozen identities and prove prior V148 scoreCallCount=0; recover only the malformed expected Gold SHA in memory from the validated historical V147 runner/result; then allow the unchanged frozen V148 main path to reread/verify Gold, parse it, and invoke the historical scorer at most once. Persist and self-seal immediately."
+}
