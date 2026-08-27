@@ -89,3 +89,12 @@ Song: **Lenny Kravitz — Are You Gonna Go My Way**.
 3. Assemble one immutable scorer reference payload with authorization flags and frozen Rhythm/Lead/Bass rows. Verify its identity before any score call.
 4. Score exact frozen combined Guitar first and Bass second **exactly once** with `score_frontend_reference.py`; interpret preregistered gates; never retune this consumed output afterward.
 5. Only after acoustic recognition is scored/frozen: continue Rhythm/Lead role separation, fret/string assignment, techniques, and PDF work.
+
+## V154 Rhythm scorer-ready normalization — COMPLETE / FROZEN
+- One-use CPU GitHub Actions run `33121732460` completed successfully and sealed its workflow.
+- Frozen source: `research/v154-professional-references/rhythm-professional-reference.json`, SHA256 `18fd868ae960dfcdd1ffb0110f1a9dfd8acc2ffeb46e247d1116cd54291526ac`.
+- Frozen scorer-ready output: `research/v154-professional-references/rhythm-professional-reference-scorer-ready.json`, SHA256 `d6c9416979f25e6a81b9cd4583389b584a59421a0529fcccb4ca6f5dd47e679f`.
+- Receipt: `research/v154-professional-references/rhythm-professional-reference-scorer-ready-receipt.json`; Git blob `a62aad39bbc8a05c38c03c1461fc750246110270`.
+- Deterministic flatten: 113 measures, 603 source events, **946 scorer rows**, MIDI 40–71, step range 0–15, exact duplicate-row extras 0.
+- Candidate read **NO**; generated candidate modified **NO**; reference-facing score calls **0**; human correction **NO**; threshold sweep **NO**; Modal/L4/CUDA/GPU **NO**; `main`/Production modified **NO**.
+- Next active task: Bass exact rhythmic normalization from canonical source notation. Lead timing remains blocked until the actual 22 Lead source pages are recovered.
