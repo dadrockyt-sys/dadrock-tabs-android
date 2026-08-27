@@ -1,0 +1,146 @@
+name: V154 Normalize Rhythm Reference Once
+
+on:
+  push:
+    branches:
+      - v143-contextual-prune-lobo
+
+permissions:
+  contents: write
+
+jobs:
+  normalize-rhythm:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: v143-contextual-prune-lobo
+          fetch-depth: 1
+
+      - name: Guard branch and normalize frozen Rhythm reference
+        shell: bash
+        run: |
+          set -euo pipefail
+          test "${GITHUB_REF_NAME}" = "v143-contextual-prune-lobo"
+          python3 - <<'PY'
+          import hashlib
+          import json
+          from pathlib import Path
+
+          src = Path('research/v154-professional-references/rhythm-professional-reference.json')
+          out_dir = Path('research/v154-professional-references/scorer-ready')
+          out = out_dir / 'rhythm-scorer-ready.json'
+          receipt = out_dir / 'rhythm-scorer-ready-receipt.json'
+
+          expected_source_sha256 = '18fd868ae960dfcdd1ffb0110f1a9dfd8acc2ffeb46e247d1116cd54291526ac'
+          source_bytes = src.read_bytes()
+          actual_source_sha256 = hashlib.sha256(source_bytes).hexdigest()
+          if actual_source_sha256 != expected_source_sha256:
+              raise SystemExit(f'Rhythm source SHA256 mismatch: {actual_source_sha256}')
+
+          payload = json.loads(source_bytes)
+          if payload.get('instrument') != 'rhythm':
+              raise SystemExit('Rhythm source instrument mismatch')
+          measures = payload.get('measures')
+          if not isinstance(measures, list) or len(measures) != 113:
+              raise SystemExit(f'Expected 113 Rhythm measures, got {len(measures) if isinstance(measures, list) else type(measures)}')
+
+          rows = []
+          event_count = 0
+          for measure_obj in measures:
+              measure = int(measure_obj['measure'])
+              if not 1 <= measure <= 113:
+                  raise SystemExit(f'Invalid measure {measure}')
+              events = measure_obj.get('events', [])
+              event_count += len(events)
+              for event_index, event in enumerate(events):
+                  step = float(event['step'])
+                  if not 0.0 <= step <= 15.999999:
+                      raise SystemExit(f'Invalid step m{measure}: {step}')
+                  notes = event.get('notes', [])
+                  if not isinstance(notes, list):
+                      raise SystemExit(f'Invalid notes list m{measure} event {event_index}')
+                  for note_index, note in enumerate(notes):
+                      midi = int(note['midi'])
+                      if not 0 <= midi <= 127:
+                          raise SystemExit(f'Invalid MIDI m{measure}: {midi}')
+                      rows.append({
+                          'measure': measure,
+                          'step': int(step) if step.is_integer() else step,
+                          'midi': midi,
+                          'sourceEventIndex': event_index,
+                          'sourceNoteIndex': note_index,
+                      })
+
+          if event_count != 603:
+              raise SystemExit(f'Expected 603 Rhythm events, got {event_count}')
+          if len(rows) != 946:
+              raise SystemExit(f'Expected 946 Rhythm note rows, got {len(rows)}')
+
+          scorer_rows = [
+              {'measure': row['measure'], 'step': row['step'], 'midi': row['midi']}
+              for row in rows
+          ]
+          scorer_keys = [(r['measure'], float(r['step']), r['midi']) for r in scorer_rows]
+          if scorer_keys != sorted(scorer_keys, key=lambda x: (x[0], x[1], x[2])):
+              # Input visual order is authoritative; scorer is input-order invariant. We retain source order.
+              pass
+
+          out_payload = {
+              'schema': 'dadrock.tabs.v154.professional-reference.part-scorer-ready.v1',
+              'status': 'FROZEN_SCORER_READY',
+              'song': {'artist': 'Lenny Kravitz', 'title': 'Are You Gonna Go My Way'},
+              'part': 'rhythm',
+              'grid': {'stepsPerBeat': 4, 'stepsPerMeasure': 16, 'timeSignature': '4/4'},
+              'source': {
+                  'path': str(src),
+                  'sha256': actual_source_sha256,
+                  'expectedGitBlob': '248741bade9665a34648c59a2994bd27d73fc406',
+              },
+              'normalizationPolicy': {
+                  'losslessFlattenOnly': True,
+                  'timingInferred': False,
+                  'referenceOnly': True,
+                  'generatedCandidateRead': False,
+                  'scoringPerformed': False,
+              },
+              'counts': {'measures': 113, 'events': event_count, 'notes': len(scorer_rows)},
+              'notes': scorer_rows,
+          }
+
+          out_dir.mkdir(parents=True, exist_ok=True)
+          out_bytes = (json.dumps(out_payload, indent=2, sort_keys=True) + '\n').encode('utf-8')
+          out.write_bytes(out_bytes)
+          out_sha256 = hashlib.sha256(out_bytes).hexdigest()
+
+          receipt_payload = {
+              'schema': 'dadrock.tabs.v154.professional-reference.normalization-receipt.v1',
+              'part': 'rhythm',
+              'sourcePath': str(src),
+              'sourceSha256': actual_source_sha256,
+              'outputPath': str(out),
+              'outputSha256': out_sha256,
+              'noteCount': len(scorer_rows),
+              'eventCount': event_count,
+              'measureCount': 113,
+              'timingInferred': False,
+              'generatedCandidateRead': False,
+              'scoringPerformed': False,
+          }
+          receipt.write_text(json.dumps(receipt_payload, indent=2, sort_keys=True) + '\n', encoding='utf-8')
+          print(json.dumps(receipt_payload, indent=2, sort_keys=True))
+          PY
+
+      - name: Commit frozen Rhythm scorer reference and seal workflow
+        shell: bash
+        run: |
+          set -euo pipefail
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          rm .github/workflows/v154-normalize-rhythm-once.yml
+          git add research/v154-professional-references/scorer-ready/rhythm-scorer-ready.json \
+                  research/v154-professional-references/scorer-ready/rhythm-scorer-ready-receipt.json \
+                  .github/workflows/v154-normalize-rhythm-once.yml
+          git commit -m "v154: freeze scorer-ready Rhythm reference"
+          git push origin HEAD:v143-contextual-prune-lobo
