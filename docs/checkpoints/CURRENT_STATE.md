@@ -477,3 +477,10 @@ Active phase: **V147 Phase C REAL-AUDIO ARTIFACT-FIRST CONSTRUCTION = GO / SEALE
 - Nearest-gate-excess median **3.087 dB**, p10/p90 **0.590/10.324 dB**.
 - This is **not an accuracy score**. Gold/reference read **NO**; scorer calls **0**; no candidate was constructed or searched; no audio/HPSS/CQT/Modal/GPU; no main/Production/promotion.
 - Phase A analysis authorization is consumed and this workflow is deleted in the same sealing commit. Next step may freeze exactly one V149 construction hypothesis from this reference-free evidence.
+
+
+## V149 Phase B high-confidence singleton construction — ARMED / REFERENCE-FREE — 2026-08-27 UTC
+- Phase A reference-free analysis found **52/106 = 49.06%** of V148 singleton edits below 3 dB weakest-gate clearance and **54/106 = 50.94%** at or above 3 dB.
+- Frozen V149 policy keeps exactly those 54 high-confidence singleton overrides and reverts the other 52 to accepted family #10; no other filter/threshold is allowed.
+- Preregistration blob `d8ebc3d4535ec1484ef64e946089027792715c5c`; construction authorization blob `7f1d47ecee87cd7508addcf86bed5ae56230835e`; constructor blob `c3337550509532a64ed496cc28a1e80bf1642292`; run `33046653117`.
+- At this checkpoint: candidate count **0**; Gold/reference **NO**; scorer calls **0**; audio/HPSS/CQT/Modal/GPU **NO**; main/Production/promotion **NO**.
