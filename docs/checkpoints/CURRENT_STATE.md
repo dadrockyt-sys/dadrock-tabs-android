@@ -2,7 +2,7 @@
 
 Updated: 2026-08-26 America/Montreal
 Branch: `v143-contextual-prune-lobo`
-Active phase: **V147 Phase C preregistration/clarification/support are FROZEN. Pre-audio attempt #1 is CONSUMED/FAILED CLOSED at a workflow-only self-matching input guard before tests/proof. A minimal workflow-only repair is now FROZEN BEFORE CHANGE. Actual audio decoding/analysis remains STOP pending fresh explicit authorization. Accepted Rhythm family #10 remains active.**
+Active phase: **V147 Phase C preregistration/clarification/support are FROZEN. The repaired pre-audio run reached pytest and FAILED CLOSED on one test-fixture construction issue (10 passed, 1 failed) before generated proof execution. A narrow test-fixture-only repair is now FROZEN BEFORE CHANGE. Real-audio decoding/analysis remains STOP pending fresh explicit authorization. Accepted Rhythm family #10 remains active.**
 
 ## Permanent safety / fixed protocol
 - Work only on `v143-contextual-prune-lobo`; never modify/merge `main` or Production.
@@ -53,26 +53,28 @@ Active phase: **V147 Phase C preregistration/clarification/support are FROZEN. P
 
 ### Frozen pre-audio support identities
 - Support `modal/v147_phase_c_artifact_support.py`; blob `f4278ffaacaca3f66baf7a3112e2af0f3bc387cf`.
-- Tests `modal/tests/test_v147_phase_c_artifact_support.py`; blob `e99f791cd0ab401a9e393ab9b89a6b167cee3c7f`.
+- Pre-repair tests `modal/tests/test_v147_phase_c_artifact_support.py`; blob `e99f791cd0ab401a9e393ab9b89a6b167cee3c7f`.
 - Proof harness `modal/v147_phase_c_cpu_proof.py`; blob `531384706b8b7444cf7ed22f414b47215e59b653`; schema `14721`.
 - No audio decode/CQT creation exists in this support code.
 
-### Pre-audio attempt #1 — CONSUMED / PROCEDURAL FAILURE BEFORE TESTS/PROOF
-- Workflow creation/run commit `d523387cbbca0ab3b97d03beee93e0cae6d5527f`; workflow blob `1ebe1a637d16aed29a6583538b98533f14dfbd75`.
-- Run `33036467967`, job `98400119788`: FAILURE.
-- Frozen identity verification passed.
-- `Prove workflow has no real-audio or reference input` failed because the negative greps embedded the exact forbidden strings they searched for, so the workflow matched itself.
-- Tests/proof were skipped. Artifact upload failed because no proof files existed.
-- No proof payload, candidate, audio read/decode, reference/gold access, score, Modal/GPU, or Production work occurred.
-- Never rerun/reinterpret this consumed attempt.
+### Workflow repair and reached-test run
+- Workflow-repair prereg `docs/v147-phase-c-pre-audio-workflow-repair-preregistration.md`; freeze commit `4db0900fbcd140c6b68ed5bf240c990225293f76`; blob `d36b49e3e1519fd68e524a4ec12eba300c14b0da`.
+- Frozen repair applied at commit `b9868084935c6f221a1fb052e1f13926f1615a4e`; repaired workflow blob `60c56eec4d3991b9183cbf8dce6c9fd853d85304`.
+- Run `33036741821`, job `98400937803`: FAILURE after reaching pytest.
+- Frozen identity verification passed. No-real-audio/no-reference guard passed.
+- Pytest result: **10 passed, 1 failed**.
+- Sole failure: `test_materializer_fails_closed_if_v5_source_changes` changed first-event MIDI `56 -> 57` but left stringIndex `3`, fret `6`, so canonical validation correctly raised `pitch-position mismatch: stringIndex=3 fret=6 midi=57 expected=56` before the intended V5 hash-identity gate.
+- Workflow shell stopped at pytest failure, so generated proof did **not** execute. Uploaded artifact `9632270270` contains only the failure evidence path; no GO proof/runtime exists.
+- No candidate, real-audio read/decode, CQT, reference/gold access, score, Modal/GPU, `main`, or Production work occurred.
 
-### Workflow-only repair — FROZEN BEFORE CHANGE
-- Repair prereg `docs/v147-phase-c-pre-audio-workflow-repair-preregistration.md`.
-- Freeze commit `4db0900fbcd140c6b68ed5bf240c990225293f76`.
-- Frozen repair prereg blob `d36b49e3e1519fd68e524a4ec12eba300c14b0da`.
-- Authorized behavior change only: replace the two self-matching negative grep assertions with an inline Python source-text guard that reconstructs the forbidden reference filename and raw-audio SHA from split fragments, then asserts the complete strings are absent. Keep `test ! -e debug/v147-phase-c-real-audio` unchanged.
-- All prereg/clarification/V145/V147/support/test/proof/canonical/V144 transform identities and all generated cases/algorithms/thresholds remain unchanged.
-- One fresh repository-native CPU/generated/reference-free execution is allowed after repair. If it reaches tests/proof and fails, STOP; no second proof run.
+### Test-fixture-only repair — FROZEN BEFORE CHANGE
+- Prereg `docs/v147-phase-c-pre-audio-test-fixture-repair-preregistration.md`.
+- Freeze commit `81f6db17acf9265695c08824037b416515f03b00`.
+- Frozen prereg blob `aa74555976b826a4595cf1f472a2be0a173fb3d5`.
+- Authorized test change only: in `test_materializer_fails_closed_if_v5_source_changes`, retain the existing first-event `midi + 1` mutation and add exactly `fret + 1` on that same event so the mutated event remains a valid guitar position and reaches the intended exact V5 identity-hash guard.
+- Keep expected exception unchanged: `ValueError` matching `V5 source identity mismatch`; do **not** weaken to generic fail-closed acceptance.
+- Authorized workflow change only: replace old test blob identity with the new repaired test blob identity (and optionally verify this repair-prereg blob for provenance). No generated proof cases/logic or frozen algorithm identities may change.
+- Exactly one new CPU/generated/reference-free pre-audio verification run is authorized after repair/checkpoint. If it passes, persist evidence and seal/delete workflow. If a new substantive failure appears, STOP/checkpoint.
 
 ## Frozen Phase-C front end for later separately authorized audio execution
 - mono 22050 Hz; HPSS margin `(1.0,6.0)`; CQT hop 128; 48 bins/octave; fmin MIDI 40; 243 bins.
@@ -91,14 +93,16 @@ Active phase: **V147 Phase C preregistration/clarification/support are FROZEN. P
 
 ## EXPLICIT NEXT STEPS
 1. Keep V146, V147 A, and V147 B sealed; family #10 remains accepted.
-2. Apply exactly the frozen workflow-only repair; checkpoint repaired workflow identity.
-3. Execute exactly one fresh CPU/generated/reference-free pre-audio run. No real audio may be supplied/read.
-4. Persist exact proof/runtime/run evidence; checkpoint; delete/seal workflow; checkpoint again.
-5. **STOP before actual audio decoding/CQT analysis. Fresh explicit authorization is required for real-audio execution.**
-6. Phase D/reference scoring remains unauthorized until a separately frozen protocol after a Phase-C real-audio GO artifact.
+2. Apply exactly the frozen test-fixture repair (`midi +1`, `fret +1` on the same first V5 event); checkpoint new test blob.
+3. Update only the one-use workflow test-blob identity (and provenance guard if added); checkpoint workflow blob.
+4. Execute exactly one new CPU/generated/reference-free pre-audio verification run. No real audio may be supplied/read.
+5. If GO, persist exact run/job/artifact/proof/runtime identities; checkpoint; delete/seal workflow; checkpoint again.
+6. **STOP before actual audio decoding/CQT analysis. Fresh explicit authorization is required for real-audio execution.**
+7. Phase D/reference scoring remains unauthorized until a separately frozen protocol after a Phase-C real-audio GO artifact.
 
 ## Current stop point
 - Accepted scores **35.4 / 6.7 / 5.5 / 5.8 / 100 / 100**.
 - V147 A GO/SEALED; V147 B GO/SEALED.
-- Phase C pre-audio attempt #1 failed only at procedural self-matching guard before tests/proof; repair is frozen but not yet applied.
+- Phase C pre-audio reached tests; 10/11 passed; one invalid mutation fixture blocked the intended identity-gate assertion.
+- Test-fixture repair is frozen before change at `81f6db17...`; no repair has yet been applied in this checkpoint.
 - No calibration/gold/reference access, real-audio decode, analyzer integration, Modal/L4/GPU, main, or Production changes occurred.
