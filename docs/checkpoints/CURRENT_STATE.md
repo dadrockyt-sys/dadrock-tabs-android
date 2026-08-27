@@ -3,7 +3,7 @@
 Updated: 2026-08-27 UTC
 Branch: `v143-contextual-prune-lobo`
 
-Active phase: **V153 Phase A REFERENCE-FREE STRENGTH RANKING = COMPLETE / RESULT PERSISTED / WORKFLOW SEAL PENDING. Unique strongest event = 347. STOP BEFORE CONSTRUCTION. V152 remains COMPLETE / SEALED. Historical V147 Phase C real-audio remains COMPLETE / SEALED.**
+Active phase: **V153 Phase A REFERENCE-FREE STRENGTH RANKING = COMPLETE / SEALED. Unique strongest event = 347. STOP BEFORE CONSTRUCTION. V152 remains COMPLETE / SEALED. Historical V147 Phase C real-audio remains COMPLETE / SEALED.**
 
 ## Preserved historical checkpoint
 - Full pre-compaction history is preserved byte-for-byte at `docs/checkpoints/archive/CURRENT_STATE-pre-phase-c-auth-intake-20260827.md`.
@@ -25,7 +25,7 @@ Active phase: **V153 Phase A REFERENCE-FREE STRENGTH RANKING = COMPLETE / RESULT
 - Durable V152 score SHA256 `cc549c6f0a33c0b90648433494ef36a31b5647191058e28b9ea089f12cab7ef4`; run `33050114109`.
 - V152 score authorization is consumed; do not rescore V152.
 
-## V153 Phase A — COMPLETE / REFERENCE-FREE
+## V153 Phase A — COMPLETE / SEALED / REFERENCE-FREE
 - Fresh user authorization covered exactly one V153 Phase A deterministic reference-free ranking over `[132, 347, 457]`.
 - Authorization record `debug/v153-reference-free-strength/phase-a-authorization.json`; blob `46f38b384d47e9ffc38de3e2bc6c3cfe60bf9642`; commit `52a39b8e6553ae628e8d965e0fe5a4b7e74e9c7f`.
 - Preregistration `debug/v153-reference-free-strength/phase-a-preregistration.json`; blob `449d668c5959e97f8f1172bc697a9578c4df03f6`; commit `824ec7ce963b1f0ae213be3db7ec2e26d3a72a88`.
@@ -40,6 +40,8 @@ Active phase: **V153 Phase A REFERENCE-FREE STRENGTH RANKING = COMPLETE / RESULT
 - Gate: **`GO_UNIQUE_WINNER`**.
 - Frozen ranking order: **`[347, 132, 457]`**.
 - Unique strongest event: **`347`**.
+- One-use workflow `.github/workflows/v153-phase-a-reference-free-strength-once.yml` was deleted/sealed at commit **`cf00747a8c2b40089ebb82e7a64e377d4d4a78f3`** after the successful result was persisted.
+- V153 Phase A authorization is consumed; the durable sentinel plus deleted workflow prevent legitimate rerun.
 
 ### Frozen evidence tuples
 - Event `347` — measure 35, step 9, MIDI `62 -> 61`: tuple **`[2, 2, 2, 3.5114020000000004]`**.
@@ -75,11 +77,11 @@ Active phase: **V153 Phase A REFERENCE-FREE STRENGTH RANKING = COMPLETE / RESULT
 ## Authoritative stop point
 - V147 Phase C real-audio: **COMPLETE / SEALED**.
 - V152: **COMPLETE / SEALED; best scored result**.
-- V153 Phase A ranking: **COMPLETE; UNIQUE WINNER = EVENT 347**.
+- V153 Phase A ranking: **COMPLETE / SEALED; UNIQUE WINNER = EVENT 347**.
 - V153 candidate construction: **NOT AUTHORIZED / NOT STARTED**.
 - New Gold/reference read: **NO**.
 - New score call: **NO**.
 - New candidate construction: **NO**.
 - New audio/GPU execution: **NO**.
 - Main/Production modification: **NO**.
-- Immediate administrative action: delete/seal `.github/workflows/v153-phase-a-reference-free-strength-once.yml`, checkpoint the seal, then STOP.
+- Next executable boundary requires fresh explicit authorization for exactly **one V153 event-347 candidate construction** from the accepted baseline plus only the frozen V152 row for event 347, with no Gold/reference or score during construction.
