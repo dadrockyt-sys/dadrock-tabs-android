@@ -1,0 +1,37 @@
+{
+  "schema": "dadrock.tabs.v151.positive-consensus.phase-a-preregistration.v1",
+  "classification": "reference-free-positive-consensus-analysis-frozen",
+  "branch": "v143-contextual-prune-lobo",
+  "basis": {
+    "v150CandidateEventSha256": "72a0582cfc7d03d84cd2f878f191a69b7262b200ce248d1a896207444a3c5e4e",
+    "v150ChangedEvents": 33,
+    "v150PolyphonicChangedEvents": 0,
+    "v150CriticalMismatchCountHistoricalContextOnly": 1720,
+    "acceptedBaselineCriticalMismatchCountHistoricalContextOnly": 1712
+  },
+  "analysisPopulation": "exactly the 33 V150 changed singleton events",
+  "analysisInputs": [
+    "debug/v150-contextual-singleton/candidate/construction-proof.json",
+    "debug/v150-contextual-singleton/phase-a-analysis.json"
+  ],
+  "positiveConsensusDefinition": {
+    "voiceLeading": "contextRelationship == strict-both-sides-better",
+    "pitchClassRecurrence": "pitchClassSupportClass != original-pitch-class-more-supported",
+    "exactPitchRecurrence": "exactPitchSupportClass != original-exact-pitch-more-supported",
+    "positiveConsensus": "all three predicates true"
+  },
+  "purpose": "Identify the subset of surviving V150 edits supported simultaneously by two-sided local voice-leading and by no contrary local recurrence evidence. This is descriptive only and does not construct or score a candidate.",
+  "forbidden": {
+    "goldOrReferenceRead": true,
+    "priorV149OrV150ScoreResultReadByAnalyzer": true,
+    "candidateConstruction": true,
+    "candidateSearchOrVariants": true,
+    "thresholdSweep": true,
+    "audioReadOrDecode": true,
+    "hpssOrCqtRecompute": true,
+    "modalOrGpu": true,
+    "mainOrProductionModification": true,
+    "automaticPromotion": true
+  },
+  "nextBoundary": "If positive-consensus cases exist, a separate frozen phase may construct exactly one candidate that starts from the accepted baseline and copies only those exact V150 rows."
+}
