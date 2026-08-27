@@ -1,0 +1,40 @@
+{
+  "schema": "dadrock.tabs.v152.active-recurrence.phase-b-preregistration.v1",
+  "classification": "single-both-selected-candidate-frozen",
+  "branch": "v143-contextual-prune-lobo",
+  "basis": {
+    "phaseAAnalysisSha256": "d56fb557406a986b3026e698ded9aa1820b062f13ab82175e249abd421c7137c",
+    "v151CandidateEventSha256": "e6c437f534dfb5523610797c67f8f69176be903456ef4940c3032567b949156b",
+    "v151ChangedEvents": 12,
+    "bothSelectedCount": 3,
+    "bothSelectedPercentOfV151Changes": 25.0
+  },
+  "bothSelectedEventIndices": [132, 347, 457],
+  "singleFrozenConstructionPolicy": {
+    "name": "accepted-baseline-plus-v151-both-selected-active-recurrence-only",
+    "startFrom": "accepted family #10",
+    "copyV151RowOnlyWhen": "eventIndex is exactly one of [132,347,457]",
+    "otherwise": "preserve accepted row exactly",
+    "expectedChangedEvents": 3,
+    "expectedChangedOnsets": 3,
+    "expectedPolyphonicChangedEvents": 0,
+    "expectedEventCount": 1144,
+    "expectedMeasures": 113,
+    "candidateVariants": 1
+  },
+  "hypothesis": "The strongest generalizable singleton overrides are those already satisfying V151 two-sided voice-leading consensus and additionally receiving active selected-note support in both local exact-pitch and pitch-class recurrence channels.",
+  "forbidden": {
+    "alternateClassCombination": true,
+    "additionalFilter": true,
+    "thresholdSweep": true,
+    "candidateSearchOrVariants": true,
+    "goldOrReferenceReadDuringConstruction": true,
+    "priorScoreResultReadDuringConstruction": true,
+    "audioReadOrDecode": true,
+    "hpssOrCqtRecompute": true,
+    "modalOrGpu": true,
+    "mainOrProductionModification": true,
+    "automaticPromotion": true
+  },
+  "scoreBoundary": "Persist and seal the exact 3-change candidate before a separate exact-identity single Gold calibration score."
+}
