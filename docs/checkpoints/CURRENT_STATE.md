@@ -467,3 +467,13 @@ Active phase: **V147 Phase C REAL-AUDIO ARTIFACT-FIRST CONSTRUCTION = GO / SEALE
 - V149 Phase A is descriptive and reference-free: exactly the **106 V148 singleton changes** are profiled by frozen audio-evidence confidence features.
 - Preregistration blob `324e9f5bcd7264b3d50f54c51a86ebbf173b5ef6`; analyzer blob `1f13b85110c2ccb6fccdd24bb87b63e64ec490ca`; run `33046424194`.
 - At this checkpoint: Gold/reference read **NO**; scorer calls **0**; candidate construction/search **NO**; audio/HPSS/CQT **NO**; Modal/GPU **NO**; main/Production/promotion **NO**.
+
+
+## V149 Phase A singleton confidence analysis — COMPLETE / SEALED — 2026-08-27 UTC
+- Frozen reference-free analysis completed in run `33046424194` over exactly **106 / 106 V148 singleton edits**.
+- Result: `debug/v149-singleton-confidence/phase-a-analysis.json`; SHA256 **`e18a4a3a3fa41b20793ef742e4f2ffad0e3e4ee1b41a90997ba85d7db4bace08`**.
+- Weakest-gate cumulative populations: `<1 dB` **18/106 = 16.98%**; `<2 dB` **35/106 = 33.02%**; `<3 dB` **52/106 = 49.06%**.
+- Different-string reassignment: **17/106 = 16.04%**.
+- Nearest-gate-excess median **3.087 dB**, p10/p90 **0.590/10.324 dB**.
+- This is **not an accuracy score**. Gold/reference read **NO**; scorer calls **0**; no candidate was constructed or searched; no audio/HPSS/CQT/Modal/GPU; no main/Production/promotion.
+- Phase A analysis authorization is consumed and this workflow is deleted in the same sealing commit. Next step may freeze exactly one V149 construction hypothesis from this reference-free evidence.
