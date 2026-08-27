@@ -20,7 +20,7 @@
     "stepsPerBeat": 4,
     "stepsPerMeasure": 16,
     "measureCount": 113,
-    "stepDurationSeconds": 0.11609907120743034,
+    "stepDurationSeconds": 0.11609977324263039,
     "source": "frozen V147 event_onset_seconds contract"
   },
   "pretrainedStack": {
