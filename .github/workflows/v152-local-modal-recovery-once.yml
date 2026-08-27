@@ -1,0 +1,85 @@
+name: V152 local modal recovery once
+
+on:
+  push:
+    paths:
+      - '.github/workflows/v152-local-modal-recovery-once.yml'
+
+permissions:
+  contents: write
+
+jobs:
+  recover-once:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: v143-contextual-prune-lobo
+          fetch-depth: 0
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12.14'
+      - name: Infrastructure-only local-module preflight
+        run: |
+          set -euo pipefail
+          test ! -e debug/v152-active-recurrence/candidate
+          test ! -e debug/v152-active-recurrence/phase-b-complete-sentinel.json
+          test "$(git hash-object debug/v152-active-recurrence/phase-b-construction-attempt-sentinel.json)" = "c1ebc95e55807260f3b13fefa1652c97476ef6de"
+          test "$(git hash-object validation/v152_active_recurrence/construct_once.py)" = "7cb83979e693203b7f6254a790831b1ca4938420"
+          test "$(git hash-object debug/v152-active-recurrence/local-modal-namespace-recovery-preregistration.json)" = "e1460e0c08766ace87e383960ba01474e567c474"
+          test "$(git hash-object validation/v152_active_recurrence/recover_local_modal_namespace_once.py)" = "f454a78e96edf2749009ebb73d5a9af517fd3a54"
+          python validation/v152_active_recurrence/recover_local_modal_namespace_once.py --help >/dev/null
+      - name: Consume original construction sentinel and checkpoint
+        env:
+          RUN_ID: ${{ github.run_id }}
+          HEAD_SHA: ${{ github.sha }}
+        run: |
+          set -euo pipefail
+          python - <<'PY'
+          import json,os
+          from datetime import datetime,timezone
+          from pathlib import Path
+          p=Path('debug/v152-active-recurrence/phase-b-construction-attempt-sentinel.json'); d=json.loads(p.read_text())
+          if d.get('status')!='ARMED_NOT_CONSUMED' or d.get('candidateConstructedCount')!=0 or d.get('scoreCallCount')!=0: raise SystemExit('original V152 sentinel no longer clean')
+          d['status']='CONSUMED_BEFORE_CONSTRUCTION'; d['runId']=os.environ['RUN_ID']; d['runHeadSha']=os.environ['HEAD_SHA']; d['consumedAtUtc']=datetime.now(timezone.utc).isoformat(); d['infrastructureRecovery']='explicit-local-modal-namespace'; p.write_text(json.dumps(d,indent=2,sort_keys=True)+'\n')
+          cp=Path('docs/checkpoints/CURRENT_STATE.md'); text=cp.read_text(); marker='## V152 Phase B construction — LOCAL MODULE RECOVERY CONSUMED / REFERENCE-FREE — 2026-08-27 UTC'
+          if marker not in text:
+              text += f'''\n\n{marker}\n- Runs `33049594534` and `33049714633` both failed during **preflight**, before the one-use construction sentinel was consumed; V152 candidate count remained **0**, Gold reads **0**, score calls **0**.\n- The second failure proved an installed third-party `modal` package was shadowing the repository-local `modal/` research namespace.\n- Recovery launcher blob `f454a78e96edf2749009ebb73d5a9af517fd3a54` injects only the repository-local `modal/` namespace, then delegates to unchanged scientific constructor blob `7cb83979e693203b7f6254a790831b1ca4938420`.\n- Scientific candidate remains exactly events **[132, 347, 457]**; run `{os.environ['RUN_ID']}`. No Gold/reference/prior score/search/retuning/audio/GPU/Production/promotion.\n'''
+              cp.write_text(text)
+          PY
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add debug/v152-active-recurrence/phase-b-construction-attempt-sentinel.json docs/checkpoints/CURRENT_STATE.md
+          git commit -m 'debug: checkpoint V152 local-module recovery [skip ci]'
+          git push origin HEAD:v143-contextual-prune-lobo
+      - name: Construct exactly one frozen V152 candidate
+        run: |
+          set -euo pipefail
+          python validation/v152_active_recurrence/recover_local_modal_namespace_once.py --output-dir debug/v152-active-recurrence/candidate | tee /tmp/v152-construction.json
+      - name: Verify persist checkpoint and self-seal
+        env:
+          RUN_ID: ${{ github.run_id }}
+        run: |
+          set -euo pipefail
+          python - <<'PY'
+          import hashlib,json,os
+          from datetime import datetime,timezone
+          from pathlib import Path
+          od=Path('debug/v152-active-recurrence/candidate'); proof=json.loads((od/'construction-proof.json').read_text()); pdf=json.loads((od/'pdf-event-fidelity.json').read_text()); m=proof['metrics']; s=proof['safety']
+          assert proof['gate']=='GO'; assert m['changedEventCountVersusAccepted']==3; assert m['changedOnsetCountVersusAccepted']==3; assert m['polyphonicChangedEventsVersusAccepted']==0
+          assert pdf['pdfEventFidelity']==1.0 and pdf['referenceOpened'] is False; assert s['scoreCallCount']==0 and s['goldOrReferenceRead'] is False and s['candidateVariantsConstructed']==1
+          files={}
+          for n in ('candidate.json','construction-proof.json','pdf-event-fidelity.json','preservation-manifest.json'):
+              b=(od/n).read_bytes(); files[n]={'bytes':len(b),'sha256':hashlib.sha256(b).hexdigest()}
+          complete={'schema':'dadrock.tabs.v152.active-recurrence.phase-b-completion.v1','status':'COMPLETE_SEALED_STOP_BEFORE_SCORING','runId':os.environ['RUN_ID'],'completedAtUtc':datetime.now(timezone.utc).isoformat(),'candidateEventSha256':proof['candidateEventSha256'],'changedEvents':3,'changedOnsets':3,'polyphonicChangedEvents':0,'pdfEventFidelity':1.0,'outputIdentities':files,'goldOrReferenceRead':False,'priorScoreResultRead':False,'scoreCallCount':0,'referenceFacingScoringAuthorization':False,'productionIntegrated':False,'automaticPromotion':False}
+          Path('debug/v152-active-recurrence/phase-b-complete-sentinel.json').write_text(json.dumps(complete,indent=2,sort_keys=True)+'\n')
+          cp=Path('docs/checkpoints/CURRENT_STATE.md'); text=cp.read_text(); marker='## V152 Phase B three-note active-recurrence construction — COMPLETE / SEALED / STOP BEFORE SCORING — 2026-08-27 UTC'
+          if marker in text: raise SystemExit('duplicate checkpoint')
+          text += f'''\n\n{marker}\n- Local-module recovery run `{os.environ['RUN_ID']}` constructed the **only** V152 candidate; both prior runs constructed zero.\n- **1144 events / 113 measures / 3 changed singleton events / 3 changed onsets / 0 polyphonic changes**; changed indices `[132, 347, 457]`.\n- Canonical candidate SHA256 **`{proof['candidateEventSha256']}`**; deterministic replay TRUE; timing/metadata, position, and projection violations **0**.\n- PDF/render fidelity **100.000%**. Candidate file SHA256 **`{files['candidate.json']['sha256']}`**; proof SHA256 **`{files['construction-proof.json']['sha256']}`**.\n- Gold/reference/prior score read **NO**; score calls **0**; search/variants/alternate class/filter/threshold/audio/GPU/Production/promotion **NO**.\n- Construction sealed; one exact-identity score is the next boundary.\n'''
+          cp.write_text(text)
+          PY
+          git rm .github/workflows/v152-local-modal-recovery-once.yml
+          if [ -e .github/workflows/v152-active-recurrence-construct-once.yml ]; then git rm .github/workflows/v152-active-recurrence-construct-once.yml; fi
+          git add debug/v152-active-recurrence/candidate debug/v152-active-recurrence/phase-b-complete-sentinel.json docs/checkpoints/CURRENT_STATE.md
+          git commit -m 'debug: persist and seal V152 three-note candidate [skip ci]'
+          git push origin HEAD:v143-contextual-prune-lobo
