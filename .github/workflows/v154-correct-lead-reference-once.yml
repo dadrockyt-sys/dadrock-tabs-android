@@ -1,0 +1,210 @@
+name: V154 correct preserved Lead reference once
+
+on:
+  push:
+    branches:
+      - v143-contextual-prune-lobo
+    paths:
+      - .github/workflows/v154-correct-lead-reference-once.yml
+
+permissions:
+  contents: write
+
+env:
+  BRANCH: v143-contextual-prune-lobo
+  REF: research/v154-professional-references/lead-professional-reference-machine-readable.json
+  PROV: research/v154-professional-references/lead-professional-reference-provenance.json
+  CHECKPOINT: docs/checkpoints/CURRENT_STATE.md
+
+jobs:
+  correct:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: v143-contextual-prune-lobo
+          fetch-depth: 1
+
+      - name: Apply screenshot-line corrections and validate
+        shell: bash
+        run: |
+          set -euo pipefail
+          python - <<'PY'
+          import hashlib, json, subprocess
+          from datetime import datetime, timezone
+          from pathlib import Path
+
+          ref_path=Path('research/v154-professional-references/lead-professional-reference-machine-readable.json')
+          prov_path=Path('research/v154-professional-references/lead-professional-reference-provenance.json')
+          cp_path=Path('docs/checkpoints/CURRENT_STATE.md')
+          ref=json.loads(ref_path.read_text(encoding='utf-8'))
+          ms={m['measure']:m for m in ref['measures']}
+          strings=['e','B','G','D','A','E']
+          open_midi={'e':64,'B':59,'G':55,'D':50,'A':45,'E':40}
+          idx={s:i for i,s in enumerate(strings)}
+
+          def set_string(e,s):
+              e['string']=s; e['stringIndex']=idx[s]
+              if e['kind']=='note': e['midi']=open_midi[s]+int(e['fret'])
+              return e
+
+          def note(s,f,**kw):
+              d={'string':s,'stringIndex':idx[s],'kind':'note','fret':int(f),'midi':open_midi[s]+int(f)}
+              d.update(kw); return d
+
+          def order(evs):
+              for i,e in enumerate(evs): e['visualOrder']=i
+              return evs
+
+          # Measures 25–27 and 55–57: the 13/11 figure is on B, followed by G/D/G,
+          # not the one-string-lower first-pass assignment.
+          for mm in [25,26,27,55,56,57]:
+              ev=ms[mm]['events']
+              assert len(ev)>=6
+              assert [e.get('fret') for e in ev[:6]] == [13,11,12,12,10,12]
+              for e,s in zip(ev[:6],['B','B','G','D','G','G']): set_string(e,s)
+
+          # Chorus triad stacks are printed on B/G/D (not e/B/G).
+          for mm in [35,36,65,66,107,108]:
+              ev=ms[mm]['events']
+              assert len(ev)==18
+              for e in ev:
+                  old=e['string']
+                  assert old in {'e','B','G'}
+                  set_string(e,{'e':'B','B':'G','G':'D'}[old])
+
+          # Solo high-register string-line corrections.
+          set_string(ms[84]['events'][-1],'e')
+          for e in ms[85]['events']: set_string(e,'e')
+          for e,s in zip(ms[86]['events'],['e','e','B','B','B']): set_string(e,s)
+          for e in ms[87]['events']: set_string(e,'B')
+
+          # Measure 89 wraps between two printed systems/pages. The first system ends on B12,
+          # and the continuation begins with a distinct e12; preserve both attacks.
+          ms[89]['events']=order([
+              note('G',12,slurToNext=True),
+              note('G',14,slurFromPrevious=True,slurToNext=True),
+              note('G',12,slurFromPrevious=True),
+              note('D',14),
+              note('G',12),
+              note('G',14),
+              note('G',14,parenthesized=True,continuationOnly=True,bendLabel='full'),
+              note('B',12),
+              note('e',12),
+              note('B',12),
+              note('B',15),
+              note('B',15,parenthesized=True,continuationOnly=True,bendLabel='full'),
+              note('e',12),
+              note('B',15),
+              note('B',12),
+              note('G',14,slideOut=True),
+          ])
+          anns=ms[89].setdefault('annotations',[])
+          msg='visual recheck: first printed system ends B12; wrapped continuation begins with a distinct e12; both are retained'
+          if msg not in anns: anns.append(msg)
+
+          # Recompute counts/audit without introducing scorer timing.
+          all_events=[]
+          for m in ref['measures']:
+              for i,e in enumerate(m['events']): e['visualOrder']=i
+              m['eventCount']=len(m['events'])
+              m['attackLikeEventCount']=sum(1 for e in m['events'] if not e.get('continuationOnly'))
+              all_events.extend(m['events'])
+          pitched=[e for e in all_events if e['kind']=='note']
+          dead=[e for e in all_events if e['kind']=='deadNote']
+          cont=[e for e in all_events if e.get('continuationOnly')]
+          midis=[e['midi'] for e in pitched]
+          for e in pitched:
+              assert e['midi']==open_midi[e['string']]+int(e['fret'])
+              assert 'step' not in e
+          for e in dead:
+              assert e['midi'] is None and e['fret'] is None and 'step' not in e
+          assert [m['measure'] for m in ref['measures']] == list(range(1,114))
+          assert ms[104]['timeSignature']=='2/4'
+          assert [e['string'] for e in ms[25]['events'][:6]]==['B','B','G','D','G','G']
+          assert [e['string'] for e in ms[35]['events'][:3]]==['B','G','D']
+          assert ms[84]['events'][-1]['string']=='e' and ms[84]['events'][-1]['fret']==17
+          assert all(e['string']=='e' for e in ms[85]['events'])
+          assert [e['string'] for e in ms[86]['events']]==['e','e','B','B','B']
+          assert all(e['string']=='B' for e in ms[87]['events'])
+          assert len(ms[89]['events'])==16 and ms[89]['events'][7]['string']=='B' and ms[89]['events'][8]['string']=='e'
+          assert len(all_events)==487 and len(pitched)==476 and len(dead)==11 and len(cont)==23
+          assert min(midis)==45 and max(midis)==81
+
+          ref['audit']={
+              'storedMeasureObjects':113,
+              'eventObjects':487,
+              'pitchedEventObjects':476,
+              'deadNoteObjects':11,
+              'continuationOnlyObjects':23,
+              'observedMidiMin':45,
+              'observedMidiMax':81,
+              'midiMappingErrors':0,
+              'measureSequenceContinuous':True,
+              'scoringStepFieldsPresent':False,
+          }
+          ref['visualCorrectionAudit']={
+              'status':'REVIEWED_AGAINST_REPROVIDED_SCREENSHOTS',
+              'correctedMeasures':[25,26,27,35,36,55,56,57,65,66,84,85,86,87,89,107,108],
+              'basis':'direct staff-line/string-line visual recheck; no horizontal-spacing timing inference',
+              'referenceFacingScoreCalls':0,
+          }
+          ref_path.write_text(json.dumps(ref,indent=2,ensure_ascii=False)+'\n',encoding='utf-8')
+          ref_sha=hashlib.sha256(ref_path.read_bytes()).hexdigest()
+          blob=subprocess.check_output(['git','hash-object',str(ref_path)],text=True).strip()
+
+          prov=json.loads(prov_path.read_text(encoding='utf-8'))
+          mr=prov['machineReadableReference']
+          mr.update({
+              'sha256':ref_sha,
+              'gitBlobSha':blob,
+              'measureCount':113,
+              'eventObjects':487,
+              'pitchedEventObjects':476,
+              'deadNoteObjects':11,
+              'continuationOnlyObjects':23,
+              'observedMidiRange':[45,81],
+              'scoringReady':False,
+              'exactStepTimingFrozen':False,
+          })
+          prov['visualCorrectionAudit']={
+              'correctedAtUtc':datetime.now(timezone.utc).isoformat(),
+              'correctedMeasures':[25,26,27,35,36,55,56,57,65,66,84,85,86,87,89,107,108],
+              'reason':'direct visual staff-line/string-line recheck and split-system measure-89 continuity review',
+              'referenceFacingScoreCallsDuringCorrection':0,
+              'generatedCandidateModified':False,
+          }
+          prov_path.write_text(json.dumps(prov,indent=2,sort_keys=True)+'\n',encoding='utf-8')
+
+          cp=cp_path.read_text(encoding='utf-8')
+          cp=cp.replace('SHA256 `c737c78dbd200e4c759765fbe7c73cd36b674fdcde7c29c6772d40765b4b50a1`; Git blob `c1c173cae68e12e768377de87b0ac855d3af34f4`.', f'SHA256 `{ref_sha}`; Git blob `{blob}`.')
+          old='Coverage: measures 1–113 / 113 measure objects; 486 event objects; 475 pitched event objects; 11 dead-note objects; 23 tie/sustain/bend-continuation-only objects; observed MIDI 45–79; tuning/MIDI mapping errors 0.'
+          new='Coverage: measures 1–113 / 113 measure objects; 487 event objects; 476 pitched event objects; 11 dead-note objects; 23 tie/sustain/bend-continuation-only objects; observed MIDI 45–81; tuning/MIDI mapping errors 0.'
+          assert old in cp
+          cp=cp.replace(old,new)
+          anchor='- Measure 10 green selection highlight is ignored as interface UI. The visible measures 39–40 annotation `Probably a mistake they left in` is preserved as source uncertainty and is not silently repaired. The detached gray dot at measure 81 remains unassigned because its notation/UI meaning is ambiguous.\n'
+          correction='- Direct staff-line recheck corrected string assignments in measures 25–27, 35–36, 55–57, 65–66, 84–87, 89, and 107–108; measure 89 also retains the distinct B12 at the end of the first printed system plus the following e12 at the wrapped continuation. This corrected audit is authoritative for the visual Lead reference.\n'
+          assert anchor in cp
+          if correction not in cp: cp=cp.replace(anchor,anchor+correction)
+          cp_path.write_text(cp,encoding='utf-8')
+
+          print('Lead corrected SHA256',ref_sha)
+          print('Lead Git blob',blob)
+          print('PASS 113 measures / 487 events / 476 pitched / 11 dead / 23 continuations / MIDI 45-81 / no step fields')
+          PY
+
+      - name: Self-seal corrected reference
+        shell: bash
+        run: |
+          set -euo pipefail
+          rm .github/workflows/v154-correct-lead-reference-once.yml
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add research/v154-professional-references/lead-professional-reference-machine-readable.json \
+                  research/v154-professional-references/lead-professional-reference-provenance.json \
+                  docs/checkpoints/CURRENT_STATE.md \
+                  .github/workflows/v154-correct-lead-reference-once.yml
+          git commit -m "research: correct and seal professional Lead reference [skip ci]"
+          git fetch origin "$BRANCH"
+          git rebase "origin/$BRANCH"
+          git push origin HEAD:"$BRANCH"
