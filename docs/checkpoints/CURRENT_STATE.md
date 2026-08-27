@@ -3,7 +3,7 @@
 Updated: 2026-08-27 UTC
 Branch: `v143-contextual-prune-lobo`
 
-Active phase: **V153 Phase D EVENT-347 CPU GOLD ATTRIBUTION = FROZEN / STOP BEFORE EXECUTION. V153 Phase C CPU Gold score is COMPLETE / SEALED. No Modal/L4/CUDA/GPU is authorized or required for Phase D.**
+Active phase: **V153 Phase D EVENT-347 CPU GOLD ATTRIBUTION = COMPLETE / SEALED. The V153 score deficit is fully explained as a measure-level pitch-content histogram effect, not a local timing/chord correctness loss at event 347. CPU-only follow-up may continue; fresh authorization is required only before Modal/L4/CUDA/GPU execution.**
 
 ## Preserved historical checkpoint
 - Full pre-compaction history remains preserved at `docs/checkpoints/archive/CURRENT_STATE-pre-phase-c-auth-intake-20260827.md`; Git blob `f71ba11394e6f2f46843055e748e8717ff484158`.
@@ -89,30 +89,41 @@ Active phase: **V153 Phase D EVENT-347 CPU GOLD ATTRIBUTION = FROZEN / STOP BEFO
 - V153 critical mismatches: **1712**; delta vs accepted baseline **0**; delta vs V152 **0**.
 - V153 is exactly tied with V152 on every reported aggregate score metric and critical mismatch count.
 - Because V153 differs from the accepted baseline only at event `347`, while V152 differed at `132`, `347`, and `457`, the identical V152/V153 aggregate score proves that reverting events `132` and `457` caused **no measurable change in this scorer's aggregate metrics**.
-- The entire measured pitch-content deficit versus accepted baseline remains with event `347` alone: pitch-content F1 delta **`-0.000956937799043156`** (about **-0.096 percentage points**). All other gated metric deltas versus baseline are `0`.
-- This is evidence that the reference-free recurrence ranking selected an event that is structurally/musically supported by its local recurrence evidence but is **not beneficial under the current Gold-calibration aggregate scorer**.
+- The measured pitch-content deficit versus accepted baseline is pitch-content F1 delta **`-0.000956937799043156`** (about **-0.096 percentage points**). All other gated metric deltas versus baseline are `0`.
 
-### V153 Phase C safety record
-- Gold/reference read: **YES — exactly one CPU calibration score**.
-- Score calls: **1**.
-- Candidate search: **NO**.
-- Alternate candidate: **NO**.
-- Candidate modification: **NO**.
-- Threshold/weight/filter/rule tuning: **NO**.
-- Audio recomputation: **NO**.
-- Modal/L4/CUDA/GPU: **NO**.
-- Main/Production integration: **NO**.
-- Automatic promotion: **NO**.
-- The scored V153 candidate is immutable and must not be retuned or rescored.
-
-## V153 Phase D event-347 CPU Gold attribution — FROZEN / BEFORE EXECUTION
+## V153 Phase D event-347 CPU Gold attribution — COMPLETE / SEALED
 - Purpose: explain the exact metric mechanism behind event `347` without modifying or rescoring the sealed V153 candidate.
 - Preregistration: `debug/v153-reference-free-strength/phase-d-event347-attribution-preregistration.json`; Git blob **`5060106c4bf8646562c35dd9b9586e94550de454`**; commit **`6e444d82cc96ddaeb1b864cdb31b378c530ea1bb`**.
 - Frozen analyzer: `validation/v153_reference_free_strength/analyze_event347_gold_attribution.py`; Git blob **`d9847158e4e00ea551d004840f105f65e3b134e1`**; freeze commit **`1fe5ed0ad29cc95b77992224472585fd7e56bdef`**.
-- Inputs are frozen to the immutable V153 candidate, sealed V153 score result, accepted baseline canonical event SHA, Gold SHA `18fd868ae960dfcdd1ffb0110f1a9dfd8acc2ffeb46e247d1116cd54291526ac`, frozen core scorer blob `cc4bf61a99f22bf87a6c255e5a81220fbc82223b`, canonical adapter blob `088d44827fb23e20d9aeeb4944a672989af5846c`, and accepted-family support blob `f4278ffaacaca3f66baf7a3112e2af0f3bc387cf`.
-- Frozen diagnostic computes measure-35 MIDI `62`/`61` multiset contribution, global pitch-content matched-count delta, tolerant pitch/position matching, gross-pitch matching, chord pitch-set/voicing matching, critical-mismatch attribution, and nearby Gold notes.
-- It does **not** invoke the score wrapper, construct candidates, search variants, tune rules, read audio, or use Modal/L4/CUDA/GPU.
-- At this checkpoint Phase D has **not executed** and no attribution output exists yet.
+- Pre-execution checkpoint commit **`5d23bc9150209d2fbd86aa63bf550d26b83aa607`**.
+- One-use workflow arming commit **`cac1ec74bb72c57fd9c1ab6f5eafb16bd90bee59`**; run **`33085177853`**, job **`98562763844`**: **SUCCESS**.
+- Attempt sentinel was committed before Gold attribution at commit **`83419cd3`** with status `CONSUMED_BEFORE_GOLD_ATTRIBUTION`.
+- Result persistence commit **`3db05ab6`**; result path `debug/v153-reference-free-strength/phase-d-event347-attribution.json`; result Git blob **`46d934ee48e125ec91b6fd5a070b081477f34472`**.
+- Artifact `v153-event347-attribution-33085177853`; artifact ID **`9651813267`**; ZIP SHA256 **`b6309bb65ccca0ab0c1af4e99e21b1432ef3fb2688d8d534448e1d35a4ad8e2f`**.
+- One-use workflow `.github/workflows/v153-event347-attribution-once.yml` was deleted/sealed at commit **`5630ae9e0f9244fc7eb010d5a5ef92be0b4c38bd`**.
+
+### Exact Phase D finding
+- Accepted event `347`: measure `35`, step `9`, string `1`, fret `3`, MIDI **62 (D4)**, short sustain, slide-up.
+- V153 event `347`: same measure/step/string/duration/technique, fret `2`, MIDI **61 (C#4)**.
+- Pitch-content uses a multiset of **`(measure, MIDI)`**, independent of the note's step inside the measure.
+- In measure 35, Gold contains **one MIDI 62** and **zero MIDI 61** notes.
+- Accepted generated measure-35 counts: MIDI 62 = `1`, MIDI 61 = `3`. Candidate counts: MIDI 62 = `0`, MIDI 61 = `4`.
+- Therefore the accepted baseline receives one measure-level pitch-content match from MIDI 62; V153 loses that match and gains nothing for the extra MIDI 61. Global pitch-content matched notes change **370 → 369**, producing exactly the observed F1 delta `-0.000956937799043156`.
+- Crucially, event `347` is **unmatched in both accepted and V153 forms** under tolerant pitch timing (±0.5 step), tolerant position timing, gross pitch timing (±2 steps), chord pitch-set matching, and chord voicing matching.
+- There are **no Gold notes at all in measure 35 steps 7–11**, so neither the D4 nor C#4 at step 9 has local Gold timing support.
+- Tolerant pitch matches remain `70 → 70`; tolerant position `57 → 57`; gross pitch `189 → 189`; chord pitch-set `42 → 42`; voicing `42 → 42`; critical mismatches `1712 → 1712`.
+- Scientific interpretation: **the V153 aggregate pitch-content penalty is a coarse measure-level histogram effect, not evidence that the C#4 edit is locally less correct at event 347.** The Gold scorer credits the accepted D4 because a D4 exists elsewhere in the same measure, even though event 347 itself is not timing-matched to that reference note.
+- This means the earlier statement that event 347 alone “carries the entire deficit” is arithmetically true at aggregate-score level, but it must not be interpreted as local note-correctness evidence.
+
+### Phase D safety
+- Gold/reference read: **YES — diagnostic attribution only**.
+- Score wrapper invoked: **NO**.
+- New score calls: **0**; V153 total sealed score calls remains `1`.
+- Candidate modification/construction/variants/search: **NO**.
+- Threshold/weight/filter/rule tuning: **NO**.
+- Audio/HPSS/CQT: **NO**.
+- Modal/L4/CUDA/GPU: **NO**.
+- Main/Production: **NO**.
 
 ## Fixed safety boundary
 - Work only on `v143-contextual-prune-lobo`; never modify/merge/promote `main` or Production.
@@ -127,9 +138,9 @@ Active phase: **V153 Phase D EVENT-347 CPU GOLD ATTRIBUTION = FROZEN / STOP BEFO
 - V153 Phase A ranking: **COMPLETE / SEALED; UNIQUE WINNER = EVENT 347**.
 - V153 Phase B construction: **COMPLETE / SEALED; IMMUTABLE CANDIDATE SHA = `df40a771219fb69ae3c129c90ef5351e64b89006ff678e484741ecf0418e3d4b`**.
 - V153 Phase C CPU Gold score: **COMPLETE / SEALED; V153 == V152 on all reported aggregate score metrics and critical mismatch count**.
-- V153 Phase D CPU Gold attribution: **FROZEN / NOT EXECUTED**.
+- V153 Phase D CPU Gold attribution: **COMPLETE / SEALED; one aggregate pitch-content match loss is fully explained by measure-level MIDI-count accounting, with no local timing/chord/critical-mismatch loss at event 347**.
 - V153 score call count: **1 / SEALED / DO NOT RERUN**.
 - CPU-only follow-up analysis: **PERMITTED AT ASSISTANT DISCRETION**.
 - Modal/L4/CUDA/GPU execution: **REQUIRES FRESH EXPLICIT USER AUTHORIZATION**.
 - Main/Production modification: **NO**.
-- Next executable action is the frozen Phase D CPU attribution only; after persistence and sealing, continue CPU-only interpretation if useful and stop only if the next scientifically justified action requires Modal/L4/CUDA/GPU.
+- Next useful CPU-only work is to map the full temporal content of Gold measure 35 against the accepted/V153 generated measure, locate the Gold MIDI-62 note that supplies the coarse pitch-content credit, and determine whether the current measure-level pitch-content metric should be treated as diagnostic-only for event-level calibration decisions.
