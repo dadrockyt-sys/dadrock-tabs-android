@@ -2,7 +2,7 @@
 
 Updated: 2026-08-26 America/Montreal
 Branch: `v143-contextual-prune-lobo`
-Active phase: **V144 Rhythm baseline preserved; Families #1–#14 fully consumed/sealed. V145 Rhythm Decoder Stage 1 is preregistered, implemented, CPU-proven, and its proof workflow is sealed. Next safe work is a separate CPU-only Stage 2 for runtime timing-grid inference and global sequence decoding. No Modal/L4/GPU without fresh explicit authorization.**
+Active phase: **V144 Rhythm baseline preserved; Families #1–#14 fully consumed/sealed. V145 Stage 1 is CPU-proven and sealed. V145 Stage 2 timing-grid inference + global sequence decoding is now preregistered CPU-only and ready for implementation. No Modal/L4/GPU without fresh explicit authorization.**
 
 ## Permanent safety / fixed protocol
 - Work only on `v143-contextual-prune-lobo`; never modify/merge `main` or Production.
@@ -29,41 +29,39 @@ Active phase: **V144 Rhythm baseline preserved; Families #1–#14 fully consumed
 - Current accepted-baseline FIT residual remains `debug/v144-rhythm-calibration/diagnostics/singleton-baseline-fit-residuals.json`, blob `b9794a7b8a882ba9ade5e8095f112d4be45e47e6`.
 
 ## V145 Stage 1 — FROZEN / IMPLEMENTED / CPU-PROVEN
-- Preregistration `docs/v145-rhythm-decoder-preregistration.md`; commit **`5a5c59d305dffba16090bc7dc37d33ecbb17e295`**.
-- Frozen architecture: **V5 Rhythm-separated events -> normalized evidence -> timing/onset lattice -> pitch lattice -> constrained guitar-state decoder -> candidate event stream -> existing scorer/render/PDF gates**.
-- Protected input: V5 Rhythm-separated output; V5 itself immutable. V5 is register-gated event separation, not waveform/stem separation; ranges bass28-51, rhythm52-63, lead64-76.
-- Core `modal/v145_rhythm_decoder.py`; creation commit `17f08592ece48ee2519d3449f5f6f7d5ff8ffa39`; frozen blob **`2fd979aebb4685e86c7f24a0162f69de306c06e9`**.
-- Tests `modal/tests/test_v145_rhythm_decoder.py`; creation commit `42cb52a86c4f364bdd042620ee13f65a8f43f971`; frozen blob **`9d48b02316f4eb364b163b3027c6c4d79304ac27`**.
-- Implemented deterministic normalization; explicit-grid nearest+neighbor timing lattice; raw-onset preservation; generated-MIDI carry-through; valid standard-guitar positions; unique-string simultaneous states; fret-span guard; continuity-aware fingering; fail-closed undecoded onsets; input immutability; no Modal dependency.
-- Definitive CPU proof workflow run **`33026865312`**, job **`98370167258`**: **COMPLETED / SUCCESS**.
-- Exact identity verification, py_compile, all Stage 1 contract tests, and proof persistence succeeded.
-- Proof `debug/v145-rhythm-decoder/proofs/cpu-core-proof.json`; blob **`978c2b7cd984f2cece23d2bc152f6acca28980e1`**; persistence commit **`5878764dbc747b17578eeeb9955204459adce503`**; schema14501.
-- Proof states: cpuContractTestsPassed=true; runtimeReferenceInput=false; goldInputUsed=false; fitLabelsRead=false; validationLabelsRead=false; canaryLabelsRead=false; modalDependency=false; modalGpuUsed=false; liveAudioBenchmarkRun=false; acceptedBaselineChanged=false.
-- Temporary CPU proof workflow creation commit `8aac002fd53ae65a245ffe932fc543909218b910`; workflow blob `bbe8dd88c50b16cd3151fca1ba02cbfdab3ed6ed`; deletion/sealing commit **`e802d7a867ee5f965be0c6abe51f70b6c0e6af6b`**. Never rerun that workflow.
+- Preregistration `docs/v145-rhythm-decoder-preregistration.md`; commit `5a5c59d305dffba16090bc7dc37d33ecbb17e295`.
+- Core `modal/v145_rhythm_decoder.py`; frozen blob `2fd979aebb4685e86c7f24a0162f69de306c06e9`.
+- Tests `modal/tests/test_v145_rhythm_decoder.py`; frozen blob `9d48b02316f4eb364b163b3027c6c4d79304ac27`.
+- CPU proof run `33026865312`, job `98370167258`: COMPLETED/SUCCESS.
+- Proof `debug/v145-rhythm-decoder/proofs/cpu-core-proof.json`; blob `978c2b7cd984f2cece23d2bc152f6acca28980e1`; persistence commit `5878764dbc747b17578eeeb9955204459adce503`; schema14501.
+- Proof: no gold/reference/FIT/validation/canary inputs; no Modal dependency/GPU/live audio; accepted baseline unchanged.
+- Proof workflow deletion/sealing commit `e802d7a867ee5f965be0c6abe51f70b6c0e6af6b`. Never rerun it.
 
-## V145 next architectural hurdle — STAGE 2 NOT YET PREREGISTERED
-- Stage 1 deliberately required caller-supplied timing quantum and chose each evidence event's nearest timing proposal independently.
-- The next high-upside CPU-only hurdle is to infer timing-grid candidates from generated Rhythm evidence itself and select timing/fingering as a global sequence rather than independent nearest snaps.
-- Stage 2 must remain runtime-reference-free and must be preregistered before implementation.
-- Stage 2 should not invent new MIDI pitches yet; isolate timing/sequence gains first so pitch-generation changes remain separately attributable.
-- Any later live audio/Modal/L4/GPU benchmark still requires fresh explicit user authorization.
-
-## Fixed dependency identities
-- Residual analyzer `27ac8699279db8fc0208d067479ad3751da1a630`; singleton reconstruction search `70880d26418d907cc702233af37bcc4b643e3a57`; singleton policy `1e05e66a3523f98944370837a59e5d6e7293f9ac`.
-- Pitch-position shift `f69755b61bdcdf3a669847ce7e425289b4b0927f`; pitch shift `d9998c59acddba070069668d62bcb1c3cdaf2b05`; triple conjunction `ef9768a127472d7ce0746fdf21164d33e5117ea4`.
-- Staged selector `d176a9a69366e192e6fa75bc1039661e977f0bfa`; measure guard `4a1364204dd1e720c09d835ec3995c165047de98`; context split `2da58508f2132660ad317ee63d5cb043d58285f0`; config `9b93205cb47bc7718685b9d41b263778107801ce`.
-- Canonical `088d44827fb23e20d9aeeb4944a672989af5846c`; scorer `cc4bf61a99f22bf87a6c255e5a81220fbc82223b`; freeze `710bb6a3b15b99d3d11ceb4948d7c7175d208afc`; PDF fidelity `5e1564216873046237fb545078a04a6b18f72b27`; render contract `ccbb93c48982798cc474309fd981f6ca02d5c8d4`.
+## V145 Stage 2 — PREREGISTERED / CPU-ONLY / NOT YET IMPLEMENTED
+- Frozen preregistration: `docs/v145-rhythm-decoder-stage2-preregistration.md`.
+- Preregistration commit: **`9fe0396fc1c320e3da5f5955d823df615a787603`**.
+- Architecture: **V5 Rhythm evidence -> frozen Stage1 normalization -> runtime timing-grid inference -> raw-onset simultaneity clusters -> cluster timing/guitar-state options -> global bounded beam sequence -> decoded notes**.
+- Runtime grid candidates come only from positive consecutive generated onset deltas and median delta divided by integers1..4; allowed quantum0.050..0.500s.
+- Grid support gates: support>=0.80 within normalized residual<=0.18; median normalized residual<=0.12; minimum4 evidence events.
+- Eligible grids rank by higher support, lower median residual, lower mean residual, larger quantum, smaller phase.
+- Simultaneity cluster window is `0.30 * quantum` from first raw onset in cluster.
+- Cluster onset must be present in every member's Stage1 timing lattice; no independent member drift inside a chord cluster.
+- Standard tuning/max fret24/max fret span7; exact MIDI preservation; unique strings.
+- Global beam width64; separate clusters require strictly increasing decoded onsets; transition cost uses frozen Stage1 hand-position movement.
+- Stage2 does not invent new MIDI pitches and may leave unsupported/unplayable clusters undecoded.
+- Stage2 public runtime APIs may not accept gold/reference/FIT/validation/canary inputs.
+- No live Modal/L4/GPU/audio run authorized.
 
 ## EXPLICIT NEXT STEPS — CONTINUATION CONTRACT
 1. Stay only on `v143-contextual-prune-lobo`; never main/Production/frontend/Bass/Lead.
 2. Preserve family #10 accepted baseline and percentages **35.4 / 6.7 / 5.5 / 5.8 / 100 / 100**.
-3. Preregister V145 Stage 2 before code: runtime-only timing-quantum inference + global sequence/beam decoding; no new MIDI pitches.
-4. Implement Stage 2 CPU-only beside the frozen Stage 1 core; do not mutate Stage 1 blobs.
-5. Add deterministic synthetic tests covering correct-grid recovery from jittered onsets, rejection of unsupported grids, one timing choice per source event, no duplicate event reuse, continuity-aware global choice, fail-closed behavior, and no label/reference inputs.
-6. Run and seal a definitive CPU-only Stage 2 proof; checkpoint it.
+3. Implement Stage2 exactly to preregistration commit `9fe0396f...` in a new CPU-only module importing frozen Stage1; do not modify Stage1 blobs.
+4. Add synthetic/contract tests for jittered-grid recovery, unsupported-grid rejection, deterministic clustering, common-onset requirement, one source event once, exact MIDI, unique strings, continuity-aware global choice, fail-closed invalid clusters, input immutability, runtime label isolation, no Modal dependency.
+5. Checkpoint implementation before proof.
+6. Run and seal a definitive CPU-only Stage2 proof; checkpoint it.
 7. No live Modal/L4/GPU/audio benchmark until separately and explicitly authorized.
 
 ## Current stop point
-- V144 baseline unchanged and fully protected.
-- V145 Stage 1 CPU proof SUCCESS and sealed.
-- Immediate safe continuation: preregister V145 Stage 2 timing-grid inference + global sequence decoder, CPU-only.
+- V144 accepted baseline unchanged and protected.
+- V145 Stage1 CPU proof SUCCESS/sealed.
+- V145 Stage2 preregistered at commit `9fe0396f...`; safe next action is CPU implementation only.
