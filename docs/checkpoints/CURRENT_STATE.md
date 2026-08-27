@@ -421,3 +421,13 @@ Active phase: **V147 Phase C REAL-AUDIO ARTIFACT-FIRST CONSTRUCTION = GO / SEALE
 - The scorer must complete all candidate/construction/PDF/completion/authorization/provenance/evaluator/baseline identity gates **before** reading Gold bytes, then verify the Gold SHA before parsing, and invoke the historical score exactly once.
 - Candidate search, alternate candidate, threshold/weight/filter retuning, audio reread/HPSS/CQT, Modal/L4/GPU, main/Production modification, automatic promotion, and any second score call remain **FORBIDDEN**.
 - At this checkpoint Gold/reference content opened by the V148 scoring phase: **NO**; score calls: **0**. Execution is not yet armed; next step is a one-use fail-closed workflow with a durable attempt sentinel.
+
+
+## V148 Phase C Gold score attempt — CONSUMED BEFORE REFERENCE ACCESS — 2026-08-27 UTC
+- One-use V148 scoring workflow run `33045568440` is now fail-closed.
+- The first workflow run `33045467996` failed in reference-free preflight at an unnecessary directory-permission guard, before attempt consumption, Gold/reference access, or any score call. The scorer/import/identity checks had already passed.
+- Recovery changes only that infrastructure guard; the frozen scorer, candidate, authorization, evaluator, Gold identity, and scientific protocol are unchanged.
+- The durable attempt sentinel was consumed **before Gold/reference access** and before any score call.
+- Candidate/scorer/construction/PDF/completion/authorization/provenance identities and the scorer import preflight all passed reference-free.
+- Gold/reference content opened at this checkpoint: **NO**. Score calls at this checkpoint: **0**.
+- Candidate search/variants/retuning/audio/HPSS/CQT/Modal/L4/GPU/main/Production/promotion remain **NO / FORBIDDEN**.

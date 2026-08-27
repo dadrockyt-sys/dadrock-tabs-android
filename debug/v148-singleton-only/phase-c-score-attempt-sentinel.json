@@ -1,33 +1,36 @@
 {
-  "schema": "dadrock.tabs.v148.phase-c-score-attempt-sentinel.v1",
-  "classification": "one-use-reference-facing-score-attempt",
-  "branch": "v143-contextual-prune-lobo",
-  "sourceHeadBeforeAttemptSentinel": "d490d43088c90a10d689995c9acaa17b6791f0e8",
-  "status": "ARMED_NOT_CONSUMED",
+  "alternateCandidateConstructed": false,
+  "attemptHeadSha": "5556d3bbe92179a361acbf24ce8f29b93062703b",
+  "attemptRunId": "33045568440",
+  "audioRecomputed": false,
   "authorization": {
-    "path": "debug/v148-singleton-only/phase-c-scoring-authorization.json",
     "gitBlob": "2647f1b985339f80b7b9d09afea3eebe49fdabb0",
+    "path": "debug/v148-singleton-only/phase-c-scoring-authorization.json",
     "scope": "exactly-one-v148-singleton-only-gold-calibration-score"
   },
-  "scorer": {
-    "path": "validation/v148_singleton_only/score_once.py",
-    "gitBlob": "8137734218a722bb12f364ecfea3d1b8e526cc2c"
-  },
+  "automaticPromotion": false,
+  "branch": "v143-contextual-prune-lobo",
   "candidate": {
-    "path": "debug/v148-singleton-only/candidate/candidate.json",
-    "gitBlob": "0d3df7336db965dc111fec067d0abe75ea3926cc",
+    "canonicalEventSha256": "1be67004dea62b14740241b536339bb7cad2ecf3ee9e98bfb6109f67e4e1b1fa",
     "fileSha256": "b45034e2a4dd10a3d7784e584fccdbc7e49667a5b93c9a77ea42f5562ae139bb",
-    "canonicalEventSha256": "1be67004dea62b14740241b536339bb7cad2ecf3ee9e98bfb6109f67e4e1b1fa"
+    "gitBlob": "0d3df7336db965dc111fec067d0abe75ea3926cc",
+    "path": "debug/v148-singleton-only/candidate/candidate.json"
   },
-  "resultPath": "debug/v148-singleton-only/phase-c-score/score-result.json",
-  "completionSentinelPath": "debug/v148-singleton-only/phase-c-score-complete-sentinel.json",
-  "goldOpened": false,
-  "scoreCallCount": 0,
   "candidateSearchRun": false,
-  "alternateCandidateConstructed": false,
-  "retuningRun": false,
-  "audioRecomputed": false,
+  "classification": "one-use-reference-facing-score-attempt",
+  "completionSentinelPath": "debug/v148-singleton-only/phase-c-score-complete-sentinel.json",
+  "consumedAtUtc": "2026-08-27T06:21:36.465207+00:00",
+  "goldOpened": false,
   "modalGpuUsed": false,
   "productionIntegrated": false,
-  "automaticPromotion": false
+  "resultPath": "debug/v148-singleton-only/phase-c-score/score-result.json",
+  "retuningRun": false,
+  "schema": "dadrock.tabs.v148.phase-c-score-attempt-sentinel.v1",
+  "scoreCallCount": 0,
+  "scorer": {
+    "gitBlob": "8137734218a722bb12f364ecfea3d1b8e526cc2c",
+    "path": "validation/v148_singleton_only/score_once.py"
+  },
+  "sourceHeadBeforeAttemptSentinel": "d490d43088c90a10d689995c9acaa17b6791f0e8",
+  "status": "CONSUMED_BEFORE_REFERENCE_ACCESS"
 }
