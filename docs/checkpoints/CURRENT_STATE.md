@@ -637,3 +637,10 @@ Active phase: **V147 Phase C REAL-AUDIO ARTIFACT-FIRST CONSTRUCTION = GO / SEALE
 - Both recurrence channels tied: **9/12 = 75.00%**; indices `[46, 141, 282, 610, 811, 1004, 1049, 1206, 1207]`.
 - These are reference-free support percentages, not accuracy scores. Gold/reference **NO**; V151 score result read **NO**; scorer calls **0**; no candidate/search/threshold sweep/audio/GPU/Production.
 - If both-selected events exist, the sole preregistered next candidate is accepted baseline plus exactly that event set.
+
+
+## V152 Phase B three-note active-recurrence construction — AUTHORIZED / CONSUMED / REFERENCE-FREE — 2026-08-27 UTC
+- User instruction `Let's make a major breakthrough 🙏` authorizes exactly one frozen candidate: accepted family #10 plus V151 rows **[132, 347, 457]** only.
+- These 3 events are the complete V152 `both-selected` class: active selected-note support in both exact-pitch and pitch-class recurrence, after V151 two-sided voice-leading consensus.
+- Preregistration blob `b16e730eb5e647a6d06f36e2a7e9902451a1cd76`; authorization blob `e8ff4dc4dca664a0ba76678bf7049769dd701d7e`; constructor blob `7cb83979e693203b7f6254a790831b1ca4938420`; run `33049544746`.
+- Gold/reference **NO**; prior score result **NO**; scorer calls **0**; search/variants/alternate combination/filter/threshold/audio/GPU/Production/promotion **NO**.
