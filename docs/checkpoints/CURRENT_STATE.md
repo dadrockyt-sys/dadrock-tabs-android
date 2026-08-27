@@ -167,3 +167,18 @@ Active phase: **V153 Phase D EVENT-347 CPU GOLD ATTRIBUTION = COMPLETE / SEALED.
 - Exactly two predefined reference-free CPU branches: **raw Basic Pitch** and **CPU Demucs htdemucs_6s guitar stem -> Basic Pitch**. Basic Pitch 0.4.0 published defaults are frozen; guitar range MIDI 40–88; no threshold sweep.
 - Primary evaluation after both outputs are persisted: same-pitch onset F1 within ±0.5 frozen grid step. Accepted baseline = **6.6986% / 70 matches**. Measure-level pitch-content is diagnostic-only.
 - At this checkpoint audio opened **NO**, Gold/reference opened **NO**, human correction **NO**, Modal/L4/CUDA/GPU **NO**, main/Production **NO**.
+
+
+## V154 Phase A1 CPU pretrained reset — ENGINEERING FAILURE / SEALED — 2026-08-27 UTC
+- Run `33087772583`, job `98572047257` failed during the first raw Basic Pitch inference **before any transcription output and before Gold/reference access**.
+- Root cause: `tflite-runtime==2.14.0` loaded against resolved `numpy==2.2.6`, causing `_ARRAY_API not found`; scientific model/thresholds were never evaluated.
+- Audio identity verification and deterministic CPU normalization succeeded. Demucs did not start; Gold/reference opened **NO**; score calls **0**.
+- A1 artifact `v154-cpu-pretrained-reset-33087772583`, ID `9653047980`, ZIP SHA256 `a10194ad5029f2990e791834a028218c6d2249d7cb2a617015cdd836f4ebad60`. Failure record blob `c2dd96957fc2632feac62aa3dc4494a1aaf799d4`.
+- A1 workflow was deleted/sealed at commit `77fae6e6b705f0d471032ccfabf49f6fa64b446d`; replay **NO**.
+
+
+## V154 Phase A2 CPU runtime repair — FROZEN / CONSUMED / BEFORE AUDIO — 2026-08-27 UTC
+- A2 changes **runtime only**: NumPy `1.26.4` for TFLite ABI compatibility and official PyTorch `2.8.0+cpu`; scientific branches, Basic Pitch defaults, Demucs model, and scoring rules are unchanged.
+- A2 preregistration blob `d877f0f1b2afc90c10d924806ec50aa5efb5d2a7`; benchmark blob `ca0c26dd3cf786585bea615f4bd565a9d1980d4e`; run `33088418439`.
+- Raw transcription will be persisted before Demucs; guitar-stem transcription will be persisted before Gold. No Gold-guided construction or threshold sweep.
+- At this checkpoint audio opened **NO**, Gold/reference opened **NO**, score calls `0`, human correction/Modal/L4/CUDA execution/GPU/main/Production **NO**.
