@@ -1,0 +1,18 @@
+{
+  "schema": "dadrock.tabs.v148.singleton-only-import-path-recovery-attempt.v1",
+  "status": "ARMED_NOT_CONSUMED",
+  "branch": "v143-contextual-prune-lobo",
+  "originalFailedRunId": "33043698461",
+  "originalFailedJobId": "98422759855",
+  "originalConsumedSentinelCommit": "3fa9175a2a9b334dda48f63877ee9ef7e9ef703d",
+  "originalConsumedSentinelGitBlob": "52321ef300e7c54ea10d91b9ef98e6f287215f03",
+  "priorCandidateCountConstructed": 0,
+  "maximumCandidateCountAcrossOriginalAndRecovery": 1,
+  "recoveryPreregistrationGitBlob": "c5825e8a345a52c2aa15f38527334d24eef409af",
+  "recoveryLauncherGitBlob": "0bc6ab8795539eaab084cae5e60680ac0a2cba66",
+  "frozenConstructorGitBlob": "bb43464f48cc8e0eade0f9e98229c859cb117986",
+  "referenceFacingScoreCountAllowed": 0,
+  "consumedByRunId": null,
+  "consumedAtUtc": null,
+  "completionPersisted": false
+}
