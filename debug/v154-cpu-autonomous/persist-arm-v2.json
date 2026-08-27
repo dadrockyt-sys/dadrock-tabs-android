@@ -1,0 +1,11 @@
+{
+  "schema": "dadrock.tabs.v154.broad-other-persistence-arm.v2",
+  "sourceRunId": "33096559281",
+  "sourceArtifactId": 9656706944,
+  "sourceArtifactDigest": "sha256:f0944432c37b369ac38cd25d058265a76f36b23e2f0bcf9808880d9e141dc518",
+  "generatedJsonSha256": "1be86f86bb08e164342aa0c52db7a4d77beb938621e00d7d2e3b0e03f2dbfc37",
+  "referenceRead": false,
+  "referenceFacingScoreCalls": 0,
+  "modalUsed": false,
+  "cudaGpuUsed": false
+}
