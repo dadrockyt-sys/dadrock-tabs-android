@@ -2,7 +2,7 @@
 
 Updated: 2026-08-26 America/Montreal
 Branch: `v143-contextual-prune-lobo`
-Active phase: **V144 Rhythm baseline preserved; Families #1–#14 fully consumed/sealed. V145 Stage 1, Stage 2, and Stage 3 generated-only adapter are CPU-proven/sealed. Stage 3 evaluation harness is preregistered/implemented; its definitive synthetic CPU-proof workflow is frozen but NOT YET ARMED. No real Stage 3 candidate/score has run. No Modal/L4/GPU/live audio without fresh explicit authorization.**
+Active phase: **V144 Rhythm baseline preserved; Families #1–#14 fully consumed/sealed. V145 Stage 1, Stage 2, and Stage 3 generated-only adapter are CPU-proven/sealed. Stage 3 evaluation harness is preregistered/implemented. Its definitive synthetic CPU proof has NOT executed yet; two separate-trigger attempts produced no proof workflow run and are classified as non-executions. The next proof uses the already-proven self-trigger-on-workflow-file pattern. No real Stage 3 candidate/score has run. No Modal/L4/GPU/live audio without fresh explicit authorization.**
 
 ## Permanent safety / fixed protocol
 - Work only on `v143-contextual-prune-lobo`; never modify/merge `main` or Production.
@@ -35,11 +35,8 @@ Active phase: **V144 Rhythm baseline preserved; Families #1–#14 fully consumed
 - V5 stream `debug/v143-contextual-prune/v5-professional-pdf/v5-render-stream.json`; git blob `fe61f7ad53a4d71348a5113ecc9e3876eaad98d4`; raw SHA256 `7c3399d3f5e05ecc8ac98d71d0e5300e1e78f63ae96c1642fe4a19debb4061b2`; 1209 events /113 measures /tempo `129.19921875` /4/4 /E Standard.
 - Adapter `validation/v145_rhythm_decoder/offline_stage3_adapter.py`; frozen blob `434d4b2582991c216df411455f232b8d211337c6`.
 - Synthetic tests `modal/tests/test_v145_rhythm_stage3_offline_adapter.py`; frozen blob `3eee7ae5253ad0eecbeb492eaa24216f0fa21fee`.
-- Adapter uses exactly one Stage2 call and no gold/reference/labels. Event count/list order/eventIndex/MIDI remain immutable; protected technique/bend/legato groups remain source-exact; only atomic unprotected groups may change measure/step/stringIndex/fret; coverage remains exactly113; no add/delete/new pitch.
-- Definitive CPU proof run `33029862099`, job `98379640869`, attempt1: SUCCESS.
-- Proof `debug/v145-rhythm-decoder/proofs/cpu-stage3-offline-adapter-proof.json`; blob `f55dcd1087f108d0d93c4a5a1a86cb5058ef4eb4`; persistence commit `03a0cfcc5eceae64cc37a02e84481c5a8a2ec1de`; schema14503.
-- Proof states realV5CandidateBuilt=false, calibrationScoreRun=false, reference/gold/labels=false, Modal/GPU/liveAudio=false, acceptedBaselineChanged=false.
-- Proof workflow blob `1e1b386824ba4bcdab7e51a4ed14f361e39e2457`; deletion/sealing commit `39d20843a6d4211e2aa629afa3fedbc45c36e82a`. Never rerun it.
+- Definitive CPU proof run `33029862099`, job `98379640869`, attempt1: SUCCESS; proof blob `f55dcd1087f108d0d93c4a5a1a86cb5058ef4eb4`; workflow deletion `39d20843a6d4211e2aa629afa3fedbc45c36e82a`.
+- Prior proof infrastructure precedent confirmed: `.github/workflows/v145-rhythm-stage3-offline-adapter-cpu-proof.yml` triggered on changes to its own workflow path and successfully persisted the proof.
 
 ## Frozen Stage 3 validation/render chain
 - canonical `088d44827fb23e20d9aeeb4944a672989af5846c`
@@ -50,29 +47,30 @@ Active phase: **V144 Rhythm baseline preserved; Families #1–#14 fully consumed
 - render contract `ccbb93c48982798cc474309fd981f6ca02d5c8d4`
 - calibration gold path `debug/v144-rhythm-calibration/reference/professional-rhythm-gold-reference.json`, raw SHA256 `18fd868ae960dfcdd1ffb0110f1a9dfd8acc2ffeb46e247d1116cd54291526ac`.
 
-## V145 Stage 3 evaluation harness — PREREGISTERED / IMPLEMENTED / CPU PROOF PRE-ARMED
-- Prereg `docs/v145-rhythm-decoder-stage3-evaluation-preregistration.md`.
-- Creation commit `d40aecf6fdfd784b3c918c3ee2586fc5904cc147`; frozen prereg blob `9b3542f33fb0f9149056b1eafb8c5db1864299ca`.
+## V145 Stage 3 evaluation harness — PREREGISTERED / IMPLEMENTED / DEFINITIVE CPU PROOF READY
+- Prereg `docs/v145-rhythm-decoder-stage3-evaluation-preregistration.md`; creation commit `d40aecf6fdfd784b3c918c3ee2586fc5904cc147`; frozen prereg blob `9b3542f33fb0f9149056b1eafb8c5db1864299ca`.
 - Implementation `validation/v145_rhythm_decoder/score_offline_stage3_candidate.py`; commit `11873b539784d997ff03749ac8c2bfd8e2cef99f`; frozen blob `d208abb3f180f8375d57d786941ff49d6813de1c`.
-- Synthetic ordering/invariant tests `modal/tests/test_v145_rhythm_stage3_offline_score.py`; creation commit `6aea9f2435743c7399720d0b0c746a2bb68a1f4a`; frozen blob `d8b3770ac7f3ba18123122f19fad895257998c25`.
-- Mandatory runtime order: candidate-only validation -> frozen `validate_pre_reference(freeze_dir)` -> candidate/freeze/PDF identity -> accepted baseline manifest -> only then read/hash/validate gold -> score already-frozen candidate exactly once -> deterministic report.
-- Harness CLI remains exactly five positional paths. Synthetic dependency injection exists only to prove ordering without touching real gold.
-- Candidate gate requires 1209 canonical events, exact metadata SHA, exact measures1..113, eventIndex0..1208, PDF/freeze SHA identity and fidelity1.0, and safety `referenceFree=true`, `professionalReferenceUsed=false`, `referenceRuntimeInputUsed=false`, `goldInputUsed=false`, `acceptedBaselineChanged=false`.
-- Synthetic tests cover: valid ordered path with exactly one score and no mutation; failed pre-reference prevents both calibration reads; candidate/freeze mismatch prevents both calibration reads; wrong accepted manifest fails before gold; wrong gold SHA fails before parse/score; candidate-only safety failure prevents pre-reference/calibration reads.
-- Definitive proof workflow `.github/workflows/v145-stage3-evaluation-harness-cpu-proof.yml`; creation commit `4e8e6481ea5e5d9ee70ff73c718598090b247434`; frozen blob `e87e9a53dbc7cdddcd9315ace3477a26a5af8d8a`.
-- Proof workflow permits only synthetic harness tests; it explicitly forbids real gold read, real V5 candidate build, Modal/GPU, replay, and persists only `debug/v145-rhythm-decoder/proofs/cpu-stage3-evaluation-harness-proof.json` on success.
-- **Workflow is frozen but not armed at this checkpoint. No real V5 Stage3 candidate has been built; no real calibration gold has been read/scored.**
+- Synthetic tests `modal/tests/test_v145_rhythm_stage3_offline_score.py`; creation commit `6aea9f2435743c7399720d0b0c746a2bb68a1f4a`; frozen blob `d8b3770ac7f3ba18123122f19fad895257998c25`.
+- Mandatory evaluator order remains: candidate-only validation -> frozen `validate_pre_reference(freeze_dir)` -> candidate/freeze/PDF identity -> accepted baseline manifest -> only then read/hash/validate gold -> score already-frozen candidate exactly once -> deterministic report.
+- Separate-trigger workflow attempt #1 blob `e87e9a53dbc7cdddcd9315ace3477a26a5af8d8a`; trigger commit `6d1fa53da76a2fdc26ea668bfa12192568a356e4`. No proof workflow run was registered; only unrelated existing cleanup workflow run `33030625484`. Therefore this is a non-execution, not a proof failure.
+- Unexecuted trigger deletion commit `e0957c59749c3a78c73d42525beed3623b39bc22`.
+- Separate-trigger workflow attempt #2 blob `bd1f72442c6596b07b29b49a08cd688079a68c67`; workflow update commit `6a5c33cec243a3a82db2af67a97c545544565c59`. Again no proof workflow run registered; only unrelated cleanup workflow run `33030725470`. This is also a non-execution.
+- Definitive proof will now reuse the already-successful self-trigger infrastructure pattern: workflow path `.github/workflows/v145-stage3-evaluation-harness-cpu-proof.yml` will be its own `push.paths` trigger.
+- **Preregistered exact self-trigger workflow Git blob: `0302ece5ea705d1d65e7e29dc64ae6913a488165`.** It verifies all frozen blobs, confirms the synthetic test file does not name the real gold path, compiles only the harness/tests, runs only `modal.tests.test_v145_rhythm_stage3_offline_score`, and persists only `debug/v145-rhythm-decoder/proofs/cpu-stage3-evaluation-harness-proof.json`.
+- Expected proof schema `14505`; proof must state realV5CandidateBuilt=false, calibrationScoreRun=false, realGoldRead=false, referenceLabelsRead=false, acceptedBaselineChanged=false, promotionAllowed=false, modalGpuUsed=false, liveAudioBenchmarkRun=false.
+- No real V5 Stage3 candidate has been built; no real calibration gold has been read/scored.
 
 ## EXPLICIT NEXT STEPS
-1. Arm the frozen harness CPU proof exactly once with sole trigger `debug/v145-rhythm-decoder/.v145-stage3-evaluation-harness-proof-trigger` and exact message `v145 prove stage3 evaluation harness cpu once`; trigger must bind this pre-arm checkpoint commit and workflow blob `e87e9a53dbc7cdddcd9315ace3477a26a5af8d8a`.
-2. Observe proof; require exact synthetic test success and proof persistence. Delete/seal workflow + trigger; checkpoint immediately. Never rerun.
-3. Only after harness proof is sealed: freeze one real Stage3 one-shot workflow + sole trigger and checkpoint before arming.
-4. Real one-shot order: verify immutables/tests -> build generated-only V5 candidate once -> invariant validate -> freeze -> renderer contract -> PDF fidelity1.0 -> pre-reference scorer gate -> then accepted manifest -> gold read/hash/validate -> score -> immutable recheck -> persist explicit Stage3 candidate/report -> seal workflow/trigger -> checkpoint.
-5. Regardless of score, do not retune/replay or auto-promote; family #10 remains accepted unless a separate later promotion protocol is frozen and succeeds.
-6. No Modal/L4/GPU/live audio; protected surfaces stay untouched.
+1. Update only `.github/workflows/v145-stage3-evaluation-harness-cpu-proof.yml` to the preregistered self-trigger content whose expected blob is `0302ece5ea705d1d65e7e29dc64ae6913a488165`; this update itself is the one definitive synthetic proof trigger, matching the already successful V145 Stage3 adapter proof mechanism.
+2. Observe the resulting proof run; require exact blob verification, compile success, all synthetic tests success, and proof persistence. Do not rerun on actual test failure; inspect and checkpoint instead.
+3. On success, delete/seal the workflow and checkpoint immediately. There is no separate trigger file remaining.
+4. Only after harness proof is sealed: freeze one real Stage3 one-shot workflow + sole trigger and checkpoint before arming.
+5. Real one-shot order: verify immutables/tests -> build generated-only V5 candidate once -> invariant validate -> freeze -> renderer contract -> PDF fidelity1.0 -> pre-reference scorer gate -> then accepted manifest -> gold read/hash/validate -> score -> immutable recheck -> persist explicit Stage3 candidate/report -> seal workflow/trigger -> checkpoint.
+6. Regardless of score, do not retune/replay or auto-promote; family #10 remains accepted unless a separate later promotion protocol is frozen and succeeds.
+7. No Modal/L4/GPU/live audio; protected surfaces stay untouched.
 
 ## Current stop point
 - Accepted scores remain **35.4 / 6.7 / 5.5 / 5.8 / 100 / 100**.
 - V145 Stage1/Stage2/Stage3-adapter proofs are SUCCESS/sealed.
-- Stage3 evaluation harness/prereg/tests/proof-workflow are frozen; synthetic definitive CPU proof is the immediate next action.
+- Stage3 evaluation harness/prereg/tests are frozen; definitive self-trigger CPU proof blob is preregistered before execution.
 - Real Stage3 candidate build/evaluation has not run.
