@@ -331,3 +331,9 @@ Active phase: **V147 Phase C REAL-AUDIO ARTIFACT-FIRST CONSTRUCTION = GO / SEALE
 - Addendum prereg blob `5e0dffcea24662c7b10288e2fe1d993aeb693dd7`; analyzer blob `ff35b44b004e407a1ce09e83828061325d0f9947`.
 - Run `33042691252`; arming commit `0c9ecb3e1400dd22597356b04e927493d80d9cd3`; durable rerun sentinel committed before analysis.
 - Gold/reference/professional image unreadable; audio/HPSS/CQT/Modal/GPU unused; thresholds unchanged; analysis completed: **NO**.
+
+## V147 Phase E normalized-context persistence recovery — ARMED — 2026-08-27 UTC
+- Original normalized run `33042691252` completed its deterministic reference-free analysis but failed in persistence because an assertion conflated two collision definitions (18 net pitch-set-cardinality losses vs 19 newly duplicated MIDI identities).
+- Reconciliation frozen at `debug/v147-phase-e-reference-free/phase-e-collision-definition-reconciliation.json`, blob `40e43b756a55e4b62d2ed4b53b1c8c40792912eb`.
+- Recovery run `33042852763` is authorized only to re-materialize the exact deterministic analyzer blob `ff35b44b004e407a1ce09e83828061325d0f9947` from immutable preserved inputs and persist its output; it does not alter the analysis definition or construct a candidate.
+- Gold/reference/professional image are unreadable; audio/HPSS/CQT/Modal/GPU/candidate construction/search/retuning are prohibited.
