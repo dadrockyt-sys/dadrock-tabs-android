@@ -1,0 +1,47 @@
+{
+  "schema": "dadrock.tabs.v150.contextual-singleton.phase-a-preregistration.v1",
+  "classification": "reference-free-local-context-analysis-frozen",
+  "branch": "v143-contextual-prune-lobo",
+  "sourceHead": "0b467a6aeac833870b38727a4fd347966eb205e2",
+  "purpose": "Test an independent musical-context mechanism for the 54 V149 high-confidence singleton overrides without using Gold/reference or trying another evidence-margin threshold.",
+  "fixedInputs": {
+    "acceptedCanonicalEventSha256": "4e6f9f247134f79f30a5448515c52a6ca1012c1f1314c3458b448582999e3881",
+    "v149CandidatePath": "debug/v149-singleton-confidence/candidate/candidate.json",
+    "v149CandidateFileSha256": "1add3ffacf9048dd597a47820baeb3ef8cb0e67fa83d12b1b8d8303a8d808278",
+    "v149CandidateCanonicalEventSha256": "4dd13556d580a315c728e7333823eec9644195da5a345689cc44a566ef33d998",
+    "v149ChangedEvents": 54
+  },
+  "frozenContextDefinition": {
+    "onsetOrdering": "accepted family #10 onsets ordered by (measure, step)",
+    "targetPopulation": "exactly the 54 event indices changed by V149 versus accepted family #10",
+    "neighborOnsets": "immediately preceding and immediately following accepted onsets; neighbors may be singleton or polyphonic",
+    "distanceToNeighbor": "minimum absolute MIDI semitone distance from target pitch to any note in that neighboring onset",
+    "originalCost": "distance(original accepted MIDI, previous onset) + distance(original accepted MIDI, next onset)",
+    "selectedCost": "distance(V149 selected MIDI, previous onset) + distance(V149 selected MIDI, next onset)",
+    "strictBothSidesWorse": "selected distance is strictly greater than original distance for both previous and next onsets",
+    "strictBothSidesBetter": "selected distance is strictly smaller than original distance for both previous and next onsets",
+    "totalCostDelta": "selectedCost - originalCost",
+    "localPitchClassWindow": "two accepted onsets before and two accepted onsets after; count occurrences of original vs selected pitch class"
+  },
+  "outputs": [
+    "counts and percentages for strict-both-sides-worse/better/mixed/tied context",
+    "counts and percentages for total voice-leading cost delta negative/zero/positive",
+    "quantiles of total cost delta",
+    "pitch-class support comparison in the fixed +/-2-onset window",
+    "event rows for strict-both-sides-worse cases"
+  ],
+  "interpretationRule": "This analysis is descriptive only. If strict-both-sides-worse cases exist, a later separately frozen candidate may conservatively revert exactly that set; no alternative contextual rule may be tried in the same phase.",
+  "forbidden": {
+    "goldOrReferenceRead": true,
+    "v149OrEarlierScoreResultRead": true,
+    "scorerInvocation": true,
+    "candidateConstruction": true,
+    "candidateSearchOrVariants": true,
+    "evidenceMarginThresholdSweep": true,
+    "audioReadOrDecode": true,
+    "hpssOrCqtRecompute": true,
+    "modalOrGpu": true,
+    "mainOrProductionModification": true,
+    "automaticPromotion": true
+  }
+}
