@@ -3,7 +3,7 @@
 Updated: 2026-08-27 UTC
 Branch: `v143-contextual-prune-lobo`
 
-Active phase: **V154 broad-Other CPU benchmark RUN `33096559281` IN PROGRESS / REFERENCE-FREE. Stage-one contract tests are sealed PASS. No reference-facing score has run.**
+Active phase: **V154 broad-Other CPU benchmark RUN `33096559281` IN PROGRESS / REFERENCE-FREE. CPU Demucs separation PASSED; frozen Basic Pitch transcription is running. No reference-facing score has run.**
 
 ## History preservation
 - Full checkpoint before this compact continuation: commit `3705b8aba3f166000867f7c68e5dfc104bc71fd9`; checkpoint blob `5a19f89583af89e777380d5ddb453c4957afe5f5`.
@@ -72,9 +72,9 @@ Song: **Lenny Kravitz — Are You Gonna Go My Way**.
 - Arming commit: `986e2a69a6cb877a203d2f8b04115914dc8fd2e6`.
 - Authoritative benchmark run: **`33096559281`**, job **`98602884120`**. Treat this run as consumed; **do not rerun** it regardless of outcome.
 - Workflow is reference-free and read-only to repository contents. It does **not** push generated data back to the branch; this deliberately avoids A3's non-fast-forward persistence failure.
-- Passed steps at this checkpoint: checkout/setup; frozen protocol Git-blob verification; exact historical audio materialization/bytes/SHA verification; frozen CPU-only stack installation and CUDA assertions; deterministic 44.1k/stereo/PCM-s16le normalization.
-- Current step at this checkpoint: **CPU Demucs `htdemucs` broad Other + Bass separation**.
-- Pending only after separation: frozen Basic Pitch transcription, generation manifest, immutable workflow-artifact upload.
+- Passed steps at this checkpoint: checkout/setup; frozen protocol Git-blob verification; exact historical audio materialization/bytes/SHA verification; frozen CPU-only stack installation and CUDA assertions; deterministic 44.1k/stereo/PCM-s16le normalization; **CPU Demucs `htdemucs` broad Other + Bass separation**.
+- Current step at this checkpoint: **frozen Basic Pitch transcription of `other.wav` and `bass.wav`**.
+- Pending after transcription: generation manifest and immutable workflow-artifact upload.
 - No reference/Gold input exists in the workflow. Reference-facing score calls remain `0`.
 - Seal/delete the one-use workflow after the run regardless of success/failure.
 
@@ -82,7 +82,7 @@ Song: **Lenny Kravitz — Are You Gonna Go My Way**.
 - Reference-facing score calls this continuation: **0**.
 - Professional reference note data opened this continuation: **NO**.
 - Stage-one synthetic tests: **PASS / SEALED**.
-- Broad-Other CPU benchmark run `33096559281`: **IN PROGRESS — CPU DEMUCS**.
+- Broad-Other CPU benchmark run `33096559281`: **IN PROGRESS — DEMUCS PASS; BASIC PITCH RUNNING**.
 - Modal/L4/CUDA/GPU used: **NO**.
 - `main` / Production modified: **NO**.
 
