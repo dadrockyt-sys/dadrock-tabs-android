@@ -1,0 +1,195 @@
+name: V147 Phase D Gold Score Once
+
+on:
+  push:
+    branches:
+      - v143-contextual-prune-lobo
+    paths:
+      - .github/workflows/v147-phase-d-score-once.yml
+
+permissions:
+  contents: write
+
+concurrency:
+  group: v147-phase-d-gold-score-once
+  cancel-in-progress: false
+
+jobs:
+  score-once:
+    name: Authorized single V147 Gold calibration score
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - name: Check out authorized branch
+        uses: actions/checkout@v4
+        with:
+          ref: v143-contextual-prune-lobo
+          fetch-depth: 0
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+
+      - name: Fail closed if a score attempt was already armed
+        shell: bash
+        run: |
+          set -euo pipefail
+          test ! -e debug/v147-phase-d-scoring/score-attempt-1-armed.json || {
+            echo 'Phase-D score attempt was already armed; refusing any rerun.' >&2
+            exit 91
+          }
+          test ! -e debug/v147-phase-d-scoring/phase-d-score-result.json || {
+            echo 'Phase-D score result already exists; refusing any rerun.' >&2
+            exit 92
+          }
+
+      - name: Verify reference-free identities before score boundary
+        shell: bash
+        run: |
+          set -euo pipefail
+          test "$(git hash-object debug/v147-phase-c-real-audio/preserved-run-33038518285/candidate.json)" = "3091d4b1468260746d6629af67b7b92599d5134e"
+          test "$(sha256sum debug/v147-phase-c-real-audio/preserved-run-33038518285/candidate.json | awk '{print $1}')" = "c0215690d5bfd9d2d47b8784eee886e942fbd28c499f25c643635c45ff7a9636"
+          test "$(git hash-object validation/v144_rhythm_calibration/score_selected_conjunction_candidate.py)" = "1ca2b8550d6c08e793f26b3aa91b99fb44fa7ddb"
+          test "$(git hash-object validation/rhythm_holdout/score_rhythm_holdout.py)" = "cc4bf61a99f22bf87a6c255e5a81220fbc82223b"
+          test "$(git hash-object validation/rhythm_holdout/canonical.py)" = "088d44827fb23e20d9aeeb4944a672989af5846c"
+          test "$(git hash-object validation/v147_phase_d/score_once.py)" = "74b31168b629812acde874b89dfcdf022acf987d"
+          test "$(git hash-object debug/v147-phase-d-reference-free/phase-d-scoring-authorization.json)" = "0ee49e632c0246667363672d35f7b28b1482730c"
+          test "$(git hash-object debug/v147-phase-d-reference-free/phase-d-provenance-recovery-1.json)" = "ecb2539778fe5aa547a8fa88c1216b8562faaebc"
+          test "$(git hash-object debug/v144-rhythm-calibration/selected/v144-singleton-onset-replacement-selected-baseline.json)" = "acd12ab68ad16b8faabf38ddc9e1cc0c1e7c4b68"
+          test "$(sha256sum debug/v147-phase-c-real-audio/preserved-run-33038518285/pdf-render-evidence.json | awk '{print $1}')" = "4d25a8346a40009ec5bdaf34c89f5d09e41ba9504e4264b0fd7cb21d7c25e4b9"
+
+      - name: Persist attempt sentinel and pre-score checkpoint before Gold access
+        shell: bash
+        run: |
+          set -euo pipefail
+          mkdir -p debug/v147-phase-d-scoring
+          cat > debug/v147-phase-d-scoring/score-attempt-1-armed.json <<EOF
+          {
+            "schema": "dadrock.tabs.v147.phase-d-score-attempt.v1",
+            "classification": "armed-before-reference-access",
+            "attempt": 1,
+            "githubRunId": "${GITHUB_RUN_ID}",
+            "armingWorkflowCommit": "${GITHUB_SHA}",
+            "candidateCanonicalEventSha256": "ca35c3492295a3079c17c35124df7a483166315e85649e95ded095c6c06b2b77",
+            "goldExpectedSha256": "18fd868ae960dfcddc1ffb0110f1a9dfd8acc2ffeb46e247d1116cd54291526ac",
+            "scoreCallLimit": 1,
+            "referenceOpenedAtArmTime": false,
+            "scoreRunAtArmTime": false
+          }
+          EOF
+          cat >> docs/checkpoints/CURRENT_STATE.md <<EOF
+
+          ## Phase-D one-use scoring authorization boundary — ARMED — 2026-08-27 UTC
+          - Fresh explicit user authorization was received for **exactly one Phase-D V147 Gold calibration score**.
+          - Authorization record: \`debug/v147-phase-d-reference-free/phase-d-scoring-authorization.json\`; Git blob \`0ee49e632c0246667363672d35f7b28b1482730c\`.
+          - Provenance recovery addendum: \`debug/v147-phase-d-reference-free/phase-d-provenance-recovery-1.json\`; Git blob \`ecb2539778fe5aa547a8fa88c1216b8562faaebc\`.
+          - Frozen one-use runner: \`validation/v147_phase_d/score_once.py\`; Git blob \`74b31168b629812acde874b89dfcdf022acf987d\`.
+          - Historical wrapper/core scorer/canonical adapter remain \`1ca2b8550d6c08e793f26b3aa91b99fb44fa7ddb\` / \`cc4bf61a99f22bf87a6c255e5a81220fbc82223b\` / \`088d44827fb23e20d9aeeb4944a672989af5846c\`.
+          - Immutable candidate remains 1144 events / canonical SHA \`ca35c3492295a3079c17c35124df7a483166315e85649e95ded095c6c06b2b77\`.
+          - Attempt sentinel persisted before Gold access. GitHub Actions run \`${GITHUB_RUN_ID}\`; workflow arming commit \`${GITHUB_SHA}\`.
+          - At this checkpoint: Gold/reference content opened by this execution = **NO**; score calls = **0**.
+          - Reruns are fail-closed once the attempt sentinel exists. No search, alternate candidate, retuning, audio/CQT recomputation, Modal/L4/GPU, main/Production change, or promotion is allowed.
+          EOF
+          git add debug/v147-phase-d-scoring/score-attempt-1-armed.json docs/checkpoints/CURRENT_STATE.md
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git commit -m 'docs: arm Phase D single score checkpoint'
+          git push origin HEAD:v143-contextual-prune-lobo
+
+      - name: Run exactly one authorized historical Gold score
+        shell: bash
+        run: |
+          set -euo pipefail
+          python validation/v147_phase_d/score_once.py \
+            --output debug/v147-phase-d-scoring/phase-d-score-result.json \
+            | tee debug/v147-phase-d-scoring/score-stdout.txt
+
+      - name: Verify single-score result and prepare execution envelope
+        shell: bash
+        run: |
+          set -euo pipefail
+          python - <<'PY'
+          import hashlib, json, os, pathlib, platform, subprocess
+          root = pathlib.Path('.')
+          result_path = root / 'debug/v147-phase-d-scoring/phase-d-score-result.json'
+          report = json.loads(result_path.read_text(encoding='utf-8'))
+          assert report['classification'] == 'v147-phase-d-authorized-single-gold-calibration-score'
+          assert report['scoringChain']['scoreCallCount'] == 1
+          assert report['safety']['scoreCallCount'] == 1
+          for key in ('candidateSearchRun','alternateCandidateConstructed','retuningRun','audioRecomputed','modalGpuUsed','productionIntegrated','automaticPromotionAllowed'):
+              assert report['safety'][key] is False
+          result_sha = hashlib.sha256(result_path.read_bytes()).hexdigest()
+          envelope = {
+              'schema': 'dadrock.tabs.v147.phase-d-score-execution-envelope.v1',
+              'classification': 'single-score-execution-complete',
+              'githubRunId': os.environ['GITHUB_RUN_ID'],
+              'workflowArmingCommit': os.environ['GITHUB_SHA'],
+              'resultSha256': result_sha,
+              'scoreCallCount': 1,
+              'python': platform.python_version(),
+              'candidateCanonicalEventSha256': report['candidate']['canonicalEventSha256'],
+              'goldSha256': report['reference']['sha256'],
+              'candidateDisplayVectorPercent': report['comparison']['candidateDisplayVectorPercent'],
+              'acceptedBaselineDisplayVectorPercent': report['comparison']['acceptedBaselineDisplayVectorPercent'],
+              'gatedMetricDeltas': report['comparison']['gatedMetricDeltas'],
+              'criticalMismatchDelta': report['comparison']['criticalMismatchDelta'],
+              'safety': report['safety'],
+          }
+          out = root / 'debug/v147-phase-d-scoring/execution-envelope.json'
+          out.write_text(json.dumps(envelope, indent=2, sort_keys=True) + '\n', encoding='utf-8')
+          print(json.dumps(envelope, indent=2, sort_keys=True))
+          PY
+
+      - name: Upload immutable scoring evidence
+        uses: actions/upload-artifact@v4
+        with:
+          name: v147-phase-d-gold-score-${{ github.run_id }}
+          path: |
+            debug/v147-phase-d-scoring/phase-d-score-result.json
+            debug/v147-phase-d-scoring/execution-envelope.json
+            debug/v147-phase-d-scoring/score-stdout.txt
+            debug/v147-phase-d-scoring/score-attempt-1-armed.json
+          if-no-files-found: error
+          retention-days: 30
+
+      - name: Persist result, checkpoint, and self-seal workflow
+        shell: bash
+        run: |
+          set -euo pipefail
+          python - <<'PY'
+          import hashlib, json, pathlib
+          root = pathlib.Path('.')
+          result_path = root / 'debug/v147-phase-d-scoring/phase-d-score-result.json'
+          report = json.loads(result_path.read_text(encoding='utf-8'))
+          result_sha = hashlib.sha256(result_path.read_bytes()).hexdigest()
+          cv = report['comparison']['candidateDisplayVectorPercent']
+          bv = report['comparison']['acceptedBaselineDisplayVectorPercent']
+          d = report['comparison']['gatedMetricDeltas']
+          score = report['score']
+          lines = [
+              '',
+              '## Phase-D V147 Gold calibration score — COMPLETE / ONE-USE PATH SELF-SEALED — 2026-08-27 UTC',
+              f'- Exactly one historical score call completed in GitHub Actions run `{__import__("os").environ["GITHUB_RUN_ID"]}`.',
+              f'- Result path: `debug/v147-phase-d-scoring/phase-d-score-result.json`; SHA256 `{result_sha}`.',
+              f'- Candidate display vector (pitch content / pitch timing / string-fret timing / chord pitch-set / measure coverage / PDF fidelity): **{cv[0]:.3f} / {cv[1]:.3f} / {cv[2]:.3f} / {cv[3]:.3f} / {cv[4]:.3f} / {cv[5]:.3f}**.',
+              f'- Accepted baseline display vector: **{bv[0]:.3f} / {bv[1]:.3f} / {bv[2]:.3f} / {bv[3]:.3f} / {bv[4]:.3f} / {bv[5]:.3f}**.',
+              f'- Critical mismatch count: **{score["criticalMismatchCount"]}**; delta vs accepted baseline: **{report["comparison"]["criticalMismatchDelta"]:+d}**.',
+              f'- Raw F1 deltas vs accepted baseline: pitch content `{d["pitchContentF1"]:+.9f}`, pitch timing `{d["pitchTimingTolerantF1"]:+.9f}`, string/fret `{d["stringFretTimingTolerantF1"]:+.9f}`, chord pitch-set `{d["chordPitchSetTolerantF1"]:+.9f}`, exact voicing `{d["exactVoicingTolerantF1"]:+.9f}`, measure coverage `{d["measureCoverageRecall"]:+.9f}`.',
+              '- Gold SHA verified immediately before parsing/scoring as `18fd868ae960dfcddc1ffb0110f1a9dfd8acc2ffeb46e247d1116cd54291526ac`.',
+              '- Historical scoring chain remained blob-bound: wrapper `1ca2b8550d6c08e793f26b3aa91b99fb44fa7ddb`, core scorer `cc4bf61a99f22bf87a6c255e5a81220fbc82223b`, canonical adapter `088d44827fb23e20d9aeeb4944a672989af5846c`.',
+              '- Safety: candidate search **NO**; alternate candidate **NO**; retuning **NO**; audio/CQT recomputation **NO**; Modal/L4/GPU **NO**; main/Production integration **NO**; automatic promotion **NO**.',
+              '- The one-use workflow is removed in the same persistence commit as this checkpoint. The attempt sentinel remains durable and makes reruns fail closed.',
+              '- Phase-D scoring authorization is consumed. Any further reference-facing comparison, candidate change, calibration search, or promotion requires a new separately frozen phase and fresh explicit authorization.',
+              ''
+          ]
+          with (root / 'docs/checkpoints/CURRENT_STATE.md').open('a', encoding='utf-8') as fh:
+              fh.write('\n'.join(lines))
+          PY
+          git add debug/v147-phase-d-scoring/phase-d-score-result.json \
+                  debug/v147-phase-d-scoring/execution-envelope.json \
+                  debug/v147-phase-d-scoring/score-stdout.txt \
+                  docs/checkpoints/CURRENT_STATE.md
+          git rm .github/workflows/v147-phase-d-score-once.yml
+          git commit -m 'debug: persist and seal V147 Phase D single score'
+          git push origin HEAD:v143-contextual-prune-lobo
