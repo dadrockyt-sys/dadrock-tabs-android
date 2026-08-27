@@ -2,7 +2,7 @@
 
 Updated: 2026-08-26 America/Montreal
 Branch: `v143-contextual-prune-lobo`
-Active phase: **V147 Phase C REAL-AUDIO ARTIFACT-FIRST CONSTRUCTION = GO / SEALED, and the fresh V147 durable replay bundle = COMPLETE / SEALED. Exactly one immutable candidate was constructed from the exact historical audio. The completed 13-file evidence artifact has been hash-gated and permanently mirrored into the branch for future reference-free replay without audio/Modal/L4/GPU access. Both one-use Phase-C workflows are deleted. FRESH-CHAT HANDOFF IS READY. STOP before Phase D/reference/gold scoring and before any new Modal/L4 run.**
+Active phase: **V147 Phase C REAL-AUDIO ARTIFACT-FIRST CONSTRUCTION = GO / SEALED, and the fresh V147 durable replay bundle = COMPLETE / SEALED. Exactly one immutable candidate was constructed from the exact historical audio. The completed 13-file evidence artifact has been hash-gated and permanently mirrored into the branch for future reference-free replay without audio/Modal/L4/GPU access. Both one-use Phase-C workflows are deleted. Phase D REFERENCE-FREE DESIGN/FREEZE is now in progress. Reference/gold scoring and all new Modal/L4/GPU execution remain unauthorized.**
 
 ## Permanent safety / fixed protocol
 - Work only on `v143-contextual-prune-lobo`; never modify/merge `main` or Production.
@@ -133,6 +133,14 @@ Active phase: **V147 Phase C REAL-AUDIO ARTIFACT-FIRST CONSTRUCTION = GO / SEALE
 - It does not establish musical improvement; no candidate accuracy score or accepted-baseline comparison was run.
 - Accepted baseline scores therefore remain unchanged.
 
+## Phase D reference-free resumption — ACTIVE
+- Resumed from branch head **`8d0b9a20aff17f6671a6f5e54f9016068daedfcd`** on 2026-08-26 America/Montreal.
+- Reverified immutable candidate canonical event SHA256 **`ca35c3492295a3079c17c35124df7a483166315e85649e95ded095c6c06b2b77`** from this checkpoint.
+- Reverified durable preservation-manifest Git blob **`9f67507b448eb3a36f6e5d2d96572af425c42cb5`** from the preserved bundle.
+- Safety boundary remains intact in this resumed session: **no gold/reference opened, no scoring run, no Modal/L4/GPU run, no candidate variant/search, no Production integration**.
+- Current authorized task is only to design and freeze the Phase-D reference-free scorer/evaluator, fixed artifact contract, evaluation order, fail-closed rules, and exact STOP/GO gates using preserved non-reference evidence.
+- Fresh explicit authorization is still required after the Phase-D preregistration freeze before any reference/gold scoring.
+
 ## FRESH-CHAT HANDOFF — DO THIS NEXT, IN ORDER
 1. **Start by reading this checkpoint and re-fetching branch head.** Confirm branch is still `v143-contextual-prune-lobo`; do not touch `main`/Production. Confirm candidate SHA `ca35c3492295a3079c17c35124df7a483166315e85649e95ded095c6c06b2b77` and durable manifest blob `9f67507b448eb3a36f6e5d2d96572af425c42cb5` are unchanged.
 2. **Prefer preserved V147 evidence before any expensive compute.** Use `debug/v147-phase-c-real-audio/preserved-run-33038518285/` for all reference-free decision/fingering/candidate-validation work that can be answered from it. Do not re-read/decode the song or use Modal/L4 merely to reproduce evidence already preserved.
@@ -147,7 +155,7 @@ Active phase: **V147 Phase C REAL-AUDIO ARTIFACT-FIRST CONSTRUCTION = GO / SEALE
 
 ## EXPLICIT NEXT STEPS
 1. Keep V147 A/B, Phase-C pre-audio, Phase-C real-audio construction, and durable replay preservation sealed; do not recreate/rerun either deleted Phase-C one-use workflow.
-2. In a fresh chat, follow the handoff above: first freeze Phase D reference-free; then obtain explicit authorization before scoring.
+2. Continue only Phase-D reference-free design/freeze in this session; after freeze, STOP and obtain fresh explicit authorization before any scoring.
 3. Use preserved V147 replay evidence to minimize audio/Modal/L4 usage wherever technically sufficient.
 4. Treat any future large Modal/L4 execution as a separate phase with a frozen preservation plan and fresh authorization before compute.
 5. No automatic promotion.
@@ -158,4 +166,4 @@ Active phase: **V147 Phase C REAL-AUDIO ARTIFACT-FIRST CONSTRUCTION = GO / SEALE
 - Durable preservation commit `5ad9b4eba040219e89be9286587756d81f5a9015`; manifest blob `9f67507b448eb3a36f6e5d2d96572af425c42cb5`.
 - One-use real-audio workflow sealed at `4b125f42dfa447e1fe86741c8f41c09dcaffc895`; one-use replay-preservation workflow sealed at `2ca2e9ebcdff768869d6a2935f909a755b3dfcfa`.
 - 247 observational ±1 pitch changes; all structural/position/PDF/determinism gates green.
-- **Fresh-chat next action: design/freeze Phase D reference-free. Reference/gold scoring and all new Modal/L4/GPU execution remain unauthorized until their respective fresh explicit authorizations.**
+- **Phase D reference-free design/freeze is active. Reference/gold scoring and all new Modal/L4/GPU execution remain unauthorized until their respective fresh explicit authorizations.**
