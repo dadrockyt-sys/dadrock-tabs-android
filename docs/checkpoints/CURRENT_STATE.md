@@ -351,3 +351,15 @@ Active phase: **V147 Phase C REAL-AUDIO ARTIFACT-FIRST CONSTRUCTION = GO / SEALE
 - New duplicate-MIDI identities arose on **19 / 217** changed onsets (8.76%) and 17.12% of polyphonic changed onsets. Causes: `{'changed-events-converged': 2, 'changed-into-unchanged-existing-pitch': 17}`; directions: `{'down-one': 15, 'up-one': 9}`.
 - Phase E safety remained clean: no Gold/reference/professional image read; no audio/HPSS/CQT/Modal/L4/GPU; no candidate construction/search; no threshold retuning; no main/Production change.
 - Phase E diagnosis is complete. Next safe boundary is a **separate V148 hypothesis/preregistration only**; do not construct or score V148 until that protocol is frozen.
+
+## V148 Phase A singleton-only hypothesis — FROZEN / STOP BEFORE CONSTRUCTION — 2026-08-27 UTC
+- Phase E reference-free diagnosis is complete and sealed. Durable normalized result SHA256 `03add61b3fef99edb9cfae7815b83207436fa85cbf8d11a4e1f4d540ab8ad088`; recovery run `33042852763`; no Gold/reference/image/audio/HPSS/CQT/Modal/GPU/candidate search or retuning was used.
+- Collision metrics are reconciled, not contradictory: **18 net pitch-set-cardinality-loss onsets** versus **19 newly duplicated-MIDI-identity onsets**; 17/19 new duplicates came from a changed note moving onto an unchanged simultaneous pitch.
+- Normalized Phase-E signal: overall event-change rate 21.59%; singleton-event rate 18.0%; size-2 event rate 23.0%; size-3 event rate 35.4%; size-4+ event rate 28.0%. At the onset level: singleton 18.0%, size-2 40.1%, size-3 62.5%, size-4+ 66.7%.
+- Earlier Phase-E evidence also ruled against two simple explanations as dominant: only 30/247 substitutions were within 1 dB of any frozen V147 gate and only 2/247 selected winners depended on the octave bonus.
+- Frozen V148 hypothesis: **polyphonic onset mixtures are unsafe for independent V147 per-note +/-1 overrides; fail closed to accepted family #10 for every polyphonic onset and permit the immutable V147 projection only for accepted singleton onsets.**
+- Preregistration: `debug/v148-singleton-only/phase-a-hypothesis-preregistration.json`; Git blob **`fd3fb330d3aa80d1058656e3b2dd7eaa201f8e1c`**.
+- Single frozen future construction policy: start from accepted family #10; only where accepted onset cardinality is exactly 1 and the immutable V147 decision has `changed=true`, copy the corresponding already-materialized V147 canonical candidate row; preserve all other accepted rows exactly.
+- Expected preconstruction structural facts: 1144 events, 113 measures, exactly **106 changed events / 106 changed onsets**, zero polyphonic changes, one candidate only. No threshold/weight/pitch-class/register/string/margin filtering is allowed.
+- V148 construction must use preserved artifacts only: no audio reread, no HPSS/CQT, no Modal/L4/GPU, no Gold/reference/image, no scorer, no candidate sweep/search, no retuning, no main/Production modification.
+- **V148 construction authorization: FALSE. V148 reference-facing scoring authorization: FALSE. STOP here until fresh explicit user authorization to construct the single frozen V148 candidate.**
