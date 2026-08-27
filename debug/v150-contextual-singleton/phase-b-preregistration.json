@@ -1,0 +1,47 @@
+{
+  "schema": "dadrock.tabs.v150.contextual-singleton.phase-b-preregistration.v1",
+  "classification": "single-contextual-prune-construction-hypothesis-frozen",
+  "branch": "v143-contextual-prune-lobo",
+  "sourceHead": "9670f0c3dd45e0bd17bb21cb8235d4524ca76856",
+  "basis": {
+    "analysisPath": "debug/v150-contextual-singleton/phase-a-analysis.json",
+    "analysisGitBlob": "67ad55d005415be2248a57238109a3d8745e4061",
+    "analysisSha256": "f1e61d3f16d69aab3f6ac9fa5aabaa6ae12839be3061a8ec3521e94d1529b396",
+    "v149ChangedEvents": 54,
+    "strictBothSidesWorse": 21,
+    "strictBothSidesWorsePercent": 38.888888888888886,
+    "strictBothSidesBetter": 18,
+    "strictBothSidesBetterPercent": 33.333333333333336,
+    "mixed": 15,
+    "mixedPercent": 27.77777777777778
+  },
+  "hypothesis": "Independent per-note audio overrides that strictly worsen immediate voice-leading distance to both neighboring accepted onsets are contextually unsafe and should fail closed to the accepted baseline.",
+  "singleFrozenConstructionPolicy": {
+    "name": "v149-minus-strict-both-sides-worse-local-context-overrides",
+    "startFrom": "accepted family #10",
+    "copyV149RowOnlyWhen": "event is one of V149's 54 changed singleton events AND V150 Phase A contextRelationship is not strict-both-sides-worse",
+    "otherwise": "preserve accepted row exactly",
+    "expectedRevertedFromV149": 21,
+    "expectedChangedEventsVersusAccepted": 33,
+    "expectedChangedOnsetsVersusAccepted": 33,
+    "expectedPolyphonicChangedEvents": 0,
+    "expectedEventCount": 1144,
+    "expectedMeasures": 113,
+    "candidateVariants": 1
+  },
+  "selectionBoundary": "No pitch-class-window rule, no total-cost-only rule, no new evidence-margin threshold, and no combination rule may be substituted or added in this phase.",
+  "forbidden": {
+    "goldOrReferenceReadDuringConstruction": true,
+    "priorScoreResultReadDuringConstruction": true,
+    "candidateSweepOrVariants": true,
+    "alternateContextRule": true,
+    "evidenceMarginThresholdSweep": true,
+    "retuning": true,
+    "audioReadOrDecode": true,
+    "hpssOrCqtRecompute": true,
+    "modalOrGpu": true,
+    "mainOrProductionModification": true,
+    "automaticPromotion": true
+  },
+  "scoreBoundary": "Persist and seal the exact V150 candidate reference-free first. Any Gold score must then be separately bound to the exact candidate identity and run exactly once."
+}
