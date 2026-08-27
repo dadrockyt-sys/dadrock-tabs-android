@@ -1,0 +1,118 @@
+name: V147 Phase B Generated Integration Proof
+
+on:
+  push:
+    branches:
+      - v143-contextual-prune-lobo
+    paths:
+      - .github/workflows/v147-phase-b-generated-integration-proof.yml
+
+permissions:
+  contents: read
+
+jobs:
+  cpu-generated-integration-proof:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout frozen branch state
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+
+      - name: Install CPU test dependency
+        run: python -m pip install --disable-pip-version-check pytest
+
+      - name: Verify frozen upstream blobs
+        shell: bash
+        run: |
+          test "$(git hash-object modal/v145_rhythm_decoder.py)" = "2fd979aebb4685e86c7f24a0162f69de306c06e9"
+          test "$(git hash-object modal/v147_pitch_hypothesis.py)" = "49bce8b968406bb0d61ab61394954ef8a8303eb7"
+
+      - name: Run frozen Phase B tests and generated proof
+        shell: bash
+        run: |
+          mkdir -p debug/v147-phase-b-generated-integration
+          set +e
+          python -m pytest -q modal/tests/test_v147_phase_b_generated_integration.py 2>&1 | tee debug/v147-phase-b-generated-integration/pytest-output.txt
+          pytest_status=${PIPESTATUS[0]}
+          python -m modal.v147_phase_b_generated_integration_cpu_proof --output debug/v147-phase-b-generated-integration/generated-integration-proof.json 2>&1 | tee debug/v147-phase-b-generated-integration/proof-output.txt
+          proof_status=${PIPESTATUS[0]}
+          set -e
+
+          export PYTEST_STATUS="$pytest_status"
+          export PROOF_STATUS="$proof_status"
+          export RUNNER_OS_VALUE="$RUNNER_OS"
+          export RUNNER_ARCH_VALUE="$RUNNER_ARCH"
+          export GITHUB_SHA_VALUE="$GITHUB_SHA"
+          python - <<'PY'
+          import hashlib
+          import json
+          import os
+          import platform
+          import subprocess
+          from pathlib import Path
+
+          import pytest
+
+          def git_blob(path: str) -> str:
+              return subprocess.check_output(['git', 'hash-object', path], text=True).strip()
+
+          proof_path = Path('debug/v147-phase-b-generated-integration/generated-integration-proof.json')
+          proof_bytes = proof_path.read_bytes() if proof_path.exists() else b''
+          runtime = {
+              'schema': 14712,
+              'phase': 'V147-Phase-B',
+              'evidenceClass': 'github-actions-cpu-generated-reference-free-decoder-integration',
+              'commitSha': os.environ['GITHUB_SHA_VALUE'],
+              'runnerOs': os.environ['RUNNER_OS_VALUE'],
+              'runnerArch': os.environ['RUNNER_ARCH_VALUE'],
+              'pythonVersion': platform.python_version(),
+              'pytestVersion': pytest.__version__,
+              'pytestExitCode': int(os.environ['PYTEST_STATUS']),
+              'proofExitCode': int(os.environ['PROOF_STATUS']),
+              'proofFileSha256': hashlib.sha256(proof_bytes).hexdigest() if proof_bytes else None,
+              'v145DecoderBlob': git_blob('modal/v145_rhythm_decoder.py'),
+              'v147PitchHypothesisBlob': git_blob('modal/v147_pitch_hypothesis.py'),
+              'phaseBAdapterBlob': git_blob('modal/v147_phase_b_generated_integration.py'),
+              'phaseBTestsBlob': git_blob('modal/tests/test_v147_phase_b_generated_integration.py'),
+              'phaseBProofHarnessBlob': git_blob('modal/v147_phase_b_generated_integration_cpu_proof.py'),
+              'referenceFree': True,
+              'calibrationReferenceRead': False,
+              'goldRead': False,
+              'realAudioRead': False,
+              'analyzerIntegrated': False,
+              'modalGpuUsed': False,
+              'productionIntegrated': False,
+          }
+          runtime['frozenSourceIdentityMatch'] = (
+              runtime['v145DecoderBlob'] == '2fd979aebb4685e86c7f24a0162f69de306c06e9'
+              and runtime['v147PitchHypothesisBlob'] == '49bce8b968406bb0d61ab61394954ef8a8303eb7'
+          )
+          runtime['gate'] = 'GO' if (
+              runtime['pytestExitCode'] == 0
+              and runtime['proofExitCode'] == 0
+              and runtime['frozenSourceIdentityMatch']
+          ) else 'STOP'
+          Path('debug/v147-phase-b-generated-integration/runtime-evidence.json').write_text(
+              json.dumps(runtime, indent=2, sort_keys=True) + '\n', encoding='utf-8'
+          )
+          print('V147_PHASE_B_RUNTIME_JSON=' + json.dumps(runtime, sort_keys=True, separators=(',', ':')))
+          PY
+
+          test "$pytest_status" -eq 0
+          test "$proof_status" -eq 0
+
+      - name: Upload exact Phase B evidence
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: v147-phase-b-generated-integration-proof
+          path: |
+            debug/v147-phase-b-generated-integration/generated-integration-proof.json
+            debug/v147-phase-b-generated-integration/runtime-evidence.json
+            debug/v147-phase-b-generated-integration/pytest-output.txt
+            debug/v147-phase-b-generated-integration/proof-output.txt
+          if-no-files-found: error
