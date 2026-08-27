@@ -1,0 +1,31 @@
+name: V152 handoff checkpoint v2
+on:
+  push:
+    paths:
+      - .github/workflows/v152-handoff-checkpoint-v2.yml
+permissions:
+  contents: write
+jobs:
+  checkpoint:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: v143-contextual-prune-lobo
+          fetch-depth: 0
+      - name: Append handoff
+        run: |
+          set -euo pipefail
+          test "$(git hash-object docs/checkpoints/CURRENT_STATE.md)" = "813536e7129e57b7d110a088bda35dfa05aa973f"
+          cat debug/v152-fresh-chat-handoff.md >> docs/checkpoints/CURRENT_STATE.md
+      - name: Commit and seal
+        run: |
+          set -euo pipefail
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git rm .github/workflows/v152-handoff-checkpoint-v2.yml
+          git rm .github/workflows/v152-fresh-chat-handoff-once.yml
+          git rm debug/v152-fresh-chat-handoff.md
+          git add docs/checkpoints/CURRENT_STATE.md
+          git commit -m 'docs: save V152 handoff and V153 next steps [skip ci]'
+          git push origin HEAD:v143-contextual-prune-lobo
