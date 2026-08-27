@@ -1,0 +1,302 @@
+name: V154 CPU pretrained reset A2 once
+
+on:
+  push:
+    branches:
+      - v143-contextual-prune-lobo
+    paths:
+      - .github/workflows/v154-cpu-pretrained-reset-a2-once.yml
+
+permissions:
+  contents: write
+
+env:
+  BRANCH: v143-contextual-prune-lobo
+  ROOT_OUT: debug/v154-cpu-autonomous/phase-a2
+  SENTINEL: debug/v154-cpu-autonomous/phase-a2-attempt-sentinel.json
+  RAW_OUT: debug/v154-cpu-autonomous/phase-a2/raw-basic-pitch.json
+  GUITAR_OUT: debug/v154-cpu-autonomous/phase-a2/demucs6-guitar-basic-pitch.json
+  SCORE_OUT: debug/v154-cpu-autonomous/phase-a2/score-result.json
+  COMPLETE: debug/v154-cpu-autonomous/phase-a2-complete-sentinel.json
+  CUDA_VISIBLE_DEVICES: ""
+
+jobs:
+  cpu-pretrained-reset-a2:
+    runs-on: ubuntu-latest
+    timeout-minutes: 60
+    steps:
+      - name: Checkout exact A2 revision
+        uses: actions/checkout@v4
+        with:
+          ref: ${{ github.sha }}
+          fetch-depth: 0
+
+      - name: Set up CPU Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.10'
+
+      - name: Guard fresh A2 repair boundary
+        shell: bash
+        run: |
+          set -euo pipefail
+          test ! -e "$SENTINEL"
+          test ! -e "$ROOT_OUT"
+          test "$(git hash-object debug/v154-cpu-autonomous/phase-a2-preregistration.json)" = "d877f0f1b2afc90c10d924806ec50aa5efb5d2a7"
+          test "$(git hash-object debug/v154-cpu-autonomous/phase-a1-failure.json)" = "c2dd96957fc2632feac62aa3dc4494a1aaf799d4"
+          test "$(git hash-object debug/v154-cpu-autonomous/phase-a-preregistration.json)" = "d8af65d0b642b311fd243841af3eaef22e0a007f"
+          test "$(git hash-object validation/v154_cpu_autonomous/benchmark_pretrained_frontend.py)" = "ca0c26dd3cf786585bea615f4bd565a9d1980d4e"
+          python -m py_compile validation/v154_cpu_autonomous/benchmark_pretrained_frontend.py
+
+      - name: Consume A2 and checkpoint A1 failure before audio
+        env:
+          RUN_ID: ${{ github.run_id }}
+          HEAD_SHA: ${{ github.sha }}
+        shell: bash
+        run: |
+          set -euo pipefail
+          python - <<'PY'
+          import json, os
+          from datetime import datetime, timezone
+          from pathlib import Path
+          p=Path(os.environ['SENTINEL']); p.parent.mkdir(parents=True,exist_ok=True)
+          p.write_text(json.dumps({
+            'schema':'dadrock.tabs.v154.cpu-autonomous.phase-a2-attempt.v1',
+            'status':'CONSUMED_BEFORE_AUDIO_AND_BEFORE_GOLD',
+            'runId':os.environ['RUN_ID'],'runHeadSha':os.environ['HEAD_SHA'],
+            'consumedAtUtc':datetime.now(timezone.utc).isoformat(),
+            'preregistrationGitBlob':'d877f0f1b2afc90c10d924806ec50aa5efb5d2a7',
+            'benchmarkGitBlob':'ca0c26dd3cf786585bea615f4bd565a9d1980d4e',
+            'audioRead':False,'goldOrReferenceRead':False,'scoreCallCount':0,
+            'humanCorrection':False,'thresholdSweep':False,'modalUsed':False,
+            'cudaExecutionUsed':False,'gpuUsed':False
+          },indent=2,sort_keys=True)+'\n')
+          cp=Path('docs/checkpoints/CURRENT_STATE.md'); text=cp.read_text()
+          fail='## V154 Phase A1 CPU pretrained reset — ENGINEERING FAILURE / SEALED — 2026-08-27 UTC'
+          if fail not in text:
+              text += f'''\n\n{fail}\n- Run `33087772583`, job `98572047257` failed during the first raw Basic Pitch inference **before any transcription output and before Gold/reference access**.\n- Root cause: `tflite-runtime==2.14.0` loaded against resolved `numpy==2.2.6`, causing `_ARRAY_API not found`; scientific model/thresholds were never evaluated.\n- Audio identity verification and deterministic CPU normalization succeeded. Demucs did not start; Gold/reference opened **NO**; score calls **0**.\n- A1 artifact `v154-cpu-pretrained-reset-33087772583`, ID `9653047980`, ZIP SHA256 `a10194ad5029f2990e791834a028218c6d2249d7cb2a617015cdd836f4ebad60`. Failure record blob `c2dd96957fc2632feac62aa3dc4494a1aaf799d4`.\n- A1 workflow was deleted/sealed at commit `77fae6e6b705f0d471032ccfabf49f6fa64b446d`; replay **NO**.\n'''
+          marker='## V154 Phase A2 CPU runtime repair — FROZEN / CONSUMED / BEFORE AUDIO — 2026-08-27 UTC'
+          if marker in text: raise SystemExit('duplicate A2 checkpoint')
+          text += f'''\n\n{marker}\n- A2 changes **runtime only**: NumPy `1.26.4` for TFLite ABI compatibility and official PyTorch `2.8.0+cpu`; scientific branches, Basic Pitch defaults, Demucs model, and scoring rules are unchanged.\n- A2 preregistration blob `d877f0f1b2afc90c10d924806ec50aa5efb5d2a7`; benchmark blob `ca0c26dd3cf786585bea615f4bd565a9d1980d4e`; run `{os.environ['RUN_ID']}`.\n- Raw transcription will be persisted before Demucs; guitar-stem transcription will be persisted before Gold. No Gold-guided construction or threshold sweep.\n- At this checkpoint audio opened **NO**, Gold/reference opened **NO**, score calls `0`, human correction/Modal/L4/CUDA execution/GPU/main/Production **NO**.\n'''
+          cp.write_text(text)
+          PY
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add "$SENTINEL" docs/checkpoints/CURRENT_STATE.md
+          git commit -m 'debug: checkpoint consumed V154 A2 attempt [skip ci]'
+          git push origin HEAD:$BRANCH
+
+      - name: Make Gold unreadable before all audio inference
+        shell: bash
+        run: |
+          set -euo pipefail
+          chmod 000 debug/v144-rhythm-calibration/reference/professional-rhythm-gold-reference.json
+          if test -f public/Professionalexample.jpg; then chmod 000 public/Professionalexample.jpg; fi
+
+      - name: Checkout exact historical audio only
+        uses: actions/checkout@v4
+        with:
+          repository: dadrockyt-sys/dadrock-tabs-android
+          ref: 74b0f815ff3f66f325220975c410621503de440f
+          path: _v154a2_source
+          fetch-depth: 1
+          sparse-checkout: |
+            public/gomywayfullaitest.m4a
+          sparse-checkout-cone-mode: false
+          persist-credentials: false
+
+      - name: Verify exact historical audio bytes
+        shell: bash
+        run: |
+          set -euo pipefail
+          audio='_v154a2_source/public/gomywayfullaitest.m4a'
+          test -f "$audio"
+          test "$(wc -c < "$audio" | tr -d ' ')" = "3478611"
+          test "$(sha256sum "$audio" | awk '{print $1}')" = "215bd5a657c5326f08f132ae358595a95c30b39bb7493a52c2f910d5a608149f"
+
+      - name: Install true CPU-only pinned stack
+        shell: bash
+        run: |
+          set -euo pipefail
+          python -m pip install --disable-pip-version-check \
+            torch==2.8.0 --index-url https://download.pytorch.org/whl/cpu
+          python -m pip install --disable-pip-version-check \
+            numpy==1.26.4 \
+            basic-pitch==0.4.0 \
+            demucs==4.1.0 \
+            imageio-ffmpeg==0.6.0
+          python - <<'PY'
+          import importlib.metadata, numpy, torch
+          assert numpy.__version__ == '1.26.4'
+          assert importlib.metadata.version('basic-pitch') == '0.4.0'
+          assert importlib.metadata.version('demucs') == '4.1.0'
+          assert importlib.metadata.version('imageio-ffmpeg') == '0.6.0'
+          assert torch.__version__.startswith('2.8.0')
+          assert torch.version.cuda is None, torch.version.cuda
+          assert torch.cuda.is_available() is False
+          print({'numpy':numpy.__version__,'torch':torch.__version__,'torchCudaVersion':torch.version.cuda,'cudaAvailable':torch.cuda.is_available()})
+          PY
+          mkdir -p "$ROOT_OUT"
+          python -m pip freeze | sort > "$ROOT_OUT/pip-freeze.txt"
+
+      - name: Normalize exact audio deterministically on CPU
+        shell: bash
+        run: |
+          set -euo pipefail
+          python - <<'PY'
+          import hashlib,json,subprocess
+          from pathlib import Path
+          import imageio_ffmpeg
+          src=Path('_v154a2_source/public/gomywayfullaitest.m4a'); out=Path('/tmp/v154a2-normalized.wav')
+          exe=imageio_ffmpeg.get_ffmpeg_exe()
+          subprocess.check_call([exe,'-v','error','-i',str(src),'-vn','-ar','44100','-ac','2','-c:a','pcm_s16le',str(out)])
+          b=out.read_bytes()
+          Path('debug/v154-cpu-autonomous/phase-a2/audio-identity.json').write_text(json.dumps({
+            'historicalM4aSha256':hashlib.sha256(src.read_bytes()).hexdigest(),
+            'normalizedWavBytes':len(b),'normalizedWavSha256':hashlib.sha256(b).hexdigest(),
+            'sampleRate':44100,'channels':2,'format':'pcm_s16le',
+            'imageioFfmpegVersion':imageio_ffmpeg.__version__,
+            'goldOrReferenceRead':False,'modalUsed':False,'cudaExecutionUsed':False,'gpuUsed':False
+          },indent=2,sort_keys=True)+'\n')
+          PY
+
+      - name: Run frozen Basic Pitch on original mix CPU
+        shell: bash
+        run: |
+          set -euo pipefail
+          python validation/v154_cpu_autonomous/benchmark_pretrained_frontend.py transcribe \
+            --audio /tmp/v154a2-normalized.wav \
+            --branch-id raw-basic-pitch \
+            --audio-role normalized-original-mix \
+            --output "$RAW_OUT"
+
+      - name: Persist raw reference-free branch before separation
+        shell: bash
+        run: |
+          set -euo pipefail
+          python - <<'PY'
+          import json
+          from pathlib import Path
+          d=json.loads(Path('debug/v154-cpu-autonomous/phase-a2/raw-basic-pitch.json').read_text())
+          assert d['branchId']=='raw-basic-pitch' and d['noteEventCount']>0
+          assert d['safety']['goldOrReferenceRead'] is False
+          PY
+          git add "$ROOT_OUT"
+          git commit -m 'debug: persist V154 A2 raw Basic Pitch branch [skip ci]'
+          git push origin HEAD:$BRANCH
+
+      - name: Run CPU Demucs six-source guitar separation
+        shell: bash
+        run: |
+          set -euo pipefail
+          python - <<'PY'
+          import torch
+          assert torch.version.cuda is None
+          assert torch.cuda.is_available() is False
+          PY
+          python -m demucs -n htdemucs_6s -d cpu --shifts 1 -j 1 -o /tmp/v154a2-demucs /tmp/v154a2-normalized.wav
+          guitar='/tmp/v154a2-demucs/htdemucs_6s/v154a2-normalized/guitar.wav'
+          test -f "$guitar"
+          python - <<'PY'
+          import hashlib,importlib.metadata,json,torch
+          from pathlib import Path
+          p=Path('/tmp/v154a2-demucs/htdemucs_6s/v154a2-normalized/guitar.wav'); b=p.read_bytes()
+          cache=Path.home()/'.cache/torch/hub/checkpoints'; checkpoints=[]
+          if cache.exists():
+              for f in sorted(x for x in cache.iterdir() if x.is_file()):
+                  checkpoints.append({'name':f.name,'bytes':f.stat().st_size,'sha256':hashlib.sha256(f.read_bytes()).hexdigest()})
+          Path('debug/v154-cpu-autonomous/phase-a2/demucs-identity.json').write_text(json.dumps({
+            'packageVersion':importlib.metadata.version('demucs'),'model':'htdemucs_6s','device':'cpu','shifts':1,'jobs':1,
+            'torchVersion':torch.__version__,'torchCudaVersion':torch.version.cuda,'cudaAvailable':torch.cuda.is_available(),
+            'guitarStemBytes':len(b),'guitarStemSha256':hashlib.sha256(b).hexdigest(),'modelCheckpointFiles':checkpoints,
+            'goldOrReferenceRead':False,'modalUsed':False,'cudaExecutionUsed':False,'gpuUsed':False
+          },indent=2,sort_keys=True)+'\n')
+          PY
+
+      - name: Run frozen Basic Pitch on CPU guitar stem
+        shell: bash
+        run: |
+          set -euo pipefail
+          python validation/v154_cpu_autonomous/benchmark_pretrained_frontend.py transcribe \
+            --audio /tmp/v154a2-demucs/htdemucs_6s/v154a2-normalized/guitar.wav \
+            --branch-id demucs6-guitar-basic-pitch \
+            --audio-role htdemucs_6s-guitar-stem \
+            --output "$GUITAR_OUT"
+
+      - name: Persist second reference-free branch before Gold
+        shell: bash
+        run: |
+          set -euo pipefail
+          python - <<'PY'
+          import json
+          from pathlib import Path
+          r=json.loads(Path('debug/v154-cpu-autonomous/phase-a2/raw-basic-pitch.json').read_text())
+          g=json.loads(Path('debug/v154-cpu-autonomous/phase-a2/demucs6-guitar-basic-pitch.json').read_text())
+          assert r['branchId']=='raw-basic-pitch' and r['noteEventCount']>0
+          assert g['branchId']=='demucs6-guitar-basic-pitch' and g['noteEventCount']>0
+          for d in (r,g):
+              assert d['safety']['goldOrReferenceRead'] is False
+              assert d['safety']['humanCorrection'] is False
+              assert d['safety']['thresholdSweep'] is False
+              assert d['safety']['modalUsed'] is False
+              assert d['safety']['cudaGpuUsed'] is False
+          PY
+          git add "$ROOT_OUT"
+          git commit -m 'debug: persist V154 A2 guitar Basic Pitch branch [skip ci]'
+          git push origin HEAD:$BRANCH
+
+      - name: Open frozen Gold only after both branches are immutable
+        shell: bash
+        run: |
+          set -euo pipefail
+          chmod 600 debug/v144-rhythm-calibration/reference/professional-rhythm-gold-reference.json
+          test "$(sha256sum debug/v144-rhythm-calibration/reference/professional-rhythm-gold-reference.json | awk '{print $1}')" = "18fd868ae960dfcdd1ffb0110f1a9dfd8acc2ffeb46e247d1116cd54291526ac"
+          python validation/v154_cpu_autonomous/benchmark_pretrained_frontend.py score \
+            --raw "$RAW_OUT" --guitar "$GUITAR_OUT" \
+            --gold debug/v144-rhythm-calibration/reference/professional-rhythm-gold-reference.json \
+            --output "$SCORE_OUT" | tee /tmp/v154a2-summary.json
+
+      - name: Checkpoint score and self-seal successful A2
+        env:
+          RUN_ID: ${{ github.run_id }}
+        shell: bash
+        run: |
+          set -euo pipefail
+          python - <<'PY'
+          import hashlib,json,os
+          from datetime import datetime,timezone
+          from pathlib import Path
+          p=Path('debug/v154-cpu-autonomous/phase-a2/score-result.json'); s=json.loads(p.read_text()); sha=hashlib.sha256(p.read_bytes()).hexdigest()
+          assert s['safety']['predefinedBranches']==2 and s['safety']['humanCorrection'] is False and s['safety']['thresholdSweep'] is False
+          assert s['safety']['modalUsed'] is False and s['safety']['cudaGpuUsed'] is False
+          complete={'schema':'dadrock.tabs.v154.cpu-autonomous.phase-a2-completion.v1','status':'COMPLETE_SEALED','runId':os.environ['RUN_ID'],'completedAtUtc':datetime.now(timezone.utc).isoformat(),'scoreResultSha256':sha,'preferredFrontend':s['preferredFrontend'],'preferredLocalPitchTimingF1':s['preferredLocalPitchTimingF1'],'interpretation':s['interpretation'],'humanCorrection':False,'thresholdSweep':False,'modalUsed':False,'cudaExecutionUsed':False,'gpuUsed':False,'mainOrProductionModified':False}
+          Path('debug/v154-cpu-autonomous/phase-a2-complete-sentinel.json').write_text(json.dumps(complete,indent=2,sort_keys=True)+'\n')
+          cp=Path('docs/checkpoints/CURRENT_STATE.md'); text=cp.read_text(); marker='## V154 Phase A2 CPU pretrained frontend reset — COMPLETE / SEALED — 2026-08-27 UTC'
+          if marker in text: raise SystemExit('duplicate A2 final checkpoint')
+          lines=[]
+          for r in s['branchesRanked']:
+              lines.append(f"- `{r['branchId']}`: **{r['generatedNoteCount']} notes**, local pitch/onset F1 **{100*r['localPitchTiming']['f1']:.3f}%** ({r['localPitchTiming']['matched']} matches), gross pitch/onset F1 **{100*r['grossPitchTiming']['f1']:.3f}%** ({r['grossPitchTiming']['matched']} matches), critical mismatches **{r['criticalMismatchCount']}**, measure-level pitch-content **{100*r['pitchContentByMeasureDiagnostic']['f1']:.3f}% diagnostic-only**.")
+          text += f'''\n\n{marker}\n- CPU-only run `{os.environ['RUN_ID']}` completed with **no human correction, threshold sweep, Gold-guided construction, Modal/L4/CUDA execution/GPU, main/Production, or promotion**. Both reference-free branches were committed before Gold opened.\n'''+'\n'.join(lines)+f'''\n- Accepted baseline local pitch/onset F1 **6.699% / 70 matches**; gross matches `189`; critical mismatches `1712`.\n- Preferred frontend **`{s['preferredFrontend']}`**; local F1 **{100*s['preferredLocalPitchTimingF1']:.3f}%**; absolute gain **{100*s['absoluteLocalF1GainVsAccepted']:+.3f} percentage points**; relative multiplier **{s['relativeLocalF1MultiplierVsAccepted']:.3f}x**.\n- Interpretation **`{s['interpretation']}`**. Result SHA256 **`{sha}`**. Basic Pitch thresholds remain frozen and must not be Gold-tuned from this result.\n- CPU-only follow-up may continue at assistant discretion; any Modal/L4/CUDA/GPU execution requires fresh explicit user authorization.\n'''
+          cp.write_text(text)
+          PY
+          git rm .github/workflows/v154-cpu-pretrained-reset-a2-once.yml
+          git add "$SCORE_OUT" "$COMPLETE" docs/checkpoints/CURRENT_STATE.md
+          git commit -m 'docs: seal V154 CPU pretrained reset A2 [skip ci]'
+          git push origin HEAD:$BRANCH
+
+      - name: Upload A2 evidence
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: v154-cpu-pretrained-reset-a2-${{ github.run_id }}
+          path: |
+            debug/v154-cpu-autonomous/phase-a2-attempt-sentinel.json
+            debug/v154-cpu-autonomous/phase-a2/audio-identity.json
+            debug/v154-cpu-autonomous/phase-a2/demucs-identity.json
+            debug/v154-cpu-autonomous/phase-a2/pip-freeze.txt
+            debug/v154-cpu-autonomous/phase-a2/raw-basic-pitch.json
+            debug/v154-cpu-autonomous/phase-a2/demucs6-guitar-basic-pitch.json
+            debug/v154-cpu-autonomous/phase-a2/score-result.json
+            debug/v154-cpu-autonomous/phase-a2-complete-sentinel.json
+          if-no-files-found: warn
+          retention-days: 30
