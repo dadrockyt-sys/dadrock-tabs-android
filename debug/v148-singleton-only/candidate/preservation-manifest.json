@@ -1,0 +1,29 @@
+{
+  "candidateEventSha256": "1be67004dea62b14740241b536339bb7cad2ecf3ee9e98bfb6109f67e4e1b1fa",
+  "changedEventCountVersusAccepted": 106,
+  "changedOnsetCountVersusAccepted": 106,
+  "classification": "durable-reference-free-single-candidate-preservation",
+  "cqtPreserved": false,
+  "eventCount": 1144,
+  "files": {
+    "candidate.json": {
+      "bytes": 280975,
+      "sha256": "b45034e2a4dd10a3d7784e584fccdbc7e49667a5b93c9a77ea42f5562ae139bb"
+    },
+    "construction-proof.json": {
+      "bytes": 3569,
+      "sha256": "688b77376b8aac6b27fe40b93f1f661b4e71cdd2d76f56ac7bfea3c5b15807a4"
+    },
+    "pdf-event-fidelity.json": {
+      "bytes": 507,
+      "sha256": "45cd279822835a1246c0f90bd8af9838ea9a4c72bb07e1fa7db50d8998bcaa46"
+    }
+  },
+  "generatedMeasureCount": 113,
+  "normalizedPcmPreserved": false,
+  "policy": "accepted-onset-singleton-only-v147-projection",
+  "rawAudioPreserved": false,
+  "referenceFacingScoringAuthorized": false,
+  "referenceMaterialPreserved": false,
+  "schema": "dadrock.tabs.v148.singleton-only-preservation-manifest.v1"
+}

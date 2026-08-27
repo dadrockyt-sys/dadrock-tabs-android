@@ -1,0 +1,46 @@
+{
+  "audioRead": false,
+  "automaticPromotion": false,
+  "candidateEventSha256": "1be67004dea62b14740241b536339bb7cad2ecf3ee9e98bfb6109f67e4e1b1fa",
+  "changedEvents": 106,
+  "changedOnsets": 106,
+  "deterministic": true,
+  "eventCount": 1144,
+  "frozenConstructorGitBlob": "bb43464f48cc8e0eade0f9e98229c859cb117986",
+  "generatedMeasureCount": 113,
+  "goldOrReferenceRead": false,
+  "modalGpuUsed": false,
+  "originalFailedJobId": "98422759855",
+  "originalFailedRunId": "33043698461",
+  "outputIdentities": {
+    "candidate.json": {
+      "bytes": 280975,
+      "sha256": "b45034e2a4dd10a3d7784e584fccdbc7e49667a5b93c9a77ea42f5562ae139bb"
+    },
+    "construction-proof.json": {
+      "bytes": 3569,
+      "sha256": "688b77376b8aac6b27fe40b93f1f661b4e71cdd2d76f56ac7bfea3c5b15807a4"
+    },
+    "pdf-event-fidelity.json": {
+      "bytes": 507,
+      "sha256": "45cd279822835a1246c0f90bd8af9838ea9a4c72bb07e1fa7db50d8998bcaa46"
+    },
+    "preservation-manifest.json": {
+      "bytes": 1060,
+      "sha256": "756dd9854d68839a7fce29e9964b45186c92c3346ea7ee29516c0762feedfbb3"
+    }
+  },
+  "pdfEventFidelity": 1.0,
+  "polyphonicChangedEvents": 0,
+  "priorCandidateCountConstructed": 0,
+  "productionIntegrated": false,
+  "recoveryArmingCommit": "8042a1c31a01c8eb2ddeadca267fefb369a54ea5",
+  "recoveryConsumedSentinelCommit": "de0c9daecc26037725fee9406f56cd99f32f73b6",
+  "recoveryLauncherGitBlob": "0bc6ab8795539eaab084cae5e60680ac0a2cba66",
+  "recoveryPreregistrationGitBlob": "c5825e8a345a52c2aa15f38527334d24eef409af",
+  "recoveryRunId": "33044069767",
+  "referenceFacingScoringAuthorization": false,
+  "schema": "dadrock.tabs.v148.singleton-only-import-path-recovery-completion.v1",
+  "status": "COMPLETE_SEALED_STOP_BEFORE_SCORING",
+  "totalV148CandidatesConstructedAcrossOriginalAndRecoveryRuns": 1
+}

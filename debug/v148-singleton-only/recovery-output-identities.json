@@ -1,0 +1,18 @@
+{
+  "candidate.json": {
+    "bytes": 280975,
+    "sha256": "b45034e2a4dd10a3d7784e584fccdbc7e49667a5b93c9a77ea42f5562ae139bb"
+  },
+  "construction-proof.json": {
+    "bytes": 3569,
+    "sha256": "688b77376b8aac6b27fe40b93f1f661b4e71cdd2d76f56ac7bfea3c5b15807a4"
+  },
+  "pdf-event-fidelity.json": {
+    "bytes": 507,
+    "sha256": "45cd279822835a1246c0f90bd8af9838ea9a4c72bb07e1fa7db50d8998bcaa46"
+  },
+  "preservation-manifest.json": {
+    "bytes": 1060,
+    "sha256": "756dd9854d68839a7fce29e9964b45186c92c3346ea7ee29516c0762feedfbb3"
+  }
+}

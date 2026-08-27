@@ -1,6 +1,8 @@
 {
   "branch": "v143-contextual-prune-lobo",
-  "completionPersisted": false,
+  "candidateEventSha256": "1be67004dea62b14740241b536339bb7cad2ecf3ee9e98bfb6109f67e4e1b1fa",
+  "completedAtUtc": "2026-08-27T05:55:52.169301Z",
+  "completionPersisted": true,
   "consumedAtUtc": "2026-08-27T05:55:50.022579Z",
   "consumedByRunId": "33044069767",
   "frozenConstructorGitBlob": "bb43464f48cc8e0eade0f9e98229c859cb117986",
@@ -15,5 +17,5 @@
   "recoveryPreregistrationGitBlob": "c5825e8a345a52c2aa15f38527334d24eef409af",
   "referenceFacingScoreCountAllowed": 0,
   "schema": "dadrock.tabs.v148.singleton-only-import-path-recovery-attempt.v1",
-  "status": "CONSUMED_BEFORE_RECOVERY_CONSTRUCTION"
+  "status": "COMPLETED_AND_SEALED"
 }
