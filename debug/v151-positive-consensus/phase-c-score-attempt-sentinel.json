@@ -1,0 +1,22 @@
+{
+  "schema": "dadrock.tabs.v151.positive-consensus.phase-c-score-attempt.v1",
+  "classification": "one-use-reference-facing-score-attempt",
+  "branch": "v143-contextual-prune-lobo",
+  "status": "ARMED_NOT_CONSUMED",
+  "authorizationGitBlob": "6c40b25934f5fe83853ea47959fd765b6b7af5af",
+  "scorerGitBlob": "d26f82546c7cfb3873ef23d8ea567dd23deb06e0",
+  "candidateGitBlob": "28d10742fe9f4e27ac47a14df9151c5bc8a6eec0",
+  "candidateEventSha256": "e6c437f534dfb5523610797c67f8f69176be903456ef4940c3032567b949156b",
+  "goldOrReferenceRead": false,
+  "referenceParsed": false,
+  "scoreCallCount": 0,
+  "candidateSearchRun": false,
+  "alternateCandidateConstructed": false,
+  "alternateSubsetTested": false,
+  "additionalFilterTested": false,
+  "thresholdSweep": false,
+  "audioRead": false,
+  "modalGpuUsed": false,
+  "productionIntegrated": false,
+  "automaticPromotion": false
+}
