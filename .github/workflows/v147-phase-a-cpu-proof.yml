@@ -33,7 +33,7 @@ jobs:
           set +e
           python -m pytest -q modal/tests/test_v147_pitch_hypothesis.py 2>&1 | tee debug/v147-pitch-hypothesis/pytest-output.txt
           pytest_status=${PIPESTATUS[0]}
-          python modal/v147_pitch_hypothesis_cpu_proof.py --output debug/v147-pitch-hypothesis/cpu-generated-proof.json 2>&1 | tee debug/v147-pitch-hypothesis/proof-output.txt
+          python -m modal.v147_pitch_hypothesis_cpu_proof --output debug/v147-pitch-hypothesis/cpu-generated-proof.json 2>&1 | tee debug/v147-pitch-hypothesis/proof-output.txt
           proof_status=${PIPESTATUS[0]}
           set -e
 
