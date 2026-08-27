@@ -1,6 +1,6 @@
 # V147 — Pitch Hypothesis Before Fingering — Preregistration
 
-Status: **FROZEN BEFORE IMPLEMENTATION**
+Status: **FROZEN BEFORE IMPLEMENTATION — aggregation clarification also frozen before code**
 
 Branch: `v143-contextual-prune-lobo`
 
@@ -50,7 +50,7 @@ For production-side integration, evidence is defined on the harmonic component o
 - harmonic/percussive separation: `librosa.effects.hpss`
 - CQT resolution: **48 bins/octave**
 - narrow candidate band: **±0.30 semitone** around candidate MIDI
-- octave-support band: the same width around candidate MIDI + 12 when in range
+- octave-support band: the same width around candidate MIDI + 12 when available
 - local baseline window: **±2.0 semitones**, excluding the central **±0.75 semitone** region
 - magnitudes are converted to dB with a numerical floor before subtraction
 
@@ -61,6 +61,24 @@ For each candidate and event window:
 - `scoreDb` = `fundamentalDeltaDb + 0.25 * max(0, octaveDeltaDb)`
 
 The octave term is support only; it cannot overcome absent fundamental evidence.
+
+### Frozen CQT aggregation clarification
+
+This clarification is part of the preregistration and was committed before any V147 implementation.
+
+Phase A's CQT evidence adapter does **not** choose audio normalization, CQT hop/fmin, or event-window timing. Those stay upstream in the existing analyzer/audio pipeline. The adapter accepts an already-computed **magnitude CQT**, the corresponding MIDI value for each CQT bin, and the explicit frame indices belonging to one event window.
+
+For a requested centre MIDI `p`:
+
+1. On each selected frame, `bandMagnitude(p)` is the **sum of CQT magnitudes** whose MIDI-bin centres lie in `[p-0.30, p+0.30]`.
+2. On the same frame, baseline bins are those in `[p-2.0, p+2.0]` but outside `[p-0.75, p+0.75]`; `baselineMagnitude(p)` is the **median magnitude per selected baseline bin multiplied by the number of candidate-band bins**. This normalizes the baseline to the candidate band's width instead of rewarding a wider baseline region.
+3. Both magnitudes are converted to dB as `20 * log10(max(value, 1e-8))`.
+4. Frame delta is candidate-band dB minus normalized-baseline dB.
+5. `fundamentalDeltaDb` is the **median frame delta** across the explicit event-window frames.
+6. `octaveDeltaDb` is computed identically at `p+12` only when the supplied CQT bin range contains both its candidate band and baseline window; otherwise it is `0`.
+7. If there are no selected frames, no candidate-band bins, no baseline bins, a shape mismatch, or any non-finite input needed for scoring, evidence extraction fails closed and the pitch decision must preserve the original MIDI.
+
+This adapter boundary lets Phase A prove deterministic scoring without inventing a second audio front end. Later integration must feed it the existing harmonic 48-bin/octave CQT representation; any change to upstream CQT construction requires a new frozen phase/revision.
 
 ## Frozen decision rule
 
@@ -103,7 +121,7 @@ The generated proof must contain at least these classes and must not use any V14
 9. **Non-finite/malformed evidence** — expected action: keep original.
 10. **Determinism** — repeated identical inputs must produce byte-identical JSON output/hash.
 
-The proof should include direct synthetic evidence cases first. If the repository CPU environment already contains the required librosa/numpy stack, a generated-tone CQT smoke test may also be added without changing the frozen decision thresholds.
+The proof should include direct synthetic evidence cases first. A generated CQT-matrix adapter smoke test may also be included without changing the frozen decision thresholds. If a later proof constructs actual waveforms, it must use the already-frozen upstream analyzer representation and remain reference-free/CPU-only.
 
 ## Frozen Phase-A metrics
 
