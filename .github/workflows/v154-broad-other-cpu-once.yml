@@ -1,0 +1,193 @@
+name: V154 broad-Other CPU benchmark once
+
+on:
+  push:
+    branches:
+      - v143-contextual-prune-lobo
+    paths:
+      - .github/workflows/v154-broad-other-cpu-once.yml
+
+permissions:
+  contents: read
+
+env:
+  CUDA_VISIBLE_DEVICES: ""
+  OUT_DIR: /tmp/v154-broad-other-output
+  SOURCE_DIR: /tmp/v154-historical-source
+  NORM_WAV: /tmp/v154-broad-other-normalized.wav
+  DEMUCS_DIR: /tmp/v154-broad-other-demucs
+
+jobs:
+  benchmark:
+    runs-on: ubuntu-latest
+    timeout-minutes: 60
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ github.sha }}
+          fetch-depth: 0
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.10'
+
+      - name: Verify frozen protocol files
+        shell: bash
+        run: |
+          set -euo pipefail
+          test "$(git hash-object debug/v154-cpu-autonomous/broad-other-preregistration.json)" = "eb81efbb1ed25b023b5bce6e1159ae7785875b4a"
+          test "$(git hash-object validation/v154_cpu_multitrack/transcribe_broad_other.py)" = "2f09ca1b8bc012749468f0079497ded71d318782"
+          python -m py_compile validation/v154_cpu_multitrack/transcribe_broad_other.py
+          mkdir -p "$OUT_DIR" "$SOURCE_DIR"
+
+      - name: Materialize and verify exact historical audio
+        shell: bash
+        run: |
+          set -euo pipefail
+          git show 74b0f815ff3f66f325220975c410621503de440f:public/gomywayfullaitest.m4a > "$SOURCE_DIR/gomywayfullaitest.m4a"
+          test "$(wc -c < "$SOURCE_DIR/gomywayfullaitest.m4a" | tr -d ' ')" = "3478611"
+          test "$(sha256sum "$SOURCE_DIR/gomywayfullaitest.m4a" | awk '{print $1}')" = "215bd5a657c5326f08f132ae358595a95c30b39bb7493a52c2f910d5a608149f"
+
+      - name: Install frozen CPU-only stack
+        shell: bash
+        run: |
+          set -euo pipefail
+          python -m pip install --disable-pip-version-check torch==2.8.0 --index-url https://download.pytorch.org/whl/cpu
+          python -m pip install --disable-pip-version-check numpy==1.26.4 basic-pitch==0.4.0 demucs==4.1.0 imageio-ffmpeg==0.6.0
+          python - <<'PY'
+          import importlib.metadata, numpy, torch
+          assert numpy.__version__ == '1.26.4'
+          assert importlib.metadata.version('basic-pitch') == '0.4.0'
+          assert importlib.metadata.version('demucs') == '4.1.0'
+          assert importlib.metadata.version('imageio-ffmpeg') == '0.6.0'
+          assert torch.__version__.startswith('2.8.0')
+          assert torch.version.cuda is None
+          assert torch.cuda.is_available() is False
+          PY
+          python -m pip freeze | sort > "$OUT_DIR/pip-freeze.txt"
+
+      - name: Deterministically normalize audio
+        shell: bash
+        run: |
+          set -euo pipefail
+          python - <<'PY'
+          import hashlib, json, subprocess
+          from pathlib import Path
+          import imageio_ffmpeg
+          src = Path('/tmp/v154-historical-source/gomywayfullaitest.m4a')
+          out = Path('/tmp/v154-broad-other-normalized.wav')
+          exe = imageio_ffmpeg.get_ffmpeg_exe()
+          subprocess.check_call([exe, '-v', 'error', '-i', str(src), '-vn', '-ar', '44100', '-ac', '2', '-c:a', 'pcm_s16le', str(out)])
+          payload = {
+              'historicalCommit': '74b0f815ff3f66f325220975c410621503de440f',
+              'historicalPath': 'public/gomywayfullaitest.m4a',
+              'historicalM4aBytes': src.stat().st_size,
+              'historicalM4aSha256': hashlib.sha256(src.read_bytes()).hexdigest(),
+              'normalizedWavBytes': out.stat().st_size,
+              'normalizedWavSha256': hashlib.sha256(out.read_bytes()).hexdigest(),
+              'sampleRate': 44100,
+              'channels': 2,
+              'format': 'pcm_s16le',
+              'imageioFfmpegVersion': imageio_ffmpeg.__version__,
+              'referenceRead': False,
+              'modalUsed': False,
+              'cudaGpuUsed': False,
+          }
+          Path('/tmp/v154-broad-other-output/audio-identity.json').write_text(json.dumps(payload, indent=2, sort_keys=True) + '\n')
+          PY
+
+      - name: CPU Demucs broad Other and Bass separation
+        shell: bash
+        run: |
+          set -euo pipefail
+          python - <<'PY'
+          import torch
+          assert torch.version.cuda is None
+          assert torch.cuda.is_available() is False
+          PY
+          python -m demucs -n htdemucs -d cpu --shifts 1 -j 1 -o "$DEMUCS_DIR" "$NORM_WAV"
+          other="$DEMUCS_DIR/htdemucs/v154-broad-other-normalized/other.wav"
+          bass="$DEMUCS_DIR/htdemucs/v154-broad-other-normalized/bass.wav"
+          test -f "$other"
+          test -f "$bass"
+          python - <<'PY'
+          import hashlib, importlib.metadata, json, torch
+          from pathlib import Path
+          root = Path('/tmp/v154-broad-other-demucs/htdemucs/v154-broad-other-normalized')
+          other = root / 'other.wav'
+          bass = root / 'bass.wav'
+          cache = Path.home() / '.cache/torch/hub/checkpoints'
+          checkpoints = []
+          if cache.exists():
+              for f in sorted(x for x in cache.iterdir() if x.is_file()):
+                  checkpoints.append({'name': f.name, 'bytes': f.stat().st_size, 'sha256': hashlib.sha256(f.read_bytes()).hexdigest()})
+          payload = {
+              'packageVersion': importlib.metadata.version('demucs'),
+              'model': 'htdemucs',
+              'device': 'cpu',
+              'shifts': 1,
+              'jobs': 1,
+              'torchVersion': torch.__version__,
+              'torchCudaVersion': torch.version.cuda,
+              'cudaAvailable': torch.cuda.is_available(),
+              'otherStemBytes': other.stat().st_size,
+              'otherStemSha256': hashlib.sha256(other.read_bytes()).hexdigest(),
+              'bassStemBytes': bass.stat().st_size,
+              'bassStemSha256': hashlib.sha256(bass.read_bytes()).hexdigest(),
+              'modelCheckpointFiles': checkpoints,
+              'referenceRead': False,
+              'modalUsed': False,
+              'cudaGpuUsed': False,
+          }
+          Path('/tmp/v154-broad-other-output/demucs-identity.json').write_text(json.dumps(payload, indent=2, sort_keys=True) + '\n')
+          PY
+
+      - name: Transcribe frozen Other and Bass streams
+        shell: bash
+        run: |
+          set -euo pipefail
+          python validation/v154_cpu_multitrack/transcribe_broad_other.py \
+            --other "$DEMUCS_DIR/htdemucs/v154-broad-other-normalized/other.wav" \
+            --bass "$DEMUCS_DIR/htdemucs/v154-broad-other-normalized/bass.wav" \
+            --output "$OUT_DIR/generated.json" | tee "$OUT_DIR/transcriber-summary.txt"
+          python - <<'PY'
+          import hashlib, json, os, subprocess
+          from pathlib import Path
+          out = Path('/tmp/v154-broad-other-output')
+          generated = json.loads((out / 'generated.json').read_text())
+          safety = generated['safety']
+          assert safety['referenceRead'] is False
+          assert safety['humanCorrection'] is False
+          assert safety['referenceGuidedFiltering'] is False
+          assert safety['modalUsed'] is False
+          assert safety['cudaGpuUsed'] is False
+          assert len(generated['streams']['combinedGuitar']) > 0
+          assert len(generated['streams']['bass']) > 0
+          manifest = {
+              'schema': 'dadrock.tabs.v154.broad-other-cpu-generation-manifest.v1',
+              'classification': 'reference-free-frozen-generated-output',
+              'runId': os.environ.get('GITHUB_RUN_ID'),
+              'runHeadSha': os.environ.get('GITHUB_SHA'),
+              'preregistrationGitBlob': 'eb81efbb1ed25b023b5bce6e1159ae7785875b4a',
+              'transcriberGitBlob': '2f09ca1b8bc012749468f0079497ded71d318782',
+              'generatedJsonBytes': (out / 'generated.json').stat().st_size,
+              'generatedJsonSha256': hashlib.sha256((out / 'generated.json').read_bytes()).hexdigest(),
+              'combinedGuitarNoteCount': len(generated['streams']['combinedGuitar']),
+              'bassNoteCount': len(generated['streams']['bass']),
+              'referenceRead': False,
+              'humanCorrection': False,
+              'thresholdSweep': False,
+              'modalUsed': False,
+              'cudaGpuUsed': False,
+              'mainOrProductionModified': False,
+              'referenceFacingScoreCalls': 0,
+          }
+          (out / 'generation-manifest.json').write_text(json.dumps(manifest, indent=2, sort_keys=True) + '\n')
+          PY
+
+      - uses: actions/upload-artifact@v4
+        with:
+          name: v154-broad-other-cpu-${{ github.run_id }}
+          path: /tmp/v154-broad-other-output/
+          if-no-files-found: error
+          retention-days: 30
