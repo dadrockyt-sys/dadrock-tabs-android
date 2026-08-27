@@ -3,7 +3,7 @@
 Updated: 2026-08-27 UTC
 Branch: `v143-contextual-prune-lobo`
 
-Active phase: **V153 Phase C CPU GOLD SCORE = COMPLETE / RESULT PERSISTED / WORKFLOW SEAL PENDING. Exactly one CPU Gold calibration score was executed; no Modal/L4/CUDA/GPU was used. V153 event-347 candidate remains immutable.**
+Active phase: **V153 Phase C CPU GOLD SCORE = COMPLETE / SEALED. Exactly one CPU Gold calibration score was executed; no Modal/L4/CUDA/GPU was used. V153 event-347 candidate remains immutable. CPU-only follow-up work may proceed at assistant discretion; fresh authorization is required only before Modal/L4/CUDA/GPU execution.**
 
 ## Preserved historical checkpoint
 - Full pre-compaction history remains preserved at `docs/checkpoints/archive/CURRENT_STATE-pre-phase-c-auth-intake-20260827.md`; Git blob `f71ba11394e6f2f46843055e748e8717ff484158`.
@@ -21,7 +21,7 @@ Active phase: **V153 Phase C CPU GOLD SCORE = COMPLETE / RESULT PERSISTED / WORK
 - Immutable V147 candidate canonical event SHA256 `ca35c3492295a3079c17c35124df7a483166315e85649e95ded095c6c06b2b77`.
 - Do not reopen or rerun V147 Phase C.
 
-## Best sealed scored result — V152
+## Best sealed scored result before V153 — V152
 - Candidate canonical event SHA256 `5ebedfb173730bb5e2639e7450841fb113f7db9af2acec19b88e58cca50679e6`; candidate file SHA256 `9b15ab3aa9540438db0750bb11c592a686e87b00b3acba491c80791badd349cb`.
 - Changed events `[132, 347, 457]`; `1144` events / `113` measures / `3` singleton changed onsets / `0` polyphonic changes / PDF fidelity `100%`.
 - V152 percentages: **35.311 / 6.699 / 5.455 / 5.805 / 100.000 / 100.000**; accepted baseline **35.407 / 6.699 / 5.455 / 5.805 / 100.000 / 100.000**; both critical mismatches `1712`.
@@ -66,24 +66,50 @@ Active phase: **V153 Phase C CPU GOLD SCORE = COMPLETE / RESULT PERSISTED / WORK
 - Deterministic replay event SHA equals candidate SHA.
 - PDF event fidelity: **`1.0` / 100%**.
 
-## V153 Phase C CPU Gold score — FROZEN / ARMED / BEFORE GOLD
-- CPU-only scoring is permitted at assistant discretion under the standing policy; no fresh scoring authorization is required.
+## V153 Phase C CPU Gold score — COMPLETE / SEALED
+- CPU-only scoring was permitted at assistant discretion under the standing policy; no fresh scoring authorization was required.
 - Scoring preregistration: `debug/v153-reference-free-strength/phase-c-scoring-preregistration.json`; Git blob **`361208d8e57c614e8a509eecb5680f0d6daf841b`**; preregistration commit **`0db9a5e2d378ad0788edee07576d94b2280abbab`**.
 - Frozen scorer: `validation/v153_reference_free_strength/score_event347_once.py`; Git blob **`50f08090631ccd14701ff9f3a5d3324c7cf1f3b7`**; scorer freeze commit **`8cd8c8376e6142fc3939a79a10ee79905801f989`**.
-- Armed one-use attempt sentinel: `debug/v153-reference-free-strength/phase-c-score-attempt-sentinel.json`; Git blob **`1f1c89d1ddbf950275b2a15820a9f7d868d53740`**; arm commit **`a27e81e926268fe508d33135141a6f1b1ec5218e`**.
-- Candidate binding is the immutable V153 event-347 candidate SHA **`df40a771219fb69ae3c129c90ef5351e64b89006ff678e484741ecf0418e3d4b`**; candidate Git blob `975ab36c234b423d1b56e59588e960f7d9d7103f`.
-- Reference identity is frozen to Gold SHA256 **`18fd868ae960dfcdd1ffb0110f1a9dfd8acc2ffeb46e247d1116cd54291526ac`**, inherited from the sealed V152 score result.
-- Prior comparison source is sealed V152 score result `debug/v152-active-recurrence/phase-c-score/score-result.json`; Git blob `05042410ecd5b9793e1182a1bb1dd63ae949ab51`; file SHA256 `cc549c6f0a33c0b90648433494ef36a31b5647191058e28b9ea089f12cab7ef4`.
-- Scoring chain remains exactly: wrapper blob `1ca2b8550d6c08e793f26b3aa91b99fb44fa7ddb`, core scorer blob `cc4bf61a99f22bf87a6c255e5a81220fbc82223b`, canonical adapter blob `088d44827fb23e20d9aeeb4944a672989af5846c`.
-- Frozen score-call maximum: **1**. Candidate search, alternate candidate, candidate modification, threshold/weight/filter/rule tuning, audio recomputation, Production promotion, and automatic promotion are **NO**.
-- Modal/L4/CUDA/GPU use is **NO / NOT AUTHORIZED** for this score.
-- At this checkpoint: Gold/reference opened **NO**; reference parsed **NO**; score calls **0**.
+- Armed attempt sentinel initial Git blob **`1f1c89d1ddbf950275b2a15820a9f7d868d53740`**; arm commit **`a27e81e926268fe508d33135141a6f1b1ec5218e`**.
+- Pre-score checkpoint commit **`7f05c74b2c32ef31582fc7c4d680208e226d30da`**.
+- One-use workflow arming commit **`fcc13485b295c7e90a8cc658ea203331224114c5`**; run **`33084013810`**, job **`98558582132`**: **SUCCESS**.
+- The attempt sentinel was consumed and checkpointed before Gold access; score environment Git head was `5cbb9a5195f6fc1c440e2cf376fe8b81cfc6754e`.
+- Reference identity was frozen to Gold SHA256 **`18fd868ae960dfcdd1ffb0110f1a9dfd8acc2ffeb46e247d1116cd54291526ac`**.
+- Scoring chain remained exactly: wrapper blob `1ca2b8550d6c08e793f26b3aa91b99fb44fa7ddb`, core scorer blob `cc4bf61a99f22bf87a6c255e5a81220fbc82223b`, canonical adapter blob `088d44827fb23e20d9aeeb4944a672989af5846c`.
+- Score result path: `debug/v153-reference-free-strength/phase-c-score/score-result.json`.
+- Score result file SHA256: **`1a6a18a338498f3d5015f9f56869319156cd31c6f77caf328bf70111caa0b501`**; Git blob **`02ee60863f2d55a410083e512a972818c3d7102b`**.
+- Completion sentinel Git blob **`292eb0d2987423c390b98ae16f2854ecbcb36f69`**.
+- Score artifact `v153-event347-cpu-score-33084013810`; artifact ID **`9651307495`**; ZIP digest SHA256 **`7308270fef563dca4f90d51ecfffdd57295d40ce9ea5ea73206fa975b3c7ed07`**.
+- One-use workflow `.github/workflows/v153-event347-cpu-score-once.yml` was deleted/sealed at commit **`cf956e2810b4a098413ed5ee8685ae0368f79e22`**.
+
+### V153 score result
+- V153 percentages (pitch content / pitch timing / string-fret timing / chord pitch-set / measure coverage / PDF fidelity): **35.311 / 6.699 / 5.455 / 5.805 / 100.000 / 100.000**.
+- Accepted baseline: **35.407 / 6.699 / 5.455 / 5.805 / 100.000 / 100.000**.
+- V152: **35.311 / 6.699 / 5.455 / 5.805 / 100.000 / 100.000**.
+- V153 critical mismatches: **1712**; delta vs accepted baseline **0**; delta vs V152 **0**.
+- V153 is exactly tied with V152 on every reported aggregate score metric and critical mismatch count.
+- Because V153 differs from the accepted baseline only at event `347`, while V152 differed at `132`, `347`, and `457`, the identical V152/V153 aggregate score proves that reverting events `132` and `457` caused **no measurable change in this scorer's aggregate metrics**.
+- The entire measured pitch-content deficit versus accepted baseline remains with event `347` alone: pitch-content F1 delta **`-0.000956937799043156`** (about **-0.096 percentage points**). All other gated metric deltas versus baseline are `0`.
+- This is evidence that the reference-free recurrence ranking selected an event that is structurally/musically supported by its local recurrence evidence but is **not beneficial under the current Gold-calibration aggregate scorer**.
+
+### V153 Phase C safety record
+- Gold/reference read: **YES — exactly one CPU calibration score**.
+- Score calls: **1**.
+- Candidate search: **NO**.
+- Alternate candidate: **NO**.
+- Candidate modification: **NO**.
+- Threshold/weight/filter/rule tuning: **NO**.
+- Audio recomputation: **NO**.
+- Modal/L4/CUDA/GPU: **NO**.
+- Main/Production integration: **NO**.
+- Automatic promotion: **NO**.
+- The scored V153 candidate is immutable and must not be retuned or rescored.
 
 ## Fixed safety boundary
 - Work only on `v143-contextual-prune-lobo`; never modify/merge/promote `main` or Production.
 - `/ai-tab` frontend, Bass/Lead, and `freezeReady=false` remain untouched.
-- Do not rerun any consumed V147–V153 Phase A/Phase B one-use execution.
-- Do not modify the immutable V153 candidate after construction.
+- Do not rerun any consumed V147–V153 one-use execution.
+- Do not modify or rescore the immutable V153 candidate.
 - CPU-only scoring/analysis/construction may proceed at assistant discretion under the standing policy above.
 - Explicit authorization is required before **Modal/L4/CUDA/GPU execution**.
 - No automatic Production promotion from a calibration result.
@@ -91,17 +117,9 @@ Active phase: **V153 Phase C CPU GOLD SCORE = COMPLETE / RESULT PERSISTED / WORK
 ## Authoritative stop point
 - V153 Phase A ranking: **COMPLETE / SEALED; UNIQUE WINNER = EVENT 347**.
 - V153 Phase B construction: **COMPLETE / SEALED; IMMUTABLE CANDIDATE SHA = `df40a771219fb69ae3c129c90ef5351e64b89006ff678e484741ecf0418e3d4b`**.
-- V153 Phase C CPU Gold score: **COMPLETE / RESULT PERSISTED / WORKFLOW SEAL PENDING**.
-- Gold/reference read: **YES — exactly one sealed CPU calibration score boundary crossed**.
-- V153 score call count: **1**.
+- V153 Phase C CPU Gold score: **COMPLETE / SEALED; V153 == V152 on all reported aggregate score metrics and critical mismatch count**.
+- V153 score call count: **1 / SEALED / DO NOT RERUN**.
+- CPU-only follow-up analysis: **PERMITTED AT ASSISTANT DISCRETION**.
 - Modal/L4/CUDA/GPU execution: **REQUIRES FRESH EXPLICIT USER AUTHORIZATION**.
 - Main/Production modification: **NO**.
-- Next CPU-only executable action is exactly one score run using frozen scorer blob `50f08090631ccd14701ff9f3a5d3324c7cf1f3b7`; the run must consume the sentinel before Gold access, persist the single result, delete/seal its workflow, checkpoint, and never rerun or retune the scored candidate.
-
-## V153 Phase C CPU Gold score — COMPLETE / RESULT PERSISTED / SEAL PENDING — 2026-08-27 UTC
-- Exactly one CPU-only Gold calibration score completed in run `33084013810`; score-result SHA256 **`1a6a18a338498f3d5015f9f56869319156cd31c6f77caf328bf70111caa0b501`**.
-- V153 percentages (pitch content / pitch timing / string-fret timing / chord pitch-set / measure coverage / PDF fidelity): **35.311 / 6.699 / 5.455 / 5.805 / 100.000 / 100.000**.
-- Accepted baseline: **35.407 / 6.699 / 5.455 / 5.805 / 100.000 / 100.000**. V152: **35.311 / 6.699 / 5.455 / 5.805 / 100.000 / 100.000**.
-- Critical mismatches **1712**; delta vs accepted baseline **+0**; delta vs V152 **+0**.
-- Safety: score calls **1**; candidate search/alternate candidate/candidate modification/tuning/audio recomputation/Modal/L4/CUDA/GPU/main/Production/promotion **NO**.
-- The scored V153 candidate is immutable and must not be retuned or rescored. CPU-only follow-up analysis may proceed at assistant discretion. Modal/L4/CUDA/GPU still requires fresh explicit user authorization.
+- Next CPU-only scientific work should focus on diagnosing why event `347` loses one pitch-content match versus accepted baseline while leaving pitch timing, string/fret timing, chord pitch-set, coverage, and critical mismatch count unchanged. This diagnostic may proceed without a fresh user authorization; stop only if a proposed next action requires Modal/L4/CUDA/GPU.
