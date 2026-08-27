@@ -1,0 +1,33 @@
+{
+  "schema": "dadrock.tabs.v148.singleton-only-construction-authorization.v1",
+  "classification": "explicit-user-authorization-record",
+  "recordedAt": "2026-08-27T05:39:00Z",
+  "branch": "v143-contextual-prune-lobo",
+  "sourceHeadBeforeAuthorizationRecord": "8b8ced5401002cec6adf2def820986d2abecc047",
+  "preregistration": {
+    "path": "debug/v148-singleton-only/phase-a-hypothesis-preregistration.json",
+    "gitBlob": "fd3fb330d3aa80d1058656e3b2dd7eaa201f8e1c"
+  },
+  "userInstruction": "Please continue from current state checkpoint at docs/checkpoints/CURRENT_STATE.md on branch v143-contextual-prune-lobo Please save to docs/checkpoints/CURRENT_STATE.md on branch v143-contextual-prune-lobo often while you work Please 🙏 💚",
+  "authorizedScope": [
+    "construct exactly one V148 candidate using the frozen accepted-onset-singleton-only-v147-projection policy",
+    "use preserved artifacts only",
+    "verify deterministic replay, render-contract identity, and PDF event fidelity",
+    "durably preserve the single candidate and construction evidence on this branch",
+    "seal the one-use construction path after persistence"
+  ],
+  "notAuthorized": [
+    "Gold/reference/professional image access",
+    "reference-facing scoring",
+    "audio reread/decode",
+    "HPSS/CQT recomputation",
+    "Modal/L4/GPU execution",
+    "threshold or octave-weight changes",
+    "candidate sweep/search/variants",
+    "post-result retuning",
+    "main/Production modification",
+    "automatic promotion"
+  ],
+  "constructionAuthorization": true,
+  "referenceFacingScoringAuthorization": false
+}
