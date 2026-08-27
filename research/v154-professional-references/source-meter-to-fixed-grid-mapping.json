@@ -1,0 +1,182 @@
+{
+  "classification": "reference-only-deterministic-coordinate-transform",
+  "consequencesAroundMeterChange": {
+    "sourceMeasure103": {
+      "length16ths": 16,
+      "start": {
+        "scorerMeasure": 103,
+        "scorerStep": 0
+      }
+    },
+    "sourceMeasure104": {
+      "endExclusive": {
+        "scorerMeasure": 104,
+        "scorerStep": 8
+      },
+      "length16ths": 8,
+      "start": {
+        "scorerMeasure": 104,
+        "scorerStep": 0
+      },
+      "timeSignature": "2/4"
+    },
+    "sourceMeasure105": {
+      "endExclusive": {
+        "scorerMeasure": 105,
+        "scorerStep": 8
+      },
+      "length16ths": 16,
+      "splitAt": {
+        "scorerMeasure": 105,
+        "scorerStep": 0,
+        "sourceLocalStep": 8
+      },
+      "start": {
+        "scorerMeasure": 104,
+        "scorerStep": 8
+      },
+      "timeSignature": "4/4"
+    },
+    "sourceMeasure106": {
+      "endExclusive": {
+        "scorerMeasure": 106,
+        "scorerStep": 8
+      },
+      "length16ths": 16,
+      "splitAt": {
+        "scorerMeasure": 106,
+        "scorerStep": 0,
+        "sourceLocalStep": 8
+      },
+      "start": {
+        "scorerMeasure": 105,
+        "scorerStep": 8
+      },
+      "timeSignature": "4/4"
+    },
+    "sourceMeasure113": {
+      "endExclusive": {
+        "scorerMeasure": 113,
+        "scorerStep": 8
+      },
+      "length16ths": 16,
+      "splitAt": {
+        "scorerMeasure": 113,
+        "scorerStep": 0,
+        "sourceLocalStep": 8
+      },
+      "start": {
+        "scorerMeasure": 112,
+        "scorerStep": 8
+      },
+      "timeSignature": "4/4"
+    }
+  },
+  "examples": [
+    {
+      "scorerMeasure": 104,
+      "scorerStep": 0,
+      "sourceLocalStep": 0,
+      "sourceMeasure": 104
+    },
+    {
+      "scorerMeasure": 104,
+      "scorerStep": 7,
+      "sourceLocalStep": 7,
+      "sourceMeasure": 104
+    },
+    {
+      "scorerMeasure": 104,
+      "scorerStep": 8,
+      "sourceLocalStep": 0,
+      "sourceMeasure": 105
+    },
+    {
+      "scorerMeasure": 104,
+      "scorerStep": 15,
+      "sourceLocalStep": 7,
+      "sourceMeasure": 105
+    },
+    {
+      "scorerMeasure": 105,
+      "scorerStep": 0,
+      "sourceLocalStep": 8,
+      "sourceMeasure": 105
+    },
+    {
+      "scorerMeasure": 105,
+      "scorerStep": 7,
+      "sourceLocalStep": 15,
+      "sourceMeasure": 105
+    },
+    {
+      "scorerMeasure": 112,
+      "scorerStep": 8,
+      "sourceLocalStep": 0,
+      "sourceMeasure": 113
+    },
+    {
+      "scorerMeasure": 113,
+      "scorerStep": 0,
+      "sourceLocalStep": 8,
+      "sourceMeasure": 113
+    },
+    {
+      "scorerMeasure": 113,
+      "scorerStep": 7,
+      "sourceLocalStep": 15,
+      "sourceMeasure": 113
+    }
+  ],
+  "freezeStatement": "This mapping is frozen before Bass scorer-row construction and before any reference-facing score call. Bass and later Lead timing normalization must apply it mechanically without consulting generated output.",
+  "inputs": {
+    "frozenScorerGrid": {
+      "measureCount": 113,
+      "nominalTimeSignature": "4/4",
+      "stepsPerBeat": 4,
+      "stepsPerMeasure": 16
+    },
+    "sourceMeterAudit": "research/v154-professional-references/reference-meter-audit.json",
+    "sourceMeterFacts": {
+      "confirmation": "Bass and Lead independently declare measure 104 as 2/4",
+      "defaultTimeSignature": "4/4",
+      "nonFourFourMeasures": {
+        "104": "2/4"
+      }
+    }
+  },
+  "policy": {
+    "candidateGenerationMayReadThis": false,
+    "generatedCandidateModified": false,
+    "humanCorrection": false,
+    "mainOrProductionModified": false,
+    "modalL4CudaGpuUsed": false,
+    "postScoreRetuningAuthorized": false,
+    "referenceOnly": true,
+    "thresholdSweep": false
+  },
+  "schema": "dadrock.tabs.v154.source-meter-to-fixed-grid-mapping.v1",
+  "song": {
+    "artist": "Lenny Kravitz",
+    "title": "Are You Gonna Go My Way"
+  },
+  "transform": {
+    "absoluteSourceStepFormula": "sum(sourceMeasureLength16ths for all source measures before M) + sourceLocalStep",
+    "generatedCandidateConsulted": false,
+    "noPadding": true,
+    "noRounding": true,
+    "noStretching": true,
+    "principle": "Preserve absolute musical time in source 16th-note units; do not stretch, pad, or relabel the 2/4 bar as 4/4.",
+    "scorerMeasureFormula": "floor(absoluteSourceStep / 16) + 1",
+    "scorerStepFormula": "absoluteSourceStep mod 16",
+    "scoringPerformed": false,
+    "sourceLocalStepDefinition": "Zero-based 16th-note attack position within the source measure.",
+    "sourceMeasureLength16ths": {
+      "formula": "numerator * (16 / denominator)",
+      "supportedHere": {
+        "2/4": 8,
+        "4/4": 16
+      }
+    }
+  }
+}
