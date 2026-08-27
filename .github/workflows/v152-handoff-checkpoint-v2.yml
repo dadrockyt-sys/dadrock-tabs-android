@@ -1,4 +1,4 @@
-# trigger 2026-08-27
+# retry semantic guard 2026-08-27
 name: V152 handoff checkpoint v2
 on:
   push:
@@ -17,7 +17,9 @@ jobs:
       - name: Append handoff
         run: |
           set -euo pipefail
-          test "$(git hash-object docs/checkpoints/CURRENT_STATE.md)" = "813536e7129e57b7d110a088bda35dfa05aa973f"
+          grep -Fq '## V152 Phase C three-note active-recurrence Gold score — COMPLETE / SEALED — 2026-08-27 UTC' docs/checkpoints/CURRENT_STATE.md
+          grep -Fq 'Critical mismatches **1712**; delta vs accepted baseline **+0**' docs/checkpoints/CURRENT_STATE.md
+          test "$(grep -Fc '## FRESH-CHAT HANDOFF — V152 SEALED / NEXT TARGET V153 NOT STARTED — 2026-08-27 UTC' docs/checkpoints/CURRENT_STATE.md)" = "0"
           cat debug/v152-fresh-chat-handoff.md >> docs/checkpoints/CURRENT_STATE.md
       - name: Commit and seal
         run: |
