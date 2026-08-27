@@ -2,7 +2,7 @@
 
 Updated: 2026-08-26 America/Montreal
 Branch: `v143-contextual-prune-lobo`
-Active phase: **V147 Phase C pre-audio support gate = GO. The repaired CPU/generated/reference-free verification completed successfully with 11/11 tests and generated proof GO 6/6. No real audio/reference/gold/candidate/score/Modal/GPU work occurred. The one-use workflow is ready to be deleted/sealed. Real-audio Phase C remains STOP pending fresh explicit authorization.**
+Active phase: **V147 Phase C pre-audio support gate = GO/SEALED. The repaired CPU/generated/reference-free verification completed successfully with 11/11 tests and generated proof GO 6/6, and the one-use workflow has been deleted. No real audio/reference/gold/candidate/score/Modal/GPU work occurred. Real-audio Phase C remains STOP pending fresh explicit authorization.**
 
 ## Permanent safety / fixed protocol
 - Work only on `v143-contextual-prune-lobo`; never modify/merge `main` or Production.
@@ -20,7 +20,7 @@ Active phase: **V147 Phase C pre-audio support gate = GO. The repaired CPU/gener
 - Phase A GO: run `33034629948`, job `98394561968`; proof SHA `3843912f0c8e5da95c3993783a84762ba01b046120a48db5e5a5c6c16a3d883e`.
 - Phase B GO: run `33035123962`, job `98396067875`; proof SHA `07848295a7a0b82cee4701db8ddf4505910d4955c2c6bd9587833cbb1656435a`.
 
-## V147 Phase C — PRE-AUDIO SUPPORT GATE = GO
+## V147 Phase C — PRE-AUDIO SUPPORT GATE = GO / SEALED
 ### Frozen protocol / code identities
 - Phase-C prereg blob `5c19ed572d17cc9a760f1b63ee03c1b2c4543d30`.
 - Phase-C clarification blob `6ced1bae4cdaad8306b008827657afbb27a87dbc`.
@@ -32,7 +32,8 @@ Active phase: **V147 Phase C pre-audio support gate = GO. The repaired CPU/gener
 - Repaired Phase-C tests blob `cbcc8fa90480b2a3b12546cf2193519fb46ade87`; repair commit `8fd35df1de2e515703d446f3deafe5a504beae9a`.
 - Phase-C proof harness blob `531384706b8b7444cf7ed22f414b47215e59b653`.
 - Canonical helper blob `088d44827fb23e20d9aeeb4944a672989af5846c`.
-- One-use workflow commit `369feb721bf2d2c30a27a7318dd6485afa0a1676`; workflow blob `50caa7198f534473f9ced0317f02a8849d6a5396`.
+- Successful one-use workflow commit `369feb721bf2d2c30a27a7318dd6485afa0a1676`; workflow blob `50caa7198f534473f9ced0317f02a8849d6a5396`.
+- Workflow deletion/seal commit `08a0c76f555c11a70d2e853d4bb94de07aad315c`.
 
 ### Successful pre-audio verification
 - GitHub Actions run `33036984670`, job `98401701852`: **SUCCESS**.
@@ -51,12 +52,13 @@ Active phase: **V147 Phase C pre-audio support gate = GO. The repaired CPU/gener
 - `referenceFree=true`; `realAudioRead=false`; `audioDecoded=false`; `calibrationReferenceRead=false`; `goldRead=false`; `calibrationScoreRun=false`; `candidateConstructed=false`; `modalGpuUsed=false`; `productionIntegrated=false`.
 
 ## EXPLICIT NEXT STEPS
-1. Delete/seal `.github/workflows/v147-phase-c-pre-audio-proof.yml` without modifying any frozen Phase-C support/test/proof identities.
-2. Checkpoint deletion/seal commit and retain the successful run/artifact identities above.
-3. **STOP before actual audio decoding/CQT analysis. Fresh explicit authorization is required for real-audio Phase C execution.**
+1. Keep V147 A/B and Phase-C pre-audio support gate sealed; do not recreate or rerun the deleted one-use workflow.
+2. **STOP before actual audio decoding/CQT analysis. Fresh explicit authorization is required for real-audio Phase C execution.**
+3. After fresh authorization, follow the already-frozen Phase-C real-audio artifact-first protocol exactly: verify the exact historical raw-audio SHA before decode, construct exactly one candidate without opening gold/reference or scoring, persist immutable artifact/evidence identities, then STOP.
 4. Phase D/reference scoring remains unauthorized until separately frozen after a Phase-C real-audio GO artifact.
 
 ## Current stop point
-- V147 A GO/SEALED; V147 B GO/SEALED; **V147 Phase-C PRE-AUDIO SUPPORT = GO**.
+- V147 A GO/SEALED; V147 B GO/SEALED; **V147 Phase-C PRE-AUDIO SUPPORT = GO/SEALED**.
 - Roadblock cleared: repaired identity-fixture test passes and generated reference-free proof is GO.
+- One-use pre-audio proof workflow is deleted/sealed at `08a0c76f555c11a70d2e853d4bb94de07aad315c`.
 - No real audio, calibration/gold/reference, analyzer integration, Modal/L4/GPU, `main`, or Production changes occurred.
