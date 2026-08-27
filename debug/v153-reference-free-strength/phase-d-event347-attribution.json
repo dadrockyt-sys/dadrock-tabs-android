@@ -1,0 +1,227 @@
+{
+  "acceptedEvent": {
+    "durationSeconds": 0.10739229024943597,
+    "durationSteps": 1,
+    "eventIndex": 347,
+    "fret": 3,
+    "legatoTargetEventIndex": 349,
+    "legatoTargetFret": 9,
+    "legatoTargetMidi": 68,
+    "measure": 35,
+    "midi": 62,
+    "step": 9,
+    "stringIndex": 1,
+    "sustainTier": "short",
+    "techniques": [
+      "slide-up"
+    ]
+  },
+  "candidateEvent": {
+    "durationSeconds": 0.10739229024943597,
+    "durationSteps": 1,
+    "eventIndex": 347,
+    "fret": 2,
+    "legatoTargetEventIndex": 349,
+    "legatoTargetFret": 9,
+    "legatoTargetMidi": 68,
+    "measure": 35,
+    "midi": 61,
+    "step": 9,
+    "stringIndex": 1,
+    "sustainTier": "short",
+    "techniques": [
+      "slide-up"
+    ]
+  },
+  "changedFields": {
+    "fret": {
+      "accepted": 3,
+      "candidate": 2
+    },
+    "midi": {
+      "accepted": 62,
+      "candidate": 61
+    }
+  },
+  "classification": "cpu-reference-facing-post-score-attribution",
+  "criticalMismatchAttribution": {
+    "acceptedCriticalMismatchCount": 1712,
+    "acceptedGrossPairs": 189,
+    "candidateCriticalMismatchCount": 1712,
+    "candidateGrossPairs": 189,
+    "delta": 0
+  },
+  "eventIndex": 347,
+  "gate": "GO_EXPLAINED",
+  "interpretation": {
+    "event347CausesExactlyOnePitchContentMatchLoss": true,
+    "event347ChangesChordPitchSetMatchCount": false,
+    "event347ChangesCriticalMismatchCount": false,
+    "event347ChangesGrossPitchMatchCount": false,
+    "event347ChangesTolerantPitchMatchCount": false,
+    "event347ChangesTolerantPositionMatchCount": false,
+    "event347ChangesVoicingMatchCount": false
+  },
+  "nearbyGoldMeasure35Steps7to11": [],
+  "onsetAttribution": {
+    "acceptedOnset": {
+      "measure": 35,
+      "pitchSet": [
+        62
+      ],
+      "step": 9,
+      "voicing": [
+        [
+          1,
+          3,
+          62
+        ]
+      ]
+    },
+    "candidateOnset": {
+      "measure": 35,
+      "pitchSet": [
+        61
+      ],
+      "step": 9,
+      "voicing": [
+        [
+          1,
+          2,
+          61
+        ]
+      ]
+    },
+    "pitchSet": {
+      "acceptedEvent347Onset": {
+        "matched": false,
+        "referenceIndex": null,
+        "referenceOnset": null
+      },
+      "acceptedTotalMatches": 42,
+      "candidateEvent347Onset": {
+        "matched": false,
+        "referenceIndex": null,
+        "referenceOnset": null
+      },
+      "candidateTotalMatches": 42,
+      "totalDelta": 0
+    },
+    "voicing": {
+      "acceptedEvent347Onset": {
+        "matched": false,
+        "referenceIndex": null,
+        "referenceOnset": null
+      },
+      "acceptedTotalMatches": 42,
+      "candidateEvent347Onset": {
+        "matched": false,
+        "referenceIndex": null,
+        "referenceOnset": null
+      },
+      "candidateTotalMatches": 42,
+      "totalDelta": 0
+    }
+  },
+  "pitchContentMechanism": {
+    "acceptedF1": 0.35406698564593303,
+    "acceptedGlobalMatched": 370,
+    "affectedMeasureMidiCounts": {
+      "61": {
+        "acceptedGeneratedCount": 3,
+        "acceptedMatchedContribution": 0,
+        "candidateGeneratedCount": 4,
+        "candidateMatchedContribution": 0,
+        "matchedContributionDelta": 0,
+        "measure": 35,
+        "midi": 61,
+        "referenceCount": 0
+      },
+      "62": {
+        "acceptedGeneratedCount": 1,
+        "acceptedMatchedContribution": 1,
+        "candidateGeneratedCount": 0,
+        "candidateMatchedContribution": 0,
+        "matchedContributionDelta": -1,
+        "measure": 35,
+        "midi": 62,
+        "referenceCount": 1
+      }
+    },
+    "candidateF1": 0.3531100478468899,
+    "candidateGlobalMatched": 369,
+    "definition": "multiset match over (measure, midi), independent of step within the measure",
+    "f1Delta": -0.000956937799043156,
+    "globalMatchedDelta": -1
+  },
+  "safety": {
+    "audioReadOrDecoded": false,
+    "automaticPromotion": false,
+    "candidateConstructed": false,
+    "candidateModified": false,
+    "candidateSearchRun": false,
+    "candidateVariantsConstructed": 0,
+    "hpssOrCqtRecomputed": false,
+    "mainOrProductionModified": false,
+    "modalL4CudaGpuUsed": false,
+    "scoreCallCount": 0,
+    "scoreWrapperInvoked": false,
+    "thresholdWeightFilterRuleTuning": false
+  },
+  "schema": "dadrock.tabs.v153.event347.phase-d-attribution.v1",
+  "scoreResultCrossCheck": {
+    "acceptedPitchContentF1": 0.35406698564593303,
+    "candidateChordPitchSetMatches": 42,
+    "candidateCriticalMismatchCount": 1712,
+    "candidatePitchContentF1": 0.3531100478468899,
+    "candidatePitchTimingMatches": 70,
+    "candidatePositionTimingMatches": 57
+  },
+  "timingAttribution": {
+    "grossPitch": {
+      "acceptedEvent347": {
+        "matched": false,
+        "referenceIndex": null,
+        "referenceNote": null
+      },
+      "acceptedTotalMatches": 189,
+      "candidateEvent347": {
+        "matched": false,
+        "referenceIndex": null,
+        "referenceNote": null
+      },
+      "candidateTotalMatches": 189,
+      "totalDelta": 0
+    },
+    "tolerantPitch": {
+      "acceptedEvent347": {
+        "matched": false,
+        "referenceIndex": null,
+        "referenceNote": null
+      },
+      "acceptedTotalMatches": 70,
+      "candidateEvent347": {
+        "matched": false,
+        "referenceIndex": null,
+        "referenceNote": null
+      },
+      "candidateTotalMatches": 70,
+      "totalDelta": 0
+    },
+    "tolerantPosition": {
+      "acceptedEvent347": {
+        "matched": false,
+        "referenceIndex": null,
+        "referenceNote": null
+      },
+      "acceptedTotalMatches": 57,
+      "candidateEvent347": {
+        "matched": false,
+        "referenceIndex": null,
+        "referenceNote": null
+      },
+      "candidateTotalMatches": 57,
+      "totalDelta": 0
+    }
+  }
+}
