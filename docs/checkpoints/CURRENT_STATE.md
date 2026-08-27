@@ -541,3 +541,12 @@ Active phase: **V147 Phase C REAL-AUDIO ARTIFACT-FIRST CONSTRUCTION = GO / SEALE
 - Expected candidate: 1144 events / 113 measures / 33 singleton changes / 0 polyphonic changes / one candidate only.
 - Prereg blob `56f19421897cee8f4d991a982dfdadfaef94c19c`; auth blob `fa7ce907c580bde9d6b109024724161cc31a43e2`; constructor blob `be75a11468e177c1ed851e1545f8093a0ceca0c1`; run `33047473531`.
 - Gold/reference/prior score result **NO**; score calls **0**; candidate count before construction **0**; no search/alternate rule/threshold sweep/audio/GPU/Production.
+
+
+## V150 Phase B strict-context construction — COMPLETE / SEALED / STOP BEFORE SCORING — 2026-08-27 UTC
+- Exactly one frozen V150 candidate constructed reference-free in run `33047473531`.
+- Candidate canonical event SHA256 **`72a0582cfc7d03d84cd2f878f191a69b7262b200ce248d1a896207444a3c5e4e`**; 1144 events / 113 measures / **33 singleton changes / 0 polyphonic changes**.
+- Reverted **21/54 = 38.89%** of V149 changes for strict two-sided context violation; retained **33/54 = 61.11%**.
+- Deterministic replay **TRUE**; PDF/render fidelity **100.00%**. Candidate file SHA256 **`8366b8bd0f3df71ca38dee7ffd1274761e73521bfde740eff9c46637651187b5`**.
+- Gold/reference/prior score result read **NO**; scorer calls **0**; variants **1**; no search/alternate rule/threshold sweep/retuning/audio/GPU/Production.
+- Construction authorization consumed; workflow deleted in this sealing commit. Exact-candidate scoring still requires its separate one-use binding.
