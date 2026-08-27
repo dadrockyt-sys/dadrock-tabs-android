@@ -1,0 +1,2766 @@
+{
+  "counts": {
+    "events": 569,
+    "measures": 113,
+    "notes": 547
+  },
+  "grid": {
+    "stepsPerBeat": 4,
+    "stepsPerMeasure": 16,
+    "timeSignature": "nominal 4/4 fixed scorer grid"
+  },
+  "normalizationPolicy": {
+    "candidateGenerationMayReadThis": false,
+    "generatedCandidateModified": false,
+    "generatedCandidateRead": false,
+    "measure88Excluded": true,
+    "referenceOnly": true,
+    "scoringPerformed": false,
+    "sourceMeterPreservedBeforeFixedGridMapping": true,
+    "timingDecodedFromCanonicalNotation": true,
+    "timingInferredFromGeneratedCandidate": false
+  },
+  "notes": [
+    {
+      "measure": 7,
+      "midi": 45,
+      "step": 6
+    },
+    {
+      "measure": 7,
+      "midi": 50,
+      "step": 8
+    },
+    {
+      "measure": 8,
+      "midi": 52,
+      "step": 9
+    },
+    {
+      "measure": 8,
+      "midi": 52,
+      "step": 10
+    },
+    {
+      "measure": 8,
+      "midi": 52,
+      "step": 12
+    },
+    {
+      "measure": 8,
+      "midi": 52,
+      "step": 13
+    },
+    {
+      "measure": 9,
+      "midi": 40,
+      "step": 0
+    },
+    {
+      "measure": 9,
+      "midi": 40,
+      "step": 4
+    },
+    {
+      "measure": 9,
+      "midi": 35,
+      "step": 7
+    },
+    {
+      "measure": 9,
+      "midi": 38,
+      "step": 8
+    },
+    {
+      "measure": 9,
+      "midi": 40,
+      "step": 10
+    },
+    {
+      "measure": 9,
+      "midi": 38,
+      "step": 14
+    },
+    {
+      "measure": 10,
+      "midi": 40,
+      "step": 0
+    },
+    {
+      "measure": 10,
+      "midi": 40,
+      "step": 4
+    },
+    {
+      "measure": 10,
+      "midi": 35,
+      "step": 7
+    },
+    {
+      "measure": 10,
+      "midi": 38,
+      "step": 8
+    },
+    {
+      "measure": 10,
+      "midi": 40,
+      "step": 10
+    },
+    {
+      "measure": 10,
+      "midi": 38,
+      "step": 12
+    },
+    {
+      "measure": 10,
+      "midi": 35,
+      "step": 14
+    },
+    {
+      "measure": 11,
+      "midi": 40,
+      "step": 0
+    },
+    {
+      "measure": 11,
+      "midi": 40,
+      "step": 4
+    },
+    {
+      "measure": 11,
+      "midi": 35,
+      "step": 7
+    },
+    {
+      "measure": 11,
+      "midi": 38,
+      "step": 8
+    },
+    {
+      "measure": 11,
+      "midi": 40,
+      "step": 10
+    },
+    {
+      "measure": 11,
+      "midi": 38,
+      "step": 14
+    },
+    {
+      "measure": 12,
+      "midi": 40,
+      "step": 0
+    },
+    {
+      "measure": 12,
+      "midi": 38,
+      "step": 3
+    },
+    {
+      "measure": 12,
+      "midi": 40,
+      "step": 4
+    },
+    {
+      "measure": 12,
+      "midi": 35,
+      "step": 7
+    },
+    {
+      "measure": 12,
+      "midi": 38,
+      "step": 8
+    },
+    {
+      "measure": 12,
+      "midi": 40,
+      "step": 10
+    },
+    {
+      "measure": 12,
+      "midi": 38,
+      "step": 12
+    },
+    {
+      "measure": 12,
+      "midi": 35,
+      "step": 14
+    },
+    {
+      "measure": 13,
+      "midi": 40,
+      "step": 0
+    },
+    {
+      "measure": 13,
+      "midi": 40,
+      "step": 4
+    },
+    {
+      "measure": 13,
+      "midi": 35,
+      "step": 7
+    },
+    {
+      "measure": 13,
+      "midi": 38,
+      "step": 8
+    },
+    {
+      "measure": 13,
+      "midi": 40,
+      "step": 10
+    },
+    {
+      "measure": 13,
+      "midi": 38,
+      "step": 12
+    },
+    {
+      "measure": 13,
+      "midi": 35,
+      "step": 14
+    },
+    {
+      "measure": 14,
+      "midi": 40,
+      "step": 0
+    },
+    {
+      "measure": 14,
+      "midi": 40,
+      "step": 4
+    },
+    {
+      "measure": 14,
+      "midi": 38,
+      "step": 8
+    },
+    {
+      "measure": 14,
+      "midi": 40,
+      "step": 10
+    },
+    {
+      "measure": 14,
+      "midi": 38,
+      "step": 12
+    },
+    {
+      "measure": 14,
+      "midi": 35,
+      "step": 14
+    },
+    {
+      "measure": 15,
+      "midi": 40,
+      "step": 0
+    },
+    {
+      "measure": 15,
+      "midi": 40,
+      "step": 4
+    },
+    {
+      "measure": 15,
+      "midi": 38,
+      "step": 8
+    },
+    {
+      "measure": 15,
+      "midi": 40,
+      "step": 10
+    },
+    {
+      "measure": 16,
+      "midi": 40,
+      "step": 0
+    },
+    {
+      "measure": 16,
+      "midi": 40,
+      "step": 4
+    },
+    {
+      "measure": 16,
+      "midi": 35,
+      "step": 7
+    },
+    {
+      "measure": 16,
+      "midi": 38,
+      "step": 8
+    },
+    {
+      "measure": 16,
+      "midi": 40,
+      "step": 10
+    },
+    {
+      "measure": 16,
+      "midi": 38,
+      "step": 12
+    },
+    {
+      "measure": 16,
+      "midi": 33,
+      "step": 14
+    },
+    {
+      "measure": 17,
+      "midi": 40,
+      "step": 0
+    },
+    {
+      "measure": 17,
+      "midi": 28,
+      "step": 4
+    },
+    {
+      "measure": 17,
+      "midi": 40,
+      "step": 8
+    },
+    {
+      "measure": 17,
+      "midi": 38,
+      "step": 14
+    },
+    {
+      "measure": 18,
+      "midi": 40,
+      "step": 0
+    },
+    {
+      "measure": 18,
+      "midi": 40,
+      "step": 4
+    },
+    {
+      "measure": 18,
+      "midi": 40,
+      "step": 8
+    },
+    {
+      "measure": 18,
+      "midi": 40,
+      "step": 12
+    },
+    {
+      "measure": 18,
+      "midi": 38,
+      "step": 14
+    },
+    {
+      "measure": 19,
+      "midi": 40,
+      "step": 0
+    },
+    {
+      "measure": 19,
+      "midi": 40,
+      "step": 4
+    },
+    {
+      "measure": 19,
+      "midi": 40,
+      "step": 8
+    },
+    {
+      "measure": 19,
+      "midi": 40,
+      "step": 12
+    },
+    {
+      "measure": 19,
+      "midi": 38,
+      "step": 14
+    },
+    {
+      "measure": 20,
+      "midi": 40,
+      "step": 0
+    },
+    {
+      "measure": 20,
+      "midi": 40,
+      "step": 4
+    },
+    {
+      "measure": 20,
+      "midi": 35,
+      "step": 6
+    },
+    {
+      "measure": 20,
+      "midi": 38,
+      "step": 8
+    },
+    {
+      "measure": 20,
+      "midi": 35,
+      "step": 10
+    },
+    {
+      "measure": 20,
+      "midi": 40,
+      "step": 12
+    },
+    {
+      "measure": 20,
+      "midi": 38,
+      "step": 14
+    },
+    {
+      "measure": 21,
+      "midi": 40,
+      "step": 0
+    },
+    {
+      "measure": 21,
+      "midi": 40,
+      "step": 4
+    },
+    {
+      "measure": 21,
+      "midi": 40,
+      "step": 8
+    },
+    {
+      "measure": 21,
+      "midi": 40,
+      "step": 12
+    },
+    {
+      "measure": 21,
+      "midi": 38,
+      "step": 14
+    },
+    {
+      "measure": 22,
+      "midi": 40,
+      "step": 0
+    },
+    {
+      "measure": 22,
+      "midi": 40,
+      "step": 4
+    },
+    {
+      "measure": 22,
+      "midi": 40,
+      "step": 8
+    },
+    {
+      "measure": 22,
+      "midi": 40,
+      "step": 12
+    },
+    {
+      "measure": 22,
+      "midi": 38,
+      "step": 14
+    },
+    {
+      "measure": 23,
+      "midi": 40,
+      "step": 0
+    },
+    {
+      "measure": 23,
+      "midi": 40,
+      "step": 4
+    },
+    {
+      "measure": 23,
+      "midi": 40,
+      "step": 8
+    },
+    {
+      "measure": 23,
+      "midi": 40,
+      "step": 12
+    },
+    {
+      "measure": 23,
+      "midi": 38,
+      "step": 14
+    },
+    {
+      "measure": 24,
+      "midi": 40,
+      "step": 0
+    },
+    {
+      "measure": 24,
+      "midi": 40,
+      "step": 4
+    },
+    {
+      "measure": 24,
+      "midi": 40,
+      "step": 8
+    },
+    {
+      "measure": 24,
+      "midi": 40,
+      "step": 12
+    },
+    {
+      "measure": 24,
+      "midi": 35,
+      "step": 14
+    },
+    {
+      "measure": 25,
+      "midi": 31,
+      "step": 0
+    },
+    {
+      "measure": 25,
+      "midi": 31,
+      "step": 4
+    },
+    {
+      "measure": 25,
+      "midi": 31,
+      "step": 8
+    },
+    {
+      "measure": 25,
+      "midi": 29,
+      "step": 14
+    },
+    {
+      "measure": 26,
+      "midi": 31,
+      "step": 0
+    },
+    {
+      "measure": 26,
+      "midi": 31,
+      "step": 4
+    },
+    {
+      "measure": 26,
+      "midi": 31,
+      "step": 8
+    },
+    {
+      "measure": 26,
+      "midi": 41,
+      "step": 10
+    },
+    {
+      "measure": 26,
+      "midi": 43,
+      "step": 12
+    },
+    {
+      "measure": 26,
+      "midi": 41,
+      "step": 14
+    },
+    {
+      "measure": 27,
+      "midi": 48,
+      "step": 0
+    },
+    {
+      "measure": 27,
+      "midi": 31,
+      "step": 4
+    },
+    {
+      "measure": 27,
+      "midi": 31,
+      "step": 8
+    },
+    {
+      "measure": 27,
+      "midi": 31,
+      "step": 12
+    },
+    {
+      "measure": 27,
+      "midi": 29,
+      "step": 14
+    },
+    {
+      "measure": 28,
+      "midi": 31,
+      "step": 0
+    },
+    {
+      "measure": 28,
+      "midi": 31,
+      "step": 4
+    },
+    {
+      "measure": 28,
+      "midi": 29,
+      "step": 7
+    },
+    {
+      "measure": 28,
+      "midi": 28,
+      "step": 10
+    },
+    {
+      "measure": 29,
+      "midi": 40,
+      "step": 0
+    },
+    {
+      "measure": 29,
+      "midi": 40,
+      "step": 4
+    },
+    {
+      "measure": 29,
+      "midi": 40,
+      "step": 8
+    },
+    {
+      "measure": 29,
+      "midi": 38,
+      "step": 10
+    },
+    {
+      "measure": 29,
+      "midi": 40,
+      "step": 12
+    },
+    {
+      "measure": 29,
+      "midi": 38,
+      "step": 14
+    },
+    {
+      "measure": 30,
+      "midi": 40,
+      "step": 0
+    },
+    {
+      "measure": 30,
+      "midi": 40,
+      "step": 4
+    },
+    {
+      "measure": 30,
+      "midi": 40,
+      "step": 8
+    },
+    {
+      "measure": 30,
+      "midi": 38,
+      "step": 10
+    },
+    {
+      "measure": 30,
+      "midi": 40,
+      "step": 12
+    },
+    {
+      "measure": 30,
+      "midi": 38,
+      "step": 14
+    },
+    {
+      "measure": 31,
+      "midi": 40,
+      "step": 0
+    },
+    {
+      "measure": 31,
+      "midi": 40,
+      "step": 4
+    },
+    {
+      "measure": 31,
+      "midi": 38,
+      "step": 10
+    },
+    {
+      "measure": 31,
+      "midi": 40,
+      "step": 12
+    },
+    {
+      "measure": 31,
+      "midi": 38,
+      "step": 14
+    },
+    {
+      "measure": 32,
+      "midi": 40,
+      "step": 0
+    },
+    {
+      "measure": 32,
+      "midi": 40,
+      "step": 4
+    },
+    {
+      "measure": 32,
+      "midi": 40,
+      "step": 8
+    },
+    {
+      "measure": 32,
+      "midi": 38,
+      "step": 10
+    },
+    {
+      "measure": 32,
+      "midi": 40,
+      "step": 12
+    },
+    {
+      "measure": 32,
+      "midi": 28,
+      "step": 14
+    },
+    {
+      "measure": 33,
+      "midi": 31,
+      "step": 0
+    },
+    {
+      "measure": 33,
+      "midi": 31,
+      "step": 2
+    },
+    {
+      "measure": 33,
+      "midi": 31,
+      "step": 4
+    },
+    {
+      "measure": 33,
+      "midi": 31,
+      "step": 6
+    },
+    {
+      "measure": 33,
+      "midi": 31,
+      "step": 8
+    },
+    {
+      "measure": 33,
+      "midi": 31,
+      "step": 10
+    },
+    {
+      "measure": 33,
+      "midi": 31,
+      "step": 12
+    },
+    {
+      "measure": 33,
+      "midi": 30,
+      "step": 14
+    },
+    {
+      "measure": 34,
+      "midi": 30,
+      "step": 0
+    },
+    {
+      "measure": 34,
+      "midi": 30,
+      "step": 2
+    },
+    {
+      "measure": 34,
+      "midi": 30,
+      "step": 4
+    },
+    {
+      "measure": 34,
+      "midi": 30,
+      "step": 6
+    },
+    {
+      "measure": 34,
+      "midi": 30,
+      "step": 8
+    },
+    {
+      "measure": 34,
+      "midi": 30,
+      "step": 10
+    },
+    {
+      "measure": 34,
+      "midi": 30,
+      "step": 12
+    },
+    {
+      "measure": 35,
+      "midi": 40,
+      "step": 0
+    },
+    {
+      "measure": 35,
+      "midi": 38,
+      "step": 4
+    },
+    {
+      "measure": 35,
+      "midi": 40,
+      "step": 4
+    },
+    {
+      "measure": 35,
+      "midi": 40,
+      "step": 6
+    },
+    {
+      "measure": 35,
+      "midi": 40,
+      "step": 8
+    },
+    {
+      "measure": 35,
+      "midi": 38,
+      "step": 10
+    },
+    {
+      "measure": 35,
+      "midi": 40,
+      "step": 12
+    },
+    {
+      "measure": 35,
+      "midi": 38,
+      "step": 14
+    },
+    {
+      "measure": 36,
+      "midi": 40,
+      "step": 0
+    },
+    {
+      "measure": 36,
+      "midi": 38,
+      "step": 4
+    },
+    {
+      "measure": 36,
+      "midi": 40,
+      "step": 4
+    },
+    {
+      "measure": 36,
+      "midi": 35,
+      "step": 6
+    },
+    {
+      "measure": 36,
+      "midi": 38,
+      "step": 8
+    },
+    {
+      "measure": 36,
+      "midi": 40,
+      "step": 10
+    },
+    {
+      "measure": 36,
+      "midi": 38,
+      "step": 12
+    },
+    {
+      "measure": 36,
+      "midi": 35,
+      "step": 14
+    },
+    {
+      "measure": 37,
+      "midi": 31,
+      "step": 0
+    },
+    {
+      "measure": 37,
+      "midi": 31,
+      "step": 2
+    },
+    {
+      "measure": 37,
+      "midi": 31,
+      "step": 4
+    },
+    {
+      "measure": 37,
+      "midi": 31,
+      "step": 6
+    },
+    {
+      "measure": 37,
+      "midi": 31,
+      "step": 8
+    },
+    {
+      "measure": 37,
+      "midi": 31,
+      "step": 10
+    },
+    {
+      "measure": 37,
+      "midi": 30,
+      "step": 14
+    },
+    {
+      "measure": 42,
+      "midi": 48,
+      "step": 8
+    },
+    {
+      "measure": 42,
+      "midi": 50,
+      "step": 9
+    },
+    {
+      "measure": 42,
+      "midi": 50,
+      "step": 10
+    },
+    {
+      "measure": 42,
+      "midi": 50,
+      "step": 11
+    },
+    {
+      "measure": 42,
+      "midi": 50,
+      "step": 12
+    },
+    {
+      "measure": 42,
+      "midi": 50,
+      "step": 14
+    },
+    {
+      "measure": 43,
+      "midi": 38,
+      "step": 0
+    },
+    {
+      "measure": 43,
+      "midi": 40,
+      "step": 0
+    },
+    {
+      "measure": 43,
+      "midi": 40,
+      "step": 4
+    },
+    {
+      "measure": 43,
+      "midi": 35,
+      "step": 7
+    },
+    {
+      "measure": 43,
+      "midi": 38,
+      "step": 8
+    },
+    {
+      "measure": 43,
+      "midi": 40,
+      "step": 10
+    },
+    {
+      "measure": 44,
+      "midi": 40,
+      "step": 0
+    },
+    {
+      "measure": 44,
+      "midi": 40,
+      "step": 4
+    },
+    {
+      "measure": 44,
+      "midi": 35,
+      "step": 7
+    },
+    {
+      "measure": 44,
+      "midi": 38,
+      "step": 8
+    },
+    {
+      "measure": 44,
+      "midi": 40,
+      "step": 10
+    },
+    {
+      "measure": 44,
+      "midi": 38,
+      "step": 12
+    },
+    {
+      "measure": 44,
+      "midi": 40,
+      "step": 14
+    },
+    {
+      "measure": 45,
+      "midi": 40,
+      "step": 0
+    },
+    {
+      "measure": 45,
+      "midi": 40,
+      "step": 4
+    },
+    {
+      "measure": 45,
+      "midi": 35,
+      "step": 7
+    },
+    {
+      "measure": 45,
+      "midi": 38,
+      "step": 8
+    },
+    {
+      "measure": 45,
+      "midi": 40,
+      "step": 10
+    },
+    {
+      "measure": 46,
+      "midi": 40,
+      "step": 0
+    },
+    {
+      "measure": 46,
+      "midi": 40,
+      "step": 4
+    },
+    {
+      "measure": 46,
+      "midi": 35,
+      "step": 7
+    },
+    {
+      "measure": 46,
+      "midi": 38,
+      "step": 8
+    },
+    {
+      "measure": 46,
+      "midi": 40,
+      "step": 10
+    },
+    {
+      "measure": 46,
+      "midi": 38,
+      "step": 12
+    },
+    {
+      "measure": 46,
+      "midi": 33,
+      "step": 14
+    },
+    {
+      "measure": 47,
+      "midi": 40,
+      "step": 0
+    },
+    {
+      "measure": 47,
+      "midi": 40,
+      "step": 4
+    },
+    {
+      "measure": 47,
+      "midi": 35,
+      "step": 10
+    },
+    {
+      "measure": 47,
+      "midi": 38,
+      "step": 12
+    },
+    {
+      "measure": 47,
+      "midi": 35,
+      "step": 14
+    },
+    {
+      "measure": 48,
+      "midi": 40,
+      "step": 0
+    },
+    {
+      "measure": 48,
+      "midi": 40,
+      "step": 4
+    },
+    {
+      "measure": 48,
+      "midi": 40,
+      "step": 8
+    },
+    {
+      "measure": 48,
+      "midi": 35,
+      "step": 10
+    },
+    {
+      "measure": 48,
+      "midi": 38,
+      "step": 12
+    },
+    {
+      "measure": 48,
+      "midi": 35,
+      "step": 14
+    },
+    {
+      "measure": 49,
+      "midi": 40,
+      "step": 0
+    },
+    {
+      "measure": 49,
+      "midi": 40,
+      "step": 4
+    },
+    {
+      "measure": 49,
+      "midi": 40,
+      "step": 8
+    },
+    {
+      "measure": 49,
+      "midi": 35,
+      "step": 10
+    },
+    {
+      "measure": 49,
+      "midi": 38,
+      "step": 12
+    },
+    {
+      "measure": 49,
+      "midi": 35,
+      "step": 14
+    },
+    {
+      "measure": 50,
+      "midi": 40,
+      "step": 0
+    },
+    {
+      "measure": 50,
+      "midi": 40,
+      "step": 4
+    },
+    {
+      "measure": 50,
+      "midi": 38,
+      "step": 6
+    },
+    {
+      "measure": 50,
+      "midi": 40,
+      "step": 8
+    },
+    {
+      "measure": 50,
+      "midi": 38,
+      "step": 10
+    },
+    {
+      "measure": 50,
+      "midi": 40,
+      "step": 12
+    },
+    {
+      "measure": 50,
+      "midi": 38,
+      "step": 14
+    },
+    {
+      "measure": 51,
+      "midi": 40,
+      "step": 0
+    },
+    {
+      "measure": 51,
+      "midi": 40,
+      "step": 4
+    },
+    {
+      "measure": 51,
+      "midi": 40,
+      "step": 8
+    },
+    {
+      "measure": 51,
+      "midi": 35,
+      "step": 10
+    },
+    {
+      "measure": 51,
+      "midi": 38,
+      "step": 12
+    },
+    {
+      "measure": 51,
+      "midi": 35,
+      "step": 14
+    },
+    {
+      "measure": 52,
+      "midi": 40,
+      "step": 0
+    },
+    {
+      "measure": 52,
+      "midi": 40,
+      "step": 4
+    },
+    {
+      "measure": 52,
+      "midi": 40,
+      "step": 8
+    },
+    {
+      "measure": 52,
+      "midi": 35,
+      "step": 10
+    },
+    {
+      "measure": 52,
+      "midi": 38,
+      "step": 12
+    },
+    {
+      "measure": 52,
+      "midi": 35,
+      "step": 14
+    },
+    {
+      "measure": 53,
+      "midi": 40,
+      "step": 0
+    },
+    {
+      "measure": 53,
+      "midi": 40,
+      "step": 4
+    },
+    {
+      "measure": 53,
+      "midi": 40,
+      "step": 8
+    },
+    {
+      "measure": 53,
+      "midi": 35,
+      "step": 10
+    },
+    {
+      "measure": 53,
+      "midi": 38,
+      "step": 12
+    },
+    {
+      "measure": 53,
+      "midi": 35,
+      "step": 14
+    },
+    {
+      "measure": 54,
+      "midi": 40,
+      "step": 0
+    },
+    {
+      "measure": 54,
+      "midi": 40,
+      "step": 4
+    },
+    {
+      "measure": 54,
+      "midi": 40,
+      "step": 8
+    },
+    {
+      "measure": 54,
+      "midi": 35,
+      "step": 10
+    },
+    {
+      "measure": 54,
+      "midi": 38,
+      "step": 12
+    },
+    {
+      "measure": 54,
+      "midi": 35,
+      "step": 14
+    },
+    {
+      "measure": 55,
+      "midi": 31,
+      "step": 0
+    },
+    {
+      "measure": 55,
+      "midi": 31,
+      "step": 4
+    },
+    {
+      "measure": 55,
+      "midi": 31,
+      "step": 10
+    },
+    {
+      "measure": 55,
+      "midi": 29,
+      "step": 14
+    },
+    {
+      "measure": 56,
+      "midi": 31,
+      "step": 0
+    },
+    {
+      "measure": 56,
+      "midi": 31,
+      "step": 4
+    },
+    {
+      "measure": 56,
+      "midi": 31,
+      "step": 8
+    },
+    {
+      "measure": 56,
+      "midi": 43,
+      "step": 10
+    },
+    {
+      "measure": 56,
+      "midi": 41,
+      "step": 12
+    },
+    {
+      "measure": 56,
+      "midi": 43,
+      "step": 14
+    },
+    {
+      "measure": 57,
+      "midi": 31,
+      "step": 0
+    },
+    {
+      "measure": 57,
+      "midi": 31,
+      "step": 4
+    },
+    {
+      "measure": 57,
+      "midi": 31,
+      "step": 8
+    },
+    {
+      "measure": 57,
+      "midi": 31,
+      "step": 12
+    },
+    {
+      "measure": 57,
+      "midi": 29,
+      "step": 14
+    },
+    {
+      "measure": 58,
+      "midi": 31,
+      "step": 0
+    },
+    {
+      "measure": 58,
+      "midi": 31,
+      "step": 4
+    },
+    {
+      "measure": 58,
+      "midi": 31,
+      "step": 8
+    },
+    {
+      "measure": 58,
+      "midi": 31,
+      "step": 12
+    },
+    {
+      "measure": 58,
+      "midi": 35,
+      "step": 14
+    },
+    {
+      "measure": 59,
+      "midi": 40,
+      "step": 0
+    },
+    {
+      "measure": 59,
+      "midi": 40,
+      "step": 4
+    },
+    {
+      "measure": 59,
+      "midi": 40,
+      "step": 8
+    },
+    {
+      "measure": 59,
+      "midi": 40,
+      "step": 12
+    },
+    {
+      "measure": 59,
+      "midi": 38,
+      "step": 14
+    },
+    {
+      "measure": 60,
+      "midi": 40,
+      "step": 0
+    },
+    {
+      "measure": 60,
+      "midi": 40,
+      "step": 4
+    },
+    {
+      "measure": 60,
+      "midi": 40,
+      "step": 8
+    },
+    {
+      "measure": 60,
+      "midi": 38,
+      "step": 10
+    },
+    {
+      "measure": 60,
+      "midi": 40,
+      "step": 12
+    },
+    {
+      "measure": 60,
+      "midi": 38,
+      "step": 14
+    },
+    {
+      "measure": 61,
+      "midi": 40,
+      "step": 0
+    },
+    {
+      "measure": 61,
+      "midi": 40,
+      "step": 4
+    },
+    {
+      "measure": 61,
+      "midi": 40,
+      "step": 8
+    },
+    {
+      "measure": 61,
+      "midi": 40,
+      "step": 12
+    },
+    {
+      "measure": 61,
+      "midi": 38,
+      "step": 14
+    },
+    {
+      "measure": 62,
+      "midi": 40,
+      "step": 0
+    },
+    {
+      "measure": 62,
+      "midi": 40,
+      "step": 4
+    },
+    {
+      "measure": 62,
+      "midi": 40,
+      "step": 8
+    },
+    {
+      "measure": 62,
+      "midi": 40,
+      "step": 12
+    },
+    {
+      "measure": 63,
+      "midi": 31,
+      "step": 0
+    },
+    {
+      "measure": 63,
+      "midi": 31,
+      "step": 2
+    },
+    {
+      "measure": 63,
+      "midi": 31,
+      "step": 4
+    },
+    {
+      "measure": 63,
+      "midi": 31,
+      "step": 6
+    },
+    {
+      "measure": 63,
+      "midi": 31,
+      "step": 8
+    },
+    {
+      "measure": 63,
+      "midi": 31,
+      "step": 10
+    },
+    {
+      "measure": 63,
+      "midi": 31,
+      "step": 12
+    },
+    {
+      "measure": 63,
+      "midi": 31,
+      "step": 14
+    },
+    {
+      "measure": 64,
+      "midi": 30,
+      "step": 0
+    },
+    {
+      "measure": 64,
+      "midi": 30,
+      "step": 2
+    },
+    {
+      "measure": 64,
+      "midi": 30,
+      "step": 4
+    },
+    {
+      "measure": 64,
+      "midi": 30,
+      "step": 6
+    },
+    {
+      "measure": 64,
+      "midi": 35,
+      "step": 8
+    },
+    {
+      "measure": 64,
+      "midi": 35,
+      "step": 10
+    },
+    {
+      "measure": 64,
+      "midi": 35,
+      "step": 12
+    },
+    {
+      "measure": 64,
+      "midi": 37,
+      "step": 13
+    },
+    {
+      "measure": 64,
+      "midi": 38,
+      "step": 14
+    },
+    {
+      "measure": 65,
+      "midi": 40,
+      "step": 0
+    },
+    {
+      "measure": 65,
+      "midi": 40,
+      "step": 4
+    },
+    {
+      "measure": 65,
+      "midi": 35,
+      "step": 6
+    },
+    {
+      "measure": 65,
+      "midi": 38,
+      "step": 8
+    },
+    {
+      "measure": 65,
+      "midi": 40,
+      "step": 10
+    },
+    {
+      "measure": 65,
+      "midi": 38,
+      "step": 12
+    },
+    {
+      "measure": 65,
+      "midi": 35,
+      "step": 14
+    },
+    {
+      "measure": 66,
+      "midi": 40,
+      "step": 0
+    },
+    {
+      "measure": 66,
+      "midi": 40,
+      "step": 4
+    },
+    {
+      "measure": 66,
+      "midi": 35,
+      "step": 6
+    },
+    {
+      "measure": 66,
+      "midi": 38,
+      "step": 8
+    },
+    {
+      "measure": 66,
+      "midi": 40,
+      "step": 10
+    },
+    {
+      "measure": 66,
+      "midi": 40,
+      "step": 12
+    },
+    {
+      "measure": 66,
+      "midi": 35,
+      "step": 14
+    },
+    {
+      "measure": 67,
+      "midi": 31,
+      "step": 0
+    },
+    {
+      "measure": 67,
+      "midi": 31,
+      "step": 2
+    },
+    {
+      "measure": 67,
+      "midi": 38,
+      "step": 4
+    },
+    {
+      "measure": 67,
+      "midi": 38,
+      "step": 6
+    },
+    {
+      "measure": 67,
+      "midi": 37,
+      "step": 8
+    },
+    {
+      "measure": 67,
+      "midi": 37,
+      "step": 10
+    },
+    {
+      "measure": 67,
+      "midi": 33,
+      "step": 12
+    },
+    {
+      "measure": 67,
+      "midi": 31,
+      "step": 14
+    },
+    {
+      "measure": 76,
+      "midi": 56,
+      "step": 0
+    },
+    {
+      "measure": 76,
+      "midi": 54,
+      "step": 2
+    },
+    {
+      "measure": 76,
+      "midi": 56,
+      "step": 4
+    },
+    {
+      "measure": 76,
+      "midi": 54,
+      "step": 6
+    },
+    {
+      "measure": 76,
+      "midi": 52,
+      "step": 10
+    },
+    {
+      "measure": 76,
+      "midi": 54,
+      "step": 14
+    },
+    {
+      "measure": 77,
+      "midi": 52,
+      "step": 2
+    },
+    {
+      "measure": 77,
+      "midi": 47,
+      "step": 10
+    },
+    {
+      "measure": 77,
+      "midi": 47,
+      "step": 12
+    },
+    {
+      "measure": 77,
+      "midi": 35,
+      "step": 14
+    },
+    {
+      "measure": 78,
+      "midi": 40,
+      "step": 0
+    },
+    {
+      "measure": 78,
+      "midi": 35,
+      "step": 2
+    },
+    {
+      "measure": 78,
+      "midi": 39,
+      "step": 4
+    },
+    {
+      "measure": 78,
+      "midi": 38,
+      "step": 6
+    },
+    {
+      "measure": 78,
+      "midi": 43,
+      "step": 10
+    },
+    {
+      "measure": 78,
+      "midi": 44,
+      "step": 12
+    },
+    {
+      "measure": 78,
+      "midi": 45,
+      "step": 14
+    },
+    {
+      "measure": 79,
+      "midi": 45,
+      "step": 0
+    },
+    {
+      "measure": 79,
+      "midi": 43,
+      "step": 2
+    },
+    {
+      "measure": 79,
+      "midi": 44,
+      "step": 4
+    },
+    {
+      "measure": 79,
+      "midi": 45,
+      "step": 6
+    },
+    {
+      "measure": 79,
+      "midi": 37,
+      "step": 10
+    },
+    {
+      "measure": 79,
+      "midi": 38,
+      "step": 12
+    },
+    {
+      "measure": 79,
+      "midi": 39,
+      "step": 14
+    },
+    {
+      "measure": 80,
+      "midi": 40,
+      "step": 0
+    },
+    {
+      "measure": 80,
+      "midi": 35,
+      "step": 2
+    },
+    {
+      "measure": 80,
+      "midi": 40,
+      "step": 4
+    },
+    {
+      "measure": 80,
+      "midi": 38,
+      "step": 6
+    },
+    {
+      "measure": 80,
+      "midi": 40,
+      "step": 10
+    },
+    {
+      "measure": 80,
+      "midi": 41,
+      "step": 12
+    },
+    {
+      "measure": 80,
+      "midi": 42,
+      "step": 14
+    },
+    {
+      "measure": 81,
+      "midi": 42,
+      "step": 0
+    },
+    {
+      "measure": 81,
+      "midi": 42,
+      "step": 2
+    },
+    {
+      "measure": 81,
+      "midi": 43,
+      "step": 4
+    },
+    {
+      "measure": 81,
+      "midi": 45,
+      "step": 6
+    },
+    {
+      "measure": 81,
+      "midi": 33,
+      "step": 10
+    },
+    {
+      "measure": 81,
+      "midi": 38,
+      "step": 12
+    },
+    {
+      "measure": 81,
+      "midi": 39,
+      "step": 14
+    },
+    {
+      "measure": 82,
+      "midi": 40,
+      "step": 0
+    },
+    {
+      "measure": 82,
+      "midi": 35,
+      "step": 2
+    },
+    {
+      "measure": 82,
+      "midi": 40,
+      "step": 4
+    },
+    {
+      "measure": 82,
+      "midi": 38,
+      "step": 6
+    },
+    {
+      "measure": 82,
+      "midi": 31,
+      "step": 10
+    },
+    {
+      "measure": 82,
+      "midi": 32,
+      "step": 12
+    },
+    {
+      "measure": 82,
+      "midi": 33,
+      "step": 14
+    },
+    {
+      "measure": 83,
+      "midi": 33,
+      "step": 0
+    },
+    {
+      "measure": 83,
+      "midi": 40,
+      "step": 2
+    },
+    {
+      "measure": 83,
+      "midi": 41,
+      "step": 4
+    },
+    {
+      "measure": 83,
+      "midi": 42,
+      "step": 6
+    },
+    {
+      "measure": 83,
+      "midi": 33,
+      "step": 10
+    },
+    {
+      "measure": 83,
+      "midi": 38,
+      "step": 12
+    },
+    {
+      "measure": 83,
+      "midi": 39,
+      "step": 14
+    },
+    {
+      "measure": 84,
+      "midi": 40,
+      "step": 0
+    },
+    {
+      "measure": 84,
+      "midi": 35,
+      "step": 2
+    },
+    {
+      "measure": 84,
+      "midi": 40,
+      "step": 4
+    },
+    {
+      "measure": 84,
+      "midi": 38,
+      "step": 6
+    },
+    {
+      "measure": 84,
+      "midi": 40,
+      "step": 10
+    },
+    {
+      "measure": 84,
+      "midi": 41,
+      "step": 12
+    },
+    {
+      "measure": 84,
+      "midi": 42,
+      "step": 14
+    },
+    {
+      "measure": 85,
+      "midi": 42,
+      "step": 0
+    },
+    {
+      "measure": 85,
+      "midi": 35,
+      "step": 2
+    },
+    {
+      "measure": 85,
+      "midi": 36,
+      "step": 4
+    },
+    {
+      "measure": 85,
+      "midi": 37,
+      "step": 6
+    },
+    {
+      "measure": 85,
+      "midi": 37,
+      "step": 8
+    },
+    {
+      "measure": 85,
+      "midi": 37,
+      "step": 10
+    },
+    {
+      "measure": 85,
+      "midi": 38,
+      "step": 12
+    },
+    {
+      "measure": 85,
+      "midi": 39,
+      "step": 14
+    },
+    {
+      "measure": 86,
+      "midi": 40,
+      "step": 0
+    },
+    {
+      "measure": 86,
+      "midi": 35,
+      "step": 2
+    },
+    {
+      "measure": 86,
+      "midi": 40,
+      "step": 4
+    },
+    {
+      "measure": 86,
+      "midi": 38,
+      "step": 6
+    },
+    {
+      "measure": 86,
+      "midi": 40,
+      "step": 10
+    },
+    {
+      "measure": 86,
+      "midi": 41,
+      "step": 12
+    },
+    {
+      "measure": 86,
+      "midi": 42,
+      "step": 14
+    },
+    {
+      "measure": 87,
+      "midi": 42,
+      "step": 0
+    },
+    {
+      "measure": 87,
+      "midi": 43,
+      "step": 2
+    },
+    {
+      "measure": 87,
+      "midi": 44,
+      "step": 4
+    },
+    {
+      "measure": 87,
+      "midi": 45,
+      "step": 6
+    },
+    {
+      "measure": 87,
+      "midi": 36,
+      "step": 8
+    },
+    {
+      "measure": 87,
+      "midi": 36,
+      "step": 10
+    },
+    {
+      "measure": 87,
+      "midi": 38,
+      "step": 12
+    },
+    {
+      "measure": 87,
+      "midi": 39,
+      "step": 14
+    },
+    {
+      "measure": 89,
+      "midi": 33,
+      "step": 0
+    },
+    {
+      "measure": 89,
+      "midi": 35,
+      "step": 2
+    },
+    {
+      "measure": 89,
+      "midi": 36,
+      "step": 4
+    },
+    {
+      "measure": 89,
+      "midi": 37,
+      "step": 6
+    },
+    {
+      "measure": 89,
+      "midi": 36,
+      "step": 8
+    },
+    {
+      "measure": 89,
+      "midi": 37,
+      "step": 10
+    },
+    {
+      "measure": 89,
+      "midi": 38,
+      "step": 12
+    },
+    {
+      "measure": 89,
+      "midi": 39,
+      "step": 14
+    },
+    {
+      "measure": 90,
+      "midi": 40,
+      "step": 0
+    },
+    {
+      "measure": 90,
+      "midi": 35,
+      "step": 2
+    },
+    {
+      "measure": 90,
+      "midi": 40,
+      "step": 4
+    },
+    {
+      "measure": 90,
+      "midi": 38,
+      "step": 6
+    },
+    {
+      "measure": 90,
+      "midi": 42,
+      "step": 10
+    },
+    {
+      "measure": 90,
+      "midi": 43,
+      "step": 12
+    },
+    {
+      "measure": 90,
+      "midi": 45,
+      "step": 14
+    },
+    {
+      "measure": 91,
+      "midi": 45,
+      "step": 0
+    },
+    {
+      "measure": 91,
+      "midi": 47,
+      "step": 2
+    },
+    {
+      "measure": 91,
+      "midi": 48,
+      "step": 4
+    },
+    {
+      "measure": 91,
+      "midi": 50,
+      "step": 6
+    },
+    {
+      "measure": 91,
+      "midi": 45,
+      "step": 10
+    },
+    {
+      "measure": 91,
+      "midi": 38,
+      "step": 12
+    },
+    {
+      "measure": 91,
+      "midi": 39,
+      "step": 14
+    },
+    {
+      "measure": 92,
+      "midi": 40,
+      "step": 0
+    },
+    {
+      "measure": 92,
+      "midi": 35,
+      "step": 2
+    },
+    {
+      "measure": 92,
+      "midi": 40,
+      "step": 4
+    },
+    {
+      "measure": 92,
+      "midi": 38,
+      "step": 6
+    },
+    {
+      "measure": 92,
+      "midi": 33,
+      "step": 10
+    },
+    {
+      "measure": 92,
+      "midi": 35,
+      "step": 12
+    },
+    {
+      "measure": 92,
+      "midi": 36,
+      "step": 14
+    },
+    {
+      "measure": 92,
+      "midi": 33,
+      "step": 15
+    },
+    {
+      "measure": 95,
+      "midi": 40,
+      "step": 0
+    },
+    {
+      "measure": 95,
+      "midi": 40,
+      "step": 4
+    },
+    {
+      "measure": 95,
+      "midi": 35,
+      "step": 7
+    },
+    {
+      "measure": 95,
+      "midi": 38,
+      "step": 8
+    },
+    {
+      "measure": 95,
+      "midi": 40,
+      "step": 10
+    },
+    {
+      "measure": 95,
+      "midi": 40,
+      "step": 12
+    },
+    {
+      "measure": 96,
+      "midi": 40,
+      "step": 0
+    },
+    {
+      "measure": 96,
+      "midi": 40,
+      "step": 4
+    },
+    {
+      "measure": 96,
+      "midi": 35,
+      "step": 6
+    },
+    {
+      "measure": 96,
+      "midi": 38,
+      "step": 8
+    },
+    {
+      "measure": 96,
+      "midi": 40,
+      "step": 10
+    },
+    {
+      "measure": 96,
+      "midi": 38,
+      "step": 12
+    },
+    {
+      "measure": 96,
+      "midi": 35,
+      "step": 14
+    },
+    {
+      "measure": 97,
+      "midi": 40,
+      "step": 0
+    },
+    {
+      "measure": 97,
+      "midi": 40,
+      "step": 4
+    },
+    {
+      "measure": 97,
+      "midi": 35,
+      "step": 7
+    },
+    {
+      "measure": 97,
+      "midi": 38,
+      "step": 8
+    },
+    {
+      "measure": 97,
+      "midi": 40,
+      "step": 10
+    },
+    {
+      "measure": 97,
+      "midi": 35,
+      "step": 14
+    },
+    {
+      "measure": 98,
+      "midi": 40,
+      "step": 0
+    },
+    {
+      "measure": 98,
+      "midi": 40,
+      "step": 4
+    },
+    {
+      "measure": 98,
+      "midi": 35,
+      "step": 6
+    },
+    {
+      "measure": 98,
+      "midi": 38,
+      "step": 8
+    },
+    {
+      "measure": 98,
+      "midi": 40,
+      "step": 10
+    },
+    {
+      "measure": 98,
+      "midi": 38,
+      "step": 12
+    },
+    {
+      "measure": 98,
+      "midi": 35,
+      "step": 14
+    },
+    {
+      "measure": 99,
+      "midi": 40,
+      "step": 0
+    },
+    {
+      "measure": 99,
+      "midi": 40,
+      "step": 4
+    },
+    {
+      "measure": 99,
+      "midi": 35,
+      "step": 7
+    },
+    {
+      "measure": 99,
+      "midi": 38,
+      "step": 8
+    },
+    {
+      "measure": 99,
+      "midi": 40,
+      "step": 10
+    },
+    {
+      "measure": 99,
+      "midi": 38,
+      "step": 14
+    },
+    {
+      "measure": 100,
+      "midi": 40,
+      "step": 0
+    },
+    {
+      "measure": 100,
+      "midi": 40,
+      "step": 4
+    },
+    {
+      "measure": 100,
+      "midi": 35,
+      "step": 7
+    },
+    {
+      "measure": 100,
+      "midi": 38,
+      "step": 8
+    },
+    {
+      "measure": 100,
+      "midi": 40,
+      "step": 10
+    },
+    {
+      "measure": 100,
+      "midi": 38,
+      "step": 12
+    },
+    {
+      "measure": 100,
+      "midi": 35,
+      "step": 14
+    },
+    {
+      "measure": 101,
+      "midi": 40,
+      "step": 0
+    },
+    {
+      "measure": 101,
+      "midi": 40,
+      "step": 4
+    },
+    {
+      "measure": 101,
+      "midi": 35,
+      "step": 7
+    },
+    {
+      "measure": 101,
+      "midi": 38,
+      "step": 8
+    },
+    {
+      "measure": 101,
+      "midi": 40,
+      "step": 10
+    },
+    {
+      "measure": 101,
+      "midi": 35,
+      "step": 14
+    },
+    {
+      "measure": 102,
+      "midi": 40,
+      "step": 0
+    },
+    {
+      "measure": 102,
+      "midi": 40,
+      "step": 4
+    },
+    {
+      "measure": 102,
+      "midi": 35,
+      "step": 7
+    },
+    {
+      "measure": 102,
+      "midi": 38,
+      "step": 8
+    },
+    {
+      "measure": 102,
+      "midi": 40,
+      "step": 10
+    },
+    {
+      "measure": 102,
+      "midi": 38,
+      "step": 12
+    },
+    {
+      "measure": 102,
+      "midi": 35,
+      "step": 14
+    },
+    {
+      "measure": 103,
+      "midi": 31,
+      "step": 0
+    },
+    {
+      "measure": 103,
+      "midi": 31,
+      "step": 1
+    },
+    {
+      "measure": 103,
+      "midi": 31,
+      "step": 2
+    },
+    {
+      "measure": 103,
+      "midi": 31,
+      "step": 4
+    },
+    {
+      "measure": 103,
+      "midi": 31,
+      "step": 6
+    },
+    {
+      "measure": 103,
+      "midi": 31,
+      "step": 8
+    },
+    {
+      "measure": 103,
+      "midi": 31,
+      "step": 10
+    },
+    {
+      "measure": 103,
+      "midi": 31,
+      "step": 12
+    },
+    {
+      "measure": 103,
+      "midi": 31,
+      "step": 14
+    },
+    {
+      "measure": 104,
+      "midi": 30,
+      "step": 0
+    },
+    {
+      "measure": 104,
+      "midi": 30,
+      "step": 2
+    },
+    {
+      "measure": 104,
+      "midi": 30,
+      "step": 4
+    },
+    {
+      "measure": 104,
+      "midi": 30,
+      "step": 6
+    },
+    {
+      "measure": 104,
+      "midi": 31,
+      "step": 8
+    },
+    {
+      "measure": 104,
+      "midi": 31,
+      "step": 10
+    },
+    {
+      "measure": 104,
+      "midi": 31,
+      "step": 12
+    },
+    {
+      "measure": 104,
+      "midi": 31,
+      "step": 14
+    },
+    {
+      "measure": 105,
+      "midi": 31,
+      "step": 0
+    },
+    {
+      "measure": 105,
+      "midi": 31,
+      "step": 2
+    },
+    {
+      "measure": 105,
+      "midi": 31,
+      "step": 4
+    },
+    {
+      "measure": 105,
+      "midi": 30,
+      "step": 6
+    },
+    {
+      "measure": 106,
+      "midi": 30,
+      "step": 0
+    },
+    {
+      "measure": 106,
+      "midi": 30,
+      "step": 2
+    },
+    {
+      "measure": 106,
+      "midi": 30,
+      "step": 4
+    },
+    {
+      "measure": 106,
+      "midi": 40,
+      "step": 8
+    },
+    {
+      "measure": 106,
+      "midi": 40,
+      "step": 12
+    },
+    {
+      "measure": 106,
+      "midi": 35,
+      "step": 14
+    },
+    {
+      "measure": 107,
+      "midi": 38,
+      "step": 0
+    },
+    {
+      "measure": 107,
+      "midi": 40,
+      "step": 2
+    },
+    {
+      "measure": 107,
+      "midi": 38,
+      "step": 4
+    },
+    {
+      "measure": 107,
+      "midi": 35,
+      "step": 5
+    },
+    {
+      "measure": 107,
+      "midi": 38,
+      "step": 6
+    },
+    {
+      "measure": 107,
+      "midi": 40,
+      "step": 8
+    },
+    {
+      "measure": 107,
+      "midi": 40,
+      "step": 12
+    },
+    {
+      "measure": 107,
+      "midi": 35,
+      "step": 15
+    },
+    {
+      "measure": 108,
+      "midi": 38,
+      "step": 0
+    },
+    {
+      "measure": 108,
+      "midi": 40,
+      "step": 2
+    },
+    {
+      "measure": 108,
+      "midi": 38,
+      "step": 4
+    },
+    {
+      "measure": 108,
+      "midi": 35,
+      "step": 6
+    },
+    {
+      "measure": 108,
+      "midi": 31,
+      "step": 8
+    },
+    {
+      "measure": 108,
+      "midi": 31,
+      "step": 10
+    },
+    {
+      "measure": 108,
+      "midi": 31,
+      "step": 12
+    },
+    {
+      "measure": 108,
+      "midi": 31,
+      "step": 14
+    },
+    {
+      "measure": 109,
+      "midi": 31,
+      "step": 0
+    },
+    {
+      "measure": 109,
+      "midi": 31,
+      "step": 2
+    },
+    {
+      "measure": 109,
+      "midi": 31,
+      "step": 4
+    },
+    {
+      "measure": 109,
+      "midi": 30,
+      "step": 6
+    }
+  ],
+  "part": "bass",
+  "schema": "dadrock.tabs.v154.bass-scorer-ready.v1",
+  "song": {
+    "artist": "Lenny Kravitz",
+    "title": "Are You Gonna Go My Way"
+  }
+}

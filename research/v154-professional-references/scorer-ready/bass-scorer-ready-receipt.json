@@ -1,0 +1,32 @@
+{
+  "audit": {
+    "continuationOnlySuppressed": 8,
+    "deadNotesSuppressedFromPitchRows": 7,
+    "measure88ExcludedEvents": 7,
+    "pitchedScorerRows": 547,
+    "sourceEvents": 569,
+    "sourceMeasures": 113,
+    "totalSourceLength16ths": 1800
+  },
+  "frozenInputs": {
+    "research/v154-professional-references/bass-professional-reference-machine-readable.json": "a8e1d123f8a19e69d9c160d78aea7637b5a2012232b23e1f1ddff051e9bc40b3",
+    "research/v154-professional-references/bass-source-local-attack-timing.json": "7d2f4eed21413c6169ec8fcea75274b64c6dc8bb5f3c8de9cbc536b94afab244",
+    "research/v154-professional-references/source-meter-to-fixed-grid-mapping.json": "1c8ed50839f4fa365616281c70fa490d47a7e222600b34ae4f1545e09f587648"
+  },
+  "outputPath": "research/v154-professional-references/scorer-ready/bass-scorer-ready.json",
+  "outputSha256": "39eba52495fe81a3602f191334d71fe4bc643ed3062287fbde812fbde3c2c2f1",
+  "policy": {
+    "candidateGenerationMayReadReference": false,
+    "generatedCandidateModified": false,
+    "generatedCandidateRead": false,
+    "humanCandidateCorrection": false,
+    "mainOrProductionModified": false,
+    "modalL4CudaGpuUsed": false,
+    "referenceFacingScoreCalls": 0,
+    "referenceOnly": true,
+    "scoringPerformed": false,
+    "thresholdSweep": false
+  },
+  "schema": "dadrock.tabs.v154.bass-scorer-ready-receipt.v1",
+  "validation": "PASS"
+}
