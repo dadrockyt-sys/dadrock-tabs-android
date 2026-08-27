@@ -1,0 +1,23 @@
+{
+  "alternateCandidateConstructed": false,
+  "alternateThresholdTested": false,
+  "audioRecomputed": false,
+  "automaticPromotion": false,
+  "branch": "v143-contextual-prune-lobo",
+  "candidateCanonicalEventSha256": "4dd13556d580a315c728e7333823eec9644195da5a345689cc44a566ef33d998",
+  "candidateSearchRun": false,
+  "classification": "one-use-v149-gold-score-complete",
+  "completedAtUtc": "2026-08-27T06:46:35.543373+00:00",
+  "consumedAttemptCommit": "d98de6c44ed5eb650b05ccc65d5bf12fa5630aca",
+  "goldSha256": "18fd868ae960dfcdd1ffb0110f1a9dfd8acc2ffeb46e247d1116cd54291526ac",
+  "modalGpuUsed": false,
+  "productionIntegrated": false,
+  "resultPath": "debug/v149-singleton-confidence/phase-c-score/score-result.json",
+  "resultSha256": "29c56823b4a3f81f5af6db20c562af9b3b59a646160711eb11ff368cbdd7b6df",
+  "retuningRun": false,
+  "runHeadSha": "40c051c7bbe31e23f554b272c2847cadff05f461",
+  "runId": "33047086701",
+  "schema": "dadrock.tabs.v149.singleton-confidence.phase-c-score-completion.v1",
+  "scoreCallCount": 1,
+  "status": "COMPLETE_SEALED_AFTER_ONE_SCORE"
+}
