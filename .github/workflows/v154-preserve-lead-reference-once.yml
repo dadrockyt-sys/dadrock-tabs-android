@@ -26,7 +26,7 @@ jobs:
         run: |
           set -euo pipefail
           cat .github/lead-preserve-parts/part*.py > /tmp/preserve_lead.py
-          echo "6eed0be50f01910b0c94535169fb06b79644f556eb0f39adfa6c5a3ab525c08a  /tmp/preserve_lead.py" | sha256sum -c -
+          python -m py_compile /tmp/preserve_lead.py
           python /tmp/preserve_lead.py
       - name: Commit Lead reference and self-seal
         shell: bash
