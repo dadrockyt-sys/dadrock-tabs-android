@@ -567,3 +567,11 @@ Active phase: **V147 Phase C REAL-AUDIO ARTIFACT-FIRST CONSTRUCTION = GO / SEALE
 - Runtime Gold SHA verified from persisted V149 reference identity: **`18fd868ae960dfcdd1ffb0110f1a9dfd8acc2ffeb46e247d1116cd54291526ac`** (64 chars).
 - Safety: total score calls **1**; search/alternate candidate/context rule/threshold/retuning/audio/HPSS/CQT/Modal/GPU/Production/promotion **NO**.
 - V150 score authorization consumed; workflow deleted in this sealing commit. No automatic promotion even if the score crosses baseline.
+
+
+## V151 Phase A positive-consensus analysis — ARMED / REFERENCE-FREE — 2026-08-27 UTC
+- User authorized continued work toward a major breakthrough.
+- Population is exactly the **33 V150 changed singleton events**; V150 candidate canonical SHA `72a0582cfc7d03d84cd2f878f191a69b7262b200ce248d1a896207444a3c5e4e`.
+- Positive consensus requires strict improvement to both immediate neighboring onsets plus neither local pitch-class recurrence nor exact-pitch recurrence favoring the accepted/original note.
+- Preregistration blob `7777d1061ef51ef432bc273160c3d46fd37c7c15`; analyzer blob `b6f8e5990c534685a3210d43e77de94b953fe689`; run `33048717853`.
+- Gold/reference **NO**; prior V149/V150 score-result read by analyzer **NO**; scorer calls **0**; candidate construction/search **NO**; threshold sweep **NO**; audio/HPSS/CQT/Modal/GPU/main/Production/promotion **NO**.
