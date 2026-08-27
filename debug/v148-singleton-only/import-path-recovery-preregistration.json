@@ -1,0 +1,66 @@
+{
+  "schema": "dadrock.tabs.v148.singleton-only-import-path-recovery.v1",
+  "classification": "infrastructure-only-fail-closed-recovery-preregistration",
+  "branch": "v143-contextual-prune-lobo",
+  "failedRun": {
+    "runId": "33043698461",
+    "jobId": "98422759855",
+    "armingCommit": "86ce4cf2a4e06048cca4cd65f1ddf199c840f2a6",
+    "consumedSentinelCommit": "3fa9175a2a9b334dda48f63877ee9ef7e9ef703d",
+    "failedStep": "Construct exactly one frozen V148 candidate",
+    "failure": "ModuleNotFoundError: No module named 'modal'",
+    "failureLocation": "validation/v148_singleton_only/construct_once.py import of modal.v147_phase_c_artifact_support",
+    "candidateConstructorEnteredPastImports": false,
+    "candidateOutputPersisted": false,
+    "candidateCountConstructed": 0,
+    "referenceFacingScoreCalls": 0
+  },
+  "unchangedScientificProtocol": {
+    "preregistrationGitBlob": "fd3fb330d3aa80d1058656e3b2dd7eaa201f8e1c",
+    "constructionAuthorizationGitBlob": "006f719c8c71570142cf6990c7542f3d8692d5e4",
+    "frozenConstructorGitBlob": "bb43464f48cc8e0eade0f9e98229c859cb117986",
+    "policy": "accepted-onset-singleton-only-v147-projection",
+    "expectedEventCount": 1144,
+    "expectedMeasureCount": 113,
+    "expectedChangedEvents": 106,
+    "expectedChangedOnsets": 106,
+    "expectedPolyphonicChangedEvents": 0,
+    "maximumCandidateCountAcrossFailedAndRecoveryRuns": 1
+  },
+  "recoveryChangeOnly": {
+    "launcherPath": "validation/v148_singleton_only/recover_import_path_once.py",
+    "launcherGitBlob": "0bc6ab8795539eaab084cae5e60680ac0a2cba66",
+    "change": "prepend repository root to Python sys.path, then execute the unchanged frozen constructor",
+    "musicalLogicChanged": false,
+    "thresholdsChanged": false,
+    "weightsChanged": false,
+    "filtersChanged": false,
+    "candidatePolicyChanged": false
+  },
+  "requiredRecoveryGuards": [
+    "verify failed run and consumed sentinel identities",
+    "verify no V148 candidate output directory exists before recovery",
+    "verify original constructor and recovery launcher blobs",
+    "make Gold/reference/professional image/audio inputs unreadable",
+    "construct at most one candidate total across original and recovery runs",
+    "require 1144 events, 113 measures, 106 singleton changes, 106 changed singleton onsets, zero polyphonic changes",
+    "require deterministic replay and PDF event fidelity 1.0",
+    "persist candidate and exact output hashes",
+    "delete both original and recovery one-use workflows after success",
+    "stop before reference-facing scoring"
+  ],
+  "forbidden": [
+    "Gold/reference/professional image access",
+    "reference-facing scoring",
+    "audio reread/decode",
+    "HPSS/CQT recomputation",
+    "Modal/L4/GPU",
+    "candidate search or variants",
+    "threshold or weight retuning",
+    "post-result retuning",
+    "main/Production modification",
+    "automatic promotion"
+  ],
+  "referenceFacingScoringAuthorization": false,
+  "recoveryExecutionStatus": "FROZEN_NOT_YET_EXECUTED"
+}
