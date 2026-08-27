@@ -151,3 +151,19 @@ Active phase: **V153 Phase D EVENT-347 CPU GOLD ATTRIBUTION = COMPLETE / SEALED.
 - Preregistration blob `57eca109b51bc3f5c0685c3771d92b369a6d1c80`; analyzer blob `6ea4ee141863dd6613e689393790e6e6482c1e50`; run `33085622945`.
 - Scope: map all accepted/V153/Gold notes in measure 35, locate the Gold MIDI-62 note, calculate event-347 timing distances, and replay scorer matching primitives diagnostically only.
 - At this checkpoint Gold temporal map has not run yet; new score calls `0`; candidate modification/search/tuning/audio/Modal/L4/CUDA/GPU/main/Production/promotion `NO`.
+
+
+## V153 Phase E measure-35 temporal map — COMPLETE / SEALED — 2026-08-27 UTC
+- CPU-only run `33085622945`, job `98564336365`: **SUCCESS**. Result `debug/v153-reference-free-strength/phase-e-measure35-temporal-map.json`; Git blob `9ad89f8274297265fa46257fe6b561c50567867e`.
+- Gold measure 35 contains one MIDI 62 (D4) at **step 4** and zero MIDI 61 (C#4). Event 347 is at **step 9**. The accepted D4 is therefore **5 grid steps away** from the Gold D4, outside both ±0.5-step tolerant timing and ±2-step gross timing.
+- Phase E classification: **`MEASURE_LEVEL_ONLY_CREDIT_NO_LOCAL_TIMING_SUPPORT`**. Measure-level pitch-content must be diagnostic-only for event-level decisions.
+- Artifact `v153-measure35-temporal-map-33085622945`, ID `9651999095`, ZIP SHA256 `9ab4dad8760cf4af34b5de2b42a716505a1bbb436fcb7720d295efaf5bff8474`. One-use workflow was deleted/sealed at commit `52d06741ff19f5925f70c086f9c146aa2aa10d4f`.
+- New score calls `0`; candidate modification/search/tuning/audio/Modal/L4/CUDA/GPU/main/Production/promotion `NO`.
+
+
+## V154 Phase A CPU pretrained frontend reset — FROZEN / CONSUMED / BEFORE AUDIO — 2026-08-27 UTC
+- Project architecture reset is documented at `docs/ai-tab/CPU_AUTONOMOUS_PATH.md`.
+- Preregistration blob `d8af65d0b642b311fd243841af3eaef22e0a007f`; benchmark blob `ca0c26dd3cf786585bea615f4bd565a9d1980d4e`; run `33087772583`.
+- Exactly two predefined reference-free CPU branches: **raw Basic Pitch** and **CPU Demucs htdemucs_6s guitar stem -> Basic Pitch**. Basic Pitch 0.4.0 published defaults are frozen; guitar range MIDI 40–88; no threshold sweep.
+- Primary evaluation after both outputs are persisted: same-pitch onset F1 within ±0.5 frozen grid step. Accepted baseline = **6.6986% / 70 matches**. Measure-level pitch-content is diagnostic-only.
+- At this checkpoint audio opened **NO**, Gold/reference opened **NO**, human correction **NO**, Modal/L4/CUDA/GPU **NO**, main/Production **NO**.
