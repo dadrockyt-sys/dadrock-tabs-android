@@ -2,14 +2,14 @@
 
 Updated: 2026-08-26 America/Montreal
 Branch: `v143-contextual-prune-lobo`
-Active phase: **V144 Rhythm baseline preserved; Families #1–#14 fully consumed/sealed. V145 Stage 1, Stage 2, Stage 3 generated-only adapter, and Stage 3 evaluation harness are all CPU-proven/sealed. The real offline Stage 3 calibration one-shot is preregistered and its workflow is registered/frozen but NOT ARMED. No Modal/L4/GPU/live audio without fresh explicit authorization.**
+Active phase: **V144 Rhythm baseline preserved; Families #1–#14 fully consumed/sealed. V145 Stage 1, Stage 2, Stage 3 generated-only adapter, and Stage 3 evaluation harness are CPU-proven/sealed. The preregistered real offline Stage 3 calibration one-shot was consumed in a fail-closed pre-calibration identity failure and MUST NOT be replayed. No real V145 Stage3 candidate was built or scored. No Modal/L4/GPU/live audio without fresh explicit authorization.**
 
 ## Permanent safety / fixed protocol
 - Work only on `v143-contextual-prune-lobo`; never modify/merge `main` or Production.
 - `/ai-tab` frontend, Bass/Lead, `freezeReady=false`, main, Production untouched.
 - No Modal/L4/GPU/live audio without fresh explicit authorization.
 - Gold SHA256 `18fd868ae960dfcdd1ffb0110f1a9dfd8acc2ffeb46e247d1116cd54291526ac`; calibration benchmark only, never unseen holdout.
-- Regardless of any V145 score, no automatic promotion is allowed. Family #10 remains accepted unless a separate later promotion protocol is frozen and succeeds.
+- Regardless of any V145 work, no automatic promotion is allowed. Family #10 remains accepted unless a separate later promotion protocol is frozen and succeeds.
 
 ## Permanent accepted Rhythm baseline — UNCHANGED
 - Family #10 `singleton-onset-replace-be9e9aa7a734e3cd`.
@@ -53,34 +53,34 @@ Active phase: **V144 Rhythm baseline preserved; Families #1–#14 fully consumed
 - Implementation `validation/v145_rhythm_decoder/score_offline_stage3_candidate.py`; commit `11873b539784d997ff03749ac8c2bfd8e2cef99f`; blob `d208abb3f180f8375d57d786941ff49d6813de1c`.
 - Synthetic tests `modal/tests/test_v145_rhythm_stage3_offline_score.py`; creation commit `6aea9f2435743c7399720d0b0c746a2bb68a1f4a`; blob `d8b3770ac7f3ba18123122f19fad895257998c25`.
 - Mandatory evaluator order is frozen: candidate-only validation -> `validate_pre_reference(freeze_dir)` -> candidate/freeze/PDF identity -> accepted baseline manifest -> only then read/hash/validate gold -> score the already-frozen candidate exactly once -> deterministic report.
-- Definitive proof workflow creation commit `47a0a74e1f55330652c15efb0b40accce080f78f`; workflow blob `bda53b2d332a52f36e10fe53ecf323c1dcebad44`.
-- Definitive CPU proof run `33031101564`, job `98383566164`, attempt1: **SUCCESS**. Every step passed: exact identities/isolation, compile, synthetic ordering/invariant tests, proof persistence.
-- Proof `debug/v145-rhythm-decoder/proofs/cpu-stage3-evaluation-harness-proof.json`; blob `81c10bdcc39ce9e371fda60d2c3d107e671b8790`; persistence commit `c392dc6e6aeb5f2831cc074bfca9abb3b8f31db7`; schema14505.
+- Definitive CPU proof run `33031101564`, job `98383566164`, attempt1: SUCCESS; proof blob `81c10bdcc39ce9e371fda60d2c3d107e671b8790`; persistence commit `c392dc6e6aeb5f2831cc074bfca9abb3b8f31db7`.
 - Proof states `syntheticOrderingTestsPassed=true`, `realV5CandidateBuilt=false`, `calibrationScoreRun=false`, `realGoldRead=false`, `referenceLabelsRead=false`, `acceptedBaselineChanged=false`, `promotionAllowed=false`, `modalGpuUsed=false`, `liveAudioBenchmarkRun=false`.
-- Legacy proof workflow deletion `ac2097b1d9a70a0dcef7fa5986fd502cf8ebb157`; definitive proof workflow deletion `e25a50e02ceb105c5a11c1312319872c665a24e8`. Never rerun either proof workflow.
-- Earlier trigger/register attempts were infrastructure non-executions and are consumed; do not revisit them.
+- Proof workflows sealed/deleted; never rerun.
 
-## V145 Stage 3 real offline calibration one-shot — PREREGISTERED / WORKFLOW FROZEN / NOT ARMED
+## V145 Stage 3 real offline calibration one-shot — CONSUMED / FAILED CLOSED BEFORE CALIBRATION
 - Real-trial prereg `docs/v145-rhythm-decoder-stage3-real-one-shot-preregistration.md`; creation commit `f123d2cc3d73e3f35dd6bef54f4fdb89963b88fd`; blob `b49c530ecfb32bdc6dc00f2be957f9754a6960d6`.
-- Workflow `.github/workflows/v145-stage3-offline-calibration-one-shot.yml`; registration commit `a03f302946632309e21ebdc2c22930100b65bc25`; exact frozen Git blob **`81f16ce5c4a7ba6801cd0ceefd8858263ea21fd2`**.
-- Registration workflow run `33031336066` completed `SKIPPED`, as required, because the registration commit message was not the one-shot trigger message. No candidate construction, calibration access, or score occurred.
-- Sole trigger path is `debug/v145-rhythm-decoder/.v145-stage3-offline-calibration-trigger`.
-- Exact trigger commit message is `v145 execute stage3 offline calibration one-shot`.
-- The trigger must bind this checkpoint commit as `preArmCheckpointCommit` and workflow blob `81f16ce5c4a7ba6801cd0ceefd8858263ea21fd2`.
-- Real one-shot order is frozen: exact identity/tests -> one generated-only V5 candidate -> candidate invariants -> freeze -> renderer contract -> PDF fidelity exactly1.0 -> frozen evaluator pre-reference gate -> accepted manifest -> gold hash/validate -> exactly one score -> immutable recheck -> persist only candidate+report.
-- Candidate output path `debug/v145-rhythm-decoder/stage3/offline-candidate.json`; report path `debug/v145-rhythm-decoder/stage3/offline-calibration-score.json`; both are required absent before execution.
-- No score-dependent branch, candidate search/ranking, replay, retuning, or promotion is permitted.
-- **At this checkpoint the real one-shot is NOT ARMED; no real Stage3 candidate exists and the V144 calibration gold has not been opened by V145.**
+- Workflow `.github/workflows/v145-stage3-offline-calibration-one-shot.yml`; registration commit `a03f302946632309e21ebdc2c22930100b65bc25`.
+- Registration run `33031336066` was SKIPPED as intended; no calibration execution.
+- Pre-arm checkpoint commit `43c4432dd7a907f51df4fec9c706cc312fdf5953`.
+- Trigger commit `b0031639ea51c00bb0702c676b4bdcdfb428e04c`; exact message `v145 execute stage3 offline calibration one-shot`; trigger was sole changed file.
+- Real one-shot run `33031523386`, job `98384901171`, attempt1: **FAILURE at the first substantive identity gate** `Verify sole trigger and frozen non-calibration identities`.
+- Failure was specifically the workflow-blob self-check inside the trigger validation. The trigger/checkpoint expected workflow blob `81f16ce5c4a7ba6801cd0ceefd8858263ea21fd2`, while the actual workflow tree blob at trigger commit `b0031639...` is **`e68fce559a86b567d5d3b70ce6aaf263b477487f`**.
+- Every later workflow step was SKIPPED: frozen CPU tests, real V5 candidate construction, candidate validation, freeze, renderer contract, PDF fidelity, evaluator/gold access, scoring, post-state verification, and result persistence.
+- Therefore `realV5CandidateBuilt=false`, `calibrationScoreRun=false`, `realGoldRead=false`, `referenceLabelsRead=false`, `acceptedBaselineChanged=false`, `modalGpuUsed=false`, `liveAudioBenchmarkRun=false`.
+- Candidate output `debug/v145-rhythm-decoder/stage3/offline-candidate.json` was never produced by the run; calibration report `debug/v145-rhythm-decoder/stage3/offline-calibration-score.json` was never produced by the run.
+- This one-shot attempt is **CONSUMED** under the frozen no-replay rule. **Never rerun/rearm/recreate this same Stage3 real one-shot.**
+- The failure is infrastructure identity bookkeeping only; it produced no musical/model outcome and MUST NOT be used as musical tuning evidence.
+- Immediate sealing of the consumed workflow + trigger is pending; delete both, preserve prereg/proofs/checkpoints, then checkpoint again.
 
 ## EXPLICIT NEXT STEPS
-1. The very next repository commit must create only `debug/v145-rhythm-decoder/.v145-stage3-offline-calibration-trigger` with exact message `v145 execute stage3 offline calibration one-shot`, binding this checkpoint commit and frozen workflow blob `81f16ce5c4a7ba6801cd0ceefd8858263ea21fd2`.
-2. Observe the single real one-shot. Do not rerun on any actual job failure; inspect and checkpoint instead.
-3. On success, fetch and record the explicit candidate/report identities and calibration metrics/deltas. This is benchmark evidence only; family #10 remains accepted.
-4. Seal/delete the workflow and trigger after the single execution, then checkpoint immediately.
-5. No replay, retune, alternate selection, automatic promotion, Modal/L4/GPU/live audio, or protected-surface changes.
+1. Seal/delete `.github/workflows/v145-stage3-offline-calibration-one-shot.yml` using its current actual blob and delete `debug/v145-rhythm-decoder/.v145-stage3-offline-calibration-trigger` using its current blob. Do not rerun.
+2. Checkpoint the deletion commits immediately.
+3. Do not create a replacement/retry of the same real Stage3 one-shot. Any future real calibration trial must be a separately preregistered materially new protocol/experiment.
+4. Family #10 accepted baseline remains unchanged at **35.4 / 6.7 / 5.5 / 5.8 / 100 / 100**.
+5. No Modal/L4/GPU/live audio or protected-surface changes.
 
 ## Current stop point
 - Accepted scores remain **35.4 / 6.7 / 5.5 / 5.8 / 100 / 100**.
-- V145 Stage1/Stage2/Stage3 adapter/evaluation harness are all SUCCESS-proven and sealed.
-- Real Stage3 one-shot prereg/workflow are frozen; workflow blob `81f16ce5c4a7ba6801cd0ceefd8858263ea21fd2`.
-- Real Stage3 candidate build/evaluation has not run; the next repository commit is the sole one-shot trigger.
+- V145 Stage1/Stage2/Stage3 adapter/evaluation harness are SUCCESS-proven and sealed.
+- The first real V145 Stage3 calibration one-shot is consumed as a safe pre-calibration identity failure; there is no V145 real candidate score.
+- Workflow + trigger sealing is the immediate next action.
