@@ -1,0 +1,232 @@
+name: V148 Singleton Only Construct Once
+
+on:
+  push:
+    branches:
+      - v143-contextual-prune-lobo
+    paths:
+      - .github/workflows/v148-singleton-only-construct-once.yml
+
+permissions:
+  contents: write
+
+concurrency:
+  group: v148-singleton-only-construct-once
+  cancel-in-progress: false
+
+jobs:
+  construct-v148-singleton-only:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - name: Checkout exact arming revision
+        uses: actions/checkout@v4
+        with:
+          ref: ${{ github.sha }}
+          fetch-depth: 0
+
+      - name: Set up pinned Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.12.14'
+
+      - name: Verify frozen identities and one-use boundary
+        shell: bash
+        run: |
+          set -euo pipefail
+          test "$GITHUB_REF_NAME" = "v143-contextual-prune-lobo"
+          test "$(git rev-parse HEAD)" = "$GITHUB_SHA"
+          test "$(git hash-object validation/v148_singleton_only/construct_once.py)" = "bb43464f48cc8e0eade0f9e98229c859cb117986"
+          test "$(git hash-object debug/v148-singleton-only/phase-a-hypothesis-preregistration.json)" = "fd3fb330d3aa80d1058656e3b2dd7eaa201f8e1c"
+          test "$(git hash-object debug/v148-singleton-only/construction-authorization.json)" = "006f719c8c71570142cf6990c7542f3d8692d5e4"
+          test "$(git hash-object debug/v148-singleton-only/construction-attempt-sentinel.json)" = "5548352e8b6ece77eeec064575e2e8b246beee34"
+          test "$(git hash-object modal/v147_phase_c_artifact_support.py)" = "f4278ffaacaca3f66baf7a3112e2af0f3bc387cf"
+          test "$(git hash-object validation/rhythm_holdout/canonical.py)" = "088d44827fb23e20d9aeeb4944a672989af5846c"
+          test "$(git hash-object lib/v143RenderContract.js)" = "ccbb93c48982798cc474309fd981f6ca02d5c8d4"
+          test ! -e debug/v148-singleton-only/candidate
+          python - <<'PY'
+          import json
+          from pathlib import Path
+          sentinel = json.loads(Path('debug/v148-singleton-only/construction-attempt-sentinel.json').read_text())
+          if sentinel.get('status') != 'ARMED_NOT_CONSUMED':
+              raise SystemExit(f"attempt sentinel is not armed: {sentinel.get('status')!r}")
+          if sentinel.get('candidateConstructionCountAllowed') != 1:
+              raise SystemExit('candidate construction allowance drifted')
+          if sentinel.get('referenceFacingScoreCountAllowed') != 0:
+              raise SystemExit('reference-facing score allowance must remain zero')
+          PY
+          git fetch origin v143-contextual-prune-lobo
+          test "$(git rev-parse origin/v143-contextual-prune-lobo)" = "$GITHUB_SHA"
+
+      - name: Consume one-use attempt before construction
+        shell: bash
+        run: |
+          set -euo pipefail
+          python - <<'PY'
+          import json
+          import os
+          from datetime import datetime, timezone
+          from pathlib import Path
+          path = Path('debug/v148-singleton-only/construction-attempt-sentinel.json')
+          payload = json.loads(path.read_text())
+          if payload.get('status') != 'ARMED_NOT_CONSUMED':
+              raise SystemExit('attempt already consumed')
+          payload['status'] = 'CONSUMED_BEFORE_CONSTRUCTION'
+          payload['consumedByRunId'] = os.environ['GITHUB_RUN_ID']
+          payload['consumedAtUtc'] = datetime.now(timezone.utc).isoformat().replace('+00:00', 'Z')
+          payload['armingCommit'] = os.environ['GITHUB_SHA']
+          path.write_text(json.dumps(payload, indent=2, sort_keys=True) + '\n')
+          PY
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add debug/v148-singleton-only/construction-attempt-sentinel.json
+          git commit -m "debug: consume one-use V148 construction attempt"
+          git push origin HEAD:v143-contextual-prune-lobo
+          echo "CONSUMED_SHA=$(git rev-parse HEAD)" >> "$GITHUB_ENV"
+
+      - name: Make forbidden reference and audio inputs unreadable
+        shell: bash
+        run: |
+          set -euo pipefail
+          for dir in validation/rhythm_holdout/reference debug/v144-rhythm-calibration/reference; do
+            if test -d "$dir"; then
+              find "$dir" -type f -exec chmod 000 {} +
+            fi
+          done
+          for file in public/Professionalexample.jpg public/gomywayfullaitest.m4a; do
+            if test -f "$file"; then
+              chmod 000 "$file"
+            fi
+          done
+
+      - name: Construct exactly one frozen V148 candidate
+        shell: bash
+        run: |
+          set -euo pipefail
+          python -m py_compile validation/v148_singleton_only/construct_once.py
+          python validation/v148_singleton_only/construct_once.py \
+            --output-dir debug/v148-singleton-only/candidate \
+            2>&1 | tee debug/v148-singleton-only/construction-output.txt
+          grep -Fq '"gate":"GO"' debug/v148-singleton-only/construction-output.txt
+
+      - name: Verify construction gates and safety flags
+        shell: bash
+        run: |
+          set -euo pipefail
+          python - <<'PY'
+          import hashlib
+          import json
+          from pathlib import Path
+          root = Path('debug/v148-singleton-only/candidate')
+          proof = json.loads((root / 'construction-proof.json').read_text())
+          fidelity = json.loads((root / 'pdf-event-fidelity.json').read_text())
+          manifest = json.loads((root / 'preservation-manifest.json').read_text())
+          metrics = proof.get('metrics') or {}
+          required = {
+              'gate': 'GO',
+              'deterministic': True,
+              'pdfEventFidelity': 1.0,
+              'candidateVariantsConstructed': 1,
+              'referenceRead': False,
+              'goldRead': False,
+              'professionalImageRead': False,
+              'calibrationScoreRun': False,
+              'audioRead': False,
+              'hpssOrCqtRecomputed': False,
+              'candidateSearchRun': False,
+              'thresholdRetuningRun': False,
+              'modalGpuUsed': False,
+              'productionIntegrated': False,
+              'automaticPromotion': False,
+          }
+          for key, expected in required.items():
+              if proof.get(key) != expected:
+                  raise SystemExit(f'unsafe or failed proof gate {key}={proof.get(key)!r}')
+          if metrics.get('eventCount') != 1144 or metrics.get('generatedMeasureCount') != 113:
+              raise SystemExit('event/measure gate failed')
+          if metrics.get('changedEventCountVersusAccepted') != 106:
+              raise SystemExit('changed-event gate failed')
+          if metrics.get('changedOnsetCountVersusAccepted') != 106:
+              raise SystemExit('changed-onset gate failed')
+          if metrics.get('polyphonicChangedEventsVersusAccepted') != 0:
+              raise SystemExit('polyphonic fail-closed gate failed')
+          if metrics.get('allChangedOnsetsAcceptedCardinalityOne') is not True:
+              raise SystemExit('singleton-cardinality gate failed')
+          if metrics.get('changedSingletonRowsExactlyV147') is not True:
+              raise SystemExit('preserved V147 row identity gate failed')
+          if metrics.get('timingMetadataInvariantViolations') != 0:
+              raise SystemExit('timing/metadata invariant gate failed')
+          if metrics.get('positionIdentityViolations') != 0:
+              raise SystemExit('position identity gate failed')
+          if fidelity.get('passed') is not True or fidelity.get('pdfEventFidelity') != 1.0:
+              raise SystemExit('PDF event fidelity gate failed')
+          if manifest.get('referenceFacingScoringAuthorized') is not False:
+              raise SystemExit('manifest unexpectedly authorizes scoring')
+          identities = {}
+          for name in ('candidate.json', 'construction-proof.json', 'pdf-event-fidelity.json', 'preservation-manifest.json'):
+              raw = (root / name).read_bytes()
+              identities[name] = {'bytes': len(raw), 'sha256': hashlib.sha256(raw).hexdigest()}
+          Path('debug/v148-singleton-only/output-identities.json').write_text(
+              json.dumps(identities, indent=2, sort_keys=True) + '\n'
+          )
+          print('V148_OUTPUT_IDENTITIES=' + json.dumps(identities, sort_keys=True, separators=(',', ':')))
+          PY
+
+      - name: Persist result, complete sentinel, and self-seal workflow
+        shell: bash
+        run: |
+          set -euo pipefail
+          python - <<'PY'
+          import hashlib
+          import json
+          import os
+          from datetime import datetime, timezone
+          from pathlib import Path
+          candidate_root = Path('debug/v148-singleton-only/candidate')
+          proof = json.loads((candidate_root / 'construction-proof.json').read_text())
+          sentinel_path = Path('debug/v148-singleton-only/construction-attempt-sentinel.json')
+          sentinel = json.loads(sentinel_path.read_text())
+          if sentinel.get('status') != 'CONSUMED_BEFORE_CONSTRUCTION':
+              raise SystemExit('attempt sentinel was not consumed before construction')
+          sentinel['status'] = 'COMPLETED_AND_SEALED'
+          sentinel['completionPersisted'] = True
+          sentinel['completedAtUtc'] = datetime.now(timezone.utc).isoformat().replace('+00:00', 'Z')
+          sentinel['candidateEventSha256'] = proof['candidate']['eventSha256']
+          sentinel_path.write_text(json.dumps(sentinel, indent=2, sort_keys=True) + '\n')
+
+          identities = json.loads(Path('debug/v148-singleton-only/output-identities.json').read_text())
+          completion = {
+              'schema': 'dadrock.tabs.v148.singleton-only-construction-completion.v1',
+              'status': 'COMPLETE_SEALED_STOP_BEFORE_SCORING',
+              'runId': os.environ['GITHUB_RUN_ID'],
+              'armingCommit': os.environ['GITHUB_SHA'],
+              'consumedSentinelCommit': os.environ['CONSUMED_SHA'],
+              'candidateEventSha256': proof['candidate']['eventSha256'],
+              'eventCount': proof['candidate']['eventCount'],
+              'generatedMeasureCount': proof['candidate']['generatedMeasureCount'],
+              'changedEvents': proof['metrics']['changedEventCountVersusAccepted'],
+              'changedOnsets': proof['metrics']['changedOnsetCountVersusAccepted'],
+              'polyphonicChangedEvents': proof['metrics']['polyphonicChangedEventsVersusAccepted'],
+              'deterministic': proof['deterministic'],
+              'pdfEventFidelity': proof['pdfEventFidelity'],
+              'outputIdentities': identities,
+              'referenceFacingScoringAuthorization': False,
+              'modalGpuUsed': False,
+              'productionIntegrated': False,
+          }
+          Path('debug/v148-singleton-only/construction-complete-sentinel.json').write_text(
+              json.dumps(completion, indent=2, sort_keys=True) + '\n'
+          )
+          PY
+          rm .github/workflows/v148-singleton-only-construct-once.yml
+          git fetch origin v143-contextual-prune-lobo
+          test "$(git rev-parse origin/v143-contextual-prune-lobo)" = "$CONSUMED_SHA"
+          git add \
+            debug/v148-singleton-only/candidate \
+            debug/v148-singleton-only/construction-output.txt \
+            debug/v148-singleton-only/output-identities.json \
+            debug/v148-singleton-only/construction-attempt-sentinel.json \
+            debug/v148-singleton-only/construction-complete-sentinel.json \
+            .github/workflows/v148-singleton-only-construct-once.yml
+          git commit -m "debug: persist and seal V148 singleton candidate"
+          git push origin HEAD:v143-contextual-prune-lobo
