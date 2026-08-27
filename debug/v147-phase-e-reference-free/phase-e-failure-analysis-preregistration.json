@@ -1,0 +1,79 @@
+{
+  "schema": "dadrock.tabs.v147.phase-e-reference-free-failure-analysis.v1",
+  "classification": "reference-free-post-score-failure-analysis-preregistration",
+  "sourceHead": "9db7e6b48760eb62fc35af0f180321f2bdfafa9f",
+  "purpose": "Characterize the immutable V147 candidate's 247 audio-driven pitch substitutions using only the accepted baseline reconstruction and already-preserved reference-free Phase-C evidence. Do not identify per-event Gold correctness and do not construct or tune a replacement candidate.",
+  "immutableInputs": {
+    "acceptedBaseline": {
+      "family": "singleton-onset-replace-be9e9aa7a734e3cd",
+      "eventCount": 1144,
+      "canonicalEventSha256": "4e6f9f247134f79f30a5448515c52a6ca1012c1f1314c3458b448582999e3881",
+      "reconstructionSource": "debug/v143-contextual-prune/v5-professional-pdf/v5-render-stream.json",
+      "reconstructionFunction": "modal.v147_phase_c_artifact_support.materialize_accepted_family"
+    },
+    "v147Candidate": {
+      "path": "debug/v147-phase-c-real-audio/preserved-run-33038518285/candidate.json",
+      "fileSha256": "c0215690d5bfd9d2d47b8784eee886e942fbd28c499f25c643635c45ff7a9636",
+      "canonicalEventSha256": "ca35c3492295a3079c17c35124df7a483166315e85649e95ded095c6c06b2b77",
+      "eventCount": 1144
+    },
+    "decisions": {
+      "path": "debug/v147-phase-c-real-audio/preserved-run-33038518285/decisions.json",
+      "fileSha256": "3ec6c42730bf571c29258eca131c4e32da257c1ac6073e5319073818e8ac49b9",
+      "decisionCount": 1144,
+      "changedCount": 247
+    },
+    "phaseCCode": {
+      "artifactSupportGitBlob": "f4278ffaacaca3f66baf7a3112e2af0f3bc387cf",
+      "pitchHypothesisGitBlob": "49bce8b968406bb0d61ab61394954ef8a8303eb7",
+      "canonicalAdapterGitBlob": "088d44827fb23e20d9aeeb4944a672989af5846c"
+    }
+  },
+  "allowedAnalysis": [
+    "verify immutable input identities",
+    "reconstruct accepted family #10 reference-free",
+    "compare accepted and V147 event streams by eventIndex",
+    "summarize changed-event direction, register, pitch class, onset/polyphony and fingering movement",
+    "summarize already-preserved CQT evidence and fixed V147 decision-gate margins",
+    "measure whether composite-score winners depended on the frozen octave bonus",
+    "persist deterministic JSON/Markdown diagnostic evidence"
+  ],
+  "forbidden": [
+    "open or read Professionalexample.jpg",
+    "open or read Gold/reference JSON",
+    "invoke the Gold scorer or any reference-facing metric",
+    "read per-event reference correctness labels",
+    "decode or reread audio",
+    "recompute HPSS/CQT",
+    "run Modal/L4/GPU",
+    "change V147 thresholds or octave weight",
+    "construct an alternate candidate",
+    "search candidate variants",
+    "retune after observing diagnostics",
+    "modify main or Production",
+    "promote any candidate"
+  ],
+  "fixedDecisionConstantsForDescriptiveMarginsOnly": {
+    "octaveWeight": 0.25,
+    "minimumAlternateFundamentalDb": 3.0,
+    "minimumScoreMarginDb": 3.0,
+    "minimumFundamentalMarginDb": 2.0
+  },
+  "outputContract": {
+    "json": "debug/v147-phase-e-reference-free/failure-analysis.json",
+    "markdown": "debug/v147-phase-e-reference-free/failure-analysis.md",
+    "mustReport": [
+      "input identity verification",
+      "247-change cardinality and +/-1 direction",
+      "changed-event onset-size and multi-change-onset distributions",
+      "pitch-class transition counts",
+      "register distribution",
+      "string/fret movement distribution",
+      "pitch-collision/cardinality effects inside onsets",
+      "score/fundamental gate-excess quantiles and fixed proximity counts",
+      "octave-bonus-dependent winner count",
+      "no-reference/no-audio/no-candidate safety flags"
+    ]
+  },
+  "interpretationBoundary": "This phase may identify reference-free risk patterns and dominant mechanisms, but it may not label individual substitutions as correct/incorrect or use the Gold outcome to tune thresholds. Any V148 hypothesis/candidate requires a separate frozen phase."
+}
