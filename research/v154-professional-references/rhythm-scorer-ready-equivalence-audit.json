@@ -1,0 +1,44 @@
+{
+  "comparisonDefinition": "Exact multiset equality of normalized (measure, step, midi) scorer rows. Input sequence order is diagnostic only because simultaneous chord-note ordering is musically/scorer irrelevant.",
+  "counts": {
+    "authoritativeExactDuplicateExtras": 0,
+    "authoritativeRows": 946,
+    "authoritativeUniqueRows": 946,
+    "supplementalExactDuplicateExtras": 0,
+    "supplementalRows": 946,
+    "supplementalUniqueRows": 946
+  },
+  "frozenInputs": {
+    "research/v154-professional-references/rhythm-professional-reference-scorer-ready.json": {
+      "rowField": "rows",
+      "sha256": "d6c9416979f25e6a81b9cd4583389b584a59421a0529fcccb4ca6f5dd47e679f"
+    },
+    "research/v154-professional-references/scorer-ready/rhythm-scorer-ready.json": {
+      "rowField": "notes",
+      "sha256": "d51083800bfcf30ee15f31a4349eaa2c439f1b8662acd91618ab31bdca321555"
+    }
+  },
+  "policy": {
+    "frozenInputsRewritten": false,
+    "generatedCandidateModified": false,
+    "generatedCandidateRead": false,
+    "humanCandidateCorrection": false,
+    "mainOrProductionModified": false,
+    "modalL4CudaGpuUsed": false,
+    "referenceFacingScoreCalls": 0,
+    "referenceOnly": true,
+    "scoringPerformed": false,
+    "thresholdSweep": false
+  },
+  "results": {
+    "authoritativeOnlyRowIdentities": 0,
+    "authoritativeOnlySample": [],
+    "inputSequenceEquivalent": false,
+    "rowIdentityMultisetEquivalent": true,
+    "sortedNormalizedRowsEquivalent": true,
+    "supplementalOnlyRowIdentities": 0,
+    "supplementalOnlySample": []
+  },
+  "schema": "dadrock.tabs.v154.rhythm-scorer-ready-equivalence-audit.v1",
+  "status": "PASS"
+}
