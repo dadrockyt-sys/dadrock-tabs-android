@@ -448,3 +448,15 @@ Active phase: **V147 Phase C REAL-AUDIO ARTIFACT-FIRST CONSTRUCTION = GO / SEALE
 - Recovery run `33045966999` is now fail-closed. Its one-use recovery sentinel was consumed before any recovery Gold reread.
 - Recovery may patch only the malformed expected Gold SHA **in memory** from the validated historical V147 runner/result, then delegate to the unchanged frozen V148 scoring path. Maximum additional historical score calls: **1**; maximum total V148 score calls: **1**.
 - Candidate/search/retuning/audio/HPSS/CQT/Modal/L4/GPU/main/Production/promotion remain unchanged and forbidden.
+
+
+## V148 Phase C singleton-only Gold score — RECOVERED / COMPLETE / SEALED — 2026-08-27 UTC
+- Infrastructure-only recovery completed the originally authorized **single** historical Gold calibration score in run `33045966999` after proving the prior run made **0** score calls.
+- Root cause of the failed run was only the malformed 65-character V148 expected-Gold constant; recovery sourced the validated 64-character identity from the historically successful V147 runner/result in memory. Candidate/evaluator/baseline/metrics were unchanged.
+- Durable result: `debug/v148-singleton-only/phase-c-score/score-result.json`; SHA256 **`7ba84ac3e530e94b8d1e3b1b7d8d83902fe6f064acb4f423b37ef51e282f1638`**; persistence commit **`53543f488a1b8a45a7e5b337d75b9656acef2391`**.
+- Candidate display vector (pitch content / pitch timing / string-fret timing / chord pitch-set / measure coverage / PDF fidelity): **33.589 / 5.933 / 4.785 / 4.976 / 100.000 / 100.000**.
+- Accepted baseline display vector: **35.407 / 6.699 / 5.455 / 5.805 / 100.000 / 100.000**.
+- Critical mismatch count: **1740**; delta versus accepted baseline: **+28**.
+- Raw F1 deltas versus accepted baseline: pitch content `-0.018181818`, pitch timing `-0.007655502`, string/fret `-0.006698565`, chord pitch-set `-0.008293020`, exact voicing `-0.008293020`, measure coverage `+0.000000000`.
+- Total V148 historical score calls across failed attempt plus recovery: **1**. Candidate search **NO**; alternate candidate **NO**; retuning **NO**; audio/HPSS/CQT **NO**; Modal/L4/GPU **NO**; main/Production integration **NO**; automatic promotion **NO**.
+- V148 reference-facing scoring authorization is consumed and sealed. Both the original scoring workflow and infrastructure recovery workflow are deleted in this final seal. Further reference-facing analysis, candidate construction/search, retuning, Production integration, or promotion requires a new separately frozen phase and fresh explicit user authorization.
