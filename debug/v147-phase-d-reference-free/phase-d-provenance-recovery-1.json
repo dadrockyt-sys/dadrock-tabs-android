@@ -1,0 +1,143 @@
+{
+  "schema": "dadrock.tabs.v147.phase-d-provenance-recovery.v1",
+  "classification": "reference-free-provenance-recovery-ready-for-authorization",
+  "sourceBranch": "v143-contextual-prune-lobo",
+  "sourceHeadBeforeRecovery": "1cdc2551103c39ba41153d66f7cabc822eaf9ad5",
+  "supersedesGateStatusOnlyFrom": {
+    "path": "debug/v147-phase-d-reference-free/phase-d-preregistration-no-go.json",
+    "gitBlob": "51ce1bf65b46b1d44e4307080d45b3658da17c7f",
+    "note": "The original NO-GO preregistration remains immutable; this addendum only updates technical gate evidence after independent historical provenance was recovered."
+  },
+  "professionalHumanReferenceSource": {
+    "userClarifiedRole": "professional human-written reference from which the scorer calibration reference was designed",
+    "caseSensitivePath": "public/Professionalexample.jpg",
+    "branch": "main",
+    "currentMainCommitObserved": "5d9c97af1391686fe27726f524180b533a53d63d",
+    "gitBlob": "16106197cc1269cca0b3c443908d5ef75e8b4d3e",
+    "byteSize": 979815,
+    "introductionCommit": "e0f91e74c815b9ecdf0a72fae6d1523414b34577",
+    "introductionTimeUtc": "2026-07-30T22:59:58Z",
+    "expectedSha256FromFrozenBuilder": "aca2da3e8d551b2fd82b4ab3ecafa0c8932d6c0a27b54b6213ffc990ca08a9a9",
+    "imageContentOpenedInThisRecovery": false
+  },
+  "goldReferenceBuild": {
+    "builderPath": "validation/v144_rhythm_calibration/build_gold_reference.py",
+    "builderGitBlob": "1c6e02aa311cf58181d0ff348553bd99025a56f9",
+    "builderIntroductionCommit": "2b0fb21245d5ef01d0a5b6e65c39fa2740df3e69",
+    "builderExpectedProfessionalImageSha256": "aca2da3e8d551b2fd82b4ab3ecafa0c8932d6c0a27b54b6213ffc990ca08a9a9",
+    "builderExpectedStructuredSourceSha256": "18cdb4f8afb49562aac5b600730384636070d6ca8650823e759276a81ee4afc8",
+    "builderExpectedReferenceSha256": "18fd868ae960dfcddc1ffb0110f1a9dfd8acc2ffeb46e247d1116cd54291526ac",
+    "cpuBuildWorkflowCommit": "2fc0007caa73a23afc52450d4d0977b64c4dda1e",
+    "cpuBuildWorkflowBehavior": [
+      "fetches Professionalexample.jpg at immutable commit e0f91e74c815b9ecdf0a72fae6d1523414b34577 and rejects SHA mismatch",
+      "fetches the exact structured source and rejects normalized SHA mismatch",
+      "runs the frozen builder",
+      "sha256-verifies the produced Gold JSON equals 18fd868ae960dfcddc1ffb0110f1a9dfd8acc2ffeb46e247d1116cd54291526ac",
+      "persists only the Gold JSON and build report"
+    ],
+    "persistCommit": "0df6204909ca79bdd3a5bf1be4f1ca4d55cca53f",
+    "buildReportPath": "debug/v144-rhythm-calibration/reference/professional-rhythm-gold-reference-build.json",
+    "buildReportGitBlob": "5f1ec40176aa9b69676c7cd9e06b42c412731f37",
+    "buildReportExactHistoricalReferenceIdentity": true,
+    "goldReferencePath": "debug/v144-rhythm-calibration/reference/professional-rhythm-gold-reference.json",
+    "goldReferenceGitBlob": "248741bade9665a34648c59a2994bd27d73fc406",
+    "goldReferenceSha256": "18fd868ae960dfcddc1ffb0110f1a9dfd8acc2ffeb46e247d1116cd54291526ac",
+    "goldReferenceBodyOpenedInThisRecovery": false,
+    "independentCurrentRawByteRehashPerformed": false,
+    "identityBasis": "pre-candidate builder/workflow SHA guards + same-commit persisted build report + immutable current Git blob/history"
+  },
+  "historicalEvaluator": {
+    "fullCalibrationWrapperPath": "validation/v144_rhythm_calibration/score_selected_conjunction_candidate.py",
+    "fullCalibrationWrapperGitBlob": "1ca2b8550d6c08e793f26b3aa91b99fb44fa7ddb",
+    "fullCalibrationWrapperIntroductionCommit": "f76635d1db58d5ed11a018c5ee461c566bb983ae",
+    "fullCalibrationWrapperIntroductionTimeUtc": "2026-08-26T06:02:31Z",
+    "coreScorerPath": "validation/rhythm_holdout/score_rhythm_holdout.py",
+    "coreScorerGitBlob": "cc4bf61a99f22bf87a6c255e5a81220fbc82223b",
+    "coreScorerOriginalCommit": "e085296ac107f98dde2b67bc076bec3fbd240d57",
+    "coreScorerV143AlignmentCommit": "01c0644bf9b111920d40db96ae171360059ab714",
+    "canonicalAdapterPath": "validation/rhythm_holdout/canonical.py",
+    "canonicalAdapterGitBlob": "088d44827fb23e20d9aeeb4944a672989af5846c",
+    "canonicalAdapterV143AlignmentCommit": "20779870327370b204529a2582e1b6ec7d75c4ea",
+    "allRecoveredBeforeV147CandidateConstruction": true,
+    "fixedGatedMetrics": [
+      "pitchContentF1",
+      "pitchTimingTolerantF1",
+      "stringFretTimingTolerantF1",
+      "chordPitchSetTolerantF1",
+      "exactVoicingTolerantF1",
+      "measureCoverageRecall"
+    ],
+    "fixedAdditionalMetric": "criticalMismatchCount",
+    "stepTolerance": 0.5,
+    "grossStepTolerance": 2.0,
+    "durationTolerance": 0.25
+  },
+  "candidateAdapterContract": {
+    "contract": "V143 renderEvents -> canonical_events -> flatten_generated -> score_full_candidate",
+    "newMusicalConversionRequired": false,
+    "sameCanonicalHelperUsedByPhaseC": true,
+    "candidatePath": "debug/v147-phase-c-real-audio/preserved-run-33038518285/candidate.json",
+    "candidateGitBlob": "3091d4b1468260746d6629af67b7b92599d5134e",
+    "candidateFileSha256": "c0215690d5bfd9d2d47b8784eee886e942fbd28c499f25c643635c45ff7a9636",
+    "candidateCanonicalEventSha256": "ca35c3492295a3079c17c35124df7a483166315e85649e95ded095c6c06b2b77",
+    "candidateEventCount": 1144,
+    "candidateInstrument": "rhythm",
+    "canonicalInputRequiredFields": [
+      "eventIndex",
+      "measure",
+      "step",
+      "stringIndex",
+      "fret",
+      "midi",
+      "durationSteps"
+    ],
+    "candidateAlreadyCarriesRequiredFields": true
+  },
+  "acceptedBaseline": {
+    "manifestPath": "debug/v144-rhythm-calibration/selected/v144-singleton-onset-replacement-selected-baseline.json",
+    "manifestGitBlob": "acd12ab68ad16b8faabf38ddc9e1cc0c1e7c4b68",
+    "name": "singleton-onset-replace-be9e9aa7a734e3cd",
+    "eventCount": 1144,
+    "eventSha256": "4e6f9f247134f79f30a5448515c52a6ca1012c1f1314c3458b448582999e3881",
+    "gatedMetrics": {
+      "pitchContentF1": 0.35406698564593303,
+      "pitchTimingTolerantF1": 0.06698564593301436,
+      "stringFretTimingTolerantF1": 0.05454545454545454,
+      "chordPitchSetTolerantF1": 0.0580511402902557,
+      "exactVoicingTolerantF1": 0.0580511402902557,
+      "measureCoverageRecall": 1.0,
+      "pdfEventFidelity": 1.0
+    },
+    "criticalMismatchCount": 1712
+  },
+  "technicalGates": {
+    "gate1ExactHistoricalEvaluatorRecoveredAndHashBound": true,
+    "gate2ExactHistoricalCandidateAdapterRecoveredAndHashBound": true,
+    "gate3IntendedGoldProvenanceAndExpectedBytesHashBound": true,
+    "gate4FreshExplicitUserAuthorizationForOneUseScoring": false
+  },
+  "authorizationState": "STOP_BEFORE_REFERENCE_FACING_SCORE",
+  "futureOneUseScoringContract": [
+    "verify branch and this addendum identity",
+    "verify immutable V147 candidate file SHA and canonical event SHA",
+    "verify evaluator/core scorer/canonical adapter Git blobs",
+    "verify Gold JSON SHA256 before JSON parsing",
+    "load candidate renderEvents with the frozen canonical_events adapter only",
+    "validate Gold with the frozen validate_reference routine",
+    "run exactly one score_full_candidate evaluation",
+    "compare fixed gated metrics and criticalMismatchCount against the accepted baseline above",
+    "persist exact report and all identities",
+    "no retuning, no candidate variants, no second score, no audio recomputation, no Modal/L4/GPU, no automatic promotion"
+  ],
+  "safety": {
+    "professionalImageContentOpened": false,
+    "goldReferenceBodyOpened": false,
+    "newCalibrationScoreRun": false,
+    "candidateSearchRun": false,
+    "alternateCandidateConstructed": false,
+    "audioRecomputed": false,
+    "modalGpuUsed": false,
+    "mainModified": false,
+    "productionModified": false
+  }
+}
