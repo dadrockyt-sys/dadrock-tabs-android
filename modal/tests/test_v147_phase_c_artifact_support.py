@@ -78,6 +78,7 @@ def test_materializer_fails_closed_if_v5_source_changes() -> None:
     stream = json.loads(V5_PATH.read_text(encoding="utf-8"))
     mutated = copy.deepcopy(stream)
     mutated["events"][0]["midi"] = int(mutated["events"][0]["midi"]) + 1
+    mutated["events"][0]["fret"] = int(mutated["events"][0]["fret"]) + 1
     with pytest.raises(ValueError, match="V5 source identity mismatch"):
         materialize_accepted_family(mutated)
 
