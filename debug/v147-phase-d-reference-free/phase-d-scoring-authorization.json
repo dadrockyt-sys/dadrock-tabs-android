@@ -1,0 +1,47 @@
+{
+  "schema": "dadrock.tabs.v147.phase-d-scoring-authorization.v1",
+  "classification": "one-use-reference-facing-score-authorized",
+  "branch": "v143-contextual-prune-lobo",
+  "sourceHeadBeforeAuthorizationRecord": "f0d23157e2bbb33d259397cc7478c7ea4438e3a4",
+  "authorization": {
+    "received": true,
+    "scope": "exactly-one-phase-d-v147-gold-calibration-score",
+    "candidateSearchAllowed": false,
+    "alternateCandidateAllowed": false,
+    "retuningAllowed": false,
+    "audioRecomputeAllowed": false,
+    "modalGpuAllowed": false,
+    "productionPromotionAllowed": false
+  },
+  "technicalGates": {
+    "historicalEvaluatorRecovered": true,
+    "historicalCandidateAdapterRecovered": true,
+    "goldProvenanceRecovered": true,
+    "freshExplicitAuthorizationReceived": true
+  },
+  "candidate": {
+    "path": "debug/v147-phase-c-real-audio/preserved-run-33038518285/candidate.json",
+    "fileSha256": "c0215690d5bfd9d2d47b8784eee886e942fbd28c499f25c643635c45ff7a9636",
+    "canonicalEventSha256": "ca35c3492295a3079c17c35124df7a483166315e85649e95ded095c6c06b2b77",
+    "eventCount": 1144
+  },
+  "gold": {
+    "path": "debug/v144-rhythm-calibration/reference/professional-rhythm-gold-reference.json",
+    "expectedSha256": "18fd868ae960dfcddc1ffb0110f1a9dfd8acc2ffeb46e247d1116cd54291526ac"
+  },
+  "historicalScoringChain": {
+    "fullCalibrationWrapper": {
+      "path": "validation/v144_rhythm_calibration/score_selected_conjunction_candidate.py",
+      "gitBlob": "1ca2b8550d6c08e793f26b3aa91b99fb44fa7ddb"
+    },
+    "coreScorer": {
+      "path": "validation/rhythm_holdout/score_rhythm_holdout.py",
+      "gitBlob": "cc4bf61a99f22bf87a6c255e5a81220fbc82223b"
+    },
+    "canonicalAdapter": {
+      "path": "validation/rhythm_holdout/canonical.py",
+      "gitBlob": "088d44827fb23e20d9aeeb4944a672989af5846c"
+    }
+  },
+  "executionRule": "Verify all immutable identities before Gold access, run exactly one score, persist result and proof, then seal the one-use workflow."
+}
