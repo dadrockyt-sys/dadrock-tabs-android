@@ -1,0 +1,13 @@
+{
+  "schema": "dadrock.tabs.v147.phase-e-reference-free-attempt-sentinel.v1",
+  "classification": "analysis-attempt-armed-before-execution",
+  "githubRunId": "33042528177",
+  "workflowArmingCommit": "df8d7e2ed663c32cb3ac950b63a9d81aaaac66f7",
+  "preregistrationGitBlob": "817c93576edb23adb9225f0211e1413e2d1a161d",
+  "analyzerGitBlob": "5abf362f4d424aac460f12c59c6a1f08081ac1cb",
+  "referenceReadable": false,
+  "professionalImageReadable": false,
+  "audioRead": false,
+  "analysisCompleted": false,
+  "candidateConstructed": false
+}

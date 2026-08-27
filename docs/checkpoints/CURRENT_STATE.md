@@ -301,3 +301,14 @@ Active phase: **V147 Phase C REAL-AUDIO ARTIFACT-FIRST CONSTRUCTION = GO / SEALE
 - Safety: candidate search **NO**; alternate candidate **NO**; retuning **NO**; audio/CQT recomputation **NO**; Modal/L4/GPU **NO**; main/Production integration **NO**; automatic promotion **NO**.
 - The one-use workflow is removed in the same persistence commit as this checkpoint. The attempt sentinel remains durable and makes reruns fail closed.
 - Phase-D scoring authorization is consumed. Any further reference-facing comparison, candidate change, calibration search, or promotion requires a new separately frozen phase and fresh explicit authorization.
+
+## V147 Phase E reference-free failure analysis — ARMED / PRE-EXECUTION — 2026-08-27 UTC
+- User authorized continuation of the reference-free V147 failure analysis after the single Phase-D Gold score showed regression.
+- This phase is descriptive only: no Gold/reference, no professional image, no audio decode/CQT, no candidate construction/search, no threshold retuning, no Modal/L4/GPU, no main/Production change.
+- Preregistration: `debug/v147-phase-e-reference-free/phase-e-failure-analysis-preregistration.json`; Git blob `817c93576edb23adb9225f0211e1413e2d1a161d`.
+- Analyzer: `validation/v147_phase_e/analyze_reference_free_failure.py`; Git blob `5abf362f4d424aac460f12c59c6a1f08081ac1cb`.
+- Accepted baseline remains family #10 / 1144 events / `4e6f9f247134f79f30a5448515c52a6ca1012c1f1314c3458b448582999e3881`.
+- Immutable V147 candidate remains 1144 events / `ca35c3492295a3079c17c35124df7a483166315e85649e95ded095c6c06b2b77`; preserved decisions file SHA256 `3ec6c42730bf571c29258eca131c4e32da257c1ac6073e5319073818e8ac49b9`.
+- GitHub Actions run `33042528177`; arming commit `df8d7e2ed663c32cb3ac950b63a9d81aaaac66f7`.
+- Durable attempt sentinel is committed before analysis; reruns fail closed.
+- Gold/reference and `public/Professionalexample.jpg` were made unreadable before this checkpoint. Analysis completed at this checkpoint: **NO**.
