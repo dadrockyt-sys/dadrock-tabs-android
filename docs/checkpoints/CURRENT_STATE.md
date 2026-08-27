@@ -2,7 +2,7 @@
 
 Updated: 2026-08-26 America/Montreal
 Branch: `v143-contextual-prune-lobo`
-Active phase: **V144 Rhythm baseline preserved. V145 Stage 1, Stage 2, Stage 3 generated-only adapter, and Stage 3 evaluation harness are CPU-proven/sealed. The first real V145 Stage3 calibration one-shot is consumed, failed closed before calibration, and is now fully sealed. No real V145 Stage3 candidate was built or scored. No Modal/L4/GPU/live audio without fresh explicit authorization.**
+Active phase: **V144 Rhythm baseline preserved. V145 Stage 1, Stage 2, Stage 3 generated-only adapter, and Stage 3 evaluation harness are CPU-proven/sealed. The first real V145 Stage3 calibration one-shot is consumed/sealed with no candidate or score. V146 artifact-first calibration is now preregistered before any V146 artifact construction; Phase A is generated-only and calibration-free. No Modal/L4/GPU/live audio without fresh explicit authorization.**
 
 ## Permanent safety / fixed protocol
 - Work only on `v143-contextual-prune-lobo`; never modify/merge `main` or Production.
@@ -24,22 +24,21 @@ Active phase: **V144 Rhythm baseline preserved. V145 Stage 1, Stage 2, Stage 3 g
 - Current accepted-baseline aggregate FIT residual blob `b9794a7b8a882ba9ade5e8095f112d4be45e47e6`.
 
 ## V145 proven components
-### Stage 1 — FROZEN / CPU-PROVEN / SEALED
+### Stage 1
 - `modal/v145_rhythm_decoder.py` blob `2fd979aebb4685e86c7f24a0162f69de306c06e9`; tests `9d48b02316f4eb364b163b3027c6c4d79304ac27`.
 - Proof run `33026865312`, job `98370167258`: SUCCESS; proof blob `978c2b7cd984f2cece23d2bc152f6acca28980e1`.
 
-### Stage 2 — FROZEN / CPU-PROVEN / SEALED
+### Stage 2
 - `modal/v145_rhythm_sequence_decoder.py` blob `5f86f57d0fd10774690d50528d51bad6e0392bf3`; tests `b16b8d2060e1ea3b47225f1c7c6072cb260c0db8`.
 - Proof run `33027229509`, job `98371326572`: SUCCESS; proof blob `0522dd00598fcd5916349cb9747ca3588eaedb90`.
 
-### Stage 3 generated-only adapter — FROZEN / CPU-PROVEN / SEALED
+### Stage 3 generated-only adapter
 - Prereg blob `bb60a3bcc5f6e136eb6efb5706828379e007ec1d`.
 - V5 stream Git blob `fe61f7ad53a4d71348a5113ecc9e3876eaad98d4`; raw SHA256 `7c3399d3f5e05ecc8ac98d71d0e5300e1e78f63ae96c1642fe4a19debb4061b2`; 1209 events /113 measures /tempo `129.19921875` /4/4 /E Standard.
 - Adapter blob `434d4b2582991c216df411455f232b8d211337c6`; tests `3eee7ae5253ad0eecbeb492eaa24216f0fa21fee`.
 - Proof run `33029862099`, job `98379640869`: SUCCESS; proof blob `f55dcd1087f108d0d93c4a5a1a86cb5058ef4eb4`.
-- Adapter remains generated-only/reference-free; no add/delete/new MIDI; protected technique/link semantics preserved.
 
-### Stage 3 evaluation harness — FROZEN / CPU-PROVEN / SEALED
+### Stage 3 evaluation harness
 - Prereg blob `9b3542f33fb0f9149056b1eafb8c5db1864299ca`.
 - Evaluator blob `d208abb3f180f8375d57d786941ff49d6813de1c`; tests `d8b3770ac7f3ba18123122f19fad895257998c25`.
 - Frozen order: candidate-only validation -> pre-reference freeze/PDF gate -> candidate/freeze/PDF identity -> accepted manifest -> only then gold bytes/hash/validate -> exactly one score.
@@ -52,33 +51,38 @@ Active phase: **V144 Rhythm baseline preserved. V145 Stage 1, Stage 2, Stage 3 g
 - full-score helper `1ca2b8550d6c08e793f26b3aa91b99fb44fa7ddb`
 - PDF fidelity `5e1564216873046237fb545078a04a6b18f72b27`
 - render contract `ccbb93c48982798cc474309fd981f6ca02d5c8d4`
-- calibration gold path `debug/v144-rhythm-calibration/reference/professional-rhythm-gold-reference.json`, raw SHA256 `18fd868ae960dfcdd1ffb0110f1a9dfd8acc2ffeb46e247d1116cd54291526ac`.
 
 ## First real V145 Stage3 calibration one-shot — CONSUMED / FAILED CLOSED / SEALED
 - Real-trial prereg blob `b49c530ecfb32bdc6dc00f2be957f9754a6960d6`.
-- Registration commit `a03f302946632309e21ebdc2c22930100b65bc25`; registration run `33031336066` SKIPPED as intended.
-- Pre-arm checkpoint `43c4432dd7a907f51df4fec9c706cc312fdf5953`.
 - Trigger commit `b0031639ea51c00bb0702c676b4bdcdfb428e04c`.
-- Run `33031523386`, job `98384901171`, attempt1: FAILURE at first substantive identity gate.
-- Failure: trigger/checkpoint expected workflow blob `81f16ce5c4a7ba6801cd0ceefd8858263ea21fd2`; trigger-time workflow tree blob was `e68fce559a86b567d5d3b70ce6aaf263b477487f`. The self-check failed before any candidate/calibration work.
-- All later steps skipped: CPU contract rerun, candidate construction, invariant validation, freeze, renderer validation, PDF fidelity, accepted-manifest/gold access, scoring, persistence.
-- Therefore `realV5CandidateBuilt=false`, `calibrationScoreRun=false`, `realGoldRead=false`, `referenceLabelsRead=false`, `acceptedBaselineChanged=false`, `modalGpuUsed=false`, `liveAudioBenchmarkRun=false`.
-- No candidate/report was produced by the run. No musical/model result exists from this attempt.
-- This attempt is consumed and MUST NOT be rerun/rearmed/recreated as the same Stage3 one-shot.
-- Failure checkpoint commit `41bfadd651f4228128647ba5d58b4c09a134dadd`.
-- Consumed workflow deletion commit `0d83c411fcff78b7f7083d2a968f85bd9522870d`.
-- Consumed trigger deletion commit `b3e407413b76138722699690c8f15ca67283ab72`.
-- Workflow and trigger are now absent/sealed.
+- Run `33031523386`, job `98384901171`: FAILURE at first substantive workflow-identity gate.
+- Trigger expected workflow blob `81f16ce5c4a7ba6801cd0ceefd8858263ea21fd2`; trigger-time tree blob was `e68fce559a86b567d5d3b70ce6aaf263b477487f`.
+- All candidate/calibration steps skipped. No candidate, freeze, gold read, score, or result existed.
+- Failure checkpoint `41bfadd651f4228128647ba5d58b4c09a134dadd`; workflow deletion `0d83c411fcff78b7f7083d2a968f85bd9522870d`; trigger deletion `b3e407413b76138722699690c8f15ca67283ab72`.
+- Never rerun/rearm/recreate this same V145 real one-shot.
 
-## Next protocol boundary
-1. Do NOT retry the consumed Stage3 one-shot.
-2. Any future real calibration execution must be a separately preregistered materially new protocol/experiment, with new identity bookkeeping designed independently of this failed execution.
-3. The infrastructure identity failure may inform safer CI mechanics only; it is not musical evidence and may not shape decoder tuning.
-4. The existing frozen V145 Stage1/Stage2/adapter/evaluator may be reused as immutable components of a separately preregistered future protocol if justified.
-5. No Modal/L4/GPU/live audio or protected-surface changes without fresh explicit authorization.
+## V146 artifact-first calibration — PREREGISTERED / PHASE A NOT YET RUN
+- Prereg `docs/v146-rhythm-artifact-first-calibration-preregistration.md`.
+- Creation commit `86729595bab64ac80b82180532ee4dc94fca9817`.
+- Frozen prereg blob **`0125201e86389b21dee3ceb2e7ecd25dc67dfe84`**.
+- V146 is materially distinct in execution protocol: generated-only construction is separated from any later calibration evaluation. No musical/model parameter changed from V145.
+- Phase A reuses frozen Stage1/Stage2/adapter only and is explicitly calibration-free.
+- Phase A must invoke the frozen adapter exactly once against the immutable V5 stream and persist:
+  - `debug/v146-rhythm-artifact/generated-only-candidate.json`
+  - `debug/v146-rhythm-artifact/generated-only-candidate-proof.json`
+- Candidate contract: exactly1209 events, eventIndex0..1208, identical MIDI sequence to V5 source, exactly measures1..113, candidate metadata SHA equals canonical SHA, generated-only safety flags all correct.
+- Proof schema14601; records candidate SHA/count, changed-event/field counts and frozen adapter statistics. It must state referenceFree=true, acceptedManifestRead=false, realGoldRead=false, calibrationScoreRun=false, candidateSearchRun=false, alternateCandidateConstructed=false, acceptedBaselineChanged=false, promotionAllowed=false, modalGpuUsed=false, liveAudioBenchmarkRun=false.
+- Phase A may not read/hash/inspect accepted family #10 manifest or calibration gold, and may not import/invoke scoring code.
+- Phase B is **NOT authorized yet**. It may only be separately preregistered after the Phase A candidate/proof are persisted and sealed.
+
+## EXPLICIT NEXT STEPS
+1. Create a one-purpose V146 Phase A CPU workflow whose creation triggers the single generated-only artifact construction. It must not contain calibration paths or scoring invocations.
+2. Require exact frozen dependency verification, frozen CPU tests, exactly one adapter invocation, independent artifact invariants, and persistence of only the candidate + construction proof.
+3. On success, delete/seal the Phase A workflow and checkpoint candidate/proof exact identities immediately.
+4. Only then may a separate Phase B calibration-evaluation protocol be designed/preregistered; do not score or open gold during Phase A.
+5. Accepted family #10 remains **35.4 / 6.7 / 5.5 / 5.8 / 100 / 100**.
 
 ## Current stop point
 - Accepted scores remain **35.4 / 6.7 / 5.5 / 5.8 / 100 / 100**.
-- V145 Stage1/Stage2/adapter/evaluator are CPU-proven and sealed.
-- First real Stage3 one-shot is consumed and fully sealed with no candidate and no score.
-- Branch is non-armed and safe for design of a materially new next protocol.
+- V145 components are CPU-proven/sealed; consumed V145 real execution remains sealed with no score.
+- V146 artifact-first protocol is frozen before construction; Phase A workflow/artifact do not yet exist.
