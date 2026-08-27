@@ -2,7 +2,7 @@
 
 Updated: 2026-08-26 America/Montreal
 Branch: `v143-contextual-prune-lobo`
-Active phase: **V144 Rhythm gold calibration. Families #1–#13 are consumed/sealed. Accepted baseline remains family #10. Family #14 is preregistered/frozen and its exact CPU-only policy proof is SUCCESS, blob-recorded, and fully sealed: both temporary proof workflows and both trigger markers are deleted. The immutable success JSON remains. No family #14 FIT search has run. Next safe step is to implement the FIT-only family #14 search + synthetic search invariants, CPU-prove those exact blobs, and checkpoint before any one-shot FIT execution.**
+Active phase: **V144 Rhythm gold calibration. Families #1–#13 are consumed/sealed. Accepted baseline remains family #10. Family #14 is preregistered/frozen; policy proof is SUCCESS+SEALED. Its FIT-only search implementation and synthetic search-invariant tests are now implemented/blob-locked, and a definitive self-reporting CPU-only search-proof workflow is blob-locked below but has not been triggered. No live FIT search has run. Next safe step is to trigger the synthetic CPU search proof once, accept only its self-reported success, seal it, and checkpoint before any one-shot FIT execution.**
 
 ## Permanent safety / fixed protocol
 - Work only on `v143-contextual-prune-lobo`; never modify/merge `main` or Production.
@@ -39,94 +39,71 @@ Active phase: **V144 Rhythm gold calibration. Families #1–#13 are consumed/sea
 - Family #13 did not change the accepted baseline, therefore this diagnostic remains the current aggregate-only accepted-baseline residual. Do **not** create a replacement diagnostic yet.
 - Any successor family must be preregistered from permitted aggregate evidence only, without inspecting/using consumed-family candidate behavior.
 
-## Family #14 — PREREGISTERED / FROZEN / POLICY CPU-PROVEN + SEALED / SEARCH NOT RUN
+## Family #14 — PREREGISTERED / FROZEN / POLICY SEALED / SEARCH IMPLEMENTED / LIVE SEARCH NOT RUN
 ### Independent structural rationale
 - Family shape was selected only from the still-permitted aggregate accepted-baseline residual and independent structural reasoning, not from any consumed-family candidate result.
 - The residual contains **26 `g2-r1` shared onsets** and **27 shared generated-heavier onsets**. A generated-heavy shared onset can contain one correct note plus one surplus note; deleting only a demonstrably surplus member is materially distinct from whole-onset generated-only pruning and preserves the shared onset.
-- No family #13 zero-candidate result, ranking, candidate identity, or behavior was used to choose this family.
+- No consumed-family candidate result was used to choose this family.
 
 ### Frozen family contract
 - Name/shape: **atomic shared dyad-to-singleton surplus-note prune**.
-- FIT construction unit: an onset with exactly **2 generated notes / 1 reference note**, where exactly one generated note has exact MIDI equality with the sole reference note. The exact-MIDI-matched generated note is the immutable survivor; the other generated note is the FIT-labeled surplus correction target.
-- Ambiguous cases are excluded: zero exact-MIDI matches, two exact-MIDI matches, duplicate/indistinguishable source identities, invalid source positions, linked pitch semantics, or a prune target referenced by another event.
+- FIT construction unit: exactly **2 generated notes / 1 reference note** at one onset, with exactly one generated exact-MIDI match to the sole reference note. Exact-MIDI-matched generated note is immutable survivor; other generated note is FIT-labeled surplus target.
+- Exclude zero/two exact-MIDI matches, duplicate/indistinguishable source identities, invalid source positions, linked pitch semantics, or prune target referenced by another event.
 - Minimum FIT correction support **3**, maximum candidate rules **256**; frozen before any family #14 search.
-- Rule identity: exactly one allowed structural onset context signature + the two sorted source note identities `(sourceStringIndex, sourcePitchClass)` + the specific surplus/prune source identity. The prune identity must be exactly one member of the dyad identity and must uniquely identify one onset member.
-- Runtime application is **reference-free**. A rule may act only on an exact two-note generated onset whose structural context and complete dyad identity match the frozen rule; it removes only the uniquely identified surplus member. The survivor is otherwise byte-for-byte/source-order immutable.
-- Runtime reference input is forbidden. No pitch shifting, timing shifting, string/fret rewriting, onset creation, or survivor mutation is permitted.
-- Safety guards: source positions valid under the fixed tuning; prune target has no pitch linkage; prune target is not referenced by another event; the operation must not erase a generated measure. Result must preserve exactly **113 generated measures**.
-- Candidate construction/ranking is FIT-only. Validation/canary may gate only one locked FIT winner. Any failure or no qualifying FIT winner => deterministic family #10 fallback; never alternate.
-- Promotion gates remain unchanged: FIT Pitch Content F1 gain >=0.005, no musical regression, critical delta <=0, exact 113-measure coverage, independent PDF event fidelity 1.0.
+- Rule identity: exactly one allowed structural onset context + two sorted `(sourceStringIndex, sourcePitchClass)` identities + one specific unique prune identity that is a member of the dyad.
+- Runtime is reference-free; exact two-note generated onset + exact structural context + complete dyad identity; remove only uniquely identified surplus member. Survivor byte-for-byte/source-order immutable. No pitch/timing/string/fret rewriting or onset creation.
+- Count-changing safety: source positions valid under fixed tuning; no linked pitch semantics; prune target not referenced; operation cannot erase a generated measure; result must preserve exact **113 generated measures**.
+- FIT constructs/ranks only; validation/canary gate one locked winner; any failure/no winner => deterministic family #10 fallback, never alternate.
+- Promotion gates: FIT Pitch Content F1 gain >=0.005; no musical regression; critical delta <=0; exact 113-measure coverage; independent PDF event fidelity 1.0.
 
 ### Family #14 policy implementation/proof — COMPLETE + SEALED
 - Policy `modal/v144_rhythm_shared_dyad_surplus_prune_policy.py`; blob **`1f6cc7fcaf2d4ac7838b48b839c617b04cb1c34e`**; creation commit `3833c7dc08f0ae8366132b3e7268f3b22d876767`.
-- Synthetic policy tests `modal/tests/test_v144_rhythm_shared_dyad_surplus_prune_policy.py`; blob **`38d6804560755fcb0bcf26eeda5e1a5b77f31231`**; creation commit `38ebdf635c5ae3673d5eebc58466f887c75a7a5b`.
-- Direct dependencies verified by the definitive proof: context split blob `2da58508f2132660ad317ee63d5cb043d58285f0`; pitch-shift helper blob `d9998c59acddba070069668d62bcb1c3cdaf2b05`.
-- First proof attempt remains sealed/inconclusive via connector: workflow blob `ab443d87a53d7affdba23b86f22ec4a4f2035da8`, trigger commit `221d5edb332746b41a24b21f7fd69a030f260258`; supporting local reconstruction passed 9/9 but is not the definitive evidence.
-- Definitive self-reporting workflow blob **`fe5ce9446ef06bbabf7e8f5b866ee05dab556d3c`**; creation commit `da57ace8f8114e24c0e6c4d91662171a571182f2`; definitive trigger commit **`15f44a9886acfbcca535281e6904241c411afff1`**.
-- Definitive CPU proof run **`33025027635`**, job **`98364261256`**: **SUCCESS**. Every step completed successfully, including exact blob verification, `py_compile`, exact unittest module execution, and success-proof persistence.
-- Immutable success proof `debug/v144-rhythm-calibration/proofs/shared-dyad-surplus-prune-policy-cpu.json`; blob **`cafd2b51e75ba0895dde995f0730ef8554976516`**; schema `14426`; records `runtimeReferenceInput=false`, `modalGpuUsed=false`, `fitSearchRun=false`, runAttempt=1, exact trigger SHA and exact tested blobs.
-- Temporary proof workflow deletion commits: first workflow **`67b1cf3e7c8b797b8ec19f4d1e1e07f0a0a1805c`**; definitive workflow **`f090d0ec4016f2f5db4bf4205770db770d8793bf`**.
-- Temporary trigger deletion commits: first trigger **`d74b62184486d18ca75038ffe166e129fd5c7ae6`**; definitive trigger **`df1349044be4a6d42229ca39e89e32cad197f7a0`**.
-- Both workflows and both trigger markers are now absent; proof run must never be retriggered. Success proof JSON remains preserved.
-- No FIT candidate construction/search has run. Accepted baseline/scorers remain unchanged.
-- Next planned paths: `validation/v144_rhythm_calibration/search_atomic_shared_dyad_surplus_prunes.py` and `modal/tests/test_v144_rhythm_shared_dyad_surplus_prune_search.py`.
+- Policy tests `modal/tests/test_v144_rhythm_shared_dyad_surplus_prune_policy.py`; blob **`38d6804560755fcb0bcf26eeda5e1a5b77f31231`**; creation commit `38ebdf635c5ae3673d5eebc58466f887c75a7a5b`.
+- Direct policy dependencies proven: context split `2da58508f2132660ad317ee63d5cb043d58285f0`; pitch-shift helper `d9998c59acddba070069668d62bcb1c3cdaf2b05`.
+- Definitive policy proof run **`33025027635`**, job **`98364261256`**: SUCCESS. Immutable success proof `debug/v144-rhythm-calibration/proofs/shared-dyad-surplus-prune-policy-cpu.json`; blob **`cafd2b51e75ba0895dde995f0730ef8554976516`**; schema `14426`; runtimeReferenceInput=false; modalGpuUsed=false; fitSearchRun=false.
+- Policy proof automation is sealed/deleted. Workflow deletion commits `67b1cf3e7c8b797b8ec19f4d1e1e07f0a0a1805c` and `f090d0ec4016f2f5db4bf4205770db770d8793bf`; trigger deletion commits `d74b62184486d18ca75038ffe166e129fd5c7ae6` and `df1349044be4a6d42229ca39e89e32cad197f7a0`. Never rerun policy proof.
+
+### Family #14 search implementation — BLOB-LOCKED BEFORE SYNTHETIC CPU PROOF
+- FIT-only search path `validation/v144_rhythm_calibration/search_atomic_shared_dyad_surplus_prunes.py`; blob **`dd02c492ecfef26bbb15e8d345346ff75bb5fa30`**; creation commit **`1f1d69e0544a921a0a7cf06599c5c5b891188de1`**; report schema **`14427`**.
+- Synthetic search invariant tests path `modal/tests/test_v144_rhythm_shared_dyad_surplus_prune_search.py`; blob **`77758ead57a2735ba653bbba64e78c4124d34798`**; creation commit **`f504b9cdf6edb0a51cac151e5a07ba3f4c18509e`**.
+- Search invariants prove candidate name is dyad-order stable and prune-sensitive; ambiguous/nonmember prune identities are rejected; a valid candidate is a deletion-only source-order subsequence; changed dyads retain exactly one immutable survivor; exactly one event is removed per changed onset; arbitrary/partial deletion, survivor deletion, survivor mutation, reordering, additions, and locked-rule mismatch are rejected; support/cap remain exactly 3/256; accepted family #10 identity remains 1144 events / 113 measures / SHA `4e6f9f...`; runtime reference and Modal GPU remain false.
+- Search main reconstructs and verifies accepted family #10 before opening gold labels; candidate construction/ranking uses FIT rows only; validation/canary are closed until one FIT winner is locked; measure guard requires exact baseline measure-set preservation and 113 generated measures; failure falls back deterministically to family #10 and never selects an alternate.
+- Definitive synthetic CPU proof workflow `.github/workflows/v144-shared-dyad-surplus-prune-search-cpu-definitive.yml`; blob **`251b9f3a001ddd80d1045e5e80d2c833d0227f91`**; creation commit **`2366ee415e293edf2f86a96b7eafde5016439362`**.
+- The workflow verifies exact search/test/policy plus fixed supporting dependency blobs before compiling and running the exact synthetic search unittest. Only after success may it write `debug/v144-rhythm-calibration/proofs/shared-dyad-surplus-prune-search-cpu.json` with run identity and `fitLabelsRead=false`, `validationLabelsRead=false`, `canaryLabelsRead=false`, `liveSearchRun=false`, `runtimeReferenceInput=false`, `modalGpuUsed=false`.
+- Frozen proof trigger path: `debug/v144-rhythm-calibration/triggers/shared-dyad-surplus-prune-search-cpu-definitive.txt`. **It does not exist at this checkpoint; workflow is untriggered.**
+- **No live FIT search has run and no family #14 candidate outcome has been observed.**
 
 ## Family #13 — CONSUMED / SEALED / NO SCORE CHANGE
-### Frozen family
-- Shape: **atomic exact-three-note generated-only whole-onset prune**.
-- Construction: exactly 3 generated notes / 0 reference notes at one FIT onset.
-- Support **3**, cap **256**, frozen before search.
-- Rule identity: one structural onset context + three sorted `(sourceStringIndex, sourcePitchClass)` identities.
-- Atomic all-3 deletion only; runtime reference forbidden; linked/referenced/invalid-position/measure-erasing targets ineligible; survivors immutable/source-ordered.
-- Count-changing allowed only with exact 113 generated measures. Deterministic family #10 fallback required.
+- Shape: atomic exact-three-note generated-only whole-onset prune; support 3, cap 256.
+- Policy blob `622c839d0a833c3541007309ebf1203f1547b365`; policy tests blob `5adbcd39aacc181a6c0917654e754b582f8cca2e`; policy CPU proof run `33006494479` / job `98301477632`: SUCCESS; never rerun.
+- Search blob `e262057db95b297c9dc411f963476bae593553f1`; search tests blob `a5238673b466cbba6f69c6fa17587ebdb2d3402e`; report schema `14425`; search CPU proof run `33007127855` / job `98303667684`: SUCCESS; never rerun.
+- One-shot run `33008934470` / job `98309848693`: SUCCESS infrastructure, no FIT winner. Report `debug/v144-rhythm-calibration/candidates/atomic-generated-only-triad-onset-prune-search.json`; report blob `bb95b99f64a757b4bc96c86f4392e1e453e3b721`; ranked/evaluated count 0; family #10 fallback; validation/canary/full closed; no score change. Workflow/trigger sealed/deleted. Never rerun/retrigger/retry family #13 or use its candidate outcome to shape family #14.
 
-### Preregistered implementation proofs
-- Policy `modal/v144_rhythm_generated_only_triad_prune_policy.py`; blob `622c839d0a833c3541007309ebf1203f1547b365`.
-- Policy tests `modal/tests/test_v144_rhythm_generated_only_triad_prune_policy.py`; blob `5adbcd39aacc181a6c0917654e754b582f8cca2e`; definitive policy CPU proof run `33006494479` / job `98301477632`: SUCCESS; never rerun.
-- Search `validation/v144_rhythm_calibration/search_atomic_generated_only_triad_prunes.py`; blob `e262057db95b297c9dc411f963476bae593553f1`; report schema `14425`.
-- Search tests `modal/tests/test_v144_rhythm_generated_only_triad_prune_search.py`; blob `a5238673b466cbba6f69c6fa17587ebdb2d3402e`.
-- Broad CPU workflow blob `94b546cf0b3a2ab2bc3a15d0a292a09c2bb6fb01`; definitive search CPU proof run `33007127855` / job `98303667684`: SUCCESS; never rerun.
-
-### One-shot execution — EXACTLY ONCE
-- One-shot workflow path `.github/workflows/v144-atomic-generated-only-triad-onset-prune-search.yml`; creation commit `318fc7bfcaee75b10d9ae70eb64a50175ea1a119`; exact workflow blob `b319441e8225513c510d6f46c19ccce9cd055662`.
-- Required pre-arm checkpoint commit `174b2254761b1d0dccdf27107d73ce88b17b8ff0` recorded the exact workflow blob before trigger creation.
-- Exact trigger commit SHA `2477a1e15a455edf6108ecf6e67070c5e47ddc0c`; exact message `v144 execute atomic generated-only triad onset prune one-shot`; trigger changed exactly one path.
-- One-shot run **`33008934470`**, job **`98309848693`**, exact trigger SHA `2477a1e15a455edf6108ecf6e67070c5e47ddc0c`: SUCCESS. All steps completed successfully: immutable identity verification, fixed family #13 search, staged semantics proof, independent PDF-event identity, final invariant wrapper, immutable recheck, report-only persistence.
-- Report path `debug/v144-rhythm-calibration/candidates/atomic-generated-only-triad-onset-prune-search.json`.
-- Report persistence commit `e9bc29ada3a0e21250006d11735488857340395d`; report blob **`bb95b99f64a757b4bc96c86f4392e1e453e3b721`**.
-- Report result: `rankedRuleCount=0`, `evaluatedCandidateCount=0`, locked `accepted-v144-baseline`, locked reason `deterministic-no-prune-fallback`, `stoppedAt=fit`, validation/canary/full calibration all remained closed, `calibrationPromotionAllowed=false`.
-- Locked baseline remained 1144 events / 113 generated measures / SHA `4e6f9f247134f79f30a5448515c52a6ca1012c1f1314c3458b448582999e3881`; removedEventCount=0; removedOnsetCount=0.
-- Independent locked PDF proof passed with `pdfEventFidelity=1.0`; runtime-reference false; Modal GPU false; V5/main/Production unchanged.
-- Workflow deleted/sealed commit `e6195eab074d44d1a5d4bb34722e8a0a3f4a64bd`.
-- Trigger deleted/sealed commit `142bdfad0a9d3be628de2fb0e18e9701c1df9f57`.
-- **Never rerun/retrigger/retry family #13.** Do not use its zero-candidate outcome to shape/rank the next family.
-
-## Verified one-shot dependency identities used for family #13
+## Fixed dependency identities retained for future one-shot wrappers
 - Accepted residual analyzer `27ac8699279db8fc0208d067479ad3751da1a630`.
 - Singleton reconstruction search `70880d26418d907cc702233af37bcc4b643e3a57`; singleton policy `1e05e66a3523f98944370837a59e5d6e7293f9ac`.
 - Pitch-position shift `f69755b61bdcdf3a669847ce7e425289b4b0927f`; pitch shift `d9998c59acddba070069668d62bcb1c3cdaf2b05`; triple conjunction `ef9768a127472d7ce0746fdf21164d33e5117ea4`.
 - Staged selector `d176a9a69366e192e6fa75bc1039661e977f0bfa`; measure guard `4a1364204dd1e720c09d835ec3995c165047de98`; context split `2da58508f2132660ad317ee63d5cb043d58285f0`; config `9b93205cb47bc7718685b9d41b263778107801ce`.
 - Split analysis `1569bf01554be345ca9199a85f700db7743501a5`; signature prune scoring `699dd1a16725ecf11797e42829aa409ee5909000`; selected candidate scoring `1ca2b8550d6c08e793f26b3aa91b99fb44fa7ddb`.
 - Canonical `088d44827fb23e20d9aeeb4944a672989af5846c`; scorer `cc4bf61a99f22bf87a6c255e5a81220fbc82223b`; freeze `710bb6a3b15b99d3d11ceb4948d7c7175d208afc`; PDF fidelity `5e1564216873046237fb545078a04a6b18f72b27`; render contract `ccbb93c48982798cc474309fd981f6ca02d5c8d4`.
-- Historical filename assumption corrected: current freeze dependency is `validation/rhythm_holdout/freeze_rhythm_analysis.py`; PDF verifier is `validation/rhythm_holdout/verify_pdf_event_fidelity.py`; render contract is `lib/v143RenderContract.js`.
+- Current freeze dependency path `validation/rhythm_holdout/freeze_rhythm_analysis.py`; PDF verifier `validation/rhythm_holdout/verify_pdf_event_fidelity.py`; render contract `lib/v143RenderContract.js`.
 
 ## EXPLICIT NEXT STEPS — CONTINUATION CONTRACT
-1. Re-read this checkpoint and stay on `v143-contextual-prune-lobo` only.
-2. Never rerun/retrigger/reselect/retune families #1–#13 or any family #14 policy proof. Family #14 definitive policy proof run `33025027635` / job `98364261256` is SUCCESS and sealed.
-3. Accepted baseline remains family #10; headline scorer remains **35.4% Pitch Content F1**. Do not claim a gain from family #14 unless all gates pass and the accepted baseline actually changes.
-4. Current aggregate residual diagnostic `b9794a7b...` remains valid/current because baseline did not change.
-5. Family #14 is frozen exactly as preregistered above. Do not retune its shape/support/cap/rule identity after looking at family #14 candidate outcomes.
-6. Implement `validation/v144_rhythm_calibration/search_atomic_shared_dyad_surplus_prunes.py` and `modal/tests/test_v144_rhythm_shared_dyad_surplus_prune_search.py` using FIT-only construction/ranking and deterministic family #10 fallback semantics. No live FIT execution yet.
-7. Blob-lock and CPU-prove exact search/test files with synthetic data only; checkpoint the definitive run/job/proof before any one-shot FIT execution is armed.
-8. Candidate construction/ranking must remain FIT-only. Validation/canary may gate only one locked FIT winner. Any failure => family #10 fallback; never alternate.
-9. Promotion still requires FIT pitch gain >=0.005, no musical regression, critical delta <=0, coverage 1.0, exact 113 measures where applicable, and independent PDF event fidelity 1.0.
-10. Whenever a future accepted baseline changes, immediately recompute and checkpoint the percentage view and create a new aggregate accepted-baseline FIT residual before shaping its successor.
-11. Never modify main/Production/frontend/Bass/Lead or use Modal/L4/GPU without fresh explicit authorization.
+1. Stay on `v143-contextual-prune-lobo`; never main/Production/frontend/Bass/Lead.
+2. Never rerun/retrigger/reselect/retune families #1–#13 or family #14 policy proof.
+3. Accepted baseline remains family #10; headline scorer remains **35.4% Pitch Content F1**. Do not claim a family #14 gain until all gates pass and accepted baseline changes.
+4. Current aggregate residual diagnostic `b9794a7b...` remains current until accepted baseline changes.
+5. Family #14 shape/support/cap/rule identity are frozen; do not retune after observing any family #14 candidate outcome.
+6. Create the frozen synthetic search-proof trigger exactly once for workflow blob `251b9f3a...`; make no competing branch commits while it runs. Accept success only if its proof JSON appears and matches the exact trigger/run/search/test blobs. Then seal/delete workflow+trigger and checkpoint.
+7. Only after synthetic search proof succeeds may a one-shot live FIT execution be designed/armed. Before live execution, create the one-shot workflow, blob-lock it in this checkpoint, and only then create exactly one trigger.
+8. Live candidate construction/ranking must remain FIT-only. Validation/canary gate only one locked FIT winner. Any failure/no winner => family #10 fallback; never alternate.
+9. Promotion requires FIT pitch gain >=0.005, no musical regression, critical delta <=0, exact 113 measures, independent PDF event fidelity 1.0.
+10. If accepted baseline changes, immediately recompute percentage view and create a new aggregate accepted-baseline FIT residual before shaping any successor family.
+11. No Modal/L4/GPU without fresh explicit authorization.
 
 ## Current stop point
-- Accepted baseline: family #10 / `4e6f9f...`.
-- Motivational scorer view: **Pitch Content 35.4%**, Pitch+timing 6.7%, String/fret+timing 5.5%, Chord/voicing 5.8%, Measure coverage 100%, PDF event fidelity 100%.
-- Families #1–#13 consumed/sealed.
-- Family #14 frozen; policy definitive CPU proof SUCCESS+SEALED; success proof blob `cafd2b51...`; no FIT search run.
-- Current residual diagnostic remains `b9794a7b8a882ba9ade5e8095f112d4be45e47e6`.
-- Safe continuation: implement/prove the frozen FIT-only family #14 search + synthetic search invariants, checkpoint before any one-shot FIT execution.
+- Accepted baseline family #10 / `4e6f9f...`.
+- Scorer view unchanged: **Pitch Content 35.4%**, Pitch+timing 6.7%, String/fret+timing 5.5%, Chord/voicing 5.8%, Measure coverage 100%, PDF event fidelity 100%.
+- Families #1–#13 sealed.
+- Family #14 policy SUCCESS+SEALED. Search `dd02c492...` + tests `77758ead...` + synthetic proof workflow `251b9f3a...` are blob-locked; proof untriggered; no live FIT search run.
+- Safe continuation: trigger synthetic CPU search proof once, seal/checkpoint success, then design/prearm a one-shot FIT execution only if proof passes.
