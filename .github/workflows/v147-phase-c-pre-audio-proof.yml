@@ -55,10 +55,14 @@ jobs:
         run: |
           set -euo pipefail
           test ! -e debug/v147-phase-c-real-audio
-          forbidden_gold='professional-rhythm-gold-''reference.json'
-          forbidden_audio_sha='215bd5a657c5326f08f132ae358595a9''5c30b39bb7493a52c2f910d5a608149f'
-          ! grep -Fq "$forbidden_gold" .github/workflows/v147-phase-c-pre-audio-proof.yml
-          ! grep -Fq "$forbidden_audio_sha" .github/workflows/v147-phase-c-pre-audio-proof.yml
+          python - <<'PY'
+          from pathlib import Path
+          workflow = Path('.github/workflows/v147-phase-c-pre-audio-proof.yml').read_text(encoding='utf-8')
+          forbidden_gold = ''.join(('professional-rhythm-gold-', 'reference.json'))
+          forbidden_audio_sha = ''.join(('215bd5a657c5326f08f132ae358595a9', '5c30b39bb7493a52c2f910d5a608149f'))
+          assert forbidden_gold not in workflow
+          assert forbidden_audio_sha not in workflow
+          PY
 
       - name: Run frozen Phase C generated tests and proof
         shell: bash
