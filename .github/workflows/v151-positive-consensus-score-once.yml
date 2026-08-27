@@ -1,0 +1,136 @@
+name: V151 positive consensus Gold score once
+
+on:
+  push:
+    paths:
+      - '.github/workflows/v151-positive-consensus-score-once.yml'
+
+permissions:
+  contents: write
+
+jobs:
+  score-once:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: v143-contextual-prune-lobo
+          fetch-depth: 0
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12.14'
+      - name: Reference-free preflight before score attempt consumption
+        run: |
+          set -euo pipefail
+          test ! -e debug/v151-positive-consensus/phase-c-score/score-result.json
+          test ! -e debug/v151-positive-consensus/phase-c-score-complete-sentinel.json
+          test "$(git hash-object debug/v151-positive-consensus/phase-c-scoring-authorization.json)" = "6c40b25934f5fe83853ea47959fd765b6b7af5af"
+          test "$(git hash-object validation/v151_positive_consensus/score_once.py)" = "d26f82546c7cfb3873ef23d8ea567dd23deb06e0"
+          test "$(git hash-object debug/v151-positive-consensus/phase-c-score-attempt-sentinel.json)" = "9b99441f3ab88c027207f54e7442212f70e0fcb2"
+          test "$(git hash-object debug/v151-positive-consensus/candidate/candidate.json)" = "28d10742fe9f4e27ac47a14df9151c5bc8a6eec0"
+          test "$(git hash-object debug/v151-positive-consensus/candidate/construction-proof.json)" = "0e090cf16534eb6f7f61b07bb1ae34f062f7fea8"
+          test "$(git hash-object debug/v151-positive-consensus/candidate/pdf-event-fidelity.json)" = "20a02fd7657166c7e6d2f33240b4d99e390c5604"
+          test "$(git hash-object debug/v151-positive-consensus/phase-b-complete-sentinel.json)" = "442453a8ba07808e9098bbfe446861c2c20f9b99"
+          test "$(git hash-object debug/v150-contextual-singleton/phase-c-score/score-result.json)" = "35d0953ae89cdad9c71542fb5801e2b9c4ca563d"
+          test "$(git hash-object validation/v144_rhythm_calibration/score_selected_conjunction_candidate.py)" = "1ca2b8550d6c08e793f26b3aa91b99fb44fa7ddb"
+          test "$(git hash-object validation/rhythm_holdout/score_rhythm_holdout.py)" = "cc4bf61a99f22bf87a6c255e5a81220fbc82223b"
+          test "$(git hash-object validation/rhythm_holdout/canonical.py)" = "088d44827fb23e20d9aeeb4944a672989af5846c"
+          test "$(git hash-object debug/v144-rhythm-calibration/selected/v144-singleton-onset-replacement-selected-baseline.json)" = "acd12ab68ad16b8faabf38ddc9e1cc0c1e7c4b68"
+          python validation/v151_positive_consensus/score_once.py --help >/dev/null
+          python - <<'PY'
+          import hashlib,json
+          from pathlib import Path
+          p=Path('debug/v150-contextual-singleton/phase-c-score/score-result.json')
+          b=p.read_bytes()
+          if hashlib.sha256(b).hexdigest()!='c29c83571c68c8e850f3a2c30de0c9b0a706ab02e35342e8e39151949b576e40':
+              raise SystemExit('V150 score identity mismatch')
+          d=json.loads(b)
+          s=str((d.get('reference') or {}).get('sha256') or '')
+          if len(s)!=64 or any(ch not in '0123456789abcdef' for ch in s):
+              raise SystemExit('persisted reference SHA invalid')
+          PY
+      - name: Consume one-use attempt and checkpoint before Gold access
+        env:
+          RUN_ID: ${{ github.run_id }}
+          HEAD_SHA: ${{ github.sha }}
+        run: |
+          set -euo pipefail
+          python - <<'PY'
+          import json,os
+          from datetime import datetime,timezone
+          from pathlib import Path
+          p=Path('debug/v151-positive-consensus/phase-c-score-attempt-sentinel.json')
+          d=json.loads(p.read_text())
+          if d.get('status')!='ARMED_NOT_CONSUMED' or d.get('goldOrReferenceRead') is not False or d.get('referenceParsed') is not False or d.get('scoreCallCount')!=0:
+              raise SystemExit('V151 score attempt not cleanly armed')
+          d['status']='CONSUMED_BEFORE_GOLD_ACCESS'
+          d['runId']=os.environ['RUN_ID']
+          d['runHeadSha']=os.environ['HEAD_SHA']
+          d['consumedAtUtc']=datetime.now(timezone.utc).isoformat()
+          p.write_text(json.dumps(d,indent=2,sort_keys=True)+'\n')
+          cp=Path('docs/checkpoints/CURRENT_STATE.md')
+          marker='## V151 Phase C positive-consensus Gold score — AUTHORIZED / CONSUMED / BEFORE GOLD — 2026-08-27 UTC'
+          text=cp.read_text()
+          if marker not in text:
+              text += f'''\n\n{marker}\n- User instruction `Let's make a major breakthrough 🙏` is bound to exactly **one** historical Gold calibration score of the already-persisted V151 12-event candidate.\n- Candidate canonical SHA `e6c437f534dfb5523610797c67f8f69176be903456ef4940c3032567b949156b`; file SHA256 `ac96ec4edc3e9b67c047e7e9012139bfa46d0d6d164ffa1443960f8fbcb19ae9`; **12 changed singleton events / 0 polyphonic changes / 100% PDF fidelity**.\n- Authorization blob `6c40b25934f5fe83853ea47959fd765b6b7af5af`; scorer blob `d26f82546c7cfb3873ef23d8ea567dd23deb06e0`; run `{os.environ['RUN_ID']}`.\n- Expected Gold identity will be sourced from the already-verified persisted V150 score result before Gold bytes are accepted.\n- At this checkpoint Gold/reference opened **NO**; reference parsed **NO**; score calls **0**; search/alternate candidate/subset/filter/threshold/retuning/audio/GPU/Production/promotion **NO**.\n'''
+              cp.write_text(text)
+          PY
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add debug/v151-positive-consensus/phase-c-score-attempt-sentinel.json docs/checkpoints/CURRENT_STATE.md
+          git commit -m 'debug: checkpoint consumed V151 score attempt [skip ci]'
+          git push origin HEAD:v143-contextual-prune-lobo
+      - name: Run exactly one frozen V151 Gold score
+        run: |
+          set -euo pipefail
+          python validation/v151_positive_consensus/score_once.py --output debug/v151-positive-consensus/phase-c-score/score-result.json | tee /tmp/v151-score-summary.json
+      - name: Verify persist final checkpoint and self-seal
+        env:
+          RUN_ID: ${{ github.run_id }}
+        run: |
+          set -euo pipefail
+          python - <<'PY'
+          import hashlib,json,os
+          from datetime import datetime,timezone
+          from pathlib import Path
+          p=Path('debug/v151-positive-consensus/phase-c-score/score-result.json')
+          b=p.read_bytes(); sha=hashlib.sha256(b).hexdigest(); r=json.loads(b)
+          if r.get('authorizationScope')!='exactly-one-v151-positive-consensus-gold-calibration-score':
+              raise SystemExit('V151 score scope mismatch')
+          if (r.get('safety') or {}).get('scoreCallCount')!=1 or (r.get('scoringChain') or {}).get('scoreCallCount')!=1:
+              raise SystemExit('V151 score-call count mismatch')
+          if (r.get('candidate') or {}).get('canonicalEventSha256')!='e6c437f534dfb5523610797c67f8f69176be903456ef4940c3032567b949156b':
+              raise SystemExit('V151 scored candidate mismatch')
+          c=r['comparison']; vec=c['candidateDisplayVectorPercent']; base=c['acceptedBaselineDisplayVectorPercent']; prior=c['v150DisplayVectorPercent']
+          critical=int(r['score']['criticalMismatchCount']); db=int(c['criticalMismatchDeltaVsAcceptedBaseline']); dp=int(c['criticalMismatchDeltaVsV150'])
+          complete={
+              'schema':'dadrock.tabs.v151.positive-consensus.phase-c-score-completion.v1',
+              'classification':'one-use-reference-facing-score-complete',
+              'status':'COMPLETE_SEALED',
+              'runId':os.environ['RUN_ID'],
+              'completedAtUtc':datetime.now(timezone.utc).isoformat(),
+              'scoreResultSha256':sha,
+              'candidateEventSha256':'e6c437f534dfb5523610797c67f8f69176be903456ef4940c3032567b949156b',
+              'candidateDisplayVectorPercent':vec,
+              'acceptedBaselineDisplayVectorPercent':base,
+              'v150DisplayVectorPercent':prior,
+              'criticalMismatchCount':critical,
+              'criticalMismatchDeltaVsAcceptedBaseline':db,
+              'criticalMismatchDeltaVsV150':dp,
+              'scoreCallCount':1,
+              'candidateSearchRun':False,
+              'alternateCandidateConstructed':False,
+              'automaticPromotion':False,
+          }
+          Path('debug/v151-positive-consensus/phase-c-score-complete-sentinel.json').write_text(json.dumps(complete,indent=2,sort_keys=True)+'\n')
+          cp=Path('docs/checkpoints/CURRENT_STATE.md')
+          marker='## V151 Phase C positive-consensus Gold score — COMPLETE / SEALED — 2026-08-27 UTC'
+          text=cp.read_text()
+          if marker in text: raise SystemExit('duplicate V151 score checkpoint')
+          text += f'''\n\n{marker}\n- Exactly one frozen historical Gold calibration score completed in run `{os.environ['RUN_ID']}`; result SHA256 **`{sha}`**.\n- V151 percentages (pitch content / pitch timing / string-fret timing / chord pitch-set / measure coverage / PDF fidelity): **{vec[0]:.3f} / {vec[1]:.3f} / {vec[2]:.3f} / {vec[3]:.3f} / {vec[4]:.3f} / {vec[5]:.3f}**.\n- Accepted baseline percentages: **{base[0]:.3f} / {base[1]:.3f} / {base[2]:.3f} / {base[3]:.3f} / {base[4]:.3f} / {base[5]:.3f}**. V150 percentages: **{prior[0]:.3f} / {prior[1]:.3f} / {prior[2]:.3f} / {prior[3]:.3f} / {prior[4]:.3f} / {prior[5]:.3f}**.\n- Critical mismatches: **{critical}**; delta vs accepted baseline **{db:+d}**; delta vs V150 **{dp:+d}**.\n- Safety: total V151 score calls **1**; candidate search/alternate candidate/subset/additional filter/alternate threshold/retuning/audio/HPSS/CQT/Modal/GPU/main/Production/promotion **NO**.\n- V151 score authorization is consumed and this one-use scoring workflow is deleted. No automatic promotion even if V151 crosses baseline.\n'''
+          cp.write_text(text)
+          PY
+          git rm .github/workflows/v151-positive-consensus-score-once.yml
+          git add debug/v151-positive-consensus/phase-c-score debug/v151-positive-consensus/phase-c-score-complete-sentinel.json docs/checkpoints/CURRENT_STATE.md
+          git commit -m 'docs: checkpoint and seal completed V151 Gold score [skip ci]'
+          git push origin HEAD:v143-contextual-prune-lobo
