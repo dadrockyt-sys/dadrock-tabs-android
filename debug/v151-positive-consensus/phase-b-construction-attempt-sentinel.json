@@ -1,0 +1,18 @@
+{
+  "schema": "dadrock.tabs.v151.positive-consensus.phase-b-construction-attempt.v1",
+  "classification": "one-use-reference-free-construction-attempt",
+  "branch": "v143-contextual-prune-lobo",
+  "status": "ARMED_NOT_CONSUMED",
+  "preregistrationGitBlob": "b8a91fbe7c8cb03be2905e86508a921a2ed2759d",
+  "authorizationGitBlob": "2882c1daee695dcb14824e18d1a6ec62f9609405",
+  "constructorGitBlob": "8bc607c055bae5c8e0757622a3af3a3feb0a9b34",
+  "expectedChangedEvents": 12,
+  "candidateConstructedCount": 0,
+  "goldOrReferenceRead": false,
+  "priorScoreResultRead": false,
+  "scoreCallCount": 0,
+  "audioRead": false,
+  "modalGpuUsed": false,
+  "productionIntegrated": false,
+  "automaticPromotion": false
+}
