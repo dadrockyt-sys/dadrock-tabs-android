@@ -1,0 +1,105 @@
+{
+  "schema": "dadrock.tabs.v154.broad-other-cpu-preregistration.v1",
+  "classification": "reference-independent-cpu-multitrack-frontend-benchmark",
+  "branch": "v143-contextual-prune-lobo",
+  "createdUtc": "2026-08-27T16:58:00Z",
+  "goal": "Measure whether a frozen CPU source-separation plus note-transcription frontend can recognize the combined Rhythm+Lead guitar notes and Bass notes before any Rhythm/Lead role split, fret assignment, technique inference, or PDF rendering.",
+  "authorizationPolicy": {
+    "cpuWorkAtAssistantDiscretion": true,
+    "cpuScoringAtAssistantDiscretion": true,
+    "modalL4CudaGpuRequiresFreshAuthorization": true
+  },
+  "historicalAudio": {
+    "repository": "dadrockyt-sys/dadrock-tabs-android",
+    "commit": "74b0f815ff3f66f325220975c410621503de440f",
+    "path": "public/gomywayfullaitest.m4a",
+    "bytes": 3478611,
+    "sha256": "215bd5a657c5326f08f132ae358595a95c30b39bb7493a52c2f910d5a608149f"
+  },
+  "grid": {
+    "tempoBpm": 129.19921875,
+    "stepsPerBeat": 4,
+    "stepsPerMeasure": 16,
+    "measureCount": 113,
+    "stepDurationSeconds": 0.11609977324263039
+  },
+  "separator": {
+    "package": "demucs",
+    "version": "4.1.0",
+    "model": "htdemucs",
+    "device": "cpu",
+    "shifts": 1,
+    "jobs": 1,
+    "stemPolicy": {
+      "combinedGuitar": "other",
+      "bass": "bass"
+    },
+    "reason": "The four-stem htdemucs Other stem intentionally keeps Rhythm and Lead together so acoustic recognition is tested before musical role separation."
+  },
+  "transcriber": {
+    "package": "basic-pitch",
+    "version": "0.4.0",
+    "model": "ICASSP_2022_MODEL_PATH supplied by basic-pitch 0.4.0",
+    "onsetThreshold": 0.5,
+    "frameThreshold": 0.3,
+    "minimumNoteLengthMs": 127.7,
+    "multiplePitchBends": false,
+    "melodiaTrick": true,
+    "thresholdSweep": false,
+    "streams": {
+      "combinedGuitar": {"minimumMidi": 40, "maximumMidi": 88},
+      "bass": {"minimumMidi": 28, "maximumMidi": 67}
+    }
+  },
+  "runtime": {
+    "python": "3.10",
+    "numpy": "1.26.4",
+    "torch": "2.8.0+cpu",
+    "torchIndex": "https://download.pytorch.org/whl/cpu",
+    "imageioFfmpeg": "0.6.0",
+    "requireTorchCudaVersionNull": true,
+    "requireCudaAvailableFalse": true
+  },
+  "freezeOrder": [
+    "verify historical audio identity",
+    "normalize audio deterministically",
+    "separate htdemucs Other and Bass on CPU",
+    "transcribe Other and Bass with frozen Basic Pitch settings",
+    "persist generated stream JSON and hashes",
+    "only then open privately normalized professional references for scoring"
+  ],
+  "primaryEvaluation": {
+    "combinedGuitar": "timing-aware same-MIDI one-to-one F1 against union of professional Rhythm+Lead within plus/minus 0.5 grid step",
+    "bass": "timing-aware same-MIDI one-to-one F1 against professional Bass within plus/minus 0.5 grid step",
+    "grossDiagnostic": "same-MIDI one-to-one F1 within plus/minus 2.0 grid steps",
+    "pitchContentByMeasure": "diagnostic-only"
+  },
+  "successGates": {
+    "combinedGuitarTimingAwarePitchF1": 0.80,
+    "bassTimingAwarePitchF1": 0.80,
+    "onsetAwareNoteF1": 0.75
+  },
+  "referenceBoundary": {
+    "professionalReferencesScoringOnly": true,
+    "candidateGenerationMayReadReference": false,
+    "generatedOutputsFrozenBeforeReferenceAccess": true,
+    "postScoreRetuningOfSameOutput": false,
+    "silentVariantSearch": false,
+    "privateReferenceNoteDataCommitted": false
+  },
+  "currentSessionConstraint": {
+    "bassLeadScreenshotBytesAvailableInCurrentConversation": false,
+    "effect": "Private note-by-note normalization cannot be faithfully reconstructed in this session. This preregistration is reference-independent and does not authorize scoring until normalized reference identities are available."
+  },
+  "forbidden": [
+    "human correction",
+    "reference-guided note filtering",
+    "threshold sweep from reference results",
+    "Rhythm/Lead acoustic split before combined-guitar recognition",
+    "Modal execution without fresh authorization",
+    "L4 execution without fresh authorization",
+    "CUDA execution without fresh authorization",
+    "GPU execution without fresh authorization",
+    "main or Production modification"
+  ]
+}
