@@ -575,3 +575,13 @@ Active phase: **V147 Phase C REAL-AUDIO ARTIFACT-FIRST CONSTRUCTION = GO / SEALE
 - Positive consensus requires strict improvement to both immediate neighboring onsets plus neither local pitch-class recurrence nor exact-pitch recurrence favoring the accepted/original note.
 - Preregistration blob `7777d1061ef51ef432bc273160c3d46fd37c7c15`; analyzer blob `b6f8e5990c534685a3210d43e77de94b953fe689`; run `33048717853`.
 - Gold/reference **NO**; prior V149/V150 score-result read by analyzer **NO**; scorer calls **0**; candidate construction/search **NO**; threshold sweep **NO**; audio/HPSS/CQT/Modal/GPU/main/Production/promotion **NO**.
+
+
+## V151 Phase A positive-consensus analysis — COMPLETE / SEALED — 2026-08-27 UTC
+- Frozen reference-free analysis completed in run `33048717853` over exactly **33/33 V150 changed singleton events**. Result SHA256 **`701a46ffa8c0b50eb829fa64e7b192f6ae29e00bca7340856956d22bff5dc6d9`**.
+- Two-sided voice-leading positive: **18/33 = 54.55%**.
+- Local pitch-class recurrence does not favor original: **24/33 = 72.73%**.
+- Local exact-pitch recurrence does not favor original: **26/33 = 78.79%**.
+- Full positive consensus: **12/33 = 36.36%**; event indices `[46, 132, 141, 282, 347, 457, 610, 811, 1004, 1049, 1206, 1207]`.
+- These are context percentages, **not accuracy scores**. Gold/reference **NO**; prior score result read by analyzer **NO**; scorer calls **0**; no candidate/search/threshold sweep/audio/GPU/Production.
+- Phase A is sealed. If positive-consensus events exist, next boundary is exactly one candidate containing only that frozen event set.
