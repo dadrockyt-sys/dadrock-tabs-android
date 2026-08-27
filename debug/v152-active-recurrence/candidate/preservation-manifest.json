@@ -1,0 +1,19 @@
+{
+  "candidateEventSha256": "5ebedfb173730bb5e2639e7450841fb113f7db9af2acec19b88e58cca50679e6",
+  "files": {
+    "candidate.json": {
+      "bytes": 280917,
+      "sha256": "9b15ab3aa9540438db0750bb11c592a686e87b00b3acba491c80791badd349cb"
+    },
+    "construction-proof.json": {
+      "bytes": 1957,
+      "sha256": "e30a7a43d77c28760d2e8cd9e2df6c5114ad05cfc4e40f2bf59af15721186127"
+    },
+    "pdf-event-fidelity.json": {
+      "bytes": 447,
+      "sha256": "82872d9a3e7cb5a56c4a85db12ac8805aed49c88876227a57f1161de85fa500c"
+    }
+  },
+  "referenceFacingScoringAuthorization": false,
+  "schema": "dadrock.tabs.v152.active-recurrence-preservation.v1"
+}

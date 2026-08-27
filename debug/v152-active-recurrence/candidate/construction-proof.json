@@ -1,0 +1,56 @@
+{
+  "bothSelectedEventIndices": [
+    132,
+    347,
+    457
+  ],
+  "candidateEventSha256": "5ebedfb173730bb5e2639e7450841fb113f7db9af2acec19b88e58cca50679e6",
+  "classification": "reference-free-single-candidate-construction",
+  "deterministic": true,
+  "deterministicReplayEventSha256": "5ebedfb173730bb5e2639e7450841fb113f7db9af2acec19b88e58cca50679e6",
+  "frozenInputs": {
+    "analysisGitBlob": "5f0eb3e1ade41d0c4ab2debac1b5e2ac1b958697",
+    "authorizationGitBlob": "e8ff4dc4dca664a0ba76678bf7049769dd701d7e",
+    "phaseAAnalysisSha256": "d56fb557406a986b3026e698ded9aa1820b062f13ab82175e249abd421c7137c",
+    "preregistrationGitBlob": "b16e730eb5e647a6d06f36e2a7e9902451a1cd76",
+    "v151EventSha256": "e6c437f534dfb5523610797c67f8f69176be903456ef4940c3032567b949156b"
+  },
+  "gate": "GO",
+  "metrics": {
+    "changedEventCountVersusAccepted": 3,
+    "changedEventIndices": [
+      132,
+      347,
+      457
+    ],
+    "changedOnsetCountVersusAccepted": 3,
+    "eventCount": 1144,
+    "generatedMeasureCount": 113,
+    "polyphonicChangedEventsVersusAccepted": 0,
+    "positionIdentityViolations": 0,
+    "retainedPercentOfV151Changes": 25.0,
+    "revertedFromV151": 9,
+    "timingMetadataInvariantViolations": 0,
+    "v151ProjectionViolations": 0
+  },
+  "pdfEventFidelity": 1.0,
+  "policy": "accepted-baseline-plus-v151-both-selected-active-recurrence-only",
+  "safety": {
+    "additionalFilterTested": false,
+    "alternateClassCombinationTested": false,
+    "audioReadOrDecoded": false,
+    "automaticPromotion": false,
+    "candidateSearchRun": false,
+    "candidateVariantsConstructed": 1,
+    "goldOrReferenceRead": false,
+    "hpssOrCqtRecomputed": false,
+    "mainOrProductionModified": false,
+    "modalOrGpuUsed": false,
+    "priorScoreResultRead": false,
+    "retuningRun": false,
+    "scoreCallCount": 0,
+    "scorerInvoked": false,
+    "thresholdSweep": false
+  },
+  "schema": "dadrock.tabs.v152.active-recurrence-construction-proof.v1"
+}

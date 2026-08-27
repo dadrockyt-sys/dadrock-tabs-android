@@ -644,3 +644,11 @@ Active phase: **V147 Phase C REAL-AUDIO ARTIFACT-FIRST CONSTRUCTION = GO / SEALE
 - These 3 events are the complete V152 `both-selected` class: active selected-note support in both exact-pitch and pitch-class recurrence, after V151 two-sided voice-leading consensus.
 - Preregistration blob `b16e730eb5e647a6d06f36e2a7e9902451a1cd76`; authorization blob `e8ff4dc4dca664a0ba76678bf7049769dd701d7e`; constructor blob `7cb83979e693203b7f6254a790831b1ca4938420`; run `33049544746`.
 - Gold/reference **NO**; prior score result **NO**; scorer calls **0**; search/variants/alternate combination/filter/threshold/audio/GPU/Production/promotion **NO**.
+
+
+## V152 Phase B three-note active-recurrence construction — COMPLETE / SEALED / STOP BEFORE SCORING — 2026-08-27 UTC
+- Exactly one V152 candidate constructed in run `33049544746`: **3 changed singleton events / 3 onsets / 0 polyphonic changes / 1144 events / 113 measures**.
+- Canonical candidate SHA256 **`5ebedfb173730bb5e2639e7450841fb113f7db9af2acec19b88e58cca50679e6`**; deterministic replay TRUE; invariant/position/projection violations **0**.
+- PDF/render fidelity **100.000%**. Candidate file SHA256 **`9b15ab3aa9540438db0750bb11c592a686e87b00b3acba491c80791badd349cb`**.
+- Gold/reference **NO**; prior score result read **NO**; score calls **0**; candidate search/alternate combination/filter/threshold/audio/GPU/Production/promotion **NO**.
+- Construction is sealed; next boundary is one exact-identity Gold calibration score.

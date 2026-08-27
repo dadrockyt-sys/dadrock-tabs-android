@@ -1,0 +1,35 @@
+{
+  "automaticPromotion": false,
+  "candidateEventSha256": "5ebedfb173730bb5e2639e7450841fb113f7db9af2acec19b88e58cca50679e6",
+  "changedEvents": 3,
+  "changedOnsets": 3,
+  "completedAtUtc": "2026-08-27T07:24:03.946870+00:00",
+  "goldOrReferenceRead": false,
+  "outputIdentities": {
+    "candidate.json": {
+      "bytes": 280917,
+      "sha256": "9b15ab3aa9540438db0750bb11c592a686e87b00b3acba491c80791badd349cb"
+    },
+    "construction-proof.json": {
+      "bytes": 1957,
+      "sha256": "e30a7a43d77c28760d2e8cd9e2df6c5114ad05cfc4e40f2bf59af15721186127"
+    },
+    "pdf-event-fidelity.json": {
+      "bytes": 447,
+      "sha256": "82872d9a3e7cb5a56c4a85db12ac8805aed49c88876227a57f1161de85fa500c"
+    },
+    "preservation-manifest.json": {
+      "bytes": 653,
+      "sha256": "fc13122ddbe1488f5a516c5530a548ba646ad5cc8ecdae84141dc49c5e433b40"
+    }
+  },
+  "pdfEventFidelity": 1.0,
+  "polyphonicChangedEvents": 0,
+  "priorScoreResultRead": false,
+  "productionIntegrated": false,
+  "referenceFacingScoringAuthorization": false,
+  "runId": "33049544746",
+  "schema": "dadrock.tabs.v152.active-recurrence.phase-b-completion.v1",
+  "scoreCallCount": 0,
+  "status": "COMPLETE_SEALED_STOP_BEFORE_SCORING"
+}
