@@ -1,0 +1,22 @@
+{
+  "schema": "dadrock.tabs.v153.event347.phase-c-score-attempt.v1",
+  "classification": "one-use-cpu-gold-score-attempt",
+  "branch": "v143-contextual-prune-lobo",
+  "status": "ARMED_NOT_CONSUMED",
+  "standingPolicy": "CPU scoring at assistant discretion; fresh authorization only for Modal/L4/CUDA/GPU",
+  "preregistrationGitBlob": "361208d8e57c614e8a509eecb5680f0d6daf841b",
+  "scorerGitBlob": "50f08090631ccd14701ff9f3a5d3324c7cf1f3b7",
+  "candidateGitBlob": "975ab36c234b423d1b56e59588e960f7d9d7103f",
+  "candidateEventSha256": "df40a771219fb69ae3c129c90ef5351e64b89006ff678e484741ecf0418e3d4b",
+  "goldOrReferenceRead": false,
+  "referenceParsed": false,
+  "scoreCallCount": 0,
+  "candidateSearchRun": false,
+  "alternateCandidateConstructed": false,
+  "candidateModified": false,
+  "thresholdWeightFilterRuleTuning": false,
+  "audioRecomputed": false,
+  "modalL4CudaGpuUsed": false,
+  "productionIntegrated": false,
+  "automaticPromotion": false
+}
