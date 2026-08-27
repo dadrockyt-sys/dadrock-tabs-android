@@ -1,0 +1,62 @@
+{
+  "schema": "dadrock.tabs.v150.contextual-singleton.phase-c-scoring-authorization.v1",
+  "classification": "one-use-reference-facing-score-authorized",
+  "branch": "v143-contextual-prune-lobo",
+  "sourceHeadBeforeAuthorization": "45e3c01d5f4134eaabc284a3ce660420d6f7c8d7",
+  "userInstruction": "Let's keep working towards a breakthrough. Please continue to show score percentages when possible.",
+  "authorization": {
+    "received": true,
+    "scope": "exactly-one-v150-contextual-singleton-gold-calibration-score",
+    "candidateSearchAllowed": false,
+    "alternateCandidateAllowed": false,
+    "alternateContextRuleAllowed": false,
+    "alternateThresholdAllowed": false,
+    "retuningAllowed": false,
+    "audioRecomputeAllowed": false,
+    "modalGpuAllowed": false,
+    "productionPromotionAllowed": false
+  },
+  "candidate": {
+    "path": "debug/v150-contextual-singleton/candidate/candidate.json",
+    "gitBlob": "3dc0d09833fe236a5fdfdea0412b2bab74f00e65",
+    "fileSha256": "8366b8bd0f3df71ca38dee7ffd1274761e73521bfde740eff9c46637651187b5",
+    "canonicalEventSha256": "72a0582cfc7d03d84cd2f878f191a69b7262b200ce248d1a896207444a3c5e4e",
+    "eventCount": 1144,
+    "changedEventsVersusAccepted": 33,
+    "changedOnsetsVersusAccepted": 33,
+    "polyphonicChangedEventsVersusAccepted": 0
+  },
+  "constructionProof": {
+    "path": "debug/v150-contextual-singleton/candidate/construction-proof.json",
+    "gitBlob": "dd680f193f284b2a6874a148829c53aa8ed4f558",
+    "fileSha256": "03713d17ef1d92a1542ef12980cee8f2072f36069df4c2cc49882f3fbae58f19"
+  },
+  "pdfFidelity": {
+    "path": "debug/v150-contextual-singleton/candidate/pdf-event-fidelity.json",
+    "gitBlob": "db5086140e6123fb863f316cac57eaeac853626c",
+    "fileSha256": "418cedbbad7c25d6099f8ccf3d11cc7fc4e5e3987c8aabae2b8a41441fcaf860",
+    "fidelity": 1.0
+  },
+  "constructionCompletion": {
+    "path": "debug/v150-contextual-singleton/phase-b-complete-sentinel.json",
+    "gitBlob": "07403cf23bffad39b78de02aa70236a851380bf2",
+    "status": "COMPLETE_SEALED_STOP_BEFORE_SCORING"
+  },
+  "goldIdentitySource": {
+    "path": "validation/v147_phase_d/score_once.py",
+    "gitBlob": "74b31168b629812acde874b89dfcdf022acf987d",
+    "field": "EXPECTED.goldSha256",
+    "requiredLength": 64,
+    "requiredEncoding": "lowercase-hex"
+  },
+  "historicalScoringChain": {
+    "fullCalibrationWrapperGitBlob": "1ca2b8550d6c08e793f26b3aa91b99fb44fa7ddb",
+    "coreScorerGitBlob": "cc4bf61a99f22bf87a6c255e5a81220fbc82223b",
+    "canonicalAdapterGitBlob": "088d44827fb23e20d9aeeb4944a672989af5846c"
+  },
+  "acceptedBaseline": {
+    "path": "debug/v144-rhythm-calibration/selected/v144-singleton-onset-replacement-selected-baseline.json",
+    "gitBlob": "acd12ab68ad16b8faabf38ddc9e1cc0c1e7c4b68"
+  },
+  "executionRule": "Resolve the Gold SHA only from the frozen successful V147 scorer at runtime before any Gold access; require 64 lowercase hex; verify all non-reference identities; read and verify Gold; score exactly once; persist percentages and self-seal."
+}
