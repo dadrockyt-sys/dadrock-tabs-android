@@ -3,7 +3,7 @@
 Updated: 2026-08-27 UTC
 Branch: `v143-contextual-prune-lobo`
 
-Active phase: **V154 broad-Other CPU recognition is COMPLETE / FROZEN / STRUCTURAL-QC PASS. Professional Rhythm/Bass/Lead visual references are preserved. Rhythm is FROZEN SCORER-READY. Bass canonical pages, timing skeleton, meter audit, deterministic source-meter -> fixed scorer-grid mapping, exact source-local attack timing, and the final 547-row Bass scorer-ready reference are COMPLETE / FROZEN / VALIDATED. The Rhythm authoritative-vs-supplemental row-identity equivalence audit is next. Lead timing remains blocked until its actual source pages are recovered. Reference-facing scoring has NOT run.**
+Active phase: **V154 broad-Other CPU recognition is COMPLETE / FROZEN / STRUCTURAL-QC PASS. Rhythm is FROZEN SCORER-READY and its two independently frozen scorer representations are now proven row-identity equivalent. Bass is FROZEN SCORER-READY with 547 validated pitched rows. Lead timing is the remaining reference-normalization blocker and requires recovery of its actual 22 source pages; do not infer Lead timing from visual-order JSON alone. Reference-facing scoring has NOT run.**
 
 ## History preservation
 - Immediate pre-continuation checkpoint blob: `2f506ec99dbad7ec6fbf64b43ea1624df7fdffc3`.
@@ -48,84 +48,61 @@ Song: **Lenny Kravitz — Are You Gonna Go My Way**.
 - Generation safety remains: reference read NO; human correction NO; threshold sweep NO; Modal/L4/CUDA/GPU NO; main/Production NO.
 
 ## Frozen professional references
-### Rhythm — SCORER-READY / FROZEN
+### Rhythm — SCORER-READY / FROZEN / EQUIVALENCE-AUDITED
 - Visual/timing source: `research/v154-professional-references/rhythm-professional-reference.json`; Git blob `248741bade9665a34648c59a2994bd27d73fc406`; SHA256 `18fd868ae960dfcdd1ffb0110f1a9dfd8acc2ffeb46e247d1116cd54291526ac`.
-- Source identity also traces to `main:public/Professionalexample.jpg`; Git blob `16106197cc1269cca0b3c443908d5ef75e8b4d3e`.
-- CPU one-use normalization run `33121683834`, job `98689826186`: SUCCESS.
-- Authoritative frozen scorer part: `research/v154-professional-references/scorer-ready/rhythm-scorer-ready.json`; Git blob `99623721b13e63770829b91d0409b919b88aaa53`.
-- Frozen normalization receipt: `research/v154-professional-references/scorer-ready/rhythm-scorer-ready-receipt.json`; Git blob `0125726643b3b8f455f6a0e38e1ba4873c05d9c1`.
-- Authoritative output SHA256 `d51083800bfcf30ee15f31a4349eaa2c439f1b8662acd91618ab31bdca321555`.
-- Counts verified: 113 measures, 603 source events, **946 scorer note rows**.
-- Policy verified by receipt: `timingInferred=false`, `generatedCandidateRead=false`, `scoringPerformed=false`.
-- Supplemental independently frozen flatten: `research/v154-professional-references/rhythm-professional-reference-scorer-ready.json`, SHA256 `d6c9416979f25e6a81b9cd4583389b584a59421a0529fcccb4ca6f5dd47e679f`. Preserve both until row-identity equivalence audit is frozen.
+- Authoritative scorer part: `research/v154-professional-references/scorer-ready/rhythm-scorer-ready.json`; Git blob `99623721b13e63770829b91d0409b919b88aaa53`; SHA256 `d51083800bfcf30ee15f31a4349eaa2c439f1b8662acd91618ab31bdca321555`; 946 rows.
+- Authoritative receipt: `research/v154-professional-references/scorer-ready/rhythm-scorer-ready-receipt.json`; Git blob `0125726643b3b8f455f6a0e38e1ba4873c05d9c1`.
+- Supplemental independently frozen flatten: `research/v154-professional-references/rhythm-professional-reference-scorer-ready.json`; SHA256 `d6c9416979f25e6a81b9cd4583389b584a59421a0529fcccb4ca6f5dd47e679f`; 946 rows.
+- Frozen row-identity audit: `research/v154-professional-references/rhythm-scorer-ready-equivalence-audit.json`; Git blob `e20b96dca1fc5306754acad7dffd770ff72c4ba0`; CPU run `33124191005`, job `98698230518`: SUCCESS; freeze commit `ca4697483cc789022b6e66e3d54990cc3fbd302f`.
+- Audit result: **PASS**. Exact normalized `(measure, step, midi)` row multisets are identical: 946/946 rows, 946/946 unique rows, 0 duplicate extras, 0 authoritative-only identities, 0 supplemental-only identities. Input sequence order differs only because simultaneous chord-note order differs; sorted normalized rows are identical.
+- Audit policy: frozen inputs rewritten NO; generated candidate read/modified NO; score calls 0; human correction NO; threshold sweep NO; GPU NO; main/Production NO.
 
 ### Bass — SCORER-READY / FROZEN
 - Canonical 17-page set SHA256 `abd1748066966ceb93fe40bf8c8df3168f6c871ba006e44d28f8840184e3cde3`.
 - Machine-readable source: `research/v154-professional-references/bass-professional-reference-machine-readable.json`; Git blob `0773c98556d00837eaea28ee77cfc513498cc21f`; SHA256 `a8e1d123f8a19e69d9c160d78aea7637b5a2012232b23e1f1ddff051e9bc40b3`.
 - Frozen timing skeleton: `research/v154-professional-references/bass-timing-normalization-skeleton.json`; commit `635da435f8c87a625539d4e40d27707247621399`; Git blob `79bf9ef3706bee13e3cf61c2bedabec561031ac8`.
 - Frozen exact source-local timing: `research/v154-professional-references/bass-source-local-attack-timing.json`; commit `b4b5e29d8338a1f3b1b0c71259f97c626648ca71`; Git blob `251d4986965c823b288d4a7d0428ec32cc9231cf`; SHA256 `7d2f4eed21413c6169ec8fcea75274b64c6dc8bb5f3c8de9cbc536b94afab244`.
-- Reference-only builder: `validation/v154_cpu_multitrack/build_bass_scorer_ready.py`; added at commit `7d46ce2cdcd6c7663c7c09b20cf1e71bbb8b49c3`. Its only data inputs are the three frozen reference-side files above/below and all are SHA256 pinned; it has no generated-candidate argument or path and performs no scoring.
-- CPU one-use freeze workflow run `33124074101`, job `98697844991`: **SUCCESS**. Freeze commit `88004ad7743c8f39705661afddddb7de6bd353dc`; one-use workflow removed itself after commit.
-- Authoritative scorer-ready Bass: `research/v154-professional-references/scorer-ready/bass-scorer-ready.json`; Git blob `7c39468170fe61ac3137af94278254468c19620c`; SHA256 `39eba52495fe81a3602f191334d71fe4bc643ed3062287fbde812fbde3c2c2f1`.
+- Candidate-blind builder: `validation/v154_cpu_multitrack/build_bass_scorer_ready.py`; commit `7d46ce2cdcd6c7663c7c09b20cf1e71bbb8b49c3`.
+- CPU one-use freeze workflow run `33124074101`, job `98697844991`: SUCCESS; freeze commit `88004ad7743c8f39705661afddddb7de6bd353dc`.
+- Authoritative Bass: `research/v154-professional-references/scorer-ready/bass-scorer-ready.json`; Git blob `7c39468170fe61ac3137af94278254468c19620c`; SHA256 `39eba52495fe81a3602f191334d71fe4bc643ed3062287fbde812fbde3c2c2f1`.
 - Receipt: `research/v154-professional-references/scorer-ready/bass-scorer-ready-receipt.json`; Git blob `75a05467129ac58512ddfd0159678930e82c5958`.
-- Final Bass scorer audit: 113 source measures; 569 source events; **547 pitched scorer rows**; 8 continuation-only events suppressed; 7 dead notes rhythmically timed but suppressed from pitch rows; all 7 measure-88 events excluded because the source explicitly says `Timing mishap here`; total source length 1800 sixteenth steps after preserving source m104 = 2/4.
-- Canonical Bass pages `1000120387.jpg` through `1000120403.jpg` were the timing authority; screenshots were not committed. `1000120386.jpg` remains supplemental overlap excluded from canonical identity.
-- Grace policy is frozen: non-metrical grace notes collocate with the principal 16th step while retaining the pitched row. m35/m36 preserve existing grace flags; m43 visualOrder0 is a visibly reduced-size/slurred grace in canonical page `1000120393.jpg`, recorded reference-side without changing event identity/pitch or consulting candidate output.
+- Final audit: 113 source measures; 569 events; **547 pitched scorer rows**; 8 continuation-only suppressed; 7 dead notes timed but suppressed from pitch rows; all 7 events in source measure 88 excluded due explicit `Timing mishap here`; total source duration 1800 sixteenth steps preserving source m104 = 2/4.
+- Canonical pages `1000120387.jpg`–`1000120403.jpg` were the timing authority; screenshot bytes were not committed. m35/m36 grace flags preserved; m43 visualOrder0 visibly reduced-size/slurred grace collocated with its principal onset reference-side only.
 - Candidate read NO; scoring NO; generated candidate modified NO; candidate human correction NO; threshold sweep NO; GPU NO; main/Production NO.
 
-### Lead — visual machine-readable, exact timing blocked on source recovery
+### Lead — visual machine-readable, exact timing BLOCKED ON SOURCE RECOVERY
 - Frozen 22-page set SHA256 `de2f20c330e52aca6125e29ca2cf5c4b719406fc267a98d43d98f3ab1453ff3c`.
 - `research/v154-professional-references/lead-professional-reference-machine-readable.json`; Git blob `b018d93bb5e2119ee843fbd3fbc9139484fde0d1`; SHA256 `122e0f6b2fa63fb2ea701e9cefe897dd4337fd08de0792e11579f4933804b716`.
-- 113 measure objects; 487 event objects; 476 pitched; 11 dead notes; 23 continuation-only; observed MIDI 45–81.
-- Measures 39–40 `Probably a mistake they left in` remains source uncertainty; detached gray dot at measure 81 remains unassigned.
-- Current Library exposes the Bass set but not the prior 22 Lead source pages. **Do not invent Lead timing from visual-order JSON alone.** Recover actual Lead pages before freezing Lead timing.
+- 113 measure objects; 487 events; 476 pitched; 11 dead notes; 23 continuation-only; MIDI 45–81.
+- Measures 39–40 note `Probably a mistake they left in` remains source uncertainty; detached gray dot at measure 81 remains unassigned.
+- Prior checkpoint search found the Bass pages but not the actual 22 Lead source pages in current Library. **Do not invent Lead timing from visual-order JSON alone.** Search Library/history again; if still absent, recovery remains the hard blocker before scorer payload assembly.
 
-## V154 reference meter audit — COMPLETE / FROZEN
-- `research/v154-professional-references/reference-meter-audit.json`; commit `a438eba76c2dc2749b44257689c941665d6590db`; Git blob `cc0bb40ee8af9094ba78f7e9ced9cbbcc9d88f55`.
-- Bass and Lead independently declare **measure 104 = 2/4**; all their other song measures are 4/4 under preserved metadata.
-- Frozen generation/scorer coordinate system remains 4 steps/beat, 16 steps/measure, nominal 4/4.
-- Audit policy: candidate read NO; candidate modified NO; reference-facing score calls 0; human correction NO; GPU NO; main/Production NO.
-
-## V154 source-meter -> fixed scorer-grid mapping — COMPLETE / FROZEN
-- Frozen artifact: `research/v154-professional-references/source-meter-to-fixed-grid-mapping.json`.
-- Freeze commit: `331e756d0299de6b9fbde04c868f7d3a18363164`; Git blob `c7856d2879f4ac1524e68016e979728c92c487fd`; SHA256 `1c8ed50839f4fa365616281c70fa490d47a7e222600b34ae4f1545e09f587648`.
-- Principle: preserve **absolute source musical time in 16th-note units**. Never stretch or pad the 2/4 bar into 4/4.
-- `absoluteSourceStep = cumulative prior source-measure lengths + sourceLocalStep`; `scorerMeasure = floor(absoluteSourceStep / 16) + 1`; `scorerStep = absoluteSourceStep mod 16`.
-- Source m104 occupies scorer m104 steps 0–7; source m105 begins at scorer m104 step 8. Later source measures retain the 8-step shift.
-- Frozen without reading generated candidate and without scoring.
+## V154 reference meter audit + fixed-grid mapping — COMPLETE / FROZEN
+- Meter audit: `research/v154-professional-references/reference-meter-audit.json`; commit `a438eba76c2dc2749b44257689c941665d6590db`; Git blob `cc0bb40ee8af9094ba78f7e9ced9cbbcc9d88f55`.
+- Bass and Lead independently declare **source measure 104 = 2/4**; all other preserved source measures are 4/4.
+- Fixed mapping: `research/v154-professional-references/source-meter-to-fixed-grid-mapping.json`; commit `331e756d0299de6b9fbde04c868f7d3a18363164`; Git blob `c7856d2879f4ac1524e68016e979728c92c487fd`; SHA256 `1c8ed50839f4fa365616281c70fa490d47a7e222600b34ae4f1545e09f587648`.
+- Preserve absolute source time in 16th units: `absoluteSourceStep = cumulative prior source lengths + sourceLocalStep`; scorer measure=`floor(abs/16)+1`; scorer step=`abs mod 16`. Never stretch/pad the 2/4 bar.
+- Source m104 occupies scorer m104 steps 0–7; source m105 begins scorer m104 step 8; later source measures retain the 8-step shift.
+- Mapping frozen without candidate access and without scoring.
 
 ## Current continuation status
 - Reference-facing score calls: **0**.
 - Frozen generated candidate modified: **NO**.
 - `main` / Production modified: **NO**.
 - Modal/L4/CUDA/GPU used: **NO**.
-- Rhythm scorer-ready: **COMPLETE / FROZEN**; equivalence audit next.
-- Bass source-page recovery/inspection: **COMPLETE**.
-- Bass timing skeleton: **COMPLETE / FROZEN**.
-- Source-meter -> fixed-grid mapping: **COMPLETE / FROZEN**.
-- Bass exact source-local attack timing: **COMPLETE / FROZEN**.
-- Bass scorer-ready fixed-grid reference: **COMPLETE / FROZEN / VALIDATED — 547 rows**.
-- Lead source-page recovery: **BLOCKED / not present in current Library**.
+- Rhythm scorer-ready: **COMPLETE / FROZEN / EQUIVALENCE AUDIT PASS**.
+- Bass scorer-ready: **COMPLETE / FROZEN / VALIDATED — 547 rows**.
+- Lead source-page recovery: **ACTIVE NEXT TASK / currently blocked unless pages can be recovered**.
+- Lead scorer-ready: **NOT STARTED; source pages required**.
 
 ## Exact next steps
-1. **DONE / FROZEN:** Bass meter mapping, source-local timing, and final scorer-ready 547-row reference + receipt.
-2. Freeze a reference-only row-identity equivalence audit between authoritative `scorer-ready/rhythm-scorer-ready.json` and supplemental `rhythm-professional-reference-scorer-ready.json`. Preserve both frozen files; do not rewrite either; do not read generated candidate.
-3. Recover actual 22 Lead source pages. Normalize Lead from source notation, preserve uncertainty flags, apply the already-frozen meter mapping, and freeze scorer-ready Lead rows + receipt. Save checkpoint often.
-4. Assemble one immutable scorer reference payload with authorization flags and frozen Rhythm/Lead/Bass rows. Verify file identities and counts before any score call.
-5. Score exact frozen combined Guitar first and Bass second **exactly once** with `score_frontend_reference.py`; interpret preregistered gates; never retune this consumed output afterward.
+1. **DONE / FROZEN:** Rhythm row-identity equivalence audit; preserve both frozen Rhythm files unchanged.
+2. Search Library/prior accessible file context for the exact 22 Lead source pages corresponding to frozen Lead page-set SHA256 `de2f20c...`. Do not substitute Bass pages and do not invent timing from visual-order JSON.
+3. If recovered, visually normalize Lead source-local attacks from notation, preserve source uncertainties, apply only the frozen meter mapping, and freeze scorer-ready Lead rows + receipt. Save checkpoint often.
+4. Only after Lead is scorer-ready, assemble one immutable scorer reference payload with frozen authorization flags and exact Rhythm/Lead/Bass rows. Verify identities/counts before any score call.
+5. Score the exact frozen combined Guitar and Bass output **exactly once** using `score_frontend_reference.py`; interpret preregistered gates; never retune this consumed output afterward.
 6. Only after acoustic recognition is scored/frozen: continue Rhythm/Lead role separation, fret/string assignment, techniques, and PDF work.
 
-## V154 supplemental Rhythm normalization — COMPLETE / FROZEN
-- One-use CPU GitHub Actions run `33121732460` completed successfully and sealed its workflow.
-- Frozen source SHA256 `18fd868ae960dfcdd1ffb0110f1a9dfd8acc2ffeb46e247d1116cd54291526ac`.
-- Supplemental frozen output SHA256 `d6c9416979f25e6a81b9cd4583389b584a59421a0529fcccb4ca6f5dd47e679f`.
-- Receipt: `research/v154-professional-references/rhythm-professional-reference-scorer-ready-receipt.json`; Git blob `a62aad39bbc8a05c38c03c1461fc750246110270`.
-- Deterministic flatten: 113 measures, 603 source events, 946 scorer rows, MIDI 40–71, step range 0–15, exact duplicate-row extras 0.
-- Candidate read NO; generated candidate modified NO; reference-facing score calls 0; human correction NO; threshold sweep NO; Modal/L4/CUDA/GPU NO; main/Production modified NO.
-
-## V154 Bass source-local timing batch pages 01–05 — COMPLETE / FROZEN (historical incremental validation)
-- One-use CPU validation run `33123146413`: SUCCESS; freeze commit `4b05b50c913834ff1c036ae097804338c4e7a7ea`.
-- Artifact: `research/v154-professional-references/scorer-ready/bass-source-local-timing-pages-01-05.json`; SHA256 `327316cc677468bfbbd0b59e29e0cb5b9c3619dc49613be2241f491c14f09e5e`.
-- Receipt: `research/v154-professional-references/scorer-ready/bass-source-local-timing-pages-01-05-receipt.json`; Git blob `abafb5607a3293b2cfe58f3f18e3906330d23201`.
-- Coverage: canonical source pages 1–5 (`1000120387.jpg`–`1000120391.jpg`), measures 1–33.
-- Preserve as historical progress only; final all-pages timing/scorer-ready artifacts above supersede it for active state. Candidate read NO; score calls 0; candidate modified NO; GPU NO; main/Production NO.
+## Historical incremental Bass batch — preserve only
+- `research/v154-professional-references/scorer-ready/bass-source-local-timing-pages-01-05.json`; one-use CPU run `33123146413`; freeze commit `4b05b50c913834ff1c036ae097804338c4e7a7ea`; SHA256 `327316cc677468bfbbd0b59e29e0cb5b9c3619dc49613be2241f491c14f09e5e`.
+- This is historical progress only; the final all-pages timing/scorer-ready artifacts above are authoritative. Score calls remain 0.
