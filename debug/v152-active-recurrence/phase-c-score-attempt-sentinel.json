@@ -1,0 +1,22 @@
+{
+  "schema": "dadrock.tabs.v152.active-recurrence.phase-c-score-attempt.v1",
+  "classification": "one-use-reference-facing-score-attempt",
+  "branch": "v143-contextual-prune-lobo",
+  "status": "ARMED_NOT_CONSUMED",
+  "authorizationGitBlob": "c6fdcd4e56f6c8a2129912508ae1dc444e303c2c",
+  "scorerGitBlob": "5213abebef251632ddf272a40136a9076b15acdb",
+  "candidateGitBlob": "8486188bc7c2f5d0d7649e98b0970b64dd0eebed",
+  "candidateEventSha256": "5ebedfb173730bb5e2639e7450841fb113f7db9af2acec19b88e58cca50679e6",
+  "goldOrReferenceRead": false,
+  "referenceParsed": false,
+  "scoreCallCount": 0,
+  "candidateSearchRun": false,
+  "alternateCandidateConstructed": false,
+  "alternateClassCombinationTested": false,
+  "additionalFilterTested": false,
+  "thresholdSweep": false,
+  "audioRead": false,
+  "modalGpuUsed": false,
+  "productionIntegrated": false,
+  "automaticPromotion": false
+}
