@@ -1,0 +1,44 @@
+{
+  "schema": "dadrock.tabs.v153.event347.phase-d-attribution-preregistration.v1",
+  "classification": "cpu-reference-facing-post-score-attribution",
+  "branch": "v143-contextual-prune-lobo",
+  "authorizationPolicy": {
+    "cpuWorkAtAssistantDiscretion": true,
+    "modalL4CudaGpuRequiresFreshAuthorization": true
+  },
+  "purpose": "Explain exactly why the immutable V153 event-347 candidate loses one pitch-content match versus the accepted baseline while all timing/chord/critical-mismatch metrics remain unchanged.",
+  "frozenInputs": {
+    "candidatePath": "debug/v153-reference-free-strength/candidate/candidate.json",
+    "candidateGitBlob": "975ab36c234b423d1b56e59588e960f7d9d7103f",
+    "candidateCanonicalEventSha256": "df40a771219fb69ae3c129c90ef5351e64b89006ff678e484741ecf0418e3d4b",
+    "scoreResultPath": "debug/v153-reference-free-strength/phase-c-score/score-result.json",
+    "scoreResultGitBlob": "02ee60863f2d55a410083e512a972818c3d7102b",
+    "scoreResultSha256": "1a6a18a338498f3d5015f9f56869319156cd31c6f77caf328bf70111caa0b501",
+    "acceptedCanonicalEventSha256": "4e6f9f247134f79f30a5448515c52a6ca1012c1f1314c3458b448582999e3881",
+    "goldPath": "debug/v144-rhythm-calibration/reference/professional-rhythm-gold-reference.json",
+    "goldSha256": "18fd868ae960dfcdd1ffb0110f1a9dfd8acc2ffeb46e247d1116cd54291526ac",
+    "coreScorerGitBlob": "cc4bf61a99f22bf87a6c255e5a81220fbc82223b",
+    "canonicalAdapterGitBlob": "088d44827fb23e20d9aeeb4944a672989af5846c",
+    "acceptedFamilySupportGitBlob": "f4278ffaacaca3f66baf7a3112e2af0f3bc387cf"
+  },
+  "frozenAnalysis": [
+    "verify accepted baseline and V153 candidate differ only at eventIndex 347",
+    "report the full accepted and V153 event-347 rows",
+    "for measure 35 MIDI 62 and MIDI 61, compute accepted/candidate/reference counts and multiset pitch-content matched-count contribution",
+    "compute global pitch-content matched counts and F1 for accepted versus V153 without invoking the scoring wrapper",
+    "replay the frozen core scorer's tolerant pitch, tolerant position, gross pitch, pitch-set and voicing greedy-match primitives for diagnostic attribution only",
+    "report whether event 347 or its onset participates in each matching family and whether total match counts change",
+    "report nearby Gold notes in measure 35 for context"
+  ],
+  "forbidden": [
+    "candidate modification",
+    "candidate construction or variants",
+    "score wrapper invocation",
+    "threshold/weight/filter/rule tuning",
+    "audio read/decode or HPSS/CQT recomputation",
+    "Modal/L4/CUDA/GPU execution",
+    "main/Production modification",
+    "automatic promotion"
+  ],
+  "postResultBoundary": "Persist and seal the attribution. CPU-only follow-up may continue at assistant discretion. Stop for fresh authorization before any Modal/L4/CUDA/GPU execution."
+}
