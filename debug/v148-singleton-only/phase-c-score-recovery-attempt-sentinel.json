@@ -1,43 +1,46 @@
 {
-  "schema": "dadrock.tabs.v148.phase-c-score-recovery-attempt-sentinel.v1",
-  "classification": "one-use-infrastructure-score-recovery-attempt",
+  "alternateCandidateConstructed": false,
+  "audioRecomputed": false,
+  "automaticPromotion": false,
   "branch": "v143-contextual-prune-lobo",
-  "sourceHeadBeforeRecoverySentinel": "9bdf3e214d18444ef6c1b40853eb4b9796d9efe7",
-  "status": "ARMED_NOT_CONSUMED",
-  "priorAttempt": {
-    "runId": "33045568440",
-    "consumedAttemptCommit": "e34a3b7b8920cdce5f627bc20ad993b144cffc48",
-    "attemptSentinelGitBlob": "ff1bab2ab7c707bca28f955e1262ce16e2424ca6",
-    "goldRead": true,
-    "referenceParsed": false,
-    "historicalScoreCallCount": 0,
-    "resultPersisted": false
-  },
-  "recoveryPreregistration": {
-    "path": "debug/v148-singleton-only/phase-c-score-recovery-preregistration.json",
-    "gitBlob": "f912b656c9bdeaaa2803fcecdfd3b212fddab224"
-  },
+  "candidateCanonicalEventSha256": "1be67004dea62b14740241b536339bb7cad2ecf3ee9e98bfb6109f67e4e1b1fa",
+  "candidateSearchRun": false,
+  "classification": "one-use-infrastructure-score-recovery-attempt",
+  "consumedAtUtc": "2026-08-27T06:28:18.849460+00:00",
   "diagnosis": {
-    "path": "debug/v148-singleton-only/phase-c-score-constant-diagnosis.json",
     "gitBlob": "aaf74ffe149ec0c5943d3f665611c5dad70cba80",
-    "v148MalformedExpectedLength": 65,
-    "historicalV147ExpectedLength": 64
-  },
-  "launcher": {
-    "path": "validation/v148_singleton_only/recover_gold_hash_once.py",
-    "gitBlob": "1d5b5d03ad1419f5aebfb4f70e27de63d263f2fb"
+    "historicalV147ExpectedLength": 64,
+    "path": "debug/v148-singleton-only/phase-c-score-constant-diagnosis.json",
+    "v148MalformedExpectedLength": 65
   },
   "frozenV148ScorerGitBlob": "8137734218a722bb12f364ecfea3d1b8e526cc2c",
-  "historicalV147ScorerGitBlob": "74b31168b629812acde874b89dfcdf022acf987d",
   "historicalV147ScoreResultGitBlob": "971359f7dc645169f0f2ef5f084d0610af8e5cc3",
-  "candidateCanonicalEventSha256": "1be67004dea62b14740241b536339bb7cad2ecf3ee9e98bfb6109f67e4e1b1fa",
+  "historicalV147ScorerGitBlob": "74b31168b629812acde874b89dfcdf022acf987d",
+  "launcher": {
+    "gitBlob": "1d5b5d03ad1419f5aebfb4f70e27de63d263f2fb",
+    "path": "validation/v148_singleton_only/recover_gold_hash_once.py"
+  },
   "maximumAdditionalHistoricalScoreCalls": 1,
   "maximumTotalV148HistoricalScoreCalls": 1,
-  "candidateSearchRun": false,
-  "alternateCandidateConstructed": false,
-  "retuningRun": false,
-  "audioRecomputed": false,
   "modalGpuUsed": false,
+  "priorAttempt": {
+    "attemptSentinelGitBlob": "ff1bab2ab7c707bca28f955e1262ce16e2424ca6",
+    "consumedAttemptCommit": "e34a3b7b8920cdce5f627bc20ad993b144cffc48",
+    "goldRead": true,
+    "historicalScoreCallCount": 0,
+    "referenceParsed": false,
+    "resultPersisted": false,
+    "runId": "33045568440"
+  },
   "productionIntegrated": false,
-  "automaticPromotion": false
+  "recoveryHeadSha": "0c84ef61d7d3a460d4a3600ae7f1cabdd86fd728",
+  "recoveryPreregistration": {
+    "gitBlob": "f912b656c9bdeaaa2803fcecdfd3b212fddab224",
+    "path": "debug/v148-singleton-only/phase-c-score-recovery-preregistration.json"
+  },
+  "recoveryRunId": "33045966999",
+  "retuningRun": false,
+  "schema": "dadrock.tabs.v148.phase-c-score-recovery-attempt-sentinel.v1",
+  "sourceHeadBeforeRecoverySentinel": "9bdf3e214d18444ef6c1b40853eb4b9796d9efe7",
+  "status": "CONSUMED_BEFORE_RECOVERY_REFERENCE_ACCESS"
 }

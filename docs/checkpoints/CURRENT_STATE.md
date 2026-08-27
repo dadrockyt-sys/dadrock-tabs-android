@@ -440,3 +440,11 @@ Active phase: **V147 Phase C REAL-AUDIO ARTIFACT-FIRST CONSTRUCTION = GO / SEALE
 - Historical V147 runner expected-Gold string length: **64**; V147/V148 constants byte-for-byte equal: **False**.
 - This diagnosis did **not** read Gold/reference, parse reference, invoke the scorer, inspect audio, use Modal/GPU, search candidates, retune, touch main/Production, or promote. Total V148 score calls remain **0**.
 - Any recovery must remain infrastructure-only and preserve the original limit of **at most one historical score call**.
+
+
+## V148 Phase C score recovery — CONSUMED / INFRASTRUCTURE-ONLY / BEFORE GOLD REREAD — 2026-08-27 UTC
+- Reference-free diagnosis proved the V148 frozen expected-Gold constant is malformed at 65 characters, while the historical successful V147 runner constant is a valid 64-character SHA and is independently confirmed by the persisted V147 score result.
+- Prior consumed V148 run `33045568440` read Gold once but failed at that malformed identity comparison **before reference parsing and before any historical score call**; V148 score-call count remains **0**.
+- Recovery run `33045966999` is now fail-closed. Its one-use recovery sentinel was consumed before any recovery Gold reread.
+- Recovery may patch only the malformed expected Gold SHA **in memory** from the validated historical V147 runner/result, then delegate to the unchanged frozen V148 scoring path. Maximum additional historical score calls: **1**; maximum total V148 score calls: **1**.
+- Candidate/search/retuning/audio/HPSS/CQT/Modal/L4/GPU/main/Production/promotion remain unchanged and forbidden.
