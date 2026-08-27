@@ -1,0 +1,44 @@
+name: V152 handoff dedupe once
+on:
+  push:
+    paths:
+      - .github/workflows/v152-dedupe-handoff-once.yml
+permissions:
+  contents: write
+jobs:
+  dedupe:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: v143-contextual-prune-lobo
+          fetch-depth: 0
+      - name: Keep exactly one handoff section
+        run: |
+          set -euo pipefail
+          python - <<'PY'
+          from pathlib import Path
+          p = Path('docs/checkpoints/CURRENT_STATE.md')
+          marker = '## FRESH-CHAT HANDOFF — V152 SEALED / NEXT TARGET V153 NOT STARTED — 2026-08-27 UTC'
+          text = p.read_text(encoding='utf-8')
+          starts = []
+          pos = 0
+          while True:
+              i = text.find(marker, pos)
+              if i < 0:
+                  break
+              starts.append(i)
+              pos = i + len(marker)
+          if len(starts) != 2:
+              raise SystemExit(f'expected exactly 2 duplicate handoff markers, found {len(starts)}')
+          p.write_text(text[:starts[1]].rstrip() + '\n', encoding='utf-8')
+          PY
+      - name: Commit and seal
+        run: |
+          set -euo pipefail
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git rm .github/workflows/v152-dedupe-handoff-once.yml
+          git add docs/checkpoints/CURRENT_STATE.md
+          git commit -m 'docs: dedupe V152 fresh-chat handoff [skip ci]'
+          git push origin HEAD:v143-contextual-prune-lobo
