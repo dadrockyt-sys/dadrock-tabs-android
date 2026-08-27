@@ -1,0 +1,19 @@
+{
+  "schema": "dadrock.tabs.v150.contextual-singleton.phase-b-construction-attempt.v1",
+  "classification": "one-use-reference-free-construction-attempt",
+  "branch": "v143-contextual-prune-lobo",
+  "status": "ARMED_NOT_CONSUMED",
+  "sourceHeadBeforeSentinel": "c67dbd9199dfb67fcfce92b594e3e547cd85b532",
+  "preregistrationGitBlob": "56f19421897cee8f4d991a982dfdadfaef94c19c",
+  "authorizationGitBlob": "fa7ce907c580bde9d6b109024724161cc31a43e2",
+  "constructorGitBlob": "be75a11468e177c1ed851e1545f8093a0ceca0c1",
+  "expectedChangedEvents": 33,
+  "candidateConstructedCount": 0,
+  "goldOrReferenceRead": false,
+  "priorScoreResultRead": false,
+  "scoreCallCount": 0,
+  "audioRead": false,
+  "modalGpuUsed": false,
+  "productionIntegrated": false,
+  "automaticPromotion": false
+}
