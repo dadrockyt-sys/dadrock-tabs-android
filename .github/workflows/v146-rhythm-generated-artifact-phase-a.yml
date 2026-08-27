@@ -1,0 +1,212 @@
+name: V146 Rhythm Generated Artifact Phase A
+
+on:
+  push:
+    branches:
+      - v143-contextual-prune-lobo
+    paths:
+      - .github/workflows/v146-rhythm-generated-artifact-phase-a.yml
+
+permissions:
+  contents: write
+
+concurrency:
+  group: v146-rhythm-generated-artifact-phase-a
+  cancel-in-progress: false
+
+jobs:
+  construct:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - name: Checkout exact construction revision
+        uses: actions/checkout@v4
+        with:
+          ref: ${{ github.sha }}
+          fetch-depth: 1
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+
+      - name: Verify frozen generated-only identities
+        shell: bash
+        run: |
+          set -euo pipefail
+          candidate='debug/v146-rhythm-artifact/generated-only-candidate.json'
+          proof='debug/v146-rhythm-artifact/generated-only-candidate-proof.json'
+          test ! -e "$candidate"
+          test ! -e "$proof"
+          test "$(git hash-object docs/v146-rhythm-artifact-first-calibration-preregistration.md)" = "0125201e86389b21dee3ceb2e7ecd25dc67dfe84"
+          test "$(git hash-object modal/v145_rhythm_decoder.py)" = "2fd979aebb4685e86c7f24a0162f69de306c06e9"
+          test "$(git hash-object modal/v145_rhythm_sequence_decoder.py)" = "5f86f57d0fd10774690d50528d51bad6e0392bf3"
+          test "$(git hash-object validation/v145_rhythm_decoder/offline_stage3_adapter.py)" = "434d4b2582991c216df411455f232b8d211337c6"
+          test "$(git hash-object modal/tests/test_v145_rhythm_stage3_offline_adapter.py)" = "3eee7ae5253ad0eecbeb492eaa24216f0fa21fee"
+          test "$(git hash-object debug/v145-rhythm-decoder/proofs/cpu-stage3-offline-adapter-proof.json)" = "f55dcd1087f108d0d93c4a5a1a86cb5058ef4eb4"
+          test "$(git hash-object validation/rhythm_holdout/canonical.py)" = "088d44827fb23e20d9aeeb4944a672989af5846c"
+          test "$(git hash-object debug/v143-contextual-prune/v5-professional-pdf/v5-render-stream.json)" = "fe61f7ad53a4d71348a5113ecc9e3876eaad98d4"
+          test "$(sha256sum debug/v143-contextual-prune/v5-professional-pdf/v5-render-stream.json | awk '{print $1}')" = "7c3399d3f5e05ecc8ac98d71d0e5300e1e78f63ae96c1642fe4a19debb4061b2"
+
+      - name: Prove constructor remains calibration-free
+        shell: bash
+        run: |
+          set -euo pipefail
+          python - <<'PY'
+          import ast
+          from pathlib import Path
+          tree = ast.parse(Path('validation/v145_rhythm_decoder/offline_stage3_adapter.py').read_text(encoding='utf-8'))
+          forbidden = {'score_rhythm_holdout', 'score_selected_conjunction_candidate', 'score_offline_stage3_candidate'}
+          for node in ast.walk(tree):
+              if isinstance(node, ast.Import):
+                  assert not any(alias.name in forbidden for alias in node.names)
+              elif isinstance(node, ast.ImportFrom):
+                  assert node.module not in forbidden
+          PY
+
+      - name: Re-run frozen generated-only CPU contracts
+        run: |
+          python -m py_compile modal/v145_rhythm_decoder.py modal/v145_rhythm_sequence_decoder.py validation/v145_rhythm_decoder/offline_stage3_adapter.py
+          python -m unittest modal.tests.test_v145_rhythm_decoder -v
+          python -m unittest modal.tests.test_v145_rhythm_sequence_decoder -v
+          python -m unittest modal.tests.test_v145_rhythm_stage3_offline_adapter -v
+
+      - name: Construct exactly one generated-only artifact
+        shell: bash
+        run: |
+          set -euo pipefail
+          mkdir -p debug/v146-rhythm-artifact
+          python validation/v145_rhythm_decoder/offline_stage3_adapter.py \
+            debug/v143-contextual-prune/v5-professional-pdf/v5-render-stream.json \
+            debug/v146-rhythm-artifact/generated-only-candidate.json \
+            > /tmp/v146-phase-a-build.log
+
+      - name: Independently validate artifact and create construction proof
+        shell: bash
+        env:
+          RUN_ID: ${{ github.run_id }}
+          RUN_ATTEMPT: ${{ github.run_attempt }}
+          JOB: ${{ github.job }}
+          HEAD_SHA: ${{ github.sha }}
+        run: |
+          set -euo pipefail
+          python - <<'PY'
+          import json
+          import os
+          import sys
+          from pathlib import Path
+          sys.path.insert(0, 'validation/rhythm_holdout')
+          from canonical import canonical_events, sha256_json
+
+          source_path = Path('debug/v143-contextual-prune/v5-professional-pdf/v5-render-stream.json')
+          candidate_path = Path('debug/v146-rhythm-artifact/generated-only-candidate.json')
+          proof_path = Path('debug/v146-rhythm-artifact/generated-only-candidate-proof.json')
+          source = json.loads(source_path.read_text(encoding='utf-8'))
+          candidate = json.loads(candidate_path.read_text(encoding='utf-8'))
+
+          assert candidate['schemaVersion'] == 14503
+          assert candidate['classification'] == 'v145-rhythm-stage3-offline-generated-only-candidate'
+          assert candidate['evaluationRole'] == 'generated-only-pre-reference-candidate'
+          assert candidate['instrument'] == 'rhythm'
+          assert candidate['decoder']['stage1Blob'] == '2fd979aebb4685e86c7f24a0162f69de306c06e9'
+          assert candidate['decoder']['stage2Blob'] == '5f86f57d0fd10774690d50528d51bad6e0392bf3'
+          assert candidate['decoder']['decoderCallCount'] == 1
+
+          src = source['events']
+          events = candidate['renderEvents']
+          assert len(src) == len(events) == 1209
+          assert [int(row['eventIndex']) for row in events] == list(range(1209))
+          assert [int(row['midi']) for row in events] == [int(row['midi']) for row in src]
+          assert {int(row['measure']) for row in events} == set(range(1,114))
+
+          canonical = canonical_events(events)
+          event_sha = sha256_json(canonical)
+          assert len(canonical) == 1209
+          assert event_sha == candidate['candidate']['eventSha256']
+          assert candidate['candidate']['eventCount'] == 1209
+          assert candidate['candidate']['generatedMeasureCount'] == 113
+
+          safety = candidate['safety']
+          assert safety['referenceFree'] is True
+          assert safety['professionalReferenceUsed'] is False
+          assert safety['referenceRuntimeInputUsed'] is False
+          assert safety['goldInputUsed'] is False
+          assert safety['acceptedBaselineChanged'] is False
+          assert safety['modalGpuUsed'] is False
+          assert safety['liveAudioBenchmarkRun'] is False
+          assert safety['eventDeletion'] is False
+          assert safety['eventAddition'] is False
+          assert safety['newPitchGeneration'] is False
+
+          allowed = ('measure','step','stringIndex','fret')
+          changed_event_count = 0
+          changed_field_counts = {key:0 for key in allowed}
+          for before, after in zip(src, events):
+              changed = False
+              for key in allowed:
+                  if before.get(key) != after.get(key):
+                      changed_field_counts[key] += 1
+                      changed = True
+              forbidden_changes = {
+                  key for key in set(before) | set(after)
+                  if key not in allowed and before.get(key) != after.get(key)
+              }
+              assert not forbidden_changes, forbidden_changes
+              if changed:
+                  changed_event_count += 1
+
+          proof = {
+              'schemaVersion': 14601,
+              'proofType': 'v146-rhythm-generated-only-candidate-artifact',
+              'branch': 'v143-contextual-prune-lobo',
+              'workflowRunId': int(os.environ['RUN_ID']),
+              'workflowRunAttempt': int(os.environ['RUN_ATTEMPT']),
+              'workflowJob': os.environ['JOB'],
+              'workflowHeadSha': os.environ['HEAD_SHA'],
+              'preregistrationBlob': '0125201e86389b21dee3ceb2e7ecd25dc67dfe84',
+              'sourceRenderStreamRawSha256': '7c3399d3f5e05ecc8ac98d71d0e5300e1e78f63ae96c1642fe4a19debb4061b2',
+              'stage1Blob': '2fd979aebb4685e86c7f24a0162f69de306c06e9',
+              'stage2Blob': '5f86f57d0fd10774690d50528d51bad6e0392bf3',
+              'adapterBlob': '434d4b2582991c216df411455f232b8d211337c6',
+              'candidateEventCount': 1209,
+              'candidateEventSha256': event_sha,
+              'generatedMeasureCount': 113,
+              'changedEventCount': changed_event_count,
+              'changedFieldCounts': changed_field_counts,
+              'adapterStats': candidate['adapter'],
+              'decoderGrid': candidate['decoder']['grid'],
+              'decoderCallCount': 1,
+              'referenceFree': True,
+              'acceptedManifestRead': False,
+              'realGoldRead': False,
+              'calibrationScoreRun': False,
+              'candidateSearchRun': False,
+              'alternateCandidateConstructed': False,
+              'acceptedBaselineChanged': False,
+              'promotionAllowed': False,
+              'modalGpuUsed': False,
+              'liveAudioBenchmarkRun': False,
+          }
+          proof_path.write_text(json.dumps(proof, indent=2, sort_keys=True) + '\n', encoding='utf-8')
+          PY
+
+      - name: Persist only generated artifact and construction proof
+        shell: bash
+        run: |
+          set -euo pipefail
+          git add \
+            debug/v146-rhythm-artifact/generated-only-candidate.json \
+            debug/v146-rhythm-artifact/generated-only-candidate-proof.json
+          staged="$(git diff --cached --name-only)"
+          expected=$'debug/v146-rhythm-artifact/generated-only-candidate-proof.json\ndebug/v146-rhythm-artifact/generated-only-candidate.json'
+          test "$staged" = "$expected"
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git commit -m 'v146 persist generated-only rhythm artifact'
+          for attempt in 1 2 3 4 5; do
+            git fetch origin v143-contextual-prune-lobo
+            if git rebase origin/v143-contextual-prune-lobo && git push origin HEAD:v143-contextual-prune-lobo; then exit 0; fi
+            git rebase --abort 2>/dev/null || true
+            sleep $((attempt * 2))
+          done
+          exit 1
