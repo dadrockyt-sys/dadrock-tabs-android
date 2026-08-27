@@ -9,7 +9,7 @@ from __future__ import annotations
 
 import argparse
 import json
-from collections import Counter
+from collections import Counter, defaultdict
 from pathlib import Path
 from typing import Any, Mapping, Sequence
 
@@ -111,27 +111,99 @@ def load_reference(payload: Mapping[str, Any]) -> tuple[list[dict[str, Any]], li
     }
 
 
-def greedy_match(generated: Sequence[Mapping[str, Any]], reference: Sequence[Mapping[str, Any]], tolerance: float) -> list[tuple[int, int, float]]:
-    candidates: list[tuple[float, int, int]] = []
-    for gi, g in enumerate(generated):
-        for ri, r in enumerate(reference):
-            if int(g["measure"]) != int(r["measure"]):
-                continue
-            if int(g["midi"]) != int(r["midi"]):
-                continue
-            delta = abs(float(g["step"]) - float(r["step"]))
-            if delta <= tolerance + EPSILON:
-                candidates.append((delta, gi, ri))
-    candidates.sort(key=lambda row: (row[0], row[1], row[2]))
-    used_g: set[int] = set()
-    used_r: set[int] = set()
+def optimal_one_to_one_match(
+    generated: Sequence[Mapping[str, Any]],
+    reference: Sequence[Mapping[str, Any]],
+    tolerance: float,
+) -> list[tuple[int, int, float]]:
+    """Maximize valid same-measure/same-MIDI matches, then minimize timing error.
+
+    A nearest-delta-first greedy matcher can lose cardinality in ambiguous local
+    neighborhoods. This dynamic program works independently inside each
+    (measure, MIDI) group, sorts events by onset so input order cannot affect the
+    result, maximizes one-to-one match count first, and minimizes total absolute
+    timing error among maximum-cardinality solutions.
+    """
+    generated_groups: dict[tuple[int, int], list[tuple[float, int]]] = defaultdict(list)
+    reference_groups: dict[tuple[int, int], list[tuple[float, int]]] = defaultdict(list)
+    for gi, note in enumerate(generated):
+        generated_groups[(int(note["measure"]), int(note["midi"]))].append((float(note["step"]), gi))
+    for ri, note in enumerate(reference):
+        reference_groups[(int(note["measure"]), int(note["midi"]))].append((float(note["step"]), ri))
+
     pairs: list[tuple[int, int, float]] = []
-    for delta, gi, ri in candidates:
-        if gi in used_g or ri in used_r:
-            continue
-        used_g.add(gi)
-        used_r.add(ri)
-        pairs.append((gi, ri, delta))
+    action_rank = {"match": 0, "skip_generated": 1, "skip_reference": 2}
+
+    for key in sorted(set(generated_groups) & set(reference_groups)):
+        generated_rows = sorted(generated_groups[key], key=lambda row: (row[0], row[1]))
+        reference_rows = sorted(reference_groups[key], key=lambda row: (row[0], row[1]))
+        n = len(generated_rows)
+        m = len(reference_rows)
+        match_count = [[0] * (m + 1) for _ in range(n + 1)]
+        total_error = [[0.0] * (m + 1) for _ in range(n + 1)]
+        action: list[list[str | None]] = [[None] * (m + 1) for _ in range(n + 1)]
+
+        def better(candidate: tuple[int, float, str], best: tuple[int, float, str] | None) -> bool:
+            if best is None:
+                return True
+            if candidate[0] != best[0]:
+                return candidate[0] > best[0]
+            if abs(candidate[1] - best[1]) > EPSILON:
+                return candidate[1] < best[1]
+            return action_rank[candidate[2]] < action_rank[best[2]]
+
+        for i in range(n - 1, -1, -1):
+            for j in range(m - 1, -1, -1):
+                best: tuple[int, float, str] | None = None
+
+                candidate = (match_count[i + 1][j], total_error[i + 1][j], "skip_generated")
+                if better(candidate, best):
+                    best = candidate
+
+                candidate = (match_count[i][j + 1], total_error[i][j + 1], "skip_reference")
+                if better(candidate, best):
+                    best = candidate
+
+                delta = abs(generated_rows[i][0] - reference_rows[j][0])
+                if delta <= tolerance + EPSILON:
+                    candidate = (
+                        1 + match_count[i + 1][j + 1],
+                        delta + total_error[i + 1][j + 1],
+                        "match",
+                    )
+                    if better(candidate, best):
+                        best = candidate
+
+                assert best is not None
+                match_count[i][j], total_error[i][j], action[i][j] = best
+
+        i = 0
+        j = 0
+        while i < n and j < m:
+            current = action[i][j]
+            if current == "match":
+                generated_step, gi = generated_rows[i]
+                reference_step, ri = reference_rows[j]
+                pairs.append((gi, ri, abs(generated_step - reference_step)))
+                i += 1
+                j += 1
+            elif current == "skip_generated":
+                i += 1
+            elif current == "skip_reference":
+                j += 1
+            else:
+                raise RuntimeError("matching dynamic program entered an invalid state")
+
+    pairs.sort(
+        key=lambda pair: (
+            int(generated[pair[0]]["measure"]),
+            int(generated[pair[0]]["midi"]),
+            float(generated[pair[0]]["step"]),
+            float(reference[pair[1]]["step"]),
+            pair[0],
+            pair[1],
+        )
+    )
     return pairs
 
 
@@ -150,8 +222,8 @@ def percentile(values: Sequence[float], q: float) -> float | None:
 
 
 def score_stream(generated: Sequence[Mapping[str, Any]], reference: Sequence[Mapping[str, Any]]) -> dict[str, Any]:
-    local_pairs = greedy_match(generated, reference, STEP_TOLERANCE)
-    gross_pairs = greedy_match(generated, reference, GROSS_STEP_TOLERANCE)
+    local_pairs = optimal_one_to_one_match(generated, reference, STEP_TOLERANCE)
+    gross_pairs = optimal_one_to_one_match(generated, reference, GROSS_STEP_TOLERANCE)
     deltas = [delta for _, _, delta in local_pairs]
     return {
         "primaryTimingAwarePitch": prf(len(local_pairs), len(generated), len(reference)),
@@ -195,6 +267,8 @@ def main() -> int:
         },
         "policy": {
             "combinedGuitarScoredBeforeRoleSplit": True,
+            "matchingAlgorithm": "maximum-cardinality-then-minimum-total-absolute-timing-error-within-measure-midi",
+            "matchingInputOrderInvariant": True,
             "measurePitchContentDiagnosticOnly": True,
             "scoringWritesNoCorrections": True,
             "postScoreRetuningOfSameGeneratedOutputForbidden": True,
