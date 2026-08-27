@@ -1,0 +1,20 @@
+name: V154 frontend contract tests once
+
+on:
+  push:
+    paths:
+      - '.github/workflows/v154-frontend-contract-tests-once.yml'
+
+permissions:
+  contents: read
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: v143-contextual-prune-lobo
+      - name: Run reference-free V154 contract tests
+        run: |
+          python -m unittest validation.v154_cpu_multitrack.test_frontend_contract -v
