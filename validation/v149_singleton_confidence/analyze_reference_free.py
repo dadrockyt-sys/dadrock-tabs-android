@@ -33,7 +33,7 @@ EXPECTED = {
     "v148FileSha": "b45034e2a4dd10a3d7784e584fccdbc7e49667a5b93c9a77ea42f5562ae139bb",
     "decisionsFileSha": "3ec6c42730bf571c29258eca131c4e32da257c1ac6073e5319073818e8ac49b9",
     "changedCount": 106,
-    "preregBlob": "TO_BE_FILLED",
+    "preregBlob": "324e9f5bcd7264b3d50f54c51a86ebbf173b5ef6",
     "supportBlob": "f4278ffaacaca3f66baf7a3112e2af0f3bc387cf",
     "canonicalBlob": "088d44827fb23e20d9aeeb4944a672989af5846c",
 }
@@ -145,9 +145,8 @@ def main() -> int:
     if output.exists():
         raise RuntimeError(f"output already exists: {output}")
 
-    # Frozen code/input identities only. No Gold/reference/scorer paths are accessed.
     prereg_blob = git_blob(PREREG_PATH)
-    if EXPECTED["preregBlob"] != "TO_BE_FILLED" and prereg_blob != EXPECTED["preregBlob"]:
+    if prereg_blob != EXPECTED["preregBlob"]:
         raise RuntimeError("V149 preregistration blob mismatch")
     if git_blob(ROOT / "modal/v147_phase_c_artifact_support.py") != EXPECTED["supportBlob"]:
         raise RuntimeError("artifact support blob mismatch")
@@ -180,10 +179,7 @@ def main() -> int:
     if set(accepted_by_index) != set(v148_by_index) or set(accepted_by_index) != set(decisions):
         raise RuntimeError("event index sets differ")
 
-    changed_indices = [
-        idx for idx in sorted(accepted_by_index)
-        if accepted_by_index[idx] != v148_by_index[idx]
-    ]
+    changed_indices = [idx for idx in sorted(accepted_by_index) if accepted_by_index[idx] != v148_by_index[idx]]
     if len(changed_indices) != EXPECTED["changedCount"]:
         raise RuntimeError(f"expected 106 V148 changes, got {len(changed_indices)}")
 
