@@ -1,0 +1,51 @@
+{
+  "acceptedBaselineChanged": false,
+  "branch": "v143-contextual-prune-lobo",
+  "candidateCriticalMismatchCount": 1875,
+  "candidateEventCount": 1209,
+  "candidateEventSha256": "2de0a686cfd797a19aa02af735aa2bfaf0e65245ec85a5148c71f8b8b3a77c40",
+  "candidateGatedMetrics": {
+    "chordPitchSetTolerantF1": 0.022757697456492636,
+    "exactVoicingTolerantF1": 0.004016064257028112,
+    "measureCoverageRecall": 1.0,
+    "pdfEventFidelity": 1.0,
+    "pitchContentF1": 0.2830626450116009,
+    "pitchTimingTolerantF1": 0.044547563805104405,
+    "stringFretTimingTolerantF1": 0.0064965197215777265
+  },
+  "candidateMinusAcceptedGatedMetricDeltas": {
+    "chordPitchSetTolerantF1": -0.03529344283376307,
+    "exactVoicingTolerantF1": -0.05403507603322759,
+    "measureCoverageRecall": 0.0,
+    "pdfEventFidelity": 0.0,
+    "pitchContentF1": -0.07100434063433214,
+    "pitchTimingTolerantF1": -0.02243808212790995,
+    "stringFretTimingTolerantF1": -0.048048934823876815
+  },
+  "candidateMutatedDuringEvaluation": false,
+  "criticalMismatchDelta": 163,
+  "generatedMeasureCount": 113,
+  "liveAudioBenchmarkRun": false,
+  "mayClaimUnseenGeneralization": false,
+  "modalGpuUsed": false,
+  "pdfEventFidelity": 1.0,
+  "pdfEventSha256": "2de0a686cfd797a19aa02af735aa2bfaf0e65245ec85a5148c71f8b8b3a77c40",
+  "phaseACandidateGitBlob": "61bda87e4a16b752bfaaf68c2d51e7020f31a7f8",
+  "phaseAChangedEventCount": 871,
+  "phaseAChangedFieldCounts": {
+    "fret": 871,
+    "measure": 0,
+    "step": 0,
+    "stringIndex": 871
+  },
+  "phaseAProofGitBlob": "abb8fcd1726bf9b8caa5bf8432adae2c6915a483",
+  "phaseBPreregistrationBlob": "82bd04d819f26106a831f67a1a61ccba6e876c08",
+  "promotionAllowed": false,
+  "proofType": "v146-rhythm-fixed-artifact-calibration-evaluation",
+  "referenceOpenedOnlyAfterPreReferenceGate": true,
+  "schemaVersion": 14602,
+  "workflowHeadSha": "0008c69cc05e7dac67eb9684ef022e10dc375336",
+  "workflowJob": "evaluate",
+  "workflowRunAttempt": 1,
+  "workflowRunId": 33032332238
+}
