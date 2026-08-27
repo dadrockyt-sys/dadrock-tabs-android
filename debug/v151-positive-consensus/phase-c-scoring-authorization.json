@@ -1,0 +1,47 @@
+{
+  "schema": "dadrock.tabs.v151.positive-consensus.phase-c-scoring-authorization.v1",
+  "classification": "one-use-reference-facing-score-authorized",
+  "branch": "v143-contextual-prune-lobo",
+  "userInstruction": "Let's make a major breakthrough 🙏",
+  "authorization": {
+    "received": true,
+    "scope": "exactly-one-v151-positive-consensus-gold-calibration-score",
+    "candidateSearchAllowed": false,
+    "alternateCandidateAllowed": false,
+    "alternateSubsetAllowed": false,
+    "additionalFilterAllowed": false,
+    "alternateThresholdAllowed": false,
+    "retuningAllowed": false,
+    "audioRecomputeAllowed": false,
+    "modalGpuAllowed": false,
+    "productionPromotionAllowed": false
+  },
+  "candidateBinding": {
+    "path": "debug/v151-positive-consensus/candidate/candidate.json",
+    "gitBlob": "28d10742fe9f4e27ac47a14df9151c5bc8a6eec0",
+    "fileSha256": "ac96ec4edc3e9b67c047e7e9012139bfa46d0d6d164ffa1443960f8fbcb19ae9",
+    "canonicalEventSha256": "e6c437f534dfb5523610797c67f8f69176be903456ef4940c3032567b949156b",
+    "eventCount": 1144,
+    "changedEventsVersusAccepted": 12,
+    "changedOnsetsVersusAccepted": 12,
+    "polyphonicChangedEventsVersusAccepted": 0
+  },
+  "constructionProofBinding": {
+    "gitBlob": "0e090cf16534eb6f7f61b07bb1ae34f062f7fea8",
+    "sha256": "187cb046988df7cc96ff1e909d2d76fd7ec9c4a802f93ceea1277085cf464342"
+  },
+  "pdfEvidenceBinding": {
+    "gitBlob": "20a02fd7657166c7e6d2f33240b4d99e390c5604",
+    "sha256": "c594a733131af3e34e4c937b90d148cfd4b4673c5cb050def4293b6f97d290e7",
+    "fidelity": 1.0
+  },
+  "constructionCompletionGitBlob": "442453a8ba07808e9098bbfe446861c2c20f9b99",
+  "referenceIdentitySource": {
+    "path": "debug/v150-contextual-singleton/phase-c-score/score-result.json",
+    "gitBlob": "35d0953ae89cdad9c71542fb5801e2b9c4ca563d",
+    "sha256": "c29c83571c68c8e850f3a2c30de0c9b0a706ab02e35342e8e39151949b576e40",
+    "field": "reference.sha256"
+  },
+  "maximumScoreCalls": 1,
+  "automaticPromotion": false
+}
