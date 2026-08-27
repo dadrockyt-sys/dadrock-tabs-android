@@ -1,0 +1,16 @@
+{
+  "schema": "dadrock.tabs.v152.active-recurrence.local-modal-namespace-recovery.v1",
+  "classification": "infrastructure-only-local-module-namespace-recovery-frozen",
+  "branch": "v143-contextual-prune-lobo",
+  "priorFailedRuns": ["33049594534", "33049714633"],
+  "priorFailures": "direct constructor import and repo-root-only launcher both failed during preflight before sentinel consumption",
+  "attemptSentinelConsumed": false,
+  "candidateConstructedCount": 0,
+  "goldOrReferenceRead": false,
+  "scoreCallCount": 0,
+  "scientificConstructorGitBlob": "7cb83979e693203b7f6254a790831b1ca4938420",
+  "scientificPolicyChanged": false,
+  "recoveryChange": "inject a local namespace package named modal with __path__ pointing only to repository ROOT/modal before runpy delegation to the unchanged constructor; this prevents the installed third-party modal package from shadowing local research modules",
+  "maximumTotalV152Candidates": 1,
+  "referenceFacingScoringAuthorization": false
+}
