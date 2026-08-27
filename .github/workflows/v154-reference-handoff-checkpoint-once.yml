@@ -82,3 +82,5 @@ jobs:
           git commit -m 'docs: checkpoint V154 reference handoff [skip ci]'
           git pull --rebase origin "$BRANCH"
           git push origin "HEAD:$BRANCH"
+
+# one-use trigger revision
