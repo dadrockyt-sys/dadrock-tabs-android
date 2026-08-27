@@ -1,0 +1,277 @@
+name: V145 Stage3 Offline Calibration One-Shot
+
+on:
+  push:
+    branches:
+      - v143-contextual-prune-lobo
+    paths:
+      - .github/workflows/v145-stage3-offline-calibration-one-shot.yml
+      - debug/v145-rhythm-decoder/.v145-stage3-offline-calibration-trigger
+
+permissions:
+  contents: write
+
+concurrency:
+  group: v145-stage3-offline-calibration-one-shot
+  cancel-in-progress: false
+
+jobs:
+  calibration:
+    if: "${{ github.event.head_commit.message == 'v145 execute stage3 offline calibration one-shot' }}"
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - name: Checkout exact trigger revision
+        uses: actions/checkout@v4
+        with:
+          ref: ${{ github.sha }}
+          fetch-depth: 2
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+
+      - name: Verify sole trigger and frozen non-calibration identities
+        shell: bash
+        run: |
+          set -euo pipefail
+          trigger='debug/v145-rhythm-decoder/.v145-stage3-offline-calibration-trigger'
+          candidate='debug/v145-rhythm-decoder/stage3/offline-candidate.json'
+          report='debug/v145-rhythm-decoder/stage3/offline-calibration-score.json'
+          test "$(git log -1 --format=%s)" = 'v145 execute stage3 offline calibration one-shot'
+          test "$(git diff-tree --no-commit-id --name-only -r HEAD)" = "${trigger}"
+          test ! -e "${candidate}"
+          test ! -e "${report}"
+
+          test "$(git hash-object docs/v145-rhythm-decoder-stage3-real-one-shot-preregistration.md)" = "b49c530ecfb32bdc6dc00f2be957f9754a6960d6"
+          test "$(git hash-object docs/v145-rhythm-decoder-stage3-offline-preregistration.md)" = "bb60a3bcc5f6e136eb6efb5706828379e007ec1d"
+          test "$(git hash-object docs/v145-rhythm-decoder-stage3-evaluation-preregistration.md)" = "9b3542f33fb0f9149056b1eafb8c5db1864299ca"
+          test "$(git hash-object modal/v145_rhythm_decoder.py)" = "2fd979aebb4685e86c7f24a0162f69de306c06e9"
+          test "$(git hash-object modal/v145_rhythm_sequence_decoder.py)" = "5f86f57d0fd10774690d50528d51bad6e0392bf3"
+          test "$(git hash-object validation/v145_rhythm_decoder/offline_stage3_adapter.py)" = "434d4b2582991c216df411455f232b8d211337c6"
+          test "$(git hash-object modal/tests/test_v145_rhythm_stage3_offline_adapter.py)" = "3eee7ae5253ad0eecbeb492eaa24216f0fa21fee"
+          test "$(git hash-object debug/v145-rhythm-decoder/proofs/cpu-stage3-offline-adapter-proof.json)" = "f55dcd1087f108d0d93c4a5a1a86cb5058ef4eb4"
+          test "$(git hash-object validation/v145_rhythm_decoder/score_offline_stage3_candidate.py)" = "d208abb3f180f8375d57d786941ff49d6813de1c"
+          test "$(git hash-object modal/tests/test_v145_rhythm_stage3_offline_score.py)" = "d8b3770ac7f3ba18123122f19fad895257998c25"
+          test "$(git hash-object debug/v145-rhythm-decoder/proofs/cpu-stage3-evaluation-harness-proof.json)" = "81c10bdcc39ce9e371fda60d2c3d107e671b8790"
+          test "$(git hash-object validation/rhythm_holdout/canonical.py)" = "088d44827fb23e20d9aeeb4944a672989af5846c"
+          test "$(git hash-object validation/rhythm_holdout/freeze_rhythm_analysis.py)" = "710bb6a3b15b99d3d11ceb4948d7c7175d208afc"
+          test "$(git hash-object validation/rhythm_holdout/score_rhythm_holdout.py)" = "cc4bf61a99f22bf87a6c255e5a81220fbc82223b"
+          test "$(git hash-object validation/v144_rhythm_calibration/score_selected_conjunction_candidate.py)" = "1ca2b8550d6c08e793f26b3aa91b99fb44fa7ddb"
+          test "$(git hash-object validation/rhythm_holdout/verify_pdf_event_fidelity.py)" = "5e1564216873046237fb545078a04a6b18f72b27"
+          test "$(git hash-object lib/v143RenderContract.js)" = "ccbb93c48982798cc474309fd981f6ca02d5c8d4"
+          test "$(git hash-object debug/v143-contextual-prune/v5-professional-pdf/v5-render-stream.json)" = "fe61f7ad53a4d71348a5113ecc9e3876eaad98d4"
+          test "$(sha256sum debug/v143-contextual-prune/v5-professional-pdf/v5-render-stream.json | awk '{print $1}')" = "7c3399d3f5e05ecc8ac98d71d0e5300e1e78f63ae96c1642fe4a19debb4061b2"
+
+          python - <<'PY'
+          import json, subprocess
+          from pathlib import Path
+          trigger_path = Path('debug/v145-rhythm-decoder/.v145-stage3-offline-calibration-trigger')
+          trigger = json.loads(trigger_path.read_text(encoding='utf-8'))
+          assert trigger['classification'] == 'v145-stage3-offline-calibration-one-shot-trigger'
+          assert trigger['workflowBlob'] == subprocess.check_output(['git','hash-object','.github/workflows/v145-stage3-offline-calibration-one-shot.yml'], text=True).strip()
+          assert trigger['preArmCheckpointCommit'] == subprocess.check_output(['git','rev-parse','HEAD^'], text=True).strip()
+          checkpoint = subprocess.check_output(['git','show',f"{trigger['preArmCheckpointCommit']}:docs/checkpoints/CURRENT_STATE.md"], text=True)
+          assert trigger['workflowBlob'] in checkpoint
+          assert trigger['stage3AdapterBlob'] == '434d4b2582991c216df411455f232b8d211337c6'
+          assert trigger['evaluationHarnessBlob'] == 'd208abb3f180f8375d57d786941ff49d6813de1c'
+          assert trigger['evaluationHarnessProofBlob'] == '81c10bdcc39ce9e371fda60d2c3d107e671b8790'
+          assert trigger['sourceRenderStreamRawSha256'] == '7c3399d3f5e05ecc8ac98d71d0e5300e1e78f63ae96c1642fe4a19debb4061b2'
+          assert trigger['goldSha256'] == '18fd868ae960dfcdd1ffb0110f1a9dfd8acc2ffeb46e247d1116cd54291526ac'
+          assert trigger['acceptedManifestBlob'] == 'acd12ab68ad16b8faabf38ddc9e1cc0c1e7c4b68'
+          assert trigger['calibrationOnly'] is True
+          assert trigger['mayClaimUnseenGeneralization'] is False
+          assert trigger['automaticPromotionAllowed'] is False
+          assert trigger['modalGpuAllowed'] is False
+          assert trigger['liveAudioAllowed'] is False
+          assert trigger['replayAllowed'] is False
+          PY
+
+      - name: Re-run frozen CPU contracts before construction
+        run: |
+          python -m py_compile modal/v145_rhythm_decoder.py modal/v145_rhythm_sequence_decoder.py
+          python -m py_compile validation/v145_rhythm_decoder/offline_stage3_adapter.py validation/v145_rhythm_decoder/score_offline_stage3_candidate.py
+          python -m unittest modal.tests.test_v145_rhythm_decoder -v
+          python -m unittest modal.tests.test_v145_rhythm_sequence_decoder -v
+          python -m unittest modal.tests.test_v145_rhythm_stage3_offline_adapter -v
+          python -m unittest modal.tests.test_v145_rhythm_stage3_offline_score -v
+
+      - name: Build the single generated-only Stage3 candidate
+        shell: bash
+        run: |
+          set -euo pipefail
+          mkdir -p debug/v145-rhythm-decoder/stage3 .v145/stage3/freeze
+          python validation/v145_rhythm_decoder/offline_stage3_adapter.py \
+            debug/v143-contextual-prune/v5-professional-pdf/v5-render-stream.json \
+            debug/v145-rhythm-decoder/stage3/offline-candidate.json \
+            > .v145/stage3/candidate-build.log
+
+      - name: Independently validate generated-only candidate invariants
+        shell: bash
+        run: |
+          set -euo pipefail
+          python - <<'PY'
+          import json, sys
+          from pathlib import Path
+          sys.path.insert(0, 'validation/rhythm_holdout')
+          from canonical import canonical_events, sha256_json
+          source = json.loads(Path('debug/v143-contextual-prune/v5-professional-pdf/v5-render-stream.json').read_text(encoding='utf-8'))
+          candidate = json.loads(Path('debug/v145-rhythm-decoder/stage3/offline-candidate.json').read_text(encoding='utf-8'))
+          assert candidate['schemaVersion'] == 14503
+          assert candidate['classification'] == 'v145-rhythm-stage3-offline-generated-only-candidate'
+          assert candidate['evaluationRole'] == 'generated-only-pre-reference-candidate'
+          assert candidate['instrument'] == 'rhythm'
+          safety = candidate['safety']
+          assert safety['referenceFree'] is True
+          assert safety['professionalReferenceUsed'] is False
+          assert safety['referenceRuntimeInputUsed'] is False
+          assert safety['goldInputUsed'] is False
+          assert safety['acceptedBaselineChanged'] is False
+          assert safety['modalGpuUsed'] is False
+          assert safety['liveAudioBenchmarkRun'] is False
+          events = candidate['renderEvents']
+          assert len(events) == 1209
+          assert [int(row['eventIndex']) for row in events] == list(range(1209))
+          assert [int(row['midi']) for row in events] == [int(row['midi']) for row in source['events']]
+          canonical = canonical_events(events)
+          assert len(canonical) == 1209
+          assert sha256_json(canonical) == candidate['candidate']['eventSha256']
+          assert {int(row['measure']) for row in canonical} == set(range(1,114))
+          assert candidate['candidate']['generatedMeasureCount'] == 113
+          PY
+
+      - name: Freeze candidate before any calibration access
+        shell: bash
+        run: |
+          set -euo pipefail
+          python - <<'PY'
+          import json
+          from pathlib import Path
+          candidate = json.loads(Path('debug/v145-rhythm-decoder/stage3/offline-candidate.json').read_text(encoding='utf-8'))
+          payload = {
+              'instrument': 'rhythm',
+              'renderEvents': candidate['renderEvents'],
+              'tempoBpm': 129.19921875,
+              'timeSignature': '4/4',
+              'tuning': 'E Standard',
+              'structuredMode': True,
+              'referenceFree': True,
+              'professionalReferenceUsed': False,
+              'referenceRuntimeInputUsed': False,
+              'runtimeLabelsRequired': False,
+              'v143RuntimeSafetyVerified': True,
+          }
+          Path('.v145/stage3/freeze-input.json').write_text(json.dumps(payload,separators=(',',':'))+'\n', encoding='utf-8')
+          PY
+          python validation/rhythm_holdout/freeze_rhythm_analysis.py \
+            .v145/stage3/freeze-input.json .v145/stage3/freeze \
+            --source-commit "${GITHUB_SHA}" \
+            > .v145/stage3/freeze.log
+
+      - name: Validate frozen candidate through renderer contract
+        shell: bash
+        run: |
+          set -euo pipefail
+          cp lib/v143RenderContract.js .v145/stage3/v143RenderContract.mjs
+          node --input-type=module <<'NODE'
+          import fs from 'node:fs/promises';
+          import { validateV143RenderEvents } from './.v145/stage3/v143RenderContract.mjs';
+          const candidate = JSON.parse(await fs.readFile('debug/v145-rhythm-decoder/stage3/offline-candidate.json','utf8'));
+          const events = validateV143RenderEvents(candidate.renderEvents || []);
+          if (events.length !== 1209) throw new Error(`renderer contract rejected Stage3 event count: ${events.length}`);
+          await fs.writeFile('.v145/stage3/renderer-event-evidence.json', JSON.stringify({
+            schemaVersion:1,
+            renderEvents:events,
+            runtimeSafetyVerified:true,
+            runtimeLabelsRequired:false,
+            referenceOpened:false,
+            professionalReferenceUsed:false,
+            productionModified:false
+          })+'\n');
+          NODE
+
+      - name: Prove PDF event fidelity before calibration access
+        shell: bash
+        run: |
+          set -euo pipefail
+          python validation/rhythm_holdout/verify_pdf_event_fidelity.py \
+            .v145/stage3/freeze .v145/stage3/renderer-event-evidence.json \
+            > .v145/stage3/pdf-event-fidelity.log
+          python - <<'PY'
+          import json
+          from pathlib import Path
+          candidate = json.loads(Path('debug/v145-rhythm-decoder/stage3/offline-candidate.json').read_text(encoding='utf-8'))
+          fidelity = json.loads(Path('.v145/stage3/freeze/rhythm-pdf-event-fidelity.json').read_text(encoding='utf-8'))
+          assert fidelity['passed'] is True
+          assert fidelity['pdfEventFidelity'] == 1.0
+          assert fidelity['frozenEventCount'] == fidelity['pdfEventCount'] == 1209
+          assert fidelity['frozenEventSha256'] == fidelity['pdfEventSha256'] == candidate['candidate']['eventSha256']
+          PY
+
+      - name: Evaluate frozen candidate exactly once after pre-reference gates
+        shell: bash
+        run: |
+          set -euo pipefail
+          python validation/v145_rhythm_decoder/score_offline_stage3_candidate.py \
+            .v145/stage3/freeze \
+            debug/v145-rhythm-decoder/stage3/offline-candidate.json \
+            debug/v144-rhythm-calibration/reference/professional-rhythm-gold-reference.json \
+            debug/v144-rhythm-calibration/selected/v144-singleton-onset-replacement-selected-baseline.json \
+            debug/v145-rhythm-decoder/stage3/offline-calibration-score.json \
+            > .v145/stage3/evaluation.log
+
+      - name: Verify observational report and immutable post-state
+        shell: bash
+        run: |
+          set -euo pipefail
+          python - <<'PY'
+          import json
+          from pathlib import Path
+          candidate = json.loads(Path('debug/v145-rhythm-decoder/stage3/offline-candidate.json').read_text(encoding='utf-8'))
+          report = json.loads(Path('debug/v145-rhythm-decoder/stage3/offline-calibration-score.json').read_text(encoding='utf-8'))
+          assert report['schemaVersion'] == 14504
+          assert report['classification'] == 'v145-rhythm-stage3-offline-calibration-score'
+          assert report['evaluationRole'] == 'calibration-benchmark-not-unseen-holdout'
+          assert report['mayClaimUnseenGeneralization'] is False
+          assert report['candidate']['eventCount'] == 1209
+          assert report['candidate']['eventSha256'] == candidate['candidate']['eventSha256']
+          assert report['candidate']['generatedMeasureCount'] == 113
+          assert report['candidate']['pdfEventFidelity'] == 1.0
+          assert report['reference']['openedOnlyAfterPreReferenceGate'] is True
+          assert report['safety']['referenceOpenedOnlyAfterPreReferenceGate'] is True
+          assert report['safety']['candidateMutatedDuringEvaluation'] is False
+          assert report['safety']['acceptedBaselineChanged'] is False
+          assert report['safety']['promotionAllowed'] is False
+          assert report['safety']['modalGpuUsed'] is False
+          assert report['safety']['liveAudioBenchmarkRun'] is False
+          PY
+
+          test "$(git hash-object docs/v145-rhythm-decoder-stage3-real-one-shot-preregistration.md)" = "b49c530ecfb32bdc6dc00f2be957f9754a6960d6"
+          test "$(git hash-object modal/v145_rhythm_decoder.py)" = "2fd979aebb4685e86c7f24a0162f69de306c06e9"
+          test "$(git hash-object modal/v145_rhythm_sequence_decoder.py)" = "5f86f57d0fd10774690d50528d51bad6e0392bf3"
+          test "$(git hash-object validation/v145_rhythm_decoder/offline_stage3_adapter.py)" = "434d4b2582991c216df411455f232b8d211337c6"
+          test "$(git hash-object validation/v145_rhythm_decoder/score_offline_stage3_candidate.py)" = "d208abb3f180f8375d57d786941ff49d6813de1c"
+          test "$(git hash-object debug/v145-rhythm-decoder/proofs/cpu-stage3-offline-adapter-proof.json)" = "f55dcd1087f108d0d93c4a5a1a86cb5058ef4eb4"
+          test "$(git hash-object debug/v145-rhythm-decoder/proofs/cpu-stage3-evaluation-harness-proof.json)" = "81c10bdcc39ce9e371fda60d2c3d107e671b8790"
+
+      - name: Persist only Stage3 candidate and calibration report
+        shell: bash
+        run: |
+          set -euo pipefail
+          git add \
+            debug/v145-rhythm-decoder/stage3/offline-candidate.json \
+            debug/v145-rhythm-decoder/stage3/offline-calibration-score.json
+          staged="$(git diff --cached --name-only)"
+          expected=$'debug/v145-rhythm-decoder/stage3/offline-calibration-score.json\ndebug/v145-rhythm-decoder/stage3/offline-candidate.json'
+          test "${staged}" = "${expected}"
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git commit -m 'v145 persist stage3 offline calibration one-shot result'
+          for attempt in 1 2 3 4 5; do
+            git fetch origin v143-contextual-prune-lobo
+            if git rebase origin/v143-contextual-prune-lobo && git push origin HEAD:v143-contextual-prune-lobo; then exit 0; fi
+            git rebase --abort 2>/dev/null || true
+            sleep $((attempt * 2))
+          done
+          exit 1
