@@ -312,3 +312,16 @@ Active phase: **V147 Phase C REAL-AUDIO ARTIFACT-FIRST CONSTRUCTION = GO / SEALE
 - GitHub Actions run `33042528177`; arming commit `df8d7e2ed663c32cb3ac950b63a9d81aaaac66f7`.
 - Durable attempt sentinel is committed before analysis; reruns fail closed.
 - Gold/reference and `public/Professionalexample.jpg` were made unreadable before this checkpoint. Analysis completed at this checkpoint: **NO**.
+
+## V147 Phase E reference-free failure analysis — COMPLETE / SEALED — 2026-08-27 UTC
+- Deterministic preserved-evidence analysis completed in GitHub Actions run `33042528177`; result SHA256 `6b1fcb29341826a8de9f3859d7d51d9bc9f22000c70862386bbc1114a6df5df2`.
+- Accepted family #10 identity reverified: 1144 events / `4e6f9f247134f79f30a5448515c52a6ca1012c1f1314c3458b448582999e3881`.
+- V147 candidate identity reverified: 1144 events / `ca35c3492295a3079c17c35124df7a483166315e85649e95ded095c6c06b2b77`.
+- Exactly **247** substitutions were confirmed: 137 down-one / 110 up-one across **217** changed onsets.
+- Changed-onset topology: **106 singleton** / **111 polyphonic**; changed events by accepted onset size `{'1': 106, '2': 100, '3': 34, '4+': 7}`; changed notes per changed onset `{'1': 190, '2': 24, '3': 3}`.
+- Evidence distance to the nearest already-frozen V147 gate: median **4.166 dB**, p10/p90 **0.726/11.777 dB**; within 0.5 dB of a gate **17 / 247**, within 1.0 dB **30 / 247**.
+- Composite-score winners that were not fundamental-only winners: **2 / 247**.
+- Fingering reassignment: same-string **198**, different-string **49**; introduced pitch-collision onsets **18**; introduced string-collision onsets **0**.
+- This phase does **not** label any individual change correct/incorrect and does not use Gold/reference content to tune anything. It identifies only reference-free mechanism/risk patterns.
+- Safety: Gold/reference read **NO**; professional image read **NO**; audio decode/HPSS/CQT recompute **NO**; Modal/L4/GPU **NO**; candidate construction/search **NO**; threshold retuning **NO**; main/Production change **NO**.
+- Phase E one-use workflow is deleted in the same persistence commit. Any V148 hypothesis/candidate must be a separate frozen phase before construction.

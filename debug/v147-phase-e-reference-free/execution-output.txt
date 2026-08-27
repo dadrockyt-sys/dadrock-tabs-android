@@ -1,0 +1,1 @@
+{"changedEventCount": 247, "changedOnsetCount": 217, "differentStringChangedEvents": 49, "introducedPitchCollisionOnsets": 18, "nearGateWithin0_5Db": 17, "nearGateWithin1Db": 30, "octaveBonusDependentWinnerCount": 2, "polyphonicChangedOnsets": 111, "sameStringChangedEvents": 198, "singletonChangedOnsets": 106}

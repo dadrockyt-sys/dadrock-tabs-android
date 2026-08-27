@@ -1,0 +1,23 @@
+{
+  "analyzerGitBlob": "5abf362f4d424aac460f12c59c6a1f08081ac1cb",
+  "classification": "reference-free-analysis-complete",
+  "githubRunId": "33042528177",
+  "markdownSha256": "cb296e068f59fae7556717f355386d056e2fea18a865f5ff18352e21349da670",
+  "preregistrationGitBlob": "817c93576edb23adb9225f0211e1413e2d1a161d",
+  "resultSha256": "6b1fcb29341826a8de9f3859d7d51d9bc9f22000c70862386bbc1114a6df5df2",
+  "safety": {
+    "audioReadOrDecoded": false,
+    "candidateConstructed": false,
+    "candidateSearchRun": false,
+    "goldReferenceRead": false,
+    "hpssCqtRecomputed": false,
+    "mainModified": false,
+    "modalGpuUsed": false,
+    "productionModified": false,
+    "professionalImageRead": false,
+    "referenceScorerInvoked": false,
+    "thresholdRetuned": false
+  },
+  "schema": "dadrock.tabs.v147.phase-e-reference-free-execution-envelope.v1",
+  "workflowArmingCommit": "df8d7e2ed663c32cb3ac950b63a9d81aaaac66f7"
+}
