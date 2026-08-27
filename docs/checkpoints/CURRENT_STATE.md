@@ -3,7 +3,7 @@
 Updated: 2026-08-27 UTC
 Branch: `v143-contextual-prune-lobo`
 
-Active phase: **V153 Phase B EVENT-347 CANDIDATE CONSTRUCTION = COMPLETE / SEALED. Exactly one immutable candidate was constructed with only event 347 changed. CPU-only scoring/work may proceed at assistant discretion under the user's standing policy. Explicit authorization is required only before Modal/L4/CUDA/GPU execution. V153 Phase A ranking remains COMPLETE / SEALED. V152 remains COMPLETE / SEALED.**
+Active phase: **V153 Phase C CPU GOLD SCORE = PREREGISTERED / FROZEN / ARMED / BEFORE GOLD. CPU-only scoring is permitted at assistant discretion under the standing user policy; fresh authorization is required only before Modal/L4/CUDA/GPU execution. V153 Phase B event-347 candidate construction remains COMPLETE / SEALED and immutable.**
 
 ## Preserved historical checkpoint
 - Full pre-compaction history remains preserved at `docs/checkpoints/archive/CURRENT_STATE-pre-phase-c-auth-intake-20260827.md`; Git blob `f71ba11394e6f2f46843055e748e8717ff484158`.
@@ -51,7 +51,7 @@ Active phase: **V153 Phase B EVENT-347 CANDIDATE CONSTRUCTION = COMPLETE / SEALE
 - Candidate file SHA256: **`f90889acb034b61036951843846e2954d0c685f005a35eb667360a5a57391e67`**.
 - Candidate Git blob: **`975ab36c234b423d1b56e59588e960f7d9d7103f`**.
 - Construction proof path: `debug/v153-reference-free-strength/candidate/construction-proof.json`; file SHA256 **`8c4fe77799fb247c0a744d3650aed2f69ed44aa43d7ee5b2e97c5d4211deedc7`**; Git blob **`efe6107df544086f62babf737ef044116ed551f0`**.
-- PDF fidelity file SHA256 **`fe06f93619bbe51862933a1e235f7ff2f01356bcb02167b5b6b934a39784f33e`**.
+- PDF fidelity file SHA256 **`fe06f93619bbe51862933a1e235f7ff2f01356bcb02167b5b6b934a39784f33e`**; Git blob **`f6b1b7b463c9b55e2e70fb116d97f3508b6c269f`**.
 - Preservation manifest path: `debug/v153-reference-free-strength/candidate/preservation-manifest.json`; file SHA256 **`174c8b060b02c8eb1cb1b147c150d922f169d9cbfec2061640096efdd9e31149`**; Git blob **`f690aeefd81090b4f558353cb3f30b7fe4dca0b9`**.
 - Artifact `v153-event347-construction-33082187789`; artifact ID **`9650533630`**; ZIP SHA256 **`cfac9c3e9a921e21b5401c6f741318817323c642fe779e3c425ca8c506e45de1`**.
 
@@ -66,20 +66,18 @@ Active phase: **V153 Phase B EVENT-347 CANDIDATE CONSTRUCTION = COMPLETE / SEALE
 - Deterministic replay event SHA equals candidate SHA.
 - PDF event fidelity: **`1.0` / 100%**.
 
-### Safety record
-- Gold/reference read during construction: **NO**.
-- Professional image read: **NO**.
-- Prior score-result read by constructor: **NO**.
-- Scorer invoked during construction: **NO**.
-- Score calls during construction: **0**.
-- Candidate variants constructed: exactly **1**.
-- Candidate search/variants: **NO**.
-- Threshold/weight/filter/rule tuning: **NO**.
-- Audio read/decode: **NO**.
-- HPSS/CQT recomputation: **NO**.
-- Modal/L4/CUDA/GPU: **NO**.
-- Main/Production modification: **NO**.
-- Automatic promotion: **NO**.
+## V153 Phase C CPU Gold score — FROZEN / ARMED / BEFORE GOLD
+- CPU-only scoring is permitted at assistant discretion under the standing policy; no fresh scoring authorization is required.
+- Scoring preregistration: `debug/v153-reference-free-strength/phase-c-scoring-preregistration.json`; Git blob **`361208d8e57c614e8a509eecb5680f0d6daf841b`**; preregistration commit **`0db9a5e2d378ad0788edee07576d94b2280abbab`**.
+- Frozen scorer: `validation/v153_reference_free_strength/score_event347_once.py`; Git blob **`50f08090631ccd14701ff9f3a5d3324c7cf1f3b7`**; scorer freeze commit **`8cd8c8376e6142fc3939a79a10ee79905801f989`**.
+- Armed one-use attempt sentinel: `debug/v153-reference-free-strength/phase-c-score-attempt-sentinel.json`; Git blob **`1f1c89d1ddbf950275b2a15820a9f7d868d53740`**; arm commit **`a27e81e926268fe508d33135141a6f1b1ec5218e`**.
+- Candidate binding is the immutable V153 event-347 candidate SHA **`df40a771219fb69ae3c129c90ef5351e64b89006ff678e484741ecf0418e3d4b`**; candidate Git blob `975ab36c234b423d1b56e59588e960f7d9d7103f`.
+- Reference identity is frozen to Gold SHA256 **`18fd868ae960dfcdd1ffb0110f1a9dfd8acc2ffeb46e247d1116cd54291526ac`**, inherited from the sealed V152 score result.
+- Prior comparison source is sealed V152 score result `debug/v152-active-recurrence/phase-c-score/score-result.json`; Git blob `05042410ecd5b9793e1182a1bb1dd63ae949ab51`; file SHA256 `cc549c6f0a33c0b90648433494ef36a31b5647191058e28b9ea089f12cab7ef4`.
+- Scoring chain remains exactly: wrapper blob `1ca2b8550d6c08e793f26b3aa91b99fb44fa7ddb`, core scorer blob `cc4bf61a99f22bf87a6c255e5a81220fbc82223b`, canonical adapter blob `088d44827fb23e20d9aeeb4944a672989af5846c`.
+- Frozen score-call maximum: **1**. Candidate search, alternate candidate, candidate modification, threshold/weight/filter/rule tuning, audio recomputation, Production promotion, and automatic promotion are **NO**.
+- Modal/L4/CUDA/GPU use is **NO / NOT AUTHORIZED** for this score.
+- At this checkpoint: Gold/reference opened **NO**; reference parsed **NO**; score calls **0**.
 
 ## Fixed safety boundary
 - Work only on `v143-contextual-prune-lobo`; never modify/merge/promote `main` or Production.
@@ -93,8 +91,9 @@ Active phase: **V153 Phase B EVENT-347 CANDIDATE CONSTRUCTION = COMPLETE / SEALE
 ## Authoritative stop point
 - V153 Phase A ranking: **COMPLETE / SEALED; UNIQUE WINNER = EVENT 347**.
 - V153 Phase B construction: **COMPLETE / SEALED; IMMUTABLE CANDIDATE SHA = `df40a771219fb69ae3c129c90ef5351e64b89006ff678e484741ecf0418e3d4b`**.
-- V153 Gold/reference score call count: **0** at this checkpoint.
-- CPU-only V153 Gold scoring: **PERMITTED AT ASSISTANT DISCRETION; no fresh user authorization required**.
+- V153 Phase C CPU Gold score: **FROZEN / ARMED / BEFORE GOLD**.
+- Gold/reference read: **NO**.
+- V153 score call count: **0**.
 - Modal/L4/CUDA/GPU execution: **REQUIRES FRESH EXPLICIT USER AUTHORIZATION**.
 - Main/Production modification: **NO**.
-- Next CPU-only executable action may be a frozen one-use Gold calibration score of this immutable V153 candidate, with no candidate modification or post-score tuning of the scored candidate.
+- Next CPU-only executable action is exactly one score run using frozen scorer blob `50f08090631ccd14701ff9f3a5d3324c7cf1f3b7`; the run must consume the sentinel before Gold access, persist the single result, delete/seal its workflow, checkpoint, and never rerun or retune the scored candidate.
