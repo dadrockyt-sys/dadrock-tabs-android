@@ -3,7 +3,7 @@
 Updated: 2026-08-27 UTC
 Branch: `v143-contextual-prune-lobo`
 
-Active phase: **V154 broad-Other CPU benchmark RUN `33096559281` IN PROGRESS / REFERENCE-FREE. CPU Demucs separation PASSED; frozen Basic Pitch transcription is running. No reference-facing score has run.**
+Active phase: **V154 broad-Other CPU benchmark COMPLETE / SUCCESS / SEALED. Frozen generated combined-Guitar + Bass output exists. Reference-facing scoring has NOT run.**
 
 ## History preservation
 - Full checkpoint before this compact continuation: commit `3705b8aba3f166000867f7c68e5dfc104bc71fd9`; checkpoint blob `5a19f89583af89e777380d5ddb453c4957afe5f5`.
@@ -40,14 +40,13 @@ Song: **Lenny Kravitz — Are You Gonna Go My Way**.
 - Raw Bass/Lead screenshot bytes are not available in this active ChatGPT conversation/Library. Do not guess or reconstruct their note content from receipts or memory.
 
 ## V154 frozen broad-Other protocol
-- Preregistration: `debug/v154-cpu-autonomous/broad-other-preregistration.json`; creation commit `69102364d79c315044c994ff0acaf52dbc827dd5`; current Git blob `eb81efbb1ed25b023b5bce6e1159ae7785875b4a`.
+- Preregistration: `debug/v154-cpu-autonomous/broad-other-preregistration.json`; creation commit `69102364d79c315044c994ff0acaf52dbc827dd5`; Git blob `eb81efbb1ed25b023b5bce6e1159ae7785875b4a`.
 - Historical audio: commit `74b0f815ff3f66f325220975c410621503de440f`, `public/gomywayfullaitest.m4a`, `3478611` bytes, SHA256 `215bd5a657c5326f08f132ae358595a95c30b39bb7493a52c2f910d5a608149f`.
 - Grid: tempo `129.19921875`, 4 steps/beat, 16 steps/measure, 113 measures.
 - Separator: CPU `demucs==4.1.0`, model `htdemucs`, shifts `1`, jobs `1`; `Other` = combined Rhythm+Lead acoustic source; `Bass` independent.
 - Transcriber: Basic Pitch `0.4.0`, onset `0.5`, frame `0.3`, minimum note length `127.7 ms`, melodia enabled, no threshold sweep; combined Guitar MIDI `40–88`, Bass MIDI `28–67`.
-- Runtime: Python 3.10, NumPy 1.26.4, PyTorch 2.8.0+cpu, imageio-ffmpeg 0.6.0; CUDA must be absent/unavailable.
+- Runtime: Python 3.10, NumPy 1.26.4, PyTorch 2.8.0+cpu, imageio-ffmpeg 0.6.0; CUDA absent/unavailable.
 - Transcriber: `validation/v154_cpu_multitrack/transcribe_broad_other.py`; creation commit `c4a707d34b1a44dc34a8245f922773d43f0538cf`; blob `2f09ca1b8bc012749468f0079497ded71d318782`.
-- Generated schema: `dadrock.tabs.v154.cpu-multitrack-generated.v1`; anti-leakage flags must remain false for reference read, human correction, reference-guided filtering, Modal, CUDA/GPU.
 
 ## Stage-one scorer / validation
 - Scorer: `validation/v154_cpu_multitrack/score_frontend_reference.py`; creation commit `a5cab589b3efca8ec454311c49120543c04277fb`; blob `13936b70555bb1b3a9e4f83767376fd5d8b1bc51`.
@@ -56,8 +55,7 @@ Song: **Lenny Kravitz — Are You Gonna Go My Way**.
 - Explicit uncertain reference events may use `excludeFromScoring=true`; no silent repair.
 - Synthetic/reference-free tests: `validation/v154_cpu_multitrack/test_frontend_contract.py`; commit `69457239e304970a4b0c933dcaf708351d6b220b`.
 - Authoritative one-use test run `33096282137`, job `98601930286`: **SUCCESS**. Workflow sealed at commit `5dd4182ed0eaaa5d6e8da5da19c26fc2b5b1a7d7`.
-- A redundant synthetic run `33096281645` executed tests successfully but its persistence/seal step failed after concurrent branch movement. It is non-scientific duplicate validation and must not be rerun. Its workflow was explicitly removed at commit `477be95555d13e24621349b1b9edfaf834dc2a8d`.
-- Earlier failed checkpoint-writer workflow was removed at commit `99ff71c864cbc674c5af55d092b2f4aca9a29863`.
+- Redundant synthetic run `33096281645` is non-scientific duplicate validation and remains sealed; its workflow was removed at commit `477be95555d13e24621349b1b9edfaf834dc2a8d`.
 
 ## V154 architecture decision gates — FROZEN
 - Combined Rhythm+Lead timing-aware note/pitch F1 target: **>= 0.80**.
@@ -67,30 +65,33 @@ Song: **Lenny Kravitz — Are You Gonna Go My Way**.
 - Later conditional string/fret correctness target: **>= 0.85**.
 - Missing a gate diagnoses the responsible architecture stage; it is not permission to tune the consumed output against reference truth.
 
-## Broad-Other CPU benchmark — RUNNING / CONSUMED ONE-USE RUN
-- One-use workflow: `.github/workflows/v154-broad-other-cpu-once.yml`.
-- Arming commit: `986e2a69a6cb877a203d2f8b04115914dc8fd2e6`.
-- Authoritative benchmark run: **`33096559281`**, job **`98602884120`**. Treat this run as consumed; **do not rerun** it regardless of outcome.
-- Workflow is reference-free and read-only to repository contents. It does **not** push generated data back to the branch; this deliberately avoids A3's non-fast-forward persistence failure.
-- Passed steps at this checkpoint: checkout/setup; frozen protocol Git-blob verification; exact historical audio materialization/bytes/SHA verification; frozen CPU-only stack installation and CUDA assertions; deterministic 44.1k/stereo/PCM-s16le normalization; **CPU Demucs `htdemucs` broad Other + Bass separation**.
-- Current step at this checkpoint: **frozen Basic Pitch transcription of `other.wav` and `bass.wav`**.
-- Pending after transcription: generation manifest and immutable workflow-artifact upload.
-- No reference/Gold input exists in the workflow. Reference-facing score calls remain `0`.
-- Seal/delete the one-use workflow after the run regardless of success/failure.
+## Broad-Other CPU benchmark — COMPLETE / SUCCESS / SEALED
+- Authoritative one-use run: **`33096559281`**, job **`98602884120`**, head SHA `986e2a69a6cb877a203d2f8b04115914dc8fd2e6`.
+- Every benchmark step passed: frozen protocol verification; exact historical audio identity; CPU-only runtime/CUDA assertions; deterministic normalization; CPU Demucs separation; frozen Basic Pitch transcription; generation manifest; immutable artifact upload.
+- One-use workflow `.github/workflows/v154-broad-other-cpu-once.yml` was sealed/deleted after the run at commit `e969790e760dba4cf544521f2640cc130dc05d44`. **Do not rerun this consumed workflow.**
+- Immutable artifact ID `9656706944`, name `v154-broad-other-cpu-33096559281`, size `99782` bytes, digest `sha256:f0944432c37b369ac38cd25d058265a76f36b23e2f0bcf9808880d9e141dc518`; downloaded ZIP SHA256 independently verified identical. Artifact expires `2026-09-26T17:07:48Z`.
+- Normalized WAV: `37298398` bytes, SHA256 `3e61b7926eabc21b758c750f826c7426a29d6de5aafdd5c93f8045ecdc67f87e`.
+- Combined Guitar (`Other`) stem: `37298220` bytes, SHA256 `c288232d1fff42f0fcf57e3e46dfd274428cb2d4e1c916f7fe663d28d42b1440`.
+- Bass stem: `37298220` bytes, SHA256 `918670e9293b5aa633593fbe491ff520a045774ead7cbdba0a851301d4e86b0f`.
+- Basic Pitch model SHA256 `3db297d54af8e01c6e5618245c956b1d71b6a2b978cb2dedb527173186552676`.
+- Frozen generated output: `generated.json`, `1145129` bytes, SHA256 `1be86f86bb08e164342aa0c52db7a4d77beb938621e00d7d2e3b0e03f2dbfc37`.
+- Frozen generated counts: **1089 combined-Guitar note events**, **635 Bass note events**.
+- Durable public identity manifest: `debug/v154-cpu-autonomous/broad-other-run-33096559281-result.json`; creation commit `07ca01dc67c8e4fd68af8fd20d7acf62b61c3bde`.
+- These counts are **not accuracy scores**. They are generated-output identity only and must not be interpreted as quality evidence before professional reference scoring.
+- Reference/Gold inputs were absent from generation. Reference-facing score calls: **0**. Human correction: **NO**. Threshold sweep: **NO**. Modal/L4/CUDA/GPU: **NO**. `main`/Production modification: **NO**.
 
 ## Current execution status
 - Reference-facing score calls this continuation: **0**.
 - Professional reference note data opened this continuation: **NO**.
 - Stage-one synthetic tests: **PASS / SEALED**.
-- Broad-Other CPU benchmark run `33096559281`: **IN PROGRESS — DEMUCS PASS; BASIC PITCH RUNNING**.
+- Broad-Other CPU benchmark: **PASS / OUTPUT FROZEN / WORKFLOW SEALED**.
 - Modal/L4/CUDA/GPU used: **NO**.
 - `main` / Production modified: **NO**.
 
 ## Exact next steps
-1. Observe/classify run `33096559281`; never rerun it after consumption.
-2. Seal/delete `.github/workflows/v154-broad-other-cpu-once.yml` after the run.
-3. If successful, freeze the artifact identity plus `generated.json`/manifest hashes and note counts into a unique public-repo result manifest without exposing third-party reference data.
-4. Do **not** reference-score generated outputs until the privately normalized Rhythm/Lead/Bass payload is accessible and its normalized identity is frozen.
-5. Once private normalized references are accessible, score frozen combined Guitar first and Bass second exactly once with `score_frontend_reference.py`; no post-score retuning of that output.
-6. Only after recognition is frozen should Rhythm/Lead role separation, fret/string assignment, techniques, and PDF work continue.
-7. Save this checkpoint again after run classification/seal and after any generated-output identity persistence.
+1. Run reference-free structural QC on the already-frozen `generated.json` only (grid bounds, duration/onset sanity, MIDI-range enforcement, duplicate/overlap diagnostics, measure coverage). This may diagnose engineering defects but must not retune the frozen output.
+2. Persist only QC/identity metadata; do not expose or reconstruct professional reference note content.
+3. Do **not** reference-score generated outputs until the privately normalized Rhythm/Lead/Bass payload is accessible and its normalized identity is frozen. Current chat has no raw Bass/Lead screenshot bytes.
+4. Once private normalized references are accessible, score the frozen combined Guitar first and Bass second **exactly once** with `score_frontend_reference.py`; no post-score retuning of this consumed generated output.
+5. Only after acoustic recognition is frozen/scored should Rhythm/Lead role separation, fret/string assignment, techniques, and PDF work continue.
+6. Continue saving this checkpoint after each meaningful QC/result freeze.
