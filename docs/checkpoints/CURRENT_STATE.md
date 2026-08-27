@@ -2,7 +2,7 @@
 
 Updated: 2026-08-26 America/Montreal
 Branch: `v143-contextual-prune-lobo`
-Active phase: **V146 is CLOSED/SEALED after regression. V147 Phase A is now STARTED under a separately frozen pitch-hypothesis-before-fingering preregistration. V147 construction is reference-free and CPU/generated-evidence only; no calibration/gold access, no Modal/L4/GPU/live audio, no production promotion.**
+Active phase: **V146 is CLOSED/SEALED after regression. V147 Phase A is STARTED under a separately frozen pitch-hypothesis-before-fingering preregistration, including a pre-implementation CQT aggregation clarification. V147 construction is reference-free and CPU/generated-evidence only; no calibration/gold access, no Modal/L4/GPU/live audio, no production promotion.**
 
 ## Permanent safety / fixed protocol
 - Work only on `v143-contextual-prune-lobo`; never modify/merge `main` or Production.
@@ -57,17 +57,19 @@ Active phase: **V146 is CLOSED/SEALED after regression. V147 Phase A is now STAR
 - Interpretation: the fixed V146 decoder/adapter artifact materially regressed all musical calibration metrics vs accepted family #10. No V146 replay, retuning, alternate construction, or promotion is authorized.
 
 ## V147 Phase A — PITCH HYPOTHESIS BEFORE FINGERING / FROZEN / IN PROGRESS
-- Preregistration: `docs/v147-pitch-hypothesis-preregistration.md`; creation commit `a0bb5412be8830fca27726ad2067a713e8441089`.
+- Preregistration: `docs/v147-pitch-hypothesis-preregistration.md`; initial freeze commit `a0bb5412be8830fca27726ad2067a713e8441089`; pre-implementation CQT aggregation clarification commit `d1dcb96943af758cdd54843637366701f25b4b22`, blob `026d3bdbbebd385b7bdd4e896da569091b0265b7`.
+- Both prereg commits occurred before any V147 implementation code.
 - Structural diagnosis: `modal/v145_rhythm_decoder.py` copies incoming event MIDI into Stage 1 and Stage 2 searches only timing/playable string-fret states for that immutable MIDI. This explains why V146 could move 871 fingerings while emitting `pitchChanges = 0` and establishes the new-signal boundary without using reference labels to tune a candidate.
 - Existing reference-free signal path identified:
   - `analyzer/modal_analyzer.py` receives Basic Pitch `note_events` with event MIDI/confidence but does not construct alternate pitch hypotheses from the richer model output.
-  - `analyzer/modal_bend_harmonic_evidence_benchmark.py` already supplies HPSS harmonic audio plus 48-bin/octave CQT harmonic-energy evidence that can score nearby pitch bands.
+  - `analyzer/modal_bend_harmonic_evidence_benchmark.py` already supplies HPSS harmonic audio plus 48-bin/octave CQT harmonic-energy evidence that can score nearby pitch bands. Existing harmonic benchmark uses 48 bins/octave and a 128-sample hop, but Phase-A adapter intentionally accepts an already-computed CQT instead of freezing a second audio frontend.
   - `modal/v144_rhythm_pitch_shift_policy.py` is precedent for bounded ±1 event-MIDI alternatives, but its sequence/slope heuristic is NOT being reused as the V147 decision signal.
 - Frozen V147 candidate family: only `{midi-1, midi, midi+1}` within guitar MIDI `[40,88]`.
 - Frozen decision is fail-closed to original MIDI; alternate requires explicit harmonic evidence and frozen margins. Missing/non-finite/tied/weak/ambiguous evidence preserves original MIDI.
+- Frozen CQT adapter aggregation: explicit event frames; ±0.30-semitone summed candidate band; ±2.0 baseline excluding ±0.75; baseline width-normalized by candidate-bin count; per-frame dB deltas; median across frames; octave support at +12 only when fully represented.
 - V145 decoder stays untouched during initial V147 proof.
 - Phase A allowed evidence: CPU/reference-free generated cases only. No V145/V146 gold/reference access; no Modal/L4/GPU/live audio; no automatic production integration/promotion.
-- Next implementation: pure deterministic pitch-hypothesis function + CPU generated proof against the frozen preregistration.
+- Next implementation: pure deterministic pitch-hypothesis function + reference-free prepared-CQT adapter + CPU generated proof against the frozen preregistration.
 
 ## Frozen validation/render identities
 - canonical `088d44827fb23e20d9aeeb4944a672989af5846c`
@@ -83,7 +85,7 @@ Active phase: **V146 is CLOSED/SEALED after regression. V147 Phase A is now STAR
 ## EXPLICIT NEXT STEPS
 1. Keep V146 sealed; never replay or tune from consumed V146 calibration evidence.
 2. Keep accepted family #10 as the active Rhythm baseline.
-3. Implement V147 Phase-A pure pitch-hypothesis decision code exactly against `docs/v147-pitch-hypothesis-preregistration.md`; do not modify V145 in place.
+3. Implement V147 Phase-A pure pitch-hypothesis decision code and prepared-CQT evidence adapter exactly against `docs/v147-pitch-hypothesis-preregistration.md`; do not modify V145 in place.
 4. Build/run only the frozen CPU/reference-free generated proof. Save exact proof/results and checkpoint before any integration decision.
 5. If Phase A fails, STOP rather than retuning frozen thresholds. If it passes, checkpoint the result; any later live/reference/Modal/GPU evaluation or production integration needs its own authorized/frozen next phase.
 6. Continue frequent checkpoint saves on this branch.
@@ -91,6 +93,6 @@ Active phase: **V146 is CLOSED/SEALED after regression. V147 Phase A is now STAR
 ## Current stop point
 - Accepted scores remain **35.4 / 6.7 / 5.5 / 5.8 / 100 / 100**.
 - V146 remains consumed/closed/sealed with regression; no replay or retuning.
-- V147 Phase-A preregistration is frozen at commit `a0bb5412be8830fca27726ad2067a713e8441089` before implementation.
+- V147 Phase-A preregistration and deterministic CQT aggregation are frozen before implementation; latest prereg blob `026d3bdbbebd385b7bdd4e896da569091b0265b7`.
 - Existing reference-free Basic Pitch + harmonic CQT evidence path has been identified.
 - **Next: implement and CPU-prove the pure V147 pitch-hypothesis layer without reading calibration/gold evidence.**
