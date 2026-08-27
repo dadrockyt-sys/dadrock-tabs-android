@@ -1,0 +1,9 @@
+{
+  "constructorGitBlob": "ff5f395cad43ea2c8d88c34501cc02ef56933ef6",
+  "preregistrationGitBlob": "524a53b19c2ea737d2a01c9b959cfadd5b6cb9d8",
+  "runId": "33082187789",
+  "schema": "dadrock.tabs.v153.event347.phase-b-construction-attempt-sentinel.v1",
+  "selectedEventIndex": 347,
+  "status": "CONSUMED_BEFORE_CONSTRUCTION",
+  "triggerCommit": "3b7009f739634c394b8659fea593c19739138d2d"
+}
