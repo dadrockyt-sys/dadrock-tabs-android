@@ -2,7 +2,7 @@
 
 Updated: 2026-08-26 America/Montreal
 Branch: `v143-contextual-prune-lobo`
-Active phase: **V146 is CLOSED/SEALED after regression. V147 Phase A preregistration is frozen and its reference-free CPU implementation is now committed; generated proof execution is next. No calibration/gold access, no Modal/L4/GPU/live audio, no production promotion.**
+Active phase: **V146 is CLOSED/SEALED after regression. V147 Phase A preregistration is frozen and implemented. The single-use CPU/reference-free GitHub Actions proof workflow is now committed and execution is pending/being observed. No calibration/gold access, no Modal/L4/GPU/live audio, no production promotion.**
 
 ## Permanent safety / fixed protocol
 - Work only on `v143-contextual-prune-lobo`; never modify/merge `main` or Production.
@@ -54,7 +54,7 @@ Active phase: **V146 is CLOSED/SEALED after regression. V147 Phase A preregistra
 - Candidate minus accepted: pitch `-0.07100434063433214`; pitch/timing `-0.02243808212790995`; string/fret/timing `-0.048048934823876815`; chord pitch-set `-0.03529344283376307`; exact voicing `-0.05403507603322759`; critical mismatches `+163`.
 - Interpretation: V146 materially regressed musical calibration metrics. No replay, retuning, alternate construction, or promotion is authorized.
 
-## V147 Phase A — PITCH HYPOTHESIS BEFORE FINGERING / FROZEN / IMPLEMENTED / PROOF PENDING
+## V147 Phase A — PITCH HYPOTHESIS BEFORE FINGERING / FROZEN / IMPLEMENTED / CPU PROOF IN PROGRESS
 - Preregistration: `docs/v147-pitch-hypothesis-preregistration.md`; initial freeze commit `a0bb5412be8830fca27726ad2067a713e8441089`; pre-implementation aggregation clarification `d1dcb96943af758cdd54843637366701f25b4b22`; prereg blob `026d3bdbbebd385b7bdd4e896da569091b0265b7`.
 - Both prereg commits occurred before any V147 implementation code.
 - Structural diagnosis: `modal/v145_rhythm_decoder.py` preserves incoming event MIDI and optimizes timing/playable string-fret states around that immutable pitch. This explains V146 `pitchChanges = 0` and establishes the V147 signal boundary.
@@ -66,13 +66,18 @@ Active phase: **V146 is CLOSED/SEALED after regression. V147 Phase A preregistra
 - Frozen CQT aggregation: explicit frames; ±0.30 summed candidate band; ±2.0 baseline excluding ±0.75; width-normalized median baseline; per-frame dB delta; median across frames; +12 octave support only when fully represented.
 
 ### V147 implementation committed
-- Pure decision + prepared-CQT adapter: `modal/v147_pitch_hypothesis.py`; creation commit `ef08f480eea0bc0907ca5c686bc65bae60e858eb`.
-- Contract tests: `modal/tests/test_v147_pitch_hypothesis.py`; creation commit `e02823b82ff259b0bf3cb173245f382c37f5dda1`.
-- Standalone generated proof harness: `modal/v147_pitch_hypothesis_cpu_proof.py`; creation commit `ac6b92618f2cc52971e6b42c769f0345617d51bf`; schema14701.
+- Pure decision + prepared-CQT adapter: `modal/v147_pitch_hypothesis.py`; creation commit `ef08f480eea0bc0907ca5c686bc65bae60e858eb`; blob `49bce8b968406bb0d61ab61394954ef8a8303eb7`.
+- Contract tests: `modal/tests/test_v147_pitch_hypothesis.py`; creation commit `e02823b82ff259b0bf3cb173245f382c37f5dda1`; blob `f71d1da6c52a6a737faca7ab4f8989fb702be96d`.
+- Standalone generated proof harness: `modal/v147_pitch_hypothesis_cpu_proof.py`; creation commit `ac6b92618f2cc52971e6b42c769f0345617d51bf`; blob `e9d28739cd19f095cb83807fd0b23c2b14b7c966`; schema14701.
 - Implementation keeps V145 files untouched and has no calibration/gold, Modal/GPU, live-audio, or production integration path.
 - Tests cover: original-control keep; strong ±1 recovery; ambiguous/weak/tie keep; low/high guitar boundaries; missing/non-finite evidence fail closed; deterministic serialization; prepared-CQT strong-neighbor smoke; prepared-CQT shape-error fail closed.
 - Proof harness contains only generated evidence and reports the frozen metrics + payload SHA and `GO`/`STOP` gate.
-- **No runtime result is claimed yet. CPU proof/tests still must execute before Phase A can pass.**
+
+### V147 CPU proof execution state
+- Single-use workflow `.github/workflows/v147-phase-a-cpu-proof.yml` created in commit `aa7c3dc69367749a228137b7e2cb14cbf72c8610`.
+- Workflow is restricted to this branch/path and runs only the frozen V147 contract tests + generated proof on CPU; it records source blob identities and uploads proof/runtime/log artifacts.
+- A local reconstruction preflight using the exact three frozen GitHub file contents completed before the workflow commit: `13 passed`; generated proof gate `GO`; 11/11 proof cases passed; proof payload SHA256 `3843912f0c8e5da95c3993783a84762ba01b046120a48db5e5a5c6c16a3d883e`; formatted proof file SHA256 `2cba17eaf5158fdcbe73f3207eb8a58c6b3100429c1065e524a42c2937cab67d`. This is supporting preflight evidence only; repository-native GitHub Actions evidence remains the authoritative Phase-A execution to persist.
+- No calibration/gold reference, Modal/L4/GPU, live audio, V145 modification, or production integration was used in this execution path.
 
 ## Frozen validation/render identities
 - canonical `088d44827fb23e20d9aeeb4944a672989af5846c`
@@ -87,13 +92,14 @@ Active phase: **V146 is CLOSED/SEALED after regression. V147 Phase A preregistra
 
 ## EXPLICIT NEXT STEPS
 1. Keep V146 sealed; accepted family #10 remains active.
-2. Execute only V147's CPU/reference-free tests and generated proof; do not read calibration/gold evidence.
-3. Persist exact proof/runtime evidence and checkpoint the result.
-4. If Phase A fails, STOP rather than retuning frozen thresholds. If it passes, checkpoint `GO`; any later live/reference/Modal/GPU evaluation or production integration requires a separately authorized/frozen next phase.
+2. Observe only the single-use V147 CPU/reference-free workflow created at `aa7c3dc69367749a228137b7e2cb14cbf72c8610`; do not read calibration/gold evidence.
+3. Persist exact GitHub Actions proof/runtime evidence and checkpoint the run/job/artifact identities.
+4. If Phase A fails, STOP rather than retuning frozen thresholds. If it passes, checkpoint `GO`, delete/seal the single-use workflow, and stop. Any later live/reference/Modal/GPU evaluation or production integration requires a separately authorized/frozen next phase.
 5. Continue frequent checkpoint saves on this branch.
 
 ## Current stop point
 - Accepted scores remain **35.4 / 6.7 / 5.5 / 5.8 / 100 / 100**.
 - V146 remains consumed/closed/sealed with regression.
-- V147 preregistration is frozen; decision layer, prepared-CQT adapter, tests, and standalone CPU proof harness are committed.
-- **Next: execute the frozen CPU/reference-free proof and record exact evidence.**
+- V147 preregistration and implementation are frozen.
+- Local exact-source CPU preflight passed; repository-native single-use CPU proof workflow is committed and is the next authoritative evidence source.
+- **Next: capture the GitHub Actions V147 Phase-A run result, persist artifacts, checkpoint GO/STOP, then seal the workflow.**
