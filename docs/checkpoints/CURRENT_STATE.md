@@ -460,3 +460,10 @@ Active phase: **V147 Phase C REAL-AUDIO ARTIFACT-FIRST CONSTRUCTION = GO / SEALE
 - Raw F1 deltas versus accepted baseline: pitch content `-0.018181818`, pitch timing `-0.007655502`, string/fret `-0.006698565`, chord pitch-set `-0.008293020`, exact voicing `-0.008293020`, measure coverage `+0.000000000`.
 - Total V148 historical score calls across failed attempt plus recovery: **1**. Candidate search **NO**; alternate candidate **NO**; retuning **NO**; audio/HPSS/CQT **NO**; Modal/L4/GPU **NO**; main/Production integration **NO**; automatic promotion **NO**.
 - V148 reference-facing scoring authorization is consumed and sealed. Both the original scoring workflow and infrastructure recovery workflow are deleted in this final seal. Further reference-facing analysis, candidate construction/search, retuning, Production integration, or promotion requires a new separately frozen phase and fresh explicit user authorization.
+
+
+## V149 Phase A singleton confidence analysis — ARMED / REFERENCE-FREE — 2026-08-27 UTC
+- User authorized continued breakthrough work and requested score percentages when legitimate scores are available.
+- V149 Phase A is descriptive and reference-free: exactly the **106 V148 singleton changes** are profiled by frozen audio-evidence confidence features.
+- Preregistration blob `324e9f5bcd7264b3d50f54c51a86ebbf173b5ef6`; analyzer blob `1f13b85110c2ccb6fccdd24bb87b63e64ec490ca`; run `33046424194`.
+- At this checkpoint: Gold/reference read **NO**; scorer calls **0**; candidate construction/search **NO**; audio/HPSS/CQT **NO**; Modal/GPU **NO**; main/Production/promotion **NO**.
