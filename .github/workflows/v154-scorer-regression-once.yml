@@ -1,0 +1,21 @@
+name: V154 scorer regression once
+
+on:
+  push:
+    branches:
+      - v143-contextual-prune-lobo
+    paths:
+      - .github/workflows/v154-scorer-regression-once.yml
+
+permissions:
+  contents: read
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ github.sha }}
+      - name: Run reference-free scorer regression suite
+        run: python -m unittest validation.v154_cpu_multitrack.test_frontend_contract -v
