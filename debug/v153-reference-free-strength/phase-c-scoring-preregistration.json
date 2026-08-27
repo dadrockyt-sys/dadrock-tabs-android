@@ -1,0 +1,62 @@
+{
+  "schema": "dadrock.tabs.v153.event347.phase-c-scoring-preregistration.v1",
+  "classification": "cpu-only-one-use-gold-calibration-score-preregistration",
+  "branch": "v143-contextual-prune-lobo",
+  "authorizationPolicy": {
+    "source": "standing user instruction 2026-08-27",
+    "cpuScoringRequiresFreshAuthorization": false,
+    "modalL4CudaGpuRequiresFreshAuthorization": true
+  },
+  "candidateBinding": {
+    "path": "debug/v153-reference-free-strength/candidate/candidate.json",
+    "gitBlob": "975ab36c234b423d1b56e59588e960f7d9d7103f",
+    "fileSha256": "f90889acb034b61036951843846e2954d0c685f005a35eb667360a5a57391e67",
+    "canonicalEventSha256": "df40a771219fb69ae3c129c90ef5351e64b89006ff678e484741ecf0418e3d4b",
+    "eventCount": 1144,
+    "changedEventsVersusAccepted": 1,
+    "changedOnsetsVersusAccepted": 1,
+    "polyphonicChangedEventsVersusAccepted": 0,
+    "pdfEventFidelity": 1.0
+  },
+  "constructionEvidenceBinding": {
+    "constructionProofGitBlob": "efe6107df544086f62babf737ef044116ed551f0",
+    "constructionProofSha256": "8c4fe77799fb247c0a744d3650aed2f69ed44aa43d7ee5b2e97c5d4211deedc7",
+    "pdfEvidenceGitBlob": "f6b1b7b463c9b55e2e70fb116d97f3508b6c269f",
+    "pdfEvidenceSha256": "fe06f93619bbe51862933a1e235f7ff2f01356bcb02167b5b6b934a39784f33e",
+    "preservationManifestGitBlob": "f690aeefd81090b4f558353cb3f30b7fe4dca0b9",
+    "preservationManifestSha256": "174c8b060b02c8eb1cb1b147c150d922f169d9cbfec2061640096efdd9e31149"
+  },
+  "comparisonBinding": {
+    "acceptedBaselinePath": "debug/v144-rhythm-calibration/selected/v144-singleton-onset-replacement-selected-baseline.json",
+    "acceptedBaselineGitBlob": "acd12ab68ad16b8faabf38ddc9e1cc0c1e7c4b68",
+    "priorV152ScorePath": "debug/v152-active-recurrence/phase-c-score/score-result.json",
+    "priorV152ScoreGitBlob": "05042410ecd5b9793e1182a1bb1dd63ae949ab51",
+    "priorV152ScoreSha256": "cc549c6f0a33c0b90648433494ef36a31b5647191058e28b9ea089f12cab7ef4"
+  },
+  "referenceBinding": {
+    "path": "debug/v144-rhythm-calibration/reference/professional-rhythm-gold-reference.json",
+    "sha256": "18fd868ae960dfcdd1ffb0110f1a9dfd8acc2ffeb46e247d1116cd54291526ac",
+    "identitySource": "sealed V152 score result"
+  },
+  "scoringChain": {
+    "fullCalibrationWrapperPath": "validation/v144_rhythm_calibration/score_selected_conjunction_candidate.py",
+    "fullCalibrationWrapperGitBlob": "1ca2b8550d6c08e793f26b3aa91b99fb44fa7ddb",
+    "coreScorerPath": "validation/rhythm_holdout/score_rhythm_holdout.py",
+    "coreScorerGitBlob": "cc4bf61a99f22bf87a6c255e5a81220fbc82223b",
+    "canonicalAdapterPath": "validation/rhythm_holdout/canonical.py",
+    "canonicalAdapterGitBlob": "088d44827fb23e20d9aeeb4944a672989af5846c",
+    "historicalFunction": "score_selected_conjunction_candidate.score_full_candidate"
+  },
+  "frozenRules": {
+    "maximumScoreCalls": 1,
+    "candidateSearchAllowed": false,
+    "alternateCandidateAllowed": false,
+    "candidateModificationAllowed": false,
+    "thresholdWeightFilterRuleTuningAllowed": false,
+    "audioRecomputeAllowed": false,
+    "modalL4CudaGpuAllowedWithoutFreshAuthorization": false,
+    "productionPromotionAllowed": false,
+    "automaticPromotion": false
+  },
+  "postScoreBoundary": "Persist and seal the single CPU Gold score. Do not modify the scored candidate or rerun the score. Further CPU-only analysis may proceed at assistant discretion; any Modal/L4/CUDA/GPU execution requires fresh explicit user authorization."
+}
