@@ -1,0 +1,43 @@
+{
+  "schema": "dadrock.tabs.v149.singleton-confidence.phase-b-preregistration.v1",
+  "classification": "single-reference-free-construction-hypothesis-frozen",
+  "branch": "v143-contextual-prune-lobo",
+  "sourceHead": "0727e4818902ce1d0f6177030a69f51de1965f3f",
+  "basis": {
+    "analysisPath": "debug/v149-singleton-confidence/phase-a-analysis.json",
+    "analysisSha256": "e18a4a3a3fa41b20793ef742e4f2ffad0e3e4ee1b41a90997ba85d7db4bace08",
+    "population": 106,
+    "below3dB": 52,
+    "below3dBPercent": 49.056603773584904,
+    "atOrAbove3dB": 54,
+    "atOrAbove3dBPercent": 50.943396226415096,
+    "nearestGateMedianDb": 3.086744
+  },
+  "hypothesis": "The residual V148 regression is concentrated in singleton overrides that barely clear at least one frozen V147 evidence gate. Requiring an additional 3 dB of clearance on the weakest gate should fail closed on ambiguous singleton edits while preserving only high-confidence overrides.",
+  "singleFrozenConstructionPolicy": {
+    "name": "accepted-baseline-plus-v148-singletons-nearest-gate-at-least-3db",
+    "startFrom": "accepted family #10",
+    "copyV148RowOnlyWhen": "event is one of the 106 V148 singleton edits AND phase-a nearestGateExcessDb >= 3.0",
+    "otherwise": "preserve accepted row exactly",
+    "thresholdDb": 3.0,
+    "expectedChangedEvents": 54,
+    "expectedChangedOnsets": 54,
+    "expectedPolyphonicChangedEvents": 0,
+    "expectedEventCount": 1144,
+    "expectedMeasures": 113,
+    "candidateVariants": 1
+  },
+  "rationaleFor3dB": "3 dB is a simple pre-score confidence margin applied uniformly to the weakest of the already-frozen V147 gates; it is not selected from Gold/reference performance and produces no subgroup-specific tuning.",
+  "forbidden": {
+    "otherThresholdsOrFilters": true,
+    "pitchClassRegisterStringFiltering": true,
+    "candidateSweepOrVariants": true,
+    "goldOrReferenceReadDuringConstruction": true,
+    "audioReadOrDecode": true,
+    "hpssOrCqtRecompute": true,
+    "modalOrGpu": true,
+    "mainOrProductionModification": true,
+    "automaticPromotion": true
+  },
+  "scoreBoundary": "Construction is reference-free. Any Gold score must occur only after the exact constructed candidate is persisted and a separate one-use scorer is frozen to its exact identities."
+}
