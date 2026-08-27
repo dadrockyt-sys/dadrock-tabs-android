@@ -1,0 +1,1031 @@
+{
+  "acceptedGeneratedMeasure35": [
+    {
+      "durationSteps": 1,
+      "eventIndex": 344,
+      "fret": 2,
+      "measure": 35,
+      "midi": 57,
+      "step": 0,
+      "stringIndex": 2,
+      "techniques": [],
+      "tieIn": false,
+      "tieOut": false
+    },
+    {
+      "durationSteps": 4,
+      "eventIndex": 343,
+      "fret": 2,
+      "measure": 35,
+      "midi": 61,
+      "step": 0,
+      "stringIndex": 1,
+      "techniques": [],
+      "tieIn": false,
+      "tieOut": false
+    },
+    {
+      "durationSteps": 3,
+      "eventIndex": 345,
+      "fret": 2,
+      "measure": 35,
+      "midi": 61,
+      "step": 4,
+      "stringIndex": 1,
+      "techniques": [],
+      "tieIn": false,
+      "tieOut": false
+    },
+    {
+      "durationSteps": 1,
+      "eventIndex": 346,
+      "fret": 2,
+      "measure": 35,
+      "midi": 61,
+      "step": 7,
+      "stringIndex": 1,
+      "techniques": [],
+      "tieIn": false,
+      "tieOut": false
+    },
+    {
+      "durationSteps": 1,
+      "eventIndex": 347,
+      "fret": 3,
+      "measure": 35,
+      "midi": 62,
+      "step": 9,
+      "stringIndex": 1,
+      "techniques": [
+        "slide-up"
+      ],
+      "tieIn": false,
+      "tieOut": false
+    },
+    {
+      "durationSteps": 1,
+      "eventIndex": 348,
+      "fret": 2,
+      "measure": 35,
+      "midi": 52,
+      "step": 12,
+      "stringIndex": 3,
+      "techniques": [],
+      "tieIn": false,
+      "tieOut": false
+    },
+    {
+      "durationSteps": 2,
+      "eventIndex": 350,
+      "fret": 9,
+      "measure": 35,
+      "midi": 64,
+      "step": 13,
+      "stringIndex": 2,
+      "techniques": [],
+      "tieIn": false,
+      "tieOut": false
+    },
+    {
+      "durationSteps": 2,
+      "eventIndex": 349,
+      "fret": 9,
+      "measure": 35,
+      "midi": 68,
+      "step": 13,
+      "stringIndex": 1,
+      "techniques": [],
+      "tieIn": false,
+      "tieOut": false
+    },
+    {
+      "durationSteps": 1,
+      "eventIndex": 351,
+      "fret": 4,
+      "measure": 35,
+      "midi": 63,
+      "step": 15,
+      "stringIndex": 1,
+      "techniques": [],
+      "tieIn": false,
+      "tieOut": false
+    }
+  ],
+  "acceptedGeneratedNearestSameMidiGold": [
+    {
+      "eventIndex": 343,
+      "fret": 2,
+      "midi": 61,
+      "nearestSameMidiGold": {
+        "distanceSteps": null,
+        "exists": false,
+        "notes": [],
+        "timingClass": "ABSENT_FROM_GOLD_MEASURE"
+      },
+      "step": 0,
+      "stringIndex": 1
+    },
+    {
+      "eventIndex": 344,
+      "fret": 2,
+      "midi": 57,
+      "nearestSameMidiGold": {
+        "distanceSteps": 4,
+        "exists": true,
+        "notes": [
+          {
+            "durationSteps": null,
+            "fret": 7,
+            "measure": 35,
+            "midi": 57,
+            "step": 4,
+            "stringIndex": 3,
+            "techniques": [],
+            "tieIn": false,
+            "tieOut": false
+          }
+        ],
+        "timingClass": "MEASURE_LEVEL_ONLY"
+      },
+      "step": 0,
+      "stringIndex": 2
+    },
+    {
+      "eventIndex": 345,
+      "fret": 2,
+      "midi": 61,
+      "nearestSameMidiGold": {
+        "distanceSteps": null,
+        "exists": false,
+        "notes": [],
+        "timingClass": "ABSENT_FROM_GOLD_MEASURE"
+      },
+      "step": 4,
+      "stringIndex": 1
+    },
+    {
+      "eventIndex": 346,
+      "fret": 2,
+      "midi": 61,
+      "nearestSameMidiGold": {
+        "distanceSteps": null,
+        "exists": false,
+        "notes": [],
+        "timingClass": "ABSENT_FROM_GOLD_MEASURE"
+      },
+      "step": 7,
+      "stringIndex": 1
+    },
+    {
+      "eventIndex": 347,
+      "fret": 3,
+      "midi": 62,
+      "nearestSameMidiGold": {
+        "distanceSteps": 5,
+        "exists": true,
+        "notes": [
+          {
+            "durationSteps": null,
+            "fret": 7,
+            "measure": 35,
+            "midi": 62,
+            "step": 4,
+            "stringIndex": 2,
+            "techniques": [],
+            "tieIn": false,
+            "tieOut": false
+          }
+        ],
+        "timingClass": "MEASURE_LEVEL_ONLY"
+      },
+      "step": 9,
+      "stringIndex": 1
+    },
+    {
+      "eventIndex": 348,
+      "fret": 2,
+      "midi": 52,
+      "nearestSameMidiGold": {
+        "distanceSteps": null,
+        "exists": false,
+        "notes": [],
+        "timingClass": "ABSENT_FROM_GOLD_MEASURE"
+      },
+      "step": 12,
+      "stringIndex": 3
+    },
+    {
+      "eventIndex": 349,
+      "fret": 9,
+      "midi": 68,
+      "nearestSameMidiGold": {
+        "distanceSteps": 7,
+        "exists": true,
+        "notes": [
+          {
+            "durationSteps": null,
+            "fret": 9,
+            "measure": 35,
+            "midi": 68,
+            "step": 0,
+            "stringIndex": 1,
+            "techniques": [],
+            "tieIn": false,
+            "tieOut": false
+          },
+          {
+            "durationSteps": null,
+            "fret": 9,
+            "measure": 35,
+            "midi": 68,
+            "step": 1,
+            "stringIndex": 1,
+            "techniques": [],
+            "tieIn": false,
+            "tieOut": false
+          },
+          {
+            "durationSteps": null,
+            "fret": 9,
+            "measure": 35,
+            "midi": 68,
+            "step": 2,
+            "stringIndex": 1,
+            "techniques": [],
+            "tieIn": false,
+            "tieOut": false
+          },
+          {
+            "durationSteps": null,
+            "fret": 9,
+            "measure": 35,
+            "midi": 68,
+            "step": 3,
+            "stringIndex": 1,
+            "techniques": [],
+            "tieIn": false,
+            "tieOut": false
+          },
+          {
+            "durationSteps": null,
+            "fret": 9,
+            "measure": 35,
+            "midi": 68,
+            "step": 6,
+            "stringIndex": 1,
+            "techniques": [],
+            "tieIn": false,
+            "tieOut": false
+          }
+        ],
+        "timingClass": "MEASURE_LEVEL_ONLY"
+      },
+      "step": 13,
+      "stringIndex": 1
+    },
+    {
+      "eventIndex": 350,
+      "fret": 9,
+      "midi": 64,
+      "nearestSameMidiGold": {
+        "distanceSteps": 7,
+        "exists": true,
+        "notes": [
+          {
+            "durationSteps": null,
+            "fret": 9,
+            "measure": 35,
+            "midi": 64,
+            "step": 0,
+            "stringIndex": 2,
+            "techniques": [],
+            "tieIn": false,
+            "tieOut": false
+          },
+          {
+            "durationSteps": null,
+            "fret": 9,
+            "measure": 35,
+            "midi": 64,
+            "step": 1,
+            "stringIndex": 2,
+            "techniques": [],
+            "tieIn": false,
+            "tieOut": false
+          },
+          {
+            "durationSteps": null,
+            "fret": 9,
+            "measure": 35,
+            "midi": 64,
+            "step": 2,
+            "stringIndex": 2,
+            "techniques": [],
+            "tieIn": false,
+            "tieOut": false
+          },
+          {
+            "durationSteps": null,
+            "fret": 9,
+            "measure": 35,
+            "midi": 64,
+            "step": 3,
+            "stringIndex": 2,
+            "techniques": [],
+            "tieIn": false,
+            "tieOut": false
+          },
+          {
+            "durationSteps": null,
+            "fret": 9,
+            "measure": 35,
+            "midi": 64,
+            "step": 6,
+            "stringIndex": 2,
+            "techniques": [],
+            "tieIn": false,
+            "tieOut": false
+          }
+        ],
+        "timingClass": "MEASURE_LEVEL_ONLY"
+      },
+      "step": 13,
+      "stringIndex": 2
+    },
+    {
+      "eventIndex": 351,
+      "fret": 4,
+      "midi": 63,
+      "nearestSameMidiGold": {
+        "distanceSteps": null,
+        "exists": false,
+        "notes": [],
+        "timingClass": "ABSENT_FROM_GOLD_MEASURE"
+      },
+      "step": 15,
+      "stringIndex": 1
+    }
+  ],
+  "candidateGeneratedMeasure35": [
+    {
+      "durationSteps": 1,
+      "eventIndex": 344,
+      "fret": 2,
+      "measure": 35,
+      "midi": 57,
+      "step": 0,
+      "stringIndex": 2,
+      "techniques": [],
+      "tieIn": false,
+      "tieOut": false
+    },
+    {
+      "durationSteps": 4,
+      "eventIndex": 343,
+      "fret": 2,
+      "measure": 35,
+      "midi": 61,
+      "step": 0,
+      "stringIndex": 1,
+      "techniques": [],
+      "tieIn": false,
+      "tieOut": false
+    },
+    {
+      "durationSteps": 3,
+      "eventIndex": 345,
+      "fret": 2,
+      "measure": 35,
+      "midi": 61,
+      "step": 4,
+      "stringIndex": 1,
+      "techniques": [],
+      "tieIn": false,
+      "tieOut": false
+    },
+    {
+      "durationSteps": 1,
+      "eventIndex": 346,
+      "fret": 2,
+      "measure": 35,
+      "midi": 61,
+      "step": 7,
+      "stringIndex": 1,
+      "techniques": [],
+      "tieIn": false,
+      "tieOut": false
+    },
+    {
+      "durationSteps": 1,
+      "eventIndex": 347,
+      "fret": 2,
+      "measure": 35,
+      "midi": 61,
+      "step": 9,
+      "stringIndex": 1,
+      "techniques": [
+        "slide-up"
+      ],
+      "tieIn": false,
+      "tieOut": false
+    },
+    {
+      "durationSteps": 1,
+      "eventIndex": 348,
+      "fret": 2,
+      "measure": 35,
+      "midi": 52,
+      "step": 12,
+      "stringIndex": 3,
+      "techniques": [],
+      "tieIn": false,
+      "tieOut": false
+    },
+    {
+      "durationSteps": 2,
+      "eventIndex": 350,
+      "fret": 9,
+      "measure": 35,
+      "midi": 64,
+      "step": 13,
+      "stringIndex": 2,
+      "techniques": [],
+      "tieIn": false,
+      "tieOut": false
+    },
+    {
+      "durationSteps": 2,
+      "eventIndex": 349,
+      "fret": 9,
+      "measure": 35,
+      "midi": 68,
+      "step": 13,
+      "stringIndex": 1,
+      "techniques": [],
+      "tieIn": false,
+      "tieOut": false
+    },
+    {
+      "durationSteps": 1,
+      "eventIndex": 351,
+      "fret": 4,
+      "measure": 35,
+      "midi": 63,
+      "step": 15,
+      "stringIndex": 1,
+      "techniques": [],
+      "tieIn": false,
+      "tieOut": false
+    }
+  ],
+  "candidateGeneratedNearestSameMidiGold": [
+    {
+      "eventIndex": 343,
+      "fret": 2,
+      "midi": 61,
+      "nearestSameMidiGold": {
+        "distanceSteps": null,
+        "exists": false,
+        "notes": [],
+        "timingClass": "ABSENT_FROM_GOLD_MEASURE"
+      },
+      "step": 0,
+      "stringIndex": 1
+    },
+    {
+      "eventIndex": 344,
+      "fret": 2,
+      "midi": 57,
+      "nearestSameMidiGold": {
+        "distanceSteps": 4,
+        "exists": true,
+        "notes": [
+          {
+            "durationSteps": null,
+            "fret": 7,
+            "measure": 35,
+            "midi": 57,
+            "step": 4,
+            "stringIndex": 3,
+            "techniques": [],
+            "tieIn": false,
+            "tieOut": false
+          }
+        ],
+        "timingClass": "MEASURE_LEVEL_ONLY"
+      },
+      "step": 0,
+      "stringIndex": 2
+    },
+    {
+      "eventIndex": 345,
+      "fret": 2,
+      "midi": 61,
+      "nearestSameMidiGold": {
+        "distanceSteps": null,
+        "exists": false,
+        "notes": [],
+        "timingClass": "ABSENT_FROM_GOLD_MEASURE"
+      },
+      "step": 4,
+      "stringIndex": 1
+    },
+    {
+      "eventIndex": 346,
+      "fret": 2,
+      "midi": 61,
+      "nearestSameMidiGold": {
+        "distanceSteps": null,
+        "exists": false,
+        "notes": [],
+        "timingClass": "ABSENT_FROM_GOLD_MEASURE"
+      },
+      "step": 7,
+      "stringIndex": 1
+    },
+    {
+      "eventIndex": 347,
+      "fret": 2,
+      "midi": 61,
+      "nearestSameMidiGold": {
+        "distanceSteps": null,
+        "exists": false,
+        "notes": [],
+        "timingClass": "ABSENT_FROM_GOLD_MEASURE"
+      },
+      "step": 9,
+      "stringIndex": 1
+    },
+    {
+      "eventIndex": 348,
+      "fret": 2,
+      "midi": 52,
+      "nearestSameMidiGold": {
+        "distanceSteps": null,
+        "exists": false,
+        "notes": [],
+        "timingClass": "ABSENT_FROM_GOLD_MEASURE"
+      },
+      "step": 12,
+      "stringIndex": 3
+    },
+    {
+      "eventIndex": 349,
+      "fret": 9,
+      "midi": 68,
+      "nearestSameMidiGold": {
+        "distanceSteps": 7,
+        "exists": true,
+        "notes": [
+          {
+            "durationSteps": null,
+            "fret": 9,
+            "measure": 35,
+            "midi": 68,
+            "step": 0,
+            "stringIndex": 1,
+            "techniques": [],
+            "tieIn": false,
+            "tieOut": false
+          },
+          {
+            "durationSteps": null,
+            "fret": 9,
+            "measure": 35,
+            "midi": 68,
+            "step": 1,
+            "stringIndex": 1,
+            "techniques": [],
+            "tieIn": false,
+            "tieOut": false
+          },
+          {
+            "durationSteps": null,
+            "fret": 9,
+            "measure": 35,
+            "midi": 68,
+            "step": 2,
+            "stringIndex": 1,
+            "techniques": [],
+            "tieIn": false,
+            "tieOut": false
+          },
+          {
+            "durationSteps": null,
+            "fret": 9,
+            "measure": 35,
+            "midi": 68,
+            "step": 3,
+            "stringIndex": 1,
+            "techniques": [],
+            "tieIn": false,
+            "tieOut": false
+          },
+          {
+            "durationSteps": null,
+            "fret": 9,
+            "measure": 35,
+            "midi": 68,
+            "step": 6,
+            "stringIndex": 1,
+            "techniques": [],
+            "tieIn": false,
+            "tieOut": false
+          }
+        ],
+        "timingClass": "MEASURE_LEVEL_ONLY"
+      },
+      "step": 13,
+      "stringIndex": 1
+    },
+    {
+      "eventIndex": 350,
+      "fret": 9,
+      "midi": 64,
+      "nearestSameMidiGold": {
+        "distanceSteps": 7,
+        "exists": true,
+        "notes": [
+          {
+            "durationSteps": null,
+            "fret": 9,
+            "measure": 35,
+            "midi": 64,
+            "step": 0,
+            "stringIndex": 2,
+            "techniques": [],
+            "tieIn": false,
+            "tieOut": false
+          },
+          {
+            "durationSteps": null,
+            "fret": 9,
+            "measure": 35,
+            "midi": 64,
+            "step": 1,
+            "stringIndex": 2,
+            "techniques": [],
+            "tieIn": false,
+            "tieOut": false
+          },
+          {
+            "durationSteps": null,
+            "fret": 9,
+            "measure": 35,
+            "midi": 64,
+            "step": 2,
+            "stringIndex": 2,
+            "techniques": [],
+            "tieIn": false,
+            "tieOut": false
+          },
+          {
+            "durationSteps": null,
+            "fret": 9,
+            "measure": 35,
+            "midi": 64,
+            "step": 3,
+            "stringIndex": 2,
+            "techniques": [],
+            "tieIn": false,
+            "tieOut": false
+          },
+          {
+            "durationSteps": null,
+            "fret": 9,
+            "measure": 35,
+            "midi": 64,
+            "step": 6,
+            "stringIndex": 2,
+            "techniques": [],
+            "tieIn": false,
+            "tieOut": false
+          }
+        ],
+        "timingClass": "MEASURE_LEVEL_ONLY"
+      },
+      "step": 13,
+      "stringIndex": 2
+    },
+    {
+      "eventIndex": 351,
+      "fret": 4,
+      "midi": 63,
+      "nearestSameMidiGold": {
+        "distanceSteps": null,
+        "exists": false,
+        "notes": [],
+        "timingClass": "ABSENT_FROM_GOLD_MEASURE"
+      },
+      "step": 15,
+      "stringIndex": 1
+    }
+  ],
+  "classification": "cpu-reference-facing-measure-temporal-diagnostic",
+  "event347": {
+    "accepted": {
+      "durationSeconds": 0.10739229024943597,
+      "durationSteps": 1,
+      "eventIndex": 347,
+      "fret": 3,
+      "legatoTargetEventIndex": 349,
+      "legatoTargetFret": 9,
+      "legatoTargetMidi": 68,
+      "measure": 35,
+      "midi": 62,
+      "step": 9,
+      "stringIndex": 1,
+      "sustainTier": "short",
+      "techniques": [
+        "slide-up"
+      ]
+    },
+    "acceptedGrossMatched": false,
+    "acceptedNearestSameMidiGold": {
+      "distanceSteps": 5,
+      "exists": true,
+      "notes": [
+        {
+          "durationSteps": null,
+          "fret": 7,
+          "measure": 35,
+          "midi": 62,
+          "step": 4,
+          "stringIndex": 2,
+          "techniques": [],
+          "tieIn": false,
+          "tieOut": false
+        }
+      ],
+      "timingClass": "MEASURE_LEVEL_ONLY"
+    },
+    "candidate": {
+      "durationSeconds": 0.10739229024943597,
+      "durationSteps": 1,
+      "eventIndex": 347,
+      "fret": 2,
+      "legatoTargetEventIndex": 349,
+      "legatoTargetFret": 9,
+      "legatoTargetMidi": 68,
+      "measure": 35,
+      "midi": 61,
+      "step": 9,
+      "stringIndex": 1,
+      "sustainTier": "short",
+      "techniques": [
+        "slide-up"
+      ]
+    },
+    "candidateGrossMatched": false,
+    "candidateNearestSameMidiGold": {
+      "distanceSteps": null,
+      "exists": false,
+      "notes": [],
+      "timingClass": "ABSENT_FROM_GOLD_MEASURE"
+    },
+    "pitchContentCreditClassification": "MEASURE_LEVEL_ONLY_CREDIT_NO_LOCAL_TIMING_SUPPORT"
+  },
+  "gate": "GO_MAPPED",
+  "goldMeasure35": [
+    {
+      "durationSteps": null,
+      "fret": 9,
+      "measure": 35,
+      "midi": 59,
+      "step": 0,
+      "stringIndex": 3,
+      "techniques": [],
+      "tieIn": false,
+      "tieOut": false
+    },
+    {
+      "durationSteps": null,
+      "fret": 9,
+      "measure": 35,
+      "midi": 64,
+      "step": 0,
+      "stringIndex": 2,
+      "techniques": [],
+      "tieIn": false,
+      "tieOut": false
+    },
+    {
+      "durationSteps": null,
+      "fret": 9,
+      "measure": 35,
+      "midi": 68,
+      "step": 0,
+      "stringIndex": 1,
+      "techniques": [],
+      "tieIn": false,
+      "tieOut": false
+    },
+    {
+      "durationSteps": null,
+      "fret": 9,
+      "measure": 35,
+      "midi": 59,
+      "step": 1,
+      "stringIndex": 3,
+      "techniques": [],
+      "tieIn": false,
+      "tieOut": false
+    },
+    {
+      "durationSteps": null,
+      "fret": 9,
+      "measure": 35,
+      "midi": 64,
+      "step": 1,
+      "stringIndex": 2,
+      "techniques": [],
+      "tieIn": false,
+      "tieOut": false
+    },
+    {
+      "durationSteps": null,
+      "fret": 9,
+      "measure": 35,
+      "midi": 68,
+      "step": 1,
+      "stringIndex": 1,
+      "techniques": [],
+      "tieIn": false,
+      "tieOut": false
+    },
+    {
+      "durationSteps": null,
+      "fret": 9,
+      "measure": 35,
+      "midi": 59,
+      "step": 2,
+      "stringIndex": 3,
+      "techniques": [],
+      "tieIn": false,
+      "tieOut": false
+    },
+    {
+      "durationSteps": null,
+      "fret": 9,
+      "measure": 35,
+      "midi": 64,
+      "step": 2,
+      "stringIndex": 2,
+      "techniques": [],
+      "tieIn": false,
+      "tieOut": false
+    },
+    {
+      "durationSteps": null,
+      "fret": 9,
+      "measure": 35,
+      "midi": 68,
+      "step": 2,
+      "stringIndex": 1,
+      "techniques": [],
+      "tieIn": false,
+      "tieOut": false
+    },
+    {
+      "durationSteps": null,
+      "fret": 9,
+      "measure": 35,
+      "midi": 59,
+      "step": 3,
+      "stringIndex": 3,
+      "techniques": [],
+      "tieIn": false,
+      "tieOut": false
+    },
+    {
+      "durationSteps": null,
+      "fret": 9,
+      "measure": 35,
+      "midi": 64,
+      "step": 3,
+      "stringIndex": 2,
+      "techniques": [],
+      "tieIn": false,
+      "tieOut": false
+    },
+    {
+      "durationSteps": null,
+      "fret": 9,
+      "measure": 35,
+      "midi": 68,
+      "step": 3,
+      "stringIndex": 1,
+      "techniques": [],
+      "tieIn": false,
+      "tieOut": false
+    },
+    {
+      "durationSteps": null,
+      "fret": 7,
+      "measure": 35,
+      "midi": 57,
+      "step": 4,
+      "stringIndex": 3,
+      "techniques": [],
+      "tieIn": false,
+      "tieOut": false
+    },
+    {
+      "durationSteps": null,
+      "fret": 7,
+      "measure": 35,
+      "midi": 62,
+      "step": 4,
+      "stringIndex": 2,
+      "techniques": [],
+      "tieIn": false,
+      "tieOut": false
+    },
+    {
+      "durationSteps": null,
+      "fret": 7,
+      "measure": 35,
+      "midi": 66,
+      "step": 4,
+      "stringIndex": 1,
+      "techniques": [],
+      "tieIn": false,
+      "tieOut": false
+    },
+    {
+      "durationSteps": null,
+      "fret": 9,
+      "measure": 35,
+      "midi": 59,
+      "step": 6,
+      "stringIndex": 3,
+      "techniques": [],
+      "tieIn": false,
+      "tieOut": false
+    },
+    {
+      "durationSteps": null,
+      "fret": 9,
+      "measure": 35,
+      "midi": 64,
+      "step": 6,
+      "stringIndex": 2,
+      "techniques": [],
+      "tieIn": false,
+      "tieOut": false
+    },
+    {
+      "durationSteps": null,
+      "fret": 9,
+      "measure": 35,
+      "midi": 68,
+      "step": 6,
+      "stringIndex": 1,
+      "techniques": [],
+      "tieIn": false,
+      "tieOut": false
+    }
+  ],
+  "goldMidi61": [],
+  "goldMidi62": [
+    {
+      "durationSteps": null,
+      "fret": 7,
+      "measure": 35,
+      "midi": 62,
+      "step": 4,
+      "stringIndex": 2,
+      "techniques": [],
+      "tieIn": false,
+      "tieOut": false
+    }
+  ],
+  "interpretation": {
+    "measureLevelPitchContentShouldBeDiagnosticOnlyForThisEvent": true,
+    "reason": "The accepted D4 receives measure-level pitch-content credit from a Gold D4 outside gross timing tolerance; neither accepted nor selected event 347 is locally timing-matched."
+  },
+  "matchPairsMeasure35": {
+    "acceptedGrossPitch": [],
+    "acceptedTolerantPitch": [],
+    "acceptedTolerantPosition": [],
+    "candidateGrossPitch": [],
+    "candidateTolerantPitch": [],
+    "candidateTolerantPosition": []
+  },
+  "measure": 35,
+  "safety": {
+    "audioReadOrDecoded": false,
+    "automaticPromotion": false,
+    "candidateConstructed": false,
+    "candidateModified": false,
+    "candidateSearchRun": false,
+    "candidateVariantsConstructed": 0,
+    "hpssOrCqtRecomputed": false,
+    "mainOrProductionModified": false,
+    "modalL4CudaGpuUsed": false,
+    "scoreCallCount": 0,
+    "scoreWrapperInvoked": false,
+    "thresholdWeightFilterRuleTuning": false
+  },
+  "schema": "dadrock.tabs.v153.phase-e-measure35-temporal-map.v1"
+}
