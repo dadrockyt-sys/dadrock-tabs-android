@@ -44,6 +44,37 @@ class FrontendScorerTests(unittest.TestCase):
         report = scorer.score_stream(generated, reference)
         self.assertEqual(report["grossTimingAwarePitch"]["matched"], 0)
 
+    def test_optimal_match_avoids_nearest_first_cardinality_loss(self) -> None:
+        # Nearest-first greedy can consume g0->r1 first and strand r0, yielding
+        # only one match. The frozen metric is one-to-one within tolerance, so
+        # cardinality must be maximized before timing error is minimized.
+        generated = [
+            {"measure": 1, "step": 0.4, "midi": 60},
+            {"measure": 1, "step": 0.6, "midi": 60},
+        ]
+        reference = [
+            {"measure": 1, "step": 0.0, "midi": 60},
+            {"measure": 1, "step": 0.5, "midi": 60},
+        ]
+        pairs = scorer.optimal_one_to_one_match(generated, reference, 0.5)
+        self.assertEqual(len(pairs), 2)
+        self.assertEqual(sorted(round(delta, 9) for _, _, delta in pairs), [0.1, 0.4])
+
+    def test_matching_is_input_order_invariant(self) -> None:
+        generated = [
+            {"measure": 2, "step": 8.6, "midi": 64},
+            {"measure": 2, "step": 8.4, "midi": 64},
+            {"measure": 2, "step": 2.0, "midi": 67},
+        ]
+        reference = [
+            {"measure": 2, "step": 8.5, "midi": 64},
+            {"measure": 2, "step": 8.0, "midi": 64},
+            {"measure": 2, "step": 2.25, "midi": 67},
+        ]
+        report_a = scorer.score_stream(generated, reference)
+        report_b = scorer.score_stream(list(reversed(generated)), list(reversed(reference)))
+        self.assertEqual(report_a, report_b)
+
 
 class BroadOtherTranscriberHelperTests(unittest.TestCase):
     def test_stream_ranges_keep_bass_low_e(self) -> None:
