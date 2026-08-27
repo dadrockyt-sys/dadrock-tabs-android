@@ -1,0 +1,132 @@
+{
+  "schema": "dadrock.tabs.v154.broad-other-structural-qc.v1",
+  "classification": "reference-free-diagnostic-only",
+  "source": {
+    "runId": "33096559281",
+    "generatedJsonSha256": "1be86f86bb08e164342aa0c52db7a4d77beb938621e00d7d2e3b0e03f2dbfc37",
+    "generatedJsonBytes": 1145129
+  },
+  "policy": {
+    "referenceRead": false,
+    "referenceFacingScoreCalls": 0,
+    "humanCorrection": false,
+    "candidateRetuning": false,
+    "thresholdSweep": false,
+    "diagnosticOnly": true
+  },
+  "grid": {
+    "tempoBpm": 129.19921875,
+    "stepsPerBeat": 4,
+    "stepsPerMeasure": 16,
+    "measureCount": 113
+  },
+  "combinedGuitar": {
+    "eventCount": 1089,
+    "structuralErrorCount": 0,
+    "midiMin": 40,
+    "midiMax": 83,
+    "allowedMidiMin": 40,
+    "allowedMidiMax": 88,
+    "measureMin": 1,
+    "measureMax": 113,
+    "measuresWithEvents": 113,
+    "missingMeasures": [],
+    "exactDuplicateEventExtraCount": 0,
+    "duplicateOnsetMidiExtraCount": 0,
+    "sameMidiTemporalOverlapCount": 0,
+    "durationSeconds": {
+      "min": 0.1289936507936318,
+      "median": 0.1973696145124748,
+      "p95": 0.5340589569161068,
+      "max": 2.8586222222221807,
+      "over2SecondsCount": 2
+    },
+    "amplitude": {
+      "min": 0.16618305444717407,
+      "median": 0.4845868647098541,
+      "p95": 0.6681126356124878,
+      "max": 0.8670957684516907
+    },
+    "onsetDistanceToNearestGridSteps": {
+      "median": 0.2649335937499018,
+      "p90": 0.45529296875000114,
+      "max": 0.5,
+      "withinHalfStepCount": 1089
+    },
+    "eventsPerPopulatedMeasure": {
+      "min": 1,
+      "median": 10,
+      "max": 18,
+      "maxEventMeasure": 34
+    },
+    "timeBoundsSeconds": {
+      "firstStart": 0.7662585034013606,
+      "lastStart": 209.1840612244898,
+      "lastEnd": 209.32338095238094
+    }
+  },
+  "bass": {
+    "eventCount": 635,
+    "structuralErrorCount": 0,
+    "midiMin": 29,
+    "midiMax": 64,
+    "allowedMidiMin": 28,
+    "allowedMidiMax": 67,
+    "measureMin": 4,
+    "measureMax": 113,
+    "measuresWithEvents": 102,
+    "missingMeasures": [1, 2, 3, 40, 71, 72, 73, 74, 75, 111, 112],
+    "exactDuplicateEventExtraCount": 0,
+    "duplicateOnsetMidiExtraCount": 0,
+    "sameMidiTemporalOverlapCount": 0,
+    "durationSeconds": {
+      "min": 0.13931972789114866,
+      "median": 0.2205895691610067,
+      "p95": 0.47600907029478845,
+      "max": 6.621538775510203,
+      "over2SecondsCount": 4
+    },
+    "amplitude": {
+      "min": 0.2573222815990448,
+      "median": 0.5394238829612732,
+      "p95": 0.6704705357551571,
+      "max": 0.7728042006492615
+    },
+    "onsetDistanceToNearestGridSteps": {
+      "median": 0.2586015625000755,
+      "p90": 0.4538750000000391,
+      "max": 0.4995273437500032,
+      "withinHalfStepCount": 635
+    },
+    "eventsPerPopulatedMeasure": {
+      "min": 1,
+      "median": 6.5,
+      "max": 13,
+      "maxEventMeasure": 64
+    },
+    "timeBoundsSeconds": {
+      "firstStart": 5.958486167800453,
+      "lastStart": 208.13787936507936,
+      "lastEnd": 210.00836961451247
+    },
+    "longDurationDiagnostic": {
+      "status": "FLAG_FOR_LATER_INTERPRETATION_NOT_RETUNING",
+      "maxDurationSeconds": 6.621538775510203,
+      "maxDurationEvent": {
+        "sourceIndex": 0,
+        "measure": 110,
+        "step": 7.827976562499998,
+        "midi": 30,
+        "startSeconds": 203.38683083900227,
+        "amplitude": 0.685430645942688
+      },
+      "note": "Structural QC cannot determine whether long sustained detections or sparse measures are musically correct without opening the frozen professional reference. They remain unchanged in the consumed generated output."
+    }
+  },
+  "conclusion": {
+    "structuralContractPass": true,
+    "reason": "All events are finite, within frozen MIDI/grid bounds, duration-consistent, and free of exact duplicates, duplicate onset+MIDI events, and same-MIDI temporal overlaps. Combined Guitar covers all 113 measures. Bass has 102 populated measures; sparse/empty measures and long sustained events are diagnostic flags only, not defects proven without reference scoring.",
+    "generatedOutputModified": false,
+    "qualityOrAccuracyClaimMade": false
+  }
+}
