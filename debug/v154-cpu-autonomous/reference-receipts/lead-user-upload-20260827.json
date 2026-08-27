@@ -1,0 +1,55 @@
+{
+  "schema": "dadrock.tabs.v154.reference-receipt.v1",
+  "song": {
+    "title": "Are You Gonna Go My Way",
+    "artist": "Lenny Kravitz"
+  },
+  "part": "lead",
+  "source": "user-provided screenshot set",
+  "pageCount": 22,
+  "measureCoverageVisible": {
+    "start": 1,
+    "end": 113
+  },
+  "openingNotation": {
+    "timeSignature": "4/4",
+    "tempoQuarterBpm": 129
+  },
+  "referenceUse": "private/scoring-only; do not expose to candidate generation",
+  "publicRepoContentPolicy": "hashes/metadata only; no screenshot bytes or note-by-note transcription",
+  "setHashMethod": "sha256 over newline-joined page:filename:pageSha256 records in page order",
+  "setSha256": "de2f20c330e52aca6125e29ca2cf5c4b719406fc267a98d43d98f3ab1453ff3c",
+  "totalBytes": 1808383,
+  "pageFilenamesInOrder": [
+    "1000120332.jpg",
+    "1000120334.jpg",
+    "1000120336.jpg",
+    "1000120338.jpg",
+    "1000120340.jpg",
+    "1000120342.jpg",
+    "1000120344.jpg",
+    "1000120346.jpg",
+    "1000120348.jpg",
+    "1000120350.jpg",
+    "1000120352.jpg",
+    "1000120354.jpg",
+    "1000120356.jpg",
+    "1000120358.jpg",
+    "1000120360.jpg",
+    "1000120362.jpg",
+    "1000120364.jpg",
+    "1000120366.jpg",
+    "1000120368.jpg",
+    "1000120370.jpg",
+    "1000120372.jpg",
+    "1000120374.jpg"
+  ],
+  "firstPageSha256": "e14df970e9adc458d9062e9a10d501731548b81d58008c90cc46d87dc24e699c",
+  "lastPageSha256": "92bf4b1793dee2169f20f240cf1b06cc95f36c115c92e761deb9490474398c37",
+  "visualNotes": [
+    "One page contains a green UI selection highlight around a note; treat as interface overlay, not notation.",
+    "A visible annotation near measures 39-40 says 'Probably a mistake they left in'; preserve it as reference uncertainty rather than silently correcting the source.",
+    "Intentional blank/rest measures are meaningful reference state, not missing data.",
+    "The set contains the full lead/solo passage and reaches measure 113."
+  ]
+}
