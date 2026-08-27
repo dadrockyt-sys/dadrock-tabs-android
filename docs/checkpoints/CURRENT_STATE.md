@@ -2,7 +2,7 @@
 
 Updated: 2026-08-26 America/Montreal
 Branch: `v143-contextual-prune-lobo`
-Active phase: **V144 Rhythm gold calibration baseline preserved; Families #1–#14 consumed and fully sealed. Family #14 one-shot workflow and trigger are now deleted. Accepted baseline remains family #10. Next work may begin a separate CPU-only V145 Rhythm-decoder architecture using the existing V5 three-way separation output as a protected front end. No Modal/L4/GPU without fresh explicit authorization.**
+Active phase: **V144 Rhythm gold calibration baseline preserved; Families #1–#14 consumed and fully sealed. Family #14 one-shot workflow and trigger are deleted. Accepted baseline remains family #10. V145 Rhythm Decoder is now preregistered as a separate CPU-only architecture experiment using the existing V5 three-way separation output as protected input. No Modal/L4/GPU without fresh explicit authorization.**
 
 ## Permanent safety / fixed protocol
 - Work only on `v143-contextual-prune-lobo`; never modify/merge `main` or Production.
@@ -44,14 +44,19 @@ Active phase: **V144 Rhythm gold calibration baseline preserved; Families #1–#
 - One-shot trigger deletion commit **`e9536f2b4c122741f50aa317e2bbd332d0a9d03b`**.
 - Report and CPU proof JSONs remain preserved. Never rerun/retrigger/reselect/retune Family #14.
 
-## V145 direction — PREREGISTRATION STAGE ONLY
+## V145 Rhythm Decoder — PREREGISTERED / CPU-ONLY
+- Frozen preregistration: `docs/v145-rhythm-decoder-preregistration.md`.
+- Preregistration commit: **`5a5c59d305dffba16090bc7dc37d33ecbb17e295`**.
 - Goal: get beyond local post-hoc prune/rewrite families by changing the Rhythm architecture while preserving V144 family #10 as immutable fallback.
-- Protected front end: reuse current V5 three-way separation benchmark output for Rhythm. Existing V5 is register-gated event separation, not neural stem separation: bass MIDI28-51, rhythm52-63, lead64-76, each analyzer pass protected.
-- Proposed architecture: **V5 separated Rhythm evidence -> timing/onset lattice -> pitch-candidate lattice -> constrained guitar-state decoder -> existing event/PDF contract**.
-- Primary hurdle suggested by current accepted metrics: Pitch Content35.4% is much higher than Pitch+timing6.7%, so timing/onset alignment must be treated as a first-class decoding stage before string/fret/voicing assignment.
-- Initial V145 implementation must be CPU-only and benchmark-only. It must not alter V5 analyzer, family #10 baseline, frontend, Bass, Lead, main, Production, or freeze state.
-- Do not perform any Modal/L4/GPU execution until the user explicitly authorizes it after the CPU design/tests are frozen.
-- V145 should be developed beside V144, not as Family #15, unless explicitly decided later. This avoids contaminating the consumed-family calibration protocol with an architectural experiment.
+- Protected front end: reuse current V5 three-way separation benchmark Rhythm output. Existing V5 is register-gated event separation, not neural waveform/stem separation: bass MIDI28-51, rhythm52-63, lead64-76, each analyzer pass protected.
+- Frozen architecture: **V5 Rhythm-separated events -> normalized evidence -> timing/onset lattice -> pitch lattice -> constrained guitar-state decoder -> candidate event stream -> existing scorer/render/PDF gates**.
+- Initial timing lattice uses a caller-supplied grid quantum; automatic tempo estimation is deferred until the deterministic lattice contract is proven.
+- Initial pitch lattice does not invent new pitches; it carries generated MIDI evidence through nearby timing candidates.
+- Standard tuning initially frozen to MIDI `(40,45,50,55,59,64)` strings6->1, max fret24; simultaneous notes must use unique strings and preserve exact MIDI.
+- Runtime core may not accept gold/reference/FIT/validation/canary/scorer-derived inputs.
+- Primary hurdle suggested by accepted metrics: Pitch Content35.4% is much higher than Pitch+timing6.7%, so timing/onset alignment is treated as first-class before string/fret/voicing assignment.
+- V145 is separate from V144 Family #15; consumed-family outcomes are not used to shape it.
+- No live audio/Modal/L4/GPU benchmark is authorized by this preregistration.
 
 ## Fixed dependency identities
 - Residual analyzer `27ac8699279db8fc0208d067479ad3751da1a630`; singleton reconstruction search `70880d26418d907cc702233af37bcc4b643e3a57`; singleton policy `1e05e66a3523f98944370837a59e5d6e7293f9ac`.
@@ -64,13 +69,14 @@ Active phase: **V144 Rhythm gold calibration baseline preserved; Families #1–#
 1. Stay only on `v143-contextual-prune-lobo`; never main/Production/frontend/Bass/Lead; no Modal/L4/GPU without fresh explicit authorization.
 2. Family #14 is fully sealed. Preserve its report/proofs and never replay it.
 3. Preserve accepted family #10 baseline and percentages **35.4 / 6.7 / 5.5 / 5.8 / 100 / 100**.
-4. Create a frozen CPU-only V145 Rhythm-decoder architecture contract and tests beside V144.
+4. Implement the frozen V145 CPU core and unit tests exactly to preregistration commit `5a5c59d...`.
 5. Reuse V5 Rhythm-separated output as protected input; do not mutate V5 itself.
-6. First CPU targets: deterministic onset-grid/lattice structures, pitch-candidate representation, and guitar-state decoder invariants. Tests must prove no gold/reference input is required at runtime and family #10 fallback is unchanged.
-7. Checkpoint after each meaningful V145 implementation/proof step.
+6. First CPU targets: deterministic normalization, explicit-grid onset lattice, pitch evidence carry-through, physically valid guitar-position enumeration, deterministic unique-string chord states, continuity cost, fail-closed behavior, input immutability.
+7. Checkpoint after implementation and again after CPU proof.
 8. No live Modal/L4/GPU benchmark until separately and explicitly authorized.
 
 ## Current stop point
 - V144 accepted baseline family #10 unchanged; Families #1–#14 fully consumed/sealed.
 - Family #14 workflow deletion `443031fd...`; trigger deletion `e9536f2b...`.
-- Safe next work: CPU-only V145 Rhythm-decoder preregistration and implementation using protected V5 separation output.
+- V145 CPU architecture preregistered at commit `5a5c59d...`.
+- Safe next work: implement and CPU-test the frozen V145 Rhythm-decoder core.
