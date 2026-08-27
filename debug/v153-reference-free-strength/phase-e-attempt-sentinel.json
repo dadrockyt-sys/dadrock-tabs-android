@@ -1,0 +1,12 @@
+{
+  "analyzerGitBlob": "6ea4ee141863dd6613e689393790e6e6482c1e50",
+  "candidateModified": false,
+  "consumedAtUtc": "2026-08-27T15:02:49.341709+00:00",
+  "modalL4CudaGpuUsed": false,
+  "preregistrationGitBlob": "57eca109b51bc3f5c0685c3771d92b369a6d1c80",
+  "runHeadSha": "453566c5201295c40d4c4b48c79a05e68a9f502b",
+  "runId": "33085622945",
+  "schema": "dadrock.tabs.v153.phase-e-attempt.v1",
+  "scoreCallCount": 0,
+  "status": "CONSUMED_BEFORE_GOLD_TEMPORAL_MAP"
+}
