@@ -1,3 +1,4 @@
+# One-use archival trigger; no audio access or recompute.
 name: V147 Phase C Preserve Replay Once
 
 on:
@@ -116,7 +117,6 @@ jobs:
                   'sha256': expected_sha,
               }
 
-          candidate = json.loads((dest / 'candidate.json').read_text())
           evidence = json.loads((dest / 'phase-c-evidence.json').read_text())
           decisions = json.loads((dest / 'decisions.json').read_text())
           if len(decisions) != 1144:
