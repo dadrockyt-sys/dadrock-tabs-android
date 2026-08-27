@@ -4,8 +4,6 @@ on:
   push:
     branches:
       - v143-contextual-prune-lobo
-    paths:
-      - debug/v145-rhythm-decoder/.v145-stage3-evaluation-harness-proof-trigger
 
 permissions:
   contents: write
@@ -86,7 +84,7 @@ jobs:
           set -euo pipefail
           mkdir -p debug/v145-rhythm-decoder/proofs
           python - <<'PY'
-          import json, os, subprocess
+          import json, os
           from pathlib import Path
           proof = {
             'schemaVersion': 14505,
