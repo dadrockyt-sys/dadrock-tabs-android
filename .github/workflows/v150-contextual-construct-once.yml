@@ -1,0 +1,79 @@
+name: V150 contextual singleton construct once
+
+on:
+  push:
+    paths:
+      - '.github/workflows/v150-contextual-construct-once.yml'
+
+permissions:
+  contents: write
+
+jobs:
+  construct-once:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: v143-contextual-prune-lobo
+          fetch-depth: 0
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12.14'
+      - name: Reference-free construction preflight
+        run: |
+          set -euo pipefail
+          test ! -d debug/v150-contextual-singleton/candidate
+          test "$(git hash-object debug/v150-contextual-singleton/phase-b-preregistration.json)" = "56f19421897cee8f4d991a982dfdadfaef94c19c"
+          test "$(git hash-object debug/v150-contextual-singleton/phase-b-construction-authorization.json)" = "fa7ce907c580bde9d6b109024724161cc31a43e2"
+          test "$(git hash-object validation/v150_contextual_singleton/construct_once.py)" = "be75a11468e177c1ed851e1545f8093a0ceca0c1"
+          test "$(git hash-object debug/v150-contextual-singleton/phase-b-construction-attempt-sentinel.json)" = "7c0e01f3587e7da2231476fa53379d7365f9f1c5"
+          python validation/v150_contextual_singleton/construct_once.py --help >/dev/null
+      - name: Consume construction attempt and checkpoint
+        env:
+          RUN_ID: ${{ github.run_id }}
+          HEAD_SHA: ${{ github.sha }}
+        run: |
+          set -euo pipefail
+          python - <<'PY'
+          import json, os
+          from datetime import datetime, timezone
+          from pathlib import Path
+          p=Path('debug/v150-contextual-singleton/phase-b-construction-attempt-sentinel.json'); d=json.loads(p.read_text())
+          if d.get('status')!='ARMED_NOT_CONSUMED' or d.get('candidateConstructedCount')!=0 or d.get('scoreCallCount')!=0: raise SystemExit('V150 construction attempt not cleanly armed')
+          d['status']='CONSUMED_BEFORE_CONSTRUCTION'; d['runId']=os.environ['RUN_ID']; d['runHeadSha']=os.environ['HEAD_SHA']; d['consumedAtUtc']=datetime.now(timezone.utc).isoformat(); p.write_text(json.dumps(d,indent=2,sort_keys=True)+'\n')
+          cp=Path('docs/checkpoints/CURRENT_STATE.md'); marker='## V150 Phase B strict-context construction — ARMED / REFERENCE-FREE — 2026-08-27 UTC'; text=cp.read_text()
+          if marker not in text:
+              text += f'''\n\n{marker}\n- Frozen rule: revert exactly the **21/54 = 38.89%** V149 edits that were strictly worse to both immediate neighboring accepted onsets; keep the other **33/54 = 61.11%**.\n- Expected candidate: 1144 events / 113 measures / 33 singleton changes / 0 polyphonic changes / one candidate only.\n- Prereg blob `56f19421897cee8f4d991a982dfdadfaef94c19c`; auth blob `fa7ce907c580bde9d6b109024724161cc31a43e2`; constructor blob `be75a11468e177c1ed851e1545f8093a0ceca0c1`; run `{os.environ['RUN_ID']}`.\n- Gold/reference/prior score result **NO**; score calls **0**; candidate count before construction **0**; no search/alternate rule/threshold sweep/audio/GPU/Production.\n'''; cp.write_text(text)
+          PY
+          git config user.name 'github-actions[bot]'; git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add debug/v150-contextual-singleton/phase-b-construction-attempt-sentinel.json docs/checkpoints/CURRENT_STATE.md
+          git commit -m 'debug: consume V150 construction attempt [skip ci]'; git push origin HEAD:v143-contextual-prune-lobo
+      - name: Construct exactly one frozen V150 candidate
+        run: |
+          set -euo pipefail
+          python validation/v150_contextual_singleton/construct_once.py --output-dir debug/v150-contextual-singleton/candidate | tee /tmp/v150-construct-summary.json
+      - name: Verify persist checkpoint and self-seal
+        env:
+          RUN_ID: ${{ github.run_id }}
+        run: |
+          set -euo pipefail
+          python - <<'PY'
+          import hashlib,json,os
+          from datetime import datetime,timezone
+          from pathlib import Path
+          base=Path('debug/v150-contextual-singleton/candidate'); proof=json.loads((base/'construction-proof.json').read_text()); m=proof.get('metrics') or {}; s=proof.get('safety') or {}
+          if proof.get('gate')!='GO' or proof.get('deterministic') is not True or proof.get('pdfEventFidelity')!=1.0: raise SystemExit('V150 construction gate mismatch')
+          if m.get('changedEventCountVersusAccepted')!=33 or m.get('changedOnsetCountVersusAccepted')!=33 or m.get('polyphonicChangedEventsVersusAccepted')!=0 or m.get('revertedFromV149')!=21: raise SystemExit('V150 structure mismatch')
+          if s.get('goldOrReferenceRead') is not False or s.get('priorScoreResultRead') is not False or s.get('scoreCallCount')!=0 or s.get('candidateVariantsConstructed')!=1: raise SystemExit('V150 safety mismatch')
+          hashes={}
+          for n in ('candidate.json','construction-proof.json','pdf-event-fidelity.json','preservation-manifest.json'):
+              b=(base/n).read_bytes(); hashes[n]={'bytes':len(b),'sha256':hashlib.sha256(b).hexdigest()}
+          completion={'schema':'dadrock.tabs.v150.contextual-singleton.phase-b-completion.v1','classification':'one-use-reference-free-construction-complete','status':'COMPLETE_SEALED_STOP_BEFORE_SCORING','branch':'v143-contextual-prune-lobo','runId':os.environ['RUN_ID'],'completedAtUtc':datetime.now(timezone.utc).isoformat(),'candidateEventSha256':proof['candidateEventSha256'],'changedEvents':33,'changedOnsets':33,'polyphonicChangedEvents':0,'revertedFromV149':21,'retainedPercentOfV149Changes':100*33/54,'pdfEventFidelity':1.0,'outputIdentities':hashes,'goldOrReferenceRead':False,'priorScoreResultRead':False,'scoreCallCount':0,'candidateVariantsConstructed':1,'candidateSearchRun':False,'audioRead':False,'modalGpuUsed':False,'productionIntegrated':False,'automaticPromotion':False,'referenceFacingScoringAuthorization':False}
+          Path('debug/v150-contextual-singleton/phase-b-complete-sentinel.json').write_text(json.dumps(completion,indent=2,sort_keys=True)+'\n')
+          cp=Path('docs/checkpoints/CURRENT_STATE.md'); marker='## V150 Phase B strict-context construction — COMPLETE / SEALED / STOP BEFORE SCORING — 2026-08-27 UTC'; text=cp.read_text()
+          if marker in text: raise SystemExit('duplicate V150 construction checkpoint')
+          text += f'''\n\n{marker}\n- Exactly one frozen V150 candidate constructed reference-free in run `{os.environ['RUN_ID']}`.\n- Candidate canonical event SHA256 **`{proof['candidateEventSha256']}`**; 1144 events / 113 measures / **33 singleton changes / 0 polyphonic changes**.\n- Reverted **21/54 = 38.89%** of V149 changes for strict two-sided context violation; retained **33/54 = 61.11%**.\n- Deterministic replay **TRUE**; PDF/render fidelity **100.00%**. Candidate file SHA256 **`{hashes['candidate.json']['sha256']}`**.\n- Gold/reference/prior score result read **NO**; scorer calls **0**; variants **1**; no search/alternate rule/threshold sweep/retuning/audio/GPU/Production.\n- Construction authorization consumed; workflow deleted in this sealing commit. Exact-candidate scoring still requires its separate one-use binding.\n'''; cp.write_text(text)
+          PY
+          git rm .github/workflows/v150-contextual-construct-once.yml
+          git add debug/v150-contextual-singleton/candidate debug/v150-contextual-singleton/phase-b-complete-sentinel.json docs/checkpoints/CURRENT_STATE.md
+          git commit -m 'debug: persist and seal V150 contextual candidate [skip ci]'; git push origin HEAD:v143-contextual-prune-lobo
