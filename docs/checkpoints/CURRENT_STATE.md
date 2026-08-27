@@ -2,7 +2,7 @@
 
 Updated: 2026-08-26 America/Montreal
 Branch: `v143-contextual-prune-lobo`
-Active phase: **V144 Rhythm baseline preserved; Families #1–#14 fully consumed/sealed. V145 Stage 1, Stage 2, Stage 3 generated-only adapter, and Stage 3 evaluation harness are all CPU-proven/sealed. The real offline Stage 3 calibration one-shot has NOT run yet. No Modal/L4/GPU/live audio without fresh explicit authorization.**
+Active phase: **V144 Rhythm baseline preserved; Families #1–#14 fully consumed/sealed. V145 Stage 1, Stage 2, Stage 3 generated-only adapter, and Stage 3 evaluation harness are all CPU-proven/sealed. The real offline Stage 3 calibration one-shot is preregistered and its workflow is registered/frozen but NOT ARMED. No Modal/L4/GPU/live audio without fresh explicit authorization.**
 
 ## Permanent safety / fixed protocol
 - Work only on `v143-contextual-prune-lobo`; never modify/merge `main` or Production.
@@ -60,15 +60,27 @@ Active phase: **V144 Rhythm baseline preserved; Families #1–#14 fully consumed
 - Legacy proof workflow deletion `ac2097b1d9a70a0dcef7fa5986fd502cf8ebb157`; definitive proof workflow deletion `e25a50e02ceb105c5a11c1312319872c665a24e8`. Never rerun either proof workflow.
 - Earlier trigger/register attempts were infrastructure non-executions and are consumed; do not revisit them.
 
+## V145 Stage 3 real offline calibration one-shot — PREREGISTERED / WORKFLOW FROZEN / NOT ARMED
+- Real-trial prereg `docs/v145-rhythm-decoder-stage3-real-one-shot-preregistration.md`; creation commit `f123d2cc3d73e3f35dd6bef54f4fdb89963b88fd`; blob `b49c530ecfb32bdc6dc00f2be957f9754a6960d6`.
+- Workflow `.github/workflows/v145-stage3-offline-calibration-one-shot.yml`; registration commit `a03f302946632309e21ebdc2c22930100b65bc25`; exact frozen Git blob **`81f16ce5c4a7ba6801cd0ceefd8858263ea21fd2`**.
+- Registration workflow run `33031336066` completed `SKIPPED`, as required, because the registration commit message was not the one-shot trigger message. No candidate construction, calibration access, or score occurred.
+- Sole trigger path is `debug/v145-rhythm-decoder/.v145-stage3-offline-calibration-trigger`.
+- Exact trigger commit message is `v145 execute stage3 offline calibration one-shot`.
+- The trigger must bind this checkpoint commit as `preArmCheckpointCommit` and workflow blob `81f16ce5c4a7ba6801cd0ceefd8858263ea21fd2`.
+- Real one-shot order is frozen: exact identity/tests -> one generated-only V5 candidate -> candidate invariants -> freeze -> renderer contract -> PDF fidelity exactly1.0 -> frozen evaluator pre-reference gate -> accepted manifest -> gold hash/validate -> exactly one score -> immutable recheck -> persist only candidate+report.
+- Candidate output path `debug/v145-rhythm-decoder/stage3/offline-candidate.json`; report path `debug/v145-rhythm-decoder/stage3/offline-calibration-score.json`; both are required absent before execution.
+- No score-dependent branch, candidate search/ranking, replay, retuning, or promotion is permitted.
+- **At this checkpoint the real one-shot is NOT ARMED; no real Stage3 candidate exists and the V144 calibration gold has not been opened by V145.**
+
 ## EXPLICIT NEXT STEPS
-1. Freeze one **real Stage 3 offline one-shot** workflow and sole trigger. It must use only the already-frozen adapter/evaluator and exact immutable dependencies above; checkpoint its exact workflow blob before arming.
-2. Real one-shot order: verify exact immutables/proofs/tests -> build generated-only V5 candidate exactly once -> invariant validate -> freeze -> renderer-contract validation -> prove PDF event fidelity exactly1.0 -> invoke the frozen evaluator, which itself performs pre-reference gate before accepted manifest/gold -> score exactly once -> immutable recheck -> persist only explicit Stage3 candidate + score report.
-3. The real one-shot may read the V144 calibration gold only after the frozen pre-reference/fidelity gates. It is a calibration benchmark, not unseen holdout.
-4. After the one-shot, seal workflow/trigger and checkpoint immediately. Do not replay, retune, search, rank alternates, or auto-promote regardless of score.
-5. Family #10 accepted baseline stays unchanged unless a separate later promotion protocol is frozen and succeeds.
-6. No Modal/L4/GPU/live audio; protected surfaces remain untouched.
+1. The very next repository commit must create only `debug/v145-rhythm-decoder/.v145-stage3-offline-calibration-trigger` with exact message `v145 execute stage3 offline calibration one-shot`, binding this checkpoint commit and frozen workflow blob `81f16ce5c4a7ba6801cd0ceefd8858263ea21fd2`.
+2. Observe the single real one-shot. Do not rerun on any actual job failure; inspect and checkpoint instead.
+3. On success, fetch and record the explicit candidate/report identities and calibration metrics/deltas. This is benchmark evidence only; family #10 remains accepted.
+4. Seal/delete the workflow and trigger after the single execution, then checkpoint immediately.
+5. No replay, retune, alternate selection, automatic promotion, Modal/L4/GPU/live audio, or protected-surface changes.
 
 ## Current stop point
 - Accepted scores remain **35.4 / 6.7 / 5.5 / 5.8 / 100 / 100**.
 - V145 Stage1/Stage2/Stage3 adapter/evaluation harness are all SUCCESS-proven and sealed.
-- The real V145 Stage3 offline candidate build/evaluation has not run.
+- Real Stage3 one-shot prereg/workflow are frozen; workflow blob `81f16ce5c4a7ba6801cd0ceefd8858263ea21fd2`.
+- Real Stage3 candidate build/evaluation has not run; the next repository commit is the sole one-shot trigger.
