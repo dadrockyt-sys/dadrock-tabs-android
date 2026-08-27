@@ -1,0 +1,20 @@
+{
+  "schema": "dadrock.tabs.v152.active-recurrence.phase-b-construction-authorization.v1",
+  "classification": "one-use-reference-free-construction-authorized",
+  "branch": "v143-contextual-prune-lobo",
+  "userInstruction": "Let's make a major breakthrough 🙏",
+  "authorization": {
+    "received": true,
+    "scope": "exactly one V152 candidate under the frozen three-event both-selected active-recurrence policy",
+    "candidateVariantsAllowed": 1,
+    "candidateSearchAllowed": false,
+    "alternateClassCombinationAllowed": false,
+    "additionalFilterAllowed": false,
+    "thresholdSweepAllowed": false,
+    "retuningAllowed": false,
+    "audioRecomputeAllowed": false,
+    "modalGpuAllowed": false,
+    "productionPromotionAllowed": false
+  },
+  "referenceFacingScoringAuthorization": false
+}
