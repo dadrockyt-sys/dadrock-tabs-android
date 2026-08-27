@@ -1,0 +1,14 @@
+{
+  "eventCount": 603,
+  "generatedCandidateRead": false,
+  "measureCount": 113,
+  "noteCount": 946,
+  "outputPath": "research/v154-professional-references/scorer-ready/rhythm-scorer-ready.json",
+  "outputSha256": "d51083800bfcf30ee15f31a4349eaa2c439f1b8662acd91618ab31bdca321555",
+  "part": "rhythm",
+  "schema": "dadrock.tabs.v154.professional-reference.normalization-receipt.v1",
+  "scoringPerformed": false,
+  "sourcePath": "research/v154-professional-references/rhythm-professional-reference.json",
+  "sourceSha256": "18fd868ae960dfcdd1ffb0110f1a9dfd8acc2ffeb46e247d1116cd54291526ac",
+  "timingInferred": false
+}
