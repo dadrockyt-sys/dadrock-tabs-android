@@ -1,0 +1,40 @@
+{
+  "schema": "dadrock.tabs.v151.positive-consensus.phase-b-preregistration.v1",
+  "classification": "single-positive-consensus-candidate-frozen",
+  "branch": "v143-contextual-prune-lobo",
+  "basis": {
+    "phaseAAnalysisSha256": "701a46ffa8c0b50eb829fa64e7b192f6ae29e00bca7340856956d22bff5dc6d9",
+    "v150CandidateEventSha256": "72a0582cfc7d03d84cd2f878f191a69b7262b200ce248d1a896207444a3c5e4e",
+    "v150ChangedEvents": 33,
+    "positiveConsensusCount": 12,
+    "positiveConsensusPercentOfV150Changes": 36.36363636363637
+  },
+  "positiveConsensusEventIndices": [46, 132, 141, 282, 347, 457, 610, 811, 1004, 1049, 1206, 1207],
+  "singleFrozenConstructionPolicy": {
+    "name": "accepted-baseline-plus-v150-positive-consensus-only",
+    "startFrom": "accepted family #10",
+    "copyV150RowOnlyWhen": "eventIndex is one of the 12 exact positiveConsensusEventIndices",
+    "otherwise": "preserve accepted family #10 row exactly",
+    "expectedChangedEvents": 12,
+    "expectedChangedOnsets": 12,
+    "expectedPolyphonicChangedEvents": 0,
+    "expectedEventCount": 1144,
+    "expectedMeasures": 113,
+    "candidateVariants": 1
+  },
+  "hypothesis": "A V147-derived singleton override is most likely to generalize when it first clears the frozen V149 evidence margin and then receives independent positive support from both immediate-neighbor voice-leading with no contrary local exact-pitch or pitch-class recurrence signal.",
+  "forbidden": {
+    "alternateSubset": true,
+    "additionalFilter": true,
+    "thresholdSweep": true,
+    "candidateSearchOrVariants": true,
+    "goldOrReferenceReadDuringConstruction": true,
+    "priorScoreResultReadDuringConstruction": true,
+    "audioReadOrDecode": true,
+    "hpssOrCqtRecompute": true,
+    "modalOrGpu": true,
+    "mainOrProductionModification": true,
+    "automaticPromotion": true
+  },
+  "scoreBoundary": "Persist and seal the exact 12-change candidate before separately binding one reference-facing score to its exact identities."
+}
