@@ -1,0 +1,115 @@
+name: V153 event-347 candidate construction once
+
+on:
+  push:
+    branches:
+      - v143-contextual-prune-lobo
+    paths:
+      - .github/workflows/v153-event347-construct-once.yml
+
+permissions:
+  contents: write
+
+env:
+  BRANCH: v143-contextual-prune-lobo
+  SENTINEL: debug/v153-reference-free-strength/phase-b-construction-attempt-sentinel.json
+  OUTPUT_DIR: debug/v153-reference-free-strength/candidate
+
+jobs:
+  construct-once:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: v143-contextual-prune-lobo
+          fetch-depth: 0
+
+      - name: Guard exact one-use construction boundary
+        shell: bash
+        run: |
+          set -euo pipefail
+          test "$(git branch --show-current)" = "$BRANCH"
+          test ! -e "$SENTINEL"
+          test ! -e "$OUTPUT_DIR"
+          test "$(git hash-object validation/v153_reference_free_strength/construct_event347_once.py)" = "ff5f395cad43ea2c8d88c34501cc02ef56933ef6"
+          test "$(git hash-object debug/v153-reference-free-strength/phase-b-construction-preregistration.json)" = "524a53b19c2ea737d2a01c9b959cfadd5b6cb9d8"
+          test "$(git hash-object debug/v153-reference-free-strength/phase-b-construction-authorization.json)" = "ee74c80e0d50c01a8ca5deddee0fd04d7c9d005d"
+          test "$(git hash-object debug/v153-reference-free-strength/phase-a-analysis.json)" = "012353df21573a4e34f50500c1fa5deb4b63422b"
+          test "$(git hash-object debug/v152-active-recurrence/candidate/candidate.json)" = "8486188bc7c2f5d0d7649e98b0970b64dd0eebed"
+
+      - name: Consume construction attempt before execution
+        shell: bash
+        run: |
+          set -euo pipefail
+          python - <<'PY'
+          import json, os
+          from pathlib import Path
+          p = Path(os.environ["SENTINEL"])
+          p.parent.mkdir(parents=True, exist_ok=True)
+          p.write_text(json.dumps({
+              "schema": "dadrock.tabs.v153.event347.phase-b-construction-attempt-sentinel.v1",
+              "status": "CONSUMED_BEFORE_CONSTRUCTION",
+              "runId": os.environ["GITHUB_RUN_ID"],
+              "triggerCommit": os.environ["GITHUB_SHA"],
+              "constructorGitBlob": "ff5f395cad43ea2c8d88c34501cc02ef56933ef6",
+              "preregistrationGitBlob": "524a53b19c2ea737d2a01c9b959cfadd5b6cb9d8",
+              "selectedEventIndex": 347
+          }, indent=2, sort_keys=True) + "\n", encoding="utf-8")
+          PY
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add "$SENTINEL"
+          git commit -m "debug: consume V153 event-347 construction attempt [skip ci]"
+          git push origin "HEAD:$BRANCH"
+
+      - name: Make reference-facing inputs unreadable
+        shell: bash
+        run: |
+          set -euo pipefail
+          chmod 000 debug/v144-rhythm-calibration/reference/professional-rhythm-gold-reference.json 2>/dev/null || true
+          chmod 000 public/Professionalexample.jpg 2>/dev/null || true
+          chmod 000 debug/v151-positive-consensus/phase-c-score/score-result.json 2>/dev/null || true
+          chmod 000 debug/v152-active-recurrence/phase-c-score/score-result.json 2>/dev/null || true
+
+      - name: Construct frozen event-347 candidate once
+        shell: bash
+        run: |
+          set -euo pipefail
+          python validation/v153_reference_free_strength/construct_event347_once.py --output-dir "$OUTPUT_DIR"
+          sha256sum "$OUTPUT_DIR"/*
+          python - <<'PY'
+          import json, os
+          from pathlib import Path
+          proof = json.loads((Path(os.environ["OUTPUT_DIR"]) / "construction-proof.json").read_text())
+          assert proof["gate"] == "GO"
+          assert proof["selectedEventIndex"] == 347
+          assert proof["metrics"]["changedEventIndices"] == [347]
+          assert proof["metrics"]["changedEventCountVersusAccepted"] == 1
+          assert proof["metrics"]["changedOnsetCountVersusAccepted"] == 1
+          assert proof["metrics"]["polyphonicChangedEventsVersusAccepted"] == 0
+          assert proof["pdfEventFidelity"] == 1.0
+          assert proof["safety"]["goldOrReferenceRead"] is False
+          assert proof["safety"]["priorScoreResultRead"] is False
+          assert proof["safety"]["scoreCallCount"] == 0
+          assert proof["safety"]["candidateVariantsConstructed"] == 1
+          assert proof["safety"]["audioReadOrDecoded"] is False
+          assert proof["safety"]["modalL4CudaOrGpuUsed"] is False
+          print("candidateEventSha256=", proof["candidateEventSha256"])
+          PY
+
+      - name: Persist immutable event-347 candidate
+        shell: bash
+        run: |
+          set -euo pipefail
+          git add "$OUTPUT_DIR"
+          git commit -m "debug: persist V153 event-347 candidate [skip ci]"
+          git push origin "HEAD:$BRANCH"
+
+      - name: Upload construction evidence
+        uses: actions/upload-artifact@v4
+        with:
+          name: v153-event347-construction-${{ github.run_id }}
+          path: |
+            debug/v153-reference-free-strength/phase-b-construction-attempt-sentinel.json
+            debug/v153-reference-free-strength/candidate/
+          retention-days: 30
