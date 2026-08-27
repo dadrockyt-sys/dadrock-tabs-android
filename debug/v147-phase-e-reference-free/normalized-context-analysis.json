@@ -1,0 +1,719 @@
+{
+  "classification": "reference-free-normalized-context-diagnostic-no-candidate-construction",
+  "collisionAnalysis": {
+    "causeCounts": {
+      "changed-events-converged": 2,
+      "changed-into-unchanged-existing-pitch": 17
+    },
+    "directionCounts": {
+      "down-one": 15,
+      "up-one": 9
+    },
+    "fractionOfChangedOnsets": 0.08755760368663594,
+    "fractionOfPolyphonicChangedOnsets": 0.17117117117117117,
+    "introducedPitchCollisionOnsetCount": 19,
+    "onsets": [
+      {
+        "cause": "changed-into-unchanged-existing-pitch",
+        "changedEvents": [
+          {
+            "direction": "down-one",
+            "eventIndex": 86,
+            "originalMidi": 65,
+            "pitchClassTransition": "5->4",
+            "selectedEqualsUnchangedOnsetPitch": true,
+            "selectedMidi": 64
+          }
+        ],
+        "introducedDuplicateMidis": [
+          64
+        ],
+        "measure": 8,
+        "onsetSize": 2,
+        "step": 9
+      },
+      {
+        "cause": "changed-into-unchanged-existing-pitch",
+        "changedEvents": [
+          {
+            "direction": "down-one",
+            "eventIndex": 120,
+            "originalMidi": 65,
+            "pitchClassTransition": "5->4",
+            "selectedEqualsUnchangedOnsetPitch": true,
+            "selectedMidi": 64
+          }
+        ],
+        "introducedDuplicateMidis": [
+          64
+        ],
+        "measure": 12,
+        "onsetSize": 2,
+        "step": 6
+      },
+      {
+        "cause": "changed-into-unchanged-existing-pitch",
+        "changedEvents": [
+          {
+            "direction": "down-one",
+            "eventIndex": 299,
+            "originalMidi": 56,
+            "pitchClassTransition": "8->7",
+            "selectedEqualsUnchangedOnsetPitch": true,
+            "selectedMidi": 55
+          }
+        ],
+        "introducedDuplicateMidis": [
+          55
+        ],
+        "measure": 31,
+        "onsetSize": 2,
+        "step": 15
+      },
+      {
+        "cause": "changed-into-unchanged-existing-pitch",
+        "changedEvents": [
+          {
+            "direction": "down-one",
+            "eventIndex": 494,
+            "originalMidi": 65,
+            "pitchClassTransition": "5->4",
+            "selectedEqualsUnchangedOnsetPitch": true,
+            "selectedMidi": 64
+          }
+        ],
+        "introducedDuplicateMidis": [
+          64
+        ],
+        "measure": 50,
+        "onsetSize": 2,
+        "step": 2
+      },
+      {
+        "cause": "changed-into-unchanged-existing-pitch",
+        "changedEvents": [
+          {
+            "direction": "up-one",
+            "eventIndex": 524,
+            "originalMidi": 58,
+            "pitchClassTransition": "10->11",
+            "selectedEqualsUnchangedOnsetPitch": true,
+            "selectedMidi": 59
+          }
+        ],
+        "introducedDuplicateMidis": [
+          59
+        ],
+        "measure": 52,
+        "onsetSize": 2,
+        "step": 13
+      },
+      {
+        "cause": "changed-into-unchanged-existing-pitch",
+        "changedEvents": [
+          {
+            "direction": "down-one",
+            "eventIndex": 562,
+            "originalMidi": 68,
+            "pitchClassTransition": "8->7",
+            "selectedEqualsUnchangedOnsetPitch": true,
+            "selectedMidi": 67
+          }
+        ],
+        "introducedDuplicateMidis": [
+          67
+        ],
+        "measure": 56,
+        "onsetSize": 2,
+        "step": 6
+      },
+      {
+        "cause": "changed-into-unchanged-existing-pitch",
+        "changedEvents": [
+          {
+            "direction": "up-one",
+            "eventIndex": 620,
+            "originalMidi": 52,
+            "pitchClassTransition": "4->5",
+            "selectedEqualsUnchangedOnsetPitch": true,
+            "selectedMidi": 53
+          }
+        ],
+        "introducedDuplicateMidis": [
+          53
+        ],
+        "measure": 63,
+        "onsetSize": 2,
+        "step": 10
+      },
+      {
+        "cause": "changed-events-converged",
+        "changedEvents": [
+          {
+            "direction": "down-one",
+            "eventIndex": 631,
+            "originalMidi": 57,
+            "pitchClassTransition": "9->8",
+            "selectedEqualsUnchangedOnsetPitch": false,
+            "selectedMidi": 56
+          },
+          {
+            "direction": "up-one",
+            "eventIndex": 632,
+            "originalMidi": 58,
+            "pitchClassTransition": "10->11",
+            "selectedEqualsUnchangedOnsetPitch": false,
+            "selectedMidi": 59
+          },
+          {
+            "direction": "down-one",
+            "eventIndex": 633,
+            "originalMidi": 57,
+            "pitchClassTransition": "9->8",
+            "selectedEqualsUnchangedOnsetPitch": false,
+            "selectedMidi": 56
+          }
+        ],
+        "introducedDuplicateMidis": [
+          56
+        ],
+        "measure": 64,
+        "onsetSize": 3,
+        "step": 10
+      },
+      {
+        "cause": "changed-events-converged",
+        "changedEvents": [
+          {
+            "direction": "down-one",
+            "eventIndex": 702,
+            "originalMidi": 65,
+            "pitchClassTransition": "5->4",
+            "selectedEqualsUnchangedOnsetPitch": false,
+            "selectedMidi": 64
+          },
+          {
+            "direction": "up-one",
+            "eventIndex": 703,
+            "originalMidi": 63,
+            "pitchClassTransition": "3->4",
+            "selectedEqualsUnchangedOnsetPitch": false,
+            "selectedMidi": 64
+          }
+        ],
+        "introducedDuplicateMidis": [
+          64
+        ],
+        "measure": 71,
+        "onsetSize": 3,
+        "step": 2
+      },
+      {
+        "cause": "changed-into-unchanged-existing-pitch",
+        "changedEvents": [
+          {
+            "direction": "down-one",
+            "eventIndex": 719,
+            "originalMidi": 69,
+            "pitchClassTransition": "9->8",
+            "selectedEqualsUnchangedOnsetPitch": true,
+            "selectedMidi": 68
+          }
+        ],
+        "introducedDuplicateMidis": [
+          68
+        ],
+        "measure": 72,
+        "onsetSize": 3,
+        "step": 14
+      },
+      {
+        "cause": "changed-into-unchanged-existing-pitch",
+        "changedEvents": [
+          {
+            "direction": "up-one",
+            "eventIndex": 730,
+            "originalMidi": 78,
+            "pitchClassTransition": "6->7",
+            "selectedEqualsUnchangedOnsetPitch": false,
+            "selectedMidi": 79
+          },
+          {
+            "direction": "down-one",
+            "eventIndex": 731,
+            "originalMidi": 62,
+            "pitchClassTransition": "2->1",
+            "selectedEqualsUnchangedOnsetPitch": true,
+            "selectedMidi": 61
+          }
+        ],
+        "introducedDuplicateMidis": [
+          61
+        ],
+        "measure": 73,
+        "onsetSize": 3,
+        "step": 14
+      },
+      {
+        "cause": "changed-into-unchanged-existing-pitch",
+        "changedEvents": [
+          {
+            "direction": "up-one",
+            "eventIndex": 742,
+            "originalMidi": 62,
+            "pitchClassTransition": "2->3",
+            "selectedEqualsUnchangedOnsetPitch": true,
+            "selectedMidi": 63
+          }
+        ],
+        "introducedDuplicateMidis": [
+          63
+        ],
+        "measure": 74,
+        "onsetSize": 2,
+        "step": 12
+      },
+      {
+        "cause": "changed-into-unchanged-existing-pitch",
+        "changedEvents": [
+          {
+            "direction": "up-one",
+            "eventIndex": 753,
+            "originalMidi": 64,
+            "pitchClassTransition": "4->5",
+            "selectedEqualsUnchangedOnsetPitch": true,
+            "selectedMidi": 65
+          }
+        ],
+        "introducedDuplicateMidis": [
+          65
+        ],
+        "measure": 75,
+        "onsetSize": 3,
+        "step": 14
+      },
+      {
+        "cause": "changed-into-unchanged-existing-pitch",
+        "changedEvents": [
+          {
+            "direction": "up-one",
+            "eventIndex": 874,
+            "originalMidi": 76,
+            "pitchClassTransition": "4->5",
+            "selectedEqualsUnchangedOnsetPitch": true,
+            "selectedMidi": 77
+          }
+        ],
+        "introducedDuplicateMidis": [
+          77
+        ],
+        "measure": 87,
+        "onsetSize": 2,
+        "step": 10
+      },
+      {
+        "cause": "changed-into-unchanged-existing-pitch",
+        "changedEvents": [
+          {
+            "direction": "down-one",
+            "eventIndex": 941,
+            "originalMidi": 70,
+            "pitchClassTransition": "10->9",
+            "selectedEqualsUnchangedOnsetPitch": true,
+            "selectedMidi": 69
+          }
+        ],
+        "introducedDuplicateMidis": [
+          69
+        ],
+        "measure": 93,
+        "onsetSize": 2,
+        "step": 9
+      },
+      {
+        "cause": "changed-into-unchanged-existing-pitch",
+        "changedEvents": [
+          {
+            "direction": "down-one",
+            "eventIndex": 1044,
+            "originalMidi": 65,
+            "pitchClassTransition": "5->4",
+            "selectedEqualsUnchangedOnsetPitch": false,
+            "selectedMidi": 64
+          },
+          {
+            "direction": "down-one",
+            "eventIndex": 1047,
+            "originalMidi": 53,
+            "pitchClassTransition": "5->4",
+            "selectedEqualsUnchangedOnsetPitch": true,
+            "selectedMidi": 52
+          }
+        ],
+        "introducedDuplicateMidis": [
+          52
+        ],
+        "measure": 101,
+        "onsetSize": 5,
+        "step": 15
+      },
+      {
+        "cause": "changed-into-unchanged-existing-pitch",
+        "changedEvents": [
+          {
+            "direction": "down-one",
+            "eventIndex": 1084,
+            "originalMidi": 58,
+            "pitchClassTransition": "10->9",
+            "selectedEqualsUnchangedOnsetPitch": true,
+            "selectedMidi": 57
+          }
+        ],
+        "introducedDuplicateMidis": [
+          57
+        ],
+        "measure": 104,
+        "onsetSize": 3,
+        "step": 14
+      },
+      {
+        "cause": "changed-into-unchanged-existing-pitch",
+        "changedEvents": [
+          {
+            "direction": "up-one",
+            "eventIndex": 1141,
+            "originalMidi": 65,
+            "pitchClassTransition": "5->6",
+            "selectedEqualsUnchangedOnsetPitch": true,
+            "selectedMidi": 66
+          }
+        ],
+        "introducedDuplicateMidis": [
+          66
+        ],
+        "measure": 109,
+        "onsetSize": 2,
+        "step": 3
+      },
+      {
+        "cause": "changed-into-unchanged-existing-pitch",
+        "changedEvents": [
+          {
+            "direction": "down-one",
+            "eventIndex": 1188,
+            "originalMidi": 50,
+            "pitchClassTransition": "2->1",
+            "selectedEqualsUnchangedOnsetPitch": true,
+            "selectedMidi": 49
+          }
+        ],
+        "introducedDuplicateMidis": [
+          49
+        ],
+        "measure": 111,
+        "onsetSize": 2,
+        "step": 15
+      }
+    ],
+    "pitchClassTransitions": [
+      {
+        "count": 6,
+        "key": "5->4"
+      },
+      {
+        "count": 3,
+        "key": "4->5"
+      },
+      {
+        "count": 3,
+        "key": "9->8"
+      },
+      {
+        "count": 2,
+        "key": "8->7"
+      },
+      {
+        "count": 2,
+        "key": "10->11"
+      },
+      {
+        "count": 2,
+        "key": "2->1"
+      },
+      {
+        "count": 2,
+        "key": "10->9"
+      },
+      {
+        "count": 1,
+        "key": "3->4"
+      },
+      {
+        "count": 1,
+        "key": "6->7"
+      },
+      {
+        "count": 1,
+        "key": "2->3"
+      },
+      {
+        "count": 1,
+        "key": "5->6"
+      }
+    ]
+  },
+  "eventRates": {
+    "byAcceptedOnsetSize": [
+      {
+        "changeRate": 0.1799660441426146,
+        "changed": 106,
+        "key": "1",
+        "population": 589,
+        "rateRatioVsOverall": 0.8335269412921097
+      },
+      {
+        "changeRate": 0.2304147465437788,
+        "changed": 100,
+        "key": "2",
+        "population": 434,
+        "rateRatioVsOverall": 1.0671840892553965
+      },
+      {
+        "changeRate": 0.3541666666666667,
+        "changed": 34,
+        "key": "3",
+        "population": 96,
+        "rateRatioVsOverall": 1.6403508771929824
+      },
+      {
+        "changeRate": 0.28,
+        "changed": 7,
+        "key": "4+",
+        "population": 25,
+        "rateRatioVsOverall": 1.296842105263158
+      }
+    ],
+    "byOriginalPitchClass": [
+      {
+        "changeRate": 0.36363636363636365,
+        "changed": 4,
+        "key": "0",
+        "population": 11,
+        "rateRatioVsOverall": 1.6842105263157896
+      },
+      {
+        "changeRate": 0.15,
+        "changed": 6,
+        "key": "1",
+        "population": 40,
+        "rateRatioVsOverall": 0.6947368421052631
+      },
+      {
+        "changeRate": 0.6470588235294118,
+        "changed": 11,
+        "key": "10",
+        "population": 17,
+        "rateRatioVsOverall": 2.996904024767802
+      },
+      {
+        "changeRate": 0.046875,
+        "changed": 3,
+        "key": "11",
+        "population": 64,
+        "rateRatioVsOverall": 0.21710526315789475
+      },
+      {
+        "changeRate": 0.30697674418604654,
+        "changed": 66,
+        "key": "2",
+        "population": 215,
+        "rateRatioVsOverall": 1.4217870257037946
+      },
+      {
+        "changeRate": 0.6,
+        "changed": 6,
+        "key": "3",
+        "population": 10,
+        "rateRatioVsOverall": 2.7789473684210524
+      },
+      {
+        "changeRate": 0.046632124352331605,
+        "changed": 18,
+        "key": "4",
+        "population": 386,
+        "rateRatioVsOverall": 0.21598036542132532
+      },
+      {
+        "changeRate": 0.5128205128205128,
+        "changed": 20,
+        "key": "5",
+        "population": 39,
+        "rateRatioVsOverall": 2.3751686909581644
+      },
+      {
+        "changeRate": 0.15384615384615385,
+        "changed": 8,
+        "key": "6",
+        "population": 52,
+        "rateRatioVsOverall": 0.7125506072874495
+      },
+      {
+        "changeRate": 0.21212121212121213,
+        "changed": 14,
+        "key": "7",
+        "population": 66,
+        "rateRatioVsOverall": 0.9824561403508772
+      },
+      {
+        "changeRate": 0.21212121212121213,
+        "changed": 7,
+        "key": "8",
+        "population": 33,
+        "rateRatioVsOverall": 0.9824561403508772
+      },
+      {
+        "changeRate": 0.3981042654028436,
+        "changed": 84,
+        "key": "9",
+        "population": 211,
+        "rateRatioVsOverall": 1.8438513344973808
+      }
+    ],
+    "byOriginalRegister": [
+      {
+        "changeRate": 0.3225806451612903,
+        "changed": 40,
+        "key": "40-51",
+        "population": 124,
+        "rateRatioVsOverall": 1.494057724957555
+      },
+      {
+        "changeRate": 0.21666666666666667,
+        "changed": 130,
+        "key": "52-63",
+        "population": 600,
+        "rateRatioVsOverall": 1.0035087719298246
+      },
+      {
+        "changeRate": 0.164804469273743,
+        "changed": 59,
+        "key": "64-75",
+        "population": 358,
+        "rateRatioVsOverall": 0.763304910320494
+      },
+      {
+        "changeRate": 0.2903225806451613,
+        "changed": 18,
+        "key": "76-88",
+        "population": 62,
+        "rateRatioVsOverall": 1.3446519524617997
+      }
+    ],
+    "byOriginalStringIndex": [
+      {
+        "changeRate": 0.14545454545454545,
+        "changed": 40,
+        "key": "0",
+        "population": 275,
+        "rateRatioVsOverall": 0.6736842105263158
+      },
+      {
+        "changeRate": 0.2017167381974249,
+        "changed": 47,
+        "key": "1",
+        "population": 233,
+        "rateRatioVsOverall": 0.9342669979670205
+      },
+      {
+        "changeRate": 0.3601694915254237,
+        "changed": 85,
+        "key": "2",
+        "population": 236,
+        "rateRatioVsOverall": 1.6681534344335414
+      },
+      {
+        "changeRate": 0.18874172185430463,
+        "changed": 57,
+        "key": "3",
+        "population": 302,
+        "rateRatioVsOverall": 0.8741721854304635
+      },
+      {
+        "changeRate": 0.1875,
+        "changed": 9,
+        "key": "4",
+        "population": 48,
+        "rateRatioVsOverall": 0.868421052631579
+      },
+      {
+        "changeRate": 0.18,
+        "changed": 9,
+        "key": "5",
+        "population": 50,
+        "rateRatioVsOverall": 0.8336842105263157
+      }
+    ]
+  },
+  "identities": {
+    "acceptedEventSha256": "4e6f9f247134f79f30a5448515c52a6ca1012c1f1314c3458b448582999e3881",
+    "candidateEventSha256": "ca35c3492295a3079c17c35124df7a483166315e85649e95ded095c6c06b2b77",
+    "candidateFileSha256": "c0215690d5bfd9d2d47b8784eee886e942fbd28c499f25c643635c45ff7a9636",
+    "decisionsFileSha256": "3ec6c42730bf571c29258eca131c4e32da257c1ac6073e5319073818e8ac49b9",
+    "gitHead": "2127b135c4e3e98aa80e99bbf67b79d513750f2b"
+  },
+  "interpretationBoundary": "Normalized descriptive rates only; no reference labels, threshold selection, candidate construction, or score-guided optimization.",
+  "onsetRates": {
+    "byAcceptedOnsetSize": [
+      {
+        "changeRate": 0.1799660441426146,
+        "changed": 106,
+        "key": "1",
+        "population": 589,
+        "rateRatioVsOverall": 0.699960097955607
+      },
+      {
+        "changeRate": 0.4009216589861751,
+        "changed": 87,
+        "key": "2",
+        "population": 217,
+        "rateRatioVsOverall": 1.5593450699738791
+      },
+      {
+        "changeRate": 0.625,
+        "changed": 20,
+        "key": "3",
+        "population": 32,
+        "rateRatioVsOverall": 2.430875576036866
+      },
+      {
+        "changeRate": 0.6666666666666666,
+        "changed": 4,
+        "key": "4+",
+        "population": 6,
+        "rateRatioVsOverall": 2.592933947772657
+      }
+    ]
+  },
+  "overall": {
+    "acceptedEventCount": 1144,
+    "acceptedOnsetCount": 844,
+    "changedEventCount": 247,
+    "changedOnsetCount": 217,
+    "eventChangeRate": 0.2159090909090909,
+    "onsetChangeRate": 0.2571090047393365
+  },
+  "safety": {
+    "audioReadOrDecoded": false,
+    "candidateConstructed": false,
+    "candidateSearchRun": false,
+    "goldReferenceRead": false,
+    "hpssCqtRecomputed": false,
+    "mainModified": false,
+    "modalGpuUsed": false,
+    "productionModified": false,
+    "professionalImageRead": false,
+    "referenceScorerInvoked": false,
+    "thresholdRetuned": false
+  },
+  "schema": "dadrock.tabs.v147.phase-e-normalized-context.result.v1"
+}

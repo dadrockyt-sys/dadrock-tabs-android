@@ -1,0 +1,1 @@
+{"collisionCauseCounts": {"changed-events-converged": 2, "changed-into-unchanged-existing-pitch": 17}, "collisionOnsets": 19, "overallEventChangeRate": 0.2159090909090909, "overallOnsetChangeRate": 0.2571090047393365}

@@ -1,0 +1,27 @@
+{
+  "analyzerGitBlob": "ff35b44b004e407a1ce09e83828061325d0f9947",
+  "classification": "deterministic-reference-free-result-recovered-after-persistence-assertion-failure",
+  "collisionDefinitions": {
+    "netPitchSetCardinalityLossOnsets": 18,
+    "newDuplicateMidiIdentityOnsets": 19
+  },
+  "normalizedMarkdownSha256": "586e765ed27e88a5c4e57244159e49f9432ba2e025dc173a0a81c8d751550650",
+  "normalizedResultSha256": "03add61b3fef99edb9cfae7815b83207436fa85cbf8d11a4e1f4d540ab8ad088",
+  "originalFailedRunId": 33042691252,
+  "reconciliationGitBlob": "40e43b756a55e4b62d2ed4b53b1c8c40792912eb",
+  "recoveryRunId": 33042852763,
+  "safety": {
+    "audioReadOrDecoded": false,
+    "candidateConstructed": false,
+    "candidateSearchRun": false,
+    "goldReferenceRead": false,
+    "hpssCqtRecomputed": false,
+    "mainModified": false,
+    "modalGpuUsed": false,
+    "productionModified": false,
+    "professionalImageRead": false,
+    "referenceScorerInvoked": false,
+    "thresholdRetuned": false
+  },
+  "schema": "dadrock.tabs.v147.phase-e-normalized-context-recovery-envelope.v1"
+}

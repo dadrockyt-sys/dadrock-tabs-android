@@ -1,11 +1,12 @@
 {
-  "schema": "dadrock.tabs.v147.phase-e-normalized-context-recovery-sentinel.v1",
-  "githubRunId": "33042852763",
-  "workflowArmingCommit": "55d4e6af3495bc35da031f9065f6f3c14e46f716",
-  "originalFailedRunId": "33042691252",
-  "reconciliationGitBlob": "40e43b756a55e4b62d2ed4b53b1c8c40792912eb",
   "analyzerGitBlob": "ff35b44b004e407a1ce09e83828061325d0f9947",
-  "referenceReadable": false,
+  "githubRunId": "33042852763",
+  "originalFailedRunId": "33042691252",
   "professionalImageReadable": false,
-  "recoveryCompleted": false
+  "reconciliationGitBlob": "40e43b756a55e4b62d2ed4b53b1c8c40792912eb",
+  "recoveryCompleted": true,
+  "referenceReadable": false,
+  "resultSha256": "03add61b3fef99edb9cfae7815b83207436fa85cbf8d11a4e1f4d540ab8ad088",
+  "schema": "dadrock.tabs.v147.phase-e-normalized-context-recovery-sentinel.v1",
+  "workflowArmingCommit": "55d4e6af3495bc35da031f9065f6f3c14e46f716"
 }

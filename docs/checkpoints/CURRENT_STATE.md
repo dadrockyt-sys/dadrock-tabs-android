@@ -337,3 +337,17 @@ Active phase: **V147 Phase C REAL-AUDIO ARTIFACT-FIRST CONSTRUCTION = GO / SEALE
 - Reconciliation frozen at `debug/v147-phase-e-reference-free/phase-e-collision-definition-reconciliation.json`, blob `40e43b756a55e4b62d2ed4b53b1c8c40792912eb`.
 - Recovery run `33042852763` is authorized only to re-materialize the exact deterministic analyzer blob `ff35b44b004e407a1ce09e83828061325d0f9947` from immutable preserved inputs and persist its output; it does not alter the analysis definition or construct a candidate.
 - Gold/reference/professional image are unreadable; audio/HPSS/CQT/Modal/GPU/candidate construction/search/retuning are prohibited.
+
+## V147 Phase E normalized-context analysis — RECOVERED / COMPLETE / SEALED — 2026-08-27 UTC
+- Original run `33042691252` successfully computed the normalized analysis but failed only in post-analysis persistence. Recovery run `33042852763` re-materialized the **same frozen analyzer** from immutable preserved inputs with Gold/reference/image unreadable.
+- Normalized result SHA256 `03add61b3fef99edb9cfae7815b83207436fa85cbf8d11a4e1f4d540ab8ad088`; analyzer blob `ff35b44b004e407a1ce09e83828061325d0f9947`; reconciliation blob `40e43b756a55e4b62d2ed4b53b1c8c40792912eb`.
+- Collision-definition reconciliation: **18 net pitch-set-cardinality-loss onsets** and **19 newly duplicated-MIDI-identity onsets**. These are intentionally different metrics, not contradictory results.
+- Overall event substitution rate: **247/1144 = 21.59%**. Overall changed-onset rate: **217/844 = 25.71%**.
+- Highest normalized register rate: `40-51` = 40/124 (32.26%, 1.49x overall).
+- Highest normalized pitch-class rate: PC `10` = 11/17 (64.71%, 3.00x overall).
+- Highest normalized string rate: string `2` = 85/236 (36.02%, 1.67x overall).
+- Highest event-rate onset-size context: `3` = 34/96 (35.42%, 1.64x overall).
+- Event rates by onset size: `[{'changeRate': 0.1799660441426146, 'changed': 106, 'key': '1', 'population': 589, 'rateRatioVsOverall': 0.8335269412921097}, {'changeRate': 0.2304147465437788, 'changed': 100, 'key': '2', 'population': 434, 'rateRatioVsOverall': 1.0671840892553965}, {'changeRate': 0.3541666666666667, 'changed': 34, 'key': '3', 'population': 96, 'rateRatioVsOverall': 1.6403508771929824}, {'changeRate': 0.28, 'changed': 7, 'key': '4+', 'population': 25, 'rateRatioVsOverall': 1.296842105263158}]`. Onset-level rates by onset size: `[{'changeRate': 0.1799660441426146, 'changed': 106, 'key': '1', 'population': 589, 'rateRatioVsOverall': 0.699960097955607}, {'changeRate': 0.4009216589861751, 'changed': 87, 'key': '2', 'population': 217, 'rateRatioVsOverall': 1.5593450699738791}, {'changeRate': 0.625, 'changed': 20, 'key': '3', 'population': 32, 'rateRatioVsOverall': 2.430875576036866}, {'changeRate': 0.6666666666666666, 'changed': 4, 'key': '4+', 'population': 6, 'rateRatioVsOverall': 2.592933947772657}]`.
+- New duplicate-MIDI identities arose on **19 / 217** changed onsets (8.76%) and 17.12% of polyphonic changed onsets. Causes: `{'changed-events-converged': 2, 'changed-into-unchanged-existing-pitch': 17}`; directions: `{'down-one': 15, 'up-one': 9}`.
+- Phase E safety remained clean: no Gold/reference/professional image read; no audio/HPSS/CQT/Modal/L4/GPU; no candidate construction/search; no threshold retuning; no main/Production change.
+- Phase E diagnosis is complete. Next safe boundary is a **separate V148 hypothesis/preregistration only**; do not construct or score V148 until that protocol is frozen.
