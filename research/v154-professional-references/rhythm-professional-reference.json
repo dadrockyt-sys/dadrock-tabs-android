@@ -1,0 +1,8349 @@
+{
+  "completeReference": true,
+  "holdout": true,
+  "instrument": "rhythm",
+  "measureRange": {
+    "firstMeasure": 1,
+    "lastMeasure": 113,
+    "measureCount": 113
+  },
+  "measures": [
+    {
+      "events": [
+        {
+          "notes": [
+            {
+              "fret": 2,
+              "midi": 57,
+              "stringIndex": 2
+            }
+          ],
+          "step": 0
+        },
+        {
+          "notes": [
+            {
+              "fret": 0,
+              "midi": 55,
+              "stringIndex": 2
+            }
+          ],
+          "step": 3
+        },
+        {
+          "notes": [
+            {
+              "fret": 2,
+              "midi": 52,
+              "stringIndex": 3
+            }
+          ],
+          "step": 4
+        },
+        {
+          "notes": [
+            {
+              "fret": 0,
+              "midi": 40,
+              "stringIndex": 5
+            }
+          ],
+          "step": 6
+        },
+        {
+          "notes": [
+            {
+              "fret": 0,
+              "midi": 50,
+              "stringIndex": 3
+            }
+          ],
+          "step": 8
+        },
+        {
+          "notes": [
+            {
+              "fret": 2,
+              "midi": 52,
+              "stringIndex": 3
+            }
+          ],
+          "step": 10
+        },
+        {
+          "notes": [
+            {
+              "fret": 0,
+              "midi": 40,
+              "stringIndex": 5
+            }
+          ],
+          "step": 14
+        }
+      ],
+      "measure": 1,
+      "section": "Intro"
+    },
+    {
+      "events": [
+        {
+          "notes": [
+            {
+              "fret": 2,
+              "midi": 57,
+              "stringIndex": 2
+            }
+          ],
+          "step": 0
+        },
+        {
+          "notes": [
+            {
+              "fret": 0,
+              "midi": 55,
+              "stringIndex": 2
+            }
+          ],
+          "step": 3
+        },
+        {
+          "notes": [
+            {
+              "fret": 2,
+              "midi": 52,
+              "stringIndex": 3
+            }
+          ],
+          "step": 4
+        },
+        {
+          "notes": [
+            {
+              "fret": 0,
+              "midi": 40,
+              "stringIndex": 5
+            }
+          ],
+          "step": 6
+        },
+        {
+          "notes": [
+            {
+              "fret": 0,
+              "midi": 50,
+              "stringIndex": 3
+            }
+          ],
+          "step": 8
+        },
+        {
+          "notes": [
+            {
+              "fret": 2,
+              "midi": 52,
+              "stringIndex": 3
+            }
+          ],
+          "step": 10
+        },
+        {
+          "notes": [
+            {
+              "fret": 3,
+              "midi": 67,
+              "stringIndex": 0
+            },
+            {
+              "fret": 3,
+              "midi": 62,
+              "stringIndex": 1
+            }
+          ],
+          "step": 12
+        },
+        {
+          "notes": [
+            {
+              "fret": 3,
+              "midi": 67,
+              "stringIndex": 0
+            },
+            {
+              "fret": 3,
+              "midi": 62,
+              "stringIndex": 1
+            }
+          ],
+          "step": 13
+        }
+      ],
+      "measure": 2
+    },
+    {
+      "events": [
+        {
+          "notes": [
+            {
+              "fret": 2,
+              "midi": 57,
+              "stringIndex": 2
+            }
+          ],
+          "step": 0
+        },
+        {
+          "notes": [
+            {
+              "fret": 0,
+              "midi": 55,
+              "stringIndex": 2
+            }
+          ],
+          "step": 3
+        },
+        {
+          "notes": [
+            {
+              "fret": 2,
+              "midi": 52,
+              "stringIndex": 3
+            }
+          ],
+          "step": 4
+        },
+        {
+          "notes": [
+            {
+              "fret": 0,
+              "midi": 40,
+              "stringIndex": 5
+            }
+          ],
+          "step": 6
+        },
+        {
+          "notes": [
+            {
+              "fret": 0,
+              "midi": 50,
+              "stringIndex": 3
+            }
+          ],
+          "step": 8
+        },
+        {
+          "notes": [
+            {
+              "fret": 2,
+              "midi": 52,
+              "stringIndex": 3
+            }
+          ],
+          "step": 10
+        },
+        {
+          "notes": [
+            {
+              "fret": 0,
+              "midi": 40,
+              "stringIndex": 5
+            }
+          ],
+          "step": 14
+        }
+      ],
+      "measure": 3
+    },
+    {
+      "events": [
+        {
+          "notes": [
+            {
+              "fret": 2,
+              "midi": 57,
+              "stringIndex": 2
+            }
+          ],
+          "step": 0
+        },
+        {
+          "notes": [
+            {
+              "fret": 0,
+              "midi": 55,
+              "stringIndex": 2
+            }
+          ],
+          "step": 3
+        },
+        {
+          "notes": [
+            {
+              "fret": 2,
+              "midi": 52,
+              "stringIndex": 3
+            }
+          ],
+          "step": 4
+        },
+        {
+          "notes": [
+            {
+              "fret": 0,
+              "midi": 40,
+              "stringIndex": 5
+            }
+          ],
+          "step": 6
+        },
+        {
+          "notes": [
+            {
+              "fret": 0,
+              "midi": 50,
+              "stringIndex": 3
+            }
+          ],
+          "step": 8
+        },
+        {
+          "notes": [
+            {
+              "fret": 2,
+              "midi": 52,
+              "stringIndex": 3
+            }
+          ],
+          "step": 10
+        },
+        {
+          "notes": [
+            {
+              "fret": 3,
+              "midi": 67,
+              "stringIndex": 0
+            },
+            {
+              "fret": 3,
+              "midi": 62,
+              "stringIndex": 1
+            }
+          ],
+          "step": 12
+        },
+        {
+          "notes": [
+            {
+              "fret": 3,
+              "midi": 67,
+              "stringIndex": 0
+            },
+            {
+              "fret": 3,
+              "midi": 62,
+              "stringIndex": 1
+            }
+          ],
+          "step": 13
+        }
+      ],
+      "measure": 4
+    },
+    {
+      "events": [
+        {
+          "notes": [
+            {
+              "fret": 2,
+              "midi": 57,
+              "stringIndex": 2
+            }
+          ],
+          "step": 0
+        },
+        {
+          "notes": [
+            {
+              "fret": 0,
+              "midi": 55,
+              "stringIndex": 2
+            }
+          ],
+          "step": 3
+        },
+        {
+          "notes": [
+            {
+              "fret": 2,
+              "midi": 52,
+              "stringIndex": 3
+            }
+          ],
+          "step": 4
+        },
+        {
+          "notes": [
+            {
+              "fret": 0,
+              "midi": 40,
+              "stringIndex": 5
+            }
+          ],
+          "step": 6
+        },
+        {
+          "notes": [
+            {
+              "fret": 0,
+              "midi": 50,
+              "stringIndex": 3
+            }
+          ],
+          "step": 8
+        },
+        {
+          "notes": [
+            {
+              "fret": 2,
+              "midi": 52,
+              "stringIndex": 3
+            }
+          ],
+          "step": 10
+        },
+        {
+          "notes": [
+            {
+              "fret": 0,
+              "midi": 40,
+              "stringIndex": 5
+            }
+          ],
+          "step": 14
+        }
+      ],
+      "measure": 5
+    },
+    {
+      "events": [
+        {
+          "notes": [
+            {
+              "fret": 2,
+              "midi": 57,
+              "stringIndex": 2
+            }
+          ],
+          "step": 0
+        },
+        {
+          "notes": [
+            {
+              "fret": 0,
+              "midi": 55,
+              "stringIndex": 2
+            }
+          ],
+          "step": 3
+        },
+        {
+          "notes": [
+            {
+              "fret": 2,
+              "midi": 52,
+              "stringIndex": 3
+            }
+          ],
+          "step": 4
+        },
+        {
+          "notes": [
+            {
+              "fret": 0,
+              "midi": 40,
+              "stringIndex": 5
+            }
+          ],
+          "step": 6
+        },
+        {
+          "notes": [
+            {
+              "fret": 0,
+              "midi": 50,
+              "stringIndex": 3
+            }
+          ],
+          "step": 8
+        },
+        {
+          "notes": [
+            {
+              "fret": 2,
+              "midi": 52,
+              "stringIndex": 3
+            }
+          ],
+          "step": 10
+        },
+        {
+          "notes": [
+            {
+              "fret": 3,
+              "midi": 67,
+              "stringIndex": 0
+            },
+            {
+              "fret": 3,
+              "midi": 62,
+              "stringIndex": 1
+            }
+          ],
+          "step": 12
+        },
+        {
+          "notes": [
+            {
+              "fret": 3,
+              "midi": 67,
+              "stringIndex": 0
+            },
+            {
+              "fret": 3,
+              "midi": 62,
+              "stringIndex": 1
+            }
+          ],
+          "step": 13
+        }
+      ],
+      "measure": 6
+    },
+    {
+      "events": [
+        {
+          "notes": [
+            {
+              "fret": 2,
+              "midi": 57,
+              "stringIndex": 2
+            }
+          ],
+          "step": 0
+        },
+        {
+          "notes": [
+            {
+              "fret": 0,
+              "midi": 55,
+              "stringIndex": 2
+            }
+          ],
+          "step": 3
+        },
+        {
+          "notes": [
+            {
+              "fret": 2,
+              "midi": 52,
+              "stringIndex": 3
+            }
+          ],
+          "step": 4
+        },
+        {
+          "notes": [
+            {
+              "fret": 0,
+              "midi": 40,
+              "stringIndex": 5
+            }
+          ],
+          "step": 6
+        },
+        {
+          "notes": [
+            {
+              "fret": 0,
+              "midi": 50,
+              "stringIndex": 3
+            }
+          ],
+          "step": 8
+        },
+        {
+          "notes": [
+            {
+              "fret": 2,
+              "midi": 52,
+              "stringIndex": 3
+            }
+          ],
+          "step": 10
+        },
+        {
+          "notes": [
+            {
+              "fret": 0,
+              "midi": 40,
+              "stringIndex": 5
+            }
+          ],
+          "step": 14
+        }
+      ],
+      "measure": 7
+    },
+    {
+      "events": [
+        {
+          "notes": [
+            {
+              "fret": 2,
+              "midi": 57,
+              "stringIndex": 2
+            }
+          ],
+          "step": 0
+        },
+        {
+          "notes": [
+            {
+              "fret": 0,
+              "midi": 55,
+              "stringIndex": 2
+            }
+          ],
+          "step": 3
+        },
+        {
+          "notes": [
+            {
+              "fret": 2,
+              "midi": 52,
+              "stringIndex": 3
+            }
+          ],
+          "step": 4
+        },
+        {
+          "notes": [
+            {
+              "fret": 0,
+              "midi": 40,
+              "stringIndex": 5
+            }
+          ],
+          "step": 6
+        },
+        {
+          "notes": [
+            {
+              "fret": 0,
+              "midi": 50,
+              "stringIndex": 3
+            }
+          ],
+          "step": 8
+        },
+        {
+          "notes": [
+            {
+              "fret": 2,
+              "midi": 52,
+              "stringIndex": 3
+            }
+          ],
+          "step": 10
+        },
+        {
+          "notes": [
+            {
+              "fret": 3,
+              "midi": 67,
+              "stringIndex": 0
+            },
+            {
+              "fret": 3,
+              "midi": 62,
+              "stringIndex": 1
+            }
+          ],
+          "step": 12
+        },
+        {
+          "notes": [
+            {
+              "fret": 3,
+              "midi": 67,
+              "stringIndex": 0
+            },
+            {
+              "fret": 3,
+              "midi": 62,
+              "stringIndex": 1
+            }
+          ],
+          "step": 13
+        }
+      ],
+      "measure": 8
+    },
+    {
+      "events": [
+        {
+          "notes": [
+            {
+              "fret": 2,
+              "midi": 57,
+              "stringIndex": 2
+            }
+          ],
+          "step": 0
+        },
+        {
+          "notes": [
+            {
+              "fret": 0,
+              "midi": 55,
+              "stringIndex": 2
+            }
+          ],
+          "step": 3
+        },
+        {
+          "notes": [
+            {
+              "fret": 2,
+              "midi": 52,
+              "stringIndex": 3
+            }
+          ],
+          "step": 4
+        },
+        {
+          "notes": [
+            {
+              "fret": 0,
+              "midi": 40,
+              "stringIndex": 5
+            }
+          ],
+          "step": 6
+        },
+        {
+          "notes": [
+            {
+              "fret": 0,
+              "midi": 50,
+              "stringIndex": 3
+            }
+          ],
+          "step": 8
+        },
+        {
+          "notes": [
+            {
+              "fret": 2,
+              "midi": 52,
+              "stringIndex": 3
+            }
+          ],
+          "step": 10
+        },
+        {
+          "notes": [
+            {
+              "fret": 0,
+              "midi": 40,
+              "stringIndex": 5
+            }
+          ],
+          "step": 14
+        }
+      ],
+      "measure": 9
+    },
+    {
+      "events": [
+        {
+          "notes": [
+            {
+              "fret": 2,
+              "midi": 57,
+              "stringIndex": 2
+            }
+          ],
+          "step": 0
+        },
+        {
+          "notes": [
+            {
+              "fret": 0,
+              "midi": 55,
+              "stringIndex": 2
+            }
+          ],
+          "step": 3
+        },
+        {
+          "notes": [
+            {
+              "fret": 2,
+              "midi": 52,
+              "stringIndex": 3
+            }
+          ],
+          "step": 4
+        },
+        {
+          "notes": [
+            {
+              "fret": 0,
+              "midi": 40,
+              "stringIndex": 5
+            }
+          ],
+          "step": 6
+        },
+        {
+          "notes": [
+            {
+              "fret": 0,
+              "midi": 50,
+              "stringIndex": 3
+            }
+          ],
+          "step": 8
+        },
+        {
+          "notes": [
+            {
+              "fret": 2,
+              "midi": 52,
+              "stringIndex": 3
+            }
+          ],
+          "step": 10
+        },
+        {
+          "notes": [
+            {
+              "fret": 3,
+              "midi": 67,
+              "stringIndex": 0
+            },
+            {
+              "fret": 3,
+              "midi": 62,
+              "stringIndex": 1
+            }
+          ],
+          "step": 12
+        },
+        {
+          "notes": [
+            {
+              "fret": 3,
+              "midi": 67,
+              "stringIndex": 0
+            },
+            {
+              "fret": 3,
+              "midi": 62,
+              "stringIndex": 1
+            }
+          ],
+          "step": 13
+        }
+      ],
+      "measure": 10
+    },
+    {
+      "events": [
+        {
+          "notes": [
+            {
+              "fret": 2,
+              "midi": 57,
+              "stringIndex": 2
+            }
+          ],
+          "step": 0
+        },
+        {
+          "notes": [
+            {
+              "fret": 0,
+              "midi": 55,
+              "stringIndex": 2
+            }
+          ],
+          "step": 3
+        },
+        {
+          "notes": [
+            {
+              "fret": 2,
+              "midi": 52,
+              "stringIndex": 3
+            }
+          ],
+          "step": 4
+        },
+        {
+          "notes": [
+            {
+              "fret": 0,
+              "midi": 40,
+              "stringIndex": 5
+            }
+          ],
+          "step": 6
+        },
+        {
+          "notes": [
+            {
+              "fret": 0,
+              "midi": 50,
+              "stringIndex": 3
+            }
+          ],
+          "step": 8
+        },
+        {
+          "notes": [
+            {
+              "fret": 2,
+              "midi": 52,
+              "stringIndex": 3
+            }
+          ],
+          "step": 10
+        },
+        {
+          "notes": [
+            {
+              "fret": 0,
+              "midi": 40,
+              "stringIndex": 5
+            }
+          ],
+          "step": 14
+        }
+      ],
+      "measure": 11
+    },
+    {
+      "events": [
+        {
+          "notes": [
+            {
+              "fret": 2,
+              "midi": 57,
+              "stringIndex": 2
+            }
+          ],
+          "step": 0
+        },
+        {
+          "notes": [
+            {
+              "fret": 0,
+              "midi": 55,
+              "stringIndex": 2
+            }
+          ],
+          "step": 3
+        },
+        {
+          "notes": [
+            {
+              "fret": 2,
+              "midi": 52,
+              "stringIndex": 3
+            }
+          ],
+          "step": 4
+        },
+        {
+          "notes": [
+            {
+              "fret": 0,
+              "midi": 40,
+              "stringIndex": 5
+            }
+          ],
+          "step": 6
+        },
+        {
+          "notes": [
+            {
+              "fret": 0,
+              "midi": 50,
+              "stringIndex": 3
+            }
+          ],
+          "step": 8
+        },
+        {
+          "notes": [
+            {
+              "fret": 2,
+              "midi": 52,
+              "stringIndex": 3
+            }
+          ],
+          "step": 10
+        },
+        {
+          "notes": [
+            {
+              "fret": 3,
+              "midi": 67,
+              "stringIndex": 0
+            },
+            {
+              "fret": 3,
+              "midi": 62,
+              "stringIndex": 1
+            }
+          ],
+          "step": 12
+        },
+        {
+          "notes": [
+            {
+              "fret": 3,
+              "midi": 67,
+              "stringIndex": 0
+            },
+            {
+              "fret": 3,
+              "midi": 62,
+              "stringIndex": 1
+            }
+          ],
+          "step": 13
+        }
+      ],
+      "measure": 12
+    },
+    {
+      "events": [
+        {
+          "notes": [
+            {
+              "fret": 2,
+              "midi": 57,
+              "stringIndex": 2
+            }
+          ],
+          "step": 0
+        },
+        {
+          "notes": [
+            {
+              "fret": 0,
+              "midi": 55,
+              "stringIndex": 2
+            }
+          ],
+          "step": 3
+        },
+        {
+          "notes": [
+            {
+              "fret": 2,
+              "midi": 52,
+              "stringIndex": 3
+            }
+          ],
+          "step": 4
+        },
+        {
+          "notes": [
+            {
+              "fret": 0,
+              "midi": 40,
+              "stringIndex": 5
+            }
+          ],
+          "step": 6
+        },
+        {
+          "notes": [
+            {
+              "fret": 0,
+              "midi": 50,
+              "stringIndex": 3
+            }
+          ],
+          "step": 8
+        },
+        {
+          "notes": [
+            {
+              "fret": 2,
+              "midi": 52,
+              "stringIndex": 3
+            }
+          ],
+          "step": 10
+        },
+        {
+          "notes": [
+            {
+              "fret": 0,
+              "midi": 40,
+              "stringIndex": 5
+            }
+          ],
+          "step": 14
+        }
+      ],
+      "measure": 13
+    },
+    {
+      "events": [
+        {
+          "notes": [
+            {
+              "fret": 2,
+              "midi": 57,
+              "stringIndex": 2
+            }
+          ],
+          "step": 0
+        },
+        {
+          "notes": [
+            {
+              "fret": 0,
+              "midi": 55,
+              "stringIndex": 2
+            }
+          ],
+          "step": 3
+        },
+        {
+          "notes": [
+            {
+              "fret": 2,
+              "midi": 52,
+              "stringIndex": 3
+            }
+          ],
+          "step": 4
+        },
+        {
+          "notes": [
+            {
+              "fret": 0,
+              "midi": 40,
+              "stringIndex": 5
+            }
+          ],
+          "step": 6
+        },
+        {
+          "notes": [
+            {
+              "fret": 0,
+              "midi": 50,
+              "stringIndex": 3
+            }
+          ],
+          "step": 8
+        },
+        {
+          "notes": [
+            {
+              "fret": 2,
+              "midi": 52,
+              "stringIndex": 3
+            }
+          ],
+          "step": 10
+        },
+        {
+          "notes": [
+            {
+              "fret": 3,
+              "midi": 67,
+              "stringIndex": 0
+            },
+            {
+              "fret": 3,
+              "midi": 62,
+              "stringIndex": 1
+            }
+          ],
+          "step": 12
+        },
+        {
+          "notes": [
+            {
+              "fret": 3,
+              "midi": 67,
+              "stringIndex": 0
+            },
+            {
+              "fret": 3,
+              "midi": 62,
+              "stringIndex": 1
+            }
+          ],
+          "step": 13
+        }
+      ],
+      "measure": 14
+    },
+    {
+      "events": [
+        {
+          "notes": [
+            {
+              "fret": 2,
+              "midi": 57,
+              "stringIndex": 2
+            }
+          ],
+          "step": 0
+        },
+        {
+          "notes": [
+            {
+              "fret": 0,
+              "midi": 55,
+              "stringIndex": 2
+            }
+          ],
+          "step": 3
+        },
+        {
+          "notes": [
+            {
+              "fret": 2,
+              "midi": 52,
+              "stringIndex": 3
+            }
+          ],
+          "step": 4
+        },
+        {
+          "notes": [
+            {
+              "fret": 0,
+              "midi": 40,
+              "stringIndex": 5
+            }
+          ],
+          "step": 6
+        },
+        {
+          "notes": [
+            {
+              "fret": 0,
+              "midi": 50,
+              "stringIndex": 3
+            }
+          ],
+          "step": 8
+        },
+        {
+          "notes": [
+            {
+              "fret": 2,
+              "midi": 52,
+              "stringIndex": 3
+            }
+          ],
+          "step": 10
+        },
+        {
+          "notes": [
+            {
+              "fret": 0,
+              "midi": 40,
+              "stringIndex": 5
+            }
+          ],
+          "step": 14
+        }
+      ],
+      "measure": 15
+    },
+    {
+      "events": [
+        {
+          "notes": [
+            {
+              "fret": 2,
+              "midi": 57,
+              "stringIndex": 2
+            }
+          ],
+          "step": 0
+        },
+        {
+          "notes": [
+            {
+              "fret": 0,
+              "midi": 55,
+              "stringIndex": 2
+            }
+          ],
+          "step": 3
+        },
+        {
+          "notes": [
+            {
+              "fret": 2,
+              "midi": 52,
+              "stringIndex": 3
+            }
+          ],
+          "step": 4
+        },
+        {
+          "notes": [
+            {
+              "fret": 0,
+              "midi": 40,
+              "stringIndex": 5
+            }
+          ],
+          "step": 6
+        },
+        {
+          "notes": [
+            {
+              "fret": 0,
+              "midi": 50,
+              "stringIndex": 3
+            }
+          ],
+          "step": 8
+        },
+        {
+          "notes": [
+            {
+              "fret": 2,
+              "midi": 52,
+              "stringIndex": 3
+            }
+          ],
+          "step": 10
+        },
+        {
+          "notes": [
+            {
+              "fret": 3,
+              "midi": 67,
+              "stringIndex": 0
+            },
+            {
+              "fret": 3,
+              "midi": 62,
+              "stringIndex": 1
+            }
+          ],
+          "step": 12
+        },
+        {
+          "notes": [
+            {
+              "fret": 3,
+              "midi": 67,
+              "stringIndex": 0
+            },
+            {
+              "fret": 3,
+              "midi": 62,
+              "stringIndex": 1
+            }
+          ],
+          "step": 13
+        }
+      ],
+      "measure": 16
+    },
+    {
+      "events": [
+        {
+          "notes": [
+            {
+              "fret": 2,
+              "midi": 57,
+              "stringIndex": 2
+            }
+          ],
+          "step": 0
+        },
+        {
+          "notes": [
+            {
+              "fret": 0,
+              "midi": 55,
+              "stringIndex": 2
+            }
+          ],
+          "step": 3
+        },
+        {
+          "notes": [
+            {
+              "fret": 2,
+              "midi": 52,
+              "stringIndex": 3
+            }
+          ],
+          "step": 4
+        },
+        {
+          "notes": [
+            {
+              "fret": 0,
+              "midi": 40,
+              "stringIndex": 5
+            }
+          ],
+          "step": 6
+        },
+        {
+          "notes": [
+            {
+              "fret": 0,
+              "midi": 50,
+              "stringIndex": 3
+            }
+          ],
+          "step": 8
+        },
+        {
+          "notes": [
+            {
+              "fret": 2,
+              "midi": 52,
+              "stringIndex": 3
+            }
+          ],
+          "step": 10
+        },
+        {
+          "notes": [
+            {
+              "fret": 0,
+              "midi": 40,
+              "stringIndex": 5
+            }
+          ],
+          "step": 14
+        }
+      ],
+      "measure": 17,
+      "section": "Verse 1"
+    },
+    {
+      "events": [
+        {
+          "notes": [
+            {
+              "fret": 2,
+              "midi": 57,
+              "stringIndex": 2
+            }
+          ],
+          "step": 0
+        },
+        {
+          "notes": [
+            {
+              "fret": 0,
+              "midi": 55,
+              "stringIndex": 2
+            }
+          ],
+          "step": 3
+        },
+        {
+          "notes": [
+            {
+              "fret": 2,
+              "midi": 52,
+              "stringIndex": 3
+            }
+          ],
+          "step": 4
+        },
+        {
+          "notes": [
+            {
+              "fret": 0,
+              "midi": 40,
+              "stringIndex": 5
+            }
+          ],
+          "step": 6
+        },
+        {
+          "notes": [
+            {
+              "fret": 0,
+              "midi": 50,
+              "stringIndex": 3
+            }
+          ],
+          "step": 8
+        },
+        {
+          "notes": [
+            {
+              "fret": 2,
+              "midi": 52,
+              "stringIndex": 3
+            }
+          ],
+          "step": 10
+        },
+        {
+          "notes": [
+            {
+              "fret": 0,
+              "midi": 40,
+              "stringIndex": 5
+            }
+          ],
+          "step": 14
+        }
+      ],
+      "measure": 18
+    },
+    {
+      "events": [
+        {
+          "notes": [
+            {
+              "fret": 2,
+              "midi": 57,
+              "stringIndex": 2
+            }
+          ],
+          "step": 0
+        },
+        {
+          "notes": [
+            {
+              "fret": 0,
+              "midi": 55,
+              "stringIndex": 2
+            }
+          ],
+          "step": 3
+        },
+        {
+          "notes": [
+            {
+              "fret": 2,
+              "midi": 52,
+              "stringIndex": 3
+            }
+          ],
+          "step": 4
+        },
+        {
+          "notes": [
+            {
+              "fret": 0,
+              "midi": 40,
+              "stringIndex": 5
+            }
+          ],
+          "step": 6
+        },
+        {
+          "notes": [
+            {
+              "fret": 0,
+              "midi": 50,
+              "stringIndex": 3
+            }
+          ],
+          "step": 8
+        },
+        {
+          "notes": [
+            {
+              "fret": 2,
+              "midi": 52,
+              "stringIndex": 3
+            }
+          ],
+          "step": 10
+        },
+        {
+          "notes": [
+            {
+              "fret": 0,
+              "midi": 40,
+              "stringIndex": 5
+            }
+          ],
+          "step": 14
+        }
+      ],
+      "measure": 19
+    },
+    {
+      "events": [
+        {
+          "notes": [
+            {
+              "fret": 2,
+              "midi": 57,
+              "stringIndex": 2
+            }
+          ],
+          "step": 0
+        },
+        {
+          "notes": [
+            {
+              "fret": 0,
+              "midi": 55,
+              "stringIndex": 2
+            }
+          ],
+          "step": 3
+        },
+        {
+          "notes": [
+            {
+              "fret": 2,
+              "midi": 52,
+              "stringIndex": 3
+            }
+          ],
+          "step": 4
+        },
+        {
+          "notes": [
+            {
+              "fret": 0,
+              "midi": 40,
+              "stringIndex": 5
+            }
+          ],
+          "step": 6
+        },
+        {
+          "notes": [
+            {
+              "fret": 0,
+              "midi": 50,
+              "stringIndex": 3
+            }
+          ],
+          "step": 8
+        },
+        {
+          "notes": [
+            {
+              "fret": 2,
+              "midi": 52,
+              "stringIndex": 3
+            }
+          ],
+          "step": 10
+        },
+        {
+          "notes": [
+            {
+              "fret": 0,
+              "midi": 40,
+              "stringIndex": 5
+            }
+          ],
+          "step": 14
+        }
+      ],
+      "measure": 20
+    },
+    {
+      "events": [
+        {
+          "notes": [
+            {
+              "fret": 2,
+              "midi": 57,
+              "stringIndex": 2
+            }
+          ],
+          "step": 0
+        },
+        {
+          "notes": [
+            {
+              "fret": 0,
+              "midi": 55,
+              "stringIndex": 2
+            }
+          ],
+          "step": 3
+        },
+        {
+          "notes": [
+            {
+              "fret": 2,
+              "midi": 52,
+              "stringIndex": 3
+            }
+          ],
+          "step": 4
+        },
+        {
+          "notes": [
+            {
+              "fret": 0,
+              "midi": 40,
+              "stringIndex": 5
+            }
+          ],
+          "step": 6
+        },
+        {
+          "notes": [
+            {
+              "fret": 0,
+              "midi": 50,
+              "stringIndex": 3
+            }
+          ],
+          "step": 8
+        },
+        {
+          "notes": [
+            {
+              "fret": 2,
+              "midi": 52,
+              "stringIndex": 3
+            }
+          ],
+          "step": 10
+        },
+        {
+          "notes": [
+            {
+              "fret": 0,
+              "midi": 40,
+              "stringIndex": 5
+            }
+          ],
+          "step": 14
+        }
+      ],
+      "measure": 21
+    },
+    {
+      "events": [
+        {
+          "notes": [
+            {
+              "fret": 2,
+              "midi": 57,
+              "stringIndex": 2
+            }
+          ],
+          "step": 0
+        },
+        {
+          "notes": [
+            {
+              "fret": 0,
+              "midi": 55,
+              "stringIndex": 2
+            }
+          ],
+          "step": 3
+        },
+        {
+          "notes": [
+            {
+              "fret": 2,
+              "midi": 52,
+              "stringIndex": 3
+            }
+          ],
+          "step": 4
+        },
+        {
+          "notes": [
+            {
+              "fret": 0,
+              "midi": 40,
+              "stringIndex": 5
+            }
+          ],
+          "step": 6
+        },
+        {
+          "notes": [
+            {
+              "fret": 0,
+              "midi": 50,
+              "stringIndex": 3
+            }
+          ],
+          "step": 8
+        },
+        {
+          "notes": [
+            {
+              "fret": 2,
+              "midi": 52,
+              "stringIndex": 3
+            }
+          ],
+          "step": 10
+        },
+        {
+          "notes": [
+            {
+              "fret": 0,
+              "midi": 40,
+              "stringIndex": 5
+            }
+          ],
+          "step": 14
+        }
+      ],
+      "measure": 22
+    },
+    {
+      "events": [
+        {
+          "notes": [
+            {
+              "fret": 2,
+              "midi": 57,
+              "stringIndex": 2
+            }
+          ],
+          "step": 0
+        },
+        {
+          "notes": [
+            {
+              "fret": 0,
+              "midi": 55,
+              "stringIndex": 2
+            }
+          ],
+          "step": 3
+        },
+        {
+          "notes": [
+            {
+              "fret": 2,
+              "midi": 52,
+              "stringIndex": 3
+            }
+          ],
+          "step": 4
+        },
+        {
+          "notes": [
+            {
+              "fret": 0,
+              "midi": 40,
+              "stringIndex": 5
+            }
+          ],
+          "step": 6
+        },
+        {
+          "notes": [
+            {
+              "fret": 0,
+              "midi": 50,
+              "stringIndex": 3
+            }
+          ],
+          "step": 8
+        },
+        {
+          "notes": [
+            {
+              "fret": 2,
+              "midi": 52,
+              "stringIndex": 3
+            }
+          ],
+          "step": 10
+        },
+        {
+          "notes": [
+            {
+              "fret": 0,
+              "midi": 40,
+              "stringIndex": 5
+            }
+          ],
+          "step": 14
+        }
+      ],
+      "measure": 23
+    },
+    {
+      "events": [
+        {
+          "notes": [
+            {
+              "fret": 2,
+              "midi": 57,
+              "stringIndex": 2
+            }
+          ],
+          "step": 0
+        },
+        {
+          "notes": [
+            {
+              "fret": 0,
+              "midi": 55,
+              "stringIndex": 2
+            }
+          ],
+          "step": 3
+        },
+        {
+          "notes": [
+            {
+              "fret": 2,
+              "midi": 52,
+              "stringIndex": 3
+            }
+          ],
+          "step": 4
+        },
+        {
+          "notes": [
+            {
+              "fret": 0,
+              "midi": 40,
+              "stringIndex": 5
+            }
+          ],
+          "step": 6
+        },
+        {
+          "notes": [
+            {
+              "fret": 0,
+              "midi": 50,
+              "stringIndex": 3
+            }
+          ],
+          "step": 8
+        },
+        {
+          "notes": [
+            {
+              "fret": 2,
+              "midi": 52,
+              "stringIndex": 3
+            }
+          ],
+          "step": 10
+        },
+        {
+          "notes": [
+            {
+              "fret": 0,
+              "midi": 40,
+              "stringIndex": 5
+            }
+          ],
+          "step": 14
+        }
+      ],
+      "measure": 24
+    },
+    {
+      "events": [
+        {
+          "notes": [
+            {
+              "fret": 5,
+              "midi": 60,
+              "stringIndex": 2
+            }
+          ],
+          "step": 0
+        },
+        {
+          "notes": [
+            {
+              "fret": 3,
+              "midi": 58,
+              "stringIndex": 2
+            }
+          ],
+          "step": 3
+        },
+        {
+          "notes": [
+            {
+              "fret": 5,
+              "midi": 55,
+              "stringIndex": 3
+            }
+          ],
+          "step": 4
+        },
+        {
+          "notes": [
+            {
+              "fret": 3,
+              "midi": 43,
+              "stringIndex": 5
+            }
+          ],
+          "step": 6
+        },
+        {
+          "notes": [
+            {
+              "fret": 3,
+              "midi": 53,
+              "stringIndex": 3
+            }
+          ],
+          "step": 8
+        },
+        {
+          "notes": [
+            {
+              "fret": 5,
+              "midi": 55,
+              "stringIndex": 3
+            }
+          ],
+          "step": 10
+        },
+        {
+          "notes": [
+            {
+              "fret": 3,
+              "midi": 43,
+              "stringIndex": 5
+            }
+          ],
+          "step": 14
+        }
+      ],
+      "measure": 25
+    },
+    {
+      "events": [
+        {
+          "notes": [
+            {
+              "fret": 5,
+              "midi": 60,
+              "stringIndex": 2
+            }
+          ],
+          "step": 0
+        },
+        {
+          "notes": [
+            {
+              "fret": 3,
+              "midi": 58,
+              "stringIndex": 2
+            }
+          ],
+          "step": 3
+        },
+        {
+          "notes": [
+            {
+              "fret": 5,
+              "midi": 55,
+              "stringIndex": 3
+            }
+          ],
+          "step": 4
+        },
+        {
+          "notes": [
+            {
+              "fret": 3,
+              "midi": 43,
+              "stringIndex": 5
+            }
+          ],
+          "step": 6
+        },
+        {
+          "notes": [
+            {
+              "fret": 3,
+              "midi": 53,
+              "stringIndex": 3
+            }
+          ],
+          "step": 8
+        },
+        {
+          "notes": [
+            {
+              "fret": 5,
+              "midi": 55,
+              "stringIndex": 3
+            }
+          ],
+          "step": 10
+        },
+        {
+          "notes": [
+            {
+              "fret": 3,
+              "midi": 43,
+              "stringIndex": 5
+            }
+          ],
+          "step": 14
+        }
+      ],
+      "measure": 26
+    },
+    {
+      "events": [
+        {
+          "notes": [
+            {
+              "fret": 5,
+              "midi": 60,
+              "stringIndex": 2
+            }
+          ],
+          "step": 0
+        },
+        {
+          "notes": [
+            {
+              "fret": 3,
+              "midi": 58,
+              "stringIndex": 2
+            }
+          ],
+          "step": 3
+        },
+        {
+          "notes": [
+            {
+              "fret": 5,
+              "midi": 55,
+              "stringIndex": 3
+            }
+          ],
+          "step": 4
+        },
+        {
+          "notes": [
+            {
+              "fret": 3,
+              "midi": 43,
+              "stringIndex": 5
+            }
+          ],
+          "step": 6
+        },
+        {
+          "notes": [
+            {
+              "fret": 3,
+              "midi": 53,
+              "stringIndex": 3
+            }
+          ],
+          "step": 8
+        },
+        {
+          "notes": [
+            {
+              "fret": 5,
+              "midi": 55,
+              "stringIndex": 3
+            }
+          ],
+          "step": 10
+        },
+        {
+          "notes": [
+            {
+              "fret": 3,
+              "midi": 43,
+              "stringIndex": 5
+            }
+          ],
+          "step": 14
+        }
+      ],
+      "measure": 27
+    },
+    {
+      "events": [
+        {
+          "notes": [
+            {
+              "fret": 5,
+              "midi": 60,
+              "stringIndex": 2
+            }
+          ],
+          "step": 1
+        },
+        {
+          "notes": [
+            {
+              "fret": 4,
+              "midi": 59,
+              "stringIndex": 2
+            }
+          ],
+          "step": 4
+        },
+        {
+          "notes": [
+            {
+              "fret": 3,
+              "midi": 58,
+              "stringIndex": 2
+            }
+          ],
+          "step": 7
+        },
+        {
+          "notes": [
+            {
+              "fret": 2,
+              "midi": 57,
+              "stringIndex": 2
+            }
+          ],
+          "step": 10
+        },
+        {
+          "notes": [
+            {
+              "fret": 4,
+              "midi": 59,
+              "stringIndex": 2
+            }
+          ],
+          "step": 13
+        }
+      ],
+      "measure": 28
+    },
+    {
+      "events": [
+        {
+          "notes": [
+            {
+              "fret": 2,
+              "midi": 57,
+              "stringIndex": 2
+            }
+          ],
+          "step": 0
+        },
+        {
+          "notes": [
+            {
+              "fret": 0,
+              "midi": 55,
+              "stringIndex": 2
+            }
+          ],
+          "step": 3
+        },
+        {
+          "notes": [
+            {
+              "fret": 2,
+              "midi": 52,
+              "stringIndex": 3
+            }
+          ],
+          "step": 4
+        },
+        {
+          "notes": [
+            {
+              "fret": 0,
+              "midi": 40,
+              "stringIndex": 5
+            }
+          ],
+          "step": 6
+        },
+        {
+          "notes": [
+            {
+              "fret": 0,
+              "midi": 50,
+              "stringIndex": 3
+            }
+          ],
+          "step": 8
+        },
+        {
+          "notes": [
+            {
+              "fret": 2,
+              "midi": 52,
+              "stringIndex": 3
+            }
+          ],
+          "step": 10
+        },
+        {
+          "notes": [
+            {
+              "fret": 0,
+              "midi": 40,
+              "stringIndex": 5
+            }
+          ],
+          "step": 14
+        }
+      ],
+      "measure": 29
+    },
+    {
+      "events": [
+        {
+          "notes": [
+            {
+              "fret": 2,
+              "midi": 57,
+              "stringIndex": 2
+            }
+          ],
+          "step": 0
+        },
+        {
+          "notes": [
+            {
+              "fret": 0,
+              "midi": 55,
+              "stringIndex": 2
+            }
+          ],
+          "step": 3
+        },
+        {
+          "notes": [
+            {
+              "fret": 2,
+              "midi": 52,
+              "stringIndex": 3
+            }
+          ],
+          "step": 4
+        },
+        {
+          "notes": [
+            {
+              "fret": 0,
+              "midi": 40,
+              "stringIndex": 5
+            }
+          ],
+          "step": 6
+        },
+        {
+          "notes": [
+            {
+              "fret": 0,
+              "midi": 50,
+              "stringIndex": 3
+            }
+          ],
+          "step": 8
+        },
+        {
+          "notes": [
+            {
+              "fret": 2,
+              "midi": 52,
+              "stringIndex": 3
+            }
+          ],
+          "step": 10
+        },
+        {
+          "notes": [
+            {
+              "fret": 0,
+              "midi": 40,
+              "stringIndex": 5
+            }
+          ],
+          "step": 14
+        }
+      ],
+      "measure": 30
+    },
+    {
+      "events": [
+        {
+          "notes": [
+            {
+              "fret": 2,
+              "midi": 57,
+              "stringIndex": 2
+            }
+          ],
+          "step": 0
+        },
+        {
+          "notes": [
+            {
+              "fret": 0,
+              "midi": 55,
+              "stringIndex": 2
+            }
+          ],
+          "step": 3
+        },
+        {
+          "notes": [
+            {
+              "fret": 2,
+              "midi": 52,
+              "stringIndex": 3
+            }
+          ],
+          "step": 4
+        },
+        {
+          "notes": [
+            {
+              "fret": 0,
+              "midi": 40,
+              "stringIndex": 5
+            }
+          ],
+          "step": 6
+        },
+        {
+          "notes": [
+            {
+              "fret": 0,
+              "midi": 50,
+              "stringIndex": 3
+            }
+          ],
+          "step": 8
+        },
+        {
+          "notes": [
+            {
+              "fret": 2,
+              "midi": 52,
+              "stringIndex": 3
+            }
+          ],
+          "step": 10
+        },
+        {
+          "notes": [
+            {
+              "fret": 0,
+              "midi": 40,
+              "stringIndex": 5
+            }
+          ],
+          "step": 14
+        }
+      ],
+      "measure": 31
+    },
+    {
+      "events": [
+        {
+          "notes": [
+            {
+              "fret": 2,
+              "midi": 57,
+              "stringIndex": 2
+            }
+          ],
+          "step": 0
+        },
+        {
+          "notes": [
+            {
+              "fret": 0,
+              "midi": 55,
+              "stringIndex": 2
+            }
+          ],
+          "step": 3
+        },
+        {
+          "notes": [
+            {
+              "fret": 2,
+              "midi": 52,
+              "stringIndex": 3
+            }
+          ],
+          "step": 4
+        },
+        {
+          "notes": [
+            {
+              "fret": 0,
+              "midi": 40,
+              "stringIndex": 5
+            }
+          ],
+          "step": 6
+        },
+        {
+          "notes": [
+            {
+              "fret": 0,
+              "midi": 50,
+              "stringIndex": 3
+            }
+          ],
+          "step": 8
+        },
+        {
+          "notes": [
+            {
+              "fret": 2,
+              "midi": 52,
+              "stringIndex": 3
+            }
+          ],
+          "step": 10
+        },
+        {
+          "notes": [
+            {
+              "fret": 0,
+              "midi": 40,
+              "stringIndex": 5
+            }
+          ],
+          "step": 14
+        }
+      ],
+      "measure": 32
+    },
+    {
+      "events": [
+        {
+          "notes": [
+            {
+              "fret": 0,
+              "midi": 64,
+              "stringIndex": 0
+            },
+            {
+              "fret": 3,
+              "midi": 62,
+              "stringIndex": 1
+            },
+            {
+              "fret": 4,
+              "midi": 59,
+              "stringIndex": 2
+            },
+            {
+              "fret": 5,
+              "midi": 55,
+              "stringIndex": 3
+            }
+          ],
+          "step": 0
+        },
+        {
+          "notes": [
+            {
+              "fret": 0,
+              "midi": 64,
+              "stringIndex": 0
+            },
+            {
+              "fret": 3,
+              "midi": 62,
+              "stringIndex": 1
+            },
+            {
+              "fret": 4,
+              "midi": 59,
+              "stringIndex": 2
+            },
+            {
+              "fret": 5,
+              "midi": 55,
+              "stringIndex": 3
+            }
+          ],
+          "step": 3
+        },
+        {
+          "notes": [
+            {
+              "fret": 0,
+              "midi": 64,
+              "stringIndex": 0
+            },
+            {
+              "fret": 3,
+              "midi": 62,
+              "stringIndex": 1
+            },
+            {
+              "fret": 4,
+              "midi": 59,
+              "stringIndex": 2
+            },
+            {
+              "fret": 5,
+              "midi": 55,
+              "stringIndex": 3
+            }
+          ],
+          "step": 4
+        }
+      ],
+      "measure": 33,
+      "section": "Chorus"
+    },
+    {
+      "events": [
+        {
+          "notes": [
+            {
+              "fret": 2,
+              "midi": 61,
+              "stringIndex": 1
+            },
+            {
+              "fret": 2,
+              "midi": 57,
+              "stringIndex": 2
+            },
+            {
+              "fret": 2,
+              "midi": 52,
+              "stringIndex": 3
+            },
+            {
+              "fret": 0,
+              "midi": 45,
+              "stringIndex": 4
+            }
+          ],
+          "step": 0
+        },
+        {
+          "notes": [
+            {
+              "fret": 2,
+              "midi": 61,
+              "stringIndex": 1
+            },
+            {
+              "fret": 2,
+              "midi": 57,
+              "stringIndex": 2
+            },
+            {
+              "fret": 2,
+              "midi": 52,
+              "stringIndex": 3
+            },
+            {
+              "fret": 0,
+              "midi": 45,
+              "stringIndex": 4
+            }
+          ],
+          "step": 3
+        },
+        {
+          "notes": [
+            {
+              "fret": 2,
+              "midi": 61,
+              "stringIndex": 1
+            },
+            {
+              "fret": 2,
+              "midi": 57,
+              "stringIndex": 2
+            },
+            {
+              "fret": 2,
+              "midi": 52,
+              "stringIndex": 3
+            },
+            {
+              "fret": 0,
+              "midi": 45,
+              "stringIndex": 4
+            }
+          ],
+          "step": 4
+        }
+      ],
+      "measure": 34
+    },
+    {
+      "events": [
+        {
+          "notes": [
+            {
+              "fret": 9,
+              "midi": 68,
+              "stringIndex": 1
+            },
+            {
+              "fret": 9,
+              "midi": 64,
+              "stringIndex": 2
+            },
+            {
+              "fret": 9,
+              "midi": 59,
+              "stringIndex": 3
+            }
+          ],
+          "step": 0
+        },
+        {
+          "notes": [
+            {
+              "fret": 9,
+              "midi": 68,
+              "stringIndex": 1
+            },
+            {
+              "fret": 9,
+              "midi": 64,
+              "stringIndex": 2
+            },
+            {
+              "fret": 9,
+              "midi": 59,
+              "stringIndex": 3
+            }
+          ],
+          "step": 1
+        },
+        {
+          "notes": [
+            {
+              "fret": 9,
+              "midi": 68,
+              "stringIndex": 1
+            },
+            {
+              "fret": 9,
+              "midi": 64,
+              "stringIndex": 2
+            },
+            {
+              "fret": 9,
+              "midi": 59,
+              "stringIndex": 3
+            }
+          ],
+          "step": 2
+        },
+        {
+          "notes": [
+            {
+              "fret": 9,
+              "midi": 68,
+              "stringIndex": 1
+            },
+            {
+              "fret": 9,
+              "midi": 64,
+              "stringIndex": 2
+            },
+            {
+              "fret": 9,
+              "midi": 59,
+              "stringIndex": 3
+            }
+          ],
+          "step": 3
+        },
+        {
+          "notes": [
+            {
+              "fret": 7,
+              "midi": 66,
+              "stringIndex": 1
+            },
+            {
+              "fret": 7,
+              "midi": 62,
+              "stringIndex": 2
+            },
+            {
+              "fret": 7,
+              "midi": 57,
+              "stringIndex": 3
+            }
+          ],
+          "step": 4
+        },
+        {
+          "notes": [
+            {
+              "fret": 9,
+              "midi": 68,
+              "stringIndex": 1
+            },
+            {
+              "fret": 9,
+              "midi": 64,
+              "stringIndex": 2
+            },
+            {
+              "fret": 9,
+              "midi": 59,
+              "stringIndex": 3
+            }
+          ],
+          "step": 6
+        }
+      ],
+      "measure": 35
+    },
+    {
+      "events": [
+        {
+          "notes": [
+            {
+              "fret": 9,
+              "midi": 68,
+              "stringIndex": 1
+            },
+            {
+              "fret": 9,
+              "midi": 64,
+              "stringIndex": 2
+            },
+            {
+              "fret": 9,
+              "midi": 59,
+              "stringIndex": 3
+            }
+          ],
+          "step": 0
+        },
+        {
+          "notes": [
+            {
+              "fret": 9,
+              "midi": 68,
+              "stringIndex": 1
+            },
+            {
+              "fret": 9,
+              "midi": 64,
+              "stringIndex": 2
+            },
+            {
+              "fret": 9,
+              "midi": 59,
+              "stringIndex": 3
+            }
+          ],
+          "step": 1
+        },
+        {
+          "notes": [
+            {
+              "fret": 9,
+              "midi": 68,
+              "stringIndex": 1
+            },
+            {
+              "fret": 9,
+              "midi": 64,
+              "stringIndex": 2
+            },
+            {
+              "fret": 9,
+              "midi": 59,
+              "stringIndex": 3
+            }
+          ],
+          "step": 2
+        },
+        {
+          "notes": [
+            {
+              "fret": 9,
+              "midi": 68,
+              "stringIndex": 1
+            },
+            {
+              "fret": 9,
+              "midi": 64,
+              "stringIndex": 2
+            },
+            {
+              "fret": 9,
+              "midi": 59,
+              "stringIndex": 3
+            }
+          ],
+          "step": 3
+        },
+        {
+          "notes": [
+            {
+              "fret": 12,
+              "midi": 71,
+              "stringIndex": 1
+            },
+            {
+              "fret": 12,
+              "midi": 67,
+              "stringIndex": 2
+            },
+            {
+              "fret": 12,
+              "midi": 62,
+              "stringIndex": 3
+            }
+          ],
+          "step": 4
+        },
+        {
+          "notes": [
+            {
+              "fret": 9,
+              "midi": 68,
+              "stringIndex": 1
+            },
+            {
+              "fret": 9,
+              "midi": 64,
+              "stringIndex": 2
+            },
+            {
+              "fret": 9,
+              "midi": 59,
+              "stringIndex": 3
+            }
+          ],
+          "step": 6
+        }
+      ],
+      "measure": 36
+    },
+    {
+      "events": [
+        {
+          "notes": [
+            {
+              "fret": 0,
+              "midi": 64,
+              "stringIndex": 0
+            },
+            {
+              "fret": 3,
+              "midi": 62,
+              "stringIndex": 1
+            },
+            {
+              "fret": 4,
+              "midi": 59,
+              "stringIndex": 2
+            },
+            {
+              "fret": 5,
+              "midi": 55,
+              "stringIndex": 3
+            }
+          ],
+          "step": 0
+        },
+        {
+          "notes": [
+            {
+              "fret": 0,
+              "midi": 64,
+              "stringIndex": 0
+            },
+            {
+              "fret": 3,
+              "midi": 62,
+              "stringIndex": 1
+            },
+            {
+              "fret": 4,
+              "midi": 59,
+              "stringIndex": 2
+            },
+            {
+              "fret": 5,
+              "midi": 55,
+              "stringIndex": 3
+            }
+          ],
+          "step": 3
+        },
+        {
+          "notes": [
+            {
+              "fret": 0,
+              "midi": 64,
+              "stringIndex": 0
+            },
+            {
+              "fret": 3,
+              "midi": 62,
+              "stringIndex": 1
+            },
+            {
+              "fret": 4,
+              "midi": 59,
+              "stringIndex": 2
+            },
+            {
+              "fret": 5,
+              "midi": 55,
+              "stringIndex": 3
+            }
+          ],
+          "step": 4
+        },
+        {
+          "notes": [
+            {
+              "fret": 2,
+              "midi": 61,
+              "stringIndex": 1
+            },
+            {
+              "fret": 2,
+              "midi": 57,
+              "stringIndex": 2
+            },
+            {
+              "fret": 2,
+              "midi": 52,
+              "stringIndex": 3
+            },
+            {
+              "fret": 0,
+              "midi": 45,
+              "stringIndex": 4
+            }
+          ],
+          "step": 14
+        }
+      ],
+      "measure": 37
+    },
+    {
+      "events": [],
+      "measure": 38
+    },
+    {
+      "events": [
+        {
+          "notes": [
+            {
+              "fret": 2,
+              "midi": 57,
+              "stringIndex": 2
+            }
+          ],
+          "step": 0
+        },
+        {
+          "notes": [
+            {
+              "fret": 0,
+              "midi": 55,
+              "stringIndex": 2
+            }
+          ],
+          "step": 3
+        },
+        {
+          "notes": [
+            {
+              "fret": 2,
+              "midi": 52,
+              "stringIndex": 3
+            }
+          ],
+          "step": 4
+        },
+        {
+          "notes": [
+            {
+              "fret": 0,
+              "midi": 40,
+              "stringIndex": 5
+            }
+          ],
+          "step": 6
+        },
+        {
+          "notes": [
+            {
+              "fret": 0,
+              "midi": 50,
+              "stringIndex": 3
+            }
+          ],
+          "step": 8
+        },
+        {
+          "notes": [
+            {
+              "fret": 2,
+              "midi": 52,
+              "stringIndex": 3
+            }
+          ],
+          "step": 10
+        },
+        {
+          "notes": [
+            {
+              "fret": 0,
+              "midi": 40,
+              "stringIndex": 5
+            }
+          ],
+          "step": 14
+        }
+      ],
+      "measure": 39,
+      "section": "Riff"
+    },
+    {
+      "events": [
+        {
+          "notes": [
+            {
+              "fret": 2,
+              "midi": 57,
+              "stringIndex": 2
+            }
+          ],
+          "step": 0
+        },
+        {
+          "notes": [
+            {
+              "fret": 0,
+              "midi": 55,
+              "stringIndex": 2
+            }
+          ],
+          "step": 3
+        },
+        {
+          "notes": [
+            {
+              "fret": 2,
+              "midi": 52,
+              "stringIndex": 3
+            }
+          ],
+          "step": 4
+        },
+        {
+          "notes": [
+            {
+              "fret": 0,
+              "midi": 40,
+              "stringIndex": 5
+            }
+          ],
+          "step": 6
+        },
+        {
+          "notes": [
+            {
+              "fret": 0,
+              "midi": 50,
+              "stringIndex": 3
+            }
+          ],
+          "step": 8
+        },
+        {
+          "notes": [
+            {
+              "fret": 2,
+              "midi": 52,
+              "stringIndex": 3
+            }
+          ],
+          "step": 10
+        },
+        {
+          "notes": [
+            {
+              "fret": 3,
+              "midi": 67,
+              "stringIndex": 0
+            },
+            {
+              "fret": 3,
+              "midi": 62,
+              "stringIndex": 1
+            }
+          ],
+          "step": 12
+        },
+        {
+          "notes": [
+            {
+              "fret": 3,
+              "midi": 67,
+              "stringIndex": 0
+            },
+            {
+              "fret": 3,
+              "midi": 62,
+              "stringIndex": 1
+            }
+          ],
+          "step": 13
+        }
+      ],
+      "measure": 40
+    },
+    {
+      "events": [
+        {
+          "notes": [
+            {
+              "fret": 2,
+              "midi": 57,
+              "stringIndex": 2
+            }
+          ],
+          "step": 0
+        },
+        {
+          "notes": [
+            {
+              "fret": 0,
+              "midi": 55,
+              "stringIndex": 2
+            }
+          ],
+          "step": 3
+        },
+        {
+          "notes": [
+            {
+              "fret": 2,
+              "midi": 52,
+              "stringIndex": 3
+            }
+          ],
+          "step": 4
+        },
+        {
+          "notes": [
+            {
+              "fret": 0,
+              "midi": 40,
+              "stringIndex": 5
+            }
+          ],
+          "step": 6
+        },
+        {
+          "notes": [
+            {
+              "fret": 0,
+              "midi": 50,
+              "stringIndex": 3
+            }
+          ],
+          "step": 8
+        },
+        {
+          "notes": [
+            {
+              "fret": 2,
+              "midi": 52,
+              "stringIndex": 3
+            }
+          ],
+          "step": 10
+        },
+        {
+          "notes": [
+            {
+              "fret": 0,
+              "midi": 40,
+              "stringIndex": 5
+            }
+          ],
+          "step": 14
+        }
+      ],
+      "measure": 41
+    },
+    {
+      "events": [
+        {
+          "notes": [
+            {
+              "fret": 2,
+              "midi": 57,
+              "stringIndex": 2
+            }
+          ],
+          "step": 0
+        },
+        {
+          "notes": [
+            {
+              "fret": 0,
+              "midi": 55,
+              "stringIndex": 2
+            }
+          ],
+          "step": 3
+        },
+        {
+          "notes": [
+            {
+              "fret": 2,
+              "midi": 52,
+              "stringIndex": 3
+            }
+          ],
+          "step": 4
+        },
+        {
+          "notes": [
+            {
+              "fret": 0,
+              "midi": 40,
+              "stringIndex": 5
+            }
+          ],
+          "step": 6
+        },
+        {
+          "notes": [
+            {
+              "fret": 0,
+              "midi": 50,
+              "stringIndex": 3
+            }
+          ],
+          "step": 8
+        },
+        {
+          "notes": [
+            {
+              "fret": 2,
+              "midi": 52,
+              "stringIndex": 3
+            }
+          ],
+          "step": 10
+        },
+        {
+          "notes": [
+            {
+              "fret": 3,
+              "midi": 67,
+              "stringIndex": 0
+            },
+            {
+              "fret": 3,
+              "midi": 62,
+              "stringIndex": 1
+            }
+          ],
+          "step": 12
+        },
+        {
+          "notes": [
+            {
+              "fret": 3,
+              "midi": 67,
+              "stringIndex": 0
+            },
+            {
+              "fret": 3,
+              "midi": 62,
+              "stringIndex": 1
+            }
+          ],
+          "step": 13
+        }
+      ],
+      "measure": 42
+    },
+    {
+      "events": [
+        {
+          "notes": [
+            {
+              "fret": 2,
+              "midi": 57,
+              "stringIndex": 2
+            }
+          ],
+          "step": 0
+        },
+        {
+          "notes": [
+            {
+              "fret": 0,
+              "midi": 55,
+              "stringIndex": 2
+            }
+          ],
+          "step": 3
+        },
+        {
+          "notes": [
+            {
+              "fret": 2,
+              "midi": 52,
+              "stringIndex": 3
+            }
+          ],
+          "step": 4
+        },
+        {
+          "notes": [
+            {
+              "fret": 0,
+              "midi": 40,
+              "stringIndex": 5
+            }
+          ],
+          "step": 6
+        },
+        {
+          "notes": [
+            {
+              "fret": 0,
+              "midi": 50,
+              "stringIndex": 3
+            }
+          ],
+          "step": 8
+        },
+        {
+          "notes": [
+            {
+              "fret": 2,
+              "midi": 52,
+              "stringIndex": 3
+            }
+          ],
+          "step": 10
+        },
+        {
+          "notes": [
+            {
+              "fret": 0,
+              "midi": 40,
+              "stringIndex": 5
+            }
+          ],
+          "step": 14
+        }
+      ],
+      "measure": 43
+    },
+    {
+      "events": [
+        {
+          "notes": [
+            {
+              "fret": 2,
+              "midi": 57,
+              "stringIndex": 2
+            }
+          ],
+          "step": 0
+        },
+        {
+          "notes": [
+            {
+              "fret": 0,
+              "midi": 55,
+              "stringIndex": 2
+            }
+          ],
+          "step": 3
+        },
+        {
+          "notes": [
+            {
+              "fret": 2,
+              "midi": 52,
+              "stringIndex": 3
+            }
+          ],
+          "step": 4
+        },
+        {
+          "notes": [
+            {
+              "fret": 0,
+              "midi": 40,
+              "stringIndex": 5
+            }
+          ],
+          "step": 6
+        },
+        {
+          "notes": [
+            {
+              "fret": 0,
+              "midi": 50,
+              "stringIndex": 3
+            }
+          ],
+          "step": 8
+        },
+        {
+          "notes": [
+            {
+              "fret": 2,
+              "midi": 52,
+              "stringIndex": 3
+            }
+          ],
+          "step": 10
+        },
+        {
+          "notes": [
+            {
+              "fret": 3,
+              "midi": 67,
+              "stringIndex": 0
+            },
+            {
+              "fret": 3,
+              "midi": 62,
+              "stringIndex": 1
+            }
+          ],
+          "step": 12
+        },
+        {
+          "notes": [
+            {
+              "fret": 3,
+              "midi": 67,
+              "stringIndex": 0
+            },
+            {
+              "fret": 3,
+              "midi": 62,
+              "stringIndex": 1
+            }
+          ],
+          "step": 13
+        }
+      ],
+      "measure": 44
+    },
+    {
+      "events": [
+        {
+          "notes": [
+            {
+              "fret": 2,
+              "midi": 57,
+              "stringIndex": 2
+            }
+          ],
+          "step": 0
+        },
+        {
+          "notes": [
+            {
+              "fret": 0,
+              "midi": 55,
+              "stringIndex": 2
+            }
+          ],
+          "step": 3
+        },
+        {
+          "notes": [
+            {
+              "fret": 2,
+              "midi": 52,
+              "stringIndex": 3
+            }
+          ],
+          "step": 4
+        },
+        {
+          "notes": [
+            {
+              "fret": 0,
+              "midi": 40,
+              "stringIndex": 5
+            }
+          ],
+          "step": 6
+        },
+        {
+          "notes": [
+            {
+              "fret": 0,
+              "midi": 50,
+              "stringIndex": 3
+            }
+          ],
+          "step": 8
+        },
+        {
+          "notes": [
+            {
+              "fret": 2,
+              "midi": 52,
+              "stringIndex": 3
+            }
+          ],
+          "step": 10
+        },
+        {
+          "notes": [
+            {
+              "fret": 0,
+              "midi": 40,
+              "stringIndex": 5
+            }
+          ],
+          "step": 14
+        }
+      ],
+      "measure": 45
+    },
+    {
+      "events": [
+        {
+          "notes": [
+            {
+              "fret": 2,
+              "midi": 57,
+              "stringIndex": 2
+            }
+          ],
+          "step": 0
+        },
+        {
+          "notes": [
+            {
+              "fret": 0,
+              "midi": 55,
+              "stringIndex": 2
+            }
+          ],
+          "step": 3
+        },
+        {
+          "notes": [
+            {
+              "fret": 2,
+              "midi": 52,
+              "stringIndex": 3
+            }
+          ],
+          "step": 4
+        },
+        {
+          "notes": [
+            {
+              "fret": 0,
+              "midi": 40,
+              "stringIndex": 5
+            }
+          ],
+          "step": 6
+        },
+        {
+          "notes": [
+            {
+              "fret": 0,
+              "midi": 50,
+              "stringIndex": 3
+            }
+          ],
+          "step": 8
+        },
+        {
+          "notes": [
+            {
+              "fret": 2,
+              "midi": 52,
+              "stringIndex": 3
+            }
+          ],
+          "step": 10
+        },
+        {
+          "notes": [
+            {
+              "fret": 3,
+              "midi": 67,
+              "stringIndex": 0
+            },
+            {
+              "fret": 3,
+              "midi": 62,
+              "stringIndex": 1
+            }
+          ],
+          "step": 12
+        },
+        {
+          "notes": [
+            {
+              "fret": 3,
+              "midi": 67,
+              "stringIndex": 0
+            },
+            {
+              "fret": 3,
+              "midi": 62,
+              "stringIndex": 1
+            }
+          ],
+          "step": 13
+        }
+      ],
+      "measure": 46
+    },
+    {
+      "events": [
+        {
+          "notes": [
+            {
+              "fret": 2,
+              "midi": 57,
+              "stringIndex": 2
+            }
+          ],
+          "step": 0
+        },
+        {
+          "notes": [
+            {
+              "fret": 0,
+              "midi": 55,
+              "stringIndex": 2
+            }
+          ],
+          "step": 3
+        },
+        {
+          "notes": [
+            {
+              "fret": 2,
+              "midi": 52,
+              "stringIndex": 3
+            }
+          ],
+          "step": 4
+        },
+        {
+          "notes": [
+            {
+              "fret": 0,
+              "midi": 40,
+              "stringIndex": 5
+            }
+          ],
+          "step": 6
+        },
+        {
+          "notes": [
+            {
+              "fret": 0,
+              "midi": 50,
+              "stringIndex": 3
+            }
+          ],
+          "step": 8
+        },
+        {
+          "notes": [
+            {
+              "fret": 2,
+              "midi": 52,
+              "stringIndex": 3
+            }
+          ],
+          "step": 10
+        },
+        {
+          "notes": [
+            {
+              "fret": 0,
+              "midi": 40,
+              "stringIndex": 5
+            }
+          ],
+          "step": 14
+        }
+      ],
+      "measure": 47,
+      "section": "Verse 2"
+    },
+    {
+      "events": [
+        {
+          "notes": [
+            {
+              "fret": 2,
+              "midi": 57,
+              "stringIndex": 2
+            }
+          ],
+          "step": 0
+        },
+        {
+          "notes": [
+            {
+              "fret": 0,
+              "midi": 55,
+              "stringIndex": 2
+            }
+          ],
+          "step": 3
+        },
+        {
+          "notes": [
+            {
+              "fret": 2,
+              "midi": 52,
+              "stringIndex": 3
+            }
+          ],
+          "step": 4
+        },
+        {
+          "notes": [
+            {
+              "fret": 0,
+              "midi": 40,
+              "stringIndex": 5
+            }
+          ],
+          "step": 6
+        },
+        {
+          "notes": [
+            {
+              "fret": 0,
+              "midi": 50,
+              "stringIndex": 3
+            }
+          ],
+          "step": 8
+        },
+        {
+          "notes": [
+            {
+              "fret": 2,
+              "midi": 52,
+              "stringIndex": 3
+            }
+          ],
+          "step": 10
+        },
+        {
+          "notes": [
+            {
+              "fret": 0,
+              "midi": 40,
+              "stringIndex": 5
+            }
+          ],
+          "step": 14
+        }
+      ],
+      "measure": 48
+    },
+    {
+      "events": [
+        {
+          "notes": [
+            {
+              "fret": 2,
+              "midi": 57,
+              "stringIndex": 2
+            }
+          ],
+          "step": 0
+        },
+        {
+          "notes": [
+            {
+              "fret": 0,
+              "midi": 55,
+              "stringIndex": 2
+            }
+          ],
+          "step": 3
+        },
+        {
+          "notes": [
+            {
+              "fret": 2,
+              "midi": 52,
+              "stringIndex": 3
+            }
+          ],
+          "step": 4
+        },
+        {
+          "notes": [
+            {
+              "fret": 0,
+              "midi": 40,
+              "stringIndex": 5
+            }
+          ],
+          "step": 6
+        },
+        {
+          "notes": [
+            {
+              "fret": 0,
+              "midi": 50,
+              "stringIndex": 3
+            }
+          ],
+          "step": 8
+        },
+        {
+          "notes": [
+            {
+              "fret": 2,
+              "midi": 52,
+              "stringIndex": 3
+            }
+          ],
+          "step": 10
+        },
+        {
+          "notes": [
+            {
+              "fret": 0,
+              "midi": 40,
+              "stringIndex": 5
+            }
+          ],
+          "step": 14
+        }
+      ],
+      "measure": 49
+    },
+    {
+      "events": [
+        {
+          "notes": [
+            {
+              "fret": 2,
+              "midi": 57,
+              "stringIndex": 2
+            }
+          ],
+          "step": 0
+        },
+        {
+          "notes": [
+            {
+              "fret": 0,
+              "midi": 55,
+              "stringIndex": 2
+            }
+          ],
+          "step": 3
+        },
+        {
+          "notes": [
+            {
+              "fret": 2,
+              "midi": 52,
+              "stringIndex": 3
+            }
+          ],
+          "step": 4
+        },
+        {
+          "notes": [
+            {
+              "fret": 0,
+              "midi": 40,
+              "stringIndex": 5
+            }
+          ],
+          "step": 6
+        },
+        {
+          "notes": [
+            {
+              "fret": 0,
+              "midi": 50,
+              "stringIndex": 3
+            }
+          ],
+          "step": 8
+        },
+        {
+          "notes": [
+            {
+              "fret": 2,
+              "midi": 52,
+              "stringIndex": 3
+            }
+          ],
+          "step": 10
+        },
+        {
+          "notes": [
+            {
+              "fret": 0,
+              "midi": 40,
+              "stringIndex": 5
+            }
+          ],
+          "step": 14
+        }
+      ],
+      "measure": 50
+    },
+    {
+      "events": [
+        {
+          "notes": [
+            {
+              "fret": 2,
+              "midi": 57,
+              "stringIndex": 2
+            }
+          ],
+          "step": 0
+        },
+        {
+          "notes": [
+            {
+              "fret": 0,
+              "midi": 55,
+              "stringIndex": 2
+            }
+          ],
+          "step": 3
+        },
+        {
+          "notes": [
+            {
+              "fret": 2,
+              "midi": 52,
+              "stringIndex": 3
+            }
+          ],
+          "step": 4
+        },
+        {
+          "notes": [
+            {
+              "fret": 0,
+              "midi": 40,
+              "stringIndex": 5
+            }
+          ],
+          "step": 6
+        },
+        {
+          "notes": [
+            {
+              "fret": 0,
+              "midi": 50,
+              "stringIndex": 3
+            }
+          ],
+          "step": 8
+        },
+        {
+          "notes": [
+            {
+              "fret": 2,
+              "midi": 52,
+              "stringIndex": 3
+            }
+          ],
+          "step": 10
+        },
+        {
+          "notes": [
+            {
+              "fret": 0,
+              "midi": 40,
+              "stringIndex": 5
+            }
+          ],
+          "step": 14
+        }
+      ],
+      "measure": 51
+    },
+    {
+      "events": [
+        {
+          "notes": [
+            {
+              "fret": 2,
+              "midi": 57,
+              "stringIndex": 2
+            }
+          ],
+          "step": 0
+        },
+        {
+          "notes": [
+            {
+              "fret": 0,
+              "midi": 55,
+              "stringIndex": 2
+            }
+          ],
+          "step": 3
+        },
+        {
+          "notes": [
+            {
+              "fret": 2,
+              "midi": 52,
+              "stringIndex": 3
+            }
+          ],
+          "step": 4
+        },
+        {
+          "notes": [
+            {
+              "fret": 0,
+              "midi": 40,
+              "stringIndex": 5
+            }
+          ],
+          "step": 6
+        },
+        {
+          "notes": [
+            {
+              "fret": 0,
+              "midi": 50,
+              "stringIndex": 3
+            }
+          ],
+          "step": 8
+        },
+        {
+          "notes": [
+            {
+              "fret": 2,
+              "midi": 52,
+              "stringIndex": 3
+            }
+          ],
+          "step": 10
+        },
+        {
+          "notes": [
+            {
+              "fret": 0,
+              "midi": 40,
+              "stringIndex": 5
+            }
+          ],
+          "step": 14
+        }
+      ],
+      "measure": 52
+    },
+    {
+      "events": [
+        {
+          "notes": [
+            {
+              "fret": 2,
+              "midi": 57,
+              "stringIndex": 2
+            }
+          ],
+          "step": 0
+        },
+        {
+          "notes": [
+            {
+              "fret": 0,
+              "midi": 55,
+              "stringIndex": 2
+            }
+          ],
+          "step": 3
+        },
+        {
+          "notes": [
+            {
+              "fret": 2,
+              "midi": 52,
+              "stringIndex": 3
+            }
+          ],
+          "step": 4
+        },
+        {
+          "notes": [
+            {
+              "fret": 0,
+              "midi": 40,
+              "stringIndex": 5
+            }
+          ],
+          "step": 6
+        },
+        {
+          "notes": [
+            {
+              "fret": 0,
+              "midi": 50,
+              "stringIndex": 3
+            }
+          ],
+          "step": 8
+        },
+        {
+          "notes": [
+            {
+              "fret": 2,
+              "midi": 52,
+              "stringIndex": 3
+            }
+          ],
+          "step": 10
+        },
+        {
+          "notes": [
+            {
+              "fret": 0,
+              "midi": 40,
+              "stringIndex": 5
+            }
+          ],
+          "step": 14
+        }
+      ],
+      "measure": 53
+    },
+    {
+      "events": [
+        {
+          "notes": [
+            {
+              "fret": 2,
+              "midi": 57,
+              "stringIndex": 2
+            }
+          ],
+          "step": 0
+        },
+        {
+          "notes": [
+            {
+              "fret": 0,
+              "midi": 55,
+              "stringIndex": 2
+            }
+          ],
+          "step": 3
+        },
+        {
+          "notes": [
+            {
+              "fret": 2,
+              "midi": 52,
+              "stringIndex": 3
+            }
+          ],
+          "step": 4
+        },
+        {
+          "notes": [
+            {
+              "fret": 0,
+              "midi": 40,
+              "stringIndex": 5
+            }
+          ],
+          "step": 6
+        },
+        {
+          "notes": [
+            {
+              "fret": 0,
+              "midi": 50,
+              "stringIndex": 3
+            }
+          ],
+          "step": 8
+        },
+        {
+          "notes": [
+            {
+              "fret": 2,
+              "midi": 52,
+              "stringIndex": 3
+            }
+          ],
+          "step": 10
+        },
+        {
+          "notes": [
+            {
+              "fret": 0,
+              "midi": 40,
+              "stringIndex": 5
+            }
+          ],
+          "step": 14
+        }
+      ],
+      "measure": 54
+    },
+    {
+      "events": [
+        {
+          "notes": [
+            {
+              "fret": 5,
+              "midi": 60,
+              "stringIndex": 2
+            }
+          ],
+          "step": 0
+        },
+        {
+          "notes": [
+            {
+              "fret": 3,
+              "midi": 58,
+              "stringIndex": 2
+            }
+          ],
+          "step": 3
+        },
+        {
+          "notes": [
+            {
+              "fret": 5,
+              "midi": 55,
+              "stringIndex": 3
+            }
+          ],
+          "step": 4
+        },
+        {
+          "notes": [
+            {
+              "fret": 3,
+              "midi": 43,
+              "stringIndex": 5
+            }
+          ],
+          "step": 6
+        },
+        {
+          "notes": [
+            {
+              "fret": 3,
+              "midi": 53,
+              "stringIndex": 3
+            }
+          ],
+          "step": 8
+        },
+        {
+          "notes": [
+            {
+              "fret": 5,
+              "midi": 55,
+              "stringIndex": 3
+            }
+          ],
+          "step": 10
+        },
+        {
+          "notes": [
+            {
+              "fret": 3,
+              "midi": 43,
+              "stringIndex": 5
+            }
+          ],
+          "step": 14
+        }
+      ],
+      "measure": 55
+    },
+    {
+      "events": [
+        {
+          "notes": [
+            {
+              "fret": 5,
+              "midi": 60,
+              "stringIndex": 2
+            }
+          ],
+          "step": 0
+        },
+        {
+          "notes": [
+            {
+              "fret": 3,
+              "midi": 58,
+              "stringIndex": 2
+            }
+          ],
+          "step": 3
+        },
+        {
+          "notes": [
+            {
+              "fret": 5,
+              "midi": 55,
+              "stringIndex": 3
+            }
+          ],
+          "step": 4
+        },
+        {
+          "notes": [
+            {
+              "fret": 3,
+              "midi": 43,
+              "stringIndex": 5
+            }
+          ],
+          "step": 6
+        },
+        {
+          "notes": [
+            {
+              "fret": 3,
+              "midi": 53,
+              "stringIndex": 3
+            }
+          ],
+          "step": 8
+        },
+        {
+          "notes": [
+            {
+              "fret": 5,
+              "midi": 55,
+              "stringIndex": 3
+            }
+          ],
+          "step": 10
+        },
+        {
+          "notes": [
+            {
+              "fret": 3,
+              "midi": 43,
+              "stringIndex": 5
+            }
+          ],
+          "step": 14
+        }
+      ],
+      "measure": 56
+    },
+    {
+      "events": [
+        {
+          "notes": [
+            {
+              "fret": 5,
+              "midi": 60,
+              "stringIndex": 2
+            }
+          ],
+          "step": 0
+        },
+        {
+          "notes": [
+            {
+              "fret": 3,
+              "midi": 58,
+              "stringIndex": 2
+            }
+          ],
+          "step": 3
+        },
+        {
+          "notes": [
+            {
+              "fret": 5,
+              "midi": 55,
+              "stringIndex": 3
+            }
+          ],
+          "step": 4
+        },
+        {
+          "notes": [
+            {
+              "fret": 3,
+              "midi": 43,
+              "stringIndex": 5
+            }
+          ],
+          "step": 6
+        },
+        {
+          "notes": [
+            {
+              "fret": 3,
+              "midi": 53,
+              "stringIndex": 3
+            }
+          ],
+          "step": 8
+        },
+        {
+          "notes": [
+            {
+              "fret": 5,
+              "midi": 55,
+              "stringIndex": 3
+            }
+          ],
+          "step": 10
+        },
+        {
+          "notes": [
+            {
+              "fret": 3,
+              "midi": 43,
+              "stringIndex": 5
+            }
+          ],
+          "step": 14
+        }
+      ],
+      "measure": 57
+    },
+    {
+      "events": [
+        {
+          "notes": [
+            {
+              "fret": 5,
+              "midi": 60,
+              "stringIndex": 2
+            }
+          ],
+          "step": 0
+        },
+        {
+          "notes": [
+            {
+              "fret": 5,
+              "midi": 60,
+              "stringIndex": 2
+            }
+          ],
+          "step": 1
+        },
+        {
+          "notes": [
+            {
+              "fret": 4,
+              "midi": 59,
+              "stringIndex": 2
+            }
+          ],
+          "step": 3
+        },
+        {
+          "notes": [
+            {
+              "fret": 4,
+              "midi": 59,
+              "stringIndex": 2
+            }
+          ],
+          "step": 4
+        },
+        {
+          "notes": [
+            {
+              "fret": 3,
+              "midi": 58,
+              "stringIndex": 2
+            }
+          ],
+          "step": 7
+        },
+        {
+          "notes": [
+            {
+              "fret": 2,
+              "midi": 57,
+              "stringIndex": 2
+            }
+          ],
+          "step": 10
+        },
+        {
+          "notes": [
+            {
+              "fret": 4,
+              "midi": 59,
+              "stringIndex": 2
+            }
+          ],
+          "step": 13
+        },
+        {
+          "notes": [
+            {
+              "fret": 0,
+              "midi": 55,
+              "stringIndex": 2
+            }
+          ],
+          "step": 15
+        }
+      ],
+      "measure": 58
+    },
+    {
+      "events": [
+        {
+          "notes": [
+            {
+              "fret": 2,
+              "midi": 57,
+              "stringIndex": 2
+            }
+          ],
+          "step": 0
+        },
+        {
+          "notes": [
+            {
+              "fret": 0,
+              "midi": 55,
+              "stringIndex": 2
+            }
+          ],
+          "step": 3
+        },
+        {
+          "notes": [
+            {
+              "fret": 2,
+              "midi": 52,
+              "stringIndex": 3
+            }
+          ],
+          "step": 4
+        },
+        {
+          "notes": [
+            {
+              "fret": 0,
+              "midi": 40,
+              "stringIndex": 5
+            }
+          ],
+          "step": 6
+        },
+        {
+          "notes": [
+            {
+              "fret": 0,
+              "midi": 50,
+              "stringIndex": 3
+            }
+          ],
+          "step": 8
+        },
+        {
+          "notes": [
+            {
+              "fret": 2,
+              "midi": 52,
+              "stringIndex": 3
+            }
+          ],
+          "step": 10
+        },
+        {
+          "notes": [
+            {
+              "fret": 0,
+              "midi": 40,
+              "stringIndex": 5
+            }
+          ],
+          "step": 14
+        }
+      ],
+      "measure": 59
+    },
+    {
+      "events": [
+        {
+          "notes": [
+            {
+              "fret": 2,
+              "midi": 57,
+              "stringIndex": 2
+            }
+          ],
+          "step": 0
+        },
+        {
+          "notes": [
+            {
+              "fret": 0,
+              "midi": 55,
+              "stringIndex": 2
+            }
+          ],
+          "step": 3
+        },
+        {
+          "notes": [
+            {
+              "fret": 2,
+              "midi": 52,
+              "stringIndex": 3
+            }
+          ],
+          "step": 4
+        },
+        {
+          "notes": [
+            {
+              "fret": 0,
+              "midi": 40,
+              "stringIndex": 5
+            }
+          ],
+          "step": 6
+        },
+        {
+          "notes": [
+            {
+              "fret": 0,
+              "midi": 50,
+              "stringIndex": 3
+            }
+          ],
+          "step": 8
+        },
+        {
+          "notes": [
+            {
+              "fret": 2,
+              "midi": 52,
+              "stringIndex": 3
+            }
+          ],
+          "step": 10
+        },
+        {
+          "notes": [
+            {
+              "fret": 0,
+              "midi": 40,
+              "stringIndex": 5
+            }
+          ],
+          "step": 14
+        }
+      ],
+      "measure": 60
+    },
+    {
+      "events": [
+        {
+          "notes": [
+            {
+              "fret": 2,
+              "midi": 57,
+              "stringIndex": 2
+            }
+          ],
+          "step": 0
+        },
+        {
+          "notes": [
+            {
+              "fret": 0,
+              "midi": 55,
+              "stringIndex": 2
+            }
+          ],
+          "step": 3
+        },
+        {
+          "notes": [
+            {
+              "fret": 2,
+              "midi": 52,
+              "stringIndex": 3
+            }
+          ],
+          "step": 4
+        },
+        {
+          "notes": [
+            {
+              "fret": 0,
+              "midi": 40,
+              "stringIndex": 5
+            }
+          ],
+          "step": 6
+        },
+        {
+          "notes": [
+            {
+              "fret": 0,
+              "midi": 50,
+              "stringIndex": 3
+            }
+          ],
+          "step": 8
+        },
+        {
+          "notes": [
+            {
+              "fret": 2,
+              "midi": 52,
+              "stringIndex": 3
+            }
+          ],
+          "step": 10
+        },
+        {
+          "notes": [
+            {
+              "fret": 0,
+              "midi": 40,
+              "stringIndex": 5
+            }
+          ],
+          "step": 14
+        }
+      ],
+      "measure": 61
+    },
+    {
+      "events": [
+        {
+          "notes": [
+            {
+              "fret": 2,
+              "midi": 57,
+              "stringIndex": 2
+            }
+          ],
+          "step": 0
+        },
+        {
+          "notes": [
+            {
+              "fret": 0,
+              "midi": 55,
+              "stringIndex": 2
+            }
+          ],
+          "step": 3
+        },
+        {
+          "notes": [
+            {
+              "fret": 2,
+              "midi": 52,
+              "stringIndex": 3
+            }
+          ],
+          "step": 4
+        },
+        {
+          "notes": [
+            {
+              "fret": 0,
+              "midi": 40,
+              "stringIndex": 5
+            }
+          ],
+          "step": 6
+        },
+        {
+          "notes": [
+            {
+              "fret": 0,
+              "midi": 50,
+              "stringIndex": 3
+            }
+          ],
+          "step": 8
+        },
+        {
+          "notes": [
+            {
+              "fret": 2,
+              "midi": 52,
+              "stringIndex": 3
+            }
+          ],
+          "step": 10
+        },
+        {
+          "notes": [
+            {
+              "fret": 0,
+              "midi": 40,
+              "stringIndex": 5
+            }
+          ],
+          "step": 14
+        }
+      ],
+      "measure": 62
+    },
+    {
+      "events": [
+        {
+          "notes": [
+            {
+              "fret": 0,
+              "midi": 64,
+              "stringIndex": 0
+            },
+            {
+              "fret": 3,
+              "midi": 62,
+              "stringIndex": 1
+            },
+            {
+              "fret": 4,
+              "midi": 59,
+              "stringIndex": 2
+            },
+            {
+              "fret": 5,
+              "midi": 55,
+              "stringIndex": 3
+            }
+          ],
+          "step": 0
+        },
+        {
+          "notes": [
+            {
+              "fret": 0,
+              "midi": 64,
+              "stringIndex": 0
+            },
+            {
+              "fret": 3,
+              "midi": 62,
+              "stringIndex": 1
+            },
+            {
+              "fret": 4,
+              "midi": 59,
+              "stringIndex": 2
+            },
+            {
+              "fret": 5,
+              "midi": 55,
+              "stringIndex": 3
+            }
+          ],
+          "step": 3
+        },
+        {
+          "notes": [
+            {
+              "fret": 0,
+              "midi": 64,
+              "stringIndex": 0
+            },
+            {
+              "fret": 3,
+              "midi": 62,
+              "stringIndex": 1
+            },
+            {
+              "fret": 4,
+              "midi": 59,
+              "stringIndex": 2
+            },
+            {
+              "fret": 5,
+              "midi": 55,
+              "stringIndex": 3
+            }
+          ],
+          "step": 4
+        }
+      ],
+      "measure": 63,
+      "section": "Chorus"
+    },
+    {
+      "events": [
+        {
+          "notes": [
+            {
+              "fret": 2,
+              "midi": 61,
+              "stringIndex": 1
+            },
+            {
+              "fret": 2,
+              "midi": 57,
+              "stringIndex": 2
+            },
+            {
+              "fret": 2,
+              "midi": 52,
+              "stringIndex": 3
+            },
+            {
+              "fret": 0,
+              "midi": 45,
+              "stringIndex": 4
+            }
+          ],
+          "step": 0
+        },
+        {
+          "notes": [
+            {
+              "fret": 2,
+              "midi": 61,
+              "stringIndex": 1
+            },
+            {
+              "fret": 2,
+              "midi": 57,
+              "stringIndex": 2
+            },
+            {
+              "fret": 2,
+              "midi": 52,
+              "stringIndex": 3
+            },
+            {
+              "fret": 0,
+              "midi": 45,
+              "stringIndex": 4
+            }
+          ],
+          "step": 3
+        },
+        {
+          "notes": [
+            {
+              "fret": 2,
+              "midi": 61,
+              "stringIndex": 1
+            },
+            {
+              "fret": 2,
+              "midi": 57,
+              "stringIndex": 2
+            },
+            {
+              "fret": 2,
+              "midi": 52,
+              "stringIndex": 3
+            },
+            {
+              "fret": 0,
+              "midi": 45,
+              "stringIndex": 4
+            }
+          ],
+          "step": 4
+        }
+      ],
+      "measure": 64
+    },
+    {
+      "events": [
+        {
+          "notes": [
+            {
+              "fret": 9,
+              "midi": 68,
+              "stringIndex": 1
+            },
+            {
+              "fret": 9,
+              "midi": 64,
+              "stringIndex": 2
+            },
+            {
+              "fret": 9,
+              "midi": 59,
+              "stringIndex": 3
+            }
+          ],
+          "step": 0
+        },
+        {
+          "notes": [
+            {
+              "fret": 9,
+              "midi": 68,
+              "stringIndex": 1
+            },
+            {
+              "fret": 9,
+              "midi": 64,
+              "stringIndex": 2
+            },
+            {
+              "fret": 9,
+              "midi": 59,
+              "stringIndex": 3
+            }
+          ],
+          "step": 1
+        },
+        {
+          "notes": [
+            {
+              "fret": 9,
+              "midi": 68,
+              "stringIndex": 1
+            },
+            {
+              "fret": 9,
+              "midi": 64,
+              "stringIndex": 2
+            },
+            {
+              "fret": 9,
+              "midi": 59,
+              "stringIndex": 3
+            }
+          ],
+          "step": 2
+        },
+        {
+          "notes": [
+            {
+              "fret": 9,
+              "midi": 68,
+              "stringIndex": 1
+            },
+            {
+              "fret": 9,
+              "midi": 64,
+              "stringIndex": 2
+            },
+            {
+              "fret": 9,
+              "midi": 59,
+              "stringIndex": 3
+            }
+          ],
+          "step": 3
+        },
+        {
+          "notes": [
+            {
+              "fret": 7,
+              "midi": 66,
+              "stringIndex": 1
+            },
+            {
+              "fret": 7,
+              "midi": 62,
+              "stringIndex": 2
+            },
+            {
+              "fret": 7,
+              "midi": 57,
+              "stringIndex": 3
+            }
+          ],
+          "step": 4
+        },
+        {
+          "notes": [
+            {
+              "fret": 9,
+              "midi": 68,
+              "stringIndex": 1
+            },
+            {
+              "fret": 9,
+              "midi": 64,
+              "stringIndex": 2
+            },
+            {
+              "fret": 9,
+              "midi": 59,
+              "stringIndex": 3
+            }
+          ],
+          "step": 6
+        }
+      ],
+      "measure": 65
+    },
+    {
+      "events": [
+        {
+          "notes": [
+            {
+              "fret": 9,
+              "midi": 68,
+              "stringIndex": 1
+            },
+            {
+              "fret": 9,
+              "midi": 64,
+              "stringIndex": 2
+            },
+            {
+              "fret": 9,
+              "midi": 59,
+              "stringIndex": 3
+            }
+          ],
+          "step": 0
+        },
+        {
+          "notes": [
+            {
+              "fret": 9,
+              "midi": 68,
+              "stringIndex": 1
+            },
+            {
+              "fret": 9,
+              "midi": 64,
+              "stringIndex": 2
+            },
+            {
+              "fret": 9,
+              "midi": 59,
+              "stringIndex": 3
+            }
+          ],
+          "step": 1
+        },
+        {
+          "notes": [
+            {
+              "fret": 9,
+              "midi": 68,
+              "stringIndex": 1
+            },
+            {
+              "fret": 9,
+              "midi": 64,
+              "stringIndex": 2
+            },
+            {
+              "fret": 9,
+              "midi": 59,
+              "stringIndex": 3
+            }
+          ],
+          "step": 2
+        },
+        {
+          "notes": [
+            {
+              "fret": 9,
+              "midi": 68,
+              "stringIndex": 1
+            },
+            {
+              "fret": 9,
+              "midi": 64,
+              "stringIndex": 2
+            },
+            {
+              "fret": 9,
+              "midi": 59,
+              "stringIndex": 3
+            }
+          ],
+          "step": 3
+        },
+        {
+          "notes": [
+            {
+              "fret": 12,
+              "midi": 71,
+              "stringIndex": 1
+            },
+            {
+              "fret": 12,
+              "midi": 67,
+              "stringIndex": 2
+            },
+            {
+              "fret": 12,
+              "midi": 62,
+              "stringIndex": 3
+            }
+          ],
+          "step": 4
+        },
+        {
+          "notes": [
+            {
+              "fret": 9,
+              "midi": 68,
+              "stringIndex": 1
+            },
+            {
+              "fret": 9,
+              "midi": 64,
+              "stringIndex": 2
+            },
+            {
+              "fret": 9,
+              "midi": 59,
+              "stringIndex": 3
+            }
+          ],
+          "step": 6
+        }
+      ],
+      "measure": 66
+    },
+    {
+      "events": [
+        {
+          "notes": [
+            {
+              "fret": 0,
+              "midi": 64,
+              "stringIndex": 0
+            },
+            {
+              "fret": 3,
+              "midi": 62,
+              "stringIndex": 1
+            },
+            {
+              "fret": 4,
+              "midi": 59,
+              "stringIndex": 2
+            },
+            {
+              "fret": 5,
+              "midi": 55,
+              "stringIndex": 3
+            }
+          ],
+          "step": 0
+        },
+        {
+          "notes": [
+            {
+              "fret": 0,
+              "midi": 64,
+              "stringIndex": 0
+            },
+            {
+              "fret": 3,
+              "midi": 62,
+              "stringIndex": 1
+            },
+            {
+              "fret": 4,
+              "midi": 59,
+              "stringIndex": 2
+            },
+            {
+              "fret": 5,
+              "midi": 55,
+              "stringIndex": 3
+            }
+          ],
+          "step": 3
+        },
+        {
+          "notes": [
+            {
+              "fret": 0,
+              "midi": 64,
+              "stringIndex": 0
+            },
+            {
+              "fret": 3,
+              "midi": 62,
+              "stringIndex": 1
+            },
+            {
+              "fret": 4,
+              "midi": 59,
+              "stringIndex": 2
+            },
+            {
+              "fret": 5,
+              "midi": 55,
+              "stringIndex": 3
+            }
+          ],
+          "step": 4
+        }
+      ],
+      "measure": 67
+    },
+    {
+      "events": [],
+      "measure": 68
+    },
+    {
+      "events": [],
+      "measure": 69
+    },
+    {
+      "events": [
+        {
+          "notes": [
+            {
+              "fret": 9,
+              "midi": 68,
+              "stringIndex": 1
+            },
+            {
+              "fret": 9,
+              "midi": 64,
+              "stringIndex": 2
+            },
+            {
+              "fret": 9,
+              "midi": 59,
+              "stringIndex": 3
+            },
+            {
+              "fret": 7,
+              "midi": 52,
+              "stringIndex": 4
+            }
+          ],
+          "step": 0
+        },
+        {
+          "notes": [
+            {
+              "fret": 7,
+              "midi": 66,
+              "stringIndex": 1
+            },
+            {
+              "fret": 7,
+              "midi": 62,
+              "stringIndex": 2
+            },
+            {
+              "fret": 7,
+              "midi": 57,
+              "stringIndex": 3
+            },
+            {
+              "fret": 5,
+              "midi": 50,
+              "stringIndex": 4
+            }
+          ],
+          "step": 6
+        },
+        {
+          "notes": [
+            {
+              "fret": 7,
+              "midi": 66,
+              "stringIndex": 1
+            },
+            {
+              "fret": 7,
+              "midi": 62,
+              "stringIndex": 2
+            },
+            {
+              "fret": 7,
+              "midi": 57,
+              "stringIndex": 3
+            },
+            {
+              "fret": 5,
+              "midi": 50,
+              "stringIndex": 4
+            }
+          ],
+          "step": 14
+        }
+      ],
+      "measure": 70,
+      "section": "Bridge"
+    },
+    {
+      "events": [
+        {
+          "notes": [
+            {
+              "fret": 5,
+              "midi": 64,
+              "stringIndex": 1
+            },
+            {
+              "fret": 6,
+              "midi": 61,
+              "stringIndex": 2
+            },
+            {
+              "fret": 7,
+              "midi": 57,
+              "stringIndex": 3
+            }
+          ],
+          "step": 6
+        },
+        {
+          "notes": [
+            {
+              "fret": 7,
+              "midi": 66,
+              "stringIndex": 1
+            },
+            {
+              "fret": 7,
+              "midi": 62,
+              "stringIndex": 2
+            },
+            {
+              "fret": 7,
+              "midi": 57,
+              "stringIndex": 3
+            }
+          ],
+          "step": 10
+        },
+        {
+          "notes": [
+            {
+              "fret": 5,
+              "midi": 64,
+              "stringIndex": 1
+            },
+            {
+              "fret": 6,
+              "midi": 61,
+              "stringIndex": 2
+            },
+            {
+              "fret": 7,
+              "midi": 57,
+              "stringIndex": 3
+            }
+          ],
+          "step": 12
+        },
+        {
+          "notes": [
+            {
+              "fret": 9,
+              "midi": 68,
+              "stringIndex": 1
+            },
+            {
+              "fret": 9,
+              "midi": 64,
+              "stringIndex": 2
+            },
+            {
+              "fret": 9,
+              "midi": 59,
+              "stringIndex": 3
+            }
+          ],
+          "step": 14
+        }
+      ],
+      "measure": 71
+    },
+    {
+      "events": [
+        {
+          "notes": [
+            {
+              "fret": 9,
+              "midi": 68,
+              "stringIndex": 1
+            },
+            {
+              "fret": 9,
+              "midi": 64,
+              "stringIndex": 2
+            },
+            {
+              "fret": 9,
+              "midi": 59,
+              "stringIndex": 3
+            },
+            {
+              "fret": 7,
+              "midi": 52,
+              "stringIndex": 4
+            }
+          ],
+          "step": 0
+        },
+        {
+          "notes": [
+            {
+              "fret": 7,
+              "midi": 66,
+              "stringIndex": 1
+            },
+            {
+              "fret": 7,
+              "midi": 62,
+              "stringIndex": 2
+            },
+            {
+              "fret": 7,
+              "midi": 57,
+              "stringIndex": 3
+            },
+            {
+              "fret": 5,
+              "midi": 50,
+              "stringIndex": 4
+            }
+          ],
+          "step": 6
+        },
+        {
+          "notes": [
+            {
+              "fret": 7,
+              "midi": 66,
+              "stringIndex": 1
+            },
+            {
+              "fret": 7,
+              "midi": 62,
+              "stringIndex": 2
+            },
+            {
+              "fret": 7,
+              "midi": 57,
+              "stringIndex": 3
+            },
+            {
+              "fret": 5,
+              "midi": 50,
+              "stringIndex": 4
+            }
+          ],
+          "step": 14
+        }
+      ],
+      "measure": 72
+    },
+    {
+      "events": [
+        {
+          "notes": [
+            {
+              "fret": 5,
+              "midi": 64,
+              "stringIndex": 1
+            },
+            {
+              "fret": 6,
+              "midi": 61,
+              "stringIndex": 2
+            },
+            {
+              "fret": 7,
+              "midi": 57,
+              "stringIndex": 3
+            }
+          ],
+          "step": 6
+        },
+        {
+          "notes": [
+            {
+              "fret": 7,
+              "midi": 66,
+              "stringIndex": 1
+            },
+            {
+              "fret": 7,
+              "midi": 62,
+              "stringIndex": 2
+            },
+            {
+              "fret": 7,
+              "midi": 57,
+              "stringIndex": 3
+            }
+          ],
+          "step": 10
+        },
+        {
+          "notes": [
+            {
+              "fret": 5,
+              "midi": 64,
+              "stringIndex": 1
+            },
+            {
+              "fret": 6,
+              "midi": 61,
+              "stringIndex": 2
+            },
+            {
+              "fret": 7,
+              "midi": 57,
+              "stringIndex": 3
+            }
+          ],
+          "step": 12
+        },
+        {
+          "notes": [
+            {
+              "fret": 9,
+              "midi": 68,
+              "stringIndex": 1
+            },
+            {
+              "fret": 9,
+              "midi": 64,
+              "stringIndex": 2
+            },
+            {
+              "fret": 9,
+              "midi": 59,
+              "stringIndex": 3
+            }
+          ],
+          "step": 14
+        }
+      ],
+      "measure": 73
+    },
+    {
+      "events": [
+        {
+          "notes": [
+            {
+              "fret": 9,
+              "midi": 68,
+              "stringIndex": 1
+            },
+            {
+              "fret": 9,
+              "midi": 64,
+              "stringIndex": 2
+            },
+            {
+              "fret": 9,
+              "midi": 59,
+              "stringIndex": 3
+            },
+            {
+              "fret": 7,
+              "midi": 52,
+              "stringIndex": 4
+            }
+          ],
+          "step": 0
+        },
+        {
+          "notes": [
+            {
+              "fret": 7,
+              "midi": 66,
+              "stringIndex": 1
+            },
+            {
+              "fret": 7,
+              "midi": 62,
+              "stringIndex": 2
+            },
+            {
+              "fret": 7,
+              "midi": 57,
+              "stringIndex": 3
+            },
+            {
+              "fret": 5,
+              "midi": 50,
+              "stringIndex": 4
+            }
+          ],
+          "step": 6
+        },
+        {
+          "notes": [
+            {
+              "fret": 7,
+              "midi": 66,
+              "stringIndex": 1
+            },
+            {
+              "fret": 7,
+              "midi": 62,
+              "stringIndex": 2
+            },
+            {
+              "fret": 7,
+              "midi": 57,
+              "stringIndex": 3
+            },
+            {
+              "fret": 5,
+              "midi": 50,
+              "stringIndex": 4
+            }
+          ],
+          "step": 14
+        }
+      ],
+      "measure": 74
+    },
+    {
+      "events": [
+        {
+          "notes": [
+            {
+              "fret": 5,
+              "midi": 64,
+              "stringIndex": 1
+            },
+            {
+              "fret": 6,
+              "midi": 61,
+              "stringIndex": 2
+            },
+            {
+              "fret": 7,
+              "midi": 57,
+              "stringIndex": 3
+            }
+          ],
+          "step": 6
+        },
+        {
+          "notes": [
+            {
+              "fret": 7,
+              "midi": 66,
+              "stringIndex": 1
+            },
+            {
+              "fret": 7,
+              "midi": 62,
+              "stringIndex": 2
+            },
+            {
+              "fret": 7,
+              "midi": 57,
+              "stringIndex": 3
+            }
+          ],
+          "step": 10
+        },
+        {
+          "notes": [
+            {
+              "fret": 5,
+              "midi": 64,
+              "stringIndex": 1
+            },
+            {
+              "fret": 6,
+              "midi": 61,
+              "stringIndex": 2
+            },
+            {
+              "fret": 7,
+              "midi": 57,
+              "stringIndex": 3
+            }
+          ],
+          "step": 12
+        },
+        {
+          "notes": [
+            {
+              "fret": 9,
+              "midi": 68,
+              "stringIndex": 1
+            },
+            {
+              "fret": 9,
+              "midi": 64,
+              "stringIndex": 2
+            },
+            {
+              "fret": 9,
+              "midi": 59,
+              "stringIndex": 3
+            }
+          ],
+          "step": 14
+        }
+      ],
+      "measure": 75
+    },
+    {
+      "events": [
+        {
+          "notes": [
+            {
+              "fret": 9,
+              "midi": 68,
+              "stringIndex": 1
+            },
+            {
+              "fret": 9,
+              "midi": 64,
+              "stringIndex": 2
+            },
+            {
+              "fret": 9,
+              "midi": 59,
+              "stringIndex": 3
+            },
+            {
+              "fret": 7,
+              "midi": 52,
+              "stringIndex": 4
+            }
+          ],
+          "step": 0
+        },
+        {
+          "notes": [
+            {
+              "fret": 7,
+              "midi": 66,
+              "stringIndex": 1
+            },
+            {
+              "fret": 7,
+              "midi": 62,
+              "stringIndex": 2
+            },
+            {
+              "fret": 7,
+              "midi": 57,
+              "stringIndex": 3
+            },
+            {
+              "fret": 5,
+              "midi": 50,
+              "stringIndex": 4
+            }
+          ],
+          "step": 6
+        },
+        {
+          "notes": [
+            {
+              "fret": 7,
+              "midi": 66,
+              "stringIndex": 1
+            },
+            {
+              "fret": 7,
+              "midi": 62,
+              "stringIndex": 2
+            },
+            {
+              "fret": 7,
+              "midi": 57,
+              "stringIndex": 3
+            },
+            {
+              "fret": 5,
+              "midi": 50,
+              "stringIndex": 4
+            }
+          ],
+          "step": 14
+        }
+      ],
+      "measure": 76
+    },
+    {
+      "events": [
+        {
+          "notes": [
+            {
+              "fret": 5,
+              "midi": 64,
+              "stringIndex": 1
+            },
+            {
+              "fret": 6,
+              "midi": 61,
+              "stringIndex": 2
+            },
+            {
+              "fret": 7,
+              "midi": 57,
+              "stringIndex": 3
+            }
+          ],
+          "step": 6
+        },
+        {
+          "notes": [
+            {
+              "fret": 7,
+              "midi": 66,
+              "stringIndex": 1
+            },
+            {
+              "fret": 7,
+              "midi": 62,
+              "stringIndex": 2
+            },
+            {
+              "fret": 7,
+              "midi": 57,
+              "stringIndex": 3
+            }
+          ],
+          "step": 10
+        },
+        {
+          "notes": [
+            {
+              "fret": 5,
+              "midi": 64,
+              "stringIndex": 1
+            },
+            {
+              "fret": 6,
+              "midi": 61,
+              "stringIndex": 2
+            },
+            {
+              "fret": 7,
+              "midi": 57,
+              "stringIndex": 3
+            }
+          ],
+          "step": 12
+        },
+        {
+          "notes": [
+            {
+              "fret": 9,
+              "midi": 68,
+              "stringIndex": 1
+            },
+            {
+              "fret": 9,
+              "midi": 64,
+              "stringIndex": 2
+            },
+            {
+              "fret": 9,
+              "midi": 59,
+              "stringIndex": 3
+            }
+          ],
+          "step": 14
+        }
+      ],
+      "measure": 77
+    },
+    {
+      "events": [
+        {
+          "notes": [
+            {
+              "fret": 9,
+              "midi": 68,
+              "stringIndex": 1
+            },
+            {
+              "fret": 9,
+              "midi": 64,
+              "stringIndex": 2
+            },
+            {
+              "fret": 9,
+              "midi": 59,
+              "stringIndex": 3
+            }
+          ],
+          "step": 0
+        },
+        {
+          "notes": [
+            {
+              "fret": 7,
+              "midi": 66,
+              "stringIndex": 1
+            },
+            {
+              "fret": 7,
+              "midi": 62,
+              "stringIndex": 2
+            },
+            {
+              "fret": 7,
+              "midi": 57,
+              "stringIndex": 3
+            }
+          ],
+          "step": 6
+        },
+        {
+          "notes": [
+            {
+              "fret": 7,
+              "midi": 66,
+              "stringIndex": 1
+            },
+            {
+              "fret": 7,
+              "midi": 62,
+              "stringIndex": 2
+            },
+            {
+              "fret": 7,
+              "midi": 57,
+              "stringIndex": 3
+            }
+          ],
+          "step": 14
+        }
+      ],
+      "measure": 78,
+      "section": "Solo"
+    },
+    {
+      "events": [
+        {
+          "notes": [
+            {
+              "fret": 5,
+              "midi": 64,
+              "stringIndex": 1
+            },
+            {
+              "fret": 6,
+              "midi": 61,
+              "stringIndex": 2
+            },
+            {
+              "fret": 7,
+              "midi": 57,
+              "stringIndex": 3
+            }
+          ],
+          "step": 6
+        },
+        {
+          "notes": [
+            {
+              "fret": 7,
+              "midi": 66,
+              "stringIndex": 1
+            },
+            {
+              "fret": 7,
+              "midi": 62,
+              "stringIndex": 2
+            },
+            {
+              "fret": 7,
+              "midi": 57,
+              "stringIndex": 3
+            }
+          ],
+          "step": 10
+        },
+        {
+          "notes": [
+            {
+              "fret": 5,
+              "midi": 64,
+              "stringIndex": 1
+            },
+            {
+              "fret": 6,
+              "midi": 61,
+              "stringIndex": 2
+            },
+            {
+              "fret": 7,
+              "midi": 57,
+              "stringIndex": 3
+            }
+          ],
+          "step": 12
+        },
+        {
+          "notes": [
+            {
+              "fret": 7,
+              "midi": 66,
+              "stringIndex": 1
+            },
+            {
+              "fret": 7,
+              "midi": 62,
+              "stringIndex": 2
+            },
+            {
+              "fret": 7,
+              "midi": 57,
+              "stringIndex": 3
+            }
+          ],
+          "step": 14
+        }
+      ],
+      "measure": 79
+    },
+    {
+      "events": [
+        {
+          "notes": [
+            {
+              "fret": 9,
+              "midi": 68,
+              "stringIndex": 1
+            },
+            {
+              "fret": 9,
+              "midi": 64,
+              "stringIndex": 2
+            },
+            {
+              "fret": 9,
+              "midi": 59,
+              "stringIndex": 3
+            }
+          ],
+          "step": 0
+        },
+        {
+          "notes": [
+            {
+              "fret": 7,
+              "midi": 66,
+              "stringIndex": 1
+            },
+            {
+              "fret": 7,
+              "midi": 62,
+              "stringIndex": 2
+            },
+            {
+              "fret": 7,
+              "midi": 57,
+              "stringIndex": 3
+            }
+          ],
+          "step": 6
+        },
+        {
+          "notes": [
+            {
+              "fret": 7,
+              "midi": 66,
+              "stringIndex": 1
+            },
+            {
+              "fret": 7,
+              "midi": 62,
+              "stringIndex": 2
+            },
+            {
+              "fret": 7,
+              "midi": 57,
+              "stringIndex": 3
+            }
+          ],
+          "step": 14
+        }
+      ],
+      "measure": 80
+    },
+    {
+      "events": [
+        {
+          "notes": [
+            {
+              "fret": 5,
+              "midi": 64,
+              "stringIndex": 1
+            },
+            {
+              "fret": 6,
+              "midi": 61,
+              "stringIndex": 2
+            },
+            {
+              "fret": 7,
+              "midi": 57,
+              "stringIndex": 3
+            }
+          ],
+          "step": 6
+        },
+        {
+          "notes": [
+            {
+              "fret": 7,
+              "midi": 66,
+              "stringIndex": 1
+            },
+            {
+              "fret": 7,
+              "midi": 62,
+              "stringIndex": 2
+            },
+            {
+              "fret": 7,
+              "midi": 57,
+              "stringIndex": 3
+            }
+          ],
+          "step": 10
+        },
+        {
+          "notes": [
+            {
+              "fret": 5,
+              "midi": 64,
+              "stringIndex": 1
+            },
+            {
+              "fret": 6,
+              "midi": 61,
+              "stringIndex": 2
+            },
+            {
+              "fret": 7,
+              "midi": 57,
+              "stringIndex": 3
+            }
+          ],
+          "step": 12
+        },
+        {
+          "notes": [
+            {
+              "fret": 7,
+              "midi": 66,
+              "stringIndex": 1
+            },
+            {
+              "fret": 7,
+              "midi": 62,
+              "stringIndex": 2
+            },
+            {
+              "fret": 7,
+              "midi": 57,
+              "stringIndex": 3
+            }
+          ],
+          "step": 14
+        }
+      ],
+      "measure": 81
+    },
+    {
+      "events": [
+        {
+          "notes": [
+            {
+              "fret": 9,
+              "midi": 68,
+              "stringIndex": 1
+            },
+            {
+              "fret": 9,
+              "midi": 64,
+              "stringIndex": 2
+            },
+            {
+              "fret": 9,
+              "midi": 59,
+              "stringIndex": 3
+            }
+          ],
+          "step": 0
+        },
+        {
+          "notes": [
+            {
+              "fret": 7,
+              "midi": 66,
+              "stringIndex": 1
+            },
+            {
+              "fret": 7,
+              "midi": 62,
+              "stringIndex": 2
+            },
+            {
+              "fret": 7,
+              "midi": 57,
+              "stringIndex": 3
+            }
+          ],
+          "step": 6
+        },
+        {
+          "notes": [
+            {
+              "fret": 7,
+              "midi": 66,
+              "stringIndex": 1
+            },
+            {
+              "fret": 7,
+              "midi": 62,
+              "stringIndex": 2
+            },
+            {
+              "fret": 7,
+              "midi": 57,
+              "stringIndex": 3
+            }
+          ],
+          "step": 14
+        }
+      ],
+      "measure": 82
+    },
+    {
+      "events": [
+        {
+          "notes": [
+            {
+              "fret": 5,
+              "midi": 64,
+              "stringIndex": 1
+            },
+            {
+              "fret": 6,
+              "midi": 61,
+              "stringIndex": 2
+            },
+            {
+              "fret": 7,
+              "midi": 57,
+              "stringIndex": 3
+            }
+          ],
+          "step": 6
+        },
+        {
+          "notes": [
+            {
+              "fret": 7,
+              "midi": 66,
+              "stringIndex": 1
+            },
+            {
+              "fret": 7,
+              "midi": 62,
+              "stringIndex": 2
+            },
+            {
+              "fret": 7,
+              "midi": 57,
+              "stringIndex": 3
+            }
+          ],
+          "step": 10
+        },
+        {
+          "notes": [
+            {
+              "fret": 5,
+              "midi": 64,
+              "stringIndex": 1
+            },
+            {
+              "fret": 6,
+              "midi": 61,
+              "stringIndex": 2
+            },
+            {
+              "fret": 7,
+              "midi": 57,
+              "stringIndex": 3
+            }
+          ],
+          "step": 12
+        },
+        {
+          "notes": [
+            {
+              "fret": 7,
+              "midi": 66,
+              "stringIndex": 1
+            },
+            {
+              "fret": 7,
+              "midi": 62,
+              "stringIndex": 2
+            },
+            {
+              "fret": 7,
+              "midi": 57,
+              "stringIndex": 3
+            }
+          ],
+          "step": 14
+        }
+      ],
+      "measure": 83
+    },
+    {
+      "events": [
+        {
+          "notes": [
+            {
+              "fret": 9,
+              "midi": 68,
+              "stringIndex": 1
+            },
+            {
+              "fret": 9,
+              "midi": 64,
+              "stringIndex": 2
+            },
+            {
+              "fret": 9,
+              "midi": 59,
+              "stringIndex": 3
+            }
+          ],
+          "step": 0
+        },
+        {
+          "notes": [
+            {
+              "fret": 7,
+              "midi": 66,
+              "stringIndex": 1
+            },
+            {
+              "fret": 7,
+              "midi": 62,
+              "stringIndex": 2
+            },
+            {
+              "fret": 7,
+              "midi": 57,
+              "stringIndex": 3
+            }
+          ],
+          "step": 6
+        },
+        {
+          "notes": [
+            {
+              "fret": 7,
+              "midi": 66,
+              "stringIndex": 1
+            },
+            {
+              "fret": 7,
+              "midi": 62,
+              "stringIndex": 2
+            },
+            {
+              "fret": 7,
+              "midi": 57,
+              "stringIndex": 3
+            }
+          ],
+          "step": 14
+        }
+      ],
+      "measure": 84
+    },
+    {
+      "events": [
+        {
+          "notes": [
+            {
+              "fret": 5,
+              "midi": 64,
+              "stringIndex": 1
+            },
+            {
+              "fret": 6,
+              "midi": 61,
+              "stringIndex": 2
+            },
+            {
+              "fret": 7,
+              "midi": 57,
+              "stringIndex": 3
+            }
+          ],
+          "step": 6
+        },
+        {
+          "notes": [
+            {
+              "fret": 7,
+              "midi": 66,
+              "stringIndex": 1
+            },
+            {
+              "fret": 7,
+              "midi": 62,
+              "stringIndex": 2
+            },
+            {
+              "fret": 7,
+              "midi": 57,
+              "stringIndex": 3
+            }
+          ],
+          "step": 10
+        },
+        {
+          "notes": [
+            {
+              "fret": 5,
+              "midi": 64,
+              "stringIndex": 1
+            },
+            {
+              "fret": 6,
+              "midi": 61,
+              "stringIndex": 2
+            },
+            {
+              "fret": 7,
+              "midi": 57,
+              "stringIndex": 3
+            }
+          ],
+          "step": 12
+        },
+        {
+          "notes": [
+            {
+              "fret": 7,
+              "midi": 66,
+              "stringIndex": 1
+            },
+            {
+              "fret": 7,
+              "midi": 62,
+              "stringIndex": 2
+            },
+            {
+              "fret": 7,
+              "midi": 57,
+              "stringIndex": 3
+            }
+          ],
+          "step": 14
+        }
+      ],
+      "measure": 85
+    },
+    {
+      "events": [
+        {
+          "notes": [
+            {
+              "fret": 9,
+              "midi": 68,
+              "stringIndex": 1
+            },
+            {
+              "fret": 9,
+              "midi": 64,
+              "stringIndex": 2
+            },
+            {
+              "fret": 9,
+              "midi": 59,
+              "stringIndex": 3
+            }
+          ],
+          "step": 0
+        },
+        {
+          "notes": [
+            {
+              "fret": 7,
+              "midi": 66,
+              "stringIndex": 1
+            },
+            {
+              "fret": 7,
+              "midi": 62,
+              "stringIndex": 2
+            },
+            {
+              "fret": 7,
+              "midi": 57,
+              "stringIndex": 3
+            }
+          ],
+          "step": 6
+        },
+        {
+          "notes": [
+            {
+              "fret": 7,
+              "midi": 66,
+              "stringIndex": 1
+            },
+            {
+              "fret": 7,
+              "midi": 62,
+              "stringIndex": 2
+            },
+            {
+              "fret": 7,
+              "midi": 57,
+              "stringIndex": 3
+            }
+          ],
+          "step": 14
+        }
+      ],
+      "measure": 86
+    },
+    {
+      "events": [
+        {
+          "notes": [
+            {
+              "fret": 5,
+              "midi": 64,
+              "stringIndex": 1
+            },
+            {
+              "fret": 6,
+              "midi": 61,
+              "stringIndex": 2
+            },
+            {
+              "fret": 7,
+              "midi": 57,
+              "stringIndex": 3
+            }
+          ],
+          "step": 6
+        },
+        {
+          "notes": [
+            {
+              "fret": 7,
+              "midi": 66,
+              "stringIndex": 1
+            },
+            {
+              "fret": 7,
+              "midi": 62,
+              "stringIndex": 2
+            },
+            {
+              "fret": 7,
+              "midi": 57,
+              "stringIndex": 3
+            }
+          ],
+          "step": 10
+        },
+        {
+          "notes": [
+            {
+              "fret": 5,
+              "midi": 64,
+              "stringIndex": 1
+            },
+            {
+              "fret": 6,
+              "midi": 61,
+              "stringIndex": 2
+            },
+            {
+              "fret": 7,
+              "midi": 57,
+              "stringIndex": 3
+            }
+          ],
+          "step": 12
+        },
+        {
+          "notes": [
+            {
+              "fret": 7,
+              "midi": 66,
+              "stringIndex": 1
+            },
+            {
+              "fret": 7,
+              "midi": 62,
+              "stringIndex": 2
+            },
+            {
+              "fret": 7,
+              "midi": 57,
+              "stringIndex": 3
+            }
+          ],
+          "step": 14
+        }
+      ],
+      "measure": 87
+    },
+    {
+      "events": [
+        {
+          "notes": [
+            {
+              "fret": 9,
+              "midi": 68,
+              "stringIndex": 1
+            },
+            {
+              "fret": 9,
+              "midi": 64,
+              "stringIndex": 2
+            },
+            {
+              "fret": 9,
+              "midi": 59,
+              "stringIndex": 3
+            }
+          ],
+          "step": 0
+        },
+        {
+          "notes": [
+            {
+              "fret": 7,
+              "midi": 66,
+              "stringIndex": 1
+            },
+            {
+              "fret": 7,
+              "midi": 62,
+              "stringIndex": 2
+            },
+            {
+              "fret": 7,
+              "midi": 57,
+              "stringIndex": 3
+            }
+          ],
+          "step": 6
+        },
+        {
+          "notes": [
+            {
+              "fret": 7,
+              "midi": 66,
+              "stringIndex": 1
+            },
+            {
+              "fret": 7,
+              "midi": 62,
+              "stringIndex": 2
+            },
+            {
+              "fret": 7,
+              "midi": 57,
+              "stringIndex": 3
+            }
+          ],
+          "step": 14
+        }
+      ],
+      "measure": 88
+    },
+    {
+      "events": [
+        {
+          "notes": [
+            {
+              "fret": 5,
+              "midi": 64,
+              "stringIndex": 1
+            },
+            {
+              "fret": 6,
+              "midi": 61,
+              "stringIndex": 2
+            },
+            {
+              "fret": 7,
+              "midi": 57,
+              "stringIndex": 3
+            }
+          ],
+          "step": 6
+        },
+        {
+          "notes": [
+            {
+              "fret": 7,
+              "midi": 66,
+              "stringIndex": 1
+            },
+            {
+              "fret": 7,
+              "midi": 62,
+              "stringIndex": 2
+            },
+            {
+              "fret": 7,
+              "midi": 57,
+              "stringIndex": 3
+            }
+          ],
+          "step": 10
+        },
+        {
+          "notes": [
+            {
+              "fret": 5,
+              "midi": 64,
+              "stringIndex": 1
+            },
+            {
+              "fret": 6,
+              "midi": 61,
+              "stringIndex": 2
+            },
+            {
+              "fret": 7,
+              "midi": 57,
+              "stringIndex": 3
+            }
+          ],
+          "step": 12
+        },
+        {
+          "notes": [
+            {
+              "fret": 7,
+              "midi": 66,
+              "stringIndex": 1
+            },
+            {
+              "fret": 7,
+              "midi": 62,
+              "stringIndex": 2
+            },
+            {
+              "fret": 7,
+              "midi": 57,
+              "stringIndex": 3
+            }
+          ],
+          "step": 14
+        }
+      ],
+      "measure": 89
+    },
+    {
+      "events": [
+        {
+          "notes": [
+            {
+              "fret": 9,
+              "midi": 68,
+              "stringIndex": 1
+            },
+            {
+              "fret": 9,
+              "midi": 64,
+              "stringIndex": 2
+            },
+            {
+              "fret": 9,
+              "midi": 59,
+              "stringIndex": 3
+            }
+          ],
+          "step": 0
+        },
+        {
+          "notes": [
+            {
+              "fret": 7,
+              "midi": 66,
+              "stringIndex": 1
+            },
+            {
+              "fret": 7,
+              "midi": 62,
+              "stringIndex": 2
+            },
+            {
+              "fret": 7,
+              "midi": 57,
+              "stringIndex": 3
+            }
+          ],
+          "step": 6
+        },
+        {
+          "notes": [
+            {
+              "fret": 7,
+              "midi": 66,
+              "stringIndex": 1
+            },
+            {
+              "fret": 7,
+              "midi": 62,
+              "stringIndex": 2
+            },
+            {
+              "fret": 7,
+              "midi": 57,
+              "stringIndex": 3
+            }
+          ],
+          "step": 14
+        }
+      ],
+      "measure": 90
+    },
+    {
+      "events": [
+        {
+          "notes": [
+            {
+              "fret": 5,
+              "midi": 64,
+              "stringIndex": 1
+            },
+            {
+              "fret": 6,
+              "midi": 61,
+              "stringIndex": 2
+            },
+            {
+              "fret": 7,
+              "midi": 57,
+              "stringIndex": 3
+            }
+          ],
+          "step": 6
+        },
+        {
+          "notes": [
+            {
+              "fret": 7,
+              "midi": 66,
+              "stringIndex": 1
+            },
+            {
+              "fret": 7,
+              "midi": 62,
+              "stringIndex": 2
+            },
+            {
+              "fret": 7,
+              "midi": 57,
+              "stringIndex": 3
+            }
+          ],
+          "step": 10
+        },
+        {
+          "notes": [
+            {
+              "fret": 5,
+              "midi": 64,
+              "stringIndex": 1
+            },
+            {
+              "fret": 6,
+              "midi": 61,
+              "stringIndex": 2
+            },
+            {
+              "fret": 7,
+              "midi": 57,
+              "stringIndex": 3
+            }
+          ],
+          "step": 12
+        },
+        {
+          "notes": [
+            {
+              "fret": 7,
+              "midi": 66,
+              "stringIndex": 1
+            },
+            {
+              "fret": 7,
+              "midi": 62,
+              "stringIndex": 2
+            },
+            {
+              "fret": 7,
+              "midi": 57,
+              "stringIndex": 3
+            }
+          ],
+          "step": 14
+        }
+      ],
+      "measure": 91
+    },
+    {
+      "events": [
+        {
+          "notes": [
+            {
+              "fret": 9,
+              "midi": 68,
+              "stringIndex": 1
+            },
+            {
+              "fret": 9,
+              "midi": 64,
+              "stringIndex": 2
+            },
+            {
+              "fret": 9,
+              "midi": 59,
+              "stringIndex": 3
+            }
+          ],
+          "step": 0
+        },
+        {
+          "notes": [
+            {
+              "fret": 7,
+              "midi": 66,
+              "stringIndex": 1
+            },
+            {
+              "fret": 7,
+              "midi": 62,
+              "stringIndex": 2
+            },
+            {
+              "fret": 7,
+              "midi": 57,
+              "stringIndex": 3
+            }
+          ],
+          "step": 6
+        },
+        {
+          "notes": [
+            {
+              "fret": 7,
+              "midi": 66,
+              "stringIndex": 1
+            },
+            {
+              "fret": 7,
+              "midi": 62,
+              "stringIndex": 2
+            },
+            {
+              "fret": 7,
+              "midi": 57,
+              "stringIndex": 3
+            }
+          ],
+          "step": 14
+        }
+      ],
+      "measure": 92
+    },
+    {
+      "events": [],
+      "measure": 93
+    },
+    {
+      "events": [
+        {
+          "notes": [
+            {
+              "fret": 4,
+              "midi": 49,
+              "stringIndex": 4
+            }
+          ],
+          "step": 9
+        },
+        {
+          "notes": [
+            {
+              "fret": 5,
+              "midi": 50,
+              "stringIndex": 4
+            }
+          ],
+          "step": 12
+        },
+        {
+          "notes": [
+            {
+              "fret": 6,
+              "midi": 51,
+              "stringIndex": 4
+            }
+          ],
+          "step": 14
+        }
+      ],
+      "measure": 94
+    },
+    {
+      "events": [
+        {
+          "notes": [
+            {
+              "fret": 2,
+              "midi": 57,
+              "stringIndex": 2
+            }
+          ],
+          "step": 0
+        },
+        {
+          "notes": [
+            {
+              "fret": 0,
+              "midi": 55,
+              "stringIndex": 2
+            }
+          ],
+          "step": 3
+        },
+        {
+          "notes": [
+            {
+              "fret": 2,
+              "midi": 52,
+              "stringIndex": 3
+            }
+          ],
+          "step": 4
+        },
+        {
+          "notes": [
+            {
+              "fret": 0,
+              "midi": 40,
+              "stringIndex": 5
+            }
+          ],
+          "step": 6
+        },
+        {
+          "notes": [
+            {
+              "fret": 0,
+              "midi": 50,
+              "stringIndex": 3
+            }
+          ],
+          "step": 8
+        },
+        {
+          "notes": [
+            {
+              "fret": 2,
+              "midi": 52,
+              "stringIndex": 3
+            }
+          ],
+          "step": 10
+        },
+        {
+          "notes": [
+            {
+              "fret": 0,
+              "midi": 40,
+              "stringIndex": 5
+            }
+          ],
+          "step": 14
+        }
+      ],
+      "measure": 95
+    },
+    {
+      "events": [
+        {
+          "notes": [
+            {
+              "fret": 2,
+              "midi": 57,
+              "stringIndex": 2
+            }
+          ],
+          "step": 0
+        },
+        {
+          "notes": [
+            {
+              "fret": 0,
+              "midi": 55,
+              "stringIndex": 2
+            }
+          ],
+          "step": 3
+        },
+        {
+          "notes": [
+            {
+              "fret": 2,
+              "midi": 52,
+              "stringIndex": 3
+            }
+          ],
+          "step": 4
+        },
+        {
+          "notes": [
+            {
+              "fret": 0,
+              "midi": 40,
+              "stringIndex": 5
+            }
+          ],
+          "step": 6
+        },
+        {
+          "notes": [
+            {
+              "fret": 0,
+              "midi": 50,
+              "stringIndex": 3
+            }
+          ],
+          "step": 8
+        },
+        {
+          "notes": [
+            {
+              "fret": 2,
+              "midi": 52,
+              "stringIndex": 3
+            }
+          ],
+          "step": 10
+        },
+        {
+          "notes": [
+            {
+              "fret": 0,
+              "midi": 40,
+              "stringIndex": 5
+            }
+          ],
+          "step": 14
+        }
+      ],
+      "measure": 96
+    },
+    {
+      "events": [
+        {
+          "notes": [
+            {
+              "fret": 2,
+              "midi": 57,
+              "stringIndex": 2
+            }
+          ],
+          "step": 0
+        },
+        {
+          "notes": [
+            {
+              "fret": 0,
+              "midi": 55,
+              "stringIndex": 2
+            }
+          ],
+          "step": 3
+        },
+        {
+          "notes": [
+            {
+              "fret": 2,
+              "midi": 52,
+              "stringIndex": 3
+            }
+          ],
+          "step": 4
+        },
+        {
+          "notes": [
+            {
+              "fret": 0,
+              "midi": 40,
+              "stringIndex": 5
+            }
+          ],
+          "step": 6
+        },
+        {
+          "notes": [
+            {
+              "fret": 0,
+              "midi": 50,
+              "stringIndex": 3
+            }
+          ],
+          "step": 8
+        },
+        {
+          "notes": [
+            {
+              "fret": 2,
+              "midi": 52,
+              "stringIndex": 3
+            }
+          ],
+          "step": 10
+        },
+        {
+          "notes": [
+            {
+              "fret": 0,
+              "midi": 40,
+              "stringIndex": 5
+            }
+          ],
+          "step": 14
+        }
+      ],
+      "measure": 97
+    },
+    {
+      "events": [
+        {
+          "notes": [
+            {
+              "fret": 2,
+              "midi": 57,
+              "stringIndex": 2
+            }
+          ],
+          "step": 0
+        },
+        {
+          "notes": [
+            {
+              "fret": 0,
+              "midi": 55,
+              "stringIndex": 2
+            }
+          ],
+          "step": 3
+        },
+        {
+          "notes": [
+            {
+              "fret": 2,
+              "midi": 52,
+              "stringIndex": 3
+            }
+          ],
+          "step": 4
+        },
+        {
+          "notes": [
+            {
+              "fret": 0,
+              "midi": 40,
+              "stringIndex": 5
+            }
+          ],
+          "step": 6
+        },
+        {
+          "notes": [
+            {
+              "fret": 0,
+              "midi": 50,
+              "stringIndex": 3
+            }
+          ],
+          "step": 8
+        },
+        {
+          "notes": [
+            {
+              "fret": 2,
+              "midi": 52,
+              "stringIndex": 3
+            }
+          ],
+          "step": 10
+        },
+        {
+          "notes": [
+            {
+              "fret": 0,
+              "midi": 40,
+              "stringIndex": 5
+            }
+          ],
+          "step": 14
+        }
+      ],
+      "measure": 98
+    },
+    {
+      "events": [
+        {
+          "notes": [
+            {
+              "fret": 2,
+              "midi": 57,
+              "stringIndex": 2
+            }
+          ],
+          "step": 0
+        },
+        {
+          "notes": [
+            {
+              "fret": 0,
+              "midi": 55,
+              "stringIndex": 2
+            }
+          ],
+          "step": 3
+        },
+        {
+          "notes": [
+            {
+              "fret": 2,
+              "midi": 52,
+              "stringIndex": 3
+            }
+          ],
+          "step": 4
+        },
+        {
+          "notes": [
+            {
+              "fret": 0,
+              "midi": 40,
+              "stringIndex": 5
+            }
+          ],
+          "step": 6
+        },
+        {
+          "notes": [
+            {
+              "fret": 0,
+              "midi": 50,
+              "stringIndex": 3
+            }
+          ],
+          "step": 8
+        },
+        {
+          "notes": [
+            {
+              "fret": 2,
+              "midi": 52,
+              "stringIndex": 3
+            }
+          ],
+          "step": 10
+        },
+        {
+          "notes": [
+            {
+              "fret": 0,
+              "midi": 40,
+              "stringIndex": 5
+            }
+          ],
+          "step": 14
+        }
+      ],
+      "measure": 99
+    },
+    {
+      "events": [
+        {
+          "notes": [
+            {
+              "fret": 2,
+              "midi": 57,
+              "stringIndex": 2
+            }
+          ],
+          "step": 0
+        },
+        {
+          "notes": [
+            {
+              "fret": 0,
+              "midi": 55,
+              "stringIndex": 2
+            }
+          ],
+          "step": 3
+        },
+        {
+          "notes": [
+            {
+              "fret": 2,
+              "midi": 52,
+              "stringIndex": 3
+            }
+          ],
+          "step": 4
+        },
+        {
+          "notes": [
+            {
+              "fret": 0,
+              "midi": 40,
+              "stringIndex": 5
+            }
+          ],
+          "step": 6
+        },
+        {
+          "notes": [
+            {
+              "fret": 0,
+              "midi": 50,
+              "stringIndex": 3
+            }
+          ],
+          "step": 8
+        },
+        {
+          "notes": [
+            {
+              "fret": 2,
+              "midi": 52,
+              "stringIndex": 3
+            }
+          ],
+          "step": 10
+        },
+        {
+          "notes": [
+            {
+              "fret": 0,
+              "midi": 40,
+              "stringIndex": 5
+            }
+          ],
+          "step": 14
+        }
+      ],
+      "measure": 100
+    },
+    {
+      "events": [
+        {
+          "notes": [
+            {
+              "fret": 2,
+              "midi": 57,
+              "stringIndex": 2
+            }
+          ],
+          "step": 0
+        },
+        {
+          "notes": [
+            {
+              "fret": 0,
+              "midi": 55,
+              "stringIndex": 2
+            }
+          ],
+          "step": 3
+        },
+        {
+          "notes": [
+            {
+              "fret": 2,
+              "midi": 52,
+              "stringIndex": 3
+            }
+          ],
+          "step": 4
+        },
+        {
+          "notes": [
+            {
+              "fret": 0,
+              "midi": 40,
+              "stringIndex": 5
+            }
+          ],
+          "step": 6
+        },
+        {
+          "notes": [
+            {
+              "fret": 0,
+              "midi": 50,
+              "stringIndex": 3
+            }
+          ],
+          "step": 8
+        },
+        {
+          "notes": [
+            {
+              "fret": 2,
+              "midi": 52,
+              "stringIndex": 3
+            }
+          ],
+          "step": 10
+        },
+        {
+          "notes": [
+            {
+              "fret": 0,
+              "midi": 40,
+              "stringIndex": 5
+            }
+          ],
+          "step": 14
+        }
+      ],
+      "measure": 101
+    },
+    {
+      "events": [
+        {
+          "notes": [
+            {
+              "fret": 2,
+              "midi": 57,
+              "stringIndex": 2
+            }
+          ],
+          "step": 0
+        },
+        {
+          "notes": [
+            {
+              "fret": 0,
+              "midi": 55,
+              "stringIndex": 2
+            }
+          ],
+          "step": 3
+        },
+        {
+          "notes": [
+            {
+              "fret": 2,
+              "midi": 52,
+              "stringIndex": 3
+            }
+          ],
+          "step": 4
+        },
+        {
+          "notes": [
+            {
+              "fret": 0,
+              "midi": 40,
+              "stringIndex": 5
+            }
+          ],
+          "step": 6
+        },
+        {
+          "notes": [
+            {
+              "fret": 0,
+              "midi": 50,
+              "stringIndex": 3
+            }
+          ],
+          "step": 8
+        },
+        {
+          "notes": [
+            {
+              "fret": 2,
+              "midi": 52,
+              "stringIndex": 3
+            }
+          ],
+          "step": 10
+        },
+        {
+          "notes": [
+            {
+              "fret": 0,
+              "midi": 40,
+              "stringIndex": 5
+            }
+          ],
+          "step": 14
+        }
+      ],
+      "measure": 102
+    },
+    {
+      "events": [
+        {
+          "notes": [
+            {
+              "fret": 0,
+              "midi": 64,
+              "stringIndex": 0
+            },
+            {
+              "fret": 3,
+              "midi": 62,
+              "stringIndex": 1
+            },
+            {
+              "fret": 4,
+              "midi": 59,
+              "stringIndex": 2
+            },
+            {
+              "fret": 5,
+              "midi": 55,
+              "stringIndex": 3
+            }
+          ],
+          "step": 0
+        }
+      ],
+      "measure": 103,
+      "section": "Out-Chorus"
+    },
+    {
+      "events": [
+        {
+          "notes": [
+            {
+              "fret": 0,
+              "midi": 64,
+              "stringIndex": 0
+            },
+            {
+              "fret": 2,
+              "midi": 61,
+              "stringIndex": 1
+            },
+            {
+              "fret": 2,
+              "midi": 57,
+              "stringIndex": 2
+            },
+            {
+              "fret": 2,
+              "midi": 52,
+              "stringIndex": 3
+            }
+          ],
+          "step": 0
+        }
+      ],
+      "measure": 104
+    },
+    {
+      "events": [
+        {
+          "notes": [
+            {
+              "fret": 0,
+              "midi": 64,
+              "stringIndex": 0
+            },
+            {
+              "fret": 3,
+              "midi": 62,
+              "stringIndex": 1
+            },
+            {
+              "fret": 4,
+              "midi": 59,
+              "stringIndex": 2
+            },
+            {
+              "fret": 5,
+              "midi": 55,
+              "stringIndex": 3
+            }
+          ],
+          "step": 0
+        },
+        {
+          "notes": [
+            {
+              "fret": 0,
+              "midi": 64,
+              "stringIndex": 0
+            },
+            {
+              "fret": 2,
+              "midi": 61,
+              "stringIndex": 1
+            },
+            {
+              "fret": 2,
+              "midi": 57,
+              "stringIndex": 2
+            },
+            {
+              "fret": 2,
+              "midi": 52,
+              "stringIndex": 3
+            }
+          ],
+          "step": 14
+        }
+      ],
+      "measure": 105
+    },
+    {
+      "events": [],
+      "measure": 106
+    },
+    {
+      "events": [
+        {
+          "notes": [
+            {
+              "fret": 9,
+              "midi": 68,
+              "stringIndex": 1
+            },
+            {
+              "fret": 9,
+              "midi": 64,
+              "stringIndex": 2
+            },
+            {
+              "fret": 9,
+              "midi": 59,
+              "stringIndex": 3
+            }
+          ],
+          "step": 0
+        },
+        {
+          "notes": [
+            {
+              "fret": 9,
+              "midi": 68,
+              "stringIndex": 1
+            },
+            {
+              "fret": 9,
+              "midi": 64,
+              "stringIndex": 2
+            },
+            {
+              "fret": 9,
+              "midi": 59,
+              "stringIndex": 3
+            }
+          ],
+          "step": 1
+        },
+        {
+          "notes": [
+            {
+              "fret": 9,
+              "midi": 68,
+              "stringIndex": 1
+            },
+            {
+              "fret": 9,
+              "midi": 64,
+              "stringIndex": 2
+            },
+            {
+              "fret": 9,
+              "midi": 59,
+              "stringIndex": 3
+            }
+          ],
+          "step": 2
+        },
+        {
+          "notes": [
+            {
+              "fret": 9,
+              "midi": 68,
+              "stringIndex": 1
+            },
+            {
+              "fret": 9,
+              "midi": 64,
+              "stringIndex": 2
+            },
+            {
+              "fret": 9,
+              "midi": 59,
+              "stringIndex": 3
+            }
+          ],
+          "step": 3
+        },
+        {
+          "notes": [
+            {
+              "fret": 7,
+              "midi": 66,
+              "stringIndex": 1
+            },
+            {
+              "fret": 7,
+              "midi": 62,
+              "stringIndex": 2
+            },
+            {
+              "fret": 7,
+              "midi": 57,
+              "stringIndex": 3
+            }
+          ],
+          "step": 4
+        },
+        {
+          "notes": [
+            {
+              "fret": 9,
+              "midi": 68,
+              "stringIndex": 1
+            },
+            {
+              "fret": 9,
+              "midi": 64,
+              "stringIndex": 2
+            },
+            {
+              "fret": 9,
+              "midi": 59,
+              "stringIndex": 3
+            }
+          ],
+          "step": 6
+        }
+      ],
+      "measure": 107
+    },
+    {
+      "events": [
+        {
+          "notes": [
+            {
+              "fret": 9,
+              "midi": 68,
+              "stringIndex": 1
+            },
+            {
+              "fret": 9,
+              "midi": 64,
+              "stringIndex": 2
+            },
+            {
+              "fret": 9,
+              "midi": 59,
+              "stringIndex": 3
+            }
+          ],
+          "step": 0
+        },
+        {
+          "notes": [
+            {
+              "fret": 9,
+              "midi": 68,
+              "stringIndex": 1
+            },
+            {
+              "fret": 9,
+              "midi": 64,
+              "stringIndex": 2
+            },
+            {
+              "fret": 9,
+              "midi": 59,
+              "stringIndex": 3
+            }
+          ],
+          "step": 1
+        },
+        {
+          "notes": [
+            {
+              "fret": 9,
+              "midi": 68,
+              "stringIndex": 1
+            },
+            {
+              "fret": 9,
+              "midi": 64,
+              "stringIndex": 2
+            },
+            {
+              "fret": 9,
+              "midi": 59,
+              "stringIndex": 3
+            }
+          ],
+          "step": 2
+        },
+        {
+          "notes": [
+            {
+              "fret": 9,
+              "midi": 68,
+              "stringIndex": 1
+            },
+            {
+              "fret": 9,
+              "midi": 64,
+              "stringIndex": 2
+            },
+            {
+              "fret": 9,
+              "midi": 59,
+              "stringIndex": 3
+            }
+          ],
+          "step": 3
+        },
+        {
+          "notes": [
+            {
+              "fret": 12,
+              "midi": 71,
+              "stringIndex": 1
+            },
+            {
+              "fret": 12,
+              "midi": 67,
+              "stringIndex": 2
+            },
+            {
+              "fret": 12,
+              "midi": 62,
+              "stringIndex": 3
+            }
+          ],
+          "step": 4
+        },
+        {
+          "notes": [
+            {
+              "fret": 9,
+              "midi": 68,
+              "stringIndex": 1
+            },
+            {
+              "fret": 9,
+              "midi": 64,
+              "stringIndex": 2
+            },
+            {
+              "fret": 9,
+              "midi": 59,
+              "stringIndex": 3
+            }
+          ],
+          "step": 6
+        }
+      ],
+      "measure": 108
+    },
+    {
+      "events": [
+        {
+          "notes": [
+            {
+              "fret": 0,
+              "midi": 64,
+              "stringIndex": 0
+            },
+            {
+              "fret": 3,
+              "midi": 62,
+              "stringIndex": 1
+            },
+            {
+              "fret": 4,
+              "midi": 59,
+              "stringIndex": 2
+            },
+            {
+              "fret": 5,
+              "midi": 55,
+              "stringIndex": 3
+            }
+          ],
+          "step": 0
+        },
+        {
+          "notes": [
+            {
+              "fret": 0,
+              "midi": 64,
+              "stringIndex": 0
+            },
+            {
+              "fret": 2,
+              "midi": 61,
+              "stringIndex": 1
+            },
+            {
+              "fret": 2,
+              "midi": 57,
+              "stringIndex": 2
+            },
+            {
+              "fret": 2,
+              "midi": 52,
+              "stringIndex": 3
+            }
+          ],
+          "step": 14
+        }
+      ],
+      "measure": 109
+    },
+    {
+      "events": [],
+      "measure": 110
+    },
+    {
+      "events": [],
+      "measure": 111
+    },
+    {
+      "events": [],
+      "measure": 112
+    },
+    {
+      "events": [],
+      "measure": 113
+    }
+  ],
+  "schemaVersion": 1,
+  "source": {
+    "artist": "Lenny Kravitz",
+    "completeSource": true,
+    "kind": "professional-human-tab",
+    "pageCount": 8,
+    "provenance": "Exact scorer-only structured extraction of immutable human-written revision 7868948 corresponding to Professionalexample.jpg",
+    "sourceRevisionId": 7868948,
+    "sourceSha256": "aca2da3e8d551b2fd82b4ab3ecafa0c8932d6c0a27b54b6213ffc990ca08a9a9",
+    "structuredSourceSha256": "18cdb4f8afb49562aac5b600730384636070d6ca8650823e759276a81ee4afc8",
+    "title": "Are You Gonna Go My Way"
+  },
+  "stepsPerMeasure": 16,
+  "tempoBpm": 129,
+  "timeSignature": {
+    "beats": 4,
+    "noteValue": 4
+  },
+  "transcribedFromCompleteSource": true,
+  "tuning": [
+    "E4",
+    "B3",
+    "G3",
+    "D3",
+    "A2",
+    "E2"
+  ]
+}

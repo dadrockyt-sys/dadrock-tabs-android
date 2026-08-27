@@ -93,3 +93,14 @@ Song: **Lenny Kravitz — Are You Gonna Go My Way**.
 4. Interpret the prerecorded >=0.80 recognition gates; no post-score tuning of this consumed output.
 5. Only after acoustic recognition is scored/frozen should Rhythm/Lead role separation, fret/string assignment, techniques, and PDF work continue.
 6. Continue saving this checkpoint after every meaningful private-reference normalization, score, or architecture decision.
+
+
+## V154 professional Rhythm preservation — COMPLETE / FROZEN
+- User explicitly requested the professional Rhythm reconstruction be durably saved on research branch `v143-contextual-prune-lobo` before re-providing Bass and Lead.
+- Frozen source image verified directly from `main:public/Professionalexample.jpg`, Git blob `16106197cc1269cca0b3c443908d5ef75e8b4d3e`. The image is not present on the research branch itself.
+- Existing complete machine-readable Rhythm reconstruction on the research branch was verified as instrument `rhythm`, declared measures 1–113, then copied byte-for-byte to `research/v154-professional-references/rhythm-professional-reference.json`.
+- Preserved Rhythm SHA256 `18fd868ae960dfcdd1ffb0110f1a9dfd8acc2ffeb46e247d1116cd54291526ac`; stored measure objects `113`; events `603`; note entries `946`.
+- Provenance receipt: `research/v154-professional-references/rhythm-professional-reference-provenance.json`.
+- Failed preservation runs `33098155353` and `33098431086` wrote no reference copy and were sealed before this v3.
+- Preservation modified no generated candidate, made no reference-facing score call, and did not modify `main`/Production or use Modal/L4/CUDA/GPU.
+- When Bass and Lead screenshots are re-provided, reconstruct them into sibling files in `research/v154-professional-references/` and checkpoint each identity.
