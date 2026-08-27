@@ -1,0 +1,1265 @@
+{
+  "canonicalPageSetSha256": "abd1748066966ceb93fe40bf8c8df3168f6c871ba006e44d28f8840184e3cde3",
+  "measureRange": {
+    "count": 33,
+    "first": 1,
+    "last": 33
+  },
+  "measures": [
+    {
+      "attacks": [],
+      "continuationOnlyCount": 0,
+      "excludeFromScoring": false,
+      "measure": 1,
+      "sourceFile": "1000120387.jpg",
+      "sourcePage": 1,
+      "timeSignature": "4/4"
+    },
+    {
+      "attacks": [],
+      "continuationOnlyCount": 0,
+      "excludeFromScoring": false,
+      "measure": 2,
+      "sourceFile": "1000120387.jpg",
+      "sourcePage": 1,
+      "timeSignature": "4/4"
+    },
+    {
+      "attacks": [],
+      "continuationOnlyCount": 0,
+      "excludeFromScoring": false,
+      "measure": 3,
+      "sourceFile": "1000120387.jpg",
+      "sourcePage": 1,
+      "timeSignature": "4/4"
+    },
+    {
+      "attacks": [],
+      "continuationOnlyCount": 0,
+      "excludeFromScoring": false,
+      "measure": 4,
+      "sourceFile": "1000120387.jpg",
+      "sourcePage": 1,
+      "timeSignature": "4/4"
+    },
+    {
+      "attacks": [],
+      "continuationOnlyCount": 0,
+      "excludeFromScoring": false,
+      "measure": 5,
+      "sourceFile": "1000120387.jpg",
+      "sourcePage": 1,
+      "timeSignature": "4/4"
+    },
+    {
+      "attacks": [],
+      "continuationOnlyCount": 0,
+      "excludeFromScoring": false,
+      "measure": 6,
+      "sourceFile": "1000120387.jpg",
+      "sourcePage": 1,
+      "timeSignature": "4/4"
+    },
+    {
+      "attacks": [
+        {
+          "kind": "pitched",
+          "midi": 45,
+          "sourceLocalStep": 6,
+          "visualOrder": 0
+        },
+        {
+          "kind": "pitched",
+          "midi": 50,
+          "sourceLocalStep": 8,
+          "visualOrder": 1
+        },
+        {
+          "kind": "dead-note",
+          "midi": null,
+          "sourceLocalStep": 12,
+          "visualOrder": 2
+        }
+      ],
+      "continuationOnlyCount": 0,
+      "excludeFromScoring": false,
+      "measure": 7,
+      "sourceFile": "1000120387.jpg",
+      "sourcePage": 1,
+      "timeSignature": "4/4"
+    },
+    {
+      "attacks": [
+        {
+          "kind": "dead-note",
+          "midi": null,
+          "sourceLocalStep": 8,
+          "visualOrder": 0
+        },
+        {
+          "kind": "pitched",
+          "midi": 52,
+          "sourceLocalStep": 9,
+          "visualOrder": 1
+        },
+        {
+          "kind": "pitched",
+          "midi": 52,
+          "sourceLocalStep": 10,
+          "visualOrder": 2
+        },
+        {
+          "kind": "pitched",
+          "midi": 52,
+          "sourceLocalStep": 12,
+          "visualOrder": 3
+        },
+        {
+          "kind": "pitched",
+          "midi": 52,
+          "sourceLocalStep": 13,
+          "visualOrder": 4
+        }
+      ],
+      "continuationOnlyCount": 0,
+      "excludeFromScoring": false,
+      "measure": 8,
+      "sourceFile": "1000120387.jpg",
+      "sourcePage": 1,
+      "timeSignature": "4/4"
+    },
+    {
+      "attacks": [
+        {
+          "kind": "pitched",
+          "midi": 40,
+          "sourceLocalStep": 0,
+          "visualOrder": 0
+        },
+        {
+          "kind": "pitched",
+          "midi": 40,
+          "sourceLocalStep": 4,
+          "visualOrder": 1
+        },
+        {
+          "kind": "pitched",
+          "midi": 35,
+          "sourceLocalStep": 7,
+          "visualOrder": 2
+        },
+        {
+          "kind": "pitched",
+          "midi": 38,
+          "sourceLocalStep": 8,
+          "visualOrder": 3
+        },
+        {
+          "kind": "pitched",
+          "midi": 40,
+          "sourceLocalStep": 10,
+          "visualOrder": 4
+        },
+        {
+          "kind": "pitched",
+          "midi": 38,
+          "sourceLocalStep": 14,
+          "visualOrder": 5
+        }
+      ],
+      "continuationOnlyCount": 0,
+      "excludeFromScoring": false,
+      "measure": 9,
+      "sourceFile": "1000120387.jpg",
+      "sourcePage": 1,
+      "timeSignature": "4/4"
+    },
+    {
+      "attacks": [
+        {
+          "kind": "pitched",
+          "midi": 40,
+          "sourceLocalStep": 0,
+          "visualOrder": 0
+        },
+        {
+          "kind": "pitched",
+          "midi": 40,
+          "sourceLocalStep": 4,
+          "visualOrder": 1
+        },
+        {
+          "kind": "pitched",
+          "midi": 35,
+          "sourceLocalStep": 7,
+          "visualOrder": 2
+        },
+        {
+          "kind": "pitched",
+          "midi": 38,
+          "sourceLocalStep": 8,
+          "visualOrder": 3
+        },
+        {
+          "kind": "pitched",
+          "midi": 40,
+          "sourceLocalStep": 10,
+          "visualOrder": 4
+        },
+        {
+          "kind": "pitched",
+          "midi": 38,
+          "sourceLocalStep": 12,
+          "visualOrder": 5
+        },
+        {
+          "kind": "pitched",
+          "midi": 35,
+          "sourceLocalStep": 14,
+          "visualOrder": 6
+        }
+      ],
+      "continuationOnlyCount": 0,
+      "excludeFromScoring": false,
+      "measure": 10,
+      "sourceFile": "1000120387.jpg",
+      "sourcePage": 1,
+      "timeSignature": "4/4"
+    },
+    {
+      "attacks": [
+        {
+          "kind": "pitched",
+          "midi": 40,
+          "sourceLocalStep": 0,
+          "visualOrder": 0
+        },
+        {
+          "kind": "pitched",
+          "midi": 40,
+          "sourceLocalStep": 4,
+          "visualOrder": 1
+        },
+        {
+          "kind": "pitched",
+          "midi": 35,
+          "sourceLocalStep": 7,
+          "visualOrder": 2
+        },
+        {
+          "kind": "pitched",
+          "midi": 38,
+          "sourceLocalStep": 8,
+          "visualOrder": 3
+        },
+        {
+          "kind": "pitched",
+          "midi": 40,
+          "sourceLocalStep": 10,
+          "visualOrder": 4
+        },
+        {
+          "kind": "pitched",
+          "midi": 38,
+          "sourceLocalStep": 14,
+          "visualOrder": 5
+        }
+      ],
+      "continuationOnlyCount": 0,
+      "excludeFromScoring": false,
+      "measure": 11,
+      "sourceFile": "1000120387.jpg",
+      "sourcePage": 1,
+      "timeSignature": "4/4"
+    },
+    {
+      "attacks": [
+        {
+          "kind": "pitched",
+          "midi": 40,
+          "sourceLocalStep": 0,
+          "visualOrder": 0
+        },
+        {
+          "kind": "pitched",
+          "midi": 38,
+          "sourceLocalStep": 3,
+          "visualOrder": 1
+        },
+        {
+          "kind": "pitched",
+          "midi": 40,
+          "sourceLocalStep": 4,
+          "visualOrder": 2
+        },
+        {
+          "kind": "pitched",
+          "midi": 35,
+          "sourceLocalStep": 7,
+          "visualOrder": 3
+        },
+        {
+          "kind": "pitched",
+          "midi": 38,
+          "sourceLocalStep": 8,
+          "visualOrder": 4
+        },
+        {
+          "kind": "pitched",
+          "midi": 40,
+          "sourceLocalStep": 10,
+          "visualOrder": 5
+        },
+        {
+          "kind": "pitched",
+          "midi": 38,
+          "sourceLocalStep": 12,
+          "visualOrder": 6
+        },
+        {
+          "kind": "dead-note",
+          "midi": null,
+          "sourceLocalStep": 13,
+          "visualOrder": 7
+        },
+        {
+          "kind": "pitched",
+          "midi": 35,
+          "sourceLocalStep": 14,
+          "visualOrder": 8
+        }
+      ],
+      "continuationOnlyCount": 0,
+      "excludeFromScoring": false,
+      "measure": 12,
+      "sourceFile": "1000120387.jpg",
+      "sourcePage": 1,
+      "timeSignature": "4/4"
+    },
+    {
+      "attacks": [
+        {
+          "kind": "pitched",
+          "midi": 40,
+          "sourceLocalStep": 0,
+          "visualOrder": 0
+        },
+        {
+          "kind": "pitched",
+          "midi": 40,
+          "sourceLocalStep": 4,
+          "visualOrder": 1
+        },
+        {
+          "kind": "pitched",
+          "midi": 35,
+          "sourceLocalStep": 7,
+          "visualOrder": 2
+        },
+        {
+          "kind": "pitched",
+          "midi": 38,
+          "sourceLocalStep": 8,
+          "visualOrder": 3
+        },
+        {
+          "kind": "pitched",
+          "midi": 40,
+          "sourceLocalStep": 10,
+          "visualOrder": 4
+        },
+        {
+          "kind": "pitched",
+          "midi": 38,
+          "sourceLocalStep": 12,
+          "visualOrder": 5
+        },
+        {
+          "kind": "pitched",
+          "midi": 35,
+          "sourceLocalStep": 14,
+          "visualOrder": 6
+        }
+      ],
+      "continuationOnlyCount": 0,
+      "excludeFromScoring": false,
+      "measure": 13,
+      "sourceFile": "1000120388.jpg",
+      "sourcePage": 2,
+      "timeSignature": "4/4"
+    },
+    {
+      "attacks": [
+        {
+          "kind": "pitched",
+          "midi": 40,
+          "sourceLocalStep": 0,
+          "visualOrder": 0
+        },
+        {
+          "kind": "pitched",
+          "midi": 40,
+          "sourceLocalStep": 4,
+          "visualOrder": 1
+        },
+        {
+          "kind": "pitched",
+          "midi": 38,
+          "sourceLocalStep": 8,
+          "visualOrder": 2
+        },
+        {
+          "kind": "pitched",
+          "midi": 40,
+          "sourceLocalStep": 10,
+          "visualOrder": 3
+        },
+        {
+          "kind": "pitched",
+          "midi": 38,
+          "sourceLocalStep": 12,
+          "visualOrder": 4
+        },
+        {
+          "kind": "pitched",
+          "midi": 35,
+          "sourceLocalStep": 14,
+          "visualOrder": 5
+        }
+      ],
+      "continuationOnlyCount": 0,
+      "excludeFromScoring": false,
+      "measure": 14,
+      "sourceFile": "1000120388.jpg",
+      "sourcePage": 2,
+      "timeSignature": "4/4"
+    },
+    {
+      "attacks": [
+        {
+          "kind": "pitched",
+          "midi": 40,
+          "sourceLocalStep": 0,
+          "visualOrder": 0
+        },
+        {
+          "kind": "pitched",
+          "midi": 40,
+          "sourceLocalStep": 4,
+          "visualOrder": 1
+        },
+        {
+          "kind": "pitched",
+          "midi": 38,
+          "sourceLocalStep": 8,
+          "visualOrder": 2
+        },
+        {
+          "kind": "pitched",
+          "midi": 40,
+          "sourceLocalStep": 10,
+          "visualOrder": 3
+        }
+      ],
+      "continuationOnlyCount": 0,
+      "excludeFromScoring": false,
+      "measure": 15,
+      "sourceFile": "1000120388.jpg",
+      "sourcePage": 2,
+      "timeSignature": "4/4"
+    },
+    {
+      "attacks": [
+        {
+          "kind": "pitched",
+          "midi": 40,
+          "sourceLocalStep": 0,
+          "visualOrder": 0
+        },
+        {
+          "kind": "pitched",
+          "midi": 40,
+          "sourceLocalStep": 4,
+          "visualOrder": 1
+        },
+        {
+          "kind": "pitched",
+          "midi": 35,
+          "sourceLocalStep": 7,
+          "visualOrder": 2
+        },
+        {
+          "kind": "pitched",
+          "midi": 38,
+          "sourceLocalStep": 8,
+          "visualOrder": 3
+        },
+        {
+          "kind": "pitched",
+          "midi": 40,
+          "sourceLocalStep": 10,
+          "visualOrder": 4
+        },
+        {
+          "kind": "pitched",
+          "midi": 38,
+          "sourceLocalStep": 12,
+          "visualOrder": 5
+        },
+        {
+          "kind": "pitched",
+          "midi": 33,
+          "sourceLocalStep": 14,
+          "visualOrder": 6
+        }
+      ],
+      "continuationOnlyCount": 0,
+      "excludeFromScoring": false,
+      "measure": 16,
+      "sourceFile": "1000120388.jpg",
+      "sourcePage": 2,
+      "timeSignature": "4/4"
+    },
+    {
+      "attacks": [
+        {
+          "kind": "pitched",
+          "midi": 40,
+          "sourceLocalStep": 0,
+          "visualOrder": 0
+        },
+        {
+          "kind": "pitched",
+          "midi": 28,
+          "sourceLocalStep": 4,
+          "visualOrder": 1
+        },
+        {
+          "kind": "pitched",
+          "midi": 40,
+          "sourceLocalStep": 8,
+          "visualOrder": 2
+        },
+        {
+          "kind": "pitched",
+          "midi": 38,
+          "sourceLocalStep": 14,
+          "visualOrder": 3
+        }
+      ],
+      "continuationOnlyCount": 0,
+      "excludeFromScoring": false,
+      "measure": 17,
+      "sourceFile": "1000120388.jpg",
+      "sourcePage": 2,
+      "timeSignature": "4/4"
+    },
+    {
+      "attacks": [
+        {
+          "kind": "pitched",
+          "midi": 40,
+          "sourceLocalStep": 0,
+          "visualOrder": 0
+        },
+        {
+          "kind": "pitched",
+          "midi": 40,
+          "sourceLocalStep": 4,
+          "visualOrder": 1
+        },
+        {
+          "kind": "pitched",
+          "midi": 40,
+          "sourceLocalStep": 8,
+          "visualOrder": 2
+        },
+        {
+          "kind": "pitched",
+          "midi": 40,
+          "sourceLocalStep": 12,
+          "visualOrder": 3
+        },
+        {
+          "kind": "pitched",
+          "midi": 38,
+          "sourceLocalStep": 14,
+          "visualOrder": 4
+        }
+      ],
+      "continuationOnlyCount": 0,
+      "excludeFromScoring": false,
+      "measure": 18,
+      "sourceFile": "1000120388.jpg",
+      "sourcePage": 2,
+      "timeSignature": "4/4"
+    },
+    {
+      "attacks": [
+        {
+          "kind": "pitched",
+          "midi": 40,
+          "sourceLocalStep": 0,
+          "visualOrder": 0
+        },
+        {
+          "kind": "pitched",
+          "midi": 40,
+          "sourceLocalStep": 4,
+          "visualOrder": 1
+        },
+        {
+          "kind": "pitched",
+          "midi": 40,
+          "sourceLocalStep": 8,
+          "visualOrder": 2
+        },
+        {
+          "kind": "pitched",
+          "midi": 40,
+          "sourceLocalStep": 12,
+          "visualOrder": 3
+        },
+        {
+          "kind": "pitched",
+          "midi": 38,
+          "sourceLocalStep": 14,
+          "visualOrder": 4
+        }
+      ],
+      "continuationOnlyCount": 0,
+      "excludeFromScoring": false,
+      "measure": 19,
+      "sourceFile": "1000120389.jpg",
+      "sourcePage": 3,
+      "timeSignature": "4/4"
+    },
+    {
+      "attacks": [
+        {
+          "kind": "pitched",
+          "midi": 40,
+          "sourceLocalStep": 0,
+          "visualOrder": 0
+        },
+        {
+          "kind": "pitched",
+          "midi": 40,
+          "sourceLocalStep": 4,
+          "visualOrder": 1
+        },
+        {
+          "kind": "pitched",
+          "midi": 35,
+          "sourceLocalStep": 7,
+          "visualOrder": 2
+        },
+        {
+          "kind": "pitched",
+          "midi": 38,
+          "sourceLocalStep": 8,
+          "visualOrder": 3
+        },
+        {
+          "kind": "pitched",
+          "midi": 35,
+          "sourceLocalStep": 10,
+          "visualOrder": 4
+        },
+        {
+          "kind": "pitched",
+          "midi": 40,
+          "sourceLocalStep": 12,
+          "visualOrder": 5
+        },
+        {
+          "kind": "pitched",
+          "midi": 38,
+          "sourceLocalStep": 14,
+          "visualOrder": 6
+        }
+      ],
+      "continuationOnlyCount": 0,
+      "excludeFromScoring": false,
+      "measure": 20,
+      "sourceFile": "1000120389.jpg",
+      "sourcePage": 3,
+      "timeSignature": "4/4"
+    },
+    {
+      "attacks": [
+        {
+          "kind": "pitched",
+          "midi": 40,
+          "sourceLocalStep": 0,
+          "visualOrder": 0
+        },
+        {
+          "kind": "pitched",
+          "midi": 40,
+          "sourceLocalStep": 4,
+          "visualOrder": 1
+        },
+        {
+          "kind": "pitched",
+          "midi": 40,
+          "sourceLocalStep": 8,
+          "visualOrder": 2
+        },
+        {
+          "kind": "pitched",
+          "midi": 40,
+          "sourceLocalStep": 12,
+          "visualOrder": 3
+        },
+        {
+          "kind": "pitched",
+          "midi": 38,
+          "sourceLocalStep": 14,
+          "visualOrder": 4
+        }
+      ],
+      "continuationOnlyCount": 0,
+      "excludeFromScoring": false,
+      "measure": 21,
+      "sourceFile": "1000120389.jpg",
+      "sourcePage": 3,
+      "timeSignature": "4/4"
+    },
+    {
+      "attacks": [
+        {
+          "kind": "pitched",
+          "midi": 40,
+          "sourceLocalStep": 0,
+          "visualOrder": 0
+        },
+        {
+          "kind": "pitched",
+          "midi": 40,
+          "sourceLocalStep": 4,
+          "visualOrder": 1
+        },
+        {
+          "kind": "pitched",
+          "midi": 40,
+          "sourceLocalStep": 8,
+          "visualOrder": 2
+        },
+        {
+          "kind": "pitched",
+          "midi": 40,
+          "sourceLocalStep": 12,
+          "visualOrder": 3
+        },
+        {
+          "kind": "pitched",
+          "midi": 38,
+          "sourceLocalStep": 14,
+          "visualOrder": 4
+        }
+      ],
+      "continuationOnlyCount": 0,
+      "excludeFromScoring": false,
+      "measure": 22,
+      "sourceFile": "1000120389.jpg",
+      "sourcePage": 3,
+      "timeSignature": "4/4"
+    },
+    {
+      "attacks": [
+        {
+          "kind": "pitched",
+          "midi": 40,
+          "sourceLocalStep": 0,
+          "visualOrder": 0
+        },
+        {
+          "kind": "pitched",
+          "midi": 40,
+          "sourceLocalStep": 4,
+          "visualOrder": 1
+        },
+        {
+          "kind": "pitched",
+          "midi": 40,
+          "sourceLocalStep": 8,
+          "visualOrder": 2
+        },
+        {
+          "kind": "pitched",
+          "midi": 40,
+          "sourceLocalStep": 12,
+          "visualOrder": 3
+        },
+        {
+          "kind": "pitched",
+          "midi": 38,
+          "sourceLocalStep": 14,
+          "visualOrder": 4
+        }
+      ],
+      "continuationOnlyCount": 0,
+      "excludeFromScoring": false,
+      "measure": 23,
+      "sourceFile": "1000120389.jpg",
+      "sourcePage": 3,
+      "timeSignature": "4/4"
+    },
+    {
+      "attacks": [
+        {
+          "kind": "pitched",
+          "midi": 40,
+          "sourceLocalStep": 0,
+          "visualOrder": 0
+        },
+        {
+          "kind": "pitched",
+          "midi": 40,
+          "sourceLocalStep": 4,
+          "visualOrder": 1
+        },
+        {
+          "kind": "pitched",
+          "midi": 40,
+          "sourceLocalStep": 8,
+          "visualOrder": 2
+        },
+        {
+          "kind": "pitched",
+          "midi": 40,
+          "sourceLocalStep": 12,
+          "visualOrder": 3
+        },
+        {
+          "kind": "pitched",
+          "midi": 35,
+          "sourceLocalStep": 14,
+          "visualOrder": 4
+        }
+      ],
+      "continuationOnlyCount": 0,
+      "excludeFromScoring": false,
+      "measure": 24,
+      "sourceFile": "1000120390.jpg",
+      "sourcePage": 4,
+      "timeSignature": "4/4"
+    },
+    {
+      "attacks": [
+        {
+          "kind": "pitched",
+          "midi": 31,
+          "sourceLocalStep": 0,
+          "visualOrder": 0
+        },
+        {
+          "kind": "pitched",
+          "midi": 31,
+          "sourceLocalStep": 4,
+          "visualOrder": 1
+        },
+        {
+          "kind": "pitched",
+          "midi": 31,
+          "sourceLocalStep": 8,
+          "visualOrder": 2
+        },
+        {
+          "kind": "dead-note",
+          "midi": null,
+          "sourceLocalStep": 12,
+          "visualOrder": 3
+        },
+        {
+          "kind": "pitched",
+          "midi": 29,
+          "sourceLocalStep": 14,
+          "visualOrder": 4
+        }
+      ],
+      "continuationOnlyCount": 0,
+      "excludeFromScoring": false,
+      "measure": 25,
+      "sourceFile": "1000120390.jpg",
+      "sourcePage": 4,
+      "timeSignature": "4/4"
+    },
+    {
+      "attacks": [
+        {
+          "kind": "pitched",
+          "midi": 31,
+          "sourceLocalStep": 0,
+          "visualOrder": 0
+        },
+        {
+          "kind": "pitched",
+          "midi": 31,
+          "sourceLocalStep": 4,
+          "visualOrder": 1
+        },
+        {
+          "kind": "pitched",
+          "midi": 31,
+          "sourceLocalStep": 8,
+          "visualOrder": 2
+        },
+        {
+          "kind": "pitched",
+          "midi": 41,
+          "sourceLocalStep": 10,
+          "visualOrder": 3
+        },
+        {
+          "kind": "pitched",
+          "midi": 43,
+          "sourceLocalStep": 12,
+          "visualOrder": 4
+        },
+        {
+          "kind": "pitched",
+          "midi": 41,
+          "sourceLocalStep": 14,
+          "visualOrder": 5
+        }
+      ],
+      "continuationOnlyCount": 0,
+      "excludeFromScoring": false,
+      "measure": 26,
+      "sourceFile": "1000120390.jpg",
+      "sourcePage": 4,
+      "timeSignature": "4/4"
+    },
+    {
+      "attacks": [
+        {
+          "kind": "pitched",
+          "midi": 48,
+          "sourceLocalStep": 0,
+          "visualOrder": 0
+        },
+        {
+          "kind": "pitched",
+          "midi": 31,
+          "sourceLocalStep": 4,
+          "visualOrder": 1
+        },
+        {
+          "kind": "pitched",
+          "midi": 31,
+          "sourceLocalStep": 8,
+          "visualOrder": 2
+        },
+        {
+          "kind": "pitched",
+          "midi": 31,
+          "sourceLocalStep": 12,
+          "visualOrder": 3
+        },
+        {
+          "kind": "pitched",
+          "midi": 29,
+          "sourceLocalStep": 14,
+          "visualOrder": 4
+        }
+      ],
+      "continuationOnlyCount": 0,
+      "excludeFromScoring": false,
+      "measure": 27,
+      "sourceFile": "1000120390.jpg",
+      "sourcePage": 4,
+      "timeSignature": "4/4"
+    },
+    {
+      "attacks": [
+        {
+          "kind": "pitched",
+          "midi": 31,
+          "sourceLocalStep": 0,
+          "visualOrder": 0
+        },
+        {
+          "kind": "pitched",
+          "midi": 31,
+          "sourceLocalStep": 4,
+          "visualOrder": 1
+        },
+        {
+          "kind": "pitched",
+          "midi": 29,
+          "sourceLocalStep": 7,
+          "visualOrder": 2
+        },
+        {
+          "kind": "pitched",
+          "midi": 28,
+          "sourceLocalStep": 10,
+          "visualOrder": 3
+        }
+      ],
+      "continuationOnlyCount": 0,
+      "excludeFromScoring": false,
+      "measure": 28,
+      "sourceFile": "1000120390.jpg",
+      "sourcePage": 4,
+      "timeSignature": "4/4"
+    },
+    {
+      "attacks": [
+        {
+          "kind": "pitched",
+          "midi": 40,
+          "sourceLocalStep": 0,
+          "visualOrder": 0
+        },
+        {
+          "kind": "pitched",
+          "midi": 40,
+          "sourceLocalStep": 4,
+          "visualOrder": 1
+        },
+        {
+          "kind": "pitched",
+          "midi": 40,
+          "sourceLocalStep": 8,
+          "visualOrder": 2
+        },
+        {
+          "kind": "pitched",
+          "midi": 38,
+          "sourceLocalStep": 10,
+          "visualOrder": 3
+        },
+        {
+          "kind": "pitched",
+          "midi": 40,
+          "sourceLocalStep": 12,
+          "visualOrder": 4
+        },
+        {
+          "kind": "pitched",
+          "midi": 38,
+          "sourceLocalStep": 14,
+          "visualOrder": 5
+        }
+      ],
+      "continuationOnlyCount": 0,
+      "excludeFromScoring": false,
+      "measure": 29,
+      "sourceFile": "1000120391.jpg",
+      "sourcePage": 5,
+      "timeSignature": "4/4"
+    },
+    {
+      "attacks": [
+        {
+          "kind": "pitched",
+          "midi": 40,
+          "sourceLocalStep": 0,
+          "visualOrder": 0
+        },
+        {
+          "kind": "pitched",
+          "midi": 40,
+          "sourceLocalStep": 4,
+          "visualOrder": 1
+        },
+        {
+          "kind": "pitched",
+          "midi": 40,
+          "sourceLocalStep": 8,
+          "visualOrder": 2
+        },
+        {
+          "kind": "pitched",
+          "midi": 38,
+          "sourceLocalStep": 10,
+          "visualOrder": 3
+        },
+        {
+          "kind": "pitched",
+          "midi": 40,
+          "sourceLocalStep": 12,
+          "visualOrder": 4
+        },
+        {
+          "kind": "pitched",
+          "midi": 38,
+          "sourceLocalStep": 14,
+          "visualOrder": 5
+        }
+      ],
+      "continuationOnlyCount": 0,
+      "excludeFromScoring": false,
+      "measure": 30,
+      "sourceFile": "1000120391.jpg",
+      "sourcePage": 5,
+      "timeSignature": "4/4"
+    },
+    {
+      "attacks": [
+        {
+          "kind": "pitched",
+          "midi": 40,
+          "sourceLocalStep": 0,
+          "visualOrder": 0
+        },
+        {
+          "kind": "pitched",
+          "midi": 40,
+          "sourceLocalStep": 4,
+          "visualOrder": 1
+        },
+        {
+          "kind": "dead-note",
+          "midi": null,
+          "sourceLocalStep": 8,
+          "visualOrder": 2
+        },
+        {
+          "kind": "pitched",
+          "midi": 38,
+          "sourceLocalStep": 10,
+          "visualOrder": 3
+        },
+        {
+          "kind": "pitched",
+          "midi": 40,
+          "sourceLocalStep": 12,
+          "visualOrder": 4
+        },
+        {
+          "kind": "pitched",
+          "midi": 38,
+          "sourceLocalStep": 14,
+          "visualOrder": 5
+        }
+      ],
+      "continuationOnlyCount": 0,
+      "excludeFromScoring": false,
+      "measure": 31,
+      "sourceFile": "1000120391.jpg",
+      "sourcePage": 5,
+      "timeSignature": "4/4"
+    },
+    {
+      "attacks": [
+        {
+          "kind": "pitched",
+          "midi": 40,
+          "sourceLocalStep": 0,
+          "visualOrder": 0
+        },
+        {
+          "kind": "pitched",
+          "midi": 40,
+          "sourceLocalStep": 4,
+          "visualOrder": 1
+        },
+        {
+          "kind": "pitched",
+          "midi": 40,
+          "sourceLocalStep": 8,
+          "visualOrder": 2
+        },
+        {
+          "kind": "pitched",
+          "midi": 38,
+          "sourceLocalStep": 10,
+          "visualOrder": 3
+        },
+        {
+          "kind": "pitched",
+          "midi": 40,
+          "sourceLocalStep": 12,
+          "visualOrder": 4
+        },
+        {
+          "kind": "pitched",
+          "midi": 28,
+          "sourceLocalStep": 14,
+          "visualOrder": 5
+        }
+      ],
+      "continuationOnlyCount": 0,
+      "excludeFromScoring": false,
+      "measure": 32,
+      "sourceFile": "1000120391.jpg",
+      "sourcePage": 5,
+      "timeSignature": "4/4"
+    },
+    {
+      "attacks": [
+        {
+          "kind": "pitched",
+          "midi": 31,
+          "sourceLocalStep": 0,
+          "visualOrder": 0
+        },
+        {
+          "kind": "pitched",
+          "midi": 31,
+          "sourceLocalStep": 2,
+          "visualOrder": 1
+        },
+        {
+          "kind": "pitched",
+          "midi": 31,
+          "sourceLocalStep": 4,
+          "visualOrder": 2
+        },
+        {
+          "kind": "pitched",
+          "midi": 31,
+          "sourceLocalStep": 6,
+          "visualOrder": 3
+        },
+        {
+          "kind": "pitched",
+          "midi": 31,
+          "sourceLocalStep": 8,
+          "visualOrder": 4
+        },
+        {
+          "kind": "pitched",
+          "midi": 31,
+          "sourceLocalStep": 10,
+          "visualOrder": 5
+        },
+        {
+          "kind": "pitched",
+          "midi": 31,
+          "sourceLocalStep": 12,
+          "visualOrder": 6
+        },
+        {
+          "kind": "pitched",
+          "midi": 30,
+          "sourceLocalStep": 14,
+          "visualOrder": 7
+        }
+      ],
+      "continuationOnlyCount": 0,
+      "excludeFromScoring": false,
+      "measure": 33,
+      "sourceFile": "1000120391.jpg",
+      "sourcePage": 5,
+      "timeSignature": "4/4"
+    }
+  ],
+  "part": "bass",
+  "policy": {
+    "generatedCandidateModified": false,
+    "generatedCandidateRead": false,
+    "gpuUsed": false,
+    "humanCandidateCorrection": false,
+    "mainOrProductionModified": false,
+    "scoringPerformed": false
+  },
+  "schema": "dadrock.tabs.v154.bass-source-local-timing-batch.v1",
+  "skeletonSourceSha256": "a8e1d123f8a19e69d9c160d78aea7637b5a2012232b23e1f1ddff051e9bc40b3",
+  "sourceAuthority": "Canonical professional Bass notation pages; timing decoded from explicit rests, stems, beams, dots, and ties. Generated candidate was not read.",
+  "timingResolution": "16th-note source-local steps"
+}

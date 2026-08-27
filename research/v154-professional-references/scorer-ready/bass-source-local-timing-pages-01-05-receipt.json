@@ -1,0 +1,28 @@
+{
+  "attackCount": 153,
+  "continuationOnlyCount": 0,
+  "countAndOrderValidation": "PASS",
+  "deadNoteAttackCount": 5,
+  "generatedCandidateRead": false,
+  "gpuUsed": false,
+  "mainOrProductionModified": false,
+  "measureCount": 33,
+  "outputPath": "research/v154-professional-references/scorer-ready/bass-source-local-timing-pages-01-05.json",
+  "outputSha256": "327316cc677468bfbbd0b59e29e0cb5b9c3619dc49613be2241f491c14f09e5e",
+  "schema": "dadrock.tabs.v154.bass-source-local-timing-batch-receipt.v1",
+  "scoreCalls": 0,
+  "sourceFiles": [
+    "1000120387.jpg",
+    "1000120388.jpg",
+    "1000120389.jpg",
+    "1000120390.jpg",
+    "1000120391.jpg"
+  ],
+  "sourcePages": [
+    1,
+    2,
+    3,
+    4,
+    5
+  ]
+}
