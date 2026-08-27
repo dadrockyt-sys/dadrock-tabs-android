@@ -1,0 +1,42 @@
+name: V154 resume checkpoint writer once
+
+on:
+  push:
+    branches:
+      - v143-contextual-prune-lobo
+
+permissions:
+  contents: write
+
+jobs:
+  checkpoint:
+    if: github.event.head_commit.message == 'ci: arm V154 resume checkpoint writer'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: v143-contextual-prune-lobo
+          fetch-depth: 0
+      - name: Append resume checkpoint
+        shell: bash
+        run: |
+          cat >> docs/checkpoints/CURRENT_STATE.md <<'EOF'
+
+## V154 continuation checkpoint — BROAD-OTHER PROTOCOL FROZEN / NO REFERENCE SCORE — 2026-08-27 UTC
+- Resumed from the authoritative `docs/checkpoints/CURRENT_STATE.md` on branch `v143-contextual-prune-lobo`; `main` and Production remain untouched.
+- Current ChatGPT conversation contains no attached files. The frozen Bass/Lead screenshot identities and public-repo receipts remain valid, but the private note-by-note screenshot bytes are not available in this active session, so they were **not reconstructed or guessed**.
+- No professional reference note data was opened, scraped, generated, committed, or used for candidate selection in this continuation. Reference-facing score calls: **0**.
+- New reference-independent preregistration: `debug/v154-cpu-autonomous/broad-other-preregistration.json`; commit `69102364d79c315044c994ff0acaf52dbc827dd5`.
+- The broad-Other stage is frozen to CPU `demucs==4.1.0`, model `htdemucs`, shifts `1`, jobs `1`; `Other` is the combined Rhythm+Lead acoustic source and `Bass` remains independent.
+- New reference-free transcriber: `validation/v154_cpu_multitrack/transcribe_broad_other.py`; creation commit `c4a707d34b1a44dc34a8245f922773d43f0538cf`. It freezes Basic Pitch `0.4.0`, onset `0.5`, frame `0.3`, minimum note length `127.7 ms`, melodia trick enabled, no threshold sweep; combined Guitar MIDI range `40–88`, Bass MIDI range `28–67`.
+- New stage-one scorer: `validation/v154_cpu_multitrack/score_frontend_reference.py`; creation commit `a5cab589b3efca8ec454311c49120543c04277fb`. It scores frozen `combinedGuitar` against the private Rhythm+Lead union and frozen `bass` against private Bass, so Rhythm/Lead role splitting is not required before the primary acoustic recognition gate.
+- The scorer accepts optional `excludeFromScoring=true` on uncertain private reference events, allowing annotated uncertainty to be masked without silently repairing reference notes. Per-measure pitch-content remains diagnostic-only.
+- Success gates remain preregistered at combined Guitar timing-aware pitch F1 `>=0.80`, Bass timing-aware pitch F1 `>=0.80`, and onset-aware note F1 target `>=0.75`. No Gold/reference-guided tuning is permitted.
+- **No CPU separation/transcription benchmark has been executed yet in this continuation.** Before any future reference-facing scoring, generated Other/Bass streams must be frozen first. Private reference normalization remains required when the authorized screenshot bytes are accessible again.
+- Modal/L4/CUDA/GPU execution remains prohibited without fresh explicit user authorization. CPU work/scoring remains at assistant discretion.
+EOF
+          git config user.name "dadrockyt-sys"
+          git config user.email "actions@github.com"
+          git add docs/checkpoints/CURRENT_STATE.md
+          git commit -m "docs: checkpoint V154 broad-Other continuation [skip ci]"
+          git push origin HEAD:v143-contextual-prune-lobo
