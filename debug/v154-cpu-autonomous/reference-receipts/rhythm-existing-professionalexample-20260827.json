@@ -1,0 +1,20 @@
+{
+  "schema": "dadrock.tabs.v154.reference-receipt.v1",
+  "song": {
+    "title": "Are You Gonna Go My Way",
+    "artist": "Lenny Kravitz"
+  },
+  "part": "rhythm",
+  "source": "existing repository image",
+  "sourcePath": "public/Professionalexample.jpg",
+  "sourceRef": "main",
+  "gitBlobSha": "16106197cc1269cca0b3c443908d5ef75e8b4d3e",
+  "referenceUse": "private/scoring-only; do not expose to candidate generation",
+  "researchBranchCopyCreated": false,
+  "publicRepoContentPolicy": "receipt metadata only on research branch; do not duplicate or modify reference image",
+  "notes": [
+    "The image is present on main but not at the same path on v143-contextual-prune-lobo.",
+    "Use the frozen main-branch blob identity when normalizing the Rhythm reference at the scoring boundary.",
+    "Do not modify main or Production as part of V154 research work."
+  ]
+}
