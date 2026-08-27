@@ -1,0 +1,108 @@
+{
+  "schema": "dadrock.tabs.v154.cpu-autonomous.phase-a-preregistration.v1",
+  "classification": "cpu-only-pretrained-audio-frontend-reset",
+  "branch": "v143-contextual-prune-lobo",
+  "goal": "Test whether a pretrained CPU audio transcription frontend materially improves local onset-aware pitch recognition on the exact historical calibration audio without human correction, Gold-guided construction, Modal, L4, CUDA, or GPU.",
+  "authorizationPolicy": {
+    "cpuWorkAtAssistantDiscretion": true,
+    "cpuScoringAtAssistantDiscretion": true,
+    "modalL4CudaGpuRequiresFreshAuthorization": true
+  },
+  "historicalAudio": {
+    "repository": "dadrockyt-sys/dadrock-tabs-android",
+    "commit": "74b0f815ff3f66f325220975c410621503de440f",
+    "path": "public/gomywayfullaitest.m4a",
+    "bytes": 3478611,
+    "sha256": "215bd5a657c5326f08f132ae358595a95c30b39bb7493a52c2f910d5a608149f"
+  },
+  "grid": {
+    "tempoBpm": 129.19921875,
+    "stepsPerBeat": 4,
+    "stepsPerMeasure": 16,
+    "measureCount": 113,
+    "stepDurationSeconds": 0.11609907120743034,
+    "source": "frozen V147 event_onset_seconds contract"
+  },
+  "pretrainedStack": {
+    "basicPitch": {
+      "package": "basic-pitch",
+      "version": "0.4.0",
+      "runtime": "package default CPU runtime on Linux/Python 3.10",
+      "model": "ICASSP_2022_MODEL_PATH supplied by basic-pitch 0.4.0",
+      "onsetThreshold": 0.5,
+      "frameThreshold": 0.3,
+      "minimumNoteLengthMs": 127.7,
+      "melodiaTrick": true,
+      "minimumMidi": 40,
+      "maximumMidi": 88,
+      "thresholdSweep": false
+    },
+    "demucs": {
+      "package": "demucs",
+      "version": "4.1.0",
+      "model": "htdemucs_6s",
+      "device": "cpu",
+      "shifts": 1,
+      "jobs": 1,
+      "selectedStem": "guitar",
+      "gpuAllowed": false
+    },
+    "normalization": {
+      "imageioFfmpegVersion": "0.6.0",
+      "output": "44.1kHz stereo PCM16 WAV"
+    }
+  },
+  "predefinedBranches": [
+    {
+      "id": "raw-basic-pitch",
+      "input": "deterministically normalized original mix",
+      "transcriber": "Basic Pitch 0.4.0 defaults plus fixed guitar MIDI range 40-88"
+    },
+    {
+      "id": "demucs6-guitar-basic-pitch",
+      "input": "htdemucs_6s guitar stem generated on CPU from the same normalized mix",
+      "transcriber": "Basic Pitch 0.4.0 defaults plus fixed guitar MIDI range 40-88"
+    }
+  ],
+  "antiLeakage": {
+    "goldUnreadableDuringAudioNormalization": true,
+    "goldUnreadableDuringDemucsSeparation": true,
+    "goldUnreadableDuringBasicPitchInference": true,
+    "bothTranscriptionBranchesPersistedBeforeGoldScoring": true,
+    "humanCorrectionAllowed": false,
+    "goldGuidedCandidateConstructionAllowed": false,
+    "postScoreThresholdTuningAllowed": false
+  },
+  "evaluation": {
+    "referencePath": "debug/v144-rhythm-calibration/reference/professional-rhythm-gold-reference.json",
+    "referenceSha256": "18fd868ae960dfcdd1ffb0110f1a9dfd8acc2ffeb46e247d1116cd54291526ac",
+    "referenceNoteCount": 946,
+    "primaryMetric": "same-pitch one-to-one onset F1 within plus/minus 0.5 frozen grid step using continuous onset seconds",
+    "secondaryMetric": "same-pitch one-to-one onset F1 within plus/minus 2.0 frozen grid steps using continuous onset seconds",
+    "diagnosticOnlyMetric": "measure-level pitch-content F1",
+    "acceptedBaselineLocalPitchTimingF1": 0.06698564593301436,
+    "acceptedBaselineLocalPitchMatches": 70,
+    "acceptedBaselineGrossPitchMatches": 189,
+    "acceptedBaselineCriticalMismatchCount": 1712,
+    "selectionPolicy": "Report both predefined branches. The branch with higher primary local pitch-timing F1 is the preferred frontend for the next reference-free stage; ties use secondary gross-pitch F1. No threshold tuning is permitted from this result."
+  },
+  "interpretationBands": {
+    "BREAKTHROUGH_SIGNAL": "best primary F1 >= 0.20",
+    "PROMISING_RESET": "best primary F1 >= 0.10 and greater than accepted baseline",
+    "WEAK_GAIN": "best primary F1 greater than accepted baseline but below 0.10",
+    "NO_GAIN": "best primary F1 <= accepted baseline"
+  },
+  "forbidden": [
+    "human correction",
+    "Gold/reference access before both branch outputs are persisted",
+    "threshold sweep or hyperparameter search",
+    "Gold-guided filtering",
+    "candidate edits after scoring",
+    "Modal execution",
+    "NVIDIA L4 execution",
+    "CUDA execution",
+    "GPU execution",
+    "main or Production modification",
+    "automatic Production promotion"
+  ]
+}
