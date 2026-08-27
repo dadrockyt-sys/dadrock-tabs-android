@@ -1,0 +1,77 @@
+{
+  "schema": "dadrock.tabs.v154.cpu-autonomous.phase-a3-preregistration.v1",
+  "classification": "cpu-only-serialization-repair-of-frozen-pretrained-frontend-benchmark",
+  "branch": "v143-contextual-prune-lobo",
+  "scientificProtocolChanges": "NONE",
+  "parentScientificPreregistrationGitBlob": "d8af65d0b642b311fd243841af3eaef22e0a007f",
+  "parentBenchmarkGitBlob": "ca0c26dd3cf786585bea615f4bd565a9d1980d4e",
+  "a2Failure": {
+    "path": "debug/v154-cpu-autonomous/phase-a2-failure.json",
+    "gitBlob": "ff50e30a4eb92e733d687f45a4fd3e0118d33f42",
+    "runId": 33088418439,
+    "jobId": 98574330124,
+    "basicPitchCpuInferenceCompleted": true,
+    "goldOrReferenceRead": false,
+    "scoreCallCount": 0
+  },
+  "serializationRepair": {
+    "wrapperPath": "validation/v154_cpu_autonomous/benchmark_pretrained_frontend_a3.py",
+    "wrapperGitBlob": "991e286c38454ab4ae7d63565914913dfe89442d",
+    "scope": "replace only json_pitch_bend metadata conversion with recursive conversion of NumPy array/scalar containers to JSON-native lists/numbers",
+    "inferenceLogicChanged": false,
+    "thresholdsChanged": false,
+    "scoringLogicChanged": false,
+    "branchDefinitionsChanged": false
+  },
+  "runtime": {
+    "python": "3.10",
+    "numpy": "1.26.4",
+    "torch": "2.8.0+cpu",
+    "torchIndex": "https://download.pytorch.org/whl/cpu",
+    "basicPitch": "0.4.0",
+    "demucs": "4.1.0",
+    "imageioFfmpeg": "0.6.0",
+    "requireTorchCudaVersionNull": true,
+    "requireCudaAvailableFalse": true
+  },
+  "scientificProtocol": {
+    "branches": ["raw-basic-pitch", "demucs6-guitar-basic-pitch"],
+    "basicPitchOnsetThreshold": 0.5,
+    "basicPitchFrameThreshold": 0.3,
+    "basicPitchMinimumNoteLengthMs": 127.7,
+    "basicPitchMelodiaTrick": true,
+    "midiRange": [40, 88],
+    "demucsModel": "htdemucs_6s",
+    "demucsDevice": "cpu",
+    "demucsShifts": 1,
+    "demucsJobs": 1,
+    "primaryMetric": "same-pitch one-to-one onset F1 within plus/minus 0.5 frozen grid step",
+    "secondaryMetric": "same-pitch one-to-one onset F1 within plus/minus 2.0 frozen grid steps",
+    "acceptedBaselineLocalPitchTimingF1": 0.06698564593301436,
+    "measureLevelPitchContentRole": "diagnostic-only"
+  },
+  "antiLeakage": {
+    "goldUnreadableDuringBothTranscriptions": true,
+    "rawBranchPersistedBeforeDemucs": true,
+    "guitarBranchPersistedBeforeGold": true,
+    "humanCorrection": false,
+    "thresholdSweep": false,
+    "goldGuidedConstruction": false
+  },
+  "authorizationPolicy": {
+    "cpuWorkAtAssistantDiscretion": true,
+    "cpuScoringAtAssistantDiscretion": true,
+    "modalL4CudaGpuRequiresFreshAuthorization": true
+  },
+  "forbidden": [
+    "human correction",
+    "threshold or model parameter change",
+    "Gold-guided filtering or candidate construction",
+    "Gold access before both branch outputs are persisted",
+    "Modal execution",
+    "L4 execution",
+    "CUDA execution",
+    "GPU execution",
+    "main or Production modification"
+  ]
+}
