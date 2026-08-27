@@ -504,3 +504,17 @@ Active phase: **V147 Phase C REAL-AUDIO ARTIFACT-FIRST CONSTRUCTION = GO / SEALE
 - Authorization blob `d6af61782ab9acea1a43a554a19846e58b3f3110`; unchanged V149 scorer blob `94854131aa9f35f0822c028166eb69f5304d9f44`; recovery run `33047086701`.
 - Attempt sentinel is consumed before Gold access. Gold/reference opened **NO**; reference parsed **NO**; score calls **0**.
 - Search/alternate candidate/alternate threshold/retuning/audio/HPSS/CQT/Modal/GPU/main/Production/promotion remain **NO / FORBIDDEN**.
+
+
+## V149 Phase C high-confidence singleton Gold score — COMPLETE / SEALED — 2026-08-27 UTC
+- Exactly one frozen historical Gold calibration score completed in recovery run `33047086701`; the prior preflight-failure run made **0** score calls.
+- Durable result: `debug/v149-singleton-confidence/phase-c-score/score-result.json`; SHA256 **`29c56823b4a3f81f5af6db20c562af9b3b59a646160711eb11ff368cbdd7b6df`**; persistence commit **`5db60f0b87c6ca39d2bb833b64060fb98115b290`**.
+- V149 candidate percentages (pitch content / pitch timing / string-fret timing / chord pitch-set / measure coverage / PDF fidelity): **34.450 / 6.507 / 5.359 / 5.667 / 100.000 / 100.000**.
+- Accepted baseline percentages: **35.407 / 6.699 / 5.455 / 5.805 / 100.000 / 100.000**.
+- V148 percentages: **33.589 / 5.933 / 4.785 / 4.976 / 100.000 / 100.000**.
+- Critical mismatch count: **1722**; delta vs accepted baseline **+10**; delta vs V148 **-18**.
+- Raw F1 deltas vs accepted baseline: pitch content `-0.009569378`, pitch timing `-0.001913876`, string/fret `-0.000956938`, chord pitch-set `-0.001382170`, exact voicing `-0.001382170`, measure coverage `+0.000000000`.
+- Raw F1 deltas vs V148: pitch content `+0.008612440`, pitch timing `+0.005741627`, string/fret `+0.005741627`, chord pitch-set `+0.006910850`, exact voicing `+0.006910850`, measure coverage `+0.000000000`.
+- Gold SHA was sourced in-memory from the frozen successful V147 scorer and verified against actual Gold bytes immediately before parsing; runtime SHA **`18fd868ae960dfcdd1ffb0110f1a9dfd8acc2ffeb46e247d1116cd54291526ac`** (64 characters).
+- Safety: total V149 score calls **1**; candidate search **NO**; alternate candidate **NO**; alternate threshold test **NO**; retuning **NO**; audio/HPSS/CQT **NO**; Modal/GPU **NO**; main/Production integration **NO**; automatic promotion **NO**.
+- V149 score authorization is consumed. This one-use scoring workflow is deleted in the same sealing commit. Any next candidate, threshold, reference-facing analysis, Production integration, or promotion requires a new separately frozen phase.
