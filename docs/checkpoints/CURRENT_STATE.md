@@ -431,3 +431,12 @@ Active phase: **V147 Phase C REAL-AUDIO ARTIFACT-FIRST CONSTRUCTION = GO / SEALE
 - Candidate/scorer/construction/PDF/completion/authorization/provenance identities and the scorer import preflight all passed reference-free.
 - Gold/reference content opened at this checkpoint: **NO**. Score calls at this checkpoint: **0**.
 - Candidate search/variants/retuning/audio/HPSS/CQT/Modal/L4/GPU/main/Production/promotion remain **NO / FORBIDDEN**.
+
+
+## V148 Phase C score failure — REFERENCE-FREE CONSTANT DIAGNOSIS COMPLETE — 2026-08-27 UTC
+- Recovery run `33045568440` consumed the attempt sentinel before Gold access, then read Gold bytes but failed **before reference parsing and before any score call** at the frozen expected-Gold-SHA equality check. Runtime-computed Gold SHA was printed as the historically expected value; no result was persisted.
+- Reference-free diagnosis file: `debug/v148-singleton-only/phase-c-score-constant-diagnosis.json`; SHA256 **`70fafa0cb55ffc24c502e9378570435371ef746344e4f12d024ee2805731abcc`**.
+- Frozen V148 expected-Gold string length: **65**; valid SHA256 hex length: **False**; lowercase-hex-only: **True**.
+- Historical V147 runner expected-Gold string length: **64**; V147/V148 constants byte-for-byte equal: **False**.
+- This diagnosis did **not** read Gold/reference, parse reference, invoke the scorer, inspect audio, use Modal/GPU, search candidates, retune, touch main/Production, or promote. Total V148 score calls remain **0**.
+- Any recovery must remain infrastructure-only and preserve the original limit of **at most one historical score call**.
