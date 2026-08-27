@@ -1,0 +1,61 @@
+{
+  "schema": "dadrock.tabs.v149.singleton-confidence.phase-c-scoring-authorization.v1",
+  "classification": "one-use-reference-facing-score-authorized",
+  "branch": "v143-contextual-prune-lobo",
+  "sourceHeadBeforeAuthorization": "2a50e366d9d65a99f11354bdc9fb89bcbba6c87e",
+  "userInstruction": "Let's keep working towards a breakthrough. Please continue to show score percentages when possible.",
+  "authorization": {
+    "received": true,
+    "scope": "exactly-one-v149-high-confidence-singleton-gold-calibration-score",
+    "candidateSearchAllowed": false,
+    "alternateCandidateAllowed": false,
+    "alternateThresholdAllowed": false,
+    "retuningAllowed": false,
+    "audioRecomputeAllowed": false,
+    "modalGpuAllowed": false,
+    "productionPromotionAllowed": false
+  },
+  "candidate": {
+    "path": "debug/v149-singleton-confidence/candidate/candidate.json",
+    "gitBlob": "2590b7b00ad77bcb297d02764e9df556b5bb487a",
+    "fileSha256": "1add3ffacf9048dd597a47820baeb3ef8cb0e67fa83d12b1b8d8303a8d808278",
+    "canonicalEventSha256": "4dd13556d580a315c728e7333823eec9644195da5a345689cc44a566ef33d998",
+    "eventCount": 1144,
+    "changedEventsVersusAccepted": 54,
+    "changedOnsetsVersusAccepted": 54,
+    "polyphonicChangedEventsVersusAccepted": 0,
+    "thresholdDb": 3.0
+  },
+  "constructionProof": {
+    "path": "debug/v149-singleton-confidence/candidate/construction-proof.json",
+    "gitBlob": "86c61863721efd51f80583829020f20712b171f6",
+    "fileSha256": "1efae460dcb93129dcd6717ccad8eb9e496767a78a68eddddecd0121e1261d6e"
+  },
+  "pdfFidelity": {
+    "path": "debug/v149-singleton-confidence/candidate/pdf-event-fidelity.json",
+    "gitBlob": "23480ccbc46633bc311b32b4356dba1dd257f503",
+    "fileSha256": "23d087a2d902c6a4a10f80ffca9765139d7c021f8ac59996225c3ad7dcd478f9",
+    "fidelity": 1.0
+  },
+  "constructionCompletion": {
+    "path": "debug/v149-singleton-confidence/phase-b-complete-sentinel.json",
+    "gitBlob": "6df0fcd825cbb4ed3302754b24af32a01a5b29ab",
+    "status": "COMPLETE_SEALED_STOP_BEFORE_SCORING"
+  },
+  "gold": {
+    "path": "debug/v144-rhythm-calibration/reference/professional-rhythm-gold-reference.json",
+    "expectedSha256": "18fd868ae960dfcddc1ffb0110f1a9dfd8acc2ffeb46e247d1116cd54291526ac",
+    "expectedSha256Length": 64
+  },
+  "historicalScoringChain": {
+    "fullCalibrationWrapperGitBlob": "1ca2b8550d6c08e793f26b3aa91b99fb44fa7ddb",
+    "coreScorerGitBlob": "cc4bf61a99f22bf87a6c255e5a81220fbc82223b",
+    "canonicalAdapterGitBlob": "088d44827fb23e20d9aeeb4944a672989af5846c"
+  },
+  "acceptedBaseline": {
+    "path": "debug/v144-rhythm-calibration/selected/v144-singleton-onset-replacement-selected-baseline.json",
+    "gitBlob": "acd12ab68ad16b8faabf38ddc9e1cc0c1e7c4b68",
+    "eventSha256": "4e6f9f247134f79f30a5448515c52a6ca1012c1f1314c3458b448582999e3881"
+  },
+  "executionRule": "Verify every non-reference identity first, verify the 64-character Gold SHA before parsing, invoke the frozen historical score exactly once, persist percentages/result, then self-seal."
+}
