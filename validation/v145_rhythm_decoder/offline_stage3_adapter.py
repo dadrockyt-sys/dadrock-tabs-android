@@ -159,9 +159,7 @@ def _half_up_absolute_step(onset_seconds: float, step_seconds: float) -> tuple[i
     return absolute_step, residual
 
 
-def _decoded_groups(
-    decoded_notes: Sequence[Any],
-) -> list[tuple[float, tuple[Any, ...]]]:
+def _decoded_groups(decoded_notes: Sequence[Any]) -> list[tuple[float, tuple[Any, ...]]]:
     grouped: dict[float, list[Any]] = {}
     seen_sources: set[int] = set()
     for note in decoded_notes:
@@ -291,7 +289,7 @@ def apply_decode_result(
 def build_stage3_candidate(source_payload: Mapping[str, Any]) -> dict[str, Any]:
     if not isinstance(source_payload, Mapping):
         raise ValueError("Stage3 source payload must be a JSON object")
-    if float(source_payload.get("tempoBpm", 0.0)) != EXPECTED_TEMPO_BPM:
+    if float(source_payload.get("tempo", 0.0)) != EXPECTED_TEMPO_BPM:
         raise ValueError("Stage3 source tempo changed")
     if str(source_payload.get("timeSignature", "")) != EXPECTED_TIME_SIGNATURE:
         raise ValueError("Stage3 source time signature changed")
