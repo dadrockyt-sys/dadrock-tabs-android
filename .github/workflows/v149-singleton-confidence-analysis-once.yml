@@ -1,0 +1,119 @@
+name: V149 singleton confidence analysis once
+
+on:
+  push:
+    paths:
+      - '.github/workflows/v149-singleton-confidence-analysis-once.yml'
+
+permissions:
+  contents: write
+
+jobs:
+  analyze-once:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: v143-contextual-prune-lobo
+          fetch-depth: 0
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12.14'
+
+      - name: Verify frozen V149 identities
+        run: |
+          set -euo pipefail
+          test "$(git hash-object debug/v149-singleton-confidence/phase-a-reference-free-preregistration.json)" = "324e9f5bcd7264b3d50f54c51a86ebbf173b5ef6"
+          test "$(git hash-object validation/v149_singleton_confidence/analyze_reference_free.py)" = "1f13b85110c2ccb6fccdd24bb87b63e64ec490ca"
+          test "$(git hash-object debug/v149-singleton-confidence/phase-a-attempt-sentinel.json)" = "917d3594bc60f99e219d3d5f1e4b16b34094e5bc" || true
+          python validation/v149_singleton_confidence/analyze_reference_free.py --help >/dev/null
+          test ! -e debug/v149-singleton-confidence/phase-a-analysis.json
+
+      - name: Consume one-use attempt and checkpoint
+        env:
+          RUN_ID: ${{ github.run_id }}
+          HEAD_SHA: ${{ github.sha }}
+        run: |
+          set -euo pipefail
+          python - <<'PY'
+          import json, os
+          from datetime import datetime, timezone
+          from pathlib import Path
+          p = Path('debug/v149-singleton-confidence/phase-a-attempt-sentinel.json')
+          d = json.loads(p.read_text())
+          if d.get('status') != 'ARMED_NOT_CONSUMED':
+              raise SystemExit('V149 attempt sentinel already consumed')
+          if d.get('goldOrReferenceRead') is not False or d.get('scoreCallCount') != 0:
+              raise SystemExit('unsafe pre-analysis state')
+          d['status'] = 'CONSUMED_BEFORE_REFERENCE_FREE_ANALYSIS'
+          d['runId'] = os.environ['RUN_ID']
+          d['runHeadSha'] = os.environ['HEAD_SHA']
+          d['consumedAtUtc'] = datetime.now(timezone.utc).isoformat()
+          p.write_text(json.dumps(d, indent=2, sort_keys=True) + '\n')
+
+          cp = Path('docs/checkpoints/CURRENT_STATE.md')
+          marker = '## V149 Phase A singleton confidence analysis — ARMED / REFERENCE-FREE — 2026-08-27 UTC'
+          text = cp.read_text()
+          if marker not in text:
+              text += f'''\n\n{marker}\n- User authorized continued breakthrough work and requested score percentages when legitimate scores are available.\n- V149 Phase A is descriptive and reference-free: exactly the **106 V148 singleton changes** are profiled by frozen audio-evidence confidence features.\n- Preregistration blob `324e9f5bcd7264b3d50f54c51a86ebbf173b5ef6`; analyzer blob `1f13b85110c2ccb6fccdd24bb87b63e64ec490ca`; run `{os.environ['RUN_ID']}`.\n- At this checkpoint: Gold/reference read **NO**; scorer calls **0**; candidate construction/search **NO**; audio/HPSS/CQT **NO**; Modal/GPU **NO**; main/Production/promotion **NO**.\n'''
+              cp.write_text(text)
+          PY
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add debug/v149-singleton-confidence/phase-a-attempt-sentinel.json docs/checkpoints/CURRENT_STATE.md
+          git commit -m 'debug: checkpoint V149 analysis attempt [skip ci]'
+          git push origin HEAD:v143-contextual-prune-lobo
+
+      - name: Run frozen reference-free analysis
+        run: |
+          set -euo pipefail
+          python validation/v149_singleton_confidence/analyze_reference_free.py --output debug/v149-singleton-confidence/phase-a-analysis.json | tee /tmp/v149-analysis-summary.json
+
+      - name: Verify persist checkpoint and self-seal
+        env:
+          RUN_ID: ${{ github.run_id }}
+        run: |
+          set -euo pipefail
+          python - <<'PY'
+          import hashlib, json, os
+          from pathlib import Path
+          rp = Path('debug/v149-singleton-confidence/phase-a-analysis.json')
+          payload = rp.read_bytes()
+          sha = hashlib.sha256(payload).hexdigest()
+          r = json.loads(payload)
+          if r.get('gate') != 'GO' or (r.get('population') or {}).get('eventCount') != 106:
+              raise SystemExit('V149 analysis gate/population mismatch')
+          s = r.get('safety') or {}
+          expected_false = ('goldOrReferenceRead','professionalImageRead','audioReadOrDecoded','hpssOrCqtRecomputed','scorerInvoked','candidateConstructed','candidateSearchOrVariants','modalOrGpuUsed','mainOrProductionModified','automaticPromotion')
+          for k in expected_false:
+              if s.get(k) is not False:
+                  raise SystemExit(f'V149 safety mismatch {k}')
+          if s.get('scoreCallCount') != 0:
+              raise SystemExit('unexpected score call')
+
+          dist = r['distributions']
+          q = r['quantiles']['nearestGateExcessDb']
+          def find(rows, key):
+              for row in rows:
+                  if row['key'] == key:
+                      return row
+              return {'count': 0, 'percentOf106': 0.0}
+          weak1 = find(dist['cumulativeWeakGate'], 'nearest<1dB')
+          weak2 = find(dist['cumulativeWeakGate'], 'nearest<2dB')
+          weak3 = find(dist['cumulativeWeakGate'], 'nearest<3dB')
+          diffstr = find(dist['stringReassignment'], 'different-string')
+
+          cp = Path('docs/checkpoints/CURRENT_STATE.md')
+          marker = '## V149 Phase A singleton confidence analysis — COMPLETE / SEALED — 2026-08-27 UTC'
+          text = cp.read_text()
+          if marker in text:
+              raise SystemExit('duplicate V149 final checkpoint')
+          text += f'''\n\n{marker}\n- Frozen reference-free analysis completed in run `{os.environ['RUN_ID']}` over exactly **106 / 106 V148 singleton edits**.\n- Result: `debug/v149-singleton-confidence/phase-a-analysis.json`; SHA256 **`{sha}`**.\n- Weakest-gate cumulative populations: `<1 dB` **{weak1['count']}/106 = {weak1['percentOf106']:.2f}%**; `<2 dB` **{weak2['count']}/106 = {weak2['percentOf106']:.2f}%**; `<3 dB` **{weak3['count']}/106 = {weak3['percentOf106']:.2f}%**.\n- Different-string reassignment: **{diffstr['count']}/106 = {diffstr['percentOf106']:.2f}%**.\n- Nearest-gate-excess median **{q['p50']:.3f} dB**, p10/p90 **{q['p10']:.3f}/{q['p90']:.3f} dB**.\n- This is **not an accuracy score**. Gold/reference read **NO**; scorer calls **0**; no candidate was constructed or searched; no audio/HPSS/CQT/Modal/GPU; no main/Production/promotion.\n- Phase A analysis authorization is consumed and this workflow is deleted in the same sealing commit. Next step may freeze exactly one V149 construction hypothesis from this reference-free evidence.\n'''
+          cp.write_text(text)
+          Path('/tmp/v149-sha').write_text(sha)
+          PY
+          git rm .github/workflows/v149-singleton-confidence-analysis-once.yml
+          git add debug/v149-singleton-confidence/phase-a-analysis.json docs/checkpoints/CURRENT_STATE.md
+          git commit -m 'debug: persist and seal V149 singleton analysis [skip ci]'
+          git push origin HEAD:v143-contextual-prune-lobo
