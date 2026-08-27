@@ -1,0 +1,11 @@
+{
+  "candidateEventCount": 1144,
+  "candidateEventSha256": "e6c437f534dfb5523610797c67f8f69176be903456ef4940c3032567b949156b",
+  "passed": true,
+  "pdfEventCount": 1144,
+  "pdfEventFidelity": 1.0,
+  "pdfEventSha256": "e6c437f534dfb5523610797c67f8f69176be903456ef4940c3032567b949156b",
+  "referenceOpened": false,
+  "rendererProjection": "lib/v143RenderContract.js::projectV143RenderEvents",
+  "schema": "dadrock.tabs.v151.pdf-event-fidelity.v1"
+}

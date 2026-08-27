@@ -593,3 +593,14 @@ Active phase: **V147 Phase C REAL-AUDIO ARTIFACT-FIRST CONSTRUCTION = GO / SEALE
 - Preregistration blob `b8a91fbe7c8cb03be2905e86508a921a2ed2759d`; authorization blob `2882c1daee695dcb14824e18d1a6ec62f9609405`; constructor blob `8bc607c055bae5c8e0757622a3af3a3feb0a9b34`; run `33048929813`.
 - Expected: **1144 events / 113 measures / 12 changed singleton events / 12 changed onsets / 0 polyphonic changes / 1 candidate / 100% PDF fidelity**.
 - Gold/reference **NO**; prior score-result read **NO**; scorer calls **0**; search/variants/threshold sweep/audio/HPSS/CQT/Modal/GPU/main/Production/promotion **NO**. Reference-facing scoring authorization remains **FALSE** during construction.
+
+
+## V151 Phase B positive-consensus construction — COMPLETE / SEALED / STOP BEFORE SCORING — 2026-08-27 UTC
+- Exactly one reference-free candidate constructed in run `33048929813` from accepted family #10 plus only the **12** frozen V150 positive-consensus rows.
+- Canonical candidate event SHA256: **`e6c437f534dfb5523610797c67f8f69176be903456ef4940c3032567b949156b`**.
+- Structure: **1144 events / 113 measures / 12 changed singleton events / 12 changed onsets / 0 polyphonic changed events**.
+- Deterministic replay **TRUE**; timing/metadata violations **0**; position violations **0**; V150 projection violations **0**.
+- PDF/render event fidelity: **100.000%**; reference opened during fidelity check **NO**.
+- Candidate file SHA256 **`ac96ec4edc3e9b67c047e7e9012139bfa46d0d6d164ffa1443960f8fbcb19ae9`**; construction proof SHA256 **`187cb046988df7cc96ff1e909d2d76fd7ec9c4a802f93ceea1277085cf464342`**; PDF proof SHA256 **`c594a733131af3e34e4c937b90d148cfd4b4673c5cb050def4293b6f97d290e7`**.
+- Gold/reference **NO**; prior score result read **NO**; scorer calls **0**; search/variants/alternate subset/additional filter/threshold sweep/audio/GPU/Production/promotion **NO**.
+- Construction authorization is consumed. Reference-facing scoring remains a separate exact-identity phase.
