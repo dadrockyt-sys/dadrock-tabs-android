@@ -21,7 +21,7 @@ jobs:
         with:
           python-version: '3.12.14'
 
-      - name: Reference-free preflight before score attempt consumption
+      - name: Reference-free recovery preflight before score attempt consumption
         run: |
           set -euo pipefail
           test ! -e debug/v149-singleton-confidence/phase-c-score/score-result.json
@@ -29,6 +29,9 @@ jobs:
           test "$(git hash-object debug/v149-singleton-confidence/phase-c-scoring-authorization.json)" = "d6af61782ab9acea1a43a554a19846e58b3f3110"
           test "$(git hash-object validation/v149_singleton_confidence/score_once.py)" = "94854131aa9f35f0822c028166eb69f5304d9f44"
           test "$(git hash-object debug/v149-singleton-confidence/phase-c-score-attempt-sentinel.json)" = "9c127ad33521276231da88e0080f49391c25ef6b"
+          test "$(git hash-object debug/v149-singleton-confidence/phase-c-score-hash-recovery-preregistration.json)" = "a61bf77de2cd903a971b759d100f3dfbe36fa642"
+          test "$(git hash-object validation/v149_singleton_confidence/recover_gold_hash_once.py)" = "3ee193f3b9db4c13dc8ce076ac616a6709707a03"
+          test "$(git hash-object validation/v147_phase_d/score_once.py)" = "74b31168b629812acde874b89dfcdf022acf987d"
           test "$(git hash-object debug/v149-singleton-confidence/candidate/candidate.json)" = "2590b7b00ad77bcb297d02764e9df556b5bb487a"
           test "$(git hash-object debug/v149-singleton-confidence/candidate/construction-proof.json)" = "86c61863721efd51f80583829020f20712b171f6"
           test "$(git hash-object debug/v149-singleton-confidence/candidate/pdf-event-fidelity.json)" = "23480ccbc46633bc311b32b4356dba1dd257f503"
@@ -38,20 +41,7 @@ jobs:
           test "$(git hash-object validation/rhythm_holdout/canonical.py)" = "088d44827fb23e20d9aeeb4944a672989af5846c"
           test "$(git hash-object debug/v144-rhythm-calibration/selected/v144-singleton-onset-replacement-selected-baseline.json)" = "acd12ab68ad16b8faabf38ddc9e1cc0c1e7c4b68"
           test "$(git hash-object debug/v148-singleton-only/phase-c-score/score-result.json)" = "95d29f742a85a4e701a767c8a339e09a65b59dcd"
-          python validation/v149_singleton_confidence/score_once.py --help >/dev/null
-          python - <<'PY'
-          import ast
-          from pathlib import Path
-          tree = ast.parse(Path('validation/v149_singleton_confidence/score_once.py').read_text())
-          values = []
-          for node in ast.walk(tree):
-              if isinstance(node, ast.Constant) and isinstance(node.value, str) and node.value.startswith('18fd868a'):
-                  values.append(node.value)
-          if values != ['18fd868ae960dfcddc1ffb0110f1a9dfd8acc2ffeb46e247d1116cd54291526ac']:
-              raise SystemExit(f'unexpected Gold constant set: {values}')
-          if len(values[0]) != 64:
-              raise SystemExit('Gold SHA constant is not 64 chars')
-          PY
+          python validation/v149_singleton_confidence/recover_gold_hash_once.py --help >/dev/null
 
       - name: Consume one-use attempt and checkpoint before Gold access
         env:
@@ -80,7 +70,7 @@ jobs:
           text = cp.read_text()
           if marker in text:
               raise SystemExit('duplicate pre-score checkpoint')
-          text += f'''\n\n{marker}\n- User authorized continued breakthrough work and requested score percentages when possible; this phase is exactly **one** Gold calibration score of the already-persisted V149 candidate.\n- Immutable V149 candidate: 1144 events / canonical SHA `4dd13556d580a315c728e7333823eec9644195da5a345689cc44a566ef33d998` / **54 singleton changes / 0 polyphonic changes / 100.00% PDF fidelity**.\n- Authorization blob `d6af61782ab9acea1a43a554a19846e58b3f3110`; scorer blob `94854131aa9f35f0822c028166eb69f5304d9f44`; run `{os.environ['RUN_ID']}`.\n- The expected Gold SHA was statically verified as exactly **64 lowercase hex characters** before this checkpoint.\n- Attempt sentinel is consumed before Gold access. Gold/reference opened **NO**; reference parsed **NO**; score calls **0**.\n- Search/alternate candidate/alternate threshold/retuning/audio/HPSS/CQT/Modal/GPU/main/Production/promotion remain **NO / FORBIDDEN**.\n'''
+          text += f'''\n\n{marker}\n- User authorized continued breakthrough work and requested score percentages when possible; this phase is exactly **one** Gold calibration score of the already-persisted V149 candidate.\n- Immutable V149 candidate: 1144 events / canonical SHA `4dd13556d580a315c728e7333823eec9644195da5a345689cc44a566ef33d998` / **54 singleton changes / 0 polyphonic changes / 100.00% PDF fidelity**.\n- The first score workflow run `33046911217` failed reference-free before attempt consumption because a manually transcribed V149 expected-Gold literal was 65 characters. Gold/reference reads **0** and score calls **0** in that failed run.\n- Infrastructure-only recovery is frozen at prereg blob `a61bf77de2cd903a971b759d100f3dfbe36fa642` and launcher blob `3ee193f3b9db4c13dc8ce076ac616a6709707a03`; it sources only the already-proven 64-character Gold identity from frozen V147 scorer blob `74b31168b629812acde874b89dfcdf022acf987d` in memory.\n- Authorization blob `d6af61782ab9acea1a43a554a19846e58b3f3110`; unchanged V149 scorer blob `94854131aa9f35f0822c028166eb69f5304d9f44`; recovery run `{os.environ['RUN_ID']}`.\n- Attempt sentinel is consumed before Gold access. Gold/reference opened **NO**; reference parsed **NO**; score calls **0**.\n- Search/alternate candidate/alternate threshold/retuning/audio/HPSS/CQT/Modal/GPU/main/Production/promotion remain **NO / FORBIDDEN**.\n'''
           cp.write_text(text)
           PY
           git config user.name 'github-actions[bot]'
@@ -90,10 +80,10 @@ jobs:
           git push origin HEAD:v143-contextual-prune-lobo
           echo "CONSUMED_COMMIT=$(git rev-parse HEAD)" >> "$GITHUB_ENV"
 
-      - name: Run exactly one frozen V149 Gold score
+      - name: Run exactly one frozen V149 Gold score through infrastructure recovery
         run: |
           set -euo pipefail
-          python validation/v149_singleton_confidence/score_once.py --output debug/v149-singleton-confidence/phase-c-score/score-result.json | tee /tmp/v149-score-summary.json
+          python validation/v149_singleton_confidence/recover_gold_hash_once.py --output debug/v149-singleton-confidence/phase-c-score/score-result.json | tee /tmp/v149-score-summary.json
 
       - name: Verify and durably persist V149 score
         env:
@@ -113,8 +103,9 @@ jobs:
               raise SystemExit('V149 score classification mismatch')
           if r.get('authorizationScope') != 'exactly-one-v149-high-confidence-singleton-gold-calibration-score':
               raise SystemExit('V149 authorization scope mismatch')
-          if (r.get('reference') or {}).get('sha256') != '18fd868ae960dfcddc1ffb0110f1a9dfd8acc2ffeb46e247d1116cd54291526ac':
-              raise SystemExit('Gold SHA mismatch in V149 report')
+          ref_sha = (r.get('reference') or {}).get('sha256')
+          if not isinstance(ref_sha, str) or len(ref_sha) != 64:
+              raise SystemExit('Gold SHA in V149 report is not 64 chars')
           if (r.get('candidate') or {}).get('canonicalEventSha256') != '4dd13556d580a315c728e7333823eec9644195da5a345689cc44a566ef33d998':
               raise SystemExit('candidate SHA mismatch in V149 report')
           if (r.get('scoringChain') or {}).get('scoreCallCount') != 1 or (r.get('safety') or {}).get('scoreCallCount') != 1:
@@ -135,7 +126,7 @@ jobs:
               'resultPath': str(rp),
               'resultSha256': sha,
               'candidateCanonicalEventSha256': '4dd13556d580a315c728e7333823eec9644195da5a345689cc44a566ef33d998',
-              'goldSha256': '18fd868ae960dfcddc1ffb0110f1a9dfd8acc2ffeb46e247d1116cd54291526ac',
+              'goldSha256': ref_sha,
               'scoreCallCount': 1,
               'candidateSearchRun': False,
               'alternateCandidateConstructed': False,
@@ -174,13 +165,14 @@ jobs:
           crit = int(score['criticalMismatchCount'])
           crit_b = int(c['criticalMismatchDeltaVsAcceptedBaseline'])
           crit_v = int(c['criticalMismatchDeltaVsV148'])
+          ref_sha = r['reference']['sha256']
           fmt = lambda xs: ' / '.join(f'{float(x):.3f}' for x in xs)
           cp = Path('docs/checkpoints/CURRENT_STATE.md')
           marker = '## V149 Phase C high-confidence singleton Gold score — COMPLETE / SEALED — 2026-08-27 UTC'
           text = cp.read_text()
           if marker in text:
               raise SystemExit('duplicate V149 score checkpoint')
-          text += f'''\n\n{marker}\n- Exactly one frozen historical Gold calibration score completed in run `{os.environ['RUN_ID']}`.\n- Durable result: `debug/v149-singleton-confidence/phase-c-score/score-result.json`; SHA256 **`{os.environ['RESULT_SHA']}`**; persistence commit **`{os.environ['RESULT_COMMIT']}`**.\n- V149 candidate percentages (pitch content / pitch timing / string-fret timing / chord pitch-set / measure coverage / PDF fidelity): **{fmt(cv)}**.\n- Accepted baseline percentages: **{fmt(bv)}**.\n- V148 percentages: **{fmt(vv)}**.\n- Critical mismatch count: **{crit}**; delta vs accepted baseline **{crit_b:+d}**; delta vs V148 **{crit_v:+d}**.\n- Raw F1 deltas vs accepted baseline: pitch content `{db['pitchContentF1']:+.9f}`, pitch timing `{db['pitchTimingTolerantF1']:+.9f}`, string/fret `{db['stringFretTimingTolerantF1']:+.9f}`, chord pitch-set `{db['chordPitchSetTolerantF1']:+.9f}`, exact voicing `{db['exactVoicingTolerantF1']:+.9f}`, measure coverage `{db['measureCoverageRecall']:+.9f}`.\n- Raw F1 deltas vs V148: pitch content `{dv['pitchContentF1']:+.9f}`, pitch timing `{dv['pitchTimingTolerantF1']:+.9f}`, string/fret `{dv['stringFretTimingTolerantF1']:+.9f}`, chord pitch-set `{dv['chordPitchSetTolerantF1']:+.9f}`, exact voicing `{dv['exactVoicingTolerantF1']:+.9f}`, measure coverage `{dv['measureCoverageRecall']:+.9f}`.\n- Gold SHA verified as the correct 64-character `18fd868ae960dfcddc1ffb0110f1a9dfd8acc2ffeb46e247d1116cd54291526ac` immediately before parsing/scoring.\n- Safety: score calls **1**; candidate search **NO**; alternate candidate **NO**; alternate threshold test **NO**; retuning **NO**; audio/HPSS/CQT **NO**; Modal/GPU **NO**; main/Production integration **NO**; automatic promotion **NO**.\n- V149 score authorization is consumed. This one-use scoring workflow is deleted in the same sealing commit. Any next candidate, threshold, reference-facing analysis, Production integration, or promotion requires a new separately frozen phase.\n'''
+          text += f'''\n\n{marker}\n- Exactly one frozen historical Gold calibration score completed in recovery run `{os.environ['RUN_ID']}`; the prior preflight-failure run made **0** score calls.\n- Durable result: `debug/v149-singleton-confidence/phase-c-score/score-result.json`; SHA256 **`{os.environ['RESULT_SHA']}`**; persistence commit **`{os.environ['RESULT_COMMIT']}`**.\n- V149 candidate percentages (pitch content / pitch timing / string-fret timing / chord pitch-set / measure coverage / PDF fidelity): **{fmt(cv)}**.\n- Accepted baseline percentages: **{fmt(bv)}**.\n- V148 percentages: **{fmt(vv)}**.\n- Critical mismatch count: **{crit}**; delta vs accepted baseline **{crit_b:+d}**; delta vs V148 **{crit_v:+d}**.\n- Raw F1 deltas vs accepted baseline: pitch content `{db['pitchContentF1']:+.9f}`, pitch timing `{db['pitchTimingTolerantF1']:+.9f}`, string/fret `{db['stringFretTimingTolerantF1']:+.9f}`, chord pitch-set `{db['chordPitchSetTolerantF1']:+.9f}`, exact voicing `{db['exactVoicingTolerantF1']:+.9f}`, measure coverage `{db['measureCoverageRecall']:+.9f}`.\n- Raw F1 deltas vs V148: pitch content `{dv['pitchContentF1']:+.9f}`, pitch timing `{dv['pitchTimingTolerantF1']:+.9f}`, string/fret `{dv['stringFretTimingTolerantF1']:+.9f}`, chord pitch-set `{dv['chordPitchSetTolerantF1']:+.9f}`, exact voicing `{dv['exactVoicingTolerantF1']:+.9f}`, measure coverage `{dv['measureCoverageRecall']:+.9f}`.\n- Gold SHA was sourced in-memory from the frozen successful V147 scorer and verified against actual Gold bytes immediately before parsing; runtime SHA **`{ref_sha}`** (64 characters).\n- Safety: total V149 score calls **1**; candidate search **NO**; alternate candidate **NO**; alternate threshold test **NO**; retuning **NO**; audio/HPSS/CQT **NO**; Modal/GPU **NO**; main/Production integration **NO**; automatic promotion **NO**.\n- V149 score authorization is consumed. This one-use scoring workflow is deleted in the same sealing commit. Any next candidate, threshold, reference-facing analysis, Production integration, or promotion requires a new separately frozen phase.\n'''
           cp.write_text(text)
           PY
           git rm .github/workflows/v149-high-confidence-score-once.yml
