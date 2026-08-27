@@ -1,0 +1,45 @@
+{
+  "schema": "dadrock.tabs.v154.reference-set-manifest.v1",
+  "song": {
+    "title": "Are You Gonna Go My Way",
+    "artist": "Lenny Kravitz"
+  },
+  "status": "ALL_THREE_REFERENCES_RECEIVED_AND_IDENTITY_FROZEN",
+  "parts": {
+    "rhythm": {
+      "receiptPath": "debug/v154-cpu-autonomous/reference-receipts/rhythm-existing-professionalexample-20260827.json",
+      "receiptGitBlobSha": "258eb10fe44951d5f1f5969959ff0ca69bd852db",
+      "sourcePath": "public/Professionalexample.jpg",
+      "sourceRef": "main",
+      "sourceGitBlobSha": "16106197cc1269cca0b3c443908d5ef75e8b4d3e"
+    },
+    "bass": {
+      "receiptPath": "debug/v154-cpu-autonomous/reference-receipts/bass-user-upload-20260827.json",
+      "receiptGitBlobSha": "0cd7a2e451ae4ea17b4ba15e6c2e2508f27518fd",
+      "pageCount": 17,
+      "measureCoverageVisible": [1, 113],
+      "setSha256": "abd1748066966ceb93fe40bf8c8df3168f6c871ba006e44d28f8840184e3cde3"
+    },
+    "lead": {
+      "receiptPath": "debug/v154-cpu-autonomous/reference-receipts/lead-user-upload-20260827.json",
+      "receiptGitBlobSha": "e4cfa0a3c1f9c53bcdcb5b6ae8d73f9def5f7937",
+      "pageCount": 22,
+      "measureCoverageVisible": [1, 113],
+      "setSha256": "de2f20c330e52aca6125e29ca2cf5c4b719406fc267a98d43d98f3ab1453ff3c"
+    }
+  },
+  "scientificBoundary": {
+    "generationMayReadReferences": false,
+    "referencesOpenOnlyAtScoringBoundary": true,
+    "postScoreRetuningOfSameCandidate": false,
+    "silentVariantSearch": false,
+    "humanCorrectionTargetArchitecture": false
+  },
+  "executionBoundary": {
+    "cpuWorkAllowed": true,
+    "cpuScoringAllowed": true,
+    "modalL4CudaGpuRequiresFreshExplicitAuthorization": true,
+    "mainOrProductionModificationAllowed": false
+  },
+  "nextAction": "Normalize/freeze scoring representation privately, preregister broad-Other CPU benchmark and success gates, freeze candidate outputs, then open references for scoring."
+}
