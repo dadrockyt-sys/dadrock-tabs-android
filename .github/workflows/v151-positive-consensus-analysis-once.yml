@@ -1,4 +1,3 @@
-# armed 2026-08-27
 name: V151 positive consensus analysis once
 
 on:
@@ -11,7 +10,7 @@ permissions:
 
 jobs:
   analyze-once:
-    runs-on: ubuntu-24.04
+    runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
         with:
@@ -20,70 +19,79 @@ jobs:
       - uses: actions/setup-python@v5
         with:
           python-version: '3.12.14'
-      - name: Verify V151 reference-free boundary
+      - name: Verify frozen V151 identities
         run: |
           set -euo pipefail
           test ! -e debug/v151-positive-consensus/phase-a-analysis.json
-          test -e debug/v151-positive-consensus/phase-a-preregistration.json
-          test -e validation/v151_positive_consensus/analyze_reference_free.py
-          test -e debug/v151-positive-consensus/phase-a-attempt-sentinel.json
-          test -e debug/v150-contextual-singleton/candidate/construction-proof.json
-          test -e debug/v150-contextual-singleton/phase-a-analysis.json
+          test "$(git hash-object debug/v151-positive-consensus/phase-a-preregistration.json)" = "7777d1061ef51ef432bc273160c3d46fd37c7c15"
+          test "$(git hash-object validation/v151_positive_consensus/analyze_reference_free.py)" = "b6f8e5990c534685a3210d43e77de94b953fe689"
+          test "$(git hash-object debug/v151-positive-consensus/phase-a-attempt-sentinel.json)" = "2ed365d8477c5eaa168c75d02d65a2e93d034c18"
+          test "$(git hash-object debug/v150-contextual-singleton/candidate/construction-proof.json)" = "dd680f193f284b2a6874a148829c53aa8ed4f558"
+          test "$(git hash-object debug/v150-contextual-singleton/phase-a-analysis.json)" = "67ad55d005415be2248a57238109a3d8745e4061"
           python validation/v151_positive_consensus/analyze_reference_free.py --help >/dev/null
       - name: Consume analysis attempt and checkpoint
+        env:
+          RUN_ID: ${{ github.run_id }}
+          HEAD_SHA: ${{ github.sha }}
         run: |
           set -euo pipefail
           python - <<'PY'
-          import json
+          import json, os
+          from datetime import datetime, timezone
           from pathlib import Path
-          p=Path('debug/v151-positive-consensus/phase-a-attempt-sentinel.json')
-          d=json.loads(p.read_text())
-          if d.get('status') != 'ARMED_NOT_CONSUMED': raise SystemExit('attempt not armed')
-          d['status']='CONSUMED_BEFORE_ANALYSIS'
+          p = Path('debug/v151-positive-consensus/phase-a-attempt-sentinel.json')
+          d = json.loads(p.read_text())
+          if d.get('status') != 'ARMED_NOT_CONSUMED' or d.get('scoreCallCount') != 0:
+              raise SystemExit('V151 attempt is not cleanly armed')
+          d['status'] = 'CONSUMED_BEFORE_REFERENCE_FREE_ANALYSIS'
+          d['runId'] = os.environ['RUN_ID']
+          d['runHeadSha'] = os.environ['HEAD_SHA']
+          d['consumedAtUtc'] = datetime.now(timezone.utc).isoformat()
           p.write_text(json.dumps(d, indent=2, sort_keys=True)+'\n')
+          cp = Path('docs/checkpoints/CURRENT_STATE.md')
+          marker = '## V151 Phase A positive-consensus analysis — ARMED / REFERENCE-FREE — 2026-08-27 UTC'
+          text = cp.read_text()
+          if marker not in text:
+              text += f'''\n\n{marker}\n- User authorized continued work toward a major breakthrough.\n- Population is exactly the **33 V150 changed singleton events**; V150 candidate canonical SHA `72a0582cfc7d03d84cd2f878f191a69b7262b200ce248d1a896207444a3c5e4e`.\n- Positive consensus requires strict improvement to both immediate neighboring onsets plus neither local pitch-class recurrence nor exact-pitch recurrence favoring the accepted/original note.\n- Preregistration blob `7777d1061ef51ef432bc273160c3d46fd37c7c15`; analyzer blob `b6f8e5990c534685a3210d43e77de94b953fe689`; run `{os.environ['RUN_ID']}`.\n- Gold/reference **NO**; prior V149/V150 score-result read by analyzer **NO**; scorer calls **0**; candidate construction/search **NO**; threshold sweep **NO**; audio/HPSS/CQT/Modal/GPU/main/Production/promotion **NO**.\n'''
+              cp.write_text(text)
           PY
-          cat >> docs/checkpoints/CURRENT_STATE.md <<'EOF'
-
-## V151 Phase A positive-consensus analysis — CONSUMED / REFERENCE-FREE — 2026-08-27 UTC
-- User authorized continued work toward a major breakthrough.
-- Population: exactly the 33 V150 changed singleton events; V150 candidate canonical SHA `72a0582cfc7d03d84cd2f878f191a69b7262b200ce248d1a896207444a3c5e4e`.
-- Analysis tests a positive-consensus rule only: strict improvement to both immediate neighboring onsets, with neither local pitch-class recurrence nor exact-pitch recurrence favoring the accepted/original note.
-- Gold/reference **NO**; prior V149/V150 score-result read by analyzer **NO**; scorer calls **0**; candidate construction/search **NO**; threshold sweep **NO**; audio/HPSS/CQT/Modal/GPU/main/Production/promotion **NO**.
-EOF
           git config user.name 'github-actions[bot]'
           git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
           git add debug/v151-positive-consensus/phase-a-attempt-sentinel.json docs/checkpoints/CURRENT_STATE.md
-          git commit -m 'docs: checkpoint consumed V151 positive-consensus analysis [skip ci]'
+          git commit -m 'debug: checkpoint V151 positive-consensus attempt [skip ci]'
           git push origin HEAD:v143-contextual-prune-lobo
-      - name: Run frozen positive-consensus analysis
+      - name: Run frozen reference-free positive-consensus analysis
         run: |
           set -euo pipefail
-          python validation/v151_positive_consensus/analyze_reference_free.py --output debug/v151-positive-consensus/phase-a-analysis.json
-      - name: Persist result checkpoint and self-seal
+          python validation/v151_positive_consensus/analyze_reference_free.py --output debug/v151-positive-consensus/phase-a-analysis.json | tee /tmp/v151-analysis-summary.json
+      - name: Verify persist checkpoint and self-seal
+        env:
+          RUN_ID: ${{ github.run_id }}
         run: |
           set -euo pipefail
           python - <<'PY'
-          import hashlib,json
+          import hashlib, json, os
           from pathlib import Path
-          p=Path('debug/v151-positive-consensus/phase-a-analysis.json')
-          d=json.loads(p.read_text())
-          assert d['population']==33
-          assert d['safety']['goldOrReferenceRead'] is False
-          assert d['safety']['priorScoreResultRead'] is False
-          assert d['safety']['scoreCallCount']==0
-          sha=hashlib.sha256(p.read_bytes()).hexdigest()
-          c=d['counts']; q=d['percentages']
-          with Path('docs/checkpoints/CURRENT_STATE.md').open('a') as f:
-              f.write('\n## V151 Phase A positive-consensus analysis — COMPLETE / SEALED — 2026-08-27 UTC\n')
-              f.write(f'- Result SHA256 **`{sha}`** over exactly **33/33** V150 changed singleton events.\n')
-              f.write(f"- Two-sided voice-leading positive: **{c['voiceLeadingPositive']}/33 = {q['voiceLeadingPositive']:.2f}%**.\n")
-              f.write(f"- Local pitch-class recurrence does not favor original: **{c['pitchClassNotAgainst']}/33 = {q['pitchClassNotAgainst']:.2f}%**.\n")
-              f.write(f"- Local exact-pitch recurrence does not favor original: **{c['exactPitchNotAgainst']}/33 = {q['exactPitchNotAgainst']:.2f}%**.\n")
-              f.write(f"- Full positive consensus: **{c['positiveConsensus']}/33 = {q['positiveConsensus']:.2f}%**; event indices `{d['positiveConsensusEventIndices']}`.\n")
-              f.write('- These are reference-free context percentages, not accuracy scores. Gold/reference **NO**; prior score result read **NO**; scorer calls **0**; no candidate/search/threshold sweep/audio/GPU/Production.\n')
-              f.write('- If positive-consensus events exist, next boundary is exactly one candidate containing only that frozen event set.\n')
+          p = Path('debug/v151-positive-consensus/phase-a-analysis.json')
+          payload = p.read_bytes()
+          sha = hashlib.sha256(payload).hexdigest()
+          r = json.loads(payload)
+          if r.get('population') != 33:
+              raise SystemExit('V151 population mismatch')
+          s = r.get('safety') or {}
+          if s.get('scoreCallCount') != 0 or s.get('goldOrReferenceRead') is not False or s.get('priorScoreResultRead') is not False or s.get('candidateConstructed') is not False:
+              raise SystemExit('V151 safety mismatch')
+          c = r['counts']; q = r['percentages']
+          cp = Path('docs/checkpoints/CURRENT_STATE.md')
+          marker = '## V151 Phase A positive-consensus analysis — COMPLETE / SEALED — 2026-08-27 UTC'
+          text = cp.read_text()
+          if marker in text:
+              raise SystemExit('duplicate V151 final checkpoint')
+          text += f'''\n\n{marker}\n- Frozen reference-free analysis completed in run `{os.environ['RUN_ID']}` over exactly **33/33 V150 changed singleton events**. Result SHA256 **`{sha}`**.\n- Two-sided voice-leading positive: **{c['voiceLeadingPositive']}/33 = {q['voiceLeadingPositive']:.2f}%**.\n- Local pitch-class recurrence does not favor original: **{c['pitchClassNotAgainst']}/33 = {q['pitchClassNotAgainst']:.2f}%**.\n- Local exact-pitch recurrence does not favor original: **{c['exactPitchNotAgainst']}/33 = {q['exactPitchNotAgainst']:.2f}%**.\n- Full positive consensus: **{c['positiveConsensus']}/33 = {q['positiveConsensus']:.2f}%**; event indices `{r['positiveConsensusEventIndices']}`.\n- These are context percentages, **not accuracy scores**. Gold/reference **NO**; prior score result read by analyzer **NO**; scorer calls **0**; no candidate/search/threshold sweep/audio/GPU/Production.\n- Phase A is sealed. If positive-consensus events exist, next boundary is exactly one candidate containing only that frozen event set.\n'''
+          cp.write_text(text)
           PY
-          rm .github/workflows/v151-positive-consensus-analysis-once.yml
-          git add debug/v151-positive-consensus/phase-a-analysis.json docs/checkpoints/CURRENT_STATE.md .github/workflows/v151-positive-consensus-analysis-once.yml
+          git rm .github/workflows/v151-positive-consensus-analysis-once.yml
+          if [ -e debug/v151-positive-consensus/README.tmp ]; then git rm debug/v151-positive-consensus/README.tmp; fi
+          git add debug/v151-positive-consensus/phase-a-analysis.json docs/checkpoints/CURRENT_STATE.md
           git commit -m 'debug: persist and seal V151 positive-consensus analysis [skip ci]'
           git push origin HEAD:v143-contextual-prune-lobo
