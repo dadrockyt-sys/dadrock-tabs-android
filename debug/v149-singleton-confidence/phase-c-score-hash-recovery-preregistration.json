@@ -1,0 +1,32 @@
+{
+  "schema": "dadrock.tabs.v149.singleton-confidence.phase-c-score-hash-recovery.v1",
+  "classification": "infrastructure-only-score-hash-recovery-frozen",
+  "branch": "v143-contextual-prune-lobo",
+  "failedPreflight": {
+    "runId": "33046911217",
+    "jobId": "98432952429",
+    "failure": "V149 frozen expected-Gold literal has length 65; static preflight rejected it",
+    "attemptSentinelConsumed": false,
+    "goldOrReferenceRead": false,
+    "referenceParsed": false,
+    "scoreCallCount": 0
+  },
+  "authoritativeRecoverySource": {
+    "path": "validation/v147_phase_d/score_once.py",
+    "gitBlob": "74b31168b629812acde874b89dfcdf022acf987d",
+    "factAlreadyProvenReferenceFree": "its EXPECTED goldSha256 constant has length 64 and was used by the previously successful V147 historical score"
+  },
+  "recoveryRule": "At runtime, before any Gold access, import the frozen V147 and V149 score modules, require V147 goldSha256 length 64/lowercase-hex and V149 frozen literal length 65, replace only V149 EXPECTED['goldSha256'] in memory with the frozen V147 value, then delegate to the unchanged V149 score main().",
+  "scientificProtocolUnchanged": {
+    "candidateCanonicalEventSha256": "4dd13556d580a315c728e7333823eec9644195da5a345689cc44a566ef33d998",
+    "changedEvents": 54,
+    "thresholdDb": 3.0,
+    "historicalScoreCallMaximum": 1,
+    "candidateSearchAllowed": false,
+    "alternateThresholdAllowed": false,
+    "retuningAllowed": false,
+    "audioRecomputeAllowed": false,
+    "modalGpuAllowed": false,
+    "productionPromotionAllowed": false
+  }
+}
