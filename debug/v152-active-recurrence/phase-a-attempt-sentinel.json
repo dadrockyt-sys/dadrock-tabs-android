@@ -1,0 +1,17 @@
+{
+  "schema": "dadrock.tabs.v152.active-recurrence.phase-a-attempt.v1",
+  "classification": "one-use-reference-free-analysis-attempt",
+  "branch": "v143-contextual-prune-lobo",
+  "status": "ARMED_NOT_CONSUMED",
+  "preregistrationGitBlob": "df236c175986432e06e00ce40decb14605932686",
+  "analyzerGitBlob": "9be76f30264b6bf29cf75587cb2d640b0ff70a6d",
+  "population": 12,
+  "goldOrReferenceRead": false,
+  "v151ScoreResultRead": false,
+  "candidateConstructed": false,
+  "scoreCallCount": 0,
+  "audioRead": false,
+  "modalGpuUsed": false,
+  "productionIntegrated": false,
+  "automaticPromotion": false
+}
