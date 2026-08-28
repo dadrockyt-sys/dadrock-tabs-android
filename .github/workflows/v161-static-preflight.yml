@@ -1,0 +1,139 @@
+name: V161 static reference-blind preflight
+
+on:
+  push:
+    branches:
+      - v143-contextual-prune-lobo
+    paths:
+      - .github/workflows/v161-static-preflight.yml
+
+permissions:
+  contents: read
+
+env:
+  BRANCH: v143-contextual-prune-lobo
+  EXPECTED_PARENT_HEAD: e2fd584adbe8000fff3caf6f4e4fcb9421354ebe
+  PREREG: debug/v161-cpu-autonomous/preregistration.json
+  CONTRACT: debug/v161-cpu-autonomous/implementation-contract.json
+  NEGATIVE_GUARD: debug/v161-cpu-autonomous/negative-runtime-guard.py
+  EVENT_LOGIC: validation/v161_cpu_autonomous/event_logic_v161.py
+  EVENT_TEST: validation/v161_cpu_autonomous/test_event_logic_v161.py
+  TIMEBASE_BUILDER: validation/v161_cpu_autonomous/build_timebase_v161.py
+  TIMEBASE_QC_CODE: validation/v161_cpu_autonomous/timebase_qc_v161.py
+  TRANSCRIBER: validation/v161_cpu_autonomous/transcribe_v161.py
+  STRUCTURAL_QC_CODE: validation/v161_cpu_autonomous/structural_qc_v161.py
+  JSON_NATIVE_TEST: validation/v161_cpu_autonomous/test_json_native_v161.py
+  ENV_RECEIPT: debug/v161-cpu-autonomous/environment-receipt.json
+  TIMEBASE: debug/v161-cpu-autonomous/timebase.json
+  TIMEBASE_QC: debug/v161-cpu-autonomous/timebase-qc.json
+  OUTPUT: debug/v161-cpu-autonomous/generated.json
+  GENERATION_RECEIPT: debug/v161-cpu-autonomous/generation-receipt.json
+  STRUCTURAL_RECEIPT: debug/v161-cpu-autonomous/structural-qc.json
+  PRE_RUN_RECEIPT: debug/v161-cpu-autonomous/pre-run-identity-receipt.json
+  TERMINAL_FREEZE: debug/v161-cpu-autonomous/terminal-freeze.json
+  GENERATION_WORKFLOW: .github/workflows/v161-generate.yml
+
+jobs:
+  static-preflight-once:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ github.sha }}
+          fetch-depth: 0
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.10'
+
+      - name: Verify one-shot static identity and absence boundary
+        shell: bash
+        run: |
+          set -euo pipefail
+          test "$GITHUB_EVENT_NAME" = "push"
+          test "$GITHUB_RUN_NUMBER" = "1"
+          test "$GITHUB_RUN_ATTEMPT" = "1"
+          test "$(git rev-parse HEAD)" = "$GITHUB_SHA"
+          test "$(git rev-parse HEAD^)" = "$EXPECTED_PARENT_HEAD"
+          test "$(git diff --name-only "$EXPECTED_PARENT_HEAD" "$GITHUB_SHA")" = ".github/workflows/v161-static-preflight.yml"
+          git fetch origin "$BRANCH"
+          test "$(git rev-parse "origin/$BRANCH")" = "$GITHUB_SHA"
+
+          test "$(git hash-object "$PREREG")" = "3d6b0412caaafbad39781f72a95fe29c72a38729"
+          test "$(git hash-object "$CONTRACT")" = "51fe81400347119c95a2e6a1a63731070269a090"
+          test "$(git hash-object "$EVENT_LOGIC")" = "85419429a2dae4baeb60232b756af4b127f87ce2"
+          test "$(git hash-object "$EVENT_TEST")" = "11e1c8b56375fe9675804778e7154b89ac6f24e7"
+          test "$(git hash-object "$TIMEBASE_BUILDER")" = "7ac9f91b807430ee2edb3631393c9261b6db980b"
+          test "$(git hash-object "$TIMEBASE_QC_CODE")" = "7743c8f2ca2d09546d4eeb09f1fef3d14d7a1970"
+          test "$(git hash-object "$TRANSCRIBER")" = "0137f211a79ef2b1a63d1485497eb00686b3afd1"
+          test "$(git hash-object "$STRUCTURAL_QC_CODE")" = "35fd631fe9a6fad37aac66526aa56e9ef8d5a26a"
+          test "$(git hash-object "$JSON_NATIVE_TEST")" = "c91e223d682b03faceb3d0704fa754a2d1c91af4"
+          test "$(git hash-object "$NEGATIVE_GUARD")" = "7dc6141cfc18d192d165f86d3eecbda3cf15851a"
+
+          for path in "$ENV_RECEIPT" "$TIMEBASE" "$TIMEBASE_QC" "$OUTPUT" "$GENERATION_RECEIPT" "$STRUCTURAL_RECEIPT" "$PRE_RUN_RECEIPT" "$TERMINAL_FREEZE" "$GENERATION_WORKFLOW"; do
+            test ! -e "$path"
+          done
+
+      - name: Compile exact V161 Python implementation
+        shell: bash
+        run: |
+          set -euo pipefail
+          python -m py_compile \
+            "$EVENT_LOGIC" \
+            "$EVENT_TEST" \
+            "$TIMEBASE_BUILDER" \
+            "$TIMEBASE_QC_CODE" \
+            "$TRANSCRIBER" \
+            "$STRUCTURAL_QC_CODE" \
+            "$JSON_NATIVE_TEST" \
+            "$NEGATIVE_GUARD"
+
+      - name: Run song-blind negative runtime guard
+        shell: bash
+        run: |
+          set -euo pipefail
+          python "$NEGATIVE_GUARD" \
+            --event-logic "$EVENT_LOGIC" \
+            --timebase-builder "$TIMEBASE_BUILDER" \
+            --timebase-qc "$TIMEBASE_QC_CODE" \
+            --transcriber "$TRANSCRIBER" \
+            --structural-qc "$STRUCTURAL_QC_CODE" \
+            --event-logic-test "$EVENT_TEST" \
+            --json-native-test "$JSON_NATIVE_TEST" \
+            --workflow .github/workflows/v161-static-preflight.yml
+
+      - name: Install synthetic-fixture dependency only
+        shell: bash
+        run: |
+          set -euo pipefail
+          python -m pip install numpy==1.26.4
+          python - <<'PY'
+          import numpy as np
+          assert np.__version__ == "1.26.4", np.__version__
+          PY
+
+      - name: Run V161 song-blind event fixtures
+        shell: bash
+        run: |
+          set -euo pipefail
+          python "$EVENT_TEST"
+
+      - name: Run V161 JSON-native regression fixture
+        shell: bash
+        run: |
+          set -euo pipefail
+          python "$JSON_NATIVE_TEST"
+
+      - name: Final runtime absence proof
+        shell: bash
+        run: |
+          set -euo pipefail
+          test "$(git rev-parse HEAD)" = "$GITHUB_SHA"
+          git fetch origin "$BRANCH"
+          test "$(git rev-parse "origin/$BRANCH")" = "$GITHUB_SHA"
+          for path in "$ENV_RECEIPT" "$TIMEBASE" "$TIMEBASE_QC" "$OUTPUT" "$GENERATION_RECEIPT" "$STRUCTURAL_RECEIPT" "$PRE_RUN_RECEIPT" "$TERMINAL_FREEZE" "$GENERATION_WORKFLOW"; do
+            test ! -e "$path"
+          done
+          test "$(git status --porcelain)" = ""
+          echo "V161 static reference-blind preflight: PASS"
