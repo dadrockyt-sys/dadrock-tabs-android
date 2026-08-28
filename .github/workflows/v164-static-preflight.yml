@@ -2,6 +2,9 @@ name: V164 CPU Static Preflight
 
 on:
   workflow_dispatch:
+  push:
+    branches:
+      - v143-contextual-prune-lobo
 
 permissions:
   contents: read
