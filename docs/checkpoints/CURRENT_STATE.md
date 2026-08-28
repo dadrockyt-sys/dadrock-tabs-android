@@ -4,7 +4,7 @@ Updated: 2026-08-28 UTC
 Branch: `v143-contextual-prune-lobo`
 
 ## Active phase
-**V163 is fully terminal/consumed and failed its sole preregistered professional-reference score gate. Never rerun/rearm/repair/retune/regenerate/re-QC/rescore V163 and do not advance it to role/string/fret/technique/PDF. V164 is now preregistered, its numeric local-evidence contract is sealed, and the first version-isolated pure local-normalization helper module plus synthetic invariance fixture have been implemented and locally CPU-validated. No V164 song processing, scorer/reference read, model inference, workflow arm, or candidate exists.**
+**V163 is terminal/consumed and failed its sole preregistered professional-reference score gate. Never rerun/rearm/repair/retune/regenerate/re-QC/rescore V163 and do not advance it to role/string/fret/technique/PDF. V164 is preregistered, its exact numeric local-evidence contract is sealed, and its version-isolated event/subdivision layer now implements all normalization-sensitive decisions while pinning unaffected V162 helpers by exact Git blob. The expanded synthetic suite carries forward V162 regression behavior and adds locality invariance coverage. No V164 song processing, scorer/reference read, model inference, workflow arm, or candidate exists.**
 
 ## Standing safety
 - CPU-only reference-free work authorized at assistant discretion.
@@ -27,59 +27,65 @@ Branch: `v143-contextual-prune-lobo`
 - `debug/v164-cpu-autonomous/preregistration.json`.
 - Commit `1f0b4a904227491cbd5c62039d1ecbd500453966`; blob `05d255d75a6c1947891fba38d96d9399e3f75f9c`.
 - Schema `dadrock.tabs.v164.local-evidence-invariance-preregistration.v1`; PASS; sealed before numerics/code.
-- Hypothesis is derived only from static V162 semantics: global positive-quantile/q95 onset normalization creates nonlocal coupling, so remote amplitude can alter an unchanged local evidence decision.
-- Allowed design evidence: V162 contract blob `409da313ed03a6c232d6578d48b0da6aa35b000b`; event logic blob `9f9b33fd8c210ad581025b454cf69b6999aa544b`; song-blind fixture blob `e301f38db66f44193d799a9c1a02c99169823d45`.
+- Hypothesis derives only from static V162 semantics: song-global positive-quantile/q95 onset normalization creates nonlocal coupling, so remote amplitude can alter an unchanged local evidence decision.
+- Allowed design evidence only: V162 contract blob `409da313ed03a6c232d6578d48b0da6aa35b000b`; event logic blob `9f9b33fd8c210ad581025b454cf69b6999aa544b`; song-blind fixture blob `e301f38db66f44193d799a9c1a02c99169823d45`.
 - V163 score/reference/candidate rows and same-song audio behavior are forbidden V164 design evidence.
 
 ## V164 numeric implementation contract — FROZEN
 - `debug/v164-cpu-autonomous/implementation-contract.json`.
 - Commit `174a1c3850b4eb30335c9afd0e0ada776de37a3b`; blob `098f24282b59abba0f7cffa0793b344b76701724`.
 - Schema `dadrock.tabs.v164.local-evidence-numeric-contract.v1`; PASS; sealed before implementation code.
-- Event-local evidence window: half-window `32` frames, inclusive/clipped, up to `65` frames; positive samples only; minimum positive samples `1`; q95 support scale; no-positive support `0.0`, threshold `null`.
-- Beat-local subdivision evidence: population restricted to enclosing beat; q55 unchanged; search radius `3`, move ratio `1.05`, Voronoi/tie-break unchanged.
-- Beat-local event-step support: q95 populations from candidate step's enclosing beat; endpoint uses preceding beat; score weights `0.70/0.20/0.10`, non-nearest margin `0.05`, max correction one step unchanged.
+- Event-local evidence: half-window `32` frames, inclusive/clipped, max `65` frames; positive samples only; q95 support; no-positive support `0.0`, threshold `null`.
+- Beat-local subdivision: population limited to enclosing beat; q55/search radius `3`/move ratio `1.05` unchanged.
+- Beat-local event-step: q95 instrument/shared support from candidate step's enclosing beat; weights `0.70/0.20/0.10`, non-nearest margin `0.05`, max correction one step unchanged.
 - All unrelated V162 Basic Pitch, Guitar segmentation/recovery/register/admission/caps, Bass pYIN/state/proposal/admission/cap, beat-backbone and safety numerics remain frozen.
-- Invariance fixture constants: remote scale `1,000,000`; local scales `0.1` and `10.0`; abs/rel tolerance `1e-12`.
+- Remote perturbation factor `1,000,000`; local scales `0.1` and `10.0`; abs/rel tolerance `1e-12`.
 
-## V164 pure helper implementation — CURRENT
+## V164 integrated event/subdivision layer — CURRENT
 ### `validation/v164_cpu_autonomous/event_logic_v164.py`
-- Creation commit `5ac25c12116290d33967894405f965914aabc9af`.
-- Git blob `1357139d634f0b463a3dceee05f9ef64946aea9e`.
-- Contains **only** pure/local deterministic helpers; no song I/O/model/scorer/reference access.
-- Implements sealed 32-frame local populations, local q95 support, local positive thresholds, beat frame/population helpers, beat-local subdivision refinement/lattice construction, and beat-local event-step support/selection.
-- Nonfinite onset envelopes rejected.
+- Initial creation `5ac25c12116290d33967894405f965914aabc9af`.
+- Integrated locality update commit `20e04b71257fc01c55ba2ba611bfed8ee712306b`.
+- Current Git blob `62303877a1971f75cacda002c5ad921680161674`.
+- Loads the unaffected V162 event helper module only if its computed Git blob equals frozen `9f9b33fd8c210ad581025b454cf69b6999aa544b`; any dependency drift is terminal.
+- Reuses only unaffected V162 pure helpers: recovery score, register context/selection, Bass median/state lookup, and grid caps.
+- Reimplements every onset/subdivision-normalization-sensitive path with V164 local evidence:
+  - supported attack;
+  - Guitar segmentation reattack decision;
+  - active-state Guitar recovery;
+  - Bass state-change/detected-onset/same-pitch-reattack support;
+  - onset-frame refinement q60 population;
+  - beat subdivision q55 population;
+  - beat-local event-step q95 support.
+- Onset-refinement search radius and `1.10×` peak/current move rule remain unchanged; only q60 population locality changes.
+- RMS/activity normalization is intentionally **not** localized because the sealed V164 hypothesis is onset/subdivision evidence only.
+- No song/model/scorer/reference I/O in this module.
 
 ### `validation/v164_cpu_autonomous/test_event_logic_v164.py`
-- Creation commit `308d1b696c06558a8c6306ca120696a7a312d26e`.
-- Git blob `641a05dd7fd71cfc702b1b5b42f5c54102b2321a`.
-- Synthetic-only tests cover:
-  - local window clipping at start/end;
-  - zero-positive fallback;
-  - nonfinite rejection;
-  - Guitar-style supported-attack remote invariance;
-  - Bass-style onset-evidence remote invariance;
-  - beat subdivision remote + local-scale invariance;
-  - event-step remote + local-scale invariance;
-  - q95 beat support zero fallback.
-- Local CPU compile/test performed before commit against the exact committed text; result schema `dadrock.tabs.v164.local-evidence-static-test.v1`, `validation=PASS`.
-- Reported flags PASS: eventRemoteInvariant, bassOnsetRemoteInvariant, subdivisionRemoteInvariant, eventStepRemoteInvariant, localScaleInvariant, zeroFallbackDeterministic, boundaryClippingDeterministic, nonfiniteRejected; song/reference/scorer/V163 candidate/V163 score/GPU reads all false.
+- Initial creation `308d1b696c06558a8c6306ca120696a7a312d26e`.
+- Expanded regression/invariance commit `9324944dfcafe67831970a092ed396b03788343f`.
+- Current Git blob `13d29ef19a297d19469196cb2a23a4c0d6e040de`.
+- Carries V162 song-blind regression fixtures for Guitar segmentation, active-state recovery, sequence-aware register behavior, Bass stable-state/proposal behavior, and Guitar/Bass grid caps.
+- Adds V164 remote-invariance fixtures for supported attack, onset-frame refinement, Bass onset evidence, Bass proposal generation, beat subdivision movement, and event-step selection.
+- Retains local-scale invariance, zero-population fallback, boundary clipping, and nonfinite rejection fixtures.
+- Expected result schema `dadrock.tabs.v164.local-evidence-static-test.v2`; static GitHub preflight has **not** been armed yet.
 
 ## Current V164 execution state
 - Preregistration: sealed.
 - Numeric contract: sealed.
-- Pure helper code: implemented.
-- Pure synthetic invariance fixture: implemented and locally CPU PASS.
-- Full V164 integrated event/transcriber/timebase/QC modules: not yet implemented.
-- GitHub static preflight workflow: not armed/not created.
+- Integrated event/subdivision helper layer: implemented.
+- Expanded synthetic regression/invariance suite: implemented.
+- Full V164 timebase builder/QC/transcriber/structural-QC/JSON-native/negative-guard integration: not yet complete.
+- GitHub static preflight workflow: not created/armed.
 - Song audio reads `0`; Demucs/pitch inference `0`; V164 candidate `0`; professional-reference/scorer reads for V164 `0`; GPU/CUDA/Modal `0`; main/Production unchanged.
 - V164 prereg/contract do not authorize professional-reference scoring.
 
 ## Hard boundary — NEXT
 1. Never reopen V163 for tuning/scoring.
-2. Continue V164 implementation only from contract blob `098f24282b59abba0f7cffa0793b344b76701724`.
-3. Integrate the pure V164 locality helpers into version-isolated V164 copies of the V162 event/timebase/transcriber/QC path while preserving every unrelated V162 numeric/behavioral rule.
-4. Add/retain song-blind regression fixtures for all unchanged V162 segmentation/register/Bass-state/grid-cap behavior and JSON-native/nonfinite protections.
-5. Do not read song audio, V163 candidate/score, scorer, or professional reference during implementation/static validation.
-6. After all V164 code is complete, create a one-shot CPU-only static preflight that may compile/run synthetic fixtures only; checkpoint before arm and make zero branch writes while any sealed workflow is active.
-7. No V164 song processing until static preflight and pre-run identity are separately sealed.
-8. No GPU/Modal/CUDA without fresh explicit authorization.
+2. Continue V164 only from frozen contract blob `098f24282b59abba0f7cffa0793b344b76701724`.
+3. Build version-isolated V164 timebase builder and independent timebase QC using the frozen V162 beat backbone and V164 `build_subdivision_lattice`; change schemas/version checks only as required by the V164 contract.
+4. Build V164 transcriber from frozen V162 logic with these exact scope changes only: V164 event helpers for segmentation/recovery/Bass proposals/onset refinement/event-step support and local q95 **onset** admission support; preserve V162 RMS activity support and every pitch/admission/cap numeric.
+5. Add V164 JSON-native fixture, negative runtime guard, and structural QC with exact code/hash/local-normalization provenance checks.
+6. Do not read song audio, V163 candidate/score, scorer, or professional reference during implementation/static validation.
+7. After all V164 code is complete, create a one-shot CPU-only static preflight that compiles/runs synthetic fixtures only; checkpoint before arm and make zero branch writes while it is active.
+8. No V164 song processing until static preflight and pre-run identity are separately sealed.
+9. No GPU/Modal/CUDA without fresh explicit authorization.
