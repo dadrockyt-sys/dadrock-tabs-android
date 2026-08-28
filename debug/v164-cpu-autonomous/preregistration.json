@@ -1,0 +1,136 @@
+{
+  "schema": "dadrock.tabs.v164.local-evidence-invariance-preregistration.v1",
+  "version": "V164",
+  "status": "PREREGISTERED_BEFORE_NUMERIC_CONTRACT_OR_IMPLEMENTATION_CODE",
+  "validation": "PASS",
+  "branch": "v143-contextual-prune-lobo",
+  "createdFromBranchHead": "9f0d385e80cd1c9f0b1f6d5f905b3778208343ef",
+  "purpose": "Preregister a narrowly scoped, reference-blind successor hypothesis addressing a static locality/invariance property of the frozen V162 algorithm: onset and subdivision decisions currently depend on song-global positive quantiles/q95 normalization, so evidence in an unrelated distant section can change a local decision. V164 will test and, only if song-blind fixtures support it, replace global onset-evidence normalization with deterministic local normalization while carrying all unrelated V162 generation architecture forward unchanged.",
+  "scientificIntegrity": {
+    "createdAfterV163TerminalScore": true,
+    "reviewerHasObservedV163AggregateScoreBeforeThisPreregistration": true,
+    "claimsReviewerBlindToV163Score": false,
+    "V163ScoreMayShapeV164Hypothesis": false,
+    "V163ScoreMayShapeV164Numerics": false,
+    "V163ScoreMayShapeV164VariantSelection": false,
+    "professionalReferenceMayShapeV164": false,
+    "designEvidenceRestrictedToEnumeratedReferenceBlindStaticEvidence": true,
+    "rationale": "Because the V163 terminal aggregate score was already observed before V164 preregistration, V164 does not claim reviewer score-blindness. Its admissible design evidence is therefore explicitly restricted to the pre-existing V162 contract/code/test semantics below, and no V163 score value, professional-reference content, event, measure, or failure diagnostic may enter V164 design or validation."
+  },
+  "terminalPredecessorIdentityOnly": {
+    "version": "V163",
+    "generationTerminalCommit": "3b6f98750291a2f7b229c5e50cbf802752cf84d4",
+    "candidateGitBlob": "f4eafb1488f139198cb7860a76f294c0e1775df8",
+    "candidateSha256": "cc55d596a05bd8e9c0a149f6ba8263375c26fbb7334139a75697b58ca23c8c19",
+    "scoreTerminalCommit": "7bd8c813cac506811e3c144e5efe9edcd3abc561",
+    "V163GenerationConsumedForever": true,
+    "V163ScoreOpportunityConsumedForever": true,
+    "neverRerunRepairRetuneOrRescoreV163": true,
+    "scoreValuesIntentionallyNotCopiedIntoV164Preregistration": true
+  },
+  "allowedDesignEvidence": {
+    "V162NumericContract": {
+      "path": "debug/v162-cpu-autonomous/implementation-contract.json",
+      "gitBlob": "409da313ed03a6c232d6578d48b0da6aa35b000b"
+    },
+    "V162EventLogic": {
+      "path": "validation/v162_cpu_autonomous/event_logic_v162.py",
+      "gitBlob": "9f9b33fd8c210ad581025b454cf69b6999aa544b"
+    },
+    "V162SongBlindFixture": {
+      "path": "validation/v162_cpu_autonomous/test_event_logic_v162.py",
+      "gitBlob": "e301f38db66f44193d799a9c1a02c99169823d45"
+    },
+    "staticFacts": [
+      "V162 positive_quantile computes its threshold from all positive finite values in the supplied envelope.",
+      "V162 support_unit computes its normalization scale from the song-envelope positive q95 population passed to it.",
+      "V162 subdivision movement uses a global positive-q55 threshold on shared onset evidence.",
+      "V162 Guitar reattack/recovery support and Bass onset/rearticulation support use the same global-population normalization primitive.",
+      "The existing V162 song-blind fixtures test weak/strong attacks, subdivision movement/order, event-step boundedness, state segmentation and caps, but do not test invariance of a local decision to remote amplitude changes."
+    ],
+    "useRestriction": "Only these static code/contract/test properties and future synthetic song-blind fixtures may shape V164. No V163 candidate event rows, V163 score metrics, professional-reference data, or same-song audio behavior may choose V164 thresholds or variants."
+  },
+  "problemStatement": {
+    "localityInvariant": "Changing onset-envelope amplitudes sufficiently far from a target event/beat should not change that target's local supported-attack, subdivision-shift, or event-step evidence decision when the target neighborhood itself is unchanged.",
+    "scaleInvariant": "Multiplying all onset-envelope amplitudes within a target local evidence neighborhood by a common positive scalar should not change dimensionless support/threshold decisions, apart from deterministic epsilon behavior.",
+    "currentArchitectureRisk": "Song-global quantile/q95 normalization couples local decisions to remote dynamic range and event density, violating the intended local-evidence interpretation even without reference information."
+  },
+  "V164ArchitectureHypotheses": {
+    "H1_localSupportNormalization": "Replace song-global q95 support normalization for onset evidence with a deterministic bounded local population centered on the decision neighborhood. Exact window geometry, minimum sample rules, fallback and quantile must be sealed before implementation.",
+    "H2_localPositiveThresholds": "Replace song-global positive-quantile attack/subdivision thresholds with deterministic local positive populations appropriate to the event or beat under evaluation. Exact windows and fallbacks must be sealed before implementation.",
+    "H3_beatLocalSubdivisionEvidence": "Subdivision movement decisions must depend only on the beat-local/shared-evidence neighborhood plus the fixed beat boundaries, so remote sections cannot alter whether an interior subdivision moves.",
+    "H4_eventLocalInstrumentEvidence": "Guitar and Bass onset/rearticulation support must be normalized from local instrument evidence, preserving the existing source restrictions, segmentation architecture, pitch evidence, caps and admission formulas unless a later pre-code numeric contract explicitly proves a mechanically necessary normalization substitution.",
+    "H5_remotePerturbationInvariance": "Synthetic fixtures must prove that multiplying or replacing remote envelope regions outside the sealed locality window cannot change the target local decision.",
+    "H6_localScaleInvariance": "Synthetic fixtures must prove that positive scalar rescaling of a complete local evidence neighborhood leaves normalized decisions unchanged within deterministic floating-point tolerance.",
+    "H7_narrowScope": "V164 is not a pitch-threshold retune, density target, register rewrite, segmentation-gap change, scorer-tolerance change, or reference-guided correction. All unrelated V162 numerics remain frozen unless the forthcoming pre-code implementation contract lists a change strictly required to implement local normalization semantics."
+  },
+  "frozenCarryForwardUnlessMechanicallyRequired": {
+    "BasicPitchThresholds": true,
+    "GuitarStateSegmentationGapAndReattackRules": true,
+    "GuitarActiveStateRecoveryPitchSourceAndCap": true,
+    "SequenceAwareRegisterRules": true,
+    "BassPyinStateSegmentationRules": true,
+    "BassProposalPriorityAndMergeRules": true,
+    "GuitarAndBassAdmissionWeightsAndMinimums": true,
+    "GuitarPolyphonyCap": true,
+    "BassMonophonyCap": true,
+    "BeatMeasureBackbone": true,
+    "CandidateSchemasAndSafetySemantics": true,
+    "ProfessionalReferenceScorerAndScoreGates": true
+  },
+  "mandatorySongBlindValidationBeforeAnySongProcessing": [
+    "Compile every V164 implementation module.",
+    "Negative guard proves no professional-reference/scorer/V163-candidate/V163-score paths are opened by V164 implementation/static validation/generation/QC.",
+    "Remote-amplitude perturbation fixture: target Guitar supported-attack decision is unchanged when a distant envelope region is scaled by a very large positive factor.",
+    "Remote-amplitude perturbation fixture: target Bass onset/rearticulation support decision is unchanged when a distant envelope region is scaled by a very large positive factor.",
+    "Remote-amplitude perturbation fixture: target beat subdivision movement and selected frame are unchanged when distant shared-envelope regions are scaled by a very large positive factor.",
+    "Local positive-scale fixture: multiplying the full target local neighborhood by at least two distinct positive scalars preserves normalized support/threshold decisions.",
+    "Local zero/sparse fallback fixture: empty or insufficient positive local populations produce the sealed deterministic fallback without NaN/nonfinite output.",
+    "Boundary fixture: locality windows at the start/end of an envelope remain bounded and deterministic.",
+    "Existing V162 synthetic segmentation/register/state/grid-cap fixtures remain behaviorally identical except where their expected metadata explicitly reflects local-normalization provenance.",
+    "JSON-native receipt normalization and nonfinite rejection remain intact.",
+    "Static proof pitch inference cannot execute before fresh successor timebase QC PASS.",
+    "Absence proof for all V164 runtime artifacts and generation workflow before any arm."
+  ],
+  "forbiddenEvidenceAndActions": {
+    "V163ScoreMetricUseForDesign": true,
+    "V163ScoreDiagnosticUseForDesign": true,
+    "professionalReferenceEventMining": true,
+    "professionalReferenceMeasureMining": true,
+    "professionalReferenceContentReadForV164Design": true,
+    "V163CandidateEventLevelReadForTuning": true,
+    "referenceGuidedThresholdSelection": true,
+    "referenceGuidedVariantSelection": true,
+    "sameSongScoreLoopDuringV164Implementation": true,
+    "postScoreRetuneOfV163": true,
+    "V163Regeneration": true,
+    "V163ReQc": true,
+    "V163Rescore": true,
+    "humanCorrection": true,
+    "mainOrProductionModification": true
+  },
+  "oneShotBoundary": {
+    "numericImplementationContractRequiredBeforeV164Code": true,
+    "staticPreflightRequiredBeforeSongProcessing": true,
+    "preRunIdentitySealRequiredBeforeSongProcessing": true,
+    "freshSourceMaterializationRequired": true,
+    "freshNormalizationRequired": true,
+    "freshSeparationRequired": true,
+    "freshTimebaseRequired": true,
+    "freshIndependentTimebaseQcRequired": true,
+    "pitchInferenceBeforeTimebaseQcPassForbidden": true,
+    "freshV164CandidateOnly": true,
+    "freshIndependentStructuralQcRequired": true,
+    "generationRunCountMaximum": 1,
+    "generationRerunForbidden": true,
+    "candidateRepairAfterGenerationForbidden": true,
+    "professionalReferenceScoringAuthorizedByThisPreregistration": false,
+    "futureReferenceFacingEvaluationRequiresSeparatePreregistrationAndExplicitRecheckOfNoLoopPolicy": true
+  },
+  "computeBoundary": {
+    "defaultDevice": "cpu",
+    "cpuWorkAuthorized": true,
+    "gpuModalCudaRequiresFreshExplicitUserAuthorizationImmediatelyBeforeExecution": true
+  },
+  "nextAction": "Create and seal debug/v164-cpu-autonomous/implementation-contract.json with exact local-window geometry, quantiles, fallbacks, invariance tolerances and unchanged-V162 pins before writing any V164 implementation code."
+}
