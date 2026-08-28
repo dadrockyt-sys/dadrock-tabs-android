@@ -1,0 +1,245 @@
+{
+  "schema": "dadrock.tabs.v159.reference-blind-cpu-preregistration.v1",
+  "version": "V159",
+  "status": "PREREGISTERED_BEFORE_IMPLEMENTATION_CODE",
+  "purpose": "Fresh reference-blind CPU candidate that isolates and repairs the V158 timebase architecture failure before any new pitch-model tuning. V159 keeps the V158 Guitar and Bass recognition configurations unchanged in substance and changes the musical coordinate system, pre-candidate timebase QC, and separation of beat ordinal from bar phase.",
+  "architectureEvidence": {
+    "v158FrozenDiagnosisPath": "debug/v158-cpu-autonomous/post-score-architecture-diagnosis.json",
+    "v158FrozenDiagnosisGitBlob": "d7c5720b27f74f1f710b96a6b0da70569ae48bbc",
+    "allowedInheritance": [
+      "beat-tracker input must be finite and nonnegative",
+      "absolute beat ordinal must be independent of bar-phase inference",
+      "timebase must pass reference-blind sanity QC before candidate emission",
+      "rhythm/timebase runtime warnings must be fatal before candidate authority",
+      "pitch thresholds must not be tuned from V158 score"
+    ],
+    "forbiddenInheritance": [
+      "professional-reference note alignments",
+      "professional-reference timing offsets",
+      "professional-reference pitch histograms",
+      "professional-reference event locations",
+      "V158 candidate filtering decisions",
+      "V158 score-derived source thresholds"
+    ]
+  },
+  "song": {
+    "artist": "Lenny Kravitz",
+    "title": "Are You Gonna Go My Way",
+    "audioPath": "public/gomywayfullaitest.m4a",
+    "audioHistoricalCommit": "74b0f815ff3f66f325220975c410621503de440f",
+    "audioSha256": "215bd5a657c5326f08f132ae358595a95c30b39bb7493a52c2f910d5a608149f",
+    "audioBytes": 3478611,
+    "normalizedWavSha256": "3e61b7926eabc21b758c750f826c7426a29d6de5aafdd5c93f8045ecdc67f87e"
+  },
+  "hardIsolation": {
+    "professionalReferenceReadDuringPreregistration": false,
+    "professionalReferenceReadDuringImplementation": false,
+    "professionalReferenceReadDuringGeneration": false,
+    "priorGeneratedCandidateReadByV159Runtime": false,
+    "priorScoreReadByV159Runtime": false,
+    "priorDiagnosticReadByV159Runtime": false,
+    "referenceDerivedShiftTempoPitchHistogramOrEventCountAllowedAsParameter": false,
+    "humanCorrectionAllowed": false,
+    "candidateVariantSelectionAllowed": false,
+    "thresholdSweepAllowed": false,
+    "postGenerationReferenceGuidedFilteringAllowed": false,
+    "mainOrProductionModificationAllowed": false,
+    "gpuAllowedWithoutFreshExplicitUserAuthorization": false
+  },
+  "execution": {
+    "device": "CPU_ONLY",
+    "python": "3.10",
+    "torch": "2.8.0+cpu",
+    "numpy": "1.26.4",
+    "scipy": "1.13.1",
+    "soundfile": "0.12.1",
+    "demucs": "4.1.0",
+    "basicPitch": "0.4.0",
+    "librosa": "0.11.0",
+    "imageioFfmpeg": "0.6.0",
+    "singleCandidate": true,
+    "singleGenerationRun": true,
+    "rngSeed": 0,
+    "torchDeterministicAlgorithms": true,
+    "torchNumThreads": 1,
+    "torchNumInteropThreads": 1,
+    "mathLibraryThreads": 1
+  },
+  "triggerSafety": {
+    "generationWorkflowCreationIsTheSingleTrigger": true,
+    "secondArmEditForbidden": true,
+    "workflowMustSelfSealAfterTerminalFreeze": true,
+    "workflowRunCountMustEqualOne": true,
+    "ifDuplicateRunDetected": "abort V159 without candidate/scoring and move to a fresh version",
+    "branchWritesWhileGenerationActiveForbidden": true
+  },
+  "audioNormalization": {
+    "sampleRate": 44100,
+    "channels": 2,
+    "codec": "pcm_s16le",
+    "deterministicFfmpeg": true
+  },
+  "separation": {
+    "model": "htdemucs_6s",
+    "device": "cpu",
+    "shifts": 1,
+    "jobs": 1,
+    "guitarStem": "guitar",
+    "bassStem": "bass",
+    "drumsStem": "drums",
+    "noFallbackModel": true,
+    "singleSeparationOnly": true,
+    "recognizerInputsUnchangedFromV158": true
+  },
+  "timebase": {
+    "architecture": "materialize-and-QC a standalone reference-blind timebase artifact before any Guitar/Bass event generation; the candidate transcriber consumes that exact frozen timebase artifact instead of recomputing beat/bar structure",
+    "analysisSampleRate": 22050,
+    "hopLength": 256,
+    "beatEnvelope": {
+      "mixFeature": "librosa onset_strength on normalized mix",
+      "drumsFeature": "librosa onset_strength on Demucs drums stem",
+      "perFeatureTransform": "clamp finite onset strength to >=0, then divide by its finite positive maximum; all-zero feature fails timebase construction",
+      "fusion": "0.5 * unitScaledMixOnset + 0.5 * unitScaledDrumsOnset",
+      "requiredDomain": "finite, nonnegative, at least one strictly positive sample",
+      "signedRobustZAllowedAsDirectBeatInput": false
+    },
+    "beatTracker": {
+      "method": "librosa.beat.beat_track on the finite nonnegative fused envelope",
+      "startBpm": 120.0,
+      "tightness": 100.0,
+      "sparse": true,
+      "runtimeWarnings": "record all warnings in the beat/rhythm stage and fail before candidate emission on RuntimeWarning, NaN, or Inf",
+      "acceptedBeatOrder": "strictly increasing detected beat times only"
+    },
+    "absoluteBeatOrdinal": {
+      "principle": "one accepted tracked beat always advances absolute beat ordinal by exactly one",
+      "detectedBeatOrdinal": "leadingBeatCount + arange(numberOfDetectedBeats)",
+      "sixteenthStep": "4 * absoluteBeatOrdinal",
+      "barPhaseMayAlterOrdinal": false,
+      "sameStateOrSkipStateTransitions": "not used"
+    },
+    "barPhase": {
+      "method": "choose one static four-beat phase from audio accent evidence; phase labels do not alter beat times or beat ordinal",
+      "candidatePhases": [0, 1, 2, 3],
+      "evidenceFeatures": [
+        "drums onset-strength robust z-score at accepted beat",
+        "normalized-mix onset-strength robust z-score at accepted beat",
+        "bass-stem onset-strength robust z-score at accepted beat",
+        "low-frequency spectral-flux robust z-score at accepted beat",
+        "harmonic chroma-change novelty robust z-score at accepted beat"
+      ],
+      "featureWeightsInheritedFromV158": {
+        "drumsAccent": 1.0,
+        "mixAccent": 0.5,
+        "bassAccent": 0.5,
+        "lowFrequencyFlux": 0.75,
+        "harmonicChangeNovelty": 0.75
+      },
+      "phaseScore": "mean weighted accent evidence on beats assigned phase-0/downbeat minus mean weighted accent evidence on all other beats",
+      "tieBreak": "lowest phase index within numeric tolerance",
+      "dynamicViterbiStateTransitions": false
+    },
+    "musicalOrigin": {
+      "principle": "measure 1 begins at the phase-consistent downbeat at or immediately before the first accepted tracked beat; no professional-reference shift is used",
+      "leadingBeatCount": "(-selectedPhase) mod 4",
+      "earlyPeriod": "median of the first up-to-eight positive detected inter-beat intervals",
+      "prefix": "if leadingBeatCount > 0, extrapolate exactly that many beat positions backward from the first accepted beat using earlyPeriod",
+      "detectedBeatTimesNeverShifted": true,
+      "referenceDerivedTimingConstants": []
+    },
+    "gridInterpolation": {
+      "method": "piecewise-linear interpolation through prefix plus accepted detected beat times",
+      "stepsPerBeat": 4,
+      "quantization": "Python round(rawGridStep) converted to int",
+      "measureMapping": "fixed 16 sixteenth steps per generated measure for the front-end candidate; no professional-reference meter map is consumed by generation"
+    }
+  },
+  "preCandidateTimebaseQc": {
+    "mustPassBeforeAnyPitchInference": true,
+    "checks": [
+      "timebase artifact schema and exact audio/stem identities",
+      "fused beat envelope provenance declares finite/nonnegative construction",
+      "no beat/rhythm RuntimeWarning recorded",
+      "tracker tempo finite and positive",
+      "at least eight accepted detected beats",
+      "beat times finite and strictly increasing",
+      "all inter-beat intervals finite and positive",
+      "median inter-beat interval implies BPM between 30 and 300 inclusive",
+      "mean inter-beat interval implies BPM between 30 and 300 inclusive",
+      "detected beat-count/duration implied BPM between 30 and 300 inclusive",
+      "observed median-IBI BPM divided by tracker tempo lies between 0.5 and 2.0 inclusive to tolerate ordinary half/double-tempo ambiguity but reject pathological divergence",
+      "selected phase is one of 0..3",
+      "absolute beat ordinal increments exactly by one across detected beats",
+      "raw grid is strictly increasing in time",
+      "no professional reference was read"
+    ],
+    "requiredRecordedDiagnostics": [
+      "audio duration seconds",
+      "detected beat count",
+      "tracker tempo BPM",
+      "mean inter-beat interval",
+      "median inter-beat interval",
+      "mean-IBI implied BPM",
+      "median-IBI implied BPM",
+      "beat-count/duration implied BPM",
+      "tempo consistency ratio",
+      "selected bar phase and four phase scores",
+      "leading beat count and early extrapolation period",
+      "first/last grid time and grid step extent",
+      "warning count/messages"
+    ],
+    "failurePolicy": "any failure aborts V159 before authoritative candidate creation; freeze the failure receipt and do not re-arm V159"
+  },
+  "pitchRecognition": {
+    "principle": "isolate the timebase repair: Guitar and Bass recognition numerics remain unchanged from the sealed V158 numeric implementation contract unless a mechanical refactor is required to consume the V159 timebase artifact",
+    "v158NumericContractGitBlob": "68f01df155cd27077cea3de5a0cd048ddcb7bd76",
+    "guitar": {
+      "architecture": "Basic Pitch proposals plus persistent multi-frame harmonic-template additions and deterministic +/-12 register repair",
+      "thresholdOrRangeChangesFromV158": []
+    },
+    "bass": {
+      "architecture": "onset-first attacks plus pYIN soft evidence and harmonic-template pitch assignment",
+      "thresholdOrRangeChangesFromV158": []
+    },
+    "sourceSpecificRetuningFromV158Score": false
+  },
+  "candidatePostProcessing": {
+    "sameAsV158ExceptTimebaseConsumption": true,
+    "deduplicateSameStream": "same MIDI and same snapped absolute grid step collapse to one event with deterministic evidence precedence",
+    "crossPartDeduplication": false
+  },
+  "referenceBlindStructuralQc": {
+    "timebaseQcMustAlreadyPass": true,
+    "mustPassBeforeCandidateFreeze": [
+      "exact audio/dependency/model identities and deterministic CPU environment",
+      "exact preregistration/numeric-contract/code/timebase/timebase-QC identities",
+      "candidate write-once and single generation workflow run",
+      "nonempty Guitar and Bass streams",
+      "all events finite and within preregistered MIDI ranges",
+      "all event raw grid positions agree with the frozen V159 timebase artifact",
+      "all snapped steps and measure mapping internally consistent",
+      "no professional reference read",
+      "no prior generated candidate/score/diagnostic read by V159 runtime",
+      "no human correction, threshold sweep, or variant selection"
+    ],
+    "noQualityMetricAgainstReferenceBeforeFreeze": true
+  },
+  "scoringProtocol": {
+    "referenceAccessOnlyAfterCandidateAndAllQcFreeze": true,
+    "referencePayloadPath": "research/v154-professional-references/scorer-ready/frontend-reference-payload.json",
+    "referencePayloadSha256": "b39a203aec3f45800891fe4eca156e37e7571b91ea5c4ccc41b30bbc95fc89e7",
+    "referenceGitBlob": "2fbed60b543c0488934d8642c488aa06bf31bbf5",
+    "scorerPath": "validation/v154_cpu_multitrack/score_frontend_reference.py",
+    "scorerGitBlob": "9644e65719fbd361a9b39778ae9950c5e983e855",
+    "scoreExactlyOnce": true,
+    "postScoreRetuningForbidden": true
+  },
+  "frozenGates": {
+    "combinedGuitarTimingAwarePitchF1Minimum": 0.80,
+    "bassTimingAwarePitchF1Minimum": 0.80,
+    "laterOnsetAwareNoteF1Minimum": 0.75,
+    "laterConditionalRoleAccuracyMinimum": 0.85,
+    "laterConditionalStringFretAccuracyMinimum": 0.85
+  },
+  "failurePolicy": "Any duplicate generation run, pre-candidate timebase-QC failure, structural-QC failure after candidate creation, or missed score gate freezes the V159 outcome and ends V159. Never repair/retune/select a replacement V159 candidate against the professional reference."
+}
