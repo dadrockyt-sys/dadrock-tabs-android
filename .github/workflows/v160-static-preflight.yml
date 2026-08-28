@@ -1,0 +1,102 @@
+name: V160 static reference-blind preflight
+
+on:
+  push:
+    branches:
+      - v143-contextual-prune-lobo
+    paths:
+      - .github/workflows/v160-static-preflight.yml
+
+permissions:
+  contents: read
+
+jobs:
+  audit:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ github.sha }}
+          fetch-depth: 0
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.10'
+
+      - name: Static-only sealed boundary
+        shell: bash
+        run: |
+          set -euo pipefail
+          test "$GITHUB_EVENT_NAME" = "push"
+          test "$GITHUB_RUN_NUMBER" = "1"
+          test "$GITHUB_RUN_ATTEMPT" = "1"
+          test "$(git rev-parse HEAD)" = "$GITHUB_SHA"
+          test "$(git hash-object debug/v160-cpu-autonomous/preregistration.json)" = "cc238bcbf62c5defec410def962124d5012bd506"
+          test "$(git hash-object debug/v160-cpu-autonomous/implementation-contract.json)" = "3d5ef47a998b638683c83ae08c92e45d5422f389"
+          test ! -e debug/v160-cpu-autonomous/timebase.json
+          test ! -e debug/v160-cpu-autonomous/timebase-qc.json
+          test ! -e debug/v160-cpu-autonomous/generated.json
+          test ! -e debug/v160-cpu-autonomous/generation-receipt.json
+          test ! -e debug/v160-cpu-autonomous/environment-receipt.json
+          test ! -e debug/v160-cpu-autonomous/structural-qc.json
+          test ! -e debug/v160-cpu-autonomous/pre-run-identity-receipt.json
+          test ! -e debug/v160-cpu-autonomous/terminal-freeze.json
+          test ! -e .github/workflows/v160-generate.yml
+          echo 'V160 static boundary and sealed contract identities: PASS'
+
+      - name: Install serializer-test dependency only
+        shell: bash
+        run: |
+          set -euo pipefail
+          python -m pip install --disable-pip-version-check --no-deps 'numpy==1.26.4'
+          python - <<'PY'
+          import numpy
+          assert numpy.__version__ == '1.26.4', numpy.__version__
+          print('NumPy serializer-test dependency pin: PASS')
+          PY
+
+      - name: Python compile only
+        shell: bash
+        run: |
+          set -euo pipefail
+          python -m py_compile \
+            validation/v160_cpu_autonomous/build_timebase_v160.py \
+            validation/v160_cpu_autonomous/timebase_qc_v160.py \
+            validation/v160_cpu_autonomous/transcribe_v160.py \
+            validation/v160_cpu_autonomous/structural_qc_v160.py \
+            validation/v160_cpu_autonomous/test_json_native_v160.py \
+            debug/v160-cpu-autonomous/negative-runtime-guard.py
+
+      - name: Negative runtime and serializer-contract guard
+        shell: bash
+        run: |
+          set -euo pipefail
+          python debug/v160-cpu-autonomous/negative-runtime-guard.py \
+            --timebase-builder validation/v160_cpu_autonomous/build_timebase_v160.py \
+            --timebase-qc validation/v160_cpu_autonomous/timebase_qc_v160.py \
+            --transcriber validation/v160_cpu_autonomous/transcribe_v160.py \
+            --structural-qc validation/v160_cpu_autonomous/structural_qc_v160.py \
+            --json-native-test validation/v160_cpu_autonomous/test_json_native_v160.py \
+            --workflow .github/workflows/v160-static-preflight.yml
+
+      - name: Run song-blind JSON-native serializer fixture
+        shell: bash
+        run: |
+          set -euo pipefail
+          python validation/v160_cpu_autonomous/test_json_native_v160.py
+
+      - name: Prove no runtime work occurred
+        shell: bash
+        run: |
+          set -euo pipefail
+          test ! -e debug/v160-cpu-autonomous/timebase.json
+          test ! -e debug/v160-cpu-autonomous/timebase-qc.json
+          test ! -e debug/v160-cpu-autonomous/generated.json
+          test ! -e debug/v160-cpu-autonomous/generation-receipt.json
+          test ! -e debug/v160-cpu-autonomous/environment-receipt.json
+          test ! -e debug/v160-cpu-autonomous/structural-qc.json
+          test ! -e debug/v160-cpu-autonomous/pre-run-identity-receipt.json
+          test ! -e debug/v160-cpu-autonomous/terminal-freeze.json
+          test ! -e .github/workflows/v160-generate.yml
+          echo 'No audio/Demucs/pitch/candidate/runtime artifact was created: PASS'
