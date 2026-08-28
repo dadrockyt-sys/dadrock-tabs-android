@@ -1,0 +1,106 @@
+{
+  "schema": "dadrock.tabs.v161.professional-reference-score-preregistration.v1",
+  "version": "V161",
+  "status": "SEALED_BEFORE_REFERENCE_OR_SCORER_OPEN",
+  "validation": "PASS",
+  "branch": "v143-contextual-prune-lobo",
+  "createdFromBranchHead": "e967a6d903e30faa0e9488b129b1149de1452504",
+  "purpose": "Freeze exactly one scoring-only CPU comparison of the already-authoritative V161 candidate against the unchanged frozen professional reference. V161 generation/QC are permanently closed before any reference-facing score execution.",
+  "frozenCandidate": {
+    "path": "debug/v161-cpu-autonomous/generated.json",
+    "gitBlob": "52178705ef3830f6849b71037cd283877aa7655f",
+    "sha256": "75c4edd6560ee832bf7df4799c4e9389a7424e7056ac5f3cd5a9e07fc254996a",
+    "combinedGuitarEvents": 895,
+    "bassEvents": 449,
+    "candidateAuthoritative": true,
+    "eligibleForProfessionalReferenceScoring": true
+  },
+  "generationTerminalIdentity": {
+    "terminalCommit": "1b58ffcb8c2ee8fc7dd6152bf02c071d75035ade",
+    "armCommit": "418a25f82e4aa3742e995e4a3ce341bc48a24151",
+    "workflowRunId": 33208183041,
+    "workflowRunNumber": 1,
+    "workflowRunAttempt": 1,
+    "jobId": 98974530460,
+    "workflowGitBlob": "38cd491453c618f595d42bb6d42e87e478f35f0e",
+    "terminalFreezePath": "debug/v161-cpu-autonomous/terminal-freeze.json",
+    "terminalFreezeGitBlob": "5ff59c993698b00df3503c6e22e036f181140aa4",
+    "terminalOutcome": "STRUCTURAL_QC_PASS",
+    "neverRearmV161": true
+  },
+  "structuralQcIdentity": {
+    "path": "debug/v161-cpu-autonomous/structural-qc.json",
+    "gitBlob": "2146cf9f7b9e92ce704ef2118e711bd42ae2e093",
+    "sha256": "ba17ac241d438e15d13f0d45a93194e97151868805541dc252ea41caa1ae34ba",
+    "validation": "PASS",
+    "errors": 0
+  },
+  "frozenScorerIdentity": {
+    "path": "validation/v154_cpu_multitrack/score_frontend_reference.py",
+    "gitBlob": "9644e65719fbd361a9b39778ae9950c5e983e855",
+    "sameFrozenScorerAsV160": true,
+    "contentMayOnlyBeOpenedForScoreWorkflowAuditOrExecution": true
+  },
+  "frozenProfessionalReferenceIdentity": {
+    "path": "research/v154-professional-references/scorer-ready/frontend-reference-payload.json",
+    "gitBlob": "2fbed60b543c0488934d8642c488aa06bf31bbf5",
+    "sha256": "b39a203aec3f45800891fe4eca156e37e7571b91ea5c4ccc41b30bbc95fc89e7",
+    "sameFrozenReferenceAsV160": true,
+    "contentMayOnlyBeOpenedForScoreWorkflowAuditOrExecution": true
+  },
+  "scoreContract": {
+    "scoringDevice": "cpu",
+    "scoreWorkflowPath": ".github/workflows/v161-score.yml",
+    "scoreReceiptPath": "debug/v161-cpu-autonomous/reference-score.json",
+    "scoreTerminalPath": "debug/v161-cpu-autonomous/score-terminal-freeze.json",
+    "workflowCreationIsSoleTrigger": true,
+    "expectedWorkflowRunCount": 1,
+    "expectedRunNumber": 1,
+    "expectedRunAttempt": 1,
+    "maximumProfessionalReferenceScoreExecutions": 1,
+    "rerunForbidden": true,
+    "secondArmForbidden": true,
+    "duplicateRunForbidden": true,
+    "candidateMutationForbidden": true,
+    "candidateReplacementForbidden": true,
+    "candidateReQcForbidden": true,
+    "candidateRegenerationForbidden": true,
+    "thresholdSweepForbidden": true,
+    "variantSelectionForbidden": true,
+    "humanCorrectionForbidden": true,
+    "postScoreRetuneForbidden": true,
+    "postScoreRescoreForbidden": true,
+    "workflowMustSelfDeleteAfterSingleScore": true,
+    "workflowMustSelfSealScoreReceipt": true,
+    "assistantOrManualBranchWritesWhileScoreWorkflowActiveForbidden": true
+  },
+  "scoreGates": {
+    "guitarTimingAwarePitchF1Minimum": 0.8,
+    "bassTimingAwarePitchF1Minimum": 0.8,
+    "bothMustPassToProceedToRoleStringFretTechniquePdfPhase": true,
+    "candidateConsumedRegardlessOfPassFail": true
+  },
+  "preScoreSafety": {
+    "professionalReferenceUsedForV161ScoreYet": false,
+    "referenceFacingScoreCalls": 0,
+    "candidateModifiedAfterStructuralPass": false,
+    "generationRerun": false,
+    "timebaseQcRerun": false,
+    "structuralQcRerun": false,
+    "gpuExecutions": 0,
+    "cudaExecutions": 0,
+    "modalExecutions": 0,
+    "mainOrProductionModified": false,
+    "scoreReceiptMustNotExistAtSeal": true,
+    "scoreTerminalMustNotExistAtSeal": true,
+    "scoreWorkflowMustNotExistAtSeal": true
+  },
+  "reviewerBoundary": {
+    "scorerMayBeOpenedForScoringWorkflowAuditOnly": true,
+    "professionalReferenceMayBeOpenedForScoringWorkflowAuditOnly": true,
+    "referenceInformationMayNotInfluenceCandidateOrGenerationArtifacts": true,
+    "onlyFrozenScorerMayComputeTheSingleScore": true,
+    "singleScoreResultMustBeRecordedWithoutRepairOrSecondAttempt": true
+  },
+  "nextAction": "Reviewer-audit .github/workflows/v161-score.yml without creating it, then re-prove score workflow/report/terminal absence and arm exactly once."
+}
