@@ -1,0 +1,189 @@
+name: V158 score professional reference once
+
+on:
+  push:
+    branches:
+      - v143-contextual-prune-lobo
+    paths:
+      - .github/workflows/v158-score-reference-once.yml
+
+permissions:
+  contents: write
+
+env:
+  BRANCH: v143-contextual-prune-lobo
+  WORKFLOW: .github/workflows/v158-score-reference-once.yml
+  CANDIDATE: debug/v158-cpu-autonomous/generated.json
+  GENERATION_RECEIPT: debug/v158-cpu-autonomous/generation-receipt.json
+  ENVIRONMENT_RECEIPT: debug/v158-cpu-autonomous/environment-receipt.json
+  STRUCTURAL_QC: debug/v158-cpu-autonomous/structural-qc.json
+  REFERENCE: research/v154-professional-references/scorer-ready/frontend-reference-payload.json
+  SCORER: validation/v154_cpu_multitrack/score_frontend_reference.py
+  GUARD: validation/v158_cpu_multitrack/run_frontend_reference_score_once.py
+  PRE_SCORE: debug/v158-cpu-autonomous/frontend-reference-score/pre-score-receipt.json
+  SCORE: debug/v158-cpu-autonomous/frontend-reference-score/score.json
+  SCORE_RECEIPT: debug/v158-cpu-autonomous/frontend-reference-score/score-receipt.json
+  EXPECTED_PARENT: e91161bfc0d542322a3b4cb96de446bb3df86be7
+  EXPECTED_FREEZE_COMMIT: 1164742a49f6b760dbf3f995e91c520493f425d8
+  EXPECTED_CANDIDATE_SHA256: 2a9e8bdfbe48f03dc5d3734780aeb937ef0c5654d55a40536069ed30ee46bcc9
+  EXPECTED_CANDIDATE_BLOB: 1ddb1849b3cfefc14b60f6b5ac72af9ffcdc7fa6
+  EXPECTED_GENERATION_SHA256: e05716636d4bf63fd86ab0f3bc97cb2e274fcd600d47a839d32dfff5543ef12f
+  EXPECTED_GENERATION_BLOB: 3afb6c011065568890e1e48e437882e7848f1aaa
+  EXPECTED_ENVIRONMENT_SHA256: 1bb07ed96cdbcf1dfe5a29aea85da68e43aa63bf2835008ca98a4bae46557d9a
+  EXPECTED_ENVIRONMENT_BLOB: 9749b5c58952ca56a80df4834ea2ae116471f532
+  EXPECTED_QC_BLOB: 4cb52d4f17359fa4386945800b09fcf0171a8e30
+  EXPECTED_SCORER_BLOB: 9644e65719fbd361a9b39778ae9950c5e983e855
+  EXPECTED_GUARD_BLOB: 00b4a5f90f12c5812f48d5581b0b3698de8c46ba
+  EXPECTED_PRESCORE_BLOB: f3475d85070fe786d465a06a737d52daf858d2b4
+  EXPECTED_REFERENCE_BLOB: 2fbed60b543c0488934d8642c488aa06bf31bbf5
+
+jobs:
+  score-once:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ github.sha }}
+          fetch-depth: 0
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.10"
+
+      - name: Verify sole trigger and frozen identities without reading reference content
+        shell: bash
+        run: |
+          set -euo pipefail
+          test "$GITHUB_EVENT_NAME" = "push"
+          test "$GITHUB_REF_NAME" = "$BRANCH"
+          test "$GITHUB_RUN_NUMBER" = "1"
+          test "$GITHUB_RUN_ATTEMPT" = "1"
+          test "$(git rev-parse HEAD)" = "$GITHUB_SHA"
+          test "$(git rev-parse HEAD^)" = "$EXPECTED_PARENT"
+          test "$(sha256sum "$CANDIDATE" | awk '{print $1}')" = "$EXPECTED_CANDIDATE_SHA256"
+          test "$(git hash-object "$CANDIDATE")" = "$EXPECTED_CANDIDATE_BLOB"
+          test "$(sha256sum "$GENERATION_RECEIPT" | awk '{print $1}')" = "$EXPECTED_GENERATION_SHA256"
+          test "$(git hash-object "$GENERATION_RECEIPT")" = "$EXPECTED_GENERATION_BLOB"
+          test "$(sha256sum "$ENVIRONMENT_RECEIPT" | awk '{print $1}')" = "$EXPECTED_ENVIRONMENT_SHA256"
+          test "$(git hash-object "$ENVIRONMENT_RECEIPT")" = "$EXPECTED_ENVIRONMENT_BLOB"
+          test "$(git hash-object "$STRUCTURAL_QC")" = "$EXPECTED_QC_BLOB"
+          test "$(git hash-object "$SCORER")" = "$EXPECTED_SCORER_BLOB"
+          test "$(git hash-object "$GUARD")" = "$EXPECTED_GUARD_BLOB"
+          test "$(git hash-object "$PRE_SCORE")" = "$EXPECTED_PRESCORE_BLOB"
+          reference_blob="$(git ls-files -s -- "$REFERENCE" | awk 'NR==1 {print $2}')"
+          test "$reference_blob" = "$EXPECTED_REFERENCE_BLOB"
+          test ! -e "$SCORE"
+          test ! -e "$SCORE_RECEIPT"
+          python -m py_compile "$SCORER" "$GUARD"
+          python - <<'PY'
+          import json
+          from pathlib import Path
+          pre = json.loads(Path('debug/v158-cpu-autonomous/frontend-reference-score/pre-score-receipt.json').read_text())
+          assert pre['schema'] == 'dadrock.tabs.v158.pre-score-reference-identity-receipt.v1'
+          assert pre['status'] == 'SEALED_BEFORE_REFERENCE_SCORE'
+          assert pre['candidate_sha256'] == '2a9e8bdfbe48f03dc5d3734780aeb937ef0c5654d55a40536069ed30ee46bcc9'
+          assert pre['candidate_git_blob'] == '1ddb1849b3cfefc14b60f6b5ac72af9ffcdc7fa6'
+          assert pre['generation_receipt_git_blob'] == '3afb6c011065568890e1e48e437882e7848f1aaa'
+          assert pre['environment_receipt_git_blob'] == '9749b5c58952ca56a80df4834ea2ae116471f532'
+          assert pre['structural_qc_git_blob'] == '4cb52d4f17359fa4386945800b09fcf0171a8e30'
+          assert pre['scorer_git_blob'] == '9644e65719fbd361a9b39778ae9950c5e983e855'
+          assert pre['guard_git_blob'] == '00b4a5f90f12c5812f48d5581b0b3698de8c46ba'
+          assert pre['freeze_commit'] == '1164742a49f6b760dbf3f995e91c520493f425d8'
+          assert pre['reference_git_blob'] == '2fbed60b543c0488934d8642c488aa06bf31bbf5'
+          assert pre['reference_content_reads_before_score'] == 0
+          assert pre['reference_facing_score_calls_before_score'] == 0
+          assert pre['retry_after_reference_facing_call_allowed'] is False
+          assert pre['frozen_scorer_required_invocations'] == 1
+          PY
+
+      - name: Verify branch stability immediately before sole reference-facing call
+        shell: bash
+        run: |
+          set -euo pipefail
+          git fetch origin "$BRANCH"
+          test "$(git rev-parse "origin/$BRANCH")" = "$GITHUB_SHA"
+          test "$GITHUB_RUN_NUMBER" = "1"
+          test "$GITHUB_RUN_ATTEMPT" = "1"
+          test ! -e "$SCORE"
+          test ! -e "$SCORE_RECEIPT"
+          test "$(git hash-object "$GUARD")" = "$EXPECTED_GUARD_BLOB"
+          test "$(git hash-object "$SCORER")" = "$EXPECTED_SCORER_BLOB"
+          test "$(git ls-files -s -- "$REFERENCE" | awk 'NR==1 {print $2}')" = "$EXPECTED_REFERENCE_BLOB"
+
+      - name: Invoke frozen scorer exactly once through one-shot guard
+        shell: bash
+        run: |
+          set -euo pipefail
+          python "$GUARD" \
+            --candidate "$CANDIDATE" \
+            --reference "$REFERENCE" \
+            --scorer "$SCORER" \
+            --generation-receipt "$GENERATION_RECEIPT" \
+            --environment-receipt "$ENVIRONMENT_RECEIPT" \
+            --structural-qc "$STRUCTURAL_QC" \
+            --output "$SCORE" \
+            --score-receipt "$SCORE_RECEIPT" \
+            --pre-score-receipt "$PRE_SCORE" \
+            --freeze-commit "$EXPECTED_FREEZE_COMMIT"
+
+      - name: Validate completed score without reopening professional reference
+        if: success()
+        shell: bash
+        run: |
+          set -euo pipefail
+          test -s "$SCORE"
+          test -s "$SCORE_RECEIPT"
+          python - <<'PY'
+          import json
+          from pathlib import Path
+          score = json.loads(Path('debug/v158-cpu-autonomous/frontend-reference-score/score.json').read_text())
+          receipt = json.loads(Path('debug/v158-cpu-autonomous/frontend-reference-score/score-receipt.json').read_text())
+          assert receipt['status'] == 'COMPLETE_CONSUMED'
+          assert receipt['guard_reference_content_reads'] == 0
+          assert receipt['frozen_scorer_invocations'] == 1
+          assert receipt['retry_allowed'] is False
+          assert receipt['candidate_sha256_before'] == receipt['candidate_sha256_after']
+          assert receipt['candidate_git_blob_before'] == receipt['candidate_git_blob_after']
+          assert score['schema'] == 'dadrock.tabs.v154.cpu-front-end-score.v1'
+          guitar = score['combinedGuitar']['primaryTimingAwarePitch']['f1']
+          bass = score['bass']['primaryTimingAwarePitch']['f1']
+          print(f'combined_guitar_f1={guitar}')
+          print(f'bass_f1={bass}')
+          print(f'gate_pass={guitar >= 0.80 and bass >= 0.80}')
+          PY
+
+      - name: Freeze consumption and self-seal workflow
+        if: always()
+        shell: bash
+        run: |
+          set -euo pipefail
+          mkdir -p "$(dirname "$SCORE_RECEIPT")"
+          if [ ! -e "$SCORE_RECEIPT" ]; then
+            python - <<'PY'
+          import json, os
+          from pathlib import Path
+          payload = {
+              'schema': 'dadrock.tabs.v158.one-shot-reference-score-receipt.v1',
+              'status': 'ABORTED_BEFORE_REFERENCE_CALL',
+              'guard_reference_content_reads': 0,
+              'frozen_scorer_invocations': 0,
+              'retry_allowed': False,
+              'workflow_run_id': os.environ.get('GITHUB_RUN_ID'),
+              'workflow_run_number': int(os.environ['GITHUB_RUN_NUMBER']),
+              'workflow_run_attempt': int(os.environ['GITHUB_RUN_ATTEMPT']),
+              'trigger_commit': os.environ['GITHUB_SHA'],
+              'reason': 'one-shot workflow failed before guard created a reference-call receipt; workflow creation is consumed and re-arm is forbidden'
+          }
+          Path('debug/v158-cpu-autonomous/frontend-reference-score/score-receipt.json').write_text(json.dumps(payload, indent=2, sort_keys=True) + '\n')
+          PY
+          fi
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          if [ -e "$SCORE" ]; then
+            git add -f "$SCORE"
+          fi
+          git add -f "$SCORE_RECEIPT"
+          git rm "$WORKFLOW"
+          git commit -m "v158: freeze sole reference score consumption [skip ci]"
+          git push origin HEAD:"$BRANCH"
