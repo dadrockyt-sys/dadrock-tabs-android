@@ -1,0 +1,322 @@
+{
+  "schema": "dadrock.tabs.v162.numeric-implementation-contract.v1",
+  "version": "V162",
+  "status": "SEALED_BEFORE_IMPLEMENTATION_CODE",
+  "validation": "PASS",
+  "branch": "v143-contextual-prune-lobo",
+  "createdFromBranchHead": "8bc464c95b5bfb79eb1f4fd7a679375ecddc6844",
+  "preregistration": {
+    "path": "debug/v162-cpu-autonomous/preregistration.json",
+    "sealCommit": "5a3eecd2e4004ad254196bf926ecf8f1a97280e2",
+    "gitBlob": "5c886fec4ac323b361d9128a51a25c6ccb03952b"
+  },
+  "scope": "Architectural reference-blind V162 successor: retain source/separation/beat-measure foundations and unchanged Basic Pitch thresholds; replace fixed-gap Guitar consolidation with onset-aware note-state segmentation and bounded active-state reattack recovery; replace isolated octave repair with local same-pitch-class continuity reasoning; add shared evidence-refined 16th subdivision lattice and bounded event-step evidence selection; replace inactive Bass transition branch with stable pYIN pitch-state plus onset/rearticulation segmentation.",
+  "canonicalSchemas": {
+    "timebase": "dadrock.tabs.v162.reference-blind-subdivision-timebase.v1",
+    "timebaseQc": "dadrock.tabs.v162.reference-blind-subdivision-timebase-qc.v1",
+    "candidate": "dadrock.tabs.v162.cpu-state-segmented-generated.v1",
+    "generationReceipt": "dadrock.tabs.v162.cpu-generation-receipt.v1",
+    "environmentReceipt": "dadrock.tabs.v162.cpu-environment-receipt.v1",
+    "structuralQc": "dadrock.tabs.v162.reference-blind-structural-qc.v1",
+    "preRunReceipt": "dadrock.tabs.v162.pre-run-identity-receipt.v1",
+    "terminalFreeze": "dadrock.tabs.v162.terminal-freeze.v1"
+  },
+  "implementationPaths": {
+    "eventLogic": "validation/v162_cpu_autonomous/event_logic_v162.py",
+    "timebaseBuilder": "validation/v162_cpu_autonomous/build_timebase_v162.py",
+    "timebaseQc": "validation/v162_cpu_autonomous/timebase_qc_v162.py",
+    "transcriber": "validation/v162_cpu_autonomous/transcribe_v162.py",
+    "structuralQc": "validation/v162_cpu_autonomous/structural_qc_v162.py",
+    "eventLogicStaticTest": "validation/v162_cpu_autonomous/test_event_logic_v162.py",
+    "jsonNativeStaticTest": "validation/v162_cpu_autonomous/test_json_native_v162.py",
+    "negativeRuntimeGuard": "debug/v162-cpu-autonomous/negative-runtime-guard.py",
+    "staticPreflightWorkflow": ".github/workflows/v162-static-preflight.yml",
+    "generationWorkflow": ".github/workflows/v162-generate.yml"
+  },
+  "dependencies": {
+    "python": "3.10.x",
+    "torch": "2.8.0+cpu",
+    "numpy": "1.26.4",
+    "scipy": "1.13.1",
+    "soundfile": "0.12.1",
+    "basic-pitch": "0.4.0",
+    "demucs": "4.1.0",
+    "imageio-ffmpeg": "0.6.0",
+    "librosa": "0.11.0"
+  },
+  "sourceAndSeparation": {
+    "historicalSourceCommit": "74b0f815ff3f66f325220975c410621503de440f",
+    "sourceSha256": "215bd5a657c5326f08f132ae358595a95c30b39bb7493a52c2f910d5a608149f",
+    "sourceBytes": 3478611,
+    "normalizedWavSha256": "3e61b7926eabc21b758c750f826c7426a29d6de5aafdd5c93f8045ecdc67f87e",
+    "demucsModel": "htdemucs_6s",
+    "device": "cpu",
+    "shifts": 1,
+    "jobs": 1,
+    "repeatCount": 1,
+    "seed": 0,
+    "torchNumThreads": 1,
+    "torchNumInteropThreads": 1,
+    "torchDeterministicAlgorithms": true,
+    "mathLibraryThreads": 1
+  },
+  "analysisGeometry": {
+    "sampleRate": 22050,
+    "hopLength": 256,
+    "harmonicBinsPerOctave": 36,
+    "harmonics": [1, 2, 3, 4, 5],
+    "harmonicWeights": [1.0, 0.5, 0.3333333333, 0.25, 0.2],
+    "harmonicRadiusBins": 1,
+    "guitarMidiRangeInclusive": [40, 88],
+    "bassMidiRangeInclusive": [28, 67]
+  },
+  "beatMeasureBackbone": {
+    "retainV161BeatTrackerAndPhaseSemantics": true,
+    "fusedBeatEnvelope": "0.5*unitMix + 0.5*unitDrums",
+    "beatTrackerStartBpm": 120.0,
+    "beatTrackerTightness": 100.0,
+    "minimumDetectedBeats": 8,
+    "acceptedBpmRangeInclusive": [30.0, 300.0],
+    "tempoConsistencyRatioInclusive": [0.5, 2.0],
+    "phaseEvidenceWeights": {
+      "drums": 1.0,
+      "mix": 0.5,
+      "bass": 0.5,
+      "lowFrequencyFlux": 0.75,
+      "harmonicChange": 0.75
+    },
+    "phaseChoices": [0, 1, 2, 3],
+    "phaseTieTolerance": 1e-12,
+    "phaseTieWinner": "LOWER_PHASE",
+    "leadingBeatCount": "(-selectedPhase)%4",
+    "beatAnchorTimesMayMoveInSubdivisionStage": false
+  },
+  "sharedSubdivisionLattice": {
+    "stepsPerBeat": 4,
+    "sharedOnsetEnvelope": "0.65*unitDrums + 0.35*unitMix",
+    "beatBoundaryStepFixed": true,
+    "interiorSubsteps": [1, 2, 3],
+    "nominalInteriorTime": "beatStart + j*(beatEnd-beatStart)/4",
+    "searchRadiusFrames": 3,
+    "positiveOnsetQuantile": 0.55,
+    "moveMinimumPeakToNominalRatio": 1.05,
+    "peakTieBreak": "closest_to_nominal_then_lower_frame",
+    "voronoiConstraint": "refined interior step must remain inside midpoint cell between adjacent nominal subdivisions",
+    "strictlyIncreasingRequired": true,
+    "minimumAdjacentSeparationFrames": 1,
+    "failedOrAmbiguousMoveFallback": "nominal subdivision time",
+    "lastBeatExtrapolation": "use median of last up to 8 positive beat intervals and same subdivision rules with beat boundary fixed",
+    "canonicalAbsoluteStep": "sequential 16th index from first grid beat",
+    "measure": "absoluteStep//16+1",
+    "step": "absoluteStep%16"
+  },
+  "eventToSubdivisionSelection": {
+    "candidateStepsRelativeToNearestLattice": [-1, 0, 1],
+    "temporalScore": "clip(1 - abs(eventTime-stepTime)/(0.75*localNominalSubstepSeconds), 0, 1)",
+    "instrumentOnsetSupport": "onset strength at candidate step frame divided by positive q95 of instrument onset envelope, clipped 0..1",
+    "sharedOnsetSupport": "shared onset strength at candidate step frame divided by positive q95 of shared onset envelope, clipped 0..1",
+    "scoreWeights": {
+      "temporal": 0.70,
+      "instrumentOnset": 0.20,
+      "sharedOnset": 0.10
+    },
+    "nonNearestSelectionMinimumMargin": 0.05,
+    "fallback": "nearest lattice step",
+    "tieBreak": "higher score, then smaller absolute step delta from nearest, then lower absolute step",
+    "maximumCorrectionFromNearestSteps": 1,
+    "negativeAbsoluteStepRejected": true
+  },
+  "onsetSupport": {
+    "supportScaleQuantile": 0.95,
+    "localPeakTieBreak": "closest_to_original_then_lower_frame",
+    "guitarExistingNoteRefinementRadiusFrames": 6,
+    "bassExistingProposalRefinementRadiusFrames": 8,
+    "existingRefinementPositiveQuantile": 0.60,
+    "existingRefinementMinimumPeakRatio": 1.10
+  },
+  "guitar": {
+    "basicPitch": {
+      "onsetThreshold": 0.50,
+      "frameThreshold": 0.30,
+      "minimumNoteLengthMs": 90.0,
+      "melodiaTrick": true,
+      "multiplePitchBends": false,
+      "thresholdsUnchangedFromV161": true
+    },
+    "stateSegmentation": {
+      "sameMidiGrouping": true,
+      "overlappingFragmentsAlwaysConsolidate": true,
+      "maximumUnsupportedGapSecondsForConsolidation": 0.120,
+      "reattackInspectionRadiusFrames": 3,
+      "reattackPositiveOnsetQuantile": 0.60,
+      "reattackMinimumNormalizedOnsetSupport": 0.30,
+      "supportedReattackKeepsSeparateNote": true,
+      "unsupportedGapAtOrBelowMaximumConsolidates": true,
+      "gapAboveMaximumKeepsSeparateNote": true,
+      "confidenceOnMerge": "maximum",
+      "durationOnMerge": "union start/end"
+    },
+    "activeStateReattackRecovery": {
+      "enabled": true,
+      "independentOnsetBacktrack": false,
+      "independentOnsetMinimumIoiSeconds": 0.040,
+      "minimumNormalizedOnsetSupport": 0.35,
+      "positiveOnsetQuantile": 0.60,
+      "existingAttackExclusionSeconds": 0.050,
+      "candidatePitchSource": "only raw Basic Pitch note intervals active at the independent onset",
+      "minimumParentBasicPitchConfidence": 0.35,
+      "harmonicTemplateRankMinimum": 0.80,
+      "fundamentalMustExceedCandidateMedian": true,
+      "recoveryScore": "0.50*parentConfidence + 0.30*templateRank + 0.20*onsetSupport",
+      "recoveryScoreMinimum": 0.58,
+      "maximumRecoveredPitchesPerOnset": 3,
+      "tieBreak": "higher recoveryScore, higher parentConfidence, higher templateRank, lower MIDI",
+      "standaloneHarmonicPitchDiscoveryForbidden": true,
+      "source": "basic_pitch_active_state_reattack"
+    },
+    "sequenceAwareRegister": {
+      "candidateRegisters": "raw MIDI plus valid +/-12",
+      "contextPitchClass": "raw MIDI modulo 12",
+      "contextWindowSeconds": 0.75,
+      "contextNeighbors": "closest prior and closest next candidate with same pitch class",
+      "noNeighborBehavior": "keep raw register",
+      "contextCenter": "median MIDI of available same-pitch-class neighbors",
+      "alternativeRequiresFundamentalAboveMedian": true,
+      "alternativeTemplateRankImprovementMinimum": 0.15,
+      "alternativeContextDistanceImprovementSemitones": 3.0,
+      "continuityScore": "clip(1 - abs(candidateMidi-contextCenter)/12, 0, 1)",
+      "sequenceScore": "0.65*templateRank + 0.35*continuityScore",
+      "tieBreak": "raw register first, then higher sequenceScore, then lower MIDI",
+      "isolatedOneEventOctaveRepairForbidden": true
+    },
+    "admission": {
+      "segmentedNoteScore": "0.45*confidence + 0.25*templateRank + 0.15*onsetSupport + 0.10*persistence + 0.05*activity",
+      "segmentedNoteMinimum": 0.50,
+      "activityMinimum": 0.05,
+      "persistenceSaturationSeconds": 0.250,
+      "recoveredReattackUsesSeparateRecoveryGate": true
+    },
+    "grid": {
+      "dedupeKey": ["absoluteGridStep", "midi"],
+      "polyphonyCapPerStep": 6,
+      "winnerTieBreak": "higher admission/recovery score, higher confidence, lower MIDI"
+    },
+    "allowedSources": ["basic_pitch_segmented", "basic_pitch_active_state_reattack"]
+  },
+  "bass": {
+    "pyin": {
+      "frameLength": 2048,
+      "hopLength": 256,
+      "minimumVoicedProbabilityForStateFrame": 0.50,
+      "medianSmoothingWindowFrames": 7,
+      "stateMidiQuantization": "nearest integer MIDI"
+    },
+    "stablePitchStates": {
+      "minimumConsecutiveFrames": 4,
+      "sameStateMidiToleranceSemitones": 0,
+      "bridgeSameMidiGapMaximumFrames": 2,
+      "bridgeRequiresFiniteStateOnBothSides": true,
+      "stateChangeMinimumSemitones": 1,
+      "stateStartMinimumMedianVoicedProbability": 0.55,
+      "silenceGapFramesForNewStateStart": 6
+    },
+    "onsetProposals": {
+      "detectorBacktrack": true,
+      "minimumIoiSeconds": 0.035,
+      "stateLookupRadiusFrames": 4,
+      "minimumNormalizedOnsetSupport": 0.20,
+      "samePitchReattackMinimumNormalizedOnsetSupport": 0.30,
+      "samePitchReattackPositiveOnsetQuantile": 0.60,
+      "samePitchReattackMinimumIoiSeconds": 0.080,
+      "stateChangeProposalEnabled": true,
+      "stateChangeProposalDoesNotRequireDetectedOnset": true,
+      "proposalMergeSeconds": 0.045,
+      "priority": ["detected_onset", "same_pitch_reattack", "state_change"],
+      "winnerTieBreak": "priority, higher onset support, higher state voiced probability, lower frame"
+    },
+    "pitchEvidence": {
+      "analysisWindowSeconds": 0.120,
+      "pyinSigmaSemitones": 0.75,
+      "pyinFusionWeight": 0.75,
+      "harmonicTemplateFoundationUnchanged": true
+    },
+    "admission": {
+      "score": "0.40*voicedProbability + 0.35*templateRank + 0.15*onsetSupport + 0.10*activitySupport",
+      "minimum": 0.42,
+      "activityMinimum": 0.04,
+      "additionalGate": "fundamentalPresent OR voicedProbability>=0.60"
+    },
+    "grid": {
+      "dedupeKey": ["absoluteGridStep", "midi"],
+      "maximumNotesPerStep": 1,
+      "winnerTieBreak": "higher admission score, higher voiced probability, lower MIDI"
+    },
+    "allowedSources": ["bass_detected_onset_state", "bass_same_pitch_reattack_state", "bass_state_change"]
+  },
+  "structuralQcRequirements": {
+    "candidateHashChain": true,
+    "timebaseAndQcHashChain": true,
+    "codePins": true,
+    "singleGenerationProof": true,
+    "referenceBlindSafety": true,
+    "eventMappingToleranceSeconds": 1e-9,
+    "recomputeSubdivisionLatticeFromFrozenTimebase": true,
+    "recomputeEventStepSelection": true,
+    "guitarAllowedSourcesOnly": true,
+    "noStandaloneHarmonicRecovery": true,
+    "guitarPolyphonyCapSix": true,
+    "bassAllowedSourcesOnly": true,
+    "bassGridMonophonyCapOne": true,
+    "registerContextMetadataRequiredForRepairs": true,
+    "bassStateMetadataRequired": true,
+    "admissionAndRecoveryScoresFiniteWithinZeroOne": true,
+    "jsonNativeReceiptNormalization": true
+  },
+  "mandatorySongBlindFixtures": {
+    "guitarSustain": "same MIDI fragments with <=120ms unsupported gap consolidate",
+    "guitarReattack": "same MIDI fragment with q60 + normalized onset support >=0.30 remains distinct",
+    "guitarWeakAttack": "subthreshold onset does not block consolidation",
+    "guitarActiveStateRecovery": "supported independent onset inside an active Basic Pitch interval may recover that active pitch only; no free harmonic pitch",
+    "guitarRecoveryCap": "more than 3 eligible active pitches yields deterministic top 3",
+    "registerNoContext": "no same-pitch-class neighbor means no octave repair",
+    "registerContext": "alternative octave requires fundamental, >=0.15 template-rank gain, and >=3-semitone context-distance improvement",
+    "subdivisionNominal": "no qualifying shared peak keeps nominal interior 16th",
+    "subdivisionShift": "qualifying peak within +/-3 frames and Voronoi cell moves interior step deterministically",
+    "subdivisionNoCross": "refined steps remain strictly ordered",
+    "eventStepMargin": "non-nearest neighboring step requires >=0.05 evidence-score margin",
+    "bassStableSustain": "stable state emits no repeated duplicates without supported reattack",
+    "bassSamePitchReattack": "supported onset >=80ms after prior event inside same stable state emits new proposal",
+    "bassStateChange": "new stable MIDI state >=1 semitone with >=4 frames activates state-change proposal even without detected onset",
+    "bassGapBridge": "same-MIDI states separated by <=2 frames bridge deterministically",
+    "gridCaps": "Guitar cap6 and Bass cap1 deterministic",
+    "jsonNative": "NumPy scalar/container normalization and nonfinite rejection retained"
+  },
+  "runtimeBoundaries": {
+    "staticPreflightMayReadSongAudio": false,
+    "staticPreflightMayRunDemucsOrPitch": false,
+    "timebaseQcBeforePitch": true,
+    "timebaseQcFailureTerminalNoCandidate": true,
+    "generationMayReadProfessionalReference": false,
+    "generationMayReadFrozenScorer": false,
+    "generationMayReadV161Candidate": false,
+    "generationMayReadPriorScore": false,
+    "structuralQcRequiredForAuthority": true,
+    "onlyStructuralPassCandidateScoringEligible": true,
+    "generationMaximum": 1,
+    "generationRerunForbidden": true,
+    "candidateRepairForbidden": true,
+    "separateScorePreregistrationRequired": true,
+    "scoreMaximum": 1,
+    "postScoreRescoreForbidden": true
+  },
+  "safetyAtSeal": {
+    "professionalReferenceReadForV162Implementation": false,
+    "V161CandidateEventRead": false,
+    "V161Rescore": false,
+    "gpuExecutions": 0,
+    "cudaExecutions": 0,
+    "modalExecutions": 0,
+    "mainOrProductionModified": false
+  },
+  "nextAction": "Implement V162 pure event/subdivision helpers and mandatory song-blind fixtures first, then version-isolated timebase/QC/transcriber/structural-QC/negative guard exactly to this contract."
+}
