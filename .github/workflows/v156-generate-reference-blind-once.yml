@@ -1,0 +1,320 @@
+name: V156 generate reference-blind CPU candidate once
+
+on:
+  push:
+    branches:
+      - v143-contextual-prune-lobo
+    paths:
+      - .github/workflows/v156-generate-reference-blind-once.yml
+
+permissions:
+  contents: write
+
+env:
+  BRANCH: v143-contextual-prune-lobo
+  CUDA_VISIBLE_DEVICES: ""
+  OMP_NUM_THREADS: "1"
+  MKL_NUM_THREADS: "1"
+  OPENBLAS_NUM_THREADS: "1"
+  NUMEXPR_NUM_THREADS: "1"
+  PYTHONHASHSEED: "0"
+  CUBLAS_WORKSPACE_CONFIG: ":4096:8"
+  SOURCE_DIR: /tmp/v156-historical-source
+  NORM_WAV: /tmp/v156-normalized.wav
+  DEMUCS_DIR: /tmp/v156-demucs
+  PREREG: debug/v156-cpu-autonomous/preregistration.json
+  PRE_RUN: debug/v156-cpu-autonomous/pre-run-receipt.json
+  TRANSCRIBER: validation/v156_cpu_multitrack/transcribe_hybrid.py
+  QC: validation/v156_cpu_multitrack/structural_qc.py
+  ENGINE: validation/v155_cpu_multitrack/transcribe_hybrid.py
+  ENV_RECEIPT: debug/v156-cpu-autonomous/environment-receipt.json
+  OUTPUT: debug/v156-cpu-autonomous/generated.json
+  RECEIPT: debug/v156-cpu-autonomous/generation-receipt.json
+  QC_OUTPUT: debug/v156-cpu-autonomous/structural-qc.json
+
+jobs:
+  generate-once:
+    runs-on: ubuntu-latest
+    timeout-minutes: 75
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: v143-contextual-prune-lobo
+          fetch-depth: 0
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.10"
+
+      - name: Verify sole-trigger and sealed identities
+        shell: bash
+        run: |
+          set -euo pipefail
+          test "$GITHUB_RUN_NUMBER" = "1"
+          test "$(git hash-object "$PREREG")" = "25a0a921e3245049a7f64fd3cb823e6767fe55da"
+          test "$(git hash-object "$PRE_RUN")" = "4591695763a1e59d6b1b2bfa2600969ff4b0201f"
+          test "$(git hash-object "$TRANSCRIBER")" = "961e18f66766e51abb42f46e529730fcaa2807b4"
+          test "$(git hash-object "$QC")" = "3b1018e751deecdfb0efca100c29848256ee1234"
+          test "$(git hash-object "$ENGINE")" = "3357582dd8311b28f4b85f2ebfbc7acb8c9e4fb8"
+          test ! -e "$OUTPUT"
+          test ! -e "$RECEIPT"
+          test ! -e "$QC_OUTPUT"
+          test ! -e "$ENV_RECEIPT"
+          python -m py_compile "$TRANSCRIBER" "$QC" "$ENGINE"
+          if grep -En 'research/v154-professional-references|frontend-reference-payload|score_frontend_reference|debug/v154-cpu-autonomous/broad-other-run|debug/v155-cpu-autonomous/generated' "$TRANSCRIBER" "$QC" "$ENGINE"; then
+            echo 'Forbidden scored/reference path dependency in V156 generation code' >&2
+            exit 1
+          fi
+          python - <<'PY'
+          import json
+          from pathlib import Path
+          p = json.loads(Path('debug/v156-cpu-autonomous/preregistration.json').read_text())
+          r = json.loads(Path('debug/v156-cpu-autonomous/pre-run-receipt.json').read_text())
+          assert p['version'] == 'V156'
+          assert p['status'] == 'PREREGISTERED_BEFORE_GENERATION_AMENDED_EXECUTION_DETERMINISM'
+          assert p['execution']['device'] == 'CPU_ONLY'
+          assert p['execution']['singleCandidate'] is True
+          assert p['execution']['singleGenerationRun'] is True
+          assert p['executionDeterminism']['rngSeed'] == 0
+          assert p['executionDeterminism']['demucsInvocation'].startswith('in-process')
+          assert p['triggerSafety']['generationWorkflowCreationIsTheSingleTrigger'] is True
+          assert p['triggerSafety']['secondArmEditForbidden'] is True
+          assert r['validation'] == 'PASS'
+          assert r['candidateExistsAtSeal'] is False
+          assert r['referenceFacingScoreCallsAtSeal'] == 0
+          assert r['triggerSafety']['workflowCreationIsSingleTrigger'] is True
+          assert r['triggerSafety']['secondArmEditForbidden'] is True
+          PY
+
+      - name: Materialize exact historical audio
+        shell: bash
+        run: |
+          set -euo pipefail
+          mkdir -p "$SOURCE_DIR"
+          git show 74b0f815ff3f66f325220975c410621503de440f:public/gomywayfullaitest.m4a > "$SOURCE_DIR/gomywayfullaitest.m4a"
+          test "$(sha256sum "$SOURCE_DIR/gomywayfullaitest.m4a" | awk '{print $1}')" = "215bd5a657c5326f08f132ae358595a95c30b39bb7493a52c2f910d5a608149f"
+          test "$(wc -c < "$SOURCE_DIR/gomywayfullaitest.m4a" | tr -d ' ')" = "3478611"
+
+      - name: Install exact CPU dependencies
+        shell: bash
+        run: |
+          set -euo pipefail
+          python -m pip install --disable-pip-version-check torch==2.8.0 --index-url https://download.pytorch.org/whl/cpu
+          python -m pip install --disable-pip-version-check numpy==1.26.4 scipy==1.13.1 soundfile==0.12.1 basic-pitch==0.4.0 demucs==4.1.0 imageio-ffmpeg==0.6.0 librosa==0.11.0
+          python - <<'PY'
+          import importlib.metadata, numpy, scipy, soundfile, torch
+          assert numpy.__version__ == '1.26.4'
+          assert scipy.__version__ == '1.13.1'
+          assert soundfile.__version__ == '0.12.1'
+          assert importlib.metadata.version('basic-pitch') == '0.4.0'
+          assert importlib.metadata.version('demucs') == '4.1.0'
+          assert importlib.metadata.version('imageio-ffmpeg') == '0.6.0'
+          assert importlib.metadata.version('librosa') == '0.11.0'
+          assert torch.__version__ == '2.8.0+cpu'
+          assert torch.version.cuda is None
+          assert torch.cuda.is_available() is False
+          PY
+
+      - name: Deterministically normalize audio
+        shell: bash
+        run: |
+          set -euo pipefail
+          python - <<'PY'
+          import hashlib, subprocess
+          from pathlib import Path
+          import imageio_ffmpeg
+          src = Path('/tmp/v156-historical-source/gomywayfullaitest.m4a')
+          out = Path('/tmp/v156-normalized.wav')
+          exe = imageio_ffmpeg.get_ffmpeg_exe()
+          subprocess.check_call([exe, '-v', 'error', '-i', str(src), '-vn', '-ar', '44100', '-ac', '2', '-c:a', 'pcm_s16le', str(out)])
+          assert out.is_file() and out.stat().st_size > 1000000
+          digest = hashlib.sha256(out.read_bytes()).hexdigest()
+          assert digest == '3e61b7926eabc21b758c750f826c7426a29d6de5aafdd5c93f8045ecdc67f87e'
+          print('normalized_sha256=' + digest)
+          PY
+
+      - name: Seeded in-process CPU Demucs separation
+        shell: bash
+        run: |
+          set -euo pipefail
+          python - <<'PY'
+          import os, random
+          from pathlib import Path
+          import numpy as np
+          import torch
+
+          seed = 0
+          random.seed(seed)
+          np.random.seed(seed)
+          torch.manual_seed(seed)
+          torch.set_num_threads(1)
+          torch.set_num_interop_threads(1)
+          torch.use_deterministic_algorithms(True, warn_only=False)
+          assert torch.version.cuda is None
+          assert torch.cuda.is_available() is False
+          assert torch.get_num_threads() == 1
+          assert torch.get_num_interop_threads() == 1
+
+          from demucs.separate import main as demucs_main
+          args = ['-n', 'htdemucs_6s', '-d', 'cpu', '--shifts', '1', '-j', '1', '-o', '/tmp/v156-demucs', '/tmp/v156-normalized.wav']
+          try:
+              demucs_main(args)
+          except SystemExit as exc:
+              if exc.code not in (None, 0):
+                  raise
+          stem_dir = Path('/tmp/v156-demucs/htdemucs_6s/v156-normalized')
+          for name in ('guitar.wav', 'bass.wav', 'drums.wav'):
+              p = stem_dir / name
+              assert p.is_file() and p.stat().st_size > 1000000, p
+          print('stem_dir=' + str(stem_dir))
+          PY
+
+      - name: Refresh branch before candidate boundary
+        shell: bash
+        run: |
+          set -euo pipefail
+          git fetch origin "$BRANCH"
+          git rebase "origin/$BRANCH"
+          test "$GITHUB_RUN_NUMBER" = "1"
+          test "$(git hash-object "$PREREG")" = "25a0a921e3245049a7f64fd3cb823e6767fe55da"
+          test "$(git hash-object "$PRE_RUN")" = "4591695763a1e59d6b1b2bfa2600969ff4b0201f"
+          test "$(git hash-object "$TRANSCRIBER")" = "961e18f66766e51abb42f46e529730fcaa2807b4"
+          test "$(git hash-object "$QC")" = "3b1018e751deecdfb0efca100c29848256ee1234"
+          test "$(git hash-object "$ENGINE")" = "3357582dd8311b28f4b85f2ebfbc7acb8c9e4fb8"
+          test ! -e "$OUTPUT"
+          test ! -e "$RECEIPT"
+          test ! -e "$QC_OUTPUT"
+          test ! -e "$ENV_RECEIPT"
+
+      - name: Freeze environment and separation receipt
+        shell: bash
+        run: |
+          set -euo pipefail
+          mkdir -p debug/v156-cpu-autonomous
+          python - <<'PY'
+          import hashlib, importlib.metadata, json
+          from pathlib import Path
+          import numpy, scipy, soundfile, torch
+
+          def sha256(path):
+              h = hashlib.sha256()
+              with Path(path).open('rb') as f:
+                  for chunk in iter(lambda: f.read(1024 * 1024), b''):
+                      h.update(chunk)
+              return h.hexdigest()
+
+          stem_dir = Path('/tmp/v156-demucs/htdemucs_6s/v156-normalized')
+          cache = Path.home() / '.cache' / 'torch' / 'hub' / 'checkpoints'
+          checkpoint_files = []
+          if cache.is_dir():
+              for p in sorted(x for x in cache.iterdir() if x.is_file()):
+                  checkpoint_files.append({'path': str(p), 'sha256': sha256(p), 'bytes': p.stat().st_size})
+          assert checkpoint_files, 'Demucs checkpoint receipt is empty'
+          receipt = {
+              'schema': 'dadrock.tabs.v156.cpu-environment-receipt.v1',
+              'validation': 'PASS',
+              'workflowRunId': os.environ.get('GITHUB_RUN_ID'),
+              'workflowRunNumber': int(os.environ.get('GITHUB_RUN_NUMBER', '0')),
+              'device': 'cpu',
+              'cudaAvailable': False,
+              'torchCudaVersion': None,
+              'versions': {
+                  'python': '3.10',
+                  'torch': torch.__version__,
+                  'numpy': numpy.__version__,
+                  'scipy': scipy.__version__,
+                  'soundfile': soundfile.__version__,
+                  'demucs': importlib.metadata.version('demucs'),
+                  'basic-pitch': importlib.metadata.version('basic-pitch'),
+                  'librosa': importlib.metadata.version('librosa'),
+                  'imageio-ffmpeg': importlib.metadata.version('imageio-ffmpeg'),
+              },
+              'v156EngineGitBlob': '3357582dd8311b28f4b85f2ebfbc7acb8c9e4fb8',
+              'demucsModel': 'htdemucs_6s',
+              'demucsShifts': 1,
+              'demucsJobs': 1,
+              'demucsModelCheckpointFiles': checkpoint_files,
+              'determinism': {
+                  'seed': 0,
+                  'pythonRandomSeed': 0,
+                  'numpyRandomSeed': 0,
+                  'torchManualSeed': 0,
+                  'torchDeterministicAlgorithms': True,
+                  'torchDeterministicWarnOnly': False,
+                  'torchNumThreads': 1,
+                  'torchNumInteropThreads': 1,
+                  'ompNumThreads': 1,
+                  'mklNumThreads': 1,
+                  'openblasNumThreads': 1,
+                  'numexprNumThreads': 1,
+                  'demucsInvocation': 'in-process demucs.separate.main',
+                  'separationRepeatCount': 1,
+              },
+              'audio': {
+                  'sourceSha256': '215bd5a657c5326f08f132ae358595a95c30b39bb7493a52c2f910d5a608149f',
+                  'normalizedSha256': sha256('/tmp/v156-normalized.wav'),
+              },
+              'stemSha256': {
+                  'guitar': sha256(stem_dir / 'guitar.wav'),
+                  'bass': sha256(stem_dir / 'bass.wav'),
+                  'drums': sha256(stem_dir / 'drums.wav'),
+              },
+              'safety': {
+                  'referenceRead': False,
+                  'professionalReferencePathsOpened': 0,
+                  'referenceFacingScoreCalls': 0,
+                  'gpuUsed': False,
+                  'modalUsed': False,
+                  'mainOrProductionModified': False,
+              },
+          }
+          Path('debug/v156-cpu-autonomous/environment-receipt.json').write_text(json.dumps(receipt, indent=2, sort_keys=True) + '\n')
+          print(json.dumps({'checkpointCount': len(checkpoint_files), 'stemSha256': receipt['stemSha256']}, indent=2, sort_keys=True))
+          PY
+
+      - name: Generate exactly one V156 candidate
+        shell: bash
+        run: |
+          set -euo pipefail
+          STEM_DIR="$DEMUCS_DIR/htdemucs_6s/v156-normalized"
+          python "$TRANSCRIBER" \
+            --mix "$NORM_WAV" \
+            --guitar "$STEM_DIR/guitar.wav" \
+            --bass "$STEM_DIR/bass.wav" \
+            --drums "$STEM_DIR/drums.wav" \
+            --preregistration "$PREREG" \
+            --environment-receipt "$ENV_RECEIPT" \
+            --output "$OUTPUT" \
+            --receipt "$RECEIPT"
+          test -f "$OUTPUT"
+          test -f "$RECEIPT"
+
+      - name: Independent reference-blind structural QC
+        shell: bash
+        run: |
+          set -euo pipefail
+          python "$QC" \
+            --candidate "$OUTPUT" \
+            --receipt "$RECEIPT" \
+            --preregistration "$PREREG" \
+            --pre-run-receipt "$PRE_RUN" \
+            --output "$QC_OUTPUT"
+          python - <<'PY'
+          import json
+          from pathlib import Path
+          q = json.loads(Path('debug/v156-cpu-autonomous/structural-qc.json').read_text())
+          assert q['validation'] == 'PASS'
+          assert q['safety']['referenceRead'] is False
+          assert q['safety']['referenceFacingScoreCalls'] == 0
+          PY
+
+      - name: Freeze candidate receipts and self-seal
+        shell: bash
+        run: |
+          set -euo pipefail
+          rm .github/workflows/v156-generate-reference-blind-once.yml
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add "$OUTPUT" "$RECEIPT" "$QC_OUTPUT" "$ENV_RECEIPT" .github/workflows/v156-generate-reference-blind-once.yml
+          git commit -m "research: freeze sole V156 reference-blind CPU candidate [skip ci]"
+          git push origin HEAD:"$BRANCH"
