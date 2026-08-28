@@ -8,18 +8,17 @@ import importlib.metadata
 import json
 import math
 from pathlib import Path
-from typing import Any, Mapping
+from typing import Any
 
 import numpy as np
 
 from event_logic_v162 import (
-    BASS_GRID_CAP,
-    GUITAR_POLYPHONY_CAP,
     active_state_reattack_candidates,
     bass_state_proposals,
     cap_bass_grid,
     cap_guitar_polyphony,
     choose_sequence_register,
+    local_peak,
     median_smooth_midi,
     segment_guitar_rows,
     select_event_step,
@@ -320,8 +319,8 @@ def guitar_events(path: Path) -> tuple[list[dict[str, Any]], dict[str, Any], np.
     pitch_evidence: dict[tuple[int, int], dict[str, Any]] = {}
     peak_frames: set[int] = set()
     for frame in independent:
-        refined, _meta = refine_onset_frame(env, int(frame), 3)
-        peak_frames.add(int(refined))
+        peak_frame, _peak = local_peak(env, int(frame), 3)
+        peak_frames.add(int(peak_frame))
     for frame in sorted(peak_frames):
         scores, fundamentals = three_frame_template(cqt, freqs, frame, GUITAR_RANGE[0], GUITAR_RANGE[1])
         med_fund = float(np.median(fundamentals))
@@ -373,7 +372,6 @@ def guitar_events(path: Path) -> tuple[list[dict[str, Any]], dict[str, Any], np.
 
 def bass_events(path: Path) -> tuple[list[dict[str, Any]], dict[str, Any], np.ndarray]:
     import librosa
-
     y = load_mono(path)
     env = onset_env(y)
     rms = rms_env(y)
@@ -495,18 +493,11 @@ def bass_events(path: Path) -> tuple[list[dict[str, Any]], dict[str, Any], np.nd
     }, env
 
 
-def map_events(
-    events: list[dict[str, Any]],
-    lattice: list[float],
-    instrument_env: np.ndarray,
-    shared_env: np.ndarray,
-    stream: str,
-) -> tuple[list[dict[str, Any]], int, int]:
+def map_events(events: list[dict[str, Any]], lattice: list[float], instrument_env: np.ndarray, shared_env: np.ndarray, stream: str) -> tuple[list[dict[str, Any]], int, int]:
     if len(lattice) < 2:
         raise RuntimeError("V162 frozen subdivision lattice too short")
     mapped: dict[tuple[int, int], dict[str, Any]] = {}
-    pregrid = 0
-    corrected = 0
+    pregrid = corrected = 0
     first_half = 0.5 * float(lattice[1] - lattice[0])
     for row in events:
         event_time = float(row["startSeconds"])
