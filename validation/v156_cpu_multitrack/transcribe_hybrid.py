@@ -16,6 +16,7 @@ from validation.v155_cpu_multitrack import transcribe_hybrid as engine
 ENGINE_GIT_BLOB = "3357582dd8311b28f4b85f2ebfbc7acb8c9e4fb8"
 CANDIDATE_SCHEMA = "dadrock.tabs.v156.cpu-hybrid-generated.v1"
 RECEIPT_SCHEMA = "dadrock.tabs.v156.cpu-hybrid-generation-receipt.v1"
+PREREG_STATUS = "PREREGISTERED_BEFORE_GENERATION_AMENDED_EXECUTION_DETERMINISM"
 
 
 def main() -> int:
@@ -37,7 +38,7 @@ def main() -> int:
             raise FileNotFoundError(path)
 
     prereg = json.loads(args.preregistration.read_text())
-    if prereg.get("version") != "V156" or prereg.get("status") != "PREREGISTERED_BEFORE_GENERATION":
+    if prereg.get("version") != "V156" or prereg.get("status") != PREREG_STATUS:
         raise RuntimeError("invalid V156 preregistration")
     if prereg.get("canonicalContract", {}).get("candidateSchema") != CANDIDATE_SCHEMA:
         raise RuntimeError("V156 candidate schema contract drift")
