@@ -1,9 +1,11 @@
 #!/usr/bin/env python3
 """Canonical V158 reference-blind CPU transcriber entry point.
 
-The original V158 setup draft is preserved byte-for-byte as transcribe_v158_base.py.
-This entry point reuses only its reference-blind DSP helpers, implements the separately
-sealed sparse-pursuit resolution, and emits exactly one candidate + generation receipt.
+The original setup implementation is preserved byte-for-byte as
+``transcribe_v158_base.py``. This entry point adds the separately sealed Guitar
+sparse-pursuit resolution and cryptographically binds execution to the V158
+pre-run receipt. It has no professional-reference, scorer, prior-candidate, or
+prior-diagnostic input.
 """
 from __future__ import annotations
 
@@ -21,6 +23,7 @@ import transcribe_v158_base as base
 CANDIDATE_SCHEMA = "dadrock.tabs.v158.cpu-sequential-onset-first-generated.v1"
 RECEIPT_SCHEMA = "dadrock.tabs.v158.cpu-generation-receipt.v1"
 ENV_SCHEMA = "dadrock.tabs.v158.cpu-environment-receipt.v1"
+PRE_RUN_SCHEMA = "dadrock.tabs.v158.pre-run-identity-receipt.v1"
 PREREG_BLOB = "728cf28646db225f3c266a4bb73a6112b1f60330"
 CONTRACT_BLOB = "68f01df155cd27077cea3de5a0cd048ddcb7bd76"
 RESOLUTION_BLOB = "b4b6a5c1f8a88d359a981eb1238907805f2fc2a9"
@@ -36,16 +39,14 @@ def template_bins(freqs: np.ndarray, midi: int) -> tuple[int, ...]:
     import librosa
 
     f0 = float(librosa.midi_to_hz(midi))
-    out: set[int] = set()
+    bins: set[int] = set()
     for harmonic in base.HARMONICS:
         hz = f0 * harmonic
         if hz > float(freqs[-1]):
             continue
         center = base.frequency_bin(freqs, hz)
-        lo = max(0, center - 1)
-        hi = min(len(freqs), center + 2)
-        out.update(range(lo, hi))
-    return tuple(sorted(out))
+        bins.update(range(max(0, center - 1), min(len(freqs), center + 2)))
+    return tuple(sorted(bins))
 
 
 def residual_template_gain(residual: np.ndarray, freqs: np.ndarray, midi: int) -> float:
@@ -78,14 +79,14 @@ def sparse_pursuit_select(
     """Apply the sealed non-overlapping residual sparse-pursuit selection."""
     frame_ids = [frame - 1, frame, frame + 1]
     residual = np.asarray(cqt[:, frame_ids], dtype=float).copy()
-    remaining = set(int(m) for m in persistent)
+    remaining = set(int(midi) for midi in persistent)
     occupied: set[int] = set()
     selected: list[tuple[int, float, bool]] = []
 
-    full_scores, full_fundamentals = base.three_frame_template(
+    _, fundamentals = base.three_frame_template(
         cqt, freqs, frame, base.GUITAR_RANGE[0], base.GUITAR_RANGE[1]
     )
-    median_fundamental = float(np.median(full_fundamentals))
+    median_fundamental = float(np.median(fundamentals))
 
     while remaining and len(selected) < 6:
         best_midi: int | None = None
@@ -93,7 +94,7 @@ def sparse_pursuit_select(
         best_bins: tuple[int, ...] = ()
         for midi in sorted(remaining):
             bins = template_bins(freqs, midi)
-            if any(b in occupied for b in bins):
+            if any(bin_index in occupied for bin_index in bins):
                 continue
             gain = residual_template_gain(residual, freqs, midi)
             if (
@@ -108,8 +109,8 @@ def sparse_pursuit_select(
             break
 
         offset = best_midi - base.GUITAR_RANGE[0]
-        fund_present = bool(full_fundamentals[offset] > median_fundamental)
-        selected.append((best_midi, float(best_gain), fund_present))
+        fundamental_present = bool(fundamentals[offset] > median_fundamental)
+        selected.append((best_midi, float(best_gain), fundamental_present))
         occupied.update(best_bins)
         if best_bins:
             residual[np.asarray(best_bins, dtype=int), :] = 0.0
@@ -138,57 +139,57 @@ def guitar_events(path: Path) -> tuple[list[dict[str, Any]], dict[str, Any]]:
     )
 
     rows: list[dict[str, Any]] = []
-    raw_bp = 0
-    repairs = 0
+    raw_basic_pitch_count = 0
+    register_repair_count = 0
     for note in notes:
         if len(note) < 4:
             continue
         start = float(note[0])
         end = float(note[1])
         raw_midi = int(round(float(note[2])))
-        amp = float(note[3])
+        amplitude = float(note[3])
         if not base.GUITAR_RANGE[0] <= raw_midi <= base.GUITAR_RANGE[1]:
             continue
-        raw_bp += 1
+        raw_basic_pitch_count += 1
         frame = int(np.clip(round(start * base.SR / base.HOP), 0, cqt.shape[1] - 1))
         scores, fundamentals = base.three_frame_template(
             cqt, freqs, frame, base.GUITAR_RANGE[0], base.GUITAR_RANGE[1]
         )
-        med_fund = float(np.median(fundamentals))
+        median_fundamental = float(np.median(fundamentals))
         register_candidates = [raw_midi] + [
-            m
-            for m in (raw_midi - 12, raw_midi + 12)
-            if base.GUITAR_RANGE[0] <= m <= base.GUITAR_RANGE[1]
+            midi
+            for midi in (raw_midi - 12, raw_midi + 12)
+            if base.GUITAR_RANGE[0] <= midi <= base.GUITAR_RANGE[1]
         ]
-        chosen = raw_midi
+        chosen_midi = raw_midi
         chosen_score = float(scores[raw_midi - base.GUITAR_RANGE[0]])
         for midi in sorted(register_candidates):
             offset = midi - base.GUITAR_RANGE[0]
             score = float(scores[offset])
-            fund_present = bool(fundamentals[offset] > med_fund)
-            if midi != raw_midi and fund_present and score > chosen_score + EPS:
-                chosen = midi
+            fundamental_present = bool(fundamentals[offset] > median_fundamental)
+            if midi != raw_midi and fundamental_present and score > chosen_score + EPS:
+                chosen_midi = midi
                 chosen_score = score
-        if chosen != raw_midi:
-            repairs += 1
+        if chosen_midi != raw_midi:
+            register_repair_count += 1
         rows.append(
             {
-                "midi": int(chosen),
+                "midi": int(chosen_midi),
                 "startSeconds": start,
                 "endSeconds": end,
                 "durationSeconds": max(0.0, end - start),
-                "confidence": amp,
+                "confidence": amplitude,
                 "source": "basic_pitch",
                 "basicPitchOriginalMidi": int(raw_midi),
-                "registerRepaired": bool(chosen != raw_midi),
+                "registerRepaired": bool(chosen_midi != raw_midi),
                 "templateScore": chosen_score,
             }
         )
 
-    env = base.onset_env(y)
+    onset_envelope = base.onset_env(y)
     onset_frames = np.asarray(
         librosa.onset.onset_detect(
-            onset_envelope=env,
+            onset_envelope=onset_envelope,
             sr=base.SR,
             hop_length=base.HOP,
             backtrack=False,
@@ -201,27 +202,32 @@ def guitar_events(path: Path) -> tuple[list[dict[str, Any]], dict[str, Any]]:
     for onset_index, raw_frame in enumerate(onset_frames):
         frame = int(np.clip(raw_frame, 1, cqt.shape[1] - 2))
         frame_sets: list[set[int]] = []
-        for f in (frame - 1, frame, frame + 1):
+        for analysis_frame in (frame - 1, frame, frame + 1):
             ranked = base.top_template_midi_per_frame(
-                cqt, freqs, f, base.GUITAR_RANGE[0], base.GUITAR_RANGE[1], 6
+                cqt,
+                freqs,
+                analysis_frame,
+                base.GUITAR_RANGE[0],
+                base.GUITAR_RANGE[1],
+                6,
             )
-            frame_sets.append({m for m, _, _ in ranked})
+            frame_sets.append({midi for midi, _, _ in ranked})
         persistent = set.intersection(*frame_sets) if frame_sets else set()
         selected = sparse_pursuit_select(cqt, freqs, frame, persistent)
         selected_count += len(selected)
-        t = float(librosa.frames_to_time(frame, sr=base.SR, hop_length=base.HOP))
-        for midi, gain, fund_present in selected:
+        onset_seconds = float(librosa.frames_to_time(frame, sr=base.SR, hop_length=base.HOP))
+        for midi, gain, fundamental_present in selected:
             if any(
                 int(row["midi"]) == midi
-                and abs(float(row["startSeconds"]) - t) <= 0.060
+                and abs(float(row["startSeconds"]) - onset_seconds) <= 0.060
                 for row in rows
             ):
                 continue
             rows.append(
                 {
                     "midi": int(midi),
-                    "startSeconds": t,
-                    "endSeconds": t + 0.07,
+                    "startSeconds": onset_seconds,
+                    "endSeconds": onset_seconds + 0.07,
                     "durationSeconds": 0.07,
                     "confidence": float(gain),
                     "source": "harmonic_track",
@@ -229,7 +235,7 @@ def guitar_events(path: Path) -> tuple[list[dict[str, Any]], dict[str, Any]]:
                     "onsetFrame": frame,
                     "persistentTrackFrames": 3,
                     "sparsePursuitGain": float(gain),
-                    "fundamentalPresent": bool(fund_present),
+                    "fundamentalPresent": bool(fundamental_present),
                 }
             )
             added_count += 1
@@ -238,8 +244,8 @@ def guitar_events(path: Path) -> tuple[list[dict[str, Any]], dict[str, Any]]:
         "inputSha256": base.sha256_file(path),
         "basicPitchVersion": importlib.metadata.version("basic-pitch"),
         "basicPitchModelSha256": base.sha256_file(Path(ICASSP_2022_MODEL_PATH)),
-        "basicPitchRawEventCount": raw_bp,
-        "registerRepairCount": repairs,
+        "basicPitchRawEventCount": raw_basic_pitch_count,
+        "registerRepairCount": register_repair_count,
         "independentOnsetCount": int(len(onset_frames)),
         "sparsePursuitSelectedCount": selected_count,
         "harmonicTrackAddedCount": added_count,
@@ -248,7 +254,11 @@ def guitar_events(path: Path) -> tuple[list[dict[str, Any]], dict[str, Any]]:
     }
 
 
-def validate_sealed_setup(args: argparse.Namespace) -> tuple[dict[str, Any], dict[str, Any], dict[str, Any], dict[str, Any]]:
+def validate_sealed_setup(
+    args: argparse.Namespace,
+) -> tuple[dict[str, Any], dict[str, Any]]:
+    entrypoint_blob = base.git_blob_sha(Path(__file__))
+    structural_qc_blob = base.git_blob_sha(args.structural_qc)
     if base.git_blob_sha(helper_path()) != BASE_HELPER_BLOB:
         raise RuntimeError("V158 base helper identity drift")
     if base.git_blob_sha(args.preregistration) != PREREG_BLOB:
@@ -261,7 +271,8 @@ def validate_sealed_setup(args: argparse.Namespace) -> tuple[dict[str, Any], dic
     prereg = json.loads(args.preregistration.read_text())
     contract = json.loads(args.implementation_contract.read_text())
     resolution = json.loads(args.sparse_pursuit_resolution.read_text())
-    env = json.loads(args.environment_receipt.read_text())
+    pre_run = json.loads(args.pre_run_receipt.read_text())
+    environment = json.loads(args.environment_receipt.read_text())
 
     if prereg.get("status") != "PREREGISTERED_BEFORE_GENERATION":
         raise RuntimeError("V158 preregistration status invalid")
@@ -280,36 +291,88 @@ def validate_sealed_setup(args: argparse.Namespace) -> tuple[dict[str, Any], dic
     if resolution.get("sparsePursuitNumerics", {}).get("newTunedThresholds") != []:
         raise RuntimeError("V158 sparse-pursuit resolution introduced tuned thresholds")
 
-    if env.get("schema") != ENV_SCHEMA or env.get("validation") != "PASS" or env.get("device") != "cpu":
+    if pre_run.get("schema") != PRE_RUN_SCHEMA or pre_run.get("version") != "V158":
+        raise RuntimeError("V158 pre-run receipt schema/version invalid")
+    if pre_run.get("validation") != "PASS" or pre_run.get("status") != "SEALED_BEFORE_GENERATION":
+        raise RuntimeError("V158 pre-run receipt state invalid")
+    pins = pre_run.get("pinnedGitBlobs") or {}
+    expected_pins = {
+        "preregistration": PREREG_BLOB,
+        "implementationContract": CONTRACT_BLOB,
+        "sparsePursuitResolution": RESOLUTION_BLOB,
+        "transcriber": entrypoint_blob,
+        "baseHelper": BASE_HELPER_BLOB,
+        "structuralQc": structural_qc_blob,
+    }
+    for key, expected in expected_pins.items():
+        if pins.get(key) != expected:
+            raise RuntimeError(f"V158 pre-run pin drift: {key}")
+    if pre_run.get("candidateExistsAtSeal") is not False:
+        raise RuntimeError("V158 candidate existed at pre-run seal")
+    if pre_run.get("generationReceiptAbsentAtSeal") is not True or pre_run.get("environmentReceiptAbsentAtSeal") is not True or pre_run.get("generationWorkflowAbsentAtSeal") is not True:
+        raise RuntimeError("V158 pre-run absence boundary invalid")
+    if pre_run.get("referenceReadAtSeal") is not False or pre_run.get("professionalReferencePathsOpenedAtSeal") != 0 or pre_run.get("referenceFacingScoreCallsAtSeal") != 0:
+        raise RuntimeError("V158 pre-run reference boundary invalid")
+    trigger = pre_run.get("triggerSafety") or {}
+    if trigger.get("generationWorkflowCreationIsSingleTrigger") is not True or trigger.get("secondArmEditForbidden") is not True:
+        raise RuntimeError("V158 pre-run trigger-safety contract invalid")
+    if trigger.get("expectedGenerationWorkflowRunCount") != 1 or trigger.get("workflowMustSelfSealAfterSuccessfulFreeze") is not True:
+        raise RuntimeError("V158 pre-run workflow-count/freeze contract invalid")
+    if trigger.get("duplicateRunAction") != "ABORT_V158_WITHOUT_SCORING":
+        raise RuntimeError("V158 duplicate-run policy invalid")
+
+    if environment.get("schema") != ENV_SCHEMA or environment.get("validation") != "PASS" or environment.get("device") != "cpu":
         raise RuntimeError("V158 environment receipt invalid")
-    if env.get("cudaAvailable") is not False or env.get("torchCudaVersion") is not None:
+    if environment.get("cudaAvailable") is not False or environment.get("torchCudaVersion") is not None:
         raise RuntimeError("V158 environment is not confirmed CPU-only")
-    return prereg, contract, resolution, env
+
+    return environment, {
+        "entrypointGitBlob": entrypoint_blob,
+        "structuralQcGitBlob": structural_qc_blob,
+        "preRunReceiptSha256": base.sha256_file(args.pre_run_receipt),
+    }
 
 
 def main() -> int:
-    ap = argparse.ArgumentParser()
-    ap.add_argument("--mix", type=Path, required=True)
-    ap.add_argument("--guitar", type=Path, required=True)
-    ap.add_argument("--bass", type=Path, required=True)
-    ap.add_argument("--drums", type=Path, required=True)
-    ap.add_argument("--preregistration", type=Path, required=True)
-    ap.add_argument("--implementation-contract", type=Path, required=True)
-    ap.add_argument("--sparse-pursuit-resolution", type=Path, required=True)
-    ap.add_argument("--environment-receipt", type=Path, required=True)
-    ap.add_argument("--output", type=Path, required=True)
-    ap.add_argument("--receipt", type=Path, required=True)
-    args = ap.parse_args()
+    parser = argparse.ArgumentParser()
+    parser.add_argument("--mix", type=Path, required=True)
+    parser.add_argument("--guitar", type=Path, required=True)
+    parser.add_argument("--bass", type=Path, required=True)
+    parser.add_argument("--drums", type=Path, required=True)
+    parser.add_argument("--preregistration", type=Path, required=True)
+    parser.add_argument("--implementation-contract", type=Path, required=True)
+    parser.add_argument("--sparse-pursuit-resolution", type=Path, required=True)
+    parser.add_argument("--pre-run-receipt", type=Path, required=True)
+    parser.add_argument("--structural-qc", type=Path, required=True)
+    parser.add_argument("--environment-receipt", type=Path, required=True)
+    parser.add_argument("--output", type=Path, required=True)
+    parser.add_argument("--receipt", type=Path, required=True)
+    args = parser.parse_args()
 
     if args.output.exists() or args.receipt.exists():
         raise RuntimeError("V158 candidate/receipt is write-once")
-    _, _, _, env = validate_sealed_setup(args)
+    for path in (
+        args.mix,
+        args.guitar,
+        args.bass,
+        args.drums,
+        args.preregistration,
+        args.implementation_contract,
+        args.sparse_pursuit_resolution,
+        args.pre_run_receipt,
+        args.structural_qc,
+        args.environment_receipt,
+    ):
+        if not path.is_file():
+            raise RuntimeError(f"V158 missing required input: {path}")
+
+    environment, identities = validate_sealed_setup(args)
 
     grid = base.build_timebase(args.mix, args.drums, args.bass, args.guitar)
-    bass_raw, bass_meta = base.bass_events(args.bass)
-    guitar_raw, guitar_meta = guitar_events(args.guitar)
-    guitar, guitar_pre = base.map_and_dedupe(guitar_raw, grid, "combinedGuitar")
-    bass, bass_pre = base.map_and_dedupe(bass_raw, grid, "bass")
+    bass_raw, bass_metadata = base.bass_events(args.bass)
+    guitar_raw, guitar_metadata = guitar_events(args.guitar)
+    guitar, guitar_pre_grid = base.map_and_dedupe(guitar_raw, grid, "combinedGuitar")
+    bass, bass_pre_grid = base.map_and_dedupe(bass_raw, grid, "bass")
     if not guitar or not bass:
         raise RuntimeError("V158 generated empty stream")
 
@@ -335,9 +398,9 @@ def main() -> int:
         "timebase": {
             "method": "dynamic-beat-grid-four-state-viterbi-bar-position",
             "trackerTempoBpm": grid.tempo_bpm,
-            "beatTimesSeconds": [float(x) for x in grid.beat_times],
-            "beatGridSteps": [float(x) for x in grid.beat_steps],
-            "viterbiBarStates": [int(x) for x in grid.states],
+            "beatTimesSeconds": [float(value) for value in grid.beat_times],
+            "beatGridSteps": [float(value) for value in grid.beat_steps],
+            "viterbiBarStates": [int(value) for value in grid.states],
             "earliestActivitySeconds": grid.earliest_activity,
             "leadingExtensionBars": grid.leading_bars,
             "featureSummary": grid.feature_summary,
@@ -347,12 +410,15 @@ def main() -> int:
                 "statePathLength": len(grid.states),
             },
         },
-        "streamMetadata": {"combinedGuitar": guitar_meta, "bass": bass_meta},
+        "streamMetadata": {"combinedGuitar": guitar_metadata, "bass": bass_metadata},
         "sealedInputs": {
             "preregistrationGitBlob": PREREG_BLOB,
             "implementationContractGitBlob": CONTRACT_BLOB,
             "sparsePursuitResolutionGitBlob": RESOLUTION_BLOB,
+            "canonicalEntryPointGitBlob": identities["entrypointGitBlob"],
             "baseHelperGitBlob": BASE_HELPER_BLOB,
+            "structuralQcGitBlob": identities["structuralQcGitBlob"],
+            "preRunReceiptSha256": identities["preRunReceiptSha256"],
         },
         "safety": safety,
     }
@@ -367,21 +433,23 @@ def main() -> int:
         "preregistrationSha256": base.sha256_file(args.preregistration),
         "implementationContractSha256": base.sha256_file(args.implementation_contract),
         "sparsePursuitResolutionSha256": base.sha256_file(args.sparse_pursuit_resolution),
+        "preRunReceiptSha256": identities["preRunReceiptSha256"],
         "environmentReceiptSha256": base.sha256_file(args.environment_receipt),
         "implementation": {
-            "canonicalEntryPointGitBlob": "PIN_AT_PRE_RUN",
+            "canonicalEntryPointGitBlob": identities["entrypointGitBlob"],
             "baseHelperGitBlob": BASE_HELPER_BLOB,
+            "structuralQcGitBlob": identities["structuralQcGitBlob"],
             "sparsePursuitResolutionGitBlob": RESOLUTION_BLOB,
         },
         "counts": {"combinedGuitar": len(guitar), "bass": len(bass)},
-        "preGridExcluded": {"combinedGuitar": guitar_pre, "bass": bass_pre},
+        "preGridExcluded": {"combinedGuitar": guitar_pre_grid, "bass": bass_pre_grid},
         "inputIdentities": {
             "mixSha256": base.sha256_file(args.mix),
             "guitarStemSha256": base.sha256_file(args.guitar),
             "bassStemSha256": base.sha256_file(args.bass),
             "drumsStemSha256": base.sha256_file(args.drums),
         },
-        "environment": env,
+        "environment": environment,
         "safety": safety,
     }
     args.receipt.parent.mkdir(parents=True, exist_ok=True)
