@@ -1,0 +1,469 @@
+name: V164 one-shot local-evidence CPU generation
+
+on:
+  push:
+    branches:
+      - v143-contextual-prune-lobo
+    paths:
+      - .github/workflows/v164-generate.yml
+
+permissions:
+  contents: write
+
+concurrency:
+  group: v164-generation-once
+  cancel-in-progress: false
+
+env:
+  BRANCH: v143-contextual-prune-lobo
+  EXPECTED_PARENT_HEAD: 010995ec3085e2d7c55a68df02512420197cf876
+  SOURCE_AUDIO: /tmp/v164-source.m4a
+  NORM_WAV: /tmp/v164-normalized.wav
+  DEMUCS_DIR: /tmp/v164-demucs
+  STEM_DIR: /tmp/v164-demucs/htdemucs_6s/v164-normalized
+  PREREG: debug/v164-cpu-autonomous/preregistration.json
+  CONTRACT: debug/v164-cpu-autonomous/implementation-contract.json
+  PRE_RUN: debug/v164-cpu-autonomous/pre-run-identity-receipt.json
+  ENV_RECEIPT: debug/v164-cpu-autonomous/environment-receipt.json
+  NEGATIVE_GUARD: debug/v164-cpu-autonomous/negative-runtime-guard.py
+  EVENT_LOGIC: validation/v164_cpu_autonomous/event_logic_v164.py
+  EVENT_TEST: validation/v164_cpu_autonomous/test_event_logic_v164.py
+  TIMEBASE_BUILDER: validation/v164_cpu_autonomous/build_timebase_v164.py
+  TIMEBASE_QC_CODE: validation/v164_cpu_autonomous/timebase_qc_v164.py
+  TRANSCRIBER: validation/v164_cpu_autonomous/transcribe_v164.py
+  STRUCTURAL_QC_CODE: validation/v164_cpu_autonomous/structural_qc_v164.py
+  JSON_NATIVE_TEST: validation/v164_cpu_autonomous/test_json_native_v164.py
+  TIMEBASE: debug/v164-cpu-autonomous/timebase.json
+  TIMEBASE_QC: debug/v164-cpu-autonomous/timebase-qc.json
+  OUTPUT: debug/v164-cpu-autonomous/generated.json
+  GENERATION_RECEIPT: debug/v164-cpu-autonomous/generation-receipt.json
+  STRUCTURAL_QC: debug/v164-cpu-autonomous/structural-qc.json
+  TERMINAL_FREEZE: debug/v164-cpu-autonomous/terminal-freeze.json
+  CUDA_VISIBLE_DEVICES: ""
+  PYTHONHASHSEED: "0"
+  OMP_NUM_THREADS: "1"
+  MKL_NUM_THREADS: "1"
+  OPENBLAS_NUM_THREADS: "1"
+  NUMEXPR_NUM_THREADS: "1"
+
+jobs:
+  generate-once:
+    if: github.ref == 'refs/heads/v143-contextual-prune-lobo'
+    runs-on: ubuntu-latest
+    timeout-minutes: 180
+    steps:
+      - name: Checkout exact one-shot arm
+        uses: actions/checkout@v4
+        with:
+          ref: ${{ github.sha }}
+          fetch-depth: 0
+
+      - name: Set up Python 3.10
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.10'
+
+      - name: Verify V164 one-shot identity and sealed boundaries
+        id: guard
+        shell: bash
+        run: |
+          set -euo pipefail
+          test "$GITHUB_EVENT_NAME" = "push"
+          test "$GITHUB_RUN_NUMBER" = "1"
+          test "$GITHUB_RUN_ATTEMPT" = "1"
+          test "$(git rev-parse HEAD)" = "$GITHUB_SHA"
+          test "$(git rev-parse HEAD^)" = "$EXPECTED_PARENT_HEAD"
+          test "$(git diff --name-only "$EXPECTED_PARENT_HEAD" "$GITHUB_SHA")" = ".github/workflows/v164-generate.yml"
+          git fetch origin "$BRANCH"
+          test "$(git rev-parse "origin/$BRANCH")" = "$GITHUB_SHA"
+
+          test "$(git hash-object "$PREREG")" = "05d255d75a6c1947891fba38d96d9399e3f75f9c"
+          test "$(git hash-object "$CONTRACT")" = "098f24282b59abba0f7cffa0793b344b76701724"
+          test "$(git hash-object "$PRE_RUN")" = "fa1942690b45bce35515abee35016f953fcccd45"
+          test "$(git hash-object "$ENV_RECEIPT")" = "25a7f5e2c692a6ac518ae1243ea812cf650f7278"
+          test "$(git hash-object "$EVENT_LOGIC")" = "62303877a1971f75cacda002c5ad921680161674"
+          test "$(git hash-object "$EVENT_TEST")" = "13d29ef19a297d19469196cb2a23a4c0d6e040de"
+          test "$(git hash-object "$TIMEBASE_BUILDER")" = "170a7a15d68e271d93775c2aaba058fe3ebaa8bb"
+          test "$(git hash-object "$TIMEBASE_QC_CODE")" = "e59498e76d881f22ea405c81781ca2004ea8f53e"
+          test "$(git hash-object "$TRANSCRIBER")" = "df1302216df404bc3368ff820f005d6b63ae100d"
+          test "$(git hash-object "$STRUCTURAL_QC_CODE")" = "c1a81c7a97e646398f5e50cbc63dae341cdc500b"
+          test "$(git hash-object "$JSON_NATIVE_TEST")" = "a0b525485bbea933004045622bbf8c63527f123b"
+          test "$(git hash-object "$NEGATIVE_GUARD")" = "230aa1efeb4640aabbb05720ead031e13cc57337"
+          test "$(git hash-object .github/workflows/v164-static-preflight.yml)" = "e6beec5526ed5e4925475eaab86f5ca78909a349"
+          test "$(git hash-object .github/workflows/v164-environment-seal.yml)" = "a6b5c30293b3255ab7ce0e31fdc115c4aad24e9e"
+
+          for path in "$TIMEBASE" "$TIMEBASE_QC" "$OUTPUT" "$GENERATION_RECEIPT" "$STRUCTURAL_QC" "$TERMINAL_FREEZE"; do
+            test ! -e "$path"
+          done
+
+          python "$NEGATIVE_GUARD" \
+            --event-logic "$EVENT_LOGIC" \
+            --event-test "$EVENT_TEST" \
+            --timebase-builder "$TIMEBASE_BUILDER" \
+            --timebase-qc "$TIMEBASE_QC_CODE" \
+            --transcriber "$TRANSCRIBER" \
+            --structural-qc "$STRUCTURAL_QC_CODE" \
+            --json-native-test "$JSON_NATIVE_TEST"
+
+          python - <<'PY'
+          import json
+          from pathlib import Path
+
+          prereg = json.loads(Path("debug/v164-cpu-autonomous/preregistration.json").read_text())
+          contract = json.loads(Path("debug/v164-cpu-autonomous/implementation-contract.json").read_text())
+          pre = json.loads(Path("debug/v164-cpu-autonomous/pre-run-identity-receipt.json").read_text())
+          env = json.loads(Path("debug/v164-cpu-autonomous/environment-receipt.json").read_text())
+
+          assert prereg["version"] == "V164"
+          assert prereg["status"] == "PREREGISTERED_BEFORE_NUMERIC_CONTRACT_OR_IMPLEMENTATION_CODE"
+          assert prereg["validation"] == "PASS"
+          assert contract["version"] == "V164"
+          assert contract["status"] == "SEALED_BEFORE_IMPLEMENTATION_CODE"
+          assert contract["validation"] == "PASS"
+          assert contract["runtimeBoundaries"]["generationMaximum"] == 1
+          assert contract["runtimeBoundaries"]["generationRerunForbidden"] is True
+          assert contract["runtimeBoundaries"]["generationMayReadProfessionalReference"] is False
+          assert contract["runtimeBoundaries"]["generationMayReadFrozenScorer"] is False
+          assert contract["runtimeBoundaries"]["generationMayReadV163Candidate"] is False
+          assert contract["runtimeBoundaries"]["generationMayReadV163Score"] is False
+
+          assert pre["schema"] == "dadrock.tabs.v164.pre-run-identity-receipt.v1"
+          assert pre["version"] == "V164"
+          assert pre["validation"] == "PASS"
+          assert pre["status"] == "SEALED_AFTER_STATIC_PREFLIGHT_BEFORE_SONG_PROCESSING"
+          expected_pins = {
+              "preregistration": "05d255d75a6c1947891fba38d96d9399e3f75f9c",
+              "implementationContract": "098f24282b59abba0f7cffa0793b344b76701724",
+              "eventLogic": "62303877a1971f75cacda002c5ad921680161674",
+              "eventFixture": "13d29ef19a297d19469196cb2a23a4c0d6e040de",
+              "timebaseBuilder": "170a7a15d68e271d93775c2aaba058fe3ebaa8bb",
+              "timebaseQc": "e59498e76d881f22ea405c81781ca2004ea8f53e",
+              "transcriber": "df1302216df404bc3368ff820f005d6b63ae100d",
+              "structuralQc": "c1a81c7a97e646398f5e50cbc63dae341cdc500b",
+              "jsonNativeFixture": "a0b525485bbea933004045622bbf8c63527f123b",
+              "negativeRuntimeGuard": "230aa1efeb4640aabbb05720ead031e13cc57337",
+              "staticPreflightWorkflow": "e6beec5526ed5e4925475eaab86f5ca78909a349",
+          }
+          assert pre["pinnedGitBlobs"] == expected_pins
+          for key in ("timebaseMustNotExistAtSeal", "timebaseQcReceiptMustNotExistAtSeal", "candidateMustNotExistAtSeal", "generationReceiptMustNotExistAtSeal", "structuralQcReceiptMustNotExistAtSeal", "terminalFreezeMustNotExistAtSeal", "generationWorkflowMustNotExistAtSeal"):
+              assert pre[key] is True, key
+          assert pre["referenceReadAtSeal"] is False
+          assert pre["professionalReferencePathsOpenedAtSeal"] == 0
+          assert pre["frozenScorerReadAtSeal"] is False
+          assert pre["V163CandidateReadAtSeal"] is False
+          assert pre["V163ScoreReadAtSeal"] is False
+          assert pre["songAudioExecutionsAtSeal"] == 0
+          assert pre["pitchInferenceExecutionsAtSeal"] == 0
+          assert pre["gpuExecutionsAtSeal"] == 0
+
+          assert env["schema"] == "dadrock.tabs.v164.cpu-environment-receipt.v1"
+          assert env["version"] == "V164"
+          assert env["validation"] == "PASS"
+          assert env["status"] == "VERIFIED_BEFORE_SONG_PROCESSING"
+          assert env["device"] == "cpu"
+          assert env["pythonVersion"] == "3.10.21"
+          assert env["torchVersion"] == "2.8.0+cpu"
+          assert env["torchCudaVersion"] is None
+          assert env["cudaAvailable"] is False
+          assert env["workflowRunId"] == 33221962951
+          assert env["workflowRunNumber"] == 1
+          assert env["workflowRunAttempt"] == 1
+          assert env["environmentWorkflowGitBlob"] == "a6b5c30293b3255ab7ce0e31fdc115c4aad24e9e"
+          assert env["preRunIdentityReceiptGitBlob"] == "fa1942690b45bce35515abee35016f953fcccd45"
+          assert env["plannedSeparation"] == {"device":"cpu","executedAtSeal":False,"jobs":1,"model":"htdemucs_6s","repeatCount":1,"shifts":1}
+          safety = env["safety"]
+          assert safety["referenceRead"] is False
+          assert safety["professionalReferencePathsOpened"] == 0
+          assert safety["frozenScorerRead"] is False
+          assert safety["V163CandidateRead"] is False
+          assert safety["V163ScoreRead"] is False
+          assert safety["songAudioRead"] is False
+          assert safety["normalizationExecuted"] is False
+          assert safety["demucsExecuted"] is False
+          assert safety["pitchInferenceExecuted"] is False
+          assert safety["cudaGpuUsed"] is False
+          assert safety["modalUsed"] is False
+          PY
+
+      - name: Execute sole V164 CPU pipeline
+        id: pipeline
+        shell: bash
+        run: |
+          set -u
+          mkdir -p debug/v164-cpu-autonomous
+          printf '%s\n' "PIPELINE_STARTED" > /tmp/v164-stage
+          printf '%s\n' "PIPELINE_UNEXPECTED_FAILURE" > /tmp/v164-outcome
+
+          fail_stage() {
+            printf '%s\n' "$1" > /tmp/v164-outcome
+            exit 0
+          }
+
+          if ! python -m pip install --disable-pip-version-check --upgrade pip; then fail_stage "DEPENDENCY_BOOTSTRAP_FAIL"; fi
+          if ! python -m pip install --disable-pip-version-check --index-url https://download.pytorch.org/whl/cpu torch==2.8.0; then fail_stage "TORCH_INSTALL_FAIL"; fi
+          if ! python -m pip install --disable-pip-version-check \
+            numpy==1.26.4 scipy==1.13.1 soundfile==0.12.1 \
+            basic-pitch==0.4.0 demucs==4.1.0 imageio-ffmpeg==0.6.0 librosa==0.11.0; then
+            fail_stage "DEPENDENCY_INSTALL_FAIL"
+          fi
+
+          if ! python - <<'PY'
+          import importlib.metadata as md, json, platform
+          from pathlib import Path
+          import torch
+          env = json.loads(Path("debug/v164-cpu-autonomous/environment-receipt.json").read_text())
+          assert platform.python_version() == env["pythonVersion"]
+          assert torch.__version__ == env["torchVersion"] == "2.8.0+cpu"
+          assert torch.version.cuda is None and env["torchCudaVersion"] is None
+          assert torch.cuda.is_available() is False and env["cudaAvailable"] is False
+          for package, expected in env["dependencyVersions"].items():
+              assert md.version(package) == expected, (package, md.version(package), expected)
+          PY
+          then fail_stage "CPU_ENVIRONMENT_REPRODUCTION_FAIL"; fi
+          printf '%s\n' "DEPENDENCIES_VERIFIED" > /tmp/v164-stage
+
+          if ! git show 74b0f815ff3f66f325220975c410621503de440f:public/gomywayfullaitest.m4a > "$SOURCE_AUDIO"; then
+            fail_stage "SOURCE_MATERIALIZATION_FAIL"
+          fi
+          if ! python - <<'PY'
+          import hashlib
+          from pathlib import Path
+          p = Path("/tmp/v164-source.m4a")
+          assert p.stat().st_size == 3478611
+          assert hashlib.sha256(p.read_bytes()).hexdigest() == "215bd5a657c5326f08f132ae358595a95c30b39bb7493a52c2f910d5a608149f"
+          PY
+          then fail_stage "SOURCE_IDENTITY_FAIL"; fi
+          printf '%s\n' "SOURCE_VERIFIED" > /tmp/v164-stage
+
+          FFMPEG_EXE="$(python - <<'PY'
+          import imageio_ffmpeg
+          print(imageio_ffmpeg.get_ffmpeg_exe())
+          PY
+          )"
+          if ! "$FFMPEG_EXE" -hide_banner -loglevel error -y \
+            -i "$SOURCE_AUDIO" -ar 44100 -ac 2 -c:a pcm_s16le "$NORM_WAV"; then
+            fail_stage "NORMALIZATION_FAIL"
+          fi
+          test -s "$NORM_WAV" || fail_stage "NORMALIZED_MIX_MISSING"
+          printf '%s\n' "NORMALIZED_VERIFIED" > /tmp/v164-stage
+
+          if ! python - <<'PY'
+          import random
+          import numpy as np
+          import torch
+          from demucs.separate import main
+          random.seed(0)
+          np.random.seed(0)
+          torch.manual_seed(0)
+          torch.set_num_threads(1)
+          torch.set_num_interop_threads(1)
+          torch.use_deterministic_algorithms(True)
+          main([
+              "-n", "htdemucs_6s", "-d", "cpu", "--shifts", "1", "-j", "1",
+              "-o", "/tmp/v164-demucs", "/tmp/v164-normalized.wav",
+          ])
+          PY
+          then fail_stage "DEMUCS_FAIL"; fi
+          for stem in guitar bass drums; do
+            test -s "$STEM_DIR/$stem.wav" || fail_stage "DEMUCS_STEM_MISSING_${stem^^}"
+          done
+          printf '%s\n' "DEMUCS_VERIFIED" > /tmp/v164-stage
+
+          set +e
+          python "$TIMEBASE_BUILDER" \
+            --source-audio "$SOURCE_AUDIO" --mix "$NORM_WAV" \
+            --drums "$STEM_DIR/drums.wav" --bass "$STEM_DIR/bass.wav" --guitar "$STEM_DIR/guitar.wav" \
+            --preregistration "$PREREG" --implementation-contract "$CONTRACT" --output "$TIMEBASE"
+          rc=$?
+          set -e
+          if [ "$rc" -ne 0 ]; then rm -f "$TIMEBASE"; fail_stage "TIMEBASE_BUILD_FAIL"; fi
+          test -s "$TIMEBASE" || fail_stage "TIMEBASE_BUILD_MISSING_ARTIFACT"
+          printf '%s\n' "TIMEBASE_BUILT" > /tmp/v164-stage
+
+          set +e
+          python "$TIMEBASE_QC_CODE" \
+            --timebase "$TIMEBASE" --source-audio "$SOURCE_AUDIO" --mix "$NORM_WAV" \
+            --drums "$STEM_DIR/drums.wav" --bass "$STEM_DIR/bass.wav" --guitar "$STEM_DIR/guitar.wav" \
+            --preregistration "$PREREG" --implementation-contract "$CONTRACT" --receipt "$TIMEBASE_QC"
+          rc=$?
+          set -e
+          if [ "$rc" -ne 0 ] || [ ! -s "$TIMEBASE_QC" ]; then
+            rm -f "$OUTPUT" "$GENERATION_RECEIPT" "$STRUCTURAL_QC"
+            fail_stage "TIMEBASE_QC_FAIL"
+          fi
+          if ! python - <<'PY'
+          import json
+          q = json.load(open("debug/v164-cpu-autonomous/timebase-qc.json"))
+          assert q["schema"] == "dadrock.tabs.v164.local-evidence-timebase-qc.v1"
+          assert q["version"] == "V164"
+          assert q["validation"] == "PASS"
+          assert q["safety"]["pitchInferenceInvoked"] is False
+          assert q["safety"]["referenceRead"] is False
+          assert q["safety"]["V163CandidateRead"] is False
+          assert q["safety"]["V163ScoreRead"] is False
+          assert q["safety"]["gpuUsed"] is False
+          PY
+          then fail_stage "TIMEBASE_QC_BOUNDARY_FAIL"; fi
+          printf '%s\n' "TIMEBASE_QC_PASS" > /tmp/v164-stage
+
+          set +e
+          python "$TRANSCRIBER" \
+            --mix "$NORM_WAV" --guitar "$STEM_DIR/guitar.wav" --bass "$STEM_DIR/bass.wav" --drums "$STEM_DIR/drums.wav" \
+            --timebase "$TIMEBASE" --timebase-qc "$TIMEBASE_QC" \
+            --preregistration "$PREREG" --implementation-contract "$CONTRACT" \
+            --pre-run-receipt "$PRE_RUN" --environment-receipt "$ENV_RECEIPT" \
+            --output "$OUTPUT" --receipt "$GENERATION_RECEIPT"
+          rc=$?
+          set -e
+          if [ "$rc" -ne 0 ]; then rm -f "$OUTPUT" "$GENERATION_RECEIPT"; fail_stage "TRANSCRIBER_FAIL"; fi
+          test -s "$OUTPUT" || fail_stage "TRANSCRIBER_MISSING_CANDIDATE"
+          test -s "$GENERATION_RECEIPT" || fail_stage "TRANSCRIBER_MISSING_RECEIPT"
+          printf '%s\n' "CANDIDATE_CREATED" > /tmp/v164-stage
+
+          set +e
+          python "$STRUCTURAL_QC_CODE" \
+            --candidate "$OUTPUT" --generation-receipt "$GENERATION_RECEIPT" \
+            --timebase "$TIMEBASE" --timebase-qc "$TIMEBASE_QC" \
+            --mix "$NORM_WAV" --drums "$STEM_DIR/drums.wav" --guitar "$STEM_DIR/guitar.wav" --bass "$STEM_DIR/bass.wav" \
+            --preregistration "$PREREG" --implementation-contract "$CONTRACT" \
+            --pre-run-receipt "$PRE_RUN" --environment-receipt "$ENV_RECEIPT" \
+            --event-logic "$EVENT_LOGIC" --transcriber "$TRANSCRIBER" \
+            --timebase-builder "$TIMEBASE_BUILDER" --timebase-qc-code "$TIMEBASE_QC_CODE" \
+            --negative-runtime-guard "$NEGATIVE_GUARD" --receipt "$STRUCTURAL_QC"
+          rc=$?
+          set -e
+          if [ ! -s "$STRUCTURAL_QC" ]; then fail_stage "STRUCTURAL_QC_RUNTIME_FAIL"; fi
+          sqc="$(python - <<'PY'
+          import json
+          print(json.load(open("debug/v164-cpu-autonomous/structural-qc.json"))["validation"])
+          PY
+          )"
+          if [ "$rc" -ne 0 ]; then
+            if [ "$sqc" = "FAIL" ]; then printf '%s\n' "STRUCTURAL_QC_FAIL" > /tmp/v164-outcome; exit 0; fi
+            fail_stage "STRUCTURAL_QC_RUNTIME_FAIL"
+          fi
+          [ "$sqc" = "PASS" ] || fail_stage "STRUCTURAL_QC_NONPASS_WITH_ZERO_EXIT"
+          printf '%s\n' "STRUCTURAL_QC_PASS" > /tmp/v164-stage
+          printf '%s\n' "STRUCTURAL_QC_PASS" > /tmp/v164-outcome
+
+      - name: Freeze terminal V164 state and self-seal
+        if: ${{ always() && github.run_number == 1 && github.run_attempt == 1 }}
+        shell: bash
+        env:
+          GUARD_OUTCOME: ${{ steps.guard.outcome }}
+        run: |
+          set -euo pipefail
+          outcome="$(cat /tmp/v164-outcome 2>/dev/null || printf '%s' 'PIPELINE_UNEXPECTED_FAILURE')"
+          stage="$(cat /tmp/v164-stage 2>/dev/null || printf '%s' 'UNKNOWN')"
+          if [ "$GUARD_OUTCOME" != "success" ]; then outcome="PRE_RUN_GUARD_FAIL"; stage="PRE_RUN_GUARD"; fi
+
+          git fetch origin "$BRANCH"
+          test "$(git rev-parse "origin/$BRANCH")" = "$GITHUB_SHA"
+
+          OUTCOME="$outcome" STAGE="$stage" python - <<'PY'
+          import hashlib, json, os, subprocess
+          from pathlib import Path
+
+          paths = {
+              "environmentReceipt": Path("debug/v164-cpu-autonomous/environment-receipt.json"),
+              "timebase": Path("debug/v164-cpu-autonomous/timebase.json"),
+              "timebaseQc": Path("debug/v164-cpu-autonomous/timebase-qc.json"),
+              "candidate": Path("debug/v164-cpu-autonomous/generated.json"),
+              "generationReceipt": Path("debug/v164-cpu-autonomous/generation-receipt.json"),
+              "structuralQc": Path("debug/v164-cpu-autonomous/structural-qc.json"),
+          }
+
+          def sha(path):
+              h = hashlib.sha256()
+              with path.open("rb") as f:
+                  for chunk in iter(lambda: f.read(1024 * 1024), b""):
+                      h.update(chunk)
+              return h.hexdigest()
+
+          def git_blob(path):
+              return subprocess.check_output(["git", "hash-object", path], text=True).strip()
+
+          artifacts = {
+              name: {
+                  "exists": path.is_file(),
+                  "sha256": sha(path) if path.is_file() else None,
+                  "gitBlob": git_blob(path) if path.is_file() else None,
+              }
+              for name, path in paths.items()
+          }
+          outcome = os.environ["OUTCOME"]
+          authoritative = outcome == "STRUCTURAL_QC_PASS"
+          if outcome == "TIMEBASE_QC_FAIL":
+              assert artifacts["candidate"]["exists"] is False
+              assert artifacts["generationReceipt"]["exists"] is False
+              assert artifacts["structuralQc"]["exists"] is False
+          if outcome in {"STRUCTURAL_QC_PASS", "STRUCTURAL_QC_FAIL"}:
+              assert artifacts["candidate"]["exists"] is True
+              assert artifacts["generationReceipt"]["exists"] is True
+              assert artifacts["structuralQc"]["exists"] is True
+          if outcome == "STRUCTURAL_QC_RUNTIME_FAIL":
+              assert artifacts["candidate"]["exists"] is True
+              assert artifacts["generationReceipt"]["exists"] is True
+
+          freeze = {
+              "schema": "dadrock.tabs.v164.terminal-freeze.v1",
+              "version": "V164",
+              "status": "TERMINAL",
+              "outcome": outcome,
+              "lastCompletedStage": os.environ["STAGE"],
+              "workflowRunId": int(os.environ["GITHUB_RUN_ID"]),
+              "workflowRunNumber": int(os.environ["GITHUB_RUN_NUMBER"]),
+              "workflowRunAttempt": int(os.environ["GITHUB_RUN_ATTEMPT"]),
+              "workflowHeadSha": os.environ["GITHUB_SHA"],
+              "generationWorkflowGitBlob": git_blob(".github/workflows/v164-generate.yml"),
+              "preRunIdentityReceiptGitBlob": "fa1942690b45bce35515abee35016f953fcccd45",
+              "environmentReceiptGitBlob": "25a7f5e2c692a6ac518ae1243ea812cf650f7278",
+              "candidateAuthoritative": authoritative,
+              "professionalReferenceScoringAuthorized": False,
+              "neverRearmV164": True,
+              "artifacts": artifacts,
+              "safety": {
+                  "referenceRead": False,
+                  "professionalReferencePathsOpened": 0,
+                  "referenceFacingScoreCalls": 0,
+                  "frozenScorerRead": False,
+                  "V163CandidateRead": False,
+                  "V163ScoreRead": False,
+                  "priorGeneratedCandidateRead": False,
+                  "priorScoreRead": False,
+                  "referenceGuidedFiltering": False,
+                  "thresholdSweep": False,
+                  "variantSelection": False,
+                  "humanCorrection": False,
+                  "cudaGpuUsed": False,
+                  "modalUsed": False,
+                  "mainOrProductionModified": False,
+              },
+          }
+          assert freeze["workflowRunNumber"] == 1
+          assert freeze["workflowRunAttempt"] == 1
+          assert freeze["professionalReferenceScoringAuthorized"] is False
+          Path("debug/v164-cpu-autonomous/terminal-freeze.json").write_text(
+              json.dumps(freeze, indent=2, sort_keys=True, allow_nan=False) + "\n"
+          )
+          PY
+
+          rm .github/workflows/v164-generate.yml
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add -A -- debug/v164-cpu-autonomous .github/workflows/v164-generate.yml
+          changed="$(git diff --cached --name-only)"
+          test -n "$changed"
+          if echo "$changed" | grep -Ev '^debug/v164-cpu-autonomous/(timebase\.json|timebase-qc\.json|generated\.json|generation-receipt\.json|structural-qc\.json|terminal-freeze\.json)$|^\.github/workflows/v164-generate\.yml$'; then
+            echo "Unexpected path in V164 terminal freeze commit" >&2
+            exit 1
+          fi
+          case "$outcome" in
+            STRUCTURAL_QC_PASS) message="research: freeze sole V164 local-evidence CPU candidate [skip ci]" ;;
+            TIMEBASE_QC_FAIL|TIMEBASE_QC_BOUNDARY_FAIL) message="research: freeze terminal V164 timebase-QC failure [skip ci]" ;;
+            STRUCTURAL_QC_FAIL) message="research: freeze terminal V164 structural-QC failure [skip ci]" ;;
+            *) message="research: freeze terminal V164 execution failure [skip ci]" ;;
+          esac
+          git commit -m "$message"
+          git push origin HEAD:"$BRANCH"
+          if [ "$outcome" != "STRUCTURAL_QC_PASS" ]; then exit 1; fi
