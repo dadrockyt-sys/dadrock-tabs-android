@@ -1,0 +1,60 @@
+{
+  "cudaAvailable": false,
+  "dependencyVersions": {
+    "basic-pitch": "0.4.0",
+    "demucs": "4.1.0",
+    "imageio-ffmpeg": "0.6.0",
+    "librosa": "0.11.0",
+    "numpy": "1.26.4",
+    "scipy": "1.13.1",
+    "soundfile": "0.12.1"
+  },
+  "determinism": {
+    "mathLibraryThreads": 1,
+    "seed": 0,
+    "torchDeterministicAlgorithms": true,
+    "torchNumInteropThreads": 1,
+    "torchNumThreads": 1
+  },
+  "device": "cpu",
+  "generationWorkflowGitBlob": "a36facd5f6b0a67a6965de0a27d9491d589bc83a",
+  "implementationVersion": "V162",
+  "preRunIdentityReceiptGitBlob": "ac47d48b3df3842725ab9a3c1995831d487f1b78",
+  "pythonVersion": "3.10.21",
+  "safety": {
+    "V161CandidateRead": false,
+    "cudaGpuUsed": false,
+    "frozenScorerRead": false,
+    "humanCorrection": false,
+    "mainOrProductionModified": false,
+    "modalUsed": false,
+    "priorGeneratedCandidateRead": false,
+    "priorScoreRead": false,
+    "professionalReferencePathsOpened": 0,
+    "referenceFacingScoreCalls": 0,
+    "referenceGuidedFiltering": false,
+    "referenceRead": false,
+    "thresholdSweep": false,
+    "variantSelection": false
+  },
+  "schema": "dadrock.tabs.v162.cpu-environment-receipt.v1",
+  "separation": {
+    "bassStemSha256": "ad3f30f678f3f1d53f36b44fdd2c4b5438df9ea2154d755222543783a0eabb18",
+    "device": "cpu",
+    "drumsStemSha256": "450fa2deada5b4222039473eb2bec4f012b9e09b754c7d70d75a0f12430f8ec2",
+    "guitarStemSha256": "1a39ba7a89a798a9372a4db934119d7e3b0300512b6b3d57ee2cfa0eb1f4310f",
+    "jobs": 1,
+    "model": "htdemucs_6s",
+    "normalizedMixSha256": "3e61b7926eabc21b758c750f826c7426a29d6de5aafdd5c93f8045ecdc67f87e",
+    "repeatCount": 1,
+    "shifts": 1
+  },
+  "torchCudaVersion": null,
+  "torchVersion": "2.8.0+cpu",
+  "validation": "PASS",
+  "version": "V163",
+  "workflowHeadSha": "4fb855b300c6d0331400b9aa642254be46752def",
+  "workflowRunAttempt": 1,
+  "workflowRunId": 33213512389,
+  "workflowRunNumber": 1
+}

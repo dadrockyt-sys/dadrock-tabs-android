@@ -1,0 +1,110 @@
+{
+  "candidatePath": "debug/v163-cpu-autonomous/generated.json",
+  "candidateSha256": "cc55d596a05bd8e9c0a149f6ba8263375c26fbb7334139a75697b58ca23c8c19",
+  "counts": {
+    "bass": 404,
+    "combinedGuitar": 1041
+  },
+  "environment": {
+    "cudaAvailable": false,
+    "dependencyVersions": {
+      "basic-pitch": "0.4.0",
+      "demucs": "4.1.0",
+      "imageio-ffmpeg": "0.6.0",
+      "librosa": "0.11.0",
+      "numpy": "1.26.4",
+      "scipy": "1.13.1",
+      "soundfile": "0.12.1"
+    },
+    "determinism": {
+      "mathLibraryThreads": 1,
+      "seed": 0,
+      "torchDeterministicAlgorithms": true,
+      "torchNumInteropThreads": 1,
+      "torchNumThreads": 1
+    },
+    "device": "cpu",
+    "generationWorkflowGitBlob": "a36facd5f6b0a67a6965de0a27d9491d589bc83a",
+    "implementationVersion": "V162",
+    "preRunIdentityReceiptGitBlob": "ac47d48b3df3842725ab9a3c1995831d487f1b78",
+    "pythonVersion": "3.10.21",
+    "safety": {
+      "V161CandidateRead": false,
+      "cudaGpuUsed": false,
+      "frozenScorerRead": false,
+      "humanCorrection": false,
+      "mainOrProductionModified": false,
+      "modalUsed": false,
+      "priorGeneratedCandidateRead": false,
+      "priorScoreRead": false,
+      "professionalReferencePathsOpened": 0,
+      "referenceFacingScoreCalls": 0,
+      "referenceGuidedFiltering": false,
+      "referenceRead": false,
+      "thresholdSweep": false,
+      "variantSelection": false
+    },
+    "schema": "dadrock.tabs.v162.cpu-environment-receipt.v1",
+    "separation": {
+      "bassStemSha256": "ad3f30f678f3f1d53f36b44fdd2c4b5438df9ea2154d755222543783a0eabb18",
+      "device": "cpu",
+      "drumsStemSha256": "450fa2deada5b4222039473eb2bec4f012b9e09b754c7d70d75a0f12430f8ec2",
+      "guitarStemSha256": "1a39ba7a89a798a9372a4db934119d7e3b0300512b6b3d57ee2cfa0eb1f4310f",
+      "jobs": 1,
+      "model": "htdemucs_6s",
+      "normalizedMixSha256": "3e61b7926eabc21b758c750f826c7426a29d6de5aafdd5c93f8045ecdc67f87e",
+      "repeatCount": 1,
+      "shifts": 1
+    },
+    "torchCudaVersion": null,
+    "torchVersion": "2.8.0+cpu",
+    "validation": "PASS",
+    "version": "V163",
+    "workflowHeadSha": "4fb855b300c6d0331400b9aa642254be46752def",
+    "workflowRunAttempt": 1,
+    "workflowRunId": 33213512389,
+    "workflowRunNumber": 1
+  },
+  "environmentReceiptSha256": "475a2a6ce9cea6f3c6c4b5c194030181702885b60a6f01b78ae1e6df70a137d7",
+  "evidenceStepCorrections": {
+    "bass": 6,
+    "combinedGuitar": 19
+  },
+  "implementation": {
+    "canonicalEntryPointGitBlob": "fa163cafe2131aa73cdbb50df10d4e4912cff53b",
+    "eventLogicGitBlob": "9f9b33fd8c210ad581025b454cf69b6999aa544b"
+  },
+  "implementationContractSha256": "ac3b12d941882bacfd90bb2a6474a903b4c20890e49a934c4ff06a589d32d190",
+  "inputIdentities": {
+    "bassStemSha256": "ad3f30f678f3f1d53f36b44fdd2c4b5438df9ea2154d755222543783a0eabb18",
+    "drumsStemSha256": "450fa2deada5b4222039473eb2bec4f012b9e09b754c7d70d75a0f12430f8ec2",
+    "guitarStemSha256": "1a39ba7a89a798a9372a4db934119d7e3b0300512b6b3d57ee2cfa0eb1f4310f",
+    "mixSha256": "3e61b7926eabc21b758c750f826c7426a29d6de5aafdd5c93f8045ecdc67f87e"
+  },
+  "preGridExcluded": {
+    "bass": 0,
+    "combinedGuitar": 0
+  },
+  "preRunReceiptSha256": "758d96d36a53a955bc8b430b9d56ac7707b01dd8b39cd4ad22ce86239fdffd6d",
+  "preregistrationSha256": "1d95803e779e5be4acd7ac89374afc9b90136258fb6bc9743b8418ab63f5fbb5",
+  "safety": {
+    "V161CandidateRead": false,
+    "cudaGpuUsed": false,
+    "humanCorrection": false,
+    "mainOrProductionModified": false,
+    "modalUsed": false,
+    "priorGeneratedCandidateRead": false,
+    "priorScoreRead": false,
+    "professionalReferencePathsOpened": 0,
+    "referenceFacingScoreCalls": 0,
+    "referenceGuidedFiltering": false,
+    "referenceRead": false,
+    "thresholdSweep": false,
+    "variantSelection": false
+  },
+  "schema": "dadrock.tabs.v162.cpu-generation-receipt.v1",
+  "timebaseQcSha256": "de40050c5a905243f0b58c9564bdd3f06013dc308d9ba1d4db51630a63ab5b86",
+  "timebaseSha256": "bd36e645c9777719ecbbe9602fe6b25b920ccfee11204c26554d34c314d8f78d",
+  "validation": "PENDING_INDEPENDENT_STRUCTURAL_QC",
+  "version": "V162"
+}

@@ -1,0 +1,67 @@
+{
+  "artifacts": {
+    "candidate": {
+      "exists": true,
+      "gitBlob": "f4eafb1488f139198cb7860a76f294c0e1775df8",
+      "sha256": "cc55d596a05bd8e9c0a149f6ba8263375c26fbb7334139a75697b58ca23c8c19"
+    },
+    "environmentReceipt": {
+      "exists": true,
+      "gitBlob": "4bcd51de8645613be9b984e7c621ba6c5a4fdbb2",
+      "sha256": "475a2a6ce9cea6f3c6c4b5c194030181702885b60a6f01b78ae1e6df70a137d7"
+    },
+    "generationReceipt": {
+      "exists": true,
+      "gitBlob": "51b09bf67f665cda0c4ba07cd0f36585323522a3",
+      "sha256": "235422472042e5dbe1d58acd17fced53c16063fbe3d53b8ab7a89429c3836860"
+    },
+    "structuralQc": {
+      "exists": true,
+      "gitBlob": "35624b8bfbb3580573bb49bd12049726ee364977",
+      "sha256": "ae899558f436c872e3a3ee306463fe62163652497f96d36cea2558be27aa2337"
+    },
+    "timebase": {
+      "exists": true,
+      "gitBlob": "905e4be2d9498ae4442aab7749afc0009c14f26f",
+      "sha256": "bd36e645c9777719ecbbe9602fe6b25b920ccfee11204c26554d34c314d8f78d"
+    },
+    "timebaseQc": {
+      "exists": true,
+      "gitBlob": "a8726433c832d97bd2f950278e9b3fecda3f1388",
+      "sha256": "de40050c5a905243f0b58c9564bdd3f06013dc308d9ba1d4db51630a63ab5b86"
+    }
+  },
+  "candidateAuthoritative": true,
+  "candidateIsExactFrozenV162AlgorithmOutput": true,
+  "eligibleForProfessionalReferenceScoring": true,
+  "generationWorkflowGitBlob": "a36facd5f6b0a67a6965de0a27d9491d589bc83a",
+  "implementationVersion": "V162",
+  "lastCompletedStage": "STRUCTURAL_QC_PASS",
+  "neverRearmV163": true,
+  "outcome": "STRUCTURAL_QC_PASS",
+  "preRunIdentityReceiptGitBlob": "ac47d48b3df3842725ab9a3c1995831d487f1b78",
+  "safety": {
+    "V161CandidateRead": false,
+    "cudaGpuUsed": false,
+    "frozenScorerRead": false,
+    "humanCorrection": false,
+    "mainOrProductionModified": false,
+    "modalUsed": false,
+    "priorGeneratedCandidateRead": false,
+    "priorScoreRead": false,
+    "professionalReferencePathsOpened": 0,
+    "referenceFacingScoreCalls": 0,
+    "referenceGuidedFiltering": false,
+    "referenceRead": false,
+    "thresholdSweep": false,
+    "variantSelection": false
+  },
+  "schema": "dadrock.tabs.v163.v162-algorithm-execution-terminal.v1",
+  "status": "TERMINAL",
+  "v163PreregistrationGitBlob": "33c0eb36423bd5b014035e3a475b4232b0decf9a",
+  "version": "V163",
+  "workflowHeadSha": "4fb855b300c6d0331400b9aa642254be46752def",
+  "workflowRunAttempt": 1,
+  "workflowRunId": 33213512389,
+  "workflowRunNumber": 1
+}
