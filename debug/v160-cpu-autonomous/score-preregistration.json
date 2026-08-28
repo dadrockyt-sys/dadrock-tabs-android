@@ -1,0 +1,98 @@
+{
+  "schema": "dadrock.tabs.v160.professional-reference-score-preregistration.v1",
+  "version": "V160",
+  "status": "SEALED_BEFORE_REFERENCE_OR_SCORER_OPEN",
+  "validation": "PASS",
+  "branch": "v143-contextual-prune-lobo",
+  "createdFromBranchHead": "6457f002225a535e86b5155372bccd39b7d58120",
+  "purpose": "Freeze exactly one scoring-only CPU comparison of the already-authoritative V160 candidate against the frozen professional reference. Candidate generation and all QC are permanently closed before any scorer/reference content is opened.",
+  "frozenCandidate": {
+    "path": "debug/v160-cpu-autonomous/generated.json",
+    "gitBlob": "892be048486c843ae5d3268e35f84cd95b4245af",
+    "sha256": "db6b8428fac758d5c0fd750b797152dbd9c3f7295c3b6c6872ee631ee8c8ff76",
+    "combinedGuitarEvents": 2276,
+    "bassEvents": 460,
+    "candidateAuthoritative": true,
+    "eligibleForProfessionalReferenceScoring": true
+  },
+  "generationTerminalIdentity": {
+    "terminalCommit": "4e4b4c57dafeca61bc4a829929f8c4909133cbff",
+    "armCommit": "a66d4b23ba625ee1583aa9d6f11eb0115efb2de2",
+    "workflowRunId": 33205440520,
+    "workflowRunNumber": 1,
+    "workflowRunAttempt": 1,
+    "jobId": 98965166224,
+    "workflowGitBlob": "35c644cb4d29341d2f7d0404b896703c7fca2da4",
+    "terminalFreezePath": "debug/v160-cpu-autonomous/terminal-freeze.json",
+    "terminalFreezeGitBlob": "9690c523290955dcf0ef15074bb6746105ec0810",
+    "terminalOutcome": "STRUCTURAL_QC_PASS"
+  },
+  "structuralQcIdentity": {
+    "path": "debug/v160-cpu-autonomous/structural-qc.json",
+    "gitBlob": "5372885dfc9e07dfa8394294deafdf32c8f5a356",
+    "sha256": "2bb154499a849596f9e6e098df232d69a72379aa8508544dfa748797e23c3f34",
+    "validation": "PASS"
+  },
+  "frozenScorerIdentity": {
+    "path": "validation/v154_cpu_multitrack/score_frontend_reference.py",
+    "gitBlob": "9644e65719fbd361a9b39778ae9950c5e983e855",
+    "contentOpenedBeforeThisSeal": false
+  },
+  "frozenProfessionalReferenceIdentity": {
+    "path": "research/v154-professional-references/scorer-ready/frontend-reference-payload.json",
+    "gitBlob": "2fbed60b543c0488934d8642c488aa06bf31bbf5",
+    "sha256": "b39a203aec3f45800891fe4eca156e37e7571b91ea5c4ccc41b30bbc95fc89e7",
+    "contentOpenedBeforeThisSeal": false
+  },
+  "scoreContract": {
+    "scoringDevice": "cpu",
+    "scoreWorkflowPath": ".github/workflows/v160-score.yml",
+    "scoreReceiptPath": "debug/v160-cpu-autonomous/reference-score.json",
+    "workflowCreationIsSoleTrigger": true,
+    "expectedWorkflowRunCount": 1,
+    "expectedRunNumber": 1,
+    "expectedRunAttempt": 1,
+    "maximumProfessionalReferenceScoreExecutions": 1,
+    "rerunForbidden": true,
+    "secondArmForbidden": true,
+    "duplicateRunForbidden": true,
+    "candidateMutationForbidden": true,
+    "candidateReplacementForbidden": true,
+    "candidateReQcForbidden": true,
+    "thresholdSweepForbidden": true,
+    "variantSelectionForbidden": true,
+    "humanCorrectionForbidden": true,
+    "postScoreRetuneForbidden": true,
+    "postScoreRescoreForbidden": true,
+    "workflowMustSelfDeleteAfterSingleScore": true,
+    "workflowMustSelfSealScoreReceipt": true,
+    "assistantOrManualBranchWritesWhileScoreWorkflowActiveForbidden": true
+  },
+  "scoreGates": {
+    "guitarTimingAwarePitchF1Minimum": 0.8,
+    "bassTimingAwarePitchF1Minimum": 0.8,
+    "bothMustPassToProceedToRoleStringFretTechniquePdfPhase": true,
+    "candidateConsumedRegardlessOfPassFail": true
+  },
+  "preScoreSafety": {
+    "professionalReferenceRead": false,
+    "professionalReferencePathsOpened": 0,
+    "frozenScorerContentRead": false,
+    "referenceFacingScoreCalls": 0,
+    "candidateModifiedAfterStructuralPass": false,
+    "generationRerun": false,
+    "timebaseQcRerun": false,
+    "structuralQcRerun": false,
+    "gpuExecutions": 0,
+    "cudaExecutions": 0,
+    "modalExecutions": 0,
+    "mainOrProductionModified": false
+  },
+  "reviewerBoundary": {
+    "afterThisSealScorerMayBeOpenedForScoringWorkflowAuditOnly": true,
+    "afterThisSealProfessionalReferenceMayBeOpenedForScoringWorkflowAuditOnly": true,
+    "referenceInformationMayNotInfluenceCandidateOrGenerationArtifacts": true,
+    "onlyFrozenScorerMayComputeTheSingleScore": true,
+    "singleScoreResultMustBeRecordedWithoutRepairOrSecondAttempt": true
+  }
+}
