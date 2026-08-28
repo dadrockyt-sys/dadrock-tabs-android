@@ -1,0 +1,79 @@
+name: V159 static reference-blind preflight
+
+on:
+  push:
+    branches:
+      - v143-contextual-prune-lobo
+    paths:
+      - .github/workflows/v159-static-preflight.yml
+
+permissions:
+  contents: read
+
+jobs:
+  audit:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ github.sha }}
+          fetch-depth: 0
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.10'
+
+      - name: Static-only boundary
+        shell: bash
+        run: |
+          set -euo pipefail
+          test "$GITHUB_EVENT_NAME" = "push"
+          test "$GITHUB_RUN_NUMBER" = "1"
+          test "$GITHUB_RUN_ATTEMPT" = "1"
+          test "$(git rev-parse HEAD)" = "$GITHUB_SHA"
+          test "$(git hash-object debug/v159-cpu-autonomous/preregistration.json)" = "2eca55dc344908a791ba7946f42d77fbd7b8926d"
+          test "$(git hash-object debug/v159-cpu-autonomous/implementation-contract.json)" = "83dfee2d537d00dbced367bdbc467d167a96db2f"
+          test ! -e debug/v159-cpu-autonomous/timebase.json
+          test ! -e debug/v159-cpu-autonomous/timebase-qc.json
+          test ! -e debug/v159-cpu-autonomous/generated.json
+          test ! -e debug/v159-cpu-autonomous/generation-receipt.json
+          test ! -e debug/v159-cpu-autonomous/environment-receipt.json
+          test ! -e debug/v159-cpu-autonomous/structural-qc.json
+          test ! -e debug/v159-cpu-autonomous/pre-run-identity-receipt.json
+          test ! -e .github/workflows/v159-generate.yml
+          echo 'Static boundary and sealed preregistration/contract identities: PASS'
+
+      - name: Python compile only
+        shell: bash
+        run: |
+          set -euo pipefail
+          python -m py_compile \
+            validation/v159_cpu_autonomous/build_timebase_v159.py \
+            validation/v159_cpu_autonomous/timebase_qc_v159.py \
+            validation/v159_cpu_autonomous/transcribe_v159.py \
+            validation/v159_cpu_autonomous/structural_qc_v159.py \
+            debug/v159-cpu-autonomous/negative-runtime-guard.py
+
+      - name: Negative runtime boundary guard
+        shell: bash
+        run: |
+          set -euo pipefail
+          python debug/v159-cpu-autonomous/negative-runtime-guard.py \
+            --timebase-builder validation/v159_cpu_autonomous/build_timebase_v159.py \
+            --timebase-qc validation/v159_cpu_autonomous/timebase_qc_v159.py \
+            --transcriber validation/v159_cpu_autonomous/transcribe_v159.py \
+            --structural-qc validation/v159_cpu_autonomous/structural_qc_v159.py \
+            --workflow .github/workflows/v159-static-preflight.yml
+
+      - name: Prove no runtime work occurred
+        shell: bash
+        run: |
+          set -euo pipefail
+          test ! -e debug/v159-cpu-autonomous/timebase.json
+          test ! -e debug/v159-cpu-autonomous/timebase-qc.json
+          test ! -e debug/v159-cpu-autonomous/generated.json
+          test ! -e debug/v159-cpu-autonomous/generation-receipt.json
+          test ! -e debug/v159-cpu-autonomous/environment-receipt.json
+          test ! -e debug/v159-cpu-autonomous/structural-qc.json
+          echo 'No audio/Demucs/pitch/candidate/runtime artifact was created: PASS'
