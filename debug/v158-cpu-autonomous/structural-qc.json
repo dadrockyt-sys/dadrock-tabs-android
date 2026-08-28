@@ -1,0 +1,86 @@
+{
+  "candidatePath": "debug/v158-cpu-autonomous/generated.json",
+  "candidateSha256": "2a9e8bdfbe48f03dc5d3734780aeb937ef0c5654d55a40536069ed30ee46bcc9",
+  "environmentIdentity": {
+    "demucsModel": "htdemucs_6s",
+    "demucsModelBlobFiles": [
+      {
+        "bytes": 54885744,
+        "logicalPath": "/home/runner/.cache/huggingface/hub/models--adefossez--HTDemucs-6s/blobs/d2a1745f0744721f6b8ca5bf469b67c651ea5ed1b52998cab033b2158609d411",
+        "resolvedPath": "/home/runner/.cache/huggingface/hub/models--adefossez--HTDemucs-6s/blobs/d2a1745f0744721f6b8ca5bf469b67c651ea5ed1b52998cab033b2158609d411",
+        "sha256": "d2a1745f0744721f6b8ca5bf469b67c651ea5ed1b52998cab033b2158609d411"
+      }
+    ],
+    "device": "cpu",
+    "generationWorkflowRunCount": 1,
+    "versions": {
+      "basic-pitch": "0.4.0",
+      "demucs": "4.1.0",
+      "imageio-ffmpeg": "0.6.0",
+      "librosa": "0.11.0",
+      "numpy": "1.26.4",
+      "python": "3.10",
+      "scipy": "1.13.1",
+      "soundfile": "0.12.1",
+      "torch": "2.8.0+cpu"
+    },
+    "workflowRunNumber": 1
+  },
+  "environmentReceiptPath": "debug/v158-cpu-autonomous/environment-receipt.json",
+  "environmentReceiptSha256": "1bb07ed96cdbcf1dfe5a29aea85da68e43aa63bf2835008ca98a4bae46557d9a",
+  "generationReceiptPath": "debug/v158-cpu-autonomous/generation-receipt.json",
+  "generationReceiptSha256": "e05716636d4bf63fd86ab0f3bc97cb2e274fcd600d47a839d32dfff5543ef12f",
+  "pinnedGitBlobs": {
+    "baseHelper": "5617ff1a6ea301ecaeb898b123b05d2a8c915388",
+    "implementationContract": "68f01df155cd27077cea3de5a0cd048ddcb7bd76",
+    "preregistration": "728cf28646db225f3c266a4bb73a6112b1f60330",
+    "sparsePursuitResolution": "b4b6a5c1f8a88d359a981eb1238907805f2fc2a9",
+    "structuralQc": "0bbb08225f0a21bc5bf4889189f22d89953371df",
+    "transcriber": "91d65049031506fe44b44e034b1ab04022ba0b91"
+  },
+  "preRunReceiptPath": "debug/v158-cpu-autonomous/pre-run-receipt.json",
+  "preRunReceiptSha256": "daec7937b406c3bdf8bd8862b32b78f979f3b17ba2a9a829b09d06348034cff5",
+  "safety": {
+    "gpuUsed": false,
+    "humanCorrection": false,
+    "mainOrProductionModified": false,
+    "professionalQualityMetricUsed": false,
+    "professionalReferencePathsOpened": 0,
+    "referenceFacingScoreCalls": 0,
+    "referenceRead": false,
+    "thresholdSweep": false,
+    "variantSelection": false
+  },
+  "schema": "dadrock.tabs.v158.reference-blind-structural-qc.v1",
+  "streamStats": {
+    "bass": {
+      "count": 465,
+      "midiMax": 56,
+      "midiMin": 29,
+      "sources": {
+        "onset_harmonic_pyin": 465
+      }
+    },
+    "combinedGuitar": {
+      "count": 1701,
+      "midiMax": 86,
+      "midiMin": 40,
+      "sources": {
+        "basic_pitch": 1331,
+        "harmonic_track": 370
+      }
+    }
+  },
+  "timebaseStats": {
+    "beatCount": 2986,
+    "stateCounts": {
+      "0": 924,
+      "1": 821,
+      "2": 828,
+      "3": 413
+    },
+    "statePathLength": 2986
+  },
+  "validation": "PASS",
+  "version": "V158"
+}

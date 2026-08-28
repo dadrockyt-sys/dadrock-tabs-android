@@ -1,0 +1,69 @@
+{
+  "cudaAvailable": false,
+  "demucsJobs": 1,
+  "demucsModel": "htdemucs_6s",
+  "demucsModelBlobFiles": [
+    {
+      "bytes": 54885744,
+      "logicalPath": "/home/runner/.cache/huggingface/hub/models--adefossez--HTDemucs-6s/blobs/d2a1745f0744721f6b8ca5bf469b67c651ea5ed1b52998cab033b2158609d411",
+      "resolvedPath": "/home/runner/.cache/huggingface/hub/models--adefossez--HTDemucs-6s/blobs/d2a1745f0744721f6b8ca5bf469b67c651ea5ed1b52998cab033b2158609d411",
+      "sha256": "d2a1745f0744721f6b8ca5bf469b67c651ea5ed1b52998cab033b2158609d411"
+    }
+  ],
+  "demucsShifts": 1,
+  "determinism": {
+    "demucsInvocation": "in-process demucs.separate.main",
+    "mklNumThreads": 1,
+    "numexprNumThreads": 1,
+    "numpyRandomSeed": 0,
+    "ompNumThreads": 1,
+    "openblasNumThreads": 1,
+    "pythonRandomSeed": 0,
+    "seed": 0,
+    "separationRepeatCount": 1,
+    "torchDeterministicAlgorithms": true,
+    "torchDeterministicWarnOnly": false,
+    "torchManualSeed": 0,
+    "torchNumInteropThreads": 1,
+    "torchNumThreads": 1
+  },
+  "device": "cpu",
+  "generationWorkflowRunCount": 1,
+  "modelCacheRootsScanned": [
+    "/home/runner/.cache/torch/hub/checkpoints",
+    "/home/runner/.cache/huggingface/hub"
+  ],
+  "normalizedWavSha256": "3e61b7926eabc21b758c750f826c7426a29d6de5aafdd5c93f8045ecdc67f87e",
+  "safety": {
+    "gpuUsed": false,
+    "mainOrProductionModified": false,
+    "modalUsed": false,
+    "professionalReferencePathsOpened": 0,
+    "referenceFacingScoreCalls": 0,
+    "referenceRead": false
+  },
+  "schema": "dadrock.tabs.v158.cpu-environment-receipt.v1",
+  "sourceAudioSha256": "215bd5a657c5326f08f132ae358595a95c30b39bb7493a52c2f910d5a608149f",
+  "stemSha256": {
+    "bass": "ad3f30f678f3f1d53f36b44fdd2c4b5438df9ea2154d755222543783a0eabb18",
+    "drums": "450fa2deada5b4222039473eb2bec4f012b9e09b754c7d70d75a0f12430f8ec2",
+    "guitar": "1a39ba7a89a798a9372a4db934119d7e3b0300512b6b3d57ee2cfa0eb1f4310f"
+  },
+  "torchCudaVersion": null,
+  "triggerCommit": "eb4c41d83d0fa77402b18da5eb6655014593c186",
+  "validation": "PASS",
+  "versions": {
+    "basic-pitch": "0.4.0",
+    "demucs": "4.1.0",
+    "imageio-ffmpeg": "0.6.0",
+    "librosa": "0.11.0",
+    "numpy": "1.26.4",
+    "python": "3.10",
+    "scipy": "1.13.1",
+    "soundfile": "0.12.1",
+    "torch": "2.8.0+cpu"
+  },
+  "workflowRunAttempt": 1,
+  "workflowRunId": "33145878069",
+  "workflowRunNumber": 1
+}
