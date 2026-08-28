@@ -404,13 +404,6 @@ export default function AdminJpgTabStudioPage() {
           thickness: 0.6,
           color: lightLine,
         });
-        page.drawText('Original JPG embedded directly • uniform scale only • no OCR/AI redraw', {
-          x: 139,
-          y: 21,
-          size: 7,
-          font: regular,
-          color: muted,
-        });
       }
 
       const bytes = await pdfDoc.save();
