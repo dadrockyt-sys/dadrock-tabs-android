@@ -3,7 +3,7 @@
 Updated: 2026-08-28 UTC
 Branch: `v143-contextual-prune-lobo`
 
-Active phase: **V154 and V157 are permanently consumed after one failed reference score each. V155 is protocol-invalid and never scoreable. V156 is permanently aborted before candidate. V157 post-score diagnosis is COMPLETE / FROZEN. V158 is PREREGISTERED BEFORE GENERATION and its numeric implementation contract is SEALED BEFORE GENERATION CODE. A V158 reference-blind transcriber now exists at commit `d103955a16fb6d0904396b2858cc7deab318afd6`, Git blob `5617ff1a6ea301ecaeb898b123b05d2a8c915388`; it has NOT generated a candidate. Independent structural QC, static audit resolution/pinning, pre-run receipt, generation workflow, candidate, receipts, QC freeze and score are still absent. V158 professional-reference reads/score calls remain 0. Next: finish the transcriber static contract/isolation audit, implement independent QC, pin both code blobs, seal the pre-run identity receipt, then and only then create the one-shot generation workflow.**
+Active phase: **V154 and V157 are permanently consumed after one failed reference score each. V155 is protocol-invalid and never scoreable. V156 is permanently aborted before candidate. V157 post-score diagnosis is COMPLETE / FROZEN. V158 remains pre-generation. Its architecture preregistration and numeric implementation contract are sealed; a deterministic sparse-pursuit consistency resolution is now also sealed BEFORE canonical execution code. The previously landed V158 transcriber blob `5617ff1a...` is explicitly a non-executable setup draft until updated to implement that resolution. No V158 candidate, generation receipt, workflow, QC freeze, professional-reference read, or score call exists. Next: update the transcriber to the sealed sparse-pursuit resolution, implement independent structural QC, pin all final blobs, seal the pre-run identity receipt, then and only then create the one-shot CPU generation workflow.**
 
 ## Standing authorization / safety — MUST PRESERVE
 - CPU-only work and CPU scoring are at assistant discretion.
@@ -36,7 +36,7 @@ Song: **Lenny Kravitz — Are You Gonna Go My Way**.
 - Exact diagnostic alignment values are forbidden future generation constants.
 - Quartile diagnostic #4 is invalid due a range predicate bug; ignore it.
 
-## V158 — PREREGISTERED + NUMERIC CONTRACT SEALED BEFORE CODE
+## V158 — PREREGISTERED + SEALED CONTRACTS
 ### Architecture preregistration
 - `debug/v158-cpu-autonomous/preregistration.json`
 - Commit `cdb2eca7ec16479a5868f9a3ca18624fc0892c44`
@@ -48,32 +48,43 @@ Song: **Lenny Kravitz — Are You Gonna Go My Way**.
 - Commit `90c878c50afcd70a6a2f7e58f2605ed2a7b2ba27`
 - Git blob `68f01df155cd27077cea3de5a0cd048ddcb7bd76`
 - Status `SEALED_BEFORE_GENERATION_CODE`.
-- Canonical schemas are frozen: candidate `dadrock.tabs.v158.cpu-sequential-onset-first-generated.v1`; generation receipt `dadrock.tabs.v158.cpu-generation-receipt.v1`; environment receipt `dadrock.tabs.v158.cpu-environment-receipt.v1`; QC `dadrock.tabs.v158.reference-blind-structural-qc.v1`; pre-run receipt `dadrock.tabs.v158.pre-run-identity-receipt.v1`.
-- Timebase numeric contract: sr 22050 / hop 256 / start BPM 120 / tightness 100; four-state Viterbi with transitions next `.985`, same `.0075`, skip-one `.0075`; state-0 emission weights drums/mix/Bass/low-flux/chroma-change `1.0/.5/.5/.75/.75`; non-downbeat emission 0; low-frequency maximum 200 Hz; deterministic tie rules; piecewise beat grid and Python-round sixteenth quantization.
-- Bass numeric contract: onset-first, backtrack true, 35 ms onset collapse, 180 ms pitch window, pYIN 2048/256 as soft evidence, harmonic-template MIDI 28–67, pYIN sigma `.75`, fusion weight `.75`, global octave/fundamental comparison, source `onset_harmonic_pyin`.
-- Guitar numeric contract: Basic Pitch fixed `.5/.3/90ms`, MIDI 40–88; three-frame persistent harmonic-template tracks, max six pitches, explicit ±12 register repair, no free-standing single-frame CQT, source labels only `basic_pitch`/`harmonic_track`.
-- QC contract requires Viterbi path length = beat count, valid states 0–3, Bass onset provenance, forbidden CQT-only source labels absent, write-once candidate/receipts, referenceRead=false, reference paths opened=0, score calls=0, exactly one generation workflow run.
-- Hard isolation: no professional reference, prior generated candidate, prior score/diagnostic, reference-derived numeric correction, threshold sweep, variant selection or GPU may enter V158 generation.
+- Canonical schemas: candidate `dadrock.tabs.v158.cpu-sequential-onset-first-generated.v1`; generation receipt `dadrock.tabs.v158.cpu-generation-receipt.v1`; environment receipt `dadrock.tabs.v158.cpu-environment-receipt.v1`; QC `dadrock.tabs.v158.reference-blind-structural-qc.v1`; pre-run receipt `dadrock.tabs.v158.pre-run-identity-receipt.v1`.
+- Timebase: sr 22050 / hop 256 / start BPM 120 / tightness 100; four-state Viterbi next `.985`, same `.0075`, skip-one `.0075`; state-0 emission weights drums/mix/Bass/low-flux/chroma-change `1.0/.5/.5/.75/.75`; non-downbeat emission 0; low-frequency max 200 Hz; deterministic tie rules; piecewise beat grid; Python-round sixteenth quantization.
+- Bass: onset-first; backtrack true; 35 ms collapse; 180 ms pitch window; pYIN 2048/256 soft evidence; harmonic-template MIDI 28–67; pYIN sigma `.75`; fusion `.75`; global octave/fundamental comparison; source `onset_harmonic_pyin`.
+- Guitar: Basic Pitch `.5/.3/90ms`, MIDI 40–88; three-frame persistent harmonic-template tracks; max six pitches; explicit ±12 repair; no free-standing single-frame CQT; source labels only `basic_pitch`/`harmonic_track`.
+- QC requires Viterbi path length = beat count, states 0–3, Bass onset provenance, forbidden CQT-only labels absent, write-once candidate/receipts, referenceRead=false, professional paths opened=0, score calls=0, exactly one generation workflow run.
 
-## V158 canonical transcriber — PRESENT, NOT YET PINNED FOR RUN
+### Sparse-pursuit setup consistency resolution — SEALED
+- `debug/v158-cpu-autonomous/sparse-pursuit-contract-resolution.json`
+- Commit `d07c56e51168d7f07784ad3ed67b4902245a0c4e`.
+- Git blob `b4b6a5c1f8a88d359a981eb1238907805f2fc2a9`.
+- Status `SEALED_BEFORE_CANONICAL_EXECUTION_CODE`.
+- Reason: preregistration required iterative non-overlapping residual sparse pursuit, but the original numeric contract omitted residual mechanics.
+- Resolution is setup-only and reference/candidate blind: candidate absent; workflow absent; professional-reference reads 0; score calls 0; GPU false.
+- Candidate pool remains the already-sealed three-frame persistent top-six intersection.
+- Residual uses the same three-frame `log1p(abs(CQT))`; template bins are radius-1 neighborhoods around harmonics 1..5.
+- Iteratively choose greatest positive residual template gain, tie within `1e-12` to lower MIDI; selected templates must not overlap prior selected template bins; zero selected template bins in the private residual; stop at six / no eligible candidate / non-positive gain.
+- Event creation remains `harmonic_track`, same-MIDI 60 ms exclusion, 0.07 s duration; no new tuned thresholds.
+- This resolution blob must be pinned in the V158 pre-run receipt.
+
+## V158 transcriber boundary
 - `validation/v158_cpu_multitrack/transcribe_v158.py`
-- Implementation commit `d103955a16fb6d0904396b2858cc7deab318afd6`.
-- Current Git blob `5617ff1a6ea301ecaeb898b123b05d2a8c915388`.
-- Candidate generation count remains 0; candidate/receipt paths have not been created.
-- Static isolation scan of the visible code shows no professional-reference/scorer/prior-candidate input argument and its safety payload declares reference/professional paths/score calls all zero.
-- **Audit item still open before pinning:** architecture preregistration contains a Guitar `sparsePursuit` residual-subtraction clause, while the sealed numeric contract defines the three-frame top-six persistence/addition rule but no residual-subtraction numerics. Do not silently invent post-contract numeric behavior; resolve this static contract consistency before declaring the transcriber pinned/canonical for execution.
+- Existing implementation commit `d103955a16fb6d0904396b2858cc7deab318afd6`, Git blob `5617ff1a6ea301ecaeb898b123b05d2a8c915388`.
+- **This blob is now explicitly a non-executable setup draft** because it predates and does not implement the sealed sparse-pursuit resolution.
+- Static isolation remains good: no professional-reference/scorer/prior-candidate input argument; safety counters are zero.
+- Candidate generation count remains 0.
 
 ## Current V158 boundary
-- **V158 transcriber exists but is not yet statically sealed/pinned for execution.**
+- **No canonical/pinned V158 transcriber yet after sparse-pursuit resolution.**
 - **No V158 structural-QC script exists yet.**
 - **No V158 candidate, generation receipt, pre-run receipt, generation workflow or score exists.**
 - **V158 professional-reference reads = 0; reference-facing score calls = 0.**
 
 ## Exact next steps — RESUME HERE
 1. Re-fetch latest checkpoint/head before every write because concurrent continuations exist.
-2. Resolve the preregistration `sparsePursuit` vs sealed numeric-contract consistency without using professional references or inventing unsealed tuning; candidate generation must remain 0 during setup repair/audit.
-3. Implement `validation/v158_cpu_multitrack/structural_qc.py` exactly to the frozen schemas/invariants and independent of generation code/reference data.
-4. Pin final transcriber + QC Git blobs and perform a static isolation/schema audit.
+2. Update `validation/v158_cpu_multitrack/transcribe_v158.py` to implement sparse-pursuit resolution blob `b4b6a5c1...` exactly; no reference/prior-output reads and no generation.
+3. Implement `validation/v158_cpu_multitrack/structural_qc.py` to the frozen schemas/invariants, including pin checks for preregistration, implementation contract, sparse-pursuit resolution, final transcriber, and pre-run receipt.
+4. Pin final transcriber + QC Git blobs and complete static isolation/schema audit.
 5. Seal `debug/v158-cpu-autonomous/pre-run-receipt.json` while candidate/receipt/workflow are absent and score calls remain 0.
 6. Only then create the V158 generation workflow exactly once; creation itself is the sole trigger, with no arm edit and no branch writes while active.
 7. Generate exactly one deterministic CPU candidate; independent QC/freeze before reference access; only afterward seal a separate one-use score guard/workflow.
