@@ -18,7 +18,7 @@ Active phase: **V154 broad-Other CPU recognition is COMPLETE / FROZEN / SCORED E
 Song: **Lenny Kravitz — Are You Gonna Go My Way**.
 - Audio: `public/gomywayfullaitest.m4a`; SHA256 `215bd5a657c5326f08f132ae358595a95c30b39bb7493a52c2f910d5a608149f`.
 - V154 grid tempo: `129.19921875`, 4 steps/beat, nominal 16 steps/4-4 measure.
-- Source m104 = 2/4 (8 sixteenth steps); others 4/4.
+- Source m104 = 2/4 (8 sixteenth steps), others 4/4.
 - Frozen meter map: `research/v154-professional-references/source-meter-to-fixed-grid-mapping.json`; SHA256 `1c8ed50839f4fa365616281c70fa490d47a7e222600b34ae4f1545e09f587648`.
 - V154 CPU separator: `demucs==4.1.0`, `htdemucs`, shifts 1, jobs 1; `Other` = combined Rhythm+Lead; Bass independent.
 - V154 Basic Pitch `0.4.0`: onset 0.5, frame 0.3, minimum 127.7 ms, melodia enabled, no threshold sweep.
@@ -51,7 +51,7 @@ Song: **Lenny Kravitz — Are You Gonna Go My Way**.
 ### Frozen one-time V154 score
 - Score: `debug/v154-cpu-autonomous/v154-frontend-reference-score/score.json`; SHA256 `c206f6bc951c6bd9b6cc19e6758c4aef6654f349cc1f5712df1f052e46fa798b`.
 - Receipt: `debug/v154-cpu-autonomous/v154-frontend-reference-score/score-receipt.json`; validation PASS; `referenceFacingScoreCalls=1`; `scorerInvocationCountInWrapper=1`.
-- Score run `33139017517`, job `98745430956`; trigger `2c1155f73b99b804267763e97fcf750f985f40c7`; freeze commit `f687153`.
+- Score run `33139017517`, job `98745430956`; trigger `2c1155f73b99b804267763e97fcf750f985f40c7`; score freeze commit `f687153`.
 - **Reference-facing score count is permanently closed at 1 for V154.**
 
 ### Frozen post-score diagnostics
@@ -108,3 +108,22 @@ Song: **Lenny Kravitz — Are You Gonna Go My Way**.
 6. If V155 still fails the frozen acoustic gates, diagnose architecture and move to a new version; never retune a consumed candidate.
 7. Fresh explicit user authorization remains required immediately before any Modal/NVIDIA L4/CUDA/GPU execution; remain CPU-only unless separately authorized.
 8. Only after a future candidate passes the front-end gates should Rhythm/Lead role separation, string/fret assignment, techniques, and professional PDF work resume.
+
+## 2026-08-28 continuation — V155 PREREGISTERED BEFORE GENERATION
+- `V155` was confirmed unused before naming.
+- Authoritative preregistration: `debug/v155-cpu-autonomous/preregistration.json`.
+- Preregistration commit: `e5f51474308db460d7317cfbc4204f616ee0b069`.
+- Status: **PREREGISTERED_BEFORE_GENERATION**. No V155 candidate exists. No V155 professional-reference read or score has occurred; V155 reference-facing score calls = **0**.
+- Sealed V155 separation: CPU `htdemucs_6s`, shifts 1, jobs 1, dedicated Guitar and Bass stems, no fallback model.
+- Sealed V155 timebase: audio-derived dynamic beat times + deterministic 4-beat downbeat-phase selection + piecewise-linear beat grid; `t=0` is never assumed to be musical grid step 0; no reference-derived offset/BPM constants allowed.
+- Sealed V155 Bass recognition: HPSS harmonic Bass stem + `librosa.pyin` + deterministic onset/voicing/pitch-change segmentation; Basic Pitch not used for Bass.
+- Sealed V155 Guitar recognition: dedicated Guitar stem + one fixed Basic Pitch pass cross-checked/augmented by independent harmonic-CQT salience/onset evidence; no threshold sweep and no reference-guided chord completion.
+- Exactly one V155 candidate may be generated. Reference-blind structural QC must pass and candidate + receipt must freeze before any reference access.
+
+### Current exact next steps — these supersede the earlier V155-planning items above
+1. Implement `validation/v155_cpu_multitrack/` exactly to the sealed preregistration, with no professional-reference imports/reads.
+2. Stage/run one CPU-only generation workflow that verifies audio/preregistration/code identities, installs pinned dependencies, normalizes audio, runs `htdemucs_6s`, derives the audio-only beat/downbeat grid, runs Bass pYIN segmentation and Guitar Basic-Pitch+CQT fusion, and emits one candidate + generation receipt.
+3. Run reference-blind structural QC only; fail on dependency/model drift, nonfinite/out-of-range events, invalid snapped steps, bad safety flags, multiple candidate outputs, or any professional-reference path access.
+4. Freeze/checkpoint the single V155 candidate before any professional-reference read. V155 score calls must still be 0 at that checkpoint.
+5. Only then construct a newly guarded one-use V155 scorer and score the frozen V155 candidate exactly once against the already-frozen reference/scorer.
+6. Stay CPU-only unless fresh explicit authorization is obtained immediately before Modal/NVIDIA L4/CUDA/GPU execution.
