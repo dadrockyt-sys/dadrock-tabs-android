@@ -1,4 +1,5 @@
 name: V154 checkpoint timebase root cause once
+# armed after workflow registration
 
 on:
   push:
