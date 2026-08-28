@@ -11,6 +11,7 @@ permissions:
 env:
   BRANCH: v143-contextual-prune-lobo
 
+# Armed after pre-score checkpoint a5fa74575f503e08fa8b39fc129d4fe31cb8dbcc.
 jobs:
   score-once:
     runs-on: ubuntu-latest
