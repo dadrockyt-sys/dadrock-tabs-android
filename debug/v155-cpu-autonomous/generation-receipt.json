@@ -1,0 +1,54 @@
+{
+  "counts": {
+    "bass": 81,
+    "combinedGuitar": 1359
+  },
+  "identities": {
+    "bassStemSha256": "cc7b66be0a6168c546b407ae824819ed99d71ef73dcc195b7de9fec76f62b0c1",
+    "demucsCheckpointFiles": [],
+    "drumsStemSha256": "456d3e01309cd05dc0d6ba93036f7abd35d7a5001e74f0072e9944064ad5e581",
+    "generatorGitBlob": "d1ade9d49e4cd1d599844bc054710c146d5d1d92",
+    "guitarStemSha256": "ba1de21eee68e34c29f951812bddf8c38e7bc47fa1034ae7ee2cbc42b723b696",
+    "mixSha256": "3e61b7926eabc21b758c750f826c7426a29d6de5aafdd5c93f8045ecdc67f87e",
+    "packages": {
+      "basic-pitch": "0.4.0",
+      "demucs": "4.1.0",
+      "imageio-ffmpeg": "0.6.0",
+      "librosa": "0.11.0",
+      "numpy": "1.26.4",
+      "torch": "2.8.0+cpu"
+    },
+    "preregistrationSha256": "6e6a92323e29c16e1147f114c772fac7137c7162233cb5c5b309cf0595da876b"
+  },
+  "outputPath": "debug/v155-cpu-autonomous/generated.json",
+  "outputSha256": "cb5275aab111153f098e4f2e8b94ccf88d5d0052e2f528133702e870dac137ea",
+  "safety": {
+    "candidateVariantSelection": false,
+    "cudaGpuUsed": false,
+    "humanCorrection": false,
+    "mainOrProductionModified": false,
+    "modalUsed": false,
+    "professionalReferencePathsOpened": 0,
+    "referenceFacingScoreCalls": 0,
+    "referenceGuidedFiltering": false,
+    "referenceRead": false,
+    "thresholdSweep": false
+  },
+  "schema": "dadrock.tabs.v155.reference-blind-generation-receipt.v1",
+  "structuralQc": {
+    "bassCount": 81,
+    "bassUniqueRows": 81,
+    "combinedGuitarCount": 1359,
+    "combinedGuitarUniqueRows": 1359,
+    "validation": "PASS"
+  },
+  "timebaseSummary": {
+    "beatCount": 452,
+    "beatTrackerTempoBpm": 129.19921875,
+    "downbeatPhase": 2,
+    "firstDetectedOnsetSeconds": 0.6501587301587302,
+    "originBeatIndex": -2,
+    "robustMedianTempoBpm": 129.19921874999932
+  },
+  "validation": "PASS"
+}
