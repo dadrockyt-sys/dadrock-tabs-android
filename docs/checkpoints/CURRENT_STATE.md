@@ -56,7 +56,9 @@ Song: **Lenny Kravitz — Are You Gonna Go My Way**.
 
 ### Frozen post-score diagnostics
 - Architecture diagnostic: `debug/v154-cpu-autonomous/v154-frontend-reference-score/architecture-diagnostic.json`; SHA256 `bcc7aa275fb9c8dab3e0e9350043c5d85d48788bc13c672d97ad949d4d5595cd`; run `33139198143`, job `98746009145`, freeze commit `b6a7637`.
+- **Architecture-diagnostic audit caveat:** `measureIndexShiftScanPitchContent` is invalid/no-op because `counter_metric()` applies the same shift-bearing key function to both generated and reference rows; its identical -4..+4 results must be disregarded. The separate `globalAbsoluteShiftScan` remains valid because `absolute_midi_matches()` shifts only generated absolute positions.
 - Timebase diagnostic: `debug/v154-cpu-autonomous/v154-frontend-reference-score/timebase-diagnostic.json`; SHA256 `ddaddaa4cfff1de1b5e7466813d9e08cfaeb9451b5a08406e820209543fe2f3c`; script `validation/v154_cpu_multitrack/diagnose_frontend_timebase.py`; run `33139677372`, job `98747482513`, freeze commit `e87f81e`.
+- Timebase scan is intentionally post-score/reference-derived diagnosis only. Its equal-match tie-break favors proximity to the previously observed `-13.25` shift; exact selected shifts/BPM equivalents are therefore never future generation parameters. The early→late trend is supported by mostly unique section maxima and is architecture evidence only.
 - Both diagnostics imported/called **no official scorer**, made **0 additional official reference-facing score calls**, wrote no corrected candidate, were CPU-only, and did not touch `main`/Production.
 
 ## V154 frozen score results — BOTH GATES FAIL
@@ -76,7 +78,7 @@ Song: **Lenny Kravitz — Are You Gonna Go My Way**.
 - Historical transcriber inspected at frozen blob `2f09ca1b8bc012749468f0079497ded71d318782`.
 - Its `grid_location(seconds)` computed `absolute_step_float = seconds / STEP_SECONDS` and therefore hard-anchored **musical grid step 0 to audio/stem timestamp `0.000 s`**.
 - V154 performed **no audio-derived beat/downbeat/phase origin estimation** and **no explicit Demucs/Basic-Pitch latency compensation** before `(measure, step)` mapping.
-- Initial diagnostic found both streams independently prefer a global diagnostic shift of `-13.25` sixteenth-grid steps (~1.54 s), but this shift does not solve recognition and must never be applied as a correction to V154.
+- Initial valid global-shift diagnostic found both streams independently prefer a global diagnostic shift of `-13.25` sixteenth-grid steps (~1.54 s), but this shift does not solve recognition and must never be applied as a correction to V154.
 - Tighter section-wise diagnostic proves the shift is not constant:
   - Guitar early median `-11.50` → late median `-13.25` steps; delta `-1.75`.
   - Bass early median `-11.50` → late median `-13.50` steps; delta `-2.00`.
