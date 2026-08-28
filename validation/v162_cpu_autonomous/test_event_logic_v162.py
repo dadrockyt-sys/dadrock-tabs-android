@@ -33,7 +33,9 @@ def assert_close(a: float, b: float, tol: float = 1e-9) -> None:
 
 
 def guitar_segmentation_fixture() -> None:
-    env = np.full(220, 0.10, dtype=float)
+    # Sparse positive evidence makes the synthetic weak region genuinely weak
+    # under the sealed positive-q60 / positive-q95 normalization semantics.
+    env = np.zeros(220, dtype=float)
     env[[15, 45, 75, 105, 135, 165, 195]] = 1.0
     rows = [
         {"midi": 60, "startSeconds": 0.20, "endSeconds": 0.50, "confidence": 0.70},
