@@ -118,6 +118,12 @@ Completed/current files:
 - No branch writes while the eventual one-shot generation workflow is active.
 - No GPU execution without fresh explicit authorization.
 
+## Resume verification — 2026-08-28
+- Re-fetched `docs/checkpoints/CURRENT_STATE.md` and branch metadata before resuming.
+- Verified branch head was exactly `fbebd6afe3138f8d1e8d2b7b4f60f0ba7e20ee6d`; its tree is `10f9ed7ce821ac97a1e37bbadbbf0c91ecf3b3d7`.
+- No concurrent branch progress was present at resume.
+- Continuing only with the sealed-safe next step: CPU/dependency audit and exact fresh `htdemucs_6s` stem-layout audit. No audio, pitch inference, professional-reference read, scorer call, GPU/Modal/CUDA execution, or main/Production modification is authorized or performed by this checkpoint write.
+
 ## Exact next steps — RESUME HERE
 1. Re-fetch latest branch head/checkpoint before every write.
 2. Inspect prior CPU workflow/dependency setup and exact fresh `htdemucs_6s` stem layout without reading professional-reference/scoring artifacts.
