@@ -1,0 +1,26 @@
+name: Remove Tab Studio cover page
+
+on:
+  push:
+    paths:
+      - '.github/workflows/remove-tab-studio-cover.yml'
+
+permissions:
+  contents: write
+
+jobs:
+  patch-tab-studio:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Remove cover and top-align first tab page
+        run: python .github/scripts/remove_tab_studio_cover.py
+
+      - name: Commit Tab Studio PDF layout update
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add app/admin/tab-studio/page.js
+          git diff --cached --quiet || git commit -m "Start Tab Studio PDF directly under song metadata"
+          git push
