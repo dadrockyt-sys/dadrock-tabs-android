@@ -1,0 +1,106 @@
+{
+  "schema": "dadrock.tabs.v157.pre-run-identity-receipt.v1",
+  "version": "V157",
+  "validation": "PASS",
+  "status": "SEALED_BEFORE_GENERATION",
+  "createdBeforeAnyV157Candidate": true,
+  "candidateExistsAtSeal": false,
+  "referenceReadAtSeal": false,
+  "referenceFacingScoreCallsAtSeal": 0,
+  "song": {
+    "artist": "Lenny Kravitz",
+    "title": "Are You Gonna Go My Way",
+    "audioSha256": "215bd5a657c5326f08f132ae358595a95c30b39bb7493a52c2f910d5a608149f",
+    "normalizedWavSha256": "3e61b7926eabc21b758c750f826c7426a29d6de5aafdd5c93f8045ecdc67f87e"
+  },
+  "pinnedGitBlobs": {
+    "preregistration": "0bcca0fbb53abcc8ad8736d8e5e71e32a14004f6",
+    "canonicalTranscriber": "1d1725e2d79b173bd5fb0bfa7aefc25dce81dd58",
+    "independentStructuralQc": "5ff4df5b5c6b700272b349a1bbe709b15e17e794",
+    "inheritedReferenceBlindEngine": "3357582dd8311b28f4b85f2ebfbc7acb8c9e4fb8"
+  },
+  "canonicalContracts": {
+    "candidateSchema": "dadrock.tabs.v157.cpu-hybrid-generated.v1",
+    "generationReceiptSchema": "dadrock.tabs.v157.cpu-hybrid-generation-receipt.v1",
+    "structuralQcSchema": "dadrock.tabs.v157.reference-blind-structural-qc.v1",
+    "environmentReceiptSchema": "dadrock.tabs.v157.cpu-environment-receipt.v1",
+    "independentStructuralQcRequired": true
+  },
+  "executionDeterminism": {
+    "rngSeed": 0,
+    "pythonRandomSeed": 0,
+    "numpyRandomSeed": 0,
+    "torchManualSeed": 0,
+    "torchDeterministicAlgorithms": true,
+    "torchDeterministicWarnOnly": false,
+    "torchNumThreads": 1,
+    "torchNumInteropThreads": 1,
+    "ompNumThreads": 1,
+    "mklNumThreads": 1,
+    "openblasNumThreads": 1,
+    "numexprNumThreads": 1,
+    "demucsInvocation": "in-process demucs.separate.main after RNG/thread initialization",
+    "demucsModel": "htdemucs_6s",
+    "demucsShifts": 1,
+    "demucsJobs": 1,
+    "separationRepeatCount": 1
+  },
+  "environmentReceiptRepair": {
+    "onlyDifferenceFromV156ExecutionContract": true,
+    "importOs": true,
+    "scanCacheRoots": ["~/.cache/torch/hub/checkpoints", "~/.cache/huggingface/hub"],
+    "recursive": true,
+    "resolveSymlinks": true,
+    "ignoreLockAndMetadataFiles": true,
+    "minimumModelBlobBytes": 1048576,
+    "deduplicateByResolvedPath": true,
+    "requireAtLeastOneResolvedModelBlob": true,
+    "secondSeparationForbidden": true,
+    "qualityParameterChange": false
+  },
+  "dependencyPins": {
+    "python": "3.10",
+    "torch": "2.8.0+cpu",
+    "numpy": "1.26.4",
+    "scipy": "1.13.1",
+    "soundfile": "0.12.1",
+    "demucs": "4.1.0",
+    "basic-pitch": "0.4.0",
+    "librosa": "0.11.0",
+    "imageio-ffmpeg": "0.6.0"
+  },
+  "triggerSafety": {
+    "workflowCreationIsSingleTrigger": true,
+    "secondArmEditForbidden": true,
+    "expectedGenerationWorkflowRunCount": 1,
+    "workflowMustSelfSealAfterSuccessfulFreeze": true,
+    "duplicateRunAction": "ABORT_V157_WITHOUT_SCORING"
+  },
+  "referenceIsolation": {
+    "professionalReferenceReadDuringGeneration": false,
+    "v154CandidateUsedAsGenerationInput": false,
+    "v155CandidateOrOutputUsedAsGenerationInput": false,
+    "v156CandidateOrOutputUsedAsGenerationInput": false,
+    "referenceDerivedOffsetOrTempoConstantsAllowed": false,
+    "thresholdSweepAllowed": false,
+    "candidateVariantSelectionAllowed": false,
+    "humanCorrectionAllowed": false,
+    "postGenerationReferenceGuidedFilteringAllowed": false
+  },
+  "preGenerationBoundaryAudit": {
+    "generatedJsonAbsent": true,
+    "generationReceiptAbsent": true,
+    "generationWorkflowAbsent": true,
+    "preregistrationStatus": "PREREGISTERED_BEFORE_GENERATION",
+    "professionalReferencePathDependencyInCanonicalTranscriber": false,
+    "professionalReferencePathDependencyInIndependentQc": false
+  },
+  "safety": {
+    "cpuOnly": true,
+    "modalUsed": false,
+    "cudaGpuUsed": false,
+    "mainOrProductionModified": false,
+    "referenceRead": false,
+    "referenceFacingScoreCalls": 0
+  }
+}
