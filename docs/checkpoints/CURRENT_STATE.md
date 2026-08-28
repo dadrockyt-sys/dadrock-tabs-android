@@ -4,62 +4,66 @@ Updated: 2026-08-28 UTC
 Branch: `v143-contextual-prune-lobo`
 
 ## Active phase
-**V161 is terminal/consumed forever after its sole score. V162 successor design is now preregistered BEFORE implementation at `debug/v162-cpu-autonomous/preregistration.json`, seal commit `5a3eecd2e4004ad254196bf926ecf8f1a97280e2`, Git blob `5c886fec4ac323b361d9128a51a25c6ccb03952b`, validation PASS. No V162 implementation code or runtime artifact exists. Next: seal exact V162 numeric implementation contract before any V162 code.**
+**V161 is terminal/consumed forever. V162 successor preregistration and its complete numeric implementation contract are now sealed BEFORE implementation. V162 prereg: `debug/v162-cpu-autonomous/preregistration.json`, commit `5a3eecd2e4004ad254196bf926ecf8f1a97280e2`, blob `5c886fec4ac323b361d9128a51a25c6ccb03952b`. V162 numeric contract: `debug/v162-cpu-autonomous/implementation-contract.json`, commit `a11240eeef4ebf25a8bd9913dd0333892b6557f4`, blob `f3d8aa7cbfa1a65a6bc09e12d377f05e0ace3c87`, validation PASS. No V162 implementation/runtime files exist yet. Next: implement pure song-blind event/subdivision helpers + fixtures exactly to the sealed contract before audio-facing code.**
 
-## Standing safety — MUST PRESERVE
-- CPU-only work and CPU scoring authorized at assistant discretion.
+## Standing safety
+- CPU-only work/scoring authorized at assistant discretion.
 - Fresh explicit authorization required immediately before any Modal/NVIDIA L4/CUDA/GPU execution.
 - Never modify/merge/promote `main` or Production without explicit user direction.
-- V159, V160, V161 closed forever. Never rerun/rescore/repair/re-QC/retune V161.
-- V162 may use only frozen aggregate score/runtime evidence copied into its preregistration plus reference-blind V161 source/QC structure.
+- V159/V160/V161 closed forever; V161 never rerun/rescored/repaired/re-QC'd/retuned.
+- V162 may use only frozen aggregate score/runtime evidence in its preregistration plus reference-blind V161 source/QC structure.
 - No V161 candidate event mining/reuse; no professional-reference event/measure mining; no same-song score loop; no human correction.
 
 ## V161 terminal score — FROZEN
-- Score terminal commit `d1dd2f07bc5e07130a858981821d3b67bc2de78b`; run `33209465651`, #1 attempt #1, job `98978832375`; score workflow deleted.
-- Score report blob `08ebbd9f7ef38eeeb3defcce9aa445b21f120f57`; SHA256 `3bf1c7da8304f2507e764e16deae62f36f220881dfa1d5f1c808fdedd6c34867`.
-- Score-terminal blob `5b0550497432a6c5cb9b1b947694327b616f6241`; `SCORE_GATE_FAIL`; scoreExecutionCount=1; candidateConsumed=true; scoreOpportunityConsumed=true; neverRerunOrRescoreV161=true.
-- Guitar primary/gross/measure F1: `0.06993006993006994 / 0.1861888111888112 / 0.40297202797202797`; matched `80/213/461`; generated `895`; aggregate reference `1393`.
-- Bass primary/gross/measure F1: `0.20883534136546184 / 0.34136546184738953 / 0.5261044176706828`; matched `104/170/262`; generated `449`; aggregate reference `547`.
-- Gates remain `0.80/0.80`.
+- Terminal commit `d1dd2f07bc5e07130a858981821d3b67bc2de78b`; run `33209465651`, #1 attempt #1, job `98978832375`; score workflow deleted.
+- Guitar primary/gross/measure F1 `0.06993006993006994 / 0.1861888111888112 / 0.40297202797202797`; generated 895; matched 80/213/461.
+- Bass primary/gross/measure F1 `0.20883534136546184 / 0.34136546184738953 / 0.5261044176706828`; generated 449; matched 104/170/262.
+- Score report blob `08ebbd9f7ef38eeeb3defcce9aa445b21f120f57`; score-terminal blob `5b0550497432a6c5cb9b1b947694327b616f6241`; candidate consumed and score opportunity consumed forever.
 
 ## V162 preregistration — SEALED BEFORE CODE
-- Path `debug/v162-cpu-autonomous/preregistration.json`.
-- Seal commit `5a3eecd2e4004ad254196bf926ecf8f1a97280e2`; Git blob `5c886fec4ac323b361d9128a51a25c6ccb03952b`.
-- Schema `dadrock.tabs.v162.reference-blind-cpu-preregistration.v1`; status `PREREGISTERED_BEFORE_IMPLEMENTATION_CODE`; PASS.
-- Created from clean V162-absence head `f0b746b2f16a2536c19b6aca372596ab79f86879`.
+- Commit `5a3eecd2e4004ad254196bf926ecf8f1a97280e2`; blob `5c886fec4ac323b361d9128a51a25c6ccb03952b`; PASS.
+- Architecture: onset-aware Guitar rearticulation segmentation, active-Basic-Pitch-state-only reattack recovery, continuity-aware register inference, song-blind shared 16th subdivision lattice, instrument-specific step evidence, stable Bass pitch-state/rearticulation segmentation, no density targeting, no micro-tune.
 
-### Frozen V162 aggregate interpretation
-- V161 Guitar reduced flooding and raised measure+pitch precision, but recall collapsed; fixed-gap same-pitch consolidation is treated as over-destructive.
-- Guitar measure+pitch >> gross >> primary remains; local onset refinement alone did not solve event-to-grid/subdivision placement.
-- V161 isolated register repairs were numerous (382); V162 makes octave/register inference sequence-aware rather than one-event-only.
-- Bass improved across all score levels with similar count; keep useful onset/harmonic/pYIN foundation, but replace the zero-activation transition-recovery branch.
+## V162 numeric contract — SEALED BEFORE CODE
+- `debug/v162-cpu-autonomous/implementation-contract.json`.
+- Seal commit `a11240eeef4ebf25a8bd9913dd0333892b6557f4`; blob `f3d8aa7cbfa1a65a6bc09e12d377f05e0ace3c87`; schema `dadrock.tabs.v162.numeric-implementation-contract.v1`; PASS.
+- Retains source/normalized audio identities, CPU deterministic `htdemucs_6s`, V161 beat/measure backbone, Basic Pitch thresholds 0.50/0.30/min90ms, harmonic CQT foundation, dependencies.
 
-### Frozen V162 architecture hypotheses
-- H1 onset-aware Guitar rearticulation segmentation: supported new attack stays separate; sustained fragments consolidate.
-- H2 no standalone harmonic flooding; recovery only at independent attack intersecting persistent Basic Pitch state + harmonic support, deterministically capped.
-- H3 continuity-aware octave/register inference using local same-pitch-class track context + spectral evidence.
-- H4 song-blind subdivision lattice inside validated beat/measure backbone; no pure nearest-time global rounding.
-- H5 instrument-specific onset evidence chooses among a shared canonical subdivision lattice.
-- H6 Bass stable pitch-state segmentation: state changes + supported same-pitch reattacks; sustained states emit no duplicates.
-- H7 activity/confidence are admission evidence, never a target reference density.
-- H8 architectural successor only; no V161 threshold micro-tune.
+### Shared subdivision lattice — FROZEN
+- 4 steps/beat; beat boundary fixed.
+- shared onset = `0.65*unitDrums + 0.35*unitMix`.
+- interior j=1,2,3 nominal quarter-beat subdivisions; search ±3 frames.
+- move requires positive q55 + peak >=1.05× nominal; closest-to-nominal/lower-frame tie; Voronoi cell constraint; strictly increasing.
+- event candidate steps nearest ±1; score `.70 temporal + .20 instrument onset + .10 shared onset`; non-nearest needs >=.05 margin; max correction one step.
 
-### V162 mandatory song-blind fixtures
-- Guitar sustain consolidation; supported same-pitch reattack; weak attack suppression.
-- sequence-aware octave/register continuity.
-- shifted subdivision lattice and ambiguity/tie behavior.
-- Bass stable sustain; same-pitch reattack; stable pitch-state change.
-- Guitar polyphony/Bass monophony caps; JSON-native fixture; no-pitch-before-QC; negative leakage guard; runtime/workflow absence proof.
+### Guitar — FROZEN
+- overlap fragments always consolidate; unsupported gaps <=120ms consolidate; supported q60/onset-support>=.30 reattack stays separate.
+- independent active-state recovery: onset IOI 40ms; onset support>=.35; must intersect raw active Basic Pitch interval; parent confidence>=.35; harmonic rank>=.80 + fundamental above median; recovery score `.50 parentConfidence + .30 rank + .20 onset`; minimum .58; max 3 pitches/onset; no free harmonic pitch discovery.
+- sequence register: same pitch-class context ±0.75s; no context => no repair; alternative needs fundamental, >=.15 rank gain, >=3 semitone context-distance improvement; sequence `.65 rank + .35 continuity`.
+- segmented admission stays V161 `.45/.25/.15/.10/.05`, minimum .50, activity .05; cap6.
+
+### Bass — FROZEN
+- pYIN stable state voiced>=.50; median window7; nearest integer state MIDI; min stable run4 frames; bridge same MIDI gap<=2 frames; state change>=1 semitone; state median voiced>=.55.
+- onset lookup radius4; detected onset support>=.20; same-pitch reattack support>=.30 q60 and IOI>=80ms; state-change proposal can exist without onset; merge45ms with fixed priority.
+- harmonic/pYIN pitch window120ms and V161 admission retained; cap1.
+
+### Mandatory static fixtures
+- Guitar sustain/reattack/weak attack/active-state recovery/recovery cap.
+- register no-context/context.
+- nominal/shift/no-cross subdivision and event-step margin.
+- Bass stable sustain/same-pitch reattack/state change/gap bridge.
+- grid caps + JSON native + negative leakage/no-pitch-before-QC/absence proofs.
 
 ## Current hard boundary
-- No V162 implementation code yet.
-- `debug/v162-cpu-autonomous/implementation-contract.json` must be sealed first with all numerics/tie-breaks/fixtures.
-- Static validation must remain song/reference/V161-candidate blind.
-- V162 generation remains one-shot CPU after static PASS + pre-run seal.
+- Numeric contract is immutable; no implementation-driven threshold retune.
+- Implement pure `event_logic_v162.py` and `test_event_logic_v162.py` first; static/song-blind only.
+- Then version-isolated timebase/QC/transcriber/structural QC/JSON test/negative guard.
+- No song audio until one static preflight PASS + pre-run identity seal.
+- V162 generation max one; separate one-score prereg required after structural PASS.
 - No GPU/Modal/CUDA without fresh explicit authorization; never touch main/Production.
 
 ## Exact next steps — RESUME HERE
-1. Re-fetch branch/checkpoint before every write.
-2. Seal exact numeric V162 contract for: onset-aware consolidation/reattacks, attack-specific recovery cap, sequence-aware register rule, shared subdivision lattice + event step scoring, Bass stable-state segmentation/rearticulation, admission/caps, schemas, fixtures, one-shot boundaries.
-3. Only after contract seal implement `validation/v162_cpu_autonomous/` and V162 negative guard.
-4. Run song-blind static preflight only before any song audio.
+1. Re-fetch branch/checkpoint before each write.
+2. Implement V162 pure event/subdivision helpers exactly to contract.
+3. Add/run song-blind synthetic fixture source via one static workflow later; no song audio.
+4. Implement audio-facing modules only after helpers/tests are frozen.
