@@ -4,7 +4,7 @@ Updated: 2026-08-28 UTC
 Branch: `v143-contextual-prune-lobo`
 
 ## Active phase
-**V163 is terminal/consumed and failed its sole preregistered professional-reference score gate. Never rerun/rearm/repair/retune/regenerate/re-QC/rescore V163 and do not advance it to role/string/fret/technique/PDF. V164 is preregistered, its exact local-evidence numeric contract is sealed, its event/subdivision layer and expanded synthetic regression suite are implemented, version-isolated timebase-builder + independent timebase-QC adapters preserve the exact frozen V162 beat backbone while injecting only V164 subdivision locality, and the V164 CPU transcriber + independent structural-QC adapters are implemented without song execution. No V164 song processing, scorer/reference read, pitch inference, workflow arm, or candidate exists.**
+**V163 is terminal/consumed and failed its sole preregistered professional-reference score gate. Never rerun/rearm/repair/retune/regenerate/re-QC/rescore V163 and do not advance it to role/string/fret/technique/PDF. V164 is preregistered, its exact local-evidence numeric contract is sealed, and all planned version-isolated implementation/static-guard code is now present: event/subdivision logic + synthetic regressions, frozen-V162 timebase builder + independent timebase QC adapters, CPU transcriber, independent structural QC, JSON-native local-provenance fixture, and negative runtime guard. No V164 song processing, scorer/reference read, pitch inference, static workflow run, candidate, or GPU execution exists.**
 
 ## Standing safety
 - CPU-only reference-free work authorized at assistant discretion.
@@ -46,7 +46,7 @@ Branch: `v143-contextual-prune-lobo`
 - Current blob `13d29ef19a297d19469196cb2a23a4c0d6e040de`.
 - Carries V162 song-blind regressions for Guitar segmentation/recovery/register, Bass state/proposals, Guitar/Bass grid caps.
 - Adds V164 remote invariance for supported attack, onset refinement, Bass onset/proposals, subdivision and event-step; plus local-scale invariance, zero fallback, boundary clipping, nonfinite rejection.
-- Expected static result schema `dadrock.tabs.v164.local-evidence-static-test.v2`; GitHub static preflight not yet armed.
+- Expected static result schema `dadrock.tabs.v164.local-evidence-static-test.v2`; GitHub static preflight not yet run.
 
 ## V164 timebase builder — IMPLEMENTED / NOT EXECUTED
 ### `validation/v164_cpu_autonomous/build_timebase_v164.py`
@@ -72,15 +72,15 @@ Branch: `v143-contextual-prune-lobo`
 
 ## V164 transcriber — IMPLEMENTED / NOT EXECUTED
 ### `validation/v164_cpu_autonomous/transcribe_v164.py`
-- Creation commit `73d952258aafcfc6e875514936099c812458096a`.
-- Current Git blob `22bd3ea7048c3bb896d83af02666b48dfa2d3f84`.
+- Creation commit `73d952258aafcfc6e875514936099c812458096a`; Bass local-provenance propagation commit `75c048ff07099d41c5eb376d92d733ad2399767a`.
+- Current Git blob `df1302216df404bc3368ff820f005d6b63ae100d`.
 - V164 candidate schema `dadrock.tabs.v164.local-evidence-generated.v1`; generation receipt schema `dadrock.tabs.v164.cpu-generation-receipt.v1`.
 - Pins exact frozen V162 transcriber blob `fa163cafe2131aa73cdbb50df10d4e4912cff53b`, V162 event-logic blob `9f9b33fd8c210ad581025b454cf69b6999aa544b`, and V162 numeric-contract blob `409da313ed03a6c232d6578d48b0da6aa35b000b`.
 - Uses count-checked frozen-source adaptation so unchanged V162 audio/pitch/CQT/admission machinery remains exact; only the two onset-admission support sites are changed to V164 event-local q95 and annotated with local normalization provenance.
 - Patches locality-sensitive runtime helpers to V164 segmentation/recovery/Bass proposals/onset refinement/event-step selection while preserving V162 register, pitch, RMS/activity, admission, and cap numerics.
+- Bass candidate rows now carry `proposalNormalization` bounds emitted by the V164 proposal layer; this is provenance-only and does not change any selection/admission numeric.
 - Runtime boundary requires exact V164 prereg/contract/timebase/timebase-QC/pre-run/environment identities; timebase-QC PASS is checked before any pitch inference path can execute.
 - Candidate/receipt safety includes no reference/scorer, prior candidate/score, V163 candidate/score, GPU/Modal, threshold sweep, variant selection, or human correction.
-- Local syntax-only `py_compile` passed before commit; no repository/song import or song execution occurred in that check.
 
 ## V164 structural QC — IMPLEMENTED / NOT EXECUTED
 ### `validation/v164_cpu_autonomous/structural_qc_v164.py`
@@ -91,27 +91,46 @@ Branch: `v143-contextual-prune-lobo`
 - Preserves the frozen V162 candidate/hash-chain, one-run proof, source/cap, lattice recomputation, event-step recomputation, safety and JSON-native receipt checks through count-checked adaptation.
 - Adds V164 independent full `stepSelection` metadata recomputation at `1e-12`, onset-refinement local-window/positive-count recomputation, event-local q95 admission-support recomputation, local support-scale/provenance checks, recovery/Bass proposal bounds, V164 source-path assertions, and V163/reference/timebase-QC-before-pitch safety checks.
 - Requires all sealed `structuralQcRequirements` flags from the V164 contract and exact frozen V162 dependency pins.
-- Local syntax-only `py_compile` passed before commit; structural QC has not been run on song/candidate data because no V164 song run or candidate exists.
+- Structural QC has not been run on song/candidate data because no V164 song run or candidate exists.
+
+## V164 JSON-native fixture — IMPLEMENTED / NOT EXECUTED
+### `validation/v164_cpu_autonomous/test_json_native_v164.py`
+- Creation commit `9ed814225224197b3cf3deee48e8faa95c8b7560`.
+- Current Git blob `a0b525485bbea933004045622bbf8c63527f123b`.
+- Pins exact frozen V162 JSON-native fixture blob `654557363745f580f425252395542e9fb91adaad`.
+- Exercises the adapted structural-QC `json_native` boundary with NumPy scalars/arrays plus V164 `onsetNormalization`, `proposalNormalization`, finite support-scale and normalized `[0,1]` support metadata.
+- Requires exact JSON round-trip, no remaining NumPy types, deterministic integer/range semantics, and rejection of NaN/Inf.
+- Explicit static safety reports no song audio, Demucs, pitch, reference/scorer, V163 candidate/score, prior score, or GPU use.
+
+## V164 negative runtime guard — IMPLEMENTED / NOT EXECUTED
+### `debug/v164-cpu-autonomous/negative-runtime-guard.py`
+- Creation commit `8b4c3d42e774f1d7ea51b140eeefbba206fcb27f`.
+- Current Git blob `230aa1efeb4640aabbb05720ead031e13cc57337`.
+- Pins exact frozen V162 negative guard, event logic, transcriber, structural QC, JSON fixture and numeric-contract blobs.
+- AST/source-checks V164 local/beat normalization implementation, synthetic invariance coverage, pre-pitch timebase/QC wrappers, transcriber QC-before-pitch + count-checked local adaptation, structural local-evidence recomputation, JSON-native provenance handling, and forbidden reference/scorer/V163 artifact paths.
+- Optional workflow guard requires manual `workflow_dispatch`, CPU/static fixture commands, and forbids direct execution of timebase builder/QC, transcriber or structural QC with runtime arguments.
+- Explicit guard safety is song/audio/pitch/reference/scorer/V163/GPU blind.
 
 ## Current V164 execution state
 - Preregistration: sealed.
 - Numeric contract: sealed.
 - Event/subdivision layer: implemented.
-- Synthetic regression/invariance suite: implemented.
+- Synthetic regression/invariance suite: implemented, not run in GitHub preflight yet.
 - Timebase builder: implemented, not executed.
 - Independent timebase QC: implemented, not executed.
 - V164 transcriber: implemented, not executed.
 - V164 structural QC: implemented, not executed.
-- V164 JSON-native fixture and negative runtime guard: not yet complete.
-- GitHub static preflight workflow: not created/armed.
-- Song audio reads `0`; Demucs/pitch inference `0`; V164 candidate `0`; professional-reference/scorer reads for V164 `0`; GPU/CUDA/Modal `0`; main/Production unchanged.
+- V164 JSON-native fixture: implemented, not executed.
+- V164 negative runtime guard: implemented, not executed.
+- GitHub static preflight workflow: not created/armed/run yet.
+- Song audio reads `0`; Demucs/pitch inference `0`; V164 candidate `0`; professional-reference/scorer reads for V164 `0`; V163 candidate/score reads for V164 `0`; GPU/CUDA/Modal `0`; main/Production unchanged.
 - V164 prereg/contract do not authorize professional-reference scoring.
 
 ## Hard boundary — NEXT
 1. Never reopen V163 for tuning/scoring.
 2. Continue V164 only from frozen contract blob `098f24282b59abba0f7cffa0793b344b76701724`.
-3. Build V164 JSON-native fixture and negative runtime guard from the exact frozen V162 fixtures with version-isolated code/hash/local-normalization provenance checks.
-4. Do not read song audio, V163 candidate/score, scorer, or professional reference during implementation/static validation.
-5. After all V164 code is complete, create a one-shot CPU-only static preflight that compiles/runs synthetic fixtures only; checkpoint before arm and make zero branch writes while active.
-6. No V164 song processing until static preflight and pre-run identity are separately sealed.
+3. Create `.github/workflows/v164-static-preflight.yml` as manual one-shot CPU-only static validation: syntax-compile V164 implementation files; run only `test_event_logic_v164.py`, `test_json_native_v164.py`, and `negative-runtime-guard.py`; do not execute timebase builder/QC, transcriber, structural QC, song audio, Demucs, or pitch.
+4. Checkpoint the exact workflow blob and branch head before manually dispatching the preflight. Make **zero branch writes while that workflow is active**.
+5. If static preflight is not PASS, do not process song audio; fix only static implementation defects, reseal/checkpoint, and run a fresh static-preflight attempt under the contract boundary.
+6. No V164 song processing until static preflight PASS and pre-run identity are separately sealed.
 7. No GPU/Modal/CUDA without fresh explicit authorization.
