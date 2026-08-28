@@ -1,0 +1,166 @@
+{
+  "audioOpening": {
+    "analysisSeconds": 6.0,
+    "firstSustainedActivity": {
+      "peakMinus20Db": {
+        "firstSustained100msSeconds": 0.6435374149659864,
+        "gridStepsFromAudioZero": 5.54296875,
+        "thresholdDbfs": -30.238259689805766
+      },
+      "peakMinus25Db": {
+        "firstSustained100msSeconds": 0.6435374149659864,
+        "gridStepsFromAudioZero": 5.54296875,
+        "thresholdDbfs": -35.238259689805766
+      },
+      "peakMinus30Db": {
+        "firstSustained100msSeconds": 0.6435374149659864,
+        "gridStepsFromAudioZero": 5.54296875,
+        "thresholdDbfs": -40.238259689805766
+      },
+      "peakMinus35Db": {
+        "firstSustained100msSeconds": 0.6385487528344671,
+        "gridStepsFromAudioZero": 5.5,
+        "thresholdDbfs": -45.238259689805766
+      },
+      "peakMinus40Db": {
+        "firstSustained100msSeconds": 0.6385487528344671,
+        "gridStepsFromAudioZero": 5.5,
+        "thresholdDbfs": -50.238259689805766
+      }
+    },
+    "frameMs": 20.0,
+    "hopMs": 5.0,
+    "peakFrameDbfs": -10.238259689805764,
+    "sampleRate": 44100,
+    "strongEnvelopeRisesFirst3Seconds": [
+      {
+        "gridStepsFromAudioZero": 5.757812499999999,
+        "rise": 0.01579015581712638,
+        "seconds": 0.6684807256235827
+      },
+      {
+        "gridStepsFromAudioZero": 9.0234375,
+        "rise": 0.000910802368502453,
+        "seconds": 1.0476190476190477
+      },
+      {
+        "gridStepsFromAudioZero": 10.26953125,
+        "rise": 0.011932996133613899,
+        "seconds": 1.1922902494331067
+      },
+      {
+        "gridStepsFromAudioZero": 12.289062499999998,
+        "rise": 0.0009985692861142481,
+        "seconds": 1.4267573696145124
+      },
+      {
+        "gridStepsFromAudioZero": 14.308593749999998,
+        "rise": 0.01510330526287354,
+        "seconds": 1.6612244897959183
+      },
+      {
+        "gridStepsFromAudioZero": 15.812499999999998,
+        "rise": 0.0038604012586404557,
+        "seconds": 1.835827664399093
+      },
+      {
+        "gridStepsFromAudioZero": 18.43359375,
+        "rise": 0.016686502688699006,
+        "seconds": 2.140136054421769
+      },
+      {
+        "gridStepsFromAudioZero": 20.582031249999996,
+        "rise": 0.002712122464511718,
+        "seconds": 2.3895691609977323
+      },
+      {
+        "gridStepsFromAudioZero": 22.55859375,
+        "rise": 0.014133422709528387,
+        "seconds": 2.619047619047619
+      },
+      {
+        "gridStepsFromAudioZero": 25.6953125,
+        "rise": 0.0015417165639355357,
+        "seconds": 2.983219954648526
+      }
+    ]
+  },
+  "classification": "post-score-diagnostic-only-no-candidate-correction",
+  "comparisonToFrozenShift": {
+    "peakMinus20Db": {
+      "absoluteDifferenceGridSteps": 7.70703125,
+      "absoluteDifferenceSeconds": 0.8947845804988662,
+      "activityMinusImpliedShiftSeconds": -0.8947845804988662
+    },
+    "peakMinus25Db": {
+      "absoluteDifferenceGridSteps": 7.70703125,
+      "absoluteDifferenceSeconds": 0.8947845804988662,
+      "activityMinusImpliedShiftSeconds": -0.8947845804988662
+    },
+    "peakMinus30Db": {
+      "absoluteDifferenceGridSteps": 7.70703125,
+      "absoluteDifferenceSeconds": 0.8947845804988662,
+      "activityMinusImpliedShiftSeconds": -0.8947845804988662
+    },
+    "peakMinus35Db": {
+      "absoluteDifferenceGridSteps": 7.75,
+      "absoluteDifferenceSeconds": 0.8997732426303855,
+      "activityMinusImpliedShiftSeconds": -0.8997732426303855
+    },
+    "peakMinus40Db": {
+      "absoluteDifferenceGridSteps": 7.75,
+      "absoluteDifferenceSeconds": 0.8997732426303855,
+      "activityMinusImpliedShiftSeconds": -0.8997732426303855
+    }
+  },
+  "frozenIdentities": {
+    "audioSha256": "215bd5a657c5326f08f132ae358595a95c30b39bb7493a52c2f910d5a608149f",
+    "generatedSha256": "1be86f86bb08e164342aa0c52db7a4d77beb938621e00d7d2e3b0e03f2dbfc37"
+  },
+  "frozenPostScoreComparator": {
+    "bestDiagnosticGeneratedShiftSteps": -13.25,
+    "equivalentPositiveAudioLeadSeconds": 1.5383219954648526,
+    "note": "Comparator was frozen by prior consumed-candidate diagnostic; this script does not search offsets."
+  },
+  "generatedOpening": {
+    "bass": {
+      "firstFiveStartSeconds": [
+        5.958486167800453,
+        7.17881768707483,
+        7.701266666666667,
+        9.037697959183673,
+        9.769126530612244
+      ],
+      "firstStartAsGridStepsFromAudioZero": 51.3221171875,
+      "firstStartSeconds": 5.958486167800453
+    },
+    "combinedGuitar": {
+      "firstFiveStartSeconds": [
+        0.7662585034013606,
+        0.9171882086167801,
+        1.0448979591836736,
+        1.195827664399093,
+        1.4512471655328798
+      ],
+      "firstStartAsGridStepsFromAudioZero": 6.6,
+      "firstStartSeconds": 0.7662585034013606
+    }
+  },
+  "grid": {
+    "historicalTranscriberOrigin": "audio_time_zero_equals_measure_1_step_0",
+    "stepDurationSeconds": 0.11609977324263039,
+    "stepsPerBeat": 4,
+    "tempoBpm": 129.19921875
+  },
+  "policy": {
+    "candidateModified": false,
+    "correctedCandidateWritten": false,
+    "gpuUsed": false,
+    "mainOrProductionModified": false,
+    "officialScorerCalled": false,
+    "professionalReferenceRead": false,
+    "thresholdSweepForGeneration": false
+  },
+  "schema": "dadrock.tabs.v154.audio-grid-origin-diagnostic.v1",
+  "validation": "PASS"
+}
