@@ -1,0 +1,202 @@
+{
+  "schema": "dadrock.tabs.v160.numeric-implementation-contract.v1",
+  "version": "V160",
+  "status": "SEALED_BEFORE_IMPLEMENTATION_CODE",
+  "preregistration": {
+    "path": "debug/v160-cpu-autonomous/preregistration.json",
+    "commit": "0ab352eb781e31eb21d7329d6f08d894af02471a",
+    "gitBlob": "cc238bcbf62c5defec410def962124d5012bd506"
+  },
+  "scope": "Carry V159 generation numerics forward unchanged; implement only V160 version/schema isolation and JSON-safe independent structural-QC receipt serialization with mandatory song-blind static coverage.",
+  "canonicalSchemas": {
+    "timebase": "dadrock.tabs.v160.reference-blind-timebase.v1",
+    "timebaseQc": "dadrock.tabs.v160.reference-blind-timebase-qc.v1",
+    "candidate": "dadrock.tabs.v160.cpu-timebase-first-generated.v1",
+    "generationReceipt": "dadrock.tabs.v160.cpu-generation-receipt.v1",
+    "environmentReceipt": "dadrock.tabs.v160.cpu-environment-receipt.v1",
+    "structuralQc": "dadrock.tabs.v160.reference-blind-structural-qc.v1",
+    "preRunReceipt": "dadrock.tabs.v160.pre-run-identity-receipt.v1",
+    "terminalFreeze": "dadrock.tabs.v160.terminal-freeze.v1"
+  },
+  "implementationPaths": {
+    "timebaseBuilder": "validation/v160_cpu_autonomous/build_timebase_v160.py",
+    "timebaseQc": "validation/v160_cpu_autonomous/timebase_qc_v160.py",
+    "transcriber": "validation/v160_cpu_autonomous/transcribe_v160.py",
+    "structuralQc": "validation/v160_cpu_autonomous/structural_qc_v160.py",
+    "jsonNativeStaticTest": "validation/v160_cpu_autonomous/test_json_native_v160.py",
+    "negativeRuntimeGuard": "debug/v160-cpu-autonomous/negative-runtime-guard.py",
+    "staticPreflightWorkflow": ".github/workflows/v160-static-preflight.yml",
+    "generationWorkflow": ".github/workflows/v160-generate.yml"
+  },
+  "generationNumerics": {
+    "sourceAudio": {
+      "historicalCommit": "74b0f815ff3f66f325220975c410621503de440f",
+      "sha256": "215bd5a657c5326f08f132ae358595a95c30b39bb7493a52c2f910d5a608149f",
+      "bytes": 3478611,
+      "normalizedWavSha256": "3e61b7926eabc21b758c750f826c7426a29d6de5aafdd5c93f8045ecdc67f87e"
+    },
+    "separation": {
+      "model": "htdemucs_6s",
+      "device": "cpu",
+      "shifts": 1,
+      "jobs": 1,
+      "repeatCount": 1,
+      "seed": 0,
+      "torchNumThreads": 1,
+      "torchNumInteropThreads": 1,
+      "torchDeterministicAlgorithms": true,
+      "mathLibraryThreads": 1
+    },
+    "timebase": {
+      "analysisSampleRate": 22050,
+      "hopLength": 256,
+      "rejectNonfiniteOnsetArrays": true,
+      "onsetClampMinimum": 0.0,
+      "positiveMaxFloorExclusive": 1e-12,
+      "unitNormalization": "array/max(array)",
+      "fusedBeatEnvelope": "0.5*unitMix + 0.5*unitDrums",
+      "beatTrackerStartBpm": 120.0,
+      "beatTrackerTightness": 100.0,
+      "beatTrackerSparse": true,
+      "runtimeWarningFatal": true,
+      "minimumDetectedBeats": 8,
+      "acceptedBpmRangeInclusive": [30.0, 300.0],
+      "tempoConsistencyRatioInclusive": [0.5, 2.0],
+      "phaseEvidenceWeights": {
+        "drums": 1.0,
+        "mix": 0.5,
+        "bass": 0.5,
+        "lowFrequencyFlux": 0.75,
+        "harmonicChange": 0.75
+      },
+      "lowFrequencyMaximumHz": 200.0,
+      "chromaBins": 12,
+      "phaseChoices": [0, 1, 2, 3],
+      "phaseTieTolerance": 1e-12,
+      "phaseTieWinner": "LOWER_PHASE",
+      "leadingBeatCount": "(-selectedPhase)%4",
+      "earlyPeriod": "median(first up to 8 positive IBIs)",
+      "maximumPrependedBeats": 3,
+      "absoluteOrdinal": "sequential prefix+detected index",
+      "gridStep": "4*ordinal",
+      "phaseMayAlterOrdinal": false,
+      "absoluteGridQuantization": "int(round(rawGridStep))",
+      "measure": "absoluteGridStep//16+1",
+      "step": "absoluteGridStep%16"
+    },
+    "pitch": {
+      "harmonicBinsPerOctave": 36,
+      "harmonics": [1, 2, 3, 4, 5],
+      "harmonicWeights": [1.0, 0.5, 0.3333333333, 0.25, 0.2],
+      "harmonicRadius": 1,
+      "bassMidiRangeInclusive": [28, 67],
+      "bassOnsetBacktrack": true,
+      "bassMinIoiSeconds": 0.035,
+      "bassPitchWindowSeconds": 0.18,
+      "bassPyinFrameLength": 2048,
+      "bassPyinHopLength": 256,
+      "bassSigma": 0.75,
+      "bassFusionWeight": 0.75,
+      "guitarMidiRangeInclusive": [40, 88],
+      "basicPitchOnsetThreshold": 0.5,
+      "basicPitchFrameThreshold": 0.3,
+      "basicPitchMinimumNoteLengthMs": 90.0,
+      "basicPitchMelodiaTrick": true,
+      "persistentTrackMinFrames": 3,
+      "persistentTrackRadius": 1,
+      "persistentTrackMaxCount": 6,
+      "addedTrackDurationSeconds": 0.07,
+      "registerRepair": "BYTE-FOR-SEMANTIC-COPY_OF_V159_LOGIC_WITH_VERSION_ISOLATION_ONLY",
+      "eventDurationRules": "BYTE-FOR-SEMANTIC-COPY_OF_V159_LOGIC_WITH_VERSION_ISOLATION_ONLY",
+      "gridMidiDedupe": "BYTE-FOR-SEMANTIC-COPY_OF_V159_LOGIC_WITH_VERSION_ISOLATION_ONLY",
+      "sourcePrecedence": "BYTE-FOR-SEMANTIC-COPY_OF_V159_LOGIC_WITH_VERSION_ISOLATION_ONLY"
+    }
+  },
+  "jsonNativeNormalization": {
+    "functionContract": "json_native(value)",
+    "decisionSemantics": "Structural PASS/FAIL is computed from the original logical checks using bool(value) exactly as in V159 before normalization. Normalization is serialization-only and may not alter the decision.",
+    "checkMapContract": "After the decision is computed, construct native_checks = {key: bool(value) for key, value in checks.items()} and place native_checks, not raw checks, into the receipt.",
+    "orderedRules": [
+      "If value is None, return None.",
+      "If value is a native str, bool, or int, return it unchanged.",
+      "If value is a native float, require math.isfinite(value); otherwise raise RuntimeError; return the finite float unchanged.",
+      "If value is numpy.generic, call value.item() and recursively normalize the result.",
+      "If value is numpy.ndarray, call value.tolist() and recursively normalize the result.",
+      "If value is list or tuple, return a list containing recursively normalized elements in original order.",
+      "If value is dict, require every key to be native str and return a dict with recursively normalized values preserving insertion keys.",
+      "For every unsupported type, raise RuntimeError before receipt write."
+    ],
+    "serialization": {
+      "encoder": "json.dumps",
+      "indent": 2,
+      "sortKeys": true,
+      "allowNan": false,
+      "trailingNewline": true
+    }
+  },
+  "mandatorySyntheticStaticFixture": {
+    "mustRunBeforeAnySongAudio": true,
+    "control": "json.dumps on {'x': numpy.bool_(True)} must raise TypeError, proving the fixture would have caught V159.",
+    "fixtureValues": {
+      "boolScalar": "numpy.bool_(True)",
+      "integerScalar": "numpy.int64(7)",
+      "floatingScalar": "numpy.float64(1.25)",
+      "array": "numpy.asarray([[1,2],[3,4]], dtype=numpy.int64)",
+      "nested": "dict/list/tuple combination containing all preceding NumPy types"
+    },
+    "postNormalizationAssertions": [
+      "No numpy.generic remains recursively.",
+      "No numpy.ndarray remains recursively.",
+      "All synthetic check-map values are type(value) is bool.",
+      "json.dumps(normalized, allow_nan=False, sort_keys=True) succeeds.",
+      "json.loads round-trip equals expected native structure.",
+      "native float NaN and infinity are rejected before or by allow_nan=False."
+    ]
+  },
+  "structuralQcLogic": {
+    "allV159NonSerializationChecksMustBePreserved": true,
+    "eventMappingTolerance": 1e-9,
+    "midiRangesUnchanged": true,
+    "sourceRulesUnchanged": true,
+    "sameStreamDedupeUnchanged": true,
+    "deterministicOrderUnchanged": true,
+    "hashChainsUnchangedInSubstance": true,
+    "singleGenerationProofUnchangedInSubstance": true,
+    "safetyChecksUnchangedInSubstance": true,
+    "onlyPermittedBehavioralChange": "Receipt serialization succeeds for JSON-normalizable logical results that include NumPy scalar/container types."
+  },
+  "dependencies": {
+    "python": "3.10.x",
+    "torch": "2.8.0+cpu",
+    "numpy": "1.26.4",
+    "scipy": "1.13.1",
+    "soundfile": "0.12.1",
+    "basic-pitch": "0.4.0",
+    "demucs": "4.1.0",
+    "imageio-ffmpeg": "0.6.0",
+    "librosa": "0.11.0"
+  },
+  "runtimeBoundaries": {
+    "timebaseQcBeforePitch": true,
+    "timebaseQcFailureTerminalNoCandidate": true,
+    "structuralQcRequiredForAuthority": true,
+    "structuralQcFailureOrRuntimeFailureTerminal": true,
+    "onlyStructuralPassCandidateScoringEligible": true,
+    "generationMayReadProfessionalReference": false,
+    "generationMayReadFrozenScorer": false,
+    "generationMayReadV159Artifacts": false,
+    "generationMayReadPriorCandidatesOrScores": false,
+    "staticPreflightMayReadSongAudio": false,
+    "staticPreflightMayRunPitchOrDemucs": false
+  },
+  "safetyAtSeal": {
+    "professionalReferenceRead": false,
+    "professionalReferencePathsOpened": 0,
+    "referenceFacingScoreCalls": 0,
+    "v159CandidateScored": false,
+    "gpuExecutions": 0,
+    "cudaExecutions": 0,
+    "modalExecutions": 0,
+    "mainOrProductionModified": false
+  }
+}
