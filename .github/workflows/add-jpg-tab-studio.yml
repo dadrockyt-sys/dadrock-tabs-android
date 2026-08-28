@@ -1,0 +1,27 @@
+name: Add personal JPG Tab Studio to admin
+
+on:
+  push:
+    paths:
+      - '.github/workflows/add-jpg-tab-studio.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  patch-admin:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Add JPG Tab Studio admin card
+        run: python .github/scripts/add_jpg_tab_studio_admin.py
+
+      - name: Commit admin panel link
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add app/page.js
+          git diff --cached --quiet || git commit -m "Add personal JPG Tab Studio to admin panel"
+          git push
