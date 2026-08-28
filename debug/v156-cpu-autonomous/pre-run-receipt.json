@@ -1,0 +1,93 @@
+{
+  "schema": "dadrock.tabs.v156.pre-run-identity-receipt.v1",
+  "version": "V156",
+  "validation": "PASS",
+  "status": "SEALED_BEFORE_GENERATION",
+  "createdBeforeAnyV156Candidate": true,
+  "candidateExistsAtSeal": false,
+  "referenceReadAtSeal": false,
+  "referenceFacingScoreCallsAtSeal": 0,
+  "song": {
+    "artist": "Lenny Kravitz",
+    "title": "Are You Gonna Go My Way",
+    "audioPath": "public/gomywayfullaitest.m4a",
+    "audioSha256": "215bd5a657c5326f08f132ae358595a95c30b39bb7493a52c2f910d5a608149f"
+  },
+  "pinnedGitBlobs": {
+    "preregistration": "25a0a921e3245049a7f64fd3cb823e6767fe55da",
+    "canonicalTranscriber": "961e18f66766e51abb42f46e529730fcaa2807b4",
+    "independentStructuralQc": "3b1018e751deecdfb0efca100c29848256ee1234",
+    "inheritedReferenceBlindEngine": "3357582dd8311b28f4b85f2ebfbc7acb8c9e4fb8"
+  },
+  "canonicalContracts": {
+    "candidateSchema": "dadrock.tabs.v156.cpu-hybrid-generated.v1",
+    "generationReceiptSchema": "dadrock.tabs.v156.cpu-hybrid-generation-receipt.v1",
+    "structuralQcSchema": "dadrock.tabs.v156.reference-blind-structural-qc.v1",
+    "independentStructuralQcRequired": true
+  },
+  "executionDeterminism": {
+    "rngSeed": 0,
+    "pythonRandomSeed": 0,
+    "numpyRandomSeed": 0,
+    "torchManualSeed": 0,
+    "torchDeterministicAlgorithms": true,
+    "torchDeterministicWarnOnly": false,
+    "torchNumThreads": 1,
+    "torchNumInteropThreads": 1,
+    "ompNumThreads": 1,
+    "mklNumThreads": 1,
+    "openblasNumThreads": 1,
+    "numexprNumThreads": 1,
+    "demucsInvocation": "in-process demucs.separate.main after RNG/thread initialization",
+    "demucsModel": "htdemucs_6s",
+    "demucsShifts": 1,
+    "demucsJobs": 1,
+    "separationRepeatCount": 1
+  },
+  "dependencyPins": {
+    "python": "3.10",
+    "torch": "2.8.0+cpu",
+    "numpy": "1.26.4",
+    "scipy": "1.13.1",
+    "soundfile": "0.12.1",
+    "demucs": "4.1.0",
+    "basic-pitch": "0.4.0",
+    "librosa": "0.11.0",
+    "imageio-ffmpeg": "0.6.0"
+  },
+  "triggerSafety": {
+    "workflowCreationIsSingleTrigger": true,
+    "secondArmEditForbidden": true,
+    "expectedGenerationWorkflowRunCount": 1,
+    "workflowMustSelfSealAfterSuccessfulFreeze": true,
+    "duplicateRunAction": "ABORT_V156_WITHOUT_SCORING"
+  },
+  "referenceIsolation": {
+    "professionalReferenceReadDuringGeneration": false,
+    "v154CandidateUsedAsGenerationInput": false,
+    "v155CandidateOrOutputUsedAsGenerationInput": false,
+    "referenceDerivedOffsetOrTempoConstantsAllowed": false,
+    "thresholdSweepAllowed": false,
+    "candidateVariantSelectionAllowed": false,
+    "humanCorrectionAllowed": false,
+    "postGenerationReferenceGuidedFilteringAllowed": false
+  },
+  "preGenerationBoundaryAudit": {
+    "generatedJsonAbsent": true,
+    "generationReceiptAbsent": true,
+    "generationWorkflowAbsent": true,
+    "preregistrationStatus": "PREREGISTERED_BEFORE_GENERATION_AMENDED_EXECUTION_DETERMINISM",
+    "canonicalTranscriberMatchesAmendedStatus": true,
+    "independentQcMatchesAmendedPreregistrationBlob": true,
+    "professionalReferencePathDependencyInCanonicalTranscriber": false,
+    "professionalReferencePathDependencyInIndependentQc": false
+  },
+  "safety": {
+    "cpuOnly": true,
+    "modalUsed": false,
+    "cudaGpuUsed": false,
+    "mainOrProductionModified": false,
+    "referenceRead": false,
+    "referenceFacingScoreCalls": 0
+  }
+}
