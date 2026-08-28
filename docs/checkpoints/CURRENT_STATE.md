@@ -3,7 +3,7 @@
 Updated: 2026-08-28 UTC
 Branch: `v143-contextual-prune-lobo`
 
-Active phase: **V158 is permanently consumed/diagnosed. V159 reference-blind CPU preregistration and numeric implementation contract remain SEALED. The V159 timebase builder, independent pre-pitch timebase QC, frozen-timebase transcriber, independent structural QC, and negative runtime guard are now implemented. No V159 timebase artifact, candidate, generation run, structural-QC receipt, or score has been produced. Static/reviewer preflight, exact code identity sealing, pre-run receipt, and the one-shot CPU generation workflow remain. No professional-reference reads occurred during this implementation work. No GPU/Modal/CUDA has been used and main/Production remains untouched.**
+Active phase: **V158 is permanently consumed/diagnosed. V159 reference-blind CPU preregistration and numeric implementation contract remain SEALED. The V159 timebase builder, independent pre-pitch timebase QC, frozen-timebase transcriber, independent structural QC, and negative runtime guard are implemented. A song-blind static-only V159 preflight has now been added and its sole run #1 / attempt #1 is in progress. No V159 audio processing, Demucs separation, timebase artifact, candidate, generation run, structural-QC receipt, or score has been produced. Exact code identity sealing, pre-run receipt, and the one-shot CPU generation workflow remain. No professional-reference reads occurred. No GPU/Modal/CUDA has been used and main/Production remains untouched.**
 
 ## Standing authorization / safety — MUST PRESERVE
 - CPU-only work and CPU scoring are at assistant discretion.
@@ -78,8 +78,6 @@ Song: **Lenny Kravitz — Are You Gonna Go My Way**.
 - Any timebase-QC failure is terminal for V159 before candidate creation: freeze failure and never re-arm.
 
 ## V159 implementation progress — SAVED
-Repository state immediately before this checkpoint write: `47f7362ed7c6544a94f6a3cd4da51169ce12a474`.
-
 Completed/current files:
 - `validation/v159_cpu_autonomous/build_timebase_v159.py` — commit `583f7fa2823a6dfd829dbfa9137182b6fd86882f`.
   - Standalone write-once reference-blind timebase builder.
@@ -94,17 +92,35 @@ Completed/current files:
   - Writes exactly one candidate + generation receipt; embeds the CPU environment receipt.
 - `validation/v159_cpu_autonomous/structural_qc_v159.py` — introduced at `1c4cf06824c75de925320163cf6992f2da8c416e`, current amendment commit `47f7362ed7c6544a94f6a3cd4da51169ce12a474`.
   - Independently recomputes event mapping from frozen timebase, MIDI ranges, source rules, same-stream dedupe/order, counts, hash chains, code pins, and safety.
-  - Single-generation proof now comes from the standalone CPU environment receipt embedded exactly in the generation receipt: workflow run number `1`, attempt `1`, positive run ID.
+  - Single-generation proof comes from the standalone CPU environment receipt embedded exactly in the generation receipt: workflow run number `1`, attempt `1`, positive run ID.
 - `debug/v159-cpu-autonomous/negative-runtime-guard.py` — commit `5cf5382e6b8b8410523f2084c1b45ddd9531df83`.
   - Static reviewer-facing guard for professional-reference/scorer/prior-version runtime path leakage.
   - Prohibits pitch imports/calls in pre-pitch timebase files and checks transcriber ordering so frozen timebase-QC PASS validation occurs before pitch inference.
 
+## CPU/dependency and stem-layout audit — COMPLETE
+Reference-blind inspection of prior CPU setup established the intended V159 host layout without reading any professional-reference/scoring artifact:
+- Python `3.10`.
+- `torch==2.8.0` from the CPU wheel index; expected runtime `2.8.0+cpu`, `torch.version.cuda is None`, `torch.cuda.is_available() is False`.
+- `numpy==1.26.4`, `scipy==1.13.1`, `soundfile==0.12.1`, `basic-pitch==0.4.0`, `demucs==4.1.0`, `imageio-ffmpeg==0.6.0`, `librosa==0.11.0`.
+- Deterministic CPU separation pattern: seed `0`, one Torch thread/inter-op thread, deterministic algorithms enabled, `htdemucs_6s`, device `cpu`, `--shifts 1`, `-j 1`.
+- Exact fresh stem layout after normalizing `/tmp/v159-normalized.wav`: `/tmp/v159-demucs/htdemucs_6s/v159-normalized/guitar.wav`, `bass.wav`, and `drums.wav`.
+- Historical normalization identity remains SHA256 `3e61b7926eabc21b758c750f826c7426a29d6de5aafdd5c93f8045ecdc67f87e`.
+- This audit did not execute Demucs or open song audio.
+
+## Static preflight — IN PROGRESS
+- Added `.github/workflows/v159-static-preflight.yml` at commit `7482e15ec60f99001c61584dd167ef142d34e7f4`.
+- Workflow is path-self-triggered only and read-only (`contents: read`).
+- Sole run ID `33195208763`; workflow run number `1`; attempt `1`; event `push`; head commit `7482e15ec60f99001c61584dd167ef142d34e7f4`.
+- It performs only: sealed prereg/contract blob checks, generated-artifact absence checks, `python -m py_compile`, the V159 negative-runtime guard, and a final proof that no runtime artifact was created.
+- It installs no project/audio dependencies and invokes no V159 runtime module, song audio, Demucs, pitch recognition, scorer, or professional reference.
+- At this checkpoint write the audit job is still `in_progress`; no PASS is claimed yet.
+
 ## Validation status
 - **No V159 song audio processing has run yet.**
 - No fresh Demucs separation, timebase construction, timebase QC, pitch inference, candidate, structural-QC receipt, or score has run.
-- A local sandbox `py_compile` attempt could not fetch GitHub raw source because the sandbox could not resolve `raw.githubusercontent.com`; therefore syntax/AST execution has **not** been falsely marked PASS.
-- Static reviewer/preflight execution is still required before code identities are sealed.
-- Professional-reference reads during this V159 implementation phase: `0`.
+- A local sandbox checkout/compile retry still could not resolve `github.com`; therefore local syntax execution is not counted as evidence.
+- GitHub-hosted static reviewer/preflight run #1 is in progress and is the authoritative pending syntax/AST check.
+- Professional-reference reads during this V159 implementation/resume phase: `0`.
 - V159 reference-facing score calls: `0`.
 - GPU/Modal/CUDA executions: `0`.
 - `main`/Production modifications: `0`.
@@ -120,17 +136,16 @@ Completed/current files:
 
 ## Resume verification — 2026-08-28
 - Re-fetched `docs/checkpoints/CURRENT_STATE.md` and branch metadata before resuming.
-- Verified branch head was exactly `fbebd6afe3138f8d1e8d2b7b4f60f0ba7e20ee6d`; its tree is `10f9ed7ce821ac97a1e37bbadbbf0c91ecf3b3d7`.
-- No concurrent branch progress was present at resume.
-- Continuing only with the sealed-safe next step: CPU/dependency audit and exact fresh `htdemucs_6s` stem-layout audit. No audio, pitch inference, professional-reference read, scorer call, GPU/Modal/CUDA execution, or main/Production modification is authorized or performed by this checkpoint write.
+- Initial verified resume head was `fbebd6afe3138f8d1e8d2b7b4f60f0ba7e20ee6d`; a checkpoint-only resume verification commit advanced it to `fa999290ac3448e1159da2fe9b05f4cfb71f6846` before the static preflight was created.
+- Static preflight creation then advanced branch head to `7482e15ec60f99001c61584dd167ef142d34e7f4`.
+- No candidate/generation progress existed before creating the static preflight.
 
 ## Exact next steps — RESUME HERE
 1. Re-fetch latest branch head/checkpoint before every write.
-2. Inspect prior CPU workflow/dependency setup and exact fresh `htdemucs_6s` stem layout without reading professional-reference/scoring artifacts.
-3. Add/run a song-blind CPU static preflight (Python compile + negative runtime guard only; no audio, Demucs, pitch inference, or reference reads) if the connector permits safe workflow dispatch.
-4. Resolve any implementation-only/static defects without changing the sealed V159 numerics.
-5. Freeze exact final code/blob identities and create `dadrock.tabs.v159.pre-run-identity-receipt.v1` proving no timebase/candidate/generation receipt existed at seal and reference reads were zero.
-6. Only after reviewer/pre-run sealing, arm exactly one V159 CPU generation workflow; creation is the sole trigger. The workflow must create a CPU environment receipt with `workflowRunNumber=1`, `workflowRunAttempt=1`, and positive `workflowRunId`.
-7. Workflow order: verify audio/normalization identity → fresh CPU `htdemucs_6s` → build write-once timebase → independent timebase QC. If QC FAILS, freeze terminal V159 failure and create no candidate. If PASS, run transcriber → independent structural QC.
-8. If timebase + structural QC pass, freeze exactly one candidate, then separately seal a one-shot scoring guard/workflow for exactly one professional-reference score.
-9. Fresh explicit authorization remains required immediately before any Modal/NVIDIA L4/CUDA/GPU execution.
+2. Wait only by active polling in this same work session for V159 static preflight run `33195208763` to finish; inspect its jobs/logs. Do not claim PASS until all static steps succeed.
+3. If static preflight fails, resolve implementation-only/static defects without changing sealed V159 numerics, then use a new explicitly audited static workflow version rather than re-running the consumed attempt.
+4. If static preflight passes, freeze exact final runtime code/blob identities and create `dadrock.tabs.v159.pre-run-identity-receipt.v1` proving no timebase/candidate/generation/environment/structural-QC receipt existed at seal and reference reads/score calls were zero.
+5. Only after reviewer/pre-run sealing, arm exactly one V159 CPU generation workflow; creation is the sole trigger. The workflow must create a CPU environment receipt with `workflowRunNumber=1`, `workflowRunAttempt=1`, and positive `workflowRunId`.
+6. Workflow order: verify audio/normalization identity → fresh CPU `htdemucs_6s` → build write-once timebase → independent timebase QC. If QC FAILS, freeze terminal V159 failure and create no candidate. If PASS, run transcriber → independent structural QC.
+7. If timebase + structural QC pass, freeze exactly one candidate, then separately seal a one-shot scoring guard/workflow for exactly one professional-reference score.
+8. Fresh explicit authorization remains required immediately before any Modal/NVIDIA L4/CUDA/GPU execution.
