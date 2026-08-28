@@ -1,0 +1,642 @@
+name: V160 one-shot reference-blind CPU generation
+
+on:
+  push:
+    branches:
+      - v143-contextual-prune-lobo
+    paths:
+      - .github/workflows/v160-generate.yml
+
+permissions:
+  contents: write
+
+env:
+  BRANCH: v143-contextual-prune-lobo
+  EXPECTED_PARENT_HEAD: f439f8abf1b270ce4cb85393bde580386ed4be84
+  SOURCE_AUDIO: /tmp/v160-source.m4a
+  NORM_WAV: /tmp/v160-normalized.wav
+  DEMUCS_DIR: /tmp/v160-demucs
+  STEM_DIR: /tmp/v160-demucs/htdemucs_6s/v160-normalized
+  PREREG: debug/v160-cpu-autonomous/preregistration.json
+  CONTRACT: debug/v160-cpu-autonomous/implementation-contract.json
+  IMMUTABLE_PRE_RUN: debug/v160-cpu-autonomous/pre-run-identity-receipt.json
+  PRE_RUN: debug/v160-cpu-autonomous/pre-run-runtime-envelope.json
+  NEGATIVE_GUARD: debug/v160-cpu-autonomous/negative-runtime-guard.py
+  TIMEBASE_BUILDER: validation/v160_cpu_autonomous/build_timebase_v160.py
+  TIMEBASE_QC_CODE: validation/v160_cpu_autonomous/timebase_qc_v160.py
+  TRANSCRIBER: validation/v160_cpu_autonomous/transcribe_v160.py
+  STRUCTURAL_QC_CODE: validation/v160_cpu_autonomous/structural_qc_v160.py
+  JSON_NATIVE_TEST: validation/v160_cpu_autonomous/test_json_native_v160.py
+  STATIC_PREFLIGHT: .github/workflows/v160-static-preflight.yml
+  ENV_RECEIPT: debug/v160-cpu-autonomous/environment-receipt.json
+  TIMEBASE: debug/v160-cpu-autonomous/timebase.json
+  TIMEBASE_QC: debug/v160-cpu-autonomous/timebase-qc.json
+  OUTPUT: debug/v160-cpu-autonomous/generated.json
+  GENERATION_RECEIPT: debug/v160-cpu-autonomous/generation-receipt.json
+  STRUCTURAL_QC: debug/v160-cpu-autonomous/structural-qc.json
+  TERMINAL_FREEZE: debug/v160-cpu-autonomous/terminal-freeze.json
+  CUDA_VISIBLE_DEVICES: ""
+  PYTHONHASHSEED: "0"
+  OMP_NUM_THREADS: "1"
+  MKL_NUM_THREADS: "1"
+  OPENBLAS_NUM_THREADS: "1"
+  NUMEXPR_NUM_THREADS: "1"
+
+jobs:
+  generate-once:
+    runs-on: ubuntu-latest
+    timeout-minutes: 180
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ github.sha }}
+          fetch-depth: 0
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.10'
+
+      - name: Verify one-shot trigger, seals, and runtime boundary
+        id: guard
+        shell: bash
+        run: |
+          set -euo pipefail
+          test "$GITHUB_EVENT_NAME" = "push"
+          test "$GITHUB_RUN_NUMBER" = "1"
+          test "$GITHUB_RUN_ATTEMPT" = "1"
+          test "$(git rev-parse HEAD)" = "$GITHUB_SHA"
+          test "$(git rev-parse HEAD^)" = "$EXPECTED_PARENT_HEAD"
+          test "$(git diff --name-only "$EXPECTED_PARENT_HEAD" "$GITHUB_SHA")" = ".github/workflows/v160-generate.yml"
+          git fetch origin "$BRANCH"
+          test "$(git rev-parse "origin/$BRANCH")" = "$GITHUB_SHA"
+
+          test "$(git hash-object "$PREREG")" = "cc238bcbf62c5defec410def962124d5012bd506"
+          test "$(git hash-object "$CONTRACT")" = "3d5ef47a998b638683c83ae08c92e45d5422f389"
+          test "$(git hash-object "$IMMUTABLE_PRE_RUN")" = "699dda80f25e0222dc7ef2f857fa65327f2d49db"
+          test "$(git hash-object "$PRE_RUN")" = "a1cd82c8c5b5dc150d051b3f013ff4eb208b36a8"
+          test "$(git hash-object "$TIMEBASE_BUILDER")" = "b5aa459381da6a5d5379ed8bdb1a07ba26467b63"
+          test "$(git hash-object "$TIMEBASE_QC_CODE")" = "a2dba655709572d5c50dd8d4ec8656fa96eb03a3"
+          test "$(git hash-object "$TRANSCRIBER")" = "864f0da266816e999cd6c2750dbceb27e870b67a"
+          test "$(git hash-object "$STRUCTURAL_QC_CODE")" = "679047e1e26b7ab4dff765dd05745317ce3f43e2"
+          test "$(git hash-object "$JSON_NATIVE_TEST")" = "f2cc178c4b6a6a771a0c8f8b1527d9742f13126e"
+          test "$(git hash-object "$NEGATIVE_GUARD")" = "e6cd45c7d8bd23a92100847f3a219c84524cbbc2"
+          test "$(git hash-object "$STATIC_PREFLIGHT")" = "1e2e16a68f72c2f7265a584256fc2402049cf940"
+
+          test ! -e "$ENV_RECEIPT"
+          test ! -e "$TIMEBASE"
+          test ! -e "$TIMEBASE_QC"
+          test ! -e "$OUTPUT"
+          test ! -e "$GENERATION_RECEIPT"
+          test ! -e "$STRUCTURAL_QC"
+          test ! -e "$TERMINAL_FREEZE"
+
+          python "$NEGATIVE_GUARD" \
+            --timebase-builder "$TIMEBASE_BUILDER" \
+            --timebase-qc "$TIMEBASE_QC_CODE" \
+            --transcriber "$TRANSCRIBER" \
+            --structural-qc "$STRUCTURAL_QC_CODE" \
+            --json-native-test "$JSON_NATIVE_TEST" \
+            --workflow .github/workflows/v160-generate.yml
+
+          python - <<'PY'
+          import json
+          from pathlib import Path
+
+          immutable = json.loads(Path("debug/v160-cpu-autonomous/pre-run-identity-receipt.json").read_text())
+          runtime = json.loads(Path("debug/v160-cpu-autonomous/pre-run-runtime-envelope.json").read_text())
+
+          assert immutable["schema"] == "dadrock.tabs.v160.pre-run-identity-receipt.v1"
+          assert immutable["validation"] == "PASS"
+          assert immutable["status"] == "PASS"
+          assert runtime["schema"] == immutable["schema"]
+          assert runtime["validation"] == "PASS"
+          assert runtime["status"] == "DERIVED_RUNTIME_ENVELOPE_BEFORE_GENERATION"
+          assert runtime["derivedFromSealedReceipt"]["gitBlob"] == "699dda80f25e0222dc7ef2f857fa65327f2d49db"
+
+          sealed = immutable["sealedIdentities"]
+          pins = runtime["pinnedGitBlobs"]
+          expected = {
+              "preregistration": sealed["preregistration"]["gitBlob"],
+              "implementationContract": sealed["implementationContract"]["gitBlob"],
+              "timebaseBuilder": sealed["timebaseBuilder"]["gitBlob"],
+              "timebaseQc": sealed["timebaseQc"]["gitBlob"],
+              "transcriber": sealed["transcriber"]["gitBlob"],
+              "structuralQc": sealed["structuralQc"]["gitBlob"],
+              "jsonNativeStaticTest": sealed["jsonNativeStaticTest"]["gitBlob"],
+              "negativeRuntimeGuard": sealed["negativeRuntimeGuard"]["gitBlob"],
+              "staticPreflightWorkflow": sealed["staticPreflightWorkflow"]["gitBlob"],
+          }
+          for key, value in expected.items():
+              assert pins[key] == value, (key, pins.get(key), value)
+          assert pins["sealedPreRunIdentityReceipt"] == "699dda80f25e0222dc7ef2f857fa65327f2d49db"
+
+          absence = immutable["absenceProofAtSeal"]
+          assert absence["timebaseAbsent"] is True
+          assert absence["timebaseQcAbsent"] is True
+          assert absence["candidateAbsent"] is True
+          assert absence["generationReceiptAbsent"] is True
+          assert absence["environmentReceiptAbsent"] is True
+          assert absence["structuralQcReceiptAbsent"] is True
+          assert absence["terminalFreezeAbsent"] is True
+          assert absence["generationWorkflowAbsent"] is True
+
+          assert runtime["timebaseMustNotExistAtSeal"] is True
+          assert runtime["timebaseQcReceiptMustNotExistAtSeal"] is True
+          assert runtime["candidateMustNotExistAtSeal"] is True
+          assert runtime["generationReceiptMustNotExistAtSeal"] is True
+          assert runtime["environmentReceiptMustNotExistAtSeal"] is True
+          assert runtime["structuralQcReceiptMustNotExistAtSeal"] is True
+          assert runtime["terminalFreezeMustNotExistAtSeal"] is True
+          assert runtime["generationWorkflowMustNotExistAtSeal"] is True
+
+          safety = immutable["safetyAtSeal"]
+          assert safety["referenceRead"] is False
+          assert safety["professionalReferencePathsOpened"] == 0
+          assert safety["referenceFacingScoreCalls"] == 0
+          assert safety["frozenScorerRead"] is False
+          assert safety["priorCandidateReadForGeneration"] is False
+          assert safety["priorScoreReadForGeneration"] is False
+          assert safety["v159RuntimeArtifactReadForGeneration"] is False
+          assert safety["gpuExecutions"] == 0
+          assert safety["cudaExecutions"] == 0
+          assert safety["modalExecutions"] == 0
+          assert safety["mainOrProductionModified"] is False
+
+          assert runtime["referenceReadAtSeal"] is False
+          assert runtime["professionalReferencePathsOpenedAtSeal"] == 0
+          assert runtime["referenceFacingScoreCallsAtSeal"] == 0
+          assert runtime["frozenScorerReadAtSeal"] is False
+          assert runtime["priorCandidateReadAtSeal"] is False
+          assert runtime["priorScoreReadAtSeal"] is False
+          assert runtime["v159RuntimeArtifactReadAtSeal"] is False
+          assert runtime["gpuExecutionsAtSeal"] == 0
+          assert runtime["cudaExecutionsAtSeal"] == 0
+          assert runtime["modalExecutionsAtSeal"] == 0
+          assert runtime["mainOrProductionModifiedAtSeal"] is False
+
+          trigger = runtime["triggerSafety"]
+          assert trigger["generationWorkflowCreationIsSingleTrigger"] is True
+          assert trigger["expectedGenerationWorkflowRunCount"] == 1
+          assert trigger["expectedGenerationRunNumber"] == 1
+          assert trigger["expectedGenerationRunAttempt"] == 1
+          assert trigger["secondArmEditForbidden"] is True
+          assert trigger["duplicateRunForbidden"] is True
+          assert trigger["rerunForbidden"] is True
+          assert trigger["workflowMustSelfSealAfterTerminalFreeze"] is True
+          assert trigger["branchWritesWhileGenerationActiveForbidden"] is True
+
+          repair = runtime["reviewerAuditRepair"]
+          assert repair["classification"] == "CONTROL_PLANE_SCHEMA_PROJECTION_ONLY"
+          assert repair["originalReceiptModified"] is False
+          assert repair["generationNumericsChanged"] is False
+          assert repair["timebaseLogicChanged"] is False
+          assert repair["pitchLogicChanged"] is False
+          assert repair["structuralQcLogicChanged"] is False
+          assert repair["implementationCodeChanged"] is False
+          assert repair["songAudioRead"] is False
+          assert repair["demucsInvoked"] is False
+          assert repair["pitchInferenceInvoked"] is False
+          assert repair["professionalReferenceRead"] is False
+          assert repair["frozenScorerRead"] is False
+          assert repair["priorCandidateRead"] is False
+          assert repair["priorScoreRead"] is False
+          assert repair["v159RuntimeArtifactRead"] is False
+          assert repair["gpuUsed"] is False
+          assert repair["modalUsed"] is False
+          assert repair["cudaUsed"] is False
+          assert repair["mainOrProductionModified"] is False
+          PY
+
+      - name: Execute single CPU pipeline
+        id: pipeline
+        shell: bash
+        run: |
+          set -u
+          mkdir -p debug/v160-cpu-autonomous
+          printf '%s\n' "PIPELINE_STARTED" > /tmp/v160-stage
+          printf '%s\n' "PIPELINE_UNEXPECTED_FAILURE" > /tmp/v160-outcome
+
+          fail_stage() {
+            printf '%s\n' "$1" > /tmp/v160-outcome
+            exit 0
+          }
+
+          if ! python -m pip install --upgrade pip; then fail_stage "DEPENDENCY_BOOTSTRAP_FAIL"; fi
+          if ! python -m pip install --index-url https://download.pytorch.org/whl/cpu torch==2.8.0; then fail_stage "TORCH_INSTALL_FAIL"; fi
+          if ! python -m pip install \
+            numpy==1.26.4 scipy==1.13.1 soundfile==0.12.1 \
+            basic-pitch==0.4.0 demucs==4.1.0 imageio-ffmpeg==0.6.0 librosa==0.11.0; then
+            fail_stage "DEPENDENCY_INSTALL_FAIL"
+          fi
+          printf '%s\n' "DEPENDENCIES_INSTALLED" > /tmp/v160-stage
+
+          if ! python - <<'PY'
+          import importlib.metadata as md
+          import torch
+          assert torch.__version__ == "2.8.0+cpu", torch.__version__
+          assert torch.version.cuda is None, torch.version.cuda
+          assert torch.cuda.is_available() is False
+          pins = {
+              "numpy": "1.26.4",
+              "scipy": "1.13.1",
+              "soundfile": "0.12.1",
+              "basic-pitch": "0.4.0",
+              "demucs": "4.1.0",
+              "imageio-ffmpeg": "0.6.0",
+              "librosa": "0.11.0",
+          }
+          for package, expected in pins.items():
+              actual = md.version(package)
+              assert actual == expected, (package, actual, expected)
+          PY
+          then fail_stage "CPU_DEPENDENCY_ASSERTION_FAIL"; fi
+
+          if ! git show 74b0f815ff3f66f325220975c410621503de440f:public/gomywayfullaitest.m4a > "$SOURCE_AUDIO"; then
+            fail_stage "SOURCE_MATERIALIZATION_FAIL"
+          fi
+          if ! python - <<'PY'
+          import hashlib
+          from pathlib import Path
+          p = Path("/tmp/v160-source.m4a")
+          assert p.stat().st_size == 3478611
+          assert hashlib.sha256(p.read_bytes()).hexdigest() == "215bd5a657c5326f08f132ae358595a95c30b39bb7493a52c2f910d5a608149f"
+          PY
+          then fail_stage "SOURCE_IDENTITY_FAIL"; fi
+          printf '%s\n' "SOURCE_VERIFIED" > /tmp/v160-stage
+
+          FFMPEG_EXE="$(python - <<'PY'
+          import imageio_ffmpeg
+          print(imageio_ffmpeg.get_ffmpeg_exe())
+          PY
+          )"
+          if ! "$FFMPEG_EXE" -hide_banner -loglevel error -y \
+            -i "$SOURCE_AUDIO" -ar 44100 -ac 2 -c:a pcm_s16le "$NORM_WAV"; then
+            fail_stage "NORMALIZATION_FAIL"
+          fi
+          if ! python - <<'PY'
+          import hashlib
+          from pathlib import Path
+          p = Path("/tmp/v160-normalized.wav")
+          assert hashlib.sha256(p.read_bytes()).hexdigest() == "3e61b7926eabc21b758c750f826c7426a29d6de5aafdd5c93f8045ecdc67f87e"
+          PY
+          then fail_stage "NORMALIZED_IDENTITY_FAIL"; fi
+          printf '%s\n' "NORMALIZED_VERIFIED" > /tmp/v160-stage
+
+          if ! python - <<'PY'
+          import random
+          import numpy as np
+          import torch
+          from demucs.separate import main
+          random.seed(0)
+          np.random.seed(0)
+          torch.manual_seed(0)
+          torch.set_num_threads(1)
+          torch.set_num_interop_threads(1)
+          torch.use_deterministic_algorithms(True)
+          main([
+              "-n", "htdemucs_6s",
+              "-d", "cpu",
+              "--shifts", "1",
+              "-j", "1",
+              "-o", "/tmp/v160-demucs",
+              "/tmp/v160-normalized.wav",
+          ])
+          PY
+          then fail_stage "DEMUCS_FAIL"; fi
+
+          for stem in guitar bass drums; do
+            test -s "$STEM_DIR/$stem.wav" || fail_stage "DEMUCS_STEM_MISSING_${stem^^}"
+          done
+          printf '%s\n' "DEMUCS_VERIFIED" > /tmp/v160-stage
+
+          if ! python - <<'PY'
+          import hashlib, importlib.metadata as md, json, os, platform, subprocess
+          from pathlib import Path
+          import torch
+
+          def sha(path):
+              h = hashlib.sha256()
+              with Path(path).open("rb") as f:
+                  for chunk in iter(lambda: f.read(1024 * 1024), b""):
+                      h.update(chunk)
+              return h.hexdigest()
+
+          def git_blob(path):
+              return subprocess.check_output(["git", "hash-object", path], text=True).strip()
+
+          receipt = {
+              "schema": "dadrock.tabs.v160.cpu-environment-receipt.v1",
+              "version": "V160",
+              "validation": "PASS",
+              "device": "cpu",
+              "pythonVersion": platform.python_version(),
+              "torchVersion": torch.__version__,
+              "torchCudaVersion": torch.version.cuda,
+              "cudaAvailable": torch.cuda.is_available(),
+              "workflowRunId": int(os.environ["GITHUB_RUN_ID"]),
+              "workflowRunNumber": int(os.environ["GITHUB_RUN_NUMBER"]),
+              "workflowRunAttempt": int(os.environ["GITHUB_RUN_ATTEMPT"]),
+              "workflowHeadSha": os.environ["GITHUB_SHA"],
+              "generationWorkflowGitBlob": git_blob(".github/workflows/v160-generate.yml"),
+              "immutablePreRunIdentityReceiptGitBlob": git_blob("debug/v160-cpu-autonomous/pre-run-identity-receipt.json"),
+              "runtimePreRunEnvelopeGitBlob": git_blob("debug/v160-cpu-autonomous/pre-run-runtime-envelope.json"),
+              "dependencyVersions": {
+                  "numpy": md.version("numpy"),
+                  "scipy": md.version("scipy"),
+                  "soundfile": md.version("soundfile"),
+                  "basic-pitch": md.version("basic-pitch"),
+                  "demucs": md.version("demucs"),
+                  "imageio-ffmpeg": md.version("imageio-ffmpeg"),
+                  "librosa": md.version("librosa"),
+              },
+              "determinism": {
+                  "seed": 0,
+                  "torchDeterministicAlgorithms": True,
+                  "torchNumThreads": 1,
+                  "torchNumInteropThreads": 1,
+                  "mathLibraryThreads": 1,
+              },
+              "separation": {
+                  "model": "htdemucs_6s",
+                  "device": "cpu",
+                  "shifts": 1,
+                  "jobs": 1,
+                  "repeatCount": 1,
+                  "normalizedMixSha256": sha("/tmp/v160-normalized.wav"),
+                  "guitarStemSha256": sha("/tmp/v160-demucs/htdemucs_6s/v160-normalized/guitar.wav"),
+                  "bassStemSha256": sha("/tmp/v160-demucs/htdemucs_6s/v160-normalized/bass.wav"),
+                  "drumsStemSha256": sha("/tmp/v160-demucs/htdemucs_6s/v160-normalized/drums.wav"),
+              },
+              "safety": {
+                  "referenceRead": False,
+                  "professionalReferencePathsOpened": 0,
+                  "referenceFacingScoreCalls": 0,
+                  "priorGeneratedCandidateRead": False,
+                  "priorScoreRead": False,
+                  "v159RuntimeArtifactRead": False,
+                  "cudaGpuUsed": False,
+                  "modalUsed": False,
+                  "mainOrProductionModified": False,
+              },
+          }
+          assert receipt["torchVersion"] == "2.8.0+cpu"
+          assert receipt["torchCudaVersion"] is None
+          assert receipt["cudaAvailable"] is False
+          assert receipt["workflowRunNumber"] == 1
+          assert receipt["workflowRunAttempt"] == 1
+          assert receipt["workflowRunId"] > 0
+          assert receipt["immutablePreRunIdentityReceiptGitBlob"] == "699dda80f25e0222dc7ef2f857fa65327f2d49db"
+          assert receipt["runtimePreRunEnvelopeGitBlob"] == "a1cd82c8c5b5dc150d051b3f013ff4eb208b36a8"
+          Path("debug/v160-cpu-autonomous/environment-receipt.json").write_text(
+              json.dumps(receipt, indent=2, sort_keys=True, allow_nan=False) + "\n"
+          )
+          PY
+          then fail_stage "ENVIRONMENT_RECEIPT_FAIL"; fi
+          printf '%s\n' "ENVIRONMENT_FROZEN" > /tmp/v160-stage
+
+          set +e
+          python "$TIMEBASE_BUILDER" \
+            --source-audio "$SOURCE_AUDIO" \
+            --mix "$NORM_WAV" \
+            --drums "$STEM_DIR/drums.wav" \
+            --bass "$STEM_DIR/bass.wav" \
+            --guitar "$STEM_DIR/guitar.wav" \
+            --preregistration "$PREREG" \
+            --implementation-contract "$CONTRACT" \
+            --output "$TIMEBASE"
+          rc=$?
+          set -e
+          if [ "$rc" -ne 0 ]; then
+            rm -f "$TIMEBASE"
+            fail_stage "TIMEBASE_BUILD_FAIL"
+          fi
+          test -s "$TIMEBASE" || fail_stage "TIMEBASE_BUILD_MISSING_ARTIFACT"
+          printf '%s\n' "TIMEBASE_BUILT" > /tmp/v160-stage
+
+          set +e
+          python "$TIMEBASE_QC_CODE" \
+            --timebase "$TIMEBASE" \
+            --source-audio "$SOURCE_AUDIO" \
+            --mix "$NORM_WAV" \
+            --drums "$STEM_DIR/drums.wav" \
+            --bass "$STEM_DIR/bass.wav" \
+            --guitar "$STEM_DIR/guitar.wav" \
+            --preregistration "$PREREG" \
+            --implementation-contract "$CONTRACT" \
+            --receipt "$TIMEBASE_QC"
+          rc=$?
+          set -e
+          if [ ! -s "$TIMEBASE_QC" ]; then
+            fail_stage "TIMEBASE_QC_RUNTIME_FAIL"
+          fi
+          tbq="$(python - <<'PY'
+          import json
+          print(json.load(open("debug/v160-cpu-autonomous/timebase-qc.json"))["validation"])
+          PY
+          )"
+          if [ "$rc" -ne 0 ]; then
+            if [ "$tbq" = "FAIL" ]; then
+              printf '%s\n' "TIMEBASE_QC_FAIL" > /tmp/v160-outcome
+              exit 0
+            fi
+            fail_stage "TIMEBASE_QC_RUNTIME_FAIL"
+          fi
+          [ "$tbq" = "PASS" ] || fail_stage "TIMEBASE_QC_NONPASS_WITH_ZERO_EXIT"
+          printf '%s\n' "TIMEBASE_QC_PASS" > /tmp/v160-stage
+
+          set +e
+          python "$TRANSCRIBER" \
+            --mix "$NORM_WAV" \
+            --guitar "$STEM_DIR/guitar.wav" \
+            --bass "$STEM_DIR/bass.wav" \
+            --drums "$STEM_DIR/drums.wav" \
+            --timebase "$TIMEBASE" \
+            --timebase-qc "$TIMEBASE_QC" \
+            --preregistration "$PREREG" \
+            --implementation-contract "$CONTRACT" \
+            --pre-run-receipt "$PRE_RUN" \
+            --environment-receipt "$ENV_RECEIPT" \
+            --output "$OUTPUT" \
+            --receipt "$GENERATION_RECEIPT"
+          rc=$?
+          set -e
+          if [ "$rc" -ne 0 ]; then
+            rm -f "$OUTPUT" "$GENERATION_RECEIPT"
+            fail_stage "TRANSCRIBER_FAIL"
+          fi
+          test -s "$OUTPUT" || fail_stage "TRANSCRIBER_MISSING_CANDIDATE"
+          test -s "$GENERATION_RECEIPT" || fail_stage "TRANSCRIBER_MISSING_RECEIPT"
+          printf '%s\n' "CANDIDATE_CREATED" > /tmp/v160-stage
+
+          set +e
+          python "$STRUCTURAL_QC_CODE" \
+            --candidate "$OUTPUT" \
+            --generation-receipt "$GENERATION_RECEIPT" \
+            --timebase "$TIMEBASE" \
+            --timebase-qc "$TIMEBASE_QC" \
+            --preregistration "$PREREG" \
+            --implementation-contract "$CONTRACT" \
+            --pre-run-receipt "$PRE_RUN" \
+            --environment-receipt "$ENV_RECEIPT" \
+            --transcriber "$TRANSCRIBER" \
+            --timebase-builder "$TIMEBASE_BUILDER" \
+            --timebase-qc-code "$TIMEBASE_QC_CODE" \
+            --negative-runtime-guard "$NEGATIVE_GUARD" \
+            --receipt "$STRUCTURAL_QC"
+          rc=$?
+          set -e
+          if [ ! -s "$STRUCTURAL_QC" ]; then
+            printf '%s\n' "STRUCTURAL_QC_RUNTIME_FAIL" > /tmp/v160-outcome
+            exit 0
+          fi
+          sqc="$(python - <<'PY'
+          import json
+          print(json.load(open("debug/v160-cpu-autonomous/structural-qc.json"))["validation"])
+          PY
+          )"
+          if [ "$rc" -ne 0 ]; then
+            if [ "$sqc" = "FAIL" ]; then
+              printf '%s\n' "STRUCTURAL_QC_FAIL" > /tmp/v160-outcome
+              exit 0
+            fi
+            printf '%s\n' "STRUCTURAL_QC_RUNTIME_FAIL" > /tmp/v160-outcome
+            exit 0
+          fi
+          [ "$sqc" = "PASS" ] || fail_stage "STRUCTURAL_QC_NONPASS_WITH_ZERO_EXIT"
+          printf '%s\n' "STRUCTURAL_QC_PASS" > /tmp/v160-stage
+          printf '%s\n' "STRUCTURAL_QC_PASS" > /tmp/v160-outcome
+
+      - name: Freeze terminal V160 state and self-seal
+        if: ${{ always() && github.run_number == 1 && github.run_attempt == 1 }}
+        shell: bash
+        env:
+          GUARD_OUTCOME: ${{ steps.guard.outcome }}
+        run: |
+          set -euo pipefail
+          outcome="$(cat /tmp/v160-outcome 2>/dev/null || printf '%s' 'PIPELINE_UNEXPECTED_FAILURE')"
+          stage="$(cat /tmp/v160-stage 2>/dev/null || printf '%s' 'UNKNOWN')"
+          if [ "$GUARD_OUTCOME" != "success" ]; then
+            outcome="PRE_RUN_GUARD_FAIL"
+            stage="PRE_RUN_GUARD"
+          fi
+
+          git fetch origin "$BRANCH"
+          test "$(git rev-parse "origin/$BRANCH")" = "$GITHUB_SHA"
+
+          OUTCOME="$outcome" STAGE="$stage" python - <<'PY'
+          import hashlib, json, os, subprocess
+          from pathlib import Path
+
+          paths = {
+              "environmentReceipt": Path("debug/v160-cpu-autonomous/environment-receipt.json"),
+              "timebase": Path("debug/v160-cpu-autonomous/timebase.json"),
+              "timebaseQc": Path("debug/v160-cpu-autonomous/timebase-qc.json"),
+              "candidate": Path("debug/v160-cpu-autonomous/generated.json"),
+              "generationReceipt": Path("debug/v160-cpu-autonomous/generation-receipt.json"),
+              "structuralQc": Path("debug/v160-cpu-autonomous/structural-qc.json"),
+          }
+
+          def sha(path):
+              h = hashlib.sha256()
+              with path.open("rb") as f:
+                  for chunk in iter(lambda: f.read(1024 * 1024), b""):
+                      h.update(chunk)
+              return h.hexdigest()
+
+          def git_blob(path):
+              return subprocess.check_output(["git", "hash-object", path], text=True).strip()
+
+          artifacts = {
+              name: {
+                  "exists": path.is_file(),
+                  "sha256": sha(path) if path.is_file() else None,
+              }
+              for name, path in paths.items()
+          }
+          outcome = os.environ["OUTCOME"]
+          candidate_authoritative = outcome == "STRUCTURAL_QC_PASS"
+          scoring_eligible = candidate_authoritative
+
+          if outcome == "TIMEBASE_QC_FAIL":
+              assert artifacts["candidate"]["exists"] is False
+              assert artifacts["generationReceipt"]["exists"] is False
+              assert artifacts["structuralQc"]["exists"] is False
+          if outcome in {"STRUCTURAL_QC_PASS", "STRUCTURAL_QC_FAIL"}:
+              assert artifacts["candidate"]["exists"] is True
+              assert artifacts["generationReceipt"]["exists"] is True
+              assert artifacts["structuralQc"]["exists"] is True
+          if outcome == "STRUCTURAL_QC_RUNTIME_FAIL":
+              assert artifacts["candidate"]["exists"] is True
+              assert artifacts["generationReceipt"]["exists"] is True
+
+          freeze = {
+              "schema": "dadrock.tabs.v160.terminal-freeze.v1",
+              "version": "V160",
+              "status": "TERMINAL",
+              "outcome": outcome,
+              "lastCompletedStage": os.environ["STAGE"],
+              "workflowRunId": int(os.environ["GITHUB_RUN_ID"]),
+              "workflowRunNumber": int(os.environ["GITHUB_RUN_NUMBER"]),
+              "workflowRunAttempt": int(os.environ["GITHUB_RUN_ATTEMPT"]),
+              "workflowHeadSha": os.environ["GITHUB_SHA"],
+              "generationWorkflowGitBlob": git_blob(".github/workflows/v160-generate.yml"),
+              "immutablePreRunIdentityReceiptGitBlob": git_blob("debug/v160-cpu-autonomous/pre-run-identity-receipt.json"),
+              "runtimePreRunEnvelopeGitBlob": git_blob("debug/v160-cpu-autonomous/pre-run-runtime-envelope.json"),
+              "candidateAuthoritative": candidate_authoritative,
+              "eligibleForProfessionalReferenceScoring": scoring_eligible,
+              "neverRearmV160": True,
+              "artifacts": artifacts,
+              "safety": {
+                  "referenceRead": False,
+                  "professionalReferencePathsOpened": 0,
+                  "referenceFacingScoreCalls": 0,
+                  "priorGeneratedCandidateRead": False,
+                  "priorScoreRead": False,
+                  "v159RuntimeArtifactRead": False,
+                  "cudaGpuUsed": False,
+                  "modalUsed": False,
+                  "mainOrProductionModified": False,
+              },
+          }
+          assert freeze["workflowRunNumber"] == 1
+          assert freeze["workflowRunAttempt"] == 1
+          assert freeze["immutablePreRunIdentityReceiptGitBlob"] == "699dda80f25e0222dc7ef2f857fa65327f2d49db"
+          assert freeze["runtimePreRunEnvelopeGitBlob"] == "a1cd82c8c5b5dc150d051b3f013ff4eb208b36a8"
+          Path("debug/v160-cpu-autonomous/terminal-freeze.json").write_text(
+              json.dumps(freeze, indent=2, sort_keys=True, allow_nan=False) + "\n"
+          )
+          PY
+
+          rm .github/workflows/v160-generate.yml
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add -A debug/v160-cpu-autonomous .github/workflows/v160-generate.yml
+
+          changed="$(git diff --cached --name-only)"
+          test -n "$changed"
+          if echo "$changed" | grep -Ev '^debug/v160-cpu-autonomous/(environment-receipt\.json|timebase\.json|timebase-qc\.json|generated\.json|generation-receipt\.json|structural-qc\.json|terminal-freeze\.json)$|^\.github/workflows/v160-generate\.yml$'; then
+            echo "Unexpected path in terminal freeze commit" >&2
+            exit 1
+          fi
+
+          case "$outcome" in
+            STRUCTURAL_QC_PASS)
+              message="research: freeze sole V160 reference-blind CPU candidate [skip ci]"
+              ;;
+            TIMEBASE_QC_FAIL)
+              message="research: freeze terminal V160 timebase-QC failure [skip ci]"
+              ;;
+            STRUCTURAL_QC_FAIL)
+              message="research: freeze terminal V160 structural-QC failure [skip ci]"
+              ;;
+            *)
+              message="research: freeze terminal V160 generation failure [skip ci]"
+              ;;
+          esac
+
+          git commit -m "$message"
+          git push origin HEAD:"$BRANCH"
+
+          if [ "$outcome" != "STRUCTURAL_QC_PASS" ]; then
+            exit 1
+          fi
