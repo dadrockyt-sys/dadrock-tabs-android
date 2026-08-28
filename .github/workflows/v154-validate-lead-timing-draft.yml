@@ -1,4 +1,5 @@
 name: V154 validate Lead timing draft
+# one-use candidate-blind timing alignment validation
 on:
   push:
     branches: [v143-contextual-prune-lobo]
