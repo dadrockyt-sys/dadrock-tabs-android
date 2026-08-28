@@ -1,0 +1,361 @@
+name: V163 one-shot professional-reference CPU score
+
+on:
+  push:
+    branches:
+      - v143-contextual-prune-lobo
+    paths:
+      - .github/workflows/v163-score.yml
+
+permissions:
+  contents: write
+
+env:
+  BRANCH: v143-contextual-prune-lobo
+  EXPECTED_PARENT_HEAD: edf9dc3ee8a225114cf1f458d936748c2eadeb0a
+  CANDIDATE: debug/v163-cpu-autonomous/generated.json
+  STRUCTURAL_QC: debug/v163-cpu-autonomous/structural-qc.json
+  GENERATION_TERMINAL: debug/v163-cpu-autonomous/terminal-freeze.json
+  SCORE_PREREG: debug/v163-cpu-autonomous/score-preregistration.json
+  SCORER: validation/v154_cpu_multitrack/score_frontend_reference.py
+  REFERENCE: research/v154-professional-references/scorer-ready/frontend-reference-payload.json
+  SCORE: debug/v163-cpu-autonomous/reference-score.json
+  SCORE_TERMINAL: debug/v163-cpu-autonomous/score-terminal-freeze.json
+  CUDA_VISIBLE_DEVICES: ""
+
+jobs:
+  score-once:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ github.sha }}
+          fetch-depth: 0
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.10'
+
+      - name: Verify sealed V163 one-score boundary
+        id: guard
+        shell: bash
+        run: |
+          set -euo pipefail
+          test "$GITHUB_EVENT_NAME" = "push"
+          test "$GITHUB_RUN_NUMBER" = "1"
+          test "$GITHUB_RUN_ATTEMPT" = "1"
+          test "$(git rev-parse HEAD)" = "$GITHUB_SHA"
+          test "$(git rev-parse HEAD^)" = "$EXPECTED_PARENT_HEAD"
+          test "$(git diff --name-only "$EXPECTED_PARENT_HEAD" "$GITHUB_SHA")" = ".github/workflows/v163-score.yml"
+          git fetch origin "$BRANCH"
+          test "$(git rev-parse "origin/$BRANCH")" = "$GITHUB_SHA"
+
+          test "$(git hash-object "$CANDIDATE")" = "f4eafb1488f139198cb7860a76f294c0e1775df8"
+          test "$(sha256sum "$CANDIDATE" | awk '{print $1}')" = "cc55d596a05bd8e9c0a149f6ba8263375c26fbb7334139a75697b58ca23c8c19"
+          test "$(git hash-object "$STRUCTURAL_QC")" = "35624b8bfbb3580573bb49bd12049726ee364977"
+          test "$(sha256sum "$STRUCTURAL_QC" | awk '{print $1}')" = "ae899558f436c872e3a3ee306463fe62163652497f96d36cea2558be27aa2337"
+          test "$(git hash-object "$GENERATION_TERMINAL")" = "b5b9b7b043bca3fd4db7b72334d99731da293ed7"
+          test "$(git hash-object "$SCORE_PREREG")" = "03f03f4005ab2ab84e93d06a107bc8f680a54775"
+          test "$(git hash-object "$SCORER")" = "9644e65719fbd361a9b39778ae9950c5e983e855"
+          test "$(git hash-object "$REFERENCE")" = "2fbed60b543c0488934d8642c488aa06bf31bbf5"
+          test "$(sha256sum "$REFERENCE" | awk '{print $1}')" = "b39a203aec3f45800891fe4eca156e37e7571b91ea5c4ccc41b30bbc95fc89e7"
+
+          test ! -e "$SCORE"
+          test ! -e "$SCORE_TERMINAL"
+          test ! -e .github/workflows/v163-generate.yml
+
+          python - <<'PY'
+          from pathlib import Path
+          text = Path(".github/workflows/v163-score.yml").read_text()
+          needle = 'python "$SCORER" "$CANDIDATE" "$REFERENCE" --output "$SCORE" > /tmp/v163-score-stdout.json'
+          assert sum(line.strip() == needle for line in text.splitlines()) == 1
+          PY
+
+          python - <<'PY'
+          import hashlib, json
+          from pathlib import Path
+
+          candidate = Path("debug/v163-cpu-autonomous/generated.json")
+          structural = json.loads(Path("debug/v163-cpu-autonomous/structural-qc.json").read_text())
+          terminal = json.loads(Path("debug/v163-cpu-autonomous/terminal-freeze.json").read_text())
+          prereg = json.loads(Path("debug/v163-cpu-autonomous/score-preregistration.json").read_text())
+
+          def sha256(path):
+              return hashlib.sha256(Path(path).read_bytes()).hexdigest()
+
+          assert prereg["schema"] == "dadrock.tabs.v163.professional-reference-score-preregistration.v1"
+          assert prereg["status"] == "SEALED_BEFORE_V163_REFERENCE_FACING_SCORE"
+          assert prereg["validation"] == "PASS"
+          assert prereg["version"] == "V163"
+          assert prereg["implementationVersion"] == "V162"
+          assert prereg["frozenCandidate"]["sha256"] == sha256(candidate)
+          assert prereg["frozenCandidate"]["gitBlob"] == "f4eafb1488f139198cb7860a76f294c0e1775df8"
+          assert prereg["frozenCandidate"]["candidateAuthoritative"] is True
+          assert prereg["frozenCandidate"]["eligibleForProfessionalReferenceScoring"] is True
+          assert prereg["frozenCandidate"]["candidateIsExactFrozenV162AlgorithmOutput"] is True
+          assert prereg["frozenCandidate"]["combinedGuitarEvents"] == 1041
+          assert prereg["frozenCandidate"]["bassEvents"] == 404
+
+          assert structural["validation"] == "PASS"
+          assert structural["errors"] == []
+          assert structural["candidateSha256"] == prereg["frozenCandidate"]["sha256"]
+          assert all(structural["checks"].values())
+
+          assert terminal["status"] == "TERMINAL"
+          assert terminal["outcome"] == "STRUCTURAL_QC_PASS"
+          assert terminal["candidateAuthoritative"] is True
+          assert terminal["eligibleForProfessionalReferenceScoring"] is True
+          assert terminal["candidateIsExactFrozenV162AlgorithmOutput"] is True
+          assert terminal["neverRearmV163"] is True
+          assert terminal["workflowRunId"] == 33213512389
+          assert terminal["workflowRunNumber"] == 1
+          assert terminal["workflowRunAttempt"] == 1
+          assert terminal["workflowHeadSha"] == "4fb855b300c6d0331400b9aa642254be46752def"
+
+          gt = prereg["generationTerminalIdentity"]
+          assert gt["terminalCommit"] == "3b6f98750291a2f7b229c5e50cbf802752cf84d4"
+          assert gt["workflowRunId"] == 33213512389
+          assert gt["workflowRunNumber"] == 1
+          assert gt["workflowRunAttempt"] == 1
+          assert gt["jobId"] == 98991933938
+          assert gt["workflowGitBlob"] == "a36facd5f6b0a67a6965de0a27d9491d589bc83a"
+          assert gt["terminalFreezeGitBlob"] == "b5b9b7b043bca3fd4db7b72334d99731da293ed7"
+          assert gt["terminalOutcome"] == "STRUCTURAL_QC_PASS"
+          assert gt["neverRearmV163"] is True
+
+          assert prereg["structuralQcIdentity"]["gitBlob"] == "35624b8bfbb3580573bb49bd12049726ee364977"
+          assert prereg["structuralQcIdentity"]["sha256"] == "ae899558f436c872e3a3ee306463fe62163652497f96d36cea2558be27aa2337"
+          assert prereg["structuralQcIdentity"]["validation"] == "PASS"
+          assert prereg["structuralQcIdentity"]["errors"] == 0
+
+          assert prereg["frozenScorerIdentity"]["gitBlob"] == "9644e65719fbd361a9b39778ae9950c5e983e855"
+          assert prereg["frozenProfessionalReferenceIdentity"]["gitBlob"] == "2fbed60b543c0488934d8642c488aa06bf31bbf5"
+          assert prereg["frozenProfessionalReferenceIdentity"]["sha256"] == "b39a203aec3f45800891fe4eca156e37e7571b91ea5c4ccc41b30bbc95fc89e7"
+
+          contract = prereg["scoreContract"]
+          assert contract["scoringDevice"] == "cpu"
+          assert contract["scoreWorkflowPath"] == ".github/workflows/v163-score.yml"
+          assert contract["scoreReceiptPath"] == "debug/v163-cpu-autonomous/reference-score.json"
+          assert contract["scoreTerminalPath"] == "debug/v163-cpu-autonomous/score-terminal-freeze.json"
+          assert contract["workflowCreationIsSoleTrigger"] is True
+          assert contract["expectedWorkflowRunCount"] == 1
+          assert contract["expectedRunNumber"] == 1
+          assert contract["expectedRunAttempt"] == 1
+          assert contract["maximumProfessionalReferenceScoreExecutions"] == 1
+          for key in (
+              "rerunForbidden", "secondArmForbidden", "duplicateRunForbidden",
+              "candidateMutationForbidden", "candidateReplacementForbidden",
+              "candidateReQcForbidden", "candidateRegenerationForbidden",
+              "thresholdSweepForbidden", "variantSelectionForbidden", "humanCorrectionForbidden",
+              "postScoreRetuneForbidden", "postScoreRescoreForbidden",
+              "professionalReferenceEventMiningForbidden", "professionalReferenceMeasureMiningForbidden",
+              "workflowMustSelfDeleteAfterSingleScore", "workflowMustSelfSealScoreReceipt",
+              "assistantOrManualBranchWritesWhileScoreWorkflowActiveForbidden",
+          ):
+              assert contract[key] is True, key
+
+          gates = prereg["scoreGates"]
+          assert gates["guitarTimingAwarePitchF1Minimum"] == 0.8
+          assert gates["bassTimingAwarePitchF1Minimum"] == 0.8
+          assert gates["bothMustPassToProceedToRoleStringFretTechniquePdfPhase"] is True
+          assert gates["candidateConsumedRegardlessOfPassFail"] is True
+
+          safety = prereg["preScoreSafety"]
+          assert safety["professionalReferenceUsedForV163ScoreYet"] is False
+          assert safety["frozenScorerUsedForV163ScoreYet"] is False
+          assert safety["referenceFacingScoreCalls"] == 0
+          assert safety["candidateModifiedAfterStructuralPass"] is False
+          assert safety["generationRerun"] is False
+          assert safety["timebaseQcRerun"] is False
+          assert safety["structuralQcRerun"] is False
+          assert safety["gpuExecutions"] == 0
+          assert safety["cudaExecutions"] == 0
+          assert safety["modalExecutions"] == 0
+          assert safety["mainOrProductionModified"] is False
+          assert safety["scoreReceiptMustNotExistAtSeal"] is True
+          assert safety["scoreTerminalMustNotExistAtSeal"] is True
+          assert safety["scoreWorkflowMustNotExistAtSeal"] is True
+          PY
+
+      - name: Execute frozen scorer exactly once
+        id: score
+        shell: bash
+        run: |
+          set -u
+          printf '%s\n' "SCORE_RUNTIME_FAIL" > /tmp/v163-score-outcome
+          printf '%s\n' "1" > /tmp/v163-score-execution-count
+
+          set +e
+          python "$SCORER" "$CANDIDATE" "$REFERENCE" --output "$SCORE" > /tmp/v163-score-stdout.json
+          rc=$?
+          set -e
+          printf '%s\n' "$rc" > /tmp/v163-score-rc
+
+          if [ "$rc" -ne 0 ]; then exit 0; fi
+          if [ ! -s "$SCORE" ]; then exit 0; fi
+
+          if ! python - <<'PY'
+          import hashlib, json
+          from pathlib import Path
+
+          score = json.loads(Path("debug/v163-cpu-autonomous/reference-score.json").read_text())
+          assert score["schema"] == "dadrock.tabs.v154.cpu-front-end-score.v1"
+          assert score["song"] == {"artist": "Lenny Kravitz", "title": "Are You Gonna Go My Way"}
+          assert score["gates"]["combinedGuitarTimingAwarePitchF1Target"] == 0.80
+          assert score["gates"]["bassTimingAwarePitchF1Target"] == 0.80
+          assert score["gates"]["primaryToleranceGridSteps"] == 0.50
+          assert score["gates"]["grossToleranceGridSteps"] == 2.00
+          assert score["policy"]["scoringWritesNoCorrections"] is True
+          assert score["policy"]["postScoreRetuningOfSameGeneratedOutputForbidden"] is True
+
+          guitar = float(score["combinedGuitar"]["primaryTimingAwarePitch"]["f1"])
+          bass = float(score["bass"]["primaryTimingAwarePitch"]["f1"])
+          assert 0.0 <= guitar <= 1.0
+          assert 0.0 <= bass <= 1.0
+          assert hashlib.sha256(Path("debug/v163-cpu-autonomous/generated.json").read_bytes()).hexdigest() == "cc55d596a05bd8e9c0a149f6ba8263375c26fbb7334139a75697b58ca23c8c19"
+
+          outcome = "SCORE_GATE_PASS" if guitar >= 0.80 and bass >= 0.80 else "SCORE_GATE_FAIL"
+          Path("/tmp/v163-score-outcome").write_text(outcome + "\n")
+          PY
+          then
+            printf '%s\n' "SCORE_RUNTIME_FAIL" > /tmp/v163-score-outcome
+            exit 0
+          fi
+
+          test "$(git hash-object "$CANDIDATE")" = "f4eafb1488f139198cb7860a76f294c0e1775df8"
+          test "$(sha256sum "$CANDIDATE" | awk '{print $1}')" = "cc55d596a05bd8e9c0a149f6ba8263375c26fbb7334139a75697b58ca23c8c19"
+          test "$(git hash-object "$SCORER")" = "9644e65719fbd361a9b39778ae9950c5e983e855"
+          test "$(git hash-object "$REFERENCE")" = "2fbed60b543c0488934d8642c488aa06bf31bbf5"
+
+      - name: Freeze V163 score result and self-seal
+        if: ${{ always() && github.run_number == 1 && github.run_attempt == 1 }}
+        shell: bash
+        env:
+          GUARD_OUTCOME: ${{ steps.guard.outcome }}
+        run: |
+          set -euo pipefail
+          if [ "$GUARD_OUTCOME" = "success" ]; then
+            outcome="$(cat /tmp/v163-score-outcome 2>/dev/null || printf '%s' 'SCORE_RUNTIME_FAIL')"
+            score_execution_count="$(cat /tmp/v163-score-execution-count 2>/dev/null || printf '%s' '1')"
+          else
+            outcome="PRE_SCORE_GUARD_FAIL"
+            score_execution_count="0"
+          fi
+
+          git fetch origin "$BRANCH"
+          test "$(git rev-parse "origin/$BRANCH")" = "$GITHUB_SHA"
+
+          OUTCOME="$outcome" SCORE_EXECUTION_COUNT="$score_execution_count" python - <<'PY'
+          import hashlib, json, os, subprocess
+          from pathlib import Path
+
+          score_path = Path("debug/v163-cpu-autonomous/reference-score.json")
+
+          def sha256(path):
+              return hashlib.sha256(Path(path).read_bytes()).hexdigest()
+
+          def git_blob(path):
+              return subprocess.check_output(["git", "hash-object", path], text=True).strip()
+
+          outcome = os.environ["OUTCOME"]
+          execution_count = int(os.environ["SCORE_EXECUTION_COUNT"])
+          score = None
+          guitar_f1 = None
+          bass_f1 = None
+          score_sha = None
+          score_git_blob = None
+
+          if score_path.is_file():
+              score = json.loads(score_path.read_text())
+              score_sha = sha256(score_path)
+              score_git_blob = git_blob(score_path)
+              guitar_f1 = float(score["combinedGuitar"]["primaryTimingAwarePitch"]["f1"])
+              bass_f1 = float(score["bass"]["primaryTimingAwarePitch"]["f1"])
+
+          if outcome in {"SCORE_GATE_PASS", "SCORE_GATE_FAIL"}:
+              assert execution_count == 1
+              assert score is not None
+              assert score["schema"] == "dadrock.tabs.v154.cpu-front-end-score.v1"
+              assert score["gates"]["combinedGuitarTimingAwarePitchF1Target"] == 0.80
+              assert score["gates"]["bassTimingAwarePitchF1Target"] == 0.80
+              assert outcome == ("SCORE_GATE_PASS" if guitar_f1 >= 0.80 and bass_f1 >= 0.80 else "SCORE_GATE_FAIL")
+          elif outcome == "SCORE_RUNTIME_FAIL":
+              assert execution_count == 1
+          elif outcome == "PRE_SCORE_GUARD_FAIL":
+              assert execution_count == 0
+              assert score is None
+          else:
+              raise AssertionError(outcome)
+
+          freeze = {
+              "schema": "dadrock.tabs.v163.professional-reference-score-terminal.v1",
+              "version": "V163",
+              "implementationVersion": "V162",
+              "status": "TERMINAL",
+              "outcome": outcome,
+              "workflowRunId": int(os.environ["GITHUB_RUN_ID"]),
+              "workflowRunNumber": int(os.environ["GITHUB_RUN_NUMBER"]),
+              "workflowRunAttempt": int(os.environ["GITHUB_RUN_ATTEMPT"]),
+              "workflowHeadSha": os.environ["GITHUB_SHA"],
+              "scoreWorkflowGitBlob": git_blob(".github/workflows/v163-score.yml"),
+              "scorePreregistrationGitBlob": "03f03f4005ab2ab84e93d06a107bc8f680a54775",
+              "candidateGitBlob": "f4eafb1488f139198cb7860a76f294c0e1775df8",
+              "candidateSha256": "cc55d596a05bd8e9c0a149f6ba8263375c26fbb7334139a75697b58ca23c8c19",
+              "structuralQcGitBlob": "35624b8bfbb3580573bb49bd12049726ee364977",
+              "generationTerminalGitBlob": "b5b9b7b043bca3fd4db7b72334d99731da293ed7",
+              "scorerGitBlob": "9644e65719fbd361a9b39778ae9950c5e983e855",
+              "professionalReferenceGitBlob": "2fbed60b543c0488934d8642c488aa06bf31bbf5",
+              "professionalReferenceSha256": "b39a203aec3f45800891fe4eca156e37e7571b91ea5c4ccc41b30bbc95fc89e7",
+              "scoreExecutionCount": execution_count,
+              "scoreReportExists": score is not None,
+              "scoreReportGitBlob": score_git_blob,
+              "scoreReportSha256": score_sha,
+              "combinedGuitarTimingAwarePitchF1": guitar_f1,
+              "bassTimingAwarePitchF1": bass_f1,
+              "gates": {"combinedGuitarMinimum": 0.80, "bassMinimum": 0.80, "bothMustPass": True},
+              "eligibleForRoleStringFretTechniquePdfPhase": outcome == "SCORE_GATE_PASS",
+              "candidateConsumed": True,
+              "scoreOpportunityConsumed": True,
+              "neverRerunOrRescoreV163": True,
+              "safety": {
+                  "candidateModified": False,
+                  "candidateRegenerated": False,
+                  "candidateReQc": False,
+                  "thresholdSweep": False,
+                  "variantSelection": False,
+                  "humanCorrection": False,
+                  "postScoreRetune": False,
+                  "professionalReferenceUsedForScoringOnly": execution_count == 1,
+                  "referenceFacingScoreCalls": execution_count,
+                  "gpuUsed": False,
+                  "cudaUsed": False,
+                  "modalUsed": False,
+                  "mainOrProductionModified": False
+              }
+          }
+          assert freeze["workflowRunNumber"] == 1
+          assert freeze["workflowRunAttempt"] == 1
+          Path("debug/v163-cpu-autonomous/score-terminal-freeze.json").write_text(
+              json.dumps(freeze, indent=2, sort_keys=True, allow_nan=False) + "\n"
+          )
+          PY
+
+          rm .github/workflows/v163-score.yml
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add -A -- debug/v163-cpu-autonomous/reference-score.json debug/v163-cpu-autonomous/score-terminal-freeze.json .github/workflows/v163-score.yml
+          changed="$(git diff --cached --name-only)"
+          test -n "$changed"
+          if echo "$changed" | grep -Ev '^debug/v163-cpu-autonomous/(reference-score\.json|score-terminal-freeze\.json)$|^\.github/workflows/v163-score\.yml$'; then
+            echo "Unexpected path in V163 score terminal commit" >&2
+            exit 1
+          fi
+          case "$outcome" in
+            SCORE_GATE_PASS) message="research: freeze sole V163 professional-reference score PASS [skip ci]" ;;
+            SCORE_GATE_FAIL) message="research: freeze sole V163 professional-reference score FAIL [skip ci]" ;;
+            *) message="research: freeze terminal V163 professional-reference scoring failure [skip ci]" ;;
+          esac
+          git commit -m "$message"
+          git push origin HEAD:"$BRANCH"
+          if [ "$outcome" = "PRE_SCORE_GUARD_FAIL" ] || [ "$outcome" = "SCORE_RUNTIME_FAIL" ]; then exit 1; fi
