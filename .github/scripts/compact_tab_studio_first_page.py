@@ -20,8 +20,8 @@ new_block = r'''      for (let index = 0; index < pageFiles.length; index += 1) 
         const isFirstPage = index === 0;
 
         if (isFirstPage) {
-          // Keep the full DadRock Tab Studio identity on page one, but make it
-          // compact enough that the original tab can begin on the same page.
+          // Keep the full DadRock Tab Studio logo on page one, then move
+          // straight into the song metadata so the tab gets maximum room.
           if (logoImage) {
             const heroLogo = logoImage.scaleToFit(150, 68);
             page.drawImage(logoImage, {
@@ -41,29 +41,9 @@ new_block = r'''      for (let index = 0; index < pageFiles.length; index += 1) 
             });
           }
 
-          const studioLabel = 'TAB STUDIO';
-          const studioWidth = bold.widthOfTextAtSize(studioLabel, 14);
-          page.drawText(studioLabel, {
-            x: (612 - studioWidth) / 2,
-            y: 696,
-            size: 14,
-            font: bold,
-            color: accent,
-          });
-
-          const editionLabel = 'Professional Exact-Image Edition';
-          const editionWidth = regular.widthOfTextAtSize(editionLabel, 8.5);
-          page.drawText(editionLabel, {
-            x: (612 - editionWidth) / 2,
-            y: 679,
-            size: 8.5,
-            font: regular,
-            color: muted,
-          });
-
           page.drawLine({
-            start: { x: 40, y: 665 },
-            end: { x: 572, y: 665 },
+            start: { x: 40, y: 704 },
+            end: { x: 572, y: 704 },
             thickness: 0.8,
             color: lightLine,
           });
@@ -71,7 +51,7 @@ new_block = r'''      for (let index = 0; index < pageFiles.length; index += 1) 
           const firstSongSize = fitTextSize(bold, cleanSong, 532, 20, 13);
           page.drawText(cleanSong, {
             x: 40,
-            y: 637,
+            y: 676,
             size: firstSongSize,
             font: bold,
             color: dark,
@@ -80,7 +60,7 @@ new_block = r'''      for (let index = 0; index < pageFiles.length; index += 1) 
           const firstArtistSize = fitTextSize(regular, cleanArtist, 532, 12, 9);
           page.drawText(cleanArtist, {
             x: 40,
-            y: 616,
+            y: 655,
             size: firstArtistSize,
             font: regular,
             color: muted,
@@ -88,7 +68,7 @@ new_block = r'''      for (let index = 0; index < pageFiles.length; index += 1) 
 
           page.drawText(instrumentLabel.toUpperCase(), {
             x: 40,
-            y: 594,
+            y: 633,
             size: 9.5,
             font: bold,
             color: accent,
@@ -96,15 +76,15 @@ new_block = r'''      for (let index = 0; index < pageFiles.length; index += 1) 
 
           page.drawText(`1/${pageFiles.length}`, {
             x: 548,
-            y: 594,
+            y: 633,
             size: 8,
             font: bold,
             color: muted,
           });
 
           page.drawLine({
-            start: { x: 40, y: 580 },
-            end: { x: 572, y: 580 },
+            start: { x: 40, y: 619 },
+            end: { x: 572, y: 619 },
             thickness: 0.8,
             color: lightLine,
           });
@@ -169,11 +149,10 @@ new_block = r'''      for (let index = 0; index < pageFiles.length; index += 1) 
         }
 
         // Preserve the JPG exactly and only apply one uniform scale factor.
-        // Page one reserves space for the full logo + metadata; later pages
-        // use the larger continuation-page image area.
+        // Page one now gives the reclaimed branding space directly to the tab.
         const maxWidth = isFirstPage ? 532 : 552;
-        const maxHeight = isFirstPage ? 520 : 650;
-        const imageTop = isFirstPage ? 566 : 698;
+        const maxHeight = isFirstPage ? 568 : 650;
+        const imageTop = isFirstPage ? 606 : 698;
         const scale = Math.min(maxWidth / jpg.width, maxHeight / jpg.height);
         const renderWidth = jpg.width * scale;
         const renderHeight = jpg.height * scale;
@@ -205,4 +184,8 @@ new_block = r'''      for (let index = 0; index < pageFiles.length; index += 1) 
 '''
 
 text = text[:start] + new_block + text[end:]
+text = text.replace(
+    "{generatedPdf.sourcePages} JPG pages + cover • {formatBytes(generatedPdf.bytes)} • stored only as a temporary browser object URL",
+    "{generatedPdf.sourcePages} JPG pages • {formatBytes(generatedPdf.bytes)} • stored only as a temporary browser object URL"
+)
 path.write_text(text)
