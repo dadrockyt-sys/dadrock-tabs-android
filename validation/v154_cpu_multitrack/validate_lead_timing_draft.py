@@ -21,7 +21,10 @@ for mo in ms:
  pitched+=sum(e.get('kind')=='note' for e in ev)
  dead+=sum(e.get('kind')=='deadNote' for e in ev)
  cont+=sum(bool(e.get('continuationOnly')) for e in ev)
- if len(ev)!=len(st): mismatch.append({'measure':m,'events':len(ev),'steps':len(st),'eventKinds':[e.get('kind') for e in ev],'visualOrders':[e.get('visualOrder') for e in ev]})
+ if len(ev)!=len(st):
+  mismatch.append({'measure':m,'events':len(ev),'steps':len(st),'eventSummaries':[
+   {'visualOrder':e.get('visualOrder'),'string':e.get('string'),'fret':e.get('fret'),'midi':e.get('midi'),'continuationOnly':bool(e.get('continuationOnly')),'parenthesized':bool(e.get('parenthesized')),'bendLabel':e.get('bendLabel'),'slideOut':e.get('slideOut'),'slurToNext':e.get('slurToNext')} for e in ev
+  ],'draftSteps':st})
 print(json.dumps({'sourceEvents':source_events,'pitched':pitched,'dead':dead,'continuationOnly':cont,'timingEntries':sum(len(v) for v in sb.values()),'mismatches':mismatch,'candidateRead':False,'scoringPerformed':False},indent=2))
 if mismatch: raise SystemExit(2)
 assert source_events==487 and pitched==476 and dead==11 and cont==23
