@@ -1,5 +1,5 @@
 name: V154 freeze Lead source timing once
-
+# one-use trigger after source/draft identities and m89 alignment were validated
 on:
   push:
     branches: [v143-contextual-prune-lobo]
