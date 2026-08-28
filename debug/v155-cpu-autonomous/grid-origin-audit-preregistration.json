@@ -1,0 +1,49 @@
+{
+  "schema": "dadrock.tabs.v155.grid-origin-audit-preregistration.v1",
+  "classification": "reference-blind-cpu-audio-grid-origin-diagnostic",
+  "branch": "v143-contextual-prune-lobo",
+  "purpose": "Test whether the exact historical audio independently supports a nonzero musical grid/downbeat origin, and quantify whether V154's fixed t=0 mapping omitted a required audio-to-score origin. This is diagnostic only and does not generate, modify, select, or score a candidate.",
+  "frozenHistoricalAudio": {
+    "commit": "74b0f815ff3f66f325220975c410621503de440f",
+    "path": "public/gomywayfullaitest.m4a",
+    "bytes": 3478611,
+    "sha256": "215bd5a657c5326f08f132ae358595a95c30b39bb7493a52c2f910d5a608149f"
+  },
+  "fixedTempoForControlledAudit": {
+    "tempoBpm": 129.19921875,
+    "stepsPerBeat": 4,
+    "stepDurationSeconds": 0.11609977324263039,
+    "note": "This audit isolates origin/phase only. A future production architecture must estimate tempo reference-blind as well."
+  },
+  "audioOnlyEstimator": {
+    "decode": "mono 44100 Hz pcm_s16le via imageio-ffmpeg 0.6.0",
+    "frameLengthSamples": 2048,
+    "hopSamples": 256,
+    "activityNoisePercentile": 5,
+    "activityThresholdDbAboveNoise": 12.0,
+    "activityWindowSeconds": 0.5,
+    "activityRequiredFraction": 0.8,
+    "onsetNovelty": "positive first difference of log RMS plus positive first difference of log first-difference RMS, smoothed over 3 frames",
+    "beatPhaseScan": "scan one beat period at one-hop increments; maximize robust capped mean onset novelty sampled at fixed-tempo beat locations during first 60 active seconds",
+    "barPhaseScan": "score each of four beat residue classes by capped mean onset novelty; choose highest residue as downbeat class",
+    "originRule": "earliest beat in winning downbeat residue at or after activityStartSeconds - one beatPeriod",
+    "noReferenceUse": true
+  },
+  "v154LatencyDiagnostic": {
+    "allowedInput": "consumed frozen V154 generated.json only; no professional reference",
+    "purpose": "Measure generated onset timing relative to raw-mix onset peaks as a diagnostic of transcription/separation latency. It is not used to choose the audio-only origin estimate.",
+    "nearestRawOnsetWindowSeconds": 0.30
+  },
+  "forbidden": [
+    "professional reference read",
+    "official scorer invocation",
+    "reference-derived offset hardcoding",
+    "V154 candidate modification",
+    "V154 threshold sweep",
+    "candidate generation",
+    "candidate selection",
+    "GPU/CUDA/Modal/L4 execution",
+    "main or Production modification"
+  ],
+  "successInterpretation": "Freeze the audit output regardless of result. Only after freezing may its audio-only origin estimate be compared to the already-frozen V154 post-score phase diagnostic. Use the result to design a new preregistered architecture, never to correct V154."
+}
