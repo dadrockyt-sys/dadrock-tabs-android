@@ -4,95 +4,118 @@ Updated: 2026-08-28 UTC
 Branch: `v143-contextual-prune-lobo`
 
 ## Active phase
-**V160 is terminal/consumed forever after one generation and one score. V161 successor design is preregistered and its full numeric implementation contract is now sealed BEFORE implementation at `debug/v161-cpu-autonomous/implementation-contract.json`, seal commit `70e59185f8e9c853e0c8723f42cf97a061a8fa63`, Git blob `51fe81400347119c95a2e6a1a63731070269a090`. No V161 implementation code exists yet. All successor thresholds/windows/weights/tie-breaks are frozen reference-blind. Next: implement V161 modules exactly to the sealed contract, then run only song-blind/static validation before any same-song audio processing. GPU/Modal/CUDA remain 0; main/Production untouched.**
+**V160 is terminal/consumed forever after one generation + one professional-reference score. V161 preregistration and numeric implementation contract are sealed. V161 implementation is now substantially built, but NO V161 song audio, Demucs, Basic Pitch, pYIN, candidate generation, reference read, or score has run. Implemented so far: pure event logic + song-blind fixture, V161 global timebase builder, independent timebase QC, event-refined transcriber, and independent structural QC. Next: add the V161 JSON-native regression fixture and negative leakage/runtime guard, then perform song-blind static review/validation only. No same-song processing may occur until exact implementation identities, one static preflight, and a pre-run identity seal are complete. GPU/Modal/CUDA remain 0; main/Production untouched.**
 
 ## Standing safety — MUST PRESERVE
 - CPU-only work and CPU scoring are authorized at assistant discretion.
 - Fresh explicit user authorization is required immediately before Modal, NVIDIA L4, CUDA, or any GPU execution.
 - Never modify/merge/promote `main` or Production without explicit user direction.
-- Professional references are scoring-only; direct reference/scorer content must not guide V161 implementation.
-- V161 may use only the aggregate frozen score evidence copied into its preregistration.
-- V159 closed forever. V160 closed forever: no regeneration, re-QC, repair, rescore, retune, threshold sweep, or variant selection.
+- Professional reference and frozen scorer are scoring-only; direct content must not guide V161 implementation.
+- V161 may use only aggregate frozen score evidence copied into its sealed preregistration.
+- V159 closed forever.
+- V160 closed forever: no regeneration, re-QC, repair, retune, threshold sweep, variant selection, or rescore.
 - V161 may not read/reuse/mine V160 candidate events for tuning.
-- Do not commit professional-tab screenshot bytes. Private machine-readable references remain research-branch-only.
+- No same-song score loop during V161 implementation.
+- Do not commit professional-tab screenshot bytes.
 - Target remains automatic audio → professional-quality Rhythm/Lead/Bass tablature PDF with no human correction.
 
-## V160 terminal evidence — FROZEN
-- V160 terminal score commit `1274dc20dbbe535cb8ff91ebf2e9d02078e3d9a9`; sole score run `33206424361`, #1 attempt #1, job `98968523271`.
+## V160 frozen terminal result
+- V160 score terminal commit `1274dc20dbbe535cb8ff91ebf2e9d02078e3d9a9`.
+- Sole score run `33206424361`, run #1 attempt #1, job `98968523271`.
 - Score report blob `d280a19052228f71e4520db077686dfe9ae8f9bb`; SHA256 `32476d8d6036c72cb3b29bc4e67ec7c3fd5e7dc11b9334bd04730b4fd25e5e04`.
-- Score terminal blob `bc73cefe6653b9c398e65381256caa843182661d`; `SCORE_GATE_FAIL`; V160 consumed forever.
-- Guitar primary F1 `0.09975470155355683`; gross F1 `0.2131370945761788`; measure+pitch F1 `0.3881166530389752`; generated 2276 vs aggregate reference count 1393.
-- Bass primary F1 `0.18073485600794442`; gross F1 `0.31777557100297915`; measure+pitch F1 `0.5124131082423039`; generated 460 vs aggregate reference count 547.
-- Gates remain 0.80/0.80.
+- Score terminal blob `bc73cefe6653b9c398e65381256caa843182661d`; outcome `SCORE_GATE_FAIL`; scoreExecutionCount=1; V160 candidate/score opportunity consumed forever.
+- Guitar primary F1 `0.09975470155355683`; gross ±2-step F1 `0.2131370945761788`; measure+pitch F1 `0.3881166530389752`; generated 2276 vs aggregate reference count 1393.
+- Bass primary F1 `0.18073485600794442`; gross ±2-step F1 `0.31777557100297915`; measure+pitch F1 `0.5124131082423039`; generated 460 vs aggregate reference count 547.
+- Gates remain Guitar/Bass >= `0.80` each.
 
-## V161 preregistration — SEALED
-- `debug/v161-cpu-autonomous/preregistration.json`; seal commit `8b8a8810af2bb693ba13d5a82e85493c720e526f`; blob `3d6b0412caaafbad39781f72a95fe29c72a38729`.
-- Status `PREREGISTERED_BEFORE_IMPLEMENTATION_CODE`; validation PASS.
-- Direct professional-reference/scorer reads for design forbidden; V160 candidate event mining/reuse forbidden.
-- Frozen architecture hypotheses: Guitar consolidation, local instrument onset refinement, Bass pitch-transition segmentation, activity/confidence gating, retain validated global timebase, no micro-tune.
+## V161 sealed design boundaries
+### Preregistration
+- `debug/v161-cpu-autonomous/preregistration.json`.
+- Seal commit `8b8a8810af2bb693ba13d5a82e85493c720e526f`.
+- Git blob `3d6b0412caaafbad39781f72a95fe29c72a38729`.
+- Schema `dadrock.tabs.v161.reference-blind-cpu-preregistration.v1`; status `PREREGISTERED_BEFORE_IMPLEMENTATION_CODE`; PASS.
+- Direct professional-reference/scorer reads for V161 design forbidden; V160 candidate event mining/reuse forbidden.
 
-## V161 numeric implementation contract — SEALED BEFORE CODE
+### Numeric implementation contract
 - `debug/v161-cpu-autonomous/implementation-contract.json`.
-- Seal commit `70e59185f8e9c853e0c8723f42cf97a061a8fa63`; Git blob `51fe81400347119c95a2e6a1a63731070269a090`.
-- Schema `dadrock.tabs.v161.numeric-implementation-contract.v1`; status `SEALED_BEFORE_IMPLEMENTATION_CODE`; validation PASS.
-- Created from branch head `b2596d36d4accd2a2aa67972266dfabfda6b8a23` after V161 preregistration was checkpointed.
+- Seal commit `70e59185f8e9c853e0c8723f42cf97a061a8fa63`.
+- Git blob `51fe81400347119c95a2e6a1a63731070269a090`.
+- Schema `dadrock.tabs.v161.numeric-implementation-contract.v1`; status `SEALED_BEFORE_IMPLEMENTATION_CODE`; PASS.
+- All windows, thresholds, weights, admission formulas, tie-breaks and static fixtures were frozen before code.
 
-### Retained V161 foundations
-- Same frozen source audio identity and normalized-WAV identity.
-- CPU deterministic fresh `htdemucs_6s`: shifts=1, jobs=1, repeat=1, seed=0, Torch/math threads=1.
-- Same V160 global timebase numerics: SR 22050, hop 256, `0.5*unitMix+0.5*unitDrums`, beat start120/tightness100, four-phase evidence, sequential absolute grid, Python round to 16-step measures.
-- Same harmonic CQT foundation: 36 bins/octave, harmonics 1..5, weights `[1,.5,.3333333333,.25,.2]`, radius 1.
-- Same dependencies: Python 3.10.x, Torch 2.8.0+cpu, NumPy 1.26.4, SciPy 1.13.1, SoundFile 0.12.1, Basic Pitch 0.4.0, Demucs 4.1.0, imageio-ffmpeg 0.6.0, librosa 0.11.0.
+### Frozen architecture summary
+- Retain V160 global timebase numerics/reference-blind CPU separation.
+- Guitar Basic Pitch thresholds unchanged: onset `0.50`, frame `0.30`, minimum note `90ms`.
+- Disable standalone Guitar harmonic-track recovery entirely; harmonic evidence becomes ranking/validation only.
+- Merge same-MIDI Guitar fragments at <=`0.080s` gap.
+- Guitar onset refinement radius ±6 frames; Bass ±8; movement requires positive-onset q60 and >=1.10× current strength.
+- Guitar admission = `.45 confidence + .25 templateRank + .15 onset + .10 persistence + .05 activity`, minimum `.50`, activity >=`.05`; cap 6 notes/grid step.
+- Bass adds stable pYIN pitch-transition proposals: >=`1.50` semitone change, both-sided voiced probability >=`.55`, min transition IOI `.060s`; onset/transition proposal merge radius `.045s`.
+- Bass admission = `.40 voiced + .35 templateRank + .15 onset + .10 activity`, minimum `.42`, activity >=`.04`, plus fundamental present OR voiced>=`.60`; same-pitch refractory `.060s`; cap 1 note/grid step.
+- Same frozen CPU dependencies as V160.
 
-### V161 onset refinement — FROZEN
-- Guitar local onset search radius ±6 frames; Bass ±8 frames.
-- Move requires local peak >= global positive-onset q60 and >=1.10× current-frame onset strength.
-- Peak tie-break: closest frame to original, then lower frame.
-- Refine instrument timestamp before global-grid interpolation/rounding.
+## V161 implementation identities — CURRENT
+### Pure event logic
+- `validation/v161_cpu_autonomous/event_logic_v161.py`
+- Commit `d4c323c084e1448b3a147611774999fb9116c636`
+- Git blob `85419429a2dae4baeb60232b756af4b127f87ce2`
+- Implements sealed onset refinement, support/rank calculations, Guitar same-pitch consolidation, Bass median-smoothed pitch transitions, onset/transition proposal merging, Bass refractory handling, Guitar/Bass grid caps, and frozen admission formulas.
 
-### V161 Guitar architecture — FROZEN
-- Basic Pitch thresholds remain exactly V160: onset 0.50, frame 0.30, minimum note 90ms; no threshold micro-tune.
-- **Standalone harmonic-track recovery disabled.** Harmonic evidence is validation/ranking only; no up-to-six extra notes per onset.
-- Same-MIDI raw Basic Pitch fragments merge when gap <=0.080s.
-- Register repair remains raw/±12 semitones with fundamental-above-median + strict template-score improvement.
-- Admission score: 0.45 confidence + 0.25 template rank + 0.15 onset support + 0.10 persistence + 0.05 activity support.
-- Admission minimum 0.50; activity support minimum 0.05.
-- Grid dedupe `(absoluteStep,midi)`; maximum 6 Guitar notes per absolute step; deterministic ranking.
-- Event source `basic_pitch_consolidated` only.
+### Song-blind event-logic fixture
+- `validation/v161_cpu_autonomous/test_event_logic_v161.py`
+- Commit `8767ecd8661470424ba146a707afcfc5605c5cb6`
+- Git blob `11e1c8b56375fe9675804778e7154b89ac6f24e7`
+- Synthetic only; no song/reference data. Covers merge boundary, onset strong/weak/tie behavior, support/rank, Bass transition + voiced boundary, proposal merge, refractory, polyphony caps, admission bounds.
 
-### V161 Bass architecture — FROZEN
-- Bass MIDI 28..67; onset detector backtrack true; onset min IOI 35ms.
-- pYIN frame 2048/hop256; 5-frame median smoothing; sigma 0.75; fusion 0.75 retained.
-- Add pitch-transition proposals for finite smoothed MIDI changes >=1.50 semitones with both-side voiced probability >=0.55; transition min IOI 60ms.
-- Union onset + transition proposals within 45ms; detected onset takes priority, then strongest onset/lower frame tie-break.
-- Refined Bass pitch window 0.120s.
-- Admission score: 0.40 voiced probability + 0.35 template rank + 0.15 onset support + 0.10 activity support; minimum 0.42; activity minimum 0.04; additionally require fundamental-present OR voiced probability>=0.60.
-- Same-MIDI raw refractory 60ms; maximum 1 Bass note per absolute grid step; deterministic winner.
+### V161 timebase builder
+- `validation/v161_cpu_autonomous/build_timebase_v161.py`
+- Commit `c1d7635c7441b236ceca5cc339a2cf0cdabac33c`
+- Git blob `7ac9f91b807430ee2edb3631393c9261b6db980b`
+- Version-isolates the validated V160 global timebase semantics; safety adds `V160CandidateRead=false`.
 
-### Required song-blind fixtures — FROZEN
-- Same-pitch Guitar merge boundary 80ms.
-- Weak/strong onset refinement + tie handling.
-- Bass 1.50-semitone transition / voiced-probability boundary.
-- Guitar polyphony cap 6; Bass grid monophony cap 1.
-- No standalone Guitar harmonic recovery.
-- JSON-native serialization regression fixture retained.
-- No same-song audio, professional reference, scorer, or V160 candidate in static validation.
+### V161 independent timebase QC
+- `validation/v161_cpu_autonomous/timebase_qc_v161.py`
+- Commit `6fbf5357cd60028573e0b854a4d550c24061cb77`
+- Git blob `7743c8f2ca2d09546d4eeb09f1fef3d14d7a1970`
+- Hard pre-pitch boundary; validates V161 timebase/input identities and reference-blind safety; records `pitchInferenceInvoked=false`.
+
+### V161 event-refined transcriber
+- `validation/v161_cpu_autonomous/transcribe_v161.py`
+- Commit `4965267397047536081d0d72e902c7d881589aea`
+- Git blob `0137f211a79ef2b1a63d1485497eb00686b3afd1`
+- Pitch inference is below the frozen independent timebase-QC PASS runtime boundary.
+- Guitar: Basic Pitch → same-pitch consolidation → local onset refinement → harmonic register/rank evidence → activity/admission → only `basic_pitch_consolidated`; no standalone harmonic recovery.
+- Bass: detected onsets + smoothed pYIN pitch-transition proposals → deterministic proposal merge → local onset refinement → harmonic+pYIN pitch selection → activity/admission → same-pitch refractory → monophonic grid cap.
+- Candidate safety explicitly forbids reference/V160-candidate/prior-score reads, sweeps, variants, human correction, GPU/Modal, Production change.
+
+### V161 independent structural QC
+- `validation/v161_cpu_autonomous/structural_qc_v161.py`
+- Commit `4d25287b0c7f68ce4f74ed81aa49af87ca9280c1`
+- Git blob `35fd631fe9a6fad37aac66526aa56e9ef8d5a26a`
+- Independently recomputes frozen-grid event mapping, validates schemas/hash chains/code pins/write-once boundary, checks only `basic_pitch_consolidated` Guitar source, no harmonic recovery, Guitar cap6, Bass cap1, admission scores/refinement fields, and reference-blind safety.
+- Uses V160-style recursive JSON-native receipt normalization with `allow_nan=false`.
+
+## Validation status
+- **No V161 song audio processing has run.**
+- V161 Demucs executions=0; Basic Pitch executions=0; pYIN executions=0; candidate count=0; structural-QC runtime executions=0; professional-reference reads=0; score calls=0.
+- GPU/CUDA/Modal=0. main/Production untouched.
+- Implementation files above have not yet been consumed by a static preflight; exact identities may still change only for implementation correctness, never in response to same-song/reference output.
 
 ## Current hard boundary
-- V161 preregistration + numeric implementation contract are sealed; do not change numerics based on implementation output.
-- No V161 song audio has run.
-- Implement V161 code exactly to the sealed contract.
-- Before any same-song processing: compile/static fixtures + negative leakage guard + static preflight + pre-run identity seal are mandatory.
-- V161 generation maximum remains one; no rerun/repair after candidate creation.
+- Do not run same-song audio/Demucs/pitch yet.
+- Do not create/arm V161 generation workflow yet.
+- Finish song-blind safety implementation first: JSON-native regression fixture + negative leakage/runtime guard.
+- Then compile/run song-blind fixtures and reviewer-audit a single static preflight.
+- Static preflight must not access song audio, professional reference, scorer, V160 candidate, or run Demucs/pitch.
+- Only after static PASS: seal final implementation identities, create V161 pre-run identity receipt while runtime artifacts + generation workflow remain absent, reviewer-audit generation workflow, then arm exactly once.
 - No GPU/Modal/CUDA without fresh explicit user authorization.
 - Never touch `main`/Production without explicit user direction.
 
 ## Exact next steps — RESUME HERE
 1. Re-fetch branch head/checkpoint before every write.
-2. Implement `validation/v161_cpu_autonomous/event_logic_v161.py` first as pure deterministic song-blind helpers matching the contract.
-3. Add `test_event_logic_v161.py` and run song-blind fixtures before integrating audio code.
-4. Version-isolate V160 timebase builder/QC to V161 with unchanged global-timebase semantics.
-5. Implement `transcribe_v161.py` using sealed Guitar consolidation/admission + Bass transition/onset architecture.
-6. Implement V161 structural QC, JSON-native fixture, and negative runtime guard.
-7. Compile/run static fixtures only; no song audio/Demucs/pitch execution.
-8. Checkpoint frequently.
+2. Add `validation/v161_cpu_autonomous/test_json_native_v161.py` matching the sealed V160 JSON-native regression contract.
+3. Add `debug/v161-cpu-autonomous/negative-runtime-guard.py` proving generation/static code cannot open professional reference, frozen scorer, V160 candidate/prior score, and proving no pitch inference before independent timebase-QC PASS.
+4. Reviewer-inspect all V161 Python modules for syntax/static contract drift; only song-blind corrections are allowed.
+5. Checkpoint final implementation identities.
+6. Create/audit exactly one `.github/workflows/v161-static-preflight.yml`, song-blind only; consume it once and never rerun.
+7. Only after static preflight PASS, proceed to pre-run identity seal and one-shot CPU generation workflow review/arm.
