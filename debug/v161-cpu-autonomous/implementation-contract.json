@@ -1,0 +1,305 @@
+{
+  "schema": "dadrock.tabs.v161.numeric-implementation-contract.v1",
+  "version": "V161",
+  "status": "SEALED_BEFORE_IMPLEMENTATION_CODE",
+  "validation": "PASS",
+  "branch": "v143-contextual-prune-lobo",
+  "createdFromBranchHead": "b2596d36d4accd2a2aa67972266dfabfda6b8a23",
+  "preregistration": {
+    "path": "debug/v161-cpu-autonomous/preregistration.json",
+    "sealCommit": "8b8a8810af2bb693ba13d5a82e85493c720e526f",
+    "gitBlob": "3d6b0412caaafbad39781f72a95fe29c72a38729"
+  },
+  "scope": "Architectural reference-blind V161 successor. Retain the validated V160 source/separation/global-timebase foundations; replace V160 Guitar harmonic-track event flooding with consolidated/admitted Basic Pitch tracks; add deterministic instrument-specific onset refinement; add Bass pitch-transition proposals and admission; preserve one-shot/QC/hash/JSON-native safety semantics.",
+  "canonicalSchemas": {
+    "timebase": "dadrock.tabs.v161.reference-blind-timebase.v1",
+    "timebaseQc": "dadrock.tabs.v161.reference-blind-timebase-qc.v1",
+    "candidate": "dadrock.tabs.v161.cpu-event-refined-generated.v1",
+    "generationReceipt": "dadrock.tabs.v161.cpu-generation-receipt.v1",
+    "environmentReceipt": "dadrock.tabs.v161.cpu-environment-receipt.v1",
+    "structuralQc": "dadrock.tabs.v161.reference-blind-structural-qc.v1",
+    "preRunReceipt": "dadrock.tabs.v161.pre-run-identity-receipt.v1",
+    "terminalFreeze": "dadrock.tabs.v161.terminal-freeze.v1"
+  },
+  "implementationPaths": {
+    "eventLogic": "validation/v161_cpu_autonomous/event_logic_v161.py",
+    "timebaseBuilder": "validation/v161_cpu_autonomous/build_timebase_v161.py",
+    "timebaseQc": "validation/v161_cpu_autonomous/timebase_qc_v161.py",
+    "transcriber": "validation/v161_cpu_autonomous/transcribe_v161.py",
+    "structuralQc": "validation/v161_cpu_autonomous/structural_qc_v161.py",
+    "eventLogicStaticTest": "validation/v161_cpu_autonomous/test_event_logic_v161.py",
+    "jsonNativeStaticTest": "validation/v161_cpu_autonomous/test_json_native_v161.py",
+    "negativeRuntimeGuard": "debug/v161-cpu-autonomous/negative-runtime-guard.py",
+    "staticPreflightWorkflow": ".github/workflows/v161-static-preflight.yml",
+    "generationWorkflow": ".github/workflows/v161-generate.yml"
+  },
+  "dependencies": {
+    "python": "3.10.x",
+    "torch": "2.8.0+cpu",
+    "numpy": "1.26.4",
+    "scipy": "1.13.1",
+    "soundfile": "0.12.1",
+    "basic-pitch": "0.4.0",
+    "demucs": "4.1.0",
+    "imageio-ffmpeg": "0.6.0",
+    "librosa": "0.11.0"
+  },
+  "sourceAndSeparation": {
+    "historicalAudioCommit": "74b0f815ff3f66f325220975c410621503de440f",
+    "sourceAudioSha256": "215bd5a657c5326f08f132ae358595a95c30b39bb7493a52c2f910d5a608149f",
+    "sourceAudioBytes": 3478611,
+    "normalizedWavSha256": "3e61b7926eabc21b758c750f826c7426a29d6de5aafdd5c93f8045ecdc67f87e",
+    "demucsModel": "htdemucs_6s",
+    "device": "cpu",
+    "shifts": 1,
+    "jobs": 1,
+    "repeatCount": 1,
+    "seed": 0,
+    "torchNumThreads": 1,
+    "torchNumInteropThreads": 1,
+    "torchDeterministicAlgorithms": true,
+    "mathLibraryThreads": 1
+  },
+  "globalTimebase": {
+    "semanticRule": "Carry V160 global timebase numerics unchanged except V161 schema/version isolation.",
+    "analysisSampleRate": 22050,
+    "hopLength": 256,
+    "rejectNonfiniteOnsetArrays": true,
+    "onsetClampMinimum": 0.0,
+    "positiveMaxFloorExclusive": 1e-12,
+    "unitNormalization": "array/max(array)",
+    "fusedBeatEnvelope": "0.5*unitMix + 0.5*unitDrums",
+    "beatTrackerStartBpm": 120.0,
+    "beatTrackerTightness": 100.0,
+    "beatTrackerSparse": true,
+    "runtimeWarningFatal": true,
+    "minimumDetectedBeats": 8,
+    "acceptedBpmRangeInclusive": [30.0, 300.0],
+    "tempoConsistencyRatioInclusive": [0.5, 2.0],
+    "phaseEvidenceWeights": {
+      "drums": 1.0,
+      "mix": 0.5,
+      "bass": 0.5,
+      "lowFrequencyFlux": 0.75,
+      "harmonicChange": 0.75
+    },
+    "lowFrequencyMaximumHz": 200.0,
+    "chromaBins": 12,
+    "phaseChoices": [0, 1, 2, 3],
+    "phaseTieTolerance": 1e-12,
+    "phaseTieWinner": "LOWER_PHASE",
+    "leadingBeatCount": "(-selectedPhase)%4",
+    "earlyPeriod": "median(first up to 8 positive IBIs)",
+    "maximumPrependedBeats": 3,
+    "absoluteOrdinal": "sequential prefix+detected index",
+    "gridStep": "4*ordinal",
+    "phaseMayAlterOrdinal": false,
+    "absoluteGridQuantization": "int(round(rawGridStep))",
+    "measure": "absoluteGridStep//16+1",
+    "step": "absoluteGridStep%16"
+  },
+  "sharedPitchAnalysis": {
+    "sampleRate": 22050,
+    "hopLength": 256,
+    "harmonicBinsPerOctave": 36,
+    "harmonics": [1, 2, 3, 4, 5],
+    "harmonicWeights": [1.0, 0.5, 0.3333333333, 0.25, 0.2],
+    "harmonicRadiusBins": 1,
+    "templateFundamentalBaseWeight": 0.75,
+    "epsilon": 1e-12,
+    "onsetEnvelope": "librosa.onset.onset_strength on instrument mono stem",
+    "activityEnvelope": "RMS using frame_length=2048 and hop_length=256",
+    "supportNormalization": "clip(value / q95_positive, 0, 1); if no positive values, support=0",
+    "templateRank": "fraction of candidate-MIDI template scores <= selected score, inclusive"
+  },
+  "onsetRefinement": {
+    "guitarSearchRadiusFrames": 6,
+    "bassSearchRadiusFrames": 8,
+    "positiveOnsetQuantileForMove": 0.60,
+    "minimumPeakOverCurrentRatio": 1.10,
+    "moveRule": "Move to selected local onset frame only if positive onset samples exist, local peak >= global positive-onset q60, and local peak >= 1.10*current-frame onset strength; otherwise retain original frame.",
+    "selection": "Maximum raw onset strength within symmetric inclusive window.",
+    "tieBreak1": "minimum absolute frame distance from original",
+    "tieBreak2": "lower frame index",
+    "noPositiveOnsets": "retain original frame",
+    "quantizationOrder": "refine instrument onset first, then interpolate against frozen global grid, then Python round to integer absolute step"
+  },
+  "guitar": {
+    "midiRangeInclusive": [40, 88],
+    "basicPitch": {
+      "onsetThreshold": 0.50,
+      "frameThreshold": 0.30,
+      "minimumNoteLengthMs": 90.0,
+      "multiplePitchBends": false,
+      "melodiaTrick": true,
+      "thresholdsChangedFromV160": false
+    },
+    "harmonicTrackRecoveryEnabled": false,
+    "reasonHarmonicTrackRecoveryDisabled": "V160 admitted up to six independent harmonic-track events per onset in addition to Basic Pitch. V161 uses harmonic evidence for validation/ranking only and emits no standalone harmonic-track recovery events.",
+    "samePitchRawMergeGapSeconds": 0.080,
+    "rawMergeRule": "Sort by MIDI then start. Merge same-MIDI candidates when next.start <= current.end + 0.080 seconds; merged start=min starts, end=max ends, Basic Pitch confidence=max confidence.",
+    "registerRepair": {
+      "candidateSemitoneOffsets": [0, -12, 12],
+      "alternativeRequiresFundamentalAboveMedian": true,
+      "alternativeRequiresStrictTemplateScoreImprovement": true,
+      "tieWinner": "original MIDI, then lower MIDI"
+    },
+    "candidateEvidence": {
+      "confidence": "clip(Basic Pitch note amplitude,0,1)",
+      "templateRank": "inclusive percentile rank of chosen-MIDI three-frame harmonic template score across Guitar MIDI range",
+      "onsetSupport": "normalized onset-envelope value at refined onset frame",
+      "persistence": "clip(durationSeconds/0.250,0,1)",
+      "activitySupport": "normalized local RMS at refined onset frame",
+      "weights": {
+        "confidence": 0.45,
+        "templateRank": 0.25,
+        "onsetSupport": 0.15,
+        "persistence": 0.10,
+        "activitySupport": 0.05
+      },
+      "admissionMinimum": 0.50,
+      "minimumActivitySupport": 0.05
+    },
+    "gridDedupeKey": ["absoluteGridStep", "midi"],
+    "gridCollisionWinner": "higher admissionScore, then higher Basic Pitch confidence, then lower MIDI",
+    "maximumNotesPerAbsoluteGridStep": 6,
+    "polyphonyWinnerOrder": "admissionScore descending, Basic Pitch confidence descending, MIDI ascending",
+    "samePitchPostGridRefractorySteps": 0,
+    "eventSource": "basic_pitch_consolidated"
+  },
+  "bass": {
+    "midiRangeInclusive": [28, 67],
+    "onsetDetection": {
+      "backtrack": true,
+      "minimumOnsetIoiSeconds": 0.035
+    },
+    "pyin": {
+      "frameLength": 2048,
+      "hopLength": 256,
+      "medianSmoothingFrames": 5,
+      "pitchSigmaSemitones": 0.75,
+      "fusionWeight": 0.75
+    },
+    "pitchTransitionProposals": {
+      "minimumAbsoluteSemitoneChange": 1.50,
+      "minimumVoicedProbabilityBothSides": 0.55,
+      "minimumTransitionIoiSeconds": 0.060,
+      "transitionFrame": "first frame of new smoothed MIDI state",
+      "requiresFiniteMidiBothSides": true
+    },
+    "proposalUnion": {
+      "mergeRadiusSeconds": 0.045,
+      "priorityWithinMergeRadius": ["detected_onset", "pitch_transition"],
+      "samePriorityTieBreak": "higher raw onset strength, then lower frame"
+    },
+    "pitchWindowSeconds": 0.120,
+    "pitchSelection": "Retain V160 harmonic-template + pYIN fusion formula after proposal/refinement changes.",
+    "fundamentalPresentRule": "selected fundamental mean magnitude > median fundamental mean magnitude across Bass MIDI candidates",
+    "candidateEvidence": {
+      "voicedProbability": "clip(local median pYIN voiced probability,0,1)",
+      "templateRank": "inclusive percentile rank of selected combined pitch score across Bass MIDI candidates",
+      "onsetSupport": "normalized onset-envelope value at refined frame",
+      "activitySupport": "normalized local RMS at refined frame",
+      "weights": {
+        "voicedProbability": 0.40,
+        "templateRank": 0.35,
+        "onsetSupport": 0.15,
+        "activitySupport": 0.10
+      },
+      "admissionMinimum": 0.42,
+      "minimumActivitySupport": 0.04,
+      "additionalGate": "fundamentalPresent OR voicedProbability>=0.60"
+    },
+    "samePitchRawRefractorySeconds": 0.060,
+    "samePitchRefractoryWinner": "higher admissionScore, then earlier refined onset",
+    "maximumNotesPerAbsoluteGridStep": 1,
+    "gridStepWinner": "higher admissionScore, then higher voicedProbability, then lower MIDI",
+    "eventSourceOnset": "onset_harmonic_pyin_refined",
+    "eventSourceTransition": "transition_harmonic_pyin_refined"
+  },
+  "eventLogicStaticFixtures": {
+    "samePitchMerge": {
+      "gapAtOrBelowSecondsMustMerge": 0.080,
+      "gapAboveSecondsMustNotMerge": 0.080
+    },
+    "onsetRefinement": {
+      "radiusGuitarFrames": 6,
+      "radiusBassFrames": 8,
+      "tieMustChooseClosestThenLower": true,
+      "weakPeakMustRetainOriginal": true
+    },
+    "bassTransition": {
+      "changeAtOrAboveSemitonesCreatesProposal": 1.50,
+      "changeBelowSemitonesDoesNotCreateProposal": 1.50,
+      "voicedProbabilityBelow055DoesNotCreateProposal": true
+    },
+    "guitarPolyphony": {
+      "cap": 6,
+      "rankingMustBeDeterministic": true
+    },
+    "bassGridMonophony": {
+      "cap": 1,
+      "rankingMustBeDeterministic": true
+    },
+    "noStandaloneGuitarHarmonicRecovery": true,
+    "sameSongAudioForbidden": true,
+    "professionalReferenceForbidden": true,
+    "V160CandidateForbidden": true
+  },
+  "jsonNativeNormalization": {
+    "semanticRule": "Carry V160 JSON-native serializer behavior forward unchanged with V161 schema/version isolation.",
+    "nativeChecks": "{key: bool(value) for key,value in checks.items()}",
+    "numpyGeneric": "item() then recurse",
+    "numpyArray": "tolist() then recurse",
+    "nonfiniteFloat": "RuntimeError before write",
+    "unsupportedType": "RuntimeError before write",
+    "serialization": "json.dumps(indent=2, sort_keys=True, allow_nan=False) + newline"
+  },
+  "structuralQcRequirements": {
+    "candidateHashChain": true,
+    "timebaseHashChain": true,
+    "timebaseQcHashChain": true,
+    "environmentReceiptHashChain": true,
+    "preRunIdentityPins": true,
+    "singleGenerationWorkflowRun": true,
+    "allCandidateEventsMapExactlyToFrozenGrid": true,
+    "guitarSourceMustBeBasicPitchConsolidated": true,
+    "guitarNoStandaloneHarmonicRecovery": true,
+    "guitarPolyphonyCapSix": true,
+    "bassGridMonophonyCapOne": true,
+    "eventAdmissionScoresFiniteAndWithinZeroOne": true,
+    "eventRefinementFieldsPresent": true,
+    "referenceBlindSafety": true,
+    "writeOnceBoundary": true
+  },
+  "runtimeBoundaries": {
+    "timebaseQcBeforePitch": true,
+    "timebaseQcFailureTerminalNoCandidate": true,
+    "structuralQcRequiredForAuthority": true,
+    "structuralQcFailureOrRuntimeFailureTerminal": true,
+    "onlyStructuralPassCandidateScoringEligible": true,
+    "generationMayReadProfessionalReference": false,
+    "generationMayReadFrozenScorer": false,
+    "generationMayReadV160Candidate": false,
+    "generationMayReadPriorScores": false,
+    "staticPreflightMayReadSongAudio": false,
+    "staticPreflightMayRunPitchOrDemucs": false,
+    "sameSongScoreDuringImplementationForbidden": true,
+    "generationRunCountMaximum": 1,
+    "generationRerunForbidden": true
+  },
+  "safetyAtSeal": {
+    "professionalReferenceReadForV161Design": false,
+    "frozenScorerContentReadForV161Design": false,
+    "V160CandidateEventReadForV161Design": false,
+    "V160Regenerated": false,
+    "V160Rescored": false,
+    "referenceFacingScoreCallsAfterV160Terminal": 0,
+    "V161SongAudioExecutions": 0,
+    "gpuExecutions": 0,
+    "cudaExecutions": 0,
+    "modalExecutions": 0,
+    "mainOrProductionModified": false
+  },
+  "nextAction": "Implement V161 modules exactly to this contract, then run only song-blind/static validation before any same-song audio processing."
+}
