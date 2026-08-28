@@ -1,9 +1,16 @@
 {
   "schema": "dadrock.tabs.v156.reference-blind-cpu-preregistration.v1",
   "version": "V156",
-  "status": "PREREGISTERED_BEFORE_GENERATION",
+  "status": "PREREGISTERED_BEFORE_GENERATION_AMENDED_EXECUTION_DETERMINISM",
   "inheritsArchitectureFrom": "V155 sealed preregistration e5f51474308db460d7317cfbc4204f616ee0b069; V155 musical outputs are not inputs and are never selected/scored",
   "purpose": "Clean protocol successor after V155 was invalidated by duplicate workflow triggers and implementation-contract mismatch. V156 preserves the already-sealed V155 recognition/timebase architecture without quality tuning and fixes only execution/contract hygiene.",
+  "amendmentProvenance": {
+    "amendedBeforeAnyV156Generation": true,
+    "reason": "The two protocol-invalid V155 CPU generation attempts used the same nominal htdemucs_6s shifts=1 jobs=1 configuration but produced different stem hashes and candidate hashes. This exposed execution nondeterminism before V156 generation. The amendment freezes RNG/thread behavior only and does not alter recognition or timebase quality parameters.",
+    "referenceUsedToChooseAmendment": false,
+    "v155MusicalOutputUsedToTuneAmendment": false,
+    "architectureChanged": false
+  },
   "song": {
     "artist": "Lenny Kravitz",
     "title": "Are You Gonna Go My Way",
@@ -36,11 +43,33 @@
     "singleCandidate": true,
     "singleGenerationRun": true
   },
+  "executionDeterminism": {
+    "rngSeed": 0,
+    "pythonRandomSeed": 0,
+    "numpyRandomSeed": 0,
+    "torchManualSeed": 0,
+    "torchDeterministicAlgorithms": true,
+    "torchDeterministicWarnOnly": false,
+    "torchNumThreads": 1,
+    "torchNumInteropThreads": 1,
+    "ompNumThreads": 1,
+    "mklNumThreads": 1,
+    "openblasNumThreads": 1,
+    "numexprNumThreads": 1,
+    "cublasWorkspaceConfig": ":4096:8",
+    "demucsInvocation": "in-process demucs.separate.main after all RNG/thread settings are established; do not spawn python -m demucs for separation",
+    "separationRepeatCount": 1,
+    "noDeterminismProbeUsingSecondMusicalSeparation": true,
+    "recordModelCheckpointIdentity": true,
+    "recordStemSha256": true,
+    "failurePolicy": "If torch deterministic algorithms or in-process Demucs setup fails before candidate creation, freeze the setup failure and repair only deterministic execution mechanics without changing model, shifts, jobs, recognition thresholds, timebase rules, or any quality parameter. No second musical candidate may be created under V156 after candidate creation begins."
+  },
   "triggerSafety": {
     "generationWorkflowCreationIsTheSingleTrigger": true,
     "secondArmEditForbidden": true,
     "workflowMustSelfSealAfterSuccessfulFreeze": true,
     "workflowRunCountMustEqualOneBeforeCandidateCanBeAuthoritative": true,
+    "workflowRunNumberMustEqualOne": true,
     "ifDuplicateRunDetected": "abort V156 without scoring and move to a fresh version"
   },
   "audioNormalization": {
@@ -148,6 +177,7 @@
       "exact audio identity",
       "all dependency versions pinned",
       "Demucs model identity/checkpoint receipt recorded",
+      "deterministic RNG/thread policy recorded",
       "candidate/receipt/preregistration hashes agree",
       "nonempty Guitar and Bass streams",
       "all events finite and inside frozen MIDI ranges",
