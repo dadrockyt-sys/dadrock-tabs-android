@@ -1,0 +1,43 @@
+{
+  "audit": {
+    "continuationOnlyEvents": 23,
+    "deadNoteEvents": 11,
+    "excludedMeasure28Events": 10,
+    "excludedMeasure39Events": 1,
+    "expectedPitchedScorerRows": 447,
+    "nonnullTimedOrGraceCollocatedEventsIncludingExcludedM39": 454,
+    "nullEvents": 33,
+    "pitchedEventsIncludingContinuations": 476,
+    "referenceFacingScoreCalls": 0,
+    "sourceEvents": 487,
+    "sourceMeasures": 113,
+    "totalSourceLength16ths": 1800
+  },
+  "inputs": {
+    "research/v154-professional-references/lead-professional-reference-machine-readable.json": "122e0f6b2fa63fb2ea701e9cefe897dd4337fd08de0792e11579f4933804b716",
+    "research/v154-professional-references/lead-source-local-attack-timing-draft.json": "32107c2b09ec3d2322fa141c550a98569ea1b1a4c8e5ed92c6db062596e2df15",
+    "research/v154-professional-references/lead-source-set-receipt.json": {
+      "pageCount": 22,
+      "previousOriginalPageSetSha256": "de2f20c330e52aca6125e29ca2cf5c4b719406fc267a98d43d98f3ab1453ff3c",
+      "renderedPageSetSha256": "e54a76bca81fdcfc8333d774a66175a00da5090fb32200a980c25f8e78b616cb"
+    },
+    "research/v154-professional-references/source-meter-to-fixed-grid-mapping.json": "1c8ed50839f4fa365616281c70fa490d47a7e222600b34ae4f1545e09f587648"
+  },
+  "outputPath": "research/v154-professional-references/lead-source-local-attack-timing.json",
+  "outputSha256": "a1c30e9a14048fac6da6801d1ace1db203daf8807511f26c76a268e3cbf426c3",
+  "policy": {
+    "candidateGenerationMayReadReference": false,
+    "generatedCandidateModified": false,
+    "generatedCandidateRead": false,
+    "humanCandidateCorrection": false,
+    "mainOrProductionModified": false,
+    "modalL4CudaGpuUsed": false,
+    "referenceFacingScoreCalls": 0,
+    "referenceOnly": true,
+    "scoringPerformed": false,
+    "screenshotBytesCommitted": false,
+    "thresholdSweep": false
+  },
+  "schema": "dadrock.tabs.v154.lead-source-local-attack-timing-receipt.v1",
+  "validation": "PASS"
+}
