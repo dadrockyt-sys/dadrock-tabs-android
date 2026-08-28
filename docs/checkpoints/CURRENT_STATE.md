@@ -104,6 +104,14 @@ Song: **Lenny Kravitz — Are You Gonna Go My Way**.
 - This search result does **not** authorize timing inference from machine-readable visual order. Lead exact source-local attack timing remains blocked until the 22 notation pages are recovered.
 - No scorer call, candidate mutation, GPU use, `main`, or Production change occurred during this recovery audit.
 
+## 2026-08-28 continuation — Lead receipt/history fingerprint audit
+- Re-read both Lead receipts: `research/v154-professional-references/lead-source-set-receipt.json` and `debug/v154-cpu-autonomous/reference-receipts/lead-user-upload-20260827.json`.
+- The receipts preserve an exact recovery fingerprint for all 22 pages: original filename, rendered page identity/page number, SHA-256, dimensions, byte size, and original↔rendered mapping. Any surviving copy can therefore be authenticated without filename guessing.
+- Exact repository search for a recorded rendered-page SHA-256 (example `c12ee1f9e7499c5f8a85551295dd657f4e6736730670ac8d1132841903de31a1`) did not surface a stored notation image/object.
+- Receipt history identifies commit `d1d42841f596f9afc1572b59beba4ed12d712f00` and parent `58749dbe87b0368ed79814ce8fa07d0851badc24`. Commit metadata references removed `.github/lead-preserve-parts/...` staging/helper material, but recursive parent-tree probing has not yielded a directly recoverable notation artifact/path. Treat this only as a historical breadcrumb until a concrete artifact is recovered.
+- Next recovery probe: inspect commit check-runs / Actions run metadata and artifacts around `d1d42841...` and authenticate any survivor against the frozen receipt hashes.
+- Constraints unchanged: scoring 0; frozen candidate untouched; no GPU; no `main`/Production change; do not commit notation images or derived raster copies.
+
 ## Exact next steps
 1. **DONE / FROZEN:** Rhythm row-identity equivalence audit; preserve both frozen Rhythm files unchanged.
 2. Continue repository/history/reference-receipt probing for any accessible recovery route to the exact 22 Lead source pages corresponding to frozen Lead page-set SHA256 `de2f20c...`. Do not substitute Bass pages and do not invent timing from visual-order JSON.
