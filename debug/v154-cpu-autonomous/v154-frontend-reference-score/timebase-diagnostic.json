@@ -1,0 +1,966 @@
+{
+  "bass": {
+    "earlyMedianShiftSteps": -11.5,
+    "global": {
+      "bestShiftSteps": -13.25,
+      "generated": 635,
+      "matched": 186,
+      "reference": 547,
+      "top": [
+        {
+          "matched": 186,
+          "shift": -13.25
+        },
+        {
+          "matched": 186,
+          "shift": -13.5
+        },
+        {
+          "matched": 177,
+          "shift": -13.0
+        },
+        {
+          "matched": 172,
+          "shift": -12.0
+        },
+        {
+          "matched": 167,
+          "shift": -11.75
+        },
+        {
+          "matched": 165,
+          "shift": -12.75
+        },
+        {
+          "matched": 163,
+          "shift": -12.25
+        },
+        {
+          "matched": 158,
+          "shift": -11.5
+        }
+      ]
+    },
+    "lateMedianShiftSteps": -13.5,
+    "lateMinusEarlyShiftSteps": -2.0,
+    "sections": [
+      {
+        "bestShiftSteps": -11.0,
+        "centerAbsoluteStep": 128.0,
+        "generated": 72,
+        "matched": 26,
+        "measures": [
+          1,
+          16
+        ],
+        "reference": 66,
+        "section": "intro_riff",
+        "top": [
+          {
+            "matched": 26,
+            "shift": -11.0
+          },
+          {
+            "matched": 24,
+            "shift": -11.5
+          },
+          {
+            "matched": 24,
+            "shift": -11.25
+          },
+          {
+            "matched": 24,
+            "shift": -10.75
+          },
+          {
+            "matched": 21,
+            "shift": -10.5
+          },
+          {
+            "matched": 21,
+            "shift": -10.25
+          },
+          {
+            "matched": 21,
+            "shift": -27.5
+          },
+          {
+            "matched": 19,
+            "shift": -11.75
+          }
+        ]
+      },
+      {
+        "bestShiftSteps": -11.5,
+        "centerAbsoluteStep": 384.0,
+        "generated": 125,
+        "matched": 75,
+        "measures": [
+          17,
+          32
+        ],
+        "reference": 109,
+        "section": "verse1",
+        "top": [
+          {
+            "matched": 75,
+            "shift": -11.5
+          },
+          {
+            "matched": 70,
+            "shift": -11.75
+          },
+          {
+            "matched": 60,
+            "shift": -11.25
+          },
+          {
+            "matched": 55,
+            "shift": -12.0
+          },
+          {
+            "matched": 50,
+            "shift": -15.5
+          },
+          {
+            "matched": 49,
+            "shift": -27.5
+          },
+          {
+            "matched": 48,
+            "shift": -7.5
+          },
+          {
+            "matched": 47,
+            "shift": 4.5
+          }
+        ]
+      },
+      {
+        "bestShiftSteps": -11.5,
+        "centerAbsoluteStep": 560.0,
+        "generated": 58,
+        "matched": 34,
+        "measures": [
+          33,
+          38
+        ],
+        "reference": 49,
+        "section": "chorus1",
+        "top": [
+          {
+            "matched": 34,
+            "shift": -11.5
+          },
+          {
+            "matched": 33,
+            "shift": -11.25
+          },
+          {
+            "matched": 28,
+            "shift": -11.75
+          },
+          {
+            "matched": 26,
+            "shift": -11.0
+          },
+          {
+            "matched": 25,
+            "shift": -15.5
+          },
+          {
+            "matched": 23,
+            "shift": -15.25
+          },
+          {
+            "matched": 20,
+            "shift": -7.5
+          },
+          {
+            "matched": 19,
+            "shift": -15.75
+          }
+        ]
+      },
+      {
+        "bestShiftSteps": -13.25,
+        "centerAbsoluteStep": 672.0,
+        "generated": 38,
+        "matched": 21,
+        "measures": [
+          39,
+          46
+        ],
+        "reference": 49,
+        "section": "riff_return1",
+        "top": [
+          {
+            "matched": 21,
+            "shift": -13.25
+          },
+          {
+            "matched": 17,
+            "shift": -13.0
+          },
+          {
+            "matched": 16,
+            "shift": -13.5
+          },
+          {
+            "matched": 14,
+            "shift": -12.75
+          },
+          {
+            "matched": 14,
+            "shift": 2.75
+          },
+          {
+            "matched": 12,
+            "shift": -13.75
+          },
+          {
+            "matched": 11,
+            "shift": -17.25
+          },
+          {
+            "matched": 11,
+            "shift": -7.25
+          }
+        ]
+      },
+      {
+        "bestShiftSteps": -13.25,
+        "centerAbsoluteStep": 864.0,
+        "generated": 114,
+        "matched": 57,
+        "measures": [
+          47,
+          62
+        ],
+        "reference": 117,
+        "section": "verse2",
+        "top": [
+          {
+            "matched": 57,
+            "shift": -13.25
+          },
+          {
+            "matched": 56,
+            "shift": -13.5
+          },
+          {
+            "matched": 51,
+            "shift": -13.0
+          },
+          {
+            "matched": 45,
+            "shift": -13.75
+          },
+          {
+            "matched": 41,
+            "shift": 2.5
+          },
+          {
+            "matched": 40,
+            "shift": 2.75
+          },
+          {
+            "matched": 39,
+            "shift": -29.25
+          },
+          {
+            "matched": 36,
+            "shift": -29.5
+          }
+        ]
+      },
+      {
+        "bestShiftSteps": -12.25,
+        "centerAbsoluteStep": 1048.0,
+        "generated": 55,
+        "matched": 35,
+        "measures": [
+          63,
+          69
+        ],
+        "reference": 48,
+        "section": "chorus2",
+        "top": [
+          {
+            "matched": 35,
+            "shift": -12.25
+          },
+          {
+            "matched": 35,
+            "shift": -12.0
+          },
+          {
+            "matched": 29,
+            "shift": -12.5
+          },
+          {
+            "matched": 21,
+            "shift": -11.75
+          },
+          {
+            "matched": 20,
+            "shift": -12.75
+          },
+          {
+            "matched": 15,
+            "shift": -8.25
+          },
+          {
+            "matched": 14,
+            "shift": -14.5
+          },
+          {
+            "matched": 14,
+            "shift": -16.0
+          }
+        ]
+      },
+      {
+        "bestShiftSteps": -14.0,
+        "centerAbsoluteStep": 1168.0,
+        "generated": 14,
+        "matched": 9,
+        "measures": [
+          70,
+          77
+        ],
+        "reference": 24,
+        "section": "bridge",
+        "top": [
+          {
+            "matched": 9,
+            "shift": -14.0
+          },
+          {
+            "matched": 9,
+            "shift": -14.25
+          },
+          {
+            "matched": 8,
+            "shift": -13.5
+          },
+          {
+            "matched": 8,
+            "shift": -13.75
+          },
+          {
+            "matched": 3,
+            "shift": -10.25
+          },
+          {
+            "matched": 3,
+            "shift": -10.0
+          },
+          {
+            "matched": 3,
+            "shift": -9.75
+          },
+          {
+            "matched": 3,
+            "shift": -9.5
+          }
+        ]
+      },
+      {
+        "bestShiftSteps": -13.5,
+        "centerAbsoluteStep": 1368.0,
+        "generated": 132,
+        "matched": 74,
+        "measures": [
+          78,
+          94
+        ],
+        "reference": 125,
+        "section": "solo",
+        "top": [
+          {
+            "matched": 74,
+            "shift": -13.5
+          },
+          {
+            "matched": 64,
+            "shift": -13.25
+          },
+          {
+            "matched": 61,
+            "shift": -13.75
+          },
+          {
+            "matched": 48,
+            "shift": -13.0
+          },
+          {
+            "matched": 45,
+            "shift": -14.0
+          },
+          {
+            "matched": 31,
+            "shift": -12.75
+          },
+          {
+            "matched": 27,
+            "shift": -14.25
+          },
+          {
+            "matched": 16,
+            "shift": -12.5
+          }
+        ]
+      },
+      {
+        "bestShiftSteps": -12.5,
+        "centerAbsoluteStep": 1656.0,
+        "generated": 101,
+        "matched": 56,
+        "measures": [
+          95,
+          113
+        ],
+        "reference": 99,
+        "section": "outro",
+        "top": [
+          {
+            "matched": 56,
+            "shift": -12.5
+          },
+          {
+            "matched": 52,
+            "shift": -12.25
+          },
+          {
+            "matched": 50,
+            "shift": -12.75
+          },
+          {
+            "matched": 39,
+            "shift": -13.0
+          },
+          {
+            "matched": 38,
+            "shift": -12.0
+          },
+          {
+            "matched": 30,
+            "shift": -13.25
+          },
+          {
+            "matched": 28,
+            "shift": -8.5
+          },
+          {
+            "matched": 28,
+            "shift": -28.5
+          }
+        ]
+      }
+    ],
+    "weightedShiftVsAbsoluteStepFit": {
+      "impliedReferenceTempoBpmIfPureTempoError": 129.0379492058076,
+      "intercept": -11.32499163021271,
+      "slope": -0.0012482238341121473
+    }
+  },
+  "combinedGuitar": {
+    "earlyMedianShiftSteps": -11.5,
+    "global": {
+      "bestShiftSteps": -13.25,
+      "generated": 1089,
+      "matched": 248,
+      "reference": 1393,
+      "top": [
+        {
+          "matched": 248,
+          "shift": -13.25
+        },
+        {
+          "matched": 236,
+          "shift": -13.5
+        },
+        {
+          "matched": 231,
+          "shift": -13.0
+        },
+        {
+          "matched": 219,
+          "shift": -12.75
+        },
+        {
+          "matched": 215,
+          "shift": -12.5
+        },
+        {
+          "matched": 213,
+          "shift": -13.75
+        },
+        {
+          "matched": 202,
+          "shift": -12.25
+        },
+        {
+          "matched": 193,
+          "shift": -12.0
+        }
+      ]
+    },
+    "lateMedianShiftSteps": -13.25,
+    "lateMinusEarlyShiftSteps": -1.75,
+    "sections": [
+      {
+        "bestShiftSteps": -11.25,
+        "centerAbsoluteStep": 128.0,
+        "generated": 177,
+        "matched": 50,
+        "measures": [
+          1,
+          16
+        ],
+        "reference": 230,
+        "section": "intro_riff",
+        "top": [
+          {
+            "matched": 50,
+            "shift": -11.25
+          },
+          {
+            "matched": 49,
+            "shift": -11.0
+          },
+          {
+            "matched": 46,
+            "shift": -10.75
+          },
+          {
+            "matched": 42,
+            "shift": -11.5
+          },
+          {
+            "matched": 40,
+            "shift": -10.5
+          },
+          {
+            "matched": 38,
+            "shift": -27.25
+          },
+          {
+            "matched": 36,
+            "shift": 5.25
+          },
+          {
+            "matched": 35,
+            "shift": 4.75
+          }
+        ]
+      },
+      {
+        "bestShiftSteps": -11.5,
+        "centerAbsoluteStep": 384.0,
+        "generated": 159,
+        "matched": 67,
+        "measures": [
+          17,
+          32
+        ],
+        "reference": 181,
+        "section": "verse1",
+        "top": [
+          {
+            "matched": 67,
+            "shift": -11.5
+          },
+          {
+            "matched": 65,
+            "shift": -11.75
+          },
+          {
+            "matched": 54,
+            "shift": -11.25
+          },
+          {
+            "matched": 48,
+            "shift": 4.5
+          },
+          {
+            "matched": 47,
+            "shift": -12.0
+          },
+          {
+            "matched": 47,
+            "shift": 4.25
+          },
+          {
+            "matched": 45,
+            "shift": -27.75
+          },
+          {
+            "matched": 44,
+            "shift": -27.5
+          }
+        ]
+      },
+      {
+        "bestShiftSteps": -11.75,
+        "centerAbsoluteStep": 560.0,
+        "generated": 96,
+        "matched": 26,
+        "measures": [
+          33,
+          38
+        ],
+        "reference": 143,
+        "section": "chorus1",
+        "top": [
+          {
+            "matched": 26,
+            "shift": -11.75
+          },
+          {
+            "matched": 26,
+            "shift": -11.5
+          },
+          {
+            "matched": 25,
+            "shift": -11.25
+          },
+          {
+            "matched": 24,
+            "shift": -11.0
+          },
+          {
+            "matched": 20,
+            "shift": -12.25
+          },
+          {
+            "matched": 20,
+            "shift": -12.0
+          },
+          {
+            "matched": 18,
+            "shift": -12.5
+          },
+          {
+            "matched": 17,
+            "shift": -10.75
+          }
+        ]
+      },
+      {
+        "bestShiftSteps": -12.5,
+        "centerAbsoluteStep": 672.0,
+        "generated": 113,
+        "matched": 37,
+        "measures": [
+          39,
+          46
+        ],
+        "reference": 134,
+        "section": "riff_return1",
+        "top": [
+          {
+            "matched": 37,
+            "shift": -12.5
+          },
+          {
+            "matched": 33,
+            "shift": -12.75
+          },
+          {
+            "matched": 30,
+            "shift": -13.25
+          },
+          {
+            "matched": 30,
+            "shift": -13.0
+          },
+          {
+            "matched": 30,
+            "shift": -13.5
+          },
+          {
+            "matched": 28,
+            "shift": -12.25
+          },
+          {
+            "matched": 27,
+            "shift": 3.5
+          },
+          {
+            "matched": 26,
+            "shift": -13.75
+          }
+        ]
+      },
+      {
+        "bestShiftSteps": -13.5,
+        "centerAbsoluteStep": 864.0,
+        "generated": 149,
+        "matched": 50,
+        "measures": [
+          47,
+          62
+        ],
+        "reference": 193,
+        "section": "verse2",
+        "top": [
+          {
+            "matched": 50,
+            "shift": -13.5
+          },
+          {
+            "matched": 46,
+            "shift": -13.25
+          },
+          {
+            "matched": 43,
+            "shift": -13.75
+          },
+          {
+            "matched": 41,
+            "shift": 2.5
+          },
+          {
+            "matched": 39,
+            "shift": -29.5
+          },
+          {
+            "matched": 38,
+            "shift": -13.0
+          },
+          {
+            "matched": 37,
+            "shift": 2.75
+          },
+          {
+            "matched": 36,
+            "shift": 2.25
+          }
+        ]
+      },
+      {
+        "bestShiftSteps": -12.25,
+        "centerAbsoluteStep": 1048.0,
+        "generated": 78,
+        "matched": 31,
+        "measures": [
+          63,
+          69
+        ],
+        "reference": 150,
+        "section": "chorus2",
+        "top": [
+          {
+            "matched": 31,
+            "shift": -12.25
+          },
+          {
+            "matched": 28,
+            "shift": -12.0
+          },
+          {
+            "matched": 25,
+            "shift": -11.75
+          },
+          {
+            "matched": 22,
+            "shift": -11.5
+          },
+          {
+            "matched": 17,
+            "shift": -12.5
+          },
+          {
+            "matched": 16,
+            "shift": 3.75
+          },
+          {
+            "matched": 15,
+            "shift": -28.0
+          },
+          {
+            "matched": 14,
+            "shift": -18.0
+          }
+        ]
+      },
+      {
+        "bestShiftSteps": -13.75,
+        "centerAbsoluteStep": 1168.0,
+        "generated": 53,
+        "matched": 36,
+        "measures": [
+          70,
+          77
+        ],
+        "reference": 126,
+        "section": "bridge",
+        "top": [
+          {
+            "matched": 36,
+            "shift": -13.75
+          },
+          {
+            "matched": 35,
+            "shift": -14.0
+          },
+          {
+            "matched": 30,
+            "shift": -13.5
+          },
+          {
+            "matched": 23,
+            "shift": -13.25
+          },
+          {
+            "matched": 17,
+            "shift": -14.25
+          },
+          {
+            "matched": 12,
+            "shift": 6.25
+          },
+          {
+            "matched": 11,
+            "shift": -5.75
+          },
+          {
+            "matched": 11,
+            "shift": -2.0
+          }
+        ]
+      },
+      {
+        "bestShiftSteps": -13.25,
+        "centerAbsoluteStep": 1368.0,
+        "generated": 211,
+        "matched": 91,
+        "measures": [
+          78,
+          94
+        ],
+        "reference": 335,
+        "section": "solo",
+        "top": [
+          {
+            "matched": 91,
+            "shift": -13.25
+          },
+          {
+            "matched": 86,
+            "shift": -13.0
+          },
+          {
+            "matched": 75,
+            "shift": -13.5
+          },
+          {
+            "matched": 75,
+            "shift": -12.75
+          },
+          {
+            "matched": 60,
+            "shift": -13.75
+          },
+          {
+            "matched": 57,
+            "shift": -12.5
+          },
+          {
+            "matched": 48,
+            "shift": -14.0
+          },
+          {
+            "matched": 40,
+            "shift": -12.25
+          }
+        ]
+      },
+      {
+        "bestShiftSteps": -13.0,
+        "centerAbsoluteStep": 1656.0,
+        "generated": 188,
+        "matched": 39,
+        "measures": [
+          95,
+          113
+        ],
+        "reference": 203,
+        "section": "outro",
+        "top": [
+          {
+            "matched": 39,
+            "shift": -13.0
+          },
+          {
+            "matched": 38,
+            "shift": -12.5
+          },
+          {
+            "matched": 37,
+            "shift": -12.75
+          },
+          {
+            "matched": 34,
+            "shift": -13.25
+          },
+          {
+            "matched": 34,
+            "shift": -28.5
+          },
+          {
+            "matched": 33,
+            "shift": -29.0
+          },
+          {
+            "matched": 31,
+            "shift": 3.0
+          },
+          {
+            "matched": 30,
+            "shift": -12.25
+          }
+        ]
+      }
+    ],
+    "weightedShiftVsAbsoluteStepFit": {
+      "impliedReferenceTempoBpmIfPureTempoError": 129.007321986171,
+      "intercept": -11.244801397154141,
+      "slope": -0.001485278051102605
+    }
+  },
+  "findings": [
+    "combinedGuitar: section shifts move from early median -11.50 to late median -13.25 steps (delta -1.75); a constant origin error alone is therefore insufficient.",
+    "combinedGuitar: weighted shift-vs-time slope=-0.001485, corresponding to 129.007 BPM if interpreted purely as tempo mismatch; treat this only as diagnosis, not a reference-tuned future parameter.",
+    "bass: section shifts move from early median -11.50 to late median -13.50 steps (delta -2.00); a constant origin error alone is therefore insufficient.",
+    "bass: weighted shift-vs-time slope=-0.001248, corresponding to 129.038 BPM if interpreted purely as tempo mismatch; treat this only as diagnosis, not a reference-tuned future parameter.",
+    "Guitar and Bass show similar timebase slope, strengthening the diagnosis of a shared grid/timebase architecture error upstream of stream-specific pitch recognition."
+  ],
+  "frozenInputs": {
+    "debug/v154-cpu-autonomous/broad-other-run-33096559281/generated.json": "1be86f86bb08e164342aa0c52db7a4d77beb938621e00d7d2e3b0e03f2dbfc37",
+    "debug/v154-cpu-autonomous/v154-frontend-reference-score/architecture-diagnostic.json": "bcc7aa275fb9c8dab3e0e9350043c5d85d48788bc13c672d97ad949d4d5595cd",
+    "debug/v154-cpu-autonomous/v154-frontend-reference-score/score.json": "c206f6bc951c6bd9b6cc19e6758c4aef6654f349cc1f5712df1f052e46fa798b",
+    "research/v154-professional-references/scorer-ready/frontend-reference-payload.json": "b39a203aec3f45800891fe4eca156e37e7571b91ea5c4ccc41b30bbc95fc89e7"
+  },
+  "historicalTranscriberTimebase": {
+    "downbeatOrMusicalOriginDetection": "none",
+    "gridOrigin": "audio/stem timestamp 0.000 s",
+    "latencyCompensation": "none",
+    "tempoBpm": 129.19921875
+  },
+  "policy": {
+    "additionalOfficialReferenceFacingScoreCalls": 0,
+    "candidateCorrectionWritten": false,
+    "candidateModified": false,
+    "cpuOnly": true,
+    "diagnosticOnly": true,
+    "futureCandidateParameterTuningFromReferenceForbidden": true,
+    "gpuUsed": false,
+    "mainOrProductionModified": false,
+    "officialScorerImportedOrCalled": false
+  },
+  "schema": "dadrock.tabs.v154.post-score-timebase-diagnostic.v1",
+  "validation": "PASS"
+}
