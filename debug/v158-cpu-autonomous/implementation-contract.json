@@ -1,0 +1,121 @@
+{
+  "schema": "dadrock.tabs.v158.numeric-implementation-contract.v1",
+  "version": "V158",
+  "status": "SEALED_BEFORE_GENERATION_CODE",
+  "preregistrationGitBlob": "728cf28646db225f3c266a4bb73a6112b1f60330",
+  "canonicalSchemas": {
+    "candidate": "dadrock.tabs.v158.cpu-sequential-onset-first-generated.v1",
+    "generationReceipt": "dadrock.tabs.v158.cpu-generation-receipt.v1",
+    "environmentReceipt": "dadrock.tabs.v158.cpu-environment-receipt.v1",
+    "structuralQc": "dadrock.tabs.v158.reference-blind-structural-qc.v1",
+    "preRunReceipt": "dadrock.tabs.v158.pre-run-identity-receipt.v1"
+  },
+  "timebaseNumerics": {
+    "analysisSampleRate": 22050,
+    "hopLength": 256,
+    "beatStartBpm": 120.0,
+    "beatTightness": 100.0,
+    "viterbiStartLogProbability": -1.3862943611198906,
+    "transitionProbabilities": {
+      "next": 0.985,
+      "same": 0.0075,
+      "skipOne": 0.0075
+    },
+    "emission": {
+      "state0Only": true,
+      "drumsAccentWeight": 1.0,
+      "mixAccentWeight": 0.5,
+      "bassAccentWeight": 0.5,
+      "lowFrequencyFluxWeight": 0.75,
+      "harmonicChangeWeight": 0.75,
+      "featureTransform": "robust-z with median/MAD*1.4826, standard-deviation fallback, no positive clipping",
+      "nonDownbeatEmission": 0.0
+    },
+    "lowFrequencyFluxHzMaximum": 200.0,
+    "chromaBins": 12,
+    "viterbiTieTolerance": 1e-12,
+    "viterbiTieBreak": "lowest predecessor state then lowest final state",
+    "beatGridStepIncrement": 4.0,
+    "barLengthSteps": 16.0,
+    "earlyLocalPeriodBeatCount": 8,
+    "lateLocalPeriodBeatCount": 8,
+    "quantization": "Python round(rawGridStep) converted to int"
+  },
+  "harmonicTemplateNumerics": {
+    "cqtBinsPerOctave": 36,
+    "harmonics": [1, 2, 3, 4, 5],
+    "weights": [1.0, 0.5, 0.3333333333, 0.25, 0.2],
+    "binNeighborhoodRadius": 1,
+    "magnitudeTransform": "log1p(abs(CQT))",
+    "templateScore": "sum(weight_h * mean(logmag bins within radius around harmonic frequency over analysis frames)) + 0.75 * fundamentalMeanMagnitude",
+    "candidateTieBreak": "lower MIDI",
+    "fundamentalPresent": "fundamental mean magnitude strictly greater than median mean magnitude across all candidate fundamental bins in the same analysis window"
+  },
+  "bassNumerics": {
+    "midiMinimum": 28,
+    "midiMaximum": 67,
+    "onsetBacktrack": true,
+    "minimumInterOnsetMs": 35.0,
+    "pitchWindowMs": 180.0,
+    "pyinFrameLength": 2048,
+    "pyinHopLength": 256,
+    "pyinProximitySigmaSemitones": 0.75,
+    "pyinFusionWeight": 0.75,
+    "harmonicScoreNormalization": "z-score across MIDI candidates within each onset window; zero vector if standard deviation <1e-9",
+    "combinedPitchScore": "harmonicZ + 0.75 * medianVoicedProbability * exp(-0.5*(candidateMidi-medianFinitePyinMidi)^2/0.75^2)",
+    "octaveCandidates": "all MIDI 28..67 are scored globally; candidate +/-12 comparison is therefore implicit in the same score and ties choose lower MIDI",
+    "eventStart": "retained onset time",
+    "eventEnd": "minimum(next retained onset, onset+0.5 seconds); final event onset+0.5 seconds",
+    "eventSource": "onset_harmonic_pyin"
+  },
+  "guitarNumerics": {
+    "midiMinimum": 40,
+    "midiMaximum": 88,
+    "basicPitchOnsetThreshold": 0.5,
+    "basicPitchFrameThreshold": 0.3,
+    "basicPitchMinimumNoteLengthMs": 90.0,
+    "basicPitchMultiplePitchBends": false,
+    "basicPitchMelodiaTrick": true,
+    "independentOnsetBacktrack": false,
+    "minimumTrackFrames": 3,
+    "trackFrameRadius": 1,
+    "maxSimultaneousPitches": 6,
+    "persistentTrackRule": "candidate MIDI must rank in the six highest harmonic-template scores independently in every one of three consecutive frames centered on the onset frame",
+    "persistentTrackTieBreak": "higher template score then lower MIDI",
+    "basicPitchRegisterRepair": "compare original MIDI and +/-12 candidates that are in range using mean three-frame harmonic-template score; replace only if alternate score is strictly greater by >1e-12 and alternate fundamentalPresent=true; equal scores keep original",
+    "harmonicTrackAddition": "at independent guitar onsets add persistent-track MIDI not within 60 ms of an existing same-MIDI Basic Pitch/track event; maximum six MIDI values per onset",
+    "harmonicTrackDurationSeconds": 0.07,
+    "basicPitchSource": "basic_pitch",
+    "harmonicTrackSource": "harmonic_track",
+    "forbiddenSourceLabels": ["cqt", "cqt_only", "single_frame_cqt"]
+  },
+  "postProcessingNumerics": {
+    "sameStreamDedupeKey": ["absoluteGridStep", "midi"],
+    "dedupeEvidencePrecedence": ["basic_pitch", "harmonic_track", "onset_harmonic_pyin"],
+    "sortOrder": ["absoluteGridStep", "midi", "source"]
+  },
+  "structuralQcContract": {
+    "candidateMustBeWriteOnce": true,
+    "receiptMustBeWriteOnce": true,
+    "nonemptyStreams": ["combinedGuitar", "bass"],
+    "eventRequiredFields": ["measure", "step", "midi", "startSeconds", "rawGridStep", "absoluteGridStep", "source"],
+    "beatStatePathLengthMustEqualBeatCount": true,
+    "beatTimesStrictlyIncreasing": true,
+    "viterbiStatesAllowed": [0, 1, 2, 3],
+    "bassEveryEventRequiresOnsetProposalIndex": true,
+    "guitarForbiddenSourceLabels": ["cqt", "cqt_only", "single_frame_cqt"],
+    "professionalReferenceReadMustBeFalse": true,
+    "professionalReferencePathsOpenedMustBeZero": true,
+    "referenceFacingScoreCallsMustBeZero": true,
+    "singleGenerationWorkflowRun": true
+  },
+  "hardIsolation": {
+    "professionalReferenceRead": false,
+    "priorGeneratedCandidateRead": false,
+    "priorScoreOrDiagnosticRead": false,
+    "referenceDerivedNumericCorrection": false,
+    "thresholdSweep": false,
+    "candidateVariantSelection": false,
+    "gpu": false
+  }
+}
