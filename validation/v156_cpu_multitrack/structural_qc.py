@@ -18,8 +18,9 @@ EXPECTED_DEPS = {
     "demucs": "4.1.0",
     "basic-pitch": "0.4.0",
 }
-EXPECTED_PREREG_GIT_BLOB = "bbad04a6f2076cde2ec2a266ec321c151d9b5868"
+EXPECTED_PREREG_GIT_BLOB = "25a0a921e3245049a7f64fd3cb823e6767fe55da"
 EXPECTED_ENGINE_BLOB = "3357582dd8311b28f4b85f2ebfbc7acb8c9e4fb8"
+EXPECTED_PREREG_STATUS = "PREREGISTERED_BEFORE_GENERATION_AMENDED_EXECUTION_DETERMINISM"
 CANDIDATE_SCHEMA = "dadrock.tabs.v156.cpu-hybrid-generated.v1"
 RECEIPT_SCHEMA = "dadrock.tabs.v156.cpu-hybrid-generation-receipt.v1"
 QC_SCHEMA = "dadrock.tabs.v156.reference-blind-structural-qc.v1"
@@ -72,7 +73,7 @@ def main() -> int:
         fail("generation receipt schema")
     if receipt.get("validation") != "PENDING_INDEPENDENT_STRUCTURAL_QC":
         fail("unexpected pre-QC receipt state")
-    if prereg.get("status") != "PREREGISTERED_BEFORE_GENERATION" or prereg.get("version") != "V156":
+    if prereg.get("status") != EXPECTED_PREREG_STATUS or prereg.get("version") != "V156":
         fail("preregistration identity/status")
     contract = prereg.get("canonicalContract") or {}
     if contract.get("candidateSchema") != CANDIDATE_SCHEMA or contract.get("generationReceiptSchema") != RECEIPT_SCHEMA or contract.get("structuralQcSchema") != QC_SCHEMA:
