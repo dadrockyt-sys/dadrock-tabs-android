@@ -18,6 +18,7 @@ EXPECTED_DEPS = {
     "demucs": "4.1.0",
     "basic-pitch": "0.4.0",
 }
+EXPECTED_PREREG_GIT_BLOB = "bbad04a6f2076cde2ec2a266ec321c151d9b5868"
 EXPECTED_ENGINE_BLOB = "3357582dd8311b28f4b85f2ebfbc7acb8c9e4fb8"
 CANDIDATE_SCHEMA = "dadrock.tabs.v156.cpu-hybrid-generated.v1"
 RECEIPT_SCHEMA = "dadrock.tabs.v156.cpu-hybrid-generation-receipt.v1"
@@ -31,6 +32,11 @@ def sha256(path: Path) -> str:
         for chunk in iter(lambda: f.read(1024 * 1024), b""):
             h.update(chunk)
     return h.hexdigest()
+
+
+def git_blob_sha(path: Path) -> str:
+    payload = path.read_bytes()
+    return hashlib.sha1(b"blob " + str(len(payload)).encode("ascii") + b"\0" + payload).hexdigest()
 
 
 def finite_number(v: Any) -> bool:
@@ -71,17 +77,22 @@ def main() -> int:
     contract = prereg.get("canonicalContract") or {}
     if contract.get("candidateSchema") != CANDIDATE_SCHEMA or contract.get("generationReceiptSchema") != RECEIPT_SCHEMA or contract.get("structuralQcSchema") != QC_SCHEMA:
         fail("canonical schema contract drift")
+    if git_blob_sha(args.preregistration) != EXPECTED_PREREG_GIT_BLOB:
+        fail("preregistration Git blob drift")
+
     if pre_run.get("validation") != "PASS" or pre_run.get("version") != "V156":
         fail("pre-run receipt state")
-    if pre_run.get("triggerSafety", {}).get("workflowCreationIsSingleTrigger") is not True or pre_run.get("triggerSafety", {}).get("secondArmEditForbidden") is not True:
+    trigger = pre_run.get("triggerSafety") or {}
+    if trigger.get("workflowCreationIsSingleTrigger") is not True or trigger.get("secondArmEditForbidden") is not True:
         fail("trigger-safety pre-run contract")
+    pins = pre_run.get("pinnedGitBlobs") or {}
+    if pins.get("preregistration") != EXPECTED_PREREG_GIT_BLOB or pins.get("inheritedReferenceBlindEngine") != EXPECTED_ENGINE_BLOB:
+        fail("pre-run prereg/engine pin drift")
 
     if receipt.get("candidateSha256") != sha256(args.candidate):
         fail("candidate SHA receipt mismatch")
     if receipt.get("preregistrationSha256") != sha256(args.preregistration):
         fail("preregistration SHA receipt mismatch")
-    if pre_run.get("preregistrationSha256") != sha256(args.preregistration):
-        fail("pre-run preregistration SHA mismatch")
     if receipt.get("implementation", {}).get("inheritedReferenceBlindEngineGitBlob") != EXPECTED_ENGINE_BLOB:
         fail("engine identity in generation receipt")
 
@@ -90,6 +101,8 @@ def main() -> int:
     for key in required_false:
         if safety.get(key) is not False:
             fail(f"candidate safety {key}")
+    if safety.get("professionalReferencePathsOpened") != 0 or safety.get("referenceFacingScoreCalls") != 0:
+        fail("candidate reference-access counters")
     rsafety = receipt.get("safety") or {}
     for key in required_false:
         if rsafety.get(key) is not False:
@@ -185,7 +198,7 @@ def main() -> int:
         "generationReceiptPath": str(args.receipt),
         "generationReceiptSha256": sha256(args.receipt),
         "preregistrationPath": str(args.preregistration),
-        "preregistrationSha256": sha256(args.preregistration),
+        "preregistrationGitBlob": git_blob_sha(args.preregistration),
         "preRunReceiptPath": str(args.pre_run_receipt),
         "preRunReceiptSha256": sha256(args.pre_run_receipt),
         "streamStats": stream_stats,
