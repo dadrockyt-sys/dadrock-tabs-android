@@ -3,7 +3,7 @@
 Updated: 2026-08-28 UTC
 Branch: `v143-contextual-prune-lobo`
 
-Active phase: **V158 is permanently consumed/diagnosed. V159 reference-blind CPU preregistration and numeric implementation contract remain SEALED. The V159 timebase builder, independent pre-pitch timebase QC, frozen-timebase transcriber, independent structural QC, and negative runtime guard are implemented. A song-blind static-only V159 preflight has now been added and its sole run #1 / attempt #1 is in progress. No V159 audio processing, Demucs separation, timebase artifact, candidate, generation run, structural-QC receipt, or score has been produced. Exact code identity sealing, pre-run receipt, and the one-shot CPU generation workflow remain. No professional-reference reads occurred. No GPU/Modal/CUDA has been used and main/Production remains untouched.**
+Active phase: **V158 is permanently consumed/diagnosed. V159 reference-blind CPU preregistration and numeric implementation contract remain SEALED. The V159 timebase builder, independent pre-pitch timebase QC, frozen-timebase transcriber, independent structural QC, and negative runtime guard are implemented. The sole song-blind static preflight run has PASSED completely. No V159 audio processing, Demucs separation, timebase artifact, pitch inference, candidate, generation receipt, structural-QC receipt, or score has been produced. Exact final code identity sealing and the V159 pre-run identity receipt are next; the one-shot CPU generation workflow does not exist yet. No professional-reference reads occurred. No GPU/Modal/CUDA has been used and main/Production remains untouched.**
 
 ## Standing authorization / safety — MUST PRESERVE
 - CPU-only work and CPU scoring are at assistant discretion.
@@ -107,19 +107,25 @@ Reference-blind inspection of prior CPU setup established the intended V159 host
 - Historical normalization identity remains SHA256 `3e61b7926eabc21b758c750f826c7426a29d6de5aafdd5c93f8045ecdc67f87e`.
 - This audit did not execute Demucs or open song audio.
 
-## Static preflight — IN PROGRESS
-- Added `.github/workflows/v159-static-preflight.yml` at commit `7482e15ec60f99001c61584dd167ef142d34e7f4`.
-- Workflow is path-self-triggered only and read-only (`contents: read`).
-- Sole run ID `33195208763`; workflow run number `1`; attempt `1`; event `push`; head commit `7482e15ec60f99001c61584dd167ef142d34e7f4`.
-- It performs only: sealed prereg/contract blob checks, generated-artifact absence checks, `python -m py_compile`, the V159 negative-runtime guard, and a final proof that no runtime artifact was created.
-- It installs no project/audio dependencies and invokes no V159 runtime module, song audio, Demucs, pitch recognition, scorer, or professional reference.
-- At this checkpoint write the audit job is still `in_progress`; no PASS is claimed yet.
+## Static preflight — PASS / CONSUMED
+- `.github/workflows/v159-static-preflight.yml` was created at commit `7482e15ec60f99001c61584dd167ef142d34e7f4`.
+- Sole GitHub Actions run ID `33195208763`; workflow run number `1`; attempt `1`; event `push`; head commit `7482e15ec60f99001c61584dd167ef142d34e7f4`.
+- Job ID `98930481313`; job conclusion `success`.
+- `Static-only boundary`: PASS — sealed prereg/contract blob checks and generated-artifact absence checks succeeded.
+- `Python compile only`: PASS for all four V159 runtime modules plus the negative-runtime guard under CPython `3.10.21`.
+- `Negative runtime boundary guard`: PASS with schema `dadrock.tabs.v159.negative-runtime-guard.v1`, failures `[]`, and all four checks true:
+  - `noPriorVersionRuntimePaths`
+  - `noProfessionalReferenceOrScorerRuntimePaths`
+  - `prePitchFilesContainNoPitchImportsOrCalls`
+  - `transcriberRequiresTimebaseQcPassBeforePitch`
+- `Prove no runtime work occurred`: PASS — no timebase, timebase-QC, candidate, generation receipt, environment receipt, or structural-QC artifact was created.
+- Workflow had `contents: read`; no project/audio dependencies were installed and no song audio, Demucs, pitch recognition, scorer, or professional reference was invoked.
+- This static run is consumed; do not re-run it.
 
 ## Validation status
 - **No V159 song audio processing has run yet.**
 - No fresh Demucs separation, timebase construction, timebase QC, pitch inference, candidate, structural-QC receipt, or score has run.
-- A local sandbox checkout/compile retry still could not resolve `github.com`; therefore local syntax execution is not counted as evidence.
-- GitHub-hosted static reviewer/preflight run #1 is in progress and is the authoritative pending syntax/AST check.
+- GitHub-hosted static reviewer/preflight run #1 is authoritative PASS evidence for syntax/AST/runtime-boundary checks.
 - Professional-reference reads during this V159 implementation/resume phase: `0`.
 - V159 reference-facing score calls: `0`.
 - GPU/Modal/CUDA executions: `0`.
@@ -135,17 +141,19 @@ Reference-blind inspection of prior CPU setup established the intended V159 host
 - No GPU execution without fresh explicit authorization.
 
 ## Resume verification — 2026-08-28
-- Re-fetched `docs/checkpoints/CURRENT_STATE.md` and branch metadata before resuming.
-- Initial verified resume head was `fbebd6afe3138f8d1e8d2b7b4f60f0ba7e20ee6d`; a checkpoint-only resume verification commit advanced it to `fa999290ac3448e1159da2fe9b05f4cfb71f6846` before the static preflight was created.
-- Static preflight creation then advanced branch head to `7482e15ec60f99001c61584dd167ef142d34e7f4`.
-- No candidate/generation progress existed before creating the static preflight.
+- Initial verified resume head was `fbebd6afe3138f8d1e8d2b7b4f60f0ba7e20ee6d`.
+- Checkpoint-only verification advanced to `fa999290ac3448e1159da2fe9b05f4cfb71f6846`.
+- Static preflight creation advanced to `7482e15ec60f99001c61584dd167ef142d34e7f4`.
+- Static-preflight launch checkpoint advanced to `06b653546e99ee3be6c4f60f63acfa8bc83553ca`.
+- Before this PASS checkpoint write, branch head was re-fetched and remained exactly `06b653546e99ee3be6c4f60f63acfa8bc83553ca`; no concurrent branch progress existed.
 
 ## Exact next steps — RESUME HERE
 1. Re-fetch latest branch head/checkpoint before every write.
-2. Wait only by active polling in this same work session for V159 static preflight run `33195208763` to finish; inspect its jobs/logs. Do not claim PASS until all static steps succeed.
-3. If static preflight fails, resolve implementation-only/static defects without changing sealed V159 numerics, then use a new explicitly audited static workflow version rather than re-running the consumed attempt.
-4. If static preflight passes, freeze exact final runtime code/blob identities and create `dadrock.tabs.v159.pre-run-identity-receipt.v1` proving no timebase/candidate/generation/environment/structural-QC receipt existed at seal and reference reads/score calls were zero.
-5. Only after reviewer/pre-run sealing, arm exactly one V159 CPU generation workflow; creation is the sole trigger. The workflow must create a CPU environment receipt with `workflowRunNumber=1`, `workflowRunAttempt=1`, and positive `workflowRunId`.
-6. Workflow order: verify audio/normalization identity → fresh CPU `htdemucs_6s` → build write-once timebase → independent timebase QC. If QC FAILS, freeze terminal V159 failure and create no candidate. If PASS, run transcriber → independent structural QC.
-7. If timebase + structural QC pass, freeze exactly one candidate, then separately seal a one-shot scoring guard/workflow for exactly one professional-reference score.
-8. Fresh explicit authorization remains required immediately before any Modal/NVIDIA L4/CUDA/GPU execution.
+2. Fetch and seal exact current Git blob identities for the four V159 runtime modules, negative-runtime guard, and static-preflight workflow.
+3. Inspect the V159 preregistration/implementation contract and runtime CLI/output contracts only as needed to design the one-shot CPU workflow; do not read professional references, scores, or prior generated candidates.
+4. Create `debug/v159-cpu-autonomous/pre-run-identity-receipt.json` with schema `dadrock.tabs.v159.pre-run-identity-receipt.v1`, exact sealed code/blob pins, static-preflight PASS identity, absence of timebase/candidate/generation/environment/structural-QC artifacts and absence of `.github/workflows/v159-generate.yml` at seal, reference reads `0`, score calls `0`, GPU/Modal/CUDA executions `0`, and generation single-trigger safety.
+5. Save checkpoint after pre-run sealing.
+6. Only after reviewer/pre-run sealing, create exactly one `.github/workflows/v159-generate.yml`; **its creation is the sole generation trigger**. Once that run begins, make no branch writes until it completes.
+7. Generation workflow order: verify sealed identities/audio → deterministic normalization → fresh CPU `htdemucs_6s` → environment receipt → build write-once timebase → independent timebase QC. If QC FAILS, freeze terminal V159 failure and create no candidate. If PASS, run frozen-timebase transcriber → independent structural QC.
+8. If timebase + structural QC pass, freeze exactly one candidate, then separately seal a one-shot scoring guard/workflow for exactly one professional-reference score.
+9. Fresh explicit authorization remains required immediately before any Modal/NVIDIA L4/CUDA/GPU execution.
