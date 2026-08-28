@@ -1,0 +1,231 @@
+{
+  "schema": "dadrock.tabs.v157.reference-blind-cpu-preregistration.v1",
+  "version": "V157",
+  "status": "PREREGISTERED_BEFORE_GENERATION",
+  "purpose": "Clean protocol successor after V156 ended in a pre-candidate environment-receipt bookkeeping failure. V157 preserves the V156/V155 reference-blind musical architecture and quality parameters exactly; it changes only model-cache/environment receipt mechanics before candidate creation.",
+  "provenance": {
+    "v154ConsumedAndNeverGenerationInput": true,
+    "v155ProtocolInvalidAndNeverGenerationInput": true,
+    "v156AbortedBeforeCandidateAndNeverGenerationInput": true,
+    "v155OrV156GeneratedMusicalOutputUsed": false,
+    "professionalReferenceUsedForSetupRepair": false,
+    "setupRepairEvidence": "V156 run 33142942558 failed before candidate because the receipt assumed ~/.cache/torch/hub/checkpoints while Demucs 4.1 used another cache path; the same block also omitted import os.",
+    "musicalArchitectureChangedFromV156": false,
+    "qualityParametersChangedFromV156": false
+  },
+  "song": {
+    "artist": "Lenny Kravitz",
+    "title": "Are You Gonna Go My Way",
+    "audioPath": "public/gomywayfullaitest.m4a",
+    "audioSha256": "215bd5a657c5326f08f132ae358595a95c30b39bb7493a52c2f910d5a608149f",
+    "historicalAudioCommit": "74b0f815ff3f66f325220975c410621503de440f",
+    "historicalAudioBytes": 3478611,
+    "normalizedWavSha256": "3e61b7926eabc21b758c750f826c7426a29d6de5aafdd5c93f8045ecdc67f87e"
+  },
+  "hardIsolation": {
+    "professionalReferenceReadDuringGeneration": false,
+    "v154CandidateUsedAsGenerationInput": false,
+    "v155CandidateOrOutputUsedAsGenerationInput": false,
+    "v156CandidateOrOutputUsedAsGenerationInput": false,
+    "referenceDerivedOffsetOrTempoConstantsAllowed": false,
+    "humanCorrectionAllowed": false,
+    "candidateVariantSelectionAllowed": false,
+    "thresholdSweepAllowed": false,
+    "postGenerationReferenceGuidedFilteringAllowed": false,
+    "mainOrProductionModificationAllowed": false,
+    "gpuAllowedWithoutFreshExplicitUserAuthorization": false
+  },
+  "execution": {
+    "device": "CPU_ONLY",
+    "python": "3.10",
+    "torch": "2.8.0+cpu",
+    "numpy": "1.26.4",
+    "scipy": "1.13.1",
+    "soundfile": "0.12.1",
+    "demucs": "4.1.0",
+    "basicPitch": "0.4.0",
+    "librosa": "0.11.0",
+    "imageioFfmpeg": "0.6.0",
+    "singleCandidate": true,
+    "singleGenerationRun": true
+  },
+  "executionDeterminism": {
+    "rngSeed": 0,
+    "pythonRandomSeed": 0,
+    "numpyRandomSeed": 0,
+    "torchManualSeed": 0,
+    "torchDeterministicAlgorithms": true,
+    "torchDeterministicWarnOnly": false,
+    "torchNumThreads": 1,
+    "torchNumInteropThreads": 1,
+    "ompNumThreads": 1,
+    "mklNumThreads": 1,
+    "openblasNumThreads": 1,
+    "numexprNumThreads": 1,
+    "cublasWorkspaceConfig": ":4096:8",
+    "demucsInvocation": "in-process demucs.separate.main after all RNG/thread settings are established",
+    "separationRepeatCount": 1,
+    "noDeterminismProbeUsingSecondMusicalSeparation": true
+  },
+  "triggerSafety": {
+    "generationWorkflowCreationIsTheSingleTrigger": true,
+    "secondArmEditForbidden": true,
+    "workflowMustSelfSealAfterSuccessfulFreeze": true,
+    "workflowRunCountMustEqualOneBeforeCandidateCanBeAuthoritative": true,
+    "workflowRunNumberMustEqualOne": true,
+    "ifDuplicateRunDetected": "abort V157 without scoring and move to a fresh version"
+  },
+  "audioNormalization": {
+    "sampleRate": 44100,
+    "channels": 2,
+    "codec": "pcm_s16le",
+    "deterministicFfmpeg": true
+  },
+  "separation": {
+    "model": "htdemucs_6s",
+    "device": "cpu",
+    "shifts": 1,
+    "jobs": 1,
+    "guitarInputStem": "guitar",
+    "bassInputStem": "bass",
+    "timebaseAnalysisInputs": ["normalized_mix", "drums", "bass", "guitar"],
+    "noFallbackModel": true
+  },
+  "modelIdentityReceiptRepair": {
+    "reason": "V156 setup failure only; no candidate existed.",
+    "importOsRequired": true,
+    "cacheRoots": ["~/.cache/torch/hub/checkpoints", "~/.cache/huggingface/hub"],
+    "recursive": true,
+    "resolveSymlinks": true,
+    "ignoreLockAndMetadataFiles": true,
+    "minimumModelBlobBytes": 1048576,
+    "deduplicateByResolvedPath": true,
+    "hashAlgorithm": "sha256",
+    "requireAtLeastOneResolvedModelBlob": true,
+    "recordLogicalPathResolvedPathBytesAndSha256": true,
+    "noSecondSeparationForReceipt": true,
+    "qualityEffect": "NONE"
+  },
+  "timebase": {
+    "principle": "Musical time is derived from audio; audio timestamp 0 is never assumed to be musical grid step 0.",
+    "beatTracker": "librosa.beat.beat_track on deterministic onset envelope derived from normalized mix plus separated drums",
+    "tempoMode": "dynamic beat times; do not force one constant BPM for event mapping",
+    "downbeatPhase": {
+      "meter": "4/4",
+      "candidates": 4,
+      "selection": "choose deterministic beat-phase index maximizing beat-synchronous accent evidence from normalized mix, drums, and low-frequency/bass evidence; tie break earliest phase index",
+      "referenceBlind": true
+    },
+    "leadingGrid": "after phase selection, extrapolate whole 4-beat bars backward using robust early local beat period only as needed so earliest detected activity is nonnegative on the musical grid",
+    "eventMapping": "piecewise-linear interpolation between detected beat times; each beat spans 4 sixteenth-grid steps; outside tracked range use nearest robust local beat period",
+    "quantization": "map raw onset to fractional sixteenth position then deterministically snap to nearest integer sixteenth; preserve startSeconds and rawGridStep",
+    "referenceDerivedTimingConstants": []
+  },
+  "bassRecognition": {
+    "architecture": "monophonic/low-polyphony F0 plus onset segmentation",
+    "input": "htdemucs_6s bass stem",
+    "harmonicSignal": "librosa.effects.hpss harmonic component",
+    "f0": "librosa.pyin",
+    "midiRange": [28, 67],
+    "frameLength": 2048,
+    "hopLength": 256,
+    "voicedProbabilityMinimum": 0.70,
+    "onsetEnvelope": "librosa.onset.onset_strength on bass stem",
+    "onsetDetection": "librosa.onset.onset_detect with backtrack=true",
+    "segmentation": "split on detected onset, voiced/unvoiced transition, or stable pitch change >=0.70 semitone sustained >=3 frames",
+    "pitchAssignment": "median voiced MIDI per segment rounded to nearest MIDI semitone",
+    "repeatedSamePitch": "retain distinct same-pitch notes when a new detected onset occurs",
+    "minimumDurationMs": 70,
+    "basicPitchUsed": false
+  },
+  "guitarRecognition": {
+    "architecture": "polyphonic Basic Pitch fixed pass plus independent harmonic-CQT evidence",
+    "input": "htdemucs_6s guitar stem",
+    "basicPitch": {
+      "version": "0.4.0",
+      "onsetThreshold": 0.50,
+      "frameThreshold": 0.30,
+      "minimumNoteLengthMs": 90.0,
+      "minimumMidi": 40,
+      "maximumMidi": 88,
+      "multiplePitchBends": false,
+      "melodiaTrick": true,
+      "singleFixedPass": true
+    },
+    "cqt": {
+      "signal": "HPSS harmonic component of guitar stem",
+      "sampleRate": 22050,
+      "hopLength": 256,
+      "binsPerOctave": 36,
+      "midiRange": [40, 88],
+      "highConfidenceZ": 3.0,
+      "basicPitchSupportZ": 1.5,
+      "basicPitchSupportFractionFirst120ms": 0.35,
+      "onsetEvidence": "positive pitch-salience flux at an independently detected guitar onset"
+    },
+    "fusion": {
+      "basicPitchRetention": "retain when MIDI has CQT onset support or >=35% CQT support in first 120ms; amplitude >=0.80 may bypass CQT veto",
+      "cqtOnlyCompletion": "at detected guitar onsets, add only high-confidence local pitch peaks with positive salience flux, after generic harmonic-duplicate suppression, not within 60ms of an already kept same-MIDI event",
+      "maxSimultaneousPitchesPerOnset": 6,
+      "noReferenceGuidedChordCompletion": true
+    },
+    "minimumDurationMs": 70
+  },
+  "postProcessing": {
+    "genericOnly": true,
+    "sortOrder": ["absoluteGridStep", "midi", "source"],
+    "deduplicateSameStream": "same MIDI and same snapped absolute grid step collapse to one event with deterministic evidence precedence",
+    "crossPartDeduplication": false,
+    "pitchRanges": {
+      "combinedGuitar": [40, 88],
+      "bass": [28, 67]
+    }
+  },
+  "canonicalContract": {
+    "candidateSchema": "dadrock.tabs.v157.cpu-hybrid-generated.v1",
+    "generationReceiptSchema": "dadrock.tabs.v157.cpu-hybrid-generation-receipt.v1",
+    "structuralQcSchema": "dadrock.tabs.v157.reference-blind-structural-qc.v1",
+    "environmentReceiptSchema": "dadrock.tabs.v157.cpu-environment-receipt.v1",
+    "eventRequiredFields": ["measure", "step", "midi", "startSeconds", "rawGridStep", "absoluteGridStep", "source"],
+    "receiptRequiredTopLevel": ["candidateSha256", "preregistrationSha256", "environment", "safety"],
+    "timebaseRequiredFields": ["beatTimesSeconds", "beatGridSteps", "qc"],
+    "independentStructuralQcRequired": true
+  },
+  "referenceBlindStructuralQc": {
+    "mustPassBeforeFreeze": [
+      "exact audio identity",
+      "all dependency versions pinned",
+      "Demucs model identity/model blob receipt recorded",
+      "deterministic RNG/thread policy recorded",
+      "candidate/receipt/preregistration hashes agree",
+      "nonempty Guitar and Bass streams",
+      "all events finite and inside frozen MIDI ranges",
+      "all snapped steps integers 0..15 and consistent with absoluteGridStep",
+      "raw grid positions finite",
+      "beat times strictly increasing and beat-grid arrays aligned",
+      "single candidate only",
+      "single generation workflow run only",
+      "referenceRead=false",
+      "no professional-reference path imported or opened"
+    ],
+    "noQualityMetricAgainstReferenceBeforeFreeze": true
+  },
+  "scoringProtocol": {
+    "referenceAccessOnlyAfterCandidateAndQcFreeze": true,
+    "referencePayloadPath": "research/v154-professional-references/scorer-ready/frontend-reference-payload.json",
+    "referencePayloadSha256": "b39a203aec3f45800891fe4eca156e37e7571b91ea5c4ccc41b30bbc95fc89e7",
+    "scorerPath": "validation/v154_cpu_multitrack/score_frontend_reference.py",
+    "scorerGitBlob": "9644e65719fbd361a9b39778ae9950c5e983e855",
+    "referenceFacingScoreCallsForV157": 1,
+    "scoreExactlyOnce": true,
+    "postScoreRetuningForbidden": true
+  },
+  "frozenGates": {
+    "combinedGuitarTimingAwarePitchF1Minimum": 0.80,
+    "bassTimingAwarePitchF1Minimum": 0.80,
+    "laterOnsetAwareNoteF1Minimum": 0.75,
+    "laterConditionalRoleAccuracyMinimum": 0.85,
+    "laterConditionalStringFretAccuracyMinimum": 0.85
+  },
+  "failurePolicy": "Any protocol violation, structural-QC failure after candidate creation, or missed score gate freezes the failure and ends V157. Never repair/retune/select a replacement V157 candidate against professional reference. Pure implementation/setup failures before candidate creation may be repaired only if architecture and preregistration semantics remain unchanged."
+}
