@@ -1,0 +1,62 @@
+{
+  "schema": "dadrock.tabs.v162.pre-run-compatibility-correction.v1",
+  "version": "V162",
+  "status": "SEALED_BEFORE_PRE_RUN_RECEIPT_SHAPE_CORRECTION",
+  "validation": "PASS",
+  "branch": "v143-contextual-prune-lobo",
+  "createdFromBranchHead": "91bf86d3061e28ab7600eee01fff58398883764a",
+  "originalPreRunReceipt": {
+    "path": "debug/v162-cpu-autonomous/pre-run-identity-receipt.json",
+    "gitBlob": "d0f7af2c36e9e0d05816a66961db66922d622c06",
+    "sealCommit": "11a73b7c957a7b6ff98a68181a96b4176178f68f",
+    "validation": "PASS"
+  },
+  "issue": "The sealed receipt records runtime absence and safety values correctly inside runtimeAbsenceAtSeal and referenceAndComputeBoundaryAtSeal, but the already-frozen V162 transcriber and structural QC consume the equivalent keys from the receipt top level. Generation is still unarmed and no V162 runtime/song/model execution has occurred.",
+  "permittedCorrection": {
+    "file": "debug/v162-cpu-autonomous/pre-run-identity-receipt.json",
+    "addTopLevelCompatibilityAliasesOnly": true,
+    "aliasValuesMustExactlyEqualAlreadySealedNestedValues": true,
+    "mayAddThisCorrectionBlobToPinnedGitBlobs": true,
+    "mayNotChangeExistingNestedValues": true,
+    "mayNotChangeDesignOrNumericContract": true,
+    "mayNotChangeImplementationCode": true,
+    "mayNotChangeStaticValidationHistory": true,
+    "mayNotReadSongAudio": true,
+    "mayNotExecuteDemucsBasicPitchPyin": true,
+    "mayNotReadProfessionalReferenceOrScorer": true,
+    "mayNotReadV161Candidate": true,
+    "gpuCudaModalForbidden": true,
+    "mainProductionChangeForbidden": true
+  },
+  "requiredTopLevelAliases": {
+    "environmentReceiptMustNotExistAtSeal": true,
+    "timebaseMustNotExistAtSeal": true,
+    "timebaseQcReceiptMustNotExistAtSeal": true,
+    "candidateMustNotExistAtSeal": true,
+    "generationReceiptMustNotExistAtSeal": true,
+    "structuralQcReceiptMustNotExistAtSeal": true,
+    "terminalFreezeMustNotExistAtSeal": true,
+    "generationWorkflowMustNotExistAtSeal": true,
+    "referenceReadAtSeal": false,
+    "professionalReferencePathsOpenedAtSeal": 0,
+    "frozenScorerReadAtSeal": false,
+    "V161CandidateReadAtSeal": false,
+    "priorGeneratedCandidateReadAtSeal": false,
+    "priorScoreReadAtSeal": false,
+    "referenceFacingScoreCallsAtSeal": 0,
+    "songAudioExecutionsAtSeal": 0,
+    "demucsExecutionsAtSeal": 0,
+    "pitchInferenceExecutionsAtSeal": 0,
+    "gpuExecutionsAtSeal": 0,
+    "cudaExecutionsAtSeal": 0,
+    "modalExecutionsAtSeal": 0,
+    "mainOrProductionModifiedAtSeal": false
+  },
+  "runtimeState": {
+    "generationWorkflowAbsent": true,
+    "songProcessingCount": 0,
+    "candidateCount": 0,
+    "scoreCalls": 0
+  },
+  "nextAction": "Update only pre-run-identity-receipt.json to add the exact top-level compatibility aliases and pin this correction record, then checkpoint the superseding pre-run receipt blob before generation workflow creation."
+}
