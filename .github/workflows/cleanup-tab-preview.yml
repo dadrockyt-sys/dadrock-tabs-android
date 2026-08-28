@@ -1,82 +1,21 @@
 name: Clean up tab preview card
 
+# TEMPORARY research-branch read-only validator; restore after this one run.
 on:
   push:
     paths:
       - '.github/workflows/cleanup-tab-preview.yml'
 
 permissions:
-  contents: write
+  contents: read
 
 jobs:
   patch-preview:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-
-      - name: Update preview UI
-        run: |
-          python - <<'PY'
-          from pathlib import Path
-
-          path = Path('app/ai-tab/page.js')
-          text = path.read_text()
-
-          text = text.replace(
-              'Review Your Tab Preview',
-              'Tab Studio Preview',
-              1,
-          )
-
-          text = text.replace(
-              '''                        <h3 className="mt-3 text-lg font-black text-white">
-                          Watermarked preview ready
-                        </h3>''',
-              '''                        <h3 className="mt-3 text-lg font-black text-white">
-                          {songTitle || 'Tab'} PDF Preview
-                        </h3>''',
-              1,
-          )
-
-          text = text.replace(
-              '''                            <FileText size={19} />
-                            Open Preview PDF''',
-              '''                            <FileText size={19} />
-                            {songTitle || 'Tab'} PDF Preview''',
-              1,
-          )
-
-          overlay = '''                    {!previewUnlocked && (
-                      <div className="pointer-events-none absolute inset-x-0 bottom-0 flex min-h-[150px] items-end justify-center bg-gradient-to-t from-black via-black/90 to-transparent px-4 pb-5">
-                        <div className="text-center">
-                          <div className="mx-auto flex h-11 w-11 items-center justify-center rounded-full border border-orange-500/40 bg-orange-500/15 text-orange-300">
-                            <Lock size={20} />
-                          </div>
-
-                          <p className="mt-3 text-sm font-black text-white">
-                            Full transcription locked
-                          </p>
-
-                          <p className="mt-1 text-xs text-zinc-400">
-                            Unlock every page and
-                            remove the preview watermark.
-                          </p>
-                        </div>
-                      </div>
-                    )}
-'''
-
-          if overlay not in text:
-              raise SystemExit('Preview lock overlay block was not found.')
-
-          text = text.replace(overlay, '', 1)
-          path.write_text(text)
-          PY
-
-      - name: Commit changes
-        run: |
-          git config user.name "DadRock Tabs Automation"
-          git config user.email "actions@users.noreply.github.com"
-          git add app/ai-tab/page.js
-          git commit -m "Simplify tab preview section"
-          git push
+        with:
+          ref: v143-contextual-prune-lobo
+          fetch-depth: 1
+      - name: Validate V154 Lead timing draft alignment
+        run: python validation/v154_cpu_multitrack/validate_lead_timing_draft.py
