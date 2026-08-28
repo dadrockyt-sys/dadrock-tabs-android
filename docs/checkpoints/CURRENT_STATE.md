@@ -17,7 +17,7 @@ Active phase: **V158 is permanently CONSUMED and its reference-blind post-score 
 ## Immutable shared song / scoring identities
 Song: **Lenny Kravitz — Are You Gonna Go My Way**.
 - Historical audio commit `74b0f815ff3f66f325220975c410621503de440f`.
-- Audio SHA256 `215bd5a657c5326f08f132e358595a95c30b39bb7493a52c2f910d5a608149f` is INVALID TYPO — do not use. The authoritative audio SHA256 remains `215bd5a657c5326f08f132ae358595a95c30b39bb7493a52c2f910d5a608149f`; bytes `3478611`.
+- Audio SHA256 `215bd5a657c5326f08f132ae358595a95c30b39bb7493a52c2f910d5a608149f`; bytes `3478611`.
 - Normalized WAV SHA256 `3e61b7926eabc21b758c750f826c7426a29d6de5aafdd5c93f8045ecdc67f87e`.
 - Source m104 = 2/4 (8 sixteenth steps), others 4/4; meter map SHA256 `1c8ed50839f4fa365616281c70fa490d47a7e222600b34ae4f1545e09f587648`.
 - Frozen scorer `validation/v154_cpu_multitrack/score_frontend_reference.py`; Git blob `9644e65719fbd361a9b39778ae9950c5e983e855`.
