@@ -1,0 +1,170 @@
+{
+  "audio": {
+    "durationSeconds": 211.44090702947847,
+    "sampleRate": 22050,
+    "sha256": "215bd5a657c5326f08f132ae358595a95c30b39bb7493a52c2f910d5a608149f"
+  },
+  "classification": "reference-blind-cpu-beat-downbeat-grid-audit",
+  "policy": {
+    "candidateGenerated": false,
+    "candidateModified": false,
+    "candidateSelected": false,
+    "cpuOnly": true,
+    "gpuCudaModalL4Used": false,
+    "knownReferenceDerivedShiftRead": false,
+    "mainOrProductionModified": false,
+    "officialScorerCalled": false,
+    "professionalReferenceRead": false,
+    "v154PostScoreDiagnosticRead": false
+  },
+  "schema": "dadrock.tabs.v155.grid-origin-audit-v2.v1",
+  "timebase": {
+    "barPhaseRelativeMargin": 0.016484896011544528,
+    "barResidueScores": [
+      {
+        "beats": 8,
+        "medianAccent": 0.8221407835126007,
+        "q25Accent": 0.7923540124607493,
+        "residue": 0,
+        "score": 1.099464687873863
+      },
+      {
+        "beats": 8,
+        "medianAccent": 0.7839945321683027,
+        "q25Accent": 0.7346677195599921,
+        "residue": 1,
+        "score": 1.0411282340143
+      },
+      {
+        "beats": 7,
+        "medianAccent": 0.8057905006718904,
+        "q25Accent": 0.787284646154305,
+        "residue": 2,
+        "score": 1.081340126825897
+      },
+      {
+        "beats": 7,
+        "medianAccent": 0.8037563242651965,
+        "q25Accent": 0.688088885424605,
+        "residue": 3,
+        "score": 1.0445874341638082
+      }
+    ],
+    "chosenDownbeatResidue": 0,
+    "first16BeatTimesSeconds": [
+      0.6849886621315193,
+      1.18421768707483,
+      1.6834467120181407,
+      2.159455782312925,
+      2.647074829931973,
+      3.1230839002267574,
+      3.610702947845805,
+      4.063492063492063,
+      4.551111111111111,
+      5.038730158730159,
+      5.5147392290249435,
+      6.002358276643991,
+      6.478367346938776,
+      6.9543764172335605,
+      7.430385487528345,
+      7.894784580498866
+    ],
+    "first16MappedBeats": [
+      {
+        "beatIndex": 0,
+        "musicalSixteenth": 0.0,
+        "timeSeconds": 0.6849886621315193
+      },
+      {
+        "beatIndex": 1,
+        "musicalSixteenth": 4.3,
+        "timeSeconds": 1.18421768707483
+      },
+      {
+        "beatIndex": 2,
+        "musicalSixteenth": 8.6,
+        "timeSeconds": 1.6834467120181407
+      },
+      {
+        "beatIndex": 3,
+        "musicalSixteenth": 12.699999999999998,
+        "timeSeconds": 2.159455782312925
+      },
+      {
+        "beatIndex": 4,
+        "musicalSixteenth": 16.9,
+        "timeSeconds": 2.647074829931973
+      },
+      {
+        "beatIndex": 5,
+        "musicalSixteenth": 21.0,
+        "timeSeconds": 3.1230839002267574
+      },
+      {
+        "beatIndex": 6,
+        "musicalSixteenth": 25.199999999999996,
+        "timeSeconds": 3.610702947845805
+      },
+      {
+        "beatIndex": 7,
+        "musicalSixteenth": 29.099999999999998,
+        "timeSeconds": 4.063492063492063
+      },
+      {
+        "beatIndex": 8,
+        "musicalSixteenth": 33.3,
+        "timeSeconds": 4.551111111111111
+      },
+      {
+        "beatIndex": 9,
+        "musicalSixteenth": 37.5,
+        "timeSeconds": 5.038730158730159
+      },
+      {
+        "beatIndex": 10,
+        "musicalSixteenth": 41.6,
+        "timeSeconds": 5.5147392290249435
+      },
+      {
+        "beatIndex": 11,
+        "musicalSixteenth": 45.800000000000004,
+        "timeSeconds": 6.002358276643991
+      },
+      {
+        "beatIndex": 12,
+        "musicalSixteenth": 49.900000000000006,
+        "timeSeconds": 6.478367346938776
+      },
+      {
+        "beatIndex": 13,
+        "musicalSixteenth": 54.0,
+        "timeSeconds": 6.9543764172335605
+      },
+      {
+        "beatIndex": 14,
+        "musicalSixteenth": 58.1,
+        "timeSeconds": 7.430385487528345
+      },
+      {
+        "beatIndex": 15,
+        "musicalSixteenth": 62.1,
+        "timeSeconds": 7.894784580498866
+      }
+    ],
+    "mappingRule": "musicalAbsoluteStep=(audioSeconds-originSeconds)/(60/tempoBpmAudioDerived/4)",
+    "originBeatIndex": 0,
+    "originSeconds": 0.6849886621315193,
+    "stableRun": {
+      "beatCount": 30,
+      "endBeatIndexExclusive": 30,
+      "fallbackUsed": false,
+      "intervalCv": 0.023143347665573855,
+      "medianIntervalSeconds": 0.48761904761904784,
+      "startBeatIndex": 0
+    },
+    "stepDurationSeconds": 0.11609977324263039,
+    "tempoBpmAudioDerived": 129.19921875,
+    "trackedBeatCount": 448
+  },
+  "validation": "PASS"
+}
