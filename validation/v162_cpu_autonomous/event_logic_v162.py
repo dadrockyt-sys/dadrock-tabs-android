@@ -138,7 +138,7 @@ def segment_guitar_rows(rows: Iterable[Mapping[str, Any]], onset_env: np.ndarray
             current = row
             continue
         gap = float(row["startSeconds"]) - float(current["endSeconds"])
-        should_merge = gap <= 0.0 + EPS
+        should_merge = gap <= EPS
         attack_meta: dict[str, Any] | None = None
         if gap > 0.0 and gap <= GUITAR_MAX_UNSUPPORTED_GAP_SECONDS + EPS:
             center = seconds_to_nearest_frame(float(row["startSeconds"]), len(onset_env))
@@ -295,7 +295,6 @@ def choose_sequence_register(
         if raw_distance - distance + EPS < REGISTER_MIN_CONTEXT_DISTANCE_GAIN:
             continue
         eligible.append((midi, rank, continuity, seq))
-    ranked = sorted(eligible, key=lambda x: (0 if x[0] == raw else 1, -x[3], x[0]))
     raw_entry = next(x for x in eligible if x[0] == raw)
     alternatives = [x for x in eligible if x[0] != raw]
     chosen = raw_entry if not alternatives else max(alternatives, key=lambda x: (x[3], -x[0]))
@@ -365,15 +364,27 @@ def refine_beat_subdivisions(beat_start: float, beat_end: float, shared_env: np.
     return out
 
 
+def extrapolated_final_beat(beat_times: Iterable[float]) -> float:
+    beats = np.asarray([float(x) for x in beat_times], dtype=float)
+    if len(beats) < 2 or not np.all(np.isfinite(beats)) or not np.all(np.diff(beats) > 0.0):
+        raise RuntimeError("invalid beat times for final extrapolation")
+    ibis = np.diff(beats)
+    period = float(np.median(ibis[-min(8, len(ibis)):]))
+    if not math.isfinite(period) or period <= 0.0:
+        raise RuntimeError("invalid final beat extrapolation period")
+    return float(beats[-1] + period)
+
+
 def build_subdivision_lattice(beat_times: Iterable[float], shared_env: np.ndarray) -> list[float]:
     beats = [float(x) for x in beat_times]
     if len(beats) < 2 or not all(math.isfinite(x) for x in beats) or not all(beats[i + 1] > beats[i] for i in range(len(beats) - 1)):
         raise RuntimeError("invalid beat times")
+    extended = beats + [extrapolated_final_beat(beats)]
     lattice: list[float] = []
-    for i in range(len(beats) - 1):
-        interval = refine_beat_subdivisions(beats[i], beats[i + 1], shared_env)
+    for i in range(len(extended) - 1):
+        interval = refine_beat_subdivisions(extended[i], extended[i + 1], shared_env)
         lattice.extend(float(row["seconds"]) for row in interval[:4])
-    lattice.append(beats[-1])
+    lattice.append(extended[-1])
     if not all(lattice[i + 1] > lattice[i] + EPS for i in range(len(lattice) - 1)):
         raise RuntimeError("subdivision lattice not strictly increasing")
     return lattice
@@ -438,7 +449,6 @@ def stable_bass_states(smoothed_midi: np.ndarray, voiced_prob: np.ndarray) -> li
             labels.append(int(round(float(m))))
         else:
             labels.append(None)
-    # Bridge only short gaps surrounded by the same finite MIDI state.
     i = 0
     while i < len(labels):
         if labels[i] is not None:
@@ -494,7 +504,6 @@ def bass_state_proposals(states: list[Mapping[str, Any]], onset_frames: Iterable
     env = np.asarray(onset_env, dtype=float)
     threshold = positive_quantile(env, BASS_REATTACK_POSITIVE_QUANTILE)
     proposals: list[dict[str, Any]] = []
-    # State-change starts are independent of detected onset.
     prior: Mapping[str, Any] | None = None
     for state in states:
         if prior is None:
