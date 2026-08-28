@@ -1,0 +1,78 @@
+name: V158 setup syntax audit
+
+on:
+  push:
+    branches:
+      - v143-contextual-prune-lobo
+    paths:
+      - .github/workflows/v158-setup-syntax.yml
+
+permissions:
+  contents: read
+
+jobs:
+  audit:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: v143-contextual-prune-lobo
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.10'
+      - name: Python syntax
+        run: |
+          python -m py_compile \
+            validation/v158_cpu_multitrack/transcribe_v158.py \
+            validation/v158_cpu_multitrack/transcribe_v158_base.py \
+            validation/v158_cpu_multitrack/structural_qc.py
+      - name: Frozen Git blob identities
+        shell: python
+        run: |
+          import hashlib
+          from pathlib import Path
+
+          expected = {
+              "validation/v158_cpu_multitrack/transcribe_v158.py": "91d65049031506fe44b44e034b1ab04022ba0b91",
+              "validation/v158_cpu_multitrack/transcribe_v158_base.py": "5617ff1a6ea301ecaeb898b123b05d2a8c915388",
+              "validation/v158_cpu_multitrack/structural_qc.py": "0bbb08225f0a21bc5bf4889189f22d89953371df",
+          }
+          for name, wanted in expected.items():
+              data = Path(name).read_bytes()
+              actual = hashlib.sha1(b"blob " + str(len(data)).encode("ascii") + b"\0" + data).hexdigest()
+              if actual != wanted:
+                  raise SystemExit(f"Git blob drift: {name}: {actual} != {wanted}")
+              print(name, actual)
+      - name: Reference and prior-output isolation
+        shell: python
+        run: |
+          from pathlib import Path
+
+          files = [
+              Path("validation/v158_cpu_multitrack/transcribe_v158.py"),
+              Path("validation/v158_cpu_multitrack/transcribe_v158_base.py"),
+              Path("validation/v158_cpu_multitrack/structural_qc.py"),
+          ]
+          forbidden = [
+              "debug/v157",
+              "validation/v157",
+              "research/v154",
+              "score_frontend_reference",
+              "frontend-reference-payload",
+              "combined-reference",
+              "professional-references/",
+          ]
+          for path in files:
+              text = path.read_text()
+              hits = [needle for needle in forbidden if needle in text]
+              if hits:
+                  raise SystemExit(f"Forbidden dependency in {path}: {hits}")
+          print("reference/prior-output path isolation: PASS")
+      - name: Setup-only boundary
+        run: |
+          test ! -e debug/v158-cpu-autonomous/generated.json
+          test ! -e debug/v158-cpu-autonomous/generation-receipt.json
+          test ! -e debug/v158-cpu-autonomous/environment-receipt.json
+          test ! -e debug/v158-cpu-autonomous/pre-run-receipt.json
+          test ! -e .github/workflows/v158-generate.yml
+          echo 'V158 candidate/receipts/pre-run/generation workflow absent: PASS'
