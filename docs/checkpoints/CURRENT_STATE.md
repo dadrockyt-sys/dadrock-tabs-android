@@ -3,7 +3,7 @@
 Updated: 2026-08-28 UTC
 Branch: `v143-contextual-prune-lobo`
 
-Active phase: **V154 is COMPLETE / FROZEN / SCORED EXACTLY ONCE / BOTH FRONT-END GATES FAILED and is permanently consumed. V154 architecture + timebase diagnostics are COMPLETE / FROZEN. V155 is PREREGISTERED BEFORE GENERATION, and its generator implementation is now STAGED / NOT RUN. There is still no V155 candidate, no V155 professional-reference read, and V155 reference-facing score calls remain 0. Next: one CPU-only reference-blind V155 generation run, structural QC, candidate freeze/checkpoint, then and only then one guarded V155 score.**
+Active phase: **V154 is COMPLETE / FROZEN / SCORED EXACTLY ONCE / BOTH FRONT-END GATES FAILED and is permanently consumed. V154 architecture + timebase diagnostics are COMPLETE / FROZEN. V155 was PREREGISTERED BEFORE GENERATION, but its one-use generation workflow was accidentally triggered twice (runs `33140245244` and `33140267460`) and the armed workflow was pinned to an older generator implementation that does not fully conform to the sealed preregistration/standalone-QC contract. Therefore V155 is PROTOCOL-INVALID / ABORTED BEFORE SCORING. No V155 professional-reference read or score is permitted. After the in-flight CPU runs settle, preserve their outputs only as non-authoritative protocol-failure evidence and move the clean experiment to a fresh version.**
 
 ## Standing authorization / safety — MUST PRESERVE
 - CPU-only work and CPU scoring are at assistant discretion.
@@ -11,7 +11,7 @@ Active phase: **V154 is COMPLETE / FROZEN / SCORED EXACTLY ONCE / BOTH FRONT-END
 - Never modify/merge/promote `main` or Production without explicit user direction.
 - Professional references are scoring-only; candidate generation/transcription must not read them.
 - **V154 scored candidate is consumed forever:** no modification, threshold sweep, correction, variant selection, tuned replacement, or rescoring of a modified V154 candidate.
-- **V155 must obey one-candidate / no-sweep / no-reference-generation policy.** Freeze candidate before reference access.
+- **V155 is protocol-invalid/aborted and must never be reference-scored.** Do not select between or promote outputs from its duplicate generation attempts.
 - Do not commit professional-tab screenshot bytes. Private machine-readable references remain research-branch-only.
 - Target remains fully automatic audio -> professional-quality Rhythm/Lead/Bass tablature PDF with no human correction.
 
@@ -60,27 +60,42 @@ Song: **Lenny Kravitz — Are You Gonna Go My Way**.
 - Large residual pitch/polyphony errors remain, so timing repair alone cannot pass gates.
 - Never hardcode reference-derived `-13.25` or diagnostic ~129.01 BPM in a future generator.
 
-## V155 — PREREGISTERED / GENERATOR STAGED / NOT RUN
-- `V155` was confirmed unused before naming.
+## V155 — PREREGISTERED / PROTOCOL-INVALID / ABORTED BEFORE SCORING
+- V155 was confirmed unused before naming.
 - Preregistration: `debug/v155-cpu-autonomous/preregistration.json`; commit `e5f51474308db460d7317cfbc4204f616ee0b069`; Git blob `9d6979b0d447d137db43017dfd18c9afdcb2a4d2`; status `PREREGISTERED_BEFORE_GENERATION`.
-- Generator: `validation/v155_cpu_multitrack/generate_v155.py`; staging commit `ace14633063c8ec8ce63fd201f52514fc9cd96ae`; Git blob `d1ade9d49e4cd1d599844bc054710c146d5d1d92`.
-- **Generator has not run. No V155 candidate or generation receipt exists yet. V155 reference-facing score calls = 0.**
+- The preregistration seals `singleCandidate=true`, `singleGenerationRun=true`, no candidate variant selection, no threshold sweep, and reference access only after one candidate is frozen.
+- Older generator: `validation/v155_cpu_multitrack/generate_v155.py`; Git blob `d1ade9d49e4cd1d599844bc054710c146d5d1d92`.
+- Independent standalone QC draft: `validation/v155_cpu_multitrack/structural_qc.py`; Git blob `4a56a1b87c243dffc2ad873eef368be27e6565d0`.
+- Newer implementation closer to the sealed architecture: `validation/v155_cpu_multitrack/transcribe_hybrid.py`; added by commit `b917fcfecf64f18189c0145841204fa1ebf20fca`; Git blob `3357582dd8311b28f4b85f2ebfbc7acb8c9e4fb8`.
+- One-use workflow: `.github/workflows/v155-generate-reference-blind-once.yml`; staged commit `8daf1d5c828a5c039bef80b9b6fcad7565c48efb`, armed commit `0d44713bee44c47d1c0c932e98a13ab948a21756`.
+- **Protocol violation:** workflow creation triggered generation run `33140245244` (run_number 1) and the later arm commit triggered generation run `33140267460` (run_number 2). Both were in-flight on CPU. This violates the sealed `singleGenerationRun=true` policy before any reference access.
+- The workflow is also pinned to older generator blob `d1ade9...`, while the newer `transcribe_hybrid.py` implementation exists and is materially closer to the sealed architecture. Therefore even a technically successful old-generator output is not accepted as authoritative V155.
+- Pre-run contract audit also found the older generator and standalone QC draft used incompatible candidate/receipt field names and schemas. The generation workflow uses the generator's internal QC/inline assertions instead of the independent standalone QC, so the intended independent QC contract is not satisfied by the armed workflow.
+- **No V155 professional-reference read or V155 reference-facing score is allowed. V155 score calls must remain 0 forever.**
+- If either in-flight run commits output, retain it only as non-authoritative protocol-failure evidence. Do not compare/select between duplicate outputs and do not score them.
 
-### Sealed V155 architecture
-- CPU only: Python 3.10; torch 2.8.0 CPU; numpy 1.26.4; demucs 4.1.0; Basic Pitch 0.4.0; librosa 0.11.0; imageio-ffmpeg 0.6.0.
-- Separation: `htdemucs_6s`, shifts 1, jobs 1, dedicated Guitar + Bass stems, no fallback.
-- Timebase: audio-derived dynamic beat times; deterministic 4-beat downbeat-phase selection; piecewise-linear beat grid; never assume `t=0` is musical grid step 0; no reference-derived timing constants.
-- Bass: HPSS harmonic Bass stem + `librosa.pyin` + onset/voicing/pitch-change segmentation; Basic Pitch not used.
-- Guitar: dedicated Guitar stem + one fixed Basic Pitch pass cross-checked/augmented by harmonic-CQT salience/onset evidence; no threshold sweep/reference-guided completion.
-- Exactly one candidate; same-stream MIDI/grid dedup only; structural QC reference-blind.
-- Frozen gates remain Guitar timing-aware pitch F1 >= 0.80 and Bass >= 0.80. If V155 fails: freeze, diagnose, new version; never retune consumed V155.
+### V155 reference-blind timebase audits — DIAGNOSTIC HISTORY ONLY
+- First audit prereg: `debug/v155-cpu-autonomous/grid-origin-audit-preregistration.json`; Git blob `8760972bc904cc1a062f897d9dc4275f8e09aa11`; run `33139737996`, job `98747664507`; output `debug/v155-cpu-autonomous/grid-origin-audit.json`, SHA256 `9773e587032b5a531ca3d9fe25e83a69f9a08c9087a0ddd0a71ee9b23b2a55e1`.
+- First audit failed structurally: global RMS activity rule incorrectly selected a late-section origin near 159 s. Never promote it.
+- First audit nevertheless showed V154 onset timestamps are close to raw-audio onset peaks (~+11 ms Guitar, ~+14 ms Bass), ruling out ~1.54 s Demucs/Basic-Pitch latency as the shared timing cause.
+- Second audit prereg: `debug/v155-cpu-autonomous/grid-origin-audit-v2-preregistration.json`; Git blob `b8d04ed211873c7a3966e19c14617b25fd65e52e`; canonical output `debug/v155-cpu-autonomous/grid-origin-audit-v2.json`; SHA256 `e361e97857c8fbfe4f7aa8cd484e62f40259c5e09b3c522eb630c316af77bbf2`; successful freeze run `33140076202`, job `98748730406`, branch freeze commit after rebase `038dbb32`.
+- V2 audio-only result: tempo `129.19921875` BPM, 448 tracked beats, stable run from beat 0, origin `0.6849886621 s`, but 4/4 bar-phase confidence margin only ~`1.65%`. The origin is too weak to promote on confidence alone.
+- V2 also demonstrates why piecewise beat-synchronous interpolation is preferable to one constant step duration: detected beat intervals vary, while forcing one BPM accumulates phase error.
+
+## Fresh-version architecture direction preserved from V155 preregistration
+When moving to the fresh successor version, preserve the architectural intent but seal a new preregistration before any run:
+- CPU-only `htdemucs_6s`, shifts 1, jobs 1, dedicated Guitar and Bass stems, no fallback.
+- Audio-derived dynamic beat times and piecewise-linear beat grid; no `t=0` assumption and no reference-derived offset/BPM constants.
+- Bass: HPSS harmonic Bass + pYIN + onset/voicing/pitch-change segmentation; no Basic Pitch for Bass.
+- Guitar: dedicated Guitar stem + one fixed Basic Pitch pass fused with independent harmonic CQT salience/onset evidence; no threshold sweep/reference-guided completion.
+- Exactly one generation workflow trigger, one candidate, independent reference-blind structural QC, candidate freeze/checkpoint at score calls 0, then exactly one guarded reference score.
 
 ## Exact next steps — RESUME HERE
-1. Stage a one-use CPU workflow that mechanically pins prereg blob `9d6979...`, generator blob `d1ade9...`, and exact audio SHA256 before running anything.
-2. Workflow must reject professional-reference/scorer imports in V155 generator, install pinned CPU stack, normalize exact historical audio, run `htdemucs_6s`, assert Guitar/Bass/Drums stems, and run `generate_v155.py` exactly once.
-3. Emit only `debug/v155-cpu-autonomous/generated.json` + `generation-receipt.json` (plus small identity metadata if needed); do not commit stems/audio.
-4. Reference-blind structural QC must PASS; on pure setup/runtime bug before candidate creation, repair implementation without changing sealed architecture. Do not tune thresholds/architecture after seeing reference.
-5. Freeze/checkpoint candidate + exact SHA/counts/timebase/model identities with **V155 score calls still 0**.
-6. Only after that checkpoint construct a guarded one-use V155 scoring wrapper and score exactly once against frozen reference/scorer.
+1. Let V155 runs `33140245244` and `33140267460` settle. Record run/job conclusions and any committed artifacts as **non-authoritative protocol-failure evidence only**. Do not inspect professional references or score V155.
+2. Ensure `.github/workflows/v155-generate-reference-blind-once.yml` cannot trigger any additional V155 generation. If one run self-seals/deletes it, verify deletion; otherwise remove/disable it after in-flight runs finish, without promoting any candidate.
+3. Reconcile the implementation contract in a **fresh version**: use one canonical transcriber, one candidate/receipt schema, and one independent structural-QC schema. Mechanically test those contracts before staging generation.
+4. Seal the fresh-version preregistration before workflow creation. Include a trigger-safety rule: workflow creation itself is the single generation trigger; do not perform a second arm edit. Record exact generator/QC blobs in the preregistration or a pre-run immutable receipt.
+5. Generate exactly one CPU candidate reference-blind; run independent structural QC; freeze candidate + receipt + QC with score calls still 0.
+6. Only then build one guarded one-use score workflow and score the fresh candidate exactly once against the frozen reference/scorer.
 7. Stay CPU-only unless fresh explicit user authorization is obtained immediately before any Modal/NVIDIA L4/CUDA/GPU execution.
 8. Do not resume role separation/string/fret/technique/PDF work until a front-end candidate passes acoustic gates.
