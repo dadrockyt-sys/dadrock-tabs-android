@@ -1,0 +1,109 @@
+{
+  "schema": "dadrock.tabs.v160.pre-run-identity-receipt.v1",
+  "version": "V160",
+  "status": "PASS",
+  "validation": "PASS",
+  "branch": "v143-contextual-prune-lobo",
+  "createdFromBranchHead": "7401e4c2026892461d169302c83e4fbb3b594617",
+  "purpose": "Freeze the exact reference-blind V160 implementation identities and prove the one-shot generation workflow and all V160 runtime artifacts are still absent immediately before generation-workflow review and arm.",
+  "sealedIdentities": {
+    "preregistration": {
+      "path": "debug/v160-cpu-autonomous/preregistration.json",
+      "gitBlob": "cc238bcbf62c5defec410def962124d5012bd506",
+      "sealCommit": "0ab352eb781e31eb21d7329d6f08d894af02471a"
+    },
+    "implementationContract": {
+      "path": "debug/v160-cpu-autonomous/implementation-contract.json",
+      "gitBlob": "3d5ef47a998b638683c83ae08c92e45d5422f389",
+      "sealCommit": "242fb649f0c01887d4de7961bb32c3d47de7ad7d"
+    },
+    "timebaseBuilder": {
+      "path": "validation/v160_cpu_autonomous/build_timebase_v160.py",
+      "gitBlob": "b5aa459381da6a5d5379ed8bdb1a07ba26467b63"
+    },
+    "timebaseQc": {
+      "path": "validation/v160_cpu_autonomous/timebase_qc_v160.py",
+      "gitBlob": "a2dba655709572d5c50dd8d4ec8656fa96eb03a3"
+    },
+    "transcriber": {
+      "path": "validation/v160_cpu_autonomous/transcribe_v160.py",
+      "gitBlob": "864f0da266816e999cd6c2750dbceb27e870b67a"
+    },
+    "structuralQc": {
+      "path": "validation/v160_cpu_autonomous/structural_qc_v160.py",
+      "gitBlob": "679047e1e26b7ab4dff765dd05745317ce3f43e2"
+    },
+    "jsonNativeStaticTest": {
+      "path": "validation/v160_cpu_autonomous/test_json_native_v160.py",
+      "gitBlob": "f2cc178c4b6a6a771a0c8f8b1527d9742f13126e"
+    },
+    "negativeRuntimeGuard": {
+      "path": "debug/v160-cpu-autonomous/negative-runtime-guard.py",
+      "gitBlob": "e6cd45c7d8bd23a92100847f3a219c84524cbbc2"
+    },
+    "staticPreflightWorkflow": {
+      "path": ".github/workflows/v160-static-preflight.yml",
+      "gitBlob": "1e2e16a68f72c2f7265a584256fc2402049cf940",
+      "armCommit": "6e6cff4c73e1a951d4154f1ddbce8550576d8cbb"
+    }
+  },
+  "consumedStaticPreflight": {
+    "workflowName": "V160 static reference-blind preflight",
+    "runId": 33197726025,
+    "runNumber": 1,
+    "runAttempt": 1,
+    "jobId": 98939034732,
+    "headSha": "6e6cff4c73e1a951d4154f1ddbce8550576d8cbb",
+    "conclusion": "success",
+    "neverRerun": true
+  },
+  "absenceProofAtSeal": {
+    "debugDirectoryObservedFiles": [
+      "implementation-contract.json",
+      "negative-runtime-guard.py",
+      "preregistration.json"
+    ],
+    "timebaseAbsent": true,
+    "timebaseQcAbsent": true,
+    "candidateAbsent": true,
+    "generationReceiptAbsent": true,
+    "environmentReceiptAbsent": true,
+    "structuralQcReceiptAbsent": true,
+    "terminalFreezeAbsent": true,
+    "generationWorkflowAbsent": true,
+    "generationWorkflowPath": ".github/workflows/v160-generate.yml"
+  },
+  "oneShotGenerationBoundary": {
+    "workflowCreationIsSoleTrigger": true,
+    "expectedGenerationRunNumber": 1,
+    "expectedGenerationRunAttempt": 1,
+    "secondArmForbidden": true,
+    "duplicateRunForbidden": true,
+    "rerunForbidden": true,
+    "branchWritesWhileGenerationActiveForbidden": true,
+    "freshSourceMaterializationRequired": true,
+    "freshNormalizationRequired": true,
+    "freshDemucsSeparationRequired": true,
+    "freshTimebaseRequired": true,
+    "freshTimebaseQcRequired": true,
+    "pitchInferenceBeforeTimebaseQcPassForbidden": true,
+    "freshPitchInferenceRequiredAfterTimebaseQcPass": true,
+    "freshStructuralQcRequired": true,
+    "onlyStructuralQcPassCandidateMayBecomeAuthoritative": true,
+    "onlyAuthoritativeCandidateMayLaterBeScored": true
+  },
+  "safetyAtSeal": {
+    "referenceRead": false,
+    "professionalReferencePathsOpened": 0,
+    "referenceFacingScoreCalls": 0,
+    "frozenScorerRead": false,
+    "priorCandidateReadForGeneration": false,
+    "priorScoreReadForGeneration": false,
+    "v159RuntimeArtifactReadForGeneration": false,
+    "gpuExecutions": 0,
+    "cudaExecutions": 0,
+    "modalExecutions": 0,
+    "mainOrProductionModified": false
+  },
+  "nextAction": "Reviewer-audit the proposed .github/workflows/v160-generate.yml without creating it. Only after the audit passes may exactly one workflow creation commit arm V160 CPU generation."
+}
