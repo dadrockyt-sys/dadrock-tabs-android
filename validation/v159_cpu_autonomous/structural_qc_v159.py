@@ -234,7 +234,17 @@ def main() -> int:
     )
     checks["generationTranscriberPin"] = generation.get("implementation", {}).get("canonicalEntryPointGitBlob") == git_blob_sha(args.transcriber)
     checks["writeOnceBoundary"] = pre_run.get("timebaseMustNotExistAtSeal") is True and pre_run.get("candidateMustNotExistAtSeal") is True and pre_run.get("generationReceiptMustNotExistAtSeal") is True
-    checks["singleGenerationWorkflowRun"] = generation.get("workflowRunCount") == 1 and generation.get("workflowRunAttempt") == 1
+    generation_environment = generation.get("environment") or {}
+    checks["environmentReceiptEmbeddedExactly"] = generation_environment == environment
+    checks["singleGenerationWorkflowRun"] = (
+        environment.get("workflowRunNumber") == 1
+        and environment.get("workflowRunAttempt") == 1
+        and generation_environment.get("workflowRunNumber") == 1
+        and generation_environment.get("workflowRunAttempt") == 1
+        and generation_environment.get("workflowRunId") == environment.get("workflowRunId")
+        and isinstance(environment.get("workflowRunId"), int)
+        and environment.get("workflowRunId") > 0
+    )
 
     times = np.asarray(timebase.get("gridBeatTimesSeconds", []), dtype=float)
     steps = np.asarray(timebase.get("gridBeatSteps", []), dtype=float)
