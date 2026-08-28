@@ -4,7 +4,7 @@ Updated: 2026-08-28 UTC
 Branch: `v143-contextual-prune-lobo`
 
 ## Active phase
-**V159 is terminal/consumed forever. V160 preregistration + numeric implementation contract remain sealed. The full V160 implementation, negative runtime guard, and mandatory song-blind JSON serializer fixture are implemented. The sole V160 static preflight has now completed successfully: all Python sources compiled, the negative runtime/serializer-contract guard passed, the NumPy serializer fixture passed, and the workflow proved no audio/Demucs/pitch/candidate/runtime artifact was created. No V160 song processing has run. Next: freeze final code/blob identities and create the V160 pre-run identity receipt while the generation workflow is still absent; then reviewer-audit and arm exactly one fresh CPU generation workflow. Professional-reference reads/score calls remain 0; GPU/Modal/CUDA remain 0; main/Production remains untouched.**
+**V159 is terminal/consumed forever. V160 preregistration + numeric implementation contract remain sealed. The full V160 implementation, negative runtime guard, mandatory song-blind JSON serializer fixture, and sole static preflight are complete/PASS. The V160 pre-run identity receipt is now sealed at commit `97333e9533b5ab4d40d2f29c31cfab771fa1e3e9`, blob `699dda80f25e0222dc7ef2f857fa65327f2d49db`, while `.github/workflows/v160-generate.yml` and all V160 runtime artifacts were still absent. No V160 song processing has run. Next: reviewer-audit the proposed one-shot CPU generation workflow without creating it; only after that audit passes, arm exactly one fresh CPU generation workflow by its sole creation commit. Professional-reference reads/score calls remain 0; GPU/Modal/CUDA remain 0; main/Production remains untouched.**
 
 ## Standing authorization / safety — MUST PRESERVE
 - CPU-only work and CPU scoring are at assistant discretion.
@@ -65,7 +65,7 @@ Song: **Lenny Kravitz — Are You Gonna Go My Way**.
 - Structural receipt uses `json.dumps(..., sort_keys=True, allow_nan=False)`.
 - Mandatory fixture reproduces raw `numpy.bool_` JSON failure, then tests NumPy bool/int/float/array/nested normalization, exact round-trip, native bool checks, and NaN/Inf rejection.
 
-## V160 final implementation identities before pre-run seal
+## V160 final implementation identities
 - `validation/v160_cpu_autonomous/build_timebase_v160.py` — commit `d188c40a5bcc312f506729e7b9103a5e3c9b3c6a`; blob `b5aa459381da6a5d5379ed8bdb1a07ba26467b63`.
 - `validation/v160_cpu_autonomous/timebase_qc_v160.py` — commit `dc1c8fe71ccb1a02894d95281dd2a5c28a51f052`; blob `a2dba655709572d5c50dd8d4ec8656fa96eb03a3`.
 - `validation/v160_cpu_autonomous/transcribe_v160.py` — commit `9448c553b5ab4f11502be1a4267a3bae4d983358`; blob `864f0da266816e999cd6c2750dbceb27e870b67a`.
@@ -86,28 +86,41 @@ Song: **Lenny Kravitz — Are You Gonna Go My Way**.
 - No song audio, Demucs, pitch inference, candidate generation, professional-reference read, score call, GPU/Modal/CUDA, or Production modification occurred.
 - **Never rerun the V160 static preflight.**
 
+## V160 pre-run identity receipt — PASS / SEALED
+- `debug/v160-cpu-autonomous/pre-run-identity-receipt.json`.
+- Seal commit `97333e9533b5ab4d40d2f29c31cfab771fa1e3e9`; blob `699dda80f25e0222dc7ef2f857fa65327f2d49db`; schema `dadrock.tabs.v160.pre-run-identity-receipt.v1`; status/validation PASS.
+- Receipt created from branch head `7401e4c2026892461d169302c83e4fbb3b594617` after re-fetching the checkpoint/head.
+- Exact prereg/contract/builder/timebase-QC/transcriber/structural-QC/serializer-test/negative-guard/static-workflow Git blobs are frozen in the receipt.
+- Consumed static preflight identity frozen: run `33197726025`, run #1 attempt #1, job `98939034732`, success, head `6e6cff4c73e1a951d4154f1ddbce8550576d8cbb`; never rerun.
+- At receipt seal, the debug directory contained only preregistration, implementation contract, and negative guard; timebase/timebase-QC/candidate/generation/environment/structural/terminal runtime artifacts were absent and `.github/workflows/v160-generate.yml` returned Not Found.
+- Receipt freezes expected generation run #1 attempt #1; second arm, duplicate run, rerun, and branch writes while generation is active are forbidden.
+- Receipt records referenceRead=false; professional paths opened=0; score calls=0; frozen scorer read=false; GPU/CUDA/Modal executions=0; main/Production untouched.
+
 ## Validation status
 - **No V160 song audio processing has run.**
-- No V160 Demucs, timebase artifact, timebase-QC receipt, pitch inference, candidate, generation receipt, structural receipt, or score exists.
-- Full static syntax/boundary/serializer validation is now PASS.
+- No V160 Demucs, timebase artifact, timebase-QC receipt, pitch inference, candidate, generation receipt, environment receipt, structural receipt, terminal freeze, or score exists.
+- Static syntax/boundary/serializer validation is PASS and the pre-run identity seal is PASS.
 - Professional-reference reads in V160 work: 0. Score calls: 0. GPU/Modal/CUDA: 0. main/Production modifications: 0.
 
 ## Current hard boundary
 - V159 closed forever.
-- V160 preregistration + implementation contract sealed; do not alter semantics based on later output.
+- V160 preregistration + implementation contract + pre-run identity receipt are sealed; do not alter semantics based on later output.
 - Static preflight consumed/pass; do not rerun it.
 - No V160 generation workflow exists yet.
+- Reviewer-audit must occur before workflow creation; creation itself is the sole trigger.
 - Do not read V159 runtime artifacts from V160 generation.
 - No pitch inference before fresh V160 timebase-QC PASS.
 - Only a fresh V160 candidate with independent structural-QC PASS may become authoritative/scoring-eligible.
+- No branch writes while the one-shot generation workflow is active.
 - No GPU/Modal/CUDA without fresh explicit user authorization.
 - Never touch `main`/Production without explicit user direction.
 
 ## Exact next steps — RESUME HERE
 1. Re-fetch branch head/checkpoint before every write.
-2. Create `debug/v160-cpu-autonomous/pre-run-identity-receipt.json` with schema `dadrock.tabs.v160.pre-run-identity-receipt.v1`, status/validation PASS, exact final Git blobs for prereg/contract/builder/timebase-QC/transcriber/structural-QC/serializer-test/negative-guard/static-workflow, the consumed static run identity, and proofs that timebase/candidate/generation/environment/structural/terminal artifacts + `.github/workflows/v160-generate.yml` are absent at seal.
-3. Pre-run receipt must record referenceRead=false; professional paths opened=0; score calls=0; GPU/Modal/CUDA=0; main/Production untouched; expected generation run number/attempt=1; second arm/duplicate run forbidden; branch writes while generation active forbidden.
-4. Reviewer-audit the V160 one-shot CPU generation workflow before creation; creation is the sole trigger.
-5. After audit, arm exactly one V160 CPU workflow. Workflow order: source identity → normalize → fresh CPU `htdemucs_6s` → environment receipt → timebase → independent timebase QC. QC FAIL terminal/no candidate. PASS → transcriber → independent structural QC. Structural FAIL/runtime FAIL terminal/no score. Structural PASS → candidate authoritative.
-6. Only after structural PASS separately preregister/seal exactly one professional-reference scoring run.
-7. Fresh explicit authorization remains required immediately before any Modal/NVIDIA L4/CUDA/GPU execution.
+2. Reviewer-audit the proposed `.github/workflows/v160-generate.yml` **without creating it** against the sealed preregistration, numeric contract, pre-run receipt, and exact implementation blobs.
+3. Audit must enforce: push-path trigger only on its own creation; run #1 attempt #1 only; exact sealed source identities; no reference/scorer/V159/prior-candidate/prior-score reads; CPU-only dependency pins; source identity → normalize → fresh CPU `htdemucs_6s` → environment receipt → timebase → independent timebase QC.
+4. QC FAIL must terminal-freeze V160 with no pitch/candidate and no rerun. QC PASS only then permits transcriber → independent structural QC. Structural FAIL/runtime FAIL must terminal-freeze and forbid score. Structural PASS alone may mark the fresh candidate authoritative/scoring-eligible.
+5. After reviewer audit passes, re-fetch branch head/checkpoint and verify `.github/workflows/v160-generate.yml` + all V160 runtime artifacts remain absent; then create exactly one workflow file. **That single creation commit arms generation.**
+6. While that generation workflow is active, perform no branch writes. Observe the sole run to terminal completion and preserve run/job/head identities.
+7. Only after structural PASS separately preregister/seal exactly one professional-reference scoring run.
+8. Fresh explicit authorization remains required immediately before any Modal/NVIDIA L4/CUDA/GPU execution.
