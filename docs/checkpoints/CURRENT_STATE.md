@@ -4,7 +4,7 @@ Updated: 2026-08-28 UTC
 Branch: `v143-contextual-prune-lobo`
 
 ## Active phase
-**V163 is terminal/consumed and failed its sole preregistered professional-reference score gate. Never rerun/rearm/repair/retune/regenerate/re-QC/rescore V163 and do not advance it to role/string/fret/technique/PDF. V164 is preregistered, its exact local-evidence numeric contract is sealed, its event/subdivision layer and expanded synthetic regression suite are implemented, version-isolated timebase-builder + independent timebase-QC adapters preserve the exact frozen V162 beat backbone while injecting only V164 subdivision locality, and the V164 CPU transcriber adapter is now implemented without song execution. No V164 song processing, scorer/reference read, pitch inference, workflow arm, or candidate exists.**
+**V163 is terminal/consumed and failed its sole preregistered professional-reference score gate. Never rerun/rearm/repair/retune/regenerate/re-QC/rescore V163 and do not advance it to role/string/fret/technique/PDF. V164 is preregistered, its exact local-evidence numeric contract is sealed, its event/subdivision layer and expanded synthetic regression suite are implemented, version-isolated timebase-builder + independent timebase-QC adapters preserve the exact frozen V162 beat backbone while injecting only V164 subdivision locality, and the V164 CPU transcriber + independent structural-QC adapters are implemented without song execution. No V164 song processing, scorer/reference read, pitch inference, workflow arm, or candidate exists.**
 
 ## Standing safety
 - CPU-only reference-free work authorized at assistant discretion.
@@ -82,6 +82,17 @@ Branch: `v143-contextual-prune-lobo`
 - Candidate/receipt safety includes no reference/scorer, prior candidate/score, V163 candidate/score, GPU/Modal, threshold sweep, variant selection, or human correction.
 - Local syntax-only `py_compile` passed before commit; no repository/song import or song execution occurred in that check.
 
+## V164 structural QC — IMPLEMENTED / NOT EXECUTED
+### `validation/v164_cpu_autonomous/structural_qc_v164.py`
+- Creation commit `bba784a311653c4214b957d28f861aed4cbbd20d`.
+- Current Git blob `c1a81c7a97e646398f5e50cbc63dae341cdc500b`.
+- V164 schema `dadrock.tabs.v164.reference-blind-structural-qc.v1`.
+- Pins exact frozen V162 structural-QC blob `b7d3fa92fc9f3bed00931d19097e08cd91eab62b` and V162 numeric-contract blob `409da313ed03a6c232d6578d48b0da6aa35b000b`.
+- Preserves the frozen V162 candidate/hash-chain, one-run proof, source/cap, lattice recomputation, event-step recomputation, safety and JSON-native receipt checks through count-checked adaptation.
+- Adds V164 independent full `stepSelection` metadata recomputation at `1e-12`, onset-refinement local-window/positive-count recomputation, event-local q95 admission-support recomputation, local support-scale/provenance checks, recovery/Bass proposal bounds, V164 source-path assertions, and V163/reference/timebase-QC-before-pitch safety checks.
+- Requires all sealed `structuralQcRequirements` flags from the V164 contract and exact frozen V162 dependency pins.
+- Local syntax-only `py_compile` passed before commit; structural QC has not been run on song/candidate data because no V164 song run or candidate exists.
+
 ## Current V164 execution state
 - Preregistration: sealed.
 - Numeric contract: sealed.
@@ -90,7 +101,8 @@ Branch: `v143-contextual-prune-lobo`
 - Timebase builder: implemented, not executed.
 - Independent timebase QC: implemented, not executed.
 - V164 transcriber: implemented, not executed.
-- V164 structural QC, JSON-native fixture, negative runtime guard: not yet complete.
+- V164 structural QC: implemented, not executed.
+- V164 JSON-native fixture and negative runtime guard: not yet complete.
 - GitHub static preflight workflow: not created/armed.
 - Song audio reads `0`; Demucs/pitch inference `0`; V164 candidate `0`; professional-reference/scorer reads for V164 `0`; GPU/CUDA/Modal `0`; main/Production unchanged.
 - V164 prereg/contract do not authorize professional-reference scoring.
@@ -98,9 +110,8 @@ Branch: `v143-contextual-prune-lobo`
 ## Hard boundary — NEXT
 1. Never reopen V163 for tuning/scoring.
 2. Continue V164 only from frozen contract blob `098f24282b59abba0f7cffa0793b344b76701724`.
-3. Build V164 structural QC from frozen V162 structural-QC logic with exact source pins. Add independent checks for candidate/timebase/QC hash chain, deterministic recomputation of V164 subdivision lattice and event-step selection, local-normalization provenance/range/finite `[0,1]` support, unchanged Guitar/Bass source/cap constraints, and the V164 transcriber frozen-source adaptation provenance.
-4. Build V164 JSON-native fixture and negative runtime guard with exact code/hash/local-normalization provenance checks.
-5. Do not read song audio, V163 candidate/score, scorer, or professional reference during implementation/static validation.
-6. After all V164 code is complete, create a one-shot CPU-only static preflight that compiles/runs synthetic fixtures only; checkpoint before arm and make zero branch writes while active.
-7. No V164 song processing until static preflight and pre-run identity are separately sealed.
-8. No GPU/Modal/CUDA without fresh explicit authorization.
+3. Build V164 JSON-native fixture and negative runtime guard from the exact frozen V162 fixtures with version-isolated code/hash/local-normalization provenance checks.
+4. Do not read song audio, V163 candidate/score, scorer, or professional reference during implementation/static validation.
+5. After all V164 code is complete, create a one-shot CPU-only static preflight that compiles/runs synthetic fixtures only; checkpoint before arm and make zero branch writes while active.
+6. No V164 song processing until static preflight and pre-run identity are separately sealed.
+7. No GPU/Modal/CUDA without fresh explicit authorization.
