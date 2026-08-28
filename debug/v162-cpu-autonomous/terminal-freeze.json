@@ -1,0 +1,64 @@
+{
+  "artifacts": {
+    "candidate": {
+      "exists": false,
+      "gitBlob": null,
+      "sha256": null
+    },
+    "environmentReceipt": {
+      "exists": false,
+      "gitBlob": null,
+      "sha256": null
+    },
+    "generationReceipt": {
+      "exists": false,
+      "gitBlob": null,
+      "sha256": null
+    },
+    "structuralQc": {
+      "exists": false,
+      "gitBlob": null,
+      "sha256": null
+    },
+    "timebase": {
+      "exists": false,
+      "gitBlob": null,
+      "sha256": null
+    },
+    "timebaseQc": {
+      "exists": false,
+      "gitBlob": null,
+      "sha256": null
+    }
+  },
+  "candidateAuthoritative": false,
+  "eligibleForProfessionalReferenceScoring": false,
+  "generationWorkflowGitBlob": "4f11730505ad5a54a0efa52c78e46cce12193d2a",
+  "lastCompletedStage": "PRE_RUN_GUARD",
+  "neverRearmV162": true,
+  "outcome": "PRE_RUN_GUARD_FAIL",
+  "preRunIdentityReceiptGitBlob": "e149507d42306d4e0d6e6ce7c6d6f11cf0724538",
+  "safety": {
+    "V161CandidateRead": false,
+    "cudaGpuUsed": false,
+    "frozenScorerRead": false,
+    "humanCorrection": false,
+    "mainOrProductionModified": false,
+    "modalUsed": false,
+    "priorGeneratedCandidateRead": false,
+    "priorScoreRead": false,
+    "professionalReferencePathsOpened": 0,
+    "referenceFacingScoreCalls": 0,
+    "referenceGuidedFiltering": false,
+    "referenceRead": false,
+    "thresholdSweep": false,
+    "variantSelection": false
+  },
+  "schema": "dadrock.tabs.v162.terminal-freeze.v1",
+  "status": "TERMINAL",
+  "version": "V162",
+  "workflowHeadSha": "e560144a1a289a0e86591542bf2952c47ecb110b",
+  "workflowRunAttempt": 1,
+  "workflowRunId": 33213057382,
+  "workflowRunNumber": 1
+}
