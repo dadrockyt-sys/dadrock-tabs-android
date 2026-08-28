@@ -1,0 +1,54 @@
+{
+  "artifacts": {
+    "candidate": {
+      "exists": true,
+      "sha256": "75c4edd6560ee832bf7df4799c4e9389a7424e7056ac5f3cd5a9e07fc254996a"
+    },
+    "environmentReceipt": {
+      "exists": true,
+      "sha256": "83b7b7118e2ff02939e2304958d36fc1de2726fc8cce9e292aa173fa1a592ff7"
+    },
+    "generationReceipt": {
+      "exists": true,
+      "sha256": "d3f25db06d13ab3f9586a7cb26ad5724c4de76f5320a9ea2b1b7d77de423c8ac"
+    },
+    "structuralQc": {
+      "exists": true,
+      "sha256": "ba17ac241d438e15d13f0d45a93194e97151868805541dc252ea41caa1ae34ba"
+    },
+    "timebase": {
+      "exists": true,
+      "sha256": "079f50e4fc6ad622631a8f19ac1499076b26c0cf45d0f970689ee74ab0e03f57"
+    },
+    "timebaseQc": {
+      "exists": true,
+      "sha256": "5bff3ef704b335cbb5681a4ae937fc7a49391aeb2982de37b313667ce9d5ff88"
+    }
+  },
+  "candidateAuthoritative": true,
+  "eligibleForProfessionalReferenceScoring": true,
+  "generationWorkflowGitBlob": "38cd491453c618f595d42bb6d42e87e478f35f0e",
+  "lastCompletedStage": "STRUCTURAL_QC_PASS",
+  "neverRearmV161": true,
+  "outcome": "STRUCTURAL_QC_PASS",
+  "preRunIdentityReceiptGitBlob": "bb1aed847c62b37e68f158a50614c48acf20781a",
+  "safety": {
+    "V160CandidateRead": false,
+    "cudaGpuUsed": false,
+    "frozenScorerRead": false,
+    "mainOrProductionModified": false,
+    "modalUsed": false,
+    "priorGeneratedCandidateRead": false,
+    "priorScoreRead": false,
+    "professionalReferencePathsOpened": 0,
+    "referenceFacingScoreCalls": 0,
+    "referenceRead": false
+  },
+  "schema": "dadrock.tabs.v161.terminal-freeze.v1",
+  "status": "TERMINAL",
+  "version": "V161",
+  "workflowHeadSha": "418a25f82e4aa3742e995e4a3ce341bc48a24151",
+  "workflowRunAttempt": 1,
+  "workflowRunId": 33208183041,
+  "workflowRunNumber": 1
+}

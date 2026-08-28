@@ -1,0 +1,129 @@
+{
+  "candidatePath": "debug/v161-cpu-autonomous/generated.json",
+  "candidateSha256": "75c4edd6560ee832bf7df4799c4e9389a7424e7056ac5f3cd5a9e07fc254996a",
+  "counts": {
+    "bass": 449,
+    "combinedGuitar": 895
+  },
+  "environment": {
+    "cudaAvailable": false,
+    "dependencyVersions": {
+      "basic-pitch": "0.4.0",
+      "demucs": "4.1.0",
+      "imageio-ffmpeg": "0.6.0",
+      "librosa": "0.11.0",
+      "numpy": "1.26.4",
+      "scipy": "1.13.1",
+      "soundfile": "0.12.1"
+    },
+    "determinism": {
+      "mathLibraryThreads": 1,
+      "seed": 0,
+      "torchDeterministicAlgorithms": true,
+      "torchNumInteropThreads": 1,
+      "torchNumThreads": 1
+    },
+    "device": "cpu",
+    "generationWorkflowGitBlob": "38cd491453c618f595d42bb6d42e87e478f35f0e",
+    "preRunIdentityReceiptGitBlob": "bb1aed847c62b37e68f158a50614c48acf20781a",
+    "pythonVersion": "3.10.21",
+    "safety": {
+      "V160CandidateRead": false,
+      "cudaGpuUsed": false,
+      "frozenScorerRead": false,
+      "mainOrProductionModified": false,
+      "modalUsed": false,
+      "priorGeneratedCandidateRead": false,
+      "priorScoreRead": false,
+      "professionalReferencePathsOpened": 0,
+      "referenceFacingScoreCalls": 0,
+      "referenceRead": false
+    },
+    "schema": "dadrock.tabs.v161.cpu-environment-receipt.v1",
+    "separation": {
+      "bassStemSha256": "f109347354dd9ae4a293189834b1f6d58199a4eebe5d51dfeeedc6707c4a5316",
+      "device": "cpu",
+      "drumsStemSha256": "7ef184f2fc3b6f7fc12ea5c342bc537f6b69f1680ce36e9d4f7189be85d93e39",
+      "guitarStemSha256": "b8685062c59f5c62253029f8294afdaf25f3f8adf8868ae97b47db09ab8838f9",
+      "jobs": 1,
+      "model": "htdemucs_6s",
+      "normalizedMixSha256": "3e61b7926eabc21b758c750f826c7426a29d6de5aafdd5c93f8045ecdc67f87e",
+      "repeatCount": 1,
+      "shifts": 1
+    },
+    "torchCudaVersion": null,
+    "torchVersion": "2.8.0+cpu",
+    "validation": "PASS",
+    "version": "V161",
+    "workflowHeadSha": "418a25f82e4aa3742e995e4a3ce341bc48a24151",
+    "workflowRunAttempt": 1,
+    "workflowRunId": 33208183041,
+    "workflowRunNumber": 1
+  },
+  "environmentReceiptSha256": "83b7b7118e2ff02939e2304958d36fc1de2726fc8cce9e292aa173fa1a592ff7",
+  "implementation": {
+    "canonicalEntryPointGitBlob": "0137f211a79ef2b1a63d1485497eb00686b3afd1",
+    "eventLogicGitBlob": "85419429a2dae4baeb60232b756af4b127f87ce2"
+  },
+  "implementationContractSha256": "2a0933b8d04773d7e59a9b50d2c0fc6d836c8ba78cfdfe55ccf76676dd9092ab",
+  "inputIdentities": {
+    "bassStemSha256": "f109347354dd9ae4a293189834b1f6d58199a4eebe5d51dfeeedc6707c4a5316",
+    "drumsStemSha256": "7ef184f2fc3b6f7fc12ea5c342bc537f6b69f1680ce36e9d4f7189be85d93e39",
+    "guitarStemSha256": "b8685062c59f5c62253029f8294afdaf25f3f8adf8868ae97b47db09ab8838f9",
+    "mixSha256": "3e61b7926eabc21b758c750f826c7426a29d6de5aafdd5c93f8045ecdc67f87e"
+  },
+  "preGridExcluded": {
+    "bass": 0,
+    "combinedGuitar": 0
+  },
+  "preRunReceiptSha256": "1eae0d34d597445946354ee38611ef878fd17d72cbb5780061b6d61197ca85f3",
+  "preregistrationSha256": "5ff018e5cbb201d08e739e188366d9d0ec43b5dba8914c27971c0850c811a387",
+  "safety": {
+    "V160CandidateRead": false,
+    "cudaGpuUsed": false,
+    "humanCorrection": false,
+    "mainOrProductionModified": false,
+    "modalUsed": false,
+    "priorGeneratedCandidateRead": false,
+    "priorScoreRead": false,
+    "professionalReferencePathsOpened": 0,
+    "referenceFacingScoreCalls": 0,
+    "referenceGuidedFiltering": false,
+    "referenceRead": false,
+    "thresholdSweep": false,
+    "variantSelection": false
+  },
+  "schema": "dadrock.tabs.v161.cpu-generation-receipt.v1",
+  "streamMetadata": {
+    "bass": {
+      "admittedEventCountBeforeGridDedupe": 449,
+      "detectedOnsetCount": 465,
+      "inputSha256": "f109347354dd9ae4a293189834b1f6d58199a4eebe5d51dfeeedc6707c4a5316",
+      "mergedProposalCount": 464,
+      "onsetRefinedCount": 464,
+      "pitchTransitionProposalCount": 0,
+      "rejectedByActivity": 1,
+      "rejectedByAdditionalGate": 0,
+      "rejectedByAdmissionScore": 0,
+      "retainedOnsetCount": 464
+    },
+    "combinedGuitar": {
+      "admittedEventCountBeforeGridDedupe": 978,
+      "basicPitchModelSha256": "3db297d54af8e01c6e5618245c956b1d71b6a2b978cb2dedb527173186552676",
+      "basicPitchRawEventCount": 1404,
+      "basicPitchVersion": "0.4.0",
+      "consolidatedCandidateCount": 985,
+      "inputSha256": "b8685062c59f5c62253029f8294afdaf25f3f8adf8868ae97b47db09ab8838f9",
+      "onsetRefinedCount": 827,
+      "registerRepairCount": 382,
+      "rejectedByActivity": 0,
+      "rejectedByAdmissionScore": 7,
+      "standaloneHarmonicTrackAddedCount": 0,
+      "standaloneHarmonicTrackRecoveryEnabled": false
+    }
+  },
+  "timebaseQcSha256": "5bff3ef704b335cbb5681a4ae937fc7a49391aeb2982de37b313667ce9d5ff88",
+  "timebaseSha256": "079f50e4fc6ad622631a8f19ac1499076b26c0cf45d0f970689ee74ab0e03f57",
+  "validation": "PENDING_INDEPENDENT_STRUCTURAL_QC",
+  "version": "V161"
+}
