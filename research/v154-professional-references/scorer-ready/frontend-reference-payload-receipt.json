@@ -1,0 +1,52 @@
+{
+  "audit": {
+    "bassRows": 547,
+    "combinedGuitarRows": 1393,
+    "combinedGuitarUniqueRows": 1318,
+    "duplicateExtrasWithinParts": {
+      "bass": 0,
+      "lead": 0,
+      "rhythm": 0
+    },
+    "referenceCounts": {
+      "bassExcluded": 0,
+      "bassIncluded": 547,
+      "leadExcluded": 0,
+      "leadIncluded": 447,
+      "rhythmExcluded": 0,
+      "rhythmIncluded": 946
+    },
+    "rhythmLeadExactRowMultisetOverlap": 75,
+    "scoreStreamCalled": false,
+    "scorerFunctionsCalled": [
+      "load_reference"
+    ],
+    "scorerInterfaceLoadReferenceOnly": true
+  },
+  "counts": {
+    "bass": 547,
+    "combinedGuitar": 1393,
+    "lead": 447,
+    "rhythm": 946
+  },
+  "frozenInputs": {
+    "bassSha256": "39eba52495fe81a3602f191334d71fe4bc643ed3062287fbde812fbde3c2c2f1",
+    "leadSha256": "8fa39681bb7eb8cf214c364a3abd2f295488b123fddec3f2cebd3f19f014c0be",
+    "rhythmSha256": "d51083800bfcf30ee15f31a4349eaa2c439f1b8662acd91618ab31bdca321555",
+    "scorerGitBlobSha": "9644e65719fbd361a9b39778ae9950c5e983e855"
+  },
+  "outputPath": "research/v154-professional-references/scorer-ready/frontend-reference-payload.json",
+  "outputSha256": "b39a203aec3f45800891fe4eca156e37e7571b91ea5c4ccc41b30bbc95fc89e7",
+  "policy": {
+    "generatedCandidateModified": false,
+    "generatedCandidateRead": false,
+    "humanCandidateCorrection": false,
+    "mainOrProductionModified": false,
+    "modalL4CudaGpuUsed": false,
+    "referenceFacingScoreCalls": 0,
+    "scoringPerformed": false,
+    "thresholdSweep": false
+  },
+  "schema": "dadrock.tabs.v154.cpu-front-end-reference-receipt.v1",
+  "validation": "PASS"
+}
