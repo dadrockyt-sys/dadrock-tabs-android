@@ -190,6 +190,9 @@ def build_adapted_module() -> types.ModuleType:
     old_metadata = '            "onsetSupport": onset_support,\n'
     new_metadata = '            "onsetSupport": onset_support,\n            "onsetNormalization": onset_provenance,\n'
     source = replace_exact(source, old_metadata, new_metadata, 2, "local onset admission provenance")
+    old_bass_proposal = '            "stateVoicedProbability": float(proposal["stateVoicedProbability"]),\n            "originalOnsetFrame": original_frame,\n'
+    new_bass_proposal = '            "stateVoicedProbability": float(proposal["stateVoicedProbability"]),\n            "proposalNormalization": {"loFrame": int(proposal["normalizationLoFrame"]), "hiFrame": int(proposal["normalizationHiFrame"])},\n            "originalOnsetFrame": original_frame,\n'
+    source = replace_exact(source, old_bass_proposal, new_bass_proposal, 1, "Bass proposal local provenance")
     source = replace_exact(source, 'event_logic_v162.py', 'event_logic_v164.py', 2, "event-logic provenance path")
     source = replace_exact(source, '"V161CandidateRead"', '"V163CandidateRead"', 2, "predecessor safety key")
     old_safety = '        "V163CandidateRead": False,\n'
