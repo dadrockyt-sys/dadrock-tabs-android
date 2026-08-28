@@ -1,4 +1,5 @@
 name: V155 grid-origin audit v2 once
+# armed after preregistration + code freeze
 
 on:
   push:
