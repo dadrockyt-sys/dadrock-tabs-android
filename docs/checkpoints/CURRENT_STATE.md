@@ -1,6 +1,6 @@
 # CURRENT STATE — DadRock `/ai-tab`
 
-Updated: 2026-08-27 UTC
+Updated: 2026-08-28 UTC
 Branch: `v143-contextual-prune-lobo`
 
 Active phase: **V154 broad-Other CPU recognition is COMPLETE / FROZEN / STRUCTURAL-QC PASS. Rhythm is FROZEN SCORER-READY and its two independently frozen scorer representations are now proven row-identity equivalent. Bass is FROZEN SCORER-READY with 547 validated pitched rows. Lead timing is the remaining reference-normalization blocker and requires recovery of its actual 22 source pages; do not infer Lead timing from visual-order JSON alone. Reference-facing scoring has NOT run.**
@@ -76,6 +76,7 @@ Song: **Lenny Kravitz — Are You Gonna Go My Way**.
 - 113 measure objects; 487 events; 476 pitched; 11 dead notes; 23 continuation-only; MIDI 45–81.
 - Measures 39–40 note `Probably a mistake they left in` remains source uncertainty; detached gray dot at measure 81 remains unassigned.
 - Prior checkpoint search found the Bass pages but not the actual 22 Lead source pages in current Library. **Do not invent Lead timing from visual-order JSON alone.** Search Library/history again; if still absent, recovery remains the hard blocker before scorer payload assembly.
+- Lead source receipt: `research/v154-professional-references/lead-source-set-receipt.json`; originals are `1000120332.jpg`, `1000120334.jpg`, ... through `1000120374.jpg` (22 pages); prior platform-rendered copies were `84.jpg`–`105.jpg`.
 
 ## V154 reference meter audit + fixed-grid mapping — COMPLETE / FROZEN
 - Meter audit: `research/v154-professional-references/reference-meter-audit.json`; commit `a438eba76c2dc2749b44257689c941665d6590db`; Git blob `cc0bb40ee8af9094ba78f7e9ced9cbbcc9d88f55`.
@@ -95,9 +96,17 @@ Song: **Lenny Kravitz — Are You Gonna Go My Way**.
 - Lead source-page recovery: **ACTIVE NEXT TASK / currently blocked unless pages can be recovered**.
 - Lead scorer-ready: **NOT STARTED; source pages required**.
 
+## 2026-08-28 continuation — Lead source recovery audit
+- Exact receipt identity re-confirmed from `lead-source-set-receipt.json`: 22 originals `1000120332.jpg`–`1000120374.jpg` (even-number sequence after first), prior rendered copies `84.jpg`–`105.jpg`.
+- `files.search` across current conversation + persistent Library for the endpoint filenames, rendered-copy names, and song/Lead terms returned no indexed matches.
+- `files.list` current conversation returned **0 files**.
+- Recursive persistent-Library image metadata inventory returned only the Bass-page range `1000120386.jpg`–`1000120403.jpg` plus one unrelated JPEG; none of the Lead originals or `84.jpg`–`105.jpg` copies are present.
+- This search result does **not** authorize timing inference from machine-readable visual order. Lead exact source-local attack timing remains blocked until the 22 notation pages are recovered.
+- No scorer call, candidate mutation, GPU use, `main`, or Production change occurred during this recovery audit.
+
 ## Exact next steps
 1. **DONE / FROZEN:** Rhythm row-identity equivalence audit; preserve both frozen Rhythm files unchanged.
-2. Search Library/prior accessible file context for the exact 22 Lead source pages corresponding to frozen Lead page-set SHA256 `de2f20c...`. Do not substitute Bass pages and do not invent timing from visual-order JSON.
+2. Continue repository/history/reference-receipt probing for any accessible recovery route to the exact 22 Lead source pages corresponding to frozen Lead page-set SHA256 `de2f20c...`. Do not substitute Bass pages and do not invent timing from visual-order JSON.
 3. If recovered, visually normalize Lead source-local attacks from notation, preserve source uncertainties, apply only the frozen meter mapping, and freeze scorer-ready Lead rows + receipt. Save checkpoint often.
 4. Only after Lead is scorer-ready, assemble one immutable scorer reference payload with frozen authorization flags and exact Rhythm/Lead/Bass rows. Verify identities/counts before any score call.
 5. Score the exact frozen combined Guitar and Bass output **exactly once** using `score_frontend_reference.py`; interpret preregistered gates; never retune this consumed output afterward.
