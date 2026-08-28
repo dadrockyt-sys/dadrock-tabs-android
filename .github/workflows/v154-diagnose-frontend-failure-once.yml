@@ -1,0 +1,50 @@
+name: V154 diagnose audio grid origin via registered path
+
+on:
+  push:
+    branches: [v143-contextual-prune-lobo]
+    paths: [.github/workflows/v154-diagnose-frontend-failure-once.yml]
+
+permissions:
+  contents: write
+
+env:
+  BRANCH: v143-contextual-prune-lobo
+
+jobs:
+  diagnose-origin:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: v143-contextual-prune-lobo
+          fetch-depth: 0
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.10'
+      - name: Materialize exact historical audio and install CPU diagnostic deps
+        run: |
+          set -euo pipefail
+          git show 74b0f815ff3f66f325220975c410621503de440f:public/gomywayfullaitest.m4a > /tmp/gomywayfullaitest.m4a
+          test "$(sha256sum /tmp/gomywayfullaitest.m4a | awk '{print $1}')" = "215bd5a657c5326f08f132ae358595a95c30b39bb7493a52c2f910d5a608149f"
+          python -m pip install --disable-pip-version-check numpy==1.26.4 imageio-ffmpeg==0.6.0
+      - name: Run diagnostic-only grid-origin audit
+        run: |
+          python validation/v154_cpu_multitrack/diagnose_audio_grid_origin.py \
+            --audio /tmp/gomywayfullaitest.m4a \
+            --generated debug/v154-cpu-autonomous/broad-other-run-33096559281/generated.json \
+            --output debug/v154-cpu-autonomous/v154-frontend-reference-score/audio-grid-origin-diagnostic.json
+      - name: Commit diagnostic and self-seal both temporary workflow paths
+        run: |
+          set -euo pipefail
+          rm -f .github/workflows/v154-diagnose-frontend-failure-once.yml
+          rm -f .github/workflows/v154-diagnose-audio-grid-origin-once.yml
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add -A debug/v154-cpu-autonomous/v154-frontend-reference-score/audio-grid-origin-diagnostic.json \
+                     .github/workflows/v154-diagnose-frontend-failure-once.yml \
+                     .github/workflows/v154-diagnose-audio-grid-origin-once.yml
+          git commit -m "validation: freeze V154 audio grid-origin diagnostic [skip ci]"
+          git fetch origin "$BRANCH"
+          git rebase "origin/$BRANCH"
+          git push origin HEAD:"$BRANCH"
