@@ -1,0 +1,40 @@
+{
+  "schema": "dadrock.tabs.v158.sparse-pursuit-contract-resolution.v1",
+  "version": "V158",
+  "status": "SEALED_BEFORE_CANONICAL_EXECUTION_CODE",
+  "purpose": "Resolve the preregistered Guitar sparsePursuit clause without professional-reference access, candidate output, score feedback, threshold sweep, or variant selection. The previously landed transcriber blob 5617ff1a6ea301ecaeb898b123b05d2a8c915388 is a non-executable setup draft until replaced by code that implements this resolution.",
+  "sealedInputs": {
+    "preregistrationGitBlob": "728cf28646db225f3c266a4bb73a6112b1f60330",
+    "implementationContractGitBlob": "68f01df155cd27077cea3de5a0cd048ddcb7bd76"
+  },
+  "boundaryAtSeal": {
+    "candidateExists": false,
+    "generationReceiptExists": false,
+    "generationWorkflowExists": false,
+    "professionalReferenceRead": false,
+    "professionalReferencePathsOpened": 0,
+    "referenceFacingScoreCalls": 0,
+    "gpuUsed": false,
+    "mainOrProductionModified": false
+  },
+  "consistencyFinding": {
+    "preregistrationClause": "guitarRecognition.harmonicTracker.sparsePursuit",
+    "issue": "The architecture preregistration requires iterative non-overlapping residual-template selection, while the sealed numeric implementation contract defines persistent three-frame candidates and max-six addition but omits the residual-selection mechanics.",
+    "resolutionType": "setup-only deterministic clarification preserving the preregistered architecture",
+    "referenceOrCandidateFeedbackUsed": false
+  },
+  "sparsePursuitNumerics": {
+    "candidatePool": "Only MIDI values satisfying the sealed persistentTrackRule: candidate ranks in the six highest harmonic-template scores independently in every one of the three consecutive frames centered on the independent guitar-onset frame.",
+    "analysisFrames": [-1, 0, 1],
+    "residualRepresentation": "A private copy of the same three-frame log1p(abs(CQT)) magnitudes already specified by the sealed harmonic-template contract.",
+    "templateBins": "For each candidate MIDI, union the radius-1 CQT-bin neighborhoods around harmonics 1..5 using the sealed 36 bins/octave representation and sealed harmonic frequencies.",
+    "candidateGain": "Evaluate the sealed harmonic-template score on the current residual over the three analysis frames: sum(weight_h * mean(residual bins for harmonic h)) + 0.75 * fundamentalMeanResidual.",
+    "selectionOrder": "At each iteration choose the remaining candidate with greatest positive candidateGain; ties within 1e-12 choose lower MIDI.",
+    "nonOverlapRule": "A candidate is ineligible after any previously selected candidate if their templateBins intersect.",
+    "residualSubtraction": "After selection, set the selected candidate's templateBins to zero in the private residual copy for all three analysis frames; no other bins are modified.",
+    "stopRule": "Stop after six selected MIDI values, when no eligible candidate remains, or when the greatest eligible candidateGain is <= 0.",
+    "eventCreation": "For each selected MIDI not within 60 ms of an existing same-MIDI Basic Pitch or harmonic-track event, create one harmonic_track event of exactly 0.07 seconds at the independent guitar onset.",
+    "newTunedThresholds": []
+  },
+  "canonicalizationRule": "This resolution must be pinned in the V158 pre-run identity receipt together with the final transcriber and independent structural-QC blobs. No V158 generation workflow may exist before that pinning."
+}
