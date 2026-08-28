@@ -135,7 +135,6 @@ def subdivision_fixture() -> None:
     times = [row["seconds"] for row in refined]
     assert all(times[i + 1] > times[i] for i in range(len(times) - 1))
 
-    # [0,1,2] must include one sealed extrapolated interval ending at 3.0.
     lattice = build_subdivision_lattice([0.0, 1.0, 2.0], shifted)
     assert len(lattice) == 13
     assert_close(lattice[0], 0.0)
@@ -162,11 +161,13 @@ def subdivision_fixture() -> None:
 
 
 def bass_state_fixture() -> None:
-    midi = np.asarray([40.0] * 6 + [np.nan, np.nan] + [40.0] * 6 + [43.0] * 6, dtype=float)
+    # The first stable state ends at frame 20 so its reattack at 11 cannot merge
+    # with the state-change proposal under the sealed 45ms proposal merge rule.
+    midi = np.asarray([40.0] * 6 + [np.nan, np.nan] + [40.0] * 12 + [43.0] * 6, dtype=float)
     vp = np.asarray([0.90] * len(midi), dtype=float)
     states = stable_bass_states(midi, vp)
     assert len(states) == 2
-    assert states[0]["midi"] == 40 and states[0]["frameCount"] == 14
+    assert states[0]["midi"] == 40 and states[0]["frameCount"] == 20
     assert states[1]["midi"] == 43 and states[1]["frameCount"] == 6
 
     env = np.full(80, 0.05, dtype=float)
