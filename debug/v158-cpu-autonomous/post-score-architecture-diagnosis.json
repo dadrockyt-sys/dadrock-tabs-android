@@ -1,0 +1,243 @@
+{
+  "schema": "dadrock.tabs.v158.reference-blind-post-score-architecture-diagnosis.v1",
+  "version": "V158",
+  "status": "FROZEN_POST_SCORE_DIAGNOSIS",
+  "diagnosisScope": "Architecture-level diagnosis only. No professional-reference payload was reopened, no scorer was called, no candidate was modified, and no exact professional-reference note alignment/timing/pitch was derived or reused.",
+  "frozenInputs": {
+    "candidate": {
+      "path": "debug/v158-cpu-autonomous/generated.json",
+      "sha256": "2a9e8bdfbe48f03dc5d3734780aeb937ef0c5654d55a40536069ed30ee46bcc9",
+      "gitBlob": "1ddb1849b3cfefc14b60f6b5ac72af9ffcdc7fa6"
+    },
+    "generationReceipt": {
+      "path": "debug/v158-cpu-autonomous/generation-receipt.json",
+      "sha256": "e05716636d4bf63fd86ab0f3bc97cb2e274fcd600d47a839d32dfff5543ef12f",
+      "gitBlob": "3afb6c011065568890e1e48e437882e7848f1aaa"
+    },
+    "environmentReceipt": {
+      "path": "debug/v158-cpu-autonomous/environment-receipt.json",
+      "sha256": "1bb07ed96cdbcf1dfe5a29aea85da68e43aa63bf2835008ca98a4bae46557d9a",
+      "gitBlob": "9749b5c58952ca56a80df4834ea2ae116471f532"
+    },
+    "structuralQc": {
+      "path": "debug/v158-cpu-autonomous/structural-qc.json",
+      "gitBlob": "4cb52d4f17359fa4386945800b09fcf0171a8e30"
+    },
+    "score": {
+      "path": "debug/v158-cpu-autonomous/frontend-reference-score/score.json",
+      "sha256": "e0043db204849842c1425adeac89696c250cf8e6daf748b39473c77220c9bdf4",
+      "gitBlob": "1a4d113d7d3c3f1fdf4106bc0cada9b2914ce2cd"
+    },
+    "scoreReceipt": {
+      "path": "debug/v158-cpu-autonomous/frontend-reference-score/score-receipt.json",
+      "gitBlob": "a311305775bc9b26d2ff82f5a55c4cc0e5e8b378",
+      "status": "COMPLETE_CONSUMED",
+      "frozenScorerInvocations": 1,
+      "retryAllowed": false
+    },
+    "implementation": {
+      "canonicalTranscriberPath": "validation/v158_cpu_multitrack/transcribe_v158.py",
+      "canonicalTranscriberGitBlob": "91d65049031506fe44b44e034b1ab04022ba0b91",
+      "baseHelperPath": "validation/v158_cpu_multitrack/transcribe_v158_base.py",
+      "baseHelperGitBlob": "5617ff1a6ea301ecaeb898b123b05d2a8c915388",
+      "implementationContractPath": "debug/v158-cpu-autonomous/implementation-contract.json",
+      "implementationContractGitBlob": "68f01df155cd27077cea3de5a0cd048ddcb7bd76",
+      "preregistrationPath": "debug/v158-cpu-autonomous/preregistration.json",
+      "preregistrationGitBlob": "728cf28646db225f3c266a4bb73a6112b1f60330"
+    }
+  },
+  "observedFrozenScore": {
+    "combinedGuitar": {
+      "generated": 1701,
+      "referenceCountFromAlreadyFrozenScoreOnly": 1393,
+      "primaryMatched": 12,
+      "primaryF1": 0.007756948933419521,
+      "grossMatched": 52,
+      "grossF1": 0.03361344537815126,
+      "measurePitchDiagnosticMatched": 121,
+      "measurePitchDiagnosticF1": 0.07821590174531351
+    },
+    "bass": {
+      "generated": 465,
+      "referenceCountFromAlreadyFrozenScoreOnly": 547,
+      "primaryMatched": 1,
+      "primaryF1": 0.001976284584980237,
+      "grossMatched": 7,
+      "grossF1": 0.01383399209486166,
+      "measurePitchDiagnosticMatched": 13,
+      "measurePitchDiagnosticF1": 0.02569169960474308
+    },
+    "gate": {
+      "combinedGuitarMinimum": 0.8,
+      "bassMinimum": 0.8,
+      "passed": false
+    }
+  },
+  "referenceBlindStructuralEvidence": {
+    "generationWorkflowRunId": "33145878069",
+    "generationWorkflowJobId": "98766677246",
+    "generationWorkflowTrackDurationSecondsObservedInDemucsLog": 216.45,
+    "timebaseBeatCount": 2986,
+    "impliedTrackedBeatRateBpm": 827.7200277200278,
+    "impliedMeanTrackedBeatIntervalSeconds": 0.07248827863362357,
+    "analysisHopSeconds": 0.011609977324263039,
+    "impliedMeanFramesPerTrackedBeat": 6.243619311997655,
+    "nominalFourBeatBarsFromBeatCount": 746.5,
+    "timebaseStateCounts": {
+      "0": 924,
+      "1": 821,
+      "2": 828,
+      "3": 413
+    },
+    "candidateStreamCounts": {
+      "combinedGuitar": 1701,
+      "bass": 465
+    },
+    "candidateSourceCounts": {
+      "combinedGuitar": {
+        "basic_pitch": 1331,
+        "harmonic_track": 370
+      },
+      "bass": {
+        "onset_harmonic_pyin": 465
+      }
+    },
+    "generationRuntimeWarning": {
+      "observed": true,
+      "library": "librosa",
+      "location": "librosa/feature/rhythm.py:450",
+      "messageFragment": "RuntimeWarning: invalid value encountered in log1p",
+      "occurredDuring": "V158 candidate generation before Basic Pitch guitar inference"
+    },
+    "timebaseCodeFacts": {
+      "beatEnvelope": "0.5 * (robust_z(mix_onset_strength) + robust_z(drums_onset_strength))",
+      "negativeValuesExplicitlyAllowedBySealedContract": true,
+      "contractFeatureTransform": "robust-z with median/MAD*1.4826, standard-deviation fallback, no positive clipping",
+      "beatTracker": "librosa.beat.beat_track",
+      "beatStartBpm": 120.0,
+      "beatTightness": 100.0,
+      "gridMapping": "each detected beat is mapped into a four-sixteenth-step beat ordinal derived from Viterbi state deltas",
+      "eventMeasureMapping": "measure = snappedAbsoluteGridStep // 16 + 1"
+    }
+  },
+  "findings": [
+    {
+      "id": "V158-DIAG-001",
+      "severity": "CRITICAL",
+      "classification": "PROVEN_STRUCTURAL_FAILURE",
+      "title": "Pathological beat density makes the musical coordinate system unusable",
+      "evidence": [
+        "The frozen structural QC reports 2,986 tracked beats.",
+        "The sole generation run reports approximately 216.45 seconds of separated audio.",
+        "Those facts imply approximately 827.72 tracked beats per minute and one tracked beat every 72.49 ms.",
+        "The grid contract assigns four sixteenth steps to each tracked beat, so this density compresses musical grid cells to a physically implausible scale.",
+        "Both Guitar and Bass have near-zero timing-aware and same-measure pitch matches even though generated event counts are not orders of magnitude away from the frozen score counts. A shared coordinate-system failure is therefore the dominant cross-stream explanation."
+      ],
+      "conclusion": "The V158 timebase is catastrophically invalid before Guitar/Bass recognizer quality can be meaningfully judged."
+    },
+    {
+      "id": "V158-DIAG-002",
+      "severity": "CRITICAL",
+      "classification": "STRONGLY_SUPPORTED_ROOT_CAUSE_HYPOTHESIS",
+      "title": "Signed robust-z onset envelope is unsafe as direct beat-tracker input",
+      "evidence": [
+        "The sealed numeric contract explicitly specifies robust-z feature transforms with no positive clipping.",
+        "The implementation directly averages robust-z mix and drum onset-strength arrays and passes the signed result to librosa.beat.beat_track.",
+        "The sole generation run emitted 'RuntimeWarning: invalid value encountered in log1p' from librosa rhythm processing during timebase construction.",
+        "The resulting beat count is pathological by direct duration arithmetic."
+      ],
+      "conclusion": "A signed/invalid fused beat envelope is the strongest architecture-level cause currently supported without reopening the professional reference. It must be eliminated in the next architecture rather than tuned against V158 score details."
+    },
+    {
+      "id": "V158-DIAG-003",
+      "severity": "HIGH",
+      "classification": "ARCHITECTURE_COUPLING_RISK",
+      "title": "Bar-phase inference is incorrectly coupled to absolute beat ordinal",
+      "evidence": [
+        "The implementation converts Viterbi state transitions into the absolute beat ordinal instead of using state inference only to label downbeat/bar phase.",
+        "Same-state transitions add zero beats and skip-one transitions add two beats, so a bar-phase model can stretch or compress the absolute time coordinate.",
+        "The frozen state population is strongly nonuniform, with state 3 appearing only 413 times versus 924 state-0 labels."
+      ],
+      "conclusion": "Future timebase architecture should derive absolute beat ordinal monotonically from beat index and use bar-state inference only for phase/bar boundaries."
+    },
+    {
+      "id": "V158-DIAG-004",
+      "severity": "MEDIUM",
+      "classification": "SECONDARY_RECOGNITION_RISK",
+      "title": "Guitar proposal fusion is over-complete but cannot be responsibly retuned from V158",
+      "evidence": [
+        "V158 generated 1,701 combined-Guitar events versus 1,393 in the already-frozen aggregate score, an excess of 308 events (approximately 22.1%).",
+        "370 generated Guitar events came from harmonic_track additions on top of 1,331 Basic Pitch events.",
+        "The aggregate score does not provide source-conditional accuracy, so assigning blame to one source or choosing a threshold from this score would be unsupported and reference-guided."
+      ],
+      "conclusion": "Fix and validate the timebase first. Any later Guitar-source redesign must be preregistered generically and evaluated on a fresh independently generated version, never by filtering V158."
+    },
+    {
+      "id": "V158-DIAG-005",
+      "severity": "MEDIUM",
+      "classification": "SECONDARY_RECOGNITION_RISK",
+      "title": "Bass event count is comparatively close but pitch/time attribution remains unresolved",
+      "evidence": [
+        "V158 generated 465 Bass events versus 547 in the already-frozen aggregate score, a deficit of 82 events (approximately 15.0%).",
+        "Only 13 events matched the measure/pitch diagnostic and only one matched the primary timing-aware pitch criterion.",
+        "Because the same pathological timebase affects Bass and Guitar, V158 cannot isolate whether Bass pitch fusion itself is the main remaining error after timebase repair."
+      ],
+      "conclusion": "Do not tune pYIN/harmonic-fusion constants from V158. Re-evaluate Bass only after a fresh version has a structurally sane reference-blind timebase."
+    }
+  ],
+  "futureArchitectureRequirements": [
+    {
+      "id": "REQ-TIMEBASE-1",
+      "requirement": "Beat-tracker input must be finite and nonnegative by construction; signed robust-z features may be used for bar/downbeat evidence but not as the direct beat-strength envelope."
+    },
+    {
+      "id": "REQ-TIMEBASE-2",
+      "requirement": "Absolute beat ordinal must advance exactly once per accepted beat. Bar/downbeat-state inference must not add, delete, duplicate, stretch, or compress beat ordinal."
+    },
+    {
+      "id": "REQ-TIMEBASE-3",
+      "requirement": "Reference-blind structural QC must reject pathological beat density before candidate freeze using only audio duration, detected beat times, and tracker-internal tempo evidence; it must not use professional-reference timing."
+    },
+    {
+      "id": "REQ-TIMEBASE-4",
+      "requirement": "Reference-blind QC must record audio duration, beat count, mean/median inter-beat interval, implied beat-rate BPM, tracker-reported tempo, beat-rate/tempo consistency, state transition counts, and resulting grid extent."
+    },
+    {
+      "id": "REQ-TIMEBASE-5",
+      "requirement": "Any NaN/Inf or runtime warning attributable to beat/rhythm construction must fail timebase QC before a candidate can become authoritative."
+    },
+    {
+      "id": "REQ-PITCH-1",
+      "requirement": "Do not sweep or retune Guitar/Bass pitch thresholds from V158 aggregate score. Preserve a single preregistered configuration for the next independently generated candidate."
+    }
+  ],
+  "prohibitedReuse": [
+    "No V158 candidate modification or filtering.",
+    "No second V158 score call.",
+    "No professional-reference payload reopen for V158 diagnosis.",
+    "No exact reference-derived shift, tempo, pitch histogram, note timing, event location, or correction constant.",
+    "No source-specific threshold tuning inferred from the V158 score.",
+    "No GPU/Modal/CUDA execution without fresh explicit user authorization."
+  ],
+  "nextVersionRecommendation": {
+    "version": "V159",
+    "sequence": [
+      "Preregister a timebase-first architecture that satisfies REQ-TIMEBASE-1 through REQ-TIMEBASE-5 before implementation code is written.",
+      "Implement and independently structurally QC the timebase before permitting Guitar/Bass candidate emission.",
+      "Generate exactly one fresh reference-blind CPU candidate only after the timebase QC contract is sealed.",
+      "Score that candidate at most once under its own one-shot frozen-reference protocol.",
+      "Do not proceed to role/string/fret/technique/PDF stages unless both frozen front-end gates pass."
+    ]
+  },
+  "safety": {
+    "professionalReferencePayloadReadsDuringDiagnosis": 0,
+    "additionalReferenceFacingScoreCallsDuringDiagnosis": 0,
+    "candidateModified": false,
+    "candidateRegenerated": false,
+    "thresholdSweep": false,
+    "variantSelection": false,
+    "gpuUsed": false,
+    "modalUsed": false,
+    "mainOrProductionModified": false
+  }
+}
