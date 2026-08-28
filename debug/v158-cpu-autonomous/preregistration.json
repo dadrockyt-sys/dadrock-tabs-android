@@ -1,0 +1,218 @@
+{
+  "schema": "dadrock.tabs.v158.reference-blind-cpu-preregistration.v1",
+  "version": "V158",
+  "status": "PREREGISTERED_BEFORE_GENERATION",
+  "purpose": "Fresh reference-blind CPU front-end after consumed V157 failed both acoustic gates. V158 changes bar/downbeat inference, Bass event formation/pitch assignment, and Guitar polyphonic pitch evidence. It is not a V157 threshold sweep, correction, filtered replacement, or rescore.",
+  "song": {
+    "artist": "Lenny Kravitz",
+    "title": "Are You Gonna Go My Way",
+    "audioPath": "public/gomywayfullaitest.m4a",
+    "audioSha256": "215bd5a657c5326f08f132ae358595a95c30b39bb7493a52c2f910d5a608149f"
+  },
+  "hardIsolation": {
+    "professionalReferenceReadDuringGeneration": false,
+    "v154CandidateUsedAsGenerationInput": false,
+    "v155CandidateUsedAsGenerationInput": false,
+    "v157CandidateUsedAsGenerationInput": false,
+    "priorScoreOrDiagnosticArtifactUsedAsGenerationInput": false,
+    "referenceDerivedShiftTempoPitchHistogramOrEventCountAllowedAsParameter": false,
+    "humanCorrectionAllowed": false,
+    "candidateVariantSelectionAllowed": false,
+    "thresholdSweepAllowed": false,
+    "postGenerationReferenceGuidedFilteringAllowed": false,
+    "mainOrProductionModificationAllowed": false,
+    "gpuAllowedWithoutFreshExplicitUserAuthorization": false
+  },
+  "execution": {
+    "device": "CPU_ONLY",
+    "python": "3.10",
+    "torch": "2.8.0+cpu",
+    "numpy": "1.26.4",
+    "scipy": "1.13.1",
+    "soundfile": "0.12.1",
+    "demucs": "4.1.0",
+    "basicPitch": "0.4.0",
+    "librosa": "0.11.0",
+    "imageioFfmpeg": "0.6.0",
+    "singleCandidate": true,
+    "singleGenerationRun": true,
+    "rngSeed": 0,
+    "torchDeterministicAlgorithms": true,
+    "torchNumThreads": 1,
+    "torchNumInteropThreads": 1,
+    "mathLibraryThreads": 1
+  },
+  "triggerSafety": {
+    "generationWorkflowCreationIsTheSingleTrigger": true,
+    "secondArmEditForbidden": true,
+    "workflowMustSelfSealAfterSuccessfulFreeze": true,
+    "workflowRunCountMustEqualOneBeforeCandidateCanBeAuthoritative": true,
+    "ifDuplicateRunDetected": "abort V158 without scoring and move to a fresh version"
+  },
+  "audioNormalization": {
+    "sampleRate": 44100,
+    "channels": 2,
+    "codec": "pcm_s16le",
+    "deterministicFfmpeg": true
+  },
+  "separation": {
+    "model": "htdemucs_6s",
+    "device": "cpu",
+    "shifts": 1,
+    "jobs": 1,
+    "guitarStem": "guitar",
+    "bassStem": "bass",
+    "drumsStem": "drums",
+    "noFallbackModel": true,
+    "singleSeparationOnly": true
+  },
+  "timebase": {
+    "principle": "Beat timing and bar/downbeat phase are inferred from audio only; audio timestamp zero and any prior reference-derived shift are never musical-origin constants.",
+    "beatTracker": {
+      "method": "librosa beat tracking on a deterministic fused onset envelope from normalized mix plus drums",
+      "hopLength": 256,
+      "startBpm": 120.0,
+      "tightness": 100.0,
+      "mapping": "piecewise-linear between detected beat times; each beat spans four sixteenth steps"
+    },
+    "barPhaseModel": {
+      "method": "four-state sequential Viterbi bar-position model over tracked beats",
+      "states": [0, 1, 2, 3],
+      "nominalTransition": "0->1->2->3->0",
+      "transitionProbabilities": {
+        "nextState": 0.985,
+        "sameStateMissingBeatTolerance": 0.0075,
+        "skipOneStateExtraBeatTolerance": 0.0075
+      },
+      "emissionFeatures": [
+        "drums onset-strength robust z-score at beat",
+        "normalized-mix onset-strength robust z-score at beat",
+        "bass-stem onset-strength robust z-score at beat",
+        "low-frequency spectral-flux robust z-score at beat",
+        "harmonic chroma-change novelty from the normalized mix at beat"
+      ],
+      "downbeatEmission": "state 0 receives deterministic positive evidence from combined drum/mix/low-frequency accent plus harmonic-change novelty; non-downbeat states receive neutral baseline plus cyclic transition evidence",
+      "featureWeights": {
+        "drumsAccent": 1.0,
+        "mixAccent": 0.5,
+        "bassAccent": 0.5,
+        "lowFrequencyFlux": 0.75,
+        "harmonicChangeNovelty": 0.75
+      },
+      "tieBreak": "lowest state index then earliest path",
+      "referenceBlind": true
+    },
+    "leadingGrid": "after Viterbi state inference, extrapolate complete four-beat bars backward using robust early local beat period only until earliest detected musical activity is nonnegative on the grid",
+    "quantization": "preserve startSeconds and rawGridStep, then deterministically snap to nearest integer sixteenth",
+    "referenceDerivedTimingConstants": []
+  },
+  "bassRecognition": {
+    "architecture": "onset-first attacks with soft-F0 plus harmonic-template fundamental/octave inference",
+    "input": "htdemucs_6s bass stem",
+    "onsetCreation": {
+      "method": "librosa onset_strength + onset_detect(backtrack=true)",
+      "principle": "each distinct detected onset is an event proposal before pitch assignment; pYIN voicing is never allowed to erase an onset proposal",
+      "minimumInterOnsetMsForCollapse": 35,
+      "repeatedSamePitchAttacksRetained": true
+    },
+    "pitchEvidence": {
+      "midiRange": [28, 67],
+      "pyin": {
+        "frameLength": 2048,
+        "hopLength": 256,
+        "usedAsSoftEvidence": true,
+        "voicedProbabilityIsNotAnEventGate": true
+      },
+      "harmonicTemplate": {
+        "analysisSignal": "bass stem plus HPSS harmonic component",
+        "candidateMidiRange": [28, 67],
+        "harmonics": [1, 2, 3, 4, 5],
+        "harmonicWeights": [1.0, 0.5, 0.3333333333, 0.25, 0.2],
+        "analysisWindowMs": 180,
+        "fundamentalPresenceBonus": 0.75,
+        "octaveComparison": "explicitly compare candidate, candidate-12 and candidate+12 when in range using the same harmonic-template score; choose highest score with lower-MIDI tie break"
+      },
+      "fusion": "combine normalized harmonic-template score with pYIN pitch proximity weighted by pYIN voiced probability; if pYIN is unavailable/unvoiced, harmonic-template evidence alone assigns pitch"
+    },
+    "duration": "event end is next retained onset or harmonic-energy decay, whichever is earlier; duration does not determine whether an onset exists",
+    "basicPitchUsed": false
+  },
+  "guitarRecognition": {
+    "architecture": "Basic Pitch proposals plus multi-frame harmonic-template tracking and register repair; no raw onset-local CQT-only completion",
+    "input": "htdemucs_6s guitar stem",
+    "basicPitch": {
+      "version": "0.4.0",
+      "onsetThreshold": 0.50,
+      "frameThreshold": 0.30,
+      "minimumNoteLengthMs": 90.0,
+      "minimumMidi": 40,
+      "maximumMidi": 88,
+      "multiplePitchBends": false,
+      "melodiaTrick": true,
+      "singleFixedPass": true
+    },
+    "harmonicTracker": {
+      "signal": "HPSS harmonic component of guitar stem",
+      "representation": "36-bin-per-octave CQT plus explicit harmonic templates",
+      "sampleRate": 22050,
+      "hopLength": 256,
+      "candidateMidiRange": [40, 88],
+      "harmonics": [1, 2, 3, 4, 5],
+      "harmonicWeights": [1.0, 0.5, 0.3333333333, 0.25, 0.2],
+      "proposalSources": ["Basic Pitch event", "persistent local harmonic-template track at independently detected guitar onset"],
+      "minimumTrackFrames": 3,
+      "maxSimultaneousPitches": 6,
+      "registerRepair": "for every proposal compare original MIDI and +/-12 candidates in range using multi-frame harmonic-template fit; replace register only when an alternate has strictly greater deterministic template fit and a present fundamental bin",
+      "sparsePursuit": "at each onset iteratively choose non-overlapping harmonic templates against residual spectral energy, subtract selected template contribution, stop at six notes or when no candidate has positive residual-template gain",
+      "freeStandingSingleFrameCqtPeaksAllowed": false
+    },
+    "fusion": "Basic Pitch proposals are tracked/validated across frames; persistent harmonic-template tracks may add polyphonic proposals, but single-frame onset-local CQT peaks may not create notes",
+    "minimumDurationMs": 70,
+    "noReferenceGuidedChordCompletion": true
+  },
+  "postProcessing": {
+    "genericOnly": true,
+    "sortOrder": ["absoluteGridStep", "midi", "source"],
+    "deduplicateSameStream": "same MIDI and same snapped absolute grid step collapse to one event with deterministic evidence precedence",
+    "crossPartDeduplication": false,
+    "pitchRanges": {
+      "combinedGuitar": [40, 88],
+      "bass": [28, 67]
+    }
+  },
+  "referenceBlindStructuralQc": {
+    "mustPassBeforeFreeze": [
+      "exact audio identity",
+      "exact dependency/model identities and deterministic CPU environment",
+      "candidate/preregistration/generation-receipt hashes agree",
+      "nonempty Guitar and Bass streams",
+      "all events finite and within preregistered MIDI ranges",
+      "all snapped steps integer 0..15 and consistent with absoluteGridStep",
+      "raw grid positions finite",
+      "beat times strictly increasing and Viterbi bar-state path length equals beat count",
+      "every Bass generated event traces to a retained onset proposal",
+      "no Guitar source label corresponding to free-standing single-frame CQT completion",
+      "single candidate only",
+      "single generation workflow run only",
+      "referenceRead=false and professionalReferencePathsOpened=0"
+    ],
+    "noQualityMetricAgainstReferenceBeforeFreeze": true
+  },
+  "scoringProtocol": {
+    "referenceAccessOnlyAfterCandidateAndQcFreeze": true,
+    "referencePayloadPath": "research/v154-professional-references/scorer-ready/frontend-reference-payload.json",
+    "referencePayloadSha256": "b39a203aec3f45800891fe4eca156e37e7571b91ea5c4ccc41b30bbc95fc89e7",
+    "scorerPath": "validation/v154_cpu_multitrack/score_frontend_reference.py",
+    "scorerGitBlob": "9644e65719fbd361a9b39778ae9950c5e983e855",
+    "scoreExactlyOnce": true,
+    "postScoreRetuningForbidden": true
+  },
+  "frozenGates": {
+    "combinedGuitarTimingAwarePitchF1Minimum": 0.80,
+    "bassTimingAwarePitchF1Minimum": 0.80,
+    "laterOnsetAwareNoteF1Minimum": 0.75,
+    "laterConditionalRoleAccuracyMinimum": 0.85,
+    "laterConditionalStringFretAccuracyMinimum": 0.85
+  },
+  "failurePolicy": "Any duplicate generation, structural-QC failure after candidate creation, or missed score gate freezes the failure and ends V158. Never repair/retune/select a replacement V158 candidate against professional reference. Pure setup failures before candidate creation may only be repaired if architecture/preregistration semantics remain unchanged and doing so does not violate the single-generation-run rule."
+}
