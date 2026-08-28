@@ -1,0 +1,17 @@
+name: V154 validate Lead timing draft
+on:
+  push:
+    branches: [v143-contextual-prune-lobo]
+    paths: [.github/workflows/v154-validate-lead-timing-draft.yml]
+permissions:
+  contents: read
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: v143-contextual-prune-lobo
+          fetch-depth: 1
+      - name: Validate frozen-source event alignment only
+        run: python validation/v154_cpu_multitrack/validate_lead_timing_draft.py
