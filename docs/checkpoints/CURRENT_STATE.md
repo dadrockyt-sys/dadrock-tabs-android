@@ -3,7 +3,7 @@
 Updated: 2026-08-28 UTC
 Branch: `v143-contextual-prune-lobo`
 
-Active phase: **V154 is permanently consumed after one failed reference score. V155 is protocol-invalid/aborted and must never be scored. V156 is the clean successor: determinism-amended preregistration, canonical transcriber, independent structural QC, and immutable pre-run identity receipt are SEALED BEFORE GENERATION. No V156 candidate exists, no V156 professional reference has been read, and V156 reference-facing score calls remain 0. Next: create the V156 generation workflow exactly once; workflow creation itself is the sole trigger.**
+Active phase: **V154 is permanently consumed after one failed reference score. V155 is protocol-invalid/aborted and must never be scored. V156 is ABORTED BEFORE CANDIDATE: its sole generation run passed deterministic CPU separation but failed environment/model-cache receipt bookkeeping before transcription. No V156 candidate exists, no professional reference was read, and V156 score calls remain 0. The V156 workflow is deleted and V156 must not be generated/scored again. Next: move the unchanged reference-blind musical architecture to V157, fixing only pre-candidate model-cache/environment receipt mechanics.**
 
 ## Standing authorization / safety — MUST PRESERVE
 - CPU-only work and CPU scoring are at assistant discretion.
@@ -54,55 +54,42 @@ Song: **Lenny Kravitz — Are You Gonna Go My Way**.
 - The two nominally identical `htdemucs_6s --shifts 1` runs produced different stem/candidate hashes, exposing CPU execution nondeterminism.
 - **V155 professional-reference reads = 0; V155 reference-facing score calls = 0 forever.** Never compare/select or score V155 outputs.
 
-## V156 — CLEAN SUCCESSOR / PRE-RUN SEALED / NO CANDIDATE
-- V156 was confirmed unused before naming.
-- Determinism-amended preregistration: `debug/v156-cpu-autonomous/preregistration.json`; Git blob `25a0a921e3245049a7f64fd3cb823e6767fe55da`.
-- Status: `PREREGISTERED_BEFORE_GENERATION_AMENDED_EXECUTION_DETERMINISM`.
-- Amendment occurred before any V156 generation/reference access and changes execution determinism only; recognition/timebase quality parameters are unchanged.
-- Determinism: seed `0` for Python/NumPy/Torch; deterministic Torch algorithms; Torch intra/inter-op threads 1; OMP/MKL/OpenBLAS/NumExpr threads 1; in-process Demucs after seed initialization; exactly one separation.
-- Separation remains CPU `htdemucs_6s`, shifts 1, jobs 1, dedicated Guitar/Bass/Drums, no fallback model.
-- Timebase remains audio-derived dynamic beat times + deterministic 4/4 phase + piecewise-linear beat mapping; no `t=0` assumption and no reference-derived timing constants.
-- Bass remains HPSS harmonic + pYIN + onset/voicing/pitch-change segmentation; no Basic Pitch for Bass.
-- Guitar remains dedicated Guitar stem + one fixed Basic Pitch pass fused with harmonic CQT evidence; no threshold sweep/reference-guided completion.
-
-### V156 canonical implementation identities
+## V156 — ABORTED BEFORE CANDIDATE / NEVER GENERATE OR SCORE
+- Determinism-amended preregistration: `debug/v156-cpu-autonomous/preregistration.json`; Git blob `25a0a921e3245049a7f64fd3cb823e6767fe55da`; status `PREREGISTERED_BEFORE_GENERATION_AMENDED_EXECUTION_DETERMINISM`.
 - Canonical transcriber: `validation/v156_cpu_multitrack/transcribe_hybrid.py`; Git blob `961e18f66766e51abb42f46e529730fcaa2807b4`.
 - Independent structural QC: `validation/v156_cpu_multitrack/structural_qc.py`; Git blob `3b1018e751deecdfb0efca100c29848256ee1234`.
-- Frozen inherited reference-blind musical engine: `validation/v155_cpu_multitrack/transcribe_hybrid.py`; Git blob `3357582dd8311b28f4b85f2ebfbc7acb8c9e4fb8`.
-- V155 generated musical outputs are not V156 inputs.
-- Candidate schema `dadrock.tabs.v156.cpu-hybrid-generated.v1`.
-- Generation receipt schema `dadrock.tabs.v156.cpu-hybrid-generation-receipt.v1`.
-- Independent QC schema `dadrock.tabs.v156.reference-blind-structural-qc.v1`.
-- Exact dependency pins include Python 3.10, torch 2.8.0+cpu, NumPy 1.26.4, SciPy 1.13.1, SoundFile 0.12.1, Demucs 4.1.0, Basic Pitch 0.4.0, librosa 0.11.0, imageio-ffmpeg 0.6.0.
+- Inherited reference-blind engine: `validation/v155_cpu_multitrack/transcribe_hybrid.py`; Git blob `3357582dd8311b28f4b85f2ebfbc7acb8c9e4fb8`.
+- Pre-run identity receipt: `debug/v156-cpu-autonomous/pre-run-receipt.json`; Git blob `4591695763a1e59d6b1b2bfa2600969ff4b0201f`; seal commit `69314570f5e25cd43a679459f42b3c3ba0197965`.
+- Sole generation workflow creation commit: `d6a9a7c5234635289caa4792058aec4b737345bb`.
+- Sole generation run: `33142942558`, run number `1`, job `98757604810`; final conclusion **FAILURE BEFORE CANDIDATE**.
+- Pre-candidate PASS: sealed-identity checks, reference-isolation scan, exact historical audio authentication, exact pinned CPU dependency install, deterministic normalized audio identity, seeded in-process CPU `htdemucs_6s` separation, and branch refresh before candidate boundary.
+- Deterministic separation used seed 0, deterministic Torch algorithms, single Torch intra/inter-op threads, OMP/MKL/OpenBLAS/NumExpr thread count 1, CPU-only, `htdemucs_6s`, shifts 1, jobs 1.
+- Failure occurred in `Freeze environment and separation receipt`: workflow assumed Demucs checkpoint files would be under `~/.cache/torch/hub/checkpoints`, but that directory was empty while Demucs 4.1 emitted a Hugging Face Hub cache/download warning. Assertion: `Demucs checkpoint receipt is empty`.
+- A second setup bug exists in that same receipt block: it references `os.environ` without importing `os`; the cache assertion failed first.
+- Candidate generation, independent QC, and freeze steps were all skipped.
+- Branch verification after failure: `debug/v156-cpu-autonomous/generated.json` absent; `generation-receipt.json` absent; `structural-qc.json` absent.
+- V156 workflow was permanently deleted at commit `138d99ae3d0c0ce8990cfcf79a8d7a175d52ba18` so it cannot be triggered again.
+- **V156 candidate = NONE; professional-reference reads = 0; reference-facing score calls = 0. V156 is permanently aborted and must never be generated or scored.**
 
-### V156 sealed pre-run identity receipt
-- `debug/v156-cpu-autonomous/pre-run-receipt.json`.
-- Seal commit `69314570f5e25cd43a679459f42b3c3ba0197965`.
-- Pins preregistration `25a0a921...`, canonical transcriber `961e18f6...`, independent QC `3b1018e7...`, inherited engine `3357582d...`, and exact audio SHA256.
-- Static contract repair before sealing changed only compatibility with the determinism-amended preregistration status/hash.
-- Boundary audit before seal: V156 `generated.json` absent; V156 `generation-receipt.json` absent; V156 generation workflow absent.
-- **V156 candidate = NONE; professional-reference read = NO; reference-facing score calls = 0.**
-- A failed checkpoint-only workflow `33142810650` had no jobs and changed no experiment state; helper was removed at commit `e07009242144413e8d5af00dfa9493b0d39023c3`.
-
-## V156 trigger/freeze rules — MUST NOT VIOLATE
-- `.github/workflows/v156-generate-reference-blind-once.yml` **creation itself is the single generation trigger**.
-- Do not perform any later arm edit.
-- Expected generation workflow run count = exactly 1. Duplicate run => abort V156 without scoring and move to a fresh version.
-- During the generation run, make no unrelated branch writes until it freezes/self-seals.
-- Workflow must verify exact audio/preregistration/transcriber/QC/engine identities before candidate creation.
-- Workflow must install exact pinned CPU dependencies, enforce deterministic seed/thread policy, deterministically normalize audio, run one in-process seeded Demucs separation, record model checkpoint identity + stem hashes, run canonical transcriber, run independent QC, freeze candidate + receipt + QC, and delete itself.
-- Reference-facing score calls remain 0 through candidate/QC freeze.
-- Only after verifying exactly one generation run and independent QC PASS may a guarded one-use V156 score workflow be created.
-- Score V156 exactly once; never retune or replace a consumed candidate.
+## Frozen musical architecture to carry forward unchanged
+The next clean version must preserve the V156/V155 reference-blind musical architecture exactly; only pre-candidate execution/receipt mechanics may change:
+- CPU-only `htdemucs_6s`, shifts 1, jobs 1, dedicated Guitar/Bass/Drums, no fallback.
+- Seed 0 Python/NumPy/Torch; deterministic Torch algorithms; single-thread settings; in-process Demucs after RNG/thread setup; one separation only.
+- Audio-derived dynamic beat times + deterministic 4/4 phase + piecewise-linear beat-grid mapping; no `t=0` assumption and no reference-derived offset/BPM constants.
+- Bass = HPSS harmonic + pYIN + onset/voicing/pitch-change segmentation; no Basic Pitch for Bass.
+- Guitar = dedicated Guitar stem + one fixed Basic Pitch 0.4.0 pass fused with harmonic CQT evidence; no threshold sweep/reference-guided completion.
+- Exact dependency pins remain Python 3.10, torch 2.8.0+cpu, NumPy 1.26.4, SciPy 1.13.1, SoundFile 0.12.1, Demucs 4.1.0, Basic Pitch 0.4.0, librosa 0.11.0, imageio-ffmpeg 0.6.0.
 
 ## Exact next steps — RESUME HERE
-1. Create `.github/workflows/v156-generate-reference-blind-once.yml` **exactly once**. Creation is the sole trigger; do not edit/arm it afterward.
-2. Make no unrelated branch writes while that run is active.
-3. Verify run number/count = 1 and all pre-candidate identity/isolation checks PASS.
-4. Let the workflow perform deterministic CPU normalization + one seeded in-process `htdemucs_6s` separation + canonical transcription + independent structural QC.
-5. If setup fails before candidate creation, repair only execution mechanics allowed by preregistration; do not change recognition/timebase quality parameters.
-6. If a candidate is created and QC fails, freeze the failure and end V156; do not generate a replacement V156 candidate.
-7. On success, verify candidate/receipt/QC hashes and checkpoint with V156 score calls still 0.
-8. Only then construct one guarded one-use V156 scorer and score exactly once against the frozen professional reference/scorer.
-9. Fresh explicit user authorization remains required immediately before any Modal/NVIDIA L4/CUDA/GPU execution; remain CPU-only otherwise.
-10. Do not resume Rhythm/Lead role separation, string/fret assignment, techniques, or PDF polishing until a future front-end candidate passes the acoustic gates.
+1. Confirm `V157` is unused, then preregister it **before any V157 generation** as the clean successor. State explicitly that V155/V156 generated musical outputs are not inputs and no reference data influenced the setup repair.
+2. Preserve all musical architecture/quality parameters above unchanged. V157 changes only pre-candidate execution/receipt hygiene.
+3. Fix model-cache identity capture generically: after the single seeded Demucs separation, inspect both Torch cache and Hugging Face cache locations, recursively resolve actual non-lock model/blob files, hash unique resolved files, and require at least one model-file identity. Do not run a second separation to test determinism.
+4. Fix environment receipt code to import/use `os` correctly. Record workflow run id/number, seed/thread/determinism policy, model-cache identities, exact stem hashes, exact dependency versions, exact audio identities, CPU-only flags, reference-read false, score calls 0.
+5. Create one canonical V157 transcriber and one independent V157 structural-QC script by version/contract adaptation only; musical engine remains frozen `3357582dd8311b28f4b85f2ebfbc7acb8c9e4fb8`.
+6. Static-audit and seal a V157 pre-run identity receipt/checkpoint with no candidate and score calls 0.
+7. Create the V157 generation workflow exactly once; creation is the sole trigger. No later arm edit. If a duplicate generation run occurs, abort V157 without scoring.
+8. Run one deterministic CPU separation, canonical transcription, independent QC, freeze one candidate + receipts + QC, and self-delete the workflow.
+9. After freeze, verify exactly one generation run and checkpoint at V157 score calls 0 before any professional-reference access.
+10. Only then create one guarded one-use V157 score workflow and score exactly once. Never retune a consumed candidate.
+11. Fresh explicit user authorization remains required immediately before any Modal/NVIDIA L4/CUDA/GPU execution; remain CPU-only otherwise.
+12. Do not resume Rhythm/Lead role separation, string/fret assignment, techniques, or PDF polishing until a front-end candidate passes the acoustic gates.
