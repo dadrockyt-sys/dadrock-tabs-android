@@ -4,7 +4,7 @@ Updated: 2026-08-28 UTC
 Branch: `v143-contextual-prune-lobo`
 
 ## Active phase
-**V161 is terminal/consumed forever. V162 preregistration + numeric implementation contract are sealed, and the complete pre-static V162 implementation set is now present: pure event/subdivision logic + fixtures, subdivision timebase builder, independent timebase QC, state-segmented transcriber, independent structural QC, JSON-native fixture, and negative runtime/leakage guard. NO V162 song audio, Demucs, Basic Pitch, pYIN, candidate generation, professional-reference read, or score has run. Next: reviewer-audit and arm exactly one song-blind static preflight.**
+**V161 is terminal/consumed forever. V162 preregistration + numeric implementation contract are sealed. The sole original V162 static-preflight attempt is now consumed FAIL, but it failed only in the first NumPy-only synthetic Guitar weak-attack fixture; identity/absence proof, compilation, and AST/runtime leakage guard all PASS. No V162 song audio, Demucs, Basic Pitch, pYIN, candidate generation, professional-reference/scorer read, or score has run. The failure is a synthetic fixture construction defect: its near-uniform positive 0.10 baseline made q95 normalization equal 0.10, so normalized support became 1.0 and the sealed algorithm correctly classified the supposed 'weak' attack as supported. Never rerun `.github/workflows/v162-static-preflight.yml`. Next: seal a distinct static-repair validation boundary, correct only the synthetic fixture construction without changing any V162 numeric/algorithm, locally execute the full song-blind suite, then arm one distinct static-repair validation run.**
 
 ## Standing safety
 - CPU-only work/scoring authorized at assistant discretion.
@@ -13,6 +13,7 @@ Branch: `v143-contextual-prune-lobo`
 - V159/V160/V161 closed forever; never rerun/rescore/repair/re-QC/retune V161.
 - V162 may use only frozen aggregate evidence copied into its preregistration plus reference-blind V161 source/QC structure.
 - No V161 candidate event mining/reuse; no professional-reference event/measure mining; no same-song score loop; no human correction.
+- V162 numeric implementation contract remains immutable. Static fixture repair may not alter thresholds/windows/weights/tie-breaks or audio-facing architecture.
 
 ## V161 terminal score — FROZEN
 - Terminal commit `d1dd2f07bc5e07130a858981821d3b67bc2de78b`; score run `33209465651`, #1 attempt #1, job `98978832375`; workflow deleted.
@@ -22,66 +23,59 @@ Branch: `v143-contextual-prune-lobo`
 
 ## V162 sealed design
 - Preregistration `debug/v162-cpu-autonomous/preregistration.json`; commit `5a3eecd2e4004ad254196bf926ecf8f1a97280e2`; blob `5c886fec4ac323b361d9128a51a25c6ccb03952b`; PASS.
-- Numeric contract `debug/v162-cpu-autonomous/implementation-contract.json`; seal commit `a11240eeef4ebf25a8bd9913dd0333892b6557f4`; **authoritative current Git blob `409da313ed03a6c232d6578d48b0da6aa35b000b`**; PASS. Earlier checkpoint blob string was stale metadata and is superseded by this repository-fetched identity. Contract content/numerics were not changed.
+- Numeric contract `debug/v162-cpu-autonomous/implementation-contract.json`; seal commit `a11240eeef4ebf25a8bd9913dd0333892b6557f4`; authoritative Git blob `409da313ed03a6c232d6578d48b0da6aa35b000b`; PASS. Contract content/numerics unchanged.
 - Architecture/numerics immutable: onset-aware Guitar state segmentation; active-Basic-Pitch-state-only reattack recovery; sequence-aware register; shared evidence-refined 16th lattice; bounded evidence step selection; stable Bass pitch-state/rearticulation segmentation.
 
-## V162 complete pre-static implementation identities
-- `validation/v162_cpu_autonomous/event_logic_v162.py` — current blob `9f9b33fd8c210ad581025b454cf69b6999aa544b`; final-beat extrapolation contract conformance fix committed `c294a49e1c6eb67316a98c46c041427f8180d90f`.
-- `validation/v162_cpu_autonomous/test_event_logic_v162.py` — current blob `1e8dc629412dda23ac8106a35894aa0d86cac786`; Bass proposal-spacing fixture corrected at `d251983b22c8d5e9edd66f9137a649b79c044323`.
-- `validation/v162_cpu_autonomous/build_timebase_v162.py` — blob `f7e9483aea16af770bcffe01ad8cfaf689d693b9`; commit `baa0236a231e6f34ac99829b08e8e8fda8f0c6db`.
-- `validation/v162_cpu_autonomous/timebase_qc_v162.py` — blob `78acc9fd626039801011d039cca12686b72369c0`; commit `4d218c0fa146f34ce18444e970aa8cf758e5246b`.
-- `validation/v162_cpu_autonomous/transcribe_v162.py` — current blob `fa163cafe2131aa73cdbb50df10d4e4912cff53b`; local-peak recovery-evidence conformance fix commit `c445e4bc9d663fef9d2cdbec472e713759f9906d`.
-- `validation/v162_cpu_autonomous/structural_qc_v162.py` — blob `b7d3fa92fc9f3bed00931d19097e08cd91eab62b`; commit `4d3a74100fbd69f26ed4038efe9d73d8753b754b`.
-- `validation/v162_cpu_autonomous/test_json_native_v162.py` — blob `654557363745f580f425252395542e9fb91adaad`; commit `b662a46643af72c2b4d847c078ff8524b06b5def`.
-- `debug/v162-cpu-autonomous/negative-runtime-guard.py` — blob `8d40bc7f3dce9c9717e41fa1060c553434ad9959`; commit `fcd41e91a24d2e15caed71f07031677948580479`.
+## V162 implementation identities at original static arm
+- event logic blob `9f9b33fd8c210ad581025b454cf69b6999aa544b`
+- event test blob `1e8dc629412dda23ac8106a35894aa0d86cac786`
+- timebase builder blob `f7e9483aea16af770bcffe01ad8cfaf689d693b9`
+- timebase QC blob `78acc9fd626039801011d039cca12686b72369c0`
+- transcriber blob `fa163cafe2131aa73cdbb50df10d4e4912cff53b`
+- structural QC blob `b7d3fa92fc9f3bed00931d19097e08cd91eab62b`
+- JSON-native test blob `654557363745f580f425252395542e9fb91adaad`
+- negative guard blob `8d40bc7f3dce9c9717e41fa1060c553434ad9959`
 
-## V162 implemented architecture
-### Shared timebase/subdivision
-- V161 beat tracker/phase backbone retained.
-- Shared onset `0.65*unitDrums + 0.35*unitMix`.
-- Every beat anchor remains fixed at absolute steps divisible by 4.
-- Interior 16ths refined with sealed ±3-frame/q55/1.05/Voronoi rule.
-- One final beat interval extrapolated from median of last up-to-8 positive IBIs; full `subdivisionTimesSeconds` + sequential absolute steps frozen in timebase.
-- Independent timebase QC reloads only mix/drums, rebuilds shared envelope/lattice, requires exact lattice/anchor/final-extrapolation agreement before pitch.
+## Original V162 static preflight — FAIL / CONSUMED / NEVER RERUN
+- Workflow path `.github/workflows/v162-static-preflight.yml`.
+- Workflow Git blob `5d41bf0705bee19d49ac5928d0116078c56be7db`.
+- Arm/head commit `d6010890f4810031e4a88cdcbe59ddd4067c82d0`; expected parent `104f2bf6eb15cb6ed13ba4e800815468ce305133`.
+- Run `33210896386`, run #1 attempt #1, job `98983575649`, conclusion `failure`.
+- Identity/absence proof PASS.
+- Compile exact V162 implementation PASS.
+- Song-blind negative runtime guard PASS with all checks true: no reference/scorer/V161 runtime paths, pre-pitch files contain no pitch imports/calls, subdivision contract present, QC-before-pitch ordering present, structural lattice/step recomputation present, JSON boundary present.
+- NumPy-only dependency install PASS.
+- Event/subdivision fixture FAIL at `test_event_logic_v162.py`, `guitar_segmentation_fixture()`, assertion `len(merged) == 1` (line 45 in the consumed blob).
+- JSON fixture and final absence proof were skipped only because the event fixture terminated the job.
+- **No song audio/model execution occurred:** `songAudioRead=false`, `demucsInvoked=false`, `pitchInferenceInvoked=false`, `professionalReferenceRead=false`, `frozenScorerRead=false`, `V161CandidateRead=false`, `priorScoreRead=false`, GPU=false.
+- Never rerun or edit the consumed `v162-static-preflight.yml` to trigger another attempt.
 
-### Guitar
-- Basic Pitch thresholds unchanged 0.50/0.30/min90ms.
-- <=120ms same-pitch gaps merge only when no supported reattack; overlaps always merge; >120ms stays separate.
-- Existing segmented attacks use V161 local onset refinement.
-- Sequence register uses same-pitch-class context ±0.75s; no context => no repair; alternatives require fundamental + rank/context gains.
-- Independent attack recovery can only recover MIDI pitches active in raw Basic Pitch intervals at the local attack peak; rank/fundamental/parent confidence/recovery score gates fixed; cap3; no free harmonic pitch discovery.
-- Segmented admission retained; evidence-based event step selection uses nearest±1 lattice candidates; final cap6.
+## Static failure diagnosis — SONG-BLIND / FROZEN
+- The fixture initialized almost all 220 onset-envelope frames to positive `0.10`, with only seven stronger peaks.
+- The sealed `support_unit()` uses the q95 of positive values as scale. Because >95% of positive values were `0.10`, q95 was `0.10`.
+- Therefore the fixture's supposed weak local peak `0.10` normalized to support `1.0`, while positive q60 was also `0.10`; under the sealed reattack rule (q60 + support>=0.30), it is correctly a supported attack.
+- This does **not** demonstrate an algorithm/numeric defect. It demonstrates that the synthetic 'weak attack' fixture did not represent weak evidence under the algorithm's sealed normalization semantics.
+- Permitted correction: change only synthetic envelope construction so the weak region is truly below q60 and/or below 0.30 normalized support while keeping the same sealed q60/q95 logic and all V162 numerics unchanged.
 
-### Bass
-- pYIN median7 -> stable integer MIDI states, min4 frames, voiced gates, short same-MIDI gap bridge.
-- Proposals from detected onset, supported same-pitch reattack, or stable state change; state-change can activate without detected onset.
-- Fixed proposal priority/45ms merge; V161 harmonic+pYIN pitch evidence/admission retained; evidence step mapping; final cap1.
-
-### Independent structural QC
-- Recomputes the shared subdivision lattice from fresh mix/drums stems.
-- Recomputes `select_event_step()` for every candidate note from candidate start + fresh instrument/shared onset envelopes.
-- Enforces exact hash/schema/code pins, one-shot environment, allowed sources, no standalone harmonic recovery, sequence-context metadata for repairs, Bass state metadata, score ranges, dedupe/caps, and reference-blind safety.
-
-## Static safety
-- Event fixture is song-blind NumPy-only and covers sustain/reattack/recovery/register/subdivision/final extrapolation/Bass state/caps.
-- JSON-native fixture reproduces raw NumPy JSON failure and proves normalization/round-trip/nonfinite rejection.
-- Negative guard uses AST/text only; pre-pitch builder/QC cannot import Basic Pitch or call `pyin/yin/predict`; generation runtime cannot contain reference/scorer/V161 candidate/score/workflow paths; validates exact sealed architecture tokens and QC-before-pitch main-call ordering.
-
-## Validation status
-- No V162 static-preflight workflow exists yet.
-- No V162 runtime artifacts exist yet beyond prereg/contract/negative guard.
-- Song processing=0; Demucs=0; Basic Pitch=0; pYIN=0; candidate=0; runtime QC=0; professional-reference/scorer reads=0; score calls=0; GPU/CUDA/Modal=0; main/Production=0.
+## V162 runtime status
+- No V162 environment receipt, timebase, timebase-QC receipt, candidate, generation receipt, structural-QC receipt, terminal freeze, or pre-run receipt has ever been created.
+- V162 song processing=0; Demucs=0; Basic Pitch=0; pYIN=0; candidate=0; runtime QC=0; professional-reference/scorer reads=0; score calls=0; GPU/CUDA/Modal=0; main/Production=0.
 
 ## Current hard boundary
-- Reviewer-audit one static workflow before creation.
-- Static workflow may install NumPy only; no song/source/reference/scorer/V161-candidate access, no librosa/Demucs/Basic Pitch execution.
-- It must pin all exact blobs above, compile all seven V162 validation Python files + negative guard, run negative guard against itself, run event fixture and JSON fixture, and prove all runtime artifacts + generation workflow absent.
-- Static creation is sole trigger; expected run #1 attempt #1; never rerun.
-- Only after static PASS: seal final identities into pre-run receipt, then reviewer-audit one-shot CPU generation.
+- Original static workflow is consumed and must never rerun.
+- Before modifying the failed fixture, seal `debug/v162-cpu-autonomous/static-repair-preregistration.json` documenting the consumed run and restricting changes to song-blind static fixture correctness / non-numeric implementation defects only.
+- Do not change V162 preregistration or numeric contract.
+- Locally/song-blind execute the corrected entire event fixture + JSON fixture before any new Actions static validation.
+- A distinct static-repair workflow, if armed, must have its own self-path-only trigger, run #1 attempt #1, exact repaired code/test blobs, compile/guard/fixtures/absence proof, and must never rerun.
+- No song audio until a complete static validation PASS is achieved and a final pre-run identity receipt is sealed.
+- V162 generation remains maximum one.
 - No GPU/Modal/CUDA without fresh explicit authorization; never touch main/Production.
 
 ## Exact next steps — RESUME HERE
-1. Re-fetch branch/checkpoint and prove `.github/workflows/v162-static-preflight.yml`, `.github/workflows/v162-generate.yml`, and all V162 runtime receipts/candidate are absent.
-2. Reviewer-audit/create sole V162 static preflight with exact pins.
-3. Observe read-only; never rerun.
-4. If PASS, checkpoint run/job/head and seal V162 pre-run identities.
+1. Re-fetch branch/checkpoint.
+2. Seal V162 static-repair preregistration before any fixture modification.
+3. Correct only the weak-onset synthetic envelope construction; no numeric or algorithm changes.
+4. Execute all V162 song-blind tests locally from exact branch files; fix additional fixture-only defects if found under the sealed repair boundary.
+5. Freeze repaired exact blobs/checkpoint.
+6. Reviewer-audit/arm one distinct `.github/workflows/v162-static-repair.yml` run; never rerun it.
+7. If PASS, seal V162 pre-run identities and proceed to one-shot CPU generation review.
