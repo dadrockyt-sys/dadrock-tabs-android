@@ -1,0 +1,160 @@
+name: V162 static fixture repair validation
+
+on:
+  push:
+    branches:
+      - v143-contextual-prune-lobo
+    paths:
+      - .github/workflows/v162-static-repair.yml
+
+permissions:
+  contents: read
+
+env:
+  BRANCH: v143-contextual-prune-lobo
+  EXPECTED_PARENT_HEAD: eb42b52b2977f46cf24a5b1fd7b33738125dba6d
+  PREREG: debug/v162-cpu-autonomous/preregistration.json
+  CONTRACT: debug/v162-cpu-autonomous/implementation-contract.json
+  REPAIR_PREREG: debug/v162-cpu-autonomous/static-repair-preregistration.json
+  NEGATIVE_GUARD: debug/v162-cpu-autonomous/negative-runtime-guard.py
+  EVENT_LOGIC: validation/v162_cpu_autonomous/event_logic_v162.py
+  EVENT_TEST: validation/v162_cpu_autonomous/test_event_logic_v162.py
+  TIMEBASE_BUILDER: validation/v162_cpu_autonomous/build_timebase_v162.py
+  TIMEBASE_QC_CODE: validation/v162_cpu_autonomous/timebase_qc_v162.py
+  TRANSCRIBER: validation/v162_cpu_autonomous/transcribe_v162.py
+  STRUCTURAL_QC_CODE: validation/v162_cpu_autonomous/structural_qc_v162.py
+  JSON_NATIVE_TEST: validation/v162_cpu_autonomous/test_json_native_v162.py
+
+jobs:
+  static-repair-once:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ github.sha }}
+          fetch-depth: 0
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.10'
+
+      - name: Verify sealed repair identity and absence boundary
+        shell: bash
+        run: |
+          set -euo pipefail
+          test "$GITHUB_EVENT_NAME" = "push"
+          test "$GITHUB_RUN_NUMBER" = "1"
+          test "$GITHUB_RUN_ATTEMPT" = "1"
+          test "$(git rev-parse HEAD)" = "$GITHUB_SHA"
+          test "$(git rev-parse HEAD^)" = "$EXPECTED_PARENT_HEAD"
+          test "$(git diff --name-only "$EXPECTED_PARENT_HEAD" "$GITHUB_SHA")" = ".github/workflows/v162-static-repair.yml"
+          git fetch origin "$BRANCH"
+          test "$(git rev-parse "origin/$BRANCH")" = "$GITHUB_SHA"
+
+          test "$(git hash-object "$PREREG")" = "5c886fec4ac323b361d9128a51a25c6ccb03952b"
+          test "$(git hash-object "$CONTRACT")" = "409da313ed03a6c232d6578d48b0da6aa35b000b"
+          test "$(git hash-object "$REPAIR_PREREG")" = "f8a183cd827cf16cbab1551aa09bbed047cbe884"
+          test "$(git hash-object "$NEGATIVE_GUARD")" = "8d40bc7f3dce9c9717e41fa1060c553434ad9959"
+          test "$(git hash-object "$EVENT_LOGIC")" = "9f9b33fd8c210ad581025b454cf69b6999aa544b"
+          test "$(git hash-object "$EVENT_TEST")" = "e301f38db66f44193d799a9c1a02c99169823d45"
+          test "$(git hash-object "$TIMEBASE_BUILDER")" = "f7e9483aea16af770bcffe01ad8cfaf689d693b9"
+          test "$(git hash-object "$TIMEBASE_QC_CODE")" = "78acc9fd626039801011d039cca12686b72369c0"
+          test "$(git hash-object "$TRANSCRIBER")" = "fa163cafe2131aa73cdbb50df10d4e4912cff53b"
+          test "$(git hash-object "$STRUCTURAL_QC_CODE")" = "b7d3fa92fc9f3bed00931d19097e08cd91eab62b"
+          test "$(git hash-object "$JSON_NATIVE_TEST")" = "654557363745f580f425252395542e9fb91adaad"
+          test "$(git hash-object .github/workflows/v162-static-preflight.yml)" = "5d41bf0705bee19d49ac5928d0116078c56be7db"
+
+          python - <<'PY'
+          import json
+          from pathlib import Path
+          repair = json.loads(Path("debug/v162-cpu-autonomous/static-repair-preregistration.json").read_text())
+          assert repair["status"] == "SEALED_BEFORE_STATIC_FIXTURE_REPAIR"
+          assert repair["validation"] == "PASS"
+          assert repair["consumedOriginalStaticPreflight"]["runId"] == 33210896386
+          assert repair["consumedOriginalStaticPreflight"]["neverRerun"] is True
+          assert repair["repairScope"]["mayModify"] == ["validation/v162_cpu_autonomous/test_event_logic_v162.py"]
+          assert repair["repairScope"]["fixtureConstructionOnly"] is True
+          assert repair["repairScope"]["algorithmCodeChangeForbidden"] is True
+          assert repair["repairScope"]["numericThresholdChangeForbidden"] is True
+          PY
+
+          for path in \
+            debug/v162-cpu-autonomous/environment-receipt.json \
+            debug/v162-cpu-autonomous/timebase.json \
+            debug/v162-cpu-autonomous/timebase-qc.json \
+            debug/v162-cpu-autonomous/generated.json \
+            debug/v162-cpu-autonomous/generation-receipt.json \
+            debug/v162-cpu-autonomous/structural-qc.json \
+            debug/v162-cpu-autonomous/terminal-freeze.json \
+            debug/v162-cpu-autonomous/pre-run-identity-receipt.json \
+            .github/workflows/v162-generate.yml; do
+            test ! -e "$path"
+          done
+
+      - name: Compile exact repaired V162 implementation
+        shell: bash
+        run: |
+          set -euo pipefail
+          python -m py_compile \
+            "$EVENT_LOGIC" \
+            "$EVENT_TEST" \
+            "$TIMEBASE_BUILDER" \
+            "$TIMEBASE_QC_CODE" \
+            "$TRANSCRIBER" \
+            "$STRUCTURAL_QC_CODE" \
+            "$JSON_NATIVE_TEST" \
+            "$NEGATIVE_GUARD"
+
+      - name: Run song-blind negative runtime guard
+        shell: bash
+        run: |
+          set -euo pipefail
+          python "$NEGATIVE_GUARD" \
+            --event-logic "$EVENT_LOGIC" \
+            --event-test "$EVENT_TEST" \
+            --timebase-builder "$TIMEBASE_BUILDER" \
+            --timebase-qc "$TIMEBASE_QC_CODE" \
+            --transcriber "$TRANSCRIBER" \
+            --structural-qc "$STRUCTURAL_QC_CODE" \
+            --json-native-test "$JSON_NATIVE_TEST" \
+            --workflow .github/workflows/v162-static-repair.yml
+
+      - name: Install synthetic-fixture dependency only
+        shell: bash
+        run: |
+          set -euo pipefail
+          python -m pip install --disable-pip-version-check --no-cache-dir numpy==1.26.4
+
+      - name: Run complete V162 song-blind event and subdivision fixtures
+        shell: bash
+        working-directory: validation/v162_cpu_autonomous
+        run: |
+          set -euo pipefail
+          python test_event_logic_v162.py
+
+      - name: Run V162 JSON-native regression fixture
+        shell: bash
+        working-directory: validation/v162_cpu_autonomous
+        run: |
+          set -euo pipefail
+          python test_json_native_v162.py
+
+      - name: Final runtime absence proof
+        shell: bash
+        run: |
+          set -euo pipefail
+          for path in \
+            debug/v162-cpu-autonomous/environment-receipt.json \
+            debug/v162-cpu-autonomous/timebase.json \
+            debug/v162-cpu-autonomous/timebase-qc.json \
+            debug/v162-cpu-autonomous/generated.json \
+            debug/v162-cpu-autonomous/generation-receipt.json \
+            debug/v162-cpu-autonomous/structural-qc.json \
+            debug/v162-cpu-autonomous/terminal-freeze.json \
+            debug/v162-cpu-autonomous/pre-run-identity-receipt.json \
+            .github/workflows/v162-generate.yml; do
+            test ! -e "$path"
+          done
+          git fetch origin "$BRANCH"
+          test "$(git rev-parse "origin/$BRANCH")" = "$GITHUB_SHA"
