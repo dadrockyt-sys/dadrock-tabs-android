@@ -1,0 +1,35 @@
+name: V154 diagnose frontend failure once
+
+on:
+  push:
+    branches: [v143-contextual-prune-lobo]
+    paths: [.github/workflows/v154-diagnose-frontend-failure-once.yml]
+
+permissions:
+  contents: write
+
+env:
+  BRANCH: v143-contextual-prune-lobo
+
+jobs:
+  diagnose:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: v143-contextual-prune-lobo
+          fetch-depth: 1
+      - name: Run diagnostic-only CPU analysis
+        run: python validation/v154_cpu_multitrack/diagnose_frontend_failure.py
+      - name: Commit diagnostic and self-seal
+        run: |
+          set -euo pipefail
+          rm .github/workflows/v154-diagnose-frontend-failure-once.yml
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add debug/v154-cpu-autonomous/v154-frontend-reference-score/architecture-diagnostic.json \
+                  .github/workflows/v154-diagnose-frontend-failure-once.yml
+          git commit -m "validation: freeze V154 front-end architecture diagnostic [skip ci]"
+          git fetch origin "$BRANCH"
+          git rebase "origin/$BRANCH"
+          git push origin HEAD:"$BRANCH"
