@@ -1,0 +1,173 @@
+{
+  "schema": "dadrock.tabs.v162.reference-blind-cpu-preregistration.v1",
+  "version": "V162",
+  "status": "PREREGISTERED_BEFORE_IMPLEMENTATION_CODE",
+  "validation": "PASS",
+  "branch": "v143-contextual-prune-lobo",
+  "createdFromBranchHead": "f0b746b2f16a2536c19b6aca372596ab79f86879",
+  "purpose": "Freeze the V162 evidence boundary, successor hypotheses, validation plan, and one-shot CPU rules before any V162 implementation code exists. V162 is an architectural response to frozen aggregate V160/V161 evidence, not a same-song threshold retune.",
+  "terminalPredecessor": {
+    "version": "V161",
+    "generationTerminalCommit": "1b58ffcb8c2ee8fc7dd6152bf02c071d75035ade",
+    "scoreTerminalCommit": "d1dd2f07bc5e07130a858981821d3b67bc2de78b",
+    "candidateGitBlob": "52178705ef3830f6849b71037cd283877aa7655f",
+    "candidateSha256": "75c4edd6560ee832bf7df4799c4e9389a7424e7056ac5f3cd5a9e07fc254996a",
+    "scoreReportGitBlob": "08ebbd9f7ef38eeeb3defcce9aa445b21f120f57",
+    "scoreReportSha256": "3bf1c7da8304f2507e764e16deae62f36f220881dfa1d5f1c808fdedd6c34867",
+    "scoreTerminalGitBlob": "5b0550497432a6c5cb9b1b947694327b616f6241",
+    "scoreRunId": 33209465651,
+    "scoreRunNumber": 1,
+    "scoreRunAttempt": 1,
+    "scoreJobId": 98978832375,
+    "scoreOutcome": "SCORE_GATE_FAIL",
+    "candidateConsumedForever": true,
+    "scoreOpportunityConsumedForever": true,
+    "neverRerunOrRescoreV161": true
+  },
+  "allowedEvidenceBeforeV162Implementation": {
+    "aggregateFrozenScores": {
+      "V160": {
+        "combinedGuitarPrimaryF1": 0.09975470155355683,
+        "combinedGuitarGrossF1": 0.2131370945761788,
+        "combinedGuitarMeasurePitchF1": 0.3881166530389752,
+        "combinedGuitarGenerated": 2276,
+        "combinedGuitarPrimaryMatched": 183,
+        "combinedGuitarGrossMatched": 391,
+        "combinedGuitarMeasurePitchMatched": 712,
+        "bassPrimaryF1": 0.18073485600794442,
+        "bassGrossF1": 0.31777557100297915,
+        "bassMeasurePitchF1": 0.5124131082423039,
+        "bassGenerated": 460,
+        "bassPrimaryMatched": 91,
+        "bassGrossMatched": 160,
+        "bassMeasurePitchMatched": 258
+      },
+      "V161": {
+        "combinedGuitarPrimaryF1": 0.06993006993006994,
+        "combinedGuitarGrossF1": 0.1861888111888112,
+        "combinedGuitarMeasurePitchF1": 0.40297202797202797,
+        "combinedGuitarGenerated": 895,
+        "combinedGuitarPrimaryMatched": 80,
+        "combinedGuitarGrossMatched": 213,
+        "combinedGuitarMeasurePitchMatched": 461,
+        "bassPrimaryF1": 0.20883534136546184,
+        "bassGrossF1": 0.34136546184738953,
+        "bassMeasurePitchF1": 0.5261044176706828,
+        "bassGenerated": 449,
+        "bassPrimaryMatched": 104,
+        "bassGrossMatched": 170,
+        "bassMeasurePitchMatched": 262,
+        "aggregateReferenceCounts": {
+          "combinedGuitar": 1393,
+          "bass": 547
+        }
+      }
+    },
+    "referenceBlindRuntimeAggregates": {
+      "V161GuitarBasicPitchRaw": 1404,
+      "V161GuitarConsolidated": 985,
+      "V161GuitarAdmittedPreGrid": 978,
+      "V161GuitarFinal": 895,
+      "V161GuitarOnsetRefined": 827,
+      "V161GuitarRegisterRepairs": 382,
+      "V161GuitarStandaloneHarmonicRecovery": 0,
+      "V161BassDetectedOnsets": 465,
+      "V161BassMergedProposals": 464,
+      "V161BassFinal": 449,
+      "V161BassOnsetRefined": 464,
+      "V161BassPitchTransitionProposals": 0
+    },
+    "referenceBlindSourceCodeMayBeRead": [
+      "validation/v161_cpu_autonomous/event_logic_v161.py",
+      "validation/v161_cpu_autonomous/build_timebase_v161.py",
+      "validation/v161_cpu_autonomous/timebase_qc_v161.py",
+      "validation/v161_cpu_autonomous/transcribe_v161.py",
+      "validation/v161_cpu_autonomous/structural_qc_v161.py",
+      "validation/v161_cpu_autonomous/test_event_logic_v161.py",
+      "validation/v161_cpu_autonomous/test_json_native_v161.py",
+      "debug/v161-cpu-autonomous/negative-runtime-guard.py"
+    ],
+    "useRestriction": "Only the aggregate values copied into this preregistration and reference-blind source/QC structure may shape V162. No V161 event rows or professional-reference event/measure details may be inspected for tuning."
+  },
+  "forbiddenEvidenceAndActions": {
+    "professionalReferenceEventMining": true,
+    "professionalReferenceMeasureMining": true,
+    "referenceGuidedThresholdSelection": true,
+    "referenceGuidedVariantSelection": true,
+    "V161CandidateEventLevelReadForTuning": true,
+    "V161CandidateReuse": true,
+    "V161CandidateRepair": true,
+    "V161Regeneration": true,
+    "V161ReQc": true,
+    "V161Rescore": true,
+    "sameSongScoreLoopDuringV162Implementation": true,
+    "postScoreRetuneOfV161": true,
+    "humanCorrection": true,
+    "mainOrProductionModification": true
+  },
+  "frozenFailureInterpretation": {
+    "guitarPrecisionRecallTradeoff": "V161 greatly reduced Guitar event count and raised measure+pitch precision while primary recall and primary F1 fell. V162 therefore treats fixed-gap consolidation as over-destructive and must restore genuine repeated/rearticulated attacks without returning to V160 broad harmonic event flooding.",
+    "guitarTimingSubdivision": "V161 Guitar measure+pitch F1 remains far above gross timing F1, and gross remains far above primary timing F1. Local onset refinement alone did not solve event-to-grid placement. V162 will retain reference-blind beat/measure evidence but replace simple nearest-time 16-step placement with a song-blind subdivision-lattice evidence model.",
+    "guitarRegister": "V161 performed 382 isolated register repairs. V162 preregisters continuity-aware octave/register reasoning so an octave change must be supported by local spectral evidence plus neighboring pitch-track continuity rather than one-event evidence alone.",
+    "bassDirection": "Bass improved modestly across primary, gross, and measure+pitch metrics with similar event count, so V162 retains the useful onset/harmonic/pYIN foundation but replaces the zero-activation pitch-transition recovery branch with stable pitch-state/rearticulation segmentation.",
+    "notPermittedConclusion": "No event-level claim about the professional reference is permitted. These hypotheses derive only from frozen aggregate scores and reference-blind runtime aggregates."
+  },
+  "V162ArchitectureHypotheses": {
+    "H1_guitarRearticulationSegmentation": "Replace fixed same-MIDI gap merging with onset-aware note-state segmentation. Overlapping/sustained Basic Pitch fragments may consolidate, but a same-pitch fragment separated by a supported new attack must remain a distinct note. Numeric attack/continuity rules must be sealed before implementation.",
+    "H2_guitarEvidenceRecoveryWithoutFlooding": "Standalone harmonic-track event emission remains forbidden. Missing Guitar attacks may be recovered only when an independent instrument onset intersects a persistent Basic Pitch/model pitch state and harmonic/fundamental evidence supports the same pitch. Recovery must be attack-specific and deterministically capped.",
+    "H3_continuityAwareRegisterInference": "Octave/register selection becomes a short local track-state decision using raw pitch, harmonic/fundamental evidence, and neighboring admitted pitch continuity. Isolated +/-12 repair from a single frame is replaced by deterministic sequence-aware reasoning.",
+    "H4_songBlindSubdivisionLattice": "Keep the validated beat/measure backbone, but within each beat construct four 16th-step positions from local reference-blind onset evidence (drums/mix plus instrument onset) and regularized beat boundaries. Event quantization chooses among nearby subdivision states using evidence and temporal proximity rather than only globally interpolated nearest-step rounding.",
+    "H5_instrumentSpecificGridEvidence": "Guitar and Bass may use instrument-specific onset evidence to choose among the same shared subdivision lattice while preserving one canonical measure/step coordinate system. No scorer tolerance or reference alignment may change.",
+    "H6_bassStablePitchStateSegmentation": "Replace the inactive one-threshold pYIN transition proposal branch with a frame-state segmentation architecture: robustly smoothed pYIN/CQT consensus creates stable pitch states; new notes arise from stable state changes or supported same-pitch rearticulation onsets; sustained states do not emit repeated duplicates.",
+    "H7_activityAndConfidenceAsAdmissionNotDensityTarget": "Activity/confidence gates remain song-blind admission evidence. V162 may not target the professional reference event count or tune event density from the score; event count is an outcome of the sealed state/attack model.",
+    "H8_noMicroTune": "V162 must implement the new segmentation/register/subdivision architecture. It may not merely alter V161's 80ms merge, onset window, or admission thresholds in response to the V161 score."
+  },
+  "songBlindValidationPlan": {
+    "requiredBeforeSongProcessing": [
+      "Python compile checks for every V162 module",
+      "negative guard proving no professional-reference/scorer/V161-candidate/score paths are opened by generation or QC",
+      "synthetic Guitar sustained-fragment fixture proving fragments without a new attack consolidate",
+      "synthetic Guitar same-pitch rearticulation fixture proving a supported new attack remains a separate note",
+      "synthetic Guitar weak-attack fixture proving unsupported fragments do not multiply notes",
+      "synthetic octave/register continuity fixture proving isolated octave evidence cannot override a stable neighboring track unless the sealed sequence rule is met",
+      "synthetic subdivision-lattice fixture with locally shifted 16th onsets proving deterministic evidence-based step selection",
+      "synthetic subdivision ambiguity fixture proving deterministic tie-breaking and bounded correction",
+      "synthetic Bass stable-pitch sustain fixture proving no duplicate emission",
+      "synthetic Bass same-pitch rearticulation fixture proving supported reattack creates a new event",
+      "synthetic Bass stable pitch-change fixture proving state segmentation activates independently of the old zero-proposal transition branch",
+      "Guitar grid polyphony and Bass grid monophony deterministic cap fixtures",
+      "JSON-native receipt fixture",
+      "static proof pitch inference cannot execute before fresh V162 timebase QC PASS",
+      "absence proof for V162 runtime artifacts and generation workflow before arm"
+    ],
+    "sameSongAudioForbiddenDuringStaticValidation": true,
+    "professionalReferenceForbiddenDuringStaticValidation": true,
+    "V161CandidateForbiddenDuringStaticValidation": true,
+    "sameSongScoreForbiddenDuringImplementationValidation": true
+  },
+  "oneShotScientificBoundary": {
+    "numericImplementationContractRequiredBeforeV162Code": true,
+    "staticPreflightRequiredBeforeSongProcessing": true,
+    "preRunIdentitySealRequiredBeforeSongProcessing": true,
+    "freshSourceMaterializationRequired": true,
+    "freshNormalizationRequired": true,
+    "freshSeparationRequired": true,
+    "freshTimebaseRequired": true,
+    "freshIndependentTimebaseQcRequired": true,
+    "pitchInferenceBeforeTimebaseQcPassForbidden": true,
+    "freshV162CandidateOnly": true,
+    "freshIndependentStructuralQcRequired": true,
+    "generationRunCountMaximum": 1,
+    "generationRerunForbidden": true,
+    "candidateRepairAfterGenerationForbidden": true,
+    "professionalReferenceScoringMaximum": 1,
+    "separateScorePreregistrationRequiredAfterStructuralPass": true,
+    "postScoreRetuneOrRescoreForbidden": true
+  },
+  "computeBoundary": {
+    "defaultDevice": "cpu",
+    "cpuWorkAuthorized": true,
+    "gpuModalCudaRequiresFreshExplicitUserAuthorizationImmediatelyBeforeExecution": true
+  },
+  "nextAction": "Inspect only V162-allowed V161 reference-blind source and create/seal debug/v162-cpu-autonomous/implementation-contract.json with all segmentation, register-state, subdivision-lattice, admission, tie-break, and fixture numerics before writing V162 implementation code."
+}
