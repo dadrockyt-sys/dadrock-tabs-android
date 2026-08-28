@@ -1,0 +1,78 @@
+{
+  "candidateFreezeCommit": "c26e41d239d44d656bf57cf195ed39416658b680",
+  "frozenInputs": {
+    "generatedGitBlob": "3491814f4cc075aaf3eefaecf2d179f57d2d5dae",
+    "generatedSha256": "f5dc7094b72f8e3a988b1fdd59808cb056461d7e12a6d41508942cf499de3e71",
+    "qcGitBlob": "3528adbceb640743cc8f0e472d2cd62c49c1ebc3",
+    "referenceSha256": "b39a203aec3f45800891fe4eca156e37e7571b91ea5c4ccc41b30bbc95fc89e7",
+    "scorerGitBlobSha": "9644e65719fbd361a9b39778ae9950c5e983e855"
+  },
+  "gates": {
+    "bassPass": false,
+    "bassTimingAwarePitchF1": 0.05757575757575757,
+    "bassTimingAwarePitchF1Target": 0.8,
+    "bothFrontEndGatesPass": false,
+    "combinedGuitarPass": false,
+    "combinedGuitarTimingAwarePitchF1": 0.07692307692307694,
+    "combinedGuitarTimingAwarePitchF1Target": 0.8
+  },
+  "metrics": {
+    "bassGrossTimingAwarePitch": {
+      "f1": 0.14242424242424245,
+      "falseNegative": 500,
+      "falsePositive": 66,
+      "generated": 113,
+      "matched": 47,
+      "precision": 0.415929203539823,
+      "recall": 0.08592321755027423,
+      "reference": 547
+    },
+    "bassPrimaryTimingAwarePitch": {
+      "f1": 0.05757575757575757,
+      "falseNegative": 528,
+      "falsePositive": 94,
+      "generated": 113,
+      "matched": 19,
+      "precision": 0.168141592920354,
+      "recall": 0.03473491773308958,
+      "reference": 547
+    },
+    "combinedGuitarGrossTimingAwarePitch": {
+      "f1": 0.21752837326607818,
+      "falseNegative": 1048,
+      "falsePositive": 1434,
+      "generated": 1779,
+      "matched": 345,
+      "precision": 0.19392917369308602,
+      "recall": 0.24766690595836324,
+      "reference": 1393
+    },
+    "combinedGuitarPrimaryTimingAwarePitch": {
+      "f1": 0.07692307692307694,
+      "falseNegative": 1271,
+      "falsePositive": 1657,
+      "generated": 1779,
+      "matched": 122,
+      "precision": 0.06857785272625071,
+      "recall": 0.08758076094759512,
+      "reference": 1393
+    }
+  },
+  "policy": {
+    "cpuOnly": true,
+    "generatedCandidateModified": false,
+    "generatedCandidateRetuned": false,
+    "humanCandidateCorrection": false,
+    "mainOrProductionModified": false,
+    "modalL4CudaGpuUsed": false,
+    "postScoreRetuningOfSameGeneratedOutputForbidden": true,
+    "thresholdSweep": false,
+    "variantSelection": false
+  },
+  "referenceFacingScoreCalls": 1,
+  "schema": "dadrock.tabs.v157.cpu-front-end-score-receipt.v1",
+  "scorePath": "debug/v157-cpu-autonomous/frontend-reference-score/score.json",
+  "scoreSha256": "ffd66347990eff113814f207c303773734e79c0461fa4e4d129f1de8472594d8",
+  "scorerInvocationCountInWrapper": 1,
+  "validation": "PASS"
+}
