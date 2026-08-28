@@ -1,0 +1,48 @@
+{
+  "schema": "dadrock.tabs.v159.post-terminal-structural-runtime-diagnosis.v1",
+  "version": "V159",
+  "status": "FROZEN_POST_TERMINAL_DIAGNOSIS",
+  "scope": "REFERENCE_BLIND_IMPLEMENTATION_ONLY",
+  "terminalFreeze": {
+    "commit": "e0ab58ef5766f6c1515453c05b80e86429140acb",
+    "artifact": "debug/v159-cpu-autonomous/terminal-freeze.json",
+    "outcome": "STRUCTURAL_QC_RUNTIME_FAIL",
+    "candidateAuthoritative": false,
+    "eligibleForProfessionalReferenceScoring": false,
+    "neverRearmV159": true
+  },
+  "structuralQcImplementation": {
+    "path": "validation/v159_cpu_autonomous/structural_qc_v159.py",
+    "gitBlob": "a3fbf4e8d827aca955a0995fc31930a8c631c932",
+    "observedRuntimeFailure": "TypeError: Object of type bool_ is not JSON serializable",
+    "failureOperation": "json.dumps(receipt, indent=2, sort_keys=True) while writing the structural-QC receipt"
+  },
+  "rootCause": {
+    "proven": true,
+    "leakingReceiptField": "checks.frozenGrid",
+    "sourceExpression": "len(times) >= 2 and len(times) == len(steps) and np.all(np.isfinite(times)) and np.all(np.isfinite(steps)) and np.all(np.diff(times) > 0.0) and np.all(np.diff(steps) == 4.0)",
+    "mechanism": "Python boolean 'and' returns the final evaluated operand rather than coercing it to built-in bool. With the V159 grid checks truthy, the final operand is np.all(np.diff(steps) == 4.0), whose result is numpy.bool_. That numpy.bool_ is stored directly in checks['frozenGrid']. The later aggregate passed = all(bool(value) for value in checks.values()) converts values only for the aggregate decision and does not mutate checks. The receipt then embeds the original checks dictionary, so json.dumps encounters the numpy.bool_ and raises TypeError before any structural-QC receipt is written.",
+    "otherDirectCheckAssignmentsReviewed": "All other values assigned into checks are produced by Python comparisons, Python bool-returning helper functions, dictionary equality, or stream_check's len(errors) == 0. No other NumPy scalar/array is directly embedded in the receipt by the reviewed implementation.",
+    "repairClassForSuccessorOnly": "Normalize every QC receipt value recursively to JSON-native scalars/containers before serialization, and additionally make frozenGrid explicitly bool(...). Add a static synthetic serialization test containing numpy.bool_, numpy.integer, numpy.floating, and ndarray values so this class of defect is caught before audio execution."
+  },
+  "interpretationBoundary": {
+    "timebaseQcPassed": true,
+    "candidateWasCreated": true,
+    "structuralQcReceiptExists": false,
+    "structuralPassOrFailMayBeInferred": false,
+    "v159MayBeRepairedOrReplayed": false,
+    "v159CandidateMayBeScored": false,
+    "successorMustBeFreshlyPreregisteredBeforeImplementationOrExecution": true
+  },
+  "diagnosisSafety": {
+    "professionalReferenceReadDuringDiagnosis": false,
+    "professionalReferencePathsOpenedDuringDiagnosis": 0,
+    "referenceFacingScoreCallsDuringDiagnosis": 0,
+    "candidateContentReadDuringDiagnosis": false,
+    "priorScoreReadDuringDiagnosis": false,
+    "gpuExecutionsDuringDiagnosis": 0,
+    "modalExecutionsDuringDiagnosis": 0,
+    "cudaExecutionsDuringDiagnosis": 0,
+    "mainOrProductionModified": false
+  }
+}
