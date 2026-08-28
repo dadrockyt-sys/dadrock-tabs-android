@@ -1,0 +1,106 @@
+{
+  "schema": "dadrock.tabs.v158.pre-run-identity-receipt.v1",
+  "version": "V158",
+  "validation": "PASS",
+  "status": "SEALED_BEFORE_GENERATION",
+  "purpose": "Cryptographically pin the complete V158 CPU generation and independent-QC setup before any V158 candidate, generation receipt, environment receipt, generation workflow, professional-reference read, or reference-facing score call exists.",
+  "sealedAtBranchHeadBeforeThisReceipt": "b6c508aa9238fa1f6924969d0d10a0c9d57bf93f",
+  "song": {
+    "artist": "Lenny Kravitz",
+    "title": "Are You Gonna Go My Way",
+    "historicalSourceAudioSha256": "215bd5a657c5326f08f132ae358595a95c30b39bb7493a52c2f910d5a608149f",
+    "normalizedWavSha256": "3e61b7926eabc21b758c750f826c7426a29d6de5aafdd5c93f8045ecdc67f87e"
+  },
+  "pinnedGitBlobs": {
+    "preregistration": "728cf28646db225f3c266a4bb73a6112b1f60330",
+    "implementationContract": "68f01df155cd27077cea3de5a0cd048ddcb7bd76",
+    "sparsePursuitResolution": "b4b6a5c1f8a88d359a981eb1238907805f2fc2a9",
+    "transcriber": "91d65049031506fe44b44e034b1ab04022ba0b91",
+    "baseHelper": "5617ff1a6ea301ecaeb898b123b05d2a8c915388",
+    "structuralQc": "0bbb08225f0a21bc5bf4889189f22d89953371df"
+  },
+  "canonicalSchemas": {
+    "candidate": "dadrock.tabs.v158.cpu-sequential-onset-first-generated.v1",
+    "generationReceipt": "dadrock.tabs.v158.cpu-generation-receipt.v1",
+    "environmentReceipt": "dadrock.tabs.v158.cpu-environment-receipt.v1",
+    "structuralQc": "dadrock.tabs.v158.reference-blind-structural-qc.v1",
+    "preRunReceipt": "dadrock.tabs.v158.pre-run-identity-receipt.v1"
+  },
+  "setupAudit": {
+    "workflowPath": ".github/workflows/v158-setup-syntax.yml",
+    "workflowGitBlob": "ac7b8c3de34f527e0d3f9b0b0160538b93b30e70",
+    "workflowCommit": "b6c508aa9238fa1f6924969d0d10a0c9d57bf93f",
+    "workflowRunId": 33145622458,
+    "workflowRunNumber": 1,
+    "conclusion": "success",
+    "checks": {
+      "pythonCompile": "PASS",
+      "frozenGitBlobIdentities": "PASS",
+      "referenceAndPriorOutputPathIsolation": "PASS",
+      "candidateReceiptsPreRunAndGenerationWorkflowAbsentAtAudit": "PASS"
+    }
+  },
+  "candidateExistsAtSeal": false,
+  "generationReceiptAbsentAtSeal": true,
+  "environmentReceiptAbsentAtSeal": true,
+  "generationWorkflowAbsentAtSeal": true,
+  "referenceReadAtSeal": false,
+  "professionalReferencePathsOpenedAtSeal": 0,
+  "referenceFacingScoreCallsAtSeal": 0,
+  "triggerSafety": {
+    "generationWorkflowCreationIsSingleTrigger": true,
+    "secondArmEditForbidden": true,
+    "expectedGenerationWorkflowRunCount": 1,
+    "workflowMustSelfSealAfterSuccessfulFreeze": true,
+    "duplicateRunAction": "ABORT_V158_WITHOUT_SCORING",
+    "branchWritesWhileGenerationActiveForbidden": true
+  },
+  "executionContract": {
+    "device": "cpu",
+    "gpuAllowedWithoutFreshExplicitUserAuthorization": false,
+    "modalAllowedWithoutFreshExplicitUserAuthorization": false,
+    "demucsModel": "htdemucs_6s",
+    "demucsShifts": 1,
+    "demucsJobs": 1,
+    "python": "3.10.x",
+    "torch": "2.8.0+cpu",
+    "deterministicSeeds": 0,
+    "torchNumThreads": 1,
+    "torchNumInteropThreads": 1,
+    "ompNumThreads": 1,
+    "mklNumThreads": 1,
+    "openblasNumThreads": 1,
+    "numexprNumThreads": 1,
+    "separationRepeatCount": 1
+  },
+  "dependencyPins": {
+    "numpy": "1.26.4",
+    "scipy": "1.13.1",
+    "librosa": "0.11.0",
+    "soundfile": "0.12.1",
+    "imageio-ffmpeg": "0.6.0",
+    "demucs": "4.1.0",
+    "basic-pitch": "0.4.0",
+    "torch": "2.8.0+cpu"
+  },
+  "referenceIsolation": {
+    "generationMayReadProfessionalReferences": false,
+    "generationMayReadFrozenScorer": false,
+    "generationMayReadPriorGeneratedCandidates": false,
+    "generationMayReadPriorScoresOrDiagnostics": false,
+    "structuralQcMayReadProfessionalReferences": false,
+    "structuralQcMayReadFrozenScorer": false,
+    "referenceGuidedFiltering": false,
+    "thresholdSweep": false,
+    "variantSelection": false,
+    "humanCorrection": false
+  },
+  "safety": {
+    "referenceRead": false,
+    "professionalReferencePathsOpened": 0,
+    "referenceFacingScoreCalls": 0,
+    "cudaGpuUsed": false,
+    "modalUsed": false,
+    "mainOrProductionModified": false
+  }
+}
