@@ -244,109 +244,6 @@ export default function AdminJpgTabStudioPage() {
         logoImage = null;
       }
 
-      const cover = pdfDoc.addPage([612, 792]);
-      if (logoImage) {
-        const logo = logoImage.scaleToFit(230, 105);
-        cover.drawImage(logoImage, {
-          x: (612 - logo.width) / 2,
-          y: 650,
-          width: logo.width,
-          height: logo.height,
-        });
-      } else {
-        cover.drawText('DADROCK TABS', { x: 196, y: 705, size: 26, font: bold, color: dark });
-      }
-
-      cover.drawText('TAB STUDIO', {
-        x: 223,
-        y: 610,
-        size: 22,
-        font: bold,
-        color: accent,
-      });
-      cover.drawText('Professional Exact-Image Edition', {
-        x: 196,
-        y: 585,
-        size: 11,
-        font: regular,
-        color: muted,
-      });
-      cover.drawLine({
-        start: { x: 56, y: 555 },
-        end: { x: 556, y: 555 },
-        thickness: 1,
-        color: lightLine,
-      });
-
-      const songSize = fitTextSize(bold, cleanSong, 500, 27, 16);
-      cover.drawText(cleanSong, {
-        x: 56,
-        y: 505,
-        size: songSize,
-        font: bold,
-        color: dark,
-      });
-      const artistSize = fitTextSize(regular, cleanArtist, 500, 18, 12);
-      cover.drawText(cleanArtist, {
-        x: 56,
-        y: 472,
-        size: artistSize,
-        font: regular,
-        color: muted,
-      });
-      cover.drawText(instrumentLabel.toUpperCase(), {
-        x: 56,
-        y: 425,
-        size: 12,
-        font: bold,
-        color: accent,
-      });
-
-      cover.drawRectangle({
-        x: 56,
-        y: 250,
-        width: 500,
-        height: 120,
-        color: rgb(0.97, 0.97, 0.975),
-        borderColor: lightLine,
-        borderWidth: 1,
-      });
-      cover.drawText('EXACT JPG PRESERVATION', {
-        x: 78,
-        y: 335,
-        size: 11,
-        font: bold,
-        color: dark,
-      });
-      cover.drawText('Each source JPG is embedded directly in the PDF.', {
-        x: 78,
-        y: 310,
-        size: 10,
-        font: regular,
-        color: muted,
-      });
-      cover.drawText('No OCR. No AI redraw. No measure reflow. No image cropping.', {
-        x: 78,
-        y: 289,
-        size: 10,
-        font: regular,
-        color: muted,
-      });
-      cover.drawText(`${pageFiles.length} original tab page${pageFiles.length === 1 ? '' : 's'} follow this cover.`, {
-        x: 78,
-        y: 268,
-        size: 10,
-        font: regular,
-        color: muted,
-      });
-      cover.drawText('DadRock Tab Studio • dadrocktabs.com', {
-        x: 205,
-        y: 36,
-        size: 8,
-        font: regular,
-        color: muted,
-      });
-
       for (let index = 0; index < pageFiles.length; index += 1) {
         const source = pageFiles[index];
         const sourceBytes = await source.file.arrayBuffer();
@@ -401,7 +298,7 @@ export default function AdminJpgTabStudioPage() {
         const renderWidth = jpg.width * scale;
         const renderHeight = jpg.height * scale;
         const imageX = (612 - renderWidth) / 2;
-        const imageY = 48 + (650 - renderHeight) / 2;
+        const imageY = 698 - renderHeight;
 
         page.drawImage(jpg, {
           x: imageX,
