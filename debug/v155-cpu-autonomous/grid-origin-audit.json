@@ -1,0 +1,115 @@
+{
+  "activity": {
+    "activeFrameFraction": 0.23445094324079413,
+    "activityStartSeconds": 159.2366439909297,
+    "method": "sustained-active-window",
+    "noiseFloorDb": -22.34083088627704,
+    "requiredFraction": 0.8,
+    "thresholdDb": -10.34083088627704,
+    "windowSeconds": 0.5
+  },
+  "audio": {
+    "decodedDurationSeconds": 211.44090702947847,
+    "decodedSampleRate": 44100,
+    "decodedSamples": 9324544,
+    "m4aSha256": "215bd5a657c5326f08f132ae358595a95c30b39bb7493a52c2f910d5a608149f"
+  },
+  "audioOnlyOriginEstimate": {
+    "analysisWindowSeconds": [
+      159.2366439909297,
+      211.41768707482993
+    ],
+    "barPhaseRelativeMargin": 0.11831564840589798,
+    "barResidueScores": [
+      {
+        "beats": 28,
+        "residue": 0,
+        "score": 0.04632176053656501
+      },
+      {
+        "beats": 28,
+        "residue": 1,
+        "score": 0.04215088808155824
+      },
+      {
+        "beats": 28,
+        "residue": 2,
+        "score": 0.05253780500122601
+      },
+      {
+        "beats": 28,
+        "residue": 3,
+        "score": 0.044389209230657777
+      }
+    ],
+    "beatPeriodSeconds": 0.46439909297052157,
+    "beatPhaseRelativeMargin": 0.015838370832821545,
+    "beatPhaseScore": 0.046349915712501764,
+    "beatPhaseSecondScore": 0.0456158085593613,
+    "bestBeatPhaseSeconds": 0.12770975056689343,
+    "bestDownbeatResidue": 2,
+    "mappingRule": "scoreAbsoluteStep=(audioSeconds-originSeconds)/stepDurationSeconds",
+    "noveltyCap95": 0.14116778139105438,
+    "originBeatIndex": 342,
+    "originSeconds": 158.95219954648528,
+    "originSixteenthSteps": 1369.1000000000001
+  },
+  "classification": "reference-blind-cpu-audio-grid-origin-diagnostic",
+  "controlledGrid": {
+    "stepDurationSeconds": 0.11609977324263039,
+    "stepsPerBeat": 4,
+    "tempoBpm": 129.19921875
+  },
+  "policy": {
+    "candidateGenerated": false,
+    "candidateModified": false,
+    "candidateSelected": false,
+    "cpuOnly": true,
+    "gpuCudaModalL4Used": false,
+    "mainOrProductionModified": false,
+    "officialScorerCalled": false,
+    "professionalReferenceRead": false,
+    "referenceDerivedOffsetHardcoded": false
+  },
+  "rawOnsetPeaks": {
+    "firstTenPeakSeconds": [
+      0.6385487528344671,
+      0.7082086167800453,
+      1.1784126984126984,
+      1.4338321995464853,
+      1.6370068027210884,
+      1.8459863945578232,
+      2.1420408163265305,
+      2.391655328798186,
+      2.6006349206349206,
+      2.6586848072562357
+    ],
+    "mad": 0.011278754881884751,
+    "median": 0.011278754881884751,
+    "minimumSeparationSeconds": 0.052244897959183675,
+    "peakCount": 1087,
+    "threshold": 0.039475642086596624
+  },
+  "schema": "dadrock.tabs.v155.grid-origin-audit.v1",
+  "v154TranscriptionLatencyDiagnostic": {
+    "bass": {
+      "coverage": 0.9984251968503937,
+      "eventsWithNearbyRawOnset": 634,
+      "generatedEvents": 635,
+      "medianGeneratedMinusRawOnsetSeconds": 0.013656462585032614,
+      "p10Seconds": -0.02854213151927851,
+      "p90Seconds": 0.06836712018142638,
+      "windowSeconds": 0.3
+    },
+    "combinedGuitar": {
+      "coverage": 0.9981634527089073,
+      "eventsWithNearbyRawOnset": 1087,
+      "generatedEvents": 1089,
+      "medianGeneratedMinusRawOnsetSeconds": 0.010830839002267112,
+      "p10Seconds": -0.07936925170068035,
+      "p90Seconds": 0.09527637188209041,
+      "windowSeconds": 0.3
+    }
+  },
+  "validation": "PASS"
+}
