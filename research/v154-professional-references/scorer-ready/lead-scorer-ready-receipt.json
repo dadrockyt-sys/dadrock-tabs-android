@@ -1,0 +1,53 @@
+{
+  "audit": {
+    "continuationOnlySuppressed": 23,
+    "deadNotesSuppressedFromPitchRows": 11,
+    "excludedSourceMeasureEvents": {
+      "28": 10,
+      "39": 1
+    },
+    "meterMappingAnchors": {
+      "m107s0": {
+        "measure": 106,
+        "step": 8
+      },
+      "m107s6": {
+        "measure": 106,
+        "step": 14
+      },
+      "m108s0": {
+        "measure": 107,
+        "step": 8
+      },
+      "m108s6": {
+        "measure": 107,
+        "step": 14
+      }
+    },
+    "pitchedScorerRows": 447,
+    "sourceEvents": 487,
+    "sourceMeasures": 113,
+    "totalSourceLength16ths": 1800
+  },
+  "frozenInputs": {
+    "research/v154-professional-references/lead-professional-reference-machine-readable.json": "122e0f6b2fa63fb2ea701e9cefe897dd4337fd08de0792e11579f4933804b716",
+    "research/v154-professional-references/lead-source-local-attack-timing.json": "a1c30e9a14048fac6da6801d1ace1db203daf8807511f26c76a268e3cbf426c3",
+    "research/v154-professional-references/source-meter-to-fixed-grid-mapping.json": "1c8ed50839f4fa365616281c70fa490d47a7e222600b34ae4f1545e09f587648"
+  },
+  "outputPath": "research/v154-professional-references/scorer-ready/lead-scorer-ready.json",
+  "outputSha256": "8fa39681bb7eb8cf214c364a3abd2f295488b123fddec3f2cebd3f19f014c0be",
+  "policy": {
+    "candidateGenerationMayReadReference": false,
+    "generatedCandidateModified": false,
+    "generatedCandidateRead": false,
+    "humanCandidateCorrection": false,
+    "mainOrProductionModified": false,
+    "modalL4CudaGpuUsed": false,
+    "referenceFacingScoreCalls": 0,
+    "referenceOnly": true,
+    "scoringPerformed": false,
+    "thresholdSweep": false
+  },
+  "schema": "dadrock.tabs.v154.lead-scorer-ready-receipt.v1",
+  "validation": "PASS"
+}
