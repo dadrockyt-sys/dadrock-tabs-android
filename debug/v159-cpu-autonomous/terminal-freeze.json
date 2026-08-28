@@ -1,0 +1,48 @@
+{
+  "artifacts": {
+    "candidate": {
+      "exists": true,
+      "sha256": "a2057b0f160f8f689ea7593acb277e8a6c56325ef3183cfef58e7196907fb36c"
+    },
+    "environmentReceipt": {
+      "exists": true,
+      "sha256": "f1348bd53547b9b168793d694b9f777cde9b8b6e1fc3d03f069b5db216445154"
+    },
+    "generationReceipt": {
+      "exists": true,
+      "sha256": "a7551158b77be424f661e7eed9090e2656f6b3088c9c5df156e1ccc850b5476e"
+    },
+    "structuralQc": {
+      "exists": false,
+      "sha256": null
+    },
+    "timebase": {
+      "exists": true,
+      "sha256": "036b60261bdd07def93352ec18d03d13727e3f25cd3550d308fb0b9e94c73b53"
+    },
+    "timebaseQc": {
+      "exists": true,
+      "sha256": "d8b5337d884258aaa9d9f3a3ed48493396e226077f480db0b56bca9e60ba2a01"
+    }
+  },
+  "candidateAuthoritative": false,
+  "eligibleForProfessionalReferenceScoring": false,
+  "lastCompletedStage": "CANDIDATE_CREATED",
+  "neverRearmV159": true,
+  "outcome": "STRUCTURAL_QC_RUNTIME_FAIL",
+  "safety": {
+    "cudaGpuUsed": false,
+    "mainOrProductionModified": false,
+    "modalUsed": false,
+    "professionalReferencePathsOpened": 0,
+    "referenceFacingScoreCalls": 0,
+    "referenceRead": false
+  },
+  "schema": "dadrock.tabs.v159.terminal-freeze.v1",
+  "status": "TERMINAL",
+  "version": "V159",
+  "workflowHeadSha": "0e33dc356cef573a146bfe74fae718a523aa8fec",
+  "workflowRunAttempt": 1,
+  "workflowRunId": 33195994387,
+  "workflowRunNumber": 1
+}

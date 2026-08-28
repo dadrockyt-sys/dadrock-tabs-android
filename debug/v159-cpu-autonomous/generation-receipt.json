@@ -1,0 +1,95 @@
+{
+  "candidatePath": "debug/v159-cpu-autonomous/generated.json",
+  "candidateSha256": "a2057b0f160f8f689ea7593acb277e8a6c56325ef3183cfef58e7196907fb36c",
+  "counts": {
+    "bass": 460,
+    "combinedGuitar": 2276
+  },
+  "environment": {
+    "cudaAvailable": false,
+    "dependencyVersions": {
+      "basic-pitch": "0.4.0",
+      "demucs": "4.1.0",
+      "imageio-ffmpeg": "0.6.0",
+      "librosa": "0.11.0",
+      "numpy": "1.26.4",
+      "scipy": "1.13.1",
+      "soundfile": "0.12.1"
+    },
+    "determinism": {
+      "mathLibraryThreads": 1,
+      "seed": 0,
+      "torchDeterministicAlgorithms": true,
+      "torchNumInteropThreads": 1,
+      "torchNumThreads": 1
+    },
+    "device": "cpu",
+    "generationWorkflowGitBlob": "c5e055ba1025094d14c0b9246b52a6054741cfda",
+    "pythonVersion": "3.10.21",
+    "safety": {
+      "cudaGpuUsed": false,
+      "mainOrProductionModified": false,
+      "modalUsed": false,
+      "professionalReferencePathsOpened": 0,
+      "referenceFacingScoreCalls": 0,
+      "referenceRead": false
+    },
+    "schema": "dadrock.tabs.v159.cpu-environment-receipt.v1",
+    "separation": {
+      "bassStemSha256": "0a6b51381f6743ebc48da9a316005e336102b38a06f09c63404ab24e830c4769",
+      "device": "cpu",
+      "drumsStemSha256": "ff2af3c71ac597e4f4d6deadb7b1edf3be4cc7473ee6f66fc70293766bf6450e",
+      "guitarStemSha256": "a35066ff38ae20ebb10a9c236900567432c9e3e2dfbe8ef22a98881392ac3f39",
+      "jobs": 1,
+      "model": "htdemucs_6s",
+      "normalizedMixSha256": "3e61b7926eabc21b758c750f826c7426a29d6de5aafdd5c93f8045ecdc67f87e",
+      "repeatCount": 1,
+      "shifts": 1
+    },
+    "torchCudaVersion": null,
+    "torchVersion": "2.8.0+cpu",
+    "validation": "PASS",
+    "version": "V159",
+    "workflowHeadSha": "0e33dc356cef573a146bfe74fae718a523aa8fec",
+    "workflowRunAttempt": 1,
+    "workflowRunId": 33195994387,
+    "workflowRunNumber": 1
+  },
+  "environmentReceiptSha256": "f1348bd53547b9b168793d694b9f777cde9b8b6e1fc3d03f069b5db216445154",
+  "implementation": {
+    "canonicalEntryPointGitBlob": "290d26099f9ac082eb19173f03d1904f7fbab45d"
+  },
+  "implementationContractSha256": "adeb0def2eb38a74ce848df32e6c1d864816842b88a265e4fd95ce284c897d2d",
+  "inputIdentities": {
+    "bassStemSha256": "0a6b51381f6743ebc48da9a316005e336102b38a06f09c63404ab24e830c4769",
+    "drumsStemSha256": "ff2af3c71ac597e4f4d6deadb7b1edf3be4cc7473ee6f66fc70293766bf6450e",
+    "guitarStemSha256": "a35066ff38ae20ebb10a9c236900567432c9e3e2dfbe8ef22a98881392ac3f39",
+    "mixSha256": "3e61b7926eabc21b758c750f826c7426a29d6de5aafdd5c93f8045ecdc67f87e"
+  },
+  "preGridExcluded": {
+    "bass": 0,
+    "combinedGuitar": 0
+  },
+  "preRunReceiptSha256": "c46b24b9ad56f9755df6b4ddbe47c2b7e6f58d75d3426008af27d2efb93a7592",
+  "preregistrationSha256": "04e9228aee177a95f2f27d13115e6f0fbf13f23e1356f38077e8a677649bbd3f",
+  "safety": {
+    "cudaGpuUsed": false,
+    "humanCorrection": false,
+    "mainOrProductionModified": false,
+    "modalUsed": false,
+    "priorDiagnosticReadByRuntime": false,
+    "priorGeneratedCandidateRead": false,
+    "priorScoreRead": false,
+    "professionalReferencePathsOpened": 0,
+    "referenceFacingScoreCalls": 0,
+    "referenceGuidedFiltering": false,
+    "referenceRead": false,
+    "thresholdSweep": false,
+    "variantSelection": false
+  },
+  "schema": "dadrock.tabs.v159.cpu-generation-receipt.v1",
+  "timebaseQcSha256": "d8b5337d884258aaa9d9f3a3ed48493396e226077f480db0b56bca9e60ba2a01",
+  "timebaseSha256": "036b60261bdd07def93352ec18d03d13727e3f25cd3550d308fb0b9e94c73b53",
+  "validation": "PENDING_INDEPENDENT_STRUCTURAL_QC",
+  "version": "V159"
+}
