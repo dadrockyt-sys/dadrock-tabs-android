@@ -4,7 +4,7 @@ Updated: 2026-08-28 UTC
 Branch: `v143-contextual-prune-lobo`
 
 ## Active phase
-**V163 is terminal/consumed and permanently closed. V164 is preregistered, its numeric contract and implementation are frozen, the final CPU-only static preflight passed, and the V164 pre-run identity receipt is now separately sealed. No V164 song audio, normalization, separation, pitch inference, candidate generation, professional-reference/scorer read, V163 candidate/score read, or GPU execution has occurred. Next boundary: independently verify and seal the full CPU generation environment before any song processing.**
+**V163 is terminal/consumed and permanently closed. V164 is preregistered; its numeric contract, implementation, final CPU static preflight, pre-run identity, and full CPU generation environment are all separately sealed PASS. No V164 song audio, normalization, separation, timebase, pitch inference, candidate generation, professional-reference/scorer read, V163 candidate/score read, or GPU execution has occurred. The next boundary is the one-shot CPU V164 generation arm after all preparatory branch writes are finished.**
 
 ## Standing safety
 - CPU-only reference-free work authorized at assistant discretion.
@@ -35,46 +35,44 @@ Branch: `v143-contextual-prune-lobo`
 - `negative-runtime-guard.py` blob `230aa1efeb4640aabbb05720ead031e13cc57337`.
 - Frozen V162 pins: contract `409da313ed03a6c232d6578d48b0da6aa35b000b`; event logic `9f9b33fd8c210ad581025b454cf69b6999aa544b`; timebase builder `f7e9483aea16af770bcffe01ad8cfaf689d693b9`; timebase QC `78acc9fd626039801011d039cca12686b72369c0`; transcriber `fa163cafe2131aa73cdbb50df10d4e4912cff53b`; structural QC `b7d3fa92fc9f3bed00931d19097e08cd91eab62b`; event fixture `e301f38db66f44193d799a9c1a02c99169823d45`; JSON fixture `654557363745f580f425252395542e9fb91adaad`; negative guard `8d40bc7f3dce9c9717e41fa1060c553434ad9959`.
 
-## Cellphone-safe V164 static preflight
-- Original feature-branch-only `workflow_dispatch` was invisible in the mobile/default-branch Actions UI. User explicitly authorized a safe cellphone-friendly workaround.
-- Automatic feature-branch push trigger was added without changing V164 implementation/numerics or `main`.
-- Trigger was then narrowed to the V164 workflow/code/guard and frozen-dependency paths so ordinary checkpoint/receipt commits do not retrigger it.
-- Current workflow `.github/workflows/v164-static-preflight.yml` blob `e6beec5526ed5e4925475eaab86f5ca78909a349`; narrowing commit `720f26aa7f23fcdc127aa8cbe34e05e7ca63f215`.
-- PR #22 remains an unmerged visibility/check surface targeting `main`; `main` is untouched.
+## Cellphone-safe V164 static preflight — PASS
+- Current static workflow `.github/workflows/v164-static-preflight.yml` blob `e6beec5526ed5e4925475eaab86f5ca78909a349`; guarded-path narrowing commit `720f26aa7f23fcdc127aa8cbe34e05e7ca63f215`.
+- Authoritative final static run `33221759016`, run number `3`, attempt `1`, job `99017084779`, head `720f26aa7f23fcdc127aa8cbe34e05e7ca63f215`.
+- Syntax compile PASS; local-evidence invariance PASS; JSON-native provenance PASS; negative guard PASS with `failures=[]`.
+- Safety: songAudioRead=false; demucsInvoked=false; pitchInferenceInvoked=false; professionalReferenceRead=false; frozenScorerRead=false; V163CandidateRead=false; V163ScoreRead=false; gpuUsed=false.
+- Earlier redundant safe PASS runs: `33221653962` / `99016763456` and `33221718293` / `99016958023`.
+- PR #22 remains unmerged and is only a visibility/check surface; `main` is untouched.
 
-## Final V164 CPU Static Preflight — PASS
-- Authoritative final guarded run: ID `33221759016`, run number `3`, attempt `1`, job `99017084779`, head SHA `720f26aa7f23fcdc127aa8cbe34e05e7ca63f215`.
-- Ubuntu `24.04.4`; Python `3.11.16`; static dependency `numpy==2.0.2`.
-- Syntax compile: PASS.
-- Local-evidence invariance fixture `dadrock.tabs.v164.local-evidence-static-test.v2`: PASS.
-- JSON-native provenance fixture `dadrock.tabs.v164.json-native-local-provenance-static-test.v1`: PASS.
-- Negative guard `dadrock.tabs.v164.negative-runtime-guard.v1`: PASS, `failures=[]`.
-- All safety checks true: exact frozen V162 deps; local event logic; remote/local-scale invariance; timebase-before-pitch; transcriber QC-before-pitch/local adaptation; structural-QC local-evidence recomputation; JSON-native provenance; no reference/scorer/V163 artifact paths; CPU-only static workflow.
-- Safety outputs: songAudioRead=false; demucsInvoked=false; pitchInferenceInvoked=false; professionalReferenceRead=false; frozenScorerRead=false; V163CandidateRead=false; V163ScoreRead=false; gpuUsed=false.
-- Earlier redundant safe PASS runs caused by initial broad push trigger: run `33221653962` / job `99016763456`, and run `33221718293` / job `99016958023`.
-
-## V164 pre-run identity — SEALED
+## V164 pre-run identity — SEALED PASS
 - File `debug/v164-cpu-autonomous/pre-run-identity-receipt.json`.
-- Commit `918c2982f92afe1f21d9f36c776ca74ce894c87e`.
-- Blob `fa1942690b45bce35515abee35016f953fcccd45`.
-- Schema `dadrock.tabs.v164.pre-run-identity-receipt.v1`; validation PASS; status `SEALED_AFTER_STATIC_PREFLIGHT_BEFORE_SONG_PROCESSING`.
-- Pins exact V164 code/workflow blobs and final static run `33221759016` / job `99017084779`.
-- At seal: environment/timebase/timebase-QC/candidate/generation receipt/structural-QC/terminal freeze/generation workflow all absent.
-- At seal counters: song audio 0; Demucs 0; Basic Pitch 0; pyin 0; pitch inference 0; professional-reference/scorer 0; V163 candidate/score reads 0; GPU/CUDA/Modal 0; main/Production modifications 0.
+- Commit `918c2982f92afe1f21d9f36c776ca74ce894c87e`; blob `fa1942690b45bce35515abee35016f953fcccd45`.
+- Schema `dadrock.tabs.v164.pre-run-identity-receipt.v1`; status `SEALED_AFTER_STATIC_PREFLIGHT_BEFORE_SONG_PROCESSING`; validation PASS.
+- Pins exact V164 code/static-workflow identities and final static run `33221759016` / job `99017084779`.
+- At pre-run seal: environment/timebase/timebase-QC/candidate/generation receipt/structural-QC/terminal freeze/generation workflow absent; all runtime/reference/V163/GPU counters zero.
 
-## CPU environment design basis
-- Frozen structural QC requires environment schema PASS, `device=cpu`, `cudaAvailable=false`, `torchCudaVersion=null`, and later byte-for-byte embedding of the same environment receipt in the one-shot generation receipt.
-- It does not require song/separation hashes merely to establish the environment.
-- Last verified CPU generation stack (V163, exact frozen V162 algorithm): Python `3.10`; torch `2.8.0+cpu`; numpy `1.26.4`; scipy `1.13.1`; soundfile `0.12.1`; basic-pitch `0.4.0`; demucs `4.1.0`; imageio-ffmpeg `0.6.0`; librosa `0.11.0`.
-- Determinism basis: CUDA disabled; seed 0; deterministic Torch algorithms; Torch/math-library threads 1; Demucs plan `htdemucs_6s`, CPU, shifts 1, jobs 1.
-- V164 environment must be independently verified without reading song audio before the next runtime stage.
+## V164 CPU environment — SEALED PASS
+- Song-blind/read-only environment workflow `.github/workflows/v164-environment-seal.yml` created at commit `8fb7dcb27b04139be31aee07ca0de1d965325d4b`; workflow blob `a6b5c30293b3255ab7ce0e31fdc115c4aad24e9e`.
+- Environment run ID `33221962951`, run number `1`, attempt `1`, job `99017692441`, head `8fb7dcb27b04139be31aee07ca0de1d965325d4b`; conclusion success.
+- The job first verified pre-run blob `fa1942690b45bce35515abee35016f953fcccd45`, exact V164 code pins, and absence of environment/timebase/timebase-QC/candidate/generation/QC/terminal/generation-workflow artifacts before dependency installation.
+- Verified Python `3.10.21`; torch `2.8.0+cpu`; `torch.version.cuda=null`; `torch.cuda.is_available()=false`.
+- Exact dependencies: numpy `1.26.4`; scipy `1.13.1`; soundfile `0.12.1`; basic-pitch `0.4.0`; demucs `4.1.0`; imageio-ffmpeg `0.6.0`; librosa `0.11.0`.
+- Determinism verified: seed `0`; Torch deterministic algorithms true; Torch threads/interops `1`; math-library threads `1`; `CUDA_VISIBLE_DEVICES` empty.
+- Planned separation is frozen but not executed at seal: `htdemucs_6s`, CPU, shifts `1`, jobs `1`, repeat count `1`.
+- Environment receipt file `debug/v164-cpu-autonomous/environment-receipt.json` committed at `2fdd87c083dc89d575209cbd8cc97e7265a28bd6`; blob `25a7f5e2c692a6ac518ae1243ea812cf650f7278`.
+- Receipt schema `dadrock.tabs.v164.cpu-environment-receipt.v1`; status `VERIFIED_BEFORE_SONG_PROCESSING`; validation PASS.
+- Receipt safety: referenceRead=false; professionalReferencePathsOpened=0; frozenScorerRead=false; V163CandidateRead=false; V163ScoreRead=false; prior candidate/score=false; songAudioRead=false; normalizationExecuted=false; demucsExecuted=false; pitchInferenceExecuted=false; cudaGpuUsed=false; modalUsed=false; mainOrProductionModified=false.
+- Unrelated legacy cleanup workflow failure on the environment-seal push is not part of V164 and has no bearing on the PASS environment seal.
 
 ## Current V164 execution counters
-- Static-preflight runs: `3` PASS (two redundant safe passes + authoritative narrowed-trigger pass).
+- Static-preflight runs: `3` PASS.
 - Pre-run identity seals: `1` PASS.
+- CPU environment verification runs: `1` PASS.
+- CPU environment receipts: `1` sealed PASS.
 - Song audio reads: `0`.
-- Normalization/separation: `0`.
-- Demucs/pitch inference: `0`.
+- Normalization: `0`.
+- Demucs separation: `0`.
+- Timebase builds/QC: `0`.
+- Pitch inference: `0`.
 - V164 candidate generations: `0`.
 - Professional-reference/scorer reads for V164: `0`.
 - V163 candidate/score reads for V164: `0`.
@@ -83,10 +81,11 @@ Branch: `v143-contextual-prune-lobo`
 
 ## Hard boundary — NEXT
 1. Never reopen V163.
-2. Verify the full pinned V164 CPU generation dependency stack in a song-blind, read-only environment-seal job; do not read/materialize song audio.
-3. Seal `debug/v164-cpu-autonomous/environment-receipt.json` against pre-run blob `fa1942690b45bce35515abee35016f953fcccd45` and the verified CPU job.
-4. No V164 song processing until the environment receipt is sealed and validated.
-5. After both receipts are sealed, one-shot CPU generation may be armed only after all branch writes are complete. It must fresh-materialize/normalize/separate, build fresh V164 timebase, obtain independent timebase-QC PASS before pitch, then run fresh transcriber and independent structural QC.
-6. Professional reference/scorer and V163 candidate/score artifacts remain forbidden during V164 generation.
-7. V164 generation maximum remains one; rerun/duplicate/repair forbidden.
+2. Both required pre-song seals are satisfied: pre-run blob `fa194269...` and environment blob `25a7f5e2...`.
+3. Finish and checkpoint all preparatory branch writes before arming the one-shot `.github/workflows/v164-generate.yml`.
+4. Generation must be CPU-only, exactly one run/attempt, rerun/duplicate/repair forbidden, and no assistant/manual branch writes while active.
+5. The one-shot run must fresh-materialize the fixed source, fresh-normalize, fresh-separate with the verified environment, build fresh V164 timebase, run independent V164 timebase QC, and **must not invoke pitch before timebase-QC PASS**.
+6. Only after timebase-QC PASS may fresh V164 pitch/transcription run, followed by fresh independent structural QC. Only structural-QC PASS can make the candidate authoritative.
+7. Generation must not read professional reference/scorer or any V163 candidate/score artifact.
 8. No GPU/Modal/CUDA without fresh explicit authorization.
+9. Generation terminalization must freeze exact artifacts/run identities and prevent any second V164 generation.
