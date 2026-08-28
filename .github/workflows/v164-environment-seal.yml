@@ -1,0 +1,185 @@
+name: V164 CPU Environment Seal
+
+on:
+  push:
+    branches:
+      - v143-contextual-prune-lobo
+    paths:
+      - .github/workflows/v164-environment-seal.yml
+
+permissions:
+  contents: read
+
+concurrency:
+  group: v164-environment-seal
+  cancel-in-progress: false
+
+env:
+  CUDA_VISIBLE_DEVICES: ""
+  PYTHONHASHSEED: "0"
+  OMP_NUM_THREADS: "1"
+  MKL_NUM_THREADS: "1"
+  OPENBLAS_NUM_THREADS: "1"
+  NUMEXPR_NUM_THREADS: "1"
+
+jobs:
+  verify-cpu-environment:
+    if: github.ref == 'refs/heads/v143-contextual-prune-lobo'
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+      - name: Checkout exact environment-seal head
+        uses: actions/checkout@v4
+        with:
+          ref: ${{ github.sha }}
+          fetch-depth: 1
+
+      - name: Set up Python 3.10
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.10'
+
+      - name: Verify sealed pre-run identity and runtime absence
+        shell: bash
+        run: |
+          set -euo pipefail
+          test "$GITHUB_EVENT_NAME" = "push"
+          test "$GITHUB_RUN_NUMBER" = "1"
+          test "$GITHUB_RUN_ATTEMPT" = "1"
+          test "$(git rev-parse HEAD)" = "$GITHUB_SHA"
+          test "$(git hash-object debug/v164-cpu-autonomous/pre-run-identity-receipt.json)" = "fa1942690b45bce35515abee35016f953fcccd45"
+          test "$(git hash-object debug/v164-cpu-autonomous/preregistration.json)" = "05d255d75a6c1947891fba38d96d9399e3f75f9c"
+          test "$(git hash-object debug/v164-cpu-autonomous/implementation-contract.json)" = "098f24282b59abba0f7cffa0793b344b76701724"
+          test "$(git hash-object validation/v164_cpu_autonomous/event_logic_v164.py)" = "62303877a1971f75cacda002c5ad921680161674"
+          test "$(git hash-object validation/v164_cpu_autonomous/build_timebase_v164.py)" = "170a7a15d68e271d93775c2aaba058fe3ebaa8bb"
+          test "$(git hash-object validation/v164_cpu_autonomous/timebase_qc_v164.py)" = "e59498e76d881f22ea405c81781ca2004ea8f53e"
+          test "$(git hash-object validation/v164_cpu_autonomous/transcribe_v164.py)" = "df1302216df404bc3368ff820f005d6b63ae100d"
+          test "$(git hash-object validation/v164_cpu_autonomous/structural_qc_v164.py)" = "c1a81c7a97e646398f5e50cbc63dae341cdc500b"
+          test "$(git hash-object debug/v164-cpu-autonomous/negative-runtime-guard.py)" = "230aa1efeb4640aabbb05720ead031e13cc57337"
+          for path in \
+            debug/v164-cpu-autonomous/environment-receipt.json \
+            debug/v164-cpu-autonomous/timebase.json \
+            debug/v164-cpu-autonomous/timebase-qc.json \
+            debug/v164-cpu-autonomous/generated.json \
+            debug/v164-cpu-autonomous/generation-receipt.json \
+            debug/v164-cpu-autonomous/structural-qc.json \
+            debug/v164-cpu-autonomous/terminal-freeze.json \
+            .github/workflows/v164-generate.yml; do
+            test ! -e "$path"
+          done
+
+      - name: Install exact CPU generation dependencies
+        shell: bash
+        run: |
+          set -euo pipefail
+          python -m pip install --disable-pip-version-check --upgrade pip
+          python -m pip install --disable-pip-version-check --index-url https://download.pytorch.org/whl/cpu torch==2.8.0
+          python -m pip install --disable-pip-version-check \
+            numpy==1.26.4 scipy==1.13.1 soundfile==0.12.1 \
+            basic-pitch==0.4.0 demucs==4.1.0 imageio-ffmpeg==0.6.0 librosa==0.11.0
+
+      - name: Verify exact CPU stack and emit environment receipt
+        shell: bash
+        run: |
+          set -euo pipefail
+          python - <<'PY'
+          import importlib.metadata as md
+          import json
+          import os
+          import platform
+          import random
+          import subprocess
+          import numpy as np
+          import torch
+
+          pins = {
+              "numpy": "1.26.4",
+              "scipy": "1.13.1",
+              "soundfile": "0.12.1",
+              "basic-pitch": "0.4.0",
+              "demucs": "4.1.0",
+              "imageio-ffmpeg": "0.6.0",
+              "librosa": "0.11.0",
+          }
+          assert platform.python_version().startswith("3.10."), platform.python_version()
+          assert torch.__version__ == "2.8.0+cpu", torch.__version__
+          assert torch.version.cuda is None
+          assert torch.cuda.is_available() is False
+          for package, expected in pins.items():
+              actual = md.version(package)
+              assert actual == expected, (package, actual, expected)
+
+          random.seed(0)
+          np.random.seed(0)
+          torch.manual_seed(0)
+          torch.set_num_threads(1)
+          torch.set_num_interop_threads(1)
+          torch.use_deterministic_algorithms(True)
+          assert torch.get_num_threads() == 1
+          assert torch.get_num_interop_threads() == 1
+          assert torch.are_deterministic_algorithms_enabled()
+
+          def git_blob(path):
+              return subprocess.check_output(["git", "hash-object", path], text=True).strip()
+
+          receipt = {
+              "schema": "dadrock.tabs.v164.cpu-environment-receipt.v1",
+              "version": "V164",
+              "status": "VERIFIED_BEFORE_SONG_PROCESSING",
+              "validation": "PASS",
+              "device": "cpu",
+              "pythonVersion": platform.python_version(),
+              "torchVersion": torch.__version__,
+              "torchCudaVersion": torch.version.cuda,
+              "cudaAvailable": torch.cuda.is_available(),
+              "workflowRunId": int(os.environ["GITHUB_RUN_ID"]),
+              "workflowRunNumber": int(os.environ["GITHUB_RUN_NUMBER"]),
+              "workflowRunAttempt": int(os.environ["GITHUB_RUN_ATTEMPT"]),
+              "workflowHeadSha": os.environ["GITHUB_SHA"],
+              "environmentWorkflowGitBlob": git_blob(".github/workflows/v164-environment-seal.yml"),
+              "preRunIdentityReceiptGitBlob": git_blob("debug/v164-cpu-autonomous/pre-run-identity-receipt.json"),
+              "dependencyVersions": pins,
+              "determinism": {
+                  "seed": 0,
+                  "torchDeterministicAlgorithms": True,
+                  "torchNumThreads": 1,
+                  "torchNumInteropThreads": 1,
+                  "mathLibraryThreads": 1,
+              },
+              "plannedSeparation": {
+                  "model": "htdemucs_6s",
+                  "device": "cpu",
+                  "shifts": 1,
+                  "jobs": 1,
+                  "repeatCount": 1,
+                  "executedAtSeal": False,
+              },
+              "safety": {
+                  "referenceRead": False,
+                  "professionalReferencePathsOpened": 0,
+                  "referenceFacingScoreCalls": 0,
+                  "frozenScorerRead": False,
+                  "V163CandidateRead": False,
+                  "V163ScoreRead": False,
+                  "priorGeneratedCandidateRead": False,
+                  "priorScoreRead": False,
+                  "referenceGuidedFiltering": False,
+                  "thresholdSweep": False,
+                  "variantSelection": False,
+                  "humanCorrection": False,
+                  "songAudioRead": False,
+                  "normalizationExecuted": False,
+                  "demucsExecuted": False,
+                  "pitchInferenceExecuted": False,
+                  "cudaGpuUsed": False,
+                  "modalUsed": False,
+                  "mainOrProductionModified": False,
+              },
+          }
+          assert receipt["workflowRunNumber"] == 1
+          assert receipt["workflowRunAttempt"] == 1
+          assert receipt["preRunIdentityReceiptGitBlob"] == "fa1942690b45bce35515abee35016f953fcccd45"
+          assert receipt["cudaAvailable"] is False
+          assert receipt["torchCudaVersion"] is None
+          print("V164_ENVIRONMENT_RECEIPT_JSON=" + json.dumps(receipt, sort_keys=True, allow_nan=False))
+          PY
