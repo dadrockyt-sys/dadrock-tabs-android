@@ -1,0 +1,26 @@
+name: Compact Tab Studio first page
+
+on:
+  push:
+    paths:
+      - '.github/workflows/compact-tab-studio-first-page.yml'
+
+permissions:
+  contents: write
+
+jobs:
+  patch-tab-studio:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Keep full logo and start tab beneath metadata
+        run: python .github/scripts/compact_tab_studio_first_page.py
+
+      - name: Commit compact first-page layout
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add app/admin/tab-studio/page.js
+          git diff --cached --quiet || git commit -m "Keep Tab Studio logo above first tab page"
+          git push
