@@ -1,0 +1,150 @@
+{
+  "schema": "dadrock.tabs.v161.reference-blind-cpu-preregistration.v1",
+  "version": "V161",
+  "status": "PREREGISTERED_BEFORE_IMPLEMENTATION_CODE",
+  "validation": "PASS",
+  "branch": "v143-contextual-prune-lobo",
+  "createdFromBranchHead": "55eabcfb9600b138c9920a8e7e33972365c5ccab",
+  "purpose": "Freeze the evidence boundary, failure hypotheses, architecture-change classes, validation plan, and one-shot rules for the V161 CPU successor before any V161 implementation code is written.",
+  "terminalPredecessor": {
+    "version": "V160",
+    "terminalScoreCommit": "1274dc20dbbe535cb8ff91ebf2e9d02078e3d9a9",
+    "scoreRunId": 33206424361,
+    "scoreRunNumber": 1,
+    "scoreRunAttempt": 1,
+    "scoreJobId": 98968523271,
+    "scoreOutcome": "SCORE_GATE_FAIL",
+    "scoreReportPath": "debug/v160-cpu-autonomous/reference-score.json",
+    "scoreReportGitBlob": "d280a19052228f71e4520db077686dfe9ae8f9bb",
+    "scoreReportSha256": "32476d8d6036c72cb3b29bc4e67ec7c3fd5e7dc11b9334bd04730b4fd25e5e04",
+    "scoreTerminalPath": "debug/v160-cpu-autonomous/score-terminal-freeze.json",
+    "scoreTerminalGitBlob": "bc73cefe6653b9c398e65381256caa843182661d",
+    "candidateConsumedForever": true,
+    "scoreOpportunityConsumedForever": true,
+    "neverRerunOrRescoreV160": true
+  },
+  "allowedEvidenceBeforeV161Implementation": {
+    "aggregateFrozenScores": {
+      "V154": {
+        "combinedGuitarTimingAwarePitchF1": 0.04915390813859791,
+        "bassTimingAwarePitchF1": 0.1116751269035533
+      },
+      "V157": {
+        "combinedGuitarTimingAwarePitchF1": 0.07692307692307694,
+        "bassTimingAwarePitchF1": 0.05757575757575757
+      },
+      "V158": {
+        "combinedGuitarTimingAwarePitchF1": 0.007756948933419521,
+        "bassTimingAwarePitchF1": 0.001976284584980237
+      },
+      "V160": {
+        "combinedGuitarPrimaryF1": 0.09975470155355683,
+        "combinedGuitarGrossF1": 0.2131370945761788,
+        "combinedGuitarMeasurePitchF1": 0.3881166530389752,
+        "combinedGuitarGenerated": 2276,
+        "combinedGuitarReferenceCountAggregateOnly": 1393,
+        "combinedGuitarPrimaryMatched": 183,
+        "combinedGuitarGrossMatched": 391,
+        "combinedGuitarMeasurePitchMatched": 712,
+        "bassPrimaryF1": 0.18073485600794442,
+        "bassGrossF1": 0.31777557100297915,
+        "bassMeasurePitchF1": 0.5124131082423039,
+        "bassGenerated": 460,
+        "bassReferenceCountAggregateOnly": 547,
+        "bassPrimaryMatched": 91,
+        "bassGrossMatched": 160,
+        "bassMeasurePitchMatched": 258
+      }
+    },
+    "frozenRuntimeDiagnoses": {
+      "V159StructuralRuntimeDiagnosisGitBlob": "95d89bec0c7571e84d945d812f968909ad475c39",
+      "V159ImplementationDiagnosisGitBlob": "6d01cd2b6f8f3f9df52277904b0f892df9ba8fc0",
+      "V160StructuralQcGitBlob": "5372885dfc9e07dfa8394294deafdf32c8f5a356",
+      "V160TimebaseQcGitBlob": "f122b624bb6bdfd629947ec3a5963c7b4373b3c2"
+    },
+    "referenceBlindSourceCodeMayBeRead": [
+      "validation/v160_cpu_autonomous/build_timebase_v160.py",
+      "validation/v160_cpu_autonomous/timebase_qc_v160.py",
+      "validation/v160_cpu_autonomous/transcribe_v160.py",
+      "validation/v160_cpu_autonomous/structural_qc_v160.py",
+      "validation/v160_cpu_autonomous/test_json_native_v160.py",
+      "debug/v160-cpu-autonomous/negative-runtime-guard.py"
+    ],
+    "scoreReportUse": "Only the frozen aggregate metrics explicitly copied into this preregistration may drive V161 design. Do not reopen or mine reference-side event details for implementation choices."
+  },
+  "forbiddenEvidenceAndActions": {
+    "directProfessionalReferenceReadForV161Design": true,
+    "professionalReferenceEventMining": true,
+    "professionalReferenceMeasureMining": true,
+    "frozenScorerContentReadForV161Design": true,
+    "V160CandidateEventLevelReadForTuning": true,
+    "V160CandidateReuse": true,
+    "V160CandidateRepair": true,
+    "V160Regeneration": true,
+    "V160ReQc": true,
+    "V160Rescore": true,
+    "referenceGuidedThresholdSweep": true,
+    "referenceGuidedVariantSelection": true,
+    "sameSongScoreLoopDuringV161Implementation": true,
+    "humanCorrection": true,
+    "mainOrProductionModification": true
+  },
+  "frozenFailureInterpretation": {
+    "globalTimebase": "V160 timebase and independent timebase QC passed strongly, so V161 will not treat the global beat grid as the primary failure. V161 may retain the global grid concept while changing instrument-event onset localization before quantization.",
+    "combinedGuitar": "Generated event count 2276 versus aggregate reference count 1393 plus primary precision 0.0804 and measure-pitch precision 0.3128 indicate severe over-generation/duplicate-or-spurious event construction. Measure-pitch recall 0.5111 is materially above primary recall 0.1314, so both event selection and onset placement require architectural changes.",
+    "bass": "Bass measure-pitch F1 0.5124 materially exceeds primary F1 0.1807 and gross F1 0.3178, while generated count 460 is below aggregate reference count 547. This supports a hypothesis of meaningful pitch-content signal with missing notes plus onset/timing placement error rather than primarily gross event flooding.",
+    "timing": "For both instruments, gross +/-2-step matching materially exceeds primary +/-0.5-step matching. V161 therefore preregisters instrument-specific onset localization/snap-to-evidence before grid quantization as a design class, without altering the frozen scorer tolerances.",
+    "notPermittedConclusion": "No event-level claim about the professional reference is permitted. These hypotheses are derived only from aggregate frozen score outputs and reference-blind runtime evidence."
+  },
+  "V161ArchitectureHypotheses": {
+    "H1_guitarEventConsolidation": "Replace broad event emission with onset-gated pitch tracks that merge persistence into notes, suppress repeated same-pitch duplicates within a song-blind refractory interval, and apply a song-blind polyphony/event-density policy fixed before song execution.",
+    "H2_instrumentOnsetLocalization": "Before converting an inferred event to the 16-step measure grid, refine its timestamp using a local instrument-stem onset-strength maximum inside a preregistered symmetric search window. The search window and tie-break rules must be numerically sealed before implementation.",
+    "H3_bassTransitionSegmentation": "Use bass-stem pitch transitions plus onset evidence to create discrete bass notes rather than treating sustained frame estimates as independent event opportunities. Missing-note recovery must be based on song-blind onset/pitch-transition logic, not reference counts.",
+    "H4_activityGating": "Use reference-blind stem activity/confidence gates to prevent pitch events during locally inactive or low-evidence regions, with thresholds derived from fixed signal statistics or song-blind fixtures rather than same-song scoring.",
+    "H5_confidenceCalibration": "Separate pitch-candidate formation from note admission. Candidate confidence may combine model probability, harmonic support, spectral prominence, temporal persistence, and onset support using a numerically sealed deterministic formula.",
+    "H6_globalGridRetentionWithLocalRefinement": "Retain the validated global beat/measure grid unless song-blind tests disprove it; improve timing by localizing instrument events in audio before the final nearest-step mapping rather than changing scorer tolerance or reference alignment.",
+    "H7_noMicroTune": "V161 must be an architectural successor. It may not merely adjust V160 thresholds in response to the V160 score."
+  },
+  "songBlindValidationPlan": {
+    "requiredBeforeSongProcessing": [
+      "Python syntax/compile checks for every V161 module",
+      "negative guard proving no professional-reference, frozen-scorer, V160-candidate, or prior-score paths are opened by V161 generation/QC",
+      "synthetic monophonic repeated-note fixture validating onset consolidation and refractory behavior",
+      "synthetic sustained-note fixture proving one sustained pitch does not become repeated duplicate events",
+      "synthetic polyphonic fixture validating deterministic polyphony handling without reference guidance",
+      "synthetic onset-offset fixture validating local onset refinement and deterministic tie-breaking",
+      "synthetic bass pitch-transition fixture validating note segmentation and missing-transition handling",
+      "JSON-native receipt fixture retained from V160",
+      "static proof that pitch inference cannot execute before fresh V161 timebase QC PASS",
+      "absence proof for all V161 runtime artifacts and generation workflow before arm"
+    ],
+    "sameSongAudioForbiddenDuringStaticValidation": true,
+    "professionalReferenceForbiddenDuringStaticValidation": true,
+    "sameSongScoreForbiddenDuringImplementationValidation": true
+  },
+  "oneShotScientificBoundary": {
+    "numericImplementationContractRequiredBeforeV161Code": true,
+    "staticPreflightRequiredBeforeSongProcessing": true,
+    "preRunIdentitySealRequiredBeforeSongProcessing": true,
+    "freshSourceMaterializationRequired": true,
+    "freshNormalizationRequired": true,
+    "freshSeparationRequired": true,
+    "freshTimebaseRequired": true,
+    "freshIndependentTimebaseQcRequired": true,
+    "pitchInferenceBeforeTimebaseQcPassForbidden": true,
+    "freshV161CandidateOnly": true,
+    "freshIndependentStructuralQcRequired": true,
+    "generationRunCountMaximum": 1,
+    "generationRerunForbidden": true,
+    "candidateRepairAfterGenerationForbidden": true,
+    "professionalReferenceScoringMaximum": 1,
+    "separateScorePreregistrationRequiredAfterStructuralPass": true,
+    "postScoreRetuneOrRescoreForbidden": true
+  },
+  "computeBoundary": {
+    "defaultDevice": "cpu",
+    "cpuWorkAuthorized": true,
+    "gpuModalCudaRequiresFreshExplicitUserAuthorizationImmediatelyBeforeExecution": true
+  },
+  "nextAction": "Create and seal debug/v161-cpu-autonomous/implementation-contract.json with all algorithmic numerics before writing any V161 implementation code."
+}
