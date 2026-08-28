@@ -1,0 +1,63 @@
+name: V156 checkpoint pre-run boundary once
+
+on:
+  push:
+    branches: [v143-contextual-prune-lobo]
+    paths:
+      - .github/workflows/v156-checkpoint-prerun-once.yml
+
+permissions:
+  contents: write
+
+env:
+  BRANCH: v143-contextual-prune-lobo
+
+jobs:
+  checkpoint:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: v143-contextual-prune-lobo
+          fetch-depth: 1
+      - name: Append sealed V156 pre-run state
+        shell: bash
+        run: |
+          cat >> docs/checkpoints/CURRENT_STATE.md <<'EOF'
+
+## 2026-08-28 continuation — V156 PRE-RUN IDENTITY SEALED / NO CANDIDATE
+This section supersedes the earlier V156 pre-generation amendment/implementation steps above.
+- Determinism-amended preregistration is authoritative: `debug/v156-cpu-autonomous/preregistration.json`; Git blob `25a0a921e3245049a7f64fd3cb823e6767fe55da`; status `PREREGISTERED_BEFORE_GENERATION_AMENDED_EXECUTION_DETERMINISM`.
+- Amendment remains execution-only: RNG seed `0` for Python/NumPy/Torch, deterministic Torch algorithms, single-thread settings, in-process Demucs, `htdemucs_6s`, shifts `1`, jobs `1`. No musical/recognition/timebase quality parameter changed.
+- Canonical V156 transcriber: `validation/v156_cpu_multitrack/transcribe_hybrid.py`; Git blob `961e18f66766e51abb42f46e529730fcaa2807b4`.
+- Independent V156 structural QC: `validation/v156_cpu_multitrack/structural_qc.py`; Git blob `3b1018e751deecdfb0efca100c29848256ee1234`.
+- Frozen inherited reference-blind musical engine: `validation/v155_cpu_multitrack/transcribe_hybrid.py`; Git blob `3357582dd8311b28f4b85f2ebfbc7acb8c9e4fb8`. V155 generated musical outputs are not V156 inputs.
+- Pre-run identity receipt: `debug/v156-cpu-autonomous/pre-run-receipt.json`; seal commit `69314570f5e25cd43a679459f42b3c3ba0197965`.
+- Static contract repair before sealing changed only bookkeeping compatibility with the amended preregistration status/hash; no candidate was generated during the repair.
+- Boundary audit immediately before receipt: V156 `generated.json` absent; V156 `generation-receipt.json` absent; V156 generation workflow absent.
+- V156 professional-reference read = **NO**; V156 reference-facing score calls = **0**; V156 candidate = **NONE** at the seal.
+- Trigger rule is frozen: `.github/workflows/v156-generate-reference-blind-once.yml` creation itself is the **single and only** generation trigger. A later arm edit is forbidden. Duplicate generation run => abort V156 without scoring.
+- During the V156 generation run, make no unrelated branch writes until it freezes/self-seals.
+
+### Exact next steps from this sealed boundary
+1. Create `.github/workflows/v156-generate-reference-blind-once.yml` exactly once. Do not edit/arm it afterward.
+2. Workflow must verify the exact pre-run/preregistration/transcriber/QC/engine identities and exact historical audio identity before candidate creation.
+3. Install exact pinned CPU dependencies, enforce seed/thread/deterministic settings, normalize audio deterministically, and run **one** in-process seeded `htdemucs_6s` separation.
+4. Record Demucs checkpoint identity and stem hashes; run the canonical transcriber; run the independent structural QC.
+5. Freeze exactly one candidate + generation receipt + independent QC and self-delete the generation workflow. V156 score calls remain 0.
+6. After success, verify generation workflow run count is exactly 1 and checkpoint the frozen candidate before any professional-reference access.
+7. Only then build a guarded one-use V156 scoring workflow and score exactly once. Never retune a consumed candidate.
+8. Fresh explicit authorization remains required immediately before any Modal/NVIDIA L4/CUDA/GPU execution; remain CPU-only otherwise.
+EOF
+      - name: Commit checkpoint and self-seal
+        shell: bash
+        run: |
+          set -euo pipefail
+          rm .github/workflows/v156-checkpoint-prerun-once.yml
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add docs/checkpoints/CURRENT_STATE.md .github/workflows/v156-checkpoint-prerun-once.yml
+          git commit -m "checkpoint: seal V156 pre-run boundary [skip ci]"
+          git fetch origin "$BRANCH"
+          git rebase "origin/$BRANCH"
+          git push origin HEAD:"$BRANCH"
