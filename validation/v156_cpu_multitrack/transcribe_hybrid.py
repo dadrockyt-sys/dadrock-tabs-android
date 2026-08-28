@@ -60,6 +60,8 @@ def main() -> int:
 
     safety = {
         "referenceRead": False,
+        "professionalReferencePathsOpened": 0,
+        "referenceFacingScoreCalls": 0,
         "humanCorrection": False,
         "referenceGuidedFiltering": False,
         "thresholdSweep": False,
