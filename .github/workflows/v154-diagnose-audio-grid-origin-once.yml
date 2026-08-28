@@ -11,6 +11,7 @@ permissions:
 env:
   BRANCH: v143-contextual-prune-lobo
 
+# One-use post-score diagnostic only; never writes a corrected candidate.
 jobs:
   diagnose-origin:
     runs-on: ubuntu-latest
