@@ -1,0 +1,71 @@
+{
+  "candidatePath": "debug/v157-cpu-autonomous/generated.json",
+  "candidateSha256": "f5dc7094b72f8e3a988b1fdd59808cb056461d7e12a6d41508942cf499de3e71",
+  "environmentIdentity": {
+    "demucsModel": "htdemucs_6s",
+    "demucsModelBlobFiles": [
+      {
+        "bytes": 54885744,
+        "logicalPath": "/home/runner/.cache/huggingface/hub/models--adefossez--HTDemucs-6s/blobs/d2a1745f0744721f6b8ca5bf469b67c651ea5ed1b52998cab033b2158609d411",
+        "resolvedPath": "/home/runner/.cache/huggingface/hub/models--adefossez--HTDemucs-6s/blobs/d2a1745f0744721f6b8ca5bf469b67c651ea5ed1b52998cab033b2158609d411",
+        "sha256": "d2a1745f0744721f6b8ca5bf469b67c651ea5ed1b52998cab033b2158609d411"
+      }
+    ],
+    "versions": {
+      "basic-pitch": "0.4.0",
+      "demucs": "4.1.0",
+      "imageio-ffmpeg": "0.6.0",
+      "librosa": "0.11.0",
+      "numpy": "1.26.4",
+      "python": "3.10",
+      "scipy": "1.13.1",
+      "soundfile": "0.12.1",
+      "torch": "2.8.0+cpu"
+    }
+  },
+  "generationReceiptPath": "debug/v157-cpu-autonomous/generation-receipt.json",
+  "generationReceiptSha256": "7501b7639ef5284647af6dc6ad0b0e430254f19d8d419e0fd6f33dede6ffda8c",
+  "preRunReceiptPath": "debug/v157-cpu-autonomous/pre-run-receipt.json",
+  "preRunReceiptSha256": "0144f991b211681e8e0a8860cf08fef3b378ca343ab726544c0ebe5bee824402",
+  "preregistrationGitBlob": "0bcca0fbb53abcc8ad8736d8e5e71e32a14004f6",
+  "preregistrationPath": "debug/v157-cpu-autonomous/preregistration.json",
+  "safety": {
+    "gpuUsed": false,
+    "humanCorrection": false,
+    "mainOrProductionModified": false,
+    "professionalQualityMetricUsed": false,
+    "referenceFacingScoreCalls": 0,
+    "referenceRead": false,
+    "thresholdSweep": false,
+    "variantSelection": false
+  },
+  "schema": "dadrock.tabs.v157.reference-blind-structural-qc.v1",
+  "streamStats": {
+    "bass": {
+      "count": 113,
+      "midiMax": 56,
+      "midiMin": 37,
+      "sources": {
+        "pyin": 113
+      }
+    },
+    "combinedGuitar": {
+      "count": 1779,
+      "midiMax": 88,
+      "midiMin": 40,
+      "sources": {
+        "basic_pitch": 1366,
+        "cqt": 413
+      }
+    }
+  },
+  "timebaseQc": {
+    "fractionIntervalsWithinHalfToOnePointFiveMedian": 1.0,
+    "interBeatIntervalCoefficientOfVariation": 0.027276358719819024,
+    "medianInterBeatBpm": 129.19921874999932,
+    "strictlyIncreasingBeatTimes": true,
+    "trackedBeatCount": 448,
+    "trackerTempoBpm": 129.19921875
+  },
+  "validation": "PASS"
+}

@@ -1,0 +1,107 @@
+{
+  "candidatePath": "debug/v157-cpu-autonomous/generated.json",
+  "candidateSha256": "f5dc7094b72f8e3a988b1fdd59808cb056461d7e12a6d41508942cf499de3e71",
+  "counts": {
+    "bass": 113,
+    "combinedGuitar": 1779
+  },
+  "environment": {
+    "audio": {
+      "normalizedSha256": "3e61b7926eabc21b758c750f826c7426a29d6de5aafdd5c93f8045ecdc67f87e",
+      "sourceSha256": "215bd5a657c5326f08f132ae358595a95c30b39bb7493a52c2f910d5a608149f"
+    },
+    "cudaAvailable": false,
+    "demucsJobs": 1,
+    "demucsModel": "htdemucs_6s",
+    "demucsModelBlobFiles": [
+      {
+        "bytes": 54885744,
+        "logicalPath": "/home/runner/.cache/huggingface/hub/models--adefossez--HTDemucs-6s/blobs/d2a1745f0744721f6b8ca5bf469b67c651ea5ed1b52998cab033b2158609d411",
+        "resolvedPath": "/home/runner/.cache/huggingface/hub/models--adefossez--HTDemucs-6s/blobs/d2a1745f0744721f6b8ca5bf469b67c651ea5ed1b52998cab033b2158609d411",
+        "sha256": "d2a1745f0744721f6b8ca5bf469b67c651ea5ed1b52998cab033b2158609d411"
+      }
+    ],
+    "demucsShifts": 1,
+    "determinism": {
+      "demucsInvocation": "in-process demucs.separate.main",
+      "mklNumThreads": 1,
+      "numexprNumThreads": 1,
+      "numpyRandomSeed": 0,
+      "ompNumThreads": 1,
+      "openblasNumThreads": 1,
+      "pythonRandomSeed": 0,
+      "seed": 0,
+      "separationRepeatCount": 1,
+      "torchDeterministicAlgorithms": true,
+      "torchDeterministicWarnOnly": false,
+      "torchManualSeed": 0,
+      "torchNumInteropThreads": 1,
+      "torchNumThreads": 1
+    },
+    "device": "cpu",
+    "modelCacheRootsScanned": [
+      "/home/runner/.cache/torch/hub/checkpoints",
+      "/home/runner/.cache/huggingface/hub"
+    ],
+    "safety": {
+      "gpuUsed": false,
+      "mainOrProductionModified": false,
+      "modalUsed": false,
+      "professionalReferencePathsOpened": 0,
+      "referenceFacingScoreCalls": 0,
+      "referenceRead": false
+    },
+    "schema": "dadrock.tabs.v157.cpu-environment-receipt.v1",
+    "stemSha256": {
+      "bass": "f109347354dd9ae4a293189834b1f6d58199a4eebe5d51dfeeedc6707c4a5316",
+      "drums": "7ef184f2fc3b6f7fc12ea5c342bc537f6b69f1680ce36e9d4f7189be85d93e39",
+      "guitar": "b8685062c59f5c62253029f8294afdaf25f3f8adf8868ae97b47db09ab8838f9"
+    },
+    "torchCudaVersion": null,
+    "v157EngineGitBlob": "3357582dd8311b28f4b85f2ebfbc7acb8c9e4fb8",
+    "validation": "PASS",
+    "versions": {
+      "basic-pitch": "0.4.0",
+      "demucs": "4.1.0",
+      "imageio-ffmpeg": "0.6.0",
+      "librosa": "0.11.0",
+      "numpy": "1.26.4",
+      "python": "3.10",
+      "scipy": "1.13.1",
+      "soundfile": "0.12.1",
+      "torch": "2.8.0+cpu"
+    },
+    "workflowRunId": "33143471258",
+    "workflowRunNumber": 1
+  },
+  "environmentReceiptSha256": "123d5d2fa09b42914116bf7aae0e30fac43c63561f5a434d6bbe9e602cd27f9a",
+  "implementation": {
+    "canonicalVersion": "V157",
+    "inheritedReferenceBlindEngineGitBlob": "3357582dd8311b28f4b85f2ebfbc7acb8c9e4fb8"
+  },
+  "inputIdentities": {
+    "bassStemSha256": "f109347354dd9ae4a293189834b1f6d58199a4eebe5d51dfeeedc6707c4a5316",
+    "drumsStemSha256": "7ef184f2fc3b6f7fc12ea5c342bc537f6b69f1680ce36e9d4f7189be85d93e39",
+    "guitarStemSha256": "b8685062c59f5c62253029f8294afdaf25f3f8adf8868ae97b47db09ab8838f9",
+    "mixSha256": "3e61b7926eabc21b758c750f826c7426a29d6de5aafdd5c93f8045ecdc67f87e"
+  },
+  "preGridExcluded": {
+    "bass": 0,
+    "combinedGuitar": 0
+  },
+  "preregistrationSha256": "2aac8a6fe794aff298697878f43097d8074dc491b304eb6dc357037c951f906a",
+  "safety": {
+    "cudaGpuUsed": false,
+    "humanCorrection": false,
+    "mainOrProductionModified": false,
+    "modalUsed": false,
+    "professionalReferencePathsOpened": 0,
+    "referenceFacingScoreCalls": 0,
+    "referenceGuidedFiltering": false,
+    "referenceRead": false,
+    "thresholdSweep": false,
+    "variantSelection": false
+  },
+  "schema": "dadrock.tabs.v157.cpu-hybrid-generation-receipt.v1",
+  "validation": "PENDING_INDEPENDENT_STRUCTURAL_QC"
+}
