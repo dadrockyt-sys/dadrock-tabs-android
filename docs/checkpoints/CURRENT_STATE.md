@@ -3,7 +3,7 @@
 Updated: 2026-08-28 UTC
 Branch: `v143-contextual-prune-lobo`
 
-Active phase: **V154 broad-Other CPU recognition remains COMPLETE / FROZEN / STRUCTURAL-QC PASS. Rhythm, Lead, and Bass are now all FROZEN SCORER-READY: Rhythm 946 rows (equivalence PASS), Lead 447 rows, Bass 547 rows. The full 22-page Lead source was recovered and exactly authenticated before timing normalization. Reference-facing scoring has NOT run. Next is immutable three-part reference payload assembly/identity audit, then the preregistered one-time CPU score.**
+Active phase: **V154 broad-Other CPU recognition remains COMPLETE / FROZEN / STRUCTURAL-QC PASS. Rhythm, Lead, and Bass are now all FROZEN SCORER-READY: Rhythm 946 rows (equivalence PASS), Lead 447 rows, Bass 547 rows. The full 22-page Lead source was recovered and exactly authenticated before timing normalization. Reference-facing scoring has NOT run. The immutable three-part reference payload builder is now staged; next is to run/freeze that payload and receipt, checkpoint, then perform the preregistered one-time CPU score.**
 
 ## Standing authorization / safety — MUST PRESERVE
 - CPU-only work and CPU scoring are at assistant discretion.
@@ -39,6 +39,14 @@ Song: **Lenny Kravitz — Are You Gonna Go My Way**.
 - Later conditional string/fret correctness >= 0.85.
 - A missed gate diagnoses architecture; it never authorizes post-score tuning of the consumed output.
 
+## Reference locations — RESUME HERE
+These are the authoritative frozen scorer-ready files to use when resuming:
+- **Rhythm:** `research/v154-professional-references/scorer-ready/rhythm-scorer-ready.json` — 946 rows — SHA256 `d51083800bfcf30ee15f31a4349eaa2c439f1b8662acd91618ab31bdca321555`.
+- **Lead:** `research/v154-professional-references/scorer-ready/lead-scorer-ready.json` — 447 pitched rows — SHA256 `8fa39681bb7eb8cf214c364a3abd2f295488b123fddec3f2cebd3f19f014c0be`.
+- **Bass:** `research/v154-professional-references/scorer-ready/bass-scorer-ready.json` — 547 pitched rows — SHA256 `39eba52495fe81a3602f191334d71fe4bc643ed3062287fbde812fbde3c2c2f1`.
+- **Combined immutable reference payload builder already staged:** `validation/v154_cpu_multitrack/build_frontend_reference_payload.py` — added in commit `0828bb6d7cc2d0a6396e244f6397289e3f745366`.
+- Builder output targets when run: `research/v154-professional-references/scorer-ready/frontend-reference-payload.json` and `research/v154-professional-references/scorer-ready/frontend-reference-payload-receipt.json`.
+
 ## Rhythm — COMPLETE / FROZEN / SCORER-READY
 - Authoritative scorer-ready: `research/v154-professional-references/scorer-ready/rhythm-scorer-ready.json`; Git blob `99623721b13e63770829b91d0409b919b88aaa53`; SHA256 `d51083800bfcf30ee15f31a4349eaa2c439f1b8662acd91618ab31bdca321555`; **946 rows**.
 - Independent supplemental flatten: SHA256 `d6c9416979f25e6a81b9cd4583389b584a59421a0529fcccb4ca6f5dd47e679f`; 946 rows.
@@ -71,13 +79,16 @@ Song: **Lenny Kravitz — Are You Gonna Go My Way**.
 - Lead scorer-ready: **COMPLETE / FROZEN / 447 rows**.
 - Bass scorer-ready: **COMPLETE / FROZEN / 547 rows**.
 - Combined Rhythm+Lead reference expected rows: **1393** before immutable-payload audit.
+- Immutable reference payload builder: **STAGED / NOT YET RUN** at `validation/v154_cpu_multitrack/build_frontend_reference_payload.py`.
 - Reference-facing score calls: **0**.
 - Frozen generated candidate modified: **NO**.
 - Modal/L4/CUDA/GPU used: **NO**.
 - `main` / Production modified: **NO**.
 
 ## Exact next steps
-1. Assemble one immutable scorer reference payload from the exact frozen Rhythm 946 + Lead 447 + Bass 547 rows, with pinned identities and safety flags. Audit combined Guitar row identity/count = 1393 and Bass = 547 before any score call.
-2. Check the frozen scorer interface/expected payload shape without scoring; freeze payload + receipt and checkpoint.
-3. Score the exact frozen combined Guitar and Bass generated output **exactly once** with `score_frontend_reference.py`; record metrics/gates and immutable receipt. Never retune this consumed output afterward.
-4. Only after acoustic recognition is scored/frozen: continue role separation, string/fret, techniques, and PDF work.
+1. Run `validation/v154_cpu_multitrack/build_frontend_reference_payload.py` CPU-only. It must read only the three frozen scorer-ready references and frozen scorer interface, never the generated candidate; it must write the immutable payload + receipt exactly once.
+2. Verify the payload audit passes with exact counts: Rhythm 946 + Lead 447 = **1393 combined Guitar rows**, Bass = **547 rows**; verify pinned SHA identities, preserve cross-part multiplicity, and confirm scorer interface audit calls only `load_reference` with `score_stream` **not called**.
+3. Freeze/checkpoint `research/v154-professional-references/scorer-ready/frontend-reference-payload.json` and `frontend-reference-payload-receipt.json`, recording their SHA256 and builder run/commit identities in this file.
+4. Only after that checkpoint, perform the preregistered CPU reference-facing score **exactly once** using frozen generated candidate `debug/v154-cpu-autonomous/broad-other-run-33096559281/generated.json`, frozen reference payload, and frozen scorer `validation/v154_cpu_multitrack/score_frontend_reference.py`.
+5. Record combined-Guitar and Bass metrics/gates plus an immutable score receipt. Never retune, modify, threshold-sweep, or correct the consumed generated output after that score.
+6. Only after acoustic recognition is scored/frozen: continue Rhythm/Lead role separation, string/fret assignment, techniques, and professional PDF work.
