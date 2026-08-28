@@ -1,0 +1,172 @@
+{
+  "schema": "dadrock.tabs.v155.reference-blind-cpu-preregistration.v1",
+  "version": "V155",
+  "status": "PREREGISTERED_BEFORE_GENERATION",
+  "song": {
+    "artist": "Lenny Kravitz",
+    "title": "Are You Gonna Go My Way",
+    "audioPath": "public/gomywayfullaitest.m4a",
+    "audioSha256": "215bd5a657c5326f08f132ae358595a95c30b39bb7493a52c2f910d5a608149f"
+  },
+  "purpose": "One new reference-blind CPU front-end experiment after V154 failed its frozen acoustic-recognition gates. V155 changes both timebase architecture and pitch-recognition architecture; it is not a threshold sweep or correction of V154.",
+  "hardIsolation": {
+    "professionalReferenceReadDuringGeneration": false,
+    "v154CandidateUsedAsGenerationInput": false,
+    "v154ReferenceDerivedOffsetOrTempoConstantsAllowed": false,
+    "humanCorrectionAllowed": false,
+    "candidateVariantSelectionAllowed": false,
+    "thresholdSweepAllowed": false,
+    "postGenerationReferenceGuidedFilteringAllowed": false,
+    "mainOrProductionModificationAllowed": false,
+    "gpuAllowedWithoutFreshExplicitUserAuthorization": false
+  },
+  "execution": {
+    "device": "CPU_ONLY",
+    "python": "3.10",
+    "torch": "2.8.0+cpu",
+    "numpy": "1.26.4",
+    "demucs": "4.1.0",
+    "basicPitch": "0.4.0",
+    "librosa": "0.11.0",
+    "imageioFfmpeg": "0.6.0",
+    "singleCandidate": true,
+    "singleGenerationRun": true
+  },
+  "audioNormalization": {
+    "sampleRate": 44100,
+    "channels": 2,
+    "codec": "pcm_s16le",
+    "deterministicFfmpeg": true
+  },
+  "separation": {
+    "model": "htdemucs_6s",
+    "device": "cpu",
+    "shifts": 1,
+    "jobs": 1,
+    "guitarInputStem": "guitar",
+    "bassInputStem": "bass",
+    "timebaseAnalysisInputs": ["normalized_mix", "drums", "bass", "guitar"],
+    "noFallbackModel": true
+  },
+  "timebase": {
+    "principle": "Musical time is derived from audio; audio timestamp 0 is never assumed to be musical grid step 0.",
+    "beatTracker": "librosa.beat.beat_track on deterministic multi-band onset envelope derived from normalized mix plus separated drums",
+    "tempoMode": "dynamic beat times; do not force one constant BPM for event mapping",
+    "downbeatPhase": {
+      "meter": "4/4",
+      "candidates": 4,
+      "selection": "choose the deterministic beat-phase index maximizing beat-synchronous accent evidence from low-frequency onset energy, drums onset energy, and full-band spectral flux",
+      "tieBreak": "earliest phase index"
+    },
+    "leadingGrid": "after phase selection, extrapolate beat intervals backward only as needed so the first musical event can map before the first detected beat; do not use any professional-reference anchor",
+    "eventMapping": "piecewise-linear interpolation between detected beat times; each beat spans 4 sixteenth-grid steps; outside tracked range use nearest robust local beat period",
+    "quantization": "map raw onset to fractional sixteenth position then deterministically snap to nearest integer sixteenth for scorer-facing measure/step; preserve raw seconds and unsnapped grid position in debug metadata",
+    "referenceDerivedTimingConstants": []
+  },
+  "bassRecognition": {
+    "architecture": "monophonic/low-polyphony F0 plus onset segmentation",
+    "input": "htdemucs_6s bass stem",
+    "harmonicSignal": "librosa.effects.hpss harmonic component",
+    "f0": "librosa.pyin",
+    "midiRange": [28, 67],
+    "frameLength": 2048,
+    "hopLength": 256,
+    "voicedProbabilityMinimum": 0.70,
+    "onsetEnvelope": "librosa.onset.onset_strength on bass stem",
+    "onsetDetection": "librosa.onset.onset_detect with backtrack=true and fixed default normalization",
+    "segmentation": "split on detected onset, voiced/unvoiced transition, or stable-pitch change >= 0.70 semitone sustained for >= 3 frames",
+    "pitchAssignment": "median voiced MIDI per segment, rounded to nearest MIDI semitone",
+    "repeatedSamePitch": "retain distinct same-pitch notes when a new detected onset occurs",
+    "minimumDurationMs": 70,
+    "basicPitchUsed": false
+  },
+  "guitarRecognition": {
+    "architecture": "polyphonic model plus independent harmonic-CQT evidence",
+    "input": "htdemucs_6s guitar stem",
+    "basicPitch": {
+      "version": "0.4.0",
+      "onsetThreshold": 0.50,
+      "frameThreshold": 0.30,
+      "minimumNoteLengthMs": 90.0,
+      "minimumMidi": 40,
+      "maximumMidi": 88,
+      "multiplePitchBends": false,
+      "melodiaTrick": true,
+      "singleFixedPass": true
+    },
+    "cqt": {
+      "signal": "HPSS harmonic component of guitar stem",
+      "sampleRate": 22050,
+      "hopLength": 256,
+      "binsPerOctave": 36,
+      "midiRange": [40, 88],
+      "salience": "local log-magnitude peak energy accumulated within +/- one third semitone around each MIDI center",
+      "noiseFloor": "per-frame robust median plus MAD",
+      "highConfidencePeak": "salience >= median + 3.0*MAD and local maximum in pitch",
+      "onsetEvidence": "positive salience flux at the candidate MIDI plus guitar onset envelope"
+    },
+    "fusion": {
+      "basicPitchRetention": "retain a Basic Pitch event when its MIDI has CQT support at onset or over at least 35% of its first 120 ms; exceptionally strong Basic Pitch events with amplitude >= 0.80 are retained without CQT veto",
+      "cqtOnlyCompletion": "at detected guitar onsets, add a CQT-only MIDI only when it is a high-confidence peak, has onset evidence, is not a likely harmonic duplicate of a stronger lower fundamental, and is not within 60 ms of an already-kept same-MIDI event",
+      "maxSimultaneousPitchesPerOnset": 6,
+      "noReferenceGuidedChordCompletion": true
+    },
+    "minimumDurationMs": 70
+  },
+  "postProcessing": {
+    "genericOnly": true,
+    "sortOrder": ["absoluteGridStep", "midi", "source"],
+    "deduplicateSameStream": "same MIDI and same snapped grid step collapse to one event; retain strongest evidence and provenance",
+    "crossPartDeduplication": false,
+    "pitchRanges": {
+      "combinedGuitar": [40, 88],
+      "bass": [28, 67]
+    }
+  },
+  "candidateSchema": {
+    "streams": ["combinedGuitar", "bass"],
+    "requiredEventFields": ["measure", "step", "midi", "startSeconds", "rawGridStep", "source"],
+    "requiredSafetyFlags": {
+      "referenceRead": false,
+      "humanCorrection": false,
+      "referenceGuidedFiltering": false,
+      "thresholdSweep": false,
+      "modalUsed": false,
+      "cudaGpuUsed": false
+    }
+  },
+  "referenceBlindStructuralQc": {
+    "mustPassBeforeFreeze": [
+      "exact audio identity",
+      "all dependency versions pinned",
+      "Demucs model identity/checkpoint receipt recorded",
+      "nonempty Guitar and Bass streams",
+      "all events finite and inside frozen MIDI ranges",
+      "all snapped steps integers 0..15",
+      "raw grid positions finite",
+      "event seconds monotonically valid",
+      "single candidate only",
+      "referenceRead=false",
+      "no professional-reference path imported or opened"
+    ],
+    "noQualityMetricAgainstReferenceBeforeFreeze": true
+  },
+  "scoringProtocol": {
+    "referenceAccessOnlyAfterCandidateFreeze": true,
+    "referencePayloadPath": "research/v154-professional-references/scorer-ready/frontend-reference-payload.json",
+    "referencePayloadSha256": "b39a203aec3f45800891fe4eca156e37e7571b91ea5c4ccc41b30bbc95fc89e7",
+    "scorerPath": "validation/v154_cpu_multitrack/score_frontend_reference.py",
+    "scorerGitBlob": "9644e65719fbd361a9b39778ae9950c5e983e855",
+    "referenceFacingScoreCallsForV155": 1,
+    "scoreExactlyOnce": true,
+    "postScoreRetuningForbidden": true
+  },
+  "frozenGates": {
+    "combinedGuitarTimingAwarePitchF1Minimum": 0.80,
+    "bassTimingAwarePitchF1Minimum": 0.80,
+    "laterOnsetAwareNoteF1Minimum": 0.75,
+    "laterConditionalRoleAccuracyMinimum": 0.85,
+    "laterConditionalStringFretAccuracyMinimum": 0.85
+  },
+  "failurePolicy": "If V155 misses a frozen gate, freeze the failure, diagnose architecture, and move to a new version. Never retune or select a replacement V155 candidate against the professional reference."
+}
