@@ -1,0 +1,73 @@
+{
+  "frozenInputs": {
+    "generatedSha256": "1be86f86bb08e164342aa0c52db7a4d77beb938621e00d7d2e3b0e03f2dbfc37",
+    "referenceSha256": "b39a203aec3f45800891fe4eca156e37e7571b91ea5c4ccc41b30bbc95fc89e7",
+    "scorerGitBlobSha": "9644e65719fbd361a9b39778ae9950c5e983e855"
+  },
+  "gates": {
+    "bassPass": false,
+    "bassTimingAwarePitchF1": 0.1116751269035533,
+    "bassTimingAwarePitchF1Target": 0.8,
+    "combinedGuitarPass": false,
+    "combinedGuitarTimingAwarePitchF1": 0.04915390813859791,
+    "combinedGuitarTimingAwarePitchF1Target": 0.8
+  },
+  "metrics": {
+    "bassGrossTimingAwarePitch": {
+      "f1": 0.2639593908629442,
+      "falseNegative": 391,
+      "falsePositive": 479,
+      "generated": 635,
+      "matched": 156,
+      "precision": 0.24566929133858267,
+      "recall": 0.2851919561243144,
+      "reference": 547
+    },
+    "bassPrimaryTimingAwarePitch": {
+      "f1": 0.1116751269035533,
+      "falseNegative": 481,
+      "falsePositive": 569,
+      "generated": 635,
+      "matched": 66,
+      "precision": 0.10393700787401575,
+      "recall": 0.1206581352833638,
+      "reference": 547
+    },
+    "combinedGuitarGrossTimingAwarePitch": {
+      "f1": 0.16760676873489122,
+      "falseNegative": 1185,
+      "falsePositive": 881,
+      "generated": 1089,
+      "matched": 208,
+      "precision": 0.19100091827364554,
+      "recall": 0.14931801866475233,
+      "reference": 1393
+    },
+    "combinedGuitarPrimaryTimingAwarePitch": {
+      "f1": 0.04915390813859791,
+      "falseNegative": 1332,
+      "falsePositive": 1028,
+      "generated": 1089,
+      "matched": 61,
+      "precision": 0.05601469237832874,
+      "recall": 0.04379038047379756,
+      "reference": 1393
+    }
+  },
+  "policy": {
+    "cpuOnly": true,
+    "generatedCandidateModified": false,
+    "generatedCandidateRetuned": false,
+    "humanCandidateCorrection": false,
+    "mainOrProductionModified": false,
+    "modalL4CudaGpuUsed": false,
+    "postScoreRetuningOfSameGeneratedOutputForbidden": true,
+    "thresholdSweep": false
+  },
+  "referenceFacingScoreCalls": 1,
+  "schema": "dadrock.tabs.v154.cpu-front-end-score-receipt.v1",
+  "scorePath": "debug/v154-cpu-autonomous/v154-frontend-reference-score/score.json",
+  "scoreSha256": "c206f6bc951c6bd9b6cc19e6758c4aef6654f349cc1f5712df1f052e46fa798b",
+  "scorerInvocationCountInWrapper": 1,
+  "validation": "PASS"
+}
