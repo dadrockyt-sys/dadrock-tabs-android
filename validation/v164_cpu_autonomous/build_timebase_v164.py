@@ -47,7 +47,15 @@ def load_pinned_module(path: Path, expected_blob: str, name: str):
     if spec is None or spec.loader is None:
         raise RuntimeError(f"could not load pinned module: {path}")
     module = importlib.util.module_from_spec(spec)
-    spec.loader.exec_module(module)
+    parent = str(path.parent)
+    inserted = parent not in sys.path
+    if inserted:
+        sys.path.insert(0, parent)
+    try:
+        spec.loader.exec_module(module)
+    finally:
+        if inserted:
+            sys.path.remove(parent)
     return module
 
 
