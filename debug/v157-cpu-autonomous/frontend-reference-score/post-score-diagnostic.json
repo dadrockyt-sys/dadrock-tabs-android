@@ -1,0 +1,503 @@
+{
+  "bass": {
+    "detectedOnsetCount": 465,
+    "detectedOnsetsToReferenceRatio": 0.850091407678245,
+    "eventsBeforeGridDedupe": 113,
+    "eventsToDetectedOnsetsRatio": 0.24301075268817204,
+    "generatedCount": 113,
+    "generatedFirstMeasure": 8,
+    "generatedLastMeasure": 102,
+    "generatedPitchHistogram": {
+      "37": 1,
+      "38": 3,
+      "39": 1,
+      "40": 66,
+      "41": 3,
+      "42": 5,
+      "43": 8,
+      "44": 3,
+      "45": 6,
+      "47": 2,
+      "48": 1,
+      "50": 4,
+      "52": 5,
+      "54": 3,
+      "56": 2
+    },
+    "generatedToReferenceRatio": 0.20658135283363802,
+    "globalShiftDiagnostic": {
+      "allBestShifts": [
+        -12.5
+      ],
+      "chosen": {
+        "f1": 0.29090909090909095,
+        "generated": 113,
+        "matched": 96,
+        "precision": 0.8495575221238938,
+        "recall": 0.17550274223034734,
+        "reference": 547,
+        "shiftSteps": -12.5
+      },
+      "increment": 0.25,
+      "scanRange": [
+        -16.0,
+        16.0
+      ],
+      "tolerance": 0.5
+    },
+    "measurePitchContent": {
+      "f1": 0.22424242424242424,
+      "generated": 113,
+      "matched": 74,
+      "precision": 0.6548672566371682,
+      "recall": 0.13528336380255943,
+      "reference": 547
+    },
+    "medianPerMeasureGeneratedReferenceRatio": 0.14285714285714285,
+    "quartileShiftDiagnostic": [
+      {
+        "absoluteRange": [
+          0.0,
+          433.5
+        ],
+        "generated": 33,
+        "quartile": 1,
+        "reference": 114,
+        "shiftScan": {
+          "allBestShifts": [
+            -12.5
+          ],
+          "chosen": {
+            "f1": 0.38095238095238093,
+            "generated": 33,
+            "matched": 28,
+            "precision": 0.8484848484848485,
+            "recall": 0.24561403508771928,
+            "reference": 114,
+            "shiftSteps": -12.5
+          },
+          "increment": 0.5,
+          "scanRange": [
+            -16,
+            16
+          ],
+          "tolerance": 0.5
+        }
+      },
+      {
+        "absoluteRange": [
+          433.5,
+          867.0
+        ],
+        "generated": 31,
+        "quartile": 2,
+        "reference": 144,
+        "shiftScan": {
+          "allBestShifts": [
+            -12.5
+          ],
+          "chosen": {
+            "f1": 0.2857142857142857,
+            "generated": 31,
+            "matched": 25,
+            "precision": 0.8064516129032258,
+            "recall": 0.1736111111111111,
+            "reference": 144,
+            "shiftSteps": -12.5
+          },
+          "increment": 0.5,
+          "scanRange": [
+            -16,
+            16
+          ],
+          "tolerance": 0.5
+        }
+      },
+      {
+        "absoluteRange": [
+          867.0,
+          1300.5
+        ],
+        "generated": 32,
+        "quartile": 3,
+        "reference": 119,
+        "shiftScan": {
+          "allBestShifts": [
+            -12.5
+          ],
+          "chosen": {
+            "f1": 0.35761589403973504,
+            "generated": 32,
+            "matched": 27,
+            "precision": 0.84375,
+            "recall": 0.226890756302521,
+            "reference": 119,
+            "shiftSteps": -12.5
+          },
+          "increment": 0.5,
+          "scanRange": [
+            -16,
+            16
+          ],
+          "tolerance": 0.5
+        }
+      },
+      {
+        "absoluteRange": [
+          1300.5,
+          1734.0
+        ],
+        "generated": 113,
+        "quartile": 4,
+        "reference": 547,
+        "shiftScan": {
+          "allBestShifts": [
+            -12.5
+          ],
+          "chosen": {
+            "f1": 0.29090909090909095,
+            "generated": 113,
+            "matched": 96,
+            "precision": 0.8495575221238938,
+            "recall": 0.17550274223034734,
+            "reference": 547,
+            "shiftSteps": -12.5
+          },
+          "increment": 0.5,
+          "scanRange": [
+            -16,
+            16
+          ],
+          "tolerance": 0.5
+        }
+      }
+    ],
+    "referenceCount": 547,
+    "referenceFirstMeasure": 7,
+    "referenceLastMeasure": 109,
+    "referenceMeasuresWithNoGeneratedBass": [
+      7,
+      15,
+      18,
+      24,
+      26,
+      28,
+      32,
+      34,
+      35,
+      37,
+      42,
+      49,
+      54,
+      56,
+      58,
+      59,
+      61,
+      62,
+      64,
+      83,
+      84,
+      86,
+      89,
+      95,
+      99,
+      100,
+      101,
+      103,
+      104,
+      105,
+      106,
+      107,
+      108,
+      109
+    ],
+    "referencePitchHistogram": {
+      "28": 3,
+      "29": 5,
+      "30": 22,
+      "31": 73,
+      "32": 1,
+      "33": 10,
+      "35": 70,
+      "36": 6,
+      "37": 9,
+      "38": 96,
+      "39": 8,
+      "40": 184,
+      "41": 7,
+      "42": 9,
+      "43": 8,
+      "44": 3,
+      "45": 9,
+      "47": 3,
+      "48": 3,
+      "50": 7,
+      "52": 6,
+      "54": 3,
+      "56": 2
+    },
+    "strictMeasureTiming": {
+      "f1": 0.05757575757575757,
+      "generated": 113,
+      "matched": 19,
+      "precision": 0.168141592920354,
+      "recall": 0.03473491773308958,
+      "reference": 547
+    }
+  },
+  "classification": "post-score-diagnostic-only-no-candidate-correction",
+  "combinedGuitar": {
+    "count": 1779,
+    "globalShiftDiagnostic": {
+      "allBestShifts": [
+        -12.5
+      ],
+      "chosen": {
+        "f1": 0.4211853720050442,
+        "generated": 1779,
+        "matched": 668,
+        "precision": 0.37549184935356944,
+        "recall": 0.47954055994257,
+        "reference": 1393,
+        "shiftSteps": -12.5
+      },
+      "increment": 0.25,
+      "scanRange": [
+        -16.0,
+        16.0
+      ],
+      "tolerance": 0.5
+    },
+    "measurePitchContent": {
+      "f1": 0.4520807061790668,
+      "generated": 1779,
+      "matched": 717,
+      "precision": 0.403035413153457,
+      "recall": 0.5147164393395549,
+      "reference": 1393
+    },
+    "quartileShiftDiagnostic": [
+      {
+        "absoluteRange": [
+          0.0,
+          450.5
+        ],
+        "generated": 429,
+        "quartile": 1,
+        "reference": 317,
+        "shiftScan": {
+          "allBestShifts": [
+            -12.5,
+            -11.5
+          ],
+          "chosen": {
+            "f1": 0.4691689008042896,
+            "generated": 429,
+            "matched": 175,
+            "precision": 0.40792540792540793,
+            "recall": 0.5520504731861199,
+            "reference": 317,
+            "shiftSteps": -11.5
+          },
+          "increment": 0.5,
+          "scanRange": [
+            -16,
+            16
+          ],
+          "tolerance": 0.5
+        }
+      },
+      {
+        "absoluteRange": [
+          450.5,
+          901.0
+        ],
+        "generated": 388,
+        "quartile": 2,
+        "reference": 331,
+        "shiftScan": {
+          "allBestShifts": [
+            -12.5
+          ],
+          "chosen": {
+            "f1": 0.42002781641168285,
+            "generated": 388,
+            "matched": 151,
+            "precision": 0.38917525773195877,
+            "recall": 0.4561933534743202,
+            "reference": 331,
+            "shiftSteps": -12.5
+          },
+          "increment": 0.5,
+          "scanRange": [
+            -16,
+            16
+          ],
+          "tolerance": 0.5
+        }
+      },
+      {
+        "absoluteRange": [
+          901.0,
+          1351.5
+        ],
+        "generated": 444,
+        "quartile": 3,
+        "reference": 388,
+        "shiftScan": {
+          "allBestShifts": [
+            -12.5
+          ],
+          "chosen": {
+            "f1": 0.41105769230769235,
+            "generated": 444,
+            "matched": 171,
+            "precision": 0.38513513513513514,
+            "recall": 0.44072164948453607,
+            "reference": 388,
+            "shiftSteps": -12.5
+          },
+          "increment": 0.5,
+          "scanRange": [
+            -16,
+            16
+          ],
+          "tolerance": 0.5
+        }
+      },
+      {
+        "absoluteRange": [
+          1351.5,
+          1802.0
+        ],
+        "generated": 1779,
+        "quartile": 4,
+        "reference": 1393,
+        "shiftScan": {
+          "allBestShifts": [
+            -12.5
+          ],
+          "chosen": {
+            "f1": 0.4211853720050442,
+            "generated": 1779,
+            "matched": 668,
+            "precision": 0.37549184935356944,
+            "recall": 0.47954055994257,
+            "reference": 1393,
+            "shiftSteps": -12.5
+          },
+          "increment": 0.5,
+          "scanRange": [
+            -16,
+            16
+          ],
+          "tolerance": 0.5
+        }
+      }
+    ],
+    "referenceCount": 1393,
+    "sourceBreakdown": {
+      "basic_pitch": {
+        "count": 1366,
+        "globalShiftDiagnostic": {
+          "allBestShifts": [
+            -12.5
+          ],
+          "chosen": {
+            "f1": 0.4624864081188837,
+            "generated": 1366,
+            "matched": 638,
+            "precision": 0.4670571010248902,
+            "recall": 0.4580043072505384,
+            "reference": 1393,
+            "shiftSteps": -12.5
+          },
+          "increment": 0.25,
+          "scanRange": [
+            -16.0,
+            16.0
+          ],
+          "tolerance": 0.5
+        },
+        "measurePitchContent": {
+          "f1": 0.47770931496919167,
+          "generated": 1366,
+          "matched": 659,
+          "precision": 0.48243045387994143,
+          "recall": 0.47307968413496054,
+          "reference": 1393
+        },
+        "strictMeasureTiming": {
+          "f1": 0.07031533164189924,
+          "generated": 1366,
+          "matched": 97,
+          "precision": 0.07101024890190337,
+          "recall": 0.06963388370423547,
+          "reference": 1393
+        }
+      },
+      "cqt": {
+        "count": 413,
+        "globalShiftDiagnostic": {
+          "allBestShifts": [
+            -11.5
+          ],
+          "chosen": {
+            "f1": 0.04983388704318937,
+            "generated": 413,
+            "matched": 45,
+            "precision": 0.1089588377723971,
+            "recall": 0.03230437903804738,
+            "reference": 1393,
+            "shiftSteps": -11.5
+          },
+          "increment": 0.25,
+          "scanRange": [
+            -16.0,
+            16.0
+          ],
+          "tolerance": 0.5
+        },
+        "measurePitchContent": {
+          "f1": 0.12956810631229235,
+          "generated": 413,
+          "matched": 117,
+          "precision": 0.28329297820823246,
+          "recall": 0.08399138549892318,
+          "reference": 1393
+        },
+        "strictMeasureTiming": {
+          "f1": 0.02768549280177187,
+          "generated": 413,
+          "matched": 25,
+          "precision": 0.06053268765133172,
+          "recall": 0.017946877243359655,
+          "reference": 1393
+        }
+      }
+    },
+    "strictMeasureTiming": {
+      "f1": 0.07692307692307694,
+      "generated": 1779,
+      "matched": 122,
+      "precision": 0.06857785272625071,
+      "recall": 0.08758076094759512,
+      "reference": 1393
+    }
+  },
+  "interpretationRules": [
+    "Shift scans are post-score architecture evidence only; never promote selected shifts to future song-specific constants.",
+    "Source-specific reference metrics may motivate generic architecture changes but may not be used to filter or rewrite V157.",
+    "V157 score count stays permanently 1; this diagnostic must not import or call the official scorer."
+  ],
+  "safety": {
+    "additionalReferenceFacingScoreCalls": 0,
+    "candidateModified": false,
+    "candidateVariantWritten": false,
+    "futureHardcodedReferenceCorrectionAllowed": false,
+    "officialScorerCalled": false,
+    "officialScorerImported": false,
+    "thresholdSweepForCandidate": false
+  },
+  "schema": "dadrock.tabs.v157.post-score-architecture-diagnostic.v1"
+}
