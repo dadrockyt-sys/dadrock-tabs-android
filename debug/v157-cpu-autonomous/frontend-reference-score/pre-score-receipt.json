@@ -1,0 +1,51 @@
+{
+  "schema": "dadrock.tabs.v157.cpu-front-end-pre-score-receipt.v1",
+  "version": "V157",
+  "validation": "PASS",
+  "status": "SEALED_BEFORE_REFERENCE_SCORE",
+  "candidateFreezeCommit": "c26e41d239d44d656bf57cf195ed39416658b680",
+  "candidatePath": "debug/v157-cpu-autonomous/generated.json",
+  "candidateSha256": "f5dc7094b72f8e3a988b1fdd59808cb056461d7e12a6d41508942cf499de3e71",
+  "candidateGitBlob": "3491814f4cc075aaf3eefaecf2d179f57d2d5dae",
+  "structuralQcPath": "debug/v157-cpu-autonomous/structural-qc.json",
+  "structuralQcGitBlob": "3528adbceb640743cc8f0e472d2cd62c49c1ebc3",
+  "structuralQcValidation": "PASS",
+  "generationReceiptPath": "debug/v157-cpu-autonomous/generation-receipt.json",
+  "generationReceiptSha256": "7501b7639ef5284647af6dc6ad0b0e430254f19d8d419e0fd6f33dede6ffda8c",
+  "referencePayloadPath": "research/v154-professional-references/scorer-ready/frontend-reference-payload.json",
+  "referencePayloadSha256": "b39a203aec3f45800891fe4eca156e37e7571b91ea5c4ccc41b30bbc95fc89e7",
+  "scorerPath": "validation/v154_cpu_multitrack/score_frontend_reference.py",
+  "scorerGitBlob": "9644e65719fbd361a9b39778ae9950c5e983e855",
+  "guardPath": "validation/v157_cpu_multitrack/run_frontend_reference_score_once.py",
+  "guardGitBlob": "6396ff11f1b2960fb4c80c1633786c3089ec4883",
+  "scorePath": "debug/v157-cpu-autonomous/frontend-reference-score/score.json",
+  "scoreReceiptPath": "debug/v157-cpu-autonomous/frontend-reference-score/score-receipt.json",
+  "scorePathAbsentAtSeal": true,
+  "scoreReceiptPathAbsentAtSeal": true,
+  "referenceFacingScoreCallsAtSeal": 0,
+  "scorerInvocationCountAtSeal": 0,
+  "scorePolicy": {
+    "cpuOnly": true,
+    "scoreExactlyOnce": true,
+    "guardInvokesFrozenScorerExactlyOnce": true,
+    "automaticRetryForbidden": true,
+    "candidateRewriteForbidden": true,
+    "candidateRetuneForbidden": true,
+    "humanCandidateCorrectionForbidden": true,
+    "thresholdSweepForbidden": true,
+    "variantSelectionForbidden": true,
+    "postScoreRetuningForbidden": true,
+    "secondScoreCallForbidden": true
+  },
+  "frozenGates": {
+    "combinedGuitarTimingAwarePitchF1Minimum": 0.80,
+    "bassTimingAwarePitchF1Minimum": 0.80
+  },
+  "safety": {
+    "professionalReferenceContentReadByGeneration": false,
+    "referenceFacingScoreCalls": 0,
+    "gpuUsed": false,
+    "modalUsed": false,
+    "mainOrProductionModified": false
+  }
+}
