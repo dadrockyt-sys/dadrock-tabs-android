@@ -112,9 +112,17 @@ Song: **Lenny Kravitz — Are You Gonna Go My Way**.
 - Next recovery probe: inspect commit check-runs / Actions run metadata and artifacts around `d1d42841...` and authenticate any survivor against the frozen receipt hashes.
 - Constraints unchanged: scoring 0; frozen candidate untouched; no GPU; no `main`/Production change; do not commit notation images or derived raster copies.
 
+## 2026-08-28 continuation — Lead preservation workflow/artifact audit
+- The temporary parent-tree helpers are exactly `.github/lead-preserve-parts/part01.py`–`part07.py`; inspected content shows they build the machine-readable Lead transcription/reference/provenance artifacts and do **not** contain embedded image bytes or a reversible image encoding.
+- Actions lookup by triggering parent `58749dbe87b0368ed79814ce8fa07d0851badc24` identifies successful run `33118628998`, workflow `V154 preserve Lead reference once` at `.github/workflows/v154-preserve-lead-reference-once.yml`, started `2026-08-27T21:32:41Z`.
+- The run's artifacts endpoint reports `total_count: 0`; therefore this successful preservation run has no retained Actions artifact bundle from which the 22 notation pages can be recovered.
+- Actions lookup by generated preservation commit `d1d42841...` returns 0 runs, consistent with that commit being created by the workflow rather than being its triggering head.
+- Recovery remains limited to other commit/tree/blob history, workflow logs/check metadata, or the external/current-conversation source. Hashes/visual-order data are authentication/transcription evidence only and cannot be used to reconstruct exact page images or infer exact Lead attack timing.
+- Constraints unchanged: scoring 0; frozen candidate untouched; no GPU; no `main`/Production change; do not commit notation images or derived raster copies.
+
 ## Exact next steps
 1. **DONE / FROZEN:** Rhythm row-identity equivalence audit; preserve both frozen Rhythm files unchanged.
-2. Continue repository/history/reference-receipt probing for any accessible recovery route to the exact 22 Lead source pages corresponding to frozen Lead page-set SHA256 `de2f20c...`. Do not substitute Bass pages and do not invent timing from visual-order JSON.
+2. Continue repository/history/reference-receipt probing for any accessible recovery route to the exact 22 Lead source pages corresponding to frozen Lead page-set SHA256 `de2f20c...`. Next inspect preservation workflow jobs/log metadata and deleted/tree/blob history; do not substitute Bass pages and do not invent timing from visual-order JSON.
 3. If recovered, visually normalize Lead source-local attacks from notation, preserve source uncertainties, apply only the frozen meter mapping, and freeze scorer-ready Lead rows + receipt. Save checkpoint often.
 4. Only after Lead is scorer-ready, assemble one immutable scorer reference payload with frozen authorization flags and exact Rhythm/Lead/Bass rows. Verify identities/counts before any score call.
 5. Score the exact frozen combined Guitar and Bass output **exactly once** using `score_frontend_reference.py`; interpret preregistered gates; never retune this consumed output afterward.
