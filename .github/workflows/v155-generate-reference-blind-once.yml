@@ -1,4 +1,5 @@
 name: V155 generate reference-blind CPU candidate once
+# armed after workflow registration
 
 on:
   push:
