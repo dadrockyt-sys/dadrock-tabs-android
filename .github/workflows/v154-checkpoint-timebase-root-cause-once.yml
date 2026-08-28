@@ -1,0 +1,59 @@
+name: V154 checkpoint timebase root cause once
+
+on:
+  push:
+    branches: [v143-contextual-prune-lobo]
+    paths: [.github/workflows/v154-checkpoint-timebase-root-cause-once.yml]
+
+permissions:
+  contents: write
+
+env:
+  BRANCH: v143-contextual-prune-lobo
+
+jobs:
+  checkpoint:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: v143-contextual-prune-lobo
+          fetch-depth: 1
+      - name: Append latest root-cause checkpoint
+        run: |
+          cat >> docs/checkpoints/CURRENT_STATE.md <<'EOF'
+
+## 2026-08-28 continuation — V154 timebase root-cause audit COMPLETE / FROZEN
+- Historical generation code inspected at V154 head `986e2a69a6cb877a203d2f8b04115914dc8fd2e6`.
+- Historical workflow: `.github/workflows/v154-broad-other-cpu-once.yml`; run `33096559281`.
+- Historical transcriber: `validation/v154_cpu_multitrack/transcribe_broad_other.py`; frozen Git blob `2f09ca1b8bc012749468f0079497ded71d318782`.
+- `grid_location(seconds)` computed `absolute_step_float = seconds / STEP_SECONDS`; therefore musical grid step 0 was hard-anchored to audio/stem timestamp `0.000 s`.
+- V154 performed **no audio-derived beat/downbeat/phase origin estimation** and **no explicit Demucs/Basic-Pitch latency compensation** before mapping onsets to `(measure, step)`.
+- Historical CPU artifact `v154-broad-other-cpu-33096559281` remains available; artifact id `9656706944`, digest `sha256:f0944432c37b369ac38cd25d058265a76f36b23e2f0bcf9808880d9e141dc518`.
+- Artifact identities reconfirmed: generated SHA256 `1be86f86bb08e164342aa0c52db7a4d77beb938621e00d7d2e3b0e03f2dbfc37`; normalized WAV SHA256 `3e61b7926eabc21b758c750f826c7426a29d6de5aafdd5c93f8045ecdc67f87e`; Other stem SHA256 `c288232d1fff42f0fcf57e3e46dfd274428cb2d4e1c916f7fe663d28d42b1440`; Bass stem SHA256 `918670e9293b5aa633593fbe491ff520a045774ead7cbdba0a851301d4e86b0f`.
+- Tighter diagnostic: `debug/v154-cpu-autonomous/v154-frontend-reference-score/timebase-diagnostic.json`; SHA256 `ddaddaa4cfff1de1b5e7466813d9e08cfaeb9451b5a08406e820209543fe2f3c`.
+- Diagnostic script: `validation/v154_cpu_multitrack/diagnose_frontend_timebase.py`; one-use CPU run `33139677372`, job `98747482513`; freeze commit `e87f81e`; official scorer imported/called **NO**; additional reference-facing score calls **0**; candidate correction written **NO**.
+- Section-wise best shifts are not constant: combined Guitar early median `-11.50` -> late median `-13.25` steps (delta `-1.75`); Bass `-11.50` -> `-13.50` (delta `-2.00`).
+- Weighted shift-vs-time slopes independently agree: Guitar `-0.001485` (diagnostic pure-tempo equivalent ~`129.007 BPM`); Bass `-0.001248` (~`129.038 BPM`). These reference-derived BPM equivalents are **diagnostic only and must never be hardcoded/tuned into a future candidate**.
+- Root-cause conclusion: V154 has a **shared upstream timebase architecture failure** consisting of (a) missing automatic musical/downbeat origin alignment and (b) small cumulative tempo/timebase drift. The large residual pitch/polyphony error remains a separate recognition failure, so timing repair alone cannot satisfy the acoustic gates.
+- Permanent V154 rule remains unchanged: reference-facing score count = **1 permanently closed**; consumed candidate stays byte-identical and is never corrected/retuned/rescored as a replacement.
+
+### Resume-next steps after this audit
+1. Confirm `V155` (or next unused version) is unused before naming the next experiment.
+2. Preregister the next CPU architecture **before generation**, with no professional-reference reads in candidate generation.
+3. New timebase must estimate tempo + musical beat/downbeat/phase from audio itself rather than assuming `t=0` = grid step 0; do not use the reference-derived `-13.25` shift or ~129.01 BPM as song-specific constants.
+4. Recognition architecture must also change materially beyond a Basic Pitch threshold sweep because V154 residual pitch/polyphony performance is far below target even under diagnostic timing relaxation.
+5. Freeze exactly one new reference-blind candidate after structural QC, then use a newly sealed one-time scoring protocol. Do not compare/select variants against the reference.
+6. Stay CPU-only unless fresh explicit user authorization is obtained immediately before any Modal/NVIDIA L4/CUDA/GPU run.
+EOF
+      - name: Commit checkpoint and self-seal
+        run: |
+          set -euo pipefail
+          rm .github/workflows/v154-checkpoint-timebase-root-cause-once.yml
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add docs/checkpoints/CURRENT_STATE.md .github/workflows/v154-checkpoint-timebase-root-cause-once.yml
+          git commit -m "checkpoint: freeze V154 timebase root-cause audit [skip ci]"
+          git fetch origin "$BRANCH"
+          git rebase "origin/$BRANCH"
+          git push origin HEAD:"$BRANCH"
