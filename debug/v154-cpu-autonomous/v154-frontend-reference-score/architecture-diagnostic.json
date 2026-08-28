@@ -1,0 +1,1258 @@
+{
+  "bass": {
+    "counts": {
+      "generated": 635,
+      "reference": 547
+    },
+    "generatedFractionalStepStats": {
+      "maximum": 0.4995273437500032,
+      "medianDistanceToIntegerStep": 0.2586015625000755,
+      "p90": 0.4538750000000391
+    },
+    "globalAbsoluteShiftScan": {
+      "bestShift": {
+        "f1": 0.3147208121827411,
+        "generated": 635,
+        "matched": 186,
+        "precision": 0.2929133858267717,
+        "recall": 0.340036563071298,
+        "reference": 547,
+        "shiftSteps": -13.25
+      },
+      "scanIncrementSteps": 0.25,
+      "scanRangeSteps": [
+        -16,
+        16
+      ],
+      "toleranceSteps": 0.5,
+      "topShifts": [
+        {
+          "matched": 186,
+          "shiftSteps": -13.25
+        },
+        {
+          "matched": 186,
+          "shiftSteps": -13.5
+        },
+        {
+          "matched": 177,
+          "shiftSteps": -13.0
+        },
+        {
+          "matched": 172,
+          "shiftSteps": -12.0
+        },
+        {
+          "matched": 167,
+          "shiftSteps": -11.75
+        },
+        {
+          "matched": 165,
+          "shiftSteps": -12.75
+        },
+        {
+          "matched": 163,
+          "shiftSteps": -12.25
+        },
+        {
+          "matched": 158,
+          "shiftSteps": -11.5
+        },
+        {
+          "matched": 154,
+          "shiftSteps": -12.5
+        },
+        {
+          "matched": 150,
+          "shiftSteps": -13.75
+        }
+      ],
+      "zeroShift": {
+        "f1": 0.13028764805414553,
+        "generated": 635,
+        "matched": 77,
+        "precision": 0.12125984251968504,
+        "recall": 0.14076782449725778,
+        "reference": 547,
+        "shiftSteps": 0.0
+      }
+    },
+    "measureIndexShiftScanPitchContent": {
+      "all": [
+        {
+          "f1": 0.5634517766497462,
+          "generated": 635,
+          "matched": 333,
+          "measureShift": 0,
+          "precision": 0.5244094488188976,
+          "recall": 0.6087751371115173,
+          "reference": 547
+        },
+        {
+          "f1": 0.5634517766497462,
+          "generated": 635,
+          "matched": 333,
+          "measureShift": -1,
+          "precision": 0.5244094488188976,
+          "recall": 0.6087751371115173,
+          "reference": 547
+        },
+        {
+          "f1": 0.5634517766497462,
+          "generated": 635,
+          "matched": 333,
+          "measureShift": 1,
+          "precision": 0.5244094488188976,
+          "recall": 0.6087751371115173,
+          "reference": 547
+        },
+        {
+          "f1": 0.5634517766497462,
+          "generated": 635,
+          "matched": 333,
+          "measureShift": -2,
+          "precision": 0.5244094488188976,
+          "recall": 0.6087751371115173,
+          "reference": 547
+        },
+        {
+          "f1": 0.5634517766497462,
+          "generated": 635,
+          "matched": 333,
+          "measureShift": 2,
+          "precision": 0.5244094488188976,
+          "recall": 0.6087751371115173,
+          "reference": 547
+        },
+        {
+          "f1": 0.5634517766497462,
+          "generated": 635,
+          "matched": 333,
+          "measureShift": -3,
+          "precision": 0.5244094488188976,
+          "recall": 0.6087751371115173,
+          "reference": 547
+        },
+        {
+          "f1": 0.5634517766497462,
+          "generated": 635,
+          "matched": 333,
+          "measureShift": 3,
+          "precision": 0.5244094488188976,
+          "recall": 0.6087751371115173,
+          "reference": 547
+        },
+        {
+          "f1": 0.5634517766497462,
+          "generated": 635,
+          "matched": 333,
+          "measureShift": -4,
+          "precision": 0.5244094488188976,
+          "recall": 0.6087751371115173,
+          "reference": 547
+        },
+        {
+          "f1": 0.5634517766497462,
+          "generated": 635,
+          "matched": 333,
+          "measureShift": 4,
+          "precision": 0.5244094488188976,
+          "recall": 0.6087751371115173,
+          "reference": 547
+        }
+      ],
+      "best": {
+        "f1": 0.5634517766497462,
+        "generated": 635,
+        "matched": 333,
+        "measureShift": 0,
+        "precision": 0.5244094488188976,
+        "recall": 0.6087751371115173,
+        "reference": 547
+      }
+    },
+    "nearestSameMeasureMidiTimingDelta": {
+      "generatedNotesWithSameMeasureMidiReference": 407,
+      "medianAbsoluteDeltaSteps": 2.62844921875012,
+      "p90AbsoluteDeltaSteps": 8.637429687500116,
+      "topSignedQuarterStepDeltaBins": [
+        {
+          "count": 21,
+          "delta": 1.0
+        },
+        {
+          "count": 18,
+          "delta": 0.25
+        },
+        {
+          "count": 18,
+          "delta": -0.5
+        },
+        {
+          "count": 16,
+          "delta": 0.0
+        },
+        {
+          "count": 16,
+          "delta": -0.25
+        },
+        {
+          "count": 14,
+          "delta": 1.75
+        },
+        {
+          "count": 13,
+          "delta": 0.5
+        },
+        {
+          "count": 13,
+          "delta": 1.25
+        },
+        {
+          "count": 13,
+          "delta": 3.75
+        },
+        {
+          "count": 13,
+          "delta": 1.5
+        },
+        {
+          "count": 13,
+          "delta": 3.5
+        },
+        {
+          "count": 11,
+          "delta": -2.75
+        }
+      ]
+    },
+    "pitchClassContentByMeasure": {
+      "f1": 0.6159052453468697,
+      "generated": 635,
+      "matched": 364,
+      "precision": 0.573228346456693,
+      "recall": 0.6654478976234004,
+      "reference": 547
+    },
+    "pitchContentByMeasure": {
+      "f1": 0.5634517766497462,
+      "generated": 635,
+      "matched": 333,
+      "precision": 0.5244094488188976,
+      "recall": 0.6087751371115173,
+      "reference": 547
+    },
+    "sections": [
+      {
+        "measures": [
+          1,
+          16
+        ],
+        "pitchClassContentByMeasure": {
+          "f1": 0.6942148760330578,
+          "generated": 64,
+          "matched": 42,
+          "precision": 0.65625,
+          "recall": 0.7368421052631579,
+          "reference": 57
+        },
+        "pitchContentByMeasure": {
+          "f1": 0.6776859504132231,
+          "generated": 64,
+          "matched": 41,
+          "precision": 0.640625,
+          "recall": 0.7192982456140351,
+          "reference": 57
+        },
+        "section": "intro_riff",
+        "timingSameMidiTolerance0_5": {
+          "f1": 0.1322314049586777,
+          "generated": 64,
+          "matched": 8,
+          "precision": 0.125,
+          "recall": 0.14035087719298245,
+          "reference": 57
+        },
+        "timingSameMidiTolerance2_0": {
+          "f1": 0.3305785123966942,
+          "generated": 64,
+          "matched": 20,
+          "precision": 0.3125,
+          "recall": 0.3508771929824561,
+          "reference": 57
+        }
+      },
+      {
+        "measures": [
+          17,
+          32
+        ],
+        "pitchClassContentByMeasure": {
+          "f1": 0.7244897959183674,
+          "generated": 113,
+          "matched": 71,
+          "precision": 0.6283185840707964,
+          "recall": 0.8554216867469879,
+          "reference": 83
+        },
+        "pitchContentByMeasure": {
+          "f1": 0.6632653061224489,
+          "generated": 113,
+          "matched": 65,
+          "precision": 0.5752212389380531,
+          "recall": 0.7831325301204819,
+          "reference": 83
+        },
+        "section": "verse1",
+        "timingSameMidiTolerance0_5": {
+          "f1": 0.25510204081632654,
+          "generated": 113,
+          "matched": 25,
+          "precision": 0.22123893805309736,
+          "recall": 0.30120481927710846,
+          "reference": 83
+        },
+        "timingSameMidiTolerance2_0": {
+          "f1": 0.3979591836734694,
+          "generated": 113,
+          "matched": 39,
+          "precision": 0.34513274336283184,
+          "recall": 0.46987951807228917,
+          "reference": 83
+        }
+      },
+      {
+        "measures": [
+          33,
+          38
+        ],
+        "pitchClassContentByMeasure": {
+          "f1": 0.5227272727272727,
+          "generated": 50,
+          "matched": 23,
+          "precision": 0.46,
+          "recall": 0.6052631578947368,
+          "reference": 38
+        },
+        "pitchContentByMeasure": {
+          "f1": 0.34090909090909094,
+          "generated": 50,
+          "matched": 15,
+          "precision": 0.3,
+          "recall": 0.39473684210526316,
+          "reference": 38
+        },
+        "section": "chorus1",
+        "timingSameMidiTolerance0_5": {
+          "f1": 0.0,
+          "generated": 50,
+          "matched": 0,
+          "precision": 0.0,
+          "recall": 0.0,
+          "reference": 38
+        },
+        "timingSameMidiTolerance2_0": {
+          "f1": 0.22727272727272727,
+          "generated": 50,
+          "matched": 10,
+          "precision": 0.2,
+          "recall": 0.2631578947368421,
+          "reference": 38
+        }
+      },
+      {
+        "measures": [
+          39,
+          46
+        ],
+        "pitchClassContentByMeasure": {
+          "f1": 0.6666666666666667,
+          "generated": 23,
+          "matched": 18,
+          "precision": 0.782608695652174,
+          "recall": 0.5806451612903226,
+          "reference": 31
+        },
+        "pitchContentByMeasure": {
+          "f1": 0.5555555555555556,
+          "generated": 23,
+          "matched": 15,
+          "precision": 0.6521739130434783,
+          "recall": 0.4838709677419355,
+          "reference": 31
+        },
+        "section": "riff_return1",
+        "timingSameMidiTolerance0_5": {
+          "f1": 0.037037037037037035,
+          "generated": 23,
+          "matched": 1,
+          "precision": 0.043478260869565216,
+          "recall": 0.03225806451612903,
+          "reference": 31
+        },
+        "timingSameMidiTolerance2_0": {
+          "f1": 0.2222222222222222,
+          "generated": 23,
+          "matched": 6,
+          "precision": 0.2608695652173913,
+          "recall": 0.1935483870967742,
+          "reference": 31
+        }
+      },
+      {
+        "measures": [
+          47,
+          62
+        ],
+        "pitchClassContentByMeasure": {
+          "f1": 0.7604166666666667,
+          "generated": 104,
+          "matched": 73,
+          "precision": 0.7019230769230769,
+          "recall": 0.8295454545454546,
+          "reference": 88
+        },
+        "pitchContentByMeasure": {
+          "f1": 0.7083333333333333,
+          "generated": 104,
+          "matched": 68,
+          "precision": 0.6538461538461539,
+          "recall": 0.7727272727272727,
+          "reference": 88
+        },
+        "section": "verse2",
+        "timingSameMidiTolerance0_5": {
+          "f1": 0.14583333333333334,
+          "generated": 104,
+          "matched": 14,
+          "precision": 0.1346153846153846,
+          "recall": 0.1590909090909091,
+          "reference": 88
+        },
+        "timingSameMidiTolerance2_0": {
+          "f1": 0.4583333333333333,
+          "generated": 104,
+          "matched": 44,
+          "precision": 0.4230769230769231,
+          "recall": 0.5,
+          "reference": 88
+        }
+      },
+      {
+        "measures": [
+          63,
+          69
+        ],
+        "pitchClassContentByMeasure": {
+          "f1": 0.4651162790697675,
+          "generated": 47,
+          "matched": 20,
+          "precision": 0.425531914893617,
+          "recall": 0.5128205128205128,
+          "reference": 39
+        },
+        "pitchContentByMeasure": {
+          "f1": 0.4186046511627907,
+          "generated": 47,
+          "matched": 18,
+          "precision": 0.3829787234042553,
+          "recall": 0.46153846153846156,
+          "reference": 39
+        },
+        "section": "chorus2",
+        "timingSameMidiTolerance0_5": {
+          "f1": 0.18604651162790697,
+          "generated": 47,
+          "matched": 8,
+          "precision": 0.1702127659574468,
+          "recall": 0.20512820512820512,
+          "reference": 39
+        },
+        "timingSameMidiTolerance2_0": {
+          "f1": 0.20930232558139536,
+          "generated": 47,
+          "matched": 9,
+          "precision": 0.19148936170212766,
+          "recall": 0.23076923076923078,
+          "reference": 39
+        }
+      },
+      {
+        "measures": [
+          70,
+          77
+        ],
+        "pitchClassContentByMeasure": {
+          "f1": 0.33333333333333326,
+          "generated": 8,
+          "matched": 3,
+          "precision": 0.375,
+          "recall": 0.3,
+          "reference": 10
+        },
+        "pitchContentByMeasure": {
+          "f1": 0.33333333333333326,
+          "generated": 8,
+          "matched": 3,
+          "precision": 0.375,
+          "recall": 0.3,
+          "reference": 10
+        },
+        "section": "bridge",
+        "timingSameMidiTolerance0_5": {
+          "f1": 0.0,
+          "generated": 8,
+          "matched": 0,
+          "precision": 0.0,
+          "recall": 0.0,
+          "reference": 10
+        },
+        "timingSameMidiTolerance2_0": {
+          "f1": 0.11111111111111112,
+          "generated": 8,
+          "matched": 1,
+          "precision": 0.125,
+          "recall": 0.1,
+          "reference": 10
+        }
+      },
+      {
+        "measures": [
+          78,
+          94
+        ],
+        "pitchClassContentByMeasure": {
+          "f1": 0.4298245614035088,
+          "generated": 126,
+          "matched": 49,
+          "precision": 0.3888888888888889,
+          "recall": 0.4803921568627451,
+          "reference": 102
+        },
+        "pitchContentByMeasure": {
+          "f1": 0.3947368421052631,
+          "generated": 126,
+          "matched": 45,
+          "precision": 0.35714285714285715,
+          "recall": 0.4411764705882353,
+          "reference": 102
+        },
+        "section": "solo",
+        "timingSameMidiTolerance0_5": {
+          "f1": 0.008771929824561403,
+          "generated": 126,
+          "matched": 1,
+          "precision": 0.007936507936507936,
+          "recall": 0.00980392156862745,
+          "reference": 102
+        },
+        "timingSameMidiTolerance2_0": {
+          "f1": 0.03508771929824561,
+          "generated": 126,
+          "matched": 4,
+          "precision": 0.031746031746031744,
+          "recall": 0.0392156862745098,
+          "reference": 102
+        }
+      },
+      {
+        "measures": [
+          95,
+          113
+        ],
+        "pitchClassContentByMeasure": {
+          "f1": 0.6532663316582915,
+          "generated": 100,
+          "matched": 65,
+          "precision": 0.65,
+          "recall": 0.6565656565656566,
+          "reference": 99
+        },
+        "pitchContentByMeasure": {
+          "f1": 0.6331658291457286,
+          "generated": 100,
+          "matched": 63,
+          "precision": 0.63,
+          "recall": 0.6363636363636364,
+          "reference": 99
+        },
+        "section": "outro",
+        "timingSameMidiTolerance0_5": {
+          "f1": 0.09045226130653267,
+          "generated": 100,
+          "matched": 9,
+          "precision": 0.09,
+          "recall": 0.09090909090909091,
+          "reference": 99
+        },
+        "timingSameMidiTolerance2_0": {
+          "f1": 0.23115577889447236,
+          "generated": 100,
+          "matched": 23,
+          "precision": 0.23,
+          "recall": 0.23232323232323232,
+          "reference": 99
+        }
+      }
+    ],
+    "timingSameMidiTolerance0_5": {
+      "f1": 0.1116751269035533,
+      "generated": 635,
+      "matched": 66,
+      "precision": 0.10393700787401575,
+      "recall": 0.1206581352833638,
+      "reference": 547
+    },
+    "timingSameMidiTolerance2_0": {
+      "f1": 0.2639593908629442,
+      "generated": 635,
+      "matched": 156,
+      "precision": 0.24566929133858267,
+      "recall": 0.2851919561243144,
+      "reference": 547
+    }
+  },
+  "combinedGuitar": {
+    "counts": {
+      "generated": 1089,
+      "reference": 1393
+    },
+    "generatedFractionalStepStats": {
+      "maximum": 0.5,
+      "medianDistanceToIntegerStep": 0.2649335937499018,
+      "p90": 0.45529296875000114
+    },
+    "globalAbsoluteShiftScan": {
+      "bestShift": {
+        "f1": 0.19983883964544719,
+        "generated": 1089,
+        "matched": 248,
+        "precision": 0.22773186409550045,
+        "recall": 0.1780330222541278,
+        "reference": 1393,
+        "shiftSteps": -13.25
+      },
+      "scanIncrementSteps": 0.25,
+      "scanRangeSteps": [
+        -16,
+        16
+      ],
+      "toleranceSteps": 0.5,
+      "topShifts": [
+        {
+          "matched": 248,
+          "shiftSteps": -13.25
+        },
+        {
+          "matched": 236,
+          "shiftSteps": -13.5
+        },
+        {
+          "matched": 231,
+          "shiftSteps": -13.0
+        },
+        {
+          "matched": 219,
+          "shiftSteps": -12.75
+        },
+        {
+          "matched": 215,
+          "shiftSteps": -12.5
+        },
+        {
+          "matched": 213,
+          "shiftSteps": -13.75
+        },
+        {
+          "matched": 202,
+          "shiftSteps": -12.25
+        },
+        {
+          "matched": 193,
+          "shiftSteps": -12.0
+        },
+        {
+          "matched": 191,
+          "shiftSteps": -11.75
+        },
+        {
+          "matched": 180,
+          "shiftSteps": -14.0
+        }
+      ],
+      "zeroShift": {
+        "f1": 0.052377115229653506,
+        "generated": 1089,
+        "matched": 65,
+        "precision": 0.05968778696051423,
+        "recall": 0.046661880832735106,
+        "reference": 1393,
+        "shiftSteps": 0.0
+      }
+    },
+    "measureIndexShiftScanPitchContent": {
+      "all": [
+        {
+          "f1": 0.46333601933924257,
+          "generated": 1089,
+          "matched": 575,
+          "measureShift": 0,
+          "precision": 0.5280073461891643,
+          "recall": 0.41277817659727206,
+          "reference": 1393
+        },
+        {
+          "f1": 0.46333601933924257,
+          "generated": 1089,
+          "matched": 575,
+          "measureShift": -1,
+          "precision": 0.5280073461891643,
+          "recall": 0.41277817659727206,
+          "reference": 1393
+        },
+        {
+          "f1": 0.46333601933924257,
+          "generated": 1089,
+          "matched": 575,
+          "measureShift": 1,
+          "precision": 0.5280073461891643,
+          "recall": 0.41277817659727206,
+          "reference": 1393
+        },
+        {
+          "f1": 0.46333601933924257,
+          "generated": 1089,
+          "matched": 575,
+          "measureShift": -2,
+          "precision": 0.5280073461891643,
+          "recall": 0.41277817659727206,
+          "reference": 1393
+        },
+        {
+          "f1": 0.46333601933924257,
+          "generated": 1089,
+          "matched": 575,
+          "measureShift": 2,
+          "precision": 0.5280073461891643,
+          "recall": 0.41277817659727206,
+          "reference": 1393
+        },
+        {
+          "f1": 0.46333601933924257,
+          "generated": 1089,
+          "matched": 575,
+          "measureShift": -3,
+          "precision": 0.5280073461891643,
+          "recall": 0.41277817659727206,
+          "reference": 1393
+        },
+        {
+          "f1": 0.46333601933924257,
+          "generated": 1089,
+          "matched": 575,
+          "measureShift": 3,
+          "precision": 0.5280073461891643,
+          "recall": 0.41277817659727206,
+          "reference": 1393
+        },
+        {
+          "f1": 0.46333601933924257,
+          "generated": 1089,
+          "matched": 575,
+          "measureShift": -4,
+          "precision": 0.5280073461891643,
+          "recall": 0.41277817659727206,
+          "reference": 1393
+        },
+        {
+          "f1": 0.46333601933924257,
+          "generated": 1089,
+          "matched": 575,
+          "measureShift": 4,
+          "precision": 0.5280073461891643,
+          "recall": 0.41277817659727206,
+          "reference": 1393
+        }
+      ],
+      "best": {
+        "f1": 0.46333601933924257,
+        "generated": 1089,
+        "matched": 575,
+        "measureShift": 0,
+        "precision": 0.5280073461891643,
+        "recall": 0.41277817659727206,
+        "reference": 1393
+      }
+    },
+    "nearestSameMeasureMidiTimingDelta": {
+      "generatedNotesWithSameMeasureMidiReference": 761,
+      "medianAbsoluteDeltaSteps": 3.004726562500082,
+      "p90AbsoluteDeltaSteps": 10.864933593749925,
+      "topSignedQuarterStepDeltaBins": [
+        {
+          "count": 28,
+          "delta": -2.75
+        },
+        {
+          "count": 25,
+          "delta": 1.0
+        },
+        {
+          "count": 25,
+          "delta": -2.5
+        },
+        {
+          "count": 21,
+          "delta": 1.75
+        },
+        {
+          "count": 19,
+          "delta": 2.25
+        },
+        {
+          "count": 19,
+          "delta": -3.5
+        },
+        {
+          "count": 19,
+          "delta": -2.25
+        },
+        {
+          "count": 19,
+          "delta": -3.0
+        },
+        {
+          "count": 19,
+          "delta": 1.25
+        },
+        {
+          "count": 17,
+          "delta": 0.5
+        },
+        {
+          "count": 15,
+          "delta": -0.25
+        },
+        {
+          "count": 15,
+          "delta": 6.0
+        }
+      ]
+    },
+    "pitchClassContentByMeasure": {
+      "f1": 0.5511684125705077,
+      "generated": 1089,
+      "matched": 684,
+      "precision": 0.628099173553719,
+      "recall": 0.4910265613783202,
+      "reference": 1393
+    },
+    "pitchContentByMeasure": {
+      "f1": 0.46333601933924257,
+      "generated": 1089,
+      "matched": 575,
+      "precision": 0.5280073461891643,
+      "recall": 0.41277817659727206,
+      "reference": 1393
+    },
+    "sections": [
+      {
+        "measures": [
+          1,
+          16
+        ],
+        "pitchClassContentByMeasure": {
+          "f1": 0.6510416666666667,
+          "generated": 168,
+          "matched": 125,
+          "precision": 0.7440476190476191,
+          "recall": 0.5787037037037037,
+          "reference": 216
+        },
+        "pitchContentByMeasure": {
+          "f1": 0.5572916666666666,
+          "generated": 168,
+          "matched": 107,
+          "precision": 0.6369047619047619,
+          "recall": 0.49537037037037035,
+          "reference": 216
+        },
+        "section": "intro_riff",
+        "timingSameMidiTolerance0_5": {
+          "f1": 0.08333333333333333,
+          "generated": 168,
+          "matched": 16,
+          "precision": 0.09523809523809523,
+          "recall": 0.07407407407407407,
+          "reference": 216
+        },
+        "timingSameMidiTolerance2_0": {
+          "f1": 0.23958333333333334,
+          "generated": 168,
+          "matched": 46,
+          "precision": 0.27380952380952384,
+          "recall": 0.21296296296296297,
+          "reference": 216
+        }
+      },
+      {
+        "measures": [
+          17,
+          32
+        ],
+        "pitchClassContentByMeasure": {
+          "f1": 0.6083650190114068,
+          "generated": 135,
+          "matched": 80,
+          "precision": 0.5925925925925926,
+          "recall": 0.625,
+          "reference": 128
+        },
+        "pitchContentByMeasure": {
+          "f1": 0.4486692015209125,
+          "generated": 135,
+          "matched": 59,
+          "precision": 0.43703703703703706,
+          "recall": 0.4609375,
+          "reference": 128
+        },
+        "section": "verse1",
+        "timingSameMidiTolerance0_5": {
+          "f1": 0.030418250950570342,
+          "generated": 135,
+          "matched": 4,
+          "precision": 0.02962962962962963,
+          "recall": 0.03125,
+          "reference": 128
+        },
+        "timingSameMidiTolerance2_0": {
+          "f1": 0.13688212927756654,
+          "generated": 135,
+          "matched": 18,
+          "precision": 0.13333333333333333,
+          "recall": 0.140625,
+          "reference": 128
+        }
+      },
+      {
+        "measures": [
+          33,
+          38
+        ],
+        "pitchClassContentByMeasure": {
+          "f1": 0.44919786096256686,
+          "generated": 75,
+          "matched": 42,
+          "precision": 0.56,
+          "recall": 0.375,
+          "reference": 112
+        },
+        "pitchContentByMeasure": {
+          "f1": 0.40641711229946526,
+          "generated": 75,
+          "matched": 38,
+          "precision": 0.5066666666666667,
+          "recall": 0.3392857142857143,
+          "reference": 112
+        },
+        "section": "chorus1",
+        "timingSameMidiTolerance0_5": {
+          "f1": 0.04278074866310161,
+          "generated": 75,
+          "matched": 4,
+          "precision": 0.05333333333333334,
+          "recall": 0.03571428571428571,
+          "reference": 112
+        },
+        "timingSameMidiTolerance2_0": {
+          "f1": 0.08556149732620322,
+          "generated": 75,
+          "matched": 8,
+          "precision": 0.10666666666666667,
+          "recall": 0.07142857142857142,
+          "reference": 112
+        }
+      },
+      {
+        "measures": [
+          39,
+          46
+        ],
+        "pitchClassContentByMeasure": {
+          "f1": 0.6288659793814434,
+          "generated": 90,
+          "matched": 61,
+          "precision": 0.6777777777777778,
+          "recall": 0.5865384615384616,
+          "reference": 104
+        },
+        "pitchContentByMeasure": {
+          "f1": 0.4948453608247423,
+          "generated": 90,
+          "matched": 48,
+          "precision": 0.5333333333333333,
+          "recall": 0.46153846153846156,
+          "reference": 104
+        },
+        "section": "riff_return1",
+        "timingSameMidiTolerance0_5": {
+          "f1": 0.030927835051546393,
+          "generated": 90,
+          "matched": 3,
+          "precision": 0.03333333333333333,
+          "recall": 0.028846153846153848,
+          "reference": 104
+        },
+        "timingSameMidiTolerance2_0": {
+          "f1": 0.15463917525773194,
+          "generated": 90,
+          "matched": 15,
+          "precision": 0.16666666666666666,
+          "recall": 0.14423076923076922,
+          "reference": 104
+        }
+      },
+      {
+        "measures": [
+          47,
+          62
+        ],
+        "pitchClassContentByMeasure": {
+          "f1": 0.582089552238806,
+          "generated": 128,
+          "matched": 78,
+          "precision": 0.609375,
+          "recall": 0.5571428571428572,
+          "reference": 140
+        },
+        "pitchContentByMeasure": {
+          "f1": 0.4925373134328358,
+          "generated": 128,
+          "matched": 66,
+          "precision": 0.515625,
+          "recall": 0.4714285714285714,
+          "reference": 140
+        },
+        "section": "verse2",
+        "timingSameMidiTolerance0_5": {
+          "f1": 0.02985074626865672,
+          "generated": 128,
+          "matched": 4,
+          "precision": 0.03125,
+          "recall": 0.02857142857142857,
+          "reference": 140
+        },
+        "timingSameMidiTolerance2_0": {
+          "f1": 0.12686567164179102,
+          "generated": 128,
+          "matched": 17,
+          "precision": 0.1328125,
+          "recall": 0.12142857142857143,
+          "reference": 140
+        }
+      },
+      {
+        "measures": [
+          63,
+          69
+        ],
+        "pitchClassContentByMeasure": {
+          "f1": 0.43093922651933697,
+          "generated": 69,
+          "matched": 39,
+          "precision": 0.5652173913043478,
+          "recall": 0.3482142857142857,
+          "reference": 112
+        },
+        "pitchContentByMeasure": {
+          "f1": 0.3756906077348066,
+          "generated": 69,
+          "matched": 34,
+          "precision": 0.4927536231884058,
+          "recall": 0.30357142857142855,
+          "reference": 112
+        },
+        "section": "chorus2",
+        "timingSameMidiTolerance0_5": {
+          "f1": 0.06629834254143645,
+          "generated": 69,
+          "matched": 6,
+          "precision": 0.08695652173913043,
+          "recall": 0.05357142857142857,
+          "reference": 112
+        },
+        "timingSameMidiTolerance2_0": {
+          "f1": 0.14364640883977903,
+          "generated": 69,
+          "matched": 13,
+          "precision": 0.18840579710144928,
+          "recall": 0.11607142857142858,
+          "reference": 112
+        }
+      },
+      {
+        "measures": [
+          70,
+          77
+        ],
+        "pitchClassContentByMeasure": {
+          "f1": 0.36879432624113473,
+          "generated": 45,
+          "matched": 26,
+          "precision": 0.5777777777777777,
+          "recall": 0.2708333333333333,
+          "reference": 96
+        },
+        "pitchContentByMeasure": {
+          "f1": 0.3120567375886525,
+          "generated": 45,
+          "matched": 22,
+          "precision": 0.4888888888888889,
+          "recall": 0.22916666666666666,
+          "reference": 96
+        },
+        "section": "bridge",
+        "timingSameMidiTolerance0_5": {
+          "f1": 0.0,
+          "generated": 45,
+          "matched": 0,
+          "precision": 0.0,
+          "recall": 0.0,
+          "reference": 96
+        },
+        "timingSameMidiTolerance2_0": {
+          "f1": 0.14184397163120566,
+          "generated": 45,
+          "matched": 10,
+          "precision": 0.2222222222222222,
+          "recall": 0.10416666666666667,
+          "reference": 96
+        }
+      },
+      {
+        "measures": [
+          78,
+          94
+        ],
+        "pitchClassContentByMeasure": {
+          "f1": 0.5573770491803278,
+          "generated": 203,
+          "matched": 136,
+          "precision": 0.6699507389162561,
+          "recall": 0.47719298245614034,
+          "reference": 285
+        },
+        "pitchContentByMeasure": {
+          "f1": 0.4836065573770492,
+          "generated": 203,
+          "matched": 118,
+          "precision": 0.5812807881773399,
+          "recall": 0.41403508771929826,
+          "reference": 285
+        },
+        "section": "solo",
+        "timingSameMidiTolerance0_5": {
+          "f1": 0.05737704918032786,
+          "generated": 203,
+          "matched": 14,
+          "precision": 0.06896551724137931,
+          "recall": 0.04912280701754386,
+          "reference": 285
+        },
+        "timingSameMidiTolerance2_0": {
+          "f1": 0.20901639344262296,
+          "generated": 203,
+          "matched": 51,
+          "precision": 0.2512315270935961,
+          "recall": 0.17894736842105263,
+          "reference": 285
+        }
+      },
+      {
+        "measures": [
+          95,
+          113
+        ],
+        "pitchClassContentByMeasure": {
+          "f1": 0.5159574468085106,
+          "generated": 176,
+          "matched": 97,
+          "precision": 0.5511363636363636,
+          "recall": 0.485,
+          "reference": 200
+        },
+        "pitchContentByMeasure": {
+          "f1": 0.44148936170212766,
+          "generated": 176,
+          "matched": 83,
+          "precision": 0.4715909090909091,
+          "recall": 0.415,
+          "reference": 200
+        },
+        "section": "outro",
+        "timingSameMidiTolerance0_5": {
+          "f1": 0.053191489361702135,
+          "generated": 176,
+          "matched": 10,
+          "precision": 0.056818181818181816,
+          "recall": 0.05,
+          "reference": 200
+        },
+        "timingSameMidiTolerance2_0": {
+          "f1": 0.1595744680851064,
+          "generated": 176,
+          "matched": 30,
+          "precision": 0.17045454545454544,
+          "recall": 0.15,
+          "reference": 200
+        }
+      }
+    ],
+    "timingSameMidiTolerance0_5": {
+      "f1": 0.04915390813859791,
+      "generated": 1089,
+      "matched": 61,
+      "precision": 0.05601469237832874,
+      "recall": 0.04379038047379756,
+      "reference": 1393
+    },
+    "timingSameMidiTolerance2_0": {
+      "f1": 0.16760676873489122,
+      "generated": 1089,
+      "matched": 208,
+      "precision": 0.19100091827364554,
+      "recall": 0.14931801866475233,
+      "reference": 1393
+    }
+  },
+  "findings": [
+    "combinedGuitar: timing/grid placement is a major failure mode; measure-level exact-pitch content F1 exceeds \u00b10.5-step timing F1 by 0.414.",
+    "combinedGuitar: many same-pitch events are displaced beyond the primary half-step timing window; widening to \u00b12 steps gains 0.118 F1 but remains far below target.",
+    "combinedGuitar: a global absolute-time shift of -13.25 steps materially improves diagnostic same-MIDI alignment (F1 0.052->0.200), indicating grid-origin/phase error.",
+    "combinedGuitar: pitch-class F1 exceeds exact-MIDI F1 by 0.088, consistent with octave/register errors contributing materially.",
+    "combinedGuitar: weakest timing sections are bridge=0.000, verse2=0.030, verse1=0.030.",
+    "bass: timing/grid placement is a major failure mode; measure-level exact-pitch content F1 exceeds \u00b10.5-step timing F1 by 0.452.",
+    "bass: many same-pitch events are displaced beyond the primary half-step timing window; widening to \u00b12 steps gains 0.152 F1 but remains far below target.",
+    "bass: a global absolute-time shift of -13.25 steps materially improves diagnostic same-MIDI alignment (F1 0.130->0.315), indicating grid-origin/phase error.",
+    "bass: pitch-class relaxation gives limited gain (0.563->0.616); failures are not dominated by octave/register mistakes alone.",
+    "bass: weakest timing sections are chorus1=0.000, bridge=0.000, solo=0.009."
+  ],
+  "frozenInputs": {
+    "debug/v154-cpu-autonomous/broad-other-run-33096559281/generated.json": "1be86f86bb08e164342aa0c52db7a4d77beb938621e00d7d2e3b0e03f2dbfc37",
+    "debug/v154-cpu-autonomous/v154-frontend-reference-score/score.json": "c206f6bc951c6bd9b6cc19e6758c4aef6654f349cc1f5712df1f052e46fa798b",
+    "research/v154-professional-references/scorer-ready/frontend-reference-payload.json": "b39a203aec3f45800891fe4eca156e37e7571b91ea5c4ccc41b30bbc95fc89e7"
+  },
+  "policy": {
+    "additionalOfficialReferenceFacingScoreCalls": 0,
+    "candidateRetuningOrThresholdSweep": false,
+    "cpuOnly": true,
+    "diagnosticOnly": true,
+    "generatedCandidateCorrectionWritten": false,
+    "generatedCandidateModified": false,
+    "mainOrProductionModified": false,
+    "modalL4CudaGpuUsed": false,
+    "officialScorerImportedOrCalled": false
+  },
+  "schema": "dadrock.tabs.v154.post-score-architecture-diagnostic.v1",
+  "validation": "PASS"
+}
