@@ -3,7 +3,7 @@
 Updated: 2026-08-28 UTC
 Branch: `v143-contextual-prune-lobo`
 
-Active phase: **V154 broad-Other CPU recognition remains COMPLETE / FROZEN / STRUCTURAL-QC PASS. Rhythm is FROZEN SCORER-READY with row-identity equivalence PASS. Bass is FROZEN SCORER-READY with 547 pitched rows. The full 22-page Lead notation source has now been RECOVERED and byte-authenticated against the frozen rendered Lead receipt; exact Lead timing normalization is ACTIVE. Reference-facing scoring has NOT run.**
+Active phase: **V154 broad-Other CPU recognition remains COMPLETE / FROZEN / STRUCTURAL-QC PASS. Rhythm is FROZEN SCORER-READY with row-identity equivalence PASS. Bass is FROZEN SCORER-READY with 547 pitched rows. The full 22-page Lead source is RECOVERED/authenticated and Lead source-local timing is now FROZEN / VALIDATED with 447 expected pitched scorer rows. Lead scorer-ready build is ACTIVE. Reference-facing scoring has NOT run.**
 
 ## Standing authorization / safety — MUST PRESERVE
 - CPU-only work and CPU scoring are at assistant discretion.
@@ -50,39 +50,37 @@ Song: **Lenny Kravitz — Are You Gonna Go My Way**.
 - Authoritative scorer-ready: `research/v154-professional-references/scorer-ready/bass-scorer-ready.json`; SHA256 `39eba52495fe81a3602f191334d71fe4bc643ed3062287fbde812fbde3c2c2f1`; 547 pitched rows.
 - Bass source screenshot bytes remain uncommitted.
 
-## Lead — FULL SOURCE RECOVERED / TIMING NORMALIZATION ACTIVE
+## Lead — SOURCE + EXACT SOURCE-LOCAL TIMING COMPLETE / FROZEN
 - Machine-readable visual source: `research/v154-professional-references/lead-professional-reference-machine-readable.json`; Git blob `b018d93bb5e2119ee843fbd3fbc9139484fde0d1`; SHA256 `122e0f6b2fa63fb2ea701e9cefe897dd4337fd08de0792e11579f4933804b716`.
 - Source audit: 113 measures; 487 events; 476 pitched; 11 dead notes; 23 continuation-only; MIDI 45–81.
 - Frozen original upload set SHA256: `de2f20c330e52aca6125e29ca2cf5c4b719406fc267a98d43d98f3ab1453ff3c`.
 - Frozen platform-rendered set SHA256: `e54a76bca81fdcfc8333d774a66175a00da5090fb32200a980c25f8e78b616cb`.
 - **2026-08-28 recovery:** user re-provided Lead pages 1–11 as rendered `84.jpg`–`94.jpg`, then Lead pages 12–22 as `95.jpg`–`105.jpg` (user corrected an initial “Bass 1–11” label to Lead 1–11).
-- Local byte audit of all 22 current uploads exactly matches every `currentRenderedPages` record in `research/v154-professional-references/lead-source-set-receipt.json`: filename, byte size, page order, and SHA256 all match. This is exact authentication to the frozen rendered receipt, not merely visual similarity.
-- Page coverage is measures 1–113; page 1 shows quarter=129 and 4/4; measure 104 explicitly shows 2/4; measure 105 returns to 4/4.
-- Known source uncertainty remains: measures 39–40 visibly say `Probably a mistake they left in`; detached gray dot at m81 remains unassigned; green m10 selection highlight is UI only.
-- Screenshot bytes are available in the active conversation for visual timing normalization but **must not be committed**.
-
-## Current Lead timing decisions being normalized from notation
-- Repeating Em/transpose riff rhythm is read from explicit rhythm stems, not from machine-readable visual order alone.
-- Visible grace rendering will be preserved as reference-side timing corrections without rewriting the frozen visual source (e.g. m78 first small/slashed note collocated with its principal; m81 small/slashed notes similarly treated).
-- Continuation-only parenthesized notes remain null timing/no scorer row.
-- Source-measure 104 2/4 mapping will be applied only after source-local timing is frozen.
-- Measures whose exact rhythm is not actually recoverable from the rendered page crop will be excluded rather than guessed; current candidate for such treatment is m28 because its rhythm-stem line is cropped off. Measure 39 is also a candidate scoring exclusion because the source itself labels the passage as a probable mistake.
-- m92 contains a visible triplet; preserve exact tupleting provenance and use an explicit deterministic 16th-grid quantization policy for scorer rows rather than hiding the tuplet.
+- Local byte audit of all 22 current uploads exactly matched every `currentRenderedPages` record in `lead-source-set-receipt.json`: filename, byte size, order, and SHA256.
+- Candidate-blind draft alignment validator run `33134759638` isolated one bookkeeping mismatch: frozen source m89 has 16 events versus 15 draft entries. Detailed run `33134967960` identified the missing m89 visualOrder10 B15 attack; final timing inserts source-local step10 while keeping parenthesized continuation-only visualOrders6/11 null.
+- Final exact source-local timing: `research/v154-professional-references/lead-source-local-attack-timing.json`; Git blob `577a4a07514cdca63d544998f6c5b590ccd2b125`; SHA256 `a1c30e9a14048fac6da6801d1ace1db203daf8807511f26c76a268e3cbf426c3`.
+- Timing receipt: `research/v154-professional-references/lead-source-local-attack-timing-receipt.json`; validation **PASS**. One-use freeze run `33135091568`, job `98733161996`: SUCCESS; freeze commit `57d76df`.
+- Final timing audit: 487 source events; 476 pitched including continuations; 23 continuation-only null/no-row; 11 dead notes; 454 non-null timed/grace-collocated events including excluded m39; 33 null events; total source length 1800 sixteenth steps; expected Lead pitched scorer rows **447**.
+- m28: all 10 events excluded because the rendered page crop omits its rhythm-stem line; exact timing is not invented from horizontal spacing.
+- m39: visible event timing retained at source-local step8 but the single event is excluded from scoring because the source itself labels measures39–40 `Probably a mistake they left in`, analogous to preserving a known reference-side timing/source defect rather than penalizing candidate output for it.
+- Grace normalization: m78 first slashed/reduced D12 collocated with principal at step0; m81 two slashed/reduced E10 graces collocated with principals at steps0 and4. Frozen visual source is not rewritten.
+- m92 visible triplet preserves exact ideal provenance `[14, 44/3, 46/3]` and deterministic scorer quantization `[14,15,15]`.
+- Screenshot bytes remain uncommitted. Generated candidate read/modified NO; scoring NO; GPU NO; main/Production NO.
 
 ## Current continuation status
 - Rhythm scorer-ready: **COMPLETE / FROZEN / EQUIVALENCE PASS**.
 - Bass scorer-ready: **COMPLETE / FROZEN / 547 rows**.
 - Lead source-page recovery: **COMPLETE / EXACT RENDERED-RECEIPT BYTE MATCH**.
-- Lead exact source-local timing: **IN PROGRESS**.
-- Lead scorer-ready: **NOT YET FROZEN**.
+- Lead exact source-local timing: **COMPLETE / FROZEN / VALIDATED**.
+- Lead scorer-ready: **ACTIVE NEXT BUILD; expected 447 pitched rows**.
 - Reference-facing score calls: **0**.
 - Frozen generated candidate modified: **NO**.
 - Modal/L4/CUDA/GPU used: **NO**.
 - `main` / Production modified: **NO**.
 
 ## Exact next steps
-1. Finish visual source-local Lead attack normalization across measures 1–113 using recovered pages 84–105; preserve grace/continuation/tuplets and explicit source uncertainties.
-2. Freeze `lead-source-local-attack-timing.json` with safety flags and page-set authentication; checkpoint.
-3. Build and validate write-once `scorer-ready/lead-scorer-ready.json` + receipt using only frozen Lead source/timing/meter mapping; no generated-candidate read and no scoring.
-4. Assemble one immutable combined Rhythm+Lead guitar reference payload plus frozen Bass reference; verify counts/identities before score call.
-5. Score the exact frozen combined Guitar and Bass output **exactly once** with `score_frontend_reference.py`; never retune the consumed output afterward.
+1. Build and validate write-once `scorer-ready/lead-scorer-ready.json` + receipt using only frozen Lead source/timing/meter mapping; no generated-candidate read and no scoring.
+2. Freeze the Lead scorer-ready identities/counts and checkpoint.
+3. Assemble one immutable combined Rhythm+Lead guitar reference payload plus frozen Bass reference; verify counts/identities before score call.
+4. Score the exact frozen combined Guitar and Bass output **exactly once** with `score_frontend_reference.py`; never retune the consumed output afterward.
+5. Only after acoustic recognition is scored/frozen: continue role separation, string/fret, techniques, and PDF work.
