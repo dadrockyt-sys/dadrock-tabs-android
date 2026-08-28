@@ -1,0 +1,68 @@
+name: V157 post-score diagnostic once
+
+on:
+  push:
+    branches: [v143-contextual-prune-lobo]
+    paths:
+      - .github/workflows/v157-diagnose-post-score-once.yml
+
+permissions:
+  contents: write
+
+env:
+  BRANCH: v143-contextual-prune-lobo
+  SCRIPT: validation/v157_cpu_multitrack/diagnose_post_score.py
+  GENERATED: debug/v157-cpu-autonomous/generated.json
+  REFERENCE: research/v154-professional-references/scorer-ready/frontend-reference-payload.json
+  OUTPUT: debug/v157-cpu-autonomous/frontend-reference-score/post-score-diagnostic.json
+
+jobs:
+  diagnose:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: v143-contextual-prune-lobo
+          fetch-depth: 0
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.10"
+      - name: Verify consumed V157 identities and diagnostic isolation
+        run: |
+          set -euo pipefail
+          test "$(git hash-object "$SCRIPT")" = "64723c75dbd257719b8846d4829466cda39cb25e"
+          test "$(git hash-object "$GENERATED")" = "3491814f4cc075aaf3eefaecf2d179f57d2d5dae"
+          test "$(sha256sum "$GENERATED" | awk '{print $1}')" = "f5dc7094b72f8e3a988b1fdd59808cb056461d7e12a6d41508942cf499de3e71"
+          test "$(sha256sum "$REFERENCE" | awk '{print $1}')" = "b39a203aec3f45800891fe4eca156e37e7571b91ea5c4ccc41b30bbc95fc89e7"
+          test ! -e "$OUTPUT"
+          if grep -En 'import .*score_frontend_reference|from .*score_frontend_reference|score_stream\(' "$SCRIPT"; then
+            echo 'Diagnostic appears to import/call official scorer' >&2
+            exit 1
+          fi
+      - name: Run diagnostic only
+        run: |
+          set -euo pipefail
+          python "$SCRIPT" --generated "$GENERATED" --reference "$REFERENCE" --output "$OUTPUT"
+          python - <<'PY'
+          import json
+          from pathlib import Path
+          p = json.loads(Path('debug/v157-cpu-autonomous/frontend-reference-score/post-score-diagnostic.json').read_text())
+          s = p['safety']
+          assert s['officialScorerImported'] is False
+          assert s['officialScorerCalled'] is False
+          assert s['additionalReferenceFacingScoreCalls'] == 0
+          assert s['candidateModified'] is False
+          assert s['candidateVariantWritten'] is False
+          print(json.dumps({'guitar':p['combinedGuitar']['globalShiftDiagnostic'],'bass':p['bass']['globalShiftDiagnostic'],'bassSparsity':{k:p['bass'][k] for k in ['generatedCount','referenceCount','detectedOnsetCount','eventsToDetectedOnsetsRatio']}}, indent=2))
+          PY
+      - name: Freeze diagnostic and self-seal
+        run: |
+          set -euo pipefail
+          rm .github/workflows/v157-diagnose-post-score-once.yml
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add "$OUTPUT" .github/workflows/v157-diagnose-post-score-once.yml
+          git commit -m "validation: freeze V157 post-score diagnostic [skip ci]"
+          git fetch origin "$BRANCH"
+          git rebase "origin/$BRANCH"
+          git push origin HEAD:"$BRANCH"
