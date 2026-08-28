@@ -1,0 +1,36 @@
+name: Remove Tab Studio PDF footer wording
+
+on:
+  push:
+    paths:
+      - '.github/workflows/remove-tab-studio-footer.yml'
+
+permissions:
+  contents: write
+
+jobs:
+  remove-footer:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Remove PDF footer wording
+        run: |
+          python - <<'PY'
+          from pathlib import Path
+
+          path = Path('app/admin/tab-studio/page.js')
+          text = path.read_text()
+          old = """        page.drawText('Original JPG embedded directly • uniform scale only • no OCR/AI redraw', {\n          x: 139,\n          y: 21,\n          size: 7,\n          font: regular,\n          color: muted,\n        });\n"""
+          if old not in text:
+              raise SystemExit('Tab Studio footer wording block not found')
+          path.write_text(text.replace(old, '', 1))
+          PY
+
+      - name: Commit footer cleanup
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add app/admin/tab-studio/page.js
+          git diff --cached --quiet || git commit -m "Remove Tab Studio PDF footer wording"
+          git push
