@@ -1,0 +1,56 @@
+{
+  "schema": "dadrock.tabs.v155.grid-origin-audit-v2-preregistration.v1",
+  "classification": "reference-blind-cpu-beat-downbeat-grid-audit",
+  "branch": "v143-contextual-prune-lobo",
+  "purpose": "Replace the failed global-RMS origin heuristic with an established onset/beat tracker and a deterministic four-beat accent-phase rule. This audit is audio-only and freezes regardless of result. It does not generate or score a candidate.",
+  "frozenHistoricalAudio": {
+    "commit": "74b0f815ff3f66f325220975c410621503de440f",
+    "path": "public/gomywayfullaitest.m4a",
+    "bytes": 3478611,
+    "sha256": "215bd5a657c5326f08f132ae358595a95c30b39bb7493a52c2f910d5a608149f"
+  },
+  "runtime": {
+    "python": "3.10",
+    "numpy": "1.26.4",
+    "librosa": "0.11.0",
+    "imageioFfmpeg": "0.6.0",
+    "device": "cpu"
+  },
+  "audioAnalysis": {
+    "sampleRate": 22050,
+    "mono": true,
+    "hopLength": 256,
+    "hpss": true,
+    "beatOnsetEnvelope": "librosa.onset.onset_strength on HPSS percussive signal",
+    "downbeatAccentEnvelope": "equal-weight robust-normalized sum of percussive onset strength and 30-220 Hz positive spectral-flux envelope",
+    "tempo": "librosa.feature.tempo from percussive onset envelope, aggregate median, max_tempo 200; if estimate is below 70 BPM, repeatedly double until >=70; if above 200 BPM, repeatedly halve until <=200",
+    "beatTracking": "librosa.beat.beat_track using the frozen audio-derived tempo as bpm and percussive onset envelope",
+    "stableRun": "earliest run containing at least 12 consecutive tracked beats whose adjacent intervals each lie within 15 percent of the run median beat interval; if none exists use all tracked beats and mark fallback",
+    "downbeatPhase": "for residue 0..3 over stable tracked beats, compute median accent at that residue plus 0.35 times the 25th-percentile accent; choose highest score; ties choose smallest residue",
+    "origin": "earliest tracked beat in the stable run whose global beat index has the chosen residue",
+    "mapping": "musicalAbsoluteStep=(audioSeconds-originSeconds)/(60/tempoBpm/4)",
+    "noGlobalRmsActivityGate": true
+  },
+  "validationOutputs": [
+    "audio-derived tempo BPM",
+    "beat count and first 16 beat times",
+    "stable-run bounds and beat-interval CV",
+    "four residue accent scores and confidence margin",
+    "audio-only origin seconds",
+    "first 16 mapped sixteenth positions relative to origin"
+  ],
+  "forbidden": [
+    "professional-reference read",
+    "official-scorer invocation",
+    "reading V154 post-score shift or timebase diagnostic",
+    "known -13.25 shift input",
+    "reference-derived BPM input",
+    "candidate generation",
+    "candidate modification",
+    "candidate selection",
+    "threshold sweep against any score",
+    "Modal, NVIDIA L4, CUDA, or GPU execution",
+    "main or Production modification"
+  ],
+  "interpretation": "Freeze output regardless of success. Only after freeze may the audio-only result be compared diagnostically with already-frozen V154 evidence. Do not promote the estimator merely because it happens to agree with the reference-derived shift."
+}
