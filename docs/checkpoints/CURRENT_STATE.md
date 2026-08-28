@@ -3,7 +3,7 @@
 Updated: 2026-08-28 UTC
 Branch: `v143-contextual-prune-lobo`
 
-Active phase: **V158 is permanently consumed/diagnosed. V159 reference-blind CPU preregistration AND numeric implementation contract are now SEALED before implementation code. No V159 implementation code, timebase artifact, candidate, generation run, or score exists yet. Next allowed work is to implement the exact sealed V159 components: standalone timebase builder, independent timebase QC, candidate transcriber consuming the frozen timebase, and independent structural QC. No professional-reference reads are allowed during this work. No GPU/Modal/CUDA has been used and main/Production remains untouched.**
+Active phase: **V158 is permanently consumed/diagnosed. V159 reference-blind CPU preregistration and numeric implementation contract remain SEALED. The first V159 implementation milestone is now committed: a standalone reference-blind timebase builder plus independent pre-pitch timebase QC. No V159 timebase artifact, candidate, generation run, or score has been produced. Next allowed work is the candidate transcriber consuming only a PASS/frozen V159 timebase + QC receipt, independent structural QC, the missing negative runtime guard, and reviewer/pre-run identity sealing. No professional-reference reads are allowed during this work. No GPU/Modal/CUDA has been used and main/Production remains untouched.**
 
 ## Standing authorization / safety — MUST PRESERVE
 - CPU-only work and CPU scoring are at assistant discretion.
@@ -77,19 +77,38 @@ Song: **Lenny Kravitz — Are You Gonna Go My Way**.
 - Grid step differences exactly 4; detected beat ordinal increments exactly 1; phase and leading count consistent.
 - Any timebase-QC failure is terminal for V159 before candidate creation: freeze failure and never re-arm.
 
+## V159 implementation progress — SAVED
+Repository state before this checkpoint commit reached commit `96514a32cc4f82999d3c3bef50d5fa0b7508e2f`.
+
+Completed files:
+- `validation/v159_cpu_autonomous/build_timebase_v159.py` — commit `583f7fa2823a6dfd829dbfa9137182b6fd86882f`.
+  - Reads only sealed prereg/contract + source audio + normalized mix + fresh drums/bass/guitar stems.
+  - Verifies historical source/normalized identities before construction.
+  - Implements positive-unit-scaled mix/drums fused onset envelope, beat tracker, warning capture, V158-weight static phase evidence, prefix extrapolation, sequential ordinal/grid steps, diagnostics, safety flags, and write-once timebase output.
+  - Contains no pitch inference, professional-reference, prior-candidate, score, or prior-diagnostic inputs.
+- `validation/v159_cpu_autonomous/timebase_qc_v159.py` — commit `96514a32cc4f82999d3c3bef50d5fa0b7508e2f6`.
+  - Independent hard pre-pitch QC with write-once PASS/FAIL receipt.
+  - Recomputes input identities and tempo/IBI diagnostics; validates phase/leading-prefix/ordinal/grid invariants and reference-blind safety.
+  - Returns nonzero on terminal QC failure and explicitly records `pitchInferenceInvoked: false`.
+
+Important repository discrepancy discovered while resuming:
+- The previous checkpoint text implied `debug/v159-cpu-autonomous/negative-runtime-guard.py` already existed, but the live branch directory contains only `preregistration.json` and `implementation-contract.json`. The guard therefore remains to be implemented; do not assume it exists.
+
 ## Current hard boundary
 - V158 consumed; diagnosis frozen.
 - **V159 preregistration + numeric contract frozen. Do not change those semantics based on later output.**
-- No V159 code/timebase/candidate/run/score exists yet.
+- V159 timebase builder + independent timebase QC code now exist, but **neither has been executed on the song**.
+- No V159 timebase artifact/candidate/generation run/score exists yet.
+- No pitch inference is allowed until a fresh V159 timebase-QC receipt has frozen `PASS` inside the single generation workflow.
 - No professional-reference read during V159 implementation/generation/QC.
 - No GPU execution; main/Production untouched.
 
 ## Exact next steps — RESUME HERE
 1. Re-fetch latest branch head/checkpoint before every write.
-2. Implement `validation/v159_cpu_multitrack/build_timebase.py` exactly from frozen contract.
-3. Implement independent `validation/v159_cpu_multitrack/timebase_qc.py`.
-4. Implement V159 candidate transcriber consuming the frozen timebase while preserving V158 pitch numerics, plus independent structural QC.
-5. Freeze exact code identities and create a V159 pre-run identity receipt before any workflow.
-6. Arm exactly one V159 CPU generation workflow; creation is sole trigger; no branch writes while active. If timebase QC fails, freeze terminal failure/self-remove without candidate.
+2. Implement `validation/v159_cpu_autonomous/transcribe_v159.py` consuming the exact frozen V159 timebase and a PASS timebase-QC receipt; preserve the sealed V158 pitch numerics.
+3. Implement `validation/v159_cpu_autonomous/structural_qc_v159.py` independently from generation.
+4. Add the missing `debug/v159-cpu-autonomous/negative-runtime-guard.py` and ensure it rejects professional-reference/prior-candidate/prior-score/prior-diagnostic runtime reads plus pitch inference before timebase-QC PASS.
+5. Run static/preflight review of implementation semantics; then freeze exact reviewer-facing code identities and create a V159 pre-run identity receipt before any workflow.
+6. Only after implementation/reviewer boundary approval, arm exactly one V159 CPU generation workflow; creation is sole trigger; no branch writes while active. If timebase QC fails, freeze terminal failure/self-remove without candidate.
 7. If timebase + structural QC pass, freeze exactly one candidate, then seal a one-shot score guard/workflow for exactly one professional-reference score.
 8. Fresh explicit authorization remains required immediately before any Modal/NVIDIA L4/CUDA/GPU execution.
