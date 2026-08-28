@@ -36,21 +36,21 @@
   },
   "candidateDiagnostics": {
     "sourceRawEventCounts": {
-      "direct": 21354,
-      "cascade": 20589
+      "direct": 21340,
+      "cascade": 20613
     },
     "sourceInBassRangeCounts": {
-      "direct": 21354,
-      "cascade": 20589
+      "direct": 21340,
+      "cascade": 20613
     },
     "sourceGridAlignedCounts": {
-      "direct": 21079,
-      "cascade": 20309
+      "direct": 21060,
+      "cascade": 20338
     },
-    "slotPitchHypothesisCount": 22648,
-    "rejectedSlotPitchHypothesesWithoutConsensus": 9132,
-    "consensusSlotCount": 1754,
-    "acceptedEventCount": 1754,
+    "slotPitchHypothesisCount": 22513,
+    "rejectedSlotPitchHypothesesWithoutConsensus": 8896,
+    "consensusSlotCount": 1762,
+    "acceptedEventCount": 1762,
     "requiredConsensusViews": 2,
     "maximumGridErrorSeconds": 0.1,
     "bassMidiMinimum": 28,
@@ -58,13 +58,13 @@
     "bassMinimumFrequencyHz": 41.20344461410875,
     "bassMaximumFrequencyHz": 391.99543598174927
   },
-  "eventCount": 1754,
-  "projectedRenderEventCount": 1754,
+  "eventCount": 1762,
+  "projectedRenderEventCount": 1762,
   "uniqueMeasures": 113,
-  "consensusEventCount": 1754,
-  "bassRangeEventCount": 1754,
-  "gridErrorAuthenticatedEventCount": 1754,
-  "techniqueFreeEventCount": 1754,
+  "consensusEventCount": 1762,
+  "bassRangeEventCount": 1762,
+  "gridErrorAuthenticatedEventCount": 1762,
+  "techniqueFreeEventCount": 1762,
   "qualityThresholds": {
     "minimumValidRenderEvents": 4,
     "minimumRenderEventSurvivalPercent": 70,
@@ -77,8 +77,8 @@
     "name": "bass-professional-quality-gate",
     "version": 1,
     "instrument": "bass",
-    "rawEventCount": 1754,
-    "validRenderEventCount": 1754,
+    "rawEventCount": 1762,
+    "validRenderEventCount": 1762,
     "renderEventSurvivalPercent": 100,
     "playableStringFretPercent": 100,
     "timingCoveragePercent": 100,
