@@ -1,0 +1,69 @@
+{
+  "schema": "dadrock.tabs.v159.post-run-implementation-diagnosis.v1",
+  "version": "V159",
+  "status": "FROZEN_REFERENCE_BLIND_POSTMORTEM",
+  "terminalVersion": true,
+  "neverRearmV159": true,
+  "mayScoreV159Candidate": false,
+  "terminalFreezeCommit": "e0ab58ef5766f6c1515453c05b80e86429140acb",
+  "workflow": {
+    "runId": 33195994387,
+    "runNumber": 1,
+    "runAttempt": 1,
+    "headSha": "0e33dc356cef573a146bfe74fae718a523aa8fec",
+    "terminalOutcome": "STRUCTURAL_QC_RUNTIME_FAIL"
+  },
+  "successfulPrecedingStages": {
+    "cpuEnvironment": "PASS",
+    "freshDemucsSeparation": "PASS",
+    "timebaseBuild": "PASS",
+    "detectedBeatCount": 448,
+    "selectedPhase": 1,
+    "independentTimebaseQc": "PASS",
+    "timebaseQcFailedChecks": [],
+    "candidateCreatedExactlyOnce": true,
+    "candidateSha256": "a2057b0f160f8f689ea7593acb277e8a6c56325ef3183cfef58e7196907fb36c",
+    "candidateAuthoritative": false,
+    "candidateEligibleForScoring": false
+  },
+  "structuralQcRuntimeFailure": {
+    "implementationPath": "validation/v159_cpu_autonomous/structural_qc_v159.py",
+    "implementationGitBlob": "a3fbf4e8d827aca955a0995fc31930a8c631c932",
+    "exceptionType": "TypeError",
+    "exceptionMessage": "Object of type bool_ is not JSON serializable",
+    "failureOperation": "json.dumps(receipt, indent=2, sort_keys=True)",
+    "receiptWritten": false,
+    "structuralPassOrFailCanBeInferred": false
+  },
+  "provenRootCause": {
+    "checkKey": "frozenGrid",
+    "sourcePattern": "len(times) >= 2 and len(times) == len(steps) and np.all(np.isfinite(times)) and np.all(np.isfinite(steps)) and np.all(np.diff(times) > 0.0) and np.all(np.diff(steps) == 4.0)",
+    "whyItLeaks": "numpy.all returns numpy.bool_. Python boolean `and` returns the last evaluated operand rather than coercing it to native bool. When every frozen-grid condition is true, the final np.all(...) result is stored directly in checks['frozenGrid'] as numpy.bool_. The later pass aggregation explicitly calls bool(value), so validation control flow succeeds, but the raw checks dictionary is inserted into the receipt and json.dumps rejects numpy.bool_.",
+    "otherDirectNumPyCheckAssignmentsFound": 0,
+    "rootCauseConfidence": "PROVEN_FROM_FROZEN_SOURCE_AND_PYTHON_NUMPY_TYPE_SEMANTICS"
+  },
+  "successorImplementationRequirement": {
+    "appliesTo": "V160_OR_LATER_ONLY",
+    "v159MayBePatchedOrRerun": false,
+    "numericGenerationSemanticsMustChangeForThisFix": false,
+    "requiredRepair": "Ensure every independent-QC receipt value is JSON-native before serialization. At minimum coerce checks['frozenGrid'] to native bool. Prefer a generic deterministic JSON-safety normalization that converts numpy.generic scalars via .item(), arrays via .tolist() with recursive normalization, and preserves native dict/list/string/int/float/bool/null values.",
+    "requiredStaticTest": "Construct a synthetic QC receipt containing numpy.bool_, numpy integer/float scalars, and a small ndarray; normalize it; assert json.dumps succeeds and booleans remain native bool. Also assert the structural checks dictionary contains only native bool values before receipt serialization.",
+    "mustBePreregisteredBeforeSuccessorExecution": true
+  },
+  "referenceIsolation": {
+    "professionalReferenceReadDuringPostmortem": false,
+    "professionalReferencePathsOpenedDuringPostmortem": 0,
+    "frozenScorerReadDuringPostmortem": false,
+    "priorScoreReadDuringPostmortem": false,
+    "referenceFacingScoreCallsDuringPostmortem": 0,
+    "v159CandidateScored": false,
+    "thresholdTuningPerformed": false,
+    "pitchNumericsChanged": false
+  },
+  "executionSafety": {
+    "gpuUsed": false,
+    "cudaUsed": false,
+    "modalUsed": false,
+    "mainOrProductionModified": false
+  }
+}
