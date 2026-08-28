@@ -5,6 +5,18 @@ on:
   push:
     branches:
       - v143-contextual-prune-lobo
+    paths:
+      - .github/workflows/v164-static-preflight.yml
+      - validation/v164_cpu_autonomous/**
+      - debug/v164-cpu-autonomous/preregistration.json
+      - debug/v164-cpu-autonomous/implementation-contract.json
+      - debug/v164-cpu-autonomous/negative-runtime-guard.py
+      - validation/v162_cpu_autonomous/event_logic_v162.py
+      - validation/v162_cpu_autonomous/transcribe_v162.py
+      - validation/v162_cpu_autonomous/structural_qc_v162.py
+      - validation/v162_cpu_autonomous/test_json_native_v162.py
+      - debug/v162-cpu-autonomous/implementation-contract.json
+      - debug/v162-cpu-autonomous/negative-runtime-guard.py
 
 permissions:
   contents: read
