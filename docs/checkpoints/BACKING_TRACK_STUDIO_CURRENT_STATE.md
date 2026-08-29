@@ -52,9 +52,13 @@ Create a new Backing Track Studio page using `app/ai-tab/page.js` as the UI/work
 Relevant route:
 - `app/api/audio-upload/route.js`
 
+Inspection note:
+- On the current `backing-track-studio` baseline, `app/api/audio-upload/complete/route.js` is not present even though the AI-tab page still calls that URL. BTS should not copy that dangling completion call.
+
 BTS implementation decision:
 - Preserve the same upload interaction/style.
-- Prefer a BTS-specific upload namespace/route if code changes are needed, so no AI-tab upload behavior is changed.
+- Use a BTS-specific upload namespace/route so no AI-tab upload behavior is changed.
+- Keep the BTS upload path self-contained rather than depending on the missing AI-tab completion route.
 
 ### AI processing / Modal handoff
 Current AI-tab analysis route:
@@ -88,14 +92,15 @@ Existing pieces:
 - `app/api/paypal/capture-order/route.js`
 
 Critical isolation findings:
-- The existing AI-tab button currently creates/captures through the PayPal JS SDK and hardcodes **USD $2.99** in the client component.
-- Existing backend create-order logic also hardcodes **USD $2.99**.
-- Therefore BTS must not modify those files to change the price.
+- The existing AI-tab client component loads the PayPal JS SDK, then calls the existing server-side create/capture routes; the price is **not** hardcoded in the current client component.
+- `app/api/paypal/create-order/route.js` freezes AI-tab price at **USD $2.99** and creates a signed purchase fingerprint from song/artist/transcription type/price/currency.
+- `app/api/paypal/capture-order/route.js` verifies the completed capture, **USD $2.99**, currency, and matching fingerprint before unlocking AI-tab.
+- Therefore BTS must not modify those files to change product identity or price.
 
 BTS implementation decision:
-- Add a dedicated BTS PayPal button/component.
+- Add a dedicated BTS PayPal button/component patterned on the existing component.
 - Add dedicated BTS create/capture routes (for example `/api/bts/paypal/create-order` and `/api/bts/paypal/capture-order`).
-- Freeze BTS testing amount to **USD $1.00** server-side.
+- Freeze BTS testing amount to **USD $1.00** server-side and verify the BTS product fingerprint during capture.
 - Continue using PayPal sandbox credentials/base URL during development.
 
 ## Research-branch waveform separator inspection — COMPLETE
@@ -133,9 +138,10 @@ The BS-RoFormer cascade remains optional for later quality experiments; the BTS 
 ## Planned BTS file boundaries
 - `app/bts/page.js` — BTS UI only.
 - `components/BTSPayPalCheckoutButton.js` — BTS $1 sandbox checkout only.
-- `app/api/bts/process/route.js` — BTS source fetch -> Modal -> downloadable audio response.
+- `app/api/bts/audio-upload/route.js` — BTS private Vercel Blob upload target.
+- `app/api/bts/process/route.js` — BTS source -> Modal -> downloadable audio response.
 - `app/api/bts/paypal/create-order/route.js` — BTS sandbox order creation, server-fixed USD $1.00.
-- `app/api/bts/paypal/capture-order/route.js` — BTS sandbox capture.
+- `app/api/bts/paypal/capture-order/route.js` — BTS sandbox capture + verification.
 - `analyzer/modal_bts_separator.py` — dedicated Modal waveform/stem worker.
 - `analyzer/bts-audio-separation-requirements.txt` — minimal BTS worker dependencies if required.
 
