@@ -1,0 +1,135 @@
+{
+  "classification": "SINGLE_SONG_TRAINING_CALIBRATION_ONLY",
+  "inheritedFrozenMetrics": {
+    "bass": {
+      "falseNegative": 121,
+      "falsePositive": 86,
+      "generated": 512,
+      "grossF1": 0.8309726156751652,
+      "matched": 426,
+      "primaryF1": 0.8045325779036827,
+      "primaryPrecision": 0.83203125,
+      "primaryRecall": 0.7787934186471663,
+      "reference": 547,
+      "sameMeasurePitchContentF1": 0.8404154863078376
+    },
+    "combinedGuitar": {
+      "falseNegative": 859,
+      "falsePositive": 579,
+      "generated": 1113,
+      "grossF1": 0.5450917797286512,
+      "matched": 534,
+      "primaryF1": 0.42617717478052675,
+      "primaryPrecision": 0.4797843665768194,
+      "primaryRecall": 0.38334529791816224,
+      "reference": 1393,
+      "sameMeasurePitchContentF1": 0.5897845171588189
+    }
+  },
+  "iteration004GitBlob": "8dd85049a65f00541f7874ff99511b081a0b5ff2",
+  "iteration004Sha256": "728785c631750cbfcad48cc3243c238d6e7de6f337cce87e125a651ca2793acc",
+  "policy": {
+    "generalizationClaim": false,
+    "gpuCudaModalUsed": false,
+    "individualEventSelectionByReference": false,
+    "iteration003Modified": false,
+    "mainOrProductionModified": false,
+    "newReferenceFacingScoreCalls": 0,
+    "postSweepRetuning": false,
+    "professionalReferenceReadByPromotion": false,
+    "scorerReadByPromotion": false
+  },
+  "proofGitBlob": "d055f3f0a1cbf91cd4d6ac4cb26ee654b599925d",
+  "proofSha256": "b35c7bff5583786a8e23e736c56898505306e7c6c69106bf565aa11e0e0ae753",
+  "schema": "dadrock.tabs.v167.iteration-004-freeze-receipt.v1",
+  "selectedWinner": {
+    "config": {
+      "activeStateMode": "allow_active",
+      "activitySupportMin": 0.05,
+      "baseline": false,
+      "candidateToMaxActiveTemplateScoreMin": 1.0,
+      "chordIntervalsAllowed": [
+        3,
+        4,
+        5,
+        7,
+        8,
+        9,
+        10
+      ],
+      "existingIteration003EventsPreferred": true,
+      "fundamentalPresentRequired": true,
+      "harmonicOctaveIntervalsRejected": [
+        12,
+        19,
+        24
+      ],
+      "id": "gctx-o50-q100-allow-noharm",
+      "intervalContextPolicy": "exclude_harmonic_octave",
+      "maxAddsPerSite": 1,
+      "onsetSupportMin": 0.5,
+      "polyphonyCap": 6,
+      "requireBasicPitchActiveContext": true,
+      "stepMidiDedupe": true,
+      "stream": "combinedGuitar",
+      "templateRankMin": 0.975
+    },
+    "frozenCandidateSha256": "2527870bc4655c238d5f4fbd0e243ab518554e17c4e2c29db2794225bbbeed43",
+    "frozenGuitarMetrics": {
+      "falseNegative": 859,
+      "falsePositive": 579,
+      "generated": 1113,
+      "grossF1": 0.5450917797286512,
+      "matched": 534,
+      "primaryF1": 0.42617717478052675,
+      "primaryPrecision": 0.4797843665768194,
+      "primaryRecall": 0.38334529791816224,
+      "reference": 1393,
+      "sameMeasurePitchContentF1": 0.5897845171588189
+    },
+    "generationSummary": {
+      "added": 63,
+      "eligible": 69,
+      "sitesWithActiveContext": 204,
+      "sitesWithAdds": 63,
+      "sitesWithEligible": 63
+    },
+    "id": "gctx-o50-q100-allow-noharm",
+    "inheritedBassMetrics": {
+      "falseNegative": 121,
+      "falsePositive": 86,
+      "generated": 512,
+      "grossF1": 0.8309726156751652,
+      "matched": 426,
+      "primaryF1": 0.8045325779036827,
+      "primaryPrecision": 0.83203125,
+      "primaryRecall": 0.7787934186471663,
+      "reference": 547,
+      "sameMeasurePitchContentF1": 0.8404154863078376
+    },
+    "reconstructedCandidateSha256": "2527870bc4655c238d5f4fbd0e243ab518554e17c4e2c29db2794225bbbeed43"
+  },
+  "status": "ITERATION_004_FROZEN",
+  "streamProof": {
+    "bass": {
+      "iteration004Count": 512,
+      "normalizedEqualIteration003": true,
+      "parentCount": 512,
+      "richListExactlyPreserved": true
+    },
+    "combinedGuitar": {
+      "contextualRecoveryAdditions": 63,
+      "iteration004Count": 1113,
+      "newCoordinatesDisjointFromParent": true,
+      "newCoordinatesUnique": true,
+      "normalizedEqualFrozenScoredWinner": true,
+      "parentCount": 1050,
+      "parentRichEventDictionaryMultisetExactlyPreserved": true
+    }
+  },
+  "version": "V167",
+  "workflowHeadSha": "f66673e69a0b810eb21a1f7c9584f0357db70404",
+  "workflowRunAttempt": 1,
+  "workflowRunId": 33257608217,
+  "workflowRunNumber": 1
+}

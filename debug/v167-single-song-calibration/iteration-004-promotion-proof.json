@@ -1,0 +1,116 @@
+{
+  "classification": "SINGLE_SONG_TRAINING_CALIBRATION_ONLY",
+  "inputs": {
+    "baseBuilderGitBlob": "24413d321f64bbfcce48812ceb85b4593dcfa80c",
+    "contextualBuilderGitBlob": "fd257fe88c5dcd9b3ab135263a6457140c3f63b6",
+    "contextualSweepManifestGitBlob": "b9ec90a34e0d7a4a6b6ee7fb3f5a1eef7e6bba5d",
+    "contextualSweepManifestSha256": "2f51fa0cba372acc8f797a2e700b3b0a6bb42b807ad4bad818b3c40c262df876",
+    "contextualSweepReportGitBlob": "b00e25f5c1fd9f8c40b440156e049317e008ec1d",
+    "contextualSweepReportSha256": "6b661f6dfa27d31204f4e8a9035d286d5324440b947eb3e49db99205dad9320e",
+    "evidencePoolGitBlob": "aa7da3a55344b1418a291f30fab9ca55858fc094",
+    "evidencePoolSha256": "1c983784c2d12a22437a80387525789bcf55a2f4e4a5c7a96608c575bf709673",
+    "iteration003GitBlob": "758f8762632e916306aed9b036a6483af9431dc0",
+    "iteration003Sha256": "f15c6f40dd4b8479c2dfb7eab039cff98a23b45eb796265ffad08c5a8ae37115",
+    "timebaseGitBlob": "abebae25801b7ddeb5b933977c4f4a918f7bf9ef",
+    "timebaseSha256": "899746d3048d239bc0032375d412a109ea04b055df19df1b7b08dc3e73aa5ca0"
+  },
+  "iteration004CandidateSha256": "728785c631750cbfcad48cc3243c238d6e7de6f337cce87e125a651ca2793acc",
+  "policy": {
+    "directReferenceEventCopy": false,
+    "generalizationClaim": false,
+    "gpuCudaModalUsed": false,
+    "individualEventSelectionByReference": false,
+    "mainOrProductionModified": false,
+    "newReferenceFacingScoreCalls": 0,
+    "postSweepRetuning": false,
+    "professionalReferenceReadByPromotion": false,
+    "scorerReadByPromotion": false
+  },
+  "schema": "dadrock.tabs.v167.iteration-004-contextual-guitar-promotion-proof.v1",
+  "selectedWinner": {
+    "config": {
+      "activeStateMode": "allow_active",
+      "activitySupportMin": 0.05,
+      "baseline": false,
+      "candidateToMaxActiveTemplateScoreMin": 1.0,
+      "chordIntervalsAllowed": [
+        3,
+        4,
+        5,
+        7,
+        8,
+        9,
+        10
+      ],
+      "existingIteration003EventsPreferred": true,
+      "fundamentalPresentRequired": true,
+      "harmonicOctaveIntervalsRejected": [
+        12,
+        19,
+        24
+      ],
+      "id": "gctx-o50-q100-allow-noharm",
+      "intervalContextPolicy": "exclude_harmonic_octave",
+      "maxAddsPerSite": 1,
+      "onsetSupportMin": 0.5,
+      "polyphonyCap": 6,
+      "requireBasicPitchActiveContext": true,
+      "stepMidiDedupe": true,
+      "stream": "combinedGuitar",
+      "templateRankMin": 0.975
+    },
+    "frozenCandidateSha256": "2527870bc4655c238d5f4fbd0e243ab518554e17c4e2c29db2794225bbbeed43",
+    "frozenGuitarMetrics": {
+      "falseNegative": 859,
+      "falsePositive": 579,
+      "generated": 1113,
+      "grossF1": 0.5450917797286512,
+      "matched": 534,
+      "primaryF1": 0.42617717478052675,
+      "primaryPrecision": 0.4797843665768194,
+      "primaryRecall": 0.38334529791816224,
+      "reference": 1393,
+      "sameMeasurePitchContentF1": 0.5897845171588189
+    },
+    "generationSummary": {
+      "added": 63,
+      "eligible": 69,
+      "sitesWithActiveContext": 204,
+      "sitesWithAdds": 63,
+      "sitesWithEligible": 63
+    },
+    "id": "gctx-o50-q100-allow-noharm",
+    "inheritedBassMetrics": {
+      "falseNegative": 121,
+      "falsePositive": 86,
+      "generated": 512,
+      "grossF1": 0.8309726156751652,
+      "matched": 426,
+      "primaryF1": 0.8045325779036827,
+      "primaryPrecision": 0.83203125,
+      "primaryRecall": 0.7787934186471663,
+      "reference": 547,
+      "sameMeasurePitchContentF1": 0.8404154863078376
+    },
+    "reconstructedCandidateSha256": "2527870bc4655c238d5f4fbd0e243ab518554e17c4e2c29db2794225bbbeed43"
+  },
+  "status": "ITERATION_004_NORMALIZED_STREAM_EQUALITY_PROVEN",
+  "streamProof": {
+    "bass": {
+      "iteration004Count": 512,
+      "normalizedEqualIteration003": true,
+      "parentCount": 512,
+      "richListExactlyPreserved": true
+    },
+    "combinedGuitar": {
+      "contextualRecoveryAdditions": 63,
+      "iteration004Count": 1113,
+      "newCoordinatesDisjointFromParent": true,
+      "newCoordinatesUnique": true,
+      "normalizedEqualFrozenScoredWinner": true,
+      "parentCount": 1050,
+      "parentRichEventDictionaryMultisetExactlyPreserved": true
+    }
+  },
+  "version": "V167"
+}
