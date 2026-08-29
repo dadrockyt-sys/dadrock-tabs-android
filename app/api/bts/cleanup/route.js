@@ -5,7 +5,8 @@ export const runtime = 'nodejs';
 export const maxDuration = 60;
 
 const BTS_AUDIO_PREFIX = 'bts-audio/';
-const MAX_RETENTION_MS = 24 * 60 * 60 * 1000;
+const CLEANUP_THRESHOLD_MS = 23 * 60 * 60 * 1000;
+const MAXIMUM_RETENTION_HOURS = 24;
 const PAGE_SIZE = 1000;
 const MAX_PAGES_PER_RUN = 10;
 
@@ -39,7 +40,10 @@ export async function GET(request) {
     );
   }
 
-  const cutoff = Date.now() - MAX_RETENTION_MS;
+  // The cron runs hourly. Using a 23-hour cleanup threshold ensures an
+  // abandoned upload is removed before it can exceed the 24-hour maximum
+  // retention policy, even if it was created just after the previous run.
+  const cutoff = Date.now() - CLEANUP_THRESHOLD_MS;
   const expiredUrls = [];
   let cursor;
   let pagesScanned = 0;
@@ -86,7 +90,9 @@ export async function GET(request) {
 
     return NextResponse.json({
       success: true,
-      retentionHours: 24,
+      cleanupThresholdHours: 23,
+      maximumRetentionHours:
+        MAXIMUM_RETENTION_HOURS,
       pagesScanned,
       blobsScanned,
       deleted: expiredUrls.length,
