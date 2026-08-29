@@ -6,12 +6,16 @@ Branch: `v143-contextual-prune-lobo`
 ## Active phase
 **V166 is terminal/immutable. V167 is the explicitly scorer/reference-guided SINGLE-SONG TRAINING CALIBRATION lane for Lenny Kravitz — Are You Gonna Go My Way. Iteration 003 is frozen current best: Guitar 41.9156774457634% F1; Bass 80.45325779036827% F1. Bass is closed for this lane. Guitar's first 48-rule additive standalone-harmonic grid is terminal negative. The terminal aggregate diagnosis now identifies the failure mechanism without new reference access: more additions strongly increase recall but destroy precision/F1, and the reference-blind pool is dominated by octave/harmonic-like inactive candidates. This supports a structurally new, sparse contextual Guitar hypothesis based on relative evidence versus active pitches plus harmonic-interval suppression. No new rule has been scored yet. `main`/Production remain untouched; no GPU/CUDA/Modal work is authorized or used.**
 
-## Current execution checkpoint — 2026-08-29 14:02 UTC
-- Resumed directly from this file on `v143-contextual-prune-lobo`; starting head was `2a7dfedd6385ef0136e1a07e6677dd3b6c47cbf0`.
-- Reconfirmed Iteration 003 is immutable for this sweep and Bass must remain byte/stream-equivalent to I003.
-- Re-read the preregistration below and will implement its exact 36-rule contextual Guitar family: onset `{0.50,0.65}`, candidate/max-active template ratio `{0.75,1.00,1.25}`, active-state `{allow_active,inactive_only}`, interval policy `{none,exclude_harmonic_octave,chord_interval}`, top-1/site, `(step,midi)` dedupe, polyphony cap 6.
-- Located the frozen reference-blind upstream evidence builder `validation/v167_single_song_calibration/augment_upstream_pitch_pool_v167.py`; its Guitar pool already exposes `templateScore`, `templateRank`, `fundamentalPresent`, `onsetSupport`, `activitySupport`, and Basic Pitch active-at-site context. No reference-derived correctness field will be used for candidate selection.
-- No new contextual rule has been generated or scored yet. Next substep: map the frozen evidence to active-pitch-relative context and implement/freeze the deterministic variants before any scorer/reference read.
+## Current execution checkpoint — 2026-08-29 UTC / PRE-SCORE ARM
+- Resumed directly from this file on `v143-contextual-prune-lobo`; starting head was `2a7dfedd6385ef0136e1a07e6677dd3b6c47cbf0`. First resume checkpoint commit: `1c51821eb68629150f31c61d28f7094410caa92f`.
+- Reconfirmed Iteration 003 is immutable for this sweep and Bass must remain scoring-stream-equivalent to I003.
+- Re-read the preregistration below and implemented its exact 36-rule contextual Guitar family: onset `{0.50,0.65}`, candidate/max-active template ratio `{0.75,1.00,1.25}`, active-state `{allow_active,inactive_only}`, interval policy `{none,exclude_harmonic_octave,chord_interval}`, top-1/site, `(step,midi)` dedupe, polyphony cap 6.
+- The inherited `fundamentalPresent` candidate filter is retained because the frozen aggregate structural diagnosis that preregistered the relative-ratio/interval family computed its eligible inactive pool with that same filter. This is fixed across all 36 rules, not a tuned dimension.
+- New reference-blind generator: `validation/v167_single_song_calibration/build_contextual_guitar_recovery_variants_v167.py`, blob `23065c56b5b08d1d9d59fe37a01dfa95f6c6627d`, commit `40da61d541df1ad24f7d17ea097eeb6f7b4ea065`.
+- New frozen-family grader: `validation/v167_single_song_calibration/score_contextual_guitar_recovery_variants_v167.py`, blob `adfd512f53e8839b295129c0768d484b5af09bc7`, commit `95adfb70254bbf3be13233d99ed844e57bb31297`.
+- Predeclared top-1/site ordering is now explicit before scoring: candidate/max-active template-score ratio descending, template rank descending, template score descending, onset support descending, activity support descending, MIDI ascending.
+- Grader boundary verifies manifest status/policy, all 37 candidate hashes, I003 SHA256, 512-event Bass coordinate identity in every candidate, and only then imports the frozen scorer / opens the professional reference.
+- No contextual candidate has been generated or scored yet; no scorer/reference read has occurred for this family. Next substep: arm a one-shot CPU workflow that verifies these exact blobs, generates + seals all 37 complete candidates, grades them once, freezes the report/receipt, self-removes, and leaves I003 unchanged pending result review.
 
 ## Standing V167 methodology
 - Calibration only; never present V167 scores as holdout/generalization performance.
@@ -57,7 +61,7 @@ Branch: `v143-contextual-prune-lobo`
 ## V167 Iteration 003 — CURRENT BEST / FROZEN
 - Promotion transform blob `9c63f2a0c4732cf3c3a11faf028cf0952c27664e`.
 - Run `33253690563`, job `99103631893`; terminal self-seal `17ab31bf26fa1e15a7754469b7598c071a938705`.
-- Candidate `debug/v167-single-song-calibration/iteration-003-generated.json`: blob `758f8762632e916306aed9b036a6483af9431dc0`, SHA256 `f15c6f40dd4b8479c2dfb7eab039cff98a23b45eb796265ffad08c5a8ae37115`.
+- Candidate `debug/v167-single-song-calibration/iteration-003-generated.json`: blob `758f8762632e916306aed9b036a6483af9431dc0`, SHA256 `f15c6f40dd4b8479c2dfb7eab039cff98a23b45eb796265ffad08c575bf709673`.
 - Proof blob `60dba77ac478ed804fd5d66993878e4921c4a72d`; receipt blob `b3979dd5b6b205a072223493248fc66b37272a5c`, status `ITERATION_003_FROZEN`.
 - Guitar rich list exactly preserved 1050 ->1050. Bass 402 +110 ->512; prior rich Bass dictionaries preserved.
 - Normalized streams exactly equal already-scored frozen winner; zero new reference-facing scores; no retuning.
