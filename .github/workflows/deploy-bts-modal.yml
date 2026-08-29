@@ -2,9 +2,20 @@ name: Deploy BTS Modal Worker
 
 on:
   workflow_dispatch:
+  push:
+    branches:
+      - main
+    paths:
+      - 'analyzer/modal_bts_separator.py'
+      - 'analyzer/bts-audio-separation-requirements.txt'
+      - '.github/workflows/deploy-bts-modal.yml'
 
 permissions:
   contents: read
+
+concurrency:
+  group: deploy-bts-modal-main
+  cancel-in-progress: false
 
 jobs:
   deploy:
@@ -36,3 +47,6 @@ jobs:
 
       - name: Show deployed BTS app
         run: modal app list --env main
+
+      - name: Show deployed BTS endpoint
+        run: modal endpoint list --env main --json
