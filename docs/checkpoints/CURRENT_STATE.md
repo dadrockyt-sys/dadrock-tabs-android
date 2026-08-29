@@ -4,7 +4,7 @@ Updated: 2026-08-29 UTC
 Branch: `v143-contextual-prune-lobo`
 
 ## Active phase
-**V166 is terminal/immutable. V167 is the explicitly scorer/reference-guided SINGLE-SONG TRAINING CALIBRATION lane for Lenny Kravitz — Are You Gonna Go My Way. Iteration 002 remains the best frozen candidate: Guitar 41.9157%, Bass 71.8651%. Timing and admitted-event Bass pitch alternatives are substantially exhausted. Exact upstream discard gates and the reproducible CPU source/stem boundary are mapped. A reference-blind, output-neutral evidence observer plus standalone Guitar/Bass pitch-pool augmentation is now staged. Its first arm failed safely in the pre-compute guard because the workflow scanned its own forbidden-string literals; no dependency/audio/pitch work ran. Re-arm is next. `main`/Production remain untouched.**
+**V166 is terminal/immutable. V167 is the explicitly scorer/reference-guided SINGLE-SONG TRAINING CALIBRATION lane for Lenny Kravitz — Are You Gonna Go My Way. Iteration 002 remains the best frozen candidate: Guitar 41.9157%, Bass 71.8651%. Timing and admitted-event Bass pitch alternatives are substantially exhausted. Exact upstream discard gates and the reproducible CPU source/stem boundary are mapped. The reference-blind, output-neutral evidence observer plus standalone Guitar/Bass pitch-pool augmentation has now completed successfully and is frozen at terminal commit `86ab5882845b61917b8820c35b07022adef532f0`. The next boundary is a fixed, predeclared reference-facing recovery-rule/threshold sweep over that frozen upstream pool; no Iteration 003 exists yet. `main`/Production remain untouched.**
 
 ## Standing V167 methodology
 - Calibration only; never present V167 calibration score as holdout/generalization performance.
@@ -70,30 +70,32 @@ Branch: `v143-contextual-prune-lobo`
 - Frozen V166 timebase blob `abebae25801b7ddeb5b933977c4f4a918f7bf9ef` stores exact normalized-mix/stem SHA256+byte identities.
 - Historical deterministic stack: Python 3.10.21, torch 2.8.0+cpu, Demucs 4.1.0 `htdemucs_6s`, CPU, shifts=1, jobs=1. No GPU/CUDA/Modal needed.
 
-## V167 upstream evidence instrumentation — STAGED
-- Output-neutral observer `validation/v167_single_song_calibration/instrument_v166_nearmiss_v167.py`, blob `1224932a841e27bfdfe8d61fd631e5c1f728d485`, implementation commit `d6b26d5305c4b57e4e8056cdd98078a9b205401b`.
-- Pinned event-logic runner `validation/v167_single_song_calibration/run_instrument_v166_nearmiss_v167.py`, current blob `af216b9727ca851a32c43c318ee18849c4043752`.
-- Upstream pitch augmentation `validation/v167_single_song_calibration/augment_upstream_pitch_pool_v167.py` staged at commit `8110e8d341e7165b0e0d305d293e9703fcd4014c`.
-- Observer calls the exact pinned V166 front-end functions and must reproduce the frozen V166 musical streams **exactly** at 1050 Guitar / 402 Bass before evidence is accepted.
-- Observer records Guitar raw/segmentation/admission/recovery/grid reject reasons and Bass state/onset/proposal-merge/admission/grid reject reasons without altering decisions.
-- Augmentation adds:
-  - Guitar all MIDI 40–88 six-frame harmonic candidates at every independent onset peak, including pitches not active in Basic Pitch.
-  - Bass all MIDI 28–67 harmonic+pYIN candidates at retained-onset and merged-proposal sites, including sites without a nearby stable state.
-- No professional reference/scorer is an input to observer or augmentation.
+## V167 upstream evidence instrumentation — FROZEN / TERMINAL
+- Output-neutral observer `validation/v167_single_song_calibration/instrument_v166_nearmiss_v167.py`, blob `1224932a841e27bfdfe8d61fd631e5c1f728d485`.
+- Pinned event-logic runner `validation/v167_single_song_calibration/run_instrument_v166_nearmiss_v167.py`, blob `af216b9727ca851a32c43c318ee18849c4043752`.
+- Upstream pitch augmentation `validation/v167_single_song_calibration/augment_upstream_pitch_pool_v167.py`, frozen blob `daf4ace1b6eff1da81bb537b38caa4dcb0976b29`.
+- Corrected re-arm commit `7e8d15fcb57ddc34550ce7215f10c00603008852` fixed the first arm's self-matching guard without weakening the boundary: only observer/runner/augmentation source is scanned for forbidden reference/scorer paths.
+- Successful one-shot CPU run `33228322645`, job `99036292089`, run 2/attempt 1; every step completed SUCCESS.
+- Terminal self-seal commit `86ab5882845b61917b8820c35b07022adef532f0` deleted `.github/workflows/v167-nearmiss-instrumentation.yml` and froze exactly the evidence pool + receipt.
+- Evidence pool `debug/v167-single-song-calibration/nearmiss-evidence-pool.json`, blob `aa7da3a55344b1418a291f30fab9ca55858fc094`, SHA256 `1c983784c2d12a22437a80387525789bcf55a2f4e4a5c7a96608c575bf709673`.
+- Receipt `debug/v167-single-song-calibration/nearmiss-evidence-receipt.json`, blob `8268eb6eeb0bbb00b98bcf3dcf2812c8a55932a3`, status `EVIDENCE_POOL_FROZEN`.
+- Exact reproduction proof: frozen V166 musical streams reproduced bit-for-policy exactly at **1050 Guitar / 402 Bass**; source/mix/Guitar/Bass/drums hashes matched the frozen V166 boundary.
+- Policy proof: reference read=false, scorer read=false, reference-facing score calls=0, threshold tuning=false, candidate generation behavior modified=false, GPU/CUDA/Modal=false, `main`/Production modified=false.
 
-### First arm — SAFE PRE-COMPUTE FAILURE
-- Workflow `.github/workflows/v167-nearmiss-instrumentation.yml` armed at commit `efe1db25f2914a033eb9f67e6177d2fece95c5a5`.
-- Run `33228188560`, job `99035902132`, run 1/attempt 1, FAILED at `Verify immutable identities and reference-blind boundary`.
-- Dependency install, source materialization, Demucs, observer, augmentation, and freeze steps were all skipped. No audio/pitch computation or evidence output occurred.
-- Cause identified: the guard concatenated the workflow text into its scan while the workflow itself contained the forbidden reference/scorer filenames as literal strings in the `forbidden` tuple. The guard therefore self-matched by construction.
-- Fix: scan only observer/runner/augmentation code for forbidden reference/scorer paths; re-arm as workflow run 2 with current branch parent pinned.
+### Frozen observer counts
+- Guitar: 272 independent onsets; 1,404 raw; 1,010 segmented; 1,005 segmented admitted; 5 admission-score rejects; 48 recovered. Grid input 1,053 -> 1,050 final; 18 evidence step corrections; cap 6.
+- Bass: 465 raw onsets; 464 retained; 394 stable states; 449 merged proposals; 449 admitted; **0** activity/additional/admission-score rejects. Grid input 449 -> 405 unique step/MIDI -> 402 final under monophonic cap; 6 evidence step corrections.
+- Standalone Guitar harmonic pool: **272 sites / 13,328 candidates**.
+- Bass pre-admission pool: **913 sites / 36,520 candidates**.
+- The pool is evidence only: augmentation changed zero generated events.
 
-## NEXT boundary — freeze reference-blind upstream evidence pool
-1. Re-arm the corrected one-shot CPU instrumentation workflow. Keep exact source, dependency, V166 code, candidate, and timebase identity assertions.
-2. Reproduce deterministic CPU stems and verify normalized-mix/stem hashes against frozen V166 timebase.
-3. Run the output-neutral observer and require exact frozen V166 musical-stream equality (1050/402) before accepting any evidence.
-4. Add standalone Guitar harmonic and Bass pre-admission pitch pools; reference/scorer remain unread.
-5. Freeze evidence pool + receipt and self-seal workflow. Update this checkpoint with run/job/terminal commit, blobs/hashes, pool counts, and exact reproduction proof.
-6. Only after the pool is frozen, build reference-facing fixed recovery-rule/threshold sweeps. Prioritize Guitar missing chord tones/polyphony and Bass MIDI 31/35 low-register recall.
-7. Apply the already-frozen `-12` phase and Iteration 002 timing rules to recovery variants for apples-to-apples scoring.
-8. Do not create Iteration 003 until a frozen recovery sweep shows a material F1 gain with a defensible precision/recall tradeoff.
+## NEXT boundary — fixed recovery-rule/threshold sweep over frozen pool
+1. Treat evidence pool blob `aa7da3a55344b1418a291f30fab9ca55858fc094` as immutable input. Do not rerun source separation or pitch observation unless a new explicitly versioned lane is created.
+2. Build a deterministic, predeclared recovery-variant generator/sweep. Reference/scorer may grade complete variants and select whole rules/thresholds only; they may not choose individual candidate events.
+3. Prioritize Guitar missing chord tones/polyphony from the 13,328 standalone harmonic candidates. Keep the existing Guitar cap=6 and evaluate conservative whole-rule gates first.
+4. Prioritize Bass upstream proposal/state coverage from the 36,520 pre-admission candidates, especially MIDI 31/35. Preserve monophonic cap=1 and avoid event-by-event reference choices.
+5. Apply the already-frozen `-12` global phase and Iteration 002 whole-stream timing rules to every recovery variant before apples-to-apples scoring.
+6. Record complete variant definitions, candidate counts, structural QC, precision/recall/F1, and deterministic winner selection in a frozen sweep report + receipt.
+7. Do not create Iteration 003 unless the frozen sweep shows a material F1 gain with a defensible precision/recall tradeoff.
+8. Keep CPU-only. Fresh explicit authorization is required before any GPU/CUDA/Modal work.
+9. Never modify/merge/promote `main` or Production without explicit user direction.
