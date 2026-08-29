@@ -4,6 +4,7 @@ import subprocess
 import sys
 import tempfile
 from pathlib import Path
+from urllib.parse import unquote, urlparse
 
 import modal
 
@@ -15,6 +16,7 @@ DEMUCS_6S_MODEL = os.environ.get(
 )
 
 MAX_AUDIO_SIZE_BYTES = 50 * 1024 * 1024
+MIN_AUDIO_DURATION_SECONDS = 3.0
 MAX_AUDIO_DURATION_SECONDS = 15 * 60
 
 REMOVAL_MODES = {
@@ -36,7 +38,7 @@ image = (
     modal.Image.debian_slim(python_version="3.11")
     .apt_install("ffmpeg")
     .pip_install(
-        "audio-separator[gpu]==0.30.2",
+        "audio-separator[cpu]==0.30.2",
         "fastapi[standard]",
         "requests",
     )
@@ -66,6 +68,27 @@ def choose_stem(paths: list[Path], stem_name: str) -> Path | None:
     return max(matches, key=lambda path: path.stat().st_size)
 
 
+def validate_blob_source(audio_url: str, pathname: str) -> None:
+    parsed = urlparse(audio_url)
+
+    if parsed.scheme != "https":
+        raise ValueError("A secure Vercel Blob URL is required.")
+
+    if (
+        not parsed.hostname
+        or not parsed.hostname.endswith(".blob.vercel-storage.com")
+    ):
+        raise ValueError("The uploaded audio must come from Vercel Blob.")
+
+    decoded_path = unquote(parsed.path.lstrip("/"))
+
+    if decoded_path != pathname:
+        raise ValueError("The audio URL does not match the uploaded pathname.")
+
+    if not pathname.startswith("bts-audio/") or ".." in pathname:
+        raise ValueError("Invalid Backing Track Studio audio pathname.")
+
+
 def inspect_duration(input_audio: Path) -> float:
     result = subprocess.run(
         [
@@ -81,6 +104,7 @@ def inspect_duration(input_audio: Path) -> float:
         check=False,
         capture_output=True,
         text=True,
+        timeout=60,
     )
 
     if result.returncode != 0:
@@ -94,8 +118,10 @@ def inspect_duration(input_audio: Path) -> float:
             "Unable to determine the uploaded audio duration."
         ) from error
 
-    if duration <= 0:
-        raise ValueError("The uploaded audio appears to be empty.")
+    if duration < MIN_AUDIO_DURATION_SECONDS:
+        raise ValueError(
+            "The uploaded audio must be at least 3 seconds long."
+        )
 
     if duration > MAX_AUDIO_DURATION_SECONDS:
         raise ValueError(
@@ -125,7 +151,9 @@ def normalize_audio(input_audio: Path, output_audio: Path) -> None:
             str(output_audio),
         ],
         check=False,
+        capture_output=True,
         text=True,
+        timeout=180,
     )
 
     if (
@@ -159,16 +187,30 @@ def separate_stems(input_audio: Path, output_dir: Path) -> dict[str, Path]:
         "--use_soundfile",
     ]
 
-    result = subprocess.run(
-        command,
-        check=False,
-        text=True,
-    )
+    try:
+        result = subprocess.run(
+            command,
+            check=False,
+            capture_output=True,
+            text=True,
+            timeout=3300,
+            env={
+                **os.environ,
+                "CUDA_VISIBLE_DEVICES": "",
+            },
+        )
+    except subprocess.TimeoutExpired as error:
+        raise RuntimeError(
+            "Demucs stem separation timed out on CPU."
+        ) from error
 
     outputs = discover_audio(output_dir)
 
     if result.returncode != 0 or not outputs:
-        raise RuntimeError("Demucs stem separation failed.")
+        detail = (result.stderr or result.stdout or "").strip()[-1500:]
+        raise RuntimeError(
+            f"Demucs stem separation failed. {detail}"
+        )
 
     stems: dict[str, Path] = {}
 
@@ -244,7 +286,9 @@ def rebuild_backing_track(
     result = subprocess.run(
         command,
         check=False,
+        capture_output=True,
         text=True,
+        timeout=300,
     )
 
     if (
@@ -257,8 +301,7 @@ def rebuild_backing_track(
 
 @app.function(
     image=image,
-    gpu="A10G",
-    timeout=900,
+    timeout=3600,
     memory=8192,
     secrets=[
         modal.Secret.from_name(
@@ -284,6 +327,7 @@ def create_backing_track(payload: dict):
         )
 
     audio_url = str(payload.get("audioUrl") or "").strip()
+    pathname = str(payload.get("pathname") or "").strip()
     removal_mode = str(
         payload.get("removalMode") or ""
     ).strip().lower()
@@ -297,16 +341,23 @@ def create_backing_track(payload: dict):
             ),
         )
 
-    if not audio_url.startswith(("https://", "http://")):
+    try:
+        validate_blob_source(audio_url, pathname)
+    except ValueError as error:
         raise HTTPException(
             status_code=400,
-            detail="A valid audioUrl is required.",
+            detail=str(error),
+        ) from error
+
+    if not blob_token:
+        raise HTTPException(
+            status_code=400,
+            detail="Private Blob authorization is required.",
         )
 
-    headers: dict[str, str] = {}
-
-    if blob_token:
-        headers["Authorization"] = f"Bearer {blob_token}"
+    headers = {
+        "Authorization": f"Bearer {blob_token}",
+    }
 
     with tempfile.TemporaryDirectory() as temp_dir:
         root = Path(temp_dir)
@@ -368,6 +419,7 @@ def create_backing_track(payload: dict):
                 "Cache-Control": "private, no-store, max-age=0",
                 "X-BTS-Removal-Mode": removal_mode,
                 "X-BTS-Separator-Model": DEMUCS_6S_MODEL,
+                "X-BTS-Compute": "cpu",
             },
         )
 
@@ -380,6 +432,7 @@ if __name__ == "__main__":
                 "model": DEMUCS_6S_MODEL,
                 "removalModes": sorted(REMOVAL_MODES),
                 "waveformSeparation": True,
+                "compute": "cpu-only",
                 "productionModified": False,
             },
             indent=2,
