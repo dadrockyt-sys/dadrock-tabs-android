@@ -1,0 +1,94 @@
+{
+  "schema": "dadrock.tabs.v165.score-preregistration.v1",
+  "version": "V165",
+  "status": "SEALED_BEFORE_SCORER_OR_PROFESSIONAL_REFERENCE_READ",
+  "validation": "PASS",
+  "branch": "v143-contextual-prune-lobo",
+  "createdFromBranchHead": "45febfbdd163ff77ba6ed7dd625119bd8cd3107e",
+  "purpose": "Authorize one read-only professional-reference scoring opportunity for the already frozen authoritative V165 candidate, without permitting any generation repair, retuning, regeneration, re-QC, threshold sweep, variant selection, or human correction.",
+  "authoritativeCandidate": {
+    "path": "debug/v165-cpu-autonomous/generated.json",
+    "gitBlob": "e70a444cb7778a6f56988cf8cc69dccb9c1d89ce",
+    "sha256": "b1ad02001724750ea82d693591a7c0b1f214820de37a590871a6d78eef63e5cb",
+    "combinedGuitarCount": 1043,
+    "bassCount": 405
+  },
+  "generationTerminal": {
+    "commit": "97c2efe6acf988a4535de1fff449194b7b2f7c2b",
+    "terminalFreezeGitBlob": "857153fdaedd3c386d5802277cf60e68ae231dc6",
+    "generationRunId": 33223256331,
+    "generationRunNumber": 1,
+    "generationRunAttempt": 1,
+    "generationJobId": 99021632117,
+    "outcome": "STRUCTURAL_QC_PASS",
+    "candidateAuthoritative": true,
+    "neverRearmV165": true
+  },
+  "structuralQc": {
+    "gitBlob": "f411e6c98b8ae33ba6f545d1b4dea12c80019a94",
+    "sha256": "af2f88975b9681e256c01ca14586bc4dd50d8229dc455df057b2ffb75cc2cc57",
+    "validation": "PASS",
+    "errors": []
+  },
+  "fixedQualityGates": {
+    "guitarF1Minimum": 0.8,
+    "bassF1Minimum": 0.8,
+    "gateRule": "both_must_pass",
+    "frozenBeforeScorerOrReferenceRead": true
+  },
+  "scoreIdentityBoundary": {
+    "identityReceiptPath": "debug/v165-cpu-autonomous/score-identity-receipt.json",
+    "receiptMustNotExistAtPreregistrationSeal": true,
+    "scorerMayBeOpenedOnlyAfterThisPreregistrationCommit": true,
+    "professionalReferenceMayBeOpenedOnlyAfterThisPreregistrationCommit": true,
+    "identityVerificationMustBeReadOnly": true,
+    "scorerMustPreexistThisPreregistration": true,
+    "professionalReferenceMustPreexistThisPreregistration": true,
+    "scorerAndReferenceMustBeHashPinnedBeforeScoreExecution": true,
+    "scoreWorkflowMustNotExistUntilIdentityReceiptIsSealed": true
+  },
+  "soleScoreBoundary": {
+    "maximumScoreRuns": 1,
+    "maximumScoreAttempts": 1,
+    "rerunForbidden": true,
+    "duplicateRunForbidden": true,
+    "secondScoreOpportunityForbidden": true,
+    "candidateWriteForbidden": true,
+    "candidateRepairForbidden": true,
+    "candidateRetuneForbidden": true,
+    "candidateRegenerationForbidden": true,
+    "candidateReQcForbidden": true,
+    "thresholdSweepForbidden": true,
+    "variantSelectionForbidden": true,
+    "humanCorrectionForbidden": true,
+    "scoreInformedFollowupRepairForbidden": true,
+    "scoreMustBeReadOnlyAgainstExactCandidateHash": true,
+    "terminalScoreFreezeRequired": true,
+    "scoreWorkflowSelfDeleteRequired": true,
+    "branchWritesWhileScoreActiveForbidden": true
+  },
+  "referenceUsePolicy": {
+    "professionalReferenceUsePermittedOnlyForSoleAggregateScore": true,
+    "eventLevelMiningForbidden": true,
+    "measureLevelMiningForbidden": true,
+    "referenceGuidedFilteringForbidden": true,
+    "referenceGuidedCandidateSelectionForbidden": true,
+    "referenceDerivedRetuningForbidden": true,
+    "onlyAggregatePredeclaredScoreOutputsMayBeRetained": true
+  },
+  "safetyAtSeal": {
+    "professionalReferenceRead": false,
+    "professionalReferencePathsOpened": 0,
+    "frozenScorerRead": false,
+    "referenceFacingScoreCalls": 0,
+    "V163CandidateRead": false,
+    "V163ScoreRead": false,
+    "V164RuntimeArtifactRead": false,
+    "V165CandidateModified": false,
+    "gpuUsed": false,
+    "cudaUsed": false,
+    "modalUsed": false,
+    "mainOrProductionModified": false
+  },
+  "nextAction": "After this file is committed, perform read-only discovery/identity verification of the pre-existing frozen scorer and professional reference, seal their exact paths and hashes in score-identity-receipt.json, then separately arm exactly one read-only CPU score workflow. Do not score before the identity receipt is sealed."
+}
