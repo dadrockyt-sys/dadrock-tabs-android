@@ -1,0 +1,172 @@
+name: V167 post-recurrence phrase consistency diagnosis
+
+on:
+  push:
+    branches:
+      - v143-contextual-prune-lobo
+    paths:
+      - .github/workflows/v167-post-recurrence-phrase-consistency-analysis.yml
+
+permissions:
+  contents: write
+
+concurrency:
+  group: v167-post-recurrence-phrase-consistency-once
+  cancel-in-progress: false
+
+env:
+  BRANCH: v143-contextual-prune-lobo
+  EXPECTED_PARENT_HEAD: b0cb0698f3a3118cecff4f819fd4f3428983a6cd
+  I003: debug/v167-single-song-calibration/iteration-003-generated.json
+  I005: debug/v167-single-song-calibration/iteration-005-generated.json
+  RECURRENCE_REPORT: debug/v167-single-song-calibration/temporal-recurrence-guitar-sweep.json
+  TEMPORAL_DIAGNOSIS: debug/v167-single-song-calibration/post-topology-temporal-recurrence-analysis.json
+  ANALYZER: validation/v167_single_song_calibration/analyze_post_recurrence_phrase_consistency_v167.py
+  OUTPUT: debug/v167-single-song-calibration/post-recurrence-phrase-consistency-analysis.json
+  RECEIPT: debug/v167-single-song-calibration/post-recurrence-phrase-consistency-analysis-receipt.json
+  CUDA_VISIBLE_DEVICES: ""
+  PYTHONHASHSEED: "0"
+  OMP_NUM_THREADS: "1"
+  MKL_NUM_THREADS: "1"
+  OPENBLAS_NUM_THREADS: "1"
+  NUMEXPR_NUM_THREADS: "1"
+
+jobs:
+  analyze-once:
+    if: github.ref == 'refs/heads/v143-contextual-prune-lobo'
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - name: Checkout exact phrase diagnosis arm
+        uses: actions/checkout@v4
+        with:
+          ref: ${{ github.sha }}
+          fetch-depth: 0
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.10.21'
+
+      - name: Verify reference-blind phrase diagnosis boundary
+        shell: bash
+        run: |
+          set -euo pipefail
+          test "$GITHUB_EVENT_NAME" = "push"
+          test "$GITHUB_RUN_ATTEMPT" = "1"
+          test "$(git rev-parse HEAD^)" = "$EXPECTED_PARENT_HEAD"
+          test "$(git diff --name-only "$EXPECTED_PARENT_HEAD" "$GITHUB_SHA")" = ".github/workflows/v167-post-recurrence-phrase-consistency-analysis.yml"
+          git fetch origin "$BRANCH"
+          test "$(git rev-parse "origin/$BRANCH")" = "$GITHUB_SHA"
+
+          test "$(git hash-object "$I003")" = "758f8762632e916306aed9b036a6483af9431dc0"
+          test "$(git hash-object "$I005")" = "8d68f4d7fac4e094bcd617b026befddd370d9368"
+          test "$(git hash-object "$RECURRENCE_REPORT")" = "1d31573afc5d4774a6022b9438088577232e63c6"
+          test "$(git hash-object "$TEMPORAL_DIAGNOSIS")" = "42a4d4bd9c016b5aee74a14eea4b78fb601a6b6e"
+          test "$(git hash-object "$ANALYZER")" = "5e5003e87ad7619e4ce352cbc60608db197e3690"
+          test "$(git hash-object docs/checkpoints/CURRENT_STATE.md)" = "374639f04ebf941e8ad1967d51ab7509ca27a371"
+
+          test ! -e "$OUTPUT"
+          test ! -e "$RECEIPT"
+          python -m py_compile "$ANALYZER"
+
+          python - <<'PY'
+          from pathlib import Path
+          text = Path('validation/v167_single_song_calibration/analyze_post_recurrence_phrase_consistency_v167.py').read_text()
+          for forbidden in ('frontend-reference-payload.json', 'score_frontend_reference.py', '--reference', '--scorer-code'):
+              assert forbidden not in text, forbidden
+          assert 'newRuleSelectedByThisAnalysis' in text
+          assert 'closedRecurrenceFamilyRetuned' in text
+          PY
+
+      - name: Analyze phrase and metrical consistency without reference
+        shell: bash
+        run: |
+          set -euo pipefail
+          python "$ANALYZER" \
+            --i003 "$I003" \
+            --i005 "$I005" \
+            --recurrence-report "$RECURRENCE_REPORT" \
+            --temporal-diagnosis "$TEMPORAL_DIAGNOSIS" \
+            --output "$OUTPUT"
+
+          python - <<'PY'
+          import json
+          analysis = json.load(open('debug/v167-single-song-calibration/post-recurrence-phrase-consistency-analysis.json'))
+          assert analysis['status'] == 'POST_RECURRENCE_PHRASE_CONSISTENCY_REFERENCE_BLIND_ANALYSIS_FROZEN'
+          assert analysis['policy']['professionalReferenceReadByAnalysis'] is False
+          assert analysis['policy']['scorerReadByAnalysis'] is False
+          assert analysis['policy']['newReferenceFacingScoreCalls'] == 0
+          assert analysis['policy']['perEventReferenceMatchAssignmentsRead'] is False
+          assert analysis['policy']['individualEventCorrectnessInferred'] is False
+          assert analysis['policy']['closedRecurrenceFamilyRetuned'] is False
+          assert analysis['policy']['newRuleSelectedByThisAnalysis'] is False
+          assert len(analysis['selectedRowsReferenceBlind']) == 48
+          print(json.dumps({
+              'metrical': analysis['metricalStructure'],
+              'phrase': {
+                  'additionsInRepeatedExactContextGroups': analysis['phraseContextStructure']['additionsInRepeatedExactContextGroups'],
+                  'additionsInRepeatedRelativeContextGroups': analysis['phraseContextStructure']['additionsInRepeatedRelativeContextGroups'],
+                  'largestExactContextGroup': analysis['phraseContextStructure']['largestExactContextGroup'],
+                  'largestRelativeContextGroup': analysis['phraseContextStructure']['largestRelativeContextGroup'],
+                  'repeatedExactContextGroupCount': analysis['phraseContextStructure']['repeatedExactContextGroupCount'],
+                  'repeatedRelativeContextGroupCount': analysis['phraseContextStructure']['repeatedRelativeContextGroupCount'],
+              },
+          }, indent=2, sort_keys=True))
+          PY
+
+      - name: Freeze phrase diagnosis receipt and self-seal
+        shell: bash
+        run: |
+          set -euo pipefail
+          python - <<'PY'
+          import hashlib
+          import json
+          import os
+          import subprocess
+          from pathlib import Path
+
+          output = Path('debug/v167-single-song-calibration/post-recurrence-phrase-consistency-analysis.json')
+          receipt_path = Path('debug/v167-single-song-calibration/post-recurrence-phrase-consistency-analysis-receipt.json')
+          analysis = json.loads(output.read_text())
+          receipt = {
+              'schema': 'dadrock.tabs.v167.post-recurrence-phrase-consistency-analysis-receipt.v1',
+              'version': 'V167',
+              'status': 'POST_RECURRENCE_PHRASE_CONSISTENCY_ANALYSIS_FROZEN',
+              'classification': 'SINGLE_SONG_TRAINING_CALIBRATION_ONLY',
+              'workflowRunId': int(os.environ['GITHUB_RUN_ID']),
+              'workflowRunNumber': int(os.environ['GITHUB_RUN_NUMBER']),
+              'workflowRunAttempt': int(os.environ['GITHUB_RUN_ATTEMPT']),
+              'workflowHeadSha': os.environ['GITHUB_SHA'],
+              'analysisSha256': hashlib.sha256(output.read_bytes()).hexdigest(),
+              'analysisGitBlob': subprocess.check_output(['git', 'hash-object', str(output)], text=True).strip(),
+              'implementation': {
+                  'analyzerGitBlob': '5e5003e87ad7619e4ce352cbc60608db197e3690',
+              },
+              'inputs': analysis['inputs'],
+              'summary': {
+                  'additionCount': len(analysis['selectedRowsReferenceBlind']),
+                  'sameMidiSamePhaseBaseSupport': analysis['metricalStructure']['additionsWithAtLeastOneImmutableBaseSameMidiSamePhaseOccurrence'],
+                  'sameMidiSamePhaseBaseSupport2Plus': analysis['metricalStructure']['additionsWithAtLeastTwoImmutableBaseSameMidiSamePhaseOccurrences'],
+                  'additionsInRepeatedExactContextGroups': analysis['phraseContextStructure']['additionsInRepeatedExactContextGroups'],
+                  'additionsInRepeatedRelativeContextGroups': analysis['phraseContextStructure']['additionsInRepeatedRelativeContextGroups'],
+                  'largestExactContextGroup': analysis['phraseContextStructure']['largestExactContextGroup'],
+                  'largestRelativeContextGroup': analysis['phraseContextStructure']['largestRelativeContextGroup'],
+              },
+              'policy': analysis['policy'],
+          }
+          receipt_path.write_text(json.dumps(receipt, indent=2, sort_keys=True) + '\n')
+          PY
+
+          rm .github/workflows/v167-post-recurrence-phrase-consistency-analysis.yml
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add -A -- "$OUTPUT" "$RECEIPT" .github/workflows/v167-post-recurrence-phrase-consistency-analysis.yml
+          changed="$(git diff --cached --name-only)"
+          if echo "$changed" | grep -Ev '^debug/v167-single-song-calibration/post-recurrence-phrase-consistency-analysis(-receipt)?\.json$|^\.github/workflows/v167-post-recurrence-phrase-consistency-analysis\.yml$'; then
+            echo 'Unexpected post-recurrence phrase diagnosis path' >&2
+            exit 1
+          fi
+          test "$(printf '%s\n' "$changed" | sed '/^$/d' | wc -l)" -eq 3
+          git commit -m "research: freeze V167 post-recurrence phrase consistency diagnosis [skip ci]"
+          git push origin HEAD:"$BRANCH"
