@@ -1,5 +1,6 @@
 name: Deploy BTS Modal Worker
 
+# Redeploy BTS worker when its separation runtime changes.
 on:
   workflow_dispatch:
   push:
