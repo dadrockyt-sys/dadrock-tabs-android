@@ -1,0 +1,50 @@
+{
+  "candidate": {
+    "gitBlob": "e70a444cb7778a6f56988cf8cc69dccb9c1d89ce",
+    "sha256": "b1ad02001724750ea82d693591a7c0b1f214820de37a590871a6d78eef63e5cb"
+  },
+  "gates": {
+    "bassF1Minimum": 0.8,
+    "bassPass": false,
+    "bothPass": false,
+    "combinedGuitarF1Minimum": 0.8,
+    "combinedGuitarPass": false
+  },
+  "outcome": "SCORE_GATE_FAIL",
+  "policy": {
+    "aggregateOutputOnly": true,
+    "candidateMutation": false,
+    "candidateRepair": false,
+    "humanCorrection": false,
+    "postScoreRetuneOrRescoreForbidden": true,
+    "singleFrozenScorerExecution": true,
+    "thresholdSweep": false,
+    "variantSelection": false
+  },
+  "primaryTimingAwarePitch": {
+    "bass": {
+      "f1": 0.21638655462184872,
+      "generated": 405,
+      "matched": 103,
+      "precision": 0.254320987654321,
+      "recall": 0.1882998171846435,
+      "reference": 547
+    },
+    "combinedGuitar": {
+      "f1": 0.059934318555008206,
+      "generated": 1043,
+      "matched": 73,
+      "precision": 0.06999041227229147,
+      "recall": 0.0524048815506102,
+      "reference": 1393
+    }
+  },
+  "professionalReferenceGitBlob": "2fbed60b543c0488934d8642c488aa06bf31bbf5",
+  "schema": "dadrock.tabs.v165.aggregate-professional-reference-score.v1",
+  "scorerGitBlob": "9644e65719fbd361a9b39778ae9950c5e983e855",
+  "song": {
+    "artist": "Lenny Kravitz",
+    "title": "Are You Gonna Go My Way"
+  },
+  "version": "V165"
+}
