@@ -1,0 +1,64 @@
+{
+  "schema": "dadrock.tabs.v167.single-song-calibration-manifest.v1",
+  "version": "V167",
+  "status": "CALIBRATION_LANE_OPEN",
+  "validation": "PASS",
+  "branch": "v143-contextual-prune-lobo",
+  "song": {
+    "artist": "Lenny Kravitz",
+    "title": "Are You Gonna Go My Way",
+    "sourceCommit": "74b0f815ff3f66f325220975c410621503de440f",
+    "sourcePath": "public/gomywayfullaitest.m4a",
+    "sourceSha256": "215bd5a657c5326f08f132ae358595a95c30b39bb7493a52c2f910d5a608149f"
+  },
+  "startingCandidate": {
+    "sourceVersion": "V166",
+    "path": "debug/v166-cpu-autonomous/generated.json",
+    "gitBlob": "c36a4d1e14ca66235b51a866ad3908322834efff",
+    "sha256": "fa2411598b401f745eff49a9cbda294ed767de093c905909531c7dd4dc6eb378",
+    "guitarEvents": 1050,
+    "bassEvents": 402,
+    "terminalCommit": "7f5f5f19f6ec413fc772a9839be5497ecb2790e3",
+    "generationRunId": 33226705813,
+    "structuralQc": "PASS"
+  },
+  "frozenScorer": {
+    "path": "validation/v154_cpu_multitrack/score_frontend_reference.py",
+    "gitBlob": "9644e65719fbd361a9b39778ae9950c5e983e855",
+    "primaryToleranceGridSteps": 0.5,
+    "grossToleranceGridSteps": 2.0
+  },
+  "professionalReference": {
+    "path": "research/v154-professional-references/scorer-ready/frontend-reference-payload.json",
+    "gitBlob": "2fbed60b543c0488934d8642c488aa06bf31bbf5",
+    "sha256": "b39a203aec3f45800891fe4eca156e37e7571b91ea5c4ccc41b30bbc95fc89e7",
+    "combinedGuitarEvents": 1393,
+    "bassEvents": 547,
+    "privateCalibrationOnly": true
+  },
+  "methodology": {
+    "label": "SINGLE_SONG_TRAINING_CALIBRATION",
+    "goal": "Drive this fixed song as close to 100 percent as practical under the frozen scorer while improving deterministic transcription behavior.",
+    "referenceAndScorerDiagnosticsAllowed": true,
+    "scoreInformedIterationAllowed": true,
+    "thresholdExperimentsAllowed": true,
+    "variantComparisonAllowed": true,
+    "eventLevelErrorAnalysisAllowed": true,
+    "directReferenceCopyIntoCandidateForbidden": true,
+    "manualAnswerKeySubstitutionForbidden": true,
+    "algorithmicOrDeterministicChangesRequired": true,
+    "calibrationScoreMustNotBeClaimedAsGeneralization": true,
+    "laterUntouchedHoldoutRequired": true
+  },
+  "scorePresentation": {
+    "immediateRecognitionPercent": "frozen scorer primaryTimingAwarePitch.f1 * 100",
+    "targets": [50, 70, 85, 95, 100],
+    "oneHundredMeaning": "100 percent on this one calibration song under the frozen scorer, not universal transcription accuracy"
+  },
+  "runtime": {
+    "cpuWorkAuthorized": true,
+    "gpuCudaModalRequiresFreshExplicitAuthorization": true,
+    "mainOrProductionModificationForbiddenWithoutExplicitDirection": true
+  },
+  "nextAction": "Create and run a read-only baseline scorer plus error-bucket diagnostic against the frozen V166 starting candidate."
+}
