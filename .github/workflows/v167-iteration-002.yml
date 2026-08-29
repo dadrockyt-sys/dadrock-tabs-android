@@ -1,0 +1,187 @@
+name: V167 calibration iteration 002 audio-evidence timing rules
+
+on:
+  push:
+    branches:
+      - v143-contextual-prune-lobo
+    paths:
+      - .github/workflows/v167-iteration-002.yml
+
+permissions:
+  contents: write
+
+concurrency:
+  group: v167-calibration-iteration-002-once
+  cancel-in-progress: false
+
+env:
+  BRANCH: v143-contextual-prune-lobo
+  EXPECTED_PARENT_HEAD: 92c88fb1b212c9ea450336afd03b285355dba8af
+  SOURCE: debug/v167-single-song-calibration/iteration-001-generated.json
+  SWEEP: debug/v167-single-song-calibration/step-rule-sweep.json
+  RULE_CODE: validation/v167_single_song_calibration/step_rule_sweep_v167.py
+  TRANSFORM: validation/v167_single_song_calibration/apply_step_rules_v167.py
+  DIAGNOSTIC: validation/v167_single_song_calibration/diagnose_v167.py
+  SCORER: validation/v154_cpu_multitrack/score_frontend_reference.py
+  REFERENCE: research/v154-professional-references/scorer-ready/frontend-reference-payload.json
+  OUTPUT_CANDIDATE: debug/v167-single-song-calibration/iteration-002-generated.json
+  OUTPUT_SCORE: debug/v167-single-song-calibration/iteration-002-score.json
+  OUTPUT_DIAGNOSTIC: debug/v167-single-song-calibration/iteration-002-diagnostic.json
+  OUTPUT_RECEIPT: debug/v167-single-song-calibration/iteration-002-receipt.json
+
+jobs:
+  calibrate:
+    if: github.ref == 'refs/heads/v143-contextual-prune-lobo'
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - name: Checkout exact iteration 002 arm
+        uses: actions/checkout@v4
+        with:
+          ref: ${{ github.sha }}
+          fetch-depth: 0
+
+      - name: Verify frozen iteration 002 identities
+        shell: bash
+        run: |
+          set -euo pipefail
+          test "$GITHUB_EVENT_NAME" = "push"
+          test "$GITHUB_RUN_NUMBER" = "1"
+          test "$GITHUB_RUN_ATTEMPT" = "1"
+          test "$(git rev-parse HEAD^)" = "$EXPECTED_PARENT_HEAD"
+          test "$(git diff --name-only "$EXPECTED_PARENT_HEAD" "$GITHUB_SHA")" = ".github/workflows/v167-iteration-002.yml"
+          git fetch origin "$BRANCH"
+          test "$(git rev-parse "origin/$BRANCH")" = "$GITHUB_SHA"
+          test "$(git hash-object "$SOURCE")" = "1b73d6ece977fb976fa1c503997e6434d4e4811a"
+          test "$(git hash-object "$SWEEP")" = "2096d3caa58b6ce7d6ab57aeaa7512989e2e4acd"
+          test "$(git hash-object "$RULE_CODE")" = "14cac9e217f65f72933c72ee349523ca9681fc21"
+          test "$(git hash-object "$TRANSFORM")" = "00dc94081117664890d1dc5539bf5e69fedf76fa"
+          test "$(git hash-object "$DIAGNOSTIC")" = "04affbbf88b66264b0b7b2a4dedd27da5c55f632"
+          test "$(git hash-object "$SCORER")" = "9644e65719fbd361a9b39778ae9950c5e983e855"
+          test "$(git hash-object "$REFERENCE")" = "2fbed60b543c0488934d8642c488aa06bf31bbf5"
+          for p in "$OUTPUT_CANDIDATE" "$OUTPUT_SCORE" "$OUTPUT_DIAGNOSTIC" "$OUTPUT_RECEIPT"; do test ! -e "$p"; done
+          python - <<'PY'
+          import json
+          s=json.load(open('debug/v167-single-song-calibration/step-rule-sweep.json'))
+          assert s['combinedGuitar']['best']['rule']=='max_score_x_shared'
+          assert s['bass']['best']['rule']=='max_score_x_mean_support'
+          assert s['policy']['referenceSelectsIndividualEventAlternative'] is False
+          PY
+
+      - name: Apply reference-blind iteration 002 transform
+        shell: bash
+        run: |
+          set -euo pipefail
+          python "$TRANSFORM" \
+            --input "$SOURCE" \
+            --sweep "$SWEEP" \
+            --rule-code "$RULE_CODE" \
+            --output "$OUTPUT_CANDIDATE" \
+            --input-blob 1b73d6ece977fb976fa1c503997e6434d4e4811a \
+            --sweep-blob 2096d3caa58b6ce7d6ab57aeaa7512989e2e4acd \
+            --rule-code-blob 14cac9e217f65f72933c72ee349523ca9681fc21
+          python - <<'PY'
+          import json
+          c=json.load(open('debug/v167-single-song-calibration/iteration-002-generated.json'))
+          assert c['calibration']['iteration']==2
+          assert c['calibration']['professionalReferenceReadByTransform'] is False
+          assert c['calibration']['directReferenceEventCopy'] is False
+          assert c['calibration']['midiChanged'] is False
+          assert c['calibration']['scoredEventCardinalityChanged'] is False
+          g=c['calibration']['streamSummaries']['combinedGuitar']
+          b=c['calibration']['streamSummaries']['bass']
+          assert g['movedEvents']==266 and g['eventCount']==1050
+          assert b['movedEvents']==15 and b['eventCount']==402
+          PY
+
+      - name: Score and diagnose iteration 002
+        shell: bash
+        run: |
+          set -euo pipefail
+          python "$DIAGNOSTIC" \
+            --candidate "$OUTPUT_CANDIDATE" \
+            --reference "$REFERENCE" \
+            --scorer "$SCORER" \
+            --score-output "$OUTPUT_SCORE" \
+            --diagnostic-output "$OUTPUT_DIAGNOSTIC"
+          python - <<'PY'
+          import json
+          d=json.load(open('debug/v167-single-song-calibration/iteration-002-diagnostic.json'))
+          g=d['recognitionPercent']['combinedGuitar']
+          b=d['recognitionPercent']['bass']
+          assert abs(g-41.9156774457634) < 1e-9, g
+          assert abs(b-71.86512118018967) < 1e-9, b
+          print('Iteration 002 Guitar %',g)
+          print('Iteration 002 Bass %',b)
+          PY
+
+      - name: Freeze iteration 002 and self-seal
+        shell: bash
+        run: |
+          set -euo pipefail
+          python - <<'PY'
+          import hashlib,json,os,subprocess
+          from pathlib import Path
+          def sha(path): return hashlib.sha256(Path(path).read_bytes()).hexdigest()
+          def blob(path): return subprocess.check_output(['git','hash-object',path],text=True).strip()
+          c=json.load(open('debug/v167-single-song-calibration/iteration-002-generated.json'))
+          d=json.load(open('debug/v167-single-song-calibration/iteration-002-diagnostic.json'))
+          receipt={
+            'schema':'dadrock.tabs.v167.single-song-calibration-iteration-receipt.v1',
+            'version':'V167','iteration':2,'status':'ITERATION_FROZEN',
+            'label':'SINGLE_SONG_TRAINING_CALIBRATION',
+            'workflowRunId':int(os.environ['GITHUB_RUN_ID']),
+            'workflowRunNumber':int(os.environ['GITHUB_RUN_NUMBER']),
+            'workflowRunAttempt':int(os.environ['GITHUB_RUN_ATTEMPT']),
+            'workflowHeadSha':os.environ['GITHUB_SHA'],
+            'change':{
+              'type':'stored_audio_evidence_whole_stream_step_rules',
+              'combinedGuitarRule':'max_score_x_shared',
+              'bassRule':'max_score_x_mean_support',
+              'globalPhaseCorrectionGridSteps':-12,
+              'guitarMovedEvents':c['calibration']['streamSummaries']['combinedGuitar']['movedEvents'],
+              'bassMovedEvents':c['calibration']['streamSummaries']['bass']['movedEvents']
+            },
+            'recognitionPercent':d['recognitionPercent'],
+            'artifacts':{
+              'candidateGitBlob':blob('debug/v167-single-song-calibration/iteration-002-generated.json'),
+              'candidateSha256':sha('debug/v167-single-song-calibration/iteration-002-generated.json'),
+              'scoreGitBlob':blob('debug/v167-single-song-calibration/iteration-002-score.json'),
+              'scoreSha256':sha('debug/v167-single-song-calibration/iteration-002-score.json'),
+              'diagnosticGitBlob':blob('debug/v167-single-song-calibration/iteration-002-diagnostic.json'),
+              'diagnosticSha256':sha('debug/v167-single-song-calibration/iteration-002-diagnostic.json')
+            },
+            'provenance':{
+              'parentCandidateGitBlob':'1b73d6ece977fb976fa1c503997e6434d4e4811a',
+              'stepRuleSweepGitBlob':'2096d3caa58b6ce7d6ab57aeaa7512989e2e4acd',
+              'stepRuleCodeGitBlob':'14cac9e217f65f72933c72ee349523ca9681fc21',
+              'transformGitBlob':'00dc94081117664890d1dc5539bf5e69fedf76fa',
+              'diagnosticGitBlob':'04affbbf88b66264b0b7b2a4dedd27da5c55f632',
+              'scorerGitBlob':'9644e65719fbd361a9b39778ae9950c5e983e855',
+              'professionalReferenceGitBlob':'2fbed60b543c0488934d8642c488aa06bf31bbf5'
+            },
+            'policy':{
+              'calibrationOnly':True,
+              'referenceFacingScore':True,
+              'transformReadProfessionalReference':False,
+              'referenceSelectedWholeRuleOnly':True,
+              'referenceSelectedIndividualEventAlternative':False,
+              'directReferenceCopy':False,'humanCorrection':False,
+              'midiChanged':False,'eventCardinalityChanged':False,
+              'gpuCudaModalUsed':False,'mainOrProductionModified':False,
+              'generalizationClaim':False
+            }
+          }
+          Path('debug/v167-single-song-calibration/iteration-002-receipt.json').write_text(json.dumps(receipt,indent=2,sort_keys=True)+'\n')
+          PY
+          rm .github/workflows/v167-iteration-002.yml
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add -A -- debug/v167-single-song-calibration .github/workflows/v167-iteration-002.yml
+          changed="$(git diff --cached --name-only)"
+          if echo "$changed" | grep -Ev '^debug/v167-single-song-calibration/(iteration-002-generated\.json|iteration-002-score\.json|iteration-002-diagnostic\.json|iteration-002-receipt\.json)$|^\.github/workflows/v167-iteration-002\.yml$'; then
+            echo 'Unexpected V167 iteration 002 path' >&2
+            exit 1
+          fi
+          git commit -m "research: freeze V167 calibration iteration 002 audio-evidence timing rules [skip ci]"
+          git push origin HEAD:"$BRANCH"
