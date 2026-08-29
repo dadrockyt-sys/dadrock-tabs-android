@@ -1,0 +1,86 @@
+{
+  "classification": "SINGLE_SONG_TRAINING_CALIBRATION_ONLY",
+  "inputs": {
+    "baseBuilderGitBlob": "24413d321f64bbfcce48812ceb85b4593dcfa80c",
+    "evidencePoolGitBlob": "aa7da3a55344b1418a291f30fab9ca55858fc094",
+    "evidencePoolSha256": "1c983784c2d12a22437a80387525789bcf55a2f4e4a5c7a96608c575bf709673",
+    "iteration002GitBlob": "7eba73700116ceeca580a8851abe399aed764834",
+    "iteration002Sha256": "96fbc329d9ba46b06d430c7c3c7b7f5b0e9077f6e133da5c3165c1fde609b5cc",
+    "rearmBuilderGitBlob": "fbbee07493084792912c774d375ca5011672891f",
+    "sweepManifestGitBlob": "0ee153dbf1004d921c586516bca91e52f7bb1fde",
+    "sweepManifestSha256": "c91ee15d702746e082c059b5f99c44fcfa7a89f18e5e9f2fc81eb6513d1baa80",
+    "sweepReportGitBlob": "324f1f4e68951ac8653c51c8a436e4d35e5dc16b",
+    "sweepReportSha256": "1bcc5eca05df31270ff7ff638cca6def3166a0e5084c4874d70d710d4696836f",
+    "timebaseGitBlob": "abebae25801b7ddeb5b933977c4f4a918f7bf9ef",
+    "timebaseSha256": "899746d3048d239bc0032375d412a109ea04b055df19df1b7b08dc3e73aa5ca0"
+  },
+  "iteration003CandidateSha256": "f15c6f40dd4b8479c2dfb7eab039cff98a23b45eb796265ffad08c5a8ae37115",
+  "policy": {
+    "directReferenceEventCopy": false,
+    "generalizationClaim": false,
+    "gpuCudaModalUsed": false,
+    "individualEventSelectionByReference": false,
+    "mainOrProductionModified": false,
+    "newReferenceFacingScoreCalls": 0,
+    "postSweepRetuning": false,
+    "professionalReferenceReadByPromotion": false,
+    "scorerReadByPromotion": false
+  },
+  "schema": "dadrock.tabs.v167.iteration-003-promotion-proof.v1",
+  "selectedWinner": {
+    "config": {
+      "activitySupportMin": 0.1,
+      "baseline": false,
+      "existingEventsPreferred": true,
+      "fundamentalPresentRequired": true,
+      "id": "b-r975-o50-a10-low_register_no_stable_state",
+      "lowRegisterMaxMidi": 40,
+      "newRecoveryCapPerPreviouslyEmptyStep": 1,
+      "onsetSupportMin": 0.5,
+      "preExistingIteration002StepCollisionsPreserved": true,
+      "scope": "low_register_no_stable_state",
+      "stream": "bass",
+      "templateRankMin": 0.975
+    },
+    "frozenCandidateSha256": "2e04edd9cb61795ea9679ce899c7ded9549bb0f5d9f8e04a5d53fdf07ec9fa13",
+    "frozenMetrics": {
+      "falseNegative": 121,
+      "falsePositive": 86,
+      "generated": 512,
+      "grossF1": 0.8309726156751652,
+      "matched": 426,
+      "primaryF1": 0.8045325779036827,
+      "primaryPrecision": 0.83203125,
+      "primaryRecall": 0.7787934186471663,
+      "reference": 547,
+      "sameMeasurePitchContentF1": 0.8404154863078376
+    },
+    "generationSummary": {
+      "added": 110,
+      "eligible": 149,
+      "newRecoveryEventsAddedOnlyToPreviouslyEmptySteps": true,
+      "preExistingCollisionSteps": 4,
+      "preExistingCollisionsPreserved": true,
+      "sitesWithAdds": 110
+    },
+    "id": "b-r975-o50-a10-low_register_no_stable_state",
+    "reconstructedCandidateSha256": "2e04edd9cb61795ea9679ce899c7ded9549bb0f5d9f8e04a5d53fdf07ec9fa13"
+  },
+  "status": "ITERATION_003_NORMALIZED_STREAM_EQUALITY_PROVEN",
+  "streamProof": {
+    "bass": {
+      "iteration003Count": 512,
+      "normalizedEqualFrozenScoredWinner": true,
+      "parentCount": 402,
+      "preExistingRichEventDictionaryMultisetExactlyPreserved": true,
+      "recoveryAdditions": 110
+    },
+    "combinedGuitar": {
+      "iteration003Count": 1050,
+      "normalizedEqualFrozenScoredWinner": true,
+      "parentCount": 1050,
+      "parentRichListExactlyPreserved": true
+    }
+  },
+  "version": "V167"
+}
