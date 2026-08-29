@@ -1,0 +1,103 @@
+name: V167 shared eight-measure block phase sweep
+
+on:
+  push:
+    branches:
+      - v143-contextual-prune-lobo
+    paths:
+      - .github/workflows/v167-block-phase-sweep.yml
+
+permissions:
+  contents: write
+
+concurrency:
+  group: v167-block-phase-sweep-once
+  cancel-in-progress: false
+
+env:
+  BRANCH: v143-contextual-prune-lobo
+  EXPECTED_PARENT_HEAD: a5402d1749acb99f2ef274b75f000d28d98b2a9f
+  CANDIDATE: debug/v167-single-song-calibration/iteration-001-generated.json
+  REFERENCE: research/v154-professional-references/scorer-ready/frontend-reference-payload.json
+  SCORER: validation/v154_cpu_multitrack/score_frontend_reference.py
+  SWEEP_CODE: validation/v167_single_song_calibration/block_phase_sweep_v167.py
+  OUTPUT: debug/v167-single-song-calibration/block-phase-sweep-8m.json
+
+jobs:
+  sweep:
+    if: github.ref == 'refs/heads/v143-contextual-prune-lobo'
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - name: Checkout exact block-sweep arm
+        uses: actions/checkout@v4
+        with:
+          ref: ${{ github.sha }}
+          fetch-depth: 0
+
+      - name: Verify frozen iteration 001 inputs
+        shell: bash
+        run: |
+          set -euo pipefail
+          test "$GITHUB_EVENT_NAME" = "push"
+          test "$GITHUB_RUN_NUMBER" = "1"
+          test "$GITHUB_RUN_ATTEMPT" = "1"
+          test "$(git rev-parse HEAD^)" = "$EXPECTED_PARENT_HEAD"
+          test "$(git diff --name-only "$EXPECTED_PARENT_HEAD" "$GITHUB_SHA")" = ".github/workflows/v167-block-phase-sweep.yml"
+          git fetch origin "$BRANCH"
+          test "$(git rev-parse "origin/$BRANCH")" = "$GITHUB_SHA"
+          test "$(git hash-object "$CANDIDATE")" = "1b73d6ece977fb976fa1c503997e6434d4e4811a"
+          test "$(git hash-object "$REFERENCE")" = "2fbed60b543c0488934d8642c488aa06bf31bbf5"
+          test "$(git hash-object "$SCORER")" = "9644e65719fbd361a9b39778ae9950c5e983e855"
+          test "$(git hash-object "$SWEEP_CODE")" = "80e2d888c725bd739dbfc868186df56aff7cb3fc"
+          test ! -e "$OUTPUT"
+          python - <<'PY'
+          import json
+          c=json.load(open('debug/v167-single-song-calibration/iteration-001-generated.json'))
+          assert c['version']=='V167'
+          assert c['calibration']['iteration']==1
+          assert c['calibration']['transform']['shiftGridSteps']==-12
+          assert c['calibration']['directReferenceEventCopy'] is False
+          PY
+
+      - name: Run fixed shared block phase sweep
+        shell: bash
+        run: |
+          set -euo pipefail
+          python "$SWEEP_CODE" \
+            --candidate "$CANDIDATE" \
+            --reference "$REFERENCE" \
+            --scorer "$SCORER" \
+            --output "$OUTPUT"
+
+      - name: Freeze block phase sweep and self-seal
+        shell: bash
+        run: |
+          set -euo pipefail
+          python - <<'PY'
+          import json
+          r=json.load(open('debug/v167-single-song-calibration/block-phase-sweep-8m.json'))
+          assert r['version']=='V167'
+          assert r['parameters']['blockMeasures']==8
+          assert r['parameters']['additionalShiftMin']==-3
+          assert r['parameters']['additionalShiftMax']==3
+          assert r['parameters']['sharedShiftAcrossGuitarAndBass'] is True
+          assert r['policy']['candidateFileModified'] is False
+          assert r['policy']['eventByEventReferenceMove'] is False
+          assert r['policy']['directReferenceCopy'] is False
+          print(json.dumps({
+            'selectedNonzeroBlocks':r['selectedNonzeroBlocks'],
+            'projected':r['projectedCombinedMap']
+          },indent=2,sort_keys=True))
+          PY
+          rm .github/workflows/v167-block-phase-sweep.yml
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add -A -- "$OUTPUT" .github/workflows/v167-block-phase-sweep.yml
+          changed="$(git diff --cached --name-only)"
+          if echo "$changed" | grep -Ev '^debug/v167-single-song-calibration/block-phase-sweep-8m\.json$|^\.github/workflows/v167-block-phase-sweep\.yml$'; then
+            echo 'Unexpected V167 block-sweep path' >&2
+            exit 1
+          fi
+          git commit -m "research: freeze V167 shared 8-measure block phase sweep [skip ci]"
+          git push origin HEAD:"$BRANCH"
