@@ -1,0 +1,78 @@
+{
+  "artifacts": {
+    "candidate": {
+      "exists": true,
+      "gitBlob": "c36a4d1e14ca66235b51a866ad3908322834efff",
+      "sha256": "fa2411598b401f745eff49a9cbda294ed767de093c905909531c7dd4dc6eb378"
+    },
+    "environmentReceipt": {
+      "exists": true,
+      "gitBlob": "cec6af69f7fb0e35e25784c9cdcec5c8b5f907c1",
+      "sha256": "02336798484b20bc916259f1f8c226d853f5753a2840f4e628099c797651b6a7"
+    },
+    "generationReceipt": {
+      "exists": true,
+      "gitBlob": "14206b972bf9fbe2979a1bc19419ceca2822ebf2",
+      "sha256": "be330b09f67689646fe071090c59b5695fd8de7afe18ac4aa275f4877e1695c5"
+    },
+    "structuralQc": {
+      "exists": true,
+      "gitBlob": "97b8072a24321a435356694b9d1d3e6bbad998e5",
+      "sha256": "52e2382cabf6a0e1bdb3e81fb00074b4da566b5670d320215071c2b4fa30d80d"
+    },
+    "timebase": {
+      "exists": true,
+      "gitBlob": "abebae25801b7ddeb5b933977c4f4a918f7bf9ef",
+      "sha256": "899746d3048d239bc0032375d412a109ea04b055df19df1b7b08dc3e73aa5ca0"
+    },
+    "timebaseQc": {
+      "exists": true,
+      "gitBlob": "7c371d3ef3e6aa0b786671cffa023aed675a02b7",
+      "sha256": "3d239c073f5d11ee4b89e08eddf50d5fa082ec1cf3e16fb617f865dc9c0433a5"
+    }
+  },
+  "candidateAuthoritative": true,
+  "environmentReceiptGitBlob": "cec6af69f7fb0e35e25784c9cdcec5c8b5f907c1",
+  "generationWorkflowGitBlob": "6198db63c574cf922a56fd30fb829404dffc7173",
+  "lastCompletedStage": "STRUCTURAL_QC_PASS",
+  "neverRearmV166": true,
+  "outcome": "STRUCTURAL_QC_PASS",
+  "pairedWindow": {
+    "contractGitBlob": "9ab505ee8c7de732b6e9a8928854ae99d3ebb0c7",
+    "frameCount": 6,
+    "offsets": [
+      -1,
+      0,
+      1,
+      2,
+      3,
+      4
+    ]
+  },
+  "preRunIdentityReceiptGitBlob": "097d309d27f34ef0c02548b31a2440e3054aac00",
+  "professionalReferenceScoringAuthorized": false,
+  "safety": {
+    "V165CandidateRead": false,
+    "V165ScoreRead": false,
+    "cudaGpuUsed": false,
+    "frozenScorerRead": false,
+    "humanCorrection": false,
+    "mainOrProductionModified": false,
+    "modalUsed": false,
+    "priorGeneratedCandidateRead": false,
+    "priorScoreRead": false,
+    "professionalReferencePathsOpened": 0,
+    "referenceFacingScoreCalls": 0,
+    "referenceGuidedFiltering": false,
+    "referenceRead": false,
+    "thresholdSweep": false,
+    "variantSelection": false
+  },
+  "schema": "dadrock.tabs.v166.terminal-freeze.v1",
+  "status": "TERMINAL",
+  "version": "V166",
+  "workflowHeadSha": "1e06d775ee03ebf92fe8f68fc02cf034812ea43f",
+  "workflowRunAttempt": 1,
+  "workflowRunId": 33226705813,
+  "workflowRunNumber": 1
+}

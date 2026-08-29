@@ -1,0 +1,116 @@
+{
+  "candidatePath": "debug/v166-cpu-autonomous/generated.json",
+  "candidateSha256": "fa2411598b401f745eff49a9cbda294ed767de093c905909531c7dd4dc6eb378",
+  "counts": {
+    "bass": 402,
+    "combinedGuitar": 1050
+  },
+  "environment": {
+    "cudaAvailable": false,
+    "dependencyVersions": {
+      "basic-pitch": "0.4.0",
+      "demucs": "4.1.0",
+      "imageio-ffmpeg": "0.6.0",
+      "librosa": "0.11.0",
+      "numpy": "1.26.4",
+      "scipy": "1.13.1",
+      "soundfile": "0.12.1"
+    },
+    "determinism": {
+      "mathLibraryThreads": 1,
+      "seed": 0,
+      "torchDeterministicAlgorithms": true,
+      "torchNumInteropThreads": 1,
+      "torchNumThreads": 1
+    },
+    "device": "cpu",
+    "environmentWorkflowGitBlob": "fe4cfcb8b30a1a70d6bbc8d9a97b93a62a258be6",
+    "plannedSeparation": {
+      "device": "cpu",
+      "executedAtSeal": false,
+      "jobs": 1,
+      "model": "htdemucs_6s",
+      "repeatCount": 1,
+      "shifts": 1
+    },
+    "preRunIdentityReceiptGitBlob": "097d309d27f34ef0c02548b31a2440e3054aac00",
+    "pythonVersion": "3.10.21",
+    "safety": {
+      "V163CandidateRead": false,
+      "V163ScoreRead": false,
+      "V164RuntimeArtifactRead": false,
+      "V165CandidateRead": false,
+      "V165ScoreRead": false,
+      "cudaGpuUsed": false,
+      "demucsExecuted": false,
+      "frozenScorerRead": false,
+      "humanCorrection": false,
+      "mainOrProductionModified": false,
+      "modalUsed": false,
+      "normalizationExecuted": false,
+      "pitchInferenceExecuted": false,
+      "priorGeneratedCandidateRead": false,
+      "priorScoreRead": false,
+      "professionalReferencePathsOpened": 0,
+      "referenceFacingScoreCalls": 0,
+      "referenceGuidedFiltering": false,
+      "referenceRead": false,
+      "songAudioRead": false,
+      "thresholdSweep": false,
+      "variantSelection": false
+    },
+    "schema": "dadrock.tabs.v166.cpu-environment-receipt.v1",
+    "status": "VERIFIED_BEFORE_SONG_PROCESSING",
+    "torchCudaVersion": null,
+    "torchVersion": "2.8.0+cpu",
+    "validation": "PASS",
+    "version": "V166",
+    "workflowHeadSha": "a5fe0cca4e4aa40f19ec197997758174713b1b5c",
+    "workflowRunAttempt": 1,
+    "workflowRunId": 33226566787,
+    "workflowRunNumber": 1
+  },
+  "environmentReceiptSha256": "02336798484b20bc916259f1f8c226d853f5753a2840f4e628099c797651b6a7",
+  "evidenceStepCorrections": {
+    "bass": 6,
+    "combinedGuitar": 18
+  },
+  "implementation": {
+    "canonicalEntryPointGitBlob": "f04ca86525b2ce71680a90b84ed476943e9e6426",
+    "eventLogicGitBlob": "6561194742093d76bab452ef0bbb0b889724dc4e"
+  },
+  "implementationContractSha256": "cb48403bbb154fee90e2c3d62a00e1d0d96233b607726387a97f4d02df31d8f2",
+  "inputIdentities": {
+    "bassStemSha256": "4b34b2bc3367d9f8ed4dce39b95ad3d60c49d6541186df6b0d24a4211b03c7ef",
+    "drumsStemSha256": "05890ac9cad62eacf0099c962b137a458228811a85b8ea828bb15f238d2c1e50",
+    "guitarStemSha256": "4c71e9e15dd07e60a5442923b86523bafe4313056ca3c892054a607aa7e4e9d2",
+    "mixSha256": "3e61b7926eabc21b758c750f826c7426a29d6de5aafdd5c93f8045ecdc67f87e"
+  },
+  "preGridExcluded": {
+    "bass": 0,
+    "combinedGuitar": 0
+  },
+  "preRunReceiptSha256": "bd660d813347fb182add1408ae67245dd7c1bd86e05ba00121b01d7d238fce64",
+  "preregistrationSha256": "5dd81f331d89a57b4c3931ba67fe7d0a3ac474889d68a9613d36f8afcf15bf2b",
+  "safety": {
+    "V163CandidateRead": false,
+    "V163ScoreRead": false,
+    "cudaGpuUsed": false,
+    "humanCorrection": false,
+    "mainOrProductionModified": false,
+    "modalUsed": false,
+    "priorGeneratedCandidateRead": false,
+    "priorScoreRead": false,
+    "professionalReferencePathsOpened": 0,
+    "referenceFacingScoreCalls": 0,
+    "referenceGuidedFiltering": false,
+    "referenceRead": false,
+    "thresholdSweep": false,
+    "variantSelection": false
+  },
+  "schema": "dadrock.tabs.v166.cpu-generation-receipt.v1",
+  "timebaseQcSha256": "3d239c073f5d11ee4b89e08eddf50d5fa082ec1cf3e16fb617f865dc9c0433a5",
+  "timebaseSha256": "899746d3048d239bc0032375d412a109ea04b055df19df1b7b08dc3e73aa5ca0",
+  "validation": "PENDING_INDEPENDENT_STRUCTURAL_QC",
+  "version": "V166"
+}
