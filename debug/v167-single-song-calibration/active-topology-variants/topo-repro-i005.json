@@ -1,0 +1,9730 @@
+{
+  "safety": {
+    "V163CandidateRead": false,
+    "V163ScoreRead": false,
+    "aggregateFrozenScoreReportRead": true,
+    "cudaGpuUsed": false,
+    "directReferenceEventCopy": false,
+    "gpuCudaModalUsed": false,
+    "humanCorrection": false,
+    "individualEventSelectionByReference": false,
+    "mainOrProductionModified": false,
+    "modalUsed": false,
+    "newReferenceFacingScoreCalls": 0,
+    "newReferenceFacingScoreCallsByGenerator": 0,
+    "priorGeneratedCandidateRead": false,
+    "priorScoreRead": false,
+    "professionalReferencePathsOpened": 0,
+    "referenceFacingScoreCalls": 0,
+    "referenceGuidedFiltering": false,
+    "referenceRead": false,
+    "scorerRead": false,
+    "selectedWholeFrozenRuleOnly": true,
+    "thresholdSweep": false,
+    "tuningPerformedByPromotion": false,
+    "variantSelection": false
+  },
+  "schema": "dadrock.tabs.v167.active-topology-score-candidate.v1",
+  "song": {
+    "artist": "Lenny Kravitz",
+    "title": "Are You Gonna Go My Way"
+  },
+  "status": "PREDECLARED_ACTIVE_TOPOLOGY_VARIANT_FROZEN_BEFORE_SCORING",
+  "streams": {
+    "bass": [
+      {
+        "absoluteGridStep": 104,
+        "measure": 7,
+        "midi": 50,
+        "step": 8
+      },
+      {
+        "absoluteGridStep": 121,
+        "measure": 8,
+        "midi": 51,
+        "step": 9
+      },
+      {
+        "absoluteGridStep": 124,
+        "measure": 8,
+        "midi": 52,
+        "step": 12
+      },
+      {
+        "absoluteGridStep": 124,
+        "measure": 8,
+        "midi": 52,
+        "step": 12
+      },
+      {
+        "absoluteGridStep": 126,
+        "measure": 8,
+        "midi": 50,
+        "step": 14
+      },
+      {
+        "absoluteGridStep": 128,
+        "measure": 9,
+        "midi": 40,
+        "step": 0
+      },
+      {
+        "absoluteGridStep": 132,
+        "measure": 9,
+        "midi": 40,
+        "step": 4
+      },
+      {
+        "absoluteGridStep": 135,
+        "measure": 9,
+        "midi": 35,
+        "step": 7
+      },
+      {
+        "absoluteGridStep": 136,
+        "measure": 9,
+        "midi": 38,
+        "step": 8
+      },
+      {
+        "absoluteGridStep": 138,
+        "measure": 9,
+        "midi": 40,
+        "step": 10
+      },
+      {
+        "absoluteGridStep": 143,
+        "measure": 9,
+        "midi": 38,
+        "step": 15
+      },
+      {
+        "absoluteGridStep": 144,
+        "measure": 10,
+        "midi": 40,
+        "step": 0
+      },
+      {
+        "absoluteGridStep": 148,
+        "measure": 10,
+        "midi": 40,
+        "step": 4
+      },
+      {
+        "absoluteGridStep": 152,
+        "measure": 10,
+        "midi": 38,
+        "step": 8
+      },
+      {
+        "absoluteGridStep": 154,
+        "measure": 10,
+        "midi": 40,
+        "step": 10
+      },
+      {
+        "absoluteGridStep": 156,
+        "measure": 10,
+        "midi": 38,
+        "step": 12
+      },
+      {
+        "absoluteGridStep": 158,
+        "measure": 10,
+        "midi": 35,
+        "step": 14
+      },
+      {
+        "absoluteGridStep": 160,
+        "measure": 11,
+        "midi": 40,
+        "step": 0
+      },
+      {
+        "absoluteGridStep": 164,
+        "measure": 11,
+        "midi": 40,
+        "step": 4
+      },
+      {
+        "absoluteGridStep": 167,
+        "measure": 11,
+        "midi": 35,
+        "step": 7
+      },
+      {
+        "absoluteGridStep": 168,
+        "measure": 11,
+        "midi": 38,
+        "step": 8
+      },
+      {
+        "absoluteGridStep": 170,
+        "measure": 11,
+        "midi": 40,
+        "step": 10
+      },
+      {
+        "absoluteGridStep": 174,
+        "measure": 11,
+        "midi": 38,
+        "step": 14
+      },
+      {
+        "absoluteGridStep": 176,
+        "measure": 12,
+        "midi": 40,
+        "step": 0
+      },
+      {
+        "absoluteGridStep": 179,
+        "measure": 12,
+        "midi": 39,
+        "step": 3
+      },
+      {
+        "absoluteGridStep": 180,
+        "measure": 12,
+        "midi": 40,
+        "step": 4
+      },
+      {
+        "absoluteGridStep": 184,
+        "measure": 12,
+        "midi": 38,
+        "step": 8
+      },
+      {
+        "absoluteGridStep": 186,
+        "measure": 12,
+        "midi": 38,
+        "step": 10
+      },
+      {
+        "absoluteGridStep": 188,
+        "measure": 12,
+        "midi": 39,
+        "step": 12
+      },
+      {
+        "absoluteGridStep": 190,
+        "measure": 12,
+        "midi": 35,
+        "step": 14
+      },
+      {
+        "absoluteGridStep": 192,
+        "measure": 13,
+        "midi": 40,
+        "step": 0
+      },
+      {
+        "absoluteGridStep": 195,
+        "measure": 13,
+        "midi": 40,
+        "step": 3
+      },
+      {
+        "absoluteGridStep": 196,
+        "measure": 13,
+        "midi": 40,
+        "step": 4
+      },
+      {
+        "absoluteGridStep": 200,
+        "measure": 13,
+        "midi": 38,
+        "step": 8
+      },
+      {
+        "absoluteGridStep": 202,
+        "measure": 13,
+        "midi": 40,
+        "step": 10
+      },
+      {
+        "absoluteGridStep": 204,
+        "measure": 13,
+        "midi": 38,
+        "step": 12
+      },
+      {
+        "absoluteGridStep": 206,
+        "measure": 13,
+        "midi": 35,
+        "step": 14
+      },
+      {
+        "absoluteGridStep": 208,
+        "measure": 14,
+        "midi": 40,
+        "step": 0
+      },
+      {
+        "absoluteGridStep": 212,
+        "measure": 14,
+        "midi": 40,
+        "step": 4
+      },
+      {
+        "absoluteGridStep": 216,
+        "measure": 14,
+        "midi": 38,
+        "step": 8
+      },
+      {
+        "absoluteGridStep": 218,
+        "measure": 14,
+        "midi": 40,
+        "step": 10
+      },
+      {
+        "absoluteGridStep": 220,
+        "measure": 14,
+        "midi": 38,
+        "step": 12
+      },
+      {
+        "absoluteGridStep": 222,
+        "measure": 14,
+        "midi": 38,
+        "step": 14
+      },
+      {
+        "absoluteGridStep": 224,
+        "measure": 15,
+        "midi": 40,
+        "step": 0
+      },
+      {
+        "absoluteGridStep": 228,
+        "measure": 15,
+        "midi": 40,
+        "step": 4
+      },
+      {
+        "absoluteGridStep": 231,
+        "measure": 15,
+        "midi": 35,
+        "step": 7
+      },
+      {
+        "absoluteGridStep": 232,
+        "measure": 15,
+        "midi": 38,
+        "step": 8
+      },
+      {
+        "absoluteGridStep": 234,
+        "measure": 15,
+        "midi": 40,
+        "step": 10
+      },
+      {
+        "absoluteGridStep": 240,
+        "measure": 16,
+        "midi": 40,
+        "step": 0
+      },
+      {
+        "absoluteGridStep": 244,
+        "measure": 16,
+        "midi": 40,
+        "step": 4
+      },
+      {
+        "absoluteGridStep": 247,
+        "measure": 16,
+        "midi": 35,
+        "step": 7
+      },
+      {
+        "absoluteGridStep": 248,
+        "measure": 16,
+        "midi": 38,
+        "step": 8
+      },
+      {
+        "absoluteGridStep": 250,
+        "measure": 16,
+        "midi": 40,
+        "step": 10
+      },
+      {
+        "absoluteGridStep": 252,
+        "measure": 16,
+        "midi": 38,
+        "step": 12
+      },
+      {
+        "absoluteGridStep": 256,
+        "measure": 17,
+        "midi": 40,
+        "step": 0
+      },
+      {
+        "absoluteGridStep": 260,
+        "measure": 17,
+        "midi": 40,
+        "step": 4
+      },
+      {
+        "absoluteGridStep": 264,
+        "measure": 17,
+        "midi": 40,
+        "step": 8
+      },
+      {
+        "absoluteGridStep": 268,
+        "measure": 17,
+        "midi": 38,
+        "step": 12
+      },
+      {
+        "absoluteGridStep": 270,
+        "measure": 17,
+        "midi": 38,
+        "step": 14
+      },
+      {
+        "absoluteGridStep": 272,
+        "measure": 18,
+        "midi": 40,
+        "step": 0
+      },
+      {
+        "absoluteGridStep": 276,
+        "measure": 18,
+        "midi": 40,
+        "step": 4
+      },
+      {
+        "absoluteGridStep": 280,
+        "measure": 18,
+        "midi": 40,
+        "step": 8
+      },
+      {
+        "absoluteGridStep": 284,
+        "measure": 18,
+        "midi": 40,
+        "step": 12
+      },
+      {
+        "absoluteGridStep": 286,
+        "measure": 18,
+        "midi": 38,
+        "step": 14
+      },
+      {
+        "absoluteGridStep": 288,
+        "measure": 19,
+        "midi": 40,
+        "step": 0
+      },
+      {
+        "absoluteGridStep": 292,
+        "measure": 19,
+        "midi": 40,
+        "step": 4
+      },
+      {
+        "absoluteGridStep": 296,
+        "measure": 19,
+        "midi": 40,
+        "step": 8
+      },
+      {
+        "absoluteGridStep": 300,
+        "measure": 19,
+        "midi": 40,
+        "step": 12
+      },
+      {
+        "absoluteGridStep": 302,
+        "measure": 19,
+        "midi": 38,
+        "step": 14
+      },
+      {
+        "absoluteGridStep": 304,
+        "measure": 20,
+        "midi": 40,
+        "step": 0
+      },
+      {
+        "absoluteGridStep": 308,
+        "measure": 20,
+        "midi": 40,
+        "step": 4
+      },
+      {
+        "absoluteGridStep": 310,
+        "measure": 20,
+        "midi": 35,
+        "step": 6
+      },
+      {
+        "absoluteGridStep": 312,
+        "measure": 20,
+        "midi": 35,
+        "step": 8
+      },
+      {
+        "absoluteGridStep": 314,
+        "measure": 20,
+        "midi": 35,
+        "step": 10
+      },
+      {
+        "absoluteGridStep": 316,
+        "measure": 20,
+        "midi": 40,
+        "step": 12
+      },
+      {
+        "absoluteGridStep": 318,
+        "measure": 20,
+        "midi": 38,
+        "step": 14
+      },
+      {
+        "absoluteGridStep": 320,
+        "measure": 21,
+        "midi": 40,
+        "step": 0
+      },
+      {
+        "absoluteGridStep": 324,
+        "measure": 21,
+        "midi": 40,
+        "step": 4
+      },
+      {
+        "absoluteGridStep": 328,
+        "measure": 21,
+        "midi": 40,
+        "step": 8
+      },
+      {
+        "absoluteGridStep": 332,
+        "measure": 21,
+        "midi": 40,
+        "step": 12
+      },
+      {
+        "absoluteGridStep": 334,
+        "measure": 21,
+        "midi": 38,
+        "step": 14
+      },
+      {
+        "absoluteGridStep": 336,
+        "measure": 22,
+        "midi": 40,
+        "step": 0
+      },
+      {
+        "absoluteGridStep": 340,
+        "measure": 22,
+        "midi": 40,
+        "step": 4
+      },
+      {
+        "absoluteGridStep": 344,
+        "measure": 22,
+        "midi": 40,
+        "step": 8
+      },
+      {
+        "absoluteGridStep": 348,
+        "measure": 22,
+        "midi": 40,
+        "step": 12
+      },
+      {
+        "absoluteGridStep": 350,
+        "measure": 22,
+        "midi": 38,
+        "step": 14
+      },
+      {
+        "absoluteGridStep": 352,
+        "measure": 23,
+        "midi": 40,
+        "step": 0
+      },
+      {
+        "absoluteGridStep": 356,
+        "measure": 23,
+        "midi": 40,
+        "step": 4
+      },
+      {
+        "absoluteGridStep": 360,
+        "measure": 23,
+        "midi": 40,
+        "step": 8
+      },
+      {
+        "absoluteGridStep": 364,
+        "measure": 23,
+        "midi": 40,
+        "step": 12
+      },
+      {
+        "absoluteGridStep": 366,
+        "measure": 23,
+        "midi": 38,
+        "step": 14
+      },
+      {
+        "absoluteGridStep": 368,
+        "measure": 24,
+        "midi": 40,
+        "step": 0
+      },
+      {
+        "absoluteGridStep": 372,
+        "measure": 24,
+        "midi": 40,
+        "step": 4
+      },
+      {
+        "absoluteGridStep": 376,
+        "measure": 24,
+        "midi": 40,
+        "step": 8
+      },
+      {
+        "absoluteGridStep": 380,
+        "measure": 24,
+        "midi": 40,
+        "step": 12
+      },
+      {
+        "absoluteGridStep": 382,
+        "measure": 24,
+        "midi": 40,
+        "step": 14
+      },
+      {
+        "absoluteGridStep": 384,
+        "measure": 25,
+        "midi": 31,
+        "step": 0
+      },
+      {
+        "absoluteGridStep": 388,
+        "measure": 25,
+        "midi": 31,
+        "step": 4
+      },
+      {
+        "absoluteGridStep": 392,
+        "measure": 25,
+        "midi": 31,
+        "step": 8
+      },
+      {
+        "absoluteGridStep": 396,
+        "measure": 25,
+        "midi": 40,
+        "step": 12
+      },
+      {
+        "absoluteGridStep": 398,
+        "measure": 25,
+        "midi": 29,
+        "step": 14
+      },
+      {
+        "absoluteGridStep": 404,
+        "measure": 26,
+        "midi": 31,
+        "step": 4
+      },
+      {
+        "absoluteGridStep": 408,
+        "measure": 26,
+        "midi": 31,
+        "step": 8
+      },
+      {
+        "absoluteGridStep": 410,
+        "measure": 26,
+        "midi": 41,
+        "step": 10
+      },
+      {
+        "absoluteGridStep": 412,
+        "measure": 26,
+        "midi": 43,
+        "step": 12
+      },
+      {
+        "absoluteGridStep": 414,
+        "measure": 26,
+        "midi": 41,
+        "step": 14
+      },
+      {
+        "absoluteGridStep": 416,
+        "measure": 27,
+        "midi": 43,
+        "step": 0
+      },
+      {
+        "absoluteGridStep": 420,
+        "measure": 27,
+        "midi": 43,
+        "step": 4
+      },
+      {
+        "absoluteGridStep": 424,
+        "measure": 27,
+        "midi": 31,
+        "step": 8
+      },
+      {
+        "absoluteGridStep": 428,
+        "measure": 27,
+        "midi": 31,
+        "step": 12
+      },
+      {
+        "absoluteGridStep": 430,
+        "measure": 27,
+        "midi": 31,
+        "step": 14
+      },
+      {
+        "absoluteGridStep": 432,
+        "measure": 28,
+        "midi": 31,
+        "step": 0
+      },
+      {
+        "absoluteGridStep": 436,
+        "measure": 28,
+        "midi": 31,
+        "step": 4
+      },
+      {
+        "absoluteGridStep": 439,
+        "measure": 28,
+        "midi": 30,
+        "step": 7
+      },
+      {
+        "absoluteGridStep": 442,
+        "measure": 28,
+        "midi": 29,
+        "step": 10
+      },
+      {
+        "absoluteGridStep": 448,
+        "measure": 29,
+        "midi": 40,
+        "step": 0
+      },
+      {
+        "absoluteGridStep": 452,
+        "measure": 29,
+        "midi": 40,
+        "step": 4
+      },
+      {
+        "absoluteGridStep": 456,
+        "measure": 29,
+        "midi": 40,
+        "step": 8
+      },
+      {
+        "absoluteGridStep": 458,
+        "measure": 29,
+        "midi": 38,
+        "step": 10
+      },
+      {
+        "absoluteGridStep": 460,
+        "measure": 29,
+        "midi": 40,
+        "step": 12
+      },
+      {
+        "absoluteGridStep": 464,
+        "measure": 30,
+        "midi": 38,
+        "step": 0
+      },
+      {
+        "absoluteGridStep": 464,
+        "measure": 30,
+        "midi": 40,
+        "step": 0
+      },
+      {
+        "absoluteGridStep": 468,
+        "measure": 30,
+        "midi": 40,
+        "step": 4
+      },
+      {
+        "absoluteGridStep": 472,
+        "measure": 30,
+        "midi": 40,
+        "step": 8
+      },
+      {
+        "absoluteGridStep": 474,
+        "measure": 30,
+        "midi": 38,
+        "step": 10
+      },
+      {
+        "absoluteGridStep": 476,
+        "measure": 30,
+        "midi": 40,
+        "step": 12
+      },
+      {
+        "absoluteGridStep": 478,
+        "measure": 30,
+        "midi": 38,
+        "step": 14
+      },
+      {
+        "absoluteGridStep": 480,
+        "measure": 31,
+        "midi": 40,
+        "step": 0
+      },
+      {
+        "absoluteGridStep": 484,
+        "measure": 31,
+        "midi": 40,
+        "step": 4
+      },
+      {
+        "absoluteGridStep": 488,
+        "measure": 31,
+        "midi": 37,
+        "step": 8
+      },
+      {
+        "absoluteGridStep": 490,
+        "measure": 31,
+        "midi": 38,
+        "step": 10
+      },
+      {
+        "absoluteGridStep": 492,
+        "measure": 31,
+        "midi": 40,
+        "step": 12
+      },
+      {
+        "absoluteGridStep": 494,
+        "measure": 31,
+        "midi": 38,
+        "step": 14
+      },
+      {
+        "absoluteGridStep": 496,
+        "measure": 32,
+        "midi": 40,
+        "step": 0
+      },
+      {
+        "absoluteGridStep": 500,
+        "measure": 32,
+        "midi": 40,
+        "step": 4
+      },
+      {
+        "absoluteGridStep": 504,
+        "measure": 32,
+        "midi": 40,
+        "step": 8
+      },
+      {
+        "absoluteGridStep": 506,
+        "measure": 32,
+        "midi": 38,
+        "step": 10
+      },
+      {
+        "absoluteGridStep": 508,
+        "measure": 32,
+        "midi": 40,
+        "step": 12
+      },
+      {
+        "absoluteGridStep": 512,
+        "measure": 33,
+        "midi": 31,
+        "step": 0
+      },
+      {
+        "absoluteGridStep": 514,
+        "measure": 33,
+        "midi": 31,
+        "step": 2
+      },
+      {
+        "absoluteGridStep": 518,
+        "measure": 33,
+        "midi": 31,
+        "step": 6
+      },
+      {
+        "absoluteGridStep": 520,
+        "measure": 33,
+        "midi": 31,
+        "step": 8
+      },
+      {
+        "absoluteGridStep": 522,
+        "measure": 33,
+        "midi": 31,
+        "step": 10
+      },
+      {
+        "absoluteGridStep": 524,
+        "measure": 33,
+        "midi": 31,
+        "step": 12
+      },
+      {
+        "absoluteGridStep": 526,
+        "measure": 33,
+        "midi": 30,
+        "step": 14
+      },
+      {
+        "absoluteGridStep": 530,
+        "measure": 34,
+        "midi": 30,
+        "step": 2
+      },
+      {
+        "absoluteGridStep": 532,
+        "measure": 34,
+        "midi": 30,
+        "step": 4
+      },
+      {
+        "absoluteGridStep": 534,
+        "measure": 34,
+        "midi": 30,
+        "step": 6
+      },
+      {
+        "absoluteGridStep": 536,
+        "measure": 34,
+        "midi": 30,
+        "step": 8
+      },
+      {
+        "absoluteGridStep": 538,
+        "measure": 34,
+        "midi": 30,
+        "step": 10
+      },
+      {
+        "absoluteGridStep": 544,
+        "measure": 35,
+        "midi": 40,
+        "step": 0
+      },
+      {
+        "absoluteGridStep": 548,
+        "measure": 35,
+        "midi": 40,
+        "step": 4
+      },
+      {
+        "absoluteGridStep": 551,
+        "measure": 35,
+        "midi": 40,
+        "step": 7
+      },
+      {
+        "absoluteGridStep": 552,
+        "measure": 35,
+        "midi": 40,
+        "step": 8
+      },
+      {
+        "absoluteGridStep": 554,
+        "measure": 35,
+        "midi": 38,
+        "step": 10
+      },
+      {
+        "absoluteGridStep": 556,
+        "measure": 35,
+        "midi": 40,
+        "step": 12
+      },
+      {
+        "absoluteGridStep": 558,
+        "measure": 35,
+        "midi": 38,
+        "step": 14
+      },
+      {
+        "absoluteGridStep": 560,
+        "measure": 36,
+        "midi": 40,
+        "step": 0
+      },
+      {
+        "absoluteGridStep": 564,
+        "measure": 36,
+        "midi": 40,
+        "step": 4
+      },
+      {
+        "absoluteGridStep": 566,
+        "measure": 36,
+        "midi": 40,
+        "step": 6
+      },
+      {
+        "absoluteGridStep": 568,
+        "measure": 36,
+        "midi": 38,
+        "step": 8
+      },
+      {
+        "absoluteGridStep": 570,
+        "measure": 36,
+        "midi": 40,
+        "step": 10
+      },
+      {
+        "absoluteGridStep": 572,
+        "measure": 36,
+        "midi": 38,
+        "step": 12
+      },
+      {
+        "absoluteGridStep": 574,
+        "measure": 36,
+        "midi": 35,
+        "step": 14
+      },
+      {
+        "absoluteGridStep": 578,
+        "measure": 37,
+        "midi": 31,
+        "step": 2
+      },
+      {
+        "absoluteGridStep": 580,
+        "measure": 37,
+        "midi": 31,
+        "step": 4
+      },
+      {
+        "absoluteGridStep": 582,
+        "measure": 37,
+        "midi": 31,
+        "step": 6
+      },
+      {
+        "absoluteGridStep": 584,
+        "measure": 37,
+        "midi": 31,
+        "step": 8
+      },
+      {
+        "absoluteGridStep": 586,
+        "measure": 37,
+        "midi": 31,
+        "step": 10
+      },
+      {
+        "absoluteGridStep": 590,
+        "measure": 37,
+        "midi": 30,
+        "step": 14
+      },
+      {
+        "absoluteGridStep": 664,
+        "measure": 42,
+        "midi": 49,
+        "step": 8
+      },
+      {
+        "absoluteGridStep": 668,
+        "measure": 42,
+        "midi": 50,
+        "step": 12
+      },
+      {
+        "absoluteGridStep": 671,
+        "measure": 42,
+        "midi": 49,
+        "step": 15
+      },
+      {
+        "absoluteGridStep": 672,
+        "measure": 43,
+        "midi": 40,
+        "step": 0
+      },
+      {
+        "absoluteGridStep": 676,
+        "measure": 43,
+        "midi": 40,
+        "step": 4
+      },
+      {
+        "absoluteGridStep": 680,
+        "measure": 43,
+        "midi": 38,
+        "step": 8
+      },
+      {
+        "absoluteGridStep": 682,
+        "measure": 43,
+        "midi": 40,
+        "step": 10
+      },
+      {
+        "absoluteGridStep": 688,
+        "measure": 44,
+        "midi": 40,
+        "step": 0
+      },
+      {
+        "absoluteGridStep": 692,
+        "measure": 44,
+        "midi": 40,
+        "step": 4
+      },
+      {
+        "absoluteGridStep": 695,
+        "measure": 44,
+        "midi": 38,
+        "step": 7
+      },
+      {
+        "absoluteGridStep": 696,
+        "measure": 44,
+        "midi": 38,
+        "step": 8
+      },
+      {
+        "absoluteGridStep": 698,
+        "measure": 44,
+        "midi": 40,
+        "step": 10
+      },
+      {
+        "absoluteGridStep": 700,
+        "measure": 44,
+        "midi": 38,
+        "step": 12
+      },
+      {
+        "absoluteGridStep": 702,
+        "measure": 44,
+        "midi": 40,
+        "step": 14
+      },
+      {
+        "absoluteGridStep": 704,
+        "measure": 45,
+        "midi": 40,
+        "step": 0
+      },
+      {
+        "absoluteGridStep": 708,
+        "measure": 45,
+        "midi": 40,
+        "step": 4
+      },
+      {
+        "absoluteGridStep": 711,
+        "measure": 45,
+        "midi": 35,
+        "step": 7
+      },
+      {
+        "absoluteGridStep": 712,
+        "measure": 45,
+        "midi": 38,
+        "step": 8
+      },
+      {
+        "absoluteGridStep": 714,
+        "measure": 45,
+        "midi": 40,
+        "step": 10
+      },
+      {
+        "absoluteGridStep": 720,
+        "measure": 46,
+        "midi": 40,
+        "step": 0
+      },
+      {
+        "absoluteGridStep": 724,
+        "measure": 46,
+        "midi": 40,
+        "step": 4
+      },
+      {
+        "absoluteGridStep": 728,
+        "measure": 46,
+        "midi": 38,
+        "step": 8
+      },
+      {
+        "absoluteGridStep": 730,
+        "measure": 46,
+        "midi": 40,
+        "step": 10
+      },
+      {
+        "absoluteGridStep": 732,
+        "measure": 46,
+        "midi": 38,
+        "step": 12
+      },
+      {
+        "absoluteGridStep": 736,
+        "measure": 47,
+        "midi": 35,
+        "step": 0
+      },
+      {
+        "absoluteGridStep": 740,
+        "measure": 47,
+        "midi": 40,
+        "step": 4
+      },
+      {
+        "absoluteGridStep": 746,
+        "measure": 47,
+        "midi": 35,
+        "step": 10
+      },
+      {
+        "absoluteGridStep": 748,
+        "measure": 47,
+        "midi": 38,
+        "step": 12
+      },
+      {
+        "absoluteGridStep": 750,
+        "measure": 47,
+        "midi": 35,
+        "step": 14
+      },
+      {
+        "absoluteGridStep": 752,
+        "measure": 48,
+        "midi": 40,
+        "step": 0
+      },
+      {
+        "absoluteGridStep": 756,
+        "measure": 48,
+        "midi": 40,
+        "step": 4
+      },
+      {
+        "absoluteGridStep": 760,
+        "measure": 48,
+        "midi": 39,
+        "step": 8
+      },
+      {
+        "absoluteGridStep": 762,
+        "measure": 48,
+        "midi": 35,
+        "step": 10
+      },
+      {
+        "absoluteGridStep": 764,
+        "measure": 48,
+        "midi": 38,
+        "step": 12
+      },
+      {
+        "absoluteGridStep": 766,
+        "measure": 48,
+        "midi": 38,
+        "step": 14
+      },
+      {
+        "absoluteGridStep": 768,
+        "measure": 49,
+        "midi": 40,
+        "step": 0
+      },
+      {
+        "absoluteGridStep": 772,
+        "measure": 49,
+        "midi": 40,
+        "step": 4
+      },
+      {
+        "absoluteGridStep": 776,
+        "measure": 49,
+        "midi": 40,
+        "step": 8
+      },
+      {
+        "absoluteGridStep": 778,
+        "measure": 49,
+        "midi": 35,
+        "step": 10
+      },
+      {
+        "absoluteGridStep": 780,
+        "measure": 49,
+        "midi": 38,
+        "step": 12
+      },
+      {
+        "absoluteGridStep": 782,
+        "measure": 49,
+        "midi": 35,
+        "step": 14
+      },
+      {
+        "absoluteGridStep": 784,
+        "measure": 50,
+        "midi": 35,
+        "step": 0
+      },
+      {
+        "absoluteGridStep": 788,
+        "measure": 50,
+        "midi": 40,
+        "step": 4
+      },
+      {
+        "absoluteGridStep": 790,
+        "measure": 50,
+        "midi": 38,
+        "step": 6
+      },
+      {
+        "absoluteGridStep": 792,
+        "measure": 50,
+        "midi": 40,
+        "step": 8
+      },
+      {
+        "absoluteGridStep": 794,
+        "measure": 50,
+        "midi": 38,
+        "step": 10
+      },
+      {
+        "absoluteGridStep": 796,
+        "measure": 50,
+        "midi": 40,
+        "step": 12
+      },
+      {
+        "absoluteGridStep": 798,
+        "measure": 50,
+        "midi": 38,
+        "step": 14
+      },
+      {
+        "absoluteGridStep": 800,
+        "measure": 51,
+        "midi": 40,
+        "step": 0
+      },
+      {
+        "absoluteGridStep": 804,
+        "measure": 51,
+        "midi": 40,
+        "step": 4
+      },
+      {
+        "absoluteGridStep": 808,
+        "measure": 51,
+        "midi": 40,
+        "step": 8
+      },
+      {
+        "absoluteGridStep": 810,
+        "measure": 51,
+        "midi": 35,
+        "step": 10
+      },
+      {
+        "absoluteGridStep": 812,
+        "measure": 51,
+        "midi": 38,
+        "step": 12
+      },
+      {
+        "absoluteGridStep": 816,
+        "measure": 52,
+        "midi": 40,
+        "step": 0
+      },
+      {
+        "absoluteGridStep": 820,
+        "measure": 52,
+        "midi": 40,
+        "step": 4
+      },
+      {
+        "absoluteGridStep": 824,
+        "measure": 52,
+        "midi": 40,
+        "step": 8
+      },
+      {
+        "absoluteGridStep": 826,
+        "measure": 52,
+        "midi": 35,
+        "step": 10
+      },
+      {
+        "absoluteGridStep": 828,
+        "measure": 52,
+        "midi": 38,
+        "step": 12
+      },
+      {
+        "absoluteGridStep": 832,
+        "measure": 53,
+        "midi": 40,
+        "step": 0
+      },
+      {
+        "absoluteGridStep": 836,
+        "measure": 53,
+        "midi": 40,
+        "step": 4
+      },
+      {
+        "absoluteGridStep": 838,
+        "measure": 53,
+        "midi": 40,
+        "step": 6
+      },
+      {
+        "absoluteGridStep": 840,
+        "measure": 53,
+        "midi": 40,
+        "step": 8
+      },
+      {
+        "absoluteGridStep": 842,
+        "measure": 53,
+        "midi": 35,
+        "step": 10
+      },
+      {
+        "absoluteGridStep": 844,
+        "measure": 53,
+        "midi": 38,
+        "step": 12
+      },
+      {
+        "absoluteGridStep": 846,
+        "measure": 53,
+        "midi": 35,
+        "step": 14
+      },
+      {
+        "absoluteGridStep": 848,
+        "measure": 54,
+        "midi": 40,
+        "step": 0
+      },
+      {
+        "absoluteGridStep": 852,
+        "measure": 54,
+        "midi": 40,
+        "step": 4
+      },
+      {
+        "absoluteGridStep": 856,
+        "measure": 54,
+        "midi": 40,
+        "step": 8
+      },
+      {
+        "absoluteGridStep": 858,
+        "measure": 54,
+        "midi": 35,
+        "step": 10
+      },
+      {
+        "absoluteGridStep": 860,
+        "measure": 54,
+        "midi": 38,
+        "step": 12
+      },
+      {
+        "absoluteGridStep": 864,
+        "measure": 55,
+        "midi": 31,
+        "step": 0
+      },
+      {
+        "absoluteGridStep": 868,
+        "measure": 55,
+        "midi": 31,
+        "step": 4
+      },
+      {
+        "absoluteGridStep": 874,
+        "measure": 55,
+        "midi": 31,
+        "step": 10
+      },
+      {
+        "absoluteGridStep": 878,
+        "measure": 55,
+        "midi": 29,
+        "step": 14
+      },
+      {
+        "absoluteGridStep": 884,
+        "measure": 56,
+        "midi": 31,
+        "step": 4
+      },
+      {
+        "absoluteGridStep": 888,
+        "measure": 56,
+        "midi": 31,
+        "step": 8
+      },
+      {
+        "absoluteGridStep": 890,
+        "measure": 56,
+        "midi": 43,
+        "step": 10
+      },
+      {
+        "absoluteGridStep": 892,
+        "measure": 56,
+        "midi": 41,
+        "step": 12
+      },
+      {
+        "absoluteGridStep": 894,
+        "measure": 56,
+        "midi": 43,
+        "step": 14
+      },
+      {
+        "absoluteGridStep": 900,
+        "measure": 57,
+        "midi": 31,
+        "step": 4
+      },
+      {
+        "absoluteGridStep": 903,
+        "measure": 57,
+        "midi": 31,
+        "step": 7
+      },
+      {
+        "absoluteGridStep": 908,
+        "measure": 57,
+        "midi": 31,
+        "step": 12
+      },
+      {
+        "absoluteGridStep": 912,
+        "measure": 58,
+        "midi": 31,
+        "step": 0
+      },
+      {
+        "absoluteGridStep": 916,
+        "measure": 58,
+        "midi": 31,
+        "step": 4
+      },
+      {
+        "absoluteGridStep": 918,
+        "measure": 58,
+        "midi": 31,
+        "step": 6
+      },
+      {
+        "absoluteGridStep": 920,
+        "measure": 58,
+        "midi": 31,
+        "step": 8
+      },
+      {
+        "absoluteGridStep": 925,
+        "measure": 58,
+        "midi": 31,
+        "step": 13
+      },
+      {
+        "absoluteGridStep": 926,
+        "measure": 58,
+        "midi": 38,
+        "step": 14
+      },
+      {
+        "absoluteGridStep": 928,
+        "measure": 59,
+        "midi": 40,
+        "step": 0
+      },
+      {
+        "absoluteGridStep": 929,
+        "measure": 59,
+        "midi": 40,
+        "step": 1
+      },
+      {
+        "absoluteGridStep": 932,
+        "measure": 59,
+        "midi": 40,
+        "step": 4
+      },
+      {
+        "absoluteGridStep": 936,
+        "measure": 59,
+        "midi": 40,
+        "step": 8
+      },
+      {
+        "absoluteGridStep": 940,
+        "measure": 59,
+        "midi": 40,
+        "step": 12
+      },
+      {
+        "absoluteGridStep": 942,
+        "measure": 59,
+        "midi": 38,
+        "step": 14
+      },
+      {
+        "absoluteGridStep": 944,
+        "measure": 60,
+        "midi": 40,
+        "step": 0
+      },
+      {
+        "absoluteGridStep": 948,
+        "measure": 60,
+        "midi": 40,
+        "step": 4
+      },
+      {
+        "absoluteGridStep": 950,
+        "measure": 60,
+        "midi": 40,
+        "step": 6
+      },
+      {
+        "absoluteGridStep": 952,
+        "measure": 60,
+        "midi": 40,
+        "step": 8
+      },
+      {
+        "absoluteGridStep": 954,
+        "measure": 60,
+        "midi": 38,
+        "step": 10
+      },
+      {
+        "absoluteGridStep": 956,
+        "measure": 60,
+        "midi": 40,
+        "step": 12
+      },
+      {
+        "absoluteGridStep": 958,
+        "measure": 60,
+        "midi": 38,
+        "step": 14
+      },
+      {
+        "absoluteGridStep": 960,
+        "measure": 61,
+        "midi": 40,
+        "step": 0
+      },
+      {
+        "absoluteGridStep": 962,
+        "measure": 61,
+        "midi": 40,
+        "step": 2
+      },
+      {
+        "absoluteGridStep": 964,
+        "measure": 61,
+        "midi": 40,
+        "step": 4
+      },
+      {
+        "absoluteGridStep": 968,
+        "measure": 61,
+        "midi": 40,
+        "step": 8
+      },
+      {
+        "absoluteGridStep": 970,
+        "measure": 61,
+        "midi": 40,
+        "step": 10
+      },
+      {
+        "absoluteGridStep": 972,
+        "measure": 61,
+        "midi": 40,
+        "step": 12
+      },
+      {
+        "absoluteGridStep": 974,
+        "measure": 61,
+        "midi": 38,
+        "step": 14
+      },
+      {
+        "absoluteGridStep": 976,
+        "measure": 62,
+        "midi": 40,
+        "step": 0
+      },
+      {
+        "absoluteGridStep": 980,
+        "measure": 62,
+        "midi": 40,
+        "step": 4
+      },
+      {
+        "absoluteGridStep": 982,
+        "measure": 62,
+        "midi": 40,
+        "step": 6
+      },
+      {
+        "absoluteGridStep": 984,
+        "measure": 62,
+        "midi": 40,
+        "step": 8
+      },
+      {
+        "absoluteGridStep": 988,
+        "measure": 62,
+        "midi": 40,
+        "step": 12
+      },
+      {
+        "absoluteGridStep": 992,
+        "measure": 63,
+        "midi": 31,
+        "step": 0
+      },
+      {
+        "absoluteGridStep": 994,
+        "measure": 63,
+        "midi": 31,
+        "step": 2
+      },
+      {
+        "absoluteGridStep": 996,
+        "measure": 63,
+        "midi": 31,
+        "step": 4
+      },
+      {
+        "absoluteGridStep": 998,
+        "measure": 63,
+        "midi": 31,
+        "step": 6
+      },
+      {
+        "absoluteGridStep": 1000,
+        "measure": 63,
+        "midi": 31,
+        "step": 8
+      },
+      {
+        "absoluteGridStep": 1002,
+        "measure": 63,
+        "midi": 31,
+        "step": 10
+      },
+      {
+        "absoluteGridStep": 1004,
+        "measure": 63,
+        "midi": 31,
+        "step": 12
+      },
+      {
+        "absoluteGridStep": 1008,
+        "measure": 64,
+        "midi": 31,
+        "step": 0
+      },
+      {
+        "absoluteGridStep": 1010,
+        "measure": 64,
+        "midi": 30,
+        "step": 2
+      },
+      {
+        "absoluteGridStep": 1012,
+        "measure": 64,
+        "midi": 30,
+        "step": 4
+      },
+      {
+        "absoluteGridStep": 1014,
+        "measure": 64,
+        "midi": 30,
+        "step": 6
+      },
+      {
+        "absoluteGridStep": 1016,
+        "measure": 64,
+        "midi": 33,
+        "step": 8
+      },
+      {
+        "absoluteGridStep": 1022,
+        "measure": 64,
+        "midi": 38,
+        "step": 14
+      },
+      {
+        "absoluteGridStep": 1024,
+        "measure": 65,
+        "midi": 40,
+        "step": 0
+      },
+      {
+        "absoluteGridStep": 1028,
+        "measure": 65,
+        "midi": 40,
+        "step": 4
+      },
+      {
+        "absoluteGridStep": 1030,
+        "measure": 65,
+        "midi": 35,
+        "step": 6
+      },
+      {
+        "absoluteGridStep": 1032,
+        "measure": 65,
+        "midi": 38,
+        "step": 8
+      },
+      {
+        "absoluteGridStep": 1034,
+        "measure": 65,
+        "midi": 40,
+        "step": 10
+      },
+      {
+        "absoluteGridStep": 1036,
+        "measure": 65,
+        "midi": 38,
+        "step": 12
+      },
+      {
+        "absoluteGridStep": 1040,
+        "measure": 66,
+        "midi": 40,
+        "step": 0
+      },
+      {
+        "absoluteGridStep": 1044,
+        "measure": 66,
+        "midi": 40,
+        "step": 4
+      },
+      {
+        "absoluteGridStep": 1048,
+        "measure": 66,
+        "midi": 38,
+        "step": 8
+      },
+      {
+        "absoluteGridStep": 1050,
+        "measure": 66,
+        "midi": 40,
+        "step": 10
+      },
+      {
+        "absoluteGridStep": 1052,
+        "measure": 66,
+        "midi": 40,
+        "step": 12
+      },
+      {
+        "absoluteGridStep": 1056,
+        "measure": 67,
+        "midi": 31,
+        "step": 0
+      },
+      {
+        "absoluteGridStep": 1058,
+        "measure": 67,
+        "midi": 31,
+        "step": 2
+      },
+      {
+        "absoluteGridStep": 1060,
+        "measure": 67,
+        "midi": 31,
+        "step": 4
+      },
+      {
+        "absoluteGridStep": 1062,
+        "measure": 67,
+        "midi": 38,
+        "step": 6
+      },
+      {
+        "absoluteGridStep": 1064,
+        "measure": 67,
+        "midi": 38,
+        "step": 8
+      },
+      {
+        "absoluteGridStep": 1066,
+        "measure": 67,
+        "midi": 37,
+        "step": 10
+      },
+      {
+        "absoluteGridStep": 1068,
+        "measure": 67,
+        "midi": 36,
+        "step": 12
+      },
+      {
+        "absoluteGridStep": 1200,
+        "measure": 76,
+        "midi": 56,
+        "step": 0
+      },
+      {
+        "absoluteGridStep": 1202,
+        "measure": 76,
+        "midi": 54,
+        "step": 2
+      },
+      {
+        "absoluteGridStep": 1204,
+        "measure": 76,
+        "midi": 56,
+        "step": 4
+      },
+      {
+        "absoluteGridStep": 1207,
+        "measure": 76,
+        "midi": 54,
+        "step": 7
+      },
+      {
+        "absoluteGridStep": 1210,
+        "measure": 76,
+        "midi": 52,
+        "step": 10
+      },
+      {
+        "absoluteGridStep": 1214,
+        "measure": 76,
+        "midi": 54,
+        "step": 14
+      },
+      {
+        "absoluteGridStep": 1218,
+        "measure": 77,
+        "midi": 52,
+        "step": 2
+      },
+      {
+        "absoluteGridStep": 1224,
+        "measure": 77,
+        "midi": 52,
+        "step": 8
+      },
+      {
+        "absoluteGridStep": 1226,
+        "measure": 77,
+        "midi": 47,
+        "step": 10
+      },
+      {
+        "absoluteGridStep": 1228,
+        "measure": 77,
+        "midi": 47,
+        "step": 12
+      },
+      {
+        "absoluteGridStep": 1230,
+        "measure": 77,
+        "midi": 35,
+        "step": 14
+      },
+      {
+        "absoluteGridStep": 1232,
+        "measure": 78,
+        "midi": 40,
+        "step": 0
+      },
+      {
+        "absoluteGridStep": 1236,
+        "measure": 78,
+        "midi": 39,
+        "step": 4
+      },
+      {
+        "absoluteGridStep": 1238,
+        "measure": 78,
+        "midi": 38,
+        "step": 6
+      },
+      {
+        "absoluteGridStep": 1242,
+        "measure": 78,
+        "midi": 43,
+        "step": 10
+      },
+      {
+        "absoluteGridStep": 1244,
+        "measure": 78,
+        "midi": 43,
+        "step": 12
+      },
+      {
+        "absoluteGridStep": 1246,
+        "measure": 78,
+        "midi": 45,
+        "step": 14
+      },
+      {
+        "absoluteGridStep": 1250,
+        "measure": 79,
+        "midi": 43,
+        "step": 2
+      },
+      {
+        "absoluteGridStep": 1252,
+        "measure": 79,
+        "midi": 44,
+        "step": 4
+      },
+      {
+        "absoluteGridStep": 1254,
+        "measure": 79,
+        "midi": 45,
+        "step": 6
+      },
+      {
+        "absoluteGridStep": 1258,
+        "measure": 79,
+        "midi": 37,
+        "step": 10
+      },
+      {
+        "absoluteGridStep": 1260,
+        "measure": 79,
+        "midi": 38,
+        "step": 12
+      },
+      {
+        "absoluteGridStep": 1262,
+        "measure": 79,
+        "midi": 39,
+        "step": 14
+      },
+      {
+        "absoluteGridStep": 1264,
+        "measure": 80,
+        "midi": 40,
+        "step": 0
+      },
+      {
+        "absoluteGridStep": 1268,
+        "measure": 80,
+        "midi": 40,
+        "step": 4
+      },
+      {
+        "absoluteGridStep": 1270,
+        "measure": 80,
+        "midi": 38,
+        "step": 6
+      },
+      {
+        "absoluteGridStep": 1272,
+        "measure": 80,
+        "midi": 37,
+        "step": 8
+      },
+      {
+        "absoluteGridStep": 1274,
+        "measure": 80,
+        "midi": 40,
+        "step": 10
+      },
+      {
+        "absoluteGridStep": 1276,
+        "measure": 80,
+        "midi": 41,
+        "step": 12
+      },
+      {
+        "absoluteGridStep": 1278,
+        "measure": 80,
+        "midi": 42,
+        "step": 14
+      },
+      {
+        "absoluteGridStep": 1282,
+        "measure": 81,
+        "midi": 42,
+        "step": 2
+      },
+      {
+        "absoluteGridStep": 1284,
+        "measure": 81,
+        "midi": 43,
+        "step": 4
+      },
+      {
+        "absoluteGridStep": 1286,
+        "measure": 81,
+        "midi": 45,
+        "step": 6
+      },
+      {
+        "absoluteGridStep": 1292,
+        "measure": 81,
+        "midi": 37,
+        "step": 12
+      },
+      {
+        "absoluteGridStep": 1294,
+        "measure": 81,
+        "midi": 38,
+        "step": 14
+      },
+      {
+        "absoluteGridStep": 1296,
+        "measure": 82,
+        "midi": 40,
+        "step": 0
+      },
+      {
+        "absoluteGridStep": 1298,
+        "measure": 82,
+        "midi": 35,
+        "step": 2
+      },
+      {
+        "absoluteGridStep": 1300,
+        "measure": 82,
+        "midi": 40,
+        "step": 4
+      },
+      {
+        "absoluteGridStep": 1302,
+        "measure": 82,
+        "midi": 38,
+        "step": 6
+      },
+      {
+        "absoluteGridStep": 1304,
+        "measure": 82,
+        "midi": 38,
+        "step": 8
+      },
+      {
+        "absoluteGridStep": 1308,
+        "measure": 82,
+        "midi": 32,
+        "step": 12
+      },
+      {
+        "absoluteGridStep": 1310,
+        "measure": 82,
+        "midi": 33,
+        "step": 14
+      },
+      {
+        "absoluteGridStep": 1314,
+        "measure": 83,
+        "midi": 36,
+        "step": 2
+      },
+      {
+        "absoluteGridStep": 1316,
+        "measure": 83,
+        "midi": 37,
+        "step": 4
+      },
+      {
+        "absoluteGridStep": 1318,
+        "measure": 83,
+        "midi": 38,
+        "step": 6
+      },
+      {
+        "absoluteGridStep": 1322,
+        "measure": 83,
+        "midi": 33,
+        "step": 10
+      },
+      {
+        "absoluteGridStep": 1324,
+        "measure": 83,
+        "midi": 37,
+        "step": 12
+      },
+      {
+        "absoluteGridStep": 1326,
+        "measure": 83,
+        "midi": 38,
+        "step": 14
+      },
+      {
+        "absoluteGridStep": 1328,
+        "measure": 84,
+        "midi": 40,
+        "step": 0
+      },
+      {
+        "absoluteGridStep": 1332,
+        "measure": 84,
+        "midi": 40,
+        "step": 4
+      },
+      {
+        "absoluteGridStep": 1334,
+        "measure": 84,
+        "midi": 38,
+        "step": 6
+      },
+      {
+        "absoluteGridStep": 1338,
+        "measure": 84,
+        "midi": 40,
+        "step": 10
+      },
+      {
+        "absoluteGridStep": 1340,
+        "measure": 84,
+        "midi": 41,
+        "step": 12
+      },
+      {
+        "absoluteGridStep": 1342,
+        "measure": 84,
+        "midi": 42,
+        "step": 14
+      },
+      {
+        "absoluteGridStep": 1346,
+        "measure": 85,
+        "midi": 35,
+        "step": 2
+      },
+      {
+        "absoluteGridStep": 1348,
+        "measure": 85,
+        "midi": 36,
+        "step": 4
+      },
+      {
+        "absoluteGridStep": 1350,
+        "measure": 85,
+        "midi": 37,
+        "step": 6
+      },
+      {
+        "absoluteGridStep": 1352,
+        "measure": 85,
+        "midi": 37,
+        "step": 8
+      },
+      {
+        "absoluteGridStep": 1354,
+        "measure": 85,
+        "midi": 37,
+        "step": 10
+      },
+      {
+        "absoluteGridStep": 1356,
+        "measure": 85,
+        "midi": 38,
+        "step": 12
+      },
+      {
+        "absoluteGridStep": 1358,
+        "measure": 85,
+        "midi": 39,
+        "step": 14
+      },
+      {
+        "absoluteGridStep": 1360,
+        "measure": 86,
+        "midi": 39,
+        "step": 0
+      },
+      {
+        "absoluteGridStep": 1362,
+        "measure": 86,
+        "midi": 40,
+        "step": 2
+      },
+      {
+        "absoluteGridStep": 1364,
+        "measure": 86,
+        "midi": 40,
+        "step": 4
+      },
+      {
+        "absoluteGridStep": 1366,
+        "measure": 86,
+        "midi": 38,
+        "step": 6
+      },
+      {
+        "absoluteGridStep": 1370,
+        "measure": 86,
+        "midi": 40,
+        "step": 10
+      },
+      {
+        "absoluteGridStep": 1372,
+        "measure": 86,
+        "midi": 41,
+        "step": 12
+      },
+      {
+        "absoluteGridStep": 1374,
+        "measure": 86,
+        "midi": 42,
+        "step": 14
+      },
+      {
+        "absoluteGridStep": 1378,
+        "measure": 87,
+        "midi": 43,
+        "step": 2
+      },
+      {
+        "absoluteGridStep": 1380,
+        "measure": 87,
+        "midi": 44,
+        "step": 4
+      },
+      {
+        "absoluteGridStep": 1382,
+        "measure": 87,
+        "midi": 45,
+        "step": 6
+      },
+      {
+        "absoluteGridStep": 1384,
+        "measure": 87,
+        "midi": 37,
+        "step": 8
+      },
+      {
+        "absoluteGridStep": 1386,
+        "measure": 87,
+        "midi": 37,
+        "step": 10
+      },
+      {
+        "absoluteGridStep": 1388,
+        "measure": 87,
+        "midi": 38,
+        "step": 12
+      },
+      {
+        "absoluteGridStep": 1390,
+        "measure": 87,
+        "midi": 39,
+        "step": 14
+      },
+      {
+        "absoluteGridStep": 1392,
+        "measure": 88,
+        "midi": 39,
+        "step": 0
+      },
+      {
+        "absoluteGridStep": 1394,
+        "measure": 88,
+        "midi": 40,
+        "step": 2
+      },
+      {
+        "absoluteGridStep": 1397,
+        "measure": 88,
+        "midi": 39,
+        "step": 5
+      },
+      {
+        "absoluteGridStep": 1399,
+        "measure": 88,
+        "midi": 38,
+        "step": 7
+      },
+      {
+        "absoluteGridStep": 1402,
+        "measure": 88,
+        "midi": 38,
+        "step": 10
+      },
+      {
+        "absoluteGridStep": 1404,
+        "measure": 88,
+        "midi": 31,
+        "step": 12
+      },
+      {
+        "absoluteGridStep": 1406,
+        "measure": 88,
+        "midi": 33,
+        "step": 14
+      },
+      {
+        "absoluteGridStep": 1410,
+        "measure": 89,
+        "midi": 34,
+        "step": 2
+      },
+      {
+        "absoluteGridStep": 1412,
+        "measure": 89,
+        "midi": 35,
+        "step": 4
+      },
+      {
+        "absoluteGridStep": 1414,
+        "measure": 89,
+        "midi": 37,
+        "step": 6
+      },
+      {
+        "absoluteGridStep": 1416,
+        "measure": 89,
+        "midi": 35,
+        "step": 8
+      },
+      {
+        "absoluteGridStep": 1418,
+        "measure": 89,
+        "midi": 37,
+        "step": 10
+      },
+      {
+        "absoluteGridStep": 1420,
+        "measure": 89,
+        "midi": 38,
+        "step": 12
+      },
+      {
+        "absoluteGridStep": 1422,
+        "measure": 89,
+        "midi": 39,
+        "step": 14
+      },
+      {
+        "absoluteGridStep": 1424,
+        "measure": 90,
+        "midi": 40,
+        "step": 0
+      },
+      {
+        "absoluteGridStep": 1428,
+        "measure": 90,
+        "midi": 40,
+        "step": 4
+      },
+      {
+        "absoluteGridStep": 1430,
+        "measure": 90,
+        "midi": 38,
+        "step": 6
+      },
+      {
+        "absoluteGridStep": 1434,
+        "measure": 90,
+        "midi": 42,
+        "step": 10
+      },
+      {
+        "absoluteGridStep": 1436,
+        "measure": 90,
+        "midi": 42,
+        "step": 12
+      },
+      {
+        "absoluteGridStep": 1438,
+        "measure": 90,
+        "midi": 45,
+        "step": 14
+      },
+      {
+        "absoluteGridStep": 1442,
+        "measure": 91,
+        "midi": 47,
+        "step": 2
+      },
+      {
+        "absoluteGridStep": 1444,
+        "measure": 91,
+        "midi": 48,
+        "step": 4
+      },
+      {
+        "absoluteGridStep": 1446,
+        "measure": 91,
+        "midi": 50,
+        "step": 6
+      },
+      {
+        "absoluteGridStep": 1450,
+        "measure": 91,
+        "midi": 45,
+        "step": 10
+      },
+      {
+        "absoluteGridStep": 1452,
+        "measure": 91,
+        "midi": 38,
+        "step": 12
+      },
+      {
+        "absoluteGridStep": 1454,
+        "measure": 91,
+        "midi": 39,
+        "step": 14
+      },
+      {
+        "absoluteGridStep": 1456,
+        "measure": 92,
+        "midi": 40,
+        "step": 0
+      },
+      {
+        "absoluteGridStep": 1458,
+        "measure": 92,
+        "midi": 35,
+        "step": 2
+      },
+      {
+        "absoluteGridStep": 1460,
+        "measure": 92,
+        "midi": 40,
+        "step": 4
+      },
+      {
+        "absoluteGridStep": 1462,
+        "measure": 92,
+        "midi": 38,
+        "step": 6
+      },
+      {
+        "absoluteGridStep": 1466,
+        "measure": 92,
+        "midi": 33,
+        "step": 10
+      },
+      {
+        "absoluteGridStep": 1468,
+        "measure": 92,
+        "midi": 35,
+        "step": 12
+      },
+      {
+        "absoluteGridStep": 1470,
+        "measure": 92,
+        "midi": 35,
+        "step": 14
+      },
+      {
+        "absoluteGridStep": 1504,
+        "measure": 95,
+        "midi": 40,
+        "step": 0
+      },
+      {
+        "absoluteGridStep": 1508,
+        "measure": 95,
+        "midi": 40,
+        "step": 4
+      },
+      {
+        "absoluteGridStep": 1511,
+        "measure": 95,
+        "midi": 35,
+        "step": 7
+      },
+      {
+        "absoluteGridStep": 1512,
+        "measure": 95,
+        "midi": 38,
+        "step": 8
+      },
+      {
+        "absoluteGridStep": 1514,
+        "measure": 95,
+        "midi": 40,
+        "step": 10
+      },
+      {
+        "absoluteGridStep": 1516,
+        "measure": 95,
+        "midi": 40,
+        "step": 12
+      },
+      {
+        "absoluteGridStep": 1520,
+        "measure": 96,
+        "midi": 40,
+        "step": 0
+      },
+      {
+        "absoluteGridStep": 1524,
+        "measure": 96,
+        "midi": 40,
+        "step": 4
+      },
+      {
+        "absoluteGridStep": 1526,
+        "measure": 96,
+        "midi": 35,
+        "step": 6
+      },
+      {
+        "absoluteGridStep": 1528,
+        "measure": 96,
+        "midi": 38,
+        "step": 8
+      },
+      {
+        "absoluteGridStep": 1530,
+        "measure": 96,
+        "midi": 40,
+        "step": 10
+      },
+      {
+        "absoluteGridStep": 1532,
+        "measure": 96,
+        "midi": 38,
+        "step": 12
+      },
+      {
+        "absoluteGridStep": 1534,
+        "measure": 96,
+        "midi": 35,
+        "step": 14
+      },
+      {
+        "absoluteGridStep": 1536,
+        "measure": 97,
+        "midi": 40,
+        "step": 0
+      },
+      {
+        "absoluteGridStep": 1540,
+        "measure": 97,
+        "midi": 40,
+        "step": 4
+      },
+      {
+        "absoluteGridStep": 1543,
+        "measure": 97,
+        "midi": 35,
+        "step": 7
+      },
+      {
+        "absoluteGridStep": 1544,
+        "measure": 97,
+        "midi": 38,
+        "step": 8
+      },
+      {
+        "absoluteGridStep": 1546,
+        "measure": 97,
+        "midi": 40,
+        "step": 10
+      },
+      {
+        "absoluteGridStep": 1550,
+        "measure": 97,
+        "midi": 35,
+        "step": 14
+      },
+      {
+        "absoluteGridStep": 1552,
+        "measure": 98,
+        "midi": 40,
+        "step": 0
+      },
+      {
+        "absoluteGridStep": 1556,
+        "measure": 98,
+        "midi": 40,
+        "step": 4
+      },
+      {
+        "absoluteGridStep": 1560,
+        "measure": 98,
+        "midi": 38,
+        "step": 8
+      },
+      {
+        "absoluteGridStep": 1562,
+        "measure": 98,
+        "midi": 40,
+        "step": 10
+      },
+      {
+        "absoluteGridStep": 1564,
+        "measure": 98,
+        "midi": 38,
+        "step": 12
+      },
+      {
+        "absoluteGridStep": 1568,
+        "measure": 99,
+        "midi": 40,
+        "step": 0
+      },
+      {
+        "absoluteGridStep": 1572,
+        "measure": 99,
+        "midi": 40,
+        "step": 4
+      },
+      {
+        "absoluteGridStep": 1575,
+        "measure": 99,
+        "midi": 35,
+        "step": 7
+      },
+      {
+        "absoluteGridStep": 1576,
+        "measure": 99,
+        "midi": 38,
+        "step": 8
+      },
+      {
+        "absoluteGridStep": 1578,
+        "measure": 99,
+        "midi": 38,
+        "step": 10
+      },
+      {
+        "absoluteGridStep": 1582,
+        "measure": 99,
+        "midi": 38,
+        "step": 14
+      },
+      {
+        "absoluteGridStep": 1584,
+        "measure": 100,
+        "midi": 40,
+        "step": 0
+      },
+      {
+        "absoluteGridStep": 1588,
+        "measure": 100,
+        "midi": 40,
+        "step": 4
+      },
+      {
+        "absoluteGridStep": 1591,
+        "measure": 100,
+        "midi": 38,
+        "step": 7
+      },
+      {
+        "absoluteGridStep": 1592,
+        "measure": 100,
+        "midi": 38,
+        "step": 8
+      },
+      {
+        "absoluteGridStep": 1594,
+        "measure": 100,
+        "midi": 40,
+        "step": 10
+      },
+      {
+        "absoluteGridStep": 1596,
+        "measure": 100,
+        "midi": 38,
+        "step": 12
+      },
+      {
+        "absoluteGridStep": 1598,
+        "measure": 100,
+        "midi": 35,
+        "step": 14
+      },
+      {
+        "absoluteGridStep": 1600,
+        "measure": 101,
+        "midi": 40,
+        "step": 0
+      },
+      {
+        "absoluteGridStep": 1604,
+        "measure": 101,
+        "midi": 40,
+        "step": 4
+      },
+      {
+        "absoluteGridStep": 1607,
+        "measure": 101,
+        "midi": 35,
+        "step": 7
+      },
+      {
+        "absoluteGridStep": 1608,
+        "measure": 101,
+        "midi": 38,
+        "step": 8
+      },
+      {
+        "absoluteGridStep": 1610,
+        "measure": 101,
+        "midi": 40,
+        "step": 10
+      },
+      {
+        "absoluteGridStep": 1615,
+        "measure": 101,
+        "midi": 35,
+        "step": 15
+      },
+      {
+        "absoluteGridStep": 1616,
+        "measure": 102,
+        "midi": 40,
+        "step": 0
+      },
+      {
+        "absoluteGridStep": 1620,
+        "measure": 102,
+        "midi": 40,
+        "step": 4
+      },
+      {
+        "absoluteGridStep": 1623,
+        "measure": 102,
+        "midi": 35,
+        "step": 7
+      },
+      {
+        "absoluteGridStep": 1624,
+        "measure": 102,
+        "midi": 35,
+        "step": 8
+      },
+      {
+        "absoluteGridStep": 1624,
+        "measure": 102,
+        "midi": 38,
+        "step": 8
+      },
+      {
+        "absoluteGridStep": 1626,
+        "measure": 102,
+        "midi": 40,
+        "step": 10
+      },
+      {
+        "absoluteGridStep": 1628,
+        "measure": 102,
+        "midi": 38,
+        "step": 12
+      },
+      {
+        "absoluteGridStep": 1630,
+        "measure": 102,
+        "midi": 38,
+        "step": 14
+      },
+      {
+        "absoluteGridStep": 1632,
+        "measure": 103,
+        "midi": 34,
+        "step": 0
+      },
+      {
+        "absoluteGridStep": 1634,
+        "measure": 103,
+        "midi": 31,
+        "step": 2
+      },
+      {
+        "absoluteGridStep": 1636,
+        "measure": 103,
+        "midi": 31,
+        "step": 4
+      },
+      {
+        "absoluteGridStep": 1638,
+        "measure": 103,
+        "midi": 31,
+        "step": 6
+      },
+      {
+        "absoluteGridStep": 1642,
+        "measure": 103,
+        "midi": 31,
+        "step": 10
+      },
+      {
+        "absoluteGridStep": 1646,
+        "measure": 103,
+        "midi": 31,
+        "step": 14
+      },
+      {
+        "absoluteGridStep": 1650,
+        "measure": 104,
+        "midi": 30,
+        "step": 2
+      },
+      {
+        "absoluteGridStep": 1654,
+        "measure": 104,
+        "midi": 30,
+        "step": 6
+      },
+      {
+        "absoluteGridStep": 1656,
+        "measure": 104,
+        "midi": 30,
+        "step": 8
+      },
+      {
+        "absoluteGridStep": 1658,
+        "measure": 104,
+        "midi": 31,
+        "step": 10
+      },
+      {
+        "absoluteGridStep": 1660,
+        "measure": 104,
+        "midi": 31,
+        "step": 12
+      },
+      {
+        "absoluteGridStep": 1662,
+        "measure": 104,
+        "midi": 31,
+        "step": 14
+      },
+      {
+        "absoluteGridStep": 1664,
+        "measure": 105,
+        "midi": 31,
+        "step": 0
+      },
+      {
+        "absoluteGridStep": 1666,
+        "measure": 105,
+        "midi": 31,
+        "step": 2
+      },
+      {
+        "absoluteGridStep": 1670,
+        "measure": 105,
+        "midi": 30,
+        "step": 6
+      },
+      {
+        "absoluteGridStep": 1680,
+        "measure": 106,
+        "midi": 30,
+        "step": 0
+      },
+      {
+        "absoluteGridStep": 1682,
+        "measure": 106,
+        "midi": 30,
+        "step": 2
+      },
+      {
+        "absoluteGridStep": 1684,
+        "measure": 106,
+        "midi": 30,
+        "step": 4
+      },
+      {
+        "absoluteGridStep": 1688,
+        "measure": 106,
+        "midi": 40,
+        "step": 8
+      },
+      {
+        "absoluteGridStep": 1692,
+        "measure": 106,
+        "midi": 40,
+        "step": 12
+      },
+      {
+        "absoluteGridStep": 1696,
+        "measure": 107,
+        "midi": 35,
+        "step": 0
+      },
+      {
+        "absoluteGridStep": 1696,
+        "measure": 107,
+        "midi": 38,
+        "step": 0
+      },
+      {
+        "absoluteGridStep": 1698,
+        "measure": 107,
+        "midi": 40,
+        "step": 2
+      },
+      {
+        "absoluteGridStep": 1700,
+        "measure": 107,
+        "midi": 40,
+        "step": 4
+      },
+      {
+        "absoluteGridStep": 1704,
+        "measure": 107,
+        "midi": 40,
+        "step": 8
+      },
+      {
+        "absoluteGridStep": 1708,
+        "measure": 107,
+        "midi": 40,
+        "step": 12
+      },
+      {
+        "absoluteGridStep": 1711,
+        "measure": 107,
+        "midi": 40,
+        "step": 15
+      },
+      {
+        "absoluteGridStep": 1712,
+        "measure": 108,
+        "midi": 38,
+        "step": 0
+      },
+      {
+        "absoluteGridStep": 1714,
+        "measure": 108,
+        "midi": 40,
+        "step": 2
+      },
+      {
+        "absoluteGridStep": 1716,
+        "measure": 108,
+        "midi": 38,
+        "step": 4
+      },
+      {
+        "absoluteGridStep": 1718,
+        "measure": 108,
+        "midi": 38,
+        "step": 6
+      },
+      {
+        "absoluteGridStep": 1720,
+        "measure": 108,
+        "midi": 34,
+        "step": 8
+      },
+      {
+        "absoluteGridStep": 1722,
+        "measure": 108,
+        "midi": 31,
+        "step": 10
+      },
+      {
+        "absoluteGridStep": 1724,
+        "measure": 108,
+        "midi": 31,
+        "step": 12
+      },
+      {
+        "absoluteGridStep": 1726,
+        "measure": 108,
+        "midi": 31,
+        "step": 14
+      },
+      {
+        "absoluteGridStep": 1728,
+        "measure": 109,
+        "midi": 31,
+        "step": 0
+      },
+      {
+        "absoluteGridStep": 1730,
+        "measure": 109,
+        "midi": 31,
+        "step": 2
+      },
+      {
+        "absoluteGridStep": 1732,
+        "measure": 109,
+        "midi": 31,
+        "step": 4
+      },
+      {
+        "absoluteGridStep": 1734,
+        "measure": 109,
+        "midi": 30,
+        "step": 6
+      }
+    ],
+    "combinedGuitar": [
+      {
+        "absoluteGridStep": 0,
+        "measure": 1,
+        "midi": 59,
+        "step": 0
+      },
+      {
+        "absoluteGridStep": 2,
+        "measure": 1,
+        "midi": 57,
+        "step": 2
+      },
+      {
+        "absoluteGridStep": 4,
+        "measure": 1,
+        "midi": 52,
+        "step": 4
+      },
+      {
+        "absoluteGridStep": 4,
+        "measure": 1,
+        "midi": 55,
+        "step": 4
+      },
+      {
+        "absoluteGridStep": 4,
+        "measure": 1,
+        "midi": 67,
+        "step": 4
+      },
+      {
+        "absoluteGridStep": 6,
+        "measure": 1,
+        "midi": 40,
+        "step": 6
+      },
+      {
+        "absoluteGridStep": 8,
+        "measure": 1,
+        "midi": 64,
+        "step": 8
+      },
+      {
+        "absoluteGridStep": 14,
+        "measure": 1,
+        "midi": 59,
+        "step": 14
+      },
+      {
+        "absoluteGridStep": 14,
+        "measure": 1,
+        "midi": 64,
+        "step": 14
+      },
+      {
+        "absoluteGridStep": 16,
+        "measure": 2,
+        "midi": 59,
+        "step": 0
+      },
+      {
+        "absoluteGridStep": 18,
+        "measure": 2,
+        "midi": 57,
+        "step": 2
+      },
+      {
+        "absoluteGridStep": 18,
+        "measure": 2,
+        "midi": 67,
+        "step": 2
+      },
+      {
+        "absoluteGridStep": 20,
+        "measure": 2,
+        "midi": 52,
+        "step": 4
+      },
+      {
+        "absoluteGridStep": 20,
+        "measure": 2,
+        "midi": 64,
+        "step": 4
+      },
+      {
+        "absoluteGridStep": 22,
+        "measure": 2,
+        "midi": 40,
+        "step": 6
+      },
+      {
+        "absoluteGridStep": 22,
+        "measure": 2,
+        "midi": 59,
+        "step": 6
+      },
+      {
+        "absoluteGridStep": 28,
+        "measure": 2,
+        "midi": 43,
+        "step": 12
+      },
+      {
+        "absoluteGridStep": 28,
+        "measure": 2,
+        "midi": 62,
+        "step": 12
+      },
+      {
+        "absoluteGridStep": 28,
+        "measure": 2,
+        "midi": 67,
+        "step": 12
+      },
+      {
+        "absoluteGridStep": 32,
+        "measure": 3,
+        "midi": 59,
+        "step": 0
+      },
+      {
+        "absoluteGridStep": 34,
+        "measure": 3,
+        "midi": 57,
+        "step": 2
+      },
+      {
+        "absoluteGridStep": 36,
+        "measure": 3,
+        "midi": 52,
+        "step": 4
+      },
+      {
+        "absoluteGridStep": 36,
+        "measure": 3,
+        "midi": 64,
+        "step": 4
+      },
+      {
+        "absoluteGridStep": 38,
+        "measure": 3,
+        "midi": 40,
+        "step": 6
+      },
+      {
+        "absoluteGridStep": 42,
+        "measure": 3,
+        "midi": 52,
+        "step": 10
+      },
+      {
+        "absoluteGridStep": 44,
+        "measure": 3,
+        "midi": 64,
+        "step": 12
+      },
+      {
+        "absoluteGridStep": 46,
+        "measure": 3,
+        "midi": 40,
+        "step": 14
+      },
+      {
+        "absoluteGridStep": 46,
+        "measure": 3,
+        "midi": 59,
+        "step": 14
+      },
+      {
+        "absoluteGridStep": 48,
+        "measure": 4,
+        "midi": 59,
+        "step": 0
+      },
+      {
+        "absoluteGridStep": 50,
+        "measure": 4,
+        "midi": 57,
+        "step": 2
+      },
+      {
+        "absoluteGridStep": 52,
+        "measure": 4,
+        "midi": 40,
+        "step": 4
+      },
+      {
+        "absoluteGridStep": 52,
+        "measure": 4,
+        "midi": 52,
+        "step": 4
+      },
+      {
+        "absoluteGridStep": 52,
+        "measure": 4,
+        "midi": 55,
+        "step": 4
+      },
+      {
+        "absoluteGridStep": 52,
+        "measure": 4,
+        "midi": 64,
+        "step": 4
+      },
+      {
+        "absoluteGridStep": 56,
+        "measure": 4,
+        "midi": 50,
+        "step": 8
+      },
+      {
+        "absoluteGridStep": 58,
+        "measure": 4,
+        "midi": 52,
+        "step": 10
+      },
+      {
+        "absoluteGridStep": 60,
+        "measure": 4,
+        "midi": 43,
+        "step": 12
+      },
+      {
+        "absoluteGridStep": 60,
+        "measure": 4,
+        "midi": 62,
+        "step": 12
+      },
+      {
+        "absoluteGridStep": 60,
+        "measure": 4,
+        "midi": 67,
+        "step": 12
+      },
+      {
+        "absoluteGridStep": 64,
+        "measure": 5,
+        "midi": 59,
+        "step": 0
+      },
+      {
+        "absoluteGridStep": 66,
+        "measure": 5,
+        "midi": 57,
+        "step": 2
+      },
+      {
+        "absoluteGridStep": 66,
+        "measure": 5,
+        "midi": 67,
+        "step": 2
+      },
+      {
+        "absoluteGridStep": 68,
+        "measure": 5,
+        "midi": 52,
+        "step": 4
+      },
+      {
+        "absoluteGridStep": 68,
+        "measure": 5,
+        "midi": 64,
+        "step": 4
+      },
+      {
+        "absoluteGridStep": 70,
+        "measure": 5,
+        "midi": 40,
+        "step": 6
+      },
+      {
+        "absoluteGridStep": 70,
+        "measure": 5,
+        "midi": 52,
+        "step": 6
+      },
+      {
+        "absoluteGridStep": 70,
+        "measure": 5,
+        "midi": 59,
+        "step": 6
+      },
+      {
+        "absoluteGridStep": 74,
+        "measure": 5,
+        "midi": 52,
+        "step": 10
+      },
+      {
+        "absoluteGridStep": 74,
+        "measure": 5,
+        "midi": 64,
+        "step": 10
+      },
+      {
+        "absoluteGridStep": 76,
+        "measure": 5,
+        "midi": 40,
+        "step": 12
+      },
+      {
+        "absoluteGridStep": 76,
+        "measure": 5,
+        "midi": 52,
+        "step": 12
+      },
+      {
+        "absoluteGridStep": 78,
+        "measure": 5,
+        "midi": 40,
+        "step": 14
+      },
+      {
+        "absoluteGridStep": 80,
+        "measure": 6,
+        "midi": 52,
+        "step": 0
+      },
+      {
+        "absoluteGridStep": 80,
+        "measure": 6,
+        "midi": 59,
+        "step": 0
+      },
+      {
+        "absoluteGridStep": 84,
+        "measure": 6,
+        "midi": 52,
+        "step": 4
+      },
+      {
+        "absoluteGridStep": 84,
+        "measure": 6,
+        "midi": 59,
+        "step": 4
+      },
+      {
+        "absoluteGridStep": 84,
+        "measure": 6,
+        "midi": 64,
+        "step": 4
+      },
+      {
+        "absoluteGridStep": 84,
+        "measure": 6,
+        "midi": 67,
+        "step": 4
+      },
+      {
+        "absoluteGridStep": 86,
+        "measure": 6,
+        "midi": 40,
+        "step": 6
+      },
+      {
+        "absoluteGridStep": 88,
+        "measure": 6,
+        "midi": 40,
+        "step": 8
+      },
+      {
+        "absoluteGridStep": 88,
+        "measure": 6,
+        "midi": 62,
+        "step": 8
+      },
+      {
+        "absoluteGridStep": 88,
+        "measure": 6,
+        "midi": 64,
+        "step": 8
+      },
+      {
+        "absoluteGridStep": 90,
+        "measure": 6,
+        "midi": 52,
+        "step": 10
+      },
+      {
+        "absoluteGridStep": 92,
+        "measure": 6,
+        "midi": 62,
+        "step": 12
+      },
+      {
+        "absoluteGridStep": 92,
+        "measure": 6,
+        "midi": 67,
+        "step": 12
+      },
+      {
+        "absoluteGridStep": 94,
+        "measure": 6,
+        "midi": 43,
+        "step": 14
+      },
+      {
+        "absoluteGridStep": 96,
+        "measure": 7,
+        "midi": 59,
+        "step": 0
+      },
+      {
+        "absoluteGridStep": 96,
+        "measure": 7,
+        "midi": 71,
+        "step": 0
+      },
+      {
+        "absoluteGridStep": 98,
+        "measure": 7,
+        "midi": 57,
+        "step": 2
+      },
+      {
+        "absoluteGridStep": 98,
+        "measure": 7,
+        "midi": 67,
+        "step": 2
+      },
+      {
+        "absoluteGridStep": 100,
+        "measure": 7,
+        "midi": 40,
+        "step": 4
+      },
+      {
+        "absoluteGridStep": 100,
+        "measure": 7,
+        "midi": 59,
+        "step": 4
+      },
+      {
+        "absoluteGridStep": 100,
+        "measure": 7,
+        "midi": 64,
+        "step": 4
+      },
+      {
+        "absoluteGridStep": 104,
+        "measure": 7,
+        "midi": 62,
+        "step": 8
+      },
+      {
+        "absoluteGridStep": 104,
+        "measure": 7,
+        "midi": 64,
+        "step": 8
+      },
+      {
+        "absoluteGridStep": 106,
+        "measure": 7,
+        "midi": 52,
+        "step": 10
+      },
+      {
+        "absoluteGridStep": 108,
+        "measure": 7,
+        "midi": 65,
+        "step": 12
+      },
+      {
+        "absoluteGridStep": 110,
+        "measure": 7,
+        "midi": 40,
+        "step": 14
+      },
+      {
+        "absoluteGridStep": 110,
+        "measure": 7,
+        "midi": 62,
+        "step": 14
+      },
+      {
+        "absoluteGridStep": 112,
+        "measure": 8,
+        "midi": 57,
+        "step": 0
+      },
+      {
+        "absoluteGridStep": 116,
+        "measure": 8,
+        "midi": 52,
+        "step": 4
+      },
+      {
+        "absoluteGridStep": 116,
+        "measure": 8,
+        "midi": 64,
+        "step": 4
+      },
+      {
+        "absoluteGridStep": 116,
+        "measure": 8,
+        "midi": 67,
+        "step": 4
+      },
+      {
+        "absoluteGridStep": 121,
+        "measure": 8,
+        "midi": 62,
+        "step": 9
+      },
+      {
+        "absoluteGridStep": 122,
+        "measure": 8,
+        "midi": 40,
+        "step": 10
+      },
+      {
+        "absoluteGridStep": 122,
+        "measure": 8,
+        "midi": 52,
+        "step": 10
+      },
+      {
+        "absoluteGridStep": 124,
+        "measure": 8,
+        "midi": 62,
+        "step": 12
+      },
+      {
+        "absoluteGridStep": 124,
+        "measure": 8,
+        "midi": 64,
+        "step": 12
+      },
+      {
+        "absoluteGridStep": 124,
+        "measure": 8,
+        "midi": 67,
+        "step": 12
+      },
+      {
+        "absoluteGridStep": 126,
+        "measure": 8,
+        "midi": 50,
+        "step": 14
+      },
+      {
+        "absoluteGridStep": 128,
+        "measure": 9,
+        "midi": 59,
+        "step": 0
+      },
+      {
+        "absoluteGridStep": 128,
+        "measure": 9,
+        "midi": 71,
+        "step": 0
+      },
+      {
+        "absoluteGridStep": 132,
+        "measure": 9,
+        "midi": 64,
+        "step": 4
+      },
+      {
+        "absoluteGridStep": 132,
+        "measure": 9,
+        "midi": 67,
+        "step": 4
+      },
+      {
+        "absoluteGridStep": 134,
+        "measure": 9,
+        "midi": 40,
+        "step": 6
+      },
+      {
+        "absoluteGridStep": 134,
+        "measure": 9,
+        "midi": 59,
+        "step": 6
+      },
+      {
+        "absoluteGridStep": 136,
+        "measure": 9,
+        "midi": 62,
+        "step": 8
+      },
+      {
+        "absoluteGridStep": 138,
+        "measure": 9,
+        "midi": 52,
+        "step": 10
+      },
+      {
+        "absoluteGridStep": 138,
+        "measure": 9,
+        "midi": 64,
+        "step": 10
+      },
+      {
+        "absoluteGridStep": 142,
+        "measure": 9,
+        "midi": 62,
+        "step": 14
+      },
+      {
+        "absoluteGridStep": 147,
+        "measure": 10,
+        "midi": 67,
+        "step": 3
+      },
+      {
+        "absoluteGridStep": 148,
+        "measure": 10,
+        "midi": 52,
+        "step": 4
+      },
+      {
+        "absoluteGridStep": 148,
+        "measure": 10,
+        "midi": 58,
+        "step": 4
+      },
+      {
+        "absoluteGridStep": 148,
+        "measure": 10,
+        "midi": 64,
+        "step": 4
+      },
+      {
+        "absoluteGridStep": 150,
+        "measure": 10,
+        "midi": 40,
+        "step": 6
+      },
+      {
+        "absoluteGridStep": 152,
+        "measure": 10,
+        "midi": 62,
+        "step": 8
+      },
+      {
+        "absoluteGridStep": 154,
+        "measure": 10,
+        "midi": 52,
+        "step": 10
+      },
+      {
+        "absoluteGridStep": 154,
+        "measure": 10,
+        "midi": 64,
+        "step": 10
+      },
+      {
+        "absoluteGridStep": 156,
+        "measure": 10,
+        "midi": 62,
+        "step": 12
+      },
+      {
+        "absoluteGridStep": 156,
+        "measure": 10,
+        "midi": 64,
+        "step": 12
+      },
+      {
+        "absoluteGridStep": 156,
+        "measure": 10,
+        "midi": 67,
+        "step": 12
+      },
+      {
+        "absoluteGridStep": 163,
+        "measure": 11,
+        "midi": 67,
+        "step": 3
+      },
+      {
+        "absoluteGridStep": 164,
+        "measure": 11,
+        "midi": 52,
+        "step": 4
+      },
+      {
+        "absoluteGridStep": 164,
+        "measure": 11,
+        "midi": 64,
+        "step": 4
+      },
+      {
+        "absoluteGridStep": 164,
+        "measure": 11,
+        "midi": 67,
+        "step": 4
+      },
+      {
+        "absoluteGridStep": 168,
+        "measure": 11,
+        "midi": 62,
+        "step": 8
+      },
+      {
+        "absoluteGridStep": 170,
+        "measure": 11,
+        "midi": 52,
+        "step": 10
+      },
+      {
+        "absoluteGridStep": 170,
+        "measure": 11,
+        "midi": 64,
+        "step": 10
+      },
+      {
+        "absoluteGridStep": 174,
+        "measure": 11,
+        "midi": 40,
+        "step": 14
+      },
+      {
+        "absoluteGridStep": 176,
+        "measure": 12,
+        "midi": 57,
+        "step": 0
+      },
+      {
+        "absoluteGridStep": 176,
+        "measure": 12,
+        "midi": 71,
+        "step": 0
+      },
+      {
+        "absoluteGridStep": 180,
+        "measure": 12,
+        "midi": 52,
+        "step": 4
+      },
+      {
+        "absoluteGridStep": 180,
+        "measure": 12,
+        "midi": 64,
+        "step": 4
+      },
+      {
+        "absoluteGridStep": 180,
+        "measure": 12,
+        "midi": 67,
+        "step": 4
+      },
+      {
+        "absoluteGridStep": 184,
+        "measure": 12,
+        "midi": 62,
+        "step": 8
+      },
+      {
+        "absoluteGridStep": 186,
+        "measure": 12,
+        "midi": 52,
+        "step": 10
+      },
+      {
+        "absoluteGridStep": 188,
+        "measure": 12,
+        "midi": 62,
+        "step": 12
+      },
+      {
+        "absoluteGridStep": 188,
+        "measure": 12,
+        "midi": 64,
+        "step": 12
+      },
+      {
+        "absoluteGridStep": 188,
+        "measure": 12,
+        "midi": 67,
+        "step": 12
+      },
+      {
+        "absoluteGridStep": 192,
+        "measure": 13,
+        "midi": 59,
+        "step": 0
+      },
+      {
+        "absoluteGridStep": 194,
+        "measure": 13,
+        "midi": 57,
+        "step": 2
+      },
+      {
+        "absoluteGridStep": 194,
+        "measure": 13,
+        "midi": 67,
+        "step": 2
+      },
+      {
+        "absoluteGridStep": 196,
+        "measure": 13,
+        "midi": 52,
+        "step": 4
+      },
+      {
+        "absoluteGridStep": 196,
+        "measure": 13,
+        "midi": 64,
+        "step": 4
+      },
+      {
+        "absoluteGridStep": 198,
+        "measure": 13,
+        "midi": 40,
+        "step": 6
+      },
+      {
+        "absoluteGridStep": 198,
+        "measure": 13,
+        "midi": 59,
+        "step": 6
+      },
+      {
+        "absoluteGridStep": 200,
+        "measure": 13,
+        "midi": 62,
+        "step": 8
+      },
+      {
+        "absoluteGridStep": 200,
+        "measure": 13,
+        "midi": 66,
+        "step": 8
+      },
+      {
+        "absoluteGridStep": 202,
+        "measure": 13,
+        "midi": 52,
+        "step": 10
+      },
+      {
+        "absoluteGridStep": 202,
+        "measure": 13,
+        "midi": 64,
+        "step": 10
+      },
+      {
+        "absoluteGridStep": 208,
+        "measure": 14,
+        "midi": 59,
+        "step": 0
+      },
+      {
+        "absoluteGridStep": 208,
+        "measure": 14,
+        "midi": 71,
+        "step": 0
+      },
+      {
+        "absoluteGridStep": 210,
+        "measure": 14,
+        "midi": 57,
+        "step": 2
+      },
+      {
+        "absoluteGridStep": 212,
+        "measure": 14,
+        "midi": 52,
+        "step": 4
+      },
+      {
+        "absoluteGridStep": 212,
+        "measure": 14,
+        "midi": 64,
+        "step": 4
+      },
+      {
+        "absoluteGridStep": 212,
+        "measure": 14,
+        "midi": 67,
+        "step": 4
+      },
+      {
+        "absoluteGridStep": 214,
+        "measure": 14,
+        "midi": 40,
+        "step": 6
+      },
+      {
+        "absoluteGridStep": 216,
+        "measure": 14,
+        "midi": 62,
+        "step": 8
+      },
+      {
+        "absoluteGridStep": 218,
+        "measure": 14,
+        "midi": 52,
+        "step": 10
+      },
+      {
+        "absoluteGridStep": 218,
+        "measure": 14,
+        "midi": 64,
+        "step": 10
+      },
+      {
+        "absoluteGridStep": 220,
+        "measure": 14,
+        "midi": 62,
+        "step": 12
+      },
+      {
+        "absoluteGridStep": 220,
+        "measure": 14,
+        "midi": 67,
+        "step": 12
+      },
+      {
+        "absoluteGridStep": 222,
+        "measure": 14,
+        "midi": 55,
+        "step": 14
+      },
+      {
+        "absoluteGridStep": 222,
+        "measure": 14,
+        "midi": 67,
+        "step": 14
+      },
+      {
+        "absoluteGridStep": 224,
+        "measure": 15,
+        "midi": 59,
+        "step": 0
+      },
+      {
+        "absoluteGridStep": 226,
+        "measure": 15,
+        "midi": 57,
+        "step": 2
+      },
+      {
+        "absoluteGridStep": 226,
+        "measure": 15,
+        "midi": 67,
+        "step": 2
+      },
+      {
+        "absoluteGridStep": 226,
+        "measure": 15,
+        "midi": 69,
+        "step": 2
+      },
+      {
+        "absoluteGridStep": 228,
+        "measure": 15,
+        "midi": 52,
+        "step": 4
+      },
+      {
+        "absoluteGridStep": 228,
+        "measure": 15,
+        "midi": 64,
+        "step": 4
+      },
+      {
+        "absoluteGridStep": 230,
+        "measure": 15,
+        "midi": 52,
+        "step": 6
+      },
+      {
+        "absoluteGridStep": 232,
+        "measure": 15,
+        "midi": 62,
+        "step": 8
+      },
+      {
+        "absoluteGridStep": 234,
+        "measure": 15,
+        "midi": 52,
+        "step": 10
+      },
+      {
+        "absoluteGridStep": 234,
+        "measure": 15,
+        "midi": 64,
+        "step": 10
+      },
+      {
+        "absoluteGridStep": 242,
+        "measure": 16,
+        "midi": 57,
+        "step": 2
+      },
+      {
+        "absoluteGridStep": 244,
+        "measure": 16,
+        "midi": 52,
+        "step": 4
+      },
+      {
+        "absoluteGridStep": 244,
+        "measure": 16,
+        "midi": 64,
+        "step": 4
+      },
+      {
+        "absoluteGridStep": 244,
+        "measure": 16,
+        "midi": 67,
+        "step": 4
+      },
+      {
+        "absoluteGridStep": 244,
+        "measure": 16,
+        "midi": 71,
+        "step": 4
+      },
+      {
+        "absoluteGridStep": 246,
+        "measure": 16,
+        "midi": 40,
+        "step": 6
+      },
+      {
+        "absoluteGridStep": 248,
+        "measure": 16,
+        "midi": 62,
+        "step": 8
+      },
+      {
+        "absoluteGridStep": 250,
+        "measure": 16,
+        "midi": 52,
+        "step": 10
+      },
+      {
+        "absoluteGridStep": 250,
+        "measure": 16,
+        "midi": 64,
+        "step": 10
+      },
+      {
+        "absoluteGridStep": 252,
+        "measure": 16,
+        "midi": 62,
+        "step": 12
+      },
+      {
+        "absoluteGridStep": 252,
+        "measure": 16,
+        "midi": 64,
+        "step": 12
+      },
+      {
+        "absoluteGridStep": 252,
+        "measure": 16,
+        "midi": 67,
+        "step": 12
+      },
+      {
+        "absoluteGridStep": 260,
+        "measure": 17,
+        "midi": 52,
+        "step": 4
+      },
+      {
+        "absoluteGridStep": 262,
+        "measure": 17,
+        "midi": 40,
+        "step": 6
+      },
+      {
+        "absoluteGridStep": 262,
+        "measure": 17,
+        "midi": 59,
+        "step": 6
+      },
+      {
+        "absoluteGridStep": 266,
+        "measure": 17,
+        "midi": 52,
+        "step": 10
+      },
+      {
+        "absoluteGridStep": 266,
+        "measure": 17,
+        "midi": 64,
+        "step": 10
+      },
+      {
+        "absoluteGridStep": 270,
+        "measure": 17,
+        "midi": 59,
+        "step": 14
+      },
+      {
+        "absoluteGridStep": 272,
+        "measure": 18,
+        "midi": 58,
+        "step": 0
+      },
+      {
+        "absoluteGridStep": 275,
+        "measure": 18,
+        "midi": 67,
+        "step": 3
+      },
+      {
+        "absoluteGridStep": 276,
+        "measure": 18,
+        "midi": 52,
+        "step": 4
+      },
+      {
+        "absoluteGridStep": 278,
+        "measure": 18,
+        "midi": 40,
+        "step": 6
+      },
+      {
+        "absoluteGridStep": 280,
+        "measure": 18,
+        "midi": 50,
+        "step": 8
+      },
+      {
+        "absoluteGridStep": 280,
+        "measure": 18,
+        "midi": 52,
+        "step": 8
+      },
+      {
+        "absoluteGridStep": 280,
+        "measure": 18,
+        "midi": 62,
+        "step": 8
+      },
+      {
+        "absoluteGridStep": 282,
+        "measure": 18,
+        "midi": 52,
+        "step": 10
+      },
+      {
+        "absoluteGridStep": 282,
+        "measure": 18,
+        "midi": 71,
+        "step": 10
+      },
+      {
+        "absoluteGridStep": 282,
+        "measure": 18,
+        "midi": 80,
+        "step": 10
+      },
+      {
+        "absoluteGridStep": 284,
+        "measure": 18,
+        "midi": 64,
+        "step": 12
+      },
+      {
+        "absoluteGridStep": 286,
+        "measure": 18,
+        "midi": 40,
+        "step": 14
+      },
+      {
+        "absoluteGridStep": 286,
+        "measure": 18,
+        "midi": 59,
+        "step": 14
+      },
+      {
+        "absoluteGridStep": 288,
+        "measure": 19,
+        "midi": 59,
+        "step": 0
+      },
+      {
+        "absoluteGridStep": 292,
+        "measure": 19,
+        "midi": 52,
+        "step": 4
+      },
+      {
+        "absoluteGridStep": 294,
+        "measure": 19,
+        "midi": 40,
+        "step": 6
+      },
+      {
+        "absoluteGridStep": 294,
+        "measure": 19,
+        "midi": 59,
+        "step": 6
+      },
+      {
+        "absoluteGridStep": 298,
+        "measure": 19,
+        "midi": 52,
+        "step": 10
+      },
+      {
+        "absoluteGridStep": 302,
+        "measure": 19,
+        "midi": 59,
+        "step": 14
+      },
+      {
+        "absoluteGridStep": 302,
+        "measure": 19,
+        "midi": 68,
+        "step": 14
+      },
+      {
+        "absoluteGridStep": 306,
+        "measure": 20,
+        "midi": 57,
+        "step": 2
+      },
+      {
+        "absoluteGridStep": 308,
+        "measure": 20,
+        "midi": 52,
+        "step": 4
+      },
+      {
+        "absoluteGridStep": 308,
+        "measure": 20,
+        "midi": 64,
+        "step": 4
+      },
+      {
+        "absoluteGridStep": 308,
+        "measure": 20,
+        "midi": 71,
+        "step": 4
+      },
+      {
+        "absoluteGridStep": 314,
+        "measure": 20,
+        "midi": 52,
+        "step": 10
+      },
+      {
+        "absoluteGridStep": 314,
+        "measure": 20,
+        "midi": 64,
+        "step": 10
+      },
+      {
+        "absoluteGridStep": 320,
+        "measure": 21,
+        "midi": 59,
+        "step": 0
+      },
+      {
+        "absoluteGridStep": 322,
+        "measure": 21,
+        "midi": 57,
+        "step": 2
+      },
+      {
+        "absoluteGridStep": 322,
+        "measure": 21,
+        "midi": 67,
+        "step": 2
+      },
+      {
+        "absoluteGridStep": 324,
+        "measure": 21,
+        "midi": 52,
+        "step": 4
+      },
+      {
+        "absoluteGridStep": 324,
+        "measure": 21,
+        "midi": 59,
+        "step": 4
+      },
+      {
+        "absoluteGridStep": 324,
+        "measure": 21,
+        "midi": 64,
+        "step": 4
+      },
+      {
+        "absoluteGridStep": 330,
+        "measure": 21,
+        "midi": 52,
+        "step": 10
+      },
+      {
+        "absoluteGridStep": 330,
+        "measure": 21,
+        "midi": 64,
+        "step": 10
+      },
+      {
+        "absoluteGridStep": 336,
+        "measure": 22,
+        "midi": 59,
+        "step": 0
+      },
+      {
+        "absoluteGridStep": 338,
+        "measure": 22,
+        "midi": 57,
+        "step": 2
+      },
+      {
+        "absoluteGridStep": 340,
+        "measure": 22,
+        "midi": 52,
+        "step": 4
+      },
+      {
+        "absoluteGridStep": 340,
+        "measure": 22,
+        "midi": 64,
+        "step": 4
+      },
+      {
+        "absoluteGridStep": 346,
+        "measure": 22,
+        "midi": 52,
+        "step": 10
+      },
+      {
+        "absoluteGridStep": 346,
+        "measure": 22,
+        "midi": 64,
+        "step": 10
+      },
+      {
+        "absoluteGridStep": 350,
+        "measure": 22,
+        "midi": 40,
+        "step": 14
+      },
+      {
+        "absoluteGridStep": 352,
+        "measure": 23,
+        "midi": 59,
+        "step": 0
+      },
+      {
+        "absoluteGridStep": 354,
+        "measure": 23,
+        "midi": 57,
+        "step": 2
+      },
+      {
+        "absoluteGridStep": 356,
+        "measure": 23,
+        "midi": 52,
+        "step": 4
+      },
+      {
+        "absoluteGridStep": 356,
+        "measure": 23,
+        "midi": 64,
+        "step": 4
+      },
+      {
+        "absoluteGridStep": 358,
+        "measure": 23,
+        "midi": 40,
+        "step": 6
+      },
+      {
+        "absoluteGridStep": 362,
+        "measure": 23,
+        "midi": 52,
+        "step": 10
+      },
+      {
+        "absoluteGridStep": 366,
+        "measure": 23,
+        "midi": 40,
+        "step": 14
+      },
+      {
+        "absoluteGridStep": 368,
+        "measure": 24,
+        "midi": 59,
+        "step": 0
+      },
+      {
+        "absoluteGridStep": 370,
+        "measure": 24,
+        "midi": 57,
+        "step": 2
+      },
+      {
+        "absoluteGridStep": 372,
+        "measure": 24,
+        "midi": 40,
+        "step": 4
+      },
+      {
+        "absoluteGridStep": 372,
+        "measure": 24,
+        "midi": 52,
+        "step": 4
+      },
+      {
+        "absoluteGridStep": 372,
+        "measure": 24,
+        "midi": 64,
+        "step": 4
+      },
+      {
+        "absoluteGridStep": 372,
+        "measure": 24,
+        "midi": 67,
+        "step": 4
+      },
+      {
+        "absoluteGridStep": 376,
+        "measure": 24,
+        "midi": 64,
+        "step": 8
+      },
+      {
+        "absoluteGridStep": 378,
+        "measure": 24,
+        "midi": 40,
+        "step": 10
+      },
+      {
+        "absoluteGridStep": 378,
+        "measure": 24,
+        "midi": 52,
+        "step": 10
+      },
+      {
+        "absoluteGridStep": 382,
+        "measure": 24,
+        "midi": 68,
+        "step": 14
+      },
+      {
+        "absoluteGridStep": 384,
+        "measure": 25,
+        "midi": 62,
+        "step": 0
+      },
+      {
+        "absoluteGridStep": 386,
+        "measure": 25,
+        "midi": 60,
+        "step": 2
+      },
+      {
+        "absoluteGridStep": 388,
+        "measure": 25,
+        "midi": 55,
+        "step": 4
+      },
+      {
+        "absoluteGridStep": 388,
+        "measure": 25,
+        "midi": 58,
+        "step": 4
+      },
+      {
+        "absoluteGridStep": 388,
+        "measure": 25,
+        "midi": 62,
+        "step": 4
+      },
+      {
+        "absoluteGridStep": 388,
+        "measure": 25,
+        "midi": 67,
+        "step": 4
+      },
+      {
+        "absoluteGridStep": 392,
+        "measure": 25,
+        "midi": 65,
+        "step": 8
+      },
+      {
+        "absoluteGridStep": 394,
+        "measure": 25,
+        "midi": 55,
+        "step": 10
+      },
+      {
+        "absoluteGridStep": 394,
+        "measure": 25,
+        "midi": 67,
+        "step": 10
+      },
+      {
+        "absoluteGridStep": 398,
+        "measure": 25,
+        "midi": 43,
+        "step": 14
+      },
+      {
+        "absoluteGridStep": 398,
+        "measure": 25,
+        "midi": 62,
+        "step": 14
+      },
+      {
+        "absoluteGridStep": 400,
+        "measure": 26,
+        "midi": 62,
+        "step": 0
+      },
+      {
+        "absoluteGridStep": 404,
+        "measure": 26,
+        "midi": 55,
+        "step": 4
+      },
+      {
+        "absoluteGridStep": 404,
+        "measure": 26,
+        "midi": 58,
+        "step": 4
+      },
+      {
+        "absoluteGridStep": 404,
+        "measure": 26,
+        "midi": 60,
+        "step": 4
+      },
+      {
+        "absoluteGridStep": 404,
+        "measure": 26,
+        "midi": 67,
+        "step": 4
+      },
+      {
+        "absoluteGridStep": 406,
+        "measure": 26,
+        "midi": 43,
+        "step": 6
+      },
+      {
+        "absoluteGridStep": 408,
+        "measure": 26,
+        "midi": 65,
+        "step": 8
+      },
+      {
+        "absoluteGridStep": 410,
+        "measure": 26,
+        "midi": 55,
+        "step": 10
+      },
+      {
+        "absoluteGridStep": 410,
+        "measure": 26,
+        "midi": 67,
+        "step": 10
+      },
+      {
+        "absoluteGridStep": 416,
+        "measure": 27,
+        "midi": 62,
+        "step": 0
+      },
+      {
+        "absoluteGridStep": 418,
+        "measure": 27,
+        "midi": 58,
+        "step": 2
+      },
+      {
+        "absoluteGridStep": 418,
+        "measure": 27,
+        "midi": 60,
+        "step": 2
+      },
+      {
+        "absoluteGridStep": 420,
+        "measure": 27,
+        "midi": 55,
+        "step": 4
+      },
+      {
+        "absoluteGridStep": 420,
+        "measure": 27,
+        "midi": 67,
+        "step": 4
+      },
+      {
+        "absoluteGridStep": 424,
+        "measure": 27,
+        "midi": 53,
+        "step": 8
+      },
+      {
+        "absoluteGridStep": 424,
+        "measure": 27,
+        "midi": 65,
+        "step": 8
+      },
+      {
+        "absoluteGridStep": 426,
+        "measure": 27,
+        "midi": 55,
+        "step": 10
+      },
+      {
+        "absoluteGridStep": 426,
+        "measure": 27,
+        "midi": 67,
+        "step": 10
+      },
+      {
+        "absoluteGridStep": 430,
+        "measure": 27,
+        "midi": 64,
+        "step": 14
+      },
+      {
+        "absoluteGridStep": 430,
+        "measure": 27,
+        "midi": 68,
+        "step": 14
+      },
+      {
+        "absoluteGridStep": 432,
+        "measure": 28,
+        "midi": 60,
+        "step": 0
+      },
+      {
+        "absoluteGridStep": 432,
+        "measure": 28,
+        "midi": 67,
+        "step": 0
+      },
+      {
+        "absoluteGridStep": 433,
+        "measure": 28,
+        "midi": 67,
+        "step": 1
+      },
+      {
+        "absoluteGridStep": 436,
+        "measure": 28,
+        "midi": 59,
+        "step": 4
+      },
+      {
+        "absoluteGridStep": 436,
+        "measure": 28,
+        "midi": 65,
+        "step": 4
+      },
+      {
+        "absoluteGridStep": 439,
+        "measure": 28,
+        "midi": 58,
+        "step": 7
+      },
+      {
+        "absoluteGridStep": 439,
+        "measure": 28,
+        "midi": 64,
+        "step": 7
+      },
+      {
+        "absoluteGridStep": 442,
+        "measure": 28,
+        "midi": 57,
+        "step": 10
+      },
+      {
+        "absoluteGridStep": 442,
+        "measure": 28,
+        "midi": 65,
+        "step": 10
+      },
+      {
+        "absoluteGridStep": 445,
+        "measure": 28,
+        "midi": 67,
+        "step": 13
+      },
+      {
+        "absoluteGridStep": 452,
+        "measure": 29,
+        "midi": 52,
+        "step": 4
+      },
+      {
+        "absoluteGridStep": 452,
+        "measure": 29,
+        "midi": 55,
+        "step": 4
+      },
+      {
+        "absoluteGridStep": 452,
+        "measure": 29,
+        "midi": 64,
+        "step": 4
+      },
+      {
+        "absoluteGridStep": 454,
+        "measure": 29,
+        "midi": 40,
+        "step": 6
+      },
+      {
+        "absoluteGridStep": 454,
+        "measure": 29,
+        "midi": 68,
+        "step": 6
+      },
+      {
+        "absoluteGridStep": 458,
+        "measure": 29,
+        "midi": 52,
+        "step": 10
+      },
+      {
+        "absoluteGridStep": 458,
+        "measure": 29,
+        "midi": 64,
+        "step": 10
+      },
+      {
+        "absoluteGridStep": 462,
+        "measure": 29,
+        "midi": 40,
+        "step": 14
+      },
+      {
+        "absoluteGridStep": 462,
+        "measure": 29,
+        "midi": 52,
+        "step": 14
+      },
+      {
+        "absoluteGridStep": 462,
+        "measure": 29,
+        "midi": 59,
+        "step": 14
+      },
+      {
+        "absoluteGridStep": 467,
+        "measure": 30,
+        "midi": 67,
+        "step": 3
+      },
+      {
+        "absoluteGridStep": 468,
+        "measure": 30,
+        "midi": 40,
+        "step": 4
+      },
+      {
+        "absoluteGridStep": 468,
+        "measure": 30,
+        "midi": 52,
+        "step": 4
+      },
+      {
+        "absoluteGridStep": 474,
+        "measure": 30,
+        "midi": 52,
+        "step": 10
+      },
+      {
+        "absoluteGridStep": 476,
+        "measure": 30,
+        "midi": 64,
+        "step": 12
+      },
+      {
+        "absoluteGridStep": 478,
+        "measure": 30,
+        "midi": 40,
+        "step": 14
+      },
+      {
+        "absoluteGridStep": 478,
+        "measure": 30,
+        "midi": 52,
+        "step": 14
+      },
+      {
+        "absoluteGridStep": 478,
+        "measure": 30,
+        "midi": 59,
+        "step": 14
+      },
+      {
+        "absoluteGridStep": 482,
+        "measure": 31,
+        "midi": 57,
+        "step": 2
+      },
+      {
+        "absoluteGridStep": 484,
+        "measure": 31,
+        "midi": 52,
+        "step": 4
+      },
+      {
+        "absoluteGridStep": 486,
+        "measure": 31,
+        "midi": 40,
+        "step": 6
+      },
+      {
+        "absoluteGridStep": 486,
+        "measure": 31,
+        "midi": 59,
+        "step": 6
+      },
+      {
+        "absoluteGridStep": 486,
+        "measure": 31,
+        "midi": 68,
+        "step": 6
+      },
+      {
+        "absoluteGridStep": 490,
+        "measure": 31,
+        "midi": 40,
+        "step": 10
+      },
+      {
+        "absoluteGridStep": 490,
+        "measure": 31,
+        "midi": 52,
+        "step": 10
+      },
+      {
+        "absoluteGridStep": 490,
+        "measure": 31,
+        "midi": 64,
+        "step": 10
+      },
+      {
+        "absoluteGridStep": 490,
+        "measure": 31,
+        "midi": 68,
+        "step": 10
+      },
+      {
+        "absoluteGridStep": 494,
+        "measure": 31,
+        "midi": 40,
+        "step": 14
+      },
+      {
+        "absoluteGridStep": 498,
+        "measure": 32,
+        "midi": 57,
+        "step": 2
+      },
+      {
+        "absoluteGridStep": 498,
+        "measure": 32,
+        "midi": 69,
+        "step": 2
+      },
+      {
+        "absoluteGridStep": 500,
+        "measure": 32,
+        "midi": 52,
+        "step": 4
+      },
+      {
+        "absoluteGridStep": 500,
+        "measure": 32,
+        "midi": 64,
+        "step": 4
+      },
+      {
+        "absoluteGridStep": 502,
+        "measure": 32,
+        "midi": 40,
+        "step": 6
+      },
+      {
+        "absoluteGridStep": 506,
+        "measure": 32,
+        "midi": 52,
+        "step": 10
+      },
+      {
+        "absoluteGridStep": 506,
+        "measure": 32,
+        "midi": 64,
+        "step": 10
+      },
+      {
+        "absoluteGridStep": 510,
+        "measure": 32,
+        "midi": 45,
+        "step": 14
+      },
+      {
+        "absoluteGridStep": 512,
+        "measure": 33,
+        "midi": 59,
+        "step": 0
+      },
+      {
+        "absoluteGridStep": 512,
+        "measure": 33,
+        "midi": 62,
+        "step": 0
+      },
+      {
+        "absoluteGridStep": 514,
+        "measure": 33,
+        "midi": 64,
+        "step": 2
+      },
+      {
+        "absoluteGridStep": 519,
+        "measure": 33,
+        "midi": 64,
+        "step": 7
+      },
+      {
+        "absoluteGridStep": 524,
+        "measure": 33,
+        "midi": 57,
+        "step": 12
+      },
+      {
+        "absoluteGridStep": 526,
+        "measure": 33,
+        "midi": 57,
+        "step": 14
+      },
+      {
+        "absoluteGridStep": 526,
+        "measure": 33,
+        "midi": 64,
+        "step": 14
+      },
+      {
+        "absoluteGridStep": 528,
+        "measure": 34,
+        "midi": 52,
+        "step": 0
+      },
+      {
+        "absoluteGridStep": 528,
+        "measure": 34,
+        "midi": 61,
+        "step": 0
+      },
+      {
+        "absoluteGridStep": 532,
+        "measure": 34,
+        "midi": 64,
+        "step": 4
+      },
+      {
+        "absoluteGridStep": 542,
+        "measure": 34,
+        "midi": 68,
+        "step": 14
+      },
+      {
+        "absoluteGridStep": 544,
+        "measure": 35,
+        "midi": 52,
+        "step": 0
+      },
+      {
+        "absoluteGridStep": 544,
+        "measure": 35,
+        "midi": 64,
+        "step": 0
+      },
+      {
+        "absoluteGridStep": 544,
+        "measure": 35,
+        "midi": 71,
+        "step": 0
+      },
+      {
+        "absoluteGridStep": 548,
+        "measure": 35,
+        "midi": 62,
+        "step": 4
+      },
+      {
+        "absoluteGridStep": 548,
+        "measure": 35,
+        "midi": 66,
+        "step": 4
+      },
+      {
+        "absoluteGridStep": 550,
+        "measure": 35,
+        "midi": 64,
+        "step": 6
+      },
+      {
+        "absoluteGridStep": 550,
+        "measure": 35,
+        "midi": 68,
+        "step": 6
+      },
+      {
+        "absoluteGridStep": 552,
+        "measure": 35,
+        "midi": 52,
+        "step": 8
+      },
+      {
+        "absoluteGridStep": 560,
+        "measure": 36,
+        "midi": 64,
+        "step": 0
+      },
+      {
+        "absoluteGridStep": 560,
+        "measure": 36,
+        "midi": 68,
+        "step": 0
+      },
+      {
+        "absoluteGridStep": 564,
+        "measure": 36,
+        "midi": 62,
+        "step": 4
+      },
+      {
+        "absoluteGridStep": 564,
+        "measure": 36,
+        "midi": 71,
+        "step": 4
+      },
+      {
+        "absoluteGridStep": 566,
+        "measure": 36,
+        "midi": 64,
+        "step": 6
+      },
+      {
+        "absoluteGridStep": 566,
+        "measure": 36,
+        "midi": 68,
+        "step": 6
+      },
+      {
+        "absoluteGridStep": 576,
+        "measure": 37,
+        "midi": 62,
+        "step": 0
+      },
+      {
+        "absoluteGridStep": 580,
+        "measure": 37,
+        "midi": 47,
+        "step": 4
+      },
+      {
+        "absoluteGridStep": 580,
+        "measure": 37,
+        "midi": 48,
+        "step": 4
+      },
+      {
+        "absoluteGridStep": 580,
+        "measure": 37,
+        "midi": 62,
+        "step": 4
+      },
+      {
+        "absoluteGridStep": 584,
+        "measure": 37,
+        "midi": 47,
+        "step": 8
+      },
+      {
+        "absoluteGridStep": 584,
+        "measure": 37,
+        "midi": 59,
+        "step": 8
+      },
+      {
+        "absoluteGridStep": 584,
+        "measure": 37,
+        "midi": 59,
+        "step": 8
+      },
+      {
+        "absoluteGridStep": 584,
+        "measure": 37,
+        "midi": 62,
+        "step": 8
+      },
+      {
+        "absoluteGridStep": 588,
+        "measure": 37,
+        "midi": 45,
+        "step": 12
+      },
+      {
+        "absoluteGridStep": 590,
+        "measure": 37,
+        "midi": 45,
+        "step": 14
+      },
+      {
+        "absoluteGridStep": 590,
+        "measure": 37,
+        "midi": 52,
+        "step": 14
+      },
+      {
+        "absoluteGridStep": 592,
+        "measure": 38,
+        "midi": 57,
+        "step": 0
+      },
+      {
+        "absoluteGridStep": 593,
+        "measure": 38,
+        "midi": 45,
+        "step": 1
+      },
+      {
+        "absoluteGridStep": 593,
+        "measure": 38,
+        "midi": 69,
+        "step": 1
+      },
+      {
+        "absoluteGridStep": 595,
+        "measure": 38,
+        "midi": 45,
+        "step": 3
+      },
+      {
+        "absoluteGridStep": 596,
+        "measure": 38,
+        "midi": 61,
+        "step": 4
+      },
+      {
+        "absoluteGridStep": 596,
+        "measure": 38,
+        "midi": 64,
+        "step": 4
+      },
+      {
+        "absoluteGridStep": 597,
+        "measure": 38,
+        "midi": 61,
+        "step": 5
+      },
+      {
+        "absoluteGridStep": 604,
+        "measure": 38,
+        "midi": 57,
+        "step": 12
+      },
+      {
+        "absoluteGridStep": 608,
+        "measure": 39,
+        "midi": 52,
+        "step": 0
+      },
+      {
+        "absoluteGridStep": 608,
+        "measure": 39,
+        "midi": 59,
+        "step": 0
+      },
+      {
+        "absoluteGridStep": 610,
+        "measure": 39,
+        "midi": 57,
+        "step": 2
+      },
+      {
+        "absoluteGridStep": 612,
+        "measure": 39,
+        "midi": 52,
+        "step": 4
+      },
+      {
+        "absoluteGridStep": 612,
+        "measure": 39,
+        "midi": 64,
+        "step": 4
+      },
+      {
+        "absoluteGridStep": 614,
+        "measure": 39,
+        "midi": 40,
+        "step": 6
+      },
+      {
+        "absoluteGridStep": 614,
+        "measure": 39,
+        "midi": 64,
+        "step": 6
+      },
+      {
+        "absoluteGridStep": 616,
+        "measure": 39,
+        "midi": 62,
+        "step": 8
+      },
+      {
+        "absoluteGridStep": 618,
+        "measure": 39,
+        "midi": 40,
+        "step": 10
+      },
+      {
+        "absoluteGridStep": 618,
+        "measure": 39,
+        "midi": 52,
+        "step": 10
+      },
+      {
+        "absoluteGridStep": 622,
+        "measure": 39,
+        "midi": 64,
+        "step": 14
+      },
+      {
+        "absoluteGridStep": 624,
+        "measure": 40,
+        "midi": 59,
+        "step": 0
+      },
+      {
+        "absoluteGridStep": 626,
+        "measure": 40,
+        "midi": 57,
+        "step": 2
+      },
+      {
+        "absoluteGridStep": 628,
+        "measure": 40,
+        "midi": 40,
+        "step": 4
+      },
+      {
+        "absoluteGridStep": 628,
+        "measure": 40,
+        "midi": 52,
+        "step": 4
+      },
+      {
+        "absoluteGridStep": 628,
+        "measure": 40,
+        "midi": 64,
+        "step": 4
+      },
+      {
+        "absoluteGridStep": 632,
+        "measure": 40,
+        "midi": 40,
+        "step": 8
+      },
+      {
+        "absoluteGridStep": 632,
+        "measure": 40,
+        "midi": 52,
+        "step": 8
+      },
+      {
+        "absoluteGridStep": 632,
+        "measure": 40,
+        "midi": 52,
+        "step": 8
+      },
+      {
+        "absoluteGridStep": 632,
+        "measure": 40,
+        "midi": 64,
+        "step": 8
+      },
+      {
+        "absoluteGridStep": 636,
+        "measure": 40,
+        "midi": 43,
+        "step": 12
+      },
+      {
+        "absoluteGridStep": 636,
+        "measure": 40,
+        "midi": 52,
+        "step": 12
+      },
+      {
+        "absoluteGridStep": 636,
+        "measure": 40,
+        "midi": 62,
+        "step": 12
+      },
+      {
+        "absoluteGridStep": 636,
+        "measure": 40,
+        "midi": 67,
+        "step": 12
+      },
+      {
+        "absoluteGridStep": 640,
+        "measure": 41,
+        "midi": 59,
+        "step": 0
+      },
+      {
+        "absoluteGridStep": 642,
+        "measure": 41,
+        "midi": 57,
+        "step": 2
+      },
+      {
+        "absoluteGridStep": 644,
+        "measure": 41,
+        "midi": 52,
+        "step": 4
+      },
+      {
+        "absoluteGridStep": 644,
+        "measure": 41,
+        "midi": 64,
+        "step": 4
+      },
+      {
+        "absoluteGridStep": 644,
+        "measure": 41,
+        "midi": 67,
+        "step": 4
+      },
+      {
+        "absoluteGridStep": 646,
+        "measure": 41,
+        "midi": 40,
+        "step": 6
+      },
+      {
+        "absoluteGridStep": 646,
+        "measure": 41,
+        "midi": 59,
+        "step": 6
+      },
+      {
+        "absoluteGridStep": 648,
+        "measure": 41,
+        "midi": 62,
+        "step": 8
+      },
+      {
+        "absoluteGridStep": 650,
+        "measure": 41,
+        "midi": 52,
+        "step": 10
+      },
+      {
+        "absoluteGridStep": 650,
+        "measure": 41,
+        "midi": 64,
+        "step": 10
+      },
+      {
+        "absoluteGridStep": 654,
+        "measure": 41,
+        "midi": 40,
+        "step": 14
+      },
+      {
+        "absoluteGridStep": 656,
+        "measure": 42,
+        "midi": 59,
+        "step": 0
+      },
+      {
+        "absoluteGridStep": 658,
+        "measure": 42,
+        "midi": 67,
+        "step": 2
+      },
+      {
+        "absoluteGridStep": 660,
+        "measure": 42,
+        "midi": 52,
+        "step": 4
+      },
+      {
+        "absoluteGridStep": 660,
+        "measure": 42,
+        "midi": 59,
+        "step": 4
+      },
+      {
+        "absoluteGridStep": 660,
+        "measure": 42,
+        "midi": 64,
+        "step": 4
+      },
+      {
+        "absoluteGridStep": 664,
+        "measure": 42,
+        "midi": 62,
+        "step": 8
+      },
+      {
+        "absoluteGridStep": 666,
+        "measure": 42,
+        "midi": 52,
+        "step": 10
+      },
+      {
+        "absoluteGridStep": 666,
+        "measure": 42,
+        "midi": 64,
+        "step": 10
+      },
+      {
+        "absoluteGridStep": 668,
+        "measure": 42,
+        "midi": 67,
+        "step": 12
+      },
+      {
+        "absoluteGridStep": 672,
+        "measure": 43,
+        "midi": 59,
+        "step": 0
+      },
+      {
+        "absoluteGridStep": 674,
+        "measure": 43,
+        "midi": 57,
+        "step": 2
+      },
+      {
+        "absoluteGridStep": 676,
+        "measure": 43,
+        "midi": 52,
+        "step": 4
+      },
+      {
+        "absoluteGridStep": 676,
+        "measure": 43,
+        "midi": 64,
+        "step": 4
+      },
+      {
+        "absoluteGridStep": 676,
+        "measure": 43,
+        "midi": 67,
+        "step": 4
+      },
+      {
+        "absoluteGridStep": 678,
+        "measure": 43,
+        "midi": 52,
+        "step": 6
+      },
+      {
+        "absoluteGridStep": 678,
+        "measure": 43,
+        "midi": 59,
+        "step": 6
+      },
+      {
+        "absoluteGridStep": 680,
+        "measure": 43,
+        "midi": 62,
+        "step": 8
+      },
+      {
+        "absoluteGridStep": 682,
+        "measure": 43,
+        "midi": 52,
+        "step": 10
+      },
+      {
+        "absoluteGridStep": 682,
+        "measure": 43,
+        "midi": 64,
+        "step": 10
+      },
+      {
+        "absoluteGridStep": 686,
+        "measure": 43,
+        "midi": 40,
+        "step": 14
+      },
+      {
+        "absoluteGridStep": 686,
+        "measure": 43,
+        "midi": 59,
+        "step": 14
+      },
+      {
+        "absoluteGridStep": 688,
+        "measure": 44,
+        "midi": 71,
+        "step": 0
+      },
+      {
+        "absoluteGridStep": 690,
+        "measure": 44,
+        "midi": 67,
+        "step": 2
+      },
+      {
+        "absoluteGridStep": 692,
+        "measure": 44,
+        "midi": 52,
+        "step": 4
+      },
+      {
+        "absoluteGridStep": 692,
+        "measure": 44,
+        "midi": 64,
+        "step": 4
+      },
+      {
+        "absoluteGridStep": 694,
+        "measure": 44,
+        "midi": 58,
+        "step": 6
+      },
+      {
+        "absoluteGridStep": 696,
+        "measure": 44,
+        "midi": 62,
+        "step": 8
+      },
+      {
+        "absoluteGridStep": 698,
+        "measure": 44,
+        "midi": 52,
+        "step": 10
+      },
+      {
+        "absoluteGridStep": 698,
+        "measure": 44,
+        "midi": 64,
+        "step": 10
+      },
+      {
+        "absoluteGridStep": 700,
+        "measure": 44,
+        "midi": 62,
+        "step": 12
+      },
+      {
+        "absoluteGridStep": 700,
+        "measure": 44,
+        "midi": 67,
+        "step": 12
+      },
+      {
+        "absoluteGridStep": 704,
+        "measure": 45,
+        "midi": 59,
+        "step": 0
+      },
+      {
+        "absoluteGridStep": 704,
+        "measure": 45,
+        "midi": 71,
+        "step": 0
+      },
+      {
+        "absoluteGridStep": 706,
+        "measure": 45,
+        "midi": 55,
+        "step": 2
+      },
+      {
+        "absoluteGridStep": 706,
+        "measure": 45,
+        "midi": 67,
+        "step": 2
+      },
+      {
+        "absoluteGridStep": 708,
+        "measure": 45,
+        "midi": 52,
+        "step": 4
+      },
+      {
+        "absoluteGridStep": 708,
+        "measure": 45,
+        "midi": 64,
+        "step": 4
+      },
+      {
+        "absoluteGridStep": 710,
+        "measure": 45,
+        "midi": 59,
+        "step": 6
+      },
+      {
+        "absoluteGridStep": 712,
+        "measure": 45,
+        "midi": 62,
+        "step": 8
+      },
+      {
+        "absoluteGridStep": 714,
+        "measure": 45,
+        "midi": 52,
+        "step": 10
+      },
+      {
+        "absoluteGridStep": 714,
+        "measure": 45,
+        "midi": 64,
+        "step": 10
+      },
+      {
+        "absoluteGridStep": 718,
+        "measure": 45,
+        "midi": 40,
+        "step": 14
+      },
+      {
+        "absoluteGridStep": 720,
+        "measure": 46,
+        "midi": 40,
+        "step": 0
+      },
+      {
+        "absoluteGridStep": 720,
+        "measure": 46,
+        "midi": 71,
+        "step": 0
+      },
+      {
+        "absoluteGridStep": 722,
+        "measure": 46,
+        "midi": 67,
+        "step": 2
+      },
+      {
+        "absoluteGridStep": 724,
+        "measure": 46,
+        "midi": 52,
+        "step": 4
+      },
+      {
+        "absoluteGridStep": 724,
+        "measure": 46,
+        "midi": 64,
+        "step": 4
+      },
+      {
+        "absoluteGridStep": 726,
+        "measure": 46,
+        "midi": 40,
+        "step": 6
+      },
+      {
+        "absoluteGridStep": 728,
+        "measure": 46,
+        "midi": 62,
+        "step": 8
+      },
+      {
+        "absoluteGridStep": 730,
+        "measure": 46,
+        "midi": 52,
+        "step": 10
+      },
+      {
+        "absoluteGridStep": 730,
+        "measure": 46,
+        "midi": 64,
+        "step": 10
+      },
+      {
+        "absoluteGridStep": 732,
+        "measure": 46,
+        "midi": 62,
+        "step": 12
+      },
+      {
+        "absoluteGridStep": 732,
+        "measure": 46,
+        "midi": 67,
+        "step": 12
+      },
+      {
+        "absoluteGridStep": 738,
+        "measure": 47,
+        "midi": 57,
+        "step": 2
+      },
+      {
+        "absoluteGridStep": 740,
+        "measure": 47,
+        "midi": 52,
+        "step": 4
+      },
+      {
+        "absoluteGridStep": 742,
+        "measure": 47,
+        "midi": 40,
+        "step": 6
+      },
+      {
+        "absoluteGridStep": 742,
+        "measure": 47,
+        "midi": 59,
+        "step": 6
+      },
+      {
+        "absoluteGridStep": 746,
+        "measure": 47,
+        "midi": 52,
+        "step": 10
+      },
+      {
+        "absoluteGridStep": 746,
+        "measure": 47,
+        "midi": 64,
+        "step": 10
+      },
+      {
+        "absoluteGridStep": 750,
+        "measure": 47,
+        "midi": 40,
+        "step": 14
+      },
+      {
+        "absoluteGridStep": 752,
+        "measure": 48,
+        "midi": 59,
+        "step": 0
+      },
+      {
+        "absoluteGridStep": 754,
+        "measure": 48,
+        "midi": 57,
+        "step": 2
+      },
+      {
+        "absoluteGridStep": 756,
+        "measure": 48,
+        "midi": 52,
+        "step": 4
+      },
+      {
+        "absoluteGridStep": 758,
+        "measure": 48,
+        "midi": 40,
+        "step": 6
+      },
+      {
+        "absoluteGridStep": 760,
+        "measure": 48,
+        "midi": 40,
+        "step": 8
+      },
+      {
+        "absoluteGridStep": 762,
+        "measure": 48,
+        "midi": 52,
+        "step": 10
+      },
+      {
+        "absoluteGridStep": 766,
+        "measure": 48,
+        "midi": 40,
+        "step": 14
+      },
+      {
+        "absoluteGridStep": 766,
+        "measure": 48,
+        "midi": 59,
+        "step": 14
+      },
+      {
+        "absoluteGridStep": 770,
+        "measure": 49,
+        "midi": 57,
+        "step": 2
+      },
+      {
+        "absoluteGridStep": 772,
+        "measure": 49,
+        "midi": 40,
+        "step": 4
+      },
+      {
+        "absoluteGridStep": 772,
+        "measure": 49,
+        "midi": 52,
+        "step": 4
+      },
+      {
+        "absoluteGridStep": 778,
+        "measure": 49,
+        "midi": 52,
+        "step": 10
+      },
+      {
+        "absoluteGridStep": 778,
+        "measure": 49,
+        "midi": 64,
+        "step": 10
+      },
+      {
+        "absoluteGridStep": 784,
+        "measure": 50,
+        "midi": 59,
+        "step": 0
+      },
+      {
+        "absoluteGridStep": 786,
+        "measure": 50,
+        "midi": 57,
+        "step": 2
+      },
+      {
+        "absoluteGridStep": 788,
+        "measure": 50,
+        "midi": 52,
+        "step": 4
+      },
+      {
+        "absoluteGridStep": 788,
+        "measure": 50,
+        "midi": 55,
+        "step": 4
+      },
+      {
+        "absoluteGridStep": 790,
+        "measure": 50,
+        "midi": 59,
+        "step": 6
+      },
+      {
+        "absoluteGridStep": 794,
+        "measure": 50,
+        "midi": 52,
+        "step": 10
+      },
+      {
+        "absoluteGridStep": 794,
+        "measure": 50,
+        "midi": 64,
+        "step": 10
+      },
+      {
+        "absoluteGridStep": 800,
+        "measure": 51,
+        "midi": 59,
+        "step": 0
+      },
+      {
+        "absoluteGridStep": 802,
+        "measure": 51,
+        "midi": 57,
+        "step": 2
+      },
+      {
+        "absoluteGridStep": 804,
+        "measure": 51,
+        "midi": 40,
+        "step": 4
+      },
+      {
+        "absoluteGridStep": 804,
+        "measure": 51,
+        "midi": 52,
+        "step": 4
+      },
+      {
+        "absoluteGridStep": 804,
+        "measure": 51,
+        "midi": 55,
+        "step": 4
+      },
+      {
+        "absoluteGridStep": 804,
+        "measure": 51,
+        "midi": 68,
+        "step": 4
+      },
+      {
+        "absoluteGridStep": 810,
+        "measure": 51,
+        "midi": 52,
+        "step": 10
+      },
+      {
+        "absoluteGridStep": 810,
+        "measure": 51,
+        "midi": 64,
+        "step": 10
+      },
+      {
+        "absoluteGridStep": 814,
+        "measure": 51,
+        "midi": 40,
+        "step": 14
+      },
+      {
+        "absoluteGridStep": 816,
+        "measure": 52,
+        "midi": 59,
+        "step": 0
+      },
+      {
+        "absoluteGridStep": 818,
+        "measure": 52,
+        "midi": 57,
+        "step": 2
+      },
+      {
+        "absoluteGridStep": 820,
+        "measure": 52,
+        "midi": 52,
+        "step": 4
+      },
+      {
+        "absoluteGridStep": 820,
+        "measure": 52,
+        "midi": 55,
+        "step": 4
+      },
+      {
+        "absoluteGridStep": 822,
+        "measure": 52,
+        "midi": 40,
+        "step": 6
+      },
+      {
+        "absoluteGridStep": 822,
+        "measure": 52,
+        "midi": 68,
+        "step": 6
+      },
+      {
+        "absoluteGridStep": 826,
+        "measure": 52,
+        "midi": 52,
+        "step": 10
+      },
+      {
+        "absoluteGridStep": 830,
+        "measure": 52,
+        "midi": 40,
+        "step": 14
+      },
+      {
+        "absoluteGridStep": 832,
+        "measure": 53,
+        "midi": 40,
+        "step": 0
+      },
+      {
+        "absoluteGridStep": 832,
+        "measure": 53,
+        "midi": 59,
+        "step": 0
+      },
+      {
+        "absoluteGridStep": 834,
+        "measure": 53,
+        "midi": 57,
+        "step": 2
+      },
+      {
+        "absoluteGridStep": 836,
+        "measure": 53,
+        "midi": 52,
+        "step": 4
+      },
+      {
+        "absoluteGridStep": 838,
+        "measure": 53,
+        "midi": 40,
+        "step": 6
+      },
+      {
+        "absoluteGridStep": 842,
+        "measure": 53,
+        "midi": 40,
+        "step": 10
+      },
+      {
+        "absoluteGridStep": 842,
+        "measure": 53,
+        "midi": 52,
+        "step": 10
+      },
+      {
+        "absoluteGridStep": 844,
+        "measure": 53,
+        "midi": 40,
+        "step": 12
+      },
+      {
+        "absoluteGridStep": 844,
+        "measure": 53,
+        "midi": 64,
+        "step": 12
+      },
+      {
+        "absoluteGridStep": 846,
+        "measure": 53,
+        "midi": 52,
+        "step": 14
+      },
+      {
+        "absoluteGridStep": 850,
+        "measure": 54,
+        "midi": 57,
+        "step": 2
+      },
+      {
+        "absoluteGridStep": 852,
+        "measure": 54,
+        "midi": 52,
+        "step": 4
+      },
+      {
+        "absoluteGridStep": 856,
+        "measure": 54,
+        "midi": 62,
+        "step": 8
+      },
+      {
+        "absoluteGridStep": 858,
+        "measure": 54,
+        "midi": 52,
+        "step": 10
+      },
+      {
+        "absoluteGridStep": 858,
+        "measure": 54,
+        "midi": 64,
+        "step": 10
+      },
+      {
+        "absoluteGridStep": 860,
+        "measure": 54,
+        "midi": 54,
+        "step": 12
+      },
+      {
+        "absoluteGridStep": 862,
+        "measure": 54,
+        "midi": 64,
+        "step": 14
+      },
+      {
+        "absoluteGridStep": 864,
+        "measure": 55,
+        "midi": 62,
+        "step": 0
+      },
+      {
+        "absoluteGridStep": 866,
+        "measure": 55,
+        "midi": 60,
+        "step": 2
+      },
+      {
+        "absoluteGridStep": 867,
+        "measure": 55,
+        "midi": 58,
+        "step": 3
+      },
+      {
+        "absoluteGridStep": 867,
+        "measure": 55,
+        "midi": 70,
+        "step": 3
+      },
+      {
+        "absoluteGridStep": 868,
+        "measure": 55,
+        "midi": 55,
+        "step": 4
+      },
+      {
+        "absoluteGridStep": 868,
+        "measure": 55,
+        "midi": 62,
+        "step": 4
+      },
+      {
+        "absoluteGridStep": 868,
+        "measure": 55,
+        "midi": 67,
+        "step": 4
+      },
+      {
+        "absoluteGridStep": 870,
+        "measure": 55,
+        "midi": 43,
+        "step": 6
+      },
+      {
+        "absoluteGridStep": 872,
+        "measure": 55,
+        "midi": 65,
+        "step": 8
+      },
+      {
+        "absoluteGridStep": 874,
+        "measure": 55,
+        "midi": 55,
+        "step": 10
+      },
+      {
+        "absoluteGridStep": 874,
+        "measure": 55,
+        "midi": 67,
+        "step": 10
+      },
+      {
+        "absoluteGridStep": 878,
+        "measure": 55,
+        "midi": 62,
+        "step": 14
+      },
+      {
+        "absoluteGridStep": 880,
+        "measure": 56,
+        "midi": 55,
+        "step": 0
+      },
+      {
+        "absoluteGridStep": 880,
+        "measure": 56,
+        "midi": 62,
+        "step": 0
+      },
+      {
+        "absoluteGridStep": 882,
+        "measure": 56,
+        "midi": 60,
+        "step": 2
+      },
+      {
+        "absoluteGridStep": 883,
+        "measure": 56,
+        "midi": 58,
+        "step": 3
+      },
+      {
+        "absoluteGridStep": 884,
+        "measure": 56,
+        "midi": 55,
+        "step": 4
+      },
+      {
+        "absoluteGridStep": 884,
+        "measure": 56,
+        "midi": 58,
+        "step": 4
+      },
+      {
+        "absoluteGridStep": 884,
+        "measure": 56,
+        "midi": 62,
+        "step": 4
+      },
+      {
+        "absoluteGridStep": 884,
+        "measure": 56,
+        "midi": 67,
+        "step": 4
+      },
+      {
+        "absoluteGridStep": 886,
+        "measure": 56,
+        "midi": 62,
+        "step": 6
+      },
+      {
+        "absoluteGridStep": 888,
+        "measure": 56,
+        "midi": 65,
+        "step": 8
+      },
+      {
+        "absoluteGridStep": 888,
+        "measure": 56,
+        "midi": 67,
+        "step": 8
+      },
+      {
+        "absoluteGridStep": 892,
+        "measure": 56,
+        "midi": 55,
+        "step": 12
+      },
+      {
+        "absoluteGridStep": 892,
+        "measure": 56,
+        "midi": 67,
+        "step": 12
+      },
+      {
+        "absoluteGridStep": 894,
+        "measure": 56,
+        "midi": 43,
+        "step": 14
+      },
+      {
+        "absoluteGridStep": 894,
+        "measure": 56,
+        "midi": 62,
+        "step": 14
+      },
+      {
+        "absoluteGridStep": 896,
+        "measure": 57,
+        "midi": 74,
+        "step": 0
+      },
+      {
+        "absoluteGridStep": 899,
+        "measure": 57,
+        "midi": 58,
+        "step": 3
+      },
+      {
+        "absoluteGridStep": 900,
+        "measure": 57,
+        "midi": 55,
+        "step": 4
+      },
+      {
+        "absoluteGridStep": 900,
+        "measure": 57,
+        "midi": 58,
+        "step": 4
+      },
+      {
+        "absoluteGridStep": 900,
+        "measure": 57,
+        "midi": 67,
+        "step": 4
+      },
+      {
+        "absoluteGridStep": 901,
+        "measure": 57,
+        "midi": 70,
+        "step": 5
+      },
+      {
+        "absoluteGridStep": 902,
+        "measure": 57,
+        "midi": 43,
+        "step": 6
+      },
+      {
+        "absoluteGridStep": 904,
+        "measure": 57,
+        "midi": 65,
+        "step": 8
+      },
+      {
+        "absoluteGridStep": 906,
+        "measure": 57,
+        "midi": 43,
+        "step": 10
+      },
+      {
+        "absoluteGridStep": 906,
+        "measure": 57,
+        "midi": 67,
+        "step": 10
+      },
+      {
+        "absoluteGridStep": 912,
+        "measure": 58,
+        "midi": 60,
+        "step": 0
+      },
+      {
+        "absoluteGridStep": 912,
+        "measure": 58,
+        "midi": 72,
+        "step": 0
+      },
+      {
+        "absoluteGridStep": 915,
+        "measure": 58,
+        "midi": 59,
+        "step": 3
+      },
+      {
+        "absoluteGridStep": 915,
+        "measure": 58,
+        "midi": 71,
+        "step": 3
+      },
+      {
+        "absoluteGridStep": 919,
+        "measure": 58,
+        "midi": 58,
+        "step": 7
+      },
+      {
+        "absoluteGridStep": 919,
+        "measure": 58,
+        "midi": 70,
+        "step": 7
+      },
+      {
+        "absoluteGridStep": 923,
+        "measure": 58,
+        "midi": 57,
+        "step": 11
+      },
+      {
+        "absoluteGridStep": 923,
+        "measure": 58,
+        "midi": 69,
+        "step": 11
+      },
+      {
+        "absoluteGridStep": 924,
+        "measure": 58,
+        "midi": 71,
+        "step": 12
+      },
+      {
+        "absoluteGridStep": 926,
+        "measure": 58,
+        "midi": 58,
+        "step": 14
+      },
+      {
+        "absoluteGridStep": 926,
+        "measure": 58,
+        "midi": 67,
+        "step": 14
+      },
+      {
+        "absoluteGridStep": 932,
+        "measure": 59,
+        "midi": 40,
+        "step": 4
+      },
+      {
+        "absoluteGridStep": 932,
+        "measure": 59,
+        "midi": 52,
+        "step": 4
+      },
+      {
+        "absoluteGridStep": 932,
+        "measure": 59,
+        "midi": 55,
+        "step": 4
+      },
+      {
+        "absoluteGridStep": 938,
+        "measure": 59,
+        "midi": 52,
+        "step": 10
+      },
+      {
+        "absoluteGridStep": 938,
+        "measure": 59,
+        "midi": 64,
+        "step": 10
+      },
+      {
+        "absoluteGridStep": 942,
+        "measure": 59,
+        "midi": 40,
+        "step": 14
+      },
+      {
+        "absoluteGridStep": 942,
+        "measure": 59,
+        "midi": 52,
+        "step": 14
+      },
+      {
+        "absoluteGridStep": 942,
+        "measure": 59,
+        "midi": 59,
+        "step": 14
+      },
+      {
+        "absoluteGridStep": 944,
+        "measure": 60,
+        "midi": 57,
+        "step": 0
+      },
+      {
+        "absoluteGridStep": 948,
+        "measure": 60,
+        "midi": 52,
+        "step": 4
+      },
+      {
+        "absoluteGridStep": 948,
+        "measure": 60,
+        "midi": 64,
+        "step": 4
+      },
+      {
+        "absoluteGridStep": 949,
+        "measure": 60,
+        "midi": 40,
+        "step": 5
+      },
+      {
+        "absoluteGridStep": 949,
+        "measure": 60,
+        "midi": 59,
+        "step": 5
+      },
+      {
+        "absoluteGridStep": 954,
+        "measure": 60,
+        "midi": 40,
+        "step": 10
+      },
+      {
+        "absoluteGridStep": 954,
+        "measure": 60,
+        "midi": 52,
+        "step": 10
+      },
+      {
+        "absoluteGridStep": 954,
+        "measure": 60,
+        "midi": 59,
+        "step": 10
+      },
+      {
+        "absoluteGridStep": 956,
+        "measure": 60,
+        "midi": 64,
+        "step": 12
+      },
+      {
+        "absoluteGridStep": 958,
+        "measure": 60,
+        "midi": 40,
+        "step": 14
+      },
+      {
+        "absoluteGridStep": 960,
+        "measure": 61,
+        "midi": 59,
+        "step": 0
+      },
+      {
+        "absoluteGridStep": 964,
+        "measure": 61,
+        "midi": 40,
+        "step": 4
+      },
+      {
+        "absoluteGridStep": 964,
+        "measure": 61,
+        "midi": 52,
+        "step": 4
+      },
+      {
+        "absoluteGridStep": 970,
+        "measure": 61,
+        "midi": 52,
+        "step": 10
+      },
+      {
+        "absoluteGridStep": 970,
+        "measure": 61,
+        "midi": 64,
+        "step": 10
+      },
+      {
+        "absoluteGridStep": 976,
+        "measure": 62,
+        "midi": 59,
+        "step": 0
+      },
+      {
+        "absoluteGridStep": 978,
+        "measure": 62,
+        "midi": 55,
+        "step": 2
+      },
+      {
+        "absoluteGridStep": 978,
+        "measure": 62,
+        "midi": 57,
+        "step": 2
+      },
+      {
+        "absoluteGridStep": 978,
+        "measure": 62,
+        "midi": 64,
+        "step": 2
+      },
+      {
+        "absoluteGridStep": 980,
+        "measure": 62,
+        "midi": 52,
+        "step": 4
+      },
+      {
+        "absoluteGridStep": 980,
+        "measure": 62,
+        "midi": 64,
+        "step": 4
+      },
+      {
+        "absoluteGridStep": 982,
+        "measure": 62,
+        "midi": 40,
+        "step": 6
+      },
+      {
+        "absoluteGridStep": 982,
+        "measure": 62,
+        "midi": 52,
+        "step": 6
+      },
+      {
+        "absoluteGridStep": 982,
+        "measure": 62,
+        "midi": 59,
+        "step": 6
+      },
+      {
+        "absoluteGridStep": 986,
+        "measure": 62,
+        "midi": 52,
+        "step": 10
+      },
+      {
+        "absoluteGridStep": 988,
+        "measure": 62,
+        "midi": 53,
+        "step": 12
+      },
+      {
+        "absoluteGridStep": 988,
+        "measure": 62,
+        "midi": 71,
+        "step": 12
+      },
+      {
+        "absoluteGridStep": 990,
+        "measure": 62,
+        "midi": 59,
+        "step": 14
+      },
+      {
+        "absoluteGridStep": 992,
+        "measure": 63,
+        "midi": 62,
+        "step": 0
+      },
+      {
+        "absoluteGridStep": 996,
+        "measure": 63,
+        "midi": 62,
+        "step": 4
+      },
+      {
+        "absoluteGridStep": 996,
+        "measure": 63,
+        "midi": 64,
+        "step": 4
+      },
+      {
+        "absoluteGridStep": 998,
+        "measure": 63,
+        "midi": 62,
+        "step": 6
+      },
+      {
+        "absoluteGridStep": 1000,
+        "measure": 63,
+        "midi": 44,
+        "step": 8
+      },
+      {
+        "absoluteGridStep": 1000,
+        "measure": 63,
+        "midi": 47,
+        "step": 8
+      },
+      {
+        "absoluteGridStep": 1000,
+        "measure": 63,
+        "midi": 64,
+        "step": 8
+      },
+      {
+        "absoluteGridStep": 1002,
+        "measure": 63,
+        "midi": 64,
+        "step": 10
+      },
+      {
+        "absoluteGridStep": 1004,
+        "measure": 63,
+        "midi": 45,
+        "step": 12
+      },
+      {
+        "absoluteGridStep": 1004,
+        "measure": 63,
+        "midi": 59,
+        "step": 12
+      },
+      {
+        "absoluteGridStep": 1004,
+        "measure": 63,
+        "midi": 62,
+        "step": 12
+      },
+      {
+        "absoluteGridStep": 1008,
+        "measure": 64,
+        "midi": 64,
+        "step": 0
+      },
+      {
+        "absoluteGridStep": 1010,
+        "measure": 64,
+        "midi": 61,
+        "step": 2
+      },
+      {
+        "absoluteGridStep": 1012,
+        "measure": 64,
+        "midi": 57,
+        "step": 4
+      },
+      {
+        "absoluteGridStep": 1012,
+        "measure": 64,
+        "midi": 64,
+        "step": 4
+      },
+      {
+        "absoluteGridStep": 1012,
+        "measure": 64,
+        "midi": 69,
+        "step": 4
+      },
+      {
+        "absoluteGridStep": 1016,
+        "measure": 64,
+        "midi": 61,
+        "step": 8
+      },
+      {
+        "absoluteGridStep": 1016,
+        "measure": 64,
+        "midi": 69,
+        "step": 8
+      },
+      {
+        "absoluteGridStep": 1024,
+        "measure": 65,
+        "midi": 64,
+        "step": 0
+      },
+      {
+        "absoluteGridStep": 1024,
+        "measure": 65,
+        "midi": 68,
+        "step": 0
+      },
+      {
+        "absoluteGridStep": 1028,
+        "measure": 65,
+        "midi": 62,
+        "step": 4
+      },
+      {
+        "absoluteGridStep": 1028,
+        "measure": 65,
+        "midi": 66,
+        "step": 4
+      },
+      {
+        "absoluteGridStep": 1030,
+        "measure": 65,
+        "midi": 59,
+        "step": 6
+      },
+      {
+        "absoluteGridStep": 1030,
+        "measure": 65,
+        "midi": 64,
+        "step": 6
+      },
+      {
+        "absoluteGridStep": 1030,
+        "measure": 65,
+        "midi": 68,
+        "step": 6
+      },
+      {
+        "absoluteGridStep": 1040,
+        "measure": 66,
+        "midi": 59,
+        "step": 0
+      },
+      {
+        "absoluteGridStep": 1040,
+        "measure": 66,
+        "midi": 68,
+        "step": 0
+      },
+      {
+        "absoluteGridStep": 1044,
+        "measure": 66,
+        "midi": 62,
+        "step": 4
+      },
+      {
+        "absoluteGridStep": 1044,
+        "measure": 66,
+        "midi": 66,
+        "step": 4
+      },
+      {
+        "absoluteGridStep": 1044,
+        "measure": 66,
+        "midi": 71,
+        "step": 4
+      },
+      {
+        "absoluteGridStep": 1047,
+        "measure": 66,
+        "midi": 59,
+        "step": 7
+      },
+      {
+        "absoluteGridStep": 1047,
+        "measure": 66,
+        "midi": 64,
+        "step": 7
+      },
+      {
+        "absoluteGridStep": 1047,
+        "measure": 66,
+        "midi": 68,
+        "step": 7
+      },
+      {
+        "absoluteGridStep": 1047,
+        "measure": 66,
+        "midi": 71,
+        "step": 7
+      },
+      {
+        "absoluteGridStep": 1048,
+        "measure": 66,
+        "midi": 59,
+        "step": 8
+      },
+      {
+        "absoluteGridStep": 1050,
+        "measure": 66,
+        "midi": 64,
+        "step": 10
+      },
+      {
+        "absoluteGridStep": 1056,
+        "measure": 67,
+        "midi": 59,
+        "step": 0
+      },
+      {
+        "absoluteGridStep": 1056,
+        "measure": 67,
+        "midi": 62,
+        "step": 0
+      },
+      {
+        "absoluteGridStep": 1060,
+        "measure": 67,
+        "midi": 59,
+        "step": 4
+      },
+      {
+        "absoluteGridStep": 1064,
+        "measure": 67,
+        "midi": 62,
+        "step": 8
+      },
+      {
+        "absoluteGridStep": 1070,
+        "measure": 67,
+        "midi": 52,
+        "step": 14
+      },
+      {
+        "absoluteGridStep": 1070,
+        "measure": 67,
+        "midi": 57,
+        "step": 14
+      },
+      {
+        "absoluteGridStep": 1072,
+        "measure": 68,
+        "midi": 64,
+        "step": 0
+      },
+      {
+        "absoluteGridStep": 1074,
+        "measure": 68,
+        "midi": 45,
+        "step": 2
+      },
+      {
+        "absoluteGridStep": 1084,
+        "measure": 68,
+        "midi": 57,
+        "step": 12
+      },
+      {
+        "absoluteGridStep": 1093,
+        "measure": 69,
+        "midi": 76,
+        "step": 5
+      },
+      {
+        "absoluteGridStep": 1095,
+        "measure": 69,
+        "midi": 57,
+        "step": 7
+      },
+      {
+        "absoluteGridStep": 1104,
+        "measure": 70,
+        "midi": 64,
+        "step": 0
+      },
+      {
+        "absoluteGridStep": 1104,
+        "measure": 70,
+        "midi": 68,
+        "step": 0
+      },
+      {
+        "absoluteGridStep": 1110,
+        "measure": 70,
+        "midi": 62,
+        "step": 6
+      },
+      {
+        "absoluteGridStep": 1110,
+        "measure": 70,
+        "midi": 66,
+        "step": 6
+      },
+      {
+        "absoluteGridStep": 1118,
+        "measure": 70,
+        "midi": 62,
+        "step": 14
+      },
+      {
+        "absoluteGridStep": 1118,
+        "measure": 70,
+        "midi": 66,
+        "step": 14
+      },
+      {
+        "absoluteGridStep": 1126,
+        "measure": 71,
+        "midi": 57,
+        "step": 6
+      },
+      {
+        "absoluteGridStep": 1126,
+        "measure": 71,
+        "midi": 61,
+        "step": 6
+      },
+      {
+        "absoluteGridStep": 1126,
+        "measure": 71,
+        "midi": 64,
+        "step": 6
+      },
+      {
+        "absoluteGridStep": 1130,
+        "measure": 71,
+        "midi": 62,
+        "step": 10
+      },
+      {
+        "absoluteGridStep": 1130,
+        "measure": 71,
+        "midi": 66,
+        "step": 10
+      },
+      {
+        "absoluteGridStep": 1132,
+        "measure": 71,
+        "midi": 61,
+        "step": 12
+      },
+      {
+        "absoluteGridStep": 1132,
+        "measure": 71,
+        "midi": 64,
+        "step": 12
+      },
+      {
+        "absoluteGridStep": 1134,
+        "measure": 71,
+        "midi": 58,
+        "step": 14
+      },
+      {
+        "absoluteGridStep": 1136,
+        "measure": 72,
+        "midi": 64,
+        "step": 0
+      },
+      {
+        "absoluteGridStep": 1136,
+        "measure": 72,
+        "midi": 68,
+        "step": 0
+      },
+      {
+        "absoluteGridStep": 1142,
+        "measure": 72,
+        "midi": 62,
+        "step": 6
+      },
+      {
+        "absoluteGridStep": 1142,
+        "measure": 72,
+        "midi": 66,
+        "step": 6
+      },
+      {
+        "absoluteGridStep": 1150,
+        "measure": 72,
+        "midi": 62,
+        "step": 14
+      },
+      {
+        "absoluteGridStep": 1150,
+        "measure": 72,
+        "midi": 66,
+        "step": 14
+      },
+      {
+        "absoluteGridStep": 1158,
+        "measure": 73,
+        "midi": 57,
+        "step": 6
+      },
+      {
+        "absoluteGridStep": 1158,
+        "measure": 73,
+        "midi": 61,
+        "step": 6
+      },
+      {
+        "absoluteGridStep": 1158,
+        "measure": 73,
+        "midi": 64,
+        "step": 6
+      },
+      {
+        "absoluteGridStep": 1162,
+        "measure": 73,
+        "midi": 62,
+        "step": 10
+      },
+      {
+        "absoluteGridStep": 1162,
+        "measure": 73,
+        "midi": 66,
+        "step": 10
+      },
+      {
+        "absoluteGridStep": 1164,
+        "measure": 73,
+        "midi": 61,
+        "step": 12
+      },
+      {
+        "absoluteGridStep": 1164,
+        "measure": 73,
+        "midi": 64,
+        "step": 12
+      },
+      {
+        "absoluteGridStep": 1166,
+        "measure": 73,
+        "midi": 59,
+        "step": 14
+      },
+      {
+        "absoluteGridStep": 1166,
+        "measure": 73,
+        "midi": 63,
+        "step": 14
+      },
+      {
+        "absoluteGridStep": 1166,
+        "measure": 73,
+        "midi": 67,
+        "step": 14
+      },
+      {
+        "absoluteGridStep": 1167,
+        "measure": 73,
+        "midi": 63,
+        "step": 15
+      },
+      {
+        "absoluteGridStep": 1168,
+        "measure": 74,
+        "midi": 64,
+        "step": 0
+      },
+      {
+        "absoluteGridStep": 1168,
+        "measure": 74,
+        "midi": 68,
+        "step": 0
+      },
+      {
+        "absoluteGridStep": 1174,
+        "measure": 74,
+        "midi": 47,
+        "step": 6
+      },
+      {
+        "absoluteGridStep": 1174,
+        "measure": 74,
+        "midi": 66,
+        "step": 6
+      },
+      {
+        "absoluteGridStep": 1174,
+        "measure": 74,
+        "midi": 71,
+        "step": 6
+      },
+      {
+        "absoluteGridStep": 1174,
+        "measure": 74,
+        "midi": 74,
+        "step": 6
+      },
+      {
+        "absoluteGridStep": 1180,
+        "measure": 74,
+        "midi": 62,
+        "step": 12
+      },
+      {
+        "absoluteGridStep": 1180,
+        "measure": 74,
+        "midi": 66,
+        "step": 12
+      },
+      {
+        "absoluteGridStep": 1182,
+        "measure": 74,
+        "midi": 66,
+        "step": 14
+      },
+      {
+        "absoluteGridStep": 1190,
+        "measure": 75,
+        "midi": 61,
+        "step": 6
+      },
+      {
+        "absoluteGridStep": 1190,
+        "measure": 75,
+        "midi": 64,
+        "step": 6
+      },
+      {
+        "absoluteGridStep": 1194,
+        "measure": 75,
+        "midi": 66,
+        "step": 10
+      },
+      {
+        "absoluteGridStep": 1196,
+        "measure": 75,
+        "midi": 61,
+        "step": 12
+      },
+      {
+        "absoluteGridStep": 1196,
+        "measure": 75,
+        "midi": 64,
+        "step": 12
+      },
+      {
+        "absoluteGridStep": 1200,
+        "measure": 76,
+        "midi": 54,
+        "step": 0
+      },
+      {
+        "absoluteGridStep": 1200,
+        "measure": 76,
+        "midi": 56,
+        "step": 0
+      },
+      {
+        "absoluteGridStep": 1200,
+        "measure": 76,
+        "midi": 59,
+        "step": 0
+      },
+      {
+        "absoluteGridStep": 1200,
+        "measure": 76,
+        "midi": 64,
+        "step": 0
+      },
+      {
+        "absoluteGridStep": 1204,
+        "measure": 76,
+        "midi": 56,
+        "step": 4
+      },
+      {
+        "absoluteGridStep": 1206,
+        "measure": 76,
+        "midi": 54,
+        "step": 6
+      },
+      {
+        "absoluteGridStep": 1206,
+        "measure": 76,
+        "midi": 66,
+        "step": 6
+      },
+      {
+        "absoluteGridStep": 1214,
+        "measure": 76,
+        "midi": 62,
+        "step": 14
+      },
+      {
+        "absoluteGridStep": 1214,
+        "measure": 76,
+        "midi": 66,
+        "step": 14
+      },
+      {
+        "absoluteGridStep": 1222,
+        "measure": 77,
+        "midi": 64,
+        "step": 6
+      },
+      {
+        "absoluteGridStep": 1222,
+        "measure": 77,
+        "midi": 73,
+        "step": 6
+      },
+      {
+        "absoluteGridStep": 1224,
+        "measure": 77,
+        "midi": 61,
+        "step": 8
+      },
+      {
+        "absoluteGridStep": 1226,
+        "measure": 77,
+        "midi": 62,
+        "step": 10
+      },
+      {
+        "absoluteGridStep": 1232,
+        "measure": 78,
+        "midi": 64,
+        "step": 0
+      },
+      {
+        "absoluteGridStep": 1236,
+        "measure": 78,
+        "midi": 64,
+        "step": 4
+      },
+      {
+        "absoluteGridStep": 1237,
+        "measure": 78,
+        "midi": 64,
+        "step": 5
+      },
+      {
+        "absoluteGridStep": 1238,
+        "measure": 78,
+        "midi": 64,
+        "step": 6
+      },
+      {
+        "absoluteGridStep": 1238,
+        "measure": 78,
+        "midi": 66,
+        "step": 6
+      },
+      {
+        "absoluteGridStep": 1242,
+        "measure": 78,
+        "midi": 65,
+        "step": 10
+      },
+      {
+        "absoluteGridStep": 1244,
+        "measure": 78,
+        "midi": 62,
+        "step": 12
+      },
+      {
+        "absoluteGridStep": 1244,
+        "measure": 78,
+        "midi": 64,
+        "step": 12
+      },
+      {
+        "absoluteGridStep": 1244,
+        "measure": 78,
+        "midi": 67,
+        "step": 12
+      },
+      {
+        "absoluteGridStep": 1244,
+        "measure": 78,
+        "midi": 69,
+        "step": 12
+      },
+      {
+        "absoluteGridStep": 1246,
+        "measure": 78,
+        "midi": 62,
+        "step": 14
+      },
+      {
+        "absoluteGridStep": 1246,
+        "measure": 78,
+        "midi": 67,
+        "step": 14
+      },
+      {
+        "absoluteGridStep": 1250,
+        "measure": 79,
+        "midi": 67,
+        "step": 2
+      },
+      {
+        "absoluteGridStep": 1252,
+        "measure": 79,
+        "midi": 67,
+        "step": 4
+      },
+      {
+        "absoluteGridStep": 1254,
+        "measure": 79,
+        "midi": 61,
+        "step": 6
+      },
+      {
+        "absoluteGridStep": 1254,
+        "measure": 79,
+        "midi": 64,
+        "step": 6
+      },
+      {
+        "absoluteGridStep": 1254,
+        "measure": 79,
+        "midi": 67,
+        "step": 6
+      },
+      {
+        "absoluteGridStep": 1256,
+        "measure": 79,
+        "midi": 62,
+        "step": 8
+      },
+      {
+        "absoluteGridStep": 1256,
+        "measure": 79,
+        "midi": 66,
+        "step": 8
+      },
+      {
+        "absoluteGridStep": 1256,
+        "measure": 79,
+        "midi": 71,
+        "step": 8
+      },
+      {
+        "absoluteGridStep": 1260,
+        "measure": 79,
+        "midi": 62,
+        "step": 12
+      },
+      {
+        "absoluteGridStep": 1260,
+        "measure": 79,
+        "midi": 64,
+        "step": 12
+      },
+      {
+        "absoluteGridStep": 1264,
+        "measure": 80,
+        "midi": 59,
+        "step": 0
+      },
+      {
+        "absoluteGridStep": 1264,
+        "measure": 80,
+        "midi": 64,
+        "step": 0
+      },
+      {
+        "absoluteGridStep": 1264,
+        "measure": 80,
+        "midi": 68,
+        "step": 0
+      },
+      {
+        "absoluteGridStep": 1268,
+        "measure": 80,
+        "midi": 57,
+        "step": 4
+      },
+      {
+        "absoluteGridStep": 1268,
+        "measure": 80,
+        "midi": 58,
+        "step": 4
+      },
+      {
+        "absoluteGridStep": 1269,
+        "measure": 80,
+        "midi": 58,
+        "step": 5
+      },
+      {
+        "absoluteGridStep": 1270,
+        "measure": 80,
+        "midi": 57,
+        "step": 6
+      },
+      {
+        "absoluteGridStep": 1270,
+        "measure": 80,
+        "midi": 62,
+        "step": 6
+      },
+      {
+        "absoluteGridStep": 1270,
+        "measure": 80,
+        "midi": 66,
+        "step": 6
+      },
+      {
+        "absoluteGridStep": 1272,
+        "measure": 80,
+        "midi": 55,
+        "step": 8
+      },
+      {
+        "absoluteGridStep": 1272,
+        "measure": 80,
+        "midi": 67,
+        "step": 8
+      },
+      {
+        "absoluteGridStep": 1276,
+        "measure": 80,
+        "midi": 52,
+        "step": 12
+      },
+      {
+        "absoluteGridStep": 1276,
+        "measure": 80,
+        "midi": 64,
+        "step": 12
+      },
+      {
+        "absoluteGridStep": 1278,
+        "measure": 80,
+        "midi": 62,
+        "step": 14
+      },
+      {
+        "absoluteGridStep": 1278,
+        "measure": 80,
+        "midi": 66,
+        "step": 14
+      },
+      {
+        "absoluteGridStep": 1280,
+        "measure": 81,
+        "midi": 52,
+        "step": 0
+      },
+      {
+        "absoluteGridStep": 1282,
+        "measure": 81,
+        "midi": 64,
+        "step": 2
+      },
+      {
+        "absoluteGridStep": 1284,
+        "measure": 81,
+        "midi": 52,
+        "step": 4
+      },
+      {
+        "absoluteGridStep": 1286,
+        "measure": 81,
+        "midi": 52,
+        "step": 6
+      },
+      {
+        "absoluteGridStep": 1286,
+        "measure": 81,
+        "midi": 61,
+        "step": 6
+      },
+      {
+        "absoluteGridStep": 1286,
+        "measure": 81,
+        "midi": 64,
+        "step": 6
+      },
+      {
+        "absoluteGridStep": 1290,
+        "measure": 81,
+        "midi": 66,
+        "step": 10
+      },
+      {
+        "absoluteGridStep": 1292,
+        "measure": 81,
+        "midi": 57,
+        "step": 12
+      },
+      {
+        "absoluteGridStep": 1292,
+        "measure": 81,
+        "midi": 61,
+        "step": 12
+      },
+      {
+        "absoluteGridStep": 1292,
+        "measure": 81,
+        "midi": 64,
+        "step": 12
+      },
+      {
+        "absoluteGridStep": 1294,
+        "measure": 81,
+        "midi": 40,
+        "step": 14
+      },
+      {
+        "absoluteGridStep": 1294,
+        "measure": 81,
+        "midi": 59,
+        "step": 14
+      },
+      {
+        "absoluteGridStep": 1294,
+        "measure": 81,
+        "midi": 68,
+        "step": 14
+      },
+      {
+        "absoluteGridStep": 1296,
+        "measure": 82,
+        "midi": 64,
+        "step": 0
+      },
+      {
+        "absoluteGridStep": 1300,
+        "measure": 82,
+        "midi": 61,
+        "step": 4
+      },
+      {
+        "absoluteGridStep": 1302,
+        "measure": 82,
+        "midi": 62,
+        "step": 6
+      },
+      {
+        "absoluteGridStep": 1302,
+        "measure": 82,
+        "midi": 66,
+        "step": 6
+      },
+      {
+        "absoluteGridStep": 1304,
+        "measure": 82,
+        "midi": 61,
+        "step": 8
+      },
+      {
+        "absoluteGridStep": 1304,
+        "measure": 82,
+        "midi": 64,
+        "step": 8
+      },
+      {
+        "absoluteGridStep": 1306,
+        "measure": 82,
+        "midi": 66,
+        "step": 10
+      },
+      {
+        "absoluteGridStep": 1308,
+        "measure": 82,
+        "midi": 66,
+        "step": 12
+      },
+      {
+        "absoluteGridStep": 1308,
+        "measure": 82,
+        "midi": 68,
+        "step": 12
+      },
+      {
+        "absoluteGridStep": 1309,
+        "measure": 82,
+        "midi": 66,
+        "step": 13
+      },
+      {
+        "absoluteGridStep": 1310,
+        "measure": 82,
+        "midi": 64,
+        "step": 14
+      },
+      {
+        "absoluteGridStep": 1314,
+        "measure": 83,
+        "midi": 64,
+        "step": 2
+      },
+      {
+        "absoluteGridStep": 1316,
+        "measure": 83,
+        "midi": 64,
+        "step": 4
+      },
+      {
+        "absoluteGridStep": 1316,
+        "measure": 83,
+        "midi": 66,
+        "step": 4
+      },
+      {
+        "absoluteGridStep": 1318,
+        "measure": 83,
+        "midi": 61,
+        "step": 6
+      },
+      {
+        "absoluteGridStep": 1318,
+        "measure": 83,
+        "midi": 64,
+        "step": 6
+      },
+      {
+        "absoluteGridStep": 1318,
+        "measure": 83,
+        "midi": 68,
+        "step": 6
+      },
+      {
+        "absoluteGridStep": 1320,
+        "measure": 83,
+        "midi": 71,
+        "step": 8
+      },
+      {
+        "absoluteGridStep": 1320,
+        "measure": 83,
+        "midi": 76,
+        "step": 8
+      },
+      {
+        "absoluteGridStep": 1322,
+        "measure": 83,
+        "midi": 57,
+        "step": 10
+      },
+      {
+        "absoluteGridStep": 1322,
+        "measure": 83,
+        "midi": 62,
+        "step": 10
+      },
+      {
+        "absoluteGridStep": 1322,
+        "measure": 83,
+        "midi": 66,
+        "step": 10
+      },
+      {
+        "absoluteGridStep": 1322,
+        "measure": 83,
+        "midi": 76,
+        "step": 10
+      },
+      {
+        "absoluteGridStep": 1324,
+        "measure": 83,
+        "midi": 61,
+        "step": 12
+      },
+      {
+        "absoluteGridStep": 1324,
+        "measure": 83,
+        "midi": 64,
+        "step": 12
+      },
+      {
+        "absoluteGridStep": 1328,
+        "measure": 84,
+        "midi": 64,
+        "step": 0
+      },
+      {
+        "absoluteGridStep": 1328,
+        "measure": 84,
+        "midi": 68,
+        "step": 0
+      },
+      {
+        "absoluteGridStep": 1328,
+        "measure": 84,
+        "midi": 76,
+        "step": 0
+      },
+      {
+        "absoluteGridStep": 1332,
+        "measure": 84,
+        "midi": 64,
+        "step": 4
+      },
+      {
+        "absoluteGridStep": 1332,
+        "measure": 84,
+        "midi": 64,
+        "step": 4
+      },
+      {
+        "absoluteGridStep": 1332,
+        "measure": 84,
+        "midi": 76,
+        "step": 4
+      },
+      {
+        "absoluteGridStep": 1332,
+        "measure": 84,
+        "midi": 79,
+        "step": 4
+      },
+      {
+        "absoluteGridStep": 1334,
+        "measure": 84,
+        "midi": 57,
+        "step": 6
+      },
+      {
+        "absoluteGridStep": 1334,
+        "measure": 84,
+        "midi": 62,
+        "step": 6
+      },
+      {
+        "absoluteGridStep": 1334,
+        "measure": 84,
+        "midi": 66,
+        "step": 6
+      },
+      {
+        "absoluteGridStep": 1334,
+        "measure": 84,
+        "midi": 76,
+        "step": 6
+      },
+      {
+        "absoluteGridStep": 1336,
+        "measure": 84,
+        "midi": 77,
+        "step": 8
+      },
+      {
+        "absoluteGridStep": 1338,
+        "measure": 84,
+        "midi": 76,
+        "step": 10
+      },
+      {
+        "absoluteGridStep": 1340,
+        "measure": 84,
+        "midi": 81,
+        "step": 12
+      },
+      {
+        "absoluteGridStep": 1341,
+        "measure": 84,
+        "midi": 81,
+        "step": 13
+      },
+      {
+        "absoluteGridStep": 1342,
+        "measure": 84,
+        "midi": 62,
+        "step": 14
+      },
+      {
+        "absoluteGridStep": 1342,
+        "measure": 84,
+        "midi": 66,
+        "step": 14
+      },
+      {
+        "absoluteGridStep": 1342,
+        "measure": 84,
+        "midi": 81,
+        "step": 14
+      },
+      {
+        "absoluteGridStep": 1344,
+        "measure": 85,
+        "midi": 83,
+        "step": 0
+      },
+      {
+        "absoluteGridStep": 1346,
+        "measure": 85,
+        "midi": 83,
+        "step": 2
+      },
+      {
+        "absoluteGridStep": 1348,
+        "measure": 85,
+        "midi": 83,
+        "step": 4
+      },
+      {
+        "absoluteGridStep": 1350,
+        "measure": 85,
+        "midi": 61,
+        "step": 6
+      },
+      {
+        "absoluteGridStep": 1350,
+        "measure": 85,
+        "midi": 64,
+        "step": 6
+      },
+      {
+        "absoluteGridStep": 1352,
+        "measure": 85,
+        "midi": 57,
+        "step": 8
+      },
+      {
+        "absoluteGridStep": 1352,
+        "measure": 85,
+        "midi": 83,
+        "step": 8
+      },
+      {
+        "absoluteGridStep": 1354,
+        "measure": 85,
+        "midi": 62,
+        "step": 10
+      },
+      {
+        "absoluteGridStep": 1354,
+        "measure": 85,
+        "midi": 66,
+        "step": 10
+      },
+      {
+        "absoluteGridStep": 1354,
+        "measure": 85,
+        "midi": 71,
+        "step": 10
+      },
+      {
+        "absoluteGridStep": 1356,
+        "measure": 85,
+        "midi": 57,
+        "step": 12
+      },
+      {
+        "absoluteGridStep": 1356,
+        "measure": 85,
+        "midi": 57,
+        "step": 12
+      },
+      {
+        "absoluteGridStep": 1356,
+        "measure": 85,
+        "midi": 64,
+        "step": 12
+      },
+      {
+        "absoluteGridStep": 1356,
+        "measure": 85,
+        "midi": 66,
+        "step": 12
+      },
+      {
+        "absoluteGridStep": 1356,
+        "measure": 85,
+        "midi": 83,
+        "step": 12
+      },
+      {
+        "absoluteGridStep": 1360,
+        "measure": 86,
+        "midi": 59,
+        "step": 0
+      },
+      {
+        "absoluteGridStep": 1360,
+        "measure": 86,
+        "midi": 64,
+        "step": 0
+      },
+      {
+        "absoluteGridStep": 1362,
+        "measure": 86,
+        "midi": 83,
+        "step": 2
+      },
+      {
+        "absoluteGridStep": 1364,
+        "measure": 86,
+        "midi": 76,
+        "step": 4
+      },
+      {
+        "absoluteGridStep": 1366,
+        "measure": 86,
+        "midi": 62,
+        "step": 6
+      },
+      {
+        "absoluteGridStep": 1366,
+        "measure": 86,
+        "midi": 66,
+        "step": 6
+      },
+      {
+        "absoluteGridStep": 1366,
+        "measure": 86,
+        "midi": 71,
+        "step": 6
+      },
+      {
+        "absoluteGridStep": 1366,
+        "measure": 86,
+        "midi": 76,
+        "step": 6
+      },
+      {
+        "absoluteGridStep": 1368,
+        "measure": 86,
+        "midi": 76,
+        "step": 8
+      },
+      {
+        "absoluteGridStep": 1370,
+        "measure": 86,
+        "midi": 76,
+        "step": 10
+      },
+      {
+        "absoluteGridStep": 1371,
+        "measure": 86,
+        "midi": 76,
+        "step": 11
+      },
+      {
+        "absoluteGridStep": 1372,
+        "measure": 86,
+        "midi": 76,
+        "step": 12
+      },
+      {
+        "absoluteGridStep": 1374,
+        "measure": 86,
+        "midi": 62,
+        "step": 14
+      },
+      {
+        "absoluteGridStep": 1374,
+        "measure": 86,
+        "midi": 66,
+        "step": 14
+      },
+      {
+        "absoluteGridStep": 1378,
+        "measure": 87,
+        "midi": 79,
+        "step": 2
+      },
+      {
+        "absoluteGridStep": 1380,
+        "measure": 87,
+        "midi": 61,
+        "step": 4
+      },
+      {
+        "absoluteGridStep": 1380,
+        "measure": 87,
+        "midi": 64,
+        "step": 4
+      },
+      {
+        "absoluteGridStep": 1380,
+        "measure": 87,
+        "midi": 79,
+        "step": 4
+      },
+      {
+        "absoluteGridStep": 1382,
+        "measure": 87,
+        "midi": 61,
+        "step": 6
+      },
+      {
+        "absoluteGridStep": 1384,
+        "measure": 87,
+        "midi": 59,
+        "step": 8
+      },
+      {
+        "absoluteGridStep": 1384,
+        "measure": 87,
+        "midi": 79,
+        "step": 8
+      },
+      {
+        "absoluteGridStep": 1386,
+        "measure": 87,
+        "midi": 62,
+        "step": 10
+      },
+      {
+        "absoluteGridStep": 1386,
+        "measure": 87,
+        "midi": 66,
+        "step": 10
+      },
+      {
+        "absoluteGridStep": 1387,
+        "measure": 87,
+        "midi": 62,
+        "step": 11
+      },
+      {
+        "absoluteGridStep": 1388,
+        "measure": 87,
+        "midi": 57,
+        "step": 12
+      },
+      {
+        "absoluteGridStep": 1388,
+        "measure": 87,
+        "midi": 64,
+        "step": 12
+      },
+      {
+        "absoluteGridStep": 1388,
+        "measure": 87,
+        "midi": 79,
+        "step": 12
+      },
+      {
+        "absoluteGridStep": 1392,
+        "measure": 88,
+        "midi": 59,
+        "step": 0
+      },
+      {
+        "absoluteGridStep": 1392,
+        "measure": 88,
+        "midi": 64,
+        "step": 0
+      },
+      {
+        "absoluteGridStep": 1392,
+        "measure": 88,
+        "midi": 68,
+        "step": 0
+      },
+      {
+        "absoluteGridStep": 1395,
+        "measure": 88,
+        "midi": 74,
+        "step": 3
+      },
+      {
+        "absoluteGridStep": 1396,
+        "measure": 88,
+        "midi": 62,
+        "step": 4
+      },
+      {
+        "absoluteGridStep": 1396,
+        "measure": 88,
+        "midi": 71,
+        "step": 4
+      },
+      {
+        "absoluteGridStep": 1396,
+        "measure": 88,
+        "midi": 74,
+        "step": 4
+      },
+      {
+        "absoluteGridStep": 1398,
+        "measure": 88,
+        "midi": 62,
+        "step": 6
+      },
+      {
+        "absoluteGridStep": 1398,
+        "measure": 88,
+        "midi": 66,
+        "step": 6
+      },
+      {
+        "absoluteGridStep": 1398,
+        "measure": 88,
+        "midi": 74,
+        "step": 6
+      },
+      {
+        "absoluteGridStep": 1400,
+        "measure": 88,
+        "midi": 74,
+        "step": 8
+      },
+      {
+        "absoluteGridStep": 1401,
+        "measure": 88,
+        "midi": 74,
+        "step": 9
+      },
+      {
+        "absoluteGridStep": 1402,
+        "measure": 88,
+        "midi": 76,
+        "step": 10
+      },
+      {
+        "absoluteGridStep": 1404,
+        "measure": 88,
+        "midi": 69,
+        "step": 12
+      },
+      {
+        "absoluteGridStep": 1404,
+        "measure": 88,
+        "midi": 76,
+        "step": 12
+      },
+      {
+        "absoluteGridStep": 1405,
+        "measure": 88,
+        "midi": 69,
+        "step": 13
+      },
+      {
+        "absoluteGridStep": 1406,
+        "measure": 88,
+        "midi": 62,
+        "step": 14
+      },
+      {
+        "absoluteGridStep": 1406,
+        "measure": 88,
+        "midi": 67,
+        "step": 14
+      },
+      {
+        "absoluteGridStep": 1406,
+        "measure": 88,
+        "midi": 69,
+        "step": 14
+      },
+      {
+        "absoluteGridStep": 1408,
+        "measure": 89,
+        "midi": 69,
+        "step": 0
+      },
+      {
+        "absoluteGridStep": 1410,
+        "measure": 89,
+        "midi": 64,
+        "step": 2
+      },
+      {
+        "absoluteGridStep": 1410,
+        "measure": 89,
+        "midi": 67,
+        "step": 2
+      },
+      {
+        "absoluteGridStep": 1412,
+        "measure": 89,
+        "midi": 67,
+        "step": 4
+      },
+      {
+        "absoluteGridStep": 1412,
+        "measure": 89,
+        "midi": 69,
+        "step": 4
+      },
+      {
+        "absoluteGridStep": 1414,
+        "measure": 89,
+        "midi": 61,
+        "step": 6
+      },
+      {
+        "absoluteGridStep": 1414,
+        "measure": 89,
+        "midi": 64,
+        "step": 6
+      },
+      {
+        "absoluteGridStep": 1415,
+        "measure": 89,
+        "midi": 64,
+        "step": 7
+      },
+      {
+        "absoluteGridStep": 1416,
+        "measure": 89,
+        "midi": 52,
+        "step": 8
+      },
+      {
+        "absoluteGridStep": 1416,
+        "measure": 89,
+        "midi": 62,
+        "step": 8
+      },
+      {
+        "absoluteGridStep": 1416,
+        "measure": 89,
+        "midi": 71,
+        "step": 8
+      },
+      {
+        "absoluteGridStep": 1416,
+        "measure": 89,
+        "midi": 74,
+        "step": 8
+      },
+      {
+        "absoluteGridStep": 1418,
+        "measure": 89,
+        "midi": 66,
+        "step": 10
+      },
+      {
+        "absoluteGridStep": 1420,
+        "measure": 89,
+        "midi": 57,
+        "step": 12
+      },
+      {
+        "absoluteGridStep": 1420,
+        "measure": 89,
+        "midi": 64,
+        "step": 12
+      },
+      {
+        "absoluteGridStep": 1420,
+        "measure": 89,
+        "midi": 71,
+        "step": 12
+      },
+      {
+        "absoluteGridStep": 1420,
+        "measure": 89,
+        "midi": 76,
+        "step": 12
+      },
+      {
+        "absoluteGridStep": 1424,
+        "measure": 90,
+        "midi": 64,
+        "step": 0
+      },
+      {
+        "absoluteGridStep": 1424,
+        "measure": 90,
+        "midi": 69,
+        "step": 0
+      },
+      {
+        "absoluteGridStep": 1424,
+        "measure": 90,
+        "midi": 71,
+        "step": 0
+      },
+      {
+        "absoluteGridStep": 1424,
+        "measure": 90,
+        "midi": 76,
+        "step": 0
+      },
+      {
+        "absoluteGridStep": 1425,
+        "measure": 90,
+        "midi": 71,
+        "step": 1
+      },
+      {
+        "absoluteGridStep": 1428,
+        "measure": 90,
+        "midi": 74,
+        "step": 4
+      },
+      {
+        "absoluteGridStep": 1430,
+        "measure": 90,
+        "midi": 57,
+        "step": 6
+      },
+      {
+        "absoluteGridStep": 1430,
+        "measure": 90,
+        "midi": 62,
+        "step": 6
+      },
+      {
+        "absoluteGridStep": 1430,
+        "measure": 90,
+        "midi": 66,
+        "step": 6
+      },
+      {
+        "absoluteGridStep": 1430,
+        "measure": 90,
+        "midi": 76,
+        "step": 6
+      },
+      {
+        "absoluteGridStep": 1432,
+        "measure": 90,
+        "midi": 69,
+        "step": 8
+      },
+      {
+        "absoluteGridStep": 1432,
+        "measure": 90,
+        "midi": 71,
+        "step": 8
+      },
+      {
+        "absoluteGridStep": 1433,
+        "measure": 90,
+        "midi": 69,
+        "step": 9
+      },
+      {
+        "absoluteGridStep": 1435,
+        "measure": 90,
+        "midi": 71,
+        "step": 11
+      },
+      {
+        "absoluteGridStep": 1436,
+        "measure": 90,
+        "midi": 64,
+        "step": 12
+      },
+      {
+        "absoluteGridStep": 1436,
+        "measure": 90,
+        "midi": 71,
+        "step": 12
+      },
+      {
+        "absoluteGridStep": 1436,
+        "measure": 90,
+        "midi": 71,
+        "step": 12
+      },
+      {
+        "absoluteGridStep": 1437,
+        "measure": 90,
+        "midi": 71,
+        "step": 13
+      },
+      {
+        "absoluteGridStep": 1438,
+        "measure": 90,
+        "midi": 62,
+        "step": 14
+      },
+      {
+        "absoluteGridStep": 1438,
+        "measure": 90,
+        "midi": 66,
+        "step": 14
+      },
+      {
+        "absoluteGridStep": 1438,
+        "measure": 90,
+        "midi": 74,
+        "step": 14
+      },
+      {
+        "absoluteGridStep": 1440,
+        "measure": 91,
+        "midi": 76,
+        "step": 0
+      },
+      {
+        "absoluteGridStep": 1440,
+        "measure": 91,
+        "midi": 76,
+        "step": 0
+      },
+      {
+        "absoluteGridStep": 1446,
+        "measure": 91,
+        "midi": 64,
+        "step": 6
+      },
+      {
+        "absoluteGridStep": 1446,
+        "measure": 91,
+        "midi": 74,
+        "step": 6
+      },
+      {
+        "absoluteGridStep": 1448,
+        "measure": 91,
+        "midi": 61,
+        "step": 8
+      },
+      {
+        "absoluteGridStep": 1448,
+        "measure": 91,
+        "midi": 66,
+        "step": 8
+      },
+      {
+        "absoluteGridStep": 1450,
+        "measure": 91,
+        "midi": 62,
+        "step": 10
+      },
+      {
+        "absoluteGridStep": 1452,
+        "measure": 91,
+        "midi": 57,
+        "step": 12
+      },
+      {
+        "absoluteGridStep": 1452,
+        "measure": 91,
+        "midi": 62,
+        "step": 12
+      },
+      {
+        "absoluteGridStep": 1452,
+        "measure": 91,
+        "midi": 64,
+        "step": 12
+      },
+      {
+        "absoluteGridStep": 1452,
+        "measure": 91,
+        "midi": 74,
+        "step": 12
+      },
+      {
+        "absoluteGridStep": 1454,
+        "measure": 91,
+        "midi": 75,
+        "step": 14
+      },
+      {
+        "absoluteGridStep": 1456,
+        "measure": 92,
+        "midi": 64,
+        "step": 0
+      },
+      {
+        "absoluteGridStep": 1458,
+        "measure": 92,
+        "midi": 74,
+        "step": 2
+      },
+      {
+        "absoluteGridStep": 1459,
+        "measure": 92,
+        "midi": 76,
+        "step": 3
+      },
+      {
+        "absoluteGridStep": 1460,
+        "measure": 92,
+        "midi": 62,
+        "step": 4
+      },
+      {
+        "absoluteGridStep": 1460,
+        "measure": 92,
+        "midi": 66,
+        "step": 4
+      },
+      {
+        "absoluteGridStep": 1460,
+        "measure": 92,
+        "midi": 71,
+        "step": 4
+      },
+      {
+        "absoluteGridStep": 1460,
+        "measure": 92,
+        "midi": 76,
+        "step": 4
+      },
+      {
+        "absoluteGridStep": 1461,
+        "measure": 92,
+        "midi": 71,
+        "step": 5
+      },
+      {
+        "absoluteGridStep": 1462,
+        "measure": 92,
+        "midi": 62,
+        "step": 6
+      },
+      {
+        "absoluteGridStep": 1462,
+        "measure": 92,
+        "midi": 69,
+        "step": 6
+      },
+      {
+        "absoluteGridStep": 1464,
+        "measure": 92,
+        "midi": 71,
+        "step": 8
+      },
+      {
+        "absoluteGridStep": 1466,
+        "measure": 92,
+        "midi": 69,
+        "step": 10
+      },
+      {
+        "absoluteGridStep": 1466,
+        "measure": 92,
+        "midi": 69,
+        "step": 10
+      },
+      {
+        "absoluteGridStep": 1466,
+        "measure": 92,
+        "midi": 71,
+        "step": 10
+      },
+      {
+        "absoluteGridStep": 1467,
+        "measure": 92,
+        "midi": 69,
+        "step": 11
+      },
+      {
+        "absoluteGridStep": 1468,
+        "measure": 92,
+        "midi": 67,
+        "step": 12
+      },
+      {
+        "absoluteGridStep": 1468,
+        "measure": 92,
+        "midi": 69,
+        "step": 12
+      },
+      {
+        "absoluteGridStep": 1468,
+        "measure": 92,
+        "midi": 69,
+        "step": 12
+      },
+      {
+        "absoluteGridStep": 1468,
+        "measure": 92,
+        "midi": 71,
+        "step": 12
+      },
+      {
+        "absoluteGridStep": 1468,
+        "measure": 92,
+        "midi": 71,
+        "step": 12
+      },
+      {
+        "absoluteGridStep": 1472,
+        "measure": 93,
+        "midi": 62,
+        "step": 0
+      },
+      {
+        "absoluteGridStep": 1472,
+        "measure": 93,
+        "midi": 67,
+        "step": 0
+      },
+      {
+        "absoluteGridStep": 1474,
+        "measure": 93,
+        "midi": 57,
+        "step": 2
+      },
+      {
+        "absoluteGridStep": 1479,
+        "measure": 93,
+        "midi": 68,
+        "step": 7
+      },
+      {
+        "absoluteGridStep": 1483,
+        "measure": 93,
+        "midi": 67,
+        "step": 11
+      },
+      {
+        "absoluteGridStep": 1489,
+        "measure": 94,
+        "midi": 66,
+        "step": 1
+      },
+      {
+        "absoluteGridStep": 1491,
+        "measure": 94,
+        "midi": 62,
+        "step": 3
+      },
+      {
+        "absoluteGridStep": 1499,
+        "measure": 94,
+        "midi": 49,
+        "step": 11
+      },
+      {
+        "absoluteGridStep": 1499,
+        "measure": 94,
+        "midi": 50,
+        "step": 11
+      },
+      {
+        "absoluteGridStep": 1499,
+        "measure": 94,
+        "midi": 62,
+        "step": 11
+      },
+      {
+        "absoluteGridStep": 1502,
+        "measure": 94,
+        "midi": 51,
+        "step": 14
+      },
+      {
+        "absoluteGridStep": 1504,
+        "measure": 95,
+        "midi": 58,
+        "step": 0
+      },
+      {
+        "absoluteGridStep": 1504,
+        "measure": 95,
+        "midi": 71,
+        "step": 0
+      },
+      {
+        "absoluteGridStep": 1508,
+        "measure": 95,
+        "midi": 52,
+        "step": 4
+      },
+      {
+        "absoluteGridStep": 1508,
+        "measure": 95,
+        "midi": 57,
+        "step": 4
+      },
+      {
+        "absoluteGridStep": 1508,
+        "measure": 95,
+        "midi": 64,
+        "step": 4
+      },
+      {
+        "absoluteGridStep": 1508,
+        "measure": 95,
+        "midi": 67,
+        "step": 4
+      },
+      {
+        "absoluteGridStep": 1510,
+        "measure": 95,
+        "midi": 59,
+        "step": 6
+      },
+      {
+        "absoluteGridStep": 1512,
+        "measure": 95,
+        "midi": 62,
+        "step": 8
+      },
+      {
+        "absoluteGridStep": 1514,
+        "measure": 95,
+        "midi": 52,
+        "step": 10
+      },
+      {
+        "absoluteGridStep": 1514,
+        "measure": 95,
+        "midi": 64,
+        "step": 10
+      },
+      {
+        "absoluteGridStep": 1518,
+        "measure": 95,
+        "midi": 40,
+        "step": 14
+      },
+      {
+        "absoluteGridStep": 1522,
+        "measure": 96,
+        "midi": 57,
+        "step": 2
+      },
+      {
+        "absoluteGridStep": 1524,
+        "measure": 96,
+        "midi": 52,
+        "step": 4
+      },
+      {
+        "absoluteGridStep": 1524,
+        "measure": 96,
+        "midi": 57,
+        "step": 4
+      },
+      {
+        "absoluteGridStep": 1524,
+        "measure": 96,
+        "midi": 64,
+        "step": 4
+      },
+      {
+        "absoluteGridStep": 1524,
+        "measure": 96,
+        "midi": 67,
+        "step": 4
+      },
+      {
+        "absoluteGridStep": 1526,
+        "measure": 96,
+        "midi": 59,
+        "step": 6
+      },
+      {
+        "absoluteGridStep": 1528,
+        "measure": 96,
+        "midi": 62,
+        "step": 8
+      },
+      {
+        "absoluteGridStep": 1530,
+        "measure": 96,
+        "midi": 52,
+        "step": 10
+      },
+      {
+        "absoluteGridStep": 1530,
+        "measure": 96,
+        "midi": 64,
+        "step": 10
+      },
+      {
+        "absoluteGridStep": 1532,
+        "measure": 96,
+        "midi": 40,
+        "step": 12
+      },
+      {
+        "absoluteGridStep": 1536,
+        "measure": 97,
+        "midi": 40,
+        "step": 0
+      },
+      {
+        "absoluteGridStep": 1536,
+        "measure": 97,
+        "midi": 59,
+        "step": 0
+      },
+      {
+        "absoluteGridStep": 1538,
+        "measure": 97,
+        "midi": 57,
+        "step": 2
+      },
+      {
+        "absoluteGridStep": 1540,
+        "measure": 97,
+        "midi": 52,
+        "step": 4
+      },
+      {
+        "absoluteGridStep": 1540,
+        "measure": 97,
+        "midi": 64,
+        "step": 4
+      },
+      {
+        "absoluteGridStep": 1544,
+        "measure": 97,
+        "midi": 62,
+        "step": 8
+      },
+      {
+        "absoluteGridStep": 1546,
+        "measure": 97,
+        "midi": 40,
+        "step": 10
+      },
+      {
+        "absoluteGridStep": 1546,
+        "measure": 97,
+        "midi": 64,
+        "step": 10
+      },
+      {
+        "absoluteGridStep": 1548,
+        "measure": 97,
+        "midi": 52,
+        "step": 12
+      },
+      {
+        "absoluteGridStep": 1552,
+        "measure": 98,
+        "midi": 52,
+        "step": 0
+      },
+      {
+        "absoluteGridStep": 1552,
+        "measure": 98,
+        "midi": 59,
+        "step": 0
+      },
+      {
+        "absoluteGridStep": 1552,
+        "measure": 98,
+        "midi": 71,
+        "step": 0
+      },
+      {
+        "absoluteGridStep": 1554,
+        "measure": 98,
+        "midi": 57,
+        "step": 2
+      },
+      {
+        "absoluteGridStep": 1556,
+        "measure": 98,
+        "midi": 52,
+        "step": 4
+      },
+      {
+        "absoluteGridStep": 1556,
+        "measure": 98,
+        "midi": 64,
+        "step": 4
+      },
+      {
+        "absoluteGridStep": 1559,
+        "measure": 98,
+        "midi": 52,
+        "step": 7
+      },
+      {
+        "absoluteGridStep": 1560,
+        "measure": 98,
+        "midi": 52,
+        "step": 8
+      },
+      {
+        "absoluteGridStep": 1560,
+        "measure": 98,
+        "midi": 62,
+        "step": 8
+      },
+      {
+        "absoluteGridStep": 1562,
+        "measure": 98,
+        "midi": 52,
+        "step": 10
+      },
+      {
+        "absoluteGridStep": 1562,
+        "measure": 98,
+        "midi": 64,
+        "step": 10
+      },
+      {
+        "absoluteGridStep": 1566,
+        "measure": 98,
+        "midi": 40,
+        "step": 14
+      },
+      {
+        "absoluteGridStep": 1568,
+        "measure": 99,
+        "midi": 59,
+        "step": 0
+      },
+      {
+        "absoluteGridStep": 1568,
+        "measure": 99,
+        "midi": 71,
+        "step": 0
+      },
+      {
+        "absoluteGridStep": 1572,
+        "measure": 99,
+        "midi": 52,
+        "step": 4
+      },
+      {
+        "absoluteGridStep": 1576,
+        "measure": 99,
+        "midi": 62,
+        "step": 8
+      },
+      {
+        "absoluteGridStep": 1578,
+        "measure": 99,
+        "midi": 52,
+        "step": 10
+      },
+      {
+        "absoluteGridStep": 1578,
+        "measure": 99,
+        "midi": 64,
+        "step": 10
+      },
+      {
+        "absoluteGridStep": 1584,
+        "measure": 100,
+        "midi": 40,
+        "step": 0
+      },
+      {
+        "absoluteGridStep": 1584,
+        "measure": 100,
+        "midi": 59,
+        "step": 0
+      },
+      {
+        "absoluteGridStep": 1584,
+        "measure": 100,
+        "midi": 71,
+        "step": 0
+      },
+      {
+        "absoluteGridStep": 1586,
+        "measure": 100,
+        "midi": 57,
+        "step": 2
+      },
+      {
+        "absoluteGridStep": 1586,
+        "measure": 100,
+        "midi": 67,
+        "step": 2
+      },
+      {
+        "absoluteGridStep": 1588,
+        "measure": 100,
+        "midi": 52,
+        "step": 4
+      },
+      {
+        "absoluteGridStep": 1588,
+        "measure": 100,
+        "midi": 64,
+        "step": 4
+      },
+      {
+        "absoluteGridStep": 1592,
+        "measure": 100,
+        "midi": 62,
+        "step": 8
+      },
+      {
+        "absoluteGridStep": 1594,
+        "measure": 100,
+        "midi": 52,
+        "step": 10
+      },
+      {
+        "absoluteGridStep": 1594,
+        "measure": 100,
+        "midi": 64,
+        "step": 10
+      },
+      {
+        "absoluteGridStep": 1600,
+        "measure": 101,
+        "midi": 52,
+        "step": 0
+      },
+      {
+        "absoluteGridStep": 1600,
+        "measure": 101,
+        "midi": 59,
+        "step": 0
+      },
+      {
+        "absoluteGridStep": 1600,
+        "measure": 101,
+        "midi": 71,
+        "step": 0
+      },
+      {
+        "absoluteGridStep": 1602,
+        "measure": 101,
+        "midi": 57,
+        "step": 2
+      },
+      {
+        "absoluteGridStep": 1604,
+        "measure": 101,
+        "midi": 52,
+        "step": 4
+      },
+      {
+        "absoluteGridStep": 1604,
+        "measure": 101,
+        "midi": 64,
+        "step": 4
+      },
+      {
+        "absoluteGridStep": 1604,
+        "measure": 101,
+        "midi": 67,
+        "step": 4
+      },
+      {
+        "absoluteGridStep": 1608,
+        "measure": 101,
+        "midi": 62,
+        "step": 8
+      },
+      {
+        "absoluteGridStep": 1610,
+        "measure": 101,
+        "midi": 40,
+        "step": 10
+      },
+      {
+        "absoluteGridStep": 1610,
+        "measure": 101,
+        "midi": 52,
+        "step": 10
+      },
+      {
+        "absoluteGridStep": 1610,
+        "measure": 101,
+        "midi": 64,
+        "step": 10
+      },
+      {
+        "absoluteGridStep": 1616,
+        "measure": 102,
+        "midi": 71,
+        "step": 0
+      },
+      {
+        "absoluteGridStep": 1620,
+        "measure": 102,
+        "midi": 52,
+        "step": 4
+      },
+      {
+        "absoluteGridStep": 1620,
+        "measure": 102,
+        "midi": 64,
+        "step": 4
+      },
+      {
+        "absoluteGridStep": 1624,
+        "measure": 102,
+        "midi": 62,
+        "step": 8
+      },
+      {
+        "absoluteGridStep": 1626,
+        "measure": 102,
+        "midi": 40,
+        "step": 10
+      },
+      {
+        "absoluteGridStep": 1626,
+        "measure": 102,
+        "midi": 52,
+        "step": 10
+      },
+      {
+        "absoluteGridStep": 1626,
+        "measure": 102,
+        "midi": 64,
+        "step": 10
+      },
+      {
+        "absoluteGridStep": 1628,
+        "measure": 102,
+        "midi": 40,
+        "step": 12
+      },
+      {
+        "absoluteGridStep": 1630,
+        "measure": 102,
+        "midi": 59,
+        "step": 14
+      },
+      {
+        "absoluteGridStep": 1632,
+        "measure": 103,
+        "midi": 52,
+        "step": 0
+      },
+      {
+        "absoluteGridStep": 1632,
+        "measure": 103,
+        "midi": 62,
+        "step": 0
+      },
+      {
+        "absoluteGridStep": 1632,
+        "measure": 103,
+        "midi": 71,
+        "step": 0
+      },
+      {
+        "absoluteGridStep": 1636,
+        "measure": 103,
+        "midi": 55,
+        "step": 4
+      },
+      {
+        "absoluteGridStep": 1636,
+        "measure": 103,
+        "midi": 64,
+        "step": 4
+      },
+      {
+        "absoluteGridStep": 1639,
+        "measure": 103,
+        "midi": 64,
+        "step": 7
+      },
+      {
+        "absoluteGridStep": 1640,
+        "measure": 103,
+        "midi": 62,
+        "step": 8
+      },
+      {
+        "absoluteGridStep": 1641,
+        "measure": 103,
+        "midi": 52,
+        "step": 9
+      },
+      {
+        "absoluteGridStep": 1644,
+        "measure": 103,
+        "midi": 64,
+        "step": 12
+      },
+      {
+        "absoluteGridStep": 1648,
+        "measure": 104,
+        "midi": 61,
+        "step": 0
+      },
+      {
+        "absoluteGridStep": 1648,
+        "measure": 104,
+        "midi": 64,
+        "step": 0
+      },
+      {
+        "absoluteGridStep": 1649,
+        "measure": 104,
+        "midi": 45,
+        "step": 1
+      },
+      {
+        "absoluteGridStep": 1649,
+        "measure": 104,
+        "midi": 57,
+        "step": 1
+      },
+      {
+        "absoluteGridStep": 1652,
+        "measure": 104,
+        "midi": 52,
+        "step": 4
+      },
+      {
+        "absoluteGridStep": 1652,
+        "measure": 104,
+        "midi": 61,
+        "step": 4
+      },
+      {
+        "absoluteGridStep": 1656,
+        "measure": 104,
+        "midi": 52,
+        "step": 8
+      },
+      {
+        "absoluteGridStep": 1656,
+        "measure": 104,
+        "midi": 59,
+        "step": 8
+      },
+      {
+        "absoluteGridStep": 1656,
+        "measure": 104,
+        "midi": 62,
+        "step": 8
+      },
+      {
+        "absoluteGridStep": 1660,
+        "measure": 104,
+        "midi": 50,
+        "step": 12
+      },
+      {
+        "absoluteGridStep": 1660,
+        "measure": 104,
+        "midi": 71,
+        "step": 12
+      },
+      {
+        "absoluteGridStep": 1670,
+        "measure": 105,
+        "midi": 52,
+        "step": 6
+      },
+      {
+        "absoluteGridStep": 1670,
+        "measure": 105,
+        "midi": 57,
+        "step": 6
+      },
+      {
+        "absoluteGridStep": 1670,
+        "measure": 105,
+        "midi": 64,
+        "step": 6
+      },
+      {
+        "absoluteGridStep": 1672,
+        "measure": 105,
+        "midi": 45,
+        "step": 8
+      },
+      {
+        "absoluteGridStep": 1674,
+        "measure": 105,
+        "midi": 52,
+        "step": 10
+      },
+      {
+        "absoluteGridStep": 1676,
+        "measure": 105,
+        "midi": 69,
+        "step": 12
+      },
+      {
+        "absoluteGridStep": 1680,
+        "measure": 106,
+        "midi": 45,
+        "step": 0
+      },
+      {
+        "absoluteGridStep": 1680,
+        "measure": 106,
+        "midi": 52,
+        "step": 0
+      },
+      {
+        "absoluteGridStep": 1688,
+        "measure": 106,
+        "midi": 52,
+        "step": 8
+      },
+      {
+        "absoluteGridStep": 1688,
+        "measure": 106,
+        "midi": 64,
+        "step": 8
+      },
+      {
+        "absoluteGridStep": 1688,
+        "measure": 106,
+        "midi": 71,
+        "step": 8
+      },
+      {
+        "absoluteGridStep": 1690,
+        "measure": 106,
+        "midi": 68,
+        "step": 10
+      },
+      {
+        "absoluteGridStep": 1692,
+        "measure": 106,
+        "midi": 62,
+        "step": 12
+      },
+      {
+        "absoluteGridStep": 1692,
+        "measure": 106,
+        "midi": 66,
+        "step": 12
+      },
+      {
+        "absoluteGridStep": 1694,
+        "measure": 106,
+        "midi": 52,
+        "step": 14
+      },
+      {
+        "absoluteGridStep": 1694,
+        "measure": 106,
+        "midi": 64,
+        "step": 14
+      },
+      {
+        "absoluteGridStep": 1694,
+        "measure": 106,
+        "midi": 68,
+        "step": 14
+      },
+      {
+        "absoluteGridStep": 1694,
+        "measure": 106,
+        "midi": 71,
+        "step": 14
+      },
+      {
+        "absoluteGridStep": 1704,
+        "measure": 107,
+        "midi": 52,
+        "step": 8
+      },
+      {
+        "absoluteGridStep": 1704,
+        "measure": 107,
+        "midi": 68,
+        "step": 8
+      },
+      {
+        "absoluteGridStep": 1704,
+        "measure": 107,
+        "midi": 71,
+        "step": 8
+      },
+      {
+        "absoluteGridStep": 1708,
+        "measure": 107,
+        "midi": 71,
+        "step": 12
+      },
+      {
+        "absoluteGridStep": 1710,
+        "measure": 107,
+        "midi": 52,
+        "step": 14
+      },
+      {
+        "absoluteGridStep": 1710,
+        "measure": 107,
+        "midi": 59,
+        "step": 14
+      },
+      {
+        "absoluteGridStep": 1710,
+        "measure": 107,
+        "midi": 64,
+        "step": 14
+      },
+      {
+        "absoluteGridStep": 1710,
+        "measure": 107,
+        "midi": 68,
+        "step": 14
+      },
+      {
+        "absoluteGridStep": 1720,
+        "measure": 108,
+        "midi": 59,
+        "step": 8
+      },
+      {
+        "absoluteGridStep": 1722,
+        "measure": 108,
+        "midi": 62,
+        "step": 10
+      },
+      {
+        "absoluteGridStep": 1728,
+        "measure": 109,
+        "midi": 59,
+        "step": 0
+      },
+      {
+        "absoluteGridStep": 1728,
+        "measure": 109,
+        "midi": 71,
+        "step": 0
+      },
+      {
+        "absoluteGridStep": 1734,
+        "measure": 109,
+        "midi": 45,
+        "step": 6
+      },
+      {
+        "absoluteGridStep": 1734,
+        "measure": 109,
+        "midi": 52,
+        "step": 6
+      },
+      {
+        "absoluteGridStep": 1734,
+        "measure": 109,
+        "midi": 57,
+        "step": 6
+      },
+      {
+        "absoluteGridStep": 1734,
+        "measure": 109,
+        "midi": 64,
+        "step": 6
+      },
+      {
+        "absoluteGridStep": 1736,
+        "measure": 109,
+        "midi": 61,
+        "step": 8
+      },
+      {
+        "absoluteGridStep": 1738,
+        "measure": 109,
+        "midi": 52,
+        "step": 10
+      },
+      {
+        "absoluteGridStep": 1742,
+        "measure": 109,
+        "midi": 57,
+        "step": 14
+      },
+      {
+        "absoluteGridStep": 1747,
+        "measure": 110,
+        "midi": 52,
+        "step": 3
+      },
+      {
+        "absoluteGridStep": 1750,
+        "measure": 110,
+        "midi": 61,
+        "step": 6
+      },
+      {
+        "absoluteGridStep": 1750,
+        "measure": 110,
+        "midi": 64,
+        "step": 6
+      },
+      {
+        "absoluteGridStep": 1751,
+        "measure": 110,
+        "midi": 64,
+        "step": 7
+      },
+      {
+        "absoluteGridStep": 1752,
+        "measure": 110,
+        "midi": 64,
+        "step": 8
+      },
+      {
+        "absoluteGridStep": 1753,
+        "measure": 110,
+        "midi": 64,
+        "step": 9
+      },
+      {
+        "absoluteGridStep": 1754,
+        "measure": 110,
+        "midi": 64,
+        "step": 10
+      },
+      {
+        "absoluteGridStep": 1755,
+        "measure": 110,
+        "midi": 45,
+        "step": 11
+      },
+      {
+        "absoluteGridStep": 1756,
+        "measure": 110,
+        "midi": 64,
+        "step": 12
+      },
+      {
+        "absoluteGridStep": 1757,
+        "measure": 110,
+        "midi": 45,
+        "step": 13
+      },
+      {
+        "absoluteGridStep": 1760,
+        "measure": 111,
+        "midi": 45,
+        "step": 0
+      },
+      {
+        "absoluteGridStep": 1760,
+        "measure": 111,
+        "midi": 64,
+        "step": 0
+      },
+      {
+        "absoluteGridStep": 1762,
+        "measure": 111,
+        "midi": 45,
+        "step": 2
+      },
+      {
+        "absoluteGridStep": 1762,
+        "measure": 111,
+        "midi": 64,
+        "step": 2
+      },
+      {
+        "absoluteGridStep": 1764,
+        "measure": 111,
+        "midi": 45,
+        "step": 4
+      },
+      {
+        "absoluteGridStep": 1764,
+        "measure": 111,
+        "midi": 64,
+        "step": 4
+      },
+      {
+        "absoluteGridStep": 1765,
+        "measure": 111,
+        "midi": 45,
+        "step": 5
+      },
+      {
+        "absoluteGridStep": 1765,
+        "measure": 111,
+        "midi": 64,
+        "step": 5
+      },
+      {
+        "absoluteGridStep": 1767,
+        "measure": 111,
+        "midi": 45,
+        "step": 7
+      },
+      {
+        "absoluteGridStep": 1767,
+        "measure": 111,
+        "midi": 64,
+        "step": 7
+      },
+      {
+        "absoluteGridStep": 1769,
+        "measure": 111,
+        "midi": 45,
+        "step": 9
+      },
+      {
+        "absoluteGridStep": 1769,
+        "measure": 111,
+        "midi": 64,
+        "step": 9
+      },
+      {
+        "absoluteGridStep": 1772,
+        "measure": 111,
+        "midi": 61,
+        "step": 12
+      },
+      {
+        "absoluteGridStep": 1776,
+        "measure": 112,
+        "midi": 57,
+        "step": 0
+      },
+      {
+        "absoluteGridStep": 1788,
+        "measure": 112,
+        "midi": 45,
+        "step": 12
+      },
+      {
+        "absoluteGridStep": 1788,
+        "measure": 112,
+        "midi": 64,
+        "step": 12
+      },
+      {
+        "absoluteGridStep": 1790,
+        "measure": 112,
+        "midi": 42,
+        "step": 14
+      },
+      {
+        "absoluteGridStep": 1790,
+        "measure": 112,
+        "midi": 62,
+        "step": 14
+      },
+      {
+        "absoluteGridStep": 1790,
+        "measure": 112,
+        "midi": 67,
+        "step": 14
+      }
+    ]
+  },
+  "v167ActiveTopologyPruning": {
+    "config": {
+      "description": "exact normalized I005 reproduction control",
+      "id": "topo-repro-i005",
+      "keepTopologies": [
+        "single",
+        "chord",
+        "near_unison",
+        "remote"
+      ],
+      "reproductionControl": true
+    },
+    "onlyFrozenI005StateSplitAdditionsFiltered": true,
+    "originalI003GuitarEventsAlwaysKept": true,
+    "sourceIteration": 5,
+    "summary": {
+      "baseI003GuitarEvents": 1050,
+      "bassEventCount": 512,
+      "guitarEventCount": 1098,
+      "keptI005Additions": 48,
+      "keptTopologyCounts": {
+        "chord": 18,
+        "near_unison": 5,
+        "remote": 2,
+        "single": 23
+      },
+      "prunedI005Additions": 0,
+      "sourceI005Additions": 48
+    }
+  },
+  "version": "V167"
+}

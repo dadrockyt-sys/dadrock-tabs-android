@@ -1,0 +1,170 @@
+{
+  "classification": "SINGLE_SONG_TRAINING_CALIBRATION_ONLY",
+  "inputs": {
+    "baseGuitarCount": 1050,
+    "bassCount": 512,
+    "iteration003Sha256": "f15c6f40dd4b8479c2dfb7eab039cff98a23b45eb796265ffad08c5a8ae37115",
+    "iteration005Sha256": "86329ebc25e589f566d466a7a65cae35a158c25f470b1c034973f3dbc7d38b31",
+    "postI005DiagnosisSha256": "fe7e826724a11e115a25f932d4b58ed88e3aedae67fb54142cc532cc40ab8450",
+    "sourceI005AdditionCount": 48,
+    "sourceTopologyCounts": {
+      "chord": 18,
+      "near_unison": 5,
+      "remote": 2,
+      "single": 23
+    }
+  },
+  "policy": {
+    "allI003GuitarEventsAlwaysKept": true,
+    "allVariantRulesPredeclaredBeforeScoring": true,
+    "automaticIteration006Promotion": false,
+    "bassFixedExactlyToI005": true,
+    "bassScoreCallsPlanned": 0,
+    "individualEventSelectionByReference": false,
+    "newGuitarVariantScoreCallsPlanned": 3,
+    "newReferenceFacingScoreCallsByGenerator": 0,
+    "onlyFrozenI005AdditionsFiltered": true,
+    "professionalReferenceReadByGenerator": false,
+    "promotionEligibility": {
+      "minimumF1GainPercentagePointsVsI005": 0.1,
+      "precisionMustBeAtLeastI005": true
+    },
+    "reproductionControlScored": false,
+    "scorerReadByGenerator": false,
+    "tieBreak": [
+      "max_primary_f1",
+      "max_primary_precision",
+      "fewer_kept_i005_additions",
+      "lexicographic_rule_id"
+    ]
+  },
+  "schema": "dadrock.tabs.v167.predeclared-active-topology-guitar-manifest.v1",
+  "status": "FROZEN_BEFORE_REFERENCE_SCORING",
+  "variants": [
+    {
+      "config": {
+        "description": "exact normalized I005 reproduction control",
+        "id": "topo-repro-i005",
+        "keepTopologies": [
+          "single",
+          "chord",
+          "near_unison",
+          "remote"
+        ],
+        "reproductionControl": true
+      },
+      "counts": {
+        "bass": 512,
+        "combinedGuitar": 1098
+      },
+      "id": "topo-repro-i005",
+      "relativePath": "topo-repro-i005.json",
+      "reproductionControl": true,
+      "sha256": "4fbd7c41093d8b3f9b382bba51d8cda29a0aeeb36071749f67b7084f5cfca652",
+      "summary": {
+        "baseI003GuitarEvents": 1050,
+        "bassEventCount": 512,
+        "guitarEventCount": 1098,
+        "keptI005Additions": 48,
+        "keptTopologyCounts": {
+          "chord": 18,
+          "near_unison": 5,
+          "remote": 2,
+          "single": 23
+        },
+        "prunedI005Additions": 0,
+        "sourceI005Additions": 48
+      }
+    },
+    {
+      "config": {
+        "description": "keep isolated-active reattacks or chord-interval active context",
+        "id": "topo-single-or-chord",
+        "keepTopologies": [
+          "single",
+          "chord"
+        ],
+        "reproductionControl": false
+      },
+      "counts": {
+        "bass": 512,
+        "combinedGuitar": 1091
+      },
+      "id": "topo-single-or-chord",
+      "relativePath": "topo-single-or-chord.json",
+      "reproductionControl": false,
+      "sha256": "8a924e8395d439635d577cee028d2c9b47512d5c305d0018e5cc6bbd2a6c46c4",
+      "summary": {
+        "baseI003GuitarEvents": 1050,
+        "bassEventCount": 512,
+        "guitarEventCount": 1091,
+        "keptI005Additions": 41,
+        "keptTopologyCounts": {
+          "chord": 18,
+          "single": 23
+        },
+        "prunedI005Additions": 7,
+        "sourceI005Additions": 48
+      }
+    },
+    {
+      "config": {
+        "description": "keep only additions with no different active pitch at site",
+        "id": "topo-single-only",
+        "keepTopologies": [
+          "single"
+        ],
+        "reproductionControl": false
+      },
+      "counts": {
+        "bass": 512,
+        "combinedGuitar": 1073
+      },
+      "id": "topo-single-only",
+      "relativePath": "topo-single-only.json",
+      "reproductionControl": false,
+      "sha256": "370ecb56e1f1e3ef4b16367f7cd6747dac8139e6d75a739e861b165eb7e88efa",
+      "summary": {
+        "baseI003GuitarEvents": 1050,
+        "bassEventCount": 512,
+        "guitarEventCount": 1073,
+        "keptI005Additions": 23,
+        "keptTopologyCounts": {
+          "single": 23
+        },
+        "prunedI005Additions": 25,
+        "sourceI005Additions": 48
+      }
+    },
+    {
+      "config": {
+        "description": "keep only additions whose nearest different active pitch is a preregistered chord interval",
+        "id": "topo-chord-only",
+        "keepTopologies": [
+          "chord"
+        ],
+        "reproductionControl": false
+      },
+      "counts": {
+        "bass": 512,
+        "combinedGuitar": 1068
+      },
+      "id": "topo-chord-only",
+      "relativePath": "topo-chord-only.json",
+      "reproductionControl": false,
+      "sha256": "2355aa168e4aed0d63f298690d092209b205191a2a64df109139624978e4950c",
+      "summary": {
+        "baseI003GuitarEvents": 1050,
+        "bassEventCount": 512,
+        "guitarEventCount": 1068,
+        "keptI005Additions": 18,
+        "keptTopologyCounts": {
+          "chord": 18
+        },
+        "prunedI005Additions": 30,
+        "sourceI005Additions": 48
+      }
+    }
+  ],
+  "version": "V167"
+}
