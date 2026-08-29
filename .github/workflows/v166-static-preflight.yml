@@ -1,0 +1,63 @@
+name: V166 CPU Static Preflight
+
+on:
+  workflow_dispatch:
+  push:
+    branches:
+      - v143-contextual-prune-lobo
+    paths:
+      - .github/workflows/v166-static-preflight.yml
+
+permissions:
+  contents: read
+
+concurrency:
+  group: v166-static-preflight
+  cancel-in-progress: false
+
+jobs:
+  static-preflight:
+    if: github.ref == 'refs/heads/v143-contextual-prune-lobo'
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - name: Checkout sealed branch state
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Install static dependency only
+        run: python -m pip install --disable-pip-version-check numpy==2.0.2
+
+      - name: Syntax compile V166 implementation and guards
+        run: |
+          python -m py_compile \
+            validation/v166_cpu_autonomous/event_logic_v166.py \
+            validation/v166_cpu_autonomous/build_timebase_v166.py \
+            validation/v166_cpu_autonomous/timebase_qc_v166.py \
+            validation/v166_cpu_autonomous/transcribe_v166.py \
+            validation/v166_cpu_autonomous/structural_qc_v166.py \
+            validation/v166_cpu_autonomous/test_paired_template_v166.py \
+            validation/v166_cpu_autonomous/test_json_native_v166.py \
+            debug/v166-cpu-autonomous/negative-runtime-guard.py
+
+      - name: Run song-blind paired-window fixture
+        run: python validation/v166_cpu_autonomous/test_paired_template_v166.py
+
+      - name: Run JSON-native fixture
+        run: python validation/v166_cpu_autonomous/test_json_native_v166.py
+
+      - name: Run negative runtime guard
+        run: |
+          python debug/v166-cpu-autonomous/negative-runtime-guard.py \
+            --event-logic validation/v166_cpu_autonomous/event_logic_v166.py \
+            --transcriber validation/v166_cpu_autonomous/transcribe_v166.py \
+            --paired-test validation/v166_cpu_autonomous/test_paired_template_v166.py \
+            --timebase-builder validation/v166_cpu_autonomous/build_timebase_v166.py \
+            --timebase-qc validation/v166_cpu_autonomous/timebase_qc_v166.py \
+            --structural-qc validation/v166_cpu_autonomous/structural_qc_v166.py \
+            --json-test validation/v166_cpu_autonomous/test_json_native_v166.py \
+            --workflow .github/workflows/v166-static-preflight.yml
