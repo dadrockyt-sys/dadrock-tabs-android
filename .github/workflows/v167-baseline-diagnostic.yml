@@ -1,0 +1,138 @@
+name: V167 one-shot single-song calibration baseline
+
+on:
+  push:
+    branches:
+      - v143-contextual-prune-lobo
+    paths:
+      - .github/workflows/v167-baseline-diagnostic.yml
+
+permissions:
+  contents: write
+
+concurrency:
+  group: v167-calibration-baseline-once
+  cancel-in-progress: false
+
+env:
+  BRANCH: v143-contextual-prune-lobo
+  EXPECTED_PARENT_HEAD: a7c1e94b41fc99ca74987f6e4e651f9aff9a6048
+  MANIFEST: debug/v167-single-song-calibration/calibration-manifest.json
+  CANDIDATE: debug/v166-cpu-autonomous/generated.json
+  SCORER: validation/v154_cpu_multitrack/score_frontend_reference.py
+  REFERENCE: research/v154-professional-references/scorer-ready/frontend-reference-payload.json
+  DIAGNOSTIC_CODE: validation/v167_single_song_calibration/diagnose_v167.py
+  SCORE_OUTPUT: debug/v167-single-song-calibration/baseline-score.json
+  DIAGNOSTIC_OUTPUT: debug/v167-single-song-calibration/baseline-diagnostic.json
+  RECEIPT: debug/v167-single-song-calibration/baseline-receipt.json
+
+jobs:
+  baseline:
+    if: github.ref == 'refs/heads/v143-contextual-prune-lobo'
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - name: Checkout exact V167 baseline arm
+        uses: actions/checkout@v4
+        with:
+          ref: ${{ github.sha }}
+          fetch-depth: 0
+
+      - name: Verify calibration identities
+        shell: bash
+        run: |
+          set -euo pipefail
+          test "$GITHUB_EVENT_NAME" = "push"
+          test "$GITHUB_RUN_NUMBER" = "1"
+          test "$GITHUB_RUN_ATTEMPT" = "1"
+          test "$(git rev-parse HEAD^)" = "$EXPECTED_PARENT_HEAD"
+          test "$(git diff --name-only "$EXPECTED_PARENT_HEAD" "$GITHUB_SHA")" = ".github/workflows/v167-baseline-diagnostic.yml"
+          git fetch origin "$BRANCH"
+          test "$(git rev-parse "origin/$BRANCH")" = "$GITHUB_SHA"
+          test "$(git hash-object "$MANIFEST")" = "8d6e9723e77e9ec2159e765436db2e9d91982fb2"
+          test "$(git hash-object "$CANDIDATE")" = "c36a4d1e14ca66235b51a866ad3908322834efff"
+          test "$(git hash-object "$SCORER")" = "9644e65719fbd361a9b39778ae9950c5e983e855"
+          test "$(git hash-object "$REFERENCE")" = "2fbed60b543c0488934d8642c488aa06bf31bbf5"
+          test "$(git hash-object "$DIAGNOSTIC_CODE")" = "04affbbf88b66264b0b7b2a4dedd27da5c55f632"
+          test ! -e "$SCORE_OUTPUT"
+          test ! -e "$DIAGNOSTIC_OUTPUT"
+          test ! -e "$RECEIPT"
+          python - <<'PY'
+          import json
+          m=json.load(open('debug/v167-single-song-calibration/calibration-manifest.json'))
+          assert m['version']=='V167' and m['validation']=='PASS'
+          assert m['methodology']['label']=='SINGLE_SONG_TRAINING_CALIBRATION'
+          assert m['methodology']['referenceAndScorerDiagnosticsAllowed'] is True
+          assert m['methodology']['directReferenceCopyIntoCandidateForbidden'] is True
+          assert m['startingCandidate']['gitBlob']=='c36a4d1e14ca66235b51a866ad3908322834efff'
+          PY
+
+      - name: Run frozen score and detailed calibration diagnostic
+        shell: bash
+        run: |
+          set -euo pipefail
+          python "$DIAGNOSTIC_CODE" \
+            --candidate "$CANDIDATE" \
+            --reference "$REFERENCE" \
+            --scorer "$SCORER" \
+            --score-output "$SCORE_OUTPUT" \
+            --diagnostic-output "$DIAGNOSTIC_OUTPUT"
+
+      - name: Freeze baseline receipt and self-seal
+        shell: bash
+        run: |
+          set -euo pipefail
+          python - <<'PY'
+          import hashlib, json, os, subprocess
+          from pathlib import Path
+          def sha256(path):
+              return hashlib.sha256(Path(path).read_bytes()).hexdigest()
+          def blob(path):
+              return subprocess.check_output(['git','hash-object',path], text=True).strip()
+          score=json.load(open('debug/v167-single-song-calibration/baseline-score.json'))
+          diag=json.load(open('debug/v167-single-song-calibration/baseline-diagnostic.json'))
+          receipt={
+            'schema':'dadrock.tabs.v167.single-song-calibration-baseline-receipt.v1',
+            'version':'V167',
+            'status':'BASELINE_FROZEN',
+            'label':'SINGLE_SONG_TRAINING_CALIBRATION',
+            'workflowRunId':int(os.environ['GITHUB_RUN_ID']),
+            'workflowRunNumber':int(os.environ['GITHUB_RUN_NUMBER']),
+            'workflowRunAttempt':int(os.environ['GITHUB_RUN_ATTEMPT']),
+            'workflowHeadSha':os.environ['GITHUB_SHA'],
+            'inputGitBlobs':{
+              'manifest':'8d6e9723e77e9ec2159e765436db2e9d91982fb2',
+              'candidate':'c36a4d1e14ca66235b51a866ad3908322834efff',
+              'scorer':'9644e65719fbd361a9b39778ae9950c5e983e855',
+              'professionalReference':'2fbed60b543c0488934d8642c488aa06bf31bbf5',
+              'diagnosticCode':'04affbbf88b66264b0b7b2a4dedd27da5c55f632'
+            },
+            'recognitionPercent':diag['recognitionPercent'],
+            'scoreArtifacts':{
+              'baselineScoreSha256':sha256('debug/v167-single-song-calibration/baseline-score.json'),
+              'baselineDiagnosticSha256':sha256('debug/v167-single-song-calibration/baseline-diagnostic.json')
+            },
+            'policy':{
+              'calibrationOnly':True,
+              'candidateModified':False,
+              'referenceFacing':True,
+              'directReferenceCopy':False,
+              'generalizationClaim':False,
+              'gpuCudaModalUsed':False,
+              'mainOrProductionModified':False
+            }
+          }
+          Path('debug/v167-single-song-calibration/baseline-receipt.json').write_text(json.dumps(receipt,indent=2,sort_keys=True)+'\n')
+          PY
+          rm .github/workflows/v167-baseline-diagnostic.yml
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add -A -- debug/v167-single-song-calibration .github/workflows/v167-baseline-diagnostic.yml
+          changed="$(git diff --cached --name-only)"
+          echo "$changed"
+          if echo "$changed" | grep -Ev '^debug/v167-single-song-calibration/(baseline-score\.json|baseline-diagnostic\.json|baseline-receipt\.json)$|^\.github/workflows/v167-baseline-diagnostic\.yml$'; then
+            echo 'Unexpected V167 baseline path' >&2
+            exit 1
+          fi
+          git commit -m "research: freeze V167 calibration baseline diagnostic [skip ci]"
+          git push origin HEAD:"$BRANCH"
