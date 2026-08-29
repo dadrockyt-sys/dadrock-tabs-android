@@ -4,12 +4,12 @@ Updated: 2026-08-29 UTC
 Branch: `v143-contextual-prune-lobo`
 
 ## Active phase
-**V166 is terminal/immutable. V167 is the explicitly reference/scorer-guided SINGLE-SONG TRAINING CALIBRATION lane for Lenny Kravitz — Are You Gonna Go My Way. Iteration 001 is frozen at Guitar 40.36% / Bass 70.60%. A new fixed whole-stream audio-evidence timing-rule sweep is frozen and materially improves both instruments without changing MIDI or event cardinality: projected Guitar 41.92%, Bass 71.87%. Next boundary is deterministic Iteration 002 using the selected whole-stream rules, followed by score/diagnostic freeze. `main`/Production remain untouched.**
+**V166 is terminal/immutable. V167 is the explicitly reference/scorer-guided SINGLE-SONG TRAINING CALIBRATION lane for Lenny Kravitz — Are You Gonna Go My Way. Calibration Iteration 002 is now frozen and is the current best candidate: Guitar 41.92%, Bass 71.87%. It uses only the already-stored audio-derived lattice alternatives, with no MIDI/cardinality changes. The next major target is recall/pitch: instrument the CPU front-end to preserve and analyze near-miss/rejected event pools, then use the scorer to tune deterministic admission/recovery behavior. `main`/Production remain untouched.**
 
 ## Standing V167 methodology
 - Calibration only, not holdout/generalization performance.
 - Frozen scorer blob `9644e65719fbd361a9b39778ae9950c5e983e855`; frozen professional reference blob `2fbed60b543c0488934d8642c488aa06bf31bbf5`.
-- Reference/scorer may grade complete predeclared variants and select a whole deterministic rule; it may not choose an individual event answer.
+- Reference/scorer may grade complete predeclared variants and select whole deterministic rules/parameter settings; it may not directly supply or copy candidate events.
 - Direct/manual copying of professional-reference events into generated output is forbidden.
 - CPU work authorized; fresh explicit authorization required immediately before GPU/CUDA/Modal.
 - Never modify/merge/promote `main` or Production without explicit direction.
@@ -20,47 +20,59 @@ Branch: `v143-contextual-prune-lobo`
 
 ## V167 Iteration 001 — FROZEN
 - Terminal commit `dcb61f0eeeedd1d1ea69cec257d374f7b83a084b`.
-- Candidate blob `1b73d6ece977fb976fa1c503997e6434d4e4811a`, SHA256 `cfe521efac40b28b3fd34268cd24d7cdc24d92926fc33815f0928942edb56911`.
-- Guitar **40.36021285304953%** — 493 matched / 1050 generated / 1393 reference; gross 54.93246009005321%.
-- Bass **70.60063224446786%** — 335 / 402 / 547; gross 74.81559536354058%.
-- Shared global phase correction is `-12` grid steps.
+- Candidate blob `1b73d6ece977fb976fa1c503997e6434d4e4811a`.
+- Guitar 40.36021285304953%; Bass 70.60063224446786%.
+- Shared global phase correction `-12` grid steps.
 
-## Previous frozen diagnostics
-- Fixed 8-measure shared phase sweep: report blob `415be9b6670a0b03ad593ae008b3353d59c26c05`; all blocks chose 0 additional shift.
-- Generated-only repeat completion: report blob `3a71ad10fd74805d86803f5e86c5332c54acf0ef`; no Bass gain and weak Guitar gain with excessive added notes; not promoted.
-- Candidate evidence probe: run `33227694682`, terminal commit `0944ca72009e087c46cb02ab3d544a211d442b90`, report blob `b15fcdf72f39ce5342c7306f0fb78c1588c80f75`; every admitted event stores three audio-derived `stepSelection.candidates`.
+## Frozen step-rule sweep
+- Code blob `14cac9e217f65f72933c72ee349523ca9681fc21`.
+- Run `33227803023`, job `99034806131`; terminal commit `81593418a2f4e429e7eb5a8423de9f92037b0e3d`.
+- Report blob `2096d3caa58b6ce7d6ab57aeaa7512989e2e4acd`.
+- Selected Guitar rule `max_score_x_shared`; selected Bass rule `max_score_x_mean_support`.
 
-## V167 fixed whole-stream step-rule sweep — FROZEN POSITIVE RESULT
-- Code `validation/v167_single_song_calibration/step_rule_sweep_v167.py`, blob `14cac9e217f65f72933c72ee349523ca9681fc21`.
-- One-shot run `33227803023`, run 1, attempt 1, job `99034806131`; SUCCESS.
-- Arm commit `0f652c0be51750c7ba66314373c50ffb56c14aba`.
-- Terminal commit `81593418a2f4e429e7eb5a8423de9f92037b0e3d`, message `research: freeze V167 fixed audio-evidence step-rule sweep [skip ci]`.
-- Report `debug/v167-single-song-calibration/step-rule-sweep.json`, blob `2096d3caa58b6ce7d6ab57aeaa7512989e2e4acd`.
-- All alternatives come from each event's existing 3 stored audio-derived lattice candidates. MIDI and event cardinality remain unchanged. Stored candidate absolute step receives the already-frozen `-12` global correction before measure/step conversion.
-- Reference selected only complete whole-stream rules, never individual event alternatives.
+## V167 Calibration Iteration 002 — CURRENT BEST / FROZEN SUCCESS
+- Transform `validation/v167_single_song_calibration/apply_step_rules_v167.py`, blob `00dc94081117664890d1dc5539bf5e69fedf76fa`.
+- One-shot run `33227898407`, run 1, attempt 1, job `99035077043`; all identity/transform/score/diagnostic/self-seal steps PASS.
+- Arm commit `db02cdac39bf24bbdc020f4c5e61b0cb86b75ad4`.
+- Terminal commit `9883daaa9770123aeab2a122fa72fa2fc6c16c4c`, message `research: freeze V167 calibration iteration 002 audio-evidence timing rules [skip ci]`.
+- Candidate `debug/v167-single-song-calibration/iteration-002-generated.json`, blob `7eba73700116ceeca580a8851abe399aed764834`, SHA256 `96fbc329d9ba46b06d430c7c3c7b7f5b0e9077f6e133da5c3165c1fde609b5cc`.
+- Score blob `5e01636b8ebe4753ee78a5126bfa321697139932`, SHA256 `f4ac083d43d3f8ecf507fca1631b6a6bcafbf403045a4efa1708ce4e3e856772`.
+- Diagnostic blob `763b7f6450e02ea66406c5baba1372cde366cd41`, SHA256 `792cedf9ef62caea30a89f1c520745876e15ef28f015aabe53975b95acef2fae`.
+- Receipt blob `c80a4e2a78309e359eaee67f745111c80e70d270`.
 
-### Guitar selected rule
-- Rule: `max_score_x_shared`.
-- Baseline primary F1 40.36021285304953% → projected **41.9156774457634%**; **+1.5554645927138677 pp**.
-- Matches 493 → 512; precision 46.9524% → 48.7619%; recall 35.3912% → 36.7552%.
-- Gross F1 54.93246009005321% → **55.09619320507573%**; gross matches 671 → 673.
-- 266 / 1050 events move: 160 by -1, 105 by +1, 1 by -2; 784 unchanged. Mean absolute movement 0.2543 step.
+### Iteration 002 exact score
+**Guitar**
+- Primary F1 **41.9156774457634%** — 512 matched / 1050 generated / 1393 reference.
+- Precision 48.76190476190476%; recall 36.755204594400576%.
+- Gross ±2-step F1 **55.09619320507573%**, 673 matches.
+- Same-measure pitch-content F1 **59.35325419566108%**, 725 matches.
+- 160 gross-only same-pitch timing matches remain, but recall/pitch is the dominant limitation.
+- Residual primary FN 881, FP 538; 491 FN have no generated event within ±0.5 step same measure.
 
-### Bass selected rule
-- Rule: `max_score_x_mean_support` where mean support = `(instrumentSupport + sharedSupport)/2`.
-- Baseline primary F1 70.60063224446786% → projected **71.86512118018967%**; **+1.264488935721808 pp**.
-- Matches 335 → 341; precision 83.3333% → 84.8259%; recall 61.2431% → 62.3400%.
-- Gross F1 74.81559536354058% → 74.39409905163331%; gross matches 355 → 353. Primary scorer improves materially while gross changes slightly downward.
-- Only 15 / 402 events move: 8 by -1, 7 by +1; 387 unchanged. Mean absolute movement 0.0373 step.
+**Bass**
+- Primary F1 **71.86512118018967%** — 341 / 402 / 547.
+- Precision 84.82587064676617%; recall 62.3400365630713%.
+- Gross ±2-step F1 **74.39409905163331%**, 353 matches.
+- Same-measure pitch-content F1 **75.0263435194942%**, 356 matches.
+- Only 10 gross-only same-pitch timing matches remain.
+- Residual primary FN 206, FP 61; 165 FN have no generated event within ±0.5 step same measure.
+- Low-register recall remains obvious: generated MIDI 31 count 10 vs reference 73; generated MIDI 35 count 26 vs reference 70.
 
-## Promotion decision
-- Promote the two selected deterministic rules as V167 Calibration Iteration 002 because both improve the frozen primary scorer with no pitch/cardinality changes and use only stored audio evidence.
-- Iteration 002 transform itself must not read the professional reference. It may read the frozen sweep report as the sealed calibration parameter source.
-- Preserve Iteration 001 as immutable parent and record exact per-stream rules, movement counts, sweep/code blobs, and zero direct-reference copying.
+### Iteration 002 safety/provenance
+- Guitar rule moved 266 events; Bass rule moved 15.
+- No MIDI changes; no scored event cardinality changes.
+- Transform did not read professional reference.
+- Reference selected only the frozen whole-stream rule, never an individual event alternative.
+- Direct reference copy=false; human correction=false; GPU/CUDA/Modal=false; main/Production=false.
 
-## NEXT boundary
-1. Implement deterministic Iteration 002 transform from immutable Iteration 001: Guitar `max_score_x_shared`, Bass `max_score_x_mean_support`.
-2. For each selected stored lattice candidate, apply `storedStep - 12`; update final `absoluteGridStep`, `measure`, and `step`. Preserve MIDI and scored event count exactly.
-3. Preserve original nested audio evidence; add explicit calibration provenance rather than rewriting source evidence silently.
-4. Score and run the standard detailed V167 diagnostic; freeze candidate, score, diagnostic, receipt, and workflow self-seal.
-5. After Iteration 002, move to recall/pitch recovery. Because the frozen candidate lacks rejected-event dictionaries, the likely next high-value step is a new CPU-only instrumented front-end calibration run that captures near-miss/rejected pools for Bass low-register and Guitar polyphony.
+## Prior negative/weak diagnostics retained
+- 8-measure shared timing sweep: no nonzero block shift.
+- Generated-only repeat completion: no Bass improvement and only weak Guitar gain with excessive additions; not promoted.
+- Candidate evidence probe: no large rejected-event pool preserved in frozen candidate, but rich admitted-event audio evidence exists.
+
+## NEXT boundary — recall/pitch near-miss instrumentation
+1. Inspect the frozen V166/V165/V162 CPU front-end source and stream metadata to locate exact Guitar and Bass admission/recovery gates and determine where rejected event objects are discarded.
+2. Create a V167 calibration-only instrumented CPU front-end that preserves near-miss/rejected candidate objects and reason codes without changing the existing detection behavior on its first instrumentation run.
+3. First instrumentation run should reproduce the underlying V166 front-end musical output before V167 timing transforms while emitting machine-readable near-miss pools; then apply the already-frozen V167 `-12` and Iteration 002 timing rules for apples-to-apples scoring.
+4. Use the reference only after near-miss generation to grade fixed threshold/recovery variants. Never copy reference events into the pool or candidate.
+5. Prioritize Bass low-register recovery and Guitar missing polyphony/chord tones. Promote a new iteration only when a frozen parameter sweep shows a material precision/recall/F1 gain.
