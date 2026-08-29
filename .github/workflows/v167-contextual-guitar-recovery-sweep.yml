@@ -16,7 +16,7 @@ concurrency:
 
 env:
   BRANCH: v143-contextual-prune-lobo
-  EXPECTED_PARENT_HEAD: d5d5f0e8eda426028ea73bd450d0dcf759035100
+  EXPECTED_PARENT_HEAD: 6955ab3b09bc052a40b741a95868eccece8537de
   BASE: debug/v167-single-song-calibration/iteration-003-generated.json
   POOL: debug/v167-single-song-calibration/nearmiss-evidence-pool.json
   TIMEBASE: debug/v166-cpu-autonomous/timebase.json
@@ -68,18 +68,19 @@ jobs:
           test "$(git hash-object "$POOL")" = "aa7da3a55344b1418a291f30fab9ca55858fc094"
           test "$(git hash-object "$TIMEBASE")" = "abebae25801b7ddeb5b933977c4f4a918f7bf9ef"
           test "$(git hash-object "$BASE_BUILDER")" = "24413d321f64bbfcce48812ceb85b4593dcfa80c"
-          test "$(git hash-object "$BUILDER")" = "0dd0f9c7560a2caef9b11ef1caea34a4bbf48fcb"
+          test "$(git hash-object "$BUILDER")" = "fd257fe88c5dcd9b3ab135263a6457140c3f63b6"
           test "$(git hash-object "$BASE_GRADER")" = "adfd512f53e8839b295129c0768d484b5af09bc7"
           test "$(git hash-object "$GRADER")" = "8555101a684f59f7dcd910d7c6f7694e968a68b1"
           test "$(git hash-object "$SCORER")" = "9644e65719fbd361a9b39778ae9950c5e983e855"
           test "$(git hash-object "$REFERENCE")" = "2fbed60b543c0488934d8642c488aa06bf31bbf5"
-          test "$(git hash-object docs/checkpoints/CURRENT_STATE.md)" = "8032fd85e5431ecbcea256cc6d1dab0b55fd506a"
+          test "$(git hash-object docs/checkpoints/CURRENT_STATE.md)" = "1df207c90d65b8ace5f42559da7024760fc4e12b"
           test ! -e "$MANIFEST"
           test ! -e "$OUTPUT"
           test ! -e "$RECEIPT"
           python -m py_compile "$BASE_BUILDER" "$BUILDER" "$BASE_GRADER" "$GRADER" "$SCORER"
           python - <<'PY'
-          import hashlib, importlib.util, sys
+          import hashlib, importlib.util, json, sys
+          from collections import Counter
           from pathlib import Path
           checks={
             'debug/v167-single-song-calibration/iteration-003-generated.json':'f15c6f40dd4b8479c2dfb7eab039cff98a23b45eb796265ffad08c5a8ae37115',
@@ -89,6 +90,11 @@ jobs:
           for path,expected in checks.items():
               actual=hashlib.sha256(Path(path).read_bytes()).hexdigest()
               assert actual==expected,(path,actual,expected)
+          base=json.loads(Path('debug/v167-single-song-calibration/iteration-003-generated.json').read_text())
+          coords=[(int(r['measure']),float(r['step']),int(r['midi'])) for r in base['streams']['combinedGuitar'] if not bool(r.get('excludeFromScoring',False))]
+          duplicate_excess=sum(v-1 for v in Counter(coords).values() if v>1)
+          assert duplicate_excess>0,duplicate_excess
+          print('Immutable I003 Guitar pre-existing duplicate coordinate excess',duplicate_excess)
           text=Path('validation/v167_single_song_calibration/build_contextual_guitar_recovery_variants_v167.py').read_text()
           for forbidden in ('frontend-reference-payload.json','score_frontend_reference.py'):
               assert forbidden not in text,forbidden
@@ -140,6 +146,8 @@ jobs:
           assert m['policy']['allVariantRulesPredeclaredBeforeScoring'] is True
           assert m['policy']['individualEventSelectionByReference'] is False
           assert m['policy']['bassNormalizedStreamFixedToIteration003'] is True
+          assert m['policy']['newRecoveryStepMidiDedupeAgainstImmutableParent'] is True
+          assert m['policy']['preExistingParentCoordinateDuplicatesPreserved'] is True
           root=Path('/tmp/v167-contextual-guitar-recovery-variants')
           for row in variants:
               p=root/row['relativePath']
@@ -210,7 +218,7 @@ jobs:
             },
             'implementation':{
               'baseBuilderGitBlob':'24413d321f64bbfcce48812ceb85b4593dcfa80c',
-              'contextualBuilderGitBlob':'0dd0f9c7560a2caef9b11ef1caea34a4bbf48fcb',
+              'contextualBuilderGitBlob':'fd257fe88c5dcd9b3ab135263a6457140c3f63b6',
               'baseGraderGitBlob':'adfd512f53e8839b295129c0768d484b5af09bc7',
               'graderRearmGitBlob':'8555101a684f59f7dcd910d7c6f7694e968a68b1',
             },
