@@ -1,0 +1,43 @@
+{
+  "analysisGitBlob": "9e9123ab265f4addf7d619f7435d773f1159bd6c",
+  "analysisSha256": "77e66e39c0b08680ea260aa5efadaaee0142d5ee7b30bd26ab8ec1db4f12c384",
+  "classification": "SINGLE_SONG_TRAINING_CALIBRATION_ONLY",
+  "implementation": {
+    "analyzerGitBlob": "5e5003e87ad7619e4ce352cbc60608db197e3690"
+  },
+  "inputs": {
+    "iteration003Sha256": "f15c6f40dd4b8479c2dfb7eab039cff98a23b45eb796265ffad08c5a8ae37115",
+    "iteration005Sha256": "86329ebc25e589f566d466a7a65cae35a158c25f470b1c034973f3dbc7d38b31",
+    "temporalDiagnosisSha256": "fd5c12339e594ae1207e2c4edb2eb034a9249de15ab99d3623cf5f6922061b36",
+    "terminalRecurrenceReportSha256": "800e9dbcd8565b32d2015ba6cc97a142c91dbf1c3b76f39f96818b3f4c735382"
+  },
+  "policy": {
+    "closedRecurrenceFamilyRetuned": false,
+    "generalizationClaim": false,
+    "gpuCudaModalUsed": false,
+    "individualEventCorrectnessInferred": false,
+    "mainOrProductionModified": false,
+    "newReferenceFacingScoreCalls": 0,
+    "newRuleSelectedByThisAnalysis": false,
+    "perEventReferenceMatchAssignmentsRead": false,
+    "professionalReferenceReadByAnalysis": false,
+    "scorerReadByAnalysis": false,
+    "terminalAggregateRecurrenceScoresRead": true
+  },
+  "schema": "dadrock.tabs.v167.post-recurrence-phrase-consistency-analysis-receipt.v1",
+  "status": "POST_RECURRENCE_PHRASE_CONSISTENCY_ANALYSIS_FROZEN",
+  "summary": {
+    "additionCount": 48,
+    "additionsInRepeatedExactContextGroups": 2,
+    "additionsInRepeatedRelativeContextGroups": 2,
+    "largestExactContextGroup": 2,
+    "largestRelativeContextGroup": 2,
+    "sameMidiSamePhaseBaseSupport": 30,
+    "sameMidiSamePhaseBaseSupport2Plus": 25
+  },
+  "version": "V167",
+  "workflowHeadSha": "61c4a2771b3b3f4b2c9006dfb631b0cfa2bd8a0e",
+  "workflowRunAttempt": 1,
+  "workflowRunId": 33266658642,
+  "workflowRunNumber": 1
+}
