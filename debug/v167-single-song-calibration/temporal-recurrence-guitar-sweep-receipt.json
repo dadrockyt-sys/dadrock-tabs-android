@@ -1,0 +1,221 @@
+{
+  "classification": "SINGLE_SONG_TRAINING_CALIBRATION_ONLY",
+  "generationReceiptGitBlob": "72dd00101541c8bd63f2271c4cea514f63cdbb3c",
+  "implementation": {
+    "graderGitBlob": "e8251df48d03e94a2d53060bc1e82b4e9d5ba4f7",
+    "scorerGitBlob": "9644e65719fbd361a9b39778ae9950c5e983e855"
+  },
+  "manifestGitBlob": "76077bdbad3e519a09e3105633bc14b8aedb1fe9",
+  "manifestSha256": "5e0eaedcf3e78e3b0c4213004a51cc04d935418315f0a281708e36d637b21ed5",
+  "newVariantsBeatingI005": 1,
+  "newVariantsMeetingPromotionEligibility": 0,
+  "policy": {
+    "allCandidatesFrozenBeforeReferenceRead": true,
+    "bassScored": false,
+    "generalizationClaim": false,
+    "gpuCudaModalUsed": false,
+    "individualEventSelectionByReference": false,
+    "iteration006Created": false,
+    "mainOrProductionModified": false,
+    "postScoreCandidateMutation": false,
+    "postScoreRetuning": false,
+    "reproductionControlScored": false
+  },
+  "reference": {
+    "gitBlob": "2fbed60b543c0488934d8642c488aa06bf31bbf5",
+    "sha256": "b39a203aec3f45800891fe4eca156e37e7571b91ea5c4ccc41b30bbc95fc89e7"
+  },
+  "reportGitBlob": "1d31573afc5d4774a6022b9438088577232e63c6",
+  "reportSha256": "800e9dbcd8565b32d2015ba6cc97a142c91dbf1c3b76f39f96818b3f4c735382",
+  "schema": "dadrock.tabs.v167.temporal-recurrence-guitar-sweep-receipt.v1",
+  "scoreCallBoundary": {
+    "bass": 0,
+    "guitar": 3,
+    "reproductionControl": 0
+  },
+  "status": "TEMPORAL_RECURRENCE_GUITAR_SWEEP_FROZEN",
+  "variants": [
+    {
+      "candidateSha256": "a72ce501c6d4cdbcbbdc67370ef2b35b88ad2358921d1de90f86d7f5af4c4dbe",
+      "config": {
+        "burstSelector": "earliest",
+        "description": "collapse each same-MIDI gap<=1 connected burst to its earliest addition",
+        "id": "recur-gap1-earliest",
+        "maxConnectedGapSteps": 1,
+        "reproductionControl": false
+      },
+      "deltaVsI005": {
+        "f1PercentagePoints": 0.08607010983709418,
+        "falseNegative": 0,
+        "falsePositive": -5,
+        "generated": -5,
+        "matched": 0,
+        "precisionPercentagePoints": 0.22206223742077813,
+        "recallPercentagePoints": 0.0
+      },
+      "generationSummary": {
+        "baseI003GuitarEvents": 1050,
+        "bassEventCount": 512,
+        "burstComponentCount": 4,
+        "burstEventCount": 9,
+        "collapsedEventCount": 5,
+        "connectedComponentCount": 43,
+        "guitarEventCount": 1093,
+        "keptI005Additions": 43,
+        "prunedI005Additions": 5,
+        "sourceI005Additions": 48
+      },
+      "id": "recur-gap1-earliest",
+      "metrics": {
+        "falseNegative": 860,
+        "falsePositive": 560,
+        "generated": 1093,
+        "grossF1": 0.5486725663716814,
+        "matched": 533,
+        "primaryF1": 0.4288012872083669,
+        "primaryPrecision": 0.4876486733760293,
+        "primaryRecall": 0.3826274228284279,
+        "reference": 1393,
+        "sameMeasurePitchContentF1": 0.5929203539823008
+      }
+    },
+    {
+      "candidateSha256": "0092a24e36ae8857a531dba254764d431811133d6d23df318615202557c13f49",
+      "config": {
+        "burstSelector": "strongest_evidence",
+        "description": "collapse each same-MIDI gap<=1 connected burst by max onset, then activity, then earliest",
+        "id": "recur-gap1-strongest",
+        "maxConnectedGapSteps": 1,
+        "reproductionControl": false
+      },
+      "deltaVsI005": {
+        "f1PercentagePoints": -0.07483093601970969,
+        "falseNegative": 2,
+        "falsePositive": -3,
+        "generated": -5,
+        "matched": -2,
+        "precisionPercentagePoints": 0.03907962076935556,
+        "recallPercentagePoints": -0.14357501794687866
+      },
+      "generationSummary": {
+        "baseI003GuitarEvents": 1050,
+        "bassEventCount": 512,
+        "burstComponentCount": 4,
+        "burstEventCount": 9,
+        "collapsedEventCount": 5,
+        "connectedComponentCount": 43,
+        "guitarEventCount": 1093,
+        "keptI005Additions": 43,
+        "prunedI005Additions": 5,
+        "sourceI005Additions": 48
+      },
+      "id": "recur-gap1-strongest",
+      "metrics": {
+        "falseNegative": 862,
+        "falsePositive": 562,
+        "generated": 1093,
+        "grossF1": 0.5486725663716814,
+        "matched": 531,
+        "primaryF1": 0.42719227674979887,
+        "primaryPrecision": 0.48581884720951507,
+        "primaryRecall": 0.3811916726489591,
+        "reference": 1393,
+        "sameMeasurePitchContentF1": 0.5929203539823008
+      }
+    },
+    {
+      "candidateSha256": "012768977ba5f06036c04d25462e5ac47e45f4fa44e0672861f113e3fb21228b",
+      "config": {
+        "burstSelector": "strongest_evidence",
+        "description": "collapse each same-MIDI gap<=2 connected burst by max onset, then activity, then earliest",
+        "id": "recur-gap2-strongest",
+        "maxConnectedGapSteps": 2,
+        "reproductionControl": false
+      },
+      "deltaVsI005": {
+        "f1PercentagePoints": -0.1843123363318544,
+        "falseNegative": 4,
+        "falsePositive": -4,
+        "generated": -8,
+        "matched": -4,
+        "precisionPercentagePoints": -0.01069500843903226,
+        "recallPercentagePoints": -0.2871500358937573
+      },
+      "generationSummary": {
+        "baseI003GuitarEvents": 1050,
+        "bassEventCount": 512,
+        "burstComponentCount": 6,
+        "burstEventCount": 14,
+        "collapsedEventCount": 8,
+        "connectedComponentCount": 40,
+        "guitarEventCount": 1090,
+        "keptI005Additions": 40,
+        "prunedI005Additions": 8,
+        "sourceI005Additions": 48
+      },
+      "id": "recur-gap2-strongest",
+      "metrics": {
+        "falseNegative": 864,
+        "falsePositive": 561,
+        "generated": 1090,
+        "grossF1": 0.5485300040273862,
+        "matched": 529,
+        "primaryF1": 0.4260974627466774,
+        "primaryPrecision": 0.4853211009174312,
+        "primaryRecall": 0.3797559224694903,
+        "reference": 1393,
+        "sameMeasurePitchContentF1": 0.5928312525171164
+      }
+    }
+  ],
+  "version": "V167",
+  "winnerIncludingI005Baseline": {
+    "candidateSha256": "a72ce501c6d4cdbcbbdc67370ef2b35b88ad2358921d1de90f86d7f5af4c4dbe",
+    "config": {
+      "burstSelector": "earliest",
+      "description": "collapse each same-MIDI gap<=1 connected burst to its earliest addition",
+      "id": "recur-gap1-earliest",
+      "maxConnectedGapSteps": 1,
+      "reproductionControl": false
+    },
+    "deltaVsI005": {
+      "f1PercentagePoints": 0.08607010983709418,
+      "falseNegative": 0,
+      "falsePositive": -5,
+      "generated": -5,
+      "matched": 0,
+      "precisionPercentagePoints": 0.22206223742077813,
+      "recallPercentagePoints": 0.0
+    },
+    "eligibleForSeparateNoRescoreIteration006Promotion": false,
+    "generationSummary": {
+      "baseI003GuitarEvents": 1050,
+      "bassEventCount": 512,
+      "burstComponentCount": 4,
+      "burstEventCount": 9,
+      "collapsedEventCount": 5,
+      "connectedComponentCount": 43,
+      "guitarEventCount": 1093,
+      "keptI005Additions": 43,
+      "prunedI005Additions": 5,
+      "sourceI005Additions": 48
+    },
+    "id": "recur-gap1-earliest",
+    "metrics": {
+      "falseNegative": 860,
+      "falsePositive": 560,
+      "generated": 1093,
+      "grossF1": 0.5486725663716814,
+      "matched": 533,
+      "primaryF1": 0.4288012872083669,
+      "primaryPrecision": 0.4876486733760293,
+      "primaryRecall": 0.3826274228284279,
+      "reference": 1393,
+      "sameMeasurePitchContentF1": 0.5929203539823008
+    }
+  },
+  "workflowHeadSha": "ff1ba9f5f8d820d93b786c8adaddbd3b7160010c",
+  "workflowRunAttempt": 1,
+  "workflowRunId": 33266492124,
+  "workflowRunNumber": 1
+}
