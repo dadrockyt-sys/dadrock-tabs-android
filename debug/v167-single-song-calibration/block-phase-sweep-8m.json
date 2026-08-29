@@ -1,0 +1,2736 @@
+{
+  "blocks": [
+    {
+      "endMeasure": 8,
+      "rows": [
+        {
+          "shiftGridSteps": -3,
+          "valid": false
+        },
+        {
+          "shiftGridSteps": -2,
+          "valid": false
+        },
+        {
+          "bass": {
+            "f1": 0.7038988408851423,
+            "falseNegative": 213,
+            "falsePositive": 68,
+            "generated": 402,
+            "matched": 334,
+            "precision": 0.8308457711442786,
+            "recall": 0.6106032906764168,
+            "reference": 547
+          },
+          "combinedGuitar": {
+            "f1": 0.37658616455178057,
+            "falseNegative": 933,
+            "falsePositive": 590,
+            "generated": 1050,
+            "matched": 460,
+            "precision": 0.4380952380952381,
+            "recall": 0.33022254127781764,
+            "reference": 1393
+          },
+          "deltaJointPrimaryMatchedVsIteration001": -34,
+          "jointPrimaryMatched": 794,
+          "shiftGridSteps": -1,
+          "valid": true
+        },
+        {
+          "bass": {
+            "f1": 0.7060063224446786,
+            "falseNegative": 212,
+            "falsePositive": 67,
+            "generated": 402,
+            "matched": 335,
+            "precision": 0.8333333333333334,
+            "recall": 0.6124314442413162,
+            "reference": 547
+          },
+          "combinedGuitar": {
+            "f1": 0.4036021285304953,
+            "falseNegative": 900,
+            "falsePositive": 557,
+            "generated": 1050,
+            "matched": 493,
+            "precision": 0.4695238095238095,
+            "recall": 0.3539124192390524,
+            "reference": 1393
+          },
+          "deltaJointPrimaryMatchedVsIteration001": 0,
+          "jointPrimaryMatched": 828,
+          "shiftGridSteps": 0,
+          "valid": true
+        },
+        {
+          "bass": {
+            "f1": 0.7060063224446786,
+            "falseNegative": 212,
+            "falsePositive": 67,
+            "generated": 402,
+            "matched": 335,
+            "precision": 0.8333333333333334,
+            "recall": 0.6124314442413162,
+            "reference": 547
+          },
+          "combinedGuitar": {
+            "f1": 0.38477282030290627,
+            "falseNegative": 923,
+            "falsePositive": 580,
+            "generated": 1050,
+            "matched": 470,
+            "precision": 0.44761904761904764,
+            "recall": 0.3374012921751615,
+            "reference": 1393
+          },
+          "deltaJointPrimaryMatchedVsIteration001": -23,
+          "jointPrimaryMatched": 805,
+          "shiftGridSteps": 1,
+          "valid": true
+        },
+        {
+          "bass": {
+            "f1": 0.7038988408851423,
+            "falseNegative": 213,
+            "falsePositive": 68,
+            "generated": 402,
+            "matched": 334,
+            "precision": 0.8308457711442786,
+            "recall": 0.6106032906764168,
+            "reference": 547
+          },
+          "combinedGuitar": {
+            "f1": 0.37331150225133036,
+            "falseNegative": 937,
+            "falsePositive": 594,
+            "generated": 1050,
+            "matched": 456,
+            "precision": 0.4342857142857143,
+            "recall": 0.3273510409188801,
+            "reference": 1393
+          },
+          "deltaJointPrimaryMatchedVsIteration001": -38,
+          "jointPrimaryMatched": 790,
+          "shiftGridSteps": 2,
+          "valid": true
+        },
+        {
+          "bass": {
+            "f1": 0.7017913593256058,
+            "falseNegative": 214,
+            "falsePositive": 69,
+            "generated": 402,
+            "matched": 333,
+            "precision": 0.8283582089552238,
+            "recall": 0.6087751371115173,
+            "reference": 547
+          },
+          "combinedGuitar": {
+            "f1": 0.37331150225133036,
+            "falseNegative": 937,
+            "falsePositive": 594,
+            "generated": 1050,
+            "matched": 456,
+            "precision": 0.4342857142857143,
+            "recall": 0.3273510409188801,
+            "reference": 1393
+          },
+          "deltaJointPrimaryMatchedVsIteration001": -39,
+          "jointPrimaryMatched": 789,
+          "shiftGridSteps": 3,
+          "valid": true
+        }
+      ],
+      "selectedDeltaJointPrimaryMatchedWhenTestedAlone": 0,
+      "selectedJointPrimaryMatchedWhenTestedAlone": 828,
+      "selectedShiftGridSteps": 0,
+      "startMeasure": 1
+    },
+    {
+      "endMeasure": 16,
+      "rows": [
+        {
+          "bass": {
+            "f1": 0.6259220231822971,
+            "falseNegative": 250,
+            "falsePositive": 105,
+            "generated": 402,
+            "matched": 297,
+            "precision": 0.7388059701492538,
+            "recall": 0.5429616087751371,
+            "reference": 547
+          },
+          "combinedGuitar": {
+            "f1": 0.3553008595988538,
+            "falseNegative": 959,
+            "falsePositive": 616,
+            "generated": 1050,
+            "matched": 434,
+            "precision": 0.41333333333333333,
+            "recall": 0.31155778894472363,
+            "reference": 1393
+          },
+          "deltaJointPrimaryMatchedVsIteration001": -97,
+          "jointPrimaryMatched": 731,
+          "shiftGridSteps": -3,
+          "valid": true
+        },
+        {
+          "bass": {
+            "f1": 0.6301369863013698,
+            "falseNegative": 248,
+            "falsePositive": 103,
+            "generated": 402,
+            "matched": 299,
+            "precision": 0.7437810945273632,
+            "recall": 0.546617915904936,
+            "reference": 547
+          },
+          "combinedGuitar": {
+            "f1": 0.36103151862464183,
+            "falseNegative": 952,
+            "falsePositive": 609,
+            "generated": 1050,
+            "matched": 441,
+            "precision": 0.42,
+            "recall": 0.3165829145728643,
+            "reference": 1393
+          },
+          "deltaJointPrimaryMatchedVsIteration001": -88,
+          "jointPrimaryMatched": 740,
+          "shiftGridSteps": -2,
+          "valid": true
+        },
+        {
+          "bass": {
+            "f1": 0.6301369863013698,
+            "falseNegative": 248,
+            "falsePositive": 103,
+            "generated": 402,
+            "matched": 299,
+            "precision": 0.7437810945273632,
+            "recall": 0.546617915904936,
+            "reference": 547
+          },
+          "combinedGuitar": {
+            "f1": 0.35939418747441665,
+            "falseNegative": 954,
+            "falsePositive": 611,
+            "generated": 1050,
+            "matched": 439,
+            "precision": 0.4180952380952381,
+            "recall": 0.3151471643933956,
+            "reference": 1393
+          },
+          "deltaJointPrimaryMatchedVsIteration001": -90,
+          "jointPrimaryMatched": 738,
+          "shiftGridSteps": -1,
+          "valid": true
+        },
+        {
+          "bass": {
+            "f1": 0.7060063224446786,
+            "falseNegative": 212,
+            "falsePositive": 67,
+            "generated": 402,
+            "matched": 335,
+            "precision": 0.8333333333333334,
+            "recall": 0.6124314442413162,
+            "reference": 547
+          },
+          "combinedGuitar": {
+            "f1": 0.4036021285304953,
+            "falseNegative": 900,
+            "falsePositive": 557,
+            "generated": 1050,
+            "matched": 493,
+            "precision": 0.4695238095238095,
+            "recall": 0.3539124192390524,
+            "reference": 1393
+          },
+          "deltaJointPrimaryMatchedVsIteration001": 0,
+          "jointPrimaryMatched": 828,
+          "shiftGridSteps": 0,
+          "valid": true
+        },
+        {
+          "bass": {
+            "f1": 0.6280295047418335,
+            "falseNegative": 249,
+            "falsePositive": 104,
+            "generated": 402,
+            "matched": 298,
+            "precision": 0.7412935323383084,
+            "recall": 0.5447897623400365,
+            "reference": 547
+          },
+          "combinedGuitar": {
+            "f1": 0.36266884977486696,
+            "falseNegative": 950,
+            "falsePositive": 607,
+            "generated": 1050,
+            "matched": 443,
+            "precision": 0.4219047619047619,
+            "recall": 0.3180186647523331,
+            "reference": 1393
+          },
+          "deltaJointPrimaryMatchedVsIteration001": -87,
+          "jointPrimaryMatched": 741,
+          "shiftGridSteps": 1,
+          "valid": true
+        },
+        {
+          "bass": {
+            "f1": 0.6280295047418335,
+            "falseNegative": 249,
+            "falsePositive": 104,
+            "generated": 402,
+            "matched": 298,
+            "precision": 0.7412935323383084,
+            "recall": 0.5447897623400365,
+            "reference": 547
+          },
+          "combinedGuitar": {
+            "f1": 0.3561195251739665,
+            "falseNegative": 958,
+            "falsePositive": 615,
+            "generated": 1050,
+            "matched": 435,
+            "precision": 0.4142857142857143,
+            "recall": 0.312275664034458,
+            "reference": 1393
+          },
+          "deltaJointPrimaryMatchedVsIteration001": -95,
+          "jointPrimaryMatched": 733,
+          "shiftGridSteps": 2,
+          "valid": true
+        },
+        {
+          "bass": {
+            "f1": 0.6259220231822971,
+            "falseNegative": 250,
+            "falsePositive": 105,
+            "generated": 402,
+            "matched": 297,
+            "precision": 0.7388059701492538,
+            "recall": 0.5429616087751371,
+            "reference": 547
+          },
+          "combinedGuitar": {
+            "f1": 0.3553008595988538,
+            "falseNegative": 959,
+            "falsePositive": 616,
+            "generated": 1050,
+            "matched": 434,
+            "precision": 0.41333333333333333,
+            "recall": 0.31155778894472363,
+            "reference": 1393
+          },
+          "deltaJointPrimaryMatchedVsIteration001": -97,
+          "jointPrimaryMatched": 731,
+          "shiftGridSteps": 3,
+          "valid": true
+        }
+      ],
+      "selectedDeltaJointPrimaryMatchedWhenTestedAlone": 0,
+      "selectedJointPrimaryMatchedWhenTestedAlone": 828,
+      "selectedShiftGridSteps": 0,
+      "startMeasure": 9
+    },
+    {
+      "endMeasure": 24,
+      "rows": [
+        {
+          "bass": {
+            "f1": 0.6280295047418335,
+            "falseNegative": 249,
+            "falsePositive": 104,
+            "generated": 402,
+            "matched": 298,
+            "precision": 0.7412935323383084,
+            "recall": 0.5447897623400365,
+            "reference": 547
+          },
+          "combinedGuitar": {
+            "f1": 0.3880474826033566,
+            "falseNegative": 919,
+            "falsePositive": 576,
+            "generated": 1050,
+            "matched": 474,
+            "precision": 0.4514285714285714,
+            "recall": 0.3402727925340991,
+            "reference": 1393
+          },
+          "deltaJointPrimaryMatchedVsIteration001": -56,
+          "jointPrimaryMatched": 772,
+          "shiftGridSteps": -3,
+          "valid": true
+        },
+        {
+          "bass": {
+            "f1": 0.6322444678609063,
+            "falseNegative": 247,
+            "falsePositive": 102,
+            "generated": 402,
+            "matched": 300,
+            "precision": 0.746268656716418,
+            "recall": 0.5484460694698354,
+            "reference": 547
+          },
+          "combinedGuitar": {
+            "f1": 0.39214081047891935,
+            "falseNegative": 914,
+            "falsePositive": 571,
+            "generated": 1050,
+            "matched": 479,
+            "precision": 0.4561904761904762,
+            "recall": 0.34386216798277097,
+            "reference": 1393
+          },
+          "deltaJointPrimaryMatchedVsIteration001": -49,
+          "jointPrimaryMatched": 779,
+          "shiftGridSteps": -2,
+          "valid": true
+        },
+        {
+          "bass": {
+            "f1": 0.6301369863013698,
+            "falseNegative": 248,
+            "falsePositive": 103,
+            "generated": 402,
+            "matched": 299,
+            "precision": 0.7437810945273632,
+            "recall": 0.546617915904936,
+            "reference": 547
+          },
+          "combinedGuitar": {
+            "f1": 0.38886614817846915,
+            "falseNegative": 918,
+            "falsePositive": 575,
+            "generated": 1050,
+            "matched": 475,
+            "precision": 0.4523809523809524,
+            "recall": 0.34099066762383345,
+            "reference": 1393
+          },
+          "deltaJointPrimaryMatchedVsIteration001": -54,
+          "jointPrimaryMatched": 774,
+          "shiftGridSteps": -1,
+          "valid": true
+        },
+        {
+          "bass": {
+            "f1": 0.7060063224446786,
+            "falseNegative": 212,
+            "falsePositive": 67,
+            "generated": 402,
+            "matched": 335,
+            "precision": 0.8333333333333334,
+            "recall": 0.6124314442413162,
+            "reference": 547
+          },
+          "combinedGuitar": {
+            "f1": 0.4036021285304953,
+            "falseNegative": 900,
+            "falsePositive": 557,
+            "generated": 1050,
+            "matched": 493,
+            "precision": 0.4695238095238095,
+            "recall": 0.3539124192390524,
+            "reference": 1393
+          },
+          "deltaJointPrimaryMatchedVsIteration001": 0,
+          "jointPrimaryMatched": 828,
+          "shiftGridSteps": 0,
+          "valid": true
+        },
+        {
+          "bass": {
+            "f1": 0.6280295047418335,
+            "falseNegative": 249,
+            "falsePositive": 104,
+            "generated": 402,
+            "matched": 298,
+            "precision": 0.7412935323383084,
+            "recall": 0.5447897623400365,
+            "reference": 547
+          },
+          "combinedGuitar": {
+            "f1": 0.39214081047891935,
+            "falseNegative": 914,
+            "falsePositive": 571,
+            "generated": 1050,
+            "matched": 479,
+            "precision": 0.4561904761904762,
+            "recall": 0.34386216798277097,
+            "reference": 1393
+          },
+          "deltaJointPrimaryMatchedVsIteration001": -51,
+          "jointPrimaryMatched": 777,
+          "shiftGridSteps": 1,
+          "valid": true
+        },
+        {
+          "bass": {
+            "f1": 0.6301369863013698,
+            "falseNegative": 248,
+            "falsePositive": 103,
+            "generated": 402,
+            "matched": 299,
+            "precision": 0.7437810945273632,
+            "recall": 0.546617915904936,
+            "reference": 547
+          },
+          "combinedGuitar": {
+            "f1": 0.3880474826033566,
+            "falseNegative": 919,
+            "falsePositive": 576,
+            "generated": 1050,
+            "matched": 474,
+            "precision": 0.4514285714285714,
+            "recall": 0.3402727925340991,
+            "reference": 1393
+          },
+          "deltaJointPrimaryMatchedVsIteration001": -55,
+          "jointPrimaryMatched": 773,
+          "shiftGridSteps": 2,
+          "valid": true
+        },
+        {
+          "bass": {
+            "f1": 0.6301369863013698,
+            "falseNegative": 248,
+            "falsePositive": 103,
+            "generated": 402,
+            "matched": 299,
+            "precision": 0.7437810945273632,
+            "recall": 0.546617915904936,
+            "reference": 547
+          },
+          "combinedGuitar": {
+            "f1": 0.3880474826033566,
+            "falseNegative": 919,
+            "falsePositive": 576,
+            "generated": 1050,
+            "matched": 474,
+            "precision": 0.4514285714285714,
+            "recall": 0.3402727925340991,
+            "reference": 1393
+          },
+          "deltaJointPrimaryMatchedVsIteration001": -55,
+          "jointPrimaryMatched": 773,
+          "shiftGridSteps": 3,
+          "valid": true
+        }
+      ],
+      "selectedDeltaJointPrimaryMatchedWhenTestedAlone": 0,
+      "selectedJointPrimaryMatchedWhenTestedAlone": 828,
+      "selectedShiftGridSteps": 0,
+      "startMeasure": 17
+    },
+    {
+      "endMeasure": 32,
+      "rows": [
+        {
+          "bass": {
+            "f1": 0.6554267650158061,
+            "falseNegative": 236,
+            "falsePositive": 91,
+            "generated": 402,
+            "matched": 311,
+            "precision": 0.7736318407960199,
+            "recall": 0.5685557586837294,
+            "reference": 547
+          },
+          "combinedGuitar": {
+            "f1": 0.37331150225133036,
+            "falseNegative": 937,
+            "falsePositive": 594,
+            "generated": 1050,
+            "matched": 456,
+            "precision": 0.4342857142857143,
+            "recall": 0.3273510409188801,
+            "reference": 1393
+          },
+          "deltaJointPrimaryMatchedVsIteration001": -61,
+          "jointPrimaryMatched": 767,
+          "shiftGridSteps": -3,
+          "valid": true
+        },
+        {
+          "bass": {
+            "f1": 0.6554267650158061,
+            "falseNegative": 236,
+            "falsePositive": 91,
+            "generated": 402,
+            "matched": 311,
+            "precision": 0.7736318407960199,
+            "recall": 0.5685557586837294,
+            "reference": 547
+          },
+          "combinedGuitar": {
+            "f1": 0.37576749897666806,
+            "falseNegative": 934,
+            "falsePositive": 591,
+            "generated": 1050,
+            "matched": 459,
+            "precision": 0.43714285714285717,
+            "recall": 0.3295046661880833,
+            "reference": 1393
+          },
+          "deltaJointPrimaryMatchedVsIteration001": -58,
+          "jointPrimaryMatched": 770,
+          "shiftGridSteps": -2,
+          "valid": true
+        },
+        {
+          "bass": {
+            "f1": 0.6596417281348788,
+            "falseNegative": 234,
+            "falsePositive": 89,
+            "generated": 402,
+            "matched": 313,
+            "precision": 0.7786069651741293,
+            "recall": 0.5722120658135283,
+            "reference": 547
+          },
+          "combinedGuitar": {
+            "f1": 0.37331150225133036,
+            "falseNegative": 937,
+            "falsePositive": 594,
+            "generated": 1050,
+            "matched": 456,
+            "precision": 0.4342857142857143,
+            "recall": 0.3273510409188801,
+            "reference": 1393
+          },
+          "deltaJointPrimaryMatchedVsIteration001": -59,
+          "jointPrimaryMatched": 769,
+          "shiftGridSteps": -1,
+          "valid": true
+        },
+        {
+          "bass": {
+            "f1": 0.7060063224446786,
+            "falseNegative": 212,
+            "falsePositive": 67,
+            "generated": 402,
+            "matched": 335,
+            "precision": 0.8333333333333334,
+            "recall": 0.6124314442413162,
+            "reference": 547
+          },
+          "combinedGuitar": {
+            "f1": 0.4036021285304953,
+            "falseNegative": 900,
+            "falsePositive": 557,
+            "generated": 1050,
+            "matched": 493,
+            "precision": 0.4695238095238095,
+            "recall": 0.3539124192390524,
+            "reference": 1393
+          },
+          "deltaJointPrimaryMatchedVsIteration001": 0,
+          "jointPrimaryMatched": 828,
+          "shiftGridSteps": 0,
+          "valid": true
+        },
+        {
+          "bass": {
+            "f1": 0.6554267650158061,
+            "falseNegative": 236,
+            "falsePositive": 91,
+            "generated": 402,
+            "matched": 311,
+            "precision": 0.7736318407960199,
+            "recall": 0.5685557586837294,
+            "reference": 547
+          },
+          "combinedGuitar": {
+            "f1": 0.37494883340155544,
+            "falseNegative": 935,
+            "falsePositive": 592,
+            "generated": 1050,
+            "matched": 458,
+            "precision": 0.4361904761904762,
+            "recall": 0.3287867910983489,
+            "reference": 1393
+          },
+          "deltaJointPrimaryMatchedVsIteration001": -59,
+          "jointPrimaryMatched": 769,
+          "shiftGridSteps": 1,
+          "valid": true
+        },
+        {
+          "bass": {
+            "f1": 0.6554267650158061,
+            "falseNegative": 236,
+            "falsePositive": 91,
+            "generated": 402,
+            "matched": 311,
+            "precision": 0.7736318407960199,
+            "recall": 0.5685557586837294,
+            "reference": 547
+          },
+          "combinedGuitar": {
+            "f1": 0.37249283667621785,
+            "falseNegative": 938,
+            "falsePositive": 595,
+            "generated": 1050,
+            "matched": 455,
+            "precision": 0.43333333333333335,
+            "recall": 0.32663316582914576,
+            "reference": 1393
+          },
+          "deltaJointPrimaryMatchedVsIteration001": -62,
+          "jointPrimaryMatched": 766,
+          "shiftGridSteps": 2,
+          "valid": true
+        },
+        {
+          "bass": {
+            "f1": 0.6575342465753424,
+            "falseNegative": 235,
+            "falsePositive": 90,
+            "generated": 402,
+            "matched": 312,
+            "precision": 0.7761194029850746,
+            "recall": 0.5703839122486288,
+            "reference": 547
+          },
+          "combinedGuitar": {
+            "f1": 0.37331150225133036,
+            "falseNegative": 937,
+            "falsePositive": 594,
+            "generated": 1050,
+            "matched": 456,
+            "precision": 0.4342857142857143,
+            "recall": 0.3273510409188801,
+            "reference": 1393
+          },
+          "deltaJointPrimaryMatchedVsIteration001": -60,
+          "jointPrimaryMatched": 768,
+          "shiftGridSteps": 3,
+          "valid": true
+        }
+      ],
+      "selectedDeltaJointPrimaryMatchedWhenTestedAlone": 0,
+      "selectedJointPrimaryMatchedWhenTestedAlone": 828,
+      "selectedShiftGridSteps": 0,
+      "startMeasure": 25
+    },
+    {
+      "endMeasure": 40,
+      "rows": [
+        {
+          "bass": {
+            "f1": 0.678609062170706,
+            "falseNegative": 225,
+            "falsePositive": 80,
+            "generated": 402,
+            "matched": 322,
+            "precision": 0.8009950248756219,
+            "recall": 0.5886654478976234,
+            "reference": 547
+          },
+          "combinedGuitar": {
+            "f1": 0.3913221449038068,
+            "falseNegative": 915,
+            "falsePositive": 572,
+            "generated": 1050,
+            "matched": 478,
+            "precision": 0.4552380952380952,
+            "recall": 0.3431442928930366,
+            "reference": 1393
+          },
+          "deltaJointPrimaryMatchedVsIteration001": -28,
+          "jointPrimaryMatched": 800,
+          "shiftGridSteps": -3,
+          "valid": true
+        },
+        {
+          "bass": {
+            "f1": 0.6870389884088514,
+            "falseNegative": 221,
+            "falsePositive": 76,
+            "generated": 402,
+            "matched": 326,
+            "precision": 0.8109452736318408,
+            "recall": 0.5959780621572212,
+            "reference": 547
+          },
+          "combinedGuitar": {
+            "f1": 0.38886614817846915,
+            "falseNegative": 918,
+            "falsePositive": 575,
+            "generated": 1050,
+            "matched": 475,
+            "precision": 0.4523809523809524,
+            "recall": 0.34099066762383345,
+            "reference": 1393
+          },
+          "deltaJointPrimaryMatchedVsIteration001": -27,
+          "jointPrimaryMatched": 801,
+          "shiftGridSteps": -2,
+          "valid": true
+        },
+        {
+          "bass": {
+            "f1": 0.6807165437302423,
+            "falseNegative": 224,
+            "falsePositive": 79,
+            "generated": 402,
+            "matched": 323,
+            "precision": 0.8034825870646766,
+            "recall": 0.5904936014625228,
+            "reference": 547
+          },
+          "combinedGuitar": {
+            "f1": 0.3880474826033566,
+            "falseNegative": 919,
+            "falsePositive": 576,
+            "generated": 1050,
+            "matched": 474,
+            "precision": 0.4514285714285714,
+            "recall": 0.3402727925340991,
+            "reference": 1393
+          },
+          "deltaJointPrimaryMatchedVsIteration001": -31,
+          "jointPrimaryMatched": 797,
+          "shiftGridSteps": -1,
+          "valid": true
+        },
+        {
+          "bass": {
+            "f1": 0.7060063224446786,
+            "falseNegative": 212,
+            "falsePositive": 67,
+            "generated": 402,
+            "matched": 335,
+            "precision": 0.8333333333333334,
+            "recall": 0.6124314442413162,
+            "reference": 547
+          },
+          "combinedGuitar": {
+            "f1": 0.4036021285304953,
+            "falseNegative": 900,
+            "falsePositive": 557,
+            "generated": 1050,
+            "matched": 493,
+            "precision": 0.4695238095238095,
+            "recall": 0.3539124192390524,
+            "reference": 1393
+          },
+          "deltaJointPrimaryMatchedVsIteration001": 0,
+          "jointPrimaryMatched": 828,
+          "shiftGridSteps": 0,
+          "valid": true
+        },
+        {
+          "bass": {
+            "f1": 0.678609062170706,
+            "falseNegative": 225,
+            "falsePositive": 80,
+            "generated": 402,
+            "matched": 322,
+            "precision": 0.8009950248756219,
+            "recall": 0.5886654478976234,
+            "reference": 547
+          },
+          "combinedGuitar": {
+            "f1": 0.3929594760540319,
+            "falseNegative": 913,
+            "falsePositive": 570,
+            "generated": 1050,
+            "matched": 480,
+            "precision": 0.45714285714285713,
+            "recall": 0.3445800430725054,
+            "reference": 1393
+          },
+          "deltaJointPrimaryMatchedVsIteration001": -26,
+          "jointPrimaryMatched": 802,
+          "shiftGridSteps": 1,
+          "valid": true
+        },
+        {
+          "bass": {
+            "f1": 0.6828240252897787,
+            "falseNegative": 223,
+            "falsePositive": 78,
+            "generated": 402,
+            "matched": 324,
+            "precision": 0.8059701492537313,
+            "recall": 0.5923217550274223,
+            "reference": 547
+          },
+          "combinedGuitar": {
+            "f1": 0.3929594760540319,
+            "falseNegative": 913,
+            "falsePositive": 570,
+            "generated": 1050,
+            "matched": 480,
+            "precision": 0.45714285714285713,
+            "recall": 0.3445800430725054,
+            "reference": 1393
+          },
+          "deltaJointPrimaryMatchedVsIteration001": -24,
+          "jointPrimaryMatched": 804,
+          "shiftGridSteps": 2,
+          "valid": true
+        },
+        {
+          "bass": {
+            "f1": 0.678609062170706,
+            "falseNegative": 225,
+            "falsePositive": 80,
+            "generated": 402,
+            "matched": 322,
+            "precision": 0.8009950248756219,
+            "recall": 0.5886654478976234,
+            "reference": 547
+          },
+          "combinedGuitar": {
+            "f1": 0.39459680720425705,
+            "falseNegative": 911,
+            "falsePositive": 568,
+            "generated": 1050,
+            "matched": 482,
+            "precision": 0.45904761904761904,
+            "recall": 0.3460157932519742,
+            "reference": 1393
+          },
+          "deltaJointPrimaryMatchedVsIteration001": -24,
+          "jointPrimaryMatched": 804,
+          "shiftGridSteps": 3,
+          "valid": true
+        }
+      ],
+      "selectedDeltaJointPrimaryMatchedWhenTestedAlone": 0,
+      "selectedJointPrimaryMatchedWhenTestedAlone": 828,
+      "selectedShiftGridSteps": 0,
+      "startMeasure": 33
+    },
+    {
+      "endMeasure": 48,
+      "rows": [
+        {
+          "bass": {
+            "f1": 0.6512118018967333,
+            "falseNegative": 238,
+            "falsePositive": 93,
+            "generated": 402,
+            "matched": 309,
+            "precision": 0.7686567164179104,
+            "recall": 0.5648994515539305,
+            "reference": 547
+          },
+          "combinedGuitar": {
+            "f1": 0.3618501841997544,
+            "falseNegative": 951,
+            "falsePositive": 608,
+            "generated": 1050,
+            "matched": 442,
+            "precision": 0.42095238095238097,
+            "recall": 0.3173007896625987,
+            "reference": 1393
+          },
+          "deltaJointPrimaryMatchedVsIteration001": -77,
+          "jointPrimaryMatched": 751,
+          "shiftGridSteps": -3,
+          "valid": true
+        },
+        {
+          "bass": {
+            "f1": 0.6575342465753424,
+            "falseNegative": 235,
+            "falsePositive": 90,
+            "generated": 402,
+            "matched": 312,
+            "precision": 0.7761194029850746,
+            "recall": 0.5703839122486288,
+            "reference": 547
+          },
+          "combinedGuitar": {
+            "f1": 0.36758084322554235,
+            "falseNegative": 944,
+            "falsePositive": 601,
+            "generated": 1050,
+            "matched": 449,
+            "precision": 0.4276190476190476,
+            "recall": 0.3223259152907394,
+            "reference": 1393
+          },
+          "deltaJointPrimaryMatchedVsIteration001": -67,
+          "jointPrimaryMatched": 761,
+          "shiftGridSteps": -2,
+          "valid": true
+        },
+        {
+          "bass": {
+            "f1": 0.6533192834562698,
+            "falseNegative": 237,
+            "falsePositive": 92,
+            "generated": 402,
+            "matched": 310,
+            "precision": 0.7711442786069652,
+            "recall": 0.56672760511883,
+            "reference": 547
+          },
+          "combinedGuitar": {
+            "f1": 0.3659435120753173,
+            "falseNegative": 946,
+            "falsePositive": 603,
+            "generated": 1050,
+            "matched": 447,
+            "precision": 0.4257142857142857,
+            "recall": 0.32089016511127066,
+            "reference": 1393
+          },
+          "deltaJointPrimaryMatchedVsIteration001": -71,
+          "jointPrimaryMatched": 757,
+          "shiftGridSteps": -1,
+          "valid": true
+        },
+        {
+          "bass": {
+            "f1": 0.7060063224446786,
+            "falseNegative": 212,
+            "falsePositive": 67,
+            "generated": 402,
+            "matched": 335,
+            "precision": 0.8333333333333334,
+            "recall": 0.6124314442413162,
+            "reference": 547
+          },
+          "combinedGuitar": {
+            "f1": 0.4036021285304953,
+            "falseNegative": 900,
+            "falsePositive": 557,
+            "generated": 1050,
+            "matched": 493,
+            "precision": 0.4695238095238095,
+            "recall": 0.3539124192390524,
+            "reference": 1393
+          },
+          "deltaJointPrimaryMatchedVsIteration001": 0,
+          "jointPrimaryMatched": 828,
+          "shiftGridSteps": 0,
+          "valid": true
+        },
+        {
+          "bass": {
+            "f1": 0.6533192834562698,
+            "falseNegative": 237,
+            "falsePositive": 92,
+            "generated": 402,
+            "matched": 310,
+            "precision": 0.7711442786069652,
+            "recall": 0.56672760511883,
+            "reference": 547
+          },
+          "combinedGuitar": {
+            "f1": 0.368399508800655,
+            "falseNegative": 943,
+            "falsePositive": 600,
+            "generated": 1050,
+            "matched": 450,
+            "precision": 0.42857142857142855,
+            "recall": 0.3230437903804738,
+            "reference": 1393
+          },
+          "deltaJointPrimaryMatchedVsIteration001": -68,
+          "jointPrimaryMatched": 760,
+          "shiftGridSteps": 1,
+          "valid": true
+        },
+        {
+          "bass": {
+            "f1": 0.6533192834562698,
+            "falseNegative": 237,
+            "falsePositive": 92,
+            "generated": 402,
+            "matched": 310,
+            "precision": 0.7711442786069652,
+            "recall": 0.56672760511883,
+            "reference": 547
+          },
+          "combinedGuitar": {
+            "f1": 0.3618501841997544,
+            "falseNegative": 951,
+            "falsePositive": 608,
+            "generated": 1050,
+            "matched": 442,
+            "precision": 0.42095238095238097,
+            "recall": 0.3173007896625987,
+            "reference": 1393
+          },
+          "deltaJointPrimaryMatchedVsIteration001": -76,
+          "jointPrimaryMatched": 752,
+          "shiftGridSteps": 2,
+          "valid": true
+        },
+        {
+          "bass": {
+            "f1": 0.6533192834562698,
+            "falseNegative": 237,
+            "falsePositive": 92,
+            "generated": 402,
+            "matched": 310,
+            "precision": 0.7711442786069652,
+            "recall": 0.56672760511883,
+            "reference": 547
+          },
+          "combinedGuitar": {
+            "f1": 0.3618501841997544,
+            "falseNegative": 951,
+            "falsePositive": 608,
+            "generated": 1050,
+            "matched": 442,
+            "precision": 0.42095238095238097,
+            "recall": 0.3173007896625987,
+            "reference": 1393
+          },
+          "deltaJointPrimaryMatchedVsIteration001": -76,
+          "jointPrimaryMatched": 752,
+          "shiftGridSteps": 3,
+          "valid": true
+        }
+      ],
+      "selectedDeltaJointPrimaryMatchedWhenTestedAlone": 0,
+      "selectedJointPrimaryMatchedWhenTestedAlone": 828,
+      "selectedShiftGridSteps": 0,
+      "startMeasure": 41
+    },
+    {
+      "endMeasure": 56,
+      "rows": [
+        {
+          "bass": {
+            "f1": 0.6343519494204426,
+            "falseNegative": 246,
+            "falsePositive": 101,
+            "generated": 402,
+            "matched": 301,
+            "precision": 0.7487562189054726,
+            "recall": 0.5502742230347349,
+            "reference": 547
+          },
+          "combinedGuitar": {
+            "f1": 0.3798608268522309,
+            "falseNegative": 929,
+            "falsePositive": 586,
+            "generated": 1050,
+            "matched": 464,
+            "precision": 0.4419047619047619,
+            "recall": 0.3330940416367552,
+            "reference": 1393
+          },
+          "deltaJointPrimaryMatchedVsIteration001": -63,
+          "jointPrimaryMatched": 765,
+          "shiftGridSteps": -3,
+          "valid": true
+        },
+        {
+          "bass": {
+            "f1": 0.6385669125395153,
+            "falseNegative": 244,
+            "falsePositive": 99,
+            "generated": 402,
+            "matched": 303,
+            "precision": 0.753731343283582,
+            "recall": 0.5539305301645339,
+            "reference": 547
+          },
+          "combinedGuitar": {
+            "f1": 0.3880474826033566,
+            "falseNegative": 919,
+            "falsePositive": 576,
+            "generated": 1050,
+            "matched": 474,
+            "precision": 0.4514285714285714,
+            "recall": 0.3402727925340991,
+            "reference": 1393
+          },
+          "deltaJointPrimaryMatchedVsIteration001": -51,
+          "jointPrimaryMatched": 777,
+          "shiftGridSteps": -2,
+          "valid": true
+        },
+        {
+          "bass": {
+            "f1": 0.6343519494204426,
+            "falseNegative": 246,
+            "falsePositive": 101,
+            "generated": 402,
+            "matched": 301,
+            "precision": 0.7487562189054726,
+            "recall": 0.5502742230347349,
+            "reference": 547
+          },
+          "combinedGuitar": {
+            "f1": 0.38313548915268114,
+            "falseNegative": 925,
+            "falsePositive": 582,
+            "generated": 1050,
+            "matched": 468,
+            "precision": 0.44571428571428573,
+            "recall": 0.33596554199569273,
+            "reference": 1393
+          },
+          "deltaJointPrimaryMatchedVsIteration001": -59,
+          "jointPrimaryMatched": 769,
+          "shiftGridSteps": -1,
+          "valid": true
+        },
+        {
+          "bass": {
+            "f1": 0.7060063224446786,
+            "falseNegative": 212,
+            "falsePositive": 67,
+            "generated": 402,
+            "matched": 335,
+            "precision": 0.8333333333333334,
+            "recall": 0.6124314442413162,
+            "reference": 547
+          },
+          "combinedGuitar": {
+            "f1": 0.4036021285304953,
+            "falseNegative": 900,
+            "falsePositive": 557,
+            "generated": 1050,
+            "matched": 493,
+            "precision": 0.4695238095238095,
+            "recall": 0.3539124192390524,
+            "reference": 1393
+          },
+          "deltaJointPrimaryMatchedVsIteration001": 0,
+          "jointPrimaryMatched": 828,
+          "shiftGridSteps": 0,
+          "valid": true
+        },
+        {
+          "bass": {
+            "f1": 0.6343519494204426,
+            "falseNegative": 246,
+            "falsePositive": 101,
+            "generated": 402,
+            "matched": 301,
+            "precision": 0.7487562189054726,
+            "recall": 0.5502742230347349,
+            "reference": 547
+          },
+          "combinedGuitar": {
+            "f1": 0.38313548915268114,
+            "falseNegative": 925,
+            "falsePositive": 582,
+            "generated": 1050,
+            "matched": 468,
+            "precision": 0.44571428571428573,
+            "recall": 0.33596554199569273,
+            "reference": 1393
+          },
+          "deltaJointPrimaryMatchedVsIteration001": -59,
+          "jointPrimaryMatched": 769,
+          "shiftGridSteps": 1,
+          "valid": true
+        },
+        {
+          "bass": {
+            "f1": 0.636459430979979,
+            "falseNegative": 245,
+            "falsePositive": 100,
+            "generated": 402,
+            "matched": 302,
+            "precision": 0.7512437810945274,
+            "recall": 0.5521023765996343,
+            "reference": 547
+          },
+          "combinedGuitar": {
+            "f1": 0.38149815800245596,
+            "falseNegative": 927,
+            "falsePositive": 584,
+            "generated": 1050,
+            "matched": 466,
+            "precision": 0.4438095238095238,
+            "recall": 0.334529791816224,
+            "reference": 1393
+          },
+          "deltaJointPrimaryMatchedVsIteration001": -60,
+          "jointPrimaryMatched": 768,
+          "shiftGridSteps": 2,
+          "valid": true
+        },
+        {
+          "bass": {
+            "f1": 0.6343519494204426,
+            "falseNegative": 246,
+            "falsePositive": 101,
+            "generated": 402,
+            "matched": 301,
+            "precision": 0.7487562189054726,
+            "recall": 0.5502742230347349,
+            "reference": 547
+          },
+          "combinedGuitar": {
+            "f1": 0.3798608268522309,
+            "falseNegative": 929,
+            "falsePositive": 586,
+            "generated": 1050,
+            "matched": 464,
+            "precision": 0.4419047619047619,
+            "recall": 0.3330940416367552,
+            "reference": 1393
+          },
+          "deltaJointPrimaryMatchedVsIteration001": -63,
+          "jointPrimaryMatched": 765,
+          "shiftGridSteps": 3,
+          "valid": true
+        }
+      ],
+      "selectedDeltaJointPrimaryMatchedWhenTestedAlone": 0,
+      "selectedJointPrimaryMatchedWhenTestedAlone": 828,
+      "selectedShiftGridSteps": 0,
+      "startMeasure": 49
+    },
+    {
+      "endMeasure": 64,
+      "rows": [
+        {
+          "bass": {
+            "f1": 0.6638566912539515,
+            "falseNegative": 232,
+            "falsePositive": 87,
+            "generated": 402,
+            "matched": 315,
+            "precision": 0.7835820895522388,
+            "recall": 0.5758683729433273,
+            "reference": 547
+          },
+          "combinedGuitar": {
+            "f1": 0.38559148587801884,
+            "falseNegative": 922,
+            "falsePositive": 579,
+            "generated": 1050,
+            "matched": 471,
+            "precision": 0.44857142857142857,
+            "recall": 0.3381191672648959,
+            "reference": 1393
+          },
+          "deltaJointPrimaryMatchedVsIteration001": -42,
+          "jointPrimaryMatched": 786,
+          "shiftGridSteps": -3,
+          "valid": true
+        },
+        {
+          "bass": {
+            "f1": 0.6743940990516333,
+            "falseNegative": 227,
+            "falsePositive": 82,
+            "generated": 402,
+            "matched": 320,
+            "precision": 0.7960199004975125,
+            "recall": 0.5850091407678245,
+            "reference": 547
+          },
+          "combinedGuitar": {
+            "f1": 0.38886614817846915,
+            "falseNegative": 918,
+            "falsePositive": 575,
+            "generated": 1050,
+            "matched": 475,
+            "precision": 0.4523809523809524,
+            "recall": 0.34099066762383345,
+            "reference": 1393
+          },
+          "deltaJointPrimaryMatchedVsIteration001": -33,
+          "jointPrimaryMatched": 795,
+          "shiftGridSteps": -2,
+          "valid": true
+        },
+        {
+          "bass": {
+            "f1": 0.6659641728134879,
+            "falseNegative": 231,
+            "falsePositive": 86,
+            "generated": 402,
+            "matched": 316,
+            "precision": 0.7860696517412935,
+            "recall": 0.5776965265082267,
+            "reference": 547
+          },
+          "combinedGuitar": {
+            "f1": 0.3905034793286943,
+            "falseNegative": 916,
+            "falsePositive": 573,
+            "generated": 1050,
+            "matched": 477,
+            "precision": 0.4542857142857143,
+            "recall": 0.34242641780330224,
+            "reference": 1393
+          },
+          "deltaJointPrimaryMatchedVsIteration001": -35,
+          "jointPrimaryMatched": 793,
+          "shiftGridSteps": -1,
+          "valid": true
+        },
+        {
+          "bass": {
+            "f1": 0.7060063224446786,
+            "falseNegative": 212,
+            "falsePositive": 67,
+            "generated": 402,
+            "matched": 335,
+            "precision": 0.8333333333333334,
+            "recall": 0.6124314442413162,
+            "reference": 547
+          },
+          "combinedGuitar": {
+            "f1": 0.4036021285304953,
+            "falseNegative": 900,
+            "falsePositive": 557,
+            "generated": 1050,
+            "matched": 493,
+            "precision": 0.4695238095238095,
+            "recall": 0.3539124192390524,
+            "reference": 1393
+          },
+          "deltaJointPrimaryMatchedVsIteration001": 0,
+          "jointPrimaryMatched": 828,
+          "shiftGridSteps": 0,
+          "valid": true
+        },
+        {
+          "bass": {
+            "f1": 0.6638566912539515,
+            "falseNegative": 232,
+            "falsePositive": 87,
+            "generated": 402,
+            "matched": 315,
+            "precision": 0.7835820895522388,
+            "recall": 0.5758683729433273,
+            "reference": 547
+          },
+          "combinedGuitar": {
+            "f1": 0.39459680720425705,
+            "falseNegative": 911,
+            "falsePositive": 568,
+            "generated": 1050,
+            "matched": 482,
+            "precision": 0.45904761904761904,
+            "recall": 0.3460157932519742,
+            "reference": 1393
+          },
+          "deltaJointPrimaryMatchedVsIteration001": -31,
+          "jointPrimaryMatched": 797,
+          "shiftGridSteps": 1,
+          "valid": true
+        },
+        {
+          "bass": {
+            "f1": 0.6743940990516333,
+            "falseNegative": 227,
+            "falsePositive": 82,
+            "generated": 402,
+            "matched": 320,
+            "precision": 0.7960199004975125,
+            "recall": 0.5850091407678245,
+            "reference": 547
+          },
+          "combinedGuitar": {
+            "f1": 0.387228817028244,
+            "falseNegative": 920,
+            "falsePositive": 577,
+            "generated": 1050,
+            "matched": 473,
+            "precision": 0.4504761904761905,
+            "recall": 0.33955491744436467,
+            "reference": 1393
+          },
+          "deltaJointPrimaryMatchedVsIteration001": -35,
+          "jointPrimaryMatched": 793,
+          "shiftGridSteps": 2,
+          "valid": true
+        },
+        {
+          "bass": {
+            "f1": 0.6659641728134879,
+            "falseNegative": 231,
+            "falsePositive": 86,
+            "generated": 402,
+            "matched": 316,
+            "precision": 0.7860696517412935,
+            "recall": 0.5776965265082267,
+            "reference": 547
+          },
+          "combinedGuitar": {
+            "f1": 0.38641015145313146,
+            "falseNegative": 921,
+            "falsePositive": 578,
+            "generated": 1050,
+            "matched": 472,
+            "precision": 0.44952380952380955,
+            "recall": 0.3388370423546303,
+            "reference": 1393
+          },
+          "deltaJointPrimaryMatchedVsIteration001": -40,
+          "jointPrimaryMatched": 788,
+          "shiftGridSteps": 3,
+          "valid": true
+        }
+      ],
+      "selectedDeltaJointPrimaryMatchedWhenTestedAlone": 0,
+      "selectedJointPrimaryMatchedWhenTestedAlone": 828,
+      "selectedShiftGridSteps": 0,
+      "startMeasure": 57
+    },
+    {
+      "endMeasure": 72,
+      "rows": [
+        {
+          "bass": {
+            "f1": 0.678609062170706,
+            "falseNegative": 225,
+            "falsePositive": 80,
+            "generated": 402,
+            "matched": 322,
+            "precision": 0.8009950248756219,
+            "recall": 0.5886654478976234,
+            "reference": 547
+          },
+          "combinedGuitar": {
+            "f1": 0.3798608268522309,
+            "falseNegative": 929,
+            "falsePositive": 586,
+            "generated": 1050,
+            "matched": 464,
+            "precision": 0.4419047619047619,
+            "recall": 0.3330940416367552,
+            "reference": 1393
+          },
+          "deltaJointPrimaryMatchedVsIteration001": -42,
+          "jointPrimaryMatched": 786,
+          "shiftGridSteps": -3,
+          "valid": true
+        },
+        {
+          "bass": {
+            "f1": 0.6891464699683878,
+            "falseNegative": 220,
+            "falsePositive": 75,
+            "generated": 402,
+            "matched": 327,
+            "precision": 0.8134328358208955,
+            "recall": 0.5978062157221207,
+            "reference": 547
+          },
+          "combinedGuitar": {
+            "f1": 0.3782234957020057,
+            "falseNegative": 931,
+            "falsePositive": 588,
+            "generated": 1050,
+            "matched": 462,
+            "precision": 0.44,
+            "recall": 0.3316582914572864,
+            "reference": 1393
+          },
+          "deltaJointPrimaryMatchedVsIteration001": -39,
+          "jointPrimaryMatched": 789,
+          "shiftGridSteps": -2,
+          "valid": true
+        },
+        {
+          "bass": {
+            "f1": 0.678609062170706,
+            "falseNegative": 225,
+            "falsePositive": 80,
+            "generated": 402,
+            "matched": 322,
+            "precision": 0.8009950248756219,
+            "recall": 0.5886654478976234,
+            "reference": 547
+          },
+          "combinedGuitar": {
+            "f1": 0.37576749897666806,
+            "falseNegative": 934,
+            "falsePositive": 591,
+            "generated": 1050,
+            "matched": 459,
+            "precision": 0.43714285714285717,
+            "recall": 0.3295046661880833,
+            "reference": 1393
+          },
+          "deltaJointPrimaryMatchedVsIteration001": -47,
+          "jointPrimaryMatched": 781,
+          "shiftGridSteps": -1,
+          "valid": true
+        },
+        {
+          "bass": {
+            "f1": 0.7060063224446786,
+            "falseNegative": 212,
+            "falsePositive": 67,
+            "generated": 402,
+            "matched": 335,
+            "precision": 0.8333333333333334,
+            "recall": 0.6124314442413162,
+            "reference": 547
+          },
+          "combinedGuitar": {
+            "f1": 0.4036021285304953,
+            "falseNegative": 900,
+            "falsePositive": 557,
+            "generated": 1050,
+            "matched": 493,
+            "precision": 0.4695238095238095,
+            "recall": 0.3539124192390524,
+            "reference": 1393
+          },
+          "deltaJointPrimaryMatchedVsIteration001": 0,
+          "jointPrimaryMatched": 828,
+          "shiftGridSteps": 0,
+          "valid": true
+        },
+        {
+          "bass": {
+            "f1": 0.678609062170706,
+            "falseNegative": 225,
+            "falsePositive": 80,
+            "generated": 402,
+            "matched": 322,
+            "precision": 0.8009950248756219,
+            "recall": 0.5886654478976234,
+            "reference": 547
+          },
+          "combinedGuitar": {
+            "f1": 0.37740483012689313,
+            "falseNegative": 932,
+            "falsePositive": 589,
+            "generated": 1050,
+            "matched": 461,
+            "precision": 0.439047619047619,
+            "recall": 0.33094041636755206,
+            "reference": 1393
+          },
+          "deltaJointPrimaryMatchedVsIteration001": -45,
+          "jointPrimaryMatched": 783,
+          "shiftGridSteps": 1,
+          "valid": true
+        },
+        {
+          "bass": {
+            "f1": 0.6807165437302423,
+            "falseNegative": 224,
+            "falsePositive": 79,
+            "generated": 402,
+            "matched": 323,
+            "precision": 0.8034825870646766,
+            "recall": 0.5904936014625228,
+            "reference": 547
+          },
+          "combinedGuitar": {
+            "f1": 0.3782234957020057,
+            "falseNegative": 931,
+            "falsePositive": 588,
+            "generated": 1050,
+            "matched": 462,
+            "precision": 0.44,
+            "recall": 0.3316582914572864,
+            "reference": 1393
+          },
+          "deltaJointPrimaryMatchedVsIteration001": -43,
+          "jointPrimaryMatched": 785,
+          "shiftGridSteps": 2,
+          "valid": true
+        },
+        {
+          "bass": {
+            "f1": 0.678609062170706,
+            "falseNegative": 225,
+            "falsePositive": 80,
+            "generated": 402,
+            "matched": 322,
+            "precision": 0.8009950248756219,
+            "recall": 0.5886654478976234,
+            "reference": 547
+          },
+          "combinedGuitar": {
+            "f1": 0.37904216127711826,
+            "falseNegative": 930,
+            "falsePositive": 587,
+            "generated": 1050,
+            "matched": 463,
+            "precision": 0.44095238095238093,
+            "recall": 0.33237616654702085,
+            "reference": 1393
+          },
+          "deltaJointPrimaryMatchedVsIteration001": -43,
+          "jointPrimaryMatched": 785,
+          "shiftGridSteps": 3,
+          "valid": true
+        }
+      ],
+      "selectedDeltaJointPrimaryMatchedWhenTestedAlone": 0,
+      "selectedJointPrimaryMatchedWhenTestedAlone": 828,
+      "selectedShiftGridSteps": 0,
+      "startMeasure": 65
+    },
+    {
+      "endMeasure": 80,
+      "rows": [
+        {
+          "bass": {
+            "f1": 0.6554267650158061,
+            "falseNegative": 236,
+            "falsePositive": 91,
+            "generated": 402,
+            "matched": 311,
+            "precision": 0.7736318407960199,
+            "recall": 0.5685557586837294,
+            "reference": 547
+          },
+          "combinedGuitar": {
+            "f1": 0.38149815800245596,
+            "falseNegative": 927,
+            "falsePositive": 584,
+            "generated": 1050,
+            "matched": 466,
+            "precision": 0.4438095238095238,
+            "recall": 0.334529791816224,
+            "reference": 1393
+          },
+          "deltaJointPrimaryMatchedVsIteration001": -51,
+          "jointPrimaryMatched": 777,
+          "shiftGridSteps": -3,
+          "valid": true
+        },
+        {
+          "bass": {
+            "f1": 0.6596417281348788,
+            "falseNegative": 234,
+            "falsePositive": 89,
+            "generated": 402,
+            "matched": 313,
+            "precision": 0.7786069651741293,
+            "recall": 0.5722120658135283,
+            "reference": 547
+          },
+          "combinedGuitar": {
+            "f1": 0.3806794924273434,
+            "falseNegative": 928,
+            "falsePositive": 585,
+            "generated": 1050,
+            "matched": 465,
+            "precision": 0.44285714285714284,
+            "recall": 0.3338119167264896,
+            "reference": 1393
+          },
+          "deltaJointPrimaryMatchedVsIteration001": -50,
+          "jointPrimaryMatched": 778,
+          "shiftGridSteps": -2,
+          "valid": true
+        },
+        {
+          "bass": {
+            "f1": 0.6596417281348788,
+            "falseNegative": 234,
+            "falsePositive": 89,
+            "generated": 402,
+            "matched": 313,
+            "precision": 0.7786069651741293,
+            "recall": 0.5722120658135283,
+            "reference": 547
+          },
+          "combinedGuitar": {
+            "f1": 0.38477282030290627,
+            "falseNegative": 923,
+            "falsePositive": 580,
+            "generated": 1050,
+            "matched": 470,
+            "precision": 0.44761904761904764,
+            "recall": 0.3374012921751615,
+            "reference": 1393
+          },
+          "deltaJointPrimaryMatchedVsIteration001": -45,
+          "jointPrimaryMatched": 783,
+          "shiftGridSteps": -1,
+          "valid": true
+        },
+        {
+          "bass": {
+            "f1": 0.7060063224446786,
+            "falseNegative": 212,
+            "falsePositive": 67,
+            "generated": 402,
+            "matched": 335,
+            "precision": 0.8333333333333334,
+            "recall": 0.6124314442413162,
+            "reference": 547
+          },
+          "combinedGuitar": {
+            "f1": 0.4036021285304953,
+            "falseNegative": 900,
+            "falsePositive": 557,
+            "generated": 1050,
+            "matched": 493,
+            "precision": 0.4695238095238095,
+            "recall": 0.3539124192390524,
+            "reference": 1393
+          },
+          "deltaJointPrimaryMatchedVsIteration001": 0,
+          "jointPrimaryMatched": 828,
+          "shiftGridSteps": 0,
+          "valid": true
+        },
+        {
+          "bass": {
+            "f1": 0.6554267650158061,
+            "falseNegative": 236,
+            "falsePositive": 91,
+            "generated": 402,
+            "matched": 311,
+            "precision": 0.7736318407960199,
+            "recall": 0.5685557586837294,
+            "reference": 547
+          },
+          "combinedGuitar": {
+            "f1": 0.387228817028244,
+            "falseNegative": 920,
+            "falsePositive": 577,
+            "generated": 1050,
+            "matched": 473,
+            "precision": 0.4504761904761905,
+            "recall": 0.33955491744436467,
+            "reference": 1393
+          },
+          "deltaJointPrimaryMatchedVsIteration001": -44,
+          "jointPrimaryMatched": 784,
+          "shiftGridSteps": 1,
+          "valid": true
+        },
+        {
+          "bass": {
+            "f1": 0.6617492096944152,
+            "falseNegative": 233,
+            "falsePositive": 88,
+            "generated": 402,
+            "matched": 314,
+            "precision": 0.7810945273631841,
+            "recall": 0.5740402193784278,
+            "reference": 547
+          },
+          "combinedGuitar": {
+            "f1": 0.38313548915268114,
+            "falseNegative": 925,
+            "falsePositive": 582,
+            "generated": 1050,
+            "matched": 468,
+            "precision": 0.44571428571428573,
+            "recall": 0.33596554199569273,
+            "reference": 1393
+          },
+          "deltaJointPrimaryMatchedVsIteration001": -46,
+          "jointPrimaryMatched": 782,
+          "shiftGridSteps": 2,
+          "valid": true
+        },
+        {
+          "bass": {
+            "f1": 0.6554267650158061,
+            "falseNegative": 236,
+            "falsePositive": 91,
+            "generated": 402,
+            "matched": 311,
+            "precision": 0.7736318407960199,
+            "recall": 0.5685557586837294,
+            "reference": 547
+          },
+          "combinedGuitar": {
+            "f1": 0.37904216127711826,
+            "falseNegative": 930,
+            "falsePositive": 587,
+            "generated": 1050,
+            "matched": 463,
+            "precision": 0.44095238095238093,
+            "recall": 0.33237616654702085,
+            "reference": 1393
+          },
+          "deltaJointPrimaryMatchedVsIteration001": -54,
+          "jointPrimaryMatched": 774,
+          "shiftGridSteps": 3,
+          "valid": true
+        }
+      ],
+      "selectedDeltaJointPrimaryMatchedWhenTestedAlone": 0,
+      "selectedJointPrimaryMatchedWhenTestedAlone": 828,
+      "selectedShiftGridSteps": 0,
+      "startMeasure": 73
+    },
+    {
+      "endMeasure": 88,
+      "rows": [
+        {
+          "bass": {
+            "f1": 0.6448893572181243,
+            "falseNegative": 241,
+            "falsePositive": 96,
+            "generated": 402,
+            "matched": 306,
+            "precision": 0.7611940298507462,
+            "recall": 0.5594149908592322,
+            "reference": 547
+          },
+          "combinedGuitar": {
+            "f1": 0.3643061809250921,
+            "falseNegative": 948,
+            "falsePositive": 605,
+            "generated": 1050,
+            "matched": 445,
+            "precision": 0.4238095238095238,
+            "recall": 0.3194544149318019,
+            "reference": 1393
+          },
+          "deltaJointPrimaryMatchedVsIteration001": -77,
+          "jointPrimaryMatched": 751,
+          "shiftGridSteps": -3,
+          "valid": true
+        },
+        {
+          "bass": {
+            "f1": 0.6575342465753424,
+            "falseNegative": 235,
+            "falsePositive": 90,
+            "generated": 402,
+            "matched": 312,
+            "precision": 0.7761194029850746,
+            "recall": 0.5703839122486288,
+            "reference": 547
+          },
+          "combinedGuitar": {
+            "f1": 0.36512484650020466,
+            "falseNegative": 947,
+            "falsePositive": 604,
+            "generated": 1050,
+            "matched": 446,
+            "precision": 0.4247619047619048,
+            "recall": 0.32017229002153624,
+            "reference": 1393
+          },
+          "deltaJointPrimaryMatchedVsIteration001": -70,
+          "jointPrimaryMatched": 758,
+          "shiftGridSteps": -2,
+          "valid": true
+        },
+        {
+          "bass": {
+            "f1": 0.6427818756585879,
+            "falseNegative": 242,
+            "falsePositive": 97,
+            "generated": 402,
+            "matched": 305,
+            "precision": 0.7587064676616916,
+            "recall": 0.5575868372943327,
+            "reference": 547
+          },
+          "combinedGuitar": {
+            "f1": 0.3618501841997544,
+            "falseNegative": 951,
+            "falsePositive": 608,
+            "generated": 1050,
+            "matched": 442,
+            "precision": 0.42095238095238097,
+            "recall": 0.3173007896625987,
+            "reference": 1393
+          },
+          "deltaJointPrimaryMatchedVsIteration001": -81,
+          "jointPrimaryMatched": 747,
+          "shiftGridSteps": -1,
+          "valid": true
+        },
+        {
+          "bass": {
+            "f1": 0.7060063224446786,
+            "falseNegative": 212,
+            "falsePositive": 67,
+            "generated": 402,
+            "matched": 335,
+            "precision": 0.8333333333333334,
+            "recall": 0.6124314442413162,
+            "reference": 547
+          },
+          "combinedGuitar": {
+            "f1": 0.4036021285304953,
+            "falseNegative": 900,
+            "falsePositive": 557,
+            "generated": 1050,
+            "matched": 493,
+            "precision": 0.4695238095238095,
+            "recall": 0.3539124192390524,
+            "reference": 1393
+          },
+          "deltaJointPrimaryMatchedVsIteration001": 0,
+          "jointPrimaryMatched": 828,
+          "shiftGridSteps": 0,
+          "valid": true
+        },
+        {
+          "bass": {
+            "f1": 0.6427818756585879,
+            "falseNegative": 242,
+            "falsePositive": 97,
+            "generated": 402,
+            "matched": 305,
+            "precision": 0.7587064676616916,
+            "recall": 0.5575868372943327,
+            "reference": 547
+          },
+          "combinedGuitar": {
+            "f1": 0.36512484650020466,
+            "falseNegative": 947,
+            "falsePositive": 604,
+            "generated": 1050,
+            "matched": 446,
+            "precision": 0.4247619047619048,
+            "recall": 0.32017229002153624,
+            "reference": 1393
+          },
+          "deltaJointPrimaryMatchedVsIteration001": -77,
+          "jointPrimaryMatched": 751,
+          "shiftGridSteps": 1,
+          "valid": true
+        },
+        {
+          "bass": {
+            "f1": 0.6533192834562698,
+            "falseNegative": 237,
+            "falsePositive": 92,
+            "generated": 402,
+            "matched": 310,
+            "precision": 0.7711442786069652,
+            "recall": 0.56672760511883,
+            "reference": 547
+          },
+          "combinedGuitar": {
+            "f1": 0.3667621776504298,
+            "falseNegative": 945,
+            "falsePositive": 602,
+            "generated": 1050,
+            "matched": 448,
+            "precision": 0.4266666666666667,
+            "recall": 0.32160804020100503,
+            "reference": 1393
+          },
+          "deltaJointPrimaryMatchedVsIteration001": -70,
+          "jointPrimaryMatched": 758,
+          "shiftGridSteps": 2,
+          "valid": true
+        },
+        {
+          "bass": {
+            "f1": 0.6427818756585879,
+            "falseNegative": 242,
+            "falsePositive": 97,
+            "generated": 402,
+            "matched": 305,
+            "precision": 0.7587064676616916,
+            "recall": 0.5575868372943327,
+            "reference": 547
+          },
+          "combinedGuitar": {
+            "f1": 0.35939418747441665,
+            "falseNegative": 954,
+            "falsePositive": 611,
+            "generated": 1050,
+            "matched": 439,
+            "precision": 0.4180952380952381,
+            "recall": 0.3151471643933956,
+            "reference": 1393
+          },
+          "deltaJointPrimaryMatchedVsIteration001": -84,
+          "jointPrimaryMatched": 744,
+          "shiftGridSteps": 3,
+          "valid": true
+        }
+      ],
+      "selectedDeltaJointPrimaryMatchedWhenTestedAlone": 0,
+      "selectedJointPrimaryMatchedWhenTestedAlone": 828,
+      "selectedShiftGridSteps": 0,
+      "startMeasure": 81
+    },
+    {
+      "endMeasure": 96,
+      "rows": [
+        {
+          "bass": {
+            "f1": 0.6406743940990517,
+            "falseNegative": 243,
+            "falsePositive": 98,
+            "generated": 402,
+            "matched": 304,
+            "precision": 0.7562189054726368,
+            "recall": 0.5557586837294333,
+            "reference": 547
+          },
+          "combinedGuitar": {
+            "f1": 0.37576749897666806,
+            "falseNegative": 934,
+            "falsePositive": 591,
+            "generated": 1050,
+            "matched": 459,
+            "precision": 0.43714285714285717,
+            "recall": 0.3295046661880833,
+            "reference": 1393
+          },
+          "deltaJointPrimaryMatchedVsIteration001": -65,
+          "jointPrimaryMatched": 763,
+          "shiftGridSteps": -3,
+          "valid": true
+        },
+        {
+          "bass": {
+            "f1": 0.6448893572181243,
+            "falseNegative": 241,
+            "falsePositive": 96,
+            "generated": 402,
+            "matched": 306,
+            "precision": 0.7611940298507462,
+            "recall": 0.5594149908592322,
+            "reference": 547
+          },
+          "combinedGuitar": {
+            "f1": 0.3700368399508801,
+            "falseNegative": 941,
+            "falsePositive": 598,
+            "generated": 1050,
+            "matched": 452,
+            "precision": 0.43047619047619046,
+            "recall": 0.32447954055994255,
+            "reference": 1393
+          },
+          "deltaJointPrimaryMatchedVsIteration001": -70,
+          "jointPrimaryMatched": 758,
+          "shiftGridSteps": -2,
+          "valid": true
+        },
+        {
+          "bass": {
+            "f1": 0.6406743940990517,
+            "falseNegative": 243,
+            "falsePositive": 98,
+            "generated": 402,
+            "matched": 304,
+            "precision": 0.7562189054726368,
+            "recall": 0.5557586837294333,
+            "reference": 547
+          },
+          "combinedGuitar": {
+            "f1": 0.37085550552599267,
+            "falseNegative": 940,
+            "falsePositive": 597,
+            "generated": 1050,
+            "matched": 453,
+            "precision": 0.43142857142857144,
+            "recall": 0.32519741564967697,
+            "reference": 1393
+          },
+          "deltaJointPrimaryMatchedVsIteration001": -71,
+          "jointPrimaryMatched": 757,
+          "shiftGridSteps": -1,
+          "valid": true
+        },
+        {
+          "bass": {
+            "f1": 0.7060063224446786,
+            "falseNegative": 212,
+            "falsePositive": 67,
+            "generated": 402,
+            "matched": 335,
+            "precision": 0.8333333333333334,
+            "recall": 0.6124314442413162,
+            "reference": 547
+          },
+          "combinedGuitar": {
+            "f1": 0.4036021285304953,
+            "falseNegative": 900,
+            "falsePositive": 557,
+            "generated": 1050,
+            "matched": 493,
+            "precision": 0.4695238095238095,
+            "recall": 0.3539124192390524,
+            "reference": 1393
+          },
+          "deltaJointPrimaryMatchedVsIteration001": 0,
+          "jointPrimaryMatched": 828,
+          "shiftGridSteps": 0,
+          "valid": true
+        },
+        {
+          "bass": {
+            "f1": 0.6406743940990517,
+            "falseNegative": 243,
+            "falsePositive": 98,
+            "generated": 402,
+            "matched": 304,
+            "precision": 0.7562189054726368,
+            "recall": 0.5557586837294333,
+            "reference": 547
+          },
+          "combinedGuitar": {
+            "f1": 0.37658616455178057,
+            "falseNegative": 933,
+            "falsePositive": 590,
+            "generated": 1050,
+            "matched": 460,
+            "precision": 0.4380952380952381,
+            "recall": 0.33022254127781764,
+            "reference": 1393
+          },
+          "deltaJointPrimaryMatchedVsIteration001": -64,
+          "jointPrimaryMatched": 764,
+          "shiftGridSteps": 1,
+          "valid": true
+        },
+        {
+          "bass": {
+            "f1": 0.6448893572181243,
+            "falseNegative": 241,
+            "falsePositive": 96,
+            "generated": 402,
+            "matched": 306,
+            "precision": 0.7611940298507462,
+            "recall": 0.5594149908592322,
+            "reference": 547
+          },
+          "combinedGuitar": {
+            "f1": 0.37167417110110523,
+            "falseNegative": 939,
+            "falsePositive": 596,
+            "generated": 1050,
+            "matched": 454,
+            "precision": 0.43238095238095237,
+            "recall": 0.32591529073941133,
+            "reference": 1393
+          },
+          "deltaJointPrimaryMatchedVsIteration001": -68,
+          "jointPrimaryMatched": 760,
+          "shiftGridSteps": 2,
+          "valid": true
+        },
+        {
+          "bass": {
+            "f1": 0.6406743940990517,
+            "falseNegative": 243,
+            "falsePositive": 98,
+            "generated": 402,
+            "matched": 304,
+            "precision": 0.7562189054726368,
+            "recall": 0.5557586837294333,
+            "reference": 547
+          },
+          "combinedGuitar": {
+            "f1": 0.3667621776504298,
+            "falseNegative": 945,
+            "falsePositive": 602,
+            "generated": 1050,
+            "matched": 448,
+            "precision": 0.4266666666666667,
+            "recall": 0.32160804020100503,
+            "reference": 1393
+          },
+          "deltaJointPrimaryMatchedVsIteration001": -76,
+          "jointPrimaryMatched": 752,
+          "shiftGridSteps": 3,
+          "valid": true
+        }
+      ],
+      "selectedDeltaJointPrimaryMatchedWhenTestedAlone": 0,
+      "selectedJointPrimaryMatchedWhenTestedAlone": 828,
+      "selectedShiftGridSteps": 0,
+      "startMeasure": 89
+    },
+    {
+      "endMeasure": 104,
+      "rows": [
+        {
+          "bass": {
+            "f1": 0.6427818756585879,
+            "falseNegative": 242,
+            "falsePositive": 97,
+            "generated": 402,
+            "matched": 305,
+            "precision": 0.7587064676616916,
+            "recall": 0.5575868372943327,
+            "reference": 547
+          },
+          "combinedGuitar": {
+            "f1": 0.38313548915268114,
+            "falseNegative": 925,
+            "falsePositive": 582,
+            "generated": 1050,
+            "matched": 468,
+            "precision": 0.44571428571428573,
+            "recall": 0.33596554199569273,
+            "reference": 1393
+          },
+          "deltaJointPrimaryMatchedVsIteration001": -55,
+          "jointPrimaryMatched": 773,
+          "shiftGridSteps": -3,
+          "valid": true
+        },
+        {
+          "bass": {
+            "f1": 0.6469968387776607,
+            "falseNegative": 240,
+            "falsePositive": 95,
+            "generated": 402,
+            "matched": 307,
+            "precision": 0.763681592039801,
+            "recall": 0.5612431444241316,
+            "reference": 547
+          },
+          "combinedGuitar": {
+            "f1": 0.3880474826033566,
+            "falseNegative": 919,
+            "falsePositive": 576,
+            "generated": 1050,
+            "matched": 474,
+            "precision": 0.4514285714285714,
+            "recall": 0.3402727925340991,
+            "reference": 1393
+          },
+          "deltaJointPrimaryMatchedVsIteration001": -47,
+          "jointPrimaryMatched": 781,
+          "shiftGridSteps": -2,
+          "valid": true
+        },
+        {
+          "bass": {
+            "f1": 0.6427818756585879,
+            "falseNegative": 242,
+            "falsePositive": 97,
+            "generated": 402,
+            "matched": 305,
+            "precision": 0.7587064676616916,
+            "recall": 0.5575868372943327,
+            "reference": 547
+          },
+          "combinedGuitar": {
+            "f1": 0.38559148587801884,
+            "falseNegative": 922,
+            "falsePositive": 579,
+            "generated": 1050,
+            "matched": 471,
+            "precision": 0.44857142857142857,
+            "recall": 0.3381191672648959,
+            "reference": 1393
+          },
+          "deltaJointPrimaryMatchedVsIteration001": -52,
+          "jointPrimaryMatched": 776,
+          "shiftGridSteps": -1,
+          "valid": true
+        },
+        {
+          "bass": {
+            "f1": 0.7060063224446786,
+            "falseNegative": 212,
+            "falsePositive": 67,
+            "generated": 402,
+            "matched": 335,
+            "precision": 0.8333333333333334,
+            "recall": 0.6124314442413162,
+            "reference": 547
+          },
+          "combinedGuitar": {
+            "f1": 0.4036021285304953,
+            "falseNegative": 900,
+            "falsePositive": 557,
+            "generated": 1050,
+            "matched": 493,
+            "precision": 0.4695238095238095,
+            "recall": 0.3539124192390524,
+            "reference": 1393
+          },
+          "deltaJointPrimaryMatchedVsIteration001": 0,
+          "jointPrimaryMatched": 828,
+          "shiftGridSteps": 0,
+          "valid": true
+        },
+        {
+          "bass": {
+            "f1": 0.6427818756585879,
+            "falseNegative": 242,
+            "falsePositive": 97,
+            "generated": 402,
+            "matched": 305,
+            "precision": 0.7587064676616916,
+            "recall": 0.5575868372943327,
+            "reference": 547
+          },
+          "combinedGuitar": {
+            "f1": 0.387228817028244,
+            "falseNegative": 920,
+            "falsePositive": 577,
+            "generated": 1050,
+            "matched": 473,
+            "precision": 0.4504761904761905,
+            "recall": 0.33955491744436467,
+            "reference": 1393
+          },
+          "deltaJointPrimaryMatchedVsIteration001": -50,
+          "jointPrimaryMatched": 778,
+          "shiftGridSteps": 1,
+          "valid": true
+        },
+        {
+          "bass": {
+            "f1": 0.6427818756585879,
+            "falseNegative": 242,
+            "falsePositive": 97,
+            "generated": 402,
+            "matched": 305,
+            "precision": 0.7587064676616916,
+            "recall": 0.5575868372943327,
+            "reference": 547
+          },
+          "combinedGuitar": {
+            "f1": 0.38313548915268114,
+            "falseNegative": 925,
+            "falsePositive": 582,
+            "generated": 1050,
+            "matched": 468,
+            "precision": 0.44571428571428573,
+            "recall": 0.33596554199569273,
+            "reference": 1393
+          },
+          "deltaJointPrimaryMatchedVsIteration001": -55,
+          "jointPrimaryMatched": 773,
+          "shiftGridSteps": 2,
+          "valid": true
+        },
+        {
+          "bass": {
+            "f1": 0.6427818756585879,
+            "falseNegative": 242,
+            "falsePositive": 97,
+            "generated": 402,
+            "matched": 305,
+            "precision": 0.7587064676616916,
+            "recall": 0.5575868372943327,
+            "reference": 547
+          },
+          "combinedGuitar": {
+            "f1": 0.38313548915268114,
+            "falseNegative": 925,
+            "falsePositive": 582,
+            "generated": 1050,
+            "matched": 468,
+            "precision": 0.44571428571428573,
+            "recall": 0.33596554199569273,
+            "reference": 1393
+          },
+          "deltaJointPrimaryMatchedVsIteration001": -55,
+          "jointPrimaryMatched": 773,
+          "shiftGridSteps": 3,
+          "valid": true
+        }
+      ],
+      "selectedDeltaJointPrimaryMatchedWhenTestedAlone": 0,
+      "selectedJointPrimaryMatchedWhenTestedAlone": 828,
+      "selectedShiftGridSteps": 0,
+      "startMeasure": 97
+    },
+    {
+      "endMeasure": 112,
+      "rows": [
+        {
+          "bass": {
+            "f1": 0.6807165437302423,
+            "falseNegative": 224,
+            "falsePositive": 79,
+            "generated": 402,
+            "matched": 323,
+            "precision": 0.8034825870646766,
+            "recall": 0.5904936014625228,
+            "reference": 547
+          },
+          "combinedGuitar": {
+            "f1": 0.39950880065493244,
+            "falseNegative": 905,
+            "falsePositive": 562,
+            "generated": 1050,
+            "matched": 488,
+            "precision": 0.46476190476190476,
+            "recall": 0.3503230437903805,
+            "reference": 1393
+          },
+          "deltaJointPrimaryMatchedVsIteration001": -17,
+          "jointPrimaryMatched": 811,
+          "shiftGridSteps": -3,
+          "valid": true
+        },
+        {
+          "bass": {
+            "f1": 0.6933614330874606,
+            "falseNegative": 218,
+            "falsePositive": 73,
+            "generated": 402,
+            "matched": 329,
+            "precision": 0.818407960199005,
+            "recall": 0.6014625228519196,
+            "reference": 547
+          },
+          "combinedGuitar": {
+            "f1": 0.3986901350798199,
+            "falseNegative": 906,
+            "falsePositive": 563,
+            "generated": 1050,
+            "matched": 487,
+            "precision": 0.4638095238095238,
+            "recall": 0.34960516870064606,
+            "reference": 1393
+          },
+          "deltaJointPrimaryMatchedVsIteration001": -12,
+          "jointPrimaryMatched": 816,
+          "shiftGridSteps": -2,
+          "valid": true
+        },
+        {
+          "bass": {
+            "f1": 0.6828240252897787,
+            "falseNegative": 223,
+            "falsePositive": 78,
+            "generated": 402,
+            "matched": 324,
+            "precision": 0.8059701492537313,
+            "recall": 0.5923217550274223,
+            "reference": 547
+          },
+          "combinedGuitar": {
+            "f1": 0.3970528039295948,
+            "falseNegative": 908,
+            "falsePositive": 565,
+            "generated": 1050,
+            "matched": 485,
+            "precision": 0.46190476190476193,
+            "recall": 0.34816941852117733,
+            "reference": 1393
+          },
+          "deltaJointPrimaryMatchedVsIteration001": -19,
+          "jointPrimaryMatched": 809,
+          "shiftGridSteps": -1,
+          "valid": true
+        },
+        {
+          "bass": {
+            "f1": 0.7060063224446786,
+            "falseNegative": 212,
+            "falsePositive": 67,
+            "generated": 402,
+            "matched": 335,
+            "precision": 0.8333333333333334,
+            "recall": 0.6124314442413162,
+            "reference": 547
+          },
+          "combinedGuitar": {
+            "f1": 0.4036021285304953,
+            "falseNegative": 900,
+            "falsePositive": 557,
+            "generated": 1050,
+            "matched": 493,
+            "precision": 0.4695238095238095,
+            "recall": 0.3539124192390524,
+            "reference": 1393
+          },
+          "deltaJointPrimaryMatchedVsIteration001": 0,
+          "jointPrimaryMatched": 828,
+          "shiftGridSteps": 0,
+          "valid": true
+        },
+        {
+          "bass": {
+            "f1": 0.6807165437302423,
+            "falseNegative": 224,
+            "falsePositive": 79,
+            "generated": 402,
+            "matched": 323,
+            "precision": 0.8034825870646766,
+            "recall": 0.5904936014625228,
+            "reference": 547
+          },
+          "combinedGuitar": {
+            "f1": 0.3978714695047073,
+            "falseNegative": 907,
+            "falsePositive": 564,
+            "generated": 1050,
+            "matched": 486,
+            "precision": 0.46285714285714286,
+            "recall": 0.3488872936109117,
+            "reference": 1393
+          },
+          "deltaJointPrimaryMatchedVsIteration001": -19,
+          "jointPrimaryMatched": 809,
+          "shiftGridSteps": 1,
+          "valid": true
+        },
+        {
+          "bass": {
+            "f1": 0.6870389884088514,
+            "falseNegative": 221,
+            "falsePositive": 76,
+            "generated": 402,
+            "matched": 326,
+            "precision": 0.8109452736318408,
+            "recall": 0.5959780621572212,
+            "reference": 547
+          },
+          "combinedGuitar": {
+            "f1": 0.400327466230045,
+            "falseNegative": 904,
+            "falsePositive": 561,
+            "generated": 1050,
+            "matched": 489,
+            "precision": 0.4657142857142857,
+            "recall": 0.35104091888011485,
+            "reference": 1393
+          },
+          "deltaJointPrimaryMatchedVsIteration001": -13,
+          "jointPrimaryMatched": 815,
+          "shiftGridSteps": 2,
+          "valid": true
+        },
+        {
+          "bass": {
+            "f1": 0.6807165437302423,
+            "falseNegative": 224,
+            "falsePositive": 79,
+            "generated": 402,
+            "matched": 323,
+            "precision": 0.8034825870646766,
+            "recall": 0.5904936014625228,
+            "reference": 547
+          },
+          "combinedGuitar": {
+            "f1": 0.400327466230045,
+            "falseNegative": 904,
+            "falsePositive": 561,
+            "generated": 1050,
+            "matched": 489,
+            "precision": 0.4657142857142857,
+            "recall": 0.35104091888011485,
+            "reference": 1393
+          },
+          "deltaJointPrimaryMatchedVsIteration001": -16,
+          "jointPrimaryMatched": 812,
+          "shiftGridSteps": 3,
+          "valid": true
+        }
+      ],
+      "selectedDeltaJointPrimaryMatchedWhenTestedAlone": 0,
+      "selectedJointPrimaryMatchedWhenTestedAlone": 828,
+      "selectedShiftGridSteps": 0,
+      "startMeasure": 105
+    }
+  ],
+  "iteration001Baseline": {
+    "bass": {
+      "f1": 0.7060063224446786,
+      "falseNegative": 212,
+      "falsePositive": 67,
+      "generated": 402,
+      "matched": 335,
+      "precision": 0.8333333333333334,
+      "recall": 0.6124314442413162,
+      "reference": 547
+    },
+    "combinedGuitar": {
+      "f1": 0.4036021285304953,
+      "falseNegative": 900,
+      "falsePositive": 557,
+      "generated": 1050,
+      "matched": 493,
+      "precision": 0.4695238095238095,
+      "recall": 0.3539124192390524,
+      "reference": 1393
+    },
+    "jointPrimaryMatched": 828
+  },
+  "label": "SINGLE_SONG_TRAINING_CALIBRATION",
+  "parameters": {
+    "additionalShiftMax": 3,
+    "additionalShiftMin": -3,
+    "blockMeasures": 8,
+    "objective": "maximize total primary matched events across combinedGuitar+bass",
+    "sharedShiftAcrossGuitarAndBass": true,
+    "stepsPerMeasure": 16,
+    "tieBreak": "smaller absolute shift, then earlier/negative shift"
+  },
+  "policy": {
+    "calibrationOnly": true,
+    "candidateFileModified": false,
+    "directReferenceCopy": false,
+    "eventByEventReferenceMove": false,
+    "fixedBlockPartition": true,
+    "generalizationClaim": false,
+    "midiModified": false,
+    "referenceFacing": true
+  },
+  "projectedCombinedMap": {
+    "bass": {
+      "f1": 0.7060063224446786,
+      "falseNegative": 212,
+      "falsePositive": 67,
+      "generated": 402,
+      "matched": 335,
+      "precision": 0.8333333333333334,
+      "recall": 0.6124314442413162,
+      "reference": 547
+    },
+    "bassGross": {
+      "f1": 0.7481559536354058,
+      "falseNegative": 192,
+      "falsePositive": 47,
+      "generated": 402,
+      "matched": 355,
+      "precision": 0.8830845771144279,
+      "recall": 0.6489945155393053,
+      "reference": 547
+    },
+    "combinedGuitar": {
+      "f1": 0.4036021285304953,
+      "falseNegative": 900,
+      "falsePositive": 557,
+      "generated": 1050,
+      "matched": 493,
+      "precision": 0.4695238095238095,
+      "recall": 0.3539124192390524,
+      "reference": 1393
+    },
+    "combinedGuitarGross": {
+      "f1": 0.5493246009005321,
+      "falseNegative": 722,
+      "falsePositive": 379,
+      "generated": 1050,
+      "matched": 671,
+      "precision": 0.6390476190476191,
+      "recall": 0.48169418521177315,
+      "reference": 1393
+    },
+    "deltaJointPrimaryMatchedVsIteration001": 0,
+    "jointPrimaryMatched": 828,
+    "recognitionPercent": {
+      "bass": 70.60063224446786,
+      "combinedGuitar": 40.36021285304953
+    }
+  },
+  "referenceCounts": {
+    "bassExcluded": 0,
+    "bassIncluded": 547,
+    "leadExcluded": 0,
+    "leadIncluded": 447,
+    "rhythmExcluded": 0,
+    "rhythmIncluded": 946
+  },
+  "schema": "dadrock.tabs.v167.shared-eight-measure-block-phase-sweep.v1",
+  "selectedNonzeroBlocks": [],
+  "version": "V167"
+}
