@@ -1,7 +1,7 @@
 import json
 import os
+import shutil
 import subprocess
-import sys
 import tempfile
 from pathlib import Path
 from urllib.parse import unquote, urlparse
@@ -167,10 +167,14 @@ def normalize_audio(input_audio: Path, output_audio: Path) -> None:
 def separate_stems(input_audio: Path, output_dir: Path) -> dict[str, Path]:
     output_dir.mkdir(parents=True, exist_ok=True)
 
+    separator_cli = shutil.which("audio-separator")
+    if not separator_cli:
+        raise RuntimeError(
+            "Demucs stem separation failed. The audio-separator CLI is not installed."
+        )
+
     command = [
-        sys.executable,
-        "-m",
-        "audio_separator",
+        separator_cli,
         str(input_audio),
         "--model_filename",
         DEMUCS_6S_MODEL,
