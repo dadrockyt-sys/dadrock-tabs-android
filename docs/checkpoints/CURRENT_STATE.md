@@ -4,7 +4,7 @@ Updated: 2026-08-29 UTC
 Branch: `v143-contextual-prune-lobo`
 
 ## Active phase
-**V166 is terminal/immutable. V167 is the explicitly scorer/reference-guided SINGLE-SONG TRAINING CALIBRATION lane for Lenny Kravitz — Are You Gonna Go My Way. Iteration 002 remains the best frozen candidate: Guitar 41.9157%, Bass 71.8651%. The reference-blind upstream evidence pool is frozen. A deterministic 146-variant upstream-recovery sweep is preregistered before reference scoring. The first arm passed every identity/preregistration guard but failed during reference-blind generation because its validator incorrectly required post-Iteration-002 Bass to be globally monophonic; no scorer/reference step ran. A pinned guard-only re-arm adapter now preserves pre-existing Iteration 002 timing collisions while still allowing at most one new Bass recovery event on a previously empty step. No Iteration 003 exists yet. `main`/Production remain untouched.**
+**V166 is terminal/immutable. V167 is the explicitly scorer/reference-guided SINGLE-SONG TRAINING CALIBRATION lane for Lenny Kravitz — Are You Gonna Go My Way. Iteration 002 remains the best frozen candidate: Guitar 41.9157%, Bass 71.8651%. The reference-blind upstream evidence pool is frozen. A deterministic 146-variant upstream-recovery sweep is preregistered before reference scoring. The first arm passed every identity/preregistration guard but failed during reference-blind generation because its validator incorrectly required post-Iteration-002 Bass to be globally monophonic; no scorer/reference step ran. The corrected pinned guard-only re-arm adapter now preserves pre-existing Iteration 002 timing collisions while still allowing at most one new Bass recovery event on a previously empty step. No Iteration 003 exists yet. `main`/Production remain untouched.**
 
 ## Standing V167 methodology
 - Calibration only; never present V167 calibration score as holdout/generalization performance.
@@ -106,11 +106,12 @@ Branch: `v143-contextual-prune-lobo`
 - Reference-facing grading step: **SKIPPED**. Freeze/self-seal step: **SKIPPED**.
 - Therefore the failed arm consumed **zero reference-facing scores** and did not alter any candidate, threshold, rule, `main`, or Production.
 - Root cause: frozen Iteration 002 timing calibration can collapse two or more already-existing Bass events onto the same corrected step after V166's pre-calibration monophonic cap; the generator validator incorrectly treated those inherited collisions as recovery violations.
-- Guard-only re-arm adapter `validation/v167_single_song_calibration/build_upstream_recovery_variants_v167_rearm.py`, blob `bcc369871f6170687bbc753be62d3d7b3266ed98`, commit `0093ee19d251f6d968701f079b338627a4886880`.
+- Corrected guard-only re-arm adapter `validation/v167_single_song_calibration/build_upstream_recovery_variants_v167_rearm.py`, blob `fbbee07493084792912c774d375ca5011672891f`, commit `ffa7694b48e4e64b7e6a354a1704546909a45533`.
 - Adapter pins base builder blob `24413d...` and changes only the Bass post-build invariant/metadata: every pre-existing Iteration 002 step occupancy must remain exactly unchanged, and each previously empty step may receive at most one new recovery event. Thresholds, ranking, scopes, timing, evidence, and 146-variant parameter grid remain unchanged.
+- An earlier adapter draft blob `bcc369871f6170687bbc753be62d3d7b3266ed98` was **never run**; code review caught and fixed its config-iterator self-binding before workflow re-arm.
 
 ## NEXT boundary — corrected one-shot CPU recovery sweep
-1. Re-arm the existing one-shot workflow on `v143-contextual-prune-lobo`, pinning the guard-only adapter blob `bcc369871f6170687bbc753be62d3d7b3266ed98` plus all frozen inputs.
+1. Re-arm the existing one-shot workflow on `v143-contextual-prune-lobo`, pinning corrected adapter blob `fbbee07493084792912c774d375ca5011672891f` plus all frozen inputs.
 2. Generate all 146 score-minimal variants plus the frozen manifest **before** crossing the reference-facing boundary; verify exact pool/base/timebase identities and every candidate hash.
 3. Only after the complete manifest is sealed, run the frozen scorer/reference over all complete variants. Do not alter any candidate after scoring begins.
 4. Require baseline variants to reproduce Iteration 002 exactly: Guitar 41.9156774457634%, Bass 71.86512118018967%.
