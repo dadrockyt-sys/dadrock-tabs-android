@@ -5,9 +5,9 @@ Checkpoint branch: `backing-track-studio`
 Production branch: `main`
 
 ## Active phase
-**BTS has been promoted to `main` and is live at `https://dadrocktabs.com/bts` for user testing.**
+**BTS is live at `https://dadrocktabs.com/bts`; a separate BTS token system has now been implemented on the checkpoint branch and is being validated before Production promotion.**
 
-User explicitly authorized moving the completed BTS work to `main`/Production on 2026-08-29.
+User explicitly authorized moving the completed BTS work to `main`/Production on 2026-08-29, and then requested the AI-tab-style token workflow be added before testing.
 
 ## Production promotion
 - Pull request: **#23 — Promote Backing Track Studio to main**
@@ -16,13 +16,6 @@ User explicitly authorized moving the completed BTS work to `main`/Production on
 - Vercel production deployment: `dpl_DyBoeXcpAG8oKcQi1qWiP1A5mJso`
 - Vercel state: **READY**
 - Production build: **successful**
-- Build route manifest explicitly includes:
-  - `/bts`
-  - `/api/bts/audio-upload`
-  - `/api/bts/cleanup`
-  - `/api/bts/paypal/create-order`
-  - `/api/bts/paypal/capture-order`
-  - `/api/bts/process`
 - Live custom-domain verification: `https://dadrocktabs.com/bts` returned **HTTP 200** and rendered the BTS page.
 
 ## Working route
@@ -30,7 +23,7 @@ User explicitly authorized moving the completed BTS work to `main`/Production on
 - Logo: `public/dadrock-tabs-bts-logo.png`
 
 ## Frozen product intent
-Create a standalone Backing Track Studio using `app/ai-tab/page.js` as the UX blueprint while keeping AI-tab production/payment behavior unchanged.
+Create a standalone Backing Track Studio using `app/ai-tab/page.js` as the UX blueprint while keeping AI-tab production/payment/token behavior unchanged.
 
 User flow:
 1. Upload MP3/WAV/M4A/AAC audio.
@@ -39,7 +32,9 @@ User flow:
    - Remove Guitars
    - Remove Bass
    - Remove Guitars + Bass
-4. Pay **USD $1.00** through PayPal **sandbox** during testing.
+4. Unlock through either:
+   - **USD $1.00** PayPal **sandbox** checkout during testing, or
+   - a valid complimentary BTS token.
 5. Process with genuine waveform/stem separation through a dedicated Modal worker.
 6. Download the resulting MP3 backing track.
 
@@ -56,6 +51,42 @@ User flow:
 - `analyzer/bts-audio-separation-requirements.txt`
 - `vercel.json` hourly BTS cleanup cron addition
 
+## BTS token system — IMPLEMENTED ON CHECKPOINT BRANCH
+User requested the same token usage behavior as AI Tab, but with a separate BTS creator/tracker.
+
+Isolation design:
+- Existing AI Tab collection remains `tab_tokens` and is untouched.
+- BTS uses a new collection: `bts_tokens`.
+- Existing AI Tab token format remains `DRT-XXXX-XXXX-XXXX`.
+- BTS uses a distinct `BTS-XXXX-XXXX-XXXX` format to prevent accidental cross-product redemption.
+
+New files/routes:
+- `app/api/admin/bts-tokens/route.js`
+  - ADMIN_PASSWORD protected.
+  - token types match AI Tab: testing, giveaway, promotion, customer, support.
+  - quantity 1–100.
+  - uses per token 1–100.
+  - optional assigned email.
+  - optional expiration.
+  - notes.
+  - enable/disable/delete.
+  - stats for total/active/used/expired/disabled/redemptions.
+- `app/api/bts/free-token/route.js`
+  - validates BTS token, email assignment, active state, expiration, and uses remaining.
+  - atomically decrements one use and records redemption history.
+  - returns a signed BTS job authorization so token unlocks use the same `/api/bts/process` path as paid orders.
+  - redemption metadata stores email/removal mode/time only; it does not persist uploaded audio/pathnames.
+- `app/admin/bts-tokens/page.js`
+  - separate BTS token creator and tracker.
+  - uses the existing admin password/session convention.
+  - displays token status, remaining uses, expiration, notes and redemption history.
+- `components/BTSPayPalCheckoutButton.js`
+  - now offers **Have a free BTS token?** as an alternative to PayPal after upload.
+  - invalid tokens leave PayPal available.
+  - accepted tokens invoke the same processing callback with a signed BTS job token.
+
+AI Tab token creator, tracker, redemption route, `tab_tokens` database records and DRT token behavior remain unchanged.
+
 ## Waveform/stem separation
 BTS uses a dedicated waveform separator based on the proven AI-tab research substrate:
 - `audio-separator[gpu]==0.30.2`
@@ -69,6 +100,7 @@ BTS uses a dedicated waveform separator based on the proven AI-tab research subs
 - BTS server price is fixed at **USD $1.00**.
 - PayPal is **sandbox only** during testing.
 - Existing AI-tab payment routes and **USD $2.99** product remain unchanged.
+- BTS complimentary tokens do not modify or bypass AI Tab payment/token logic.
 
 ## Copyright/audio retention rule — FROZEN
 **Maximum retention: 24 hours.**
@@ -83,7 +115,7 @@ Implementation is intentionally stricter:
 Do not introduce persistent copyrighted-audio storage without explicit user approval.
 
 ## Production cron status
-The BTS cleanup cron is now present in the Production `vercel.json` because the BTS work was explicitly promoted to `main`.
+The BTS cleanup cron is present in Production `vercel.json`.
 
 Important: cleanup execution still depends on Production `CRON_SECRET` being configured. Secret presence has **not** been independently verified from the available connector surface. Do not claim hourly cleanup is functioning until a cron invocation is confirmed or the secret is verified.
 
@@ -97,32 +129,32 @@ Important: cleanup execution still depends on Production `CRON_SECRET` being con
 - Optional: `BTS_JOB_SIGNING_SECRET`; falls back to PayPal client secret if absent
 - Modal secret expected by worker: `dadrock-bts-separator-secret` containing `BTS_SEPARATOR_API_TOKEN`
 
-The production build does not prove these runtime secrets/endpoints are configured. UI/live-route testing can begin now; full upload -> PayPal -> separation -> download testing must verify runtime configuration through actual use.
+Token administration additionally relies on the already-existing `ADMIN_PASSWORD` and MongoDB configuration used by the site.
 
 ## Validation status
-- Branch comparison before merge: BTS branch was 28 commits ahead of `main`, 0 behind, with 12 changed files limited to BTS additions plus the BTS `vercel.json` cron entry.
-- PR #23 merged successfully into `main`.
+- Original BTS PR #23 merged successfully into `main`.
 - Vercel production build compiled successfully with Next.js 16.1.6 / Turbopack.
-- `/bts` and all BTS API routes appeared in the production route manifest.
-- Production deployment reached **READY**.
-- `https://dadrocktabs.com/bts` returned HTTP 200 and rendered the BTS interface.
-- Full paid audio-processing flow has not yet been exercised from the browser.
+- `/bts` and original BTS API routes appeared in the production route manifest.
+- Production deployment reached **READY** and `/bts` returned HTTP 200.
+- New BTS token additions are currently on `backing-track-studio` pending final branch diff/build validation and promotion.
+- Full audio-processing flow has not yet been exercised from the browser.
 
 ## Progress score
 Five-gate rubric, 20 points each:
 1. Scope + isolated branch + checkpoint — complete.
 2. Blueprint/dependency/research inspection — complete.
 3. BTS page + upload/email/removal UI — complete.
-4. Dedicated separator + $1 sandbox PayPal + download delivery + retention — implemented.
-5. Production deployment/live route — complete; end-to-end functional testing remains.
+4. Dedicated separator + $1 sandbox PayPal + download delivery + retention + separate token system — implemented.
+5. Production deployment/live route — original BTS complete; token addition promotion and end-to-end functional testing remain.
 
-**Current Project Progress Score: 95%.**
+**Current Project Progress Score: 96%.**
 
 ## NEXT
-1. User tests `https://dadrocktabs.com/bts` on Production.
-2. Test a permitted audio upload and confirm private Blob authorization succeeds.
-3. Complete a PayPal sandbox $1 checkout.
-4. Confirm dedicated Modal separator receives the paid job and returns MP3.
-5. Confirm generated track downloads and source Blob is deleted immediately afterward.
-6. Confirm `CRON_SECRET`/hourly cleanup works for abandoned uploads.
-7. Fix any issues found during live testing in the BTS workflow without changing AI-tab behavior.
+1. Validate branch diff for BTS token additions only.
+2. Promote the BTS token addition to `main` for the user's pre-test requirement.
+3. Verify Vercel build includes `/admin/bts-tokens`, `/api/admin/bts-tokens`, `/api/bts/free-token` and `/bts`.
+4. Create a BTS testing token in the separate admin tracker.
+5. Test a permitted audio upload and redeem the BTS token.
+6. Confirm dedicated Modal separator returns MP3 and source Blob is deleted immediately afterward.
+7. Separately test PayPal sandbox $1 checkout.
+8. Confirm `CRON_SECRET`/hourly cleanup works for abandoned uploads.
