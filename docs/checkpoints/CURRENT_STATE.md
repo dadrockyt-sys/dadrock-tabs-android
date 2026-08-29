@@ -6,6 +6,30 @@ Branch: `v143-contextual-prune-lobo`
 ## Active phase
 **V168 remains `HOLDOUT_ASSET_MISSING / SCORING_NOT_ARMED`. V167 is CLOSED / TERMINAL. No independent professional combined-Guitar holdout asset has been admitted, so V168 remains at exactly 0 reference-facing score calls. The current public/open holdout search is now prospectively stopped at the practical frontier: GOAT is the primary access-controlled lead; G&N is a provenance-strong but rights/acquisition-blocked fallback. No currently screened openly obtainable candidate clears the frozen professional-reference + exact-source use-basis gates. The next useful work requires external asset access/provenance, not more scorer/candidate code. `main`/Production remain untouched; CPU only; fresh explicit authorization is required before GPU/CUDA/Modal.**
 
+## User-facing percentage score reporting — STANDING INSTRUCTION
+The user prefers a simple percentage score in future updates/tests because it helps motivation and makes progress easier to follow.
+
+### Project Progress Score
+When work is research/setup/provenance rather than an actual model evaluation, report a **Project Progress Score: X%** using this fixed five-gate rubric (20 percentage points each):
+1. **Preregistration + frozen Policy A/B complete** — 20%.
+2. **Admission/provenance validators frozen + self-tested** — 20%.
+3. **External candidate screening completed to a defensible stop boundary** — 20%.
+4. **>=2 admissible independent professional holdout songs acquired, rights/provenance frozen, exact source/reference SHA256-bound, and both validators passed** — 20%.
+5. **Reference-blind Policy A/B candidates frozen for all admitted songs + prospective holdout scoring completed under the frozen evaluation rule** — 20%.
+
+Current **Project Progress Score: 60%** (gates 1–3 complete; gates 4–5 incomplete).
+
+### Actual Test Score
+Whenever an actual model/evaluation test is legitimately run, report a prominent **Test Score: X%** using the frozen primary metric for that test (for V168, combined-Guitar timing-aware pitch F1 / frozen macro rule as applicable). Also report precision/recall and the comparison/delta when available.
+
+### Score-integrity rules
+- The percentage display is motivational/reporting only; it must **never** weaken or replace frozen scientific pass/fail gates.
+- Do not invent, inflate, round upward to imply success, or convert blocked research into fake model accuracy.
+- Keep **Project Progress Score** and **Test Score** clearly labeled so project completion is never confused with transcription quality.
+- If no legitimate evaluation has run, say `Test Score: NOT RUN` rather than manufacturing a model percentage.
+- Meaningful research can be reported even when the fixed Project Progress Score remains unchanged.
+- Include the percentage score in future checkpoint updates and user-facing test/progress summaries unless the user asks otherwise.
+
 ## Most recent continuation work — FROZEN
 
 ### Open-search stop
@@ -166,4 +190,5 @@ If fewer than 2 valid songs exist, remain `HOLDOUT_ASSET_MISSING` and score call
 6. Resume broad candidate search only if genuinely new evidence/corpora appear; do not repeatedly re-screen the same blocked/excluded datasets.
 7. No asset admission until a complete >=2-song manifest passes BOTH frozen validators.
 8. Save this checkpoint again before any future admission, candidate code arm, or scorer arm.
-9. CPU only; no GPU/CUDA/Modal; never modify main/Production.
+9. Include the user-facing percentage score in future progress/test updates per the standing instruction above.
+10. CPU only; no GPU/CUDA/Modal; never modify main/Production.
