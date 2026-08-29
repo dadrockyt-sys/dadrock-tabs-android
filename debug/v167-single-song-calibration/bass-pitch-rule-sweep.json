@@ -1,0 +1,5111 @@
+{
+  "baseline": {
+    "changedExamples": [],
+    "changedMidiEvents": 0,
+    "deltaMidiHistogram": {
+      "0": 402
+    },
+    "gross": {
+      "f1": 0.7439409905163331,
+      "falseNegative": 194,
+      "falsePositive": 49,
+      "generated": 402,
+      "matched": 353,
+      "precision": 0.8781094527363185,
+      "recall": 0.6453382084095064,
+      "reference": 547
+    },
+    "primary": {
+      "f1": 0.7186512118018967,
+      "falseNegative": 206,
+      "falsePositive": 61,
+      "generated": 402,
+      "matched": 341,
+      "precision": 0.8482587064676617,
+      "recall": 0.623400365630713,
+      "reference": 547
+    },
+    "rule": {
+      "kind": "baseline",
+      "name": "baseline_current"
+    }
+  },
+  "best": {
+    "changedExamples": [],
+    "changedMidiEvents": 0,
+    "deltaMidiHistogram": {
+      "0": 402
+    },
+    "gross": {
+      "f1": 0.7439409905163331,
+      "falseNegative": 194,
+      "falsePositive": 49,
+      "generated": 402,
+      "matched": 353,
+      "precision": 0.8781094527363185,
+      "recall": 0.6453382084095064,
+      "reference": 547
+    },
+    "primary": {
+      "f1": 0.7186512118018967,
+      "falseNegative": 206,
+      "falsePositive": 61,
+      "generated": 402,
+      "matched": 341,
+      "precision": 0.8482587064676617,
+      "recall": 0.623400365630713,
+      "reference": 547
+    },
+    "rule": {
+      "kind": "baseline",
+      "name": "baseline_current"
+    }
+  },
+  "deltaRecognitionPercent": 0.0,
+  "label": "SINGLE_SONG_TRAINING_CALIBRATION",
+  "policy": {
+    "alternativeMidiDerivedOnlyFromStoredAudioEvidence": true,
+    "calibrationOnly": true,
+    "candidateFileModified": false,
+    "directReferenceCopy": false,
+    "eventCardinalityModified": false,
+    "generalizationClaim": false,
+    "referenceFacing": true,
+    "referenceSelectsIndividualEventMidi": false,
+    "referenceSelectsWholeRuleOnly": true,
+    "timingModified": false
+  },
+  "referenceCounts": {
+    "bassExcluded": 0,
+    "bassIncluded": 547,
+    "leadExcluded": 0,
+    "leadIncluded": 447,
+    "rhythmExcluded": 0,
+    "rhythmIncluded": 946
+  },
+  "rows": [
+    {
+      "changedExamples": [],
+      "changedMidiEvents": 0,
+      "deltaMidiHistogram": {
+        "0": 402
+      },
+      "gross": {
+        "f1": 0.7439409905163331,
+        "falseNegative": 194,
+        "falsePositive": 49,
+        "generated": 402,
+        "matched": 353,
+        "precision": 0.8781094527363185,
+        "recall": 0.6453382084095064,
+        "reference": 547
+      },
+      "primary": {
+        "f1": 0.7186512118018967,
+        "falseNegative": 206,
+        "falsePositive": 61,
+        "generated": 402,
+        "matched": 341,
+        "precision": 0.8482587064676617,
+        "recall": 0.623400365630713,
+        "reference": 547
+      },
+      "rule": {
+        "kind": "baseline",
+        "name": "baseline_current"
+      }
+    },
+    {
+      "changedExamples": [
+        {
+          "chosenMidi": 51,
+          "currentMidi": 50,
+          "measure": 8,
+          "medianPyinMidi": 49.800000000000004,
+          "medianPyinVoicedProbability": 0.615949885458068,
+          "stateMidi": 51,
+          "stateVoicedProbability": 0.6860828109301793,
+          "step": 14.0
+        },
+        {
+          "chosenMidi": 40,
+          "currentMidi": 35,
+          "measure": 9,
+          "medianPyinMidi": 35.0,
+          "medianPyinVoicedProbability": 0.17653060863289757,
+          "stateMidi": 40,
+          "stateVoicedProbability": 0.6860828109301793,
+          "step": 7.0
+        },
+        {
+          "chosenMidi": 38,
+          "currentMidi": 40,
+          "measure": 9,
+          "medianPyinMidi": 39.4,
+          "medianPyinVoicedProbability": 0.2407543944755743,
+          "stateMidi": 38,
+          "stateVoicedProbability": 0.7571601330199093,
+          "step": 10.0
+        },
+        {
+          "chosenMidi": 38,
+          "currentMidi": 40,
+          "measure": 10,
+          "medianPyinMidi": 39.599999999999994,
+          "medianPyinVoicedProbability": 0.2796051653363589,
+          "stateMidi": 38,
+          "stateVoicedProbability": 0.6159498854580681,
+          "step": 0.0
+        },
+        {
+          "chosenMidi": 38,
+          "currentMidi": 40,
+          "measure": 10,
+          "medianPyinMidi": 39.900000000000006,
+          "medianPyinVoicedProbability": 0.1765306086328976,
+          "stateMidi": 38,
+          "stateVoicedProbability": 0.7563756852013395,
+          "step": 10.0
+        },
+        {
+          "chosenMidi": 35,
+          "currentMidi": 40,
+          "measure": 11,
+          "medianPyinMidi": 39.7,
+          "medianPyinVoicedProbability": 0.1765306086328976,
+          "stateMidi": 35,
+          "stateVoicedProbability": 0.6159498854580681,
+          "step": 0.0
+        },
+        {
+          "chosenMidi": 40,
+          "currentMidi": 35,
+          "measure": 11,
+          "medianPyinMidi": 35.599999999999994,
+          "medianPyinVoicedProbability": 0.10857977072874497,
+          "stateMidi": 40,
+          "stateVoicedProbability": 0.6860828109301793,
+          "step": 7.0
+        },
+        {
+          "chosenMidi": 38,
+          "currentMidi": 40,
+          "measure": 11,
+          "medianPyinMidi": 39.8,
+          "medianPyinVoicedProbability": 0.32333605839064083,
+          "stateMidi": 38,
+          "stateVoicedProbability": 0.6159498854580681,
+          "step": 10.0
+        },
+        {
+          "chosenMidi": 40,
+          "currentMidi": 38,
+          "measure": 11,
+          "medianPyinMidi": 37.800000000000004,
+          "medianPyinVoicedProbability": 0.24075439447557428,
+          "stateMidi": 40,
+          "stateVoicedProbability": 0.6860828109301793,
+          "step": 14.0
+        },
+        {
+          "chosenMidi": 38,
+          "currentMidi": 40,
+          "measure": 12,
+          "medianPyinMidi": 39.8,
+          "medianPyinVoicedProbability": 0.2796051653363589,
+          "stateMidi": 38,
+          "stateVoicedProbability": 0.6159498854580681,
+          "step": 0.0
+        },
+        {
+          "chosenMidi": 40,
+          "currentMidi": 38,
+          "measure": 12,
+          "medianPyinMidi": 37.800000000000004,
+          "medianPyinVoicedProbability": 0.32333605839064083,
+          "stateMidi": 40,
+          "stateVoicedProbability": 0.6860828109301793,
+          "step": 8.0
+        },
+        {
+          "chosenMidi": 40,
+          "currentMidi": 39,
+          "measure": 12,
+          "medianPyinMidi": 39.7,
+          "medianPyinVoicedProbability": 0.27960516533635893,
+          "stateMidi": 40,
+          "stateVoicedProbability": 0.7571601330199094,
+          "step": 12.0
+        },
+        {
+          "chosenMidi": 35,
+          "currentMidi": 40,
+          "measure": 14,
+          "medianPyinMidi": 39.7,
+          "medianPyinVoicedProbability": 0.21503488333984888,
+          "stateMidi": 35,
+          "stateVoicedProbability": 0.6159498854580681,
+          "step": 0.0
+        },
+        {
+          "chosenMidi": 38,
+          "currentMidi": 40,
+          "measure": 14,
+          "medianPyinMidi": 39.900000000000006,
+          "medianPyinVoicedProbability": 0.20650679911775227,
+          "stateMidi": 38,
+          "stateVoicedProbability": 0.6860828109301793,
+          "step": 10.0
+        },
+        {
+          "chosenMidi": 38,
+          "currentMidi": 40,
+          "measure": 15,
+          "medianPyinMidi": 39.7,
+          "medianPyinVoicedProbability": 0.2796051653363589,
+          "stateMidi": 38,
+          "stateVoicedProbability": 0.7216214719750443,
+          "step": 10.0
+        },
+        {
+          "chosenMidi": 38,
+          "currentMidi": 40,
+          "measure": 16,
+          "medianPyinMidi": 39.900000000000006,
+          "medianPyinVoicedProbability": 0.17653060863289757,
+          "stateMidi": 38,
+          "stateVoicedProbability": 0.7571601330199094,
+          "step": 10.0
+        },
+        {
+          "chosenMidi": 40,
+          "currentMidi": 38,
+          "measure": 16,
+          "medianPyinMidi": 37.99999999999999,
+          "medianPyinVoicedProbability": 0.20650679911775227,
+          "stateMidi": 40,
+          "stateVoicedProbability": 0.6860828109301793,
+          "step": 12.0
+        },
+        {
+          "chosenMidi": 40,
+          "currentMidi": 38,
+          "measure": 18,
+          "medianPyinMidi": 37.99999999999999,
+          "medianPyinVoicedProbability": 0.2796051653363589,
+          "stateMidi": 40,
+          "stateVoicedProbability": 0.6860828109301793,
+          "step": 14.0
+        },
+        {
+          "chosenMidi": 38,
+          "currentMidi": 35,
+          "measure": 20,
+          "medianPyinMidi": 36.89999999999999,
+          "medianPyinVoicedProbability": 0.1504646013433388,
+          "stateMidi": 38,
+          "stateVoicedProbability": 0.7571601330199094,
+          "step": 8.0
+        },
+        {
+          "chosenMidi": 40,
+          "currentMidi": 38,
+          "measure": 20,
+          "medianPyinMidi": 37.99999999999999,
+          "medianPyinVoicedProbability": 0.2796051653363589,
+          "stateMidi": 40,
+          "stateVoicedProbability": 0.6860828109301793,
+          "step": 14.0
+        },
+        {
+          "chosenMidi": 38,
+          "currentMidi": 40,
+          "measure": 21,
+          "medianPyinMidi": 39.8,
+          "medianPyinVoicedProbability": 0.3233360583906409,
+          "stateMidi": 38,
+          "stateVoicedProbability": 0.6159498854580681,
+          "step": 0.0
+        },
+        {
+          "chosenMidi": 40,
+          "currentMidi": 38,
+          "measure": 21,
+          "medianPyinMidi": 38.099999999999994,
+          "medianPyinVoicedProbability": 0.24075439447557428,
+          "stateMidi": 40,
+          "stateVoicedProbability": 0.7571601330199094,
+          "step": 14.0
+        },
+        {
+          "chosenMidi": 40,
+          "currentMidi": 38,
+          "measure": 23,
+          "medianPyinMidi": 37.9,
+          "medianPyinVoicedProbability": 0.24075439447557428,
+          "stateMidi": 40,
+          "stateVoicedProbability": 0.6860828109301793,
+          "step": 14.0
+        },
+        {
+          "chosenMidi": 43,
+          "currentMidi": 41,
+          "measure": 26,
+          "medianPyinMidi": 40.9,
+          "medianPyinVoicedProbability": 0.3233360583906409,
+          "stateMidi": 43,
+          "stateVoicedProbability": 0.7571601330199094,
+          "step": 14.0
+        },
+        {
+          "chosenMidi": 40,
+          "currentMidi": 38,
+          "measure": 30,
+          "medianPyinMidi": 37.9,
+          "medianPyinVoicedProbability": 0.32333605839064083,
+          "stateMidi": 40,
+          "stateVoicedProbability": 0.6860828109301793,
+          "step": 0.0
+        }
+      ],
+      "changedMidiEvents": 111,
+      "deltaMidiHistogram": {
+        "-1": 24,
+        "-2": 31,
+        "-3": 3,
+        "-5": 9,
+        "0": 291,
+        "1": 7,
+        "2": 19,
+        "3": 5,
+        "4": 1,
+        "5": 9,
+        "6": 1,
+        "7": 2
+      },
+      "gross": {
+        "f1": 0.6111696522655427,
+        "falseNegative": 257,
+        "falsePositive": 112,
+        "generated": 402,
+        "matched": 290,
+        "precision": 0.7213930348258707,
+        "recall": 0.5301645338208409,
+        "reference": 547
+      },
+      "primary": {
+        "f1": 0.5395152792413066,
+        "falseNegative": 291,
+        "falsePositive": 146,
+        "generated": 402,
+        "matched": 256,
+        "precision": 0.6368159203980099,
+        "recall": 0.4680073126142596,
+        "reference": 547
+      },
+      "rule": {
+        "kind": "state_all",
+        "name": "state_all"
+      }
+    },
+    {
+      "changedExamples": [
+        {
+          "chosenMidi": 50,
+          "currentMidi": 51,
+          "measure": 8,
+          "medianPyinMidi": 50.300000000000004,
+          "medianPyinVoicedProbability": 0.22563657234596562,
+          "stateMidi": 51,
+          "stateVoicedProbability": 0.6860828109301793,
+          "step": 9.0
+        },
+        {
+          "chosenMidi": 39,
+          "currentMidi": 40,
+          "measure": 9,
+          "medianPyinMidi": 39.4,
+          "medianPyinVoicedProbability": 0.2407543944755743,
+          "stateMidi": 38,
+          "stateVoicedProbability": 0.7571601330199093,
+          "step": 10.0
+        },
+        {
+          "chosenMidi": 36,
+          "currentMidi": 35,
+          "measure": 11,
+          "medianPyinMidi": 35.599999999999994,
+          "medianPyinVoicedProbability": 0.10857977072874497,
+          "stateMidi": 40,
+          "stateVoicedProbability": 0.6860828109301793,
+          "step": 7.0
+        },
+        {
+          "chosenMidi": 40,
+          "currentMidi": 39,
+          "measure": 12,
+          "medianPyinMidi": 39.7,
+          "medianPyinVoicedProbability": 0.27960516533635893,
+          "stateMidi": 40,
+          "stateVoicedProbability": 0.7571601330199094,
+          "step": 12.0
+        },
+        {
+          "chosenMidi": 36,
+          "currentMidi": 35,
+          "measure": 13,
+          "medianPyinMidi": 35.5,
+          "medianPyinVoicedProbability": 0.17653060863289757,
+          "stateMidi": 35,
+          "stateVoicedProbability": 0.6159498854580681,
+          "step": 14.0
+        },
+        {
+          "chosenMidi": 36,
+          "currentMidi": 38,
+          "measure": 14,
+          "medianPyinMidi": 36.2,
+          "medianPyinVoicedProbability": 0.24075439447557428,
+          "stateMidi": 38,
+          "stateVoicedProbability": 0.6159498854580681,
+          "step": 14.0
+        },
+        {
+          "chosenMidi": 37,
+          "currentMidi": 38,
+          "measure": 15,
+          "medianPyinMidi": 37.39999999999999,
+          "medianPyinVoicedProbability": 0.17653060863289757,
+          "stateMidi": 38,
+          "stateVoicedProbability": 0.7216214719750443,
+          "step": 8.0
+        },
+        {
+          "chosenMidi": 39,
+          "currentMidi": 40,
+          "measure": 18,
+          "medianPyinMidi": 39.4,
+          "medianPyinVoicedProbability": 0.2796051653363589,
+          "stateMidi": 40,
+          "stateVoicedProbability": 0.6860828109301793,
+          "step": 0.0
+        },
+        {
+          "chosenMidi": 36,
+          "currentMidi": 35,
+          "measure": 20,
+          "medianPyinMidi": 36.099999999999994,
+          "medianPyinVoicedProbability": 0.15046460134333883,
+          "stateMidi": 35,
+          "stateVoicedProbability": 0.5822374698590262,
+          "step": 6.0
+        },
+        {
+          "chosenMidi": 37,
+          "currentMidi": 35,
+          "measure": 20,
+          "medianPyinMidi": 36.89999999999999,
+          "medianPyinVoicedProbability": 0.1504646013433388,
+          "stateMidi": 38,
+          "stateVoicedProbability": 0.7571601330199094,
+          "step": 8.0
+        },
+        {
+          "chosenMidi": 39,
+          "currentMidi": 40,
+          "measure": 24,
+          "medianPyinMidi": 39.3,
+          "medianPyinVoicedProbability": 0.24075439447557428,
+          "stateMidi": 40,
+          "stateVoicedProbability": 0.6860828109301793,
+          "step": 0.0
+        },
+        {
+          "chosenMidi": 36,
+          "currentMidi": 40,
+          "measure": 24,
+          "medianPyinMidi": 35.699999999999996,
+          "medianPyinVoicedProbability": 0.17653060863289757,
+          "stateMidi": 40,
+          "stateVoicedProbability": 0.6860828109301793,
+          "step": 14.0
+        },
+        {
+          "chosenMidi": 44,
+          "currentMidi": 43,
+          "measure": 27,
+          "medianPyinMidi": 43.5,
+          "medianPyinVoicedProbability": 0.6159498854580682,
+          "stateMidi": 43,
+          "stateVoicedProbability": 0.7571601330199094,
+          "step": 4.0
+        },
+        {
+          "chosenMidi": 39,
+          "currentMidi": 40,
+          "measure": 31,
+          "medianPyinMidi": 39.4,
+          "medianPyinVoicedProbability": 0.2796051653363589,
+          "stateMidi": 38,
+          "stateVoicedProbability": 0.6159498854580681,
+          "step": 0.0
+        },
+        {
+          "chosenMidi": 39,
+          "currentMidi": 40,
+          "measure": 35,
+          "medianPyinMidi": 38.699999999999996,
+          "medianPyinVoicedProbability": 0.011853505394683413,
+          "stateMidi": 40,
+          "stateVoicedProbability": 0.6860828109301793,
+          "step": 4.0
+        },
+        {
+          "chosenMidi": 41,
+          "currentMidi": 40,
+          "measure": 36,
+          "medianPyinMidi": 40.9,
+          "medianPyinVoicedProbability": 0.04069733156888106,
+          "stateMidi": 40,
+          "stateVoicedProbability": 0.6860828109301793,
+          "step": 4.0
+        },
+        {
+          "chosenMidi": 39,
+          "currentMidi": 40,
+          "measure": 36,
+          "medianPyinMidi": 39.099999999999994,
+          "medianPyinVoicedProbability": 0.12793708630129036,
+          "stateMidi": 40,
+          "stateVoicedProbability": 0.6860828109301793,
+          "step": 6.0
+        },
+        {
+          "chosenMidi": 39,
+          "currentMidi": 38,
+          "measure": 36,
+          "medianPyinMidi": 39.099999999999994,
+          "medianPyinVoicedProbability": 0.27960516533635893,
+          "stateMidi": 38,
+          "stateVoicedProbability": 0.6159498854580681,
+          "step": 12.0
+        },
+        {
+          "chosenMidi": 36,
+          "currentMidi": 35,
+          "measure": 36,
+          "medianPyinMidi": 36.0,
+          "medianPyinVoicedProbability": 0.2796051653363589,
+          "stateMidi": 38,
+          "stateVoicedProbability": 0.6159498854580681,
+          "step": 14.0
+        },
+        {
+          "chosenMidi": 39,
+          "currentMidi": 40,
+          "measure": 43,
+          "medianPyinMidi": 39.3,
+          "medianPyinVoicedProbability": 0.24305598222705557,
+          "stateMidi": 40,
+          "stateVoicedProbability": 0.6860828109301793,
+          "step": 0.0
+        },
+        {
+          "chosenMidi": 40,
+          "currentMidi": 35,
+          "measure": 47,
+          "medianPyinMidi": 39.900000000000006,
+          "medianPyinVoicedProbability": 0.10857977072874499,
+          "stateMidi": 40,
+          "stateVoicedProbability": 0.8266685594724996,
+          "step": 0.0
+        },
+        {
+          "chosenMidi": 39,
+          "currentMidi": 40,
+          "measure": 48,
+          "medianPyinMidi": 39.4,
+          "medianPyinVoicedProbability": 0.2280678869846282,
+          "stateMidi": 35,
+          "stateVoicedProbability": 0.6159498854580681,
+          "step": 0.0
+        },
+        {
+          "chosenMidi": 38,
+          "currentMidi": 35,
+          "measure": 50,
+          "medianPyinMidi": 37.9,
+          "medianPyinVoicedProbability": 0.2796051653363589,
+          "stateMidi": 40,
+          "stateVoicedProbability": 0.6860828109301793,
+          "step": 0.0
+        },
+        {
+          "chosenMidi": 36,
+          "currentMidi": 35,
+          "measure": 54,
+          "medianPyinMidi": 35.599999999999994,
+          "medianPyinVoicedProbability": 0.03010686179419501,
+          "stateMidi": 39,
+          "stateVoicedProbability": 0.7216214719750442,
+          "step": 10.0
+        },
+        {
+          "chosenMidi": 38,
+          "currentMidi": 31,
+          "measure": 67,
+          "medianPyinMidi": 37.99999999999999,
+          "medianPyinVoicedProbability": 0.37469919371696114,
+          "stateMidi": 38,
+          "stateVoicedProbability": 0.7571601330199094,
+          "step": 4.0
+        }
+      ],
+      "changedMidiEvents": 53,
+      "deltaMidiHistogram": {
+        "-1": 23,
+        "-2": 2,
+        "-4": 1,
+        "0": 349,
+        "1": 20,
+        "2": 2,
+        "3": 1,
+        "4": 1,
+        "5": 2,
+        "7": 1
+      },
+      "gross": {
+        "f1": 0.6954689146469969,
+        "falseNegative": 217,
+        "falsePositive": 72,
+        "generated": 402,
+        "matched": 330,
+        "precision": 0.8208955223880597,
+        "recall": 0.603290676416819,
+        "reference": 547
+      },
+      "primary": {
+        "f1": 0.6722866174920968,
+        "falseNegative": 228,
+        "falsePositive": 83,
+        "generated": 402,
+        "matched": 319,
+        "precision": 0.7935323383084577,
+        "recall": 0.583180987202925,
+        "reference": 547
+      },
+      "rule": {
+        "kind": "pyin_all",
+        "name": "pyin_round_all"
+      }
+    },
+    {
+      "changedExamples": [
+        {
+          "chosenMidi": 51,
+          "currentMidi": 50,
+          "measure": 8,
+          "medianPyinMidi": 49.800000000000004,
+          "medianPyinVoicedProbability": 0.615949885458068,
+          "stateMidi": 51,
+          "stateVoicedProbability": 0.6860828109301793,
+          "step": 14.0
+        },
+        {
+          "chosenMidi": 40,
+          "currentMidi": 35,
+          "measure": 9,
+          "medianPyinMidi": 35.0,
+          "medianPyinVoicedProbability": 0.17653060863289757,
+          "stateMidi": 40,
+          "stateVoicedProbability": 0.6860828109301793,
+          "step": 7.0
+        },
+        {
+          "chosenMidi": 38,
+          "currentMidi": 40,
+          "measure": 9,
+          "medianPyinMidi": 39.4,
+          "medianPyinVoicedProbability": 0.2407543944755743,
+          "stateMidi": 38,
+          "stateVoicedProbability": 0.7571601330199093,
+          "step": 10.0
+        },
+        {
+          "chosenMidi": 38,
+          "currentMidi": 40,
+          "measure": 10,
+          "medianPyinMidi": 39.599999999999994,
+          "medianPyinVoicedProbability": 0.2796051653363589,
+          "stateMidi": 38,
+          "stateVoicedProbability": 0.6159498854580681,
+          "step": 0.0
+        },
+        {
+          "chosenMidi": 38,
+          "currentMidi": 40,
+          "measure": 10,
+          "medianPyinMidi": 39.900000000000006,
+          "medianPyinVoicedProbability": 0.1765306086328976,
+          "stateMidi": 38,
+          "stateVoicedProbability": 0.7563756852013395,
+          "step": 10.0
+        },
+        {
+          "chosenMidi": 35,
+          "currentMidi": 40,
+          "measure": 11,
+          "medianPyinMidi": 39.7,
+          "medianPyinVoicedProbability": 0.1765306086328976,
+          "stateMidi": 35,
+          "stateVoicedProbability": 0.6159498854580681,
+          "step": 0.0
+        },
+        {
+          "chosenMidi": 40,
+          "currentMidi": 35,
+          "measure": 11,
+          "medianPyinMidi": 35.599999999999994,
+          "medianPyinVoicedProbability": 0.10857977072874497,
+          "stateMidi": 40,
+          "stateVoicedProbability": 0.6860828109301793,
+          "step": 7.0
+        },
+        {
+          "chosenMidi": 38,
+          "currentMidi": 40,
+          "measure": 11,
+          "medianPyinMidi": 39.8,
+          "medianPyinVoicedProbability": 0.32333605839064083,
+          "stateMidi": 38,
+          "stateVoicedProbability": 0.6159498854580681,
+          "step": 10.0
+        },
+        {
+          "chosenMidi": 40,
+          "currentMidi": 38,
+          "measure": 11,
+          "medianPyinMidi": 37.800000000000004,
+          "medianPyinVoicedProbability": 0.24075439447557428,
+          "stateMidi": 40,
+          "stateVoicedProbability": 0.6860828109301793,
+          "step": 14.0
+        },
+        {
+          "chosenMidi": 38,
+          "currentMidi": 40,
+          "measure": 12,
+          "medianPyinMidi": 39.8,
+          "medianPyinVoicedProbability": 0.2796051653363589,
+          "stateMidi": 38,
+          "stateVoicedProbability": 0.6159498854580681,
+          "step": 0.0
+        },
+        {
+          "chosenMidi": 40,
+          "currentMidi": 38,
+          "measure": 12,
+          "medianPyinMidi": 37.800000000000004,
+          "medianPyinVoicedProbability": 0.32333605839064083,
+          "stateMidi": 40,
+          "stateVoicedProbability": 0.6860828109301793,
+          "step": 8.0
+        },
+        {
+          "chosenMidi": 40,
+          "currentMidi": 39,
+          "measure": 12,
+          "medianPyinMidi": 39.7,
+          "medianPyinVoicedProbability": 0.27960516533635893,
+          "stateMidi": 40,
+          "stateVoicedProbability": 0.7571601330199094,
+          "step": 12.0
+        },
+        {
+          "chosenMidi": 35,
+          "currentMidi": 40,
+          "measure": 14,
+          "medianPyinMidi": 39.7,
+          "medianPyinVoicedProbability": 0.21503488333984888,
+          "stateMidi": 35,
+          "stateVoicedProbability": 0.6159498854580681,
+          "step": 0.0
+        },
+        {
+          "chosenMidi": 38,
+          "currentMidi": 40,
+          "measure": 14,
+          "medianPyinMidi": 39.900000000000006,
+          "medianPyinVoicedProbability": 0.20650679911775227,
+          "stateMidi": 38,
+          "stateVoicedProbability": 0.6860828109301793,
+          "step": 10.0
+        },
+        {
+          "chosenMidi": 38,
+          "currentMidi": 40,
+          "measure": 15,
+          "medianPyinMidi": 39.7,
+          "medianPyinVoicedProbability": 0.2796051653363589,
+          "stateMidi": 38,
+          "stateVoicedProbability": 0.7216214719750443,
+          "step": 10.0
+        },
+        {
+          "chosenMidi": 38,
+          "currentMidi": 40,
+          "measure": 16,
+          "medianPyinMidi": 39.900000000000006,
+          "medianPyinVoicedProbability": 0.17653060863289757,
+          "stateMidi": 38,
+          "stateVoicedProbability": 0.7571601330199094,
+          "step": 10.0
+        },
+        {
+          "chosenMidi": 40,
+          "currentMidi": 38,
+          "measure": 16,
+          "medianPyinMidi": 37.99999999999999,
+          "medianPyinVoicedProbability": 0.20650679911775227,
+          "stateMidi": 40,
+          "stateVoicedProbability": 0.6860828109301793,
+          "step": 12.0
+        },
+        {
+          "chosenMidi": 40,
+          "currentMidi": 38,
+          "measure": 18,
+          "medianPyinMidi": 37.99999999999999,
+          "medianPyinVoicedProbability": 0.2796051653363589,
+          "stateMidi": 40,
+          "stateVoicedProbability": 0.6860828109301793,
+          "step": 14.0
+        },
+        {
+          "chosenMidi": 38,
+          "currentMidi": 35,
+          "measure": 20,
+          "medianPyinMidi": 36.89999999999999,
+          "medianPyinVoicedProbability": 0.1504646013433388,
+          "stateMidi": 38,
+          "stateVoicedProbability": 0.7571601330199094,
+          "step": 8.0
+        },
+        {
+          "chosenMidi": 40,
+          "currentMidi": 38,
+          "measure": 20,
+          "medianPyinMidi": 37.99999999999999,
+          "medianPyinVoicedProbability": 0.2796051653363589,
+          "stateMidi": 40,
+          "stateVoicedProbability": 0.6860828109301793,
+          "step": 14.0
+        },
+        {
+          "chosenMidi": 38,
+          "currentMidi": 40,
+          "measure": 21,
+          "medianPyinMidi": 39.8,
+          "medianPyinVoicedProbability": 0.3233360583906409,
+          "stateMidi": 38,
+          "stateVoicedProbability": 0.6159498854580681,
+          "step": 0.0
+        },
+        {
+          "chosenMidi": 40,
+          "currentMidi": 38,
+          "measure": 21,
+          "medianPyinMidi": 38.099999999999994,
+          "medianPyinVoicedProbability": 0.24075439447557428,
+          "stateMidi": 40,
+          "stateVoicedProbability": 0.7571601330199094,
+          "step": 14.0
+        },
+        {
+          "chosenMidi": 40,
+          "currentMidi": 38,
+          "measure": 23,
+          "medianPyinMidi": 37.9,
+          "medianPyinVoicedProbability": 0.24075439447557428,
+          "stateMidi": 40,
+          "stateVoicedProbability": 0.6860828109301793,
+          "step": 14.0
+        },
+        {
+          "chosenMidi": 43,
+          "currentMidi": 41,
+          "measure": 26,
+          "medianPyinMidi": 40.9,
+          "medianPyinVoicedProbability": 0.3233360583906409,
+          "stateMidi": 43,
+          "stateVoicedProbability": 0.7571601330199094,
+          "step": 14.0
+        },
+        {
+          "chosenMidi": 40,
+          "currentMidi": 38,
+          "measure": 30,
+          "medianPyinMidi": 37.9,
+          "medianPyinVoicedProbability": 0.32333605839064083,
+          "stateMidi": 40,
+          "stateVoicedProbability": 0.6860828109301793,
+          "step": 0.0
+        }
+      ],
+      "changedMidiEvents": 111,
+      "deltaMidiHistogram": {
+        "-1": 24,
+        "-2": 31,
+        "-3": 3,
+        "-5": 9,
+        "0": 291,
+        "1": 7,
+        "2": 19,
+        "3": 5,
+        "4": 1,
+        "5": 9,
+        "6": 1,
+        "7": 2
+      },
+      "gross": {
+        "f1": 0.6111696522655427,
+        "falseNegative": 257,
+        "falsePositive": 112,
+        "generated": 402,
+        "matched": 290,
+        "precision": 0.7213930348258707,
+        "recall": 0.5301645338208409,
+        "reference": 547
+      },
+      "primary": {
+        "f1": 0.5395152792413066,
+        "falseNegative": 291,
+        "falsePositive": 146,
+        "generated": 402,
+        "matched": 256,
+        "precision": 0.6368159203980099,
+        "recall": 0.4680073126142596,
+        "reference": 547
+      },
+      "rule": {
+        "kind": "state_if_conf",
+        "name": "state_if_state_voiced_ge_55",
+        "threshold": 0.55
+      }
+    },
+    {
+      "changedExamples": [
+        {
+          "chosenMidi": 44,
+          "currentMidi": 43,
+          "measure": 27,
+          "medianPyinMidi": 43.5,
+          "medianPyinVoicedProbability": 0.6159498854580682,
+          "stateMidi": 43,
+          "stateVoicedProbability": 0.7571601330199094,
+          "step": 4.0
+        },
+        {
+          "chosenMidi": 37,
+          "currentMidi": 38,
+          "measure": 82,
+          "medianPyinMidi": 37.199999999999996,
+          "medianPyinVoicedProbability": 0.6159498854580681,
+          "stateMidi": 37,
+          "stateVoicedProbability": 0.6159498854580681,
+          "step": 8.0
+        }
+      ],
+      "changedMidiEvents": 2,
+      "deltaMidiHistogram": {
+        "-1": 1,
+        "0": 400,
+        "1": 1
+      },
+      "gross": {
+        "f1": 0.7439409905163331,
+        "falseNegative": 194,
+        "falsePositive": 49,
+        "generated": 402,
+        "matched": 353,
+        "precision": 0.8781094527363185,
+        "recall": 0.6453382084095064,
+        "reference": 547
+      },
+      "primary": {
+        "f1": 0.7186512118018967,
+        "falseNegative": 206,
+        "falsePositive": 61,
+        "generated": 402,
+        "matched": 341,
+        "precision": 0.8482587064676617,
+        "recall": 0.623400365630713,
+        "reference": 547
+      },
+      "rule": {
+        "kind": "pyin_if_conf",
+        "name": "pyin_if_pyin_voiced_ge_55",
+        "threshold": 0.55
+      }
+    },
+    {
+      "changedExamples": [
+        {
+          "chosenMidi": 38,
+          "currentMidi": 40,
+          "measure": 9,
+          "medianPyinMidi": 39.4,
+          "medianPyinVoicedProbability": 0.2407543944755743,
+          "stateMidi": 38,
+          "stateVoicedProbability": 0.7571601330199093,
+          "step": 10.0
+        },
+        {
+          "chosenMidi": 38,
+          "currentMidi": 40,
+          "measure": 10,
+          "medianPyinMidi": 39.599999999999994,
+          "medianPyinVoicedProbability": 0.2796051653363589,
+          "stateMidi": 38,
+          "stateVoicedProbability": 0.6159498854580681,
+          "step": 0.0
+        },
+        {
+          "chosenMidi": 38,
+          "currentMidi": 40,
+          "measure": 10,
+          "medianPyinMidi": 39.900000000000006,
+          "medianPyinVoicedProbability": 0.1765306086328976,
+          "stateMidi": 38,
+          "stateVoicedProbability": 0.7563756852013395,
+          "step": 10.0
+        },
+        {
+          "chosenMidi": 35,
+          "currentMidi": 40,
+          "measure": 11,
+          "medianPyinMidi": 39.7,
+          "medianPyinVoicedProbability": 0.1765306086328976,
+          "stateMidi": 35,
+          "stateVoicedProbability": 0.6159498854580681,
+          "step": 0.0
+        },
+        {
+          "chosenMidi": 38,
+          "currentMidi": 40,
+          "measure": 11,
+          "medianPyinMidi": 39.8,
+          "medianPyinVoicedProbability": 0.32333605839064083,
+          "stateMidi": 38,
+          "stateVoicedProbability": 0.6159498854580681,
+          "step": 10.0
+        },
+        {
+          "chosenMidi": 38,
+          "currentMidi": 40,
+          "measure": 12,
+          "medianPyinMidi": 39.8,
+          "medianPyinVoicedProbability": 0.2796051653363589,
+          "stateMidi": 38,
+          "stateVoicedProbability": 0.6159498854580681,
+          "step": 0.0
+        },
+        {
+          "chosenMidi": 35,
+          "currentMidi": 40,
+          "measure": 14,
+          "medianPyinMidi": 39.7,
+          "medianPyinVoicedProbability": 0.21503488333984888,
+          "stateMidi": 35,
+          "stateVoicedProbability": 0.6159498854580681,
+          "step": 0.0
+        },
+        {
+          "chosenMidi": 38,
+          "currentMidi": 40,
+          "measure": 14,
+          "medianPyinMidi": 39.900000000000006,
+          "medianPyinVoicedProbability": 0.20650679911775227,
+          "stateMidi": 38,
+          "stateVoicedProbability": 0.6860828109301793,
+          "step": 10.0
+        },
+        {
+          "chosenMidi": 38,
+          "currentMidi": 40,
+          "measure": 15,
+          "medianPyinMidi": 39.7,
+          "medianPyinVoicedProbability": 0.2796051653363589,
+          "stateMidi": 38,
+          "stateVoicedProbability": 0.7216214719750443,
+          "step": 10.0
+        },
+        {
+          "chosenMidi": 38,
+          "currentMidi": 40,
+          "measure": 16,
+          "medianPyinMidi": 39.900000000000006,
+          "medianPyinVoicedProbability": 0.17653060863289757,
+          "stateMidi": 38,
+          "stateVoicedProbability": 0.7571601330199094,
+          "step": 10.0
+        },
+        {
+          "chosenMidi": 38,
+          "currentMidi": 40,
+          "measure": 21,
+          "medianPyinMidi": 39.8,
+          "medianPyinVoicedProbability": 0.3233360583906409,
+          "stateMidi": 38,
+          "stateVoicedProbability": 0.6159498854580681,
+          "step": 0.0
+        },
+        {
+          "chosenMidi": 38,
+          "currentMidi": 40,
+          "measure": 31,
+          "medianPyinMidi": 39.4,
+          "medianPyinVoicedProbability": 0.2796051653363589,
+          "stateMidi": 38,
+          "stateVoicedProbability": 0.6159498854580681,
+          "step": 0.0
+        },
+        {
+          "chosenMidi": 38,
+          "currentMidi": 40,
+          "measure": 32,
+          "medianPyinMidi": 39.599999999999994,
+          "medianPyinVoicedProbability": 0.3721358982975087,
+          "stateMidi": 38,
+          "stateVoicedProbability": 0.6159498854580681,
+          "step": 0.0
+        },
+        {
+          "chosenMidi": 38,
+          "currentMidi": 40,
+          "measure": 36,
+          "medianPyinMidi": 40.0,
+          "medianPyinVoicedProbability": 0.24075439447557434,
+          "stateMidi": 38,
+          "stateVoicedProbability": 0.7571601330199094,
+          "step": 10.0
+        },
+        {
+          "chosenMidi": 38,
+          "currentMidi": 40,
+          "measure": 44,
+          "medianPyinMidi": 40.0,
+          "medianPyinVoicedProbability": 0.27960516533635893,
+          "stateMidi": 38,
+          "stateVoicedProbability": 0.6159498854580681,
+          "step": 14.0
+        },
+        {
+          "chosenMidi": 38,
+          "currentMidi": 40,
+          "measure": 45,
+          "medianPyinMidi": 39.7,
+          "medianPyinVoicedProbability": 0.2796051653363589,
+          "stateMidi": 38,
+          "stateVoicedProbability": 0.6159498854580681,
+          "step": 10.0
+        },
+        {
+          "chosenMidi": 35,
+          "currentMidi": 40,
+          "measure": 48,
+          "medianPyinMidi": 39.4,
+          "medianPyinVoicedProbability": 0.2280678869846282,
+          "stateMidi": 35,
+          "stateVoicedProbability": 0.6159498854580681,
+          "step": 0.0
+        },
+        {
+          "chosenMidi": 38,
+          "currentMidi": 40,
+          "measure": 50,
+          "medianPyinMidi": 39.900000000000006,
+          "medianPyinVoicedProbability": 0.48498680771591135,
+          "stateMidi": 38,
+          "stateVoicedProbability": 0.6159498854580681,
+          "step": 12.0
+        },
+        {
+          "chosenMidi": 38,
+          "currentMidi": 40,
+          "measure": 53,
+          "medianPyinMidi": 40.1,
+          "medianPyinVoicedProbability": 0.42606232904328145,
+          "stateMidi": 38,
+          "stateVoicedProbability": 0.6510163481941237,
+          "step": 6.0
+        },
+        {
+          "chosenMidi": 35,
+          "currentMidi": 38,
+          "measure": 53,
+          "medianPyinMidi": 37.7,
+          "medianPyinVoicedProbability": 0.24075439447557428,
+          "stateMidi": 35,
+          "stateVoicedProbability": 0.7571601330199094,
+          "step": 12.0
+        },
+        {
+          "chosenMidi": 35,
+          "currentMidi": 40,
+          "measure": 54,
+          "medianPyinMidi": 39.7,
+          "medianPyinVoicedProbability": 0.17466708260215966,
+          "stateMidi": 35,
+          "stateVoicedProbability": 0.6159498854580681,
+          "step": 0.0
+        },
+        {
+          "chosenMidi": 39,
+          "currentMidi": 40,
+          "measure": 54,
+          "medianPyinMidi": 39.8,
+          "medianPyinVoicedProbability": 0.42606232904328145,
+          "stateMidi": 39,
+          "stateVoicedProbability": 0.7216214719750442,
+          "step": 8.0
+        },
+        {
+          "chosenMidi": 38,
+          "currentMidi": 40,
+          "measure": 60,
+          "medianPyinMidi": 39.900000000000006,
+          "medianPyinVoicedProbability": 0.2407543944755743,
+          "stateMidi": 38,
+          "stateVoicedProbability": 0.6159498854580681,
+          "step": 0.0
+        },
+        {
+          "chosenMidi": 38,
+          "currentMidi": 40,
+          "measure": 60,
+          "medianPyinMidi": 39.900000000000006,
+          "medianPyinVoicedProbability": 0.3721358982975087,
+          "stateMidi": 38,
+          "stateVoicedProbability": 0.6159498854580681,
+          "step": 12.0
+        },
+        {
+          "chosenMidi": 38,
+          "currentMidi": 40,
+          "measure": 61,
+          "medianPyinMidi": 39.900000000000006,
+          "medianPyinVoicedProbability": 0.32333605839064083,
+          "stateMidi": 38,
+          "stateVoicedProbability": 0.6159498854580681,
+          "step": 0.0
+        }
+      ],
+      "changedMidiEvents": 67,
+      "deltaMidiHistogram": {
+        "-1": 24,
+        "-2": 31,
+        "-3": 3,
+        "-5": 9,
+        "0": 335
+      },
+      "gross": {
+        "f1": 0.6427818756585879,
+        "falseNegative": 242,
+        "falsePositive": 97,
+        "generated": 402,
+        "matched": 305,
+        "precision": 0.7587064676616916,
+        "recall": 0.5575868372943327,
+        "reference": 547
+      },
+      "primary": {
+        "f1": 0.5922023182297155,
+        "falseNegative": 266,
+        "falsePositive": 121,
+        "generated": 402,
+        "matched": 281,
+        "precision": 0.6990049751243781,
+        "recall": 0.5137111517367459,
+        "reference": 547
+      },
+      "rule": {
+        "kind": "lower_state_if_conf",
+        "name": "lower_state_if_state_voiced_ge_55",
+        "threshold": 0.55
+      }
+    },
+    {
+      "changedExamples": [
+        {
+          "chosenMidi": 51,
+          "currentMidi": 50,
+          "measure": 8,
+          "medianPyinMidi": 49.800000000000004,
+          "medianPyinVoicedProbability": 0.615949885458068,
+          "stateMidi": 51,
+          "stateVoicedProbability": 0.6860828109301793,
+          "step": 14.0
+        },
+        {
+          "chosenMidi": 40,
+          "currentMidi": 35,
+          "measure": 9,
+          "medianPyinMidi": 35.0,
+          "medianPyinVoicedProbability": 0.17653060863289757,
+          "stateMidi": 40,
+          "stateVoicedProbability": 0.6860828109301793,
+          "step": 7.0
+        },
+        {
+          "chosenMidi": 38,
+          "currentMidi": 40,
+          "measure": 9,
+          "medianPyinMidi": 39.4,
+          "medianPyinVoicedProbability": 0.2407543944755743,
+          "stateMidi": 38,
+          "stateVoicedProbability": 0.7571601330199093,
+          "step": 10.0
+        },
+        {
+          "chosenMidi": 38,
+          "currentMidi": 40,
+          "measure": 10,
+          "medianPyinMidi": 39.599999999999994,
+          "medianPyinVoicedProbability": 0.2796051653363589,
+          "stateMidi": 38,
+          "stateVoicedProbability": 0.6159498854580681,
+          "step": 0.0
+        },
+        {
+          "chosenMidi": 38,
+          "currentMidi": 40,
+          "measure": 10,
+          "medianPyinMidi": 39.900000000000006,
+          "medianPyinVoicedProbability": 0.1765306086328976,
+          "stateMidi": 38,
+          "stateVoicedProbability": 0.7563756852013395,
+          "step": 10.0
+        },
+        {
+          "chosenMidi": 35,
+          "currentMidi": 40,
+          "measure": 11,
+          "medianPyinMidi": 39.7,
+          "medianPyinVoicedProbability": 0.1765306086328976,
+          "stateMidi": 35,
+          "stateVoicedProbability": 0.6159498854580681,
+          "step": 0.0
+        },
+        {
+          "chosenMidi": 40,
+          "currentMidi": 35,
+          "measure": 11,
+          "medianPyinMidi": 35.599999999999994,
+          "medianPyinVoicedProbability": 0.10857977072874497,
+          "stateMidi": 40,
+          "stateVoicedProbability": 0.6860828109301793,
+          "step": 7.0
+        },
+        {
+          "chosenMidi": 38,
+          "currentMidi": 40,
+          "measure": 11,
+          "medianPyinMidi": 39.8,
+          "medianPyinVoicedProbability": 0.32333605839064083,
+          "stateMidi": 38,
+          "stateVoicedProbability": 0.6159498854580681,
+          "step": 10.0
+        },
+        {
+          "chosenMidi": 40,
+          "currentMidi": 38,
+          "measure": 11,
+          "medianPyinMidi": 37.800000000000004,
+          "medianPyinVoicedProbability": 0.24075439447557428,
+          "stateMidi": 40,
+          "stateVoicedProbability": 0.6860828109301793,
+          "step": 14.0
+        },
+        {
+          "chosenMidi": 38,
+          "currentMidi": 40,
+          "measure": 12,
+          "medianPyinMidi": 39.8,
+          "medianPyinVoicedProbability": 0.2796051653363589,
+          "stateMidi": 38,
+          "stateVoicedProbability": 0.6159498854580681,
+          "step": 0.0
+        },
+        {
+          "chosenMidi": 40,
+          "currentMidi": 38,
+          "measure": 12,
+          "medianPyinMidi": 37.800000000000004,
+          "medianPyinVoicedProbability": 0.32333605839064083,
+          "stateMidi": 40,
+          "stateVoicedProbability": 0.6860828109301793,
+          "step": 8.0
+        },
+        {
+          "chosenMidi": 40,
+          "currentMidi": 39,
+          "measure": 12,
+          "medianPyinMidi": 39.7,
+          "medianPyinVoicedProbability": 0.27960516533635893,
+          "stateMidi": 40,
+          "stateVoicedProbability": 0.7571601330199094,
+          "step": 12.0
+        },
+        {
+          "chosenMidi": 35,
+          "currentMidi": 40,
+          "measure": 14,
+          "medianPyinMidi": 39.7,
+          "medianPyinVoicedProbability": 0.21503488333984888,
+          "stateMidi": 35,
+          "stateVoicedProbability": 0.6159498854580681,
+          "step": 0.0
+        },
+        {
+          "chosenMidi": 38,
+          "currentMidi": 40,
+          "measure": 14,
+          "medianPyinMidi": 39.900000000000006,
+          "medianPyinVoicedProbability": 0.20650679911775227,
+          "stateMidi": 38,
+          "stateVoicedProbability": 0.6860828109301793,
+          "step": 10.0
+        },
+        {
+          "chosenMidi": 38,
+          "currentMidi": 40,
+          "measure": 15,
+          "medianPyinMidi": 39.7,
+          "medianPyinVoicedProbability": 0.2796051653363589,
+          "stateMidi": 38,
+          "stateVoicedProbability": 0.7216214719750443,
+          "step": 10.0
+        },
+        {
+          "chosenMidi": 38,
+          "currentMidi": 40,
+          "measure": 16,
+          "medianPyinMidi": 39.900000000000006,
+          "medianPyinVoicedProbability": 0.17653060863289757,
+          "stateMidi": 38,
+          "stateVoicedProbability": 0.7571601330199094,
+          "step": 10.0
+        },
+        {
+          "chosenMidi": 40,
+          "currentMidi": 38,
+          "measure": 16,
+          "medianPyinMidi": 37.99999999999999,
+          "medianPyinVoicedProbability": 0.20650679911775227,
+          "stateMidi": 40,
+          "stateVoicedProbability": 0.6860828109301793,
+          "step": 12.0
+        },
+        {
+          "chosenMidi": 40,
+          "currentMidi": 38,
+          "measure": 18,
+          "medianPyinMidi": 37.99999999999999,
+          "medianPyinVoicedProbability": 0.2796051653363589,
+          "stateMidi": 40,
+          "stateVoicedProbability": 0.6860828109301793,
+          "step": 14.0
+        },
+        {
+          "chosenMidi": 38,
+          "currentMidi": 35,
+          "measure": 20,
+          "medianPyinMidi": 36.89999999999999,
+          "medianPyinVoicedProbability": 0.1504646013433388,
+          "stateMidi": 38,
+          "stateVoicedProbability": 0.7571601330199094,
+          "step": 8.0
+        },
+        {
+          "chosenMidi": 40,
+          "currentMidi": 38,
+          "measure": 20,
+          "medianPyinMidi": 37.99999999999999,
+          "medianPyinVoicedProbability": 0.2796051653363589,
+          "stateMidi": 40,
+          "stateVoicedProbability": 0.6860828109301793,
+          "step": 14.0
+        },
+        {
+          "chosenMidi": 38,
+          "currentMidi": 40,
+          "measure": 21,
+          "medianPyinMidi": 39.8,
+          "medianPyinVoicedProbability": 0.3233360583906409,
+          "stateMidi": 38,
+          "stateVoicedProbability": 0.6159498854580681,
+          "step": 0.0
+        },
+        {
+          "chosenMidi": 40,
+          "currentMidi": 38,
+          "measure": 21,
+          "medianPyinMidi": 38.099999999999994,
+          "medianPyinVoicedProbability": 0.24075439447557428,
+          "stateMidi": 40,
+          "stateVoicedProbability": 0.7571601330199094,
+          "step": 14.0
+        },
+        {
+          "chosenMidi": 40,
+          "currentMidi": 38,
+          "measure": 23,
+          "medianPyinMidi": 37.9,
+          "medianPyinVoicedProbability": 0.24075439447557428,
+          "stateMidi": 40,
+          "stateVoicedProbability": 0.6860828109301793,
+          "step": 14.0
+        },
+        {
+          "chosenMidi": 43,
+          "currentMidi": 41,
+          "measure": 26,
+          "medianPyinMidi": 40.9,
+          "medianPyinVoicedProbability": 0.3233360583906409,
+          "stateMidi": 43,
+          "stateVoicedProbability": 0.7571601330199094,
+          "step": 14.0
+        },
+        {
+          "chosenMidi": 40,
+          "currentMidi": 38,
+          "measure": 30,
+          "medianPyinMidi": 37.9,
+          "medianPyinVoicedProbability": 0.32333605839064083,
+          "stateMidi": 40,
+          "stateVoicedProbability": 0.6860828109301793,
+          "step": 0.0
+        }
+      ],
+      "changedMidiEvents": 109,
+      "deltaMidiHistogram": {
+        "-1": 24,
+        "-2": 31,
+        "-3": 3,
+        "-5": 7,
+        "0": 293,
+        "1": 7,
+        "2": 19,
+        "3": 5,
+        "4": 1,
+        "5": 9,
+        "6": 1,
+        "7": 2
+      },
+      "gross": {
+        "f1": 0.613277133825079,
+        "falseNegative": 256,
+        "falsePositive": 111,
+        "generated": 402,
+        "matched": 291,
+        "precision": 0.7238805970149254,
+        "recall": 0.5319926873857403,
+        "reference": 547
+      },
+      "primary": {
+        "f1": 0.541622760800843,
+        "falseNegative": 290,
+        "falsePositive": 145,
+        "generated": 402,
+        "matched": 257,
+        "precision": 0.6393034825870647,
+        "recall": 0.46983546617915906,
+        "reference": 547
+      },
+      "rule": {
+        "kind": "state_if_conf",
+        "name": "state_if_state_voiced_ge_60",
+        "threshold": 0.6
+      }
+    },
+    {
+      "changedExamples": [
+        {
+          "chosenMidi": 44,
+          "currentMidi": 43,
+          "measure": 27,
+          "medianPyinMidi": 43.5,
+          "medianPyinVoicedProbability": 0.6159498854580682,
+          "stateMidi": 43,
+          "stateVoicedProbability": 0.7571601330199094,
+          "step": 4.0
+        },
+        {
+          "chosenMidi": 37,
+          "currentMidi": 38,
+          "measure": 82,
+          "medianPyinMidi": 37.199999999999996,
+          "medianPyinVoicedProbability": 0.6159498854580681,
+          "stateMidi": 37,
+          "stateVoicedProbability": 0.6159498854580681,
+          "step": 8.0
+        }
+      ],
+      "changedMidiEvents": 2,
+      "deltaMidiHistogram": {
+        "-1": 1,
+        "0": 400,
+        "1": 1
+      },
+      "gross": {
+        "f1": 0.7439409905163331,
+        "falseNegative": 194,
+        "falsePositive": 49,
+        "generated": 402,
+        "matched": 353,
+        "precision": 0.8781094527363185,
+        "recall": 0.6453382084095064,
+        "reference": 547
+      },
+      "primary": {
+        "f1": 0.7186512118018967,
+        "falseNegative": 206,
+        "falsePositive": 61,
+        "generated": 402,
+        "matched": 341,
+        "precision": 0.8482587064676617,
+        "recall": 0.623400365630713,
+        "reference": 547
+      },
+      "rule": {
+        "kind": "pyin_if_conf",
+        "name": "pyin_if_pyin_voiced_ge_60",
+        "threshold": 0.6
+      }
+    },
+    {
+      "changedExamples": [
+        {
+          "chosenMidi": 38,
+          "currentMidi": 40,
+          "measure": 9,
+          "medianPyinMidi": 39.4,
+          "medianPyinVoicedProbability": 0.2407543944755743,
+          "stateMidi": 38,
+          "stateVoicedProbability": 0.7571601330199093,
+          "step": 10.0
+        },
+        {
+          "chosenMidi": 38,
+          "currentMidi": 40,
+          "measure": 10,
+          "medianPyinMidi": 39.599999999999994,
+          "medianPyinVoicedProbability": 0.2796051653363589,
+          "stateMidi": 38,
+          "stateVoicedProbability": 0.6159498854580681,
+          "step": 0.0
+        },
+        {
+          "chosenMidi": 38,
+          "currentMidi": 40,
+          "measure": 10,
+          "medianPyinMidi": 39.900000000000006,
+          "medianPyinVoicedProbability": 0.1765306086328976,
+          "stateMidi": 38,
+          "stateVoicedProbability": 0.7563756852013395,
+          "step": 10.0
+        },
+        {
+          "chosenMidi": 35,
+          "currentMidi": 40,
+          "measure": 11,
+          "medianPyinMidi": 39.7,
+          "medianPyinVoicedProbability": 0.1765306086328976,
+          "stateMidi": 35,
+          "stateVoicedProbability": 0.6159498854580681,
+          "step": 0.0
+        },
+        {
+          "chosenMidi": 38,
+          "currentMidi": 40,
+          "measure": 11,
+          "medianPyinMidi": 39.8,
+          "medianPyinVoicedProbability": 0.32333605839064083,
+          "stateMidi": 38,
+          "stateVoicedProbability": 0.6159498854580681,
+          "step": 10.0
+        },
+        {
+          "chosenMidi": 38,
+          "currentMidi": 40,
+          "measure": 12,
+          "medianPyinMidi": 39.8,
+          "medianPyinVoicedProbability": 0.2796051653363589,
+          "stateMidi": 38,
+          "stateVoicedProbability": 0.6159498854580681,
+          "step": 0.0
+        },
+        {
+          "chosenMidi": 35,
+          "currentMidi": 40,
+          "measure": 14,
+          "medianPyinMidi": 39.7,
+          "medianPyinVoicedProbability": 0.21503488333984888,
+          "stateMidi": 35,
+          "stateVoicedProbability": 0.6159498854580681,
+          "step": 0.0
+        },
+        {
+          "chosenMidi": 38,
+          "currentMidi": 40,
+          "measure": 14,
+          "medianPyinMidi": 39.900000000000006,
+          "medianPyinVoicedProbability": 0.20650679911775227,
+          "stateMidi": 38,
+          "stateVoicedProbability": 0.6860828109301793,
+          "step": 10.0
+        },
+        {
+          "chosenMidi": 38,
+          "currentMidi": 40,
+          "measure": 15,
+          "medianPyinMidi": 39.7,
+          "medianPyinVoicedProbability": 0.2796051653363589,
+          "stateMidi": 38,
+          "stateVoicedProbability": 0.7216214719750443,
+          "step": 10.0
+        },
+        {
+          "chosenMidi": 38,
+          "currentMidi": 40,
+          "measure": 16,
+          "medianPyinMidi": 39.900000000000006,
+          "medianPyinVoicedProbability": 0.17653060863289757,
+          "stateMidi": 38,
+          "stateVoicedProbability": 0.7571601330199094,
+          "step": 10.0
+        },
+        {
+          "chosenMidi": 38,
+          "currentMidi": 40,
+          "measure": 21,
+          "medianPyinMidi": 39.8,
+          "medianPyinVoicedProbability": 0.3233360583906409,
+          "stateMidi": 38,
+          "stateVoicedProbability": 0.6159498854580681,
+          "step": 0.0
+        },
+        {
+          "chosenMidi": 38,
+          "currentMidi": 40,
+          "measure": 31,
+          "medianPyinMidi": 39.4,
+          "medianPyinVoicedProbability": 0.2796051653363589,
+          "stateMidi": 38,
+          "stateVoicedProbability": 0.6159498854580681,
+          "step": 0.0
+        },
+        {
+          "chosenMidi": 38,
+          "currentMidi": 40,
+          "measure": 32,
+          "medianPyinMidi": 39.599999999999994,
+          "medianPyinVoicedProbability": 0.3721358982975087,
+          "stateMidi": 38,
+          "stateVoicedProbability": 0.6159498854580681,
+          "step": 0.0
+        },
+        {
+          "chosenMidi": 38,
+          "currentMidi": 40,
+          "measure": 36,
+          "medianPyinMidi": 40.0,
+          "medianPyinVoicedProbability": 0.24075439447557434,
+          "stateMidi": 38,
+          "stateVoicedProbability": 0.7571601330199094,
+          "step": 10.0
+        },
+        {
+          "chosenMidi": 38,
+          "currentMidi": 40,
+          "measure": 44,
+          "medianPyinMidi": 40.0,
+          "medianPyinVoicedProbability": 0.27960516533635893,
+          "stateMidi": 38,
+          "stateVoicedProbability": 0.6159498854580681,
+          "step": 14.0
+        },
+        {
+          "chosenMidi": 38,
+          "currentMidi": 40,
+          "measure": 45,
+          "medianPyinMidi": 39.7,
+          "medianPyinVoicedProbability": 0.2796051653363589,
+          "stateMidi": 38,
+          "stateVoicedProbability": 0.6159498854580681,
+          "step": 10.0
+        },
+        {
+          "chosenMidi": 35,
+          "currentMidi": 40,
+          "measure": 48,
+          "medianPyinMidi": 39.4,
+          "medianPyinVoicedProbability": 0.2280678869846282,
+          "stateMidi": 35,
+          "stateVoicedProbability": 0.6159498854580681,
+          "step": 0.0
+        },
+        {
+          "chosenMidi": 38,
+          "currentMidi": 40,
+          "measure": 50,
+          "medianPyinMidi": 39.900000000000006,
+          "medianPyinVoicedProbability": 0.48498680771591135,
+          "stateMidi": 38,
+          "stateVoicedProbability": 0.6159498854580681,
+          "step": 12.0
+        },
+        {
+          "chosenMidi": 38,
+          "currentMidi": 40,
+          "measure": 53,
+          "medianPyinMidi": 40.1,
+          "medianPyinVoicedProbability": 0.42606232904328145,
+          "stateMidi": 38,
+          "stateVoicedProbability": 0.6510163481941237,
+          "step": 6.0
+        },
+        {
+          "chosenMidi": 35,
+          "currentMidi": 38,
+          "measure": 53,
+          "medianPyinMidi": 37.7,
+          "medianPyinVoicedProbability": 0.24075439447557428,
+          "stateMidi": 35,
+          "stateVoicedProbability": 0.7571601330199094,
+          "step": 12.0
+        },
+        {
+          "chosenMidi": 35,
+          "currentMidi": 40,
+          "measure": 54,
+          "medianPyinMidi": 39.7,
+          "medianPyinVoicedProbability": 0.17466708260215966,
+          "stateMidi": 35,
+          "stateVoicedProbability": 0.6159498854580681,
+          "step": 0.0
+        },
+        {
+          "chosenMidi": 39,
+          "currentMidi": 40,
+          "measure": 54,
+          "medianPyinMidi": 39.8,
+          "medianPyinVoicedProbability": 0.42606232904328145,
+          "stateMidi": 39,
+          "stateVoicedProbability": 0.7216214719750442,
+          "step": 8.0
+        },
+        {
+          "chosenMidi": 38,
+          "currentMidi": 40,
+          "measure": 60,
+          "medianPyinMidi": 39.900000000000006,
+          "medianPyinVoicedProbability": 0.2407543944755743,
+          "stateMidi": 38,
+          "stateVoicedProbability": 0.6159498854580681,
+          "step": 0.0
+        },
+        {
+          "chosenMidi": 38,
+          "currentMidi": 40,
+          "measure": 60,
+          "medianPyinMidi": 39.900000000000006,
+          "medianPyinVoicedProbability": 0.3721358982975087,
+          "stateMidi": 38,
+          "stateVoicedProbability": 0.6159498854580681,
+          "step": 12.0
+        },
+        {
+          "chosenMidi": 38,
+          "currentMidi": 40,
+          "measure": 61,
+          "medianPyinMidi": 39.900000000000006,
+          "medianPyinVoicedProbability": 0.32333605839064083,
+          "stateMidi": 38,
+          "stateVoicedProbability": 0.6159498854580681,
+          "step": 0.0
+        }
+      ],
+      "changedMidiEvents": 65,
+      "deltaMidiHistogram": {
+        "-1": 24,
+        "-2": 31,
+        "-3": 3,
+        "-5": 7,
+        "0": 337
+      },
+      "gross": {
+        "f1": 0.6448893572181243,
+        "falseNegative": 241,
+        "falsePositive": 96,
+        "generated": 402,
+        "matched": 306,
+        "precision": 0.7611940298507462,
+        "recall": 0.5594149908592322,
+        "reference": 547
+      },
+      "primary": {
+        "f1": 0.5943097997892519,
+        "falseNegative": 265,
+        "falsePositive": 120,
+        "generated": 402,
+        "matched": 282,
+        "precision": 0.7014925373134329,
+        "recall": 0.5155393053016454,
+        "reference": 547
+      },
+      "rule": {
+        "kind": "lower_state_if_conf",
+        "name": "lower_state_if_state_voiced_ge_60",
+        "threshold": 0.6
+      }
+    },
+    {
+      "changedExamples": [
+        {
+          "chosenMidi": 51,
+          "currentMidi": 50,
+          "measure": 8,
+          "medianPyinMidi": 49.800000000000004,
+          "medianPyinVoicedProbability": 0.615949885458068,
+          "stateMidi": 51,
+          "stateVoicedProbability": 0.6860828109301793,
+          "step": 14.0
+        },
+        {
+          "chosenMidi": 40,
+          "currentMidi": 35,
+          "measure": 9,
+          "medianPyinMidi": 35.0,
+          "medianPyinVoicedProbability": 0.17653060863289757,
+          "stateMidi": 40,
+          "stateVoicedProbability": 0.6860828109301793,
+          "step": 7.0
+        },
+        {
+          "chosenMidi": 38,
+          "currentMidi": 40,
+          "measure": 9,
+          "medianPyinMidi": 39.4,
+          "medianPyinVoicedProbability": 0.2407543944755743,
+          "stateMidi": 38,
+          "stateVoicedProbability": 0.7571601330199093,
+          "step": 10.0
+        },
+        {
+          "chosenMidi": 38,
+          "currentMidi": 40,
+          "measure": 10,
+          "medianPyinMidi": 39.900000000000006,
+          "medianPyinVoicedProbability": 0.1765306086328976,
+          "stateMidi": 38,
+          "stateVoicedProbability": 0.7563756852013395,
+          "step": 10.0
+        },
+        {
+          "chosenMidi": 40,
+          "currentMidi": 35,
+          "measure": 11,
+          "medianPyinMidi": 35.599999999999994,
+          "medianPyinVoicedProbability": 0.10857977072874497,
+          "stateMidi": 40,
+          "stateVoicedProbability": 0.6860828109301793,
+          "step": 7.0
+        },
+        {
+          "chosenMidi": 40,
+          "currentMidi": 38,
+          "measure": 11,
+          "medianPyinMidi": 37.800000000000004,
+          "medianPyinVoicedProbability": 0.24075439447557428,
+          "stateMidi": 40,
+          "stateVoicedProbability": 0.6860828109301793,
+          "step": 14.0
+        },
+        {
+          "chosenMidi": 40,
+          "currentMidi": 38,
+          "measure": 12,
+          "medianPyinMidi": 37.800000000000004,
+          "medianPyinVoicedProbability": 0.32333605839064083,
+          "stateMidi": 40,
+          "stateVoicedProbability": 0.6860828109301793,
+          "step": 8.0
+        },
+        {
+          "chosenMidi": 40,
+          "currentMidi": 39,
+          "measure": 12,
+          "medianPyinMidi": 39.7,
+          "medianPyinVoicedProbability": 0.27960516533635893,
+          "stateMidi": 40,
+          "stateVoicedProbability": 0.7571601330199094,
+          "step": 12.0
+        },
+        {
+          "chosenMidi": 38,
+          "currentMidi": 40,
+          "measure": 14,
+          "medianPyinMidi": 39.900000000000006,
+          "medianPyinVoicedProbability": 0.20650679911775227,
+          "stateMidi": 38,
+          "stateVoicedProbability": 0.6860828109301793,
+          "step": 10.0
+        },
+        {
+          "chosenMidi": 38,
+          "currentMidi": 40,
+          "measure": 15,
+          "medianPyinMidi": 39.7,
+          "medianPyinVoicedProbability": 0.2796051653363589,
+          "stateMidi": 38,
+          "stateVoicedProbability": 0.7216214719750443,
+          "step": 10.0
+        },
+        {
+          "chosenMidi": 38,
+          "currentMidi": 40,
+          "measure": 16,
+          "medianPyinMidi": 39.900000000000006,
+          "medianPyinVoicedProbability": 0.17653060863289757,
+          "stateMidi": 38,
+          "stateVoicedProbability": 0.7571601330199094,
+          "step": 10.0
+        },
+        {
+          "chosenMidi": 40,
+          "currentMidi": 38,
+          "measure": 16,
+          "medianPyinMidi": 37.99999999999999,
+          "medianPyinVoicedProbability": 0.20650679911775227,
+          "stateMidi": 40,
+          "stateVoicedProbability": 0.6860828109301793,
+          "step": 12.0
+        },
+        {
+          "chosenMidi": 40,
+          "currentMidi": 38,
+          "measure": 18,
+          "medianPyinMidi": 37.99999999999999,
+          "medianPyinVoicedProbability": 0.2796051653363589,
+          "stateMidi": 40,
+          "stateVoicedProbability": 0.6860828109301793,
+          "step": 14.0
+        },
+        {
+          "chosenMidi": 38,
+          "currentMidi": 35,
+          "measure": 20,
+          "medianPyinMidi": 36.89999999999999,
+          "medianPyinVoicedProbability": 0.1504646013433388,
+          "stateMidi": 38,
+          "stateVoicedProbability": 0.7571601330199094,
+          "step": 8.0
+        },
+        {
+          "chosenMidi": 40,
+          "currentMidi": 38,
+          "measure": 20,
+          "medianPyinMidi": 37.99999999999999,
+          "medianPyinVoicedProbability": 0.2796051653363589,
+          "stateMidi": 40,
+          "stateVoicedProbability": 0.6860828109301793,
+          "step": 14.0
+        },
+        {
+          "chosenMidi": 40,
+          "currentMidi": 38,
+          "measure": 21,
+          "medianPyinMidi": 38.099999999999994,
+          "medianPyinVoicedProbability": 0.24075439447557428,
+          "stateMidi": 40,
+          "stateVoicedProbability": 0.7571601330199094,
+          "step": 14.0
+        },
+        {
+          "chosenMidi": 40,
+          "currentMidi": 38,
+          "measure": 23,
+          "medianPyinMidi": 37.9,
+          "medianPyinVoicedProbability": 0.24075439447557428,
+          "stateMidi": 40,
+          "stateVoicedProbability": 0.6860828109301793,
+          "step": 14.0
+        },
+        {
+          "chosenMidi": 43,
+          "currentMidi": 41,
+          "measure": 26,
+          "medianPyinMidi": 40.9,
+          "medianPyinVoicedProbability": 0.3233360583906409,
+          "stateMidi": 43,
+          "stateVoicedProbability": 0.7571601330199094,
+          "step": 14.0
+        },
+        {
+          "chosenMidi": 40,
+          "currentMidi": 38,
+          "measure": 30,
+          "medianPyinMidi": 37.9,
+          "medianPyinVoicedProbability": 0.32333605839064083,
+          "stateMidi": 40,
+          "stateVoicedProbability": 0.6860828109301793,
+          "step": 0.0
+        },
+        {
+          "chosenMidi": 40,
+          "currentMidi": 38,
+          "measure": 35,
+          "medianPyinMidi": 38.099999999999994,
+          "medianPyinVoicedProbability": 0.2796051653363589,
+          "stateMidi": 40,
+          "stateVoicedProbability": 0.6860828109301793,
+          "step": 14.0
+        },
+        {
+          "chosenMidi": 38,
+          "currentMidi": 40,
+          "measure": 36,
+          "medianPyinMidi": 40.0,
+          "medianPyinVoicedProbability": 0.24075439447557434,
+          "stateMidi": 38,
+          "stateVoicedProbability": 0.7571601330199094,
+          "step": 10.0
+        },
+        {
+          "chosenMidi": 40,
+          "currentMidi": 38,
+          "measure": 46,
+          "medianPyinMidi": 37.99999999999999,
+          "medianPyinVoicedProbability": 0.24075439447557428,
+          "stateMidi": 40,
+          "stateVoicedProbability": 0.7216214719750442,
+          "step": 12.0
+        },
+        {
+          "chosenMidi": 40,
+          "currentMidi": 35,
+          "measure": 47,
+          "medianPyinMidi": 39.900000000000006,
+          "medianPyinVoicedProbability": 0.10857977072874499,
+          "stateMidi": 40,
+          "stateVoicedProbability": 0.8266685594724996,
+          "step": 0.0
+        },
+        {
+          "chosenMidi": 40,
+          "currentMidi": 35,
+          "measure": 50,
+          "medianPyinMidi": 37.9,
+          "medianPyinVoicedProbability": 0.2796051653363589,
+          "stateMidi": 40,
+          "stateVoicedProbability": 0.6860828109301793,
+          "step": 0.0
+        },
+        {
+          "chosenMidi": 40,
+          "currentMidi": 38,
+          "measure": 50,
+          "medianPyinMidi": 37.99999999999999,
+          "medianPyinVoicedProbability": 0.3721358982975087,
+          "stateMidi": 40,
+          "stateVoicedProbability": 0.6860828109301793,
+          "step": 6.0
+        }
+      ],
+      "changedMidiEvents": 67,
+      "deltaMidiHistogram": {
+        "-1": 14,
+        "-2": 14,
+        "-3": 1,
+        "-5": 1,
+        "0": 335,
+        "1": 6,
+        "2": 18,
+        "3": 1,
+        "4": 1,
+        "5": 8,
+        "6": 1,
+        "7": 2
+      },
+      "gross": {
+        "f1": 0.6680716543730243,
+        "falseNegative": 230,
+        "falsePositive": 85,
+        "generated": 402,
+        "matched": 317,
+        "precision": 0.7885572139303483,
+        "recall": 0.5795246800731262,
+        "reference": 547
+      },
+      "primary": {
+        "f1": 0.6217070600632244,
+        "falseNegative": 252,
+        "falsePositive": 107,
+        "generated": 402,
+        "matched": 295,
+        "precision": 0.7338308457711443,
+        "recall": 0.5393053016453382,
+        "reference": 547
+      },
+      "rule": {
+        "kind": "state_if_conf",
+        "name": "state_if_state_voiced_ge_65",
+        "threshold": 0.65
+      }
+    },
+    {
+      "changedExamples": [],
+      "changedMidiEvents": 0,
+      "deltaMidiHistogram": {
+        "0": 402
+      },
+      "gross": {
+        "f1": 0.7439409905163331,
+        "falseNegative": 194,
+        "falsePositive": 49,
+        "generated": 402,
+        "matched": 353,
+        "precision": 0.8781094527363185,
+        "recall": 0.6453382084095064,
+        "reference": 547
+      },
+      "primary": {
+        "f1": 0.7186512118018967,
+        "falseNegative": 206,
+        "falsePositive": 61,
+        "generated": 402,
+        "matched": 341,
+        "precision": 0.8482587064676617,
+        "recall": 0.623400365630713,
+        "reference": 547
+      },
+      "rule": {
+        "kind": "pyin_if_conf",
+        "name": "pyin_if_pyin_voiced_ge_65",
+        "threshold": 0.65
+      }
+    },
+    {
+      "changedExamples": [
+        {
+          "chosenMidi": 38,
+          "currentMidi": 40,
+          "measure": 9,
+          "medianPyinMidi": 39.4,
+          "medianPyinVoicedProbability": 0.2407543944755743,
+          "stateMidi": 38,
+          "stateVoicedProbability": 0.7571601330199093,
+          "step": 10.0
+        },
+        {
+          "chosenMidi": 38,
+          "currentMidi": 40,
+          "measure": 10,
+          "medianPyinMidi": 39.900000000000006,
+          "medianPyinVoicedProbability": 0.1765306086328976,
+          "stateMidi": 38,
+          "stateVoicedProbability": 0.7563756852013395,
+          "step": 10.0
+        },
+        {
+          "chosenMidi": 38,
+          "currentMidi": 40,
+          "measure": 14,
+          "medianPyinMidi": 39.900000000000006,
+          "medianPyinVoicedProbability": 0.20650679911775227,
+          "stateMidi": 38,
+          "stateVoicedProbability": 0.6860828109301793,
+          "step": 10.0
+        },
+        {
+          "chosenMidi": 38,
+          "currentMidi": 40,
+          "measure": 15,
+          "medianPyinMidi": 39.7,
+          "medianPyinVoicedProbability": 0.2796051653363589,
+          "stateMidi": 38,
+          "stateVoicedProbability": 0.7216214719750443,
+          "step": 10.0
+        },
+        {
+          "chosenMidi": 38,
+          "currentMidi": 40,
+          "measure": 16,
+          "medianPyinMidi": 39.900000000000006,
+          "medianPyinVoicedProbability": 0.17653060863289757,
+          "stateMidi": 38,
+          "stateVoicedProbability": 0.7571601330199094,
+          "step": 10.0
+        },
+        {
+          "chosenMidi": 38,
+          "currentMidi": 40,
+          "measure": 36,
+          "medianPyinMidi": 40.0,
+          "medianPyinVoicedProbability": 0.24075439447557434,
+          "stateMidi": 38,
+          "stateVoicedProbability": 0.7571601330199094,
+          "step": 10.0
+        },
+        {
+          "chosenMidi": 38,
+          "currentMidi": 40,
+          "measure": 53,
+          "medianPyinMidi": 40.1,
+          "medianPyinVoicedProbability": 0.42606232904328145,
+          "stateMidi": 38,
+          "stateVoicedProbability": 0.6510163481941237,
+          "step": 6.0
+        },
+        {
+          "chosenMidi": 35,
+          "currentMidi": 38,
+          "measure": 53,
+          "medianPyinMidi": 37.7,
+          "medianPyinVoicedProbability": 0.24075439447557428,
+          "stateMidi": 35,
+          "stateVoicedProbability": 0.7571601330199094,
+          "step": 12.0
+        },
+        {
+          "chosenMidi": 39,
+          "currentMidi": 40,
+          "measure": 54,
+          "medianPyinMidi": 39.8,
+          "medianPyinVoicedProbability": 0.42606232904328145,
+          "stateMidi": 39,
+          "stateVoicedProbability": 0.7216214719750442,
+          "step": 8.0
+        },
+        {
+          "chosenMidi": 38,
+          "currentMidi": 40,
+          "measure": 62,
+          "medianPyinMidi": 40.199999999999996,
+          "medianPyinVoicedProbability": 0.7571601330199094,
+          "stateMidi": 38,
+          "stateVoicedProbability": 0.8266685594724995,
+          "step": 6.0
+        },
+        {
+          "chosenMidi": 38,
+          "currentMidi": 40,
+          "measure": 65,
+          "medianPyinMidi": 40.1,
+          "medianPyinVoicedProbability": 0.1765306086328976,
+          "stateMidi": 38,
+          "stateVoicedProbability": 0.6860828109301793,
+          "step": 10.0
+        },
+        {
+          "chosenMidi": 37,
+          "currentMidi": 38,
+          "measure": 67,
+          "medianPyinMidi": 37.3,
+          "medianPyinVoicedProbability": 0.42606232904328145,
+          "stateMidi": 37,
+          "stateVoicedProbability": 0.7919143462462045,
+          "step": 8.0
+        },
+        {
+          "chosenMidi": 44,
+          "currentMidi": 45,
+          "measure": 78,
+          "medianPyinMidi": 44.699999999999996,
+          "medianPyinVoicedProbability": 0.615949885458068,
+          "stateMidi": 44,
+          "stateVoicedProbability": 0.7571601330199094,
+          "step": 14.0
+        },
+        {
+          "chosenMidi": 39,
+          "currentMidi": 40,
+          "measure": 80,
+          "medianPyinMidi": 39.900000000000006,
+          "medianPyinVoicedProbability": 0.3721358982975087,
+          "stateMidi": 39,
+          "stateVoicedProbability": 0.6860828109301793,
+          "step": 0.0
+        },
+        {
+          "chosenMidi": 40,
+          "currentMidi": 41,
+          "measure": 80,
+          "medianPyinMidi": 40.9,
+          "medianPyinVoicedProbability": 0.27960516533635893,
+          "stateMidi": 40,
+          "stateVoicedProbability": 0.6860828109301793,
+          "step": 12.0
+        },
+        {
+          "chosenMidi": 41,
+          "currentMidi": 42,
+          "measure": 80,
+          "medianPyinMidi": 41.89999999999999,
+          "medianPyinVoicedProbability": 0.27960516533635893,
+          "stateMidi": 41,
+          "stateVoicedProbability": 0.6860828109301793,
+          "step": 14.0
+        },
+        {
+          "chosenMidi": 42,
+          "currentMidi": 43,
+          "measure": 81,
+          "medianPyinMidi": 42.8,
+          "medianPyinVoicedProbability": 0.3721358982975087,
+          "stateMidi": 42,
+          "stateVoicedProbability": 0.7571601330199094,
+          "step": 4.0
+        },
+        {
+          "chosenMidi": 41,
+          "currentMidi": 42,
+          "measure": 84,
+          "medianPyinMidi": 41.8,
+          "medianPyinVoicedProbability": 0.32333605839064083,
+          "stateMidi": 41,
+          "stateVoicedProbability": 0.6860828109301793,
+          "step": 14.0
+        },
+        {
+          "chosenMidi": 40,
+          "currentMidi": 41,
+          "measure": 86,
+          "medianPyinMidi": 40.8,
+          "medianPyinVoicedProbability": 0.27960516533635893,
+          "stateMidi": 40,
+          "stateVoicedProbability": 0.6860828109301793,
+          "step": 12.0
+        },
+        {
+          "chosenMidi": 41,
+          "currentMidi": 42,
+          "measure": 86,
+          "medianPyinMidi": 41.8,
+          "medianPyinVoicedProbability": 0.37213589829750865,
+          "stateMidi": 41,
+          "stateVoicedProbability": 0.6860828109301793,
+          "step": 14.0
+        },
+        {
+          "chosenMidi": 42,
+          "currentMidi": 43,
+          "measure": 87,
+          "medianPyinMidi": 42.599999999999994,
+          "medianPyinVoicedProbability": 0.42606232904328145,
+          "stateMidi": 42,
+          "stateVoicedProbability": 0.7571601330199094,
+          "step": 2.0
+        },
+        {
+          "chosenMidi": 43,
+          "currentMidi": 44,
+          "measure": 87,
+          "medianPyinMidi": 43.5,
+          "medianPyinVoicedProbability": 0.48498680771591135,
+          "stateMidi": 43,
+          "stateVoicedProbability": 0.7571601330199094,
+          "step": 4.0
+        },
+        {
+          "chosenMidi": 44,
+          "currentMidi": 45,
+          "measure": 87,
+          "medianPyinMidi": 44.6,
+          "medianPyinVoicedProbability": 0.48498680771591135,
+          "stateMidi": 44,
+          "stateVoicedProbability": 0.7571601330199094,
+          "step": 6.0
+        },
+        {
+          "chosenMidi": 39,
+          "currentMidi": 40,
+          "measure": 90,
+          "medianPyinMidi": 40.0,
+          "medianPyinVoicedProbability": 0.3233360583906409,
+          "stateMidi": 39,
+          "stateVoicedProbability": 0.7919143462462044,
+          "step": 0.0
+        },
+        {
+          "chosenMidi": 43,
+          "currentMidi": 45,
+          "measure": 90,
+          "medianPyinMidi": 44.5,
+          "medianPyinVoicedProbability": 0.3721358982975087,
+          "stateMidi": 43,
+          "stateVoicedProbability": 0.7571601330199094,
+          "step": 14.0
+        }
+      ],
+      "changedMidiEvents": 30,
+      "deltaMidiHistogram": {
+        "-1": 14,
+        "-2": 14,
+        "-3": 1,
+        "-5": 1,
+        "0": 372
+      },
+      "gross": {
+        "f1": 0.7060063224446786,
+        "falseNegative": 212,
+        "falsePositive": 67,
+        "generated": 402,
+        "matched": 335,
+        "precision": 0.8333333333333334,
+        "recall": 0.6124314442413162,
+        "reference": 547
+      },
+      "primary": {
+        "f1": 0.6638566912539515,
+        "falseNegative": 232,
+        "falsePositive": 87,
+        "generated": 402,
+        "matched": 315,
+        "precision": 0.7835820895522388,
+        "recall": 0.5758683729433273,
+        "reference": 547
+      },
+      "rule": {
+        "kind": "lower_state_if_conf",
+        "name": "lower_state_if_state_voiced_ge_65",
+        "threshold": 0.65
+      }
+    },
+    {
+      "changedExamples": [
+        {
+          "chosenMidi": 38,
+          "currentMidi": 40,
+          "measure": 9,
+          "medianPyinMidi": 39.4,
+          "medianPyinVoicedProbability": 0.2407543944755743,
+          "stateMidi": 38,
+          "stateVoicedProbability": 0.7571601330199093,
+          "step": 10.0
+        },
+        {
+          "chosenMidi": 38,
+          "currentMidi": 40,
+          "measure": 10,
+          "medianPyinMidi": 39.900000000000006,
+          "medianPyinVoicedProbability": 0.1765306086328976,
+          "stateMidi": 38,
+          "stateVoicedProbability": 0.7563756852013395,
+          "step": 10.0
+        },
+        {
+          "chosenMidi": 40,
+          "currentMidi": 39,
+          "measure": 12,
+          "medianPyinMidi": 39.7,
+          "medianPyinVoicedProbability": 0.27960516533635893,
+          "stateMidi": 40,
+          "stateVoicedProbability": 0.7571601330199094,
+          "step": 12.0
+        },
+        {
+          "chosenMidi": 38,
+          "currentMidi": 40,
+          "measure": 15,
+          "medianPyinMidi": 39.7,
+          "medianPyinVoicedProbability": 0.2796051653363589,
+          "stateMidi": 38,
+          "stateVoicedProbability": 0.7216214719750443,
+          "step": 10.0
+        },
+        {
+          "chosenMidi": 38,
+          "currentMidi": 40,
+          "measure": 16,
+          "medianPyinMidi": 39.900000000000006,
+          "medianPyinVoicedProbability": 0.17653060863289757,
+          "stateMidi": 38,
+          "stateVoicedProbability": 0.7571601330199094,
+          "step": 10.0
+        },
+        {
+          "chosenMidi": 38,
+          "currentMidi": 35,
+          "measure": 20,
+          "medianPyinMidi": 36.89999999999999,
+          "medianPyinVoicedProbability": 0.1504646013433388,
+          "stateMidi": 38,
+          "stateVoicedProbability": 0.7571601330199094,
+          "step": 8.0
+        },
+        {
+          "chosenMidi": 40,
+          "currentMidi": 38,
+          "measure": 21,
+          "medianPyinMidi": 38.099999999999994,
+          "medianPyinVoicedProbability": 0.24075439447557428,
+          "stateMidi": 40,
+          "stateVoicedProbability": 0.7571601330199094,
+          "step": 14.0
+        },
+        {
+          "chosenMidi": 43,
+          "currentMidi": 41,
+          "measure": 26,
+          "medianPyinMidi": 40.9,
+          "medianPyinVoicedProbability": 0.3233360583906409,
+          "stateMidi": 43,
+          "stateVoicedProbability": 0.7571601330199094,
+          "step": 14.0
+        },
+        {
+          "chosenMidi": 38,
+          "currentMidi": 40,
+          "measure": 36,
+          "medianPyinMidi": 40.0,
+          "medianPyinVoicedProbability": 0.24075439447557434,
+          "stateMidi": 38,
+          "stateVoicedProbability": 0.7571601330199094,
+          "step": 10.0
+        },
+        {
+          "chosenMidi": 40,
+          "currentMidi": 38,
+          "measure": 46,
+          "medianPyinMidi": 37.99999999999999,
+          "medianPyinVoicedProbability": 0.24075439447557428,
+          "stateMidi": 40,
+          "stateVoicedProbability": 0.7216214719750442,
+          "step": 12.0
+        },
+        {
+          "chosenMidi": 40,
+          "currentMidi": 35,
+          "measure": 47,
+          "medianPyinMidi": 39.900000000000006,
+          "medianPyinVoicedProbability": 0.10857977072874499,
+          "stateMidi": 40,
+          "stateVoicedProbability": 0.8266685594724996,
+          "step": 0.0
+        },
+        {
+          "chosenMidi": 40,
+          "currentMidi": 38,
+          "measure": 50,
+          "medianPyinMidi": 37.99999999999999,
+          "medianPyinVoicedProbability": 0.2796051653363589,
+          "stateMidi": 40,
+          "stateVoicedProbability": 0.7571601330199094,
+          "step": 14.0
+        },
+        {
+          "chosenMidi": 35,
+          "currentMidi": 38,
+          "measure": 53,
+          "medianPyinMidi": 37.7,
+          "medianPyinVoicedProbability": 0.24075439447557428,
+          "stateMidi": 35,
+          "stateVoicedProbability": 0.7571601330199094,
+          "step": 12.0
+        },
+        {
+          "chosenMidi": 39,
+          "currentMidi": 40,
+          "measure": 54,
+          "medianPyinMidi": 39.8,
+          "medianPyinVoicedProbability": 0.42606232904328145,
+          "stateMidi": 39,
+          "stateVoicedProbability": 0.7216214719750442,
+          "step": 8.0
+        },
+        {
+          "chosenMidi": 39,
+          "currentMidi": 35,
+          "measure": 54,
+          "medianPyinMidi": 35.599999999999994,
+          "medianPyinVoicedProbability": 0.03010686179419501,
+          "stateMidi": 39,
+          "stateVoicedProbability": 0.7216214719750442,
+          "step": 10.0
+        },
+        {
+          "chosenMidi": 43,
+          "currentMidi": 41,
+          "measure": 56,
+          "medianPyinMidi": 40.9,
+          "medianPyinVoicedProbability": 0.42606232904328145,
+          "stateMidi": 43,
+          "stateVoicedProbability": 0.7571601330199094,
+          "step": 12.0
+        },
+        {
+          "chosenMidi": 38,
+          "currentMidi": 40,
+          "measure": 62,
+          "medianPyinMidi": 40.199999999999996,
+          "medianPyinVoicedProbability": 0.7571601330199094,
+          "stateMidi": 38,
+          "stateVoicedProbability": 0.8266685594724995,
+          "step": 6.0
+        },
+        {
+          "chosenMidi": 40,
+          "currentMidi": 35,
+          "measure": 65,
+          "medianPyinMidi": 34.9,
+          "medianPyinVoicedProbability": 0.10857977072874497,
+          "stateMidi": 40,
+          "stateVoicedProbability": 0.8266685594724995,
+          "step": 6.0
+        },
+        {
+          "chosenMidi": 38,
+          "currentMidi": 31,
+          "measure": 67,
+          "medianPyinMidi": 37.99999999999999,
+          "medianPyinVoicedProbability": 0.37469919371696114,
+          "stateMidi": 38,
+          "stateVoicedProbability": 0.7571601330199094,
+          "step": 4.0
+        },
+        {
+          "chosenMidi": 37,
+          "currentMidi": 38,
+          "measure": 67,
+          "medianPyinMidi": 37.3,
+          "medianPyinVoicedProbability": 0.42606232904328145,
+          "stateMidi": 37,
+          "stateVoicedProbability": 0.7919143462462045,
+          "step": 8.0
+        },
+        {
+          "chosenMidi": 44,
+          "currentMidi": 43,
+          "measure": 78,
+          "medianPyinMidi": 43.599999999999994,
+          "medianPyinVoicedProbability": 0.2796051653363589,
+          "stateMidi": 44,
+          "stateVoicedProbability": 0.7571601330199094,
+          "step": 12.0
+        },
+        {
+          "chosenMidi": 44,
+          "currentMidi": 45,
+          "measure": 78,
+          "medianPyinMidi": 44.699999999999996,
+          "medianPyinVoicedProbability": 0.615949885458068,
+          "stateMidi": 44,
+          "stateVoicedProbability": 0.7571601330199094,
+          "step": 14.0
+        },
+        {
+          "chosenMidi": 42,
+          "currentMidi": 43,
+          "measure": 81,
+          "medianPyinMidi": 42.8,
+          "medianPyinVoicedProbability": 0.3721358982975087,
+          "stateMidi": 42,
+          "stateVoicedProbability": 0.7571601330199094,
+          "step": 4.0
+        },
+        {
+          "chosenMidi": 39,
+          "currentMidi": 33,
+          "measure": 83,
+          "medianPyinMidi": 35.39999999999999,
+          "medianPyinVoicedProbability": 0.07463855114881301,
+          "stateMidi": 39,
+          "stateVoicedProbability": 0.7571601330199093,
+          "step": 10.0
+        },
+        {
+          "chosenMidi": 42,
+          "currentMidi": 35,
+          "measure": 85,
+          "medianPyinMidi": 35.19999999999999,
+          "medianPyinVoicedProbability": 0.24075439447557428,
+          "stateMidi": 42,
+          "stateVoicedProbability": 0.7571601330199094,
+          "step": 2.0
+        }
+      ],
+      "changedMidiEvents": 34,
+      "deltaMidiHistogram": {
+        "-1": 8,
+        "-2": 9,
+        "-3": 1,
+        "0": 368,
+        "1": 3,
+        "2": 5,
+        "3": 1,
+        "4": 1,
+        "5": 3,
+        "6": 1,
+        "7": 2
+      },
+      "gross": {
+        "f1": 0.7123287671232877,
+        "falseNegative": 209,
+        "falsePositive": 64,
+        "generated": 402,
+        "matched": 338,
+        "precision": 0.8407960199004975,
+        "recall": 0.6179159049360147,
+        "reference": 547
+      },
+      "primary": {
+        "f1": 0.6765015806111696,
+        "falseNegative": 226,
+        "falsePositive": 81,
+        "generated": 402,
+        "matched": 321,
+        "precision": 0.7985074626865671,
+        "recall": 0.5868372943327239,
+        "reference": 547
+      },
+      "rule": {
+        "kind": "state_if_conf",
+        "name": "state_if_state_voiced_ge_70",
+        "threshold": 0.7
+      }
+    },
+    {
+      "changedExamples": [],
+      "changedMidiEvents": 0,
+      "deltaMidiHistogram": {
+        "0": 402
+      },
+      "gross": {
+        "f1": 0.7439409905163331,
+        "falseNegative": 194,
+        "falsePositive": 49,
+        "generated": 402,
+        "matched": 353,
+        "precision": 0.8781094527363185,
+        "recall": 0.6453382084095064,
+        "reference": 547
+      },
+      "primary": {
+        "f1": 0.7186512118018967,
+        "falseNegative": 206,
+        "falsePositive": 61,
+        "generated": 402,
+        "matched": 341,
+        "precision": 0.8482587064676617,
+        "recall": 0.623400365630713,
+        "reference": 547
+      },
+      "rule": {
+        "kind": "pyin_if_conf",
+        "name": "pyin_if_pyin_voiced_ge_70",
+        "threshold": 0.7
+      }
+    },
+    {
+      "changedExamples": [
+        {
+          "chosenMidi": 38,
+          "currentMidi": 40,
+          "measure": 9,
+          "medianPyinMidi": 39.4,
+          "medianPyinVoicedProbability": 0.2407543944755743,
+          "stateMidi": 38,
+          "stateVoicedProbability": 0.7571601330199093,
+          "step": 10.0
+        },
+        {
+          "chosenMidi": 38,
+          "currentMidi": 40,
+          "measure": 10,
+          "medianPyinMidi": 39.900000000000006,
+          "medianPyinVoicedProbability": 0.1765306086328976,
+          "stateMidi": 38,
+          "stateVoicedProbability": 0.7563756852013395,
+          "step": 10.0
+        },
+        {
+          "chosenMidi": 38,
+          "currentMidi": 40,
+          "measure": 15,
+          "medianPyinMidi": 39.7,
+          "medianPyinVoicedProbability": 0.2796051653363589,
+          "stateMidi": 38,
+          "stateVoicedProbability": 0.7216214719750443,
+          "step": 10.0
+        },
+        {
+          "chosenMidi": 38,
+          "currentMidi": 40,
+          "measure": 16,
+          "medianPyinMidi": 39.900000000000006,
+          "medianPyinVoicedProbability": 0.17653060863289757,
+          "stateMidi": 38,
+          "stateVoicedProbability": 0.7571601330199094,
+          "step": 10.0
+        },
+        {
+          "chosenMidi": 38,
+          "currentMidi": 40,
+          "measure": 36,
+          "medianPyinMidi": 40.0,
+          "medianPyinVoicedProbability": 0.24075439447557434,
+          "stateMidi": 38,
+          "stateVoicedProbability": 0.7571601330199094,
+          "step": 10.0
+        },
+        {
+          "chosenMidi": 35,
+          "currentMidi": 38,
+          "measure": 53,
+          "medianPyinMidi": 37.7,
+          "medianPyinVoicedProbability": 0.24075439447557428,
+          "stateMidi": 35,
+          "stateVoicedProbability": 0.7571601330199094,
+          "step": 12.0
+        },
+        {
+          "chosenMidi": 39,
+          "currentMidi": 40,
+          "measure": 54,
+          "medianPyinMidi": 39.8,
+          "medianPyinVoicedProbability": 0.42606232904328145,
+          "stateMidi": 39,
+          "stateVoicedProbability": 0.7216214719750442,
+          "step": 8.0
+        },
+        {
+          "chosenMidi": 38,
+          "currentMidi": 40,
+          "measure": 62,
+          "medianPyinMidi": 40.199999999999996,
+          "medianPyinVoicedProbability": 0.7571601330199094,
+          "stateMidi": 38,
+          "stateVoicedProbability": 0.8266685594724995,
+          "step": 6.0
+        },
+        {
+          "chosenMidi": 37,
+          "currentMidi": 38,
+          "measure": 67,
+          "medianPyinMidi": 37.3,
+          "medianPyinVoicedProbability": 0.42606232904328145,
+          "stateMidi": 37,
+          "stateVoicedProbability": 0.7919143462462045,
+          "step": 8.0
+        },
+        {
+          "chosenMidi": 44,
+          "currentMidi": 45,
+          "measure": 78,
+          "medianPyinMidi": 44.699999999999996,
+          "medianPyinVoicedProbability": 0.615949885458068,
+          "stateMidi": 44,
+          "stateVoicedProbability": 0.7571601330199094,
+          "step": 14.0
+        },
+        {
+          "chosenMidi": 42,
+          "currentMidi": 43,
+          "measure": 81,
+          "medianPyinMidi": 42.8,
+          "medianPyinVoicedProbability": 0.3721358982975087,
+          "stateMidi": 42,
+          "stateVoicedProbability": 0.7571601330199094,
+          "step": 4.0
+        },
+        {
+          "chosenMidi": 42,
+          "currentMidi": 43,
+          "measure": 87,
+          "medianPyinMidi": 42.599999999999994,
+          "medianPyinVoicedProbability": 0.42606232904328145,
+          "stateMidi": 42,
+          "stateVoicedProbability": 0.7571601330199094,
+          "step": 2.0
+        },
+        {
+          "chosenMidi": 43,
+          "currentMidi": 44,
+          "measure": 87,
+          "medianPyinMidi": 43.5,
+          "medianPyinVoicedProbability": 0.48498680771591135,
+          "stateMidi": 43,
+          "stateVoicedProbability": 0.7571601330199094,
+          "step": 4.0
+        },
+        {
+          "chosenMidi": 44,
+          "currentMidi": 45,
+          "measure": 87,
+          "medianPyinMidi": 44.6,
+          "medianPyinVoicedProbability": 0.48498680771591135,
+          "stateMidi": 44,
+          "stateVoicedProbability": 0.7571601330199094,
+          "step": 6.0
+        },
+        {
+          "chosenMidi": 39,
+          "currentMidi": 40,
+          "measure": 90,
+          "medianPyinMidi": 40.0,
+          "medianPyinVoicedProbability": 0.3233360583906409,
+          "stateMidi": 39,
+          "stateVoicedProbability": 0.7919143462462044,
+          "step": 0.0
+        },
+        {
+          "chosenMidi": 43,
+          "currentMidi": 45,
+          "measure": 90,
+          "medianPyinMidi": 44.5,
+          "medianPyinVoicedProbability": 0.3721358982975087,
+          "stateMidi": 43,
+          "stateVoicedProbability": 0.7571601330199094,
+          "step": 14.0
+        },
+        {
+          "chosenMidi": 45,
+          "currentMidi": 47,
+          "measure": 91,
+          "medianPyinMidi": 46.8,
+          "medianPyinVoicedProbability": 0.2796051653363589,
+          "stateMidi": 45,
+          "stateVoicedProbability": 0.8266685594724995,
+          "step": 2.0
+        },
+        {
+          "chosenMidi": 48,
+          "currentMidi": 50,
+          "measure": 91,
+          "medianPyinMidi": 49.800000000000004,
+          "medianPyinVoicedProbability": 0.48498680771591135,
+          "stateMidi": 48,
+          "stateVoicedProbability": 0.8266685594724995,
+          "step": 6.0
+        }
+      ],
+      "changedMidiEvents": 18,
+      "deltaMidiHistogram": {
+        "-1": 8,
+        "-2": 9,
+        "-3": 1,
+        "0": 384
+      },
+      "gross": {
+        "f1": 0.7249736564805057,
+        "falseNegative": 203,
+        "falsePositive": 58,
+        "generated": 402,
+        "matched": 344,
+        "precision": 0.8557213930348259,
+        "recall": 0.6288848263254113,
+        "reference": 547
+      },
+      "primary": {
+        "f1": 0.6870389884088514,
+        "falseNegative": 221,
+        "falsePositive": 76,
+        "generated": 402,
+        "matched": 326,
+        "precision": 0.8109452736318408,
+        "recall": 0.5959780621572212,
+        "reference": 547
+      },
+      "rule": {
+        "kind": "lower_state_if_conf",
+        "name": "lower_state_if_state_voiced_ge_70",
+        "threshold": 0.7
+      }
+    },
+    {
+      "changedExamples": [
+        {
+          "chosenMidi": 38,
+          "currentMidi": 40,
+          "measure": 9,
+          "medianPyinMidi": 39.4,
+          "medianPyinVoicedProbability": 0.2407543944755743,
+          "stateMidi": 38,
+          "stateVoicedProbability": 0.7571601330199093,
+          "step": 10.0
+        },
+        {
+          "chosenMidi": 38,
+          "currentMidi": 40,
+          "measure": 10,
+          "medianPyinMidi": 39.900000000000006,
+          "medianPyinVoicedProbability": 0.1765306086328976,
+          "stateMidi": 38,
+          "stateVoicedProbability": 0.7563756852013395,
+          "step": 10.0
+        },
+        {
+          "chosenMidi": 40,
+          "currentMidi": 39,
+          "measure": 12,
+          "medianPyinMidi": 39.7,
+          "medianPyinVoicedProbability": 0.27960516533635893,
+          "stateMidi": 40,
+          "stateVoicedProbability": 0.7571601330199094,
+          "step": 12.0
+        },
+        {
+          "chosenMidi": 38,
+          "currentMidi": 40,
+          "measure": 16,
+          "medianPyinMidi": 39.900000000000006,
+          "medianPyinVoicedProbability": 0.17653060863289757,
+          "stateMidi": 38,
+          "stateVoicedProbability": 0.7571601330199094,
+          "step": 10.0
+        },
+        {
+          "chosenMidi": 38,
+          "currentMidi": 35,
+          "measure": 20,
+          "medianPyinMidi": 36.89999999999999,
+          "medianPyinVoicedProbability": 0.1504646013433388,
+          "stateMidi": 38,
+          "stateVoicedProbability": 0.7571601330199094,
+          "step": 8.0
+        },
+        {
+          "chosenMidi": 40,
+          "currentMidi": 38,
+          "measure": 21,
+          "medianPyinMidi": 38.099999999999994,
+          "medianPyinVoicedProbability": 0.24075439447557428,
+          "stateMidi": 40,
+          "stateVoicedProbability": 0.7571601330199094,
+          "step": 14.0
+        },
+        {
+          "chosenMidi": 43,
+          "currentMidi": 41,
+          "measure": 26,
+          "medianPyinMidi": 40.9,
+          "medianPyinVoicedProbability": 0.3233360583906409,
+          "stateMidi": 43,
+          "stateVoicedProbability": 0.7571601330199094,
+          "step": 14.0
+        },
+        {
+          "chosenMidi": 38,
+          "currentMidi": 40,
+          "measure": 36,
+          "medianPyinMidi": 40.0,
+          "medianPyinVoicedProbability": 0.24075439447557434,
+          "stateMidi": 38,
+          "stateVoicedProbability": 0.7571601330199094,
+          "step": 10.0
+        },
+        {
+          "chosenMidi": 40,
+          "currentMidi": 35,
+          "measure": 47,
+          "medianPyinMidi": 39.900000000000006,
+          "medianPyinVoicedProbability": 0.10857977072874499,
+          "stateMidi": 40,
+          "stateVoicedProbability": 0.8266685594724996,
+          "step": 0.0
+        },
+        {
+          "chosenMidi": 40,
+          "currentMidi": 38,
+          "measure": 50,
+          "medianPyinMidi": 37.99999999999999,
+          "medianPyinVoicedProbability": 0.2796051653363589,
+          "stateMidi": 40,
+          "stateVoicedProbability": 0.7571601330199094,
+          "step": 14.0
+        },
+        {
+          "chosenMidi": 35,
+          "currentMidi": 38,
+          "measure": 53,
+          "medianPyinMidi": 37.7,
+          "medianPyinVoicedProbability": 0.24075439447557428,
+          "stateMidi": 35,
+          "stateVoicedProbability": 0.7571601330199094,
+          "step": 12.0
+        },
+        {
+          "chosenMidi": 43,
+          "currentMidi": 41,
+          "measure": 56,
+          "medianPyinMidi": 40.9,
+          "medianPyinVoicedProbability": 0.42606232904328145,
+          "stateMidi": 43,
+          "stateVoicedProbability": 0.7571601330199094,
+          "step": 12.0
+        },
+        {
+          "chosenMidi": 38,
+          "currentMidi": 40,
+          "measure": 62,
+          "medianPyinMidi": 40.199999999999996,
+          "medianPyinVoicedProbability": 0.7571601330199094,
+          "stateMidi": 38,
+          "stateVoicedProbability": 0.8266685594724995,
+          "step": 6.0
+        },
+        {
+          "chosenMidi": 40,
+          "currentMidi": 35,
+          "measure": 65,
+          "medianPyinMidi": 34.9,
+          "medianPyinVoicedProbability": 0.10857977072874497,
+          "stateMidi": 40,
+          "stateVoicedProbability": 0.8266685594724995,
+          "step": 6.0
+        },
+        {
+          "chosenMidi": 38,
+          "currentMidi": 31,
+          "measure": 67,
+          "medianPyinMidi": 37.99999999999999,
+          "medianPyinVoicedProbability": 0.37469919371696114,
+          "stateMidi": 38,
+          "stateVoicedProbability": 0.7571601330199094,
+          "step": 4.0
+        },
+        {
+          "chosenMidi": 37,
+          "currentMidi": 38,
+          "measure": 67,
+          "medianPyinMidi": 37.3,
+          "medianPyinVoicedProbability": 0.42606232904328145,
+          "stateMidi": 37,
+          "stateVoicedProbability": 0.7919143462462045,
+          "step": 8.0
+        },
+        {
+          "chosenMidi": 44,
+          "currentMidi": 43,
+          "measure": 78,
+          "medianPyinMidi": 43.599999999999994,
+          "medianPyinVoicedProbability": 0.2796051653363589,
+          "stateMidi": 44,
+          "stateVoicedProbability": 0.7571601330199094,
+          "step": 12.0
+        },
+        {
+          "chosenMidi": 44,
+          "currentMidi": 45,
+          "measure": 78,
+          "medianPyinMidi": 44.699999999999996,
+          "medianPyinVoicedProbability": 0.615949885458068,
+          "stateMidi": 44,
+          "stateVoicedProbability": 0.7571601330199094,
+          "step": 14.0
+        },
+        {
+          "chosenMidi": 42,
+          "currentMidi": 43,
+          "measure": 81,
+          "medianPyinMidi": 42.8,
+          "medianPyinVoicedProbability": 0.3721358982975087,
+          "stateMidi": 42,
+          "stateVoicedProbability": 0.7571601330199094,
+          "step": 4.0
+        },
+        {
+          "chosenMidi": 39,
+          "currentMidi": 33,
+          "measure": 83,
+          "medianPyinMidi": 35.39999999999999,
+          "medianPyinVoicedProbability": 0.07463855114881301,
+          "stateMidi": 39,
+          "stateVoicedProbability": 0.7571601330199093,
+          "step": 10.0
+        },
+        {
+          "chosenMidi": 42,
+          "currentMidi": 35,
+          "measure": 85,
+          "medianPyinMidi": 35.19999999999999,
+          "medianPyinVoicedProbability": 0.24075439447557428,
+          "stateMidi": 42,
+          "stateVoicedProbability": 0.7571601330199094,
+          "step": 2.0
+        },
+        {
+          "chosenMidi": 42,
+          "currentMidi": 43,
+          "measure": 87,
+          "medianPyinMidi": 42.599999999999994,
+          "medianPyinVoicedProbability": 0.42606232904328145,
+          "stateMidi": 42,
+          "stateVoicedProbability": 0.7571601330199094,
+          "step": 2.0
+        },
+        {
+          "chosenMidi": 43,
+          "currentMidi": 44,
+          "measure": 87,
+          "medianPyinMidi": 43.5,
+          "medianPyinVoicedProbability": 0.48498680771591135,
+          "stateMidi": 43,
+          "stateVoicedProbability": 0.7571601330199094,
+          "step": 4.0
+        },
+        {
+          "chosenMidi": 44,
+          "currentMidi": 45,
+          "measure": 87,
+          "medianPyinMidi": 44.6,
+          "medianPyinVoicedProbability": 0.48498680771591135,
+          "stateMidi": 44,
+          "stateVoicedProbability": 0.7571601330199094,
+          "step": 6.0
+        },
+        {
+          "chosenMidi": 39,
+          "currentMidi": 40,
+          "measure": 90,
+          "medianPyinMidi": 40.0,
+          "medianPyinVoicedProbability": 0.3233360583906409,
+          "stateMidi": 39,
+          "stateVoicedProbability": 0.7919143462462044,
+          "step": 0.0
+        }
+      ],
+      "changedMidiEvents": 30,
+      "deltaMidiHistogram": {
+        "-1": 7,
+        "-2": 8,
+        "-3": 1,
+        "0": 372,
+        "1": 3,
+        "2": 4,
+        "3": 1,
+        "5": 3,
+        "6": 1,
+        "7": 2
+      },
+      "gross": {
+        "f1": 0.7207586933614331,
+        "falseNegative": 205,
+        "falsePositive": 60,
+        "generated": 402,
+        "matched": 342,
+        "precision": 0.8507462686567164,
+        "recall": 0.6252285191956124,
+        "reference": 547
+      },
+      "primary": {
+        "f1": 0.684931506849315,
+        "falseNegative": 222,
+        "falsePositive": 77,
+        "generated": 402,
+        "matched": 325,
+        "precision": 0.8084577114427861,
+        "recall": 0.5941499085923218,
+        "reference": 547
+      },
+      "rule": {
+        "kind": "state_if_conf",
+        "name": "state_if_state_voiced_ge_75",
+        "threshold": 0.75
+      }
+    },
+    {
+      "changedExamples": [],
+      "changedMidiEvents": 0,
+      "deltaMidiHistogram": {
+        "0": 402
+      },
+      "gross": {
+        "f1": 0.7439409905163331,
+        "falseNegative": 194,
+        "falsePositive": 49,
+        "generated": 402,
+        "matched": 353,
+        "precision": 0.8781094527363185,
+        "recall": 0.6453382084095064,
+        "reference": 547
+      },
+      "primary": {
+        "f1": 0.7186512118018967,
+        "falseNegative": 206,
+        "falsePositive": 61,
+        "generated": 402,
+        "matched": 341,
+        "precision": 0.8482587064676617,
+        "recall": 0.623400365630713,
+        "reference": 547
+      },
+      "rule": {
+        "kind": "pyin_if_conf",
+        "name": "pyin_if_pyin_voiced_ge_75",
+        "threshold": 0.75
+      }
+    },
+    {
+      "changedExamples": [
+        {
+          "chosenMidi": 38,
+          "currentMidi": 40,
+          "measure": 9,
+          "medianPyinMidi": 39.4,
+          "medianPyinVoicedProbability": 0.2407543944755743,
+          "stateMidi": 38,
+          "stateVoicedProbability": 0.7571601330199093,
+          "step": 10.0
+        },
+        {
+          "chosenMidi": 38,
+          "currentMidi": 40,
+          "measure": 10,
+          "medianPyinMidi": 39.900000000000006,
+          "medianPyinVoicedProbability": 0.1765306086328976,
+          "stateMidi": 38,
+          "stateVoicedProbability": 0.7563756852013395,
+          "step": 10.0
+        },
+        {
+          "chosenMidi": 38,
+          "currentMidi": 40,
+          "measure": 16,
+          "medianPyinMidi": 39.900000000000006,
+          "medianPyinVoicedProbability": 0.17653060863289757,
+          "stateMidi": 38,
+          "stateVoicedProbability": 0.7571601330199094,
+          "step": 10.0
+        },
+        {
+          "chosenMidi": 38,
+          "currentMidi": 40,
+          "measure": 36,
+          "medianPyinMidi": 40.0,
+          "medianPyinVoicedProbability": 0.24075439447557434,
+          "stateMidi": 38,
+          "stateVoicedProbability": 0.7571601330199094,
+          "step": 10.0
+        },
+        {
+          "chosenMidi": 35,
+          "currentMidi": 38,
+          "measure": 53,
+          "medianPyinMidi": 37.7,
+          "medianPyinVoicedProbability": 0.24075439447557428,
+          "stateMidi": 35,
+          "stateVoicedProbability": 0.7571601330199094,
+          "step": 12.0
+        },
+        {
+          "chosenMidi": 38,
+          "currentMidi": 40,
+          "measure": 62,
+          "medianPyinMidi": 40.199999999999996,
+          "medianPyinVoicedProbability": 0.7571601330199094,
+          "stateMidi": 38,
+          "stateVoicedProbability": 0.8266685594724995,
+          "step": 6.0
+        },
+        {
+          "chosenMidi": 37,
+          "currentMidi": 38,
+          "measure": 67,
+          "medianPyinMidi": 37.3,
+          "medianPyinVoicedProbability": 0.42606232904328145,
+          "stateMidi": 37,
+          "stateVoicedProbability": 0.7919143462462045,
+          "step": 8.0
+        },
+        {
+          "chosenMidi": 44,
+          "currentMidi": 45,
+          "measure": 78,
+          "medianPyinMidi": 44.699999999999996,
+          "medianPyinVoicedProbability": 0.615949885458068,
+          "stateMidi": 44,
+          "stateVoicedProbability": 0.7571601330199094,
+          "step": 14.0
+        },
+        {
+          "chosenMidi": 42,
+          "currentMidi": 43,
+          "measure": 81,
+          "medianPyinMidi": 42.8,
+          "medianPyinVoicedProbability": 0.3721358982975087,
+          "stateMidi": 42,
+          "stateVoicedProbability": 0.7571601330199094,
+          "step": 4.0
+        },
+        {
+          "chosenMidi": 42,
+          "currentMidi": 43,
+          "measure": 87,
+          "medianPyinMidi": 42.599999999999994,
+          "medianPyinVoicedProbability": 0.42606232904328145,
+          "stateMidi": 42,
+          "stateVoicedProbability": 0.7571601330199094,
+          "step": 2.0
+        },
+        {
+          "chosenMidi": 43,
+          "currentMidi": 44,
+          "measure": 87,
+          "medianPyinMidi": 43.5,
+          "medianPyinVoicedProbability": 0.48498680771591135,
+          "stateMidi": 43,
+          "stateVoicedProbability": 0.7571601330199094,
+          "step": 4.0
+        },
+        {
+          "chosenMidi": 44,
+          "currentMidi": 45,
+          "measure": 87,
+          "medianPyinMidi": 44.6,
+          "medianPyinVoicedProbability": 0.48498680771591135,
+          "stateMidi": 44,
+          "stateVoicedProbability": 0.7571601330199094,
+          "step": 6.0
+        },
+        {
+          "chosenMidi": 39,
+          "currentMidi": 40,
+          "measure": 90,
+          "medianPyinMidi": 40.0,
+          "medianPyinVoicedProbability": 0.3233360583906409,
+          "stateMidi": 39,
+          "stateVoicedProbability": 0.7919143462462044,
+          "step": 0.0
+        },
+        {
+          "chosenMidi": 43,
+          "currentMidi": 45,
+          "measure": 90,
+          "medianPyinMidi": 44.5,
+          "medianPyinVoicedProbability": 0.3721358982975087,
+          "stateMidi": 43,
+          "stateVoicedProbability": 0.7571601330199094,
+          "step": 14.0
+        },
+        {
+          "chosenMidi": 45,
+          "currentMidi": 47,
+          "measure": 91,
+          "medianPyinMidi": 46.8,
+          "medianPyinVoicedProbability": 0.2796051653363589,
+          "stateMidi": 45,
+          "stateVoicedProbability": 0.8266685594724995,
+          "step": 2.0
+        },
+        {
+          "chosenMidi": 48,
+          "currentMidi": 50,
+          "measure": 91,
+          "medianPyinMidi": 49.800000000000004,
+          "medianPyinVoicedProbability": 0.48498680771591135,
+          "stateMidi": 48,
+          "stateVoicedProbability": 0.8266685594724995,
+          "step": 6.0
+        }
+      ],
+      "changedMidiEvents": 16,
+      "deltaMidiHistogram": {
+        "-1": 7,
+        "-2": 8,
+        "-3": 1,
+        "0": 386
+      },
+      "gross": {
+        "f1": 0.7291886195995785,
+        "falseNegative": 201,
+        "falsePositive": 56,
+        "generated": 402,
+        "matched": 346,
+        "precision": 0.8606965174129353,
+        "recall": 0.6325411334552102,
+        "reference": 547
+      },
+      "primary": {
+        "f1": 0.6912539515279241,
+        "falseNegative": 219,
+        "falsePositive": 74,
+        "generated": 402,
+        "matched": 328,
+        "precision": 0.8159203980099502,
+        "recall": 0.5996343692870201,
+        "reference": 547
+      },
+      "rule": {
+        "kind": "lower_state_if_conf",
+        "name": "lower_state_if_state_voiced_ge_75",
+        "threshold": 0.75
+      }
+    },
+    {
+      "changedExamples": [
+        {
+          "chosenMidi": 40,
+          "currentMidi": 35,
+          "measure": 47,
+          "medianPyinMidi": 39.900000000000006,
+          "medianPyinVoicedProbability": 0.10857977072874499,
+          "stateMidi": 40,
+          "stateVoicedProbability": 0.8266685594724996,
+          "step": 0.0
+        },
+        {
+          "chosenMidi": 38,
+          "currentMidi": 40,
+          "measure": 62,
+          "medianPyinMidi": 40.199999999999996,
+          "medianPyinVoicedProbability": 0.7571601330199094,
+          "stateMidi": 38,
+          "stateVoicedProbability": 0.8266685594724995,
+          "step": 6.0
+        },
+        {
+          "chosenMidi": 40,
+          "currentMidi": 35,
+          "measure": 65,
+          "medianPyinMidi": 34.9,
+          "medianPyinVoicedProbability": 0.10857977072874497,
+          "stateMidi": 40,
+          "stateVoicedProbability": 0.8266685594724995,
+          "step": 6.0
+        },
+        {
+          "chosenMidi": 45,
+          "currentMidi": 47,
+          "measure": 91,
+          "medianPyinMidi": 46.8,
+          "medianPyinVoicedProbability": 0.2796051653363589,
+          "stateMidi": 45,
+          "stateVoicedProbability": 0.8266685594724995,
+          "step": 2.0
+        },
+        {
+          "chosenMidi": 48,
+          "currentMidi": 50,
+          "measure": 91,
+          "medianPyinMidi": 49.800000000000004,
+          "medianPyinVoicedProbability": 0.48498680771591135,
+          "stateMidi": 48,
+          "stateVoicedProbability": 0.8266685594724995,
+          "step": 6.0
+        },
+        {
+          "chosenMidi": 50,
+          "currentMidi": 45,
+          "measure": 91,
+          "medianPyinMidi": 45.2,
+          "medianPyinVoicedProbability": 0.1765306086328976,
+          "stateMidi": 50,
+          "stateVoicedProbability": 0.8911444948731204,
+          "step": 10.0
+        }
+      ],
+      "changedMidiEvents": 6,
+      "deltaMidiHistogram": {
+        "-2": 3,
+        "0": 396,
+        "5": 3
+      },
+      "gross": {
+        "f1": 0.7397260273972602,
+        "falseNegative": 196,
+        "falsePositive": 51,
+        "generated": 402,
+        "matched": 351,
+        "precision": 0.8731343283582089,
+        "recall": 0.6416819012797075,
+        "reference": 547
+      },
+      "primary": {
+        "f1": 0.7123287671232877,
+        "falseNegative": 209,
+        "falsePositive": 64,
+        "generated": 402,
+        "matched": 338,
+        "precision": 0.8407960199004975,
+        "recall": 0.6179159049360147,
+        "reference": 547
+      },
+      "rule": {
+        "kind": "state_if_conf",
+        "name": "state_if_state_voiced_ge_80",
+        "threshold": 0.8
+      }
+    },
+    {
+      "changedExamples": [],
+      "changedMidiEvents": 0,
+      "deltaMidiHistogram": {
+        "0": 402
+      },
+      "gross": {
+        "f1": 0.7439409905163331,
+        "falseNegative": 194,
+        "falsePositive": 49,
+        "generated": 402,
+        "matched": 353,
+        "precision": 0.8781094527363185,
+        "recall": 0.6453382084095064,
+        "reference": 547
+      },
+      "primary": {
+        "f1": 0.7186512118018967,
+        "falseNegative": 206,
+        "falsePositive": 61,
+        "generated": 402,
+        "matched": 341,
+        "precision": 0.8482587064676617,
+        "recall": 0.623400365630713,
+        "reference": 547
+      },
+      "rule": {
+        "kind": "pyin_if_conf",
+        "name": "pyin_if_pyin_voiced_ge_80",
+        "threshold": 0.8
+      }
+    },
+    {
+      "changedExamples": [
+        {
+          "chosenMidi": 38,
+          "currentMidi": 40,
+          "measure": 62,
+          "medianPyinMidi": 40.199999999999996,
+          "medianPyinVoicedProbability": 0.7571601330199094,
+          "stateMidi": 38,
+          "stateVoicedProbability": 0.8266685594724995,
+          "step": 6.0
+        },
+        {
+          "chosenMidi": 45,
+          "currentMidi": 47,
+          "measure": 91,
+          "medianPyinMidi": 46.8,
+          "medianPyinVoicedProbability": 0.2796051653363589,
+          "stateMidi": 45,
+          "stateVoicedProbability": 0.8266685594724995,
+          "step": 2.0
+        },
+        {
+          "chosenMidi": 48,
+          "currentMidi": 50,
+          "measure": 91,
+          "medianPyinMidi": 49.800000000000004,
+          "medianPyinVoicedProbability": 0.48498680771591135,
+          "stateMidi": 48,
+          "stateVoicedProbability": 0.8266685594724995,
+          "step": 6.0
+        }
+      ],
+      "changedMidiEvents": 3,
+      "deltaMidiHistogram": {
+        "-2": 3,
+        "0": 399
+      },
+      "gross": {
+        "f1": 0.7418335089567966,
+        "falseNegative": 195,
+        "falsePositive": 50,
+        "generated": 402,
+        "matched": 352,
+        "precision": 0.8756218905472637,
+        "recall": 0.643510054844607,
+        "reference": 547
+      },
+      "primary": {
+        "f1": 0.714436248682824,
+        "falseNegative": 208,
+        "falsePositive": 63,
+        "generated": 402,
+        "matched": 339,
+        "precision": 0.8432835820895522,
+        "recall": 0.6197440585009141,
+        "reference": 547
+      },
+      "rule": {
+        "kind": "lower_state_if_conf",
+        "name": "lower_state_if_state_voiced_ge_80",
+        "threshold": 0.8
+      }
+    },
+    {
+      "changedExamples": [
+        {
+          "chosenMidi": 50,
+          "currentMidi": 45,
+          "measure": 91,
+          "medianPyinMidi": 45.2,
+          "medianPyinVoicedProbability": 0.1765306086328976,
+          "stateMidi": 50,
+          "stateVoicedProbability": 0.8911444948731204,
+          "step": 10.0
+        }
+      ],
+      "changedMidiEvents": 1,
+      "deltaMidiHistogram": {
+        "0": 401,
+        "5": 1
+      },
+      "gross": {
+        "f1": 0.7418335089567966,
+        "falseNegative": 195,
+        "falsePositive": 50,
+        "generated": 402,
+        "matched": 352,
+        "precision": 0.8756218905472637,
+        "recall": 0.643510054844607,
+        "reference": 547
+      },
+      "primary": {
+        "f1": 0.7165437302423603,
+        "falseNegative": 207,
+        "falsePositive": 62,
+        "generated": 402,
+        "matched": 340,
+        "precision": 0.845771144278607,
+        "recall": 0.6215722120658135,
+        "reference": 547
+      },
+      "rule": {
+        "kind": "state_if_conf",
+        "name": "state_if_state_voiced_ge_85",
+        "threshold": 0.85
+      }
+    },
+    {
+      "changedExamples": [],
+      "changedMidiEvents": 0,
+      "deltaMidiHistogram": {
+        "0": 402
+      },
+      "gross": {
+        "f1": 0.7439409905163331,
+        "falseNegative": 194,
+        "falsePositive": 49,
+        "generated": 402,
+        "matched": 353,
+        "precision": 0.8781094527363185,
+        "recall": 0.6453382084095064,
+        "reference": 547
+      },
+      "primary": {
+        "f1": 0.7186512118018967,
+        "falseNegative": 206,
+        "falsePositive": 61,
+        "generated": 402,
+        "matched": 341,
+        "precision": 0.8482587064676617,
+        "recall": 0.623400365630713,
+        "reference": 547
+      },
+      "rule": {
+        "kind": "pyin_if_conf",
+        "name": "pyin_if_pyin_voiced_ge_85",
+        "threshold": 0.85
+      }
+    },
+    {
+      "changedExamples": [],
+      "changedMidiEvents": 0,
+      "deltaMidiHistogram": {
+        "0": 402
+      },
+      "gross": {
+        "f1": 0.7439409905163331,
+        "falseNegative": 194,
+        "falsePositive": 49,
+        "generated": 402,
+        "matched": 353,
+        "precision": 0.8781094527363185,
+        "recall": 0.6453382084095064,
+        "reference": 547
+      },
+      "primary": {
+        "f1": 0.7186512118018967,
+        "falseNegative": 206,
+        "falsePositive": 61,
+        "generated": 402,
+        "matched": 341,
+        "precision": 0.8482587064676617,
+        "recall": 0.623400365630713,
+        "reference": 547
+      },
+      "rule": {
+        "kind": "lower_state_if_conf",
+        "name": "lower_state_if_state_voiced_ge_85",
+        "threshold": 0.85
+      }
+    },
+    {
+      "changedExamples": [
+        {
+          "chosenMidi": 35,
+          "currentMidi": 40,
+          "measure": 11,
+          "medianPyinMidi": 39.7,
+          "medianPyinVoicedProbability": 0.1765306086328976,
+          "stateMidi": 35,
+          "stateVoicedProbability": 0.6159498854580681,
+          "step": 0.0
+        },
+        {
+          "chosenMidi": 35,
+          "currentMidi": 40,
+          "measure": 14,
+          "medianPyinMidi": 39.7,
+          "medianPyinVoicedProbability": 0.21503488333984888,
+          "stateMidi": 35,
+          "stateVoicedProbability": 0.6159498854580681,
+          "step": 0.0
+        },
+        {
+          "chosenMidi": 35,
+          "currentMidi": 40,
+          "measure": 48,
+          "medianPyinMidi": 39.4,
+          "medianPyinVoicedProbability": 0.2280678869846282,
+          "stateMidi": 35,
+          "stateVoicedProbability": 0.6159498854580681,
+          "step": 0.0
+        },
+        {
+          "chosenMidi": 35,
+          "currentMidi": 38,
+          "measure": 53,
+          "medianPyinMidi": 37.7,
+          "medianPyinVoicedProbability": 0.24075439447557428,
+          "stateMidi": 35,
+          "stateVoicedProbability": 0.7571601330199094,
+          "step": 12.0
+        },
+        {
+          "chosenMidi": 35,
+          "currentMidi": 40,
+          "measure": 54,
+          "medianPyinMidi": 39.7,
+          "medianPyinVoicedProbability": 0.17466708260215966,
+          "stateMidi": 35,
+          "stateVoicedProbability": 0.6159498854580681,
+          "step": 0.0
+        },
+        {
+          "chosenMidi": 37,
+          "currentMidi": 40,
+          "measure": 80,
+          "medianPyinMidi": 39.7,
+          "medianPyinVoicedProbability": 0.27960516533635893,
+          "stateMidi": 37,
+          "stateVoicedProbability": 0.6159498854580681,
+          "step": 10.0
+        },
+        {
+          "chosenMidi": 35,
+          "currentMidi": 40,
+          "measure": 88,
+          "medianPyinMidi": 39.900000000000006,
+          "medianPyinVoicedProbability": 0.12793708630129036,
+          "stateMidi": 35,
+          "stateVoicedProbability": 0.5822374698590262,
+          "step": 2.0
+        },
+        {
+          "chosenMidi": 35,
+          "currentMidi": 40,
+          "measure": 90,
+          "medianPyinMidi": 40.0,
+          "medianPyinVoicedProbability": 0.2065067991177523,
+          "stateMidi": 35,
+          "stateVoicedProbability": 0.617303932595082,
+          "step": 4.0
+        },
+        {
+          "chosenMidi": 35,
+          "currentMidi": 40,
+          "measure": 97,
+          "medianPyinMidi": 39.5,
+          "medianPyinVoicedProbability": 0.3233360583906409,
+          "stateMidi": 35,
+          "stateVoicedProbability": 0.6159498854580681,
+          "step": 0.0
+        },
+        {
+          "chosenMidi": 35,
+          "currentMidi": 40,
+          "measure": 98,
+          "medianPyinMidi": 39.5,
+          "medianPyinVoicedProbability": 0.2407543944755743,
+          "stateMidi": 35,
+          "stateVoicedProbability": 0.6510163481941237,
+          "step": 0.0
+        },
+        {
+          "chosenMidi": 35,
+          "currentMidi": 40,
+          "measure": 99,
+          "medianPyinMidi": 39.2,
+          "medianPyinVoicedProbability": 0.056071395445892624,
+          "stateMidi": 35,
+          "stateVoicedProbability": 0.5822374698590262,
+          "step": 0.0
+        },
+        {
+          "chosenMidi": 35,
+          "currentMidi": 38,
+          "measure": 107,
+          "medianPyinMidi": 37.800000000000004,
+          "medianPyinVoicedProbability": 0.17653060863289757,
+          "stateMidi": 35,
+          "stateVoicedProbability": 0.6159498854580681,
+          "step": 0.0
+        }
+      ],
+      "changedMidiEvents": 12,
+      "deltaMidiHistogram": {
+        "-3": 3,
+        "-5": 9,
+        "0": 390
+      },
+      "gross": {
+        "f1": 0.7228661749209695,
+        "falseNegative": 204,
+        "falsePositive": 59,
+        "generated": 402,
+        "matched": 343,
+        "precision": 0.8532338308457711,
+        "recall": 0.6270566727605119,
+        "reference": 547
+      },
+      "primary": {
+        "f1": 0.6954689146469969,
+        "falseNegative": 217,
+        "falsePositive": 72,
+        "generated": 402,
+        "matched": 330,
+        "precision": 0.8208955223880597,
+        "recall": 0.603290676416819,
+        "reference": 547
+      },
+      "rule": {
+        "delta": 3,
+        "kind": "state_if_downward_delta",
+        "name": "state_if_current_above_state_by_3_and_voiced_ge_55",
+        "threshold": 0.55
+      }
+    },
+    {
+      "changedExamples": [
+        {
+          "chosenMidi": 35,
+          "currentMidi": 38,
+          "measure": 53,
+          "medianPyinMidi": 37.7,
+          "medianPyinVoicedProbability": 0.24075439447557428,
+          "stateMidi": 35,
+          "stateVoicedProbability": 0.7571601330199094,
+          "step": 12.0
+        },
+        {
+          "chosenMidi": 35,
+          "currentMidi": 40,
+          "measure": 98,
+          "medianPyinMidi": 39.5,
+          "medianPyinVoicedProbability": 0.2407543944755743,
+          "stateMidi": 35,
+          "stateVoicedProbability": 0.6510163481941237,
+          "step": 0.0
+        }
+      ],
+      "changedMidiEvents": 2,
+      "deltaMidiHistogram": {
+        "-3": 1,
+        "-5": 1,
+        "0": 400
+      },
+      "gross": {
+        "f1": 0.7397260273972602,
+        "falseNegative": 196,
+        "falsePositive": 51,
+        "generated": 402,
+        "matched": 351,
+        "precision": 0.8731343283582089,
+        "recall": 0.6416819012797075,
+        "reference": 547
+      },
+      "primary": {
+        "f1": 0.714436248682824,
+        "falseNegative": 208,
+        "falsePositive": 63,
+        "generated": 402,
+        "matched": 339,
+        "precision": 0.8432835820895522,
+        "recall": 0.6197440585009141,
+        "reference": 547
+      },
+      "rule": {
+        "delta": 3,
+        "kind": "state_if_downward_delta",
+        "name": "state_if_current_above_state_by_3_and_voiced_ge_65",
+        "threshold": 0.65
+      }
+    },
+    {
+      "changedExamples": [
+        {
+          "chosenMidi": 35,
+          "currentMidi": 38,
+          "measure": 53,
+          "medianPyinMidi": 37.7,
+          "medianPyinVoicedProbability": 0.24075439447557428,
+          "stateMidi": 35,
+          "stateVoicedProbability": 0.7571601330199094,
+          "step": 12.0
+        }
+      ],
+      "changedMidiEvents": 1,
+      "deltaMidiHistogram": {
+        "-3": 1,
+        "0": 401
+      },
+      "gross": {
+        "f1": 0.7418335089567966,
+        "falseNegative": 195,
+        "falsePositive": 50,
+        "generated": 402,
+        "matched": 352,
+        "precision": 0.8756218905472637,
+        "recall": 0.643510054844607,
+        "reference": 547
+      },
+      "primary": {
+        "f1": 0.7165437302423603,
+        "falseNegative": 207,
+        "falsePositive": 62,
+        "generated": 402,
+        "matched": 340,
+        "precision": 0.845771144278607,
+        "recall": 0.6215722120658135,
+        "reference": 547
+      },
+      "rule": {
+        "delta": 3,
+        "kind": "state_if_downward_delta",
+        "name": "state_if_current_above_state_by_3_and_voiced_ge_75",
+        "threshold": 0.75
+      }
+    },
+    {
+      "changedExamples": [],
+      "changedMidiEvents": 0,
+      "deltaMidiHistogram": {
+        "0": 402
+      },
+      "gross": {
+        "f1": 0.7439409905163331,
+        "falseNegative": 194,
+        "falsePositive": 49,
+        "generated": 402,
+        "matched": 353,
+        "precision": 0.8781094527363185,
+        "recall": 0.6453382084095064,
+        "reference": 547
+      },
+      "primary": {
+        "f1": 0.7186512118018967,
+        "falseNegative": 206,
+        "falsePositive": 61,
+        "generated": 402,
+        "matched": 341,
+        "precision": 0.8482587064676617,
+        "recall": 0.623400365630713,
+        "reference": 547
+      },
+      "rule": {
+        "delta": 3,
+        "kind": "state_if_downward_delta",
+        "name": "state_if_current_above_state_by_3_and_voiced_ge_85",
+        "threshold": 0.85
+      }
+    },
+    {
+      "changedExamples": [
+        {
+          "chosenMidi": 35,
+          "currentMidi": 40,
+          "measure": 11,
+          "medianPyinMidi": 39.7,
+          "medianPyinVoicedProbability": 0.1765306086328976,
+          "stateMidi": 35,
+          "stateVoicedProbability": 0.6159498854580681,
+          "step": 0.0
+        },
+        {
+          "chosenMidi": 35,
+          "currentMidi": 40,
+          "measure": 14,
+          "medianPyinMidi": 39.7,
+          "medianPyinVoicedProbability": 0.21503488333984888,
+          "stateMidi": 35,
+          "stateVoicedProbability": 0.6159498854580681,
+          "step": 0.0
+        },
+        {
+          "chosenMidi": 35,
+          "currentMidi": 40,
+          "measure": 48,
+          "medianPyinMidi": 39.4,
+          "medianPyinVoicedProbability": 0.2280678869846282,
+          "stateMidi": 35,
+          "stateVoicedProbability": 0.6159498854580681,
+          "step": 0.0
+        },
+        {
+          "chosenMidi": 35,
+          "currentMidi": 40,
+          "measure": 54,
+          "medianPyinMidi": 39.7,
+          "medianPyinVoicedProbability": 0.17466708260215966,
+          "stateMidi": 35,
+          "stateVoicedProbability": 0.6159498854580681,
+          "step": 0.0
+        },
+        {
+          "chosenMidi": 35,
+          "currentMidi": 40,
+          "measure": 88,
+          "medianPyinMidi": 39.900000000000006,
+          "medianPyinVoicedProbability": 0.12793708630129036,
+          "stateMidi": 35,
+          "stateVoicedProbability": 0.5822374698590262,
+          "step": 2.0
+        },
+        {
+          "chosenMidi": 35,
+          "currentMidi": 40,
+          "measure": 90,
+          "medianPyinMidi": 40.0,
+          "medianPyinVoicedProbability": 0.2065067991177523,
+          "stateMidi": 35,
+          "stateVoicedProbability": 0.617303932595082,
+          "step": 4.0
+        },
+        {
+          "chosenMidi": 35,
+          "currentMidi": 40,
+          "measure": 97,
+          "medianPyinMidi": 39.5,
+          "medianPyinVoicedProbability": 0.3233360583906409,
+          "stateMidi": 35,
+          "stateVoicedProbability": 0.6159498854580681,
+          "step": 0.0
+        },
+        {
+          "chosenMidi": 35,
+          "currentMidi": 40,
+          "measure": 98,
+          "medianPyinMidi": 39.5,
+          "medianPyinVoicedProbability": 0.2407543944755743,
+          "stateMidi": 35,
+          "stateVoicedProbability": 0.6510163481941237,
+          "step": 0.0
+        },
+        {
+          "chosenMidi": 35,
+          "currentMidi": 40,
+          "measure": 99,
+          "medianPyinMidi": 39.2,
+          "medianPyinVoicedProbability": 0.056071395445892624,
+          "stateMidi": 35,
+          "stateVoicedProbability": 0.5822374698590262,
+          "step": 0.0
+        }
+      ],
+      "changedMidiEvents": 9,
+      "deltaMidiHistogram": {
+        "-5": 9,
+        "0": 393
+      },
+      "gross": {
+        "f1": 0.7291886195995785,
+        "falseNegative": 201,
+        "falsePositive": 56,
+        "generated": 402,
+        "matched": 346,
+        "precision": 0.8606965174129353,
+        "recall": 0.6325411334552102,
+        "reference": 547
+      },
+      "primary": {
+        "f1": 0.7017913593256058,
+        "falseNegative": 214,
+        "falsePositive": 69,
+        "generated": 402,
+        "matched": 333,
+        "precision": 0.8283582089552238,
+        "recall": 0.6087751371115173,
+        "reference": 547
+      },
+      "rule": {
+        "delta": 5,
+        "kind": "state_if_downward_delta",
+        "name": "state_if_current_above_state_by_5_and_voiced_ge_55",
+        "threshold": 0.55
+      }
+    },
+    {
+      "changedExamples": [
+        {
+          "chosenMidi": 35,
+          "currentMidi": 40,
+          "measure": 98,
+          "medianPyinMidi": 39.5,
+          "medianPyinVoicedProbability": 0.2407543944755743,
+          "stateMidi": 35,
+          "stateVoicedProbability": 0.6510163481941237,
+          "step": 0.0
+        }
+      ],
+      "changedMidiEvents": 1,
+      "deltaMidiHistogram": {
+        "-5": 1,
+        "0": 401
+      },
+      "gross": {
+        "f1": 0.7418335089567966,
+        "falseNegative": 195,
+        "falsePositive": 50,
+        "generated": 402,
+        "matched": 352,
+        "precision": 0.8756218905472637,
+        "recall": 0.643510054844607,
+        "reference": 547
+      },
+      "primary": {
+        "f1": 0.7165437302423603,
+        "falseNegative": 207,
+        "falsePositive": 62,
+        "generated": 402,
+        "matched": 340,
+        "precision": 0.845771144278607,
+        "recall": 0.6215722120658135,
+        "reference": 547
+      },
+      "rule": {
+        "delta": 5,
+        "kind": "state_if_downward_delta",
+        "name": "state_if_current_above_state_by_5_and_voiced_ge_65",
+        "threshold": 0.65
+      }
+    },
+    {
+      "changedExamples": [],
+      "changedMidiEvents": 0,
+      "deltaMidiHistogram": {
+        "0": 402
+      },
+      "gross": {
+        "f1": 0.7439409905163331,
+        "falseNegative": 194,
+        "falsePositive": 49,
+        "generated": 402,
+        "matched": 353,
+        "precision": 0.8781094527363185,
+        "recall": 0.6453382084095064,
+        "reference": 547
+      },
+      "primary": {
+        "f1": 0.7186512118018967,
+        "falseNegative": 206,
+        "falsePositive": 61,
+        "generated": 402,
+        "matched": 341,
+        "precision": 0.8482587064676617,
+        "recall": 0.623400365630713,
+        "reference": 547
+      },
+      "rule": {
+        "delta": 5,
+        "kind": "state_if_downward_delta",
+        "name": "state_if_current_above_state_by_5_and_voiced_ge_75",
+        "threshold": 0.75
+      }
+    },
+    {
+      "changedExamples": [],
+      "changedMidiEvents": 0,
+      "deltaMidiHistogram": {
+        "0": 402
+      },
+      "gross": {
+        "f1": 0.7439409905163331,
+        "falseNegative": 194,
+        "falsePositive": 49,
+        "generated": 402,
+        "matched": 353,
+        "precision": 0.8781094527363185,
+        "recall": 0.6453382084095064,
+        "reference": 547
+      },
+      "primary": {
+        "f1": 0.7186512118018967,
+        "falseNegative": 206,
+        "falsePositive": 61,
+        "generated": 402,
+        "matched": 341,
+        "precision": 0.8482587064676617,
+        "recall": 0.623400365630713,
+        "reference": 547
+      },
+      "rule": {
+        "delta": 5,
+        "kind": "state_if_downward_delta",
+        "name": "state_if_current_above_state_by_5_and_voiced_ge_85",
+        "threshold": 0.85
+      }
+    },
+    {
+      "changedExamples": [],
+      "changedMidiEvents": 0,
+      "deltaMidiHistogram": {
+        "0": 402
+      },
+      "gross": {
+        "f1": 0.7439409905163331,
+        "falseNegative": 194,
+        "falsePositive": 49,
+        "generated": 402,
+        "matched": 353,
+        "precision": 0.8781094527363185,
+        "recall": 0.6453382084095064,
+        "reference": 547
+      },
+      "primary": {
+        "f1": 0.7186512118018967,
+        "falseNegative": 206,
+        "falsePositive": 61,
+        "generated": 402,
+        "matched": 341,
+        "precision": 0.8482587064676617,
+        "recall": 0.623400365630713,
+        "reference": 547
+      },
+      "rule": {
+        "delta": 7,
+        "kind": "state_if_downward_delta",
+        "name": "state_if_current_above_state_by_7_and_voiced_ge_55",
+        "threshold": 0.55
+      }
+    },
+    {
+      "changedExamples": [],
+      "changedMidiEvents": 0,
+      "deltaMidiHistogram": {
+        "0": 402
+      },
+      "gross": {
+        "f1": 0.7439409905163331,
+        "falseNegative": 194,
+        "falsePositive": 49,
+        "generated": 402,
+        "matched": 353,
+        "precision": 0.8781094527363185,
+        "recall": 0.6453382084095064,
+        "reference": 547
+      },
+      "primary": {
+        "f1": 0.7186512118018967,
+        "falseNegative": 206,
+        "falsePositive": 61,
+        "generated": 402,
+        "matched": 341,
+        "precision": 0.8482587064676617,
+        "recall": 0.623400365630713,
+        "reference": 547
+      },
+      "rule": {
+        "delta": 7,
+        "kind": "state_if_downward_delta",
+        "name": "state_if_current_above_state_by_7_and_voiced_ge_65",
+        "threshold": 0.65
+      }
+    },
+    {
+      "changedExamples": [],
+      "changedMidiEvents": 0,
+      "deltaMidiHistogram": {
+        "0": 402
+      },
+      "gross": {
+        "f1": 0.7439409905163331,
+        "falseNegative": 194,
+        "falsePositive": 49,
+        "generated": 402,
+        "matched": 353,
+        "precision": 0.8781094527363185,
+        "recall": 0.6453382084095064,
+        "reference": 547
+      },
+      "primary": {
+        "f1": 0.7186512118018967,
+        "falseNegative": 206,
+        "falsePositive": 61,
+        "generated": 402,
+        "matched": 341,
+        "precision": 0.8482587064676617,
+        "recall": 0.623400365630713,
+        "reference": 547
+      },
+      "rule": {
+        "delta": 7,
+        "kind": "state_if_downward_delta",
+        "name": "state_if_current_above_state_by_7_and_voiced_ge_75",
+        "threshold": 0.75
+      }
+    },
+    {
+      "changedExamples": [],
+      "changedMidiEvents": 0,
+      "deltaMidiHistogram": {
+        "0": 402
+      },
+      "gross": {
+        "f1": 0.7439409905163331,
+        "falseNegative": 194,
+        "falsePositive": 49,
+        "generated": 402,
+        "matched": 353,
+        "precision": 0.8781094527363185,
+        "recall": 0.6453382084095064,
+        "reference": 547
+      },
+      "primary": {
+        "f1": 0.7186512118018967,
+        "falseNegative": 206,
+        "falsePositive": 61,
+        "generated": 402,
+        "matched": 341,
+        "precision": 0.8482587064676617,
+        "recall": 0.623400365630713,
+        "reference": 547
+      },
+      "rule": {
+        "delta": 7,
+        "kind": "state_if_downward_delta",
+        "name": "state_if_current_above_state_by_7_and_voiced_ge_85",
+        "threshold": 0.85
+      }
+    },
+    {
+      "changedExamples": [],
+      "changedMidiEvents": 0,
+      "deltaMidiHistogram": {
+        "0": 402
+      },
+      "gross": {
+        "f1": 0.7439409905163331,
+        "falseNegative": 194,
+        "falsePositive": 49,
+        "generated": 402,
+        "matched": 353,
+        "precision": 0.8781094527363185,
+        "recall": 0.6453382084095064,
+        "reference": 547
+      },
+      "primary": {
+        "f1": 0.7186512118018967,
+        "falseNegative": 206,
+        "falsePositive": 61,
+        "generated": 402,
+        "matched": 341,
+        "precision": 0.8482587064676617,
+        "recall": 0.623400365630713,
+        "reference": 547
+      },
+      "rule": {
+        "delta": 9,
+        "kind": "state_if_downward_delta",
+        "name": "state_if_current_above_state_by_9_and_voiced_ge_55",
+        "threshold": 0.55
+      }
+    },
+    {
+      "changedExamples": [],
+      "changedMidiEvents": 0,
+      "deltaMidiHistogram": {
+        "0": 402
+      },
+      "gross": {
+        "f1": 0.7439409905163331,
+        "falseNegative": 194,
+        "falsePositive": 49,
+        "generated": 402,
+        "matched": 353,
+        "precision": 0.8781094527363185,
+        "recall": 0.6453382084095064,
+        "reference": 547
+      },
+      "primary": {
+        "f1": 0.7186512118018967,
+        "falseNegative": 206,
+        "falsePositive": 61,
+        "generated": 402,
+        "matched": 341,
+        "precision": 0.8482587064676617,
+        "recall": 0.623400365630713,
+        "reference": 547
+      },
+      "rule": {
+        "delta": 9,
+        "kind": "state_if_downward_delta",
+        "name": "state_if_current_above_state_by_9_and_voiced_ge_65",
+        "threshold": 0.65
+      }
+    },
+    {
+      "changedExamples": [],
+      "changedMidiEvents": 0,
+      "deltaMidiHistogram": {
+        "0": 402
+      },
+      "gross": {
+        "f1": 0.7439409905163331,
+        "falseNegative": 194,
+        "falsePositive": 49,
+        "generated": 402,
+        "matched": 353,
+        "precision": 0.8781094527363185,
+        "recall": 0.6453382084095064,
+        "reference": 547
+      },
+      "primary": {
+        "f1": 0.7186512118018967,
+        "falseNegative": 206,
+        "falsePositive": 61,
+        "generated": 402,
+        "matched": 341,
+        "precision": 0.8482587064676617,
+        "recall": 0.623400365630713,
+        "reference": 547
+      },
+      "rule": {
+        "delta": 9,
+        "kind": "state_if_downward_delta",
+        "name": "state_if_current_above_state_by_9_and_voiced_ge_75",
+        "threshold": 0.75
+      }
+    },
+    {
+      "changedExamples": [],
+      "changedMidiEvents": 0,
+      "deltaMidiHistogram": {
+        "0": 402
+      },
+      "gross": {
+        "f1": 0.7439409905163331,
+        "falseNegative": 194,
+        "falsePositive": 49,
+        "generated": 402,
+        "matched": 353,
+        "precision": 0.8781094527363185,
+        "recall": 0.6453382084095064,
+        "reference": 547
+      },
+      "primary": {
+        "f1": 0.7186512118018967,
+        "falseNegative": 206,
+        "falsePositive": 61,
+        "generated": 402,
+        "matched": 341,
+        "precision": 0.8482587064676617,
+        "recall": 0.623400365630713,
+        "reference": 547
+      },
+      "rule": {
+        "delta": 9,
+        "kind": "state_if_downward_delta",
+        "name": "state_if_current_above_state_by_9_and_voiced_ge_85",
+        "threshold": 0.85
+      }
+    },
+    {
+      "changedExamples": [],
+      "changedMidiEvents": 0,
+      "deltaMidiHistogram": {
+        "0": 402
+      },
+      "gross": {
+        "f1": 0.7439409905163331,
+        "falseNegative": 194,
+        "falsePositive": 49,
+        "generated": 402,
+        "matched": 353,
+        "precision": 0.8781094527363185,
+        "recall": 0.6453382084095064,
+        "reference": 547
+      },
+      "primary": {
+        "f1": 0.7186512118018967,
+        "falseNegative": 206,
+        "falsePositive": 61,
+        "generated": 402,
+        "matched": 341,
+        "precision": 0.8482587064676617,
+        "recall": 0.623400365630713,
+        "reference": 547
+      },
+      "rule": {
+        "delta": 11,
+        "kind": "state_if_downward_delta",
+        "name": "state_if_current_above_state_by_11_and_voiced_ge_55",
+        "threshold": 0.55
+      }
+    },
+    {
+      "changedExamples": [],
+      "changedMidiEvents": 0,
+      "deltaMidiHistogram": {
+        "0": 402
+      },
+      "gross": {
+        "f1": 0.7439409905163331,
+        "falseNegative": 194,
+        "falsePositive": 49,
+        "generated": 402,
+        "matched": 353,
+        "precision": 0.8781094527363185,
+        "recall": 0.6453382084095064,
+        "reference": 547
+      },
+      "primary": {
+        "f1": 0.7186512118018967,
+        "falseNegative": 206,
+        "falsePositive": 61,
+        "generated": 402,
+        "matched": 341,
+        "precision": 0.8482587064676617,
+        "recall": 0.623400365630713,
+        "reference": 547
+      },
+      "rule": {
+        "delta": 11,
+        "kind": "state_if_downward_delta",
+        "name": "state_if_current_above_state_by_11_and_voiced_ge_65",
+        "threshold": 0.65
+      }
+    },
+    {
+      "changedExamples": [],
+      "changedMidiEvents": 0,
+      "deltaMidiHistogram": {
+        "0": 402
+      },
+      "gross": {
+        "f1": 0.7439409905163331,
+        "falseNegative": 194,
+        "falsePositive": 49,
+        "generated": 402,
+        "matched": 353,
+        "precision": 0.8781094527363185,
+        "recall": 0.6453382084095064,
+        "reference": 547
+      },
+      "primary": {
+        "f1": 0.7186512118018967,
+        "falseNegative": 206,
+        "falsePositive": 61,
+        "generated": 402,
+        "matched": 341,
+        "precision": 0.8482587064676617,
+        "recall": 0.623400365630713,
+        "reference": 547
+      },
+      "rule": {
+        "delta": 11,
+        "kind": "state_if_downward_delta",
+        "name": "state_if_current_above_state_by_11_and_voiced_ge_75",
+        "threshold": 0.75
+      }
+    },
+    {
+      "changedExamples": [],
+      "changedMidiEvents": 0,
+      "deltaMidiHistogram": {
+        "0": 402
+      },
+      "gross": {
+        "f1": 0.7439409905163331,
+        "falseNegative": 194,
+        "falsePositive": 49,
+        "generated": 402,
+        "matched": 353,
+        "precision": 0.8781094527363185,
+        "recall": 0.6453382084095064,
+        "reference": 547
+      },
+      "primary": {
+        "f1": 0.7186512118018967,
+        "falseNegative": 206,
+        "falsePositive": 61,
+        "generated": 402,
+        "matched": 341,
+        "precision": 0.8482587064676617,
+        "recall": 0.623400365630713,
+        "reference": 547
+      },
+      "rule": {
+        "delta": 11,
+        "kind": "state_if_downward_delta",
+        "name": "state_if_current_above_state_by_11_and_voiced_ge_85",
+        "threshold": 0.85
+      }
+    }
+  ],
+  "rules": [
+    {
+      "kind": "baseline",
+      "name": "baseline_current"
+    },
+    {
+      "kind": "state_all",
+      "name": "state_all"
+    },
+    {
+      "kind": "pyin_all",
+      "name": "pyin_round_all"
+    },
+    {
+      "kind": "state_if_conf",
+      "name": "state_if_state_voiced_ge_55",
+      "threshold": 0.55
+    },
+    {
+      "kind": "pyin_if_conf",
+      "name": "pyin_if_pyin_voiced_ge_55",
+      "threshold": 0.55
+    },
+    {
+      "kind": "lower_state_if_conf",
+      "name": "lower_state_if_state_voiced_ge_55",
+      "threshold": 0.55
+    },
+    {
+      "kind": "state_if_conf",
+      "name": "state_if_state_voiced_ge_60",
+      "threshold": 0.6
+    },
+    {
+      "kind": "pyin_if_conf",
+      "name": "pyin_if_pyin_voiced_ge_60",
+      "threshold": 0.6
+    },
+    {
+      "kind": "lower_state_if_conf",
+      "name": "lower_state_if_state_voiced_ge_60",
+      "threshold": 0.6
+    },
+    {
+      "kind": "state_if_conf",
+      "name": "state_if_state_voiced_ge_65",
+      "threshold": 0.65
+    },
+    {
+      "kind": "pyin_if_conf",
+      "name": "pyin_if_pyin_voiced_ge_65",
+      "threshold": 0.65
+    },
+    {
+      "kind": "lower_state_if_conf",
+      "name": "lower_state_if_state_voiced_ge_65",
+      "threshold": 0.65
+    },
+    {
+      "kind": "state_if_conf",
+      "name": "state_if_state_voiced_ge_70",
+      "threshold": 0.7
+    },
+    {
+      "kind": "pyin_if_conf",
+      "name": "pyin_if_pyin_voiced_ge_70",
+      "threshold": 0.7
+    },
+    {
+      "kind": "lower_state_if_conf",
+      "name": "lower_state_if_state_voiced_ge_70",
+      "threshold": 0.7
+    },
+    {
+      "kind": "state_if_conf",
+      "name": "state_if_state_voiced_ge_75",
+      "threshold": 0.75
+    },
+    {
+      "kind": "pyin_if_conf",
+      "name": "pyin_if_pyin_voiced_ge_75",
+      "threshold": 0.75
+    },
+    {
+      "kind": "lower_state_if_conf",
+      "name": "lower_state_if_state_voiced_ge_75",
+      "threshold": 0.75
+    },
+    {
+      "kind": "state_if_conf",
+      "name": "state_if_state_voiced_ge_80",
+      "threshold": 0.8
+    },
+    {
+      "kind": "pyin_if_conf",
+      "name": "pyin_if_pyin_voiced_ge_80",
+      "threshold": 0.8
+    },
+    {
+      "kind": "lower_state_if_conf",
+      "name": "lower_state_if_state_voiced_ge_80",
+      "threshold": 0.8
+    },
+    {
+      "kind": "state_if_conf",
+      "name": "state_if_state_voiced_ge_85",
+      "threshold": 0.85
+    },
+    {
+      "kind": "pyin_if_conf",
+      "name": "pyin_if_pyin_voiced_ge_85",
+      "threshold": 0.85
+    },
+    {
+      "kind": "lower_state_if_conf",
+      "name": "lower_state_if_state_voiced_ge_85",
+      "threshold": 0.85
+    },
+    {
+      "delta": 3,
+      "kind": "state_if_downward_delta",
+      "name": "state_if_current_above_state_by_3_and_voiced_ge_55",
+      "threshold": 0.55
+    },
+    {
+      "delta": 3,
+      "kind": "state_if_downward_delta",
+      "name": "state_if_current_above_state_by_3_and_voiced_ge_65",
+      "threshold": 0.65
+    },
+    {
+      "delta": 3,
+      "kind": "state_if_downward_delta",
+      "name": "state_if_current_above_state_by_3_and_voiced_ge_75",
+      "threshold": 0.75
+    },
+    {
+      "delta": 3,
+      "kind": "state_if_downward_delta",
+      "name": "state_if_current_above_state_by_3_and_voiced_ge_85",
+      "threshold": 0.85
+    },
+    {
+      "delta": 5,
+      "kind": "state_if_downward_delta",
+      "name": "state_if_current_above_state_by_5_and_voiced_ge_55",
+      "threshold": 0.55
+    },
+    {
+      "delta": 5,
+      "kind": "state_if_downward_delta",
+      "name": "state_if_current_above_state_by_5_and_voiced_ge_65",
+      "threshold": 0.65
+    },
+    {
+      "delta": 5,
+      "kind": "state_if_downward_delta",
+      "name": "state_if_current_above_state_by_5_and_voiced_ge_75",
+      "threshold": 0.75
+    },
+    {
+      "delta": 5,
+      "kind": "state_if_downward_delta",
+      "name": "state_if_current_above_state_by_5_and_voiced_ge_85",
+      "threshold": 0.85
+    },
+    {
+      "delta": 7,
+      "kind": "state_if_downward_delta",
+      "name": "state_if_current_above_state_by_7_and_voiced_ge_55",
+      "threshold": 0.55
+    },
+    {
+      "delta": 7,
+      "kind": "state_if_downward_delta",
+      "name": "state_if_current_above_state_by_7_and_voiced_ge_65",
+      "threshold": 0.65
+    },
+    {
+      "delta": 7,
+      "kind": "state_if_downward_delta",
+      "name": "state_if_current_above_state_by_7_and_voiced_ge_75",
+      "threshold": 0.75
+    },
+    {
+      "delta": 7,
+      "kind": "state_if_downward_delta",
+      "name": "state_if_current_above_state_by_7_and_voiced_ge_85",
+      "threshold": 0.85
+    },
+    {
+      "delta": 9,
+      "kind": "state_if_downward_delta",
+      "name": "state_if_current_above_state_by_9_and_voiced_ge_55",
+      "threshold": 0.55
+    },
+    {
+      "delta": 9,
+      "kind": "state_if_downward_delta",
+      "name": "state_if_current_above_state_by_9_and_voiced_ge_65",
+      "threshold": 0.65
+    },
+    {
+      "delta": 9,
+      "kind": "state_if_downward_delta",
+      "name": "state_if_current_above_state_by_9_and_voiced_ge_75",
+      "threshold": 0.75
+    },
+    {
+      "delta": 9,
+      "kind": "state_if_downward_delta",
+      "name": "state_if_current_above_state_by_9_and_voiced_ge_85",
+      "threshold": 0.85
+    },
+    {
+      "delta": 11,
+      "kind": "state_if_downward_delta",
+      "name": "state_if_current_above_state_by_11_and_voiced_ge_55",
+      "threshold": 0.55
+    },
+    {
+      "delta": 11,
+      "kind": "state_if_downward_delta",
+      "name": "state_if_current_above_state_by_11_and_voiced_ge_65",
+      "threshold": 0.65
+    },
+    {
+      "delta": 11,
+      "kind": "state_if_downward_delta",
+      "name": "state_if_current_above_state_by_11_and_voiced_ge_75",
+      "threshold": 0.75
+    },
+    {
+      "delta": 11,
+      "kind": "state_if_downward_delta",
+      "name": "state_if_current_above_state_by_11_and_voiced_ge_85",
+      "threshold": 0.85
+    }
+  ],
+  "schema": "dadrock.tabs.v167.fixed-bass-audio-evidence-pitch-rule-sweep.v1",
+  "version": "V167"
+}
