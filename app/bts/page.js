@@ -606,7 +606,7 @@ export default function BackingTrackStudioPage() {
                     ) : (
                       <>
                         <Upload className="h-5 w-5" />
-                        Continue to $1 Checkout
+                        Continue to PayPal or Token Input
                       </>
                     )}
                   </button>
