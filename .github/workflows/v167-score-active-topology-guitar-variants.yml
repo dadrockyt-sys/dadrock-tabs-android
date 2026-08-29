@@ -1,0 +1,249 @@
+name: V167 score frozen active-topology Guitar variants
+
+on:
+  push:
+    branches:
+      - v143-contextual-prune-lobo
+    paths:
+      - .github/workflows/v167-score-active-topology-guitar-variants.yml
+
+permissions:
+  contents: write
+
+concurrency:
+  group: v167-score-active-topology-guitar-variants-once
+  cancel-in-progress: false
+
+env:
+  BRANCH: v143-contextual-prune-lobo
+  EXPECTED_PARENT_HEAD: 4612cf5299f70dd28c88de663f93558bbfab86cd
+  I005: debug/v167-single-song-calibration/iteration-005-generated.json
+  VARIANT_ROOT: debug/v167-single-song-calibration/active-topology-variants
+  MANIFEST: debug/v167-single-song-calibration/active-topology-guitar-manifest.json
+  GENERATION_RECEIPT: debug/v167-single-song-calibration/active-topology-generation-receipt.json
+  GRADER: validation/v167_single_song_calibration/score_active_topology_guitar_variants_v167.py
+  SCORER: validation/v154_cpu_multitrack/score_frontend_reference.py
+  REFERENCE: research/v154-professional-references/scorer-ready/frontend-reference-payload.json
+  OUTPUT: debug/v167-single-song-calibration/active-topology-guitar-sweep.json
+  RECEIPT: debug/v167-single-song-calibration/active-topology-guitar-sweep-receipt.json
+  CUDA_VISIBLE_DEVICES: ""
+  PYTHONHASHSEED: "0"
+  OMP_NUM_THREADS: "1"
+  MKL_NUM_THREADS: "1"
+  OPENBLAS_NUM_THREADS: "1"
+  NUMEXPR_NUM_THREADS: "1"
+
+jobs:
+  score-once:
+    if: github.ref == 'refs/heads/v143-contextual-prune-lobo'
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+      - name: Checkout exact topology scoring arm
+        uses: actions/checkout@v4
+        with:
+          ref: ${{ github.sha }}
+          fetch-depth: 0
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.10.21'
+
+      - name: Verify complete frozen pre-reference boundary
+        shell: bash
+        run: |
+          set -euo pipefail
+          test "$GITHUB_EVENT_NAME" = "push"
+          test "$GITHUB_RUN_ATTEMPT" = "1"
+          test "$(git rev-parse HEAD^)" = "$EXPECTED_PARENT_HEAD"
+          test "$(git diff --name-only "$EXPECTED_PARENT_HEAD" "$GITHUB_SHA")" = ".github/workflows/v167-score-active-topology-guitar-variants.yml"
+          git fetch origin "$BRANCH"
+          test "$(git rev-parse "origin/$BRANCH")" = "$GITHUB_SHA"
+
+          # Frozen non-reference inputs.
+          test "$(git hash-object "$I005")" = "8d68f4d7fac4e094bcd617b026befddd370d9368"
+          test "$(git hash-object "$MANIFEST")" = "4b3e75b7f1734807b67de827e54bd4bcc59b855b"
+          test "$(git hash-object "$GENERATION_RECEIPT")" = "e702f408ab63387a1c21e9a37470aa4afa6c4a66"
+          test "$(git hash-object "$GRADER")" = "4458d45cfa2ea018cf40a3a24344e1b7dd9d104a"
+          test "$(git hash-object docs/checkpoints/CURRENT_STATE.md)" = "409cd478697c9fd10c93a491724bbe981b405d7d"
+
+          test "$(git hash-object "$VARIANT_ROOT/topo-repro-i005.json")" = "a4c8a68ff10b5a168fbb19adc2e6bbdb18771061"
+          test "$(git hash-object "$VARIANT_ROOT/topo-single-or-chord.json")" = "f91ef9390e5dd5cb3061fec84d3c017bb0ae8bce"
+          test "$(git hash-object "$VARIANT_ROOT/topo-single-only.json")" = "e4f75950bd17b067546dd902fbcd4701c226b71e"
+          test "$(git hash-object "$VARIANT_ROOT/topo-chord-only.json")" = "559ba84378a67d04004b9eaca60264350c0cce9f"
+
+          # Reference/scorer identity is verified through the Git tree only here;
+          # their working-tree bytes are not opened by this pre-reference step.
+          test "$(git rev-parse "HEAD:$SCORER")" = "9644e65719fbd361a9b39778ae9950c5e983e855"
+          test "$(git rev-parse "HEAD:$REFERENCE")" = "2fbed60b543c0488934d8642c488aa06bf31bbf5"
+
+          test ! -e "$OUTPUT"
+          test ! -e "$RECEIPT"
+          python -m py_compile "$GRADER"
+
+          python - <<'PY'
+          import hashlib
+          import json
+          from pathlib import Path
+
+          checks = {
+              'debug/v167-single-song-calibration/iteration-005-generated.json': '86329ebc25e589f566d466a7a65cae35a158c25f470b1c034973f3dbc7d38b31',
+              'debug/v167-single-song-calibration/active-topology-guitar-manifest.json': 'bafccfaf15f2e95959396d0f956d3224b2a4fb21290058222281cf0a77023d48',
+              'debug/v167-single-song-calibration/active-topology-variants/topo-repro-i005.json': '4fbd7c41093d8b3f9b382bba51d8cda29a0aeeb36071749f67b7084f5cfca652',
+              'debug/v167-single-song-calibration/active-topology-variants/topo-single-or-chord.json': '8a924e8395d439635d577cee028d2c9b47512d5c305d0018e5cc6bbd2a6c46c4',
+              'debug/v167-single-song-calibration/active-topology-variants/topo-single-only.json': '370ecb56e1f1e3ef4b16367f7cd6747dac8139e6d75a739e861b165eb7e88efa',
+              'debug/v167-single-song-calibration/active-topology-variants/topo-chord-only.json': '2355aa168e4aed0d63f298690d092209b205191a2a64df109139624978e4950c',
+          }
+          for path, expected in checks.items():
+              actual = hashlib.sha256(Path(path).read_bytes()).hexdigest()
+              assert actual == expected, (path, actual, expected)
+
+          manifest = json.load(open('debug/v167-single-song-calibration/active-topology-guitar-manifest.json'))
+          receipt = json.load(open('debug/v167-single-song-calibration/active-topology-generation-receipt.json'))
+          assert manifest['status'] == 'FROZEN_BEFORE_REFERENCE_SCORING'
+          assert receipt['status'] == 'ACTIVE_TOPOLOGY_VARIANTS_FROZEN_BEFORE_SCORING'
+          assert receipt['manifestSha256'] == 'bafccfaf15f2e95959396d0f956d3224b2a4fb21290058222281cf0a77023d48'
+          assert receipt['manifestGitBlob'] == '4b3e75b7f1734807b67de827e54bd4bcc59b855b'
+          assert receipt['policy']['professionalReferenceReadByGenerationWorkflow'] is False
+          assert receipt['policy']['scorerReadByGenerationWorkflow'] is False
+          assert receipt['policy']['newReferenceFacingScoreCalls'] == 0
+          assert receipt['policy']['allCandidateHashesFrozenBeforeScoring'] is True
+          assert manifest['policy']['newGuitarVariantScoreCallsPlanned'] == 3
+          assert manifest['policy']['bassScoreCallsPlanned'] == 0
+          assert manifest['policy']['reproductionControlScored'] is False
+          assert manifest['policy']['automaticIteration006Promotion'] is False
+          assert manifest['policy']['promotionEligibility'] == {
+              'minimumF1GainPercentagePointsVsI005': 0.1,
+              'precisionMustBeAtLeastI005': True,
+          }
+          expected = {
+              'topo-repro-i005': ('4fbd7c41093d8b3f9b382bba51d8cda29a0aeeb36071749f67b7084f5cfca652', 48, True),
+              'topo-single-or-chord': ('8a924e8395d439635d577cee028d2c9b47512d5c305d0018e5cc6bbd2a6c46c4', 41, False),
+              'topo-single-only': ('370ecb56e1f1e3ef4b16367f7cd6747dac8139e6d75a739e861b165eb7e88efa', 23, False),
+              'topo-chord-only': ('2355aa168e4aed0d63f298690d092209b205191a2a64df109139624978e4950c', 18, False),
+          }
+          for row in manifest['variants']:
+              sha, kept, repro = expected[row['id']]
+              assert row['sha256'] == sha
+              assert row['summary']['keptI005Additions'] == kept
+              assert row['reproductionControl'] is repro
+              assert row['counts']['bass'] == 512
+          assert {row['id'] for row in manifest['variants']} == set(expected)
+          PY
+
+      - name: Score exactly three frozen Guitar whole rules
+        shell: bash
+        run: |
+          set -euo pipefail
+          # This command is the first working-tree read of the frozen scorer/reference.
+          python "$GRADER" \
+            --variant-root "$VARIANT_ROOT" \
+            --manifest "$MANIFEST" \
+            --i005 "$I005" \
+            --reference "$REFERENCE" \
+            --scorer-code "$SCORER" \
+            --output "$OUTPUT"
+
+          python - <<'PY'
+          import json
+          report = json.load(open('debug/v167-single-song-calibration/active-topology-guitar-sweep.json'))
+          assert report['schema'] == 'dadrock.tabs.v167.active-topology-guitar-sweep.v1'
+          assert report['status'] == 'REFERENCE_GRADED_COMPLETE_PREDECLARED_ACTIVE_TOPOLOGY_VARIANTS'
+          assert report['manifestSha256'] == 'bafccfaf15f2e95959396d0f956d3224b2a4fb21290058222281cf0a77023d48'
+          assert report['referenceSha256'] == 'b39a203aec3f45800891fe4eca156e37e7571b91ea5c4ccc41b30bbc95fc89e7'
+          assert report['selectionPolicy']['guitarScoreCalls'] == 3
+          assert report['selectionPolicy']['bassScoreCalls'] == 0
+          assert report['selectionPolicy']['reproductionControlScoreCalls'] == 0
+          assert report['selectionPolicy']['automaticIteration006Promotion'] is False
+          assert report['selectionPolicy']['postScoreCandidateMutation'] is False
+          assert report['selectionPolicy']['postScoreRetuning'] is False
+          assert report['reproductionControl']['normalizedGuitarExactlyI005'] is True
+          assert report['reproductionControl']['normalizedBassExactlyI005'] is True
+          assert report['reproductionControl']['scoreCalls'] == 0
+          assert len(report['variants']) == 3
+          assert {row['id'] for row in report['variants']} == {
+              'topo-single-or-chord', 'topo-single-only', 'topo-chord-only'
+          }
+          assert report['policy']['iteration006CreatedByThisSweep'] is False
+          assert report['policy']['bassStreamScored'] is False
+          print(json.dumps({
+              'winner': report['winnerIncludingI005Baseline'],
+              'newVariantsBeatingI005': report['newVariantsBeatingI005'],
+              'newVariantsMeetingPromotionEligibility': report['newVariantsMeetingPromotionEligibility'],
+          }, indent=2, sort_keys=True))
+          PY
+
+      - name: Freeze topology scoring receipt and self-seal
+        shell: bash
+        run: |
+          set -euo pipefail
+          python - <<'PY'
+          import hashlib
+          import json
+          import os
+          import subprocess
+          from pathlib import Path
+
+          output = Path('debug/v167-single-song-calibration/active-topology-guitar-sweep.json')
+          receipt_path = Path('debug/v167-single-song-calibration/active-topology-guitar-sweep-receipt.json')
+          report = json.loads(output.read_text())
+          receipt = {
+              'schema': 'dadrock.tabs.v167.active-topology-guitar-sweep-receipt.v1',
+              'version': 'V167',
+              'status': 'ACTIVE_TOPOLOGY_GUITAR_SWEEP_FROZEN',
+              'classification': 'SINGLE_SONG_TRAINING_CALIBRATION_ONLY',
+              'workflowRunId': int(os.environ['GITHUB_RUN_ID']),
+              'workflowRunNumber': int(os.environ['GITHUB_RUN_NUMBER']),
+              'workflowRunAttempt': int(os.environ['GITHUB_RUN_ATTEMPT']),
+              'workflowHeadSha': os.environ['GITHUB_SHA'],
+              'reportSha256': hashlib.sha256(output.read_bytes()).hexdigest(),
+              'reportGitBlob': subprocess.check_output(['git', 'hash-object', str(output)], text=True).strip(),
+              'manifestSha256': report['manifestSha256'],
+              'manifestGitBlob': '4b3e75b7f1734807b67de827e54bd4bcc59b855b',
+              'generationReceiptGitBlob': 'e702f408ab63387a1c21e9a37470aa4afa6c4a66',
+              'implementation': {
+                  'graderGitBlob': '4458d45cfa2ea018cf40a3a24344e1b7dd9d104a',
+                  'scorerGitBlob': '9644e65719fbd361a9b39778ae9950c5e983e855',
+              },
+              'reference': {
+                  'gitBlob': '2fbed60b543c0488934d8642c488aa06bf31bbf5',
+                  'sha256': report['referenceSha256'],
+              },
+              'scoreCallBoundary': {
+                  'guitar': report['selectionPolicy']['guitarScoreCalls'],
+                  'bass': report['selectionPolicy']['bassScoreCalls'],
+                  'reproductionControl': report['selectionPolicy']['reproductionControlScoreCalls'],
+              },
+              'winnerIncludingI005Baseline': report['winnerIncludingI005Baseline'],
+              'newVariantsBeatingI005': report['newVariantsBeatingI005'],
+              'newVariantsMeetingPromotionEligibility': report['newVariantsMeetingPromotionEligibility'],
+              'variants': report['variants'],
+              'policy': {
+                  'allCandidatesFrozenBeforeReferenceRead': True,
+                  'individualEventSelectionByReference': False,
+                  'postScoreCandidateMutation': False,
+                  'postScoreRetuning': False,
+                  'iteration006Created': False,
+                  'bassScored': False,
+                  'reproductionControlScored': False,
+                  'gpuCudaModalUsed': False,
+                  'mainOrProductionModified': False,
+                  'generalizationClaim': False,
+              },
+          }
+          receipt_path.write_text(json.dumps(receipt, indent=2, sort_keys=True) + '\n')
+          PY
+
+          rm .github/workflows/v167-score-active-topology-guitar-variants.yml
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add -A -- "$OUTPUT" "$RECEIPT" .github/workflows/v167-score-active-topology-guitar-variants.yml
+          changed="$(git diff --cached --name-only)"
+          if echo "$changed" | grep -Ev '^debug/v167-single-song-calibration/active-topology-guitar-sweep(-receipt)?\.json$|^\.github/workflows/v167-score-active-topology-guitar-variants\.yml$'; then
+            echo 'Unexpected topology scoring path' >&2
+            exit 1
+          fi
+          test "$(printf '%s\n' "$changed" | sed '/^$/d' | wc -l)" -eq 3
+          git commit -m "research: freeze V167 active-topology Guitar sweep [skip ci]"
+          git push origin HEAD:"$BRANCH"
