@@ -1,0 +1,4310 @@
+{
+  "bass": {
+    "baseline": {
+      "f1": 0.7060063224446786,
+      "falseNegative": 212,
+      "falsePositive": 67,
+      "generated": 402,
+      "matched": 335,
+      "precision": 0.8333333333333334,
+      "recall": 0.6124314442413162,
+      "reference": 547
+    },
+    "selected": {
+      "addedEvents": 0,
+      "changedMeasures": 0,
+      "deltaRecognitionPercent": 0.0,
+      "detailedChanges": [],
+      "primary": {
+        "f1": 0.7060063224446786,
+        "falseNegative": 212,
+        "falsePositive": 67,
+        "generated": 402,
+        "matched": 335,
+        "precision": 0.8333333333333334,
+        "recall": 0.6124314442413162,
+        "reference": 547
+      },
+      "recognitionPercent": 70.60063224446786,
+      "useBaseline": true
+    },
+    "variants": [
+      {
+        "addedEvents": 26,
+        "changedMeasures": 26,
+        "maxAdditionsPerMeasure": 1,
+        "minTargetEvents": 1,
+        "primary": {
+          "f1": 0.6953846153846154,
+          "falseNegative": 208,
+          "falsePositive": 89,
+          "generated": 428,
+          "matched": 339,
+          "precision": 0.7920560747663551,
+          "recall": 0.6197440585009141,
+          "reference": 547
+        },
+        "threshold": 0.5
+      },
+      {
+        "addedEvents": 25,
+        "changedMeasures": 25,
+        "maxAdditionsPerMeasure": 1,
+        "minTargetEvents": 2,
+        "primary": {
+          "f1": 0.6960985626283368,
+          "falseNegative": 208,
+          "falsePositive": 88,
+          "generated": 427,
+          "matched": 339,
+          "precision": 0.7939110070257611,
+          "recall": 0.6197440585009141,
+          "reference": 547
+        },
+        "threshold": 0.5
+      },
+      {
+        "addedEvents": 25,
+        "changedMeasures": 25,
+        "maxAdditionsPerMeasure": 1,
+        "minTargetEvents": 3,
+        "primary": {
+          "f1": 0.6960985626283368,
+          "falseNegative": 208,
+          "falsePositive": 88,
+          "generated": 427,
+          "matched": 339,
+          "precision": 0.7939110070257611,
+          "recall": 0.6197440585009141,
+          "reference": 547
+        },
+        "threshold": 0.5
+      },
+      {
+        "addedEvents": 58,
+        "changedMeasures": 42,
+        "maxAdditionsPerMeasure": 2,
+        "minTargetEvents": 1,
+        "primary": {
+          "f1": 0.6911618669314796,
+          "falseNegative": 199,
+          "falsePositive": 112,
+          "generated": 460,
+          "matched": 348,
+          "precision": 0.7565217391304347,
+          "recall": 0.6361974405850092,
+          "reference": 547
+        },
+        "threshold": 0.5
+      },
+      {
+        "addedEvents": 57,
+        "changedMeasures": 41,
+        "maxAdditionsPerMeasure": 2,
+        "minTargetEvents": 2,
+        "primary": {
+          "f1": 0.6918489065606362,
+          "falseNegative": 199,
+          "falsePositive": 111,
+          "generated": 459,
+          "matched": 348,
+          "precision": 0.7581699346405228,
+          "recall": 0.6361974405850092,
+          "reference": 547
+        },
+        "threshold": 0.5
+      },
+      {
+        "addedEvents": 57,
+        "changedMeasures": 41,
+        "maxAdditionsPerMeasure": 2,
+        "minTargetEvents": 3,
+        "primary": {
+          "f1": 0.6918489065606362,
+          "falseNegative": 199,
+          "falsePositive": 111,
+          "generated": 459,
+          "matched": 348,
+          "precision": 0.7581699346405228,
+          "recall": 0.6361974405850092,
+          "reference": 547
+        },
+        "threshold": 0.5
+      },
+      {
+        "addedEvents": 89,
+        "changedMeasures": 51,
+        "maxAdditionsPerMeasure": 4,
+        "minTargetEvents": 1,
+        "primary": {
+          "f1": 0.6724470134874758,
+          "falseNegative": 198,
+          "falsePositive": 142,
+          "generated": 491,
+          "matched": 349,
+          "precision": 0.7107942973523421,
+          "recall": 0.6380255941499086,
+          "reference": 547
+        },
+        "threshold": 0.5
+      },
+      {
+        "addedEvents": 84,
+        "changedMeasures": 49,
+        "maxAdditionsPerMeasure": 4,
+        "minTargetEvents": 2,
+        "primary": {
+          "f1": 0.675701839303001,
+          "falseNegative": 198,
+          "falsePositive": 137,
+          "generated": 486,
+          "matched": 349,
+          "precision": 0.7181069958847737,
+          "recall": 0.6380255941499086,
+          "reference": 547
+        },
+        "threshold": 0.5
+      },
+      {
+        "addedEvents": 81,
+        "changedMeasures": 48,
+        "maxAdditionsPerMeasure": 4,
+        "minTargetEvents": 3,
+        "primary": {
+          "f1": 0.6776699029126213,
+          "falseNegative": 198,
+          "falsePositive": 134,
+          "generated": 483,
+          "matched": 349,
+          "precision": 0.722567287784679,
+          "recall": 0.6380255941499086,
+          "reference": 547
+        },
+        "threshold": 0.5
+      },
+      {
+        "addedEvents": 89,
+        "changedMeasures": 51,
+        "maxAdditionsPerMeasure": 8,
+        "minTargetEvents": 1,
+        "primary": {
+          "f1": 0.6724470134874758,
+          "falseNegative": 198,
+          "falsePositive": 142,
+          "generated": 491,
+          "matched": 349,
+          "precision": 0.7107942973523421,
+          "recall": 0.6380255941499086,
+          "reference": 547
+        },
+        "threshold": 0.5
+      },
+      {
+        "addedEvents": 84,
+        "changedMeasures": 49,
+        "maxAdditionsPerMeasure": 8,
+        "minTargetEvents": 2,
+        "primary": {
+          "f1": 0.675701839303001,
+          "falseNegative": 198,
+          "falsePositive": 137,
+          "generated": 486,
+          "matched": 349,
+          "precision": 0.7181069958847737,
+          "recall": 0.6380255941499086,
+          "reference": 547
+        },
+        "threshold": 0.5
+      },
+      {
+        "addedEvents": 81,
+        "changedMeasures": 48,
+        "maxAdditionsPerMeasure": 8,
+        "minTargetEvents": 3,
+        "primary": {
+          "f1": 0.6776699029126213,
+          "falseNegative": 198,
+          "falsePositive": 134,
+          "generated": 483,
+          "matched": 349,
+          "precision": 0.722567287784679,
+          "recall": 0.6380255941499086,
+          "reference": 547
+        },
+        "threshold": 0.5
+      },
+      {
+        "addedEvents": 26,
+        "changedMeasures": 26,
+        "maxAdditionsPerMeasure": 1,
+        "minTargetEvents": 1,
+        "primary": {
+          "f1": 0.6953846153846154,
+          "falseNegative": 208,
+          "falsePositive": 89,
+          "generated": 428,
+          "matched": 339,
+          "precision": 0.7920560747663551,
+          "recall": 0.6197440585009141,
+          "reference": 547
+        },
+        "threshold": 0.67
+      },
+      {
+        "addedEvents": 25,
+        "changedMeasures": 25,
+        "maxAdditionsPerMeasure": 1,
+        "minTargetEvents": 2,
+        "primary": {
+          "f1": 0.6960985626283368,
+          "falseNegative": 208,
+          "falsePositive": 88,
+          "generated": 427,
+          "matched": 339,
+          "precision": 0.7939110070257611,
+          "recall": 0.6197440585009141,
+          "reference": 547
+        },
+        "threshold": 0.67
+      },
+      {
+        "addedEvents": 25,
+        "changedMeasures": 25,
+        "maxAdditionsPerMeasure": 1,
+        "minTargetEvents": 3,
+        "primary": {
+          "f1": 0.6960985626283368,
+          "falseNegative": 208,
+          "falsePositive": 88,
+          "generated": 427,
+          "matched": 339,
+          "precision": 0.7939110070257611,
+          "recall": 0.6197440585009141,
+          "reference": 547
+        },
+        "threshold": 0.67
+      },
+      {
+        "addedEvents": 58,
+        "changedMeasures": 42,
+        "maxAdditionsPerMeasure": 2,
+        "minTargetEvents": 1,
+        "primary": {
+          "f1": 0.6911618669314796,
+          "falseNegative": 199,
+          "falsePositive": 112,
+          "generated": 460,
+          "matched": 348,
+          "precision": 0.7565217391304347,
+          "recall": 0.6361974405850092,
+          "reference": 547
+        },
+        "threshold": 0.67
+      },
+      {
+        "addedEvents": 57,
+        "changedMeasures": 41,
+        "maxAdditionsPerMeasure": 2,
+        "minTargetEvents": 2,
+        "primary": {
+          "f1": 0.6918489065606362,
+          "falseNegative": 199,
+          "falsePositive": 111,
+          "generated": 459,
+          "matched": 348,
+          "precision": 0.7581699346405228,
+          "recall": 0.6361974405850092,
+          "reference": 547
+        },
+        "threshold": 0.67
+      },
+      {
+        "addedEvents": 57,
+        "changedMeasures": 41,
+        "maxAdditionsPerMeasure": 2,
+        "minTargetEvents": 3,
+        "primary": {
+          "f1": 0.6918489065606362,
+          "falseNegative": 199,
+          "falsePositive": 111,
+          "generated": 459,
+          "matched": 348,
+          "precision": 0.7581699346405228,
+          "recall": 0.6361974405850092,
+          "reference": 547
+        },
+        "threshold": 0.67
+      },
+      {
+        "addedEvents": 62,
+        "changedMeasures": 43,
+        "maxAdditionsPerMeasure": 4,
+        "minTargetEvents": 1,
+        "primary": {
+          "f1": 0.6884272997032642,
+          "falseNegative": 199,
+          "falsePositive": 116,
+          "generated": 464,
+          "matched": 348,
+          "precision": 0.75,
+          "recall": 0.6361974405850092,
+          "reference": 547
+        },
+        "threshold": 0.67
+      },
+      {
+        "addedEvents": 57,
+        "changedMeasures": 41,
+        "maxAdditionsPerMeasure": 4,
+        "minTargetEvents": 2,
+        "primary": {
+          "f1": 0.6918489065606362,
+          "falseNegative": 199,
+          "falsePositive": 111,
+          "generated": 459,
+          "matched": 348,
+          "precision": 0.7581699346405228,
+          "recall": 0.6361974405850092,
+          "reference": 547
+        },
+        "threshold": 0.67
+      },
+      {
+        "addedEvents": 57,
+        "changedMeasures": 41,
+        "maxAdditionsPerMeasure": 4,
+        "minTargetEvents": 3,
+        "primary": {
+          "f1": 0.6918489065606362,
+          "falseNegative": 199,
+          "falsePositive": 111,
+          "generated": 459,
+          "matched": 348,
+          "precision": 0.7581699346405228,
+          "recall": 0.6361974405850092,
+          "reference": 547
+        },
+        "threshold": 0.67
+      },
+      {
+        "addedEvents": 62,
+        "changedMeasures": 43,
+        "maxAdditionsPerMeasure": 8,
+        "minTargetEvents": 1,
+        "primary": {
+          "f1": 0.6884272997032642,
+          "falseNegative": 199,
+          "falsePositive": 116,
+          "generated": 464,
+          "matched": 348,
+          "precision": 0.75,
+          "recall": 0.6361974405850092,
+          "reference": 547
+        },
+        "threshold": 0.67
+      },
+      {
+        "addedEvents": 57,
+        "changedMeasures": 41,
+        "maxAdditionsPerMeasure": 8,
+        "minTargetEvents": 2,
+        "primary": {
+          "f1": 0.6918489065606362,
+          "falseNegative": 199,
+          "falsePositive": 111,
+          "generated": 459,
+          "matched": 348,
+          "precision": 0.7581699346405228,
+          "recall": 0.6361974405850092,
+          "reference": 547
+        },
+        "threshold": 0.67
+      },
+      {
+        "addedEvents": 57,
+        "changedMeasures": 41,
+        "maxAdditionsPerMeasure": 8,
+        "minTargetEvents": 3,
+        "primary": {
+          "f1": 0.6918489065606362,
+          "falseNegative": 199,
+          "falsePositive": 111,
+          "generated": 459,
+          "matched": 348,
+          "precision": 0.7581699346405228,
+          "recall": 0.6361974405850092,
+          "reference": 547
+        },
+        "threshold": 0.67
+      },
+      {
+        "addedEvents": 26,
+        "changedMeasures": 26,
+        "maxAdditionsPerMeasure": 1,
+        "minTargetEvents": 1,
+        "primary": {
+          "f1": 0.6953846153846154,
+          "falseNegative": 208,
+          "falsePositive": 89,
+          "generated": 428,
+          "matched": 339,
+          "precision": 0.7920560747663551,
+          "recall": 0.6197440585009141,
+          "reference": 547
+        },
+        "threshold": 0.75
+      },
+      {
+        "addedEvents": 25,
+        "changedMeasures": 25,
+        "maxAdditionsPerMeasure": 1,
+        "minTargetEvents": 2,
+        "primary": {
+          "f1": 0.6960985626283368,
+          "falseNegative": 208,
+          "falsePositive": 88,
+          "generated": 427,
+          "matched": 339,
+          "precision": 0.7939110070257611,
+          "recall": 0.6197440585009141,
+          "reference": 547
+        },
+        "threshold": 0.75
+      },
+      {
+        "addedEvents": 25,
+        "changedMeasures": 25,
+        "maxAdditionsPerMeasure": 1,
+        "minTargetEvents": 3,
+        "primary": {
+          "f1": 0.6960985626283368,
+          "falseNegative": 208,
+          "falsePositive": 88,
+          "generated": 427,
+          "matched": 339,
+          "precision": 0.7939110070257611,
+          "recall": 0.6197440585009141,
+          "reference": 547
+        },
+        "threshold": 0.75
+      },
+      {
+        "addedEvents": 58,
+        "changedMeasures": 42,
+        "maxAdditionsPerMeasure": 2,
+        "minTargetEvents": 1,
+        "primary": {
+          "f1": 0.6911618669314796,
+          "falseNegative": 199,
+          "falsePositive": 112,
+          "generated": 460,
+          "matched": 348,
+          "precision": 0.7565217391304347,
+          "recall": 0.6361974405850092,
+          "reference": 547
+        },
+        "threshold": 0.75
+      },
+      {
+        "addedEvents": 57,
+        "changedMeasures": 41,
+        "maxAdditionsPerMeasure": 2,
+        "minTargetEvents": 2,
+        "primary": {
+          "f1": 0.6918489065606362,
+          "falseNegative": 199,
+          "falsePositive": 111,
+          "generated": 459,
+          "matched": 348,
+          "precision": 0.7581699346405228,
+          "recall": 0.6361974405850092,
+          "reference": 547
+        },
+        "threshold": 0.75
+      },
+      {
+        "addedEvents": 57,
+        "changedMeasures": 41,
+        "maxAdditionsPerMeasure": 2,
+        "minTargetEvents": 3,
+        "primary": {
+          "f1": 0.6918489065606362,
+          "falseNegative": 199,
+          "falsePositive": 111,
+          "generated": 459,
+          "matched": 348,
+          "precision": 0.7581699346405228,
+          "recall": 0.6361974405850092,
+          "reference": 547
+        },
+        "threshold": 0.75
+      },
+      {
+        "addedEvents": 62,
+        "changedMeasures": 43,
+        "maxAdditionsPerMeasure": 4,
+        "minTargetEvents": 1,
+        "primary": {
+          "f1": 0.6884272997032642,
+          "falseNegative": 199,
+          "falsePositive": 116,
+          "generated": 464,
+          "matched": 348,
+          "precision": 0.75,
+          "recall": 0.6361974405850092,
+          "reference": 547
+        },
+        "threshold": 0.75
+      },
+      {
+        "addedEvents": 57,
+        "changedMeasures": 41,
+        "maxAdditionsPerMeasure": 4,
+        "minTargetEvents": 2,
+        "primary": {
+          "f1": 0.6918489065606362,
+          "falseNegative": 199,
+          "falsePositive": 111,
+          "generated": 459,
+          "matched": 348,
+          "precision": 0.7581699346405228,
+          "recall": 0.6361974405850092,
+          "reference": 547
+        },
+        "threshold": 0.75
+      },
+      {
+        "addedEvents": 57,
+        "changedMeasures": 41,
+        "maxAdditionsPerMeasure": 4,
+        "minTargetEvents": 3,
+        "primary": {
+          "f1": 0.6918489065606362,
+          "falseNegative": 199,
+          "falsePositive": 111,
+          "generated": 459,
+          "matched": 348,
+          "precision": 0.7581699346405228,
+          "recall": 0.6361974405850092,
+          "reference": 547
+        },
+        "threshold": 0.75
+      },
+      {
+        "addedEvents": 62,
+        "changedMeasures": 43,
+        "maxAdditionsPerMeasure": 8,
+        "minTargetEvents": 1,
+        "primary": {
+          "f1": 0.6884272997032642,
+          "falseNegative": 199,
+          "falsePositive": 116,
+          "generated": 464,
+          "matched": 348,
+          "precision": 0.75,
+          "recall": 0.6361974405850092,
+          "reference": 547
+        },
+        "threshold": 0.75
+      },
+      {
+        "addedEvents": 57,
+        "changedMeasures": 41,
+        "maxAdditionsPerMeasure": 8,
+        "minTargetEvents": 2,
+        "primary": {
+          "f1": 0.6918489065606362,
+          "falseNegative": 199,
+          "falsePositive": 111,
+          "generated": 459,
+          "matched": 348,
+          "precision": 0.7581699346405228,
+          "recall": 0.6361974405850092,
+          "reference": 547
+        },
+        "threshold": 0.75
+      },
+      {
+        "addedEvents": 57,
+        "changedMeasures": 41,
+        "maxAdditionsPerMeasure": 8,
+        "minTargetEvents": 3,
+        "primary": {
+          "f1": 0.6918489065606362,
+          "falseNegative": 199,
+          "falsePositive": 111,
+          "generated": 459,
+          "matched": 348,
+          "precision": 0.7581699346405228,
+          "recall": 0.6361974405850092,
+          "reference": 547
+        },
+        "threshold": 0.75
+      },
+      {
+        "addedEvents": 26,
+        "changedMeasures": 26,
+        "maxAdditionsPerMeasure": 1,
+        "minTargetEvents": 1,
+        "primary": {
+          "f1": 0.6953846153846154,
+          "falseNegative": 208,
+          "falsePositive": 89,
+          "generated": 428,
+          "matched": 339,
+          "precision": 0.7920560747663551,
+          "recall": 0.6197440585009141,
+          "reference": 547
+        },
+        "threshold": 0.8
+      },
+      {
+        "addedEvents": 25,
+        "changedMeasures": 25,
+        "maxAdditionsPerMeasure": 1,
+        "minTargetEvents": 2,
+        "primary": {
+          "f1": 0.6960985626283368,
+          "falseNegative": 208,
+          "falsePositive": 88,
+          "generated": 427,
+          "matched": 339,
+          "precision": 0.7939110070257611,
+          "recall": 0.6197440585009141,
+          "reference": 547
+        },
+        "threshold": 0.8
+      },
+      {
+        "addedEvents": 25,
+        "changedMeasures": 25,
+        "maxAdditionsPerMeasure": 1,
+        "minTargetEvents": 3,
+        "primary": {
+          "f1": 0.6960985626283368,
+          "falseNegative": 208,
+          "falsePositive": 88,
+          "generated": 427,
+          "matched": 339,
+          "precision": 0.7939110070257611,
+          "recall": 0.6197440585009141,
+          "reference": 547
+        },
+        "threshold": 0.8
+      },
+      {
+        "addedEvents": 56,
+        "changedMeasures": 41,
+        "maxAdditionsPerMeasure": 2,
+        "minTargetEvents": 1,
+        "primary": {
+          "f1": 0.690547263681592,
+          "falseNegative": 200,
+          "falsePositive": 111,
+          "generated": 458,
+          "matched": 347,
+          "precision": 0.75764192139738,
+          "recall": 0.6343692870201096,
+          "reference": 547
+        },
+        "threshold": 0.8
+      },
+      {
+        "addedEvents": 55,
+        "changedMeasures": 40,
+        "maxAdditionsPerMeasure": 2,
+        "minTargetEvents": 2,
+        "primary": {
+          "f1": 0.6912350597609562,
+          "falseNegative": 200,
+          "falsePositive": 110,
+          "generated": 457,
+          "matched": 347,
+          "precision": 0.7592997811816192,
+          "recall": 0.6343692870201096,
+          "reference": 547
+        },
+        "threshold": 0.8
+      },
+      {
+        "addedEvents": 55,
+        "changedMeasures": 40,
+        "maxAdditionsPerMeasure": 2,
+        "minTargetEvents": 3,
+        "primary": {
+          "f1": 0.6912350597609562,
+          "falseNegative": 200,
+          "falsePositive": 110,
+          "generated": 457,
+          "matched": 347,
+          "precision": 0.7592997811816192,
+          "recall": 0.6343692870201096,
+          "reference": 547
+        },
+        "threshold": 0.8
+      },
+      {
+        "addedEvents": 60,
+        "changedMeasures": 42,
+        "maxAdditionsPerMeasure": 4,
+        "minTargetEvents": 1,
+        "primary": {
+          "f1": 0.6878097125867195,
+          "falseNegative": 200,
+          "falsePositive": 115,
+          "generated": 462,
+          "matched": 347,
+          "precision": 0.7510822510822511,
+          "recall": 0.6343692870201096,
+          "reference": 547
+        },
+        "threshold": 0.8
+      },
+      {
+        "addedEvents": 55,
+        "changedMeasures": 40,
+        "maxAdditionsPerMeasure": 4,
+        "minTargetEvents": 2,
+        "primary": {
+          "f1": 0.6912350597609562,
+          "falseNegative": 200,
+          "falsePositive": 110,
+          "generated": 457,
+          "matched": 347,
+          "precision": 0.7592997811816192,
+          "recall": 0.6343692870201096,
+          "reference": 547
+        },
+        "threshold": 0.8
+      },
+      {
+        "addedEvents": 55,
+        "changedMeasures": 40,
+        "maxAdditionsPerMeasure": 4,
+        "minTargetEvents": 3,
+        "primary": {
+          "f1": 0.6912350597609562,
+          "falseNegative": 200,
+          "falsePositive": 110,
+          "generated": 457,
+          "matched": 347,
+          "precision": 0.7592997811816192,
+          "recall": 0.6343692870201096,
+          "reference": 547
+        },
+        "threshold": 0.8
+      },
+      {
+        "addedEvents": 60,
+        "changedMeasures": 42,
+        "maxAdditionsPerMeasure": 8,
+        "minTargetEvents": 1,
+        "primary": {
+          "f1": 0.6878097125867195,
+          "falseNegative": 200,
+          "falsePositive": 115,
+          "generated": 462,
+          "matched": 347,
+          "precision": 0.7510822510822511,
+          "recall": 0.6343692870201096,
+          "reference": 547
+        },
+        "threshold": 0.8
+      },
+      {
+        "addedEvents": 55,
+        "changedMeasures": 40,
+        "maxAdditionsPerMeasure": 8,
+        "minTargetEvents": 2,
+        "primary": {
+          "f1": 0.6912350597609562,
+          "falseNegative": 200,
+          "falsePositive": 110,
+          "generated": 457,
+          "matched": 347,
+          "precision": 0.7592997811816192,
+          "recall": 0.6343692870201096,
+          "reference": 547
+        },
+        "threshold": 0.8
+      },
+      {
+        "addedEvents": 55,
+        "changedMeasures": 40,
+        "maxAdditionsPerMeasure": 8,
+        "minTargetEvents": 3,
+        "primary": {
+          "f1": 0.6912350597609562,
+          "falseNegative": 200,
+          "falsePositive": 110,
+          "generated": 457,
+          "matched": 347,
+          "precision": 0.7592997811816192,
+          "recall": 0.6343692870201096,
+          "reference": 547
+        },
+        "threshold": 0.8
+      },
+      {
+        "addedEvents": 26,
+        "changedMeasures": 26,
+        "maxAdditionsPerMeasure": 1,
+        "minTargetEvents": 1,
+        "primary": {
+          "f1": 0.6953846153846154,
+          "falseNegative": 208,
+          "falsePositive": 89,
+          "generated": 428,
+          "matched": 339,
+          "precision": 0.7920560747663551,
+          "recall": 0.6197440585009141,
+          "reference": 547
+        },
+        "threshold": 0.9
+      },
+      {
+        "addedEvents": 25,
+        "changedMeasures": 25,
+        "maxAdditionsPerMeasure": 1,
+        "minTargetEvents": 2,
+        "primary": {
+          "f1": 0.6960985626283368,
+          "falseNegative": 208,
+          "falsePositive": 88,
+          "generated": 427,
+          "matched": 339,
+          "precision": 0.7939110070257611,
+          "recall": 0.6197440585009141,
+          "reference": 547
+        },
+        "threshold": 0.9
+      },
+      {
+        "addedEvents": 25,
+        "changedMeasures": 25,
+        "maxAdditionsPerMeasure": 1,
+        "minTargetEvents": 3,
+        "primary": {
+          "f1": 0.6960985626283368,
+          "falseNegative": 208,
+          "falsePositive": 88,
+          "generated": 427,
+          "matched": 339,
+          "precision": 0.7939110070257611,
+          "recall": 0.6197440585009141,
+          "reference": 547
+        },
+        "threshold": 0.9
+      },
+      {
+        "addedEvents": 34,
+        "changedMeasures": 30,
+        "maxAdditionsPerMeasure": 2,
+        "minTargetEvents": 1,
+        "primary": {
+          "f1": 0.693794506612411,
+          "falseNegative": 206,
+          "falsePositive": 95,
+          "generated": 436,
+          "matched": 341,
+          "precision": 0.7821100917431193,
+          "recall": 0.623400365630713,
+          "reference": 547
+        },
+        "threshold": 0.9
+      },
+      {
+        "addedEvents": 33,
+        "changedMeasures": 29,
+        "maxAdditionsPerMeasure": 2,
+        "minTargetEvents": 2,
+        "primary": {
+          "f1": 0.6945010183299389,
+          "falseNegative": 206,
+          "falsePositive": 94,
+          "generated": 435,
+          "matched": 341,
+          "precision": 0.7839080459770115,
+          "recall": 0.623400365630713,
+          "reference": 547
+        },
+        "threshold": 0.9
+      },
+      {
+        "addedEvents": 33,
+        "changedMeasures": 29,
+        "maxAdditionsPerMeasure": 2,
+        "minTargetEvents": 3,
+        "primary": {
+          "f1": 0.6945010183299389,
+          "falseNegative": 206,
+          "falsePositive": 94,
+          "generated": 435,
+          "matched": 341,
+          "precision": 0.7839080459770115,
+          "recall": 0.623400365630713,
+          "reference": 547
+        },
+        "threshold": 0.9
+      },
+      {
+        "addedEvents": 38,
+        "changedMeasures": 31,
+        "maxAdditionsPerMeasure": 4,
+        "minTargetEvents": 1,
+        "primary": {
+          "f1": 0.6909827760891591,
+          "falseNegative": 206,
+          "falsePositive": 99,
+          "generated": 440,
+          "matched": 341,
+          "precision": 0.775,
+          "recall": 0.623400365630713,
+          "reference": 547
+        },
+        "threshold": 0.9
+      },
+      {
+        "addedEvents": 33,
+        "changedMeasures": 29,
+        "maxAdditionsPerMeasure": 4,
+        "minTargetEvents": 2,
+        "primary": {
+          "f1": 0.6945010183299389,
+          "falseNegative": 206,
+          "falsePositive": 94,
+          "generated": 435,
+          "matched": 341,
+          "precision": 0.7839080459770115,
+          "recall": 0.623400365630713,
+          "reference": 547
+        },
+        "threshold": 0.9
+      },
+      {
+        "addedEvents": 33,
+        "changedMeasures": 29,
+        "maxAdditionsPerMeasure": 4,
+        "minTargetEvents": 3,
+        "primary": {
+          "f1": 0.6945010183299389,
+          "falseNegative": 206,
+          "falsePositive": 94,
+          "generated": 435,
+          "matched": 341,
+          "precision": 0.7839080459770115,
+          "recall": 0.623400365630713,
+          "reference": 547
+        },
+        "threshold": 0.9
+      },
+      {
+        "addedEvents": 38,
+        "changedMeasures": 31,
+        "maxAdditionsPerMeasure": 8,
+        "minTargetEvents": 1,
+        "primary": {
+          "f1": 0.6909827760891591,
+          "falseNegative": 206,
+          "falsePositive": 99,
+          "generated": 440,
+          "matched": 341,
+          "precision": 0.775,
+          "recall": 0.623400365630713,
+          "reference": 547
+        },
+        "threshold": 0.9
+      },
+      {
+        "addedEvents": 33,
+        "changedMeasures": 29,
+        "maxAdditionsPerMeasure": 8,
+        "minTargetEvents": 2,
+        "primary": {
+          "f1": 0.6945010183299389,
+          "falseNegative": 206,
+          "falsePositive": 94,
+          "generated": 435,
+          "matched": 341,
+          "precision": 0.7839080459770115,
+          "recall": 0.623400365630713,
+          "reference": 547
+        },
+        "threshold": 0.9
+      },
+      {
+        "addedEvents": 33,
+        "changedMeasures": 29,
+        "maxAdditionsPerMeasure": 8,
+        "minTargetEvents": 3,
+        "primary": {
+          "f1": 0.6945010183299389,
+          "falseNegative": 206,
+          "falsePositive": 94,
+          "generated": 435,
+          "matched": 341,
+          "precision": 0.7839080459770115,
+          "recall": 0.623400365630713,
+          "reference": 547
+        },
+        "threshold": 0.9
+      },
+      {
+        "addedEvents": 26,
+        "changedMeasures": 26,
+        "maxAdditionsPerMeasure": 1,
+        "minTargetEvents": 1,
+        "primary": {
+          "f1": 0.6953846153846154,
+          "falseNegative": 208,
+          "falsePositive": 89,
+          "generated": 428,
+          "matched": 339,
+          "precision": 0.7920560747663551,
+          "recall": 0.6197440585009141,
+          "reference": 547
+        },
+        "threshold": 1.0
+      },
+      {
+        "addedEvents": 25,
+        "changedMeasures": 25,
+        "maxAdditionsPerMeasure": 1,
+        "minTargetEvents": 2,
+        "primary": {
+          "f1": 0.6960985626283368,
+          "falseNegative": 208,
+          "falsePositive": 88,
+          "generated": 427,
+          "matched": 339,
+          "precision": 0.7939110070257611,
+          "recall": 0.6197440585009141,
+          "reference": 547
+        },
+        "threshold": 1.0
+      },
+      {
+        "addedEvents": 25,
+        "changedMeasures": 25,
+        "maxAdditionsPerMeasure": 1,
+        "minTargetEvents": 3,
+        "primary": {
+          "f1": 0.6960985626283368,
+          "falseNegative": 208,
+          "falsePositive": 88,
+          "generated": 427,
+          "matched": 339,
+          "precision": 0.7939110070257611,
+          "recall": 0.6197440585009141,
+          "reference": 547
+        },
+        "threshold": 1.0
+      },
+      {
+        "addedEvents": 34,
+        "changedMeasures": 30,
+        "maxAdditionsPerMeasure": 2,
+        "minTargetEvents": 1,
+        "primary": {
+          "f1": 0.693794506612411,
+          "falseNegative": 206,
+          "falsePositive": 95,
+          "generated": 436,
+          "matched": 341,
+          "precision": 0.7821100917431193,
+          "recall": 0.623400365630713,
+          "reference": 547
+        },
+        "threshold": 1.0
+      },
+      {
+        "addedEvents": 33,
+        "changedMeasures": 29,
+        "maxAdditionsPerMeasure": 2,
+        "minTargetEvents": 2,
+        "primary": {
+          "f1": 0.6945010183299389,
+          "falseNegative": 206,
+          "falsePositive": 94,
+          "generated": 435,
+          "matched": 341,
+          "precision": 0.7839080459770115,
+          "recall": 0.623400365630713,
+          "reference": 547
+        },
+        "threshold": 1.0
+      },
+      {
+        "addedEvents": 33,
+        "changedMeasures": 29,
+        "maxAdditionsPerMeasure": 2,
+        "minTargetEvents": 3,
+        "primary": {
+          "f1": 0.6945010183299389,
+          "falseNegative": 206,
+          "falsePositive": 94,
+          "generated": 435,
+          "matched": 341,
+          "precision": 0.7839080459770115,
+          "recall": 0.623400365630713,
+          "reference": 547
+        },
+        "threshold": 1.0
+      },
+      {
+        "addedEvents": 38,
+        "changedMeasures": 31,
+        "maxAdditionsPerMeasure": 4,
+        "minTargetEvents": 1,
+        "primary": {
+          "f1": 0.6909827760891591,
+          "falseNegative": 206,
+          "falsePositive": 99,
+          "generated": 440,
+          "matched": 341,
+          "precision": 0.775,
+          "recall": 0.623400365630713,
+          "reference": 547
+        },
+        "threshold": 1.0
+      },
+      {
+        "addedEvents": 33,
+        "changedMeasures": 29,
+        "maxAdditionsPerMeasure": 4,
+        "minTargetEvents": 2,
+        "primary": {
+          "f1": 0.6945010183299389,
+          "falseNegative": 206,
+          "falsePositive": 94,
+          "generated": 435,
+          "matched": 341,
+          "precision": 0.7839080459770115,
+          "recall": 0.623400365630713,
+          "reference": 547
+        },
+        "threshold": 1.0
+      },
+      {
+        "addedEvents": 33,
+        "changedMeasures": 29,
+        "maxAdditionsPerMeasure": 4,
+        "minTargetEvents": 3,
+        "primary": {
+          "f1": 0.6945010183299389,
+          "falseNegative": 206,
+          "falsePositive": 94,
+          "generated": 435,
+          "matched": 341,
+          "precision": 0.7839080459770115,
+          "recall": 0.623400365630713,
+          "reference": 547
+        },
+        "threshold": 1.0
+      },
+      {
+        "addedEvents": 38,
+        "changedMeasures": 31,
+        "maxAdditionsPerMeasure": 8,
+        "minTargetEvents": 1,
+        "primary": {
+          "f1": 0.6909827760891591,
+          "falseNegative": 206,
+          "falsePositive": 99,
+          "generated": 440,
+          "matched": 341,
+          "precision": 0.775,
+          "recall": 0.623400365630713,
+          "reference": 547
+        },
+        "threshold": 1.0
+      },
+      {
+        "addedEvents": 33,
+        "changedMeasures": 29,
+        "maxAdditionsPerMeasure": 8,
+        "minTargetEvents": 2,
+        "primary": {
+          "f1": 0.6945010183299389,
+          "falseNegative": 206,
+          "falsePositive": 94,
+          "generated": 435,
+          "matched": 341,
+          "precision": 0.7839080459770115,
+          "recall": 0.623400365630713,
+          "reference": 547
+        },
+        "threshold": 1.0
+      },
+      {
+        "addedEvents": 33,
+        "changedMeasures": 29,
+        "maxAdditionsPerMeasure": 8,
+        "minTargetEvents": 3,
+        "primary": {
+          "f1": 0.6945010183299389,
+          "falseNegative": 206,
+          "falsePositive": 94,
+          "generated": 435,
+          "matched": 341,
+          "precision": 0.7839080459770115,
+          "recall": 0.623400365630713,
+          "reference": 547
+        },
+        "threshold": 1.0
+      }
+    ]
+  },
+  "combinedGuitar": {
+    "baseline": {
+      "f1": 0.4036021285304953,
+      "falseNegative": 900,
+      "falsePositive": 557,
+      "generated": 1050,
+      "matched": 493,
+      "precision": 0.4695238095238095,
+      "recall": 0.3539124192390524,
+      "reference": 1393
+    },
+    "selected": {
+      "addedEvents": 285,
+      "changedMeasures": 60,
+      "deltaRecognitionPercent": 0.622191839032582,
+      "detailedChanges": [
+        {
+          "added": [
+            {
+              "midi": 62,
+              "step": 8.0
+            },
+            {
+              "midi": 66,
+              "step": 8.0
+            },
+            {
+              "midi": 52,
+              "step": 10.0
+            },
+            {
+              "midi": 64,
+              "step": 10.0
+            }
+          ],
+          "donorEventCount": 11,
+          "donorMeasure": 13,
+          "overlapCount": 7,
+          "targetCoverageByDonor": 0.7,
+          "targetEventCount": 10,
+          "targetMeasure": 2
+        },
+        {
+          "added": [
+            {
+              "midi": 67,
+              "step": 2.0
+            },
+            {
+              "midi": 52,
+              "step": 4.0
+            },
+            {
+              "midi": 52,
+              "step": 6.0
+            },
+            {
+              "midi": 59,
+              "step": 6.0
+            },
+            {
+              "midi": 64,
+              "step": 10.0
+            },
+            {
+              "midi": 40,
+              "step": 12.0
+            },
+            {
+              "midi": 52,
+              "step": 12.0
+            }
+          ],
+          "donorEventCount": 13,
+          "donorMeasure": 5,
+          "overlapCount": 6,
+          "targetCoverageByDonor": 0.6666666666666666,
+          "targetEventCount": 9,
+          "targetMeasure": 3
+        },
+        {
+          "added": [
+            {
+              "midi": 59,
+              "step": 0.0
+            },
+            {
+              "midi": 71,
+              "step": 0.0
+            },
+            {
+              "midi": 67,
+              "step": 3.0
+            },
+            {
+              "midi": 40,
+              "step": 6.0
+            },
+            {
+              "midi": 62,
+              "step": 8.0
+            },
+            {
+              "midi": 64,
+              "step": 10.0
+            },
+            {
+              "midi": 55,
+              "step": 14.0
+            },
+            {
+              "midi": 67,
+              "step": 14.0
+            }
+          ],
+          "donorEventCount": 14,
+          "donorMeasure": 14,
+          "overlapCount": 6,
+          "targetCoverageByDonor": 0.5454545454545454,
+          "targetEventCount": 11,
+          "targetMeasure": 4
+        },
+        {
+          "added": [
+            {
+              "midi": 57,
+              "step": 2.0
+            },
+            {
+              "midi": 67,
+              "step": 2.0
+            },
+            {
+              "midi": 52,
+              "step": 4.0
+            },
+            {
+              "midi": 66,
+              "step": 8.0
+            }
+          ],
+          "donorEventCount": 11,
+          "donorMeasure": 13,
+          "overlapCount": 7,
+          "targetCoverageByDonor": 0.7,
+          "targetEventCount": 10,
+          "targetMeasure": 9
+        },
+        {
+          "added": [
+            {
+              "midi": 59,
+              "step": 0.0
+            },
+            {
+              "midi": 71,
+              "step": 0.0
+            },
+            {
+              "midi": 57,
+              "step": 2.0
+            },
+            {
+              "midi": 55,
+              "step": 14.0
+            },
+            {
+              "midi": 67,
+              "step": 14.0
+            }
+          ],
+          "donorEventCount": 14,
+          "donorMeasure": 14,
+          "overlapCount": 9,
+          "targetCoverageByDonor": 0.9,
+          "targetEventCount": 10,
+          "targetMeasure": 10
+        },
+        {
+          "added": [
+            {
+              "midi": 59,
+              "step": 0.0
+            },
+            {
+              "midi": 57,
+              "step": 2.0
+            },
+            {
+              "midi": 64,
+              "step": 4.0
+            },
+            {
+              "midi": 40,
+              "step": 6.0
+            },
+            {
+              "midi": 59,
+              "step": 6.0
+            }
+          ],
+          "donorEventCount": 11,
+          "donorMeasure": 41,
+          "overlapCount": 6,
+          "targetCoverageByDonor": 0.8571428571428571,
+          "targetEventCount": 7,
+          "targetMeasure": 11
+        },
+        {
+          "added": [
+            {
+              "midi": 62,
+              "step": 9.0
+            },
+            {
+              "midi": 40,
+              "step": 10.0
+            },
+            {
+              "midi": 50,
+              "step": 13.0
+            },
+            {
+              "midi": 62,
+              "step": 13.0
+            },
+            {
+              "midi": 64,
+              "step": 13.0
+            }
+          ],
+          "donorEventCount": 11,
+          "donorMeasure": 8,
+          "overlapCount": 6,
+          "targetCoverageByDonor": 0.6,
+          "targetEventCount": 10,
+          "targetMeasure": 12
+        },
+        {
+          "added": [
+            {
+              "midi": 52,
+              "step": 6.0
+            },
+            {
+              "midi": 40,
+              "step": 12.0
+            },
+            {
+              "midi": 52,
+              "step": 12.0
+            },
+            {
+              "midi": 40,
+              "step": 14.0
+            }
+          ],
+          "donorEventCount": 13,
+          "donorMeasure": 5,
+          "overlapCount": 9,
+          "targetCoverageByDonor": 0.8181818181818182,
+          "targetEventCount": 11,
+          "targetMeasure": 13
+        },
+        {
+          "added": [
+            {
+              "midi": 40,
+              "step": 0.0
+            },
+            {
+              "midi": 71,
+              "step": 0.0
+            },
+            {
+              "midi": 64,
+              "step": 5.0
+            }
+          ],
+          "donorEventCount": 10,
+          "donorMeasure": 100,
+          "overlapCount": 7,
+          "targetCoverageByDonor": 0.7777777777777778,
+          "targetEventCount": 9,
+          "targetMeasure": 15
+        },
+        {
+          "added": [
+            {
+              "midi": 59,
+              "step": 0.0
+            },
+            {
+              "midi": 71,
+              "step": 0.0
+            },
+            {
+              "midi": 62,
+              "step": 12.0
+            },
+            {
+              "midi": 55,
+              "step": 14.0
+            },
+            {
+              "midi": 67,
+              "step": 14.0
+            }
+          ],
+          "donorEventCount": 14,
+          "donorMeasure": 14,
+          "overlapCount": 9,
+          "targetCoverageByDonor": 0.8181818181818182,
+          "targetEventCount": 11,
+          "targetMeasure": 16
+        },
+        {
+          "added": [
+            {
+              "midi": 57,
+              "step": 2.0
+            },
+            {
+              "midi": 40,
+              "step": 14.0
+            }
+          ],
+          "donorEventCount": 7,
+          "donorMeasure": 47,
+          "overlapCount": 5,
+          "targetCoverageByDonor": 0.8333333333333334,
+          "targetEventCount": 6,
+          "targetMeasure": 17
+        },
+        {
+          "added": [
+            {
+              "midi": 57,
+              "step": 2.0
+            },
+            {
+              "midi": 64,
+              "step": 4.0
+            },
+            {
+              "midi": 64,
+              "step": 11.0
+            },
+            {
+              "midi": 40,
+              "step": 14.0
+            }
+          ],
+          "donorEventCount": 9,
+          "donorMeasure": 3,
+          "overlapCount": 5,
+          "targetCoverageByDonor": 0.7142857142857143,
+          "targetEventCount": 7,
+          "targetMeasure": 19
+        },
+        {
+          "added": [
+            {
+              "midi": 52,
+              "step": 0.0
+            },
+            {
+              "midi": 59,
+              "step": 0.0
+            },
+            {
+              "midi": 71,
+              "step": 0.0
+            },
+            {
+              "midi": 67,
+              "step": 3.0
+            },
+            {
+              "midi": 62,
+              "step": 8.0
+            },
+            {
+              "midi": 40,
+              "step": 10.0
+            }
+          ],
+          "donorEventCount": 11,
+          "donorMeasure": 101,
+          "overlapCount": 5,
+          "targetCoverageByDonor": 0.8333333333333334,
+          "targetEventCount": 6,
+          "targetMeasure": 20
+        },
+        {
+          "added": [
+            {
+              "midi": 62,
+              "step": 8.0
+            },
+            {
+              "midi": 67,
+              "step": 13.0
+            }
+          ],
+          "donorEventCount": 9,
+          "donorMeasure": 42,
+          "overlapCount": 7,
+          "targetCoverageByDonor": 0.875,
+          "targetEventCount": 8,
+          "targetMeasure": 21
+        },
+        {
+          "added": [
+            {
+              "midi": 40,
+              "step": 0.0
+            },
+            {
+              "midi": 40,
+              "step": 6.0
+            },
+            {
+              "midi": 40,
+              "step": 10.0
+            },
+            {
+              "midi": 52,
+              "step": 14.0
+            }
+          ],
+          "donorEventCount": 10,
+          "donorMeasure": 53,
+          "overlapCount": 6,
+          "targetCoverageByDonor": 0.8571428571428571,
+          "targetEventCount": 7,
+          "targetMeasure": 22
+        },
+        {
+          "added": [
+            {
+              "midi": 67,
+              "step": 3.0
+            },
+            {
+              "midi": 59,
+              "step": 6.0
+            },
+            {
+              "midi": 62,
+              "step": 8.0
+            },
+            {
+              "midi": 64,
+              "step": 10.0
+            }
+          ],
+          "donorEventCount": 11,
+          "donorMeasure": 41,
+          "overlapCount": 7,
+          "targetCoverageByDonor": 1.0,
+          "targetEventCount": 7,
+          "targetMeasure": 23
+        },
+        {
+          "added": [
+            {
+              "midi": 52,
+              "step": 3.0
+            },
+            {
+              "midi": 64,
+              "step": 3.0
+            },
+            {
+              "midi": 52,
+              "step": 8.0
+            },
+            {
+              "midi": 40,
+              "step": 9.0
+            },
+            {
+              "midi": 43,
+              "step": 12.0
+            },
+            {
+              "midi": 62,
+              "step": 12.0
+            },
+            {
+              "midi": 67,
+              "step": 12.0
+            }
+          ],
+          "donorEventCount": 12,
+          "donorMeasure": 40,
+          "overlapCount": 5,
+          "targetCoverageByDonor": 0.5,
+          "targetEventCount": 10,
+          "targetMeasure": 24
+        },
+        {
+          "added": [
+            {
+              "midi": 70,
+              "step": 3.0
+            },
+            {
+              "midi": 62,
+              "step": 4.0
+            },
+            {
+              "midi": 43,
+              "step": 6.0
+            }
+          ],
+          "donorEventCount": 12,
+          "donorMeasure": 55,
+          "overlapCount": 9,
+          "targetCoverageByDonor": 0.8181818181818182,
+          "targetEventCount": 11,
+          "targetMeasure": 25
+        },
+        {
+          "added": [
+            {
+              "midi": 60,
+              "step": 2.0
+            },
+            {
+              "midi": 70,
+              "step": 3.0
+            },
+            {
+              "midi": 62,
+              "step": 4.0
+            },
+            {
+              "midi": 62,
+              "step": 14.0
+            }
+          ],
+          "donorEventCount": 12,
+          "donorMeasure": 55,
+          "overlapCount": 8,
+          "targetCoverageByDonor": 0.8888888888888888,
+          "targetEventCount": 9,
+          "targetMeasure": 26
+        },
+        {
+          "added": [
+            {
+              "midi": 58,
+              "step": 3.0
+            },
+            {
+              "midi": 70,
+              "step": 3.0
+            },
+            {
+              "midi": 62,
+              "step": 4.0
+            },
+            {
+              "midi": 43,
+              "step": 6.0
+            },
+            {
+              "midi": 62,
+              "step": 14.0
+            }
+          ],
+          "donorEventCount": 12,
+          "donorMeasure": 55,
+          "overlapCount": 7,
+          "targetCoverageByDonor": 0.6363636363636364,
+          "targetEventCount": 11,
+          "targetMeasure": 27
+        },
+        {
+          "added": [
+            {
+              "midi": 40,
+              "step": 0.0
+            },
+            {
+              "midi": 59,
+              "step": 0.0
+            },
+            {
+              "midi": 57,
+              "step": 2.0
+            },
+            {
+              "midi": 40,
+              "step": 6.0
+            },
+            {
+              "midi": 40,
+              "step": 10.0
+            }
+          ],
+          "donorEventCount": 10,
+          "donorMeasure": 53,
+          "overlapCount": 5,
+          "targetCoverageByDonor": 0.625,
+          "targetEventCount": 8,
+          "targetMeasure": 30
+        },
+        {
+          "added": [
+            {
+              "midi": 59,
+              "step": 0.0
+            },
+            {
+              "midi": 67,
+              "step": 3.0
+            },
+            {
+              "midi": 64,
+              "step": 4.0
+            },
+            {
+              "midi": 62,
+              "step": 8.0
+            },
+            {
+              "midi": 64,
+              "step": 10.0
+            }
+          ],
+          "donorEventCount": 11,
+          "donorMeasure": 41,
+          "overlapCount": 6,
+          "targetCoverageByDonor": 0.6,
+          "targetEventCount": 10,
+          "targetMeasure": 31
+        },
+        {
+          "added": [
+            {
+              "midi": 59,
+              "step": 0.0
+            },
+            {
+              "midi": 67,
+              "step": 3.0
+            },
+            {
+              "midi": 59,
+              "step": 6.0
+            },
+            {
+              "midi": 62,
+              "step": 8.0
+            },
+            {
+              "midi": 40,
+              "step": 14.0
+            }
+          ],
+          "donorEventCount": 11,
+          "donorMeasure": 41,
+          "overlapCount": 6,
+          "targetCoverageByDonor": 0.75,
+          "targetEventCount": 8,
+          "targetMeasure": 32
+        },
+        {
+          "added": [
+            {
+              "midi": 59,
+              "step": 1.0
+            },
+            {
+              "midi": 57,
+              "step": 2.0
+            },
+            {
+              "midi": 67,
+              "step": 3.0
+            },
+            {
+              "midi": 52,
+              "step": 4.0
+            },
+            {
+              "midi": 40,
+              "step": 5.0
+            },
+            {
+              "midi": 52,
+              "step": 9.0
+            },
+            {
+              "midi": 64,
+              "step": 9.0
+            },
+            {
+              "midi": 40,
+              "step": 10.0
+            }
+          ],
+          "donorEventCount": 10,
+          "donorMeasure": 24,
+          "overlapCount": 2,
+          "targetCoverageByDonor": 0.5,
+          "targetEventCount": 4,
+          "targetMeasure": 34
+        },
+        {
+          "added": [
+            {
+              "midi": 59,
+              "step": 0.0
+            },
+            {
+              "midi": 68,
+              "step": 0.0
+            },
+            {
+              "midi": 71,
+              "step": 4.0
+            },
+            {
+              "midi": 59,
+              "step": 6.0
+            },
+            {
+              "midi": 71,
+              "step": 6.0
+            },
+            {
+              "midi": 59,
+              "step": 8.0
+            },
+            {
+              "midi": 64,
+              "step": 10.0
+            }
+          ],
+          "donorEventCount": 11,
+          "donorMeasure": 66,
+          "overlapCount": 4,
+          "targetCoverageByDonor": 0.5,
+          "targetEventCount": 8,
+          "targetMeasure": 35
+        },
+        {
+          "added": [
+            {
+              "midi": 66,
+              "step": 4.0
+            },
+            {
+              "midi": 59,
+              "step": 6.0
+            }
+          ],
+          "donorEventCount": 7,
+          "donorMeasure": 65,
+          "overlapCount": 5,
+          "targetCoverageByDonor": 0.8333333333333334,
+          "targetEventCount": 6,
+          "targetMeasure": 36
+        },
+        {
+          "added": [
+            {
+              "midi": 52,
+              "step": 6.0
+            },
+            {
+              "midi": 59,
+              "step": 14.0
+            }
+          ],
+          "donorEventCount": 12,
+          "donorMeasure": 43,
+          "overlapCount": 10,
+          "targetCoverageByDonor": 0.9090909090909091,
+          "targetEventCount": 11,
+          "targetMeasure": 41
+        },
+        {
+          "added": [
+            {
+              "midi": 71,
+              "step": 0.0
+            },
+            {
+              "midi": 58,
+              "step": 6.0
+            },
+            {
+              "midi": 62,
+              "step": 13.0
+            }
+          ],
+          "donorEventCount": 10,
+          "donorMeasure": 44,
+          "overlapCount": 7,
+          "targetCoverageByDonor": 0.7777777777777778,
+          "targetEventCount": 9,
+          "targetMeasure": 42
+        },
+        {
+          "added": [
+            {
+              "midi": 55,
+              "step": 2.0
+            },
+            {
+              "midi": 64,
+              "step": 2.0
+            },
+            {
+              "midi": 40,
+              "step": 6.0
+            },
+            {
+              "midi": 71,
+              "step": 12.0
+            },
+            {
+              "midi": 53,
+              "step": 13.0
+            }
+          ],
+          "donorEventCount": 13,
+          "donorMeasure": 62,
+          "overlapCount": 8,
+          "targetCoverageByDonor": 0.6666666666666666,
+          "targetEventCount": 12,
+          "targetMeasure": 43
+        },
+        {
+          "added": [
+            {
+              "midi": 40,
+              "step": 0.0
+            },
+            {
+              "midi": 40,
+              "step": 6.0
+            },
+            {
+              "midi": 67,
+              "step": 12.0
+            }
+          ],
+          "donorEventCount": 11,
+          "donorMeasure": 46,
+          "overlapCount": 8,
+          "targetCoverageByDonor": 0.8,
+          "targetEventCount": 10,
+          "targetMeasure": 44
+        },
+        {
+          "added": [
+            {
+              "midi": 57,
+              "step": 2.0
+            },
+            {
+              "midi": 40,
+              "step": 6.0
+            },
+            {
+              "midi": 52,
+              "step": 6.0
+            },
+            {
+              "midi": 52,
+              "step": 10.0
+            },
+            {
+              "midi": 40,
+              "step": 12.0
+            },
+            {
+              "midi": 52,
+              "step": 12.0
+            }
+          ],
+          "donorEventCount": 13,
+          "donorMeasure": 5,
+          "overlapCount": 7,
+          "targetCoverageByDonor": 0.6363636363636364,
+          "targetEventCount": 11,
+          "targetMeasure": 45
+        },
+        {
+          "added": [
+            {
+              "midi": 59,
+              "step": 0.0
+            },
+            {
+              "midi": 57,
+              "step": 2.0
+            },
+            {
+              "midi": 67,
+              "step": 3.0
+            },
+            {
+              "midi": 62,
+              "step": 12.0
+            },
+            {
+              "midi": 55,
+              "step": 14.0
+            },
+            {
+              "midi": 67,
+              "step": 14.0
+            }
+          ],
+          "donorEventCount": 14,
+          "donorMeasure": 14,
+          "overlapCount": 8,
+          "targetCoverageByDonor": 0.7272727272727273,
+          "targetEventCount": 11,
+          "targetMeasure": 46
+        },
+        {
+          "added": [
+            {
+              "midi": 59,
+              "step": 0.0
+            },
+            {
+              "midi": 67,
+              "step": 3.0
+            },
+            {
+              "midi": 64,
+              "step": 4.0
+            },
+            {
+              "midi": 62,
+              "step": 8.0
+            }
+          ],
+          "donorEventCount": 11,
+          "donorMeasure": 41,
+          "overlapCount": 7,
+          "targetCoverageByDonor": 1.0,
+          "targetEventCount": 7,
+          "targetMeasure": 47
+        },
+        {
+          "added": [
+            {
+              "midi": 59,
+              "step": 1.0
+            },
+            {
+              "midi": 64,
+              "step": 4.0
+            },
+            {
+              "midi": 64,
+              "step": 11.0
+            }
+          ],
+          "donorEventCount": 9,
+          "donorMeasure": 3,
+          "overlapCount": 6,
+          "targetCoverageByDonor": 0.75,
+          "targetEventCount": 8,
+          "targetMeasure": 48
+        },
+        {
+          "added": [
+            {
+              "midi": 64,
+              "step": 3.0
+            },
+            {
+              "midi": 71,
+              "step": 5.0
+            }
+          ],
+          "donorEventCount": 6,
+          "donorMeasure": 20,
+          "overlapCount": 4,
+          "targetCoverageByDonor": 0.8,
+          "targetEventCount": 5,
+          "targetMeasure": 49
+        },
+        {
+          "added": [
+            {
+              "midi": 67,
+              "step": 3.0
+            },
+            {
+              "midi": 64,
+              "step": 4.0
+            },
+            {
+              "midi": 40,
+              "step": 6.0
+            },
+            {
+              "midi": 62,
+              "step": 8.0
+            },
+            {
+              "midi": 40,
+              "step": 14.0
+            }
+          ],
+          "donorEventCount": 11,
+          "donorMeasure": 41,
+          "overlapCount": 6,
+          "targetCoverageByDonor": 0.8571428571428571,
+          "targetEventCount": 7,
+          "targetMeasure": 50
+        },
+        {
+          "added": [
+            {
+              "midi": 67,
+              "step": 2.0
+            },
+            {
+              "midi": 64,
+              "step": 4.0
+            },
+            {
+              "midi": 40,
+              "step": 6.0
+            },
+            {
+              "midi": 52,
+              "step": 6.0
+            },
+            {
+              "midi": 59,
+              "step": 6.0
+            },
+            {
+              "midi": 40,
+              "step": 12.0
+            },
+            {
+              "midi": 52,
+              "step": 12.0
+            }
+          ],
+          "donorEventCount": 13,
+          "donorMeasure": 5,
+          "overlapCount": 6,
+          "targetCoverageByDonor": 0.6666666666666666,
+          "targetEventCount": 9,
+          "targetMeasure": 51
+        },
+        {
+          "added": [
+            {
+              "midi": 52,
+              "step": 3.0
+            },
+            {
+              "midi": 64,
+              "step": 4.0
+            },
+            {
+              "midi": 64,
+              "step": 11.0
+            },
+            {
+              "midi": 59,
+              "step": 14.0
+            }
+          ],
+          "donorEventCount": 9,
+          "donorMeasure": 3,
+          "overlapCount": 5,
+          "targetCoverageByDonor": 0.625,
+          "targetEventCount": 8,
+          "targetMeasure": 52
+        },
+        {
+          "added": [
+            {
+              "midi": 67,
+              "step": 3.0
+            },
+            {
+              "midi": 64,
+              "step": 4.0
+            },
+            {
+              "midi": 59,
+              "step": 6.0
+            },
+            {
+              "midi": 62,
+              "step": 8.0
+            },
+            {
+              "midi": 64,
+              "step": 10.0
+            }
+          ],
+          "donorEventCount": 11,
+          "donorMeasure": 41,
+          "overlapCount": 6,
+          "targetCoverageByDonor": 0.6,
+          "targetEventCount": 10,
+          "targetMeasure": 53
+        },
+        {
+          "added": [
+            {
+              "midi": 59,
+              "step": 0.0
+            },
+            {
+              "midi": 67,
+              "step": 2.0
+            },
+            {
+              "midi": 69,
+              "step": 2.0
+            },
+            {
+              "midi": 64,
+              "step": 4.0
+            }
+          ],
+          "donorEventCount": 9,
+          "donorMeasure": 15,
+          "overlapCount": 5,
+          "targetCoverageByDonor": 0.7142857142857143,
+          "targetEventCount": 7,
+          "targetMeasure": 54
+        },
+        {
+          "added": [
+            {
+              "midi": 62,
+              "step": 0.0
+            },
+            {
+              "midi": 60,
+              "step": 2.0
+            },
+            {
+              "midi": 53,
+              "step": 8.0
+            },
+            {
+              "midi": 55,
+              "step": 10.0
+            },
+            {
+              "midi": 64,
+              "step": 13.0
+            },
+            {
+              "midi": 68,
+              "step": 13.0
+            }
+          ],
+          "donorEventCount": 11,
+          "donorMeasure": 27,
+          "overlapCount": 5,
+          "targetCoverageByDonor": 0.5,
+          "targetEventCount": 10,
+          "targetMeasure": 57
+        },
+        {
+          "added": [
+            {
+              "midi": 59,
+              "step": 1.0
+            },
+            {
+              "midi": 57,
+              "step": 2.0
+            },
+            {
+              "midi": 68,
+              "step": 5.0
+            },
+            {
+              "midi": 52,
+              "step": 10.0
+            },
+            {
+              "midi": 64,
+              "step": 10.0
+            }
+          ],
+          "donorEventCount": 9,
+          "donorMeasure": 51,
+          "overlapCount": 4,
+          "targetCoverageByDonor": 0.5,
+          "targetEventCount": 8,
+          "targetMeasure": 59
+        },
+        {
+          "added": [
+            {
+              "midi": 59,
+              "step": 1.0
+            },
+            {
+              "midi": 57,
+              "step": 2.0
+            },
+            {
+              "midi": 55,
+              "step": 3.0
+            },
+            {
+              "midi": 68,
+              "step": 5.0
+            },
+            {
+              "midi": 40,
+              "step": 14.0
+            }
+          ],
+          "donorEventCount": 9,
+          "donorMeasure": 51,
+          "overlapCount": 4,
+          "targetCoverageByDonor": 1.0,
+          "targetEventCount": 4,
+          "targetMeasure": 61
+        },
+        {
+          "added": [
+            {
+              "midi": 59,
+              "step": 0.0
+            },
+            {
+              "midi": 71,
+              "step": 4.0
+            },
+            {
+              "midi": 71,
+              "step": 6.0
+            },
+            {
+              "midi": 59,
+              "step": 8.0
+            },
+            {
+              "midi": 64,
+              "step": 10.0
+            }
+          ],
+          "donorEventCount": 11,
+          "donorMeasure": 66,
+          "overlapCount": 6,
+          "targetCoverageByDonor": 0.8571428571428571,
+          "targetEventCount": 7,
+          "targetMeasure": 65
+        },
+        {
+          "added": [
+            {
+              "midi": 59,
+              "step": 0.0
+            },
+            {
+              "midi": 83,
+              "step": 2.0
+            },
+            {
+              "midi": 76,
+              "step": 3.0
+            },
+            {
+              "midi": 71,
+              "step": 6.0
+            },
+            {
+              "midi": 76,
+              "step": 7.0
+            },
+            {
+              "midi": 76,
+              "step": 10.0
+            },
+            {
+              "midi": 76,
+              "step": 11.0
+            }
+          ],
+          "donorEventCount": 12,
+          "donorMeasure": 86,
+          "overlapCount": 5,
+          "targetCoverageByDonor": 0.8333333333333334,
+          "targetEventCount": 6,
+          "targetMeasure": 70
+        },
+        {
+          "added": [
+            {
+              "midi": 62,
+              "step": 11.0
+            },
+            {
+              "midi": 66,
+              "step": 11.0
+            },
+            {
+              "midi": 59,
+              "step": 15.0
+            },
+            {
+              "midi": 63,
+              "step": 15.0
+            },
+            {
+              "midi": 64,
+              "step": 15.0
+            },
+            {
+              "midi": 67,
+              "step": 15.0
+            }
+          ],
+          "donorEventCount": 11,
+          "donorMeasure": 73,
+          "overlapCount": 5,
+          "targetCoverageByDonor": 0.625,
+          "targetEventCount": 8,
+          "targetMeasure": 71
+        },
+        {
+          "added": [
+            {
+              "midi": 59,
+              "step": 0.0
+            },
+            {
+              "midi": 83,
+              "step": 2.0
+            },
+            {
+              "midi": 76,
+              "step": 3.0
+            },
+            {
+              "midi": 71,
+              "step": 6.0
+            },
+            {
+              "midi": 76,
+              "step": 7.0
+            },
+            {
+              "midi": 76,
+              "step": 10.0
+            },
+            {
+              "midi": 76,
+              "step": 11.0
+            }
+          ],
+          "donorEventCount": 12,
+          "donorMeasure": 86,
+          "overlapCount": 5,
+          "targetCoverageByDonor": 0.8333333333333334,
+          "targetEventCount": 6,
+          "targetMeasure": 72
+        },
+        {
+          "added": [
+            {
+              "midi": 57,
+              "step": 6.0
+            },
+            {
+              "midi": 62,
+              "step": 10.0
+            },
+            {
+              "midi": 58,
+              "step": 14.0
+            }
+          ],
+          "donorEventCount": 8,
+          "donorMeasure": 71,
+          "overlapCount": 5,
+          "targetCoverageByDonor": 0.7142857142857143,
+          "targetEventCount": 7,
+          "targetMeasure": 75
+        },
+        {
+          "added": [
+            {
+              "midi": 57,
+              "step": 6.0
+            },
+            {
+              "midi": 61,
+              "step": 6.0
+            },
+            {
+              "midi": 66,
+              "step": 10.0
+            },
+            {
+              "midi": 61,
+              "step": 12.0
+            },
+            {
+              "midi": 64,
+              "step": 12.0
+            },
+            {
+              "midi": 58,
+              "step": 14.0
+            }
+          ],
+          "donorEventCount": 8,
+          "donorMeasure": 71,
+          "overlapCount": 2,
+          "targetCoverageByDonor": 0.5,
+          "targetEventCount": 4,
+          "targetMeasure": 77
+        },
+        {
+          "added": [
+            {
+              "midi": 59,
+              "step": 0.0
+            },
+            {
+              "midi": 57,
+              "step": 2.0
+            },
+            {
+              "midi": 52,
+              "step": 6.0
+            },
+            {
+              "midi": 59,
+              "step": 14.0
+            }
+          ],
+          "donorEventCount": 12,
+          "donorMeasure": 43,
+          "overlapCount": 8,
+          "targetCoverageByDonor": 0.7272727272727273,
+          "targetEventCount": 11,
+          "targetMeasure": 95
+        },
+        {
+          "added": [
+            {
+              "midi": 59,
+              "step": 0.0
+            },
+            {
+              "midi": 52,
+              "step": 6.0
+            },
+            {
+              "midi": 40,
+              "step": 14.0
+            },
+            {
+              "midi": 59,
+              "step": 14.0
+            }
+          ],
+          "donorEventCount": 12,
+          "donorMeasure": 43,
+          "overlapCount": 8,
+          "targetCoverageByDonor": 0.7272727272727273,
+          "targetEventCount": 11,
+          "targetMeasure": 96
+        },
+        {
+          "added": [
+            {
+              "midi": 52,
+              "step": 0.0
+            },
+            {
+              "midi": 71,
+              "step": 0.0
+            },
+            {
+              "midi": 67,
+              "step": 3.0
+            },
+            {
+              "midi": 52,
+              "step": 5.0
+            },
+            {
+              "midi": 52,
+              "step": 10.0
+            }
+          ],
+          "donorEventCount": 11,
+          "donorMeasure": 101,
+          "overlapCount": 6,
+          "targetCoverageByDonor": 0.75,
+          "targetEventCount": 8,
+          "targetMeasure": 97
+        },
+        {
+          "added": [
+            {
+              "midi": 67,
+              "step": 3.0
+            },
+            {
+              "midi": 64,
+              "step": 4.0
+            },
+            {
+              "midi": 59,
+              "step": 6.0
+            },
+            {
+              "midi": 59,
+              "step": 14.0
+            }
+          ],
+          "donorEventCount": 12,
+          "donorMeasure": 43,
+          "overlapCount": 8,
+          "targetCoverageByDonor": 0.7272727272727273,
+          "targetEventCount": 11,
+          "targetMeasure": 98
+        },
+        {
+          "added": [
+            {
+              "midi": 64,
+              "step": 4.0
+            },
+            {
+              "midi": 40,
+              "step": 10.0
+            },
+            {
+              "midi": 40,
+              "step": 13.0
+            },
+            {
+              "midi": 59,
+              "step": 14.0
+            }
+          ],
+          "donorEventCount": 9,
+          "donorMeasure": 102,
+          "overlapCount": 5,
+          "targetCoverageByDonor": 0.8333333333333334,
+          "targetEventCount": 6,
+          "targetMeasure": 99
+        },
+        {
+          "added": [
+            {
+              "midi": 52,
+              "step": 0.0
+            },
+            {
+              "midi": 64,
+              "step": 3.0
+            },
+            {
+              "midi": 67,
+              "step": 3.0
+            },
+            {
+              "midi": 40,
+              "step": 10.0
+            }
+          ],
+          "donorEventCount": 11,
+          "donorMeasure": 101,
+          "overlapCount": 7,
+          "targetCoverageByDonor": 0.7,
+          "targetEventCount": 10,
+          "targetMeasure": 100
+        },
+        {
+          "added": [
+            {
+              "midi": 52,
+              "step": 4.0
+            },
+            {
+              "midi": 64,
+              "step": 4.0
+            },
+            {
+              "midi": 40,
+              "step": 6.0
+            },
+            {
+              "midi": 62,
+              "step": 12.0
+            },
+            {
+              "midi": 67,
+              "step": 12.0
+            },
+            {
+              "midi": 55,
+              "step": 14.0
+            },
+            {
+              "midi": 67,
+              "step": 14.0
+            }
+          ],
+          "donorEventCount": 14,
+          "donorMeasure": 14,
+          "overlapCount": 7,
+          "targetCoverageByDonor": 0.6363636363636364,
+          "targetEventCount": 11,
+          "targetMeasure": 101
+        },
+        {
+          "added": [
+            {
+              "midi": 67,
+              "step": 2.0
+            },
+            {
+              "midi": 58,
+              "step": 6.0
+            },
+            {
+              "midi": 62,
+              "step": 13.0
+            },
+            {
+              "midi": 67,
+              "step": 13.0
+            }
+          ],
+          "donorEventCount": 10,
+          "donorMeasure": 44,
+          "overlapCount": 6,
+          "targetCoverageByDonor": 0.6666666666666666,
+          "targetEventCount": 9,
+          "targetMeasure": 102
+        },
+        {
+          "added": [
+            {
+              "midi": 59,
+              "step": 1.0
+            },
+            {
+              "midi": 45,
+              "step": 6.0
+            },
+            {
+              "midi": 61,
+              "step": 8.0
+            },
+            {
+              "midi": 57,
+              "step": 14.0
+            }
+          ],
+          "donorEventCount": 8,
+          "donorMeasure": 109,
+          "overlapCount": 4,
+          "targetCoverageByDonor": 0.6666666666666666,
+          "targetEventCount": 6,
+          "targetMeasure": 105
+        },
+        {
+          "added": [
+            {
+              "midi": 45,
+              "step": 0.0
+            },
+            {
+              "midi": 52,
+              "step": 0.0
+            },
+            {
+              "midi": 68,
+              "step": 10.0
+            },
+            {
+              "midi": 66,
+              "step": 11.0
+            },
+            {
+              "midi": 62,
+              "step": 12.0
+            },
+            {
+              "midi": 71,
+              "step": 14.0
+            }
+          ],
+          "donorEventCount": 11,
+          "donorMeasure": 106,
+          "overlapCount": 5,
+          "targetCoverageByDonor": 0.625,
+          "targetEventCount": 8,
+          "targetMeasure": 107
+        },
+        {
+          "added": [
+            {
+              "midi": 64,
+              "step": 0.0
+            },
+            {
+              "midi": 64,
+              "step": 5.0
+            },
+            {
+              "midi": 66,
+              "step": 6.0
+            },
+            {
+              "midi": 65,
+              "step": 10.0
+            },
+            {
+              "midi": 62,
+              "step": 12.0
+            },
+            {
+              "midi": 67,
+              "step": 12.0
+            },
+            {
+              "midi": 69,
+              "step": 13.0
+            }
+          ],
+          "donorEventCount": 10,
+          "donorMeasure": 78,
+          "overlapCount": 3,
+          "targetCoverageByDonor": 0.5,
+          "targetEventCount": 6,
+          "targetMeasure": 112
+        }
+      ],
+      "gross": {
+        "f1": 0.5498533724340176,
+        "falseNegative": 643,
+        "falsePositive": 585,
+        "generated": 1335,
+        "matched": 750,
+        "precision": 0.5617977528089888,
+        "recall": 0.5384063173007897,
+        "reference": 1393
+      },
+      "maxAdditionsPerMeasure": 8,
+      "minTargetEvents": 3,
+      "primary": {
+        "f1": 0.40982404692082114,
+        "falseNegative": 834,
+        "falsePositive": 776,
+        "generated": 1335,
+        "matched": 559,
+        "precision": 0.41872659176029964,
+        "recall": 0.4012921751615219,
+        "reference": 1393
+      },
+      "recognitionPercent": 40.98240469208211,
+      "threshold": 0.5
+    },
+    "variants": [
+      {
+        "addedEvents": 0,
+        "changedMeasures": 0,
+        "maxAdditionsPerMeasure": 1,
+        "minTargetEvents": 1,
+        "primary": {
+          "f1": 0.4036021285304953,
+          "falseNegative": 900,
+          "falsePositive": 557,
+          "generated": 1050,
+          "matched": 493,
+          "precision": 0.4695238095238095,
+          "recall": 0.3539124192390524,
+          "reference": 1393
+        },
+        "threshold": 0.5
+      },
+      {
+        "addedEvents": 0,
+        "changedMeasures": 0,
+        "maxAdditionsPerMeasure": 1,
+        "minTargetEvents": 2,
+        "primary": {
+          "f1": 0.4036021285304953,
+          "falseNegative": 900,
+          "falsePositive": 557,
+          "generated": 1050,
+          "matched": 493,
+          "precision": 0.4695238095238095,
+          "recall": 0.3539124192390524,
+          "reference": 1393
+        },
+        "threshold": 0.5
+      },
+      {
+        "addedEvents": 0,
+        "changedMeasures": 0,
+        "maxAdditionsPerMeasure": 1,
+        "minTargetEvents": 3,
+        "primary": {
+          "f1": 0.4036021285304953,
+          "falseNegative": 900,
+          "falsePositive": 557,
+          "generated": 1050,
+          "matched": 493,
+          "precision": 0.4695238095238095,
+          "recall": 0.3539124192390524,
+          "reference": 1393
+        },
+        "threshold": 0.5
+      },
+      {
+        "addedEvents": 12,
+        "changedMeasures": 6,
+        "maxAdditionsPerMeasure": 2,
+        "minTargetEvents": 1,
+        "primary": {
+          "f1": 0.4032586558044806,
+          "falseNegative": 898,
+          "falsePositive": 567,
+          "generated": 1062,
+          "matched": 495,
+          "precision": 0.4661016949152542,
+          "recall": 0.35534816941852115,
+          "reference": 1393
+        },
+        "threshold": 0.5
+      },
+      {
+        "addedEvents": 12,
+        "changedMeasures": 6,
+        "maxAdditionsPerMeasure": 2,
+        "minTargetEvents": 2,
+        "primary": {
+          "f1": 0.4032586558044806,
+          "falseNegative": 898,
+          "falsePositive": 567,
+          "generated": 1062,
+          "matched": 495,
+          "precision": 0.4661016949152542,
+          "recall": 0.35534816941852115,
+          "reference": 1393
+        },
+        "threshold": 0.5
+      },
+      {
+        "addedEvents": 12,
+        "changedMeasures": 6,
+        "maxAdditionsPerMeasure": 2,
+        "minTargetEvents": 3,
+        "primary": {
+          "f1": 0.4032586558044806,
+          "falseNegative": 898,
+          "falsePositive": 567,
+          "generated": 1062,
+          "matched": 495,
+          "precision": 0.4661016949152542,
+          "recall": 0.35534816941852115,
+          "reference": 1393
+        },
+        "threshold": 0.5
+      },
+      {
+        "addedEvents": 127,
+        "changedMeasures": 37,
+        "maxAdditionsPerMeasure": 4,
+        "minTargetEvents": 1,
+        "primary": {
+          "f1": 0.40233463035019457,
+          "falseNegative": 876,
+          "falsePositive": 660,
+          "generated": 1177,
+          "matched": 517,
+          "precision": 0.4392523364485981,
+          "recall": 0.3711414213926777,
+          "reference": 1393
+        },
+        "threshold": 0.5
+      },
+      {
+        "addedEvents": 127,
+        "changedMeasures": 37,
+        "maxAdditionsPerMeasure": 4,
+        "minTargetEvents": 2,
+        "primary": {
+          "f1": 0.40233463035019457,
+          "falseNegative": 876,
+          "falsePositive": 660,
+          "generated": 1177,
+          "matched": 517,
+          "precision": 0.4392523364485981,
+          "recall": 0.3711414213926777,
+          "reference": 1393
+        },
+        "threshold": 0.5
+      },
+      {
+        "addedEvents": 127,
+        "changedMeasures": 37,
+        "maxAdditionsPerMeasure": 4,
+        "minTargetEvents": 3,
+        "primary": {
+          "f1": 0.40233463035019457,
+          "falseNegative": 876,
+          "falsePositive": 660,
+          "generated": 1177,
+          "matched": 517,
+          "precision": 0.4392523364485981,
+          "recall": 0.3711414213926777,
+          "reference": 1393
+        },
+        "threshold": 0.5
+      },
+      {
+        "addedEvents": 285,
+        "changedMeasures": 60,
+        "maxAdditionsPerMeasure": 8,
+        "minTargetEvents": 1,
+        "primary": {
+          "f1": 0.40982404692082114,
+          "falseNegative": 834,
+          "falsePositive": 776,
+          "generated": 1335,
+          "matched": 559,
+          "precision": 0.41872659176029964,
+          "recall": 0.4012921751615219,
+          "reference": 1393
+        },
+        "threshold": 0.5
+      },
+      {
+        "addedEvents": 285,
+        "changedMeasures": 60,
+        "maxAdditionsPerMeasure": 8,
+        "minTargetEvents": 2,
+        "primary": {
+          "f1": 0.40982404692082114,
+          "falseNegative": 834,
+          "falsePositive": 776,
+          "generated": 1335,
+          "matched": 559,
+          "precision": 0.41872659176029964,
+          "recall": 0.4012921751615219,
+          "reference": 1393
+        },
+        "threshold": 0.5
+      },
+      {
+        "addedEvents": 285,
+        "changedMeasures": 60,
+        "maxAdditionsPerMeasure": 8,
+        "minTargetEvents": 3,
+        "primary": {
+          "f1": 0.40982404692082114,
+          "falseNegative": 834,
+          "falsePositive": 776,
+          "generated": 1335,
+          "matched": 559,
+          "precision": 0.41872659176029964,
+          "recall": 0.4012921751615219,
+          "reference": 1393
+        },
+        "threshold": 0.5
+      },
+      {
+        "addedEvents": 0,
+        "changedMeasures": 0,
+        "maxAdditionsPerMeasure": 1,
+        "minTargetEvents": 1,
+        "primary": {
+          "f1": 0.4036021285304953,
+          "falseNegative": 900,
+          "falsePositive": 557,
+          "generated": 1050,
+          "matched": 493,
+          "precision": 0.4695238095238095,
+          "recall": 0.3539124192390524,
+          "reference": 1393
+        },
+        "threshold": 0.67
+      },
+      {
+        "addedEvents": 0,
+        "changedMeasures": 0,
+        "maxAdditionsPerMeasure": 1,
+        "minTargetEvents": 2,
+        "primary": {
+          "f1": 0.4036021285304953,
+          "falseNegative": 900,
+          "falsePositive": 557,
+          "generated": 1050,
+          "matched": 493,
+          "precision": 0.4695238095238095,
+          "recall": 0.3539124192390524,
+          "reference": 1393
+        },
+        "threshold": 0.67
+      },
+      {
+        "addedEvents": 0,
+        "changedMeasures": 0,
+        "maxAdditionsPerMeasure": 1,
+        "minTargetEvents": 3,
+        "primary": {
+          "f1": 0.4036021285304953,
+          "falseNegative": 900,
+          "falsePositive": 557,
+          "generated": 1050,
+          "matched": 493,
+          "precision": 0.4695238095238095,
+          "recall": 0.3539124192390524,
+          "reference": 1393
+        },
+        "threshold": 0.67
+      },
+      {
+        "addedEvents": 12,
+        "changedMeasures": 6,
+        "maxAdditionsPerMeasure": 2,
+        "minTargetEvents": 1,
+        "primary": {
+          "f1": 0.4032586558044806,
+          "falseNegative": 898,
+          "falsePositive": 567,
+          "generated": 1062,
+          "matched": 495,
+          "precision": 0.4661016949152542,
+          "recall": 0.35534816941852115,
+          "reference": 1393
+        },
+        "threshold": 0.67
+      },
+      {
+        "addedEvents": 12,
+        "changedMeasures": 6,
+        "maxAdditionsPerMeasure": 2,
+        "minTargetEvents": 2,
+        "primary": {
+          "f1": 0.4032586558044806,
+          "falseNegative": 898,
+          "falsePositive": 567,
+          "generated": 1062,
+          "matched": 495,
+          "precision": 0.4661016949152542,
+          "recall": 0.35534816941852115,
+          "reference": 1393
+        },
+        "threshold": 0.67
+      },
+      {
+        "addedEvents": 12,
+        "changedMeasures": 6,
+        "maxAdditionsPerMeasure": 2,
+        "minTargetEvents": 3,
+        "primary": {
+          "f1": 0.4032586558044806,
+          "falseNegative": 898,
+          "falsePositive": 567,
+          "generated": 1062,
+          "matched": 495,
+          "precision": 0.4661016949152542,
+          "recall": 0.35534816941852115,
+          "reference": 1393
+        },
+        "threshold": 0.67
+      },
+      {
+        "addedEvents": 96,
+        "changedMeasures": 29,
+        "maxAdditionsPerMeasure": 4,
+        "minTargetEvents": 1,
+        "primary": {
+          "f1": 0.40645923591965344,
+          "falseNegative": 877,
+          "falsePositive": 630,
+          "generated": 1146,
+          "matched": 516,
+          "precision": 0.450261780104712,
+          "recall": 0.3704235463029433,
+          "reference": 1393
+        },
+        "threshold": 0.67
+      },
+      {
+        "addedEvents": 96,
+        "changedMeasures": 29,
+        "maxAdditionsPerMeasure": 4,
+        "minTargetEvents": 2,
+        "primary": {
+          "f1": 0.40645923591965344,
+          "falseNegative": 877,
+          "falsePositive": 630,
+          "generated": 1146,
+          "matched": 516,
+          "precision": 0.450261780104712,
+          "recall": 0.3704235463029433,
+          "reference": 1393
+        },
+        "threshold": 0.67
+      },
+      {
+        "addedEvents": 96,
+        "changedMeasures": 29,
+        "maxAdditionsPerMeasure": 4,
+        "minTargetEvents": 3,
+        "primary": {
+          "f1": 0.40645923591965344,
+          "falseNegative": 877,
+          "falsePositive": 630,
+          "generated": 1146,
+          "matched": 516,
+          "precision": 0.450261780104712,
+          "recall": 0.3704235463029433,
+          "reference": 1393
+        },
+        "threshold": 0.67
+      },
+      {
+        "addedEvents": 150,
+        "changedMeasures": 37,
+        "maxAdditionsPerMeasure": 8,
+        "minTargetEvents": 1,
+        "primary": {
+          "f1": 0.4087929039722329,
+          "falseNegative": 863,
+          "falsePositive": 670,
+          "generated": 1200,
+          "matched": 530,
+          "precision": 0.44166666666666665,
+          "recall": 0.38047379755922467,
+          "reference": 1393
+        },
+        "threshold": 0.67
+      },
+      {
+        "addedEvents": 150,
+        "changedMeasures": 37,
+        "maxAdditionsPerMeasure": 8,
+        "minTargetEvents": 2,
+        "primary": {
+          "f1": 0.4087929039722329,
+          "falseNegative": 863,
+          "falsePositive": 670,
+          "generated": 1200,
+          "matched": 530,
+          "precision": 0.44166666666666665,
+          "recall": 0.38047379755922467,
+          "reference": 1393
+        },
+        "threshold": 0.67
+      },
+      {
+        "addedEvents": 150,
+        "changedMeasures": 37,
+        "maxAdditionsPerMeasure": 8,
+        "minTargetEvents": 3,
+        "primary": {
+          "f1": 0.4087929039722329,
+          "falseNegative": 863,
+          "falsePositive": 670,
+          "generated": 1200,
+          "matched": 530,
+          "precision": 0.44166666666666665,
+          "recall": 0.38047379755922467,
+          "reference": 1393
+        },
+        "threshold": 0.67
+      },
+      {
+        "addedEvents": 0,
+        "changedMeasures": 0,
+        "maxAdditionsPerMeasure": 1,
+        "minTargetEvents": 1,
+        "primary": {
+          "f1": 0.4036021285304953,
+          "falseNegative": 900,
+          "falsePositive": 557,
+          "generated": 1050,
+          "matched": 493,
+          "precision": 0.4695238095238095,
+          "recall": 0.3539124192390524,
+          "reference": 1393
+        },
+        "threshold": 0.75
+      },
+      {
+        "addedEvents": 0,
+        "changedMeasures": 0,
+        "maxAdditionsPerMeasure": 1,
+        "minTargetEvents": 2,
+        "primary": {
+          "f1": 0.4036021285304953,
+          "falseNegative": 900,
+          "falsePositive": 557,
+          "generated": 1050,
+          "matched": 493,
+          "precision": 0.4695238095238095,
+          "recall": 0.3539124192390524,
+          "reference": 1393
+        },
+        "threshold": 0.75
+      },
+      {
+        "addedEvents": 0,
+        "changedMeasures": 0,
+        "maxAdditionsPerMeasure": 1,
+        "minTargetEvents": 3,
+        "primary": {
+          "f1": 0.4036021285304953,
+          "falseNegative": 900,
+          "falsePositive": 557,
+          "generated": 1050,
+          "matched": 493,
+          "precision": 0.4695238095238095,
+          "recall": 0.3539124192390524,
+          "reference": 1393
+        },
+        "threshold": 0.75
+      },
+      {
+        "addedEvents": 12,
+        "changedMeasures": 6,
+        "maxAdditionsPerMeasure": 2,
+        "minTargetEvents": 1,
+        "primary": {
+          "f1": 0.4032586558044806,
+          "falseNegative": 898,
+          "falsePositive": 567,
+          "generated": 1062,
+          "matched": 495,
+          "precision": 0.4661016949152542,
+          "recall": 0.35534816941852115,
+          "reference": 1393
+        },
+        "threshold": 0.75
+      },
+      {
+        "addedEvents": 12,
+        "changedMeasures": 6,
+        "maxAdditionsPerMeasure": 2,
+        "minTargetEvents": 2,
+        "primary": {
+          "f1": 0.4032586558044806,
+          "falseNegative": 898,
+          "falsePositive": 567,
+          "generated": 1062,
+          "matched": 495,
+          "precision": 0.4661016949152542,
+          "recall": 0.35534816941852115,
+          "reference": 1393
+        },
+        "threshold": 0.75
+      },
+      {
+        "addedEvents": 12,
+        "changedMeasures": 6,
+        "maxAdditionsPerMeasure": 2,
+        "minTargetEvents": 3,
+        "primary": {
+          "f1": 0.4032586558044806,
+          "falseNegative": 898,
+          "falsePositive": 567,
+          "generated": 1062,
+          "matched": 495,
+          "precision": 0.4661016949152542,
+          "recall": 0.35534816941852115,
+          "reference": 1393
+        },
+        "threshold": 0.75
+      },
+      {
+        "addedEvents": 54,
+        "changedMeasures": 18,
+        "maxAdditionsPerMeasure": 4,
+        "minTargetEvents": 1,
+        "primary": {
+          "f1": 0.40448538245895077,
+          "falseNegative": 888,
+          "falsePositive": 599,
+          "generated": 1104,
+          "matched": 505,
+          "precision": 0.45742753623188404,
+          "recall": 0.36252692031586503,
+          "reference": 1393
+        },
+        "threshold": 0.75
+      },
+      {
+        "addedEvents": 54,
+        "changedMeasures": 18,
+        "maxAdditionsPerMeasure": 4,
+        "minTargetEvents": 2,
+        "primary": {
+          "f1": 0.40448538245895077,
+          "falseNegative": 888,
+          "falsePositive": 599,
+          "generated": 1104,
+          "matched": 505,
+          "precision": 0.45742753623188404,
+          "recall": 0.36252692031586503,
+          "reference": 1393
+        },
+        "threshold": 0.75
+      },
+      {
+        "addedEvents": 54,
+        "changedMeasures": 18,
+        "maxAdditionsPerMeasure": 4,
+        "minTargetEvents": 3,
+        "primary": {
+          "f1": 0.40448538245895077,
+          "falseNegative": 888,
+          "falsePositive": 599,
+          "generated": 1104,
+          "matched": 505,
+          "precision": 0.45742753623188404,
+          "recall": 0.36252692031586503,
+          "reference": 1393
+        },
+        "threshold": 0.75
+      },
+      {
+        "addedEvents": 109,
+        "changedMeasures": 27,
+        "maxAdditionsPerMeasure": 8,
+        "minTargetEvents": 1,
+        "primary": {
+          "f1": 0.40595611285266453,
+          "falseNegative": 875,
+          "falsePositive": 641,
+          "generated": 1159,
+          "matched": 518,
+          "precision": 0.4469370146678171,
+          "recall": 0.37185929648241206,
+          "reference": 1393
+        },
+        "threshold": 0.75
+      },
+      {
+        "addedEvents": 109,
+        "changedMeasures": 27,
+        "maxAdditionsPerMeasure": 8,
+        "minTargetEvents": 2,
+        "primary": {
+          "f1": 0.40595611285266453,
+          "falseNegative": 875,
+          "falsePositive": 641,
+          "generated": 1159,
+          "matched": 518,
+          "precision": 0.4469370146678171,
+          "recall": 0.37185929648241206,
+          "reference": 1393
+        },
+        "threshold": 0.75
+      },
+      {
+        "addedEvents": 109,
+        "changedMeasures": 27,
+        "maxAdditionsPerMeasure": 8,
+        "minTargetEvents": 3,
+        "primary": {
+          "f1": 0.40595611285266453,
+          "falseNegative": 875,
+          "falsePositive": 641,
+          "generated": 1159,
+          "matched": 518,
+          "precision": 0.4469370146678171,
+          "recall": 0.37185929648241206,
+          "reference": 1393
+        },
+        "threshold": 0.75
+      },
+      {
+        "addedEvents": 0,
+        "changedMeasures": 0,
+        "maxAdditionsPerMeasure": 1,
+        "minTargetEvents": 1,
+        "primary": {
+          "f1": 0.4036021285304953,
+          "falseNegative": 900,
+          "falsePositive": 557,
+          "generated": 1050,
+          "matched": 493,
+          "precision": 0.4695238095238095,
+          "recall": 0.3539124192390524,
+          "reference": 1393
+        },
+        "threshold": 0.8
+      },
+      {
+        "addedEvents": 0,
+        "changedMeasures": 0,
+        "maxAdditionsPerMeasure": 1,
+        "minTargetEvents": 2,
+        "primary": {
+          "f1": 0.4036021285304953,
+          "falseNegative": 900,
+          "falsePositive": 557,
+          "generated": 1050,
+          "matched": 493,
+          "precision": 0.4695238095238095,
+          "recall": 0.3539124192390524,
+          "reference": 1393
+        },
+        "threshold": 0.8
+      },
+      {
+        "addedEvents": 0,
+        "changedMeasures": 0,
+        "maxAdditionsPerMeasure": 1,
+        "minTargetEvents": 3,
+        "primary": {
+          "f1": 0.4036021285304953,
+          "falseNegative": 900,
+          "falsePositive": 557,
+          "generated": 1050,
+          "matched": 493,
+          "precision": 0.4695238095238095,
+          "recall": 0.3539124192390524,
+          "reference": 1393
+        },
+        "threshold": 0.8
+      },
+      {
+        "addedEvents": 10,
+        "changedMeasures": 5,
+        "maxAdditionsPerMeasure": 2,
+        "minTargetEvents": 1,
+        "primary": {
+          "f1": 0.4035874439461883,
+          "falseNegative": 898,
+          "falsePositive": 565,
+          "generated": 1060,
+          "matched": 495,
+          "precision": 0.4669811320754717,
+          "recall": 0.35534816941852115,
+          "reference": 1393
+        },
+        "threshold": 0.8
+      },
+      {
+        "addedEvents": 10,
+        "changedMeasures": 5,
+        "maxAdditionsPerMeasure": 2,
+        "minTargetEvents": 2,
+        "primary": {
+          "f1": 0.4035874439461883,
+          "falseNegative": 898,
+          "falsePositive": 565,
+          "generated": 1060,
+          "matched": 495,
+          "precision": 0.4669811320754717,
+          "recall": 0.35534816941852115,
+          "reference": 1393
+        },
+        "threshold": 0.8
+      },
+      {
+        "addedEvents": 10,
+        "changedMeasures": 5,
+        "maxAdditionsPerMeasure": 2,
+        "minTargetEvents": 3,
+        "primary": {
+          "f1": 0.4035874439461883,
+          "falseNegative": 898,
+          "falsePositive": 565,
+          "generated": 1060,
+          "matched": 495,
+          "precision": 0.4669811320754717,
+          "recall": 0.35534816941852115,
+          "reference": 1393
+        },
+        "threshold": 0.8
+      },
+      {
+        "addedEvents": 43,
+        "changedMeasures": 14,
+        "maxAdditionsPerMeasure": 4,
+        "minTargetEvents": 1,
+        "primary": {
+          "f1": 0.40547063555913115,
+          "falseNegative": 889,
+          "falsePositive": 589,
+          "generated": 1093,
+          "matched": 504,
+          "precision": 0.46111619396157366,
+          "recall": 0.36180904522613067,
+          "reference": 1393
+        },
+        "threshold": 0.8
+      },
+      {
+        "addedEvents": 43,
+        "changedMeasures": 14,
+        "maxAdditionsPerMeasure": 4,
+        "minTargetEvents": 2,
+        "primary": {
+          "f1": 0.40547063555913115,
+          "falseNegative": 889,
+          "falsePositive": 589,
+          "generated": 1093,
+          "matched": 504,
+          "precision": 0.46111619396157366,
+          "recall": 0.36180904522613067,
+          "reference": 1393
+        },
+        "threshold": 0.8
+      },
+      {
+        "addedEvents": 43,
+        "changedMeasures": 14,
+        "maxAdditionsPerMeasure": 4,
+        "minTargetEvents": 3,
+        "primary": {
+          "f1": 0.40547063555913115,
+          "falseNegative": 889,
+          "falsePositive": 589,
+          "generated": 1093,
+          "matched": 504,
+          "precision": 0.46111619396157366,
+          "recall": 0.36180904522613067,
+          "reference": 1393
+        },
+        "threshold": 0.8
+      },
+      {
+        "addedEvents": 90,
+        "changedMeasures": 22,
+        "maxAdditionsPerMeasure": 8,
+        "minTargetEvents": 1,
+        "primary": {
+          "f1": 0.4058428740623767,
+          "falseNegative": 879,
+          "falsePositive": 626,
+          "generated": 1140,
+          "matched": 514,
+          "precision": 0.45087719298245615,
+          "recall": 0.36898779612347454,
+          "reference": 1393
+        },
+        "threshold": 0.8
+      },
+      {
+        "addedEvents": 90,
+        "changedMeasures": 22,
+        "maxAdditionsPerMeasure": 8,
+        "minTargetEvents": 2,
+        "primary": {
+          "f1": 0.4058428740623767,
+          "falseNegative": 879,
+          "falsePositive": 626,
+          "generated": 1140,
+          "matched": 514,
+          "precision": 0.45087719298245615,
+          "recall": 0.36898779612347454,
+          "reference": 1393
+        },
+        "threshold": 0.8
+      },
+      {
+        "addedEvents": 90,
+        "changedMeasures": 22,
+        "maxAdditionsPerMeasure": 8,
+        "minTargetEvents": 3,
+        "primary": {
+          "f1": 0.4058428740623767,
+          "falseNegative": 879,
+          "falsePositive": 626,
+          "generated": 1140,
+          "matched": 514,
+          "precision": 0.45087719298245615,
+          "recall": 0.36898779612347454,
+          "reference": 1393
+        },
+        "threshold": 0.8
+      },
+      {
+        "addedEvents": 0,
+        "changedMeasures": 0,
+        "maxAdditionsPerMeasure": 1,
+        "minTargetEvents": 1,
+        "primary": {
+          "f1": 0.4036021285304953,
+          "falseNegative": 900,
+          "falsePositive": 557,
+          "generated": 1050,
+          "matched": 493,
+          "precision": 0.4695238095238095,
+          "recall": 0.3539124192390524,
+          "reference": 1393
+        },
+        "threshold": 0.9
+      },
+      {
+        "addedEvents": 0,
+        "changedMeasures": 0,
+        "maxAdditionsPerMeasure": 1,
+        "minTargetEvents": 2,
+        "primary": {
+          "f1": 0.4036021285304953,
+          "falseNegative": 900,
+          "falsePositive": 557,
+          "generated": 1050,
+          "matched": 493,
+          "precision": 0.4695238095238095,
+          "recall": 0.3539124192390524,
+          "reference": 1393
+        },
+        "threshold": 0.9
+      },
+      {
+        "addedEvents": 0,
+        "changedMeasures": 0,
+        "maxAdditionsPerMeasure": 1,
+        "minTargetEvents": 3,
+        "primary": {
+          "f1": 0.4036021285304953,
+          "falseNegative": 900,
+          "falsePositive": 557,
+          "generated": 1050,
+          "matched": 493,
+          "precision": 0.4695238095238095,
+          "recall": 0.3539124192390524,
+          "reference": 1393
+        },
+        "threshold": 0.9
+      },
+      {
+        "addedEvents": 2,
+        "changedMeasures": 1,
+        "maxAdditionsPerMeasure": 2,
+        "minTargetEvents": 1,
+        "primary": {
+          "f1": 0.4032719836400818,
+          "falseNegative": 900,
+          "falsePositive": 559,
+          "generated": 1052,
+          "matched": 493,
+          "precision": 0.4686311787072243,
+          "recall": 0.3539124192390524,
+          "reference": 1393
+        },
+        "threshold": 0.9
+      },
+      {
+        "addedEvents": 2,
+        "changedMeasures": 1,
+        "maxAdditionsPerMeasure": 2,
+        "minTargetEvents": 2,
+        "primary": {
+          "f1": 0.4032719836400818,
+          "falseNegative": 900,
+          "falsePositive": 559,
+          "generated": 1052,
+          "matched": 493,
+          "precision": 0.4686311787072243,
+          "recall": 0.3539124192390524,
+          "reference": 1393
+        },
+        "threshold": 0.9
+      },
+      {
+        "addedEvents": 2,
+        "changedMeasures": 1,
+        "maxAdditionsPerMeasure": 2,
+        "minTargetEvents": 3,
+        "primary": {
+          "f1": 0.4032719836400818,
+          "falseNegative": 900,
+          "falsePositive": 559,
+          "generated": 1052,
+          "matched": 493,
+          "precision": 0.4686311787072243,
+          "recall": 0.3539124192390524,
+          "reference": 1393
+        },
+        "threshold": 0.9
+      },
+      {
+        "addedEvents": 10,
+        "changedMeasures": 3,
+        "maxAdditionsPerMeasure": 4,
+        "minTargetEvents": 1,
+        "primary": {
+          "f1": 0.4019567876070118,
+          "falseNegative": 900,
+          "falsePositive": 567,
+          "generated": 1060,
+          "matched": 493,
+          "precision": 0.4650943396226415,
+          "recall": 0.3539124192390524,
+          "reference": 1393
+        },
+        "threshold": 0.9
+      },
+      {
+        "addedEvents": 10,
+        "changedMeasures": 3,
+        "maxAdditionsPerMeasure": 4,
+        "minTargetEvents": 2,
+        "primary": {
+          "f1": 0.4019567876070118,
+          "falseNegative": 900,
+          "falsePositive": 567,
+          "generated": 1060,
+          "matched": 493,
+          "precision": 0.4650943396226415,
+          "recall": 0.3539124192390524,
+          "reference": 1393
+        },
+        "threshold": 0.9
+      },
+      {
+        "addedEvents": 10,
+        "changedMeasures": 3,
+        "maxAdditionsPerMeasure": 4,
+        "minTargetEvents": 3,
+        "primary": {
+          "f1": 0.4019567876070118,
+          "falseNegative": 900,
+          "falsePositive": 567,
+          "generated": 1060,
+          "matched": 493,
+          "precision": 0.4650943396226415,
+          "recall": 0.3539124192390524,
+          "reference": 1393
+        },
+        "threshold": 0.9
+      },
+      {
+        "addedEvents": 20,
+        "changedMeasures": 5,
+        "maxAdditionsPerMeasure": 8,
+        "minTargetEvents": 1,
+        "primary": {
+          "f1": 0.4019488428745432,
+          "falseNegative": 898,
+          "falsePositive": 575,
+          "generated": 1070,
+          "matched": 495,
+          "precision": 0.46261682242990654,
+          "recall": 0.35534816941852115,
+          "reference": 1393
+        },
+        "threshold": 0.9
+      },
+      {
+        "addedEvents": 20,
+        "changedMeasures": 5,
+        "maxAdditionsPerMeasure": 8,
+        "minTargetEvents": 2,
+        "primary": {
+          "f1": 0.4019488428745432,
+          "falseNegative": 898,
+          "falsePositive": 575,
+          "generated": 1070,
+          "matched": 495,
+          "precision": 0.46261682242990654,
+          "recall": 0.35534816941852115,
+          "reference": 1393
+        },
+        "threshold": 0.9
+      },
+      {
+        "addedEvents": 20,
+        "changedMeasures": 5,
+        "maxAdditionsPerMeasure": 8,
+        "minTargetEvents": 3,
+        "primary": {
+          "f1": 0.4019488428745432,
+          "falseNegative": 898,
+          "falsePositive": 575,
+          "generated": 1070,
+          "matched": 495,
+          "precision": 0.46261682242990654,
+          "recall": 0.35534816941852115,
+          "reference": 1393
+        },
+        "threshold": 0.9
+      },
+      {
+        "addedEvents": 0,
+        "changedMeasures": 0,
+        "maxAdditionsPerMeasure": 1,
+        "minTargetEvents": 1,
+        "primary": {
+          "f1": 0.4036021285304953,
+          "falseNegative": 900,
+          "falsePositive": 557,
+          "generated": 1050,
+          "matched": 493,
+          "precision": 0.4695238095238095,
+          "recall": 0.3539124192390524,
+          "reference": 1393
+        },
+        "threshold": 1.0
+      },
+      {
+        "addedEvents": 0,
+        "changedMeasures": 0,
+        "maxAdditionsPerMeasure": 1,
+        "minTargetEvents": 2,
+        "primary": {
+          "f1": 0.4036021285304953,
+          "falseNegative": 900,
+          "falsePositive": 557,
+          "generated": 1050,
+          "matched": 493,
+          "precision": 0.4695238095238095,
+          "recall": 0.3539124192390524,
+          "reference": 1393
+        },
+        "threshold": 1.0
+      },
+      {
+        "addedEvents": 0,
+        "changedMeasures": 0,
+        "maxAdditionsPerMeasure": 1,
+        "minTargetEvents": 3,
+        "primary": {
+          "f1": 0.4036021285304953,
+          "falseNegative": 900,
+          "falsePositive": 557,
+          "generated": 1050,
+          "matched": 493,
+          "precision": 0.4695238095238095,
+          "recall": 0.3539124192390524,
+          "reference": 1393
+        },
+        "threshold": 1.0
+      },
+      {
+        "addedEvents": 0,
+        "changedMeasures": 0,
+        "maxAdditionsPerMeasure": 2,
+        "minTargetEvents": 1,
+        "primary": {
+          "f1": 0.4036021285304953,
+          "falseNegative": 900,
+          "falsePositive": 557,
+          "generated": 1050,
+          "matched": 493,
+          "precision": 0.4695238095238095,
+          "recall": 0.3539124192390524,
+          "reference": 1393
+        },
+        "threshold": 1.0
+      },
+      {
+        "addedEvents": 0,
+        "changedMeasures": 0,
+        "maxAdditionsPerMeasure": 2,
+        "minTargetEvents": 2,
+        "primary": {
+          "f1": 0.4036021285304953,
+          "falseNegative": 900,
+          "falsePositive": 557,
+          "generated": 1050,
+          "matched": 493,
+          "precision": 0.4695238095238095,
+          "recall": 0.3539124192390524,
+          "reference": 1393
+        },
+        "threshold": 1.0
+      },
+      {
+        "addedEvents": 0,
+        "changedMeasures": 0,
+        "maxAdditionsPerMeasure": 2,
+        "minTargetEvents": 3,
+        "primary": {
+          "f1": 0.4036021285304953,
+          "falseNegative": 900,
+          "falsePositive": 557,
+          "generated": 1050,
+          "matched": 493,
+          "precision": 0.4695238095238095,
+          "recall": 0.3539124192390524,
+          "reference": 1393
+        },
+        "threshold": 1.0
+      },
+      {
+        "addedEvents": 8,
+        "changedMeasures": 2,
+        "maxAdditionsPerMeasure": 4,
+        "minTargetEvents": 1,
+        "primary": {
+          "f1": 0.4022847817217462,
+          "falseNegative": 900,
+          "falsePositive": 565,
+          "generated": 1058,
+          "matched": 493,
+          "precision": 0.4659735349716446,
+          "recall": 0.3539124192390524,
+          "reference": 1393
+        },
+        "threshold": 1.0
+      },
+      {
+        "addedEvents": 8,
+        "changedMeasures": 2,
+        "maxAdditionsPerMeasure": 4,
+        "minTargetEvents": 2,
+        "primary": {
+          "f1": 0.4022847817217462,
+          "falseNegative": 900,
+          "falsePositive": 565,
+          "generated": 1058,
+          "matched": 493,
+          "precision": 0.4659735349716446,
+          "recall": 0.3539124192390524,
+          "reference": 1393
+        },
+        "threshold": 1.0
+      },
+      {
+        "addedEvents": 8,
+        "changedMeasures": 2,
+        "maxAdditionsPerMeasure": 4,
+        "minTargetEvents": 3,
+        "primary": {
+          "f1": 0.4022847817217462,
+          "falseNegative": 900,
+          "falsePositive": 565,
+          "generated": 1058,
+          "matched": 493,
+          "precision": 0.4659735349716446,
+          "recall": 0.3539124192390524,
+          "reference": 1393
+        },
+        "threshold": 1.0
+      },
+      {
+        "addedEvents": 13,
+        "changedMeasures": 3,
+        "maxAdditionsPerMeasure": 8,
+        "minTargetEvents": 1,
+        "primary": {
+          "f1": 0.40309446254071657,
+          "falseNegative": 898,
+          "falsePositive": 568,
+          "generated": 1063,
+          "matched": 495,
+          "precision": 0.4656632173095014,
+          "recall": 0.35534816941852115,
+          "reference": 1393
+        },
+        "threshold": 1.0
+      },
+      {
+        "addedEvents": 13,
+        "changedMeasures": 3,
+        "maxAdditionsPerMeasure": 8,
+        "minTargetEvents": 2,
+        "primary": {
+          "f1": 0.40309446254071657,
+          "falseNegative": 898,
+          "falsePositive": 568,
+          "generated": 1063,
+          "matched": 495,
+          "precision": 0.4656632173095014,
+          "recall": 0.35534816941852115,
+          "reference": 1393
+        },
+        "threshold": 1.0
+      },
+      {
+        "addedEvents": 13,
+        "changedMeasures": 3,
+        "maxAdditionsPerMeasure": 8,
+        "minTargetEvents": 3,
+        "primary": {
+          "f1": 0.40309446254071657,
+          "falseNegative": 898,
+          "falsePositive": 568,
+          "generated": 1063,
+          "matched": 495,
+          "precision": 0.4656632173095014,
+          "recall": 0.35534816941852115,
+          "reference": 1393
+        },
+        "threshold": 1.0
+      }
+    ]
+  },
+  "label": "SINGLE_SONG_TRAINING_CALIBRATION",
+  "parameters": {
+    "donorSource": "same generated stream, another generated measure only",
+    "maxAdditionsPerMeasure": [
+      1,
+      2,
+      4,
+      8
+    ],
+    "minTargetEvents": [
+      1,
+      2,
+      3
+    ],
+    "recursivePropagation": false,
+    "thresholds": [
+      0.5,
+      0.67,
+      0.75,
+      0.8,
+      0.9,
+      1.0
+    ]
+  },
+  "policy": {
+    "addedEventsDerivedFromReference": false,
+    "addedEventsDerivedOnlyFromGeneratedDonorMeasures": true,
+    "calibrationOnly": true,
+    "directReferenceCopy": false,
+    "generalizationClaim": false,
+    "referenceFacing": true,
+    "referenceUsedOnlyToScoreFixedVariants": true
+  },
+  "referenceCounts": {
+    "bassExcluded": 0,
+    "bassIncluded": 547,
+    "leadExcluded": 0,
+    "leadIncluded": 447,
+    "rhythmExcluded": 0,
+    "rhythmIncluded": 946
+  },
+  "schema": "dadrock.tabs.v167.self-repeat-completion-sweep.v1",
+  "version": "V167"
+}
