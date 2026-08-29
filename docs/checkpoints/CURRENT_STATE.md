@@ -4,7 +4,16 @@ Updated: 2026-08-29 UTC
 Branch: `v143-contextual-prune-lobo`
 
 ## Active phase
-**V166 is terminal/immutable. V167 remains the explicitly scorer/reference-guided SINGLE-SONG TRAINING CALIBRATION lane for Lenny Kravitz — Are You Gonna Go My Way. Iteration 005 remains frozen current best: Guitar `gss-active-only` **42.7940586109996% F1**, Bass **80.45325779036827% F1**. The active-topology family is terminal negative/closed and no I006 exists. The new reference-blind temporal/recurrence diagnosis is now terminal/frozen and identifies a sparse, genuinely new structural hypothesis: collapse only short same-MIDI bursts among the 48 frozen I005 additions. A small recurrence family is preregistered below but not yet implemented/generated/scored. `main`/Production remain untouched; no GPU/CUDA/Modal work is authorized or used.**
+**V166 is terminal/immutable. V167 remains the explicitly scorer/reference-guided SINGLE-SONG TRAINING CALIBRATION lane for Lenny Kravitz — Are You Gonna Go My Way. Iteration 005 remains frozen current best: Guitar `gss-active-only` **42.7940586109996% F1**, Bass **80.45325779036827% F1**. The active-topology family is terminal negative/closed and no I006 exists. The reference-blind temporal/recurrence diagnosis is terminal/frozen and the preregistered same-MIDI burst-collapse family is now implemented but NOT generated or scored. Generator/grader identities are frozen below. `main`/Production remain untouched; no GPU/CUDA/Modal work is authorized or used.**
+
+## Current execution checkpoint — RECURRENCE IMPLEMENTATION STAGED / CANDIDATES NOT GENERATED
+- Generator `validation/v167_single_song_calibration/build_temporal_recurrence_guitar_variants_v167.py`: commit `937f3296e970ae7bf6759c9cb0efb971b0a9c3e0`, blob `9eab55638625f71949f0877369f543459bcf8fda`.
+- Grader `validation/v167_single_song_calibration/score_temporal_recurrence_guitar_variants_v167.py`: commit `48e01a18c95dd76d3ed1b5dc4addd4df3bf156e6`, blob `e8251df48d03e94a2d53060bc1e82b4e9d5ba4f7`.
+- Generator has no scorer/reference input. It keeps all 1050 immutable I003 Guitar events and filters only the exact 48 frozen I005 additions.
+- Exactly four rules exist: `recur-repro-i005`, `recur-gap1-earliest`, `recur-gap1-strongest`, `recur-gap2-strongest`. No thresholds or additional variants were added.
+- Expected kept I005 additions are hard-guarded at **48 / 43 / 43 / 40** respectively; expected Guitar counts are **1098 / 1093 / 1093 / 1090**. Bass is copied exactly from I005.
+- `strongest_evidence` selector is exactly max frozen onset support, then max frozen activity support, then earlier grid step. It does not read reference outcomes.
+- Grader requires a fully frozen manifest/candidate set before reference/scorer access and is hard-limited to exactly Guitar **3**, Bass **0**, reproduction **0** score calls. It cannot create I006.
 
 ## Temporal/recurrence diagnosis — FROZEN / TERMINAL
 - Analyzer `validation/v167_single_song_calibration/analyze_post_topology_temporal_recurrence_v167.py`: blob `156f0f2adc202b3868791514f31594426cadf0d0`.
@@ -33,15 +42,13 @@ Branch: `v143-contextual-prune-lobo`
   - MIDI81 `[1341,1342]`: onset favors 1342 (1.0 vs 0.85884).
   - MIDI69 `[1405,1406]`: onset/activity favor 1406.
   - MIDI64 `[1750,1751,1752]`: onset ties at 1.0 for 1751/1752; activity favors 1751 over 1752; earliest would keep 1750.
-- This makes “earliest” vs “strongest evidence” two genuinely distinct deterministic burst-resolution rules without any reference-facing event choice.
 
-## Preregistered next family — same-MIDI burst collapse
+## Preregistered recurrence family — implementation frozen, generation pending
 All variants keep all 1050 immutable I003 Guitar events. Only the exact 48 frozen I005 additions may be filtered. Bass remains exactly I005. No onset/activity/rank threshold sweep is added.
 - `recur-repro-i005`: exact I005, all48 additions; no-score reproduction control.
-- `recur-gap1-earliest`: for each same-MIDI addition connected component whose consecutive grid gaps are <=1, keep only earliest; expected additions **43**, Guitar count **1093**.
-- `recur-gap1-strongest`: same gap<=1 components, keep only max onset support, then max activity support, then earliest; expected additions **43**, Guitar **1093**.
-- `recur-gap2-strongest`: same-MIDI components with consecutive gaps <=2, keep only strongest by same evidence ordering; expected additions **40**, Guitar **1090**.
-- This family is distinct from the closed topology family and uses only frozen temporal/reference-blind evidence.
+- `recur-gap1-earliest`: same-MIDI gap<=1 connected bursts collapse to earliest; additions **43**, Guitar **1093**.
+- `recur-gap1-strongest`: same gap<=1 bursts collapse by max onset, then activity, then earliest; additions **43**, Guitar **1093**.
+- `recur-gap2-strongest`: same-MIDI gap<=2 bursts collapse by same evidence ordering; additions **40**, Guitar **1090**.
 - Freeze all candidate hashes before any reference/scorer read. Planned score calls: exactly Guitar **3**, Bass **0**, reproduction **0**.
 - Selection: max Guitar F1, then precision, fewer kept additions, lexicographic id.
 - Scorer workflow may not create I006. Separate I006 promotion eligibility remains conservative: winner must gain **>=+0.10pp F1 vs I005** and have **precision >= I005**.
@@ -62,10 +69,11 @@ All variants keep all 1050 immutable I003 Guitar events. Only the exact 48 froze
 - Bass closed. CPU authorized; fresh explicit authorization required before GPU/CUDA/Modal.
 - Never modify/merge/promote `main` or Production without explicit user direction.
 
-## NEXT boundary — implement and freeze recurrence candidates reference-blind
-1. Implement generator + grader exactly for the preregistered four variants above; do not add variants or thresholds.
-2. Checkpoint implementation blobs before candidate generation.
-3. Run a separate self-removing generation-only workflow with no scorer/reference input; require kept-addition counts 48/43/43/40 and Bass exact I005.
-4. Freeze manifest/candidate hashes/receipt before any scoring.
-5. Checkpoint frozen candidate identities, then arm a separate exactly-3-call Guitar scorer workflow using the existing frozen scorer/reference. Bass/reproduction receive 0 calls; no I006 auto-promotion.
-6. CPU only; no GPU/CUDA/Modal; never modify main/Production.
+## NEXT boundary — freeze recurrence candidates reference-blind
+1. Arm a separate self-removing generation-only workflow from this exact checkpoint parent.
+2. Workflow must verify generator blob, grader blob, I003/I005/diagnosis identities; generator text must contain no reference/scorer path.
+3. Generate exactly four candidates and require kept-addition counts 48/43/43/40 and Bass exact I005.
+4. Commit manifest/candidate files + generation receipt and remove the workflow in the same terminal commit.
+5. Checkpoint frozen candidate identities before any scoring.
+6. Only then arm a separate exactly-3-call Guitar scorer workflow using the existing frozen scorer/reference. Bass/reproduction receive 0 calls; no I006 auto-promotion.
+7. CPU only; no GPU/CUDA/Modal; never modify main/Production.
