@@ -4,7 +4,7 @@ Updated: 2026-08-29 UTC
 Branch: `v143-contextual-prune-lobo`
 
 ## Active phase
-**V166 is terminal/immutable. V167 is the explicitly scorer/reference-guided SINGLE-SONG TRAINING CALIBRATION lane for Lenny Kravitz — Are You Gonna Go My Way. The 146-variant upstream-recovery sweep is terminal/frozen. Guitar's winner is the unchanged Iteration 002 baseline at 41.9156774457634%. Bass has a material frozen whole-rule winner at 80.45325779036827% F1, +8.588136610178598pp versus Iteration 002, with +15.539305301645335pp recall and -1.622745646766166pp precision. The winner adds 110 reference-blind upstream recovery events under the predeclared low-register/no-stable-state rule. A deterministic reference-blind Iteration 003 promotion transform is now staged and pinned; it must reconstruct the already-scored minimal winner at exact SHA256 `2e04edd9...` and prove normalized musical-stream equality before writing the rich Bass-only promotion. No new reference-facing score is needed or permitted for selection. `main`/Production remain untouched; no GPU/CUDA/Modal work is authorized or needed.**
+**V166 is terminal/immutable. V167 is the explicitly scorer/reference-guided SINGLE-SONG TRAINING CALIBRATION lane for Lenny Kravitz — Are You Gonna Go My Way. Iteration 003 is now the frozen current best. Guitar remains exactly the Iteration 002 winner at 41.9156774457634% F1. Bass has been deterministically promoted to the frozen upstream-recovery winner at 80.45325779036827% F1, +8.588136610178598pp versus Iteration 002. The rich Iteration 003 candidate was proven musically identical to the already-scored frozen sweep winner with zero new reference-facing score calls. `main`/Production remain untouched; no GPU/CUDA/Modal work was used. The next research boundary is Guitar only: the first standalone-harmonic addition grid is terminal negative, so any further Guitar work must begin from a new preregistered hypothesis derived from frozen aggregate evidence, not per-event reference choices.**
 
 ## Standing V167 methodology
 - Calibration only; never present V167 calibration score as holdout/generalization performance.
@@ -20,7 +20,7 @@ Branch: `v143-contextual-prune-lobo`
 - Candidate `debug/v166-cpu-autonomous/generated.json`, blob `c36a4d1e14ca66235b51a866ad3908322834efff`, SHA256 `fa2411598b401f745eff49a9cbda294ed767de093c905909531c7dd4dc6eb378`.
 - Counts Guitar 1050 / Bass 402; structural QC PASS. V159–V166 generations are closed forever.
 
-## V167 calibration progression
+## V167 progression before upstream recovery
 - Baseline: Guitar **6.058125255832993%**, Bass **21.707060063224446%**.
 - Frozen global phase optimum for both streams: `-12` absolute grid steps.
 - Iteration 001 terminal `dcb61f0eeeedd1d1ea69cec257d374f7b83a084b`: Guitar **40.36021285304953%**, Bass **70.60063224446786%**.
@@ -28,7 +28,7 @@ Branch: `v143-contextual-prune-lobo`
 - Generated-only repeat completion was not promoted: Bass no gain; Guitar only +0.622pp while adding 285 notes.
 - Frozen whole-stream step-rule sweep selected Guitar `max_score_x_shared` and Bass `max_score_x_mean_support`.
 
-## V167 Iteration 002 — FROZEN BASE
+## V167 Iteration 002 — FROZEN PARENT
 - Transform `validation/v167_single_song_calibration/apply_step_rules_v167.py`, blob `00dc94081117664890d1dc5539bf5e69fedf76fa`.
 - Run `33227898407`, job `99035077043`; terminal commit `9883daaa9770123aeab2a122fa72fa2fc6c16c4c`.
 - Candidate `debug/v167-single-song-calibration/iteration-002-generated.json`, blob `7eba73700116ceeca580a8851abe399aed764834`, SHA256 `96fbc329d9ba46b06d430c7c3c7b7f5b0e9077f6e133da5c3165c1fde609b5cc`.
@@ -49,15 +49,15 @@ Branch: `v143-contextual-prune-lobo`
 - Exact V166 musical reproduction: 1050 Guitar / 402 Bass. Reference/scorer reads 0; threshold tuning=false; candidate generation behavior modified=false; GPU/CUDA/Modal=false; `main`/Production=false.
 - Guitar standalone harmonic pool: **272 sites / 13,328 candidates**.
 - Bass pre-admission pool: **913 sites / 36,520 candidates**.
-- Bass final admission gates rejected essentially nothing; missing Bass recall is upstream proposal/state coverage.
-- Guitar active-state recovery historically did not perform standalone harmonic pitch discovery; missing chord-tone/polyphony coverage is upstream.
+- Bass final admission gates rejected essentially nothing; missing Bass recall was upstream proposal/state coverage.
+- Guitar active-state recovery historically did not perform standalone harmonic pitch discovery; missing chord-tone/polyphony coverage remains an upstream hypothesis area.
 
 ## V167 upstream-recovery sweep preregistration
 - Base generator `validation/v167_single_song_calibration/build_upstream_recovery_variants_v167.py`, blob `24413d321f64bbfcce48812ceb85b4593dcfa80c`, commit `6935311a96cc8ba391ad461ef1368ae7bed789b1`.
 - Corrected guard-only adapter `validation/v167_single_song_calibration/build_upstream_recovery_variants_v167_rearm.py`, blob `fbbee07493084792912c774d375ca5011672891f`, commit `ffa7694b48e4e64b7e6a354a1704546909a45533`.
 - Grader `validation/v167_single_song_calibration/score_upstream_recovery_variants_v167.py`, blob `32304261ff9e6bec00d22eabea08cf5070cd3d3e`, commit `589a046a08c7e508bae910774e8f74bb5c4b96ac`.
 - 146 complete variants frozen before reference scoring: 49 Guitar (baseline + 48) and 97 Bass (baseline + 96).
-- Guitar grid: template rank 0.80/0.90/0.95/0.975 × onset 0.35/0.50/0.65 × max 1/2 adds/site × Basic-Pitch-inactive-only true/false; fundamental required; activity >=0.05; existing I002 events preferred; cap 6.
+- Guitar grid: template rank 0.80/0.90/0.95/0.975 × onset 0.35/0.50/0.65 × max 1/2 additions/site × Basic-Pitch-inactive-only true/false; fundamental required; activity >=0.05; existing I002 events preferred; cap 6.
 - Bass grid: template rank 0.80/0.90/0.95/0.975 × onset 0.20/0.35/0.50 × activity 0.04/0.10 × scope all/no-stable-state/low-register/low-register+no-stable-state; fundamental required; low register MIDI <=40; new additions only on I002-empty corrected steps; inherited I002 timing collisions preserved.
 - New recovery timing fixed reference-blind: nearest frozen V166 subdivision then frozen `-12` global phase. Existing I002 timing retained.
 - Winner selection frozen in advance: max primary F1, max precision, fewer additions, lexicographic id. Material threshold 1.0pp. No automatic I003 promotion.
@@ -77,10 +77,10 @@ Branch: `v143-contextual-prune-lobo`
 
 ### Frozen Guitar sweep result
 - Winner `g-baseline`; unchanged I002.
-- F1 41.9156774457634%; precision 48.76190476190476%; recall 36.755204594400576%; 512/1050/1393.
-- Delta 0.0pp. All 48 standalone-harmonic whole rules are frozen negative in this grid.
+- F1 **41.9156774457634%**; precision 48.76190476190476%; recall 36.755204594400576%; 512/1050/1393.
+- Delta 0.0pp. All 48 standalone-harmonic addition whole rules are terminal negative in this first grid.
 
-### Frozen Bass winner — MATERIAL
+### Frozen Bass sweep winner — MATERIAL
 - Rule `b-r975-o50-a10-low_register_no_stable_state`.
 - Gates: template rank >=0.975; onset >=0.50; activity >=0.10; fundamental required; MIDI <=40; no nearby stable state; existing I002 events preserved; recovery only on previously empty corrected steps.
 - Frozen score-minimal candidate SHA256 `2e04edd9cb61795ea9679ce899c7ded9549bb0f5d9f8e04a5d53fdf07ec9fa13`.
@@ -91,19 +91,30 @@ Branch: `v143-contextual-prune-lobo`
 - Delta vs I002: **+8.588136610178598pp F1**, -1.622745646766166pp precision, +15.539305301645335pp recall, +85 matched, +110 generated, +25 FP, -85 FN.
 - `materialGainAtLeast1pp=true`; exceeds frozen Bass primary-F1 target 80%.
 
-## V167 Iteration 003 promotion — STAGED / REFERENCE-BLIND
-- Promotion transform `validation/v167_single_song_calibration/promote_upstream_recovery_winner_v167.py`, blob `9c63f2a0c4732cf3c3a11faf028cf0952c27664e`, commit `8f2c4628a8c1448cf1b33bd521c2e133fb600e98`.
-- Transform accepts no scorer/professional-reference input. It reads only frozen I002, evidence pool, timebase, sweep manifest/report, and the pinned base/re-arm recovery builders.
-- Hard identity gates pin I002 SHA256 `96fbc...`, pool SHA256 `1c983...`, manifest SHA256 `c91ee...`, report SHA256 `1bcc...`, base builder blob `24413d...`, re-arm builder blob `fbbee...`, winner rule/config/summary/metrics, and winner candidate SHA256 `2e04edd9...`.
-- Before producing I003, it reconstructs the score-minimal Bass winner from frozen upstream evidence and requires exact SHA256 equality to `2e04edd9cb61795ea9679ce899c7ded9549bb0f5d9f8e04a5d53fdf07ec9fa13`.
-- Promotion deep-copies I002; Guitar remains exact; all 402 existing rich Bass event dictionaries must remain unchanged in content; exactly 110 reconstructed frozen winner recovery events are added.
-- It proves normalized `(measure, step, midi)` Guitar and Bass streams exactly equal the already-scored frozen winning variant. The frozen scorer is input-order invariant, so canonical rich re-sorting cannot change score.
-- I003 inherits the already-frozen Guitar/Bass metrics only on that exact normalized-stream equality basis. Promotion performs zero new reference-facing score calls and no post-sweep tuning.
+## V167 Iteration 003 — CURRENT BEST / FROZEN
+- Promotion transform `validation/v167_single_song_calibration/promote_upstream_recovery_winner_v167.py`, blob `9c63f2a0c4732cf3c3a11faf028cf0952c27664e`, implementation commit `8f2c4628a8c1448cf1b33bd521c2e133fb600e98`.
+- Pre-arm checkpoint commit `5e436ff4fd0178f0fd5cf959ee2b2923e27d7f2f`.
+- One-shot arm commit `157bf0ed3514d106a9888d6877183e9a54e462d3`.
+- Workflow run `33253690563`, job `99103631893`, run 1 / attempt 1; **all steps SUCCESS**.
+- Terminal self-seal commit `17ab31bf26fa1e15a7754469b7598c071a938705`; one-shot workflow deleted.
+- Candidate `debug/v167-single-song-calibration/iteration-003-generated.json`: git blob `758f8762632e916306aed9b036a6483af9431dc0`, SHA256 `f15c6f40dd4b8479c2dfb7eab039cff98a23b45eb796265ffad08c5a8ae37115`.
+- Promotion proof `debug/v167-single-song-calibration/iteration-003-promotion-proof.json`: git blob `60dba77ac478ed804fd5d66993878e4921c4a72d`, SHA256 `35cb7c95252e4000cc522cd474616b5a0265731ab2454ea123d7756b7872059d`.
+- Receipt `debug/v167-single-song-calibration/iteration-003-promotion-receipt.json`: git blob `b3979dd5b6b205a072223493248fc66b37272a5c`, status `ITERATION_003_FROZEN`.
+- Promotion reconstructed the frozen score-minimal winner at exact SHA256 `2e04edd9cb61795ea9679ce899c7ded9549bb0f5d9f8e04a5d53fdf07ec9fa13` before writing I003.
+- Guitar proof: parent count 1050 -> I003 count 1050; rich parent list exactly preserved=true; normalized stream equal frozen scored winner=true.
+- Bass proof: parent count 402 + exactly 110 recovery additions -> I003 count 512; pre-existing rich event dictionary multiset exactly preserved=true; normalized stream equal frozen scored winner=true.
+- Policy proof: professional reference read by promotion=false; scorer read by promotion=false; new reference-facing score calls=0; individual-event reference selection=false; direct reference event copy=false; post-sweep retuning=false; GPU/CUDA/Modal=false; `main`/Production modified=false; generalization claim=false.
 
-## NEXT boundary — one-shot CPU Iteration 003 promotion
-1. Arm a one-shot workflow on `v143-contextual-prune-lobo` only, pinned to promotion transform blob `9c63f2a0c4732cf3c3a11faf028cf0952c27664e` and every frozen input identity above.
-2. Run the reference-blind transform; require exact reconstruction of frozen winner SHA256 `2e04edd9...`, exactly 110 Bass additions, I003 counts Guitar 1050 / Bass 512, unchanged rich I002 event content, and normalized equality to the already-scored frozen winner.
-3. Freeze `debug/v167-single-song-calibration/iteration-003-generated.json`, an equality/promotion proof, and a receipt; self-delete the workflow and record run/job/terminal commit, blobs/hashes, inherited frozen metrics, and zero new reference-facing scores.
-4. Do not run another selection/tuning loop. Guitar recovery sweep is terminal negative in this grid; any new Guitar work requires a new preregistered hypothesis.
-5. Keep CPU-only. Fresh explicit authorization is required before any GPU/CUDA/Modal work.
-6. Never modify/merge/promote `main` or Production without explicit user direction.
+### Frozen Iteration 003 inherited metrics
+- **Guitar:** F1 **41.9156774457634%**, precision **48.76190476190476%**, recall **36.755204594400576%**, 512 matched / 1050 generated / 1393 reference.
+- **Bass:** F1 **80.45325779036827%**, precision **83.203125%**, recall **77.87934186471663%**, 426 matched / 512 generated / 547 reference; FP 86 / FN 121; gross F1 83.09726156751652%; same-measure pitch-content F1 84.04154863078376%.
+- These are inherited from exact normalized musical-stream equality to the already-scored frozen sweep winner; I003 itself performed no new reference-facing score.
+
+## NEXT boundary — new preregistered Guitar hypothesis only
+1. Keep Iteration 003 immutable as the current best. Bass recovery is frozen/promoted; do not retune it in this lane.
+2. Analyze only **aggregate whole-variant results** from the terminal 48-rule Guitar sweep plus reference-blind candidate/evidence distributions. Do not use per-event reference matches to choose notes.
+3. Determine why additive standalone-harmonic recovery loses to baseline: quantify additions versus F1/precision/recall at each predeclared threshold family and identify whether the issue is over-addition, weak ranking discrimination, timing occupancy, or missing contextual gating.
+4. Any next Guitar candidate family must be explicitly preregistered as a new deterministic whole-rule hypothesis before reference scoring. Prefer a structurally different gate (for example contextual/relative evidence) rather than simply expanding the already-negative absolute-threshold grid.
+5. Do not create Iteration 004 unless a new frozen whole-rule Guitar sweep materially beats I003 Guitar with a defensible precision/recall tradeoff while Bass remains exactly I003.
+6. Keep CPU-only. Fresh explicit authorization is required before any GPU/CUDA/Modal work.
+7. Never modify/merge/promote `main` or Production without explicit user direction.
