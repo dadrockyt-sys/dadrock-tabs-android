@@ -16,13 +16,14 @@ concurrency:
 
 env:
   BRANCH: v143-contextual-prune-lobo
-  EXPECTED_PARENT_HEAD: ede1a3aaf02a7424c9b69431db6683d2917fcf19
+  EXPECTED_PARENT_HEAD: d5d5f0e8eda426028ea73bd450d0dcf759035100
   BASE: debug/v167-single-song-calibration/iteration-003-generated.json
   POOL: debug/v167-single-song-calibration/nearmiss-evidence-pool.json
   TIMEBASE: debug/v166-cpu-autonomous/timebase.json
   BASE_BUILDER: validation/v167_single_song_calibration/build_upstream_recovery_variants_v167.py
   BUILDER: validation/v167_single_song_calibration/build_contextual_guitar_recovery_variants_v167.py
-  GRADER: validation/v167_single_song_calibration/score_contextual_guitar_recovery_variants_v167.py
+  BASE_GRADER: validation/v167_single_song_calibration/score_contextual_guitar_recovery_variants_v167.py
+  GRADER: validation/v167_single_song_calibration/score_contextual_guitar_recovery_variants_v167_rearm.py
   SCORER: validation/v154_cpu_multitrack/score_frontend_reference.py
   REFERENCE: research/v154-professional-references/scorer-ready/frontend-reference-payload.json
   VARIANT_ROOT: /tmp/v167-contextual-guitar-recovery-variants
@@ -42,7 +43,7 @@ jobs:
     runs-on: ubuntu-latest
     timeout-minutes: 120
     steps:
-      - name: Checkout exact preregistered contextual sweep arm
+      - name: Checkout exact preregistered contextual sweep re-arm
         uses: actions/checkout@v4
         with:
           ref: ${{ github.sha }}
@@ -67,20 +68,21 @@ jobs:
           test "$(git hash-object "$POOL")" = "aa7da3a55344b1418a291f30fab9ca55858fc094"
           test "$(git hash-object "$TIMEBASE")" = "abebae25801b7ddeb5b933977c4f4a918f7bf9ef"
           test "$(git hash-object "$BASE_BUILDER")" = "24413d321f64bbfcce48812ceb85b4593dcfa80c"
-          test "$(git hash-object "$BUILDER")" = "23065c56b5b08d1d9d59fe37a01dfa95f6c6627d"
-          test "$(git hash-object "$GRADER")" = "adfd512f53e8839b295129c0768d484b5af09bc7"
+          test "$(git hash-object "$BUILDER")" = "0dd0f9c7560a2caef9b11ef1caea34a4bbf48fcb"
+          test "$(git hash-object "$BASE_GRADER")" = "adfd512f53e8839b295129c0768d484b5af09bc7"
+          test "$(git hash-object "$GRADER")" = "8555101a684f59f7dcd910d7c6f7694e968a68b1"
           test "$(git hash-object "$SCORER")" = "9644e65719fbd361a9b39778ae9950c5e983e855"
           test "$(git hash-object "$REFERENCE")" = "2fbed60b543c0488934d8642c488aa06bf31bbf5"
-          test "$(git hash-object docs/checkpoints/CURRENT_STATE.md)" = "fe418bd4247a620fd1c62da63394628ebe27d5c8"
+          test "$(git hash-object docs/checkpoints/CURRENT_STATE.md)" = "8032fd85e5431ecbcea256cc6d1dab0b55fd506a"
           test ! -e "$MANIFEST"
           test ! -e "$OUTPUT"
           test ! -e "$RECEIPT"
-          python -m py_compile "$BASE_BUILDER" "$BUILDER" "$GRADER" "$SCORER"
+          python -m py_compile "$BASE_BUILDER" "$BUILDER" "$BASE_GRADER" "$GRADER" "$SCORER"
           python - <<'PY'
           import hashlib, importlib.util, sys
           from pathlib import Path
           checks={
-            'debug/v167-single-song-calibration/iteration-003-generated.json':'f15c6f40dd4b8479c2dfb7eab039cff98a23b45eb796265ffad08c575bf709673',
+            'debug/v167-single-song-calibration/iteration-003-generated.json':'f15c6f40dd4b8479c2dfb7eab039cff98a23b45eb796265ffad08c5a8ae37115',
             'debug/v167-single-song-calibration/nearmiss-evidence-pool.json':'1c983784c2d12a22437a80387525789bcf55a2f4e4a5c7a96608c575bf709673',
             'research/v154-professional-references/scorer-ready/frontend-reference-payload.json':'b39a203aec3f45800891fe4eca156e37e7571b91ea5c4ccc41b30bbc95fc89e7',
           }
@@ -200,6 +202,7 @@ jobs:
             'reportGitBlob':subprocess.check_output(['git','hash-object',str(output)],text=True).strip(),
             'inputs':{
               'iteration003GitBlob':'758f8762632e916306aed9b036a6483af9431dc0',
+              'iteration003Sha256':'f15c6f40dd4b8479c2dfb7eab039cff98a23b45eb796265ffad08c5a8ae37115',
               'evidencePoolGitBlob':'aa7da3a55344b1418a291f30fab9ca55858fc094',
               'timebaseGitBlob':'abebae25801b7ddeb5b933977c4f4a918f7bf9ef',
               'referenceGitBlob':'2fbed60b543c0488934d8642c488aa06bf31bbf5',
@@ -207,8 +210,9 @@ jobs:
             },
             'implementation':{
               'baseBuilderGitBlob':'24413d321f64bbfcce48812ceb85b4593dcfa80c',
-              'contextualBuilderGitBlob':'23065c56b5b08d1d9d59fe37a01dfa95f6c6627d',
-              'graderGitBlob':'adfd512f53e8839b295129c0768d484b5af09bc7',
+              'contextualBuilderGitBlob':'0dd0f9c7560a2caef9b11ef1caea34a4bbf48fcb',
+              'baseGraderGitBlob':'adfd512f53e8839b295129c0768d484b5af09bc7',
+              'graderRearmGitBlob':'8555101a684f59f7dcd910d7c6f7694e968a68b1',
             },
             'variantCounts':{'baseline':1,'contextual':36,'total':37},
             'winner':report['winner'],
