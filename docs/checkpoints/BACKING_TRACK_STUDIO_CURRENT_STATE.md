@@ -4,171 +4,143 @@ Updated: 2026-08-29 UTC
 Branch: `backing-track-studio`
 
 ## Active phase
-**Dependency map frozen; ready to scaffold `/bts`.** This project is isolated from `main`; `main`/Production must remain untouched unless explicitly requested.
+**BTS implementation complete in branch; validation/configuration remains.** `main`/Production remain untouched.
 
 ## Working route
-- Working route: `/bts` -> `dadrocktabs.com/bts`.
-- Use the existing logo at `public/dadrock-tabs-bts-logo.png`.
+- `/bts` -> `dadrocktabs.com/bts`
+- Logo: `public/dadrock-tabs-bts-logo.png`
 
 ## Frozen product intent
-Create a new Backing Track Studio page using `app/ai-tab/page.js` as the UI/workflow blueprint.
+Create a standalone Backing Track Studio using `app/ai-tab/page.js` as the UX blueprint while keeping AI-tab production/payment behavior unchanged.
 
-### User flow
-1. User uploads an audio file using the same upload approach as `/ai-tab`.
-2. Reuse the same email-validation semantics as `/ai-tab`.
-3. User chooses one removal mode:
-   - Remove Guitars;
-   - Remove Bass;
-   - Remove Guitars + Bass.
-4. Process the uploaded audio through Modal using genuine waveform/stem separation.
-5. Produce a downloadable backing track with the requested instrument stem(s) removed.
-6. Use PayPal **sandbox** during testing.
-7. Test price: **USD $1.00 per backing track**.
-8. Keep BTS payment/API logic isolated so the existing AI-tab USD $2.99 product is unchanged.
+User flow:
+1. Upload MP3/WAV/M4A/AAC audio.
+2. Use the same email-format validation semantics as `/ai-tab`.
+3. Choose:
+   - Remove Guitars
+   - Remove Bass
+   - Remove Guitars + Bass
+4. Pay **USD $1.00** through PayPal **sandbox** during testing.
+5. Process with genuine waveform/stem separation through a dedicated Modal worker.
+6. Download the resulting MP3 backing track.
 
-## Implementation principles
-- Reuse proven `/ai-tab` UX patterns where practical, but keep BTS product APIs/payment paths dedicated.
-- Reuse the existing Vercel Blob upload approach.
-- Do not reuse transcription note/register filtering as backing-track generation.
-- Reuse the proven research separator substrate where appropriate instead of introducing an unrelated model stack.
-- Uploaded audio is user-provided content and is processed only for the requested job.
-- Do not alter `main` or Production during development.
+## Dependency map — COMPLETE
+- `/ai-tab` blueprint inspected.
+- Existing AI-tab payment files remain frozen:
+  - `components/PayPalCheckoutButton.js`
+  - `app/api/paypal/create-order/route.js`
+  - `app/api/paypal/capture-order/route.js`
+- AI-tab backend remains USD $2.99 and is not modified.
+- AI-tab email behavior is format validation, not OTP verification.
+- Existing AI-tab analyzer is transcription-oriented and is not used as backing-track generation.
 
-## Frozen `/ai-tab` dependency map
-
-### Page / state flow
-- Blueprint: `app/ai-tab/page.js`.
-- Client-side page controls file selection, email input, status/progress, payment unlock, generated-object URL, and browser download.
-- `/ai-tab` uses a staged UX: upload -> analyze/preview -> payment -> generate/deliver. BTS can use the same visual/status language but has a simpler upload -> choose removal -> email -> payment -> stem processing -> download flow.
-
-### Audio upload
-`/ai-tab` currently uses:
-1. `POST /api/audio-upload` with `{ filename, contentType, size }`.
-2. The route creates a private Vercel Blob target under `ai-tab-audio/...` and returns the upload URL / source URL.
-3. The browser `PUT`s the file bytes to the returned URL with the source content type.
-4. The page calls `POST /api/audio-upload/complete` with the resolved blob URL and file metadata.
-5. The resulting private Blob URL is then handed to server-side processing.
-
-Relevant route:
-- `app/api/audio-upload/route.js`
-
-Inspection note:
-- On the current `backing-track-studio` baseline, `app/api/audio-upload/complete/route.js` is not present even though the AI-tab page still calls that URL. BTS should not copy that dangling completion call.
-
-BTS implementation decision:
-- Preserve the same upload interaction/style.
-- Use a BTS-specific upload namespace/route so no AI-tab upload behavior is changed.
-- Keep the BTS upload path self-contained rather than depending on the missing AI-tab completion route.
-
-### AI processing / Modal handoff
-Current AI-tab analysis route:
-- `app/api/analyze-audio-tab/route.js`
-- Resolves private Vercel Blob audio with `BLOB_READ_WRITE_TOKEN`.
-- Sends the source audio to the Modal analyzer as multipart form data.
-- Returns transcription/chord/note-event JSON.
-
-Important: this route is transcription-oriented and does **not** produce a backing-track waveform. BTS requires a dedicated processing route that returns audio bytes or a BTS-owned downloadable artifact.
-
-### Email semantics
-- Current `/ai-tab` page validates email client-side with a normal email-format regex.
-- The visible current flow does **not** perform an OTP/code challenge before checkout; its current “verification” semantics are valid-format confirmation plus use of that address for the paid result.
-- The email is locked/used as part of the paid generation flow.
-- `app/api/generate-tab-pdf/route.js` uses Resend first and Nodemailer as a fallback to deliver the generated PDF, while also returning the PDF to the browser.
-
-BTS implementation decision:
-- Match the existing AI-tab email-format validation/confirmation behavior unless a separate verifier is introduced later.
-- Do not claim OTP verification exists when it does not.
-- Backing-track delivery can be a browser download; email may remain checkout/job metadata unless a safe link-delivery path is added later.
-
-### Status + download behavior
-- `/ai-tab` maintains explicit upload/analysis/generation states and creates a browser object URL from the generated binary response.
-- BTS should mirror this pattern: processing state -> binary audio response -> `URL.createObjectURL()` -> downloadable backing-track link.
-- This avoids making the BTS MVP dependent on persistent storage of the processed track.
-
-### PayPal
-Existing pieces:
-- `components/PayPalCheckoutButton.js`
-- `app/api/paypal/create-order/route.js`
-- `app/api/paypal/capture-order/route.js`
-
-Critical isolation findings:
-- The existing AI-tab client component loads the PayPal JS SDK, then calls the existing server-side create/capture routes; the price is **not** hardcoded in the current client component.
-- `app/api/paypal/create-order/route.js` freezes AI-tab price at **USD $2.99** and creates a signed purchase fingerprint from song/artist/transcription type/price/currency.
-- `app/api/paypal/capture-order/route.js` verifies the completed capture, **USD $2.99**, currency, and matching fingerprint before unlocking AI-tab.
-- Therefore BTS must not modify those files to change product identity or price.
-
-BTS implementation decision:
-- Add a dedicated BTS PayPal button/component patterned on the existing component.
-- Add dedicated BTS create/capture routes (for example `/api/bts/paypal/create-order` and `/api/bts/paypal/capture-order`).
-- Freeze BTS testing amount to **USD $1.00** server-side and verify the BTS product fingerprint during capture.
-- Continue using PayPal sandbox credentials/base URL during development.
-
-## Research-branch waveform separator inspection — COMPLETE
-The active AI-tab research lineage contains genuine waveform/audio-stem separation; BTS does **not** need to invent a separator from scratch.
-
-### Proven reusable research pieces
-- `analyzer/audio-separation-requirements-20260814.txt`
-  - includes `audio-separator[gpu]==0.30.2`.
+## Waveform/stem research — COMPLETE
+The active AI-tab research branch contains genuine waveform separation:
 - `analyzer/v143_production_separator.py`
-  - genuine audio-stem separation using `audio-separator`.
-  - normalizes arbitrary source audio to PCM WAV via FFmpeg.
-  - Guitar path uses Demucs 6-source model `htdemucs_6s.yaml` with `--single_stem Guitar`.
-  - optional cascade uses BS-RoFormer instrumental model `model_bs_roformer_ep_317_sdr_12.9755.ckpt` before Demucs Guitar extraction.
 - `analyzer/bass_professional_separator_scaffold.py`
-  - genuine Bass stem extraction with the same Demucs 6-source model and `--single_stem Bass`.
-  - direct Bass path plus optional BS-RoFormer -> Demucs Bass cascade.
-- `analyzer/analyze_and_grade_gomyway_gpu_separator_stem_v1.py`
-  - consumes separator-produced waveform stems for downstream grading, confirming these are actual audio files/stems rather than note-register filtering.
+- `audio-separator[gpu]==0.30.2`
+- Demucs six-source model `htdemucs_6s.yaml`
 
-### BTS separator decision
-Use the smallest dedicated BTS Modal worker built on the already-proven `audio-separator` / Demucs 6-source substrate:
-- normalize uploaded source audio;
-- separate the full 6-source stem set once;
-- reconstruct the backing track by summing all stems except Guitar, Bass, or both according to the selected mode;
-- encode a downloadable audio result (MP3 preferred for transfer size; WAV may be used internally);
-- keep this BTS worker/API separate from the frozen AI-tab analyzer endpoint.
+BTS reuses this proven substrate in a dedicated worker rather than using note/register filtering.
 
-Why full-stem reconstruction instead of subtracting a single estimated stem from the original:
-- it gives one deterministic source-of-truth stem set for all three removal modes;
-- it avoids phase/codec differences that can make `original - estimated_stem` less reliable;
-- `htdemucs_6s` already exposes both Guitar and Bass identities in the research substrate.
+## Implemented BTS files
+- `app/bts/page.js`
+  - BTS logo
+  - audio upload
+  - email validation
+  - copyright/permission confirmation
+  - Remove Guitars / Remove Bass / Remove Guitars + Bass options
+  - upload/status/payment/processing/download UI
+- `components/BTSPayPalCheckoutButton.js`
+  - dedicated BTS PayPal sandbox checkout
+- `lib/btsPayment.js`
+  - BTS-only price/product validation
+  - USD $1.00
+  - product fingerprinting
+  - signed paid-job token
+- `app/api/bts/audio-upload/route.js`
+  - BTS-only private Vercel Blob upload authorization
+  - `bts-audio/` namespace
+  - 50 MB maximum
+- `app/api/bts/paypal/create-order/route.js`
+  - sandbox-only PayPal base URL
+  - server-fixed USD $1.00
+  - BTS-specific order identity
+- `app/api/bts/paypal/capture-order/route.js`
+  - verifies completed sandbox capture, price, currency, and BTS fingerprint
+  - returns signed BTS job token
+- `app/api/bts/process/route.js`
+  - verifies paid BTS job token
+  - resolves the private Blob server-side from pathname
+  - calls only the dedicated BTS Modal endpoint
+  - streams returned MP3 directly to the browser
+  - does not persist the generated backing track
+  - deletes the uploaded source Blob immediately after processing completes
+- `analyzer/modal_bts_separator.py`
+  - dedicated Modal app `dadrock-backing-track-studio`
+  - A10G GPU
+  - FFmpeg normalization
+  - `audio-separator` with `htdemucs_6s.yaml`
+  - full six-source waveform separation
+  - rebuilds mix excluding Guitar, Bass, or both
+  - returns 192 kbps MP3
+- `analyzer/bts-audio-separation-requirements.txt`
+- `app/api/bts/cleanup/route.js`
+  - cron-authenticated BTS-only cleanup
+  - scans only `bts-audio/`
+  - deletes any upload at or beyond 24 hours old
+- `vercel.json`
+  - retains existing daily sync cron
+  - adds hourly `/api/bts/cleanup` cron
 
-The BS-RoFormer cascade remains optional for later quality experiments; the BTS MVP should start with direct Demucs 6-source separation because it is the smallest path that natively supports both requested instruments.
+## Copyright/audio retention rule — FROZEN
+User requirement: do not keep copyrighted audio.
 
-## Planned BTS file boundaries
-- `app/bts/page.js` — BTS UI only.
-- `components/BTSPayPalCheckoutButton.js` — BTS $1 sandbox checkout only.
-- `app/api/bts/audio-upload/route.js` — BTS private Vercel Blob upload target.
-- `app/api/bts/process/route.js` — BTS source -> Modal -> downloadable audio response.
-- `app/api/bts/paypal/create-order/route.js` — BTS sandbox order creation, server-fixed USD $1.00.
-- `app/api/bts/paypal/capture-order/route.js` — BTS sandbox capture + verification.
-- `analyzer/modal_bts_separator.py` — dedicated Modal waveform/stem worker.
-- `analyzer/bts-audio-separation-requirements.txt` — minimal BTS worker dependencies if required.
+**Maximum retention: 24 hours.**
 
-## Progress score — STANDING
-The user prefers a percentage progress score during work.
+Implementation is intentionally stricter:
+- Successful job: source upload is deleted immediately after processing.
+- Generated backing track: streamed to the customer and **not persisted** by BTS.
+- Modal intermediate source/stems/output live only in a temporary directory and disappear when the request ends.
+- Abandoned or failed uploads: hourly BTS cleanup removes any `bts-audio/` Blob that reaches 24 hours.
+- Response uses `Cache-Control: private, no-store`.
 
-Use this five-gate rubric (20 points each):
-1. **Project scope + isolated branch + checkpoint frozen** — complete.
-2. **Blueprint/dependency inspection complete** — complete.
-3. **BTS page + upload/email/removal UI implemented** — pending.
-4. **Modal separation + PayPal sandbox $1 flow + download delivery implemented** — pending.
-5. **End-to-end validation/build checks complete and handoff-ready** — pending.
+This 24-hour maximum applies to BTS audio storage; do not introduce persistent copyrighted-audio storage without explicit user approval.
 
-**Current Project Progress Score: 40%.**
-
-## Safety rails
+## Isolation / safety rails
 - Work only on `backing-track-studio`.
-- Never modify `main` or Production without explicit user direction.
-- Re-fetch this checkpoint first when resuming work in a new chat/session.
-- Save back to this checkpoint frequently while working.
-- Existing AI-tab $2.99 payment behavior is frozen and must remain unchanged.
-- Existing AI-tab production analyzer endpoint is frozen and must remain unchanged.
+- Do not modify `main` or Production.
+- Existing AI-tab $2.99 PayPal behavior remains unchanged.
+- Existing AI-tab analyzer endpoints remain unchanged.
+- BTS uses dedicated API/payment/Modal environment variables.
+- Re-fetch this checkpoint first whenever resuming BTS work.
+- Save this checkpoint frequently.
+
+## Required environment/configuration before live testing
+- `NEXT_PUBLIC_PAYPAL_CLIENT_ID` — sandbox client ID
+- `PAYPAL_CLIENT_SECRET` — sandbox secret
+- `BLOB_READ_WRITE_TOKEN`
+- `CRON_SECRET`
+- `BTS_SEPARATOR_API_URL` — deployed dedicated Modal BTS endpoint
+- `BTS_SEPARATOR_API_TOKEN` — matching token in Vercel and Modal secret
+- Optional: `BTS_JOB_SIGNING_SECRET`; falls back to PayPal client secret if absent
+- Modal secret expected by worker: `dadrock-bts-separator-secret` containing `BTS_SEPARATOR_API_TOKEN`
+
+## Progress score
+Five-gate rubric, 20 points each:
+1. Scope + isolated branch + checkpoint — complete.
+2. Blueprint/dependency/research inspection — complete.
+3. BTS page + upload/email/removal UI — complete.
+4. Dedicated Modal separator + $1 sandbox PayPal + download delivery + retention — implemented.
+5. End-to-end validation/build/deployment checks — pending.
+
+**Current Project Progress Score: 80%.**
 
 ## NEXT
-1. Scaffold `app/bts/page.js` using the AI-tab visual/upload/status blueprint and the BTS logo.
-2. Add removal choices: Guitar, Bass, Guitar + Bass.
-3. Add dedicated BTS $1 PayPal sandbox component/routes.
-4. Add dedicated BTS processing route and Modal stem-removal worker using the frozen Demucs 6-source substrate.
-5. Save this checkpoint again after scaffolding/API work.
-6. Run available build/static checks and inspect branch diffs before handoff.
+1. Run local/static/build validation on `backing-track-studio`.
+2. Fix any build/runtime issues found without changing AI-tab files.
+3. Validate BTS payment fingerprint/job-token contracts.
+4. Validate cleanup route and cron configuration.
+5. Deploy the dedicated Modal BTS worker only when environment/secrets are ready; do not deploy Production site unless explicitly requested.
+6. Test `/bts` end-to-end with sandbox payment and a permitted audio sample.
+7. Re-save this checkpoint after validation.
