@@ -19,7 +19,7 @@ from typing import Any, Iterable
 
 import build_upstream_recovery_variants_v167 as base_builder
 
-EXPECTED_BASE_SHA256 = "f15c6f40dd4b8479c2dfb7eab039cff98a23b45eb796265ffad08c575bf709673"
+EXPECTED_BASE_SHA256 = "f15c6f40dd4b8479c2dfb7eab039cff98a23b45eb796265ffad08c5a8ae37115"
 EXPECTED_POOL_SHA256 = "1c983784c2d12a22437a80387525789bcf55a2f4e4a5c7a96608c575bf709673"
 EXPECTED_BASE_COUNTS = {"combinedGuitar": 1050, "bass": 512}
 EXPECTED_GUITAR_POOL_ROWS = 13328
