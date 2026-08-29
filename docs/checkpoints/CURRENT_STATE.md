@@ -4,7 +4,7 @@ Updated: 2026-08-29 UTC
 Branch: `v143-contextual-prune-lobo`
 
 ## Active phase
-**V168 is active with status `HOLDOUT_ASSET_MISSING / SCORING_NOT_ARMED`. V167 is CLOSED / TERMINAL and must not be reopened for another Lenny Kravitz calibration sweep. No independent professional combined-Guitar holdout asset has been admitted, so V168 remains at exactly 0 reference-facing score calls. The frozen two-policy protocol, frozen base admission validator, and frozen/self-tested provenance companion remain unchanged. GOAT remains the strongest acquisition lead but is explicitly NOT admitted because legitimate restricted research access and exact access terms/bytes are not yet present. IDMT-SMT-Guitar is blocked on subset-3 professional-reference provenance; AG-PT-set is now excluded because it is monophonic individual-note/technique material rather than a song holdout; EG-Solo is now blocked despite promising manual tablature-assisted annotation because its source performances are third-party professional YouTube demonstrations of popular rock songs with no frozen exact-source research-use grant in the inspected project materials. `main`/Production remain untouched; CPU only; fresh authorization required before GPU/CUDA/Modal.**
+**V168 is active with status `HOLDOUT_ASSET_MISSING / SCORING_NOT_ARMED`. V167 is CLOSED / TERMINAL and must not be reopened for another Lenny Kravitz calibration sweep. No independent professional combined-Guitar holdout asset has been admitted, so V168 remains at exactly 0 reference-facing score calls. The frozen two-policy protocol, frozen base admission validator, and frozen/self-tested provenance companion remain unchanged. GOAT remains the strongest acquisition lead but is explicitly NOT admitted because legitimate restricted research access and exact access terms/bytes are not yet present. G&N is now the strongest provenance-only fallback: its 42 electric-guitar solo tracks were carefully annotated by an experienced electric-guitar player and every label checked by a second electric-guitar player, but its source audio comes from the commercial *Rock Lead Basics* companion recording and no frozen source/reference research-use grant or authorized dataset acquisition path has been established. IDMT-SMT-Guitar remains blocked on subset-3 professional-reference provenance; AG-PT is excluded as isolated monophonic technique-note material; EG-Solo is blocked on third-party YouTube source-audio use basis. `main`/Production remain untouched; CPU only; fresh authorization required before GPU/CUDA/Modal.**
 
 ## V168 external holdout candidate screening — FROZEN STATUS + ADDENDA
 - Original screening checkpoint: `docs/checkpoints/V168_HOLDOUT_CANDIDATE_SCREENING_20260829.md`.
@@ -15,6 +15,8 @@ Branch: `v143-contextual-prune-lobo`
   - creation commit `5c197a9cef7700df717cfbb041a0673aab5429f0`.
 - AG-PT + EG-Solo triage: `docs/checkpoints/V168_AGPT_EGSOLO_TRIAGE_20260829.md`.
   - creation commit `e114eab039e588484d4f91fba153dd56e4a4cbaf`.
+- G&N screening: `docs/checkpoints/V168_GN_DATASET_SCREENING_20260829.md`.
+  - creation commit `b71cf2c079b695d9b6c18faacc4a85853d7c0d16`.
 - Classification remains **SCREENING ONLY / NO ASSETS ADMITTED / SCORING NOT ARMED**.
 - V168 reference-facing score calls remain **0**.
 - No external source-audio/reference asset has been admitted; no holdout candidate-generation workflow exists; no scorer workflow is armed.
@@ -31,6 +33,18 @@ Branch: `v143-contextual-prune-lobo`
 - Public GOAT GitHub repository exposes two illustrative audio/tab/MIDI examples but no repository `LICENSE` file was observed in the inspected tree; examples are not a rights shortcut around the restricted dataset record.
 - Before GOAT admission, must freeze: actual access grant/terms, exact dataset version + SHA256 bytes, source/reference pair binding, exact reference layer, any timing-conversion algorithm/parameters, reference isolation, and a score-blind deterministic song-selection rule.
 - No GOAT access has been claimed or granted in this project at this checkpoint.
+
+### G&N — PROVENANCE-STRONG FALLBACK / BLOCKED / NOT ADMITTED
+- Frozen screening checkpoint: `docs/checkpoints/V168_GN_DATASET_SCREENING_20260829.md`, creation commit `b71cf2c079b695d9b6c18faacc4a85853d7c0d16`.
+- TENT paper DOI `10.5334/tismir.23` describes 42 unaccompanied monophonic electric-guitar solo tracks from Danny Gill & Nick Nolan's 1997 *Rock Lead Basics: Master Class Series* companion audio.
+- Tracks are 20–40 seconds, 19:31 total, with 1,113 note events; clean and distortion tones are present.
+- The timestamps of all note events and techniques were **carefully annotated by an experienced electric-guitar player** using the book's tablatures; every label was then **checked by another electric-guitar player** to make sure it was correct.
+- This is exceptionally strong human/professional reference provenance and the reference is not described as model-derived.
+- Material blocker: source audio is part of a commercial Musicians Institute/Hal Leonard instructional publication. Current commercial listings provide publisher-controlled online audio/access-code delivery; no public research-use grant for exact source bytes was found.
+- The TENT article's CC BY 4.0 license is an article license, not automatically a dataset/audio license.
+- Public `srviest/SoloLa` metadata tree contains code/model/output/`answers/*.answer` files but no source `.wav` files and no repository `LICENSE` file. README provides no G&N dataset license or authorized source acquisition path.
+- Do not infer that `answers/*.answer` are admissible professional references without explicit distribution/use terms and exact source/reference binding; their note-event content was not opened.
+- G&N may only be reopened for admission if a lawful stable research-use path for exact source audio **and** corresponding annotations can be prospectively established and hash-frozen.
 
 ### EGDB five-song real-world evaluation set — BLOCKED
 - Paper states five real-world YouTube guitar recordings were **manually annotated by the authors' musician**: strong annotation provenance.
@@ -51,7 +65,7 @@ Branch: `v143-contextual-prune-lobo`
 - High-quality real classical-guitar dataset, but high-resolution alignment is model/algorithm-assisted before human verification/correction.
 - Frozen no-model-derived-reference rule remains controlling. Excluded for current V168.
 
-### EGSet12 — still blocked
+### EGSet12 — BLOCKED
 - Authors' loader resolves annotations from `jams_corrected/<track>.jams` and inference naming also references `Jams_corrected`.
 - Public repository/issues/PRs/releases/project site/inspected history did not recover the corrected annotation bytes or correction derivation.
 - Do not substitute public release JAMS by assumption.
@@ -166,13 +180,13 @@ No V168 scorer workflow may be armed until:
 - CPU only; fresh explicit authorization immediately before GPU/CUDA/Modal.
 - Never modify/merge/promote `main` or Production without explicit user direction.
 
-## NEXT boundary — GOAT ACCESS / G&N RIGHTS-AND-ACQUISITION TRIAGE
+## NEXT boundary — OPEN RIGHTS-CLEAN PROFESSIONAL HOLDOUT SEARCH / GOAT ACCESS
 1. **Do not score.**
 2. Primary path remains legitimate GOAT research access. Do not claim access until actually granted; preserve grant/terms as provenance.
-3. Next metadata-only fallback triage: investigate the older **G&N electric-guitar solo dataset** used by TENT. The published TENT paper says 42 unaccompanied monophonic electric-guitar solo tracks from a textbook CD were carefully annotated by an experienced electric-guitar player and every label was checked by another electric-guitar player. Determine whether there is any lawful, stable research-use acquisition path for the exact commercial-CD source audio and annotations.
-4. Do not acquire, rip, copy, or treat textbook/CD audio as authorized by assumption. Public paper description is provenance evidence, not a use grant.
-5. Do not reopen AG-PT or EG-Solo unless genuinely new evidence changes the frozen exclusion/blocker.
+3. G&N remains a secondary provenance-strong lead, but do not acquire or use commercial publisher audio unless a legitimate exact-source research-use basis and annotation-use basis are established prospectively.
+4. Continue metadata-only screening for an openly obtainable source that simultaneously provides: >=2 independent real guitar pieces; human/professional note-event references; no model-derived reference layer; explicit lawful evaluation/research use for exact source audio; stable source/reference identity.
+5. Fast reject candidates that are isolated-note/technique datasets, synthetic-only, third-party YouTube/commercial audio without a use grant, model/alignment-derived ground truth, or lack complete note-event reference provenance.
 6. Do not implement reference conversion, candidate generation, or a generic V168 scorer adapter before a complete >=2-song manifest passes BOTH frozen validators.
-7. Keep EGSet12, EGDB real-world, François Leduc, GAPS, IDMT, GuitarSet, Guitar-TECHS, AG-PT, and EG-Solo blocked/excluded under their current reasons; do not weaken frozen semantics.
+7. Keep all currently screened candidates blocked/excluded under their recorded reasons; do not weaken frozen semantics.
 8. Save `CURRENT_STATE.md` again before any admission or code arm.
 9. CPU only; no GPU/CUDA/Modal; never modify main/Production.
