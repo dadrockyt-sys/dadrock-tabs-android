@@ -1,0 +1,136 @@
+{
+  "analysisGitBlob": "043eaa2367f1efbb6309e13d2fcd52952b809e81",
+  "analysisSha256": "fe7e826724a11e115a25f932d4b58ed88e3aedae67fb54142cc532cc40ab8450",
+  "classification": "SINGLE_SONG_TRAINING_CALIBRATION_ONLY",
+  "correction": {
+    "correctBoundary": "analyze the exact 48 frozen post-grid I005 additions and use pool evidence only to characterize their selected sites",
+    "failedAttemptReason": "pre-grid structural eligibility was incorrectly asserted equal to the frozen builder's post timing/dedupe/polyphony eligible count",
+    "supersedesFailedAnalyzerAttempt": true
+  },
+  "implementation": {
+    "correctedAnalyzerGitBlob": "82ec287869102ab6af949afa174a2543768dbc55",
+    "failedAnalyzerGitBlob": "86a32010f441fb518146f3717ae8d9ab3b94b8ea"
+  },
+  "inputs": {
+    "contextualReportSha256": "6b661f6dfa27d31204f4e8a9035d286d5324440b947eb3e49db99205dad9320e",
+    "iteration003Sha256": "f15c6f40dd4b8479c2dfb7eab039cff98a23b45eb796265ffad08c5a8ae37115",
+    "iteration005Sha256": "86329ebc25e589f566d466a7a65cae35a158c25f470b1c034973f3dbc7d38b31",
+    "poolSha256": "1c983784c2d12a22437a80387525789bcf55a2f4e4a5c7a96608c575bf709673",
+    "stateSplitReportSha256": "f4dfd04849eab3f15290cadb2b9ff0a2903bc6174beb428b35c71aa7c7347562"
+  },
+  "policy": {
+    "generalizationClaim": false,
+    "gpuCudaModalUsed": false,
+    "mainOrProductionModified": false,
+    "newReferenceFacingScoreCalls": 0,
+    "newRuleSelectedByThisAnalysis": false,
+    "perEventReferenceMatchAssignmentsRead": false,
+    "professionalReferenceReadByAnalysis": false,
+    "referenceBlindStructuralEvidenceRead": true,
+    "scorerReadByAnalysis": false,
+    "wholeRuleAggregateMetricsRead": true
+  },
+  "schema": "dadrock.tabs.v167.post-i005-active-only-aggregate-analysis-receipt.v2",
+  "status": "POST_I005_ACTIVE_ONLY_AGGREGATE_ANALYSIS_FROZEN",
+  "summary": {
+    "activeMidiCountAtSiteHistogram": {
+      "1": 23,
+      "2": 15,
+      "3": 5,
+      "4": 5
+    },
+    "additionCount": 48,
+    "allowActiveNoHarmOnsetPairSummary": {
+      "higherOnsetImprovedF1": 0,
+      "higherOnsetReducedF1": 2,
+      "higherOnsetTiedF1": 1,
+      "meanAddedDelta": -4,
+      "meanF1DeltaPercentagePoints": -0.1449121244071483,
+      "meanFalsePositiveDelta": -1.3333333333333333,
+      "meanGeneratedDelta": -4,
+      "meanMatchedDelta": -2.6666666666666665,
+      "meanPrecisionDeltaPercentagePoints": -0.06787608671943168,
+      "meanRecallDeltaPercentagePoints": -0.19143335726250302,
+      "pairCount": 3
+    },
+    "closestOnsetPair": {
+      "activeStateMode": "allow_active",
+      "deltaHighMinusLow": {
+        "added": -6,
+        "f1PercentagePoints": -0.21771747805267583,
+        "falseNegative": 4,
+        "falsePositive": -2,
+        "generated": -6,
+        "matched": -4,
+        "precisionPercentagePoints": -0.10129121956088949,
+        "recallPercentagePoints": -0.2871500358937573
+      },
+      "high": {
+        "activeAdded": 0,
+        "added": 57,
+        "f1": 0.424,
+        "falseNegative": 863,
+        "falsePositive": 577,
+        "generated": 1107,
+        "id": "gctx-o65-q100-allow-noharm",
+        "inactiveAdded": 0,
+        "matched": 530,
+        "precision": 0.4787714543812105,
+        "recall": 0.38047379755922467
+      },
+      "highId": "gctx-o65-q100-allow-noharm",
+      "intervalContextPolicy": "exclude_harmonic_octave",
+      "low": {
+        "activeAdded": 0,
+        "added": 63,
+        "f1": 0.42617717478052675,
+        "falseNegative": 859,
+        "falsePositive": 579,
+        "generated": 1113,
+        "id": "gctx-o50-q100-allow-noharm",
+        "inactiveAdded": 0,
+        "matched": 534,
+        "precision": 0.4797843665768194,
+        "recall": 0.38334529791816224
+      },
+      "lowId": "gctx-o50-q100-allow-noharm",
+      "ratio": 1.0
+    },
+    "maxActiveTieCountAtSiteHistogram": {
+      "1": 48
+    },
+    "nearestDifferentActiveIntervalCategoryHistogram": {
+      "chord_interval": 18,
+      "near_unison_1_2": 5,
+      "no_different_active": 23,
+      "other_above_octave": 2
+    },
+    "onsetSupport": {
+      "count": 48,
+      "max": 1.0,
+      "mean": 0.9097447311376512,
+      "median": 1.0,
+      "min": 0.5479741416765714,
+      "p10": 0.6317305834882877,
+      "p25": 0.8582492568773332,
+      "p75": 1.0,
+      "p90": 1.0
+    },
+    "onsetThresholdSurvivalCounts": {
+      "ge_0.55": 47,
+      "ge_0.60": 43,
+      "ge_0.65": 42,
+      "ge_0.70": 41,
+      "ge_0.75": 40
+    },
+    "preGridActiveMaxCandidateCountAtSelectedSiteHistogram": {
+      "1": 48
+    },
+    "uniqueSelectedSiteCount": 48
+  },
+  "version": "V167",
+  "workflowHeadSha": "b0474ab800a187d382a67e61d3e18d17ee9a278e",
+  "workflowRunAttempt": 1,
+  "workflowRunId": 33265328718,
+  "workflowRunNumber": 2
+}
