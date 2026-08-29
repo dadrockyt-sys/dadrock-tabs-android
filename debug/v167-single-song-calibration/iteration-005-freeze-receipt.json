@@ -1,0 +1,176 @@
+{
+  "classification": "SINGLE_SONG_TRAINING_CALIBRATION_ONLY",
+  "implementation": {
+    "baseBuilderGitBlob": "24413d321f64bbfcce48812ceb85b4593dcfa80c",
+    "promoterGitBlob": "a912018b58f9bd7243229fcba3d8895e33300c44",
+    "stateSplitBuilderGitBlob": "6b480d43744a5c67c02510d55162581d896afee4"
+  },
+  "inheritedFrozenMetrics": {
+    "basis": "exact_normalized_measure_step_midi_stream_equality_to_already_scored_frozen_state_split_winner",
+    "bass": {
+      "falseNegative": 121,
+      "falsePositive": 86,
+      "generated": 512,
+      "matched": 426,
+      "primaryF1": 0.8045325779036827,
+      "primaryPrecision": 0.83203125,
+      "primaryRecall": 0.7787934186471663,
+      "reference": 547
+    },
+    "combinedGuitar": {
+      "falseNegative": 860,
+      "falsePositive": 565,
+      "generated": 1098,
+      "grossF1": 0.5475712565234846,
+      "matched": 533,
+      "primaryF1": 0.42794058610999597,
+      "primaryPrecision": 0.4854280510018215,
+      "primaryRecall": 0.3826274228284279,
+      "reference": 1393,
+      "sameMeasurePitchContentF1": 0.5917302288237656
+    },
+    "newReferenceFacingScorePerformedByPromotion": false
+  },
+  "inputs": {
+    "baseBuilderGitBlob": "24413d321f64bbfcce48812ceb85b4593dcfa80c",
+    "evidencePoolGitBlob": "aa7da3a55344b1418a291f30fab9ca55858fc094",
+    "evidencePoolSha256": "1c983784c2d12a22437a80387525789bcf55a2f4e4a5c7a96608c575bf709673",
+    "iteration003GitBlob": "758f8762632e916306aed9b036a6483af9431dc0",
+    "iteration003Sha256": "f15c6f40dd4b8479c2dfb7eab039cff98a23b45eb796265ffad08c5a8ae37115",
+    "iteration004GitBlob": "8dd85049a65f00541f7874ff99511b081a0b5ff2",
+    "iteration004Sha256": "728785c631750cbfcad48cc3243c238d6e7de6f337cce87e125a651ca2793acc",
+    "stateSplitBuilderGitBlob": "6b480d43744a5c67c02510d55162581d896afee4",
+    "stateSplitSweepManifestGitBlob": "fc5202898adc0d8aabdfce0e02c019f32443a4a1",
+    "stateSplitSweepManifestSha256": "113add46d50e423708972ed18eb88df48ec1d60968e75d5e251f609f84a365e4",
+    "stateSplitSweepReceiptGitBlob": "c40cd73d857c4d42d87c41c95d17d47be5f15e3c",
+    "stateSplitSweepReportGitBlob": "d26e4128479f760c23fe6c449cc4b3ec5ad7219b",
+    "stateSplitSweepReportSha256": "f4dfd04849eab3f15290cadb2b9ff0a2903bc6174beb428b35c71aa7c7347562",
+    "timebaseGitBlob": "abebae25801b7ddeb5b933977c4f4a918f7bf9ef",
+    "timebaseSha256": "899746d3048d239bc0032375d412a109ea04b055df19df1b7b08dc3e73aa5ca0"
+  },
+  "iteration005CandidateGitBlob": "8d68f4d7fac4e094bcd617b026befddd370d9368",
+  "iteration005CandidateSha256": "86329ebc25e589f566d466a7a65cae35a158c25f470b1c034973f3dbc7d38b31",
+  "policy": {
+    "directReferenceEventCopy": false,
+    "generalizationClaim": false,
+    "gpuCudaModalUsed": false,
+    "individualEventSelectionByReference": false,
+    "mainOrProductionModified": false,
+    "newReferenceFacingScoreCalls": 0,
+    "postSweepRetuning": false,
+    "professionalReferenceReadByPromotion": false,
+    "scorerReadByPromotion": false
+  },
+  "promotionProofGitBlob": "668128054f5ad644055913833cd07ef197bce538",
+  "promotionProofSha256": "a286b96819dacba1d4e1cf7aa84589a29279df0b02b4104ced5d5a7c77e2ca15",
+  "schema": "dadrock.tabs.v167.iteration-005-freeze-receipt.v1",
+  "selectedWinner": {
+    "config": {
+      "activeBranch": {
+        "candidateState": "basic_pitch_active",
+        "candidateToMaxActiveTemplateScoreMin": 1.0,
+        "harmonicOctaveIntervalsRejected": [
+          12,
+          19,
+          24
+        ],
+        "intervalContextPolicy": "exclude_harmonic_octave"
+      },
+      "activitySupportMin": 0.05,
+      "baseline": false,
+      "existingIteration003EventsPreferred": true,
+      "fundamentalPresentRequired": true,
+      "id": "gss-active-only",
+      "inactiveBranch": {
+        "candidateState": "basic_pitch_inactive",
+        "candidateToMaxActiveTemplateScoreMin": null,
+        "chordIntervalsAllowed": [
+          3,
+          4,
+          5,
+          7,
+          8,
+          9,
+          10
+        ],
+        "enabled": false,
+        "harmonicOctaveIntervalsRejected": [
+          12,
+          19,
+          24
+        ],
+        "intervalContextPolicy": null
+      },
+      "maxAddsPerSite": 1,
+      "onsetSupportMin": 0.5,
+      "polyphonyCap": 6,
+      "reproductionControl": false,
+      "requireBasicPitchActiveContext": true,
+      "stepMidiDedupe": true,
+      "stream": "combinedGuitar",
+      "templateRankMin": 0.975
+    },
+    "frozenCandidateSha256": "aa042135c542f2025522bb0d8ab9491c8457bf95025db5953b714d452afc0d5e",
+    "frozenGuitarMetrics": {
+      "falseNegative": 860,
+      "falsePositive": 565,
+      "generated": 1098,
+      "grossF1": 0.5475712565234846,
+      "matched": 533,
+      "primaryF1": 0.42794058610999597,
+      "primaryPrecision": 0.4854280510018215,
+      "primaryRecall": 0.3826274228284279,
+      "reference": 1393,
+      "sameMeasurePitchContentF1": 0.5917302288237656
+    },
+    "generationSummary": {
+      "activeAdded": 48,
+      "activeEligible": 48,
+      "added": 48,
+      "eligible": 48,
+      "inactiveAdded": 0,
+      "inactiveEligible": 0,
+      "sitesWithActiveContext": 204,
+      "sitesWithAdds": 48,
+      "sitesWithEligible": 48
+    },
+    "id": "gss-active-only",
+    "inheritedBassMetrics": {
+      "falseNegative": 121,
+      "falsePositive": 86,
+      "generated": 512,
+      "matched": 426,
+      "primaryF1": 0.8045325779036827,
+      "primaryPrecision": 0.83203125,
+      "primaryRecall": 0.7787934186471663,
+      "reference": 547
+    },
+    "reconstructedCandidateSha256": "aa042135c542f2025522bb0d8ab9491c8457bf95025db5953b714d452afc0d5e"
+  },
+  "status": "ITERATION_005_FROZEN",
+  "streamProof": {
+    "bass": {
+      "iteration003Count": 512,
+      "iteration004Count": 512,
+      "iteration005Count": 512,
+      "normalizedEqualI004": true,
+      "richListExactlyPreservedAcrossI003I004I005": true
+    },
+    "combinedGuitar": {
+      "constructionBaseCount": 1050,
+      "constructionBaseRichEventDictionaryMultisetExactlyPreserved": true,
+      "iteration005Count": 1098,
+      "logicalParentI004Count": 1113,
+      "netCountDeltaVsI004": -15,
+      "newCoordinatesDisjointFromConstructionBase": true,
+      "newCoordinatesUnique": true,
+      "normalizedEqualFrozenScoredWinner": true,
+      "stateSplitRecoveryAdditions": 48
+    }
+  },
+  "version": "V167",
+  "workflowHeadSha": "6f54d0b672e4d7e2b0ced4da5cb8566b7e324712",
+  "workflowRunAttempt": 1,
+  "workflowRunId": 33264957530,
+  "workflowRunNumber": 1
+}
