@@ -1,4 +1,4 @@
-import { del } from '@vercel/blob';
+import { del, head } from '@vercel/blob';
 import { NextResponse } from 'next/server';
 
 import {
@@ -12,7 +12,13 @@ import {
 export const runtime = 'nodejs';
 export const maxDuration = 600;
 
-function safeDownloadName(removalMode) {
+function safeDownloadName(originalFilename, removalMode) {
+  const base = cleanBtsText(originalFilename, 120)
+    .replace(/\.[^/.]+$/, '')
+    .replace(/[^a-zA-Z0-9._-]+/g, '-')
+    .replace(/-+/g, '-')
+    .replace(/^[-_.]+|[-_.]+$/g, '');
+
   const suffix =
     removalMode === 'guitar-bass'
       ? 'no-guitars-no-bass'
@@ -20,11 +26,11 @@ function safeDownloadName(removalMode) {
         ? 'no-guitars'
         : 'no-bass';
 
-  return `dadrock-backing-track-${suffix}.mp3`;
+  return `${base || 'dadrock-backing-track'}-${suffix}.mp3`;
 }
 
 export async function POST(request) {
-  let audioUrl = '';
+  let resolvedAudioUrl = '';
   let blobToken = '';
 
   try {
@@ -50,14 +56,14 @@ export async function POST(request) {
       40
     ).toLowerCase();
 
-    audioUrl = cleanBtsText(
-      body?.audioUrl,
-      2000
-    );
-
     const pathname = cleanBtsText(
       body?.pathname,
       500
+    );
+
+    const originalFilename = cleanBtsText(
+      body?.originalFilename,
+      160
     );
 
     if (
@@ -65,8 +71,7 @@ export async function POST(request) {
       !jobToken ||
       !isValidBtsEmail(customerEmail) ||
       !BTS_REMOVAL_MODES.includes(removalMode) ||
-      !isValidBtsPathname(pathname) ||
-      !audioUrl.startsWith('https://')
+      !isValidBtsPathname(pathname)
     ) {
       return NextResponse.json(
         {
@@ -129,6 +134,41 @@ export async function POST(request) {
       );
     }
 
+    let blobMetadata;
+
+    try {
+      blobMetadata = await head(pathname, {
+        token: blobToken,
+      });
+    } catch (error) {
+      console.error(
+        'BTS private upload lookup failed:',
+        error
+      );
+
+      return NextResponse.json(
+        {
+          error:
+            'The uploaded BTS audio could not be found.',
+        },
+        { status: 404 }
+      );
+    }
+
+    resolvedAudioUrl = String(
+      blobMetadata?.url || ''
+    );
+
+    if (!resolvedAudioUrl.startsWith('https://')) {
+      return NextResponse.json(
+        {
+          error:
+            'The uploaded BTS audio could not be resolved.',
+        },
+        { status: 404 }
+      );
+    }
+
     const separatorResponse = await fetch(
       separatorUrl,
       {
@@ -139,7 +179,7 @@ export async function POST(request) {
         body: JSON.stringify({
           token: separatorToken,
           blobToken,
-          audioUrl,
+          audioUrl: resolvedAudioUrl,
           pathname,
           removalMode,
         }),
@@ -197,7 +237,10 @@ export async function POST(request) {
         'content-type'
       ) || '';
 
-    if (!returnedContentType.startsWith('audio/')) {
+    if (
+      !returnedContentType.startsWith('audio/') ||
+      !separatorResponse.body
+    ) {
       return NextResponse.json(
         {
           error:
@@ -207,29 +250,18 @@ export async function POST(request) {
       );
     }
 
-    const trackBytes =
-      await separatorResponse.arrayBuffer();
-
-    if (!trackBytes.byteLength) {
-      return NextResponse.json(
-        {
-          error:
-            'The BTS separator returned an empty audio track.',
-        },
-        { status: 502 }
-      );
-    }
-
-    return new Response(trackBytes, {
+    return new Response(separatorResponse.body, {
       status: 200,
       headers: {
         'Content-Type': returnedContentType,
         'Content-Disposition':
           `attachment; filename="${safeDownloadName(
+            originalFilename,
             removalMode
           )}"`,
         'Cache-Control':
           'private, no-store, max-age=0',
+        'X-Content-Type-Options': 'nosniff',
         'X-BTS-Removal-Mode': removalMode,
       },
     });
@@ -249,9 +281,9 @@ export async function POST(request) {
       { status: 500 }
     );
   } finally {
-    if (audioUrl && blobToken) {
+    if (resolvedAudioUrl && blobToken) {
       try {
-        await del(audioUrl, {
+        await del(resolvedAudioUrl, {
           token: blobToken,
         });
       } catch (cleanupError) {
