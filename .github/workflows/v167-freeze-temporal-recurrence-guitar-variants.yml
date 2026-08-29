@@ -16,7 +16,7 @@ concurrency:
 
 env:
   BRANCH: v143-contextual-prune-lobo
-  EXPECTED_PARENT_HEAD: 67cfba5e486b2a31b842ce6101e57fa543922e8e
+  EXPECTED_PARENT_HEAD: c00748cd38f28462a7d93e6098012d3bc1a2ec96
   I003: debug/v167-single-song-calibration/iteration-003-generated.json
   I005: debug/v167-single-song-calibration/iteration-005-generated.json
   DIAGNOSIS: debug/v167-single-song-calibration/post-topology-temporal-recurrence-analysis.json
@@ -38,7 +38,7 @@ jobs:
     runs-on: ubuntu-latest
     timeout-minutes: 20
     steps:
-      - name: Checkout exact recurrence generation arm
+      - name: Checkout exact corrected recurrence generation arm
         uses: actions/checkout@v4
         with:
           ref: ${{ github.sha }}
@@ -49,7 +49,7 @@ jobs:
         with:
           python-version: '3.10.21'
 
-      - name: Verify reference-blind generation boundary
+      - name: Verify corrected reference-blind generation boundary
         shell: bash
         run: |
           set -euo pipefail
@@ -63,9 +63,9 @@ jobs:
           test "$(git hash-object "$I003")" = "758f8762632e916306aed9b036a6483af9431dc0"
           test "$(git hash-object "$I005")" = "8d68f4d7fac4e094bcd617b026befddd370d9368"
           test "$(git hash-object "$DIAGNOSIS")" = "42a4d4bd9c016b5aee74a14eea4b78fb601a6b6e"
-          test "$(git hash-object "$BUILDER")" = "9eab55638625f71949f0877369f543459bcf8fda"
+          test "$(git hash-object "$BUILDER")" = "2f90e7a8b3e07ae59856f67cf0d299094f482d94"
           test "$(git hash-object "$GRADER")" = "e8251df48d03e94a2d53060bc1e82b4e9d5ba4f7"
-          test "$(git hash-object docs/checkpoints/CURRENT_STATE.md)" = "4c5e33fc2f87985888d32c0544e76aa8ca5ea8af"
+          test "$(git hash-object docs/checkpoints/CURRENT_STATE.md)" = "9143a5867b43cd47de49633f36b0873206712da0"
 
           test ! -e "$VARIANT_ROOT"
           test ! -e "$MANIFEST"
@@ -80,6 +80,7 @@ jobs:
           assert 'recur-gap1-earliest' in text
           assert 'recur-gap1-strongest' in text
           assert 'recur-gap2-strongest' in text
+          assert 'dadrock.tabs.v167.post-topology-temporal-recurrence-analysis.v1' in text
           PY
 
       - name: Generate and verify all preregistered recurrence variants
@@ -173,7 +174,7 @@ jobs:
               'manifestSha256': hashlib.sha256(manifest_path.read_bytes()).hexdigest(),
               'manifestGitBlob': subprocess.check_output(['git', 'hash-object', str(manifest_path)], text=True).strip(),
               'implementation': {
-                  'builderGitBlob': '9eab55638625f71949f0877369f543459bcf8fda',
+                  'builderGitBlob': '2f90e7a8b3e07ae59856f67cf0d299094f482d94',
                   'graderGitBlob': 'e8251df48d03e94a2d53060bc1e82b4e9d5ba4f7',
               },
               'inputs': manifest['inputs'],
