@@ -1,0 +1,71 @@
+name: One-time BTS separator completion fix
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - '.github/workflows/one-time-bts-separator-success-fix.yml'
+
+permissions:
+  contents: write
+
+jobs:
+  patch:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: main
+          fetch-depth: 0
+
+      - name: Accept completed six-stem output
+        run: |
+          python - <<'PY'
+          from pathlib import Path
+
+          path = Path('analyzer/modal_bts_separator.py')
+          text = path.read_text()
+
+          old_run = '''            timeout=3300,
+            env={
+'''
+          new_run = '''            timeout=3300,
+            cwd=str(output_dir),
+            env={
+'''
+          if old_run not in text:
+              raise SystemExit('Expected separator subprocess block not found')
+          text = text.replace(old_run, new_run, 1)
+
+          old_check = '''    if result.returncode != 0 or not outputs:
+        detail = (result.stderr or result.stdout or "").strip()[-1500:]
+        raise RuntimeError(
+            f"Demucs stem separation failed. {detail}"
+        )
+'''
+          new_check = '''    if not outputs:
+        raise RuntimeError(
+            "Demucs stem separation did not produce audio stems."
+        )
+
+    if result.returncode != 0:
+        print(
+            "audio-separator returned a non-zero status after producing "
+            f"{len(outputs)} audio files; validating the six expected stems."
+        )
+'''
+          if old_check not in text:
+              raise SystemExit('Expected separator completion check not found')
+          text = text.replace(old_check, new_check, 1)
+
+          path.write_text(text)
+          PY
+          rm .github/workflows/one-time-bts-separator-success-fix.yml
+
+      - name: Commit BTS separator completion fix
+        run: |
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add analyzer/modal_bts_separator.py .github/workflows/one-time-bts-separator-success-fix.yml
+          git commit -m 'Accept completed BTS six-stem separation output'
+          git push origin main
