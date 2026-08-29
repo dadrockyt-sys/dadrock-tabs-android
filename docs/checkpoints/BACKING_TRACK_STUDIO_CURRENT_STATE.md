@@ -5,7 +5,7 @@ Checkpoint branch: `backing-track-studio`
 Production branch: `main`
 
 ## Active phase
-**Backing Track Studio and its isolated complimentary-token workflow are live in Production and ready for user end-to-end testing.**
+**Backing Track Studio and its isolated complimentary-token workflow are live in Production. First user end-to-end test reached `/api/bts/process` but exposed the remaining runtime configuration blocker: the dedicated Modal separator URL/token are not configured in Vercel Production.**
 
 ## Production state
 - Live route: `https://dadrocktabs.com/bts`
@@ -20,6 +20,29 @@ Production branch: `main`
   - production deployment: `dpl_8QzCeZWUV4tJSf4cR6dJD9vkxJL2`
   - Vercel state: **READY**
   - aliases include `dadrocktabs.com` and `www.dadrocktabs.com`
+
+## First live processing test — CONFIRMED BLOCKER
+At approximately 2026-08-29 20:13:52 UTC the user completed the BTS UI far enough to POST to `/api/bts/process`.
+
+Production runtime log returned HTTP **503** with:
+- `hasSeparatorUrl: false`
+- `hasSeparatorToken: false`
+- `hasBlobToken: true`
+
+The user-facing message was:
+`Backing Track Studio processing is not configured yet.`
+
+This comes directly from `app/api/bts/process/route.js` when one or more of these are absent:
+- `BTS_SEPARATOR_API_URL`
+- `BTS_SEPARATOR_API_TOKEN`
+- `BLOB_READ_WRITE_TOKEN`
+
+Live evidence proves `BLOB_READ_WRITE_TOKEN` is already configured. The remaining blocker is specifically:
+1. deploy/resolve the dedicated BTS Modal endpoint from `analyzer/modal_bts_separator.py`;
+2. configure matching `BTS_SEPARATOR_API_URL` and `BTS_SEPARATOR_API_TOKEN` in Vercel Production;
+3. redeploy/retry.
+
+Do not treat this as an upload/token failure. The request reached the protected processing route successfully enough to hit the separator configuration check.
 
 ## Product flow
 1. Upload MP3/WAV/M4A/AAC audio.
@@ -36,8 +59,6 @@ Production branch: `main`
 7. Resulting MP3 is streamed to the user for download.
 
 ## BTS token system — LIVE AND ISOLATED
-User requested AI-Tab-style token usage while keeping BTS creator/tracker separate.
-
 ### AI Tab remains unchanged
 - Collection: `tab_tokens`
 - Token format: `DRT-XXXX-XXXX-XXXX`
@@ -66,7 +87,7 @@ BTS tokens follow the AI Tab usage model:
 
 Accepted BTS tokens return a signed BTS job token, so they enter the same protected audio-processing route as a verified PayPal sandbox capture.
 
-The current hidden admin panel now includes a separate link beside the existing AI Tab token controls:
+The current hidden admin panel includes a separate link beside the existing AI Tab token controls:
 - `Open Backing Track Studio Token Manager →`
 
 No AI Tab token collection, API route, redemption logic, or DRT token behavior was modified by the BTS token work.
@@ -76,7 +97,7 @@ No AI Tab token collection, API route, redemption logic, or DRT token behavior w
 - `/admin/bts-tokens`: live HTTP **200**.
 - `/api/admin/bts-tokens` without credentials: live HTTP **401 Unauthorized**, as expected.
 - Final admin-link deployment: **READY**.
-- Full authenticated token creation/redemption is intentionally left for the user's first live test rather than creating a token without their admin session.
+- User's first test reached `/api/bts/process`; this strongly indicates upload/unlock handoff is functioning through the client-to-process boundary, though redemption counters should still be checked in the admin tracker.
 
 ## Core BTS implementation
 - `app/bts/page.js`
@@ -99,6 +120,7 @@ No AI Tab token collection, API route, redemption logic, or DRT token behavior w
 - Current worker configuration uses `audio-separator[cpu]==0.30.2` and explicitly disables CUDA.
 - Removes Guitar, Bass, or both and rebuilds the remaining mix.
 - Returns a 192 kbps MP3.
+- Worker code exists in repo, but the deployed endpoint/runtime connection is not yet configured in Vercel Production.
 
 ## Payment isolation
 - BTS create/capture routes are separate from AI Tab.
@@ -122,12 +144,15 @@ Do not introduce persistent copyrighted-audio storage without explicit user appr
 Production `vercel.json` contains the hourly `/api/bts/cleanup` cron. Execution depends on Production `CRON_SECRET` being configured. Secret presence has not been independently verified through the available connector surface; confirm via a real cron invocation/runtime log before claiming abandoned-upload cleanup is operational.
 
 ## Required runtime configuration for complete end-to-end processing
+Known from first live test:
+- `BLOB_READ_WRITE_TOKEN` — **present in Production**
+- `BTS_SEPARATOR_API_URL` — **missing in Production**
+- `BTS_SEPARATOR_API_TOKEN` — **missing in Production**
+
+Also required/expected:
 - `NEXT_PUBLIC_PAYPAL_CLIENT_ID` / sandbox PayPal client ID
 - `PAYPAL_CLIENT_SECRET`
-- `BLOB_READ_WRITE_TOKEN`
 - `CRON_SECRET`
-- `BTS_SEPARATOR_API_URL`
-- `BTS_SEPARATOR_API_TOKEN`
 - optional `BTS_JOB_SIGNING_SECRET`
 - Modal secret `dadrock-bts-separator-secret` with matching `BTS_SEPARATOR_API_TOKEN`
 - existing MongoDB configuration
@@ -141,18 +166,20 @@ Completed:
 - BTS token admin endpoint requires authentication.
 - AI Tab token files remained outside the BTS token promotion diff.
 - Final admin-panel link promotion changed only `app/page.js` by 6 added lines.
+- First browser processing request reached `/api/bts/process`.
+- Production runtime log identified missing separator URL/token and confirmed Blob token exists.
 
-Still to test from the browser:
-1. Log into admin and generate a `testing` BTS token.
-2. Upload permitted test audio at `/bts`.
-3. Select a removal mode.
-4. Redeem the BTS token and verify one use is consumed/tracked.
-5. Confirm processing reaches the dedicated separator and returns a playable MP3.
-6. Confirm the source Blob is deleted immediately after success.
+Still to complete:
+1. Deploy/resolve the dedicated BTS Modal separator endpoint.
+2. Configure matching `BTS_SEPARATOR_API_URL` and `BTS_SEPARATOR_API_TOKEN` in Vercel Production.
+3. Retry the existing BTS flow with permitted audio.
+4. Confirm separator returns a playable MP3.
+5. Confirm source Blob is deleted immediately after success.
+6. Verify token use decrement/redemption entry in the admin tracker.
 7. Separately test the $1 PayPal sandbox path.
 8. Confirm hourly cleanup cron behavior/runtime authorization for an abandoned test upload.
 
 ## Progress score
 **Current Project Progress Score: 98%.**
 
-Remaining 2% is real end-to-end browser/runtime validation of token redemption, stem processing/download, deletion, PayPal sandbox, and cleanup cron.
+The implementation is complete; the current blocker is external runtime configuration for the dedicated Modal separator, followed by final end-to-end validation.
