@@ -250,6 +250,12 @@ export async function POST(request) {
       );
     }
 
+    // Copyright-retention policy:
+    // - The generated backing track is streamed directly to the customer and
+    //   is never written to persistent BTS storage.
+    // - The source upload is deleted in finally as soon as this processing
+    //   request finishes. That is intentionally stricter than the maximum
+    //   24-hour retention window requested for copyrighted audio.
     return new Response(separatorResponse.body, {
       status: 200,
       headers: {
@@ -263,6 +269,8 @@ export async function POST(request) {
           'private, no-store, max-age=0',
         'X-Content-Type-Options': 'nosniff',
         'X-BTS-Removal-Mode': removalMode,
+        'X-BTS-Audio-Retention':
+          'source-deleted-after-processing; generated-track-not-persisted; maximum-24-hours',
       },
     });
   } catch (error) {
