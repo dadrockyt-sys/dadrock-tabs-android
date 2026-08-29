@@ -4,9 +4,9 @@ Updated: 2026-08-29 UTC
 Branch: `v143-contextual-prune-lobo`
 
 ## Active phase
-**V166 is terminal/immutable. V167 remains the explicitly scorer/reference-guided SINGLE-SONG TRAINING CALIBRATION lane for Lenny Kravitz — Are You Gonna Go My Way. Iteration 004 is now the frozen current best. It deterministically promotes the already-frozen contextual Guitar whole-rule winner `gctx-o50-q100-allow-noharm` with zero new reference-facing score calls: Guitar 42.617717478052675% F1, precision 47.97843665768194%, recall 38.334529791816224%, 534 matched / 1113 generated / 1393 reference. Bass is exactly preserved from I003 at 80.45325779036827% F1, 426 / 512 / 547, and remains closed. I004 reconstruction SHA256 exactly matched the previously scored frozen winner before promotion. `main`/Production remain untouched; no GPU/CUDA/Modal work is authorized or used. Next research boundary is aggregate/reference-blind Guitar diagnosis of the completed 36-rule contextual family before any new score-facing family is preregistered.**
+**V166 is terminal/immutable. V167 remains the explicitly scorer/reference-guided SINGLE-SONG TRAINING CALIBRATION lane for Lenny Kravitz — Are You Gonna Go My Way. Iteration 004 is now the frozen current best. It deterministically promotes the already-frozen contextual Guitar whole-rule winner `gctx-o50-q100-allow-noharm` with zero new reference-facing score calls: Guitar 42.617717478052675% F1, precision 47.97843665768194%, recall 38.334529791816224%, 534 matched / 1113 generated / 1393 reference. Bass is exactly preserved from I003 at 80.45325779036827% F1, 426 / 512 / 547, and remains closed. I004 reconstruction SHA256 exactly matched the previously scored frozen winner before promotion. The post-I004 aggregate/reference-blind Guitar diagnosis analyzer is now staged; no diagnosis workflow has executed yet. `main`/Production remain untouched; no GPU/CUDA/Modal work is authorized or used.**
 
-## Current execution checkpoint — ITERATION 004 FROZEN / POST-I004 DIAGNOSIS NEXT
+## Current execution checkpoint — ITERATION 004 FROZEN / POST-I004 DIAGNOSIS STAGED
 - Deterministic I004 promotion transform: `validation/v167_single_song_calibration/promote_contextual_guitar_winner_v167.py`, blob `cd099c6a7f1c33a4d3c5f1ce58c27d4d8d20078f`, implementation commit `4cd0dece8f8a88fc211fbecd63bb5747e6d74ae9`.
 - Pre-arm checkpoint commit `1b89b9529835809cd912d2adf0ffbb87f1c4f21e`.
 - Promotion arm `f66673e69a0b810eb21a1f7c9584f0357db70404`; run `33257608217`, job `99113946852`; **SUCCESS**.
@@ -18,6 +18,8 @@ Branch: `v143-contextual-prune-lobo`
 - I004 Guitar = all 1050 rich I003 Guitar event dictionaries preserved as a multiset + exactly 63 frozen contextual recovery additions; output count 1113; new coordinates unique and disjoint from parent; normalized stream exactly equals the frozen scored winner.
 - I004 Bass = exact rich I003 Bass list, 512 events; normalized stream exactly equals I003.
 - Promotion policy proof: professional reference read=false; scorer read=false; new reference-facing score calls=0; individual-event reference selection=false; post-sweep retuning=false; I003 modified=false; GPU/CUDA/Modal=false; `main`/Production=false; generalization claim=false.
+- Post-I004 analyzer `validation/v167_single_song_calibration/analyze_contextual_guitar_sweep_v167.py` added at commit `8f7be4d89813fd5e9e9f078a3983de10692a99b2`, blob `9bd0e9f69f63d5886a69af9695d738bbd4c9e897`. It accepts only the frozen contextual sweep report, frozen reference-blind evidence pool, frozen I004 candidate, and output path; it has no professional-reference/scorer input and selects no new rule.
+- Analyzer preregisters paired aggregate comparisons for harmonic suppression vs none, `allow_active` vs `inactive_only`, ratio `1.00` vs `0.75`, ratio `1.25` vs `1.00`, and onset `0.65` vs `0.50`, plus whole-rule addition/precision/recall/F1 correlations and reference-blind structural summaries of the 63 I004 additions.
 
 ## Frozen I004 inherited metrics
 ### Guitar — `gctx-o50-q100-allow-noharm`
@@ -61,11 +63,11 @@ Branch: `v143-contextual-prune-lobo`
 - CPU work authorized. Fresh explicit authorization required immediately before GPU/CUDA/Modal.
 - Never modify/merge/promote `main` or Production without explicit user direction.
 
-## NEXT boundary — post-I004 aggregate/reference-blind Guitar diagnosis
+## NEXT boundary — freeze post-I004 aggregate/reference-blind Guitar diagnosis
 1. Keep I004 immutable; keep Bass exactly I004/I003 and do not score Bass.
-2. Analyze only the frozen 37-rule contextual sweep report plus frozen reference-blind Guitar evidence (and, if useful, the frozen I004 addition set). Do **not** open the professional reference or scorer; do not read per-event reference match assignments.
+2. Arm a self-removing CPU-only analysis workflow from the exact checkpoint parent. It may read only the frozen 37-rule contextual sweep report, frozen reference-blind Guitar evidence, frozen I004 candidate, and the staged analyzer. Do **not** open the professional reference or scorer; do not read per-event reference match assignments.
 3. Quantify whole-rule factor effects for onset `{0.50,0.65}`, ratio `{0.75,1.00,1.25}`, active-state `{allow_active,inactive_only}`, and interval policy `{none,exclude_harmonic_octave,chord_interval}`; relate additions to F1/precision/recall deltas and identify which structural dimensions drive the 10 positive rules.
-4. Specifically test at aggregate-rule level whether harmonic suppression recovers precision, whether `allow_active` is carrying re-attack recall, and whether ratio `1.00` is a stable middle regime versus `0.75` over-addition and `1.25` under-addition.
-5. Freeze the analysis + receipt in a self-removing CPU-only workflow. No new reference-facing score calls.
+4. Specifically test at aggregate-rule level whether harmonic suppression recovers precision, whether `allow_active` carries additional recall/matches without labeling individual events, and whether ratio `1.00` is a stable middle regime versus `0.75` over-addition and `1.25` under-addition.
+5. Freeze the analysis + receipt; zero new reference-facing score calls; analyzer must select no new rule and create no I005.
 6. Only after that frozen diagnosis may a genuinely new small Guitar family be preregistered. Freeze every candidate/rule before any future scorer/reference read; do not create I005 automatically.
 7. Never modify/merge/promote `main` or Production; fresh explicit authorization required before GPU/CUDA/Modal.
