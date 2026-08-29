@@ -210,6 +210,8 @@ def separate_stems(input_audio: Path, output_dir: Path) -> dict[str, Path]:
 
     outputs = discover_audio(output_dir)
 
+    # audio-separator 0.30.2 can report a non-zero process status after
+    # writing all requested stems. The stem files are the source of truth.
     if not outputs:
         detail = (result.stderr or result.stdout or "").strip()[-1500:]
         raise RuntimeError(
