@@ -41,11 +41,12 @@ def load_base_builder():
 
 
 BASE = load_base_builder()
+FROZEN_BASS_CONFIGS = BASE.bass_configs
 
 
 def bass_configs() -> Iterable[dict[str, Any]]:
     """Keep the exact parameter grid while clarifying the post-timing cap scope."""
-    for raw in BASE.bass_configs():
+    for raw in FROZEN_BASS_CONFIGS():
         config = dict(raw)
         if not bool(config.get("baseline", False)):
             if int(config.pop("stepCap")) != 1:
