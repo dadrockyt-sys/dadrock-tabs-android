@@ -4,7 +4,7 @@ Updated: 2026-08-29 UTC
 Branch: `v143-contextual-prune-lobo`
 
 ## Active phase
-**V166 is terminal/immutable. V167 is the explicitly reference/scorer-guided SINGLE-SONG TRAINING CALIBRATION lane for Lenny Kravitz — Are You Gonna Go My Way. Calibration Iteration 002 is now frozen and is the current best candidate: Guitar 41.92%, Bass 71.87%. It uses only the already-stored audio-derived lattice alternatives, with no MIDI/cardinality changes. The next major target is recall/pitch: instrument the CPU front-end to preserve and analyze near-miss/rejected event pools, then use the scorer to tune deterministic admission/recovery behavior. `main`/Production remain untouched.**
+**V166 is terminal/immutable. V167 is the explicitly reference/scorer-guided SINGLE-SONG TRAINING CALIBRATION lane for Lenny Kravitz — Are You Gonna Go My Way. Calibration Iteration 002 is frozen and is the current best candidate: Guitar 41.92%, Bass 71.87%. Timing calibration is now largely exhausted. The exact V166/V164/V162 CPU discard gates have been mapped, and the sealed source audio can be reproduced CPU-only from historical Git commit `74b0f815ff3f66f325220975c410621503de440f`. Next action is an output-neutral, reference-blind instrumentation layer that records the real near-miss/rejected pools while reproducing the frozen V166 musical output. `main`/Production remain untouched.**
 
 ## Standing V167 methodology
 - Calibration only, not holdout/generalization performance.
@@ -70,9 +70,38 @@ Branch: `v143-contextual-prune-lobo`
 - Generated-only repeat completion: no Bass improvement and only weak Guitar gain with excessive additions; not promoted.
 - Candidate evidence probe: no large rejected-event pool preserved in frozen candidate, but rich admitted-event audio evidence exists.
 
-## NEXT boundary — recall/pitch near-miss instrumentation
-1. Inspect the frozen V166/V165/V162 CPU front-end source and stream metadata to locate exact Guitar and Bass admission/recovery gates and determine where rejected event objects are discarded.
-2. Create a V167 calibration-only instrumented CPU front-end that preserves near-miss/rejected candidate objects and reason codes without changing the existing detection behavior on its first instrumentation run.
-3. First instrumentation run should reproduce the underlying V166 front-end musical output before V167 timing transforms while emitting machine-readable near-miss pools; then apply the already-frozen V167 `-12` and Iteration 002 timing rules for apples-to-apples scoring.
-4. Use the reference only after near-miss generation to grade fixed threshold/recovery variants. Never copy reference events into the pool or candidate.
-5. Prioritize Bass low-register recovery and Guitar missing polyphony/chord tones. Promote a new iteration only when a frozen parameter sweep shows a material precision/recall/F1 gain.
+## V167 recall/pitch source audit — DISCARD GATES MAPPED
+### Exact frozen implementation chain
+- V166 event wrapper `validation/v166_cpu_autonomous/event_logic_v166.py`, blob `6561194742093d76bab452ef0bbb0b889724dc4e`, mechanically inherits V165/V164 event behavior.
+- V166 transcriber `validation/v166_cpu_autonomous/transcribe_v166.py`, blob `f04ca86525b2ce71680a90b84ed476943e9e6426`; sole V166 musical change is the paired six-frame Guitar template offsets `[-1,0,1,2,3,4]`.
+- Actual admission/grid implementation descends from V162 transcriber blob `fa163cafe2131aa73cdbb50df10d4e4912cff53b`, with V164 local-evidence adapter blob `df1302216df404bc3368ff820f005d6b63ae100d` and V164 event logic blob `62303877a1971f75cacda002c5ad921680161674`.
+
+### Reproducible CPU source boundary
+- Historical V166 workflow materializes `public/gomywayfullaitest.m4a` from Git commit `74b0f815ff3f66f325220975c410621503de440f`.
+- Exact source identity: 3,478,611 bytes; SHA256 `215bd5a657c5326f08f132ae358595a95c30b39bb7493a52c2f910d5a608149f`.
+- Original run normalized with bundled ffmpeg and used deterministic `demucs==4.1.0`, model `htdemucs_6s`, device `cpu`, shifts=1, jobs=1; Python 3.10.21 / torch 2.8.0+cpu.
+- Therefore the instrumentation run can reproduce source/stems CPU-only without external upload and without GPU/CUDA/Modal.
+
+### Guitar discard points to instrument
+1. **Raw Basic Pitch → segmentation**: Basic Pitch uses onset threshold 0.50, frame threshold 0.30, minimum note length 90ms, MIDI 40–88. Same-MIDI rows with gap <=0.120s are merged when local reattack evidence is unsupported; child rows are not retained as standalone candidates.
+2. **Segmented admission**: each segmented row computes paired-window template/register evidence, onset/activity/persistence/confidence, then rejects activity `<0.05` and admission score `<0.50`. Admission score = `0.45*confidence + 0.25*rank + 0.15*onset + 0.10*persistence + 0.05*activity`.
+3. **Active-state reattack recovery**: candidate onset must have support >=0.35, not be within 0.050s of an existing attack, parent confidence >=0.35, pitch evidence present, template rank >=0.80, fundamental present, recovery score >=0.58; per-onset candidates are capped at 3. Failed candidates are currently discarded by `continue` branches.
+4. **Grid mapping/dedupe**: events before the first-grid half-window are dropped; identical `(absoluteGridStep,midi)` collisions retain only the stronger evidence/confidence event.
+5. **Guitar polyphony cap**: after mapping, each grid step is capped at 6 by admission/recovery score then confidence, discarding lower-ranked simultaneous pitches.
+
+### Bass discard points to instrument
+1. **Stable pitch-state construction**: pYIN states require frame voiced probability >=0.50, minimum run 4 frames, median voiced probability >=0.55; only gaps <=2 frames between identical states are bridged. Short/weak states disappear before proposals.
+2. **Onset/state proposal construction**: detected onsets with no nearby state are discarded; onset support `<0.20` is discarded. Same-pitch reattacks require IOI >=0.080s and local peak/threshold plus support >=0.30.
+3. **Proposal merge**: proposals within 0.045s are grouped; only one winner survives, ordered by proposal priority, onset support, state voiced probability, then frame. Nonwinning proposal dictionaries are discarded.
+4. **Bass admission**: for each merged proposal, pitch is chosen from harmonic template + pYIN proximity. Reject activity `<0.04`; reject unless fundamental is present or median pYIN voiced probability >=0.60; reject admission score `<0.42`. Bass admission score = `0.40*voiced + 0.35*rank + 0.15*onset + 0.10*activity`.
+5. **Grid mapping/dedupe**: pre-grid events are dropped; same `(absoluteGridStep,midi)` collisions retain only stronger evidence.
+6. **Bass grid cap**: final grid is capped at one Bass note per step by admission score, voiced probability, then MIDI; lower-ranked simultaneous candidates are discarded.
+
+## NEXT boundary — output-neutral near-miss instrumentation
+1. Implement a V167 calibration-only instrumentation layer over the exact pinned V166 behavior. The first run must not alter any admission/recovery/grid decisions.
+2. Emit machine-readable pools with explicit decision/reason codes for: Guitar raw/segmentation merges, segmented rejects, recovery rejects/cap losers, grid dedupe/polyphony losers; Bass weak/short state candidates if practical, onset/reattack rejects, proposal merge losers, admission rejects, grid dedupe/cap losers.
+3. Preserve enough existing audio evidence per rejected object to support later deterministic threshold/ranking sweeps; do not read the professional reference while constructing the pool.
+4. Re-run the exact sealed source/stem pipeline CPU-only and assert the instrumented final V166 musical streams reproduce the frozen V166 candidate before freezing the evidence pool.
+5. After the evidence pool is frozen, apply the already-frozen V167 `-12` and Iteration 002 timing transforms for apples-to-apples calibration scoring of any recovery variants.
+6. Reference may then grade whole fixed threshold/ranking variants only. Prioritize Bass MIDI 31/35 low-register recovery and Guitar missing polyphony/chord tones.
+7. Do not create Iteration 003 until a frozen recovery sweep demonstrates a material improvement with a defensible precision/recall tradeoff.
