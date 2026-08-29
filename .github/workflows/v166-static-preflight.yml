@@ -41,11 +41,15 @@ jobs:
             validation/v166_cpu_autonomous/transcribe_v166.py \
             validation/v166_cpu_autonomous/structural_qc_v166.py \
             validation/v166_cpu_autonomous/test_paired_template_v166.py \
+            validation/v166_cpu_autonomous/test_runtime_compat_v166.py \
             validation/v166_cpu_autonomous/test_json_native_v166.py \
             debug/v166-cpu-autonomous/negative-runtime-guard.py
 
       - name: Run song-blind paired-window fixture
         run: python validation/v166_cpu_autonomous/test_paired_template_v166.py
+
+      - name: Run inherited runtime-interface compatibility fixture
+        run: python validation/v166_cpu_autonomous/test_runtime_compat_v166.py
 
       - name: Run JSON-native fixture
         run: python validation/v166_cpu_autonomous/test_json_native_v166.py
@@ -56,6 +60,7 @@ jobs:
             --event-logic validation/v166_cpu_autonomous/event_logic_v166.py \
             --transcriber validation/v166_cpu_autonomous/transcribe_v166.py \
             --paired-test validation/v166_cpu_autonomous/test_paired_template_v166.py \
+            --runtime-test validation/v166_cpu_autonomous/test_runtime_compat_v166.py \
             --timebase-builder validation/v166_cpu_autonomous/build_timebase_v166.py \
             --timebase-qc validation/v166_cpu_autonomous/timebase_qc_v166.py \
             --structural-qc validation/v166_cpu_autonomous/structural_qc_v166.py \
