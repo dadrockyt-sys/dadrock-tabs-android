@@ -1,0 +1,64 @@
+name: One-time BTS separator CLI fix
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - '.github/workflows/one-time-bts-separator-cli-fix.yml'
+
+permissions:
+  contents: write
+
+jobs:
+  patch:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: main
+          fetch-depth: 0
+
+      - name: Use installed audio-separator CLI
+        run: |
+          python - <<'PY'
+          from pathlib import Path
+
+          path = Path('analyzer/modal_bts_separator.py')
+          text = path.read_text()
+
+          if 'import shutil\n' not in text:
+              text = text.replace('import os\n', 'import os\nimport shutil\n', 1)
+
+          old = '''    command = [
+        sys.executable,
+        "-m",
+        "audio_separator",
+        str(input_audio),
+'''
+          new = '''    separator_executable = shutil.which("audio-separator")
+
+    if not separator_executable:
+        raise RuntimeError(
+            "audio-separator CLI is unavailable in the Modal image."
+        )
+
+    command = [
+        separator_executable,
+        str(input_audio),
+'''
+
+          if old not in text:
+              raise SystemExit('Expected audio_separator module launcher not found')
+
+          text = text.replace(old, new, 1)
+          path.write_text(text)
+          PY
+          rm .github/workflows/one-time-bts-separator-cli-fix.yml
+
+      - name: Commit BTS separator fix
+        run: |
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add analyzer/modal_bts_separator.py .github/workflows/one-time-bts-separator-cli-fix.yml
+          git commit -m 'Fix BTS audio-separator CLI invocation'
+          git push origin main
