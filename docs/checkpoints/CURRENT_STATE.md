@@ -4,7 +4,7 @@ Updated: 2026-08-29 UTC
 Branch: `v143-contextual-prune-lobo`
 
 ## Active phase
-**V166 is terminal/immutable. V167 is the explicitly scorer/reference-guided SINGLE-SONG TRAINING CALIBRATION lane for Lenny Kravitz — Are You Gonna Go My Way. Iteration 002 remains the best frozen candidate: Guitar 41.9157%, Bass 71.8651%. Timing and admitted-event Bass pitch alternatives are substantially exhausted. Exact upstream discard gates and the reproducible CPU source/stem boundary are mapped. The reference-blind upstream evidence pool is frozen at terminal commit `86ab5882845b61917b8820c35b07022adef532f0`. A deterministic 146-variant upstream-recovery sweep is now explicitly preregistered in code before reference scoring: 49 Guitar variants and 97 Bass variants, including baselines. No Iteration 003 exists yet. `main`/Production remain untouched.**
+**V166 is terminal/immutable. V167 is the explicitly scorer/reference-guided SINGLE-SONG TRAINING CALIBRATION lane for Lenny Kravitz — Are You Gonna Go My Way. Iteration 002 remains the best frozen candidate: Guitar 41.9157%, Bass 71.8651%. The reference-blind upstream evidence pool is frozen. A deterministic 146-variant upstream-recovery sweep is preregistered before reference scoring. The first arm passed every identity/preregistration guard but failed during reference-blind generation because its validator incorrectly required post-Iteration-002 Bass to be globally monophonic; no scorer/reference step ran. A pinned guard-only re-arm adapter now preserves pre-existing Iteration 002 timing collisions while still allowing at most one new Bass recovery event on a previously empty step. No Iteration 003 exists yet. `main`/Production remain untouched.**
 
 ## Standing V167 methodology
 - Calibration only; never present V167 calibration score as holdout/generalization performance.
@@ -61,7 +61,7 @@ Branch: `v143-contextual-prune-lobo`
 - Detected onsets without a nearby stable state never become proposals; onset support <0.20 is rejected. Same-pitch reattacks require IOI >=0.080s and stronger local onset evidence.
 - Proposals within 45ms merge to one winner; losers are normally discarded.
 - Final admission rejects activity <0.04, then requires fundamental present OR median pYIN voiced >=0.60, then admission >=0.42. These final gates reject comparatively few events.
-- Grid dedupe and monophonic cap 1/step follow.
+- Grid dedupe and monophonic cap 1/step happen before V167 timing calibration. The frozen Iteration 002 timing transform can subsequently move distinct existing events onto the same corrected step; those pre-existing timing collisions must be preserved, not mistaken for new recovery-cap violations.
 - Existing admitted-event `stateMidi`/pYIN repitching is frozen negative, so low-note recall must come from upstream state/onset/proposal coverage.
 
 ## Reproducible CPU source boundary
@@ -74,38 +74,47 @@ Branch: `v143-contextual-prune-lobo`
 - Output-neutral observer `validation/v167_single_song_calibration/instrument_v166_nearmiss_v167.py`, blob `1224932a841e27bfdfe8d61fd631e5c1f728d485`.
 - Pinned event-logic runner `validation/v167_single_song_calibration/run_instrument_v166_nearmiss_v167.py`, blob `af216b9727ca851a32c43c318ee18849c4043752`.
 - Upstream pitch augmentation `validation/v167_single_song_calibration/augment_upstream_pitch_pool_v167.py`, frozen blob `daf4ace1b6eff1da81bb537b38caa4dcb0976b29`.
-- Corrected re-arm commit `7e8d15fcb57ddc34550ce7215f10c00603008852` fixed the first arm's self-matching guard without weakening the boundary: only observer/runner/augmentation source is scanned for forbidden reference/scorer paths.
-- Successful one-shot CPU run `33228322645`, job `99036292089`, run 2/attempt 1; every step completed SUCCESS.
-- Terminal self-seal commit `86ab5882845b61917b8820c35b07022adef532f0` deleted `.github/workflows/v167-nearmiss-instrumentation.yml` and froze exactly the evidence pool + receipt.
+- Corrected re-arm commit `7e8d15fcb57ddc34550ce7215f10c00603008852` fixed the first instrumentation arm's self-matching guard without weakening the boundary.
+- Successful one-shot CPU run `33228322645`, job `99036292089`; terminal self-seal commit `86ab5882845b61917b8820c35b07022adef532f0`.
 - Evidence pool `debug/v167-single-song-calibration/nearmiss-evidence-pool.json`, blob `aa7da3a55344b1418a291f30fab9ca55858fc094`, SHA256 `1c983784c2d12a22437a80387525789bcf55a2f4e4a5c7a96608c575bf709673`.
 - Receipt `debug/v167-single-song-calibration/nearmiss-evidence-receipt.json`, blob `8268eb6eeb0bbb00b98bcf3dcf2812c8a55932a3`, status `EVIDENCE_POOL_FROZEN`.
-- Exact reproduction proof: frozen V166 musical streams reproduced bit-for-policy exactly at **1050 Guitar / 402 Bass**; source/mix/Guitar/Bass/drums hashes matched the frozen V166 boundary.
+- Exact reproduction proof: frozen V166 musical streams reproduced at **1050 Guitar / 402 Bass**; source/mix/Guitar/Bass/drums hashes matched the frozen V166 boundary.
 - Policy proof: reference read=false, scorer read=false, reference-facing score calls=0, threshold tuning=false, candidate generation behavior modified=false, GPU/CUDA/Modal=false, `main`/Production modified=false.
 
 ### Frozen observer counts
 - Guitar: 272 independent onsets; 1,404 raw; 1,010 segmented; 1,005 segmented admitted; 5 admission-score rejects; 48 recovered. Grid input 1,053 -> 1,050 final; 18 evidence step corrections; cap 6.
-- Bass: 465 raw onsets; 464 retained; 394 stable states; 449 merged proposals; 449 admitted; **0** activity/additional/admission-score rejects. Grid input 449 -> 405 unique step/MIDI -> 402 final under monophonic cap; 6 evidence step corrections.
+- Bass: 465 raw onsets; 464 retained; 394 stable states; 449 merged proposals; 449 admitted; **0** activity/additional/admission-score rejects. Grid input 449 -> 405 unique step/MIDI -> 402 final under pre-calibration monophonic cap; 6 evidence step corrections.
 - Standalone Guitar harmonic pool: **272 sites / 13,328 candidates**.
 - Bass pre-admission pool: **913 sites / 36,520 candidates**.
 - The pool is evidence only: augmentation changed zero generated events.
 
 ## V167 predeclared upstream-recovery sweep — STAGED BEFORE REFERENCE READ
-- Reference-blind generator `validation/v167_single_song_calibration/build_upstream_recovery_variants_v167.py`, blob `24413d321f64bbfcce48812ceb85b4593dcfa80c`, implementation commit `6935311a96cc8ba391ad461ef1368ae7bed789b1`.
+- Base reference-blind generator `validation/v167_single_song_calibration/build_upstream_recovery_variants_v167.py`, blob `24413d321f64bbfcce48812ceb85b4593dcfa80c`, implementation commit `6935311a96cc8ba391ad461ef1368ae7bed789b1`.
 - Frozen-manifest grader `validation/v167_single_song_calibration/score_upstream_recovery_variants_v167.py`, blob `32304261ff9e6bec00d22eabea08cf5070cd3d3e`, implementation commit `589a046a08c7e508bae910774e8f74bb5c4b96ac`.
 - The generator accepts no reference/scorer input and predeclares **146 complete variants before scoring**: **49 Guitar** (baseline + 48 whole rules) and **97 Bass** (baseline + 96 whole rules).
-- Guitar grid: template-rank thresholds 0.80/0.90/0.95/0.975 × onset support 0.35/0.50/0.65 × max 1/2 additions per site × Basic-Pitch-inactive-only true/false; fundamental required; activity >=0.05; existing Iteration 002 events always win; `(step,midi)` dedupe and polyphony cap 6 remain.
-- Bass grid: template-rank thresholds 0.80/0.90/0.95/0.975 × onset support 0.20/0.35/0.50 × activity 0.04/0.10 × scope all/no-stable-state/low-register/low-register+no-stable-state; fundamental required; low-register scope is MIDI <=40; existing Iteration 002 events always win; only empty monophonic steps are filled.
-- New recovery-event timing is fixed without reference: nearest frozen V166 subdivision, then the already-frozen `-12` global phase. Existing Iteration 002 events retain their already-frozen whole-stream step-rule timing.
+- Guitar grid: template-rank 0.80/0.90/0.95/0.975 × onset 0.35/0.50/0.65 × max 1/2 additions/site × Basic-Pitch-inactive-only true/false; fundamental required; activity >=0.05; existing Iteration 002 events win; `(step,midi)` dedupe and cap 6 remain.
+- Bass grid: template-rank 0.80/0.90/0.95/0.975 × onset 0.20/0.35/0.50 × activity 0.04/0.10 × scope all/no-stable-state/low-register/low-register+no-stable-state; fundamental required; low-register is MIDI <=40; existing Iteration 002 events always win; new recovery events are considered only for corrected steps empty in Iteration 002.
+- New recovery timing is fixed without reference: nearest frozen V166 subdivision, then the already-frozen `-12` global phase. Existing Iteration 002 events retain their already-frozen whole-stream step-rule timing.
 - Score-minimal candidate files are SHA256-sealed in a manifest before any scorer/reference read. The grader verifies every candidate hash before importing the scorer or opening the professional reference.
 - Winner selection is frozen in advance: max primary F1, then max precision, then fewer added events, then lexicographically smaller rule id. A >=1.0pp F1 gain is reported as material, but promotion is never automatic.
-- No Iteration 003 has been created. No reference-facing score has been run against this variant set yet.
 
-## NEXT boundary — one-shot CPU recovery sweep
-1. Arm a one-shot workflow on `v143-contextual-prune-lobo` only, pinned to the current preregistration state and exact blobs above.
-2. Generate all 146 score-minimal variants plus the frozen manifest **before** crossing the reference-facing boundary; verify exact pool/base/timebase identities and manifest/candidate hashes.
+### First recovery-sweep arm — SAFE PRE-SCORE FAILURE
+- Arm commit `8880dabdc9ac93d52e126328abd0965d23f45392`.
+- Workflow run `33253264878`, job `99102488179`, run number 1 / attempt 1.
+- Exact preregistration/identity guard step: **SUCCESS**.
+- Reference-blind generation step: **FAILURE** at the Bass global-monophony assertion.
+- Reference-facing grading step: **SKIPPED**. Freeze/self-seal step: **SKIPPED**.
+- Therefore the failed arm consumed **zero reference-facing scores** and did not alter any candidate, threshold, rule, `main`, or Production.
+- Root cause: frozen Iteration 002 timing calibration can collapse two or more already-existing Bass events onto the same corrected step after V166's pre-calibration monophonic cap; the generator validator incorrectly treated those inherited collisions as recovery violations.
+- Guard-only re-arm adapter `validation/v167_single_song_calibration/build_upstream_recovery_variants_v167_rearm.py`, blob `bcc369871f6170687bbc753be62d3d7b3266ed98`, commit `0093ee19d251f6d968701f079b338627a4886880`.
+- Adapter pins base builder blob `24413d...` and changes only the Bass post-build invariant/metadata: every pre-existing Iteration 002 step occupancy must remain exactly unchanged, and each previously empty step may receive at most one new recovery event. Thresholds, ranking, scopes, timing, evidence, and 146-variant parameter grid remain unchanged.
+
+## NEXT boundary — corrected one-shot CPU recovery sweep
+1. Re-arm the existing one-shot workflow on `v143-contextual-prune-lobo`, pinning the guard-only adapter blob `bcc369871f6170687bbc753be62d3d7b3266ed98` plus all frozen inputs.
+2. Generate all 146 score-minimal variants plus the frozen manifest **before** crossing the reference-facing boundary; verify exact pool/base/timebase identities and every candidate hash.
 3. Only after the complete manifest is sealed, run the frozen scorer/reference over all complete variants. Do not alter any candidate after scoring begins.
-4. Require the baseline variants to reproduce Iteration 002 exactly: Guitar 41.9156774457634%, Bass 71.86512118018967%.
-5. Freeze the manifest, complete score report, and receipt; self-delete the one-shot workflow and record run/job/terminal commit, blobs/hashes, winners, deltas, candidate additions, precision/recall/F1.
+4. Require baseline variants to reproduce Iteration 002 exactly: Guitar 41.9156774457634%, Bass 71.86512118018967%.
+5. Freeze manifest, complete score report, and receipt; self-delete the workflow and record run/job/terminal commit, blobs/hashes, winners, deltas, additions, precision/recall/F1.
 6. Do not create Iteration 003 unless the frozen sweep shows a material F1 gain with a defensible precision/recall tradeoff.
 7. Keep CPU-only. Fresh explicit authorization is required before any GPU/CUDA/Modal work.
 8. Never modify/merge/promote `main` or Production without explicit user direction.
