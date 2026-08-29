@@ -4,7 +4,7 @@ Updated: 2026-08-29 UTC
 Branch: `v143-contextual-prune-lobo`
 
 ## Active phase
-**V168 is active with status `HOLDOUT_ASSET_MISSING / SCORING_NOT_ARMED`. V167 is CLOSED / TERMINAL and must not be reopened for another Lenny Kravitz calibration sweep. No independent professional combined-Guitar holdout asset has been admitted, so V168 remains at exactly 0 reference-facing score calls. The frozen two-policy protocol, frozen base admission validator, and frozen/self-tested provenance companion remain unchanged. External screening now identifies GOAT as the strongest remaining acquisition candidate, but it is explicitly NOT admitted: the authoritative dataset record is restricted, requires an access request, limits use to research, and exact downloaded bytes/access terms do not yet exist in this project. GOAT's human-checked tablature content is promising; its separately fine-aligned MIDI must not be treated as automatically admissible under the frozen no-model-derived-reference gate. `main`/Production remain untouched; CPU only; fresh authorization required before GPU/CUDA/Modal.**
+**V168 is active with status `HOLDOUT_ASSET_MISSING / SCORING_NOT_ARMED`. V167 is CLOSED / TERMINAL and must not be reopened for another Lenny Kravitz calibration sweep. No independent professional combined-Guitar holdout asset has been admitted, so V168 remains at exactly 0 reference-facing score calls. The frozen two-policy protocol, frozen base admission validator, and frozen/self-tested provenance companion remain unchanged. External screening now identifies GOAT as the strongest remaining acquisition candidate, but it is explicitly NOT admitted: the authoritative dataset record is restricted, requires an access request, limits use to research, and exact downloaded bytes/access terms do not yet exist in this project. GOAT's human-checked tablature content is promising; its separately fine-aligned MIDI must not be treated as automatically admissible under the frozen no-model-derived-reference gate. IDMT-SMT-Guitar has now cleared its authoritative license/use-basis uncertainty and has strong human-ground-truth evidence, but remains NOT admitted because the exact song-like reference subset and annotator/professional provenance still need to be frozen under the stricter `professional_scorer_ready` gate. `main`/Production remain untouched; CPU only; fresh authorization required before GPU/CUDA/Modal.**
 
 ## V168 external holdout candidate screening — FROZEN STATUS + ADDENDUM
 - Original screening checkpoint: `docs/checkpoints/V168_HOLDOUT_CANDIDATE_SCREENING_20260829.md`.
@@ -52,10 +52,21 @@ Branch: `v143-contextual-prune-lobo`
 - Public repository/issues/PRs/releases/project site/inspected history did not recover the corrected annotation bytes or correction derivation.
 - Do not substitute public release JAMS by assumption.
 
+### IDMT-SMT-Guitar — STRONG OPEN HUMAN-GROUND-TRUTH LEAD / NOT ADMITTED
+- Authoritative Fraunhofer IDMT dataset page now resolves the rights/use-basis question: the dataset is provided **for evaluation purpose under CC BY-NC-ND 4.0**.
+- Authoritative Zenodo DOI `10.5281/zenodo.7544110`, version `1.0.0`, is open and exposes `IDMT-SMT-GUITAR_V2.zip` (1.3 GB), MD5 `06796e08731bccffaed6ae59361486e4`.
+- Zenodo describes four subsets. Subsets 1 and 2 have XML parameter annotations; subset 3 contains **five short monophonic/polyphonic guitar recordings**, each accompanied by a parameter annotation in XML; subset 4 is oriented to chord/rhythm tasks.
+- The authoritative DAFx-2014 paper states that the evaluation dataset was **recorded and manually annotated with all note parameters discussed in the paper**, that parameter annotations are stored in XML, and that the dataset served as ground truth for the experiments.
+- The paper also explicitly compares system detections to **manually annotated ground truth** and labels its reference tablature example as manually notated.
+- This resolves the earlier concern that IDMT annotations might simply be model-derived labels: the core published transcription ground truth is human/manual, not the proposed model output.
+- However, the frozen V168 gate is stricter than merely `manual`: the inspected authoritative sources do not yet identify the annotator(s) or establish that the exact song-like XML reference subset was created/validated by a professional musician/transcriber under the intended `professional_scorer_ready` semantics.
+- The 2014 paper's dataset section describes two constituent sets used in that study, whereas the current Zenodo package exposes four subsets. The exact provenance/lineage of **subset 3's five short recordings + XML annotations** must therefore be traced before treating those five recordings as the prospective >=2-song holdout.
+- CC BY-NC-ND 4.0 also means no public redistribution/transformation shortcut should be assumed. Any eventual use must preserve the exact license/use boundary and exact source/reference byte identities; do not publish derived reference content merely because the package is downloadable.
+- Status remains **NOT ADMITTED / SCORING NOT ARMED / 0 SCORE CALLS**.
+
 ### Other screened candidates — not admitted
 - **GuitarSet:** rich paired guitar audio/annotations, but annotation construction is substantially automated and known annotation issues exist; not enough for current `professional_scorer_ready` contract without independent validation.
 - **Guitar-TECHS:** professional performers + synchronized MIDI capture, but labels arise from instrument/MIDI-pickup capture rather than independently established professional note-event transcription.
-- **IDMT-SMT-Guitar:** paired WAV/XML transcription data remains under investigation; authoritative use-basis and professional-reference provenance not yet frozen.
 
 ## Frozen V154 scorer compatibility finding
 - Frozen scorer file `validation/v154_cpu_multitrack/score_frontend_reference.py`, blob `9644e65719fbd361a9b39778ae9950c5e983e855`.
@@ -134,12 +145,13 @@ No V168 scorer workflow may be armed until:
 - CPU only; fresh explicit authorization immediately before GPU/CUDA/Modal.
 - Never modify/merge/promote `main` or Production without explicit user direction.
 
-## NEXT boundary — GOAT ACCESS / CONTINUE ACCESSIBLE-CANDIDATE SCREENING
+## NEXT boundary — IDMT SUBSET-3 PROVENANCE / GOAT ACCESS
 1. **Do not score.**
-2. Primary path: obtain legitimate GOAT research access. Do not claim access until actually granted; preserve the grant/terms as provenance.
-3. Until access exists, continue screening openly obtainable candidates for a human/professional note-event reference layer that satisfies the frozen no-model-derived-reference rule.
-4. IDMT-SMT-Guitar is the next unresolved open candidate to vet for authoritative rights/use-basis and annotation provenance.
-5. Do not implement GOAT reference conversion, candidate generation, or generic V168 scorer adapter before complete >=2-song assets pass BOTH frozen validators.
-6. Keep EGSet12, EGDB real-world, François Leduc, and GAPS blocked/excluded unless genuinely new provenance evidence appears; do not weaken frozen semantics.
-7. Save `CURRENT_STATE.md` before any admission or code arm.
-8. CPU only; no GPU/CUDA/Modal; never modify main/Production.
+2. Continue the open-candidate path by tracing the exact provenance/lineage of IDMT-SMT-Guitar **subset 3's five short WAV/XML pairs**, especially who created/validated the XML reference and whether that provenance satisfies frozen `professional_scorer_ready` semantics.
+3. Preserve the now-resolved authoritative use-basis: Fraunhofer states evaluation-purpose **CC BY-NC-ND 4.0**; do not assume permission to redistribute or publish transformed reference content.
+4. Do not open/inspect reference note-event content merely to choose favorable tracks. Metadata/provenance investigation remains score-blind.
+5. Primary restricted path remains legitimate GOAT research access; do not claim access until granted and preserve grant/terms as provenance.
+6. Do not implement IDMT/GOAT reference conversion, candidate generation, or generic V168 scorer adapter before complete >=2-song assets pass BOTH frozen validators.
+7. Keep EGSet12, EGDB real-world, François Leduc, and GAPS blocked/excluded unless genuinely new provenance evidence appears; do not weaken frozen semantics.
+8. Save `CURRENT_STATE.md` again before any admission or code arm.
+9. CPU only; no GPU/CUDA/Modal; never modify main/Production.
