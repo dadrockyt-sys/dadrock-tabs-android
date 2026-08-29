@@ -22,7 +22,9 @@ export default function BTSPayPalCheckoutButton({
   useEffect(() => {
     let isCancelled = false;
 
-    const clientId = process.env.NEXT_PUBLIC_PAYPAL_CLIENT_ID;
+    const clientId =
+      process.env.NEXT_PUBLIC_PAYPAL_SANDBOX_CLIENT_ID ||
+      process.env.NEXT_PUBLIC_PAYPAL_CLIENT_ID;
 
     if (!clientId) {
       setPaymentError('PayPal sandbox is not configured.');
