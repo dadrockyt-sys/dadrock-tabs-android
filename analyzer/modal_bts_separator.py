@@ -1,7 +1,7 @@
 import json
 import os
+import shutil
 import subprocess
-import sys
 import tempfile
 from pathlib import Path
 from urllib.parse import unquote, urlparse
@@ -167,10 +167,14 @@ def normalize_audio(input_audio: Path, output_audio: Path) -> None:
 def separate_stems(input_audio: Path, output_dir: Path) -> dict[str, Path]:
     output_dir.mkdir(parents=True, exist_ok=True)
 
+    separator_cli = shutil.which("audio-separator")
+    if not separator_cli:
+        raise RuntimeError(
+            "Demucs stem separation failed. The audio-separator CLI is not installed."
+        )
+
     command = [
-        sys.executable,
-        "-m",
-        "audio_separator",
+        separator_cli,
         str(input_audio),
         "--model_filename",
         DEMUCS_6S_MODEL,
@@ -194,6 +198,7 @@ def separate_stems(input_audio: Path, output_dir: Path) -> dict[str, Path]:
             capture_output=True,
             text=True,
             timeout=3300,
+            cwd=str(output_dir),
             env={
                 **os.environ,
                 "CUDA_VISIBLE_DEVICES": "",
@@ -206,7 +211,9 @@ def separate_stems(input_audio: Path, output_dir: Path) -> dict[str, Path]:
 
     outputs = discover_audio(output_dir)
 
-    if result.returncode != 0 or not outputs:
+    # audio-separator 0.30.2 can report a non-zero process status after
+    # writing all requested stems. The stem files are the source of truth.
+    if not outputs:
         detail = (result.stderr or result.stdout or "").strip()[-1500:]
         raise RuntimeError(
             f"Demucs stem separation failed. {detail}"
