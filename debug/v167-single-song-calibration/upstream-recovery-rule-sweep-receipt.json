@@ -1,0 +1,128 @@
+{
+  "classification": "SINGLE_SONG_TRAINING_CALIBRATION_ONLY",
+  "implementation": {
+    "baseBuilderGitBlob": "24413d321f64bbfcce48812ceb85b4593dcfa80c",
+    "graderGitBlob": "32304261ff9e6bec00d22eabea08cf5070cd3d3e",
+    "rearmBuilderGitBlob": "fbbee07493084792912c774d375ca5011672891f"
+  },
+  "inputs": {
+    "evidencePoolGitBlob": "aa7da3a55344b1418a291f30fab9ca55858fc094",
+    "iteration002GitBlob": "7eba73700116ceeca580a8851abe399aed764834",
+    "referenceGitBlob": "2fbed60b543c0488934d8642c488aa06bf31bbf5",
+    "scorerGitBlob": "9644e65719fbd361a9b39778ae9950c5e983e855",
+    "timebaseGitBlob": "abebae25801b7ddeb5b933977c4f4a918f7bf9ef"
+  },
+  "manifestGitBlob": "0ee153dbf1004d921c586516bca91e52f7bb1fde",
+  "manifestSha256": "c91ee15d702746e082c059b5f99c44fcfa7a89f18e5e9f2fc81eb6513d1baa80",
+  "policy": {
+    "generalizationClaim": false,
+    "gpuCudaModalUsed": false,
+    "individualEventSelectionByReference": false,
+    "iteration003Created": false,
+    "mainOrProductionModified": false,
+    "newBassRecoveryEventsOnlyOnPreviouslyEmptySteps": true,
+    "postScoreCandidateMutation": false,
+    "preExistingIteration002BassStepCollisionsPreserved": true,
+    "variantsFrozenBeforeReferenceRead": true
+  },
+  "reportGitBlob": "324f1f4e68951ac8653c51c8a436e4d35e5dc16b",
+  "reportSha256": "1bcc5eca05df31270ff7ff638cca6def3166a0e5084c4874d70d710d4696836f",
+  "schema": "dadrock.tabs.v167.upstream-recovery-rule-sweep-receipt.v1",
+  "status": "UPSTREAM_RECOVERY_SWEEP_FROZEN",
+  "variantCounts": {
+    "bass": 97,
+    "combinedGuitar": 49,
+    "total": 146
+  },
+  "version": "V167",
+  "winners": {
+    "bass": {
+      "candidateSha256": "2e04edd9cb61795ea9679ce899c7ded9549bb0f5d9f8e04a5d53fdf07ec9fa13",
+      "config": {
+        "activitySupportMin": 0.1,
+        "baseline": false,
+        "existingEventsPreferred": true,
+        "fundamentalPresentRequired": true,
+        "id": "b-r975-o50-a10-low_register_no_stable_state",
+        "lowRegisterMaxMidi": 40,
+        "newRecoveryCapPerPreviouslyEmptyStep": 1,
+        "onsetSupportMin": 0.5,
+        "preExistingIteration002StepCollisionsPreserved": true,
+        "scope": "low_register_no_stable_state",
+        "stream": "bass",
+        "templateRankMin": 0.975
+      },
+      "deltaVsIteration002": {
+        "f1PercentagePoints": 8.588136610178598,
+        "falseNegative": -85,
+        "falsePositive": 25,
+        "generated": 110,
+        "matched": 85,
+        "precisionPercentagePoints": -1.622745646766166,
+        "recallPercentagePoints": 15.539305301645335
+      },
+      "generationSummary": {
+        "added": 110,
+        "eligible": 149,
+        "newRecoveryEventsAddedOnlyToPreviouslyEmptySteps": true,
+        "preExistingCollisionSteps": 4,
+        "preExistingCollisionsPreserved": true,
+        "sitesWithAdds": 110
+      },
+      "id": "b-r975-o50-a10-low_register_no_stable_state",
+      "materialGainAtLeast1pp": true,
+      "metrics": {
+        "falseNegative": 121,
+        "falsePositive": 86,
+        "generated": 512,
+        "grossF1": 0.8309726156751652,
+        "matched": 426,
+        "primaryF1": 0.8045325779036827,
+        "primaryPrecision": 0.83203125,
+        "primaryRecall": 0.7787934186471663,
+        "reference": 547,
+        "sameMeasurePitchContentF1": 0.8404154863078376
+      }
+    },
+    "combinedGuitar": {
+      "candidateSha256": "ad4f0bc73679ba1493d7a3644039aa117c3dbd411fa21b4b3c2504ec589b786b",
+      "config": {
+        "baseline": true,
+        "id": "g-baseline",
+        "stream": "combinedGuitar"
+      },
+      "deltaVsIteration002": {
+        "f1PercentagePoints": 0.0,
+        "falseNegative": 0,
+        "falsePositive": 0,
+        "generated": 0,
+        "matched": 0,
+        "precisionPercentagePoints": 0.0,
+        "recallPercentagePoints": 0.0
+      },
+      "generationSummary": {
+        "added": 0,
+        "eligible": 0,
+        "sitesWithAdds": 0
+      },
+      "id": "g-baseline",
+      "materialGainAtLeast1pp": false,
+      "metrics": {
+        "falseNegative": 881,
+        "falsePositive": 538,
+        "generated": 1050,
+        "grossF1": 0.5509619320507573,
+        "matched": 512,
+        "primaryF1": 0.419156774457634,
+        "primaryPrecision": 0.4876190476190476,
+        "primaryRecall": 0.36755204594400576,
+        "reference": 1393,
+        "sameMeasurePitchContentF1": 0.5935325419566108
+      }
+    }
+  },
+  "workflowHeadSha": "168113eed4e053a97220ab8ad9daefb189d5fd93",
+  "workflowRunAttempt": 1,
+  "workflowRunId": 33253434886,
+  "workflowRunNumber": 2
+}

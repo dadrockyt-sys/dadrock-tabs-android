@@ -1,0 +1,4535 @@
+{
+  "inputs": {
+    "baseCounts": {
+      "bass": 402,
+      "combinedGuitar": 1050
+    },
+    "baseSha256": "96fbc329d9ba46b06d430c7c3c7b7f5b0e9077f6e133da5c3165c1fde609b5cc",
+    "poolCounts": {
+      "bass": 36520,
+      "guitar": 13328
+    },
+    "poolSha256": "1c983784c2d12a22437a80387525789bcf55a2f4e4a5c7a96608c575bf709673",
+    "timebaseSha256": "899746d3048d239bc0032375d412a109ea04b055df19df1b7b08dc3e73aa5ca0"
+  },
+  "policy": {
+    "allVariantRulesPredeclaredBeforeScoring": true,
+    "existingIteration002EventsPreferred": true,
+    "globalPhaseCorrectionGridSteps": -12,
+    "individualEventSelectionByReference": false,
+    "iteration002ExistingEventTimingPreserved": true,
+    "newRecoveryTimingRule": "nearest-frozen-v166-subdivision-then-frozen-minus-12-global-phase",
+    "referenceRead": false,
+    "scorerRead": false
+  },
+  "schema": "dadrock.tabs.v167.predeclared-upstream-recovery-variant-manifest.v1",
+  "status": "FROZEN_BEFORE_REFERENCE_SCORING",
+  "variants": [
+    {
+      "config": {
+        "baseline": true,
+        "id": "g-baseline",
+        "stream": "combinedGuitar"
+      },
+      "counts": {
+        "bass": 402,
+        "combinedGuitar": 1050
+      },
+      "id": "g-baseline",
+      "relativePath": "guitar/g-baseline.json",
+      "sha256": "ad4f0bc73679ba1493d7a3644039aa117c3dbd411fa21b4b3c2504ec589b786b",
+      "stream": "combinedGuitar",
+      "summary": {
+        "added": 0,
+        "eligible": 0,
+        "sitesWithAdds": 0
+      }
+    },
+    {
+      "config": {
+        "activitySupportMin": 0.05,
+        "baseline": false,
+        "basicPitchInactiveOnly": true,
+        "existingEventsPreferred": true,
+        "fundamentalPresentRequired": true,
+        "id": "g-r800-o35-n1-i1",
+        "maxAddsPerSite": 1,
+        "onsetSupportMin": 0.35,
+        "polyphonyCap": 6,
+        "stepMidiDedupe": true,
+        "stream": "combinedGuitar",
+        "templateRankMin": 0.8
+      },
+      "counts": {
+        "bass": 402,
+        "combinedGuitar": 1320
+      },
+      "id": "g-r800-o35-n1-i1",
+      "relativePath": "guitar/g-r800-o35-n1-i1.json",
+      "sha256": "e8ffeb1a885ff06fbe14e5aeadf845af26d5785943e71edad6119e186c624532",
+      "stream": "combinedGuitar",
+      "summary": {
+        "added": 270,
+        "eligible": 2023,
+        "sitesWithAdds": 270
+      }
+    },
+    {
+      "config": {
+        "activitySupportMin": 0.05,
+        "baseline": false,
+        "basicPitchInactiveOnly": false,
+        "existingEventsPreferred": true,
+        "fundamentalPresentRequired": true,
+        "id": "g-r800-o35-n1-i0",
+        "maxAddsPerSite": 1,
+        "onsetSupportMin": 0.35,
+        "polyphonyCap": 6,
+        "stepMidiDedupe": true,
+        "stream": "combinedGuitar",
+        "templateRankMin": 0.8
+      },
+      "counts": {
+        "bass": 402,
+        "combinedGuitar": 1320
+      },
+      "id": "g-r800-o35-n1-i0",
+      "relativePath": "guitar/g-r800-o35-n1-i0.json",
+      "sha256": "99ffd48d66ed69ada7e9f3bfad19d3c46cda1255b70a52946a802afd1c91bf26",
+      "stream": "combinedGuitar",
+      "summary": {
+        "added": 270,
+        "eligible": 2105,
+        "sitesWithAdds": 270
+      }
+    },
+    {
+      "config": {
+        "activitySupportMin": 0.05,
+        "baseline": false,
+        "basicPitchInactiveOnly": true,
+        "existingEventsPreferred": true,
+        "fundamentalPresentRequired": true,
+        "id": "g-r800-o35-n2-i1",
+        "maxAddsPerSite": 2,
+        "onsetSupportMin": 0.35,
+        "polyphonyCap": 6,
+        "stepMidiDedupe": true,
+        "stream": "combinedGuitar",
+        "templateRankMin": 0.8
+      },
+      "counts": {
+        "bass": 402,
+        "combinedGuitar": 1589
+      },
+      "id": "g-r800-o35-n2-i1",
+      "relativePath": "guitar/g-r800-o35-n2-i1.json",
+      "sha256": "fdb34b013b7b3697f01e19a7371ce50023e0b1b79b2e5869a20ebe100c460fcc",
+      "stream": "combinedGuitar",
+      "summary": {
+        "added": 539,
+        "eligible": 2021,
+        "sitesWithAdds": 270
+      }
+    },
+    {
+      "config": {
+        "activitySupportMin": 0.05,
+        "baseline": false,
+        "basicPitchInactiveOnly": false,
+        "existingEventsPreferred": true,
+        "fundamentalPresentRequired": true,
+        "id": "g-r800-o35-n2-i0",
+        "maxAddsPerSite": 2,
+        "onsetSupportMin": 0.35,
+        "polyphonyCap": 6,
+        "stepMidiDedupe": true,
+        "stream": "combinedGuitar",
+        "templateRankMin": 0.8
+      },
+      "counts": {
+        "bass": 402,
+        "combinedGuitar": 1589
+      },
+      "id": "g-r800-o35-n2-i0",
+      "relativePath": "guitar/g-r800-o35-n2-i0.json",
+      "sha256": "11e6fb3dfd62eb708a5445910d08f65bf5df251c34ba56d56223db24c86a12cb",
+      "stream": "combinedGuitar",
+      "summary": {
+        "added": 539,
+        "eligible": 2103,
+        "sitesWithAdds": 270
+      }
+    },
+    {
+      "config": {
+        "activitySupportMin": 0.05,
+        "baseline": false,
+        "basicPitchInactiveOnly": true,
+        "existingEventsPreferred": true,
+        "fundamentalPresentRequired": true,
+        "id": "g-r800-o50-n1-i1",
+        "maxAddsPerSite": 1,
+        "onsetSupportMin": 0.5,
+        "polyphonyCap": 6,
+        "stepMidiDedupe": true,
+        "stream": "combinedGuitar",
+        "templateRankMin": 0.8
+      },
+      "counts": {
+        "bass": 402,
+        "combinedGuitar": 1319
+      },
+      "id": "g-r800-o50-n1-i1",
+      "relativePath": "guitar/g-r800-o50-n1-i1.json",
+      "sha256": "d0425f308ce957364a186303b945f550b601fb2e4c2eb00893214c3587541f4c",
+      "stream": "combinedGuitar",
+      "summary": {
+        "added": 269,
+        "eligible": 2014,
+        "sitesWithAdds": 269
+      }
+    },
+    {
+      "config": {
+        "activitySupportMin": 0.05,
+        "baseline": false,
+        "basicPitchInactiveOnly": false,
+        "existingEventsPreferred": true,
+        "fundamentalPresentRequired": true,
+        "id": "g-r800-o50-n1-i0",
+        "maxAddsPerSite": 1,
+        "onsetSupportMin": 0.5,
+        "polyphonyCap": 6,
+        "stepMidiDedupe": true,
+        "stream": "combinedGuitar",
+        "templateRankMin": 0.8
+      },
+      "counts": {
+        "bass": 402,
+        "combinedGuitar": 1319
+      },
+      "id": "g-r800-o50-n1-i0",
+      "relativePath": "guitar/g-r800-o50-n1-i0.json",
+      "sha256": "9afd205e1491394085b1ca189e080770cb9abb6b33e5d4f09bd9555766d35c37",
+      "stream": "combinedGuitar",
+      "summary": {
+        "added": 269,
+        "eligible": 2096,
+        "sitesWithAdds": 269
+      }
+    },
+    {
+      "config": {
+        "activitySupportMin": 0.05,
+        "baseline": false,
+        "basicPitchInactiveOnly": true,
+        "existingEventsPreferred": true,
+        "fundamentalPresentRequired": true,
+        "id": "g-r800-o50-n2-i1",
+        "maxAddsPerSite": 2,
+        "onsetSupportMin": 0.5,
+        "polyphonyCap": 6,
+        "stepMidiDedupe": true,
+        "stream": "combinedGuitar",
+        "templateRankMin": 0.8
+      },
+      "counts": {
+        "bass": 402,
+        "combinedGuitar": 1587
+      },
+      "id": "g-r800-o50-n2-i1",
+      "relativePath": "guitar/g-r800-o50-n2-i1.json",
+      "sha256": "3e34544b059cdd0f3e54c99e810da1584773e976834ae4643857a51c2d8eb21d",
+      "stream": "combinedGuitar",
+      "summary": {
+        "added": 537,
+        "eligible": 2012,
+        "sitesWithAdds": 269
+      }
+    },
+    {
+      "config": {
+        "activitySupportMin": 0.05,
+        "baseline": false,
+        "basicPitchInactiveOnly": false,
+        "existingEventsPreferred": true,
+        "fundamentalPresentRequired": true,
+        "id": "g-r800-o50-n2-i0",
+        "maxAddsPerSite": 2,
+        "onsetSupportMin": 0.5,
+        "polyphonyCap": 6,
+        "stepMidiDedupe": true,
+        "stream": "combinedGuitar",
+        "templateRankMin": 0.8
+      },
+      "counts": {
+        "bass": 402,
+        "combinedGuitar": 1587
+      },
+      "id": "g-r800-o50-n2-i0",
+      "relativePath": "guitar/g-r800-o50-n2-i0.json",
+      "sha256": "4ca3e6d10ff6a7be86287e15d932c630d2171ff1af6e79e3291c08e2c69f3a88",
+      "stream": "combinedGuitar",
+      "summary": {
+        "added": 537,
+        "eligible": 2094,
+        "sitesWithAdds": 269
+      }
+    },
+    {
+      "config": {
+        "activitySupportMin": 0.05,
+        "baseline": false,
+        "basicPitchInactiveOnly": true,
+        "existingEventsPreferred": true,
+        "fundamentalPresentRequired": true,
+        "id": "g-r800-o65-n1-i1",
+        "maxAddsPerSite": 1,
+        "onsetSupportMin": 0.65,
+        "polyphonyCap": 6,
+        "stepMidiDedupe": true,
+        "stream": "combinedGuitar",
+        "templateRankMin": 0.8
+      },
+      "counts": {
+        "bass": 402,
+        "combinedGuitar": 1309
+      },
+      "id": "g-r800-o65-n1-i1",
+      "relativePath": "guitar/g-r800-o65-n1-i1.json",
+      "sha256": "e7cfd5ecade518c23985a54298e6bdd3fdc657ab9ae50b1bd24cdd2909275f35",
+      "stream": "combinedGuitar",
+      "summary": {
+        "added": 259,
+        "eligible": 1940,
+        "sitesWithAdds": 259
+      }
+    },
+    {
+      "config": {
+        "activitySupportMin": 0.05,
+        "baseline": false,
+        "basicPitchInactiveOnly": false,
+        "existingEventsPreferred": true,
+        "fundamentalPresentRequired": true,
+        "id": "g-r800-o65-n1-i0",
+        "maxAddsPerSite": 1,
+        "onsetSupportMin": 0.65,
+        "polyphonyCap": 6,
+        "stepMidiDedupe": true,
+        "stream": "combinedGuitar",
+        "templateRankMin": 0.8
+      },
+      "counts": {
+        "bass": 402,
+        "combinedGuitar": 1309
+      },
+      "id": "g-r800-o65-n1-i0",
+      "relativePath": "guitar/g-r800-o65-n1-i0.json",
+      "sha256": "067e3a81aed2332e02b28ba83007957e5b0374d9f53277ab891bbc680b37c518",
+      "stream": "combinedGuitar",
+      "summary": {
+        "added": 259,
+        "eligible": 2015,
+        "sitesWithAdds": 259
+      }
+    },
+    {
+      "config": {
+        "activitySupportMin": 0.05,
+        "baseline": false,
+        "basicPitchInactiveOnly": true,
+        "existingEventsPreferred": true,
+        "fundamentalPresentRequired": true,
+        "id": "g-r800-o65-n2-i1",
+        "maxAddsPerSite": 2,
+        "onsetSupportMin": 0.65,
+        "polyphonyCap": 6,
+        "stepMidiDedupe": true,
+        "stream": "combinedGuitar",
+        "templateRankMin": 0.8
+      },
+      "counts": {
+        "bass": 402,
+        "combinedGuitar": 1567
+      },
+      "id": "g-r800-o65-n2-i1",
+      "relativePath": "guitar/g-r800-o65-n2-i1.json",
+      "sha256": "8aee169c43b4d69e77f8bb839a5da0c8ba69e6275d9962070bb6a8ffe196c9a0",
+      "stream": "combinedGuitar",
+      "summary": {
+        "added": 517,
+        "eligible": 1938,
+        "sitesWithAdds": 259
+      }
+    },
+    {
+      "config": {
+        "activitySupportMin": 0.05,
+        "baseline": false,
+        "basicPitchInactiveOnly": false,
+        "existingEventsPreferred": true,
+        "fundamentalPresentRequired": true,
+        "id": "g-r800-o65-n2-i0",
+        "maxAddsPerSite": 2,
+        "onsetSupportMin": 0.65,
+        "polyphonyCap": 6,
+        "stepMidiDedupe": true,
+        "stream": "combinedGuitar",
+        "templateRankMin": 0.8
+      },
+      "counts": {
+        "bass": 402,
+        "combinedGuitar": 1567
+      },
+      "id": "g-r800-o65-n2-i0",
+      "relativePath": "guitar/g-r800-o65-n2-i0.json",
+      "sha256": "d2c84b243d2af43dc8cf1e939bda894ddb54059488d7a3d177eaeea6715f7445",
+      "stream": "combinedGuitar",
+      "summary": {
+        "added": 517,
+        "eligible": 2013,
+        "sitesWithAdds": 259
+      }
+    },
+    {
+      "config": {
+        "activitySupportMin": 0.05,
+        "baseline": false,
+        "basicPitchInactiveOnly": true,
+        "existingEventsPreferred": true,
+        "fundamentalPresentRequired": true,
+        "id": "g-r900-o35-n1-i1",
+        "maxAddsPerSite": 1,
+        "onsetSupportMin": 0.35,
+        "polyphonyCap": 6,
+        "stepMidiDedupe": true,
+        "stream": "combinedGuitar",
+        "templateRankMin": 0.9
+      },
+      "counts": {
+        "bass": 402,
+        "combinedGuitar": 1320
+      },
+      "id": "g-r900-o35-n1-i1",
+      "relativePath": "guitar/g-r900-o35-n1-i1.json",
+      "sha256": "3f8117844b877e699cc26b1a11c2a82c7199c71f86d0790719a99799ad85a8ff",
+      "stream": "combinedGuitar",
+      "summary": {
+        "added": 270,
+        "eligible": 920,
+        "sitesWithAdds": 270
+      }
+    },
+    {
+      "config": {
+        "activitySupportMin": 0.05,
+        "baseline": false,
+        "basicPitchInactiveOnly": false,
+        "existingEventsPreferred": true,
+        "fundamentalPresentRequired": true,
+        "id": "g-r900-o35-n1-i0",
+        "maxAddsPerSite": 1,
+        "onsetSupportMin": 0.35,
+        "polyphonyCap": 6,
+        "stepMidiDedupe": true,
+        "stream": "combinedGuitar",
+        "templateRankMin": 0.9
+      },
+      "counts": {
+        "bass": 402,
+        "combinedGuitar": 1320
+      },
+      "id": "g-r900-o35-n1-i0",
+      "relativePath": "guitar/g-r900-o35-n1-i0.json",
+      "sha256": "ee9cc7bffe0b534889b2b2faa6a74bb274b1a7e5556d391101a5d94633f2e7d8",
+      "stream": "combinedGuitar",
+      "summary": {
+        "added": 270,
+        "eligible": 998,
+        "sitesWithAdds": 270
+      }
+    },
+    {
+      "config": {
+        "activitySupportMin": 0.05,
+        "baseline": false,
+        "basicPitchInactiveOnly": true,
+        "existingEventsPreferred": true,
+        "fundamentalPresentRequired": true,
+        "id": "g-r900-o35-n2-i1",
+        "maxAddsPerSite": 2,
+        "onsetSupportMin": 0.35,
+        "polyphonyCap": 6,
+        "stepMidiDedupe": true,
+        "stream": "combinedGuitar",
+        "templateRankMin": 0.9
+      },
+      "counts": {
+        "bass": 402,
+        "combinedGuitar": 1580
+      },
+      "id": "g-r900-o35-n2-i1",
+      "relativePath": "guitar/g-r900-o35-n2-i1.json",
+      "sha256": "b7ddb33039ccdbeb09f3a3575f2c6f37e17e6cac3e4e1bbcb0549fe6901e51a8",
+      "stream": "combinedGuitar",
+      "summary": {
+        "added": 530,
+        "eligible": 919,
+        "sitesWithAdds": 270
+      }
+    },
+    {
+      "config": {
+        "activitySupportMin": 0.05,
+        "baseline": false,
+        "basicPitchInactiveOnly": false,
+        "existingEventsPreferred": true,
+        "fundamentalPresentRequired": true,
+        "id": "g-r900-o35-n2-i0",
+        "maxAddsPerSite": 2,
+        "onsetSupportMin": 0.35,
+        "polyphonyCap": 6,
+        "stepMidiDedupe": true,
+        "stream": "combinedGuitar",
+        "templateRankMin": 0.9
+      },
+      "counts": {
+        "bass": 402,
+        "combinedGuitar": 1586
+      },
+      "id": "g-r900-o35-n2-i0",
+      "relativePath": "guitar/g-r900-o35-n2-i0.json",
+      "sha256": "44880bcfe3b487f5c5d2b837f2ce77bba8d2a253742e3928ca12acf0deb9ab09",
+      "stream": "combinedGuitar",
+      "summary": {
+        "added": 536,
+        "eligible": 997,
+        "sitesWithAdds": 270
+      }
+    },
+    {
+      "config": {
+        "activitySupportMin": 0.05,
+        "baseline": false,
+        "basicPitchInactiveOnly": true,
+        "existingEventsPreferred": true,
+        "fundamentalPresentRequired": true,
+        "id": "g-r900-o50-n1-i1",
+        "maxAddsPerSite": 1,
+        "onsetSupportMin": 0.5,
+        "polyphonyCap": 6,
+        "stepMidiDedupe": true,
+        "stream": "combinedGuitar",
+        "templateRankMin": 0.9
+      },
+      "counts": {
+        "bass": 402,
+        "combinedGuitar": 1319
+      },
+      "id": "g-r900-o50-n1-i1",
+      "relativePath": "guitar/g-r900-o50-n1-i1.json",
+      "sha256": "0672aafdd9a733789ae6c644935df5b64a5bbd42dc3854d1de47e284845f6d74",
+      "stream": "combinedGuitar",
+      "summary": {
+        "added": 269,
+        "eligible": 916,
+        "sitesWithAdds": 269
+      }
+    },
+    {
+      "config": {
+        "activitySupportMin": 0.05,
+        "baseline": false,
+        "basicPitchInactiveOnly": false,
+        "existingEventsPreferred": true,
+        "fundamentalPresentRequired": true,
+        "id": "g-r900-o50-n1-i0",
+        "maxAddsPerSite": 1,
+        "onsetSupportMin": 0.5,
+        "polyphonyCap": 6,
+        "stepMidiDedupe": true,
+        "stream": "combinedGuitar",
+        "templateRankMin": 0.9
+      },
+      "counts": {
+        "bass": 402,
+        "combinedGuitar": 1319
+      },
+      "id": "g-r900-o50-n1-i0",
+      "relativePath": "guitar/g-r900-o50-n1-i0.json",
+      "sha256": "1284b798ce9b49650127b4e6c30f67e473eb5854e097654b8b26df9258ebf251",
+      "stream": "combinedGuitar",
+      "summary": {
+        "added": 269,
+        "eligible": 994,
+        "sitesWithAdds": 269
+      }
+    },
+    {
+      "config": {
+        "activitySupportMin": 0.05,
+        "baseline": false,
+        "basicPitchInactiveOnly": true,
+        "existingEventsPreferred": true,
+        "fundamentalPresentRequired": true,
+        "id": "g-r900-o50-n2-i1",
+        "maxAddsPerSite": 2,
+        "onsetSupportMin": 0.5,
+        "polyphonyCap": 6,
+        "stepMidiDedupe": true,
+        "stream": "combinedGuitar",
+        "templateRankMin": 0.9
+      },
+      "counts": {
+        "bass": 402,
+        "combinedGuitar": 1578
+      },
+      "id": "g-r900-o50-n2-i1",
+      "relativePath": "guitar/g-r900-o50-n2-i1.json",
+      "sha256": "6d7a9efcd035a1d83c31158eb1c9098bc64c20b22f51b26ea33d6c72f364ebd5",
+      "stream": "combinedGuitar",
+      "summary": {
+        "added": 528,
+        "eligible": 915,
+        "sitesWithAdds": 269
+      }
+    },
+    {
+      "config": {
+        "activitySupportMin": 0.05,
+        "baseline": false,
+        "basicPitchInactiveOnly": false,
+        "existingEventsPreferred": true,
+        "fundamentalPresentRequired": true,
+        "id": "g-r900-o50-n2-i0",
+        "maxAddsPerSite": 2,
+        "onsetSupportMin": 0.5,
+        "polyphonyCap": 6,
+        "stepMidiDedupe": true,
+        "stream": "combinedGuitar",
+        "templateRankMin": 0.9
+      },
+      "counts": {
+        "bass": 402,
+        "combinedGuitar": 1584
+      },
+      "id": "g-r900-o50-n2-i0",
+      "relativePath": "guitar/g-r900-o50-n2-i0.json",
+      "sha256": "2066c2d7f3fe971e5416ec317af91d9cc550b65123f3df6d85fe2d0857af2bfb",
+      "stream": "combinedGuitar",
+      "summary": {
+        "added": 534,
+        "eligible": 993,
+        "sitesWithAdds": 269
+      }
+    },
+    {
+      "config": {
+        "activitySupportMin": 0.05,
+        "baseline": false,
+        "basicPitchInactiveOnly": true,
+        "existingEventsPreferred": true,
+        "fundamentalPresentRequired": true,
+        "id": "g-r900-o65-n1-i1",
+        "maxAddsPerSite": 1,
+        "onsetSupportMin": 0.65,
+        "polyphonyCap": 6,
+        "stepMidiDedupe": true,
+        "stream": "combinedGuitar",
+        "templateRankMin": 0.9
+      },
+      "counts": {
+        "bass": 402,
+        "combinedGuitar": 1309
+      },
+      "id": "g-r900-o65-n1-i1",
+      "relativePath": "guitar/g-r900-o65-n1-i1.json",
+      "sha256": "8a9426bc53250b61508be8cc13e0b2772120940c68efad7c7728824df6aebb7d",
+      "stream": "combinedGuitar",
+      "summary": {
+        "added": 259,
+        "eligible": 883,
+        "sitesWithAdds": 259
+      }
+    },
+    {
+      "config": {
+        "activitySupportMin": 0.05,
+        "baseline": false,
+        "basicPitchInactiveOnly": false,
+        "existingEventsPreferred": true,
+        "fundamentalPresentRequired": true,
+        "id": "g-r900-o65-n1-i0",
+        "maxAddsPerSite": 1,
+        "onsetSupportMin": 0.65,
+        "polyphonyCap": 6,
+        "stepMidiDedupe": true,
+        "stream": "combinedGuitar",
+        "templateRankMin": 0.9
+      },
+      "counts": {
+        "bass": 402,
+        "combinedGuitar": 1309
+      },
+      "id": "g-r900-o65-n1-i0",
+      "relativePath": "guitar/g-r900-o65-n1-i0.json",
+      "sha256": "521a4e91e563b7c52ae4527ae728541d84fa9ec7ce75498badabf1b8cdf00e10",
+      "stream": "combinedGuitar",
+      "summary": {
+        "added": 259,
+        "eligible": 954,
+        "sitesWithAdds": 259
+      }
+    },
+    {
+      "config": {
+        "activitySupportMin": 0.05,
+        "baseline": false,
+        "basicPitchInactiveOnly": true,
+        "existingEventsPreferred": true,
+        "fundamentalPresentRequired": true,
+        "id": "g-r900-o65-n2-i1",
+        "maxAddsPerSite": 2,
+        "onsetSupportMin": 0.65,
+        "polyphonyCap": 6,
+        "stepMidiDedupe": true,
+        "stream": "combinedGuitar",
+        "templateRankMin": 0.9
+      },
+      "counts": {
+        "bass": 402,
+        "combinedGuitar": 1558
+      },
+      "id": "g-r900-o65-n2-i1",
+      "relativePath": "guitar/g-r900-o65-n2-i1.json",
+      "sha256": "dd21048c3b17798e32680e3561db31ad308bf740ed2d26d2fa53524973f11487",
+      "stream": "combinedGuitar",
+      "summary": {
+        "added": 508,
+        "eligible": 882,
+        "sitesWithAdds": 259
+      }
+    },
+    {
+      "config": {
+        "activitySupportMin": 0.05,
+        "baseline": false,
+        "basicPitchInactiveOnly": false,
+        "existingEventsPreferred": true,
+        "fundamentalPresentRequired": true,
+        "id": "g-r900-o65-n2-i0",
+        "maxAddsPerSite": 2,
+        "onsetSupportMin": 0.65,
+        "polyphonyCap": 6,
+        "stepMidiDedupe": true,
+        "stream": "combinedGuitar",
+        "templateRankMin": 0.9
+      },
+      "counts": {
+        "bass": 402,
+        "combinedGuitar": 1564
+      },
+      "id": "g-r900-o65-n2-i0",
+      "relativePath": "guitar/g-r900-o65-n2-i0.json",
+      "sha256": "c103ee93117e8fe86a49c8fb15ae99e69b5c90778ef76fbfcfd438d2abae2f87",
+      "stream": "combinedGuitar",
+      "summary": {
+        "added": 514,
+        "eligible": 953,
+        "sitesWithAdds": 259
+      }
+    },
+    {
+      "config": {
+        "activitySupportMin": 0.05,
+        "baseline": false,
+        "basicPitchInactiveOnly": true,
+        "existingEventsPreferred": true,
+        "fundamentalPresentRequired": true,
+        "id": "g-r950-o35-n1-i1",
+        "maxAddsPerSite": 1,
+        "onsetSupportMin": 0.35,
+        "polyphonyCap": 6,
+        "stepMidiDedupe": true,
+        "stream": "combinedGuitar",
+        "templateRankMin": 0.95
+      },
+      "counts": {
+        "bass": 402,
+        "combinedGuitar": 1311
+      },
+      "id": "g-r950-o35-n1-i1",
+      "relativePath": "guitar/g-r950-o35-n1-i1.json",
+      "sha256": "acf952d9e97def0a8ba9940b9a73ebc2cae673722292f5b887382de851bd2196",
+      "stream": "combinedGuitar",
+      "summary": {
+        "added": 261,
+        "eligible": 480,
+        "sitesWithAdds": 261
+      }
+    },
+    {
+      "config": {
+        "activitySupportMin": 0.05,
+        "baseline": false,
+        "basicPitchInactiveOnly": false,
+        "existingEventsPreferred": true,
+        "fundamentalPresentRequired": true,
+        "id": "g-r950-o35-n1-i0",
+        "maxAddsPerSite": 1,
+        "onsetSupportMin": 0.35,
+        "polyphonyCap": 6,
+        "stepMidiDedupe": true,
+        "stream": "combinedGuitar",
+        "templateRankMin": 0.95
+      },
+      "counts": {
+        "bass": 402,
+        "combinedGuitar": 1313
+      },
+      "id": "g-r950-o35-n1-i0",
+      "relativePath": "guitar/g-r950-o35-n1-i0.json",
+      "sha256": "ec5052d47f7519d3eb65927d985fab78b596a1ae8e68c5f805d0606bb3dbc247",
+      "stream": "combinedGuitar",
+      "summary": {
+        "added": 263,
+        "eligible": 553,
+        "sitesWithAdds": 263
+      }
+    },
+    {
+      "config": {
+        "activitySupportMin": 0.05,
+        "baseline": false,
+        "basicPitchInactiveOnly": true,
+        "existingEventsPreferred": true,
+        "fundamentalPresentRequired": true,
+        "id": "g-r950-o35-n2-i1",
+        "maxAddsPerSite": 2,
+        "onsetSupportMin": 0.35,
+        "polyphonyCap": 6,
+        "stepMidiDedupe": true,
+        "stream": "combinedGuitar",
+        "templateRankMin": 0.95
+      },
+      "counts": {
+        "bass": 402,
+        "combinedGuitar": 1472
+      },
+      "id": "g-r950-o35-n2-i1",
+      "relativePath": "guitar/g-r950-o35-n2-i1.json",
+      "sha256": "3598260ebecac405df67e9917f5222e6f4f514a3a41be0709078ff2e949549f7",
+      "stream": "combinedGuitar",
+      "summary": {
+        "added": 422,
+        "eligible": 479,
+        "sitesWithAdds": 260
+      }
+    },
+    {
+      "config": {
+        "activitySupportMin": 0.05,
+        "baseline": false,
+        "basicPitchInactiveOnly": false,
+        "existingEventsPreferred": true,
+        "fundamentalPresentRequired": true,
+        "id": "g-r950-o35-n2-i0",
+        "maxAddsPerSite": 2,
+        "onsetSupportMin": 0.35,
+        "polyphonyCap": 6,
+        "stepMidiDedupe": true,
+        "stream": "combinedGuitar",
+        "templateRankMin": 0.95
+      },
+      "counts": {
+        "bass": 402,
+        "combinedGuitar": 1507
+      },
+      "id": "g-r950-o35-n2-i0",
+      "relativePath": "guitar/g-r950-o35-n2-i0.json",
+      "sha256": "dab2f009dd9398b3153bd8d6dd6d21363ff7df46787723df459215df2cfac3f5",
+      "stream": "combinedGuitar",
+      "summary": {
+        "added": 457,
+        "eligible": 552,
+        "sitesWithAdds": 262
+      }
+    },
+    {
+      "config": {
+        "activitySupportMin": 0.05,
+        "baseline": false,
+        "basicPitchInactiveOnly": true,
+        "existingEventsPreferred": true,
+        "fundamentalPresentRequired": true,
+        "id": "g-r950-o50-n1-i1",
+        "maxAddsPerSite": 1,
+        "onsetSupportMin": 0.5,
+        "polyphonyCap": 6,
+        "stepMidiDedupe": true,
+        "stream": "combinedGuitar",
+        "templateRankMin": 0.95
+      },
+      "counts": {
+        "bass": 402,
+        "combinedGuitar": 1310
+      },
+      "id": "g-r950-o50-n1-i1",
+      "relativePath": "guitar/g-r950-o50-n1-i1.json",
+      "sha256": "3d98ed9955d809048e06172cae349e4a3131caab7b240aa8795e9f679ad28daf",
+      "stream": "combinedGuitar",
+      "summary": {
+        "added": 260,
+        "eligible": 477,
+        "sitesWithAdds": 260
+      }
+    },
+    {
+      "config": {
+        "activitySupportMin": 0.05,
+        "baseline": false,
+        "basicPitchInactiveOnly": false,
+        "existingEventsPreferred": true,
+        "fundamentalPresentRequired": true,
+        "id": "g-r950-o50-n1-i0",
+        "maxAddsPerSite": 1,
+        "onsetSupportMin": 0.5,
+        "polyphonyCap": 6,
+        "stepMidiDedupe": true,
+        "stream": "combinedGuitar",
+        "templateRankMin": 0.95
+      },
+      "counts": {
+        "bass": 402,
+        "combinedGuitar": 1312
+      },
+      "id": "g-r950-o50-n1-i0",
+      "relativePath": "guitar/g-r950-o50-n1-i0.json",
+      "sha256": "f9e5a6c7998b856d978c1f65abf40c5f36822a4ce390cc7a38d37f789e1793d8",
+      "stream": "combinedGuitar",
+      "summary": {
+        "added": 262,
+        "eligible": 550,
+        "sitesWithAdds": 262
+      }
+    },
+    {
+      "config": {
+        "activitySupportMin": 0.05,
+        "baseline": false,
+        "basicPitchInactiveOnly": true,
+        "existingEventsPreferred": true,
+        "fundamentalPresentRequired": true,
+        "id": "g-r950-o50-n2-i1",
+        "maxAddsPerSite": 2,
+        "onsetSupportMin": 0.5,
+        "polyphonyCap": 6,
+        "stepMidiDedupe": true,
+        "stream": "combinedGuitar",
+        "templateRankMin": 0.95
+      },
+      "counts": {
+        "bass": 402,
+        "combinedGuitar": 1470
+      },
+      "id": "g-r950-o50-n2-i1",
+      "relativePath": "guitar/g-r950-o50-n2-i1.json",
+      "sha256": "49d6bb83d2be779a8a4a3f0d7f82725822c36d6780c6fa91888bbcee873a4d3a",
+      "stream": "combinedGuitar",
+      "summary": {
+        "added": 420,
+        "eligible": 476,
+        "sitesWithAdds": 259
+      }
+    },
+    {
+      "config": {
+        "activitySupportMin": 0.05,
+        "baseline": false,
+        "basicPitchInactiveOnly": false,
+        "existingEventsPreferred": true,
+        "fundamentalPresentRequired": true,
+        "id": "g-r950-o50-n2-i0",
+        "maxAddsPerSite": 2,
+        "onsetSupportMin": 0.5,
+        "polyphonyCap": 6,
+        "stepMidiDedupe": true,
+        "stream": "combinedGuitar",
+        "templateRankMin": 0.95
+      },
+      "counts": {
+        "bass": 402,
+        "combinedGuitar": 1505
+      },
+      "id": "g-r950-o50-n2-i0",
+      "relativePath": "guitar/g-r950-o50-n2-i0.json",
+      "sha256": "7973a484f7a6d559bee37cca4ed90e54a1cb3f6404b87a0b8150bcda422533c4",
+      "stream": "combinedGuitar",
+      "summary": {
+        "added": 455,
+        "eligible": 549,
+        "sitesWithAdds": 261
+      }
+    },
+    {
+      "config": {
+        "activitySupportMin": 0.05,
+        "baseline": false,
+        "basicPitchInactiveOnly": true,
+        "existingEventsPreferred": true,
+        "fundamentalPresentRequired": true,
+        "id": "g-r950-o65-n1-i1",
+        "maxAddsPerSite": 1,
+        "onsetSupportMin": 0.65,
+        "polyphonyCap": 6,
+        "stepMidiDedupe": true,
+        "stream": "combinedGuitar",
+        "templateRankMin": 0.95
+      },
+      "counts": {
+        "bass": 402,
+        "combinedGuitar": 1300
+      },
+      "id": "g-r950-o65-n1-i1",
+      "relativePath": "guitar/g-r950-o65-n1-i1.json",
+      "sha256": "fc5472e166f54aa5e50c3ff2c2f983ff6fa1bc37a5afbfe210c505b72735b5c8",
+      "stream": "combinedGuitar",
+      "summary": {
+        "added": 250,
+        "eligible": 461,
+        "sitesWithAdds": 250
+      }
+    },
+    {
+      "config": {
+        "activitySupportMin": 0.05,
+        "baseline": false,
+        "basicPitchInactiveOnly": false,
+        "existingEventsPreferred": true,
+        "fundamentalPresentRequired": true,
+        "id": "g-r950-o65-n1-i0",
+        "maxAddsPerSite": 1,
+        "onsetSupportMin": 0.65,
+        "polyphonyCap": 6,
+        "stepMidiDedupe": true,
+        "stream": "combinedGuitar",
+        "templateRankMin": 0.95
+      },
+      "counts": {
+        "bass": 402,
+        "combinedGuitar": 1302
+      },
+      "id": "g-r950-o65-n1-i0",
+      "relativePath": "guitar/g-r950-o65-n1-i0.json",
+      "sha256": "5771d37506dbe0863c15ffb4563ee0b13b610d809d45a30f4eebaf6affed383c",
+      "stream": "combinedGuitar",
+      "summary": {
+        "added": 252,
+        "eligible": 527,
+        "sitesWithAdds": 252
+      }
+    },
+    {
+      "config": {
+        "activitySupportMin": 0.05,
+        "baseline": false,
+        "basicPitchInactiveOnly": true,
+        "existingEventsPreferred": true,
+        "fundamentalPresentRequired": true,
+        "id": "g-r950-o65-n2-i1",
+        "maxAddsPerSite": 2,
+        "onsetSupportMin": 0.65,
+        "polyphonyCap": 6,
+        "stepMidiDedupe": true,
+        "stream": "combinedGuitar",
+        "templateRankMin": 0.95
+      },
+      "counts": {
+        "bass": 402,
+        "combinedGuitar": 1454
+      },
+      "id": "g-r950-o65-n2-i1",
+      "relativePath": "guitar/g-r950-o65-n2-i1.json",
+      "sha256": "9fa5b1946321c195c51a68708a918829fc099657d3a8ae591fe827cff1152379",
+      "stream": "combinedGuitar",
+      "summary": {
+        "added": 404,
+        "eligible": 460,
+        "sitesWithAdds": 249
+      }
+    },
+    {
+      "config": {
+        "activitySupportMin": 0.05,
+        "baseline": false,
+        "basicPitchInactiveOnly": false,
+        "existingEventsPreferred": true,
+        "fundamentalPresentRequired": true,
+        "id": "g-r950-o65-n2-i0",
+        "maxAddsPerSite": 2,
+        "onsetSupportMin": 0.65,
+        "polyphonyCap": 6,
+        "stepMidiDedupe": true,
+        "stream": "combinedGuitar",
+        "templateRankMin": 0.95
+      },
+      "counts": {
+        "bass": 402,
+        "combinedGuitar": 1487
+      },
+      "id": "g-r950-o65-n2-i0",
+      "relativePath": "guitar/g-r950-o65-n2-i0.json",
+      "sha256": "cada289e19e12dc984d325185f2238a7624d5ddc52ebb21be12b2ebe26496654",
+      "stream": "combinedGuitar",
+      "summary": {
+        "added": 437,
+        "eligible": 526,
+        "sitesWithAdds": 251
+      }
+    },
+    {
+      "config": {
+        "activitySupportMin": 0.05,
+        "baseline": false,
+        "basicPitchInactiveOnly": true,
+        "existingEventsPreferred": true,
+        "fundamentalPresentRequired": true,
+        "id": "g-r975-o35-n1-i1",
+        "maxAddsPerSite": 1,
+        "onsetSupportMin": 0.35,
+        "polyphonyCap": 6,
+        "stepMidiDedupe": true,
+        "stream": "combinedGuitar",
+        "templateRankMin": 0.975
+      },
+      "counts": {
+        "bass": 402,
+        "combinedGuitar": 1261
+      },
+      "id": "g-r975-o35-n1-i1",
+      "relativePath": "guitar/g-r975-o35-n1-i1.json",
+      "sha256": "daf669ce2d97db76ebee290d4d9afc2775744b58958808fe1f921250dd4c22ad",
+      "stream": "combinedGuitar",
+      "summary": {
+        "added": 211,
+        "eligible": 276,
+        "sitesWithAdds": 211
+      }
+    },
+    {
+      "config": {
+        "activitySupportMin": 0.05,
+        "baseline": false,
+        "basicPitchInactiveOnly": false,
+        "existingEventsPreferred": true,
+        "fundamentalPresentRequired": true,
+        "id": "g-r975-o35-n1-i0",
+        "maxAddsPerSite": 1,
+        "onsetSupportMin": 0.35,
+        "polyphonyCap": 6,
+        "stepMidiDedupe": true,
+        "stream": "combinedGuitar",
+        "templateRankMin": 0.975
+      },
+      "counts": {
+        "bass": 402,
+        "combinedGuitar": 1278
+      },
+      "id": "g-r975-o35-n1-i0",
+      "relativePath": "guitar/g-r975-o35-n1-i0.json",
+      "sha256": "5fad5596ba59a49fa5cce33a2662519bfa2b41de87a95f68f67a9749ad8cf9a5",
+      "stream": "combinedGuitar",
+      "summary": {
+        "added": 228,
+        "eligible": 340,
+        "sitesWithAdds": 228
+      }
+    },
+    {
+      "config": {
+        "activitySupportMin": 0.05,
+        "baseline": false,
+        "basicPitchInactiveOnly": true,
+        "existingEventsPreferred": true,
+        "fundamentalPresentRequired": true,
+        "id": "g-r975-o35-n2-i1",
+        "maxAddsPerSite": 2,
+        "onsetSupportMin": 0.35,
+        "polyphonyCap": 6,
+        "stepMidiDedupe": true,
+        "stream": "combinedGuitar",
+        "templateRankMin": 0.975
+      },
+      "counts": {
+        "bass": 402,
+        "combinedGuitar": 1326
+      },
+      "id": "g-r975-o35-n2-i1",
+      "relativePath": "guitar/g-r975-o35-n2-i1.json",
+      "sha256": "99104bb896d7aedc851bd7ef2792a9f4d7cdc29adcecf45bd9689cb401717a05",
+      "stream": "combinedGuitar",
+      "summary": {
+        "added": 276,
+        "eligible": 276,
+        "sitesWithAdds": 211
+      }
+    },
+    {
+      "config": {
+        "activitySupportMin": 0.05,
+        "baseline": false,
+        "basicPitchInactiveOnly": false,
+        "existingEventsPreferred": true,
+        "fundamentalPresentRequired": true,
+        "id": "g-r975-o35-n2-i0",
+        "maxAddsPerSite": 2,
+        "onsetSupportMin": 0.35,
+        "polyphonyCap": 6,
+        "stepMidiDedupe": true,
+        "stream": "combinedGuitar",
+        "templateRankMin": 0.975
+      },
+      "counts": {
+        "bass": 402,
+        "combinedGuitar": 1390
+      },
+      "id": "g-r975-o35-n2-i0",
+      "relativePath": "guitar/g-r975-o35-n2-i0.json",
+      "sha256": "905f6716d2fca0596acdc770345ccbe49cf8b48ac942e52f2ed36fe8c3b8a49f",
+      "stream": "combinedGuitar",
+      "summary": {
+        "added": 340,
+        "eligible": 340,
+        "sitesWithAdds": 228
+      }
+    },
+    {
+      "config": {
+        "activitySupportMin": 0.05,
+        "baseline": false,
+        "basicPitchInactiveOnly": true,
+        "existingEventsPreferred": true,
+        "fundamentalPresentRequired": true,
+        "id": "g-r975-o50-n1-i1",
+        "maxAddsPerSite": 1,
+        "onsetSupportMin": 0.5,
+        "polyphonyCap": 6,
+        "stepMidiDedupe": true,
+        "stream": "combinedGuitar",
+        "templateRankMin": 0.975
+      },
+      "counts": {
+        "bass": 402,
+        "combinedGuitar": 1260
+      },
+      "id": "g-r975-o50-n1-i1",
+      "relativePath": "guitar/g-r975-o50-n1-i1.json",
+      "sha256": "155c1ef49e01e117375efe15f4e42a6efdb9d4c4c6b33f4d04666a5bab0a9f19",
+      "stream": "combinedGuitar",
+      "summary": {
+        "added": 210,
+        "eligible": 274,
+        "sitesWithAdds": 210
+      }
+    },
+    {
+      "config": {
+        "activitySupportMin": 0.05,
+        "baseline": false,
+        "basicPitchInactiveOnly": false,
+        "existingEventsPreferred": true,
+        "fundamentalPresentRequired": true,
+        "id": "g-r975-o50-n1-i0",
+        "maxAddsPerSite": 1,
+        "onsetSupportMin": 0.5,
+        "polyphonyCap": 6,
+        "stepMidiDedupe": true,
+        "stream": "combinedGuitar",
+        "templateRankMin": 0.975
+      },
+      "counts": {
+        "bass": 402,
+        "combinedGuitar": 1277
+      },
+      "id": "g-r975-o50-n1-i0",
+      "relativePath": "guitar/g-r975-o50-n1-i0.json",
+      "sha256": "7d312a12ca75a2d5c9fe455fe0bce27a4158caf8f4e69520e63ca27bf9d1f7ac",
+      "stream": "combinedGuitar",
+      "summary": {
+        "added": 227,
+        "eligible": 338,
+        "sitesWithAdds": 227
+      }
+    },
+    {
+      "config": {
+        "activitySupportMin": 0.05,
+        "baseline": false,
+        "basicPitchInactiveOnly": true,
+        "existingEventsPreferred": true,
+        "fundamentalPresentRequired": true,
+        "id": "g-r975-o50-n2-i1",
+        "maxAddsPerSite": 2,
+        "onsetSupportMin": 0.5,
+        "polyphonyCap": 6,
+        "stepMidiDedupe": true,
+        "stream": "combinedGuitar",
+        "templateRankMin": 0.975
+      },
+      "counts": {
+        "bass": 402,
+        "combinedGuitar": 1324
+      },
+      "id": "g-r975-o50-n2-i1",
+      "relativePath": "guitar/g-r975-o50-n2-i1.json",
+      "sha256": "b801e477862c7d0416b345160c40ff477db3572112953a3f7e9a440554ecbd63",
+      "stream": "combinedGuitar",
+      "summary": {
+        "added": 274,
+        "eligible": 274,
+        "sitesWithAdds": 210
+      }
+    },
+    {
+      "config": {
+        "activitySupportMin": 0.05,
+        "baseline": false,
+        "basicPitchInactiveOnly": false,
+        "existingEventsPreferred": true,
+        "fundamentalPresentRequired": true,
+        "id": "g-r975-o50-n2-i0",
+        "maxAddsPerSite": 2,
+        "onsetSupportMin": 0.5,
+        "polyphonyCap": 6,
+        "stepMidiDedupe": true,
+        "stream": "combinedGuitar",
+        "templateRankMin": 0.975
+      },
+      "counts": {
+        "bass": 402,
+        "combinedGuitar": 1388
+      },
+      "id": "g-r975-o50-n2-i0",
+      "relativePath": "guitar/g-r975-o50-n2-i0.json",
+      "sha256": "bd61f724a61e1478c0e9a9e827790b9c4964f1e83d4f5c5b38c75d8cb225dc29",
+      "stream": "combinedGuitar",
+      "summary": {
+        "added": 338,
+        "eligible": 338,
+        "sitesWithAdds": 227
+      }
+    },
+    {
+      "config": {
+        "activitySupportMin": 0.05,
+        "baseline": false,
+        "basicPitchInactiveOnly": true,
+        "existingEventsPreferred": true,
+        "fundamentalPresentRequired": true,
+        "id": "g-r975-o65-n1-i1",
+        "maxAddsPerSite": 1,
+        "onsetSupportMin": 0.65,
+        "polyphonyCap": 6,
+        "stepMidiDedupe": true,
+        "stream": "combinedGuitar",
+        "templateRankMin": 0.975
+      },
+      "counts": {
+        "bass": 402,
+        "combinedGuitar": 1252
+      },
+      "id": "g-r975-o65-n1-i1",
+      "relativePath": "guitar/g-r975-o65-n1-i1.json",
+      "sha256": "38212d1c54aceac9090b1ce01449ae7676dcdfb85aab6b0930efd66519ff9490",
+      "stream": "combinedGuitar",
+      "summary": {
+        "added": 202,
+        "eligible": 266,
+        "sitesWithAdds": 202
+      }
+    },
+    {
+      "config": {
+        "activitySupportMin": 0.05,
+        "baseline": false,
+        "basicPitchInactiveOnly": false,
+        "existingEventsPreferred": true,
+        "fundamentalPresentRequired": true,
+        "id": "g-r975-o65-n1-i0",
+        "maxAddsPerSite": 1,
+        "onsetSupportMin": 0.65,
+        "polyphonyCap": 6,
+        "stepMidiDedupe": true,
+        "stream": "combinedGuitar",
+        "templateRankMin": 0.975
+      },
+      "counts": {
+        "bass": 402,
+        "combinedGuitar": 1269
+      },
+      "id": "g-r975-o65-n1-i0",
+      "relativePath": "guitar/g-r975-o65-n1-i0.json",
+      "sha256": "4405dabc74d09a2acd89353c6ad685a1a799f3aa1c658b497134d4ae5182b891",
+      "stream": "combinedGuitar",
+      "summary": {
+        "added": 219,
+        "eligible": 324,
+        "sitesWithAdds": 219
+      }
+    },
+    {
+      "config": {
+        "activitySupportMin": 0.05,
+        "baseline": false,
+        "basicPitchInactiveOnly": true,
+        "existingEventsPreferred": true,
+        "fundamentalPresentRequired": true,
+        "id": "g-r975-o65-n2-i1",
+        "maxAddsPerSite": 2,
+        "onsetSupportMin": 0.65,
+        "polyphonyCap": 6,
+        "stepMidiDedupe": true,
+        "stream": "combinedGuitar",
+        "templateRankMin": 0.975
+      },
+      "counts": {
+        "bass": 402,
+        "combinedGuitar": 1316
+      },
+      "id": "g-r975-o65-n2-i1",
+      "relativePath": "guitar/g-r975-o65-n2-i1.json",
+      "sha256": "5c8047b63c4910d504e315cc38cd827d1bf55033fe0ecf280755296c0085f72c",
+      "stream": "combinedGuitar",
+      "summary": {
+        "added": 266,
+        "eligible": 266,
+        "sitesWithAdds": 202
+      }
+    },
+    {
+      "config": {
+        "activitySupportMin": 0.05,
+        "baseline": false,
+        "basicPitchInactiveOnly": false,
+        "existingEventsPreferred": true,
+        "fundamentalPresentRequired": true,
+        "id": "g-r975-o65-n2-i0",
+        "maxAddsPerSite": 2,
+        "onsetSupportMin": 0.65,
+        "polyphonyCap": 6,
+        "stepMidiDedupe": true,
+        "stream": "combinedGuitar",
+        "templateRankMin": 0.975
+      },
+      "counts": {
+        "bass": 402,
+        "combinedGuitar": 1374
+      },
+      "id": "g-r975-o65-n2-i0",
+      "relativePath": "guitar/g-r975-o65-n2-i0.json",
+      "sha256": "974e5f0ce301926ab733ab904fcb79c656f69eef2a59854208d155fdda08ff91",
+      "stream": "combinedGuitar",
+      "summary": {
+        "added": 324,
+        "eligible": 324,
+        "sitesWithAdds": 219
+      }
+    },
+    {
+      "config": {
+        "baseline": true,
+        "id": "b-baseline",
+        "stream": "bass"
+      },
+      "counts": {
+        "bass": 402,
+        "combinedGuitar": 1050
+      },
+      "id": "b-baseline",
+      "relativePath": "bass/b-baseline.json",
+      "sha256": "3073866ff60a5bf2c245b513a2db20040cfeca52d579a2c16e7e9f54e425490c",
+      "stream": "bass",
+      "summary": {
+        "added": 0,
+        "eligible": 0,
+        "preExistingCollisionSteps": 4,
+        "sitesWithAdds": 0
+      }
+    },
+    {
+      "config": {
+        "activitySupportMin": 0.04,
+        "baseline": false,
+        "existingEventsPreferred": true,
+        "fundamentalPresentRequired": true,
+        "id": "b-r800-o20-a04-all",
+        "lowRegisterMaxMidi": 40,
+        "newRecoveryCapPerPreviouslyEmptyStep": 1,
+        "onsetSupportMin": 0.2,
+        "preExistingIteration002StepCollisionsPreserved": true,
+        "scope": "all",
+        "stream": "bass",
+        "templateRankMin": 0.8
+      },
+      "counts": {
+        "bass": 541,
+        "combinedGuitar": 1050
+      },
+      "id": "b-r800-o20-a04-all",
+      "relativePath": "bass/b-r800-o20-a04-all.json",
+      "sha256": "f32a360af5bd5659ba94c095db8fd66250c442599034db1771e82d42b6ab2664",
+      "stream": "bass",
+      "summary": {
+        "added": 139,
+        "eligible": 1227,
+        "newRecoveryEventsAddedOnlyToPreviouslyEmptySteps": true,
+        "preExistingCollisionSteps": 4,
+        "preExistingCollisionsPreserved": true,
+        "sitesWithAdds": 139
+      }
+    },
+    {
+      "config": {
+        "activitySupportMin": 0.04,
+        "baseline": false,
+        "existingEventsPreferred": true,
+        "fundamentalPresentRequired": true,
+        "id": "b-r800-o20-a04-no_stable_state",
+        "lowRegisterMaxMidi": 40,
+        "newRecoveryCapPerPreviouslyEmptyStep": 1,
+        "onsetSupportMin": 0.2,
+        "preExistingIteration002StepCollisionsPreserved": true,
+        "scope": "no_stable_state",
+        "stream": "bass",
+        "templateRankMin": 0.8
+      },
+      "counts": {
+        "bass": 517,
+        "combinedGuitar": 1050
+      },
+      "id": "b-r800-o20-a04-no_stable_state",
+      "relativePath": "bass/b-r800-o20-a04-no_stable_state.json",
+      "sha256": "4d5cc63595ba0caf17759b4c28a4e9b9849472cb316d11e69137653b3a76862d",
+      "stream": "bass",
+      "summary": {
+        "added": 115,
+        "eligible": 1031,
+        "newRecoveryEventsAddedOnlyToPreviouslyEmptySteps": true,
+        "preExistingCollisionSteps": 4,
+        "preExistingCollisionsPreserved": true,
+        "sitesWithAdds": 115
+      }
+    },
+    {
+      "config": {
+        "activitySupportMin": 0.04,
+        "baseline": false,
+        "existingEventsPreferred": true,
+        "fundamentalPresentRequired": true,
+        "id": "b-r800-o20-a04-low_register",
+        "lowRegisterMaxMidi": 40,
+        "newRecoveryCapPerPreviouslyEmptyStep": 1,
+        "onsetSupportMin": 0.2,
+        "preExistingIteration002StepCollisionsPreserved": true,
+        "scope": "low_register",
+        "stream": "bass",
+        "templateRankMin": 0.8
+      },
+      "counts": {
+        "bass": 541,
+        "combinedGuitar": 1050
+      },
+      "id": "b-r800-o20-a04-low_register",
+      "relativePath": "bass/b-r800-o20-a04-low_register.json",
+      "sha256": "88900e105a0ea546878d5312a6c03864c0541d12107a65822fba3bd1d287372a",
+      "stream": "bass",
+      "summary": {
+        "added": 139,
+        "eligible": 756,
+        "newRecoveryEventsAddedOnlyToPreviouslyEmptySteps": true,
+        "preExistingCollisionSteps": 4,
+        "preExistingCollisionsPreserved": true,
+        "sitesWithAdds": 139
+      }
+    },
+    {
+      "config": {
+        "activitySupportMin": 0.04,
+        "baseline": false,
+        "existingEventsPreferred": true,
+        "fundamentalPresentRequired": true,
+        "id": "b-r800-o20-a04-low_register_no_stable_state",
+        "lowRegisterMaxMidi": 40,
+        "newRecoveryCapPerPreviouslyEmptyStep": 1,
+        "onsetSupportMin": 0.2,
+        "preExistingIteration002StepCollisionsPreserved": true,
+        "scope": "low_register_no_stable_state",
+        "stream": "bass",
+        "templateRankMin": 0.8
+      },
+      "counts": {
+        "bass": 517,
+        "combinedGuitar": 1050
+      },
+      "id": "b-r800-o20-a04-low_register_no_stable_state",
+      "relativePath": "bass/b-r800-o20-a04-low_register_no_stable_state.json",
+      "sha256": "c780646b898345545630d25ba42691c0a1e5f26087adfdb6bfbafbc226ef60c2",
+      "stream": "bass",
+      "summary": {
+        "added": 115,
+        "eligible": 624,
+        "newRecoveryEventsAddedOnlyToPreviouslyEmptySteps": true,
+        "preExistingCollisionSteps": 4,
+        "preExistingCollisionsPreserved": true,
+        "sitesWithAdds": 115
+      }
+    },
+    {
+      "config": {
+        "activitySupportMin": 0.1,
+        "baseline": false,
+        "existingEventsPreferred": true,
+        "fundamentalPresentRequired": true,
+        "id": "b-r800-o20-a10-all",
+        "lowRegisterMaxMidi": 40,
+        "newRecoveryCapPerPreviouslyEmptyStep": 1,
+        "onsetSupportMin": 0.2,
+        "preExistingIteration002StepCollisionsPreserved": true,
+        "scope": "all",
+        "stream": "bass",
+        "templateRankMin": 0.8
+      },
+      "counts": {
+        "bass": 539,
+        "combinedGuitar": 1050
+      },
+      "id": "b-r800-o20-a10-all",
+      "relativePath": "bass/b-r800-o20-a10-all.json",
+      "sha256": "faabde46b85d4b6e138d082de983a2164bf30c108162a93c94359b5b6db2dc02",
+      "stream": "bass",
+      "summary": {
+        "added": 137,
+        "eligible": 1209,
+        "newRecoveryEventsAddedOnlyToPreviouslyEmptySteps": true,
+        "preExistingCollisionSteps": 4,
+        "preExistingCollisionsPreserved": true,
+        "sitesWithAdds": 137
+      }
+    },
+    {
+      "config": {
+        "activitySupportMin": 0.1,
+        "baseline": false,
+        "existingEventsPreferred": true,
+        "fundamentalPresentRequired": true,
+        "id": "b-r800-o20-a10-no_stable_state",
+        "lowRegisterMaxMidi": 40,
+        "newRecoveryCapPerPreviouslyEmptyStep": 1,
+        "onsetSupportMin": 0.2,
+        "preExistingIteration002StepCollisionsPreserved": true,
+        "scope": "no_stable_state",
+        "stream": "bass",
+        "templateRankMin": 0.8
+      },
+      "counts": {
+        "bass": 515,
+        "combinedGuitar": 1050
+      },
+      "id": "b-r800-o20-a10-no_stable_state",
+      "relativePath": "bass/b-r800-o20-a10-no_stable_state.json",
+      "sha256": "5456f13472fb1598d839ffe422477ab1d237a553ff3684177c2f55ef3a5bdc26",
+      "stream": "bass",
+      "summary": {
+        "added": 113,
+        "eligible": 1013,
+        "newRecoveryEventsAddedOnlyToPreviouslyEmptySteps": true,
+        "preExistingCollisionSteps": 4,
+        "preExistingCollisionsPreserved": true,
+        "sitesWithAdds": 113
+      }
+    },
+    {
+      "config": {
+        "activitySupportMin": 0.1,
+        "baseline": false,
+        "existingEventsPreferred": true,
+        "fundamentalPresentRequired": true,
+        "id": "b-r800-o20-a10-low_register",
+        "lowRegisterMaxMidi": 40,
+        "newRecoveryCapPerPreviouslyEmptyStep": 1,
+        "onsetSupportMin": 0.2,
+        "preExistingIteration002StepCollisionsPreserved": true,
+        "scope": "low_register",
+        "stream": "bass",
+        "templateRankMin": 0.8
+      },
+      "counts": {
+        "bass": 539,
+        "combinedGuitar": 1050
+      },
+      "id": "b-r800-o20-a10-low_register",
+      "relativePath": "bass/b-r800-o20-a10-low_register.json",
+      "sha256": "4d070871ab6d1bbdd0d5db9a31281aa156e6ea8ddc6cb9cc43cad86225085c5a",
+      "stream": "bass",
+      "summary": {
+        "added": 137,
+        "eligible": 744,
+        "newRecoveryEventsAddedOnlyToPreviouslyEmptySteps": true,
+        "preExistingCollisionSteps": 4,
+        "preExistingCollisionsPreserved": true,
+        "sitesWithAdds": 137
+      }
+    },
+    {
+      "config": {
+        "activitySupportMin": 0.1,
+        "baseline": false,
+        "existingEventsPreferred": true,
+        "fundamentalPresentRequired": true,
+        "id": "b-r800-o20-a10-low_register_no_stable_state",
+        "lowRegisterMaxMidi": 40,
+        "newRecoveryCapPerPreviouslyEmptyStep": 1,
+        "onsetSupportMin": 0.2,
+        "preExistingIteration002StepCollisionsPreserved": true,
+        "scope": "low_register_no_stable_state",
+        "stream": "bass",
+        "templateRankMin": 0.8
+      },
+      "counts": {
+        "bass": 515,
+        "combinedGuitar": 1050
+      },
+      "id": "b-r800-o20-a10-low_register_no_stable_state",
+      "relativePath": "bass/b-r800-o20-a10-low_register_no_stable_state.json",
+      "sha256": "ecfc6d5952ea80f72b96e1d8eb158f3a48d4e09a80f22f05d0188f6c3be6ec32",
+      "stream": "bass",
+      "summary": {
+        "added": 113,
+        "eligible": 612,
+        "newRecoveryEventsAddedOnlyToPreviouslyEmptySteps": true,
+        "preExistingCollisionSteps": 4,
+        "preExistingCollisionsPreserved": true,
+        "sitesWithAdds": 113
+      }
+    },
+    {
+      "config": {
+        "activitySupportMin": 0.04,
+        "baseline": false,
+        "existingEventsPreferred": true,
+        "fundamentalPresentRequired": true,
+        "id": "b-r800-o35-a04-all",
+        "lowRegisterMaxMidi": 40,
+        "newRecoveryCapPerPreviouslyEmptyStep": 1,
+        "onsetSupportMin": 0.35,
+        "preExistingIteration002StepCollisionsPreserved": true,
+        "scope": "all",
+        "stream": "bass",
+        "templateRankMin": 0.8
+      },
+      "counts": {
+        "bass": 539,
+        "combinedGuitar": 1050
+      },
+      "id": "b-r800-o35-a04-all",
+      "relativePath": "bass/b-r800-o35-a04-all.json",
+      "sha256": "4cfd46ee375ffbb6e97c8f81bb1cfc5aac6ae5b79f4ca58c0a21799eae2b9cf7",
+      "stream": "bass",
+      "summary": {
+        "added": 137,
+        "eligible": 1211,
+        "newRecoveryEventsAddedOnlyToPreviouslyEmptySteps": true,
+        "preExistingCollisionSteps": 4,
+        "preExistingCollisionsPreserved": true,
+        "sitesWithAdds": 137
+      }
+    },
+    {
+      "config": {
+        "activitySupportMin": 0.04,
+        "baseline": false,
+        "existingEventsPreferred": true,
+        "fundamentalPresentRequired": true,
+        "id": "b-r800-o35-a04-no_stable_state",
+        "lowRegisterMaxMidi": 40,
+        "newRecoveryCapPerPreviouslyEmptyStep": 1,
+        "onsetSupportMin": 0.35,
+        "preExistingIteration002StepCollisionsPreserved": true,
+        "scope": "no_stable_state",
+        "stream": "bass",
+        "templateRankMin": 0.8
+      },
+      "counts": {
+        "bass": 517,
+        "combinedGuitar": 1050
+      },
+      "id": "b-r800-o35-a04-no_stable_state",
+      "relativePath": "bass/b-r800-o35-a04-no_stable_state.json",
+      "sha256": "34d6b6859b4b4efc451d13b0b6c0a5a904f963dbf737037619b52b4d2e40f1fd",
+      "stream": "bass",
+      "summary": {
+        "added": 115,
+        "eligible": 1031,
+        "newRecoveryEventsAddedOnlyToPreviouslyEmptySteps": true,
+        "preExistingCollisionSteps": 4,
+        "preExistingCollisionsPreserved": true,
+        "sitesWithAdds": 115
+      }
+    },
+    {
+      "config": {
+        "activitySupportMin": 0.04,
+        "baseline": false,
+        "existingEventsPreferred": true,
+        "fundamentalPresentRequired": true,
+        "id": "b-r800-o35-a04-low_register",
+        "lowRegisterMaxMidi": 40,
+        "newRecoveryCapPerPreviouslyEmptyStep": 1,
+        "onsetSupportMin": 0.35,
+        "preExistingIteration002StepCollisionsPreserved": true,
+        "scope": "low_register",
+        "stream": "bass",
+        "templateRankMin": 0.8
+      },
+      "counts": {
+        "bass": 539,
+        "combinedGuitar": 1050
+      },
+      "id": "b-r800-o35-a04-low_register",
+      "relativePath": "bass/b-r800-o35-a04-low_register.json",
+      "sha256": "e48756d4910e1f0c072c996ae79e7d277ae8c9ef6909d101a633fb6b4949df3e",
+      "stream": "bass",
+      "summary": {
+        "added": 137,
+        "eligible": 745,
+        "newRecoveryEventsAddedOnlyToPreviouslyEmptySteps": true,
+        "preExistingCollisionSteps": 4,
+        "preExistingCollisionsPreserved": true,
+        "sitesWithAdds": 137
+      }
+    },
+    {
+      "config": {
+        "activitySupportMin": 0.04,
+        "baseline": false,
+        "existingEventsPreferred": true,
+        "fundamentalPresentRequired": true,
+        "id": "b-r800-o35-a04-low_register_no_stable_state",
+        "lowRegisterMaxMidi": 40,
+        "newRecoveryCapPerPreviouslyEmptyStep": 1,
+        "onsetSupportMin": 0.35,
+        "preExistingIteration002StepCollisionsPreserved": true,
+        "scope": "low_register_no_stable_state",
+        "stream": "bass",
+        "templateRankMin": 0.8
+      },
+      "counts": {
+        "bass": 517,
+        "combinedGuitar": 1050
+      },
+      "id": "b-r800-o35-a04-low_register_no_stable_state",
+      "relativePath": "bass/b-r800-o35-a04-low_register_no_stable_state.json",
+      "sha256": "a6d1a6f27ec98e11193147e8bc941243f83276cb4d01de152c7064875ddc0419",
+      "stream": "bass",
+      "summary": {
+        "added": 115,
+        "eligible": 624,
+        "newRecoveryEventsAddedOnlyToPreviouslyEmptySteps": true,
+        "preExistingCollisionSteps": 4,
+        "preExistingCollisionsPreserved": true,
+        "sitesWithAdds": 115
+      }
+    },
+    {
+      "config": {
+        "activitySupportMin": 0.1,
+        "baseline": false,
+        "existingEventsPreferred": true,
+        "fundamentalPresentRequired": true,
+        "id": "b-r800-o35-a10-all",
+        "lowRegisterMaxMidi": 40,
+        "newRecoveryCapPerPreviouslyEmptyStep": 1,
+        "onsetSupportMin": 0.35,
+        "preExistingIteration002StepCollisionsPreserved": true,
+        "scope": "all",
+        "stream": "bass",
+        "templateRankMin": 0.8
+      },
+      "counts": {
+        "bass": 537,
+        "combinedGuitar": 1050
+      },
+      "id": "b-r800-o35-a10-all",
+      "relativePath": "bass/b-r800-o35-a10-all.json",
+      "sha256": "4bf110e410a936f1f3c29c18e8141a1a402633639a0bd9009711c56daf547591",
+      "stream": "bass",
+      "summary": {
+        "added": 135,
+        "eligible": 1193,
+        "newRecoveryEventsAddedOnlyToPreviouslyEmptySteps": true,
+        "preExistingCollisionSteps": 4,
+        "preExistingCollisionsPreserved": true,
+        "sitesWithAdds": 135
+      }
+    },
+    {
+      "config": {
+        "activitySupportMin": 0.1,
+        "baseline": false,
+        "existingEventsPreferred": true,
+        "fundamentalPresentRequired": true,
+        "id": "b-r800-o35-a10-no_stable_state",
+        "lowRegisterMaxMidi": 40,
+        "newRecoveryCapPerPreviouslyEmptyStep": 1,
+        "onsetSupportMin": 0.35,
+        "preExistingIteration002StepCollisionsPreserved": true,
+        "scope": "no_stable_state",
+        "stream": "bass",
+        "templateRankMin": 0.8
+      },
+      "counts": {
+        "bass": 515,
+        "combinedGuitar": 1050
+      },
+      "id": "b-r800-o35-a10-no_stable_state",
+      "relativePath": "bass/b-r800-o35-a10-no_stable_state.json",
+      "sha256": "203b7c60947b93c38401f2023f01997894e8d1dc40ae66584bf8707d7ca6398b",
+      "stream": "bass",
+      "summary": {
+        "added": 113,
+        "eligible": 1013,
+        "newRecoveryEventsAddedOnlyToPreviouslyEmptySteps": true,
+        "preExistingCollisionSteps": 4,
+        "preExistingCollisionsPreserved": true,
+        "sitesWithAdds": 113
+      }
+    },
+    {
+      "config": {
+        "activitySupportMin": 0.1,
+        "baseline": false,
+        "existingEventsPreferred": true,
+        "fundamentalPresentRequired": true,
+        "id": "b-r800-o35-a10-low_register",
+        "lowRegisterMaxMidi": 40,
+        "newRecoveryCapPerPreviouslyEmptyStep": 1,
+        "onsetSupportMin": 0.35,
+        "preExistingIteration002StepCollisionsPreserved": true,
+        "scope": "low_register",
+        "stream": "bass",
+        "templateRankMin": 0.8
+      },
+      "counts": {
+        "bass": 537,
+        "combinedGuitar": 1050
+      },
+      "id": "b-r800-o35-a10-low_register",
+      "relativePath": "bass/b-r800-o35-a10-low_register.json",
+      "sha256": "97bea441c7f6851373301459bf79682b597833d3e1d39c44b216761742183cf7",
+      "stream": "bass",
+      "summary": {
+        "added": 135,
+        "eligible": 733,
+        "newRecoveryEventsAddedOnlyToPreviouslyEmptySteps": true,
+        "preExistingCollisionSteps": 4,
+        "preExistingCollisionsPreserved": true,
+        "sitesWithAdds": 135
+      }
+    },
+    {
+      "config": {
+        "activitySupportMin": 0.1,
+        "baseline": false,
+        "existingEventsPreferred": true,
+        "fundamentalPresentRequired": true,
+        "id": "b-r800-o35-a10-low_register_no_stable_state",
+        "lowRegisterMaxMidi": 40,
+        "newRecoveryCapPerPreviouslyEmptyStep": 1,
+        "onsetSupportMin": 0.35,
+        "preExistingIteration002StepCollisionsPreserved": true,
+        "scope": "low_register_no_stable_state",
+        "stream": "bass",
+        "templateRankMin": 0.8
+      },
+      "counts": {
+        "bass": 515,
+        "combinedGuitar": 1050
+      },
+      "id": "b-r800-o35-a10-low_register_no_stable_state",
+      "relativePath": "bass/b-r800-o35-a10-low_register_no_stable_state.json",
+      "sha256": "55cd3f1647165acd4f8b8668213d24b28037f35aa4e6353dd79c2688262d6abd",
+      "stream": "bass",
+      "summary": {
+        "added": 113,
+        "eligible": 612,
+        "newRecoveryEventsAddedOnlyToPreviouslyEmptySteps": true,
+        "preExistingCollisionSteps": 4,
+        "preExistingCollisionsPreserved": true,
+        "sitesWithAdds": 113
+      }
+    },
+    {
+      "config": {
+        "activitySupportMin": 0.04,
+        "baseline": false,
+        "existingEventsPreferred": true,
+        "fundamentalPresentRequired": true,
+        "id": "b-r800-o50-a04-all",
+        "lowRegisterMaxMidi": 40,
+        "newRecoveryCapPerPreviouslyEmptyStep": 1,
+        "onsetSupportMin": 0.5,
+        "preExistingIteration002StepCollisionsPreserved": true,
+        "scope": "all",
+        "stream": "bass",
+        "templateRankMin": 0.8
+      },
+      "counts": {
+        "bass": 537,
+        "combinedGuitar": 1050
+      },
+      "id": "b-r800-o50-a04-all",
+      "relativePath": "bass/b-r800-o50-a04-all.json",
+      "sha256": "8027b092ae80290654151303f37547a6c47d49fb65cf82c203b26a93ec0803a1",
+      "stream": "bass",
+      "summary": {
+        "added": 135,
+        "eligible": 1194,
+        "newRecoveryEventsAddedOnlyToPreviouslyEmptySteps": true,
+        "preExistingCollisionSteps": 4,
+        "preExistingCollisionsPreserved": true,
+        "sitesWithAdds": 135
+      }
+    },
+    {
+      "config": {
+        "activitySupportMin": 0.04,
+        "baseline": false,
+        "existingEventsPreferred": true,
+        "fundamentalPresentRequired": true,
+        "id": "b-r800-o50-a04-no_stable_state",
+        "lowRegisterMaxMidi": 40,
+        "newRecoveryCapPerPreviouslyEmptyStep": 1,
+        "onsetSupportMin": 0.5,
+        "preExistingIteration002StepCollisionsPreserved": true,
+        "scope": "no_stable_state",
+        "stream": "bass",
+        "templateRankMin": 0.8
+      },
+      "counts": {
+        "bass": 515,
+        "combinedGuitar": 1050
+      },
+      "id": "b-r800-o50-a04-no_stable_state",
+      "relativePath": "bass/b-r800-o50-a04-no_stable_state.json",
+      "sha256": "d7c9937c76575c07885acf3994eea2f57a90d991219de48d913e0a4dfa33daa0",
+      "stream": "bass",
+      "summary": {
+        "added": 113,
+        "eligible": 1014,
+        "newRecoveryEventsAddedOnlyToPreviouslyEmptySteps": true,
+        "preExistingCollisionSteps": 4,
+        "preExistingCollisionsPreserved": true,
+        "sitesWithAdds": 113
+      }
+    },
+    {
+      "config": {
+        "activitySupportMin": 0.04,
+        "baseline": false,
+        "existingEventsPreferred": true,
+        "fundamentalPresentRequired": true,
+        "id": "b-r800-o50-a04-low_register",
+        "lowRegisterMaxMidi": 40,
+        "newRecoveryCapPerPreviouslyEmptyStep": 1,
+        "onsetSupportMin": 0.5,
+        "preExistingIteration002StepCollisionsPreserved": true,
+        "scope": "low_register",
+        "stream": "bass",
+        "templateRankMin": 0.8
+      },
+      "counts": {
+        "bass": 537,
+        "combinedGuitar": 1050
+      },
+      "id": "b-r800-o50-a04-low_register",
+      "relativePath": "bass/b-r800-o50-a04-low_register.json",
+      "sha256": "12b5f262bd4a0e80f58bae2f152648d426535e3719be88f648c4f11f8af3189d",
+      "stream": "bass",
+      "summary": {
+        "added": 135,
+        "eligible": 730,
+        "newRecoveryEventsAddedOnlyToPreviouslyEmptySteps": true,
+        "preExistingCollisionSteps": 4,
+        "preExistingCollisionsPreserved": true,
+        "sitesWithAdds": 135
+      }
+    },
+    {
+      "config": {
+        "activitySupportMin": 0.04,
+        "baseline": false,
+        "existingEventsPreferred": true,
+        "fundamentalPresentRequired": true,
+        "id": "b-r800-o50-a04-low_register_no_stable_state",
+        "lowRegisterMaxMidi": 40,
+        "newRecoveryCapPerPreviouslyEmptyStep": 1,
+        "onsetSupportMin": 0.5,
+        "preExistingIteration002StepCollisionsPreserved": true,
+        "scope": "low_register_no_stable_state",
+        "stream": "bass",
+        "templateRankMin": 0.8
+      },
+      "counts": {
+        "bass": 515,
+        "combinedGuitar": 1050
+      },
+      "id": "b-r800-o50-a04-low_register_no_stable_state",
+      "relativePath": "bass/b-r800-o50-a04-low_register_no_stable_state.json",
+      "sha256": "abb5bdfff5d706a3a09484733a41b9066cde1f78b70451dce12815365a87315b",
+      "stream": "bass",
+      "summary": {
+        "added": 113,
+        "eligible": 609,
+        "newRecoveryEventsAddedOnlyToPreviouslyEmptySteps": true,
+        "preExistingCollisionSteps": 4,
+        "preExistingCollisionsPreserved": true,
+        "sitesWithAdds": 113
+      }
+    },
+    {
+      "config": {
+        "activitySupportMin": 0.1,
+        "baseline": false,
+        "existingEventsPreferred": true,
+        "fundamentalPresentRequired": true,
+        "id": "b-r800-o50-a10-all",
+        "lowRegisterMaxMidi": 40,
+        "newRecoveryCapPerPreviouslyEmptyStep": 1,
+        "onsetSupportMin": 0.5,
+        "preExistingIteration002StepCollisionsPreserved": true,
+        "scope": "all",
+        "stream": "bass",
+        "templateRankMin": 0.8
+      },
+      "counts": {
+        "bass": 535,
+        "combinedGuitar": 1050
+      },
+      "id": "b-r800-o50-a10-all",
+      "relativePath": "bass/b-r800-o50-a10-all.json",
+      "sha256": "9eb5b3fb8ea164589398d9b15bc7974f51787bd6bbf5f5f686348908fcd51b24",
+      "stream": "bass",
+      "summary": {
+        "added": 133,
+        "eligible": 1176,
+        "newRecoveryEventsAddedOnlyToPreviouslyEmptySteps": true,
+        "preExistingCollisionSteps": 4,
+        "preExistingCollisionsPreserved": true,
+        "sitesWithAdds": 133
+      }
+    },
+    {
+      "config": {
+        "activitySupportMin": 0.1,
+        "baseline": false,
+        "existingEventsPreferred": true,
+        "fundamentalPresentRequired": true,
+        "id": "b-r800-o50-a10-no_stable_state",
+        "lowRegisterMaxMidi": 40,
+        "newRecoveryCapPerPreviouslyEmptyStep": 1,
+        "onsetSupportMin": 0.5,
+        "preExistingIteration002StepCollisionsPreserved": true,
+        "scope": "no_stable_state",
+        "stream": "bass",
+        "templateRankMin": 0.8
+      },
+      "counts": {
+        "bass": 513,
+        "combinedGuitar": 1050
+      },
+      "id": "b-r800-o50-a10-no_stable_state",
+      "relativePath": "bass/b-r800-o50-a10-no_stable_state.json",
+      "sha256": "80b1c789b088a93e644156c5c3b41a915d10c5deaa6c042599474ae93ecccf31",
+      "stream": "bass",
+      "summary": {
+        "added": 111,
+        "eligible": 996,
+        "newRecoveryEventsAddedOnlyToPreviouslyEmptySteps": true,
+        "preExistingCollisionSteps": 4,
+        "preExistingCollisionsPreserved": true,
+        "sitesWithAdds": 111
+      }
+    },
+    {
+      "config": {
+        "activitySupportMin": 0.1,
+        "baseline": false,
+        "existingEventsPreferred": true,
+        "fundamentalPresentRequired": true,
+        "id": "b-r800-o50-a10-low_register",
+        "lowRegisterMaxMidi": 40,
+        "newRecoveryCapPerPreviouslyEmptyStep": 1,
+        "onsetSupportMin": 0.5,
+        "preExistingIteration002StepCollisionsPreserved": true,
+        "scope": "low_register",
+        "stream": "bass",
+        "templateRankMin": 0.8
+      },
+      "counts": {
+        "bass": 535,
+        "combinedGuitar": 1050
+      },
+      "id": "b-r800-o50-a10-low_register",
+      "relativePath": "bass/b-r800-o50-a10-low_register.json",
+      "sha256": "be0d5e0c73501fbeccf7d4207e7e4ef0b033895dae8dd3cc71f9ca9aa72d4ab0",
+      "stream": "bass",
+      "summary": {
+        "added": 133,
+        "eligible": 718,
+        "newRecoveryEventsAddedOnlyToPreviouslyEmptySteps": true,
+        "preExistingCollisionSteps": 4,
+        "preExistingCollisionsPreserved": true,
+        "sitesWithAdds": 133
+      }
+    },
+    {
+      "config": {
+        "activitySupportMin": 0.1,
+        "baseline": false,
+        "existingEventsPreferred": true,
+        "fundamentalPresentRequired": true,
+        "id": "b-r800-o50-a10-low_register_no_stable_state",
+        "lowRegisterMaxMidi": 40,
+        "newRecoveryCapPerPreviouslyEmptyStep": 1,
+        "onsetSupportMin": 0.5,
+        "preExistingIteration002StepCollisionsPreserved": true,
+        "scope": "low_register_no_stable_state",
+        "stream": "bass",
+        "templateRankMin": 0.8
+      },
+      "counts": {
+        "bass": 513,
+        "combinedGuitar": 1050
+      },
+      "id": "b-r800-o50-a10-low_register_no_stable_state",
+      "relativePath": "bass/b-r800-o50-a10-low_register_no_stable_state.json",
+      "sha256": "e746a462968584391196609960a60f7a940e7fad95fd29257ab64fc703df6a16",
+      "stream": "bass",
+      "summary": {
+        "added": 111,
+        "eligible": 597,
+        "newRecoveryEventsAddedOnlyToPreviouslyEmptySteps": true,
+        "preExistingCollisionSteps": 4,
+        "preExistingCollisionsPreserved": true,
+        "sitesWithAdds": 111
+      }
+    },
+    {
+      "config": {
+        "activitySupportMin": 0.04,
+        "baseline": false,
+        "existingEventsPreferred": true,
+        "fundamentalPresentRequired": true,
+        "id": "b-r900-o20-a04-all",
+        "lowRegisterMaxMidi": 40,
+        "newRecoveryCapPerPreviouslyEmptyStep": 1,
+        "onsetSupportMin": 0.2,
+        "preExistingIteration002StepCollisionsPreserved": true,
+        "scope": "all",
+        "stream": "bass",
+        "templateRankMin": 0.9
+      },
+      "counts": {
+        "bass": 541,
+        "combinedGuitar": 1050
+      },
+      "id": "b-r900-o20-a04-all",
+      "relativePath": "bass/b-r900-o20-a04-all.json",
+      "sha256": "6b100491d9a9e8be9a84277606a5c1ffc6e18a42403669a1545fc13e862d46c8",
+      "stream": "bass",
+      "summary": {
+        "added": 139,
+        "eligible": 692,
+        "newRecoveryEventsAddedOnlyToPreviouslyEmptySteps": true,
+        "preExistingCollisionSteps": 4,
+        "preExistingCollisionsPreserved": true,
+        "sitesWithAdds": 139
+      }
+    },
+    {
+      "config": {
+        "activitySupportMin": 0.04,
+        "baseline": false,
+        "existingEventsPreferred": true,
+        "fundamentalPresentRequired": true,
+        "id": "b-r900-o20-a04-no_stable_state",
+        "lowRegisterMaxMidi": 40,
+        "newRecoveryCapPerPreviouslyEmptyStep": 1,
+        "onsetSupportMin": 0.2,
+        "preExistingIteration002StepCollisionsPreserved": true,
+        "scope": "no_stable_state",
+        "stream": "bass",
+        "templateRankMin": 0.9
+      },
+      "counts": {
+        "bass": 517,
+        "combinedGuitar": 1050
+      },
+      "id": "b-r900-o20-a04-no_stable_state",
+      "relativePath": "bass/b-r900-o20-a04-no_stable_state.json",
+      "sha256": "ffad1175785ffbc994752542970728fdab5ad85990aa26114da8d06a4f18fb85",
+      "stream": "bass",
+      "summary": {
+        "added": 115,
+        "eligible": 575,
+        "newRecoveryEventsAddedOnlyToPreviouslyEmptySteps": true,
+        "preExistingCollisionSteps": 4,
+        "preExistingCollisionsPreserved": true,
+        "sitesWithAdds": 115
+      }
+    },
+    {
+      "config": {
+        "activitySupportMin": 0.04,
+        "baseline": false,
+        "existingEventsPreferred": true,
+        "fundamentalPresentRequired": true,
+        "id": "b-r900-o20-a04-low_register",
+        "lowRegisterMaxMidi": 40,
+        "newRecoveryCapPerPreviouslyEmptyStep": 1,
+        "onsetSupportMin": 0.2,
+        "preExistingIteration002StepCollisionsPreserved": true,
+        "scope": "low_register",
+        "stream": "bass",
+        "templateRankMin": 0.9
+      },
+      "counts": {
+        "bass": 540,
+        "combinedGuitar": 1050
+      },
+      "id": "b-r900-o20-a04-low_register",
+      "relativePath": "bass/b-r900-o20-a04-low_register.json",
+      "sha256": "9c7f3c2018be75a4abd19b35a74d8069b34629c89c888f9a993a1deace123155",
+      "stream": "bass",
+      "summary": {
+        "added": 138,
+        "eligible": 482,
+        "newRecoveryEventsAddedOnlyToPreviouslyEmptySteps": true,
+        "preExistingCollisionSteps": 4,
+        "preExistingCollisionsPreserved": true,
+        "sitesWithAdds": 138
+      }
+    },
+    {
+      "config": {
+        "activitySupportMin": 0.04,
+        "baseline": false,
+        "existingEventsPreferred": true,
+        "fundamentalPresentRequired": true,
+        "id": "b-r900-o20-a04-low_register_no_stable_state",
+        "lowRegisterMaxMidi": 40,
+        "newRecoveryCapPerPreviouslyEmptyStep": 1,
+        "onsetSupportMin": 0.2,
+        "preExistingIteration002StepCollisionsPreserved": true,
+        "scope": "low_register_no_stable_state",
+        "stream": "bass",
+        "templateRankMin": 0.9
+      },
+      "counts": {
+        "bass": 517,
+        "combinedGuitar": 1050
+      },
+      "id": "b-r900-o20-a04-low_register_no_stable_state",
+      "relativePath": "bass/b-r900-o20-a04-low_register_no_stable_state.json",
+      "sha256": "3c58374decc8e21f0eb915f80a377fac298c40a7efbf92639a7416a13914c1c8",
+      "stream": "bass",
+      "summary": {
+        "added": 115,
+        "eligible": 399,
+        "newRecoveryEventsAddedOnlyToPreviouslyEmptySteps": true,
+        "preExistingCollisionSteps": 4,
+        "preExistingCollisionsPreserved": true,
+        "sitesWithAdds": 115
+      }
+    },
+    {
+      "config": {
+        "activitySupportMin": 0.1,
+        "baseline": false,
+        "existingEventsPreferred": true,
+        "fundamentalPresentRequired": true,
+        "id": "b-r900-o20-a10-all",
+        "lowRegisterMaxMidi": 40,
+        "newRecoveryCapPerPreviouslyEmptyStep": 1,
+        "onsetSupportMin": 0.2,
+        "preExistingIteration002StepCollisionsPreserved": true,
+        "scope": "all",
+        "stream": "bass",
+        "templateRankMin": 0.9
+      },
+      "counts": {
+        "bass": 539,
+        "combinedGuitar": 1050
+      },
+      "id": "b-r900-o20-a10-all",
+      "relativePath": "bass/b-r900-o20-a10-all.json",
+      "sha256": "11955e675f2f93fad0d2b234f1915992a5ba1cbe27d1a74f4e67fb9186740023",
+      "stream": "bass",
+      "summary": {
+        "added": 137,
+        "eligible": 682,
+        "newRecoveryEventsAddedOnlyToPreviouslyEmptySteps": true,
+        "preExistingCollisionSteps": 4,
+        "preExistingCollisionsPreserved": true,
+        "sitesWithAdds": 137
+      }
+    },
+    {
+      "config": {
+        "activitySupportMin": 0.1,
+        "baseline": false,
+        "existingEventsPreferred": true,
+        "fundamentalPresentRequired": true,
+        "id": "b-r900-o20-a10-no_stable_state",
+        "lowRegisterMaxMidi": 40,
+        "newRecoveryCapPerPreviouslyEmptyStep": 1,
+        "onsetSupportMin": 0.2,
+        "preExistingIteration002StepCollisionsPreserved": true,
+        "scope": "no_stable_state",
+        "stream": "bass",
+        "templateRankMin": 0.9
+      },
+      "counts": {
+        "bass": 515,
+        "combinedGuitar": 1050
+      },
+      "id": "b-r900-o20-a10-no_stable_state",
+      "relativePath": "bass/b-r900-o20-a10-no_stable_state.json",
+      "sha256": "c13f32d525c3c05acb887d04de4fa8064b25c5ad482e7bd48a16de479febce34",
+      "stream": "bass",
+      "summary": {
+        "added": 113,
+        "eligible": 565,
+        "newRecoveryEventsAddedOnlyToPreviouslyEmptySteps": true,
+        "preExistingCollisionSteps": 4,
+        "preExistingCollisionsPreserved": true,
+        "sitesWithAdds": 113
+      }
+    },
+    {
+      "config": {
+        "activitySupportMin": 0.1,
+        "baseline": false,
+        "existingEventsPreferred": true,
+        "fundamentalPresentRequired": true,
+        "id": "b-r900-o20-a10-low_register",
+        "lowRegisterMaxMidi": 40,
+        "newRecoveryCapPerPreviouslyEmptyStep": 1,
+        "onsetSupportMin": 0.2,
+        "preExistingIteration002StepCollisionsPreserved": true,
+        "scope": "low_register",
+        "stream": "bass",
+        "templateRankMin": 0.9
+      },
+      "counts": {
+        "bass": 538,
+        "combinedGuitar": 1050
+      },
+      "id": "b-r900-o20-a10-low_register",
+      "relativePath": "bass/b-r900-o20-a10-low_register.json",
+      "sha256": "697a7fbd4f7b930597bbb4229d2ba7e9e4d66511a4e73cb25d24fa2e5694dddc",
+      "stream": "bass",
+      "summary": {
+        "added": 136,
+        "eligible": 474,
+        "newRecoveryEventsAddedOnlyToPreviouslyEmptySteps": true,
+        "preExistingCollisionSteps": 4,
+        "preExistingCollisionsPreserved": true,
+        "sitesWithAdds": 136
+      }
+    },
+    {
+      "config": {
+        "activitySupportMin": 0.1,
+        "baseline": false,
+        "existingEventsPreferred": true,
+        "fundamentalPresentRequired": true,
+        "id": "b-r900-o20-a10-low_register_no_stable_state",
+        "lowRegisterMaxMidi": 40,
+        "newRecoveryCapPerPreviouslyEmptyStep": 1,
+        "onsetSupportMin": 0.2,
+        "preExistingIteration002StepCollisionsPreserved": true,
+        "scope": "low_register_no_stable_state",
+        "stream": "bass",
+        "templateRankMin": 0.9
+      },
+      "counts": {
+        "bass": 515,
+        "combinedGuitar": 1050
+      },
+      "id": "b-r900-o20-a10-low_register_no_stable_state",
+      "relativePath": "bass/b-r900-o20-a10-low_register_no_stable_state.json",
+      "sha256": "eade35d7251cdf3e3518e77d5c2bdf29ba0b38a7efa7777e2f82173228ca6e1d",
+      "stream": "bass",
+      "summary": {
+        "added": 113,
+        "eligible": 391,
+        "newRecoveryEventsAddedOnlyToPreviouslyEmptySteps": true,
+        "preExistingCollisionSteps": 4,
+        "preExistingCollisionsPreserved": true,
+        "sitesWithAdds": 113
+      }
+    },
+    {
+      "config": {
+        "activitySupportMin": 0.04,
+        "baseline": false,
+        "existingEventsPreferred": true,
+        "fundamentalPresentRequired": true,
+        "id": "b-r900-o35-a04-all",
+        "lowRegisterMaxMidi": 40,
+        "newRecoveryCapPerPreviouslyEmptyStep": 1,
+        "onsetSupportMin": 0.35,
+        "preExistingIteration002StepCollisionsPreserved": true,
+        "scope": "all",
+        "stream": "bass",
+        "templateRankMin": 0.9
+      },
+      "counts": {
+        "bass": 539,
+        "combinedGuitar": 1050
+      },
+      "id": "b-r900-o35-a04-all",
+      "relativePath": "bass/b-r900-o35-a04-all.json",
+      "sha256": "06dc55bf8c5f18fc88fadfd001b5574782c90d3a65f53ab47771e7649c123ec5",
+      "stream": "bass",
+      "summary": {
+        "added": 137,
+        "eligible": 682,
+        "newRecoveryEventsAddedOnlyToPreviouslyEmptySteps": true,
+        "preExistingCollisionSteps": 4,
+        "preExistingCollisionsPreserved": true,
+        "sitesWithAdds": 137
+      }
+    },
+    {
+      "config": {
+        "activitySupportMin": 0.04,
+        "baseline": false,
+        "existingEventsPreferred": true,
+        "fundamentalPresentRequired": true,
+        "id": "b-r900-o35-a04-no_stable_state",
+        "lowRegisterMaxMidi": 40,
+        "newRecoveryCapPerPreviouslyEmptyStep": 1,
+        "onsetSupportMin": 0.35,
+        "preExistingIteration002StepCollisionsPreserved": true,
+        "scope": "no_stable_state",
+        "stream": "bass",
+        "templateRankMin": 0.9
+      },
+      "counts": {
+        "bass": 517,
+        "combinedGuitar": 1050
+      },
+      "id": "b-r900-o35-a04-no_stable_state",
+      "relativePath": "bass/b-r900-o35-a04-no_stable_state.json",
+      "sha256": "84d0fcc16877ac97eeabd42dd96b999de1cb4776cf0a402dd8cf0b588540529f",
+      "stream": "bass",
+      "summary": {
+        "added": 115,
+        "eligible": 575,
+        "newRecoveryEventsAddedOnlyToPreviouslyEmptySteps": true,
+        "preExistingCollisionSteps": 4,
+        "preExistingCollisionsPreserved": true,
+        "sitesWithAdds": 115
+      }
+    },
+    {
+      "config": {
+        "activitySupportMin": 0.04,
+        "baseline": false,
+        "existingEventsPreferred": true,
+        "fundamentalPresentRequired": true,
+        "id": "b-r900-o35-a04-low_register",
+        "lowRegisterMaxMidi": 40,
+        "newRecoveryCapPerPreviouslyEmptyStep": 1,
+        "onsetSupportMin": 0.35,
+        "preExistingIteration002StepCollisionsPreserved": true,
+        "scope": "low_register",
+        "stream": "bass",
+        "templateRankMin": 0.9
+      },
+      "counts": {
+        "bass": 538,
+        "combinedGuitar": 1050
+      },
+      "id": "b-r900-o35-a04-low_register",
+      "relativePath": "bass/b-r900-o35-a04-low_register.json",
+      "sha256": "fb96812b72b953386d5dd71fb7da5421402133a7675962cd12ea060bd6933683",
+      "stream": "bass",
+      "summary": {
+        "added": 136,
+        "eligible": 475,
+        "newRecoveryEventsAddedOnlyToPreviouslyEmptySteps": true,
+        "preExistingCollisionSteps": 4,
+        "preExistingCollisionsPreserved": true,
+        "sitesWithAdds": 136
+      }
+    },
+    {
+      "config": {
+        "activitySupportMin": 0.04,
+        "baseline": false,
+        "existingEventsPreferred": true,
+        "fundamentalPresentRequired": true,
+        "id": "b-r900-o35-a04-low_register_no_stable_state",
+        "lowRegisterMaxMidi": 40,
+        "newRecoveryCapPerPreviouslyEmptyStep": 1,
+        "onsetSupportMin": 0.35,
+        "preExistingIteration002StepCollisionsPreserved": true,
+        "scope": "low_register_no_stable_state",
+        "stream": "bass",
+        "templateRankMin": 0.9
+      },
+      "counts": {
+        "bass": 517,
+        "combinedGuitar": 1050
+      },
+      "id": "b-r900-o35-a04-low_register_no_stable_state",
+      "relativePath": "bass/b-r900-o35-a04-low_register_no_stable_state.json",
+      "sha256": "df943f6f675f22122643575b8de743880634fdb85264ef9a48e62f68f1ee31b1",
+      "stream": "bass",
+      "summary": {
+        "added": 115,
+        "eligible": 399,
+        "newRecoveryEventsAddedOnlyToPreviouslyEmptySteps": true,
+        "preExistingCollisionSteps": 4,
+        "preExistingCollisionsPreserved": true,
+        "sitesWithAdds": 115
+      }
+    },
+    {
+      "config": {
+        "activitySupportMin": 0.1,
+        "baseline": false,
+        "existingEventsPreferred": true,
+        "fundamentalPresentRequired": true,
+        "id": "b-r900-o35-a10-all",
+        "lowRegisterMaxMidi": 40,
+        "newRecoveryCapPerPreviouslyEmptyStep": 1,
+        "onsetSupportMin": 0.35,
+        "preExistingIteration002StepCollisionsPreserved": true,
+        "scope": "all",
+        "stream": "bass",
+        "templateRankMin": 0.9
+      },
+      "counts": {
+        "bass": 537,
+        "combinedGuitar": 1050
+      },
+      "id": "b-r900-o35-a10-all",
+      "relativePath": "bass/b-r900-o35-a10-all.json",
+      "sha256": "3b0d1ad0165a73ad0fe8f412345ec58995b5410bc107c6e4feff7a31d2062ed7",
+      "stream": "bass",
+      "summary": {
+        "added": 135,
+        "eligible": 672,
+        "newRecoveryEventsAddedOnlyToPreviouslyEmptySteps": true,
+        "preExistingCollisionSteps": 4,
+        "preExistingCollisionsPreserved": true,
+        "sitesWithAdds": 135
+      }
+    },
+    {
+      "config": {
+        "activitySupportMin": 0.1,
+        "baseline": false,
+        "existingEventsPreferred": true,
+        "fundamentalPresentRequired": true,
+        "id": "b-r900-o35-a10-no_stable_state",
+        "lowRegisterMaxMidi": 40,
+        "newRecoveryCapPerPreviouslyEmptyStep": 1,
+        "onsetSupportMin": 0.35,
+        "preExistingIteration002StepCollisionsPreserved": true,
+        "scope": "no_stable_state",
+        "stream": "bass",
+        "templateRankMin": 0.9
+      },
+      "counts": {
+        "bass": 515,
+        "combinedGuitar": 1050
+      },
+      "id": "b-r900-o35-a10-no_stable_state",
+      "relativePath": "bass/b-r900-o35-a10-no_stable_state.json",
+      "sha256": "d7c84ba97a53c3dc5c2e3c2121940815b913db82e6d753dbfaf4dde96e3d63be",
+      "stream": "bass",
+      "summary": {
+        "added": 113,
+        "eligible": 565,
+        "newRecoveryEventsAddedOnlyToPreviouslyEmptySteps": true,
+        "preExistingCollisionSteps": 4,
+        "preExistingCollisionsPreserved": true,
+        "sitesWithAdds": 113
+      }
+    },
+    {
+      "config": {
+        "activitySupportMin": 0.1,
+        "baseline": false,
+        "existingEventsPreferred": true,
+        "fundamentalPresentRequired": true,
+        "id": "b-r900-o35-a10-low_register",
+        "lowRegisterMaxMidi": 40,
+        "newRecoveryCapPerPreviouslyEmptyStep": 1,
+        "onsetSupportMin": 0.35,
+        "preExistingIteration002StepCollisionsPreserved": true,
+        "scope": "low_register",
+        "stream": "bass",
+        "templateRankMin": 0.9
+      },
+      "counts": {
+        "bass": 536,
+        "combinedGuitar": 1050
+      },
+      "id": "b-r900-o35-a10-low_register",
+      "relativePath": "bass/b-r900-o35-a10-low_register.json",
+      "sha256": "a2325d2c316765c4e71606a5f944359724b3619d7bda8e8fd177a63e8b8779ec",
+      "stream": "bass",
+      "summary": {
+        "added": 134,
+        "eligible": 467,
+        "newRecoveryEventsAddedOnlyToPreviouslyEmptySteps": true,
+        "preExistingCollisionSteps": 4,
+        "preExistingCollisionsPreserved": true,
+        "sitesWithAdds": 134
+      }
+    },
+    {
+      "config": {
+        "activitySupportMin": 0.1,
+        "baseline": false,
+        "existingEventsPreferred": true,
+        "fundamentalPresentRequired": true,
+        "id": "b-r900-o35-a10-low_register_no_stable_state",
+        "lowRegisterMaxMidi": 40,
+        "newRecoveryCapPerPreviouslyEmptyStep": 1,
+        "onsetSupportMin": 0.35,
+        "preExistingIteration002StepCollisionsPreserved": true,
+        "scope": "low_register_no_stable_state",
+        "stream": "bass",
+        "templateRankMin": 0.9
+      },
+      "counts": {
+        "bass": 515,
+        "combinedGuitar": 1050
+      },
+      "id": "b-r900-o35-a10-low_register_no_stable_state",
+      "relativePath": "bass/b-r900-o35-a10-low_register_no_stable_state.json",
+      "sha256": "dd1b689495f2a04d715e8d788a52034b04e7e624035c5245abdaa3615d4739ad",
+      "stream": "bass",
+      "summary": {
+        "added": 113,
+        "eligible": 391,
+        "newRecoveryEventsAddedOnlyToPreviouslyEmptySteps": true,
+        "preExistingCollisionSteps": 4,
+        "preExistingCollisionsPreserved": true,
+        "sitesWithAdds": 113
+      }
+    },
+    {
+      "config": {
+        "activitySupportMin": 0.04,
+        "baseline": false,
+        "existingEventsPreferred": true,
+        "fundamentalPresentRequired": true,
+        "id": "b-r900-o50-a04-all",
+        "lowRegisterMaxMidi": 40,
+        "newRecoveryCapPerPreviouslyEmptyStep": 1,
+        "onsetSupportMin": 0.5,
+        "preExistingIteration002StepCollisionsPreserved": true,
+        "scope": "all",
+        "stream": "bass",
+        "templateRankMin": 0.9
+      },
+      "counts": {
+        "bass": 537,
+        "combinedGuitar": 1050
+      },
+      "id": "b-r900-o50-a04-all",
+      "relativePath": "bass/b-r900-o50-a04-all.json",
+      "sha256": "5c5e2d10559a7eae88a2f919cf7ec0ce56055215bb879a62f2af07cbe78da183",
+      "stream": "bass",
+      "summary": {
+        "added": 135,
+        "eligible": 672,
+        "newRecoveryEventsAddedOnlyToPreviouslyEmptySteps": true,
+        "preExistingCollisionSteps": 4,
+        "preExistingCollisionsPreserved": true,
+        "sitesWithAdds": 135
+      }
+    },
+    {
+      "config": {
+        "activitySupportMin": 0.04,
+        "baseline": false,
+        "existingEventsPreferred": true,
+        "fundamentalPresentRequired": true,
+        "id": "b-r900-o50-a04-no_stable_state",
+        "lowRegisterMaxMidi": 40,
+        "newRecoveryCapPerPreviouslyEmptyStep": 1,
+        "onsetSupportMin": 0.5,
+        "preExistingIteration002StepCollisionsPreserved": true,
+        "scope": "no_stable_state",
+        "stream": "bass",
+        "templateRankMin": 0.9
+      },
+      "counts": {
+        "bass": 515,
+        "combinedGuitar": 1050
+      },
+      "id": "b-r900-o50-a04-no_stable_state",
+      "relativePath": "bass/b-r900-o50-a04-no_stable_state.json",
+      "sha256": "de288df775f28af852958a94b969b5babdccbb18880778919b951b0b8730d09d",
+      "stream": "bass",
+      "summary": {
+        "added": 113,
+        "eligible": 565,
+        "newRecoveryEventsAddedOnlyToPreviouslyEmptySteps": true,
+        "preExistingCollisionSteps": 4,
+        "preExistingCollisionsPreserved": true,
+        "sitesWithAdds": 113
+      }
+    },
+    {
+      "config": {
+        "activitySupportMin": 0.04,
+        "baseline": false,
+        "existingEventsPreferred": true,
+        "fundamentalPresentRequired": true,
+        "id": "b-r900-o50-a04-low_register",
+        "lowRegisterMaxMidi": 40,
+        "newRecoveryCapPerPreviouslyEmptyStep": 1,
+        "onsetSupportMin": 0.5,
+        "preExistingIteration002StepCollisionsPreserved": true,
+        "scope": "low_register",
+        "stream": "bass",
+        "templateRankMin": 0.9
+      },
+      "counts": {
+        "bass": 536,
+        "combinedGuitar": 1050
+      },
+      "id": "b-r900-o50-a04-low_register",
+      "relativePath": "bass/b-r900-o50-a04-low_register.json",
+      "sha256": "f56ab116b127f65838e84ad46c0c673e7e1fd7603e579cd110682036c4a523eb",
+      "stream": "bass",
+      "summary": {
+        "added": 134,
+        "eligible": 465,
+        "newRecoveryEventsAddedOnlyToPreviouslyEmptySteps": true,
+        "preExistingCollisionSteps": 4,
+        "preExistingCollisionsPreserved": true,
+        "sitesWithAdds": 134
+      }
+    },
+    {
+      "config": {
+        "activitySupportMin": 0.04,
+        "baseline": false,
+        "existingEventsPreferred": true,
+        "fundamentalPresentRequired": true,
+        "id": "b-r900-o50-a04-low_register_no_stable_state",
+        "lowRegisterMaxMidi": 40,
+        "newRecoveryCapPerPreviouslyEmptyStep": 1,
+        "onsetSupportMin": 0.5,
+        "preExistingIteration002StepCollisionsPreserved": true,
+        "scope": "low_register_no_stable_state",
+        "stream": "bass",
+        "templateRankMin": 0.9
+      },
+      "counts": {
+        "bass": 515,
+        "combinedGuitar": 1050
+      },
+      "id": "b-r900-o50-a04-low_register_no_stable_state",
+      "relativePath": "bass/b-r900-o50-a04-low_register_no_stable_state.json",
+      "sha256": "4fb1d278cc23bc2436792adbf130399a06b54869c378ede44f2bec96927c7594",
+      "stream": "bass",
+      "summary": {
+        "added": 113,
+        "eligible": 389,
+        "newRecoveryEventsAddedOnlyToPreviouslyEmptySteps": true,
+        "preExistingCollisionSteps": 4,
+        "preExistingCollisionsPreserved": true,
+        "sitesWithAdds": 113
+      }
+    },
+    {
+      "config": {
+        "activitySupportMin": 0.1,
+        "baseline": false,
+        "existingEventsPreferred": true,
+        "fundamentalPresentRequired": true,
+        "id": "b-r900-o50-a10-all",
+        "lowRegisterMaxMidi": 40,
+        "newRecoveryCapPerPreviouslyEmptyStep": 1,
+        "onsetSupportMin": 0.5,
+        "preExistingIteration002StepCollisionsPreserved": true,
+        "scope": "all",
+        "stream": "bass",
+        "templateRankMin": 0.9
+      },
+      "counts": {
+        "bass": 535,
+        "combinedGuitar": 1050
+      },
+      "id": "b-r900-o50-a10-all",
+      "relativePath": "bass/b-r900-o50-a10-all.json",
+      "sha256": "d38e07dfb3666f870d23e0afce0c707fa319da780d8fd5ff18204219aded51e9",
+      "stream": "bass",
+      "summary": {
+        "added": 133,
+        "eligible": 662,
+        "newRecoveryEventsAddedOnlyToPreviouslyEmptySteps": true,
+        "preExistingCollisionSteps": 4,
+        "preExistingCollisionsPreserved": true,
+        "sitesWithAdds": 133
+      }
+    },
+    {
+      "config": {
+        "activitySupportMin": 0.1,
+        "baseline": false,
+        "existingEventsPreferred": true,
+        "fundamentalPresentRequired": true,
+        "id": "b-r900-o50-a10-no_stable_state",
+        "lowRegisterMaxMidi": 40,
+        "newRecoveryCapPerPreviouslyEmptyStep": 1,
+        "onsetSupportMin": 0.5,
+        "preExistingIteration002StepCollisionsPreserved": true,
+        "scope": "no_stable_state",
+        "stream": "bass",
+        "templateRankMin": 0.9
+      },
+      "counts": {
+        "bass": 513,
+        "combinedGuitar": 1050
+      },
+      "id": "b-r900-o50-a10-no_stable_state",
+      "relativePath": "bass/b-r900-o50-a10-no_stable_state.json",
+      "sha256": "29de57c5278f7610d7cb772af590f81a443b068361b489ce7d78df8ee90fa6e3",
+      "stream": "bass",
+      "summary": {
+        "added": 111,
+        "eligible": 555,
+        "newRecoveryEventsAddedOnlyToPreviouslyEmptySteps": true,
+        "preExistingCollisionSteps": 4,
+        "preExistingCollisionsPreserved": true,
+        "sitesWithAdds": 111
+      }
+    },
+    {
+      "config": {
+        "activitySupportMin": 0.1,
+        "baseline": false,
+        "existingEventsPreferred": true,
+        "fundamentalPresentRequired": true,
+        "id": "b-r900-o50-a10-low_register",
+        "lowRegisterMaxMidi": 40,
+        "newRecoveryCapPerPreviouslyEmptyStep": 1,
+        "onsetSupportMin": 0.5,
+        "preExistingIteration002StepCollisionsPreserved": true,
+        "scope": "low_register",
+        "stream": "bass",
+        "templateRankMin": 0.9
+      },
+      "counts": {
+        "bass": 534,
+        "combinedGuitar": 1050
+      },
+      "id": "b-r900-o50-a10-low_register",
+      "relativePath": "bass/b-r900-o50-a10-low_register.json",
+      "sha256": "541965f30b2017d03f7578fe45cda22408a4ca9e90258e1daf83c834d29c0a26",
+      "stream": "bass",
+      "summary": {
+        "added": 132,
+        "eligible": 457,
+        "newRecoveryEventsAddedOnlyToPreviouslyEmptySteps": true,
+        "preExistingCollisionSteps": 4,
+        "preExistingCollisionsPreserved": true,
+        "sitesWithAdds": 132
+      }
+    },
+    {
+      "config": {
+        "activitySupportMin": 0.1,
+        "baseline": false,
+        "existingEventsPreferred": true,
+        "fundamentalPresentRequired": true,
+        "id": "b-r900-o50-a10-low_register_no_stable_state",
+        "lowRegisterMaxMidi": 40,
+        "newRecoveryCapPerPreviouslyEmptyStep": 1,
+        "onsetSupportMin": 0.5,
+        "preExistingIteration002StepCollisionsPreserved": true,
+        "scope": "low_register_no_stable_state",
+        "stream": "bass",
+        "templateRankMin": 0.9
+      },
+      "counts": {
+        "bass": 513,
+        "combinedGuitar": 1050
+      },
+      "id": "b-r900-o50-a10-low_register_no_stable_state",
+      "relativePath": "bass/b-r900-o50-a10-low_register_no_stable_state.json",
+      "sha256": "ce977c0bba2a539da61a1969adea353426a886b2fafa5b1ead21252987b154b1",
+      "stream": "bass",
+      "summary": {
+        "added": 111,
+        "eligible": 381,
+        "newRecoveryEventsAddedOnlyToPreviouslyEmptySteps": true,
+        "preExistingCollisionSteps": 4,
+        "preExistingCollisionsPreserved": true,
+        "sitesWithAdds": 111
+      }
+    },
+    {
+      "config": {
+        "activitySupportMin": 0.04,
+        "baseline": false,
+        "existingEventsPreferred": true,
+        "fundamentalPresentRequired": true,
+        "id": "b-r950-o20-a04-all",
+        "lowRegisterMaxMidi": 40,
+        "newRecoveryCapPerPreviouslyEmptyStep": 1,
+        "onsetSupportMin": 0.2,
+        "preExistingIteration002StepCollisionsPreserved": true,
+        "scope": "all",
+        "stream": "bass",
+        "templateRankMin": 0.95
+      },
+      "counts": {
+        "bass": 541,
+        "combinedGuitar": 1050
+      },
+      "id": "b-r950-o20-a04-all",
+      "relativePath": "bass/b-r950-o20-a04-all.json",
+      "sha256": "389cecc5dadc7e1bdec914fb15162d11210097b0d868c98fbf706817ad379351",
+      "stream": "bass",
+      "summary": {
+        "added": 139,
+        "eligible": 417,
+        "newRecoveryEventsAddedOnlyToPreviouslyEmptySteps": true,
+        "preExistingCollisionSteps": 4,
+        "preExistingCollisionsPreserved": true,
+        "sitesWithAdds": 139
+      }
+    },
+    {
+      "config": {
+        "activitySupportMin": 0.04,
+        "baseline": false,
+        "existingEventsPreferred": true,
+        "fundamentalPresentRequired": true,
+        "id": "b-r950-o20-a04-no_stable_state",
+        "lowRegisterMaxMidi": 40,
+        "newRecoveryCapPerPreviouslyEmptyStep": 1,
+        "onsetSupportMin": 0.2,
+        "preExistingIteration002StepCollisionsPreserved": true,
+        "scope": "no_stable_state",
+        "stream": "bass",
+        "templateRankMin": 0.95
+      },
+      "counts": {
+        "bass": 517,
+        "combinedGuitar": 1050
+      },
+      "id": "b-r950-o20-a04-no_stable_state",
+      "relativePath": "bass/b-r950-o20-a04-no_stable_state.json",
+      "sha256": "b5ecc44ae9bcdae9aefe4485e8acf35311a5a82a974c31b16450931da8aa1797",
+      "stream": "bass",
+      "summary": {
+        "added": 115,
+        "eligible": 345,
+        "newRecoveryEventsAddedOnlyToPreviouslyEmptySteps": true,
+        "preExistingCollisionSteps": 4,
+        "preExistingCollisionsPreserved": true,
+        "sitesWithAdds": 115
+      }
+    },
+    {
+      "config": {
+        "activitySupportMin": 0.04,
+        "baseline": false,
+        "existingEventsPreferred": true,
+        "fundamentalPresentRequired": true,
+        "id": "b-r950-o20-a04-low_register",
+        "lowRegisterMaxMidi": 40,
+        "newRecoveryCapPerPreviouslyEmptyStep": 1,
+        "onsetSupportMin": 0.2,
+        "preExistingIteration002StepCollisionsPreserved": true,
+        "scope": "low_register",
+        "stream": "bass",
+        "templateRankMin": 0.95
+      },
+      "counts": {
+        "bass": 537,
+        "combinedGuitar": 1050
+      },
+      "id": "b-r950-o20-a04-low_register",
+      "relativePath": "bass/b-r950-o20-a04-low_register.json",
+      "sha256": "89b4910d5978aeb888d899d710d8b9e32cf8d7e71dee19fdb7576f40666ecd5c",
+      "stream": "bass",
+      "summary": {
+        "added": 135,
+        "eligible": 306,
+        "newRecoveryEventsAddedOnlyToPreviouslyEmptySteps": true,
+        "preExistingCollisionSteps": 4,
+        "preExistingCollisionsPreserved": true,
+        "sitesWithAdds": 135
+      }
+    },
+    {
+      "config": {
+        "activitySupportMin": 0.04,
+        "baseline": false,
+        "existingEventsPreferred": true,
+        "fundamentalPresentRequired": true,
+        "id": "b-r950-o20-a04-low_register_no_stable_state",
+        "lowRegisterMaxMidi": 40,
+        "newRecoveryCapPerPreviouslyEmptyStep": 1,
+        "onsetSupportMin": 0.2,
+        "preExistingIteration002StepCollisionsPreserved": true,
+        "scope": "low_register_no_stable_state",
+        "stream": "bass",
+        "templateRankMin": 0.95
+      },
+      "counts": {
+        "bass": 517,
+        "combinedGuitar": 1050
+      },
+      "id": "b-r950-o20-a04-low_register_no_stable_state",
+      "relativePath": "bass/b-r950-o20-a04-low_register_no_stable_state.json",
+      "sha256": "b8598e65388bdace879fd57b968ce5e708a28616630bee0e3dfbbfc6f7b8d974",
+      "stream": "bass",
+      "summary": {
+        "added": 115,
+        "eligible": 252,
+        "newRecoveryEventsAddedOnlyToPreviouslyEmptySteps": true,
+        "preExistingCollisionSteps": 4,
+        "preExistingCollisionsPreserved": true,
+        "sitesWithAdds": 115
+      }
+    },
+    {
+      "config": {
+        "activitySupportMin": 0.1,
+        "baseline": false,
+        "existingEventsPreferred": true,
+        "fundamentalPresentRequired": true,
+        "id": "b-r950-o20-a10-all",
+        "lowRegisterMaxMidi": 40,
+        "newRecoveryCapPerPreviouslyEmptyStep": 1,
+        "onsetSupportMin": 0.2,
+        "preExistingIteration002StepCollisionsPreserved": true,
+        "scope": "all",
+        "stream": "bass",
+        "templateRankMin": 0.95
+      },
+      "counts": {
+        "bass": 539,
+        "combinedGuitar": 1050
+      },
+      "id": "b-r950-o20-a10-all",
+      "relativePath": "bass/b-r950-o20-a10-all.json",
+      "sha256": "d4a162cd0305098944b269e2514192fe29b02f17da4d65fc657800b05dd10174",
+      "stream": "bass",
+      "summary": {
+        "added": 137,
+        "eligible": 411,
+        "newRecoveryEventsAddedOnlyToPreviouslyEmptySteps": true,
+        "preExistingCollisionSteps": 4,
+        "preExistingCollisionsPreserved": true,
+        "sitesWithAdds": 137
+      }
+    },
+    {
+      "config": {
+        "activitySupportMin": 0.1,
+        "baseline": false,
+        "existingEventsPreferred": true,
+        "fundamentalPresentRequired": true,
+        "id": "b-r950-o20-a10-no_stable_state",
+        "lowRegisterMaxMidi": 40,
+        "newRecoveryCapPerPreviouslyEmptyStep": 1,
+        "onsetSupportMin": 0.2,
+        "preExistingIteration002StepCollisionsPreserved": true,
+        "scope": "no_stable_state",
+        "stream": "bass",
+        "templateRankMin": 0.95
+      },
+      "counts": {
+        "bass": 515,
+        "combinedGuitar": 1050
+      },
+      "id": "b-r950-o20-a10-no_stable_state",
+      "relativePath": "bass/b-r950-o20-a10-no_stable_state.json",
+      "sha256": "c204c8628ae1f94b928515ebfaf82cffa18befaeb4aad2b31a1e362040ff0089",
+      "stream": "bass",
+      "summary": {
+        "added": 113,
+        "eligible": 339,
+        "newRecoveryEventsAddedOnlyToPreviouslyEmptySteps": true,
+        "preExistingCollisionSteps": 4,
+        "preExistingCollisionsPreserved": true,
+        "sitesWithAdds": 113
+      }
+    },
+    {
+      "config": {
+        "activitySupportMin": 0.1,
+        "baseline": false,
+        "existingEventsPreferred": true,
+        "fundamentalPresentRequired": true,
+        "id": "b-r950-o20-a10-low_register",
+        "lowRegisterMaxMidi": 40,
+        "newRecoveryCapPerPreviouslyEmptyStep": 1,
+        "onsetSupportMin": 0.2,
+        "preExistingIteration002StepCollisionsPreserved": true,
+        "scope": "low_register",
+        "stream": "bass",
+        "templateRankMin": 0.95
+      },
+      "counts": {
+        "bass": 535,
+        "combinedGuitar": 1050
+      },
+      "id": "b-r950-o20-a10-low_register",
+      "relativePath": "bass/b-r950-o20-a10-low_register.json",
+      "sha256": "7bd476c6e2bba2aefe8fd5ac2f9c1352acd553e026027d368e2dc91206817f77",
+      "stream": "bass",
+      "summary": {
+        "added": 133,
+        "eligible": 302,
+        "newRecoveryEventsAddedOnlyToPreviouslyEmptySteps": true,
+        "preExistingCollisionSteps": 4,
+        "preExistingCollisionsPreserved": true,
+        "sitesWithAdds": 133
+      }
+    },
+    {
+      "config": {
+        "activitySupportMin": 0.1,
+        "baseline": false,
+        "existingEventsPreferred": true,
+        "fundamentalPresentRequired": true,
+        "id": "b-r950-o20-a10-low_register_no_stable_state",
+        "lowRegisterMaxMidi": 40,
+        "newRecoveryCapPerPreviouslyEmptyStep": 1,
+        "onsetSupportMin": 0.2,
+        "preExistingIteration002StepCollisionsPreserved": true,
+        "scope": "low_register_no_stable_state",
+        "stream": "bass",
+        "templateRankMin": 0.95
+      },
+      "counts": {
+        "bass": 515,
+        "combinedGuitar": 1050
+      },
+      "id": "b-r950-o20-a10-low_register_no_stable_state",
+      "relativePath": "bass/b-r950-o20-a10-low_register_no_stable_state.json",
+      "sha256": "9d7839c028872898d9878fa608e8ceba71ec17166b1b411e9f669b8486d02d60",
+      "stream": "bass",
+      "summary": {
+        "added": 113,
+        "eligible": 248,
+        "newRecoveryEventsAddedOnlyToPreviouslyEmptySteps": true,
+        "preExistingCollisionSteps": 4,
+        "preExistingCollisionsPreserved": true,
+        "sitesWithAdds": 113
+      }
+    },
+    {
+      "config": {
+        "activitySupportMin": 0.04,
+        "baseline": false,
+        "existingEventsPreferred": true,
+        "fundamentalPresentRequired": true,
+        "id": "b-r950-o35-a04-all",
+        "lowRegisterMaxMidi": 40,
+        "newRecoveryCapPerPreviouslyEmptyStep": 1,
+        "onsetSupportMin": 0.35,
+        "preExistingIteration002StepCollisionsPreserved": true,
+        "scope": "all",
+        "stream": "bass",
+        "templateRankMin": 0.95
+      },
+      "counts": {
+        "bass": 539,
+        "combinedGuitar": 1050
+      },
+      "id": "b-r950-o35-a04-all",
+      "relativePath": "bass/b-r950-o35-a04-all.json",
+      "sha256": "35da928b3a72600a22ec662a8747282f9fe9511a3ddfbc09cc19f1b997f56204",
+      "stream": "bass",
+      "summary": {
+        "added": 137,
+        "eligible": 411,
+        "newRecoveryEventsAddedOnlyToPreviouslyEmptySteps": true,
+        "preExistingCollisionSteps": 4,
+        "preExistingCollisionsPreserved": true,
+        "sitesWithAdds": 137
+      }
+    },
+    {
+      "config": {
+        "activitySupportMin": 0.04,
+        "baseline": false,
+        "existingEventsPreferred": true,
+        "fundamentalPresentRequired": true,
+        "id": "b-r950-o35-a04-no_stable_state",
+        "lowRegisterMaxMidi": 40,
+        "newRecoveryCapPerPreviouslyEmptyStep": 1,
+        "onsetSupportMin": 0.35,
+        "preExistingIteration002StepCollisionsPreserved": true,
+        "scope": "no_stable_state",
+        "stream": "bass",
+        "templateRankMin": 0.95
+      },
+      "counts": {
+        "bass": 517,
+        "combinedGuitar": 1050
+      },
+      "id": "b-r950-o35-a04-no_stable_state",
+      "relativePath": "bass/b-r950-o35-a04-no_stable_state.json",
+      "sha256": "d0d1fd839fe5e4ed16224eeadc4caf8bd8a50577811808f1d13425f6f2164964",
+      "stream": "bass",
+      "summary": {
+        "added": 115,
+        "eligible": 345,
+        "newRecoveryEventsAddedOnlyToPreviouslyEmptySteps": true,
+        "preExistingCollisionSteps": 4,
+        "preExistingCollisionsPreserved": true,
+        "sitesWithAdds": 115
+      }
+    },
+    {
+      "config": {
+        "activitySupportMin": 0.04,
+        "baseline": false,
+        "existingEventsPreferred": true,
+        "fundamentalPresentRequired": true,
+        "id": "b-r950-o35-a04-low_register",
+        "lowRegisterMaxMidi": 40,
+        "newRecoveryCapPerPreviouslyEmptyStep": 1,
+        "onsetSupportMin": 0.35,
+        "preExistingIteration002StepCollisionsPreserved": true,
+        "scope": "low_register",
+        "stream": "bass",
+        "templateRankMin": 0.95
+      },
+      "counts": {
+        "bass": 536,
+        "combinedGuitar": 1050
+      },
+      "id": "b-r950-o35-a04-low_register",
+      "relativePath": "bass/b-r950-o35-a04-low_register.json",
+      "sha256": "48b23620db9d7ee4e424ec8f28bb3cf8ffa794b5e975cb817dd2e5ca74a38e1f",
+      "stream": "bass",
+      "summary": {
+        "added": 134,
+        "eligible": 303,
+        "newRecoveryEventsAddedOnlyToPreviouslyEmptySteps": true,
+        "preExistingCollisionSteps": 4,
+        "preExistingCollisionsPreserved": true,
+        "sitesWithAdds": 134
+      }
+    },
+    {
+      "config": {
+        "activitySupportMin": 0.04,
+        "baseline": false,
+        "existingEventsPreferred": true,
+        "fundamentalPresentRequired": true,
+        "id": "b-r950-o35-a04-low_register_no_stable_state",
+        "lowRegisterMaxMidi": 40,
+        "newRecoveryCapPerPreviouslyEmptyStep": 1,
+        "onsetSupportMin": 0.35,
+        "preExistingIteration002StepCollisionsPreserved": true,
+        "scope": "low_register_no_stable_state",
+        "stream": "bass",
+        "templateRankMin": 0.95
+      },
+      "counts": {
+        "bass": 517,
+        "combinedGuitar": 1050
+      },
+      "id": "b-r950-o35-a04-low_register_no_stable_state",
+      "relativePath": "bass/b-r950-o35-a04-low_register_no_stable_state.json",
+      "sha256": "4ab11e18f08f3d3a8f546e11cb81c1882124b60e1c96988f410e602857b2f288",
+      "stream": "bass",
+      "summary": {
+        "added": 115,
+        "eligible": 252,
+        "newRecoveryEventsAddedOnlyToPreviouslyEmptySteps": true,
+        "preExistingCollisionSteps": 4,
+        "preExistingCollisionsPreserved": true,
+        "sitesWithAdds": 115
+      }
+    },
+    {
+      "config": {
+        "activitySupportMin": 0.1,
+        "baseline": false,
+        "existingEventsPreferred": true,
+        "fundamentalPresentRequired": true,
+        "id": "b-r950-o35-a10-all",
+        "lowRegisterMaxMidi": 40,
+        "newRecoveryCapPerPreviouslyEmptyStep": 1,
+        "onsetSupportMin": 0.35,
+        "preExistingIteration002StepCollisionsPreserved": true,
+        "scope": "all",
+        "stream": "bass",
+        "templateRankMin": 0.95
+      },
+      "counts": {
+        "bass": 537,
+        "combinedGuitar": 1050
+      },
+      "id": "b-r950-o35-a10-all",
+      "relativePath": "bass/b-r950-o35-a10-all.json",
+      "sha256": "14cebfaea2364c006613b70ddfb618e560149692d3cb0523a1ed8e3c0dc833d8",
+      "stream": "bass",
+      "summary": {
+        "added": 135,
+        "eligible": 405,
+        "newRecoveryEventsAddedOnlyToPreviouslyEmptySteps": true,
+        "preExistingCollisionSteps": 4,
+        "preExistingCollisionsPreserved": true,
+        "sitesWithAdds": 135
+      }
+    },
+    {
+      "config": {
+        "activitySupportMin": 0.1,
+        "baseline": false,
+        "existingEventsPreferred": true,
+        "fundamentalPresentRequired": true,
+        "id": "b-r950-o35-a10-no_stable_state",
+        "lowRegisterMaxMidi": 40,
+        "newRecoveryCapPerPreviouslyEmptyStep": 1,
+        "onsetSupportMin": 0.35,
+        "preExistingIteration002StepCollisionsPreserved": true,
+        "scope": "no_stable_state",
+        "stream": "bass",
+        "templateRankMin": 0.95
+      },
+      "counts": {
+        "bass": 515,
+        "combinedGuitar": 1050
+      },
+      "id": "b-r950-o35-a10-no_stable_state",
+      "relativePath": "bass/b-r950-o35-a10-no_stable_state.json",
+      "sha256": "70cec73f673ca05489c1fcf0309fb39dd30d7d540ade2de93cfdcc569472c9c4",
+      "stream": "bass",
+      "summary": {
+        "added": 113,
+        "eligible": 339,
+        "newRecoveryEventsAddedOnlyToPreviouslyEmptySteps": true,
+        "preExistingCollisionSteps": 4,
+        "preExistingCollisionsPreserved": true,
+        "sitesWithAdds": 113
+      }
+    },
+    {
+      "config": {
+        "activitySupportMin": 0.1,
+        "baseline": false,
+        "existingEventsPreferred": true,
+        "fundamentalPresentRequired": true,
+        "id": "b-r950-o35-a10-low_register",
+        "lowRegisterMaxMidi": 40,
+        "newRecoveryCapPerPreviouslyEmptyStep": 1,
+        "onsetSupportMin": 0.35,
+        "preExistingIteration002StepCollisionsPreserved": true,
+        "scope": "low_register",
+        "stream": "bass",
+        "templateRankMin": 0.95
+      },
+      "counts": {
+        "bass": 534,
+        "combinedGuitar": 1050
+      },
+      "id": "b-r950-o35-a10-low_register",
+      "relativePath": "bass/b-r950-o35-a10-low_register.json",
+      "sha256": "ccb3f1df54eea70a92990edbafb8b8633916454a9c97beb6832d663cfe95b693",
+      "stream": "bass",
+      "summary": {
+        "added": 132,
+        "eligible": 299,
+        "newRecoveryEventsAddedOnlyToPreviouslyEmptySteps": true,
+        "preExistingCollisionSteps": 4,
+        "preExistingCollisionsPreserved": true,
+        "sitesWithAdds": 132
+      }
+    },
+    {
+      "config": {
+        "activitySupportMin": 0.1,
+        "baseline": false,
+        "existingEventsPreferred": true,
+        "fundamentalPresentRequired": true,
+        "id": "b-r950-o35-a10-low_register_no_stable_state",
+        "lowRegisterMaxMidi": 40,
+        "newRecoveryCapPerPreviouslyEmptyStep": 1,
+        "onsetSupportMin": 0.35,
+        "preExistingIteration002StepCollisionsPreserved": true,
+        "scope": "low_register_no_stable_state",
+        "stream": "bass",
+        "templateRankMin": 0.95
+      },
+      "counts": {
+        "bass": 515,
+        "combinedGuitar": 1050
+      },
+      "id": "b-r950-o35-a10-low_register_no_stable_state",
+      "relativePath": "bass/b-r950-o35-a10-low_register_no_stable_state.json",
+      "sha256": "0eacabbe79dcc90560a96a77168e4ba6d731970eb1981a5d6c5138c968093db7",
+      "stream": "bass",
+      "summary": {
+        "added": 113,
+        "eligible": 248,
+        "newRecoveryEventsAddedOnlyToPreviouslyEmptySteps": true,
+        "preExistingCollisionSteps": 4,
+        "preExistingCollisionsPreserved": true,
+        "sitesWithAdds": 113
+      }
+    },
+    {
+      "config": {
+        "activitySupportMin": 0.04,
+        "baseline": false,
+        "existingEventsPreferred": true,
+        "fundamentalPresentRequired": true,
+        "id": "b-r950-o50-a04-all",
+        "lowRegisterMaxMidi": 40,
+        "newRecoveryCapPerPreviouslyEmptyStep": 1,
+        "onsetSupportMin": 0.5,
+        "preExistingIteration002StepCollisionsPreserved": true,
+        "scope": "all",
+        "stream": "bass",
+        "templateRankMin": 0.95
+      },
+      "counts": {
+        "bass": 537,
+        "combinedGuitar": 1050
+      },
+      "id": "b-r950-o50-a04-all",
+      "relativePath": "bass/b-r950-o50-a04-all.json",
+      "sha256": "21500c795a3b2b1d6cf306dd68e9a4fb46d95166c04cd95e00cc625bb5cb603f",
+      "stream": "bass",
+      "summary": {
+        "added": 135,
+        "eligible": 405,
+        "newRecoveryEventsAddedOnlyToPreviouslyEmptySteps": true,
+        "preExistingCollisionSteps": 4,
+        "preExistingCollisionsPreserved": true,
+        "sitesWithAdds": 135
+      }
+    },
+    {
+      "config": {
+        "activitySupportMin": 0.04,
+        "baseline": false,
+        "existingEventsPreferred": true,
+        "fundamentalPresentRequired": true,
+        "id": "b-r950-o50-a04-no_stable_state",
+        "lowRegisterMaxMidi": 40,
+        "newRecoveryCapPerPreviouslyEmptyStep": 1,
+        "onsetSupportMin": 0.5,
+        "preExistingIteration002StepCollisionsPreserved": true,
+        "scope": "no_stable_state",
+        "stream": "bass",
+        "templateRankMin": 0.95
+      },
+      "counts": {
+        "bass": 515,
+        "combinedGuitar": 1050
+      },
+      "id": "b-r950-o50-a04-no_stable_state",
+      "relativePath": "bass/b-r950-o50-a04-no_stable_state.json",
+      "sha256": "35884585364fbacf2cda9b3f112d36b7f1325e35c32fef86fe79badd64bca8de",
+      "stream": "bass",
+      "summary": {
+        "added": 113,
+        "eligible": 339,
+        "newRecoveryEventsAddedOnlyToPreviouslyEmptySteps": true,
+        "preExistingCollisionSteps": 4,
+        "preExistingCollisionsPreserved": true,
+        "sitesWithAdds": 113
+      }
+    },
+    {
+      "config": {
+        "activitySupportMin": 0.04,
+        "baseline": false,
+        "existingEventsPreferred": true,
+        "fundamentalPresentRequired": true,
+        "id": "b-r950-o50-a04-low_register",
+        "lowRegisterMaxMidi": 40,
+        "newRecoveryCapPerPreviouslyEmptyStep": 1,
+        "onsetSupportMin": 0.5,
+        "preExistingIteration002StepCollisionsPreserved": true,
+        "scope": "low_register",
+        "stream": "bass",
+        "templateRankMin": 0.95
+      },
+      "counts": {
+        "bass": 534,
+        "combinedGuitar": 1050
+      },
+      "id": "b-r950-o50-a04-low_register",
+      "relativePath": "bass/b-r950-o50-a04-low_register.json",
+      "sha256": "4a2351fe9e4ad028f783e6060c04f60d41bcd79ded02a74e5589581e520cc1c4",
+      "stream": "bass",
+      "summary": {
+        "added": 132,
+        "eligible": 297,
+        "newRecoveryEventsAddedOnlyToPreviouslyEmptySteps": true,
+        "preExistingCollisionSteps": 4,
+        "preExistingCollisionsPreserved": true,
+        "sitesWithAdds": 132
+      }
+    },
+    {
+      "config": {
+        "activitySupportMin": 0.04,
+        "baseline": false,
+        "existingEventsPreferred": true,
+        "fundamentalPresentRequired": true,
+        "id": "b-r950-o50-a04-low_register_no_stable_state",
+        "lowRegisterMaxMidi": 40,
+        "newRecoveryCapPerPreviouslyEmptyStep": 1,
+        "onsetSupportMin": 0.5,
+        "preExistingIteration002StepCollisionsPreserved": true,
+        "scope": "low_register_no_stable_state",
+        "stream": "bass",
+        "templateRankMin": 0.95
+      },
+      "counts": {
+        "bass": 515,
+        "combinedGuitar": 1050
+      },
+      "id": "b-r950-o50-a04-low_register_no_stable_state",
+      "relativePath": "bass/b-r950-o50-a04-low_register_no_stable_state.json",
+      "sha256": "253b4ce2df6509ac40a64bc9ca55098d6d076ee22d56a75ff232c73d549d04ef",
+      "stream": "bass",
+      "summary": {
+        "added": 113,
+        "eligible": 246,
+        "newRecoveryEventsAddedOnlyToPreviouslyEmptySteps": true,
+        "preExistingCollisionSteps": 4,
+        "preExistingCollisionsPreserved": true,
+        "sitesWithAdds": 113
+      }
+    },
+    {
+      "config": {
+        "activitySupportMin": 0.1,
+        "baseline": false,
+        "existingEventsPreferred": true,
+        "fundamentalPresentRequired": true,
+        "id": "b-r950-o50-a10-all",
+        "lowRegisterMaxMidi": 40,
+        "newRecoveryCapPerPreviouslyEmptyStep": 1,
+        "onsetSupportMin": 0.5,
+        "preExistingIteration002StepCollisionsPreserved": true,
+        "scope": "all",
+        "stream": "bass",
+        "templateRankMin": 0.95
+      },
+      "counts": {
+        "bass": 535,
+        "combinedGuitar": 1050
+      },
+      "id": "b-r950-o50-a10-all",
+      "relativePath": "bass/b-r950-o50-a10-all.json",
+      "sha256": "762076088578db66212710dd563ec56e5a948589d459f43ee1d46f2653858356",
+      "stream": "bass",
+      "summary": {
+        "added": 133,
+        "eligible": 399,
+        "newRecoveryEventsAddedOnlyToPreviouslyEmptySteps": true,
+        "preExistingCollisionSteps": 4,
+        "preExistingCollisionsPreserved": true,
+        "sitesWithAdds": 133
+      }
+    },
+    {
+      "config": {
+        "activitySupportMin": 0.1,
+        "baseline": false,
+        "existingEventsPreferred": true,
+        "fundamentalPresentRequired": true,
+        "id": "b-r950-o50-a10-no_stable_state",
+        "lowRegisterMaxMidi": 40,
+        "newRecoveryCapPerPreviouslyEmptyStep": 1,
+        "onsetSupportMin": 0.5,
+        "preExistingIteration002StepCollisionsPreserved": true,
+        "scope": "no_stable_state",
+        "stream": "bass",
+        "templateRankMin": 0.95
+      },
+      "counts": {
+        "bass": 513,
+        "combinedGuitar": 1050
+      },
+      "id": "b-r950-o50-a10-no_stable_state",
+      "relativePath": "bass/b-r950-o50-a10-no_stable_state.json",
+      "sha256": "947af75bd4743a2dc48398b619aacf15e7e42e22d305b0c885c0b6117639d8b8",
+      "stream": "bass",
+      "summary": {
+        "added": 111,
+        "eligible": 333,
+        "newRecoveryEventsAddedOnlyToPreviouslyEmptySteps": true,
+        "preExistingCollisionSteps": 4,
+        "preExistingCollisionsPreserved": true,
+        "sitesWithAdds": 111
+      }
+    },
+    {
+      "config": {
+        "activitySupportMin": 0.1,
+        "baseline": false,
+        "existingEventsPreferred": true,
+        "fundamentalPresentRequired": true,
+        "id": "b-r950-o50-a10-low_register",
+        "lowRegisterMaxMidi": 40,
+        "newRecoveryCapPerPreviouslyEmptyStep": 1,
+        "onsetSupportMin": 0.5,
+        "preExistingIteration002StepCollisionsPreserved": true,
+        "scope": "low_register",
+        "stream": "bass",
+        "templateRankMin": 0.95
+      },
+      "counts": {
+        "bass": 532,
+        "combinedGuitar": 1050
+      },
+      "id": "b-r950-o50-a10-low_register",
+      "relativePath": "bass/b-r950-o50-a10-low_register.json",
+      "sha256": "8889b1def73a327ff41c9b9d3c3b85f1f03b4b372eb7ccc48a907cfce00a65e2",
+      "stream": "bass",
+      "summary": {
+        "added": 130,
+        "eligible": 293,
+        "newRecoveryEventsAddedOnlyToPreviouslyEmptySteps": true,
+        "preExistingCollisionSteps": 4,
+        "preExistingCollisionsPreserved": true,
+        "sitesWithAdds": 130
+      }
+    },
+    {
+      "config": {
+        "activitySupportMin": 0.1,
+        "baseline": false,
+        "existingEventsPreferred": true,
+        "fundamentalPresentRequired": true,
+        "id": "b-r950-o50-a10-low_register_no_stable_state",
+        "lowRegisterMaxMidi": 40,
+        "newRecoveryCapPerPreviouslyEmptyStep": 1,
+        "onsetSupportMin": 0.5,
+        "preExistingIteration002StepCollisionsPreserved": true,
+        "scope": "low_register_no_stable_state",
+        "stream": "bass",
+        "templateRankMin": 0.95
+      },
+      "counts": {
+        "bass": 513,
+        "combinedGuitar": 1050
+      },
+      "id": "b-r950-o50-a10-low_register_no_stable_state",
+      "relativePath": "bass/b-r950-o50-a10-low_register_no_stable_state.json",
+      "sha256": "827e37dd57c951129a4e8d019c931c5d807515b282632de90d7bf34cd6776e47",
+      "stream": "bass",
+      "summary": {
+        "added": 111,
+        "eligible": 242,
+        "newRecoveryEventsAddedOnlyToPreviouslyEmptySteps": true,
+        "preExistingCollisionSteps": 4,
+        "preExistingCollisionsPreserved": true,
+        "sitesWithAdds": 111
+      }
+    },
+    {
+      "config": {
+        "activitySupportMin": 0.04,
+        "baseline": false,
+        "existingEventsPreferred": true,
+        "fundamentalPresentRequired": true,
+        "id": "b-r975-o20-a04-all",
+        "lowRegisterMaxMidi": 40,
+        "newRecoveryCapPerPreviouslyEmptyStep": 1,
+        "onsetSupportMin": 0.2,
+        "preExistingIteration002StepCollisionsPreserved": true,
+        "scope": "all",
+        "stream": "bass",
+        "templateRankMin": 0.975
+      },
+      "counts": {
+        "bass": 541,
+        "combinedGuitar": 1050
+      },
+      "id": "b-r975-o20-a04-all",
+      "relativePath": "bass/b-r975-o20-a04-all.json",
+      "sha256": "ebfeb611987b51f3558dce7cd848a7d4eb00198029ae210ae38234d7e3e51652",
+      "stream": "bass",
+      "summary": {
+        "added": 139,
+        "eligible": 278,
+        "newRecoveryEventsAddedOnlyToPreviouslyEmptySteps": true,
+        "preExistingCollisionSteps": 4,
+        "preExistingCollisionsPreserved": true,
+        "sitesWithAdds": 139
+      }
+    },
+    {
+      "config": {
+        "activitySupportMin": 0.04,
+        "baseline": false,
+        "existingEventsPreferred": true,
+        "fundamentalPresentRequired": true,
+        "id": "b-r975-o20-a04-no_stable_state",
+        "lowRegisterMaxMidi": 40,
+        "newRecoveryCapPerPreviouslyEmptyStep": 1,
+        "onsetSupportMin": 0.2,
+        "preExistingIteration002StepCollisionsPreserved": true,
+        "scope": "no_stable_state",
+        "stream": "bass",
+        "templateRankMin": 0.975
+      },
+      "counts": {
+        "bass": 517,
+        "combinedGuitar": 1050
+      },
+      "id": "b-r975-o20-a04-no_stable_state",
+      "relativePath": "bass/b-r975-o20-a04-no_stable_state.json",
+      "sha256": "89d6f1de8459885fc9d46afa2ed09c7efc2f01d69412a636381ee2258bd5403a",
+      "stream": "bass",
+      "summary": {
+        "added": 115,
+        "eligible": 230,
+        "newRecoveryEventsAddedOnlyToPreviouslyEmptySteps": true,
+        "preExistingCollisionSteps": 4,
+        "preExistingCollisionsPreserved": true,
+        "sitesWithAdds": 115
+      }
+    },
+    {
+      "config": {
+        "activitySupportMin": 0.04,
+        "baseline": false,
+        "existingEventsPreferred": true,
+        "fundamentalPresentRequired": true,
+        "id": "b-r975-o20-a04-low_register",
+        "lowRegisterMaxMidi": 40,
+        "newRecoveryCapPerPreviouslyEmptyStep": 1,
+        "onsetSupportMin": 0.2,
+        "preExistingIteration002StepCollisionsPreserved": true,
+        "scope": "low_register",
+        "stream": "bass",
+        "templateRankMin": 0.975
+      },
+      "counts": {
+        "bass": 535,
+        "combinedGuitar": 1050
+      },
+      "id": "b-r975-o20-a04-low_register",
+      "relativePath": "bass/b-r975-o20-a04-low_register.json",
+      "sha256": "5817132a350ea029a9415aedce11bc2076f09fc102b65b09deb8ee1aa47a1fae",
+      "stream": "bass",
+      "summary": {
+        "added": 133,
+        "eligible": 193,
+        "newRecoveryEventsAddedOnlyToPreviouslyEmptySteps": true,
+        "preExistingCollisionSteps": 4,
+        "preExistingCollisionsPreserved": true,
+        "sitesWithAdds": 133
+      }
+    },
+    {
+      "config": {
+        "activitySupportMin": 0.04,
+        "baseline": false,
+        "existingEventsPreferred": true,
+        "fundamentalPresentRequired": true,
+        "id": "b-r975-o20-a04-low_register_no_stable_state",
+        "lowRegisterMaxMidi": 40,
+        "newRecoveryCapPerPreviouslyEmptyStep": 1,
+        "onsetSupportMin": 0.2,
+        "preExistingIteration002StepCollisionsPreserved": true,
+        "scope": "low_register_no_stable_state",
+        "stream": "bass",
+        "templateRankMin": 0.975
+      },
+      "counts": {
+        "bass": 516,
+        "combinedGuitar": 1050
+      },
+      "id": "b-r975-o20-a04-low_register_no_stable_state",
+      "relativePath": "bass/b-r975-o20-a04-low_register_no_stable_state.json",
+      "sha256": "0eeeb2c688f488ca2881553b7b0c15aa08c4e84a7433800ce10e4fa644e1efbf",
+      "stream": "bass",
+      "summary": {
+        "added": 114,
+        "eligible": 156,
+        "newRecoveryEventsAddedOnlyToPreviouslyEmptySteps": true,
+        "preExistingCollisionSteps": 4,
+        "preExistingCollisionsPreserved": true,
+        "sitesWithAdds": 114
+      }
+    },
+    {
+      "config": {
+        "activitySupportMin": 0.1,
+        "baseline": false,
+        "existingEventsPreferred": true,
+        "fundamentalPresentRequired": true,
+        "id": "b-r975-o20-a10-all",
+        "lowRegisterMaxMidi": 40,
+        "newRecoveryCapPerPreviouslyEmptyStep": 1,
+        "onsetSupportMin": 0.2,
+        "preExistingIteration002StepCollisionsPreserved": true,
+        "scope": "all",
+        "stream": "bass",
+        "templateRankMin": 0.975
+      },
+      "counts": {
+        "bass": 539,
+        "combinedGuitar": 1050
+      },
+      "id": "b-r975-o20-a10-all",
+      "relativePath": "bass/b-r975-o20-a10-all.json",
+      "sha256": "4f77c03212b3c2aefdc7bc449a7a425d5ea0a865f6f0c1cc185ea1c29e357bc1",
+      "stream": "bass",
+      "summary": {
+        "added": 137,
+        "eligible": 274,
+        "newRecoveryEventsAddedOnlyToPreviouslyEmptySteps": true,
+        "preExistingCollisionSteps": 4,
+        "preExistingCollisionsPreserved": true,
+        "sitesWithAdds": 137
+      }
+    },
+    {
+      "config": {
+        "activitySupportMin": 0.1,
+        "baseline": false,
+        "existingEventsPreferred": true,
+        "fundamentalPresentRequired": true,
+        "id": "b-r975-o20-a10-no_stable_state",
+        "lowRegisterMaxMidi": 40,
+        "newRecoveryCapPerPreviouslyEmptyStep": 1,
+        "onsetSupportMin": 0.2,
+        "preExistingIteration002StepCollisionsPreserved": true,
+        "scope": "no_stable_state",
+        "stream": "bass",
+        "templateRankMin": 0.975
+      },
+      "counts": {
+        "bass": 515,
+        "combinedGuitar": 1050
+      },
+      "id": "b-r975-o20-a10-no_stable_state",
+      "relativePath": "bass/b-r975-o20-a10-no_stable_state.json",
+      "sha256": "d07b22daab2d2b11db3af33cf5f4554b70fc8855bd752d400d7fcdec8e603869",
+      "stream": "bass",
+      "summary": {
+        "added": 113,
+        "eligible": 226,
+        "newRecoveryEventsAddedOnlyToPreviouslyEmptySteps": true,
+        "preExistingCollisionSteps": 4,
+        "preExistingCollisionsPreserved": true,
+        "sitesWithAdds": 113
+      }
+    },
+    {
+      "config": {
+        "activitySupportMin": 0.1,
+        "baseline": false,
+        "existingEventsPreferred": true,
+        "fundamentalPresentRequired": true,
+        "id": "b-r975-o20-a10-low_register",
+        "lowRegisterMaxMidi": 40,
+        "newRecoveryCapPerPreviouslyEmptyStep": 1,
+        "onsetSupportMin": 0.2,
+        "preExistingIteration002StepCollisionsPreserved": true,
+        "scope": "low_register",
+        "stream": "bass",
+        "templateRankMin": 0.975
+      },
+      "counts": {
+        "bass": 533,
+        "combinedGuitar": 1050
+      },
+      "id": "b-r975-o20-a10-low_register",
+      "relativePath": "bass/b-r975-o20-a10-low_register.json",
+      "sha256": "750bdd56d6e7fcd89089ea2705ffee1d3cbbf57ca9df275732ae193b55d65153",
+      "stream": "bass",
+      "summary": {
+        "added": 131,
+        "eligible": 190,
+        "newRecoveryEventsAddedOnlyToPreviouslyEmptySteps": true,
+        "preExistingCollisionSteps": 4,
+        "preExistingCollisionsPreserved": true,
+        "sitesWithAdds": 131
+      }
+    },
+    {
+      "config": {
+        "activitySupportMin": 0.1,
+        "baseline": false,
+        "existingEventsPreferred": true,
+        "fundamentalPresentRequired": true,
+        "id": "b-r975-o20-a10-low_register_no_stable_state",
+        "lowRegisterMaxMidi": 40,
+        "newRecoveryCapPerPreviouslyEmptyStep": 1,
+        "onsetSupportMin": 0.2,
+        "preExistingIteration002StepCollisionsPreserved": true,
+        "scope": "low_register_no_stable_state",
+        "stream": "bass",
+        "templateRankMin": 0.975
+      },
+      "counts": {
+        "bass": 514,
+        "combinedGuitar": 1050
+      },
+      "id": "b-r975-o20-a10-low_register_no_stable_state",
+      "relativePath": "bass/b-r975-o20-a10-low_register_no_stable_state.json",
+      "sha256": "9f036378919b91a96b518c6b9506b36d514c7001d4c8022b6cecb03e79ebb873",
+      "stream": "bass",
+      "summary": {
+        "added": 112,
+        "eligible": 153,
+        "newRecoveryEventsAddedOnlyToPreviouslyEmptySteps": true,
+        "preExistingCollisionSteps": 4,
+        "preExistingCollisionsPreserved": true,
+        "sitesWithAdds": 112
+      }
+    },
+    {
+      "config": {
+        "activitySupportMin": 0.04,
+        "baseline": false,
+        "existingEventsPreferred": true,
+        "fundamentalPresentRequired": true,
+        "id": "b-r975-o35-a04-all",
+        "lowRegisterMaxMidi": 40,
+        "newRecoveryCapPerPreviouslyEmptyStep": 1,
+        "onsetSupportMin": 0.35,
+        "preExistingIteration002StepCollisionsPreserved": true,
+        "scope": "all",
+        "stream": "bass",
+        "templateRankMin": 0.975
+      },
+      "counts": {
+        "bass": 539,
+        "combinedGuitar": 1050
+      },
+      "id": "b-r975-o35-a04-all",
+      "relativePath": "bass/b-r975-o35-a04-all.json",
+      "sha256": "b6877378265fa5927db623659c8ebe5c40362a42f2d81e7d96c70d3709c7a5ff",
+      "stream": "bass",
+      "summary": {
+        "added": 137,
+        "eligible": 274,
+        "newRecoveryEventsAddedOnlyToPreviouslyEmptySteps": true,
+        "preExistingCollisionSteps": 4,
+        "preExistingCollisionsPreserved": true,
+        "sitesWithAdds": 137
+      }
+    },
+    {
+      "config": {
+        "activitySupportMin": 0.04,
+        "baseline": false,
+        "existingEventsPreferred": true,
+        "fundamentalPresentRequired": true,
+        "id": "b-r975-o35-a04-no_stable_state",
+        "lowRegisterMaxMidi": 40,
+        "newRecoveryCapPerPreviouslyEmptyStep": 1,
+        "onsetSupportMin": 0.35,
+        "preExistingIteration002StepCollisionsPreserved": true,
+        "scope": "no_stable_state",
+        "stream": "bass",
+        "templateRankMin": 0.975
+      },
+      "counts": {
+        "bass": 517,
+        "combinedGuitar": 1050
+      },
+      "id": "b-r975-o35-a04-no_stable_state",
+      "relativePath": "bass/b-r975-o35-a04-no_stable_state.json",
+      "sha256": "50f856ef244360f1129a775bc4fe27ce6c4d521e2c00e62e8ab90fbedfbdb425",
+      "stream": "bass",
+      "summary": {
+        "added": 115,
+        "eligible": 230,
+        "newRecoveryEventsAddedOnlyToPreviouslyEmptySteps": true,
+        "preExistingCollisionSteps": 4,
+        "preExistingCollisionsPreserved": true,
+        "sitesWithAdds": 115
+      }
+    },
+    {
+      "config": {
+        "activitySupportMin": 0.04,
+        "baseline": false,
+        "existingEventsPreferred": true,
+        "fundamentalPresentRequired": true,
+        "id": "b-r975-o35-a04-low_register",
+        "lowRegisterMaxMidi": 40,
+        "newRecoveryCapPerPreviouslyEmptyStep": 1,
+        "onsetSupportMin": 0.35,
+        "preExistingIteration002StepCollisionsPreserved": true,
+        "scope": "low_register",
+        "stream": "bass",
+        "templateRankMin": 0.975
+      },
+      "counts": {
+        "bass": 534,
+        "combinedGuitar": 1050
+      },
+      "id": "b-r975-o35-a04-low_register",
+      "relativePath": "bass/b-r975-o35-a04-low_register.json",
+      "sha256": "b1912871922615305b3ac1577fc36963e52fbf12c53f5abd121bdd1abadbfcec",
+      "stream": "bass",
+      "summary": {
+        "added": 132,
+        "eligible": 191,
+        "newRecoveryEventsAddedOnlyToPreviouslyEmptySteps": true,
+        "preExistingCollisionSteps": 4,
+        "preExistingCollisionsPreserved": true,
+        "sitesWithAdds": 132
+      }
+    },
+    {
+      "config": {
+        "activitySupportMin": 0.04,
+        "baseline": false,
+        "existingEventsPreferred": true,
+        "fundamentalPresentRequired": true,
+        "id": "b-r975-o35-a04-low_register_no_stable_state",
+        "lowRegisterMaxMidi": 40,
+        "newRecoveryCapPerPreviouslyEmptyStep": 1,
+        "onsetSupportMin": 0.35,
+        "preExistingIteration002StepCollisionsPreserved": true,
+        "scope": "low_register_no_stable_state",
+        "stream": "bass",
+        "templateRankMin": 0.975
+      },
+      "counts": {
+        "bass": 516,
+        "combinedGuitar": 1050
+      },
+      "id": "b-r975-o35-a04-low_register_no_stable_state",
+      "relativePath": "bass/b-r975-o35-a04-low_register_no_stable_state.json",
+      "sha256": "ef5c0cb41cd0913921fe0f10e44105bcebcbedc3c58755c8f2269060567ac3f4",
+      "stream": "bass",
+      "summary": {
+        "added": 114,
+        "eligible": 156,
+        "newRecoveryEventsAddedOnlyToPreviouslyEmptySteps": true,
+        "preExistingCollisionSteps": 4,
+        "preExistingCollisionsPreserved": true,
+        "sitesWithAdds": 114
+      }
+    },
+    {
+      "config": {
+        "activitySupportMin": 0.1,
+        "baseline": false,
+        "existingEventsPreferred": true,
+        "fundamentalPresentRequired": true,
+        "id": "b-r975-o35-a10-all",
+        "lowRegisterMaxMidi": 40,
+        "newRecoveryCapPerPreviouslyEmptyStep": 1,
+        "onsetSupportMin": 0.35,
+        "preExistingIteration002StepCollisionsPreserved": true,
+        "scope": "all",
+        "stream": "bass",
+        "templateRankMin": 0.975
+      },
+      "counts": {
+        "bass": 537,
+        "combinedGuitar": 1050
+      },
+      "id": "b-r975-o35-a10-all",
+      "relativePath": "bass/b-r975-o35-a10-all.json",
+      "sha256": "2f24839424fca93da76a6ab5e87b72a33b0b6e87c1a93f2de71f61f58ac6faaa",
+      "stream": "bass",
+      "summary": {
+        "added": 135,
+        "eligible": 270,
+        "newRecoveryEventsAddedOnlyToPreviouslyEmptySteps": true,
+        "preExistingCollisionSteps": 4,
+        "preExistingCollisionsPreserved": true,
+        "sitesWithAdds": 135
+      }
+    },
+    {
+      "config": {
+        "activitySupportMin": 0.1,
+        "baseline": false,
+        "existingEventsPreferred": true,
+        "fundamentalPresentRequired": true,
+        "id": "b-r975-o35-a10-no_stable_state",
+        "lowRegisterMaxMidi": 40,
+        "newRecoveryCapPerPreviouslyEmptyStep": 1,
+        "onsetSupportMin": 0.35,
+        "preExistingIteration002StepCollisionsPreserved": true,
+        "scope": "no_stable_state",
+        "stream": "bass",
+        "templateRankMin": 0.975
+      },
+      "counts": {
+        "bass": 515,
+        "combinedGuitar": 1050
+      },
+      "id": "b-r975-o35-a10-no_stable_state",
+      "relativePath": "bass/b-r975-o35-a10-no_stable_state.json",
+      "sha256": "998eb8d4b93cf1f07a63928ce8f225fec1cfa06ea0ad620d1ad5a1d34f1f56f6",
+      "stream": "bass",
+      "summary": {
+        "added": 113,
+        "eligible": 226,
+        "newRecoveryEventsAddedOnlyToPreviouslyEmptySteps": true,
+        "preExistingCollisionSteps": 4,
+        "preExistingCollisionsPreserved": true,
+        "sitesWithAdds": 113
+      }
+    },
+    {
+      "config": {
+        "activitySupportMin": 0.1,
+        "baseline": false,
+        "existingEventsPreferred": true,
+        "fundamentalPresentRequired": true,
+        "id": "b-r975-o35-a10-low_register",
+        "lowRegisterMaxMidi": 40,
+        "newRecoveryCapPerPreviouslyEmptyStep": 1,
+        "onsetSupportMin": 0.35,
+        "preExistingIteration002StepCollisionsPreserved": true,
+        "scope": "low_register",
+        "stream": "bass",
+        "templateRankMin": 0.975
+      },
+      "counts": {
+        "bass": 532,
+        "combinedGuitar": 1050
+      },
+      "id": "b-r975-o35-a10-low_register",
+      "relativePath": "bass/b-r975-o35-a10-low_register.json",
+      "sha256": "aa631c4e1ae772ea76ae784f4d661529b8d054afd9df8bb27db7372bc4842600",
+      "stream": "bass",
+      "summary": {
+        "added": 130,
+        "eligible": 188,
+        "newRecoveryEventsAddedOnlyToPreviouslyEmptySteps": true,
+        "preExistingCollisionSteps": 4,
+        "preExistingCollisionsPreserved": true,
+        "sitesWithAdds": 130
+      }
+    },
+    {
+      "config": {
+        "activitySupportMin": 0.1,
+        "baseline": false,
+        "existingEventsPreferred": true,
+        "fundamentalPresentRequired": true,
+        "id": "b-r975-o35-a10-low_register_no_stable_state",
+        "lowRegisterMaxMidi": 40,
+        "newRecoveryCapPerPreviouslyEmptyStep": 1,
+        "onsetSupportMin": 0.35,
+        "preExistingIteration002StepCollisionsPreserved": true,
+        "scope": "low_register_no_stable_state",
+        "stream": "bass",
+        "templateRankMin": 0.975
+      },
+      "counts": {
+        "bass": 514,
+        "combinedGuitar": 1050
+      },
+      "id": "b-r975-o35-a10-low_register_no_stable_state",
+      "relativePath": "bass/b-r975-o35-a10-low_register_no_stable_state.json",
+      "sha256": "04e64c2eaa00afb7ed6bc54ab4e24951f13b7d534b1a20395d0485bbb45ae916",
+      "stream": "bass",
+      "summary": {
+        "added": 112,
+        "eligible": 153,
+        "newRecoveryEventsAddedOnlyToPreviouslyEmptySteps": true,
+        "preExistingCollisionSteps": 4,
+        "preExistingCollisionsPreserved": true,
+        "sitesWithAdds": 112
+      }
+    },
+    {
+      "config": {
+        "activitySupportMin": 0.04,
+        "baseline": false,
+        "existingEventsPreferred": true,
+        "fundamentalPresentRequired": true,
+        "id": "b-r975-o50-a04-all",
+        "lowRegisterMaxMidi": 40,
+        "newRecoveryCapPerPreviouslyEmptyStep": 1,
+        "onsetSupportMin": 0.5,
+        "preExistingIteration002StepCollisionsPreserved": true,
+        "scope": "all",
+        "stream": "bass",
+        "templateRankMin": 0.975
+      },
+      "counts": {
+        "bass": 537,
+        "combinedGuitar": 1050
+      },
+      "id": "b-r975-o50-a04-all",
+      "relativePath": "bass/b-r975-o50-a04-all.json",
+      "sha256": "c9618f17e1f85f6a7c31fa9365196a130c546db0e3e6a54ed89d9cd43d1bbf28",
+      "stream": "bass",
+      "summary": {
+        "added": 135,
+        "eligible": 270,
+        "newRecoveryEventsAddedOnlyToPreviouslyEmptySteps": true,
+        "preExistingCollisionSteps": 4,
+        "preExistingCollisionsPreserved": true,
+        "sitesWithAdds": 135
+      }
+    },
+    {
+      "config": {
+        "activitySupportMin": 0.04,
+        "baseline": false,
+        "existingEventsPreferred": true,
+        "fundamentalPresentRequired": true,
+        "id": "b-r975-o50-a04-no_stable_state",
+        "lowRegisterMaxMidi": 40,
+        "newRecoveryCapPerPreviouslyEmptyStep": 1,
+        "onsetSupportMin": 0.5,
+        "preExistingIteration002StepCollisionsPreserved": true,
+        "scope": "no_stable_state",
+        "stream": "bass",
+        "templateRankMin": 0.975
+      },
+      "counts": {
+        "bass": 515,
+        "combinedGuitar": 1050
+      },
+      "id": "b-r975-o50-a04-no_stable_state",
+      "relativePath": "bass/b-r975-o50-a04-no_stable_state.json",
+      "sha256": "b66ba8df5dce1e166adc7835a2d74e071d251b972c6f7d8fd34802dddf2db418",
+      "stream": "bass",
+      "summary": {
+        "added": 113,
+        "eligible": 226,
+        "newRecoveryEventsAddedOnlyToPreviouslyEmptySteps": true,
+        "preExistingCollisionSteps": 4,
+        "preExistingCollisionsPreserved": true,
+        "sitesWithAdds": 113
+      }
+    },
+    {
+      "config": {
+        "activitySupportMin": 0.04,
+        "baseline": false,
+        "existingEventsPreferred": true,
+        "fundamentalPresentRequired": true,
+        "id": "b-r975-o50-a04-low_register",
+        "lowRegisterMaxMidi": 40,
+        "newRecoveryCapPerPreviouslyEmptyStep": 1,
+        "onsetSupportMin": 0.5,
+        "preExistingIteration002StepCollisionsPreserved": true,
+        "scope": "low_register",
+        "stream": "bass",
+        "templateRankMin": 0.975
+      },
+      "counts": {
+        "bass": 532,
+        "combinedGuitar": 1050
+      },
+      "id": "b-r975-o50-a04-low_register",
+      "relativePath": "bass/b-r975-o50-a04-low_register.json",
+      "sha256": "88389d93a85821777ee0613490416f600c51c0921450f7615b0427429cd4039b",
+      "stream": "bass",
+      "summary": {
+        "added": 130,
+        "eligible": 187,
+        "newRecoveryEventsAddedOnlyToPreviouslyEmptySteps": true,
+        "preExistingCollisionSteps": 4,
+        "preExistingCollisionsPreserved": true,
+        "sitesWithAdds": 130
+      }
+    },
+    {
+      "config": {
+        "activitySupportMin": 0.04,
+        "baseline": false,
+        "existingEventsPreferred": true,
+        "fundamentalPresentRequired": true,
+        "id": "b-r975-o50-a04-low_register_no_stable_state",
+        "lowRegisterMaxMidi": 40,
+        "newRecoveryCapPerPreviouslyEmptyStep": 1,
+        "onsetSupportMin": 0.5,
+        "preExistingIteration002StepCollisionsPreserved": true,
+        "scope": "low_register_no_stable_state",
+        "stream": "bass",
+        "templateRankMin": 0.975
+      },
+      "counts": {
+        "bass": 514,
+        "combinedGuitar": 1050
+      },
+      "id": "b-r975-o50-a04-low_register_no_stable_state",
+      "relativePath": "bass/b-r975-o50-a04-low_register_no_stable_state.json",
+      "sha256": "801e0078b4656d513fc4e9df18ac1b71079f40fc3b9b125ff549e00c2faa6991",
+      "stream": "bass",
+      "summary": {
+        "added": 112,
+        "eligible": 152,
+        "newRecoveryEventsAddedOnlyToPreviouslyEmptySteps": true,
+        "preExistingCollisionSteps": 4,
+        "preExistingCollisionsPreserved": true,
+        "sitesWithAdds": 112
+      }
+    },
+    {
+      "config": {
+        "activitySupportMin": 0.1,
+        "baseline": false,
+        "existingEventsPreferred": true,
+        "fundamentalPresentRequired": true,
+        "id": "b-r975-o50-a10-all",
+        "lowRegisterMaxMidi": 40,
+        "newRecoveryCapPerPreviouslyEmptyStep": 1,
+        "onsetSupportMin": 0.5,
+        "preExistingIteration002StepCollisionsPreserved": true,
+        "scope": "all",
+        "stream": "bass",
+        "templateRankMin": 0.975
+      },
+      "counts": {
+        "bass": 535,
+        "combinedGuitar": 1050
+      },
+      "id": "b-r975-o50-a10-all",
+      "relativePath": "bass/b-r975-o50-a10-all.json",
+      "sha256": "fdd34be6f56ab40be35c6e93a585362ce11b5d4f929bd3740ee9d26da0abb926",
+      "stream": "bass",
+      "summary": {
+        "added": 133,
+        "eligible": 266,
+        "newRecoveryEventsAddedOnlyToPreviouslyEmptySteps": true,
+        "preExistingCollisionSteps": 4,
+        "preExistingCollisionsPreserved": true,
+        "sitesWithAdds": 133
+      }
+    },
+    {
+      "config": {
+        "activitySupportMin": 0.1,
+        "baseline": false,
+        "existingEventsPreferred": true,
+        "fundamentalPresentRequired": true,
+        "id": "b-r975-o50-a10-no_stable_state",
+        "lowRegisterMaxMidi": 40,
+        "newRecoveryCapPerPreviouslyEmptyStep": 1,
+        "onsetSupportMin": 0.5,
+        "preExistingIteration002StepCollisionsPreserved": true,
+        "scope": "no_stable_state",
+        "stream": "bass",
+        "templateRankMin": 0.975
+      },
+      "counts": {
+        "bass": 513,
+        "combinedGuitar": 1050
+      },
+      "id": "b-r975-o50-a10-no_stable_state",
+      "relativePath": "bass/b-r975-o50-a10-no_stable_state.json",
+      "sha256": "aa6dc5a44ff2abf17898391daca1fb8764a6da893ff23609b552946a0eaba2bb",
+      "stream": "bass",
+      "summary": {
+        "added": 111,
+        "eligible": 222,
+        "newRecoveryEventsAddedOnlyToPreviouslyEmptySteps": true,
+        "preExistingCollisionSteps": 4,
+        "preExistingCollisionsPreserved": true,
+        "sitesWithAdds": 111
+      }
+    },
+    {
+      "config": {
+        "activitySupportMin": 0.1,
+        "baseline": false,
+        "existingEventsPreferred": true,
+        "fundamentalPresentRequired": true,
+        "id": "b-r975-o50-a10-low_register",
+        "lowRegisterMaxMidi": 40,
+        "newRecoveryCapPerPreviouslyEmptyStep": 1,
+        "onsetSupportMin": 0.5,
+        "preExistingIteration002StepCollisionsPreserved": true,
+        "scope": "low_register",
+        "stream": "bass",
+        "templateRankMin": 0.975
+      },
+      "counts": {
+        "bass": 530,
+        "combinedGuitar": 1050
+      },
+      "id": "b-r975-o50-a10-low_register",
+      "relativePath": "bass/b-r975-o50-a10-low_register.json",
+      "sha256": "4fc9e811e8d28a1f9009e91c2fb900d7affad1af1103382ef492b5f71827648d",
+      "stream": "bass",
+      "summary": {
+        "added": 128,
+        "eligible": 184,
+        "newRecoveryEventsAddedOnlyToPreviouslyEmptySteps": true,
+        "preExistingCollisionSteps": 4,
+        "preExistingCollisionsPreserved": true,
+        "sitesWithAdds": 128
+      }
+    },
+    {
+      "config": {
+        "activitySupportMin": 0.1,
+        "baseline": false,
+        "existingEventsPreferred": true,
+        "fundamentalPresentRequired": true,
+        "id": "b-r975-o50-a10-low_register_no_stable_state",
+        "lowRegisterMaxMidi": 40,
+        "newRecoveryCapPerPreviouslyEmptyStep": 1,
+        "onsetSupportMin": 0.5,
+        "preExistingIteration002StepCollisionsPreserved": true,
+        "scope": "low_register_no_stable_state",
+        "stream": "bass",
+        "templateRankMin": 0.975
+      },
+      "counts": {
+        "bass": 512,
+        "combinedGuitar": 1050
+      },
+      "id": "b-r975-o50-a10-low_register_no_stable_state",
+      "relativePath": "bass/b-r975-o50-a10-low_register_no_stable_state.json",
+      "sha256": "2e04edd9cb61795ea9679ce899c7ded9549bb0f5d9f8e04a5d53fdf07ec9fa13",
+      "stream": "bass",
+      "summary": {
+        "added": 110,
+        "eligible": 149,
+        "newRecoveryEventsAddedOnlyToPreviouslyEmptySteps": true,
+        "preExistingCollisionSteps": 4,
+        "preExistingCollisionsPreserved": true,
+        "sitesWithAdds": 110
+      }
+    }
+  ],
+  "version": "V167"
+}
