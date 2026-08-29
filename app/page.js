@@ -2890,6 +2890,12 @@ const songUrl = isLocalePage ? `/${currentLocale}/songs/${data.slug}` : `/songs/
                   Tab Studio Tokens
                 </h2>
                 <p className="text-zinc-400 mt-1 text-sm">Generate and manage complimentary PDF unlocks, testing tokens, and promotional offers.</p>
+                <a
+                  href="/admin/bts-tokens"
+                  className="mt-3 inline-flex items-center rounded-lg border border-green-500/30 bg-green-500/10 px-3 py-2 text-xs font-bold text-green-300 transition hover:bg-green-500/20"
+                >
+                  Open Backing Track Studio Token Manager →
+                </a>
               </div>
               <button
                 onClick={loadTabTokens}
