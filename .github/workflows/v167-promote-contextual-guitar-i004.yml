@@ -1,0 +1,201 @@
+name: V167 promote frozen contextual Guitar winner to I004
+
+on:
+  push:
+    branches:
+      - v143-contextual-prune-lobo
+    paths:
+      - .github/workflows/v167-promote-contextual-guitar-i004.yml
+
+permissions:
+  contents: write
+
+concurrency:
+  group: v167-promote-contextual-guitar-i004-once
+  cancel-in-progress: false
+
+env:
+  BRANCH: v143-contextual-prune-lobo
+  EXPECTED_PARENT_HEAD: 1b89b9529835809cd912d2adf0ffbb87f1c4f21e
+  BASE: debug/v167-single-song-calibration/iteration-003-generated.json
+  POOL: debug/v167-single-song-calibration/nearmiss-evidence-pool.json
+  TIMEBASE: debug/v166-cpu-autonomous/timebase.json
+  MANIFEST: debug/v167-single-song-calibration/contextual-guitar-recovery-sweep-manifest.json
+  REPORT: debug/v167-single-song-calibration/contextual-guitar-recovery-sweep.json
+  BASE_BUILDER: validation/v167_single_song_calibration/build_upstream_recovery_variants_v167.py
+  CONTEXTUAL_BUILDER: validation/v167_single_song_calibration/build_contextual_guitar_recovery_variants_v167.py
+  PROMOTER: validation/v167_single_song_calibration/promote_contextual_guitar_winner_v167.py
+  OUTPUT: debug/v167-single-song-calibration/iteration-004-generated.json
+  PROOF: debug/v167-single-song-calibration/iteration-004-promotion-proof.json
+  RECEIPT: debug/v167-single-song-calibration/iteration-004-freeze-receipt.json
+  CUDA_VISIBLE_DEVICES: ""
+  PYTHONHASHSEED: "0"
+  OMP_NUM_THREADS: "1"
+  MKL_NUM_THREADS: "1"
+  OPENBLAS_NUM_THREADS: "1"
+  NUMEXPR_NUM_THREADS: "1"
+
+jobs:
+  promote-once:
+    if: github.ref == 'refs/heads/v143-contextual-prune-lobo'
+    runs-on: ubuntu-latest
+    timeout-minutes: 60
+    steps:
+      - name: Checkout exact I004 promotion arm
+        uses: actions/checkout@v4
+        with:
+          ref: ${{ github.sha }}
+          fetch-depth: 0
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.10.21'
+
+      - name: Verify immutable no-rescore promotion boundary
+        shell: bash
+        run: |
+          set -euo pipefail
+          test "$GITHUB_EVENT_NAME" = "push"
+          test "$GITHUB_RUN_ATTEMPT" = "1"
+          test "$(git rev-parse HEAD^)" = "$EXPECTED_PARENT_HEAD"
+          test "$(git diff --name-only "$EXPECTED_PARENT_HEAD" "$GITHUB_SHA")" = ".github/workflows/v167-promote-contextual-guitar-i004.yml"
+          git fetch origin "$BRANCH"
+          test "$(git rev-parse "origin/$BRANCH")" = "$GITHUB_SHA"
+
+          test "$(git hash-object "$BASE")" = "758f8762632e916306aed9b036a6483af9431dc0"
+          test "$(git hash-object "$POOL")" = "aa7da3a55344b1418a291f30fab9ca55858fc094"
+          test "$(git hash-object "$TIMEBASE")" = "abebae25801b7ddeb5b933977c4f4a918f7bf9ef"
+          test "$(git hash-object "$MANIFEST")" = "b9ec90a34e0d7a4a6b6ee7fb3f5a1eef7e6bba5d"
+          test "$(git hash-object "$REPORT")" = "b00e25f5c1fd9f8c40b440156e049317e008ec1d"
+          test "$(git hash-object "$BASE_BUILDER")" = "24413d321f64bbfcce48812ceb85b4593dcfa80c"
+          test "$(git hash-object "$CONTEXTUAL_BUILDER")" = "fd257fe88c5dcd9b3ab135263a6457140c3f63b6"
+          test "$(git hash-object "$PROMOTER")" = "cd099c6a7f1c33a4d3c5f1ce58c27d4d8d20078f"
+          test "$(git hash-object docs/checkpoints/CURRENT_STATE.md)" = "4113e01c0ebfdffacdb92add6384812cf8772fd1"
+
+          test ! -e "$OUTPUT"
+          test ! -e "$PROOF"
+          test ! -e "$RECEIPT"
+          python -m py_compile "$BASE_BUILDER" "$CONTEXTUAL_BUILDER" "$PROMOTER"
+
+          python - <<'PY'
+          import hashlib
+          from pathlib import Path
+          checks={
+            'debug/v167-single-song-calibration/iteration-003-generated.json':'f15c6f40dd4b8479c2dfb7eab039cff98a23b45eb796265ffad08c5a8ae37115',
+            'debug/v167-single-song-calibration/nearmiss-evidence-pool.json':'1c983784c2d12a22437a80387525789bcf55a2f4e4a5c7a96608c575bf709673',
+            'debug/v167-single-song-calibration/contextual-guitar-recovery-sweep-manifest.json':'2f51fa0cba372acc8f797a2e700b3b0a6bb42b807ad4bad818b3c40c262df876',
+            'debug/v167-single-song-calibration/contextual-guitar-recovery-sweep.json':'6b661f6dfa27d31204f4e8a9035d286d5324440b947eb3e49db99205dad9320e',
+          }
+          for path,expected in checks.items():
+              actual=hashlib.sha256(Path(path).read_bytes()).hexdigest()
+              assert actual==expected,(path,actual,expected)
+          promoter=Path('validation/v167_single_song_calibration/promote_contextual_guitar_winner_v167.py').read_text()
+          for forbidden in ('frontend-reference-payload.json','score_frontend_reference.py'):
+              assert forbidden not in promoter,forbidden
+          PY
+
+      - name: Reconstruct frozen winner and promote to rich I004
+        shell: bash
+        run: |
+          set -euo pipefail
+          python "$PROMOTER" \
+            --base "$BASE" \
+            --pool "$POOL" \
+            --timebase "$TIMEBASE" \
+            --manifest "$MANIFEST" \
+            --report "$REPORT" \
+            --base-builder "$BASE_BUILDER" \
+            --contextual-builder "$CONTEXTUAL_BUILDER" \
+            --output "$OUTPUT" \
+            --proof "$PROOF" \
+            --base-blob "758f8762632e916306aed9b036a6483af9431dc0" \
+            --pool-blob "aa7da3a55344b1418a291f30fab9ca55858fc094" \
+            --timebase-blob "abebae25801b7ddeb5b933977c4f4a918f7bf9ef" \
+            --manifest-blob "b9ec90a34e0d7a4a6b6ee7fb3f5a1eef7e6bba5d" \
+            --report-blob "b00e25f5c1fd9f8c40b440156e049317e008ec1d"
+
+          python - <<'PY'
+          import json
+          output=json.load(open('debug/v167-single-song-calibration/iteration-004-generated.json'))
+          proof=json.load(open('debug/v167-single-song-calibration/iteration-004-promotion-proof.json'))
+          assert output['version']=='V167'
+          assert output['status']=='CALIBRATION_ITERATION_004_FROZEN_CONTEXTUAL_GUITAR_WINNER_PROMOTED'
+          assert output['calibration']['iteration']==4
+          assert output['calibration']['parentIteration']==3
+          assert output['calibration']['selectedRuleId']=='gctx-o50-q100-allow-noharm'
+          assert output['calibration']['frozenScoredWinnerCandidateSha256']=='2527870bc4655c238d5f4fbd0e243ab518554e17c4e2c29db2794225bbbeed43'
+          assert output['calibration']['reconstructedScoredWinnerCandidateSha256']=='2527870bc4655c238d5f4fbd0e243ab518554e17c4e2c29db2794225bbbeed43'
+          assert len(output['streams']['combinedGuitar'])==1113
+          assert len(output['streams']['bass'])==512
+          assert proof['status']=='ITERATION_004_NORMALIZED_STREAM_EQUALITY_PROVEN'
+          assert proof['streamProof']['combinedGuitar']['contextualRecoveryAdditions']==63
+          assert proof['streamProof']['combinedGuitar']['parentRichEventDictionaryMultisetExactlyPreserved'] is True
+          assert proof['streamProof']['combinedGuitar']['normalizedEqualFrozenScoredWinner'] is True
+          assert proof['streamProof']['bass']['richListExactlyPreserved'] is True
+          assert proof['streamProof']['bass']['normalizedEqualIteration003'] is True
+          assert proof['policy']['professionalReferenceReadByPromotion'] is False
+          assert proof['policy']['scorerReadByPromotion'] is False
+          assert proof['policy']['newReferenceFacingScoreCalls']==0
+          assert proof['policy']['postSweepRetuning'] is False
+          assert proof['policy']['gpuCudaModalUsed'] is False
+          assert proof['policy']['mainOrProductionModified'] is False
+          print('I004 candidate SHA256',proof['iteration004CandidateSha256'])
+          PY
+
+      - name: Freeze I004 receipt and self-seal
+        shell: bash
+        run: |
+          set -euo pipefail
+          python - <<'PY'
+          import hashlib,json,os,subprocess
+          from pathlib import Path
+          output=Path('debug/v167-single-song-calibration/iteration-004-generated.json')
+          proof=Path('debug/v167-single-song-calibration/iteration-004-promotion-proof.json')
+          receipt=Path('debug/v167-single-song-calibration/iteration-004-freeze-receipt.json')
+          p=json.loads(proof.read_text())
+          r={
+            'schema':'dadrock.tabs.v167.iteration-004-freeze-receipt.v1',
+            'version':'V167',
+            'status':'ITERATION_004_FROZEN',
+            'classification':'SINGLE_SONG_TRAINING_CALIBRATION_ONLY',
+            'workflowRunId':int(os.environ['GITHUB_RUN_ID']),
+            'workflowRunNumber':int(os.environ['GITHUB_RUN_NUMBER']),
+            'workflowRunAttempt':int(os.environ['GITHUB_RUN_ATTEMPT']),
+            'workflowHeadSha':os.environ['GITHUB_SHA'],
+            'iteration004GitBlob':subprocess.check_output(['git','hash-object',str(output)],text=True).strip(),
+            'iteration004Sha256':hashlib.sha256(output.read_bytes()).hexdigest(),
+            'proofGitBlob':subprocess.check_output(['git','hash-object',str(proof)],text=True).strip(),
+            'proofSha256':hashlib.sha256(proof.read_bytes()).hexdigest(),
+            'selectedWinner':p['selectedWinner'],
+            'streamProof':p['streamProof'],
+            'inheritedFrozenMetrics':{
+              'combinedGuitar':p['selectedWinner']['frozenGuitarMetrics'],
+              'bass':p['selectedWinner']['inheritedBassMetrics'],
+            },
+            'policy':{
+              'professionalReferenceReadByPromotion':False,
+              'scorerReadByPromotion':False,
+              'newReferenceFacingScoreCalls':0,
+              'individualEventSelectionByReference':False,
+              'postSweepRetuning':False,
+              'iteration003Modified':False,
+              'gpuCudaModalUsed':False,
+              'mainOrProductionModified':False,
+              'generalizationClaim':False,
+            },
+          }
+          receipt.write_text(json.dumps(r,indent=2,sort_keys=True)+'\n')
+          PY
+
+          rm .github/workflows/v167-promote-contextual-guitar-i004.yml
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add -A -- "$OUTPUT" "$PROOF" "$RECEIPT" .github/workflows/v167-promote-contextual-guitar-i004.yml
+          changed="$(git diff --cached --name-only)"
+          if echo "$changed" | grep -Ev '^debug/v167-single-song-calibration/iteration-004-(generated|promotion-proof|freeze-receipt)\.json$|^\.github/workflows/v167-promote-contextual-guitar-i004\.yml$'; then
+            echo 'Unexpected I004 promotion path' >&2
+            exit 1
+          fi
+          git commit -m "research: freeze V167 Iteration 004 contextual Guitar winner [skip ci]"
+          git push origin HEAD:"$BRANCH"
