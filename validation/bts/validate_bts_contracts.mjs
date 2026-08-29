@@ -46,6 +46,21 @@ const processRoute = read(
 const cleanupRoute = read(
   'app/api/bts/cleanup/route.js'
 );
+const freeTokenRoute = read(
+  'app/api/bts/free-token/route.js'
+);
+const btsTokenAdminRoute = read(
+  'app/api/admin/bts-tokens/route.js'
+);
+const btsTokenAdminPage = read(
+  'app/admin/bts-tokens/page.js'
+);
+const aiTokenRoute = read(
+  'app/api/free-tab-token/route.js'
+);
+const aiTokenAdminRoute = read(
+  'app/api/admin/tab-tokens/route.js'
+);
 const paypalButton = read(
   'components/BTSPayPalCheckoutButton.js'
 );
@@ -148,7 +163,7 @@ check(
 );
 
 check(
-  'BTS process verifies paid job and resolves Blob server-side',
+  'BTS process verifies signed job and resolves Blob server-side',
   includesAll(processRoute, [
     'verifyBtsJobToken',
     'await head(pathname',
@@ -203,6 +218,62 @@ check(
     "'/api/bts/paypal/create-order'",
     "'/api/bts/paypal/capture-order'",
     'NEXT_PUBLIC_PAYPAL_SANDBOX_CLIENT_ID',
+  ])
+);
+
+check(
+  'BTS checkout exposes a complimentary token alternative',
+  includesAll(paypalButton, [
+    "'/api/bts/free-token'",
+    'Have a free BTS token?',
+    'BTS-XXXX-XXXX-XXXX',
+    "unlockMethod: 'free-token'",
+  ])
+);
+
+check(
+  'BTS free tokens are structurally isolated from AI Tab tokens',
+  freeTokenRoute.includes("db.collection('bts_tokens')") &&
+    freeTokenRoute.includes('^BTS-') &&
+    !freeTokenRoute.includes("db.collection('tab_tokens')") &&
+    aiTokenRoute.includes("db.collection('tab_tokens')") &&
+    aiTokenRoute.includes('^DRT-')
+);
+
+check(
+  'BTS token redemption mirrors AI Tab use accounting',
+  includesAll(freeTokenRoute, [
+    'active: true',
+    'usesRemaining: { $gt: 0 }',
+    '$inc: { usesRemaining: -1 }',
+    '$push: { redemptions: redemption }',
+    "'TOKEN_EMAIL_MISMATCH'",
+    "'TOKEN_EXPIRED'",
+    'createBtsJobToken',
+  ])
+);
+
+check(
+  'BTS token admin uses a separate collection and AI token admin stays unchanged',
+  btsTokenAdminRoute.includes("db.collection('bts_tokens')") &&
+    btsTokenAdminRoute.includes('BTS-${value.slice(0, 4)}') &&
+    !btsTokenAdminRoute.includes("db.collection('tab_tokens')") &&
+    aiTokenAdminRoute.includes("db.collection('tab_tokens')") &&
+    aiTokenAdminRoute.includes('DRT-${raw.slice(0, 4)}')
+);
+
+check(
+  'BTS token admin supports AI-style creator and tracker controls',
+  includesAll(btsTokenAdminPage, [
+    'Uses Per Token',
+    'Assigned Email (optional)',
+    'Expiration (optional)',
+    'Notes (optional)',
+    'Generate BTS Tokens',
+    'BTS Token Tracker',
+    'Redemption History',
+    "tokenAction(token._id, 'toggle'",
+    "tokenAction(token._id, 'delete')",
   ])
 );
 
