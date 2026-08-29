@@ -1,0 +1,103 @@
+{
+  "bass": {
+    "diagnosticPitchContentByMeasure": {
+      "f1": 0.750263435194942,
+      "falseNegative": 191,
+      "falsePositive": 46,
+      "generated": 402,
+      "matched": 356,
+      "precision": 0.8855721393034826,
+      "recall": 0.6508226691042047,
+      "reference": 547
+    },
+    "grossTimingAwarePitch": {
+      "f1": 0.7439409905163331,
+      "falseNegative": 194,
+      "falsePositive": 49,
+      "generated": 402,
+      "matched": 353,
+      "precision": 0.8781094527363185,
+      "recall": 0.6453382084095064,
+      "reference": 547
+    },
+    "localTimingErrorSteps": {
+      "maximum": 0.0,
+      "median": 0.0,
+      "p90": 0.0
+    },
+    "primaryTimingAwarePitch": {
+      "f1": 0.7186512118018967,
+      "falseNegative": 206,
+      "falsePositive": 61,
+      "generated": 402,
+      "matched": 341,
+      "precision": 0.8482587064676617,
+      "recall": 0.623400365630713,
+      "reference": 547
+    }
+  },
+  "combinedGuitar": {
+    "diagnosticPitchContentByMeasure": {
+      "f1": 0.5935325419566108,
+      "falseNegative": 668,
+      "falsePositive": 325,
+      "generated": 1050,
+      "matched": 725,
+      "precision": 0.6904761904761905,
+      "recall": 0.5204594400574301,
+      "reference": 1393
+    },
+    "grossTimingAwarePitch": {
+      "f1": 0.5509619320507573,
+      "falseNegative": 720,
+      "falsePositive": 377,
+      "generated": 1050,
+      "matched": 673,
+      "precision": 0.6409523809523809,
+      "recall": 0.48312993539124194,
+      "reference": 1393
+    },
+    "localTimingErrorSteps": {
+      "maximum": 0.0,
+      "median": 0.0,
+      "p90": 0.0
+    },
+    "primaryTimingAwarePitch": {
+      "f1": 0.419156774457634,
+      "falseNegative": 881,
+      "falsePositive": 538,
+      "generated": 1050,
+      "matched": 512,
+      "precision": 0.4876190476190476,
+      "recall": 0.36755204594400576,
+      "reference": 1393
+    }
+  },
+  "gates": {
+    "bassTimingAwarePitchF1Target": 0.8,
+    "combinedGuitarTimingAwarePitchF1Target": 0.8,
+    "grossToleranceGridSteps": 2.0,
+    "primaryToleranceGridSteps": 0.5
+  },
+  "policy": {
+    "combinedGuitarScoredBeforeRoleSplit": true,
+    "matchingAlgorithm": "maximum-cardinality-then-minimum-total-absolute-timing-error-within-measure-midi",
+    "matchingInputOrderInvariant": true,
+    "measurePitchContentDiagnosticOnly": true,
+    "postScoreRetuningOfSameGeneratedOutputForbidden": true,
+    "scoringWritesNoCorrections": true
+  },
+  "referenceCounts": {
+    "bassExcluded": 0,
+    "bassIncluded": 547,
+    "leadExcluded": 0,
+    "leadIncluded": 447,
+    "rhythmExcluded": 0,
+    "rhythmIncluded": 946
+  },
+  "schema": "dadrock.tabs.v154.cpu-front-end-score.v1",
+  "song": {
+    "artist": "Lenny Kravitz",
+    "title": "Are You Gonna Go My Way"
+  }
+}

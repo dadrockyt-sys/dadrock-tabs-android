@@ -1,0 +1,54 @@
+{
+  "artifacts": {
+    "candidateGitBlob": "7eba73700116ceeca580a8851abe399aed764834",
+    "candidateSha256": "96fbc329d9ba46b06d430c7c3c7b7f5b0e9077f6e133da5c3165c1fde609b5cc",
+    "diagnosticGitBlob": "763b7f6450e02ea66406c5baba1372cde366cd41",
+    "diagnosticSha256": "792cedf9ef62caea30a89f1c520745876e15ef28f015aabe53975b95acef2fae",
+    "scoreGitBlob": "5e01636b8ebe4753ee78a5126bfa321697139932",
+    "scoreSha256": "f4ac083d43d3f8ecf507fca1631b6a6bcafbf403045a4efa1708ce4e3e856772"
+  },
+  "change": {
+    "bassMovedEvents": 15,
+    "bassRule": "max_score_x_mean_support",
+    "combinedGuitarRule": "max_score_x_shared",
+    "globalPhaseCorrectionGridSteps": -12,
+    "guitarMovedEvents": 266,
+    "type": "stored_audio_evidence_whole_stream_step_rules"
+  },
+  "iteration": 2,
+  "label": "SINGLE_SONG_TRAINING_CALIBRATION",
+  "policy": {
+    "calibrationOnly": true,
+    "directReferenceCopy": false,
+    "eventCardinalityChanged": false,
+    "generalizationClaim": false,
+    "gpuCudaModalUsed": false,
+    "humanCorrection": false,
+    "mainOrProductionModified": false,
+    "midiChanged": false,
+    "referenceFacingScore": true,
+    "referenceSelectedIndividualEventAlternative": false,
+    "referenceSelectedWholeRuleOnly": true,
+    "transformReadProfessionalReference": false
+  },
+  "provenance": {
+    "diagnosticGitBlob": "04affbbf88b66264b0b7b2a4dedd27da5c55f632",
+    "parentCandidateGitBlob": "1b73d6ece977fb976fa1c503997e6434d4e4811a",
+    "professionalReferenceGitBlob": "2fbed60b543c0488934d8642c488aa06bf31bbf5",
+    "scorerGitBlob": "9644e65719fbd361a9b39778ae9950c5e983e855",
+    "stepRuleCodeGitBlob": "14cac9e217f65f72933c72ee349523ca9681fc21",
+    "stepRuleSweepGitBlob": "2096d3caa58b6ce7d6ab57aeaa7512989e2e4acd",
+    "transformGitBlob": "00dc94081117664890d1dc5539bf5e69fedf76fa"
+  },
+  "recognitionPercent": {
+    "bass": 71.86512118018967,
+    "combinedGuitar": 41.9156774457634
+  },
+  "schema": "dadrock.tabs.v167.single-song-calibration-iteration-receipt.v1",
+  "status": "ITERATION_FROZEN",
+  "version": "V167",
+  "workflowHeadSha": "db02cdac39bf24bbdc020f4c5e61b0cb86b75ad4",
+  "workflowRunAttempt": 1,
+  "workflowRunId": 33227898407,
+  "workflowRunNumber": 1
+}
