@@ -4,7 +4,7 @@ Updated: 2026-08-29 UTC
 Branch: `v143-contextual-prune-lobo`
 
 ## Active phase
-**V168 is active with status `HOLDOUT_ASSET_MISSING / SCORING_NOT_ARMED`. V167 is CLOSED / TERMINAL and must not be reopened for another Lenny Kravitz calibration sweep. No independent professional combined-Guitar holdout asset has been admitted, so V168 remains at exactly 0 reference-facing score calls. The frozen two-policy protocol, frozen base admission validator, and frozen/self-tested provenance companion remain unchanged. GOAT remains the strongest acquisition lead but is explicitly NOT admitted because legitimate restricted research access and exact access terms/bytes are not yet present. IDMT-SMT-Guitar has now been screened to a terminal `BLOCKED / NOT ADMITTED` state under the current frozen gate: its public use basis is resolved and the original partitions have manual-ground-truth evidence, but the five song-like subset-3 pieces were later additions whose exact annotation preparation/professional validation provenance is not documented strongly enough to claim `professional_scorer_ready`. `main`/Production remain untouched; CPU only; fresh authorization required before GPU/CUDA/Modal.**
+**V168 is active with status `HOLDOUT_ASSET_MISSING / SCORING_NOT_ARMED`. V167 is CLOSED / TERMINAL and must not be reopened for another Lenny Kravitz calibration sweep. No independent professional combined-Guitar holdout asset has been admitted, so V168 remains at exactly 0 reference-facing score calls. The frozen two-policy protocol, frozen base admission validator, and frozen/self-tested provenance companion remain unchanged. GOAT remains the strongest acquisition lead but is explicitly NOT admitted because legitimate restricted research access and exact access terms/bytes are not yet present. IDMT-SMT-Guitar is blocked on subset-3 professional-reference provenance; AG-PT-set is now excluded because it is monophonic individual-note/technique material rather than a song holdout; EG-Solo is now blocked despite promising manual tablature-assisted annotation because its source performances are third-party professional YouTube demonstrations of popular rock songs with no frozen exact-source research-use grant in the inspected project materials. `main`/Production remain untouched; CPU only; fresh authorization required before GPU/CUDA/Modal.**
 
 ## V168 external holdout candidate screening — FROZEN STATUS + ADDENDA
 - Original screening checkpoint: `docs/checkpoints/V168_HOLDOUT_CANDIDATE_SCREENING_20260829.md`.
@@ -13,6 +13,8 @@ Branch: `v143-contextual-prune-lobo`
   - creation commit `2dcaf95ecff3ea7f7f9c422c321bf2948579eae0`.
 - IDMT screening: `docs/checkpoints/V168_IDMT_SMT_GUITAR_SCREENING_20260829.md`.
   - creation commit `5c197a9cef7700df717cfbb041a0673aab5429f0`.
+- AG-PT + EG-Solo triage: `docs/checkpoints/V168_AGPT_EGSOLO_TRIAGE_20260829.md`.
+  - creation commit `e114eab039e588484d4f91fba153dd56e4a4cbaf`.
 - Classification remains **SCREENING ONLY / NO ASSETS ADMITTED / SCORING NOT ARMED**.
 - V168 reference-facing score calls remain **0**.
 - No external source-audio/reference asset has been admitted; no holdout candidate-generation workflow exists; no scorer workflow is armed.
@@ -65,6 +67,23 @@ Branch: `v143-contextual-prune-lobo`
 - A later independent random-sample onset audit reports good timing accuracy (about 8.5 ms mean absolute error on its IDMT sample), but that is not full professional validation of the five subset-3 XML references.
 - Do not promote subset 3 to `professional_scorer_ready` without genuinely new primary-source provenance tying those exact five references to an adequate professional annotation/validation process.
 - No IDMT source/reference bytes were acquired or inspected; no asset was admitted; score calls remain **0**.
+
+### AG-PT-set — EXCLUDED / NOT ADMITTED
+- Frozen triage checkpoint: `docs/checkpoints/V168_AGPT_EGSOLO_TRIAGE_20260829.md`, creation commit `e114eab039e588484d4f91fba153dd56e4a4cbaf`.
+- Authoritative Zenodo DOI `10.5281/zenodo.10159492`, version `v1`, exposes `aGPTset_z.zip` (6.7 GB), MD5 `1dff8103f9ad6e1a86cee2e5e39cbe87`.
+- Zenodo describes 15 h 55 m of **monophonic** recordings of 12 acoustic-guitar techniques, with 32,592 labeled individual notes and millisecond onset timestamps; recordings were performed by 6 players on 7 steel-string guitars.
+- The associated paper provides musician annotation evidence, but the dataset unit is isolated/monophonic technique-note material, not independent song/piece streams.
+- Do not redefine isolated-note recordings as songs to satisfy the frozen >=2-song holdout requirement.
+- Status **EXCLUDED** for V168 cross-song holdout; no bytes acquired; no score calls.
+
+### EG-Solo — BLOCKED / NOT ADMITTED
+- Frozen triage checkpoint: `docs/checkpoints/V168_AGPT_EGSOLO_TRIAGE_20260829.md`, creation commit `e114eab039e588484d4f91fba153dd56e4a4cbaf`.
+- Official project page states 76 clips / ~40 minutes / 6,833 notes from **professional electric-guitar solo demonstration videos available on YouTube**, featuring popular rock songs with backing tracks; note and technique labels are MIDI.
+- Later literature reports manual onset annotation with aid of guitar tablatures, so reference provenance is promising.
+- Public GitHub repo `bryanyu1997/EG-Solo_demo` has no `LICENSE` file in the inspected recursive tree. It contains demo-rendered `ground-truth`, prediction, and Solola WAVs, not a clean licensed source-audio package.
+- Material blocker: exact source performances are third-party YouTube popular-rock demonstrations and the inspected materials provide no frozen research-use grant for those exact source-audio bytes.
+- Public availability/YouTube location is not a sufficient `rightsOrUseBasis` under the frozen intake contract. Do not download/pair source audio by assumption and do not treat rendered `ground-truth` WAV demos as the professional symbolic reference.
+- Reopen only if a legitimate exact-source use basis and stable source identity are obtained prospectively.
 
 ### Other screened candidates — not admitted
 - **GuitarSet:** rich paired guitar audio/annotations, but annotation construction is substantially automated and known annotation issues exist; not enough for current `professional_scorer_ready` contract without independent validation.
@@ -147,13 +166,13 @@ No V168 scorer workflow may be armed until:
 - CPU only; fresh explicit authorization immediately before GPU/CUDA/Modal.
 - Never modify/merge/promote `main` or Production without explicit user direction.
 
-## NEXT boundary — GOAT ACCESS / REMAINING OPEN-CANDIDATE TRIAGE
+## NEXT boundary — GOAT ACCESS / G&N RIGHTS-AND-ACQUISITION TRIAGE
 1. **Do not score.**
 2. Primary path remains legitimate GOAT research access. Do not claim access until actually granted; preserve grant/terms as provenance.
-3. Continue only score-blind metadata/provenance screening of remaining openly obtainable candidates that could plausibly supply >=2 independent real guitar pieces with human/professional note-event references.
-4. Fast-triage AG-PT-set and EG-Solo next: AG-PT is likely non-song/monophonic and EG-Solo likely has third-party YouTube source-rights problems, but freeze those conclusions from authoritative sources rather than assumption.
-5. Do not reopen IDMT subset 3 unless genuinely new primary-source annotation/validation provenance appears.
+3. Next metadata-only fallback triage: investigate the older **G&N electric-guitar solo dataset** used by TENT. The published TENT paper says 42 unaccompanied monophonic electric-guitar solo tracks from a textbook CD were carefully annotated by an experienced electric-guitar player and every label was checked by another electric-guitar player. Determine whether there is any lawful, stable research-use acquisition path for the exact commercial-CD source audio and annotations.
+4. Do not acquire, rip, copy, or treat textbook/CD audio as authorized by assumption. Public paper description is provenance evidence, not a use grant.
+5. Do not reopen AG-PT or EG-Solo unless genuinely new evidence changes the frozen exclusion/blocker.
 6. Do not implement reference conversion, candidate generation, or a generic V168 scorer adapter before a complete >=2-song manifest passes BOTH frozen validators.
-7. Keep EGSet12, EGDB real-world, François Leduc, GAPS, IDMT, GuitarSet, and Guitar-TECHS blocked/excluded under their current reasons; do not weaken frozen semantics.
+7. Keep EGSet12, EGDB real-world, François Leduc, GAPS, IDMT, GuitarSet, Guitar-TECHS, AG-PT, and EG-Solo blocked/excluded under their current reasons; do not weaken frozen semantics.
 8. Save `CURRENT_STATE.md` again before any admission or code arm.
 9. CPU only; no GPU/CUDA/Modal; never modify main/Production.
