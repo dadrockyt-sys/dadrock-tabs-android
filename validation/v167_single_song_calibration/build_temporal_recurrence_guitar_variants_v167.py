@@ -260,8 +260,10 @@ def main() -> int:
         raise RuntimeError("recurrence base must be frozen I003")
     if int((i005.get("calibration") or {}).get("iteration", -1)) != 5:
         raise RuntimeError("recurrence source must be frozen I005")
-    if diagnosis.get("status") != "POST_TOPOLOGY_TEMPORAL_RECURRENCE_ANALYSIS_FROZEN":
-        raise RuntimeError("temporal recurrence diagnosis is not frozen")
+    if diagnosis.get("schema") != "dadrock.tabs.v167.post-topology-temporal-recurrence-analysis.v1":
+        raise RuntimeError("temporal recurrence diagnosis schema is not frozen expected v1")
+    if diagnosis.get("additionCount") != EXPECTED["additionCount"]:
+        raise RuntimeError("temporal recurrence diagnosis addition count drift")
     dpolicy = diagnosis.get("policy") or {}
     if dpolicy.get("professionalReferenceReadByAnalysis") is not False:
         raise RuntimeError("diagnosis reference boundary invalid")
