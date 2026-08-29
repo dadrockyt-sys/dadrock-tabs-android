@@ -1,0 +1,92 @@
+name: V167 one-shot absolute-grid phase sweep
+
+on:
+  push:
+    branches:
+      - v143-contextual-prune-lobo
+    paths:
+      - .github/workflows/v167-grid-phase-sweep.yml
+
+permissions:
+  contents: write
+
+concurrency:
+  group: v167-grid-phase-sweep-once
+  cancel-in-progress: false
+
+env:
+  BRANCH: v143-contextual-prune-lobo
+  EXPECTED_PARENT_HEAD: 2d087a4aab1eecab1480dcd9f48a70d0243c9458
+  CANDIDATE: debug/v166-cpu-autonomous/generated.json
+  REFERENCE: research/v154-professional-references/scorer-ready/frontend-reference-payload.json
+  SCORER: validation/v154_cpu_multitrack/score_frontend_reference.py
+  SWEEP_CODE: validation/v167_single_song_calibration/grid_phase_sweep_v167.py
+  OUTPUT: debug/v167-single-song-calibration/grid-phase-sweep.json
+
+jobs:
+  sweep:
+    if: github.ref == 'refs/heads/v143-contextual-prune-lobo'
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - name: Checkout exact phase-sweep arm
+        uses: actions/checkout@v4
+        with:
+          ref: ${{ github.sha }}
+          fetch-depth: 0
+
+      - name: Verify frozen calibration inputs
+        shell: bash
+        run: |
+          set -euo pipefail
+          test "$GITHUB_EVENT_NAME" = "push"
+          test "$GITHUB_RUN_NUMBER" = "1"
+          test "$GITHUB_RUN_ATTEMPT" = "1"
+          test "$(git rev-parse HEAD^)" = "$EXPECTED_PARENT_HEAD"
+          test "$(git diff --name-only "$EXPECTED_PARENT_HEAD" "$GITHUB_SHA")" = ".github/workflows/v167-grid-phase-sweep.yml"
+          git fetch origin "$BRANCH"
+          test "$(git rev-parse "origin/$BRANCH")" = "$GITHUB_SHA"
+          test "$(git hash-object "$CANDIDATE")" = "c36a4d1e14ca66235b51a866ad3908322834efff"
+          test "$(git hash-object "$REFERENCE")" = "2fbed60b543c0488934d8642c488aa06bf31bbf5"
+          test "$(git hash-object "$SCORER")" = "9644e65719fbd361a9b39778ae9950c5e983e855"
+          test "$(git hash-object "$SWEEP_CODE")" = "68e247ea780c46a8e5bf9f1a7a86e8c3b3eccce9"
+          test ! -e "$OUTPUT"
+
+      - name: Sweep absolute-grid phase
+        shell: bash
+        run: |
+          set -euo pipefail
+          python "$SWEEP_CODE" \
+            --candidate "$CANDIDATE" \
+            --reference "$REFERENCE" \
+            --scorer "$SCORER" \
+            --output "$OUTPUT" \
+            --min-shift -16 --max-shift 16
+
+      - name: Self-seal phase-sweep result
+        shell: bash
+        run: |
+          set -euo pipefail
+          python - <<'PY'
+          import json
+          r=json.load(open('debug/v167-single-song-calibration/grid-phase-sweep.json'))
+          assert r['version']=='V167'
+          assert r['policy']['candidateFileModified'] is False
+          assert r['policy']['midiModified'] is False
+          assert r['policy']['directReferenceCopy'] is False
+          assert r['combinedGuitar']['baseline']['shiftGridSteps']==0
+          assert r['bass']['baseline']['shiftGridSteps']==0
+          print('Guitar best', r['combinedGuitar']['best'])
+          print('Bass best', r['bass']['best'])
+          PY
+          rm .github/workflows/v167-grid-phase-sweep.yml
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add -A -- "$OUTPUT" .github/workflows/v167-grid-phase-sweep.yml
+          changed="$(git diff --cached --name-only)"
+          if echo "$changed" | grep -Ev '^debug/v167-single-song-calibration/grid-phase-sweep\.json$|^\.github/workflows/v167-grid-phase-sweep\.yml$'; then
+            echo 'Unexpected V167 phase-sweep path' >&2
+            exit 1
+          fi
+          git commit -m "research: freeze V167 absolute-grid phase sweep [skip ci]"
+          git push origin HEAD:"$BRANCH"
