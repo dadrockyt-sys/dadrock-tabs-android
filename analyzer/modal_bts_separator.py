@@ -210,7 +210,7 @@ def separate_stems(input_audio: Path, output_dir: Path) -> dict[str, Path]:
 
     outputs = discover_audio(output_dir)
 
-    if result.returncode != 0 or not outputs:
+    if not outputs:
         detail = (result.stderr or result.stdout or "").strip()[-1500:]
         raise RuntimeError(
             f"Demucs stem separation failed. {detail}"
