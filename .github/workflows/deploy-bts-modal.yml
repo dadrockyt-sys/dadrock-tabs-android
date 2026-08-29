@@ -1,0 +1,38 @@
+name: Deploy BTS Modal Worker
+
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    env:
+      MODAL_TOKEN_ID: ${{ secrets.MODAL_BTS_TOKEN_ID }}
+      MODAL_TOKEN_SECRET: ${{ secrets.MODAL_BTS_TOKEN_SECRET }}
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Install Modal CLI
+        run: python -m pip install --upgrade modal
+
+      - name: Validate BTS Modal credentials
+        shell: bash
+        run: |
+          test -n "$MODAL_TOKEN_ID" || { echo "MODAL_BTS_TOKEN_ID is missing"; exit 1; }
+          test -n "$MODAL_TOKEN_SECRET" || { echo "MODAL_BTS_TOKEN_SECRET is missing"; exit 1; }
+
+      - name: Deploy Backing Track Studio worker
+        run: modal deploy --env main analyzer/modal_bts_separator.py
+
+      - name: Show deployed BTS app
+        run: modal app list --env main
