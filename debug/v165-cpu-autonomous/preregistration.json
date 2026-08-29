@@ -1,0 +1,156 @@
+{
+  "schema": "dadrock.tabs.v165.adapter-repair-preregistration.v1",
+  "version": "V165",
+  "status": "PREREGISTERED_BEFORE_NUMERIC_CONTRACT_OR_IMPLEMENTATION_CODE",
+  "validation": "PASS",
+  "branch": "v143-contextual-prune-lobo",
+  "createdFromBranchHead": "a3168ac53ad8512acc3d5e320c5bbfd3851e41a6",
+  "purpose": "Preregister a narrowly scoped implementation-only successor to terminal V164. V165 preserves all V164 musical, numeric, locality, pitch, segmentation, register, admission, cap, timebase, safety, and one-shot semantics unchanged. Its sole implementation hypothesis is that the V164 frozen-source transcriber adapter failed before pitch because a provenance-path exact-count assertion expected two occurrences of event_logic_v162.py while the pinned frozen V162 transcriber contains three. V165 will repair only that adapter transform and strengthen song-blind static validation so construction of the adapted transcriber module is exercised before any song processing.",
+  "scientificIntegrity": {
+    "createdAfterV164TerminalFailure": true,
+    "V164ProducedCandidate": false,
+    "V164PitchInferenceExecuted": false,
+    "V164StructuralQcExecuted": false,
+    "V164ProfessionalReferenceRead": false,
+    "V164FrozenScorerRead": false,
+    "V164V163CandidateRead": false,
+    "V164V163ScoreRead": false,
+    "V164TimebaseOrAudioEvidenceMayShapeV165MusicalNumerics": false,
+    "V164RuntimeFailureMayShapeV165ImplementationRepair": true,
+    "professionalReferenceMayShapeV165": false,
+    "V163ScoreMayShapeV165": false,
+    "rationale": "The only admissible new evidence for V165 is the source-adapter exception raised before pitch inference. V164 song/timebase values are terminal runtime artifacts and may not be used to select or alter musical thresholds, windows, quantiles, weights, pitch rules, register logic, segmentation rules, caps, or variants."
+  },
+  "terminalV164Identity": {
+    "terminalCommit": "5b63614b77a74777c50669d73c5c6607991df0a0",
+    "terminalFreezeGitBlob": "e2203663df78d2dce5d17e65bd94f4a2bb685e27",
+    "generationRunId": 33222155380,
+    "generationRunNumber": 1,
+    "generationRunAttempt": 1,
+    "generationJobId": 99018290109,
+    "generationHeadSha": "984a542a846ff711600ef86c3114f48d4d0b5f89",
+    "outcome": "TRANSCRIBER_FAIL",
+    "lastCompletedStage": "TIMEBASE_QC_PASS",
+    "candidateAuthoritative": false,
+    "candidateExists": false,
+    "generationReceiptExists": false,
+    "structuralQcExists": false,
+    "pitchInferenceExecuted": false,
+    "neverRearmV164": true
+  },
+  "allowedImplementationEvidence": {
+    "V164Transcriber": {
+      "path": "validation/v164_cpu_autonomous/transcribe_v164.py",
+      "gitBlob": "df1302216df404bc3368ff820f005d6b63ae100d"
+    },
+    "FrozenV162Transcriber": {
+      "path": "validation/v162_cpu_autonomous/transcribe_v162.py",
+      "gitBlob": "fa163cafe2131aa73cdbb50df10d4e4912cff53b"
+    },
+    "V164StaticFixture": {
+      "path": "validation/v164_cpu_autonomous/test_event_logic_v164.py",
+      "gitBlob": "13d29ef19a297d19469196cb2a23a4c0d6e040de"
+    },
+    "V164NegativeGuard": {
+      "path": "debug/v164-cpu-autonomous/negative-runtime-guard.py",
+      "gitBlob": "230aa1efeb4640aabbb05720ead031e13cc57337"
+    },
+    "V164TerminalFailureFact": "build_adapted_module raised RuntimeError before adapted module execution because the transform labeled event-logic provenance path expected 2 matches and found 3.",
+    "useRestriction": "These sources may be used only to repair and statically validate the adapter construction. They may not be used to alter musical/numeric behavior."
+  },
+  "frozenV164DesignPins": {
+    "preregistration": "05d255d75a6c1947891fba38d96d9399e3f75f9c",
+    "implementationContract": "098f24282b59abba0f7cffa0793b344b76701724",
+    "eventLogic": "62303877a1971f75cacda002c5ad921680161674",
+    "eventFixture": "13d29ef19a297d19469196cb2a23a4c0d6e040de",
+    "timebaseBuilder": "170a7a15d68e271d93775c2aaba058fe3ebaa8bb",
+    "timebaseQc": "e59498e76d881f22ea405c81781ca2004ea8f53e",
+    "transcriber": "df1302216df404bc3368ff820f005d6b63ae100d",
+    "structuralQc": "c1a81c7a97e646398f5e50cbc63dae341cdc500b",
+    "jsonNativeFixture": "a0b525485bbea933004045622bbf8c63527f123b",
+    "negativeRuntimeGuard": "230aa1efeb4640aabbb05720ead031e13cc57337"
+  },
+  "frozenBehavior": {
+    "allV164NumericContractValues": true,
+    "eventLocalHalfWindowFrames": 32,
+    "eventLocalSupportPositiveQuantile": 0.95,
+    "beatLocalSubdivisionPositiveQuantile": 0.55,
+    "eventStepPositiveQuantile": 0.95,
+    "remoteInvarianceScaleFactor": 1000000.0,
+    "localScaleFactors": [0.1, 10.0],
+    "invarianceRelativeTolerance": 1e-12,
+    "invarianceAbsoluteTolerance": 1e-12,
+    "BasicPitchThresholds": true,
+    "GuitarStateSegmentationAndRecovery": true,
+    "SequenceAwareRegisterRules": true,
+    "BassPyinStateSegmentationAndProposalRules": true,
+    "GuitarAndBassAdmissionWeightsAndMinimums": true,
+    "GuitarPolyphonyCap": true,
+    "BassMonophonyCap": true,
+    "BeatMeasureBackbone": true,
+    "TimebaseConstructionAndQcSemantics": true,
+    "CandidateAndReceiptSemantics": true
+  },
+  "permittedV165Changes": {
+    "transcriberAdapterProvenancePathTransformRepair": true,
+    "songBlindAdapterConstructionFixture": true,
+    "negativeGuardChecksForAdapterConstructionFixture": true,
+    "versionSchemaAndProvenanceRenaming": true,
+    "workflowAndReceiptVersionRenaming": true,
+    "musicalOrNumericRetuning": false,
+    "timebaseAlgorithmChange": false,
+    "pitchAlgorithmChange": false,
+    "segmentationChange": false,
+    "registerChange": false,
+    "admissionChange": false,
+    "capChange": false
+  },
+  "mandatorySongBlindValidationBeforeAnyV165SongProcessing": [
+    "Compile every V165 implementation module.",
+    "Execute a song-blind adapter-construction fixture that imports V165 transcribe_v165 and successfully calls build_adapted_module without invoking its main function, loading audio, Demucs, Basic Pitch, pyin, professional reference, scorer, V163 artifacts, or V164 runtime artifacts.",
+    "Prove the adapted module points to V165 event logic/provenance and preserves the exact frozen V162 source-transform contract except for the preregistered provenance-path occurrence repair and version/schema substitutions.",
+    "Run all V164 song-blind local-evidence invariance fixtures unchanged in behavioral expectations.",
+    "Run JSON-native provenance fixtures.",
+    "Run a negative runtime guard proving no professional-reference/scorer/V163/V164-runtime-artifact paths are opened by static validation or generation code.",
+    "Prove pitch inference cannot execute before fresh V165 independent timebase-QC PASS.",
+    "Prove V165 runtime artifacts and generation workflow are absent before any one-shot arm."
+  ],
+  "forbiddenEvidenceAndActions": {
+    "V164TimebaseUseForRetuning": true,
+    "V164StemOrAudioAnalysisForRetuning": true,
+    "V164CandidateRepairOrResume": true,
+    "V164GenerationRerun": true,
+    "V164GenerationRearm": true,
+    "V163ScoreMetricOrDiagnosticUse": true,
+    "professionalReferenceEventOrMeasureMining": true,
+    "professionalReferenceContentReadForV165Design": true,
+    "referenceGuidedThresholdOrVariantSelection": true,
+    "sameSongScoreLoopDuringV165Implementation": true,
+    "humanCorrection": true,
+    "mainOrProductionModification": true
+  },
+  "oneShotBoundary": {
+    "numericImplementationContractRequiredBeforeV165Code": true,
+    "staticPreflightRequiredBeforeSongProcessing": true,
+    "preRunIdentitySealRequiredBeforeSongProcessing": true,
+    "cpuEnvironmentSealRequiredBeforeSongProcessing": true,
+    "freshSourceMaterializationRequired": true,
+    "freshNormalizationRequired": true,
+    "freshSeparationRequired": true,
+    "freshTimebaseRequired": true,
+    "freshIndependentTimebaseQcRequired": true,
+    "pitchInferenceBeforeTimebaseQcPassForbidden": true,
+    "freshV165CandidateOnly": true,
+    "freshIndependentStructuralQcRequired": true,
+    "generationRunCountMaximum": 1,
+    "generationRerunForbidden": true,
+    "candidateRepairAfterGenerationForbidden": true,
+    "professionalReferenceScoringAuthorizedByThisPreregistration": false
+  },
+  "computeBoundary": {
+    "defaultDevice": "cpu",
+    "cpuWorkAuthorized": true,
+    "gpuModalCudaRequiresFreshExplicitUserAuthorizationImmediatelyBeforeExecution": true
+  },
+  "nextAction": "Seal a V165 implementation contract that copies every V164 musical/numeric value unchanged and precisely defines the allowed adapter-construction repair and static fixture before writing any V165 implementation code."
+}
