@@ -16,13 +16,13 @@ concurrency:
 
 env:
   BRANCH: v143-contextual-prune-lobo
-  EXPECTED_PARENT_HEAD: d01318d7179b9637fd1e54ef488d2371ac7af55a
+  EXPECTED_PARENT_HEAD: 384d4a6033bfaf778a26a0fa3be459b475f0b39d
   CONTEXTUAL_REPORT: debug/v167-single-song-calibration/contextual-guitar-recovery-sweep.json
   STATE_REPORT: debug/v167-single-song-calibration/state-split-guitar-sweep.json
   POOL: debug/v167-single-song-calibration/nearmiss-evidence-pool.json
   I003: debug/v167-single-song-calibration/iteration-003-generated.json
   I005: debug/v167-single-song-calibration/iteration-005-generated.json
-  ANALYZER: validation/v167_single_song_calibration/analyze_post_i005_active_only_v167.py
+  ANALYZER: validation/v167_single_song_calibration/analyze_post_i005_active_only_v167_rearm.py
   OUTPUT: debug/v167-single-song-calibration/post-i005-active-only-aggregate-analysis.json
   RECEIPT: debug/v167-single-song-calibration/post-i005-active-only-aggregate-analysis-receipt.json
   CUDA_VISIBLE_DEVICES: ""
@@ -38,7 +38,7 @@ jobs:
     runs-on: ubuntu-latest
     timeout-minutes: 20
     steps:
-      - name: Checkout exact post-I005 analysis arm
+      - name: Checkout exact corrected analysis rearm
         uses: actions/checkout@v4
         with:
           ref: ${{ github.sha }}
@@ -49,7 +49,7 @@ jobs:
         with:
           python-version: '3.10.21'
 
-      - name: Verify reference-blind aggregate boundary
+      - name: Verify corrected reference-blind aggregate boundary
         shell: bash
         run: |
           set -euo pipefail
@@ -65,8 +65,8 @@ jobs:
           test "$(git hash-object "$POOL")" = "aa7da3a55344b1418a291f30fab9ca55858fc094"
           test "$(git hash-object "$I003")" = "758f8762632e916306aed9b036a6483af9431dc0"
           test "$(git hash-object "$I005")" = "8d68f4d7fac4e094bcd617b026befddd370d9368"
-          test "$(git hash-object "$ANALYZER")" = "86a32010f441fb518146f3717ae8d9ab3b94b8ea"
-          test "$(git hash-object docs/checkpoints/CURRENT_STATE.md)" = "67a2c01c5416046689463ff3a37faa7d5d889f01"
+          test "$(git hash-object "$ANALYZER")" = "82ec287869102ab6af949afa174a2543768dbc55"
+          test "$(git hash-object docs/checkpoints/CURRENT_STATE.md)" = "703e1b8628bc4de3b9b7e798560234060c0d3f0a"
 
           test ! -e "$OUTPUT"
           test ! -e "$RECEIPT"
@@ -87,12 +87,12 @@ jobs:
               actual = hashlib.sha256(Path(path).read_bytes()).hexdigest()
               assert actual == expected, (path, actual, expected)
 
-          text = Path('validation/v167_single_song_calibration/analyze_post_i005_active_only_v167.py').read_text()
+          text = Path('validation/v167_single_song_calibration/analyze_post_i005_active_only_v167_rearm.py').read_text()
           for forbidden in ('frontend-reference-payload.json', 'score_frontend_reference.py', '--reference', '--scorer-code'):
               assert forbidden not in text, forbidden
           PY
 
-      - name: Analyze frozen aggregate and reference-blind structure
+      - name: Analyze exact I005 additions and frozen aggregate evidence
         shell: bash
         run: |
           set -euo pipefail
@@ -107,25 +107,27 @@ jobs:
           python - <<'PY'
           import json
           analysis = json.load(open('debug/v167-single-song-calibration/post-i005-active-only-aggregate-analysis.json'))
+          assert analysis['schema'] == 'dadrock.tabs.v167.post-i005-active-only-aggregate-analysis.v2'
           assert analysis['status'] == 'POST_I005_AGGREGATE_REFERENCE_BLIND_ANALYSIS_FROZEN'
+          assert analysis['correction']['supersedesFailedAnalyzerAttempt'] is True
           assert analysis['policy']['professionalReferenceReadByAnalysis'] is False
           assert analysis['policy']['scorerReadByAnalysis'] is False
           assert analysis['policy']['newReferenceFacingScoreCalls'] == 0
           assert analysis['policy']['perEventReferenceMatchAssignmentsRead'] is False
           assert analysis['policy']['newRuleSelectedByThisAnalysis'] is False
           assert analysis['i005SelectedAdditionStructure']['additionCount'] == 48
-          assert analysis['currentActiveOnlyEligibleSiteStructure']['eligibleSiteCount'] == 48
-          assert analysis['currentActiveOnlyEligibleSiteStructure']['allEligibleSitesSelectedByI005'] is True
+          assert analysis['i005SelectedAdditionStructure']['uniqueSelectedSiteCount'] == 48
           assert analysis['stateSplitWholeRuleMechanism']['allFourNewRulesBeatI004'] is True
           print('onset pair:', json.dumps(analysis['contextualOnset050Vs065WholeRuleEvidence']['closestToI004StructurePair'], sort_keys=True))
           print('selected onset:', json.dumps(analysis['i005SelectedAdditionStructure']['onsetSupport'], sort_keys=True))
           print('onset survival:', json.dumps(analysis['i005SelectedAdditionStructure']['onsetThresholdSurvivalCounts'], sort_keys=True))
           print('active multiplicity:', json.dumps(analysis['i005SelectedAdditionStructure']['activeMidiCountAtSiteHistogram'], sort_keys=True))
           print('max ties:', json.dumps(analysis['i005SelectedAdditionStructure']['maxActiveTieCountAtSiteHistogram'], sort_keys=True))
+          print('selected competition:', json.dumps(analysis['i005SelectedAdditionStructure']['preGridActiveMaxCandidateCountAtSelectedSiteHistogram'], sort_keys=True))
           print('interval categories:', json.dumps(analysis['i005SelectedAdditionStructure']['nearestDifferentActiveIntervalCategoryHistogram'], sort_keys=True))
           PY
 
-      - name: Freeze analysis receipt and self-seal
+      - name: Freeze corrected analysis receipt and self-seal
         shell: bash
         run: |
           set -euo pipefail
@@ -140,7 +142,7 @@ jobs:
           receipt_path = Path('debug/v167-single-song-calibration/post-i005-active-only-aggregate-analysis-receipt.json')
           analysis = json.loads(output.read_text())
           receipt = {
-              'schema': 'dadrock.tabs.v167.post-i005-active-only-aggregate-analysis-receipt.v1',
+              'schema': 'dadrock.tabs.v167.post-i005-active-only-aggregate-analysis-receipt.v2',
               'version': 'V167',
               'status': 'POST_I005_ACTIVE_ONLY_AGGREGATE_ANALYSIS_FROZEN',
               'classification': 'SINGLE_SONG_TRAINING_CALIBRATION_ONLY',
@@ -151,15 +153,19 @@ jobs:
               'analysisSha256': hashlib.sha256(output.read_bytes()).hexdigest(),
               'analysisGitBlob': subprocess.check_output(['git', 'hash-object', str(output)], text=True).strip(),
               'implementation': {
-                  'analyzerGitBlob': '86a32010f441fb518146f3717ae8d9ab3b94b8ea',
+                  'failedAnalyzerGitBlob': '86a32010f441fb518146f3717ae8d9ab3b94b8ea',
+                  'correctedAnalyzerGitBlob': '82ec287869102ab6af949afa174a2543768dbc55',
               },
+              'correction': analysis['correction'],
               'inputs': analysis['inputs'],
               'summary': {
                   'additionCount': analysis['i005SelectedAdditionStructure']['additionCount'],
+                  'uniqueSelectedSiteCount': analysis['i005SelectedAdditionStructure']['uniqueSelectedSiteCount'],
                   'onsetSupport': analysis['i005SelectedAdditionStructure']['onsetSupport'],
                   'onsetThresholdSurvivalCounts': analysis['i005SelectedAdditionStructure']['onsetThresholdSurvivalCounts'],
                   'activeMidiCountAtSiteHistogram': analysis['i005SelectedAdditionStructure']['activeMidiCountAtSiteHistogram'],
                   'maxActiveTieCountAtSiteHistogram': analysis['i005SelectedAdditionStructure']['maxActiveTieCountAtSiteHistogram'],
+                  'preGridActiveMaxCandidateCountAtSelectedSiteHistogram': analysis['i005SelectedAdditionStructure']['preGridActiveMaxCandidateCountAtSelectedSiteHistogram'],
                   'nearestDifferentActiveIntervalCategoryHistogram': analysis['i005SelectedAdditionStructure']['nearestDifferentActiveIntervalCategoryHistogram'],
                   'closestOnsetPair': analysis['contextualOnset050Vs065WholeRuleEvidence']['closestToI004StructurePair'],
                   'allowActiveNoHarmOnsetPairSummary': analysis['contextualOnset050Vs065WholeRuleEvidence']['allowActiveExcludeHarmonicOctave'],
@@ -175,9 +181,9 @@ jobs:
           git add -A -- "$OUTPUT" "$RECEIPT" .github/workflows/v167-post-i005-active-only-analysis.yml
           changed="$(git diff --cached --name-only)"
           if echo "$changed" | grep -Ev '^debug/v167-single-song-calibration/post-i005-active-only-aggregate-analysis(-receipt)?\.json$|^\.github/workflows/v167-post-i005-active-only-analysis\.yml$'; then
-            echo 'Unexpected post-I005 analysis path' >&2
+            echo 'Unexpected corrected post-I005 analysis path' >&2
             exit 1
           fi
           test "$(printf '%s\n' "$changed" | sed '/^$/d' | wc -l)" -eq 3
-          git commit -m "research: freeze V167 post-I005 active-only aggregate diagnosis [skip ci]"
+          git commit -m "research: freeze corrected V167 post-I005 active-only aggregate diagnosis [skip ci]"
           git push origin HEAD:"$BRANCH"
