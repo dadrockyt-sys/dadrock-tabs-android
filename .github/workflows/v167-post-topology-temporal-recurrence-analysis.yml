@@ -1,0 +1,176 @@
+name: V167 post-topology temporal recurrence diagnosis
+
+on:
+  push:
+    branches:
+      - v143-contextual-prune-lobo
+    paths:
+      - .github/workflows/v167-post-topology-temporal-recurrence-analysis.yml
+
+permissions:
+  contents: write
+
+concurrency:
+  group: v167-post-topology-temporal-recurrence-analysis-once
+  cancel-in-progress: false
+
+env:
+  BRANCH: v143-contextual-prune-lobo
+  EXPECTED_PARENT_HEAD: 38123ca676a098a5991759fa62a7c6a5d44d6554
+  I003: debug/v167-single-song-calibration/iteration-003-generated.json
+  I005: debug/v167-single-song-calibration/iteration-005-generated.json
+  TOPOLOGY_REPORT: debug/v167-single-song-calibration/active-topology-guitar-sweep.json
+  PRIOR_DIAGNOSIS: debug/v167-single-song-calibration/post-i005-active-only-aggregate-analysis.json
+  ANALYZER: validation/v167_single_song_calibration/analyze_post_topology_temporal_recurrence_v167.py
+  OUTPUT: debug/v167-single-song-calibration/post-topology-temporal-recurrence-analysis.json
+  RECEIPT: debug/v167-single-song-calibration/post-topology-temporal-recurrence-analysis-receipt.json
+  CUDA_VISIBLE_DEVICES: ""
+  PYTHONHASHSEED: "0"
+  OMP_NUM_THREADS: "1"
+  MKL_NUM_THREADS: "1"
+  OPENBLAS_NUM_THREADS: "1"
+  NUMEXPR_NUM_THREADS: "1"
+
+jobs:
+  analyze-once:
+    if: github.ref == 'refs/heads/v143-contextual-prune-lobo'
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - name: Checkout exact temporal diagnosis arm
+        uses: actions/checkout@v4
+        with:
+          ref: ${{ github.sha }}
+          fetch-depth: 0
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.10.21'
+
+      - name: Verify reference-blind temporal boundary
+        shell: bash
+        run: |
+          set -euo pipefail
+          test "$GITHUB_EVENT_NAME" = "push"
+          test "$GITHUB_RUN_ATTEMPT" = "1"
+          test "$(git rev-parse HEAD^)" = "$EXPECTED_PARENT_HEAD"
+          test "$(git diff --name-only "$EXPECTED_PARENT_HEAD" "$GITHUB_SHA")" = ".github/workflows/v167-post-topology-temporal-recurrence-analysis.yml"
+          git fetch origin "$BRANCH"
+          test "$(git rev-parse "origin/$BRANCH")" = "$GITHUB_SHA"
+
+          test "$(git hash-object "$I003")" = "758f8762632e916306aed9b036a6483af9431dc0"
+          test "$(git hash-object "$I005")" = "8d68f4d7fac4e094bcd617b026befddd370d9368"
+          test "$(git hash-object "$TOPOLOGY_REPORT")" = "4aab67d913b4b68cc518825d4495a48c3b9e76fc"
+          test "$(git hash-object "$PRIOR_DIAGNOSIS")" = "043eaa2367f1efbb6309e13d2fcd52952b809e81"
+          test "$(git hash-object "$ANALYZER")" = "156f0f2adc202b3868791514f31594426cadf0d0"
+          test "$(git hash-object docs/checkpoints/CURRENT_STATE.md)" = "9fb86dffba97a9688d8fd2236ab075cc5cf3ea20"
+
+          test ! -e "$OUTPUT"
+          test ! -e "$RECEIPT"
+          python -m py_compile "$ANALYZER"
+
+          python - <<'PY'
+          import hashlib
+          from pathlib import Path
+          checks = {
+              'debug/v167-single-song-calibration/iteration-003-generated.json': 'f15c6f40dd4b8479c2dfb7eab039cff98a23b45eb796265ffad08c5a8ae37115',
+              'debug/v167-single-song-calibration/iteration-005-generated.json': '86329ebc25e589f566d466a7a65cae35a158c25f470b1c034973f3dbc7d38b31',
+              'debug/v167-single-song-calibration/active-topology-guitar-sweep.json': '869825ed2a91e9f50bc6ca5ac71d922ee93dc17dd5804bf8d94d0e951e179b85',
+              'debug/v167-single-song-calibration/post-i005-active-only-aggregate-analysis.json': 'fe7e826724a11e115a25f932d4b58ed88e3aedae67fb54142cc532cc40ab8450',
+          }
+          for path, expected in checks.items():
+              actual = hashlib.sha256(Path(path).read_bytes()).hexdigest()
+              assert actual == expected, (path, actual, expected)
+          text = Path('validation/v167_single_song_calibration/analyze_post_topology_temporal_recurrence_v167.py').read_text()
+          for forbidden in ('frontend-reference-payload.json', 'score_frontend_reference.py', '--reference', '--scorer-code'):
+              assert forbidden not in text, forbidden
+          PY
+
+      - name: Analyze temporal recurrence structure
+        shell: bash
+        run: |
+          set -euo pipefail
+          python "$ANALYZER" \
+            --i003 "$I003" \
+            --i005 "$I005" \
+            --topology-report "$TOPOLOGY_REPORT" \
+            --post-i005-diagnosis "$PRIOR_DIAGNOSIS" \
+            --output "$OUTPUT"
+
+          python - <<'PY'
+          import json
+          a = json.load(open('debug/v167-single-song-calibration/post-topology-temporal-recurrence-analysis.json'))
+          assert a['schema'] == 'dadrock.tabs.v167.post-topology-temporal-recurrence-analysis.v1'
+          assert a['status'] == 'POST_TOPOLOGY_TEMPORAL_RECURRENCE_REFERENCE_BLIND_ANALYSIS_FROZEN'
+          assert a['additionCount'] == 48
+          assert a['policy']['professionalReferenceReadByAnalysis'] is False
+          assert a['policy']['scorerReadByAnalysis'] is False
+          assert a['policy']['newReferenceFacingScoreCalls'] == 0
+          assert a['policy']['perEventReferenceMatchAssignmentsRead'] is False
+          assert a['policy']['newRuleSelectedByThisAnalysis'] is False
+          print('unique steps:', a['uniqueAdditionGridStepCount'])
+          print('nearest add any:', json.dumps(a['distanceDistributions']['nearestAdditionAnyMidiGridSteps'], sort_keys=True))
+          print('nearest add same:', json.dumps(a['distanceDistributions']['nearestAdditionSameMidiGridSteps'], sort_keys=True))
+          print('nearest base same:', json.dumps(a['distanceDistributions']['nearestBaseSameMidiGridSteps'], sort_keys=True))
+          print('within:', json.dumps(a['withinThresholdCounts'], sort_keys=True))
+          print('same-midi gap1 runs:', json.dumps(a['clusterStructure']['sameMidiGap1Runs'], sort_keys=True))
+          print('same-midi gap2 runs:', json.dumps(a['clusterStructure']['sameMidiGap2Runs'], sort_keys=True))
+          print('same-midi gap4 runs:', json.dumps(a['clusterStructure']['sameMidiGap4Runs'], sort_keys=True))
+          PY
+
+      - name: Freeze temporal diagnosis receipt and self-seal
+        shell: bash
+        run: |
+          set -euo pipefail
+          python - <<'PY'
+          import hashlib
+          import json
+          import os
+          import subprocess
+          from pathlib import Path
+          output = Path('debug/v167-single-song-calibration/post-topology-temporal-recurrence-analysis.json')
+          receipt_path = Path('debug/v167-single-song-calibration/post-topology-temporal-recurrence-analysis-receipt.json')
+          a = json.loads(output.read_text())
+          receipt = {
+              'schema': 'dadrock.tabs.v167.post-topology-temporal-recurrence-analysis-receipt.v1',
+              'version': 'V167',
+              'status': 'POST_TOPOLOGY_TEMPORAL_RECURRENCE_ANALYSIS_FROZEN',
+              'classification': 'SINGLE_SONG_TRAINING_CALIBRATION_ONLY',
+              'workflowRunId': int(os.environ['GITHUB_RUN_ID']),
+              'workflowRunNumber': int(os.environ['GITHUB_RUN_NUMBER']),
+              'workflowRunAttempt': int(os.environ['GITHUB_RUN_ATTEMPT']),
+              'workflowHeadSha': os.environ['GITHUB_SHA'],
+              'analysisSha256': hashlib.sha256(output.read_bytes()).hexdigest(),
+              'analysisGitBlob': subprocess.check_output(['git', 'hash-object', str(output)], text=True).strip(),
+              'implementation': {'analyzerGitBlob': '156f0f2adc202b3868791514f31594426cadf0d0'},
+              'inputs': a['inputs'],
+              'summary': {
+                  'additionCount': a['additionCount'],
+                  'uniqueAdditionGridStepCount': a['uniqueAdditionGridStepCount'],
+                  'additionGridStepMultiplicityHistogram': a['additionGridStepMultiplicityHistogram'],
+                  'nearestAdditionAnyMidi': a['distanceDistributions']['nearestAdditionAnyMidiGridSteps'],
+                  'nearestAdditionSameMidi': a['distanceDistributions']['nearestAdditionSameMidiGridSteps'],
+                  'nearestBaseSameMidi': a['distanceDistributions']['nearestBaseSameMidiGridSteps'],
+                  'withinThresholdCounts': a['withinThresholdCounts'],
+                  'sameMidiGap1Runs': a['clusterStructure']['sameMidiGap1Runs'],
+                  'sameMidiGap2Runs': a['clusterStructure']['sameMidiGap2Runs'],
+                  'sameMidiGap4Runs': a['clusterStructure']['sameMidiGap4Runs'],
+              },
+              'policy': a['policy'],
+          }
+          receipt_path.write_text(json.dumps(receipt, indent=2, sort_keys=True) + '\n')
+          PY
+
+          rm .github/workflows/v167-post-topology-temporal-recurrence-analysis.yml
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add -A -- "$OUTPUT" "$RECEIPT" .github/workflows/v167-post-topology-temporal-recurrence-analysis.yml
+          changed="$(git diff --cached --name-only)"
+          if echo "$changed" | grep -Ev '^debug/v167-single-song-calibration/post-topology-temporal-recurrence-analysis(-receipt)?\.json$|^\.github/workflows/v167-post-topology-temporal-recurrence-analysis\.yml$'; then
+            echo 'Unexpected temporal diagnosis path' >&2
+            exit 1
+          fi
+          test "$(printf '%s\n' "$changed" | sed '/^$/d' | wc -l)" -eq 3
+          git commit -m "research: freeze V167 temporal recurrence diagnosis [skip ci]"
+          git push origin HEAD:"$BRANCH"
