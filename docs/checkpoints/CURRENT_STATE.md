@@ -4,22 +4,32 @@ Updated: 2026-08-29 UTC
 Branch: `v143-contextual-prune-lobo`
 
 ## Active phase
-**V166 is terminal/immutable. V167 is the explicitly scorer/reference-guided SINGLE-SONG TRAINING CALIBRATION lane for Lenny Kravitz — Are You Gonna Go My Way. Iteration 003 is frozen current best: Guitar 41.9156774457634% F1; Bass 80.45325779036827% F1. Bass is closed for this lane. Guitar's first 48-rule additive standalone-harmonic grid is terminal negative. The terminal aggregate diagnosis supports a structurally new, sparse contextual Guitar hypothesis based on relative evidence versus active pitches plus harmonic-interval suppression. The first two contextual one-shot arms both stopped safely before grading/reference read: the first on stale I003 checksum metadata, the second after successful preregistration verification when generation detected pre-existing duplicate I003 Guitar coordinates. The rule family itself remains unscored. `main`/Production remain untouched; no GPU/CUDA/Modal work is authorized or used.**
+**V166 is terminal/immutable. V167 is the explicitly scorer/reference-guided SINGLE-SONG TRAINING CALIBRATION lane for Lenny Kravitz — Are You Gonna Go My Way. Iteration 003 remains the frozen parent: Guitar 41.9156774457634% F1; Bass 80.45325779036827% F1. The preregistered sparse contextual Guitar sweep is now terminal/frozen and positive: 10/36 nonbaseline rules beat I003, with winner `gctx-o50-q100-allow-noharm` at Guitar 42.617717478052675% F1 (+0.702040032289275pp), precision 47.97843665768194% (-0.7834681042228231pp), recall 38.334529791816224% (+1.5793251974156486pp), 63 additions, 534 matches. Bass stayed exactly I003 for every scored variant and remains closed. This clears the checkpoint promotion condition with a defensible recall/precision tradeoff. Next is deterministic no-rescore I004 promotion of the already-frozen whole-rule winner. `main`/Production remain untouched; no GPU/CUDA/Modal work is authorized or used.**
 
-## Current execution checkpoint — 2026-08-29 UTC / PRE-SCORE RE-ARM 2
-- Resumed directly from this file on `v143-contextual-prune-lobo`; starting head was `2a7dfedd6385ef0136e1a07e6677dd3b6c47cbf0`. First resume checkpoint commit: `1c51821eb68629150f31c61d28f7094410caa92f`.
-- Reconfirmed Iteration 003 is immutable for this sweep and Bass must remain scoring-stream-equivalent to I003.
-- Implemented the exact preregistered 36-rule contextual Guitar family: onset `{0.50,0.65}`, candidate/max-active template ratio `{0.75,1.00,1.25}`, active-state `{allow_active,inactive_only}`, interval policy `{none,exclude_harmonic_octave,chord_interval}`, top-1/site, parent-aware `(step,midi)` dedupe for new additions, polyphony cap 6.
-- The inherited `fundamentalPresent` candidate filter is fixed across all 36 rules because the frozen aggregate structural diagnosis used that same filter when deriving the relative-ratio/interval hypothesis; it is not a tuned dimension.
-- Predeclared top-1/site ordering remains unchanged: candidate/max-active template-score ratio descending, template rank descending, template score descending, onset support descending, activity support descending, MIDI ascending.
-- First one-shot arm commit `82c1e0e375d8be6d1c0a974d311723381bfdf91c`; run `33256979705`, job `99112324623` terminated in immutable preregistration verification because the checkpoint's written I003 SHA256 was stale. Generation, grading, and freeze were skipped; **zero professional reference/scorer reads occurred**.
-- The first failure established that Git blob `758f8762632e916306aed9b036a6483af9431dc0` is unchanged and independently SHA256-hashes to `f15c6f40dd4b8479c2dfb7eab039cff98a23b45eb796265ffad08c5a8ae37115`. The prior checkpoint `...c575bf709673` value was incorrect metadata only; I003 bytes were never modified.
-- Safe grader identity adapter remains `validation/v167_single_song_calibration/score_contextual_guitar_recovery_variants_v167_rearm.py`, blob `8555101a684f59f7dcd910d7c6f7694e968a68b1`, commit `af57ace48426ae3faf61c61a6f5cae24ba66fe57`. It only patches the stale I003 SHA guard before delegating to base grader blob `adfd512f53e8839b295129c0768d484b5af09bc7`; scoring/winner logic is unchanged.
-- Second one-shot re-arm commit `d32acd8a0d6a202bd2d5e27cfe4a381210a7d768`; run `33257192660`, job `99112883194`. Its immutable preregistration verification **passed completely**, including exact blobs, corrected I003 SHA256, all 37 rule definitions, and no reference/scorer access.
-- Generation then stopped before manifest completion on an overly strict postcondition: `contextual Guitar variant violated (step,midi) dedupe`. The frozen I003 parent itself contains pre-existing duplicate `(step,midi)` coordinates, while the old frozen recovery generator only guaranteed that newly added events do not collide with the parent/each other. Grading/freeze were skipped; **zero professional reference/scorer reads occurred in run 33257192660**.
-- This is an invariant correction, not a rule change: existing I003 duplicates remain byte/stream-preserved and continue to win; each *new* contextual event is still rejected if its `(step,midi)` already exists in I003 or among earlier additions. New-addition uniqueness is now explicitly asserted.
-- Corrected reference-blind generator commit `4ae7b91ce196b97df9e033fab7ff1880c32e1069`, current blob `fd257fe88c5dcd9b3ab135263a6457140c3f63b6`. Candidate thresholds, active-state modes, interval policies, ordering, top-1/site, timing, and cap are unchanged.
-- Next substep: re-arm the same one-shot CPU sweep against this parent-aware dedupe implementation. Freeze all 37 complete candidate hashes before any reference/scorer read, then grade exactly once, freeze report/receipt, self-remove, and leave I003 unchanged pending result review. Do not create I004 inside the sweep.
+## Current execution checkpoint — 2026-08-29 UTC / CONTEXTUAL SWEEP FROZEN, I004 PROMOTION NEXT
+- Resumed from this file on `v143-contextual-prune-lobo`; starting head was `2a7dfedd6385ef0136e1a07e6677dd3b6c47cbf0`.
+- The exact preregistered 36-rule Guitar family stayed fixed in substance throughout execution: rank `0.975`, activity `0.05`, onset `{0.50,0.65}`, candidate/max-active template ratio `{0.75,1.00,1.25}`, active-state `{allow_active,inactive_only}`, interval policy `{none,exclude_harmonic_octave,chord_interval}`, inherited `fundamentalPresent`, active-pitch context required, top-1/site, parent-aware new-event `(step,midi)` dedupe, polyphony cap 6.
+- First arm `82c1e0e375d8be6d1c0a974d311723381bfdf91c`; run `33256979705`, job `99112324623`: stopped in preregistration verification on stale checkpoint SHA256 metadata. No candidates generated; zero scorer/reference reads.
+- The immutable I003 Git blob `758f8762632e916306aed9b036a6483af9431dc0` independently hashes to corrected SHA256 `f15c6f40dd4b8479c2dfb7eab039cff98a23b45eb796265ffad08c5a8ae37115`; prior `...c575bf709673` checkpoint text was metadata error only. I003 bytes were never changed.
+- Second arm `d32acd8a0d6a202bd2d5e27cfe4a381210a7d768`; run `33257192660`, job `99112883194`: full preregistration verification passed, then generation stopped on an overly strict assertion because immutable I003 Guitar already contains duplicate scoring coordinates. Grading/reference read skipped.
+- Third arm `0dec90b569de77b4410c52c354e2b764883e327f`; run `33257327955`, job `99113230085`: **SUCCESS**. Pre-score guard established immutable I003 Guitar duplicate-coordinate excess = **9**. All 37 complete candidates froze before reference/scorer read; additions ranged 0..117; Bass count 512 in every variant.
+- Contextual generator final blob `fd257fe88c5dcd9b3ab135263a6457140c3f63b6` (commit `4ae7b91ce196b97df9e033fab7ff1880c32e1069`). It preserves I003 parent duplicates while rejecting every new event that collides with a parent or earlier new `(step,midi)` coordinate. Candidate thresholds/ranking were not changed by this invariant correction.
+- Base grader blob `adfd512f53e8839b295129c0768d484b5af09bc7`; safe identity adapter blob `8555101a684f59f7dcd910d7c6f7694e968a68b1`. The adapter only corrects the stale I003 SHA guard; scoring/winner logic remains the preregistered grader.
+- Successful sweep self-sealed at terminal commit `f93467de4ccde1d2c0b9baf02c14c194f9d644c4`; the one-shot workflow was deleted.
+- Frozen manifest `debug/v167-single-song-calibration/contextual-guitar-recovery-sweep-manifest.json`: blob `b9ec90a34e0d7a4a6b6ee7fb3f5a1eef7e6bba5d`, SHA256 `2f51fa0cba372acc8f797a2e700b3b0a6bb42b807ad4bad818b3c40c262df876`.
+- Frozen report `debug/v167-single-song-calibration/contextual-guitar-recovery-sweep.json`: blob `b00e25f5c1fd9f8c40b440156e049317e008ec1d`, SHA256 `6b661f6dfa27d31204f4e8a9035d286d5324440b947eb3e49db99205dad9320e`.
+- Frozen receipt `debug/v167-single-song-calibration/contextual-guitar-recovery-sweep-receipt.json`: blob `e4e296bb50a38935d83e2c1183160509974fd6aa`, status `CONTEXTUAL_GUITAR_RECOVERY_SWEEP_FROZEN`.
+- Sweep policy proof: 37 variants = 1 baseline + 36 contextual; all frozen before reference read; whole-rule selection only; individual-event reference selection false; post-score candidate mutation false; Bass coordinate identity verified before reference read; I004 not created by scoring workflow; generalization claim false; GPU/CUDA/Modal false; `main`/Production false.
+
+## Frozen contextual Guitar winner
+- Rule `gctx-o50-q100-allow-noharm`.
+- Config: template rank >=0.975; activity >=0.05; onset >=0.50; candidate/max-active template-score ratio >=1.00; `allow_active`; nearest different active interval 12/19/24 rejected; active context required; inherited `fundamentalPresent`; top-1/site; cap 6.
+- Frozen candidate SHA256 `2527870bc4655c238d5f4fbd0e243ab518554e17c4e2c29db2794225bbbeed43`.
+- Generation: 63 additions from 69 eligible candidates, 63 sites with adds, 204 sites with active context.
+- Guitar: F1 **42.617717478052675%**; precision **47.97843665768194%**; recall **38.334529791816224%**; matched 534; generated 1113; reference 1393; FP 579; FN 859.
+- Delta vs I003: F1 **+0.702040032289275pp**; precision **-0.7834681042228231pp**; recall **+1.5793251974156486pp**; +22 matches; +41 FP; -22 FN.
+- **10 / 36** nonbaseline contextual rules beat I003 Guitar F1. The selected whole rule wins by the preregistered ordering: max F1, then precision, fewer additions, lexicographic id.
+- Bass inherited baseline remains F1 **80.45325779036827%**, precision 83.203125%, recall 77.87934186471663%, matched 426 / generated 512 / reference 547.
 
 ## Standing V167 methodology
 - Calibration only; never present V167 scores as holdout/generalization performance.
@@ -44,57 +54,18 @@ Branch: `v143-contextual-prune-lobo`
 - Candidate `debug/v167-single-song-calibration/iteration-002-generated.json`, blob `7eba73700116ceeca580a8851abe399aed764834`, SHA256 `96fbc329d9ba46b06d430c7c3c7b7f5b0e9077f6e133da5c3165c1fde609b5cc`.
 - Guitar **41.9156774457634%** F1; P 48.76190476190476%; R 36.755204594400576%; 512/1050/1393.
 - Bass **71.86512118018967%** F1; P 84.82587064676616%; R 62.340036563071296%; 341/402/547.
-- Bass admitted-event repitch sweep frozen negative, delta 0.0pp.
 
-## Frozen source/evidence boundary
-- Source SHA256 `215bd5a657c5326f08f132ae358595a95c30b39bb7493a52c2f910d5a608149f`; V166 timebase blob `abebae25801b7ddeb5b933977c4f4a918f7bf9ef`.
-- Evidence run `33228322645`, job `99036292089`; terminal `86ab5882845b61917b8820c35b07022adef532f0`.
-- Evidence pool blob `aa7da3a55344b1418a291f30fab9ca55858fc094`, SHA256 `1c983784c2d12a22437a80387525789bcf55a2f4e4a5c7a96608c575bf709673`.
-- Exact V166 reproduction; reference/scorer reads 0; tuning=false; candidate generation modified=false; GPU/CUDA/Modal=false; `main`/Production=false.
-- Guitar pool **272 sites / 13,328 candidates**; Bass pool **913 sites / 36,520 candidates**.
-
-## V167 upstream-recovery sweep — FROZEN / TERMINAL
-- Base generator blob `24413d321f64bbfcce48812ceb85b4593dcfa80c`; corrected adapter `fbbee07493084792912c774d375ca5011672891f`; grader `32304261ff9e6bec00d22eabea08cf5070cd3d3e`.
-- 146 complete variants froze before reference scoring: 49 Guitar + 97 Bass.
-- Corrected successful run `33253434886`, job `99102944880`; terminal `0c74a6916e046d202cc5cf775f974bbd06fcf567`.
-- Manifest blob `0ee153dbf1004d921c586516bca91e52f7bb1fde`, SHA256 `c91ee15d702746e082c059b5f99c44fcfa7a89f18e5e9f2fc81eb6513d1baa80`.
-- Report blob `324f1f4e68951ac8653c51c8a436e4d35e5dc16b`, SHA256 `1bcc5eca05df31270ff7ff638cca6def3166a0e5084c4874d70d710d4696836f`.
-- Guitar winner baseline; all 48 additive rules negative.
-- Bass winner `b-r975-o50-a10-low_register_no_stable_state`: 110 additions, F1 **80.45325779036827%**, P83.203125%, R77.87934186471663%, +8.588136610178598pp F1.
-
-## V167 Iteration 003 — CURRENT BEST / FROZEN
+## V167 Iteration 003 — FROZEN PARENT FOR I004
 - Promotion transform blob `9c63f2a0c4732cf3c3a11faf028cf0952c27664e`.
 - Run `33253690563`, job `99103631893`; terminal self-seal `17ab31bf26fa1e15a7754469b7598c071a938705`.
-- Candidate `debug/v167-single-song-calibration/iteration-003-generated.json`: blob `758f8762632e916306aed9b036a6483af9431dc0`, corrected SHA256 `f15c6f40dd4b8479c2dfb7eab039cff98a23b45eb796265ffad08c5a8ae37115` (independently established by the pre-score runner; prior checkpoint checksum text was stale).
+- Candidate `debug/v167-single-song-calibration/iteration-003-generated.json`: blob `758f8762632e916306aed9b036a6483af9431dc0`, corrected SHA256 `f15c6f40dd4b8479c2dfb7eab039cff98a23b45eb796265ffad08c5a8ae37115`.
 - Proof blob `60dba77ac478ed804fd5d66993878e4921c4a72d`; receipt blob `b3979dd5b6b205a072223493248fc66b37272a5c`, status `ITERATION_003_FROZEN`.
-- Guitar rich list exactly preserved 1050 ->1050. Bass 402 +110 ->512; prior rich Bass dictionaries preserved.
-- Normalized streams exactly equal already-scored frozen winner; zero new reference-facing scores; no retuning.
-- Frozen inherited metrics: Guitar **41.9156774457634%** F1; Bass **80.45325779036827%** F1.
+- Guitar 1050; Bass 512. Frozen inherited metrics: Guitar **41.9156774457634%** F1; Bass **80.45325779036827%** F1.
 
-## Guitar aggregate diagnosis — FROZEN / TERMINAL
-- Analyzer `validation/v167_single_song_calibration/analyze_guitar_recovery_sweep_v167.py`, blob `c6fedb0f5b8404ff472495362e7b37ecdf734f15`, implementation `9f62891686f5bfeef303c11012e7d427916da4aa`.
-- Arm `216a5e5014a7f5620e5af5750326788a73d2869c`; run `33253840653`, job `99104039755`; terminal self-seal `90e333a54e4eeca8a62fb78efe607d2277314e2a`.
-- Analysis `debug/v167-single-song-calibration/guitar-recovery-sweep-aggregate-analysis.json`: blob `df7df6a2504ea8295f9c7ac6a150825d9edfb4cd`, SHA256 `9b395b0977d979a09eb5b65dbaee85694f09861bbd16c7fcb0ec45e8db2d05de`.
-- Receipt blob `c9fc8563f5d8cd995f4fc353df56f72912a3678c`, status `GUITAR_RECOVERY_AGGREGATE_ANALYSIS_FROZEN`.
-- Policy: no professional reference/scorer read by analysis; no new reference-facing scores; no per-event match assignments; aggregate whole-variant scores only; candidate evidence reference-blind; no new rule selected by analysis.
-
-### Aggregate failure mechanism
-- **0 / 48** nonbaseline Guitar rules beat I003/I002 Guitar baseline.
-- Best nonbaseline: `g-r975-o50-n1-i0`; **227 additions**; 544 matches (+32), but 733 FP (+195). F1 **40.74906367041199%**, delta **-1.1666137753514105pp**; precision -6.162061378976025pp; recall +2.2972002871500363pp.
-- Across all 48 whole rules: additions vs F1 delta correlation **-0.7416972534834104**; additions vs precision delta **-0.9573408067181765**; additions vs recall delta **+0.7364716686311232**.
-- The old grid therefore fails primarily by **over-addition / poor precision**, not inability to add true positives.
-
-### Reference-blind structural evidence
-- 272 sites / 13,328 candidates; 270 sites have at least one inactive candidate at the old grid floor; 68 sites have no Basic Pitch active MIDI and therefore no useful active-pitch context.
-- At the 204 sites with active-pitch context, top-inactive template-score / max-active template-score ratio: median **0.6892**, p75 **1.0089**, p90 **1.4639**, mean 0.8424.
-- Top-vs-second inactive template-rank gap is weakly discriminative: median **0.020408**, p90 **0.040816**.
-- Nearest-active semitone distance for top inactive candidate is dominated by **12 semitones: 100 sites**. Other harmonic-like distances include 19 semitones: 6 sites; 24 semitones: 2 sites. Distance 7 occurs 16 sites; smaller non-octave intervals are much less common.
-- Mechanistic interpretation: the standalone harmonic pool often promotes octave/harmonic energy around an already-active pitch. Absolute template/onset thresholds alone cannot distinguish these from missing chord tones/re-attacks.
-
-## NEXT boundary — contextual Guitar recovery family
-1. Keep I003 immutable; keep Bass exactly I003.
-2. The 36 whole-rule Guitar grid is now implemented and remains frozen in substance: fixed rank `0.975`, activity `0.05`, onset `{0.50,0.65}`, ratio `{0.75,1.00,1.25}`, active-state `{allow_active,inactive_only}`, interval policy `{none,exclude_harmonic_octave,chord_interval}`, top-1/site, active-pitch context required, inherited `fundamentalPresent` filter.
-3. Existing I003 Guitar events always win. Preserve any parent duplicate coordinates exactly; no new recovery event may collide with any parent or new `(step,midi)` coordinate. Polyphony cap 6 and frozen timing remain.
-4. Freeze baseline + 36 complete candidate hashes before any reference/scorer read. Winner selection remains max Guitar F1, then precision, fewer additions, lexicographic id. Bass scoring stream must remain exactly I003 for every variant.
-5. Do not create I004 unless this frozen contextual sweep materially beats I003 Guitar with a defensible precision/recall tradeoff.
-6. CPU only; fresh authorization before GPU/CUDA/Modal. Never modify/merge/promote `main` or Production without explicit user direction.
+## NEXT boundary — promote frozen contextual winner to I004 without rescoring
+1. I003 stays immutable. Reconstruct only frozen winner `gctx-o50-q100-allow-noharm` from I003 + frozen evidence/timebase + final contextual builder.
+2. Reconstructed score-minimal candidate must SHA256-match frozen scored winner `2527870bc4655c238d5f4fbd0e243ab518554e17c4e2c29db2794225bbbeed43` before writing I004.
+3. I004 Guitar = all rich I003 Guitar events preserved exactly as event dictionaries + exactly the 63 frozen winner additions. Normalized Guitar scoring stream must equal the frozen scored winner.
+4. I004 Bass list must remain exactly equal to rich I003 Bass; normalized Bass stream must also remain exactly the already-scored I003 Bass baseline.
+5. Promotion reads frozen manifest/report only to verify the already-selected whole rule; it must not open professional reference/scorer files, must not rescore, retune, or make per-event reference choices.
+6. Freeze I004 candidate + promotion proof + receipt in a self-removing CPU-only workflow. No GPU/CUDA/Modal. Never modify/merge/promote `main` or Production without explicit user direction.
