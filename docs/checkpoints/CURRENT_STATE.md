@@ -4,74 +4,78 @@ Updated: 2026-08-29 UTC
 Branch: `v143-contextual-prune-lobo`
 
 ## Active phase
-**V166 is terminal/immutable. V167 remains the explicitly scorer/reference-guided SINGLE-SONG TRAINING CALIBRATION lane for Lenny Kravitz — Are You Gonna Go My Way. Iteration 005 is frozen current best. Guitar inherits the already-scored terminal state-split winner `gss-active-only` at 42.7940586109996% F1; Bass remains exactly I003/I004 at 80.45325779036827% F1. I005 is immutable. The first post-I005 reference-blind analyzer run failed safely before writing output because it incorrectly equated pre-grid structural eligibility with the frozen builder's post timing/dedupe/polyphony `eligible` count. The reference-blind boundary itself passed. A corrected rearm analyzer is now staged: it studies the exact 48 frozen I005 additions and their frozen reference-blind evidence directly and does not make the invalid eligibility-count equivalence. No analysis output is frozen yet. `main`/Production remain untouched; no GPU/CUDA/Modal work is authorized or used.**
+**V166 is terminal/immutable. V167 remains the explicitly scorer/reference-guided SINGLE-SONG TRAINING CALIBRATION lane for Lenny Kravitz — Are You Gonna Go My Way. Iteration 005 is frozen current best: Guitar `gss-active-only` **42.7940586109996% F1**, Bass **80.45325779036827% F1**. The corrected post-I005 aggregate/reference-blind diagnosis is now terminal/frozen with zero new reference/scorer access. It rules out simple onset tightening and shows the remaining 48 I005 additions have no useful max-score ratio/tie competition dimension. The structurally defensible next hypothesis is a small **active-topology pruning family** based only on frozen active-pitch context: isolated-active vs chord-interval vs near-unison/remote context. No next family is implemented or scored yet. `main`/Production remain untouched; no GPU/CUDA/Modal work is authorized or used.**
 
-## Current execution checkpoint — CORRECTED POST-I005 ANALYZER STAGED / REARM NOT YET RUN
-- First analyzer `validation/v167_single_song_calibration/analyze_post_i005_active_only_v167.py`: commit `fdbb26b4ca50f235dbaf459941004194bcf3a7c1`, blob `86a32010f441fb518146f3717ae8d9ab3b94b8ea`.
-- First analysis arm commit `e7c40c589017dc5027bbf4aaaee574cfe4bbd425`; run `33265180179`, job `99133883024`, attempt 1.
-- Immutable/reference-blind guard step passed. Analyzer step failed with `RuntimeError: active-only current-rule eligible site count no longer equals 48` before receipt/self-seal; therefore no frozen analysis artifact or receipt was created.
-- Failure mechanism is methodological/tooling only: the analyzer's local structural test omitted frozen timing correction, `(step,midi)` dedupe, and polyphony-cap guards used by the state-split builder, so a pre-grid count was incorrectly asserted equal to the builder's post-grid `eligible=48` summary.
-- Corrected analyzer `validation/v167_single_song_calibration/analyze_post_i005_active_only_v167_rearm.py`: commit `70ace4cd7d7594ee89c8ab341bdbdde9059eec3d`, blob `82ec287869102ab6af949afa174a2543768dbc55`.
-- Corrected boundary: the exact 48 frozen I005 additions are the authoritative post-grid selected set. The evidence pool is used only to characterize those selected sites (active-pitch multiplicity, max-active ties, candidate competition, intervals, onset/activity/rank distributions). It does not infer a new post-grid eligible count from incomplete structural predicates.
-- Corrected analyzer still has no professional-reference/scorer input, reads no per-event reference matches, performs 0 new reference-facing score calls, and sets `newRuleSelectedByThisAnalysis=false`.
-- The failed workflow file remains on branch only because its self-removal step was skipped after failure; it must be rearmed by updating that same workflow from an exact checkpoint parent, not rerun as-is.
+## Post-I005 aggregate diagnosis — FROZEN / TERMINAL
+- First analyzer attempt blob `86a32010f441fb518146f3717ae8d9ab3b94b8ea`; run `33265180179`, job `99133883024`: immutable/reference-blind guard passed, analyzer failed safely before output because it confused pre-grid structural eligibility with the builder's post timing/dedupe/polyphony `eligible` count.
+- Corrected analyzer `validation/v167_single_song_calibration/analyze_post_i005_active_only_v167_rearm.py`: blob `82ec287869102ab6af949afa174a2543768dbc55`.
+- Corrected rearm commit `b0474ab800a187d382a67e61d3e18d17ee9a278e`; run `33265328718`, job `99134275015`; terminal self-removing commit `dbfa511f90b2f8ccd58411211fdde540fa5ca0c9`.
+- Analysis `debug/v167-single-song-calibration/post-i005-active-only-aggregate-analysis.json`: blob `043eaa2367f1efbb6309e13d2fcd52952b809e81`, SHA256 `fe7e826724a11e115a25f932d4b58ed88e3aedae67fb54142cc532cc40ab8450`.
+- Receipt `debug/v167-single-song-calibration/post-i005-active-only-aggregate-analysis-receipt.json`: blob `eb7e888bf1bb772a90496126df434a621728972e`, status `POST_I005_ACTIVE_ONLY_AGGREGATE_ANALYSIS_FROZEN`.
+- Policy: professional reference read=false; scorer read=false; new reference-facing score calls=0; per-event reference match assignments read=false; new rule selected by analysis=false; GPU/CUDA/Modal=false; `main`/Production=false.
+
+### Frozen structural findings for the exact 48 I005 additions
+- Exactly **48 additions / 48 unique selected sites**.
+- Candidate/max-active template-score ratio is **exactly 1.0 for all 48**.
+- Max-active tie count is **1 at all 48 sites**; pre-grid active-max candidate count at each selected site is also **1**. Therefore ratio tightening, tie-breaking, or active-candidate competition are dead dimensions for this set.
+- Active MIDI multiplicity: **1 active pitch: 23 sites; 2: 15; 3: 5; 4: 5**.
+- Nearest-different-active topology: **no different active pitch: 23; chord interval: 18; near-unison 1–2 semitones: 5; other above octave: 2**.
+- Exact nearest interval histogram: none 23; 1:1; 2:4; 3:7; 4:4; 5:2; 7:1; 9:2; 10:2; 15:1; 22:1.
+- Onset support: min **0.547974**, p10 **0.631731**, p25 **0.858249**, median **1.0**, mean **0.909745**. Survival: >=0.55 47; >=0.60 43; >=0.65 42; >=0.70 41; >=0.75 40.
+- Activity support: min **0.409515**, p10 **0.496324**, p25 **0.644686**, median **0.772817**, mean **0.772771**.
+- Template rank: min/p10 **0.9795918**, p25/median/p75/p90/max **1.0**, mean **0.997024**. Rank is nearly saturated and is not an attractive new search dimension.
+
+### Frozen aggregate evidence against onset tightening
+- Across all 9 prior `allow_active` paired rules with otherwise identical config, onset 0.65 vs 0.50: **0 improved F1, 6 reduced F1, 3 tied**, mean F1 delta **-0.089190pp**.
+- For `allow_active + exclude_harmonic_octave`: **0 improved, 2 reduced, 1 tied**, mean F1 delta **-0.144912pp**.
+- Closest prior rule to I004 structure, `q100 allow noharm`: 0.50 F1 **42.617717478052675%** vs 0.65 F1 **42.4%**; tightening removed 6 events but lost 4 matches / 2 FP and F1 **-0.217717pp**.
+- Therefore do **not** preregister a simple onset-floor increase as the next family.
+
+### Frozen topology interpretation
+- I005 already selects a unique max-active Basic-Pitch-active candidate at every retained site. The remaining meaningful reference-blind distinction is the topology of *other* active pitches.
+- A small next family is defensible because 41/48 sites fall into musically interpretable isolated-active or chord-interval context, while 7/48 are near-unison (5) or remote-above-octave (2).
+- This is a whole-rule structural hypothesis only. No event is labeled true/false by reference, and no per-event outcome may be used to choose which 7 to remove.
 
 ## Iteration 005 — FROZEN CURRENT BEST
 ### Guitar — `gss-active-only`
-- Candidate `debug/v167-single-song-calibration/iteration-005-generated.json`: blob `8d68f4d7fac4e094bcd617b026befddd370d9368`, SHA256 `86329ebc25e589f566d466a7a65cae35a158c25f470b1c034973f3dbc7d38b31`.
-- Promotion proof blob `668128054f5ad644055913833cd07ef197bce538`, SHA256 `a286b96819dacba1d4e1cf7aa84589a29279df0b02b4104ced5d5a7c77e2ca15`.
-- Freeze receipt blob `85a3280910e8f5cc257ea30e3047d3ea51f85a20`, status `ITERATION_005_FROZEN`.
+- Candidate blob `8d68f4d7fac4e094bcd617b026befddd370d9368`, SHA256 `86329ebc25e589f566d466a7a65cae35a158c25f470b1c034973f3dbc7d38b31`.
 - F1 **42.7940586109996%**; precision **48.54280510018215%**; recall **38.26274228284279%**.
-- 533 matched / 1098 generated / 1393 reference; FP 565; FN 860.
-- Delta vs I004: F1 **+0.17634113294692222pp**; precision **+0.5643684425002127pp**; recall **-0.07178750897343655pp**; matched -1; generated -15; FP -14; FN +1.
-- I005 Guitar = all **1050** original rich I003 Guitar dictionaries + exactly **48** frozen state-split additions = **1098** events.
-- Normalized Guitar exactly equals frozen scored winner SHA256 `aa042135c542f2025522bb0d8ab9491c8457bf95025db5953b714d452afc0d5e`.
-- Structural rule: rank >=0.975; activity >=0.05; onset >=0.50; Basic-Pitch active context required; `fundamentalPresent`; top-1/site; cap 6; active candidate/max-active ratio >=1.00; nearest different active intervals {12,19,24} rejected; inactive branch disabled.
+- 533 matched / 1098 generated / 1393 reference; FP565/FN860.
+- I005 = all 1050 original rich I003 Guitar dictionaries + exactly 48 frozen state-split additions.
+- Normalized stream exactly equals already-scored state-split winner SHA256 `aa042135c542f2025522bb0d8ab9491c8457bf95025db5953b714d452afc0d5e`.
 
 ### Bass — closed / identical I003-I005
 - F1 **80.45325779036827%**; precision **83.203125%**; recall **77.87934186471663%**.
-- 426 matched / 512 generated / 547 reference; FP 86; FN 121.
-- Rich list exactly preserved across I003/I004/I005=true; normalized equal I004=true.
+- 426 matched / 512 generated / 547 reference; FP86/FN121.
+- Bass must remain rich/normalized exactly I005/I004/I003 in all future Guitar-only variants.
 
-## Frozen state-split sweep — terminal source of I005 winner
-- Manifest blob `fc5202898adc0d8aabdfce0e02c019f32443a4a1`, SHA256 `113add46d50e423708972ed18eb88df48ec1d60968e75d5e251f609f84a365e4`.
-- Report blob `d26e4128479f760c23fe6c449cc4b3ec5ad7219b`, SHA256 `f4dfd04849eab3f15290cadb2b9ff0a2903bc6174beb428b35c71aa7c7347562`.
-- Receipt blob `c40cd73d857c4d42d87c41c95d17d47be5f15e3c`, status `STATE_SPLIT_GUITAR_SWEEP_FROZEN`.
-- Scoring boundary held: exactly 5 Guitar calls = I004 baseline + four new whole rules; 0 Bass calls; 0 reproduction-control calls.
-- All four new rules beat I004. Winner `gss-active-only`.
-- `gss-active-only`: 48 active / 0 inactive additions, F1 42.7940586109996%.
-- `gss-inactive-q125-noharm`: 47 active +10 inactive additions, F1 42.72%.
-- `gss-inactive-q100-chord`: 47 active +10 inactive additions, F1 42.64000000000001%.
-- `gss-inactive-q125-chord`: also beat I004; terminal report remains source of truth for exact metrics.
-- Whole-rule interpretation: disabling the inactive branch improved the precision/FP tradeoff most strongly; no individual candidate is labeled by reference as true/false by this conclusion.
-
-## Frozen contextual sweep aggregate source
-- Report `debug/v167-single-song-calibration/contextual-guitar-recovery-sweep.json`: blob `b00e25f5c1fd9f8c40b440156e049317e008ec1d`, SHA256 `6b661f6dfa27d31204f4e8a9035d286d5324440b947eb3e49db99205dad9320e`.
-- Used only at whole-rule aggregate level to compare pre-existing onset 0.50 vs 0.65 variants with otherwise matching configs. No per-event scorer assignments are used.
-
-## Immutable source/evidence boundary
+## Immutable identities
 - I003 blob `758f8762632e916306aed9b036a6483af9431dc0`, SHA256 `f15c6f40dd4b8479c2dfb7eab039cff98a23b45eb796265ffad08c5a8ae37115`.
 - I004 blob `8dd85049a65f00541f7874ff99511b081a0b5ff2`, SHA256 `728785c631750cbfcad48cc3243c238d6e7de6f337cce87e125a651ca2793acc`.
 - I005 blob `8d68f4d7fac4e094bcd617b026befddd370d9368`, SHA256 `86329ebc25e589f566d466a7a65cae35a158c25f470b1c034973f3dbc7d38b31`.
 - Evidence pool blob `aa7da3a55344b1418a291f30fab9ca55858fc094`, SHA256 `1c983784c2d12a22437a80387525789bcf55a2f4e4a5c7a96608c575bf709673`.
-- Frozen V166 timebase blob `abebae25801b7ddeb5b933977c4f4a918f7bf9ef`, SHA256 `899746d3048d239bc0032375d412a109ea04b055df19df1b7b08dc3e73aa5ca0`.
 - Frozen scorer blob `9644e65719fbd361a9b39778ae9950c5e983e855`.
 - Frozen professional reference blob `2fbed60b543c0488934d8642c488aa06bf31bbf5`, SHA256 `b39a203aec3f45800891fe4eca156e37e7571b91ea5c4ccc41b30bbc95fc89e7`.
 
 ## Standing V167 methodology
 - Calibration only; never present V167 scores as holdout/generalization performance.
-- Reference/scorer may grade complete predeclared whole variants only. No per-event reference choices or direct reference-event copying.
-- I003, I004, and I005 are immutable.
-- Bass is closed and must remain exactly I005/I004/I003 in future Guitar-only work.
-- Frozen state-split sweep is terminal; do not rescore or retune that same family.
+- Complete deterministic whole variants must be frozen/hashes fixed before any new reference/scorer read.
+- No per-event reference choices, direct reference-event copying, or post-score mutation/retuning.
+- I003, I004, I005 and all terminal reports are immutable.
+- Bass is closed.
 - CPU work authorized. Fresh explicit authorization required immediately before GPU/CUDA/Modal.
 - Never modify/merge/promote `main` or Production without explicit user direction.
 
-## NEXT boundary — rearm corrected aggregate/reference-blind diagnosis
-1. Update the existing failed self-removing workflow from this exact checkpoint parent; do not rerun the failed workflow unchanged.
-2. Point it to corrected analyzer blob `82ec287869102ab6af949afa174a2543768dbc55`; verify frozen contextual report, state-split report, evidence pool, I003, I005, and checkpoint identities.
-3. Compile corrected analyzer and assert it contains no professional-reference/scorer path or CLI input.
-4. Run once; require status `POST_I005_AGGREGATE_REFERENCE_BLIND_ANALYSIS_FROZEN`, exactly 48 I005 additions / 48 unique selected sites, and policy showing 0 reference/scorer/per-event match access.
-5. Freeze `post-i005-active-only-aggregate-analysis.json` and receipt; self-remove workflow.
-6. Read frozen diagnosis and checkpoint before deciding or preregistering any new Guitar family.
-7. CPU only; no GPU/CUDA/Modal. Never modify `main` or Production.
+## NEXT boundary — preregister small active-topology Guitar pruning family
+1. Keep I005 immutable and Bass exactly I005 for every variant.
+2. Build variants only by deterministic whole-rule filtering of the 48 frozen I005 additions using their already-frozen reference-blind active topology; all 1050 original I003 Guitar events remain untouched.
+3. Proposed small family, frozen before scoring:
+   - no-score reproduction control = exact I005;
+   - `topo-single-or-chord`: keep additions with no different active pitch OR nearest different active interval in {3,4,5,7,8,9,10}; expected 41 additions;
+   - `topo-single-only`: keep only no-different-active additions; expected 23;
+   - `topo-chord-only`: keep only chord-interval additions; expected 18.
+4. Do not add onset/activity/rank/ratio threshold dimensions to this family. Those would confound the topology hypothesis and are not supported by the frozen diagnosis.
+5. Freeze manifest + all candidate hashes before any reference/scorer read. Reproduction control gets 0 score calls; Bass gets 0 score calls. Score exactly the 3 new Guitar whole rules.
+6. Frozen selection: max Guitar F1, then precision, fewer additions, lexicographic id. Do not create I006 automatically. Require at least **+0.10pp F1 vs I005 and precision >= I005** before a separate no-rescore I006 promotion is even eligible.
+7. Save preregistration/checkpoint before arming any reference-facing scorer workflow.
+8. CPU only; no GPU/CUDA/Modal; never modify `main` or Production.
