@@ -32,6 +32,7 @@ function safeDownloadName(originalFilename, removalMode) {
 export async function POST(request) {
   let resolvedAudioUrl = '';
   let blobToken = '';
+  let processingSucceeded = false;
 
   try {
     const body = await request.json();
@@ -225,6 +226,7 @@ export async function POST(request) {
           error:
             detail ||
             'The backing track could not be generated.',
+          retryable: true,
         },
         {
           status: separatorResponse.status,
@@ -245,17 +247,22 @@ export async function POST(request) {
         {
           error:
             'The BTS separator did not return an audio track.',
+          retryable: true,
         },
         { status: 502 }
       );
     }
 
+    processingSucceeded = true;
+
     // Copyright-retention policy:
     // - The generated backing track is streamed directly to the customer and
     //   is never written to persistent BTS storage.
-    // - The source upload is deleted in finally as soon as this processing
-    //   request finishes. That is intentionally stricter than the maximum
-    //   24-hour retention window requested for copyrighted audio.
+    // - Successful source uploads are deleted immediately after the separator
+    //   returns a valid audio stream.
+    // - A failed paid job keeps its private source temporarily so the same
+    //   signed job can be retried; the BTS cleanup cron removes it before the
+    //   frozen 24-hour maximum retention boundary.
     return new Response(separatorResponse.body, {
       status: 200,
       headers: {
@@ -270,7 +277,7 @@ export async function POST(request) {
         'X-Content-Type-Options': 'nosniff',
         'X-BTS-Removal-Mode': removalMode,
         'X-BTS-Audio-Retention':
-          'source-deleted-after-processing; generated-track-not-persisted; maximum-24-hours',
+          'success-source-deleted; failed-source-private-until-retry-or-cleanup; generated-track-not-persisted; maximum-24-hours',
       },
     });
   } catch (error) {
@@ -285,11 +292,16 @@ export async function POST(request) {
           error instanceof Error
             ? error.message
             : 'Unable to generate the backing track.',
+        retryable: Boolean(resolvedAudioUrl),
       },
       { status: 500 }
     );
   } finally {
-    if (resolvedAudioUrl && blobToken) {
+    if (
+      processingSucceeded &&
+      resolvedAudioUrl &&
+      blobToken
+    ) {
       try {
         await del(resolvedAudioUrl, {
           token: blobToken,
