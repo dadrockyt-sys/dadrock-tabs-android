@@ -4,7 +4,7 @@ Updated: 2026-08-29 UTC
 Branch: `v143-contextual-prune-lobo`
 
 ## Active phase
-**V166 is terminal/immutable. V167 is the explicitly scorer/reference-guided SINGLE-SONG TRAINING CALIBRATION lane for Lenny Kravitz — Are You Gonna Go My Way. Iteration 002 remains the best frozen candidate: Guitar 41.9157%, Bass 71.8651%. Timing and admitted-event Bass pitch alternatives are substantially exhausted. Exact upstream discard gates and the reproducible CPU source/stem boundary are mapped. The reference-blind, output-neutral evidence observer plus standalone Guitar/Bass pitch-pool augmentation has now completed successfully and is frozen at terminal commit `86ab5882845b61917b8820c35b07022adef532f0`. The next boundary is a fixed, predeclared reference-facing recovery-rule/threshold sweep over that frozen upstream pool; no Iteration 003 exists yet. `main`/Production remain untouched.**
+**V166 is terminal/immutable. V167 is the explicitly scorer/reference-guided SINGLE-SONG TRAINING CALIBRATION lane for Lenny Kravitz — Are You Gonna Go My Way. Iteration 002 remains the best frozen candidate: Guitar 41.9157%, Bass 71.8651%. Timing and admitted-event Bass pitch alternatives are substantially exhausted. Exact upstream discard gates and the reproducible CPU source/stem boundary are mapped. The reference-blind upstream evidence pool is frozen at terminal commit `86ab5882845b61917b8820c35b07022adef532f0`. A deterministic 146-variant upstream-recovery sweep is now explicitly preregistered in code before reference scoring: 49 Guitar variants and 97 Bass variants, including baselines. No Iteration 003 exists yet. `main`/Production remain untouched.**
 
 ## Standing V167 methodology
 - Calibration only; never present V167 calibration score as holdout/generalization performance.
@@ -89,13 +89,23 @@ Branch: `v143-contextual-prune-lobo`
 - Bass pre-admission pool: **913 sites / 36,520 candidates**.
 - The pool is evidence only: augmentation changed zero generated events.
 
-## NEXT boundary — fixed recovery-rule/threshold sweep over frozen pool
-1. Treat evidence pool blob `aa7da3a55344b1418a291f30fab9ca55858fc094` as immutable input. Do not rerun source separation or pitch observation unless a new explicitly versioned lane is created.
-2. Build a deterministic, predeclared recovery-variant generator/sweep. Reference/scorer may grade complete variants and select whole rules/thresholds only; they may not choose individual candidate events.
-3. Prioritize Guitar missing chord tones/polyphony from the 13,328 standalone harmonic candidates. Keep the existing Guitar cap=6 and evaluate conservative whole-rule gates first.
-4. Prioritize Bass upstream proposal/state coverage from the 36,520 pre-admission candidates, especially MIDI 31/35. Preserve monophonic cap=1 and avoid event-by-event reference choices.
-5. Apply the already-frozen `-12` global phase and Iteration 002 whole-stream timing rules to every recovery variant before apples-to-apples scoring.
-6. Record complete variant definitions, candidate counts, structural QC, precision/recall/F1, and deterministic winner selection in a frozen sweep report + receipt.
-7. Do not create Iteration 003 unless the frozen sweep shows a material F1 gain with a defensible precision/recall tradeoff.
-8. Keep CPU-only. Fresh explicit authorization is required before any GPU/CUDA/Modal work.
-9. Never modify/merge/promote `main` or Production without explicit user direction.
+## V167 predeclared upstream-recovery sweep — STAGED BEFORE REFERENCE READ
+- Reference-blind generator `validation/v167_single_song_calibration/build_upstream_recovery_variants_v167.py`, blob `24413d321f64bbfcce48812ceb85b4593dcfa80c`, implementation commit `6935311a96cc8ba391ad461ef1368ae7bed789b1`.
+- Frozen-manifest grader `validation/v167_single_song_calibration/score_upstream_recovery_variants_v167.py`, blob `32304261ff9e6bec00d22eabea08cf5070cd3d3e`, implementation commit `589a046a08c7e508bae910774e8f74bb5c4b96ac`.
+- The generator accepts no reference/scorer input and predeclares **146 complete variants before scoring**: **49 Guitar** (baseline + 48 whole rules) and **97 Bass** (baseline + 96 whole rules).
+- Guitar grid: template-rank thresholds 0.80/0.90/0.95/0.975 × onset support 0.35/0.50/0.65 × max 1/2 additions per site × Basic-Pitch-inactive-only true/false; fundamental required; activity >=0.05; existing Iteration 002 events always win; `(step,midi)` dedupe and polyphony cap 6 remain.
+- Bass grid: template-rank thresholds 0.80/0.90/0.95/0.975 × onset support 0.20/0.35/0.50 × activity 0.04/0.10 × scope all/no-stable-state/low-register/low-register+no-stable-state; fundamental required; low-register scope is MIDI <=40; existing Iteration 002 events always win; only empty monophonic steps are filled.
+- New recovery-event timing is fixed without reference: nearest frozen V166 subdivision, then the already-frozen `-12` global phase. Existing Iteration 002 events retain their already-frozen whole-stream step-rule timing.
+- Score-minimal candidate files are SHA256-sealed in a manifest before any scorer/reference read. The grader verifies every candidate hash before importing the scorer or opening the professional reference.
+- Winner selection is frozen in advance: max primary F1, then max precision, then fewer added events, then lexicographically smaller rule id. A >=1.0pp F1 gain is reported as material, but promotion is never automatic.
+- No Iteration 003 has been created. No reference-facing score has been run against this variant set yet.
+
+## NEXT boundary — one-shot CPU recovery sweep
+1. Arm a one-shot workflow on `v143-contextual-prune-lobo` only, pinned to the current preregistration state and exact blobs above.
+2. Generate all 146 score-minimal variants plus the frozen manifest **before** crossing the reference-facing boundary; verify exact pool/base/timebase identities and manifest/candidate hashes.
+3. Only after the complete manifest is sealed, run the frozen scorer/reference over all complete variants. Do not alter any candidate after scoring begins.
+4. Require the baseline variants to reproduce Iteration 002 exactly: Guitar 41.9156774457634%, Bass 71.86512118018967%.
+5. Freeze the manifest, complete score report, and receipt; self-delete the one-shot workflow and record run/job/terminal commit, blobs/hashes, winners, deltas, candidate additions, precision/recall/F1.
+6. Do not create Iteration 003 unless the frozen sweep shows a material F1 gain with a defensible precision/recall tradeoff.
+7. Keep CPU-only. Fresh explicit authorization is required before any GPU/CUDA/Modal work.
+8. Never modify/merge/promote `main` or Production without explicit user direction.
