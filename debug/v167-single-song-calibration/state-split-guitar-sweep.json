@@ -1,0 +1,539 @@
+{
+  "classification": "SINGLE_SONG_TRAINING_CALIBRATION_ONLY",
+  "iteration004Baseline": {
+    "bassInheritedWithoutScoreCall": {
+      "falseNegative": 121,
+      "falsePositive": 86,
+      "generated": 512,
+      "matched": 426,
+      "primaryF1": 0.8045325779036827,
+      "primaryPrecision": 0.83203125,
+      "primaryRecall": 0.7787934186471663,
+      "reference": 547
+    },
+    "combinedGuitar": {
+      "falseNegative": 859,
+      "falsePositive": 579,
+      "generated": 1113,
+      "grossF1": 0.5450917797286512,
+      "matched": 534,
+      "primaryF1": 0.42617717478052675,
+      "primaryPrecision": 0.4797843665768194,
+      "primaryRecall": 0.38334529791816224,
+      "reference": 1393,
+      "sameMeasurePitchContentF1": 0.5897845171588189
+    }
+  },
+  "iteration004Sha256": "728785c631750cbfcad48cc3243c238d6e7de6f337cce87e125a651ca2793acc",
+  "manifestSha256": "113add46d50e423708972ed18eb88df48ec1d60968e75d5e251f609f84a365e4",
+  "newVariantIdsBeatingIteration004": [
+    "gss-active-only",
+    "gss-inactive-q125-chord",
+    "gss-inactive-q125-noharm",
+    "gss-inactive-q100-chord"
+  ],
+  "newVariantsBeatingIteration004": 4,
+  "policy": {
+    "automaticIteration005Promotion": false,
+    "bassCoordinateIdentityVerifiedBeforeReferenceRead": true,
+    "bassScoreCalls": 0,
+    "calibrationOnly": true,
+    "generalizationClaim": false,
+    "gpuCudaModalUsed": false,
+    "guitarScoreCalls": 5,
+    "mainOrProductionModified": false,
+    "postScoreRetuningOfSameVariantSet": false,
+    "reproductionControlScoreCalls": 0,
+    "scoringWritesNoCandidateCorrections": true
+  },
+  "referenceCounts": {
+    "bassExcluded": 0,
+    "bassIncluded": 547,
+    "leadExcluded": 0,
+    "leadIncluded": 447,
+    "rhythmExcluded": 0,
+    "rhythmIncluded": 946
+  },
+  "referenceSha256": "b39a203aec3f45800891fe4eca156e37e7571b91ea5c4ccc41b30bbc95fc89e7",
+  "reproductionControl": {
+    "candidateSha256": "63f9beaf41907bf13a734df18d7711925166b311ba5b950414ab27ca9f751bc9",
+    "id": "gss-repro-q100-noharm",
+    "normalizedBassExactlyIteration004": true,
+    "normalizedGuitarExactlyIteration004": true,
+    "scoreCalls": 0
+  },
+  "schema": "dadrock.tabs.v167.state-split-guitar-sweep.v1",
+  "scorerSha256": "95f4e22f3367ec930bd1d07141266f60712240f0f83bd07d2e1cc4eae815dda2",
+  "selectionPolicy": {
+    "allNewVariantsFrozenBeforeReferenceRead": true,
+    "bassScoreCalls": 0,
+    "guitarScoreCalls": 5,
+    "individualEventSelectionByReference": false,
+    "iteration005CreatedByThisSweep": false,
+    "postScoreRetuning": false,
+    "postScoreVariantMutation": false,
+    "reproductionControlScored": false,
+    "tieBreak": [
+      "max_primary_f1",
+      "max_primary_precision",
+      "fewer_total_additions_vs_i003",
+      "lexicographic_rule_id"
+    ],
+    "wholeVariantOnly": true
+  },
+  "status": "REFERENCE_GRADED_COMPLETE_PREDECLARED_STATE_SPLIT_VARIANTS",
+  "variants": [
+    {
+      "candidateSha256": "728785c631750cbfcad48cc3243c238d6e7de6f337cce87e125a651ca2793acc",
+      "config": {
+        "baseline": true,
+        "source": "frozen_iteration_004"
+      },
+      "deltaVsIteration004": {
+        "f1PercentagePoints": 0.0,
+        "falseNegative": 0,
+        "falsePositive": 0,
+        "generated": 0,
+        "matched": 0,
+        "precisionPercentagePoints": 0.0,
+        "recallPercentagePoints": 0.0
+      },
+      "generationSummary": {
+        "activeAdded": 46,
+        "added": 63,
+        "inactiveAdded": 17
+      },
+      "id": "i004-baseline",
+      "kind": "baseline",
+      "metrics": {
+        "falseNegative": 859,
+        "falsePositive": 579,
+        "generated": 1113,
+        "grossF1": 0.5450917797286512,
+        "matched": 534,
+        "primaryF1": 0.42617717478052675,
+        "primaryPrecision": 0.4797843665768194,
+        "primaryRecall": 0.38334529791816224,
+        "reference": 1393,
+        "sameMeasurePitchContentF1": 0.5897845171588189
+      },
+      "totalAdditionsVsI003": 63
+    },
+    {
+      "candidateSha256": "aa042135c542f2025522bb0d8ab9491c8457bf95025db5953b714d452afc0d5e",
+      "config": {
+        "activeBranch": {
+          "candidateState": "basic_pitch_active",
+          "candidateToMaxActiveTemplateScoreMin": 1.0,
+          "harmonicOctaveIntervalsRejected": [
+            12,
+            19,
+            24
+          ],
+          "intervalContextPolicy": "exclude_harmonic_octave"
+        },
+        "activitySupportMin": 0.05,
+        "baseline": false,
+        "existingIteration003EventsPreferred": true,
+        "fundamentalPresentRequired": true,
+        "id": "gss-active-only",
+        "inactiveBranch": {
+          "candidateState": "basic_pitch_inactive",
+          "candidateToMaxActiveTemplateScoreMin": null,
+          "chordIntervalsAllowed": [
+            3,
+            4,
+            5,
+            7,
+            8,
+            9,
+            10
+          ],
+          "enabled": false,
+          "harmonicOctaveIntervalsRejected": [
+            12,
+            19,
+            24
+          ],
+          "intervalContextPolicy": null
+        },
+        "maxAddsPerSite": 1,
+        "onsetSupportMin": 0.5,
+        "polyphonyCap": 6,
+        "reproductionControl": false,
+        "requireBasicPitchActiveContext": true,
+        "stepMidiDedupe": true,
+        "stream": "combinedGuitar",
+        "templateRankMin": 0.975
+      },
+      "deltaVsIteration004": {
+        "f1PercentagePoints": 0.17634113294692222,
+        "falseNegative": 1,
+        "falsePositive": -14,
+        "generated": -15,
+        "matched": -1,
+        "precisionPercentagePoints": 0.5643684425002127,
+        "recallPercentagePoints": -0.07178750897343655
+      },
+      "generationSummary": {
+        "activeAdded": 48,
+        "activeEligible": 48,
+        "added": 48,
+        "eligible": 48,
+        "inactiveAdded": 0,
+        "inactiveEligible": 0,
+        "sitesWithActiveContext": 204,
+        "sitesWithAdds": 48,
+        "sitesWithEligible": 48
+      },
+      "id": "gss-active-only",
+      "kind": "new_state_split_rule",
+      "metrics": {
+        "falseNegative": 860,
+        "falsePositive": 565,
+        "generated": 1098,
+        "grossF1": 0.5475712565234846,
+        "matched": 533,
+        "primaryF1": 0.42794058610999597,
+        "primaryPrecision": 0.4854280510018215,
+        "primaryRecall": 0.3826274228284279,
+        "reference": 1393,
+        "sameMeasurePitchContentF1": 0.5917302288237656
+      },
+      "totalAdditionsVsI003": 48
+    },
+    {
+      "candidateSha256": "2eb34475ccf0bf173f0bd9e64d7267caa32fd7410e2a27553cda923b36731caf",
+      "config": {
+        "activeBranch": {
+          "candidateState": "basic_pitch_active",
+          "candidateToMaxActiveTemplateScoreMin": 1.0,
+          "harmonicOctaveIntervalsRejected": [
+            12,
+            19,
+            24
+          ],
+          "intervalContextPolicy": "exclude_harmonic_octave"
+        },
+        "activitySupportMin": 0.05,
+        "baseline": false,
+        "existingIteration003EventsPreferred": true,
+        "fundamentalPresentRequired": true,
+        "id": "gss-inactive-q125-noharm",
+        "inactiveBranch": {
+          "candidateState": "basic_pitch_inactive",
+          "candidateToMaxActiveTemplateScoreMin": 1.25,
+          "chordIntervalsAllowed": [
+            3,
+            4,
+            5,
+            7,
+            8,
+            9,
+            10
+          ],
+          "enabled": true,
+          "harmonicOctaveIntervalsRejected": [
+            12,
+            19,
+            24
+          ],
+          "intervalContextPolicy": "exclude_harmonic_octave"
+        },
+        "maxAddsPerSite": 1,
+        "onsetSupportMin": 0.5,
+        "polyphonyCap": 6,
+        "reproductionControl": false,
+        "requireBasicPitchActiveContext": true,
+        "stepMidiDedupe": true,
+        "stream": "combinedGuitar",
+        "templateRankMin": 0.975
+      },
+      "deltaVsIteration004": {
+        "f1PercentagePoints": 0.10228252194732224,
+        "falseNegative": 0,
+        "falsePositive": -6,
+        "generated": -6,
+        "matched": 0,
+        "precisionPercentagePoints": 0.260045727141911,
+        "recallPercentagePoints": 0.0
+      },
+      "generationSummary": {
+        "activeAdded": 47,
+        "activeEligible": 48,
+        "added": 57,
+        "eligible": 60,
+        "inactiveAdded": 10,
+        "inactiveEligible": 12,
+        "sitesWithActiveContext": 204,
+        "sitesWithAdds": 57,
+        "sitesWithEligible": 57
+      },
+      "id": "gss-inactive-q125-noharm",
+      "kind": "new_state_split_rule",
+      "metrics": {
+        "falseNegative": 859,
+        "falsePositive": 573,
+        "generated": 1107,
+        "grossF1": 0.5464,
+        "matched": 534,
+        "primaryF1": 0.42719999999999997,
+        "primaryPrecision": 0.4823848238482385,
+        "primaryRecall": 0.38334529791816224,
+        "reference": 1393,
+        "sameMeasurePitchContentF1": 0.5903999999999998
+      },
+      "totalAdditionsVsI003": 57
+    },
+    {
+      "candidateSha256": "f23bec8a441fa61403081be493efb617214aaf47deb4d2b19a87c9d436fb3064",
+      "config": {
+        "activeBranch": {
+          "candidateState": "basic_pitch_active",
+          "candidateToMaxActiveTemplateScoreMin": 1.0,
+          "harmonicOctaveIntervalsRejected": [
+            12,
+            19,
+            24
+          ],
+          "intervalContextPolicy": "exclude_harmonic_octave"
+        },
+        "activitySupportMin": 0.05,
+        "baseline": false,
+        "existingIteration003EventsPreferred": true,
+        "fundamentalPresentRequired": true,
+        "id": "gss-inactive-q100-chord",
+        "inactiveBranch": {
+          "candidateState": "basic_pitch_inactive",
+          "candidateToMaxActiveTemplateScoreMin": 1.0,
+          "chordIntervalsAllowed": [
+            3,
+            4,
+            5,
+            7,
+            8,
+            9,
+            10
+          ],
+          "enabled": true,
+          "harmonicOctaveIntervalsRejected": [
+            12,
+            19,
+            24
+          ],
+          "intervalContextPolicy": "chord_interval"
+        },
+        "maxAddsPerSite": 1,
+        "onsetSupportMin": 0.5,
+        "polyphonyCap": 6,
+        "reproductionControl": false,
+        "requireBasicPitchActiveContext": true,
+        "stepMidiDedupe": true,
+        "stream": "combinedGuitar",
+        "templateRankMin": 0.975
+      },
+      "deltaVsIteration004": {
+        "f1PercentagePoints": 0.022282521947331047,
+        "falseNegative": 1,
+        "falsePositive": -5,
+        "generated": -6,
+        "matched": -1,
+        "precisionPercentagePoints": 0.1697114904662067,
+        "recallPercentagePoints": -0.07178750897343655
+      },
+      "generationSummary": {
+        "activeAdded": 47,
+        "activeEligible": 48,
+        "added": 57,
+        "eligible": 58,
+        "inactiveAdded": 10,
+        "inactiveEligible": 10,
+        "sitesWithActiveContext": 204,
+        "sitesWithAdds": 57,
+        "sitesWithEligible": 57
+      },
+      "id": "gss-inactive-q100-chord",
+      "kind": "new_state_split_rule",
+      "metrics": {
+        "falseNegative": 860,
+        "falsePositive": 574,
+        "generated": 1107,
+        "grossF1": 0.5456,
+        "matched": 533,
+        "primaryF1": 0.42640000000000006,
+        "primaryPrecision": 0.48148148148148145,
+        "primaryRecall": 0.3826274228284279,
+        "reference": 1393,
+        "sameMeasurePitchContentF1": 0.5903999999999998
+      },
+      "totalAdditionsVsI003": 57
+    },
+    {
+      "candidateSha256": "5a8ea32192a9a6d8086f613c6b4720bbee402e2afb5a59ba3e757f51f1894cb0",
+      "config": {
+        "activeBranch": {
+          "candidateState": "basic_pitch_active",
+          "candidateToMaxActiveTemplateScoreMin": 1.0,
+          "harmonicOctaveIntervalsRejected": [
+            12,
+            19,
+            24
+          ],
+          "intervalContextPolicy": "exclude_harmonic_octave"
+        },
+        "activitySupportMin": 0.05,
+        "baseline": false,
+        "existingIteration003EventsPreferred": true,
+        "fundamentalPresentRequired": true,
+        "id": "gss-inactive-q125-chord",
+        "inactiveBranch": {
+          "candidateState": "basic_pitch_inactive",
+          "candidateToMaxActiveTemplateScoreMin": 1.25,
+          "chordIntervalsAllowed": [
+            3,
+            4,
+            5,
+            7,
+            8,
+            9,
+            10
+          ],
+          "enabled": true,
+          "harmonicOctaveIntervalsRejected": [
+            12,
+            19,
+            24
+          ],
+          "intervalContextPolicy": "chord_interval"
+        },
+        "maxAddsPerSite": 1,
+        "onsetSupportMin": 0.5,
+        "polyphonyCap": 6,
+        "reproductionControl": false,
+        "requireBasicPitchActiveContext": true,
+        "stepMidiDedupe": true,
+        "stream": "combinedGuitar",
+        "templateRankMin": 0.975
+      },
+      "deltaVsIteration004": {
+        "f1PercentagePoints": 0.10773342375093864,
+        "falseNegative": 1,
+        "falsePositive": -10,
+        "generated": -11,
+        "matched": -1,
+        "precisionPercentagePoints": 0.3881695129169749,
+        "recallPercentagePoints": -0.07178750897343655
+      },
+      "generationSummary": {
+        "activeAdded": 48,
+        "activeEligible": 48,
+        "added": 52,
+        "eligible": 52,
+        "inactiveAdded": 4,
+        "inactiveEligible": 4,
+        "sitesWithActiveContext": 204,
+        "sitesWithAdds": 52,
+        "sitesWithEligible": 52
+      },
+      "id": "gss-inactive-q125-chord",
+      "kind": "new_state_split_rule",
+      "metrics": {
+        "falseNegative": 860,
+        "falsePositive": 569,
+        "generated": 1102,
+        "grossF1": 0.5466933867735471,
+        "matched": 533,
+        "primaryF1": 0.42725450901803613,
+        "primaryPrecision": 0.48366606170598914,
+        "primaryRecall": 0.3826274228284279,
+        "reference": 1393,
+        "sameMeasurePitchContentF1": 0.5907815631262525
+      },
+      "totalAdditionsVsI003": 52
+    }
+  ],
+  "version": "V167",
+  "winner": {
+    "beatsIteration004GuitarF1": true,
+    "candidateSha256": "aa042135c542f2025522bb0d8ab9491c8457bf95025db5953b714d452afc0d5e",
+    "config": {
+      "activeBranch": {
+        "candidateState": "basic_pitch_active",
+        "candidateToMaxActiveTemplateScoreMin": 1.0,
+        "harmonicOctaveIntervalsRejected": [
+          12,
+          19,
+          24
+        ],
+        "intervalContextPolicy": "exclude_harmonic_octave"
+      },
+      "activitySupportMin": 0.05,
+      "baseline": false,
+      "existingIteration003EventsPreferred": true,
+      "fundamentalPresentRequired": true,
+      "id": "gss-active-only",
+      "inactiveBranch": {
+        "candidateState": "basic_pitch_inactive",
+        "candidateToMaxActiveTemplateScoreMin": null,
+        "chordIntervalsAllowed": [
+          3,
+          4,
+          5,
+          7,
+          8,
+          9,
+          10
+        ],
+        "enabled": false,
+        "harmonicOctaveIntervalsRejected": [
+          12,
+          19,
+          24
+        ],
+        "intervalContextPolicy": null
+      },
+      "maxAddsPerSite": 1,
+      "onsetSupportMin": 0.5,
+      "polyphonyCap": 6,
+      "reproductionControl": false,
+      "requireBasicPitchActiveContext": true,
+      "stepMidiDedupe": true,
+      "stream": "combinedGuitar",
+      "templateRankMin": 0.975
+    },
+    "deltaVsIteration004": {
+      "f1PercentagePoints": 0.17634113294692222,
+      "falseNegative": 1,
+      "falsePositive": -14,
+      "generated": -15,
+      "matched": -1,
+      "precisionPercentagePoints": 0.5643684425002127,
+      "recallPercentagePoints": -0.07178750897343655
+    },
+    "generationSummary": {
+      "activeAdded": 48,
+      "activeEligible": 48,
+      "added": 48,
+      "eligible": 48,
+      "inactiveAdded": 0,
+      "inactiveEligible": 0,
+      "sitesWithActiveContext": 204,
+      "sitesWithAdds": 48,
+      "sitesWithEligible": 48
+    },
+    "id": "gss-active-only",
+    "metrics": {
+      "falseNegative": 860,
+      "falsePositive": 565,
+      "generated": 1098,
+      "grossF1": 0.5475712565234846,
+      "matched": 533,
+      "primaryF1": 0.42794058610999597,
+      "primaryPrecision": 0.4854280510018215,
+      "primaryRecall": 0.3826274228284279,
+      "reference": 1393,
+      "sameMeasurePitchContentF1": 0.5917302288237656
+    },
+    "totalAdditionsVsI003": 48
+  }
+}

@@ -1,0 +1,153 @@
+{
+  "classification": "SINGLE_SONG_TRAINING_CALIBRATION_ONLY",
+  "implementation": {
+    "baseBuilderGitBlob": "24413d321f64bbfcce48812ceb85b4593dcfa80c",
+    "stateSplitBuilderGitBlob": "6b480d43744a5c67c02510d55162581d896afee4",
+    "stateSplitGraderGitBlob": "7e5068ce607d7f817429d39ea363840c7ba8d51e"
+  },
+  "inputs": {
+    "evidencePoolGitBlob": "aa7da3a55344b1418a291f30fab9ca55858fc094",
+    "iteration003GitBlob": "758f8762632e916306aed9b036a6483af9431dc0",
+    "iteration003Sha256": "f15c6f40dd4b8479c2dfb7eab039cff98a23b45eb796265ffad08c5a8ae37115",
+    "iteration004GitBlob": "8dd85049a65f00541f7874ff99511b081a0b5ff2",
+    "iteration004Sha256": "728785c631750cbfcad48cc3243c238d6e7de6f337cce87e125a651ca2793acc",
+    "referenceGitBlob": "2fbed60b543c0488934d8642c488aa06bf31bbf5",
+    "referenceSha256": "b39a203aec3f45800891fe4eca156e37e7571b91ea5c4ccc41b30bbc95fc89e7",
+    "scorerGitBlob": "9644e65719fbd361a9b39778ae9950c5e983e855",
+    "timebaseGitBlob": "abebae25801b7ddeb5b933977c4f4a918f7bf9ef"
+  },
+  "manifestGitBlob": "fc5202898adc0d8aabdfce0e02c019f32443a4a1",
+  "manifestSha256": "113add46d50e423708972ed18eb88df48ec1d60968e75d5e251f609f84a365e4",
+  "newVariantIdsBeatingIteration004": [
+    "gss-active-only",
+    "gss-inactive-q125-chord",
+    "gss-inactive-q125-noharm",
+    "gss-inactive-q100-chord"
+  ],
+  "newVariantsBeatingIteration004": 4,
+  "policy": {
+    "allNewVariantsFrozenBeforeReferenceRead": true,
+    "bassCoordinateIdentityVerifiedBeforeReferenceRead": true,
+    "bassScoreCalls": 0,
+    "generalizationClaim": false,
+    "gpuCudaModalUsed": false,
+    "individualEventSelectionByReference": false,
+    "iteration003Modified": false,
+    "iteration004Modified": false,
+    "iteration005Created": false,
+    "mainOrProductionModified": false,
+    "postScoreCandidateMutation": false,
+    "postScoreRetuning": false,
+    "reproductionControlScoreCalls": 0
+  },
+  "reportGitBlob": "d26e4128479f760c23fe6c449cc4b3ec5ad7219b",
+  "reportSha256": "f4dfd04849eab3f15290cadb2b9ff0a2903bc6174beb428b35c71aa7c7347562",
+  "reproductionControl": {
+    "candidateSha256": "63f9beaf41907bf13a734df18d7711925166b311ba5b950414ab27ca9f751bc9",
+    "id": "gss-repro-q100-noharm",
+    "normalizedBassExactlyIteration004": true,
+    "normalizedGuitarExactlyIteration004": true,
+    "scoreCalls": 0
+  },
+  "schema": "dadrock.tabs.v167.state-split-guitar-sweep-receipt.v1",
+  "scoreCallCounts": {
+    "bass": 0,
+    "guitar": 5,
+    "reproductionControl": 0
+  },
+  "status": "STATE_SPLIT_GUITAR_SWEEP_FROZEN",
+  "variantCounts": {
+    "baseline": 1,
+    "newStateSplit": 4,
+    "reproductionControls": 1,
+    "scoredTotal": 5
+  },
+  "version": "V167",
+  "winner": {
+    "beatsIteration004GuitarF1": true,
+    "candidateSha256": "aa042135c542f2025522bb0d8ab9491c8457bf95025db5953b714d452afc0d5e",
+    "config": {
+      "activeBranch": {
+        "candidateState": "basic_pitch_active",
+        "candidateToMaxActiveTemplateScoreMin": 1.0,
+        "harmonicOctaveIntervalsRejected": [
+          12,
+          19,
+          24
+        ],
+        "intervalContextPolicy": "exclude_harmonic_octave"
+      },
+      "activitySupportMin": 0.05,
+      "baseline": false,
+      "existingIteration003EventsPreferred": true,
+      "fundamentalPresentRequired": true,
+      "id": "gss-active-only",
+      "inactiveBranch": {
+        "candidateState": "basic_pitch_inactive",
+        "candidateToMaxActiveTemplateScoreMin": null,
+        "chordIntervalsAllowed": [
+          3,
+          4,
+          5,
+          7,
+          8,
+          9,
+          10
+        ],
+        "enabled": false,
+        "harmonicOctaveIntervalsRejected": [
+          12,
+          19,
+          24
+        ],
+        "intervalContextPolicy": null
+      },
+      "maxAddsPerSite": 1,
+      "onsetSupportMin": 0.5,
+      "polyphonyCap": 6,
+      "reproductionControl": false,
+      "requireBasicPitchActiveContext": true,
+      "stepMidiDedupe": true,
+      "stream": "combinedGuitar",
+      "templateRankMin": 0.975
+    },
+    "deltaVsIteration004": {
+      "f1PercentagePoints": 0.17634113294692222,
+      "falseNegative": 1,
+      "falsePositive": -14,
+      "generated": -15,
+      "matched": -1,
+      "precisionPercentagePoints": 0.5643684425002127,
+      "recallPercentagePoints": -0.07178750897343655
+    },
+    "generationSummary": {
+      "activeAdded": 48,
+      "activeEligible": 48,
+      "added": 48,
+      "eligible": 48,
+      "inactiveAdded": 0,
+      "inactiveEligible": 0,
+      "sitesWithActiveContext": 204,
+      "sitesWithAdds": 48,
+      "sitesWithEligible": 48
+    },
+    "id": "gss-active-only",
+    "metrics": {
+      "falseNegative": 860,
+      "falsePositive": 565,
+      "generated": 1098,
+      "grossF1": 0.5475712565234846,
+      "matched": 533,
+      "primaryF1": 0.42794058610999597,
+      "primaryPrecision": 0.4854280510018215,
+      "primaryRecall": 0.3826274228284279,
+      "reference": 1393,
+      "sameMeasurePitchContentF1": 0.5917302288237656
+    },
+    "totalAdditionsVsI003": 48
+  },
+  "workflowHeadSha": "7e3c73c45d8b29e7ebf9a0a79b38bf5098ff5f7f",
+  "workflowRunAttempt": 1,
+  "workflowRunId": 33258368926,
+  "workflowRunNumber": 1
+}
