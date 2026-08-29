@@ -23,43 +23,22 @@ jobs:
         run: |
           python - <<'PY'
           from pathlib import Path
-
           path = Path('analyzer/modal_bts_separator.py')
           text = path.read_text()
-
-          old_args = '''        "--output_dir",
-        str(output_dir),
-'''
+          old_args = '        "--output_dir",\n        str(output_dir),\n'
           if old_args not in text:
               raise SystemExit('Expected --output_dir argument block not found')
           text = text.replace(old_args, '', 1)
-
-          old_run = '''            timeout=3300,
-            env={
-'''
-          new_run = '''            timeout=3300,
-            cwd=str(output_dir),
-            env={
-'''
+          old_run = '            timeout=3300,\n            env={\n'
+          new_run = '            timeout=3300,\n            cwd=str(output_dir),\n            env={\n'
           if old_run not in text:
               raise SystemExit('Expected subprocess.run block not found')
           text = text.replace(old_run, new_run, 1)
-
-          old_error = '''    if not outputs:
-        detail = (result.stderr or result.stdout or "").strip()[-1500:]
-        raise RuntimeError(
-            f"Demucs stem separation failed. {detail}"
-        )
-'''
-          new_error = '''    if not outputs:
-        raise RuntimeError(
-            "Demucs completed but BTS could not locate the generated stem files."
-        )
-'''
+          old_error = '    if not outputs:\n        detail = (result.stderr or result.stdout or "").strip()[-1500:]\n        raise RuntimeError(\n            f"Demucs stem separation failed. {detail}"\n        )\n'
+          new_error = '    if not outputs:\n        raise RuntimeError(\n            "Demucs completed but BTS could not locate the generated stem files."\n        )\n'
           if old_error not in text:
               raise SystemExit('Expected long Demucs error block not found')
           text = text.replace(old_error, new_error, 1)
-
           path.write_text(text)
           PY
           rm .github/workflows/one-time-bts-output-dir-fix.yml
