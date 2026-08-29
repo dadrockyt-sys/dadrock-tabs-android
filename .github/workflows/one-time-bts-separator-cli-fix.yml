@@ -22,36 +22,15 @@ jobs:
         run: |
           python - <<'PY'
           from pathlib import Path
-
           path = Path('analyzer/modal_bts_separator.py')
           text = path.read_text()
-
           if 'import shutil\n' not in text:
               text = text.replace('import os\n', 'import os\nimport shutil\n', 1)
-
-          old = '''    command = [
-        sys.executable,
-        "-m",
-        "audio_separator",
-        str(input_audio),
-'''
-          new = '''    separator_executable = shutil.which("audio-separator")
-
-    if not separator_executable:
-        raise RuntimeError(
-            "audio-separator CLI is unavailable in the Modal image."
-        )
-
-    command = [
-        separator_executable,
-        str(input_audio),
-'''
-
+          old = '    command = [\n        sys.executable,\n        "-m",\n        "audio_separator",\n        str(input_audio),\n'
+          new = '    separator_executable = shutil.which("audio-separator")\n\n    if not separator_executable:\n        raise RuntimeError(\n            "audio-separator CLI is unavailable in the Modal image."\n        )\n\n    command = [\n        separator_executable,\n        str(input_audio),\n'
           if old not in text:
               raise SystemExit('Expected audio_separator module launcher not found')
-
-          text = text.replace(old, new, 1)
-          path.write_text(text)
+          path.write_text(text.replace(old, new, 1))
           PY
           rm .github/workflows/one-time-bts-separator-cli-fix.yml
 
