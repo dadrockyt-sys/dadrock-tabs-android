@@ -1,0 +1,104 @@
+{
+  "schema": "dadrock.tabs.v166.preregistration.v1",
+  "version": "V166",
+  "status": "PREREGISTERED_BEFORE_NUMERIC_CONTRACT_OR_IMPLEMENTATION_CODE",
+  "validation": "PASS",
+  "branch": "v143-contextual-prune-lobo",
+  "createdFromBranchHead": "f79406fe4d5ad0ef4adf681b4205e2f90b4ebe1b",
+  "purpose": "Evaluate one reference-free structural hypothesis: Guitar harmonic/template evidence should average two adjacent fixed three-frame windows instead of relying only on the onset-centered three-frame window, while all unrelated V165/V164 musical and numeric behavior remains frozen.",
+  "reviewerBlindingDisclosure": {
+    "V165AggregateScoreWasObservedBeforeThisPreregistration": true,
+    "claimsScoreBlindness": false,
+    "scoreOrReferenceValuesUsedToChooseThisDesign": false,
+    "professionalReferenceEventsOrMeasuresUsed": false,
+    "V165CandidateEventsUsedToChooseThisDesign": false,
+    "V164RuntimeAudioOrTimebaseValuesUsedToChooseThisDesign": false,
+    "designBasis": "Static inspection only of the frozen transcriber architecture: Guitar template evidence is computed by three_frame_template from frames [-1,0,+1] around the event frame and reused for register/recovery evidence. The V166 hypothesis is the mechanically adjacent second window [+2,+3,+4]."
+  },
+  "frozenPredecessor": {
+    "version": "V165",
+    "generationTerminalCommit": "97c2efe6acf988a4535de1fff449194b7b2f7c2b",
+    "candidateGitBlob": "e70a444cb7778a6f56988cf8cc69dccb9c1d89ce",
+    "candidateSha256": "b1ad02001724750ea82d693591a7c0b1f214820de37a590871a6d78eef63e5cb",
+    "generationConsumedForever": true,
+    "scoreConsumedForever": true,
+    "neverReadV165ScoreForV166DesignOrExecution": true,
+    "neverReadProfessionalReferenceForV166DesignOrGeneration": true
+  },
+  "staticCodeBasis": {
+    "frozenV162TranscriberPath": "validation/v162_cpu_autonomous/transcribe_v162.py",
+    "frozenV162TranscriberGitBlob": "fa163cafe2131aa73cdbb50df10d4e4912cff53b",
+    "frozenV162EventLogicPath": "validation/v162_cpu_autonomous/event_logic_v162.py",
+    "frozenV162EventLogicGitBlob": "9f9b33fd8c210ad581025b454cf69b6999aa544b",
+    "observedArchitectureFactsOnly": [
+      "three_frame_template uses frame offsets [-1,0,+1] with clipping",
+      "Guitar main-event template evidence calls three_frame_template at the refined onset frame",
+      "Guitar independent/recovery pitch evidence also calls three_frame_template at an onset frame",
+      "choose_sequence_register consumes template rank/fundamental evidence but has separate frozen sequence-context thresholds"
+    ]
+  },
+  "hypothesis": {
+    "name": "paired-adjacent-temporal-template-evidence",
+    "primaryWindowOffsets": [-1, 0, 1],
+    "adjacentWindowOffsets": [2, 3, 4],
+    "combinedOffsets": [-1, 0, 1, 2, 3, 4],
+    "rationale": "Use exactly two contiguous windows of the predecessor's existing width. This is a structural temporal-averaging hypothesis, not a threshold search and not selected from score/reference evidence.",
+    "scope": "Guitar harmonic/template evidence only",
+    "expectedMechanism": "A single onset-local spectral fluctuation contributes to a larger fixed temporal evidence population while sustained harmonic evidence is represented across both adjacent windows."
+  },
+  "frozenChangeBoundary": {
+    "onlyAllowedFunctionalChange": "Replace the predecessor Guitar three-frame template-evidence function at runtime with an exact six-frame paired-window implementation using offsets [-1,0,1,2,3,4] and the same frozen template_scores implementation.",
+    "frameClipping": "Each requested frame is independently clipped to [0, cqtFrames-1], preserving predecessor boundary semantics.",
+    "templateScoring": "Use the exact frozen predecessor template_scores harmonic/fundamental computation with the six selected frames.",
+    "allTemplateCallSites": "The replacement applies uniformly to predecessor calls of three_frame_template, including main Guitar event evidence and Guitar recovery pitch evidence; no call-site-specific thresholds or exceptions.",
+    "noOtherFunctionalChanges": true
+  },
+  "explicitlyFrozenUnchanged": [
+    "source audio identity and normalization",
+    "CPU Demucs model/settings and deterministic environment",
+    "timebase construction and independent timebase QC",
+    "Basic Pitch model and all Basic Pitch thresholds/settings",
+    "Guitar onset refinement/local-evidence normalization",
+    "Guitar segmentation and reattack/recovery thresholds",
+    "Guitar admission weights and admission/activity thresholds",
+    "register context window, rank-gain threshold, context-distance-gain threshold, and sequence scoring weights",
+    "Guitar polyphony cap",
+    "all Bass pitch/state/proposal/admission/reattack logic and Bass monophony cap",
+    "event-to-grid selection and subdivision logic",
+    "candidate schemas except V166 mechanical versioning/provenance",
+    "structural QC safety/hash-chain requirements"
+  ],
+  "songBlindStaticRequirements": {
+    "constantTimeEvidenceEquivalence": "For CQT evidence constant across time, paired-window template scores/fundamentals must equal predecessor three-frame outputs within rel/abs 1e-12.",
+    "selectedFrameOffsetsExact": [-1, 0, 1, 2, 3, 4],
+    "boundaryClippingDeterministic": true,
+    "nonfiniteInputRejectedByFrozenTemplateScoring": true,
+    "noProfessionalReference": true,
+    "noScorer": true,
+    "noV165CandidateOrScore": true,
+    "noSongAudio": true,
+    "noPitchInference": true,
+    "noGpuCudaModal": true
+  },
+  "runtimeBoundaries": {
+    "device": "cpu",
+    "maximumGenerationRuns": 1,
+    "maximumGenerationAttempts": 1,
+    "rerunForbidden": true,
+    "duplicateRunForbidden": true,
+    "candidateRepairForbidden": true,
+    "thresholdSweepForbidden": true,
+    "variantSelectionForbidden": true,
+    "humanCorrectionForbidden": true,
+    "professionalReferenceReadDuringDesignStaticOrGenerationForbidden": true,
+    "scorerReadDuringDesignStaticOrGenerationForbidden": true,
+    "V165CandidateReadDuringDesignStaticOrGenerationForbidden": true,
+    "V165ScoreReadDuringDesignStaticOrGenerationForbidden": true,
+    "gpuCudaModalForbidden": true,
+    "mainOrProductionModificationForbidden": true,
+    "freshIndependentTimebaseQcPassRequiredBeforePitch": true,
+    "freshIndependentStructuralQcRequired": true,
+    "professionalReferenceScoreRequiresSeparatePostGenerationPreregistration": true
+  },
+  "nextAction": "Seal the exact V166 numeric/implementation contract before creating V166 implementation code. The contract may only formalize this paired-window hypothesis and frozen predecessor values; it may not inspect or use V165 score/reference evidence."
+}
