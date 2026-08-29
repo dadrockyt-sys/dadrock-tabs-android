@@ -1,0 +1,63 @@
+{
+  "cudaAvailable": false,
+  "dependencyVersions": {
+    "basic-pitch": "0.4.0",
+    "demucs": "4.1.0",
+    "imageio-ffmpeg": "0.6.0",
+    "librosa": "0.11.0",
+    "numpy": "1.26.4",
+    "scipy": "1.13.1",
+    "soundfile": "0.12.1"
+  },
+  "determinism": {
+    "mathLibraryThreads": 1,
+    "seed": 0,
+    "torchDeterministicAlgorithms": true,
+    "torchNumInteropThreads": 1,
+    "torchNumThreads": 1
+  },
+  "device": "cpu",
+  "environmentWorkflowGitBlob": "24f4a0631229044e4d8990627b0f38c4f7edce8c",
+  "plannedSeparation": {
+    "device": "cpu",
+    "executedAtSeal": false,
+    "jobs": 1,
+    "model": "htdemucs_6s",
+    "repeatCount": 1,
+    "shifts": 1
+  },
+  "preRunIdentityReceiptGitBlob": "a2acd7839a2ec05ca0be04c4ed38e532b9af3559",
+  "pythonVersion": "3.10.21",
+  "safety": {
+    "V163CandidateRead": false,
+    "V163ScoreRead": false,
+    "V164RuntimeArtifactRead": false,
+    "cudaGpuUsed": false,
+    "demucsExecuted": false,
+    "frozenScorerRead": false,
+    "humanCorrection": false,
+    "mainOrProductionModified": false,
+    "modalUsed": false,
+    "normalizationExecuted": false,
+    "pitchInferenceExecuted": false,
+    "priorGeneratedCandidateRead": false,
+    "priorScoreRead": false,
+    "professionalReferencePathsOpened": 0,
+    "referenceFacingScoreCalls": 0,
+    "referenceGuidedFiltering": false,
+    "referenceRead": false,
+    "songAudioRead": false,
+    "thresholdSweep": false,
+    "variantSelection": false
+  },
+  "schema": "dadrock.tabs.v165.cpu-environment-receipt.v1",
+  "status": "VERIFIED_BEFORE_SONG_PROCESSING",
+  "torchCudaVersion": null,
+  "torchVersion": "2.8.0+cpu",
+  "validation": "PASS",
+  "version": "V165",
+  "workflowHeadSha": "c7c3b7dd49e3743e8ff1e3306efaf5f52d77b0bf",
+  "workflowRunAttempt": 1,
+  "workflowRunId": 33223054612,
+  "workflowRunNumber": 1
+}
