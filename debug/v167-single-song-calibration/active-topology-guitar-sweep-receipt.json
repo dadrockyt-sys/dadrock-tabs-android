@@ -1,0 +1,213 @@
+{
+  "classification": "SINGLE_SONG_TRAINING_CALIBRATION_ONLY",
+  "generationReceiptGitBlob": "e702f408ab63387a1c21e9a37470aa4afa6c4a66",
+  "implementation": {
+    "graderGitBlob": "4458d45cfa2ea018cf40a3a24344e1b7dd9d104a",
+    "scorerGitBlob": "9644e65719fbd361a9b39778ae9950c5e983e855"
+  },
+  "manifestGitBlob": "4b3e75b7f1734807b67de827e54bd4bcc59b855b",
+  "manifestSha256": "bafccfaf15f2e95959396d0f956d3224b2a4fb21290058222281cf0a77023d48",
+  "newVariantsBeatingI005": 0,
+  "newVariantsMeetingPromotionEligibility": 0,
+  "policy": {
+    "allCandidatesFrozenBeforeReferenceRead": true,
+    "bassScored": false,
+    "generalizationClaim": false,
+    "gpuCudaModalUsed": false,
+    "individualEventSelectionByReference": false,
+    "iteration006Created": false,
+    "mainOrProductionModified": false,
+    "postScoreCandidateMutation": false,
+    "postScoreRetuning": false,
+    "reproductionControlScored": false
+  },
+  "reference": {
+    "gitBlob": "2fbed60b543c0488934d8642c488aa06bf31bbf5",
+    "sha256": "b39a203aec3f45800891fe4eca156e37e7571b91ea5c4ccc41b30bbc95fc89e7"
+  },
+  "reportGitBlob": "4aab67d913b4b68cc518825d4495a48c3b9e76fc",
+  "reportSha256": "869825ed2a91e9f50bc6ca5ac71d922ee93dc17dd5804bf8d94d0e951e179b85",
+  "schema": "dadrock.tabs.v167.active-topology-guitar-sweep-receipt.v1",
+  "scoreCallBoundary": {
+    "bass": 0,
+    "guitar": 3,
+    "reproductionControl": 0
+  },
+  "status": "ACTIVE_TOPOLOGY_GUITAR_SWEEP_FROZEN",
+  "variants": [
+    {
+      "candidateSha256": "8a924e8395d439635d577cee028d2c9b47512d5c305d0018e5cc6bbd2a6c46c4",
+      "config": {
+        "description": "keep isolated-active reattacks or chord-interval active context",
+        "id": "topo-single-or-chord",
+        "keepTopologies": [
+          "single",
+          "chord"
+        ],
+        "reproductionControl": false
+      },
+      "deltaVsI005": {
+        "f1PercentagePoints": -0.04043542259379862,
+        "falseNegative": 2,
+        "falsePositive": -5,
+        "generated": -7,
+        "matched": -2,
+        "precisionPercentagePoints": 0.12813898781051658,
+        "recallPercentagePoints": -0.14357501794687866
+      },
+      "generationSummary": {
+        "baseI003GuitarEvents": 1050,
+        "bassEventCount": 512,
+        "guitarEventCount": 1091,
+        "keptI005Additions": 41,
+        "keptTopologyCounts": {
+          "chord": 18,
+          "single": 23
+        },
+        "prunedI005Additions": 7,
+        "sourceI005Additions": 48
+      },
+      "id": "topo-single-or-chord",
+      "metrics": {
+        "falseNegative": 862,
+        "falsePositive": 560,
+        "generated": 1091,
+        "grossF1": 0.5483091787439613,
+        "matched": 531,
+        "primaryF1": 0.427536231884058,
+        "primaryPrecision": 0.4867094408799267,
+        "primaryRecall": 0.3811916726489591,
+        "reference": 1393,
+        "sameMeasurePitchContentF1": 0.5925925925925926
+      }
+    },
+    {
+      "candidateSha256": "370ecb56e1f1e3ef4b16367f7cd6747dac8139e6d75a739e861b165eb7e88efa",
+      "config": {
+        "description": "keep only additions with no different active pitch at site",
+        "id": "topo-single-only",
+        "keepTopologies": [
+          "single"
+        ],
+        "reproductionControl": false
+      },
+      "deltaVsI005": {
+        "f1PercentagePoints": -0.2960861860198727,
+        "falseNegative": 9,
+        "falsePositive": -16,
+        "generated": -25,
+        "matched": -9,
+        "precisionPercentagePoints": 0.29223683830806313,
+        "recallPercentagePoints": -0.6460875807609512
+      },
+      "generationSummary": {
+        "baseI003GuitarEvents": 1050,
+        "bassEventCount": 512,
+        "guitarEventCount": 1073,
+        "keptI005Additions": 23,
+        "keptTopologyCounts": {
+          "single": 23
+        },
+        "prunedI005Additions": 25,
+        "sourceI005Additions": 48
+      },
+      "id": "topo-single-only",
+      "metrics": {
+        "falseNegative": 869,
+        "falsePositive": 549,
+        "generated": 1073,
+        "grossF1": 0.5490673154906731,
+        "matched": 524,
+        "primaryF1": 0.42497972424979724,
+        "primaryPrecision": 0.48835041938490215,
+        "primaryRecall": 0.37616654702081836,
+        "reference": 1393,
+        "sameMeasurePitchContentF1": 0.5912408759124088
+      }
+    },
+    {
+      "candidateSha256": "2355aa168e4aed0d63f298690d092209b205191a2a64df109139624978e4950c",
+      "config": {
+        "description": "keep only additions whose nearest different active pitch is a preregistered chord interval",
+        "id": "topo-chord-only",
+        "keepTopologies": [
+          "chord"
+        ],
+        "reproductionControl": false
+      },
+      "deltaVsI005": {
+        "f1PercentagePoints": -0.6160821786550197,
+        "falseNegative": 14,
+        "falsePositive": -16,
+        "generated": -30,
+        "matched": -14,
+        "precisionPercentagePoints": 0.052700517795378765,
+        "recallPercentagePoints": -1.005025125628145
+      },
+      "generationSummary": {
+        "baseI003GuitarEvents": 1050,
+        "bassEventCount": 512,
+        "guitarEventCount": 1068,
+        "keptI005Additions": 18,
+        "keptTopologyCounts": {
+          "chord": 18
+        },
+        "prunedI005Additions": 30,
+        "sourceI005Additions": 48
+      },
+      "id": "topo-chord-only",
+      "metrics": {
+        "falseNegative": 874,
+        "falsePositive": 549,
+        "generated": 1068,
+        "grossF1": 0.5501828524989841,
+        "matched": 519,
+        "primaryF1": 0.42177976432344577,
+        "primaryPrecision": 0.4859550561797753,
+        "primaryRecall": 0.3725771715721464,
+        "reference": 1393,
+        "sameMeasurePitchContentF1": 0.5948801300284438
+      }
+    }
+  ],
+  "version": "V167",
+  "winnerIncludingI005Baseline": {
+    "candidateSha256": "86329ebc25e589f566d466a7a65cae35a158c25f470b1c034973f3dbc7d38b31",
+    "config": {
+      "baseline": true,
+      "source": "frozen_iteration_005_inherited_without_score_call"
+    },
+    "deltaVsI005": {
+      "f1PercentagePoints": 0.0,
+      "falseNegative": 0,
+      "falsePositive": 0,
+      "generated": 0,
+      "matched": 0,
+      "precisionPercentagePoints": 0.0,
+      "recallPercentagePoints": 0.0
+    },
+    "eligibleForSeparateNoRescoreIteration006Promotion": false,
+    "generationSummary": {
+      "bassEventCount": 512,
+      "guitarEventCount": 1098,
+      "keptI005Additions": 48
+    },
+    "id": "i005-baseline",
+    "metrics": {
+      "falseNegative": 860,
+      "falsePositive": 565,
+      "generated": 1098,
+      "grossF1": 0.5475712565234846,
+      "matched": 533,
+      "primaryF1": 0.42794058610999597,
+      "primaryPrecision": 0.4854280510018215,
+      "primaryRecall": 0.3826274228284279,
+      "reference": 1393,
+      "sameMeasurePitchContentF1": 0.5917302288237656
+    }
+  },
+  "workflowHeadSha": "8ed642489561cf407f78bbe4350e5aeabac02010",
+  "workflowRunAttempt": 1,
+  "workflowRunId": 33265672682,
+  "workflowRunNumber": 1
+}
