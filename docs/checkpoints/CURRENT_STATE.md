@@ -4,7 +4,26 @@ Updated: 2026-08-29 UTC
 Branch: `v143-contextual-prune-lobo`
 
 ## Active phase
-**V168 is active with status `HOLDOUT_ASSET_MISSING / SCORING_NOT_ARMED`. V167 is CLOSED / TERMINAL and must not be reopened for another Lenny Kravitz calibration sweep. The repository still has only one professional scorer-ready reference set, all for Lenny Kravitz — Are You Gonna Go My Way; prior project history contains many other song lessons/transcriptions but no separate frozen professional scorer-ready ground-truth set was identified. Therefore V168 remains at exactly 0 score calls. The prospective two-policy protocol and a hard holdout-asset admission validator are now frozen before any future holdout is admitted. `main`/Production remain untouched; CPU only; fresh authorization required before GPU/CUDA/Modal.**
+**V168 is active with status `HOLDOUT_ASSET_MISSING / SCORING_NOT_ARMED`. V167 is CLOSED / TERMINAL and must not be reopened for another Lenny Kravitz calibration sweep. The repository still has only one professional scorer-ready reference set, all for Lenny Kravitz — Are You Gonna Go My Way; no independent >=2-song professional combined-Guitar holdout set has been identified. Therefore V168 remains at exactly 0 score calls. The frozen two-policy protocol and frozen base holdout-admission validator remain unchanged. A stricter prospective provenance/pair-binding companion gate is now staged before any external asset admission; it operates on metadata only and does not alter the frozen admission schema or evaluation rule. `main`/Production remain untouched; CPU only; fresh authorization required before GPU/CUDA/Modal.**
+
+## Current execution checkpoint — V168 PROVENANCE INTAKE GATE STAGED / SELF-TEST PENDING
+- Frozen base admission validator remains immutable: `validation/v168_holdout/validate_holdout_asset_manifest_v168.py`, blob `c9e0b00ffe9cddf8138e63843afa98a715fed579`.
+- New prospective companion: `validation/v168_holdout/validate_holdout_asset_provenance_v168.py`.
+- Creation commit `3102d78a99d506f31f728d1496a47fbe4e872223`; blob `9edb8a65cc809d7fe42a288d6a00cfc602f37dcc`.
+- Companion validates the SAME frozen manifest schema `dadrock.tabs.v168.holdout-asset-manifest.v1`; it first calls the frozen base validator, then adds provenance/source-reference binding requirements.
+- It never opens source-audio bytes, professional-reference note/event bytes, generated candidates, or scorer code; it cannot score anything.
+- Prospective intake requirements doc: `docs/checkpoints/V168_HOLDOUT_ASSET_INTAKE_REQUIREMENTS_20260829.md`, blob `3064b8e9000fbab1b031ed32389cb82aab846876`.
+- New companion hard requirements include:
+  - frozen non-secret storage locators for source and professional reference;
+  - frozen provenance origin/acquisition/use-basis metadata;
+  - source/reference SHA256 pair binding proving the exact same recording;
+  - `derivedFromModelOrCandidateOutput=false`;
+  - independent preparation from V167 calibration;
+  - professional reference bytes inaccessible to candidate generation;
+  - frozen-V154-scorer compatibility reviewed before admission;
+  - combined-Guitar coverage/timing-grid/uncertainty quality review made without comparative scores.
+- No holdout asset has been admitted. V168 reference-facing score calls remain **0**.
+- Next safe action: run only a synthetic-metadata CPU self-test of the staged companion plus the frozen base validator, with no audio/reference bytes and no scorer.
 
 ## V168 preregistration — FROZEN
 - `docs/checkpoints/V168_HOLDOUT_PREREGISTRATION_20260829.md`
@@ -48,10 +67,10 @@ Song-specific Lenny candidate JSONs are not holdout candidates. For future admit
 
 ## Holdout admission gate — HARD BLOCK
 No V168 scorer workflow may be armed until:
-1. >=2 genuinely independent songs validate through the frozen admission contract.
+1. >=2 genuinely independent songs validate through the frozen admission contract and the staged provenance companion.
 2. Each is different from `Are You Gonna Go My Way`; different artists preferred where practical.
-3. Each has frozen source audio + professional scorer-ready combined-Guitar reference identity.
-4. Candidate generation cannot access professional-reference event content.
+3. Each has frozen source audio + professional scorer-ready combined-Guitar reference identity and frozen source/reference pair binding.
+4. Candidate generation cannot access professional-reference event content or reference bytes.
 5. Policy A/B outputs for every admitted song are generated reference-blind and fully hash-frozen before scorer/reference access.
 6. A global candidate-freeze manifest is committed before first V168 score call.
 7. If fewer than 2 valid songs exist, remain `HOLDOUT_ASSET_MISSING` and score calls remain **0**.
@@ -71,7 +90,7 @@ No V168 scorer workflow may be armed until:
 ## Holdout inventory result
 - `docs/checkpoints/V154_REFERENCE_SET_FROZEN_20260827.md` confirms the one professional reference set is **Lenny Kravitz — Are You Gonna Go My Way** with Rhythm + Lead + Bass components.
 - `research/v154-professional-references/scorer-ready/` is the same song/reference lane.
-- Repo searches found no independent second-song professional scorer-ready reference under holdout/professional-reference/ground-truth/golden/reference-MIDI/benchmark/expected/reference-filename searches.
+- Repository inventory/searches found no independent second-song professional scorer-ready reference under holdout/professional-reference/ground-truth/golden/reference-MIDI/benchmark/expected/reference-filename searches.
 - Prior project context contains numerous non-Lenny DadRock lesson/transcription songs, but no separate frozen professional scorer-ready ground-truth reference was found. Do not promote ordinary lesson/tab assets to holdout ground truth by assumption.
 
 ## V167 terminal handoff — immutable
@@ -87,16 +106,17 @@ No V168 scorer workflow may be armed until:
 - Freeze all candidates before reference scoring.
 - No per-event reference choices, direct reference-event copying, post-score mutation, or retuning.
 - No holdout song may be dropped for unfavorable outcome.
-- Public repo may retain hashes/manifests/aggregate results; private reference bytes remain under existing storage boundary.
+- Public repo may retain non-secret hashes/manifests/provenance labels/aggregate results; private reference bytes remain under existing storage boundary.
 - Expected frozen scorer for compatible future references: blob `9644e65719fbd361a9b39778ae9950c5e983e855`.
 - CPU only; fresh explicit authorization immediately before GPU/CUDA/Modal.
 - Never modify/merge/promote `main` or Production without explicit user direction.
 
-## NEXT boundary — EXTERNAL HOLDOUT ASSET ACQUISITION / ADMISSION
-1. **Do not score now.**
-2. Acquire/freeze at least two genuinely independent professional combined-Guitar reference songs and matching source-audio identities.
-3. Build the holdout asset manifest using schema `dadrock.tabs.v168.holdout-asset-manifest.v1` and validate it with frozen validator blob `c9e0b00f...d579`.
-4. Do not use professional note/event content to modify Policy A/B.
-5. Once >=2 assets validate, checkpoint their identities before implementing/arming any candidate generation or scoring workflow.
-6. If assets are unavailable, remain blocked; do not substitute Lenny components, ordinary DadRock lesson tabs, or synthetic self-reference as holdout.
+## NEXT boundary — SELF-TEST PROVENANCE GATE, THEN EXTERNAL ASSET ACQUISITION
+1. **Do not score.**
+2. From this checkpoint, run a one-shot CPU-only synthetic-metadata self-test of companion blob `9edb8a65...` while hard-verifying frozen base validator blob `c9e0b00f...d579`.
+3. Self-test may not read audio, professional-reference bytes/events, generated candidates, or scorer code. V168 score calls must remain **0**.
+4. Freeze only a self-test receipt and remove its temporary workflow; checkpoint the result.
+5. Then acquire/freeze at least two genuinely independent professional combined-Guitar reference songs and matching source-audio identities.
+6. Future asset manifest must pass BOTH frozen base admission and frozen provenance companion before candidate-generation code is staged.
 7. Save `CURRENT_STATE.md` before any future asset admission or code arm.
+8. CPU only; no GPU/CUDA/Modal; never modify main/Production.
