@@ -1,0 +1,289 @@
+{
+  "analysisGitBlob": "42a4d4bd9c016b5aee74a14eea4b78fb601a6b6e",
+  "analysisSha256": "fd5c12339e594ae1207e2c4edb2eb034a9249de15ab99d3623cf5f6922061b36",
+  "classification": "SINGLE_SONG_TRAINING_CALIBRATION_ONLY",
+  "implementation": {
+    "analyzerGitBlob": "156f0f2adc202b3868791514f31594426cadf0d0"
+  },
+  "inputs": {
+    "iteration003Sha256": "f15c6f40dd4b8479c2dfb7eab039cff98a23b45eb796265ffad08c5a8ae37115",
+    "iteration005Sha256": "86329ebc25e589f566d466a7a65cae35a158c25f470b1c034973f3dbc7d38b31",
+    "postI005DiagnosisSha256": "fe7e826724a11e115a25f932d4b58ed88e3aedae67fb54142cc532cc40ab8450",
+    "terminalTopologyReportSha256": "869825ed2a91e9f50bc6ca5ac71d922ee93dc17dd5804bf8d94d0e951e179b85"
+  },
+  "policy": {
+    "generalizationClaim": false,
+    "gpuCudaModalUsed": false,
+    "mainOrProductionModified": false,
+    "newReferenceFacingScoreCalls": 0,
+    "newRuleSelectedByThisAnalysis": false,
+    "perEventReferenceMatchAssignmentsRead": false,
+    "professionalReferenceReadByAnalysis": false,
+    "scorerReadByAnalysis": false,
+    "terminalAggregateTopologyScoresRead": true
+  },
+  "schema": "dadrock.tabs.v167.post-topology-temporal-recurrence-analysis-receipt.v1",
+  "status": "POST_TOPOLOGY_TEMPORAL_RECURRENCE_ANALYSIS_FROZEN",
+  "summary": {
+    "additionCount": 48,
+    "additionGridStepMultiplicityHistogram": {
+      "1": 48
+    },
+    "nearestAdditionAnyMidi": {
+      "count": 48,
+      "max": 203.0,
+      "mean": 17.0625,
+      "median": 4.5,
+      "min": 1.0,
+      "p10": 1.0,
+      "p25": 1.0,
+      "p75": 8.25,
+      "p90": 39.600000000000136
+    },
+    "nearestAdditionSameMidi": {
+      "count": 44,
+      "max": 924.0,
+      "mean": 109.31818181818181,
+      "median": 33.0,
+      "min": 1.0,
+      "p10": 1.0,
+      "p25": 2.0,
+      "p75": 106.0,
+      "p90": 359.6
+    },
+    "nearestBaseSameMidi": {
+      "count": 48,
+      "max": 6.0,
+      "mean": 1.8125,
+      "median": 1.5,
+      "min": 1.0,
+      "p10": 1.0,
+      "p25": 1.0,
+      "p75": 2.0,
+      "p90": 3.3000000000000043
+    },
+    "sameMidiGap1Runs": [
+      {
+        "count": 2,
+        "midi": 64,
+        "spanGridSteps": 1,
+        "steps": [
+          1237,
+          1238
+        ]
+      },
+      {
+        "count": 3,
+        "midi": 64,
+        "spanGridSteps": 2,
+        "steps": [
+          1750,
+          1751,
+          1752
+        ]
+      },
+      {
+        "count": 2,
+        "midi": 69,
+        "spanGridSteps": 1,
+        "steps": [
+          1405,
+          1406
+        ]
+      },
+      {
+        "count": 2,
+        "midi": 81,
+        "spanGridSteps": 1,
+        "steps": [
+          1341,
+          1342
+        ]
+      }
+    ],
+    "sameMidiGap2Runs": [
+      {
+        "count": 2,
+        "midi": 64,
+        "spanGridSteps": 1,
+        "steps": [
+          1237,
+          1238
+        ]
+      },
+      {
+        "count": 4,
+        "midi": 64,
+        "spanGridSteps": 4,
+        "steps": [
+          1750,
+          1751,
+          1752,
+          1754
+        ]
+      },
+      {
+        "count": 2,
+        "midi": 67,
+        "spanGridSteps": 2,
+        "steps": [
+          1410,
+          1412
+        ]
+      },
+      {
+        "count": 2,
+        "midi": 69,
+        "spanGridSteps": 1,
+        "steps": [
+          1405,
+          1406
+        ]
+      },
+      {
+        "count": 2,
+        "midi": 71,
+        "spanGridSteps": 2,
+        "steps": [
+          1435,
+          1437
+        ]
+      },
+      {
+        "count": 2,
+        "midi": 81,
+        "spanGridSteps": 1,
+        "steps": [
+          1341,
+          1342
+        ]
+      }
+    ],
+    "sameMidiGap4Runs": [
+      {
+        "count": 2,
+        "midi": 64,
+        "spanGridSteps": 1,
+        "steps": [
+          1237,
+          1238
+        ]
+      },
+      {
+        "count": 4,
+        "midi": 64,
+        "spanGridSteps": 4,
+        "steps": [
+          1750,
+          1751,
+          1752,
+          1754
+        ]
+      },
+      {
+        "count": 2,
+        "midi": 67,
+        "spanGridSteps": 2,
+        "steps": [
+          1410,
+          1412
+        ]
+      },
+      {
+        "count": 2,
+        "midi": 69,
+        "spanGridSteps": 1,
+        "steps": [
+          1405,
+          1406
+        ]
+      },
+      {
+        "count": 2,
+        "midi": 71,
+        "spanGridSteps": 2,
+        "steps": [
+          1435,
+          1437
+        ]
+      },
+      {
+        "count": 2,
+        "midi": 81,
+        "spanGridSteps": 1,
+        "steps": [
+          1341,
+          1342
+        ]
+      }
+    ],
+    "uniqueAdditionGridStepCount": 48,
+    "withinThresholdCounts": {
+      "nearestAdditionAnyMidi": {
+        "le_1": 13,
+        "le_12": 37,
+        "le_16": 40,
+        "le_2": 20,
+        "le_24": 42,
+        "le_3": 23,
+        "le_32": 43,
+        "le_4": 24,
+        "le_6": 30,
+        "le_8": 36
+      },
+      "nearestAdditionSameMidi": {
+        "le_1": 9,
+        "le_12": 19,
+        "le_16": 19,
+        "le_2": 14,
+        "le_24": 20,
+        "le_3": 14,
+        "le_32": 22,
+        "le_4": 14,
+        "le_6": 18,
+        "le_8": 18
+      },
+      "nearestBaseAnyMidi": {
+        "le_1": 45,
+        "le_12": 48,
+        "le_16": 48,
+        "le_2": 48,
+        "le_24": 48,
+        "le_3": 48,
+        "le_32": 48,
+        "le_4": 48,
+        "le_6": 48,
+        "le_8": 48
+      },
+      "nearestBaseSameMidi": {
+        "le_1": 24,
+        "le_12": 48,
+        "le_16": 48,
+        "le_2": 42,
+        "le_24": 48,
+        "le_3": 43,
+        "le_32": 48,
+        "le_4": 46,
+        "le_6": 48,
+        "le_8": 48
+      },
+      "priorBaseSameMidi": {
+        "le_1": 18,
+        "le_12": 41,
+        "le_16": 43,
+        "le_2": 35,
+        "le_24": 47,
+        "le_3": 36,
+        "le_32": 47,
+        "le_4": 39,
+        "le_6": 40,
+        "le_8": 41
+      }
+    }
+  },
+  "version": "V167",
+  "workflowHeadSha": "b2c7ffc70ae4e2cce2bb5d124187295e3a6630a8",
+  "workflowRunAttempt": 1,
+  "workflowRunId": 33265800855,
+  "workflowRunNumber": 1
+}
