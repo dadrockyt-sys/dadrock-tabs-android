@@ -1,0 +1,73 @@
+name: One-time BTS separator output directory fix
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - '.github/workflows/one-time-bts-output-dir-fix.yml'
+
+permissions:
+  contents: write
+
+jobs:
+  patch:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: main
+          fetch-depth: 0
+
+      - name: Make BTS separator output location deterministic
+        shell: bash
+        run: |
+          python - <<'PY'
+          from pathlib import Path
+
+          path = Path('analyzer/modal_bts_separator.py')
+          text = path.read_text()
+
+          old_args = '''        "--output_dir",
+        str(output_dir),
+'''
+          if old_args not in text:
+              raise SystemExit('Expected --output_dir argument block not found')
+          text = text.replace(old_args, '', 1)
+
+          old_run = '''            timeout=3300,
+            env={
+'''
+          new_run = '''            timeout=3300,
+            cwd=str(output_dir),
+            env={
+'''
+          if old_run not in text:
+              raise SystemExit('Expected subprocess.run block not found')
+          text = text.replace(old_run, new_run, 1)
+
+          old_error = '''    if not outputs:
+        detail = (result.stderr or result.stdout or "").strip()[-1500:]
+        raise RuntimeError(
+            f"Demucs stem separation failed. {detail}"
+        )
+'''
+          new_error = '''    if not outputs:
+        raise RuntimeError(
+            "Demucs completed but BTS could not locate the generated stem files."
+        )
+'''
+          if old_error not in text:
+              raise SystemExit('Expected long Demucs error block not found')
+          text = text.replace(old_error, new_error, 1)
+
+          path.write_text(text)
+          PY
+          rm .github/workflows/one-time-bts-output-dir-fix.yml
+
+      - name: Commit BTS output-directory fix
+        run: |
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add analyzer/modal_bts_separator.py .github/workflows/one-time-bts-output-dir-fix.yml
+          git commit -m 'Fix BTS separator stem output location'
+          git push origin main
