@@ -1,0 +1,128 @@
+{
+  "classification": "SINGLE_SONG_TRAINING_CALIBRATION_ONLY",
+  "frozenVariants": [
+    {
+      "counts": {
+        "bass": 512,
+        "combinedGuitar": 1098
+      },
+      "gitBlob": "73e5ef69a58d42ac511fe16b3c9da8c1060c8002",
+      "id": "recur-repro-i005",
+      "relativePath": "recur-repro-i005.json",
+      "reproductionControl": true,
+      "sha256": "ba95511e2a92fa00a5bb335ec7913ea8f8b7559a583fc49874ee8159ea535f19",
+      "summary": {
+        "baseI003GuitarEvents": 1050,
+        "bassEventCount": 512,
+        "burstComponentCount": 0,
+        "burstEventCount": 0,
+        "collapsedEventCount": 0,
+        "connectedComponentCount": 48,
+        "guitarEventCount": 1098,
+        "keptI005Additions": 48,
+        "prunedI005Additions": 0,
+        "sourceI005Additions": 48
+      }
+    },
+    {
+      "counts": {
+        "bass": 512,
+        "combinedGuitar": 1093
+      },
+      "gitBlob": "13f2613403b82d45ce5fc5c18da26e66dd04e886",
+      "id": "recur-gap1-earliest",
+      "relativePath": "recur-gap1-earliest.json",
+      "reproductionControl": false,
+      "sha256": "a72ce501c6d4cdbcbbdc67370ef2b35b88ad2358921d1de90f86d7f5af4c4dbe",
+      "summary": {
+        "baseI003GuitarEvents": 1050,
+        "bassEventCount": 512,
+        "burstComponentCount": 4,
+        "burstEventCount": 9,
+        "collapsedEventCount": 5,
+        "connectedComponentCount": 43,
+        "guitarEventCount": 1093,
+        "keptI005Additions": 43,
+        "prunedI005Additions": 5,
+        "sourceI005Additions": 48
+      }
+    },
+    {
+      "counts": {
+        "bass": 512,
+        "combinedGuitar": 1093
+      },
+      "gitBlob": "7299ef6d1d31e8157a7a0d7e9d9169aa279fb86b",
+      "id": "recur-gap1-strongest",
+      "relativePath": "recur-gap1-strongest.json",
+      "reproductionControl": false,
+      "sha256": "0092a24e36ae8857a531dba254764d431811133d6d23df318615202557c13f49",
+      "summary": {
+        "baseI003GuitarEvents": 1050,
+        "bassEventCount": 512,
+        "burstComponentCount": 4,
+        "burstEventCount": 9,
+        "collapsedEventCount": 5,
+        "connectedComponentCount": 43,
+        "guitarEventCount": 1093,
+        "keptI005Additions": 43,
+        "prunedI005Additions": 5,
+        "sourceI005Additions": 48
+      }
+    },
+    {
+      "counts": {
+        "bass": 512,
+        "combinedGuitar": 1090
+      },
+      "gitBlob": "10322fcadf4081a833795a03a2deadee33f3cfa6",
+      "id": "recur-gap2-strongest",
+      "relativePath": "recur-gap2-strongest.json",
+      "reproductionControl": false,
+      "sha256": "012768977ba5f06036c04d25462e5ac47e45f4fa44e0672861f113e3fb21228b",
+      "summary": {
+        "baseI003GuitarEvents": 1050,
+        "bassEventCount": 512,
+        "burstComponentCount": 6,
+        "burstEventCount": 14,
+        "collapsedEventCount": 8,
+        "connectedComponentCount": 40,
+        "guitarEventCount": 1090,
+        "keptI005Additions": 40,
+        "prunedI005Additions": 8,
+        "sourceI005Additions": 48
+      }
+    }
+  ],
+  "implementation": {
+    "builderGitBlob": "2f90e7a8b3e07ae59856f67cf0d299094f482d94",
+    "graderGitBlob": "e8251df48d03e94a2d53060bc1e82b4e9d5ba4f7"
+  },
+  "inputs": {
+    "baseGuitarCount": 1050,
+    "bassCount": 512,
+    "iteration003Sha256": "f15c6f40dd4b8479c2dfb7eab039cff98a23b45eb796265ffad08c5a8ae37115",
+    "iteration005Sha256": "86329ebc25e589f566d466a7a65cae35a158c25f470b1c034973f3dbc7d38b31",
+    "sourceI005AdditionCount": 48,
+    "temporalDiagnosisSha256": "fd5c12339e594ae1207e2c4edb2eb034a9249de15ab99d3623cf5f6922061b36"
+  },
+  "manifestGitBlob": "76077bdbad3e519a09e3105633bc14b8aedb1fe9",
+  "manifestSha256": "5e0eaedcf3e78e3b0c4213004a51cc04d935418315f0a281708e36d637b21ed5",
+  "policy": {
+    "allCandidateHashesFrozenBeforeScoring": true,
+    "bassScored": false,
+    "gpuCudaModalUsed": false,
+    "mainOrProductionModified": false,
+    "newReferenceFacingScoreCalls": 0,
+    "professionalReferenceReadByGenerationWorkflow": false,
+    "reproductionControlScored": false,
+    "scorerReadByGenerationWorkflow": false
+  },
+  "schema": "dadrock.tabs.v167.temporal-recurrence-generation-receipt.v1",
+  "status": "TEMPORAL_RECURRENCE_VARIANTS_FROZEN_BEFORE_SCORING",
+  "version": "V167",
+  "workflowHeadSha": "b551be770b699c4d0f3c1079796f4d9f3bcffbc2",
+  "workflowRunAttempt": 1,
+  "workflowRunId": 33266423759,
+  "workflowRunNumber": 2
+}

@@ -1,0 +1,157 @@
+{
+  "classification": "SINGLE_SONG_TRAINING_CALIBRATION_ONLY",
+  "inputs": {
+    "baseGuitarCount": 1050,
+    "bassCount": 512,
+    "iteration003Sha256": "f15c6f40dd4b8479c2dfb7eab039cff98a23b45eb796265ffad08c5a8ae37115",
+    "iteration005Sha256": "86329ebc25e589f566d466a7a65cae35a158c25f470b1c034973f3dbc7d38b31",
+    "sourceI005AdditionCount": 48,
+    "temporalDiagnosisSha256": "fd5c12339e594ae1207e2c4edb2eb034a9249de15ab99d3623cf5f6922061b36"
+  },
+  "policy": {
+    "allI003GuitarEventsAlwaysKept": true,
+    "allVariantRulesPredeclaredBeforeScoring": true,
+    "automaticIteration006Promotion": false,
+    "bassFixedExactlyToI005": true,
+    "bassScoreCallsPlanned": 0,
+    "individualEventSelectionByReference": false,
+    "newGuitarVariantScoreCallsPlanned": 3,
+    "newReferenceFacingScoreCallsByGenerator": 0,
+    "noThresholdSweep": true,
+    "onlyFrozenI005AdditionsFiltered": true,
+    "professionalReferenceReadByGenerator": false,
+    "promotionEligibility": {
+      "minimumF1GainPercentagePointsVsI005": 0.1,
+      "precisionMustBeAtLeastI005": true
+    },
+    "reproductionControlScored": false,
+    "scorerReadByGenerator": false,
+    "tieBreak": [
+      "max_primary_f1",
+      "max_primary_precision",
+      "fewer_kept_i005_additions",
+      "lexicographic_rule_id"
+    ]
+  },
+  "schema": "dadrock.tabs.v167.predeclared-temporal-recurrence-guitar-manifest.v1",
+  "status": "FROZEN_BEFORE_REFERENCE_SCORING",
+  "variants": [
+    {
+      "config": {
+        "burstSelector": null,
+        "description": "exact normalized I005 reproduction control",
+        "id": "recur-repro-i005",
+        "maxConnectedGapSteps": null,
+        "reproductionControl": true
+      },
+      "counts": {
+        "bass": 512,
+        "combinedGuitar": 1098
+      },
+      "id": "recur-repro-i005",
+      "relativePath": "recur-repro-i005.json",
+      "reproductionControl": true,
+      "sha256": "ba95511e2a92fa00a5bb335ec7913ea8f8b7559a583fc49874ee8159ea535f19",
+      "summary": {
+        "baseI003GuitarEvents": 1050,
+        "bassEventCount": 512,
+        "burstComponentCount": 0,
+        "burstEventCount": 0,
+        "collapsedEventCount": 0,
+        "connectedComponentCount": 48,
+        "guitarEventCount": 1098,
+        "keptI005Additions": 48,
+        "prunedI005Additions": 0,
+        "sourceI005Additions": 48
+      }
+    },
+    {
+      "config": {
+        "burstSelector": "earliest",
+        "description": "collapse each same-MIDI gap<=1 connected burst to its earliest addition",
+        "id": "recur-gap1-earliest",
+        "maxConnectedGapSteps": 1,
+        "reproductionControl": false
+      },
+      "counts": {
+        "bass": 512,
+        "combinedGuitar": 1093
+      },
+      "id": "recur-gap1-earliest",
+      "relativePath": "recur-gap1-earliest.json",
+      "reproductionControl": false,
+      "sha256": "a72ce501c6d4cdbcbbdc67370ef2b35b88ad2358921d1de90f86d7f5af4c4dbe",
+      "summary": {
+        "baseI003GuitarEvents": 1050,
+        "bassEventCount": 512,
+        "burstComponentCount": 4,
+        "burstEventCount": 9,
+        "collapsedEventCount": 5,
+        "connectedComponentCount": 43,
+        "guitarEventCount": 1093,
+        "keptI005Additions": 43,
+        "prunedI005Additions": 5,
+        "sourceI005Additions": 48
+      }
+    },
+    {
+      "config": {
+        "burstSelector": "strongest_evidence",
+        "description": "collapse each same-MIDI gap<=1 connected burst by max onset, then activity, then earliest",
+        "id": "recur-gap1-strongest",
+        "maxConnectedGapSteps": 1,
+        "reproductionControl": false
+      },
+      "counts": {
+        "bass": 512,
+        "combinedGuitar": 1093
+      },
+      "id": "recur-gap1-strongest",
+      "relativePath": "recur-gap1-strongest.json",
+      "reproductionControl": false,
+      "sha256": "0092a24e36ae8857a531dba254764d431811133d6d23df318615202557c13f49",
+      "summary": {
+        "baseI003GuitarEvents": 1050,
+        "bassEventCount": 512,
+        "burstComponentCount": 4,
+        "burstEventCount": 9,
+        "collapsedEventCount": 5,
+        "connectedComponentCount": 43,
+        "guitarEventCount": 1093,
+        "keptI005Additions": 43,
+        "prunedI005Additions": 5,
+        "sourceI005Additions": 48
+      }
+    },
+    {
+      "config": {
+        "burstSelector": "strongest_evidence",
+        "description": "collapse each same-MIDI gap<=2 connected burst by max onset, then activity, then earliest",
+        "id": "recur-gap2-strongest",
+        "maxConnectedGapSteps": 2,
+        "reproductionControl": false
+      },
+      "counts": {
+        "bass": 512,
+        "combinedGuitar": 1090
+      },
+      "id": "recur-gap2-strongest",
+      "relativePath": "recur-gap2-strongest.json",
+      "reproductionControl": false,
+      "sha256": "012768977ba5f06036c04d25462e5ac47e45f4fa44e0672861f113e3fb21228b",
+      "summary": {
+        "baseI003GuitarEvents": 1050,
+        "bassEventCount": 512,
+        "burstComponentCount": 6,
+        "burstEventCount": 14,
+        "collapsedEventCount": 8,
+        "connectedComponentCount": 40,
+        "guitarEventCount": 1090,
+        "keptI005Additions": 40,
+        "prunedI005Additions": 8,
+        "sourceI005Additions": 48
+      }
+    }
+  ],
+  "version": "V167"
+}
