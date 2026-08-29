@@ -4,54 +4,52 @@ Updated: 2026-08-29 UTC
 Branch: `v143-contextual-prune-lobo`
 
 ## Active phase
-**V166 is terminal and permanently closed with an authoritative CPU candidate and structural-QC PASS. The next phase is V167 SINGLE-SONG CALIBRATION: explicitly scorer/reference-guided work on this one fixed song, with the goal of driving the calibration score as close to 100% as practical. V167 calibration results must never be represented as holdout/generalization performance. `main`/Production remain untouched.**
+**V166 is terminal/immutable. V167 is an explicitly reference/scorer-guided SINGLE-SONG TRAINING CALIBRATION lane for Lenny Kravitz — Are You Gonna Go My Way. Baseline is now frozen. The dominant first engineering target is grid/timing placement, because measure-level pitch content is far stronger than exact-timing F1. `main`/Production remain untouched.**
 
-## V166 terminal anchors
-- Sole generation run `33226705813`, run `1`, attempt `1`, job `99031747626`; SUCCESS.
-- Arm/head `1e06d775ee03ebf92fe8f68fc02cf034812ea43f`.
-- Terminal commit `7f5f5f19f6ec413fc772a9839be5497ecb2790e3`, message `research: freeze sole V166 paired-window CPU candidate [skip ci]`.
-- Outcome `STRUCTURAL_QC_PASS`; `candidateAuthoritative=true`; `neverRearmV166=true`.
-- Candidate path `debug/v166-cpu-autonomous/generated.json`.
-- Candidate blob `c36a4d1e14ca66235b51a866ad3908322834efff`.
-- Candidate SHA256 `fa2411598b401f745eff49a9cbda294ed767de093c905909531c7dd4dc6eb378`.
-- Counts: Guitar `1050`; Bass `402`.
-- Evidence-step corrections: Guitar `18`; Bass `6`; pre-grid excluded `0` both.
-- Timebase blob `abebae25801b7ddeb5b933977c4f4a918f7bf9ef`; SHA256 `899746d3048d239bc0032375d412a109ea04b055df19df1b7b08dc3e73aa5ca0`.
-- Timebase-QC blob `7c371d3ef3e6aa0b786671cffa023aed675a02b7`; SHA256 `3d239c073f5d11ee4b89e08eddf50d5fa082ec1cf3e16fb617f865dc9c0433a5`.
-- Generation receipt blob `14206b972bf9fbe2979a1bc19419ceca2822ebf2`; SHA256 `be330b09f67689646fe071090c59b5695fd8de7afe18ac4aa275f4877e1695c5`.
-- Structural-QC blob `97b8072a24321a435356694b9d1d3e6bbad998e5`; SHA256 `52e2382cabf6a0e1bdb3e81fb00074b4da566b5670d320215071c2b4fa30d80d`.
-- Generation workflow blob `6198db63c574cf922a56fd30fb829404dffc7173`; workflow self-deleted during terminalization.
-- V166 generation safety: no professional reference/scorer read, no V165 candidate/score read, no threshold sweep/variant selection/human correction, no GPU/CUDA/Modal, no main/Production modification.
+## Closed V166 terminal
+- Sole generation run `33226705813`, run 1, attempt 1, job `99031747626`; SUCCESS.
+- Terminal commit `7f5f5f19f6ec413fc772a9839be5497ecb2790e3`; structural QC PASS.
+- Immutable candidate `debug/v166-cpu-autonomous/generated.json` blob `c36a4d1e14ca66235b51a866ad3908322834efff`, SHA256 `fa2411598b401f745eff49a9cbda294ed767de093c905909531c7dd4dc6eb378`.
+- Guitar 1050; Bass 402. `neverRearmV166=true`.
+- V159–V166 generations are closed forever; do not rerun/rearm/mutate them.
 
-## V166 paired-window implementation
-- Contract blob `9ab505ee8c7de732b6e9a8928854ae99d3ebb0c7`.
-- Guitar template offsets exactly `[-1,0,1,2,3,4]`; six frames.
-- V166 finalized implementation identities remain frozen as recorded in the previous checkpoint and pre-run receipt.
+## V167 calibration contract
+- Manifest `debug/v167-single-song-calibration/calibration-manifest.json`, blob `8d6e9723e77e9ec2159e765436db2e9d91982fb2`.
+- Label: `SINGLE_SONG_TRAINING_CALIBRATION` — not holdout/generalization performance.
+- Frozen scorer `validation/v154_cpu_multitrack/score_frontend_reference.py`, blob `9644e65719fbd361a9b39778ae9950c5e983e855`; primary tolerance 0.5 grid step, gross tolerance 2.0.
+- Frozen professional reference blob `2fbed60b543c0488934d8642c488aa06bf31bbf5`, SHA256 `b39a203aec3f45800891fe4eca156e37e7571b91ea5c4ccc41b30bbc95fc89e7`; Guitar 1393, Bass 547.
+- Score/reference-guided diagnostics, parameter experiments, variant comparison, and deterministic algorithmic repair are allowed in V167.
+- Direct/manual copying of reference events into generated output remains forbidden.
+- Any 100% reached here means 100% on this calibration song under the frozen scorer only; later untouched multi-song holdout remains required.
+- CPU work authorized. Fresh explicit authorization required immediately before GPU/CUDA/Modal. Never modify `main`/Production without explicit direction.
 
-## Closed generations
-- V159–V166 are closed forever. Never rerun/rearm/repair/retune/regenerate/re-QC a closed version.
-- V163 and V165 score opportunities remain closed forever.
-- V166 generation is closed forever. Do not mutate its candidate.
+## V167 frozen baseline — SUCCESS
+- One-shot baseline run `33227202895`, run 1, attempt 1, job `99033120458`; all steps SUCCESS and workflow self-sealed.
+- Baseline terminal commit `0930a2a50d4f736237312114189c526bbf43c100`, message `research: freeze V167 calibration baseline diagnostic [skip ci]`.
+- Baseline receipt status `BASELINE_FROZEN`.
+- Recognition F1 × 100:
+  - Combined Guitar: **6.058125255832993%** (74 matched / 1050 generated / 1393 reference).
+  - Bass: **21.707060063224446%** (103 matched / 402 generated / 547 reference).
+- Gross ±2-step same-pitch timing F1:
+  - Guitar: **20.139173147769135%**, 246 matches; 172 are gross-only timing-drift matches.
+  - Bass: **36.248682824025286%**, 172 matches; 69 are gross-only timing-drift matches.
+- Same-measure pitch-content F1 ignoring exact step:
+  - Guitar: **48.95620139173148%**, 598 matched pitches.
+  - Bass: **52.05479452054794%**, 247 matched pitches.
+- This gap is the first major signal: substantial correct pitch content is already landing in the correct measure but on incorrect grid positions.
 
-## V167 SINGLE-SONG CALIBRATION — authorization and scientific label
-The user explicitly authorized taking this one song as far toward `100%` as possible. V167 therefore changes methodology on purpose:
-- This is a **training/calibration lane**, not a blind experiment and not a holdout score.
-- The frozen professional reference and frozen scorer may be read and used diagnostically.
-- Event-level, timing-level, pitch/register, false-positive, false-negative, chord/polyphony, duration, and structural error analysis is allowed for this one song.
-- Score-informed iteration, threshold/parameter experiments, variant comparison, and algorithmic repair are allowed inside V167 calibration.
-- Every iteration must preserve provenance: exact parent candidate/code/config, exact scorer/reference identity, exact score, and the change tested.
-- No manual copying of the professional reference into the generated output. Improvements must come through deterministic algorithm/code/parameter behavior so the exercise remains useful engineering rather than answer-key substitution.
-- Any `100%` reached here means **100% on the calibration song under the chosen scorer**, not 100% general transcription accuracy.
-- A later untouched multi-song holdout benchmark will be required to measure generalization.
+## Baseline error buckets
+Guitar unmatched reference events: 710 no generated event within ±0.5 step in same measure; 421 other pitch errors near correct time; 96 near-semitone; 85 octave/register; 7 local collision/duplicate. Guitar unmatched generated: 504 no nearby reference event; 318 other pitch error; 82 near-semitone; 72 octave/register.
 
-## Calibration score presentation
-Use scorer F1 × 100 as the immediate pitch/timing recognition percentage for Guitar and Bass. Also build a broader `Professional Tab Score /100` separately so PDF/tab quality is not confused with front-end note F1.
+Bass unmatched reference events: 255 no generated event within ±0.5 step same measure; 104 other pitch error near correct time; 82 near-semitone; 3 octave/register. Bass unmatched generated: 111 no nearby reference; 104 other pitch; 81 near-semitone; 3 octave/register.
 
-## V167 next boundary
-1. Freeze a V167 calibration manifest before the first score-guided mutation. Pin V166 candidate, frozen scorer, frozen professional reference, song source, branch, and calibration-only label.
-2. Run a read-only baseline diagnostic of the frozen V166 candidate against the frozen scorer/reference. This is the starting calibration score, not a V166 score claim.
-3. Produce machine-readable error buckets for Guitar and Bass: matched, missed, extra, pitch-class/octave/register error, onset/timing displacement, duration mismatch, duplicate/fragmented events, chord/polyphony under/over detection where inferable.
-4. Rank the largest error classes by achievable score impact.
-5. Implement one deterministic calibration change at a time, rerun CPU-only as needed, score, log delta, retain the best calibration candidate, and continue toward 100%.
-6. Do not use GPU/Modal/CUDA without fresh explicit authorization immediately before execution.
-7. Never modify/merge/promote `main` or Production without explicit user direction.
+## Interpretation / priority
+1. **Timing/grid phase first.** Exact-timing F1 is dramatically below same-measure pitch-content F1 for both instruments.
+2. Guitar also has a major recall/polyphony problem: 1393 reference vs 1050 generated and many no-nearby-event misses.
+3. Bass pitch distribution shows likely under-detection of lower notes (notably reference MIDI 31 and 35 frequencies substantially exceed generated), but timing should be corrected/tested before altering pitch thresholds.
+4. Octave/register errors exist but are not the dominant count, so do not spend the next iteration primarily on octave repair.
+
+## NEXT boundary
+- Run a read-only deterministic **absolute-grid phase sweep** on the frozen V166 candidate, separately for Guitar and Bass, using integer shifts around the current lattice (no candidate mutation). Recompute `absoluteGridStep -> measure/step` for each tested shift and score with the frozen scorer.
+- Record the full score curve and best shift for each stream. This is a calibration diagnostic/parameter experiment, not a generalization claim.
+- If a stable phase shift yields a material gain, implement it as the first V167 deterministic timing calibration rule and produce a new provenance-tracked calibration candidate; otherwise proceed to per-section/timebase-warp diagnostics rather than blindly changing pitch logic.
