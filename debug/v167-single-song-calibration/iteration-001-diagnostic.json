@@ -1,0 +1,724 @@
+{
+  "bass": {
+    "calibrationInterpretation": {
+      "nearSemitonePitchError": "near-correct onset is within two semitones of nearest reference event",
+      "noNearbyEvent": "no event exists within 0.5 grid step in the same measure; likely miss/extra, timebase displacement, or larger onset error",
+      "octaveOrRegisterError": "near-correct onset has a pitch separated by one or more octaves",
+      "samePitchGrossTimingDrift": "same MIDI can match within 2 grid steps but not within the primary 0.5-step tolerance"
+    },
+    "counts": {
+      "generated": 402,
+      "reference": 547
+    },
+    "falseNegativeBuckets": {
+      "nearSemitonePitchError": 22,
+      "noGeneratedEventWithinHalfStepSameMeasure": 171,
+      "octaveOrRegisterError": 2,
+      "otherPitchErrorNearCorrectTime": 17
+    },
+    "falsePositiveBuckets": {
+      "nearSemitonePitchError": 19,
+      "noReferenceEventWithinHalfStepSameMeasure": 29,
+      "octaveOrRegisterError": 2,
+      "otherPitchErrorNearCorrectTime": 17
+    },
+    "gross": {
+      "f1": 0.7481559536354058,
+      "falseNegative": 192,
+      "falsePositive": 47,
+      "generated": 402,
+      "matched": 355,
+      "precision": 0.8830845771144279,
+      "recall": 0.6489945155393053,
+      "reference": 547
+    },
+    "matchedTiming": {
+      "grossOnlySamePitchTimingDriftCount": 19,
+      "grossPairCount": 355,
+      "primaryMaxAbsStepDelta": 0.0,
+      "primaryMedianAbsStepDelta": 0.0,
+      "primaryP90AbsStepDelta": 0.0,
+      "primaryPairCount": 335
+    },
+    "pitchContentByMeasure": {
+      "f1": 0.7523709167544784,
+      "falseNegative": 190,
+      "falsePositive": 45,
+      "generated": 402,
+      "matched": 357,
+      "precision": 0.8880597014925373,
+      "recall": 0.6526508226691042,
+      "reference": 547
+    },
+    "primary": {
+      "f1": 0.7060063224446786,
+      "falseNegative": 212,
+      "falsePositive": 67,
+      "generated": 402,
+      "matched": 335,
+      "precision": 0.8333333333333334,
+      "recall": 0.6124314442413162,
+      "reference": 547
+    },
+    "topErrorMeasures": [
+      {
+        "falseNegative": 6,
+        "falsePositive": 4,
+        "measure": 83,
+        "totalErrors": 10
+      },
+      {
+        "falseNegative": 6,
+        "falsePositive": 3,
+        "measure": 12,
+        "totalErrors": 9
+      },
+      {
+        "falseNegative": 6,
+        "falsePositive": 3,
+        "measure": 67,
+        "totalErrors": 9
+      },
+      {
+        "falseNegative": 9,
+        "falsePositive": 0,
+        "measure": 103,
+        "totalErrors": 9
+      },
+      {
+        "falseNegative": 8,
+        "falsePositive": 0,
+        "measure": 63,
+        "totalErrors": 8
+      },
+      {
+        "falseNegative": 8,
+        "falsePositive": 0,
+        "measure": 64,
+        "totalErrors": 8
+      },
+      {
+        "falseNegative": 8,
+        "falsePositive": 0,
+        "measure": 104,
+        "totalErrors": 8
+      },
+      {
+        "falseNegative": 7,
+        "falsePositive": 0,
+        "measure": 34,
+        "totalErrors": 7
+      },
+      {
+        "falseNegative": 7,
+        "falsePositive": 0,
+        "measure": 37,
+        "totalErrors": 7
+      },
+      {
+        "falseNegative": 5,
+        "falsePositive": 2,
+        "measure": 42,
+        "totalErrors": 7
+      },
+      {
+        "falseNegative": 5,
+        "falsePositive": 2,
+        "measure": 58,
+        "totalErrors": 7
+      },
+      {
+        "falseNegative": 3,
+        "falsePositive": 3,
+        "measure": 8,
+        "totalErrors": 6
+      },
+      {
+        "falseNegative": 4,
+        "falsePositive": 2,
+        "measure": 27,
+        "totalErrors": 6
+      },
+      {
+        "falseNegative": 4,
+        "falsePositive": 2,
+        "measure": 81,
+        "totalErrors": 6
+      },
+      {
+        "falseNegative": 4,
+        "falsePositive": 2,
+        "measure": 89,
+        "totalErrors": 6
+      },
+      {
+        "falseNegative": 4,
+        "falsePositive": 2,
+        "measure": 107,
+        "totalErrors": 6
+      },
+      {
+        "falseNegative": 5,
+        "falsePositive": 0,
+        "measure": 33,
+        "totalErrors": 5
+      },
+      {
+        "falseNegative": 3,
+        "falsePositive": 2,
+        "measure": 35,
+        "totalErrors": 5
+      },
+      {
+        "falseNegative": 3,
+        "falsePositive": 2,
+        "measure": 48,
+        "totalErrors": 5
+      },
+      {
+        "falseNegative": 5,
+        "falsePositive": 0,
+        "measure": 57,
+        "totalErrors": 5
+      }
+    ],
+    "topGeneratedMidi": [
+      {
+        "count": 189,
+        "key": "40"
+      },
+      {
+        "count": 99,
+        "key": "38"
+      },
+      {
+        "count": 26,
+        "key": "35"
+      },
+      {
+        "count": 12,
+        "key": "37"
+      },
+      {
+        "count": 11,
+        "key": "39"
+      },
+      {
+        "count": 10,
+        "key": "43"
+      },
+      {
+        "count": 10,
+        "key": "31"
+      },
+      {
+        "count": 6,
+        "key": "41"
+      },
+      {
+        "count": 6,
+        "key": "45"
+      },
+      {
+        "count": 6,
+        "key": "42"
+      },
+      {
+        "count": 5,
+        "key": "52"
+      },
+      {
+        "count": 4,
+        "key": "50"
+      },
+      {
+        "count": 3,
+        "key": "54"
+      },
+      {
+        "count": 3,
+        "key": "47"
+      },
+      {
+        "count": 2,
+        "key": "49"
+      },
+      {
+        "count": 2,
+        "key": "36"
+      },
+      {
+        "count": 2,
+        "key": "56"
+      },
+      {
+        "count": 2,
+        "key": "44"
+      },
+      {
+        "count": 1,
+        "key": "51"
+      },
+      {
+        "count": 1,
+        "key": "33"
+      }
+    ],
+    "topReferenceMidi": [
+      {
+        "count": 184,
+        "key": "40"
+      },
+      {
+        "count": 96,
+        "key": "38"
+      },
+      {
+        "count": 73,
+        "key": "31"
+      },
+      {
+        "count": 70,
+        "key": "35"
+      },
+      {
+        "count": 22,
+        "key": "30"
+      },
+      {
+        "count": 10,
+        "key": "33"
+      },
+      {
+        "count": 9,
+        "key": "45"
+      },
+      {
+        "count": 9,
+        "key": "37"
+      },
+      {
+        "count": 9,
+        "key": "42"
+      },
+      {
+        "count": 8,
+        "key": "43"
+      },
+      {
+        "count": 8,
+        "key": "39"
+      },
+      {
+        "count": 7,
+        "key": "50"
+      },
+      {
+        "count": 7,
+        "key": "41"
+      },
+      {
+        "count": 6,
+        "key": "52"
+      },
+      {
+        "count": 6,
+        "key": "36"
+      },
+      {
+        "count": 5,
+        "key": "29"
+      },
+      {
+        "count": 3,
+        "key": "28"
+      },
+      {
+        "count": 3,
+        "key": "48"
+      },
+      {
+        "count": 3,
+        "key": "54"
+      },
+      {
+        "count": 3,
+        "key": "47"
+      }
+    ]
+  },
+  "candidate": "debug/v167-single-song-calibration/iteration-001-generated.json",
+  "combinedGuitar": {
+    "calibrationInterpretation": {
+      "nearSemitonePitchError": "near-correct onset is within two semitones of nearest reference event",
+      "noNearbyEvent": "no event exists within 0.5 grid step in the same measure; likely miss/extra, timebase displacement, or larger onset error",
+      "octaveOrRegisterError": "near-correct onset has a pitch separated by one or more octaves",
+      "samePitchGrossTimingDrift": "same MIDI can match within 2 grid steps but not within the primary 0.5-step tolerance"
+    },
+    "counts": {
+      "generated": 1050,
+      "reference": 1393
+    },
+    "falseNegativeBuckets": {
+      "nearSemitonePitchError": 69,
+      "noGeneratedEventWithinHalfStepSameMeasure": 478,
+      "octaveOrRegisterError": 79,
+      "otherPitchErrorNearCorrectTime": 247,
+      "samePitchLocalCollisionOrDuplicate": 27
+    },
+    "falsePositiveBuckets": {
+      "nearSemitonePitchError": 59,
+      "noReferenceEventWithinHalfStepSameMeasure": 318,
+      "octaveOrRegisterError": 53,
+      "otherPitchErrorNearCorrectTime": 127
+    },
+    "gross": {
+      "f1": 0.5493246009005321,
+      "falseNegative": 722,
+      "falsePositive": 379,
+      "generated": 1050,
+      "matched": 671,
+      "precision": 0.6390476190476191,
+      "recall": 0.48169418521177315,
+      "reference": 1393
+    },
+    "matchedTiming": {
+      "grossOnlySamePitchTimingDriftCount": 177,
+      "grossPairCount": 671,
+      "primaryMaxAbsStepDelta": 0.0,
+      "primaryMedianAbsStepDelta": 0.0,
+      "primaryP90AbsStepDelta": 0.0,
+      "primaryPairCount": 493
+    },
+    "pitchContentByMeasure": {
+      "f1": 0.5943512075317232,
+      "falseNegative": 667,
+      "falsePositive": 324,
+      "generated": 1050,
+      "matched": 726,
+      "precision": 0.6914285714285714,
+      "recall": 0.5211773151471644,
+      "reference": 1393
+    },
+    "primary": {
+      "f1": 0.4036021285304953,
+      "falseNegative": 900,
+      "falsePositive": 557,
+      "generated": 1050,
+      "matched": 493,
+      "precision": 0.4695238095238095,
+      "recall": 0.3539124192390524,
+      "reference": 1393
+    },
+    "topErrorMeasures": [
+      {
+        "falseNegative": 31,
+        "falsePositive": 3,
+        "measure": 35,
+        "totalErrors": 34
+      },
+      {
+        "falseNegative": 31,
+        "falsePositive": 3,
+        "measure": 107,
+        "totalErrors": 34
+      },
+      {
+        "falseNegative": 29,
+        "falsePositive": 4,
+        "measure": 66,
+        "totalErrors": 33
+      },
+      {
+        "falseNegative": 30,
+        "falsePositive": 0,
+        "measure": 36,
+        "totalErrors": 30
+      },
+      {
+        "falseNegative": 29,
+        "falsePositive": 0,
+        "measure": 65,
+        "totalErrors": 29
+      },
+      {
+        "falseNegative": 18,
+        "falsePositive": 7,
+        "measure": 89,
+        "totalErrors": 25
+      },
+      {
+        "falseNegative": 18,
+        "falsePositive": 7,
+        "measure": 91,
+        "totalErrors": 25
+      },
+      {
+        "falseNegative": 17,
+        "falsePositive": 8,
+        "measure": 92,
+        "totalErrors": 25
+      },
+      {
+        "falseNegative": 15,
+        "falsePositive": 9,
+        "measure": 87,
+        "totalErrors": 24
+      },
+      {
+        "falseNegative": 14,
+        "falsePositive": 7,
+        "measure": 106,
+        "totalErrors": 21
+      },
+      {
+        "falseNegative": 18,
+        "falsePositive": 3,
+        "measure": 108,
+        "totalErrors": 21
+      },
+      {
+        "falseNegative": 12,
+        "falsePositive": 8,
+        "measure": 79,
+        "totalErrors": 20
+      },
+      {
+        "falseNegative": 10,
+        "falsePositive": 9,
+        "measure": 7,
+        "totalErrors": 19
+      },
+      {
+        "falseNegative": 12,
+        "falsePositive": 7,
+        "measure": 37,
+        "totalErrors": 19
+      },
+      {
+        "falseNegative": 10,
+        "falsePositive": 9,
+        "measure": 63,
+        "totalErrors": 19
+      },
+      {
+        "falseNegative": 11,
+        "falsePositive": 7,
+        "measure": 6,
+        "totalErrors": 18
+      },
+      {
+        "falseNegative": 8,
+        "falsePositive": 10,
+        "measure": 40,
+        "totalErrors": 18
+      },
+      {
+        "falseNegative": 12,
+        "falsePositive": 6,
+        "measure": 58,
+        "totalErrors": 18
+      },
+      {
+        "falseNegative": 9,
+        "falsePositive": 9,
+        "measure": 85,
+        "totalErrors": 18
+      },
+      {
+        "falseNegative": 11,
+        "falsePositive": 6,
+        "measure": 64,
+        "totalErrors": 17
+      }
+    ],
+    "topGeneratedMidi": [
+      {
+        "count": 174,
+        "key": "64"
+      },
+      {
+        "count": 146,
+        "key": "52"
+      },
+      {
+        "count": 107,
+        "key": "62"
+      },
+      {
+        "count": 90,
+        "key": "59"
+      },
+      {
+        "count": 76,
+        "key": "40"
+      },
+      {
+        "count": 69,
+        "key": "57"
+      },
+      {
+        "count": 67,
+        "key": "67"
+      },
+      {
+        "count": 47,
+        "key": "71"
+      },
+      {
+        "count": 40,
+        "key": "66"
+      },
+      {
+        "count": 30,
+        "key": "68"
+      },
+      {
+        "count": 28,
+        "key": "61"
+      },
+      {
+        "count": 24,
+        "key": "55"
+      },
+      {
+        "count": 20,
+        "key": "45"
+      },
+      {
+        "count": 18,
+        "key": "69"
+      },
+      {
+        "count": 18,
+        "key": "76"
+      },
+      {
+        "count": 16,
+        "key": "58"
+      },
+      {
+        "count": 11,
+        "key": "74"
+      },
+      {
+        "count": 10,
+        "key": "43"
+      },
+      {
+        "count": 10,
+        "key": "65"
+      },
+      {
+        "count": 7,
+        "key": "60"
+      }
+    ],
+    "topReferenceMidi": [
+      {
+        "count": 180,
+        "key": "64"
+      },
+      {
+        "count": 141,
+        "key": "57"
+      },
+      {
+        "count": 136,
+        "key": "62"
+      },
+      {
+        "count": 131,
+        "key": "52"
+      },
+      {
+        "count": 126,
+        "key": "59"
+      },
+      {
+        "count": 100,
+        "key": "40"
+      },
+      {
+        "count": 86,
+        "key": "55"
+      },
+      {
+        "count": 81,
+        "key": "67"
+      },
+      {
+        "count": 77,
+        "key": "68"
+      },
+      {
+        "count": 67,
+        "key": "50"
+      },
+      {
+        "count": 52,
+        "key": "66"
+      },
+      {
+        "count": 37,
+        "key": "61"
+      },
+      {
+        "count": 36,
+        "key": "69"
+      },
+      {
+        "count": 29,
+        "key": "76"
+      },
+      {
+        "count": 22,
+        "key": "71"
+      },
+      {
+        "count": 15,
+        "key": "74"
+      },
+      {
+        "count": 12,
+        "key": "43"
+      },
+      {
+        "count": 9,
+        "key": "60"
+      },
+      {
+        "count": 9,
+        "key": "65"
+      },
+      {
+        "count": 8,
+        "key": "58"
+      }
+    ]
+  },
+  "label": "SINGLE_SONG_TRAINING_CALIBRATION",
+  "policy": {
+    "calibrationOnly": true,
+    "directReferenceCopyForbidden": true,
+    "generalizationClaimForbidden": true,
+    "referenceFacing": true,
+    "writesCandidateCorrections": false
+  },
+  "recognitionPercent": {
+    "bass": 70.60063224446786,
+    "combinedGuitar": 40.36021285304953
+  },
+  "reference": "research/v154-professional-references/scorer-ready/frontend-reference-payload.json",
+  "referenceCounts": {
+    "bassExcluded": 0,
+    "bassIncluded": 547,
+    "leadExcluded": 0,
+    "leadIncluded": 447,
+    "rhythmExcluded": 0,
+    "rhythmIncluded": 946
+  },
+  "schema": "dadrock.tabs.v167.single-song-calibration-diagnostic.v1",
+  "scorer": "validation/v154_cpu_multitrack/score_frontend_reference.py",
+  "version": "V167"
+}

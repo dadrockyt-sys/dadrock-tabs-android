@@ -1,0 +1,45 @@
+{
+  "artifacts": {
+    "candidateGitBlob": "1b73d6ece977fb976fa1c503997e6434d4e4811a",
+    "candidateSha256": "cfe521efac40b28b3fd34268cd24d7cdc24d92926fc33815f0928942edb56911",
+    "diagnosticGitBlob": "68ee76d97aae5ebeb063ab67ce2e280b76c444c7",
+    "diagnosticSha256": "0aea54f100696a67b7e50a289c172c9c8954b134bbc163a5d0bb04d7d0e943e7",
+    "scoreGitBlob": "6b8d4c09c167f976721c0f60913639cda35ada64",
+    "scoreSha256": "fbc3f1bd686a3d42971fe2d5cb96a9c1ab8ae276f27a4945b30ea004365124ae"
+  },
+  "change": {
+    "shiftGridSteps": -12,
+    "type": "shared_absolute_grid_phase"
+  },
+  "iteration": 1,
+  "label": "SINGLE_SONG_TRAINING_CALIBRATION",
+  "policy": {
+    "calibrationOnly": true,
+    "directReferenceCopy": false,
+    "generalizationClaim": false,
+    "gpuCudaModalUsed": false,
+    "humanCorrection": false,
+    "mainOrProductionModified": false,
+    "referenceFacingScore": true,
+    "transformReadProfessionalReference": false
+  },
+  "provenance": {
+    "diagnosticGitBlob": "04affbbf88b66264b0b7b2a4dedd27da5c55f632",
+    "phaseSweepGitBlob": "6def13224adf3d2dcdc505e7d804a2dd104f0a86",
+    "professionalReferenceGitBlob": "2fbed60b543c0488934d8642c488aa06bf31bbf5",
+    "scorerGitBlob": "9644e65719fbd361a9b39778ae9950c5e983e855",
+    "sourceCandidateGitBlob": "c36a4d1e14ca66235b51a866ad3908322834efff",
+    "transformGitBlob": "9b13b65a2b4c9fd6a801afe50a0ecc153de56b3c"
+  },
+  "recognitionPercent": {
+    "bass": 70.60063224446786,
+    "combinedGuitar": 40.36021285304953
+  },
+  "schema": "dadrock.tabs.v167.single-song-calibration-iteration-receipt.v1",
+  "status": "ITERATION_FROZEN",
+  "version": "V167",
+  "workflowHeadSha": "16831e9d389572d3c39ce6f45cc77e5906cc4c55",
+  "workflowRunAttempt": 1,
+  "workflowRunId": 33227463521,
+  "workflowRunNumber": 1
+}
