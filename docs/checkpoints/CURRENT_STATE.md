@@ -4,13 +4,13 @@ Updated: 2026-08-29 UTC
 Branch: `v143-contextual-prune-lobo`
 
 ## Active phase
-**V166 is terminal/immutable. V167 is the explicitly scorer/reference-guided SINGLE-SONG TRAINING CALIBRATION lane for Lenny Kravitz — Are You Gonna Go My Way. Iteration 002 remains the best frozen candidate: Guitar 41.9157%, Bass 71.8651%. Timing and admitted-event Bass pitch alternatives are now substantially exhausted. The next high-value boundary is upstream CPU-only proposal/evidence instrumentation: capture Guitar standalone harmonic pitches and Bass onset/state near-misses that the frozen algorithm never admits/proposes, while leaving the baseline output unchanged. `main`/Production remain untouched.**
+**V166 is terminal/immutable. V167 is the explicitly scorer/reference-guided SINGLE-SONG TRAINING CALIBRATION lane for Lenny Kravitz — Are You Gonna Go My Way. Iteration 002 remains the best frozen candidate: Guitar 41.9157%, Bass 71.8651%. Timing and admitted-event Bass pitch alternatives are substantially exhausted. Exact upstream discard gates and the reproducible CPU source/stem boundary are mapped. A reference-blind, output-neutral evidence observer plus standalone Guitar/Bass pitch-pool augmentation is now staged. Its first arm failed safely in the pre-compute guard because the workflow scanned its own forbidden-string literals; no dependency/audio/pitch work ran. Re-arm is next. `main`/Production remain untouched.**
 
 ## Standing V167 methodology
 - Calibration only; never present V167 calibration score as holdout/generalization performance.
 - Frozen scorer `validation/v154_cpu_multitrack/score_frontend_reference.py`, blob `9644e65719fbd361a9b39778ae9950c5e983e855`.
 - Frozen professional reference blob `2fbed60b543c0488934d8642c488aa06bf31bbf5`, SHA256 `b39a203aec3f45800891fe4eca156e37e7571b91ea5c4ccc41b30bbc95fc89e7`.
-- Reference/scorer may grade complete predeclared variants and select whole deterministic rules/parameter settings. It may not directly supply or copy candidate events or choose individual-event answers.
+- Reference/scorer may grade complete predeclared variants and select whole deterministic rules/parameter settings. It may not directly supply/copy candidate events or choose individual-event answers.
 - Direct/manual reference-event copying is forbidden.
 - CPU work is authorized. Fresh explicit authorization is required immediately before GPU/CUDA/Modal execution.
 - Never modify/merge/promote `main` or Production without explicit user direction.
@@ -42,40 +42,58 @@ Branch: `v143-contextual-prune-lobo`
 
 ## V167 Bass admitted-event pitch-rule sweep — FROZEN NEGATIVE
 - Code `validation/v167_single_song_calibration/bass_pitch_rule_sweep_v167.py`, blob `2b59bb1dcb2b5724eb56457349639ec6eb6eca83`.
-- One-shot run `33228058021`, run 1, attempt 1, job `99035528898`; SUCCESS.
-- Arm commit `df77cdf143bb6808ced8478068bd00fe14b24ab8`.
-- Terminal commit `b3425afd6ffd06ab367a18edd3ce4d63242f7659`, message `research: freeze V167 fixed Bass audio-evidence pitch-rule sweep [skip ci]`.
-- Report `debug/v167-single-song-calibration/bass-pitch-rule-sweep.json`, blob `189466d1a4180e4fc05519b8ebdd94546d4dbf00`.
-- Tested complete whole-stream rules derived only from stored `stateMidi`, `medianPyinMidi`, their voiced probabilities, fixed confidence thresholds, and fixed downward-delta thresholds; timing/cardinality unchanged.
-- **Best rule is `baseline_current`; delta = 0.0 percentage points.** Current admitted Bass MIDI assignment therefore remains frozen for now.
-- This materially strengthens the conclusion that low Bass recall is a **proposal/detection coverage problem upstream**, not a simple repitching problem inside already-admitted events.
+- One-shot run `33228058021`, job `99035528898`; SUCCESS.
+- Terminal commit `b3425afd6ffd06ab367a18edd3ce4d63242f7659`; report `debug/v167-single-song-calibration/bass-pitch-rule-sweep.json`, blob `189466d1a4180e4fc05519b8ebdd94546d4dbf00`.
+- Best rule is `baseline_current`; delta **0.0 pp**. Stored `stateMidi`/pYIN substitutions do not improve admitted Bass events.
+- Conclusion strengthened: low Bass recall is an upstream proposal/detection coverage problem, not a simple repitching problem inside already-admitted events.
 
-## Frozen V166/V162 source audit — main upstream bottlenecks
+## Frozen source audit — upstream discard bottlenecks
 ### Guitar
-- Basic Pitch frozen call uses onset threshold 0.50, frame threshold 0.30, minimum note length 90ms, MIDI range 40–88.
-- Final activity/admission gates reject very little: activity rejects are 0 and total admission-score rejects across streams are only about 5 in the frozen evidence metadata. Lowering the final 0.50 Guitar admission threshold is therefore not the main opportunity.
-- Active-state reattack recovery only evaluates a MIDI pitch if Basic Pitch already has that pitch active at the onset. **Standalone harmonic pitch discovery is explicitly disabled.** This is a major structural recall bottleneck for missing Guitar chord tones/polyphony.
-- Final Guitar grid cap is 6 notes per grid step, so the cap is not the obvious primary limiter.
+- Basic Pitch frozen call: onset threshold 0.50, frame threshold 0.30, minimum note length 90ms, MIDI 40–88.
+- Same-MIDI rows can merge at segmentation when reattack evidence is unsupported.
+- Segmented final gates: activity >=0.05 and admission >=0.50; these reject comparatively few candidates.
+- Active-state recovery only evaluates a MIDI if Basic Pitch already has that pitch active at the onset. **Standalone harmonic pitch discovery is explicitly disabled**, making this a major missing-polyphony/chord-tone bottleneck.
+- Recovery gates: onset support >=0.35, not within 0.050s existing attack, parent confidence >=0.35, pitch evidence present, template rank >=0.80, fundamental present, recovery score >=0.58, cap 3/onset.
+- Grid dedupe keeps one event per `(step,midi)` by evidence/confidence; Guitar final polyphony cap = 6 notes/step.
 
 ### Bass
-- Stable states require voiced probability >=0.50, minimum 4 frames, median voiced >=0.55; only short gaps between identical states are bridged.
-- Detected onsets without a nearby stable state never become proposals. Same-pitch reattacks have additional onset/IOI gates.
-- Proposal merge within 45ms keeps only one winner.
-- Final Bass admission gates also reject comparatively few events; final grid cap is one note per step, appropriate for monophonic Bass.
-- Existing admitted-event `stateMidi`/pYIN substitution does not improve the score, so missing low notes must be recovered from **onsets/states/proposals not currently represented in the admitted stream**.
+- Stable pYIN states require frame voiced >=0.50, minimum 4 frames, median voiced >=0.55; only <=2-frame identical-state gaps bridge.
+- Detected onsets without a nearby stable state never become proposals; onset support <0.20 is rejected. Same-pitch reattacks require IOI >=0.080s and stronger local onset evidence.
+- Proposals within 45ms merge to one winner; losers are normally discarded.
+- Final admission rejects activity <0.04, then requires fundamental present OR median pYIN voiced >=0.60, then admission >=0.42. These final gates reject comparatively few events.
+- Grid dedupe and monophonic cap 1/step follow.
+- Existing admitted-event `stateMidi`/pYIN repitching is frozen negative, so low-note recall must come from upstream state/onset/proposal coverage.
 
 ## Reproducible CPU source boundary
 - Historical source: `public/gomywayfullaitest.m4a` from Git commit `74b0f815ff3f66f325220975c410621503de440f`.
-- Exact source identity: 3,478,611 bytes; SHA256 `215bd5a657c5326f08f132ae358595a95c30b39bb7493a52c2f910d5a608149f`.
+- Exact source: 3,478,611 bytes; SHA256 `215bd5a657c5326f08f132ae358595a95c30b39bb7493a52c2f910d5a608149f`.
+- Frozen V166 timebase blob `abebae25801b7ddeb5b933977c4f4a918f7bf9ef` stores exact normalized-mix/stem SHA256+byte identities.
 - Historical deterministic stack: Python 3.10.21, torch 2.8.0+cpu, Demucs 4.1.0 `htdemucs_6s`, CPU, shifts=1, jobs=1. No GPU/CUDA/Modal needed.
 
-## NEXT boundary — upstream evidence pool
-1. Recover the exact historical V166 one-shot workflow/stem construction and pin every path/command needed to reproduce its CPU stems and timebase inputs.
-2. Implement a V167 calibration-only, **reference-blind evidence-pool generator** that does not alter the frozen baseline candidate. Priority pools:
-   - Guitar: independent onset peaks with standalone harmonic/CQT pitch candidates (including pitches not active in Basic Pitch), plus enough rank/fundamental/onset evidence for later fixed threshold sweeps.
-   - Bass: detected/retained onset candidates lacking a stable-state proposal, weak/short state candidates where practical, proposal-merge losers, and alternative harmonic/pYIN candidates before final admission.
-3. First evidence run must not read scorer/reference and must be CPU-only. It should reproduce/pin the source/stem/timebase identities and emit machine-readable pools only.
-4. Freeze the evidence pool before any reference-facing recovery sweep.
-5. After pool freeze, apply the already-frozen `-12` phase and Iteration 002 timing rules to recovery variants for apples-to-apples scoring.
-6. Reference may grade only complete fixed recovery rules/threshold grids; no event-by-event reference selection.
-7. Do not create Iteration 003 until a frozen recovery sweep shows a material F1 gain with a defensible precision/recall tradeoff.
+## V167 upstream evidence instrumentation — STAGED
+- Output-neutral observer `validation/v167_single_song_calibration/instrument_v166_nearmiss_v167.py`, blob `1224932a841e27bfdfe8d61fd631e5c1f728d485`, implementation commit `d6b26d5305c4b57e4e8056cdd98078a9b205401b`.
+- Pinned event-logic runner `validation/v167_single_song_calibration/run_instrument_v166_nearmiss_v167.py`, current blob `af216b9727ca851a32c43c318ee18849c4043752`.
+- Upstream pitch augmentation `validation/v167_single_song_calibration/augment_upstream_pitch_pool_v167.py` staged at commit `8110e8d341e7165b0e0d305d293e9703fcd4014c`.
+- Observer calls the exact pinned V166 front-end functions and must reproduce the frozen V166 musical streams **exactly** at 1050 Guitar / 402 Bass before evidence is accepted.
+- Observer records Guitar raw/segmentation/admission/recovery/grid reject reasons and Bass state/onset/proposal-merge/admission/grid reject reasons without altering decisions.
+- Augmentation adds:
+  - Guitar all MIDI 40–88 six-frame harmonic candidates at every independent onset peak, including pitches not active in Basic Pitch.
+  - Bass all MIDI 28–67 harmonic+pYIN candidates at retained-onset and merged-proposal sites, including sites without a nearby stable state.
+- No professional reference/scorer is an input to observer or augmentation.
+
+### First arm — SAFE PRE-COMPUTE FAILURE
+- Workflow `.github/workflows/v167-nearmiss-instrumentation.yml` armed at commit `efe1db25f2914a033eb9f67e6177d2fece95c5a5`.
+- Run `33228188560`, job `99035902132`, run 1/attempt 1, FAILED at `Verify immutable identities and reference-blind boundary`.
+- Dependency install, source materialization, Demucs, observer, augmentation, and freeze steps were all skipped. No audio/pitch computation or evidence output occurred.
+- Cause identified: the guard concatenated the workflow text into its scan while the workflow itself contained the forbidden reference/scorer filenames as literal strings in the `forbidden` tuple. The guard therefore self-matched by construction.
+- Fix: scan only observer/runner/augmentation code for forbidden reference/scorer paths; re-arm as workflow run 2 with current branch parent pinned.
+
+## NEXT boundary — freeze reference-blind upstream evidence pool
+1. Re-arm the corrected one-shot CPU instrumentation workflow. Keep exact source, dependency, V166 code, candidate, and timebase identity assertions.
+2. Reproduce deterministic CPU stems and verify normalized-mix/stem hashes against frozen V166 timebase.
+3. Run the output-neutral observer and require exact frozen V166 musical-stream equality (1050/402) before accepting any evidence.
+4. Add standalone Guitar harmonic and Bass pre-admission pitch pools; reference/scorer remain unread.
+5. Freeze evidence pool + receipt and self-seal workflow. Update this checkpoint with run/job/terminal commit, blobs/hashes, pool counts, and exact reproduction proof.
+6. Only after the pool is frozen, build reference-facing fixed recovery-rule/threshold sweeps. Prioritize Guitar missing chord tones/polyphony and Bass MIDI 31/35 low-register recall.
+7. Apply the already-frozen `-12` phase and Iteration 002 timing rules to recovery variants for apples-to-apples scoring.
+8. Do not create Iteration 003 until a frozen recovery sweep shows a material F1 gain with a defensible precision/recall tradeoff.
