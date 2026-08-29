@@ -1,0 +1,37 @@
+{
+  "baseAdmissionValidatorGitBlob": "c9e0b00ffe9cddf8138e63843afa98a715fed579",
+  "intakeRequirementsGitBlob": "3064b8e9000fbab1b031ed32389cb82aab846876",
+  "policy": {
+    "generatedCandidatesRead": false,
+    "gpuCudaModalUsed": false,
+    "holdoutAssetsAdmitted": 0,
+    "mainOrProductionModified": false,
+    "professionalReferenceBytesRead": false,
+    "professionalReferenceNoteEventsRead": false,
+    "referenceFacingScoreCalls": 0,
+    "referenceFacingScoringArmed": false,
+    "scorerRead": false,
+    "sourceAudioBytesRead": false,
+    "syntheticMetadataOnly": true
+  },
+  "provenanceValidatorGitBlob": "9edb8a65cc809d7fe42a288d6a00cfc602f37dcc",
+  "schema": "dadrock.tabs.v168.holdout-provenance-gate-selftest-receipt.v1",
+  "selfTest": {
+    "negativeCasesRejected": [
+      "source-reference-hash-binding",
+      "model-derived-reference",
+      "candidate-generation-reference-access",
+      "unfrozen-provenance",
+      "scorer-incompatible-reference"
+    ],
+    "referenceFacingScoreCalls": 0,
+    "status": "SELF_TEST_PASS",
+    "validSongCount": 2
+  },
+  "status": "V168_HOLDOUT_PROVENANCE_GATE_SELF_TEST_FROZEN",
+  "version": "V168",
+  "workflowHeadSha": "830f06e4294ce4c519da97507b3d58b2ad841fef",
+  "workflowRunAttempt": 1,
+  "workflowRunId": 33267391386,
+  "workflowRunNumber": 1
+}
