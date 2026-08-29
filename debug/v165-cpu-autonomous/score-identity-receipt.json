@@ -1,0 +1,84 @@
+{
+  "schema": "dadrock.tabs.v165.score-identity-receipt.v1",
+  "version": "V165",
+  "status": "SEALED_BEFORE_SOLE_SCORE_EXECUTION",
+  "validation": "PASS",
+  "branch": "v143-contextual-prune-lobo",
+  "createdFromBranchHead": "f7d9320cb1b96c38fc3d2cabc85b1f554046d4fe",
+  "scorePreregistration": {
+    "path": "debug/v165-cpu-autonomous/score-preregistration.json",
+    "gitBlob": "c5e44f8e60da4e7d68e71f384b702149b327a840",
+    "status": "SEALED_BEFORE_SCORER_OR_PROFESSIONAL_REFERENCE_READ",
+    "validation": "PASS"
+  },
+  "candidate": {
+    "path": "debug/v165-cpu-autonomous/generated.json",
+    "gitBlob": "e70a444cb7778a6f56988cf8cc69dccb9c1d89ce",
+    "sha256": "b1ad02001724750ea82d693591a7c0b1f214820de37a590871a6d78eef63e5cb",
+    "unchangedAfterScorePreregistration": true,
+    "authoritative": true
+  },
+  "generationTerminal": {
+    "commit": "97c2efe6acf988a4535de1fff449194b7b2f7c2b",
+    "terminalFreezeGitBlob": "857153fdaedd3c386d5802277cf60e68ae231dc6",
+    "neverRearmV165": true
+  },
+  "structuralQc": {
+    "gitBlob": "f411e6c98b8ae33ba6f545d1b4dea12c80019a94",
+    "sha256": "af2f88975b9681e256c01ca14586bc4dd50d8229dc455df057b2ffb75cc2cc57",
+    "validation": "PASS"
+  },
+  "frozenScorerIdentity": {
+    "path": "validation/v154_cpu_multitrack/score_frontend_reference.py",
+    "gitBlob": "9644e65719fbd361a9b39778ae9950c5e983e855",
+    "preexistedV165ScorePreregistration": true,
+    "verifiedReadOnlyAfterScorePreregistrationSeal": true
+  },
+  "frozenProfessionalReferenceIdentity": {
+    "path": "research/v154-professional-references/scorer-ready/frontend-reference-payload.json",
+    "gitBlob": "2fbed60b543c0488934d8642c488aa06bf31bbf5",
+    "sha256": "b39a203aec3f45800891fe4eca156e37e7571b91ea5c4ccc41b30bbc95fc89e7",
+    "preexistedV165ScorePreregistration": true,
+    "verifiedReadOnlyAfterScorePreregistrationSeal": true
+  },
+  "fixedScoreContract": {
+    "device": "cpu",
+    "guitarF1Minimum": 0.8,
+    "bassF1Minimum": 0.8,
+    "bothMustPass": true,
+    "maximumScoreRuns": 1,
+    "maximumScoreAttempts": 1,
+    "rerunForbidden": true,
+    "candidateMutationForbidden": true,
+    "candidateRepairForbidden": true,
+    "postScoreRetuneForbidden": true,
+    "postScoreRescoreForbidden": true,
+    "eventOrMeasureReferenceMiningForbidden": true,
+    "thresholdSweepForbidden": true,
+    "variantSelectionForbidden": true,
+    "humanCorrectionForbidden": true
+  },
+  "runtimeAbsenceAtSeal": {
+    "scoreWorkflowPath": ".github/workflows/v165-score.yml",
+    "scoreWorkflowAbsent": true,
+    "scoreReceiptPath": "debug/v165-cpu-autonomous/reference-score.json",
+    "scoreReceiptAbsent": true,
+    "scoreTerminalPath": "debug/v165-cpu-autonomous/score-terminal-freeze.json",
+    "scoreTerminalAbsent": true,
+    "referenceFacingScoreCalls": 0
+  },
+  "identityReadAccounting": {
+    "scorerIdentityReadPerformed": true,
+    "professionalReferenceIdentityReadPerformed": true,
+    "scoreExecutionPerformed": false,
+    "referenceUsedForCandidateChange": false,
+    "V163CandidateRead": false,
+    "V163ScoreRead": false,
+    "V164RuntimeArtifactRead": false,
+    "gpuUsed": false,
+    "cudaUsed": false,
+    "modalUsed": false,
+    "mainOrProductionModified": false
+  },
+  "nextAction": "Audit and create .github/workflows/v165-score.yml as the sole trigger. It must verify every pinned identity, execute the frozen scorer exactly once on CPU against only the exact V165 candidate and frozen professional reference, retain only aggregate predeclared score outputs, terminal-freeze the result, self-delete, and never permit a rerun or candidate change."
+}
