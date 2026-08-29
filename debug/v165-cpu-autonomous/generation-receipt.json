@@ -1,0 +1,114 @@
+{
+  "candidatePath": "debug/v165-cpu-autonomous/generated.json",
+  "candidateSha256": "b1ad02001724750ea82d693591a7c0b1f214820de37a590871a6d78eef63e5cb",
+  "counts": {
+    "bass": 405,
+    "combinedGuitar": 1043
+  },
+  "environment": {
+    "cudaAvailable": false,
+    "dependencyVersions": {
+      "basic-pitch": "0.4.0",
+      "demucs": "4.1.0",
+      "imageio-ffmpeg": "0.6.0",
+      "librosa": "0.11.0",
+      "numpy": "1.26.4",
+      "scipy": "1.13.1",
+      "soundfile": "0.12.1"
+    },
+    "determinism": {
+      "mathLibraryThreads": 1,
+      "seed": 0,
+      "torchDeterministicAlgorithms": true,
+      "torchNumInteropThreads": 1,
+      "torchNumThreads": 1
+    },
+    "device": "cpu",
+    "environmentWorkflowGitBlob": "24f4a0631229044e4d8990627b0f38c4f7edce8c",
+    "plannedSeparation": {
+      "device": "cpu",
+      "executedAtSeal": false,
+      "jobs": 1,
+      "model": "htdemucs_6s",
+      "repeatCount": 1,
+      "shifts": 1
+    },
+    "preRunIdentityReceiptGitBlob": "a2acd7839a2ec05ca0be04c4ed38e532b9af3559",
+    "pythonVersion": "3.10.21",
+    "safety": {
+      "V163CandidateRead": false,
+      "V163ScoreRead": false,
+      "V164RuntimeArtifactRead": false,
+      "cudaGpuUsed": false,
+      "demucsExecuted": false,
+      "frozenScorerRead": false,
+      "humanCorrection": false,
+      "mainOrProductionModified": false,
+      "modalUsed": false,
+      "normalizationExecuted": false,
+      "pitchInferenceExecuted": false,
+      "priorGeneratedCandidateRead": false,
+      "priorScoreRead": false,
+      "professionalReferencePathsOpened": 0,
+      "referenceFacingScoreCalls": 0,
+      "referenceGuidedFiltering": false,
+      "referenceRead": false,
+      "songAudioRead": false,
+      "thresholdSweep": false,
+      "variantSelection": false
+    },
+    "schema": "dadrock.tabs.v165.cpu-environment-receipt.v1",
+    "status": "VERIFIED_BEFORE_SONG_PROCESSING",
+    "torchCudaVersion": null,
+    "torchVersion": "2.8.0+cpu",
+    "validation": "PASS",
+    "version": "V165",
+    "workflowHeadSha": "c7c3b7dd49e3743e8ff1e3306efaf5f52d77b0bf",
+    "workflowRunAttempt": 1,
+    "workflowRunId": 33223054612,
+    "workflowRunNumber": 1
+  },
+  "environmentReceiptSha256": "63cf68e3cd1e3e8523a136147bbc81f57776e80a9c439197a5bee61c0b7b1b39",
+  "evidenceStepCorrections": {
+    "bass": 6,
+    "combinedGuitar": 17
+  },
+  "implementation": {
+    "canonicalEntryPointGitBlob": "45d595853302b077fbf4f3094e9a4922fba02435",
+    "eventLogicGitBlob": "b296b3c322c13f8963f253f9b0666db66766a178"
+  },
+  "implementationContractSha256": "5abcce263ec1ddd1dff9bb2c2839aac2e916c6759abd883a75d21a3891235746",
+  "inputIdentities": {
+    "bassStemSha256": "f109347354dd9ae4a293189834b1f6d58199a4eebe5d51dfeeedc6707c4a5316",
+    "drumsStemSha256": "7ef184f2fc3b6f7fc12ea5c342bc537f6b69f1680ce36e9d4f7189be85d93e39",
+    "guitarStemSha256": "b8685062c59f5c62253029f8294afdaf25f3f8adf8868ae97b47db09ab8838f9",
+    "mixSha256": "3e61b7926eabc21b758c750f826c7426a29d6de5aafdd5c93f8045ecdc67f87e"
+  },
+  "preGridExcluded": {
+    "bass": 0,
+    "combinedGuitar": 0
+  },
+  "preRunReceiptSha256": "67f24357b2867bdc4c373725dd8beeea0c101d363ddf8e650489b71bcd396a8f",
+  "preregistrationSha256": "ce84c5833d22803703ae74ca286708ec181220ecef51c88fcae59f4db1008c06",
+  "safety": {
+    "V163CandidateRead": false,
+    "V163ScoreRead": false,
+    "cudaGpuUsed": false,
+    "humanCorrection": false,
+    "mainOrProductionModified": false,
+    "modalUsed": false,
+    "priorGeneratedCandidateRead": false,
+    "priorScoreRead": false,
+    "professionalReferencePathsOpened": 0,
+    "referenceFacingScoreCalls": 0,
+    "referenceGuidedFiltering": false,
+    "referenceRead": false,
+    "thresholdSweep": false,
+    "variantSelection": false
+  },
+  "schema": "dadrock.tabs.v165.cpu-generation-receipt.v1",
+  "timebaseQcSha256": "8c4054decc381b862f95f32b4b95a43b05cb2108bc357b00e2d6b8c3d7e2002c",
+  "timebaseSha256": "eaef13457f7a2d357d9f288afdeb8b9d0364f85be29b367247245cf9ed636426",
+  "validation": "PENDING_INDEPENDENT_STRUCTURAL_QC",
+  "version": "V165"
+}
