@@ -1,0 +1,43 @@
+{
+  "counts": {
+    "bass": 402,
+    "combinedGuitar": 1050
+  },
+  "evidencePoolGitBlob": "aa7da3a55344b1418a291f30fab9ca55858fc094",
+  "evidencePoolSha256": "1c983784c2d12a22437a80387525789bcf55a2f4e4a5c7a96608c575bf709673",
+  "exactFrozenV166MusicalStreams": true,
+  "implementation": {
+    "augmentGitBlob": "daf4ace1b6eff1da81bb537b38caa4dcb0976b29",
+    "observerGitBlob": "1224932a841e27bfdfe8d61fd631e5c1f728d485",
+    "runnerGitBlob": "af216b9727ca851a32c43c318ee18849c4043752",
+    "v166EventLogicGitBlob": "6561194742093d76bab452ef0bbb0b889724dc4e",
+    "v166TranscriberGitBlob": "f04ca86525b2ce71680a90b84ed476943e9e6426"
+  },
+  "inputIdentities": {
+    "bassStemSha256": "4b34b2bc3367d9f8ed4dce39b95ad3d60c49d6541186df6b0d24a4211b03c7ef",
+    "drumsStemSha256": "05890ac9cad62eacf0099c962b137a458228811a85b8ea828bb15f238d2c1e50",
+    "guitarStemSha256": "4c71e9e15dd07e60a5442923b86523bafe4313056ca3c892054a607aa7e4e9d2",
+    "mixSha256": "3e61b7926eabc21b758c750f826c7426a29d6de5aafdd5c93f8045ecdc67f87e",
+    "sourceAudioSha256": "215bd5a657c5326f08f132ae358595a95c30b39bb7493a52c2f910d5a608149f",
+    "timebaseSha256": "899746d3048d239bc0032375d412a109ea04b055df19df1b7b08dc3e73aa5ca0",
+    "v166CandidateGitBlob": "c36a4d1e14ca66235b51a866ad3908322834efff",
+    "v166TranscriberGitBlob": "f04ca86525b2ce71680a90b84ed476943e9e6426"
+  },
+  "policy": {
+    "candidateGenerationBehaviorModified": false,
+    "frozenV166CandidateModified": false,
+    "gpuCudaModalUsed": false,
+    "mainOrProductionModified": false,
+    "referenceFacingScoreCalls": 0,
+    "referenceRead": false,
+    "scorerRead": false,
+    "thresholdTuningPerformed": false
+  },
+  "schema": "dadrock.tabs.v167.reference-blind-nearmiss-evidence-receipt.v1",
+  "status": "EVIDENCE_POOL_FROZEN",
+  "version": "V167",
+  "workflowHeadSha": "7e8d15fcb57ddc34550ce7215f10c00603008852",
+  "workflowRunAttempt": 1,
+  "workflowRunId": 33228322645,
+  "workflowRunNumber": 2
+}
