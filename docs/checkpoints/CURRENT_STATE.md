@@ -6,6 +6,13 @@ Branch: `v143-contextual-prune-lobo`
 ## Active phase
 **V166 is terminal/immutable. V167 is the explicitly scorer/reference-guided SINGLE-SONG TRAINING CALIBRATION lane for Lenny Kravitz — Are You Gonna Go My Way. Iteration 003 is frozen current best: Guitar 41.9156774457634% F1; Bass 80.45325779036827% F1. Bass is closed for this lane. Guitar's first 48-rule additive standalone-harmonic grid is terminal negative. The terminal aggregate diagnosis now identifies the failure mechanism without new reference access: more additions strongly increase recall but destroy precision/F1, and the reference-blind pool is dominated by octave/harmonic-like inactive candidates. This supports a structurally new, sparse contextual Guitar hypothesis based on relative evidence versus active pitches plus harmonic-interval suppression. No new rule has been scored yet. `main`/Production remain untouched; no GPU/CUDA/Modal work is authorized or used.**
 
+## Current execution checkpoint — 2026-08-29 14:02 UTC
+- Resumed directly from this file on `v143-contextual-prune-lobo`; starting head was `2a7dfedd6385ef0136e1a07e6677dd3b6c47cbf0`.
+- Reconfirmed Iteration 003 is immutable for this sweep and Bass must remain byte/stream-equivalent to I003.
+- Re-read the preregistration below and will implement its exact 36-rule contextual Guitar family: onset `{0.50,0.65}`, candidate/max-active template ratio `{0.75,1.00,1.25}`, active-state `{allow_active,inactive_only}`, interval policy `{none,exclude_harmonic_octave,chord_interval}`, top-1/site, `(step,midi)` dedupe, polyphony cap 6.
+- Located the frozen reference-blind upstream evidence builder `validation/v167_single_song_calibration/augment_upstream_pitch_pool_v167.py`; its Guitar pool already exposes `templateScore`, `templateRank`, `fundamentalPresent`, `onsetSupport`, `activitySupport`, and Basic Pitch active-at-site context. No reference-derived correctness field will be used for candidate selection.
+- No new contextual rule has been generated or scored yet. Next substep: map the frozen evidence to active-pitch-relative context and implement/freeze the deterministic variants before any scorer/reference read.
+
 ## Standing V167 methodology
 - Calibration only; never present V167 scores as holdout/generalization performance.
 - Frozen scorer `validation/v154_cpu_multitrack/score_frontend_reference.py`, blob `9644e65719fbd361a9b39778ae9950c5e983e855`.
