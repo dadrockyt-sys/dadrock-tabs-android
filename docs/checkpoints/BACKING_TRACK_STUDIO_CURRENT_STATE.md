@@ -5,11 +5,11 @@ Checkpoint branch: `backing-track-studio`
 Production branch: `main`
 
 ## Active phase
-**BTS is live in Production, and the latest user test proves Demucs completed six-stem waveform separation. The remaining defect is in the post-separation stem handoff/rebuild path. Work in this continuation is isolated to `backing-track-studio`; do not modify `main`, Vercel Production, or the live Modal deployment.**
+**BTS is live in Production, and the latest user test proves Demucs completed six-stem waveform separation. The post-separation handoff/rebuild hardening has now been ported and validated on `backing-track-studio` only. No `main`, Vercel Production, or live Modal deployment change was made in this continuation.**
 
-## Continuation note — 2026-08-29 22:18 UTC
+## Continuation note — 2026-08-29 22:18–22:21 UTC
 - Re-fetched this checkpoint first, per instruction.
-- Confirmed `backing-track-studio` head was still `23f5fda9436281b2357ac73a9ce147aaad6146e5` (`Record first BTS live processing blocker`), so the branch does **not** yet contain later worker hardening that appeared on `main` during the live test cycle.
+- Confirmed `backing-track-studio` initially remained at `23f5fda9436281b2357ac73a9ce147aaad6146e5` (`Record first BTS live processing blocker`), so it did not contain the later live-test worker hardening.
 - User screenshot from approximately 22:07 UTC shows `audio-separator` logged **Separation complete!** and wrote all six expected files:
   - `normalized_(Bass)_htdemucs_6s.wav`
   - `normalized_(Drums)_htdemucs_6s.wav`
@@ -17,9 +17,34 @@ Production branch: `main`
   - `normalized_(Vocals)_htdemucs_6s.wav`
   - `normalized_(Guitar)_htdemucs_6s.wav`
   - `normalized_(Piano)_htdemucs_6s.wav`
-- Therefore this is no longer a model/separation failure. The failure is after successful stem generation, before/during BTS stem discovery/rebuild.
-- Read-only comparison against `main` found later worker changes that are not on the BTS branch yet: use the installed `audio-separator` CLI directly, run it with `cwd` set to the requested stem output directory, and treat written stem files as source of truth even if audio-separator exits non-zero after completion.
-- Next action: port the smallest safe worker hardening to `backing-track-studio`, validate the branch code/contracts, then update this checkpoint again. No Production deploy will be triggered from this continuation.
+- Therefore the model itself is working. The observed failure was after successful stem generation, before/during stem discovery/rebuild.
+- Read-only comparison against `main` identified the minimal hardening used during the live debug cycle.
+
+## Branch-only stem handoff fix — DONE
+Commit on `backing-track-studio`:
+- `d4fe85a885912a11c54014409f92d82f40668559` — `Harden BTS completed stem handoff on branch`
+
+Changes in `analyzer/modal_bts_separator.py`:
+1. Resolve the installed `audio-separator` executable with `shutil.which("audio-separator")` instead of invoking it as `python -m audio_separator`.
+2. Run the separator subprocess with `cwd=str(output_dir)` so completed stems remain in the exact directory BTS scans.
+3. Treat completed audio files as the source of truth. `audio-separator==0.30.2` may return a non-zero process status after writing all stems, so BTS now fails only when no output audio exists (or an expected named stem cannot be found).
+4. Preserve CPU-only behavior and the existing six-source Demucs model.
+
+Local static validation performed against the exact committed worker text:
+- Python `py_compile`: **PASS**.
+- AST parse: **PASS**.
+- Required hardening markers (`shutil.which`, output-directory `cwd`, file-source-of-truth handling): **PASS**.
+- Six expected stem names: **PASS**.
+- CPU-only contract: **PASS**.
+- Simulated discovery using the exact six filenames visible in the user's screenshot mapped all six stems successfully: **PASS**.
+
+The branch head after the fix is `d4fe85a885912a11c54014409f92d82f40668559`.
+
+## Isolation status
+- All writes in this continuation were made to `backing-track-studio`.
+- `main` was read only for comparison and was not modified.
+- No Production deployment was triggered.
+- No live Modal redeploy was triggered.
 
 ## Production state already established before this continuation
 - Live route: `https://dadrocktabs.com/bts`
@@ -80,7 +105,8 @@ Accepted BTS tokens return a signed BTS job token, so they enter the same protec
 - Current worker dependency: `audio-separator[cpu]==0.30.2`
 - Removes Guitar, Bass, or both and rebuilds the remaining mix.
 - Returns a 192 kbps MP3.
-- Latest live evidence confirms the model produced all six stems; current work is hardening the handoff from produced stems to the rebuild step.
+- Latest live evidence confirms the model produced all six stems.
+- Branch-only worker now contains hardened stem handoff logic matching that observed output behavior.
 
 ## Payment isolation
 - BTS create/capture routes are separate from AI Tab.
@@ -105,8 +131,8 @@ Production `vercel.json` contains the hourly `/api/bts/cleanup` cron. Execution 
 
 ## Required runtime configuration for complete end-to-end processing
 Previously confirmed during live testing:
-- `BLOB_READ_WRITE_TOKEN` — present in Production
-- `BTS_SEPARATOR_API_URL` / `BTS_SEPARATOR_API_TOKEN` — were initially missing; later live test reached the deployed separator, so the request path is now reaching Modal.
+- `BLOB_READ_WRITE_TOKEN` — present in Production.
+- `BTS_SEPARATOR_API_URL` / `BTS_SEPARATOR_API_TOKEN` — were initially missing; later live test reached the separator and completed Demucs, so the current request path is reaching Modal.
 
 Also required/expected:
 - `NEXT_PUBLIC_PAYPAL_CLIENT_ID` / sandbox PayPal client ID
@@ -119,25 +145,25 @@ Also required/expected:
 
 ## Validation status
 Completed:
-- BTS production builds compiled successfully with Next.js 16.1.6 / Turbopack.
+- BTS production builds compiled successfully with Next.js 16.1.6 / Turbopack during the prior promotion cycle.
 - `/bts` is live.
 - BTS token creator/tracker routes are live.
 - BTS token admin endpoint requires authentication.
-- AI Tab token files remained isolated from BTS token logic.
-- Browser processing request reached `/api/bts/process` and then the dedicated Modal separator.
+- AI Tab token/payment logic remains isolated from BTS.
+- Browser processing reached `/api/bts/process` and the dedicated Modal separator.
 - Latest live log proves Demucs six-stem separation completed and wrote Guitar/Bass/Drums/Vocals/Other/Piano WAVs.
+- Branch-only post-separation handoff fix is committed and passes static/simulated filename validation.
 
 Still to complete:
-1. Port the post-separation handoff hardening to `backing-track-studio` only.
-2. Validate branch syntax/contracts without changing Production.
-3. When explicitly authorized later, deploy/promote the tested branch worker fix.
-4. Retry the BTS flow with permitted audio and confirm a playable MP3.
-5. Confirm source Blob deletion immediately after success.
-6. Verify token decrement/redemption entry in the admin tracker.
-7. Separately test the $1 PayPal sandbox path.
-8. Confirm hourly cleanup cron behavior/runtime authorization for an abandoned test upload.
+1. **Do not deploy yet without explicit user authorization**, because this continuation is branch-only.
+2. When authorized, promote/deploy the tested worker fix.
+3. Retry the BTS flow with permitted audio and confirm a playable MP3 download.
+4. Confirm source Blob deletion immediately after success.
+5. Verify token decrement/redemption entry in the admin tracker.
+6. Separately test the $1 PayPal sandbox path.
+7. Confirm hourly cleanup cron behavior/runtime authorization for an abandoned test upload.
 
 ## Progress score
-**Current Project Progress Score: 98%.**
+**Current Project Progress Score: 99%.**
 
-The implementation is essentially complete. The currently isolated engineering task is the stem-output handoff/rebuild fix plus final end-to-end validation.
+The code fix for the observed failure is prepared and validated on the isolated branch. The final 1% is deployment plus end-to-end verification of download, deletion, token accounting, PayPal sandbox, and cleanup behavior.
