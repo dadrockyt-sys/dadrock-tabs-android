@@ -28,7 +28,7 @@ export default function BTSPayPalCheckoutButton({
   const [paymentCompleted, setPaymentCompleted] = useState(false);
   const [unlockMethod, setUnlockMethod] = useState('');
 
-  const [showTokenEntry, setShowTokenEntry] = useState(false);
+  const [showTokenEntry, setShowTokenEntry] = useState(true);
   const [freeTokenCode, setFreeTokenCode] = useState('');
   const [isRedeemingToken, setIsRedeemingToken] = useState(false);
   const [tokenError, setTokenError] = useState('');
@@ -349,11 +349,11 @@ export default function BTSPayPalCheckoutButton({
             ? '✓ Free BTS token accepted'
             : '✓ $1.00 sandbox payment completed'}
         </p>
-        <p className="mt-1 text-sm text-zinc-400">
+        <p className="mt-1 text-sm text-zinc-300">
           Your backing track is being prepared.
         </p>
         {unlockMethod === 'free-token' && tokenUsesRemaining !== null && (
-          <p className="mt-2 text-xs text-zinc-500">
+          <p className="mt-2 text-xs text-zinc-300">
             Token uses remaining: {tokenUsesRemaining}
           </p>
         )}
@@ -363,35 +363,7 @@ export default function BTSPayPalCheckoutButton({
 
   return (
     <div className="space-y-4">
-      <div className="space-y-3">
-        {isLoading && (
-          <p className="text-center text-sm text-zinc-400">
-            Loading secure PayPal sandbox checkout…
-          </p>
-        )}
-
-        <div ref={containerRef} />
-
-        {paymentError && (
-          <p className="rounded-lg border border-red-500/30 bg-red-500/10 p-3 text-sm text-red-300">
-            {paymentError}
-          </p>
-        )}
-
-        <p className="text-center text-xs text-zinc-500">
-          Testing price: USD $1.00 — PayPal sandbox only.
-        </p>
-      </div>
-
-      <div className="flex items-center gap-3">
-        <div className="h-px flex-1 bg-zinc-800" />
-        <span className="text-xs font-bold uppercase tracking-wider text-zinc-600">
-          or
-        </span>
-        <div className="h-px flex-1 bg-zinc-800" />
-      </div>
-
-      <div className="rounded-xl border border-green-500/20 bg-green-500/5 p-4">
+      <div className="rounded-xl border-2 border-green-400/70 bg-green-500/10 p-4 shadow-lg shadow-green-950/20">
         <button
           type="button"
           onClick={() => {
@@ -401,16 +373,16 @@ export default function BTSPayPalCheckoutButton({
           }}
           className="w-full text-left"
         >
-          <p className="font-bold text-green-300">
-            Have a free BTS token?
+          <p className="text-base font-black text-green-300">
+            Have a BTS token?
           </p>
-          <p className="mt-1 text-xs text-zinc-500">
-            Use a Backing Track Studio token instead of PayPal.
+          <p className="mt-1 text-sm font-medium text-white">
+            Enter your Backing Track Studio token here instead of using PayPal.
           </p>
         </button>
 
         {showTokenEntry && (
-          <div className="mt-4 space-y-3">
+          <div className="mt-3 space-y-3">
             <input
               type="text"
               value={freeTokenCode}
@@ -428,13 +400,13 @@ export default function BTSPayPalCheckoutButton({
               maxLength={40}
               autoComplete="off"
               placeholder="BTS-XXXX-XXXX-XXXX"
-              className="w-full rounded-lg border border-zinc-700 bg-zinc-950 px-3 py-3 font-mono text-sm uppercase text-white outline-none placeholder:text-zinc-700 focus:border-green-500"
+              className="w-full rounded-lg border-2 border-green-400/60 bg-zinc-950 px-3 py-3 font-mono text-base font-bold uppercase text-white outline-none placeholder:text-zinc-400 focus:border-green-300"
             />
 
             {tokenError && (
-              <div className="rounded-lg border border-red-500/30 bg-red-500/10 p-3 text-sm text-red-300">
+              <div className="rounded-lg border border-red-400/50 bg-red-500/15 p-3 text-sm text-red-200">
                 {tokenErrorTitle && (
-                  <p className="font-bold">{tokenErrorTitle}</p>
+                  <p className="font-bold text-red-100">{tokenErrorTitle}</p>
                 )}
                 <p className={tokenErrorTitle ? 'mt-1 text-xs' : ''}>
                   {tokenError}
@@ -446,14 +418,42 @@ export default function BTSPayPalCheckoutButton({
               type="button"
               onClick={handleFreeTokenUnlock}
               disabled={isRedeemingToken || !freeTokenCode.trim()}
-              className="w-full rounded-lg bg-green-600 px-4 py-3 font-black text-white transition hover:bg-green-500 disabled:cursor-not-allowed disabled:opacity-50"
+              className="w-full rounded-lg bg-green-500 px-4 py-3 font-black text-black transition hover:bg-green-400 disabled:cursor-not-allowed disabled:opacity-50"
             >
               {isRedeemingToken
                 ? 'Checking token…'
-                : 'Use Free BTS Token'}
+                : 'Use BTS Token'}
             </button>
           </div>
         )}
+      </div>
+
+      <div className="flex items-center gap-3">
+        <div className="h-px flex-1 bg-zinc-700" />
+        <span className="text-xs font-black uppercase tracking-wider text-zinc-300">
+          or pay with PayPal
+        </span>
+        <div className="h-px flex-1 bg-zinc-700" />
+      </div>
+
+      <div className="space-y-3">
+        {isLoading && (
+          <p className="text-center text-sm text-zinc-300">
+            Loading secure PayPal sandbox checkout…
+          </p>
+        )}
+
+        <div ref={containerRef} />
+
+        {paymentError && (
+          <p className="rounded-lg border border-red-500/30 bg-red-500/10 p-3 text-sm text-red-200">
+            {paymentError}
+          </p>
+        )}
+
+        <p className="text-center text-xs font-medium text-zinc-300">
+          Testing price: USD $1.00 — PayPal sandbox only.
+        </p>
       </div>
     </div>
   );
