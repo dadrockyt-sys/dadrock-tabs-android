@@ -1,0 +1,887 @@
+{
+  "bass": {
+    "baseline": {
+      "deltaGridStepHistogram": {
+        "0": 402
+      },
+      "fallbackEvents": 0,
+      "gross": {
+        "f1": 0.7481559536354058,
+        "falseNegative": 192,
+        "falsePositive": 47,
+        "generated": 402,
+        "matched": 355,
+        "precision": 0.8830845771144279,
+        "recall": 0.6489945155393053,
+        "reference": 547
+      },
+      "maxAbsGridDelta": 0.0,
+      "meanAbsGridDelta": 0.0,
+      "movedEvents": 0,
+      "primary": {
+        "f1": 0.7060063224446786,
+        "falseNegative": 212,
+        "falsePositive": 67,
+        "generated": 402,
+        "matched": 335,
+        "precision": 0.8333333333333334,
+        "recall": 0.6124314442413162,
+        "reference": 547
+      },
+      "rule": "baseline_current"
+    },
+    "best": {
+      "deltaGridStepHistogram": {
+        "-1": 8,
+        "0": 387,
+        "1": 7
+      },
+      "fallbackEvents": 0,
+      "gross": {
+        "f1": 0.7439409905163331,
+        "falseNegative": 194,
+        "falsePositive": 49,
+        "generated": 402,
+        "matched": 353,
+        "precision": 0.8781094527363185,
+        "recall": 0.6453382084095064,
+        "reference": 547
+      },
+      "maxAbsGridDelta": 1,
+      "meanAbsGridDelta": 0.03731343283582089,
+      "movedEvents": 15,
+      "primary": {
+        "f1": 0.7186512118018967,
+        "falseNegative": 206,
+        "falsePositive": 61,
+        "generated": 402,
+        "matched": 341,
+        "precision": 0.8482587064676617,
+        "recall": 0.623400365630713,
+        "reference": 547
+      },
+      "rule": "max_score_x_mean_support"
+    },
+    "deltaRecognitionPercent": 1.264488935721808,
+    "rows": [
+      {
+        "deltaGridStepHistogram": {
+          "0": 402
+        },
+        "fallbackEvents": 0,
+        "gross": {
+          "f1": 0.7481559536354058,
+          "falseNegative": 192,
+          "falsePositive": 47,
+          "generated": 402,
+          "matched": 355,
+          "precision": 0.8830845771144279,
+          "recall": 0.6489945155393053,
+          "reference": 547
+        },
+        "maxAbsGridDelta": 0.0,
+        "meanAbsGridDelta": 0.0,
+        "movedEvents": 0,
+        "primary": {
+          "f1": 0.7060063224446786,
+          "falseNegative": 212,
+          "falsePositive": 67,
+          "generated": 402,
+          "matched": 335,
+          "precision": 0.8333333333333334,
+          "recall": 0.6124314442413162,
+          "reference": 547
+        },
+        "rule": "baseline_current"
+      },
+      {
+        "deltaGridStepHistogram": {
+          "-1": 3,
+          "0": 399
+        },
+        "fallbackEvents": 0,
+        "gross": {
+          "f1": 0.7481559536354058,
+          "falseNegative": 192,
+          "falsePositive": 47,
+          "generated": 402,
+          "matched": 355,
+          "precision": 0.8830845771144279,
+          "recall": 0.6489945155393053,
+          "reference": 547
+        },
+        "maxAbsGridDelta": 1,
+        "meanAbsGridDelta": 0.007462686567164179,
+        "movedEvents": 3,
+        "primary": {
+          "f1": 0.7123287671232877,
+          "falseNegative": 209,
+          "falsePositive": 64,
+          "generated": 402,
+          "matched": 338,
+          "precision": 0.8407960199004975,
+          "recall": 0.6179159049360147,
+          "reference": 547
+        },
+        "rule": "max_score"
+      },
+      {
+        "deltaGridStepHistogram": {
+          "-1": 31,
+          "0": 342,
+          "1": 28,
+          "2": 1
+        },
+        "fallbackEvents": 0,
+        "gross": {
+          "f1": 0.7270811380400422,
+          "falseNegative": 202,
+          "falsePositive": 57,
+          "generated": 402,
+          "matched": 345,
+          "precision": 0.8582089552238806,
+          "recall": 0.6307129798903108,
+          "reference": 547
+        },
+        "maxAbsGridDelta": 2,
+        "meanAbsGridDelta": 0.1517412935323383,
+        "movedEvents": 60,
+        "primary": {
+          "f1": 0.6427818756585879,
+          "falseNegative": 242,
+          "falsePositive": 97,
+          "generated": 402,
+          "matched": 305,
+          "precision": 0.7587064676616916,
+          "recall": 0.5575868372943327,
+          "reference": 547
+        },
+        "rule": "max_instrument_support"
+      },
+      {
+        "deltaGridStepHistogram": {
+          "-1": 18,
+          "0": 362,
+          "1": 22
+        },
+        "fallbackEvents": 0,
+        "gross": {
+          "f1": 0.7397260273972602,
+          "falseNegative": 196,
+          "falsePositive": 51,
+          "generated": 402,
+          "matched": 351,
+          "precision": 0.8731343283582089,
+          "recall": 0.6416819012797075,
+          "reference": 547
+        },
+        "maxAbsGridDelta": 1,
+        "meanAbsGridDelta": 0.09950248756218906,
+        "movedEvents": 40,
+        "primary": {
+          "f1": 0.6933614330874606,
+          "falseNegative": 218,
+          "falsePositive": 73,
+          "generated": 402,
+          "matched": 329,
+          "precision": 0.818407960199005,
+          "recall": 0.6014625228519196,
+          "reference": 547
+        },
+        "rule": "max_shared_support"
+      },
+      {
+        "deltaGridStepHistogram": {
+          "-1": 9,
+          "0": 381,
+          "1": 11,
+          "2": 1
+        },
+        "fallbackEvents": 0,
+        "gross": {
+          "f1": 0.7418335089567966,
+          "falseNegative": 195,
+          "falsePositive": 50,
+          "generated": 402,
+          "matched": 352,
+          "precision": 0.8756218905472637,
+          "recall": 0.643510054844607,
+          "reference": 547
+        },
+        "maxAbsGridDelta": 2,
+        "meanAbsGridDelta": 0.05472636815920398,
+        "movedEvents": 21,
+        "primary": {
+          "f1": 0.6933614330874606,
+          "falseNegative": 218,
+          "falsePositive": 73,
+          "generated": 402,
+          "matched": 329,
+          "precision": 0.818407960199005,
+          "recall": 0.6014625228519196,
+          "reference": 547
+        },
+        "rule": "max_score_x_instrument"
+      },
+      {
+        "deltaGridStepHistogram": {
+          "-1": 9,
+          "0": 379,
+          "1": 14
+        },
+        "fallbackEvents": 0,
+        "gross": {
+          "f1": 0.7418335089567966,
+          "falseNegative": 195,
+          "falsePositive": 50,
+          "generated": 402,
+          "matched": 352,
+          "precision": 0.8756218905472637,
+          "recall": 0.643510054844607,
+          "reference": 547
+        },
+        "maxAbsGridDelta": 1,
+        "meanAbsGridDelta": 0.05721393034825871,
+        "movedEvents": 23,
+        "primary": {
+          "f1": 0.714436248682824,
+          "falseNegative": 208,
+          "falsePositive": 63,
+          "generated": 402,
+          "matched": 339,
+          "precision": 0.8432835820895522,
+          "recall": 0.6197440585009141,
+          "reference": 547
+        },
+        "rule": "max_score_x_shared"
+      },
+      {
+        "deltaGridStepHistogram": {
+          "-1": 8,
+          "0": 387,
+          "1": 7
+        },
+        "fallbackEvents": 0,
+        "gross": {
+          "f1": 0.7439409905163331,
+          "falseNegative": 194,
+          "falsePositive": 49,
+          "generated": 402,
+          "matched": 353,
+          "precision": 0.8781094527363185,
+          "recall": 0.6453382084095064,
+          "reference": 547
+        },
+        "maxAbsGridDelta": 1,
+        "meanAbsGridDelta": 0.03731343283582089,
+        "movedEvents": 15,
+        "primary": {
+          "f1": 0.7186512118018967,
+          "falseNegative": 206,
+          "falsePositive": 61,
+          "generated": 402,
+          "matched": 341,
+          "precision": 0.8482587064676617,
+          "recall": 0.623400365630713,
+          "reference": 547
+        },
+        "rule": "max_score_x_mean_support"
+      },
+      {
+        "deltaGridStepHistogram": {
+          "-1": 8,
+          "0": 386,
+          "1": 7,
+          "2": 1
+        },
+        "fallbackEvents": 0,
+        "gross": {
+          "f1": 0.7439409905163331,
+          "falseNegative": 194,
+          "falsePositive": 49,
+          "generated": 402,
+          "matched": 353,
+          "precision": 0.8781094527363185,
+          "recall": 0.6453382084095064,
+          "reference": 547
+        },
+        "maxAbsGridDelta": 2,
+        "meanAbsGridDelta": 0.04228855721393035,
+        "movedEvents": 16,
+        "primary": {
+          "f1": 0.714436248682824,
+          "falseNegative": 208,
+          "falsePositive": 63,
+          "generated": 402,
+          "matched": 339,
+          "precision": 0.8432835820895522,
+          "recall": 0.6197440585009141,
+          "reference": 547
+        },
+        "rule": "max_score_x_inst75_shared25"
+      },
+      {
+        "deltaGridStepHistogram": {
+          "-1": 8,
+          "0": 386,
+          "1": 8
+        },
+        "fallbackEvents": 0,
+        "gross": {
+          "f1": 0.7439409905163331,
+          "falseNegative": 194,
+          "falsePositive": 49,
+          "generated": 402,
+          "matched": 353,
+          "precision": 0.8781094527363185,
+          "recall": 0.6453382084095064,
+          "reference": 547
+        },
+        "maxAbsGridDelta": 1,
+        "meanAbsGridDelta": 0.03980099502487562,
+        "movedEvents": 16,
+        "primary": {
+          "f1": 0.7165437302423603,
+          "falseNegative": 207,
+          "falsePositive": 62,
+          "generated": 402,
+          "matched": 340,
+          "precision": 0.845771144278607,
+          "recall": 0.6215722120658135,
+          "reference": 547
+        },
+        "rule": "max_score_x_inst25_shared75"
+      },
+      {
+        "deltaGridStepHistogram": {
+          "-1": 9,
+          "0": 386,
+          "1": 6,
+          "2": 1
+        },
+        "fallbackEvents": 0,
+        "gross": {
+          "f1": 0.7439409905163331,
+          "falseNegative": 194,
+          "falsePositive": 49,
+          "generated": 402,
+          "matched": 353,
+          "precision": 0.8781094527363185,
+          "recall": 0.6453382084095064,
+          "reference": 547
+        },
+        "maxAbsGridDelta": 2,
+        "meanAbsGridDelta": 0.04228855721393035,
+        "movedEvents": 16,
+        "primary": {
+          "f1": 0.6996838777660697,
+          "falseNegative": 215,
+          "falsePositive": 70,
+          "generated": 402,
+          "matched": 332,
+          "precision": 0.8258706467661692,
+          "recall": 0.6069469835466179,
+          "reference": 547
+        },
+        "rule": "max_mean_score_instrument"
+      },
+      {
+        "deltaGridStepHistogram": {
+          "-1": 12,
+          "0": 377,
+          "1": 13
+        },
+        "fallbackEvents": 0,
+        "gross": {
+          "f1": 0.7418335089567966,
+          "falseNegative": 195,
+          "falsePositive": 50,
+          "generated": 402,
+          "matched": 352,
+          "precision": 0.8756218905472637,
+          "recall": 0.643510054844607,
+          "reference": 547
+        },
+        "maxAbsGridDelta": 1,
+        "meanAbsGridDelta": 0.06218905472636816,
+        "movedEvents": 25,
+        "primary": {
+          "f1": 0.7123287671232877,
+          "falseNegative": 209,
+          "falsePositive": 64,
+          "generated": 402,
+          "matched": 338,
+          "precision": 0.8407960199004975,
+          "recall": 0.6179159049360147,
+          "reference": 547
+        },
+        "rule": "max_mean_score_shared"
+      }
+    ]
+  },
+  "combinedGuitar": {
+    "baseline": {
+      "deltaGridStepHistogram": {
+        "0": 1050
+      },
+      "fallbackEvents": 0,
+      "gross": {
+        "f1": 0.5493246009005321,
+        "falseNegative": 722,
+        "falsePositive": 379,
+        "generated": 1050,
+        "matched": 671,
+        "precision": 0.6390476190476191,
+        "recall": 0.48169418521177315,
+        "reference": 1393
+      },
+      "maxAbsGridDelta": 0.0,
+      "meanAbsGridDelta": 0.0,
+      "movedEvents": 0,
+      "primary": {
+        "f1": 0.4036021285304953,
+        "falseNegative": 900,
+        "falsePositive": 557,
+        "generated": 1050,
+        "matched": 493,
+        "precision": 0.4695238095238095,
+        "recall": 0.3539124192390524,
+        "reference": 1393
+      },
+      "rule": "baseline_current"
+    },
+    "best": {
+      "deltaGridStepHistogram": {
+        "-1": 160,
+        "-2": 1,
+        "0": 784,
+        "1": 105
+      },
+      "fallbackEvents": 0,
+      "gross": {
+        "f1": 0.5509619320507573,
+        "falseNegative": 720,
+        "falsePositive": 377,
+        "generated": 1050,
+        "matched": 673,
+        "precision": 0.6409523809523809,
+        "recall": 0.48312993539124194,
+        "reference": 1393
+      },
+      "maxAbsGridDelta": 2,
+      "meanAbsGridDelta": 0.2542857142857143,
+      "movedEvents": 266,
+      "primary": {
+        "f1": 0.419156774457634,
+        "falseNegative": 881,
+        "falsePositive": 538,
+        "generated": 1050,
+        "matched": 512,
+        "precision": 0.4876190476190476,
+        "recall": 0.36755204594400576,
+        "reference": 1393
+      },
+      "rule": "max_score_x_shared"
+    },
+    "deltaRecognitionPercent": 1.5554645927138677,
+    "rows": [
+      {
+        "deltaGridStepHistogram": {
+          "0": 1050
+        },
+        "fallbackEvents": 0,
+        "gross": {
+          "f1": 0.5493246009005321,
+          "falseNegative": 722,
+          "falsePositive": 379,
+          "generated": 1050,
+          "matched": 671,
+          "precision": 0.6390476190476191,
+          "recall": 0.48169418521177315,
+          "reference": 1393
+        },
+        "maxAbsGridDelta": 0.0,
+        "meanAbsGridDelta": 0.0,
+        "movedEvents": 0,
+        "primary": {
+          "f1": 0.4036021285304953,
+          "falseNegative": 900,
+          "falsePositive": 557,
+          "generated": 1050,
+          "matched": 493,
+          "precision": 0.4695238095238095,
+          "recall": 0.3539124192390524,
+          "reference": 1393
+        },
+        "rule": "baseline_current"
+      },
+      {
+        "deltaGridStepHistogram": {
+          "-1": 4,
+          "0": 1042,
+          "1": 4
+        },
+        "fallbackEvents": 0,
+        "gross": {
+          "f1": 0.5493246009005321,
+          "falseNegative": 722,
+          "falsePositive": 379,
+          "generated": 1050,
+          "matched": 671,
+          "precision": 0.6390476190476191,
+          "recall": 0.48169418521177315,
+          "reference": 1393
+        },
+        "maxAbsGridDelta": 1,
+        "meanAbsGridDelta": 0.007619047619047619,
+        "movedEvents": 8,
+        "primary": {
+          "f1": 0.4036021285304953,
+          "falseNegative": 900,
+          "falsePositive": 557,
+          "generated": 1050,
+          "matched": 493,
+          "precision": 0.4695238095238095,
+          "recall": 0.3539124192390524,
+          "reference": 1393
+        },
+        "rule": "max_score"
+      },
+      {
+        "deltaGridStepHistogram": {
+          "-1": 180,
+          "-2": 5,
+          "0": 671,
+          "1": 191,
+          "2": 3
+        },
+        "fallbackEvents": 0,
+        "gross": {
+          "f1": 0.5231273024969301,
+          "falseNegative": 754,
+          "falsePositive": 411,
+          "generated": 1050,
+          "matched": 639,
+          "precision": 0.6085714285714285,
+          "recall": 0.4587221823402728,
+          "reference": 1393
+        },
+        "maxAbsGridDelta": 2,
+        "meanAbsGridDelta": 0.36857142857142855,
+        "movedEvents": 379,
+        "primary": {
+          "f1": 0.31682357756856316,
+          "falseNegative": 1006,
+          "falsePositive": 663,
+          "generated": 1050,
+          "matched": 387,
+          "precision": 0.36857142857142855,
+          "recall": 0.27781765972720746,
+          "reference": 1393
+        },
+        "rule": "max_instrument_support"
+      },
+      {
+        "deltaGridStepHistogram": {
+          "-1": 192,
+          "-2": 1,
+          "0": 642,
+          "1": 211,
+          "2": 4
+        },
+        "fallbackEvents": 0,
+        "gross": {
+          "f1": 0.536225951698731,
+          "falseNegative": 738,
+          "falsePositive": 395,
+          "generated": 1050,
+          "matched": 655,
+          "precision": 0.6238095238095238,
+          "recall": 0.47020818377602297,
+          "reference": 1393
+        },
+        "maxAbsGridDelta": 2,
+        "meanAbsGridDelta": 0.3933333333333333,
+        "movedEvents": 408,
+        "primary": {
+          "f1": 0.38313548915268114,
+          "falseNegative": 925,
+          "falsePositive": 582,
+          "generated": 1050,
+          "matched": 468,
+          "precision": 0.44571428571428573,
+          "recall": 0.33596554199569273,
+          "reference": 1393
+        },
+        "rule": "max_shared_support"
+      },
+      {
+        "deltaGridStepHistogram": {
+          "-1": 47,
+          "-2": 1,
+          "0": 968,
+          "1": 34
+        },
+        "fallbackEvents": 0,
+        "gross": {
+          "f1": 0.547687269750307,
+          "falseNegative": 724,
+          "falsePositive": 381,
+          "generated": 1050,
+          "matched": 669,
+          "precision": 0.6371428571428571,
+          "recall": 0.48025843503230436,
+          "reference": 1393
+        },
+        "maxAbsGridDelta": 2,
+        "meanAbsGridDelta": 0.07904761904761905,
+        "movedEvents": 82,
+        "primary": {
+          "f1": 0.39459680720425705,
+          "falseNegative": 911,
+          "falsePositive": 568,
+          "generated": 1050,
+          "matched": 482,
+          "precision": 0.45904761904761904,
+          "recall": 0.3460157932519742,
+          "reference": 1393
+        },
+        "rule": "max_score_x_instrument"
+      },
+      {
+        "deltaGridStepHistogram": {
+          "-1": 160,
+          "-2": 1,
+          "0": 784,
+          "1": 105
+        },
+        "fallbackEvents": 0,
+        "gross": {
+          "f1": 0.5509619320507573,
+          "falseNegative": 720,
+          "falsePositive": 377,
+          "generated": 1050,
+          "matched": 673,
+          "precision": 0.6409523809523809,
+          "recall": 0.48312993539124194,
+          "reference": 1393
+        },
+        "maxAbsGridDelta": 2,
+        "meanAbsGridDelta": 0.2542857142857143,
+        "movedEvents": 266,
+        "primary": {
+          "f1": 0.419156774457634,
+          "falseNegative": 881,
+          "falsePositive": 538,
+          "generated": 1050,
+          "matched": 512,
+          "precision": 0.4876190476190476,
+          "recall": 0.36755204594400576,
+          "reference": 1393
+        },
+        "rule": "max_score_x_shared"
+      },
+      {
+        "deltaGridStepHistogram": {
+          "-1": 72,
+          "0": 941,
+          "1": 37
+        },
+        "fallbackEvents": 0,
+        "gross": {
+          "f1": 0.5493246009005321,
+          "falseNegative": 722,
+          "falsePositive": 379,
+          "generated": 1050,
+          "matched": 671,
+          "precision": 0.6390476190476191,
+          "recall": 0.48169418521177315,
+          "reference": 1393
+        },
+        "maxAbsGridDelta": 1,
+        "meanAbsGridDelta": 0.10380952380952381,
+        "movedEvents": 109,
+        "primary": {
+          "f1": 0.4142447810069587,
+          "falseNegative": 887,
+          "falsePositive": 544,
+          "generated": 1050,
+          "matched": 506,
+          "precision": 0.4819047619047619,
+          "recall": 0.36324479540559945,
+          "reference": 1393
+        },
+        "rule": "max_score_x_mean_support"
+      },
+      {
+        "deltaGridStepHistogram": {
+          "-1": 65,
+          "0": 966,
+          "1": 19
+        },
+        "fallbackEvents": 0,
+        "gross": {
+          "f1": 0.547687269750307,
+          "falseNegative": 724,
+          "falsePositive": 381,
+          "generated": 1050,
+          "matched": 669,
+          "precision": 0.6371428571428571,
+          "recall": 0.48025843503230436,
+          "reference": 1393
+        },
+        "maxAbsGridDelta": 1,
+        "meanAbsGridDelta": 0.08,
+        "movedEvents": 84,
+        "primary": {
+          "f1": 0.4085141219811707,
+          "falseNegative": 894,
+          "falsePositive": 551,
+          "generated": 1050,
+          "matched": 499,
+          "precision": 0.47523809523809524,
+          "recall": 0.3582196697774587,
+          "reference": 1393
+        },
+        "rule": "max_score_x_inst75_shared25"
+      },
+      {
+        "deltaGridStepHistogram": {
+          "-1": 115,
+          "-2": 1,
+          "0": 876,
+          "1": 58
+        },
+        "fallbackEvents": 0,
+        "gross": {
+          "f1": 0.5501432664756447,
+          "falseNegative": 721,
+          "falsePositive": 378,
+          "generated": 1050,
+          "matched": 672,
+          "precision": 0.64,
+          "recall": 0.4824120603015075,
+          "reference": 1393
+        },
+        "maxAbsGridDelta": 2,
+        "meanAbsGridDelta": 0.16666666666666666,
+        "movedEvents": 174,
+        "primary": {
+          "f1": 0.4183381088825215,
+          "falseNegative": 882,
+          "falsePositive": 539,
+          "generated": 1050,
+          "matched": 511,
+          "precision": 0.4866666666666667,
+          "recall": 0.36683417085427134,
+          "reference": 1393
+        },
+        "rule": "max_score_x_inst25_shared75"
+      },
+      {
+        "deltaGridStepHistogram": {
+          "-1": 66,
+          "-2": 1,
+          "0": 918,
+          "1": 65
+        },
+        "fallbackEvents": 0,
+        "gross": {
+          "f1": 0.5427752762996316,
+          "falseNegative": 730,
+          "falsePositive": 387,
+          "generated": 1050,
+          "matched": 663,
+          "precision": 0.6314285714285715,
+          "recall": 0.47595118449389806,
+          "reference": 1393
+        },
+        "maxAbsGridDelta": 2,
+        "meanAbsGridDelta": 0.12666666666666668,
+        "movedEvents": 132,
+        "primary": {
+          "f1": 0.38641015145313146,
+          "falseNegative": 921,
+          "falsePositive": 578,
+          "generated": 1050,
+          "matched": 472,
+          "precision": 0.44952380952380955,
+          "recall": 0.3388370423546303,
+          "reference": 1393
+        },
+        "rule": "max_mean_score_instrument"
+      },
+      {
+        "deltaGridStepHistogram": {
+          "-1": 171,
+          "-2": 1,
+          "0": 768,
+          "1": 110
+        },
+        "fallbackEvents": 0,
+        "gross": {
+          "f1": 0.5517805976258697,
+          "falseNegative": 719,
+          "falsePositive": 376,
+          "generated": 1050,
+          "matched": 674,
+          "precision": 0.6419047619047619,
+          "recall": 0.4838478104809763,
+          "reference": 1393
+        },
+        "maxAbsGridDelta": 2,
+        "meanAbsGridDelta": 0.2695238095238095,
+        "movedEvents": 282,
+        "primary": {
+          "f1": 0.41588211215718374,
+          "falseNegative": 885,
+          "falsePositive": 542,
+          "generated": 1050,
+          "matched": 508,
+          "precision": 0.4838095238095238,
+          "recall": 0.3646805455850682,
+          "reference": 1393
+        },
+        "rule": "max_mean_score_shared"
+      }
+    ]
+  },
+  "globalPhaseCorrectionGridSteps": -12,
+  "label": "SINGLE_SONG_TRAINING_CALIBRATION",
+  "policy": {
+    "alternativesDerivedFromStoredAudioEvidence": true,
+    "calibrationOnly": true,
+    "candidateFileModified": false,
+    "directReferenceCopy": false,
+    "eventCardinalityModified": false,
+    "generalizationClaim": false,
+    "midiModified": false,
+    "referenceFacing": true,
+    "referenceSelectsIndividualEventAlternative": false,
+    "referenceSelectsWholeRuleOnly": true
+  },
+  "referenceCounts": {
+    "bassExcluded": 0,
+    "bassIncluded": 547,
+    "leadExcluded": 0,
+    "leadIncluded": 447,
+    "rhythmExcluded": 0,
+    "rhythmIncluded": 946
+  },
+  "rules": [
+    "baseline_current",
+    "max_score",
+    "max_instrument_support",
+    "max_shared_support",
+    "max_score_x_instrument",
+    "max_score_x_shared",
+    "max_score_x_mean_support",
+    "max_score_x_inst75_shared25",
+    "max_score_x_inst25_shared75",
+    "max_mean_score_instrument",
+    "max_mean_score_shared"
+  ],
+  "schema": "dadrock.tabs.v167.fixed-global-step-selection-rule-sweep.v1",
+  "stepsPerMeasure": 16,
+  "version": "V167"
+}
