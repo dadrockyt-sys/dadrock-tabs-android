@@ -1,0 +1,359 @@
+name: V167 preregistered state-split Guitar sweep
+
+on:
+  push:
+    branches:
+      - v143-contextual-prune-lobo
+    paths:
+      - .github/workflows/v167-state-split-guitar-sweep.yml
+
+permissions:
+  contents: write
+
+concurrency:
+  group: v167-state-split-guitar-sweep-once
+  cancel-in-progress: false
+
+env:
+  BRANCH: v143-contextual-prune-lobo
+  EXPECTED_PARENT_HEAD: 954ca59a99e83f3c14aed0b4c2366ae13601084f
+  I003: debug/v167-single-song-calibration/iteration-003-generated.json
+  I004: debug/v167-single-song-calibration/iteration-004-generated.json
+  POOL: debug/v167-single-song-calibration/nearmiss-evidence-pool.json
+  TIMEBASE: debug/v166-cpu-autonomous/timebase.json
+  BASE_BUILDER: validation/v167_single_song_calibration/build_upstream_recovery_variants_v167.py
+  BUILDER: validation/v167_single_song_calibration/build_state_split_guitar_variants_v167.py
+  GRADER: validation/v167_single_song_calibration/score_state_split_guitar_variants_v167.py
+  SCORER: validation/v154_cpu_multitrack/score_frontend_reference.py
+  REFERENCE: research/v154-professional-references/scorer-ready/frontend-reference-payload.json
+  VARIANT_ROOT: /tmp/v167-state-split-guitar-variants
+  MANIFEST: debug/v167-single-song-calibration/state-split-guitar-sweep-manifest.json
+  OUTPUT: debug/v167-single-song-calibration/state-split-guitar-sweep.json
+  RECEIPT: debug/v167-single-song-calibration/state-split-guitar-sweep-receipt.json
+  CUDA_VISIBLE_DEVICES: ""
+  PYTHONHASHSEED: "0"
+  OMP_NUM_THREADS: "1"
+  MKL_NUM_THREADS: "1"
+  OPENBLAS_NUM_THREADS: "1"
+  NUMEXPR_NUM_THREADS: "1"
+
+jobs:
+  sweep-once:
+    if: github.ref == 'refs/heads/v143-contextual-prune-lobo'
+    runs-on: ubuntu-latest
+    timeout-minutes: 45
+    steps:
+      - name: Checkout exact state-split sweep arm
+        uses: actions/checkout@v4
+        with:
+          ref: ${{ github.sha }}
+          fetch-depth: 0
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.10.21'
+
+      - name: Verify preregistered reference-blind generation boundary
+        shell: bash
+        run: |
+          set -euo pipefail
+          test "$GITHUB_EVENT_NAME" = "push"
+          test "$GITHUB_RUN_ATTEMPT" = "1"
+          test "$(git rev-parse HEAD^)" = "$EXPECTED_PARENT_HEAD"
+          test "$(git diff --name-only "$EXPECTED_PARENT_HEAD" "$GITHUB_SHA")" = ".github/workflows/v167-state-split-guitar-sweep.yml"
+          git fetch origin "$BRANCH"
+          test "$(git rev-parse "origin/$BRANCH")" = "$GITHUB_SHA"
+
+          test "$(git hash-object "$I003")" = "758f8762632e916306aed9b036a6483af9431dc0"
+          test "$(git hash-object "$I004")" = "8dd85049a65f00541f7874ff99511b081a0b5ff2"
+          test "$(git hash-object "$POOL")" = "aa7da3a55344b1418a291f30fab9ca55858fc094"
+          test "$(git hash-object "$TIMEBASE")" = "abebae25801b7ddeb5b933977c4f4a918f7bf9ef"
+          test "$(git hash-object "$BASE_BUILDER")" = "24413d321f64bbfcce48812ceb85b4593dcfa80c"
+          test "$(git hash-object "$BUILDER")" = "6b480d43744a5c67c02510d55162581d896afee4"
+          test "$(git hash-object docs/checkpoints/CURRENT_STATE.md)" = "238e67d1b40af1f82bca669e558a287cf6e5307d"
+
+          # Scorer/reference identities are checked here only through the Git tree;
+          # their working-tree bytes are not opened until after candidate sealing.
+          test "$(git rev-parse "HEAD:$SCORER")" = "9644e65719fbd361a9b39778ae9950c5e983e855"
+          test "$(git rev-parse "HEAD:$REFERENCE")" = "2fbed60b543c0488934d8642c488aa06bf31bbf5"
+
+          test ! -e "$VARIANT_ROOT"
+          test ! -e "$MANIFEST"
+          test ! -e "$OUTPUT"
+          test ! -e "$RECEIPT"
+          python -m py_compile "$BASE_BUILDER" "$BUILDER"
+
+          python - <<'PY'
+          import hashlib, importlib.util, sys
+          from pathlib import Path
+          checks={
+            'debug/v167-single-song-calibration/iteration-003-generated.json':'f15c6f40dd4b8479c2dfb7eab039cff98a23b45eb796265ffad08c5a8ae37115',
+            'debug/v167-single-song-calibration/iteration-004-generated.json':'728785c631750cbfcad48cc3243c238d6e7de6f337cce87e125a651ca2793acc',
+            'debug/v167-single-song-calibration/nearmiss-evidence-pool.json':'1c983784c2d12a22437a80387525789bcf55a2f4e4a5c7a96608c575bf709673',
+          }
+          for path,expected in checks.items():
+              actual=hashlib.sha256(Path(path).read_bytes()).hexdigest()
+              assert actual==expected,(path,actual,expected)
+
+          builder=Path('validation/v167_single_song_calibration/build_state_split_guitar_variants_v167.py')
+          text=builder.read_text()
+          for forbidden in ('frontend-reference-payload.json','score_frontend_reference.py','--reference','--scorer-code'):
+              assert forbidden not in text,forbidden
+
+          module_dir=builder.parent.resolve()
+          sys.path.insert(0,str(module_dir))
+          spec=importlib.util.spec_from_file_location('_v167_state_split_guard',builder.resolve())
+          module=importlib.util.module_from_spec(spec)
+          spec.loader.exec_module(module)
+          configs=list(module.preregistered_configs())
+          assert len(configs)==5,len(configs)
+          assert configs[0]['id']=='gss-repro-q100-noharm'
+          assert configs[0]['reproductionControl'] is True
+          assert [c['id'] for c in configs[1:]]==[
+              'gss-active-only',
+              'gss-inactive-q125-noharm',
+              'gss-inactive-q100-chord',
+              'gss-inactive-q125-chord',
+          ]
+          for c in configs:
+              assert c['templateRankMin']==0.975
+              assert c['activitySupportMin']==0.05
+              assert c['onsetSupportMin']==0.50
+              assert c['requireBasicPitchActiveContext'] is True
+              assert c['fundamentalPresentRequired'] is True
+              assert c['maxAddsPerSite']==1
+              assert c['polyphonyCap']==6
+              assert c['activeBranch']['candidateState']=='basic_pitch_active'
+              assert c['activeBranch']['candidateToMaxActiveTemplateScoreMin']==1.00
+              assert c['activeBranch']['intervalContextPolicy']=='exclude_harmonic_octave'
+          PY
+
+      - name: Generate verify and seal all state-split candidates before scorer reference read
+        shell: bash
+        run: |
+          set -euo pipefail
+          python "$BUILDER" \
+            --base-i003 "$I003" \
+            --baseline-i004 "$I004" \
+            --pool "$POOL" \
+            --timebase "$TIMEBASE" \
+            --output-dir "$VARIANT_ROOT" \
+            --manifest "$MANIFEST"
+
+          python - <<'PY'
+          import hashlib,json
+          from pathlib import Path
+
+          root=Path('/tmp/v167-state-split-guitar-variants')
+          manifest=Path('debug/v167-single-song-calibration/state-split-guitar-sweep-manifest.json')
+          i004=Path('debug/v167-single-song-calibration/iteration-004-generated.json')
+          m=json.loads(manifest.read_text())
+          b=json.loads(i004.read_text())
+
+          assert m['schema']=='dadrock.tabs.v167.predeclared-state-split-guitar-manifest.v1'
+          assert m['status']=='FROZEN_BEFORE_REFERENCE_SCORING'
+          p=m['policy']
+          assert p['professionalReferenceReadByGenerator'] is False
+          assert p['scorerReadByGenerator'] is False
+          assert p['allNewRulesPredeclaredBeforeScoring'] is True
+          assert p['individualEventSelectionByReference'] is False
+          assert p['reproductionControlScored'] is False
+          assert p['reproductionMustEqualIteration004BeforeScoring'] is True
+          assert p['newRuleCount']==4
+          assert p['automaticIteration005Promotion'] is False
+
+          def coords(payload,stream):
+              return sorted((int(r['measure']),float(r['step']),int(r['midi'])) for r in payload['streams'][stream] if not bool(r.get('excludeFromScoring',False)))
+
+          i004_g=coords(b,'combinedGuitar')
+          i004_b=coords(b,'bass')
+          assert len(i004_g)==1113
+          assert len(i004_b)==512
+
+          repro=m['reproductionControl']
+          assert repro['id']=='gss-repro-q100-noharm'
+          assert repro['scored'] is False
+          assert repro['normalizedGuitarExactlyIteration004'] is True
+          assert repro['normalizedBassExactlyIteration004'] is True
+          rp=root/repro['relativePath']
+          assert rp.is_file()
+          assert hashlib.sha256(rp.read_bytes()).hexdigest()==repro['sha256']
+          rj=json.loads(rp.read_text())
+          assert coords(rj,'combinedGuitar')==i004_g
+          assert coords(rj,'bass')==i004_b
+          assert int(repro['summary']['added'])==63
+
+          rows=m['newVariants']
+          assert len(rows)==4
+          assert [r['id'] for r in rows]==[
+              'gss-active-only',
+              'gss-inactive-q125-noharm',
+              'gss-inactive-q100-chord',
+              'gss-inactive-q125-chord',
+          ]
+          for row in rows:
+              assert row['scored'] is True
+              path=root/row['relativePath']
+              assert path.is_file()
+              assert hashlib.sha256(path.read_bytes()).hexdigest()==row['sha256'],row['id']
+              payload=json.loads(path.read_text())
+              assert coords(payload,'bass')==i004_b,row['id']
+              assert int(row['counts']['bass'])==512
+              s=row['summary']
+              assert int(s['activeAdded'])+int(s['inactiveAdded'])==int(s['added'])
+              assert int(row['totalAdditionsVsI003'])==int(s['added'])
+
+          print('Manifest SHA256',hashlib.sha256(manifest.read_bytes()).hexdigest())
+          print('Reproduction control exact I004: true; score calls 0')
+          print('New summaries',json.dumps([{'id':r['id'],**r['summary']} for r in rows],sort_keys=True))
+          PY
+
+          chmod -R a-w "$VARIANT_ROOT"
+          chmod a-w "$MANIFEST"
+
+      - name: Cross frozen reference boundary and grade five Guitar streams only
+        shell: bash
+        run: |
+          set -euo pipefail
+
+          # Candidate tree + manifest are already complete and write-sealed here.
+          test "$(git hash-object "$GRADER")" = "7e5068ce607d7f817429d39ea363840c7ba8d51e"
+          test "$(git hash-object "$SCORER")" = "9644e65719fbd361a9b39778ae9950c5e983e855"
+          test "$(git hash-object "$REFERENCE")" = "2fbed60b543c0488934d8642c488aa06bf31bbf5"
+          python -m py_compile "$GRADER" "$SCORER"
+
+          python - <<'PY'
+          import hashlib
+          from pathlib import Path
+          checks={
+            'research/v154-professional-references/scorer-ready/frontend-reference-payload.json':'b39a203aec3f45800891fe4eca156e37e7571b91ea5c4ccc41b30bbc95fc89e7',
+            'debug/v167-single-song-calibration/iteration-004-generated.json':'728785c631750cbfcad48cc3243c238d6e7de6f337cce87e125a651ca2793acc',
+          }
+          for path,expected in checks.items():
+              actual=hashlib.sha256(Path(path).read_bytes()).hexdigest()
+              assert actual==expected,(path,actual,expected)
+          PY
+
+          python "$GRADER" \
+            --variant-root "$VARIANT_ROOT" \
+            --manifest "$MANIFEST" \
+            --baseline-i004 "$I004" \
+            --reference "$REFERENCE" \
+            --scorer-code "$SCORER" \
+            --output "$OUTPUT"
+
+          python - <<'PY'
+          import json
+          report=json.load(open('debug/v167-single-song-calibration/state-split-guitar-sweep.json'))
+          assert report['status']=='REFERENCE_GRADED_COMPLETE_PREDECLARED_STATE_SPLIT_VARIANTS'
+          assert len(report['variants'])==5
+          assert report['reproductionControl']['scoreCalls']==0
+          assert report['reproductionControl']['normalizedGuitarExactlyIteration004'] is True
+          assert report['selectionPolicy']['allNewVariantsFrozenBeforeReferenceRead'] is True
+          assert report['selectionPolicy']['individualEventSelectionByReference'] is False
+          assert report['selectionPolicy']['reproductionControlScored'] is False
+          assert report['selectionPolicy']['bassScoreCalls']==0
+          assert report['selectionPolicy']['guitarScoreCalls']==5
+          assert report['selectionPolicy']['iteration005CreatedByThisSweep'] is False
+          assert report['policy']['automaticIteration005Promotion'] is False
+          print('winner',json.dumps(report['winner'],sort_keys=True))
+          print('new variants beating I004',report['newVariantsBeatingIteration004'])
+          PY
+
+      - name: Freeze state-split sweep receipt and self-seal
+        shell: bash
+        run: |
+          set -euo pipefail
+          chmod u+w "$MANIFEST"
+          python - <<'PY'
+          import hashlib,json,os,subprocess
+          from pathlib import Path
+
+          manifest=Path('debug/v167-single-song-calibration/state-split-guitar-sweep-manifest.json')
+          output=Path('debug/v167-single-song-calibration/state-split-guitar-sweep.json')
+          receipt=Path('debug/v167-single-song-calibration/state-split-guitar-sweep-receipt.json')
+          m=json.loads(manifest.read_text())
+          report=json.loads(output.read_text())
+          repro=m['reproductionControl']
+
+          r={
+            'schema':'dadrock.tabs.v167.state-split-guitar-sweep-receipt.v1',
+            'version':'V167',
+            'status':'STATE_SPLIT_GUITAR_SWEEP_FROZEN',
+            'classification':'SINGLE_SONG_TRAINING_CALIBRATION_ONLY',
+            'workflowRunId':int(os.environ['GITHUB_RUN_ID']),
+            'workflowRunNumber':int(os.environ['GITHUB_RUN_NUMBER']),
+            'workflowRunAttempt':int(os.environ['GITHUB_RUN_ATTEMPT']),
+            'workflowHeadSha':os.environ['GITHUB_SHA'],
+            'manifestSha256':hashlib.sha256(manifest.read_bytes()).hexdigest(),
+            'manifestGitBlob':subprocess.check_output(['git','hash-object',str(manifest)],text=True).strip(),
+            'reportSha256':hashlib.sha256(output.read_bytes()).hexdigest(),
+            'reportGitBlob':subprocess.check_output(['git','hash-object',str(output)],text=True).strip(),
+            'inputs':{
+              'iteration003GitBlob':'758f8762632e916306aed9b036a6483af9431dc0',
+              'iteration003Sha256':'f15c6f40dd4b8479c2dfb7eab039cff98a23b45eb796265ffad08c5a8ae37115',
+              'iteration004GitBlob':'8dd85049a65f00541f7874ff99511b081a0b5ff2',
+              'iteration004Sha256':'728785c631750cbfcad48cc3243c238d6e7de6f337cce87e125a651ca2793acc',
+              'evidencePoolGitBlob':'aa7da3a55344b1418a291f30fab9ca55858fc094',
+              'timebaseGitBlob':'abebae25801b7ddeb5b933977c4f4a918f7bf9ef',
+              'referenceGitBlob':'2fbed60b543c0488934d8642c488aa06bf31bbf5',
+              'referenceSha256':'b39a203aec3f45800891fe4eca156e37e7571b91ea5c4ccc41b30bbc95fc89e7',
+              'scorerGitBlob':'9644e65719fbd361a9b39778ae9950c5e983e855',
+            },
+            'implementation':{
+              'baseBuilderGitBlob':'24413d321f64bbfcce48812ceb85b4593dcfa80c',
+              'stateSplitBuilderGitBlob':'6b480d43744a5c67c02510d55162581d896afee4',
+              'stateSplitGraderGitBlob':'7e5068ce607d7f817429d39ea363840c7ba8d51e',
+            },
+            'variantCounts':{
+              'baseline':1,
+              'newStateSplit':4,
+              'scoredTotal':5,
+              'reproductionControls':1,
+            },
+            'scoreCallCounts':{
+              'guitar':5,
+              'bass':0,
+              'reproductionControl':0,
+            },
+            'reproductionControl':{
+              'id':repro['id'],
+              'candidateSha256':repro['sha256'],
+              'normalizedGuitarExactlyIteration004':True,
+              'normalizedBassExactlyIteration004':True,
+              'scoreCalls':0,
+            },
+            'winner':report['winner'],
+            'newVariantsBeatingIteration004':report['newVariantsBeatingIteration004'],
+            'newVariantIdsBeatingIteration004':report['newVariantIdsBeatingIteration004'],
+            'policy':{
+              'allNewVariantsFrozenBeforeReferenceRead':True,
+              'individualEventSelectionByReference':False,
+              'bassCoordinateIdentityVerifiedBeforeReferenceRead':True,
+              'bassScoreCalls':0,
+              'reproductionControlScoreCalls':0,
+              'postScoreCandidateMutation':False,
+              'postScoreRetuning':False,
+              'iteration003Modified':False,
+              'iteration004Modified':False,
+              'iteration005Created':False,
+              'gpuCudaModalUsed':False,
+              'mainOrProductionModified':False,
+              'generalizationClaim':False,
+            },
+          }
+          receipt.write_text(json.dumps(r,indent=2,sort_keys=True)+'\n')
+          PY
+
+          rm .github/workflows/v167-state-split-guitar-sweep.yml
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add -A -- "$MANIFEST" "$OUTPUT" "$RECEIPT" .github/workflows/v167-state-split-guitar-sweep.yml
+          changed="$(git diff --cached --name-only)"
+          if echo "$changed" | grep -Ev '^debug/v167-single-song-calibration/state-split-guitar-sweep(-manifest|-receipt)?\.json$|^\.github/workflows/v167-state-split-guitar-sweep\.yml$'; then
+            echo 'Unexpected V167 state-split sweep path' >&2
+            exit 1
+          fi
+          git commit -m "research: freeze V167 state-split Guitar sweep [skip ci]"
+          git push origin HEAD:"$BRANCH"
