@@ -1,0 +1,28 @@
+name: Add BTS token admin link
+
+on:
+  push:
+    branches:
+      - backing-track-studio
+    paths:
+      - '.github/scripts/add_bts_token_admin_link.py'
+
+permissions:
+  contents: write
+
+jobs:
+  patch-admin:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Add BTS token manager link to current admin panel
+        run: python .github/scripts/add_bts_token_admin_link.py
+
+      - name: Commit admin panel link
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add app/page.js
+          git diff --cached --quiet || git commit -m "Link BTS token manager from admin panel"
+          git push
