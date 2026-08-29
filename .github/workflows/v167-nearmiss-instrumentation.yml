@@ -16,10 +16,9 @@ concurrency:
 
 env:
   BRANCH: v143-contextual-prune-lobo
-  EXPECTED_PARENT_HEAD: 36ed96b0e890966aa3fd9ffa8546956e81aeadda
+  EXPECTED_PARENT_HEAD: 063afbd94f82677fd95b6ad587a37cebf6c6f800
   SOURCE_AUDIO: /tmp/v167-nearmiss-source.m4a
   NORM_WAV: /tmp/v167-nearmiss-normalized.wav
-  DEMUCS_DIR: /tmp/v167-nearmiss-demucs
   STEM_DIR: /tmp/v167-nearmiss-demucs/htdemucs_6s/v167-nearmiss-normalized
   TIMEBASE: debug/v166-cpu-autonomous/timebase.json
   FROZEN_V166: debug/v166-cpu-autonomous/generated.json
@@ -27,6 +26,7 @@ env:
   V166_EVENT_LOGIC: validation/v166_cpu_autonomous/event_logic_v166.py
   OBSERVER: validation/v167_single_song_calibration/instrument_v166_nearmiss_v167.py
   RUNNER: validation/v167_single_song_calibration/run_instrument_v166_nearmiss_v167.py
+  AUGMENT: validation/v167_single_song_calibration/augment_upstream_pitch_pool_v167.py
   OUTPUT: debug/v167-single-song-calibration/nearmiss-evidence-pool.json
   RECEIPT: debug/v167-single-song-calibration/nearmiss-evidence-receipt.json
   CUDA_VISIBLE_DEVICES: ""
@@ -42,7 +42,7 @@ jobs:
     runs-on: ubuntu-latest
     timeout-minutes: 180
     steps:
-      - name: Checkout exact instrumentation arm
+      - name: Checkout exact instrumentation re-arm
         uses: actions/checkout@v4
         with:
           ref: ${{ github.sha }}
@@ -58,26 +58,27 @@ jobs:
         run: |
           set -euo pipefail
           test "$GITHUB_EVENT_NAME" = "push"
-          test "$GITHUB_RUN_NUMBER" = "1"
+          test "$GITHUB_RUN_NUMBER" = "2"
           test "$GITHUB_RUN_ATTEMPT" = "1"
           test "$(git rev-parse HEAD^)" = "$EXPECTED_PARENT_HEAD"
           test "$(git diff --name-only "$EXPECTED_PARENT_HEAD" "$GITHUB_SHA")" = ".github/workflows/v167-nearmiss-instrumentation.yml"
           git fetch origin "$BRANCH"
           test "$(git rev-parse "origin/$BRANCH")" = "$GITHUB_SHA"
           test "$(git hash-object "$OBSERVER")" = "1224932a841e27bfdfe8d61fd631e5c1f728d485"
-          test "$(git hash-object "$RUNNER")" = "ba411ae45d25887b4416d7048a5896f01de174fa"
+          test "$(git hash-object "$RUNNER")" = "af216b9727ca851a32c43c318ee18849c4043752"
+          test "$(git hash-object "$AUGMENT")" = "daf4ace1b6eff1da81bb537b38caa4dcb0976b29"
           test "$(git hash-object "$V166_TRANSCRIBER")" = "f04ca86525b2ce71680a90b84ed476943e9e6426"
           test "$(git hash-object "$V166_EVENT_LOGIC")" = "6561194742093d76bab452ef0bbb0b889724dc4e"
           test "$(git hash-object "$TIMEBASE")" = "abebae25801b7ddeb5b933977c4f4a918f7bf9ef"
           test "$(git hash-object "$FROZEN_V166")" = "c36a4d1e14ca66235b51a866ad3908322834efff"
           test ! -e "$OUTPUT"
           test ! -e "$RECEIPT"
-          python -m py_compile "$OBSERVER" "$RUNNER"
+          python -m py_compile "$OBSERVER" "$RUNNER" "$AUGMENT"
           python - <<'PY'
           from pathlib import Path
-          text=(Path('.github/workflows/v167-nearmiss-instrumentation.yml').read_text()
-                + Path('validation/v167_single_song_calibration/instrument_v166_nearmiss_v167.py').read_text()
-                + Path('validation/v167_single_song_calibration/run_instrument_v166_nearmiss_v167.py').read_text())
+          text=(Path('validation/v167_single_song_calibration/instrument_v166_nearmiss_v167.py').read_text()
+                + Path('validation/v167_single_song_calibration/run_instrument_v166_nearmiss_v167.py').read_text()
+                + Path('validation/v167_single_song_calibration/augment_upstream_pitch_pool_v167.py').read_text())
           forbidden=(
               'research/v154-professional-references/scorer-ready/frontend-reference-payload.json',
               'score_frontend_reference.py',
@@ -171,6 +172,16 @@ jobs:
             --v166-transcriber "$V166_TRANSCRIBER" \
             --output "$OUTPUT" \
             --receipt "$RECEIPT"
+
+      - name: Add standalone Guitar and Bass upstream pitch evidence
+        shell: bash
+        run: |
+          set -euo pipefail
+          python "$AUGMENT" \
+            --pool "$OUTPUT" \
+            --guitar "$STEM_DIR/guitar.wav" \
+            --bass "$STEM_DIR/bass.wav" \
+            --v166-transcriber "$V166_TRANSCRIBER"
           python - <<'PY'
           import json
           p=json.load(open('debug/v167-single-song-calibration/nearmiss-evidence-pool.json'))
@@ -182,10 +193,18 @@ jobs:
           assert p['policy']['thresholdTuningPerformed'] is False
           assert p['policy']['candidateGenerationBehaviorModified'] is False
           assert p['policy']['gpuCudaModalUsed'] is False
+          assert p['policy']['referenceReadDuringUpstreamPitchObservation'] is False
+          assert p['policy']['scorerReadDuringUpstreamPitchObservation'] is False
+          assert p['policy']['generatedEventsChangedByUpstreamPitchObservation'] is False
+          up=p['upstreamPitchPools']
+          assert up['guitarStandaloneHarmonic']['candidateCount'] > 0
+          assert up['bassPreAdmission']['candidateCount'] > 0
           print('Guitar observed counts',p['guitar']['counts'])
           print('Bass observed counts',p['bass']['counts'])
           print('Guitar grid counts',p['grid']['combinedGuitar']['counts'])
           print('Bass grid counts',p['grid']['bass']['counts'])
+          print('Guitar standalone sites/candidates',up['guitarStandaloneHarmonic']['siteCount'],up['guitarStandaloneHarmonic']['candidateCount'])
+          print('Bass upstream sites/candidates',up['bassPreAdmission']['siteCount'],up['bassPreAdmission']['candidateCount'])
           PY
 
       - name: Freeze evidence pool and self-seal
@@ -193,11 +212,14 @@ jobs:
         run: |
           set -euo pipefail
           python - <<'PY'
-          import json,os,subprocess
+          import hashlib,json,os,subprocess
           from pathlib import Path
-          path=Path('debug/v167-single-song-calibration/nearmiss-evidence-receipt.json')
-          r=json.loads(path.read_text())
+          output=Path('debug/v167-single-song-calibration/nearmiss-evidence-pool.json')
+          receipt=Path('debug/v167-single-song-calibration/nearmiss-evidence-receipt.json')
+          r=json.loads(receipt.read_text())
           r['status']='EVIDENCE_POOL_FROZEN'
+          r['evidencePoolSha256']=hashlib.sha256(output.read_bytes()).hexdigest()
+          r['evidencePoolGitBlob']=subprocess.check_output(['git','hash-object',str(output)],text=True).strip()
           r['workflowRunId']=int(os.environ['GITHUB_RUN_ID'])
           r['workflowRunNumber']=int(os.environ['GITHUB_RUN_NUMBER'])
           r['workflowRunAttempt']=int(os.environ['GITHUB_RUN_ATTEMPT'])
@@ -205,10 +227,11 @@ jobs:
           r['implementation']={
             'observerGitBlob':subprocess.check_output(['git','hash-object','validation/v167_single_song_calibration/instrument_v166_nearmiss_v167.py'],text=True).strip(),
             'runnerGitBlob':subprocess.check_output(['git','hash-object','validation/v167_single_song_calibration/run_instrument_v166_nearmiss_v167.py'],text=True).strip(),
+            'augmentGitBlob':subprocess.check_output(['git','hash-object','validation/v167_single_song_calibration/augment_upstream_pitch_pool_v167.py'],text=True).strip(),
             'v166TranscriberGitBlob':'f04ca86525b2ce71680a90b84ed476943e9e6426',
             'v166EventLogicGitBlob':'6561194742093d76bab452ef0bbb0b889724dc4e',
           }
-          path.write_text(json.dumps(r,indent=2,sort_keys=True)+'\n')
+          receipt.write_text(json.dumps(r,indent=2,sort_keys=True)+'\n')
           PY
           rm .github/workflows/v167-nearmiss-instrumentation.yml
           git config user.name "github-actions[bot]"
@@ -219,5 +242,5 @@ jobs:
             echo 'Unexpected V167 instrumentation path' >&2
             exit 1
           fi
-          git commit -m "research: freeze V167 reference-blind near-miss evidence pool [skip ci]"
+          git commit -m "research: freeze V167 reference-blind upstream evidence pool [skip ci]"
           git push origin HEAD:"$BRANCH"
