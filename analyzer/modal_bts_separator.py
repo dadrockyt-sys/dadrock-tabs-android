@@ -198,6 +198,7 @@ def separate_stems(input_audio: Path, output_dir: Path) -> dict[str, Path]:
             capture_output=True,
             text=True,
             timeout=3300,
+            cwd=str(output_dir),
             env={
                 **os.environ,
                 "CUDA_VISIBLE_DEVICES": "",
