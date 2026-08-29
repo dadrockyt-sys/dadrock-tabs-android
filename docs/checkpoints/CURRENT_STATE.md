@@ -55,7 +55,7 @@ Branch: `v143-contextual-prune-lobo`
 - One-shot workflow arm head `c04832da85afdd9a585141dd763dc3c1212ace6e`; workflow blob `a7dfc42450a160f8143d025d288f6e42103cf0d0`.
 - Sole workflow run `33223256331`, run number `1`, attempt `1`, job `99021632117`; all steps PASS including identity/sealed-boundary guard, CPU pipeline, and terminal freeze/self-seal.
 - Terminal commit `97c2efe6acf988a4535de1fff449194b7b2f7c2b`: `research: freeze sole V165 adapter-repair CPU candidate [skip ci]`; generation workflow self-deleted.
-- Terminal freeze blob `7a34f3e96674d527b0a612dbbb96562cbc7f24d4` if verified from repository metadata; authoritative facts are also pinned below by artifact hashes. Status `TERMINAL`; outcome `STRUCTURAL_QC_PASS`; last completed stage `STRUCTURAL_QC_PASS`; `candidateAuthoritative=true`; `neverRearmV165=true`; `professionalReferenceScoringAuthorized=false`.
+- Terminal freeze blob `857153fdaedd3c386d5802277cf60e68ae231dc6`; status `TERMINAL`; outcome `STRUCTURAL_QC_PASS`; last completed stage `STRUCTURAL_QC_PASS`; `candidateAuthoritative=true`; `neverRearmV165=true`; `professionalReferenceScoringAuthorized=false`.
 - Candidate `debug/v165-cpu-autonomous/generated.json`: blob `e70a444cb7778a6f56988cf8cc69dccb9c1d89ce`; SHA256 `b1ad02001724750ea82d693591a7c0b1f214820de37a590871a6d78eef63e5cb`.
 - Candidate counts: combined Guitar `1043`; Bass `405`.
 - Evidence-step corrections: combined Guitar `17`; Bass `6`; pre-grid excluded `0` for both.
