@@ -95,6 +95,8 @@ def main() -> int:
         and repair.get("pinnedFrozenSourceActualOccurrenceCount") == 3
         and repair.get("V165RequiredOccurrenceCount") == 3
         and repair.get("allThreeOccurrencesMustBeReplaced") is True
+        and repair.get("zeroOldNeedleOccurrencesRequiredAfterTransform") is True
+        and repair.get("threeNewNeedleOccurrencesRequiredAfterTransform") is True
         and repair.get("noFallbackToUnboundedReplace") is True
         and repair.get("countCheckedReplacementRequired") is True
     ):
@@ -110,7 +112,12 @@ def main() -> int:
         "adapterTest": args.adapter_test.read_text(),
         "jsonTest": args.json_native_test.read_text(),
     }
-    allowed_v164_source_adapters = {"eventLogic", "eventTest", "timebaseBuilder", "timebaseQc", "transcriber", "structuralQc", "jsonTest"}
+    # adapterTest intentionally reads the exact frozen V164 transcriber source to prove
+    # the occurrence count; this is source-only evidence, not a V164 runtime artifact.
+    allowed_v164_source_adapters = {
+        "eventLogic", "eventTest", "timebaseBuilder", "timebaseQc",
+        "transcriber", "structuralQc", "adapterTest", "jsonTest",
+    }
     for label, source in sources.items():
         for literal in FORBIDDEN_RUNTIME_LITERALS:
             if literal in source:
@@ -133,10 +140,11 @@ def main() -> int:
         and "_adapt_v164_adapter_source" in trans
         and "source.count(old) != 1" in trans
         and "source.replace(old, new)" in trans
-        and "'event_logic_v162.py', 'event_logic_v165.py', " in trans
-        and '"3, \\"event-logic provenance path\\")"' not in trans
+        and "event_logic_v162.py" in trans
+        and "event_logic_v165.py" in trans
+        and '"2, \\"event-logic provenance path\\")"' in trans
+        and '"3, \\"event-logic provenance path\\")"' in trans
     ):
-        # Last condition above intentionally rejects no special content; detailed count is exercised dynamically by adapter test.
         failures.append("V165 transcriber repair structure invalid")
 
     if FROZEN_V164_TIMEBASE_BUILDER_BLOB not in sources["timebaseBuilder"]:
@@ -198,8 +206,9 @@ def main() -> int:
                 "modal",
                 "cuda",
             )
+            lower_workflow = workflow.lower()
             for item in forbidden_commands:
-                if item in workflow.lower():
+                if item in lower_workflow:
                     workflow_ok = False
                     failures.append(f"V165 static workflow contains forbidden runtime command: {item}")
 
