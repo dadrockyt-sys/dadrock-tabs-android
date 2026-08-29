@@ -89,19 +89,13 @@ export async function POST(request) {
           tokenPayload: JSON.stringify({
             product: 'backing-track-studio',
             removalMode,
-            customerEmail:
-              customerEmail.toLowerCase(),
           }),
         };
       },
 
-      onUploadCompleted: async ({
-        blob,
-        tokenPayload,
-      }) => {
+      onUploadCompleted: async ({ blob }) => {
         console.log('BTS audio upload completed:', {
           pathname: blob.pathname,
-          tokenPayload,
         });
       },
     });
