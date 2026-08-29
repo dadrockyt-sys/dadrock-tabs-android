@@ -1,0 +1,2475 @@
+{
+  "classification": "SINGLE_SONG_TRAINING_CALIBRATION_ONLY",
+  "iteration003Baseline": {
+    "bass": {
+      "falseNegative": 121,
+      "falsePositive": 86,
+      "generated": 512,
+      "grossF1": 0.8309726156751652,
+      "matched": 426,
+      "primaryF1": 0.8045325779036827,
+      "primaryPrecision": 0.83203125,
+      "primaryRecall": 0.7787934186471663,
+      "reference": 547,
+      "sameMeasurePitchContentF1": 0.8404154863078376
+    },
+    "combinedGuitar": {
+      "falseNegative": 881,
+      "falsePositive": 538,
+      "generated": 1050,
+      "grossF1": 0.5509619320507573,
+      "matched": 512,
+      "primaryF1": 0.419156774457634,
+      "primaryPrecision": 0.4876190476190476,
+      "primaryRecall": 0.36755204594400576,
+      "reference": 1393,
+      "sameMeasurePitchContentF1": 0.5935325419566108
+    }
+  },
+  "iteration003Sha256": "f15c6f40dd4b8479c2dfb7eab039cff98a23b45eb796265ffad08c5a8ae37115",
+  "manifestSha256": "2f51fa0cba372acc8f797a2e700b3b0a6bb42b807ad4bad818b3c40c262df876",
+  "nonBaselineVariantsBeatingIteration003": 10,
+  "policy": {
+    "bassCoordinateIdentityVerifiedBeforeReferenceRead": true,
+    "calibrationOnly": true,
+    "generalizationClaim": false,
+    "gpuCudaModalUsed": false,
+    "mainOrProductionModified": false,
+    "postScoreRetuningOfSameVariantSet": false,
+    "scoringWritesNoCandidateCorrections": true
+  },
+  "referenceCounts": {
+    "bassExcluded": 0,
+    "bassIncluded": 547,
+    "leadExcluded": 0,
+    "leadIncluded": 447,
+    "rhythmExcluded": 0,
+    "rhythmIncluded": 946
+  },
+  "referenceSha256": "b39a203aec3f45800891fe4eca156e37e7571b91ea5c4ccc41b30bbc95fc89e7",
+  "schema": "dadrock.tabs.v167.contextual-guitar-recovery-sweep.v1",
+  "scorerSha256": "95f4e22f3367ec930bd1d07141266f60712240f0f83bd07d2e1cc4eae815dda2",
+  "selectionPolicy": {
+    "allVariantsFrozenBeforeReferenceRead": true,
+    "individualEventSelectionByReference": false,
+    "iteration004CreatedByThisSweep": false,
+    "postScoreVariantMutation": false,
+    "tieBreak": [
+      "max_primary_f1",
+      "max_primary_precision",
+      "fewer_added_events",
+      "lexicographic_rule_id"
+    ],
+    "wholeVariantOnly": true
+  },
+  "status": "REFERENCE_GRADED_COMPLETE_PREDECLARED_CONTEXTUAL_VARIANTS",
+  "variants": [
+    {
+      "candidateSha256": "34815091a7f8f505c6d50820dbe261073e0500bb109a2767183d472943d82160",
+      "config": {
+        "baseline": true,
+        "id": "gctx-baseline",
+        "stream": "combinedGuitar"
+      },
+      "deltaVsIteration003": {
+        "f1PercentagePoints": 0.0,
+        "falseNegative": 0,
+        "falsePositive": 0,
+        "generated": 0,
+        "matched": 0,
+        "precisionPercentagePoints": 0.0,
+        "recallPercentagePoints": 0.0
+      },
+      "generationSummary": {
+        "added": 0,
+        "eligible": 0,
+        "sitesWithActiveContext": 0,
+        "sitesWithAdds": 0,
+        "sitesWithEligible": 0
+      },
+      "id": "gctx-baseline",
+      "metrics": {
+        "falseNegative": 881,
+        "falsePositive": 538,
+        "generated": 1050,
+        "grossF1": 0.5509619320507573,
+        "matched": 512,
+        "primaryF1": 0.419156774457634,
+        "primaryPrecision": 0.4876190476190476,
+        "primaryRecall": 0.36755204594400576,
+        "reference": 1393,
+        "sameMeasurePitchContentF1": 0.5935325419566108
+      },
+      "stream": "combinedGuitar"
+    },
+    {
+      "candidateSha256": "622b7708837602cf9b6f6bc1654b8afaaaaabe38b257259c596ac4c93ce2a60f",
+      "config": {
+        "activeStateMode": "allow_active",
+        "activitySupportMin": 0.05,
+        "baseline": false,
+        "candidateToMaxActiveTemplateScoreMin": 0.75,
+        "chordIntervalsAllowed": [
+          3,
+          4,
+          5,
+          7,
+          8,
+          9,
+          10
+        ],
+        "existingIteration003EventsPreferred": true,
+        "fundamentalPresentRequired": true,
+        "harmonicOctaveIntervalsRejected": [
+          12,
+          19,
+          24
+        ],
+        "id": "gctx-o50-q075-allow-none",
+        "intervalContextPolicy": "none",
+        "maxAddsPerSite": 1,
+        "onsetSupportMin": 0.5,
+        "polyphonyCap": 6,
+        "requireBasicPitchActiveContext": true,
+        "stepMidiDedupe": true,
+        "stream": "combinedGuitar",
+        "templateRankMin": 0.975
+      },
+      "deltaVsIteration003": {
+        "f1PercentagePoints": 0.03744755423660262,
+        "falseNegative": -25,
+        "falsePositive": 92,
+        "generated": 117,
+        "matched": 25,
+        "precisionPercentagePoints": -2.746480597380341,
+        "recallPercentagePoints": 1.7946877243359638
+      },
+      "generationSummary": {
+        "added": 117,
+        "eligible": 147,
+        "sitesWithActiveContext": 204,
+        "sitesWithAdds": 117,
+        "sitesWithEligible": 117
+      },
+      "id": "gctx-o50-q075-allow-none",
+      "metrics": {
+        "falseNegative": 856,
+        "falsePositive": 630,
+        "generated": 1167,
+        "grossF1": 0.5375,
+        "matched": 537,
+        "primaryF1": 0.41953125,
+        "primaryPrecision": 0.4601542416452442,
+        "primaryRecall": 0.3854989231873654,
+        "reference": 1393,
+        "sameMeasurePitchContentF1": 0.5828125
+      },
+      "stream": "combinedGuitar"
+    },
+    {
+      "candidateSha256": "e2e3acfdebf4c01bba8f7850d696fd50ab9e4d650023e477c6e3d458f1ea2802",
+      "config": {
+        "activeStateMode": "allow_active",
+        "activitySupportMin": 0.05,
+        "baseline": false,
+        "candidateToMaxActiveTemplateScoreMin": 0.75,
+        "chordIntervalsAllowed": [
+          3,
+          4,
+          5,
+          7,
+          8,
+          9,
+          10
+        ],
+        "existingIteration003EventsPreferred": true,
+        "fundamentalPresentRequired": true,
+        "harmonicOctaveIntervalsRejected": [
+          12,
+          19,
+          24
+        ],
+        "id": "gctx-o50-q075-allow-noharm",
+        "intervalContextPolicy": "exclude_harmonic_octave",
+        "maxAddsPerSite": 1,
+        "onsetSupportMin": 0.5,
+        "polyphonyCap": 6,
+        "requireBasicPitchActiveContext": true,
+        "stepMidiDedupe": true,
+        "stream": "combinedGuitar",
+        "templateRankMin": 0.975
+      },
+      "deltaVsIteration003": {
+        "f1PercentagePoints": 0.5952482594412112,
+        "falseNegative": -23,
+        "falsePositive": 51,
+        "generated": 74,
+        "matched": 23,
+        "precisionPercentagePoints": -1.1640399932214884,
+        "recallPercentagePoints": 1.6511127063890851
+      },
+      "generationSummary": {
+        "added": 74,
+        "eligible": 87,
+        "sitesWithActiveContext": 204,
+        "sitesWithAdds": 74,
+        "sitesWithEligible": 74
+      },
+      "id": "gctx-o50-q075-allow-noharm",
+      "metrics": {
+        "falseNegative": 858,
+        "falsePositive": 589,
+        "generated": 1124,
+        "grossF1": 0.5435041716328963,
+        "matched": 535,
+        "primaryF1": 0.4251092570520461,
+        "primaryPrecision": 0.47597864768683273,
+        "primaryRecall": 0.3840631730078966,
+        "reference": 1393,
+        "sameMeasurePitchContentF1": 0.5880015891934842
+      },
+      "stream": "combinedGuitar"
+    },
+    {
+      "candidateSha256": "08720c3e8f98094e35930ae7dd1048ea1605007e6eda5e9bd2034c0254b953b2",
+      "config": {
+        "activeStateMode": "allow_active",
+        "activitySupportMin": 0.05,
+        "baseline": false,
+        "candidateToMaxActiveTemplateScoreMin": 0.75,
+        "chordIntervalsAllowed": [
+          3,
+          4,
+          5,
+          7,
+          8,
+          9,
+          10
+        ],
+        "existingIteration003EventsPreferred": true,
+        "fundamentalPresentRequired": true,
+        "harmonicOctaveIntervalsRejected": [
+          12,
+          19,
+          24
+        ],
+        "id": "gctx-o50-q075-allow-chord",
+        "intervalContextPolicy": "chord_interval",
+        "maxAddsPerSite": 1,
+        "onsetSupportMin": 0.5,
+        "polyphonyCap": 6,
+        "requireBasicPitchActiveContext": true,
+        "stepMidiDedupe": true,
+        "stream": "combinedGuitar",
+        "templateRankMin": 0.975
+      },
+      "deltaVsIteration003": {
+        "f1PercentagePoints": 0.03672271559198581,
+        "falseNegative": -8,
+        "falsePositive": 28,
+        "generated": 36,
+        "matched": 8,
+        "precisionPercentagePoints": -0.8797684819784268,
+        "recallPercentagePoints": 0.5743000717875091
+      },
+      "generationSummary": {
+        "added": 36,
+        "eligible": 38,
+        "sitesWithActiveContext": 204,
+        "sitesWithAdds": 36,
+        "sitesWithEligible": 36
+      },
+      "id": "gctx-o50-q075-allow-chord",
+      "metrics": {
+        "falseNegative": 873,
+        "falsePositive": 566,
+        "generated": 1086,
+        "grossF1": 0.5469947559499798,
+        "matched": 520,
+        "primaryF1": 0.41952400161355385,
+        "primaryPrecision": 0.47882136279926335,
+        "primaryRecall": 0.37329504666188085,
+        "reference": 1393,
+        "sameMeasurePitchContentF1": 0.592174263816055
+      },
+      "stream": "combinedGuitar"
+    },
+    {
+      "candidateSha256": "4e2184d6da8d95d842a17f26630df2007e8c23ef6b2bb1726c69e0233ab28f98",
+      "config": {
+        "activeStateMode": "inactive_only",
+        "activitySupportMin": 0.05,
+        "baseline": false,
+        "candidateToMaxActiveTemplateScoreMin": 0.75,
+        "chordIntervalsAllowed": [
+          3,
+          4,
+          5,
+          7,
+          8,
+          9,
+          10
+        ],
+        "existingIteration003EventsPreferred": true,
+        "fundamentalPresentRequired": true,
+        "harmonicOctaveIntervalsRejected": [
+          12,
+          19,
+          24
+        ],
+        "id": "gctx-o50-q075-inactive-none",
+        "intervalContextPolicy": "none",
+        "maxAddsPerSite": 1,
+        "onsetSupportMin": 0.5,
+        "polyphonyCap": 6,
+        "requireBasicPitchActiveContext": true,
+        "stepMidiDedupe": true,
+        "stream": "combinedGuitar",
+        "templateRankMin": 0.975
+      },
+      "deltaVsIteration003": {
+        "f1PercentagePoints": -1.0264356831591936,
+        "falseNegative": -3,
+        "falsePositive": 73,
+        "generated": 76,
+        "matched": 3,
+        "precisionPercentagePoints": -3.024782204178295,
+        "recallPercentagePoints": 0.2153625269203152
+      },
+      "generationSummary": {
+        "added": 76,
+        "eligible": 87,
+        "sitesWithActiveContext": 204,
+        "sitesWithAdds": 76,
+        "sitesWithEligible": 76
+      },
+      "id": "gctx-o50-q075-inactive-none",
+      "metrics": {
+        "falseNegative": 878,
+        "falsePositive": 611,
+        "generated": 1126,
+        "grossF1": 0.537514886859865,
+        "matched": 515,
+        "primaryF1": 0.40889241762604206,
+        "primaryPrecision": 0.4573712255772647,
+        "primaryRecall": 0.3697056712132089,
+        "reference": 1393,
+        "sameMeasurePitchContentF1": 0.5803890432711394
+      },
+      "stream": "combinedGuitar"
+    },
+    {
+      "candidateSha256": "c2e52018b85988241bdcb40cfdac48a4729804dd29926e907ef6f6b11260292f",
+      "config": {
+        "activeStateMode": "inactive_only",
+        "activitySupportMin": 0.05,
+        "baseline": false,
+        "candidateToMaxActiveTemplateScoreMin": 0.75,
+        "chordIntervalsAllowed": [
+          3,
+          4,
+          5,
+          7,
+          8,
+          9,
+          10
+        ],
+        "existingIteration003EventsPreferred": true,
+        "fundamentalPresentRequired": true,
+        "harmonicOctaveIntervalsRejected": [
+          12,
+          19,
+          24
+        ],
+        "id": "gctx-o50-q075-inactive-noharm",
+        "intervalContextPolicy": "exclude_harmonic_octave",
+        "maxAddsPerSite": 1,
+        "onsetSupportMin": 0.5,
+        "polyphonyCap": 6,
+        "requireBasicPitchActiveContext": true,
+        "stepMidiDedupe": true,
+        "stream": "combinedGuitar",
+        "templateRankMin": 0.975
+      },
+      "deltaVsIteration003": {
+        "f1PercentagePoints": -0.46113199121794457,
+        "falseNegative": -1,
+        "falsePositive": 31,
+        "generated": 32,
+        "matched": 1,
+        "precisionPercentagePoints": -1.3497051315905284,
+        "recallPercentagePoints": 0.07178750897343655
+      },
+      "generationSummary": {
+        "added": 32,
+        "eligible": 36,
+        "sitesWithActiveContext": 204,
+        "sitesWithAdds": 32,
+        "sitesWithEligible": 32
+      },
+      "id": "gctx-o50-q075-inactive-noharm",
+      "metrics": {
+        "falseNegative": 880,
+        "falsePositive": 569,
+        "generated": 1082,
+        "grossF1": 0.5446464646464646,
+        "matched": 513,
+        "primaryF1": 0.41454545454545455,
+        "primaryPrecision": 0.47412199630314233,
+        "primaryRecall": 0.3682699210337401,
+        "reference": 1393,
+        "sameMeasurePitchContentF1": 0.5874747474747475
+      },
+      "stream": "combinedGuitar"
+    },
+    {
+      "candidateSha256": "0d5311325bfb8287283a62488e2776cfc93636076963c80a597d65587a24c2c6",
+      "config": {
+        "activeStateMode": "inactive_only",
+        "activitySupportMin": 0.05,
+        "baseline": false,
+        "candidateToMaxActiveTemplateScoreMin": 0.75,
+        "chordIntervalsAllowed": [
+          3,
+          4,
+          5,
+          7,
+          8,
+          9,
+          10
+        ],
+        "existingIteration003EventsPreferred": true,
+        "fundamentalPresentRequired": true,
+        "harmonicOctaveIntervalsRejected": [
+          12,
+          19,
+          24
+        ],
+        "id": "gctx-o50-q075-inactive-chord",
+        "intervalContextPolicy": "chord_interval",
+        "maxAddsPerSite": 1,
+        "onsetSupportMin": 0.5,
+        "polyphonyCap": 6,
+        "requireBasicPitchActiveContext": true,
+        "stepMidiDedupe": true,
+        "stream": "combinedGuitar",
+        "templateRankMin": 0.975
+      },
+      "deltaVsIteration003": {
+        "f1PercentagePoints": -0.30657545470285097,
+        "falseNegative": 0,
+        "falsePositive": 18,
+        "generated": 18,
+        "matched": 0,
+        "precisionPercentagePoints": -0.8218298555377201,
+        "recallPercentagePoints": 0.0
+      },
+      "generationSummary": {
+        "added": 18,
+        "eligible": 18,
+        "sitesWithActiveContext": 204,
+        "sitesWithAdds": 18,
+        "sitesWithEligible": 18
+      },
+      "id": "gctx-o50-q075-inactive-chord",
+      "metrics": {
+        "falseNegative": 881,
+        "falsePositive": 556,
+        "generated": 1068,
+        "grossF1": 0.5469321414059327,
+        "matched": 512,
+        "primaryF1": 0.4160910199106055,
+        "primaryPrecision": 0.4794007490636704,
+        "primaryRecall": 0.36755204594400576,
+        "reference": 1393,
+        "sameMeasurePitchContentF1": 0.5900040633888662
+      },
+      "stream": "combinedGuitar"
+    },
+    {
+      "candidateSha256": "776f487175be98905022d812de4981b5c030e8f84c49ce02c5c410464c9d9daa",
+      "config": {
+        "activeStateMode": "allow_active",
+        "activitySupportMin": 0.05,
+        "baseline": false,
+        "candidateToMaxActiveTemplateScoreMin": 1.0,
+        "chordIntervalsAllowed": [
+          3,
+          4,
+          5,
+          7,
+          8,
+          9,
+          10
+        ],
+        "existingIteration003EventsPreferred": true,
+        "fundamentalPresentRequired": true,
+        "harmonicOctaveIntervalsRejected": [
+          12,
+          19,
+          24
+        ],
+        "id": "gctx-o50-q100-allow-none",
+        "intervalContextPolicy": "none",
+        "maxAddsPerSite": 1,
+        "onsetSupportMin": 0.5,
+        "polyphonyCap": 6,
+        "requireBasicPitchActiveContext": true,
+        "stepMidiDedupe": true,
+        "stream": "combinedGuitar",
+        "templateRankMin": 0.975
+      },
+      "deltaVsIteration003": {
+        "f1PercentagePoints": 0.32230521775118426,
+        "falseNegative": -24,
+        "falsePositive": 71,
+        "generated": 95,
+        "matched": 24,
+        "precisionPercentagePoints": -1.9496776876689548,
+        "recallPercentagePoints": 1.7229002153625272
+      },
+      "generationSummary": {
+        "added": 95,
+        "eligible": 112,
+        "sitesWithActiveContext": 204,
+        "sitesWithAdds": 95,
+        "sitesWithEligible": 95
+      },
+      "id": "gctx-o50-q100-allow-none",
+      "metrics": {
+        "falseNegative": 857,
+        "falsePositive": 609,
+        "generated": 1145,
+        "grossF1": 0.541371158392435,
+        "matched": 536,
+        "primaryF1": 0.42237982663514584,
+        "primaryPrecision": 0.46812227074235807,
+        "primaryRecall": 0.38478104809763103,
+        "reference": 1393,
+        "sameMeasurePitchContentF1": 0.5855003940110323
+      },
+      "stream": "combinedGuitar"
+    },
+    {
+      "candidateSha256": "2527870bc4655c238d5f4fbd0e243ab518554e17c4e2c29db2794225bbbeed43",
+      "config": {
+        "activeStateMode": "allow_active",
+        "activitySupportMin": 0.05,
+        "baseline": false,
+        "candidateToMaxActiveTemplateScoreMin": 1.0,
+        "chordIntervalsAllowed": [
+          3,
+          4,
+          5,
+          7,
+          8,
+          9,
+          10
+        ],
+        "existingIteration003EventsPreferred": true,
+        "fundamentalPresentRequired": true,
+        "harmonicOctaveIntervalsRejected": [
+          12,
+          19,
+          24
+        ],
+        "id": "gctx-o50-q100-allow-noharm",
+        "intervalContextPolicy": "exclude_harmonic_octave",
+        "maxAddsPerSite": 1,
+        "onsetSupportMin": 0.5,
+        "polyphonyCap": 6,
+        "requireBasicPitchActiveContext": true,
+        "stepMidiDedupe": true,
+        "stream": "combinedGuitar",
+        "templateRankMin": 0.975
+      },
+      "deltaVsIteration003": {
+        "f1PercentagePoints": 0.702040032289275,
+        "falseNegative": -22,
+        "falsePositive": 41,
+        "generated": 63,
+        "matched": 22,
+        "precisionPercentagePoints": -0.7834681042228231,
+        "recallPercentagePoints": 1.5793251974156486
+      },
+      "generationSummary": {
+        "added": 63,
+        "eligible": 69,
+        "sitesWithActiveContext": 204,
+        "sitesWithAdds": 63,
+        "sitesWithEligible": 63
+      },
+      "id": "gctx-o50-q100-allow-noharm",
+      "metrics": {
+        "falseNegative": 859,
+        "falsePositive": 579,
+        "generated": 1113,
+        "grossF1": 0.5450917797286512,
+        "matched": 534,
+        "primaryF1": 0.42617717478052675,
+        "primaryPrecision": 0.4797843665768194,
+        "primaryRecall": 0.38334529791816224,
+        "reference": 1393,
+        "sameMeasurePitchContentF1": 0.5897845171588189
+      },
+      "stream": "combinedGuitar"
+    },
+    {
+      "candidateSha256": "69115c4a5cf89077954c36ef2c51229980cd2020a3edb0de32a5e0858c468637",
+      "config": {
+        "activeStateMode": "allow_active",
+        "activitySupportMin": 0.05,
+        "baseline": false,
+        "candidateToMaxActiveTemplateScoreMin": 1.0,
+        "chordIntervalsAllowed": [
+          3,
+          4,
+          5,
+          7,
+          8,
+          9,
+          10
+        ],
+        "existingIteration003EventsPreferred": true,
+        "fundamentalPresentRequired": true,
+        "harmonicOctaveIntervalsRejected": [
+          12,
+          19,
+          24
+        ],
+        "id": "gctx-o50-q100-allow-chord",
+        "intervalContextPolicy": "chord_interval",
+        "maxAddsPerSite": 1,
+        "onsetSupportMin": 0.5,
+        "polyphonyCap": 6,
+        "requireBasicPitchActiveContext": true,
+        "stepMidiDedupe": true,
+        "stream": "combinedGuitar",
+        "templateRankMin": 0.975
+      },
+      "deltaVsIteration003": {
+        "f1PercentagePoints": 0.0916070544389469,
+        "falseNegative": -7,
+        "falsePositive": 21,
+        "generated": 28,
+        "matched": 7,
+        "precisionPercentagePoints": -0.6171923314780448,
+        "recallPercentagePoints": 0.502512562814067
+      },
+      "generationSummary": {
+        "added": 28,
+        "eligible": 28,
+        "sitesWithActiveContext": 204,
+        "sitesWithAdds": 28,
+        "sitesWithEligible": 28
+      },
+      "id": "gctx-o50-q100-allow-chord",
+      "metrics": {
+        "falseNegative": 874,
+        "falsePositive": 559,
+        "generated": 1078,
+        "grossF1": 0.5479562929987859,
+        "matched": 519,
+        "primaryF1": 0.42007284500202346,
+        "primaryPrecision": 0.48144712430426717,
+        "primaryRecall": 0.3725771715721464,
+        "reference": 1393,
+        "sameMeasurePitchContentF1": 0.5932820720356131
+      },
+      "stream": "combinedGuitar"
+    },
+    {
+      "candidateSha256": "c1ef778fc93817b3b109059253e28251552b53fd7b7fb05fcad4eb256816d15e",
+      "config": {
+        "activeStateMode": "inactive_only",
+        "activitySupportMin": 0.05,
+        "baseline": false,
+        "candidateToMaxActiveTemplateScoreMin": 1.0,
+        "chordIntervalsAllowed": [
+          3,
+          4,
+          5,
+          7,
+          8,
+          9,
+          10
+        ],
+        "existingIteration003EventsPreferred": true,
+        "fundamentalPresentRequired": true,
+        "harmonicOctaveIntervalsRejected": [
+          12,
+          19,
+          24
+        ],
+        "id": "gctx-o50-q100-inactive-none",
+        "intervalContextPolicy": "none",
+        "maxAddsPerSite": 1,
+        "onsetSupportMin": 0.5,
+        "polyphonyCap": 6,
+        "requireBasicPitchActiveContext": true,
+        "stepMidiDedupe": true,
+        "stream": "combinedGuitar",
+        "templateRankMin": 0.975
+      },
+      "deltaVsIteration003": {
+        "f1PercentagePoints": -0.5502155983738433,
+        "falseNegative": -3,
+        "falsePositive": 44,
+        "generated": 47,
+        "matched": 3,
+        "precisionPercentagePoints": -1.815687806572036,
+        "recallPercentagePoints": 0.2153625269203152
+      },
+      "generationSummary": {
+        "added": 47,
+        "eligible": 58,
+        "sitesWithActiveContext": 204,
+        "sitesWithAdds": 47,
+        "sitesWithEligible": 47
+      },
+      "id": "gctx-o50-q100-inactive-none",
+      "metrics": {
+        "falseNegative": 878,
+        "falsePositive": 582,
+        "generated": 1097,
+        "grossF1": 0.5437751004016065,
+        "matched": 515,
+        "primaryF1": 0.41365461847389556,
+        "primaryPrecision": 0.46946216955332726,
+        "primaryRecall": 0.3697056712132089,
+        "reference": 1393,
+        "sameMeasurePitchContentF1": 0.5863453815261044
+      },
+      "stream": "combinedGuitar"
+    },
+    {
+      "candidateSha256": "ea94cb84813c6c1e67821a7844fca72bd1f276201621c450650225a6a72bebe1",
+      "config": {
+        "activeStateMode": "inactive_only",
+        "activitySupportMin": 0.05,
+        "baseline": false,
+        "candidateToMaxActiveTemplateScoreMin": 1.0,
+        "chordIntervalsAllowed": [
+          3,
+          4,
+          5,
+          7,
+          8,
+          9,
+          10
+        ],
+        "existingIteration003EventsPreferred": true,
+        "fundamentalPresentRequired": true,
+        "harmonicOctaveIntervalsRejected": [
+          12,
+          19,
+          24
+        ],
+        "id": "gctx-o50-q100-inactive-noharm",
+        "intervalContextPolicy": "exclude_harmonic_octave",
+        "maxAddsPerSite": 1,
+        "onsetSupportMin": 0.5,
+        "polyphonyCap": 6,
+        "requireBasicPitchActiveContext": true,
+        "stepMidiDedupe": true,
+        "stream": "combinedGuitar",
+        "templateRankMin": 0.975
+      },
+      "deltaVsIteration003": {
+        "f1PercentagePoints": -0.2083603725926697,
+        "falseNegative": -1,
+        "falsePositive": 16,
+        "generated": 17,
+        "matched": 1,
+        "precisionPercentagePoints": -0.6831793635917349,
+        "recallPercentagePoints": 0.07178750897343655
+      },
+      "generationSummary": {
+        "added": 17,
+        "eligible": 21,
+        "sitesWithActiveContext": 204,
+        "sitesWithAdds": 17,
+        "sitesWithEligible": 17
+      },
+      "id": "gctx-o50-q100-inactive-noharm",
+      "metrics": {
+        "falseNegative": 880,
+        "falsePositive": 554,
+        "generated": 1067,
+        "grossF1": 0.5479674796747968,
+        "matched": 513,
+        "primaryF1": 0.4170731707317073,
+        "primaryPrecision": 0.48078725398313027,
+        "primaryRecall": 0.3682699210337401,
+        "reference": 1393,
+        "sameMeasurePitchContentF1": 0.5910569105691057
+      },
+      "stream": "combinedGuitar"
+    },
+    {
+      "candidateSha256": "ae1273ba06e6d5504c07fd8b1ffd4349ff31ea3ff531878674ae00b08f187c25",
+      "config": {
+        "activeStateMode": "inactive_only",
+        "activitySupportMin": 0.05,
+        "baseline": false,
+        "candidateToMaxActiveTemplateScoreMin": 1.0,
+        "chordIntervalsAllowed": [
+          3,
+          4,
+          5,
+          7,
+          8,
+          9,
+          10
+        ],
+        "existingIteration003EventsPreferred": true,
+        "fundamentalPresentRequired": true,
+        "harmonicOctaveIntervalsRejected": [
+          12,
+          19,
+          24
+        ],
+        "id": "gctx-o50-q100-inactive-chord",
+        "intervalContextPolicy": "chord_interval",
+        "maxAddsPerSite": 1,
+        "onsetSupportMin": 0.5,
+        "polyphonyCap": 6,
+        "requireBasicPitchActiveContext": true,
+        "stepMidiDedupe": true,
+        "stream": "combinedGuitar",
+        "templateRankMin": 0.975
+      },
+      "deltaVsIteration003": {
+        "f1PercentagePoints": -0.17087516284452486,
+        "falseNegative": 0,
+        "falsePositive": 10,
+        "generated": 10,
+        "matched": 0,
+        "precisionPercentagePoints": -0.4600179694519313,
+        "recallPercentagePoints": 0.0
+      },
+      "generationSummary": {
+        "added": 10,
+        "eligible": 10,
+        "sitesWithActiveContext": 204,
+        "sitesWithAdds": 10,
+        "sitesWithEligible": 10
+      },
+      "id": "gctx-o50-q100-inactive-chord",
+      "metrics": {
+        "falseNegative": 881,
+        "falsePositive": 548,
+        "generated": 1060,
+        "grossF1": 0.5487158581328984,
+        "matched": 512,
+        "primaryF1": 0.41744802282918875,
+        "primaryPrecision": 0.4830188679245283,
+        "primaryRecall": 0.36755204594400576,
+        "reference": 1393,
+        "sameMeasurePitchContentF1": 0.5919282511210762
+      },
+      "stream": "combinedGuitar"
+    },
+    {
+      "candidateSha256": "90d073817f9178f7feef594a159f5b2ad1236894a6c9a272fcf15b66274a737a",
+      "config": {
+        "activeStateMode": "allow_active",
+        "activitySupportMin": 0.05,
+        "baseline": false,
+        "candidateToMaxActiveTemplateScoreMin": 1.25,
+        "chordIntervalsAllowed": [
+          3,
+          4,
+          5,
+          7,
+          8,
+          9,
+          10
+        ],
+        "existingIteration003EventsPreferred": true,
+        "fundamentalPresentRequired": true,
+        "harmonicOctaveIntervalsRejected": [
+          12,
+          19,
+          24
+        ],
+        "id": "gctx-o50-q125-allow-none",
+        "intervalContextPolicy": "none",
+        "maxAddsPerSite": 1,
+        "onsetSupportMin": 0.5,
+        "polyphonyCap": 6,
+        "requireBasicPitchActiveContext": true,
+        "stepMidiDedupe": true,
+        "stream": "combinedGuitar",
+        "templateRankMin": 0.975
+      },
+      "deltaVsIteration003": {
+        "f1PercentagePoints": -0.22873502889397268,
+        "falseNegative": -2,
+        "falsePositive": 21,
+        "generated": 23,
+        "matched": 2,
+        "precisionPercentagePoints": -0.8588292726223745,
+        "recallPercentagePoints": 0.14357501794687866
+      },
+      "generationSummary": {
+        "added": 23,
+        "eligible": 30,
+        "sitesWithActiveContext": 204,
+        "sitesWithAdds": 23,
+        "sitesWithEligible": 23
+      },
+      "id": "gctx-o50-q125-allow-none",
+      "metrics": {
+        "falseNegative": 879,
+        "falsePositive": 559,
+        "generated": 1073,
+        "grossF1": 0.5482562854825629,
+        "matched": 514,
+        "primaryF1": 0.41686942416869427,
+        "primaryPrecision": 0.4790307548928239,
+        "primaryRecall": 0.36898779612347454,
+        "reference": 1393,
+        "sameMeasurePitchContentF1": 0.5904298459042984
+      },
+      "stream": "combinedGuitar"
+    },
+    {
+      "candidateSha256": "f96a0c360407597fd5bd81feca277cb5f5b729883cb5e299cda980a762b77f57",
+      "config": {
+        "activeStateMode": "allow_active",
+        "activitySupportMin": 0.05,
+        "baseline": false,
+        "candidateToMaxActiveTemplateScoreMin": 1.25,
+        "chordIntervalsAllowed": [
+          3,
+          4,
+          5,
+          7,
+          8,
+          9,
+          10
+        ],
+        "existingIteration003EventsPreferred": true,
+        "fundamentalPresentRequired": true,
+        "harmonicOctaveIntervalsRejected": [
+          12,
+          19,
+          24
+        ],
+        "id": "gctx-o50-q125-allow-noharm",
+        "intervalContextPolicy": "exclude_harmonic_octave",
+        "maxAddsPerSite": 1,
+        "onsetSupportMin": 0.5,
+        "polyphonyCap": 6,
+        "requireBasicPitchActiveContext": true,
+        "stepMidiDedupe": true,
+        "stream": "combinedGuitar",
+        "templateRankMin": 0.975
+      },
+      "deltaVsIteration003": {
+        "f1PercentagePoints": -0.08934234588569567,
+        "falseNegative": -1,
+        "falsePositive": 9,
+        "generated": 10,
+        "matched": 1,
+        "precisionPercentagePoints": -0.3656783468104219,
+        "recallPercentagePoints": 0.07178750897343655
+      },
+      "generationSummary": {
+        "added": 10,
+        "eligible": 12,
+        "sitesWithActiveContext": 204,
+        "sitesWithAdds": 10,
+        "sitesWithEligible": 10
+      },
+      "id": "gctx-o50-q125-allow-noharm",
+      "metrics": {
+        "falseNegative": 880,
+        "falsePositive": 547,
+        "generated": 1060,
+        "grossF1": 0.5495311863024868,
+        "matched": 513,
+        "primaryF1": 0.41826335099877704,
+        "primaryPrecision": 0.4839622641509434,
+        "primaryRecall": 0.3682699210337401,
+        "reference": 1393,
+        "sameMeasurePitchContentF1": 0.5919282511210762
+      },
+      "stream": "combinedGuitar"
+    },
+    {
+      "candidateSha256": "c0f42fe8c5cc634b13346a31af96e651b4ccc78fff1d16f34ed653dfb0840275",
+      "config": {
+        "activeStateMode": "allow_active",
+        "activitySupportMin": 0.05,
+        "baseline": false,
+        "candidateToMaxActiveTemplateScoreMin": 1.25,
+        "chordIntervalsAllowed": [
+          3,
+          4,
+          5,
+          7,
+          8,
+          9,
+          10
+        ],
+        "existingIteration003EventsPreferred": true,
+        "fundamentalPresentRequired": true,
+        "harmonicOctaveIntervalsRejected": [
+          12,
+          19,
+          24
+        ],
+        "id": "gctx-o50-q125-allow-chord",
+        "intervalContextPolicy": "chord_interval",
+        "maxAddsPerSite": 1,
+        "onsetSupportMin": 0.5,
+        "polyphonyCap": 6,
+        "requireBasicPitchActiveContext": true,
+        "stepMidiDedupe": true,
+        "stream": "combinedGuitar",
+        "templateRankMin": 0.975
+      },
+      "deltaVsIteration003": {
+        "f1PercentagePoints": -0.06851765826850764,
+        "falseNegative": 0,
+        "falsePositive": 4,
+        "generated": 4,
+        "matched": 0,
+        "precisionPercentagePoints": -0.18505466702810058,
+        "recallPercentagePoints": 0.0
+      },
+      "generationSummary": {
+        "added": 4,
+        "eligible": 4,
+        "sitesWithActiveContext": 204,
+        "sitesWithAdds": 4,
+        "sitesWithEligible": 4
+      },
+      "id": "gctx-o50-q125-allow-chord",
+      "metrics": {
+        "falseNegative": 881,
+        "falsePositive": 542,
+        "generated": 1054,
+        "grossF1": 0.55006129955047,
+        "matched": 512,
+        "primaryF1": 0.4184715978749489,
+        "primaryPrecision": 0.4857685009487666,
+        "primaryRecall": 0.36755204594400576,
+        "reference": 1393,
+        "sameMeasurePitchContentF1": 0.5925623212096446
+      },
+      "stream": "combinedGuitar"
+    },
+    {
+      "candidateSha256": "658ed30781e71a63af3963f08062e2e3e677f30095459e07a1c37079cbf6d9d1",
+      "config": {
+        "activeStateMode": "inactive_only",
+        "activitySupportMin": 0.05,
+        "baseline": false,
+        "candidateToMaxActiveTemplateScoreMin": 1.25,
+        "chordIntervalsAllowed": [
+          3,
+          4,
+          5,
+          7,
+          8,
+          9,
+          10
+        ],
+        "existingIteration003EventsPreferred": true,
+        "fundamentalPresentRequired": true,
+        "harmonicOctaveIntervalsRejected": [
+          12,
+          19,
+          24
+        ],
+        "id": "gctx-o50-q125-inactive-none",
+        "intervalContextPolicy": "none",
+        "maxAddsPerSite": 1,
+        "onsetSupportMin": 0.5,
+        "polyphonyCap": 6,
+        "requireBasicPitchActiveContext": true,
+        "stepMidiDedupe": true,
+        "stream": "combinedGuitar",
+        "templateRankMin": 0.975
+      },
+      "deltaVsIteration003": {
+        "f1PercentagePoints": -0.22873502889397268,
+        "falseNegative": -2,
+        "falsePositive": 21,
+        "generated": 23,
+        "matched": 2,
+        "precisionPercentagePoints": -0.8588292726223745,
+        "recallPercentagePoints": 0.14357501794687866
+      },
+      "generationSummary": {
+        "added": 23,
+        "eligible": 30,
+        "sitesWithActiveContext": 204,
+        "sitesWithAdds": 23,
+        "sitesWithEligible": 23
+      },
+      "id": "gctx-o50-q125-inactive-none",
+      "metrics": {
+        "falseNegative": 879,
+        "falsePositive": 559,
+        "generated": 1073,
+        "grossF1": 0.5482562854825629,
+        "matched": 514,
+        "primaryF1": 0.41686942416869427,
+        "primaryPrecision": 0.4790307548928239,
+        "primaryRecall": 0.36898779612347454,
+        "reference": 1393,
+        "sameMeasurePitchContentF1": 0.5904298459042984
+      },
+      "stream": "combinedGuitar"
+    },
+    {
+      "candidateSha256": "3192bd83f9d254d3250d4f492b804932e8e4360d265408ea161c4691f98a6edc",
+      "config": {
+        "activeStateMode": "inactive_only",
+        "activitySupportMin": 0.05,
+        "baseline": false,
+        "candidateToMaxActiveTemplateScoreMin": 1.25,
+        "chordIntervalsAllowed": [
+          3,
+          4,
+          5,
+          7,
+          8,
+          9,
+          10
+        ],
+        "existingIteration003EventsPreferred": true,
+        "fundamentalPresentRequired": true,
+        "harmonicOctaveIntervalsRejected": [
+          12,
+          19,
+          24
+        ],
+        "id": "gctx-o50-q125-inactive-noharm",
+        "intervalContextPolicy": "exclude_harmonic_octave",
+        "maxAddsPerSite": 1,
+        "onsetSupportMin": 0.5,
+        "polyphonyCap": 6,
+        "requireBasicPitchActiveContext": true,
+        "stepMidiDedupe": true,
+        "stream": "combinedGuitar",
+        "templateRankMin": 0.975
+      },
+      "deltaVsIteration003": {
+        "f1PercentagePoints": -0.08934234588569567,
+        "falseNegative": -1,
+        "falsePositive": 9,
+        "generated": 10,
+        "matched": 1,
+        "precisionPercentagePoints": -0.3656783468104219,
+        "recallPercentagePoints": 0.07178750897343655
+      },
+      "generationSummary": {
+        "added": 10,
+        "eligible": 12,
+        "sitesWithActiveContext": 204,
+        "sitesWithAdds": 10,
+        "sitesWithEligible": 10
+      },
+      "id": "gctx-o50-q125-inactive-noharm",
+      "metrics": {
+        "falseNegative": 880,
+        "falsePositive": 547,
+        "generated": 1060,
+        "grossF1": 0.5495311863024868,
+        "matched": 513,
+        "primaryF1": 0.41826335099877704,
+        "primaryPrecision": 0.4839622641509434,
+        "primaryRecall": 0.3682699210337401,
+        "reference": 1393,
+        "sameMeasurePitchContentF1": 0.5919282511210762
+      },
+      "stream": "combinedGuitar"
+    },
+    {
+      "candidateSha256": "ca1dd606fb6d71e6e1425aa4cc77cecb3d7d15907240beb26201ac2b9e084039",
+      "config": {
+        "activeStateMode": "inactive_only",
+        "activitySupportMin": 0.05,
+        "baseline": false,
+        "candidateToMaxActiveTemplateScoreMin": 1.25,
+        "chordIntervalsAllowed": [
+          3,
+          4,
+          5,
+          7,
+          8,
+          9,
+          10
+        ],
+        "existingIteration003EventsPreferred": true,
+        "fundamentalPresentRequired": true,
+        "harmonicOctaveIntervalsRejected": [
+          12,
+          19,
+          24
+        ],
+        "id": "gctx-o50-q125-inactive-chord",
+        "intervalContextPolicy": "chord_interval",
+        "maxAddsPerSite": 1,
+        "onsetSupportMin": 0.5,
+        "polyphonyCap": 6,
+        "requireBasicPitchActiveContext": true,
+        "stepMidiDedupe": true,
+        "stream": "combinedGuitar",
+        "templateRankMin": 0.975
+      },
+      "deltaVsIteration003": {
+        "f1PercentagePoints": -0.06851765826850764,
+        "falseNegative": 0,
+        "falsePositive": 4,
+        "generated": 4,
+        "matched": 0,
+        "precisionPercentagePoints": -0.18505466702810058,
+        "recallPercentagePoints": 0.0
+      },
+      "generationSummary": {
+        "added": 4,
+        "eligible": 4,
+        "sitesWithActiveContext": 204,
+        "sitesWithAdds": 4,
+        "sitesWithEligible": 4
+      },
+      "id": "gctx-o50-q125-inactive-chord",
+      "metrics": {
+        "falseNegative": 881,
+        "falsePositive": 542,
+        "generated": 1054,
+        "grossF1": 0.55006129955047,
+        "matched": 512,
+        "primaryF1": 0.4184715978749489,
+        "primaryPrecision": 0.4857685009487666,
+        "primaryRecall": 0.36755204594400576,
+        "reference": 1393,
+        "sameMeasurePitchContentF1": 0.5925623212096446
+      },
+      "stream": "combinedGuitar"
+    },
+    {
+      "candidateSha256": "c23b23df1dba527a100e56056416afc010db8ed7fbf4ecac0005b3131537ec9d",
+      "config": {
+        "activeStateMode": "allow_active",
+        "activitySupportMin": 0.05,
+        "baseline": false,
+        "candidateToMaxActiveTemplateScoreMin": 0.75,
+        "chordIntervalsAllowed": [
+          3,
+          4,
+          5,
+          7,
+          8,
+          9,
+          10
+        ],
+        "existingIteration003EventsPreferred": true,
+        "fundamentalPresentRequired": true,
+        "harmonicOctaveIntervalsRejected": [
+          12,
+          19,
+          24
+        ],
+        "id": "gctx-o65-q075-allow-none",
+        "intervalContextPolicy": "none",
+        "maxAddsPerSite": 1,
+        "onsetSupportMin": 0.65,
+        "polyphonyCap": 6,
+        "requireBasicPitchActiveContext": true,
+        "stepMidiDedupe": true,
+        "stream": "combinedGuitar",
+        "templateRankMin": 0.975
+      },
+      "deltaVsIteration003": {
+        "f1PercentagePoints": -0.08253996045200496,
+        "falseNegative": -22,
+        "falsePositive": 88,
+        "generated": 110,
+        "matched": 22,
+        "precisionPercentagePoints": -2.7274220032840746,
+        "recallPercentagePoints": 1.5793251974156486
+      },
+      "generationSummary": {
+        "added": 110,
+        "eligible": 137,
+        "sitesWithActiveContext": 204,
+        "sitesWithAdds": 110,
+        "sitesWithEligible": 110
+      },
+      "id": "gctx-o65-q075-allow-none",
+      "metrics": {
+        "falseNegative": 859,
+        "falsePositive": 626,
+        "generated": 1160,
+        "grossF1": 0.5374069721895809,
+        "matched": 534,
+        "primaryF1": 0.41833137485311395,
+        "primaryPrecision": 0.4603448275862069,
+        "primaryRecall": 0.38334529791816224,
+        "reference": 1393,
+        "sameMeasurePitchContentF1": 0.5828437132784959
+      },
+      "stream": "combinedGuitar"
+    },
+    {
+      "candidateSha256": "96f067ff90126c6934e593bed8f70b5becead6db3aed5d990788749daf845299",
+      "config": {
+        "activeStateMode": "allow_active",
+        "activitySupportMin": 0.05,
+        "baseline": false,
+        "candidateToMaxActiveTemplateScoreMin": 0.75,
+        "chordIntervalsAllowed": [
+          3,
+          4,
+          5,
+          7,
+          8,
+          9,
+          10
+        ],
+        "existingIteration003EventsPreferred": true,
+        "fundamentalPresentRequired": true,
+        "harmonicOctaveIntervalsRejected": [
+          12,
+          19,
+          24
+        ],
+        "id": "gctx-o65-q075-allow-noharm",
+        "intervalContextPolicy": "exclude_harmonic_octave",
+        "maxAddsPerSite": 1,
+        "onsetSupportMin": 0.65,
+        "polyphonyCap": 6,
+        "requireBasicPitchActiveContext": true,
+        "stepMidiDedupe": true,
+        "stream": "combinedGuitar",
+        "templateRankMin": 0.975
+      },
+      "deltaVsIteration003": {
+        "f1PercentagePoints": 0.37822936427244214,
+        "falseNegative": -19,
+        "falsePositive": 49,
+        "generated": 68,
+        "matched": 19,
+        "precisionPercentagePoints": -1.266377033818894,
+        "recallPercentagePoints": 1.3639626704953334
+      },
+      "generationSummary": {
+        "added": 68,
+        "eligible": 80,
+        "sitesWithActiveContext": 204,
+        "sitesWithAdds": 68,
+        "sitesWithEligible": 68
+      },
+      "id": "gctx-o65-q075-allow-noharm",
+      "metrics": {
+        "falseNegative": 862,
+        "falsePositive": 587,
+        "generated": 1118,
+        "grossF1": 0.5432098765432098,
+        "matched": 531,
+        "primaryF1": 0.4229390681003584,
+        "primaryPrecision": 0.4749552772808587,
+        "primaryRecall": 0.3811916726489591,
+        "reference": 1393,
+        "sameMeasurePitchContentF1": 0.5878136200716846
+      },
+      "stream": "combinedGuitar"
+    },
+    {
+      "candidateSha256": "64e7272e12eabcd0cbeb37070191fd519ad79b991a8327672d5685a0e8ac9340",
+      "config": {
+        "activeStateMode": "allow_active",
+        "activitySupportMin": 0.05,
+        "baseline": false,
+        "candidateToMaxActiveTemplateScoreMin": 0.75,
+        "chordIntervalsAllowed": [
+          3,
+          4,
+          5,
+          7,
+          8,
+          9,
+          10
+        ],
+        "existingIteration003EventsPreferred": true,
+        "fundamentalPresentRequired": true,
+        "harmonicOctaveIntervalsRejected": [
+          12,
+          19,
+          24
+        ],
+        "id": "gctx-o65-q075-allow-chord",
+        "intervalContextPolicy": "chord_interval",
+        "maxAddsPerSite": 1,
+        "onsetSupportMin": 0.65,
+        "polyphonyCap": 6,
+        "requireBasicPitchActiveContext": true,
+        "stepMidiDedupe": true,
+        "stream": "combinedGuitar",
+        "templateRankMin": 0.975
+      },
+      "deltaVsIteration003": {
+        "f1PercentagePoints": -0.027057591041851348,
+        "falseNegative": -7,
+        "falsePositive": 28,
+        "generated": 35,
+        "matched": 7,
+        "precisionPercentagePoints": -0.927803379416281,
+        "recallPercentagePoints": 0.502512562814067
+      },
+      "generationSummary": {
+        "added": 35,
+        "eligible": 37,
+        "sitesWithActiveContext": 204,
+        "sitesWithAdds": 35,
+        "sitesWithEligible": 35
+      },
+      "id": "gctx-o65-q075-allow-chord",
+      "metrics": {
+        "falseNegative": 874,
+        "falsePositive": 566,
+        "generated": 1085,
+        "grossF1": 0.5464083938660209,
+        "matched": 519,
+        "primaryF1": 0.4188861985472155,
+        "primaryPrecision": 0.4783410138248848,
+        "primaryRecall": 0.3725771715721464,
+        "reference": 1393,
+        "sameMeasurePitchContentF1": 0.5916061339790154
+      },
+      "stream": "combinedGuitar"
+    },
+    {
+      "candidateSha256": "c266f76deaed675870b3a7b562def4ea2c734afd125cb06a2c4258046e5684d4",
+      "config": {
+        "activeStateMode": "inactive_only",
+        "activitySupportMin": 0.05,
+        "baseline": false,
+        "candidateToMaxActiveTemplateScoreMin": 0.75,
+        "chordIntervalsAllowed": [
+          3,
+          4,
+          5,
+          7,
+          8,
+          9,
+          10
+        ],
+        "existingIteration003EventsPreferred": true,
+        "fundamentalPresentRequired": true,
+        "harmonicOctaveIntervalsRejected": [
+          12,
+          19,
+          24
+        ],
+        "id": "gctx-o65-q075-inactive-none",
+        "intervalContextPolicy": "none",
+        "maxAddsPerSite": 1,
+        "onsetSupportMin": 0.65,
+        "polyphonyCap": 6,
+        "requireBasicPitchActiveContext": true,
+        "stepMidiDedupe": true,
+        "stream": "combinedGuitar",
+        "templateRankMin": 0.975
+      },
+      "deltaVsIteration003": {
+        "f1PercentagePoints": -0.9614030918866645,
+        "falseNegative": -3,
+        "falsePositive": 69,
+        "generated": 72,
+        "matched": 3,
+        "precisionPercentagePoints": -2.861726508785334,
+        "recallPercentagePoints": 0.2153625269203152
+      },
+      "generationSummary": {
+        "added": 72,
+        "eligible": 83,
+        "sitesWithActiveContext": 204,
+        "sitesWithAdds": 72,
+        "sitesWithEligible": 72
+      },
+      "id": "gctx-o65-q075-inactive-none",
+      "metrics": {
+        "falseNegative": 878,
+        "falsePositive": 607,
+        "generated": 1122,
+        "grossF1": 0.5383697813121272,
+        "matched": 515,
+        "primaryF1": 0.40954274353876735,
+        "primaryPrecision": 0.4590017825311943,
+        "primaryRecall": 0.3697056712132089,
+        "reference": 1393,
+        "sameMeasurePitchContentF1": 0.5813121272365804
+      },
+      "stream": "combinedGuitar"
+    },
+    {
+      "candidateSha256": "bcfc0c24e7649f2860cc2ed8dfea393cc379a9633c271a9eecde20aa5b23cd18",
+      "config": {
+        "activeStateMode": "inactive_only",
+        "activitySupportMin": 0.05,
+        "baseline": false,
+        "candidateToMaxActiveTemplateScoreMin": 0.75,
+        "chordIntervalsAllowed": [
+          3,
+          4,
+          5,
+          7,
+          8,
+          9,
+          10
+        ],
+        "existingIteration003EventsPreferred": true,
+        "fundamentalPresentRequired": true,
+        "harmonicOctaveIntervalsRejected": [
+          12,
+          19,
+          24
+        ],
+        "id": "gctx-o65-q075-inactive-noharm",
+        "intervalContextPolicy": "exclude_harmonic_octave",
+        "maxAddsPerSite": 1,
+        "onsetSupportMin": 0.65,
+        "polyphonyCap": 6,
+        "requireBasicPitchActiveContext": true,
+        "stepMidiDedupe": true,
+        "stream": "combinedGuitar",
+        "templateRankMin": 0.975
+      },
+      "deltaVsIteration003": {
+        "f1PercentagePoints": -0.4443759097892741,
+        "falseNegative": -1,
+        "falsePositive": 30,
+        "generated": 31,
+        "matched": 1,
+        "precisionPercentagePoints": -1.30584555746443,
+        "recallPercentagePoints": 0.07178750897343655
+      },
+      "generationSummary": {
+        "added": 31,
+        "eligible": 35,
+        "sitesWithActiveContext": 204,
+        "sitesWithAdds": 31,
+        "sitesWithEligible": 31
+      },
+      "id": "gctx-o65-q075-inactive-noharm",
+      "metrics": {
+        "falseNegative": 880,
+        "falsePositive": 568,
+        "generated": 1081,
+        "grossF1": 0.5448666127728375,
+        "matched": 513,
+        "primaryF1": 0.41471301535974125,
+        "primaryPrecision": 0.4745605920444033,
+        "primaryRecall": 0.3682699210337401,
+        "reference": 1393,
+        "sameMeasurePitchContentF1": 0.587712206952304
+      },
+      "stream": "combinedGuitar"
+    },
+    {
+      "candidateSha256": "d2da1075651350a7ae964966282f2662b6fb3df49353af1efe4f66c380df8ae4",
+      "config": {
+        "activeStateMode": "inactive_only",
+        "activitySupportMin": 0.05,
+        "baseline": false,
+        "candidateToMaxActiveTemplateScoreMin": 0.75,
+        "chordIntervalsAllowed": [
+          3,
+          4,
+          5,
+          7,
+          8,
+          9,
+          10
+        ],
+        "existingIteration003EventsPreferred": true,
+        "fundamentalPresentRequired": true,
+        "harmonicOctaveIntervalsRejected": [
+          12,
+          19,
+          24
+        ],
+        "id": "gctx-o65-q075-inactive-chord",
+        "intervalContextPolicy": "chord_interval",
+        "maxAddsPerSite": 1,
+        "onsetSupportMin": 0.65,
+        "polyphonyCap": 6,
+        "requireBasicPitchActiveContext": true,
+        "stepMidiDedupe": true,
+        "stream": "combinedGuitar",
+        "templateRankMin": 0.975
+      },
+      "deltaVsIteration003": {
+        "f1PercentagePoints": -0.30657545470285097,
+        "falseNegative": 0,
+        "falsePositive": 18,
+        "generated": 18,
+        "matched": 0,
+        "precisionPercentagePoints": -0.8218298555377201,
+        "recallPercentagePoints": 0.0
+      },
+      "generationSummary": {
+        "added": 18,
+        "eligible": 18,
+        "sitesWithActiveContext": 204,
+        "sitesWithAdds": 18,
+        "sitesWithEligible": 18
+      },
+      "id": "gctx-o65-q075-inactive-chord",
+      "metrics": {
+        "falseNegative": 881,
+        "falsePositive": 556,
+        "generated": 1068,
+        "grossF1": 0.5469321414059327,
+        "matched": 512,
+        "primaryF1": 0.4160910199106055,
+        "primaryPrecision": 0.4794007490636704,
+        "primaryRecall": 0.36755204594400576,
+        "reference": 1393,
+        "sameMeasurePitchContentF1": 0.5900040633888662
+      },
+      "stream": "combinedGuitar"
+    },
+    {
+      "candidateSha256": "b402c04e3afeabd02afc5bf40adf01a91a9f8589f4842df4230f98e74194cf9f",
+      "config": {
+        "activeStateMode": "allow_active",
+        "activitySupportMin": 0.05,
+        "baseline": false,
+        "candidateToMaxActiveTemplateScoreMin": 1.0,
+        "chordIntervalsAllowed": [
+          3,
+          4,
+          5,
+          7,
+          8,
+          9,
+          10
+        ],
+        "existingIteration003EventsPreferred": true,
+        "fundamentalPresentRequired": true,
+        "harmonicOctaveIntervalsRejected": [
+          12,
+          19,
+          24
+        ],
+        "id": "gctx-o65-q100-allow-none",
+        "intervalContextPolicy": "none",
+        "maxAddsPerSite": 1,
+        "onsetSupportMin": 0.65,
+        "polyphonyCap": 6,
+        "requireBasicPitchActiveContext": true,
+        "stepMidiDedupe": true,
+        "stream": "combinedGuitar",
+        "templateRankMin": 0.975
+      },
+      "deltaVsIteration003": {
+        "f1PercentagePoints": 0.2020625779426466,
+        "falseNegative": -21,
+        "falsePositive": 67,
+        "generated": 88,
+        "matched": 21,
+        "precisionPercentagePoints": -1.9253494016235662,
+        "recallPercentagePoints": 1.507537688442212
+      },
+      "generationSummary": {
+        "added": 88,
+        "eligible": 104,
+        "sitesWithActiveContext": 204,
+        "sitesWithAdds": 88,
+        "sitesWithEligible": 88
+      },
+      "id": "gctx-o65-q100-allow-none",
+      "metrics": {
+        "falseNegative": 860,
+        "falsePositive": 605,
+        "generated": 1138,
+        "grossF1": 0.541288028447254,
+        "matched": 533,
+        "primaryF1": 0.42117740023706046,
+        "primaryPrecision": 0.46836555360281196,
+        "primaryRecall": 0.3826274228284279,
+        "reference": 1393,
+        "sameMeasurePitchContentF1": 0.5855393125246938
+      },
+      "stream": "combinedGuitar"
+    },
+    {
+      "candidateSha256": "54978a935a2bfbe1db5d2ed6fabb9102daff7e6efcfe6a9757a4a0c7104f4900",
+      "config": {
+        "activeStateMode": "allow_active",
+        "activitySupportMin": 0.05,
+        "baseline": false,
+        "candidateToMaxActiveTemplateScoreMin": 1.0,
+        "chordIntervalsAllowed": [
+          3,
+          4,
+          5,
+          7,
+          8,
+          9,
+          10
+        ],
+        "existingIteration003EventsPreferred": true,
+        "fundamentalPresentRequired": true,
+        "harmonicOctaveIntervalsRejected": [
+          12,
+          19,
+          24
+        ],
+        "id": "gctx-o65-q100-allow-noharm",
+        "intervalContextPolicy": "exclude_harmonic_octave",
+        "maxAddsPerSite": 1,
+        "onsetSupportMin": 0.65,
+        "polyphonyCap": 6,
+        "requireBasicPitchActiveContext": true,
+        "stepMidiDedupe": true,
+        "stream": "combinedGuitar",
+        "templateRankMin": 0.975
+      },
+      "deltaVsIteration003": {
+        "f1PercentagePoints": 0.4843225542365992,
+        "falseNegative": -18,
+        "falsePositive": 39,
+        "generated": 57,
+        "matched": 18,
+        "precisionPercentagePoints": -0.8847593237837126,
+        "recallPercentagePoints": 1.2921751615218913
+      },
+      "generationSummary": {
+        "added": 57,
+        "eligible": 63,
+        "sitesWithActiveContext": 204,
+        "sitesWithAdds": 57,
+        "sitesWithEligible": 57
+      },
+      "id": "gctx-o65-q100-allow-noharm",
+      "metrics": {
+        "falseNegative": 863,
+        "falsePositive": 577,
+        "generated": 1107,
+        "grossF1": 0.5448000000000001,
+        "matched": 530,
+        "primaryF1": 0.424,
+        "primaryPrecision": 0.4787714543812105,
+        "primaryRecall": 0.38047379755922467,
+        "reference": 1393,
+        "sameMeasurePitchContentF1": 0.5896
+      },
+      "stream": "combinedGuitar"
+    },
+    {
+      "candidateSha256": "dd6eef38d18938832a9650a7e004cc742c559d1e9f5b7b67a8d86322ee298783",
+      "config": {
+        "activeStateMode": "allow_active",
+        "activitySupportMin": 0.05,
+        "baseline": false,
+        "candidateToMaxActiveTemplateScoreMin": 1.0,
+        "chordIntervalsAllowed": [
+          3,
+          4,
+          5,
+          7,
+          8,
+          9,
+          10
+        ],
+        "existingIteration003EventsPreferred": true,
+        "fundamentalPresentRequired": true,
+        "harmonicOctaveIntervalsRejected": [
+          12,
+          19,
+          24
+        ],
+        "id": "gctx-o65-q100-allow-chord",
+        "intervalContextPolicy": "chord_interval",
+        "maxAddsPerSite": 1,
+        "onsetSupportMin": 0.65,
+        "polyphonyCap": 6,
+        "requireBasicPitchActiveContext": true,
+        "stepMidiDedupe": true,
+        "stream": "combinedGuitar",
+        "templateRankMin": 0.975
+      },
+      "deltaVsIteration003": {
+        "f1PercentagePoints": 0.027642392293281137,
+        "falseNegative": -6,
+        "falsePositive": 21,
+        "generated": 27,
+        "matched": 6,
+        "precisionPercentagePoints": -0.6653402307998435,
+        "recallPercentagePoints": 0.4307250538406304
+      },
+      "generationSummary": {
+        "added": 27,
+        "eligible": 27,
+        "sitesWithActiveContext": 204,
+        "sitesWithAdds": 27,
+        "sitesWithEligible": 27
+      },
+      "id": "gctx-o65-q100-allow-chord",
+      "metrics": {
+        "falseNegative": 875,
+        "falsePositive": 559,
+        "generated": 1077,
+        "grossF1": 0.5473684210526316,
+        "matched": 518,
+        "primaryF1": 0.4194331983805668,
+        "primaryPrecision": 0.4809656453110492,
+        "primaryRecall": 0.37185929648241206,
+        "reference": 1393,
+        "sameMeasurePitchContentF1": 0.5927125506072874
+      },
+      "stream": "combinedGuitar"
+    },
+    {
+      "candidateSha256": "c3b0a71a21a203884fdeeaca34b9c4686a9d5eb7c758387930ef5856734d9c32",
+      "config": {
+        "activeStateMode": "inactive_only",
+        "activitySupportMin": 0.05,
+        "baseline": false,
+        "candidateToMaxActiveTemplateScoreMin": 1.0,
+        "chordIntervalsAllowed": [
+          3,
+          4,
+          5,
+          7,
+          8,
+          9,
+          10
+        ],
+        "existingIteration003EventsPreferred": true,
+        "fundamentalPresentRequired": true,
+        "harmonicOctaveIntervalsRejected": [
+          12,
+          19,
+          24
+        ],
+        "id": "gctx-o65-q100-inactive-none",
+        "intervalContextPolicy": "none",
+        "maxAddsPerSite": 1,
+        "onsetSupportMin": 0.65,
+        "polyphonyCap": 6,
+        "requireBasicPitchActiveContext": true,
+        "stepMidiDedupe": true,
+        "stream": "combinedGuitar",
+        "templateRankMin": 0.975
+      },
+      "deltaVsIteration003": {
+        "f1PercentagePoints": -0.5169636193968374,
+        "falseNegative": -3,
+        "falsePositive": 42,
+        "generated": 45,
+        "matched": 3,
+        "precisionPercentagePoints": -1.7299412915851298,
+        "recallPercentagePoints": 0.2153625269203152
+      },
+      "generationSummary": {
+        "added": 45,
+        "eligible": 56,
+        "sitesWithActiveContext": 204,
+        "sitesWithAdds": 45,
+        "sitesWithEligible": 45
+      },
+      "id": "gctx-o65-q100-inactive-none",
+      "metrics": {
+        "falseNegative": 878,
+        "falsePositive": 580,
+        "generated": 1095,
+        "grossF1": 0.5442122186495176,
+        "matched": 515,
+        "primaryF1": 0.4139871382636656,
+        "primaryPrecision": 0.4703196347031963,
+        "primaryRecall": 0.3697056712132089,
+        "reference": 1393,
+        "sameMeasurePitchContentF1": 0.5868167202572347
+      },
+      "stream": "combinedGuitar"
+    },
+    {
+      "candidateSha256": "87593f9d9ac5b09ea135a8c9b9916607f0fdb134651f0600e16fcc3bf5c52f22",
+      "config": {
+        "activeStateMode": "inactive_only",
+        "activitySupportMin": 0.05,
+        "baseline": false,
+        "candidateToMaxActiveTemplateScoreMin": 1.0,
+        "chordIntervalsAllowed": [
+          3,
+          4,
+          5,
+          7,
+          8,
+          9,
+          10
+        ],
+        "existingIteration003EventsPreferred": true,
+        "fundamentalPresentRequired": true,
+        "harmonicOctaveIntervalsRejected": [
+          12,
+          19,
+          24
+        ],
+        "id": "gctx-o65-q100-inactive-noharm",
+        "intervalContextPolicy": "exclude_harmonic_octave",
+        "maxAddsPerSite": 1,
+        "onsetSupportMin": 0.65,
+        "polyphonyCap": 6,
+        "requireBasicPitchActiveContext": true,
+        "stepMidiDedupe": true,
+        "stream": "combinedGuitar",
+        "templateRankMin": 0.975
+      },
+      "deltaVsIteration003": {
+        "f1PercentagePoints": -0.2083603725926697,
+        "falseNegative": -1,
+        "falsePositive": 16,
+        "generated": 17,
+        "matched": 1,
+        "precisionPercentagePoints": -0.6831793635917349,
+        "recallPercentagePoints": 0.07178750897343655
+      },
+      "generationSummary": {
+        "added": 17,
+        "eligible": 21,
+        "sitesWithActiveContext": 204,
+        "sitesWithAdds": 17,
+        "sitesWithEligible": 17
+      },
+      "id": "gctx-o65-q100-inactive-noharm",
+      "metrics": {
+        "falseNegative": 880,
+        "falsePositive": 554,
+        "generated": 1067,
+        "grossF1": 0.5479674796747968,
+        "matched": 513,
+        "primaryF1": 0.4170731707317073,
+        "primaryPrecision": 0.48078725398313027,
+        "primaryRecall": 0.3682699210337401,
+        "reference": 1393,
+        "sameMeasurePitchContentF1": 0.5910569105691057
+      },
+      "stream": "combinedGuitar"
+    },
+    {
+      "candidateSha256": "cab44e0bcc8575c3c4b93b9569794ce1a2049324e66a268587d683a2841b2d4f",
+      "config": {
+        "activeStateMode": "inactive_only",
+        "activitySupportMin": 0.05,
+        "baseline": false,
+        "candidateToMaxActiveTemplateScoreMin": 1.0,
+        "chordIntervalsAllowed": [
+          3,
+          4,
+          5,
+          7,
+          8,
+          9,
+          10
+        ],
+        "existingIteration003EventsPreferred": true,
+        "fundamentalPresentRequired": true,
+        "harmonicOctaveIntervalsRejected": [
+          12,
+          19,
+          24
+        ],
+        "id": "gctx-o65-q100-inactive-chord",
+        "intervalContextPolicy": "chord_interval",
+        "maxAddsPerSite": 1,
+        "onsetSupportMin": 0.65,
+        "polyphonyCap": 6,
+        "requireBasicPitchActiveContext": true,
+        "stepMidiDedupe": true,
+        "stream": "combinedGuitar",
+        "templateRankMin": 0.975
+      },
+      "deltaVsIteration003": {
+        "f1PercentagePoints": -0.17087516284452486,
+        "falseNegative": 0,
+        "falsePositive": 10,
+        "generated": 10,
+        "matched": 0,
+        "precisionPercentagePoints": -0.4600179694519313,
+        "recallPercentagePoints": 0.0
+      },
+      "generationSummary": {
+        "added": 10,
+        "eligible": 10,
+        "sitesWithActiveContext": 204,
+        "sitesWithAdds": 10,
+        "sitesWithEligible": 10
+      },
+      "id": "gctx-o65-q100-inactive-chord",
+      "metrics": {
+        "falseNegative": 881,
+        "falsePositive": 548,
+        "generated": 1060,
+        "grossF1": 0.5487158581328984,
+        "matched": 512,
+        "primaryF1": 0.41744802282918875,
+        "primaryPrecision": 0.4830188679245283,
+        "primaryRecall": 0.36755204594400576,
+        "reference": 1393,
+        "sameMeasurePitchContentF1": 0.5919282511210762
+      },
+      "stream": "combinedGuitar"
+    },
+    {
+      "candidateSha256": "bc38bfa955a4280c144791474eaa5915a546353cf61b1613dfe473d90eb320fe",
+      "config": {
+        "activeStateMode": "allow_active",
+        "activitySupportMin": 0.05,
+        "baseline": false,
+        "candidateToMaxActiveTemplateScoreMin": 1.25,
+        "chordIntervalsAllowed": [
+          3,
+          4,
+          5,
+          7,
+          8,
+          9,
+          10
+        ],
+        "existingIteration003EventsPreferred": true,
+        "fundamentalPresentRequired": true,
+        "harmonicOctaveIntervalsRejected": [
+          12,
+          19,
+          24
+        ],
+        "id": "gctx-o65-q125-allow-none",
+        "intervalContextPolicy": "none",
+        "maxAddsPerSite": 1,
+        "onsetSupportMin": 0.65,
+        "polyphonyCap": 6,
+        "requireBasicPitchActiveContext": true,
+        "stepMidiDedupe": true,
+        "stream": "combinedGuitar",
+        "templateRankMin": 0.975
+      },
+      "deltaVsIteration003": {
+        "f1PercentagePoints": -0.22873502889397268,
+        "falseNegative": -2,
+        "falsePositive": 21,
+        "generated": 23,
+        "matched": 2,
+        "precisionPercentagePoints": -0.8588292726223745,
+        "recallPercentagePoints": 0.14357501794687866
+      },
+      "generationSummary": {
+        "added": 23,
+        "eligible": 30,
+        "sitesWithActiveContext": 204,
+        "sitesWithAdds": 23,
+        "sitesWithEligible": 23
+      },
+      "id": "gctx-o65-q125-allow-none",
+      "metrics": {
+        "falseNegative": 879,
+        "falsePositive": 559,
+        "generated": 1073,
+        "grossF1": 0.5482562854825629,
+        "matched": 514,
+        "primaryF1": 0.41686942416869427,
+        "primaryPrecision": 0.4790307548928239,
+        "primaryRecall": 0.36898779612347454,
+        "reference": 1393,
+        "sameMeasurePitchContentF1": 0.5904298459042984
+      },
+      "stream": "combinedGuitar"
+    },
+    {
+      "candidateSha256": "e9738c86f256b0048a6a395eba3252613ed0d878fb0617640095c19b257005ac",
+      "config": {
+        "activeStateMode": "allow_active",
+        "activitySupportMin": 0.05,
+        "baseline": false,
+        "candidateToMaxActiveTemplateScoreMin": 1.25,
+        "chordIntervalsAllowed": [
+          3,
+          4,
+          5,
+          7,
+          8,
+          9,
+          10
+        ],
+        "existingIteration003EventsPreferred": true,
+        "fundamentalPresentRequired": true,
+        "harmonicOctaveIntervalsRejected": [
+          12,
+          19,
+          24
+        ],
+        "id": "gctx-o65-q125-allow-noharm",
+        "intervalContextPolicy": "exclude_harmonic_octave",
+        "maxAddsPerSite": 1,
+        "onsetSupportMin": 0.65,
+        "polyphonyCap": 6,
+        "requireBasicPitchActiveContext": true,
+        "stepMidiDedupe": true,
+        "stream": "combinedGuitar",
+        "templateRankMin": 0.975
+      },
+      "deltaVsIteration003": {
+        "f1PercentagePoints": -0.08934234588569567,
+        "falseNegative": -1,
+        "falsePositive": 9,
+        "generated": 10,
+        "matched": 1,
+        "precisionPercentagePoints": -0.3656783468104219,
+        "recallPercentagePoints": 0.07178750897343655
+      },
+      "generationSummary": {
+        "added": 10,
+        "eligible": 12,
+        "sitesWithActiveContext": 204,
+        "sitesWithAdds": 10,
+        "sitesWithEligible": 10
+      },
+      "id": "gctx-o65-q125-allow-noharm",
+      "metrics": {
+        "falseNegative": 880,
+        "falsePositive": 547,
+        "generated": 1060,
+        "grossF1": 0.5495311863024868,
+        "matched": 513,
+        "primaryF1": 0.41826335099877704,
+        "primaryPrecision": 0.4839622641509434,
+        "primaryRecall": 0.3682699210337401,
+        "reference": 1393,
+        "sameMeasurePitchContentF1": 0.5919282511210762
+      },
+      "stream": "combinedGuitar"
+    },
+    {
+      "candidateSha256": "20b4c57f6ab6bf8a9df51b943951b39909b3eb10469a788efb20dfb4b06d5d72",
+      "config": {
+        "activeStateMode": "allow_active",
+        "activitySupportMin": 0.05,
+        "baseline": false,
+        "candidateToMaxActiveTemplateScoreMin": 1.25,
+        "chordIntervalsAllowed": [
+          3,
+          4,
+          5,
+          7,
+          8,
+          9,
+          10
+        ],
+        "existingIteration003EventsPreferred": true,
+        "fundamentalPresentRequired": true,
+        "harmonicOctaveIntervalsRejected": [
+          12,
+          19,
+          24
+        ],
+        "id": "gctx-o65-q125-allow-chord",
+        "intervalContextPolicy": "chord_interval",
+        "maxAddsPerSite": 1,
+        "onsetSupportMin": 0.65,
+        "polyphonyCap": 6,
+        "requireBasicPitchActiveContext": true,
+        "stepMidiDedupe": true,
+        "stream": "combinedGuitar",
+        "templateRankMin": 0.975
+      },
+      "deltaVsIteration003": {
+        "f1PercentagePoints": -0.06851765826850764,
+        "falseNegative": 0,
+        "falsePositive": 4,
+        "generated": 4,
+        "matched": 0,
+        "precisionPercentagePoints": -0.18505466702810058,
+        "recallPercentagePoints": 0.0
+      },
+      "generationSummary": {
+        "added": 4,
+        "eligible": 4,
+        "sitesWithActiveContext": 204,
+        "sitesWithAdds": 4,
+        "sitesWithEligible": 4
+      },
+      "id": "gctx-o65-q125-allow-chord",
+      "metrics": {
+        "falseNegative": 881,
+        "falsePositive": 542,
+        "generated": 1054,
+        "grossF1": 0.55006129955047,
+        "matched": 512,
+        "primaryF1": 0.4184715978749489,
+        "primaryPrecision": 0.4857685009487666,
+        "primaryRecall": 0.36755204594400576,
+        "reference": 1393,
+        "sameMeasurePitchContentF1": 0.5925623212096446
+      },
+      "stream": "combinedGuitar"
+    },
+    {
+      "candidateSha256": "df180eed797d659a5f139eec5ee013f9a22a462476826804715b75b1e0e95d44",
+      "config": {
+        "activeStateMode": "inactive_only",
+        "activitySupportMin": 0.05,
+        "baseline": false,
+        "candidateToMaxActiveTemplateScoreMin": 1.25,
+        "chordIntervalsAllowed": [
+          3,
+          4,
+          5,
+          7,
+          8,
+          9,
+          10
+        ],
+        "existingIteration003EventsPreferred": true,
+        "fundamentalPresentRequired": true,
+        "harmonicOctaveIntervalsRejected": [
+          12,
+          19,
+          24
+        ],
+        "id": "gctx-o65-q125-inactive-none",
+        "intervalContextPolicy": "none",
+        "maxAddsPerSite": 1,
+        "onsetSupportMin": 0.65,
+        "polyphonyCap": 6,
+        "requireBasicPitchActiveContext": true,
+        "stepMidiDedupe": true,
+        "stream": "combinedGuitar",
+        "templateRankMin": 0.975
+      },
+      "deltaVsIteration003": {
+        "f1PercentagePoints": -0.22873502889397268,
+        "falseNegative": -2,
+        "falsePositive": 21,
+        "generated": 23,
+        "matched": 2,
+        "precisionPercentagePoints": -0.8588292726223745,
+        "recallPercentagePoints": 0.14357501794687866
+      },
+      "generationSummary": {
+        "added": 23,
+        "eligible": 30,
+        "sitesWithActiveContext": 204,
+        "sitesWithAdds": 23,
+        "sitesWithEligible": 23
+      },
+      "id": "gctx-o65-q125-inactive-none",
+      "metrics": {
+        "falseNegative": 879,
+        "falsePositive": 559,
+        "generated": 1073,
+        "grossF1": 0.5482562854825629,
+        "matched": 514,
+        "primaryF1": 0.41686942416869427,
+        "primaryPrecision": 0.4790307548928239,
+        "primaryRecall": 0.36898779612347454,
+        "reference": 1393,
+        "sameMeasurePitchContentF1": 0.5904298459042984
+      },
+      "stream": "combinedGuitar"
+    },
+    {
+      "candidateSha256": "c8c691fca9edd75dfa5d5e89fe3a36ec58af3ea46ec9b32423f78c860f9da438",
+      "config": {
+        "activeStateMode": "inactive_only",
+        "activitySupportMin": 0.05,
+        "baseline": false,
+        "candidateToMaxActiveTemplateScoreMin": 1.25,
+        "chordIntervalsAllowed": [
+          3,
+          4,
+          5,
+          7,
+          8,
+          9,
+          10
+        ],
+        "existingIteration003EventsPreferred": true,
+        "fundamentalPresentRequired": true,
+        "harmonicOctaveIntervalsRejected": [
+          12,
+          19,
+          24
+        ],
+        "id": "gctx-o65-q125-inactive-noharm",
+        "intervalContextPolicy": "exclude_harmonic_octave",
+        "maxAddsPerSite": 1,
+        "onsetSupportMin": 0.65,
+        "polyphonyCap": 6,
+        "requireBasicPitchActiveContext": true,
+        "stepMidiDedupe": true,
+        "stream": "combinedGuitar",
+        "templateRankMin": 0.975
+      },
+      "deltaVsIteration003": {
+        "f1PercentagePoints": -0.08934234588569567,
+        "falseNegative": -1,
+        "falsePositive": 9,
+        "generated": 10,
+        "matched": 1,
+        "precisionPercentagePoints": -0.3656783468104219,
+        "recallPercentagePoints": 0.07178750897343655
+      },
+      "generationSummary": {
+        "added": 10,
+        "eligible": 12,
+        "sitesWithActiveContext": 204,
+        "sitesWithAdds": 10,
+        "sitesWithEligible": 10
+      },
+      "id": "gctx-o65-q125-inactive-noharm",
+      "metrics": {
+        "falseNegative": 880,
+        "falsePositive": 547,
+        "generated": 1060,
+        "grossF1": 0.5495311863024868,
+        "matched": 513,
+        "primaryF1": 0.41826335099877704,
+        "primaryPrecision": 0.4839622641509434,
+        "primaryRecall": 0.3682699210337401,
+        "reference": 1393,
+        "sameMeasurePitchContentF1": 0.5919282511210762
+      },
+      "stream": "combinedGuitar"
+    },
+    {
+      "candidateSha256": "c8527c87070a3a0b660ebec034977dcd2ac2f062e421602a5c25275b369ea4f4",
+      "config": {
+        "activeStateMode": "inactive_only",
+        "activitySupportMin": 0.05,
+        "baseline": false,
+        "candidateToMaxActiveTemplateScoreMin": 1.25,
+        "chordIntervalsAllowed": [
+          3,
+          4,
+          5,
+          7,
+          8,
+          9,
+          10
+        ],
+        "existingIteration003EventsPreferred": true,
+        "fundamentalPresentRequired": true,
+        "harmonicOctaveIntervalsRejected": [
+          12,
+          19,
+          24
+        ],
+        "id": "gctx-o65-q125-inactive-chord",
+        "intervalContextPolicy": "chord_interval",
+        "maxAddsPerSite": 1,
+        "onsetSupportMin": 0.65,
+        "polyphonyCap": 6,
+        "requireBasicPitchActiveContext": true,
+        "stepMidiDedupe": true,
+        "stream": "combinedGuitar",
+        "templateRankMin": 0.975
+      },
+      "deltaVsIteration003": {
+        "f1PercentagePoints": -0.06851765826850764,
+        "falseNegative": 0,
+        "falsePositive": 4,
+        "generated": 4,
+        "matched": 0,
+        "precisionPercentagePoints": -0.18505466702810058,
+        "recallPercentagePoints": 0.0
+      },
+      "generationSummary": {
+        "added": 4,
+        "eligible": 4,
+        "sitesWithActiveContext": 204,
+        "sitesWithAdds": 4,
+        "sitesWithEligible": 4
+      },
+      "id": "gctx-o65-q125-inactive-chord",
+      "metrics": {
+        "falseNegative": 881,
+        "falsePositive": 542,
+        "generated": 1054,
+        "grossF1": 0.55006129955047,
+        "matched": 512,
+        "primaryF1": 0.4184715978749489,
+        "primaryPrecision": 0.4857685009487666,
+        "primaryRecall": 0.36755204594400576,
+        "reference": 1393,
+        "sameMeasurePitchContentF1": 0.5925623212096446
+      },
+      "stream": "combinedGuitar"
+    }
+  ],
+  "version": "V167",
+  "winner": {
+    "beatsIteration003GuitarF1": true,
+    "candidateSha256": "2527870bc4655c238d5f4fbd0e243ab518554e17c4e2c29db2794225bbbeed43",
+    "config": {
+      "activeStateMode": "allow_active",
+      "activitySupportMin": 0.05,
+      "baseline": false,
+      "candidateToMaxActiveTemplateScoreMin": 1.0,
+      "chordIntervalsAllowed": [
+        3,
+        4,
+        5,
+        7,
+        8,
+        9,
+        10
+      ],
+      "existingIteration003EventsPreferred": true,
+      "fundamentalPresentRequired": true,
+      "harmonicOctaveIntervalsRejected": [
+        12,
+        19,
+        24
+      ],
+      "id": "gctx-o50-q100-allow-noharm",
+      "intervalContextPolicy": "exclude_harmonic_octave",
+      "maxAddsPerSite": 1,
+      "onsetSupportMin": 0.5,
+      "polyphonyCap": 6,
+      "requireBasicPitchActiveContext": true,
+      "stepMidiDedupe": true,
+      "stream": "combinedGuitar",
+      "templateRankMin": 0.975
+    },
+    "deltaVsIteration003": {
+      "f1PercentagePoints": 0.702040032289275,
+      "falseNegative": -22,
+      "falsePositive": 41,
+      "generated": 63,
+      "matched": 22,
+      "precisionPercentagePoints": -0.7834681042228231,
+      "recallPercentagePoints": 1.5793251974156486
+    },
+    "generationSummary": {
+      "added": 63,
+      "eligible": 69,
+      "sitesWithActiveContext": 204,
+      "sitesWithAdds": 63,
+      "sitesWithEligible": 63
+    },
+    "id": "gctx-o50-q100-allow-noharm",
+    "metrics": {
+      "falseNegative": 859,
+      "falsePositive": 579,
+      "generated": 1113,
+      "grossF1": 0.5450917797286512,
+      "matched": 534,
+      "primaryF1": 0.42617717478052675,
+      "primaryPrecision": 0.4797843665768194,
+      "primaryRecall": 0.38334529791816224,
+      "reference": 1393,
+      "sameMeasurePitchContentF1": 0.5897845171588189
+    }
+  }
+}

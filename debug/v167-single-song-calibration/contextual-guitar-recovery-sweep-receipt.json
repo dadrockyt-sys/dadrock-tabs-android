@@ -1,0 +1,109 @@
+{
+  "classification": "SINGLE_SONG_TRAINING_CALIBRATION_ONLY",
+  "implementation": {
+    "baseBuilderGitBlob": "24413d321f64bbfcce48812ceb85b4593dcfa80c",
+    "baseGraderGitBlob": "adfd512f53e8839b295129c0768d484b5af09bc7",
+    "contextualBuilderGitBlob": "fd257fe88c5dcd9b3ab135263a6457140c3f63b6",
+    "graderRearmGitBlob": "8555101a684f59f7dcd910d7c6f7694e968a68b1"
+  },
+  "inputs": {
+    "evidencePoolGitBlob": "aa7da3a55344b1418a291f30fab9ca55858fc094",
+    "iteration003GitBlob": "758f8762632e916306aed9b036a6483af9431dc0",
+    "iteration003Sha256": "f15c6f40dd4b8479c2dfb7eab039cff98a23b45eb796265ffad08c5a8ae37115",
+    "referenceGitBlob": "2fbed60b543c0488934d8642c488aa06bf31bbf5",
+    "scorerGitBlob": "9644e65719fbd361a9b39778ae9950c5e983e855",
+    "timebaseGitBlob": "abebae25801b7ddeb5b933977c4f4a918f7bf9ef"
+  },
+  "manifestGitBlob": "b9ec90a34e0d7a4a6b6ee7fb3f5a1eef7e6bba5d",
+  "manifestSha256": "2f51fa0cba372acc8f797a2e700b3b0a6bb42b807ad4bad818b3c40c262df876",
+  "nonBaselineVariantsBeatingIteration003": 10,
+  "policy": {
+    "bassCoordinateIdentityVerifiedBeforeReferenceRead": true,
+    "generalizationClaim": false,
+    "gpuCudaModalUsed": false,
+    "individualEventSelectionByReference": false,
+    "iteration003Modified": false,
+    "iteration004Created": false,
+    "mainOrProductionModified": false,
+    "postScoreCandidateMutation": false,
+    "variantsFrozenBeforeReferenceRead": true
+  },
+  "reportGitBlob": "b00e25f5c1fd9f8c40b440156e049317e008ec1d",
+  "reportSha256": "6b661f6dfa27d31204f4e8a9035d286d5324440b947eb3e49db99205dad9320e",
+  "schema": "dadrock.tabs.v167.contextual-guitar-recovery-sweep-receipt.v1",
+  "status": "CONTEXTUAL_GUITAR_RECOVERY_SWEEP_FROZEN",
+  "variantCounts": {
+    "baseline": 1,
+    "contextual": 36,
+    "total": 37
+  },
+  "version": "V167",
+  "winner": {
+    "beatsIteration003GuitarF1": true,
+    "candidateSha256": "2527870bc4655c238d5f4fbd0e243ab518554e17c4e2c29db2794225bbbeed43",
+    "config": {
+      "activeStateMode": "allow_active",
+      "activitySupportMin": 0.05,
+      "baseline": false,
+      "candidateToMaxActiveTemplateScoreMin": 1.0,
+      "chordIntervalsAllowed": [
+        3,
+        4,
+        5,
+        7,
+        8,
+        9,
+        10
+      ],
+      "existingIteration003EventsPreferred": true,
+      "fundamentalPresentRequired": true,
+      "harmonicOctaveIntervalsRejected": [
+        12,
+        19,
+        24
+      ],
+      "id": "gctx-o50-q100-allow-noharm",
+      "intervalContextPolicy": "exclude_harmonic_octave",
+      "maxAddsPerSite": 1,
+      "onsetSupportMin": 0.5,
+      "polyphonyCap": 6,
+      "requireBasicPitchActiveContext": true,
+      "stepMidiDedupe": true,
+      "stream": "combinedGuitar",
+      "templateRankMin": 0.975
+    },
+    "deltaVsIteration003": {
+      "f1PercentagePoints": 0.702040032289275,
+      "falseNegative": -22,
+      "falsePositive": 41,
+      "generated": 63,
+      "matched": 22,
+      "precisionPercentagePoints": -0.7834681042228231,
+      "recallPercentagePoints": 1.5793251974156486
+    },
+    "generationSummary": {
+      "added": 63,
+      "eligible": 69,
+      "sitesWithActiveContext": 204,
+      "sitesWithAdds": 63,
+      "sitesWithEligible": 63
+    },
+    "id": "gctx-o50-q100-allow-noharm",
+    "metrics": {
+      "falseNegative": 859,
+      "falsePositive": 579,
+      "generated": 1113,
+      "grossF1": 0.5450917797286512,
+      "matched": 534,
+      "primaryF1": 0.42617717478052675,
+      "primaryPrecision": 0.4797843665768194,
+      "primaryRecall": 0.38334529791816224,
+      "reference": 1393,
+      "sameMeasurePitchContentF1": 0.5897845171588189
+    }
+  },
+  "workflowHeadSha": "0dec90b569de77b4410c52c354e2b764883e327f",
+  "workflowRunAttempt": 1,
+  "workflowRunId": 33257327955,
+  "workflowRunNumber": 3
+}

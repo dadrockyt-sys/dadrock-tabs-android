@@ -1,0 +1,1793 @@
+{
+  "classification": "SINGLE_SONG_TRAINING_CALIBRATION_ONLY",
+  "inputs": {
+    "baseCounts": {
+      "bass": 512,
+      "combinedGuitar": 1050
+    },
+    "guitarPoolRows": 13328,
+    "guitarPoolSites": 272,
+    "iteration003Sha256": "f15c6f40dd4b8479c2dfb7eab039cff98a23b45eb796265ffad08c5a8ae37115",
+    "poolSha256": "1c983784c2d12a22437a80387525789bcf55a2f4e4a5c7a96608c575bf709673",
+    "timebaseSha256": "899746d3048d239bc0032375d412a109ea04b055df19df1b7b08dc3e73aa5ca0"
+  },
+  "policy": {
+    "allVariantRulesPredeclaredBeforeScoring": true,
+    "bassNormalizedStreamFixedToIteration003": true,
+    "existingIteration003GuitarEventsPreferred": true,
+    "fundamentalPresentFilterInheritedFromFrozenStructuralEvidence": true,
+    "globalPhaseCorrectionGridSteps": -12,
+    "gpuCudaModalUsed": false,
+    "individualEventSelectionByReference": false,
+    "iteration003Immutable": true,
+    "mainOrProductionModified": false,
+    "newRecoveryStepMidiDedupeAgainstImmutableParent": true,
+    "newRecoveryTimingRule": "nearest-frozen-v166-subdivision-then-frozen-minus-12-global-phase",
+    "preExistingParentCoordinateDuplicatesPreserved": true,
+    "referenceRead": false,
+    "scorerRead": false,
+    "siteSelectionOrder": [
+      "candidate_to_max_active_template_score_ratio_desc",
+      "template_rank_desc",
+      "template_score_desc",
+      "onset_support_desc",
+      "activity_support_desc",
+      "midi_asc"
+    ]
+  },
+  "schema": "dadrock.tabs.v167.predeclared-contextual-guitar-recovery-manifest.v1",
+  "status": "FROZEN_BEFORE_REFERENCE_SCORING",
+  "variants": [
+    {
+      "config": {
+        "baseline": true,
+        "id": "gctx-baseline",
+        "stream": "combinedGuitar"
+      },
+      "counts": {
+        "bass": 512,
+        "combinedGuitar": 1050
+      },
+      "id": "gctx-baseline",
+      "relativePath": "guitar/gctx-baseline.json",
+      "sha256": "34815091a7f8f505c6d50820dbe261073e0500bb109a2767183d472943d82160",
+      "stream": "combinedGuitar",
+      "summary": {
+        "added": 0,
+        "eligible": 0,
+        "sitesWithActiveContext": 0,
+        "sitesWithAdds": 0,
+        "sitesWithEligible": 0
+      }
+    },
+    {
+      "config": {
+        "activeStateMode": "allow_active",
+        "activitySupportMin": 0.05,
+        "baseline": false,
+        "candidateToMaxActiveTemplateScoreMin": 0.75,
+        "chordIntervalsAllowed": [
+          3,
+          4,
+          5,
+          7,
+          8,
+          9,
+          10
+        ],
+        "existingIteration003EventsPreferred": true,
+        "fundamentalPresentRequired": true,
+        "harmonicOctaveIntervalsRejected": [
+          12,
+          19,
+          24
+        ],
+        "id": "gctx-o50-q075-allow-none",
+        "intervalContextPolicy": "none",
+        "maxAddsPerSite": 1,
+        "onsetSupportMin": 0.5,
+        "polyphonyCap": 6,
+        "requireBasicPitchActiveContext": true,
+        "stepMidiDedupe": true,
+        "stream": "combinedGuitar",
+        "templateRankMin": 0.975
+      },
+      "counts": {
+        "bass": 512,
+        "combinedGuitar": 1167
+      },
+      "id": "gctx-o50-q075-allow-none",
+      "relativePath": "guitar/gctx-o50-q075-allow-none.json",
+      "sha256": "622b7708837602cf9b6f6bc1654b8afaaaaabe38b257259c596ac4c93ce2a60f",
+      "stream": "combinedGuitar",
+      "summary": {
+        "added": 117,
+        "eligible": 147,
+        "sitesWithActiveContext": 204,
+        "sitesWithAdds": 117,
+        "sitesWithEligible": 117
+      }
+    },
+    {
+      "config": {
+        "activeStateMode": "allow_active",
+        "activitySupportMin": 0.05,
+        "baseline": false,
+        "candidateToMaxActiveTemplateScoreMin": 0.75,
+        "chordIntervalsAllowed": [
+          3,
+          4,
+          5,
+          7,
+          8,
+          9,
+          10
+        ],
+        "existingIteration003EventsPreferred": true,
+        "fundamentalPresentRequired": true,
+        "harmonicOctaveIntervalsRejected": [
+          12,
+          19,
+          24
+        ],
+        "id": "gctx-o50-q075-allow-noharm",
+        "intervalContextPolicy": "exclude_harmonic_octave",
+        "maxAddsPerSite": 1,
+        "onsetSupportMin": 0.5,
+        "polyphonyCap": 6,
+        "requireBasicPitchActiveContext": true,
+        "stepMidiDedupe": true,
+        "stream": "combinedGuitar",
+        "templateRankMin": 0.975
+      },
+      "counts": {
+        "bass": 512,
+        "combinedGuitar": 1124
+      },
+      "id": "gctx-o50-q075-allow-noharm",
+      "relativePath": "guitar/gctx-o50-q075-allow-noharm.json",
+      "sha256": "e2e3acfdebf4c01bba8f7850d696fd50ab9e4d650023e477c6e3d458f1ea2802",
+      "stream": "combinedGuitar",
+      "summary": {
+        "added": 74,
+        "eligible": 87,
+        "sitesWithActiveContext": 204,
+        "sitesWithAdds": 74,
+        "sitesWithEligible": 74
+      }
+    },
+    {
+      "config": {
+        "activeStateMode": "allow_active",
+        "activitySupportMin": 0.05,
+        "baseline": false,
+        "candidateToMaxActiveTemplateScoreMin": 0.75,
+        "chordIntervalsAllowed": [
+          3,
+          4,
+          5,
+          7,
+          8,
+          9,
+          10
+        ],
+        "existingIteration003EventsPreferred": true,
+        "fundamentalPresentRequired": true,
+        "harmonicOctaveIntervalsRejected": [
+          12,
+          19,
+          24
+        ],
+        "id": "gctx-o50-q075-allow-chord",
+        "intervalContextPolicy": "chord_interval",
+        "maxAddsPerSite": 1,
+        "onsetSupportMin": 0.5,
+        "polyphonyCap": 6,
+        "requireBasicPitchActiveContext": true,
+        "stepMidiDedupe": true,
+        "stream": "combinedGuitar",
+        "templateRankMin": 0.975
+      },
+      "counts": {
+        "bass": 512,
+        "combinedGuitar": 1086
+      },
+      "id": "gctx-o50-q075-allow-chord",
+      "relativePath": "guitar/gctx-o50-q075-allow-chord.json",
+      "sha256": "08720c3e8f98094e35930ae7dd1048ea1605007e6eda5e9bd2034c0254b953b2",
+      "stream": "combinedGuitar",
+      "summary": {
+        "added": 36,
+        "eligible": 38,
+        "sitesWithActiveContext": 204,
+        "sitesWithAdds": 36,
+        "sitesWithEligible": 36
+      }
+    },
+    {
+      "config": {
+        "activeStateMode": "inactive_only",
+        "activitySupportMin": 0.05,
+        "baseline": false,
+        "candidateToMaxActiveTemplateScoreMin": 0.75,
+        "chordIntervalsAllowed": [
+          3,
+          4,
+          5,
+          7,
+          8,
+          9,
+          10
+        ],
+        "existingIteration003EventsPreferred": true,
+        "fundamentalPresentRequired": true,
+        "harmonicOctaveIntervalsRejected": [
+          12,
+          19,
+          24
+        ],
+        "id": "gctx-o50-q075-inactive-none",
+        "intervalContextPolicy": "none",
+        "maxAddsPerSite": 1,
+        "onsetSupportMin": 0.5,
+        "polyphonyCap": 6,
+        "requireBasicPitchActiveContext": true,
+        "stepMidiDedupe": true,
+        "stream": "combinedGuitar",
+        "templateRankMin": 0.975
+      },
+      "counts": {
+        "bass": 512,
+        "combinedGuitar": 1126
+      },
+      "id": "gctx-o50-q075-inactive-none",
+      "relativePath": "guitar/gctx-o50-q075-inactive-none.json",
+      "sha256": "4e2184d6da8d95d842a17f26630df2007e8c23ef6b2bb1726c69e0233ab28f98",
+      "stream": "combinedGuitar",
+      "summary": {
+        "added": 76,
+        "eligible": 87,
+        "sitesWithActiveContext": 204,
+        "sitesWithAdds": 76,
+        "sitesWithEligible": 76
+      }
+    },
+    {
+      "config": {
+        "activeStateMode": "inactive_only",
+        "activitySupportMin": 0.05,
+        "baseline": false,
+        "candidateToMaxActiveTemplateScoreMin": 0.75,
+        "chordIntervalsAllowed": [
+          3,
+          4,
+          5,
+          7,
+          8,
+          9,
+          10
+        ],
+        "existingIteration003EventsPreferred": true,
+        "fundamentalPresentRequired": true,
+        "harmonicOctaveIntervalsRejected": [
+          12,
+          19,
+          24
+        ],
+        "id": "gctx-o50-q075-inactive-noharm",
+        "intervalContextPolicy": "exclude_harmonic_octave",
+        "maxAddsPerSite": 1,
+        "onsetSupportMin": 0.5,
+        "polyphonyCap": 6,
+        "requireBasicPitchActiveContext": true,
+        "stepMidiDedupe": true,
+        "stream": "combinedGuitar",
+        "templateRankMin": 0.975
+      },
+      "counts": {
+        "bass": 512,
+        "combinedGuitar": 1082
+      },
+      "id": "gctx-o50-q075-inactive-noharm",
+      "relativePath": "guitar/gctx-o50-q075-inactive-noharm.json",
+      "sha256": "c2e52018b85988241bdcb40cfdac48a4729804dd29926e907ef6f6b11260292f",
+      "stream": "combinedGuitar",
+      "summary": {
+        "added": 32,
+        "eligible": 36,
+        "sitesWithActiveContext": 204,
+        "sitesWithAdds": 32,
+        "sitesWithEligible": 32
+      }
+    },
+    {
+      "config": {
+        "activeStateMode": "inactive_only",
+        "activitySupportMin": 0.05,
+        "baseline": false,
+        "candidateToMaxActiveTemplateScoreMin": 0.75,
+        "chordIntervalsAllowed": [
+          3,
+          4,
+          5,
+          7,
+          8,
+          9,
+          10
+        ],
+        "existingIteration003EventsPreferred": true,
+        "fundamentalPresentRequired": true,
+        "harmonicOctaveIntervalsRejected": [
+          12,
+          19,
+          24
+        ],
+        "id": "gctx-o50-q075-inactive-chord",
+        "intervalContextPolicy": "chord_interval",
+        "maxAddsPerSite": 1,
+        "onsetSupportMin": 0.5,
+        "polyphonyCap": 6,
+        "requireBasicPitchActiveContext": true,
+        "stepMidiDedupe": true,
+        "stream": "combinedGuitar",
+        "templateRankMin": 0.975
+      },
+      "counts": {
+        "bass": 512,
+        "combinedGuitar": 1068
+      },
+      "id": "gctx-o50-q075-inactive-chord",
+      "relativePath": "guitar/gctx-o50-q075-inactive-chord.json",
+      "sha256": "0d5311325bfb8287283a62488e2776cfc93636076963c80a597d65587a24c2c6",
+      "stream": "combinedGuitar",
+      "summary": {
+        "added": 18,
+        "eligible": 18,
+        "sitesWithActiveContext": 204,
+        "sitesWithAdds": 18,
+        "sitesWithEligible": 18
+      }
+    },
+    {
+      "config": {
+        "activeStateMode": "allow_active",
+        "activitySupportMin": 0.05,
+        "baseline": false,
+        "candidateToMaxActiveTemplateScoreMin": 1.0,
+        "chordIntervalsAllowed": [
+          3,
+          4,
+          5,
+          7,
+          8,
+          9,
+          10
+        ],
+        "existingIteration003EventsPreferred": true,
+        "fundamentalPresentRequired": true,
+        "harmonicOctaveIntervalsRejected": [
+          12,
+          19,
+          24
+        ],
+        "id": "gctx-o50-q100-allow-none",
+        "intervalContextPolicy": "none",
+        "maxAddsPerSite": 1,
+        "onsetSupportMin": 0.5,
+        "polyphonyCap": 6,
+        "requireBasicPitchActiveContext": true,
+        "stepMidiDedupe": true,
+        "stream": "combinedGuitar",
+        "templateRankMin": 0.975
+      },
+      "counts": {
+        "bass": 512,
+        "combinedGuitar": 1145
+      },
+      "id": "gctx-o50-q100-allow-none",
+      "relativePath": "guitar/gctx-o50-q100-allow-none.json",
+      "sha256": "776f487175be98905022d812de4981b5c030e8f84c49ce02c5c410464c9d9daa",
+      "stream": "combinedGuitar",
+      "summary": {
+        "added": 95,
+        "eligible": 112,
+        "sitesWithActiveContext": 204,
+        "sitesWithAdds": 95,
+        "sitesWithEligible": 95
+      }
+    },
+    {
+      "config": {
+        "activeStateMode": "allow_active",
+        "activitySupportMin": 0.05,
+        "baseline": false,
+        "candidateToMaxActiveTemplateScoreMin": 1.0,
+        "chordIntervalsAllowed": [
+          3,
+          4,
+          5,
+          7,
+          8,
+          9,
+          10
+        ],
+        "existingIteration003EventsPreferred": true,
+        "fundamentalPresentRequired": true,
+        "harmonicOctaveIntervalsRejected": [
+          12,
+          19,
+          24
+        ],
+        "id": "gctx-o50-q100-allow-noharm",
+        "intervalContextPolicy": "exclude_harmonic_octave",
+        "maxAddsPerSite": 1,
+        "onsetSupportMin": 0.5,
+        "polyphonyCap": 6,
+        "requireBasicPitchActiveContext": true,
+        "stepMidiDedupe": true,
+        "stream": "combinedGuitar",
+        "templateRankMin": 0.975
+      },
+      "counts": {
+        "bass": 512,
+        "combinedGuitar": 1113
+      },
+      "id": "gctx-o50-q100-allow-noharm",
+      "relativePath": "guitar/gctx-o50-q100-allow-noharm.json",
+      "sha256": "2527870bc4655c238d5f4fbd0e243ab518554e17c4e2c29db2794225bbbeed43",
+      "stream": "combinedGuitar",
+      "summary": {
+        "added": 63,
+        "eligible": 69,
+        "sitesWithActiveContext": 204,
+        "sitesWithAdds": 63,
+        "sitesWithEligible": 63
+      }
+    },
+    {
+      "config": {
+        "activeStateMode": "allow_active",
+        "activitySupportMin": 0.05,
+        "baseline": false,
+        "candidateToMaxActiveTemplateScoreMin": 1.0,
+        "chordIntervalsAllowed": [
+          3,
+          4,
+          5,
+          7,
+          8,
+          9,
+          10
+        ],
+        "existingIteration003EventsPreferred": true,
+        "fundamentalPresentRequired": true,
+        "harmonicOctaveIntervalsRejected": [
+          12,
+          19,
+          24
+        ],
+        "id": "gctx-o50-q100-allow-chord",
+        "intervalContextPolicy": "chord_interval",
+        "maxAddsPerSite": 1,
+        "onsetSupportMin": 0.5,
+        "polyphonyCap": 6,
+        "requireBasicPitchActiveContext": true,
+        "stepMidiDedupe": true,
+        "stream": "combinedGuitar",
+        "templateRankMin": 0.975
+      },
+      "counts": {
+        "bass": 512,
+        "combinedGuitar": 1078
+      },
+      "id": "gctx-o50-q100-allow-chord",
+      "relativePath": "guitar/gctx-o50-q100-allow-chord.json",
+      "sha256": "69115c4a5cf89077954c36ef2c51229980cd2020a3edb0de32a5e0858c468637",
+      "stream": "combinedGuitar",
+      "summary": {
+        "added": 28,
+        "eligible": 28,
+        "sitesWithActiveContext": 204,
+        "sitesWithAdds": 28,
+        "sitesWithEligible": 28
+      }
+    },
+    {
+      "config": {
+        "activeStateMode": "inactive_only",
+        "activitySupportMin": 0.05,
+        "baseline": false,
+        "candidateToMaxActiveTemplateScoreMin": 1.0,
+        "chordIntervalsAllowed": [
+          3,
+          4,
+          5,
+          7,
+          8,
+          9,
+          10
+        ],
+        "existingIteration003EventsPreferred": true,
+        "fundamentalPresentRequired": true,
+        "harmonicOctaveIntervalsRejected": [
+          12,
+          19,
+          24
+        ],
+        "id": "gctx-o50-q100-inactive-none",
+        "intervalContextPolicy": "none",
+        "maxAddsPerSite": 1,
+        "onsetSupportMin": 0.5,
+        "polyphonyCap": 6,
+        "requireBasicPitchActiveContext": true,
+        "stepMidiDedupe": true,
+        "stream": "combinedGuitar",
+        "templateRankMin": 0.975
+      },
+      "counts": {
+        "bass": 512,
+        "combinedGuitar": 1097
+      },
+      "id": "gctx-o50-q100-inactive-none",
+      "relativePath": "guitar/gctx-o50-q100-inactive-none.json",
+      "sha256": "c1ef778fc93817b3b109059253e28251552b53fd7b7fb05fcad4eb256816d15e",
+      "stream": "combinedGuitar",
+      "summary": {
+        "added": 47,
+        "eligible": 58,
+        "sitesWithActiveContext": 204,
+        "sitesWithAdds": 47,
+        "sitesWithEligible": 47
+      }
+    },
+    {
+      "config": {
+        "activeStateMode": "inactive_only",
+        "activitySupportMin": 0.05,
+        "baseline": false,
+        "candidateToMaxActiveTemplateScoreMin": 1.0,
+        "chordIntervalsAllowed": [
+          3,
+          4,
+          5,
+          7,
+          8,
+          9,
+          10
+        ],
+        "existingIteration003EventsPreferred": true,
+        "fundamentalPresentRequired": true,
+        "harmonicOctaveIntervalsRejected": [
+          12,
+          19,
+          24
+        ],
+        "id": "gctx-o50-q100-inactive-noharm",
+        "intervalContextPolicy": "exclude_harmonic_octave",
+        "maxAddsPerSite": 1,
+        "onsetSupportMin": 0.5,
+        "polyphonyCap": 6,
+        "requireBasicPitchActiveContext": true,
+        "stepMidiDedupe": true,
+        "stream": "combinedGuitar",
+        "templateRankMin": 0.975
+      },
+      "counts": {
+        "bass": 512,
+        "combinedGuitar": 1067
+      },
+      "id": "gctx-o50-q100-inactive-noharm",
+      "relativePath": "guitar/gctx-o50-q100-inactive-noharm.json",
+      "sha256": "ea94cb84813c6c1e67821a7844fca72bd1f276201621c450650225a6a72bebe1",
+      "stream": "combinedGuitar",
+      "summary": {
+        "added": 17,
+        "eligible": 21,
+        "sitesWithActiveContext": 204,
+        "sitesWithAdds": 17,
+        "sitesWithEligible": 17
+      }
+    },
+    {
+      "config": {
+        "activeStateMode": "inactive_only",
+        "activitySupportMin": 0.05,
+        "baseline": false,
+        "candidateToMaxActiveTemplateScoreMin": 1.0,
+        "chordIntervalsAllowed": [
+          3,
+          4,
+          5,
+          7,
+          8,
+          9,
+          10
+        ],
+        "existingIteration003EventsPreferred": true,
+        "fundamentalPresentRequired": true,
+        "harmonicOctaveIntervalsRejected": [
+          12,
+          19,
+          24
+        ],
+        "id": "gctx-o50-q100-inactive-chord",
+        "intervalContextPolicy": "chord_interval",
+        "maxAddsPerSite": 1,
+        "onsetSupportMin": 0.5,
+        "polyphonyCap": 6,
+        "requireBasicPitchActiveContext": true,
+        "stepMidiDedupe": true,
+        "stream": "combinedGuitar",
+        "templateRankMin": 0.975
+      },
+      "counts": {
+        "bass": 512,
+        "combinedGuitar": 1060
+      },
+      "id": "gctx-o50-q100-inactive-chord",
+      "relativePath": "guitar/gctx-o50-q100-inactive-chord.json",
+      "sha256": "ae1273ba06e6d5504c07fd8b1ffd4349ff31ea3ff531878674ae00b08f187c25",
+      "stream": "combinedGuitar",
+      "summary": {
+        "added": 10,
+        "eligible": 10,
+        "sitesWithActiveContext": 204,
+        "sitesWithAdds": 10,
+        "sitesWithEligible": 10
+      }
+    },
+    {
+      "config": {
+        "activeStateMode": "allow_active",
+        "activitySupportMin": 0.05,
+        "baseline": false,
+        "candidateToMaxActiveTemplateScoreMin": 1.25,
+        "chordIntervalsAllowed": [
+          3,
+          4,
+          5,
+          7,
+          8,
+          9,
+          10
+        ],
+        "existingIteration003EventsPreferred": true,
+        "fundamentalPresentRequired": true,
+        "harmonicOctaveIntervalsRejected": [
+          12,
+          19,
+          24
+        ],
+        "id": "gctx-o50-q125-allow-none",
+        "intervalContextPolicy": "none",
+        "maxAddsPerSite": 1,
+        "onsetSupportMin": 0.5,
+        "polyphonyCap": 6,
+        "requireBasicPitchActiveContext": true,
+        "stepMidiDedupe": true,
+        "stream": "combinedGuitar",
+        "templateRankMin": 0.975
+      },
+      "counts": {
+        "bass": 512,
+        "combinedGuitar": 1073
+      },
+      "id": "gctx-o50-q125-allow-none",
+      "relativePath": "guitar/gctx-o50-q125-allow-none.json",
+      "sha256": "90d073817f9178f7feef594a159f5b2ad1236894a6c9a272fcf15b66274a737a",
+      "stream": "combinedGuitar",
+      "summary": {
+        "added": 23,
+        "eligible": 30,
+        "sitesWithActiveContext": 204,
+        "sitesWithAdds": 23,
+        "sitesWithEligible": 23
+      }
+    },
+    {
+      "config": {
+        "activeStateMode": "allow_active",
+        "activitySupportMin": 0.05,
+        "baseline": false,
+        "candidateToMaxActiveTemplateScoreMin": 1.25,
+        "chordIntervalsAllowed": [
+          3,
+          4,
+          5,
+          7,
+          8,
+          9,
+          10
+        ],
+        "existingIteration003EventsPreferred": true,
+        "fundamentalPresentRequired": true,
+        "harmonicOctaveIntervalsRejected": [
+          12,
+          19,
+          24
+        ],
+        "id": "gctx-o50-q125-allow-noharm",
+        "intervalContextPolicy": "exclude_harmonic_octave",
+        "maxAddsPerSite": 1,
+        "onsetSupportMin": 0.5,
+        "polyphonyCap": 6,
+        "requireBasicPitchActiveContext": true,
+        "stepMidiDedupe": true,
+        "stream": "combinedGuitar",
+        "templateRankMin": 0.975
+      },
+      "counts": {
+        "bass": 512,
+        "combinedGuitar": 1060
+      },
+      "id": "gctx-o50-q125-allow-noharm",
+      "relativePath": "guitar/gctx-o50-q125-allow-noharm.json",
+      "sha256": "f96a0c360407597fd5bd81feca277cb5f5b729883cb5e299cda980a762b77f57",
+      "stream": "combinedGuitar",
+      "summary": {
+        "added": 10,
+        "eligible": 12,
+        "sitesWithActiveContext": 204,
+        "sitesWithAdds": 10,
+        "sitesWithEligible": 10
+      }
+    },
+    {
+      "config": {
+        "activeStateMode": "allow_active",
+        "activitySupportMin": 0.05,
+        "baseline": false,
+        "candidateToMaxActiveTemplateScoreMin": 1.25,
+        "chordIntervalsAllowed": [
+          3,
+          4,
+          5,
+          7,
+          8,
+          9,
+          10
+        ],
+        "existingIteration003EventsPreferred": true,
+        "fundamentalPresentRequired": true,
+        "harmonicOctaveIntervalsRejected": [
+          12,
+          19,
+          24
+        ],
+        "id": "gctx-o50-q125-allow-chord",
+        "intervalContextPolicy": "chord_interval",
+        "maxAddsPerSite": 1,
+        "onsetSupportMin": 0.5,
+        "polyphonyCap": 6,
+        "requireBasicPitchActiveContext": true,
+        "stepMidiDedupe": true,
+        "stream": "combinedGuitar",
+        "templateRankMin": 0.975
+      },
+      "counts": {
+        "bass": 512,
+        "combinedGuitar": 1054
+      },
+      "id": "gctx-o50-q125-allow-chord",
+      "relativePath": "guitar/gctx-o50-q125-allow-chord.json",
+      "sha256": "c0f42fe8c5cc634b13346a31af96e651b4ccc78fff1d16f34ed653dfb0840275",
+      "stream": "combinedGuitar",
+      "summary": {
+        "added": 4,
+        "eligible": 4,
+        "sitesWithActiveContext": 204,
+        "sitesWithAdds": 4,
+        "sitesWithEligible": 4
+      }
+    },
+    {
+      "config": {
+        "activeStateMode": "inactive_only",
+        "activitySupportMin": 0.05,
+        "baseline": false,
+        "candidateToMaxActiveTemplateScoreMin": 1.25,
+        "chordIntervalsAllowed": [
+          3,
+          4,
+          5,
+          7,
+          8,
+          9,
+          10
+        ],
+        "existingIteration003EventsPreferred": true,
+        "fundamentalPresentRequired": true,
+        "harmonicOctaveIntervalsRejected": [
+          12,
+          19,
+          24
+        ],
+        "id": "gctx-o50-q125-inactive-none",
+        "intervalContextPolicy": "none",
+        "maxAddsPerSite": 1,
+        "onsetSupportMin": 0.5,
+        "polyphonyCap": 6,
+        "requireBasicPitchActiveContext": true,
+        "stepMidiDedupe": true,
+        "stream": "combinedGuitar",
+        "templateRankMin": 0.975
+      },
+      "counts": {
+        "bass": 512,
+        "combinedGuitar": 1073
+      },
+      "id": "gctx-o50-q125-inactive-none",
+      "relativePath": "guitar/gctx-o50-q125-inactive-none.json",
+      "sha256": "658ed30781e71a63af3963f08062e2e3e677f30095459e07a1c37079cbf6d9d1",
+      "stream": "combinedGuitar",
+      "summary": {
+        "added": 23,
+        "eligible": 30,
+        "sitesWithActiveContext": 204,
+        "sitesWithAdds": 23,
+        "sitesWithEligible": 23
+      }
+    },
+    {
+      "config": {
+        "activeStateMode": "inactive_only",
+        "activitySupportMin": 0.05,
+        "baseline": false,
+        "candidateToMaxActiveTemplateScoreMin": 1.25,
+        "chordIntervalsAllowed": [
+          3,
+          4,
+          5,
+          7,
+          8,
+          9,
+          10
+        ],
+        "existingIteration003EventsPreferred": true,
+        "fundamentalPresentRequired": true,
+        "harmonicOctaveIntervalsRejected": [
+          12,
+          19,
+          24
+        ],
+        "id": "gctx-o50-q125-inactive-noharm",
+        "intervalContextPolicy": "exclude_harmonic_octave",
+        "maxAddsPerSite": 1,
+        "onsetSupportMin": 0.5,
+        "polyphonyCap": 6,
+        "requireBasicPitchActiveContext": true,
+        "stepMidiDedupe": true,
+        "stream": "combinedGuitar",
+        "templateRankMin": 0.975
+      },
+      "counts": {
+        "bass": 512,
+        "combinedGuitar": 1060
+      },
+      "id": "gctx-o50-q125-inactive-noharm",
+      "relativePath": "guitar/gctx-o50-q125-inactive-noharm.json",
+      "sha256": "3192bd83f9d254d3250d4f492b804932e8e4360d265408ea161c4691f98a6edc",
+      "stream": "combinedGuitar",
+      "summary": {
+        "added": 10,
+        "eligible": 12,
+        "sitesWithActiveContext": 204,
+        "sitesWithAdds": 10,
+        "sitesWithEligible": 10
+      }
+    },
+    {
+      "config": {
+        "activeStateMode": "inactive_only",
+        "activitySupportMin": 0.05,
+        "baseline": false,
+        "candidateToMaxActiveTemplateScoreMin": 1.25,
+        "chordIntervalsAllowed": [
+          3,
+          4,
+          5,
+          7,
+          8,
+          9,
+          10
+        ],
+        "existingIteration003EventsPreferred": true,
+        "fundamentalPresentRequired": true,
+        "harmonicOctaveIntervalsRejected": [
+          12,
+          19,
+          24
+        ],
+        "id": "gctx-o50-q125-inactive-chord",
+        "intervalContextPolicy": "chord_interval",
+        "maxAddsPerSite": 1,
+        "onsetSupportMin": 0.5,
+        "polyphonyCap": 6,
+        "requireBasicPitchActiveContext": true,
+        "stepMidiDedupe": true,
+        "stream": "combinedGuitar",
+        "templateRankMin": 0.975
+      },
+      "counts": {
+        "bass": 512,
+        "combinedGuitar": 1054
+      },
+      "id": "gctx-o50-q125-inactive-chord",
+      "relativePath": "guitar/gctx-o50-q125-inactive-chord.json",
+      "sha256": "ca1dd606fb6d71e6e1425aa4cc77cecb3d7d15907240beb26201ac2b9e084039",
+      "stream": "combinedGuitar",
+      "summary": {
+        "added": 4,
+        "eligible": 4,
+        "sitesWithActiveContext": 204,
+        "sitesWithAdds": 4,
+        "sitesWithEligible": 4
+      }
+    },
+    {
+      "config": {
+        "activeStateMode": "allow_active",
+        "activitySupportMin": 0.05,
+        "baseline": false,
+        "candidateToMaxActiveTemplateScoreMin": 0.75,
+        "chordIntervalsAllowed": [
+          3,
+          4,
+          5,
+          7,
+          8,
+          9,
+          10
+        ],
+        "existingIteration003EventsPreferred": true,
+        "fundamentalPresentRequired": true,
+        "harmonicOctaveIntervalsRejected": [
+          12,
+          19,
+          24
+        ],
+        "id": "gctx-o65-q075-allow-none",
+        "intervalContextPolicy": "none",
+        "maxAddsPerSite": 1,
+        "onsetSupportMin": 0.65,
+        "polyphonyCap": 6,
+        "requireBasicPitchActiveContext": true,
+        "stepMidiDedupe": true,
+        "stream": "combinedGuitar",
+        "templateRankMin": 0.975
+      },
+      "counts": {
+        "bass": 512,
+        "combinedGuitar": 1160
+      },
+      "id": "gctx-o65-q075-allow-none",
+      "relativePath": "guitar/gctx-o65-q075-allow-none.json",
+      "sha256": "c23b23df1dba527a100e56056416afc010db8ed7fbf4ecac0005b3131537ec9d",
+      "stream": "combinedGuitar",
+      "summary": {
+        "added": 110,
+        "eligible": 137,
+        "sitesWithActiveContext": 204,
+        "sitesWithAdds": 110,
+        "sitesWithEligible": 110
+      }
+    },
+    {
+      "config": {
+        "activeStateMode": "allow_active",
+        "activitySupportMin": 0.05,
+        "baseline": false,
+        "candidateToMaxActiveTemplateScoreMin": 0.75,
+        "chordIntervalsAllowed": [
+          3,
+          4,
+          5,
+          7,
+          8,
+          9,
+          10
+        ],
+        "existingIteration003EventsPreferred": true,
+        "fundamentalPresentRequired": true,
+        "harmonicOctaveIntervalsRejected": [
+          12,
+          19,
+          24
+        ],
+        "id": "gctx-o65-q075-allow-noharm",
+        "intervalContextPolicy": "exclude_harmonic_octave",
+        "maxAddsPerSite": 1,
+        "onsetSupportMin": 0.65,
+        "polyphonyCap": 6,
+        "requireBasicPitchActiveContext": true,
+        "stepMidiDedupe": true,
+        "stream": "combinedGuitar",
+        "templateRankMin": 0.975
+      },
+      "counts": {
+        "bass": 512,
+        "combinedGuitar": 1118
+      },
+      "id": "gctx-o65-q075-allow-noharm",
+      "relativePath": "guitar/gctx-o65-q075-allow-noharm.json",
+      "sha256": "96f067ff90126c6934e593bed8f70b5becead6db3aed5d990788749daf845299",
+      "stream": "combinedGuitar",
+      "summary": {
+        "added": 68,
+        "eligible": 80,
+        "sitesWithActiveContext": 204,
+        "sitesWithAdds": 68,
+        "sitesWithEligible": 68
+      }
+    },
+    {
+      "config": {
+        "activeStateMode": "allow_active",
+        "activitySupportMin": 0.05,
+        "baseline": false,
+        "candidateToMaxActiveTemplateScoreMin": 0.75,
+        "chordIntervalsAllowed": [
+          3,
+          4,
+          5,
+          7,
+          8,
+          9,
+          10
+        ],
+        "existingIteration003EventsPreferred": true,
+        "fundamentalPresentRequired": true,
+        "harmonicOctaveIntervalsRejected": [
+          12,
+          19,
+          24
+        ],
+        "id": "gctx-o65-q075-allow-chord",
+        "intervalContextPolicy": "chord_interval",
+        "maxAddsPerSite": 1,
+        "onsetSupportMin": 0.65,
+        "polyphonyCap": 6,
+        "requireBasicPitchActiveContext": true,
+        "stepMidiDedupe": true,
+        "stream": "combinedGuitar",
+        "templateRankMin": 0.975
+      },
+      "counts": {
+        "bass": 512,
+        "combinedGuitar": 1085
+      },
+      "id": "gctx-o65-q075-allow-chord",
+      "relativePath": "guitar/gctx-o65-q075-allow-chord.json",
+      "sha256": "64e7272e12eabcd0cbeb37070191fd519ad79b991a8327672d5685a0e8ac9340",
+      "stream": "combinedGuitar",
+      "summary": {
+        "added": 35,
+        "eligible": 37,
+        "sitesWithActiveContext": 204,
+        "sitesWithAdds": 35,
+        "sitesWithEligible": 35
+      }
+    },
+    {
+      "config": {
+        "activeStateMode": "inactive_only",
+        "activitySupportMin": 0.05,
+        "baseline": false,
+        "candidateToMaxActiveTemplateScoreMin": 0.75,
+        "chordIntervalsAllowed": [
+          3,
+          4,
+          5,
+          7,
+          8,
+          9,
+          10
+        ],
+        "existingIteration003EventsPreferred": true,
+        "fundamentalPresentRequired": true,
+        "harmonicOctaveIntervalsRejected": [
+          12,
+          19,
+          24
+        ],
+        "id": "gctx-o65-q075-inactive-none",
+        "intervalContextPolicy": "none",
+        "maxAddsPerSite": 1,
+        "onsetSupportMin": 0.65,
+        "polyphonyCap": 6,
+        "requireBasicPitchActiveContext": true,
+        "stepMidiDedupe": true,
+        "stream": "combinedGuitar",
+        "templateRankMin": 0.975
+      },
+      "counts": {
+        "bass": 512,
+        "combinedGuitar": 1122
+      },
+      "id": "gctx-o65-q075-inactive-none",
+      "relativePath": "guitar/gctx-o65-q075-inactive-none.json",
+      "sha256": "c266f76deaed675870b3a7b562def4ea2c734afd125cb06a2c4258046e5684d4",
+      "stream": "combinedGuitar",
+      "summary": {
+        "added": 72,
+        "eligible": 83,
+        "sitesWithActiveContext": 204,
+        "sitesWithAdds": 72,
+        "sitesWithEligible": 72
+      }
+    },
+    {
+      "config": {
+        "activeStateMode": "inactive_only",
+        "activitySupportMin": 0.05,
+        "baseline": false,
+        "candidateToMaxActiveTemplateScoreMin": 0.75,
+        "chordIntervalsAllowed": [
+          3,
+          4,
+          5,
+          7,
+          8,
+          9,
+          10
+        ],
+        "existingIteration003EventsPreferred": true,
+        "fundamentalPresentRequired": true,
+        "harmonicOctaveIntervalsRejected": [
+          12,
+          19,
+          24
+        ],
+        "id": "gctx-o65-q075-inactive-noharm",
+        "intervalContextPolicy": "exclude_harmonic_octave",
+        "maxAddsPerSite": 1,
+        "onsetSupportMin": 0.65,
+        "polyphonyCap": 6,
+        "requireBasicPitchActiveContext": true,
+        "stepMidiDedupe": true,
+        "stream": "combinedGuitar",
+        "templateRankMin": 0.975
+      },
+      "counts": {
+        "bass": 512,
+        "combinedGuitar": 1081
+      },
+      "id": "gctx-o65-q075-inactive-noharm",
+      "relativePath": "guitar/gctx-o65-q075-inactive-noharm.json",
+      "sha256": "bcfc0c24e7649f2860cc2ed8dfea393cc379a9633c271a9eecde20aa5b23cd18",
+      "stream": "combinedGuitar",
+      "summary": {
+        "added": 31,
+        "eligible": 35,
+        "sitesWithActiveContext": 204,
+        "sitesWithAdds": 31,
+        "sitesWithEligible": 31
+      }
+    },
+    {
+      "config": {
+        "activeStateMode": "inactive_only",
+        "activitySupportMin": 0.05,
+        "baseline": false,
+        "candidateToMaxActiveTemplateScoreMin": 0.75,
+        "chordIntervalsAllowed": [
+          3,
+          4,
+          5,
+          7,
+          8,
+          9,
+          10
+        ],
+        "existingIteration003EventsPreferred": true,
+        "fundamentalPresentRequired": true,
+        "harmonicOctaveIntervalsRejected": [
+          12,
+          19,
+          24
+        ],
+        "id": "gctx-o65-q075-inactive-chord",
+        "intervalContextPolicy": "chord_interval",
+        "maxAddsPerSite": 1,
+        "onsetSupportMin": 0.65,
+        "polyphonyCap": 6,
+        "requireBasicPitchActiveContext": true,
+        "stepMidiDedupe": true,
+        "stream": "combinedGuitar",
+        "templateRankMin": 0.975
+      },
+      "counts": {
+        "bass": 512,
+        "combinedGuitar": 1068
+      },
+      "id": "gctx-o65-q075-inactive-chord",
+      "relativePath": "guitar/gctx-o65-q075-inactive-chord.json",
+      "sha256": "d2da1075651350a7ae964966282f2662b6fb3df49353af1efe4f66c380df8ae4",
+      "stream": "combinedGuitar",
+      "summary": {
+        "added": 18,
+        "eligible": 18,
+        "sitesWithActiveContext": 204,
+        "sitesWithAdds": 18,
+        "sitesWithEligible": 18
+      }
+    },
+    {
+      "config": {
+        "activeStateMode": "allow_active",
+        "activitySupportMin": 0.05,
+        "baseline": false,
+        "candidateToMaxActiveTemplateScoreMin": 1.0,
+        "chordIntervalsAllowed": [
+          3,
+          4,
+          5,
+          7,
+          8,
+          9,
+          10
+        ],
+        "existingIteration003EventsPreferred": true,
+        "fundamentalPresentRequired": true,
+        "harmonicOctaveIntervalsRejected": [
+          12,
+          19,
+          24
+        ],
+        "id": "gctx-o65-q100-allow-none",
+        "intervalContextPolicy": "none",
+        "maxAddsPerSite": 1,
+        "onsetSupportMin": 0.65,
+        "polyphonyCap": 6,
+        "requireBasicPitchActiveContext": true,
+        "stepMidiDedupe": true,
+        "stream": "combinedGuitar",
+        "templateRankMin": 0.975
+      },
+      "counts": {
+        "bass": 512,
+        "combinedGuitar": 1138
+      },
+      "id": "gctx-o65-q100-allow-none",
+      "relativePath": "guitar/gctx-o65-q100-allow-none.json",
+      "sha256": "b402c04e3afeabd02afc5bf40adf01a91a9f8589f4842df4230f98e74194cf9f",
+      "stream": "combinedGuitar",
+      "summary": {
+        "added": 88,
+        "eligible": 104,
+        "sitesWithActiveContext": 204,
+        "sitesWithAdds": 88,
+        "sitesWithEligible": 88
+      }
+    },
+    {
+      "config": {
+        "activeStateMode": "allow_active",
+        "activitySupportMin": 0.05,
+        "baseline": false,
+        "candidateToMaxActiveTemplateScoreMin": 1.0,
+        "chordIntervalsAllowed": [
+          3,
+          4,
+          5,
+          7,
+          8,
+          9,
+          10
+        ],
+        "existingIteration003EventsPreferred": true,
+        "fundamentalPresentRequired": true,
+        "harmonicOctaveIntervalsRejected": [
+          12,
+          19,
+          24
+        ],
+        "id": "gctx-o65-q100-allow-noharm",
+        "intervalContextPolicy": "exclude_harmonic_octave",
+        "maxAddsPerSite": 1,
+        "onsetSupportMin": 0.65,
+        "polyphonyCap": 6,
+        "requireBasicPitchActiveContext": true,
+        "stepMidiDedupe": true,
+        "stream": "combinedGuitar",
+        "templateRankMin": 0.975
+      },
+      "counts": {
+        "bass": 512,
+        "combinedGuitar": 1107
+      },
+      "id": "gctx-o65-q100-allow-noharm",
+      "relativePath": "guitar/gctx-o65-q100-allow-noharm.json",
+      "sha256": "54978a935a2bfbe1db5d2ed6fabb9102daff7e6efcfe6a9757a4a0c7104f4900",
+      "stream": "combinedGuitar",
+      "summary": {
+        "added": 57,
+        "eligible": 63,
+        "sitesWithActiveContext": 204,
+        "sitesWithAdds": 57,
+        "sitesWithEligible": 57
+      }
+    },
+    {
+      "config": {
+        "activeStateMode": "allow_active",
+        "activitySupportMin": 0.05,
+        "baseline": false,
+        "candidateToMaxActiveTemplateScoreMin": 1.0,
+        "chordIntervalsAllowed": [
+          3,
+          4,
+          5,
+          7,
+          8,
+          9,
+          10
+        ],
+        "existingIteration003EventsPreferred": true,
+        "fundamentalPresentRequired": true,
+        "harmonicOctaveIntervalsRejected": [
+          12,
+          19,
+          24
+        ],
+        "id": "gctx-o65-q100-allow-chord",
+        "intervalContextPolicy": "chord_interval",
+        "maxAddsPerSite": 1,
+        "onsetSupportMin": 0.65,
+        "polyphonyCap": 6,
+        "requireBasicPitchActiveContext": true,
+        "stepMidiDedupe": true,
+        "stream": "combinedGuitar",
+        "templateRankMin": 0.975
+      },
+      "counts": {
+        "bass": 512,
+        "combinedGuitar": 1077
+      },
+      "id": "gctx-o65-q100-allow-chord",
+      "relativePath": "guitar/gctx-o65-q100-allow-chord.json",
+      "sha256": "dd6eef38d18938832a9650a7e004cc742c559d1e9f5b7b67a8d86322ee298783",
+      "stream": "combinedGuitar",
+      "summary": {
+        "added": 27,
+        "eligible": 27,
+        "sitesWithActiveContext": 204,
+        "sitesWithAdds": 27,
+        "sitesWithEligible": 27
+      }
+    },
+    {
+      "config": {
+        "activeStateMode": "inactive_only",
+        "activitySupportMin": 0.05,
+        "baseline": false,
+        "candidateToMaxActiveTemplateScoreMin": 1.0,
+        "chordIntervalsAllowed": [
+          3,
+          4,
+          5,
+          7,
+          8,
+          9,
+          10
+        ],
+        "existingIteration003EventsPreferred": true,
+        "fundamentalPresentRequired": true,
+        "harmonicOctaveIntervalsRejected": [
+          12,
+          19,
+          24
+        ],
+        "id": "gctx-o65-q100-inactive-none",
+        "intervalContextPolicy": "none",
+        "maxAddsPerSite": 1,
+        "onsetSupportMin": 0.65,
+        "polyphonyCap": 6,
+        "requireBasicPitchActiveContext": true,
+        "stepMidiDedupe": true,
+        "stream": "combinedGuitar",
+        "templateRankMin": 0.975
+      },
+      "counts": {
+        "bass": 512,
+        "combinedGuitar": 1095
+      },
+      "id": "gctx-o65-q100-inactive-none",
+      "relativePath": "guitar/gctx-o65-q100-inactive-none.json",
+      "sha256": "c3b0a71a21a203884fdeeaca34b9c4686a9d5eb7c758387930ef5856734d9c32",
+      "stream": "combinedGuitar",
+      "summary": {
+        "added": 45,
+        "eligible": 56,
+        "sitesWithActiveContext": 204,
+        "sitesWithAdds": 45,
+        "sitesWithEligible": 45
+      }
+    },
+    {
+      "config": {
+        "activeStateMode": "inactive_only",
+        "activitySupportMin": 0.05,
+        "baseline": false,
+        "candidateToMaxActiveTemplateScoreMin": 1.0,
+        "chordIntervalsAllowed": [
+          3,
+          4,
+          5,
+          7,
+          8,
+          9,
+          10
+        ],
+        "existingIteration003EventsPreferred": true,
+        "fundamentalPresentRequired": true,
+        "harmonicOctaveIntervalsRejected": [
+          12,
+          19,
+          24
+        ],
+        "id": "gctx-o65-q100-inactive-noharm",
+        "intervalContextPolicy": "exclude_harmonic_octave",
+        "maxAddsPerSite": 1,
+        "onsetSupportMin": 0.65,
+        "polyphonyCap": 6,
+        "requireBasicPitchActiveContext": true,
+        "stepMidiDedupe": true,
+        "stream": "combinedGuitar",
+        "templateRankMin": 0.975
+      },
+      "counts": {
+        "bass": 512,
+        "combinedGuitar": 1067
+      },
+      "id": "gctx-o65-q100-inactive-noharm",
+      "relativePath": "guitar/gctx-o65-q100-inactive-noharm.json",
+      "sha256": "87593f9d9ac5b09ea135a8c9b9916607f0fdb134651f0600e16fcc3bf5c52f22",
+      "stream": "combinedGuitar",
+      "summary": {
+        "added": 17,
+        "eligible": 21,
+        "sitesWithActiveContext": 204,
+        "sitesWithAdds": 17,
+        "sitesWithEligible": 17
+      }
+    },
+    {
+      "config": {
+        "activeStateMode": "inactive_only",
+        "activitySupportMin": 0.05,
+        "baseline": false,
+        "candidateToMaxActiveTemplateScoreMin": 1.0,
+        "chordIntervalsAllowed": [
+          3,
+          4,
+          5,
+          7,
+          8,
+          9,
+          10
+        ],
+        "existingIteration003EventsPreferred": true,
+        "fundamentalPresentRequired": true,
+        "harmonicOctaveIntervalsRejected": [
+          12,
+          19,
+          24
+        ],
+        "id": "gctx-o65-q100-inactive-chord",
+        "intervalContextPolicy": "chord_interval",
+        "maxAddsPerSite": 1,
+        "onsetSupportMin": 0.65,
+        "polyphonyCap": 6,
+        "requireBasicPitchActiveContext": true,
+        "stepMidiDedupe": true,
+        "stream": "combinedGuitar",
+        "templateRankMin": 0.975
+      },
+      "counts": {
+        "bass": 512,
+        "combinedGuitar": 1060
+      },
+      "id": "gctx-o65-q100-inactive-chord",
+      "relativePath": "guitar/gctx-o65-q100-inactive-chord.json",
+      "sha256": "cab44e0bcc8575c3c4b93b9569794ce1a2049324e66a268587d683a2841b2d4f",
+      "stream": "combinedGuitar",
+      "summary": {
+        "added": 10,
+        "eligible": 10,
+        "sitesWithActiveContext": 204,
+        "sitesWithAdds": 10,
+        "sitesWithEligible": 10
+      }
+    },
+    {
+      "config": {
+        "activeStateMode": "allow_active",
+        "activitySupportMin": 0.05,
+        "baseline": false,
+        "candidateToMaxActiveTemplateScoreMin": 1.25,
+        "chordIntervalsAllowed": [
+          3,
+          4,
+          5,
+          7,
+          8,
+          9,
+          10
+        ],
+        "existingIteration003EventsPreferred": true,
+        "fundamentalPresentRequired": true,
+        "harmonicOctaveIntervalsRejected": [
+          12,
+          19,
+          24
+        ],
+        "id": "gctx-o65-q125-allow-none",
+        "intervalContextPolicy": "none",
+        "maxAddsPerSite": 1,
+        "onsetSupportMin": 0.65,
+        "polyphonyCap": 6,
+        "requireBasicPitchActiveContext": true,
+        "stepMidiDedupe": true,
+        "stream": "combinedGuitar",
+        "templateRankMin": 0.975
+      },
+      "counts": {
+        "bass": 512,
+        "combinedGuitar": 1073
+      },
+      "id": "gctx-o65-q125-allow-none",
+      "relativePath": "guitar/gctx-o65-q125-allow-none.json",
+      "sha256": "bc38bfa955a4280c144791474eaa5915a546353cf61b1613dfe473d90eb320fe",
+      "stream": "combinedGuitar",
+      "summary": {
+        "added": 23,
+        "eligible": 30,
+        "sitesWithActiveContext": 204,
+        "sitesWithAdds": 23,
+        "sitesWithEligible": 23
+      }
+    },
+    {
+      "config": {
+        "activeStateMode": "allow_active",
+        "activitySupportMin": 0.05,
+        "baseline": false,
+        "candidateToMaxActiveTemplateScoreMin": 1.25,
+        "chordIntervalsAllowed": [
+          3,
+          4,
+          5,
+          7,
+          8,
+          9,
+          10
+        ],
+        "existingIteration003EventsPreferred": true,
+        "fundamentalPresentRequired": true,
+        "harmonicOctaveIntervalsRejected": [
+          12,
+          19,
+          24
+        ],
+        "id": "gctx-o65-q125-allow-noharm",
+        "intervalContextPolicy": "exclude_harmonic_octave",
+        "maxAddsPerSite": 1,
+        "onsetSupportMin": 0.65,
+        "polyphonyCap": 6,
+        "requireBasicPitchActiveContext": true,
+        "stepMidiDedupe": true,
+        "stream": "combinedGuitar",
+        "templateRankMin": 0.975
+      },
+      "counts": {
+        "bass": 512,
+        "combinedGuitar": 1060
+      },
+      "id": "gctx-o65-q125-allow-noharm",
+      "relativePath": "guitar/gctx-o65-q125-allow-noharm.json",
+      "sha256": "e9738c86f256b0048a6a395eba3252613ed0d878fb0617640095c19b257005ac",
+      "stream": "combinedGuitar",
+      "summary": {
+        "added": 10,
+        "eligible": 12,
+        "sitesWithActiveContext": 204,
+        "sitesWithAdds": 10,
+        "sitesWithEligible": 10
+      }
+    },
+    {
+      "config": {
+        "activeStateMode": "allow_active",
+        "activitySupportMin": 0.05,
+        "baseline": false,
+        "candidateToMaxActiveTemplateScoreMin": 1.25,
+        "chordIntervalsAllowed": [
+          3,
+          4,
+          5,
+          7,
+          8,
+          9,
+          10
+        ],
+        "existingIteration003EventsPreferred": true,
+        "fundamentalPresentRequired": true,
+        "harmonicOctaveIntervalsRejected": [
+          12,
+          19,
+          24
+        ],
+        "id": "gctx-o65-q125-allow-chord",
+        "intervalContextPolicy": "chord_interval",
+        "maxAddsPerSite": 1,
+        "onsetSupportMin": 0.65,
+        "polyphonyCap": 6,
+        "requireBasicPitchActiveContext": true,
+        "stepMidiDedupe": true,
+        "stream": "combinedGuitar",
+        "templateRankMin": 0.975
+      },
+      "counts": {
+        "bass": 512,
+        "combinedGuitar": 1054
+      },
+      "id": "gctx-o65-q125-allow-chord",
+      "relativePath": "guitar/gctx-o65-q125-allow-chord.json",
+      "sha256": "20b4c57f6ab6bf8a9df51b943951b39909b3eb10469a788efb20dfb4b06d5d72",
+      "stream": "combinedGuitar",
+      "summary": {
+        "added": 4,
+        "eligible": 4,
+        "sitesWithActiveContext": 204,
+        "sitesWithAdds": 4,
+        "sitesWithEligible": 4
+      }
+    },
+    {
+      "config": {
+        "activeStateMode": "inactive_only",
+        "activitySupportMin": 0.05,
+        "baseline": false,
+        "candidateToMaxActiveTemplateScoreMin": 1.25,
+        "chordIntervalsAllowed": [
+          3,
+          4,
+          5,
+          7,
+          8,
+          9,
+          10
+        ],
+        "existingIteration003EventsPreferred": true,
+        "fundamentalPresentRequired": true,
+        "harmonicOctaveIntervalsRejected": [
+          12,
+          19,
+          24
+        ],
+        "id": "gctx-o65-q125-inactive-none",
+        "intervalContextPolicy": "none",
+        "maxAddsPerSite": 1,
+        "onsetSupportMin": 0.65,
+        "polyphonyCap": 6,
+        "requireBasicPitchActiveContext": true,
+        "stepMidiDedupe": true,
+        "stream": "combinedGuitar",
+        "templateRankMin": 0.975
+      },
+      "counts": {
+        "bass": 512,
+        "combinedGuitar": 1073
+      },
+      "id": "gctx-o65-q125-inactive-none",
+      "relativePath": "guitar/gctx-o65-q125-inactive-none.json",
+      "sha256": "df180eed797d659a5f139eec5ee013f9a22a462476826804715b75b1e0e95d44",
+      "stream": "combinedGuitar",
+      "summary": {
+        "added": 23,
+        "eligible": 30,
+        "sitesWithActiveContext": 204,
+        "sitesWithAdds": 23,
+        "sitesWithEligible": 23
+      }
+    },
+    {
+      "config": {
+        "activeStateMode": "inactive_only",
+        "activitySupportMin": 0.05,
+        "baseline": false,
+        "candidateToMaxActiveTemplateScoreMin": 1.25,
+        "chordIntervalsAllowed": [
+          3,
+          4,
+          5,
+          7,
+          8,
+          9,
+          10
+        ],
+        "existingIteration003EventsPreferred": true,
+        "fundamentalPresentRequired": true,
+        "harmonicOctaveIntervalsRejected": [
+          12,
+          19,
+          24
+        ],
+        "id": "gctx-o65-q125-inactive-noharm",
+        "intervalContextPolicy": "exclude_harmonic_octave",
+        "maxAddsPerSite": 1,
+        "onsetSupportMin": 0.65,
+        "polyphonyCap": 6,
+        "requireBasicPitchActiveContext": true,
+        "stepMidiDedupe": true,
+        "stream": "combinedGuitar",
+        "templateRankMin": 0.975
+      },
+      "counts": {
+        "bass": 512,
+        "combinedGuitar": 1060
+      },
+      "id": "gctx-o65-q125-inactive-noharm",
+      "relativePath": "guitar/gctx-o65-q125-inactive-noharm.json",
+      "sha256": "c8c691fca9edd75dfa5d5e89fe3a36ec58af3ea46ec9b32423f78c860f9da438",
+      "stream": "combinedGuitar",
+      "summary": {
+        "added": 10,
+        "eligible": 12,
+        "sitesWithActiveContext": 204,
+        "sitesWithAdds": 10,
+        "sitesWithEligible": 10
+      }
+    },
+    {
+      "config": {
+        "activeStateMode": "inactive_only",
+        "activitySupportMin": 0.05,
+        "baseline": false,
+        "candidateToMaxActiveTemplateScoreMin": 1.25,
+        "chordIntervalsAllowed": [
+          3,
+          4,
+          5,
+          7,
+          8,
+          9,
+          10
+        ],
+        "existingIteration003EventsPreferred": true,
+        "fundamentalPresentRequired": true,
+        "harmonicOctaveIntervalsRejected": [
+          12,
+          19,
+          24
+        ],
+        "id": "gctx-o65-q125-inactive-chord",
+        "intervalContextPolicy": "chord_interval",
+        "maxAddsPerSite": 1,
+        "onsetSupportMin": 0.65,
+        "polyphonyCap": 6,
+        "requireBasicPitchActiveContext": true,
+        "stepMidiDedupe": true,
+        "stream": "combinedGuitar",
+        "templateRankMin": 0.975
+      },
+      "counts": {
+        "bass": 512,
+        "combinedGuitar": 1054
+      },
+      "id": "gctx-o65-q125-inactive-chord",
+      "relativePath": "guitar/gctx-o65-q125-inactive-chord.json",
+      "sha256": "c8527c87070a3a0b660ebec034977dcd2ac2f062e421602a5c25275b369ea4f4",
+      "stream": "combinedGuitar",
+      "summary": {
+        "added": 4,
+        "eligible": 4,
+        "sitesWithActiveContext": 204,
+        "sitesWithAdds": 4,
+        "sitesWithEligible": 4
+      }
+    }
+  ],
+  "version": "V167"
+}
