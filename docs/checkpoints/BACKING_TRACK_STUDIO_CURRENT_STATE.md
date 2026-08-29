@@ -4,7 +4,7 @@ Updated: 2026-08-29 UTC
 Branch: `backing-track-studio`
 
 ## Active phase
-**BTS implementation complete in branch; validation/configuration remains.** `main`/Production remain untouched.
+**BTS implementation complete in branch; final validation/configuration remains.** `main`/Production remain untouched.
 
 ## Working route
 - `/bts` -> `dadrocktabs.com/bts`
@@ -71,11 +71,12 @@ BTS reuses this proven substrate in a dedicated worker rather than using note/re
   - returns signed BTS job token
 - `app/api/bts/process/route.js`
   - verifies paid BTS job token
-  - resolves the private Blob server-side from pathname
+  - resolves private Blob server-side from pathname
   - calls only the dedicated BTS Modal endpoint
   - streams returned MP3 directly to the browser
   - does not persist the generated backing track
   - deletes the uploaded source Blob immediately after processing completes
+  - sends `Cache-Control: private, no-store`
 - `analyzer/modal_bts_separator.py`
   - dedicated Modal app `dadrock-backing-track-studio`
   - A10G GPU
@@ -84,11 +85,12 @@ BTS reuses this proven substrate in a dedicated worker rather than using note/re
   - full six-source waveform separation
   - rebuilds mix excluding Guitar, Bass, or both
   - returns 192 kbps MP3
+  - intermediate source/stems/output live only inside a temporary directory
 - `analyzer/bts-audio-separation-requirements.txt`
 - `app/api/bts/cleanup/route.js`
-  - cron-authenticated BTS-only cleanup
+  - CRON_SECRET-protected BTS-only cleanup
   - scans only `bts-audio/`
-  - deletes any upload at or beyond 24 hours old
+  - hourly cleanup threshold is 23 hours so abandoned uploads cannot exceed the 24-hour maximum between hourly runs
 - `vercel.json`
   - retains existing daily sync cron
   - adds hourly `/api/bts/cleanup` cron
@@ -101,11 +103,18 @@ User requirement: do not keep copyrighted audio.
 Implementation is intentionally stricter:
 - Successful job: source upload is deleted immediately after processing.
 - Generated backing track: streamed to the customer and **not persisted** by BTS.
-- Modal intermediate source/stems/output live only in a temporary directory and disappear when the request ends.
-- Abandoned or failed uploads: hourly BTS cleanup removes any `bts-audio/` Blob that reaches 24 hours.
-- Response uses `Cache-Control: private, no-store`.
+- Modal intermediates: temporary only and removed when the worker request ends.
+- Abandoned/failed uploads: hourly cleanup starts deleting `bts-audio/` blobs at 23 hours so the practical maximum remains under 24 hours.
+- Response caching is disabled with `private, no-store`.
 
-This 24-hour maximum applies to BTS audio storage; do not introduce persistent copyrighted-audio storage without explicit user approval.
+Do not introduce persistent copyrighted-audio storage without explicit user approval.
+
+## Retention validation
+- Vercel documentation confirms cron jobs are configured through the `crons` array in `vercel.json`.
+- Vercel documentation confirms cron Route Handlers can be protected using `Authorization: Bearer ${CRON_SECRET}`; BTS cleanup follows that contract.
+- Vercel Blob SDK documentation confirms prefix listing/pagination and deletion by URL/pathname are supported.
+- Important deployment behavior: Vercel Cron Jobs are production-scheduled. The branch code is ready, but the cleanup cron does not become an active scheduled job until the relevant BTS code/config is deployed to Production. Production must **not** be modified without explicit user direction.
+- During development/preview testing, use permitted test audio and ensure test uploads are processed/deleted or manually cleaned if a test is abandoned.
 
 ## Isolation / safety rails
 - Work only on `backing-track-studio`.
@@ -126,21 +135,28 @@ This 24-hour maximum applies to BTS audio storage; do not introduce persistent c
 - Optional: `BTS_JOB_SIGNING_SECRET`; falls back to PayPal client secret if absent
 - Modal secret expected by worker: `dadrock-bts-separator-secret` containing `BTS_SEPARATOR_API_TOKEN`
 
+## Validation status
+- GitHub diff confirms BTS work is isolated from `main` and consists of BTS-specific additions plus the branch-only `vercel.json` cron addition.
+- No GitHub CI/check run is attached to the latest BTS checkpoint commit.
+- Connected Vercel currently shows `main` Production deployments and no BTS preview deployment to inspect.
+- Local `git clone`/`next build` could not be run in the execution container because outbound GitHub DNS/network access is blocked.
+- No Production deployment or promotion was attempted.
+
 ## Progress score
 Five-gate rubric, 20 points each:
 1. Scope + isolated branch + checkpoint — complete.
 2. Blueprint/dependency/research inspection — complete.
 3. BTS page + upload/email/removal UI — complete.
 4. Dedicated Modal separator + $1 sandbox PayPal + download delivery + retention — implemented.
-5. End-to-end validation/build/deployment checks — pending.
+5. End-to-end validation/build/deployment checks — partially complete; live Modal/PayPal/browser test remains.
 
-**Current Project Progress Score: 80%.**
+**Current Project Progress Score: 85%.**
 
 ## NEXT
-1. Run local/static/build validation on `backing-track-studio`.
-2. Fix any build/runtime issues found without changing AI-tab files.
-3. Validate BTS payment fingerprint/job-token contracts.
-4. Validate cleanup route and cron configuration.
-5. Deploy the dedicated Modal BTS worker only when environment/secrets are ready; do not deploy Production site unless explicitly requested.
-6. Test `/bts` end-to-end with sandbox payment and a permitted audio sample.
-7. Re-save this checkpoint after validation.
+1. Perform final code-contract review for page -> upload -> payment -> job token -> process route.
+2. Deploy the dedicated Modal BTS worker only when BTS secrets are ready; do not deploy the site to Production without explicit user direction.
+3. Create/inspect a non-Production BTS preview if the deployment setup permits it.
+4. Test `/bts` end-to-end with PayPal sandbox and a permitted audio sample.
+5. Verify immediate source Blob deletion after a successful job.
+6. Before eventual Production release, verify `CRON_SECRET` exists so the hourly 24-hour cleanup protection becomes active.
+7. Re-save this checkpoint after final validation.
