@@ -1,0 +1,66 @@
+{
+  "artifacts": {
+    "candidate": {
+      "exists": false,
+      "gitBlob": null,
+      "sha256": null
+    },
+    "environmentReceipt": {
+      "exists": true,
+      "gitBlob": "25a7f5e2c692a6ac518ae1243ea812cf650f7278",
+      "sha256": "e517881f9648148f6a1f0d795ee525eeaf70ed9ba385de321de477d3a37c920e"
+    },
+    "generationReceipt": {
+      "exists": false,
+      "gitBlob": null,
+      "sha256": null
+    },
+    "structuralQc": {
+      "exists": false,
+      "gitBlob": null,
+      "sha256": null
+    },
+    "timebase": {
+      "exists": true,
+      "gitBlob": "3ac889cd913bf6528741cb4df4f7b343014466f1",
+      "sha256": "1ce4e9e2214ec87a4ed378007b5d2dfa62a890dc5bd6a84244df6ead41e628d8"
+    },
+    "timebaseQc": {
+      "exists": true,
+      "gitBlob": "3ec4199f20ae7dc016395f41dcd527dbc20f3216",
+      "sha256": "1cfda58a4a5bc7da9f6be84b7ed6193896fdd342dec540023f737334c4d7ea23"
+    }
+  },
+  "candidateAuthoritative": false,
+  "environmentReceiptGitBlob": "25a7f5e2c692a6ac518ae1243ea812cf650f7278",
+  "generationWorkflowGitBlob": "1e545e8ea54a5884007abbdcf08818e51e00073a",
+  "lastCompletedStage": "TIMEBASE_QC_PASS",
+  "neverRearmV164": true,
+  "outcome": "TRANSCRIBER_FAIL",
+  "preRunIdentityReceiptGitBlob": "fa1942690b45bce35515abee35016f953fcccd45",
+  "professionalReferenceScoringAuthorized": false,
+  "safety": {
+    "V163CandidateRead": false,
+    "V163ScoreRead": false,
+    "cudaGpuUsed": false,
+    "frozenScorerRead": false,
+    "humanCorrection": false,
+    "mainOrProductionModified": false,
+    "modalUsed": false,
+    "priorGeneratedCandidateRead": false,
+    "priorScoreRead": false,
+    "professionalReferencePathsOpened": 0,
+    "referenceFacingScoreCalls": 0,
+    "referenceGuidedFiltering": false,
+    "referenceRead": false,
+    "thresholdSweep": false,
+    "variantSelection": false
+  },
+  "schema": "dadrock.tabs.v164.terminal-freeze.v1",
+  "status": "TERMINAL",
+  "version": "V164",
+  "workflowHeadSha": "984a542a846ff711600ef86c3114f48d4d0b5f89",
+  "workflowRunAttempt": 1,
+  "workflowRunId": 33222155380,
+  "workflowRunNumber": 1
+}
