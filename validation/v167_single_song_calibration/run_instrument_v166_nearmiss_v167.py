@@ -39,6 +39,21 @@ def load_v166_module_with_event_logic(path: Path):
             continue
         if not hasattr(module, name):
             setattr(module, name, value)
+
+    # Convenience observer only: expose the exact pinned supported-attack evidence
+    # without adding a new threshold or changing any V166 decision.
+    if not hasattr(module, "onset_evidence"):
+        def onset_evidence(env, center_frame, *, radius, positive_q):
+            _supported, meta = module.supported_attack(
+                env,
+                center_frame,
+                radius=radius,
+                positive_q=positive_q,
+                minimum_support=0.0,
+            )
+            return meta
+        module.onset_evidence = onset_evidence
+
     module.V167_OBSERVER_EVENT_LOGIC_GIT_BLOB = EXPECTED_V166_EVENT_LOGIC_BLOB
     return module
 
