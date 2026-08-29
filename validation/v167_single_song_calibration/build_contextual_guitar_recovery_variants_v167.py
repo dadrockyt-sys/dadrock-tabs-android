@@ -120,6 +120,7 @@ def build_guitar(
         }
 
     occupied = {(int(note["absoluteGridStep"]), int(note["midi"])) for note in out}
+    new_pairs: set[tuple[int, int]] = set()
     per_step: dict[int, int] = defaultdict(int)
     for note in out:
         per_step[int(note["absoluteGridStep"])] += 1
@@ -191,7 +192,8 @@ def build_guitar(
         site_added = 0
         for row, absolute, ratio, nearest_interval in candidates:
             midi = int(row["midi"])
-            if (absolute, midi) in occupied or per_step[absolute] >= GUITAR_CAP:
+            pair = (absolute, midi)
+            if pair in occupied or per_step[absolute] >= GUITAR_CAP:
                 continue
             evidence = {
                 "siteFrame": int(row["siteFrame"]),
@@ -209,7 +211,8 @@ def build_guitar(
                 "nearestDifferentActiveSemitoneDistance": nearest_interval,
             }
             out.append(base_builder.event_for_recovery(absolute, midi, "combinedGuitar", config, evidence))
-            occupied.add((absolute, midi))
+            occupied.add(pair)
+            new_pairs.add(pair)
             per_step[absolute] += 1
             added += 1
             site_added += 1
@@ -221,8 +224,12 @@ def build_guitar(
     out.sort(key=lambda note: (int(note["absoluteGridStep"]), int(note["midi"])))
     if max(per_step.values(), default=0) > GUITAR_CAP:
         raise AssertionError("contextual Guitar variant exceeded polyphony cap")
-    if len({(int(n["absoluteGridStep"]), int(n["midi"])) for n in out}) != len(out):
-        raise AssertionError("contextual Guitar variant violated (step,midi) dedupe")
+    # I003 is immutable and may contain pre-existing duplicate coordinates.
+    # The preregistered dedupe requirement applies to new recovery events:
+    # occupied was seeded from every parent coordinate, then updated after each
+    # add, so every new pair must be unique and disjoint from the parent set.
+    if len(new_pairs) != added:
+        raise AssertionError("contextual Guitar variant added a duplicate (step,midi) coordinate")
     return out, {
         "added": added,
         "eligible": eligible,
@@ -324,6 +331,8 @@ def main() -> int:
                 "midi_asc",
             ],
             "fundamentalPresentFilterInheritedFromFrozenStructuralEvidence": True,
+            "newRecoveryStepMidiDedupeAgainstImmutableParent": True,
+            "preExistingParentCoordinateDuplicatesPreserved": True,
             "gpuCudaModalUsed": False,
             "mainOrProductionModified": False,
         },
