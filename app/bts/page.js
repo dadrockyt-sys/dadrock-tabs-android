@@ -268,7 +268,7 @@ export default function BackingTrackStudioPage() {
         pathname: blob.pathname,
       });
       setStatusMessage(
-        'Upload complete. Complete the $1.00 sandbox checkout to generate your backing track.'
+        'Upload complete. Complete the $1.00 checkout to generate your backing track.'
       );
     } catch (error) {
       setErrorMessage(
@@ -394,7 +394,7 @@ export default function BackingTrackStudioPage() {
     setErrorMessage(
       error instanceof Error
         ? error.message
-        : 'PayPal sandbox checkout could not be completed.'
+        : 'PayPal checkout could not be completed.'
     );
   }, []);
 
@@ -577,7 +577,7 @@ export default function BackingTrackStudioPage() {
                   <div className="flex items-end justify-between gap-3">
                     <div>
                       <p className="text-xs text-zinc-500">
-                        Sandbox test price
+                        Price
                       </p>
                       <p className="text-3xl font-black text-white">
                         ${PRICE}
