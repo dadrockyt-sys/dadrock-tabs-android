@@ -124,13 +124,13 @@ check(
 );
 
 check(
-  'BTS payment is live and server-fixed to USD 1.00',
+  'BTS payment is live, isolated, and server-fixed to USD 1.00',
   includesAll(payment, [
     "export const BTS_PRICE = '1.00'",
     "export const BTS_CURRENCY = 'USD'",
     "https://api-m.paypal.com",
-    'process.env.NEXT_PUBLIC_PAYPAL_CLIENT_ID',
-    'process.env.PAYPAL_CLIENT_SECRET',
+    'process.env.NEXT_PUBLIC_BTS_PAYPAL_CLIENT_ID',
+    'process.env.BTS_PAYPAL_CLIENT_SECRET',
   ]) &&
     !payment.includes('api-m.sandbox.paypal.com') &&
     !payment.includes('PAYPAL_SANDBOX_')
@@ -151,7 +151,9 @@ check(
     'createBtsPurchaseFingerprint',
     "reference_id: 'dadrock-bts'",
     'custom_id: `bts-${fingerprint}`',
-  ])
+    "environment: 'live'",
+  ]) &&
+    !createOrder.includes('sandbox: true')
 );
 
 check(
@@ -162,7 +164,9 @@ check(
     'capture?.amount?.currency_code === BTS_CURRENCY',
     'capture?.amount?.value === BTS_PRICE',
     'purchaseUnit?.custom_id === expectedCustomId',
-  ])
+    "environment: 'live'",
+  ]) &&
+    !captureOrder.includes('sandbox: true')
 );
 
 check(
@@ -223,12 +227,13 @@ check(
 );
 
 check(
-  'BTS PayPal UI uses dedicated BTS live checkout endpoints',
+  'BTS PayPal UI uses dedicated BTS live checkout endpoints and client ID',
   includesAll(paypalButton, [
     "'/api/bts/paypal/create-order'",
     "'/api/bts/paypal/capture-order'",
-    'NEXT_PUBLIC_PAYPAL_CLIENT_ID',
+    'NEXT_PUBLIC_BTS_PAYPAL_CLIENT_ID',
   ]) &&
+    !paypalButton.includes('NEXT_PUBLIC_PAYPAL_CLIENT_ID') &&
     !paypalButton.includes('NEXT_PUBLIC_PAYPAL_SANDBOX_CLIENT_ID')
 );
 
