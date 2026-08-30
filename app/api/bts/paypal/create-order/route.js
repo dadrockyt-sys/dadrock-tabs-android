@@ -132,7 +132,7 @@ export async function POST(request) {
       orderId: data.id,
       price: BTS_PRICE,
       currency: BTS_CURRENCY,
-      sandbox: true,
+      environment: 'live',
     });
   } catch (error) {
     console.error(
