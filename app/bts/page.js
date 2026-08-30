@@ -20,11 +20,11 @@ import {
   Loader2,
   Mail,
   Music2,
-  ShieldCheck,
   Upload,
 } from 'lucide-react';
 
 import BTSPayPalCheckoutButton from '@/components/BTSPayPalCheckoutButton';
+import LanguageSelector from '@/components/LanguageSelector';
 
 const LOGO_URL = '/dadrock-tabs-bts-logo.png';
 const PRICE = '1.00';
@@ -410,9 +410,7 @@ export default function BackingTrackStudioPage() {
             DadRock Tabs
           </Link>
 
-          <div className="rounded-full border border-orange-500/30 bg-orange-500/10 px-3 py-1 text-xs font-bold text-orange-300">
-            PayPal Sandbox · ${PRICE} USD
-          </div>
+          <LanguageSelector />
         </div>
 
         <section className="overflow-hidden rounded-3xl border border-orange-500/25 bg-zinc-900/80 shadow-2xl shadow-orange-950/20">
@@ -670,27 +668,13 @@ export default function BackingTrackStudioPage() {
 
               <section className="rounded-2xl border border-zinc-800 bg-zinc-950/70 p-5 text-sm text-zinc-400">
                 <div className="flex items-start gap-3">
-                  <ShieldCheck className="mt-0.5 h-5 w-5 shrink-0 text-green-400" />
-                  <div>
-                    <p className="font-bold text-white">
-                      Isolated BTS workflow
-                    </p>
-                    <p className="mt-1 text-xs leading-5">
-                      The existing AI Tab payment and analyzer routes are not changed. BTS uses its own upload authorization, $1 sandbox order, and backing-track processor.
-                    </p>
-                  </div>
-                </div>
-              </section>
-
-              <section className="rounded-2xl border border-zinc-800 bg-zinc-950/70 p-5 text-sm text-zinc-400">
-                <div className="flex items-start gap-3">
                   <Headphones className="mt-0.5 h-5 w-5 shrink-0 text-orange-400" />
                   <div>
                     <p className="font-bold text-white">
                       What the AI removes
                     </p>
                     <p className="mt-1 text-xs leading-5">
-                      The current BTS prototype uses six-source waveform separation and rebuilds the mix without the stem or stems you selected.
+                      BTS uses six-source waveform separation to rebuild the mix without the guitar or bass stems you select. Because instruments can overlap inside a mastered recording, some bleed or separation artifacts may remain in complex mixes.
                     </p>
                   </div>
                 </div>
@@ -709,6 +693,23 @@ export default function BackingTrackStudioPage() {
               )}
             </aside>
           </div>
+
+          <section
+            aria-labelledby="bts-seo-heading"
+            className="border-t border-zinc-800 bg-black/20 px-5 py-7 sm:px-8"
+          >
+            <div className="mx-auto max-w-3xl text-center">
+              <h2
+                id="bts-seo-heading"
+                className="text-xl font-black text-white sm:text-2xl"
+              >
+                AI Guitar and Bass Backing Track Maker
+              </h2>
+              <p className="mt-3 text-sm leading-7 text-zinc-400 sm:text-base">
+                DadRock Tabs Backing Track Studio is an online AI backing track maker for guitarists, bass players, singers, and musicians who want custom practice tracks from audio they have the right to use. Upload an MP3, WAV, M4A, or AAC file, then remove guitar, remove bass, or remove both guitar and bass with six-source AI stem separation and download the rebuilt mix as an MP3. Use it to practice riffs and solos, rehearse bass lines, play along with classic rock, hard rock, metal, blues, and other music, or hear the rest of an arrangement more clearly while learning a part.
+              </p>
+            </div>
+          </section>
         </section>
       </div>
     </main>
