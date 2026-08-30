@@ -5,7 +5,7 @@ Checkpoint branch: `backing-track-studio`
 Production branch: `main`
 
 ## Active phase
-**The user has confirmed the live BTS processing flow works end-to-end, including playable/downloadable backing-track generation. BTS is now prepared on `backing-track-studio` to leave PayPal sandbox and use live PayPal at the existing USD $1.00 price. The customer-facing sandbox wording is removed. No `main` or Production write was made because the standing instruction remains to keep changes isolated until explicit promotion authorization.**
+**The user has confirmed the live BTS processing flow works end-to-end, including playable/downloadable backing-track generation. BTS is now prepared on `backing-track-studio` to leave PayPal sandbox and use live PayPal at the existing USD $1.00 price. The customer-facing sandbox wording is removed and `/bts` is prepared as an English-only sitemap entry for GSC. No `main` or Production write was made because the standing instruction remains to keep changes isolated until explicit promotion authorization.**
 
 ## Live PayPal / GSC readiness continuation — 2026-08-30 UTC
 - Re-fetched this checkpoint before making changes, per instruction.
@@ -19,13 +19,16 @@ Production branch: `main`
 - `components/BTSPayPalCheckoutButton.js` now loads the live PayPal client ID only and contains no sandbox customer wording.
 - `app/bts/page.js` now shows **Price** instead of **Sandbox test price**, and checkout/status/error copy no longer refers to sandbox.
 - BTS contract validation was updated to require the live PayPal endpoint/credentials and to fail if sandbox UI/config markers return.
+- `app/sitemap.js` now includes `https://dadrocktabs.com/bts` as an **English-only** route; no premature localized `/xx/bts` URLs or hreflang entries were added.
 - Relevant branch commits:
   - `db3e3e29942bcb1d8a5908bba2f4ccf2184511db` — `Switch BTS PayPal to live mode`
   - `40dd816819f0269a4d2d6f6532100099522747f1` — `Use live PayPal checkout for BTS`
   - `ae98a54e2cd4ddd99574537e4e47f148042840e6` — `Remove BTS sandbox presentation`
   - `9a87024c5ada72dc3b965b16bb793694f589180d` — `Validate live BTS PayPal configuration`
+  - `dd48ea4a50b26dcb8076e56eeae37f3b150e9e18` — `Add BTS to English sitemap`
 - Route-specific SEO metadata already exists on the branch with canonical `https://dadrocktabs.com/bts`, index/follow, search-focused title/description, and social metadata.
-- Manual GSC URL inspection/request indexing can be used once these branch changes are promoted and the live page is rechecked. `/bts` is not being localized yet, so no locale-prefixed BTS URLs or hreflang entries should be published yet.
+- Manual GSC URL inspection/request indexing can be used once these branch changes are promoted and the live page is rechecked.
+- Production live PayPal credential values cannot be inspected through the currently available Vercel connector surface. Before/at promotion, confirm the existing `NEXT_PUBLIC_PAYPAL_CLIENT_ID` and `PAYPAL_CLIENT_SECRET` are the live PayPal app credentials rather than sandbox credentials.
 
 ## UI / SEO / localization-prep continuation — 2026-08-30 UTC
 - User confirmed the live BTS generation flow is working and supplied screenshots showing successful processing/download behavior.
@@ -172,6 +175,7 @@ Completed / user-confirmed:
 - Branch BTS route metadata has a dedicated title, description, canonical, keyword set, social metadata, and index/follow settings.
 - Branch BTS PayPal helper targets `https://api-m.paypal.com` and uses live credential names only.
 - Branch validation now explicitly checks live PayPal configuration and rejects sandbox markers.
+- Branch sitemap includes `/bts` exactly once as an English-only route.
 
 Still to complete:
 1. **Promote the prepared branch changes to `main`/Production only when explicitly authorized.**
