@@ -1650,6 +1650,25 @@ export default function App({ initialLang = 'en' }) {
             {t.tagline}
           </p>
 
+          {/* Backing Track Studio launch callout */}
+          <Link
+            href="/bts"
+            className={`group relative w-full max-w-2xl mb-5 overflow-hidden rounded-full border-2 border-amber-400/80 bg-gradient-to-r from-zinc-950 via-orange-950 to-zinc-950 px-4 py-3.5 sm:px-5 sm:py-4 shadow-[0_0_30px_rgba(245,158,11,0.35)] transition-all duration-500 hover:scale-[1.02] hover:border-amber-300 hover:shadow-[0_0_42px_rgba(245,158,11,0.55)] ${pageReady ? 'opacity-100' : 'opacity-0'}`}
+            style={{ transitionDelay: '0.25s' }}
+            aria-label="Open Backing Track Studio"
+          >
+            <span className="relative z-10 flex w-full items-center gap-3 sm:gap-4">
+              <span className="flex h-11 w-11 shrink-0 items-center justify-center rounded-full bg-red-600 text-[11px] font-black tracking-wide text-white shadow-[0_0_18px_rgba(220,38,38,0.8)] ring-2 ring-red-300/60 sm:h-12 sm:w-12 sm:text-xs">
+                NEW
+              </span>
+              <span className="flex-1 text-center text-lg font-black uppercase tracking-wider text-white transition-colors group-hover:text-amber-200 sm:text-xl">
+                Backing Track Studio
+              </span>
+              <Music className="h-6 w-6 shrink-0 text-amber-400 transition-transform group-hover:scale-110 sm:h-7 sm:w-7" />
+            </span>
+            <span className="pointer-events-none absolute inset-0 bg-gradient-to-r from-red-600/10 via-amber-400/10 to-orange-500/10 opacity-70 transition-opacity group-hover:opacity-100" />
+          </Link>
+
           {/* Search Form with Gradient Border */}
           <form onSubmit={handleSearch} className={`w-full max-w-2xl mb-8 transition-opacity duration-500 ${pageReady ? 'opacity-100' : 'opacity-0'}`} style={{ transitionDelay: '0.3s' }}>
             <div className="flex gap-3">
