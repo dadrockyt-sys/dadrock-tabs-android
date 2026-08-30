@@ -25,10 +25,8 @@ jobs:
 
           path = Path('app/page.js')
           text = path.read_text()
-          anchor = '''          {/* Search Form with Gradient Border */}
-          <form onSubmit={handleSearch} className={`w-full max-w-2xl mb-8 transition-opacity duration-500 ${pageReady ? 'opacity-100' : 'opacity-0'}`} style={{ transitionDelay: '0.3s' }}>
-'''
-          block = '''          {/* Backing Track Studio launch callout */}
+          marker = "          {/* Search Form with Gradient Border */}\n"
+          block = """          {/* Backing Track Studio launch callout */}
           <Link
             href="/bts"
             className={`group relative w-full max-w-2xl mb-5 overflow-hidden rounded-full border-2 border-amber-400/80 bg-gradient-to-r from-zinc-950 via-orange-950 to-zinc-950 px-4 py-3.5 sm:px-5 sm:py-4 shadow-[0_0_30px_rgba(245,158,11,0.35)] transition-all duration-500 hover:scale-[1.02] hover:border-amber-300 hover:shadow-[0_0_42px_rgba(245,158,11,0.55)] ${pageReady ? 'opacity-100' : 'opacity-0'}`}
@@ -47,13 +45,12 @@ jobs:
             <span className="pointer-events-none absolute inset-0 bg-gradient-to-r from-red-600/10 via-amber-400/10 to-orange-500/10 opacity-70 transition-opacity group-hover:opacity-100" />
           </Link>
 
-'''
+"""
           if 'Backing Track Studio launch callout' in text:
               raise SystemExit('Callout already present; refusing duplicate patch.')
-          if anchor not in text:
-              raise SystemExit('Expected homepage search anchor not found.')
-          text = text.replace(anchor, block + anchor, 1)
-          path.write_text(text)
+          if marker not in text:
+              raise SystemExit('Expected homepage search marker not found.')
+          path.write_text(text.replace(marker, block + marker, 1))
           PY
 
       - name: Commit homepage change
