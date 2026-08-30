@@ -5,7 +5,27 @@ Checkpoint branch: `backing-track-studio`
 Production branch: `main`
 
 ## Active phase
-**Production promotion is complete. The tested BTS live-PayPal/UI/SEO changes were rebased safely onto the then-current `main` through a dedicated release branch and merged via PR #27. Production `/bts` is serving successfully, the production sitemap now contains the English-only `/bts` URL, and a production `/api/bts/cleanup` cron invocation has returned HTTP 200. The remaining launch verification is one real USD $1.00 PayPal checkout/capture (performed by the user, with optional refund) followed by GSC URL Inspection/request indexing.**
+**Production promotion is complete. The tested BTS live-PayPal/UI/SEO changes were released safely to `main` through PR #27, and the new homepage Backing Track Studio launch callout is also live through PR #28. Production `/bts` is serving successfully, the production homepage now promotes BTS immediately before the search bar, the sitemap contains the English-only `/bts` URL, and a production `/api/bts/cleanup` cron invocation has returned HTTP 200. The remaining launch verification is one real USD $1.00 PayPal checkout/capture (performed by the user, with optional refund) followed by GSC URL Inspection/request indexing.**
+
+## Homepage BTS launch callout — LIVE — 2026-08-30 UTC
+- Re-fetched this checkpoint before the homepage production work and again immediately before saving this checkpoint update, per standing instruction.
+- User requested a prominent full-length **Backing Track Studio** button immediately before the homepage search bar, with a red circular **NEW** attention badge in bright white text and styling that fits the DadRock Tabs visual theme.
+- A clean branch `bts-homepage-callout` was created from current `main` and the final production diff was reduced to exactly one file: `app/page.js`.
+- The callout is inserted directly after the homepage tagline and immediately before the existing **Search Form with Gradient Border** block.
+- Visual treatment:
+  - full-width within the homepage's existing `max-w-2xl` content width;
+  - dark zinc/orange gradient matching the site's black/orange rock theme;
+  - amber border and glow for stronger contrast;
+  - bright red circular **NEW** badge at the start with white bold text;
+  - centered uppercase **Backing Track Studio** label;
+  - amber music icon and hover glow/scale treatment.
+- The button links to canonical `/bts`. Localized homepage routes reuse the shared homepage component, but the link intentionally remains `/bts` until real localized BTS routes/content exist.
+- PR **#28** (`Add Backing Track Studio homepage callout`) changed only `app/page.js` and was squash-merged successfully.
+- PR #28 Production/main commit: `323832497eb72d15a0e47aea486c0f633b3d8f43`.
+- Vercel Production deployment: `dpl_7kn57qtP86vsT4sKYSa9ZwZcXNdV`.
+- Vercel build completed successfully with Next.js 16.1.6; the Production deployment reached **READY** and owns the `dadrocktabs.com` alias.
+- Live verification observed `GET https://dadrocktabs.com/` → **HTTP 200** from `dpl_7kn57qtP86vsT4sKYSa9ZwZcXNdV`.
+- The returned Production HTML visibly contains, in order: homepage tagline → `/bts` launch callout with red **NEW** badge → homepage search form, confirming the requested placement is live.
 
 ## Production promotion — COMPLETE — 2026-08-30 UTC
 - Re-fetched this checkpoint before updating it, per standing instruction.
@@ -22,7 +42,7 @@ Production branch: `main`
   - `validation/bts/validate_bts_contracts.mjs`
 - Release commit: `867fa041951aebfb3914e3b758bb71d1e84d9095` — `Promote BTS live PayPal and SEO`.
 - Production PR **#27** (`Release Backing Track Studio live PayPal and SEO`) was merged successfully.
-- Production merge/current `main` SHA: `bf9051383e5a68a29aa7b71edc0811d23ebb9db7`.
+- PR #27 Production merge SHA: `407a8b5fe6f030fc1976be209c26a2d9d3eea7b5`.
 - PR **#26** was then closed unmerged and marked superseded by PR #27.
 - Vercel Production deployment observed: `dpl_8XMtBfxJ4EaKiJ7N5F8cQCCR9xeH`.
 - Production runtime verification observed `GET /bts` → **HTTP 200** from that `main` deployment.
@@ -128,9 +148,10 @@ The relevant upload/email/status/delivery chain in `app/ai-tab/page.js` is now e
 - Feature development and validation remained isolated on `backing-track-studio` until the user explicitly authorized Production promotion.
 - Promotion was performed safely through `bts-production-release`, created from the then-current `main`, so newer unrelated Production work was not overwritten.
 - PR #27 is merged to `main`; Production was therefore intentionally modified after explicit authorization.
+- The homepage callout was isolated on `bts-homepage-callout` and merged through PR #28; its final Production diff changed only `app/page.js`.
 - PR #26 from the divergent feature branch was closed unmerged as superseded.
-- Ongoing checkpoint maintenance remains on `backing-track-studio` only; this checkpoint file was not added to the Production release.
-- No live Modal redeploy was triggered by the promotion itself.
+- Ongoing checkpoint maintenance remains on `backing-track-studio` only; this checkpoint file was not added to either Production release.
+- No live Modal redeploy was triggered by the homepage callout.
 
 ## Production state
 - Live route: `https://dadrocktabs.com/bts`
@@ -142,8 +163,12 @@ The relevant upload/email/status/delivery chain in `app/ai-tab/page.js` is now e
   - merge commit: `2ae350ba72e12bacb8b767ab4ffe6c80bce322aa`
 - Live PayPal/UI/SEO/stem-handoff release: PR **#27**
   - release commit: `867fa041951aebfb3914e3b758bb71d1e84d9095`
-  - merge/current `main` SHA at promotion: `bf9051383e5a68a29aa7b71edc0811d23ebb9db7`
+  - merge commit: `407a8b5fe6f030fc1976be209c26a2d9d3eea7b5`
   - Vercel production deployment: `dpl_8XMtBfxJ4EaKiJ7N5F8cQCCR9xeH`
+- Homepage BTS launch callout: PR **#28**
+  - Production/main commit: `323832497eb72d15a0e47aea486c0f633b3d8f43`
+  - Vercel production deployment: `dpl_7kn57qtP86vsT4sKYSa9ZwZcXNdV`
+  - Current homepage verification: HTTP 200 with the BTS callout rendered immediately before the search form.
 
 ## Product flow
 1. Upload MP3/WAV/M4A/AAC audio.
@@ -225,6 +250,7 @@ Production `vercel.json` contains the hourly `/api/bts/cleanup` cron. A Producti
 ## Validation status
 Completed / user-confirmed / production-observed:
 - `/bts` is live and Production returned **HTTP 200** after PR #27 promotion.
+- The Production homepage now contains the themed **Backing Track Studio** launch callout with a red **NEW** badge immediately before the search form, verified from live Production HTML after PR #28.
 - BTS browser processing reaches the dedicated Modal separator.
 - Demucs six-stem separation completes.
 - The rebuilt backing track is playable in-browser and downloadable as MP3.
@@ -248,4 +274,4 @@ Still to complete:
 ## Progress score
 **Current Project Progress Score: 99.5%.**
 
-Core BTS functionality is working according to the user's live test, the prepared live-PayPal/UI/SEO changes are promoted safely to Production, the live route and sitemap entry are confirmed, and the cleanup route has executed successfully in Production. The final launch-verification items are a real USD $1.00 PayPal smoke transaction and GSC URL Inspection/request indexing.
+Core BTS functionality is working according to the user's live test, the live-PayPal/UI/SEO changes are promoted safely to Production, the homepage now prominently promotes Backing Track Studio immediately before search, the live route and sitemap entry are confirmed, and the cleanup route has executed successfully in Production. The final launch-verification items remain a real USD $1.00 PayPal smoke transaction and GSC URL Inspection/request indexing.
