@@ -5,7 +5,7 @@ Checkpoint branch: `backing-track-studio`
 Production branch: `main`
 
 ## Active phase
-**The user now reports the live BTS flow is working successfully end-to-end, including playable/downloadable backing-track generation. A branch-only UI/SEO/localization-prep pass is underway on `backing-track-studio`: internal implementation copy is removed, the top sandbox badge is replaced with the existing 14-language selector, and BTS-specific search copy/metadata are added. No `main` or Production write was made in this continuation.**
+**The user now reports the live BTS flow is working successfully end-to-end, including playable/downloadable backing-track generation. A branch-only UI/SEO/localization-prep pass is complete on `backing-track-studio`: internal implementation copy is removed, the top sandbox badge is replaced with the existing 14-language selector, and BTS-specific search copy/metadata are added. No `main` or Production write was made in this continuation.**
 
 ## UI / SEO / localization-prep continuation — 2026-08-30 UTC
 - Re-fetched this checkpoint before making changes, per instruction.
@@ -30,7 +30,15 @@ Production branch: `main`
   - Open Graph/Twitter metadata;
   - index/follow robots metadata.
 - Locale-prefixed BTS routes are **not enabled yet**. This is intentional so choosing a locale does not create 404/duplicate localized BTS URLs before translations and localized routes are actually implemented. The shared selector is now visually present and ready for the next localization phase.
-- A temporary one-time Actions patch workflow was attempted but GitHub recorded a startup failure with zero jobs on this branch. It made no BTS code change; direct branch file updates were used instead. Remove the temporary workflow file before finishing this continuation.
+- A temporary one-time Actions patch workflow was attempted but GitHub recorded a startup failure with zero jobs on this branch. It made no BTS code change; direct branch file updates were used instead.
+- The failed temporary workflow was removed in commit `8d881a02e7e341f459363f7e865050d3c8519ff1`.
+- Final re-fetch confirmed:
+  - `LanguageSelector` is present at the former top-right sandbox-badge position;
+  - the **Isolated BTS workflow** section is gone;
+  - the bleed/artifact expectation text is present;
+  - the SEO paragraph is present;
+  - `app/bts/layout.js` contains the `/bts` canonical and BTS-specific metadata;
+  - the temporary workflow file no longer exists.
 
 ## Continuation note — 2026-08-29 22:18–22:21 UTC
 - Re-fetched this checkpoint first, per instruction.
@@ -163,15 +171,14 @@ Completed / user-confirmed:
 - AI Tab payment/token logic remains isolated from BTS.
 - Branch-only UI now removes internal workflow implementation copy, exposes the shared 14-language selector, and includes SEO-focused content.
 - Branch-only BTS route metadata now has a dedicated title, description, canonical, keyword set, social metadata, and index/follow settings.
+- Final branch file inspection confirms the requested UI/SEO changes and temporary workflow cleanup.
 
 Still to complete:
-1. Remove the failed temporary one-time workflow file from `backing-track-studio`.
-2. Re-fetch/inspect the final branch files after cleanup.
-3. Do not promote these UI/SEO changes to `main`/Production without explicit user authorization.
-4. When localization work begins, create real localized BTS routes/content before adding `bts` to `LOCALIZED_ROUTE_ROOTS` or publishing hreflang alternates.
-5. Independently confirm source Blob deletion and hourly cleanup cron runtime authorization if full operational closure is desired.
+1. Do not promote these UI/SEO changes to `main`/Production without explicit user authorization.
+2. When localization work begins, create real localized BTS routes/content before adding `bts` to `LOCALIZED_ROUTE_ROOTS` or publishing hreflang alternates.
+3. Independently confirm source Blob deletion and hourly cleanup cron runtime authorization if full operational closure is desired.
 
 ## Progress score
 **Current Project Progress Score: 99%.**
 
-Core BTS functionality is working according to the user's live test. The remaining work is branch cleanup/verification, optional operational cleanup verification, and explicit authorization before promoting the new UI/SEO/localization-prep changes.
+Core BTS functionality is working according to the user's live test, and the requested UI/SEO/localization-prep changes are complete on the isolated branch. Remaining work is explicit promotion authorization, future localization, and optional cleanup-runtime verification.
