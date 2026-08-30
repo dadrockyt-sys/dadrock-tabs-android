@@ -153,7 +153,7 @@ export async function POST(request) {
       status: capture.status,
       removalMode,
       jobToken,
-      sandbox: true,
+      environment: 'live',
     });
   } catch (error) {
     console.error(
