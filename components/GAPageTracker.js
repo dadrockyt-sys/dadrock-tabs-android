@@ -2,6 +2,7 @@
 
 import { useEffect, useRef } from 'react';
 import { usePathname, useSearchParams } from 'next/navigation';
+import HomeBtsCallout from '@/components/HomeBtsCallout';
 
 const GA_MEASUREMENT_ID = 'G-92RKGQW8NJ';
 
@@ -61,5 +62,5 @@ export default function GAPageTracker() {
     };
   }, [pathname, searchParams]);
 
-  return null;
+  return <HomeBtsCallout />;
 }
