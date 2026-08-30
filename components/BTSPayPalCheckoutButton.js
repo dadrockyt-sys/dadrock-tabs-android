@@ -39,10 +39,10 @@ export default function BTSPayPalCheckoutButton({
     let isCancelled = false;
 
     const clientId =
-      process.env.NEXT_PUBLIC_PAYPAL_CLIENT_ID;
+      process.env.NEXT_PUBLIC_BTS_PAYPAL_CLIENT_ID;
 
     if (!clientId) {
-      setPaymentError('PayPal is not configured. You can still use a valid BTS token.');
+      setPaymentError('Live PayPal is not configured yet. You can still use a valid BTS token.');
       setIsLoading(false);
       return undefined;
     }
