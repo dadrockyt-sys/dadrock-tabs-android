@@ -95,12 +95,44 @@ Do not introduce persistent copyrighted-audio storage without explicit user appr
 - Homepage includes the prominent Backing Track Studio launch callout.
 - Locale-prefixed BTS routes are intentionally not enabled until real translations/routes are implemented.
 
-## Next steps
+## Next follow-on phase — localization and translations
+**This is the saved next development phase. Do not begin until the user is ready to resume work.**
+
+Goal: localize Backing Track Studio from English into the other 13 DadRock Tabs languages while preserving the completed English Production flow.
+
+Target locales:
+- Spanish — `es`
+- Portuguese — `pt`
+- Brazilian Portuguese — `pt-br`
+- German — `de`
+- French — `fr`
+- Italian — `it`
+- Japanese — `ja`
+- Korean — `ko`
+- Chinese — `zh`
+- Russian — `ru`
+- Hindi — `hi`
+- Swedish — `sv`
+- Finnish — `fi`
+
+When localization work begins:
+1. Re-fetch this checkpoint first.
+2. Continue on `backing-track-studio`; do not modify `main` or Production until explicitly approved.
+3. Reuse DadRock Tabs' existing 14-language routing/i18n conventions rather than inventing a separate BTS localization system.
+4. Translate the full BTS customer experience, including headings, upload instructions, removal-mode labels/descriptions, email/rights text, checkout/token UI, processing/download states, error messages, retention/copyright copy, and SEO paragraph.
+5. Add locale-specific BTS metadata/SEO copy where appropriate.
+6. Decide and implement the correct localized route structure consistent with the rest of dadrocktabs.com.
+7. Preserve the BTS payment price, PayPal Live credential isolation, token isolation, processing APIs, retention rules, and English behavior unchanged unless separately approved.
+8. Validate all 13 localized versions on mobile as well as desktop before any Production promotion.
+9. Only after translations/routes are proven should locale BTS URLs be considered for sitemap/indexing changes.
+
+## Immediate next steps
 1. Submit/request indexing for `https://dadrocktabs.com/bts` in Google Search Console if not already done.
 2. Monitor real-world BTS usage, PayPal errors, separator failures and user feedback.
-3. Treat future localization, separation-quality improvements, or pricing changes as separate follow-on work.
+3. When the user is ready to resume development, begin the saved **13-language BTS localization and translation phase** above.
 
 ## Progress score
-**Current Project Progress Score: 100%.**
+**Completed English BTS launch scope: 100%.**  
+**Next follow-on phase: 13-language localization — not started.**
 
-The planned BTS launch scope is complete: upload, email/rights flow, three removal modes, Modal separation, downloadable MP3, isolated BTS tokens, live USD $1.00 PayPal, cleanup/retention controls, SEO, sitemap entry, homepage promotion and Production deployment are all in place. The user has confirmed the PayPal flow now works correctly.
+The planned English BTS launch scope is complete: upload, email/rights flow, three removal modes, Modal separation, downloadable MP3, isolated BTS tokens, live USD $1.00 PayPal, cleanup/retention controls, SEO, sitemap entry, homepage promotion and Production deployment are all in place. The user has confirmed the PayPal flow now works correctly. The next project phase is localization into the other 13 DadRock Tabs languages when the user is ready to continue.
