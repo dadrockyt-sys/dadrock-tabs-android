@@ -2,7 +2,7 @@
 
 import { useEffect, useRef, useState } from 'react';
 
-const PAYPAL_SCRIPT_ID = 'dadrock-paypal-sdk';
+const PAYPAL_SCRIPT_ID = 'dadrock-bts-paypal-sdk';
 
 const TOKEN_ERROR_TITLES = {
   TOKEN_NOT_FOUND: 'Token Not Found',
@@ -39,10 +39,10 @@ export default function BTSPayPalCheckoutButton({
     let isCancelled = false;
 
     const clientId =
-      process.env.NEXT_PUBLIC_PAYPAL_CLIENT_ID;
+      process.env.NEXT_PUBLIC_BTS_PAYPAL_CLIENT_ID;
 
     if (!clientId) {
-      setPaymentError('PayPal is not configured. You can still use a valid BTS token.');
+      setPaymentError('BTS live PayPal is not configured. You can still use a valid BTS token.');
       setIsLoading(false);
       return undefined;
     }
