@@ -5,10 +5,10 @@ Checkpoint branch: `backing-track-studio`
 Production branch: `main`
 
 ## Active phase
-**The BTS live-PayPal credential isolation fix has now been promoted to Production through PR #29 after the user configured dedicated PayPal Live credentials in Vercel. A new Production deployment is building from main commit `e318f105bbffd9c611e145648851e38d0c6802d2`. The next verification is to wait for that deployment to reach READY, confirm `/bts` serves normally, then have the user retry the real USD $1.00 PayPal checkout.**
+**The BTS live-PayPal credential isolation fix is now fully deployed to Production through PR #29. Vercel deployment `dpl_6UoY1Z265WgCT7ezoJFbXqSANYCi` reached READY, owns the `dadrocktabs.com` alias, and Production `/bts` returned HTTP 200 from that deployment. The remaining launch proof is one real USD $1.00 PayPal checkout/capture by the user, followed by runtime-log confirmation and GSC indexing.**
 
-## Latest continuation — dedicated BTS PayPal Live credentials promoted — 2026-08-30 UTC
-- Re-fetched this checkpoint first before making changes, per standing instruction.
+## Latest continuation — dedicated BTS PayPal Live credentials promoted and deployed — 2026-08-30 UTC
+- Re-fetched this checkpoint before this final verification/save, per standing instruction.
 - The user's first real USD $1.00 BTS PayPal smoke test had returned **Unable to authenticate with PayPal**.
 - Production runtime logs identified the exact PayPal response:
   - `error: 'invalid_client'`
@@ -17,26 +17,30 @@ Production branch: `main`
 - Branch-only BTS isolation was prepared on `backing-track-studio` using:
   - `NEXT_PUBLIC_BTS_PAYPAL_CLIENT_ID`
   - `BTS_PAYPAL_CLIENT_SECRET`
-- User then confirmed both dedicated variables were added in Vercel for **Production** using real PayPal Live app credentials.
-- Vercel automatically redeployed the previous main commit after the environment-variable save (`dpl_CaTYvV12po3GbzQU45fXiZuieV6c`), confirming the Production environment change was registered, but that redeploy still contained the old shared-credential code.
+- User confirmed both dedicated variables were added in Vercel for **Production** using real PayPal Live app credentials.
+- Vercel automatically redeployed the previous main commit after the environment-variable save (`dpl_CaTYvV12po3GbzQU45fXiZuieV6c`), proving the Production environment change was registered, but that redeploy still contained the old shared-credential code.
 
 ## Clean Production release — PR #29
-- A clean release branch already existed from current main: `bts-live-paypal-credentials`.
-- Current main before the release was `323832497eb72d15a0e47aea486c0f633b3d8f43`.
-- The release branch was confirmed to be **ahead 5 / behind 0** relative to main.
-- PR #29 was opened as **Fix BTS live PayPal credential isolation**.
-- PR #29 was inspected before merge. Its complete changed-file set was exactly:
+- Clean release branch: `bts-live-paypal-credentials`.
+- Main before the release: `323832497eb72d15a0e47aea486c0f633b3d8f43`.
+- Release branch was confirmed **ahead 5 / behind 0** relative to main.
+- PR #29: **Fix BTS live PayPal credential isolation**.
+- Complete changed-file set was inspected before merge and contained exactly:
   1. `app/api/bts/paypal/create-order/route.js`
   2. `app/api/bts/paypal/capture-order/route.js`
   3. `components/BTSPayPalCheckoutButton.js`
   4. `lib/btsPayment.js`
   5. `validation/bts/validate_bts_contracts.mjs`
-- The route changes only replace obsolete `sandbox: true` response metadata with `environment: 'live'`.
-- The functional payment changes are limited to BTS-specific credential isolation.
-- PR #29 was mergeable and was squash-merged successfully.
+- Route changes only replace obsolete `sandbox: true` response metadata with `environment: 'live'`.
+- Functional payment changes are limited to BTS-specific credential isolation.
+- PR #29 was mergeable and squash-merged successfully.
 - Production/main commit: `e318f105bbffd9c611e145648851e38d0c6802d2`.
-- New Production deployment: `dpl_6UoY1Z265WgCT7ezoJFbXqSANYCi`.
-- At this checkpoint save, that deployment is still **BUILDING**.
+- Production deployment: `dpl_6UoY1Z265WgCT7ezoJFbXqSANYCi`.
+- Deployment reached **READY** successfully with Next.js/Turbopack.
+- Vercel reports aliases including:
+  - `dadrocktabs.com`
+  - `www.dadrocktabs.com`
+- Live fetch of `https://dadrocktabs.com/bts` returned **HTTP 200** and its generated assets explicitly reference `dpl_6UoY1Z265WgCT7ezoJFbXqSANYCi`, confirming the new Production deployment is serving the BTS page.
 
 ## BTS PayPal credential contract — now Production code
 ### Browser
@@ -46,7 +50,7 @@ Production branch: `main`
 It no longer reuses `NEXT_PUBLIC_PAYPAL_CLIENT_ID`.
 
 ### Server
-`lib/btsPayment.js` uses only the dedicated BTS Live pair for PayPal OAuth:
+`lib/btsPayment.js` uses the dedicated BTS Live pair for PayPal OAuth:
 - `NEXT_PUBLIC_BTS_PAYPAL_CLIENT_ID`
 - `BTS_PAYPAL_CLIENT_SECRET`
 
@@ -125,14 +129,12 @@ Do not introduce persistent copyrighted-audio storage without explicit user appr
 - Dedicated BTS Live PayPal credentials: PR #29 — main `e318f105bbffd9c611e145648851e38d0c6802d2`
 
 ## Next steps
-1. Wait for Vercel deployment `dpl_6UoY1Z265WgCT7ezoJFbXqSANYCi` to reach READY.
-2. Confirm Production `/bts` serves normally from the new deployment.
-3. User performs one real USD $1.00 BTS checkout.
-4. Inspect `/api/bts/paypal/create-order` and `/capture-order` runtime logs to confirm Live OAuth/order/capture success and absence of `invalid_client`.
-5. Confirm paid authorization proceeds into the already-proven BTS processing/download path.
-6. Request Google Search Console indexing for `https://dadrocktabs.com/bts` once the real-money smoke test is green.
+1. User performs one real USD $1.00 BTS checkout on `https://dadrocktabs.com/bts`.
+2. Inspect Production runtime logs for `/api/bts/paypal/create-order` and `/api/bts/paypal/capture-order` to confirm Live OAuth/order/capture success and absence of `invalid_client`.
+3. Confirm paid authorization proceeds into the already-proven BTS processing/download path.
+4. Request Google Search Console indexing for `https://dadrocktabs.com/bts` once the real-money smoke test is green.
 
 ## Progress score
-**Current Project Progress Score: 99.7%.**
+**Current Project Progress Score: 99.9%.**
 
-The dedicated PayPal Live credential fix is now in Production code and the correct BTS-only Live credentials have been configured in Vercel. The only remaining launch proof is successful completion of the new Production deployment and one real USD $1.00 checkout/capture.
+The dedicated PayPal Live credential fix is in Production code, the correct BTS-only Live credentials are configured in Vercel, the new deployment is READY, and `/bts` is serving successfully from that deployment. The sole remaining functional launch proof is one real USD $1.00 PayPal checkout/capture.
