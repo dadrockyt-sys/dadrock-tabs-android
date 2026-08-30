@@ -5,10 +5,29 @@ Checkpoint branch: `backing-track-studio`
 Production branch: `main`
 
 ## Active phase
-**The user now reports the live BTS flow is working successfully end-to-end, including playable/downloadable backing-track generation. A branch-only UI/SEO/localization-prep pass is complete on `backing-track-studio`: internal implementation copy is removed, the top sandbox badge is replaced with the existing 14-language selector, and BTS-specific search copy/metadata are added. No `main` or Production write was made in this continuation.**
+**The user has confirmed the live BTS processing flow works end-to-end, including playable/downloadable backing-track generation. BTS is now prepared on `backing-track-studio` to leave PayPal sandbox and use live PayPal at the existing USD $1.00 price. The customer-facing sandbox wording is removed. No `main` or Production write was made because the standing instruction remains to keep changes isolated until explicit promotion authorization.**
+
+## Live PayPal / GSC readiness continuation — 2026-08-30 UTC
+- Re-fetched this checkpoint before making changes, per instruction.
+- User confirmed the complete BTS processing flow works and requested removal of the sandbox state before submitting `https://dadrocktabs.com/bts` to Google Search Console.
+- BTS remains **USD $1.00 per backing track**.
+- `lib/btsPayment.js` now uses PayPal's live API endpoint: `https://api-m.paypal.com`.
+- BTS now uses the existing live PayPal credential names already used by DadRock Tabs:
+  - `NEXT_PUBLIC_PAYPAL_CLIENT_ID`
+  - `PAYPAL_CLIENT_SECRET`
+- BTS-specific create/capture routes remain separate, so the existing AI Tab USD $2.99 product and routes are not changed.
+- `components/BTSPayPalCheckoutButton.js` now loads the live PayPal client ID only and contains no sandbox customer wording.
+- `app/bts/page.js` now shows **Price** instead of **Sandbox test price**, and checkout/status/error copy no longer refers to sandbox.
+- BTS contract validation was updated to require the live PayPal endpoint/credentials and to fail if sandbox UI/config markers return.
+- Relevant branch commits:
+  - `db3e3e29942bcb1d8a5908bba2f4ccf2184511db` — `Switch BTS PayPal to live mode`
+  - `40dd816819f0269a4d2d6f6532100099522747f1` — `Use live PayPal checkout for BTS`
+  - `ae98a54e2cd4ddd99574537e4e47f148042840e6` — `Remove BTS sandbox presentation`
+  - `9a87024c5ada72dc3b965b16bb793694f589180d` — `Validate live BTS PayPal configuration`
+- Route-specific SEO metadata already exists on the branch with canonical `https://dadrocktabs.com/bts`, index/follow, search-focused title/description, and social metadata.
+- Manual GSC URL inspection/request indexing can be used once these branch changes are promoted and the live page is rechecked. `/bts` is not being localized yet, so no locale-prefixed BTS URLs or hreflang entries should be published yet.
 
 ## UI / SEO / localization-prep continuation — 2026-08-30 UTC
-- Re-fetched this checkpoint before making changes, per instruction.
 - User confirmed the live BTS generation flow is working and supplied screenshots showing successful processing/download behavior.
 - User reported noticeable guitar bleed in separated audio. This is consistent with source-separation limitations in dense/mastered recordings and is a plausible contributor to some AI Tab transcription difficulty because residual guitar energy can still reach downstream analysis.
 - User requested:
@@ -29,29 +48,8 @@ Production branch: `main`
   - relevant backing-track/stem-separation keywords;
   - Open Graph/Twitter metadata;
   - index/follow robots metadata.
-- Locale-prefixed BTS routes are **not enabled yet**. This is intentional so choosing a locale does not create 404/duplicate localized BTS URLs before translations and localized routes are actually implemented. The shared selector is now visually present and ready for the next localization phase.
-- A temporary one-time Actions patch workflow was attempted but GitHub recorded a startup failure with zero jobs on this branch. It made no BTS code change; direct branch file updates were used instead.
-- The failed temporary workflow was removed in commit `8d881a02e7e341f459363f7e865050d3c8519ff1`.
-- Final re-fetch confirmed:
-  - `LanguageSelector` is present at the former top-right sandbox-badge position;
-  - the **Isolated BTS workflow** section is gone;
-  - the bleed/artifact expectation text is present;
-  - the SEO paragraph is present;
-  - `app/bts/layout.js` contains the `/bts` canonical and BTS-specific metadata;
-  - the temporary workflow file no longer exists.
-
-## Continuation note — 2026-08-29 22:18–22:21 UTC
-- Re-fetched this checkpoint first, per instruction.
-- Confirmed `backing-track-studio` initially remained at `23f5fda9436281b2357ac73a9ce147aaad6146e5` (`Record first BTS live processing blocker`), so it did not contain the later live-test worker hardening.
-- User screenshot from approximately 22:07 UTC shows `audio-separator` logged **Separation complete!** and wrote all six expected files:
-  - `normalized_(Bass)_htdemucs_6s.wav`
-  - `normalized_(Drums)_htdemucs_6s.wav`
-  - `normalized_(Other)_htdemucs_6s.wav`
-  - `normalized_(Vocals)_htdemucs_6s.wav`
-  - `normalized_(Guitar)_htdemucs_6s.wav`
-  - `normalized_(Piano)_htdemucs_6s.wav`
-- Therefore the model itself is working. The observed failure was after successful stem generation, before/during stem discovery/rebuild.
-- Read-only comparison against `main` identified the minimal hardening used during the live debug cycle.
+- Locale-prefixed BTS routes are **not enabled yet**. This is intentional so choosing a locale does not create 404/duplicate localized BTS URLs before translations and localized routes are actually implemented.
+- Failed temporary workflow was removed in commit `8d881a02e7e341f459363f7e865050d3c8519ff1`.
 
 ## Branch-only stem handoff fix — DONE
 Commit on `backing-track-studio`:
@@ -63,19 +61,19 @@ Changes in `analyzer/modal_bts_separator.py`:
 3. Treat completed audio files as the source of truth. `audio-separator==0.30.2` may return a non-zero process status after writing all stems, so BTS now fails only when no output audio exists (or an expected named stem cannot be found).
 4. Preserve CPU-only behavior and the existing six-source Demucs model.
 
-Local static validation performed against the exact committed worker text:
-- Python `py_compile`: **PASS**.
-- AST parse: **PASS**.
-- Required hardening markers (`shutil.which`, output-directory `cwd`, file-source-of-truth handling): **PASS**.
-- Six expected stem names: **PASS**.
-- CPU-only contract: **PASS**.
-- Simulated discovery using the exact six filenames visible in the user's screenshot mapped all six stems successfully: **PASS**.
+Live evidence showed all six expected stems were written:
+- Bass
+- Drums
+- Other
+- Vocals
+- Guitar
+- Piano
 
 ## Isolation status
 - All writes in this continuation were made to `backing-track-studio`.
 - `main` was not modified.
-- No Production deployment was triggered by these UI/SEO changes.
-- No live Modal redeploy was triggered by these UI/SEO changes.
+- No Production deployment was triggered by the live-PayPal/UI/SEO changes.
+- No live Modal redeploy was triggered by these changes.
 
 ## Production state already established before this continuation
 - Live route: `https://dadrocktabs.com/bts`
@@ -94,7 +92,7 @@ Local static validation performed against the exact committed worker text:
    - Remove Bass
    - Remove Guitars + Bass
 4. Unlock with either:
-   - **USD $1.00 PayPal sandbox**, or
+   - **USD $1.00 PayPal live checkout** once the branch is promoted, or
    - a complimentary **BTS token**.
 5. Both unlock methods produce a signed BTS job authorization and use the same `/api/bts/process` processing path.
 6. Dedicated stem separation rebuilds the mix without the selected stem(s).
@@ -113,7 +111,7 @@ Local static validation performed against the exact committed worker text:
 - Admin API: `/api/admin/bts-tokens`
 - Redemption API: `/api/bts/free-token`
 
-Accepted BTS tokens return a signed BTS job token, so they enter the same protected audio-processing route as a verified PayPal sandbox capture.
+Accepted BTS tokens return a signed BTS job token, so they enter the same protected audio-processing route as a verified PayPal capture.
 
 ## Core BTS implementation
 - `app/bts/page.js`
@@ -137,14 +135,15 @@ Accepted BTS tokens return a signed BTS job token, so they enter the same protec
 - Current worker dependency: `audio-separator[cpu]==0.30.2`
 - Removes Guitar, Bass, or both and rebuilds the remaining mix.
 - Returns a 192 kbps MP3.
-- Live evidence confirms the model produced all six stems and the user later confirmed a successful playable/downloadable rebuilt track.
-- Separation is not acoustically perfect: the user reports noticeable guitar bleed in at least one test. This is now reflected in customer-facing expectation copy rather than implying perfect isolation.
+- User has confirmed successful playable/downloadable rebuilt tracks.
+- Separation is not acoustically perfect: noticeable guitar bleed can remain in dense/mastered recordings, and the customer-facing copy now sets that expectation accurately.
 
 ## Payment isolation
 - BTS create/capture routes are separate from AI Tab.
-- BTS server price: **USD $1.00**.
-- BTS PayPal mode: **sandbox** during testing.
-- Existing AI Tab **USD $2.99** payment flow remains unchanged.
+- BTS server price remains **USD $1.00**.
+- Branch target mode is now **live PayPal**.
+- BTS uses the existing live PayPal credential pair but its own BTS order/capture validation and signed job-token path.
+- Existing AI Tab **USD $2.99** price, routes, and product logic remain unchanged.
 
 ## Copyright/audio retention rule — FROZEN
 **Maximum retention: 24 hours.**
@@ -166,19 +165,22 @@ Completed / user-confirmed:
 - `/bts` is live.
 - BTS browser processing reaches the dedicated Modal separator.
 - Demucs six-stem separation completes.
-- The rebuilt backing track is playable in-browser and downloadable as MP3 according to the user's latest successful test.
+- The rebuilt backing track is playable in-browser and downloadable as MP3.
 - BTS token creator/tracker routes are live and isolated from AI Tab.
 - AI Tab payment/token logic remains isolated from BTS.
-- Branch-only UI now removes internal workflow implementation copy, exposes the shared 14-language selector, and includes SEO-focused content.
-- Branch-only BTS route metadata now has a dedicated title, description, canonical, keyword set, social metadata, and index/follow settings.
-- Final branch file inspection confirms the requested UI/SEO changes and temporary workflow cleanup.
+- Branch UI removes internal workflow implementation copy, exposes the shared 14-language selector, includes SEO-focused content, and contains no customer-facing sandbox labels.
+- Branch BTS route metadata has a dedicated title, description, canonical, keyword set, social metadata, and index/follow settings.
+- Branch BTS PayPal helper targets `https://api-m.paypal.com` and uses live credential names only.
+- Branch validation now explicitly checks live PayPal configuration and rejects sandbox markers.
 
 Still to complete:
-1. Do not promote these UI/SEO changes to `main`/Production without explicit user authorization.
-2. When localization work begins, create real localized BTS routes/content before adding `bts` to `LOCALIZED_ROUTE_ROOTS` or publishing hreflang alternates.
-3. Independently confirm source Blob deletion and hourly cleanup cron runtime authorization if full operational closure is desired.
+1. **Promote the prepared branch changes to `main`/Production only when explicitly authorized.**
+2. After promotion, perform one small real USD $1.00 BTS PayPal transaction to verify live credentials/capture, then refund it if desired through PayPal.
+3. After the live page is confirmed, use GSC URL Inspection for `https://dadrocktabs.com/bts` and request indexing.
+4. When localization work begins, create real localized BTS routes/content before adding `bts` to `LOCALIZED_ROUTE_ROOTS` or publishing hreflang alternates.
+5. Independently confirm hourly cleanup cron runtime authorization if full operational closure is desired.
 
 ## Progress score
 **Current Project Progress Score: 99%.**
 
-Core BTS functionality is working according to the user's live test, and the requested UI/SEO/localization-prep changes are complete on the isolated branch. Remaining work is explicit promotion authorization, future localization, and optional cleanup-runtime verification.
+Core BTS functionality is working according to the user's live test. The branch is now prepared for live USD $1 PayPal and GSC-facing SEO; the remaining gate is explicit Production promotion plus a live-payment smoke test.
