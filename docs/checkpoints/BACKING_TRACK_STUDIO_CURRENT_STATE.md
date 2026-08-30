@@ -72,6 +72,31 @@ Live evidence showed all six expected stems were written:
 - Guitar
 - Piano
 
+## Frozen AI Tab dependency map + research-separator audit — 2026-08-30 UTC
+- Re-fetched this checkpoint first, then re-inspected the active AI Tab research branch before making any separator decision.
+- Current `backing-track-studio` head before this audit was `b1794d5354ed2471cde2adc2802dcd2767ae8cbe`.
+- Branch comparison at this checkpoint showed `backing-track-studio` is **18 commits ahead and 26 commits behind `main`**. No merge, rebase, sync, or Production action was performed because the user explicitly requires isolation.
+
+### Frozen `/ai-tab` dependency map
+The relevant upload/email/status/delivery chain in `app/ai-tab/page.js` is now explicitly frozen for BTS reference:
+1. Audio selection accepts MP3/WAV/M4A/AAC and performs browser-side type/extension checks.
+2. Email handling in the AI Tab page is **format validation only** using the same `^[^\s@]+@[^\s@]+\.[^\s@]+$` semantics that BTS now uses; there is no separate email-ownership verification step in this page flow.
+3. AI Tab uploads through `@vercel/blob/client` to `/api/audio-upload` with private Blob access and sends song/artist/transcription type/copyright/email metadata in `clientPayload`.
+4. Analysis is requested from `/api/analyze-audio-tab`.
+5. Watermarked preview delivery is requested from `/api/generate-tab-preview`.
+6. Paid unlock is handled by `components/PayPalCheckoutButton.js` and the existing AI Tab PayPal routes; complimentary unlock uses `/api/free-tab-token`.
+7. Final PDF creation/delivery is requested from `/api/generate-tab-pdf`; the browser downloads the returned PDF and the AI Tab flow also prepares email delivery.
+8. BTS intentionally reuses the **UX pattern and email-format semantics**, not AI Tab payment or delivery APIs. BTS keeps `/api/bts/audio-upload`, `/api/bts/paypal/*`, `/api/bts/free-token`, and `/api/bts/process` separate so the USD $2.99 AI Tab product remains untouched.
+
+### Active research branch inspection
+- Active research branch inspected: `v143-contextual-prune-lobo`.
+- This branch **does contain genuine waveform/stem-separation research**, including `analyzer/analyze_and_grade_gomyway_gpu_separator_stem_v1.py` and the related separator benchmark grader.
+- The research compares a direct six-source Demucs guitar stem with a precomputed **BS-Roformer → Demucs 6-source** guitar stem and grades those waveform stems downstream with identical Basic Pitch settings.
+- This is not a reusable production BTS worker: it is a song-specific research benchmark/grader around precomputed stems, and the code explicitly requires `productionSeparatorChanged == false` and `productionPromotionAllowed == false`.
+- Therefore **no research-branch separator code was copied into BTS**. The existing dedicated BTS Modal worker remains the smallest production-suitable waveform solution: generic uploaded-audio input, private-Blob validation, six-source Demucs separation, selected stem removal, direct MP3 rebuild, and no persistent generated-audio storage.
+- This satisfies the standing requirement to inspect the active AI Tab research branch before choosing/building a BTS separator.
+- No change was made to AI Tab, `main`, Production, or the research branch.
+
 ## Isolation status
 - All writes in this continuation were made to `backing-track-studio`.
 - `main` was not modified.
@@ -176,6 +201,8 @@ Completed / user-confirmed:
 - Branch BTS PayPal helper targets `https://api-m.paypal.com` and uses live credential names only.
 - Branch validation now explicitly checks live PayPal configuration and rejects sandbox markers.
 - Branch sitemap includes `/bts` exactly once as an English-only route.
+- AI Tab upload/email/status/delivery dependencies are now explicitly frozen in this checkpoint.
+- Active AI Tab research branch was re-inspected and found to contain genuine waveform-separation research, but no generic production worker appropriate to copy into BTS.
 
 Still to complete:
 1. **Promote the prepared branch changes to `main`/Production only when explicitly authorized.**
