@@ -101,6 +101,12 @@ check(
 );
 
 check(
+  'BTS customer UI no longer presents sandbox state',
+  !page.toLowerCase().includes('sandbox') &&
+    !paypalButton.toLowerCase().includes('sandbox')
+);
+
+check(
   'BTS email format verification matches AI-tab semantics',
   page.includes('/^[^\\s@]+@[^\\s@]+\\.[^\\s@]+$/') &&
     uploadRoute.includes('isValidBtsEmail')
@@ -118,12 +124,16 @@ check(
 );
 
 check(
-  'BTS payment is sandbox-only and server-fixed to USD 1.00',
+  'BTS payment is live and server-fixed to USD 1.00',
   includesAll(payment, [
     "export const BTS_PRICE = '1.00'",
     "export const BTS_CURRENCY = 'USD'",
-    "https://api-m.sandbox.paypal.com",
-  ])
+    "https://api-m.paypal.com",
+    'process.env.NEXT_PUBLIC_PAYPAL_CLIENT_ID',
+    'process.env.PAYPAL_CLIENT_SECRET',
+  ]) &&
+    !payment.includes('api-m.sandbox.paypal.com') &&
+    !payment.includes('PAYPAL_SANDBOX_')
 );
 
 check(
@@ -213,12 +223,13 @@ check(
 );
 
 check(
-  'BTS PayPal UI uses dedicated BTS sandbox endpoints',
+  'BTS PayPal UI uses dedicated BTS live checkout endpoints',
   includesAll(paypalButton, [
     "'/api/bts/paypal/create-order'",
     "'/api/bts/paypal/capture-order'",
-    'NEXT_PUBLIC_PAYPAL_SANDBOX_CLIENT_ID',
-  ])
+    'NEXT_PUBLIC_PAYPAL_CLIENT_ID',
+  ]) &&
+    !paypalButton.includes('NEXT_PUBLIC_PAYPAL_SANDBOX_CLIENT_ID')
 );
 
 check(

@@ -93,6 +93,9 @@ export default async function sitemap() {
     addLocalizedRoutes(routes, path);
   }
 
+  // Backing Track Studio is English-only until BTS translations are published.
+  addEnglishRoute(routes, '/bts');
+
   // Individual learning guides
   for (const slug of Object.keys(GUIDES)) {
     addLocalizedRoutes(routes, `/learn/${slug}`);
