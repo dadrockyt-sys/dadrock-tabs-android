@@ -1,11 +1,36 @@
 # CURRENT STATE — Backing Track Studio
 
-Updated: 2026-08-29 UTC  
+Updated: 2026-08-30 UTC  
 Checkpoint branch: `backing-track-studio`  
 Production branch: `main`
 
 ## Active phase
-**BTS is live in Production, and the latest user test proves Demucs completed six-stem waveform separation. The post-separation handoff/rebuild hardening has now been ported and validated on `backing-track-studio` only. No `main`, Vercel Production, or live Modal deployment change was made in this continuation.**
+**The user now reports the live BTS flow is working successfully end-to-end, including playable/downloadable backing-track generation. A branch-only UI/SEO/localization-prep pass is underway on `backing-track-studio`: internal implementation copy is removed, the top sandbox badge is replaced with the existing 14-language selector, and BTS-specific search copy/metadata are added. No `main` or Production write was made in this continuation.**
+
+## UI / SEO / localization-prep continuation — 2026-08-30 UTC
+- Re-fetched this checkpoint before making changes, per instruction.
+- User confirmed the live BTS generation flow is working and supplied screenshots showing successful processing/download behavior.
+- User reported noticeable guitar bleed in separated audio. This is consistent with source-separation limitations in dense/mastered recordings and is a plausible contributor to some AI Tab transcription difficulty because residual guitar energy can still reach downstream analysis.
+- User requested:
+  - remove the customer-facing **Isolated BTS workflow** implementation box;
+  - remove the top-right **PayPal Sandbox · $1.00 USD** badge;
+  - replace that badge with the same DadRock Tabs language selector backed by the site's 14 locales;
+  - add a strong natural-language SEO paragraph for searches around backing tracks, guitar removal, bass removal, practice tracks, and AI stem separation;
+  - prepare BTS for later translation/localization.
+- Existing site locale source confirmed in `lib/i18n.js`: `en`, `es`, `pt`, `pt-br`, `de`, `fr`, `it`, `ja`, `ko`, `zh`, `ru`, `hi`, `sv`, `fi`.
+- `app/bts/page.js` branch-only update committed as `505847ec073a7231a6d53c968e16cd54195541a9` (`Polish BTS UI for SEO and localization`):
+  - uses the existing `components/LanguageSelector.js` in the top-right position;
+  - removes the internal workflow explanation box;
+  - adds a user-facing note that complex mastered mixes can retain some stem bleed/artifacts;
+  - adds a semantic **AI Guitar and Bass Backing Track Maker** section with natural search-intent copy.
+- `app/bts/layout.js` added branch-only in commit `8a9eb8faa2e0b5284c37b9fc56771cf36f42b2c9` (`Add BTS route SEO metadata`):
+  - BTS-specific title and description;
+  - `/bts` canonical;
+  - relevant backing-track/stem-separation keywords;
+  - Open Graph/Twitter metadata;
+  - index/follow robots metadata.
+- Locale-prefixed BTS routes are **not enabled yet**. This is intentional so choosing a locale does not create 404/duplicate localized BTS URLs before translations and localized routes are actually implemented. The shared selector is now visually present and ready for the next localization phase.
+- A temporary one-time Actions patch workflow was attempted but GitHub recorded a startup failure with zero jobs on this branch. It made no BTS code change; direct branch file updates were used instead. Remove the temporary workflow file before finishing this continuation.
 
 ## Continuation note — 2026-08-29 22:18–22:21 UTC
 - Re-fetched this checkpoint first, per instruction.
@@ -38,13 +63,11 @@ Local static validation performed against the exact committed worker text:
 - CPU-only contract: **PASS**.
 - Simulated discovery using the exact six filenames visible in the user's screenshot mapped all six stems successfully: **PASS**.
 
-The branch head after the fix is `d4fe85a885912a11c54014409f92d82f40668559`.
-
 ## Isolation status
 - All writes in this continuation were made to `backing-track-studio`.
-- `main` was read only for comparison and was not modified.
-- No Production deployment was triggered.
-- No live Modal redeploy was triggered.
+- `main` was not modified.
+- No Production deployment was triggered by these UI/SEO changes.
+- No live Modal redeploy was triggered by these UI/SEO changes.
 
 ## Production state already established before this continuation
 - Live route: `https://dadrocktabs.com/bts`
@@ -86,6 +109,7 @@ Accepted BTS tokens return a signed BTS job token, so they enter the same protec
 
 ## Core BTS implementation
 - `app/bts/page.js`
+- `app/bts/layout.js`
 - `components/BTSPayPalCheckoutButton.js`
 - `lib/btsPayment.js`
 - `app/api/bts/audio-upload/route.js`
@@ -105,8 +129,8 @@ Accepted BTS tokens return a signed BTS job token, so they enter the same protec
 - Current worker dependency: `audio-separator[cpu]==0.30.2`
 - Removes Guitar, Bass, or both and rebuilds the remaining mix.
 - Returns a 192 kbps MP3.
-- Latest live evidence confirms the model produced all six stems.
-- Branch-only worker now contains hardened stem handoff logic matching that observed output behavior.
+- Live evidence confirms the model produced all six stems and the user later confirmed a successful playable/downloadable rebuilt track.
+- Separation is not acoustically perfect: the user reports noticeable guitar bleed in at least one test. This is now reflected in customer-facing expectation copy rather than implying perfect isolation.
 
 ## Payment isolation
 - BTS create/capture routes are separate from AI Tab.
@@ -129,41 +153,25 @@ Do not introduce persistent copyrighted-audio storage without explicit user appr
 ## Cleanup cron caveat
 Production `vercel.json` contains the hourly `/api/bts/cleanup` cron. Execution depends on Production `CRON_SECRET` being configured. Secret presence has not been independently verified through the available connector surface; confirm via a real cron invocation/runtime log before claiming abandoned-upload cleanup is operational.
 
-## Required runtime configuration for complete end-to-end processing
-Previously confirmed during live testing:
-- `BLOB_READ_WRITE_TOKEN` — present in Production.
-- `BTS_SEPARATOR_API_URL` / `BTS_SEPARATOR_API_TOKEN` — were initially missing; later live test reached the separator and completed Demucs, so the current request path is reaching Modal.
-
-Also required/expected:
-- `NEXT_PUBLIC_PAYPAL_CLIENT_ID` / sandbox PayPal client ID
-- `PAYPAL_CLIENT_SECRET`
-- `CRON_SECRET`
-- optional `BTS_JOB_SIGNING_SECRET`
-- Modal secret `dadrock-bts-separator-secret` with matching `BTS_SEPARATOR_API_TOKEN`
-- existing MongoDB configuration
-- existing `ADMIN_PASSWORD` for token administration
-
 ## Validation status
-Completed:
-- BTS production builds compiled successfully with Next.js 16.1.6 / Turbopack during the prior promotion cycle.
+Completed / user-confirmed:
 - `/bts` is live.
-- BTS token creator/tracker routes are live.
-- BTS token admin endpoint requires authentication.
-- AI Tab token/payment logic remains isolated from BTS.
-- Browser processing reached `/api/bts/process` and the dedicated Modal separator.
-- Latest live log proves Demucs six-stem separation completed and wrote Guitar/Bass/Drums/Vocals/Other/Piano WAVs.
-- Branch-only post-separation handoff fix is committed and passes static/simulated filename validation.
+- BTS browser processing reaches the dedicated Modal separator.
+- Demucs six-stem separation completes.
+- The rebuilt backing track is playable in-browser and downloadable as MP3 according to the user's latest successful test.
+- BTS token creator/tracker routes are live and isolated from AI Tab.
+- AI Tab payment/token logic remains isolated from BTS.
+- Branch-only UI now removes internal workflow implementation copy, exposes the shared 14-language selector, and includes SEO-focused content.
+- Branch-only BTS route metadata now has a dedicated title, description, canonical, keyword set, social metadata, and index/follow settings.
 
 Still to complete:
-1. **Do not deploy yet without explicit user authorization**, because this continuation is branch-only.
-2. When authorized, promote/deploy the tested worker fix.
-3. Retry the BTS flow with permitted audio and confirm a playable MP3 download.
-4. Confirm source Blob deletion immediately after success.
-5. Verify token decrement/redemption entry in the admin tracker.
-6. Separately test the $1 PayPal sandbox path.
-7. Confirm hourly cleanup cron behavior/runtime authorization for an abandoned test upload.
+1. Remove the failed temporary one-time workflow file from `backing-track-studio`.
+2. Re-fetch/inspect the final branch files after cleanup.
+3. Do not promote these UI/SEO changes to `main`/Production without explicit user authorization.
+4. When localization work begins, create real localized BTS routes/content before adding `bts` to `LOCALIZED_ROUTE_ROOTS` or publishing hreflang alternates.
+5. Independently confirm source Blob deletion and hourly cleanup cron runtime authorization if full operational closure is desired.
 
 ## Progress score
 **Current Project Progress Score: 99%.**
 
-The code fix for the observed failure is prepared and validated on the isolated branch. The final 1% is deployment plus end-to-end verification of download, deletion, token accounting, PayPal sandbox, and cleanup behavior.
+Core BTS functionality is working according to the user's live test. The remaining work is branch cleanup/verification, optional operational cleanup verification, and explicit authorization before promoting the new UI/SEO/localization-prep changes.
