@@ -39,11 +39,10 @@ export default function BTSPayPalCheckoutButton({
     let isCancelled = false;
 
     const clientId =
-      process.env.NEXT_PUBLIC_PAYPAL_SANDBOX_CLIENT_ID ||
       process.env.NEXT_PUBLIC_PAYPAL_CLIENT_ID;
 
     if (!clientId) {
-      setPaymentError('PayPal sandbox is not configured. You can still use a valid BTS token.');
+      setPaymentError('PayPal is not configured. You can still use a valid BTS token.');
       setIsLoading(false);
       return undefined;
     }
@@ -133,7 +132,7 @@ export default function BTSPayPalCheckoutButton({
               ) {
                 throw new Error(
                   result.error ||
-                    'Unable to verify the BTS sandbox payment.'
+                    'Unable to verify the BTS payment.'
                 );
               }
 
@@ -347,7 +346,7 @@ export default function BTSPayPalCheckoutButton({
         <p className="font-bold text-green-400">
           {unlockMethod === 'free-token'
             ? '✓ Free BTS token accepted'
-            : '✓ $1.00 sandbox payment completed'}
+            : '✓ $1.00 payment completed'}
         </p>
         <p className="mt-1 text-sm text-zinc-400">
           Your backing track is being prepared.
@@ -366,7 +365,7 @@ export default function BTSPayPalCheckoutButton({
       <div className="space-y-3">
         {isLoading && (
           <p className="text-center text-sm text-zinc-400">
-            Loading secure PayPal sandbox checkout…
+            Loading secure PayPal checkout…
           </p>
         )}
 
@@ -379,7 +378,7 @@ export default function BTSPayPalCheckoutButton({
         )}
 
         <p className="text-center text-xs text-zinc-500">
-          Testing price: USD $1.00 — PayPal sandbox only.
+          USD $1.00 per backing track.
         </p>
       </div>
 
