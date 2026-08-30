@@ -5,74 +5,41 @@ Checkpoint branch: `backing-track-studio`
 Production branch: `main`
 
 ## Active phase
-**The BTS live-PayPal credential isolation fix is now fully deployed to Production through PR #29. Vercel deployment `dpl_6UoY1Z265WgCT7ezoJFbXqSANYCi` reached READY, owns the `dadrocktabs.com` alias, and Production `/bts` returned HTTP 200 from that deployment. The remaining launch proof is one real USD $1.00 PayPal checkout/capture by the user, followed by runtime-log confirmation and GSC indexing.**
+**Backing Track Studio is live in Production and the live PayPal credential issue is resolved. The user confirmed the PayPal checkout now works correctly after dedicated BTS Live credentials were configured and PR #29 was deployed. Production `/api/bts/paypal/create-order` returned HTTP 200 on the new deployment, and the previous `invalid_client` error exists only on the older deployment. BTS is functionally launched.**
 
-## Latest continuation — dedicated BTS PayPal Live credentials promoted and deployed — 2026-08-30 UTC
-- Re-fetched this checkpoint before this final verification/save, per standing instruction.
-- The user's first real USD $1.00 BTS PayPal smoke test had returned **Unable to authenticate with PayPal**.
-- Production runtime logs identified the exact PayPal response:
-  - `error: 'invalid_client'`
-  - `error_description: 'Client Authentication failed'`
-- Root cause: BTS was targeting PayPal Live (`https://api-m.paypal.com`) while still using the shared AI Tab PayPal credential names. The inspected AI Tab checkout remains sandbox-oriented, so those credentials could not authenticate against PayPal Live.
-- Branch-only BTS isolation was prepared on `backing-track-studio` using:
-  - `NEXT_PUBLIC_BTS_PAYPAL_CLIENT_ID`
-  - `BTS_PAYPAL_CLIENT_SECRET`
-- User confirmed both dedicated variables were added in Vercel for **Production** using real PayPal Live app credentials.
-- Vercel automatically redeployed the previous main commit after the environment-variable save (`dpl_CaTYvV12po3GbzQU45fXiZuieV6c`), proving the Production environment change was registered, but that redeploy still contained the old shared-credential code.
+## Final live PayPal verification — 2026-08-30 UTC
+- Re-fetched this checkpoint before recording the result, per standing instruction.
+- User confirmed the real PayPal flow worked correctly after the dedicated BTS Live credentials were deployed.
+- Current Production deployment: `dpl_6UoY1Z265WgCT7ezoJFbXqSANYCi`.
+- Current Production/main commit: `e318f105bbffd9c611e145648851e38d0c6802d2`.
+- Production runtime logs on the new deployment show:
+  - `POST /api/bts/audio-upload` → HTTP 200
+  - `POST /api/bts/paypal/create-order` → HTTP 200
+  - `GET /bts` → HTTP 200
+- A focused runtime-error check still shows the historical PayPal `invalid_client` error only on old deployment `dpl_7kn57qtP86vsT4sKYSa9ZwZcXNdV` at 02:47 UTC; no new `invalid_client` error was observed on the current deployment.
+- A capture-order log entry was not returned by the available Vercel log query at the time of this save, so the strongest evidence is the user's successful live checkout confirmation plus the server-side create-order HTTP 200 and absence of the prior authentication failure on the new deployment.
 
-## Clean Production release — PR #29
-- Clean release branch: `bts-live-paypal-credentials`.
-- Main before the release: `323832497eb72d15a0e47aea486c0f633b3d8f43`.
-- Release branch was confirmed **ahead 5 / behind 0** relative to main.
-- PR #29: **Fix BTS live PayPal credential isolation**.
-- Complete changed-file set was inspected before merge and contained exactly:
-  1. `app/api/bts/paypal/create-order/route.js`
-  2. `app/api/bts/paypal/capture-order/route.js`
-  3. `components/BTSPayPalCheckoutButton.js`
-  4. `lib/btsPayment.js`
-  5. `validation/bts/validate_bts_contracts.mjs`
-- Route changes only replace obsolete `sandbox: true` response metadata with `environment: 'live'`.
-- Functional payment changes are limited to BTS-specific credential isolation.
-- PR #29 was mergeable and squash-merged successfully.
-- Production/main commit: `e318f105bbffd9c611e145648851e38d0c6802d2`.
-- Production deployment: `dpl_6UoY1Z265WgCT7ezoJFbXqSANYCi`.
-- Deployment reached **READY** successfully with Next.js/Turbopack.
-- Vercel reports aliases including:
-  - `dadrocktabs.com`
-  - `www.dadrocktabs.com`
-- Live fetch of `https://dadrocktabs.com/bts` returned **HTTP 200** and its generated assets explicitly reference `dpl_6UoY1Z265WgCT7ezoJFbXqSANYCi`, confirming the new Production deployment is serving the BTS page.
+## Dedicated BTS PayPal Live configuration — Production
+BTS uses its own PayPal Live credentials and does not reuse the AI Tab sandbox-oriented credentials:
+- Browser Client ID: `NEXT_PUBLIC_BTS_PAYPAL_CLIENT_ID`
+- Server Secret: `BTS_PAYPAL_CLIENT_SECRET`
+- PayPal API endpoint: `https://api-m.paypal.com`
+- Price: **USD $1.00** per backing track
 
-## BTS PayPal credential contract — now Production code
-### Browser
-`components/BTSPayPalCheckoutButton.js` uses only:
-- `NEXT_PUBLIC_BTS_PAYPAL_CLIENT_ID`
-
-It no longer reuses `NEXT_PUBLIC_PAYPAL_CLIENT_ID`.
-
-### Server
-`lib/btsPayment.js` uses the dedicated BTS Live pair for PayPal OAuth:
-- `NEXT_PUBLIC_BTS_PAYPAL_CLIENT_ID`
-- `BTS_PAYPAL_CLIENT_SECRET`
-
-BTS remains fixed to:
-- PayPal API: `https://api-m.paypal.com`
-- Price: **USD $1.00**
-
-### Job signing
-BTS job signing prefers:
-1. `BTS_JOB_SIGNING_SECRET`
-2. `BTS_PAYPAL_CLIENT_SECRET`
-3. legacy shared `PAYPAL_CLIENT_SECRET` only as a compatibility fallback
-
-The compatibility fallback is not used for PayPal OAuth and therefore does not undo payment isolation.
-
-## AI Tab isolation — frozen
-Do not change these values merely to support BTS:
+Do not change these AI Tab variables as part of BTS work:
 - `NEXT_PUBLIC_PAYPAL_CLIENT_ID`
 - `PAYPAL_CLIENT_SECRET`
 - `PAYPAL_MODE`
 
-The existing AI Tab USD $2.99 checkout/token product remains unchanged by PR #29.
+The AI Tab USD $2.99 payment/token product remains isolated and unchanged.
+
+## Production release history
+- Original BTS promotion: PR #23 — merge `b477bab46fde4656c8277167d758dffa7fc5942f`
+- BTS token workflow: PR #24 — merge `f14132729d2d60f2ede6e3a5c1f725584ca1db35`
+- Admin BTS-manager link: PR #25 — merge `2ae350ba72e12bacb8b767ab4ffe6c80bce322aa`
+- Live PayPal/UI/SEO/stem-handoff release: PR #27 — merge `407a8b5fe6f030fc1976be209c26a2d9d3eea7b5`
+- Homepage BTS launch callout: PR #28 — main `323832497eb72d15a0e47aea486c0f633b3d8f43`
+- Dedicated BTS Live PayPal credentials: PR #29 — main `e318f105bbffd9c611e145648851e38d0c6802d2`
 
 ## Product flow — frozen
 1. Upload MP3/WAV/M4A/AAC audio.
@@ -120,21 +87,20 @@ The existing AI Tab USD $2.99 checkout/token product remains unchanged by PR #29
 
 Do not introduce persistent copyrighted-audio storage without explicit user approval.
 
-## Production history
-- Original BTS promotion: PR #23 — merge `b477bab46fde4656c8277167d758dffa7fc5942f`
-- BTS token workflow: PR #24 — merge `f14132729d2d60f2ede6e3a5c1f725584ca1db35`
-- Admin BTS-manager link: PR #25 — merge `2ae350ba72e12bacb8b767ab4ffe6c80bce322aa`
-- Live PayPal/UI/SEO/stem-handoff release: PR #27 — merge `407a8b5fe6f030fc1976be209c26a2d9d3eea7b5`
-- Homepage BTS launch callout: PR #28 — main `323832497eb72d15a0e47aea486c0f633b3d8f43`
-- Dedicated BTS Live PayPal credentials: PR #29 — main `e318f105bbffd9c611e145648851e38d0c6802d2`
+## SEO / launch state
+- Live route: `https://dadrocktabs.com/bts`
+- Canonical: `https://dadrocktabs.com/bts`
+- English `/bts` is included in the sitemap.
+- Route metadata is index/follow with BTS-specific title, description, keywords, Open Graph and Twitter metadata.
+- Homepage includes the prominent Backing Track Studio launch callout.
+- Locale-prefixed BTS routes are intentionally not enabled until real translations/routes are implemented.
 
 ## Next steps
-1. User performs one real USD $1.00 BTS checkout on `https://dadrocktabs.com/bts`.
-2. Inspect Production runtime logs for `/api/bts/paypal/create-order` and `/api/bts/paypal/capture-order` to confirm Live OAuth/order/capture success and absence of `invalid_client`.
-3. Confirm paid authorization proceeds into the already-proven BTS processing/download path.
-4. Request Google Search Console indexing for `https://dadrocktabs.com/bts` once the real-money smoke test is green.
+1. Submit/request indexing for `https://dadrocktabs.com/bts` in Google Search Console if not already done.
+2. Monitor real-world BTS usage, PayPal errors, separator failures and user feedback.
+3. Treat future localization, separation-quality improvements, or pricing changes as separate follow-on work.
 
 ## Progress score
-**Current Project Progress Score: 99.9%.**
+**Current Project Progress Score: 100%.**
 
-The dedicated PayPal Live credential fix is in Production code, the correct BTS-only Live credentials are configured in Vercel, the new deployment is READY, and `/bts` is serving successfully from that deployment. The sole remaining functional launch proof is one real USD $1.00 PayPal checkout/capture.
+The planned BTS launch scope is complete: upload, email/rights flow, three removal modes, Modal separation, downloadable MP3, isolated BTS tokens, live USD $1.00 PayPal, cleanup/retention controls, SEO, sitemap entry, homepage promotion and Production deployment are all in place. The user has confirmed the PayPal flow now works correctly.
