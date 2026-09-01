@@ -194,10 +194,31 @@ Quality interpretation / working recommendation:
 
 Do not change the V168 research branch separator/scorer/evaluator because of this BTS observation. If BTS quality work resumes, keep it isolated to `backing-track-studio` and compare the same lossless reference excerpts under controlled separator settings before adopting any slower production configuration.
 
+## 2026-09-01 diagnostic — SplitMySong isolated guitar
+Dedicated diagnostic checkpoint:
+- `docs/checkpoints/V168_SPLITMYSONG_GUITAR_DIAGNOSTIC_20260901.md`
+- creation commit `b9b5d6440540dcbaa8f3c2db1119a69d4a248d92`
+- status **DIAGNOSTIC INPUT FROZEN / CPU COMPARISON NOT YET SCORED**.
+
+The user supplied an externally separated AYGGMW guitar stem produced by SplitMySong. Exact diagnostic audio SHA256: `6601b8d01cbbbe6b6e70d9ec0ca3c15d17873c78e62ae4acdc258c96f168e3c9`.
+
+Scientific boundary:
+- external model-generated separation only; **not** a professional reference and **not** an admissible V168 holdout asset;
+- diagnostic question is whether this cleaner isolated-guitar input improves the legacy AYGGMW transcription result when passed through the exact frozen V167 I005 CPU path;
+- frozen comparison baseline is Guitar F1 **42.7940586109996%**, P **48.54280510018215%**, R **38.26274228284279%**, TP/pred/ref **533/1098/1393**;
+- reference-blind audio alignment check froze start offset at **0.000 s**, no time-stretch; isolated stem contains approximately 5.5 s of trailing padding;
+- exact historical Basic Pitch observer settings recovered: onset `0.50`, frame `0.30`, minimum note length `90 ms`, guitar frequency range, no multiple pitch bends, Melodia trick on;
+- exact V167 I005 contextual thresholds/selectors remain frozen and must not be changed after seeing the diagnostic result;
+- local CPU sandbox lacks Basic Pitch and the Demucs six-source model weights, and local DNS prevents dependency/model download. Do not substitute another detector;
+- preferred next route is an existing/historical GitHub Actions **CPU / Python 3.11** environment with the exact Basic Pitch dependency if available;
+- no GPU/CUDA/Modal has been used or authorized.
+
+This diagnostic does not alter V168: **Project Progress Score remains 60%; Test Score remains NOT RUN; V168 prospective reference-facing score calls remain exactly 0.**
+
 ## NEXT boundary — GOAT OWNER DECISION / EXTERNAL ACCESS REQUIRED
 1. **Project Progress Score: 60%. Test Score: NOT RUN.**
-2. **Do not score.**
-3. **Do not implement candidate generation or a generic/new-song scorer adapter.**
+2. **Do not score V168 prospective holdouts.** The frozen SplitMySong AYGGMW diagnostic may be scored separately after its candidate stream is generated and hash-frozen, because it is explicitly outside V168 prospective evaluation.
+3. **Do not implement V168 candidate generation or a generic/new-song scorer adapter.**
 4. GOAT request is submitted; as of 2026-09-01 no reply has been received. Await explicit owner/Zenodo decision. Do not claim approval until grant evidence exists.
 5. Preserve non-secret grant wording/date/conditions/restrictions if approval arrives; never commit secret links/tokens/credentials.
 6. Once access is actually granted, perform score-blind GOAT metadata/integrity intake first: exact record/version, file bytes/SHA256, source/reference binding, reference-layer derivation, use terms, and the reported duration/EOF anomalies.
