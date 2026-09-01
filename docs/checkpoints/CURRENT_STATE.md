@@ -1,10 +1,10 @@
 # CURRENT STATE — DadRock `/ai-tab`
 
-Updated: 2026-08-29 UTC  
+Updated: 2026-09-01 UTC  
 Branch: `v143-contextual-prune-lobo`
 
 ## Active phase
-**V168 remains `HOLDOUT_ASSET_MISSING / SCORING_NOT_ARMED`. V167 is CLOSED / TERMINAL. The GOAT restricted-dataset access request has now been submitted successfully through Zenodo and is awaiting the dataset owner's decision. Submission is not approval: no GOAT bytes or owner grant/conditions are present yet, no holdout asset has been admitted, and V168 reference-facing score calls remain exactly 0. `main`/Production remain untouched. CPU only; fresh explicit authorization is required immediately before GPU/CUDA/Modal.**
+**V168 remains `HOLDOUT_ASSET_MISSING / SCORING_NOT_ARMED`. V167 is CLOSED / TERMINAL. The GOAT restricted-dataset access request has now been submitted successfully through Zenodo and is awaiting the dataset owner's decision. As of 2026-09-01, no owner/Zenodo reply has been received. Submission is not approval: no GOAT bytes or owner grant/conditions are present yet, no holdout asset has been admitted, and V168 reference-facing score calls remain exactly 0. `main`/Production remain untouched. CPU only; fresh explicit authorization is required immediately before GPU/CUDA/Modal.**
 
 ## Percentage reporting — STANDING USER INSTRUCTION
 The user prefers a percentage score in future progress/test updates because it helps motivation and makes progress easier to follow.
@@ -170,11 +170,35 @@ Tie/inconclusive -> retain Policy A / `HOLDOUT_INSUFFICIENT`.
 - CPU only; fresh explicit authorization immediately before GPU/CUDA/Modal.
 - Never modify/merge/promote `main` or Production without explicit user direction.
 
+## 2026-09-01 related finding — BTS separation input quality / tone bleed
+This is a related engineering observation only. It does **not** alter V168's frozen evaluator, policies, admission gates, score, or CPU/GPU authorization state.
+
+Backing Track Studio inspection on branch `backing-track-studio` found:
+- separator: `audio-separator[cpu]==0.30.2` using Demucs six-source `htdemucs_6s.yaml`;
+- upload UI currently accepts MP3, WAV, M4A and AAC;
+- every uploaded source is decoded before separation with FFmpeg to **44.1 kHz, stereo, 16-bit PCM WAV** (`pcm_s16le`);
+- separated stems are WAV;
+- the reconstructed customer backing track is encoded only **after separation** as 192 kbps MP3;
+- current Demucs run parameters are `shifts=1`, `overlap=0.10`, `segment_size=6`, CPU-only.
+
+Quality interpretation / working recommendation:
+- Preferred canonical source for separation is **lossless stereo PCM WAV**. FLAC is technically equivalent lossless input if/when the BTS upload UI is extended to accept it.
+- Prefer a genuine lossless original/master at 44.1 kHz or 48 kHz. Do not upsample a lower-rate/lossy source merely to create a larger WAV.
+- 24-bit lossless source is useful when it is genuinely available, but the present BTS normalization intentionally converts to 16-bit PCM before Demucs. A genuine 16-bit CD-quality WAV remains a strong source.
+- MP3/AAC/M4A/typical MP4 audio is normally lossy. Decoding it to WAV before Demucs does **not** restore information already discarded by the codec.
+- MP4 is a container, not an intrinsic audio quality level; its audio can be lossy AAC or, less commonly, another codec. Therefore `.mp4` alone is not a quality recommendation.
+- Lossless input can reduce codec artifacts and preserve transient/stereo/spectral cues, but it cannot eliminate source-separation bleed caused by overlapping harmonics, distortion, reverb, doubled guitars, dense mixes, or model limitations.
+- The BTS 192 kbps MP3 encode happens after source separation, so it cannot be the cause of guitar information leaking into the wrong stem during inference, although it can slightly reduce final playback fidelity.
+- The current separator settings are speed-leaning. Upstream Demucs defaults to overlap `0.25`; its shift-trick documentation says additional shift predictions can improve SDR but scale inference time roughly with the number of shifts. A controlled quality test of overlap/segment/shifts is therefore a higher-value next BTS experiment than changing container extensions alone.
+- Upstream Demucs itself describes `htdemucs_6s` as an experimental six-source model, so audible guitar bleed may remain even with pristine lossless input.
+
+Do not change the V168 research branch separator/scorer/evaluator because of this BTS observation. If BTS quality work resumes, keep it isolated to `backing-track-studio` and compare the same lossless reference excerpts under controlled separator settings before adopting any slower production configuration.
+
 ## NEXT boundary — GOAT OWNER DECISION / EXTERNAL ACCESS REQUIRED
 1. **Project Progress Score: 60%. Test Score: NOT RUN.**
 2. **Do not score.**
 3. **Do not implement candidate generation or a generic/new-song scorer adapter.**
-4. GOAT request is submitted; await explicit owner/Zenodo decision. Do not claim approval until grant evidence exists.
+4. GOAT request is submitted; as of 2026-09-01 no reply has been received. Await explicit owner/Zenodo decision. Do not claim approval until grant evidence exists.
 5. Preserve non-secret grant wording/date/conditions/restrictions if approval arrives; never commit secret links/tokens/credentials.
 6. Once access is actually granted, perform score-blind GOAT metadata/integrity intake first: exact record/version, file bytes/SHA256, source/reference binding, reference-layer derivation, use terms, and the reported duration/EOF anomalies.
 7. Freeze deterministic integrity/song-selection rules before reading professional note-event content for scoring or generating comparative results.
