@@ -1,0 +1,54 @@
+{
+  "schema": "dadrock.tabs.v168.splitmysong-diagnostic-preregistration.v1",
+  "version": "V168_DIAGNOSTIC_SPLITMYSONG",
+  "status": "FROZEN_BEFORE_DIAGNOSTIC_GENERATION_OR_LEGACY_REFERENCE_ACCESS",
+  "validation": "PASS",
+  "classification": "LEGACY_SINGLE_SONG_DIAGNOSTIC_OUTSIDE_V168_PROSPECTIVE_HOLDOUT",
+  "question": "Does the externally isolated SplitMySong guitar input improve the frozen legacy AYGGMW combined-Guitar score when processed by the exact historical V165 Basic Pitch runtime and V167 I005 gss-active-only policy?",
+  "sourceIdentity": {
+    "sha256": "6601b8d01cbbbe6b6e70d9ec0ca3c15d17873c78e62ae4acdc258c96f168e3c9",
+    "bytes": 3610958,
+    "durationSeconds": 217.060136,
+    "codecName": "aac",
+    "sampleRate": 44100,
+    "channels": 2
+  },
+  "normalizedIdentity": {
+    "sha256": "fdb0578d71f77c150e7fe66766a03953be55e7028fef4c24dc777416f2e7ff4f",
+    "bytes": 9572600,
+    "durationSeconds": 217.060136,
+    "codecName": "pcm_s16le",
+    "sampleRate": 22050,
+    "channels": 1
+  },
+  "alignment": {
+    "startOffsetSeconds": 0.0,
+    "timeStretch": false,
+    "trailingPaddingMayBeIgnoredOnlyOutsideFrozenLegacySongTimebase": true,
+    "professionalReferenceUsedToChooseAlignment": false
+  },
+  "comparisonBaseline": {
+    "policyId": "gss-active-only",
+    "guitarF1Percent": 42.7940586109996,
+    "guitarPrecisionPercent": 48.54280510018215,
+    "guitarRecallPercent": 38.26274228284279,
+    "truePositives": 533,
+    "predicted": 1098,
+    "reference": 1393,
+    "falsePositives": 565,
+    "falseNegatives": 860,
+    "promotedCandidateSha256": "86329ebc25e589f566d466a7a65cae35a158c25f470b1c034973f3dbc7d38b31"
+  },
+  "boundaries": {
+    "generationMustBeReferenceBlind": true,
+    "candidateMustBeHashFrozenBeforeLegacyReferenceAccess": true,
+    "thresholdsMayNotChangeAfterDiagnosticScore": true,
+    "diagnosticIsNotV168Holdout": true,
+    "diagnosticDoesNotChangeV168ProjectProgressScore": true,
+    "v168ProspectiveReferenceFacingScoreCallsRemainZero": true,
+    "cpuOnly": true,
+    "gpuCudaModalForbiddenWithoutFreshExplicitAuthorization": true,
+    "audioBytesMustNotBeCommittedToPublicRepository": true,
+    "mainOrProductionModificationForbidden": true
+  }
+}
