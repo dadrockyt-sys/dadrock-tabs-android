@@ -1,0 +1,133 @@
+name: V168 shared-context functional equivalence
+
+on:
+  push:
+    branches:
+      - v143-contextual-prune-lobo
+    paths:
+      - .github/workflows/v168-shared-context-equivalence.yml
+
+permissions:
+  contents: read
+
+env:
+  CUDA_VISIBLE_DEVICES: ""
+  PYTHONHASHSEED: "0"
+  OMP_NUM_THREADS: "1"
+  MKL_NUM_THREADS: "1"
+  OPENBLAS_NUM_THREADS: "1"
+  NUMEXPR_NUM_THREADS: "1"
+
+jobs:
+  diagnose:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 25
+    steps:
+      - name: Checkout exact diagnostic head
+        uses: actions/checkout@v4
+        with:
+          ref: ${{ github.sha }}
+          fetch-depth: 0
+
+      - name: Set up historical Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.10"
+          check-latest: false
+
+      - name: Verify checker identity and install exact replay dependencies
+        shell: bash
+        run: |
+          set -euo pipefail
+          test "$(git hash-object validation/v168_splitmysong_diagnostic/check_shared_context_equivalence_v168.py)" = "2e9a8dc2ec60a311b3e6bca5f8dc9390aea48b0f"
+          python -m py_compile validation/v168_splitmysong_diagnostic/check_shared_context_equivalence_v168.py
+          python -m pip install --disable-pip-version-check --upgrade pip
+          python -m pip install --disable-pip-version-check --index-url https://download.pytorch.org/whl/cpu torch==2.8.0
+          python -m pip install --disable-pip-version-check \
+            numpy==1.26.4 scipy==1.13.1 soundfile==0.12.1 \
+            basic-pitch==0.4.0 demucs==4.1.0 imageio-ffmpeg==0.6.0 librosa==0.11.0 \
+            joblib==1.5.3 platformdirs==4.11.5
+          python - <<'PY'
+          import importlib.metadata as md, platform, torch
+          assert platform.python_version() == "3.10.21", platform.python_version()
+          assert torch.__version__ == "2.8.0+cpu", torch.__version__
+          assert torch.version.cuda is None and not torch.cuda.is_available()
+          expected = {
+              "demucs": "4.1.0", "imageio-ffmpeg": "0.6.0", "librosa": "0.11.0",
+              "numpy": "1.26.4", "scipy": "1.13.1", "soundfile": "0.12.1",
+              "joblib": "1.5.3", "platformdirs": "4.11.5",
+          }
+          for name, version in expected.items():
+              assert md.version(name) == version, (name, md.version(name), version)
+          print("EXACT REPLAY DEPENDENCIES PASS")
+          PY
+
+      - name: Materialize byte-frozen historical source and mix
+        shell: bash
+        run: |
+          set -euo pipefail
+          git show 74b0f815ff3f66f325220975c410621503de440f:public/gomywayfullaitest.m4a > /tmp/v168-context-source.m4a
+          test "$(stat -c '%s' /tmp/v168-context-source.m4a)" = "3478611"
+          test "$(sha256sum /tmp/v168-context-source.m4a | awk '{print $1}')" = "215bd5a657c5326f08f132ae358595a95c30b39bb7493a52c2f910d5a608149f"
+          FFMPEG_EXE="$(python - <<'PY'
+          import imageio_ffmpeg
+          print(imageio_ffmpeg.get_ffmpeg_exe())
+          PY
+          )"
+          "$FFMPEG_EXE" -hide_banner -loglevel error -y \
+            -i /tmp/v168-context-source.m4a -ar 44100 -ac 2 -c:a pcm_s16le \
+            /tmp/v168-context-mix.wav
+          test "$(sha256sum /tmp/v168-context-mix.wav | awk '{print $1}')" = "3e61b7926eabc21b758c750f826c7426a29d6de5aafdd5c93f8045ecdc67f87e"
+          echo "FROZEN MIX PASS"
+
+      - name: Reproduce current deterministic CPU Demucs drums
+        shell: bash
+        run: |
+          set -euo pipefail
+          python - <<'PY'
+          import random
+          import numpy as np
+          import torch
+          from demucs.separate import main
+          random.seed(0)
+          np.random.seed(0)
+          torch.manual_seed(0)
+          torch.set_num_threads(1)
+          torch.set_num_interop_threads(1)
+          torch.use_deterministic_algorithms(True)
+          main([
+              "-n", "htdemucs_6s", "-d", "cpu", "--shifts", "1", "-j", "1",
+              "-o", "/tmp/v168-context-demucs", "/tmp/v168-context-mix.wav",
+          ])
+          PY
+          DRUMS=/tmp/v168-context-demucs/htdemucs_6s/v168-context-mix/drums.wav
+          test -f "$DRUMS"
+          echo "driftedDrumsSha256=$(sha256sum "$DRUMS" | awk '{print $1}')"
+          echo "frozenExpectedDrumsSha256=05890ac9cad62eacf0099c962b137a458228811a85b8ea828bb15f238d2c1e50"
+
+      - name: Run strict shared-context equivalence gate
+        shell: bash
+        run: |
+          set -euo pipefail
+          REPORT=/tmp/v168-shared-context-equivalence.json
+          DRUMS=/tmp/v168-context-demucs/htdemucs_6s/v168-context-mix/drums.wav
+          set +e
+          python validation/v168_splitmysong_diagnostic/check_shared_context_equivalence_v168.py \
+            --repo-root . \
+            --candidate debug/v166-cpu-autonomous/generated.json \
+            --timebase debug/v166-cpu-autonomous/timebase.json \
+            --mix /tmp/v168-context-mix.wav \
+            --drums "$DRUMS" \
+            --report "$REPORT"
+          rc=$?
+          set -e
+          test "$rc" = "0" -o "$rc" = "2"
+          echo "checkerExitCode=$rc"
+          echo "=== FUNCTIONAL EQUIVALENCE REPORT ==="
+          cat "$REPORT"
+          echo "=== SAFETY BOUNDARY ==="
+          echo "No private SplitMySong audio was used."
+          echo "Basic Pitch package may be installed for historical environment parity, but no Basic Pitch module/inference was invoked by this workflow."
+          echo "No candidate was generated."
+          echo "No scorer or professional/legacy reference was opened."
+          echo "No audio/stems/report are uploaded as artifacts."
