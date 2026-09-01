@@ -236,3 +236,10 @@ This diagnostic does not alter V168: **Project Progress Score remains 60%; Test 
 - Inspected the current `.github/workflows` directory; there is no workflow filename containing `basic`, so the historical Python 3.11 / Basic Pitch runtime must be traced from workflow contents and repository history rather than filename matching.
 - No detector substitution, Basic Pitch retuning, V167 I005 threshold change, V168 validator/scorer change, benchmark mutation, GPU/CUDA/Modal use, `main` change, or Production change has been made in this resume step.
 - Next safe action: locate an existing/historical CPU workflow or dependency manifest that proves the exact Basic Pitch runtime, then generate and hash-freeze the isolated-guitar candidate stream before any separate diagnostic comparison score is computed.
+
+## 2026-09-01 provenance correction — Basic Pitch runtime trace
+- Corrected the earlier old-ref interpretation: `b8c698eff3854cf2c40b375c5ef81070a5e0fe69` is the **tree SHA** of branch-head commit `76215896844d9361db110fa2d81a1c7416c16631`, not a commit SHA.
+- Exact target-branch tree inspection still does **not** establish an installed Basic Pitch package version or inference backend version. Default-branch code-search hits are not being accepted as proof of the historical target-branch CPU runtime.
+- Runtime provenance remains gated on historical workflow/Actions evidence that proves the Python version, actually installed Basic Pitch version, and TensorFlow/ONNX/inference backend before candidate regeneration.
+- No CPU candidate has been regenerated yet because the exact runtime is not proven; no parity claim has been made.
+- No GPU/CUDA/Modal workload was triggered or authorized. V168 remains frozen at **Project Progress Score 60% / Test Score NOT RUN**.
