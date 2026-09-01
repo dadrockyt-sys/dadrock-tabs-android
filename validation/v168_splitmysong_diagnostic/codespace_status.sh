@@ -1,7 +1,10 @@
 #!/usr/bin/env bash
 set -euo pipefail
 
-REPO_ROOT="$(git rev-parse --show-toplevel)"
+SCRIPT_DIR="$(cd -- "$(dirname -- "${BASH_SOURCE[0]}")" && pwd)"
+REPO_ROOT="$(cd -- "$SCRIPT_DIR/../.." && pwd)"
+
+git config --global --add safe.directory "$REPO_ROOT"
 cd "$REPO_ROOT"
 
 BRANCH="$(git branch --show-current)"
