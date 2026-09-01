@@ -8,7 +8,11 @@ fi
 
 SOURCE="$1"
 OUT_DIR="${2:-$HOME/v168-splitmysong-private}"
-REPO_ROOT="$(git rev-parse --show-toplevel)"
+SCRIPT_DIR="$(cd -- "$(dirname -- "${BASH_SOURCE[0]}")" && pwd)"
+REPO_ROOT="$(cd -- "$SCRIPT_DIR/../.." && pwd)"
+
+git config --global --add safe.directory "$REPO_ROOT"
+
 MODEL_PATH="$(python - <<'PY'
 from basic_pitch import ICASSP_2022_MODEL_PATH
 print(ICASSP_2022_MODEL_PATH)
