@@ -1,0 +1,26 @@
+FROM python:3.10.21-slim-bookworm
+
+ENV CUDA_VISIBLE_DEVICES="" \
+    PYTHONHASHSEED=0 \
+    OMP_NUM_THREADS=1 \
+    MKL_NUM_THREADS=1 \
+    OPENBLAS_NUM_THREADS=1 \
+    NUMEXPR_NUM_THREADS=1 \
+    PIP_DISABLE_PIP_VERSION_CHECK=1 \
+    PIP_NO_CACHE_DIR=1
+
+RUN apt-get update \
+    && apt-get install -y --no-install-recommends ffmpeg git libsndfile1 ca-certificates \
+    && rm -rf /var/lib/apt/lists/*
+
+WORKDIR /workspace
+COPY validation/v168_splitmysong_diagnostic/requirements-cpu.txt /tmp/requirements-cpu.txt
+RUN python -m pip install --upgrade pip \
+    && python -m pip install -r /tmp/requirements-cpu.txt
+
+COPY . /workspace
+RUN python validation/v168_splitmysong_diagnostic/verify_environment_v168.py \
+    --repo-root /workspace \
+    --receipt /tmp/environment-smoke-receipt.json
+
+ENTRYPOINT ["python", "validation/v168_splitmysong_diagnostic/preflight_splitmysong_v168.py"]
