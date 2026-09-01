@@ -1,0 +1,206 @@
+name: V168 SplitMySong historical Demucs reproduction
+
+on:
+  push:
+    branches:
+      - v143-contextual-prune-lobo
+    paths:
+      - .github/workflows/v168-splitmysong-historical-demucs-repro.yml
+
+permissions:
+  contents: read
+
+env:
+  CUDA_VISIBLE_DEVICES: ""
+  PYTHONHASHSEED: "0"
+  OMP_NUM_THREADS: "1"
+  MKL_NUM_THREADS: "1"
+  OPENBLAS_NUM_THREADS: "1"
+  NUMEXPR_NUM_THREADS: "1"
+
+jobs:
+  reproduce:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 20
+    steps:
+      - name: Checkout exact diagnostic head with history
+        uses: actions/checkout@v4
+        with:
+          ref: ${{ github.sha }}
+          fetch-depth: 0
+
+      - name: Set up exact historical Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.10"
+          check-latest: false
+
+      - name: Reproduce historical dependency resolution
+        shell: bash
+        run: |
+          set -euo pipefail
+          python -m pip install --disable-pip-version-check --upgrade pip
+          python -m pip install --disable-pip-version-check --index-url https://download.pytorch.org/whl/cpu torch==2.8.0
+          python -m pip install --disable-pip-version-check \
+            numpy==1.26.4 scipy==1.13.1 soundfile==0.12.1 \
+            basic-pitch==0.4.0 demucs==4.1.0 imageio-ffmpeg==0.6.0 librosa==0.11.0
+
+          python - <<'PY'
+          import importlib.metadata as md, platform, torch
+          expected = {
+              "basic-pitch": "0.4.0",
+              "demucs": "4.1.0",
+              "einops": "0.8.2",
+              "hf-xet": "1.6.0",
+              "huggingface-hub": "1.29.0",
+              "imageio-ffmpeg": "0.6.0",
+              "julius": "0.2.8",
+              "librosa": "0.11.0",
+              "numpy": "1.26.4",
+              "pyyaml": "6.0.3",
+              "safetensors": "0.8.0",
+              "scipy": "1.13.1",
+              "soundfile": "0.12.1",
+              "sphn": "0.2.1",
+              "tflite-runtime": "2.14.0",
+              "tqdm": "4.70.0",
+          }
+          assert platform.python_version() == "3.10.21", platform.python_version()
+          assert torch.__version__ == "2.8.0+cpu", torch.__version__
+          assert torch.version.cuda is None and not torch.cuda.is_available()
+          for name, version in expected.items():
+              observed = md.version(name)
+              assert observed == version, (name, observed, version)
+          print("HISTORICAL DEPENDENCY RESOLUTION MATCH")
+          PY
+
+      - name: Materialize and verify frozen historical source
+        shell: bash
+        run: |
+          set -euo pipefail
+          git show 74b0f815ff3f66f325220975c410621503de440f:public/gomywayfullaitest.m4a > /tmp/v168-historical-source.m4a
+          test "$(stat -c '%s' /tmp/v168-historical-source.m4a)" = "3478611"
+          test "$(sha256sum /tmp/v168-historical-source.m4a | awk '{print $1}')" = "215bd5a657c5326f08f132ae358595a95c30b39bb7493a52c2f910d5a608149f"
+
+          FFMPEG_EXE="$(python - <<'PY'
+          import imageio_ffmpeg
+          print(imageio_ffmpeg.get_ffmpeg_exe())
+          PY
+          )"
+          "$FFMPEG_EXE" -hide_banner -loglevel error -y \
+            -i /tmp/v168-historical-source.m4a -ar 44100 -ac 2 -c:a pcm_s16le \
+            /tmp/v168-historical-mix.wav
+          MIX_SHA="$(sha256sum /tmp/v168-historical-mix.wav | awk '{print $1}')"
+          echo "historicalMixSha256=$MIX_SHA"
+          test "$MIX_SHA" = "3e61b7926eabc21b758c750f826c7426a29d6de5aafdd5c93f8045ecdc67f87e"
+
+      - name: Reproduce historical CPU Demucs separation
+        shell: bash
+        run: |
+          set -euo pipefail
+          python - <<'PY'
+          import json, os, platform, random
+          from pathlib import Path
+          import numpy as np
+          import torch
+          from demucs.separate import main
+
+          random.seed(0)
+          np.random.seed(0)
+          torch.manual_seed(0)
+          torch.set_num_threads(1)
+          torch.set_num_interop_threads(1)
+          torch.use_deterministic_algorithms(True)
+
+          print(json.dumps({
+              "platform": platform.platform(),
+              "machine": platform.machine(),
+              "processor": platform.processor(),
+              "torch": torch.__version__,
+              "cudaVersion": torch.version.cuda,
+              "cudaAvailable": torch.cuda.is_available(),
+          }, sort_keys=True))
+          cpuinfo = Path('/proc/cpuinfo')
+          if cpuinfo.is_file():
+              model_lines = [line.strip() for line in cpuinfo.read_text(errors='replace').splitlines()
+                             if line.lower().startswith('model name')]
+              if model_lines:
+                  print("cpuModel=" + model_lines[0].split(':', 1)[1].strip())
+
+          main([
+              "-n", "htdemucs_6s", "-d", "cpu", "--shifts", "1", "-j", "1",
+              "-o", "/tmp/v168-historical-demucs", "/tmp/v168-historical-mix.wav",
+          ])
+          PY
+
+      - name: Hash model cache and stems without uploading audio
+        shell: bash
+        run: |
+          set -euo pipefail
+          STEM_DIR=/tmp/v168-historical-demucs/htdemucs_6s/v168-historical-mix
+
+          echo "=== HISTORICAL DEMUCS REPRODUCTION HASHES ==="
+          for stem in guitar bass drums other vocals piano; do
+            path="$STEM_DIR/$stem.wav"
+            if [ -f "$path" ]; then
+              printf '%sSha256=' "$stem"
+              sha256sum "$path" | awk '{print $1}'
+            fi
+          done
+
+          echo "=== HUGGING FACE MODEL CACHE ==="
+          python - <<'PY'
+          import hashlib, json
+          from pathlib import Path
+
+          def sha(path):
+              h = hashlib.sha256()
+              with path.open('rb') as f:
+                  for chunk in iter(lambda: f.read(1024 * 1024), b''):
+                      h.update(chunk)
+              return h.hexdigest()
+
+          repo = Path.home()/'.cache/huggingface/hub/models--adefossez--HTDemucs-6s'
+          result = {"repoCache": str(repo), "exists": repo.is_dir()}
+          ref = repo/'refs/main'
+          if ref.is_file():
+              result['mainRef'] = ref.read_text().strip()
+          snaps = repo/'snapshots'
+          result['snapshotIds'] = sorted(p.name for p in snaps.iterdir() if p.is_dir()) if snaps.is_dir() else []
+          files = []
+          if snaps.is_dir():
+              for snap in sorted((p for p in snaps.iterdir() if p.is_dir()), key=lambda p:p.name):
+                  for name in ('htdemucs_6s.yaml','5c90dfd2.safetensors'):
+                      p = snap/name
+                      if p.is_file():
+                          files.append({"snapshot": snap.name, "name": name, "sha256": sha(p), "bytes": p.stat().st_size})
+          result['files'] = files
+          print(json.dumps(result, indent=2, sort_keys=True))
+          PY
+
+          GUITAR_SHA="$(sha256sum "$STEM_DIR/guitar.wav" | awk '{print $1}')"
+          BASS_SHA="$(sha256sum "$STEM_DIR/bass.wav" | awk '{print $1}')"
+          DRUMS_SHA="$(sha256sum "$STEM_DIR/drums.wav" | awk '{print $1}')"
+
+          echo "expectedGuitar=4c71e9e15dd07e60a5442923b86523bafe4313056ca3c892054a607aa7e4e9d2"
+          echo "expectedBass=4b34b2bc3367d9f8ed4dce39b95ad3d60c49d6541186df6b0d24a4211b03c7ef"
+          echo "expectedDrums=05890ac9cad62eacf0099c962b137a458228811a85b8ea828bb15f238d2c1e50"
+
+          if [ "$GUITAR_SHA" = "4c71e9e15dd07e60a5442923b86523bafe4313056ca3c892054a607aa7e4e9d2" ] && \
+             [ "$BASS_SHA" = "4b34b2bc3367d9f8ed4dce39b95ad3d60c49d6541186df6b0d24a4211b03c7ef" ] && \
+             [ "$DRUMS_SHA" = "05890ac9cad62eacf0099c962b137a458228811a85b8ea828bb15f238d2c1e50" ]; then
+            echo "HISTORICAL DEMUCS EXACT REPRODUCTION PASS"
+          else
+            echo "HISTORICAL DEMUCS EXACT REPRODUCTION MISMATCH"
+            exit 1
+          fi
+
+      - name: Safety boundary
+        if: always()
+        shell: bash
+        run: |
+          echo "No private SplitMySong audio was used."
+          echo "No Basic Pitch inference was invoked."
+          echo "No candidate was generated."
+          echo "No scorer/reference content was opened."
+          echo "No audio or stems are uploaded as artifacts."
