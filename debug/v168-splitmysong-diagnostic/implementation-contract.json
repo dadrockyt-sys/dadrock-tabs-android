@@ -1,0 +1,92 @@
+{
+  "schema": "dadrock.tabs.v168.splitmysong-diagnostic-contract.v1",
+  "version": "V168_DIAGNOSTIC_SPLITMYSONG",
+  "status": "SEALED_BEFORE_DIAGNOSTIC_GENERATION",
+  "validation": "PASS",
+  "runtime": {
+    "python": "3.10.21",
+    "packages": {
+      "basic-pitch": "0.4.0",
+      "demucs": "4.1.0",
+      "imageio-ffmpeg": "0.6.0",
+      "librosa": "0.11.0",
+      "numpy": "1.26.4",
+      "scipy": "1.13.1",
+      "soundfile": "0.12.1",
+      "tflite-runtime": "2.14.0",
+      "torch": "2.8.0+cpu"
+    },
+    "torchCudaVersion": null,
+    "cudaAvailable": false,
+    "basicPitchModelSha256": "3db297d54af8e01c6e5618245c956b1d71b6a2b978cb2dedb527173186552676"
+  },
+  "frozenGitBlobs": {
+    "v165EnvironmentReceipt": {
+      "path": "debug/v165-cpu-autonomous/environment-receipt.json",
+      "blob": "84160ae885316450ad59c3dca5bbb9692e4dfdc9"
+    },
+    "v165Transcriber": {
+      "path": "validation/v165_cpu_autonomous/transcribe_v165.py",
+      "blob": "45d595853302b077fbf4f3094e9a4922fba02435"
+    },
+    "v164Transcriber": {
+      "path": "validation/v164_cpu_autonomous/transcribe_v164.py",
+      "blob": "df1302216df404bc3368ff820f005d6b63ae100d"
+    },
+    "v162Transcriber": {
+      "path": "validation/v162_cpu_autonomous/transcribe_v162.py",
+      "blob": "fa163cafe2131aa73cdbb50df10d4e4912cff53b"
+    },
+    "v167BaseBuilder": {
+      "path": "validation/v167_single_song_calibration/build_upstream_recovery_variants_v167.py",
+      "blob": "24413d321f64bbfcce48812ceb85b4593dcfa80c"
+    },
+    "v167StateSplitBuilder": {
+      "path": "validation/v167_single_song_calibration/build_state_split_guitar_variants_v167.py",
+      "blob": "6b480d43744a5c67c02510d55162581d896afee4"
+    },
+    "v167StateSplitPromotion": {
+      "path": "validation/v167_single_song_calibration/promote_state_split_guitar_winner_v167.py",
+      "blob": "a912018b58f9bd7243229fcba3d8895e33300c44"
+    }
+  },
+  "policy": {
+    "id": "gss-active-only",
+    "templateRankMin": 0.975,
+    "activitySupportMin": 0.05,
+    "onsetSupportMin": 0.5,
+    "requireBasicPitchActiveContext": true,
+    "fundamentalPresentRequired": true,
+    "candidateToMaxActiveTemplateScoreMin": 1.0,
+    "harmonicOctaveIntervalsRejected": [12, 19, 24],
+    "maxAddsPerSite": 1,
+    "existingIteration003EventsPreferred": true,
+    "stepMidiDedupe": true,
+    "polyphonyCap": 6,
+    "inactiveBranchEnabled": false,
+    "globalPhaseCorrectionGridSteps": -12,
+    "topOneOrdering": [
+      "candidate_to_max_active_template_ratio_desc",
+      "template_rank_desc",
+      "template_score_desc",
+      "onset_support_desc",
+      "activity_support_desc",
+      "midi_asc"
+    ]
+  },
+  "execution": {
+    "inputPreflightMayRunWithoutRepositoryCheckout": true,
+    "armPreflightRequiresAllRepositoryPins": true,
+    "armPreflightRequiresExactRuntimeAndModel": true,
+    "armPreflightPerformsPitchInference": false,
+    "candidateGenerationMaximum": 1,
+    "candidateGenerationRerunForbiddenWithoutNewPreregistration": true,
+    "candidateMustBeHashFrozenBeforeScoring": true,
+    "generatorMayReadProfessionalReference": false,
+    "generatorMayReadLegacyAyggmwReference": false,
+    "generatorMayReadScorer": false,
+    "referenceFacingScoreCallsBeforeCandidateFreeze": 0,
+    "gpuCudaModalUsed": false,
+    "mainOrProductionModified": false
+  }
+}
