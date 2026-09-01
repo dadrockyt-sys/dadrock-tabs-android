@@ -90,7 +90,7 @@ Dedicated checkpoint: `docs/checkpoints/V168_IDMT_SMT_GUITAR_SCREENING_20260829.
 Evaluation-purpose CC BY-NC-ND 4.0 basis exists, but exact professional annotation/validation provenance for the later five song-like subset-3 pieces is not strong enough for the current gate.
 
 ### AG-PT — EXCLUDED
-`docs/checkpoints/V168_AGPT_EGSOLO_TRIAGE_20260829.md`, commit `e114eab039e588484d4f91fba153dd56e4f91fba153dd56e4a4cbaf`. Human/musician annotations, but isolated monophonic technique-note units rather than song/piece holdout streams.
+`docs/checkpoints/V168_AGPT_EGSOLO_TRIAGE_20260829.md`, commit `e114eab039e588484d4f91fba153dd56e4a4cbaf`. Human/musician annotations, but isolated monophonic technique-note units rather than song/piece holdout streams.
 
 ### EG-Solo — BLOCKED
 Promising manual tablature-assisted annotation, but source performances are third-party professional YouTube demonstrations and no frozen exact-source research-use grant was found.
