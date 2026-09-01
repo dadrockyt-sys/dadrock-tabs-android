@@ -228,3 +228,11 @@ This diagnostic does not alter V168: **Project Progress Score remains 60%; Test 
 10. Save `CURRENT_STATE.md` before any future admission, candidate-code arm, scorer arm, or reference-facing score call.
 11. Keep Project Progress Score/Test Score in future user-facing updates.
 12. CPU only; no GPU/CUDA/Modal; never modify main/Production.
+
+## 2026-09-01 resume checkpoint — historical Basic Pitch runtime trace
+- Re-fetched `docs/checkpoints/CURRENT_STATE.md` from `v143-contextual-prune-lobo` before making changes and preserved all frozen V168/V167 boundaries.
+- Confirmed the safe continuation remains the isolated SplitMySong AYGGMW guitar diagnostic on CPU only; V168 itself remains unarmed at **Project Progress Score 60% / Test Score NOT RUN**.
+- Corrected a stale repository-search clue: `scripts/doctor-basic-pitch.ps1` is **not present** at the current branch head, so no Basic Pitch package version is being asserted from that stale path.
+- Inspected the current `.github/workflows` directory; there is no workflow filename containing `basic`, so the historical Python 3.11 / Basic Pitch runtime must be traced from workflow contents and repository history rather than filename matching.
+- No detector substitution, Basic Pitch retuning, V167 I005 threshold change, V168 validator/scorer change, benchmark mutation, GPU/CUDA/Modal use, `main` change, or Production change has been made in this resume step.
+- Next safe action: locate an existing/historical CPU workflow or dependency manifest that proves the exact Basic Pitch runtime, then generate and hash-freeze the isolated-guitar candidate stream before any separate diagnostic comparison score is computed.
