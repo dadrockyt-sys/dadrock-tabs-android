@@ -22,6 +22,9 @@ PY
 mkdir -p "$OUT_DIR"
 chmod 700 "$OUT_DIR"
 
+python "$REPO_ROOT/validation/v168_splitmysong_diagnostic/verify_ffmpeg_normalizer_v168.py" \
+  --receipt "$OUT_DIR/ffmpeg-normalizer-receipt.json"
+
 python "$REPO_ROOT/validation/v168_splitmysong_diagnostic/verify_environment_v168.py" \
   --repo-root "$REPO_ROOT" \
   --receipt "$OUT_DIR/environment-receipt.json"
@@ -38,6 +41,8 @@ python "$REPO_ROOT/validation/v168_splitmysong_diagnostic/preflight_splitmysong_
 
 printf '\nARM PREFLIGHT PASS\n'
 printf 'Private output directory: %s\n' "$OUT_DIR"
+printf 'FFmpeg receipt SHA256: '
+sha256sum "$OUT_DIR/ffmpeg-normalizer-receipt.json" | awk '{print $1}'
 printf 'Environment receipt SHA256: '
 sha256sum "$OUT_DIR/environment-receipt.json" | awk '{print $1}'
 printf 'Arm receipt SHA256: '
