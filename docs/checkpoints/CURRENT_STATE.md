@@ -64,7 +64,7 @@ Access checkpoints:
 
 Authoritative requested record: Zenodo `15690894`, DOI `10.5281/zenodo.15690894`, v1, restricted, research-only / not intended for commercial-product use.
 
-### New pre-access GOAT integrity/selection preregistration
+### Pre-access GOAT integrity/selection preregistration
 
 Created before any restricted GOAT bytes were seen:
 - `docs/checkpoints/V168_GOAT_INTEGRITY_SELECTION_PREREGISTRATION_20260901.md`
@@ -73,24 +73,58 @@ Created before any restricted GOAT bytes were seen:
 Public evidence frozen in that preregistration:
 - GOAT README blob `888ae24a02c79d17e291d755d524f35546e15ea7` describes 5.9h unique DI recordings plus 29.5h augmented audio;
 - `render_amp.ipynb` blob `c94e935b51cc6f68cd63b5cd1a9107013e7f4ef9` shows randomized re-amping, internal `f_measure_fine >= 0.75`, an example `Dani`/`Lithium`/`Reptilia` test split, and warns final published structure may differ;
-- public issue `JackJamesLoth/GOAT-Dataset#1` is open/no-comments at inspection time and reports possible `item_67`, `item_96`, `item_110` duration/EOF anomalies. These are unverified reports and the items are not automatically excluded.
+- public issue `JackJamesLoth/GOAT-Dataset#1` was open with no comments at inspection time and reports possible `item_67`, `item_96`, `item_110` duration/EOF anomalies. These are unverified reports and the items are not automatically excluded.
 
-Frozen GOAT-specific rules now include:
+Frozen GOAT-specific rules include:
 - one unique base performance / base DI recording per holdout unit; re-amps/amp variants cannot count as independent songs;
 - exact source/reference SHA256 pair binding before admission;
-- primary EOF integrity is based on scored **onsets**, because the frozen V154 endpoint uses onset + MIDI and not note offsets/durations;
 - every scored reference onset must be within `[0, sourceDuration + 0.050s]`; otherwise fail `REFERENCE_ONSET_OUTSIDE_SOURCE_EOF`;
 - note offsets beyond EOF alone do not fail an item when scored onsets remain valid;
 - no truncation, note dropping, time-stretch, manual shift, or repair to rescue a failing item;
-- `item_96`/`item_110` therefore fail naturally if their later scored onsets exceed the shorter audio; `item_67` is not failed solely for note-off overrun;
 - target holdout size = 3 independent works when >=3 pass; minimum remains 2;
-- Tier 1 selection uses an official/unambiguous released GOAT-v1 test split if one exists in granted v1 metadata;
-- the public notebook's `Dani`/`Lithium`/`Reptilia` names are not authoritative unless granted v1 independently identifies them as the official released test split;
-- Tier 2 fallback is deterministic SHA256 ranking over integrity-pass base-DI representatives by work/base-performance/source hash;
-- selection cannot use Policy A/B scores, pitch distribution, note density, difficulty, style, model errors, or outcome-facing statistics;
-- if fewer than 2 survive frozen intake, V168 becomes `INCONCLUSIVE / HOLDOUT_INSUFFICIENT` rather than weakening rules.
+- Tier 1 uses an official/unambiguous released GOAT-v1 test split if one exists;
+- public notebook `Dani`/`Lithium`/`Reptilia` names are not authoritative unless granted v1 independently marks them as released test data;
+- Tier 2 fallback uses deterministic SHA256 ranking over integrity-pass base-DI work representatives;
+- selection cannot use Policy A/B scores, pitch distribution, note density, difficulty, style, model errors, or other outcome-facing statistics;
+- fewer than 2 eligible works => `INCONCLUSIVE / HOLDOUT_INSUFFICIENT`, not rule weakening.
 
-Next repository goal is to make these frozen rules machine-checkable without touching restricted files or scorer/reference paths.
+### Machine-readable GOAT selection contract — frozen/static-tested
+
+Dedicated static-readiness checkpoint:
+- `docs/checkpoints/V168_GOAT_SELECTION_STATIC_READY_20260901.md`
+- creation commit `9863af8844fa1f71d966414be6a24a633ae693b9`.
+
+Contract:
+- `validation/v168_holdout/goat_selection_contract_v168.json`
+- creation commit `7e89671fe3dc14e91c52cc533d0e1ceb5605c16c`
+- Git blob `ae3b33d89faa6cd31bb596b8553de75cb3320b9e`
+- SHA256 `8c84eefa442d4c547180e1543cace9031ca2d801c1d04956893b3fb24e71096b`.
+
+Metadata-only receipt validator:
+- `validation/v168_holdout/validate_goat_selection_receipt_v168.py`
+- creation commit `263f9cdc8350f887f77fcc6021894ba2e00e26f6`
+- Git blob `2f33b8c3df1caee63abe3493b64c16d6d4889b00`.
+
+Static workflow:
+- `.github/workflows/v168-goat-selection-static.yml`
+- creation commit/head `bb5050522aada64304599b16ace99836a8f3eab8`
+- Git blob `1d6eb422dcd02e36218ba32b11491bf123e6c5a5`.
+
+GitHub Actions run `33569762190`, job `100060930936` completed **SUCCESS** on Ubuntu 24.04 / Python 3.10.21.
+
+CI verified:
+- exact contract blob and SHA256;
+- exact validator blob;
+- Python compile PASS;
+- static AST guard PASS with stdlib-only imports and no audio/reference/candidate/scorer/MIDI/Guitar-Pro CLI surface;
+- synthetic metadata self-test `SELF_TEST_PASS`;
+- Tier 1 deterministic fixture selection `item_20`, `item_67`, `item_21` while synthetic `item_96` failed by EOF integrity rather than item name;
+- Tier 2 deterministic fixture selection `base-a1`, `base-z`, `base-c`;
+- insufficient one-work fixture => `INCONCLUSIVE_HOLDOUT_INSUFFICIENT`;
+- negative cases rejected: selection-order drift, comparative-score leak, failed EOF item promoted to PASS;
+- audioRead=false, referenceNoteEventRead=false, candidateRead=false, scorerRead=false, referenceFacingScoreCalls=0.
+
+The repository is now prepared through the GOAT metadata-selection validation boundary without restricted data.
 
 ## V167 terminal handoff — immutable
 
@@ -128,12 +162,19 @@ Historical full-lattice diagnostic also remains fail-closed: 1617/1805 historica
 
 ## NEXT SAFE ACTION
 
-Continue repository-only pre-access GOAT preparation:
-1. freeze a machine-readable GOAT selection/intake contract implementing the preregistered Tier 1/Tier 2 selection and reason codes;
-2. self-test it only with synthetic metadata fixtures — no GOAT restricted bytes, audio, professional reference content, candidates, or scorer access;
-3. checkpoint exact code/blob/test identities here.
+Repository-only pre-access GOAT preparation is complete through deterministic selection-receipt validation.
 
-After that, the primary external boundary remains: wait for explicit GOAT owner approval. If approval arrives, freeze grant wording/date/conditions and exact v1 bytes before admission.
+Primary next event is external: **await explicit GOAT owner approval or denial**.
+
+If approval arrives, before any restricted-v1 admission/candidate/scorer work:
+1. checkpoint exact non-secret approval wording/date/owner conditions/restrictions;
+2. freeze exact Zenodo record/version and complete restricted-v1 file inventory/SHA256 identities;
+3. identify the complete unique base-DI inventory and source/reference pair bindings;
+4. produce the metadata-only integrity/selection receipt under the frozen contract;
+5. run `validate_goat_selection_receipt_v168.py` plus the two existing holdout validators;
+6. checkpoint selected >=2 assets and exact identities **before candidate generation is armed**.
+
+Until explicit access is granted, do not build a GOAT candidate generator or GOAT/new-song scorer adapter and do not claim gate 4 complete.
 
 ## Standing safety / methodology
 
