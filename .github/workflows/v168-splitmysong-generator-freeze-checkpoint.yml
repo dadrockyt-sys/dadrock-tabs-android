@@ -1,0 +1,50 @@
+name: V168 SplitMySong generator freeze checkpoint
+
+on:
+  push:
+    branches: [v143-contextual-prune-lobo]
+    paths: [.github/workflows/v168-splitmysong-generator-freeze-checkpoint.yml]
+
+permissions:
+  contents: write
+
+jobs:
+  append:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: v143-contextual-prune-lobo
+          fetch-depth: 0
+      - name: Append checkpoint and self-delete
+        shell: bash
+        run: |
+          set -euo pipefail
+          BRANCH=v143-contextual-prune-lobo
+          git fetch origin "$BRANCH"
+          git checkout "$BRANCH"
+          git reset --hard "origin/$BRANCH"
+          test "$(grep -c 'SplitMySong reference-blind generator frozen' docs/checkpoints/CURRENT_STATE.md || true)" = "0"
+          cat >> docs/checkpoints/CURRENT_STATE.md <<'EOF'
+
+## 2026-09-01 continuation checkpoint — SplitMySong reference-blind generator frozen
+- The private Codespace ARM gate is already frozen **PASS**; candidate generation had not run when this generator checkpoint was created.
+- Dedicated one-shot reference-blind generator: `validation/v168_splitmysong_diagnostic/generate_splitmysong_candidate_v168.py`, creation commit **`79f3847bc54c6d95ee8166c742d9c6ec9e6efe67`**, frozen Git blob **`95972fb9b1f9c1bf4872e2c945025b4aa69a312c`**.
+- Private one-command generation launcher: `validation/v168_splitmysong_diagnostic/run_private_candidate_generation.sh`, creation commit **`3c162e30ca51680ab00f41522f9c3b42348704b2`**, frozen Git blob **`ff0abb9d979cb475862278ffc17966e6d73f5a86`**.
+- Static safety workflow: `.github/workflows/v168-splitmysong-generator-static.yml`, creation commit **`94710f77ee3d00e1e79c985b5ab72bc721135189`**, Git blob **`fb576039ab33349c5420454ce6a840331f6bf5f3`**. Run **`33560121176`** completed **SUCCESS**. It compiled the generator, syntax-checked the launcher, pinned both blob identities, verified the CLI accepts exactly `--repo-root`, `--source`, `--normalized-guitar`, `--arm-receipt`, `--environment-receipt`, `--ffmpeg-receipt`, and `--output-dir`, and confirmed no scorer/reference CLI argument is accepted.
+- Generator pins the private SplitMySong source SHA256 **`6601b8d01cbbbe6b6e70d9ec0ca3c15d17873c78e62ae4acdc258c96f168e3c9`**, normalized Guitar SHA256 **`fdb0578d71f77c150e7fe66766a03953be55e7028fef4c24dc777416f2e7ff4f`**, ARM receipt SHA256 **`f34aef34a729d4ca32ba42975717a1b8e79b568aa1a8dc44d13c2eb1bcd6ef6f`**, CPU environment receipt SHA256 **`c7bf81f59220808cef01a7e399830dbf8a23df4b052fac10bac75c498ad78847`**, FFmpeg receipt SHA256 **`e7713b47a4f3bf468b706bb0eef8c683ea3e2ec3571e3170f203e28bf9ee1f1f`**, Basic Pitch model SHA256 **`3db297d54af8e01c6e5618245c956b1d71b6a2b978cb2dedb527173186552676`**, frozen V166 timebase, exact V166/V167 code blobs, and exact `gss-active-only` config.
+- Clean A/B definition is frozen: historical AYGGMW mix/drums/bass/timebase context is reproduced and hash-verified; the only changed front-end input is the Guitar audio, replaced by the externally separated SplitMySong Guitar. The candidate then follows V166 Guitar front-end/grid mapping, V167 global phase `-12`, frozen `max_score_x_shared` step rule, and frozen I005 `gss-active-only` recovery.
+- The generator caches Basic Pitch so the candidate path requires **exactly one actual Basic Pitch inference call**. It writes an irreversible one-shot attempt marker immediately before entering the candidate-building inference path; pre-existing marker/candidate/receipt/freeze files make rerun fail closed.
+- Successful generation writes only private files: `splitmysong-i005-candidate.json`, `splitmysong-generation-receipt.json`, and `splitmysong-candidate-freeze.json`. The freeze status is `FROZEN_BEFORE_ANY_LEGACY_REFERENCE_OR_SCORER_ACCESS`; the launcher explicitly stops after printing their SHA256 values and does not invoke a scorer.
+- Added a separate **no-pitch-inference** historical-context preflight to reduce execution risk before consuming the one-shot inference attempt: `validation/v168_splitmysong_diagnostic/prepare_historical_context_v168.py`, creation commit **`f44def1823927866da3b7fa2c9f1f5b52ea5e942`**, Git blob **`b93d8e671858c8b433c6e6645dc9f0e826429ed3`**. It reproduces and verifies historical source/mix plus exact Demucs `htdemucs_6s` Guitar/Bass/Drums hashes without importing Basic Pitch, generating a candidate, or opening scorer/reference content.
+- Private historical-context launcher: `validation/v168_splitmysong_diagnostic/run_historical_context_preflight.sh`, creation commit **`e87c97a2036849f2fad8bdf4c31a95c32bb2872b`**, Git blob **`03c315e4cbfd84b30255976dad39bf3a7f0caf13`**.
+- **Next safe action is the no-inference historical-context preflight only.** Require `HISTORICAL CONTEXT PREFLIGHT PASS` and record its private receipt SHA256 before executing the one-shot candidate launcher.
+- At this checkpoint: **no diagnostic candidate has been generated, no Basic Pitch inference has run for SplitMySong, no scorer/reference has been opened, and diagnostic reference-facing score calls remain 0**. V168 prospective evaluation remains untouched: **Project Progress Score 60%; Test Score NOT RUN; V168 reference-facing score calls 0**. No GPU/CUDA/Modal, `main`, or Production change occurred.
+EOF
+          rm .github/workflows/v168-splitmysong-generator-freeze-checkpoint.yml
+          git config user.name github-actions[bot]
+          git config user.email 41898282+github-actions[bot]@users.noreply.github.com
+          git add docs/checkpoints/CURRENT_STATE.md .github/workflows/v168-splitmysong-generator-freeze-checkpoint.yml
+          git commit -m 'Checkpoint SplitMySong generator freeze'
+          git pull --rebase origin "$BRANCH"
+          git push origin HEAD:"$BRANCH"
