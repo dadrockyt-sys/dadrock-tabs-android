@@ -1,0 +1,94 @@
+{
+  "schema": "dadrock.tabs.v168.splitmysong-historical-shared-support-neighborhood-preregistration.v1",
+  "version": "V168_SPLITMYSONG_DIAGNOSTIC",
+  "status": "PREREGISTERED_BEFORE_SPLITMYSONG_PITCH_INFERENCE_OR_NEIGHBORHOOD_RESULT",
+  "createdUtcDate": "2026-09-01",
+  "purpose": "Provide a separate fail-closed path for exact V166 shared-onset timing decisions at the actual reference-blind SplitMySong Guitar event neighborhoods when historical Demucs stem bytes cannot be reproduced exactly.",
+  "supersessionBoundary": {
+    "doesNotChangePriorFullLatticeChecker": true,
+    "priorFullLatticeCheckerStatus": "FAIL_CLOSED",
+    "priorCoveredLatticeSteps": 1617,
+    "priorTotalLatticeSteps": 1805,
+    "priorUncoveredLatticeSteps": 188,
+    "priorObservedHistoricalEventDecisionChanges": 0,
+    "statement": "The prior 1805/1805 gate remains a valid failed diagnostic. This preregistration defines a distinct candidate-specific exact-support gate before any SplitMySong pitch inference is observed."
+  },
+  "frozenHistoricalInputs": {
+    "v166CandidatePath": "debug/v166-cpu-autonomous/generated.json",
+    "v166CandidateGitBlob": "c36a4d1e14ca66235b51a866ad3908322834efff",
+    "v166CandidateSha256": "fa2411598b401f745eff49a9cbda294ed767de093c905909531c7dd4dc6eb378",
+    "v166TimebasePath": "debug/v166-cpu-autonomous/timebase.json",
+    "v166TimebaseGitBlob": "abebae25801b7ddeb5b933977c4f4a918f7bf9ef",
+    "v166TimebaseSha256": "899746d3048d239bc0032375d412a109ea04b055df19df1b7b08dc3e73aa5ca0",
+    "v166CombinedGuitarEventCount": 1050,
+    "v166BassEventCount": 402,
+    "v166PersistedEventCount": 1452,
+    "v166PersistedStepSelectionOptionRows": 4356,
+    "historicallyCoveredStepCount": 1617,
+    "latticeStepCount": 1805
+  },
+  "historicalSharedSupportTableRule": {
+    "source": "Only stepSelection.candidates rows already persisted in the frozen V166 candidate may contribute historical sharedSupport evidence.",
+    "key": "integer lattice step",
+    "value": "the persisted sharedSupport for that step plus its persisted shared normalization beat/frame provenance",
+    "instrumentIndependent": true,
+    "duplicateRule": "Every repeated historical row for the same step must contain exactly the same numeric sharedSupport and compatible shared normalization provenance; otherwise fail closed.",
+    "noInterpolation": true,
+    "noExtrapolation": true,
+    "noFreshDemucsSubstitution": true,
+    "noReferenceOrScorerData": true
+  },
+  "splitMySongObservationRule": {
+    "privateSourceSha256": "6601b8d01cbbbe6b6e70d9ec0ca3c15d17873c78e62ae4acdc258c96f168e3c9",
+    "normalizedGuitarSha256": "fdb0578d71f77c150e7fe66766a03953be55e7028fef4c24dc777416f2e7ff4f",
+    "basicPitchVersion": "0.4.0",
+    "basicPitchModelSha256": "3db297d54af8e01c6e5618245c956b1d71b6a2b978cb2dedb527173186552676",
+    "actualBasicPitchInferenceCallsAllowed": 1,
+    "frontEnd": "Exact frozen V166 Guitar front-end through admitted/recovered pre-grid events, with the already-frozen SplitMySong Guitar as the sole changed audio input.",
+    "referenceBlind": true
+  },
+  "requiredNeighborhoodRule": {
+    "whenComputed": "Only after the single reference-blind Basic Pitch observation has produced the frozen V166 pre-grid Guitar event list.",
+    "preGridExclusion": "Use the exact frozen V166 map_events pre-grid rule before constructing required timing neighborhoods.",
+    "nearestStep": "For each remaining pre-grid event, nearest is argmin(abs(latticeTime-eventTime)) using the exact frozen V166 timebase.",
+    "candidateSteps": "For each event, require every valid step in {nearest-1, nearest, nearest+1}.",
+    "passCondition": "Every required candidate step for every actual SplitMySong pre-grid Guitar event exists in the frozen historical shared-support table.",
+    "failCondition": "If even one required candidate step lacks a frozen historical sharedSupport row, stop before producing a mapped or final candidate.",
+    "coverageMustBe100PercentOfActualRequiredSteps": true
+  },
+  "exactMappingRule": {
+    "sharedSupport": "Use the exact persisted historical V166 sharedSupport for each required option step; do not use a newly separated Drums stem or a recomputed shared envelope.",
+    "instrumentSupport": "Compute from the frozen SplitMySong Guitar onset envelope under the exact V166 beat_support_unit rule.",
+    "score": "Use the exact frozen V166/V164 event_step_score formula and EVENT_NON_NEAREST_MARGIN behavior.",
+    "selection": "Recompute nearest/winner deterministically from event time, frozen V166 lattice, new Guitar instrumentSupport, and exact historical sharedSupport lookup.",
+    "metadata": "Preserve historical shared normalization provenance from the frozen support row and compute instrument normalization provenance from the SplitMySong Guitar envelope.",
+    "claim": "A passing event is mapped with the same historical shared-support values that V166 would have supplied at every option step actually consulted by that event. No claim of full-WAV or full-lattice Demucs equivalence is made."
+  },
+  "downstreamRule": {
+    "afterExactMappingPass": [
+      "apply frozen V167 global phase -12",
+      "apply frozen I002 max_score_x_shared whole-stream transform",
+      "apply exact frozen I005 gss-active-only recovery/configuration"
+    ],
+    "noThresholdOrSelectorChanges": true,
+    "noReferenceGuidedFiltering": true,
+    "noPostScoreMutation": true
+  },
+  "failureSemantics": {
+    "missingHistoricalSupport": "FAIL_CLOSED_NO_CANDIDATE",
+    "inconsistentHistoricalSupport": "FAIL_CLOSED_NO_CANDIDATE",
+    "identityDrift": "FAIL_CLOSED_NO_INFERENCE_OR_NO_CANDIDATE_AS_APPLICABLE",
+    "referenceOrScorerAccessBeforeCandidateFreeze": "HARD_FAIL"
+  },
+  "safety": {
+    "referenceRead": false,
+    "scorerRead": false,
+    "referenceFacingScoreCalls": 0,
+    "professionalReferencePathsOpened": 0,
+    "splitMySongPitchInferenceInvokedAtPreregistration": false,
+    "splitMySongCandidateGeneratedAtPreregistration": false,
+    "gpuCudaUsed": false,
+    "modalUsed": false,
+    "mainOrProductionModified": false
+  }
+}
