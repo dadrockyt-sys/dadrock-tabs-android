@@ -1,0 +1,157 @@
+{
+  "contractIdentity": null,
+  "frozenPolicy": {
+    "activitySupportMin": 0.05,
+    "candidateToMaxActiveTemplateScoreMin": 1.0,
+    "existingIteration003EventsPreferred": true,
+    "fundamentalPresentRequired": true,
+    "globalPhaseCorrectionGridSteps": -12,
+    "harmonicOctaveIntervalsRejected": [
+      12,
+      19,
+      24
+    ],
+    "id": "gss-active-only",
+    "inactiveBranchEnabled": false,
+    "maxAddsPerSite": 1,
+    "onsetSupportMin": 0.5,
+    "polyphonyCap": 6,
+    "requireBasicPitchActiveContext": true,
+    "stepMidiDedupe": true,
+    "templateRankMin": 0.975,
+    "topOneOrdering": [
+      "candidate_to_max_active_template_ratio_desc",
+      "template_rank_desc",
+      "template_score_desc",
+      "onset_support_desc",
+      "activity_support_desc",
+      "midi_asc"
+    ]
+  },
+  "frozenRepositoryPins": {
+    "v162Transcriber": {
+      "blob": "fa163cafe2131aa73cdbb50df10d4e4912cff53b",
+      "path": "validation/v162_cpu_autonomous/transcribe_v162.py"
+    },
+    "v164Transcriber": {
+      "blob": "df1302216df404bc3368ff820f005d6b63ae100d",
+      "path": "validation/v164_cpu_autonomous/transcribe_v164.py"
+    },
+    "v165EnvironmentReceipt": {
+      "blob": "84160ae885316450ad59c3dca5bbb9692e4dfdc9",
+      "path": "debug/v165-cpu-autonomous/environment-receipt.json"
+    },
+    "v165Transcriber": {
+      "blob": "45d595853302b077fbf4f3094e9a4922fba02435",
+      "path": "validation/v165_cpu_autonomous/transcribe_v165.py"
+    },
+    "v167BaseBuilder": {
+      "blob": "24413d321f64bbfcce48812ceb85b4593dcfa80c",
+      "path": "validation/v167_single_song_calibration/build_upstream_recovery_variants_v167.py"
+    },
+    "v167StateSplitBuilder": {
+      "blob": "6b480d43744a5c67c02510d55162581d896afee4",
+      "path": "validation/v167_single_song_calibration/build_state_split_guitar_variants_v167.py"
+    },
+    "v167StateSplitPromotion": {
+      "blob": "a912018b58f9bd7243229fcba3d8895e33300c44",
+      "path": "validation/v167_single_song_calibration/promote_state_split_guitar_winner_v167.py"
+    }
+  },
+  "frozenRuntimeTarget": {
+    "basicPitchModelSha256": "3db297d54af8e01c6e5618245c956b1d71b6a2b978cb2dedb527173186552676",
+    "cudaAvailable": false,
+    "packages": {
+      "basic-pitch": "0.4.0",
+      "demucs": "4.1.0",
+      "imageio-ffmpeg": "0.6.0",
+      "librosa": "0.11.0",
+      "numpy": "1.26.4",
+      "scipy": "1.13.1",
+      "soundfile": "0.12.1",
+      "tflite-runtime": "2.14.0",
+      "torch": "2.8.0+cpu"
+    },
+    "python": "3.10.21",
+    "torchCudaVersion": null
+  },
+  "normalization": {
+    "byteDeterminismExpectedSha256": "fdb0578d71f77c150e7fe66766a03953be55e7028fef4c24dc777416f2e7ff4f",
+    "commandTemplate": [
+      "ffmpeg",
+      "-hide_banner",
+      "-loglevel",
+      "error",
+      "-y",
+      "-i",
+      "{source}",
+      "-map",
+      "0:a:0",
+      "-vn",
+      "-ar",
+      "22050",
+      "-ac",
+      "1",
+      "-c:a",
+      "pcm_s16le",
+      "{normalized}"
+    ],
+    "executedCommandRedacted": [
+      "ffmpeg",
+      "-hide_banner",
+      "-loglevel",
+      "error",
+      "-y",
+      "-i",
+      "{source}",
+      "-map",
+      "0:a:0",
+      "-vn",
+      "-ar",
+      "22050",
+      "-ac",
+      "1",
+      "-c:a",
+      "pcm_s16le",
+      "{normalized}"
+    ],
+    "output": {
+      "bytes": 9572600,
+      "channels": 1,
+      "codecName": "pcm_s16le",
+      "durationSeconds": 217.060136,
+      "name": "input-normalized.wav",
+      "sampleRate": 22050,
+      "sha256": "fdb0578d71f77c150e7fe66766a03953be55e7028fef4c24dc777416f2e7ff4f"
+    }
+  },
+  "phase": "input",
+  "safety": {
+    "audioCommittedToRepository": false,
+    "candidateGenerated": false,
+    "gpuCudaUsed": false,
+    "humanCorrection": false,
+    "legacyAyggmwReferenceRead": false,
+    "mainOrProductionModified": false,
+    "modalUsed": false,
+    "pitchInferenceInvoked": false,
+    "professionalReferenceRead": false,
+    "referenceFacingScoreCalls": 0,
+    "scorerRead": false,
+    "thresholdSweep": false
+  },
+  "schema": "dadrock.tabs.v168.splitmysong-diagnostic-preflight.v1",
+  "source": {
+    "bytes": 3610958,
+    "channels": 2,
+    "codecName": "aac",
+    "durationSeconds": 217.060136,
+    "name": "Guitar - Are You Gonna Go My Way - Lenny Kravitz ｜ Only Guitar (Isolated)(1).m4a",
+    "sampleRate": 44100,
+    "sha256": "6601b8d01cbbbe6b6e70d9ec0ca3c15d17873c78e62ae4acdc258c96f168e3c9"
+  },
+  "status": "INPUT_FROZEN",
+  "validation": "PASS",
+  "verifiedRepositoryPins": null,
+  "verifiedRuntime": null
+}
