@@ -89,7 +89,11 @@ Private Codespace ARM preflight is frozen **PASS**:
 - CPU environment receipt SHA256 `c7bf81f59220808cef01a7e399830dbf8a23df4b052fac10bac75c498ad78847`;
 - ARM receipt SHA256 `f34aef34a729d4ca32ba42975717a1b8e79b568aa1a8dc44d13c2eb1bcd6ef6f`.
 
-No SplitMySong Basic Pitch inference has yet been run. No diagnostic candidate or scorer result exists. Diagnostic reference-facing score calls remain 0.
+Exactly one private SplitMySong Basic Pitch observation has now been run under the frozen one-shot launcher. The preregistered actual-neighborhood historical-support gate returned **`FAIL_CLOSED_NO_CANDIDATE`**. No diagnostic candidate was generated; `referenceRead=false`; `scorerRead=false`; diagnostic reference-facing score calls remain 0.
+
+Dedicated result checkpoint:
+- `docs/checkpoints/V168_SPLITMYSONG_HISTORICAL_SUPPORT_FAIL_CLOSED_20260901.md`
+- creation commit `bfd8b2e1064c2025c2edc142589fbbafa0ef464b`.
 
 ## Historical Demucs reproducibility issue — preserved fail-closed
 Authoritative V166 normalized mix SHA256: `3e61b7926eabc21b758c750f826c7426a29d6de5aafdd5c93f8045ecdc67f87e`.
@@ -134,8 +138,8 @@ Repository-only audit found no admissible artifact that fills the 188 steps whil
 
 Do not interpolate/extrapolate missing shared-support values.
 
-## 2026-09-01 new preregistered path — exact historical support at actual SplitMySong neighborhoods
-A separate candidate-specific gate was preregistered **before any SplitMySong pitch inference or result was observed**. This does not alter the failed 1805/1805 diagnostic.
+## 2026-09-01 preregistered path — exact historical support at actual SplitMySong neighborhoods
+A separate candidate-specific gate was preregistered **before any SplitMySong pitch inference or result was observed**. This did not alter the failed 1805/1805 diagnostic.
 
 Preregistration:
 - `debug/v168-splitmysong-diagnostic/historical-shared-support-neighborhood-preregistration.json`
@@ -153,7 +157,7 @@ Frozen rule:
 7. If even one required option step is uncovered, stop with `FAIL_CLOSED_NO_CANDIDATE`; do not produce mapped/final I005 candidate and do not run a scorer.
 8. If PASS, recompute only the new Guitar instrument support while using exact persisted historical V166 shared support for every consulted option; then apply frozen V167 global -12, frozen I002 `max_score_x_shared`, and exact frozen I005 `gss-active-only` downstream logic.
 
-This is scientifically narrower than full-lattice equivalence: it claims exact historical shared-support preservation only at every timing option actually consulted by the new reference-blind candidate, not full-WAV or full-lattice Demucs equivalence.
+The one-shot observation has now exercised this gate and failed exactly under rule 7. Do not weaken or reinterpret the gate after seeing the result.
 
 ## Historical shared-support helper — frozen and self-tested
 Helper:
@@ -180,7 +184,7 @@ Static/self-test results:
 - static report SHA256 `4f46836a084424dc0535965bcacaf4b6edced68a6cc724fa27c826b88f0a8c30`;
 - no audio read, Basic Pitch inference, reference/scorer access, GPU/CUDA, or Modal use occurred in the static workflow.
 
-## Private one-shot historical-support generator — frozen code, NOT RUN
+## Private one-shot historical-support generator — RUN ONCE / TERMINAL FAIL-CLOSED
 Generator:
 - `validation/v168_splitmysong_diagnostic/generate_splitmysong_historical_support_v168.py`
 - creation commit `45e7847e88195d0f30609851eb239dcbc1fd350a`
@@ -191,38 +195,47 @@ Private launcher:
 - creation commit `898f015df6012ba4ab1f5dacc5eafb73f49d61ae`
 - Git blob `9630986e86010177be3d8756185bdbded2309495`.
 
-One-shot behavior is fail-closed:
-- writes persistent attempt marker before the Basic Pitch observation;
-- performs exactly one cached Basic Pitch inference through the exact frozen V166 Guitar front-end;
-- immediately writes/hash-freezes `splitmysong-basic-pitch-observation.json` before evaluating the neighborhood result;
-- writes/hash-freezes `splitmysong-historical-support-neighborhood-gate.json`;
-- if gate fails, exits 2 with **no candidate** and launcher instructs not to rerun and not to score;
-- if gate passes, builds/freeze-writes `splitmysong-i005-candidate.json`, `splitmysong-generation-receipt.json`, and `splitmysong-candidate-freeze.json` before any scorer/reference access;
-- accepts no reference/scorer path.
+The private launcher has now been run **exactly once**. User-provided terminal output reported:
+- status `FAIL_CLOSED_NO_CANDIDATE`;
+- Basic Pitch observation SHA256 `f6cd2d2d7f29ebce3bc550d1907149f7c0d6d2b81cab08eadfdbd6b5b8107b95`;
+- neighborhood-gate SHA256 `77df30d58d3229c344ad498d78dd32db0f44b9df40f7f81011b1edd6e7e0da06`;
+- `candidateGenerated=false`;
+- `requiredUniqueStepCount=1471`;
+- `missingRequiredStepCount=50`;
+- `referenceRead=false`;
+- `scorerRead=false`.
 
-At this checkpoint the private one-shot launcher has **NOT** been run. Therefore:
-- SplitMySong Basic Pitch attempts = **0**;
+Missing required steps exactly as printed:
+`[11, 22, 23, 24, 36, 37, 43, 66, 84, 131, 270, 440, 529, 611, 613, 618, 632, 650, 921, 922, 1030, 1031, 1032, 1038, 1054, 1110, 1111, 1173, 1204, 1242, 1252, 1278, 1324, 1388, 1489, 1493, 1499, 1554, 1586, 1630, 1655, 1671, 1675, 1676, 1698, 1756, 1786, 1790, 1791, 1792]`.
+
+Therefore 1421/1471 required unique option steps were historically covered, but the preregistered requirement was 1471/1471. The path correctly stopped without a candidate.
+
+Current private diagnostic counters:
+- SplitMySong Basic Pitch attempts = **1**;
 - SplitMySong candidate generated = **false**;
 - diagnostic reference-facing score calls = **0**;
 - V168 prospective reference-facing score calls = **0**.
 
+Do **not** rerun this one-shot observation. Do **not** run a scorer. Preserve `$HOME/v168-splitmysong-private/historical-support-generation` read-only. Do not infer candidate, generation-receipt, or candidate-freeze artifacts from a failed gate.
+
 ## NEXT SAFE ACTION
-The repository/static work is complete up to the one-shot private observation boundary.
+The SplitMySong historical-support candidate-generation path is now closed at its preregistered fail-closed boundary.
 
-In the already-verified private Codespace, after pulling branch `v143-contextual-prune-lobo` to at least commit `955f399273e34f684a50b6db4407af5e5b11368a`, the next command is the frozen private launcher:
+Primary V168 next action is external: await the GOAT restricted-dataset owner's decision. If access is granted, follow the already-frozen admission/provenance sequence before any candidate or scorer arm.
 
-```bash
-bash validation/v168_splitmysong_diagnostic/run_private_historical_support_generation.sh
-```
+Permitted meanwhile:
+- repository-only/read-only audits that do not reinterpret this SplitMySong result or weaken any frozen gate;
+- preserve and verify the two printed private output hashes if the private files are later inspected read-only;
+- maintain CPU-only/no-reference boundaries.
 
-Do this only in the private Codespace where the frozen input files/receipts already exist under `$HOME/v168-splitmysong-private`.
-
-Interpretation is predetermined:
-- exit/status PASS -> checkpoint the printed observation/gate/candidate/receipt/freeze SHA256 values **before** any legacy AYGGMW scorer/reference access;
-- exit 2 / `FAIL_CLOSED_NO_CANDIDATE` -> checkpoint the observation + gate SHA256 and missing required steps; **do not rerun** the Basic Pitch observation and do not score;
-- any other failure after the attempt marker exists -> preserve the private output directory and diagnose read-only; **do not rerun** until the failure is understood.
-
-I cannot directly access or execute inside the user's private Codespace from the GitHub repository connector, so the one-shot private command itself remains the next execution boundary.
+Forbidden:
+- rerunning the SplitMySong Basic Pitch observation;
+- interpolating/extrapolating the 50 missing historical-support values;
+- weakening the 100% actual-neighborhood coverage gate after observing failure;
+- scoring this failed/no-candidate diagnostic;
+- using professional-reference content for candidate generation;
+- GPU/CUDA/Modal without fresh explicit authorization;
+- modifying/merging/promoting `main` or Production without explicit user direction.
 
 ## Standing safety / methodology
 - V168 prospective evaluation is not calibration continuation.
@@ -231,4 +244,4 @@ I cannot directly access or execute inside the user's private Codespace from the
 - No per-event reference choices, reference-event copying, post-score mutation, retuning, adverse-result song exclusion, gate weakening, or missing-support interpolation.
 - CPU only; fresh explicit authorization before GPU/CUDA/Modal.
 - Never modify/merge/promote `main` or Production without explicit user direction.
-- Save this `CURRENT_STATE.md` before any future holdout admission, candidate-generation arm, scorer arm, reference-facing score call, or after receiving the private one-shot output hashes.
+- Save this `CURRENT_STATE.md` before any future holdout admission, candidate-generation arm, scorer arm, reference-facing score call, or after receiving any new private boundary evidence.
