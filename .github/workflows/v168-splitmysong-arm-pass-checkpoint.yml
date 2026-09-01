@@ -1,0 +1,55 @@
+name: V168 SplitMySong ARM PASS checkpoint
+
+on:
+  push:
+    branches:
+      - v143-contextual-prune-lobo
+    paths:
+      - .github/workflows/v168-splitmysong-arm-pass-checkpoint.yml
+
+permissions:
+  contents: write
+
+jobs:
+  append-checkpoint:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout exact branch
+        uses: actions/checkout@v4
+        with:
+          ref: v143-contextual-prune-lobo
+          fetch-depth: 1
+      - name: Append ARM PASS and self-delete
+        shell: bash
+        run: |
+          set -euo pipefail
+          python - <<'PY'
+          from pathlib import Path
+          path = Path('docs/checkpoints/CURRENT_STATE.md')
+          marker = '## 2026-09-01 continuation checkpoint — SplitMySong ARM preflight PASS'
+          text = path.read_text(encoding='utf-8')
+          if marker in text:
+              raise SystemExit('checkpoint marker already present')
+          section = r'''
+
+## 2026-09-01 continuation checkpoint — SplitMySong ARM preflight PASS
+- A fresh private Codespace created from `v143-contextual-prune-lobo` passed the exact diagnostic environment checks after the Debian 13 / FFmpeg 7.1.5 correction.
+- The exact frozen private SplitMySong source passed identity verification with SHA256 **`6601b8d01cbbbe6b6e70d9ec0ca3c15d17873c78e62ae4acdc258c96f168e3c9`**.
+- Reference-blind normalization reproduced the frozen WAV byte identity exactly: SHA256 **`fdb0578d71f77c150e7fe66766a03953be55e7028fef4c24dc777416f2e7ff4f`**.
+- User-visible private FFmpeg normalizer receipt SHA256: **`e7713b47a4f3bf468b706bb0eef8c683ea3e2ec3571e3170f203e28bf9ee1f1f`**.
+- User-visible private CPU environment receipt SHA256: **`c7bf81f59220808cef01a7e399830dbf8a23df4b052fac10bac75c498ad78847`**.
+- User-visible private ARM receipt SHA256: **`f34aef34a729d4ca32ba42975717a1b8e79b568aa1a8dc44d13c2eb1bcd6ef6f`**.
+- Final private gate status is **`ARM PREFLIGHT PASS`**. The ARM phase verified the exact Python 3.10.21 / Basic Pitch 0.4.0 / TFLite Runtime 2.14.0 / Torch 2.8.0+cpu environment, exact Basic Pitch model identity, exact FFmpeg normalizer, frozen repository code identities, and exact private audio/normalization identities.
+- The ARM phase itself performed **no pitch inference**, generated **no candidate**, accepted/read **no scorer or reference**, and made **0 reference-facing score calls**. Private audio, normalized WAV, and private receipts remain outside the repository and must not be git-added or committed.
+- This pass authorizes only the already-preregistered next engineering boundary: freeze a dedicated one-shot **reference-blind CPU candidate generator**, checkpoint its exact code identity before execution, generate exactly one candidate privately, and hash-freeze that candidate and generation receipt before any legacy AYGGMW reference/scorer access.
+- V168 prospective evaluation remains untouched: **Project Progress Score 60%; Test Score NOT RUN; V168 reference-facing score calls 0**. No GPU/CUDA/Modal, `main`, or Production change occurred.
+'''
+          path.write_text(text.rstrip() + section + '\n', encoding='utf-8')
+          PY
+          rm .github/workflows/v168-splitmysong-arm-pass-checkpoint.yml
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add docs/checkpoints/CURRENT_STATE.md .github/workflows/v168-splitmysong-arm-pass-checkpoint.yml
+          git diff --cached --quiet && exit 1
+          git commit -m 'Checkpoint SplitMySong ARM preflight pass'
+          git push origin HEAD:v143-contextual-prune-lobo
