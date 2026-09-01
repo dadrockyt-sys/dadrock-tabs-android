@@ -51,3 +51,5 @@ jobs:
           git add docs/checkpoints/CURRENT_STATE.md
           git commit -m "Checkpoint shared-context functional-equivalence result"
           git push origin HEAD:v143-contextual-prune-lobo
+
+# Deliberate second-commit trigger after workflow registration.
