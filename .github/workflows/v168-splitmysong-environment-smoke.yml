@@ -9,6 +9,7 @@ on:
       - validation/v168_splitmysong_diagnostic/Dockerfile.cpu
       - validation/v168_splitmysong_diagnostic/requirements-cpu.txt
       - validation/v168_splitmysong_diagnostic/verify_environment_v168.py
+      - validation/v168_splitmysong_diagnostic/verify_ffmpeg_normalizer_v168.py
 
 permissions:
   contents: read
@@ -37,6 +38,16 @@ jobs:
             --file validation/v168_splitmysong_diagnostic/Dockerfile.cpu \
             --tag dadrock-splitmysong-v168-cpu:${GITHUB_SHA} \
             .
+
+      - name: Verify exact FFmpeg 7.1.5 normalizer
+        shell: bash
+        run: |
+          set -euo pipefail
+          docker run --rm \
+            --entrypoint python \
+            dadrock-splitmysong-v168-cpu:${GITHUB_SHA} \
+            validation/v168_splitmysong_diagnostic/verify_ffmpeg_normalizer_v168.py \
+            --receipt /tmp/ffmpeg-normalizer-smoke-receipt.json
 
       - name: Verify container remains CPU-only and reference-blind
         shell: bash
