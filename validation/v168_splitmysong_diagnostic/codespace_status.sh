@@ -30,12 +30,19 @@ fi
 OUT="$HOME/v168-splitmysong-private"
 mkdir -p "$OUT"
 chmod 700 "$OUT"
+
+python validation/v168_splitmysong_diagnostic/verify_ffmpeg_normalizer_v168.py \
+  --receipt "$OUT/ffmpeg-normalizer-receipt.json"
+
 python validation/v168_splitmysong_diagnostic/verify_environment_v168.py \
   --repo-root . \
   --receipt "$OUT/environment-receipt.json"
 
 printf '\nCODESPACE CPU ENVIRONMENT PASS\n'
-printf 'Receipt: %s\n' "$OUT/environment-receipt.json"
-printf 'Receipt SHA256: '
+printf 'Environment receipt: %s\n' "$OUT/environment-receipt.json"
+printf 'Environment receipt SHA256: '
 sha256sum "$OUT/environment-receipt.json" | awk '{print $1}'
+printf 'FFmpeg receipt: %s\n' "$OUT/ffmpeg-normalizer-receipt.json"
+printf 'FFmpeg receipt SHA256: '
+sha256sum "$OUT/ffmpeg-normalizer-receipt.json" | awk '{print $1}'
 printf '\nNext: place the frozen SplitMySong .m4a only in the Codespace private filesystem, then run run_private_arm_preflight.sh against that path.\n'
