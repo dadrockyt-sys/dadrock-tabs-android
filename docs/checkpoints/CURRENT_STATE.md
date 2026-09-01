@@ -301,3 +301,13 @@ This diagnostic does not alter V168: **Project Progress Score remains 60%; Test 
 - No audio, normalized WAV, candidate, inference result, scorer output, or reference bytes were committed or uploaded. No GPU/CUDA/Modal, `main`, Production, or V168 prospective-scoring state changed.
 - Codespace handoff is now simplified: sync the branch, rebuild the Codespace container (or create a fresh Codespace on this branch), then run `bash validation/v168_splitmysong_diagnostic/codespace_status.sh`. Only after that reports `CODESPACE CPU ENVIRONMENT PASS` should the frozen SplitMySong `.m4a` be placed in the private Codespace filesystem and passed to `run_private_arm_preflight.sh`.
 - **Project Progress Score remains 60%; Test Score remains NOT RUN.**
+
+## 2026-09-01 continuation checkpoint — Codespace CPU environment PASS
+- User rebuilt the personal Codespace from branch `v143-contextual-prune-lobo` using the default V168 diagnostic devcontainer.
+- User-visible verification now reports Python **3.10.21** and `CODESPACE CPU ENVIRONMENT PASS`.
+- Frozen environment verifier reports `status=CPU_ENVIRONMENT_READY`, `validation=PASS`, Basic Pitch `0.4.0`, TFLite Runtime `2.14.0`, Torch `2.8.0+cpu`, CUDA unavailable, and all safety flags false for audio/reference/scorer/inference access.
+- Private environment receipt path is `$HOME/v168-splitmysong-private/environment-receipt.json`. The user-visible receipt SHA256 is **`c7bf81f59220808cef01a7e399830dbf8a23df4b052fac10bac75c498ad78847`**.
+- Codespace ownership guard issue was fixed in `codespace_status.sh` commit `25d8d587857ba23d0fb92c1b8459fa0c7a285462` and `run_private_arm_preflight.sh` commit `337e5b60b4876f6d3a85fa1579be72bc34978482`.
+- No SplitMySong audio has been processed in this Codespace yet. No candidate, pitch inference, scorer/reference access, GPU/CUDA/Modal use, `main`, Production, or V168 prospective scoring state changed.
+- Next safe step: place the exact frozen SplitMySong `.m4a` only in the Codespace private filesystem, verify source SHA256 `6601b8d01cbbbe6b6e70d9ec0ca3c15d17873c78e62ae4acdc258c96f168e3c9`, run the strict private arm preflight, and freeze its PASS receipt before implementing or running candidate generation.
+- **Project Progress Score remains 60%; Test Score remains NOT RUN.**
