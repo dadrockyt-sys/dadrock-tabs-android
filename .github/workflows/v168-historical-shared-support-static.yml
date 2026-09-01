@@ -6,6 +6,8 @@ on:
       - v143-contextual-prune-lobo
     paths:
       - validation/v168_splitmysong_diagnostic/historical_shared_support_v168.py
+      - validation/v168_splitmysong_diagnostic/generate_splitmysong_historical_support_v168.py
+      - validation/v168_splitmysong_diagnostic/run_private_historical_support_generation.sh
       - debug/v168-splitmysong-diagnostic/historical-shared-support-neighborhood-preregistration.json
       - .github/workflows/v168-historical-shared-support-static.yml
   workflow_dispatch:
@@ -31,12 +33,46 @@ jobs:
         run: |
           set -euo pipefail
           helper_blob="$(git hash-object validation/v168_splitmysong_diagnostic/historical_shared_support_v168.py)"
+          generator_blob="$(git hash-object validation/v168_splitmysong_diagnostic/generate_splitmysong_historical_support_v168.py)"
+          launcher_blob="$(git hash-object validation/v168_splitmysong_diagnostic/run_private_historical_support_generation.sh)"
           prereg_blob="$(git hash-object debug/v168-splitmysong-diagnostic/historical-shared-support-neighborhood-preregistration.json)"
           test "$helper_blob" = "c9b5cc1bc4076be77780d64f73d53f2a7083f94f"
+          test "$generator_blob" = "5adfb45a69f922dc409f35350683935df518bf07"
+          test "$launcher_blob" = "9630986e86010177be3d8756185bdbded2309495"
           test "$prereg_blob" = "f34661e2d67f9f1c541b80ac01af2c6ea82e2159"
 
-      - name: Compile helper
-        run: python -m py_compile validation/v168_splitmysong_diagnostic/historical_shared_support_v168.py
+      - name: Compile Python and syntax-check launcher
+        shell: bash
+        run: |
+          set -euo pipefail
+          python -m py_compile \
+            validation/v168_splitmysong_diagnostic/historical_shared_support_v168.py \
+            validation/v168_splitmysong_diagnostic/generate_splitmysong_historical_support_v168.py
+          bash -n validation/v168_splitmysong_diagnostic/run_private_historical_support_generation.sh
+
+      - name: Verify generator CLI surface is reference-blind
+        shell: bash
+        run: |
+          set -euo pipefail
+          python - <<'PY'
+          import ast
+          from pathlib import Path
+          path = Path('validation/v168_splitmysong_diagnostic/generate_splitmysong_historical_support_v168.py')
+          tree = ast.parse(path.read_text())
+          args = []
+          for node in ast.walk(tree):
+              if isinstance(node, ast.Call) and isinstance(node.func, ast.Attribute) and node.func.attr == 'add_argument' and node.args:
+                  first = node.args[0]
+                  if isinstance(first, ast.Constant) and isinstance(first.value, str):
+                      args.append(first.value)
+          expected = {
+              '--repo-root', '--source', '--normalized-guitar', '--arm-receipt',
+              '--environment-receipt', '--ffmpeg-receipt', '--output-dir'
+          }
+          assert set(args) == expected, (args, expected)
+          assert not any('reference' in x.lower() or 'scorer' in x.lower() for x in args)
+          print('generatorCli=' + ','.join(sorted(args)))
+          PY
 
       - name: Reconstruct and self-validate historical support table
         shell: bash
