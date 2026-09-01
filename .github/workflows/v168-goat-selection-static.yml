@@ -1,0 +1,75 @@
+name: V168 GOAT selection static self-test
+
+on:
+  push:
+    branches:
+      - v143-contextual-prune-lobo
+    paths:
+      - validation/v168_holdout/goat_selection_contract_v168.json
+      - validation/v168_holdout/validate_goat_selection_receipt_v168.py
+      - .github/workflows/v168-goat-selection-static.yml
+  workflow_dispatch:
+
+jobs:
+  static-self-test:
+    runs-on: ubuntu-24.04
+    permissions:
+      contents: read
+    steps:
+      - name: Checkout exact branch commit
+        uses: actions/checkout@v4
+
+      - name: Set up Python 3.10
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.10'
+
+      - name: Verify frozen file identities
+        shell: bash
+        run: |
+          set -euo pipefail
+          test "$(git hash-object validation/v168_holdout/goat_selection_contract_v168.json)" = "ae3b33d89faa6cd31bb596b8553de75cb3320b9e"
+          test "$(git hash-object validation/v168_holdout/validate_goat_selection_receipt_v168.py)" = "2f33b8c3df1caee63abe3493b64c16d6d4889b00"
+          test "$(sha256sum validation/v168_holdout/goat_selection_contract_v168.json | awk '{print $1}')" = "8c84eefa442d4c547180e1543cace9031ca2d801c1d04956893b3fb24e71096b"
+
+      - name: Compile validator
+        run: python -m py_compile validation/v168_holdout/validate_goat_selection_receipt_v168.py
+
+      - name: Static no-audio/no-scorer guard
+        shell: python
+        run: |
+          import ast
+          from pathlib import Path
+
+          path = Path('validation/v168_holdout/validate_goat_selection_receipt_v168.py')
+          tree = ast.parse(path.read_text(encoding='utf-8'))
+          imports = set()
+          for node in ast.walk(tree):
+              if isinstance(node, ast.Import):
+                  imports.update(alias.name.split('.')[0] for alias in node.names)
+              elif isinstance(node, ast.ImportFrom) and node.module:
+                  imports.add(node.module.split('.')[0])
+
+          forbidden = {
+              'basic_pitch', 'librosa', 'soundfile', 'torch', 'tensorflow',
+              'tflite_runtime', 'demucs', 'numpy', 'scipy', 'mido', 'pretty_midi'
+          }
+          found = sorted(imports & forbidden)
+          if found:
+              raise SystemExit(f'forbidden media/model/scoring imports: {found}')
+
+          text = path.read_text(encoding='utf-8')
+          forbidden_cli = ['--audio', '--reference', '--candidate', '--scorer', '--midi', '--guitar-pro']
+          bad_cli = [flag for flag in forbidden_cli if flag in text]
+          if bad_cli:
+              raise SystemExit(f'forbidden CLI surface: {bad_cli}')
+
+          print('STATIC_GUARD_PASS')
+          print('imports=', ','.join(sorted(imports)))
+          print('audioRead=false')
+          print('referenceNoteEventRead=false')
+          print('candidateRead=false')
+          print('scorerRead=false')
+
+      - name: Run synthetic metadata self-test
+        run: python validation/v168_holdout/validate_goat_selection_receipt_v168.py --self-test
