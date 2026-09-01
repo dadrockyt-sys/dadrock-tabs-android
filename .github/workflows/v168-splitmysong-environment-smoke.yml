@@ -13,6 +13,7 @@ on:
       - validation/v168_splitmysong_diagnostic/prepare_historical_context_v168.py
       - validation/v168_splitmysong_diagnostic/run_historical_context_preflight.sh
       - validation/v168_splitmysong_diagnostic/generate_splitmysong_candidate_v168.py
+      - validation/v168_splitmysong_diagnostic/generate_from_frozen_context_v168.py
 
 permissions:
   contents: read
@@ -63,7 +64,7 @@ jobs:
             --repo-root /workspace \
             --receipt /tmp/environment-smoke-receipt.json
 
-      - name: Static-check context and generator code without audio or inference
+      - name: Static-check context and generation code without audio or inference
         shell: bash
         run: |
           set -euo pipefail
@@ -72,7 +73,8 @@ jobs:
             dadrock-splitmysong-v168-cpu:${GITHUB_SHA} \
             -m py_compile \
             validation/v168_splitmysong_diagnostic/prepare_historical_context_v168.py \
-            validation/v168_splitmysong_diagnostic/generate_splitmysong_candidate_v168.py
+            validation/v168_splitmysong_diagnostic/generate_splitmysong_candidate_v168.py \
+            validation/v168_splitmysong_diagnostic/generate_from_frozen_context_v168.py
 
           docker run --rm \
             --entrypoint bash \
@@ -88,12 +90,17 @@ jobs:
             --entrypoint python \
             dadrock-splitmysong-v168-cpu:${GITHUB_SHA} \
             validation/v168_splitmysong_diagnostic/generate_splitmysong_candidate_v168.py --help \
-            > /tmp/generator-help.txt
+            > /tmp/core-help.txt
+          docker run --rm \
+            --entrypoint python \
+            dadrock-splitmysong-v168-cpu:${GITHUB_SHA} \
+            validation/v168_splitmysong_diagnostic/generate_from_frozen_context_v168.py --help \
+            > /tmp/final-help.txt
 
-          if grep -E -- '--(reference|scorer)' /tmp/context-help.txt /tmp/generator-help.txt; then
+          if grep -E -- '--(reference|scorer)' /tmp/context-help.txt /tmp/core-help.txt /tmp/final-help.txt; then
             echo 'Reference/scorer CLI argument unexpectedly exposed' >&2
             exit 1
           fi
 
           echo 'STATIC REFERENCE-BLIND GENERATION GUARD PASS'
-          echo 'No audio, Basic Pitch inference, candidate generation, scorer, or reference access occurred.'
+          echo 'No private audio, Basic Pitch inference, candidate generation, scorer, or reference access occurred.'
