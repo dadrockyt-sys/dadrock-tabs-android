@@ -1,0 +1,49 @@
+name: V168 SplitMySong FFmpeg fix checkpoint
+
+on:
+  push:
+    branches:
+      - v143-contextual-prune-lobo
+    paths:
+      - .github/workflows/v168-ffmpeg-fix-checkpoint.yml
+
+permissions:
+  contents: write
+
+jobs:
+  append-checkpoint:
+    if: github.ref == 'refs/heads/v143-contextual-prune-lobo'
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout exact branch
+        uses: actions/checkout@v4
+        with:
+          ref: v143-contextual-prune-lobo
+          fetch-depth: 0
+
+      - name: Append verified FFmpeg correction checkpoint
+        shell: bash
+        run: |
+          set -euo pipefail
+          cat >> docs/checkpoints/CURRENT_STATE.md <<'EOF'
+
+          ## 2026-09-01 continuation checkpoint — SplitMySong FFmpeg normalization correction verified
+          - The private Codespace normalization diagnostic classified the first arm-preflight failure as **`PCM_DIFFERENCE`**, not a WAV-wrapper-only difference. The exact frozen source SHA256 still matched `6601b8d01cbbbe6b6e70d9ec0ca3c15d17873c78e62ae4acdc258c96f168e3c9`.
+          - The old Codespace was Debian 12 / FFmpeg **5.1.9-0+deb12u1**. It produced normalized WAV SHA256 `7717939de51bbb3cafab85427fd8273411935ca03848823d326d8bf4effacfd6` and raw PCM SHA256 **`fe8fd3d83600027afd0827cee6eb821371a3b3ce3a8907fd761be345a94538f3`**, which differs from the frozen raw PCM SHA256 **`2c5dc122c2d37e562d90a13eac0c6dcac534ad7ee562fecd154b98e9124f63dd`**.
+          - Root cause is therefore decoder/resampler environment drift. The frozen normalization was produced/reproduced with Debian 13 (`trixie`) FFmpeg package **`7:7.1.5-0+deb13u1`**; the arm gate correctly failed before pitch inference.
+          - Updated `validation/v168_splitmysong_diagnostic/Dockerfile.cpu` to `python:3.10.21-slim-trixie` and exact `ffmpeg=7:7.1.5-0+deb13u1`. Current Dockerfile blob is **`2c67c375bac79b983474cb641a02c3e8d78b8ac0`**.
+          - Added fail-closed no-audio verifier `validation/v168_splitmysong_diagnostic/verify_ffmpeg_normalizer_v168.py`, current blob **`c72dcb121405b0211d6b64f91d33c3de2d5de09a`**. It requires Debian 13, exact dpkg FFmpeg version `7:7.1.5-0+deb13u1`, and matching FFmpeg binary version before arm can proceed.
+          - `codespace_status.sh` now runs the exact FFmpeg verifier before the frozen CPU/model/repository verifier; current blob **`434599bf4aab5db0e72e0b3923c46db089072ee7`**.
+          - `run_private_arm_preflight.sh` now runs the exact FFmpeg verifier before environment verification and audio normalization; current blob **`7f22cd3832f7d2e64d05da6996edc93d6d1982ad`**.
+          - The no-audio GitHub Actions workflow `V168 SplitMySong CPU environment smoke` was extended to build the corrected image and separately verify the exact FFmpeg normalizer plus the CPU/reference-blind environment. Run **33555154045**, job **100014047776**, head commit **`7efef8a230567d97abfa2dfea889454fcef79591`**, completed **SUCCESS**: image build PASS, exact FFmpeg normalizer PASS, CPU/reference-blind environment PASS.
+          - No private audio was uploaded to GitHub Actions or committed. No SplitMySong candidate was generated; Basic Pitch inference, scorer, and professional/legacy reference access remain unrun. No GPU/CUDA/Modal, `main`, Production, or V168 prospective-scoring state changed.
+          - Next safe step: pull this branch in the private Codespace, full-rebuild the devcontainer, rerun `codespace_status.sh`, then rerun `diagnose_normalization_v168.sh` against the already-private source. Require **`EXACT_MATCH`** before rerunning `run_private_arm_preflight.sh`. Only an **`ARM PREFLIGHT PASS`** may authorize implementation/execution of the one-shot reference-blind candidate generator.
+          - **Project Progress Score remains 60%; Test Score remains NOT RUN.**
+          EOF
+
+          git rm .github/workflows/v168-ffmpeg-fix-checkpoint.yml
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add docs/checkpoints/CURRENT_STATE.md
+          git commit -m 'Checkpoint SplitMySong FFmpeg normalization fix'
+          git push origin HEAD:v143-contextual-prune-lobo
