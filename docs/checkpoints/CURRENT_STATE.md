@@ -332,3 +332,15 @@ This diagnostic does not alter V168: **Project Progress Score remains 60%; Test 
 - No private audio was uploaded to GitHub Actions or committed. No SplitMySong candidate was generated; Basic Pitch inference, scorer, and professional/legacy reference access remain unrun. No GPU/CUDA/Modal, `main`, Production, or V168 prospective-scoring state changed.
 - Next safe step: pull this branch in the private Codespace, full-rebuild the devcontainer, rerun `codespace_status.sh`, then rerun `diagnose_normalization_v168.sh` against the already-private source. Require **`EXACT_MATCH`** before rerunning `run_private_arm_preflight.sh`. Only an **`ARM PREFLIGHT PASS`** may authorize implementation/execution of the one-shot reference-blind candidate generator.
 - **Project Progress Score remains 60%; Test Score remains NOT RUN.**
+
+## 2026-09-01 continuation checkpoint — SplitMySong ARM preflight PASS
+- A fresh private Codespace created from `v143-contextual-prune-lobo` passed the exact diagnostic environment checks after the Debian 13 / FFmpeg 7.1.5 correction.
+- The exact frozen private SplitMySong source passed identity verification with SHA256 **`6601b8d01cbbbe6b6e70d9ec0ca3c15d17873c78e62ae4acdc258c96f168e3c9`**.
+- Reference-blind normalization reproduced the frozen WAV byte identity exactly: SHA256 **`fdb0578d71f77c150e7fe66766a03953be55e7028fef4c24dc777416f2e7ff4f`**.
+- User-visible private FFmpeg normalizer receipt SHA256: **`e7713b47a4f3bf468b706bb0eef8c683ea3e2ec3571e3170f203e28bf9ee1f1f`**.
+- User-visible private CPU environment receipt SHA256: **`c7bf81f59220808cef01a7e399830dbf8a23df4b052fac10bac75c498ad78847`**.
+- User-visible private ARM receipt SHA256: **`f34aef34a729d4ca32ba42975717a1b8e79b568aa1a8dc44d13c2eb1bcd6ef6f`**.
+- Final private gate status is **`ARM PREFLIGHT PASS`**. The ARM phase verified the exact Python 3.10.21 / Basic Pitch 0.4.0 / TFLite Runtime 2.14.0 / Torch 2.8.0+cpu environment, exact Basic Pitch model identity, exact FFmpeg normalizer, frozen repository code identities, and exact private audio/normalization identities.
+- The ARM phase itself performed **no pitch inference**, generated **no candidate**, accepted/read **no scorer or reference**, and made **0 reference-facing score calls**. Private audio, normalized WAV, and private receipts remain outside the repository and must not be git-added or committed.
+- This pass authorizes only the already-preregistered next engineering boundary: freeze a dedicated one-shot **reference-blind CPU candidate generator**, checkpoint its exact code identity before execution, generate exactly one candidate privately, and hash-freeze that candidate and generation receipt before any legacy AYGGMW reference/scorer access.
+- V168 prospective evaluation remains untouched: **Project Progress Score 60%; Test Score NOT RUN; V168 reference-facing score calls 0**. No GPU/CUDA/Modal, `main`, or Production change occurred.
