@@ -210,7 +210,7 @@ Scientific boundary:
 - exact historical Basic Pitch observer settings recovered: onset `0.50`, frame `0.30`, minimum note length `90 ms`, guitar frequency range, no multiple pitch bends, Melodia trick on;
 - exact V167 I005 contextual thresholds/selectors remain frozen and must not be changed after seeing the diagnostic result;
 - local CPU sandbox lacks Basic Pitch and the Demucs six-source model weights, and local DNS prevents dependency/model download. Do not substitute another detector;
-- preferred next route is an existing/historical GitHub Actions **CPU / Python 3.11** environment with the exact Basic Pitch dependency if available;
+- historical successful runtime is now proven as GitHub Actions Ubuntu 24.04 CPU / Python `3.10.21` / `basic-pitch==0.4.0` with `tflite-runtime==2.14.0`; TensorFlow and ONNX Runtime were absent;
 - no GPU/CUDA/Modal has been used or authorized.
 
 This diagnostic does not alter V168: **Project Progress Score remains 60%; Test Score remains NOT RUN; V168 prospective reference-facing score calls remain exactly 0.**
@@ -233,13 +233,16 @@ This diagnostic does not alter V168: **Project Progress Score remains 60%; Test 
 - Re-fetched `docs/checkpoints/CURRENT_STATE.md` from `v143-contextual-prune-lobo` before making changes and preserved all frozen V168/V167 boundaries.
 - Confirmed the safe continuation remains the isolated SplitMySong AYGGMW guitar diagnostic on CPU only; V168 itself remains unarmed at **Project Progress Score 60% / Test Score NOT RUN**.
 - Corrected a stale repository-search clue: `scripts/doctor-basic-pitch.ps1` is **not present** at the current branch head, so no Basic Pitch package version is being asserted from that stale path.
-- Inspected the current `.github/workflows` directory; there is no workflow filename containing `basic`, so the historical Python 3.11 / Basic Pitch runtime must be traced from workflow contents and repository history rather than filename matching.
+- Inspected the current `.github/workflows` directory; there is no workflow filename containing `basic`, so the historical runtime was traced through the self-deleting V162→V165 workflow lineage and GitHub Actions history rather than filename matching.
 - No detector substitution, Basic Pitch retuning, V167 I005 threshold change, V168 validator/scorer change, benchmark mutation, GPU/CUDA/Modal use, `main` change, or Production change has been made in this resume step.
-- Next safe action: locate an existing/historical CPU workflow or dependency manifest that proves the exact Basic Pitch runtime, then generate and hash-freeze the isolated-guitar candidate stream before any separate diagnostic comparison score is computed.
 
 ## 2026-09-01 provenance correction — Basic Pitch runtime trace
 - Corrected the earlier old-ref interpretation: `b8c698eff3854cf2c40b375c5ef81070a5e0fe69` is the **tree SHA** of branch-head commit `76215896844d9361db110fa2d81a1c7416c16631`, not a commit SHA.
-- Exact target-branch tree inspection still does **not** establish an installed Basic Pitch package version or inference backend version. Default-branch code-search hits are not being accepted as proof of the historical target-branch CPU runtime.
-- Runtime provenance remains gated on historical workflow/Actions evidence that proves the Python version, actually installed Basic Pitch version, and TensorFlow/ONNX/inference backend before candidate regeneration.
-- No CPU candidate has been regenerated yet because the exact runtime is not proven; no parity claim has been made.
+- V162 itself cannot prove an executed Basic Pitch runtime: its sole generation run `33213057382` terminated at `PRE_RUN_GUARD_FAIL` with no environment receipt, candidate, generation receipt, or pitch inference artifact.
+- V164 did freeze a CPU environment receipt proving Python `3.10.21`, `basic-pitch==0.4.0`, Torch `2.8.0+cpu`, CUDA unavailable, but its generation terminated at `TRANSCRIBER_FAIL` after timebase QC and produced no candidate.
+- V165 is the first successful candidate-generation runtime in this lineage. Frozen environment receipt `debug/v165-cpu-autonomous/environment-receipt.json` records Python `3.10.21`, `basic-pitch==0.4.0`, Torch `2.8.0+cpu`, CUDA unavailable, and the exact dependency set. Generation run `33223256331`, job `99021632117`, completed `STRUCTURAL_QC_PASS` and committed authoritative candidate `debug/v165-cpu-autonomous/generated.json` with SHA256 `b1ad02001724750ea82d693591a7c0b1f214820de37a590871a6d78eef63e5cb`.
+- The successful V165 Actions log proves the Basic Pitch installation pulled `tflite-runtime==2.14.0`; it explicitly warned that CoreMLTools, ONNX Runtime, and TensorFlow were not installed. Therefore the executed Basic Pitch backend was the TFLite runtime path, not TensorFlow or ONNX.
+- The authoritative V165 candidate records `basicPitchVersion=0.4.0`, raw Basic Pitch Guitar event count `1404`, and `basicPitchModelSha256=3db297d54af8e01c6e5618245c956b1d71b6a2b978cb2dedb527173186552676`.
+- This supersedes the earlier provisional expectation of a Python 3.11 environment. Exact historical reproduction target for the SplitMySong diagnostic is **Ubuntu 24.04 CPU / Python 3.10.21 / Basic Pitch 0.4.0 / tflite-runtime 2.14.0**, with the Basic Pitch model file required to hash to `3db297d54af8e01c6e5618245c956b1d71b6a2b978cb2dedb527173186552676` before inference.
+- No diagnostic candidate has been regenerated yet. Before any candidate-generation arm, re-fetch this checkpoint, verify the SplitMySong audio bytes still hash to `6601b8d01cbbbe6b6e70d9ec0ca3c15d17873c78e62ae4acdc258c96f168e3c9`, and freeze the exact reference-blind diagnostic workflow/code identity.
 - No GPU/CUDA/Modal workload was triggered or authorized. V168 remains frozen at **Project Progress Score 60% / Test Score NOT RUN**.
