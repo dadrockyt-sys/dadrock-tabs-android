@@ -292,3 +292,12 @@ This diagnostic does not alter V168: **Project Progress Score remains 60%; Test 
 - Environment status is now **CPU_ENVIRONMENT_READY**. Candidate generation remains unarmed until the verified private audio is placed inside an access-controlled execution environment and the strict `arm` preflight passes there.
 - No audio was committed or uploaded as an Actions artifact. No candidate was generated, no pitch inference/scorer/reference ran, no GPU/CUDA/Modal use occurred, and V168 holdout/scoring state is unchanged. **Project Progress Score remains 60%; Test Score remains NOT RUN.**
 - Next safe step: create/open the personal Codespace from `v143-contextual-prune-lobo` using the `v168-splitmysong` devcontainer, place the already-hash-frozen isolated guitar file only inside that Codespace, run the private arm preflight, and freeze its PASS receipt before implementing or running the one-shot candidate generator.
+
+
+## 2026-09-01 continuation checkpoint — Codespaces default CPU environment
+- User's first Codespace resolved to Python 3.12.1 because the branch had only a nested optional devcontainer and no branch-level default `.devcontainer/devcontainer.json`.
+- Added branch-level default Codespaces config `.devcontainer/devcontainer.json` at commit `b4cf5b1aeaade194a0040a619ba0586890e33951`. It builds the already-smoke-tested `validation/v168_splitmysong_diagnostic/Dockerfile.cpu` and runs the frozen environment verifier automatically after creation/rebuild.
+- Added one-command status check `validation/v168_splitmysong_diagnostic/codespace_status.sh` at commit `918a6b8d09d13eabdb32943392c1be64982c0913`. It fails closed unless branch is `v143-contextual-prune-lobo` and Python is exactly 3.10.21, then runs the full frozen CPU/model/repository verifier and stores only a private receipt under `$HOME/v168-splitmysong-private`.
+- No audio, normalized WAV, candidate, inference result, scorer output, or reference bytes were committed or uploaded. No GPU/CUDA/Modal, `main`, Production, or V168 prospective-scoring state changed.
+- Codespace handoff is now simplified: sync the branch, rebuild the Codespace container (or create a fresh Codespace on this branch), then run `bash validation/v168_splitmysong_diagnostic/codespace_status.sh`. Only after that reports `CODESPACE CPU ENVIRONMENT PASS` should the frozen SplitMySong `.m4a` be placed in the private Codespace filesystem and passed to `run_private_arm_preflight.sh`.
+- **Project Progress Score remains 60%; Test Score remains NOT RUN.**
