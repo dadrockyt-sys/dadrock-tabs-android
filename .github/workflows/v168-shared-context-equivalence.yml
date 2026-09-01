@@ -131,3 +131,5 @@ jobs:
           echo "No candidate was generated."
           echo "No scorer or professional/legacy reference was opened."
           echo "No audio/stems/report are uploaded as artifacts."
+
+# Deliberate second-commit trigger after workflow registration.
