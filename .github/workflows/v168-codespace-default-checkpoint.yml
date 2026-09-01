@@ -1,0 +1,32 @@
+name: V168 Codespaces default checkpoint
+
+on:
+  push:
+    branches:
+      - v143-contextual-prune-lobo
+    paths:
+      - .github/workflows/v168-codespace-default-checkpoint.yml
+
+permissions:
+  contents: write
+
+jobs:
+  append-checkpoint:
+    if: github.ref == 'refs/heads/v143-contextual-prune-lobo'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ github.sha }}
+          fetch-depth: 1
+      - name: Append verified Codespaces checkpoint
+        shell: bash
+        run: |
+          set -euo pipefail
+          printf '%s' 'CgojIyAyMDI2LTA5LTAxIGNvbnRpbnVhdGlvbiBjaGVja3BvaW50IOKAlCBDb2Rlc3BhY2VzIGRlZmF1bHQgQ1BVIGVudmlyb25tZW50Ci0gVXNlcidzIGZpcnN0IENvZGVzcGFjZSByZXNvbHZlZCB0byBQeXRob24gMy4xMi4xIGJlY2F1c2UgdGhlIGJyYW5jaCBoYWQgb25seSBhIG5lc3RlZCBvcHRpb25hbCBkZXZjb250YWluZXIgYW5kIG5vIGJyYW5jaC1sZXZlbCBkZWZhdWx0IGAuZGV2Y29udGFpbmVyL2RldmNvbnRhaW5lci5qc29uYC4KLSBBZGRlZCBicmFuY2gtbGV2ZWwgZGVmYXVsdCBDb2Rlc3BhY2VzIGNvbmZpZyBgLmRldmNvbnRhaW5lci9kZXZjb250YWluZXIuanNvbmAgYXQgY29tbWl0IGBiNGNmNWIxYWVhYWRlMTk0YTAwNDBhNjE5YmEwNTg2ODkwZTMzOTUxYC4gSXQgYnVpbGRzIHRoZSBhbHJlYWR5LXNtb2tlLXRlc3RlZCBgdmFsaWRhdGlvbi92MTY4X3NwbGl0bXlzb25nX2RpYWdub3N0aWMvRG9ja2VyZmlsZS5jcHVgIGFuZCBydW5zIHRoZSBmcm96ZW4gZW52aXJvbm1lbnQgdmVyaWZpZXIgYXV0b21hdGljYWxseSBhZnRlciBjcmVhdGlvbi9yZWJ1aWxkLgotIEFkZGVkIG9uZS1jb21tYW5kIHN0YXR1cyBjaGVjayBgdmFsaWRhdGlvbi92MTY4X3NwbGl0bXlzb25nX2RpYWdub3N0aWMvY29kZXNwYWNlX3N0YXR1cy5zaGAgYXQgY29tbWl0IGA5MThhNmI4ZDA5ZDEzZWFiZGIzMjk0MzM5MmMxYmU2NDk4MmMwOTEzYC4gSXQgZmFpbHMgY2xvc2VkIHVubGVzcyBicmFuY2ggaXMgYHYxNDMtY29udGV4dHVhbC1wcnVuZS1sb2JvYCBhbmQgUHl0aG9uIGlzIGV4YWN0bHkgMy4xMC4yMSwgdGhlbiBydW5zIHRoZSBmdWxsIGZyb3plbiBDUFUvbW9kZWwvcmVwb3NpdG9yeSB2ZXJpZmllciBhbmQgc3RvcmVzIG9ubHkgYSBwcml2YXRlIHJlY2VpcHQgdW5kZXIgYCRIT01FL3YxNjgtc3BsaXRteXNvbmctcHJpdmF0ZWAuCi0gTm8gYXVkaW8sIG5vcm1hbGl6ZWQgV0FWLCBjYW5kaWRhdGUsIGluZmVyZW5jZSByZXN1bHQsIHNjb3JlciBvdXRwdXQsIG9yIHJlZmVyZW5jZSBieXRlcyB3ZXJlIGNvbW1pdHRlZCBvciB1cGxvYWRlZC4gTm8gR1BVL0NVREEvTW9kYWwsIGBtYWluYCwgUHJvZHVjdGlvbiwgb3IgVjE2OCBwcm9zcGVjdGl2ZS1zY29yaW5nIHN0YXRlIGNoYW5nZWQuCi0gQ29kZXNwYWNlIGhhbmRvZmYgaXMgbm93IHNpbXBsaWZpZWQ6IHN5bmMgdGhlIGJyYW5jaCwgcmVidWlsZCB0aGUgQ29kZXNwYWNlIGNvbnRhaW5lciAob3IgY3JlYXRlIGEgZnJlc2ggQ29kZXNwYWNlIG9uIHRoaXMgYnJhbmNoKSwgdGhlbiBydW4gYGJhc2ggdmFsaWRhdGlvbi92MTY4X3NwbGl0bXlzb25nX2RpYWdub3N0aWMvY29kZXNwYWNlX3N0YXR1cy5zaGAuIE9ubHkgYWZ0ZXIgdGhhdCByZXBvcnRzIGBDT0RFU1BBQ0UgQ1BVIEVOVklST05NRU5UIFBBU1NgIHNob3VsZCB0aGUgZnJvemVuIFNwbGl0TXlTb25nIGAubTRhYCBiZSBwbGFjZWQgaW4gdGhlIHByaXZhdGUgQ29kZXNwYWNlIGZpbGVzeXN0ZW0gYW5kIHBhc3NlZCB0byBgcnVuX3ByaXZhdGVfYXJtX3ByZWZsaWdodC5zaGAuCi0gKipQcm9qZWN0IFByb2dyZXNzIFNjb3JlIHJlbWFpbnMgNjAlOyBUZXN0IFNjb3JlIHJlbWFpbnMgTk9UIFJVTi4qKgo=' | base64 -d >> docs/checkpoints/CURRENT_STATE.md
+          rm .github/workflows/v168-codespace-default-checkpoint.yml
+          git config user.name 'dadrockyt-sys'
+          git config user.email 'actions@users.noreply.github.com'
+          git add docs/checkpoints/CURRENT_STATE.md .github/workflows/v168-codespace-default-checkpoint.yml
+          git commit -m 'Checkpoint Codespaces default CPU environment'
+          git push origin HEAD:v143-contextual-prune-lobo
