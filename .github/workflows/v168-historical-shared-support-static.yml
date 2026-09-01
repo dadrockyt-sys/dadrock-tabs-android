@@ -1,0 +1,67 @@
+name: V168 historical shared-support static verification
+
+on:
+  push:
+    branches:
+      - v143-contextual-prune-lobo
+    paths:
+      - validation/v168_splitmysong_diagnostic/historical_shared_support_v168.py
+      - debug/v168-splitmysong-diagnostic/historical-shared-support-neighborhood-preregistration.json
+      - .github/workflows/v168-historical-shared-support-static.yml
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  verify:
+    runs-on: ubuntu-24.04
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: v143-contextual-prune-lobo
+          fetch-depth: 1
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.10'
+
+      - name: Verify frozen file identities
+        shell: bash
+        run: |
+          set -euo pipefail
+          helper_blob="$(git hash-object validation/v168_splitmysong_diagnostic/historical_shared_support_v168.py)"
+          prereg_blob="$(git hash-object debug/v168-splitmysong-diagnostic/historical-shared-support-neighborhood-preregistration.json)"
+          test "$helper_blob" = "c9b5cc1bc4076be77780d64f73d53f2a7083f94f"
+          test "$prereg_blob" = "f34661e2d67f9f1c541b80ac01af2c6ea82e2159"
+
+      - name: Compile helper
+        run: python -m py_compile validation/v168_splitmysong_diagnostic/historical_shared_support_v168.py
+
+      - name: Reconstruct and self-validate historical support table
+        shell: bash
+        run: |
+          set -euo pipefail
+          report="${RUNNER_TEMP}/v168-historical-shared-support-report.json"
+          python validation/v168_splitmysong_diagnostic/historical_shared_support_v168.py \
+            --repo-root "$GITHUB_WORKSPACE" \
+            --report "$report"
+          python - "$report" <<'PY'
+          import hashlib, json, pathlib, sys
+          p = pathlib.Path(sys.argv[1])
+          d = json.loads(p.read_text())
+          assert d["status"] == "HISTORICAL_SHARED_SUPPORT_TABLE_READY"
+          assert d["latticeStepCount"] == 1805
+          assert d["coveredStepCount"] == 1617
+          assert d["uncoveredStepCount"] == 188
+          assert d["table"]["eventCount"] == 1452
+          assert d["table"]["optionRowCount"] == 4356
+          assert d["historicalSelfValidation"]["optionStepMismatches"] == 0
+          assert d["historicalSelfValidation"]["scoreRecomputeMismatches"] == 0
+          assert d["historicalSelfValidation"]["winnerRecomputeMismatches"] == 0
+          assert d["safety"]["audioRead"] is False
+          assert d["safety"]["pitchInferenceInvoked"] is False
+          assert d["safety"]["referenceRead"] is False
+          assert d["safety"]["scorerRead"] is False
+          print("reportSha256=" + hashlib.sha256(p.read_bytes()).hexdigest())
+          PY
