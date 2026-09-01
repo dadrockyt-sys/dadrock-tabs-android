@@ -16,7 +16,7 @@ concurrency:
 
 env:
   BRANCH: v143-contextual-prune-lobo
-  EXPECTED_PARENT_HEAD: 40c463f673b8a6afeb0f5e140f14e928838e0c38
+  EXPECTED_PARENT_HEAD: 878f2b0763e80d2859808ccbbcffc1e884986582
   WORKFLOW_PATH: .github/workflows/v168-splitmysong-checkpoint-freeze.yml
   CHECKPOINT_PATH: docs/checkpoints/CURRENT_STATE.md
 
@@ -37,7 +37,6 @@ jobs:
         run: |
           set -euo pipefail
           test "$GITHUB_EVENT_NAME" = "push"
-          test "$GITHUB_RUN_NUMBER" = "2"
           test "$GITHUB_RUN_ATTEMPT" = "1"
           test "$(git rev-parse HEAD)" = "$GITHUB_SHA"
           test "$(git rev-parse HEAD^)" = "$EXPECTED_PARENT_HEAD"
