@@ -1,0 +1,50 @@
+name: V168 SplitMySong CPU environment smoke
+
+on:
+  push:
+    branches:
+      - v143-contextual-prune-lobo
+    paths:
+      - .github/workflows/v168-splitmysong-environment-smoke.yml
+      - validation/v168_splitmysong_diagnostic/Dockerfile.cpu
+      - validation/v168_splitmysong_diagnostic/requirements-cpu.txt
+      - validation/v168_splitmysong_diagnostic/verify_environment_v168.py
+
+permissions:
+  contents: read
+
+concurrency:
+  group: v168-splitmysong-cpu-environment-smoke
+  cancel-in-progress: true
+
+jobs:
+  build-and-verify:
+    if: github.ref == 'refs/heads/v143-contextual-prune-lobo'
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+      - name: Checkout exact smoke-test head
+        uses: actions/checkout@v4
+        with:
+          ref: ${{ github.sha }}
+          fetch-depth: 1
+
+      - name: Build exact CPU diagnostic image
+        shell: bash
+        run: |
+          set -euo pipefail
+          docker build \
+            --file validation/v168_splitmysong_diagnostic/Dockerfile.cpu \
+            --tag dadrock-splitmysong-v168-cpu:${GITHUB_SHA} \
+            .
+
+      - name: Verify container remains CPU-only and reference-blind
+        shell: bash
+        run: |
+          set -euo pipefail
+          docker run --rm \
+            --entrypoint python \
+            dadrock-splitmysong-v168-cpu:${GITHUB_SHA} \
+            validation/v168_splitmysong_diagnostic/verify_environment_v168.py \
+            --repo-root /workspace \
+            --receipt /tmp/environment-smoke-receipt.json
