@@ -73,6 +73,19 @@ def safe_version(name: str) -> str | None:
         return None
 
 
+def cpu_model() -> str | None:
+    cpuinfo = Path("/proc/cpuinfo")
+    if not cpuinfo.is_file():
+        return platform.processor() or None
+    try:
+        for line in cpuinfo.read_text(encoding="utf-8", errors="replace").splitlines():
+            if line.lower().startswith("model name") and ":" in line:
+                return line.split(":", 1)[1].strip()
+    except OSError:
+        pass
+    return platform.processor() or None
+
+
 def candidate_cache_roots(home: Path) -> list[Path]:
     roots = [
         home / ".cache" / "huggingface" / "hub",
@@ -185,6 +198,52 @@ def locate_outputs(build_dir: Path) -> dict[str, Path]:
     }
 
 
+def summary_lines(report: dict[str, Any]) -> list[str]:
+    lines = [
+        "HISTORICAL CONTEXT FAILURE DIAGNOSTIC SUMMARY",
+        f"cpuModel={report['runtime'].get('cpuModel')}",
+        f"platform={report['runtime'].get('platform')}",
+    ]
+    outputs = report["outputs"]
+    for name in ("mix", "guitar", "bass", "drums"):
+        row = outputs.get(name) or {}
+        lines.append(
+            f"{name}Sha256={row.get('sha256', 'MISSING')} exactMatch={row.get('exactMatch')}"
+        )
+
+    hf_model_rows = [
+        row for row in report["modelFiles"]
+        if row.get("modelKind") == "huggingFaceSafetensors"
+    ]
+    if hf_model_rows:
+        row = hf_model_rows[0]
+        lines.append(
+            f"hfModelSha256={row.get('sha256')} exactMatch={row.get('exactMatch')}"
+        )
+    else:
+        lines.append("hfModelSha256=MISSING exactMatch=None")
+
+    hf_cache = report.get("huggingFaceCache") or []
+    if hf_cache:
+        first = hf_cache[0]
+        lines.append(f"hfMainRef={first.get('mainRef')}")
+        lines.append(f"hfSnapshotIds={','.join(first.get('snapshotIds') or [])}")
+    else:
+        lines.append("hfMainRef=MISSING")
+        lines.append("hfSnapshotIds=MISSING")
+
+    packages = report["runtime"]["packages"]
+    for name in ("demucs", "torch", "huggingface-hub", "safetensors", "julius", "numpy"):
+        lines.append(f"package[{name}]={packages.get(name)}")
+    lines.extend([
+        "demucsInvokedByDiagnostic=False",
+        "pitchInferenceInvoked=False",
+        "candidateGenerated=False",
+        "referenceFacingScoreCalls=0",
+    ])
+    return lines
+
+
 def main() -> int:
     ap = argparse.ArgumentParser()
     ap.add_argument(
@@ -220,13 +279,15 @@ def main() -> int:
     }
 
     report = {
-        "schema": "dadrock.tabs.v168.splitmysong-historical-context-failure-diagnostic.v2",
+        "schema": "dadrock.tabs.v168.splitmysong-historical-context-failure-diagnostic.v3",
         "status": "READ_ONLY_DIAGNOSTIC",
         "buildDir": str(build_dir),
         "runtime": {
             "python": platform.python_version(),
             "platform": platform.platform(),
             "machine": platform.machine(),
+            "processor": platform.processor(),
+            "cpuModel": cpu_model(),
             "packages": packages,
         },
         "outputs": output_rows,
@@ -257,6 +318,7 @@ def main() -> int:
     }
 
     print(json.dumps(report, indent=2, sort_keys=True))
+    print("\n" + "\n".join(summary_lines(report)))
     print("\nHISTORICAL CONTEXT FAILURE DIAGNOSTIC COMPLETE")
     print("No Demucs or Basic Pitch inference was invoked by this diagnostic.")
     return 0
