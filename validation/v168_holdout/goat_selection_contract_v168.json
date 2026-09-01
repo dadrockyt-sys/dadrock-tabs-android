@@ -1,0 +1,68 @@
+{
+  "boundary": {
+    "candidateGenerationArmedBeforeSelectionFreeze": false,
+    "comparativeScoresReadBeforeSelectionFreeze": false,
+    "gpuCudaModalUsed": false,
+    "mainOrProductionModified": false,
+    "referenceFacingScoringArmedBeforeSelectionFreeze": false,
+    "v168ReferenceFacingScoreCallsBeforeSelectionFreeze": 0
+  },
+  "dataset": {
+    "doi": "10.5281/zenodo.15690894",
+    "version": "v1",
+    "zenodoRecordId": "15690894"
+  },
+  "integrity": {
+    "allowedFailureReasons": [
+      "SOURCE_IDENTITY_UNFROZEN",
+      "REFERENCE_IDENTITY_UNFROZEN",
+      "SOURCE_REFERENCE_BINDING_UNRESOLVED",
+      "REFERENCE_PARSE_FAILED",
+      "V154_TIMEBASE_INCOMPATIBLE",
+      "REFERENCE_ONSET_OUTSIDE_SOURCE_EOF",
+      "OWNER_USE_CONDITIONS_INCOMPATIBLE",
+      "BASE_PERFORMANCE_ID_UNRESOLVED",
+      "WORK_ID_UNRESOLVED"
+    ],
+    "noteOffsetBeyondEofAloneIsFailure": false,
+    "repairAllowed": false,
+    "requiredPassFlags": [
+      "sourceIdentityFrozen",
+      "referenceIdentityFrozen",
+      "sourceReferenceBindingFrozen",
+      "referenceParseSucceeded",
+      "v154TimebaseCompatible",
+      "allScoredReferenceOnsetsWithinSourceEofTolerance",
+      "ownerUseConditionsCompatible",
+      "decisionMadeWithoutComparativeScores"
+    ],
+    "sourceEofOnsetToleranceSeconds": 0.05
+  },
+  "schema": "dadrock.tabs.v168.goat-selection-contract.v1",
+  "selection": {
+    "baseSourceRole": "base_di",
+    "minimumHoldoutWorks": 2,
+    "targetHoldoutWorks": 3,
+    "tier1": {
+      "name": "official_released_test_split",
+      "order": [
+        "normalized_work_id",
+        "normalized_base_performance_id"
+      ],
+      "representative": "lexicographically_smallest_normalized_base_performance_id",
+      "splitLabel": "test"
+    },
+    "tier2": {
+      "digestFormula": "SHA256(salt + \"|\" + normalizedWorkId + \"|\" + normalizedBasePerformanceId + \"|\" + sourceAudioSha256)",
+      "name": "deterministic_hash_fallback",
+      "order": [
+        "selection_digest",
+        "normalized_work_id",
+        "normalized_base_performance_id"
+      ],
+      "representative": "lexicographically_smallest_normalized_base_performance_id",
+      "salt": "dadrock-v168-goat-v1-selection"
+    }
+  },
+  "version": "V168"
+}
