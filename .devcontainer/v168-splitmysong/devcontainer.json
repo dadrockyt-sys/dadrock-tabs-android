@@ -1,0 +1,15 @@
+{
+  "name": "DadRock SplitMySong V168 CPU Diagnostic",
+  "build": {
+    "dockerfile": "../../validation/v168_splitmysong_diagnostic/Dockerfile.cpu",
+    "context": "../.."
+  },
+  "overrideCommand": true,
+  "remoteUser": "root",
+  "postCreateCommand": "python validation/v168_splitmysong_diagnostic/verify_environment_v168.py --repo-root .",
+  "hostRequirements": {
+    "cpus": 4,
+    "memory": "8gb",
+    "storage": "32gb"
+  }
+}
