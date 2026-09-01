@@ -1,0 +1,83 @@
+name: V168 SplitMySong generator static safety guard
+
+on:
+  push:
+    branches:
+      - v143-contextual-prune-lobo
+    paths:
+      - validation/v168_splitmysong_diagnostic/generate_splitmysong_candidate_v168.py
+      - validation/v168_splitmysong_diagnostic/run_private_candidate_generation.sh
+      - .github/workflows/v168-splitmysong-generator-static.yml
+
+permissions:
+  contents: read
+
+jobs:
+  static-guard:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - name: Checkout exact head
+        uses: actions/checkout@v4
+        with:
+          ref: ${{ github.sha }}
+          fetch-depth: 1
+
+      - name: Verify frozen generator and launcher identities
+        shell: bash
+        run: |
+          set -euo pipefail
+          test "$(git hash-object validation/v168_splitmysong_diagnostic/generate_splitmysong_candidate_v168.py)" = "95972fb9b1f9c1bf4872e2c945025b4aa69a312c"
+          test "$(git hash-object validation/v168_splitmysong_diagnostic/run_private_candidate_generation.sh)" = "ff0abb9d979cb475862278ffc17966e6d73f5a86"
+          python -m py_compile validation/v168_splitmysong_diagnostic/generate_splitmysong_candidate_v168.py
+          bash -n validation/v168_splitmysong_diagnostic/run_private_candidate_generation.sh
+
+      - name: Verify reference-blind CLI and one-shot safety shape
+        shell: bash
+        run: |
+          set -euo pipefail
+          python - <<'PY'
+          import ast
+          from pathlib import Path
+
+          path = Path('validation/v168_splitmysong_diagnostic/generate_splitmysong_candidate_v168.py')
+          text = path.read_text(encoding='utf-8')
+          tree = ast.parse(text)
+
+          options = []
+          for node in ast.walk(tree):
+              if isinstance(node, ast.Call) and isinstance(node.func, ast.Attribute) and node.func.attr == 'add_argument':
+                  for arg in node.args:
+                      if isinstance(arg, ast.Constant) and isinstance(arg.value, str) and arg.value.startswith('--'):
+                          options.append(arg.value)
+
+          expected = {
+              '--repo-root',
+              '--source',
+              '--normalized-guitar',
+              '--arm-receipt',
+              '--environment-receipt',
+              '--ffmpeg-receipt',
+              '--output-dir',
+          }
+          assert set(options) == expected, (options, expected)
+          assert not any('score' in x.lower() or 'reference' in x.lower() for x in options)
+
+          required_fragments = [
+              'PRIVATE_SOURCE_SHA256 = "6601b8d01cbbbe6b6e70d9ec0ca3c15d17873c78e62ae4acdc258c96f168e3c9"',
+              'NORMALIZED_GUITAR_SHA256 = "fdb0578d71f77c150e7fe66766a03953be55e7028fef4c24dc777416f2e7ff4f"',
+              'ARM_RECEIPT_SHA256 = "f34aef34a729d4ca32ba42975717a1b8e79b568aa1a8dc44d13c2eb1bcd6ef6f"',
+              'BASIC_PITCH_MODEL_SHA256 = "3db297d54af8e01c6e5618245c956b1d71b6a2b978cb2dedb527173186552676"',
+              'ONE_SHOT_PITCH_INFERENCE_ARMED_AND_STARTED',
+              'FROZEN_BEFORE_ANY_LEGACY_REFERENCE_OR_SCORER_ACCESS',
+              'expected exactly one Basic Pitch inference',
+          ]
+          for fragment in required_fragments:
+              assert fragment in text, fragment
+
+          launcher = Path('validation/v168_splitmysong_diagnostic/run_private_candidate_generation.sh').read_text(encoding='utf-8')
+          assert 'generate_splitmysong_candidate_v168.py' in launcher
+          assert 'splitmysong-candidate-freeze.json' in launcher
+          assert 'STOP: do not run a scorer until these hashes are checkpointed.' in launcher
+          print('V168 SPLITMYSONG GENERATOR STATIC SAFETY PASS')
+          PY
