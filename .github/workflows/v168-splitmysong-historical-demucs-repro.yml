@@ -45,6 +45,13 @@ jobs:
             numpy==1.26.4 scipy==1.13.1 soundfile==0.12.1 \
             basic-pitch==0.4.0 demucs==4.1.0 imageio-ffmpeg==0.6.0 librosa==0.11.0
 
+          # The first replay exposed two small resolver drifts relative to the
+          # authoritative V166 job. Restore the exact Aug-29 transitive versions
+          # before separation; cloudpickle was not present in the historical set.
+          python -m pip install --disable-pip-version-check \
+            joblib==1.5.3 platformdirs==4.11.5
+          python -m pip uninstall -y cloudpickle || true
+
           python - <<'PY'
           import importlib.metadata as md, platform, torch
           expected = {
@@ -54,9 +61,11 @@ jobs:
               "hf-xet": "1.6.0",
               "huggingface-hub": "1.29.0",
               "imageio-ffmpeg": "0.6.0",
+              "joblib": "1.5.3",
               "julius": "0.2.8",
               "librosa": "0.11.0",
               "numpy": "1.26.4",
+              "platformdirs": "4.11.5",
               "pyyaml": "6.0.3",
               "safetensors": "0.8.0",
               "scipy": "1.13.1",
@@ -71,6 +80,12 @@ jobs:
           for name, version in expected.items():
               observed = md.version(name)
               assert observed == version, (name, observed, version)
+          try:
+              md.version("cloudpickle")
+          except md.PackageNotFoundError:
+              pass
+          else:
+              raise AssertionError("cloudpickle unexpectedly present; V166 resolver identity drift")
           print("HISTORICAL DEPENDENCY RESOLUTION MATCH")
           PY
 
@@ -99,7 +114,7 @@ jobs:
         run: |
           set -euo pipefail
           python - <<'PY'
-          import json, os, platform, random
+          import json, platform, random
           from pathlib import Path
           import numpy as np
           import torch
