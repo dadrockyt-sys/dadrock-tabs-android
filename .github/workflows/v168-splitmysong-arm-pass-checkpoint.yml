@@ -2,54 +2,30 @@ name: V168 SplitMySong ARM PASS checkpoint
 
 on:
   push:
-    branches:
-      - v143-contextual-prune-lobo
-    paths:
-      - .github/workflows/v168-splitmysong-arm-pass-checkpoint.yml
+    branches: [v143-contextual-prune-lobo]
+    paths: [.github/workflows/v168-splitmysong-arm-pass-checkpoint.yml]
 
 permissions:
   contents: write
 
 jobs:
-  append-checkpoint:
+  append:
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout exact branch
-        uses: actions/checkout@v4
+      - uses: actions/checkout@v4
         with:
           ref: v143-contextual-prune-lobo
           fetch-depth: 1
-      - name: Append ARM PASS and self-delete
-        shell: bash
+      - name: Append checkpoint and self-delete
+        env:
+          SECTION_B64: CiMjIDIwMjYtMDktMDEgY29udGludWF0aW9uIGNoZWNrcG9pbnQg4oCUIFNwbGl0TXlTb25nIEFSTSBwcmVmbGlnaHQgUEFTUwotIEEgZnJlc2ggcHJpdmF0ZSBDb2Rlc3BhY2UgY3JlYXRlZCBmcm9tIGB2MTQzLWNvbnRleHR1YWwtcHJ1bmUtbG9ib2AgcGFzc2VkIHRoZSBleGFjdCBkaWFnbm9zdGljIGVudmlyb25tZW50IGNoZWNrcyBhZnRlciB0aGUgRGViaWFuIDEzIC8gRkZtcGVnIDcuMS41IGNvcnJlY3Rpb24uCi0gVGhlIGV4YWN0IGZyb3plbiBwcml2YXRlIFNwbGl0TXlTb25nIHNvdXJjZSBwYXNzZWQgaWRlbnRpdHkgdmVyaWZpY2F0aW9uIHdpdGggU0hBMjU2ICoqYDY2MDFiOGQwMWNiYmJlNmI2ZTcwZDllYzBjYTNjMTVkMTc4NzNjNzhlNjJhZTRhY2RjMjU4Yzk2ZjE2OGUzYzlgKiouCi0gUmVmZXJlbmNlLWJsaW5kIG5vcm1hbGl6YXRpb24gcmVwcm9kdWNlZCB0aGUgZnJvemVuIFdBViBieXRlIGlkZW50aXR5IGV4YWN0bHk6IFNIQTI1NiAqKmBmZGIwNTc4ZDcxZjc3YzE1MGU3ZmU2Njc2NmEwMzk1M2JlNTVlNzAyOGZlZjRjMjRkYzc3NzQxNmYyZTdmZjRmYCoqLgotIFVzZXItdmlzaWJsZSBwcml2YXRlIEZGbXBlZyBub3JtYWxpemVyIHJlY2VpcHQgU0hBMjU2OiAqKmBlNzcxM2I0N2E0ZjNiZjQ2OGI3MDZiYjBlZWY4YzY4M2VhM2UyZWMzNTcxZTMxNzBmMjAzZTI4YmY5ZWUxZjFmYCoqLgotIFVzZXItdmlzaWJsZSBwcml2YXRlIENQVSBlbnZpcm9ubWVudCByZWNlaXB0IFNIQTI1NjogKipgYzdiZjgxZjU5MjIwODA4Y2VmMDFhN2UzOTk4MzBkYmY4YTIzZGY0YjA1MmZhYzEwYmFjNzVjNDk4YWQ3ODg0N2AqKi4KLSBVc2VyLXZpc2libGUgcHJpdmF0ZSBBUk0gcmVjZWlwdCBTSEEyNTY6ICoqYGYzNGFlZjM0YTcyOWQ0Y2EzMmJhNDI5NzU3MTdhMWI4ZTc5YjU2OGFhMWE4ZGM0NGQxM2MyZWIxYmNkNmVmNmZgKiouCi0gRmluYWwgcHJpdmF0ZSBnYXRlIHN0YXR1cyBpcyAqKmBBUk0gUFJFRkxJR0hUIFBBU1NgKiouIFRoZSBBUk0gcGhhc2UgdmVyaWZpZWQgdGhlIGV4YWN0IFB5dGhvbiAzLjEwLjIxIC8gQmFzaWMgUGl0Y2ggMC40LjAgLyBURkxpdGUgUnVudGltZSAyLjE0LjAgLyBUb3JjaCAyLjguMCtjcHUgZW52aXJvbm1lbnQsIGV4YWN0IEJhc2ljIFBpdGNoIG1vZGVsIGlkZW50aXR5LCBleGFjdCBGRm1wZWcgbm9ybWFsaXplciwgZnJvemVuIHJlcG9zaXRvcnkgY29kZSBpZGVudGl0aWVzLCBhbmQgZXhhY3QgcHJpdmF0ZSBhdWRpby9ub3JtYWxpemF0aW9uIGlkZW50aXRpZXMuCi0gVGhlIEFSTSBwaGFzZSBpdHNlbGYgcGVyZm9ybWVkICoqbm8gcGl0Y2ggaW5mZXJlbmNlKiosIGdlbmVyYXRlZCAqKm5vIGNhbmRpZGF0ZSoqLCBhY2NlcHRlZC9yZWFkICoqbm8gc2NvcmVyIG9yIHJlZmVyZW5jZSoqLCBhbmQgbWFkZSAqKjAgcmVmZXJlbmNlLWZhY2luZyBzY29yZSBjYWxscyoqLiBQcml2YXRlIGF1ZGlvLCBub3JtYWxpemVkIFdBViwgYW5kIHByaXZhdGUgcmVjZWlwdHMgcmVtYWluIG91dHNpZGUgdGhlIHJlcG9zaXRvcnkgYW5kIG11c3Qgbm90IGJlIGdpdC1hZGRlZCBvciBjb21taXR0ZWQuCi0gVGhpcyBwYXNzIGF1dGhvcml6ZXMgb25seSB0aGUgYWxyZWFkeS1wcmVyZWdpc3RlcmVkIG5leHQgZW5naW5lZXJpbmcgYm91bmRhcnk6IGZyZWV6ZSBhIGRlZGljYXRlZCBvbmUtc2hvdCAqKnJlZmVyZW5jZS1ibGluZCBDUFUgY2FuZGlkYXRlIGdlbmVyYXRvcioqLCBjaGVja3BvaW50IGl0cyBleGFjdCBjb2RlIGlkZW50aXR5IGJlZm9yZSBleGVjdXRpb24sIGdlbmVyYXRlIGV4YWN0bHkgb25lIGNhbmRpZGF0ZSBwcml2YXRlbHksIGFuZCBoYXNoLWZyZWV6ZSB0aGF0IGNhbmRpZGF0ZSBhbmQgZ2VuZXJhdGlvbiByZWNlaXB0IGJlZm9yZSBhbnkgbGVnYWN5IEFZR0dNVyByZWZlcmVuY2Uvc2NvcmVyIGFjY2Vzcy4KLSBWMTY4IHByb3NwZWN0aXZlIGV2YWx1YXRpb24gcmVtYWlucyB1bnRvdWNoZWQ6ICoqUHJvamVjdCBQcm9ncmVzcyBTY29yZSA2MCU7IFRlc3QgU2NvcmUgTk9UIFJVTjsgVjE2OCByZWZlcmVuY2UtZmFjaW5nIHNjb3JlIGNhbGxzIDAqKi4gTm8gR1BVL0NVREEvTW9kYWwsIGBtYWluYCwgb3IgUHJvZHVjdGlvbiBjaGFuZ2Ugb2NjdXJyZWQuCg==
         run: |
           set -euo pipefail
-          python - <<'PY'
-          from pathlib import Path
-          path = Path('docs/checkpoints/CURRENT_STATE.md')
-          marker = '## 2026-09-01 continuation checkpoint — SplitMySong ARM preflight PASS'
-          text = path.read_text(encoding='utf-8')
-          if marker in text:
-              raise SystemExit('checkpoint marker already present')
-          section = r'''
-
-## 2026-09-01 continuation checkpoint — SplitMySong ARM preflight PASS
-- A fresh private Codespace created from `v143-contextual-prune-lobo` passed the exact diagnostic environment checks after the Debian 13 / FFmpeg 7.1.5 correction.
-- The exact frozen private SplitMySong source passed identity verification with SHA256 **`6601b8d01cbbbe6b6e70d9ec0ca3c15d17873c78e62ae4acdc258c96f168e3c9`**.
-- Reference-blind normalization reproduced the frozen WAV byte identity exactly: SHA256 **`fdb0578d71f77c150e7fe66766a03953be55e7028fef4c24dc777416f2e7ff4f`**.
-- User-visible private FFmpeg normalizer receipt SHA256: **`e7713b47a4f3bf468b706bb0eef8c683ea3e2ec3571e3170f203e28bf9ee1f1f`**.
-- User-visible private CPU environment receipt SHA256: **`c7bf81f59220808cef01a7e399830dbf8a23df4b052fac10bac75c498ad78847`**.
-- User-visible private ARM receipt SHA256: **`f34aef34a729d4ca32ba42975717a1b8e79b568aa1a8dc44d13c2eb1bcd6ef6f`**.
-- Final private gate status is **`ARM PREFLIGHT PASS`**. The ARM phase verified the exact Python 3.10.21 / Basic Pitch 0.4.0 / TFLite Runtime 2.14.0 / Torch 2.8.0+cpu environment, exact Basic Pitch model identity, exact FFmpeg normalizer, frozen repository code identities, and exact private audio/normalization identities.
-- The ARM phase itself performed **no pitch inference**, generated **no candidate**, accepted/read **no scorer or reference**, and made **0 reference-facing score calls**. Private audio, normalized WAV, and private receipts remain outside the repository and must not be git-added or committed.
-- This pass authorizes only the already-preregistered next engineering boundary: freeze a dedicated one-shot **reference-blind CPU candidate generator**, checkpoint its exact code identity before execution, generate exactly one candidate privately, and hash-freeze that candidate and generation receipt before any legacy AYGGMW reference/scorer access.
-- V168 prospective evaluation remains untouched: **Project Progress Score 60%; Test Score NOT RUN; V168 reference-facing score calls 0**. No GPU/CUDA/Modal, `main`, or Production change occurred.
-'''
-          path.write_text(text.rstrip() + section + '\n', encoding='utf-8')
-          PY
+          test "$(grep -c 'SplitMySong ARM preflight PASS' docs/checkpoints/CURRENT_STATE.md || true)" = "0"
+          printf '%s' "$SECTION_B64" | base64 -d >> docs/checkpoints/CURRENT_STATE.md
           rm .github/workflows/v168-splitmysong-arm-pass-checkpoint.yml
-          git config user.name 'github-actions[bot]'
-          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git config user.name github-actions[bot]
+          git config user.email 41898282+github-actions[bot]@users.noreply.github.com
           git add docs/checkpoints/CURRENT_STATE.md .github/workflows/v168-splitmysong-arm-pass-checkpoint.yml
-          git diff --cached --quiet && exit 1
           git commit -m 'Checkpoint SplitMySong ARM preflight pass'
           git push origin HEAD:v143-contextual-prune-lobo
