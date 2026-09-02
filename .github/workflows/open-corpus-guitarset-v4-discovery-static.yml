@@ -1,0 +1,72 @@
+name: Open corpus GuitarSet V4 discovery static guards
+
+on:
+  workflow_dispatch:
+  push:
+    branches:
+      - v143-contextual-prune-lobo
+    paths:
+      - .github/workflows/open-corpus-guitarset-v4-discovery-static.yml
+      - validation/open_corpus/analyze_guitarset_v4_discovery.py
+
+permissions:
+  contents: read
+
+jobs:
+  static-self-test:
+    runs-on: ubuntu-24.04
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Verify frozen discovery analyzer identity
+        shell: bash
+        run: |
+          set -euo pipefail
+          test "$(git hash-object validation/open_corpus/analyze_guitarset_v4_discovery.py)" = "f25706803b5ae0f46be59c95cd3e1485cefd3aba"
+          test "$(git hash-object validation/open_corpus/score_guitarset_v3_development_candidates.py)" = "19ef54155735a6ac1e65441250b47d1572ac0380"
+          echo V4_DISCOVERY_BLOB_GUARDS_PASS
+
+      - name: Static no-audio no-generation and partition guards
+        shell: python
+        run: |
+          import ast
+          from pathlib import Path
+          p=Path('validation/open_corpus/analyze_guitarset_v4_discovery.py')
+          text=p.read_text()
+          tree=ast.parse(text)
+          imports=set()
+          for n in ast.walk(tree):
+              if isinstance(n,ast.Import): imports.update(a.name.split('.')[0] for a in n.names)
+              elif isinstance(n,ast.ImportFrom) and n.module: imports.add(n.module.split('.')[0])
+          bad=sorted(imports & {'basic_pitch','soundfile','librosa','torch'})
+          if bad: raise SystemExit(f'forbidden discovery imports: {bad}')
+          for token in ['predict(', 'load_mono_audio', '.wav', '--audio-root']:
+              if token in text: raise SystemExit(f'forbidden generation/audio surface: {token}')
+          if 'DISCOVERY_PLAYERS = ("02", "04")' not in text: raise SystemExit('discovery partition not frozen')
+          if 'CONFIRMATION_PLAYER = "05"' not in text: raise SystemExit('confirmation player not frozen')
+          if 'EVAL_PLAYERS = ("00", "01", "03")' not in text: raise SystemExit('evaluation partition not frozen')
+          print('V4_DISCOVERY_STATIC_ISOLATION_PASS')
+          print('player05ReferenceRead=false')
+          print('guitarSetProspectiveEvaluationScoreCalls=0')
+          print('v168ReferenceFacingScoreCalls=0')
+
+      - name: Compile and counterfactual self-test
+        shell: bash
+        run: |
+          set -euo pipefail
+          cd validation/open_corpus
+          python -m py_compile analyze_guitarset_v4_discovery.py
+          python analyze_guitarset_v4_discovery.py --self-test
+
+      - name: Reconfirm no real data consumption
+        shell: bash
+        run: |
+          printf '%s\n' \
+            'V4_DISCOVERY_STATIC_PASS' \
+            'guitarSetDevelopmentJamsDownloaded=false' \
+            'guitarSetDevelopmentJamsNoteEventsRead=0' \
+            'player05ReferenceRead=false' \
+            'basicPitchInferenceCalls=0' \
+            'guitarSetProspectiveEvaluationProcessed=false' \
+            'guitarSetProspectiveEvaluationScoreCalls=0' \
+            'v168ReferenceFacingScoreCalls=0'
