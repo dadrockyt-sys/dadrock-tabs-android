@@ -1,0 +1,126 @@
+name: Open corpus GuitarSet V3 metadata inventory
+
+on:
+  workflow_dispatch:
+  push:
+    branches:
+      - v143-contextual-prune-lobo
+    paths:
+      - validation/open_corpus/inventory_guitarset_v3_metadata.py
+      - .github/workflows/open-corpus-guitarset-v3-metadata-inventory.yml
+
+permissions:
+  contents: read
+
+jobs:
+  metadata-inventory:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 30
+    steps:
+      - name: Checkout exact branch commit
+        uses: actions/checkout@v4
+
+      - name: Verify frozen inventory implementation
+        shell: bash
+        run: |
+          set -euo pipefail
+          test "$(git hash-object validation/open_corpus/inventory_guitarset_v3_metadata.py)" = "3a0f20df2b8ac0b447d8c7d6fb13a7ff67878a69"
+          echo GUITARSET_V3_INVENTORY_BLOB_PASS
+
+      - name: Set up Python 3.10
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.10'
+
+      - name: Compile and synthetic self-test
+        shell: bash
+        run: |
+          set -euo pipefail
+          python -m py_compile validation/open_corpus/inventory_guitarset_v3_metadata.py
+          python validation/open_corpus/inventory_guitarset_v3_metadata.py --self-test
+
+      - name: Download official GuitarSet v1.1.0 archives
+        shell: bash
+        run: |
+          set -euo pipefail
+          ROOT="$RUNNER_TEMP/guitarset-v3-inventory"
+          mkdir -p "$ROOT"
+          cd "$ROOT"
+          curl -L --fail --retry 3 --retry-delay 3 \
+            'https://zenodo.org/records/3371780/files/audio_mono-mic.zip?download=1' \
+            -o audio_mono-mic.zip
+          curl -L --fail --retry 3 --retry-delay 3 \
+            'https://zenodo.org/records/3371780/files/annotation.zip?download=1' \
+            -o annotation.zip
+          echo '275966d6610ac34999b58426beb119c3  audio_mono-mic.zip' | md5sum -c -
+          echo 'b39b78e63d3446f2e54ddb7a54df9b10  annotation.zip' | md5sum -c -
+          printf '%s\n' \
+            'GUITARSET_V3_OFFICIAL_MD5_PASS' \
+            'audioDecoded=false' \
+            'jamsMemberContentsRead=false' \
+            'basicPitchInferenceCalls=0' \
+            'guitarSetProspectiveEvaluationScoreCalls=0' \
+            'v168ReferenceFacingScoreCalls=0'
+
+      - name: Run metadata path-only inventory
+        shell: bash
+        run: |
+          set -euo pipefail
+          ROOT="$RUNNER_TEMP/guitarset-v3-inventory"
+          python validation/open_corpus/inventory_guitarset_v3_metadata.py \
+            --audio-zip "$ROOT/audio_mono-mic.zip" \
+            --annotation-zip "$ROOT/annotation.zip" \
+            --output "$ROOT/guitarset-v3-metadata-inventory.json"
+          sha256sum "$ROOT/guitarset-v3-metadata-inventory.json" | tee "$ROOT/report-sha256.txt"
+
+      - name: Prove no archive members were extracted or interpreted
+        shell: bash
+        run: |
+          set -euo pipefail
+          ROOT="$RUNNER_TEMP/guitarset-v3-inventory"
+          test "$(find "$ROOT" -type f \( -name '*.wav' -o -name '*.jams' \) | wc -l)" -eq 0
+          python - <<'PY'
+          import json, os
+          from pathlib import Path
+          root=Path(os.environ['RUNNER_TEMP'])/'guitarset-v3-inventory'
+          report=json.loads((root/'guitarset-v3-metadata-inventory.json').read_text())
+          assert report['status']=='GUITARSET_V3_METADATA_INVENTORY_PASS'
+          assert report['pairing']['uniqueTrackCount']==360
+          assert report['pairing']['developmentTrackCount']==180
+          assert report['pairing']['evaluationTrackCount']==180
+          assert report['safety']['zipCentralDirectoryOnly'] is True
+          assert report['safety']['audioDecoded'] is False
+          assert report['safety']['jamsMemberContentsRead'] is False
+          assert report['safety']['jamsNoteEventsRead']==0
+          assert report['safety']['basicPitchInferenceCalls']==0
+          assert report['safety']['guitarSetProspectiveEvaluationScoreCalls']==0
+          assert report['safety']['v168ReferenceFacingScoreCalls']==0
+          print('GUITARSET_V3_METADATA_BOUNDARY_PASS')
+          print('audioSha256='+report['archives']['audioMonoMic']['sha256'])
+          print('annotationSha256='+report['archives']['annotation']['sha256'])
+          print('trackCount=360')
+          print('developmentTrackCount=180')
+          print('evaluationTrackCount=180')
+          print('jamsNoteEventsRead=0')
+          print('basicPitchInferenceCalls=0')
+          print('guitarSetProspectiveEvaluationScoreCalls=0')
+          print('v168ReferenceFacingScoreCalls=0')
+          PY
+
+      - name: Delete source archives before artifact upload
+        shell: bash
+        run: |
+          set -euo pipefail
+          ROOT="$RUNNER_TEMP/guitarset-v3-inventory"
+          rm -f "$ROOT/audio_mono-mic.zip" "$ROOT/annotation.zip"
+          test "$(find "$ROOT" -maxdepth 1 -type f -name '*.zip' | wc -l)" -eq 0
+          ls -lh "$ROOT/guitarset-v3-metadata-inventory.json" "$ROOT/report-sha256.txt"
+
+      - name: Upload metadata-only inventory report
+        uses: actions/upload-artifact@v4
+        with:
+          name: guitarset-v3-metadata-inventory
+          path: |
+            ${{ runner.temp }}/guitarset-v3-inventory/guitarset-v3-metadata-inventory.json
+            ${{ runner.temp }}/guitarset-v3-inventory/report-sha256.txt
+          retention-days: 30
