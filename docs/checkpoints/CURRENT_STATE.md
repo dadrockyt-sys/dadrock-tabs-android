@@ -54,44 +54,52 @@ Terminal checkpoint:
 
 **Frozen consequence:** do not weaken V3, choose a least-bad config, or run V3 on `00/01/03`. GuitarSet prospective evaluation score calls remain **0**.
 
-## V4 development-only discovery — PREREGISTERED / RUNNING
+## V4 development-only discovery — COMPLETED / FROZEN
 
-A distinctly new V4 discovery phase was preregistered before any new per-event reference analysis:
+Preregistration:
 - `docs/checkpoints/OPEN_CORPUS_V4_GUITARSET_DISCOVERY_PREREGISTRATION_20260902.md`;
 - creation commit `fc542909f4faa53263c79d519d053450277acffb`.
 
-Frozen V4 partition:
-- discovery players: **`02`, `04`** = 117 admissible tracks;
-- internal confirmation player: **`05`** = 60 tracks, no V4 per-event reference use until a V4 trigger family/confirmation gate is frozen;
-- prospective evaluation players **`00/01/03` remain sealed**.
+Frozen partition:
+- discovery `02/04`: 117 tracks;
+- internal confirmation `05`: 60 tracks, **still unread for V4 per-event labels**;
+- prospective evaluation `00/01/03`: **still sealed**.
 
-V4 discovery reuses only the immutable V3 candidate artifact. It performs no audio decoding, Basic Pitch inference, candidate regeneration, or V2/V3 recomputation.
+Frozen analyzer blob `f25706803b5ae0f46be59c95cd3e1485cefd3aba`. Static run `33582924789`, job `100100868170`: SUCCESS.
 
-Frozen discovery label: for each trigger-eligible ordinary V2 octave proposal on `02/04`, swap only that one event's pitch to the already-frozen V2 winner, rescore the complete track with the unchanged exact-pitch one-to-one matcher, and label by primary 100ms delta TP (`beneficial` / `neutral` / `harmful`). Strict50 delta TP is secondary.
+Real discovery run `33582980473`, job `100101041812`: **SUCCESS**.
 
-Allowed trigger-side observables are reference-blind fields already frozen in the candidate artifact: baseline pitch, V2 direction, Basic Pitch amplitude, duration, consensus, median advantage, four per-frame advantages/winners and deterministic summaries. Player may be used only as an analysis grouping column, never as a trigger feature.
+Frozen outputs:
+- 7,518 trigger-eligible ordinary-V2 octave proposals across 117 tracks;
+- report SHA256 `5250a27c0249b019e2f080a2ef754290d31ce8d3ff0a66779c51b0b7cfbfb509`;
+- labeled rows SHA256 `a8d0852333a4f277b180dc1585b09b304d441171ef0b252c7c80b588d1411b9b`;
+- artifact ID `9829078706`, ZIP SHA256 `2f7353b3bd82cd3d0dc5db08bcc0490656defb956e55c1a7da3cd6a0f5b4eff1`.
 
-Frozen analyzer:
-- `validation/open_corpus/analyze_guitarset_v4_discovery.py`;
-- creation commit `144c1a801ccbce1832f3d71e785ae512595f54d7`;
-- blob `f25706803b5ae0f46be59c95cd3e1485cefd3aba`.
+Primary 100 ms event classes:
+- beneficial 119 / 7,518 = **1.5828677839851024%**;
+- neutral 2,669 / 7,518 = **35.50146315509444%**;
+- harmful 4,730 / 7,518 = **62.91566906092046%**.
 
-Static guards:
-- workflow commit `11ef95aab4f35e658670fb247db8eb624248e1ac`;
-- run `33582924789`, job `100100868170`: **SUCCESS / V4_DISCOVERY_STATIC_PASS**;
-- no real JAMS, no Basic Pitch/audio, player05ReferenceRead=false, prospective evaluation score calls=0, V168 score calls=0.
+By direction:
+- octave-up: 9 beneficial / 2,113 (**0.4259346900141978%**), 1,535 harmful (**72.64552768575486%**);
+- octave-down: 110 beneficial / 5,405 (**2.0351526364477337%**), 3,195 harmful (**59.11193339500463%**).
 
-Real preregistered discovery:
-- workflow creation commit `48d32716fce48556f88c7318366ade373af0faea`;
-- run `33582980473`, job `100101041812`;
-- current state at this checkpoint: **IN PROGRESS** after candidate identity/hash verification and discovery-reference isolation began/completed; no V4 trigger selection is permitted by this run.
+By player:
+- `02`: 60 beneficial / 4,221 (**1.4214641080312722%**), 2,844 harmful (**67.37739872068231%**);
+- `04`: 59 beneficial / 3,297 (**1.789505611161662%**), 1,886 harmful (**57.203518350015166%**).
+
+Dedicated result checkpoint:
+- `docs/checkpoints/OPEN_CORPUS_V4_GUITARSET_DISCOVERY_RESULT_20260902.md`;
+- creation commit `cbc1e4c3e7c67e668519c70b6b94c81aa17fb699`.
+
+No V4 trigger has been selected. Player `05` referenceRead=false / perEventLabelsComputed=false. Prospective evaluation score calls=0. V168 score calls=0.
 
 ## NEXT SAFE ACTION
 
-1. Check run `33582980473` to completion.
-2. If discovery completes, freeze report/row hashes and checkpoint the `02/04` event-class/feature evidence before formulating any V4 trigger family.
-3. Do not read player `05` V4 per-event references until a small V4 trigger family, confirmation qualification gate and deterministic selection rule are separately frozen.
-4. Do not touch prospective evaluation players `00/01/03`.
+1. Analyze only the already-frozen `02/04` labeled discovery rows using the preregistered reference-blind feature set; checkpoint the feature-level findings.
+2. Formulate at most a small interpretable V4 candidate family with exact thresholds from discovery only.
+3. Before any player `05` reference use, separately freeze the V4 candidate family, one-shot confirmation scorer, confirmation qualification gate, and deterministic selection rule.
+4. Do not touch prospective evaluation players `00/01/03` unless a V4 design later passes the frozen player-05 confirmation gate.
 5. GOAT approval remains the independent primary V168 path; on approval follow the frozen GOAT intake sequence before any V168 arm.
 
 ## Standing methodology
