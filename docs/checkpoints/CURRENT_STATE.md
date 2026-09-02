@@ -36,53 +36,59 @@ Frozen scorer recovery run `33582451429`, job `100099402236`: SUCCESS. Baseline 
 
 ## V4 discovery — COMPLETED / FROZEN
 
-Preregistered discovery players `02/04` only; player `05` reserved for later confirmation; `00/01/03` sealed.
+Discovery players `02/04` only; player `05` reserved for confirmation; `00/01/03` prospective sealed.
 
-Discovery run `33582980473`, job `100101041812`: SUCCESS.
+Discovery run `33582980473`, job `100101041812`: SUCCESS. Frozen output: 7,518 proposal events across 117 tracks; report SHA256 `5250a27c0249b019e2f080a2ef754290d31ce8d3ff0a66779c51b0b7cfbfb509`; labeled rows SHA256 `a8d0852333a4f277b180dc1585b09b304d441171ef0b252c7c80b588d1411b9b`; artifact ID `9829078706`, ZIP SHA256 `2f7353b3bd82cd3d0dc5db08bcc0490656defb956e55c1a7da3cd6a0f5b4eff1`.
 
-Frozen outputs:
-- 7,518 octave-proposal events across 117 tracks;
-- report SHA256 `5250a27c0249b019e2f080a2ef754290d31ce8d3ff0a66779c51b0b7cfbfb509`;
-- labeled rows SHA256 `a8d0852333a4f277b180dc1585b09b304d441171ef0b252c7c80b588d1411b9b`;
-- artifact ID `9829078706`, ZIP SHA256 `2f7353b3bd82cd3d0dc5db08bcc0490656defb956e55c1a7da3cd6a0f5b4eff1`.
+Primary discovery labels: 119 beneficial (1.5828677839851024%), 2669 neutral (35.50146315509444%), 4730 harmful (62.91566906092046%).
 
-Primary classes: beneficial 119 (**1.5828677839851024%**), neutral 2669 (**35.50146315509444%**), harmful 4730 (**62.91566906092046%**). Octave-up is especially harmful; octave-down remains mostly harmful.
+## V4 conservative discovery family — `H72-D035` SELECTED
 
-Result checkpoint `docs/checkpoints/OPEN_CORPUS_V4_GUITARSET_DISCOVERY_RESULT_20260902.md`, creation commit `cbc1e4c3e7c67e668519c70b6b94c81aa17fb699`.
+Family preregistration `docs/checkpoints/OPEN_CORPUS_V4_GUITARSET_DISCOVERY_FAMILY_PREREGISTRATION_20260902.md`, creation commit `b47a7e7a19ac865366295dfed7c5b3d7b7b00334`.
 
-## V4 conservative discovery family — FROZEN BEFORE EXACT FAMILY SCORE
+Frozen family:
+- `H72-D025`: ordinary V2 octave-down only, baseline MIDI >=72, duration <=0.25 s;
+- `H72-D030`: same, duration <=0.30 s;
+- `H72-D035`: same, duration <=0.35 s.
 
-Exploratory discovery evidence identified one conservative, physically interpretable pocket: high-register, short-duration **octave-down** proposals.
+Evaluator blob `254b495c55149725dae5795b83278787b4930869`. Static run `33583946815`, job `100104012439`: SUCCESS.
 
-Family preregistration:
-- `docs/checkpoints/OPEN_CORPUS_V4_GUITARSET_DISCOVERY_FAMILY_PREREGISTRATION_20260902.md`;
-- creation commit `b47a7e7a19ac865366295dfed7c5b3d7b7b00334`.
+Exact family score:
+- workflow creation commit `a69788be8498b72224e8d15d99c193016280bb70`;
+- run `33584036171`, job `100104285213`: **SUCCESS**;
+- exact family score calls = **1**;
+- all three configs qualified under the frozen gate;
+- frozen deterministic selection chose **`H72-D035`**.
 
-Every config requires frozen V2 direction down by exactly 12 semitones, baseline MIDI pitch >=72, and duration at/below the config threshold:
-- `H72-D025` <=0.25 s;
-- `H72-D030` <=0.30 s;
-- `H72-D035` <=0.35 s.
+Discovery baseline primary macro F1 **79.23291495571898%**, primary combined micro F1 **75.48820336017702%**.
 
-Frozen reference-blind selected-event counts from candidate features: 107 / 137 / 157 respectively. `H72-D035` discovery one-event labels were 11 beneficial, 146 neutral, 0 harmful; player `02` net +1, player `04` net +10; strict50 net +12.
+Selected `H72-D035` changed **157** pitches and achieved:
+- primary combined micro gain **+0.05660328813645776 pp**;
+- primary macro gain **+0.07533076559106178 pp**;
+- player `02` primary micro **+0.010499238805181221 pp**;
+- player `04` primary micro **+0.10091835704913876 pp**;
+- strict50 combined micro **+0.061749041603405885 pp**;
+- negative-primary-TP discovery tracks: **0**;
+- positive-primary-TP discovery tracks: **8**.
 
-Exact multi-event discovery-family evaluator:
-- `validation/open_corpus/evaluate_guitarset_v4_discovery_family.py`;
-- creation commit `95cd1a88ed1ef2a7a7bc1d96bc30194ba58e7c21`;
-- blob `254b495c55149725dae5795b83278787b4930869`.
+Frozen report identities:
+- score SHA256 `ea8a15ad7d9bb436a3c7108e1cfe67231ac5d2dadf42580abdcc2832ed3339bf`;
+- artifact ID `9829448816`;
+- artifact ZIP SHA256 `a34320aa04467fd9ca73736e63bb93a603c02b9954c04ebf771fd1eb2bf83cf6`.
 
-Static guards workflow creation commit `c021cd4410a06e6d3497c062a3db2ec264bf38be`; run `33583946815`, job `100104012439`: **SUCCESS / V4_DISCOVERY_FAMILY_STATIC_PASS**. No real JAMS/audio, no Basic Pitch, player05ReferenceRead=false, confirmation score calls=0, prospective evaluation score calls=0, V168 score calls=0.
+Dedicated result checkpoint:
+- `docs/checkpoints/OPEN_CORPUS_V4_GUITARSET_DISCOVERY_FAMILY_SELECTED_20260902.md`;
+- creation commit `2dfb5e5a5f3b1ecb7195330de012a4c34a8df033`.
 
-Frozen exact discovery-family qualification requires: event-count identity; strictly positive primary macro and combined micro gains; nonnegative player-02/player-04 primary micro deltas; nonnegative strict50 combined micro delta; and **zero discovery tracks with negative primary TP delta**. Deterministic selection is highest primary combined micro gain, then macro, then strict50 micro, then fewest changes, then lexical ID.
-
-No exact family score has run yet. Player `05` remains unread for V4 references.
+Only `H72-D035` may proceed to confirmation. `H72-D025` and `H72-D030` are closed for confirmation. Player `05` V4 referenceRead=false; player-05 confirmation score calls=0. GuitarSet prospective score calls=0. V168 score calls=0.
 
 ## NEXT SAFE ACTION
 
-1. Run exactly one exact multi-event V4 family score on discovery players `02/04` only using the frozen evaluator/family and immutable candidate artifact.
-2. If no config qualifies, close V4 family and keep player `05` unread.
-3. If one config is selected, immediately checkpoint its exact discovery score and then freeze a separate one-shot player-`05` confirmation scorer/gate **before** any player-05 V4 reference use.
-4. Do not touch prospective evaluation players `00/01/03` unless a later frozen player-05 confirmation passes.
-5. GOAT approval remains the independent primary V168 path; on approval follow the frozen GOAT intake sequence before any V168 arm.
+1. Before reading any player-`05` V4 reference, freeze a separate one-shot confirmation contract and scorer for **only `H72-D035`**.
+2. Confirmation gate must be fixed before the run and fail closed without threshold tuning. Recommended frozen conditions: event-count identity; primary macro gain >0; primary combined micro gain >0; strict50 combined micro non-regression; no player-05 track primary TP loss.
+3. Run static/synthetic guards first. Save CURRENT_STATE again before any real player-05 reference use.
+4. Then run exactly one player-05 confirmation. If the scientific gate fails, close V4 without weakening it. If it passes, checkpoint before designing any prospective `00/01/03` workflow.
+5. Prospective players `00/01/03` remain sealed now. GOAT remains the independent primary V168 path.
 
 ## Standing methodology
 
