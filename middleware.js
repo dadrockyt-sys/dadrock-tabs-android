@@ -100,10 +100,15 @@ export function middleware(request) {
 
   // Forward the URL locale to Server Components so the root <html lang> can
   // be rendered correctly in the initial HTML response (not patched client-side).
-  const continueWithLocale = (locale = 'en') => {
+  // Locale subpages are visitor-facing translations, not independent search
+  // landing pages, so they also receive an explicit noindex response header.
+  const continueWithLocale = (locale = 'en', noindex = false) => {
     const requestHeaders = new Headers(request.headers);
     requestHeaders.set('x-dadrock-lang', locale);
     const response = NextResponse.next({ request: { headers: requestHeaders } });
+    if (noindex) {
+      response.headers.set('X-Robots-Tag', 'noindex, follow');
+    }
     return addSecurityHeaders(response);
   };
   
@@ -333,13 +338,15 @@ export function middleware(request) {
     return continueWithLocale('en');
   }
 
-  // If it's just the locale root, let [lang]/page.js handle it
+  // Locale homepages remain independent indexable language landing pages.
   if (!restPath || restPath === '' || restPath === '/') {
     return continueWithLocale(matchedLocale);
   }
 
-  // Let translated subpaths like /es/artist/acdc load normally
-  return continueWithLocale(matchedLocale);
+  // Translated subpaths stay fully usable for visitors while being kept out of
+  // search results. Crawlers are allowed so they can see both noindex and the
+  // English rel=canonical emitted by the route metadata.
+  return continueWithLocale(matchedLocale, matchedLocale !== 'en');
 }
 
 export const config = {
