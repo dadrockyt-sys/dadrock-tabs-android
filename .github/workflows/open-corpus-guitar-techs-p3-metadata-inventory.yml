@@ -1,0 +1,94 @@
+name: Open corpus Guitar-TECHS P3 metadata inventory
+
+on:
+  push:
+    branches:
+      - v143-contextual-prune-lobo
+    paths:
+      - .github/workflows/open-corpus-guitar-techs-p3-metadata-inventory.yml
+  workflow_dispatch:
+
+jobs:
+  inventory:
+    runs-on: ubuntu-24.04
+    permissions:
+      contents: read
+    steps:
+      - name: Checkout exact branch commit
+        uses: actions/checkout@v4
+
+      - name: Download and verify public P3 archive
+        shell: bash
+        run: |
+          set -euo pipefail
+          mkdir -p "$RUNNER_TEMP/guitar-techs-p3"
+          cd "$RUNNER_TEMP/guitar-techs-p3"
+          curl -L --fail --retry 3 --retry-delay 3 \
+            'https://zenodo.org/records/14963133/files/P3_music.zip?download=1' \
+            -o P3_music.zip
+          echo '071ba80aecf00f4a31fbd167b3f22198  P3_music.zip' | md5sum -c -
+          sha256sum P3_music.zip | tee archive-sha256.txt
+
+      - name: Build path-only ZIP inventory
+        shell: python
+        run: |
+          import json
+          import os
+          import zipfile
+          from collections import Counter
+          from pathlib import Path
+
+          root = Path(os.environ['RUNNER_TEMP']) / 'guitar-techs-p3'
+          archive = root / 'P3_music.zip'
+          rows = []
+          extensions = Counter()
+          with zipfile.ZipFile(archive) as zf:
+              for info in zf.infolist():
+                  suffix = Path(info.filename).suffix.lower() or '<none>'
+                  extensions[suffix] += 1
+                  rows.append({
+                      'name': info.filename,
+                      'uncompressedBytes': info.file_size,
+                      'compressedBytes': info.compress_size,
+                      'crc32': f'{info.CRC:08x}',
+                      'extension': suffix,
+                      'isDirectory': info.is_dir(),
+                  })
+
+          payload = {
+              'schema': 'dadrock.tabs.open-corpus.zip-inventory.v1',
+              'dataset': 'Guitar-TECHS',
+              'zenodoRecord': '14963133',
+              'scope': 'P3_music',
+              'archive': 'P3_music.zip',
+              'officialMd5': '071ba80aecf00f4a31fbd167b3f22198',
+              'entryCount': len(rows),
+              'extensions': dict(sorted(extensions.items())),
+              'entries': rows,
+              'fileContentsRead': False,
+              'referenceNoteEventsRead': False,
+              'candidateGenerated': False,
+              'v168ReferenceFacingScoreCalls': 0,
+              'v168PoliciesModified': False,
+              'goatHoldoutSelectionModified': False,
+          }
+          out = root / 'p3-music-inventory.json'
+          out.write_text(json.dumps(payload, indent=2, sort_keys=True) + '\n', encoding='utf-8')
+          print(json.dumps({k: payload[k] for k in ['dataset','scope','entryCount','extensions','fileContentsRead','referenceNoteEventsRead','candidateGenerated','v168ReferenceFacingScoreCalls']}, indent=2, sort_keys=True))
+          print('PATHS')
+          for row in rows:
+              print(row['name'])
+
+      - name: Hash inventory report
+        shell: bash
+        run: sha256sum "$RUNNER_TEMP/guitar-techs-p3/p3-music-inventory.json" | tee "$RUNNER_TEMP/guitar-techs-p3/inventory-sha256.txt"
+
+      - name: Preserve metadata-only inventory
+        uses: actions/upload-artifact@v4
+        with:
+          name: guitar-techs-p3-music-metadata-inventory
+          path: |
+            ${{ runner.temp }}/guitar-techs-p3/archive-sha256.txt
+            ${{ runner.temp }}/guitar-techs-p3/p3-music-inventory.json
+            ${{ runner.temp }}/guitar-techs-p3/inventory-sha256.txt
+          retention-days: 30
