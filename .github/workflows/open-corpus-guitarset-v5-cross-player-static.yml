@@ -1,0 +1,82 @@
+name: Open corpus GuitarSet V5 cross-player static guards
+
+on:
+  workflow_dispatch:
+  push:
+    branches:
+      - v143-contextual-prune-lobo
+    paths:
+      - .github/workflows/open-corpus-guitarset-v5-cross-player-static.yml
+
+permissions:
+  contents: read
+
+jobs:
+  static-self-test:
+    runs-on: ubuntu-24.04
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Verify frozen V5 identities
+        shell: bash
+        run: |
+          set -euo pipefail
+          test "$(git hash-object validation/open_corpus/evaluate_guitarset_v5_cross_player_development.py)" = "8a38a0c812fb1979fe01ccad711d3f8e72813d26"
+          test "$(git hash-object validation/open_corpus/score_guitarset_v3_development_candidates.py)" = "19ef54155735a6ac1e65441250b47d1572ac0380"
+          test -f docs/checkpoints/OPEN_CORPUS_V5_GUITARSET_CROSS_PLAYER_DEVELOPMENT_PREREGISTRATION_20260902.md
+          echo V5_CROSS_PLAYER_BLOB_GUARDS_PASS
+
+      - name: Static isolation and family guards
+        shell: python
+        run: |
+          import ast
+          from pathlib import Path
+          p=Path('validation/open_corpus/evaluate_guitarset_v5_cross_player_development.py')
+          text=p.read_text()
+          tree=ast.parse(text)
+          imports=set()
+          for n in ast.walk(tree):
+              if isinstance(n,ast.Import): imports.update(a.name.split('.')[0] for a in n.names)
+              elif isinstance(n,ast.ImportFrom) and n.module: imports.add(n.module.split('.')[0])
+          bad=sorted(imports & {'basic_pitch','soundfile','librosa','torch'})
+          if bad: raise SystemExit(f'forbidden V5 imports: {bad}')
+          for token in ['predict(', 'load_mono_audio', '.wav', '--audio-root']:
+              if token in text: raise SystemExit(f'forbidden audio/generation surface: {token}')
+          required=[
+              'PITCH_FLOORS = (72, 76, 79)',
+              'MAX_DURATIONS = (0.20, 0.25, 0.30, 0.35)',
+              'ADVANTAGE_THRESHOLDS = (0.05, 0.10, 0.15, 0.20)',
+              'CONSENSUS_THRESHOLD = 1.00',
+              'MIN_CHANGED_PER_PLAYER = 5',
+              'ordinary_winner == baseline_pitch - 12',
+              '"eachPlayerPrimaryMicroGainStrictlyPositive"',
+              '"eachPlayerPrimaryMacroNotLower"',
+              '"eachPlayerStrict50MicroNotLower"',
+              '"eachPlayerNegativeTrackCountNoGreaterThanPositive"',
+          ]
+          for token in required:
+              if token not in text: raise SystemExit(f'missing frozen V5 token: {token}')
+          print('V5_CROSS_PLAYER_STATIC_ISOLATION_PASS')
+          print('v5DevelopmentScoreCalls=0')
+          print('guitarSetProspectiveEvaluationScoreCalls=0')
+          print('v168ReferenceFacingScoreCalls=0')
+
+      - name: Compile and self-test
+        shell: bash
+        run: |
+          set -euo pipefail
+          cd validation/open_corpus
+          python -m py_compile evaluate_guitarset_v5_cross_player_development.py
+          python evaluate_guitarset_v5_cross_player_development.py --self-test
+
+      - name: Reconfirm no real references or audio
+        shell: bash
+        run: |
+          printf '%s\n' \
+            'V5_CROSS_PLAYER_STATIC_PASS' \
+            'guitarSetDevelopmentJamsDownloaded=false' \
+            'guitarSetDevelopmentJamsNoteEventsRead=0' \
+            'basicPitchInferenceCalls=0' \
+            'guitarSetProspectiveEvaluationProcessed=false' \
+            'guitarSetProspectiveEvaluationScoreCalls=0' \
+            'v168ReferenceFacingScoreCalls=0'
