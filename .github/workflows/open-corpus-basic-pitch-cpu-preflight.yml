@@ -1,0 +1,95 @@
+name: Open corpus Basic Pitch CPU preflight
+
+on:
+  push:
+    branches:
+      - v143-contextual-prune-lobo
+    paths:
+      - .github/workflows/open-corpus-basic-pitch-cpu-preflight.yml
+  workflow_dispatch:
+
+jobs:
+  preflight:
+    runs-on: ubuntu-24.04
+    permissions:
+      contents: read
+    steps:
+      - name: Checkout exact branch commit
+        uses: actions/checkout@v4
+
+      - name: Set up Python 3.10
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.10'
+
+      - name: Install frozen CPU Basic Pitch runtime
+        run: |
+          python -m pip install --disable-pip-version-check \
+            numpy==1.26.4 \
+            tflite-runtime==2.14.0 \
+            basic-pitch==0.4.0
+
+      - name: Verify package/runtime/model identity
+        shell: python
+        run: |
+          import hashlib
+          import json
+          import platform
+          from pathlib import Path
+          import importlib.metadata as metadata
+          import basic_pitch
+          from basic_pitch import ICASSP_2022_MODEL_PATH, TFLITE_PRESENT, TF_PRESENT, CT_PRESENT, ONNX_PRESENT
+
+          model = Path(ICASSP_2022_MODEL_PATH)
+          digest = hashlib.sha256(model.read_bytes()).hexdigest()
+          expected = '3db297d54af8e01c6e5618245c956b1d71b6a2b978cb2dedb527173186552676'
+          if digest != expected:
+              raise SystemExit(f'Basic Pitch model SHA256 mismatch: {digest}')
+          if not TFLITE_PRESENT:
+              raise SystemExit('TFLite runtime not present')
+          if TF_PRESENT or CT_PRESENT or ONNX_PRESENT:
+              raise SystemExit(f'unexpected alternate inference runtime: TF={TF_PRESENT} CT={CT_PRESENT} ONNX={ONNX_PRESENT}')
+
+          print(json.dumps({
+              'status': 'BASIC_PITCH_CPU_IDENTITY_PASS',
+              'python': platform.python_version(),
+              'basicPitch': metadata.version('basic-pitch'),
+              'tfliteRuntime': metadata.version('tflite-runtime'),
+              'numpy': metadata.version('numpy'),
+              'modelPathSuffix': model.name,
+              'modelSha256': digest,
+              'tflitePresent': TFLITE_PRESENT,
+              'tensorflowPresent': TF_PRESENT,
+              'coremlPresent': CT_PRESENT,
+              'onnxPresent': ONNX_PRESENT,
+              'cudaUsed': False,
+              'p3AudioRead': False,
+              'p3ReferenceRead': False,
+              'v168ReferenceFacingScoreCalls': 0,
+          }, indent=2, sort_keys=True))
+
+      - name: Synthetic one-second inference smoke test
+        shell: python
+        run: |
+          import json
+          import math
+          import tempfile
+          from pathlib import Path
+          import numpy as np
+          import soundfile as sf
+          from basic_pitch.inference import predict
+
+          sr = 22050
+          t = np.arange(sr, dtype=np.float32) / sr
+          x = (0.25 * np.sin(2 * np.pi * 440.0 * t)).astype(np.float32)
+          with tempfile.TemporaryDirectory() as tmp:
+              wav = Path(tmp) / 'synthetic-a4.wav'
+              sf.write(wav, x, sr)
+              _, _, events = predict(wav)
+              print(json.dumps({
+                  'status': 'BASIC_PITCH_CPU_INFERENCE_PASS',
+                  'syntheticEventCount': len(events),
+                  'p3AudioRead': False,
+                  'p3ReferenceRead': False,
+                  'v168ReferenceFacingScoreCalls': 0,
+              }, indent=2, sort_keys=True))
