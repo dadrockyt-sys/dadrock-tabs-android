@@ -85,14 +85,6 @@ export async function generateMetadata({ params }) {
         'name': 'DadRock Tabs',
         'description': descriptions.en,
         'inLanguage': locales,
-        'potentialAction': {
-          '@type': 'SearchAction',
-          'target': {
-            '@type': 'EntryPoint',
-            'urlTemplate': `${baseUrl}/search?q={search_term_string}`
-          },
-          'query-input': 'required name=search_term_string'
-        }
       },
       {
         '@type': 'Organization',
@@ -205,8 +197,7 @@ export async function generateMetadata({ params }) {
       images: ['https://customer-assets.emergentagent.com/job_music-tab-finder/artifacts/qsso7cx0_dadrockmetal.png'],
     },
     robots: {
-      // NOINDEX locale pages — they're UI translations of the same English content
-      // This prevents "Alternate page with proper canonical tag" GSC errors
+      // Language homepages are independent, indexable landing pages.
       index: true,
       follow: true,
       googleBot: {
