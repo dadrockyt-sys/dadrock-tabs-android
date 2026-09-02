@@ -23,7 +23,7 @@ Branch: `v143-contextual-prune-lobo`
 
 ## V167 immutable handoff
 
-Promoted I005 Guitar F1 **42.7940586109996%**, precision **48.54280510018215%**, recall **38.26274228284279%**, TP/pred/ref **533/1098/1393**; Bass F1 **80.45325779036827%**. Highest unpromoted `recur-gap1-earliest` = **42.88012872083669%**, +**0.08607010983709418pp**, below the frozen +0.10pp threshold. No I006.
+Promoted I005 Guitar F1 **42.7940586109996%**, precision **48.54280510018215%**, recall **38.26274228284279%**, TP/pred/ref **533/1098/1393**; Bass F1 **80.45325779036827%**. Highest unpromoted `recur-gap1-earliest` = **42.88012872083669%**, +**0.08607010983709418pp**, below frozen +0.10pp threshold. No I006.
 
 ## SplitMySong diagnostic — terminal fail-closed
 
@@ -35,73 +35,79 @@ Exactly one private observation: `FAIL_CLOSED_NO_CANDIDATE`; 1421/1471 required 
 
 Preregistration: `docs/checkpoints/OPEN_CORPUS_BREAKTHROUGH_PREREGISTRATION_20260901.md`, commit `f0b966df4881311456b5c455161431d8a771114e`.
 
-This is V169-style development only. No GOAT/Lenny reference tuning, no V168 mutation, no commercial-tab scraping, and no third-party audio committed to the repo.
+### Harmonic signal and controlled V2 pass
 
-### Replicated harmonic-fundamental signal
+Known-reference harmonic study replicated 558/558 lower-vs-+12 choices across P1/P2 DI + mic/amp, including weak 137/137 and very weak 69/69.
 
-Frozen study script: `validation/open_corpus/analyze_guitar_techs_harmonic_octave_v169.py`, creation commit `3f67a134f646cc35f12e9c49e545e8b0c1df5fd1`.
+Candidate-ranking V1 failed synthetic guards before real ranking and is terminal.
 
-P1 checkpoint: `docs/checkpoints/OPEN_CORPUS_GUITAR_TECHS_P1_HARMONIC_RESULT_20260902.md`, commit `5ef3a3dff39e46e31527e2ef7824a655338a2539`.
-
-P2 checkpoint: `docs/checkpoints/OPEN_CORPUS_GUITAR_TECHS_P2_HARMONIC_CONFIRMATION_20260902.md`, commit `4b6333f40c9c419bc7db6933c9b2497671a9fca7`.
-
-Earlier known-reference harmonic comparison was 558/558 correct lower-vs-+12 choices across P1/P2 DI + mic/amp, including 137/137 weak and 69/69 very-weak cases. That motivated candidate-ranking V2 but was not an end-to-end candidate-selection test.
-
-## Candidate-ranking V1 — terminal
-
-V1 failed its prospective synthetic weak-fundamental guard before real ranking data. See `docs/checkpoints/OPEN_CORPUS_HARMONIC_CANDIDATE_RANKING_V1_SYNTHETIC_FAIL_20260902.md`, commit `a506577498dce1583913e0a1fe23de1d0611f45e`. Real V1 ranking observations = 0. Do not reuse V1.
-
-## Candidate-ranking V2 — CONTROLLED FEATURE PASS
-
-Dedicated result checkpoint:
+Candidate-ranking V2 dedicated result:
 - `docs/checkpoints/OPEN_CORPUS_HARMONIC_CANDIDATE_RANKING_V2_PASS_20260902.md`;
 - creation commit `38df953a637c12359a844b239bce08897c710c32`.
 
-Frozen evaluator:
+Frozen V2 evaluator:
 - `validation/open_corpus/evaluate_harmonic_candidate_ranking_v2_v169.py`;
-- creation commit `b2544a2c84bfbf75797be19481540286cd57a514`;
-- Git blob `95e1e7d20a4bb5b15962cb803fa2da4d065743ae`.
+- Git blob `95e1e7d20a4bb5b15962cb803fa2da4d065743ae`;
+- formula `C/(1+0.50*L/(C+eps)); Q=(E/M)^0.25`;
+- controlled candidates `{midi-12,midi,midi+12}`.
 
-Frozen formula: `C/(1+0.50*L/(C+eps)); Q=(E/M)^0.25`; controlled candidate set `{midi-12,midi,midi+12}`.
+Serialization-only recovered Actions run `33577664874`, job `100085059794`: **SUCCESS** and `CANDIDATE_FEATURE_PASS` with no frozen gate failures.
 
-Original run `33576456720` passed the four synthetic guards and verified P1/P2, but failed only during JSON serialization after the first real P1-DI in-memory computation. The frozen evaluator was not edited. A preregistered serialization-only adapter recovered the reports.
+Controlled results:
+- P1 DI 142/142; P1 mic/amp 142/142;
+- P2 DI 137/137; P2 mic/amp 137/137;
+- combined **558/558 = 100%**;
+- weak **137/137 = 100%**;
+- very weak **69/69 = 100%**;
+- false-low = 0; false-high = 0.
 
-Recovery:
-- adapter `validation/open_corpus/serialize_harmonic_candidate_ranking_v2_v169.py`, creation commit `c6f22de0b018d68b641b88e838ee052fc45f2e80`;
-- workflow `.github/workflows/open-corpus-harmonic-candidate-ranking-v2-recovery.yml`, creation commit `d453a899e6e3e5588649e23600be32c3227f42b1`;
-- Actions run `33577664874`, job `100085059794`: **SUCCESS**;
-- exact evaluator/helper blob guards PASS;
-- original synthetic guards PASS;
-- serializer self-test PASS;
-- aggregate status **`CANDIDATE_FEATURE_PASS`**, frozen gate failures `[]`.
+Aggregate report SHA256 `f527313e5c24802eab1bc0c3ba38efdc3d3a08af9038eb4a5a22ea72d5d089b2`.
 
-Recovered controlled octave-ranking results:
-- P1 direct input: **142/142 = 100%**; weak 67/67; very weak 44/44; false low/high 0/0;
-- P1 mic/amp: **142/142 = 100%**; weak 40/40; very weak 21/21; false low/high 0/0;
-- P2 direct input: **137/137 = 100%**; weak 19/19; false low/high 0/0;
-- P2 mic/amp: **137/137 = 100%**; weak 11/11; very weak 4/4; false low/high 0/0.
+Interpretation: real controlled octave-disambiguation breakthrough, but not end-to-end transcription because the three-candidate neighborhood remained reference-centered.
 
-Combined: **558/558 = 100%**, weak **137/137 = 100%**, very weak **69/69 = 100%**, with zero false-low and zero false-high winners.
+## P3 music — unseen reference-blind bridge is now frozen
 
-Aggregate report SHA256: `f527313e5c24802eab1bc0c3ba38efdc3d3a08af9038eb4a5a22ea72d5d089b2`; artifact ID `9827261916`; artifact ZIP digest `0430246471afd5eafa8da6539502247028e13fc322bb41b90f6ee093c8291fe6`.
+Metadata-only inventory checkpoint:
+- `docs/checkpoints/OPEN_CORPUS_GUITAR_TECHS_P3_METADATA_INVENTORY_20260902.md`;
+- creation commit `cc1d9d3d4a168e6551935ab0445f20ea1e9134b4`.
 
-### Interpretation boundary
+P3 inventory workflow run `33577994728`, job `100086035966`: **SUCCESS**.
 
-This is a genuine controlled octave-disambiguation breakthrough: V2 selects among three competing pitches using audio-only scoring and the reference is consulted only after winner selection. However, the candidate neighborhood is still centered on the ground-truth pitch. Therefore this is **not 100% transcription accuracy** and does not yet prove reference-blind candidate discovery, onset discovery, polyphonic transcription, or full tab generation.
+P3 archive:
+- Zenodo record `14963133`, `P3_music.zip`;
+- official MD5 `071ba80aecf00f4a31fbd167b3f22198`;
+- observed SHA256 `033489e22600751fb5a1633e7d856b901c6782e0486fa02135e830780d9dbfe2`;
+- inventory SHA256 `e2237f182f8db4f896748a87b16b449eb42a06de03c3f98f06ace87dbe1e3765`;
+- artifact ID `9827368055`.
+
+Metadata paths show all 12 indices `01`–`12` have `midi_XX.mid`, `directinput_XX.wav`, `micamp_XX.wav`, plus ego/exo MP3. Inventory code did not open file contents; P3 reference note events read = **false**; P3 candidates = **none**.
+
+Reference-blind bridge preregistration:
+- `docs/checkpoints/OPEN_CORPUS_P3_REFERENCE_BLIND_OCTAVE_PREREGISTRATION_20260902.md`;
+- creation commit `75b4ee9613da84d4a097f486d67fec79e18eb40c`.
+
+Frozen P3 bridge design:
+- all 12 works, both DI + mic/amp = 24 capture-work units;
+- Basic Pitch 0.4.0 CPU/TFLite baseline with default thresholds and required model SHA256 `3db297d54af8e01c6e5618245c956b1d71b6a2b978cb2dedb527173186552676`;
+- each Basic Pitch event proposes `{p-12,p,p+12}` to the already-frozen V2 selector with alignment 0.0;
+- correction may replace pitch only; no adding/deleting/merging/dedup/time shifting;
+- candidate job extracts audio only, deletes source ZIP before candidate Python runs, freezes/hashes baseline and corrected streams;
+- separate scoring job then verifies candidate hashes, re-downloads exact archive, extracts MIDI only, and scores without rerunning candidate generation;
+- exact pitch, one-to-one onset matching; 100 ms primary and 50 ms strict secondary; no reference-driven alignment;
+- PASS requires >=+0.25pp corrected combined macro F1 at 100 ms, no micro-F1 regression per DI/micAmp at 100 ms, no combined micro regression at 50 ms, event-count identity and all artifact guards;
+- material regression conditions and `INCONCLUSIVE_NO_MATERIAL_GAIN` are prospectively frozen.
+
+At this checkpoint **no P3 MIDI reference event has been read and no P3 Basic Pitch inference/candidate has been run**.
 
 ## NEXT SAFE ACTION
 
-Bridge from controlled ranking to **reference-blind proposal + frozen V2 octave correction** on previously unused public musical material.
+1. Run a no-P3-data CPU preflight for Basic Pitch 0.4.0/TFLite 2.14.0 and verify the required model SHA256.
+2. Implement candidate-generator and scorer scripts exactly to the frozen P3 contract, with static guards that the candidate script exposes no reference/MIDI input.
+3. Save another checkpoint before the first P3 inference.
+4. Run the two-job reference-isolated P3 bridge once.
+5. Checkpoint PASS/FAIL/INCONCLUSIVE before any V3.
 
-Before any outcome is observed:
-1. inventory a previously unused public archive using metadata/path names only;
-2. freeze the exact reference-blind proposal engine, model identity, thresholds, event representation, V2 application rule, prediction-freeze/hash boundary, scorer, matching tolerances, and success/failure metrics;
-3. candidate generation must receive audio only and must freeze/hash predictions before reference MIDI/JAMS is opened by the scoring stage;
-4. use the frozen V2 evaluator without retuning any V2 formula/weights/timing based on P1/P2 outcomes;
-5. prefer a genuinely new player/material partition (Guitar-TECHS P3 music is a strong candidate) so P1/P2 single-note outcomes are not recycled as the next validation set;
-6. checkpoint all results before considering any V3.
-
-Public Zenodo record `14963133` describes Guitar-TECHS P3 `Music` as full musical excerpts with synchronized per-string MIDI and provides `P3_music.zip`; P3 has not been used in the V2 candidate-ranking outcomes above.
+No P3-driven tuning of Basic Pitch thresholds or V2 weights is permitted.
 
 GOAT approval remains independent; if it arrives, follow the already-frozen GOAT intake/admission sequence before any V168 candidate/scorer arm.
 
