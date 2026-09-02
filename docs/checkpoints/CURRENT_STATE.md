@@ -12,7 +12,6 @@ Branch: `v143-contextual-prune-lobo`
 - GOAT restricted access request for Zenodo `15690894` / DOI `10.5281/zenodo.15690894` v1 is awaiting explicit owner approval/denial.
 - No restricted GOAT bytes admitted; V168 prospective reference-facing score calls = **0**.
 - Frozen V168 Policy A/B, validators, GOAT selection contract and promotion gate unchanged.
-- GOAT pre-access static run `33569762190`, job `100060930936`: SUCCESS.
 - No GOAT candidate/scorer adapter armed. `main` / Production untouched.
 - CPU only; fresh explicit authorization required immediately before GPU/CUDA/Modal.
 
@@ -25,11 +24,11 @@ V167 promoted I005 Guitar F1 **42.7940586109996%**; highest unpromoted gap1 earl
 
 SplitMySong remains terminal `FAIL_CLOSED_NO_CANDIDATE`: exactly one private observation, 1421/1471 required steps covered, 50 missing, candidate=false, referenceRead=false, scorerRead=false. Never rerun/score/weaken/interpolate.
 
-P3 Guitar-TECHS reference-blind octave bridge remains terminal scientific `REFERENCE_BLIND_OCTAVE_CORRECTION_FAIL`; never mine P3 per-event outcomes for V3. Frozen aggregate lesson only: V2 needs a conservative intervention trigger.
+P3 Guitar-TECHS bridge remains terminal `REFERENCE_BLIND_OCTAVE_CORRECTION_FAIL`; never mine it for V3. Controlled V2 P1/P2 result remains 558/558 correct when the octave ambiguity is already known.
 
-## V3 GuitarSet — provenance frozen, prospective evaluation sealed
+## V3 GuitarSet provenance / split
 
-GuitarSet v1.1.0 archive identities:
+Frozen GuitarSet v1.1.0 identities:
 - `audio_mono-mic.zip` SHA256 `237cdc58353d25c3c9683f4565a0f1cf2db30a9051abca545a919f8f1296dc28`;
 - `annotation.zip` SHA256 `8daa02e6417ccca1685feb44b135e95928ad7037e5032ecb326b5791856fda99`.
 
@@ -40,68 +39,71 @@ Frozen V3 code:
 - development candidate generator blob `61068cee19132c40f3d0b15231d64ea3d428e1ca`;
 - development scorer blob `19ef54155735a6ac1e65441250b47d1572ac0380`.
 
-Frozen trigger family: consensus `{0.75,1.00}` × median advantage `{0.05,0.10,0.15,0.20}`. Qualification remains event identity, >=+0.25pp primary macro gain, primary combined micro non-regression, each-player primary micro delta >=-0.10pp, strict50 combined micro non-regression; among qualifiers select fewest changed pitches first.
+Frozen trigger family: consensus `{0.75,1.00}` × median advantage `{0.05,0.10,0.15,0.20}`. Qualification: event identity, >=+0.25pp primary macro gain, primary combined micro non-regression, each-player primary micro delta >=-0.10pp, strict50 combined micro non-regression; among qualifiers select fewest changed pitches first.
 
-## V3 development candidates — FROZEN / AUTHORITATIVE
+## V3 development candidates — authoritative
 
-Original run `33581322528`, Job A `100096037798`: SUCCESS.
+Original run `33581322528`, candidate job `100096037798`: SUCCESS.
 
-Exactly 177 admissible development microphone tracks processed on CPU/TFLite only. Frozen candidate summary:
-- baseline events: **29,245**;
-- ordinary V2 proposal events: **10,693**;
-- trigger-eligible events: **10,642**;
-- changed pitches: `C075-M005` 5869, `C075-M010` 4012, `C075-M015` 2685, `C075-M020` 1732, `C100-M005` 4881, `C100-M010` 3546, `C100-M015` 2457, `C100-M020` 1620;
+- 177 admissible development tracks only;
+- baseline events **29,245**;
+- ordinary V2 proposals **10,693**;
+- trigger-eligible events **10,642**;
 - candidate manifest SHA256 `4568ca0c5f25ba11f17074b43b21e135eb44357c04a963266c61457038120a83`;
-- artifact ID `9828683652`, ZIP digest `sha256:1031aaf913b6292ee961051fed76b91bf003139ab6d3f8db1dad5d0dded270c5`.
+- candidate artifact ID `9828683652`, ZIP SHA256 `1031aaf913b6292ee961051fed76b91bf003139ab6d3f8db1dad5d0dded270c5`.
 
-**Never regenerate these candidates for this development study.**
+Changed pitches: `C075-M005` 5869, `C075-M010` 4012, `C075-M015` 2685, `C075-M020` 1732, `C100-M005` 4881, `C100-M010` 3546, `C100-M015` 2457, `C100-M020` 1620.
 
-## V3 scorer recovery status — scientific result still unobserved
+**Never regenerate these candidates for this V3 study.**
 
-### Original scorer job
+## V3 development result — TERMINAL `NO_DEVELOPMENT_SIGNAL`
 
-Run `33581322528`, Job B `100097954531`: mechanical pre-reference failure because `candidate-manifest-sha256.txt` stored Job A's absolute temporary path. No JAMS reference download or scoring occurred.
+After two checkpointed mechanical scorer-recovery issues (absolute-path checksum receipt, then JAMS 0.3.4 / NumPy 2.x incompatibility), the scorer-only runtime recovery changed only the runtime pin to `numpy==1.26.4` with unchanged `jams==0.3.4`.
 
-Recovery checkpoint commit `63de07c41db5322b5e0330339552f14dfc677c78`.
+Successful recovery:
+- workflow creation commit `fea2d10cdeeae39424abd6dd5cd94792d01614ce`;
+- run `33582451429`;
+- job `100099402236`: **SUCCESS**;
+- original artifact identity and all 177 candidate hashes reverified before references;
+- exact 177 development JAMS references only; no players `00/01/03`, no anomaly files;
+- Basic Pitch unavailable in scorer runtime; candidateRegenerated=false.
 
-### Scorer path recovery
+Frozen score report:
+- `guitarset-v3-development-score.json` SHA256 `80f68643e11644d085674ddbb1771d7bd6502bcc328c94d3cc356aea1a7af057`;
+- report artifact ID `9828894162`;
+- artifact ZIP SHA256 `569252da6d45a38e6661a5f26feb1cbbda2c0971c54e979c30470037b2d1087b`.
 
-Recovery workflow commit `b5577db4bb9f929d6307b303f78188adf14dd730`; run `33582237435`, job `100098746109`.
+Baseline on 177 development tracks / 28,115 reference events:
+- primary macro F1 **80.3621313923964%**;
+- primary micro F1 **76.62482566248256%**;
+- strict50 micro F1 **74.51882845188284%**.
 
-Before references it successfully:
-- bound original run/head/artifact ID/name/digest;
-- downloaded the original artifact only;
-- directly verified manifest SHA256 `4568ca0c5f25ba11f17074b43b21e135eb44357c04a963266c61457038120a83`;
-- rehashed all 177 candidate JSONs successfully;
-- proved no WAV/JAMS/ZIP in the candidate artifact, no evaluation candidates, no Basic Pitch runtime, and candidateRegenerated=false.
+**None of the 8 frozen V3 configurations qualified.** `qualifiedConfigIds=[]`; `selectedConfig=null`; event-count identity=true.
 
-It then verified `annotation.zip` and extracted exactly the same 177 development JAMS files (`02`=59, `04`=58, `05`=60), with no `00/01/03` and no excluded anomalies.
+All configurations regressed macro, primary micro and strict50 micro. Least harmful was the strictest/fewest-change `C100-M020`:
+- changed pitches **1620 / 29245 = 5.539408445888186%**;
+- primary macro F1 **79.36093022561383%**, delta **-1.0012011667825789pp**;
+- primary micro F1 **75.09414225941423%**, delta **-1.5306834030683376pp**;
+- strict50 micro delta **-1.509762900976284pp**;
+- player primary micro deltas: `02` -2.5933119848810975pp, `04` -0.6761529922292766pp, `05` -1.3518628670307749pp.
 
-Scoring failed mechanically on the first lazy `import jams`: `jams==0.3.4` pulled `numpy==2.2.6`, but JAMS 0.3.4 uses `np.float_`, removed in NumPy 2.x. Failure occurred before `jams.load` completed and before any note event was interpreted.
+Dedicated terminal checkpoint:
+- `docs/checkpoints/OPEN_CORPUS_V3_GUITARSET_NO_DEVELOPMENT_SIGNAL_20260902.md`;
+- creation commit `cd6e06687d3a5c8f7a0a4c4588ed78f3fd711f3a`.
 
-Therefore now:
-- development reference JAMS files were mechanically extracted in the failed recovery run;
-- development JAMS note events interpreted/read by scorer: **0**;
-- completed development score calls: **0**;
-- baseline/config metrics: **none**;
-- scientific V3 development status: **NOT YET OBSERVED**;
-- prospective evaluation processed=false; prospective evaluation score calls=0;
-- V168 prospective reference-facing score calls=0.
+### Frozen consequence
 
-Dedicated runtime checkpoint:
-- `docs/checkpoints/OPEN_CORPUS_V3_GUITARSET_DEVELOPMENT_JAMS_NUMPY_RUNTIME_RECOVERY_20260902.md`
-- creation commit `b8933a36b6cea21e00c8c247f906b7c7e5ed5c58`.
+The current V3 eight-config trigger family is **closed / terminal**. Do not weaken its gate, select a least-bad configuration, or run it on GuitarSet evaluation players `00/01/03`.
+
+GuitarSet development score calls = **1**. Prospective evaluation processed=false; prospective evaluation score calls=**0**. V168 prospective reference-facing score calls=**0**.
 
 ## NEXT SAFE ACTION
 
-1. Make exactly one mechanical recovery change: pin `numpy==1.26.4` with unchanged `jams==0.3.4` in the scorer-only recovery workflow. NumPy 1.26.4 retains `np.float_` and was already used in the V3 static environment.
-2. Do not change scorer code, trigger, candidates, thresholds, matching, split, anomaly exclusions, or selection rule.
-3. Reuse and reverify the original frozen candidate artifact and all 177 per-file hashes before references.
-4. Process only the same 177 development JAMS files; no evaluation players.
-5. If scoring completes, immediately checkpoint the frozen scientific classification (`V3_DEVELOPMENT_TRIGGER_SELECTED` or `NO_DEVELOPMENT_SIGNAL`) before any prospective-evaluation work.
-6. If another mechanical runtime failure occurs before metrics are produced, fail closed and checkpoint it before any correction.
-
-GOAT approval remains independent; on approval follow the frozen GOAT intake sequence before any V168 arm.
+1. Keep GuitarSet evaluation players `00/01/03` sealed. Do **not** run V3 prospective evaluation.
+2. If continuing the open-corpus lane, begin a distinctly named **V4 development-only hypothesis-generation phase** on already-consumed development players `02/04/05`.
+3. Before any new per-event reference analysis, preregister the V4 exploratory question, allowed development data, forbidden evaluation data, and evidence outputs.
+4. V4 may use development evidence iteratively, but a future prospective evaluation is allowed only after the final V4 feature logic, candidate generation, scorer, selection rule and PASS/FAIL contract are frozen first.
+5. GOAT approval remains the independent primary V168 path; on approval follow the frozen GOAT intake sequence before any V168 arm.
 
 ## Standing methodology
 
