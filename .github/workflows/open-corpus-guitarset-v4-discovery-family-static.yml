@@ -1,0 +1,84 @@
+name: Open corpus GuitarSet V4 discovery family static guards
+
+on:
+  workflow_dispatch:
+  push:
+    branches:
+      - v143-contextual-prune-lobo
+    paths:
+      - .github/workflows/open-corpus-guitarset-v4-discovery-family-static.yml
+
+permissions:
+  contents: read
+
+jobs:
+  static-self-test:
+    runs-on: ubuntu-24.04
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Verify frozen evaluator identity
+        shell: bash
+        run: |
+          set -euo pipefail
+          test "$(git hash-object validation/open_corpus/evaluate_guitarset_v4_discovery_family.py)" = "254b495c55149725dae5795b83278787b4930869"
+          test "$(git hash-object validation/open_corpus/score_guitarset_v3_development_candidates.py)" = "19ef54155735a6ac1e65441250b47d1572ac0380"
+          echo V4_DISCOVERY_FAMILY_BLOB_GUARDS_PASS
+
+      - name: Static isolation and frozen-family guards
+        shell: python
+        run: |
+          import ast
+          from pathlib import Path
+          p=Path('validation/open_corpus/evaluate_guitarset_v4_discovery_family.py')
+          text=p.read_text()
+          tree=ast.parse(text)
+          imports=set()
+          for n in ast.walk(tree):
+              if isinstance(n,ast.Import): imports.update(a.name.split('.')[0] for a in n.names)
+              elif isinstance(n,ast.ImportFrom) and n.module: imports.add(n.module.split('.')[0])
+          bad=sorted(imports & {'basic_pitch','soundfile','librosa','torch'})
+          if bad: raise SystemExit(f'forbidden imports: {bad}')
+          for token in ['predict(', 'load_mono_audio', '.wav', '--audio-root']:
+              if token in text: raise SystemExit(f'forbidden audio/generation surface: {token}')
+          required=[
+              'DISCOVERY_PLAYERS = ("02", "04")',
+              'CONFIRMATION_PLAYER = "05"',
+              'EVAL_PLAYERS = ("00", "01", "03")',
+              '"H72-D025"', '"H72-D030"', '"H72-D035"',
+              '"minBaselinePitch": 72',
+              '"maxDurationSeconds": 0.25',
+              '"maxDurationSeconds": 0.30',
+              '"maxDurationSeconds": 0.35',
+              'ordinary_winner == baseline_pitch - 12',
+              '"noDiscoveryTrackPrimaryTPLoss"',
+          ]
+          for token in required:
+              if token not in text: raise SystemExit(f'missing frozen family token: {token}')
+          print('V4_DISCOVERY_FAMILY_STATIC_ISOLATION_PASS')
+          print('player05ReferenceRead=false')
+          print('player05ConfirmationScoreCalls=0')
+          print('guitarSetProspectiveEvaluationScoreCalls=0')
+          print('v168ReferenceFacingScoreCalls=0')
+
+      - name: Compile and self-test
+        shell: bash
+        run: |
+          set -euo pipefail
+          cd validation/open_corpus
+          python -m py_compile evaluate_guitarset_v4_discovery_family.py
+          python evaluate_guitarset_v4_discovery_family.py --self-test
+
+      - name: Reconfirm no real data use
+        shell: bash
+        run: |
+          printf '%s\n' \
+            'V4_DISCOVERY_FAMILY_STATIC_PASS' \
+            'guitarSetDevelopmentJamsDownloaded=false' \
+            'guitarSetDevelopmentJamsNoteEventsRead=0' \
+            'player05ReferenceRead=false' \
+            'player05ConfirmationScoreCalls=0' \
+            'basicPitchInferenceCalls=0' \
+            'guitarSetProspectiveEvaluationProcessed=false' \
+            'guitarSetProspectiveEvaluationScoreCalls=0' \
+            'v168ReferenceFacingScoreCalls=0'
