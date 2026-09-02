@@ -1,0 +1,86 @@
+name: Open corpus GuitarSet V4 player05 confirmation static guards
+
+on:
+  workflow_dispatch:
+  push:
+    branches:
+      - v143-contextual-prune-lobo
+    paths:
+      - .github/workflows/open-corpus-guitarset-v4-player05-confirmation-static.yml
+
+permissions:
+  contents: read
+
+jobs:
+  static-self-test:
+    runs-on: ubuntu-24.04
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Verify frozen confirmation identities
+        shell: bash
+        run: |
+          set -euo pipefail
+          test "$(git hash-object validation/open_corpus/confirm_guitarset_v4_player05.py)" = "794011aa78524226ec47e74ca8dd91008eef629a"
+          test "$(git hash-object validation/open_corpus/evaluate_guitarset_v4_discovery_family.py)" = "254b495c55149725dae5795b83278787b4930869"
+          test "$(git hash-object validation/open_corpus/score_guitarset_v3_development_candidates.py)" = "19ef54155735a6ac1e65441250b47d1572ac0380"
+          test -f docs/checkpoints/OPEN_CORPUS_V4_GUITARSET_PLAYER05_CONFIRMATION_PREREGISTRATION_20260902.md
+          echo V4_PLAYER05_CONFIRMATION_BLOB_GUARDS_PASS
+
+      - name: Static isolation and frozen gate guards
+        shell: python
+        run: |
+          import ast
+          from pathlib import Path
+          p=Path('validation/open_corpus/confirm_guitarset_v4_player05.py')
+          text=p.read_text()
+          tree=ast.parse(text)
+          imports=set()
+          for n in ast.walk(tree):
+              if isinstance(n,ast.Import): imports.update(a.name.split('.')[0] for a in n.names)
+              elif isinstance(n,ast.ImportFrom) and n.module: imports.add(n.module.split('.')[0])
+          bad=sorted(imports & {'basic_pitch','soundfile','librosa','torch'})
+          if bad: raise SystemExit(f'forbidden confirmation imports: {bad}')
+          for token in ['predict(', 'load_mono_audio', '.wav', '--audio-root']:
+              if token in text: raise SystemExit(f'forbidden audio/generation surface: {token}')
+          required=[
+              'CONFIRMATION_PLAYER = "05"',
+              'DISCOVERY_PLAYERS = ("02", "04")',
+              'EVAL_PLAYERS = ("00", "01", "03")',
+              '"id": "H72-D035"',
+              '"minBaselinePitch": 72',
+              '"maxDurationSeconds": 0.35',
+              '"primaryMacroGainStrictlyPositive"',
+              '"primaryCombinedMicroGainStrictlyPositive"',
+              '"strict50CombinedMicroNotLower"',
+              '"noPlayer05TrackPrimaryTPLoss"',
+          ]
+          for token in required:
+              if token not in text: raise SystemExit(f'missing frozen confirmation token: {token}')
+          print('V4_PLAYER05_CONFIRMATION_STATIC_ISOLATION_PASS')
+          print('player05ReferenceRead=false')
+          print('player05ConfirmationScoreCalls=0')
+          print('guitarSetProspectiveEvaluationScoreCalls=0')
+          print('v168ReferenceFacingScoreCalls=0')
+
+      - name: Compile and self-test
+        shell: bash
+        run: |
+          set -euo pipefail
+          cd validation/open_corpus
+          python -m py_compile confirm_guitarset_v4_player05.py
+          python confirm_guitarset_v4_player05.py --self-test
+
+      - name: Reconfirm no real reference use
+        shell: bash
+        run: |
+          printf '%s\n' \
+            'V4_PLAYER05_CONFIRMATION_STATIC_PASS' \
+            'guitarSetDevelopmentJamsDownloaded=false' \
+            'guitarSetDevelopmentJamsNoteEventsRead=0' \
+            'player05ReferenceRead=false' \
+            'player05ConfirmationScoreCalls=0' \
+            'basicPitchInferenceCalls=0' \
+            'guitarSetProspectiveEvaluationProcessed=false' \
+            'guitarSetProspectiveEvaluationScoreCalls=0' \
+            'v168ReferenceFacingScoreCalls=0'
