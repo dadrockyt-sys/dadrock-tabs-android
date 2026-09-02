@@ -116,7 +116,8 @@ export function middleware(request) {
 
     let cleanPath = pathname;
 
-    // Handle trailing slashes in the same hop
+    // Handle trailing slashes in the same hop. Every non-root URL uses the
+    // no-trailing-slash form, including language roots such as /fr and /de.
     if (cleanPath !== '/' && cleanPath.endsWith('/')) {
       const withoutSlash = cleanPath.slice(0, -1);
       const segment = withoutSlash.slice(1);
@@ -127,11 +128,9 @@ export function middleware(request) {
         cleanPath = '/zh';
       } else if (withoutSlash.match(/^\/sitemap-[a-z]{2}\.xml$/)) {
         cleanPath = '/sitemap.xml';
-      } else if (!locales.includes(segment)) {
-        // Strip trailing slash for non-locale-root paths
+      } else {
         cleanPath = withoutSlash;
       }
-      // locale roots like /fr/ keep trailing slash — served directly after redirect
     }
 
     // Handle default English locale in the same www canonicalization hop.
@@ -189,7 +188,8 @@ export function middleware(request) {
   }
 
   // ─── 4. Handle trailing slashes ───
-  // Eliminate redirect chains by combining trailing slash strip with known redirects
+  // Keep one URL form everywhere: all non-root trailing-slash URLs 301 directly
+  // to the same path without the slash.
   if (pathname !== '/' && pathname.endsWith('/')) {
     const withoutSlash = pathname.slice(0, -1);
     const segment = withoutSlash.slice(1); // e.g., '/zh/' → 'zh'
@@ -209,15 +209,9 @@ export function middleware(request) {
       return NextResponse.redirect(new URL('/sitemap.xml', request.url), 301);
     }
 
-    // Locale roots (/zh/, /fr/) → serve directly without redirect
-    if (locales.includes(segment)) {
-      // Fall through to locale handling below
-    } else {
-      // All other trailing slashes → redirect to clean URL
-      const cleanUrl = new URL(withoutSlash, request.url);
-      cleanUrl.search = request.nextUrl.search;
-      return NextResponse.redirect(cleanUrl, 301);
-    }
+    const cleanUrl = new URL(withoutSlash, request.url);
+    cleanUrl.search = request.nextUrl.search;
+    return NextResponse.redirect(cleanUrl, 301);
   }
 
   // ─── 4b. Strip trailing dashes from artist/song slugs ───
