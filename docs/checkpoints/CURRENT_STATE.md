@@ -51,28 +51,42 @@ Across P1/P2 direct-input + mic/amp, the unchanged lower-vs-+12 harmonic formula
 
 ## Candidate-ranking V1 — TERMINAL SYNTHETIC FAIL-FAST
 
-Preregistration:
-- `docs/checkpoints/OPEN_CORPUS_HARMONIC_CANDIDATE_RANKING_PREREGISTRATION_20260902.md`;
-- commit `cbff7cad113985bd141525304151df679c6a8c65`.
+Preregistration: `docs/checkpoints/OPEN_CORPUS_HARMONIC_CANDIDATE_RANKING_PREREGISTRATION_20260902.md`, commit `cbff7cad113985bd141525304151df679c6a8c65`.
 
-Dedicated failure checkpoint:
-- `docs/checkpoints/OPEN_CORPUS_HARMONIC_CANDIDATE_RANKING_V1_SYNTHETIC_FAIL_20260902.md`;
-- commit `a506577498dce1583913e0a1fe23de1d0611f45e`.
+Failure checkpoint: `docs/checkpoints/OPEN_CORPUS_HARMONIC_CANDIDATE_RANKING_V1_SYNTHETIC_FAIL_20260902.md`, commit `a506577498dce1583913e0a1fe23de1d0611f45e`.
 
-V1 evaluator creation commit `4a78c31c09f4bb4048b8a95793031c9f91e6fa59`; workflow commit `3cd9e0da9204859aa8348045e49e003f51ccd119`; Actions run `33576111277`, job `100080320038`.
+V1 Actions run `33576111277`, job `100080320038` failed before real P1/P2 ranking because synthetic weak-fundamental fixture chose +12. Real V1 ranking observations = 0. V1 is terminal and must not be reused.
 
-V1 failed **before any real P1/P2 archive download or candidate-ranking result**. Synthetic guard error:
-`RuntimeError: self-test wrong winner: expected 45, got 57`.
+## Candidate-ranking V2 — frozen; serialization-only recovery pending
 
-Thus real P1 candidate-ranking winner observations = **0** and real P2 candidate-ranking winner observations = **0**. V1 is rejected and must not be silently retuned/reused.
+Frozen evaluator:
+- `validation/open_corpus/evaluate_harmonic_candidate_ranking_v2_v169.py`;
+- creation commit `b2544a2c84bfbf75797be19481540286cd57a514`;
+- Git blob `95e1e7d20a4bb5b15962cb803fa2da4d065743ae`.
 
-Frozen diagnosis: V1 penalized an octave-too-high candidate only with literal power at `f/2`. When the true lower fundamental is weak, that misses the already-replicated lower-octave evidence at odd harmonics `3f/2`, `5f/2`, `7f/2`.
+Frozen V2 formula: `C/(1+0.50*L/(C+eps)); Q=(E/M)^0.25`, with lower-octave odd-harmonic coherence and candidate set `{midi-12,midi,midi+12}`.
+
+Actions run `33576456720`, job `100081401356`:
+- four synthetic guards: **PASS**;
+- P1/P2 archive official MD5 verification: **PASS**;
+- P1 SHA256 `130592ae5555476ea8e4070c0f3421794ef8b5e252dfa780745d07eedd0eb4a4`;
+- P2 SHA256 `d6b54e40d22113d6c0a663165cb2af63735897a35bb45fc6d0ed49c944b548d9`;
+- first real `P1-directInput` `evaluate_capture(...)` computation completed in memory;
+- serialization then failed on a NumPy `int64` before any real ranking summary was printed/written;
+- P1 mic/amp and both P2 captures did not run;
+- aggregate V2 gate did not run; no result artifact exists.
+
+Dedicated recovery-boundary checkpoint:
+- `docs/checkpoints/OPEN_CORPUS_HARMONIC_CANDIDATE_RANKING_V2_SERIALIZATION_RECOVERY_20260902.md`;
+- creation commit `7364a977feda3cd147567aa58810be446472540b`.
+
+Important: one real P1-DI ranking computation occurred, but **zero V2 real ranking summaries were exposed**. This is not a synthetic-only failure.
 
 ## NEXT SAFE ACTION
 
-Define **candidate-ranking V2 prospectively using synthetic physics only**, before any real P1/P2 candidate-ranking results. Replace V1's literal `f/2` penalty with lower-octave odd-harmonic coherence. Require V2 to pass multiple synthetic guards (normal harmonic decay, weak fundamental/strong H2-H3-H5, even-heavy distortion) before real public-corpus downloads/ranking are permitted.
+Run a **serialization-only V2 recovery** without editing the frozen evaluator blob. Add a separate adapter that imports the frozen `evaluate_capture(...)`, recursively converts NumPy scalars only after computation, verifies evaluator blob `95e1e7d20a4bb5b15962cb803fa2da4d065743ae`, reruns the original four synthetic guards plus a serializer guard, then reruns the unchanged four public Guitar-TECHS captures and the already-frozen V2 success gate.
 
-If synthetic guards pass, checkpoint exact V2 formula and then run P1/P2 controlled `{midi-12,midi,midi+12}` ranking under a new frozen V2 label. If V2 reaches real data, preserve the same prospective success gate and checkpoint results before any V3.
+No V2 weight/threshold/timing/candidate change is allowed. Checkpoint recovered PASS/FAIL before defining any V3.
 
 GOAT approval remains independent; if it arrives, follow the already-frozen GOAT intake/admission sequence before any V168 candidate/scorer arm.
 
