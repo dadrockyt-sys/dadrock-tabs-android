@@ -1,0 +1,268 @@
+name: Open corpus GuitarSet V3 development scorer runtime recovery
+
+on:
+  workflow_dispatch:
+  push:
+    branches:
+      - v143-contextual-prune-lobo
+    paths:
+      - .github/workflows/open-corpus-guitarset-v3-development-score-runtime-recovery.yml
+
+permissions:
+  contents: read
+  actions: read
+
+jobs:
+  recover-development-score:
+    name: Score frozen V3 candidates with NumPy 1.26.4
+    runs-on: ubuntu-24.04
+    timeout-minutes: 60
+    env:
+      ORIGINAL_RUN_ID: '33581322528'
+      ORIGINAL_HEAD_SHA: 'f494e5b2f586ec335b16dcabce687e63bb1f88fb'
+      CANDIDATE_ARTIFACT_ID: '9828683652'
+      CANDIDATE_ARTIFACT_NAME: 'guitarset-v3-development-frozen-candidates'
+      CANDIDATE_ARTIFACT_DIGEST: 'sha256:1031aaf913b6292ee961051fed76b91bf003139ab6d3f8db1dad5d0dded270c5'
+      CANDIDATE_MANIFEST_SHA256: '4568ca0c5f25ba11f17074b43b21e135eb44357c04a963266c61457038120a83'
+      FROZEN_SCORER_BLOB: '19ef54155735a6ac1e65441250b47d1572ac0380'
+
+    steps:
+      - name: Checkout recovery commit
+        uses: actions/checkout@v4
+
+      - name: Verify unchanged frozen scientific code
+        shell: bash
+        run: |
+          set -euo pipefail
+          test "$(git hash-object validation/open_corpus/score_guitarset_v3_development_candidates.py)" = "$FROZEN_SCORER_BLOB"
+          test "$(git hash-object validation/open_corpus/v3_selective_octave_trigger_v169.py)" = "14ddd15fc29bfe947a4e3ce12050b10f43d2435f"
+          test "$(git hash-object validation/open_corpus/generate_guitarset_v3_development_candidates.py)" = "61068cee19132c40f3d0b15231d64ea3d428e1ca"
+          echo GUITARSET_V3_RUNTIME_RECOVERY_FROZEN_CODE_PASS
+          echo candidateRegenerated=false
+          echo guitarSetProspectiveEvaluationProcessed=false
+          echo guitarSetProspectiveEvaluationScoreCalls=0
+          echo v168ReferenceFacingScoreCalls=0
+
+      - name: Verify original artifact metadata
+        shell: bash
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          set -euo pipefail
+          ROOT="$RUNNER_TEMP/guitarset-v3-runtime-recovery"
+          mkdir -p "$ROOT"
+          curl -fsSL \
+            -H "Authorization: Bearer $GH_TOKEN" \
+            -H 'Accept: application/vnd.github+json' \
+            -H 'X-GitHub-Api-Version: 2022-11-28' \
+            "https://api.github.com/repos/$GITHUB_REPOSITORY/actions/artifacts/$CANDIDATE_ARTIFACT_ID" \
+            -o "$ROOT/artifact-metadata.json"
+          python - <<'PY'
+          import json, os
+          from pathlib import Path
+          p=Path(os.environ['RUNNER_TEMP'])/'guitarset-v3-runtime-recovery/artifact-metadata.json'
+          a=json.loads(p.read_text())
+          wr=a.get('workflow_run') or {}
+          assert int(a['id'])==int(os.environ['CANDIDATE_ARTIFACT_ID'])
+          assert a['name']==os.environ['CANDIDATE_ARTIFACT_NAME']
+          assert a['expired'] is False
+          assert a.get('digest')==os.environ['CANDIDATE_ARTIFACT_DIGEST']
+          assert int(wr.get('id'))==int(os.environ['ORIGINAL_RUN_ID'])
+          assert wr.get('head_sha')==os.environ['ORIGINAL_HEAD_SHA']
+          print('GUITARSET_V3_RUNTIME_RECOVERY_ARTIFACT_IDENTITY_PASS')
+          PY
+          rm -f "$ROOT/artifact-metadata.json"
+
+      - name: Set up Python 3.10
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.10'
+
+      - name: Install frozen compatible reference runtime
+        shell: bash
+        run: |
+          set -euo pipefail
+          python -m pip install --disable-pip-version-check numpy==1.26.4 jams==0.3.4
+          python - <<'PY'
+          import importlib.util
+          import numpy as np
+          import jams
+          assert np.__version__ == '1.26.4', np.__version__
+          assert hasattr(np, 'float_')
+          if importlib.util.find_spec('basic_pitch') is not None:
+              raise SystemExit('basic_pitch unexpectedly importable in runtime recovery scorer')
+          print('GUITARSET_V3_JAMS_NUMPY_RUNTIME_COMPATIBILITY_PASS')
+          print('numpyVersion='+np.__version__)
+          print('jamsImport=true')
+          print('basicPitchImportable=false')
+          print('candidateRegenerated=false')
+          print('guitarSetDevelopmentScoreCalls=0')
+          print('guitarSetProspectiveEvaluationScoreCalls=0')
+          print('v168ReferenceFacingScoreCalls=0')
+          PY
+
+      - name: Download original frozen candidates
+        uses: actions/download-artifact@v4
+        with:
+          name: guitarset-v3-development-frozen-candidates
+          path: ${{ runner.temp }}/guitarset-v3-runtime-recovery/candidates
+          github-token: ${{ github.token }}
+          repository: dadrockyt-sys/dadrock-tabs-android
+          run-id: 33581322528
+
+      - name: Reverify manifest and all 177 candidate hashes before references
+        shell: bash
+        run: |
+          set -euo pipefail
+          CAND="$RUNNER_TEMP/guitarset-v3-runtime-recovery/candidates"
+          test "$(sha256sum "$CAND/candidate-freeze-manifest.json" | awk '{print $1}')" = "$CANDIDATE_MANIFEST_SHA256"
+          test "$(find "$CAND" -maxdepth 1 -type f -name '*.json' | wc -l)" -eq 178
+          test "$(find "$CAND" -type f \( -name '*.wav' -o -name '*.jams' -o -name '*.zip' \) | wc -l)" -eq 0
+          CAND="$CAND" python - <<'PY'
+          import hashlib, json, os
+          from pathlib import Path
+          root=Path(os.environ['CAND'])
+          def sha(path):
+              h=hashlib.sha256()
+              with path.open('rb') as f:
+                  for b in iter(lambda:f.read(1<<20),b''):
+                      h.update(b)
+              return h.hexdigest()
+          mp=root/'candidate-freeze-manifest.json'
+          assert sha(mp)==os.environ['CANDIDATE_MANIFEST_SHA256']
+          m=json.loads(mp.read_text())
+          assert m['candidateFileCount']==177
+          assert m['players']==['02','04','05']
+          assert m['sealedEvaluationPlayers']==['00','01','03']
+          assert set(m['excludedKnownAnomalies'])=={'04_BN3-154-E_comp','04_Jazz1-200-B_comp','02_Funk2-119-G_comp'}
+          assert m['referenceRead'] is False
+          assert m['guitarSetJamsNoteEventsRead']==0
+          assert m['guitarSetProspectiveEvaluationProcessed'] is False
+          assert m['guitarSetProspectiveEvaluationScoreCalls']==0
+          assert m['v168ReferenceFacingScoreCalls']==0
+          assert len(m['files'])==177
+          seen=set()
+          for r in m['files']:
+              path=root/r['file']
+              assert path.is_file()
+              assert sha(path)==r['sha256'], path.name
+              p=json.loads(path.read_text())
+              stem=p['trackStem']
+              assert stem not in seen
+              seen.add(stem)
+              assert stem[:2] in {'02','04','05'}
+              assert stem[:2] not in {'00','01','03'}
+              assert stem not in {'04_BN3-154-E_comp','04_Jazz1-200-B_comp','02_Funk2-119-G_comp'}
+          assert len(seen)==177
+          print('GUITARSET_V3_RUNTIME_RECOVERY_ALL_CANDIDATE_HASHES_PASS')
+          print('candidateFreezeManifestSha256='+sha(mp))
+          print('candidateFileCount=177')
+          print('guitarSetDevelopmentScoreCalls=0')
+          print('guitarSetProspectiveEvaluationScoreCalls=0')
+          print('v168ReferenceFacingScoreCalls=0')
+          PY
+
+      - name: Download verify and isolate the same 177 development JAMS
+        shell: bash
+        run: |
+          set -euo pipefail
+          ROOT="$RUNNER_TEMP/guitarset-v3-runtime-recovery"
+          mkdir -p "$ROOT/reference" "$ROOT/output"
+          cd "$ROOT"
+          curl -L --fail --retry 3 --retry-delay 3 \
+            'https://zenodo.org/records/3371780/files/annotation.zip?download=1' \
+            -o annotation.zip
+          echo 'b39b78e63d3446f2e54ddb7a54df9b10  annotation.zip' | md5sum -c -
+          echo '8daa02e6417ccca1685feb44b135e95928ad7037e5032ecb326b5791856fda99  annotation.zip' | sha256sum -c -
+          python - <<'PY'
+          import shutil, zipfile
+          from pathlib import Path
+          root=Path('.')
+          out=root/'reference'
+          dev={'02','04','05'}
+          excluded={'04_BN3-154-E_comp','04_Jazz1-200-B_comp','02_Funk2-119-G_comp'}
+          selected=[]
+          with zipfile.ZipFile(root/'annotation.zip','r') as z:
+              for info in z.infolist():
+                  name=Path(info.filename).name
+                  if not name.endswith('.jams'):
+                      continue
+                  stem=name[:-5]
+                  if stem[:2] not in dev or stem in excluded:
+                      continue
+                  dest=out/name
+                  if dest.exists(): raise SystemExit(f'duplicate destination {name}')
+                  with z.open(info,'r') as src, dest.open('wb') as dst:
+                      shutil.copyfileobj(src,dst)
+                  selected.append(stem)
+          assert len(selected)==177, len(selected)
+          counts={p:sum(s.startswith(p+'_') for s in selected) for p in sorted(dev)}
+          assert counts=={'02':59,'04':58,'05':60}, counts
+          assert not any(s[:2] in {'00','01','03'} for s in selected)
+          assert not any(s in excluded for s in selected)
+          print('GUITARSET_V3_RUNTIME_RECOVERY_REFERENCE_SELECTION_PASS',counts)
+          PY
+          rm -f annotation.zip
+          test "$(find reference -maxdepth 1 -type f -name '*.jams' | wc -l)" -eq 177
+          test "$(find "$ROOT" -type f -name '*.wav' | wc -l)" -eq 0
+          test "$(find reference -maxdepth 1 -type f \( -name '00_*' -o -name '01_*' -o -name '03_*' \) | wc -l)" -eq 0
+          echo GUITARSET_V3_RUNTIME_RECOVERY_REFERENCE_ONLY_WORKSPACE_PASS
+          echo guitarSetProspectiveEvaluationJamsNoteEventsRead=0
+          echo guitarSetProspectiveEvaluationScoreCalls=0
+          echo v168ReferenceFacingScoreCalls=0
+
+      - name: Score unchanged frozen development candidates
+        shell: bash
+        run: |
+          set -euo pipefail
+          ROOT="$RUNNER_TEMP/guitarset-v3-runtime-recovery"
+          python validation/open_corpus/score_guitarset_v3_development_candidates.py \
+            --candidate-dir "$ROOT/candidates" \
+            --reference-dir "$ROOT/reference" \
+            --output "$ROOT/output/guitarset-v3-development-score.json"
+          (cd "$ROOT/output" && sha256sum guitarset-v3-development-score.json > score-sha256.txt)
+
+      - name: Print frozen scientific classification
+        shell: python
+        run: |
+          import json, os
+          from pathlib import Path
+          p=Path(os.environ['RUNNER_TEMP'])/'guitarset-v3-runtime-recovery/output/guitarset-v3-development-score.json'
+          r=json.loads(p.read_text())
+          print(json.dumps({
+            'status':r['status'],
+            'candidateFreezeManifestSha256':r['candidateFreezeManifestSha256'],
+            'developmentTrackCount':r['developmentTrackCount'],
+            'totalReferenceEventCount':r['totalReferenceEventCount'],
+            'baselinePrimaryMacroF1Pct':r['baseline']['primary100ms']['macroF1Pct'],
+            'baselinePrimaryMicroF1Pct':r['baseline']['primary100ms']['micro']['f1Pct'],
+            'baselineStrict50MicroF1Pct':r['baseline']['strict50ms']['micro']['f1Pct'],
+            'qualifiedConfigIds':r['qualifiedConfigIds'],
+            'selectedConfig':r['selectedConfig'],
+            'totalChangedPitchCounts':r['totalChangedPitchCounts'],
+            'guitarSetDevelopmentScoreCalls':r['guitarSetDevelopmentScoreCalls'],
+            'guitarSetProspectiveEvaluationProcessed':r['guitarSetProspectiveEvaluationProcessed'],
+            'guitarSetProspectiveEvaluationScoreCalls':r['guitarSetProspectiveEvaluationScoreCalls'],
+            'v168ReferenceFacingScoreCalls':r['v168ReferenceFacingScoreCalls'],
+          },indent=2,sort_keys=True))
+
+      - name: Remove references and candidates before preserving report
+        if: always()
+        shell: bash
+        run: |
+          set -euo pipefail
+          ROOT="$RUNNER_TEMP/guitarset-v3-runtime-recovery"
+          rm -rf "$ROOT/reference" "$ROOT/candidates"
+          rm -f "$ROOT/annotation.zip" "$ROOT/artifact-metadata.json"
+          if [ -d "$ROOT/output" ]; then
+            test "$(find "$ROOT/output" -type f \( -name '*.jams' -o -name '*.wav' -o -name '*.zip' \) | wc -l)" -eq 0
+          fi
+
+      - name: Preserve runtime-recovery development score report
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: guitarset-v3-development-score-runtime-recovery-report
+          path: ${{ runner.temp }}/guitarset-v3-runtime-recovery/output/
+          retention-days: 30
+          if-no-files-found: ignore
