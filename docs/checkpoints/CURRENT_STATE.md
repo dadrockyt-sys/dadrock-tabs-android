@@ -24,77 +24,76 @@ V167 promoted I005 Guitar F1 **42.7940586109996%**; highest unpromoted gap1 earl
 
 SplitMySong remains terminal `FAIL_CLOSED_NO_CANDIDATE`: exactly one private observation, 1421/1471 required steps covered, 50 missing, candidate=false, referenceRead=false, scorerRead=false. Never rerun/score/weaken/interpolate.
 
-Controlled V2 Guitar-TECHS P1/P2 result remains 558/558 when an octave ambiguity is already known. P3 indiscriminate bridge remains terminal `REFERENCE_BLIND_OCTAVE_CORRECTION_FAIL`.
+## GuitarSet V3/V4 — terminal history
 
-## V3 GuitarSet — TERMINAL `NO_DEVELOPMENT_SIGNAL`
+Immutable candidate artifact from original run `33581322528`: manifest SHA256 `4568ca0c5f25ba11f17074b43b21e135eb44357c04a963266c61457038120a83`; artifact ID `9828683652`; ZIP SHA256 `1031aaf913b6292ee961051fed76b91bf003139ab6d3f8db1dad5d0dded270c5`.
 
-Development players `02/04/05`; prospective evaluation players `00/01/03` remain sealed. Frozen V3 scorer run `33582451429`, job `100099402236`: SUCCESS and terminal `NO_DEVELOPMENT_SIGNAL`. Never run V3 on `00/01/03`.
+V3 terminal `NO_DEVELOPMENT_SIGNAL`.
 
-Immutable candidate artifact:
-- original run `33581322528`;
-- manifest SHA256 `4568ca0c5f25ba11f17074b43b21e135eb44357c04a963266c61457038120a83`;
-- artifact ID `9828683652`;
-- ZIP SHA256 `1031aaf913b6292ee961051fed76b91bf003139ab6d3f8db1dad5d0dded270c5`.
+V4 discovery selected `H72-D035` on players `02/04`, but frozen one-shot player-05 confirmation failed:
+- run `33584451308`, job `100105524472`;
+- changed 91 pitches across 60 tracks;
+- primary macro delta **-0.0701653918423375 pp**;
+- primary micro delta **-0.05407451468121849 pp**;
+- strict50 micro delta **-0.0540745146812327 pp**;
+- 1 positive / 56 neutral / 3 negative primary-TP tracks;
+- terminal `V4_PLAYER05_CONFIRMATION_FAIL`.
 
-## V4 GuitarSet — CLOSED / TERMINAL
+Confirmation report SHA256 `3feb63042c670690221901906045520f17faa01d02a461c01b805ea68867d722`; artifact ID `9829578804`; ZIP SHA256 `556d301e3466a9f6064d52ccd3e37410b492fac147e20e7833ed8bde65dff300`.
 
-Discovery players `02/04` only identified a conservative high-register short-duration octave-down family. Exact discovery-family scoring selected `H72-D035` under the frozen gate:
-- discovery-family run `33584036171`, job `100104285213`: SUCCESS;
-- selected discovery gains: primary combined micro +0.05660328813645776 pp; primary macro +0.07533076559106178 pp; strict50 micro +0.061749041603405885 pp; 0 negative-primary-TP discovery tracks.
+Terminal checkpoint `docs/checkpoints/OPEN_CORPUS_V4_GUITARSET_PLAYER05_CONFIRMATION_FAIL_20260902.md`, creation commit `d008ea75c945bbf050d6af0a136367d2ff730c4a`.
 
-Selected result checkpoint:
-- `docs/checkpoints/OPEN_CORPUS_V4_GUITARSET_DISCOVERY_FAMILY_SELECTED_20260902.md`;
-- creation commit `2dfb5e5a5f3b1ecb7195330de012a4c34a8df033`.
+Never rerun/retune V4. Prospective players `00/01/03` were not opened for V4.
 
-### One-shot player-05 confirmation — FAIL
+## V5 cross-player development — PREREGISTERED / NOT YET SCORED
 
-Frozen confirmation preregistration:
-- `docs/checkpoints/OPEN_CORPUS_V4_GUITARSET_PLAYER05_CONFIRMATION_PREREGISTRATION_20260902.md`;
-- creation commit `3759e73563c5fc93f67407e5e3f9ea37a4e3d584`.
+New methodological boundary: all `02/04/05` are now explicitly **development** for V5. The sole untouched prospective test players remain `00/01/03` and are still sealed.
 
-Frozen scorer blob `794011aa78524226ec47e74ca8dd91008eef629a`. Static run `33584362102`, job `100105263075`: SUCCESS.
+Preregistration:
+- `docs/checkpoints/OPEN_CORPUS_V5_GUITARSET_CROSS_PLAYER_DEVELOPMENT_PREREGISTRATION_20260902.md`;
+- creation commit `20c96e258653a8dcf65c312cf75ded44511450e6`.
 
-Real one-shot confirmation:
-- workflow creation commit `ae536a761e388e902dbacb0f740305517a81f2a7`;
-- run `33584451308`, job `100105524472`: **SUCCESS mechanically, scientific `V4_PLAYER05_CONFIRMATION_FAIL`**;
-- player05ReferenceRead=true;
-- player05ConfirmationScoreCalls=1;
-- 60 tracks, 8715 reference events, 9778 baseline predicted events;
-- `H72-D035` changed 91 pitches;
-- event-count identity=true.
+Frozen 48-config, reference-blind family:
+- octave-down only (`ordinaryV2Winner = baselinePitch - 12`);
+- pitch floors `{72,76,79}`;
+- maximum durations `{0.20,0.25,0.30,0.35}` seconds;
+- common-frame consensus fixed at `1.00`;
+- median-advantage thresholds `{0.05,0.10,0.15,0.20}`.
 
-Primary baseline: TP 7306, macro F1 **82.56410344391738%**, micro F1 **79.01368085221435%**.
+No amplitude/player/track/style/tempo/pitch-class/reference feature is allowed in the gate.
 
-Primary `H72-D035`: TP 7301, macro F1 **82.49393805207504%**, micro F1 **78.95960633753313%**.
+Frozen development qualification requires:
+- event-count identity;
+- >=5 changed pitches in each development player;
+- combined primary macro and micro gains >0;
+- combined strict50 micro non-regression;
+- **each** of players `02/04/05` primary micro gain >0;
+- each player primary macro and strict50 micro non-regression;
+- within each player, negative-primary-TP track count <= positive-primary-TP track count.
 
-Confirmation deltas:
-- primary TP **-5**;
-- primary macro **-0.0701653918423375 pp**;
-- primary combined micro **-0.05407451468121849 pp**;
-- strict50 combined micro **-0.0540745146812327 pp**.
+Frozen deterministic selection maximizes worst-player primary micro gain, then combined primary micro, combined macro, worst-player strict50 micro, then fewest changes and lexical ID.
 
-Track direction counts: 1 positive, 56 neutral, 3 negative. Frozen no-track-loss condition failed, as did all three metric gain/non-regression conditions. Qualification=false.
+Frozen evaluator:
+- `validation/open_corpus/evaluate_guitarset_v5_cross_player_development.py`;
+- creation commit `a520c8c6c245a49c609264da9de25c5f18deab5b`;
+- blob `8a38a0c812fb1979fe01ccad711d3f8e72813d26`.
 
-Frozen report identities:
-- report SHA256 `3feb63042c670690221901906045520f17faa01d02a461c01b805ea68867d722`;
-- artifact ID `9829578804`;
-- artifact ZIP SHA256 `556d301e3466a9f6064d52ccd3e37410b492fac147e20e7833ed8bde65dff300`.
-
-Terminal checkpoint:
-- `docs/checkpoints/OPEN_CORPUS_V4_GUITARSET_PLAYER05_CONFIRMATION_FAIL_20260902.md`;
-- creation commit `d008ea75c945bbf050d6af0a136367d2ff730c4a`.
-
-**Frozen consequence:** never rerun confirmation, weaken the V4 gate, try another V4 family member on player05, or open prospective `00/01/03` for V4.
-
-GuitarSet prospective evaluation processed=false; prospective score calls=0. V168 reference-facing score calls=0.
+Static guards:
+- workflow creation commit `67a1024cb9df06ef0edcb56cd671a48254183c6e`;
+- run `33584773548`, job `100106522779`: **SUCCESS / V5_CROSS_PLAYER_STATIC_PASS**;
+- no real references/audio, no Basic Pitch;
+- V5 development score calls=0;
+- prospective score calls=0;
+- V168 score calls=0.
 
 ## NEXT SAFE ACTION
 
-1. Treat V4 as closed. Do not mine player-05 outcomes to retune V4.
-2. If continuing open-corpus research, open a clearly named **V5 development phase** that explicitly reclassifies all `02/04/05` as development and preserves `00/01/03` as the untouched sole prospective test set.
-3. Before mining player-05 event-level outcomes for V5, freeze a new development protocol. A robust option is player-stratified/leave-one-player-out development requiring candidate behavior to replicate across all three development players rather than relying on a single confirmation player.
-4. No prospective `00/01/03` reference use until a V5 rule is completely frozen, including one-shot prospective gate and fail-closed behavior.
-5. GOAT approval remains the independent primary V168 path; on approval follow the frozen GOAT intake sequence before any V168 arm.
+1. Run exactly one V5 cross-player development score across all 177 `02/04/05` tracks using the frozen 48-config family.
+2. Before references, reverify original candidate artifact identity, manifest hash and all 177 candidate hashes; no audio/Basic Pitch/candidate regeneration.
+3. Extract only development JAMS `02/04/05`; assert no `00/01/03` JAMS in the workspace.
+4. If no config qualifies, close this V5 family and keep prospective players sealed.
+5. If a config qualifies, immediately checkpoint the selected config. **Do not open `00/01/03` yet**; first freeze a separate one-shot prospective evaluation contract and pass/non-regression rule.
+6. GOAT remains independent V168 path.
 
 ## Standing methodology
 
