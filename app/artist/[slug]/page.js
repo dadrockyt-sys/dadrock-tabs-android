@@ -51,13 +51,43 @@ export async function generateMetadata({ params }) {
   });
 
   const title = `${artistPattern} Guitar & Bass Tabs - ${videoCount} Free Lessons | DadRock Tabs`;
-
   const description = `Learn ${videoCount} songs by ${artistPattern} with free guitar and bass tab video lessons. Step-by-step tutorials perfect for beginner and intermediate players.`;
+  const canonicalUrl = `https://dadrocktabs.com/artist/${slug}`;
+
+  let thumbnail = 'https://customer-assets.emergentagent.com/job_music-tab-finder/artifacts/qsso7cx0_dadrockmetal.png';
+  try {
+    const firstVideo = await db.collection('videos').findOne(
+      { artist: { $regex: new RegExp(`^${escapedPattern}`, 'i') } },
+      { projection: { thumbnail: 1 } }
+    );
+    if (firstVideo?.thumbnail) thumbnail = firstVideo.thumbnail;
+  } catch { /* use default */ }
+
+  const dynamicOgImage = `https://dadrocktabs.com/api/og?title=${encodeURIComponent(artistPattern)}&type=artist&thumb=${encodeURIComponent(thumbnail)}`;
 
   return {
     title,
     description,
     alternates: generateAlternates(`/artist/${slug}`),
+    openGraph: {
+      title,
+      description,
+      type: 'website',
+      url: canonicalUrl,
+      siteName: 'DadRock Tabs',
+      images: [{
+        url: dynamicOgImage,
+        width: 1200,
+        height: 630,
+        alt: title,
+      }],
+    },
+    twitter: {
+      card: 'summary_large_image',
+      title,
+      description,
+      images: [dynamicOgImage],
+    },
   };
 }
 
@@ -126,4 +156,4 @@ export default async function ArtistPage({ params }) {
       initialAiContent={aiSeoContent}
     />
   );
-        }
+}
