@@ -1,28 +1,12 @@
 import { getDb } from '@/lib/mongodb';
 import { artistToSlug } from '@/lib/slugify';
+import { locales } from '@/lib/i18n';
 import { GENRES, ERAS } from '@/lib/genreData';
 import { GUIDES } from '@/lib/guidesData';
 import { DIFFICULTY_LEVELS } from '@/lib/difficultyData';
 import { PLAYLISTS } from '@/lib/playlistData';
 
 const baseUrl = 'https://dadrocktabs.com';
-
-const locales = [
-  'en',
-  'es',
-  'pt',
-  'pt-br',
-  'de',
-  'fr',
-  'it',
-  'ja',
-  'ko',
-  'zh',
-  'ru',
-  'hi',
-  'sv',
-  'fi',
-];
 
 function getLocalizedUrl(path, locale) {
   const cleanPath = path === '/' ? '' : path;
@@ -34,34 +18,28 @@ function getLocalizedUrl(path, locale) {
   return `${baseUrl}/${locale}${cleanPath}`;
 }
 
-function getLanguageAlternates(path) {
+function getHomepageLanguageAlternates() {
   const languages = {};
 
   for (const locale of locales) {
-    languages[locale] = getLocalizedUrl(path, locale);
+    languages[locale] = getLocalizedUrl('/', locale);
   }
 
-  languages['x-default'] = getLocalizedUrl(path, 'en');
-
+  languages['x-default'] = getLocalizedUrl('/', 'en');
   return languages;
 }
 
-function addLocalizedRoutes(routes, path, options = {}) {
+function addLocalizedHomepages(routes) {
+  const languages = getHomepageLanguageAlternates();
+
   for (const locale of locales) {
-    const route = {
-      url: getLocalizedUrl(path, locale),
-      alternates: {
-        languages: getLanguageAlternates(path),
-      },
-    };
-
-    if (options.lastModified) {
-      route.lastModified = options.lastModified;
-    }
-
-    routes.push(route);
+    routes.push({
+      url: getLocalizedUrl('/', locale),
+      alternates: { languages },
+    });
   }
 }
+
 function addEnglishRoute(routes, path, options = {}) {
   const route = {
     url: `${baseUrl}${path === '/' ? '' : path}`,
@@ -74,8 +52,7 @@ function addEnglishRoute(routes, path, options = {}) {
   routes.push(route);
 }
 
-const localizedStaticPaths = [
-  '/',
+const englishStaticPaths = [
   '/coming-soon',
   '/top-lessons',
   '/quickies',
@@ -88,60 +65,43 @@ const localizedStaticPaths = [
 export default async function sitemap() {
   const routes = [];
 
-  // Main pages available in all 14 languages
-  for (const path of localizedStaticPaths) {
-    addLocalizedRoutes(routes, path);
+  // Only the language homepages are independent multilingual search URLs.
+  // Their self-canonicals + hreflang metadata are handled by app/[lang]/page.js.
+  addLocalizedHomepages(routes);
+
+  // All subpage families use the English URL as the search canonical.
+  // Locale-prefixed variants remain available to visitors but stay out of the sitemap.
+  for (const path of englishStaticPaths) {
+    addEnglishRoute(routes, path);
   }
 
-  // Backing Track Studio is English-only until BTS translations are published.
+  // Backing Track Studio is English-only.
   addEnglishRoute(routes, '/bts');
 
-  // Individual learning guides
+  // Individual learning guides: English canonical URLs only.
   for (const slug of Object.keys(GUIDES)) {
-    addLocalizedRoutes(routes, `/learn/${slug}`);
+    addEnglishRoute(routes, `/learn/${slug}`);
   }
 
-  // Difficulty pages
+  // Difficulty pages: English canonical URLs only.
   for (const level of Object.keys(DIFFICULTY_LEVELS)) {
-    addLocalizedRoutes(routes, `/difficulty/${level}`);
+    addEnglishRoute(routes, `/difficulty/${level}`);
   }
 
-  // Genre pages are currently English-only
+  // Genre pages are English-only.
   for (const slug of Object.keys(GENRES)) {
     addEnglishRoute(routes, `/genre/${slug}`);
   }
 
-  // Era pages are currently English-only
+  // Era pages are English-only.
   for (const slug of Object.keys(ERAS)) {
     addEnglishRoute(routes, `/era/${slug}`);
   }
 
-  // Playlist pages are currently English-only
+  // Playlist pages are English-only.
   for (const slug of Object.keys(PLAYLISTS)) {
     addEnglishRoute(routes, `/playlist/${slug}`);
   }
-
-  const highPrioritySongs = new Set([
-    'metallica-master-of-puppets',
-    'metallica-enter-sandman',
-    'led-zeppelin-stairway-to-heaven',
-    'black-sabbath-war-pigs',
-        'metallica-one',
-    'pantera-cemetery-gates',
-    'slayer-angel-of-death',
-    'megadeth-holy-wars-the-punishment-due',
-    'black-sabbath-heaven-and-hell',
-    'led-zeppelin-dazed-and-confused',
-    'metallica-seek-and-destroy',
-    'metallica-for-whom-the-bell-tolls',
-    'metallica-creeping-death',
-    'black-sabbath-iron-man',
-    'ozzy-osbourne-crazy-train',
-    'van-halen-eruption',
-    'acdc-back-in-black',
-    'metallica-fade-to-black',
-    'slayer-raining-blood',
-  ]);
 
   const artistSlugOverrides = {
     'ac-dc': 'acdc',
@@ -185,7 +145,8 @@ export default async function sitemap() {
       );
 
       if (isJunk) continue;
-            let slug = artistToSlug(artist);
+
+      let slug = artistToSlug(artist);
 
       if (!slug) continue;
 
@@ -194,8 +155,7 @@ export default async function sitemap() {
       if (seenArtistSlugs.has(slug)) continue;
 
       seenArtistSlugs.add(slug);
-
-      addLocalizedRoutes(routes, `/artist/${slug}`);
+      addEnglishRoute(routes, `/artist/${slug}`);
     }
 
     const songPages = await db
@@ -220,7 +180,7 @@ export default async function sitemap() {
         options.lastModified = song.updated_at;
       }
 
-      addLocalizedRoutes(
+      addEnglishRoute(
         routes,
         `/songs/${song.slug}`,
         options
