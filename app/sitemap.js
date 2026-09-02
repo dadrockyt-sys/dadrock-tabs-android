@@ -62,6 +62,29 @@ const englishStaticPaths = [
   '/learn',
 ];
 
+// Database artist labels contain a handful of historical typos/aliases. Keep
+// only the clean canonical slug in the XML sitemap so Google never receives
+// competing crawl hints for the same artist.
+const artistSlugOverrides = {
+  'ac-dc': 'acdc',
+  'alive-in-chains': 'alice-in-chains',
+  'gearge-thorogood': 'george-thorogood',
+  'kimg-diamond': 'king-diamond',
+  'telsa': 'tesla',
+  'the-poilice': 'the-police',
+  'xyx': 'xyz',
+  'steve-ray-vaughan': 'stevie-ray-vaughan',
+  'red-hot-chilli-peppers': 'red-hot-chili-peppers',
+  'the-red-hot-chili-peppers': 'red-hot-chili-peppers',
+};
+
+// These legacy song-page URLs are intentionally redirected by middleware to
+// artist pages, so they must not be advertised as indexable sitemap entries.
+const redirectedSongSlugs = new Set([
+  'pantera-walk',
+  'dokken-tooth-and-nail',
+]);
+
 export default async function sitemap() {
   const routes = [];
 
@@ -102,10 +125,6 @@ export default async function sitemap() {
   for (const slug of Object.keys(PLAYLISTS)) {
     addEnglishRoute(routes, `/playlist/${slug}`);
   }
-
-  const artistSlugOverrides = {
-    'ac-dc': 'acdc',
-  };
 
   try {
     const db = await getDb();
@@ -172,7 +191,7 @@ export default async function sitemap() {
       .toArray();
 
     for (const song of songPages) {
-      if (!song.slug) continue;
+      if (!song.slug || redirectedSongSlugs.has(song.slug)) continue;
 
       const options = {};
 
