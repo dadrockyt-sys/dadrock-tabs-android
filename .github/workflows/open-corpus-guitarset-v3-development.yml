@@ -1,0 +1,335 @@
+name: Open corpus GuitarSet V3 development study
+
+on:
+  workflow_dispatch:
+  push:
+    branches:
+      - v143-contextual-prune-lobo
+    paths:
+      - .github/workflows/open-corpus-guitarset-v3-development.yml
+
+permissions:
+  contents: read
+
+jobs:
+  freeze-development-candidates:
+    name: Freeze development audio-only candidates
+    runs-on: ubuntu-24.04
+    timeout-minutes: 180
+    steps:
+      - name: Checkout exact branch commit
+        uses: actions/checkout@v4
+
+      - name: Verify frozen development code identities
+        shell: bash
+        run: |
+          set -euo pipefail
+          test "$(git hash-object validation/open_corpus/evaluate_harmonic_candidate_ranking_v2_v169.py)" = "95e1e7d20a4bb5b15962cb803fa2da4d065743ae"
+          test "$(git hash-object validation/open_corpus/analyze_guitar_techs_harmonic_octave_v169.py)" = "c39305df4f875bf6aec0d5e9d5b6448a5f7404df"
+          test "$(git hash-object validation/open_corpus/v3_selective_octave_trigger_v169.py)" = "14ddd15fc29bfe947a4e3ce12050b10f43d2435f"
+          test "$(git hash-object validation/open_corpus/generate_guitarset_v3_development_candidates.py)" = "61068cee19132c40f3d0b15231d64ea3d428e1ca"
+          echo GUITARSET_V3_FROZEN_CANDIDATE_CODE_PASS
+
+      - name: Set up Python 3.10
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.10'
+
+      - name: Install frozen CPU candidate runtime
+        shell: bash
+        run: |
+          python -m pip install --disable-pip-version-check \
+            numpy==1.26.4 \
+            tflite-runtime==2.14.0 \
+            basic-pitch==0.4.0
+
+      - name: Verify Basic Pitch TFLite identity
+        shell: python
+        run: |
+          import hashlib, importlib.metadata as metadata
+          from pathlib import Path
+          from basic_pitch import ICASSP_2022_MODEL_PATH, TFLITE_PRESENT, TF_PRESENT, CT_PRESENT, ONNX_PRESENT
+          assert metadata.version('basic-pitch')=='0.4.0'
+          assert metadata.version('tflite-runtime')=='2.14.0'
+          digest=hashlib.sha256(Path(ICASSP_2022_MODEL_PATH).read_bytes()).hexdigest()
+          assert digest=='3db297d54af8e01c6e5618245c956b1d71b6a2b978cb2dedb527173186552676',digest
+          assert TFLITE_PRESENT and not TF_PRESENT and not CT_PRESENT and not ONNX_PRESENT
+          print('GUITARSET_V3_BASIC_PITCH_TFLITE_IDENTITY_PASS',digest)
+          print('cudaUsed=false')
+          print('referenceRead=false')
+          print('guitarSetProspectiveEvaluationProcessed=false')
+          print('guitarSetProspectiveEvaluationScoreCalls=0')
+          print('v168ReferenceFacingScoreCalls=0')
+
+      - name: Download verify and isolate 177 development microphone tracks
+        shell: bash
+        run: |
+          set -euo pipefail
+          ROOT="$RUNNER_TEMP/guitarset-v3-development-candidate"
+          mkdir -p "$ROOT/audio" "$ROOT/output"
+          cd "$ROOT"
+          curl -L --fail --retry 3 --retry-delay 3 \
+            'https://zenodo.org/records/3371780/files/audio_mono-mic.zip?download=1' \
+            -o audio_mono-mic.zip
+          echo '275966d6610ac34999b58426beb119c3  audio_mono-mic.zip' | md5sum -c -
+          echo '237cdc58353d25c3c9683f4565a0f1cf2db30a9051abca545a919f8f1296dc28  audio_mono-mic.zip' | sha256sum -c -
+          python - <<'PY'
+          import shutil, zipfile
+          from pathlib import Path
+          root=Path('.')
+          out=root/'audio'
+          dev={'02','04','05'}
+          excluded={'04_BN3-154-E_comp','04_Jazz1-200-B_comp','02_Funk2-119-G_comp'}
+          selected=[]
+          with zipfile.ZipFile(root/'audio_mono-mic.zip','r') as z:
+              for info in z.infolist():
+                  name=Path(info.filename).name
+                  if not name.endswith('_mic.wav'):
+                      continue
+                  stem=name[:-8]
+                  if stem[:2] not in dev or stem in excluded:
+                      continue
+                  dest=out/name
+                  if dest.exists(): raise SystemExit(f'duplicate destination {name}')
+                  with z.open(info,'r') as src, dest.open('wb') as dst:
+                      shutil.copyfileobj(src,dst)
+                  selected.append(stem)
+          if len(selected)!=177: raise SystemExit(f'expected 177 development tracks, got {len(selected)}')
+          counts={p:sum(s.startswith(p+'_') for s in selected) for p in sorted(dev)}
+          if counts!={'02':59,'04':58,'05':60}: raise SystemExit(f'player counts mismatch {counts}')
+          if any(s[:2] in {'00','01','03'} for s in selected): raise SystemExit('sealed evaluation track extracted')
+          if any(s in excluded for s in selected): raise SystemExit('excluded anomaly extracted')
+          print('GUITARSET_V3_DEVELOPMENT_AUDIO_SELECTION_PASS',counts)
+          PY
+          rm -f audio_mono-mic.zip
+          test ! -e audio_mono-mic.zip
+          test "$(find audio -maxdepth 1 -type f -name '*.wav' | wc -l)" -eq 177
+          test "$(find "$ROOT" -type f -name '*.jams' | wc -l)" -eq 0
+          test "$(find audio -maxdepth 1 -type f \( -name '00_*' -o -name '01_*' -o -name '03_*' \) | wc -l)" -eq 0
+          test ! -e audio/04_BN3-154-E_comp_mic.wav
+          test ! -e audio/04_Jazz1-200-B_comp_mic.wav
+          test ! -e audio/02_Funk2-119-G_comp_mic.wav
+          printf '%s\n' \
+            'GUITARSET_V3_DEVELOPMENT_AUDIO_ONLY_WORKSPACE_PASS' \
+            'referenceRead=false' \
+            'guitarSetJamsNoteEventsRead=0' \
+            'guitarSetProspectiveEvaluationProcessed=false' \
+            'guitarSetProspectiveEvaluationScoreCalls=0' \
+            'v168ReferenceFacingScoreCalls=0'
+
+      - name: Run frozen development candidate generation
+        shell: bash
+        run: |
+          set -euo pipefail
+          python validation/open_corpus/generate_guitarset_v3_development_candidates.py \
+            --audio-root "$RUNNER_TEMP/guitarset-v3-development-candidate/audio" \
+            --output-dir "$RUNNER_TEMP/guitarset-v3-development-candidate/output"
+
+      - name: Freeze candidate manifest and remove audio
+        shell: bash
+        run: |
+          set -euo pipefail
+          ROOT="$RUNNER_TEMP/guitarset-v3-development-candidate"
+          OUT="$ROOT/output"
+          test "$(find "$OUT" -maxdepth 1 -type f -name '*.json' | wc -l)" -eq 178
+          sha256sum "$OUT/candidate-freeze-manifest.json" | tee "$OUT/candidate-manifest-sha256.txt"
+          rm -rf "$ROOT/audio"
+          test "$(find "$ROOT" -type f \( -name '*.wav' -o -name '*.jams' -o -name '*.zip' \) | wc -l)" -eq 0
+          python - <<'PY'
+          import json, os
+          from pathlib import Path
+          out=Path(os.environ['RUNNER_TEMP'])/'guitarset-v3-development-candidate/output'
+          m=json.loads((out/'candidate-freeze-manifest.json').read_text())
+          assert m['candidateFileCount']==177
+          assert m['players']==['02','04','05']
+          assert m['sealedEvaluationPlayers']==['00','01','03']
+          assert m['referenceRead'] is False
+          assert m['guitarSetJamsNoteEventsRead']==0
+          assert m['guitarSetProspectiveEvaluationProcessed'] is False
+          assert m['guitarSetProspectiveEvaluationScoreCalls']==0
+          assert m['v168ReferenceFacingScoreCalls']==0
+          print('GUITARSET_V3_DEVELOPMENT_CANDIDATE_ARTIFACT_FROZEN')
+          print('candidateFileCount=177')
+          print('totalBaselineEventCount='+str(m['totalBaselineEventCount']))
+          print('totalOrdinaryV2ProposalEventCount='+str(m['totalOrdinaryV2ProposalEventCount']))
+          print('totalTriggerEligibleEventCount='+str(m['totalTriggerEligibleEventCount']))
+          print('totalChangedPitchCounts='+json.dumps(m['totalChangedPitchCounts'],sort_keys=True))
+          print('referenceRead=false')
+          print('guitarSetProspectiveEvaluationScoreCalls=0')
+          print('v168ReferenceFacingScoreCalls=0')
+          PY
+
+      - name: Upload frozen development candidate artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: guitarset-v3-development-frozen-candidates
+          path: ${{ runner.temp }}/guitarset-v3-development-candidate/output/
+          retention-days: 30
+
+  score-development-candidates:
+    name: Score already-frozen development candidates
+    needs: freeze-development-candidates
+    runs-on: ubuntu-24.04
+    timeout-minutes: 60
+    steps:
+      - name: Checkout exact branch commit
+        uses: actions/checkout@v4
+
+      - name: Verify frozen development scorer identity
+        shell: bash
+        run: |
+          set -euo pipefail
+          test "$(git hash-object validation/open_corpus/score_guitarset_v3_development_candidates.py)" = "19ef54155735a6ac1e65441250b47d1572ac0380"
+          echo GUITARSET_V3_FROZEN_DEVELOPMENT_SCORER_PASS
+
+      - name: Set up Python 3.10
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.10'
+
+      - name: Install reference parser only
+        shell: bash
+        run: python -m pip install --disable-pip-version-check jams==0.3.4
+
+      - name: Verify scorer has no Basic Pitch runtime
+        shell: python
+        run: |
+          import importlib.util
+          if importlib.util.find_spec('basic_pitch') is not None:
+              raise SystemExit('basic_pitch unexpectedly importable in development scorer job')
+          print('GUITARSET_V3_DEVELOPMENT_SCORER_NO_BASIC_PITCH_PASS')
+          print('candidateRegenerated=false')
+          print('guitarSetProspectiveEvaluationScoreCalls=0')
+          print('v168ReferenceFacingScoreCalls=0')
+
+      - name: Download already-frozen development candidate artifact
+        uses: actions/download-artifact@v4
+        with:
+          name: guitarset-v3-development-frozen-candidates
+          path: ${{ runner.temp }}/guitarset-v3-development-score/candidates
+
+      - name: Verify frozen candidates before reference download
+        shell: bash
+        run: |
+          set -euo pipefail
+          CAND="$RUNNER_TEMP/guitarset-v3-development-score/candidates"
+          cd "$CAND"
+          sha256sum -c candidate-manifest-sha256.txt
+          test "$(find . -maxdepth 1 -type f -name '*.json' | wc -l)" -eq 178
+          test "$(find . -type f \( -name '*.wav' -o -name '*.jams' -o -name '*.zip' \) | wc -l)" -eq 0
+          python - <<'PY'
+          import json
+          from pathlib import Path
+          m=json.loads(Path('candidate-freeze-manifest.json').read_text())
+          assert m['candidateFileCount']==177
+          assert m['referenceRead'] is False
+          assert m['guitarSetJamsNoteEventsRead']==0
+          assert m['guitarSetProspectiveEvaluationProcessed'] is False
+          assert m['guitarSetProspectiveEvaluationScoreCalls']==0
+          assert m['v168ReferenceFacingScoreCalls']==0
+          print('GUITARSET_V3_FROZEN_DEVELOPMENT_CANDIDATE_HASH_PASS')
+          PY
+
+      - name: Download verify and isolate 177 development JAMS references
+        shell: bash
+        run: |
+          set -euo pipefail
+          ROOT="$RUNNER_TEMP/guitarset-v3-development-score"
+          mkdir -p "$ROOT/reference" "$ROOT/output"
+          cd "$ROOT"
+          curl -L --fail --retry 3 --retry-delay 3 \
+            'https://zenodo.org/records/3371780/files/annotation.zip?download=1' \
+            -o annotation.zip
+          echo 'b39b78e63d3446f2e54ddb7a54df9b10  annotation.zip' | md5sum -c -
+          echo '8daa02e6417ccca1685feb44b135e95928ad7037e5032ecb326b5791856fda99  annotation.zip' | sha256sum -c -
+          python - <<'PY'
+          import shutil, zipfile
+          from pathlib import Path
+          root=Path('.')
+          out=root/'reference'
+          dev={'02','04','05'}
+          excluded={'04_BN3-154-E_comp','04_Jazz1-200-B_comp','02_Funk2-119-G_comp'}
+          selected=[]
+          with zipfile.ZipFile(root/'annotation.zip','r') as z:
+              for info in z.infolist():
+                  name=Path(info.filename).name
+                  if not name.endswith('.jams'):
+                      continue
+                  stem=name[:-5]
+                  if stem[:2] not in dev or stem in excluded:
+                      continue
+                  dest=out/name
+                  if dest.exists(): raise SystemExit(f'duplicate destination {name}')
+                  with z.open(info,'r') as src, dest.open('wb') as dst:
+                      shutil.copyfileobj(src,dst)
+                  selected.append(stem)
+          if len(selected)!=177: raise SystemExit(f'expected 177 development JAMS files, got {len(selected)}')
+          counts={p:sum(s.startswith(p+'_') for s in selected) for p in sorted(dev)}
+          if counts!={'02':59,'04':58,'05':60}: raise SystemExit(f'player counts mismatch {counts}')
+          if any(s[:2] in {'00','01','03'} for s in selected): raise SystemExit('sealed evaluation JAMS extracted')
+          if any(s in excluded for s in selected): raise SystemExit('excluded anomaly JAMS extracted')
+          print('GUITARSET_V3_DEVELOPMENT_REFERENCE_SELECTION_PASS',counts)
+          PY
+          rm -f annotation.zip
+          test ! -e annotation.zip
+          test "$(find reference -maxdepth 1 -type f -name '*.jams' | wc -l)" -eq 177
+          test "$(find "$ROOT" -type f -name '*.wav' | wc -l)" -eq 0
+          test "$(find reference -maxdepth 1 -type f \( -name '00_*' -o -name '01_*' -o -name '03_*' \) | wc -l)" -eq 0
+          test ! -e reference/04_BN3-154-E_comp.jams
+          test ! -e reference/04_Jazz1-200-B_comp.jams
+          test ! -e reference/02_Funk2-119-G_comp.jams
+          echo GUITARSET_V3_DEVELOPMENT_REFERENCE_ONLY_WORKSPACE_PASS
+          echo guitarSetProspectiveEvaluationJamsNoteEventsRead=0
+          echo guitarSetProspectiveEvaluationScoreCalls=0
+          echo v168ReferenceFacingScoreCalls=0
+
+      - name: Score frozen development candidates and select gate
+        shell: bash
+        run: |
+          set -euo pipefail
+          ROOT="$RUNNER_TEMP/guitarset-v3-development-score"
+          python validation/open_corpus/score_guitarset_v3_development_candidates.py \
+            --candidate-dir "$ROOT/candidates" \
+            --reference-dir "$ROOT/reference" \
+            --output "$ROOT/output/guitarset-v3-development-score.json"
+          sha256sum "$ROOT/output/guitarset-v3-development-score.json" | tee "$ROOT/output/score-sha256.txt"
+
+      - name: Print scientific classification without changing CI conclusion
+        shell: python
+        run: |
+          import json, os
+          from pathlib import Path
+          p=Path(os.environ['RUNNER_TEMP'])/'guitarset-v3-development-score/output/guitarset-v3-development-score.json'
+          r=json.loads(p.read_text())
+          print(json.dumps({
+            'status':r['status'],
+            'candidateFreezeManifestSha256':r['candidateFreezeManifestSha256'],
+            'developmentTrackCount':r['developmentTrackCount'],
+            'totalReferenceEventCount':r['totalReferenceEventCount'],
+            'baselinePrimaryMacroF1Pct':r['baseline']['primary100ms']['macroF1Pct'],
+            'baselinePrimaryMicroF1Pct':r['baseline']['primary100ms']['micro']['f1Pct'],
+            'baselineStrict50MicroF1Pct':r['baseline']['strict50ms']['micro']['f1Pct'],
+            'qualifiedConfigIds':r['qualifiedConfigIds'],
+            'selectedConfig':r['selectedConfig'],
+            'totalChangedPitchCounts':r['totalChangedPitchCounts'],
+            'guitarSetDevelopmentScoreCalls':r['guitarSetDevelopmentScoreCalls'],
+            'guitarSetProspectiveEvaluationProcessed':r['guitarSetProspectiveEvaluationProcessed'],
+            'guitarSetProspectiveEvaluationScoreCalls':r['guitarSetProspectiveEvaluationScoreCalls'],
+            'v168ReferenceFacingScoreCalls':r['v168ReferenceFacingScoreCalls'],
+          },indent=2,sort_keys=True))
+
+      - name: Remove JAMS before preserving report
+        shell: bash
+        run: |
+          set -euo pipefail
+          ROOT="$RUNNER_TEMP/guitarset-v3-development-score"
+          rm -rf "$ROOT/reference" "$ROOT/candidates"
+          test "$(find "$ROOT" -type f \( -name '*.jams' -o -name '*.wav' -o -name '*.zip' \) | wc -l)" -eq 0
+          ls -lh "$ROOT/output/guitarset-v3-development-score.json" "$ROOT/output/score-sha256.txt"
+
+      - name: Preserve development score report
+        uses: actions/upload-artifact@v4
+        with:
+          name: guitarset-v3-development-score-report
+          path: ${{ runner.temp }}/guitarset-v3-development-score/output/
+          retention-days: 30
