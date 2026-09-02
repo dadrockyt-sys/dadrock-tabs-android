@@ -33,9 +33,7 @@ Exactly one private observation: `FAIL_CLOSED_NO_CANDIDATE`; 1421/1471 required 
 
 ## Parallel open-corpus breakthrough lane — V168 isolated
 
-Preregistration:
-- `docs/checkpoints/OPEN_CORPUS_BREAKTHROUGH_PREREGISTRATION_20260901.md`;
-- commit `f0b966df4881311456b5c455161431d8a771114e`.
+Preregistration: `docs/checkpoints/OPEN_CORPUS_BREAKTHROUGH_PREREGISTRATION_20260901.md`, commit `f0b966df4881311456b5c455161431d8a771114e`.
 
 This is V169-style development only. No GOAT/Lenny reference tuning, no V168 mutation, no commercial-tab scraping, and no third-party audio committed to the repo.
 
@@ -45,48 +43,65 @@ Frozen study script: `validation/open_corpus/analyze_guitar_techs_harmonic_octav
 
 P1 checkpoint: `docs/checkpoints/OPEN_CORPUS_GUITAR_TECHS_P1_HARMONIC_RESULT_20260902.md`, commit `5ef3a3dff39e46e31527e2ef7824a655338a2539`.
 
-P2 independent-player checkpoint: `docs/checkpoints/OPEN_CORPUS_GUITAR_TECHS_P2_HARMONIC_CONFIRMATION_20260902.md`, commit `4b6333f40c9c419bc7db6933c9b2497671a9fca7`.
+P2 checkpoint: `docs/checkpoints/OPEN_CORPUS_GUITAR_TECHS_P2_HARMONIC_CONFIRMATION_20260902.md`, commit `4b6333f40c9c419bc7db6933c9b2497671a9fca7`.
 
-Across P1/P2 direct-input + mic/amp, the unchanged lower-vs-+12 harmonic formula preferred the ground-truth lower pitch on **558/558** capture-note evaluations; weak-literal-f0 subset **137/137**; very-weak subset with examples **69/69**. This is a replicated **candidate breakthrough in feature design**, not yet end-to-end transcription proof because those studies start from a known reference pitch.
+Earlier known-reference harmonic comparison was 558/558 correct lower-vs-+12 choices across P1/P2 DI + mic/amp, including 137/137 weak and 69/69 very-weak cases. That motivated candidate-ranking V2 but was not an end-to-end candidate-selection test.
 
-## Candidate-ranking V1 — TERMINAL SYNTHETIC FAIL-FAST
+## Candidate-ranking V1 — terminal
 
-Preregistration: `docs/checkpoints/OPEN_CORPUS_HARMONIC_CANDIDATE_RANKING_PREREGISTRATION_20260902.md`, commit `cbff7cad113985bd141525304151df679c6a8c65`.
+V1 failed its prospective synthetic weak-fundamental guard before real ranking data. See `docs/checkpoints/OPEN_CORPUS_HARMONIC_CANDIDATE_RANKING_V1_SYNTHETIC_FAIL_20260902.md`, commit `a506577498dce1583913e0a1fe23de1d0611f45e`. Real V1 ranking observations = 0. Do not reuse V1.
 
-Failure checkpoint: `docs/checkpoints/OPEN_CORPUS_HARMONIC_CANDIDATE_RANKING_V1_SYNTHETIC_FAIL_20260902.md`, commit `a506577498dce1583913e0a1fe23de1d0611f45e`.
+## Candidate-ranking V2 — CONTROLLED FEATURE PASS
 
-V1 Actions run `33576111277`, job `100080320038` failed before real P1/P2 ranking because synthetic weak-fundamental fixture chose +12. Real V1 ranking observations = 0. V1 is terminal and must not be reused.
-
-## Candidate-ranking V2 — frozen; serialization-only recovery pending
+Dedicated result checkpoint:
+- `docs/checkpoints/OPEN_CORPUS_HARMONIC_CANDIDATE_RANKING_V2_PASS_20260902.md`;
+- creation commit `38df953a637c12359a844b239bce08897c710c32`.
 
 Frozen evaluator:
 - `validation/open_corpus/evaluate_harmonic_candidate_ranking_v2_v169.py`;
 - creation commit `b2544a2c84bfbf75797be19481540286cd57a514`;
 - Git blob `95e1e7d20a4bb5b15962cb803fa2da4d065743ae`.
 
-Frozen V2 formula: `C/(1+0.50*L/(C+eps)); Q=(E/M)^0.25`, with lower-octave odd-harmonic coherence and candidate set `{midi-12,midi,midi+12}`.
+Frozen formula: `C/(1+0.50*L/(C+eps)); Q=(E/M)^0.25`; controlled candidate set `{midi-12,midi,midi+12}`.
 
-Actions run `33576456720`, job `100081401356`:
-- four synthetic guards: **PASS**;
-- P1/P2 archive official MD5 verification: **PASS**;
-- P1 SHA256 `130592ae5555476ea8e4070c0f3421794ef8b5e252dfa780745d07eedd0eb4a4`;
-- P2 SHA256 `d6b54e40d22113d6c0a663165cb2af63735897a35bb45fc6d0ed49c944b548d9`;
-- first real `P1-directInput` `evaluate_capture(...)` computation completed in memory;
-- serialization then failed on a NumPy `int64` before any real ranking summary was printed/written;
-- P1 mic/amp and both P2 captures did not run;
-- aggregate V2 gate did not run; no result artifact exists.
+Original run `33576456720` passed the four synthetic guards and verified P1/P2, but failed only during JSON serialization after the first real P1-DI in-memory computation. The frozen evaluator was not edited. A preregistered serialization-only adapter recovered the reports.
 
-Dedicated recovery-boundary checkpoint:
-- `docs/checkpoints/OPEN_CORPUS_HARMONIC_CANDIDATE_RANKING_V2_SERIALIZATION_RECOVERY_20260902.md`;
-- creation commit `7364a977feda3cd147567aa58810be446472540b`.
+Recovery:
+- adapter `validation/open_corpus/serialize_harmonic_candidate_ranking_v2_v169.py`, creation commit `c6f22de0b018d68b641b88e838ee052fc45f2e80`;
+- workflow `.github/workflows/open-corpus-harmonic-candidate-ranking-v2-recovery.yml`, creation commit `d453a899e6e3e5588649e23600be32c3227f42b1`;
+- Actions run `33577664874`, job `100085059794`: **SUCCESS**;
+- exact evaluator/helper blob guards PASS;
+- original synthetic guards PASS;
+- serializer self-test PASS;
+- aggregate status **`CANDIDATE_FEATURE_PASS`**, frozen gate failures `[]`.
 
-Important: one real P1-DI ranking computation occurred, but **zero V2 real ranking summaries were exposed**. This is not a synthetic-only failure.
+Recovered controlled octave-ranking results:
+- P1 direct input: **142/142 = 100%**; weak 67/67; very weak 44/44; false low/high 0/0;
+- P1 mic/amp: **142/142 = 100%**; weak 40/40; very weak 21/21; false low/high 0/0;
+- P2 direct input: **137/137 = 100%**; weak 19/19; false low/high 0/0;
+- P2 mic/amp: **137/137 = 100%**; weak 11/11; very weak 4/4; false low/high 0/0.
+
+Combined: **558/558 = 100%**, weak **137/137 = 100%**, very weak **69/69 = 100%**, with zero false-low and zero false-high winners.
+
+Aggregate report SHA256: `f527313e5c24802eab1bc0c3ba38efdc3d3a08af9038eb4a5a22ea72d5d089b2`; artifact ID `9827261916`; artifact ZIP digest `0430246471afd5eafa8da6539502247028e13fc322bb41b90f6ee093c8291fe6`.
+
+### Interpretation boundary
+
+This is a genuine controlled octave-disambiguation breakthrough: V2 selects among three competing pitches using audio-only scoring and the reference is consulted only after winner selection. However, the candidate neighborhood is still centered on the ground-truth pitch. Therefore this is **not 100% transcription accuracy** and does not yet prove reference-blind candidate discovery, onset discovery, polyphonic transcription, or full tab generation.
 
 ## NEXT SAFE ACTION
 
-Run a **serialization-only V2 recovery** without editing the frozen evaluator blob. Add a separate adapter that imports the frozen `evaluate_capture(...)`, recursively converts NumPy scalars only after computation, verifies evaluator blob `95e1e7d20a4bb5b15962cb803fa2da4d065743ae`, reruns the original four synthetic guards plus a serializer guard, then reruns the unchanged four public Guitar-TECHS captures and the already-frozen V2 success gate.
+Bridge from controlled ranking to **reference-blind proposal + frozen V2 octave correction** on previously unused public musical material.
 
-No V2 weight/threshold/timing/candidate change is allowed. Checkpoint recovered PASS/FAIL before defining any V3.
+Before any outcome is observed:
+1. inventory a previously unused public archive using metadata/path names only;
+2. freeze the exact reference-blind proposal engine, model identity, thresholds, event representation, V2 application rule, prediction-freeze/hash boundary, scorer, matching tolerances, and success/failure metrics;
+3. candidate generation must receive audio only and must freeze/hash predictions before reference MIDI/JAMS is opened by the scoring stage;
+4. use the frozen V2 evaluator without retuning any V2 formula/weights/timing based on P1/P2 outcomes;
+5. prefer a genuinely new player/material partition (Guitar-TECHS P3 music is a strong candidate) so P1/P2 single-note outcomes are not recycled as the next validation set;
+6. checkpoint all results before considering any V3.
+
+Public Zenodo record `14963133` describes Guitar-TECHS P3 `Music` as full musical excerpts with synchronized per-string MIDI and provides `P3_music.zip`; P3 has not been used in the V2 candidate-ranking outcomes above.
 
 GOAT approval remains independent; if it arrives, follow the already-frozen GOAT intake/admission sequence before any V168 candidate/scorer arm.
 
