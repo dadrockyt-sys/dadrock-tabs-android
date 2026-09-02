@@ -41,67 +41,53 @@ Interpretation remains limited: this is a controlled octave-disambiguation break
 
 ## P3 reference-blind bridge — SCIENTIFIC FAIL / TERMINAL FOR THIS DESIGN
 
-Preregistration:
-- `docs/checkpoints/OPEN_CORPUS_P3_REFERENCE_BLIND_OCTAVE_PREREGISTRATION_20260902.md`
-- creation commit `75b4ee9613da84d4a097f486d67fec79e18eb40c`.
+Preregistration commit `75b4ee9613da84d4a097f486d67fec79e18eb40c`; result checkpoint commit `244dfd688500901119637bbb7972259c5a34b206`.
 
-Final result checkpoint:
-- `docs/checkpoints/OPEN_CORPUS_P3_REFERENCE_BLIND_OCTAVE_FAIL_20260902.md`
-- creation commit `244dfd688500901119637bbb7972259c5a34b206`.
+Real isolated workflow run `33578675945`: candidate job `100088107787` SUCCESS; scorer job `100088672148` SUCCESS. Candidate/reference isolation and artifact/hash guards passed.
 
-Real two-job workflow:
-- `.github/workflows/open-corpus-p3-reference-blind-octave-bridge.yml`
-- creation commit `bdda7e10312d6104c8ce9e418a58dd43b9dcf3e8`
-- Actions run `33578675945`
-- candidate job `100088107787`: **SUCCESS**
-- scorer job `100088672148`: **SUCCESS**.
-
-Integrity/reference isolation passed. Candidate job extracted audio only, deleted the archive, had no MIDI, used CPU/TFLite Basic Pitch 0.4.0 plus frozen V2, and froze candidates before scoring. Scorer verified frozen candidate hashes before independently downloading/extracting MIDI-only references; Basic Pitch was absent in scorer; scorer read no audio and regenerated no candidates.
-
-Frozen candidate stream:
-- baseline events **4693**;
-- corrected events **4693**;
-- event-count identity true;
-- changed pitches **1121 / 4693 = 23.88663967611336%**;
-- boundary-unscored **0**;
-- candidate freeze manifest SHA256 `88f1171baed46758916d48d640ca9f07476948d8292d310d7469f3f0d5849cc0`;
-- candidate artifact ID `9827623576`, ZIP digest `437031e6ed7f021694358f75e2f29033a1c53cdf249d35792291f5a624cdba7a`.
+Frozen candidate stream: 4693 baseline events = 4693 corrected events; changed pitches **1121 / 4693 = 23.88663967611336%**; boundary-unscored 0; candidate freeze manifest SHA256 `88f1171baed46758916d48d640ca9f07476948d8292d310d7469f3f0d5849cc0`.
 
 Scientific classification: **`REFERENCE_BLIND_OCTAVE_CORRECTION_FAIL`**.
 
-Primary 100ms:
-- baseline combined macro F1 **60.576880733206515%**;
-- corrected combined macro F1 **51.95250763325269%**;
-- delta **-8.624373099953829pp**;
-- baseline micro F1 **60.8219816043777%**, TP/pred/ref **2612/4693/3896**;
-- corrected micro F1 **52.5323087670276%**, TP/pred/ref **2256/4693/3896**;
-- delta micro **-8.289672837350096pp**;
-- DI micro delta **-8.356039963669389pp**;
-- mic/amp micro delta **-8.21983273596176pp**.
+Primary 100ms baseline macro F1 **60.576880733206515%** vs corrected **51.95250763325269%**, delta **-8.624373099953829pp**. Baseline micro F1 **60.8219816043777%** vs corrected **52.5323087670276%**, delta **-8.289672837350096pp**. Strict 50ms baseline micro **57.957853067877515%** vs corrected **49.97089300267784%**.
 
-Strict 50ms:
-- baseline macro F1 **57.47009703962679%**;
-- corrected macro F1 **49.22080531991671%**;
-- delta macro **-8.249291719710087pp**;
-- baseline micro F1 **57.957853067877515%**;
-- corrected micro F1 **49.97089300267784%**;
-- delta micro **-7.986960065199675pp**.
+Score report SHA256 `540cfe330e975584a0857ace2511ba021ab918b82dd1392a48452ffbebb92170`.
 
-Score report SHA256 `540cfe330e975584a0857ace2511ba021ab918b82dd1392a48452ffbebb92170`; score artifact ID `9827647977`, ZIP digest `4fc7438f6e10e5f0f9cc00e2e0306dd98bed95094a0ab8c4b719dd8474c3669b`.
+Frozen lesson: V2 is strong when an octave ambiguity is already known, but indiscriminate application is harmful. V3 must be a conservative reference-blind trigger deciding **whether** V2 should intervene.
 
-### Scientific lesson frozen from P3
+P3 is consumed evaluation evidence. Do not rerun it or tune V3 from P3 per-event reference outcomes.
 
-The V2 harmonic ranking signal is strong for a controlled octave question but **indiscriminate application is harmful**. Basic Pitch already gets many pitches right; the always-on V2 bridge altered nearly one quarter of events and caused large precision/recall loss. The next research object should be a conservative **reference-blind trigger/gate** deciding when an octave correction is warranted, not a more aggressive always-on reranker.
+## V3 fresh corpus — GuitarSet split frozen before use
 
-P3 is now consumed evaluation evidence. Do not rerun or tune V3 from P3 per-event reference errors. P1/P2 single-note material remains development evidence; next prospective V3 evaluation should use a fresh independent public corpus selected/frozen before outcomes.
+Preregistration:
+- `docs/checkpoints/OPEN_CORPUS_V3_GUITARSET_SPLIT_PREREGISTRATION_20260902.md`;
+- creation commit `0be0cb3ec1ee2a83100ea1e30ed523b17fc59768`.
+
+Authoritative source frozen as GuitarSet v1.1.0, Zenodo record `3371780`, DOI `10.5281/zenodo.3371780`.
+
+Frozen archives for this lane:
+- `audio_mono-mic.zip`, official MD5 `275966d6610ac34999b58426beb119c3`;
+- `annotation.zip`, official MD5 `b39b78e63d3446f2e54ddb7a54df9b10`.
+
+Use only monophonic microphone audio plus JAMS annotation references. Do not use hexaphonic per-string audio.
+
+Player-disjoint split frozen before any GuitarSet audio/JAMS note processing or Basic Pitch inference:
+- development players: `02`, `04`, `05`;
+- sealed prospective evaluation players: `00`, `01`, `03`;
+- nominal prospective evaluation set: **180 tracks**.
+
+Three publicly documented anomalous tracks are development-only and excluded from the trigger-fit objective: `04_BN3-154-E_comp`, `04_Jazz1-200-B_comp`, `02_Funk2-119-G_comp`.
+
+At split freeze: GuitarSet audio downloaded=false; annotation archive downloaded=false; JAMS note events read=0; Basic Pitch inference calls=0; prospective evaluation score calls=0; V168 score calls=0.
 
 ## NEXT SAFE ACTION
 
-1. Identify and rights/provenance-freeze a fresh independent public guitar corpus for the next prospective evaluation; GuitarSet is a leading candidate if current official distribution/license checks pass.
-2. Develop a conservative V3 trigger using only P1/P2 designated development evidence plus synthetic/physics guards; use only the aggregate P3 lesson that always-on correction is harmful, not P3 per-event outcomes.
-3. Freeze exact trigger features/thresholds, proposal/correction rules, fresh evaluation partition, candidate/reference isolation, scorer and PASS/FAIL rules before reading fresh evaluation outcomes.
-4. Keep the frozen V2 score unchanged unless a separately justified V3 feature redesign is preregistered.
-5. Checkpoint before first fresh-corpus inference and after the prospective result.
+1. Run a **metadata/path-only inventory** of `audio_mono-mic.zip` and `annotation.zip`.
+2. Verify official MD5 plus observed SHA256 for both archives.
+3. Enumerate ZIP central-directory paths only; do **not** parse JAMS contents and do **not** run Basic Pitch.
+4. Verify exact mic/JAMS stem pairing and expected six-player / 360-track structure; preserve only metadata/hashes.
+5. Checkpoint inventory identities/results before any V3 development inference or annotation parsing.
+6. Only after inventory PASS, design the V3 trigger using development players `02/04/05`; evaluation players `00/01/03` remain sealed until the trigger, scorer and PASS/FAIL rules are frozen.
 
 GOAT approval remains independent; on approval follow the already-frozen GOAT intake sequence before any V168 arm.
 
