@@ -1,0 +1,240 @@
+name: Open corpus P3 reference-blind octave bridge
+
+on:
+  push:
+    branches:
+      - v143-contextual-prune-lobo
+    paths:
+      - .github/workflows/open-corpus-p3-reference-blind-octave-bridge.yml
+  workflow_dispatch:
+
+jobs:
+  candidates:
+    name: Freeze reference-blind candidates
+    runs-on: ubuntu-24.04
+    timeout-minutes: 180
+    permissions:
+      contents: read
+    steps:
+      - name: Checkout exact branch commit
+        uses: actions/checkout@v4
+
+      - name: Verify frozen bridge code identities
+        shell: bash
+        run: |
+          set -euo pipefail
+          test "$(git hash-object validation/open_corpus/evaluate_harmonic_candidate_ranking_v2_v169.py)" = "95e1e7d20a4bb5b15962cb803fa2da4d065743ae"
+          test "$(git hash-object validation/open_corpus/analyze_guitar_techs_harmonic_octave_v169.py)" = "c39305df4f875bf6aec0d5e9d5b6448a5f7404df"
+          test "$(git hash-object validation/open_corpus/generate_p3_reference_blind_octave_candidates_v169.py)" = "e3fe6f88b585405751dad139d82769dd00743d69"
+          test "$(git hash-object validation/open_corpus/score_p3_octave_bridge_v169.py)" = "70ed9ceb69584ce96945688ae45cd9c8ffa3022a"
+          echo FROZEN_P3_BRIDGE_CODE_PASS
+
+      - name: Set up Python 3.10
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.10'
+
+      - name: Install frozen CPU candidate runtime
+        run: |
+          python -m pip install --disable-pip-version-check \
+            numpy==1.26.4 \
+            tflite-runtime==2.14.0 \
+            basic-pitch==0.4.0
+
+      - name: Verify Basic Pitch TFLite identity
+        shell: python
+        run: |
+          import hashlib
+          import importlib.metadata as metadata
+          from pathlib import Path
+          from basic_pitch import ICASSP_2022_MODEL_PATH, TFLITE_PRESENT, TF_PRESENT, CT_PRESENT, ONNX_PRESENT
+          model=Path(ICASSP_2022_MODEL_PATH)
+          digest=hashlib.sha256(model.read_bytes()).hexdigest()
+          assert metadata.version('basic-pitch')=='0.4.0'
+          assert metadata.version('tflite-runtime')=='2.14.0'
+          assert digest=='3db297d54af8e01c6e5618245c956b1d71b6a2b978cb2dedb527173186552676', digest
+          assert TFLITE_PRESENT and not TF_PRESENT and not CT_PRESENT and not ONNX_PRESENT
+          print('BASIC_PITCH_TFLITE_IDENTITY_PASS', digest)
+          print('cudaUsed=false')
+          print('p3ReferenceRead=false')
+          print('v168ReferenceFacingScoreCalls=0')
+
+      - name: Download verify and isolate P3 audio only
+        shell: bash
+        run: |
+          set -euo pipefail
+          ROOT="$RUNNER_TEMP/p3-candidate"
+          mkdir -p "$ROOT/audio" "$ROOT/output"
+          cd "$ROOT"
+          curl -L --fail --retry 3 --retry-delay 3 \
+            'https://zenodo.org/records/14963133/files/P3_music.zip?download=1' \
+            -o P3_music.zip
+          echo '071ba80aecf00f4a31fbd167b3f22198  P3_music.zip' | md5sum -c -
+          echo '033489e22600751fb5a1633e7d856b901c6782e0486fa02135e830780d9dbfe2  P3_music.zip' | sha256sum -c -
+          unzip -j P3_music.zip \
+            'P3_music/audio/directinput/directinput_*.wav' \
+            'P3_music/audio/micamp/micamp_*.wav' \
+            -d audio
+          rm -f P3_music.zip
+          test "$(find audio -maxdepth 1 -type f -name '*.wav' | wc -l)" -eq 24
+          test "$(find "$ROOT" -type f \( -name '*.mid' -o -name '*.midi' \) | wc -l)" -eq 0
+          test ! -e "$ROOT/P3_music.zip"
+          printf '%s\n' 'P3_AUDIO_ONLY_WORKSPACE_PASS' 'p3ReferenceRead=false' 'v168ReferenceFacingScoreCalls=0'
+
+      - name: Run frozen P3 reference-blind candidate generation
+        working-directory: validation/open_corpus
+        shell: bash
+        run: |
+          set -euo pipefail
+          python generate_p3_reference_blind_octave_candidates_v169.py \
+            --audio-root "$RUNNER_TEMP/p3-candidate/audio" \
+            --output-dir "$RUNNER_TEMP/p3-candidate/output"
+
+      - name: Freeze candidate manifest and verify candidate artifact surface
+        shell: bash
+        run: |
+          set -euo pipefail
+          OUT="$RUNNER_TEMP/p3-candidate/output"
+          cd "$OUT"
+          test "$(find . -maxdepth 1 -type f -name '*.json' | wc -l)" -eq 25
+          test "$(find . -maxdepth 1 -type f ! -name '*.json' | wc -l)" -eq 0
+          sha256sum candidate-freeze-manifest.json | tee candidate-manifest-sha256.txt
+          test "$(find "$OUT" -type f \( -name '*.wav' -o -name '*.mp3' -o -name '*.mid' -o -name '*.midi' \) | wc -l)" -eq 0
+          echo P3_CANDIDATE_ARTIFACT_FROZEN
+          cat candidate-manifest-sha256.txt
+          python - <<'PY'
+          import json
+          from pathlib import Path
+          m=json.loads(Path('candidate-freeze-manifest.json').read_text())
+          assert m['candidateFileCount']==24
+          assert m['referenceRead'] is False
+          assert m['v168ReferenceFacingScoreCalls']==0
+          print(json.dumps({
+            'candidateFileCount':m['candidateFileCount'],
+            'totalBaselineEventCount':m['totalBaselineEventCount'],
+            'totalCorrectedEventCount':m['totalCorrectedEventCount'],
+            'totalChangedPitchCount':m['totalChangedPitchCount'],
+            'totalBoundaryUnscoredCount':m['totalBoundaryUnscoredCount'],
+            'referenceRead':m['referenceRead'],
+            'v168ReferenceFacingScoreCalls':m['v168ReferenceFacingScoreCalls'],
+          },indent=2,sort_keys=True))
+          PY
+
+      - name: Upload frozen candidate artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: p3-reference-blind-octave-frozen-candidates
+          path: ${{ runner.temp }}/p3-candidate/output/
+          retention-days: 30
+
+  score:
+    name: Score already-frozen candidates
+    needs: candidates
+    runs-on: ubuntu-24.04
+    timeout-minutes: 60
+    permissions:
+      contents: read
+    steps:
+      - name: Checkout exact branch commit
+        uses: actions/checkout@v4
+
+      - name: Verify frozen scorer identity
+        shell: bash
+        run: |
+          set -euo pipefail
+          test "$(git hash-object validation/open_corpus/score_p3_octave_bridge_v169.py)" = "70ed9ceb69584ce96945688ae45cd9c8ffa3022a"
+          echo FROZEN_P3_SCORER_PASS
+
+      - name: Set up Python 3.10
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.10'
+
+      - name: Install scorer-only MIDI dependency
+        run: python -m pip install --disable-pip-version-check pretty-midi==0.2.11.post0
+
+      - name: Verify scorer has no Basic Pitch runtime
+        shell: python
+        run: |
+          import importlib.util
+          if importlib.util.find_spec('basic_pitch') is not None:
+              raise SystemExit('basic_pitch unexpectedly importable in scorer job')
+          print('SCORER_NO_BASIC_PITCH_RUNTIME_PASS')
+          print('candidateRegenerated=false')
+          print('v168ReferenceFacingScoreCalls=0')
+
+      - name: Download already-frozen candidate artifact
+        uses: actions/download-artifact@v4
+        with:
+          name: p3-reference-blind-octave-frozen-candidates
+          path: ${{ runner.temp }}/p3-score/candidates
+
+      - name: Verify frozen candidate artifact before reference download
+        shell: bash
+        run: |
+          set -euo pipefail
+          CAND="$RUNNER_TEMP/p3-score/candidates"
+          cd "$CAND"
+          sha256sum -c candidate-manifest-sha256.txt
+          test "$(find . -maxdepth 1 -type f -name '*.json' | wc -l)" -eq 25
+          test "$(find . -type f \( -name '*.wav' -o -name '*.mp3' -o -name '*.mid' -o -name '*.midi' \) | wc -l)" -eq 0
+          echo FROZEN_CANDIDATE_HASH_PASS
+
+      - name: Independently download verify and isolate P3 references only
+        shell: bash
+        run: |
+          set -euo pipefail
+          ROOT="$RUNNER_TEMP/p3-score"
+          mkdir -p "$ROOT/reference" "$ROOT/output"
+          cd "$ROOT"
+          curl -L --fail --retry 3 --retry-delay 3 \
+            'https://zenodo.org/records/14963133/files/P3_music.zip?download=1' \
+            -o P3_music.zip
+          echo '071ba80aecf00f4a31fbd167b3f22198  P3_music.zip' | md5sum -c -
+          echo '033489e22600751fb5a1633e7d856b901c6782e0486fa02135e830780d9dbfe2  P3_music.zip' | sha256sum -c -
+          unzip -j P3_music.zip 'P3_music/midi/midi_*.mid' -d reference
+          rm -f P3_music.zip
+          test "$(find reference -maxdepth 1 -type f -name '*.mid' | wc -l)" -eq 12
+          test "$(find "$ROOT" -type f \( -name '*.wav' -o -name '*.mp3' \) | wc -l)" -eq 0
+          test ! -e "$ROOT/P3_music.zip"
+          echo P3_REFERENCE_ONLY_WORKSPACE_PASS
+
+      - name: Score frozen baseline and corrected candidates
+        shell: bash
+        run: |
+          set -euo pipefail
+          python validation/open_corpus/score_p3_octave_bridge_v169.py \
+            --candidate-dir "$RUNNER_TEMP/p3-score/candidates" \
+            --reference-dir "$RUNNER_TEMP/p3-score/reference" \
+            --output "$RUNNER_TEMP/p3-score/output/p3-reference-blind-octave-score.json"
+          sha256sum "$RUNNER_TEMP/p3-score/output/p3-reference-blind-octave-score.json" \
+            | tee "$RUNNER_TEMP/p3-score/output/score-sha256.txt"
+
+      - name: Print scientific classification without changing CI conclusion
+        shell: python
+        run: |
+          import json, os
+          from pathlib import Path
+          p=Path(os.environ['RUNNER_TEMP'])/'p3-score/output/p3-reference-blind-octave-score.json'
+          r=json.loads(p.read_text())
+          print(json.dumps({
+            'status':r['status'],
+            'candidateFreezeManifestSha256':r['candidateFreezeManifestSha256'],
+            'totalChangedPitchCount':r['totalChangedPitchCount'],
+            'eventCountIdentity':r['eventCountIdentity'],
+            'primary100msBaselineMacroF1Pct':r['primary100ms']['baselineCombinedMacroF1Pct'],
+            'primary100msCorrectedMacroF1Pct':r['primary100ms']['correctedCombinedMacroF1Pct'],
+            'primary100msDeltaMacroF1PP':r['primary100ms']['deltaCombinedMacroF1PP'],
+            'primary100msBaselineMicroF1Pct':r['primary100ms']['baselineMicro']['f1Pct'],
+            'primary100msCorrectedMicroF1Pct':r['primary100ms']['correctedMicro']['f1Pct'],
+            'strict50msBaselineMicroF1Pct':r['strict50ms']['baselineMicro']['f1Pct'],
+            'strict50msCorrectedMicroF1Pct':r['strict50ms']['correctedMicro']['f1Pct'],
+            'v168ReferenceFacingScoreCalls':r['v168ReferenceFacingScoreCalls'],
+          },indent=2,sort_keys=True))
+
+      - name: Preserve scientific score report
+        uses: actions/upload-artifact@v4
+        with:
+          name: p3-reference-blind-octave-score-report
+          path: ${{ runner.temp }}/p3-score/output/
+          retention-days: 30
