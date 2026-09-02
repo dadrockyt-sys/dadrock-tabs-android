@@ -5,13 +5,13 @@ Branch: `v143-contextual-prune-lobo`
 
 > Compact continuation checkpoint. Dedicated checkpoints under `docs/checkpoints/` remain authoritative for detailed history; omission here does not revoke earlier frozen boundaries.
 
-## V168 / GOAT — unchanged
+## V168 / GOAT — unchanged scientific state
 
 **V168 = `HOLDOUT_ASSET_MISSING / SCORING_NOT_ARMED`. V167 = CLOSED / TERMINAL.**
 
 - GOAT restricted access request for Zenodo `15690894` / DOI `10.5281/zenodo.15690894` v1 is awaiting explicit owner approval/denial.
 - No restricted GOAT bytes admitted; V168 prospective reference-facing score calls = **0**.
-- Frozen V168 Policy A/B, validators, GOAT selection contract and promotion gate unchanged.
+- Frozen V168 Policy A/B, validators, GOAT integrity/selection contract and promotion gate unchanged.
 - No GOAT candidate/scorer adapter armed. `main` / Production untouched.
 - CPU only; fresh explicit authorization required immediately before GPU/CUDA/Modal.
 
@@ -95,16 +95,28 @@ Until a separately justified reopen checkpoint exists:
 - do not reinterpret player `05` as an independent holdout;
 - keep prospective `00/01/03` sealed and out of model/feature/threshold selection.
 
-A valid reopen requires genuinely independent motivation fixed before any new GuitarSet reference-facing score call, such as a materially new model architecture, independently derived causal/model-side feature, external published result, or new independent-corpus result. Recovering a small V5 near-signal alone is not sufficient.
+A valid reopen requires genuinely independent motivation fixed before any new GuitarSet reference-facing score call. Recovering a small V5 near-signal alone is not sufficient.
 
 GuitarSet prospective evaluation score calls remain **0**.
 
+## GOAT pre-access gap audit — COMPLETE
+
+Checkpoint `docs/checkpoints/V168_GOAT_PREACCESS_GAP_AUDIT_20260902.md`, creation commit `bb74b64f4a6be8cbab2da46569161c37f2bc09ab`.
+
+Audit result: **`GOAT_PREACCESS_IMPLEMENTATION_COMPLETE / AWAIT_OWNER_DECISION`**.
+
+The existing access/grant provenance rules, complete-base-DI inventory requirement, source/reference SHA256 binding, frozen 50 ms onset-EOF integrity rule, deterministic Tier 1/Tier 2 selection contract, metadata-only selection validator, base manifest validator and provenance validator already cover the full pre-access admission path.
+
+No additional receipt generator/template was added: the exact receipt shape is already embodied and self-tested inside `validate_goat_selection_receipt_v168.py`; duplicating it before real v1 inventory exists would add schema-drift risk.
+
+The absence of a GOAT candidate generator and GOAT/new-song scorer is intentional, not a gap. Do not build either before actual access/admission.
+
 ## NEXT SAFE ACTION
 
-1. Primary path: await explicit GOAT owner approval/denial.
-2. On GOAT approval, immediately checkpoint exact grant wording/date/conditions, hash the complete v1 inventory privately, identify complete base-DI/source-reference bindings, produce the frozen metadata-only selection receipt, and run the three frozen validators before any candidate/scorer arm.
-3. On GOAT denial, checkpoint it and keep V168 blocked/inconclusive; do not silently substitute a new holdout source.
-4. While waiting, repository-only work should remain read-only or documentation/integrity-oriented; do not resume SplitMySong or GuitarSet threshold development.
+1. **Await explicit GOAT owner approval/denial.** There is no remaining executable pre-access implementation work that should be added merely to stay busy.
+2. On approval: immediately checkpoint exact non-secret grant wording/date/time/conditions; keep secret URLs/tokens outside the repository; freeze complete restricted-v1 names/sizes/SHA256 inventory; identify complete unique base-DI/source-reference bindings; determine whether actual v1 has an official released test split; apply only the frozen integrity rules; build and validate the selection receipt; run all three frozen validators; require >=2 independent works (target 3); checkpoint selected identities before any candidate-generation arm.
+3. On denial: checkpoint it and keep V168 blocked/inconclusive; do not silently substitute a new holdout source or loosen admission.
+4. Do not resume SplitMySong or GuitarSet threshold development while waiting.
 
 ## Standing methodology
 
