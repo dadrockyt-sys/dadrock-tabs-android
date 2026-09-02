@@ -48,6 +48,8 @@ jobs:
 
       - name: Run reference-grounded open-corpus harmonic study
         shell: python
+        env:
+          PYTHONPATH: ${{ github.workspace }}
         run: |
           import json
           import os
