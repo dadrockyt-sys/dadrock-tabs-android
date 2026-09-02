@@ -1,0 +1,163 @@
+name: Open corpus GuitarSet V3 development static guards
+
+on:
+  workflow_dispatch:
+  push:
+    branches:
+      - v143-contextual-prune-lobo
+    paths:
+      - validation/open_corpus/v3_selective_octave_trigger_v169.py
+      - validation/open_corpus/generate_guitarset_v3_development_candidates.py
+      - validation/open_corpus/score_guitarset_v3_development_candidates.py
+      - .github/workflows/open-corpus-guitarset-v3-development-static.yml
+
+permissions:
+  contents: read
+
+jobs:
+  static-self-test:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 15
+    steps:
+      - name: Checkout exact branch commit
+        uses: actions/checkout@v4
+
+      - name: Verify frozen scientific identities
+        shell: bash
+        run: |
+          set -euo pipefail
+          test "$(git hash-object validation/open_corpus/evaluate_harmonic_candidate_ranking_v2_v169.py)" = "95e1e7d20a4bb5b15962cb803fa2da4d065743ae"
+          test "$(git hash-object validation/open_corpus/analyze_guitar_techs_harmonic_octave_v169.py)" = "c39305df4f875bf6aec0d5e9d5b6448a5f7404df"
+          test "$(git hash-object validation/open_corpus/v3_selective_octave_trigger_v169.py)" = "14ddd15fc29bfe947a4e3ce12050b10f43d2435f"
+          test "$(git hash-object validation/open_corpus/generate_guitarset_v3_development_candidates.py)" = "61068cee19132c40f3d0b15231d64ea3d428e1ca"
+          test "$(git hash-object validation/open_corpus/score_guitarset_v3_development_candidates.py)" = "19ef54155735a6ac1e65441250b47d1572ac0380"
+          echo GUITARSET_V3_DEVELOPMENT_BLOB_GUARDS_PASS
+
+      - name: Trigger static reference-isolation guard
+        shell: python
+        run: |
+          import ast
+          from pathlib import Path
+          p=Path('validation/open_corpus/v3_selective_octave_trigger_v169.py')
+          text=p.read_text()
+          tree=ast.parse(text)
+          imports=set()
+          for n in ast.walk(tree):
+              if isinstance(n,ast.Import): imports.update(a.name.split('.')[0] for a in n.names)
+              elif isinstance(n,ast.ImportFrom) and n.module: imports.add(n.module.split('.')[0])
+          bad=sorted(imports & {'jams','pretty_midi','basic_pitch'})
+          if bad: raise SystemExit(f'trigger forbidden imports: {bad}')
+          hits=[x for x in ['load_notes(','--reference','note_midi','pitch_midi'] if x in text]
+          if hits: raise SystemExit(f'trigger forbidden reference surface: {hits}')
+          print('V3_TRIGGER_REFERENCE_ISOLATION_STATIC_PASS')
+          print('guitarSetJamsNoteEventsRead=0')
+          print('guitarSetProspectiveEvaluationScoreCalls=0')
+          print('v168ReferenceFacingScoreCalls=0')
+
+      - name: Candidate static reference-isolation guard
+        shell: python
+        run: |
+          import ast
+          from pathlib import Path
+          p=Path('validation/open_corpus/generate_guitarset_v3_development_candidates.py')
+          text=p.read_text()
+          tree=ast.parse(text)
+          imports=set()
+          for n in ast.walk(tree):
+              if isinstance(n,ast.Import): imports.update(a.name.split('.')[0] for a in n.names)
+              elif isinstance(n,ast.ImportFrom) and n.module: imports.add(n.module.split('.')[0])
+          bad=sorted(imports & {'jams','pretty_midi'})
+          if bad: raise SystemExit(f'candidate forbidden reference imports: {bad}')
+          hits=[x for x in ['--reference-dir','--reference','.jams','note_midi','pitch_midi','jams.load'] if x in text]
+          if hits: raise SystemExit(f'candidate forbidden reference surface: {hits}')
+          print('V3_CANDIDATE_REFERENCE_ISOLATION_STATIC_PASS')
+          print('guitarSetJamsNoteEventsRead=0')
+          print('guitarSetProspectiveEvaluationScoreCalls=0')
+          print('v168ReferenceFacingScoreCalls=0')
+
+      - name: Scorer static no-audio-no-generation guard
+        shell: python
+        run: |
+          import ast
+          from pathlib import Path
+          p=Path('validation/open_corpus/score_guitarset_v3_development_candidates.py')
+          text=p.read_text()
+          tree=ast.parse(text)
+          imports=set()
+          for n in ast.walk(tree):
+              if isinstance(n,ast.Import): imports.update(a.name.split('.')[0] for a in n.names)
+              elif isinstance(n,ast.ImportFrom) and n.module: imports.add(n.module.split('.')[0])
+          bad=sorted(imports & {'basic_pitch','soundfile','librosa'})
+          if bad: raise SystemExit(f'scorer forbidden generation/audio imports: {bad}')
+          hits=[x for x in ['load_mono_audio','predict(','ICASSP_2022_MODEL_PATH','.wav','--audio-root'] if x in text]
+          if hits: raise SystemExit(f'scorer forbidden generation/audio surface: {hits}')
+          print('V3_SCORER_NO_AUDIO_NO_GENERATION_STATIC_PASS')
+          print('candidateRegenerated=false')
+          print('guitarSetProspectiveEvaluationScoreCalls=0')
+          print('v168ReferenceFacingScoreCalls=0')
+
+      - name: Compile bridge scripts
+        shell: bash
+        run: |
+          set -euo pipefail
+          python -m py_compile validation/open_corpus/v3_selective_octave_trigger_v169.py
+          python -m py_compile validation/open_corpus/generate_guitarset_v3_development_candidates.py
+          python -m py_compile validation/open_corpus/score_guitarset_v3_development_candidates.py
+
+      - name: Set up Python 3.10
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.10'
+
+      - name: Install self-test dependencies only
+        shell: bash
+        run: |
+          python -m pip install --disable-pip-version-check \
+            numpy==1.26.4 \
+            soundfile==0.14.0 \
+            pretty-midi==0.2.11.post0
+
+      - name: Verify exact frozen trigger family
+        shell: bash
+        working-directory: validation/open_corpus
+        run: |
+          python - <<'PY'
+          from v3_selective_octave_trigger_v169 import TRIGGER_CONFIGS
+          expected=(
+              ('C075-M005',0.75,0.05),('C075-M010',0.75,0.10),
+              ('C075-M015',0.75,0.15),('C075-M020',0.75,0.20),
+              ('C100-M005',1.00,0.05),('C100-M010',1.00,0.10),
+              ('C100-M015',1.00,0.15),('C100-M020',1.00,0.20),
+          )
+          actual=tuple((x['id'],x['consensusThreshold'],x['medianAdvantageThreshold']) for x in TRIGGER_CONFIGS)
+          assert actual==expected,(actual,expected)
+          print('V3_TRIGGER_FAMILY_STATIC_PASS')
+          PY
+
+      - name: Trigger synthetic self-test
+        shell: bash
+        working-directory: validation/open_corpus
+        run: python v3_selective_octave_trigger_v169.py
+
+      - name: Candidate wrapper self-test
+        shell: bash
+        working-directory: validation/open_corpus
+        run: python generate_guitarset_v3_development_candidates.py --self-test
+
+      - name: Scorer self-test
+        shell: bash
+        run: python validation/open_corpus/score_guitarset_v3_development_candidates.py --self-test
+
+      - name: Reconfirm no real GuitarSet consumption
+        shell: bash
+        run: |
+          printf '%s\n' \
+            'GUITARSET_V3_DEVELOPMENT_STATIC_PASS' \
+            'guitarSetAudioDownloaded=false' \
+            'guitarSetJamsDownloaded=false' \
+            'guitarSetJamsNoteEventsRead=0' \
+            'guitarSetBasicPitchInferenceCalls=0' \
+            'guitarSetDevelopmentScoreCalls=0' \
+            'guitarSetProspectiveEvaluationScoreCalls=0' \
+            'v168ReferenceFacingScoreCalls=0' \
+            'gpuCudaModalUsed=false'
