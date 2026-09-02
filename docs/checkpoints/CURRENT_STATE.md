@@ -31,58 +31,61 @@ Frozen V2 evaluator blob `95e1e7d20a4bb5b15962cb803fa2da4d065743ae`; helper blob
 
 P3 run `33578675945` is terminal scientific **`REFERENCE_BLIND_OCTAVE_CORRECTION_FAIL`**: event count 4693 preserved, 1121 changed pitches = 23.88663967611336%; primary macro **60.576880733206515% -> 51.95250763325269%**, delta **-8.624373099953829pp**. Never mine P3 per-event outcomes for V3. Frozen aggregate lesson only: V2 needs a conservative trigger.
 
-## V3 GuitarSet provenance — PASS, evaluation sealed
+## V3 GuitarSet provenance — PASS, prospective evaluation sealed
 
-Split preregistration commit `0be0cb3ec1ee2a83100ea1e30ed523b17fc59768`.
+GuitarSet v1.1.0 metadata-only verification run `33579938898`, job `100091870033`: SUCCESS.
+- `audio_mono-mic.zip`: SHA256 `237cdc58353d25c3c9683f4565a0f1cf2db30a9051abca545a919f8f1296dc28`.
+- `annotation.zip`: SHA256 `8daa02e6417ccca1685feb44b135e95928ad7037e5032ecb326b5791856fda99`.
+- exact mic/JAMS pairing: 360 tracks, 60/player.
+- development players `02/04/05`: 180 nominal; sealed evaluation players `00/01/03`: 180.
+- excluded development anomalies: `04_BN3-154-E_comp`, `04_Jazz1-200-B_comp`, `02_Funk2-119-G_comp`.
 
-Metadata-only archive verification run `33579938898`, job `100091870033`: SUCCESS.
-- `audio_mono-mic.zip`: MD5 `275966d6610ac34999b58426beb119c3`, SHA256 `237cdc58353d25c3c9683f4565a0f1cf2db30a9051abca545a919f8f1296dc28`.
-- `annotation.zip`: MD5 `b39b78e63d3446f2e54ddb7a54df9b10`, SHA256 `8daa02e6417ccca1685feb44b135e95928ad7037e5032ecb326b5791856fda99`.
-- Exact mic/JAMS pairing: 360 tracks, 60/player.
-- Development `02/04/05`: 180 nominal; sealed evaluation `00/01/03`: 180.
-- Predeclared anomalies excluded from development objective: `04_BN3-154-E_comp`, `04_Jazz1-200-B_comp`, `02_Funk2-119-G_comp`.
-- Inventory result checkpoint commit `45a2c8c6499af01f1218c86ecd71bb35b455cb83`.
+V3 trigger/scorer preregistration and static guards remain frozen. Trigger family: consensus `{0.75,1.00}` × median advantage `{0.05,0.10,0.15,0.20}`. Candidate qualification: event identity, >=+0.25pp primary macro gain, primary combined micro non-regression, each-player primary micro delta >=-0.10pp, strict50 combined micro non-regression; among qualifiers select fewest changed pitches first.
 
-## V3 development bridge — FROZEN / STATIC PASS / READY
+Frozen code:
+- V3 trigger blob `14ddd15fc29bfe947a4e3ce12050b10f43d2435f`;
+- development candidate generator blob `61068cee19132c40f3d0b15231d64ea3d428e1ca`;
+- development scorer blob `19ef54155735a6ac1e65441250b47d1572ac0380`.
 
-Development trigger preregistration:
-- `docs/checkpoints/OPEN_CORPUS_V3_GUITARSET_DEVELOPMENT_TRIGGER_PREREGISTRATION_20260902.md`
-- creation commit `1c9a83c7e101824640a244c83e0a86637317b101`.
+Static guard run `33581122972`, job `100095439483`: SUCCESS.
 
-READY checkpoint:
-- `docs/checkpoints/OPEN_CORPUS_V3_GUITARSET_DEVELOPMENT_BRIDGE_READY_20260902.md`
-- creation commit `c4b8bf4a31281bea5d9b451095e5eff2b4efc174`.
+## V3 development run — CANDIDATES FROZEN; SCORER RECOVERY REQUIRED
 
-Frozen V3 trigger helper:
-- `validation/open_corpus/v3_selective_octave_trigger_v169.py`
-- blob `14ddd15fc29bfe947a4e3ce12050b10f43d2435f`.
+Original workflow head `f494e5b2f586ec335b16dcabce687e63bb1f88fb`, run `33581322528`.
 
-Frozen audio-only candidate generator:
-- `validation/open_corpus/generate_guitarset_v3_development_candidates.py`
-- blob `61068cee19132c40f3d0b15231d64ea3d428e1ca`.
+### Job A — SUCCESS / authoritative frozen candidates
 
-Frozen reference-only scorer:
-- `validation/open_corpus/score_guitarset_v3_development_candidates.py`
-- blob `19ef54155735a6ac1e65441250b47d1572ac0380`.
+Job `100096037798` completed SUCCESS using CPU/TFLite only.
 
-Static workflow blob `294fd97948c061878cb1b1fa39314ae204a9b994`; run `33581122972`, job `100095439483`: **SUCCESS**. Exact blob guards, reference isolation, scorer no-audio/no-generation, compile, exact 8-config family, trigger/candidate/scorer self-tests all PASS.
+Exactly **177** preregistered development tracks were processed (`02`=59, `04`=58, `05`=60); evaluation players `00/01/03` and excluded anomalies were absent.
 
-Trigger family is frozen before outcomes: consensus `{0.75,1.00}` × median advantage `{0.05,0.10,0.15,0.20}`. Synthetic octave-high fixture gave frozen V2 winner MIDI45, consensus **1.0**, median advantage **0.40037115768886156**.
+Frozen candidate summary:
+- baseline events: **29,245**;
+- ordinary V2 proposal events: **10,693**;
+- trigger-eligible events: **10,642**;
+- changed pitches: `C075-M005` 5869, `C075-M010` 4012, `C075-M015` 2685, `C075-M020` 1732, `C100-M005` 4881, `C100-M010` 3546, `C100-M015` 2457, `C100-M020` 1620;
+- candidate freeze manifest SHA256 `4568ca0c5f25ba11f17074b43b21e135eb44357c04a963266c61457038120a83`;
+- artifact ID `9828683652`, name `guitarset-v3-development-frozen-candidates`, ZIP SHA256 `1031aaf913b6292ee961051fed76b91bf003139ab6d3f8db1dad5d0dded270c5`.
 
-Development objective is exactly **177 tracks**: player 02=59, 04=58, 05=60. Candidate qualifies only with event identity, >=+0.25pp primary macro gain, primary combined micro non-regression, each-player primary micro delta >=-0.10pp, strict50 combined micro non-regression. Among qualifiers choose fewest changed pitches first; if none: `NO_DEVELOPMENT_SIGNAL` and keep evaluation sealed.
+The candidate artifact is authoritative. **Do not rerun candidate generation.** At freeze: referenceRead=false; development JAMS note events=0; prospective evaluation processed=false; prospective evaluation score calls=0; V168 score calls=0.
 
-Reference semantics frozen from official GuitarSet parser: `note_midi`, fallback `pitch_midi`; six string annotations; `int(round(note.value))`; preserve all events; exact-pitch one-to-one onsets at 100ms/50ms.
+### Job B — MECHANICAL PRE-REFERENCE FAILURE
 
-At this READY boundary: GuitarSet development JAMS note events read=0; GuitarSet Basic Pitch inference calls=0; development score calls=0; evaluation processed=false; evaluation score calls=0; V168 score calls=0; GPU/CUDA/Modal=false.
+Job `100097954531` failed before any reference download or scoring. Candidate artifact download and digest verification succeeded; the failure was `sha256sum -c candidate-manifest-sha256.txt` because that receipt contains Job A's absolute temporary path, which does not exist in Job B.
+
+This is a path-serialization error, **not a scientific failure and not a candidate hash mismatch**. JAMS reference download, parsing and scoring were skipped. No development classification exists yet.
+
+Dedicated recovery checkpoint:
+- `docs/checkpoints/OPEN_CORPUS_V3_GUITARSET_DEVELOPMENT_SCORER_PATH_RECOVERY_20260902.md`
+- creation commit `63de07c41db5322b5e0330339552f14dfc677c78`.
 
 ## NEXT SAFE ACTION
 
-Run the preregistered two-job development workflow exactly once:
-1. Job A: verify audio archive, extract only the 177 admissible development WAVs, delete ZIP, prove no JAMS/evaluation files, run Basic Pitch once/track, freeze all 8 JSON candidate streams.
-2. Job B: verify frozen candidate hashes, no Basic Pitch, verify annotation archive, extract only corresponding 177 development JAMS files, delete ZIP, prove no audio/evaluation files, score and apply frozen selection rule.
-3. Checkpoint `V3_DEVELOPMENT_TRIGGER_SELECTED` or `NO_DEVELOPMENT_SIGNAL` before any evaluation work.
-
-No threshold/feature/scorer changes after development outcomes become visible in this lane.
+1. Add a scorer-only recovery workflow; never rerun Job A.
+2. Bind original run `33581322528`, artifact ID `9828683652`, artifact ZIP digest `1031aaf913b6292ee961051fed76b91bf003139ab6d3f8db1dad5d0dded270c5`, manifest SHA256 `4568ca0c5f25ba11f17074b43b21e135eb44357c04a963266c61457038120a83`, and frozen scorer blob `19ef54155735a6ac1e65441250b47d1572ac0380`.
+3. Before any reference download, verify the local manifest directly plus all 177 per-file hashes, no audio/JAMS/ZIP, no evaluation candidates, and no Basic Pitch runtime.
+4. Only after those checks pass, download/verify `annotation.zip`, extract only the 177 development JAMS files, score unchanged candidates with the unchanged scorer and selection rule, then checkpoint the resulting `V3_DEVELOPMENT_TRIGGER_SELECTED` or `NO_DEVELOPMENT_SIGNAL` status.
+5. Players `00/01/03` remain sealed until development classification and any required final prospective-evaluation preregistration are frozen.
 
 GOAT approval remains independent; on approval follow the frozen GOAT intake sequence before any V168 arm.
 
