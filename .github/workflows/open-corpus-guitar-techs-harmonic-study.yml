@@ -47,12 +47,54 @@ jobs:
             -d input
 
       - name: Run reference-grounded open-corpus harmonic study
+        shell: python
         run: |
-          python validation/open_corpus/analyze_guitar_techs_harmonic_octave_v169.py \
-            --midi "$RUNNER_TEMP/guitar-techs/input/midi_allsinglenotes.mid" \
-            --di "$RUNNER_TEMP/guitar-techs/input/directinput_allsinglenotes.wav" \
-            --micamp "$RUNNER_TEMP/guitar-techs/input/micamp_allsinglenotes.wav" \
-            --output "$RUNNER_TEMP/guitar-techs/output/harmonic-study-report.json"
+          import json
+          import os
+          from pathlib import Path
+          import numpy as np
+          from validation.open_corpus.analyze_guitar_techs_harmonic_octave_v169 import (
+              analyze_capture,
+              load_mono_audio,
+              load_notes,
+          )
+
+          root = Path(os.environ['RUNNER_TEMP']) / 'guitar-techs'
+          notes, instruments = load_notes(root / 'input' / 'midi_allsinglenotes.mid')
+          report = {
+              'schema': 'dadrock.tabs.open-corpus.harmonic-octave-study.v1',
+              'dataset': 'Guitar-TECHS',
+              'scope': 'P1_singlenotes',
+              'midiNoteCount': len(notes),
+              'midiInstruments': instruments,
+              'captures': {},
+              'v168ReferenceFacingScoreCalls': 0,
+              'v168PoliciesModified': False,
+              'goatHoldoutSelectionModified': False,
+          }
+          for name, path in (
+              ('directInput', root / 'input' / 'directinput_allsinglenotes.wav'),
+              ('micAmp', root / 'input' / 'micamp_allsinglenotes.wav'),
+          ):
+              audio, sample_rate = load_mono_audio(path)
+              summary, _ = analyze_capture(audio, sample_rate, notes)
+              report['captures'][name] = summary
+
+          def clean(value):
+              if isinstance(value, np.generic):
+                  return value.item()
+              if isinstance(value, dict):
+                  return {str(k): clean(v) for k, v in value.items()}
+              if isinstance(value, list):
+                  return [clean(v) for v in value]
+              if isinstance(value, tuple):
+                  return [clean(v) for v in value]
+              return value
+
+          report = clean(report)
+          output = root / 'output' / 'harmonic-study-report.json'
+          output.write_text(json.dumps(report, indent=2, sort_keys=True) + '\n', encoding='utf-8')
+          print(json.dumps(report, indent=2, sort_keys=True))
 
       - name: Hash aggregate report
         shell: bash
