@@ -51,43 +51,53 @@ Scientific classification: **`REFERENCE_BLIND_OCTAVE_CORRECTION_FAIL`**.
 
 Primary 100ms baseline macro F1 **60.576880733206515%** vs corrected **51.95250763325269%**, delta **-8.624373099953829pp**. Baseline micro F1 **60.8219816043777%** vs corrected **52.5323087670276%**, delta **-8.289672837350096pp**. Strict 50ms baseline micro **57.957853067877515%** vs corrected **49.97089300267784%**.
 
-Score report SHA256 `540cfe330e975584a0857ace2511ba021ab918b82dd1392a48452ffbebb92170`.
+Frozen lesson: V2 is strong when an octave ambiguity is already known, but indiscriminate application is harmful. V3 must be a conservative reference-blind trigger deciding **whether** V2 should intervene. P3 is consumed evaluation evidence; never tune V3 from P3 per-event reference outcomes.
 
-Frozen lesson: V2 is strong when an octave ambiguity is already known, but indiscriminate application is harmful. V3 must be a conservative reference-blind trigger deciding **whether** V2 should intervene.
+## V3 fresh corpus — GuitarSet intake PASS, evaluation still sealed
 
-P3 is consumed evaluation evidence. Do not rerun it or tune V3 from P3 per-event reference outcomes.
-
-## V3 fresh corpus — GuitarSet split frozen before use
-
-Preregistration:
-- `docs/checkpoints/OPEN_CORPUS_V3_GUITARSET_SPLIT_PREREGISTRATION_20260902.md`;
+Split preregistration:
+- `docs/checkpoints/OPEN_CORPUS_V3_GUITARSET_SPLIT_PREREGISTRATION_20260902.md`
 - creation commit `0be0cb3ec1ee2a83100ea1e30ed523b17fc59768`.
 
-Authoritative source frozen as GuitarSet v1.1.0, Zenodo record `3371780`, DOI `10.5281/zenodo.3371780`.
+Metadata inventory result checkpoint:
+- `docs/checkpoints/OPEN_CORPUS_V3_GUITARSET_METADATA_INVENTORY_PASS_20260902.md`
+- creation commit `45a2c8c6499af01f1218c86ecd71bb35b455cb83`.
 
-Frozen archives for this lane:
-- `audio_mono-mic.zip`, official MD5 `275966d6610ac34999b58426beb119c3`;
-- `annotation.zip`, official MD5 `b39b78e63d3446f2e54ddb7a54df9b10`.
+Frozen metadata inventory script:
+- `validation/open_corpus/inventory_guitarset_v3_metadata.py`
+- creation commit `312cef0ccd6d217c9de31231d0f9085d57a2289f`
+- blob `3a0f20df2b8ac0b447d8c7d6fb13a7ff67878a69`.
 
-Use only monophonic microphone audio plus JAMS annotation references. Do not use hexaphonic per-string audio.
+Real metadata-only Actions run:
+- workflow head `b11a4f1b4e644f35c25d04c803d0801b58bb469e`
+- run `33579938898`
+- job `100091870033`: **SUCCESS / `GUITARSET_V3_METADATA_INVENTORY_PASS`**.
 
-Player-disjoint split frozen before any GuitarSet audio/JAMS note processing or Basic Pitch inference:
-- development players: `02`, `04`, `05`;
-- sealed prospective evaluation players: `00`, `01`, `03`;
-- nominal prospective evaluation set: **180 tracks**.
+Authoritative GuitarSet v1.1.0 archive identities:
+- `audio_mono-mic.zip`: official MD5 `275966d6610ac34999b58426beb119c3` MATCH; observed SHA256 `237cdc58353d25c3c9683f4565a0f1cf2db30a9051abca545a919f8f1296dc28`;
+- `annotation.zip`: official MD5 `b39b78e63d3446f2e54ddb7a54df9b10` MATCH; observed SHA256 `8daa02e6417ccca1685feb44b135e95928ad7037e5032ecb326b5791856fda99`.
 
-Three publicly documented anomalous tracks are development-only and excluded from the trigger-fit objective: `04_BN3-154-E_comp`, `04_Jazz1-200-B_comp`, `02_Funk2-119-G_comp`.
+Inventory verified exact microphone/JAMS normalized stem pairing across **360 tracks**, 60 for each player `00`–`05`.
 
-At split freeze: GuitarSet audio downloaded=false; annotation archive downloaded=false; JAMS note events read=0; Basic Pitch inference calls=0; prospective evaluation score calls=0; V168 score calls=0.
+Frozen split remains:
+- development players `02/04/05`: **180 tracks**;
+- sealed prospective evaluation players `00/01/03`: **180 tracks**.
+
+Three public anomaly tracks remain development-only and outside trigger-fit objective: `04_BN3-154-E_comp`, `04_Jazz1-200-B_comp`, `02_Funk2-119-G_comp`.
+
+Metadata report SHA256 `2e23ca44c2eae62ec9f6e3e7d2be5829d693be9dc48eeb0eefcad2c489dccb1f`; artifact ID `9828185987`, artifact ZIP SHA256 `05d9daf7b96e79e44032e900e3b0add45a800e9f150825a3e4a2305207517ff0`.
+
+Inventory safety boundary: ZIP central-directory metadata only; audio decoded=false; WAV/JAMS members extracted=0; JAMS member contents read=false; JAMS note events read=0; Basic Pitch inference calls=0; GuitarSet prospective evaluation score calls=0; V168 score calls=0. Source archives were deleted before artifact upload.
 
 ## NEXT SAFE ACTION
 
-1. Run a **metadata/path-only inventory** of `audio_mono-mic.zip` and `annotation.zip`.
-2. Verify official MD5 plus observed SHA256 for both archives.
-3. Enumerate ZIP central-directory paths only; do **not** parse JAMS contents and do **not** run Basic Pitch.
-4. Verify exact mic/JAMS stem pairing and expected six-player / 360-track structure; preserve only metadata/hashes.
-5. Checkpoint inventory identities/results before any V3 development inference or annotation parsing.
-6. Only after inventory PASS, design the V3 trigger using development players `02/04/05`; evaluation players `00/01/03` remain sealed until the trigger, scorer and PASS/FAIL rules are frozen.
+1. Freeze a **development-only V3 trigger-study contract** before reading GuitarSet development outcomes.
+2. Inspect only the already-frozen V2 implementation and P3 aggregate lesson; do not mine P3 per-event reference errors.
+3. Define a small conservative family of reference-blind trigger features/gates whose purpose is to decide whether V2 is allowed to change a Basic Pitch event.
+4. Freeze exact JAMS parsing/reference semantics plus candidate/reference isolation for development players `02/04/05`.
+5. Only then run development inference/scoring and select/freeze the V3 gate using development evidence.
+6. Players `00/01/03` remain fully sealed: no JAMS content parsing, candidate inference or score calls until the final trigger, evaluation scorer and PASS/FAIL criteria are frozen.
+7. Checkpoint again before any GuitarSet development JAMS read or Basic Pitch inference.
 
 GOAT approval remains independent; on approval follow the already-frozen GOAT intake sequence before any V168 arm.
 
