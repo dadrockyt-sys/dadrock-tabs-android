@@ -117,9 +117,13 @@ Dedicated observation checkpoint: `docs/checkpoints/SONGSTERR_PUBLIC_AI_TRANSCRI
 
 Architecture-gap inventory: `docs/checkpoints/SONGSTERR_ARCHITECTURE_GAP_INVENTORY_20260903.md`, creation commit `592762183301a8767cba75c1c9e280a83ab4aa19`.
 
-Status: **`NEW_INTEGRATION_GAP_IDENTIFIED / NO SCORE AUTHORIZATION`**.
+Dual-context hypothesis: `docs/checkpoints/SONGSTERR_DUAL_CONTEXT_TOPOLOGY_HYPOTHESIS_20260903.md`, creation commit `8da294acc7d5e503fe7b193bf3903caed3d0beca`.
+
+Status: **`DUAL_CONTEXT_TOPOLOGY_INDEPENDENTLY_MOTIVATED / NO SCORE AUTHORIZATION`**.
 
 Public Songsterr `/new` currently exposes first-bar time signature, pickup-bar duration, first-bar BPM, triplet feel, instrument Auto/Adjust, separate vocals/rhythm-guitar/lead-guitar/bass/drums targets, and per-guitar/bass tuning/capo controls. Songsterr Help describes the AI output as a draft opened in its editor; a public August 2026 r/Songsterr reply attributed to the Songsterr team says current work has focused on existing instruments and `measure structure`. A public 2026 Songsterr ML-engineer listing describes production automatic music transcription using `our models` and names Python/PyTorch plus Accelerate/DeepSpeed/W&B in the training stack.
+
+A January 2026 publicly indexed r/Songsterr reply in a thread addressed to Songsterr's developer says the service uses `our models`, performs source separation `under the hood`, and that supplying pre-separated tracks can make **measure-structure prediction harder**. The exact Reddit author identity was not independently authenticated here, so this is treated as a public architecture clue rather than source-code proof.
 
 Repository inventory shows the individual component ideas are not all new:
 
@@ -130,17 +134,20 @@ Repository inventory shows the individual component ideas are not all new:
 
 Therefore **do not** treat `add Demucs`, `add tempo`, `quantize to measures`, or another GuitarSet threshold sweep as the Songsterr-derived new idea.
 
-The independent gap is an end-to-end **`STRUCTURE_INSTRUMENT_CONDITIONING_V1`** concept: explicit structure priors/estimates (meter, pickup, tempo, triplet feel) plus role/tuning/capo configuration should be carried through event interpretation, structure-aware quantization and contextual string/fret decoding, with provenance/uncertainty in the result.
+The independent architecture gap is now more specific:
 
-This is an architecture hypothesis inspired by public configuration behavior, **not a claim about Songsterr's exact private model architecture**. There is no credible public evidence identifying their exact separator, transcriber, losses, training corpus, fingering solver or thresholds.
+1. end-to-end **`STRUCTURE_INSTRUMENT_CONDITIONING_V1`** — explicit structure priors/estimates (meter, pickup, tempo, triplet feel) plus role/tuning/capo configuration carried through interpretation, quantization and string/fret decoding;
+2. **dual-context topology** — preserve the normalized full mix for global structure evidence while any separated/role-specific carrier supplies local note evidence, then fuse those contexts before measure alignment/tab decoding.
 
-This inventory **does not reopen GuitarSet development and does not authorize a V6 threshold sweep or any reference-facing score call**.
+This is an architecture hypothesis inspired by public behavior, **not a claim about Songsterr's exact private model topology**. There is still no credible public evidence identifying their exact separator, transcriber architecture, loss functions, training corpus, fingering solver or thresholds.
+
+These checkpoints **do not reopen GuitarSet development and do not authorize a V6 threshold sweep or any reference-facing score call**.
 
 ## NEXT SAFE ACTION
 
 1. **Await explicit GOAT owner approval/denial.** On approval/denial follow the already frozen V168 procedures; do not substitute another holdout source.
-2. If useful work continues while GOAT remains unavailable, freeze a separate reference-blind implementation checkpoint for `STRUCTURE_INSTRUMENT_CONDITIONING_V1` before code changes.
-3. Under that future implementation checkpoint, keep the first phase to schema/plumbing + deterministic synthetic/unit tests only: structure config, custom tuning, capo, output provenance, and existing-component integration; no frozen-reference score calls.
+2. If useful work continues while GOAT remains unavailable, freeze a separate reference-blind implementation checkpoint for `STRUCTURE_INSTRUMENT_CONDITIONING_V1` with dual-context topology before code changes.
+3. Under that future implementation checkpoint, keep the first phase to schema/plumbing + deterministic synthetic/unit tests only: preserve full-mix + carrier provenance, structure config/context, custom tuning, capo, structure-aware projection and output provenance; no frozen-reference score calls.
 4. Do not resume SplitMySong or GuitarSet threshold development while waiting.
 5. Keep CPU-only/no-Modal/no-GPU and `main`/Production untouched unless the user gives fresh explicit direction.
 
