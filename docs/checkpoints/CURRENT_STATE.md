@@ -18,7 +18,7 @@ Branch: `v143-contextual-prune-lobo`
 - `main` / Production untouched; never modify/merge/promote without explicit user direction.
 
 **Project Progress Score: 60%.**  
-**Test Score: PHASE 1 + PHASE 2 REFERENCE-BLIND CONTRACT PASS; PHASE 3 CONTRACT RUNNING; ACCURACY SCORE NOT RUN.**
+**Test Score: PHASE 1 + PHASE 2 + PHASE 3 REFERENCE-BLIND CONTRACT PASS; ACCURACY SCORE NOT RUN.**
 
 ## Phase 1 — `STRUCTURE_INSTRUMENT_CONDITIONING_V1` COMPLETE
 
@@ -34,48 +34,49 @@ Final deterministic evidence: run `33804886663`, job `100812914077`, **SUCCESS**
 
 Phase 2 remains shadow-only, reference-blind, production-ineligible and unused by PDFs.
 
-## Phase 3 — `MIXTURE_STRUCTURE_CONTEXT_V1` IMPLEMENTATION IN PROGRESS
+## Phase 3 — `MIXTURE_STRUCTURE_CONTEXT_V1` COMPLETE
 
-Pre-implementation freeze:
+Pre-freeze:
 
 `docs/checkpoints/SONGSTERR_MIXTURE_STRUCTURE_CONTEXT_V1_PREIMPLEMENTATION_FREEZE_20260903.md`
 
 Creation commit `c643120922a9bea8d83f3fd458a84df8bd0c48d5`.
 
-Frozen status: **`REFERENCE-BLIND MIXTURE-CONTEXT IMPLEMENTATION AUTHORIZED / CARRIER STRUCTURE BORROWING FORBIDDEN / REFERENCE SCORING NOT AUTHORIZED`**.
+Result:
 
-Implementation commits:
+`docs/checkpoints/SONGSTERR_MIXTURE_STRUCTURE_CONTEXT_V1_PHASE3_RESULT_20260903.md`
 
-- `80ca61f539d31c9b23fd6c8c11d22ddf81544b98` — pure `lib/aiTabMixtureStructureContextV1.mjs` resolver with exact full-mixture provenance gate, field-by-field user-prior precedence, observation validation and production-ineligible research contract.
-- `f8ec5909f16fe8179e9c5a4330dd4d60c6a5a864` — deterministic frozen M1–M10 verifier.
-- `f8fa690cbe8b0fc2f30155024a22149134db4ea8` — analyzer route appends `mixtureStructureContext` research metadata only, with **`mixtureObservation: null`** exactly as frozen.
-- `bd8598633a03a198d503f64abe7b62190eab271d` — full AI Tab verifier extended for Phase 3 carrier-borrowing prohibition, PDF non-consumption and product isolation.
-- `4591c12c35a125f197652e1547929fecd27f2be4` — branch-only workflow now runs Phase 1, Phase 2, Phase 3 M1–M10, end-to-end wiring and compact safety evidence.
+Creation commit `b0a8035033a356983266d52e0ae0a33a92c9c7b3`.
 
-Current deterministic workflow:
+Status: **`PHASE3_REFERENCE_BLIND_MIXTURE_CONTEXT_PASS / CARRIER_BORROWING_FORBIDDEN / OBSERVATION_CHANNEL_DISCONNECTED / NO_REFERENCE_SCORE`**.
+
+Implementation:
+
+- `80ca61f539d31c9b23fd6c8c11d22ddf81544b98` — pure provenance-gated mixture structure resolver;
+- `f8ec5909f16fe8179e9c5a4330dd4d60c6a5a864` — frozen deterministic M1–M10 verifier;
+- `f8fa690cbe8b0fc2f30155024a22149134db4ea8` — route appends `mixtureStructureContext` with `mixtureObservation: null`;
+- `bd8598633a03a198d503f64abe7b62190eab271d` — complete product-isolation/carrier-borrowing assertions;
+- `4591c12c35a125f197652e1547929fecd27f2be4` — workflow wiring.
+
+Final deterministic evidence:
 
 - run `33809372857`;
 - job `100827364605`;
 - tested head `4591c12c35a125f197652e1547929fecd27f2be4`;
-- status **IN PROGRESS** when this checkpoint was written.
+- conclusion **SUCCESS** on the first complete Phase 3 run;
+- evidence bot commit `0219c29276220f508d5a20586f3bc493a855a691`;
+- evidence blob SHA `1c7082e4fe37d22426cc301d6c9c536bf7212544`;
+- evidence schema version `5`.
 
-Phase 3 implementation preserves these hard boundaries:
+M1–M10 prove/reference-blind that Auto stays unresolved without a trusted full-mixture observation; trusted observations can fill Auto fields only; user priors override observations; zero pickup is preserved; carrier/separated/reference-bearing/invalid observations fail closed; current route keeps the observation channel disconnected; PDFs do not consume mixture context; product payload and V143 gates remain untouched.
 
-- explicit user structure values override mixture observations field-by-field;
-- only exact `full-mixture` / `request-audio` / reference-blind provenance may supply Auto structure;
-- separated/carrier/V143 observations fail closed;
-- current real observation channel remains disconnected (`mixtureObservation: null`);
-- no analyzerData/liveV143/structuredPayload/shadow value is borrowed as mixture context;
-- no product tab/PDF field is mutated;
-- `referenceBlind=true`, `referenceScoreAuthorized=false`, `carrierStructureBorrowingAllowed=false`, `productionEligible=false`.
-
-No reference/corpus read or score, no GuitarSet/SplitMySong/GOAT access, no Modal/GPU, and no Production change occurred.
+No reference/corpus reads or scores, no GuitarSet/SplitMySong/GOAT access, no Modal/GPU, and no Production change occurred.
 
 ## NEXT SAFE ACTION
 
-1. Check run `33809372857` / job `100827364605`.
-2. If M1–M10 or the product safety gate fails, repair only implementation/contract defects without weakening the frozen Phase 3 rules.
-3. On success, create the Phase 3 result checkpoint and update this file with final evidence hashes.
-4. Do not connect a real Auto full-mixture estimator until that estimator is independently frozen in a new checkpoint.
+1. Do **not** connect a real Auto full-mixture estimator until that estimator is independently frozen in a new checkpoint.
+2. A safe next phase is optional advanced `/ai-tab` controls on this research branch for tempo, meter, pickup, feel, tuning and capo, with current Auto/standard defaults and no default-behavior change.
+3. Any UI phase must freeze request shape/defaults/error behavior before code and prove that analyzer selection, V143 gates, PDFs and Production remain unchanged.
+4. Alternatively, a future full-mixture estimator adapter may be frozen separately, but no existing analyzer/carrier output may be relabeled as full-mixture evidence.
 5. Await GOAT owner approval/denial; do not substitute another holdout.
 6. No SplitMySong/GuitarSet work, no Modal/GPU, and no `main`/Production changes.
