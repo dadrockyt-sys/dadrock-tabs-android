@@ -10,6 +10,7 @@ const files = {
   full: 'app/api/generate-tab-pdf/route.js',
   payload: 'lib/jimmyPaigeAnalysisPayload.js',
   conditioning: 'lib/aiTabConditioningV1.mjs',
+  shadow: 'lib/aiTabConditionedShadowProjectionV1.mjs',
   professional: 'lib/createJimmyPaigeProfessionalPdf.js',
 };
 
@@ -106,6 +107,42 @@ includesAll(source.conditioning, [
   "kind: 'same-as-mixture'",
 ], 'conditioning v1 server contract');
 
+// Phase 2 shadow projection must remain parallel metadata only. It consumes
+// copied normalized events and may not become a product renderer or mutation.
+includesAll(source.analyze, [
+  'buildAiTabConditionedShadowProjectionV1',
+  'const conditioningShadowProjection =',
+  'events: structuredPayload.events,',
+  'conditioningShadowProjection,',
+  '...structuredPayload,',
+], 'conditioning shadow route plumbing');
+
+includesAll(source.shadow, [
+  "name: 'structure-conditioned-shadow-projection'",
+  'shadowOnly: true',
+  'referenceBlind: true',
+  'referenceScoreAuthorized: false',
+  'productionEligible: false',
+  "status: 'UNRESOLVED_AUTO_STRUCTURE'",
+  "status: 'EXPLICIT_STRUCTURE_RESOLVED'",
+  "quantizationStatus = 'UNRESOLVED_AUTO_FEEL'",
+  "quantizationStatus = 'STRAIGHT'",
+  "quantizationStatus = 'TRIPLET'",
+], 'conditioning shadow contract');
+
+for (const forbiddenMutation of [
+  'structuredPayload.generatedTab =',
+  'structuredPayload.events =',
+  'structuredPayload.renderEvents =',
+  'structuredPayload.measureGrid =',
+  'structuredPayload.analysisEngine =',
+]) {
+  assert.ok(
+    !source.analyze.includes(forbiddenMutation),
+    `Shadow projection must not mutate product payload: ${forbiddenMutation}`
+  );
+}
+
 // Preview and full-PDF routes must still accept all three customer choices.
 includesAll(source.preview, instrumentValues, 'preview PDF allowed types');
 includesAll(source.full, instrumentValues, 'full PDF allowed types');
@@ -127,6 +164,11 @@ for (const [label, text] of [
     'timeSignature',
     'keySignature',
   ], label);
+
+  assert.ok(
+    !text.includes('conditioningShadowProjection'),
+    `${label} must not consume Phase 2 shadow projection`
+  );
 }
 
 // Preview and purchased/full PDF must make the same professional-renderer
@@ -182,7 +224,7 @@ assert.ok(
 );
 
 const evidence = {
-  schemaVersion: 3,
+  schemaVersion: 4,
   gate: 'ai-tab-end-to-end-contract',
   product: 'dadrocktabs.com/ai-tab',
   instrumentChoices: ['lead', 'rhythm', 'bass'],
@@ -193,6 +235,13 @@ const evidence = {
   conditioningV1ReferenceBlind: true,
   conditioningV1ReferenceScoreAuthorized: false,
   dualContextProvenanceWired: true,
+  conditioningShadowProjectionWired: true,
+  conditioningShadowProjectionShadowOnly: true,
+  conditioningShadowProjectionReferenceBlind: true,
+  conditioningShadowProjectionReferenceScoreAuthorized: false,
+  conditioningShadowProjectionProductionEligible: false,
+  conditioningShadowProjectionConsumedByPdf: false,
+  productPayloadMutatedByShadowProjection: false,
   previewPdfWired: true,
   fullPdfUnlockWired: true,
   analysisMetadataTransportWired: true,
