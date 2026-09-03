@@ -93,10 +93,6 @@ includesAll(source.analyze, [
 ], 'conditioning v1 analyzer plumbing');
 
 includesAll(source.conditioning, [
-  'STRUCTURE',
-].filter(() => false), 'conditioning placeholder');
-
-includesAll(source.conditioning, [
   'AI_TAB_CONDITIONING_V1 = 1',
   'STANDARD_GUITAR_TUNING_MIDI',
   'STANDARD_BASS_TUNING_MIDI',
