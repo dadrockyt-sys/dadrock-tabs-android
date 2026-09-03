@@ -16,7 +16,7 @@ Branch: `v143-contextual-prune-lobo`
 - CPU only; fresh explicit authorization required immediately before GPU/CUDA/Modal.
 
 **Project Progress Score: 60%.**  
-**Test Score: CONTRACT TEST IN PROGRESS; NO REFERENCE SCORE.**
+**Test Score: REFERENCE-BLIND CONTRACT PASS; ACCURACY SCORE NOT RUN.**
 
 ## Immutable prior boundaries
 
@@ -143,49 +143,44 @@ This is an architecture hypothesis inspired by public behavior, **not a claim ab
 
 These checkpoints **do not reopen GuitarSet development and do not authorize a V6 threshold sweep or any reference-facing score call**.
 
-## STRUCTURE_INSTRUMENT_CONDITIONING_V1 — PRE-IMPLEMENTATION FROZEN
+## STRUCTURE_INSTRUMENT_CONDITIONING_V1 — PHASE 1 COMPLETE
 
-Checkpoint `docs/checkpoints/SONGSTERR_STRUCTURE_INSTRUMENT_CONDITIONING_V1_PREIMPLEMENTATION_FREEZE_20260903.md`, creation commit `29ef4f7e131e35378a58abb4cf68095bd284c075`.
+Pre-implementation freeze: `docs/checkpoints/SONGSTERR_STRUCTURE_INSTRUMENT_CONDITIONING_V1_PREIMPLEMENTATION_FREEZE_20260903.md`, creation commit `29ef4f7e131e35378a58abb4cf68095bd284c075`.
 
-Status: **`REFERENCE-BLIND IMPLEMENTATION AUTHORIZED / REFERENCE SCORING NOT AUTHORIZED`**.
+Result checkpoint: `docs/checkpoints/SONGSTERR_STRUCTURE_INSTRUMENT_CONDITIONING_V1_PHASE1_RESULT_20260903.md`, creation commit `a79ea4e1d62b2dfaeadac165703bf1e2315dd56f`.
 
-Frozen before code changes:
+Status: **`PHASE1_REFERENCE_BLIND_CONTRACT_PASS / NO_ACCURACY_CLAIM / NO_REFERENCE_SCORE`**.
 
-- optional `conditioning.version=1` request contract;
-- `StructurePriorV1`: Auto/manual tempo, time signature, pickup beats and straight/triplet feel;
-- `InstrumentConfigV1`: lead/rhythm/bass role, physical open-string MIDI tuning and separate capo fret;
-- default standard 6-string guitar and 4-string bass tunings;
-- dual provenance identities for `mixtureSource` and `instrumentCarrierSource`;
-- server-normalized contract is authoritative over any analyzer echo;
-- selected analyzer routing and V143 anti-leakage gate must remain unchanged;
-- deterministic T1–T10 contract tests frozen before implementation;
-- reference-facing scoring remains forbidden; contract success is not evidence of accuracy improvement.
+Implementation:
 
-## STRUCTURE_INSTRUMENT_CONDITIONING_V1 — IMPLEMENTATION IN PROGRESS
+- `a36235371441e2e1209335dd4017093a2aa0da7a` — pure `lib/aiTabConditioningV1.mjs` validation/default/provenance contract;
+- `71beaa8a947ede8a706d28c48bf9bd26852aeb3c` — analyzer API normalization, fail-closed validation, normalized forwarding and server-owned response contract;
+- `2444a0528fa21dcb69dd490ab43ddd1adc132f97` — deterministic frozen T1–T10 verifier;
+- `7ce26de92e4018d8849f07d3b57ee82c7e030784` — branch-only workflow wiring;
+- end-to-end verifier maintenance commits `d4304cb63c95d025b2943b338a4ac17b86f0a98d`, `6769391329dfac08c2c199fb7e5f91ba5f576d0f`, `81caf0f59e69c7df95622f2b0909133d432ecb74`, `ab84f27bcd55990fadbc824cfc8ad883e786d971`.
 
-Status: **`REFERENCE-BLIND PHASE 1 CODED / CONTRACT WORKFLOW RUNNING / NO REFERENCE SCORE`**.
+Final deterministic evidence:
 
-Implementation commits so far:
+- run `33804010524`;
+- job `100810007255`;
+- tested head `ab84f27bcd55990fadbc824cfc8ad883e786d971`;
+- conclusion **SUCCESS**;
+- evidence bot commit `22b0bf3661b251eddeb9e41f0f844683ba2d3ca6`;
+- `debug/v143-contextual-prune/ai-tab-end-to-end-contract.json` blob SHA `8bf20c176c27edb01cca649c36e8ac144c3d684a`.
 
-- `a36235371441e2e1209335dd4017093a2aa0da7a` — new pure server module `lib/aiTabConditioningV1.mjs` with frozen validation/defaults and server-owned dual-context provenance contract;
-- `71beaa8a947ede8a706d28c48bf9bd26852aeb3c` — `/api/analyze-audio-tab` now normalizes conditioning, fails invalid conditioning closed with HTTP 400, forwards only normalized conditioning to the already-selected analyzer, and appends a server-owned `conditioningContract` after structured payload normalization;
-- `2444a0528fa21dcb69dd490ab43ddd1adc132f97` — deterministic reference-blind T1–T10 verifier;
-- `d4304cb63c95d025b2943b338a4ac17b86f0a98d` / `6769391329dfac08c2c199fb7e5f91ba5f576d0f` — end-to-end contract extended and cleaned for Conditioning V1 while preserving legacy/V143 safety checks;
-- `7ce26de92e4018d8849f07d3b57ee82c7e030784` — branch-only AI Tab workflow now runs the Conditioning V1 verifier before the existing end-to-end contract.
+The two preceding end-to-end failures were stale source-text assertions in the old verifier. In both runs the new Conditioning V1 T1–T10 stage itself passed. The assertions were aligned to the already stricter current V143 fail-closed renderer/payload code; no safety gate or product code was weakened.
 
-The historical `analyzer/modal_analyzer.py` was inspected and intentionally left unchanged. It reads the fields it needs from the request payload and therefore tolerates an extra normalized `conditioning` object without redeployment or behavior change. Phase 1 does not claim that the legacy analyzer consumes these priors yet.
-
-Current GitHub Actions run `33803596381` for commit `6769391329dfac08c2c199fb7e5f91ba5f576d0f` was observed **in progress** when this checkpoint was written. Do not mark Phase 1 complete until that deterministic contract workflow succeeds.
+Phase 1 evidence confirms Conditioning V1 wiring, reference-blind status, no reference-score authorization, dual-context provenance, Lead/Bass legacy preservation, V143 Rhythm fail-closed safety, no manufactured structured placement for legacy output, no payment/token/email/deployment side effects, `productionModified=false` and `productionPromotionAuthorized=false`.
 
 No corpus/reference read or score was performed by this work. GuitarSet/SplitMySong/GOAT were not used; GOAT restricted bytes remain unread. No Modal analyzer was invoked, no GPU was used, and Production was not modified.
 
 ## NEXT SAFE ACTION
 
-1. Check deterministic AI Tab contract run `33803596381`; if it fails, fix only contract/plumbing issues and rerun reference-blind.
-2. On success, create a Phase 1 result checkpoint and update this file with the run/job evidence.
-3. **Await explicit GOAT owner approval/denial.** On approval/denial follow the already frozen V168 procedures; do not substitute another holdout source.
-4. After Phase 1 plumbing is closed, the next scientifically clean work is a separately frozen Phase 2 adapter that lets mixture structure context and tuning/capo actually influence measure projection/fret decoding using synthetic/reference-blind fixtures first.
-5. Do not resume SplitMySong or GuitarSet threshold development while waiting.
+1. Freeze a separate **`STRUCTURE_CONDITIONED_SHADOW_PROJECTION_V1`** Phase 2 contract before code.
+2. Phase 2 may deterministically project copied analyzer events using explicit structure priors and tuning/capo, but must remain shadow-only: do not overwrite `generatedTab`, `events`, `renderEvents`, `measureGrid` or `analysisEngine`.
+3. If structure remains Auto/unresolved, do not invent tempo/meter; report `UNRESOLVED_AUTO_STRUCTURE`.
+4. Use synthetic/reference-blind fixtures only; no GuitarSet, SplitMySong or GOAT reads/scores.
+5. **Await explicit GOAT owner approval/denial.** On approval/denial follow the already frozen V168 procedures; do not substitute another holdout source.
 6. Keep CPU-only/no-Modal/no-GPU and `main`/Production untouched unless the user gives fresh explicit direction.
 
 ## Standing methodology
