@@ -21,102 +21,63 @@ Branch: `v143-contextual-prune-lobo`
 **Project Progress Score: 60%.**  
 **Test Score: PHASE 1 + PHASE 2 REFERENCE-BLIND CONTRACT PASS; ACCURACY SCORE NOT RUN.**
 
-## GOAT pre-access path — COMPLETE / waiting
+## Songsterr-inspired architecture — independent DadRock implementation
 
-`docs/checkpoints/V168_GOAT_PREACCESS_GAP_AUDIT_20260902.md` — creation commit `bb74b64f4a6be8cbab2da46569161c37f2bc09ab`.
-
-Status: **`GOAT_PREACCESS_IMPLEMENTATION_COMPLETE / AWAIT_OWNER_DECISION`**.
-
-Existing access/grant provenance, complete-base-DI inventory, source/reference SHA256 binding, 50 ms onset-EOF integrity, deterministic Tier 1/Tier 2 selection, metadata-only selection validator, base-manifest validator and provenance validator already cover the pre-access admission path. Absence of a GOAT candidate generator/scorer remains intentional until real access/admission.
-
-## Songsterr public clue set — captured, not reverse engineering
+Public-clue checkpoints remain frozen:
 
 - `SONGSTERR_PUBLIC_AI_TRANSCRIPTION_OBSERVATION_20260903.md` — `4210b1e6d1ec44fcbb0833d3411118924fd8706b`.
 - `SONGSTERR_ARCHITECTURE_GAP_INVENTORY_20260903.md` — `592762183301a8767cba75c1c9e280a83ab4aa19`.
 - `SONGSTERR_DUAL_CONTEXT_TOPOLOGY_HYPOTHESIS_20260903.md` — `8da294acc7d5e503fe7b193bf3903caed3d0beca`.
 
-Independent DadRock architecture gap:
-
-1. **`STRUCTURE_INSTRUMENT_CONDITIONING_V1`** — meter/pickup/tempo/feel plus role/tuning/capo carried through the pipeline.
-2. **Dual-context topology** — full mixture for global structure evidence plus role/separated carrier for local note evidence, fused before alignment/tab decoding.
-
-This is an independently motivated DadRock hypothesis, not a claim about Songsterr private models, data, thresholds or APIs.
+This is an independently motivated DadRock architecture, not a reconstruction of Songsterr private models, datasets, thresholds or APIs.
 
 ## Phase 1 — `STRUCTURE_INSTRUMENT_CONDITIONING_V1` COMPLETE
 
-Pre-freeze: `SONGSTERR_STRUCTURE_INSTRUMENT_CONDITIONING_V1_PREIMPLEMENTATION_FREEZE_20260903.md` — `29ef4f7e131e35378a58abb4cf68095bd284c075`.
-
-Result: `SONGSTERR_STRUCTURE_INSTRUMENT_CONDITIONING_V1_PHASE1_RESULT_20260903.md` — `a79ea4e1d62b2dfaeadac165703bf1e2315dd56f`.
+Pre-freeze `29ef4f7e131e35378a58abb4cf68095bd284c075`; result `a79ea4e1d62b2dfaeadac165703bf1e2315dd56f`.
 
 Status: **`PHASE1_REFERENCE_BLIND_CONTRACT_PASS / NO_ACCURACY_CLAIM / NO_REFERENCE_SCORE`**.
 
-Final deterministic evidence:
-
-- run `33804010524`, job `100810007255`;
-- tested head `ab84f27bcd55990fadbc824cfc8ad883e786d971`;
-- conclusion **SUCCESS**;
-- evidence bot commit `22b0bf3661b251eddeb9e41f0f844683ba2d3ca6`;
-- evidence blob SHA `8bf20c176c27edb01cca649c36e8ac144c3d684a`.
-
-No reference/corpus reads or scores, Modal calls, GPU use or Production modification occurred.
+Final deterministic evidence: run `33804010524`, job `100810007255`, conclusion **SUCCESS**, evidence bot commit `22b0bf3661b251eddeb9e41f0f844683ba2d3ca6`.
 
 ## Phase 2 — `STRUCTURE_CONDITIONED_SHADOW_PROJECTION_V1` COMPLETE
 
-Pre-freeze:
-
-`docs/checkpoints/SONGSTERR_STRUCTURE_CONDITIONED_SHADOW_PROJECTION_V1_PREIMPLEMENTATION_FREEZE_20260903.md`
-
-Creation commit `cc08ecbdb3ce661b01afa1d64429c5e2c4988073`.
-
-Result:
-
-`docs/checkpoints/SONGSTERR_STRUCTURE_CONDITIONED_SHADOW_PROJECTION_V1_PHASE2_RESULT_20260903.md`
-
-Creation commit `6df1729538acb36dbe38d5eb757a7d4bddc767cf`.
+Pre-freeze `cc08ecbdb3ce661b01afa1d64429c5e2c4988073`; result `6df1729538acb36dbe38d5eb757a7d4bddc767cf`.
 
 Status: **`PHASE2_REFERENCE_BLIND_SHADOW_PASS / PRODUCT_OUTPUT_UNCHANGED / NO_ACCURACY_CLAIM / NO_REFERENCE_SCORE`**.
 
-Implementation:
+Final deterministic evidence: run `33804886663`, job `100812914077`, conclusion **SUCCESS**, evidence bot commit `c6bb396e69cfe8634d2b57c29faf066d1a00d5b6`, evidence blob `4d0ad6983646588338472fdb27cd8cdd60dbe60a`.
 
-- `854b6eb572efec6dc145611395462cb41b0cc965` — pure `lib/aiTabConditionedShadowProjectionV1.mjs`;
-- `0312c1a08349afa8cae297f652af43cac61b4ec0` — route appends `conditioningShadowProjection` only;
-- `bd4c3612090d2091f652ee4273587671e4fe19b7` — frozen deterministic S1–S10 verifier;
-- `6511f12a53838def0c711b3068380a4cad3a9e03` — full end-to-end shadow/product-isolation assertions;
-- `6721b96a58347789aae99c8253ec1cd717b726c8` — workflow wiring.
+Phase 2 remains shadow-only and production-ineligible. PDFs do not consume its output.
 
-Final deterministic evidence:
+## Phase 3 — `MIXTURE_STRUCTURE_CONTEXT_V1` FROZEN BEFORE CODE
 
-- run `33804886663`;
-- job `100812914077`;
-- tested head `6721b96a58347789aae99c8253ec1cd717b726c8`;
-- conclusion **SUCCESS** on the first full Phase 2 run;
-- evidence bot commit `c6bb396e69cfe8634d2b57c29faf066d1a00d5b6`;
-- evidence blob SHA `4d0ad6983646588338472fdb27cd8cdd60dbe60a`;
-- evidence schema version `4`.
+Pre-implementation checkpoint:
 
-S1–S10 prove, mechanically and reference-blind:
+`docs/checkpoints/SONGSTERR_MIXTURE_STRUCTURE_CONTEXT_V1_PREIMPLEMENTATION_FREEZE_20260903.md`
 
-- Auto structure does not invent placement;
-- explicit 4/4 and denominator-aware 6/8 timing work;
-- pickup measure 0 semantics work;
-- straight/triplet quantization works and Auto feel does not guess;
-- Drop D + capo changes only the conditioned shadow decode while physical tuning remains separate;
-- impossible pitches fail shadow decoding closed;
-- source/product payload remains unmodified;
-- PDFs do not consume shadow data;
-- shadow remains `shadowOnly=true`, `referenceBlind=true`, `referenceScoreAuthorized=false`, `productionEligible=false`.
+Creation commit `c643120922a9bea8d83f3fd458a84df8bd0c48d5`.
 
-No analyzer/audio/reference corpus was invoked by these tests. No GuitarSet/SplitMySong/GOAT read, no reference score, no Modal/GPU, no Production change.
+Status: **`REFERENCE-BLIND MIXTURE-CONTEXT IMPLEMENTATION AUTHORIZED / CARRIER STRUCTURE BORROWING FORBIDDEN / REFERENCE SCORING NOT AUTHORIZED`**.
+
+Frozen rules:
+
+- explicit user tempo/meter/pickup/feel overrides any estimator observation field-by-field;
+- Auto fields may be filled only by a provenance-validated **full-mixture** observation;
+- exact trusted provenance requires `sourceKind=full-mixture`, `sourceIdentity=request-audio`, `referenceBlind=true`, `referenceRuntimeInputUsed=false`;
+- separated/carrier/V143 structure observations must fail closed and never silently become global song structure;
+- current route integration must pass `mixtureObservation: null` so no existing analyzer/carrier gains structure authority;
+- no missing value may be guessed;
+- explicit or observed pickup `0` must remain `0`;
+- Phase 3 output is research metadata only and must not change `generatedTab`, `events`, `renderEvents`, `measureGrid`, `analysisEngine` or PDF routing;
+- `referenceBlind=true`, `referenceScoreAuthorized=false`, `carrierStructureBorrowingAllowed=false`, `productionEligible=false`;
+- deterministic M1–M10 tests were frozen before implementation.
 
 ## NEXT SAFE ACTION
 
-The most important remaining Songsterr-inspired architecture gap is **mixture-side structure context**, not another pitch/fret threshold tweak.
-
-Two independently safe next steps are available:
-
-1. freeze a `MIXTURE_STRUCTURE_CONTEXT_V1` adapter that defines how trusted full-mixture tempo/meter/pickup/feel observations can fill Auto fields while explicit user priors override them; until a genuinely full-mixture source is available, Auto must remain unresolved;
-2. expose optional advanced `/ai-tab` structure/tuning/capo controls on this research branch with Auto defaults, allowing users to supply information the Phase 1/2 contracts already understand without changing default behavior.
-
-Any new phase must be frozen before code and remain reference-blind first. Do not use Phase 2 shadow output as an accuracy/development score.
-
-Await GOAT owner approval/denial; do not substitute another holdout. No SplitMySong/GuitarSet work, no Modal/GPU, and no `main`/Production changes.
+1. Implement pure `MIXTURE_STRUCTURE_CONTEXT_V1` resolver exactly as frozen.
+2. Add frozen deterministic M1–M10 tests.
+3. Append `mixtureStructureContext` to the research API response with `mixtureObservation: null` only.
+4. Extend the existing branch-only AI Tab workflow to run M1–M10 and prove product/PDF isolation.
+5. On pass, create the Phase 3 result checkpoint and update this file.
+6. Await GOAT owner approval/denial; do not substitute another holdout.
+7. No SplitMySong/GuitarSet work, no Modal/GPU, and no `main`/Production changes.
