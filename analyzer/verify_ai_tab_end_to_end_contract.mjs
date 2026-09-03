@@ -11,6 +11,7 @@ const files = {
   payload: 'lib/jimmyPaigeAnalysisPayload.js',
   conditioning: 'lib/aiTabConditioningV1.mjs',
   shadow: 'lib/aiTabConditionedShadowProjectionV1.mjs',
+  mixture: 'lib/aiTabMixtureStructureContextV1.mjs',
   professional: 'lib/createJimmyPaigeProfessionalPdf.js',
 };
 
@@ -31,14 +32,12 @@ function includesAll(text, values, label) {
 
 const instrumentValues = ["'lead'", "'rhythm'", "'bass'"];
 
-// Customer-facing selection must retain all three product paths.
 includesAll(source.page, [
   "value: 'lead'",
   "value: 'rhythm'",
   "value: 'bass'",
 ], 'AI Tab page instrument selector');
 
-// Upload authorization must preserve the selected instrument and rights gate.
 includesAll(source.upload, [
   "['lead', 'rhythm', 'bass']",
   'copyrightConfirmed',
@@ -47,7 +46,6 @@ includesAll(source.upload, [
   'maximumSizeInBytes',
 ], 'audio upload route');
 
-// The page must execute the entire product journey.
 includesAll(source.page, [
   "handleUploadUrl:\n              '/api/audio-upload'",
   "const endpoint = '/api/analyze-audio-tab'",
@@ -61,7 +59,6 @@ includesAll(source.page, [
   'difficulty',
 ], 'AI Tab end-to-end browser flow');
 
-// Analyzer routing is intentionally split: only Rhythm may opt into V143 today.
 includesAll(source.analyze, instrumentValues, 'analyzer allowed types');
 includesAll(source.analyze, [
   'process.env.ANALYZER_API_URL',
@@ -83,8 +80,6 @@ assert.ok(
   'Bass must not be silently routed through the Rhythm V143 endpoint'
 );
 
-// Phase 1 conditioning is normalized server-side, forwarded to the selected
-// analyzer, and returned as a server-owned reference-blind contract.
 includesAll(source.analyze, [
   'normalizeAiTabConditioningV1(',
   'body?.conditioning,',
@@ -107,8 +102,6 @@ includesAll(source.conditioning, [
   "kind: 'same-as-mixture'",
 ], 'conditioning v1 server contract');
 
-// Phase 2 shadow projection must remain parallel metadata only. It consumes
-// copied normalized events and may not become a product renderer or mutation.
 includesAll(source.analyze, [
   'buildAiTabConditionedShadowProjectionV1',
   'const conditioningShadowProjection =',
@@ -130,6 +123,45 @@ includesAll(source.shadow, [
   "quantizationStatus = 'TRIPLET'",
 ], 'conditioning shadow contract');
 
+// Phase 3 reserves a dedicated global-structure channel for the full mixture.
+// During this phase the real observation channel MUST remain disconnected: no
+// current analyzer or separated carrier may gain global structure authority.
+includesAll(source.analyze, [
+  'buildAiTabMixtureStructureContextV1',
+  'const mixtureStructureContext =',
+  'structurePrior: conditioning.structurePrior,',
+  'mixtureObservation: null,',
+  'mixtureSource: conditioningContract.provenance.mixtureSource,',
+  'mixtureStructureContext,',
+], 'mixture structure context route plumbing');
+
+includesAll(source.mixture, [
+  "name: 'mixture-structure-context'",
+  'referenceBlind: true',
+  'referenceScoreAuthorized: false',
+  'carrierStructureBorrowingAllowed: false',
+  'productionEligible: false',
+  "sourceKind !== 'full-mixture'",
+  "sourceIdentity !== 'request-audio'",
+  "source: 'user-prior'",
+  "source: 'full-mixture-observation'",
+  "source: 'unresolved'",
+  "? 'NOT_CONNECTED'",
+  ": 'TRUSTED_FULL_MIXTURE_OBSERVATION'",
+], 'mixture structure context contract');
+
+for (const forbiddenBorrow of [
+  'mixtureObservation: analyzerData',
+  'mixtureObservation: liveV143',
+  'mixtureObservation: structuredPayload',
+  'mixtureObservation: conditioningShadowProjection',
+]) {
+  assert.ok(
+    !source.analyze.includes(forbiddenBorrow),
+    `Current analyzer/carrier structure must not populate mixture context: ${forbiddenBorrow}`
+  );
+}
+
 for (const forbiddenMutation of [
   'structuredPayload.generatedTab =',
   'structuredPayload.events =',
@@ -139,15 +171,13 @@ for (const forbiddenMutation of [
 ]) {
   assert.ok(
     !source.analyze.includes(forbiddenMutation),
-    `Shadow projection must not mutate product payload: ${forbiddenMutation}`
+    `Research metadata must not mutate product payload: ${forbiddenMutation}`
   );
 }
 
-// Preview and full-PDF routes must still accept all three customer choices.
 includesAll(source.preview, instrumentValues, 'preview PDF allowed types');
 includesAll(source.full, instrumentValues, 'full PDF allowed types');
 
-// Both PDF paths must receive the same structured analysis metadata family.
 for (const [label, text] of [
   ['preview route', source.preview],
   ['full PDF route', source.full],
@@ -169,11 +199,12 @@ for (const [label, text] of [
     !text.includes('conditioningShadowProjection'),
     `${label} must not consume Phase 2 shadow projection`
   );
+  assert.ok(
+    !text.includes('mixtureStructureContext'),
+    `${label} must not consume Phase 3 mixture structure context`
+  );
 }
 
-// Preview and purchased/full PDF must make the same professional-renderer
-// decision from the same feature helper. This guards against a professional
-// preview silently turning into a different renderer after unlock.
 for (const [label, text] of [
   ['preview route', source.preview],
   ['full PDF route', source.full],
@@ -185,7 +216,6 @@ for (const [label, text] of [
   ], `${label} professional renderer parity`);
 }
 
-// Purchased/full PDF must remain protected by a real unlock verification path.
 includesAll(source.full, [
   "unlockMethod === 'paypal'",
   'verifyPayPalOrder',
@@ -193,8 +223,6 @@ includesAll(source.full, [
   'await resend.emails.send',
 ], 'full PDF unlock and delivery route');
 
-// Structured identity remains fail-closed and Rhythm-only until another
-// instrument earns its own analyzer identity and quality evidence.
 includesAll(source.payload, [
   'const referenceFree =',
   'buildV143AnalyzerQualityReport',
@@ -204,8 +232,6 @@ includesAll(source.payload, [
   ": 'legacy'",
 ], 'analysis payload identity gate');
 
-// Authenticated V143 Rhythm must fail closed when its structured event stream is
-// empty/invalid; it must never silently downgrade to the legacy PDF renderer.
 includesAll(source.professional, [
   "contract.rendererOptions.transcriptionType === 'rhythm'",
   "analysisEngine === 'v143-reference-free-rhythm'",
@@ -215,7 +241,6 @@ includesAll(source.professional, [
   "mode: 'v143-structured-rhythm'",
 ], 'professional structured renderer gate');
 
-// Browser/PDF layers must not create structured placement for legacy output.
 assert.ok(
   source.payload.includes(
     'const renderEvents = v143RuntimeSafetyVerified\n    ? projectV143RenderEvents(rawEvents)\n    : [];'
@@ -224,7 +249,7 @@ assert.ok(
 );
 
 const evidence = {
-  schemaVersion: 4,
+  schemaVersion: 5,
   gate: 'ai-tab-end-to-end-contract',
   product: 'dadrocktabs.com/ai-tab',
   instrumentChoices: ['lead', 'rhythm', 'bass'],
@@ -242,6 +267,14 @@ const evidence = {
   conditioningShadowProjectionProductionEligible: false,
   conditioningShadowProjectionConsumedByPdf: false,
   productPayloadMutatedByShadowProjection: false,
+  mixtureStructureContextWired: true,
+  mixtureStructureContextReferenceBlind: true,
+  mixtureStructureContextReferenceScoreAuthorized: false,
+  mixtureStructureContextCarrierBorrowingAllowed: false,
+  mixtureStructureContextProductionEligible: false,
+  mixtureStructureContextObservationConnected: false,
+  mixtureStructureContextConsumedByPdf: false,
+  productPayloadMutatedByMixtureContext: false,
   previewPdfWired: true,
   fullPdfUnlockWired: true,
   analysisMetadataTransportWired: true,
