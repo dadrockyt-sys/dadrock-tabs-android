@@ -18,7 +18,7 @@ Branch: `v143-contextual-prune-lobo`
 - `main` / Production untouched; never modify/merge/promote without explicit user direction.
 
 **Project Progress Score: 60%.**  
-**Test Score: PHASE 1–5 REFERENCE-BLIND/SYNTHETIC CONTRACT PASS; ACCURACY SCORE NOT RUN.**
+**Test Score: PHASE 1–5 REFERENCE-BLIND/SYNTHETIC CONTRACT PASS; PHASE 6 FROZEN BEFORE CODE; ACCURACY SCORE NOT RUN.**
 
 ## Phase 1 — `STRUCTURE_INSTRUMENT_CONDITIONING_V1` COMPLETE
 
@@ -40,46 +40,36 @@ Pre-freeze `0ec398ce4ac0ea1c36494e70ffc02ca38711e4ea`; result `0c8e061e3e50efa87
 
 ## Phase 5 — `FULL_MIXTURE_AUTO_STRUCTURE_ESTIMATOR_V1` COMPLETE
 
-Pre-freeze:
+Pre-freeze `5ee029dff31fdd52422f70cb6e4714d2339519b5`; result `c9f8fd15f5e1094f62bb3e7056854a2f52ea8246`; run `33810847829`, job `100832069691`, **SUCCESS**; evidence bot commit `9e00d7b21ddca34d823169cddfb1c269604ca026`; evidence blob SHA `306891daa326a922bb3385f611d9310c63baca87`.
 
-`docs/checkpoints/SONGSTERR_FULL_MIXTURE_AUTO_STRUCTURE_ESTIMATOR_V1_PREIMPLEMENTATION_FREEZE_20260903.md`
+A1–A12 all passed. Phase 5 is the first DadRock Auto structure component whose signal authority is the full-mixture waveform itself rather than transcribed note events or a separated guitar carrier. It remains route-disconnected and makes no real-song accuracy claim.
 
-Creation commit `5ee029dff31fdd52422f70cb6e4714d2339519b5`.
+## Phase 6 — `FULL_MIXTURE_WAV_ADAPTER_V1` FROZEN BEFORE CODE
 
-Result:
+Pre-implementation checkpoint:
 
-`docs/checkpoints/SONGSTERR_FULL_MIXTURE_AUTO_STRUCTURE_ESTIMATOR_V1_PHASE5_RESULT_20260903.md`
+`docs/checkpoints/SONGSTERR_FULL_MIXTURE_WAV_ADAPTER_V1_PREIMPLEMENTATION_FREEZE_20260903.md`
 
-Creation commit `c9f8fd15f5e1094f62bb3e7056854a2f52ea8246`.
+Creation commit `e10bf5e5426d031b9730b604ecb05209ed7d52aa`.
 
-Status: **`PHASE5_REFERENCE_BLIND_WAVEFORM_ESTIMATOR_PASS / ROUTE_DISCONNECTED / NO_ACCURACY_CLAIM / NO_REFERENCE_SCORE`**.
+Status: **`REFERENCE-BLIND CPU WAV ADAPTER AUTHORIZED / SHADOW ONLY / RUNTIME WIRING NOT AUTHORIZED`**.
 
-Implementation:
+Frozen adapter contract:
 
-- `204ecd14e0a5165b199fd5693673cd498e7532e2` — pure CPU full-mixture waveform estimator;
-- `c2dd059720f0be45cd0e06874e6ca6a06797eecc` — frozen synthetic A1–A12 verifier;
-- `ac9158b26c3302a129ba0ba3ed1689bee4573f6f` — branch workflow integration.
-
-Final evidence:
-
-- run `33810847829`;
-- job `100832069691`;
-- tested head `ac9158b26c3302a129ba0ba3ed1689bee4573f6f`;
-- conclusion **SUCCESS** on the first full Phase 5 run;
-- evidence bot commit `9e00d7b21ddca34d823169cddfb1c269604ca026`;
-- evidence blob SHA `306891daa326a922bb3385f611d9310c63baca87`.
-
-A1–A12 all passed. The estimator derives structure from full-mixture PCM using deterministic energy/onset novelty, tempo periodicity, conservative 3/4-vs-4/4 accent/downbeat inference, pickup phase and straight/triplet subdivision evidence. Ambiguous cases fail unresolved rather than guessing.
-
-This is the first DadRock Auto structure component whose signal authority is the **full mixture waveform itself**, not transcribed note events or a separated guitar carrier.
-
-Safety evidence records synthetic waveforms only, no external audio, no Basic Pitch events, no separated carrier, no GuitarSet/SplitMySong/GOAT, no Modal/GPU, `routeEstimatorConnected=false`, Product unchanged and Production unchanged.
+- admitted input = PCM RIFF/WAVE only, compression `NONE`, 1–8 channels, 8–192 kHz, 8/16/24/32-bit integer PCM;
+- chunked reads of 16384 source frames; no full-file `readframes(total)` materialization;
+- full-mixture downmix is mean absolute channel energy to avoid destructive stereo phase cancellation;
+- bounded 4000 Hz envelope uses target-bin RMS;
+- Phase 5 estimator is called only on this full-mixture envelope;
+- W1–W10 synthetic WAV tests frozen before implementation, including mono/stereo, opposite-polarity stereo, 4/4, pickup, 8/24/32-bit decode, invalid admission and provenance/diagnostics;
+- no external audio assets;
+- no route/analyzer runtime wiring in Phase 6.
 
 ## NEXT SAFE ACTION
 
-1. Freeze a **`FULL_MIXTURE_WAV_ADAPTER_V1`** before code: normalized PCM WAV -> deterministic mono samples -> Phase 5 estimator observation.
-2. Test adapter with deterministic synthetic stereo/mono WAV fixtures generated in the workflow; no external audio asset.
-3. Keep `/api/analyze-audio-tab` and all analyzer endpoints disconnected from Phase 5 until adapter mechanics pass.
-4. After adapter pass, a separate analyzer-runtime shadow wiring freeze may connect normalized full-mixture WAV to Phase 3/4 metadata only; no Product/PDF use.
-5. Await GOAT owner approval/denial; do not substitute another holdout.
-6. No SplitMySong/GuitarSet work, no Modal/GPU, and no `main`/Production changes.
+1. Implement `analyzer/full_mixture_wav_adapter_v1.py` exactly against the Phase 6 freeze.
+2. Add deterministic W1–W10 verifier generating temporary WAV bytes only.
+3. Run Phase 6 CPU-only beside all existing Phase 1–5 gates.
+4. On pass, create Phase 6 result checkpoint and update this file.
+5. Only then consider a separately frozen analyzer-runtime shadow wiring step on normalized full-mixture WAV before separation.
+6. Await GOAT owner approval/denial; no SplitMySong/GuitarSet work, no Modal/GPU, and no `main`/Production changes.
