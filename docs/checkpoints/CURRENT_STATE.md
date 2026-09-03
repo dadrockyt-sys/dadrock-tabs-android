@@ -16,7 +16,7 @@ Branch: `v143-contextual-prune-lobo`
 - CPU only; fresh explicit authorization required immediately before GPU/CUDA/Modal.
 
 **Project Progress Score: 60%.**  
-**Test Score: NOT RUN.**
+**Test Score: CONTRACT TEST IN PROGRESS; NO REFERENCE SCORE.**
 
 ## Immutable prior boundaries
 
@@ -161,15 +161,32 @@ Frozen before code changes:
 - deterministic T1–T10 contract tests frozen before implementation;
 - reference-facing scoring remains forbidden; contract success is not evidence of accuracy improvement.
 
-Phase 1 implementation may now proceed on this branch with schema/plumbing + deterministic synthetic/unit-style tests only. UI controls remain optional and Auto-default if added.
+## STRUCTURE_INSTRUMENT_CONDITIONING_V1 — IMPLEMENTATION IN PROGRESS
+
+Status: **`REFERENCE-BLIND PHASE 1 CODED / CONTRACT WORKFLOW RUNNING / NO REFERENCE SCORE`**.
+
+Implementation commits so far:
+
+- `a36235371441e2e1209335dd4017093a2aa0da7a` — new pure server module `lib/aiTabConditioningV1.mjs` with frozen validation/defaults and server-owned dual-context provenance contract;
+- `71beaa8a947ede8a706d28c48bf9bd26852aeb3c` — `/api/analyze-audio-tab` now normalizes conditioning, fails invalid conditioning closed with HTTP 400, forwards only normalized conditioning to the already-selected analyzer, and appends a server-owned `conditioningContract` after structured payload normalization;
+- `2444a0528fa21dcb69dd490ab43ddd1adc132f97` — deterministic reference-blind T1–T10 verifier;
+- `d4304cb63c95d025b2943b338a4ac17b86f0a98d` / `6769391329dfac08c2c199fb7e5f91ba5f576d0f` — end-to-end contract extended and cleaned for Conditioning V1 while preserving legacy/V143 safety checks;
+- `7ce26de92e4018d8849f07d3b57ee82c7e030784` — branch-only AI Tab workflow now runs the Conditioning V1 verifier before the existing end-to-end contract.
+
+The historical `analyzer/modal_analyzer.py` was inspected and intentionally left unchanged. It reads the fields it needs from the request payload and therefore tolerates an extra normalized `conditioning` object without redeployment or behavior change. Phase 1 does not claim that the legacy analyzer consumes these priors yet.
+
+Current GitHub Actions run `33803596381` for commit `6769391329dfac08c2c199fb7e5f91ba5f576d0f` was observed **in progress** when this checkpoint was written. Do not mark Phase 1 complete until that deterministic contract workflow succeeds.
+
+No corpus/reference read or score was performed by this work. GuitarSet/SplitMySong/GOAT were not used; GOAT restricted bytes remain unread. No Modal analyzer was invoked, no GPU was used, and Production was not modified.
 
 ## NEXT SAFE ACTION
 
-1. **Await explicit GOAT owner approval/denial.** On approval/denial follow the already frozen V168 procedures; do not substitute another holdout source.
-2. Implement the now-frozen `STRUCTURE_INSTRUMENT_CONDITIONING_V1` Phase 1 contract on `v143-contextual-prune-lobo` only.
-3. Keep implementation to schema/plumbing + deterministic synthetic/unit tests: preserve full-mix + carrier provenance, structure config/context, custom tuning, capo, analyzer forwarding, structure-aware contract surfaces and output provenance; no frozen-reference score calls.
-4. Do not resume SplitMySong or GuitarSet threshold development while waiting.
-5. Keep CPU-only/no-Modal/no-GPU and `main`/Production untouched unless the user gives fresh explicit direction.
+1. Check deterministic AI Tab contract run `33803596381`; if it fails, fix only contract/plumbing issues and rerun reference-blind.
+2. On success, create a Phase 1 result checkpoint and update this file with the run/job evidence.
+3. **Await explicit GOAT owner approval/denial.** On approval/denial follow the already frozen V168 procedures; do not substitute another holdout source.
+4. After Phase 1 plumbing is closed, the next scientifically clean work is a separately frozen Phase 2 adapter that lets mixture structure context and tuning/capo actually influence measure projection/fret decoding using synthetic/reference-blind fixtures first.
+5. Do not resume SplitMySong or GuitarSet threshold development while waiting.
+6. Keep CPU-only/no-Modal/no-GPU and `main`/Production untouched unless the user gives fresh explicit direction.
 
 ## Standing methodology
 
