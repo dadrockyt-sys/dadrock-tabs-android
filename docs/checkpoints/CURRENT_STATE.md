@@ -18,7 +18,7 @@ Branch: `v143-contextual-prune-lobo`
 - `main` / Production untouched; never modify/merge/promote without explicit user direction.
 
 **Project Progress Score: 60%.**  
-**Test Score: PHASE 1 + PHASE 2 + PHASE 3 REFERENCE-BLIND CONTRACT PASS; PHASE 4 CONTRACT RUNNING; ACCURACY SCORE NOT RUN.**
+**Test Score: PHASE 1 + PHASE 2 + PHASE 3 + PHASE 4 REFERENCE-BLIND CONTRACT PASS; ACCURACY SCORE NOT RUN.**
 
 ## Phase 1 — `STRUCTURE_INSTRUMENT_CONDITIONING_V1` COMPLETE
 
@@ -34,49 +34,62 @@ Pre-freeze `c643120922a9bea8d83f3fd458a84df8bd0c48d5`; result `b0a8035033a356983
 
 Phase 3 real full-mixture observation remains intentionally disconnected (`mixtureObservation: null`). Carrier/separated/V143 structure borrowing remains forbidden.
 
-## Phase 4 — `DUAL_CONTEXT_SHADOW_FUSION_V1` IMPLEMENTATION IN PROGRESS
+## Phase 4 — `DUAL_CONTEXT_SHADOW_FUSION_V1` COMPLETE
 
-Pre-implementation checkpoint:
+Pre-freeze:
 
 `docs/checkpoints/SONGSTERR_DUAL_CONTEXT_SHADOW_FUSION_V1_PREIMPLEMENTATION_FREEZE_20260903.md`
 
 Creation commit `0ec398ce4ac0ea1c36494e70ffc02ca38711e4ea`.
 
-Frozen status: **`REFERENCE-BLIND DUAL-CONTEXT FUSION IMPLEMENTATION AUTHORIZED / SHADOW ONLY / REFERENCE SCORING NOT AUTHORIZED`**.
+Result:
 
-Implementation commits:
+`docs/checkpoints/SONGSTERR_DUAL_CONTEXT_SHADOW_FUSION_V1_PHASE4_RESULT_20260903.md`
 
-- `d597e7bbf85a206b915e58ee2a62b60cfd0ed236` — pure `lib/aiTabDualContextShadowFusionV1.mjs`; validates exact Phase 3 mixture-context safety/source, uses `mixtureStructureContext.resolved` as structure authority, Conditioning V1 instrumentConfig as role/tuning/capo authority, and reuses the pure Phase 2 projector on copied events.
-- `1f036868ba92f3aa02963c8479a6d8824aacecad` — frozen deterministic D1–D10 verifier.
-- `6c12d28bd6f63d331ea778a87525b41cccf637a5` — route appends `dualContextShadowProjection` only after Phase 3 context creation; Phase 2 diagnostic retained for lineage; product fields untouched.
-- `7e30c1b2a31bb415bf83b4d34ae3f94a71bac679` — complete AI Tab verifier extended for Phase 4 structure/instrument authority, PDF non-consumption and product isolation.
-- `8d6a65b48d8ea47837794deb4be1634e5b05330c` — branch-only workflow now runs Phase 1, Phase 2, Phase 3, Phase 4 D1–D10, complete product wiring and compact safety evidence.
+Creation commit `0c8e061e3e50efa871cd85a0c1f5c657ac629d81`.
 
-Current deterministic workflow:
+Status: **`PHASE4_REFERENCE_BLIND_DUAL_CONTEXT_FUSION_PASS / SHADOW ONLY / NO_REFERENCE_SCORE`**.
+
+Implementation:
+
+- `d597e7bbf85a206b915e58ee2a62b60cfd0ed236` — pure dual-context fusion adapter;
+- `1f036868ba92f3aa02963c8479a6d8824aacecad` — frozen D1–D10 verifier;
+- `6c12d28bd6f63d331ea778a87525b41cccf637a5` — route appends `dualContextShadowProjection` after Phase 3 context creation;
+- `7e30c1b2a31bb415bf83b4d34ae3f94a71bac679` — complete product/PDF isolation assertions;
+- `8d6a65b48d8ea47837794deb4be1634e5b05330c` — workflow wiring.
+
+Final deterministic evidence:
 
 - run `33809867672`;
 - job `100828947197`;
 - tested head `8d6a65b48d8ea47837794deb4be1634e5b05330c`;
-- status **IN PROGRESS** when this checkpoint was written.
+- conclusion **SUCCESS**;
+- evidence bot commit `318e3830fa1bf9d0df34a29ce0d3a6beafaa4c4a`;
+- evidence blob SHA `7c55a348e01d9077ac893cfcf75030dc2bf354e4`;
+- evidence schema version `6`.
 
-Phase 4 preserves these hard boundaries:
+Phase 4 mechanically completes the DadRock dual-context shadow topology:
 
-- global structure authority = validated Phase 3 mixture context only;
-- instrument authority = Conditioning V1 role/tuning/capo only;
-- current real mixture observation remains disconnected;
-- no carrier structure borrowing;
-- fusion is shadow-only/reference-blind/reference-score-forbidden/production-ineligible;
-- PDFs do not consume fusion metadata;
-- no generated tab/product event/render/measure-grid/analysis-engine mutation;
-- no analyzer-selection/V143 gate mutation.
+- global song structure authority = validated Phase 3 mixture context;
+- local note evidence = copied normalized analyzer events;
+- role/tuning/capo authority = Conditioning V1 instrument config;
+- fused projection = shadow-only research metadata.
+
+D1–D10 prove Auto remains unresolved without a trusted mixture observation; trusted synthetic full-mixture values can reach fusion; mixed user/mixture authority works field-by-field; user overrides win; tuning/capo remain instrument-only; tampered/carrier contexts fail closed; inputs are not mutated; PDFs and product fields do not consume fusion output.
 
 No reference/corpus reads or scores, no GuitarSet/SplitMySong/GOAT access, no Modal/GPU, and no Production change occurred.
 
 ## NEXT SAFE ACTION
 
-1. Check run `33809867672` / job `100828947197`.
-2. If D1–D10 or the product safety gate fails, fix only implementation/contract defects without weakening the frozen Phase 4 rules.
-3. On success, create the Phase 4 result checkpoint and update this file with final evidence hashes.
-4. Do not connect a real full-mixture estimator in this phase.
-5. Await GOAT owner approval/denial; do not substitute another holdout.
-6. No SplitMySong/GuitarSet work, no Modal/GPU, and no `main`/Production changes.
+The missing capability is now narrow and explicit: a **genuinely full-mixture, reference-blind Auto structure estimator** that can produce trusted tempo/meter/pickup/feel observations for Phase 3.
+
+Before any estimator code or wiring:
+
+1. freeze a new estimator interface/methodology checkpoint;
+2. define exactly which fields are estimated versus left unresolved;
+3. preserve full-mixture provenance and forbid carrier/stem input;
+4. use synthetic/reference-blind validation first;
+5. do not connect its outputs to product/PDF behavior—only the existing shadow dual-context path;
+6. do not reuse GuitarSet/SplitMySong/GOAT for development or scoring;
+7. no Modal/GPU without fresh explicit authorization;
+8. `main` / Production remain untouched.
