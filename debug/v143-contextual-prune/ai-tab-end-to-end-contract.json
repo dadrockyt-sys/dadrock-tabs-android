@@ -1,5 +1,5 @@
 {
-  "schemaVersion": 2,
+  "schemaVersion": 3,
   "gate": "ai-tab-end-to-end-contract",
   "product": "dadrocktabs.com/ai-tab",
   "instrumentChoices": [
@@ -10,6 +10,10 @@
   "userAudioUploadWired": true,
   "copyrightGateWired": true,
   "analyzerRequestWired": true,
+  "conditioningV1Wired": true,
+  "conditioningV1ReferenceBlind": true,
+  "conditioningV1ReferenceScoreAuthorized": false,
+  "dualContextProvenanceWired": true,
   "previewPdfWired": true,
   "fullPdfUnlockWired": true,
   "analysisMetadataTransportWired": true,
