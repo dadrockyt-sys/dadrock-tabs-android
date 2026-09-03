@@ -143,11 +143,31 @@ This is an architecture hypothesis inspired by public behavior, **not a claim ab
 
 These checkpoints **do not reopen GuitarSet development and do not authorize a V6 threshold sweep or any reference-facing score call**.
 
+## STRUCTURE_INSTRUMENT_CONDITIONING_V1 — PRE-IMPLEMENTATION FROZEN
+
+Checkpoint `docs/checkpoints/SONGSTERR_STRUCTURE_INSTRUMENT_CONDITIONING_V1_PREIMPLEMENTATION_FREEZE_20260903.md`, creation commit `29ef4f7e131e35378a58abb4cf68095bd284c075`.
+
+Status: **`REFERENCE-BLIND IMPLEMENTATION AUTHORIZED / REFERENCE SCORING NOT AUTHORIZED`**.
+
+Frozen before code changes:
+
+- optional `conditioning.version=1` request contract;
+- `StructurePriorV1`: Auto/manual tempo, time signature, pickup beats and straight/triplet feel;
+- `InstrumentConfigV1`: lead/rhythm/bass role, physical open-string MIDI tuning and separate capo fret;
+- default standard 6-string guitar and 4-string bass tunings;
+- dual provenance identities for `mixtureSource` and `instrumentCarrierSource`;
+- server-normalized contract is authoritative over any analyzer echo;
+- selected analyzer routing and V143 anti-leakage gate must remain unchanged;
+- deterministic T1–T10 contract tests frozen before implementation;
+- reference-facing scoring remains forbidden; contract success is not evidence of accuracy improvement.
+
+Phase 1 implementation may now proceed on this branch with schema/plumbing + deterministic synthetic/unit-style tests only. UI controls remain optional and Auto-default if added.
+
 ## NEXT SAFE ACTION
 
 1. **Await explicit GOAT owner approval/denial.** On approval/denial follow the already frozen V168 procedures; do not substitute another holdout source.
-2. If useful work continues while GOAT remains unavailable, freeze a separate reference-blind implementation checkpoint for `STRUCTURE_INSTRUMENT_CONDITIONING_V1` with dual-context topology before code changes.
-3. Under that future implementation checkpoint, keep the first phase to schema/plumbing + deterministic synthetic/unit tests only: preserve full-mix + carrier provenance, structure config/context, custom tuning, capo, structure-aware projection and output provenance; no frozen-reference score calls.
+2. Implement the now-frozen `STRUCTURE_INSTRUMENT_CONDITIONING_V1` Phase 1 contract on `v143-contextual-prune-lobo` only.
+3. Keep implementation to schema/plumbing + deterministic synthetic/unit tests: preserve full-mix + carrier provenance, structure config/context, custom tuning, capo, analyzer forwarding, structure-aware contract surfaces and output provenance; no frozen-reference score calls.
 4. Do not resume SplitMySong or GuitarSet threshold development while waiting.
 5. Keep CPU-only/no-Modal/no-GPU and `main`/Production untouched unless the user gives fresh explicit direction.
 
