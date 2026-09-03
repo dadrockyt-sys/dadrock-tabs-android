@@ -12,6 +12,7 @@ const files = {
   conditioning: 'lib/aiTabConditioningV1.mjs',
   shadow: 'lib/aiTabConditionedShadowProjectionV1.mjs',
   mixture: 'lib/aiTabMixtureStructureContextV1.mjs',
+  fusion: 'lib/aiTabDualContextShadowFusionV1.mjs',
   professional: 'lib/createJimmyPaigeProfessionalPdf.js',
 };
 
@@ -123,9 +124,6 @@ includesAll(source.shadow, [
   "quantizationStatus = 'TRIPLET'",
 ], 'conditioning shadow contract');
 
-// Phase 3 reserves a dedicated global-structure channel for the full mixture.
-// During this phase the real observation channel MUST remain disconnected: no
-// current analyzer or separated carrier may gain global structure authority.
 includesAll(source.analyze, [
   'buildAiTabMixtureStructureContextV1',
   'const mixtureStructureContext =',
@@ -149,6 +147,35 @@ includesAll(source.mixture, [
   "? 'NOT_CONNECTED'",
   ": 'TRUSTED_FULL_MIXTURE_OBSERVATION'",
 ], 'mixture structure context contract');
+
+includesAll(source.analyze, [
+  'buildAiTabDualContextShadowFusionV1',
+  'const dualContextShadowProjection =',
+  'events: structuredPayload.events,',
+  'conditioning,',
+  'mixtureStructureContext,',
+  'dualContextShadowProjection,',
+], 'dual-context shadow fusion route plumbing');
+
+includesAll(source.fusion, [
+  "name: 'dual-context-shadow-fusion'",
+  'shadowOnly: true',
+  'referenceBlind: true',
+  'referenceScoreAuthorized: false',
+  'carrierStructureBorrowingAllowed: false',
+  'productionEligible: false',
+  "source: 'mixture-structure-context-v1'",
+  "source: 'conditioning-v1'",
+  'structurePrior: context.resolved,',
+  'instrumentConfig: {',
+  'buildAiTabConditionedShadowProjectionV1({',
+], 'dual-context shadow fusion contract');
+
+assert.ok(
+  source.analyze.indexOf('const mixtureStructureContext =') <
+    source.analyze.indexOf('const dualContextShadowProjection ='),
+  'Mixture structure context must be created before dual-context fusion'
+);
 
 for (const forbiddenBorrow of [
   'mixtureObservation: analyzerData',
@@ -203,6 +230,10 @@ for (const [label, text] of [
     !text.includes('mixtureStructureContext'),
     `${label} must not consume Phase 3 mixture structure context`
   );
+  assert.ok(
+    !text.includes('dualContextShadowProjection'),
+    `${label} must not consume Phase 4 dual-context shadow projection`
+  );
 }
 
 for (const [label, text] of [
@@ -249,7 +280,7 @@ assert.ok(
 );
 
 const evidence = {
-  schemaVersion: 5,
+  schemaVersion: 6,
   gate: 'ai-tab-end-to-end-contract',
   product: 'dadrocktabs.com/ai-tab',
   instrumentChoices: ['lead', 'rhythm', 'bass'],
@@ -275,6 +306,14 @@ const evidence = {
   mixtureStructureContextObservationConnected: false,
   mixtureStructureContextConsumedByPdf: false,
   productPayloadMutatedByMixtureContext: false,
+  dualContextShadowFusionWired: true,
+  dualContextShadowFusionShadowOnly: true,
+  dualContextShadowFusionReferenceBlind: true,
+  dualContextShadowFusionReferenceScoreAuthorized: false,
+  dualContextShadowFusionCarrierBorrowingAllowed: false,
+  dualContextShadowFusionProductionEligible: false,
+  dualContextShadowFusionConsumedByPdf: false,
+  productPayloadMutatedByDualContextFusion: false,
   previewPdfWired: true,
   fullPdfUnlockWired: true,
   analysisMetadataTransportWired: true,
