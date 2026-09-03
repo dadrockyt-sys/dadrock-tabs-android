@@ -7,6 +7,7 @@ import {
 } from '@/lib/aiTabConditioningV1.mjs';
 import { buildAiTabConditionedShadowProjectionV1 } from '@/lib/aiTabConditionedShadowProjectionV1.mjs';
 import { buildAiTabMixtureStructureContextV1 } from '@/lib/aiTabMixtureStructureContextV1.mjs';
+import { buildAiTabDualContextShadowFusionV1 } from '@/lib/aiTabDualContextShadowFusionV1.mjs';
 
 export const runtime = 'nodejs';
 export const maxDuration = 150;
@@ -256,10 +257,8 @@ export async function POST(request) {
         usingV143RhythmAnalyzer,
       });
 
-    // Phase 2 is shadow-only: it reads copied normalized events plus the
-    // server-normalized conditioning contract and emits parallel research
-    // metadata. It never replaces generatedTab/events/renderEvents/measureGrid,
-    // changes analysisEngine, selects an analyzer, or participates in PDF output.
+    // Phase 2 remains the original raw-prior shadow diagnostic. It is retained
+    // for lineage/inspection only and never participates in product rendering.
     const conditioningShadowProjection =
       buildAiTabConditionedShadowProjectionV1({
         events: structuredPayload.events,
@@ -278,6 +277,17 @@ export async function POST(request) {
         mixtureSource: conditioningContract.provenance.mixtureSource,
       });
 
+    // Phase 4 completes the dual-context shadow topology. Global structure comes
+    // only from the validated Phase 3 mixture context; role/tuning/capo come only
+    // from Conditioning V1. The fused projection remains research metadata and
+    // cannot alter generatedTab/events/renderEvents/measureGrid/analysisEngine.
+    const dualContextShadowProjection =
+      buildAiTabDualContextShadowFusionV1({
+        events: structuredPayload.events,
+        conditioning,
+        mixtureStructureContext,
+      });
+
     return NextResponse.json({
       ...structuredPayload,
       rhythmCanaryActive:
@@ -285,6 +295,7 @@ export async function POST(request) {
       conditioningContract,
       conditioningShadowProjection,
       mixtureStructureContext,
+      dualContextShadowProjection,
     });
   } catch (error) {
     console.error(
