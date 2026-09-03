@@ -8,11 +8,13 @@ on:
     paths:
       - '.github/workflows/ai-tab-end-to-end-contract.yml'
       - 'analyzer/verify_ai_tab_end_to_end_contract.mjs'
+      - 'analyzer/verify_ai_tab_conditioning_v1.mjs'
       - 'app/ai-tab/**'
       - 'app/api/audio-upload/**'
       - 'app/api/analyze-audio-tab/**'
       - 'app/api/generate-tab-preview/**'
       - 'app/api/generate-tab-pdf/**'
+      - 'lib/aiTabConditioningV1.mjs'
       - 'lib/jimmyPaigeAnalysisPayload.js'
       - 'lib/createJimmyPaigeProfessionalPdf.js'
 
@@ -40,6 +42,9 @@ jobs:
         with:
           node-version: '22'
 
+      - name: Verify reference-blind conditioning v1
+        run: node analyzer/verify_ai_tab_conditioning_v1.mjs
+
       - name: Verify complete AI Tab product wiring
         env:
           AI_TAB_E2E_RESULT_PATH: debug/v143-contextual-prune/ai-tab-end-to-end-contract.json
@@ -60,6 +65,14 @@ jobs:
               raise SystemExit('AI Tab end-to-end contract did not pass')
           if data.get('instrumentChoices') != ['lead', 'rhythm', 'bass']:
               raise SystemExit('All three instrument choices are not preserved')
+          if data.get('conditioningV1Wired') is not True:
+              raise SystemExit('Conditioning V1 is not wired')
+          if data.get('conditioningV1ReferenceBlind') is not True:
+              raise SystemExit('Conditioning V1 must remain reference-blind')
+          if data.get('conditioningV1ReferenceScoreAuthorized') is not False:
+              raise SystemExit('Conditioning V1 must not authorize reference scoring')
+          if data.get('dualContextProvenanceWired') is not True:
+              raise SystemExit('Dual-context provenance is not wired')
           if data.get('leadLegacyPreserved') is not True:
               raise SystemExit('Lead legacy rollback path was not preserved')
           if data.get('bassLegacyPreserved') is not True:
@@ -84,6 +97,8 @@ jobs:
               raise SystemExit('Safety failure: Production promotion authorized')
 
           print('AI TAB END-TO-END CONTRACT PASSED')
+          print('conditioningV1ReferenceBlind=true')
+          print('referenceScoreAuthorized=false')
           print('leadLegacyPreserved=true')
           print('bassLegacyPreserved=true')
           print('rhythmV143FailClosed=true')
