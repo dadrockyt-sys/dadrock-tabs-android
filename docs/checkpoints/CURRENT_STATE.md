@@ -1,6 +1,6 @@
 # CURRENT STATE — DadRock `/ai-tab`
 
-Updated: 2026-09-02 UTC  
+Updated: 2026-09-03 UTC  
 Branch: `v143-contextual-prune-lobo`
 
 > Compact continuation checkpoint. Dedicated checkpoints under `docs/checkpoints/` remain authoritative for detailed history; omission here does not revoke earlier frozen boundaries.
@@ -111,12 +111,33 @@ No additional receipt generator/template was added: the exact receipt shape is a
 
 The absence of a GOAT candidate generator and GOAT/new-song scorer is intentional, not a gap. Do not build either before actual access/admission.
 
+## Songsterr public AI-transcription observation — ACTIVE REFERENCE-BLIND RESEARCH
+
+Dedicated checkpoint: `docs/checkpoints/SONGSTERR_PUBLIC_AI_TRANSCRIPTION_OBSERVATION_20260903.md`, creation commit `4210b1e6d1ec44fcbb0833d3411118924fd8706b`.
+
+Status: **PUBLIC-OBSERVATION ONLY / NO SONGSTERR PRIVATE OR PAID DATA / NO REFERENCE SCORE CALLS**.
+
+Public Songsterr `/new` currently exposes first-bar time signature, pickup-bar duration, first-bar BPM, triplet feel, instrument Auto/Adjust, separate vocals/rhythm-guitar/lead-guitar/bass/drums targets, and per-guitar/bass tuning/capo controls. Songsterr Help describes the AI output as a draft opened in its editor; a public August 2026 r/Songsterr reply attributed to the Songsterr team says current work has focused on existing instruments and `measure structure`.
+
+This independently motivates architectural investigation of:
+
+1. first-class meter/tempo/downbeat/pickup structure before final tab quantization;
+2. instrument-conditioned transcription/routing rather than one generic pitch detector;
+3. tuning/capo-conditioned or joint fret/string inference;
+4. possible source-separation/routing as a hypothesis only — **no claim** that Songsterr uses any specific separator/model/vendor;
+5. draft + editor/uncertainty product flow rather than treating first-pass generation as final.
+
+Current original `analyzer/modal_analyzer.py` directly calls Basic Pitch on whole normalized audio, performs post-hoc fret assignment, and returns `tempo=None` and `timeSignature=None`, making the public Songsterr structure controls a genuinely independent architecture clue rather than a threshold tweak derived from GuitarSet outcomes.
+
+This observation **does not reopen GuitarSet development and does not authorize a V6 threshold sweep or any reference-facing score call**. Before any such score call, a separate checkpoint must freeze a genuinely new reference-blind candidate hypothesis/implementation.
+
 ## NEXT SAFE ACTION
 
-1. **Await explicit GOAT owner approval/denial.** There is no remaining executable pre-access implementation work that should be added merely to stay busy.
-2. On approval: immediately checkpoint exact non-secret grant wording/date/time/conditions; keep secret URLs/tokens outside the repository; freeze complete restricted-v1 names/sizes/SHA256 inventory; identify complete unique base-DI/source-reference bindings; determine whether actual v1 has an official released test split; apply only the frozen integrity rules; build and validate the selection receipt; run all three frozen validators; require >=2 independent works (target 3); checkpoint selected identities before any candidate-generation arm.
-3. On denial: checkpoint it and keep V168 blocked/inconclusive; do not silently substitute a new holdout source or loosen admission.
-4. Do not resume SplitMySong or GuitarSet threshold development while waiting.
+1. **Await explicit GOAT owner approval/denial.** On approval/denial follow the already frozen V168 procedures; do not substitute another holdout source.
+2. While GOAT remains unavailable, inventory existing DadRock experimental code for already-built reference-blind tempo/downbeat/meter, stem-routing, and tuning-aware modules so the Songsterr clue does not cause duplicate work.
+3. Separate already-exhausted experiments from genuinely new architecture suggested by the public Songsterr control surface.
+4. If a real new architecture gap exists, freeze its reference-blind design in a dedicated checkpoint **before** any frozen-reference score call.
+5. Do not resume SplitMySong or GuitarSet threshold development while waiting.
 
 ## Standing methodology
 
