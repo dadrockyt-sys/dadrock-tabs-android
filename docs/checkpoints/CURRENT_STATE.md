@@ -111,33 +111,38 @@ No additional receipt generator/template was added: the exact receipt shape is a
 
 The absence of a GOAT candidate generator and GOAT/new-song scorer is intentional, not a gap. Do not build either before actual access/admission.
 
-## Songsterr public AI-transcription observation — ACTIVE REFERENCE-BLIND RESEARCH
+## Songsterr public AI-transcription observation — REFERENCE-BLIND CLUE CAPTURED
 
-Dedicated checkpoint: `docs/checkpoints/SONGSTERR_PUBLIC_AI_TRANSCRIPTION_OBSERVATION_20260903.md`, creation commit `4210b1e6d1ec44fcbb0833d3411118924fd8706b`.
+Dedicated observation checkpoint: `docs/checkpoints/SONGSTERR_PUBLIC_AI_TRANSCRIPTION_OBSERVATION_20260903.md`, creation commit `4210b1e6d1ec44fcbb0833d3411118924fd8706b`.
 
-Status: **PUBLIC-OBSERVATION ONLY / NO SONGSTERR PRIVATE OR PAID DATA / NO REFERENCE SCORE CALLS**.
+Architecture-gap inventory: `docs/checkpoints/SONGSTERR_ARCHITECTURE_GAP_INVENTORY_20260903.md`, creation commit `592762183301a8767cba75c1c9e280a83ab4aa19`.
 
-Public Songsterr `/new` currently exposes first-bar time signature, pickup-bar duration, first-bar BPM, triplet feel, instrument Auto/Adjust, separate vocals/rhythm-guitar/lead-guitar/bass/drums targets, and per-guitar/bass tuning/capo controls. Songsterr Help describes the AI output as a draft opened in its editor; a public August 2026 r/Songsterr reply attributed to the Songsterr team says current work has focused on existing instruments and `measure structure`.
+Status: **`NEW_INTEGRATION_GAP_IDENTIFIED / NO SCORE AUTHORIZATION`**.
 
-This independently motivates architectural investigation of:
+Public Songsterr `/new` currently exposes first-bar time signature, pickup-bar duration, first-bar BPM, triplet feel, instrument Auto/Adjust, separate vocals/rhythm-guitar/lead-guitar/bass/drums targets, and per-guitar/bass tuning/capo controls. Songsterr Help describes the AI output as a draft opened in its editor; a public August 2026 r/Songsterr reply attributed to the Songsterr team says current work has focused on existing instruments and `measure structure`. A public 2026 Songsterr ML-engineer listing describes production automatic music transcription using `our models` and names Python/PyTorch plus Accelerate/DeepSpeed/W&B in the training stack.
 
-1. first-class meter/tempo/downbeat/pickup structure before final tab quantization;
-2. instrument-conditioned transcription/routing rather than one generic pitch detector;
-3. tuning/capo-conditioned or joint fret/string inference;
-4. possible source-separation/routing as a hypothesis only — **no claim** that Songsterr uses any specific separator/model/vendor;
-5. draft + editor/uncertainty product flow rather than treating first-pass generation as final.
+Repository inventory shows the individual component ideas are not all new:
 
-Current original `analyzer/modal_analyzer.py` directly calls Basic Pitch on whole normalized audio, performs post-hoc fret assignment, and returns `tempo=None` and `timeSignature=None`, making the public Songsterr structure controls a genuinely independent architecture clue rather than a threshold tweak derived from GuitarSet outcomes.
+- original `analyzer/modal_analyzer.py`: full-mix Basic Pitch + post-hoc fixed-standard-tuning fret assignment;
+- `analyzer/modal_analyzer_v34.py`: conservative onset-gap beat interval/tempo estimation and pulse-aware harmonic windows;
+- `analyzer/build_v7_measure_grid_projection.py`: measure/beat/sixteenth projection;
+- prior V143/Backing Track Studio work: Demucs six-source and related carrier/separation paths.
 
-This observation **does not reopen GuitarSet development and does not authorize a V6 threshold sweep or any reference-facing score call**. Before any such score call, a separate checkpoint must freeze a genuinely new reference-blind candidate hypothesis/implementation.
+Therefore **do not** treat `add Demucs`, `add tempo`, `quantize to measures`, or another GuitarSet threshold sweep as the Songsterr-derived new idea.
+
+The independent gap is an end-to-end **`STRUCTURE_INSTRUMENT_CONDITIONING_V1`** concept: explicit structure priors/estimates (meter, pickup, tempo, triplet feel) plus role/tuning/capo configuration should be carried through event interpretation, structure-aware quantization and contextual string/fret decoding, with provenance/uncertainty in the result.
+
+This is an architecture hypothesis inspired by public configuration behavior, **not a claim about Songsterr's exact private model architecture**. There is no credible public evidence identifying their exact separator, transcriber, losses, training corpus, fingering solver or thresholds.
+
+This inventory **does not reopen GuitarSet development and does not authorize a V6 threshold sweep or any reference-facing score call**.
 
 ## NEXT SAFE ACTION
 
 1. **Await explicit GOAT owner approval/denial.** On approval/denial follow the already frozen V168 procedures; do not substitute another holdout source.
-2. While GOAT remains unavailable, inventory existing DadRock experimental code for already-built reference-blind tempo/downbeat/meter, stem-routing, and tuning-aware modules so the Songsterr clue does not cause duplicate work.
-3. Separate already-exhausted experiments from genuinely new architecture suggested by the public Songsterr control surface.
-4. If a real new architecture gap exists, freeze its reference-blind design in a dedicated checkpoint **before** any frozen-reference score call.
-5. Do not resume SplitMySong or GuitarSet threshold development while waiting.
+2. If useful work continues while GOAT remains unavailable, freeze a separate reference-blind implementation checkpoint for `STRUCTURE_INSTRUMENT_CONDITIONING_V1` before code changes.
+3. Under that future implementation checkpoint, keep the first phase to schema/plumbing + deterministic synthetic/unit tests only: structure config, custom tuning, capo, output provenance, and existing-component integration; no frozen-reference score calls.
+4. Do not resume SplitMySong or GuitarSet threshold development while waiting.
+5. Keep CPU-only/no-Modal/no-GPU and `main`/Production untouched unless the user gives fresh explicit direction.
 
 ## Standing methodology
 
