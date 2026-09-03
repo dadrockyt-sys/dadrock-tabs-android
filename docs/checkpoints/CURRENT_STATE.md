@@ -72,6 +72,15 @@ DadRock now has a real deterministic CPU byte-to-structure path:
 
 No external audio/reference corpus, GuitarSet/SplitMySong/GOAT, Modal/GPU, runtime route connection, Product/PDF mutation or Production change occurred.
 
+## Active continuation — analyzer-runtime shadow wiring
+
+- Resumed from this checkpoint on `v143-contextual-prune-lobo` on 2026-09-03.
+- Frozen Phases 1–6 and all scientific no-go boundaries above are reaffirmed unchanged.
+- Branch-local runtime seam inspection has started; **no analyzer/runtime/Product/Production behavior has been changed yet**.
+- This continuation is restricted to reference-blind, CPU-only shadow wiring using synthetic/static validation.
+- The intended wiring may expose the Phase 6 full-mixture observation as append-only research metadata only; existing analyzer/server trust remains authoritative and unchanged.
+- Fail-open isolation is required: shadow wiring must not make an otherwise-valid analyzer request fail.
+
 ## NEXT SAFE ACTION
 
 1. Freeze an **analyzer-runtime shadow wiring** contract before code.
