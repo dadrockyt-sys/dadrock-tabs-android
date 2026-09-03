@@ -162,10 +162,14 @@ includesAll(source.payload, [
   ": 'legacy'",
 ], 'analysis payload identity gate');
 
+// Authenticated V143 Rhythm must fail closed when its structured event stream is
+// empty/invalid; it must never silently downgrade to the legacy PDF renderer.
 includesAll(source.professional, [
   "contract.rendererOptions.transcriptionType === 'rhythm'",
   "analysisEngine === 'v143-reference-free-rhythm'",
-  'renderEvents.length > 0',
+  'validateV143RenderEvents',
+  'requestedV143StructuredRhythm && renderEvents.length === 0',
+  'Authenticated V143 Rhythm requires non-empty valid renderEvents',
   "mode: 'v143-structured-rhythm'",
 ], 'professional structured renderer gate');
 
