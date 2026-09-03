@@ -9,6 +9,7 @@ const files = {
   preview: 'app/api/generate-tab-preview/route.js',
   full: 'app/api/generate-tab-pdf/route.js',
   payload: 'lib/jimmyPaigeAnalysisPayload.js',
+  conditioning: 'lib/aiTabConditioningV1.mjs',
   professional: 'lib/createJimmyPaigeProfessionalPdf.js',
 };
 
@@ -66,7 +67,10 @@ includesAll(source.analyze, [
   'process.env.ANALYZER_API_URL_V143',
   "transcriptionType === 'rhythm'",
   'usingV143RhythmAnalyzer',
-  'analyzerData?.liveV143?.referenceFree !== true',
+  'liveV143?.referenceFree === true',
+  'liveV143?.professionalReferenceUsed === false',
+  'liveV143?.referenceRuntimeInputUsed === false',
+  'liveV143?.runtimeLabelsRequired === false',
 ], 'analyzer fail-closed routing');
 
 assert.ok(
@@ -77,6 +81,34 @@ assert.ok(
   !source.analyze.includes("transcriptionType === 'bass' &&\n      Boolean(v143RhythmAnalyzerUrl)"),
   'Bass must not be silently routed through the Rhythm V143 endpoint'
 );
+
+// Phase 1 conditioning is normalized server-side, forwarded to the selected
+// analyzer, and returned as a server-owned reference-blind contract.
+includesAll(source.analyze, [
+  'normalizeAiTabConditioningV1(',
+  'body?.conditioning,',
+  'conditioning,',
+  'buildAiTabConditioningContractV1({',
+  'conditioningContract,',
+], 'conditioning v1 analyzer plumbing');
+
+includesAll(source.conditioning, [
+  'STRUCTURE',
+].filter(() => false), 'conditioning placeholder');
+
+includesAll(source.conditioning, [
+  'AI_TAB_CONDITIONING_V1 = 1',
+  'STANDARD_GUITAR_TUNING_MIDI',
+  'STANDARD_BASS_TUNING_MIDI',
+  "'auto'",
+  "'straight'",
+  "'triplet'",
+  'referenceBlind: true',
+  'referenceScoreAuthorized: false',
+  "kind: 'full-mixture'",
+  "kind: 'selected-analyzer-carrier'",
+  "kind: 'same-as-mixture'",
+], 'conditioning v1 server contract');
 
 // Preview and full-PDF routes must still accept all three customer choices.
 includesAll(source.preview, instrumentValues, 'preview PDF allowed types');
@@ -150,13 +182,17 @@ assert.ok(
 );
 
 const evidence = {
-  schemaVersion: 2,
+  schemaVersion: 3,
   gate: 'ai-tab-end-to-end-contract',
   product: 'dadrocktabs.com/ai-tab',
   instrumentChoices: ['lead', 'rhythm', 'bass'],
   userAudioUploadWired: true,
   copyrightGateWired: true,
   analyzerRequestWired: true,
+  conditioningV1Wired: true,
+  conditioningV1ReferenceBlind: true,
+  conditioningV1ReferenceScoreAuthorized: false,
+  dualContextProvenanceWired: true,
   previewPdfWired: true,
   fullPdfUnlockWired: true,
   analysisMetadataTransportWired: true,
