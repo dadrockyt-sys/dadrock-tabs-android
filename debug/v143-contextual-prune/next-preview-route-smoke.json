@@ -2,7 +2,7 @@
   "schemaVersion": 5,
   "gate": "v143-next-preview-route-smoke",
   "branch": "v143-contextual-prune-lobo",
-  "sourceCommit": "f8fa690cbe8b0fc2f30155024a22149134db4ea8",
+  "sourceCommit": "6c12d28bd6f63d331ea778a87525b41cccf637a5",
   "phase": "started-staged-branch-gate",
   "localNextPreviewSimulation": true,
   "actualVercelPreviewDeployment": false,
