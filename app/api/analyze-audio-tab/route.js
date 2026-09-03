@@ -6,6 +6,7 @@ import {
   normalizeAiTabConditioningV1,
 } from '@/lib/aiTabConditioningV1.mjs';
 import { buildAiTabConditionedShadowProjectionV1 } from '@/lib/aiTabConditionedShadowProjectionV1.mjs';
+import { buildAiTabMixtureStructureContextV1 } from '@/lib/aiTabMixtureStructureContextV1.mjs';
 
 export const runtime = 'nodejs';
 export const maxDuration = 150;
@@ -265,12 +266,25 @@ export async function POST(request) {
         conditioning,
       });
 
+    // Phase 3 deliberately leaves the actual full-mixture observation channel
+    // disconnected. No analyzerData/liveV143/carrier field is permitted to gain
+    // global structure authority. Explicit user priors can still resolve fields;
+    // remaining Auto fields stay unresolved until a separately frozen trusted
+    // full-mixture estimator adapter exists.
+    const mixtureStructureContext =
+      buildAiTabMixtureStructureContextV1({
+        structurePrior: conditioning.structurePrior,
+        mixtureObservation: null,
+        mixtureSource: conditioningContract.provenance.mixtureSource,
+      });
+
     return NextResponse.json({
       ...structuredPayload,
       rhythmCanaryActive:
         usingV143RhythmAnalyzer,
       conditioningContract,
       conditioningShadowProjection,
+      mixtureStructureContext,
     });
   } catch (error) {
     console.error(
