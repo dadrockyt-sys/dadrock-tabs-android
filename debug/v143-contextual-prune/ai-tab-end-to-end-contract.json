@@ -1,5 +1,5 @@
 {
-  "schemaVersion": 5,
+  "schemaVersion": 6,
   "gate": "ai-tab-end-to-end-contract",
   "product": "dadrocktabs.com/ai-tab",
   "instrumentChoices": [
@@ -29,6 +29,14 @@
   "mixtureStructureContextObservationConnected": false,
   "mixtureStructureContextConsumedByPdf": false,
   "productPayloadMutatedByMixtureContext": false,
+  "dualContextShadowFusionWired": true,
+  "dualContextShadowFusionShadowOnly": true,
+  "dualContextShadowFusionReferenceBlind": true,
+  "dualContextShadowFusionReferenceScoreAuthorized": false,
+  "dualContextShadowFusionCarrierBorrowingAllowed": false,
+  "dualContextShadowFusionProductionEligible": false,
+  "dualContextShadowFusionConsumedByPdf": false,
+  "productPayloadMutatedByDualContextFusion": false,
   "previewPdfWired": true,
   "fullPdfUnlockWired": true,
   "analysisMetadataTransportWired": true,
