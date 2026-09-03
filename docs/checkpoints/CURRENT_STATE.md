@@ -18,7 +18,7 @@ Branch: `v143-contextual-prune-lobo`
 - `main` / Production untouched; never modify/merge/promote without explicit user direction.
 
 **Project Progress Score: 60%.**  
-**Test Score: PHASE 1 + PHASE 2 + PHASE 3 + PHASE 4 REFERENCE-BLIND CONTRACT PASS; ACCURACY SCORE NOT RUN.**
+**Test Score: PHASE 1 + PHASE 2 + PHASE 3 + PHASE 4 REFERENCE-BLIND CONTRACT PASS; PHASE 5 FROZEN BEFORE CODE; ACCURACY SCORE NOT RUN.**
 
 ## Phase 1 — `STRUCTURE_INSTRUMENT_CONDITIONING_V1` COMPLETE
 
@@ -36,60 +36,49 @@ Phase 3 real full-mixture observation remains intentionally disconnected (`mixtu
 
 ## Phase 4 — `DUAL_CONTEXT_SHADOW_FUSION_V1` COMPLETE
 
-Pre-freeze:
+Pre-freeze `0ec398ce4ac0ea1c36494e70ffc02ca38711e4ea`; result `0c8e061e3e50efa871cd85a0c1f5c657ac629d81`; run `33809867672`, job `100828947197`, **SUCCESS**; evidence bot commit `318e3830fa1bf9d0df34a29ce0d3a6beafaa4c4a`; evidence blob SHA `7c55a348e01d9077ac893cfcf75030dc2bf354e4`.
 
-`docs/checkpoints/SONGSTERR_DUAL_CONTEXT_SHADOW_FUSION_V1_PREIMPLEMENTATION_FREEZE_20260903.md`
-
-Creation commit `0ec398ce4ac0ea1c36494e70ffc02ca38711e4ea`.
-
-Result:
-
-`docs/checkpoints/SONGSTERR_DUAL_CONTEXT_SHADOW_FUSION_V1_PHASE4_RESULT_20260903.md`
-
-Creation commit `0c8e061e3e50efa871cd85a0c1f5c657ac629d81`.
-
-Status: **`PHASE4_REFERENCE_BLIND_DUAL_CONTEXT_FUSION_PASS / SHADOW ONLY / NO_REFERENCE_SCORE`**.
-
-Implementation:
-
-- `d597e7bbf85a206b915e58ee2a62b60cfd0ed236` — pure dual-context fusion adapter;
-- `1f036868ba92f3aa02963c8479a6d8824aacecad` — frozen D1–D10 verifier;
-- `6c12d28bd6f63d331ea778a87525b41cccf637a5` — route appends `dualContextShadowProjection` after Phase 3 context creation;
-- `7e30c1b2a31bb415bf83b4d34ae3f94a71bac679` — complete product/PDF isolation assertions;
-- `8d6a65b48d8ea47837794deb4be1634e5b05330c` — workflow wiring.
-
-Final deterministic evidence:
-
-- run `33809867672`;
-- job `100828947197`;
-- tested head `8d6a65b48d8ea47837794deb4be1634e5b05330c`;
-- conclusion **SUCCESS**;
-- evidence bot commit `318e3830fa1bf9d0df34a29ce0d3a6beafaa4c4a`;
-- evidence blob SHA `7c55a348e01d9077ac893cfcf75030dc2bf354e4`;
-- evidence schema version `6`.
-
-Phase 4 mechanically completes the DadRock dual-context shadow topology:
+Phase 4 mechanically completes the shadow dual-context topology:
 
 - global song structure authority = validated Phase 3 mixture context;
 - local note evidence = copied normalized analyzer events;
 - role/tuning/capo authority = Conditioning V1 instrument config;
 - fused projection = shadow-only research metadata.
 
-D1–D10 prove Auto remains unresolved without a trusted mixture observation; trusted synthetic full-mixture values can reach fusion; mixed user/mixture authority works field-by-field; user overrides win; tuning/capo remain instrument-only; tampered/carrier contexts fail closed; inputs are not mutated; PDFs and product fields do not consume fusion output.
+No Product/PDF consumption or Production mutation is authorized.
 
-No reference/corpus reads or scores, no GuitarSet/SplitMySong/GOAT access, no Modal/GPU, and no Production change occurred.
+## Phase 5 — `FULL_MIXTURE_AUTO_STRUCTURE_ESTIMATOR_V1` FROZEN BEFORE CODE
+
+Pre-implementation checkpoint:
+
+`docs/checkpoints/SONGSTERR_FULL_MIXTURE_AUTO_STRUCTURE_ESTIMATOR_V1_PREIMPLEMENTATION_FREEZE_20260903.md`
+
+Creation commit `5ee029dff31fdd52422f70cb6e4714d2339519b5`.
+
+Status: **`REFERENCE-BLIND CPU WAVEFORM ESTIMATOR AUTHORIZED / SHADOW ONLY / REFERENCE SCORING NOT AUTHORIZED`**.
+
+Key frozen design:
+
+- waveform/PCM input from the full mixture only;
+- no Basic Pitch/transcribed-event input and no V143/separated-carrier input;
+- 20 ms mean-absolute-energy frames, 10 ms hop, positive novelty against 8-frame median history;
+- deterministic onset peaks, 70 ms refractory;
+- tempo candidates 50–220 BPM at 0.5 BPM using phase coherence + onset-gap compatibility;
+- meter V1 may emit only 3/4, 4/4 or unresolved using accent/downbeat evidence;
+- pickup derives from first resolved full-measure downbeat phase;
+- feel uses straight half-beat versus triplet 1/3 and 2/3 subdivision evidence;
+- output is the exact trusted Phase 3 full-mixture observation schema;
+- A1–A12 synthetic waveform tests frozen before implementation;
+- no route connection in Phase 5: current route must keep `mixtureObservation: null` until a separate wiring freeze exists.
+
+V34 was inspected and is not sufficient as the new authority because its tempo diagnostic is derived from transcribed onset groups/events. Phase 5 intentionally moves structure inference earlier to the mixture waveform itself.
 
 ## NEXT SAFE ACTION
 
-The missing capability is now narrow and explicit: a **genuinely full-mixture, reference-blind Auto structure estimator** that can produce trusted tempo/meter/pickup/feel observations for Phase 3.
-
-Before any estimator code or wiring:
-
-1. freeze a new estimator interface/methodology checkpoint;
-2. define exactly which fields are estimated versus left unresolved;
-3. preserve full-mixture provenance and forbid carrier/stem input;
-4. use synthetic/reference-blind validation first;
-5. do not connect its outputs to product/PDF behavior—only the existing shadow dual-context path;
-6. do not reuse GuitarSet/SplitMySong/GOAT for development or scoring;
-7. no Modal/GPU without fresh explicit authorization;
-8. `main` / Production remain untouched.
+1. Implement `analyzer/full_mixture_auto_structure_estimator_v1.py` exactly against the Phase 5 freeze.
+2. Add deterministic synthetic waveform verifier A1–A12; no external audio assets.
+3. Run it CPU-only in the branch workflow together with existing Phase 1–4 safety gates.
+4. On pass, create a Phase 5 result checkpoint and update this file.
+5. Do **not** connect the estimator to the live analyzer/API yet; that requires a separate post-result wiring freeze.
+6. Await GOAT owner approval/denial; do not substitute another holdout.
+7. No SplitMySong/GuitarSet work, no Modal/GPU, and no `main`/Production changes.
