@@ -9,12 +9,14 @@ on:
       - '.github/workflows/ai-tab-end-to-end-contract.yml'
       - 'analyzer/verify_ai_tab_end_to_end_contract.mjs'
       - 'analyzer/verify_ai_tab_conditioning_v1.mjs'
+      - 'analyzer/verify_ai_tab_conditioned_shadow_projection_v1.mjs'
       - 'app/ai-tab/**'
       - 'app/api/audio-upload/**'
       - 'app/api/analyze-audio-tab/**'
       - 'app/api/generate-tab-preview/**'
       - 'app/api/generate-tab-pdf/**'
       - 'lib/aiTabConditioningV1.mjs'
+      - 'lib/aiTabConditionedShadowProjectionV1.mjs'
       - 'lib/jimmyPaigeAnalysisPayload.js'
       - 'lib/createJimmyPaigeProfessionalPdf.js'
 
@@ -45,6 +47,9 @@ jobs:
       - name: Verify reference-blind conditioning v1
         run: node analyzer/verify_ai_tab_conditioning_v1.mjs
 
+      - name: Verify reference-blind shadow projection v1
+        run: node analyzer/verify_ai_tab_conditioned_shadow_projection_v1.mjs
+
       - name: Verify complete AI Tab product wiring
         env:
           AI_TAB_E2E_RESULT_PATH: debug/v143-contextual-prune/ai-tab-end-to-end-contract.json
@@ -73,6 +78,20 @@ jobs:
               raise SystemExit('Conditioning V1 must not authorize reference scoring')
           if data.get('dualContextProvenanceWired') is not True:
               raise SystemExit('Dual-context provenance is not wired')
+          if data.get('conditioningShadowProjectionWired') is not True:
+              raise SystemExit('Conditioning shadow projection is not wired')
+          if data.get('conditioningShadowProjectionShadowOnly') is not True:
+              raise SystemExit('Conditioning shadow projection must remain shadow-only')
+          if data.get('conditioningShadowProjectionReferenceBlind') is not True:
+              raise SystemExit('Conditioning shadow projection must remain reference-blind')
+          if data.get('conditioningShadowProjectionReferenceScoreAuthorized') is not False:
+              raise SystemExit('Conditioning shadow projection must not authorize reference scoring')
+          if data.get('conditioningShadowProjectionProductionEligible') is not False:
+              raise SystemExit('Conditioning shadow projection must not be Production eligible')
+          if data.get('conditioningShadowProjectionConsumedByPdf') is not False:
+              raise SystemExit('PDF routes must not consume shadow projection')
+          if data.get('productPayloadMutatedByShadowProjection') is not False:
+              raise SystemExit('Shadow projection must not mutate product payload')
           if data.get('leadLegacyPreserved') is not True:
               raise SystemExit('Lead legacy rollback path was not preserved')
           if data.get('bassLegacyPreserved') is not True:
@@ -82,7 +101,7 @@ jobs:
           if data.get('rhythmStructuredProfessionalRendererFailClosed') is not True:
               raise SystemExit('Rhythm professional renderer is not fail-closed')
           if data.get('missingPlacementManufacturedForLegacy') is not False:
-              raise SystemExit('Legacy output must not acquire manufactured placement')
+              raise SystemExit('Legacy output must not acquire manufactured product placement')
           if data.get('paymentAttempted') is not False:
               raise SystemExit('Safety failure: payment attempted')
           if data.get('tokenRedeemed') is not False:
@@ -98,6 +117,8 @@ jobs:
 
           print('AI TAB END-TO-END CONTRACT PASSED')
           print('conditioningV1ReferenceBlind=true')
+          print('shadowProjectionReferenceBlind=true')
+          print('shadowProjectionProductionEligible=false')
           print('referenceScoreAuthorized=false')
           print('leadLegacyPreserved=true')
           print('bassLegacyPreserved=true')
