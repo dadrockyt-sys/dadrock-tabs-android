@@ -14,6 +14,8 @@ on:
       - 'analyzer/verify_ai_tab_dual_context_shadow_fusion_v1.mjs'
       - 'analyzer/full_mixture_auto_structure_estimator_v1.py'
       - 'analyzer/verify_full_mixture_auto_structure_estimator_v1.py'
+      - 'analyzer/full_mixture_wav_adapter_v1.py'
+      - 'analyzer/verify_full_mixture_wav_adapter_v1.py'
       - 'app/ai-tab/**'
       - 'app/api/audio-upload/**'
       - 'app/api/analyze-audio-tab/**'
@@ -66,6 +68,11 @@ jobs:
         env:
           FULL_MIXTURE_STRUCTURE_V1_RESULT_PATH: debug/v143-contextual-prune/full-mixture-auto-structure-estimator-v1.json
         run: python3 analyzer/verify_full_mixture_auto_structure_estimator_v1.py
+
+      - name: Verify full-mixture WAV adapter v1
+        env:
+          FULL_MIXTURE_WAV_ADAPTER_V1_RESULT_PATH: debug/v143-contextual-prune/full-mixture-wav-adapter-v1.json
+        run: python3 analyzer/verify_full_mixture_wav_adapter_v1.py
 
       - name: Verify complete AI Tab product wiring
         env:
@@ -164,43 +171,45 @@ jobs:
           if data.get('productionPromotionAuthorized') is not False:
               raise SystemExit('Safety failure: Production promotion authorized')
 
-          estimator_path = Path('debug/v143-contextual-prune/full-mixture-auto-structure-estimator-v1.json')
-          estimator = json.loads(estimator_path.read_text(encoding='utf-8'))
-          required_false = [
-              'referenceScoreAuthorized',
-              'externalAudioAssetsUsed',
-              'basicPitchEventsUsed',
-              'separatedCarrierUsed',
-              'guitarSetRead',
-              'splitMySongRead',
-              'goatRestrictedBytesRead',
-              'modalInvoked',
-              'gpuUsed',
-              'routeEstimatorConnected',
-              'productModified',
-              'productionModified',
-              'productionPromotionAuthorized',
+          estimator = json.loads(Path('debug/v143-contextual-prune/full-mixture-auto-structure-estimator-v1.json').read_text(encoding='utf-8'))
+          estimator_false = [
+              'referenceScoreAuthorized', 'externalAudioAssetsUsed',
+              'basicPitchEventsUsed', 'separatedCarrierUsed', 'guitarSetRead',
+              'splitMySongRead', 'goatRestrictedBytesRead', 'modalInvoked',
+              'gpuUsed', 'routeEstimatorConnected', 'productModified',
+              'productionModified', 'productionPromotionAuthorized',
           ]
-          if estimator.get('passed') is not True:
-              raise SystemExit('Full-mixture estimator synthetic contract did not pass')
-          if estimator.get('referenceBlind') is not True:
-              raise SystemExit('Full-mixture estimator must remain reference-blind')
-          if estimator.get('syntheticWaveformsOnly') is not True:
-              raise SystemExit('Phase 5 must use synthetic waveforms only')
-          for key in required_false:
+          if estimator.get('passed') is not True or estimator.get('referenceBlind') is not True or estimator.get('syntheticWaveformsOnly') is not True:
+              raise SystemExit('Phase 5 estimator contract failed')
+          for key in estimator_false:
               if estimator.get(key) is not False:
                   raise SystemExit(f'Phase 5 safety invariant failed: {key}')
           if set(estimator.get('tests', {}).values()) != {'PASS'} or len(estimator.get('tests', {})) != 12:
               raise SystemExit('Phase 5 A1-A12 evidence incomplete')
 
+          adapter = json.loads(Path('debug/v143-contextual-prune/full-mixture-wav-adapter-v1.json').read_text(encoding='utf-8'))
+          adapter_false = [
+              'referenceScoreAuthorized', 'externalAudioAssetsUsed',
+              'separatedCarrierUsed', 'transcribedEventInputUsed', 'guitarSetRead',
+              'splitMySongRead', 'goatRestrictedBytesRead', 'modalInvoked',
+              'gpuUsed', 'routeRuntimeConnected', 'productModified',
+              'productionModified', 'productionPromotionAuthorized',
+          ]
+          if adapter.get('passed') is not True or adapter.get('referenceBlind') is not True or adapter.get('syntheticWavOnly') is not True or adapter.get('fullMixtureOnly') is not True:
+              raise SystemExit('Phase 6 WAV adapter contract failed')
+          for key in adapter_false:
+              if adapter.get(key) is not False:
+                  raise SystemExit(f'Phase 6 safety invariant failed: {key}')
+          if set(adapter.get('tests', {}).values()) != {'PASS'} or len(adapter.get('tests', {})) != 10:
+              raise SystemExit('Phase 6 W1-W10 evidence incomplete')
+
           print('AI TAB END-TO-END CONTRACT PASSED')
           print('FULL MIXTURE AUTO STRUCTURE A1-A12 PASSED')
-          print('conditioningV1ReferenceBlind=true')
-          print('shadowProjectionReferenceBlind=true')
-          print('mixtureStructureContextReferenceBlind=true')
-          print('dualContextShadowFusionReferenceBlind=true')
+          print('FULL MIXTURE WAV ADAPTER W1-W10 PASSED')
           print('fullMixtureWaveformEstimatorReferenceBlind=true')
+          print('fullMixtureWavAdapterReferenceBlind=true')
           print('fullMixtureEstimatorRouteConnected=false')
+          print('fullMixtureWavRuntimeConnected=false')
           print('carrierStructureBorrowingAllowed=false')
           print('referenceScoreAuthorized=false')
           print('productionModified=false')
@@ -212,7 +221,8 @@ jobs:
           set -euo pipefail
           git add -- \
             debug/v143-contextual-prune/ai-tab-end-to-end-contract.json \
-            debug/v143-contextual-prune/full-mixture-auto-structure-estimator-v1.json
+            debug/v143-contextual-prune/full-mixture-auto-structure-estimator-v1.json \
+            debug/v143-contextual-prune/full-mixture-wav-adapter-v1.json
 
           if git diff --cached --quiet; then
             echo 'Contract evidence unchanged.'
