@@ -10,6 +10,7 @@ on:
       - 'analyzer/verify_ai_tab_end_to_end_contract.mjs'
       - 'analyzer/verify_ai_tab_conditioning_v1.mjs'
       - 'analyzer/verify_ai_tab_conditioned_shadow_projection_v1.mjs'
+      - 'analyzer/verify_ai_tab_mixture_structure_context_v1.mjs'
       - 'app/ai-tab/**'
       - 'app/api/audio-upload/**'
       - 'app/api/analyze-audio-tab/**'
@@ -17,6 +18,7 @@ on:
       - 'app/api/generate-tab-pdf/**'
       - 'lib/aiTabConditioningV1.mjs'
       - 'lib/aiTabConditionedShadowProjectionV1.mjs'
+      - 'lib/aiTabMixtureStructureContextV1.mjs'
       - 'lib/jimmyPaigeAnalysisPayload.js'
       - 'lib/createJimmyPaigeProfessionalPdf.js'
 
@@ -49,6 +51,9 @@ jobs:
 
       - name: Verify reference-blind shadow projection v1
         run: node analyzer/verify_ai_tab_conditioned_shadow_projection_v1.mjs
+
+      - name: Verify reference-blind mixture structure context v1
+        run: node analyzer/verify_ai_tab_mixture_structure_context_v1.mjs
 
       - name: Verify complete AI Tab product wiring
         env:
@@ -92,6 +97,22 @@ jobs:
               raise SystemExit('PDF routes must not consume shadow projection')
           if data.get('productPayloadMutatedByShadowProjection') is not False:
               raise SystemExit('Shadow projection must not mutate product payload')
+          if data.get('mixtureStructureContextWired') is not True:
+              raise SystemExit('Mixture structure context is not wired')
+          if data.get('mixtureStructureContextReferenceBlind') is not True:
+              raise SystemExit('Mixture structure context must remain reference-blind')
+          if data.get('mixtureStructureContextReferenceScoreAuthorized') is not False:
+              raise SystemExit('Mixture structure context must not authorize reference scoring')
+          if data.get('mixtureStructureContextCarrierBorrowingAllowed') is not False:
+              raise SystemExit('Carrier structure borrowing must remain forbidden')
+          if data.get('mixtureStructureContextProductionEligible') is not False:
+              raise SystemExit('Mixture structure context must not be Production eligible')
+          if data.get('mixtureStructureContextObservationConnected') is not False:
+              raise SystemExit('Phase 3 full-mixture observation channel must remain disconnected')
+          if data.get('mixtureStructureContextConsumedByPdf') is not False:
+              raise SystemExit('PDF routes must not consume mixture structure context')
+          if data.get('productPayloadMutatedByMixtureContext') is not False:
+              raise SystemExit('Mixture context must not mutate product payload')
           if data.get('leadLegacyPreserved') is not True:
               raise SystemExit('Lead legacy rollback path was not preserved')
           if data.get('bassLegacyPreserved') is not True:
@@ -119,6 +140,9 @@ jobs:
           print('conditioningV1ReferenceBlind=true')
           print('shadowProjectionReferenceBlind=true')
           print('shadowProjectionProductionEligible=false')
+          print('mixtureStructureContextReferenceBlind=true')
+          print('carrierStructureBorrowingAllowed=false')
+          print('mixtureObservationConnected=false')
           print('referenceScoreAuthorized=false')
           print('leadLegacyPreserved=true')
           print('bassLegacyPreserved=true')
