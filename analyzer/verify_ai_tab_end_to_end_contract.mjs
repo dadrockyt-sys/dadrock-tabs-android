@@ -176,9 +176,9 @@ includesAll(source.professional, [
 // Browser/PDF layers must not create structured placement for legacy output.
 assert.ok(
   source.payload.includes(
-    'const renderEvents = referenceFree\n    ? projectV143RenderEvents(rawEvents)\n    : [];'
+    'const renderEvents = v143RuntimeSafetyVerified\n    ? projectV143RenderEvents(rawEvents)\n    : [];'
   ),
-  'Legacy output must not acquire structured renderEvents in the normalization layer'
+  'Legacy or runtime-unsafe output must not acquire structured renderEvents in the normalization layer'
 );
 
 const evidence = {
