@@ -1,5 +1,10 @@
 import { NextResponse } from 'next/server';
 import { buildJimmyPaigeAnalysisPayload } from '@/lib/jimmyPaigeAnalysisPayload';
+import {
+  AiTabConditioningValidationError,
+  buildAiTabConditioningContractV1,
+  normalizeAiTabConditioningV1,
+} from '@/lib/aiTabConditioningV1.mjs';
 
 export const runtime = 'nodejs';
 export const maxDuration = 150;
@@ -75,9 +80,32 @@ export async function POST(request) {
       );
     }
 
+    let conditioning;
+
+    try {
+      conditioning = normalizeAiTabConditioningV1(
+        body?.conditioning,
+        transcriptionType
+      );
+    } catch (error) {
+      if (
+        error instanceof AiTabConditioningValidationError
+      ) {
+        return NextResponse.json(
+          {
+            error: error.message,
+            code: error.code,
+          },
+          { status: 400 }
+        );
+      }
+
+      throw error;
+    }
+
     // Preserve the existing analyzer as the default for Lead/Bass and as the
-    // rollback path for Rhythm. V143 is opt-in only through its own environment
-    // variable, so adding this code cannot switch production Rhythm by itself.
+    // rollback path for Rhythm. V143 remains selected only through its own
+    // environment variable, so adding conditioning cannot switch analyzers.
     const legacyAnalyzerUrl =
       process.env.ANALYZER_API_URL;
 
@@ -146,6 +174,7 @@ export async function POST(request) {
           song,
           artist,
           transcriptionType,
+          conditioning,
         }),
         cache: 'no-store',
       }
@@ -216,10 +245,20 @@ export async function POST(request) {
         }
       );
 
+    // The server-normalized conditioning contract is appended after analyzer
+    // output normalization. The analyzer is therefore never authoritative for
+    // request conditioning, reference authorization, or dual-context provenance.
+    const conditioningContract =
+      buildAiTabConditioningContractV1({
+        conditioning,
+        usingV143RhythmAnalyzer,
+      });
+
     return NextResponse.json({
       ...structuredPayload,
       rhythmCanaryActive:
         usingV143RhythmAnalyzer,
+      conditioningContract,
     });
   } catch (error) {
     console.error(
