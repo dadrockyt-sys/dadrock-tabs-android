@@ -1,0 +1,33 @@
+{
+  "schemaVersion": 1,
+  "gate": "full-mixture-wav-adapter-v1",
+  "referenceBlind": true,
+  "referenceScoreAuthorized": false,
+  "syntheticWavOnly": true,
+  "externalAudioAssetsUsed": false,
+  "fullMixtureOnly": true,
+  "separatedCarrierUsed": false,
+  "transcribedEventInputUsed": false,
+  "guitarSetRead": false,
+  "splitMySongRead": false,
+  "goatRestrictedBytesRead": false,
+  "modalInvoked": false,
+  "gpuUsed": false,
+  "routeRuntimeConnected": false,
+  "productModified": false,
+  "productionModified": false,
+  "productionPromotionAuthorized": false,
+  "tests": {
+    "W1": "PASS",
+    "W2": "PASS",
+    "W3": "PASS",
+    "W4": "PASS",
+    "W5": "PASS",
+    "W6": "PASS",
+    "W7": "PASS",
+    "W8": "PASS",
+    "W9": "PASS",
+    "W10": "PASS"
+  },
+  "passed": true
+}
