@@ -5,6 +5,7 @@ import {
   buildAiTabConditioningContractV1,
   normalizeAiTabConditioningV1,
 } from '@/lib/aiTabConditioningV1.mjs';
+import { buildAiTabConditionedShadowProjectionV1 } from '@/lib/aiTabConditionedShadowProjectionV1.mjs';
 
 export const runtime = 'nodejs';
 export const maxDuration = 150;
@@ -254,11 +255,22 @@ export async function POST(request) {
         usingV143RhythmAnalyzer,
       });
 
+    // Phase 2 is shadow-only: it reads copied normalized events plus the
+    // server-normalized conditioning contract and emits parallel research
+    // metadata. It never replaces generatedTab/events/renderEvents/measureGrid,
+    // changes analysisEngine, selects an analyzer, or participates in PDF output.
+    const conditioningShadowProjection =
+      buildAiTabConditionedShadowProjectionV1({
+        events: structuredPayload.events,
+        conditioning,
+      });
+
     return NextResponse.json({
       ...structuredPayload,
       rhythmCanaryActive:
         usingV143RhythmAnalyzer,
       conditioningContract,
+      conditioningShadowProjection,
     });
   } catch (error) {
     console.error(
