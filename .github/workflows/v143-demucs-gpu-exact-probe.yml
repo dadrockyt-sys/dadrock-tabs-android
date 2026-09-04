@@ -1,5 +1,6 @@
 name: V143 Demucs GPU Exact-Parity Probe
 
+# Trigger revision 2: private-shift control is now explicit in the isolated probe source.
 on:
   push:
     branches:
