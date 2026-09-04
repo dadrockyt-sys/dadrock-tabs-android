@@ -29,6 +29,9 @@ probe_image = (
 )
 
 
+PROMOTION_SPEEDUP_THRESHOLD = 1.25
+
+
 @contextmanager
 def temporary_environment(updates: dict[str, str | None]) -> Iterator[None]:
     previous = {key: os.environ.get(key) for key in updates}
@@ -204,7 +207,12 @@ def compare_cpu_thread_policy(
         "frozenMeanSeconds": round(frozen_mean, 3),
         "candidateMeanSeconds": round(candidate_mean, 3),
         "speedup": None if speedup is None else round(speedup, 3),
-        "promotionEligible": bool(exact_baseline_parity and speedup is not None and speedup > 1.20),
+        "promotionSpeedupThreshold": PROMOTION_SPEEDUP_THRESHOLD,
+        "promotionEligible": bool(
+            exact_baseline_parity
+            and speedup is not None
+            and speedup >= PROMOTION_SPEEDUP_THRESHOLD
+        ),
         "referenceFree": True,
         "referenceFacingAccuracyScored": False,
         "referenceScoreCalls": 0,
