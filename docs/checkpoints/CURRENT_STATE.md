@@ -16,7 +16,7 @@ Branch: `v143-contextual-prune-lobo`
 
 ## Stable Production — unchanged
 
-- `main`: **`bb992d901e78ab19645f8edc8e330d5a142ebd8e`** (re-verified before GPU gate);
+- `main`: **`bb992d901e78ab19645f8edc8e330d5a142ebd8e`**;
 - Production deployment: `dpl_5BdFAMHeiaA3rQ9QGUdHneY1rexM`, READY;
 - V143 bridge: `https://dadrockyt--dadrock-v143-http-bridge-analyze.modal.run`;
 - Production routing has proven `usingV143RhythmAnalyzer=true`;
@@ -40,7 +40,7 @@ Frozen Production Demucs execution remains CPU-only, one-thread, oneDNN-disabled
 
 ## Exact deterministic CPU identity — GREEN
 
-Historical oneDNN-off anchor:
+Historical/fresh exact anchor:
 
 - normalized WAV SHA256 `ab64e7cdd8a792aecfb6eec518577d8d7e9d2f8aa43007e632470d9fe4511e7f`;
 - direct Guitar SHA256 `0ac47da671df6f8387c1ad1343171de0cf7a0db6985dadf3f30e4a9c7cf0189c`;
@@ -50,7 +50,6 @@ Historical oneDNN-off anchor:
 
 Fresh reproduction:
 
-- workflow `.github/workflows/v143-demucs-explicit-cpu-anchor.yml`;
 - run **`33914759546`**, job **`101159244192`**, SUCCESS;
 - function call `fc-01M1Q0MFR88FXWAQ1R47TSX77Z`;
 - Modal `cpu=1.0`, no GPU; client wall **666.404s**;
@@ -59,56 +58,51 @@ Fresh reproduction:
 - artifact `9953064061`;
 - cleanup GREEN; Production untouched; reference calls 0.
 
-This is the current fail-closed reference-free output identity anchor.
+This is the fail-closed reference-free output identity anchor.
 
 ## Historical CUDA evidence — FAIL-CLOSED
 
-Read-only branch history shows GPU Demucs has previously failed exact cold/cross-container determinism:
-
 - strict three-L4 cross-container result commit `626263e890d44099b1877286f38e594268f9b140`: direct PCM not exact across workers;
-- later startup-determinism cold proof result `faa12c1031fd740842e2c30c3e36ea6dc56246f3`: source/normalized/BS-RoFormer exact, direct Demucs split between two hashes; `allSeparatorHashesExact=false`;
-- these runs used CUDA deterministic controls but predate the final current private-shift + exact oneDNN-off CPU-anchor combination.
+- later startup-determinism cold proof result `faa12c1031fd740842e2c30c3e36ea6dc56246f3`: source/normalized/BS-RoFormer exact, direct Demucs split between two hashes; `allSeparatorHashesExact=false`.
 
-Therefore GPU is not assumed safe; one final current-controls exact-CPU-parity test is justified.
-
-## Current final L4 exact-parity gate
+## Final current-controls L4 exact-parity gate — TERMINAL / FAIL-CLOSED
 
 Files:
 
-- `analyzer/v143_demucs_gpu_exact_probe.py` — initial commit `56fbba4ee1794b8232a1b5ca42a18f430381e1bb`;
-- `.github/scripts/v143_demucs_gpu_exact_collect.py` — `7556688eb94de1ef66f0bf76ff489ad9ca0ebb61`;
-- workflow `.github/workflows/v143-demucs-gpu-exact-probe.yml`.
+- `analyzer/v143_demucs_gpu_exact_probe.py` initial commit `56fbba4ee1794b8232a1b5ca42a18f430381e1bb`;
+- explicit private-shift correction commit `383c34c71eebb48b2b7f9597cdeb34aa61269ddd`;
+- collector `.github/scripts/v143_demucs_gpu_exact_collect.py` commit `7556688eb94de1ef66f0bf76ff489ad9ca0ebb61`;
+- workflow retry trigger commit `9c6b8a47bb1742b46d2d6e41b0426359c3ee5123`.
 
-Gate contract:
+Retry result:
 
-- exactly one L4 direct-Demucs pass on the full approved fixture;
-- seed 143, private shift RNG, CUBLAS deterministic workspace, Torch deterministic algorithms, TF32 disabled;
-- model/settings unchanged (`htdemucs_6s`, Guitar, shifts=1, overlap=.10, segment=6);
-- 300s client deadline; `call.cancel(terminate_containers=True)` on failure/timeout;
-- aggregate-only output; raw stem/audio not retained;
-- exact CPU normalized/Guitar/PCM/shift parity required; mismatch fails closed;
-- `always()` cleanup targets only `dadrock-v143-demucs-gpu-exact-probe`.
-
-### First trigger — TERMINAL / PREFLIGHT-ONLY FAILURE
-
-- trigger commit `f53fab02c96ee64d6cab3caff54c468a0f43b9d6`;
-- run **`33916548691`**, job **`101164931468`**;
-- failed in static boundary before Python/Modal install/deploy/audio execution;
-- cause: private-shift flag was inherited via `DEMUCS_SINGLE_THREAD_ENV`, but the workflow intentionally required an explicit source-level `V143_DEMUCS_FIXED_SHIFT_RNG` declaration;
-- no Modal app was deployed; no audio ran; no artifact was expected;
-- Production untouched.
-
-Harness correction:
-
-- commit **`383c34c71eebb48b2b7f9597cdeb34aa61269ddd`** explicitly sets `gpu_env["V143_DEMUCS_FIXED_SHIFT_RNG"] = "1"` while still removing only `CUDA_VISIBLE_DEVICES` so L4 remains visible;
-- no model/audio/parity/deadline change.
-
-### Retry — ARMED / RUNNING
-
-- workflow retrigger commit **`9c6b8a47bb1742b46d2d6e41b0426359c3ee5123`**;
 - run **`33916705535`**, job **`101165425904`**;
-- currently starting checkout/preflight;
-- no second/parallel audio diagnostic is authorized while this run is active.
+- preflight/setup/deploy: GREEN;
+- function call **`fc-01M1Q1ZA6GFSF1NZTPFF2GQA9P`**;
+- device: **NVIDIA L4**; PyTorch `2.13.0+cu130`;
+- completed normally well inside 300s deadline;
+- client wall **51.663s**;
+- direct Demucs separation **42.404s** (`42.405s` measured wall);
+- total remote **43.158s**;
+- speedup vs exact CPU anchor: **12.899x**;
+- source SHA exact;
+- normalized WAV SHA exact;
+- private deterministic shift trace exact: `0,22050,6026`;
+- output dimensions exact: 44.1kHz, 9,324,544 frames, 2 channels, 37,298,220 bytes;
+- GPU direct Guitar SHA256 **`5820375b67d6d3ad38386c267f8e21b721a06446ba9d8b4de14260d832d2f5a4`**;
+- GPU decoded PCM-int16 SHA256 **`376c33be95e277f811f1edc2bea14a4d6287f4ad7ae4e8eca2c5c84134b9341b`**;
+- exact CPU Guitar anchor is `0ac47da6...0189c`; exact CPU PCM anchor is `2c22f040...36bed`;
+- `runtimeInvariantsPassed=true`;
+- **`exactCpuParityPassed=false`**;
+- artifact **`9953451993`** uploaded successfully;
+- isolated app cleanup GREEN; `productionAppTouched=false`;
+- reference-facing score calls 0; raw audio/stem retention false; Production/Vercel unchanged.
+
+### Decisive interpretation
+
+GPU solves the speed bottleneck but changes the frozen exact Demucs output identity. Under the current fail-closed exact-output contract, **GPU PROMOTION IS CLOSED / DO NOT RETEST OR WEAKEN PARITY TO FORCE A PASS**. No second L4 repeatability run is warranted because the first current-controls candidate already fails the required CPU identity.
+
+The next acceleration direction must preserve the exact CPU numerical path while changing execution architecture, not model/settings/numerical backend. The most promising untested class is exact parallelization of Demucs' existing internal split/chunk workload with deterministic ordered reduction, if repository/upstream implementation evidence confirms that can be done without changing output math/order.
 
 ## Authorization
 
@@ -116,8 +110,9 @@ User explicitly authorized continuation of non-reference-facing V143 Production/
 
 ## NEXT SAFE ACTION
 
-1. Read terminal outcome/artifact for retry run **`33916705535`** and confirm isolated-app cleanup.
-2. If GPU completes but mismatches exact CPU identity, close GPU promotion under the current exact-output contract; do not weaken parity for speed.
-3. If GPU unexpectedly passes exact CPU identity, run exactly one additional independent L4 call to prove cross-container repeatability before any Production change.
-4. Only exact identity + repeatability may justify a Production worker execution/resource change. Bridge/Vercel/UI remain unchanged unless independently required.
-5. Reference-facing accuracy remains unarmed.
+1. **Do not run more GPU or CPU-thread-count probes.**
+2. Perform read-only source/history inspection of Demucs/audio-separator split execution to determine whether its 40-chunk CPU work can be parallelized while preserving exact per-chunk math and the original deterministic overlap-add/reduction order.
+3. If structurally feasible, build a reference-free diagnostic implementation/gate first; require exact CPU Guitar + PCM hash parity before considering performance.
+4. If exact split-parallel execution is not feasible, record that terminally and move to another architecture that preserves exact CPU output (for example reusable source-hash stage caching), without changing musical/numerical settings.
+5. Production/bridge/Vercel/UI remain unchanged until an exact deterministic structural gate passes.
+6. Reference-facing accuracy remains unarmed.
