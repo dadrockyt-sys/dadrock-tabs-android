@@ -16,7 +16,7 @@ Branch: `v143-contextual-prune-lobo`
 - `main` / Production untouched; never modify/merge/promote without explicit user direction.
 
 **Project Progress Score: 60%.**  
-**Test Score: PHASE 1–7 PASS; PHASE 8 T1–T12 + SAFETY EVIDENCE PASS; BRANCH BUILD GATE MAINTENANCE IN PROGRESS; ACCURACY SCORE NOT RUN.**
+**Test Score: PHASE 1–7 PASS; PHASE 8 T1–T12 + SAFETY EVIDENCE PASS; FULL NEXT BUILD PASS; FINAL LOCAL ROUTE-SMOKE RERUN ACTIVE; ACCURACY SCORE NOT RUN.**
 
 ## Phases 1–7 — COMPLETE
 
@@ -56,7 +56,7 @@ Successful Phase 8 evidence:
 - T1–T12 **SUCCESS**;
 - safety-evidence gate **SUCCESS**.
 
-The existing AI Tab End-to-End Contract also passed on the Phase 8 route-change commit (`33827001284`). Phase 7 runtime-shadow verification also reran successfully (`33827001245`).
+Existing AI Tab End-to-End Contract also passed on Phase 8 route change (`33827001284`). Phase 7 runtime-shadow verification reran successfully (`33827001245`).
 
 Implemented server guarantees remain:
 
@@ -68,25 +68,35 @@ Implemented server guarantees remain:
 - admitted observation can affect only existing research `mixtureStructureContext` / shadow metadata;
 - Product/UI/PDF authority, analyzer selection/status, generated tab/events/render events/measure grid remain independent.
 
-## Branch build gate maintenance — ACTIVE
+## Branch build gate maintenance — NEAR COMPLETE
 
-The route-change commit also triggered legacy workflow `V143 AI Tab Branch Build Gate` run `33827001255`, which failed before install/build could run.
+Legacy run `33827001255` was not a real application build failure: a stale verifier failed and the workflow then attempted to rebase a dirty worktree before npm/build.
 
-Investigation established two CI-maintenance defects independent of Phase 8 authority:
+Maintenance commits:
 
-1. `analyzer/verify_v143_analyzer_quality_gate.mjs` is stale: its passing fixture supplies only `liveV143.referenceFree=true`, while current `buildJimmyPaigeAnalysisPayload` correctly requires the complete four-flag anti-leakage contract (`referenceFree=true`, `professionalReferenceUsed=false`, `referenceRuntimeInputUsed=false`, `runtimeLabelsRequired=false`). Its expected failure regex is also stale.
-2. The branch-build workflow commits/pushes heartbeat files during its own run and later tries to `git rebase` while verifier/build artifacts leave a dirty worktree, producing `cannot rebase: You have unstaged changes.` This caused npm install, Next build and route smoke to be skipped, so the failed run is not evidence of a Phase 8 application build failure.
+- `d315fd3c29837ecc6fe1c2a87baeb76c6256db18` — refreshed `verify_v143_analyzer_quality_gate.mjs` to the current complete four-flag anti-leakage contract and current fail-closed error message;
+- `1cd60a689264894e700da89bcf7d7de1971b7a60` — made `V143 AI Tab Branch Build Gate` read-only/deterministic: no branch heartbeat commits/rebases/pushes; it now runs verifiers, locked `npm ci`, full `next build`, built-server readiness, local route smoke, compact artifact/safety evidence;
+- `745899173e4dd5205cd9b9b6b820a2943bb64866` — refreshed the local Preview route smoke fixture to include the authenticated V143 `eventIndex` required by `validateV143RenderEvents`.
 
-Artifact `9920317860` contained only compact JSON because hidden `.branch-build-gate/*.log` files were excluded by the artifact upload configuration; the job logs themselves prove analyzer verifier exit=1 and dirty-worktree rebase failure.
+First clean gate run after workflow repair:
 
-Current branch head checked after investigation: `33e4613e3daedfd744bdcb0c54bef4583b916dea`.
+- run `33827324331`, job `100882664132`;
+- analyzer-quality verifier **SUCCESS**;
+- Preview feature verifier **SUCCESS**;
+- locked `npm ci --ignore-scripts` **SUCCESS**;
+- full Next.js 16.1.6 production build **SUCCESS**;
+- built server readiness **SUCCESS**;
+- route smoke failed only because its synthetic authenticated `renderEvents` fixture omitted `eventIndex`; server correctly failed closed with `Authenticated V143 Rhythm requires non-empty valid renderEvents; legacy PDF fallback is not allowed.`
 
-Safety accounting remains: external/reference assets read=false; GuitarSet=false; SplitMySong=false; GOAT restricted bytes=false; reference score calls=0; Modal invoked/deployed=false; GPU=false; Product/PDF authority changed=false; `main`/Production changed=false.
+The build log confirms the Phase 8 branch compiles successfully. A MongoDB localhost connection warning occurred while generating database sitemap routes, but Next handled it and completed the production build successfully.
+
+The stale route-smoke fixture is corrected at `745899173e4dd5205cd9b9b6b820a2943bb64866`. Final clean branch-gate rerun `33827731955` is active at this checkpoint.
+
+Safety accounting remains: external/reference assets read=false; GuitarSet=false; SplitMySong=false; GOAT restricted bytes=false; reference score calls=0; Modal invoked/deployed=false; GPU=false; Product/PDF authority changed=false; actual Vercel Preview deployment=false; `main`/Production changed=false.
 
 ## NEXT SAFE ACTION
 
-1. Repair only the stale V143 analyzer-quality fixture to match the already-current anti-leakage payload contract.
-2. Simplify/fix the branch-build gate so it does not mutate/rebase/push the branch mid-run; preserve its verifier + npm ci + Next build + local route-smoke checks and artifact evidence.
-3. Rerun the repaired branch gate and inspect actual install/build/route results.
-4. Then write the dedicated Phase 8 result checkpoint and mark Phase 8 complete in this file.
-5. Do not expand Product/PDF authority, deploy/invoke Modal, use GPU, read reference assets, score references, merge `main`, or promote Production.
+1. Finish inspecting branch gate run `33827731955` after the route-smoke fixture correction.
+2. If green, compare Phase 8 freeze to the tested/current head, write the dedicated Phase 8 result checkpoint, and mark Phase 8 complete here.
+3. If any remaining failure is found, correct only stale verification/CI plumbing unless evidence points to a real application regression.
+4. Do not expand Product/PDF authority, deploy/invoke Modal, use GPU, read reference assets, score references, merge `main`, or promote Production.
