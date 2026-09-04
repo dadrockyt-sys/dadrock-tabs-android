@@ -117,7 +117,210 @@ jobs:
             --token="$VERCEL_TOKEN" \
             2>&1 | tee debug/v143-contextual-prune/vercel-preview-inspect.log
 
+      - name: Exercise protected Preview routes with authenticated Vercel curl
+        shell: bash
+        run: |
+          set -euo pipefail
+          SMOKE_DIR="debug/v143-contextual-prune/real-vercel-preview-smoke"
+          mkdir -p "$SMOKE_DIR"
+
+          python3 - <<'PY'
+          import json
+          from pathlib import Path
+
+          out = Path('debug/v143-contextual-prune/real-vercel-preview-smoke')
+          out.mkdir(parents=True, exist_ok=True)
+
+          frets = [3, 5, 7, 8, 5, 7, 8, 10, 7, 8, 10, 12]
+          render_events = []
+          for index, fret in enumerate(frets):
+              render_events.append({
+                  'eventIndex': index,
+                  'measure': index // 4 + 1,
+                  'step': (index % 4) * 4,
+                  'stringIndex': index % 3,
+                  'fret': fret,
+                  'midi': 52 + index,
+                  'rhythmTechniques': ['hammer-on'] if index == 2 else (['slide-up'] if index == 7 else []),
+                  'rhythmSustain': {
+                      'durationSteps': 2 if index % 3 == 0 else 1,
+                      'durationSeconds': 0.5 if index % 3 == 0 else 0.25,
+                      'tier': 'medium' if index % 3 == 0 else 'short',
+                  },
+              })
+
+          structured = {
+              'song': 'V143 Real Vercel Preview Smoke',
+              'artist': 'DadRock QA',
+              'transcriptionType': 'rhythm',
+              'generatedTab': '\n'.join([
+                  'e|--3-----5-----7-----8--|',
+                  'B|-----------------------|',
+                  'G|-----------------------|',
+                  'D|-----------------------|',
+                  'A|-----------------------|',
+                  'E|-----------------------|',
+              ]),
+              'tuning': 'E Standard',
+              'tempo': 120,
+              'timeSignature': '4/4',
+              'keySignature': 'E minor',
+              'previewSystems': 2,
+              'analysisEngine': 'v143-reference-free-rhythm',
+              'renderEvents': render_events,
+              'measureGrid': None,
+              'confidence': 0.91,
+              'difficulty': 'intermediate',
+              'techniques': ['hammer-on', 'slide-up'],
+          }
+          malformed_analysis = {'song': 'Missing required fields'}
+
+          (out / 'structured-payload.json').write_text(json.dumps(structured, separators=(',', ':')), encoding='utf-8')
+          (out / 'malformed-analysis-payload.json').write_text(json.dumps(malformed_analysis, separators=(',', ':')), encoding='utf-8')
+          PY
+
+          vercel curl /ai-tab \
+            --deployment "$VERCEL_PREVIEW_URL" \
+            --token="$VERCEL_TOKEN" \
+            -- \
+            --silent --show-error --location \
+            --user-agent 'Mozilla/5.0 (compatible; DadRock-V143-Real-Preview-Smoke/1.0)' \
+            --dump-header "$SMOKE_DIR/ai-tab.headers" \
+            --output "$SMOKE_DIR/ai-tab.html"
+
+          vercel curl /api/generate-tab-preview \
+            --deployment "$VERCEL_PREVIEW_URL" \
+            --token="$VERCEL_TOKEN" \
+            -- \
+            --silent --show-error --location \
+            --request POST \
+            --user-agent 'Mozilla/5.0 (compatible; DadRock-V143-Real-Preview-Smoke/1.0)' \
+            --header 'Content-Type: application/json' \
+            --data-binary "@$SMOKE_DIR/structured-payload.json" \
+            --dump-header "$SMOKE_DIR/structured.headers" \
+            --output "$SMOKE_DIR/structured.pdf"
+
+          vercel curl /api/analyze-audio-tab \
+            --deployment "$VERCEL_PREVIEW_URL" \
+            --token="$VERCEL_TOKEN" \
+            -- \
+            --silent --show-error --location \
+            --request POST \
+            --user-agent 'Mozilla/5.0 (compatible; DadRock-V143-Real-Preview-Smoke/1.0)' \
+            --header 'Content-Type: application/json' \
+            --data-binary "@$SMOKE_DIR/malformed-analysis-payload.json" \
+            --dump-header "$SMOKE_DIR/malformed-analysis.headers" \
+            --output "$SMOKE_DIR/malformed-analysis.body"
+
+          python3 - <<'PY'
+          import json, os, re
+          from pathlib import Path
+
+          smoke = Path('debug/v143-contextual-prune/real-vercel-preview-smoke')
+
+          def read_status_and_headers(path):
+              text = Path(path).read_text(encoding='utf-8', errors='replace')
+              blocks = [b for b in re.split(r'\r?\n\r?\n', text) if b.strip()]
+              http_blocks = [b for b in blocks if b.lstrip().upper().startswith('HTTP/')]
+              if not http_blocks:
+                  raise RuntimeError(f'No HTTP response block in {path}')
+              block = http_blocks[-1]
+              lines = block.splitlines()
+              match = re.search(r'HTTP/\S+\s+(\d{3})', lines[0], re.I)
+              if not match:
+                  raise RuntimeError(f'Could not parse status from {path}: {lines[0]!r}')
+              headers = {}
+              for line in lines[1:]:
+                  if ':' not in line:
+                      continue
+                  key, value = line.split(':', 1)
+                  headers[key.strip().lower()] = value.strip()
+              return int(match.group(1)), headers
+
+          page_status, page_headers = read_status_and_headers(smoke / 'ai-tab.headers')
+          structured_status, structured_headers = read_status_and_headers(smoke / 'structured.headers')
+          malformed_status, malformed_headers = read_status_and_headers(smoke / 'malformed-analysis.headers')
+
+          page_bytes = (smoke / 'ai-tab.html').stat().st_size
+          pdf = (smoke / 'structured.pdf').read_bytes()
+          malformed_body = (smoke / 'malformed-analysis.body').read_text(encoding='utf-8', errors='replace')
+
+          feature = structured_headers.get('x-jimmy-paige-pdf-feature', '')
+          renderer = structured_headers.get('x-jimmy-paige-pdf-renderer', '')
+          content_type = structured_headers.get('content-type', '')
+
+          evidence = {
+              'schemaVersion': 1,
+              'gate': 'v143-real-vercel-protected-preview-smoke',
+              'branch': os.environ['EXPECTED_BRANCH'],
+              'sourceCommit': os.environ['EXPECTED_SHA'],
+              'deploymentUrl': os.environ['VERCEL_PREVIEW_URL'],
+              'actualVercelPreviewDeployment': True,
+              'protectedAccessMethod': 'vercel-curl-authenticated-token',
+              'deploymentProtectionDisabled': False,
+              'aiTabPageStatus': page_status,
+              'aiTabPageBytes': page_bytes,
+              'structuredPreviewStatus': structured_status,
+              'structuredContentType': content_type,
+              'structuredFeature': feature,
+              'structuredRenderer': renderer,
+              'structuredPdfBytes': len(pdf),
+              'structuredPdfMagic': pdf[:4].decode('ascii', errors='replace'),
+              'malformedAnalysisStatus': malformed_status,
+              'malformedAnalysisBodyBytes': len(malformed_body.encode('utf-8')),
+              'malformedAnalysisFailsBeforeAnalyzer': malformed_status == 400,
+              'referenceBlindFixture': True,
+              'externalAudioAssetsUsed': False,
+              'analyzerInvocationRequested': False,
+              'guitarSetRead': False,
+              'splitMySongRead': False,
+              'goatRestrictedBytesRead': False,
+              'referenceScoreCalls': 0,
+              'modalInvoked': False,
+              'modalDeployed': False,
+              'gpuUsed': False,
+              'cudaUsed': False,
+              'mainModified': False,
+              'productionModified': False,
+              'productionPromotionAuthorized': False,
+              'productionFlagUsed': False,
+              'passed': False,
+              'error': None,
+          }
+
+          failures = []
+          if page_status != 200:
+              failures.append(f'/ai-tab status expected 200, got {page_status}')
+          if page_bytes <= 1000:
+              failures.append(f'/ai-tab body too small: {page_bytes}')
+          if structured_status != 200:
+              failures.append(f'structured Preview status expected 200, got {structured_status}')
+          if not content_type.lower().startswith('application/pdf'):
+              failures.append(f'structured content-type expected application/pdf, got {content_type!r}')
+          if len(pdf) <= 1000:
+              failures.append(f'structured PDF too small: {len(pdf)}')
+          if pdf[:4] != b'%PDF':
+              failures.append(f'structured PDF magic expected %PDF, got {pdf[:4]!r}')
+          if feature != 'v143-branch-preview-canary':
+              failures.append(f'feature mismatch: {feature!r}')
+          if renderer != 'v143-structured-rhythm':
+              failures.append(f'renderer mismatch: {renderer!r}')
+          if malformed_status != 400:
+              failures.append(f'malformed analysis expected 400, got {malformed_status}')
+
+          evidence['passed'] = not failures
+          if failures:
+              evidence['error'] = '; '.join(failures)
+
+          (smoke / 'evidence.json').write_text(json.dumps(evidence, indent=2) + '\n', encoding='utf-8')
+          print(json.dumps(evidence, indent=2))
+
+          if failures:
+              raise SystemExit(evidence['error'])
+          PY
+
       - name: Record exact-SHA Preview evidence
+        if: always()
         shell: bash
         run: |
           set -euo pipefail
@@ -125,12 +328,18 @@ jobs:
           import json, os
           from pathlib import Path
 
+          smoke_path = Path('debug/v143-contextual-prune/real-vercel-preview-smoke/evidence.json')
+          try:
+              smoke = json.loads(smoke_path.read_text(encoding='utf-8'))
+          except Exception:
+              smoke = {}
+
           evidence = {
-              'schemaVersion': 1,
+              'schemaVersion': 2,
               'gate': 'v143-exact-branch-vercel-preview',
               'branch': os.environ['EXPECTED_BRANCH'],
               'sourceCommit': os.environ['EXPECTED_SHA'],
-              'deploymentUrl': os.environ['VERCEL_PREVIEW_URL'],
+              'deploymentUrl': os.environ.get('VERCEL_PREVIEW_URL'),
               'requestedTarget': 'preview',
               'deploymentMethod': 'github-actions-vercel-prebuilt',
               'vercelCliVersion': '59.11.2',
@@ -143,6 +352,9 @@ jobs:
               'modalInvoked': False,
               'gpuUsed': False,
               'cudaUsed': False,
+              'protectedPreviewSmokePresent': bool(smoke),
+              'protectedPreviewSmokePassed': smoke.get('passed') is True,
+              'protectedPreviewSmoke': smoke,
           }
           out = Path('debug/v143-contextual-prune/vercel-preview-evidence.json')
           out.write_text(json.dumps(evidence, indent=2) + '\n', encoding='utf-8')
@@ -158,5 +370,52 @@ jobs:
             debug/v143-contextual-prune/vercel-preview-deploy.log
             debug/v143-contextual-prune/vercel-preview-inspect.log
             debug/v143-contextual-prune/vercel-preview-evidence.json
+            debug/v143-contextual-prune/real-vercel-preview-smoke/
           if-no-files-found: warn
           retention-days: 14
+
+      - name: Enforce protected Preview smoke evidence
+        shell: bash
+        run: |
+          set -euo pipefail
+          python3 - <<'PY'
+          import json
+          from pathlib import Path
+
+          evidence = json.loads(Path('debug/v143-contextual-prune/vercel-preview-evidence.json').read_text(encoding='utf-8'))
+          smoke = evidence.get('protectedPreviewSmoke') or {}
+
+          if evidence.get('protectedPreviewSmokePassed') is not True or smoke.get('passed') is not True:
+              raise SystemExit(f"Protected Preview smoke failed: {smoke.get('error')}")
+          if smoke.get('actualVercelPreviewDeployment') is not True:
+              raise SystemExit('Smoke must target an actual Vercel Preview deployment')
+          if smoke.get('deploymentProtectionDisabled') is not False:
+              raise SystemExit('Deployment protection must remain enabled')
+          if smoke.get('referenceBlindFixture') is not True:
+              raise SystemExit('Smoke fixture must remain reference blind')
+          if smoke.get('externalAudioAssetsUsed') is not False:
+              raise SystemExit('External/reference audio must not be used')
+          if smoke.get('analyzerInvocationRequested') is not False:
+              raise SystemExit('Protected smoke must not invoke the analyzer')
+          if smoke.get('referenceScoreCalls') != 0:
+              raise SystemExit('Reference score calls must remain zero')
+          if smoke.get('productionModified') is not False:
+              raise SystemExit('Production must remain untouched')
+          if smoke.get('mainModified') is not False:
+              raise SystemExit('main must remain untouched')
+          if smoke.get('structuredFeature') != 'v143-branch-preview-canary':
+              raise SystemExit('Protected Preview feature mismatch')
+          if smoke.get('structuredRenderer') != 'v143-structured-rhythm':
+              raise SystemExit('Protected Preview renderer mismatch')
+          if smoke.get('malformedAnalysisStatus') != 400:
+              raise SystemExit('Malformed analysis request did not fail closed with 400')
+
+          print('V143 REAL VERCEL PROTECTED PREVIEW SMOKE PASSED')
+          print(f"sourceCommit={evidence.get('sourceCommit')}")
+          print(f"deploymentUrl={evidence.get('deploymentUrl')}")
+          print(f"aiTabPageStatus={smoke.get('aiTabPageStatus')}")
+          print(f"structuredPreviewStatus={smoke.get('structuredPreviewStatus')}")
+          print(f"structuredRenderer={smoke.get('structuredRenderer')}")
+          print(f"structuredPdfBytes={smoke.get('structuredPdfBytes')}")
+          print('productionModified=false')
+          PY
