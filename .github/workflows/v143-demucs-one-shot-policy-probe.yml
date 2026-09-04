@@ -1,0 +1,166 @@
+name: V143 Demucs One Shot Policy Probe
+
+on:
+  push:
+    branches:
+      - v143-contextual-prune-lobo
+    paths:
+      - '.github/workflows/v143-demucs-one-shot-policy-probe.yml'
+
+concurrency:
+  group: v143-demucs-one-shot-policy-probe
+  cancel-in-progress: false
+
+permissions:
+  contents: read
+
+env:
+  MODAL_ENVIRONMENT: main
+  AUDIO_URL: https://raw.githubusercontent.com/dadrockyt-sys/dadrock-tabs-android/main/public/jimmy-paige-midterm-v1/gomyway-midterm-source.m4a
+  AUDIO_BLOB_SHA: 4dd709e3fa177b4daeed71ca97f0199757729d4b
+  MAIN_SHA: bb992d901e78ab19645f8edc8e330d5a142ebd8e
+  PYTHONUNBUFFERED: '1'
+
+jobs:
+  demucs-one-shot-policy-probe:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    env:
+      MODAL_TOKEN_ID: ${{ secrets.MODAL_TOKEN_ID }}
+      MODAL_TOKEN_SECRET: ${{ secrets.MODAL_TOKEN_SECRET }}
+
+    steps:
+      - name: Checkout diagnostic branch
+        uses: actions/checkout@v4
+
+      - name: Enforce diagnostic-only boundary
+        shell: bash
+        run: |
+          set -euo pipefail
+          ACTUAL_MAIN="$(git ls-remote origin refs/heads/main | awk '{print $1}')"
+          test "$ACTUAL_MAIN" = "$MAIN_SHA"
+          test -n "${MODAL_TOKEN_ID:-}"
+          test -n "${MODAL_TOKEN_SECRET:-}"
+          python3 -m py_compile analyzer/v143_demucs_one_shot_probe.py analyzer/v143_demucs_perf_probe_cli.py
+          grep -q 'dadrock-v143-demucs-one-shot-probe' analyzer/v143_demucs_one_shot_probe.py
+          grep -q 'referenceFacingAccuracyScored.*False' analyzer/v143_demucs_one_shot_probe.py
+          grep -q 'referenceScoreCalls.*0' analyzer/v143_demucs_one_shot_probe.py
+          echo 'productionWorkerChanged=false'
+          echo 'productionBridgeChanged=false'
+          echo 'vercelChanged=false'
+          echo 'referenceFacingAccuracyScored=false'
+          echo 'referenceScoreCalls=0'
+
+      - name: Set up Python 3.11
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Install Modal client and deploy isolated one-shot app
+        shell: bash
+        run: |
+          set -euo pipefail
+          python -m pip install --upgrade pip >/dev/null
+          python -m pip install 'modal==1.3.3' >/dev/null
+          modal token set --token-id "$MODAL_TOKEN_ID" --token-secret "$MODAL_TOKEN_SECRET" >/dev/null
+          modal deploy --env main analyzer/v143_demucs_one_shot_probe.py
+
+      - name: Compare 6-second frozen CPU1 and CPU4 policies
+        shell: bash
+        run: |
+          set -euo pipefail
+          OUT=debug/v143-contextual-prune/demucs-one-shot-policy-probe
+          mkdir -p "$OUT"
+          python - <<'PY'
+          import json
+          import os
+          from concurrent.futures import ThreadPoolExecutor
+          from pathlib import Path
+
+          import modal
+
+          fn = modal.Function.from_name(
+              'dadrock-v143-demucs-one-shot-probe',
+              'run_cpu_policy',
+              environment_name='main',
+          )
+          url = os.environ['AUDIO_URL']
+
+          def invoke(policy):
+              try:
+                  value = fn.remote(url, policy, 6.0)
+                  return {'ok': True, 'result': value}
+              except Exception as exc:
+                  return {
+                      'ok': False,
+                      'errorType': type(exc).__name__,
+                      'error': str(exc)[:300],
+                  }
+
+          with ThreadPoolExecutor(max_workers=2) as pool:
+              frozen_future = pool.submit(invoke, 'frozen-cpu1')
+              cpu4_future = pool.submit(invoke, 'cpu4')
+              frozen = frozen_future.result()
+              cpu4 = cpu4_future.result()
+
+          summary = {
+              'schemaVersion': 1,
+              'gate': 'v143-demucs-one-shot-policy-probe',
+              'audioBlobSha': os.environ['AUDIO_BLOB_SHA'],
+              'clipSeconds': 6.0,
+              'frozen': frozen,
+              'cpu4': cpu4,
+              'exactBaselineParity': False,
+              'candidateRepeatable': None,
+              'speedup': None,
+              'promotionEligible': False,
+              'productionWorkerChanged': False,
+              'productionBridgeChanged': False,
+              'vercelChanged': False,
+              'referenceFacingAccuracyScored': False,
+              'referenceScoreCalls': 0,
+              'rawAudioRetained': False,
+              'stemBytesRetained': False,
+          }
+
+          if frozen.get('ok') and cpu4.get('ok'):
+              f = frozen['result']
+              c = cpu4['result']
+              parity = f.get('sha256') == c.get('sha256')
+              summary['exactBaselineParity'] = parity
+              fsec = float(f.get('elapsedSeconds') or 0)
+              csec = float(c.get('elapsedSeconds') or 0)
+              if csec > 0:
+                  summary['speedup'] = round(fsec / csec, 3)
+
+              # Spend the third run only when CPU4 preserves exact frozen bytes.
+              if parity:
+                  repeat = invoke('cpu4')
+                  summary['cpu4Repeat'] = repeat
+                  if repeat.get('ok'):
+                      repeatable = repeat['result'].get('sha256') == c.get('sha256')
+                      summary['candidateRepeatable'] = repeatable
+                      summary['promotionEligible'] = bool(
+                          repeatable
+                          and summary['speedup'] is not None
+                          and summary['speedup'] > 1.20
+                      )
+                  else:
+                      summary['candidateRepeatable'] = False
+
+          out = Path('debug/v143-contextual-prune/demucs-one-shot-policy-probe')
+          (out / 'summary.json').write_text(json.dumps(summary, indent=2) + '\n', encoding='utf-8')
+          print(json.dumps(summary, indent=2))
+
+          if summary['referenceScoreCalls'] != 0:
+              raise SystemExit('Unexpected reference scoring')
+          PY
+
+      - name: Preserve aggregate one-shot evidence only
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: v143-demucs-one-shot-policy-probe
+          path: debug/v143-contextual-prune/demucs-one-shot-policy-probe/summary.json
+          if-no-files-found: warn
+          retention-days: 14
