@@ -1,0 +1,68 @@
+name: Full Mixture Admitted Shadow Effect Validation V1
+
+on:
+  workflow_dispatch:
+  push:
+    branches:
+      - v143-contextual-prune-lobo
+    paths:
+      - '.github/workflows/full-mixture-admitted-shadow-effect-validation-v1.yml'
+      - 'analyzer/verify_full_mixture_admitted_shadow_effect_validation_v1.mjs'
+      - 'lib/aiTabConditioningV1.mjs'
+      - 'lib/aiTabConditionedShadowProjectionV1.mjs'
+      - 'lib/aiTabMixtureStructureContextV1.mjs'
+      - 'lib/aiTabAnalyzerMixtureObservationAdmissionV1.mjs'
+      - 'lib/aiTabDualContextShadowFusionV1.mjs'
+      - 'app/api/analyze-audio-tab/route.js'
+      - 'app/api/generate-tab-preview/route.js'
+      - 'app/api/generate-tab-pdf/route.js'
+
+permissions:
+  contents: read
+
+jobs:
+  verify-shadow-effect:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+
+    steps:
+      - name: Checkout isolated branch
+        uses: actions/checkout@v4
+        with:
+          ref: v143-contextual-prune-lobo
+
+      - name: Set up Node.js 22
+        uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+
+      - name: Verify Phase 9 T1-T12
+        env:
+          FULL_MIXTURE_ADMITTED_SHADOW_EFFECT_V1_RESULT_PATH: debug/v143-contextual-prune/full-mixture-admitted-shadow-effect-validation-v1.json
+        run: node analyzer/verify_full_mixture_admitted_shadow_effect_validation_v1.mjs
+
+      - name: Enforce safety evidence
+        run: |
+          node --input-type=module <<'NODE'
+          import { readFile } from 'node:fs/promises';
+          const data = JSON.parse(await readFile('debug/v143-contextual-prune/full-mixture-admitted-shadow-effect-validation-v1.json', 'utf8'));
+          if (data.passed !== true) throw new Error('Phase 9 shadow-effect contract failed');
+          if (Object.keys(data.tests || {}).length !== 12 || !Object.values(data.tests || {}).every((value) => value === 'PASS')) {
+            throw new Error('Phase 9 T1-T12 evidence incomplete');
+          }
+          if (data.referenceBlind !== true || data.shadowOnly !== true) throw new Error('Phase 9 must remain reference-blind and shadow-only');
+          if (data.trustedObservationEffectObserved !== true || data.deterministicShadowEffect !== true || data.instrumentAuthorityInvariant !== true) {
+            throw new Error('Phase 9 expected shadow effect/invariance evidence missing');
+          }
+          if (data.sourceEventsMutated !== false) throw new Error('Source events must remain immutable');
+          for (const key of [
+            'productAuthorityChanged', 'pdfAuthorityChanged', 'canonicalAnalyzerOutputChanged',
+            'externalAudioAssetsUsed', 'guitarSetRead', 'splitMySongRead',
+            'goatRestrictedBytesRead', 'modalInvoked', 'gpuUsed', 'mainModified',
+            'productionModified', 'productionPromotionAuthorized',
+          ]) {
+            if (data[key] !== false) throw new Error(`Safety invariant failed: ${key}`);
+          }
+          if (data.referenceScoreCalls !== 0) throw new Error('Reference score calls must remain zero');
+          console.log('PHASE 9 FULL MIXTURE ADMITTED SHADOW EFFECT T1-T12 PASSED');
+          NODE
