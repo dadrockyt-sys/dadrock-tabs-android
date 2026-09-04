@@ -1,6 +1,5 @@
 import fs from 'node:fs/promises';
 import { NextResponse } from 'next/server';
-import { createTabPdf } from '@/lib/createTabPdfPolishedV7';
 
 export const runtime = 'nodejs';
 export const dynamic = 'force-dynamic';
@@ -132,6 +131,11 @@ export async function GET() {
   }
 
   try {
+    // This route is development-only. Keep the heavy V7 PDF stack out of
+    // production/Preview function tracing by loading it only after the
+    // production guard above has passed.
+    const { createTabPdf } = await import('@/lib/createTabPdfPolishedV7');
+
     const measureGrid = JSON.parse(
       await fs.readFile(DEFAULT_GRID_PATH, 'utf8')
     );
