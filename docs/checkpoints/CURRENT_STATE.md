@@ -13,8 +13,8 @@ Branch checkpoint: `v143-contextual-prune-lobo`
 - GuitarSet V3/V4/V5 remain terminal; prospective players `00/01/03` remain sealed; prospective score calls = **0**.
 - No reference-facing score was run during merge/Production/Modal work.
 
-**Project Progress Score: 78%.**  
-**Test Score: PHASE 1–13 GREEN; PROTECTED REAL-VERCEL PREVIEW GREEN; MAIN MERGE/BUILD/DEPLOY GREEN; PRODUCTION V143 ROUTING ACTIVE; DOWNLOAD-AUTH FIX GREEN; DIRECT L4 GOMYWAY TIMES OUT AT WORKER 1200S; STAGE LOGS LOCALIZE BOTTLENECK TO FIRST DIRECT DEMUCS CPU/SINGLE-THREAD PASS; NEXT = DIAGNOSTIC-ONLY DETERMINISM/PERFORMANCE GATE BEFORE ANY EXECUTION-POLICY CHANGE; REFERENCE-FACING ACCURACY SCORE NOT RUN.**
+**Project Progress Score: 79%.**  
+**Test Score: PHASE 1–13 GREEN; PROTECTED REAL-VERCEL PREVIEW GREEN; MAIN MERGE/BUILD/DEPLOY GREEN; PRODUCTION V143 ROUTING ACTIVE; DOWNLOAD-AUTH FIX GREEN; DIRECT L4 GOMYWAY TIMES OUT AT WORKER 1200S; STAGE LOGS LOCALIZE BOTTLENECK TO FIRST DIRECT DEMUCS CPU/SINGLE-THREAD PASS; ISOLATED CPU1-vs-CPU4 STRICT HASH PERFORMANCE GATE RUNNING; REFERENCE-FACING ACCURACY SCORE NOT RUN.**
 
 ## Stable Production state
 
@@ -66,7 +66,7 @@ Branch checkpoint: `v143-contextual-prune-lobo`
 
 ## Stage localization — decisive first-stage evidence
 
-Instrumentation-only commit line added `V143_STAGE` markers around download, normalization, separator stages and request lifecycle without changing models, seeds, execution devices, thread settings, musical data flow, or reference-free flags.
+Instrumentation-only `V143_STAGE` markers were added around download, normalization, separator stages and request lifecycle without changing models, seeds, execution devices, thread settings, musical data flow, or reference-free flags.
 
 Independent live Modal stage-log scrape for the Gomyway call showed:
 
@@ -96,7 +96,34 @@ Current frozen Demucs execution policy is deliberately conservative/deterministi
 
 ### Stage-localization workflow harness bug
 
-Workflow `V143 Stage Timing Localization`, job `101091458986`, remains stuck in its collection step because its diagnostic code treats `call.logs.tail(...)` as a bounded snapshot. The tail API follows the log stream and can block before the intended 720-second loop deadline advances. This is a **diagnostic harness bug**, not analyzer evidence. Independent Modal log scraping supplied the localization above. Do not interpret the stuck GitHub job as a worker result.
+Workflow `V143 Stage Timing Localization`, job `101091458986`, used `call.logs.tail(...)` as if it were a bounded snapshot. The tail API follows the log stream and can block before the intended 720-second loop deadline advances. This is a **diagnostic harness bug**, not analyzer evidence. Independent Modal log scraping supplied the localization above. Do not interpret that GitHub job as a worker result.
+
+## Isolated Demucs CPU thread determinism/performance gate — ACTIVE
+
+Three diagnostic-only commits on `v143-contextual-prune-lobo`:
+
+- `9e5534804d794e969acc6019290f7c80581a056d` — adds `analyzer/v143_demucs_perf_probe_cli.py`;
+- `c3f0a6721c3745438d26bb9b41e232e94743f5ef` — adds isolated Modal app `dadrock-v143-demucs-perf-probe`;
+- `4e3b9d059b9d06bd1d218e0c79457b0b0975ebb7` — adds workflow `.github/workflows/v143-demucs-cpu-thread-policy-probe.yml`.
+
+Active workflow:
+
+- run **`33894887671`**;
+- job **`101095090913`**;
+- branch head at launch: `4e3b9d059b9d06bd1d218e0c79457b0b0975ebb7`;
+- setup, source/safety assertions, isolated app deploy, and public-audio verification: GREEN;
+- comparison step currently running.
+
+Gate design:
+
+- same authorized Gomyway source; ephemeral first 12-second clip;
+- same Demucs `htdemucs_6s`, Guitar-only stem, shifts `1`, overlap `0.10`, segment `6`, seed `143`;
+- same CPU-only boundary, disabled oneDNN, conservative CPU ISA, and deterministic Torch controls;
+- frozen CPU/1-thread baseline runs twice;
+- CPU/4-thread candidate runs twice;
+- only elapsed seconds + SHA-256 hashes are retained; raw clip/stems stay inside the diagnostic worker;
+- promotion requires baseline repeatability, CPU4 repeatability, **exact candidate SHA parity with baseline**, and material speedup (gate threshold >=1.25x);
+- Production worker, HTTP bridge, Vercel, model, and reference boundaries are untouched by this probe.
 
 ## Fresh-chat authorization — EXPLICIT
 
@@ -112,6 +139,7 @@ It **does not** authorize reference-facing accuracy scoring, restricted GOAT acc
 - public-audio download failure: cleared;
 - direct worker completion: TIMEOUT at 1200 execution seconds;
 - first bottleneck localized: **direct Demucs CPU/single-thread pass**;
+- isolated CPU1-vs-CPU4 gate: ACTIVE, no Production policy change;
 - Deployment Protection: preserved;
 - reference-facing score calls: 0;
 - GOAT restricted bytes: 0;
@@ -121,10 +149,10 @@ It **does not** authorize reference-facing accuracy scoring, restricted GOAT acc
 
 ## NEXT SAFE ACTION — AUTHORIZED
 
-1. Build a **diagnostic-only Demucs determinism/performance gate** using a short clip derived from the same authorized Gomyway asset; keep clip/stems ephemeral and retain only elapsed times + SHA-256 hashes.
-2. Establish the frozen CPU/single-thread baseline on that short clip, ideally twice, to prove repeatability and obtain a baseline hash/runtime.
-3. Test acceleration candidates one at a time without references or scoring, prioritizing the smallest execution-policy changes (e.g. CPU ISA/thread changes) before GPU.
-4. Require each candidate to be repeatable across two runs; prefer exact SHA parity with the frozen baseline. If hash differs, do not promote it merely because it is faster.
+1. Finish run `33894887671` and extract only its aggregate CPU1/CPU4 elapsed times, repeatability hashes, strict parity result, and promotion verdict.
+2. If CPU4 has exact baseline parity and material speedup, validate the same candidate on a longer clip before any live worker policy change.
+3. If CPU4 fails parity, do not promote it. Move to the next isolated deterministic candidate (GPU only as a later option) under the same strict repeatability/hash gate.
+4. If the four-run 12-second gate itself cannot finish within its diagnostic budget, rerun the exact policy comparison on a 6-second clip rather than increasing Production timeouts.
 5. Do **not** change Production worker execution policy, model, seed, Demucs shifts, reference boundaries, Vercel duration, or UI orchestration until a dedicated gate demonstrates deterministic/reference-free safety and material speedup.
-6. If no safe acceleration fits the worker budget, then design async orchestration only after the worker itself can finish successfully.
+6. Only after the worker itself returns successfully should async Production orchestration or Vercel duration changes be implemented.
 7. Reference-facing accuracy remains unarmed.
