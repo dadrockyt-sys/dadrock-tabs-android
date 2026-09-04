@@ -3,6 +3,7 @@ from __future__ import annotations
 import json
 import os
 import statistics
+import time
 from pathlib import Path
 
 import modal
@@ -12,10 +13,37 @@ AUDIO_URL = os.environ["AUDIO_URL"]
 AUDIO_BLOB_SHA = os.environ["AUDIO_BLOB_SHA"]
 CLIP_SECONDS = 6.0
 PROMOTION_SPEEDUP_THRESHOLD = 1.25
+COLLECTION_DEADLINE_SECONDS = 300.0
 
 
 def mean_elapsed(rows: list[dict]) -> float:
     return statistics.fmean(float(row["elapsedSeconds"]) for row in rows)
+
+
+def cancel_calls(calls: list[tuple[str, str, modal.FunctionCall]]) -> None:
+    for _, _, call in calls:
+        try:
+            call.cancel(terminate_containers=True)
+        except Exception:
+            pass
+
+
+def validate_result(label: str, policy: str, result: object) -> dict:
+    if not isinstance(result, dict):
+        raise RuntimeError(f"{label} returned a non-dict aggregate")
+    if result.get("policy") != policy:
+        raise RuntimeError(f"{label} returned unexpected policy metadata")
+    if float(result.get("clipSeconds") or 0) != CLIP_SECONDS:
+        raise RuntimeError(f"{label} returned unexpected clip duration")
+    if result.get("referenceFacingAccuracyScored") is not False:
+        raise RuntimeError(f"{label} violated reference-scoring boundary")
+    if result.get("referenceScoreCalls") != 0:
+        raise RuntimeError(f"{label} reported reference score calls")
+    if result.get("rawAudioRetained") is not False:
+        raise RuntimeError(f"{label} retained raw audio")
+    if result.get("stemBytesRetained") is not False:
+        raise RuntimeError(f"{label} retained stem bytes")
+    return result
 
 
 def main() -> None:
@@ -37,34 +65,56 @@ def main() -> None:
         for label, policy in planned
     ]
 
+    out = Path("debug/v143-contextual-prune/demucs-cpu-policy-micro-probe")
+    out.mkdir(parents=True, exist_ok=True)
+    deadline = time.monotonic() + COLLECTION_DEADLINE_SECONDS
     runs: list[dict] = []
-    for label, policy, call in calls:
-        result = call.get()
-        if not isinstance(result, dict):
-            raise RuntimeError(f"{label} returned a non-dict aggregate")
-        if result.get("policy") != policy:
-            raise RuntimeError(f"{label} returned unexpected policy metadata")
-        if float(result.get("clipSeconds") or 0) != CLIP_SECONDS:
-            raise RuntimeError(f"{label} returned unexpected clip duration")
-        if result.get("referenceFacingAccuracyScored") is not False:
-            raise RuntimeError(f"{label} violated reference-scoring boundary")
-        if result.get("referenceScoreCalls") != 0:
-            raise RuntimeError(f"{label} reported reference score calls")
-        if result.get("rawAudioRetained") is not False:
-            raise RuntimeError(f"{label} retained raw audio")
-        if result.get("stemBytesRetained") is not False:
-            raise RuntimeError(f"{label} retained stem bytes")
-        runs.append(
-            {
-                "label": label,
-                "policy": policy,
-                "functionCallId": call.object_id,
-                "elapsedSeconds": float(result["elapsedSeconds"]),
-                "wallSeconds": float(result["wallSeconds"]),
-                "sha256": str(result["sha256"]),
-                "bytes": int(result["bytes"]),
-            }
+
+    try:
+        for label, policy, call in calls:
+            remaining = deadline - time.monotonic()
+            if remaining <= 0:
+                raise TimeoutError("micro-probe collection deadline exceeded")
+            result = validate_result(label, policy, call.get(timeout=remaining))
+            runs.append(
+                {
+                    "label": label,
+                    "policy": policy,
+                    "functionCallId": call.object_id,
+                    "elapsedSeconds": float(result["elapsedSeconds"]),
+                    "wallSeconds": float(result["wallSeconds"]),
+                    "sha256": str(result["sha256"]),
+                    "bytes": int(result["bytes"]),
+                }
+            )
+    except Exception as exc:
+        cancel_calls(calls)
+        failure = {
+            "schemaVersion": 1,
+            "gate": "v143-demucs-cpu-policy-micro-probe",
+            "diagnosticSourceCommit": os.environ.get("GITHUB_SHA"),
+            "audioBlobSha": AUDIO_BLOB_SHA,
+            "clipSeconds": CLIP_SECONDS,
+            "collectionDeadlineSeconds": COLLECTION_DEADLINE_SECONDS,
+            "completed": False,
+            "terminalType": type(exc).__name__,
+            "functionCallIds": [call.object_id for _, _, call in calls],
+            "remoteCallsCancelled": True,
+            "referenceFree": True,
+            "referenceFacingAccuracyScored": False,
+            "referenceScoreCalls": 0,
+            "rawAudioRetained": False,
+            "stemBytesRetained": False,
+            "productionWorkerChanged": False,
+            "productionBridgeChanged": False,
+            "vercelChanged": False,
+        }
+        (out / "summary.json").write_text(
+            json.dumps(failure, indent=2) + "\n",
+            encoding="utf-8",
         )
+        print(json.dumps(failure, indent=2))
+        raise
 
     frozen = [row for row in runs if row["policy"] == "frozen"]
     candidate = [row for row in runs if row["policy"] == "threads4"]
@@ -87,6 +137,8 @@ def main() -> None:
         "diagnosticSourceCommit": os.environ.get("GITHUB_SHA"),
         "audioBlobSha": AUDIO_BLOB_SHA,
         "clipSeconds": CLIP_SECONDS,
+        "collectionDeadlineSeconds": COLLECTION_DEADLINE_SECONDS,
+        "completed": True,
         "model": "htdemucs_6s.yaml",
         "singleStem": "Guitar",
         "demucsShifts": 1,
@@ -117,8 +169,6 @@ def main() -> None:
         "vercelChanged": False,
     }
 
-    out = Path("debug/v143-contextual-prune/demucs-cpu-policy-micro-probe")
-    out.mkdir(parents=True, exist_ok=True)
     (out / "summary.json").write_text(
         json.dumps(summary, indent=2) + "\n",
         encoding="utf-8",
