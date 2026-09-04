@@ -1,0 +1,76 @@
+name: V143 Demucs Retained Call Inspection
+
+on:
+  push:
+    branches:
+      - v143-contextual-prune-lobo
+    paths:
+      - '.github/workflows/v143-demucs-retained-call-inspect.yml'
+
+permissions:
+  contents: read
+
+env:
+  MODAL_ENVIRONMENT: main
+  PYTHONUNBUFFERED: '1'
+
+jobs:
+  retained-call-inspection:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    env:
+      MODAL_TOKEN_ID: ${{ secrets.MODAL_TOKEN_ID }}
+      MODAL_TOKEN_SECRET: ${{ secrets.MODAL_TOKEN_SECRET }}
+
+    steps:
+      - name: Checkout diagnostic branch
+        uses: actions/checkout@v4
+
+      - name: Enforce read-only diagnostic boundary
+        shell: bash
+        run: |
+          set -euo pipefail
+          test -n "${MODAL_TOKEN_ID:-}"
+          test -n "${MODAL_TOKEN_SECRET:-}"
+          python3 -m py_compile .github/scripts/v143_demucs_retained_call_inspect.py
+          grep -q 'FunctionCall.from_id' .github/scripts/v143_demucs_retained_call_inspect.py
+          ! grep -q '\.spawn(' .github/scripts/v143_demucs_retained_call_inspect.py
+          ! grep -q '\.remote(' .github/scripts/v143_demucs_retained_call_inspect.py
+          ! grep -q 'modal deploy' .github/scripts/v143_demucs_retained_call_inspect.py
+          echo 'readOnlyInspection=true'
+          echo 'newAudioExecution=false'
+          echo 'newFunctionCallsSpawned=0'
+          echo 'productionWorkerChanged=false'
+          echo 'productionBridgeChanged=false'
+          echo 'vercelChanged=false'
+          echo 'referenceFacingAccuracyScored=false'
+          echo 'referenceScoreCalls=0'
+
+      - name: Set up Python 3.11
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Install Modal client
+        shell: bash
+        run: |
+          set -euo pipefail
+          python -m pip install --upgrade pip >/dev/null
+          python -m pip install 'modal==1.5.5' >/dev/null
+          modal token set --token-id "$MODAL_TOKEN_ID" --token-secret "$MODAL_TOKEN_SECRET" >/dev/null
+          modal --version
+
+      - name: Inspect retained function calls only
+        shell: bash
+        run: |
+          set -euo pipefail
+          python .github/scripts/v143_demucs_retained_call_inspect.py
+
+      - name: Preserve aggregate inspection evidence only
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: v143-demucs-retained-call-inspection
+          path: debug/v143-contextual-prune/demucs-retained-call-inspection/summary.json
+          if-no-files-found: warn
+          retention-days: 14
