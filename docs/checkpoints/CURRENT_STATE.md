@@ -8,114 +8,98 @@ Branch: `v143-contextual-prune-lobo`
 ## Global scientific state — unchanged
 
 - **V168 = `HOLDOUT_ASSET_MISSING / SCORING_NOT_ARMED`. V167 = CLOSED / TERMINAL.**
-- GOAT Zenodo `15690894` / DOI `10.5281/zenodo.15690894` v1 access is still awaiting explicit owner approval/denial.
+- GOAT Zenodo `15690894` / DOI `10.5281/zenodo.15690894` v1 access still awaits explicit owner approval/denial.
 - Restricted GOAT bytes admitted/read = **0**; V168 prospective reference-facing score calls = **0**.
 - SplitMySong remains terminal `FAIL_CLOSED_NO_CANDIDATE`; never rerun/score/weaken/interpolate.
-- GuitarSet V3 terminal `NO_DEVELOPMENT_SIGNAL`; V4 terminal `V4_PLAYER05_CONFIRMATION_FAIL`; V5 terminal `NO_V5_CROSS_PLAYER_DEVELOPMENT_SIGNAL`.
-- GuitarSet development hold remains frozen; no V6 threshold rescue/mining, no V3/V4/V5 reruns or retuning.
-- Prospective GuitarSet players `00/01/03` remain sealed; prospective GuitarSet score calls = **0**.
+- GuitarSet V3/V4/V5 remain terminal; development hold remains frozen; prospective players `00/01/03` remain sealed and prospective score calls = **0**.
 - CPU only. Fresh explicit authorization is required immediately before GPU/CUDA/Modal.
 - `main` / Production untouched; never modify/merge/promote without explicit user direction.
 
 **Project Progress Score: 60%.**  
-**Test Score: PHASE 1–6 REFERENCE-BLIND/SYNTHETIC CONTRACT PASS; ACCURACY SCORE NOT RUN.**
+**Test Score: PHASE 1–7 REFERENCE-BLIND/SYNTHETIC CONTRACT PASS; ACCURACY SCORE NOT RUN.**
 
 ## Phases 1–4 — COMPLETE
 
 - Phase 1 `STRUCTURE_INSTRUMENT_CONDITIONING_V1`: run `33804010524`, job `100810007255`, **SUCCESS**.
 - Phase 2 `STRUCTURE_CONDITIONED_SHADOW_PROJECTION_V1`: run `33804886663`, job `100812914077`, **SUCCESS**.
-- Phase 3 `MIXTURE_STRUCTURE_CONTEXT_V1`: run `33809372857`, job `100827364605`, **SUCCESS**; real mixture observation remains disconnected and carrier borrowing forbidden.
+- Phase 3 `MIXTURE_STRUCTURE_CONTEXT_V1`: run `33809372857`, job `100827364605`, **SUCCESS**; carrier borrowing forbidden.
 - Phase 4 `DUAL_CONTEXT_SHADOW_FUSION_V1`: run `33809867672`, job `100828947197`, **SUCCESS**; shadow only, no Product/PDF use.
 
 ## Phase 5 — `FULL_MIXTURE_AUTO_STRUCTURE_ESTIMATOR_V1` COMPLETE
 
-Pre-freeze `5ee029dff31fdd52422f70cb6e4714d2339519b5`; result `c9f8fd15f5e1094f62bb3e7056854a2f52ea8246`; run `33810847829`, job `100832069691`, **SUCCESS**; evidence bot commit `9e00d7b21ddca34d823169cddfb1c269604ca026`; evidence blob SHA `306891daa326a922bb3385f611d9310c63baca87`.
-
-A1–A12 all passed. Full-mixture waveform Auto-structure mechanics exist and remain route-disconnected.
+Pre-freeze `5ee029dff31fdd52422f70cb6e4714d2339519b5`; result `c9f8fd15f5e1094f62bb3e7056854a2f52ea8246`; run `33810847829`, job `100832069691`, **SUCCESS**. A1–A12 all passed. Full-mixture waveform structure mechanics exist without reference scoring.
 
 ## Phase 6 — `FULL_MIXTURE_WAV_ADAPTER_V1` COMPLETE
 
-Pre-freeze:
+Pre-freeze/result checkpoints:
 
-`docs/checkpoints/SONGSTERR_FULL_MIXTURE_WAV_ADAPTER_V1_PREIMPLEMENTATION_FREEZE_20260903.md`
+- `docs/checkpoints/SONGSTERR_FULL_MIXTURE_WAV_ADAPTER_V1_PREIMPLEMENTATION_FREEZE_20260903.md`;
+- `docs/checkpoints/SONGSTERR_FULL_MIXTURE_WAV_ADAPTER_V1_PHASE6_RESULT_20260903.md`.
 
-Creation commit `e10bf5e5426d031b9730b604ecb05209ed7d52aa`.
+Implementation/verifier/workflow: `c0b0bd6c44eb39d44e8dad70a3d6dae223b4ef1b`, `39287bcbc54a2e11b8a3f30929ec04c047539210`, `26ece17a97f7b0b28cc2bb6702ee377af624b0a3`. Final run `33811270987`, job `100833411365`, **SUCCESS**. W1–W10 all passed.
 
-Result:
-
-`docs/checkpoints/SONGSTERR_FULL_MIXTURE_WAV_ADAPTER_V1_PHASE6_RESULT_20260903.md`
-
-Creation commit `a1e8a18dde28958aef74f1de120f59bdeb19d782`.
-
-Status: **`PHASE6_REFERENCE_BLIND_PCM_WAV_ADAPTER_PASS / RUNTIME_DISCONNECTED / NO_ACCURACY_CLAIM / NO_REFERENCE_SCORE`**.
-
-Implementation:
-
-- `c0b0bd6c44eb39d44e8dad70a3d6dae223b4ef1b` — chunked PCM WAV adapter;
-- `39287bcbc54a2e11b8a3f30929ec04c047539210` — frozen W1–W10 verifier;
-- `26ece17a97f7b0b28cc2bb6702ee377af624b0a3` — workflow integration.
-
-Final evidence:
-
-- run `33811270987`;
-- job `100833411365`;
-- tested head `26ece17a97f7b0b28cc2bb6702ee377af624b0a3`;
-- conclusion **SUCCESS**;
-- evidence bot commit `f3becd8a8a02a738a15a28a979977f3b7e7dbdb7`;
-- evidence blob SHA `55180641e60b7bcb832c7dcbe2753c70de40d694`.
-
-W1–W10 all passed: mono/stereo 16-bit, opposite-polarity stereo, 4/4, pickup, 8/24/32-bit integer PCM, invalid admission, bounded 4000 Hz envelope and trusted full-mixture provenance.
-
-DadRock now has a real deterministic CPU byte-to-structure path:
+Frozen byte path:
 
 `normalized full-mixture PCM WAV -> chunked decode -> energy-preserving channel downmix -> bounded 4000 Hz RMS envelope -> Phase 5 waveform estimator -> trusted Phase 3-compatible observation`.
 
-No external audio/reference corpus, GuitarSet/SplitMySong/GOAT, Modal/GPU, runtime route connection, Product/PDF mutation or Production change occurred.
+## Phase 7 — `FULL_MIXTURE_ANALYZER_RUNTIME_SHADOW_WIRING_V1` COMPLETE
 
-## Phase 7 preparation — analyzer-runtime shadow wiring contract FROZEN
-
-Pre-implementation freeze:
+Pre-freeze:
 
 `docs/checkpoints/SONGSTERR_FULL_MIXTURE_ANALYZER_RUNTIME_SHADOW_WIRING_V1_PREIMPLEMENTATION_FREEZE_20260903.md`
 
-Creation commit `249c51c8953c06772111b1ce769d5235c3a893e1`.
+Freeze commit: `249c51c8953c06772111b1ce769d5235c3a893e1`.
 
-Frozen status: **`REFERENCE-BLIND CPU SHADOW WIRING AUTHORIZED / ANALYZER AUTHORITY UNCHANGED / PRODUCT TRUST NOT AUTHORIZED / MODAL DEPLOY-INVOKE NOT AUTHORIZED`**.
+Result:
 
-The contract fixes S1–S12 before implementation. Key invariants:
+`docs/checkpoints/SONGSTERR_FULL_MIXTURE_ANALYZER_RUNTIME_SHADOW_WIRING_V1_PHASE7_RESULT_20260903.md`
 
-- shadow input is only the already-normalized full-mixture PCM WAV;
-- call must occur after normalization and before separation/carrier/event-specific interpretation;
-- analyzer may append only research-only `mixtureObservation`;
-- canonical analyzer behavior remains authoritative and must not read/use the observation;
-- all shadow-only failures degrade to `mixtureObservation: null` and must not fail an otherwise-valid canonical request;
-- malformed/untrusted provenance also degrades to null;
-- `/api/analyze-audio-tab` must continue passing `mixtureObservation: null` into `buildAiTabMixtureStructureContextV1` during this phase;
-- Product/PDF trust, `main`, Production, Modal/GPU and reference-facing scoring remain untouched/unauthorized;
-- validation is static + deterministic synthetic/local CPU only.
+Result checkpoint creation commit: `c278676a7bdd2e86a074c02f6347f6ee73f0852c`.
 
-## Continuation journal — 2026-09-03
+Status: **`PHASE7_REFERENCE_BLIND_RUNTIME_SHADOW_PASS / ANALYZER_AUTHORITY_UNCHANGED / SERVER_PRODUCT_TRUST_UNCHANGED / NO_MODAL_OR_GPU / NO_REFERENCE_SCORE`**.
 
-- Verified branch `v143-contextual-prune-lobo` and resumed from this checkpoint.
-- Re-read the Phase 6 pre-freeze/result and confirmed `analyzer/full_mixture_wav_adapter_v1.py` is the frozen byte-to-observation adapter.
-- Re-read `app/api/analyze-audio-tab/route.js`; server-side Phase 3 still deliberately supplies `mixtureObservation: null` and therefore does not trust analyzer structure.
-- Frozen analyzer-runtime shadow wiring before implementation at commit `249c51c8953c06772111b1ce769d5235c3a893e1`.
-- No Product/PDF surface, server trust policy, `main`, Production, Modal/GPU, external corpus, GOAT restricted bytes, or reference-facing score has been touched in this resumed session.
+Implementation:
 
-### Phase 7 implementation continuation — 2026-09-03
+- `7581b848ed0ad19718ae2788144e6705bcb631ef` — added `analyzer/full_mixture_runtime_shadow_v1.py`, fail-open trusted-observation admission;
+- `bcdd5457e717b0909d192e4919d0a578627f7d73` — wired the shadow into `analyzer/modal_analyzer.py::analyze` after normalized full-mixture WAV creation/inspection and before canonical `analyze_audio_file(...)`, then appended only `mixtureObservation` after canonical analysis;
+- `0e8910ffab0ec795c561c9fafd2ac32b6bb5cdb4` — added S1–S12 verifier;
+- `47a6ce44fa855ada6c7af9cf685621edb9724346` — added isolated CPU-only Phase 7 workflow;
+- `81660eb91214849132f777b7e1f4df65745cda4f` — corrected an over-strict verifier assertion only; runtime code unchanged.
 
-- Reconfirmed the implementation boundary: analyzer-side research metadata only, fail-open shadow behavior, canonical analyzer authority unchanged, and `/api/analyze-audio-tab` remains at `mixtureObservation: null`.
-- Confirmed the exact branch-local runtime seam in `analyzer/modal_analyzer.py::analyze`: `normalize_audio_file(...)` creates `normalized.wav`; `inspect_audio_file(normalized.wav)` then runs; canonical `analyze_audio_file(normalized.wav, transcription_type)` follows immediately afterward.
-- Frozen Phase 7 hook position is therefore after normalized full-mixture PCM WAV creation/inspection and immediately before `analyze_audio_file(...)`. This is before Basic Pitch/event interpretation and passes only the normalized WAV path to the Phase 6 adapter.
-- Added `analyzer/full_mixture_runtime_shadow_v1.py` at commit `7581b848ed0ad19718ae2788144e6705bcb631ef`. The helper is fail-open, takes only a normalized WAV path, imports/calls the frozen Phase 6 adapter inside the fail-open boundary, and rejects non-dict or provenance/diagnostic-invalid observations.
-- Admission requires full-mixture/request-audio provenance, reference-blind/no reference runtime input, no carrier input, no separated-carrier input, and no transcribed-event input. Any missing path, import error, adapter error, malformed result, or provenance mismatch returns `None`.
-- `analyzer/modal_analyzer.py` has not yet been changed by Phase 7 at this checkpoint; the helper exists but is still runtime-disconnected.
+Successful evidence:
+
+- workflow `Full Mixture Runtime Shadow V1`;
+- run `33826597803`;
+- job `100880476202`;
+- tested head `81660eb91214849132f777b7e1f4df65745cda4f`;
+- **S1–S12 SUCCESS**;
+- safety-evidence enforcement **SUCCESS**.
+
+The first run `33826533386` failed only on an over-strict S12 verifier string-count assertion. The verifier was corrected without runtime changes and the second run passed.
+
+Phase 7 guarantees at this checkpoint:
+
+- shadow reads only the already-normalized request full-mixture PCM WAV;
+- shadow runs before Basic Pitch/event-specific interpretation;
+- adapter/helper import errors, missing/invalid WAV, unexpected exceptions, malformed results and bad provenance all fail open to `mixtureObservation: null`;
+- accepted observations must prove full-mixture/request-audio provenance, reference blindness, no reference runtime input, no carrier/separated-carrier input and no transcribed-event input;
+- canonical analyzer output/control flow never reads `mixtureObservation`;
+- `/api/analyze-audio-tab` still passes `mixtureObservation: null` into `buildAiTabMixtureStructureContextV1` and therefore does **not** trust analyzer structure;
+- Product/PDF remains isolated.
+
+Freeze-to-tested-head diff changed only:
+
+- `.github/workflows/full-mixture-runtime-shadow-v1.yml`;
+- `analyzer/full_mixture_runtime_shadow_v1.py`;
+- `analyzer/modal_analyzer.py`;
+- `analyzer/verify_full_mixture_runtime_shadow_v1.py`;
+- `docs/checkpoints/CURRENT_STATE.md`.
+
+No Product/PDF file or `app/api/analyze-audio-tab/route.js` was changed by Phase 7. Modal invoked/deployed = false; GPU used = false; external/reference corpus read = false; reference score calls = 0; `main`/Production changed = false.
 
 ## NEXT SAFE ACTION
 
-1. Wire `estimate_full_mixture_runtime_shadow_v1(normalized_path)` into `analyzer/modal_analyzer.py::analyze` at the pinned seam, wrapped so even helper-import failure is fail-open.
-2. Run canonical `analyze_audio_file(...)` independently and append only `result["mixtureObservation"] = mixture_observation`; do not read the observation anywhere else.
-3. Add static/deterministic synthetic CPU verification for S1–S12; do not deploy or invoke Modal.
-4. Keep `/api/analyze-audio-tab` Product trust unchanged (`mixtureObservation: null`) until a separate server-side admission/wiring freeze is explicitly created and authorized.
-5. Save this checkpoint after each implementation/verification milestone.
-6. Await GOAT owner approval/denial; no SplitMySong/GuitarSet work, no Modal/GPU, and no `main`/Production changes.
+1. Do **not** make `/api/analyze-audio-tab` trust analyzer-supplied `mixtureObservation` yet.
+2. Before any server/Product trust change, create and freeze a separate server-side analyzer-observation admission/wiring contract with explicit authority, fail-open, provenance, Product/PDF, rollback and validation boundaries.
+3. Await explicit authorization before implementing that server-side trust boundary; until then Phase 7 remains research metadata only.
+4. Await GOAT owner approval/denial; no SplitMySong/GuitarSet work, no Modal/GPU, no reference scoring, and no `main`/Production changes.
