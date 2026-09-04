@@ -12,11 +12,11 @@ Branch: `v143-contextual-prune-lobo`
 - Restricted GOAT bytes admitted/read = **0**; V168 prospective reference-facing score calls = **0**.
 - SplitMySong remains terminal `FAIL_CLOSED_NO_CANDIDATE`; never rerun/score/weaken/interpolate.
 - GuitarSet V3/V4/V5 remain terminal; development hold remains frozen; prospective players `00/01/03` remain sealed and prospective score calls = **0**.
-- CPU only unless freshly and specifically needed. No GPU/CUDA/Modal is needed for Phase 9.
+- CPU only unless freshly and specifically needed. No GPU/CUDA/Modal was used for Phase 9.
 - `main` / Production untouched; never modify/merge/promote without explicit user direction.
 
-**Project Progress Score: 60%.**  
-**Test Score: PHASE 1–8 REFERENCE-BLIND/SYNTHETIC CONTRACT PASS; FULL NEXT BUILD + LOCAL ROUTE SMOKE PASS; PHASE 9 FROZEN + VERIFIER/WORKFLOW IMPLEMENTED / CI VERIFICATION PENDING; ACCURACY SCORE NOT RUN.**
+**Project Progress Score: 62%.**  
+**Test Score: PHASE 1–9 REFERENCE-BLIND/SYNTHETIC CONTRACT PASS; FULL NEXT BUILD + LOCAL ROUTE SMOKE PASS; PHASE 9 EXPECTED SHADOW EFFECT OBSERVED + DETERMINISTIC + SAFETY GATE PASS; ACCURACY SCORE NOT RUN.**
 
 ## Phases 1–7 — COMPLETE
 
@@ -58,31 +58,47 @@ Final integration gate: workflow `V143 AI Tab Branch Build Gate`, run `338277319
 
 This remains **research metadata only**. `structuredPayload`, generated tab/events/render events/measure grid, Product UI and PDF authority remain independent.
 
-## Phase 9 — `FULL_MIXTURE_ADMITTED_SHADOW_EFFECT_VALIDATION_V1` IMPLEMENTED / CI VERIFICATION PENDING
+## Phase 9 — `FULL_MIXTURE_ADMITTED_SHADOW_EFFECT_VALIDATION_V1` COMPLETE
 
 Pre-implementation freeze:
 `docs/checkpoints/SONGSTERR_FULL_MIXTURE_ADMITTED_SHADOW_EFFECT_VALIDATION_V1_PREIMPLEMENTATION_FREEZE_20260903.md`
 
 Freeze commit: `eb61fa0151b3491f492804a6d29d9b0788ef762d`.
 
-Frozen status: **`SHADOW EFFECT VALIDATION AUTHORIZED / VERIFIER-ONLY PREFERRED / PRODUCT-PDF AUTHORITY UNCHANGED / SYNTHETIC REFERENCE-BLIND ONLY / NO MODAL-GPU / NO REFERENCE SCORE / MAIN+PRODUCTION UNTOUCHED`**.
+Result:
+`docs/checkpoints/SONGSTERR_FULL_MIXTURE_ADMITTED_SHADOW_EFFECT_VALIDATION_V1_PHASE9_RESULT_20260903.md`
 
-Implementation commits:
+Result checkpoint creation commit: `e7544ee962553f8a4fab44f49b30092cb676ddb5`.
 
-- `b23b1dbcf66bf44372b84ae04e3611e9228ec220` — added `analyzer/verify_full_mixture_admitted_shadow_effect_validation_v1.mjs` with frozen T1–T12 deterministic synthetic matrix;
-- `bd9fc1edee44cf5ee5f2e8fa01904e911df7788a` — added read-only CPU-only workflow `.github/workflows/full-mixture-admitted-shadow-effect-validation-v1.yml`.
+Status: **`PHASE9_ADMITTED_SHADOW_EFFECT_PASS / EXPECTED_EFFECT_OBSERVED / DETERMINISTIC / INSTRUMENT_AUTHORITY_INVARIANT / PRODUCT-PDF_AUTHORITY_UNCHANGED / NO_MODAL-GPU / NO_REFERENCE_SCORE`**.
 
-No canonical route/helper/Product/PDF implementation file was modified by Phase 9 implementation.
+Canonical implementation:
+- `b23b1dbcf66bf44372b84ae04e3611e9228ec220` — frozen T1–T12 synthetic verifier;
+- `bd9fc1edee44cf5ee5f2e8fa01904e911df7788a` — read-only CPU-only workflow.
 
-The T1–T12 verifier covers: null-observation unresolved parity; trusted complete-observation timing/measure/subdivision effect; determinism; instrument-authority invariance; source-event immutability; explicit-prior precedence; rejected-provenance rollback; malformed/invalid rollback; partial-observation boundedness; straight/triplet/Auto feel boundedness; research-only contract preservation; Product/PDF static isolation.
+Canonical evidence:
+- workflow `Full Mixture Admitted Shadow Effect Validation V1`;
+- run `33828829026`;
+- job `100887194463`;
+- tested head `bd9fc1edee44cf5ee5f2e8fa01904e911df7788a`;
+- T1–T12 **PASS**;
+- safety-evidence gate **PASS**.
 
-Safety evidence requires: referenceBlind=true; shadowOnly=true; Product/PDF/canonical authority changed=false; external/reference assets=false; GuitarSet/SplitMySong/GOAT=false; reference score calls=0; Modal=false; GPU=false; main=false; Production=false.
+Observed evidence: trusted structure observation effect=true; deterministic shadow effect=true; instrument authority invariant=true; source events mutated=false; Product authority changed=false; PDF authority changed=false; canonical analyzer output changed=false; reference score calls=0; Modal=false; GPU=false; main=false; Production=false.
+
+A concurrent duplicate verifier-only file was added at `7af40b52075a044a8d7333dfef22e38e364cba02`; it is non-authoritative for Phase 9 evidence and did not alter runtime/Product/PDF implementation.
+
+## Meaning
+
+Phase 9 proves on deterministic synthetic reference-blind fixtures that a provenance-valid admitted full-mixture observation has a real, predictable and bounded effect on the research timing/subdivision/measure projection while preserving instrument authority, explicit-prior precedence, source-event immutability and fail-open rollback.
+
+It does **not** establish real-world transcription accuracy and does **not** itself authorize Product/PDF promotion.
 
 Safety accounting remains: external/reference assets read=false; GuitarSet=false; SplitMySong=false; GOAT restricted bytes=false; reference score calls=0; Modal invoked/deployed=false; GPU=false; actual Vercel Preview deployment=false; Product/PDF authority changed=false; `main`/Production changed=false.
 
 ## NEXT SAFE ACTION
 
-1. Inspect the automatically triggered `Full Mixture Admitted Shadow Effect Validation V1` workflow.
-2. If any test fails, correct only verifier assumptions or a demonstrated research-only helper defect without weakening the freeze or expanding authority.
-3. If T1–T12 + safety evidence are green, write the dedicated Phase 9 result checkpoint and update this file with run/job/tested-head evidence.
-4. Do not deploy/invoke Modal, use GPU, read reference assets, score references, merge `main`, promote Production, or expand Product/PDF authority.
+1. Product-facing use is now the next authority boundary.
+2. Before any live Product/PDF wiring, freeze a separate Phase 10 narrow reversible Product-authority experiment with an exact baseline/control, explicit candidate scope, fail-open rollback, determinism, and clear evidence requirements.
+3. The experiment should remain local/synthetic/reference-blind first; it must not promote `main` or Production and must not invoke Modal/GPU or reference scoring.
+4. Do not make research context Product/PDF-authoritative merely because Phase 9 passed; Phase 9 is internal effect evidence, not accuracy evidence.
