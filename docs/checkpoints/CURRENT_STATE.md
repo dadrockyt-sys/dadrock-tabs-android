@@ -94,29 +94,27 @@ The contract fixes S1–S12 before implementation. Key invariants:
 - Product/PDF trust, `main`, Production, Modal/GPU and reference-facing scoring remain untouched/unauthorized;
 - validation is static + deterministic synthetic/local CPU only.
 
-**No analyzer runtime code has been changed yet by Phase 7.** The freeze commit is documentation-only.
-
 ## Continuation journal — 2026-09-03
 
 - Verified branch `v143-contextual-prune-lobo` and resumed from this checkpoint.
 - Re-read the Phase 6 pre-freeze/result and confirmed `analyzer/full_mixture_wav_adapter_v1.py` is the frozen byte-to-observation adapter.
 - Re-read `app/api/analyze-audio-tab/route.js`; server-side Phase 3 still deliberately supplies `mixtureObservation: null` and therefore does not trust analyzer structure.
 - Frozen analyzer-runtime shadow wiring before implementation at commit `249c51c8953c06772111b1ce769d5235c3a893e1`.
-- No runtime code, Product/PDF surface, server trust policy, `main`, Production, Modal/GPU, external corpus, GOAT restricted bytes, or reference-facing score has been touched in this resumed session.
+- No Product/PDF surface, server trust policy, `main`, Production, Modal/GPU, external corpus, GOAT restricted bytes, or reference-facing score has been touched in this resumed session.
 
 ### Phase 7 implementation continuation — 2026-09-03
 
-- Resumed from the frozen Phase 7 contract on branch `v143-contextual-prune-lobo`.
 - Reconfirmed the implementation boundary: analyzer-side research metadata only, fail-open shadow behavior, canonical analyzer authority unchanged, and `/api/analyze-audio-tab` remains at `mixtureObservation: null`.
 - Confirmed the exact branch-local runtime seam in `analyzer/modal_analyzer.py::analyze`: `normalize_audio_file(...)` creates `normalized.wav`; `inspect_audio_file(normalized.wav)` then runs; canonical `analyze_audio_file(normalized.wav, transcription_type)` follows immediately afterward.
 - Frozen Phase 7 hook position is therefore after normalized full-mixture PCM WAV creation/inspection and immediately before `analyze_audio_file(...)`. This is before Basic Pitch/event interpretation and passes only the normalized WAV path to the Phase 6 adapter.
-- Planned implementation remains minimal: one fail-open research helper/admission wrapper, one call at that seam, and one append-only `mixtureObservation` response field. Canonical fields/control flow must remain independent of the observation.
-- No analyzer runtime behavior has been changed yet in this continuation interval.
+- Added `analyzer/full_mixture_runtime_shadow_v1.py` at commit `7581b848ed0ad19718ae2788144e6705bcb631ef`. The helper is fail-open, takes only a normalized WAV path, imports/calls the frozen Phase 6 adapter inside the fail-open boundary, and rejects non-dict or provenance/diagnostic-invalid observations.
+- Admission requires full-mixture/request-audio provenance, reference-blind/no reference runtime input, no carrier input, no separated-carrier input, and no transcribed-event input. Any missing path, import error, adapter error, malformed result, or provenance mismatch returns `None`.
+- `analyzer/modal_analyzer.py` has not yet been changed by Phase 7 at this checkpoint; the helper exists but is still runtime-disconnected.
 
 ## NEXT SAFE ACTION
 
-1. Add the smallest fail-open Phase 7 helper/admission wrapper in `analyzer/modal_analyzer.py` around `estimate_full_mixture_structure_from_wav_v1(path)`.
-2. Call it at the pinned seam after normalized WAV inspection and before canonical `analyze_audio_file(...)`; append only `result["mixtureObservation"]` after canonical analysis is complete.
+1. Wire `estimate_full_mixture_runtime_shadow_v1(normalized_path)` into `analyzer/modal_analyzer.py::analyze` at the pinned seam, wrapped so even helper-import failure is fail-open.
+2. Run canonical `analyze_audio_file(...)` independently and append only `result["mixtureObservation"] = mixture_observation`; do not read the observation anywhere else.
 3. Add static/deterministic synthetic CPU verification for S1–S12; do not deploy or invoke Modal.
 4. Keep `/api/analyze-audio-tab` Product trust unchanged (`mixtureObservation: null`) until a separate server-side admission/wiring freeze is explicitly created and authorized.
 5. Save this checkpoint after each implementation/verification milestone.
