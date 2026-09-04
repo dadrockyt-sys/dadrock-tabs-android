@@ -12,11 +12,11 @@ Branch: `v143-contextual-prune-lobo`
 - Restricted GOAT bytes admitted/read = **0**; V168 prospective reference-facing score calls = **0**.
 - SplitMySong remains terminal `FAIL_CLOSED_NO_CANDIDATE`; never rerun/score/weaken/interpolate.
 - GuitarSet V3/V4/V5 remain terminal; development hold remains frozen; prospective players `00/01/03` remain sealed and prospective score calls = **0**.
-- CPU only unless freshly and specifically needed. No GPU/CUDA/Modal was used for Phase 9.
+- CPU only unless freshly and specifically needed. No GPU/CUDA/Modal is needed for Phase 10.
 - `main` / Production untouched; never modify/merge/promote without explicit user direction.
 
-**Project Progress Score: 62%.**  
-**Test Score: PHASE 1–9 REFERENCE-BLIND/SYNTHETIC CONTRACT PASS; FULL NEXT BUILD + LOCAL ROUTE SMOKE PASS; PHASE 9 EXPECTED SHADOW EFFECT OBSERVED + DETERMINISTIC + SAFETY GATE PASS; ACCURACY SCORE NOT RUN.**
+**Project Progress Score: 63%.**  
+**Test Score: PHASE 1–9 REFERENCE-BLIND/SYNTHETIC CONTRACT PASS; FULL NEXT BUILD + LOCAL ROUTE SMOKE PASS; PHASE 10 PRODUCT-PLACEMENT CANDIDATE EXPERIMENT FROZEN / IMPLEMENTATION PENDING; ACCURACY SCORE NOT RUN.**
 
 ## Phases 1–7 — COMPLETE
 
@@ -30,75 +30,62 @@ Branch: `v143-contextual-prune-lobo`
 
 ## Phase 8 — `FULL_MIXTURE_SERVER_OBSERVATION_ADMISSION_WIRING_V1` COMPLETE
 
-Pre-implementation freeze:
-`docs/checkpoints/SONGSTERR_FULL_MIXTURE_SERVER_OBSERVATION_ADMISSION_WIRING_V1_PREIMPLEMENTATION_FREEZE_20260903.md`
+Freeze: `docs/checkpoints/SONGSTERR_FULL_MIXTURE_SERVER_OBSERVATION_ADMISSION_WIRING_V1_PREIMPLEMENTATION_FREEZE_20260903.md`, commit `f00e1d8161c0ebdcb8713b43b02548b07d337306`.
 
-Freeze commit: `f00e1d8161c0ebdcb8713b43b02548b07d337306`.
-
-Result:
-`docs/checkpoints/SONGSTERR_FULL_MIXTURE_SERVER_OBSERVATION_ADMISSION_WIRING_V1_PHASE8_RESULT_20260903.md`
-
-Result checkpoint creation commit: `87cdd031b542a3e1cc33ae4b9ef7e5c1cd07ebe6`.
+Result: `docs/checkpoints/SONGSTERR_FULL_MIXTURE_SERVER_OBSERVATION_ADMISSION_WIRING_V1_PHASE8_RESULT_20260903.md`, result commit `87cdd031b542a3e1cc33ae4b9ef7e5c1cd07ebe6`.
 
 Status: **`PHASE8_SERVER_RESEARCH_CONTEXT_ADMISSION_PASS / FULL_BRANCH_BUILD_ROUTE_GATE_PASS / PRODUCT-PDF_AUTHORITY_UNCHANGED / NO_MODAL-GPU / NO_REFERENCE_SCORE`**.
 
-Phase 8 contract evidence: workflow `Full Mixture Server Observation Admission V1`, run `33827081887`, job `100881934408`, tested head `33e4613e3daedfd744bdcb0c54bef4583b916dea`, T1–T12 **SUCCESS**, safety evidence **SUCCESS**. Existing `AI Tab End-to-End Contract` run `33827001284` and Phase 7 runtime-shadow rerun `33827001245` also **SUCCESS**.
-
-Server guarantees remain: canonical `structuredPayload` is built before observation trust; exact null-observation research baseline is built first; only provenance-valid full-mixture/request-audio/reference-blind observations can fill unresolved research fields; rejected/invalid observation returns the exact baseline; user priors retain precedence; Product/UI/PDF/analyzer authority stays independent.
-
-## Branch build gate — COMPLETE / GREEN
-
-Maintenance commits: `d315fd3c29837ecc6fe1c2a87baeb76c6256db18`, `1cd60a689264894e700da89bcf7d7de1971b7a60`, `745899173e4dd5205cd9b9b6b820a2943bb64866`.
-
-Final integration gate: workflow `V143 AI Tab Branch Build Gate`, run `33827731955`, job `100883875983`, tested source `745899173e4dd5205cd9b9b6b820a2943bb64866`, **SUCCESS**. Analyzer verifier, Preview feature verifier, locked install, full Next.js build, built-server readiness, structured/fallback local Preview route smoke, and safety evidence all passed. Actual Vercel Preview deployment=false; Production modified=false.
-
-## Current trust boundary
-
-`normalized full-mixture WAV -> Phase 6 estimator -> analyzer-side Phase 7 mixtureObservation -> independent server Phase 8 admission -> mixtureStructureContext -> dualContextShadowProjection`
-
-This remains **research metadata only**. `structuredPayload`, generated tab/events/render events/measure grid, Product UI and PDF authority remain independent.
+Contract evidence: run `33827081887`, job `100881934408`, T1–T12 **SUCCESS**. Final branch integration gate run `33827731955`, job `100883875983`, **SUCCESS**.
 
 ## Phase 9 — `FULL_MIXTURE_ADMITTED_SHADOW_EFFECT_VALIDATION_V1` COMPLETE
 
-Pre-implementation freeze:
-`docs/checkpoints/SONGSTERR_FULL_MIXTURE_ADMITTED_SHADOW_EFFECT_VALIDATION_V1_PREIMPLEMENTATION_FREEZE_20260903.md`
+Freeze: `docs/checkpoints/SONGSTERR_FULL_MIXTURE_ADMITTED_SHADOW_EFFECT_VALIDATION_V1_PREIMPLEMENTATION_FREEZE_20260903.md`, commit `eb61fa0151b3491f492804a6d29d9b0788ef762d`.
 
-Freeze commit: `eb61fa0151b3491f492804a6d29d9b0788ef762d`.
-
-Result:
-`docs/checkpoints/SONGSTERR_FULL_MIXTURE_ADMITTED_SHADOW_EFFECT_VALIDATION_V1_PHASE9_RESULT_20260903.md`
-
-Result checkpoint creation commit: `e7544ee962553f8a4fab44f49b30092cb676ddb5`.
+Result: `docs/checkpoints/SONGSTERR_FULL_MIXTURE_ADMITTED_SHADOW_EFFECT_VALIDATION_V1_PHASE9_RESULT_20260903.md`, result commit `e7544ee962553f8a4fab44f49b30092cb676ddb5`.
 
 Status: **`PHASE9_ADMITTED_SHADOW_EFFECT_PASS / EXPECTED_EFFECT_OBSERVED / DETERMINISTIC / INSTRUMENT_AUTHORITY_INVARIANT / PRODUCT-PDF_AUTHORITY_UNCHANGED / NO_MODAL-GPU / NO_REFERENCE_SCORE`**.
 
-Canonical implementation:
-- `b23b1dbcf66bf44372b84ae04e3611e9228ec220` — frozen T1–T12 synthetic verifier;
-- `bd9fc1edee44cf5ee5f2e8fa01904e911df7788a` — read-only CPU-only workflow.
+Canonical evidence: workflow `Full Mixture Admitted Shadow Effect Validation V1`, run `33828829026`, job `100887194463`, tested head `bd9fc1edee44cf5ee5f2e8fa01904e911df7788a`; T1–T12 and safety gate **PASS**.
 
-Canonical evidence:
-- workflow `Full Mixture Admitted Shadow Effect Validation V1`;
-- run `33828829026`;
-- job `100887194463`;
-- tested head `bd9fc1edee44cf5ee5f2e8fa01904e911df7788a`;
-- T1–T12 **PASS**;
-- safety-evidence gate **PASS**.
+Phase 9 proves the admitted structure signal has a real predictable bounded effect on research timing/subdivision/measure projection. It does not establish real-world accuracy or Product/PDF promotion evidence by itself.
 
-Observed evidence: trusted structure observation effect=true; deterministic shadow effect=true; instrument authority invariant=true; source events mutated=false; Product authority changed=false; PDF authority changed=false; canonical analyzer output changed=false; reference score calls=0; Modal=false; GPU=false; main=false; Production=false.
+A concurrent duplicate verifier-only file exists at `7af40b52075a044a8d7333dfef22e38e364cba02`; it is non-authoritative and does not alter runtime/Product/PDF implementation.
 
-A concurrent duplicate verifier-only file was added at `7af40b52075a044a8d7333dfef22e38e364cba02`; it is non-authoritative for Phase 9 evidence and did not alter runtime/Product/PDF implementation.
+## Current live trust boundary
 
-## Meaning
+`normalized full-mixture WAV -> Phase 6 estimator -> Phase 7 analyzer mixtureObservation -> Phase 8 independent server admission -> mixtureStructureContext -> Phase 4/9 dualContextShadowProjection`
 
-Phase 9 proves on deterministic synthetic reference-blind fixtures that a provenance-valid admitted full-mixture observation has a real, predictable and bounded effect on the research timing/subdivision/measure projection while preserving instrument authority, explicit-prior precedence, source-event immutability and fail-open rollback.
+This remains **research metadata only**. Canonical `structuredPayload`, generated tab/events/render events/measure grid, Product UI and PDF authority remain independent.
 
-It does **not** establish real-world transcription accuracy and does **not** itself authorize Product/PDF promotion.
+## Phase 10 — `FULL_MIXTURE_PRODUCT_PLACEMENT_CANDIDATE_VALIDATION_V1` FROZEN / ACTIVE
 
-Safety accounting remains: external/reference assets read=false; GuitarSet=false; SplitMySong=false; GOAT restricted bytes=false; reference score calls=0; Modal invoked/deployed=false; GPU=false; actual Vercel Preview deployment=false; Product/PDF authority changed=false; `main`/Production changed=false.
+The user explicitly authorized running the Product-authority experiment in this continuation.
+
+Pre-implementation freeze:
+`docs/checkpoints/SONGSTERR_FULL_MIXTURE_PRODUCT_PLACEMENT_CANDIDATE_VALIDATION_V1_PREIMPLEMENTATION_FREEZE_20260903.md`
+
+Freeze commit: `697996069faa1a9167983357d1b94dada7c827fe`.
+
+Frozen status: **`PRODUCT-AUTHORITY EXPERIMENT AUTHORIZED / EXPERIMENT-ONLY PLACEMENT CANDIDATE / LIVE PRODUCT-PDF WIRING NOT AUTHORIZED / CPU SYNTHETIC REFERENCE-BLIND ONLY / NO MODAL-GPU / NO REFERENCE SCORE / MAIN+PRODUCTION UNTOUCHED`**.
+
+Frozen candidate scope:
+- experiment-only; canonical baseline must remain immutable;
+- V143 runtime safety must already be verified;
+- never override existing authenticated `renderEvents`;
+- placement-only authority: may propose `measure` + `step` only while preserving canonical `eventIndex/stringIndex/fret/midi` exactly;
+- initial candidate scope is complete trusted straight 4/4, pickup 0 only, because the existing V143 Product contract uses 16 steps per measure;
+- incomplete/Auto/triplet/non-4/4/pickup/bad-provenance/mismatch inputs fail open to no candidate;
+- existing Product validator must accept every candidate row without compaction;
+- no live route, canonical payload builder, Product UI, Preview/PDF implementation or analyzer implementation may consume the candidate in Phase 10.
+
+Frozen P1–P12 cover baseline immutability, known synthetic truth, Product-contract compatibility, placement-only authority, determinism, authenticated-render-event precedence, provenance rollback, structure-scope rollback, event-integrity rollback, explicit-prior precedence, live Product/PDF isolation, and safety accounting.
+
+Safety accounting remains: external/reference assets read=false; GuitarSet=false; SplitMySong=false; GOAT restricted bytes=false; reference score calls=0; Modal invoked/deployed=false; GPU=false; Vercel Preview deployment=false; live Product/PDF authority changed=false; `main`/Production changed=false.
 
 ## NEXT SAFE ACTION
 
-1. Product-facing use is now the next authority boundary.
-2. Before any live Product/PDF wiring, freeze a separate Phase 10 narrow reversible Product-authority experiment with an exact baseline/control, explicit candidate scope, fail-open rollback, determinism, and clear evidence requirements.
-3. The experiment should remain local/synthetic/reference-blind first; it must not promote `main` or Production and must not invoke Modal/GPU or reference scoring.
-4. Do not make research context Product/PDF-authoritative merely because Phase 9 passed; Phase 9 is internal effect evidence, not accuracy evidence.
+1. Implement the Phase 10 experiment-only placement candidate helper/verifier under `analyzer/` only.
+2. Add an isolated CPU-only read-only workflow and run P1–P12 against deterministic known-truth synthetic fixtures.
+3. If green, write the dedicated Phase 10 result checkpoint with synthetic placement metrics and preserve the live Product/PDF boundary.
+4. Do not wire the candidate into runtime/Product/PDF merely because the experiment passes; any live promotion requires a later separate contract.
