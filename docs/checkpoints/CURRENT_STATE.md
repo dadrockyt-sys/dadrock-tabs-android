@@ -14,7 +14,7 @@ Branch checkpoint: `v143-contextual-prune-lobo`
 - No reference-facing accuracy scoring has been run during Production/Modal performance work.
 
 **Project Progress Score: 79%.**  
-**Test Score: PHASE 1–13 GREEN; PROTECTED REAL-VERCEL PREVIEW GREEN; MAIN MERGE/BUILD/DEPLOY GREEN; PRODUCTION V143 ROUTING ACTIVE; DOWNLOAD-AUTH FIX GREEN; FULL GOMYWAY WORKER TIMES OUT AT 1200S; 725.802S STAGE GATE LOCALIZES BOTTLENECK TO FIRST DIRECT DEMUCS CPU/SINGLE-THREAD PASS; ORIGINAL 12S SEQUENTIAL CPU1-vs-CPU4 GATE CANCELLED; CONCURRENT 6S MICRO-PROBE CONFOUNDED BY EXTERNAL APP STOP; RETAINED-CALL INSPECTION GREEN WITH NO RECOVERABLE AGGREGATE; SINGLE 6S FROZEN BASELINE CLEANLY TIMES OUT AT 300S WITH CANCEL/CLEANUP GREEN; CPU THREAD-COUNT TWEAK PATH CLOSED; HISTORICAL ONEDNN-OFF EXACT HASH ANCHOR RECOVERED; EXPLICIT `cpu=1.0` NO-GPU FULL-FIXTURE EXACT-ANCHOR GATE RUN 33914759546 ARMED; REFERENCE-FACING ACCURACY SCORE NOT RUN.**
+**Test Score: PHASE 1–13 GREEN; PROTECTED REAL-VERCEL PREVIEW GREEN; MAIN MERGE/BUILD/DEPLOY GREEN; PRODUCTION V143 ROUTING ACTIVE; DOWNLOAD-AUTH FIX GREEN; FULL GOMYWAY WORKER TIMES OUT AT 1200S; 725.802S STAGE GATE LOCALIZES BOTTLENECK TO FIRST DIRECT DEMUCS CPU/SINGLE-THREAD PASS; ORIGINAL 12S SEQUENTIAL CPU1-vs-CPU4 GATE CANCELLED; CONCURRENT 6S MICRO-PROBE CONFOUNDED BY EXTERNAL APP STOP; RETAINED-CALL INSPECTION GREEN WITH NO RECOVERABLE AGGREGATE; SINGLE 6S FROZEN BASELINE CLEANLY TIMES OUT AT 300S WITH CANCEL/CLEANUP GREEN; CPU THREAD-COUNT TWEAK PATH CLOSED; HISTORICAL ONEDNN-OFF EXACT HASH ANCHOR RECOVERED WITH 10:23 SEPARATION TIME; EXPLICIT `cpu=1.0` NO-GPU FULL-FIXTURE EXACT-ANCHOR GATE RUN 33914759546 ACTIVE; REFERENCE-FACING ACCURACY SCORE NOT RUN.**
 
 ## Stable Production state
 
@@ -109,22 +109,29 @@ This failure is not confounded by an external stop. The existing frozen CPU/sing
 
 Repository history contains a successful oneDNN-off CPU-only V143 host probe on the approved `public/gomywayfullaitest.m4a` fixture:
 
+- historical workflow run **`32692461330`**, job **`97328477497`**, SUCCESS;
 - historical result commit **`34471c7cdd061dbbc5ed807ba473bb2e156bc5f8`**;
 - source SHA256 **`215bd5a657c5326f08f132ae358595a95c30b39bb7493a52c2f910d5a608149f`**;
 - normalized WAV SHA256 **`ab64e7cdd8a792aecfb6eec518577d8d7e9d2f8aa43007e632470d9fe4511e7f`**;
 - oneDNN-off direct Guitar SHA256 **`0ac47da671df6f8387c1ad1343171de0cf7a0db6985dadf3f30e4a9c7cf0189c`**;
 - decoded PCM-int16 SHA256 **`2c22f04014c0f5c9c0c036125c3d702c8b87a9f67358e0dd0d3836c39c936bed`**;
-- expected deterministic shift trace `0,22050,6026`.
+- expected deterministic shift trace `0,22050,6026`;
+- fixture duration reported by separator: **211.44 seconds**;
+- historical Demucs separation duration: **10:23** (about 623 seconds);
+- historical one-probe workflow span: `05:08:27Z` to `05:19:50Z`; the actual Modal probe command ran about `05:08:45Z` to `05:19:34Z`;
+- child runtime: PyTorch **`2.13.0+cu130`**, oneDNN disabled, CPU capability DEFAULT, intra/inter-op threads both 1, no CUDA available/requested.
 
 Compatibility checks before using this as a fail-closed candidate anchor:
 
 - `analyzer/v143_production_separator.py` current blob **`05ae1978fa02f8c84ccc1e44547fc4e4cea9798b`**, exactly identical to the historical probe version;
 - `analyzer/v143_seeded_audio_separator_cli.py` current blob **`645f324c207d67b32c6d279657805ff8f25c3aa0`**, exactly identical to the oneDNN-off probe version;
-- `analyzer/v143_ai_tab_gpu_worker.py` current blob **`e7cdddfbf9e55e46be8397224b11133e7636ebb6`**, exactly identical image/dependency definition (`audio-separator[gpu]==0.44.5`);
+- `analyzer/v143_ai_tab_gpu_worker.py` current blob **`e7cdddfbf9e55e46be8397224b11133e7636ebb6`**, exactly identical image/dependency definition (`audio-separator[gpu]==0.44.5`); this dependency resolved PyTorch 2.13.0+cu130 in the historical run;
 - current seeded wrapper retains the same oneDNN-off/single-thread deterministic controls; its later changes add aggregate stage timing markers, not separator math;
 - the historical oneDNN-off hash was recorded once, not cross-host repeated, so it is treated as a **strict candidate anchor**: fresh mismatch fails closed rather than being explained away.
 
-No restricted reference was read or scored to recover this anchor.
+Historical pre-oneDNN-disable CPU baseline evidence is not the parity target: at least one oneDNN-enabled baseline produced different Guitar/PCM hashes (`a58e260f...` / `551e22e1...`), reinforcing that the oneDNN-off anchor must remain exact and must not be substituted with the earlier baseline identity.
+
+No restricted reference was read or scored to recover this anchor or timing.
 
 ## Explicit `cpu=1.0` exact-anchor structural gate — ARMED / RUNNING
 
@@ -135,7 +142,7 @@ No restricted reference was read or scored to recover this anchor.
 - Modal function explicitly requests **`cpu=1.0`**, memory 8192, **no GPU**;
 - Demucs child remains one-thread, oneDNN-disabled, `ATEN_CPU_CAPABILITY=default`, `MKL_CBWR=COMPATIBLE`, seed 143, shifts=1, overlap=.10, segment=6, Guitar only;
 - full approved reference-free fixture is used because it has the historical exact-output anchor;
-- hard client collection deadline **900 seconds**;
+- hard client collection deadline **900 seconds**, deliberately above the recovered historical ~623-second separation time;
 - failure/timeout triggers `call.cancel(terminate_containers=True)`;
 - exact Guitar + decoded PCM + normalized-input + shift-trace parity required;
 - runtime controls are validated from the child trace;
@@ -163,7 +170,7 @@ It **does not** authorize reference-facing accuracy scoring, restricted GOAT acc
 ## NEXT SAFE ACTION — AUTHORIZED
 
 1. Read terminal result/artifact for run `33914759546` and confirm isolated-app cleanup.
-2. If explicit `cpu=1.0` completes and reproduces both historical exact hashes, record its wall time as the current trustworthy CPU structural anchor.
+2. If explicit `cpu=1.0` completes and reproduces both historical exact hashes, record its wall time as the current trustworthy CPU structural anchor and compare it with the recovered historical ~623-second separation baseline.
 3. Do **not** reopen CPU thread-count tuning.
 4. If explicit CPU allocation is still materially too slow for the product pipeline, evaluate GPU Demucs only in an isolated reference-free deterministic diagnostic, with this exact CPU output identity retained as the fail-closed anchor; do not weaken identity criteria to force promotion.
 5. Do not change Production model, seed, shifts, reference boundaries, Vercel duration, or UI orchestration until a dedicated deterministic/reference-free structural gate demonstrates material speedup and output safety.
