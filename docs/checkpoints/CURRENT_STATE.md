@@ -16,7 +16,7 @@ Branch: `v143-contextual-prune-lobo`
 - `main` and Vercel Production remain untouched.
 
 **Project Progress Score: 74%.**  
-**Test Score: PHASE 1–13 GREEN; EXACT-BRANCH VERCEL PREVIEW IS NOW READY ON THE AUTHORIZED BRANCH/SHA; PROTECTED PREVIEW ROUTE SMOKE STILL TO BE COMPLETED; REFERENCE-FACING ACCURACY SCORE NOT RUN.**
+**Test Score: PHASE 1–13 GREEN; EXACT-BRANCH VERCEL PREVIEW READY; PROTECTED REAL-VERCEL ROUTE SMOKE IN PROGRESS; REFERENCE-FACING ACCURACY SCORE NOT RUN.**
 
 ## Phases 1–11 — COMPLETE
 
@@ -28,134 +28,57 @@ Branch: `v143-contextual-prune-lobo`
 
 ## Phase 12 — CANONICAL PRODUCT/PDF PLACEMENT PROMOTION CLOSED GREEN
 
-Canonical workflow:
-- run `33831663771`;
-- job `100895770003`;
-- tested head `fdd54716641d2df73e5794cd3abadf06e78da208`;
-- **SUCCESS**;
-- R1–R16 = 16/16 PASS;
-- matrix = 12/12 PASS;
-- structured renderer = `v143-structured-rhythm`;
-- structured PDF bytes = **1,665,393**;
-- deterministic promotion = **0 -> 7**;
-- exact known-truth placement = **7/7**.
+Canonical workflow run `33831663771`, job `100895770003`, tested head `fdd54716641d2df73e5794cd3abadf06e78da208`, **SUCCESS**. R1–R16 = 16/16 PASS; matrix = 12/12 PASS; renderer = `v143-structured-rhythm`; structured PDF bytes = **1,665,393**; deterministic promotion = **0 -> 7**; exact known-truth placement = **7/7**.
 
 Result: `docs/checkpoints/SONGSTERR_FULL_MIXTURE_PRODUCT_PLACEMENT_CANONICAL_PROMOTION_V1_PHASE12_RESULT_20260903.md`.
 
 ## Phase 13 — BUILT-NEXT CANONICAL PROMOTION HTTP GATE CLOSED GREEN
 
-Authoritative workflow:
-- run `33833707924`;
-- job `100901804298`;
-- tested head `ed776202b60ee410beb455db16ee820e260ff17b`;
-- **SUCCESS**;
-- analyzer-quality verifier PASS;
-- Preview feature verifier PASS;
-- locked install PASS;
-- full Next build PASS, 95/95 static pages;
-- built server readiness PASS;
-- existing route smoke PASS;
-- analysis -> canonical promotion -> Product/PDF HTTP PASS;
-- final safety enforcement PASS.
+Authoritative run `33833707924`, job `100901804298`, tested head `ed776202b60ee410beb455db16ee820e260ff17b`, **SUCCESS**. Full Next build 95/95 static pages; analysis HTTP 200; Rhythm canary active; canonical promotion `PROMOTED_PLACEMENT_ONLY`; placement **0 -> 7**; exact **7/7**; Product/PDF HTTP 200; feature `v143-branch-preview-canary`; renderer `v143-structured-rhythm`; PDF bytes **1,665,404**; malformed analysis fails closed 400.
 
-Canonical HTTP proof:
-- analysis status **200**;
-- Rhythm canary active = true;
-- promotion = `PROMOTED_PLACEMENT_ONLY`;
-- canonical placement **0 -> 7**;
-- exact known-truth placement **7/7**;
-- canonical generated tab unchanged = true;
-- Product/PDF status **200**;
-- feature = `v143-branch-preview-canary`;
-- renderer = `v143-structured-rhythm`;
-- structured PDF bytes = **1,665,404**;
-- malformed analysis request fails closed with **400**.
+Result: `docs/checkpoints/SONGSTERR_V143_BUILT_NEXT_CANONICAL_PROMOTION_HTTP_GATE_PHASE13_RESULT_20260903.md`.
 
-Result: `docs/checkpoints/SONGSTERR_V143_BUILT_NEXT_CANONICAL_PROMOTION_HTTP_GATE_PHASE13_RESULT_20260903.md`.  
-Result checkpoint commit: `977c6113521e4942a57d047ccbb1e962bf7b7e2d`.
+## Exact-branch Vercel Preview — READY
 
-## Exact-branch Vercel Preview — AUTHORIZED / READY
+User authorization remains Preview-only for `v143-contextual-prune-lobo`; Production and `main` remain outside scope.
 
-Authorization freeze:
-`docs/checkpoints/SONGSTERR_V143_EXACT_BRANCH_VERCEL_PREVIEW_AUTHORIZATION_FREEZE_20260903.md`.
-
-User authorized Preview-only deployment/validation for `v143-contextual-prune-lobo`. Production and `main` remain outside scope.
-
-### Preview deployment mechanism
-
-- `.github/workflows/v143-exact-branch-vercel-preview.yml`;
-- branch restricted to `v143-contextual-prune-lobo`;
-- exact SHA checkout/assertion;
-- repository secret `VERCEL_TOKEN` configured by user without exposing it in chat/source;
-- pinned Vercel CLI `59.11.2`;
-- `vercel pull --environment=preview`;
-- `vercel build`;
-- `vercel deploy --prebuilt` only;
-- no `--prod` or promotion path.
-
-### Earlier packaging failures — resolved
-
-Attempt at `fef8f257cca86a292f12566282c616e31b83fdf4` reached Vercel but failed because `/api/debug/v7-polished-proof` traced to **424.34 MB** > Vercel 250 MB function limit.
-
-A narrow dynamic-import fix moved the failure to the real `/api/generate-tab-pdf` function (**426.03 MB**), proving the remaining issue was branch research-asset trace pollution rather than Phase 12/13 promotion logic.
-
-Subsequent route-specific output-tracing isolation excluded non-runtime research assets from PDF function traces while preserving the actual DadRock PDF logo/runtime dependency. No Product/PDF behavior, transcription logic, `main`, or Production authority was changed.
-
-### Canonical READY Preview
-
-Deployed application source:
-- branch: `v143-contextual-prune-lobo`;
+Canonical deployed application source:
 - exact deployed SHA: **`df3042180e57df1031a2a529961388a6419d1bc5`**;
-- commit message: `preview: isolate PDF traces from public research tree`.
+- workflow run **`33836754320`**, job **`100910747161`**;
+- deployment ID **`dpl_HEQHX2nfFhYJzsMMEsAa8ePhcQpX`**;
+- hostname `dadrock-tabs-android-a45v6ibzb-stephen-mcnally-s-projects.vercel.app`;
+- state / readyState **READY**;
+- target `null` = Preview/non-Production;
+- Vercel Git branch `v143-contextual-prune-lobo`;
+- Vercel Git SHA `df3042180e57df1031a2a529961388a6419d1bc5`;
+- Production target/promotion **not used**.
 
-Note: later commits that only update `docs/checkpoints/CURRENT_STATE.md` may make the Git branch head newer than this deployed application SHA. A fresh chat must re-fetch the branch and inspect any newer commits rather than assuming the branch head should equal `df304218...`.
+The later branch head at continuation start was `5cf7218f222d4f38423d6af2b559646d20d7fe18`. A compare from `df304218...` to that head showed **2 commits ahead and only `docs/checkpoints/CURRENT_STATE.md` changed**. Therefore no runtime/config/workflow drift invalidated the canonical READY deployment.
 
-GitHub Actions Preview workflow:
-- workflow: `V143 Exact Branch Vercel Preview`;
-- run: **`33836754320`**;
-- job: **`100910747161`** (`deploy-preview`);
-- event: push;
-- deployed/tested head SHA: `df3042180e57df1031a2a529961388a6419d1bc5`;
-- run conclusion: **SUCCESS**;
-- job conclusion: **SUCCESS**.
+## Protected real-Vercel Preview smoke — continuation state
 
-Every deployment step passed:
-1. exact authorized checkout — PASS;
-2. branch/SHA/Preview-only authority guard — PASS;
-3. Node setup — PASS;
-4. pinned Vercel CLI install — PASS;
-5. Preview project configuration pull — PASS;
-6. exact branch Preview build — PASS;
-7. exact prebuilt artifact Preview deployment — PASS;
-8. wait + Vercel deployment inspect — PASS;
-9. exact-SHA evidence record — PASS;
-10. evidence preservation — PASS.
+Direct connector fetches to the protected Preview return **302** to Vercel SSO. A temporary `_vercel_share` URL is generated successfully, but the available fetch path does not retain the SSO cookie; this is a tooling/auth-cookie limitation, not an application-route failure.
 
-Vercel deployment:
-- deployment ID: **`dpl_HEQHX2nfFhYJzsMMEsAa8ePhcQpX`**;
-- hostname: `dadrock-tabs-android-a45v6ibzb-stephen-mcnally-s-projects.vercel.app`;
-- state / readyState: **READY**;
-- target: `null` = Preview/non-Production deployment;
-- source: CLI;
-- project: `dadrock-tabs-android`;
-- framework: Next.js;
-- region: `iad1`;
-- Vercel Git metadata branch: `v143-contextual-prune-lobo`;
-- Vercel Git metadata SHA: `df3042180e57df1031a2a529961388a6419d1bc5`;
-- explicit `dadrockBranch` metadata matches;
-- explicit `dadrockCommit` metadata matches;
-- aliases: none;
-- Production target/promotion: **not used**.
+Current Vercel documentation confirms `vercel curl` can issue requests to a specific Preview deployment and automatically handle deployment-protection bypass when authenticated with the existing `VERCEL_TOKEN`.
 
-### Protected-route verification status
+### Frozen implementation plan
 
-A direct connector fetch of the READY Preview `/ai-tab` endpoint returned **302** to Vercel SSO because Preview Deployment Protection is active. This is expected protection behavior and is **not** an application-route failure.
+Extend only `.github/workflows/v143-exact-branch-vercel-preview.yml` on this authorized branch to add an authenticated **Preview-only** post-deploy smoke using pinned Vercel CLI `59.11.2` and the already-configured repository secret `VERCEL_TOKEN`.
 
-Vercel authenticated-share access was generated, but this connector request path still redirected through the SSO cookie flow, so the actual protected `/ai-tab` page and protected Product/PDF HTTP route have **not yet been accepted as externally smoke-tested on the real Vercel Preview**.
+The smoke must:
+1. preserve exact branch/SHA guards and `--prebuilt` Preview-only deployment;
+2. use `vercel curl ... --deployment "$VERCEL_PREVIEW_URL"` rather than disabling protection;
+3. verify `/ai-tab` returns 200 through authenticated protection bypass;
+4. POST a deterministic, reference-blind structured Rhythm fixture directly to `/api/generate-tab-preview` (safe equivalent to the Phase 13 canonical Product/PDF payload; no external/reference audio and no analyzer invocation required);
+5. verify HTTP 200, `application/pdf`, `%PDF`, nontrivial byte count, feature `v143-branch-preview-canary`, renderer `v143-structured-rhythm`;
+6. verify malformed `/api/analyze-audio-tab` fails closed with 400 before analyzer invocation;
+7. optionally preserve a fallback Product/PDF check if it remains deterministic and reference-blind;
+8. write/upload exact smoke evidence with branch, SHA, deployment URL/ID if available, statuses, headers, PDF bytes, and all safety counters;
+9. never use `--prod`, aliases, promotion, Production mutation, `main`, GOAT/GuitarSet/SplitMySong, restricted/reference audio, Modal, GPU, CUDA, or reference scoring.
 
-The equivalent compiled local built-Next path remains green from Phase 13.
+Changing the Preview workflow file will create a newer exact branch SHA and will intentionally trigger both the exact-branch Preview workflow and the normal branch build gate. Any new Preview deployment remains non-Production and must be verified against that exact new SHA.
 
-## Safety accounting through current checkpoint
+## Safety accounting through this checkpoint
 
 - exact branch/SHA Vercel Preview deployment READY = true;
 - Vercel Production deployment created/modified by this work = false;
@@ -170,20 +93,12 @@ The equivalent compiled local built-Next path remains green from Phase 13.
 - Modal invoked/deployed = false;
 - GPU/CUDA = false.
 
-## NEXT SAFE ACTION — FRESH CHAT HANDOFF
+## NEXT SAFE ACTION
 
-1. Re-read this file and re-fetch the current `v143-contextual-prune-lobo` branch head before making changes. The canonical READY Preview is tied to application SHA `df3042180e57df1031a2a529961388a6419d1bc5`; newer **checkpoint-only** commits do not invalidate that deployment, but any newer runtime/config/workflow changes must be inspected and, if relevant, redeployed/tested.
-2. Treat deployment `dpl_HEQHX2nfFhYJzsMMEsAa8ePhcQpX` as the canonical exact-branch READY Preview for this checkpoint.
-3. Complete **protected real-Vercel Preview smoke validation** without changing Production:
-   - access the Preview through an authenticated Vercel session/share mechanism that can retain the SSO cookie;
-   - verify `/ai-tab` loads successfully;
-   - verify the Preview branch feature is active;
-   - exercise a deterministic/reference-blind analysis fixture or safe equivalent through the real Preview route;
-   - verify promoted canonical `renderEvents` reach the real Preview Product/PDF route;
-   - verify structured renderer `v143-structured-rhythm` and nontrivial PDF bytes;
-   - do not use restricted/reference audio, GOAT, GuitarSet, SplitMySong, Modal, GPU, CUDA, or reference scoring.
-4. Inspect Vercel Preview runtime logs during/after that smoke for 4xx/5xx/function errors attributable to `/ai-tab`, `/api/analyze-audio-tab`, `/api/generate-tab-preview`, or `/api/generate-tab-pdf`.
-5. If the real Preview smoke is green, create a dedicated exact-branch Vercel Preview result checkpoint under `docs/checkpoints/` and update this file with the exact deployment/run/job/route/PDF evidence.
-6. If the Preview smoke exposes a branch-only defect, patch only the attributable Preview/runtime issue, rerun both the normal branch build gate and exact-SHA Preview workflow on the same new head, and re-test.
-7. **Do not merge to `main`, assign Production aliases, use `--prod`, or promote/deploy Vercel Production without fresh explicit user authorization.**
-8. No reference-facing accuracy score until a lawful holdout exists; GOAT owner approval remains pending; terminal SplitMySong/GuitarSet phases remain closed.
+1. Patch `.github/workflows/v143-exact-branch-vercel-preview.yml` with the authenticated `vercel curl` smoke above.
+2. Let the branch-scoped push triggers run; inspect the exact new Preview run and the normal branch build gate.
+3. Read preserved smoke evidence and Vercel Preview runtime logs for `/ai-tab`, `/api/analyze-audio-tab`, and `/api/generate-tab-preview`.
+4. If green, create a dedicated exact-branch protected Preview result checkpoint and update this file with exact run/job/deployment/route/PDF evidence.
+5. If a branch-only defect appears, patch only the attributable Preview/runtime issue and re-run on the exact new head.
+6. **Do not merge to `main`, assign Production aliases, use `--prod`, or promote/deploy Vercel Production without fresh explicit user authorization.**
+7. No reference-facing accuracy score until a lawful holdout exists; GOAT owner approval remains pending; terminal SplitMySong/GuitarSet phases remain closed.
