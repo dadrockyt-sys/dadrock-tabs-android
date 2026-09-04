@@ -8,6 +8,7 @@ on:
     paths:
       - '.github/workflows/v143-exact-branch-vercel-preview.yml'
       - 'vercel.json'
+      - 'next.config.js'
       - 'app/api/debug/v7-polished-proof/**'
 
 concurrency:
