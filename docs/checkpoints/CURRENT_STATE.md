@@ -14,7 +14,7 @@ Branch checkpoint: `v143-contextual-prune-lobo`
 - No reference-facing score was run during merge/Production/Modal work.
 
 **Project Progress Score: 79%.**  
-**Test Score: PHASE 1–13 GREEN; PROTECTED REAL-VERCEL PREVIEW GREEN; MAIN MERGE/BUILD/DEPLOY GREEN; PRODUCTION V143 ROUTING ACTIVE; DOWNLOAD-AUTH FIX GREEN; DIRECT L4 GOMYWAY TIMES OUT AT WORKER 1200S; STAGE LOGS LOCALIZE BOTTLENECK TO FIRST DIRECT DEMUCS CPU/SINGLE-THREAD PASS; ISOLATED CPU1-vs-CPU4 STRICT HASH PERFORMANCE GATE RUNNING; REFERENCE-FACING ACCURACY SCORE NOT RUN.**
+**Test Score: PHASE 1–13 GREEN; PROTECTED REAL-VERCEL PREVIEW GREEN; MAIN MERGE/BUILD/DEPLOY GREEN; PRODUCTION V143 ROUTING ACTIVE; DOWNLOAD-AUTH FIX GREEN; DIRECT L4 GOMYWAY TIMES OUT AT WORKER 1200S; 725.802S STAGE GATE LOCALIZES BOTTLENECK TO FIRST DIRECT DEMUCS CPU/SINGLE-THREAD PASS; ISOLATED CPU1-vs-CPU4 STRICT HASH PERFORMANCE GATE RUNNING; REFERENCE-FACING ACCURACY SCORE NOT RUN.**
 
 ## Stable Production state
 
@@ -64,24 +64,41 @@ Branch checkpoint: `v143-contextual-prune-lobo`
 
 **Conclusion:** Vercel’s 150-second limit is not the root problem. The worker itself does not finish within 20 execution minutes, so merely raising Vercel duration or adding async polling would not yet make the pipeline successful.
 
-## Stage localization — decisive first-stage evidence
+## Stage localization — TERMINAL / decisive first-stage evidence
 
 Instrumentation-only `V143_STAGE` markers were added around download, normalization, separator stages and request lifecycle without changing models, seeds, execution devices, thread settings, musical data flow, or reference-free flags.
 
-Independent live Modal stage-log scrape for the Gomyway call showed:
+Workflow `V143 Stage Timing Localization`:
+
+- source commit `ba937b01dd71fe828b4fecb3a7c067481177dc6d`;
+- run **`33893769468`**, job **`101091458986`**: SUCCESS as a bounded diagnostic;
+- function call `fc-01M1PK37V22D6NPP741GEJDT6Y`;
+- diagnostic wall time: **725.802 seconds**;
+- terminal type: `diagnostic-window-ended`;
+- `completedWithinDiagnosticWindow=false`;
+- aggregate artifact `v143-stage-timing-localize`, id **`9945355282`**;
+- execution policy changed: false;
+- reference-facing score calls: 0;
+- raw transcription retained: false.
+
+Final markers included:
 
 ```text
-request.start                         ~0.012 s
-download.start                        ~0.013 s
-download.done                         ~0.710 s   (3,464,988 bytes)
-normalize.start                       ~0.711 s
-normalize.done                        ~1.249 s   (~42.9 MB WAV)
-separator.normalize-input.start       ~0.000 s
-separator.normalize-input.done        ~0.248 s
-separator.direct-demucs.start         ~0.248 s
+worker.start                           0.000 s
+worker.download.start                  0.001 s
+worker.download.done                   0.698 s
+worker.normalize.start                 0.699 s
+worker.normalize.done                  1.237 s
+worker.router.start                    1.237 s
+separator.start                        0.000 s
+separator.input-normalize.start        0.000 s
+separator.input-normalize.done         0.248 s
+separator.direct-demucs.start          0.248 s
 ```
 
-Repeated later scrapes still showed **no `separator.direct-demucs.done` marker**.
+There was **no `separator.direct-demucs.done` marker** before the diagnostic window ended.
+
+The log collection used `call.logs.tail(...)`, which behaved as a following stream rather than the intended quick snapshot and made the loop cadence less clean than designed. However, the job ultimately terminated within the GitHub budget and emitted the bounded aggregate summary above. The terminal evidence agrees with the independent live Modal scrape, so this does **not** weaken the localization result.
 
 Therefore the timeout is localized, with current evidence, to the **first direct Demucs6s pass** before BS-RoFormer, cascade Demucs, candidate extraction, tab generation, Product placement, or PDF rendering are reached.
 
@@ -93,10 +110,6 @@ Current frozen Demucs execution policy is deliberately conservative/deterministi
 - torch single-thread / deterministic algorithms;
 - oneDNN disabled / conservative CPU capability;
 - model `htdemucs_6s`, shifts `1`, separator seed `143`.
-
-### Stage-localization workflow harness bug
-
-Workflow `V143 Stage Timing Localization`, job `101091458986`, used `call.logs.tail(...)` as if it were a bounded snapshot. The tail API follows the log stream and can block before the intended 720-second loop deadline advances. This is a **diagnostic harness bug**, not analyzer evidence. Independent Modal log scraping supplied the localization above. Do not interpret that GitHub job as a worker result.
 
 ## Isolated Demucs CPU thread determinism/performance gate — ACTIVE
 
@@ -138,6 +151,7 @@ It **does not** authorize reference-facing accuracy scoring, restricted GOAT acc
 - patched/instrumented V143 worker: DEPLOYED;
 - public-audio download failure: cleared;
 - direct worker completion: TIMEOUT at 1200 execution seconds;
+- stage localization: terminal at 725.802 s, first direct Demucs still incomplete;
 - first bottleneck localized: **direct Demucs CPU/single-thread pass**;
 - isolated CPU1-vs-CPU4 gate: ACTIVE, no Production policy change;
 - Deployment Protection: preserved;
