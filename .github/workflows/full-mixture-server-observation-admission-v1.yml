@@ -1,0 +1,61 @@
+name: Full Mixture Server Observation Admission V1
+
+on:
+  workflow_dispatch:
+  push:
+    branches:
+      - v143-contextual-prune-lobo
+    paths:
+      - '.github/workflows/full-mixture-server-observation-admission-v1.yml'
+      - 'lib/aiTabAnalyzerMixtureObservationAdmissionV1.mjs'
+      - 'lib/aiTabMixtureStructureContextV1.mjs'
+      - 'analyzer/verify_full_mixture_server_observation_admission_v1.mjs'
+      - 'app/api/analyze-audio-tab/route.js'
+      - 'app/api/generate-tab-preview/route.js'
+      - 'app/api/generate-tab-pdf/route.js'
+
+permissions:
+  contents: read
+
+jobs:
+  verify-server-admission:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+
+    steps:
+      - name: Checkout isolated branch
+        uses: actions/checkout@v4
+        with:
+          ref: v143-contextual-prune-lobo
+
+      - name: Set up Node.js 22
+        uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+
+      - name: Verify Phase 8 T1-T12
+        env:
+          FULL_MIXTURE_SERVER_ADMISSION_V1_RESULT_PATH: debug/v143-contextual-prune/full-mixture-server-observation-admission-v1.json
+        run: node analyzer/verify_full_mixture_server_observation_admission_v1.mjs
+
+      - name: Enforce safety evidence
+        run: |
+          node --input-type=module <<'NODE'
+          import { readFile } from 'node:fs/promises';
+          const data = JSON.parse(await readFile('debug/v143-contextual-prune/full-mixture-server-observation-admission-v1.json', 'utf8'));
+          if (data.passed !== true) throw new Error('Phase 8 server admission contract failed');
+          if (Object.keys(data.tests || {}).length !== 12 || new Set(Object.values(data.tests || {})).size !== 1 || data.tests.T1 !== 'PASS') {
+            throw new Error('Phase 8 T1-T12 evidence incomplete');
+          }
+          if (data.serverResearchContextTrustConnected !== true) throw new Error('Server research context trust was not connected');
+          for (const key of [
+            'productAuthorityChanged', 'pdfAuthorityChanged', 'externalAudioAssetsUsed',
+            'guitarSetRead', 'splitMySongRead', 'goatRestrictedBytesRead',
+            'modalInvoked', 'gpuUsed', 'productionModified',
+            'productionPromotionAuthorized',
+          ]) {
+            if (data[key] !== false) throw new Error(`Safety invariant failed: ${key}`);
+          }
+          if (data.referenceScoreCalls !== 0) throw new Error('Reference score calls must remain zero');
+          console.log('PHASE 8 FULL MIXTURE SERVER OBSERVATION ADMISSION T1-T12 PASSED');
+          NODE
