@@ -12,11 +12,11 @@ Branch: `v143-contextual-prune-lobo`
 - Restricted GOAT bytes admitted/read = **0**; V168 prospective reference-facing score calls = **0**.
 - SplitMySong remains terminal `FAIL_CLOSED_NO_CANDIDATE`; never rerun/score/weaken/interpolate.
 - GuitarSet V3/V4/V5 remain terminal; development hold remains frozen; prospective players `00/01/03` remain sealed and prospective score calls = **0**.
-- CPU only unless freshly and specifically needed. No GPU/CUDA/Modal was used for Phase 10 or Phase 11.
+- CPU only unless freshly and specifically needed. No GPU/CUDA/Modal was used for Phase 10, Phase 11, or Phase 12 freeze work.
 - `main` / Production untouched; never modify/merge/promote without explicit user direction.
 
 **Project Progress Score: 66%.**  
-**Test Score: PHASE 1–11 REFERENCE-BLIND/SYNTHETIC CONTRACT PASS; PHASE 10 PRODUCT-PLACEMENT CANDIDATE 0% → 100%, 7/7 EXACT; PHASE 11 C1–C12 + 12-CASE MATRIX + SAFETY GATE + FULL BRANCH BUILD PASS; REFERENCE-FACING ACCURACY SCORE NOT RUN.**
+**Test Score: PHASE 1–11 REFERENCE-BLIND/SYNTHETIC CONTRACT PASS; PHASE 10 PRODUCT-PLACEMENT CANDIDATE 0% → 100%, 7/7 EXACT; PHASE 11 C1–C12 + 12-CASE MATRIX + SAFETY GATE + FULL BRANCH BUILD PASS; PHASE 12 CANONICAL PRODUCT/PDF PLACEMENT PROMOTION AUTHORIZED + CONTRACT FROZEN / IMPLEMENTATION STARTING; REFERENCE-FACING ACCURACY SCORE NOT RUN.**
 
 ## Phases 1–7 — COMPLETE
 
@@ -42,82 +42,59 @@ Result: `docs/checkpoints/SONGSTERR_FULL_MIXTURE_ADMITTED_SHADOW_EFFECT_VALIDATI
 Status: **`PHASE9_ADMITTED_SHADOW_EFFECT_PASS / EXPECTED_EFFECT_OBSERVED / DETERMINISTIC / INSTRUMENT_AUTHORITY_INVARIANT / PRODUCT-PDF AUTHORITY_UNCHANGED / NO_MODAL-GPU / NO_REFERENCE_SCORE`**.
 Canonical evidence: workflow `Full Mixture Admitted Shadow Effect Validation V1`, run `33828829026`, job `100887194463`, tested head `bd9fc1edee44cf5ee5f2e8fa01904e911df7788a`; T1–T12 and safety gate **PASS**.
 
-## Current live trust boundary
-
-`normalized full-mixture WAV -> Phase 6 estimator -> Phase 7 analyzer mixtureObservation -> Phase 8 independent server admission -> mixtureStructureContext -> Phase 4/9 dualContextShadowProjection -> Phase 11 summary-only productPlacementCandidateCanary`
-
-Canonical `structuredPayload`, generated tab/events/render events/measure grid, Product UI and PDF authority remain independent. Phase 11 observes only eligibility/counts after canonical payload construction and exposes no candidate row-level placement stream.
-
 ## Phase 10 — `FULL_MIXTURE_PRODUCT_PLACEMENT_CANDIDATE_VALIDATION_V1` COMPLETE
 
 Freeze: `docs/checkpoints/SONGSTERR_FULL_MIXTURE_PRODUCT_PLACEMENT_CANDIDATE_VALIDATION_V1_PREIMPLEMENTATION_FREEZE_20260903.md`, commit `697996069faa1a9167983357d1b94dada7c827fe`.
 Result: `docs/checkpoints/SONGSTERR_FULL_MIXTURE_PRODUCT_PLACEMENT_CANDIDATE_VALIDATION_V1_PHASE10_RESULT_20260903.md`, result creation commit `f381c665d875d6d308695d6f3486725c75548dac`.
 Status: **`PHASE10_PRODUCT_PLACEMENT_CANDIDATE_PASS / SYNTHETIC_PLACEMENT_0_TO_100_PERCENT / 7_OF_7_EXACT / PRODUCT_VALIDATOR_ACCEPTED / LIVE_PRODUCT-PDF AUTHORITY_UNCHANGED / NO_MODAL-GPU / NO_REFERENCE_SCORE`**.
 
-Synthetic result remains: canonical placement 0%; candidate placement 100%; exact known-truth 7/7; instrument authority invariant; existing authenticated Product placement wins; production promotion unauthorized.
+Synthetic result remains: canonical placement 0%; candidate placement 100%; exact known-truth 7/7; instrument authority invariant; existing authenticated Product placement wins.
 
 ## Phase 11 — `FULL_MIXTURE_PRODUCT_PLACEMENT_LIVE_CANDIDATE_CANARY_V1` COMPLETE
 
-Pre-implementation freeze:
-`docs/checkpoints/SONGSTERR_FULL_MIXTURE_PRODUCT_PLACEMENT_LIVE_CANDIDATE_CANARY_V1_PREIMPLEMENTATION_FREEZE_20260903.md`
-
-Freeze creation commit: `0900903385ff73fd84200fc80b7c787e0df7f45b`.
-
-Result:
-`docs/checkpoints/SONGSTERR_FULL_MIXTURE_PRODUCT_PLACEMENT_LIVE_CANDIDATE_CANARY_V1_PHASE11_RESULT_20260903.md`
-
-Result creation commit: `ce20d5fbd3d44ce186643fa7afd6f234f632586e`.
-
+Freeze: `docs/checkpoints/SONGSTERR_FULL_MIXTURE_PRODUCT_PLACEMENT_LIVE_CANDIDATE_CANARY_V1_PREIMPLEMENTATION_FREEZE_20260903.md`, commit `0900903385ff73fd84200fc80b7c787e0df7f45b`.
+Result: `docs/checkpoints/SONGSTERR_FULL_MIXTURE_PRODUCT_PLACEMENT_LIVE_CANDIDATE_CANARY_V1_PHASE11_RESULT_20260903.md`, result commit `ce20d5fbd3d44ce186643fa7afd6f234f632586e`.
 Status: **`PHASE11_LIVE_CANDIDATE_CANARY_PASS / C1-C12_PASS / 12_CASE_MATRIX_PASS / FULL_BRANCH_BUILD_PASS / SUMMARY_ONLY_RESEARCH_METADATA / PRODUCT-PDF_AUTHORITY_UNCHANGED / NO_MODAL-GPU / NO_REFERENCE_SCORE / MAIN+PRODUCTION_UNTOUCHED`**.
 
-Implementation lineage:
-- `80c455e365b9ecef1243ef37d4126c1850c7fcd3` — summary-only fail-open canary helper;
-- `0621e3123343e439585e90e1ebf80dd86a95b9c1` — append-only live route canary at the frozen post-canonical/post-shadow seam;
-- `76b90695b2ec9dc752f03629e4a11f1a4971eebe` — verifier-only candidate-loader injection for deterministic import-failure proof;
-- `3b4942b52b676cfe37b4d39038f2577b20b800ea` — C1–C12 + 12-case verifier;
-- `daf7fea292aff2382f2723742dbebfa24035385e` — isolated CPU workflow;
-- `d5387afb297f73affdc31b3117c6b383237a0b0d` — workflow-only switch to repository-standard npm lock/install path for the branch build gate.
+Canonical evidence: workflow `Full Mixture Product Placement Live Candidate Canary V1`, run `33830896322`, job `100893491799`, tested head `d5387afb297f73affdc31b3117c6b383237a0b0d`, **SUCCESS**; C1–C12, 12-case matrix, safety gate, `npm ci`, and full Next.js build all passed.
 
-Canonical evidence:
-- workflow `Full Mixture Product Placement Live Candidate Canary V1`;
-- run `33830896322`;
-- job `100893491799`;
-- tested head `d5387afb297f73affdc31b3117c6b383237a0b0d`;
-- conclusion **SUCCESS**;
-- C1–C12 **PASS**;
-- 12-case frozen validation matrix **PASS**;
-- safety-evidence gate **PASS**;
-- `npm ci` **PASS**;
-- full `npm run build` / Next.js branch build **PASS**;
-- no deployment performed.
+## Current branch trust/authority boundary
 
-Run 1 (`33830804768`, job `100893216433`) had already passed the Phase 11 verifier and safety gate; its overall failure was isolated to stale pre-existing Yarn-lock enforcement in the optional build step. The workflow-only install path was corrected, and canonical run 2 passed fully.
+Pre-Phase-12:
 
-Phase 11 invariants proven:
-- summary-only response metadata;
-- candidate row-level `renderEvents` exposed = false;
-- existing authenticated canonical Product `renderEvents` always win;
-- canonical payload mutated = false;
-- Product/PDF authority changed = false;
-- `analysisEngine` / `structuredRenderEligible` changed = false;
-- no Product/PDF/client consumer reads the canary;
-- import/helper/provenance/safety/geometry/event-integrity/candidate-rejection failures fail open to ineligible summary metadata;
-- synthetic canonical events = 7, baseline render events = 0, eligible candidate count = 7;
-- external/reference assets used = false;
-- GuitarSet / SplitMySong / GOAT restricted bytes read = false;
-- reference score calls = 0;
-- Modal/GPU/CUDA/Vercel Preview deployment = false;
-- `main` / Production modified = false.
+`normalized full-mixture WAV -> Phase 6 estimator -> Phase 7 analyzer mixtureObservation -> Phase 8 independent server admission -> mixtureStructureContext -> Phase 4/9 dualContextShadowProjection -> Phase 11 summary-only productPlacementCandidateCanary`
 
-**Interpretation:** Phase 11 proves the branch-local server can safely observe whether the Phase 10 placement-only candidate would be eligible, without exposing candidate rows or changing Product/PDF authority. This remains a software-contract result, not a real-audio transcription-accuracy score.
+Canonical Product/PDF placement is still the analyzer baseline at this exact checkpoint. Phase 12 is now explicitly authorized to promote only validated placement (`measure`/`step`) when all frozen gates pass.
+
+## Phase 12 — `FULL_MIXTURE_PRODUCT_PLACEMENT_CANONICAL_PROMOTION_V1` AUTHORIZED + CONTRACT FROZEN / IMPLEMENTATION STARTING
+
+User authorization: explicitly granted in this continuation to promote the validated placement candidate into canonical Product/PDF output under strict gates.
+
+Pre-implementation freeze:
+`docs/checkpoints/SONGSTERR_FULL_MIXTURE_PRODUCT_PLACEMENT_CANONICAL_PROMOTION_V1_PREIMPLEMENTATION_FREEZE_20260903.md`
+
+Freeze commit: `18e1e486cee7d8e030cd3bcdfe2325db723f2082`.
+
+Frozen authority:
+- branch-local Product/PDF placement promotion is authorized;
+- existing authenticated analyzer `renderEvents` always win and are never replaced/merged;
+- only reference-blind Phase 10 candidate `measure`/`step` placement may be promoted;
+- canonical event identity/string/fret/MIDI/generatedTab/events/measureGrid remain unchanged;
+- post-promotion existing V143 quality gate must pass before structured Product authority is enabled;
+- successful promotion sets canonical `renderEvents`, render contract v1, structured V143 `analysisEngine`, quality pass, and structured eligibility;
+- existing `/ai-tab` -> Preview/PDF forwarding and professional PDF validators are reused unchanged unless integration verification proves a rewrite necessary;
+- payment/token/email logic remains untouched;
+- promotion-specific failures preserve the exact pre-Phase-12 baseline response;
+- `payloadContract.productionPromotionAuthorized` remains false;
+- no `main`, Vercel Preview/Production deployment, Modal/GPU/CUDA, external/reference corpus, GOAT/SplitMySong/GuitarSet, or reference scoring is authorized.
+
+Frozen verification matrix: **R1–R16**, including synthetic 0->7 canonical promotion, exact 7/7 placement, authenticated-placement precedence, safety/provenance/geometry/event/product-validator/quality rollback, canonical contract update, actual structured PDF proof, client forwarding proof, exception rollback, safety accounting, and full branch build.
 
 ## NEXT SAFE ACTION
 
-1. **Do not implicitly promote inferred placement into canonical Product/PDF output.** Phase 11 is closed green, but Product/PDF consumption is a new authority boundary.
-2. Any next phase that lets inferred `measure`/`step` affect canonical `renderEvents`, Product UI, Preview/PDF, or Production must be separately frozen and explicitly authorized before implementation.
-3. A safer next evidence step, if desired, is a separately frozen branch-only observation/telemetry phase that gathers non-authoritative canary eligibility statistics without exposing rows or changing Product/PDF authority; do not begin it implicitly.
-4. Do not run a reference-facing accuracy score until a lawful holdout exists.
-5. Await GOAT owner approval/denial before any GOAT v1 access.
-6. Do not rerun/score/weaken SplitMySong or GuitarSet terminal phases.
-7. Do not use Modal/GPU without fresh explicit authorization immediately before any such work.
-8. Do not change `main`, Vercel Preview, or Production without explicit user direction.
+1. Implement only the frozen Phase 12 promotion helper and minimal post-canary route seam.
+2. Checkpoint immediately after helper/route integration.
+3. Add deterministic R1–R16 verifier including real structured PDF byte generation through the existing professional wrapper; no external/reference assets.
+4. Add isolated CPU workflow using repository-standard `npm ci` + `npm run build` and inspect the actual run.
+5. Create Phase 12 result checkpoint only after all gates are green.
+6. Do not merge/deploy to `main` or Production without a separate explicit user direction.
