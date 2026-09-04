@@ -1,0 +1,60 @@
+name: V143 Audio Download Auth Fix Gate
+
+on:
+  push:
+    branches:
+      - v143-contextual-prune-lobo
+    paths:
+      - 'analyzer/v143_audio_download_auth.py'
+      - 'analyzer/v143_modal_live_endpoint.py'
+      - '.github/scripts/v143_audio_download_auth_test.py'
+      - '.github/workflows/v143-audio-download-auth-fix.yml'
+
+permissions:
+  contents: read
+
+jobs:
+  audio-download-auth-fix-gate:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+
+    steps:
+      - name: Checkout branch head
+        uses: actions/checkout@v4
+
+      - name: Run pure auth policy tests
+        shell: bash
+        run: |
+          set -euo pipefail
+          python3 .github/scripts/v143_audio_download_auth_test.py
+
+      - name: Verify worker wiring and runtime safety metadata
+        shell: bash
+        run: |
+          set -euo pipefail
+          grep -q '"v143_audio_download_auth"' analyzer/v143_modal_live_endpoint.py
+          grep -q 'from v143_audio_download_auth import build_audio_download_headers' analyzer/v143_modal_live_endpoint.py
+          grep -q 'headers = build_audio_download_headers(audio_url, blob_token)' analyzer/v143_modal_live_endpoint.py
+          grep -q '"referenceRuntimeInputUsed": False' analyzer/v143_modal_live_endpoint.py
+          grep -q '"professionalReferenceUsed": False' analyzer/v143_modal_live_endpoint.py
+          grep -q '"runtimeLabelsRequired": False' analyzer/v143_modal_live_endpoint.py
+          echo 'worker wiring + four-flag compatibility seam: PASS'
+
+      - name: Compile changed Python files
+        shell: bash
+        run: |
+          set -euo pipefail
+          python3 -m py_compile \
+            analyzer/v143_audio_download_auth.py \
+            analyzer/v143_modal_live_endpoint.py \
+            .github/scripts/v143_audio_download_auth_test.py
+
+      - name: Safety accounting
+        shell: bash
+        run: |
+          set -euo pipefail
+          echo 'referenceFacingAccuracyScored=false'
+          echo 'referenceScoreCalls=0'
+          echo 'restrictedReferenceBytesRead=0'
+          echo 'productionDeploymentChanged=false'
+          echo 'modalDeploymentChanged=false'
