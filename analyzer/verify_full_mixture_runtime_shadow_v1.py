@@ -166,7 +166,8 @@ assert_true(".remote(" not in modal_source and "modal.run" not in modal_source, 
 results["S11"] = "PASS"
 
 # S12: rollback is one hook block plus one additive field; canonical function is otherwise independent.
-assert_true(modal_source.count("full_mixture_runtime_shadow_v1") == 1, "S12 expected one shadow import seam")
+assert_true(modal_source.count("from full_mixture_runtime_shadow_v1 import (") == 1, "S12 expected one shadow import seam")
+assert_true(modal_source.count("estimate_full_mixture_runtime_shadow_v1(\n                        str(normalized_path)") == 1, "S12 expected one shadow call seam")
 assert_true(modal_source.count("mixtureObservation") == 1, "S12 expected one additive response field")
 results["S12"] = "PASS"
 
