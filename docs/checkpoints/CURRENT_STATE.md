@@ -14,20 +14,22 @@ Branch checkpoint: `v143-contextual-prune-lobo`
 - No reference-facing score was run during merge/Production/Modal work.
 
 **Project Progress Score: 78%.**  
-**Test Score: PHASE 1–13 GREEN; PROTECTED REAL-VERCEL PREVIEW GREEN; MAIN MERGE/BUILD/DEPLOY GREEN; PRODUCTION V143 RHYTHM ROUTING PROVEN ACTIVE; FROZEN V143 MODAL L4 WORKER + HTTP BRIDGE RESTORED GREEN; CORRECT BRIDGE LIVE IN PRODUCTION; DOWNLOAD-AUTH FIX GATE GREEN; NEXT = REDEPLOY PATCHED V143 L4 WORKER + REAL-AUDIO SMOKE; REFERENCE-FACING ACCURACY SCORE NOT RUN.**
+**Test Score: PHASE 1–13 GREEN; PROTECTED REAL-VERCEL PREVIEW GREEN; MAIN MERGE/BUILD/DEPLOY GREEN; PRODUCTION V143 RHYTHM ROUTING PROVEN ACTIVE; CORRECT HTTP BRIDGE LIVE; DOWNLOAD-AUTH FIX GATE GREEN; PATCHED V143 L4 WORKER DEPLOY + DEPENDENCY SMOKE GREEN; NEXT = REAL-AUDIO GOMYWAY PRODUCTION SMOKE; REFERENCE-FACING ACCURACY SCORE NOT RUN.**
 
 ## Closed green foundation
 
 - Phases 1–13 reference-blind V143 chain: **GREEN**. Phase 13 run `33833707924`, job `100901804298`, structured renderer `v143-structured-rhythm`, malformed analysis 400, reference score calls 0.
 - Protected real-Vercel Preview: run `33843200741`, job `100929522781`, deployment `dpl_6pXryC9R7M5mJwZA7cUt2qh3bBsp`, `/ai-tab` 200, structured PDF 200, Deployment Protection preserved, reference score calls 0.
-- Detailed histories remain under `docs/checkpoints/`.
+- Current `main`: **`bb992d901e78ab19645f8edc8e330d5a142ebd8e`** (reverified after worker patch).
 
-## User-authorized merge to `main` — COMPLETE
+## Current Production web deployment — unchanged / verified
 
-- authorization received 2026-09-04 to merge V143 and begin testing with existing “Are You Gonna Go My Way” audio;
-- resolved two-parent merge `ceeccfbbb17968c097bb56136487e7ddeaf1a5a4` preserved newer BTS/SEO/payment/site work while overlaying tested V143 Phase 1–13 path;
-- full combined build run `33844133380`, job `100932278526`: **SUCCESS**;
-- current `main` source SHA remains **`bb992d901e78ab19645f8edc8e330d5a142ebd8e`**.
+- Vercel deployment: **`dpl_5BdFAMHeiaA3rQ9QGUdHneY1rexM`**;
+- source: exact `main` `bb992d901e78ab19645f8edc8e330d5a142ebd8e`;
+- state: **READY / production**;
+- aliases include `dadrocktabs.com` / `www.dadrocktabs.com`;
+- V143 analyzer URL points to restored decoupled bridge `https://dadrockyt--dadrock-v143-http-bridge-analyze.modal.run`;
+- Deployment Protection remains enabled.
 
 ## Authorized existing Gomyway audio
 
@@ -35,107 +37,73 @@ Branch checkpoint: `v143-contextual-prune-lobo`
 - blob SHA `4dd709e3fa177b4daeed71ca97f0199757729d4b`;
 - 3,464,988 bytes.
 
-## Production real-audio diagnostics
+## Prior Production real-audio diagnostics
 
-1. Product static URL returned 404 before analyzer: run `33844432185`, job `100933164743`.
-2. Raw-GitHub URL reached Production but legacy analyzer was selected because V143 env was absent: run `33844704674`, job `100933970052`, runtime `usingV143RhythmAnalyzer: false`; route 502.
-3. Production V143 env restored and exact current `main` rebuilt/redeployed: run `33879884350`, job `101056165576`; deployment `dpl_CojGzPaq77YRh5mLpbVTEseuWjrg`.
-4. Protected authenticated smoke proved V143 selected but obsolete Modal URL returned 404: run `33880271454`, job `101057491176`, runtime `usingV143RhythmAnalyzer: true`.
-5. Frozen Modal topology restored from exact SHA `379ca54cce0f7f962c1e22caebfd6f49b8e4edb9`: run `33884039647`, job `101059368271`; L4 dependency smoke green; bridge unauthenticated POST = 401; reference score calls = 0.
-6. Correct bridge env update required non-interactive `vercel env update --yes`; exact current `main` rebuilt and deployed successfully in run **`33884535351`**, job **`101060978549`**.
+- static Product URL 404 before analyzer: run `33844432185`;
+- raw GitHub with V143 env absent: legacy fallback, `usingV143RhythmAnalyzer=false`, 502;
+- correct V143 bridge restored and selected: `usingV143RhythmAnalyzer=true`;
+- restored-bridge Gomyway run `33884535351`, job `101060978549`: 502 `The analyzer could not download the audio file.`;
+- raw analyzer/tab/PDF not retained; reference score calls 0.
 
-### Current Production deployment
+## Download-auth repair — IMPLEMENTED / TESTED / DEPLOYED
 
-- deployment: **`dpl_5BdFAMHeiaA3rQ9QGUdHneY1rexM`**;
-- source: exact unchanged `main` **`bb992d901e78ab19645f8edc8e330d5a142ebd8e`**;
-- target/status: Production / Ready;
-- aliases include `dadrocktabs.com` and `www.dadrocktabs.com`;
-- protected authenticated `/ai-tab`: **200**;
-- Deployment Protection remained enabled.
+Root cause candidate was cross-origin forwarding of `BLOB_READ_WRITE_TOKEN`: the worker attached the Blob bearer token to every audio URL, including raw GitHub.
 
-### Restored-bridge Gomyway attempt — correct V143 stack reached, then 502 download failure
+Patch on `v143-contextual-prune-lobo`:
 
-Run `33884535351`, job `101060978549`:
+- `analyzer/v143_audio_download_auth.py` scopes Blob Authorization to HTTPS `blob.vercel-storage.com` / `*.blob.vercel-storage.com` only;
+- raw GitHub and other public/non-Blob origins receive no Blob credential;
+- deceptive/lookalike hosts, HTTP Blob URLs, malformed URLs and empty-token cases fail safe;
+- worker now uses the policy;
+- worker explicitly emits `liveV143.referenceRuntimeInputUsed=false` in addition to the existing anti-leakage flags.
 
-- Production V143 URL = restored bridge `https://dadrockyt--dadrock-v143-http-bridge-analyze.modal.run`;
-- exact current `main` build/deploy: **SUCCESS**;
-- protected `/ai-tab`: **200**;
-- Gomyway Rhythm analysis: **502**;
-- safe aggregate error: **`The analyzer could not download the audio file.`**;
-- exact Production runtime:
+### Predeploy gate — GREEN
 
-```text
-usingV143RhythmAnalyzer: true
-analyzerData: { detail: 'The analyzer could not download the audio file.' }
-```
+- workflow: `V143 Audio Download Auth Fix Gate`;
+- run **`33889340784`**, job **`101076898337`**;
+- pure policy tests: PASS;
+- worker wiring/runtime metadata: PASS;
+- changed Python compile: PASS;
+- Production/Modal changed by gate: false;
+- reference score calls: 0.
 
-Aggregate artifact only: `v143-production-restored-bridge-gomyway-v2`, artifact id `9941326017`. Raw analyzer output/tab/PDF was not retained. Preview was skipped because analysis was not 200.
+### Patched L4 worker deploy — GREEN
 
-## Download-auth repair — IMPLEMENTED / PREDEPLOY GATE GREEN
-
-Root cause candidate in the restored worker was cross-origin forwarding of `BLOB_READ_WRITE_TOKEN`: `_download_blob_to_path` attached `Authorization: Bearer <blob token>` to every URL, including public raw GitHub audio.
-
-### Patch on `v143-contextual-prune-lobo`
-
-- `analyzer/v143_audio_download_auth.py` added as a pure policy module;
-- Blob bearer authorization is emitted **only** for HTTPS `blob.vercel-storage.com` or `*.blob.vercel-storage.com`;
-- public/non-Blob origins (including `raw.githubusercontent.com`) receive **no Authorization header**;
-- deceptive suffix/lookalike hosts and HTTP Blob URLs receive no credential;
-- `analyzer/v143_modal_live_endpoint.py` now uses the policy;
-- V143 Modal image includes `v143_audio_download_auth`;
-- `liveV143.referenceRuntimeInputUsed = false` is now explicitly emitted so current `main` can verify the complete four-flag anti-leakage contract.
-
-Patch commits:
-
-- policy module: `60888a515de3d53efa0f6bdd38cfa1e4bab727ef`;
-- pure test script: `8f766b5962a75935e83be32342096e990dab8318`;
-- worker wiring/runtime flag: `e79bb924f447c308ce035c38e2fb15032d296a96`;
-- gate workflow: `266232f907e79422033bba21fafcfc7123b3ad11`.
-
-### Green gate
-
-Workflow `V143 Audio Download Auth Fix Gate`:
-
-- run: **`33889340784`**;
-- job: **`101076898337`**;
-- result: **SUCCESS**;
-- pure auth policy tests: **PASS**;
-- worker wiring + runtime safety metadata verification: **PASS**;
-- changed Python compile: **PASS**;
-- reference-facing score calls: **0**;
-- restricted reference bytes read: **0**;
-- Production deployment changed by this gate: **false**;
-- Modal deployment changed by this gate: **false**.
-
-Test coverage includes raw GitHub, Vercel public Blob, Vercel private Blob, Vercel Blob API host, deceptive suffix host, lookalike host, HTTP Blob URL, empty token, malformed URL, and uppercase/trailing-dot normalization.
+- workflow: `.github/workflows/v143-deploy-patched-worker.yml`;
+- workflow commit / deployed branch head: **`d881994ec311846d08b3288a0c2b58548b937d14`**;
+- run: **`33889490536`**;
+- job: **`101077392412`**;
+- exact target app: `dadrock-v143-ai-tab-live` in Modal environment `main`;
+- **only the worker was redeployed**; HTTP bridge and Vercel deployment were unchanged;
+- deploy step: **SUCCESS**;
+- `rhythm_dependency_smoke`: **SUCCESS**;
+- required GPU/import/reference-free checks: **PASS**;
+- aggregate artifact: `v143-patched-worker-deploy`, artifact id **`9943252415`**;
+- reference score calls: **0**.
 
 ## Fresh-chat authorization — EXPLICIT
 
-The user explicitly authorized continuation of the non-reference-facing Production work. Authorization covers exact V143 Modal worker/bridge restoration and narrowly scoped fixes required to exercise the existing reference-free pipeline with the repository-owned Gomyway audio, Vercel env correction/redeploy as required, workflow edits/reruns, preview/PDF contract checks with raw outputs discarded, and GitHub Actions/Vercel log inspection.
+The user explicitly authorized continuation of the non-reference-facing Production work. Authorization covers narrowly scoped fixes required to exercise the existing reference-free pipeline with the repository-owned Gomyway audio, Modal worker/bridge deployment as required, workflow edits/reruns, preview/PDF contract checks with raw outputs discarded, and GitHub Actions/Vercel log inspection.
 
 It **does not** authorize reference-facing accuracy scoring, restricted GOAT access, sealed GuitarSet prospective access, reopening SplitMySong terminal work, or weakening fail-closed/safety boundaries.
 
 ## Safety/accounting now
 
-- merge to `main`: authorized and complete;
-- current `main`: `bb992d901e78ab19645f8edc8e330d5a142ebd8e`;
-- Production deployment: `dpl_5BdFAMHeiaA3rQ9QGUdHneY1rexM` READY;
-- Production V143 Rhythm route selection: **ACTIVE / PROVEN**;
-- correct HTTP bridge: **ACTIVE / PROVEN**;
-- current deployed L4 worker: frozen restored version, dependency smoke green;
-- patched L4 worker: **PREDEPLOY GATE GREEN / NOT YET DEPLOYED**;
+- `main`: unchanged and verified;
+- Production web deployment: unchanged / READY;
+- V143 HTTP bridge: restored / active;
+- patched V143 L4 worker: **DEPLOYED / DEPENDENCY SMOKE GREEN**;
 - Deployment Protection: **preserved**;
 - reference-facing score calls: **0**;
 - GOAT restricted bytes: **0**;
 - GuitarSet prospective sealed reads: **0**;
 - raw Gomyway transcription/PDF retained: **false**;
-- current real-audio verdict: **NO PIPELINE QUALITY VERDICT YET — PATCH READY TO RESTORE PUBLIC-AUDIO INGEST**.
+- current real-audio verdict: **NO PIPELINE QUALITY VERDICT YET — DOWNLOAD FIX IS LIVE; REAL-AUDIO RETEST IS NEXT**.
 
 ## NEXT SAFE ACTION — AUTHORIZED
 
-1. Deploy only patched `analyzer/v143_modal_live_endpoint.py` + included policy module from current `v143-contextual-prune-lobo` head to Modal environment `main`; do not redeploy/change the HTTP bridge.
-2. Re-run `rhythm_dependency_smoke`; require NVIDIA L4, seed 143, reference-free true, required imports true.
-3. Re-run authenticated aggregate-only Production Gomyway Rhythm smoke against current Production deployment; no Vercel redeploy is required because the bridge URL is unchanged.
-4. Require Production runtime `usingV143RhythmAnalyzer: true`, analysis HTTP 200, response `rhythmCanaryActive: true`, and all four runtime flags (`referenceFree=true`, `professionalReferenceUsed=false`, `referenceRuntimeInputUsed=false`, `runtimeLabelsRequired=false`).
-5. If analysis reaches 200, generate Production structured preview; retain only aggregate quality/placement/PDF contract metadata and delete raw transcription/PDF/request outputs.
-6. Report only internal signs of success; **reference-facing accuracy remains unarmed**.
+1. Run authenticated aggregate-only Gomyway Rhythm smoke against current Production deployment `dpl_5BdFAMHeiaA3rQ9QGUdHneY1rexM`; no Vercel redeploy is needed.
+2. Require analysis HTTP 200, `rhythmCanaryActive=true`, and payload contract proof of all four anti-leakage conditions: reference-free true, professional reference not used, reference runtime input not used, runtime labels not required.
+3. Record only aggregate event/quality/placement metadata; do not retain raw transcription/tab.
+4. If analysis reaches 200, pass the structured response through Production preview and require HTTP 200, PDF content type, `%PDF`, and nontrivial byte size; delete PDF/request/raw analysis afterward.
+5. Report internal signs of success only; **reference-facing accuracy remains unarmed**.
