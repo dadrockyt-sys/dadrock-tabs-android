@@ -1,0 +1,272 @@
+name: V143 Production Gomyway Postconfig Smoke
+
+on:
+  push:
+    branches:
+      - v143-main-integration-20260904
+    paths:
+      - '.github/workflows/v143-production-gomyway-postconfig-smoke.yml'
+
+concurrency:
+  group: v143-production-gomyway-postconfig-smoke
+  cancel-in-progress: true
+
+permissions:
+  contents: read
+
+env:
+  PRODUCTION_BASE_URL: https://dadrocktabs.com
+  PRODUCTION_DEPLOYMENT_ID: dpl_CojGzPaq77YRh5mLpbVTEseuWjrg
+  PRODUCTION_SOURCE_SHA: bb992d901e78ab19645f8edc8e330d5a142ebd8e
+  AUDIO_URL: https://raw.githubusercontent.com/dadrockyt-sys/dadrock-tabs-android/main/public/jimmy-paige-midterm-v1/gomyway-midterm-source.m4a
+  AUDIO_BLOB_SHA: 4dd709e3fa177b4daeed71ca97f0199757729d4b
+
+jobs:
+  production-gomyway-postconfig-smoke:
+    runs-on: ubuntu-latest
+    timeout-minutes: 25
+
+    steps:
+      - name: Checkout diagnostic branch
+        uses: actions/checkout@v4
+
+      - name: Confirm canonical Production is reachable
+        shell: bash
+        run: |
+          set -euo pipefail
+          OUT="debug/v143-contextual-prune/production-gomyway-postconfig-smoke"
+          mkdir -p "$OUT"
+          STATUS="$(curl --silent --show-error --location --max-time 30 \
+            --output /dev/null --write-out '%{http_code}' \
+            "$PRODUCTION_BASE_URL/ai-tab")"
+          echo "canonicalAiTabStatus=$STATUS"
+          test "$STATUS" = '200'
+
+      - name: Exercise configured V143 Production pipeline with authorized Gomyway audio
+        shell: bash
+        run: |
+          set -euo pipefail
+          OUT="debug/v143-contextual-prune/production-gomyway-postconfig-smoke"
+          mkdir -p "$OUT"
+
+          cat > "$OUT/request.json" <<JSON
+          {
+            "audioUrl": "$AUDIO_URL",
+            "pathname": "gomyway-midterm-source.m4a",
+            "song": "Are You Gonna Go My Way",
+            "artist": "Lenny Kravitz",
+            "transcriptionType": "rhythm"
+          }
+          JSON
+
+          ANALYSIS_STATUS="$(curl \
+            --silent --show-error --location \
+            --max-time 650 \
+            --request POST \
+            --header 'Content-Type: application/json' \
+            --data-binary "@$OUT/request.json" \
+            --output "$OUT/analysis.json" \
+            --write-out '%{http_code}' \
+            "$PRODUCTION_BASE_URL/api/analyze-audio-tab")"
+
+          export ANALYSIS_STATUS PRODUCTION_BASE_URL AUDIO_BLOB_SHA PRODUCTION_DEPLOYMENT_ID PRODUCTION_SOURCE_SHA
+
+          python3 - <<'PY'
+          import json, os
+          from pathlib import Path
+
+          out = Path('debug/v143-contextual-prune/production-gomyway-postconfig-smoke')
+          raw = (out / 'analysis.json').read_text(encoding='utf-8', errors='replace')
+          try:
+              analysis = json.loads(raw)
+          except Exception:
+              analysis = {}
+
+          status = int(os.environ['ANALYSIS_STATUS'])
+          if status != 200:
+              safe = {
+                  'schemaVersion': 4,
+                  'gate': 'v143-production-gomyway-postconfig-smoke',
+                  'productionBaseUrl': os.environ['PRODUCTION_BASE_URL'],
+                  'productionDeploymentId': os.environ['PRODUCTION_DEPLOYMENT_ID'],
+                  'productionSourceCommit': os.environ['PRODUCTION_SOURCE_SHA'],
+                  'audioSource': 'existing-public-github-main-asset',
+                  'audioBlobSha': os.environ['AUDIO_BLOB_SHA'],
+                  'analysisStatus': status,
+                  'error': analysis.get('error') or analysis.get('detail') or 'non-JSON or unknown analyzer error',
+                  'referenceFacingAccuracyScored': False,
+                  'referenceScoreCalls': 0,
+              }
+              (out / 'summary.json').write_text(json.dumps(safe, indent=2) + '\n')
+              print(json.dumps(safe, indent=2))
+              raise SystemExit(f'Production analysis returned HTTP {status}')
+
+          events = analysis.get('events') if isinstance(analysis.get('events'), list) else []
+          render_events = analysis.get('renderEvents') if isinstance(analysis.get('renderEvents'), list) else []
+          quality = analysis.get('analysisQuality') if isinstance(analysis.get('analysisQuality'), dict) else {}
+          metrics = quality.get('metrics') if isinstance(quality.get('metrics'), dict) else {}
+          payload = analysis.get('payloadContract') if isinstance(analysis.get('payloadContract'), dict) else {}
+          promo = analysis.get('productPlacementPromotion') if isinstance(analysis.get('productPlacementPromotion'), dict) else {}
+          canary = analysis.get('productPlacementCandidateCanary') if isinstance(analysis.get('productPlacementCandidateCanary'), dict) else {}
+          mixture = analysis.get('mixtureStructureContext') if isinstance(analysis.get('mixtureStructureContext'), dict) else {}
+          dual = analysis.get('dualContextShadowProjection') if isinstance(analysis.get('dualContextShadowProjection'), dict) else {}
+          conditioning = analysis.get('conditioningContract') if isinstance(analysis.get('conditioningContract'), dict) else {}
+
+          summary = {
+              'schemaVersion': 4,
+              'gate': 'v143-production-gomyway-postconfig-smoke',
+              'productionBaseUrl': os.environ['PRODUCTION_BASE_URL'],
+              'productionDeploymentId': os.environ['PRODUCTION_DEPLOYMENT_ID'],
+              'productionSourceCommit': os.environ['PRODUCTION_SOURCE_SHA'],
+              'audioSource': 'existing-public-github-main-asset',
+              'audioBlobSha': os.environ['AUDIO_BLOB_SHA'],
+              'analysisStatus': status,
+              'rhythmCanaryActive': analysis.get('rhythmCanaryActive'),
+              'analysisEngine': analysis.get('analysisEngine'),
+              'generatedTabPresent': bool(str(analysis.get('generatedTab') or '').strip()),
+              'eventCount': len(events),
+              'renderEventCount': len(render_events),
+              'payloadContract': {
+                  'version': payload.get('version'),
+                  'referenceFree': payload.get('referenceFree'),
+                  'v143RuntimeSafetyVerified': payload.get('v143RuntimeSafetyVerified'),
+                  'boundedEventCount': payload.get('boundedEventCount'),
+                  'renderEventCount': payload.get('renderEventCount'),
+                  'analyzerQualityGatePassed': payload.get('analyzerQualityGatePassed'),
+                  'structuredRenderEligible': payload.get('structuredRenderEligible'),
+              },
+              'analysisQuality': {
+                  'passed': quality.get('passed'),
+                  'failures': quality.get('failures'),
+                  'rawEventCount': metrics.get('rawEventCount'),
+                  'consideredRawEventCount': metrics.get('consideredRawEventCount'),
+                  'validRenderEventCount': metrics.get('validRenderEventCount'),
+                  'renderEventSurvivalPercent': metrics.get('renderEventSurvivalPercent'),
+                  'playableStringFretPercent': metrics.get('playableStringFretPercent'),
+                  'musicalPlacementPercent': metrics.get('musicalPlacementPercent'),
+                  'pitchValidityPercent': metrics.get('pitchValidityPercent'),
+                  'measureRange': metrics.get('measureRange'),
+                  'stepCoverage': metrics.get('stepCoverage'),
+                  'techniqueCoverage': metrics.get('techniqueCoverage'),
+                  'sustainCoverage': metrics.get('sustainCoverage'),
+              },
+              'conditioning': {
+                  'referenceBlind': conditioning.get('referenceBlind'),
+                  'referenceScoreAuthorized': conditioning.get('referenceScoreAuthorized'),
+              },
+              'mixtureStructure': {
+                  'status': mixture.get('status'),
+                  'quantizationStatus': mixture.get('quantizationStatus'),
+                  'observationAdmitted': mixture.get('observationAdmitted'),
+                  'tempoBpm': mixture.get('tempoBpm'),
+                  'timeSignature': mixture.get('timeSignature'),
+                  'feel': mixture.get('feel'),
+              },
+              'dualContext': {
+                  'status': dual.get('status'),
+                  'renderEventCount': len(dual.get('renderEvents') or []) if isinstance(dual.get('renderEvents'), list) else None,
+              },
+              'candidateCanary': {
+                  'eligible': canary.get('eligible'),
+                  'baselineRenderEventCount': canary.get('baselineRenderEventCount'),
+                  'candidateRenderEventCount': canary.get('candidateRenderEventCount'),
+              },
+              'productPlacementPromotion': {
+                  'promoted': promo.get('promoted'),
+                  'reason': promo.get('reason'),
+                  'baselineRenderEventCount': promo.get('baselineRenderEventCount'),
+                  'canonicalRenderEventCount': promo.get('canonicalRenderEventCount'),
+              },
+              'referenceFacingAccuracyScored': False,
+              'referenceScoreCalls': 0,
+          }
+
+          (out / 'summary.json').write_text(json.dumps(summary, indent=2) + '\n', encoding='utf-8')
+          print(json.dumps(summary, indent=2))
+          if summary['rhythmCanaryActive'] is not True:
+              raise SystemExit('Production response did not confirm V143 Rhythm canary activation')
+          PY
+
+          python3 - <<'PY'
+          import json
+          from pathlib import Path
+
+          out = Path('debug/v143-contextual-prune/production-gomyway-postconfig-smoke')
+          a = json.loads((out / 'analysis.json').read_text())
+          preview = {
+              'song': 'Are You Gonna Go My Way',
+              'artist': 'Lenny Kravitz',
+              'transcriptionType': 'rhythm',
+              'generatedTab': a.get('generatedTab'),
+              'tuning': a.get('tuning'),
+              'tempo': a.get('tempo'),
+              'timeSignature': a.get('timeSignature'),
+              'keySignature': a.get('keySignature'),
+              'analysisEngine': a.get('analysisEngine'),
+              'renderEvents': a.get('renderEvents') or [],
+              'measureGrid': a.get('measureGrid'),
+              'confidence': a.get('confidence'),
+              'difficulty': a.get('difficulty'),
+              'techniques': a.get('techniques') or [],
+              'previewSystems': 4,
+          }
+          (out / 'preview-request.json').write_text(json.dumps(preview, separators=(',', ':')))
+          PY
+
+          PREVIEW_STATUS="$(curl \
+            --silent --show-error --location \
+            --max-time 120 \
+            --request POST \
+            --header 'Content-Type: application/json' \
+            --data-binary "@$OUT/preview-request.json" \
+            --dump-header "$OUT/preview.headers" \
+            --output "$OUT/preview.pdf" \
+            --write-out '%{http_code}' \
+            "$PRODUCTION_BASE_URL/api/generate-tab-preview")"
+          export PREVIEW_STATUS
+
+          python3 - <<'PY'
+          import json, os
+          from pathlib import Path
+
+          out = Path('debug/v143-contextual-prune/production-gomyway-postconfig-smoke')
+          summary = json.loads((out / 'summary.json').read_text())
+          headers = (out / 'preview.headers').read_text(encoding='utf-8', errors='replace')
+          pdf = (out / 'preview.pdf').read_bytes()
+          ct = ''
+          feature = ''
+          renderer = ''
+          for line in headers.splitlines():
+              low = line.lower()
+              if low.startswith('content-type:'):
+                  ct = line.split(':', 1)[1].strip()
+              elif low.startswith('x-jimmy-paige-pdf-feature:'):
+                  feature = line.split(':', 1)[1].strip()
+              elif low.startswith('x-jimmy-paige-pdf-renderer:'):
+                  renderer = line.split(':', 1)[1].strip()
+          summary['preview'] = {
+              'status': int(os.environ['PREVIEW_STATUS']),
+              'contentType': ct,
+              'feature': feature,
+              'renderer': renderer,
+              'pdfBytes': len(pdf),
+              'pdfMagic': pdf[:4].decode('ascii', errors='replace'),
+          }
+          (out / 'summary.json').write_text(json.dumps(summary, indent=2) + '\n')
+          print(json.dumps({'preview': summary['preview']}, indent=2))
+          if summary['preview']['status'] != 200:
+              raise SystemExit('Production preview route did not return 200')
+          if not ct.lower().startswith('application/pdf') or pdf[:4] != b'%PDF' or len(pdf) <= 1000:
+              raise SystemExit('Production preview PDF contract failed')
+          PY
+
+          rm -f "$OUT/analysis.json" "$OUT/request.json" "$OUT/preview-request.json" "$OUT/preview.pdf" "$OUT/preview.headers"
+
+      - name: Preserve aggregate postconfig evidence only
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: v143-production-gomyway-postconfig-smoke
+          path: debug/v143-contextual-prune/production-gomyway-postconfig-smoke/summary.json
+          if-no-files-found: warn
+          retention-days: 14
