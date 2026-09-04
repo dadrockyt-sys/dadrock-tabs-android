@@ -1,8 +1,5 @@
 const pdfRuntimeTraceExcludes = [
-  './public/*gomyway*',
-  './public/*GOMYWAY*',
-  './public/DadRock TABS - gomyway*',
-  './public/Stairway to Heaven AI test.m4a',
+  './public/**/*',
 ];
 
 const pdfRuntimeTraceIncludes = [
@@ -13,10 +10,11 @@ const nextConfig = {
   images: {
     unoptimized: true,
   },
-  // Keep branch-only research/test artifacts out of the two real Product/PDF
-  // serverless traces. Both renderers need only the DadRock logo from public/.
-  // /api/pdf-preview is intentionally excluded from this rule because its
-  // development proof path legitimately reads a gomyway notation fixture.
+  // The Product/PDF serverless functions read only the DadRock logo from
+  // public/. Keep the rest of the static/research tree out of these function
+  // bundles; public assets remain deployed normally for the website itself.
+  // /api/pdf-preview is intentionally excluded because its proof path reads
+  // a gomyway notation fixture from public/.
   outputFileTracingExcludes: {
     '/api/generate-tab-pdf': pdfRuntimeTraceExcludes,
     '/api/generate-tab-preview': pdfRuntimeTraceExcludes,
