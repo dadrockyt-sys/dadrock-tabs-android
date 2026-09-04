@@ -9,6 +9,7 @@ on:
       - '.github/workflows/v143-ai-tab-branch-build-gate.yml'
       - '.github/workflows/v143-exact-branch-vercel-preview.yml'
       - 'vercel.json'
+      - 'next.config.js'
       - 'app/ai-tab/**'
       - 'app/api/analyze-audio-tab/**'
       - 'app/api/audio-upload/**'
