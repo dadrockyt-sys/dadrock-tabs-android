@@ -1,0 +1,270 @@
+name: V143 Stage Timing Localization
+
+on:
+  push:
+    branches:
+      - v143-contextual-prune-lobo
+    paths:
+      - '.github/workflows/v143-stage-timing-localize.yml'
+
+concurrency:
+  group: v143-stage-timing-localize
+  cancel-in-progress: false
+
+permissions:
+  contents: read
+
+env:
+  MODAL_ENVIRONMENT: main
+  AUDIO_URL: https://raw.githubusercontent.com/dadrockyt-sys/dadrock-tabs-android/main/public/jimmy-paige-midterm-v1/gomyway-midterm-source.m4a
+  AUDIO_BLOB_SHA: 4dd709e3fa177b4daeed71ca97f0199757729d4b
+  MAIN_SHA: bb992d901e78ab19645f8edc8e330d5a142ebd8e
+  PYTHONUNBUFFERED: '1'
+
+jobs:
+  stage-timing-localize:
+    runs-on: ubuntu-latest
+    timeout-minutes: 25
+    env:
+      MODAL_TOKEN_ID: ${{ secrets.MODAL_TOKEN_ID }}
+      MODAL_TOKEN_SECRET: ${{ secrets.MODAL_TOKEN_SECRET }}
+
+    steps:
+      - name: Checkout diagnostic branch
+        uses: actions/checkout@v4
+
+      - name: Enforce exact source and unchanged execution policy
+        shell: bash
+        run: |
+          set -euo pipefail
+          ACTUAL_MAIN="$(git ls-remote origin refs/heads/main | awk '{print $1}')"
+          test "$ACTUAL_MAIN" = "$MAIN_SHA"
+          test -n "${MODAL_TOKEN_ID:-}"
+          test -n "${MODAL_TOKEN_SECRET:-}"
+          python3 .github/scripts/v143_audio_download_auth_test.py
+          python3 -m py_compile \
+            analyzer/v143_seeded_separator.py \
+            analyzer/v143_modal_live_endpoint.py
+          grep -q 'gpu="L4"' analyzer/v143_modal_live_endpoint.py
+          grep -q 'timeout=1200' analyzer/v143_modal_live_endpoint.py
+          grep -q '"referenceFree": True' analyzer/v143_modal_live_endpoint.py
+          grep -q '"professionalReferenceUsed": False' analyzer/v143_modal_live_endpoint.py
+          grep -q '"referenceRuntimeInputUsed": False' analyzer/v143_modal_live_endpoint.py
+          grep -q '"runtimeLabelsRequired": False' analyzer/v143_modal_live_endpoint.py
+          grep -q '"CUDA_VISIBLE_DEVICES": ""' analyzer/v143_seeded_separator.py
+          grep -q '"OMP_NUM_THREADS": "1"' analyzer/v143_seeded_separator.py
+          grep -q '"MKL_NUM_THREADS": "1"' analyzer/v143_seeded_separator.py
+          grep -q 'V143_STAGE separator.direct-demucs.start' <(python3 - <<'PY'
+          from pathlib import Path
+          text = Path('analyzer/v143_seeded_separator.py').read_text()
+          print(text.replace('f"V143_STAGE separator.{name}', 'V143_STAGE separator.direct-demucs.start'))
+          PY
+          )
+          echo "diagnosticSourceCommit=$GITHUB_SHA"
+          echo 'executionPolicyChanged=false'
+          echo 'referenceFacingAccuracyScored=false'
+          echo 'referenceScoreCalls=0'
+
+      - name: Set up Python 3.11
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Deploy instrumented worker with proven Modal client
+        shell: bash
+        run: |
+          set -euo pipefail
+          python -m pip install --upgrade pip >/dev/null
+          python -m pip install 'modal==1.3.3' >/dev/null
+          modal token set --token-id "$MODAL_TOKEN_ID" --token-secret "$MODAL_TOKEN_SECRET" >/dev/null
+          modal deploy --env main analyzer/v143_modal_live_endpoint.py
+
+      - name: Verify dependency smoke unchanged
+        shell: bash
+        run: |
+          set -euo pipefail
+          python - <<'PY'
+          import modal
+          fn = modal.Function.from_name(
+              'dadrock-v143-ai-tab-live',
+              'rhythm_dependency_smoke',
+              environment_name='main',
+          )
+          result = fn.remote()
+          required_true = [
+              'cudaAvailable', 'referenceFree', 'basicPitchImported',
+              'bendEvidenceImported', 'bendConsensusImported',
+              'legatoEvidenceImported', 'deterministicProviderImported',
+          ]
+          if not all(result.get(key) is True for key in required_true):
+              raise SystemExit('Instrumented worker dependency smoke failed')
+          if result.get('deviceName') != 'NVIDIA L4':
+              raise SystemExit('Unexpected worker GPU')
+          if result.get('deterministicSeparatorSeed') != 143:
+              raise SystemExit('Unexpected separator seed')
+          print('dependencySmoke=PASS')
+          PY
+
+      - name: Install diagnostic-only Modal log client
+        shell: bash
+        run: |
+          set -euo pipefail
+          python -m pip install --upgrade 'modal==1.5.5' >/dev/null
+          python - <<'PY'
+          import modal
+          print(f'diagnosticModalVersion={modal.__version__}')
+          PY
+
+      - name: Spawn Gomyway and collect bounded stage timing
+        shell: bash
+        run: |
+          set -euo pipefail
+          OUT=debug/v143-contextual-prune/stage-timing-localize
+          mkdir -p "$OUT"
+          python - <<'PY'
+          import json
+          import os
+          import re
+          import time
+          from pathlib import Path
+
+          import modal
+
+          out = Path('debug/v143-contextual-prune/stage-timing-localize')
+          payload = {
+              'audioUrl': os.environ['AUDIO_URL'],
+              'pathname': 'gomyway-midterm-source.m4a',
+              'song': 'Are You Gonna Go My Way',
+              'artist': 'Lenny Kravitz',
+              'transcriptionType': 'rhythm',
+              'blobToken': '',
+          }
+
+          fn = modal.Function.from_name(
+              'dadrock-v143-ai-tab-live',
+              'rhythm_v143_request',
+              environment_name='main',
+          )
+          call = fn.spawn(payload)
+          call_id = call.object_id
+          started = time.monotonic()
+          markers = []
+          seen = set()
+          completed = None
+          terminal_type = None
+          terminal_error = None
+          deadline = started + 720.0
+
+          stage_re = re.compile(r'^V143_STAGE\s+([A-Za-z0-9_.-]+)\s+elapsed=([0-9.]+)')
+
+          while time.monotonic() < deadline:
+              try:
+                  for entry in call.logs.tail(entries=200, source='stdout'):
+                      message = str(getattr(entry, 'message', '') or '').strip()
+                      match = stage_re.match(message)
+                      if not match:
+                          continue
+                      key = (match.group(1), match.group(2))
+                      if key in seen:
+                          continue
+                      seen.add(key)
+                      markers.append({
+                          'stage': match.group(1),
+                          'elapsedSeconds': float(match.group(2)),
+                      })
+              except Exception as exc:
+                  # Log retrieval is diagnostic-only. A bounded class name is
+                  # retained, never request/audio/transcription payloads.
+                  terminal_type = f'log-read:{type(exc).__name__}'
+
+              try:
+                  result = call.get(timeout=0)
+                  completed = True
+                  terminal_type = 'completed'
+                  # Do not retain the result. Presence is enough for this timing gate.
+                  del result
+                  break
+              except TimeoutError:
+                  pass
+              except Exception as exc:
+                  completed = False
+                  terminal_type = type(exc).__name__
+                  terminal_error = str(exc)[:300]
+                  break
+
+              if any(row['stage'] == 'separator.cascade-demucs.done' for row in markers):
+                  # Separator localization is complete; downstream completion is
+                  # not necessary for this diagnostic. Keep observing briefly.
+                  time.sleep(5)
+              else:
+                  time.sleep(10)
+
+          if completed is None:
+              completed = False
+              terminal_type = terminal_type or 'diagnostic-window-ended'
+              try:
+                  call.cancel()
+              except Exception:
+                  pass
+
+          elapsed = time.monotonic() - started
+          # Final bounded stage scrape after terminal/cancel.
+          try:
+              for entry in call.logs.tail(entries=300, source='stdout'):
+                  message = str(getattr(entry, 'message', '') or '').strip()
+                  match = stage_re.match(message)
+                  if not match:
+                      continue
+                  key = (match.group(1), match.group(2))
+                  if key not in seen:
+                      seen.add(key)
+                      markers.append({
+                          'stage': match.group(1),
+                          'elapsedSeconds': float(match.group(2)),
+                      })
+          except Exception:
+              pass
+
+          markers.sort(key=lambda row: row['elapsedSeconds'])
+          summary = {
+              'schemaVersion': 1,
+              'gate': 'v143-stage-timing-localize',
+              'diagnosticSourceCommit': os.environ.get('GITHUB_SHA'),
+              'audioBlobSha': os.environ['AUDIO_BLOB_SHA'],
+              'workerApp': 'dadrock-v143-ai-tab-live',
+              'workerFunction': 'rhythm_v143_request',
+              'functionCallId': call_id,
+              'diagnosticWallSeconds': round(elapsed, 3),
+              'completedWithinDiagnosticWindow': completed,
+              'terminalType': terminal_type,
+              'terminalError': terminal_error,
+              'stageMarkers': markers,
+              'executionPolicyChanged': False,
+              'blobTokenForwarded': False,
+              'referenceFacingAccuracyScored': False,
+              'referenceScoreCalls': 0,
+              'rawTranscriptionRetained': False,
+          }
+          (out / 'summary.json').write_text(json.dumps(summary, indent=2) + '\n', encoding='utf-8')
+          print(json.dumps(summary, indent=2))
+
+          required_prefix = [
+              'worker.start', 'worker.download.start', 'worker.download.done',
+              'worker.normalize.start', 'worker.normalize.done', 'worker.router.start',
+              'separator.start', 'separator.input-normalize.start',
+              'separator.input-normalize.done', 'separator.direct-demucs.start',
+          ]
+          observed = {row['stage'] for row in markers}
+          missing = [stage for stage in required_prefix if stage not in observed]
+          if missing:
+              raise SystemExit(f'Missing expected timing markers: {missing}')
+          PY
+
+      - name: Preserve aggregate timing only
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: v143-stage-timing-localize
+          path: debug/v143-contextual-prune/stage-timing-localize/summary.json
+          if-no-files-found: warn
+          retention-days: 14
