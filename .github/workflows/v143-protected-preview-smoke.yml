@@ -1,0 +1,291 @@
+name: V143 Protected Preview Smoke
+
+on:
+  workflow_dispatch:
+  push:
+    branches:
+      - v143-contextual-prune-lobo
+    paths:
+      - '.github/workflows/v143-protected-preview-smoke.yml'
+
+concurrency:
+  group: v143-protected-preview-smoke
+  cancel-in-progress: true
+
+permissions:
+  contents: read
+
+env:
+  VERCEL_ORG_ID: team_qJrw8Cuze5bCEg9M3Q67XMWt
+  VERCEL_PROJECT_ID: prj_6biwsn0iHci6FHNswAUCS8UYrAqF
+  EXPECTED_BRANCH: v143-contextual-prune-lobo
+
+jobs:
+  protected-preview-smoke:
+    runs-on: ubuntu-latest
+    timeout-minutes: 35
+    env:
+      VERCEL_TOKEN: ${{ secrets.VERCEL_TOKEN }}
+      EXPECTED_SHA: ${{ github.sha }}
+      NEXT_TELEMETRY_DISABLED: '1'
+
+    steps:
+      - name: Checkout exact authorized commit
+        uses: actions/checkout@v4
+        with:
+          ref: ${{ github.sha }}
+          fetch-depth: 1
+
+      - name: Enforce exact branch and Preview-only authority
+        shell: bash
+        run: |
+          set -euo pipefail
+          test "$GITHUB_REF_NAME" = "$EXPECTED_BRANCH"
+          test "$(git rev-parse HEAD)" = "$EXPECTED_SHA"
+          test -n "${VERCEL_TOKEN:-}"
+          echo "authorizedBranch=$EXPECTED_BRANCH"
+          echo "authorizedCommit=$EXPECTED_SHA"
+          echo "deploymentTarget=preview"
+          echo "productionPromotionAuthorized=false"
+
+      - name: Set up Node.js 24
+        uses: actions/setup-node@v4
+        with:
+          node-version: '24'
+
+      - name: Install pinned Vercel CLI
+        shell: bash
+        run: |
+          set -euo pipefail
+          npm install --global vercel@59.11.2
+          test "$(vercel --version | tail -n 1)" = "59.11.2"
+
+      - name: Pull Preview configuration and build exact branch
+        shell: bash
+        run: |
+          set -euo pipefail
+          vercel pull --yes --environment=preview --token="$VERCEL_TOKEN"
+          vercel build --token="$VERCEL_TOKEN"
+
+      - name: Deploy exact prebuilt artifact to Preview only
+        shell: bash
+        run: |
+          set -euo pipefail
+          mkdir -p debug/v143-contextual-prune/protected-preview-smoke
+          DEPLOY_OUTPUT="$(
+            vercel deploy \
+              --prebuilt \
+              --yes \
+              --token="$VERCEL_TOKEN" \
+              --meta "dadrockBranch=$EXPECTED_BRANCH" \
+              --meta "dadrockCommit=$EXPECTED_SHA" \
+              --meta "githubCommitRef=$EXPECTED_BRANCH" \
+              --meta "githubCommitSha=$EXPECTED_SHA" \
+              2>&1 | tee debug/v143-contextual-prune/protected-preview-smoke/deploy.log
+          )"
+          URL="$(printf '%s\n' "$DEPLOY_OUTPUT" | grep -Eo 'https://[^[:space:]]+\.vercel\.app' | tail -n 1)"
+          test -n "$URL"
+          echo "VERCEL_PREVIEW_URL=$URL" >> "$GITHUB_ENV"
+          echo "Preview URL: $URL"
+
+      - name: Confirm deployed target is Preview
+        shell: bash
+        run: |
+          set -euo pipefail
+          vercel inspect "$VERCEL_PREVIEW_URL" --wait --token="$VERCEL_TOKEN" \
+            2>&1 | tee debug/v143-contextual-prune/protected-preview-smoke/inspect.log
+          grep -Eq 'target[[:space:]]+preview' debug/v143-contextual-prune/protected-preview-smoke/inspect.log
+
+      - name: Build deterministic reference-blind smoke payloads
+        shell: bash
+        run: |
+          set -euo pipefail
+          python3 - <<'PY'
+          import json
+          from pathlib import Path
+
+          out = Path('debug/v143-contextual-prune/protected-preview-smoke')
+          out.mkdir(parents=True, exist_ok=True)
+          frets = [3, 5, 7, 8, 5, 7, 8, 10, 7, 8, 10, 12]
+          render_events = []
+          for index, fret in enumerate(frets):
+              render_events.append({
+                  'eventIndex': index,
+                  'measure': index // 4 + 1,
+                  'step': (index % 4) * 4,
+                  'stringIndex': index % 3,
+                  'fret': fret,
+                  'midi': 52 + index,
+                  'rhythmTechniques': ['hammer-on'] if index == 2 else (['slide-up'] if index == 7 else []),
+                  'rhythmSustain': {
+                      'durationSteps': 2 if index % 3 == 0 else 1,
+                      'durationSeconds': 0.5 if index % 3 == 0 else 0.25,
+                      'tier': 'medium' if index % 3 == 0 else 'short',
+                  },
+              })
+
+          payload = {
+              'song': 'V143 Real Vercel Preview Smoke',
+              'artist': 'DadRock QA',
+              'transcriptionType': 'rhythm',
+              'generatedTab': '\n'.join([
+                  'e|--3-----5-----7-----8--|',
+                  'B|-----------------------|',
+                  'G|-----------------------|',
+                  'D|-----------------------|',
+                  'A|-----------------------|',
+                  'E|-----------------------|',
+              ]),
+              'tuning': 'E Standard',
+              'tempo': 120,
+              'timeSignature': '4/4',
+              'keySignature': 'E minor',
+              'previewSystems': 2,
+              'analysisEngine': 'v143-reference-free-rhythm',
+              'renderEvents': render_events,
+              'measureGrid': None,
+              'confidence': 0.91,
+              'difficulty': 'intermediate',
+              'techniques': ['hammer-on', 'slide-up'],
+          }
+          (out / 'structured-payload.json').write_text(json.dumps(payload, separators=(',', ':')), encoding='utf-8')
+          (out / 'malformed-analysis-payload.json').write_text('{"song":"Missing required fields"}', encoding='utf-8')
+          PY
+
+      - name: Exercise protected Preview routes with authenticated Vercel curl
+        shell: bash
+        run: |
+          set -euo pipefail
+          D="debug/v143-contextual-prune/protected-preview-smoke"
+
+          # VERCEL_TOKEN is supplied through the environment. Do not place --token
+          # after `vercel curl`, because arguments after the separator belong to curl.
+          vercel curl /ai-tab \
+            --deployment "$VERCEL_PREVIEW_URL" \
+            -- \
+            --silent --show-error --location \
+            --user-agent 'Mozilla/5.0 (compatible; DadRock-V143-Protected-Preview-Smoke/1.0)' \
+            --dump-header "$D/ai-tab.headers" \
+            --output "$D/ai-tab.html"
+
+          vercel curl /api/generate-tab-preview \
+            --deployment "$VERCEL_PREVIEW_URL" \
+            -- \
+            --silent --show-error --location \
+            --request POST \
+            --user-agent 'Mozilla/5.0 (compatible; DadRock-V143-Protected-Preview-Smoke/1.0)' \
+            --header 'Content-Type: application/json' \
+            --data-binary "@$D/structured-payload.json" \
+            --dump-header "$D/structured.headers" \
+            --output "$D/structured.pdf"
+
+          vercel curl /api/analyze-audio-tab \
+            --deployment "$VERCEL_PREVIEW_URL" \
+            -- \
+            --silent --show-error --location \
+            --request POST \
+            --user-agent 'Mozilla/5.0 (compatible; DadRock-V143-Protected-Preview-Smoke/1.0)' \
+            --header 'Content-Type: application/json' \
+            --data-binary "@$D/malformed-analysis-payload.json" \
+            --dump-header "$D/malformed-analysis.headers" \
+            --output "$D/malformed-analysis.body"
+
+      - name: Verify and record protected Preview evidence
+        shell: bash
+        run: |
+          set -euo pipefail
+          python3 - <<'PY'
+          import json, os, re
+          from pathlib import Path
+
+          d = Path('debug/v143-contextual-prune/protected-preview-smoke')
+
+          def response(path):
+              text = Path(path).read_text(encoding='utf-8', errors='replace')
+              blocks = [b for b in re.split(r'\r?\n\r?\n', text) if b.strip()]
+              blocks = [b for b in blocks if b.lstrip().upper().startswith('HTTP/')]
+              if not blocks:
+                  raise AssertionError(f'no HTTP response block in {path}')
+              lines = blocks[-1].splitlines()
+              m = re.search(r'HTTP/\S+\s+(\d{3})', lines[0], re.I)
+              if not m:
+                  raise AssertionError(f'cannot parse status from {lines[0]!r}')
+              headers = {}
+              for line in lines[1:]:
+                  if ':' in line:
+                      k, v = line.split(':', 1)
+                      headers[k.strip().lower()] = v.strip()
+              return int(m.group(1)), headers
+
+          page_status, _ = response(d / 'ai-tab.headers')
+          structured_status, h = response(d / 'structured.headers')
+          malformed_status, _ = response(d / 'malformed-analysis.headers')
+          page_bytes = (d / 'ai-tab.html').stat().st_size
+          pdf = (d / 'structured.pdf').read_bytes()
+
+          evidence = {
+              'schemaVersion': 1,
+              'gate': 'v143-protected-preview-smoke',
+              'branch': os.environ['EXPECTED_BRANCH'],
+              'sourceCommit': os.environ['EXPECTED_SHA'],
+              'deploymentUrl': os.environ['VERCEL_PREVIEW_URL'],
+              'requestedTarget': 'preview',
+              'actualVercelPreviewDeployment': True,
+              'deploymentProtectionDisabled': False,
+              'protectedAccessMethod': 'vercel-curl-env-token-auto-bypass',
+              'aiTabPageStatus': page_status,
+              'aiTabPageBytes': page_bytes,
+              'structuredPreviewStatus': structured_status,
+              'structuredContentType': h.get('content-type', ''),
+              'structuredFeature': h.get('x-jimmy-paige-pdf-feature', ''),
+              'structuredRenderer': h.get('x-jimmy-paige-pdf-renderer', ''),
+              'structuredPdfBytes': len(pdf),
+              'structuredPdfMagic': pdf[:4].decode('ascii', errors='replace'),
+              'malformedAnalysisStatus': malformed_status,
+              'malformedAnalysisFailsBeforeAnalyzer': malformed_status == 400,
+              'referenceBlindFixture': True,
+              'externalAudioAssetsUsed': False,
+              'analyzerInvocationRequested': False,
+              'guitarSetRead': False,
+              'splitMySongRead': False,
+              'goatRestrictedBytesRead': False,
+              'referenceScoreCalls': 0,
+              'modalInvoked': False,
+              'modalDeployed': False,
+              'gpuUsed': False,
+              'cudaUsed': False,
+              'mainModified': False,
+              'productionModified': False,
+              'productionPromotionAuthorized': False,
+              'productionFlagUsed': False,
+              'passed': False,
+              'error': None,
+          }
+
+          failures = []
+          if page_status != 200: failures.append(f'/ai-tab={page_status}')
+          if page_bytes <= 1000: failures.append(f'/ai-tab bytes={page_bytes}')
+          if structured_status != 200: failures.append(f'preview={structured_status}')
+          if not evidence['structuredContentType'].lower().startswith('application/pdf'): failures.append('content-type')
+          if len(pdf) <= 1000: failures.append(f'pdf bytes={len(pdf)}')
+          if pdf[:4] != b'%PDF': failures.append('pdf magic')
+          if evidence['structuredFeature'] != 'v143-branch-preview-canary': failures.append(f"feature={evidence['structuredFeature']!r}")
+          if evidence['structuredRenderer'] != 'v143-structured-rhythm': failures.append(f"renderer={evidence['structuredRenderer']!r}")
+          if malformed_status != 400: failures.append(f'malformed analysis={malformed_status}')
+
+          evidence['passed'] = not failures
+          evidence['error'] = '; '.join(failures) if failures else None
+          (d / 'evidence.json').write_text(json.dumps(evidence, indent=2) + '\n', encoding='utf-8')
+          print(json.dumps(evidence, indent=2))
+          if failures:
+              raise SystemExit(evidence['error'])
+          PY
+
+      - name: Preserve protected Preview evidence
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: v143-protected-preview-smoke
+          path: debug/v143-contextual-prune/protected-preview-smoke/
+          if-no-files-found: error
+          retention-days: 14
