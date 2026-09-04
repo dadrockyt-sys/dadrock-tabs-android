@@ -14,7 +14,7 @@ Branch checkpoint: `v143-contextual-prune-lobo`
 - No reference-facing score was run during merge/Production/Modal work.
 
 **Project Progress Score: 78%.**  
-**Test Score: PHASE 1–13 GREEN; PROTECTED REAL-VERCEL PREVIEW GREEN; MAIN MERGE/BUILD/DEPLOY GREEN; PRODUCTION V143 RHYTHM ROUTING ACTIVE; CORRECT HTTP BRIDGE ACTIVE; DOWNLOAD-AUTH FIX GREEN AND DEPLOYED; REAL-AUDIO CLEARS PRIOR DOWNLOAD FAILURE BUT EXCEEDS 150-SECOND VERCEL WINDOW; DIRECT L4 TIMING RUN IS STILL ACTIVE WELL BEYOND THAT WINDOW; REFERENCE-FACING ACCURACY SCORE NOT RUN.**
+**Test Score: PHASE 1–13 GREEN; PROTECTED REAL-VERCEL PREVIEW GREEN; MAIN MERGE/BUILD/DEPLOY GREEN; PRODUCTION V143 RHYTHM ROUTING ACTIVE; CORRECT HTTP BRIDGE ACTIVE; DOWNLOAD-AUTH FIX GREEN AND DEPLOYED; REAL-AUDIO CLEARS PRIOR DOWNLOAD FAILURE; DIRECT L4 GOMYWAY HITS WORKER 1200-SECOND TIMEOUT; NEXT = STAGE-TIMING INSTRUMENTATION BEFORE ANY EXECUTION-POLICY CHANGE; REFERENCE-FACING ACCURACY SCORE NOT RUN.**
 
 ## Closed green foundation
 
@@ -71,7 +71,7 @@ Patched worker deploy:
 - aggregate artifact id `9943252415`;
 - reference score calls: 0.
 
-## Gomyway after download-auth fix — DOWNLOAD FAILURE CLEARED; VERCEL TIMEOUT NOW BLOCKS
+## Gomyway after download-auth fix — DOWNLOAD FAILURE CLEARED; VERCEL TIMEOUT OBSERVED
 
 Workflow `.github/workflows/v143-production-gomyway-after-download-fix.yml`:
 
@@ -82,14 +82,13 @@ Workflow `.github/workflows/v143-production-gomyway-after-download-fix.yml`:
 - protected `/ai-tab`: **200**;
 - Gomyway analysis began around 15:30:10 UTC and returned **HTTP 504** around 15:32:41 UTC, approximately 151 seconds later;
 - current Production route declares `export const maxDuration = 150`;
-- prior download failure returned in about 13 seconds, so this run is materially different and is consistent with the patched worker progressing into long-running analysis before the Vercel request window expired;
-- response body was non-JSON/empty at the runner, so no analyzer payload contract was available;
-- preview was intentionally skipped because analysis did not return 200;
-- raw analysis/request/PDF cleanup: **SUCCESS**;
+- prior download failure returned in about 13 seconds, so the patched worker clearly moved beyond the old ingest failure;
+- preview skipped because analysis did not return 200;
+- raw analysis/request/PDF cleanup: SUCCESS;
 - aggregate-only artifact id **`9943447301`**;
 - reference-facing score calls: **0**.
 
-## Direct L4 Gomyway timing — IN PROGRESS / IMPORTANT LATENCY EVIDENCE
+## Direct L4 Gomyway timing — TERMINAL TIMEOUT
 
 Workflow `.github/workflows/v143-direct-l4-gomyway-timing.yml`:
 
@@ -98,23 +97,40 @@ Workflow `.github/workflows/v143-direct-l4-gomyway-timing.yml`:
 - job: **`101079989844`**;
 - same exact repository-owned Gomyway asset;
 - direct `modal.Function.from_name('dadrock-v143-ai-tab-live', 'rhythm_v143_request').remote(...)`;
-- Blob token deliberately empty because the source is public raw GitHub;
-- only Vercel request-duration is bypassed; analyzer/reference safeguards remain intact;
+- Blob token deliberately empty because source is public raw GitHub;
 - safety/source preflight: PASS;
-- Modal auth: PASS;
-- direct worker call remains **IN PROGRESS** and has already outlived the 150-second Production route window by a wide margin;
-- no aggregate result/artifact exists yet because the function call has not returned;
-- reference-facing score calls: 0.
+- direct call terminal result: **FAILED / FunctionTimeoutError**;
+- measured client wall time: **1744.461 seconds**;
+- Modal worker execution limit reached: **1200 seconds**;
+- bounded aggregate error: `Task's current input ... hit its timeout of 1200s`;
+- generated tab/event metadata unavailable because worker never returned;
+- aggregate artifact: `v143-direct-l4-gomyway-timing`, id **`9944617862`**;
+- reference-facing score calls: 0;
+- raw transcription/PDF retained: false.
 
-### Current duration/orchestration interpretation
+### Timing interpretation
 
-- Vercel Pro team plan is confirmed.
-- Current route is hard-coded to 150 seconds.
-- Current Vercel documentation states Fluid Compute is configurable up to 800 seconds on Pro/Enterprise, with an extended 1,800-second duration available only in beta for supported runtimes.
-- Because the direct Modal wall time is already many minutes and still unresolved, a modest `maxDuration` increase is not sufficient evidence-based remediation.
-- If direct L4 finishes under a supported ceiling, a bounded long-duration smoke can prove the synchronous path; if it exceeds the supported ceiling or remains operationally excessive, move Rhythm to asynchronous submit/status orchestration rather than weakening analyzer logic.
+- Vercel 150 seconds is not the root cause; it only hides the longer worker problem.
+- Standard Vercel Pro Fluid Compute up to 800 seconds would still be insufficient for this observed path.
+- The worker itself exhausts 1200 execution seconds, so async Vercel orchestration alone is not enough yet.
+- No reason exists to raise Vercel duration until the worker stage bottleneck is measured and addressed.
 
-**Interpretation boundary:** no transcription-quality verdict has been made. We are measuring infrastructure/runtime behavior only.
+## Strong code-level bottleneck candidate — must be timed before modification
+
+`analyzer/v143_seeded_separator.py` currently runs the frozen separator graph in this order:
+
+1. direct Demucs6s Guitar;
+2. BS-RoFormer Instrumental;
+3. cascade Demucs6s Guitar over the RoFormer result.
+
+Both Demucs calls run under `DEMUCS_SINGLE_THREAD_ENV`, which explicitly sets:
+
+- `CUDA_VISIBLE_DEVICES=''`;
+- `OMP_NUM_THREADS=1`;
+- `MKL_NUM_THREADS=1`;
+- oneDNN disabled / conservative CPU ISA controls.
+
+Thus the L4 worker deliberately executes both Demucs passes CPU-only and single-threaded for previously-proven deterministic repeatability, while RoFormer is allowed GPU execution. This is a strong latency candidate, but changing it would alter the frozen execution policy, so no acceleration change is authorized by inference alone.
 
 ## Fresh-chat authorization — EXPLICIT
 
@@ -127,20 +143,21 @@ It **does not** authorize reference-facing accuracy scoring, restricted GOAT acc
 - `main`: unchanged and verified;
 - Production V143 routing: ACTIVE;
 - patched V143 worker: DEPLOYED / dependency smoke GREEN;
-- public-audio immediate download failure: **no longer observed**;
-- current blocker: **synchronous request duration / unresolved direct worker latency**;
+- public-audio immediate download failure: no longer observed;
+- direct worker completion: **TIMEOUT at 1200 execution seconds**;
 - Deployment Protection: preserved;
 - reference-facing score calls: 0;
 - GOAT restricted bytes: 0;
 - GuitarSet prospective sealed reads: 0;
 - raw Gomyway transcription/PDF retained: false;
-- current real-audio verdict: **NO QUALITY VERDICT — DIRECT L4 COMPLETION/TIMING STILL PENDING**.
+- current real-audio verdict: **NO QUALITY VERDICT — WORKER RUNTIME BOTTLENECK MUST BE LOCALIZED**.
 
 ## NEXT SAFE ACTION — AUTHORIZED
 
-1. Let run `33890279981` reach a terminal state and inspect only its aggregate timing/result artifact.
-2. If the L4 worker completes successfully, use measured wall time to choose the smallest supported Production orchestration change; do not change analyzer/reference behavior.
-3. If direct runtime is <=800 seconds and repeat/warm evidence supports it, a bounded Pro `maxDuration` smoke may be tested before redesigning the UI.
-4. If direct runtime exceeds 800 seconds, hits Modal's own timeout, or is too variable for synchronous UX, implement an authenticated async Rhythm submit/status flow while preserving the existing Lead/Bass path and all four V143 anti-leakage checks.
-5. Only after Production analysis returns 200 should the structured preview be generated and aggregate quality/PDF contract metadata recorded.
-6. Report internal signs of success only; **reference-facing accuracy remains unarmed**.
+1. Add non-musical timing markers only around worker stages: download, normalize, separator/router; inside separator: input normalization, direct Demucs, RoFormer, cascade Demucs; optionally downstream candidate/transcription stages if separator completes.
+2. Compile/test instrumentation to prove it does not change separator settings, seeds, reference-free flags, or musical data flow.
+3. Redeploy only the instrumented V143 worker; do not change Vercel or HTTP bridge.
+4. Run one aggregate/log-only Gomyway diagnostic using `Function.spawn()` so the Modal call ID is known; collect only bounded `V143_STAGE` timing markers and terminal error metadata, never raw tab/events.
+5. Use measured stage timing to choose the smallest performance repair. Do **not** move Demucs to GPU, relax determinism, or increase timeouts until stage evidence supports the change and a dedicated gate protects deterministic/reference-free behavior.
+6. Only after the worker itself returns successfully should async Production orchestration or Vercel duration changes be implemented.
+7. Reference-facing accuracy remains unarmed.
