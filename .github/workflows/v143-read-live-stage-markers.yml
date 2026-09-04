@@ -1,0 +1,95 @@
+name: V143 Read Live Stage Markers
+
+on:
+  push:
+    branches:
+      - v143-contextual-prune-lobo
+    paths:
+      - '.github/workflows/v143-read-live-stage-markers.yml'
+
+permissions:
+  contents: read
+
+env:
+  MODAL_ENVIRONMENT: main
+  PYTHONUNBUFFERED: '1'
+
+jobs:
+  read-live-stage-markers:
+    runs-on: ubuntu-latest
+    timeout-minutes: 8
+    env:
+      MODAL_TOKEN_ID: ${{ secrets.MODAL_TOKEN_ID }}
+      MODAL_TOKEN_SECRET: ${{ secrets.MODAL_TOKEN_SECRET }}
+
+    steps:
+      - name: Checkout diagnostic branch
+        uses: actions/checkout@v4
+
+      - name: Set up Python 3.11
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Read only bounded V143 stage markers
+        shell: bash
+        run: |
+          set -euo pipefail
+          test -n "${MODAL_TOKEN_ID:-}"
+          test -n "${MODAL_TOKEN_SECRET:-}"
+          python -m pip install --upgrade pip >/dev/null
+          python -m pip install 'modal==1.5.5' >/dev/null
+          modal token set --token-id "$MODAL_TOKEN_ID" --token-secret "$MODAL_TOKEN_SECRET" >/dev/null
+          mkdir -p debug/v143-contextual-prune/live-stage-markers
+          python - <<'PY'
+          import json
+          import re
+          from datetime import datetime, timedelta, timezone
+          from pathlib import Path
+
+          import modal
+
+          app = modal.App.lookup('dadrock-v143-ai-tab-live', environment_name='main')
+          stage_re = re.compile(r'^V143_STAGE\s+([A-Za-z0-9_.-]+)\s+elapsed=([0-9.]+)')
+          rows = []
+          since = datetime.now(timezone.utc) - timedelta(minutes=15)
+          for entry in app.logs.fetch(since=since, source='stdout', search_text='V143_STAGE'):
+              message = str(getattr(entry, 'message', '') or '').strip()
+              match = stage_re.match(message)
+              if not match:
+                  continue
+              rows.append({
+                  'stage': match.group(1),
+                  'elapsedSeconds': float(match.group(2)),
+              })
+          # Deduplicate exact markers while preserving chronology.
+          deduped = []
+          seen = set()
+          for row in rows:
+              key = (row['stage'], row['elapsedSeconds'])
+              if key in seen:
+                  continue
+              seen.add(key)
+              deduped.append(row)
+          summary = {
+              'schemaVersion': 1,
+              'gate': 'v143-read-live-stage-markers',
+              'stageMarkers': deduped[-40:],
+              'referenceFacingAccuracyScored': False,
+              'referenceScoreCalls': 0,
+              'rawTranscriptionRetained': False,
+          }
+          Path('debug/v143-contextual-prune/live-stage-markers/summary.json').write_text(
+              json.dumps(summary, indent=2) + '\n', encoding='utf-8'
+          )
+          print(json.dumps(summary, indent=2))
+          PY
+
+      - name: Preserve aggregate markers only
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: v143-live-stage-markers
+          path: debug/v143-contextual-prune/live-stage-markers/summary.json
+          if-no-files-found: warn
+          retention-days: 7
