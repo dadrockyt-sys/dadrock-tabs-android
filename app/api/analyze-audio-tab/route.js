@@ -10,6 +10,7 @@ import { buildAiTabMixtureStructureContextV1 } from '@/lib/aiTabMixtureStructure
 import { buildAiTabDualContextShadowFusionV1 } from '@/lib/aiTabDualContextShadowFusionV1.mjs';
 import { buildAiTabMixtureStructureContextFromAnalyzerObservationV1 } from '@/lib/aiTabAnalyzerMixtureObservationAdmissionV1.mjs';
 import { buildAiTabProductPlacementCandidateCanaryV1 } from '@/lib/aiTabProductPlacementCandidateCanaryV1.mjs';
+import { buildAiTabProductPlacementPromotionV1 } from '@/lib/aiTabProductPlacementPromotionV1.mjs';
 
 export const runtime = 'nodejs';
 export const maxDuration = 150;
@@ -288,8 +289,7 @@ export async function POST(request) {
 
     // Phase 4 completes the dual-context shadow topology. Global structure comes
     // only from the validated Phase 3/8 mixture context; role/tuning/capo come
-    // only from Conditioning V1. The fused projection remains research metadata
-    // and cannot alter generatedTab/events/renderEvents/measureGrid/analysisEngine.
+    // only from Conditioning V1.
     const dualContextShadowProjection =
       buildAiTabDualContextShadowFusionV1({
         events: structuredPayload.events,
@@ -297,18 +297,28 @@ export async function POST(request) {
         mixtureStructureContext,
       });
 
-    // Phase 11 is summary-only research metadata. The canonical Product payload
-    // above is already complete and immutable before this call. The canary may
-    // observe whether the existing Phase 10 placement candidate is eligible,
-    // but it never returns candidate rows or changes Product/PDF authority.
+    // Phase 11 continues to observe the pre-promotion baseline so its historical
+    // eligibility signal remains comparable. It exposes counts only, never rows.
     const productPlacementCandidateCanary =
       await buildAiTabProductPlacementCandidateCanaryV1({
         structuredPayload,
         dualContextShadowProjection,
       });
 
+    // Phase 12 is the explicitly authorized Product/PDF placement boundary. It
+    // may promote only the already-validated Phase 10 measure/step stream, only
+    // when canonical analyzer placement is absent and the post-promotion V143
+    // quality gate passes. Any promotion-only failure returns this exact baseline.
+    const {
+      promotedPayload,
+      productPlacementPromotion,
+    } = buildAiTabProductPlacementPromotionV1({
+      structuredPayload,
+      dualContextShadowProjection,
+    });
+
     return NextResponse.json({
-      ...structuredPayload,
+      ...promotedPayload,
       rhythmCanaryActive:
         usingV143RhythmAnalyzer,
       conditioningContract,
@@ -316,6 +326,7 @@ export async function POST(request) {
       mixtureStructureContext,
       dualContextShadowProjection,
       productPlacementCandidateCanary,
+      productPlacementPromotion,
     });
   } catch (error) {
     console.error(
