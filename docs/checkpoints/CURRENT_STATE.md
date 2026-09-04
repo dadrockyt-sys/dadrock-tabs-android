@@ -16,7 +16,7 @@ Branch: `v143-contextual-prune-lobo`
 - `main` / Production untouched; never modify/merge/promote without explicit user direction.
 
 **Project Progress Score: 60%.**  
-**Test Score: PHASE 1–7 REFERENCE-BLIND/SYNTHETIC CONTRACT PASS; PHASE 8 IMPLEMENTED / VERIFICATION PENDING; ACCURACY SCORE NOT RUN.**
+**Test Score: PHASE 1–7 PASS; PHASE 8 T1–T12 + SAFETY EVIDENCE PASS; BRANCH BUILD GATE MAINTENANCE IN PROGRESS; ACCURACY SCORE NOT RUN.**
 
 ## Phases 1–7 — COMPLETE
 
@@ -28,9 +28,7 @@ Branch: `v143-contextual-prune-lobo`
 - Phase 6 `FULL_MIXTURE_WAV_ADAPTER_V1`: run `33811270987`, job `100833411365`, **SUCCESS**; W1–W10 pass.
 - Phase 7 `FULL_MIXTURE_ANALYZER_RUNTIME_SHADOW_WIRING_V1`: run `33826597803`, job `100880476202`, **SUCCESS**; S1–S12 pass.
 
-Phase 7 analyzer shadow remains append-only research metadata; Product/PDF authority is unchanged.
-
-## Phase 8 — `FULL_MIXTURE_SERVER_OBSERVATION_ADMISSION_WIRING_V1` IMPLEMENTED / VERIFICATION PENDING
+## Phase 8 — `FULL_MIXTURE_SERVER_OBSERVATION_ADMISSION_WIRING_V1` IMPLEMENTED / CONTRACT PASS
 
 User authorization received in this continuation; nothing is required from the user at this time.
 
@@ -42,30 +40,53 @@ Freeze commit: `f00e1d8161c0ebdcb8713b43b02548b07d337306`.
 
 Frozen status: **`SERVER RESEARCH-CONTEXT TRUST AUTHORIZED / PRODUCT-PDF AUTHORITY UNCHANGED / FAIL-OPEN REQUIRED / NO MODAL-GPU / NO REFERENCE SCORE`**.
 
-Implementation commits so far:
+Implementation:
 
-- `a24c68b43e7ba0dd0eeadb1ea814b6a6bfd0b87a` — added `lib/aiTabAnalyzerMixtureObservationAdmissionV1.mjs`;
-- `3f56aaf6ae67e1c4175ea7db8f3c2ba3462e50a3` — wired Phase 8 into `app/api/analyze-audio-tab/route.js`;
-- `270f217748712b53c4d73471daf555ba81b1a208` — added deterministic/static T1–T12 verifier.
+- `a24c68b43e7ba0dd0eeadb1ea814b6a6bfd0b87a` — server observation admission helper;
+- `3f56aaf6ae67e1c4175ea7db8f3c2ba3462e50a3` — route wiring with explicit null-observation baseline first;
+- `270f217748712b53c4d73471daf555ba81b1a208` — T1–T12 verifier;
+- `33e4613e3daedfd744bdcb0c54bef4583b916dea` — isolated Phase 8 workflow.
 
-Implemented server behavior:
+Successful Phase 8 evidence:
 
-- route still builds `structuredPayload` before any mixture observation trust;
-- route explicitly builds `baselineMixtureStructureContext` with `mixtureObservation: null` first;
-- helper independently admits only version-1 full-mixture/request-audio/reference-blind observations with Phase 6/7 diagnostics proving no carrier/separated-carrier/event input;
-- missing/malformed/bad-provenance observation returns the exact baseline object;
-- provenance-valid but field-invalid candidate context is caught and returns the exact baseline object;
-- admitted observations can populate only the existing research `mixtureStructureContext` through `buildAiTabMixtureStructureContextV1(...)`;
-- explicit user priors retain field-by-field precedence through the unchanged Phase 3 builder;
-- `structuredPayload`, analyzer selection/status, V143 safety gate, generated tab/events/render events/measure grid, Product/UI and PDF paths remain independent of the observation.
+- workflow `Full Mixture Server Observation Admission V1`;
+- run `33827081887`;
+- job `100881934408`;
+- tested head `33e4613e3daedfd744bdcb0c54bef4583b916dea`;
+- T1–T12 **SUCCESS**;
+- safety-evidence gate **SUCCESS**.
 
-Verification matrix T1–T12 is encoded in `analyzer/verify_full_mixture_server_observation_admission_v1.mjs` and has not yet been run in CI at this checkpoint.
+The existing AI Tab End-to-End Contract also passed on the Phase 8 route-change commit (`33827001284`). Phase 7 runtime-shadow verification also reran successfully (`33827001245`).
+
+Implemented server guarantees remain:
+
+- `structuredPayload` is built before any mixture observation trust;
+- exact baseline `mixtureStructureContext` is built first with `mixtureObservation: null`;
+- server independently admits only version-1 full-mixture/request-audio/reference-blind observations proving no reference/carrier/separated-carrier/event input;
+- missing/malformed/bad-provenance or field-invalid observations return the exact baseline research context;
+- explicit user structure priors retain field-by-field precedence;
+- admitted observation can affect only existing research `mixtureStructureContext` / shadow metadata;
+- Product/UI/PDF authority, analyzer selection/status, generated tab/events/render events/measure grid remain independent.
+
+## Branch build gate maintenance — ACTIVE
+
+The route-change commit also triggered legacy workflow `V143 AI Tab Branch Build Gate` run `33827001255`, which failed before install/build could run.
+
+Investigation established two CI-maintenance defects independent of Phase 8 authority:
+
+1. `analyzer/verify_v143_analyzer_quality_gate.mjs` is stale: its passing fixture supplies only `liveV143.referenceFree=true`, while current `buildJimmyPaigeAnalysisPayload` correctly requires the complete four-flag anti-leakage contract (`referenceFree=true`, `professionalReferenceUsed=false`, `referenceRuntimeInputUsed=false`, `runtimeLabelsRequired=false`). Its expected failure regex is also stale.
+2. The branch-build workflow commits/pushes heartbeat files during its own run and later tries to `git rebase` while verifier/build artifacts leave a dirty worktree, producing `cannot rebase: You have unstaged changes.` This caused npm install, Next build and route smoke to be skipped, so the failed run is not evidence of a Phase 8 application build failure.
+
+Artifact `9920317860` contained only compact JSON because hidden `.branch-build-gate/*.log` files were excluded by the artifact upload configuration; the job logs themselves prove analyzer verifier exit=1 and dirty-worktree rebase failure.
+
+Current branch head checked after investigation: `33e4613e3daedfd744bdcb0c54bef4583b916dea`.
 
 Safety accounting remains: external/reference assets read=false; GuitarSet=false; SplitMySong=false; GOAT restricted bytes=false; reference score calls=0; Modal invoked/deployed=false; GPU=false; Product/PDF authority changed=false; `main`/Production changed=false.
 
 ## NEXT SAFE ACTION
 
-1. Add isolated CPU-only Phase 8 GitHub Actions workflow for T1–T12.
-2. Run/inspect the workflow and tighten only implementation/verifier issues without weakening the frozen contract.
-3. On success, write the dedicated Phase 8 result checkpoint and update this file with run/job/tested-head evidence.
-4. Do not expand Product/PDF authority, deploy/invoke Modal, use GPU, read reference assets, score references, merge `main`, or promote Production in Phase 8.
+1. Repair only the stale V143 analyzer-quality fixture to match the already-current anti-leakage payload contract.
+2. Simplify/fix the branch-build gate so it does not mutate/rebase/push the branch mid-run; preserve its verifier + npm ci + Next build + local route-smoke checks and artifact evidence.
+3. Rerun the repaired branch gate and inspect actual install/build/route results.
+4. Then write the dedicated Phase 8 result checkpoint and mark Phase 8 complete in this file.
+5. Do not expand Product/PDF authority, deploy/invoke Modal, use GPU, read reference assets, score references, merge `main`, or promote Production.
