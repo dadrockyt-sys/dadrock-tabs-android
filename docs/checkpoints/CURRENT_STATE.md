@@ -16,7 +16,7 @@ Branch: `v143-contextual-prune-lobo`
 - `main` and Vercel Production remain untouched.
 
 **Project Progress Score: 74%.**  
-**Test Score: PHASE 1–13 GREEN; EXACT-BRANCH VERCEL PREVIEW READY; PROTECTED REAL-VERCEL ROUTE SMOKE IN PROGRESS; REFERENCE-FACING ACCURACY SCORE NOT RUN.**
+**Test Score: PHASE 1–13 GREEN; EXACT-BRANCH VERCEL PREVIEW READY; AUTHENTICATED PROTECTED-SMOKE MECHANISM PROVEN BUT FIRST WORKFLOW INVOCATION HIT CLI ARGUMENT-PLACEMENT BUG BEFORE APP ROUTE; REFERENCE-FACING ACCURACY SCORE NOT RUN.**
 
 ## Phases 1–11 — COMPLETE
 
@@ -42,45 +42,75 @@ Result: `docs/checkpoints/SONGSTERR_V143_BUILT_NEXT_CANONICAL_PROMOTION_HTTP_GAT
 
 User authorization remains Preview-only for `v143-contextual-prune-lobo`; Production and `main` remain outside scope.
 
-Canonical deployed application source:
-- exact deployed SHA: **`df3042180e57df1031a2a529961388a6419d1bc5`**;
-- workflow run **`33836754320`**, job **`100910747161`**;
-- deployment ID **`dpl_HEQHX2nfFhYJzsMMEsAa8ePhcQpX`**;
-- hostname `dadrock-tabs-android-a45v6ibzb-stephen-mcnally-s-projects.vercel.app`;
+Earlier canonical READY deployment:
+- exact deployed SHA `df3042180e57df1031a2a529961388a6419d1bc5`;
+- workflow run `33836754320`, job `100910747161`;
+- deployment `dpl_HEQHX2nfFhYJzsMMEsAa8ePhcQpX`;
+- READY, target `null` / Preview;
+- Production target/promotion not used.
+
+At continuation start, branch head `5cf7218f222d4f38423d6af2b559646d20d7fe18` was only two checkpoint-only commits ahead of `df304218...`; no runtime drift invalidated that Preview.
+
+## Protected real-Vercel Preview smoke — ATTEMPT 1 DIAGNOSTIC
+
+Authenticated protected-route smoke was added to `.github/workflows/v143-exact-branch-vercel-preview.yml` in commit:
+
+- **`d3439a20124e1982facde2732f18b88602e18625`** — `preview: add authenticated protected-route smoke`.
+
+This push triggered:
+- exact Preview run **`33842848820`**, job **`100928483010`** (`deploy-preview`);
+- normal branch build run **`33842848801`**, job **`100928482970`** (`verify-build-and-route-smoke`).
+
+Exact Preview deployment created by attempt 1:
+- deployment ID **`dpl_Dv8ErpW4BNEA6FEtGgKjU5rwgf1K`**;
+- URL `dadrock-tabs-android-l8viklzvp-stephen-mcnally-s-projects.vercel.app`;
+- exact metadata branch `v143-contextual-prune-lobo`;
+- exact metadata SHA `d3439a20124e1982facde2732f18b88602e18625`;
 - state / readyState **READY**;
-- target `null` = Preview/non-Production;
-- Vercel Git branch `v143-contextual-prune-lobo`;
-- Vercel Git SHA `df3042180e57df1031a2a529961388a6419d1bc5`;
-- Production target/promotion **not used**.
+- `vercel inspect` target **preview**;
+- connector target `null` = non-Production;
+- aliases = none;
+- full Vercel build completed, including 95/95 static pages and the `/ai-tab`, `/api/analyze-audio-tab`, `/api/generate-tab-preview`, and `/api/generate-tab-pdf` routes.
 
-The later branch head at continuation start was `5cf7218f222d4f38423d6af2b559646d20d7fe18`. A compare from `df304218...` to that head showed **2 commits ahead and only `docs/checkpoints/CURRENT_STATE.md` changed**. Therefore no runtime/config/workflow drift invalidated the canonical READY deployment.
+Preview run steps through deployment and inspection all passed. The new smoke step then failed **before reaching the application route** because of Vercel CLI global-option placement:
 
-## Protected real-Vercel Preview smoke — continuation state
+1. `vercel curl` authenticated successfully enough to retrieve the project;
+2. Vercel CLI reported deployment protection was active;
+3. Vercel CLI automatically generated the required deployment-protection bypass token successfully;
+4. then underlying curl received the Vercel CLI token option and failed with: **`curl: option --token=***: is unknown`**;
+5. exit code = **2**.
 
-Direct connector fetches to the protected Preview return **302** to Vercel SSO. A temporary `_vercel_share` URL is generated successfully, but the available fetch path does not retain the SSO cookie; this is a tooling/auth-cookie limitation, not an application-route failure.
+Meaning: the selected authenticated protection-bypass mechanism is valid and protection remained enabled. The failure is a workflow command-line syntax defect, not an `/ai-tab` or Product/PDF application failure. No app-route result from this attempt is accepted.
 
-Current Vercel documentation confirms `vercel curl` can issue requests to a specific Preview deployment and automatically handle deployment-protection bypass when authenticated with the existing `VERCEL_TOKEN`.
+Failed-run artifact `v143-exact-branch-vercel-preview` was preserved as artifact ID **`9925517026`**. Because the first request stopped at CLI parsing, `protectedPreviewSmokePresent=false`; no false application PASS was recorded.
 
-### Frozen implementation plan
+### Narrow correction frozen
 
-Extend only `.github/workflows/v143-exact-branch-vercel-preview.yml` on this authorized branch to add an authenticated **Preview-only** post-deploy smoke using pinned Vercel CLI `59.11.2` and the already-configured repository secret `VERCEL_TOKEN`.
+Move `--token="$VERCEL_TOKEN"` to Vercel's documented global CLI position for all three smoke calls:
 
-The smoke must:
+`vercel --token="$VERCEL_TOKEN" curl <path> --deployment "$VERCEL_PREVIEW_URL" -- <native curl flags>`
+
+No runtime/Product/transcription code change is needed or authorized by this diagnostic.
+
+After the correction, rerun the exact-SHA Preview workflow and normal branch build gate; accept only evidence tied to the corrected exact SHA.
+
+## Protected smoke contract — unchanged
+
+The corrected smoke must:
 1. preserve exact branch/SHA guards and `--prebuilt` Preview-only deployment;
-2. use `vercel curl ... --deployment "$VERCEL_PREVIEW_URL"` rather than disabling protection;
-3. verify `/ai-tab` returns 200 through authenticated protection bypass;
-4. POST a deterministic, reference-blind structured Rhythm fixture directly to `/api/generate-tab-preview` (safe equivalent to the Phase 13 canonical Product/PDF payload; no external/reference audio and no analyzer invocation required);
-5. verify HTTP 200, `application/pdf`, `%PDF`, nontrivial byte count, feature `v143-branch-preview-canary`, renderer `v143-structured-rhythm`;
+2. keep Vercel Deployment Protection enabled and use authenticated `vercel curl` bypass;
+3. verify `/ai-tab` returns 200;
+4. POST a deterministic reference-blind structured Rhythm fixture directly to `/api/generate-tab-preview` with no external/reference audio and no analyzer invocation;
+5. verify HTTP 200, `application/pdf`, `%PDF`, nontrivial bytes, feature `v143-branch-preview-canary`, renderer `v143-structured-rhythm`;
 6. verify malformed `/api/analyze-audio-tab` fails closed with 400 before analyzer invocation;
-7. optionally preserve a fallback Product/PDF check if it remains deterministic and reference-blind;
-8. write/upload exact smoke evidence with branch, SHA, deployment URL/ID if available, statuses, headers, PDF bytes, and all safety counters;
-9. never use `--prod`, aliases, promotion, Production mutation, `main`, GOAT/GuitarSet/SplitMySong, restricted/reference audio, Modal, GPU, CUDA, or reference scoring.
-
-Changing the Preview workflow file will create a newer exact branch SHA and will intentionally trigger both the exact-branch Preview workflow and the normal branch build gate. Any new Preview deployment remains non-Production and must be verified against that exact new SHA.
+7. preserve exact smoke evidence and inspect Preview runtime logs;
+8. never use `--prod`, aliases, promotion, Production mutation, `main`, GOAT/GuitarSet/SplitMySong, restricted/reference audio, Modal, GPU, CUDA, or reference scoring.
 
 ## Safety accounting through this checkpoint
 
 - exact branch/SHA Vercel Preview deployment READY = true;
+- attempt-1 deployment was Preview/non-Production = true;
+- Deployment Protection disabled = false;
 - Vercel Production deployment created/modified by this work = false;
 - Preview-to-Production promotion = false;
 - Production aliases/domains/env changed = false;
@@ -95,10 +125,9 @@ Changing the Preview workflow file will create a newer exact branch SHA and will
 
 ## NEXT SAFE ACTION
 
-1. Patch `.github/workflows/v143-exact-branch-vercel-preview.yml` with the authenticated `vercel curl` smoke above.
-2. Let the branch-scoped push triggers run; inspect the exact new Preview run and the normal branch build gate.
-3. Read preserved smoke evidence and Vercel Preview runtime logs for `/ai-tab`, `/api/analyze-audio-tab`, and `/api/generate-tab-preview`.
-4. If green, create a dedicated exact-branch protected Preview result checkpoint and update this file with exact run/job/deployment/route/PDF evidence.
-5. If a branch-only defect appears, patch only the attributable Preview/runtime issue and re-run on the exact new head.
-6. **Do not merge to `main`, assign Production aliases, use `--prod`, or promote/deploy Vercel Production without fresh explicit user authorization.**
-7. No reference-facing accuracy score until a lawful holdout exists; GOAT owner approval remains pending; terminal SplitMySong/GuitarSet phases remain closed.
+1. Apply only the global Vercel CLI `--token` placement correction in `.github/workflows/v143-exact-branch-vercel-preview.yml`.
+2. Inspect exact corrected Preview and branch-build runs on the new SHA.
+3. If protected route smoke is green, inspect Vercel Preview runtime logs for `/ai-tab`, `/api/analyze-audio-tab`, and `/api/generate-tab-preview`.
+4. Create a dedicated protected Preview result checkpoint and update this file with exact run/job/deployment/route/PDF evidence.
+5. **Do not merge to `main`, assign Production aliases, use `--prod`, or promote/deploy Vercel Production without fresh explicit user authorization.**
+6. No reference-facing accuracy score until a lawful holdout exists; GOAT owner approval remains pending; terminal SplitMySong/GuitarSet phases remain closed.
