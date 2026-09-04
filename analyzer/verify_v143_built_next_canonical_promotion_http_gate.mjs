@@ -326,7 +326,8 @@ try {
   assert.equal(analysis.events.length, 7);
   evidence.canonicalEventCount = analysis.events.length;
 
-  assert.equal(analysis.conditioningContract?.provenance?.referenceBlind, true);
+  assert.equal(analysis.conditioningContract?.referenceBlind, true);
+  assert.equal(analysis.conditioningContract?.referenceScoreAuthorized, false);
   assert.equal(
     analysis.dualContextShadowProjection?.fusionContract?.referenceBlind,
     true
