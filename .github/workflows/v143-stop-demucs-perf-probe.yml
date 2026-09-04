@@ -1,0 +1,38 @@
+name: V143 Stop Demucs Perf Probe
+
+on:
+  push:
+    branches:
+      - v143-contextual-prune-lobo
+    paths:
+      - '.github/workflows/v143-stop-demucs-perf-probe.yml'
+
+permissions:
+  contents: read
+
+jobs:
+  stop-diagnostic-app:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    env:
+      MODAL_ENVIRONMENT: main
+      MODAL_TOKEN_ID: ${{ secrets.MODAL_TOKEN_ID }}
+      MODAL_TOKEN_SECRET: ${{ secrets.MODAL_TOKEN_SECRET }}
+    steps:
+      - name: Set up Python 3.11
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Stop isolated diagnostic Modal app
+        shell: bash
+        run: |
+          set -euo pipefail
+          test -n "${MODAL_TOKEN_ID:-}"
+          test -n "${MODAL_TOKEN_SECRET:-}"
+          python -m pip install --upgrade pip >/dev/null
+          python -m pip install 'modal==1.5.5' >/dev/null
+          modal token set --token-id "$MODAL_TOKEN_ID" --token-secret "$MODAL_TOKEN_SECRET" >/dev/null
+          modal app stop dadrock-v143-demucs-perf-probe --env main --yes
+          echo 'stoppedApp=dadrock-v143-demucs-perf-probe'
+          echo 'productionAppTouched=false'
