@@ -1,7 +1,7 @@
 # CURRENT STATE — DadRock `/ai-tab`
 
 Updated: 2026-09-04 (America/Toronto)  
-Branch: `v143-contextual-prune-lobo`
+Branch checkpoint: `v143-contextual-prune-lobo`
 
 > Compact continuation checkpoint. Dedicated checkpoints under `docs/checkpoints/` remain authoritative for detailed history; omission here does not revoke earlier frozen boundaries.
 
@@ -12,11 +12,10 @@ Branch: `v143-contextual-prune-lobo`
 - Restricted GOAT bytes admitted/read = **0**; V168 prospective reference-facing score calls = **0**.
 - SplitMySong remains terminal `FAIL_CLOSED_NO_CANDIDATE`; never rerun/score/weaken/interpolate.
 - GuitarSet V3/V4/V5 remain terminal; prospective players `00/01/03` remain sealed and prospective score calls = **0**.
-- CPU only for Phase 10–13. No GPU/CUDA/Modal was used.
-- `main` and Vercel Production remain untouched.
+- No new reference-facing score was run during merge/Production smoke work.
 
-**Project Progress Score: 74%.**  
-**Test Score: PHASE 1–13 GREEN; FULL BRANCH BUILD/CANONICAL HTTP GATE GREEN; EXACT-SHA PROTECTED REAL-VERCEL PREVIEW SMOKE CLOSED GREEN; REFERENCE-FACING ACCURACY SCORE NOT RUN.**
+**Project Progress Score: 78%.**  
+**Test Score: PHASE 1–13 GREEN; PROTECTED REAL-VERCEL PREVIEW GREEN; RESOLVED MAIN INTEGRATION BUILD GREEN; PRODUCTION MERGE/DEPLOY READY; FIRST REAL-AUDIO ATTEMPT BLOCKED BEFORE ANALYSIS BY STATIC-ASSET 404; REFERENCE-FACING ACCURACY SCORE NOT RUN.**
 
 ## Phases 1–13 — CLOSED GREEN
 
@@ -30,93 +29,90 @@ Branch: `v143-contextual-prune-lobo`
 
 Detailed Phase 13 result: `docs/checkpoints/SONGSTERR_V143_BUILT_NEXT_CANONICAL_PROMOTION_HTTP_GATE_PHASE13_RESULT_20260903.md`.
 
-## Independent branch gate after protected-smoke workflow change — GREEN
-
-Application-equivalent commit `d3439a20124e1982facde2732f18b88602e18625` triggered the normal branch build gate:
-
-- run **`33842848801`**;
-- job **`100928482970`** (`verify-build-and-route-smoke`);
-- conclusion **SUCCESS**.
-
-All stages passed: analyzer-quality verifier, Preview feature verifier, locked install, full Next build, built-server readiness, built Preview route, canonical analysis -> promotion -> Product/PDF HTTP chain, evidence recording, safety enforcement, and shutdown.
-
 ## Protected real-Vercel Preview smoke — CLOSED GREEN
 
-A first diagnostic Preview attempt on `d3439a20124e1982facde2732f18b88602e18625` created READY Preview deployment `dpl_Dv8ErpW4BNEA6FEtGgKjU5rwgf1K`, but the smoke command failed before any app route because `--token` was forwarded to native curl. Vercel had already successfully generated a Deployment Protection bypass token, proving the authentication mechanism; no application result was accepted from that attempt.
-
-The corrected exact-SHA gate is authoritative:
+Authoritative corrected exact-SHA protected Preview gate:
 
 - workflow: `.github/workflows/v143-protected-preview-smoke.yml`;
-- source commit: **`12567e284d76b5c95240ad823628e311df3fc5e3`**;
-- workflow run: **`33843200741`**;
-- job: **`100929522781`** (`protected-preview-smoke`);
-- conclusion: **SUCCESS**;
-- evidence artifact ID: **`9925639186`**;
-- exact deployment ID: **`dpl_6pXryC9R7M5mJwZA7cUt2qh3bBsp`**;
-- URL: `dadrock-tabs-android-dmjmes0ly-stephen-mcnally-s-projects.vercel.app`;
-- Vercel state / readyState: **READY**;
-- Vercel inspect target: **preview**;
-- connector target: `null` = Preview/non-Production;
-- aliases: none;
-- exact metadata branch: `v143-contextual-prune-lobo`;
-- exact metadata SHA: `12567e284d76b5c95240ad823628e311df3fc5e3`;
-- build: **95/95 static pages**.
-
-### Protected HTTP evidence
-
-- authenticated Deployment Protection access method: `vercel-curl-env-token-auto-bypass`;
-- Deployment Protection disabled: **false**;
-- `GET /ai-tab`: **200**, body **38,016 bytes**;
-- `POST /api/generate-tab-preview`: **200**;
-- content type: **`application/pdf`**;
-- PDF magic: **`%PDF`**;
-- feature: **`v143-branch-preview-canary`**;
-- renderer: **`v143-structured-rhythm`**;
-- PDF bytes: **1,665,759**;
-- malformed `POST /api/analyze-audio-tab`: **400**;
-- malformed request fails before analyzer: **true**;
-- protected smoke `passed`: **true**.
-
-Vercel runtime logs scoped to the exact deployment corroborate the same sequence:
-
-- `06:11:35Z` GET `/ai-tab` -> **200**;
-- `06:11:37Z` POST `/api/generate-tab-preview` -> **200**;
-- `06:11:41Z` POST `/api/analyze-audio-tab` -> **400**.
-
-No unexpected 5xx appeared in the scoped smoke log set.
+- source commit: `12567e284d76b5c95240ad823628e311df3fc5e3`;
+- run `33843200741`, job `100929522781`: **SUCCESS**;
+- deployment `dpl_6pXryC9R7M5mJwZA7cUt2qh3bBsp`: **READY**, Preview/non-Production;
+- `GET /ai-tab`: 200, 38,016 bytes;
+- structured Product/PDF: 200, `application/pdf`, `%PDF`, renderer `v143-structured-rhythm`, 1,665,759 bytes;
+- malformed analysis: 400 before analyzer;
+- Deployment Protection remained enabled;
+- reference score calls = 0.
 
 Detailed result: `docs/checkpoints/SONGSTERR_V143_REAL_VERCEL_PROTECTED_PREVIEW_SMOKE_RESULT_20260904.md`.
 
-## Safety accounting through this checkpoint
+## User-authorized merge to `main` — COMPLETE
 
-- exact protected Vercel Preview deployment READY = true;
-- Deployment Protection disabled = false;
-- Vercel Production deployment created/modified by this work = false;
-- `--prod` used = false;
-- Preview-to-Production promotion = false;
-- Production aliases/domains/env changed = false;
-- `main` modified = false;
-- deterministic reference-blind fixture = true;
-- external/reference assets/audio used = false;
-- real analyzer invocation requested by protected smoke = false;
-- GuitarSet read = false;
-- SplitMySong read = false;
-- GOAT restricted bytes read = false;
-- reference score calls = 0;
-- Modal invoked/deployed = false;
-- GPU/CUDA = false.
+Fresh explicit authorization was received on 2026-09-04 to merge V143 to `main` and begin testing the current pipeline with the existing “Are You Gonna Go My Way” audio.
 
-## CURRENT BOUNDARY
+PR #22 could not be merged directly because the long-lived V143 branch and current `main` had materially diverged. A blind history merge was rejected as unsafe because it could overwrite newer BTS/SEO/payment/site work.
 
-The authorized **Preview-only** deployment/testing objective is complete and closed green. The branch now has real protected-Vercel evidence in addition to the built-Next canonical gate.
+A focused true two-parent resolved merge was therefore constructed from prior `main` plus the tested V143 head:
 
-Production remains outside current authority. **Do not merge to `main`, assign Production aliases, use `--prod`, or promote/deploy Vercel Production without fresh explicit user authorization.**
+- prior `main`: `68cd39c7b5901f533f2b0d570567cb15c79c66da`;
+- V143 checkpoint head used as second parent: `b83c3eef6bbb6911863d467aa97e2b24d1576cc3`;
+- resolved merge commit: **`ceeccfbbb17968c097bb56136487e7ddeaf1a5a4`**;
+- temporary validation branch: `v143-main-integration-20260904`;
+- full combined Next.js production build run `33844133380`, job `100932278526`: **SUCCESS**.
 
-Reference-facing accuracy scoring also remains disarmed until a lawful holdout exists. GOAT owner approval remains pending; terminal SplitMySong/GuitarSet boundaries remain closed.
+The resolved integration preserved current `main` BTS/SEO/payment/site wiring and overlaid the tested V143 Phase 1–13 analysis/conditioning/Product-placement path plus hardened structured Rhythm renderer internals.
+
+`main` was then fast-forwarded through the validated integration lineage. A main checkpoint commit triggered the normal Production deployment:
+
+- deployed main SHA: **`bb992d901e78ab19645f8edc8e330d5a142ebd8e`**;
+- Production deployment: **`dpl_6wzaPcM1eM5o42WmrssZu966sdSs`**;
+- state / readyState: **READY**;
+- target: **production**;
+- canonical aliases include `dadrocktabs.com` and `www.dadrocktabs.com`.
+
+Production merge/deployment was explicitly authorized by the user. No reference-facing score was authorized or run by this merge.
+
+## “Are You Gonna Go My Way” real-audio smoke — current diagnostic
+
+The authorized test audio exists in the repository on both the V143 branch and current `main`:
+
+- path: `public/jimmy-paige-midterm-v1/gomyway-midterm-source.m4a`;
+- blob SHA: **`4dd709e3fa177b4daeed71ca97f0199757729d4b`**;
+- size: **3,464,988 bytes**.
+
+A first Production smoke was launched from the non-Production integration test branch:
+
+- workflow `.github/workflows/v143-production-gomyway-smoke.yml`;
+- run `33844428487`, job `100933164743`.
+
+That attempt **did not reach `/api/analyze-audio-tab`**. It stopped at the precondition GET because `https://dadrocktabs.com/jimmy-paige-midterm-v1/gomyway-midterm-source.m4a` returned Vercel **404 NOT_FOUND** despite the file existing in GitHub `main`.
+
+Therefore:
+
+- this is a Production static-asset packaging/serving diagnostic, **not** a transcription-quality failure;
+- no pipeline success/failure conclusion is accepted from attempt 1;
+- no reference score was called;
+- no generated tab/PDF was preserved or published.
+
+The normal `/api/audio-upload` endpoint uses the browser-side Vercel Blob client protocol. For the next CI smoke, avoid adding protocol complexity and avoid republishing the recording: use the file's already-public raw GitHub URL from the current public repository as the analyzer's temporary fetch URL. Keep only aggregate quality/placement metrics; delete raw generated transcription/PDF outputs before artifact upload.
+
+## Safety / accounting through this checkpoint
+
+- merge to `main`: **authorized and complete**;
+- Production deployment: **authorized and READY**;
+- current Production aliases: expected canonical aliases only;
+- reference-facing accuracy score calls during this work: **0**;
+- GOAT restricted bytes read: **0**;
+- GuitarSet prospective sealed assets read: **0**;
+- SplitMySong terminal path reopened: **false**;
+- raw real-audio transcription/PDF preserved to artifacts: **false**;
+- first real-audio attempt reached analyzer: **false**;
+- first real-audio attempt verdict: **NO PIPELINE VERDICT — STATIC ASSET 404 PRECONDITION**.
 
 ## NEXT SAFE ACTION
 
-1. Preserve this state; no additional Preview repair is required by the completed smoke.
-2. If future work stays reference-blind, continue only with branch-local/product-quality tasks that do not cross the frozen holdout boundary.
-3. If the next desired step is Production promotion or merge to `main`, obtain fresh explicit user authorization first and perform a separately gated promotion review.
-4. If the next desired step is reference-facing scoring, wait for a lawful holdout asset; do not reopen terminal SplitMySong/GuitarSet paths or read restricted GOAT bytes without authorization.
+1. Update the non-Production production-smoke workflow to use the existing raw GitHub URL for `gomyway-midterm-source.m4a` instead of the missing Vercel static URL.
+2. POST that URL to the **merged Production** `/api/analyze-audio-tab` Rhythm path.
+3. Record only aggregate internal quality signals: analyzer status/engine, event and render-event counts, V143 quality-gate metrics, conditioning/mixture/dual-context status, Product-placement candidate/promotion counts, and fail-closed/safety fields.
+4. Pass the returned structured events through the Production preview route and record only PDF contract/byte-count metadata; do not retain or publish the generated transcription or PDF.
+5. Inspect Vercel runtime logs for the exact Production deployment.
+6. Report whether the current pipeline shows **internal signs of success**. Do not call that reference-facing accuracy unless a lawful reference-scoring protocol is separately armed.
