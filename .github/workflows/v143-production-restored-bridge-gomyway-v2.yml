@@ -1,0 +1,285 @@
+name: V143 Production Restored Bridge Gomyway V2
+
+on:
+  push:
+    branches:
+      - v143-main-integration-20260904
+    paths:
+      - '.github/workflows/v143-production-restored-bridge-gomyway-v2.yml'
+
+concurrency:
+  group: v143-production-restored-bridge-gomyway-v2
+  cancel-in-progress: false
+
+permissions:
+  contents: read
+
+env:
+  VERCEL_ORG_ID: team_qJrw8Cuze5bCEg9M3Q67XMWt
+  VERCEL_PROJECT_ID: prj_6biwsn0iHci6FHNswAUCS8UYrAqF
+  MAIN_SHA: bb992d901e78ab19645f8edc8e330d5a142ebd8e
+  V143_BRIDGE_URL: https://dadrockyt--dadrock-v143-http-bridge-analyze.modal.run
+  AUDIO_URL: https://raw.githubusercontent.com/dadrockyt-sys/dadrock-tabs-android/main/public/jimmy-paige-midterm-v1/gomyway-midterm-source.m4a
+  AUDIO_BLOB_SHA: 4dd709e3fa177b4daeed71ca97f0199757729d4b
+  NEXT_TELEMETRY_DISABLED: '1'
+  NO_COLOR: '1'
+
+jobs:
+  production-restored-bridge-gomyway-v2:
+    runs-on: ubuntu-latest
+    timeout-minutes: 50
+    env:
+      VERCEL_TOKEN: ${{ secrets.VERCEL_TOKEN }}
+
+    steps:
+      - name: Checkout exact unchanged main
+        uses: actions/checkout@v4
+        with:
+          ref: ${{ env.MAIN_SHA }}
+          fetch-depth: 1
+
+      - name: Enforce safety boundary
+        shell: bash
+        run: |
+          set -euo pipefail
+          test "$(git rev-parse HEAD)" = "$MAIN_SHA"
+          test -n "${VERCEL_TOKEN:-}"
+          echo "source=$MAIN_SHA"
+          echo "onlyEnvChange=ANALYZER_API_URL_V143"
+          echo "deploymentProtectionChanged=false"
+          echo "referenceFacingAccuracyScored=false"
+          echo "referenceScoreCalls=0"
+
+      - name: Set up Node and Vercel CLI
+        uses: actions/setup-node@v4
+        with:
+          node-version: '24'
+
+      - name: Install Vercel CLI
+        shell: bash
+        run: |
+          set -euo pipefail
+          npm install --global vercel@59.11.2
+          test "$(vercel --version | tail -n 1)" = '59.11.2'
+
+      - name: Update Production V143 bridge non-interactively
+        shell: bash
+        run: |
+          set -euo pipefail
+          vercel pull --yes --environment=production --token="$VERCEL_TOKEN" >/dev/null
+          printf '%s\n' "$V143_BRIDGE_URL" \
+            | vercel env update ANALYZER_API_URL_V143 production --yes --token="$VERCEL_TOKEN" >/dev/null
+          # Sensitive values pull as placeholders, so runtime response is the authoritative target proof.
+          vercel pull --yes --environment=production --token="$VERCEL_TOKEN" >/dev/null
+          grep -q '^ANALYZER_API_URL_V143=' .vercel/.env.production.local
+          echo 'Production V143 env update command completed with --yes.'
+
+      - name: Build exact main with current Production environment
+        shell: bash
+        run: |
+          set -euo pipefail
+          vercel build --prod --yes --token="$VERCEL_TOKEN"
+
+      - name: Deploy exact prebuilt main to Production
+        shell: bash
+        run: |
+          set -euo pipefail
+          OUT=debug/v143-contextual-prune/production-restored-bridge-gomyway-v2
+          mkdir -p "$OUT"
+          DEPLOY_OUTPUT="$(
+            vercel deploy --prebuilt --prod --yes --token="$VERCEL_TOKEN" \
+              --meta "dadrockPurpose=v143-production-restored-bridge-gomyway-v2" \
+              --meta "dadrockSourceCommit=$MAIN_SHA" \
+              2>&1 | tee "$OUT/deploy.log"
+          )"
+          URL="$(printf '%s\n' "$DEPLOY_OUTPUT" | grep -Eo 'https://[^[:space:]]+\.vercel\.app' | tail -n 1)"
+          test -n "$URL"
+          echo "PRODUCTION_DEPLOYMENT_URL=$URL" >> "$GITHUB_ENV"
+          echo "Production deployment URL: $URL"
+
+      - name: Verify Production target and protected access
+        shell: bash
+        run: |
+          set -euo pipefail
+          OUT=debug/v143-contextual-prune/production-restored-bridge-gomyway-v2
+          vercel inspect "$PRODUCTION_DEPLOYMENT_URL" --wait --token="$VERCEL_TOKEN" 2>&1 | tee "$OUT/inspect.log"
+          grep -Eqi 'target[[:space:]]+production' "$OUT/inspect.log"
+          STATUS="$(vercel curl /ai-tab --deployment "$PRODUCTION_DEPLOYMENT_URL" -- \
+            --silent --show-error --location --max-time 30 \
+            --user-agent 'Mozilla/5.0 (compatible; DadRock-V143-Production-Smoke/1.0)' \
+            --output /dev/null --write-out '%{http_code}')"
+          echo "authenticatedAiTabStatus=$STATUS"
+          test "$STATUS" = '200'
+
+      - name: Analyze Gomyway through restored V143 bridge
+        shell: bash
+        run: |
+          set -euo pipefail
+          OUT=debug/v143-contextual-prune/production-restored-bridge-gomyway-v2
+          cat > "$OUT/request.json" <<JSON
+          {
+            "audioUrl": "$AUDIO_URL",
+            "pathname": "gomyway-midterm-source.m4a",
+            "song": "Are You Gonna Go My Way",
+            "artist": "Lenny Kravitz",
+            "transcriptionType": "rhythm"
+          }
+          JSON
+
+          STATUS="$(vercel curl /api/analyze-audio-tab --deployment "$PRODUCTION_DEPLOYMENT_URL" -- \
+            --silent --show-error --location --max-time 900 \
+            --request POST \
+            --user-agent 'Mozilla/5.0 (compatible; DadRock-V143-Production-Smoke/1.0)' \
+            --header 'Content-Type: application/json' \
+            --data-binary "@$OUT/request.json" \
+            --output "$OUT/analysis.json" --write-out '%{http_code}')"
+          export STATUS PRODUCTION_DEPLOYMENT_URL MAIN_SHA AUDIO_BLOB_SHA
+
+          python3 - <<'PY'
+          import json, os
+          from pathlib import Path
+          out = Path('debug/v143-contextual-prune/production-restored-bridge-gomyway-v2')
+          raw = (out/'analysis.json').read_text(encoding='utf-8', errors='replace')
+          try:
+              a = json.loads(raw)
+          except Exception:
+              a = {}
+          status = int(os.environ['STATUS'])
+          summary = {
+              'schemaVersion': 7,
+              'gate': 'v143-production-restored-bridge-gomyway-v2',
+              'productionDeploymentUrl': os.environ['PRODUCTION_DEPLOYMENT_URL'],
+              'productionSourceCommit': os.environ['MAIN_SHA'],
+              'audioBlobSha': os.environ['AUDIO_BLOB_SHA'],
+              'protectedAccessMethod': 'vercel-curl-env-token-auto-bypass',
+              'deploymentProtectionDisabled': False,
+              'analysisStatus': status,
+              'rhythmCanaryActive': a.get('rhythmCanaryActive'),
+              'analysisEngine': a.get('analysisEngine'),
+              'generatedTabPresent': bool(str(a.get('generatedTab') or '').strip()),
+              'eventCount': len(a.get('events') or []) if isinstance(a.get('events'), list) else 0,
+              'renderEventCount': len(a.get('renderEvents') or []) if isinstance(a.get('renderEvents'), list) else 0,
+              'liveV143': {},
+              'payloadContract': {},
+              'analysisQuality': {},
+              'productPlacementPromotion': {},
+              'referenceFacingAccuracyScored': False,
+              'referenceScoreCalls': 0,
+          }
+          if status != 200:
+              summary['error'] = a.get('error') or a.get('detail') or 'unknown/non-JSON analyzer error'
+              (out/'summary.json').write_text(json.dumps(summary, indent=2)+'\n')
+              print(json.dumps(summary, indent=2))
+              raise SystemExit(f'analysis HTTP {status}')
+
+          live = a.get('liveV143') if isinstance(a.get('liveV143'), dict) else {}
+          pc = a.get('payloadContract') if isinstance(a.get('payloadContract'), dict) else {}
+          aq = a.get('analysisQuality') if isinstance(a.get('analysisQuality'), dict) else {}
+          metrics = aq.get('metrics') if isinstance(aq.get('metrics'), dict) else {}
+          promo = a.get('productPlacementPromotion') if isinstance(a.get('productPlacementPromotion'), dict) else {}
+          summary['liveV143'] = {
+              'version': live.get('version'),
+              'modalGpu': live.get('modalGpu'),
+              'rhythmOnly': live.get('rhythmOnly'),
+              'referenceFree': live.get('referenceFree'),
+              'separatorDeterministic': live.get('separatorDeterministic'),
+              'separatorSeed': live.get('separatorSeed'),
+              'demucsShifts': live.get('demucsShifts'),
+              'professionalReferenceUsed': live.get('professionalReferenceUsed'),
+              'runtimeLabelsRequired': live.get('runtimeLabelsRequired'),
+          }
+          summary['payloadContract'] = {
+              'version': pc.get('version'),
+              'referenceFree': pc.get('referenceFree'),
+              'v143RuntimeSafetyVerified': pc.get('v143RuntimeSafetyVerified'),
+              'boundedEventCount': pc.get('boundedEventCount'),
+              'renderEventCount': pc.get('renderEventCount'),
+              'analyzerQualityGatePassed': pc.get('analyzerQualityGatePassed'),
+              'structuredRenderEligible': pc.get('structuredRenderEligible'),
+          }
+          summary['analysisQuality'] = {
+              'passed': aq.get('passed'),
+              'failures': aq.get('failures'),
+              'rawEventCount': metrics.get('rawEventCount'),
+              'consideredRawEventCount': metrics.get('consideredRawEventCount'),
+              'validRenderEventCount': metrics.get('validRenderEventCount'),
+              'renderEventSurvivalPercent': metrics.get('renderEventSurvivalPercent'),
+              'playableStringFretPercent': metrics.get('playableStringFretPercent'),
+              'musicalPlacementPercent': metrics.get('musicalPlacementPercent'),
+              'pitchValidityPercent': metrics.get('pitchValidityPercent'),
+              'measureRange': metrics.get('measureRange'),
+              'stepCoverage': metrics.get('stepCoverage'),
+              'techniqueCoverage': metrics.get('techniqueCoverage'),
+              'sustainCoverage': metrics.get('sustainCoverage'),
+          }
+          summary['productPlacementPromotion'] = {
+              'promoted': promo.get('promoted'),
+              'reason': promo.get('reason'),
+              'baselineRenderEventCount': promo.get('baselineRenderEventCount'),
+              'canonicalRenderEventCount': promo.get('canonicalRenderEventCount'),
+          }
+          (out/'summary.json').write_text(json.dumps(summary, indent=2)+'\n')
+          print(json.dumps(summary, indent=2))
+          if summary['rhythmCanaryActive'] is not True:
+              raise SystemExit('V143 rhythm canary not active')
+          if summary['liveV143'].get('referenceFree') is not True:
+              raise SystemExit('V143 live result not reference-free')
+          if summary['liveV143'].get('professionalReferenceUsed') is not False:
+              raise SystemExit('unexpected professional reference flag')
+          PY
+
+      - name: Generate structured Production preview from successful analysis
+        shell: bash
+        run: |
+          set -euo pipefail
+          OUT=debug/v143-contextual-prune/production-restored-bridge-gomyway-v2
+          python3 - <<'PY'
+          import json
+          from pathlib import Path
+          out=Path('debug/v143-contextual-prune/production-restored-bridge-gomyway-v2')
+          a=json.loads((out/'analysis.json').read_text())
+          p={
+            'song':'Are You Gonna Go My Way','artist':'Lenny Kravitz','transcriptionType':'rhythm',
+            'generatedTab':a.get('generatedTab'),'tuning':a.get('tuning'),'tempo':a.get('tempo'),
+            'timeSignature':a.get('timeSignature'),'keySignature':a.get('keySignature'),
+            'analysisEngine':a.get('analysisEngine'),'renderEvents':a.get('renderEvents') or [],
+            'measureGrid':a.get('measureGrid'),'confidence':a.get('confidence'),
+            'difficulty':a.get('difficulty'),'techniques':a.get('techniques') or [],'previewSystems':4,
+          }
+          (out/'preview-request.json').write_text(json.dumps(p,separators=(',',':')))
+          PY
+          PREVIEW_STATUS="$(vercel curl /api/generate-tab-preview --deployment "$PRODUCTION_DEPLOYMENT_URL" -- \
+            --silent --show-error --location --max-time 180 --request POST \
+            --user-agent 'Mozilla/5.0 (compatible; DadRock-V143-Production-Smoke/1.0)' \
+            --header 'Content-Type: application/json' --data-binary "@$OUT/preview-request.json" \
+            --dump-header "$OUT/preview.headers" --output "$OUT/preview.pdf" --write-out '%{http_code}')"
+          export PREVIEW_STATUS
+          python3 - <<'PY'
+          import json,os
+          from pathlib import Path
+          out=Path('debug/v143-contextual-prune/production-restored-bridge-gomyway-v2')
+          s=json.loads((out/'summary.json').read_text())
+          h=(out/'preview.headers').read_text(encoding='utf-8',errors='replace')
+          pdf=(out/'preview.pdf').read_bytes()
+          vals={'contentType':'','feature':'','renderer':''}
+          for line in h.splitlines():
+              low=line.lower()
+              if low.startswith('content-type:'): vals['contentType']=line.split(':',1)[1].strip()
+              elif low.startswith('x-jimmy-paige-pdf-feature:'): vals['feature']=line.split(':',1)[1].strip()
+              elif low.startswith('x-jimmy-paige-pdf-renderer:'): vals['renderer']=line.split(':',1)[1].strip()
+          s['preview']={'status':int(os.environ['PREVIEW_STATUS']),**vals,'pdfBytes':len(pdf),'pdfMagic':pdf[:4].decode('ascii',errors='replace')}
+          (out/'summary.json').write_text(json.dumps(s,indent=2)+'\n')
+          print(json.dumps({'preview':s['preview']},indent=2))
+          if s['preview']['status'] != 200 or not vals['contentType'].lower().startswith('application/pdf') or pdf[:4] != b'%PDF' or len(pdf) <= 1000:
+              raise SystemExit('Production structured preview contract failed')
+          PY
+          rm -f "$OUT/analysis.json" "$OUT/request.json" "$OUT/preview-request.json" "$OUT/preview.pdf" "$OUT/preview.headers" "$OUT/deploy.log" "$OUT/inspect.log"
+
+      - name: Preserve aggregate evidence only
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: v143-production-restored-bridge-gomyway-v2
+          path: debug/v143-contextual-prune/production-restored-bridge-gomyway-v2/summary.json
+          if-no-files-found: warn
+          retention-days: 14
