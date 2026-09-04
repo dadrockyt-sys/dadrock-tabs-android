@@ -1,0 +1,113 @@
+name: V143 Inspect Failed Worker Logs
+
+on:
+  push:
+    branches:
+      - v143-contextual-prune-lobo
+    paths:
+      - '.github/workflows/v143-fetch-failed-worker-logs.yml'
+
+permissions:
+  contents: read
+
+env:
+  MODAL_ENVIRONMENT: main
+  PYTHONUNBUFFERED: '1'
+
+jobs:
+  inspect-failed-worker-logs:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    env:
+      MODAL_TOKEN_ID: ${{ secrets.MODAL_TOKEN_ID }}
+      MODAL_TOKEN_SECRET: ${{ secrets.MODAL_TOKEN_SECRET }}
+
+    steps:
+      - name: Checkout diagnostic branch
+        uses: actions/checkout@v4
+
+      - name: Safety boundary
+        shell: bash
+        run: |
+          set -euo pipefail
+          test -n "${MODAL_TOKEN_ID:-}"
+          test -n "${MODAL_TOKEN_SECRET:-}"
+          echo 'referenceFacingAccuracyScored=false'
+          echo 'referenceScoreCalls=0'
+          echo 'rawTranscriptionRetained=false'
+
+      - name: Set up Python 3.11
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Install and authenticate Modal
+        shell: bash
+        run: |
+          set -euo pipefail
+          python -m pip install --upgrade pip >/dev/null
+          python -m pip install 'modal==1.3.3' >/dev/null
+          modal token set --token-id "$MODAL_TOKEN_ID" --token-secret "$MODAL_TOKEN_SECRET" >/dev/null
+
+      - name: Fetch bounded aggregate model-progress logs
+        shell: bash
+        run: |
+          set -euo pipefail
+          mkdir -p debug/v143-contextual-prune/failed-worker-logs
+          python - <<'PY'
+          import json
+          import re
+          from datetime import datetime, timezone
+          from pathlib import Path
+
+          import modal
+
+          fn = modal.Function.from_name(
+              'dadrock-v143-ai-tab-live',
+              'rhythm_v143_request',
+              environment_name='main',
+          )
+          start = datetime(2026, 9, 4, 15, 35, 0, tzinfo=timezone.utc)
+          end = datetime(2026, 9, 4, 16, 5, 0, tzinfo=timezone.utc)
+          pattern = re.compile(
+              r'(demucs|roformer|separator|model|instrumental|guitar|basic pitch|timeout|error)',
+              re.IGNORECASE,
+          )
+          unsafe = re.compile(r'(generatedtab|tablature|noteevents|reference score)', re.IGNORECASE)
+          matches = []
+          total = 0
+          for entry in fn.logs.fetch(since=start, until=end):
+              total += 1
+              message = str(getattr(entry, 'message', '') or '').replace('\r', ' ').replace('\n', ' ').strip()
+              if not message or unsafe.search(message) or not pattern.search(message):
+                  continue
+              message = re.sub(r'https?://\S+', '[url]', message)
+              message = re.sub(r'/tmp/\S+', '[tmp-path]', message)
+              matches.append(message[:300])
+              if len(matches) >= 120:
+                  break
+
+          summary = {
+              'schemaVersion': 1,
+              'gate': 'v143-inspect-failed-worker-logs',
+              'windowUtc': ['2026-09-04T15:35:00Z', '2026-09-04T16:05:00Z'],
+              'totalLogEntriesScanned': total,
+              'boundedRelevantLogCount': len(matches),
+              'boundedRelevantLogs': matches,
+              'referenceFacingAccuracyScored': False,
+              'referenceScoreCalls': 0,
+              'rawTranscriptionRetained': False,
+          }
+          out = Path('debug/v143-contextual-prune/failed-worker-logs/summary.json')
+          out.write_text(json.dumps(summary, indent=2) + '\n', encoding='utf-8')
+          print(json.dumps(summary, indent=2))
+          PY
+
+      - name: Preserve aggregate logs only
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: v143-failed-worker-bounded-logs
+          path: debug/v143-contextual-prune/failed-worker-logs/summary.json
+          if-no-files-found: warn
+          retention-days: 14
