@@ -72,25 +72,43 @@ DadRock now has a real deterministic CPU byte-to-structure path:
 
 No external audio/reference corpus, GuitarSet/SplitMySong/GOAT, Modal/GPU, runtime route connection, Product/PDF mutation or Production change occurred.
 
-## Active continuation — analyzer-runtime shadow wiring
+## Phase 7 preparation — analyzer-runtime shadow wiring contract FROZEN
 
-- Resumed from this checkpoint on `v143-contextual-prune-lobo` on 2026-09-03.
-- Frozen Phases 1–6 and all scientific no-go boundaries above are reaffirmed unchanged.
-- Branch-local runtime seam inspection has started; **no analyzer/runtime/Product/Production behavior has been changed yet**.
-- This continuation is restricted to reference-blind, CPU-only shadow wiring using synthetic/static validation.
-- The intended wiring may expose the Phase 6 full-mixture observation as append-only research metadata only; existing analyzer/server trust remains authoritative and unchanged.
-- Fail-open isolation is required: shadow wiring must not make an otherwise-valid analyzer request fail.
+Pre-implementation freeze:
+
+`docs/checkpoints/SONGSTERR_FULL_MIXTURE_ANALYZER_RUNTIME_SHADOW_WIRING_V1_PREIMPLEMENTATION_FREEZE_20260903.md`
+
+Creation commit `249c51c8953c06772111b1ce769d5235c3a893e1`.
+
+Frozen status: **`REFERENCE-BLIND CPU SHADOW WIRING AUTHORIZED / ANALYZER AUTHORITY UNCHANGED / PRODUCT TRUST NOT AUTHORIZED / MODAL DEPLOY-INVOKE NOT AUTHORIZED`**.
+
+The contract fixes S1–S12 before implementation. Key invariants:
+
+- shadow input is only the already-normalized full-mixture PCM WAV;
+- call must occur after normalization and before separation/carrier/event-specific interpretation;
+- analyzer may append only research-only `mixtureObservation`;
+- canonical analyzer behavior remains authoritative and must not read/use the observation;
+- all shadow-only failures degrade to `mixtureObservation: null` and must not fail an otherwise-valid canonical request;
+- malformed/untrusted provenance also degrades to null;
+- `/api/analyze-audio-tab` must continue passing `mixtureObservation: null` into `buildAiTabMixtureStructureContextV1` during this phase;
+- Product/PDF trust, `main`, Production, Modal/GPU and reference-facing scoring remain untouched/unauthorized;
+- validation is static + deterministic synthetic/local CPU only.
+
+**No analyzer runtime code has been changed yet by Phase 7.** The freeze commit is documentation-only.
 
 ## Continuation journal — 2026-09-03
 
-- Verified branch `v143-contextual-prune-lobo` exists and re-read this checkpoint before any code mutation.
-- Reaffirmed the next safe action: freeze analyzer-runtime shadow wiring before implementation.
-- No runtime code, Product/PDF surface, server trust policy, `main`, Production, Modal/GPU, external corpus, or reference-facing score has been touched in this resumed session yet.
+- Verified branch `v143-contextual-prune-lobo` and resumed from this checkpoint.
+- Re-read the Phase 6 pre-freeze/result and confirmed `analyzer/full_mixture_wav_adapter_v1.py` is the frozen byte-to-observation adapter.
+- Re-read `app/api/analyze-audio-tab/route.js`; server-side Phase 3 still deliberately supplies `mixtureObservation: null` and therefore does not trust analyzer structure.
+- Frozen analyzer-runtime shadow wiring before implementation at commit `249c51c8953c06772111b1ce769d5235c3a893e1`.
+- No runtime code, Product/PDF surface, server trust policy, `main`, Production, Modal/GPU, external corpus, GOAT restricted bytes, or reference-facing score has been touched in this resumed session.
 
 ## NEXT SAFE ACTION
 
-1. Freeze an **analyzer-runtime shadow wiring** contract before code.
-2. The wiring may call Phase 6 on the already-normalized full-mixture WAV **before any separation/carrier-specific interpretation** and append its observation as research metadata only.
-3. Do not deploy/invoke Modal; validate wiring statically and with synthetic local fixtures only.
-4. `/api/analyze-audio-tab` must still not trust analyzer structure automatically until a separate server-side admission/wiring freeze exists.
-5. Await GOAT owner approval/denial; no SplitMySong/GuitarSet work, no Modal/GPU, and no `main`/Production changes.
+1. Identify and pin the exact branch-local analyzer runtime function where the request audio is already normalized to full-mixture PCM WAV and before any separation/carrier/event interpretation.
+2. Implement the smallest possible fail-open wrapper/call under the frozen Phase 7 contract; append only analyzer-side research `mixtureObservation`.
+3. Add static/deterministic synthetic CPU verification for S1–S12; do not deploy or invoke Modal.
+4. Keep `/api/analyze-audio-tab` Product trust unchanged (`mixtureObservation: null`) until a separate server-side admission/wiring freeze is explicitly created and authorized.
+5. Save this checkpoint after each implementation/verification milestone.
+6. Await GOAT owner approval/denial; no SplitMySong/GuitarSet work, no Modal/GPU, and no `main`/Production changes.
