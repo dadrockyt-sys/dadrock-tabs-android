@@ -1,8 +1,19 @@
 import { NextResponse } from 'next/server';
-import { projectV143RenderEvents } from '@/lib/v143RenderContract';
+import { buildJimmyPaigeAnalysisPayload } from '@/lib/jimmyPaigeAnalysisPayload';
+import {
+  AiTabConditioningValidationError,
+  buildAiTabConditioningContractV1,
+  normalizeAiTabConditioningV1,
+} from '@/lib/aiTabConditioningV1.mjs';
+import { buildAiTabConditionedShadowProjectionV1 } from '@/lib/aiTabConditionedShadowProjectionV1.mjs';
+import { buildAiTabMixtureStructureContextV1 } from '@/lib/aiTabMixtureStructureContextV1.mjs';
+import { buildAiTabDualContextShadowFusionV1 } from '@/lib/aiTabDualContextShadowFusionV1.mjs';
+import { buildAiTabMixtureStructureContextFromAnalyzerObservationV1 } from '@/lib/aiTabAnalyzerMixtureObservationAdmissionV1.mjs';
+import { buildAiTabProductPlacementCandidateCanaryV1 } from '@/lib/aiTabProductPlacementCandidateCanaryV1.mjs';
+import { buildAiTabProductPlacementPromotionV1 } from '@/lib/aiTabProductPlacementPromotionV1.mjs';
 
 export const runtime = 'nodejs';
-export const maxDuration = 600;
+export const maxDuration = 150;
 
 const ALLOWED_TRANSCRIPTION_TYPES = [
   'lead',
@@ -75,9 +86,32 @@ export async function POST(request) {
       );
     }
 
+    let conditioning;
+
+    try {
+      conditioning = normalizeAiTabConditioningV1(
+        body?.conditioning,
+        transcriptionType
+      );
+    } catch (error) {
+      if (
+        error instanceof AiTabConditioningValidationError
+      ) {
+        return NextResponse.json(
+          {
+            error: error.message,
+            code: error.code,
+          },
+          { status: 400 }
+        );
+      }
+
+      throw error;
+    }
+
     // Preserve the existing analyzer as the default for Lead/Bass and as the
-    // rollback path for Rhythm. V143 is opt-in only through its own environment
-    // variable, so adding this code cannot switch production Rhythm by itself.
+    // rollback path for Rhythm. V143 remains selected only through its own
+    // environment variable, so adding conditioning cannot switch analyzers.
     const legacyAnalyzerUrl =
       process.env.ANALYZER_API_URL;
 
@@ -146,6 +180,7 @@ export async function POST(request) {
           song,
           artist,
           transcriptionType,
+          conditioning,
         }),
         cache: 'no-store',
       }
@@ -180,79 +215,118 @@ export async function POST(request) {
       );
     }
 
-    const generatedTab = String(
-      analyzerData?.generatedTab || ''
-    ).trim();
+    // V143 Rhythm must prove the complete anti-leakage contract before its
+    // response can enter the structured product path. The payload builder below
+    // independently enforces the same contract as a second fail-closed layer.
+    const liveV143 = analyzerData?.liveV143;
+    const v143RuntimeSafetyVerified =
+      liveV143?.referenceFree === true &&
+      liveV143?.professionalReferenceUsed === false &&
+      liveV143?.referenceRuntimeInputUsed === false &&
+      liveV143?.runtimeLabelsRequired === false;
 
-    if (!generatedTab) {
-      return NextResponse.json(
-        {
-          error:
-            'The analyzer returned no tablature.',
-        },
-        { status: 502 }
-      );
-    }
-
-    // During the Rhythm canary, require the new endpoint to identify itself.
-    // If the wrong Modal target is configured, fail closed instead of silently
-    // presenting legacy output as a successful V143 result.
     if (
       usingV143RhythmAnalyzer &&
-      analyzerData?.liveV143?.referenceFree !== true
+      !v143RuntimeSafetyVerified
     ) {
       console.error(
-        'V143 rhythm analyzer identity check failed.'
+        'V143 rhythm analyzer runtime safety check failed.'
       );
 
       return NextResponse.json(
         {
           error:
-            'The V143 rhythm analyzer did not identify itself correctly.',
+            'The V143 rhythm analyzer did not satisfy the reference-free runtime safety contract.',
         },
         { status: 502 }
       );
     }
 
-    const renderEvents =
-      analyzerData?.liveV143?.referenceFree === true
-        ? projectV143RenderEvents(analyzerData?.events)
-        : [];
+    const structuredPayload =
+      buildJimmyPaigeAnalysisPayload(
+        analyzerData,
+        {
+          transcriptionType,
+          usingV143RhythmAnalyzer,
+        }
+      );
+
+    // The server-normalized conditioning contract is appended after analyzer
+    // output normalization. The analyzer is therefore never authoritative for
+    // request conditioning, reference authorization, or dual-context provenance.
+    const conditioningContract =
+      buildAiTabConditioningContractV1({
+        conditioning,
+        usingV143RhythmAnalyzer,
+      });
+
+    // Phase 2 remains the original raw-prior shadow diagnostic. It is retained
+    // for lineage/inspection only and never participates in product rendering.
+    const conditioningShadowProjection =
+      buildAiTabConditionedShadowProjectionV1({
+        events: structuredPayload.events,
+        conditioning,
+      });
+
+    // Phase 8 preserves the exact Phase 3 null-observation context as the
+    // canonical baseline. Only after that server-owned baseline succeeds may a
+    // separately admitted analyzer full-mixture observation fill unresolved
+    // research fields. Any observation-only failure returns this exact baseline.
+    const baselineMixtureStructureContext =
+      buildAiTabMixtureStructureContextV1({
+        structurePrior: conditioning.structurePrior,
+        mixtureObservation: null,
+        mixtureSource: conditioningContract.provenance.mixtureSource,
+      });
+
+    const mixtureStructureContext =
+      buildAiTabMixtureStructureContextFromAnalyzerObservationV1({
+        baselineContext: baselineMixtureStructureContext,
+        analyzerObservation: analyzerData?.mixtureObservation,
+        structurePrior: conditioning.structurePrior,
+        mixtureSource: conditioningContract.provenance.mixtureSource,
+      });
+
+    // Phase 4 completes the dual-context shadow topology. Global structure comes
+    // only from the validated Phase 3/8 mixture context; role/tuning/capo come
+    // only from Conditioning V1.
+    const dualContextShadowProjection =
+      buildAiTabDualContextShadowFusionV1({
+        events: structuredPayload.events,
+        conditioning,
+        mixtureStructureContext,
+      });
+
+    // Phase 11 continues to observe the pre-promotion baseline so its historical
+    // eligibility signal remains comparable. It exposes counts only, never rows.
+    const productPlacementCandidateCanary =
+      await buildAiTabProductPlacementCandidateCanaryV1({
+        structuredPayload,
+        dualContextShadowProjection,
+      });
+
+    // Phase 12 is the explicitly authorized Product/PDF placement boundary. It
+    // may promote only the already-validated Phase 10 measure/step stream, only
+    // when canonical analyzer placement is absent and the post-promotion V143
+    // quality gate passes. Any promotion-only failure returns this exact baseline.
+    const {
+      promotedPayload,
+      productPlacementPromotion,
+    } = buildAiTabProductPlacementPromotionV1({
+      structuredPayload,
+      dualContextShadowProjection,
+    });
 
     return NextResponse.json({
-      generatedTab,
-      tuning:
-        analyzerData?.tuning || null,
-      tempo:
-        analyzerData?.tempo || null,
-      timeSignature:
-        analyzerData?.timeSignature ||
-        null,
-      keySignature:
-        analyzerData?.keySignature ||
-        null,
-      difficulty:
-        analyzerData?.difficulty ||
-        null,
-      techniques: Array.isArray(
-        analyzerData?.techniques
-      )
-        ? analyzerData.techniques
-        : [],
-      renderEvents,
-      renderContractVersion:
-        renderEvents.length > 0 ? 1 : null,
-      confidence:
-        analyzerData?.confidence ??
-        null,
-      noteCount:
-        analyzerData?.noteCount ?? 0,
-      analysisEngine:
-        analyzerData?.liveV143?.referenceFree === true
-          ? 'v143-reference-free-rhythm'
-          : 'legacy',
+      ...promotedPayload,
       rhythmCanaryActive:
         usingV143RhythmAnalyzer,
+      conditioningContract,
+      conditioningShadowProjection,
+      mixtureStructureContext,
+      dualContextShadowProjection,
+      productPlacementCandidateCanary,
+      productPlacementPromotion,
     });
   } catch (error) {
     console.error(
