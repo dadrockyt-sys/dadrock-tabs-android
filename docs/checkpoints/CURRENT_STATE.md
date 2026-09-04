@@ -1,6 +1,6 @@
 # CURRENT STATE — DadRock `/ai-tab`
 
-Updated: 2026-09-03 UTC  
+Updated: 2026-09-03 (America/Toronto)  
 Branch: `v143-contextual-prune-lobo`
 
 > Compact continuation checkpoint. Dedicated checkpoints under `docs/checkpoints/` remain authoritative for detailed history; omission here does not revoke earlier frozen boundaries.
@@ -12,11 +12,11 @@ Branch: `v143-contextual-prune-lobo`
 - Restricted GOAT bytes admitted/read = **0**; V168 prospective reference-facing score calls = **0**.
 - SplitMySong remains terminal `FAIL_CLOSED_NO_CANDIDATE`; never rerun/score/weaken/interpolate.
 - GuitarSet V3/V4/V5 remain terminal; development hold remains frozen; prospective players `00/01/03` remain sealed and prospective score calls = **0**.
-- CPU only unless freshly and specifically needed. No GPU/CUDA/Modal was needed for Phase 8.
+- CPU only unless freshly and specifically needed. No GPU/CUDA/Modal is needed for Phase 9.
 - `main` / Production untouched; never modify/merge/promote without explicit user direction.
 
 **Project Progress Score: 60%.**  
-**Test Score: PHASE 1–8 REFERENCE-BLIND/SYNTHETIC CONTRACT PASS; FULL NEXT BUILD + LOCAL ROUTE SMOKE PASS; ACCURACY SCORE NOT RUN.**
+**Test Score: PHASE 1–8 REFERENCE-BLIND/SYNTHETIC CONTRACT PASS; FULL NEXT BUILD + LOCAL ROUTE SMOKE PASS; PHASE 9 FROZEN / VERIFICATION NOT YET RUN; ACCURACY SCORE NOT RUN.**
 
 ## Phases 1–7 — COMPLETE
 
@@ -29,8 +29,6 @@ Branch: `v143-contextual-prune-lobo`
 - Phase 7 `FULL_MIXTURE_ANALYZER_RUNTIME_SHADOW_WIRING_V1`: run `33826597803`, job `100880476202`, **SUCCESS**; S1–S12 pass.
 
 ## Phase 8 — `FULL_MIXTURE_SERVER_OBSERVATION_ADMISSION_WIRING_V1` COMPLETE
-
-User authorization received in this continuation; nothing is required from the user at this time.
 
 Pre-implementation freeze:
 
@@ -79,7 +77,7 @@ Server guarantees:
 
 ## Branch build gate — COMPLETE / GREEN
 
-Maintenance commits needed to make the legacy gate deterministic/current:
+Maintenance commits:
 
 - `d315fd3c29837ecc6fe1c2a87baeb76c6256db18` — refreshed V143 analyzer-quality fixture to the current four-flag anti-leakage contract;
 - `1cd60a689264894e700da89bcf7d7de1971b7a60` — made `V143 AI Tab Branch Build Gate` read-only/deterministic;
@@ -93,15 +91,7 @@ Final branch integration gate:
 - tested source commit `745899173e4dd5205cd9b9b6b820a2943bb64866`;
 - conclusion **SUCCESS**.
 
-Every material step passed:
-
-- analyzer-quality verifier — SUCCESS;
-- Preview feature verifier — SUCCESS;
-- locked `npm ci --ignore-scripts` — SUCCESS;
-- full Next.js 16.1.6 production build — SUCCESS;
-- built server readiness — SUCCESS;
-- built Preview route smoke — SUCCESS;
-- compact safety evidence — SUCCESS.
+Every material step passed: analyzer-quality verifier; Preview feature verifier; locked `npm ci --ignore-scripts`; full Next.js 16.1.6 production build; built server readiness; built Preview route smoke; compact safety evidence.
 
 Built-route evidence includes `/ai-tab` HTTP 200, structured V143 Preview renderer success, structured/fallback PDF generation success, actual Vercel Preview deployment=false, and Production modified=false.
 
@@ -109,18 +99,35 @@ A localhost MongoDB warning occurred during database-backed sitemap generation, 
 
 ## Current trust boundary
 
-The full research path is now connected:
+The full research path is connected:
 
 `normalized full-mixture WAV -> Phase 6 estimator -> analyzer-side Phase 7 mixtureObservation -> independent server Phase 8 admission -> mixtureStructureContext -> dualContextShadowProjection`.
 
 That path remains **research metadata only**. `structuredPayload`, generated tab/events/render events/measure grid, Product UI and PDF authority remain independent.
 
-Safety accounting: external/reference assets read=false; GuitarSet=false; SplitMySong=false; GOAT restricted bytes=false; reference score calls=0; Modal invoked/deployed=false; GPU=false; actual Vercel Preview deployment=false; Product/PDF authority changed=false; `main`/Production changed=false.
+## Phase 9 — `FULL_MIXTURE_ADMITTED_SHADOW_EFFECT_VALIDATION_V1` FROZEN / IMPLEMENTATION PENDING
+
+Pre-implementation freeze:
+
+`docs/checkpoints/SONGSTERR_FULL_MIXTURE_ADMITTED_SHADOW_EFFECT_VALIDATION_V1_PREIMPLEMENTATION_FREEZE_20260903.md`
+
+Freeze commit: `eb61fa0151b3491f492804a6d29d9b0788ef762d`.
+
+Frozen status: **`SHADOW EFFECT VALIDATION AUTHORIZED / VERIFIER-ONLY PREFERRED / PRODUCT-PDF AUTHORITY UNCHANGED / SYNTHETIC REFERENCE-BLIND ONLY / NO MODAL-GPU / NO REFERENCE SCORE / MAIN+PRODUCTION UNTOUCHED`**.
+
+Purpose: prove, using only deterministic synthetic/reference-blind fixtures, whether an admitted Phase 8 full-mixture observation produces the expected deterministic timing/measure/subdivision changes in the existing shadow-only `dualContextShadowProjection`, while preserving instrument authority, explicit user-prior precedence, rollback parity, source-event immutability, and Product/PDF isolation.
+
+No Production code change is expected for Phase 9. Preferred implementation is an isolated verifier + compact evidence + CPU-only GitHub Actions workflow.
+
+Required validation matrix is frozen at 12 items covering baseline unresolved parity, trusted complete-observation effect, determinism, instrument-authority invariance, source-event immutability, explicit-prior precedence, rejected/malformed rollback, partial-observation boundedness, feel boundedness, research-only contracts, and Product/PDF static isolation.
+
+Safety accounting remains: external/reference assets read=false; GuitarSet=false; SplitMySong=false; GOAT restricted bytes=false; reference score calls=0; Modal invoked/deployed=false; GPU=false; actual Vercel Preview deployment=false; Product/PDF authority changed=false; `main`/Production changed=false.
 
 ## NEXT SAFE ACTION
 
-1. Preserve the completed Phase 8 boundary; no user action is required now.
-2. Before allowing `dualContextShadowProjection` or `mixtureStructureContext` to influence canonical generated events/tabs/Product/PDF output, freeze a separate Product-authority experiment contract with explicit baseline parity, confidence/admission, rollback, and fail-closed/fail-open boundaries.
-3. Prefer a branch-local synthetic/reference-blind shadow-effect experiment before any Product-authority promotion so the system can prove useful deterministic behavior without exposing Product output to unvalidated structure estimates.
-4. Do not merge `main` or promote Production merely because research wiring/build gates are green; those remain separate release decisions.
-5. Await GOAT owner approval/denial; no SplitMySong/GuitarSet reruns or reference-facing scoring.
+1. Add the Phase 9 deterministic synthetic/reference-blind verifier only; do not modify canonical analyzer/Product/PDF code unless the verifier exposes a research-helper defect that is separately justified.
+2. Encode the frozen 12-item matrix and compact safety evidence.
+3. Add an isolated CPU-only, read-only GitHub Actions workflow and run it on `v143-contextual-prune-lobo`.
+4. Inspect any failure without weakening the frozen contract; rollback remains the Phase 8-complete null-observation baseline.
+5. If green, write the Phase 9 result checkpoint and update this file with run/job/tested-head evidence.
+6. Do not deploy/invoke Modal, use GPU, read reference assets, score references, merge `main`, promote Production, or expand Product/PDF authority.
