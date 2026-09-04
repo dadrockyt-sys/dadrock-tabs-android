@@ -14,7 +14,7 @@ Branch checkpoint: `v143-contextual-prune-lobo`
 - No reference-facing accuracy scoring has been run during Production/Modal performance work.
 
 **Project Progress Score: 79%.**  
-**Test Score: PHASE 1–13 GREEN; PROTECTED REAL-VERCEL PREVIEW GREEN; MAIN MERGE/BUILD/DEPLOY GREEN; PRODUCTION V143 ROUTING ACTIVE; DOWNLOAD-AUTH FIX GREEN; FULL GOMYWAY WORKER TIMES OUT AT 1200S; 725.802S STAGE GATE LOCALIZES BOTTLENECK TO FIRST DIRECT DEMUCS CPU/SINGLE-THREAD PASS; ORIGINAL 12S SEQUENTIAL CPU1-vs-CPU4 GATE CANCELLED; DIAGNOSTIC APP STOPPED; BOUNDED 6S CONCURRENT MICRO-PROBE TERMINATED SAFELY WITH `RemoteError` AFTER AN EXTERNAL APP STOP, SO NO VALID CPU1/CPU4 PERFORMANCE VERDICT YET; RETAINED-CALL READ-ONLY INSPECTION ARMED; REFERENCE-FACING ACCURACY SCORE NOT RUN.**
+**Test Score: PHASE 1–13 GREEN; PROTECTED REAL-VERCEL PREVIEW GREEN; MAIN MERGE/BUILD/DEPLOY GREEN; PRODUCTION V143 ROUTING ACTIVE; DOWNLOAD-AUTH FIX GREEN; FULL GOMYWAY WORKER TIMES OUT AT 1200S; 725.802S STAGE GATE LOCALIZES BOTTLENECK TO FIRST DIRECT DEMUCS CPU/SINGLE-THREAD PASS; ORIGINAL 12S SEQUENTIAL CPU1-vs-CPU4 GATE CANCELLED; DIAGNOSTIC APP STOPPED; BOUNDED 6S CONCURRENT MICRO-PROBE TERMINATED SAFELY WITH `RemoteError` AFTER AN EXTERNAL APP STOP, SO NO VALID CPU1/CPU4 PERFORMANCE VERDICT YET; RETAINED-CALL READ-ONLY INSPECTION GREEN WITH ALL 4 CALLS TERMINAL `RemoteError` AND NO RECOVERABLE AGGREGATE; SINGLE 6S FROZEN BASELINE IS NEXT; REFERENCE-FACING ACCURACY SCORE NOT RUN.**
 
 ## Stable Production state
 
@@ -126,21 +126,21 @@ The only valid terminal conclusions are:
 4. no Production system was touched;
 5. CPU1-vs-CPU4 performance remains unresolved.
 
-## Retained-call inspection — READ ONLY / ARMED
+## Retained-call inspection — TERMINAL / GREEN READ-ONLY
 
-GitHub Actions job-log reinspection confirmed the timing above and exposed no per-call completion aggregate before the external app stop.
-
-A read-only retained-call inspector has now been added:
+GitHub Actions run **`33913626199`**, job **`101155625317`**, completed successfully using the read-only inspector.
 
 - script `.github/scripts/v143_demucs_retained_call_inspect.py`, commit `22e6556ef20c372625f3fef15537cf3ad6192164`;
 - workflow `.github/workflows/v143-demucs-retained-call-inspect.yml`, trigger commit `81be5bbe74ac869ed3d9dd11f9d6de3d0a6cc66d`;
-- uses only `modal.FunctionCall.from_id(...).get(...)` against the four existing call IDs;
-- explicitly contains no `.spawn(...)`, `.remote(...)`, or `modal deploy` path;
+- artifact id **`9952305301`**;
+- all four retained call IDs resolve to terminal type **`RemoteError`**;
+- `completedAggregateAvailable=false` for all four;
+- no timing/hash aggregate is recoverable from the interrupted four-call run;
 - new audio execution = false; new function calls spawned = 0;
-- preserves aggregate-only timing/hash/status fields if an already-completed result is recoverable;
-- reference score calls = 0; raw audio/stem retention = false; Production/Vercel changes = false.
+- reference score calls = 0; raw audio/stem retention = false;
+- Production worker/bridge/Vercel changed = false.
 
-No new Demucs baseline should be launched until this retained-call inspection is terminal and interpreted.
+This closes the retained-evidence step. It does **not** prove the frozen 6-second baseline is too slow; the prior run remains confounded by the external app stop.
 
 ## Fresh-chat authorization — EXPLICIT
 
@@ -162,9 +162,9 @@ It **does not** authorize reference-facing accuracy scoring, restricted GOAT acc
 
 ## NEXT SAFE ACTION — AUTHORIZED
 
-1. Let the read-only retained-call inspection reach a terminal result and inspect its aggregate artifact/logs; do not start new audio execution before that evidence is interpreted.
-2. If no individual completed aggregate is recoverable, replace the multi-call gate with a **single 6-second frozen baseline call** with an explicit short hard deadline, explicit progress markers, remote cancellation, and `always()` app cleanup.
+1. Build/run a **single 6-second frozen baseline call** in the isolated diagnostic app only.
+2. Give it an explicit **300-second hard collection deadline**, explicit local/remote progress markers, `call.cancel(terminate_containers=True)` on failure/timeout, aggregate-only output, and `always()` app cleanup.
 3. Only if that single baseline completes cleanly should CPU4 be tested in a separate single-call run.
-4. If a 6-second frozen run cannot complete within the short bounded window, stop pursuing CPU thread-count tweaks and move to a more structural acceleration candidate (explicit CPU resource allocation and deterministic threading, then GPU Demucs if needed) under exact-hash gates.
+4. If the 6-second frozen run cannot complete within the 300-second bounded window, stop pursuing CPU thread-count tweaks and move to a more structural acceleration candidate (explicit CPU resource allocation and deterministic threading, then GPU Demucs if needed) under exact-hash gates.
 5. Do not change Production model, seed, shifts, reference boundaries, Vercel duration, or UI orchestration until a dedicated deterministic/reference-free gate demonstrates material speedup.
 6. Reference-facing accuracy remains unarmed.
