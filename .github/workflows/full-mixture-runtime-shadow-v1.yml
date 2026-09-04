@@ -1,0 +1,58 @@
+name: Full Mixture Runtime Shadow V1
+
+on:
+  workflow_dispatch:
+  push:
+    branches:
+      - v143-contextual-prune-lobo
+    paths:
+      - '.github/workflows/full-mixture-runtime-shadow-v1.yml'
+      - 'analyzer/modal_analyzer.py'
+      - 'analyzer/full_mixture_runtime_shadow_v1.py'
+      - 'analyzer/full_mixture_wav_adapter_v1.py'
+      - 'analyzer/full_mixture_auto_structure_estimator_v1.py'
+      - 'analyzer/verify_full_mixture_runtime_shadow_v1.py'
+      - 'app/api/analyze-audio-tab/route.js'
+
+permissions:
+  contents: read
+
+jobs:
+  verify-runtime-shadow:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+
+    steps:
+      - name: Checkout isolated branch
+        uses: actions/checkout@v4
+        with:
+          ref: v143-contextual-prune-lobo
+
+      - name: Verify Phase 7 S1-S12
+        env:
+          FULL_MIXTURE_RUNTIME_SHADOW_V1_RESULT_PATH: debug/v143-contextual-prune/full-mixture-runtime-shadow-v1.json
+        run: python3 analyzer/verify_full_mixture_runtime_shadow_v1.py
+
+      - name: Enforce safety evidence
+        run: |
+          python3 - <<'PY'
+          import json
+          from pathlib import Path
+
+          data = json.loads(Path('debug/v143-contextual-prune/full-mixture-runtime-shadow-v1.json').read_text(encoding='utf-8'))
+          if data.get('passed') is not True:
+              raise SystemExit('Phase 7 runtime shadow contract failed')
+          if len(data.get('tests', {})) != 12 or set(data['tests'].values()) != {'PASS'}:
+              raise SystemExit('Phase 7 S1-S12 evidence incomplete')
+          for key in (
+              'externalAudioAssetsUsed', 'guitarSetRead', 'splitMySongRead',
+              'goatRestrictedBytesRead', 'modalInvoked', 'gpuUsed',
+              'serverProductTrustChanged', 'productPdfModifiedByRuntimeHook',
+              'productionModified', 'productionPromotionAuthorized',
+          ):
+              if data.get(key) is not False:
+                  raise SystemExit(f'Safety invariant failed: {key}')
+          if data.get('referenceScoreCalls') != 0:
+              raise SystemExit('Reference score calls must remain zero')
+          print('PHASE 7 FULL MIXTURE RUNTIME SHADOW S1-S12 PASSED')
+          PY
