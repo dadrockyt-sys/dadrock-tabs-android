@@ -14,7 +14,7 @@ Branch checkpoint: `v143-contextual-prune-lobo`
 - No reference-facing score was run during merge/Production/Modal work.
 
 **Project Progress Score: 78%.**  
-**Test Score: PHASE 1–13 GREEN; PROTECTED REAL-VERCEL PREVIEW GREEN; MAIN MERGE/BUILD/DEPLOY GREEN; PRODUCTION V143 RHYTHM ROUTING ACTIVE; CORRECT HTTP BRIDGE ACTIVE; DOWNLOAD-AUTH FIX GREEN AND DEPLOYED; REAL-AUDIO NOW PASSES THE PRIOR IMMEDIATE DOWNLOAD-FAILURE WINDOW BUT HITS THE 150-SECOND VERCEL FUNCTION LIMIT; NEXT = DIRECT L4 COMPLETION/TIMING SMOKE; REFERENCE-FACING ACCURACY SCORE NOT RUN.**
+**Test Score: PHASE 1–13 GREEN; PROTECTED REAL-VERCEL PREVIEW GREEN; MAIN MERGE/BUILD/DEPLOY GREEN; PRODUCTION V143 RHYTHM ROUTING ACTIVE; CORRECT HTTP BRIDGE ACTIVE; DOWNLOAD-AUTH FIX GREEN AND DEPLOYED; REAL-AUDIO CLEARS PRIOR DOWNLOAD FAILURE BUT EXCEEDS 150-SECOND VERCEL WINDOW; DIRECT L4 TIMING RUN IS STILL ACTIVE WELL BEYOND THAT WINDOW; REFERENCE-FACING ACCURACY SCORE NOT RUN.**
 
 ## Closed green foundation
 
@@ -29,7 +29,8 @@ Branch checkpoint: `v143-contextual-prune-lobo`
 - target/state: Production / READY;
 - aliases include `dadrocktabs.com` and `www.dadrocktabs.com`;
 - V143 URL: `https://dadrockyt--dadrock-v143-http-bridge-analyze.modal.run`;
-- Deployment Protection remains enabled.
+- Deployment Protection remains enabled;
+- Vercel team plan verified as **Pro**.
 
 ## Authorized existing Gomyway audio
 
@@ -88,7 +89,32 @@ Workflow `.github/workflows/v143-production-gomyway-after-download-fix.yml`:
 - aggregate-only artifact id **`9943447301`**;
 - reference-facing score calls: **0**.
 
-**Interpretation boundary:** this is not yet a transcription-quality verdict. It is strong evidence that the public-audio download blocker was cleared and the next bottleneck is request duration/orchestration. Direct worker completion must be proven before changing the Vercel time budget.
+## Direct L4 Gomyway timing — IN PROGRESS / IMPORTANT LATENCY EVIDENCE
+
+Workflow `.github/workflows/v143-direct-l4-gomyway-timing.yml`:
+
+- workflow commit: **`dca32a608a62021336542d67179a89253746de32`**;
+- run: **`33890279981`**;
+- job: **`101079989844`**;
+- same exact repository-owned Gomyway asset;
+- direct `modal.Function.from_name('dadrock-v143-ai-tab-live', 'rhythm_v143_request').remote(...)`;
+- Blob token deliberately empty because the source is public raw GitHub;
+- only Vercel request-duration is bypassed; analyzer/reference safeguards remain intact;
+- safety/source preflight: PASS;
+- Modal auth: PASS;
+- direct worker call remains **IN PROGRESS** and has already outlived the 150-second Production route window by a wide margin;
+- no aggregate result/artifact exists yet because the function call has not returned;
+- reference-facing score calls: 0.
+
+### Current duration/orchestration interpretation
+
+- Vercel Pro team plan is confirmed.
+- Current route is hard-coded to 150 seconds.
+- Current Vercel documentation states Fluid Compute is configurable up to 800 seconds on Pro/Enterprise, with an extended 1,800-second duration available only in beta for supported runtimes.
+- Because the direct Modal wall time is already many minutes and still unresolved, a modest `maxDuration` increase is not sufficient evidence-based remediation.
+- If direct L4 finishes under a supported ceiling, a bounded long-duration smoke can prove the synchronous path; if it exceeds the supported ceiling or remains operationally excessive, move Rhythm to asynchronous submit/status orchestration rather than weakening analyzer logic.
+
+**Interpretation boundary:** no transcription-quality verdict has been made. We are measuring infrastructure/runtime behavior only.
 
 ## Fresh-chat authorization — EXPLICIT
 
@@ -102,19 +128,19 @@ It **does not** authorize reference-facing accuracy scoring, restricted GOAT acc
 - Production V143 routing: ACTIVE;
 - patched V143 worker: DEPLOYED / dependency smoke GREEN;
 - public-audio immediate download failure: **no longer observed**;
-- current blocker: **HTTP 504 at the route's 150-second duration boundary**;
+- current blocker: **synchronous request duration / unresolved direct worker latency**;
 - Deployment Protection: preserved;
 - reference-facing score calls: 0;
 - GOAT restricted bytes: 0;
 - GuitarSet prospective sealed reads: 0;
 - raw Gomyway transcription/PDF retained: false;
-- current real-audio verdict: **NO QUALITY VERDICT — ANALYSIS OUTLIVES CURRENT VERCEL REQUEST WINDOW**.
+- current real-audio verdict: **NO QUALITY VERDICT — DIRECT L4 COMPLETION/TIMING STILL PENDING**.
 
 ## NEXT SAFE ACTION — AUTHORIZED
 
-1. Invoke deployed `dadrock-v143-ai-tab-live / rhythm_v143_request` directly from a GitHub Actions diagnostic using the same public Gomyway URL and empty Blob token, bypassing only the Vercel request-duration layer.
-2. Measure wall-clock completion and retain only aggregate metadata: completed/error, generatedTab present, event count, placement-related counts available in the worker result, and the four `liveV143` anti-leakage flags. Delete the raw worker response immediately after aggregation.
-3. If the L4 worker completes successfully, choose the smallest supported Vercel duration/orchestration adjustment based on measured runtime; do not weaken analyzer/reference safety.
-4. If the worker itself fails, diagnose that exact downstream stage before changing Vercel duration.
+1. Let run `33890279981` reach a terminal state and inspect only its aggregate timing/result artifact.
+2. If the L4 worker completes successfully, use measured wall time to choose the smallest supported Production orchestration change; do not change analyzer/reference behavior.
+3. If direct runtime is <=800 seconds and repeat/warm evidence supports it, a bounded Pro `maxDuration` smoke may be tested before redesigning the UI.
+4. If direct runtime exceeds 800 seconds, hits Modal's own timeout, or is too variable for synchronous UX, implement an authenticated async Rhythm submit/status flow while preserving the existing Lead/Bass path and all four V143 anti-leakage checks.
 5. Only after Production analysis returns 200 should the structured preview be generated and aggregate quality/PDF contract metadata recorded.
 6. Report internal signs of success only; **reference-facing accuracy remains unarmed**.
