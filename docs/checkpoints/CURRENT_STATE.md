@@ -11,10 +11,10 @@ Branch checkpoint: `v143-contextual-prune-lobo`
 - GOAT restricted bytes admitted/read = **0**; V168 prospective reference-facing score calls = **0**.
 - SplitMySong remains terminal `FAIL_CLOSED_NO_CANDIDATE`; never rerun/score/weaken/interpolate.
 - GuitarSet V3/V4/V5 remain terminal; prospective players `00/01/03` remain sealed; prospective score calls = **0**.
-- No reference-facing score was run during merge/Production/Modal work.
+- No reference-facing accuracy scoring has been run during Production/Modal performance work.
 
 **Project Progress Score: 79%.**  
-**Test Score: PHASE 1–13 GREEN; PROTECTED REAL-VERCEL PREVIEW GREEN; MAIN MERGE/BUILD/DEPLOY GREEN; PRODUCTION V143 ROUTING ACTIVE; DOWNLOAD-AUTH FIX GREEN; DIRECT L4 GOMYWAY TIMES OUT AT WORKER 1200S; 725.802S STAGE GATE LOCALIZES BOTTLENECK TO FIRST DIRECT DEMUCS CPU/SINGLE-THREAD PASS; 12S CPU1-vs-CPU4 STRICT HASH GATE RUNNING; DORMANT 6S CONCURRENT FALLBACK PREPARED; REFERENCE-FACING ACCURACY SCORE NOT RUN.**
+**Test Score: PHASE 1–13 GREEN; PROTECTED REAL-VERCEL PREVIEW GREEN; MAIN MERGE/BUILD/DEPLOY GREEN; PRODUCTION V143 ROUTING ACTIVE; DOWNLOAD-AUTH FIX GREEN; FULL GOMYWAY WORKER TIMES OUT AT 1200S; 725.802S STAGE GATE LOCALIZES BOTTLENECK TO FIRST DIRECT DEMUCS CPU/SINGLE-THREAD PASS; ORIGINAL 12S SEQUENTIAL CPU1-vs-CPU4 GATE CANCELLED AFTER RUNAWAY/LOOP-LIKE BEHAVIOR; ISOLATED APP STOPPED; BOUNDED 6S CONCURRENT MICRO-PROBE ACTIVE WITH 300S DEADLINE + REMOTE CANCELLATION + ALWAYS-CLEANUP; REFERENCE-FACING ACCURACY SCORE NOT RUN.**
 
 ## Stable Production state
 
@@ -23,168 +23,122 @@ Branch checkpoint: `v143-contextual-prune-lobo`
 - aliases include `dadrocktabs.com` / `www.dadrocktabs.com`;
 - V143 bridge: `https://dadrockyt--dadrock-v143-http-bridge-analyze.modal.run`;
 - Deployment Protection remains enabled;
-- Vercel team plan: Pro;
-- Production runtime has proven `usingV143RhythmAnalyzer=true`.
+- Production runtime has proven `usingV143RhythmAnalyzer=true`;
+- **Production worker, bridge, and Vercel configuration remain untouched by the current Demucs diagnostics.**
 
-## Authorized existing Gomyway audio
+## Authorized Gomyway source
 
 - `public/jimmy-paige-midterm-v1/gomyway-midterm-source.m4a`;
 - blob SHA `4dd709e3fa177b4daeed71ca97f0199757729d4b`;
 - 3,464,988 bytes;
-- diagnostic source: public raw GitHub `main` asset.
+- diagnostic source is public raw GitHub `main` asset;
+- raw diagnostic clips/stems are ephemeral only.
 
-## Download-auth repair — GREEN / DEPLOYED
+## Decisive performance evidence
 
-- Blob bearer now forwards only to HTTPS `blob.vercel-storage.com` / subdomains;
-- raw GitHub/public origins receive no Blob credential;
-- `liveV143.referenceRuntimeInputUsed=false` added for current `main` safety contract;
-- predeploy gate run `33889340784`, job `101076898337`: SUCCESS;
-- patched worker deploy run `33889490536`, job `101077392412`: SUCCESS;
-- reference score calls: 0.
+### Full direct worker — terminal timeout
 
-## Real-audio timing evidence
-
-### Production request after download fix
-
-- run `33889779953`, job `101078353122`;
-- protected `/ai-tab`: 200;
-- analysis returned HTTP 504 at ~151 seconds, matching `export const maxDuration = 150`;
-- old immediate download failure was no longer observed;
-- raw analysis/request/PDF deleted; aggregate artifact only; reference score calls 0.
-
-### Direct L4 Gomyway timing — TERMINAL
-
-- workflow `.github/workflows/v143-direct-l4-gomyway-timing.yml`;
-- run `33890279981`, job `101079989844`;
+- workflow run `33890279981`, job `101079989844`;
 - direct `dadrock-v143-ai-tab-live / rhythm_v143_request` call;
-- terminal: **FunctionTimeoutError**;
-- worker execution timeout: **1200 seconds**;
-- measured client wall time: **1744.461 seconds** including queue/startup;
-- aggregate artifact only; raw transcription/PDF retained false; reference score calls 0.
+- worker timeout: **1200 seconds**;
+- client wall time including queue/startup: **1744.461 seconds**;
+- reference score calls: 0; raw outputs retained: false.
 
-**Conclusion:** Vercel’s 150-second limit is not the root problem. The worker itself does not finish within 20 execution minutes, so merely raising Vercel duration or adding async polling would not yet make the pipeline successful.
+### Stage localization — terminal
 
-## Stage localization — TERMINAL / decisive first-stage evidence
-
-Instrumentation-only `V143_STAGE` markers were added around download, normalization, separator stages and request lifecycle without changing models, seeds, execution devices, thread settings, musical data flow, or reference-free flags.
-
-Workflow `V143 Stage Timing Localization`:
-
-- source commit `ba937b01dd71fe828b4fecb3a7c067481177dc6d`;
-- run **`33893769468`**, job **`101091458986`**: SUCCESS as a bounded diagnostic;
+- run `33893769468`, job `101091458986`: SUCCESS as bounded diagnostic;
 - function call `fc-01M1PK37V22D6NPP741GEJDT6Y`;
-- diagnostic wall time: **725.802 seconds**;
-- terminal type: `diagnostic-window-ended`;
+- diagnostic wall: **725.802 seconds**;
 - `completedWithinDiagnosticWindow=false`;
-- aggregate artifact `v143-stage-timing-localize`, id **`9945355282`**;
-- execution policy changed: false;
-- reference-facing score calls: 0;
-- raw transcription retained: false.
+- last decisive separator marker: `separator.direct-demucs.start` at ~0.248 s;
+- no `separator.direct-demucs.done` before diagnostic window ended;
+- conclusion: first direct Demucs6s CPU/single-thread pass is the current bottleneck before BS-RoFormer/cascade/tab/PDF stages.
 
-Final markers included:
-
-```text
-worker.start                           0.000 s
-worker.download.start                  0.001 s
-worker.download.done                   0.698 s
-worker.normalize.start                 0.699 s
-worker.normalize.done                  1.237 s
-worker.router.start                    1.237 s
-separator.start                        0.000 s
-separator.input-normalize.start        0.000 s
-separator.input-normalize.done         0.248 s
-separator.direct-demucs.start          0.248 s
-```
-
-There was **no `separator.direct-demucs.done` marker** before the diagnostic window ended.
-
-The log collection used `call.logs.tail(...)`, which behaved as a following stream rather than the intended quick snapshot and made the loop cadence less clean than designed. However, the job ultimately terminated within the GitHub budget and emitted the bounded aggregate summary above. The terminal evidence agrees with the independent live Modal scrape, so this does **not** weaken the localization result.
-
-Therefore the timeout is localized, with current evidence, to the **first direct Demucs6s pass** before BS-RoFormer, cascade Demucs, candidate extraction, tab generation, Product placement, or PDF rendering are reached.
-
-Current frozen Demucs execution policy is deliberately conservative/deterministic:
+Frozen Demucs policy remains:
 
 - CPU only (`CUDA_VISIBLE_DEVICES=''`);
-- `OMP_NUM_THREADS=1`;
-- `MKL_NUM_THREADS=1`;
-- torch single-thread / deterministic algorithms;
+- `OMP_NUM_THREADS=1`, `MKL_NUM_THREADS=1`;
+- deterministic Torch controls;
 - oneDNN disabled / conservative CPU capability;
-- model `htdemucs_6s`, shifts `1`, separator seed `143`.
+- `htdemucs_6s`, Guitar stem, shifts=1, overlap=0.10, segment=6, seed=143.
 
-## Isolated Demucs CPU thread determinism/performance gate — ACTIVE
+## Original 12-second CPU1-vs-CPU4 gate — CANCELLED / DO NOT RERUN
 
-Initial diagnostic-only commits:
+- workflow `.github/workflows/v143-demucs-cpu-thread-policy-probe.yml`;
+- run **`33894887671`**, job **`101095090913`**;
+- comparison step was cancelled after the diagnostic appeared stuck/looping;
+- root harness design issue: `compare_cpu_thread_policy(...)` executes four full Demucs passes sequentially inside one 1100-second Modal function;
+- no aggregate artifact was produced;
+- no Production change occurred;
+- do **not** rerun this sequential four-pass gate.
 
-- `9e5534804d794e969acc6019290f7c80581a056d` — adds `analyzer/v143_demucs_perf_probe_cli.py`;
-- `c3f0a6721c3745438d26bb9b41e232e94743f5ef` — adds isolated Modal app `dadrock-v143-demucs-perf-probe`;
-- `4e3b9d059b9d06bd1d218e0c79457b0b0975ebb7` — adds workflow `.github/workflows/v143-demucs-cpu-thread-policy-probe.yml`.
+## Diagnostic app emergency stop — GREEN
 
-Active workflow:
+- one-shot workflow `.github/workflows/v143-stop-demucs-perf-probe.yml`;
+- commit `5f9d33242b0d2357119acbfc4b819c2d7d96921b`;
+- run **`33897740674`**, job **`101104268991`**: SUCCESS;
+- command stopped only `dadrock-v143-demucs-perf-probe` and terminated its running containers;
+- live Production app `dadrock-v143-ai-tab-live` was not touched.
 
-- run **`33894887671`**;
-- job **`101095090913`**;
-- branch head at launch: `4e3b9d059b9d06bd1d218e0c79457b0b0975ebb7`;
-- setup, source/safety assertions, isolated app deploy, and public-audio verification: GREEN;
-- comparison step started at `2026-09-04T16:24:15Z` and remains running;
-- Production worker/bridge/Vercel are untouched by this probe.
+## Bounded 6-second concurrent micro-probe — ACTIVE
 
-Gate design:
+Prepared source:
 
-- same authorized Gomyway source; ephemeral first 12-second clip;
-- same Demucs `htdemucs_6s`, Guitar-only stem, shifts `1`, overlap `0.10`, segment `6`, seed `143`;
-- same CPU-only boundary, disabled oneDNN, conservative CPU ISA, and deterministic Torch controls;
-- frozen CPU/1-thread baseline runs twice;
-- CPU/4-thread candidate runs twice;
-- only elapsed seconds + SHA-256 hashes are retained; raw clip/stems stay inside the diagnostic worker;
-- strict decision policy requires baseline repeatability, CPU4 repeatability, **exact candidate SHA parity with baseline**, and speedup **>=1.25x**.
+- isolated single-run function `run_cpu_policy_once(...)` already exists in `analyzer/v143_demucs_perf_probe.py`;
+- collector `.github/scripts/v143_demucs_micro_probe_collect.py`;
+- commit `e47f62a8550f4b68c5aa38e15645845a299c84d4` hardened collector with:
+  - 6.0-second clip;
+  - four independent concurrent Modal calls: frozen x2 + CPU4 x2;
+  - **300-second total collection deadline**;
+  - `call.cancel(terminate_containers=True)` on failure/timeout;
+  - aggregate-only failure summary;
+  - exact SHA repeatability/parity checks;
+  - promotion threshold `>=1.25x`;
+  - raw audio/stem retention false.
 
-### Promotion-threshold bookkeeping correction
+Workflow:
 
-The originally deployed 12-second probe source reports `promotionEligible` using `speedup > 1.20`. The workflow does not auto-promote or change Production, so this cannot cause a live policy change. Commit **`2171b12134058dce62155a1647929441a56a4f8e`** corrects future diagnostic source to explicitly use `PROMOTION_SPEEDUP_THRESHOLD = 1.25` and `speedup >= 1.25`. For the active run, ignore its boolean promotion flag and judge the raw returned speedup against the stricter 1.25x threshold manually.
+- `.github/workflows/v143-demucs-cpu-policy-micro-probe.yml`;
+- trigger commit `2c1f5065c870c7673813ebad93c1ac7debccdfca`;
+- run **`33898012776`**, job **`101105170742`**;
+- current status at checkpoint: **IN PROGRESS / setup**;
+- job timeout: 12 minutes;
+- after any outcome, `if: always()` executes `modal app stop dadrock-v143-demucs-perf-probe --env main --yes || true`;
+- therefore this replacement must not leave a runaway diagnostic app behind.
 
-### Dormant 6-second concurrent fallback — PREPARED / NOT DEPLOYED
+Decision policy if the micro-probe completes:
 
-Because four sequential 12-second Demucs runs may exhaust the diagnostic budget, a stronger fallback is prepared but not deployed:
+1. frozen runs must be byte-repeatable;
+2. CPU4 runs must be byte-repeatable;
+3. CPU4 SHA must exactly equal frozen SHA;
+4. speedup must be **>=1.25x** before CPU4 is even eligible for longer validation;
+5. no Production execution-policy change from this short clip alone.
 
-- commit **`2d53ee30293082ac433d0b2eac7da81e4434186e`** adds isolated `run_cpu_policy_once(...)`, one Demucs run per Modal call;
-- commit **`0c2b7472c0ff25f34403dd3c20a3bdc2580eaf3f`** adds `.github/scripts/v143_demucs_micro_probe_collect.py`;
-- fallback clip duration: exactly **6.0 seconds**;
-- planned calls: two frozen CPU1 and two CPU4, each in a separate worker and eligible to run concurrently;
-- repeatability is therefore tested across independent workers, not merely sequential child processes;
-- collector retains only call IDs, elapsed/wall times, SHA-256 hashes, byte counts, and aggregate decision flags;
-- same strict `>=1.25x` speedup threshold plus exact baseline SHA parity;
-- no fallback workflow has been created/triggered yet; no new diagnostic deployment has occurred from these fallback commits.
+If the 6-second probe hits its 300-second deadline, treat that as decisive evidence that this CPU-only path is too slow for practical full-song use; do not increase the diagnostic timeout again.
 
 ## Fresh-chat authorization — EXPLICIT
 
-The user explicitly authorized continuation of the non-reference-facing Production work. Authorization covers narrowly scoped V143 worker/bridge fixes and deploys, workflow diagnostics, Vercel configuration/redeploy if required, the existing repository-owned Gomyway audio, and aggregate-only Product/PDF contract checks with raw outputs discarded.
+The user explicitly authorized continuation of non-reference-facing Production work. Authorization covers narrowly scoped V143 worker/bridge fixes and deploys, workflow diagnostics, Vercel configuration/redeploy if required, the existing repository-owned Gomyway audio, and aggregate-only Product/PDF contract checks with raw outputs discarded.
 
 It **does not** authorize reference-facing accuracy scoring, restricted GOAT access, sealed GuitarSet prospective access, reopening SplitMySong terminal work, or weakening fail-closed/safety boundaries.
 
 ## Safety/accounting now
 
-- `main`: unchanged and verified;
+- `main`: unchanged;
 - Production V143 routing: ACTIVE;
-- patched/instrumented V143 worker: DEPLOYED;
-- public-audio download failure: cleared;
-- direct worker completion: TIMEOUT at 1200 execution seconds;
-- stage localization: terminal at 725.802 s, first direct Demucs still incomplete;
-- first bottleneck localized: **direct Demucs CPU/single-thread pass**;
-- isolated 12s CPU1-vs-CPU4 gate: ACTIVE, no Production policy change;
-- 6s concurrent fallback: PREPARED / DORMANT;
 - Deployment Protection: preserved;
 - reference-facing score calls: 0;
 - GOAT restricted bytes: 0;
 - GuitarSet prospective sealed reads: 0;
 - raw Gomyway transcription/PDF/stems retained: false;
-- current real-audio verdict: **NO QUALITY VERDICT — DEMUCS EXECUTION POLICY PERFORMANCE MUST BE REPAIRED WITHOUT LOSING DETERMINISM**.
+- current quality verdict: **NO QUALITY VERDICT — PERFORMANCE DIAGNOSTICS ONLY**.
 
 ## NEXT SAFE ACTION — AUTHORIZED
 
-1. Finish run `33894887671` and extract only its aggregate CPU1/CPU4 elapsed times, repeatability hashes, strict parity result, and raw speedup. Apply the manual `>=1.25x` threshold.
-2. If the sequential 12-second gate times out or returns no complete aggregate, deploy/trigger the prepared **6-second concurrent micro-probe** instead of increasing any timeout.
-3. If CPU4 has exact baseline parity and material speedup, validate the same candidate on a longer clip before any live worker policy change.
-4. If CPU4 fails parity, do not promote it. Move to the next isolated deterministic candidate (GPU only as a later option) under the same strict repeatability/hash gate.
-5. Do **not** change Production worker execution policy, model, seed, Demucs shifts, reference boundaries, Vercel duration, or UI orchestration until a dedicated gate demonstrates deterministic/reference-free safety and material speedup.
-6. Only after the worker itself returns successfully should async Production orchestration or Vercel duration changes be implemented.
+1. Finish bounded micro-probe run `33898012776` / job `101105170742` and inspect aggregate artifact/log outcome.
+2. Confirm diagnostic app cleanup step succeeded regardless of probe result.
+3. If CPU4 passes exact SHA parity + repeatability + >=1.25x speedup, validate on a longer authorized clip before touching Production.
+4. If CPU4 fails parity or the 6-second gate exceeds 300 seconds, do not increase timeout and do not promote it; move to the next isolated acceleration candidate.
+5. A strong next candidate is resource-aware execution (explicit CPU allocation with deterministic threading) or later GPU Demucs, each under the same strict hash/repeatability gate.
+6. Do not change Production model, seed, shifts, reference boundaries, Vercel duration, or UI orchestration until a dedicated deterministic/reference-free gate demonstrates material speedup.
 7. Reference-facing accuracy remains unarmed.
