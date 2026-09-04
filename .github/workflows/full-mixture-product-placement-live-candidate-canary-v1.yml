@@ -19,7 +19,7 @@ on:
       - 'lib/aiTabDualContextShadowFusionV1.mjs'
       - 'lib/aiTabConditionedShadowProjectionV1.mjs'
       - 'package.json'
-      - 'yarn.lock'
+      - 'package-lock.json'
 
 permissions:
   contents: read
@@ -40,7 +40,7 @@ jobs:
         uses: actions/setup-node@v4
         with:
           node-version: '22'
-          cache: yarn
+          cache: npm
 
       - name: Verify Phase 11 C1-C12
         env:
@@ -129,9 +129,9 @@ jobs:
           NODE
 
       - name: Install branch dependencies
-        run: yarn install --frozen-lockfile
+        run: npm ci
 
       - name: Build branch without deployment
         env:
           NODE_OPTIONS: --max-old-space-size=4096
-        run: yarn build
+        run: npm run build
