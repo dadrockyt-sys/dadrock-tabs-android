@@ -88,6 +88,7 @@ def probe(source_audio: bytes, suffix: str = ".m4a") -> dict[str, Any]:
         # remain in the same conservative/single-thread mode.
         gpu_env = dict(DEMUCS_SINGLE_THREAD_ENV)
         gpu_env.pop("CUDA_VISIBLE_DEVICES", None)
+        gpu_env["V143_DEMUCS_FIXED_SHIFT_RNG"] = "1"
         gpu_env["V143_DEMUCS_SHIFT_TRACE_PATH"] = str(shift_trace)
         gpu_env["V143_DEMUCS_RUNTIME_TRACE_PATH"] = str(runtime_trace)
 
