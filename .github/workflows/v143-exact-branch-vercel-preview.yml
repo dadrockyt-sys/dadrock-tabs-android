@@ -1,0 +1,159 @@
+name: V143 Exact Branch Vercel Preview
+
+on:
+  workflow_dispatch:
+  push:
+    branches:
+      - v143-contextual-prune-lobo
+    paths:
+      - '.github/workflows/v143-exact-branch-vercel-preview.yml'
+
+concurrency:
+  group: v143-exact-branch-vercel-preview
+  cancel-in-progress: true
+
+permissions:
+  contents: read
+
+env:
+  VERCEL_ORG_ID: team_qJrw8Cuze5bCEg9M3Q67XMWt
+  VERCEL_PROJECT_ID: prj_6biwsn0iHci6FHNswAUCS8UYrAqF
+  EXPECTED_BRANCH: v143-contextual-prune-lobo
+
+jobs:
+  deploy-preview:
+    runs-on: ubuntu-latest
+    timeout-minutes: 35
+    env:
+      VERCEL_TOKEN: ${{ secrets.VERCEL_TOKEN }}
+      EXPECTED_SHA: ${{ github.sha }}
+      NEXT_TELEMETRY_DISABLED: '1'
+
+    steps:
+      - name: Checkout exact authorized commit
+        uses: actions/checkout@v4
+        with:
+          ref: ${{ github.sha }}
+          fetch-depth: 1
+
+      - name: Enforce exact branch and Preview-only authority
+        shell: bash
+        run: |
+          set -euo pipefail
+          test "$GITHUB_REF_NAME" = "$EXPECTED_BRANCH"
+          test "$(git rev-parse HEAD)" = "$EXPECTED_SHA"
+          if [ -z "${VERCEL_TOKEN:-}" ]; then
+            echo "VERCEL_TOKEN repository secret is not configured; failing closed before deployment."
+            exit 1
+          fi
+          echo "authorizedBranch=$EXPECTED_BRANCH"
+          echo "authorizedCommit=$EXPECTED_SHA"
+          echo "deploymentTarget=preview"
+          echo "productionPromotionAuthorized=false"
+
+      - name: Set up Node.js 24
+        uses: actions/setup-node@v4
+        with:
+          node-version: '24'
+
+      - name: Install pinned Vercel CLI
+        shell: bash
+        run: |
+          set -euo pipefail
+          npm install --global vercel@59.11.2
+          vercel --version
+
+      - name: Pull Preview project configuration
+        shell: bash
+        run: |
+          set -euo pipefail
+          vercel pull \
+            --yes \
+            --environment=preview \
+            --token="$VERCEL_TOKEN"
+
+      - name: Build exact branch for Preview
+        shell: bash
+        run: |
+          set -euo pipefail
+          vercel build \
+            --token="$VERCEL_TOKEN"
+
+      - name: Deploy exact prebuilt artifact to Preview
+        id: deploy
+        shell: bash
+        run: |
+          set -euo pipefail
+          mkdir -p debug/v143-contextual-prune
+          DEPLOY_OUTPUT="$(
+            vercel deploy \
+              --prebuilt \
+              --yes \
+              --token="$VERCEL_TOKEN" \
+              --meta "dadrockBranch=$EXPECTED_BRANCH" \
+              --meta "dadrockCommit=$EXPECTED_SHA" \
+              --meta "githubCommitRef=$EXPECTED_BRANCH" \
+              --meta "githubCommitSha=$EXPECTED_SHA" \
+              2>&1 | tee debug/v143-contextual-prune/vercel-preview-deploy.log
+          )"
+          URL="$(printf '%s\n' "$DEPLOY_OUTPUT" | grep -Eo 'https://[^[:space:]]+\.vercel\.app' | tail -n 1)"
+          if [ -z "$URL" ]; then
+            echo "Could not extract Preview deployment URL."
+            exit 1
+          fi
+          echo "url=$URL" >> "$GITHUB_OUTPUT"
+          echo "VERCEL_PREVIEW_URL=$URL" >> "$GITHUB_ENV"
+          echo "Preview URL: $URL"
+
+      - name: Wait for and inspect Preview deployment
+        shell: bash
+        run: |
+          set -euo pipefail
+          vercel inspect "$VERCEL_PREVIEW_URL" \
+            --wait \
+            --token="$VERCEL_TOKEN" \
+            2>&1 | tee debug/v143-contextual-prune/vercel-preview-inspect.log
+
+      - name: Record exact-SHA Preview evidence
+        shell: bash
+        run: |
+          set -euo pipefail
+          python3 - <<'PY'
+          import json, os
+          from pathlib import Path
+
+          evidence = {
+              'schemaVersion': 1,
+              'gate': 'v143-exact-branch-vercel-preview',
+              'branch': os.environ['EXPECTED_BRANCH'],
+              'sourceCommit': os.environ['EXPECTED_SHA'],
+              'deploymentUrl': os.environ['VERCEL_PREVIEW_URL'],
+              'requestedTarget': 'preview',
+              'deploymentMethod': 'github-actions-vercel-prebuilt',
+              'vercelCliVersion': '59.11.2',
+              'prebuilt': True,
+              'productionFlagUsed': False,
+              'productionPromotionAuthorized': False,
+              'mainModifiedByWorkflow': False,
+              'referenceAssetsUsed': False,
+              'referenceScoreCalls': 0,
+              'modalInvoked': False,
+              'gpuUsed': False,
+              'cudaUsed': False,
+          }
+          out = Path('debug/v143-contextual-prune/vercel-preview-evidence.json')
+          out.write_text(json.dumps(evidence, indent=2) + '\n', encoding='utf-8')
+          print(json.dumps(evidence, indent=2))
+          PY
+
+      - name: Preserve Preview deployment evidence
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: v143-exact-branch-vercel-preview
+          path: |
+            debug/v143-contextual-prune/vercel-preview-deploy.log
+            debug/v143-contextual-prune/vercel-preview-inspect.log
+            debug/v143-contextual-prune/vercel-preview-evidence.json
+          if-no-files-found: warn
+          retention-days: 14
