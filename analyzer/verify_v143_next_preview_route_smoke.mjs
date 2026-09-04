@@ -28,6 +28,7 @@ function generatedTab() {
 function validRenderEvents() {
   const frets = [3, 5, 7, 8, 5, 7, 8, 10, 7, 8, 10, 12];
   return frets.map((fret, index) => ({
+    eventIndex: index,
     measure: Math.floor(index / 4) + 1,
     step: (index % 4) * 4,
     stringIndex: index % 3,
@@ -179,10 +180,12 @@ try {
     analysisEngine: 'v143-reference-free-rhythm-fallback',
     renderEvents: [
       {
+        eventIndex: 0,
         measure: 1,
         step: 0,
         stringIndex: 0,
         fret: 3,
+        midi: 55,
       },
     ],
     measureGrid: null,
