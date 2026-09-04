@@ -14,7 +14,7 @@ Branch checkpoint: `v143-contextual-prune-lobo`
 - No reference-facing score was run during merge/Production/Modal work.
 
 **Project Progress Score: 79%.**  
-**Test Score: PHASE 1–13 GREEN; PROTECTED REAL-VERCEL PREVIEW GREEN; MAIN MERGE/BUILD/DEPLOY GREEN; PRODUCTION V143 ROUTING ACTIVE; DOWNLOAD-AUTH FIX GREEN; DIRECT L4 GOMYWAY TIMES OUT AT WORKER 1200S; 725.802S STAGE GATE LOCALIZES BOTTLENECK TO FIRST DIRECT DEMUCS CPU/SINGLE-THREAD PASS; ISOLATED CPU1-vs-CPU4 STRICT HASH PERFORMANCE GATE RUNNING; REFERENCE-FACING ACCURACY SCORE NOT RUN.**
+**Test Score: PHASE 1–13 GREEN; PROTECTED REAL-VERCEL PREVIEW GREEN; MAIN MERGE/BUILD/DEPLOY GREEN; PRODUCTION V143 ROUTING ACTIVE; DOWNLOAD-AUTH FIX GREEN; DIRECT L4 GOMYWAY TIMES OUT AT WORKER 1200S; 725.802S STAGE GATE LOCALIZES BOTTLENECK TO FIRST DIRECT DEMUCS CPU/SINGLE-THREAD PASS; 12S CPU1-vs-CPU4 STRICT HASH GATE RUNNING; DORMANT 6S CONCURRENT FALLBACK PREPARED; REFERENCE-FACING ACCURACY SCORE NOT RUN.**
 
 ## Stable Production state
 
@@ -113,7 +113,7 @@ Current frozen Demucs execution policy is deliberately conservative/deterministi
 
 ## Isolated Demucs CPU thread determinism/performance gate — ACTIVE
 
-Three diagnostic-only commits on `v143-contextual-prune-lobo`:
+Initial diagnostic-only commits:
 
 - `9e5534804d794e969acc6019290f7c80581a056d` — adds `analyzer/v143_demucs_perf_probe_cli.py`;
 - `c3f0a6721c3745438d26bb9b41e232e94743f5ef` — adds isolated Modal app `dadrock-v143-demucs-perf-probe`;
@@ -125,7 +125,8 @@ Active workflow:
 - job **`101095090913`**;
 - branch head at launch: `4e3b9d059b9d06bd1d218e0c79457b0b0975ebb7`;
 - setup, source/safety assertions, isolated app deploy, and public-audio verification: GREEN;
-- comparison step currently running.
+- comparison step started at `2026-09-04T16:24:15Z` and remains running;
+- Production worker/bridge/Vercel are untouched by this probe.
 
 Gate design:
 
@@ -135,8 +136,24 @@ Gate design:
 - frozen CPU/1-thread baseline runs twice;
 - CPU/4-thread candidate runs twice;
 - only elapsed seconds + SHA-256 hashes are retained; raw clip/stems stay inside the diagnostic worker;
-- promotion requires baseline repeatability, CPU4 repeatability, **exact candidate SHA parity with baseline**, and material speedup (gate threshold >=1.25x);
-- Production worker, HTTP bridge, Vercel, model, and reference boundaries are untouched by this probe.
+- strict decision policy requires baseline repeatability, CPU4 repeatability, **exact candidate SHA parity with baseline**, and speedup **>=1.25x**.
+
+### Promotion-threshold bookkeeping correction
+
+The originally deployed 12-second probe source reports `promotionEligible` using `speedup > 1.20`. The workflow does not auto-promote or change Production, so this cannot cause a live policy change. Commit **`2171b12134058dce62155a1647929441a56a4f8e`** corrects future diagnostic source to explicitly use `PROMOTION_SPEEDUP_THRESHOLD = 1.25` and `speedup >= 1.25`. For the active run, ignore its boolean promotion flag and judge the raw returned speedup against the stricter 1.25x threshold manually.
+
+### Dormant 6-second concurrent fallback — PREPARED / NOT DEPLOYED
+
+Because four sequential 12-second Demucs runs may exhaust the diagnostic budget, a stronger fallback is prepared but not deployed:
+
+- commit **`2d53ee30293082ac433d0b2eac7da81e4434186e`** adds isolated `run_cpu_policy_once(...)`, one Demucs run per Modal call;
+- commit **`0c2b7472c0ff25f34403dd3c20a3bdc2580eaf3f`** adds `.github/scripts/v143_demucs_micro_probe_collect.py`;
+- fallback clip duration: exactly **6.0 seconds**;
+- planned calls: two frozen CPU1 and two CPU4, each in a separate worker and eligible to run concurrently;
+- repeatability is therefore tested across independent workers, not merely sequential child processes;
+- collector retains only call IDs, elapsed/wall times, SHA-256 hashes, byte counts, and aggregate decision flags;
+- same strict `>=1.25x` speedup threshold plus exact baseline SHA parity;
+- no fallback workflow has been created/triggered yet; no new diagnostic deployment has occurred from these fallback commits.
 
 ## Fresh-chat authorization — EXPLICIT
 
@@ -153,7 +170,8 @@ It **does not** authorize reference-facing accuracy scoring, restricted GOAT acc
 - direct worker completion: TIMEOUT at 1200 execution seconds;
 - stage localization: terminal at 725.802 s, first direct Demucs still incomplete;
 - first bottleneck localized: **direct Demucs CPU/single-thread pass**;
-- isolated CPU1-vs-CPU4 gate: ACTIVE, no Production policy change;
+- isolated 12s CPU1-vs-CPU4 gate: ACTIVE, no Production policy change;
+- 6s concurrent fallback: PREPARED / DORMANT;
 - Deployment Protection: preserved;
 - reference-facing score calls: 0;
 - GOAT restricted bytes: 0;
@@ -163,10 +181,10 @@ It **does not** authorize reference-facing accuracy scoring, restricted GOAT acc
 
 ## NEXT SAFE ACTION — AUTHORIZED
 
-1. Finish run `33894887671` and extract only its aggregate CPU1/CPU4 elapsed times, repeatability hashes, strict parity result, and promotion verdict.
-2. If CPU4 has exact baseline parity and material speedup, validate the same candidate on a longer clip before any live worker policy change.
-3. If CPU4 fails parity, do not promote it. Move to the next isolated deterministic candidate (GPU only as a later option) under the same strict repeatability/hash gate.
-4. If the four-run 12-second gate itself cannot finish within its diagnostic budget, rerun the exact policy comparison on a 6-second clip rather than increasing Production timeouts.
+1. Finish run `33894887671` and extract only its aggregate CPU1/CPU4 elapsed times, repeatability hashes, strict parity result, and raw speedup. Apply the manual `>=1.25x` threshold.
+2. If the sequential 12-second gate times out or returns no complete aggregate, deploy/trigger the prepared **6-second concurrent micro-probe** instead of increasing any timeout.
+3. If CPU4 has exact baseline parity and material speedup, validate the same candidate on a longer clip before any live worker policy change.
+4. If CPU4 fails parity, do not promote it. Move to the next isolated deterministic candidate (GPU only as a later option) under the same strict repeatability/hash gate.
 5. Do **not** change Production worker execution policy, model, seed, Demucs shifts, reference boundaries, Vercel duration, or UI orchestration until a dedicated gate demonstrates deterministic/reference-free safety and material speedup.
 6. Only after the worker itself returns successfully should async Production orchestration or Vercel duration changes be implemented.
 7. Reference-facing accuracy remains unarmed.
