@@ -14,7 +14,7 @@ Branch checkpoint: `v143-contextual-prune-lobo`
 - No reference-facing accuracy scoring has been run during Production/Modal performance work.
 
 **Project Progress Score: 79%.**  
-**Test Score: PHASE 1–13 GREEN; PROTECTED REAL-VERCEL PREVIEW GREEN; MAIN MERGE/BUILD/DEPLOY GREEN; PRODUCTION V143 ROUTING ACTIVE; DOWNLOAD-AUTH FIX GREEN; FULL GOMYWAY WORKER TIMES OUT AT 1200S; 725.802S STAGE GATE LOCALIZES BOTTLENECK TO FIRST DIRECT DEMUCS CPU/SINGLE-THREAD PASS; ORIGINAL 12S SEQUENTIAL CPU1-vs-CPU4 GATE CANCELLED; DIAGNOSTIC APP STOPPED; BOUNDED 6S CONCURRENT MICRO-PROBE TERMINATED SAFELY WITH `RemoteError` AFTER AN EXTERNAL APP STOP, SO NO VALID CPU1/CPU4 PERFORMANCE VERDICT YET; RETAINED-CALL READ-ONLY INSPECTION GREEN WITH ALL 4 CALLS TERMINAL `RemoteError` AND NO RECOVERABLE AGGREGATE; SINGLE 6S FROZEN BASELINE ARMED AS RUN 33913842713; REFERENCE-FACING ACCURACY SCORE NOT RUN.**
+**Test Score: PHASE 1–13 GREEN; PROTECTED REAL-VERCEL PREVIEW GREEN; MAIN MERGE/BUILD/DEPLOY GREEN; PRODUCTION V143 ROUTING ACTIVE; DOWNLOAD-AUTH FIX GREEN; FULL GOMYWAY WORKER TIMES OUT AT 1200S; 725.802S STAGE GATE LOCALIZES BOTTLENECK TO FIRST DIRECT DEMUCS CPU/SINGLE-THREAD PASS; ORIGINAL 12S SEQUENTIAL CPU1-vs-CPU4 GATE CANCELLED; CONCURRENT 6S MICRO-PROBE CONFOUNDED BY EXTERNAL APP STOP; RETAINED-CALL INSPECTION GREEN WITH NO RECOVERABLE AGGREGATE; SINGLE 6S FROZEN BASELINE CLEANLY TIMES OUT AT 300S WITH CANCEL/CLEANUP GREEN; CPU THREAD-COUNT TWEAK PATH CLOSED; STRUCTURAL ACCELERATION NEXT; REFERENCE-FACING ACCURACY SCORE NOT RUN.**
 
 ## Stable Production state
 
@@ -63,68 +63,16 @@ Frozen Demucs policy remains CPU-only, single-threaded, deterministic, oneDNN-di
 - no aggregate artifact;
 - no Production change.
 
-## Emergency diagnostic app stop — GREEN
-
-- workflow `.github/workflows/v143-stop-demucs-perf-probe.yml`;
-- commit `5f9d33242b0d2357119acbfc4b819c2d7d96921b`;
-- run **`33897740674`**, job **`101104268991`**: SUCCESS;
-- stopped only `dadrock-v143-demucs-perf-probe`;
-- live Production app `dadrock-v143-ai-tab-live` untouched.
-
 ## Bounded 6-second concurrent micro-probe — TERMINAL / CONFOUNDED
 
-Safety hardening:
-
-- collector `.github/scripts/v143_demucs_micro_probe_collect.py`;
-- commit `e47f62a8550f4b68c5aa38e15645845a299c84d4`;
-- 6.0-second clip;
-- four independent concurrent calls: frozen x2 + CPU4 x2;
-- 300-second total collection deadline;
-- `call.cancel(terminate_containers=True)` on failure/timeout;
-- aggregate-only summary;
-- strict exact-SHA repeatability/parity + `>=1.25x` speedup threshold;
-- workflow cleanup always stops the diagnostic app.
-
-Terminal run:
-
 - workflow `.github/workflows/v143-demucs-cpu-policy-micro-probe.yml`;
-- trigger commit `2c1f5065c870c7673813ebad93c1ac7debccdfca`;
 - run **`33898012776`**, job **`101105170742`**;
-- setup/deploy: GREEN;
-- bounded probe step: FAILURE;
-- aggregate artifact id: **`9946663368`**;
-- aggregate terminal type: **`RemoteError`**;
-- `completed=false`;
-- `remoteCallsCancelled=true`;
-- reference-facing score calls: 0;
-- raw audio/stem retention: false;
-- Production worker/bridge/Vercel changed: false.
-
-Function call IDs retained for diagnostics only:
-
-- `fc-01M1PNPXNEST24KNCBC2XN054Z`
-- `fc-01M1PNPXRQ51CWRASTG0E8FT3A`
-- `fc-01M1PNPXVP2A7YAJZ6WDCTVMA8`
-- `fc-01M1PNPXYXRPD6C0EWPWS7DNT4`
-
-### Critical interpretation
-
-The collector surfaced `RemoteError` at about **17:02:51 UTC**. The cleanup step immediately afterward reported the app was **already stopped at 17:02:50 UTC by `dadrockyt`**. Therefore the failed micro-probe is **confounded by an app stop immediately before the RemoteError**.
-
-Do **not** interpret this run as proof that:
-
-- the 6-second frozen baseline exceeded the 300-second deadline;
-- CPU4 failed repeatability/parity;
-- CPU4 was slower/faster;
-- the collector timeout fired.
-
-The only valid terminal conclusions are:
-
-1. the replacement harness did not loop indefinitely;
-2. all outstanding calls were cancelled;
-3. the diagnostic app is stopped;
-4. no Production system was touched;
-5. CPU1-vs-CPU4 performance remains unresolved.
+- four independent concurrent calls: frozen x2 + CPU4 x2;
+- collector deadline: 300 seconds;
+- aggregate terminal type: `RemoteError`;
+- cleanup reported diagnostic app had already been stopped at **17:02:50 UTC by `dadrockyt`**, immediately before the collector surfaced `RemoteError` at about **17:02:51 UTC**;
+- therefore this run remains confounded and gives no valid CPU1-vs-CPU4 performance verdict;
+- reference score calls: 0; raw audio/stem retention: false; Production unchanged.
 
 ## Retained-call inspection — TERMINAL / GREEN READ-ONLY
 
@@ -140,23 +88,36 @@ GitHub Actions run **`33913626199`**, job **`101155625317`**, completed successf
 - reference score calls = 0; raw audio/stem retention = false;
 - Production worker/bridge/Vercel changed = false.
 
-This closes the retained-evidence step. It does **not** prove the frozen 6-second baseline is too slow; the prior run remains confounded by the external app stop.
+## Single 6-second frozen baseline — TERMINAL / CLEAN TIMEOUT
 
-## Single 6-second frozen baseline — ARMED / RUNNING
-
-A fresh isolated one-call gate has been created without modifying Production:
+A fresh isolated one-call gate was run without modifying Production:
 
 - isolated app source `analyzer/v143_demucs_single_baseline_probe.py`, commit `ac5385118edf609d48b1cbffcf4113ced5befe94`;
 - collector `.github/scripts/v143_demucs_single_baseline_collect.py`, commit `b817610dd1beb344ffee6f63a92d6bf29986a4a7`;
 - workflow `.github/workflows/v143-demucs-single-frozen-baseline.yml`, trigger commit `f47cc6de45562b4d29db930a0432dec6a64b4398`;
-- GitHub Actions run **`33913842713`** currently queued/starting;
-- exactly one `frozen` call, 6.0-second authorized clip;
-- hard client collection deadline **300.0 seconds**;
-- explicit local and remote progress markers;
-- `call.cancel(terminate_containers=True)` on any failure/timeout;
-- aggregate timing/hash only; no raw audio/stem bytes retained;
-- workflow `always()` cleanup stops only `dadrock-v143-demucs-single-baseline-probe`;
-- Production worker/bridge/Vercel remain unchanged; reference score calls remain 0.
+- GitHub Actions run **`33913842713`**, job **`101156325246`**;
+- exactly one `frozen` call on the 6.0-second authorized clip;
+- function call id **`fc-01M1Q00SSQNTHAQM8AAKXZWG2J`**;
+- local wait began at `19:58:35.360971Z` and failed at `20:03:35.365388Z`;
+- hard collection deadline **300.0 seconds** was reached with terminal type **`TimeoutError`**;
+- `call.cancel(terminate_containers=True)` was attempted successfully; cancellation error = null;
+- aggregate artifact id **`9952542047`** uploaded successfully;
+- isolated-app cleanup step completed successfully after the timeout;
+- `productionAppTouched=false`;
+- reference-facing score calls = 0;
+- raw audio/stem retention = false;
+- Production worker/bridge/Vercel changed = false.
+
+### Decisive interpretation
+
+This single-call failure is **not confounded by an external app stop**. The diagnostic app remained available through the 300-second collection window, the client deadline fired cleanly, the outstanding call was then cancelled, and cleanup ran afterward.
+
+Therefore:
+
+1. the existing frozen CPU/single-thread Demucs path cannot complete even a 6-second authorized clip within the 300-second bounded window under the current resource envelope;
+2. the CPU1-vs-CPU4 thread-count tweak path is now **CLOSED / DO NOT PURSUE**;
+3. the next work must be structural acceleration rather than thread-count tuning;
+4. no quality or reference-facing accuracy verdict has been produced.
 
 ## Fresh-chat authorization — EXPLICIT
 
@@ -169,6 +130,7 @@ It **does not** authorize reference-facing accuracy scoring, restricted GOAT acc
 - `main`: unchanged;
 - Production V143 routing: ACTIVE;
 - Deployment Protection: preserved;
+- diagnostic single-baseline app: STOPPED after cleanup;
 - reference-facing score calls: 0;
 - GOAT restricted bytes: 0;
 - GuitarSet prospective sealed reads: 0;
@@ -177,8 +139,10 @@ It **does not** authorize reference-facing accuracy scoring, restricted GOAT acc
 
 ## NEXT SAFE ACTION — AUTHORIZED
 
-1. Read the terminal outcome/artifact for run `33913842713` and confirm isolated-app cleanup.
-2. If the single frozen baseline completes cleanly within 300 seconds, test CPU4 only in a separate one-call run with exact-output parity gates.
-3. If the frozen baseline cannot complete within the 300-second bounded window, stop pursuing CPU thread-count tweaks and move to a more structural acceleration candidate (explicit CPU resource allocation and deterministic threading, then GPU Demucs if needed) under exact-hash gates.
-4. Do not change Production model, seed, shifts, reference boundaries, Vercel duration, or UI orchestration until a dedicated deterministic/reference-free gate demonstrates material speedup.
-5. Reference-facing accuracy remains unarmed.
+1. Do **not** run CPU4/thread-count tuning.
+2. Search existing repository/checkpoint/test evidence for any completed deterministic frozen Demucs output hash that can serve as an exact-output parity anchor without new reference-facing scoring.
+3. If a parity anchor exists, build an isolated **explicit CPU resource allocation** candidate while preserving the frozen deterministic model/seed/shifts/overlap/segment and exact-hash gate.
+4. If no usable parity anchor exists, define the smallest reference-free deterministic structural gate that can establish candidate repeatability and a trustworthy output identity anchor before any Production promotion.
+5. If explicit CPU resource allocation is still materially too slow, evaluate GPU Demucs in an isolated reference-free diagnostic under deterministic/repeatability and exact-output constraints before any Production change.
+6. Do not change Production model, seed, shifts, reference boundaries, Vercel duration, or UI orchestration until a dedicated deterministic/reference-free structural gate demonstrates material speedup and output safety.
+7. Reference-facing accuracy remains unarmed.
