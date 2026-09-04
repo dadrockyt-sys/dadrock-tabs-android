@@ -20,9 +20,17 @@ on:
       - 'lib/createAiTabPdf.js'
       - 'lib/createTabPdfPolishedV7.js'
       - 'lib/createV143RhythmPdf.js'
+      - 'lib/aiTabProductPlacementPromotionV1.mjs'
+      - 'lib/aiTabProductPlacementCandidateCanaryV1.mjs'
+      - 'lib/aiTabConditioningV1.mjs'
+      - 'lib/aiTabMixtureStructureContextV1.mjs'
+      - 'lib/aiTabAnalyzerMixtureObservationAdmissionV1.mjs'
+      - 'lib/aiTabDualContextShadowFusionV1.mjs'
+      - 'lib/aiTabConditionedShadowProjectionV1.mjs'
       - 'analyzer/verify_v143_analyzer_quality_gate.mjs'
       - 'analyzer/verify_jimmy_paige_preview_feature_gate.mjs'
       - 'analyzer/verify_v143_next_preview_route_smoke.mjs'
+      - 'analyzer/verify_v143_built_next_canonical_promotion_http_gate.mjs'
 
 concurrency:
   group: v143-ai-tab-branch-build-gate
@@ -100,6 +108,10 @@ jobs:
           set -euo pipefail
           VERCEL_ENV=preview \
           VERCEL_GIT_COMMIT_REF=v143-contextual-prune-lobo \
+          ANALYZER_API_URL=http://127.0.0.1:4311/analyze \
+          ANALYZER_API_URL_V143=http://127.0.0.1:4311/analyze \
+          ANALYZER_API_TOKEN=phase13-analyzer-token \
+          BLOB_READ_WRITE_TOKEN=phase13-blob-token \
           HOSTNAME=127.0.0.1 \
           PORT=4310 \
           npm start > .branch-build-gate/next-server.log 2>&1 &
@@ -132,6 +144,17 @@ jobs:
           timeout 300s node analyzer/verify_v143_next_preview_route_smoke.mjs \
             2>&1 | tee .branch-build-gate/preview-route-smoke.log
 
+      - name: Exercise canonical promotion through analysis and Preview HTTP routes
+        shell: bash
+        env:
+          V143_CANONICAL_HTTP_BASE_URL: http://127.0.0.1:4310
+          V143_CANONICAL_HTTP_ANALYZER_PORT: '4311'
+          V143_CANONICAL_HTTP_RESULT_PATH: debug/v143-contextual-prune/built-next-canonical-promotion-http-gate.json
+        run: |
+          set -euo pipefail
+          timeout 300s node analyzer/verify_v143_built_next_canonical_promotion_http_gate.mjs \
+            2>&1 | tee .branch-build-gate/canonical-promotion-http.log
+
       - name: Record compact branch gate evidence
         if: always()
         shell: bash
@@ -142,13 +165,18 @@ jobs:
 
           source = os.environ.get('BRANCH_GATE_SOURCE_COMMIT')
           route_path = Path('debug/v143-contextual-prune/next-preview-route-smoke.json')
+          canonical_path = Path('debug/v143-contextual-prune/built-next-canonical-promotion-http-gate.json')
           try:
               route = json.loads(route_path.read_text(encoding='utf-8'))
           except Exception:
               route = {}
+          try:
+              canonical = json.loads(canonical_path.read_text(encoding='utf-8'))
+          except Exception:
+              canonical = {}
 
           gate = {
-              'schemaVersion': 6,
+              'schemaVersion': 7,
               'gate': 'v143-ai-tab-branch-build',
               'branch': 'v143-contextual-prune-lobo',
               'sourceCommit': source,
@@ -163,6 +191,8 @@ jobs:
               'customerEmailSent': False,
               'routeEvidencePresent': bool(route),
               'routePassed': route.get('passed') is True,
+              'canonicalHttpEvidencePresent': bool(canonical),
+              'canonicalHttpPassed': canonical.get('passed') is True,
           }
           Path('debug/v143-contextual-prune/ai-tab-branch-build-gate.json').write_text(
               json.dumps(gate, indent=2) + '\n', encoding='utf-8')
@@ -178,6 +208,7 @@ jobs:
             .branch-build-gate/
             debug/v143-contextual-prune/ai-tab-branch-build-gate.json
             debug/v143-contextual-prune/next-preview-route-smoke.json
+            debug/v143-contextual-prune/built-next-canonical-promotion-http-gate.json
           if-no-files-found: warn
           include-hidden-files: true
           retention-days: 14
@@ -192,22 +223,74 @@ jobs:
 
           gate = json.loads(Path('debug/v143-contextual-prune/ai-tab-branch-build-gate.json').read_text(encoding='utf-8'))
           route = json.loads(Path('debug/v143-contextual-prune/next-preview-route-smoke.json').read_text(encoding='utf-8'))
+          canonical = json.loads(Path('debug/v143-contextual-prune/built-next-canonical-promotion-http-gate.json').read_text(encoding='utf-8'))
 
           if gate.get('routePassed') is not True or route.get('passed') is not True:
               raise SystemExit(f"V143 local Preview route smoke failed: {route.get('error')}")
+          if gate.get('canonicalHttpPassed') is not True or canonical.get('passed') is not True:
+              raise SystemExit(f"V143 canonical promotion HTTP gate failed: {canonical.get('error')}")
 
-          for data in (gate, route):
+          if canonical.get('referenceBlind') is not True:
+              raise SystemExit('Safety failure: canonical HTTP gate is not reference blind')
+          if canonical.get('analyzerStubContractPassed') is not True:
+              raise SystemExit('Safety failure: analyzer stub contract did not pass')
+          if canonical.get('analyzerStubRequestCount') != 1:
+              raise SystemExit('Safety failure: unexpected analyzer stub request count')
+          if canonical.get('rhythmCanaryActive') is not True:
+              raise SystemExit('Safety failure: Rhythm canary was not active')
+          if canonical.get('promotionReason') != 'PROMOTED_PLACEMENT_ONLY':
+              raise SystemExit('Canonical placement was not promoted')
+          if canonical.get('baselineRenderEventCount') != 0:
+              raise SystemExit('Baseline canonical placement must remain empty for fixture')
+          if canonical.get('canonicalRenderEventCount') != 7:
+              raise SystemExit('Canonical promoted placement count changed')
+          if canonical.get('exactKnownTruthMatches') != 7:
+              raise SystemExit('Known-truth placement did not match 7/7')
+          if canonical.get('canonicalGeneratedTabUnchanged') is not True:
+              raise SystemExit('Canonical generated tab changed during promotion')
+          if canonical.get('canonicalEventCount') != 7:
+              raise SystemExit('Canonical musical event count changed')
+          if canonical.get('previewFeature') != 'v143-branch-preview-canary':
+              raise SystemExit('Preview branch feature source changed')
+          if canonical.get('previewRenderer') != 'v143-structured-rhythm':
+              raise SystemExit('Promoted payload did not reach structured Rhythm renderer')
+          if not isinstance(canonical.get('previewPdfBytes'), int) or canonical.get('previewPdfBytes') <= 1000:
+              raise SystemExit('Structured PDF byte proof missing')
+          if canonical.get('invalidAnalysis400Passed') is not True:
+              raise SystemExit('Invalid analysis request did not fail closed')
+
+          for data in (gate, route, canonical):
               if data.get('actualVercelPreviewDeployment') is not False:
-                  raise SystemExit('Safety failure: actual Vercel Preview was claimed')
+                  raise SystemExit('Safety failure: actual Vercel Preview was claimed inside local gate')
               if data.get('vercelDeploymentAttempted') is not False:
-                  raise SystemExit('Safety failure: Vercel deployment was attempted')
+                  raise SystemExit('Safety failure: Vercel deployment was attempted inside local gate')
               if data.get('productionModified') is not False:
                   raise SystemExit('Safety failure: Production was modified')
               if data.get('productionPromotionAuthorized') is not False:
                   raise SystemExit('Safety failure: Production promotion was authorized')
 
-          print('V143 STAGED BRANCH BUILD + ROUTE GATE PASSED')
+          for key in (
+              'externalAudioAssetsUsed',
+              'inertAudioUrlFetched',
+              'guitarSetRead',
+              'splitMySongRead',
+              'goatRestrictedBytesRead',
+              'modalInvoked',
+              'modalDeployed',
+              'gpuUsed',
+              'cudaUsed',
+              'mainModified',
+          ):
+              if canonical.get(key) is not False:
+                  raise SystemExit(f'Safety failure: {key} must remain false')
+
+          if canonical.get('referenceScoreCalls') != 0:
+              raise SystemExit('Safety failure: reference score calls must remain zero')
+
+          print('V143 STAGED BRANCH BUILD + CANONICAL PROMOTION HTTP GATE PASSED')
           print(f"sourceCommit={gate.get('sourceCommit')}")
+          print('exactKnownTruthMatches=7/7')
+          print(f"previewPdfBytes={canonical.get('previewPdfBytes')}")
           print('actualVercelPreviewDeployment=false')
           print('productionModified=false')
           PY
