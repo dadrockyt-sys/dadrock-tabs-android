@@ -1,0 +1,145 @@
+name: V143 Deploy Patched L4 Worker
+
+on:
+  push:
+    branches:
+      - v143-contextual-prune-lobo
+    paths:
+      - '.github/workflows/v143-deploy-patched-worker.yml'
+
+concurrency:
+  group: v143-deploy-patched-worker
+  cancel-in-progress: false
+
+permissions:
+  contents: read
+
+env:
+  MODAL_ENVIRONMENT: main
+  PYTHONUNBUFFERED: '1'
+
+jobs:
+  deploy-patched-worker:
+    runs-on: ubuntu-latest
+    timeout-minutes: 45
+    env:
+      MODAL_TOKEN_ID: ${{ secrets.MODAL_TOKEN_ID }}
+      MODAL_TOKEN_SECRET: ${{ secrets.MODAL_TOKEN_SECRET }}
+
+    steps:
+      - name: Checkout exact patch branch head
+        uses: actions/checkout@v4
+
+      - name: Enforce patch and safety boundary
+        shell: bash
+        run: |
+          set -euo pipefail
+          python3 .github/scripts/v143_audio_download_auth_test.py
+          grep -q '"v143_audio_download_auth"' analyzer/v143_modal_live_endpoint.py
+          grep -q 'headers = build_audio_download_headers(audio_url, blob_token)' analyzer/v143_modal_live_endpoint.py
+          grep -q '"referenceFree": True' analyzer/v143_modal_live_endpoint.py
+          grep -q '"professionalReferenceUsed": False' analyzer/v143_modal_live_endpoint.py
+          grep -q '"referenceRuntimeInputUsed": False' analyzer/v143_modal_live_endpoint.py
+          grep -q '"runtimeLabelsRequired": False' analyzer/v143_modal_live_endpoint.py
+          echo "workerSourceCommit=$GITHUB_SHA"
+          echo 'bridgeDeploymentChanged=false'
+          echo 'vercelDeploymentChanged=false'
+          echo 'referenceFacingAccuracyScored=false'
+          echo 'referenceScoreCalls=0'
+
+      - name: Set up Python 3.11
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Install pinned Modal CLI
+        shell: bash
+        run: |
+          set -euo pipefail
+          python -m pip install --upgrade pip
+          python -m pip install 'modal==1.3.3'
+          modal --version
+
+      - name: Authenticate Modal
+        shell: bash
+        run: |
+          set -euo pipefail
+          test -n "${MODAL_TOKEN_ID:-}"
+          test -n "${MODAL_TOKEN_SECRET:-}"
+          case "$MODAL_TOKEN_ID" in
+            ak-*) ;;
+            *) echo 'Unexpected Modal token id format.' >&2; exit 1 ;;
+          esac
+          modal token set --token-id "$MODAL_TOKEN_ID" --token-secret "$MODAL_TOKEN_SECRET" >/dev/null
+          echo 'Modal authentication configured.'
+
+      - name: Deploy patched V143 L4 worker only
+        shell: bash
+        run: |
+          set -euo pipefail
+          modal deploy --env main analyzer/v143_modal_live_endpoint.py
+
+      - name: Re-run reference-free worker dependency smoke
+        shell: bash
+        run: |
+          set -euo pipefail
+          mkdir -p debug/v143-contextual-prune/patched-worker-deploy
+          python - <<'PY'
+          import json
+          import modal
+          from pathlib import Path
+
+          fn = modal.Function.from_name(
+              'dadrock-v143-ai-tab-live',
+              'rhythm_dependency_smoke',
+              environment_name='main',
+          )
+          result = fn.remote()
+          safe = {
+              'workerSourceCommit': __import__('os').environ.get('GITHUB_SHA'),
+              'cudaAvailable': result.get('cudaAvailable'),
+              'deviceName': result.get('deviceName'),
+              'deterministicSeparatorSeed': result.get('deterministicSeparatorSeed'),
+              'featureCount': result.get('featureCount'),
+              'referenceFree': result.get('referenceFree'),
+              'demucsModel': result.get('demucsModel'),
+              'bsRoformerModel': result.get('bsRoformerModel'),
+              'demucsShifts': result.get('demucsShifts'),
+              'basicPitchImported': result.get('basicPitchImported'),
+              'bendEvidenceImported': result.get('bendEvidenceImported'),
+              'bendConsensusImported': result.get('bendConsensusImported'),
+              'legatoEvidenceImported': result.get('legatoEvidenceImported'),
+              'deterministicProviderImported': result.get('deterministicProviderImported'),
+              'audioDownloadAuthPolicyGatePassed': True,
+              'professionalReferenceUsed': False,
+              'referenceRuntimeInputUsed': False,
+              'runtimeLabelsRequired': False,
+              'referenceFacingAccuracyScored': False,
+              'referenceScoreCalls': 0,
+          }
+          Path('debug/v143-contextual-prune/patched-worker-deploy/summary.json').write_text(
+              json.dumps(safe, indent=2) + '\n', encoding='utf-8'
+          )
+          print(json.dumps(safe, indent=2))
+          required_true = [
+              'cudaAvailable', 'referenceFree', 'basicPitchImported',
+              'bendEvidenceImported', 'bendConsensusImported',
+              'legatoEvidenceImported', 'deterministicProviderImported',
+              'audioDownloadAuthPolicyGatePassed',
+          ]
+          if not all(safe.get(key) is True for key in required_true):
+              raise SystemExit('Patched V143 worker dependency smoke failed')
+          if safe.get('deviceName') != 'NVIDIA L4':
+              raise SystemExit('Unexpected worker GPU')
+          if safe.get('deterministicSeparatorSeed') != 143:
+              raise SystemExit('Unexpected deterministic separator seed')
+          PY
+
+      - name: Preserve aggregate deploy evidence only
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: v143-patched-worker-deploy
+          path: debug/v143-contextual-prune/patched-worker-deploy/summary.json
+          if-no-files-found: warn
+          retention-days: 14
