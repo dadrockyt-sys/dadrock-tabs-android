@@ -14,11 +14,11 @@ Branch checkpoint: `v143-contextual-prune-lobo`
 - No reference-facing accuracy scoring has been run during Production/Modal performance work.
 
 **Project Progress Score: 79%.**  
-**Test Score: PHASE 1–13 GREEN; PROTECTED REAL-VERCEL PREVIEW GREEN; MAIN MERGE/BUILD/DEPLOY GREEN; PRODUCTION V143 ROUTING ACTIVE; DOWNLOAD-AUTH FIX GREEN; FULL GOMYWAY WORKER TIMES OUT AT 1200S; 725.802S STAGE GATE LOCALIZES BOTTLENECK TO FIRST DIRECT DEMUCS CPU/SINGLE-THREAD PASS; ORIGINAL 12S SEQUENTIAL CPU1-vs-CPU4 GATE CANCELLED; DIAGNOSTIC APP STOPPED; BOUNDED 6S CONCURRENT MICRO-PROBE TERMINATED SAFELY WITH `RemoteError` AFTER AN EXTERNAL APP STOP, SO NO VALID CPU1/CPU4 PERFORMANCE VERDICT YET; RETAINED-CALL READ-ONLY INSPECTION GREEN WITH ALL 4 CALLS TERMINAL `RemoteError` AND NO RECOVERABLE AGGREGATE; SINGLE 6S FROZEN BASELINE IS NEXT; REFERENCE-FACING ACCURACY SCORE NOT RUN.**
+**Test Score: PHASE 1–13 GREEN; PROTECTED REAL-VERCEL PREVIEW GREEN; MAIN MERGE/BUILD/DEPLOY GREEN; PRODUCTION V143 ROUTING ACTIVE; DOWNLOAD-AUTH FIX GREEN; FULL GOMYWAY WORKER TIMES OUT AT 1200S; 725.802S STAGE GATE LOCALIZES BOTTLENECK TO FIRST DIRECT DEMUCS CPU/SINGLE-THREAD PASS; ORIGINAL 12S SEQUENTIAL CPU1-vs-CPU4 GATE CANCELLED; DIAGNOSTIC APP STOPPED; BOUNDED 6S CONCURRENT MICRO-PROBE TERMINATED SAFELY WITH `RemoteError` AFTER AN EXTERNAL APP STOP, SO NO VALID CPU1/CPU4 PERFORMANCE VERDICT YET; RETAINED-CALL READ-ONLY INSPECTION GREEN WITH ALL 4 CALLS TERMINAL `RemoteError` AND NO RECOVERABLE AGGREGATE; SINGLE 6S FROZEN BASELINE ARMED AS RUN 33913842713; REFERENCE-FACING ACCURACY SCORE NOT RUN.**
 
 ## Stable Production state
 
-- current `main`: **`bb992d901e78ab19645f8edc8e330d5a142ebd8e`**;
+- current `main`: **`bb992d901e78ab19645f8edc8e330d5a142ebd8e`** (re-verified immediately before the single-baseline gate);
 - Production deployment: **`dpl_5BdFAMHeiaA3rQ9QGUdHneY1rexM`**, READY;
 - aliases include `dadrocktabs.com` / `www.dadrocktabs.com`;
 - V143 bridge: `https://dadrockyt--dadrock-v143-http-bridge-analyze.modal.run`;
@@ -142,6 +142,22 @@ GitHub Actions run **`33913626199`**, job **`101155625317`**, completed successf
 
 This closes the retained-evidence step. It does **not** prove the frozen 6-second baseline is too slow; the prior run remains confounded by the external app stop.
 
+## Single 6-second frozen baseline — ARMED / RUNNING
+
+A fresh isolated one-call gate has been created without modifying Production:
+
+- isolated app source `analyzer/v143_demucs_single_baseline_probe.py`, commit `ac5385118edf609d48b1cbffcf4113ced5befe94`;
+- collector `.github/scripts/v143_demucs_single_baseline_collect.py`, commit `b817610dd1beb344ffee6f63a92d6bf29986a4a7`;
+- workflow `.github/workflows/v143-demucs-single-frozen-baseline.yml`, trigger commit `f47cc6de45562b4d29db930a0432dec6a64b4398`;
+- GitHub Actions run **`33913842713`** currently queued/starting;
+- exactly one `frozen` call, 6.0-second authorized clip;
+- hard client collection deadline **300.0 seconds**;
+- explicit local and remote progress markers;
+- `call.cancel(terminate_containers=True)` on any failure/timeout;
+- aggregate timing/hash only; no raw audio/stem bytes retained;
+- workflow `always()` cleanup stops only `dadrock-v143-demucs-single-baseline-probe`;
+- Production worker/bridge/Vercel remain unchanged; reference score calls remain 0.
+
 ## Fresh-chat authorization — EXPLICIT
 
 The user explicitly authorized continuation of non-reference-facing Production work. Authorization covers narrowly scoped V143 worker/bridge fixes and deploys, workflow diagnostics, Vercel configuration/redeploy if required, the existing repository-owned Gomyway audio, and aggregate-only Product/PDF contract checks with raw outputs discarded.
@@ -153,7 +169,6 @@ It **does not** authorize reference-facing accuracy scoring, restricted GOAT acc
 - `main`: unchanged;
 - Production V143 routing: ACTIVE;
 - Deployment Protection: preserved;
-- diagnostic Demucs app: STOPPED;
 - reference-facing score calls: 0;
 - GOAT restricted bytes: 0;
 - GuitarSet prospective sealed reads: 0;
@@ -162,9 +177,8 @@ It **does not** authorize reference-facing accuracy scoring, restricted GOAT acc
 
 ## NEXT SAFE ACTION — AUTHORIZED
 
-1. Build/run a **single 6-second frozen baseline call** in the isolated diagnostic app only.
-2. Give it an explicit **300-second hard collection deadline**, explicit local/remote progress markers, `call.cancel(terminate_containers=True)` on failure/timeout, aggregate-only output, and `always()` app cleanup.
-3. Only if that single baseline completes cleanly should CPU4 be tested in a separate single-call run.
-4. If the 6-second frozen run cannot complete within the 300-second bounded window, stop pursuing CPU thread-count tweaks and move to a more structural acceleration candidate (explicit CPU resource allocation and deterministic threading, then GPU Demucs if needed) under exact-hash gates.
-5. Do not change Production model, seed, shifts, reference boundaries, Vercel duration, or UI orchestration until a dedicated deterministic/reference-free gate demonstrates material speedup.
-6. Reference-facing accuracy remains unarmed.
+1. Read the terminal outcome/artifact for run `33913842713` and confirm isolated-app cleanup.
+2. If the single frozen baseline completes cleanly within 300 seconds, test CPU4 only in a separate one-call run with exact-output parity gates.
+3. If the frozen baseline cannot complete within the 300-second bounded window, stop pursuing CPU thread-count tweaks and move to a more structural acceleration candidate (explicit CPU resource allocation and deterministic threading, then GPU Demucs if needed) under exact-hash gates.
+4. Do not change Production model, seed, shifts, reference boundaries, Vercel duration, or UI orchestration until a dedicated deterministic/reference-free gate demonstrates material speedup.
+5. Reference-facing accuracy remains unarmed.
