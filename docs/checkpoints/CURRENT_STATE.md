@@ -12,11 +12,11 @@ Branch: `v143-contextual-prune-lobo`
 - Restricted GOAT bytes admitted/read = **0**; V168 prospective reference-facing score calls = **0**.
 - SplitMySong remains terminal `FAIL_CLOSED_NO_CANDIDATE`; never rerun/score/weaken/interpolate.
 - GuitarSet V3/V4/V5 remain terminal; development hold remains frozen; prospective players `00/01/03` remain sealed and prospective score calls = **0**.
-- CPU only unless freshly and specifically needed. No GPU/CUDA/Modal is needed for Phase 8.
+- CPU only unless freshly and specifically needed. No GPU/CUDA/Modal was needed for Phase 8.
 - `main` / Production untouched; never modify/merge/promote without explicit user direction.
 
 **Project Progress Score: 60%.**  
-**Test Score: PHASE 1–7 PASS; PHASE 8 T1–T12 + SAFETY EVIDENCE PASS; FULL NEXT BUILD PASS; FINAL LOCAL ROUTE-SMOKE RERUN ACTIVE; ACCURACY SCORE NOT RUN.**
+**Test Score: PHASE 1–8 REFERENCE-BLIND/SYNTHETIC CONTRACT PASS; FULL NEXT BUILD + LOCAL ROUTE SMOKE PASS; ACCURACY SCORE NOT RUN.**
 
 ## Phases 1–7 — COMPLETE
 
@@ -28,7 +28,7 @@ Branch: `v143-contextual-prune-lobo`
 - Phase 6 `FULL_MIXTURE_WAV_ADAPTER_V1`: run `33811270987`, job `100833411365`, **SUCCESS**; W1–W10 pass.
 - Phase 7 `FULL_MIXTURE_ANALYZER_RUNTIME_SHADOW_WIRING_V1`: run `33826597803`, job `100880476202`, **SUCCESS**; S1–S12 pass.
 
-## Phase 8 — `FULL_MIXTURE_SERVER_OBSERVATION_ADMISSION_WIRING_V1` IMPLEMENTED / CONTRACT PASS
+## Phase 8 — `FULL_MIXTURE_SERVER_OBSERVATION_ADMISSION_WIRING_V1` COMPLETE
 
 User authorization received in this continuation; nothing is required from the user at this time.
 
@@ -38,7 +38,13 @@ Pre-implementation freeze:
 
 Freeze commit: `f00e1d8161c0ebdcb8713b43b02548b07d337306`.
 
-Frozen status: **`SERVER RESEARCH-CONTEXT TRUST AUTHORIZED / PRODUCT-PDF AUTHORITY UNCHANGED / FAIL-OPEN REQUIRED / NO MODAL-GPU / NO REFERENCE SCORE`**.
+Result:
+
+`docs/checkpoints/SONGSTERR_FULL_MIXTURE_SERVER_OBSERVATION_ADMISSION_WIRING_V1_PHASE8_RESULT_20260903.md`
+
+Result checkpoint creation commit: `87cdd031b542a3e1cc33ae4b9ef7e5c1cd07ebe6`.
+
+Status: **`PHASE8_SERVER_RESEARCH_CONTEXT_ADMISSION_PASS / FULL_BRANCH_BUILD_ROUTE_GATE_PASS / PRODUCT-PDF_AUTHORITY_UNCHANGED / NO_MODAL-GPU / NO_REFERENCE_SCORE`**.
 
 Implementation:
 
@@ -47,7 +53,7 @@ Implementation:
 - `270f217748712b53c4d73471daf555ba81b1a208` — T1–T12 verifier;
 - `33e4613e3daedfd744bdcb0c54bef4583b916dea` — isolated Phase 8 workflow.
 
-Successful Phase 8 evidence:
+Successful Phase 8 contract evidence:
 
 - workflow `Full Mixture Server Observation Admission V1`;
 - run `33827081887`;
@@ -56,47 +62,65 @@ Successful Phase 8 evidence:
 - T1–T12 **SUCCESS**;
 - safety-evidence gate **SUCCESS**.
 
-Existing AI Tab End-to-End Contract also passed on Phase 8 route change (`33827001284`). Phase 7 runtime-shadow verification reran successfully (`33827001245`).
+Additional regression evidence:
 
-Implemented server guarantees remain:
+- existing `AI Tab End-to-End Contract` run `33827001284`: **SUCCESS**;
+- Phase 7 runtime-shadow rerun `33827001245`: **SUCCESS**.
+
+Server guarantees:
 
 - `structuredPayload` is built before any mixture observation trust;
 - exact baseline `mixtureStructureContext` is built first with `mixtureObservation: null`;
 - server independently admits only version-1 full-mixture/request-audio/reference-blind observations proving no reference/carrier/separated-carrier/event input;
 - missing/malformed/bad-provenance or field-invalid observations return the exact baseline research context;
 - explicit user structure priors retain field-by-field precedence;
-- admitted observation can affect only existing research `mixtureStructureContext` / shadow metadata;
+- admitted observation can affect only existing research `mixtureStructureContext` / `dualContextShadowProjection` metadata;
 - Product/UI/PDF authority, analyzer selection/status, generated tab/events/render events/measure grid remain independent.
 
-## Branch build gate maintenance — NEAR COMPLETE
+## Branch build gate — COMPLETE / GREEN
 
-Legacy run `33827001255` was not a real application build failure: a stale verifier failed and the workflow then attempted to rebase a dirty worktree before npm/build.
+Maintenance commits needed to make the legacy gate deterministic/current:
 
-Maintenance commits:
+- `d315fd3c29837ecc6fe1c2a87baeb76c6256db18` — refreshed V143 analyzer-quality fixture to the current four-flag anti-leakage contract;
+- `1cd60a689264894e700da89bcf7d7de1971b7a60` — made `V143 AI Tab Branch Build Gate` read-only/deterministic;
+- `745899173e4dd5205cd9b9b6b820a2943bb64866` — refreshed authenticated V143 Preview smoke fixture with required `eventIndex`.
 
-- `d315fd3c29837ecc6fe1c2a87baeb76c6256db18` — refreshed `verify_v143_analyzer_quality_gate.mjs` to the current complete four-flag anti-leakage contract and current fail-closed error message;
-- `1cd60a689264894e700da89bcf7d7de1971b7a60` — made `V143 AI Tab Branch Build Gate` read-only/deterministic: no branch heartbeat commits/rebases/pushes; it now runs verifiers, locked `npm ci`, full `next build`, built-server readiness, local route smoke, compact artifact/safety evidence;
-- `745899173e4dd5205cd9b9b6b820a2943bb64866` — refreshed the local Preview route smoke fixture to include the authenticated V143 `eventIndex` required by `validateV143RenderEvents`.
+Final branch integration gate:
 
-First clean gate run after workflow repair:
+- workflow `V143 AI Tab Branch Build Gate`;
+- run `33827731955`;
+- job `100883875983`;
+- tested source commit `745899173e4dd5205cd9b9b6b820a2943bb64866`;
+- conclusion **SUCCESS**.
 
-- run `33827324331`, job `100882664132`;
-- analyzer-quality verifier **SUCCESS**;
-- Preview feature verifier **SUCCESS**;
-- locked `npm ci --ignore-scripts` **SUCCESS**;
-- full Next.js 16.1.6 production build **SUCCESS**;
-- built server readiness **SUCCESS**;
-- route smoke failed only because its synthetic authenticated `renderEvents` fixture omitted `eventIndex`; server correctly failed closed with `Authenticated V143 Rhythm requires non-empty valid renderEvents; legacy PDF fallback is not allowed.`
+Every material step passed:
 
-The build log confirms the Phase 8 branch compiles successfully. A MongoDB localhost connection warning occurred while generating database sitemap routes, but Next handled it and completed the production build successfully.
+- analyzer-quality verifier — SUCCESS;
+- Preview feature verifier — SUCCESS;
+- locked `npm ci --ignore-scripts` — SUCCESS;
+- full Next.js 16.1.6 production build — SUCCESS;
+- built server readiness — SUCCESS;
+- built Preview route smoke — SUCCESS;
+- compact safety evidence — SUCCESS.
 
-The stale route-smoke fixture is corrected at `745899173e4dd5205cd9b9b6b820a2943bb64866`. Final clean branch-gate rerun `33827731955` is active at this checkpoint.
+Built-route evidence includes `/ai-tab` HTTP 200, structured V143 Preview renderer success, structured/fallback PDF generation success, actual Vercel Preview deployment=false, and Production modified=false.
 
-Safety accounting remains: external/reference assets read=false; GuitarSet=false; SplitMySong=false; GOAT restricted bytes=false; reference score calls=0; Modal invoked/deployed=false; GPU=false; Product/PDF authority changed=false; actual Vercel Preview deployment=false; `main`/Production changed=false.
+A localhost MongoDB warning occurred during database-backed sitemap generation, but Next handled it and the production build completed successfully.
+
+## Current trust boundary
+
+The full research path is now connected:
+
+`normalized full-mixture WAV -> Phase 6 estimator -> analyzer-side Phase 7 mixtureObservation -> independent server Phase 8 admission -> mixtureStructureContext -> dualContextShadowProjection`.
+
+That path remains **research metadata only**. `structuredPayload`, generated tab/events/render events/measure grid, Product UI and PDF authority remain independent.
+
+Safety accounting: external/reference assets read=false; GuitarSet=false; SplitMySong=false; GOAT restricted bytes=false; reference score calls=0; Modal invoked/deployed=false; GPU=false; actual Vercel Preview deployment=false; Product/PDF authority changed=false; `main`/Production changed=false.
 
 ## NEXT SAFE ACTION
 
-1. Finish inspecting branch gate run `33827731955` after the route-smoke fixture correction.
-2. If green, compare Phase 8 freeze to the tested/current head, write the dedicated Phase 8 result checkpoint, and mark Phase 8 complete here.
-3. If any remaining failure is found, correct only stale verification/CI plumbing unless evidence points to a real application regression.
-4. Do not expand Product/PDF authority, deploy/invoke Modal, use GPU, read reference assets, score references, merge `main`, or promote Production.
+1. Preserve the completed Phase 8 boundary; no user action is required now.
+2. Before allowing `dualContextShadowProjection` or `mixtureStructureContext` to influence canonical generated events/tabs/Product/PDF output, freeze a separate Product-authority experiment contract with explicit baseline parity, confidence/admission, rollback, and fail-closed/fail-open boundaries.
+3. Prefer a branch-local synthetic/reference-blind shadow-effect experiment before any Product-authority promotion so the system can prove useful deterministic behavior without exposing Product output to unvalidated structure estimates.
+4. Do not merge `main` or promote Production merely because research wiring/build gates are green; those remain separate release decisions.
+5. Await GOAT owner approval/denial; no SplitMySong/GuitarSet reruns or reference-facing scoring.
