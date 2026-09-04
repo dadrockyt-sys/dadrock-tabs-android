@@ -7,11 +7,14 @@ on:
       - v143-contextual-prune-lobo
     paths:
       - '.github/workflows/v143-ai-tab-branch-build-gate.yml'
+      - '.github/workflows/v143-exact-branch-vercel-preview.yml'
+      - 'vercel.json'
       - 'app/ai-tab/**'
       - 'app/api/analyze-audio-tab/**'
       - 'app/api/audio-upload/**'
       - 'app/api/generate-tab-preview/**'
       - 'app/api/generate-tab-pdf/**'
+      - 'app/api/debug/v7-polished-proof/**'
       - 'lib/jimmyPaigeAnalysisPayload.js'
       - 'lib/jimmyPaigeProfessionalPdfFeature.js'
       - 'lib/v143AnalyzerQuality.js'
@@ -44,7 +47,7 @@ jobs:
     runs-on: ubuntu-latest
     timeout-minutes: 35
     env:
-      NEXT_TELEMETRY_DISABLED: '1'
+      NEXT_TELEMETRY_DISABLED: 1
       NODE_OPTIONS: '--max-old-space-size=4096'
 
     steps:
