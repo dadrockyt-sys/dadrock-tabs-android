@@ -1,0 +1,38 @@
+name: V143 Main Integration Build
+
+on:
+  push:
+    branches:
+      - v143-main-integration-20260904
+    paths:
+      - '.github/workflows/v143-main-integration-build.yml'
+      - 'app/api/analyze-audio-tab/**'
+      - 'lib/aiTab*'
+      - 'lib/jimmyPaigeAnalysisPayload.js'
+      - 'lib/v143AnalyzerQuality.js'
+      - 'lib/v143RenderContract.js'
+      - 'lib/createAiTabPdf.js'
+      - 'lib/createV143RhythmPdf.js'
+      - 'analyzer/full_mixture_product_placement_candidate_v1.mjs'
+      - 'docs/checkpoints/V143_MAIN_INTEGRATION_STAGED_20260904.md'
+
+permissions:
+  contents: read
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ github.sha }}
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '24'
+      - name: Install locked dependencies
+        run: yarn install --frozen-lockfile
+      - name: Build full Next.js application
+        env:
+          NEXT_TELEMETRY_DISABLED: '1'
+        run: yarn build
