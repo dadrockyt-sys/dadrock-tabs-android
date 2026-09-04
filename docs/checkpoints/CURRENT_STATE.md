@@ -81,6 +81,12 @@ No external audio/reference corpus, GuitarSet/SplitMySong/GOAT, Modal/GPU, runti
 - The intended wiring may expose the Phase 6 full-mixture observation as append-only research metadata only; existing analyzer/server trust remains authoritative and unchanged.
 - Fail-open isolation is required: shadow wiring must not make an otherwise-valid analyzer request fail.
 
+## Continuation journal — 2026-09-03
+
+- Verified branch `v143-contextual-prune-lobo` exists and re-read this checkpoint before any code mutation.
+- Reaffirmed the next safe action: freeze analyzer-runtime shadow wiring before implementation.
+- No runtime code, Product/PDF surface, server trust policy, `main`, Production, Modal/GPU, external corpus, or reference-facing score has been touched in this resumed session yet.
+
 ## NEXT SAFE ACTION
 
 1. Freeze an **analyzer-runtime shadow wiring** contract before code.
