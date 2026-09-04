@@ -14,11 +14,11 @@ Branch checkpoint: `v143-contextual-prune-lobo`
 - No reference-facing accuracy scoring has been run during Production/Modal performance work.
 
 **Project Progress Score: 79%.**  
-**Test Score: PHASE 1–13 GREEN; PROTECTED REAL-VERCEL PREVIEW GREEN; MAIN MERGE/BUILD/DEPLOY GREEN; PRODUCTION V143 ROUTING ACTIVE; DOWNLOAD-AUTH FIX GREEN; FULL GOMYWAY WORKER TIMES OUT AT 1200S; 725.802S STAGE GATE LOCALIZES BOTTLENECK TO FIRST DIRECT DEMUCS CPU/SINGLE-THREAD PASS; ORIGINAL 12S SEQUENTIAL CPU1-vs-CPU4 GATE CANCELLED; CONCURRENT 6S MICRO-PROBE CONFOUNDED BY EXTERNAL APP STOP; RETAINED-CALL INSPECTION GREEN WITH NO RECOVERABLE AGGREGATE; SINGLE 6S FROZEN BASELINE CLEANLY TIMES OUT AT 300S WITH CANCEL/CLEANUP GREEN; CPU THREAD-COUNT TWEAK PATH CLOSED; STRUCTURAL ACCELERATION NEXT; REFERENCE-FACING ACCURACY SCORE NOT RUN.**
+**Test Score: PHASE 1–13 GREEN; PROTECTED REAL-VERCEL PREVIEW GREEN; MAIN MERGE/BUILD/DEPLOY GREEN; PRODUCTION V143 ROUTING ACTIVE; DOWNLOAD-AUTH FIX GREEN; FULL GOMYWAY WORKER TIMES OUT AT 1200S; 725.802S STAGE GATE LOCALIZES BOTTLENECK TO FIRST DIRECT DEMUCS CPU/SINGLE-THREAD PASS; ORIGINAL 12S SEQUENTIAL CPU1-vs-CPU4 GATE CANCELLED; CONCURRENT 6S MICRO-PROBE CONFOUNDED BY EXTERNAL APP STOP; RETAINED-CALL INSPECTION GREEN WITH NO RECOVERABLE AGGREGATE; SINGLE 6S FROZEN BASELINE CLEANLY TIMES OUT AT 300S WITH CANCEL/CLEANUP GREEN; CPU THREAD-COUNT TWEAK PATH CLOSED; HISTORICAL ONEDNN-OFF EXACT HASH ANCHOR RECOVERED; EXPLICIT `cpu=1.0` NO-GPU FULL-FIXTURE EXACT-ANCHOR GATE RUN 33914759546 ARMED; REFERENCE-FACING ACCURACY SCORE NOT RUN.**
 
 ## Stable Production state
 
-- current `main`: **`bb992d901e78ab19645f8edc8e330d5a142ebd8e`** (re-verified immediately before the single-baseline gate);
+- current `main`: **`bb992d901e78ab19645f8edc8e330d5a142ebd8e`** (re-verified immediately before the single-baseline gate and guarded again by the explicit-CPU gate);
 - Production deployment: **`dpl_5BdFAMHeiaA3rQ9QGUdHneY1rexM`**, READY;
 - aliases include `dadrocktabs.com` / `www.dadrocktabs.com`;
 - V143 bridge: `https://dadrockyt--dadrock-v143-http-bridge-analyze.modal.run`;
@@ -26,11 +26,10 @@ Branch checkpoint: `v143-contextual-prune-lobo`
 - Production runtime has proven `usingV143RhythmAnalyzer=true`;
 - **Production worker, bridge, and Vercel configuration were not changed by the Demucs diagnostics below.**
 
-## Authorized Gomyway source
+## Authorized Gomyway sources
 
-- `public/jimmy-paige-midterm-v1/gomyway-midterm-source.m4a`;
-- blob SHA `4dd709e3fa177b4daeed71ca97f0199757729d4b`;
-- 3,464,988 bytes;
+- current bounded source: `public/jimmy-paige-midterm-v1/gomyway-midterm-source.m4a`, blob SHA `4dd709e3fa177b4daeed71ca97f0199757729d4b`, 3,464,988 bytes;
+- historical approved reference-free host-probe fixture: `public/gomywayfullaitest.m4a`, SHA256 `215bd5a657c5326f08f132ae358595a95c30b39bb7493a52c2f910d5a608149f`;
 - raw diagnostic clips/stems remain ephemeral only.
 
 ## Decisive performance evidence
@@ -59,7 +58,7 @@ Frozen Demucs policy remains CPU-only, single-threaded, deterministic, oneDNN-di
 - workflow `.github/workflows/v143-demucs-cpu-thread-policy-probe.yml`;
 - run **`33894887671`**, job **`101095090913`**;
 - cancelled after loop-like/runaway behavior;
-- harness problem: `compare_cpu_thread_policy(...)` performs four full Demucs passes sequentially inside one 1100-second Modal call;
+- harness problem: four full Demucs passes sequentially inside one long Modal call;
 - no aggregate artifact;
 - no Production change.
 
@@ -90,34 +89,59 @@ GitHub Actions run **`33913626199`**, job **`101155625317`**, completed successf
 
 ## Single 6-second frozen baseline — TERMINAL / CLEAN TIMEOUT
 
-A fresh isolated one-call gate was run without modifying Production:
-
 - isolated app source `analyzer/v143_demucs_single_baseline_probe.py`, commit `ac5385118edf609d48b1cbffcf4113ced5befe94`;
 - collector `.github/scripts/v143_demucs_single_baseline_collect.py`, commit `b817610dd1beb344ffee6f63a92d6bf29986a4a7`;
 - workflow `.github/workflows/v143-demucs-single-frozen-baseline.yml`, trigger commit `f47cc6de45562b4d29db930a0432dec6a64b4398`;
-- GitHub Actions run **`33913842713`**, job **`101156325246`**;
+- run **`33913842713`**, job **`101156325246`**;
 - exactly one `frozen` call on the 6.0-second authorized clip;
 - function call id **`fc-01M1Q00SSQNTHAQM8AAKXZWG2J`**;
-- local wait began at `19:58:35.360971Z` and failed at `20:03:35.365388Z`;
-- hard collection deadline **300.0 seconds** was reached with terminal type **`TimeoutError`**;
-- `call.cancel(terminate_containers=True)` was attempted successfully; cancellation error = null;
+- hard collection deadline **300.0 seconds** reached with terminal type **`TimeoutError`**;
+- `call.cancel(terminate_containers=True)` succeeded without cancellation error;
 - aggregate artifact id **`9952542047`** uploaded successfully;
-- isolated-app cleanup step completed successfully after the timeout;
-- `productionAppTouched=false`;
-- reference-facing score calls = 0;
-- raw audio/stem retention = false;
-- Production worker/bridge/Vercel changed = false.
+- isolated-app cleanup completed successfully after timeout;
+- `productionAppTouched=false`; reference-facing score calls = 0; raw outputs retained = false.
 
 ### Decisive interpretation
 
-This single-call failure is **not confounded by an external app stop**. The diagnostic app remained available through the 300-second collection window, the client deadline fired cleanly, the outstanding call was then cancelled, and cleanup ran afterward.
+This failure is not confounded by an external stop. The existing frozen CPU/single-thread Demucs path cannot complete even a 6-second clip within 300 seconds under that GPU-app resource envelope. CPU thread-count tuning is therefore **CLOSED / DO NOT PURSUE**; next work is structural resource/execution acceleration only.
 
-Therefore:
+## Historical exact-output anchor recovery — GREEN READ-ONLY
 
-1. the existing frozen CPU/single-thread Demucs path cannot complete even a 6-second authorized clip within the 300-second bounded window under the current resource envelope;
-2. the CPU1-vs-CPU4 thread-count tweak path is now **CLOSED / DO NOT PURSUE**;
-3. the next work must be structural acceleration rather than thread-count tuning;
-4. no quality or reference-facing accuracy verdict has been produced.
+Repository history contains a successful oneDNN-off CPU-only V143 host probe on the approved `public/gomywayfullaitest.m4a` fixture:
+
+- historical result commit **`34471c7cdd061dbbc5ed807ba473bb2e156bc5f8`**;
+- source SHA256 **`215bd5a657c5326f08f132ae358595a95c30b39bb7493a52c2f910d5a608149f`**;
+- normalized WAV SHA256 **`ab64e7cdd8a792aecfb6eec518577d8d7e9d2f8aa43007e632470d9fe4511e7f`**;
+- oneDNN-off direct Guitar SHA256 **`0ac47da671df6f8387c1ad1343171de0cf7a0db6985dadf3f30e4a9c7cf0189c`**;
+- decoded PCM-int16 SHA256 **`2c22f04014c0f5c9c0c036125c3d702c8b87a9f67358e0dd0d3836c39c936bed`**;
+- expected deterministic shift trace `0,22050,6026`.
+
+Compatibility checks before using this as a fail-closed candidate anchor:
+
+- `analyzer/v143_production_separator.py` current blob **`05ae1978fa02f8c84ccc1e44547fc4e4cea9798b`**, exactly identical to the historical probe version;
+- `analyzer/v143_seeded_audio_separator_cli.py` current blob **`645f324c207d67b32c6d279657805ff8f25c3aa0`**, exactly identical to the oneDNN-off probe version;
+- `analyzer/v143_ai_tab_gpu_worker.py` current blob **`e7cdddfbf9e55e46be8397224b11133e7636ebb6`**, exactly identical image/dependency definition (`audio-separator[gpu]==0.44.5`);
+- current seeded wrapper retains the same oneDNN-off/single-thread deterministic controls; its later changes add aggregate stage timing markers, not separator math;
+- the historical oneDNN-off hash was recorded once, not cross-host repeated, so it is treated as a **strict candidate anchor**: fresh mismatch fails closed rather than being explained away.
+
+No restricted reference was read or scored to recover this anchor.
+
+## Explicit `cpu=1.0` exact-anchor structural gate — ARMED / RUNNING
+
+- collector `.github/scripts/v143_demucs_explicit_cpu_anchor_collect.py`, commit **`bdd89936c167993f3ae882b76173094dea2d428c`**;
+- workflow `.github/workflows/v143-demucs-explicit-cpu-anchor.yml`, trigger commit **`391ef75d5cf0c4f50a9b9536126cd7a70bdf447f`**;
+- GitHub Actions run **`33914759546`**, job **`101159244192`**;
+- isolated app is existing diagnostic `dadrock-v143-demucs-cpu-host-probe` only;
+- Modal function explicitly requests **`cpu=1.0`**, memory 8192, **no GPU**;
+- Demucs child remains one-thread, oneDNN-disabled, `ATEN_CPU_CAPABILITY=default`, `MKL_CBWR=COMPATIBLE`, seed 143, shifts=1, overlap=.10, segment=6, Guitar only;
+- full approved reference-free fixture is used because it has the historical exact-output anchor;
+- hard client collection deadline **900 seconds**;
+- failure/timeout triggers `call.cancel(terminate_containers=True)`;
+- exact Guitar + decoded PCM + normalized-input + shift-trace parity required;
+- runtime controls are validated from the child trace;
+- output artifact is aggregate-only; raw stem/audio bytes are not retained;
+- `always()` cleanup stops only the isolated diagnostic app;
+- Production worker/bridge/Vercel remain untouched; reference score calls remain 0.
 
 ## Fresh-chat authorization — EXPLICIT
 
@@ -130,19 +154,17 @@ It **does not** authorize reference-facing accuracy scoring, restricted GOAT acc
 - `main`: unchanged;
 - Production V143 routing: ACTIVE;
 - Deployment Protection: preserved;
-- diagnostic single-baseline app: STOPPED after cleanup;
 - reference-facing score calls: 0;
 - GOAT restricted bytes: 0;
 - GuitarSet prospective sealed reads: 0;
 - raw Gomyway transcription/PDF/stems retained: false;
-- current quality verdict: **NO QUALITY VERDICT — PERFORMANCE DIAGNOSTICS ONLY**.
+- current quality verdict: **NO QUALITY VERDICT — PERFORMANCE/IDENTITY DIAGNOSTICS ONLY**.
 
 ## NEXT SAFE ACTION — AUTHORIZED
 
-1. Do **not** run CPU4/thread-count tuning.
-2. Search existing repository/checkpoint/test evidence for any completed deterministic frozen Demucs output hash that can serve as an exact-output parity anchor without new reference-facing scoring.
-3. If a parity anchor exists, build an isolated **explicit CPU resource allocation** candidate while preserving the frozen deterministic model/seed/shifts/overlap/segment and exact-hash gate.
-4. If no usable parity anchor exists, define the smallest reference-free deterministic structural gate that can establish candidate repeatability and a trustworthy output identity anchor before any Production promotion.
-5. If explicit CPU resource allocation is still materially too slow, evaluate GPU Demucs in an isolated reference-free diagnostic under deterministic/repeatability and exact-output constraints before any Production change.
-6. Do not change Production model, seed, shifts, reference boundaries, Vercel duration, or UI orchestration until a dedicated deterministic/reference-free structural gate demonstrates material speedup and output safety.
-7. Reference-facing accuracy remains unarmed.
+1. Read terminal result/artifact for run `33914759546` and confirm isolated-app cleanup.
+2. If explicit `cpu=1.0` completes and reproduces both historical exact hashes, record its wall time as the current trustworthy CPU structural anchor.
+3. Do **not** reopen CPU thread-count tuning.
+4. If explicit CPU allocation is still materially too slow for the product pipeline, evaluate GPU Demucs only in an isolated reference-free deterministic diagnostic, with this exact CPU output identity retained as the fail-closed anchor; do not weaken identity criteria to force promotion.
+5. Do not change Production model, seed, shifts, reference boundaries, Vercel duration, or UI orchestration until a dedicated deterministic/reference-free structural gate demonstrates material speedup and output safety.
+6. Reference-facing accuracy remains unarmed.
