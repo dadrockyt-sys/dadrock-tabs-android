@@ -15,7 +15,7 @@ Branch checkpoint: `v143-contextual-prune-lobo`
 - No new reference-facing score was run during merge/Production smoke work.
 
 **Project Progress Score: 78%.**  
-**Test Score: PHASE 1–13 GREEN; PROTECTED REAL-VERCEL PREVIEW GREEN; RESOLVED MAIN INTEGRATION BUILD GREEN; PRODUCTION MERGE/DEPLOY READY; FIRST REAL-AUDIO ATTEMPT BLOCKED BEFORE ANALYSIS BY STATIC-ASSET 404; REFERENCE-FACING ACCURACY SCORE NOT RUN.**
+**Test Score: PHASE 1–13 GREEN; PROTECTED REAL-VERCEL PREVIEW GREEN; RESOLVED MAIN INTEGRATION BUILD GREEN; PRODUCTION MERGE/DEPLOY READY; FIRST REAL-AUDIO ATTEMPT BLOCKED BY STATIC-ASSET 404; SECOND REAL-AUDIO ATTEMPT REACHED PRODUCTION ROUTE BUT EXPOSED V143 ANALYZER ENV MISCONFIGURATION; REFERENCE-FACING ACCURACY SCORE NOT RUN.**
 
 ## Phases 1–13 — CLOSED GREEN
 
@@ -71,7 +71,7 @@ The resolved integration preserved current `main` BTS/SEO/payment/site wiring an
 
 Production merge/deployment was explicitly authorized by the user. No reference-facing score was authorized or run by this merge.
 
-## “Are You Gonna Go My Way” real-audio smoke — current diagnostic
+## “Are You Gonna Go My Way” real-audio smoke — diagnostics
 
 The authorized test audio exists in the repository on both the V143 branch and current `main`:
 
@@ -79,36 +79,45 @@ The authorized test audio exists in the repository on both the V143 branch and c
 - blob SHA: **`4dd709e3fa177b4daeed71ca97f0199757729d4b`**;
 - size: **3,464,988 bytes**.
 
-A first Production smoke was launched from the non-Production integration test branch:
+### Attempt 1 — static Production URL
 
-- workflow `.github/workflows/v143-production-gomyway-smoke.yml`;
-- run `33844432185`, job `100933164743`.
+Workflow `.github/workflows/v143-production-gomyway-smoke.yml`, run `33844432185`, job `100933164743`, stopped at the precondition GET because `https://dadrocktabs.com/jimmy-paige-midterm-v1/gomyway-midterm-source.m4a` returned Vercel **404 NOT_FOUND** despite the file existing in GitHub `main`.
 
-That attempt **did not reach `/api/analyze-audio-tab`**. It stopped at the precondition GET because `https://dadrocktabs.com/jimmy-paige-midterm-v1/gomyway-midterm-source.m4a` returned Vercel **404 NOT_FOUND** despite the file existing in GitHub `main`.
+Verdict: **NO PIPELINE VERDICT — STATIC ASSET 404 PRECONDITION**. No analyzer call, reference score, generated tab, or PDF evidence was preserved.
 
-Therefore:
+### Attempt 2 — raw GitHub URL
 
-- this is a Production static-asset packaging/serving diagnostic, **not** a transcription-quality failure;
-- no pipeline success/failure conclusion is accepted from attempt 1;
-- no reference score was called;
-- no generated tab/PDF was preserved or published.
+The non-Production integration branch was updated to use:
 
-The normal `/api/audio-upload` endpoint uses the browser-side Vercel Blob client protocol. For the next CI smoke, avoid adding protocol complexity and avoid republishing the recording: use the file's already-public raw GitHub URL from the current public repository as the analyzer's temporary fetch URL. Keep only aggregate quality/placement metrics; delete raw generated transcription/PDF outputs before artifact upload.
+`https://raw.githubusercontent.com/dadrockyt-sys/dadrock-tabs-android/main/public/jimmy-paige-midterm-v1/gomyway-midterm-source.m4a`
+
+- integration branch head: `8fd6fa9a6eafcf38c97a5811eb6fb4075c221a88`;
+- workflow run: **`33844704674`**;
+- job: **`100933970052`**;
+- Production `/api/analyze-audio-tab` response: **502**;
+- safe aggregate error: **`The analyzer could not download the audio file.`**;
+- raw analysis/tab/PDF was not uploaded; only aggregate summary artifact was retained;
+- reference score calls = **0**.
+
+Most important Production runtime-log finding for exact deployment `dpl_6wzaPcM1eM5o42WmrssZu966sdSs`:
+
+```text
+Modal analyzer error: {
+  transcriptionType: 'rhythm',
+  usingV143RhythmAnalyzer: false,
+  analyzerData: { detail: 'The analyzer could not download the audio file.' }
+}
+```
+
+Therefore the merged V143 route code is live, but the exact Production deployment is **not selecting the V143 Rhythm analyzer**. The current `app/api/analyze-audio-tab/route.js` selects V143 Rhythm only when `process.env.ANALYZER_API_URL_V143` is present. Production fell back to the legacy analyzer and that legacy analyzer then failed to download the raw GitHub asset.
+
+This means Attempt 2 is **not a V143 transcription-quality verdict**. It is a Production analyzer-selection/configuration diagnostic.
 
 ## Fresh-chat authorization — EXPLICIT
 
-On 2026-09-04 the user explicitly asked to save these next steps to `CURRENT_STATE.md` **with authorization for a fresh chat to continue**.
+On 2026-09-04 the user explicitly asked to save next steps to `CURRENT_STATE.md` with authorization for a fresh chat to continue. That authorization remains active for the non-reference-facing Production diagnostics described here, including workflow edits/reruns, Production Rhythm route calls using the existing repository-owned Gomyway audio, preview/PDF contract checks with raw outputs discarded, and reading GitHub Actions/Vercel logs.
 
-The next chat is authorized to proceed immediately with the `NEXT SAFE ACTION` below without re-asking for permission. This authorization includes:
-
-- editing/rerunning the **non-Production diagnostic workflow/branch** needed to exercise the already-merged Production pipeline;
-- using the repository-owned/public `gomyway-midterm-source.m4a` as the test input, including its raw GitHub URL if needed;
-- POSTing that test input to the merged Production Rhythm analysis route;
-- exercising the Production preview/PDF route for contract verification while discarding raw generated transcription/PDF outputs afterward;
-- reading GitHub Actions and Vercel runtime/build logs needed to diagnose the test;
-- saving diagnostic checkpoints/results back to `docs/checkpoints/CURRENT_STATE.md` on `v143-contextual-prune-lobo` as work proceeds.
-
-This authorization **does not** arm or authorize any reference-facing accuracy score, restricted GOAT access, sealed GuitarSet prospective asset access, reopening SplitMySong terminal work, or weakening any existing fail-closed/safety boundary. Any such separate scientific boundary remains unchanged and still requires its own lawful/explicit authorization where applicable.
+This authorization **does not** arm or authorize any reference-facing accuracy score, restricted GOAT access, sealed GuitarSet prospective asset access, reopening SplitMySong terminal work, or weakening any existing fail-closed/safety boundary.
 
 ## Safety / accounting through this checkpoint
 
@@ -120,14 +129,18 @@ This authorization **does not** arm or authorize any reference-facing accuracy s
 - GuitarSet prospective sealed assets read: **0**;
 - SplitMySong terminal path reopened: **false**;
 - raw real-audio transcription/PDF preserved to artifacts: **false**;
-- first real-audio attempt reached analyzer: **false**;
-- first real-audio attempt verdict: **NO PIPELINE VERDICT — STATIC ASSET 404 PRECONDITION**.
+- Attempt 1 reached analyzer: **false**;
+- Attempt 2 reached Production analysis route: **true**;
+- Attempt 2 selected V143 Rhythm analyzer: **false**;
+- current real-audio verdict: **NO V143 PIPELINE VERDICT — PRODUCTION V143 ANALYZER ENV/SELECTION NOT ACTIVE**.
 
-## NEXT SAFE ACTION — AUTHORIZED FOR FRESH CHAT
+## NEXT SAFE ACTION — AUTHORIZED
 
-1. Update the non-Production production-smoke workflow to use the existing raw GitHub URL for `gomyway-midterm-source.m4a` instead of the missing Vercel static URL.
-2. POST that URL to the **merged Production** `/api/analyze-audio-tab` Rhythm path.
-3. Record only aggregate internal quality signals: analyzer status/engine, event and render-event counts, V143 quality-gate metrics, conditioning/mixture/dual-context status, Product-placement candidate/promotion counts, and fail-closed/safety fields.
-4. Pass the returned structured events through the Production preview route and record only PDF contract/byte-count metadata; do not retain or publish the generated transcription or PDF.
-5. Inspect Vercel runtime logs for the exact Production deployment.
-6. Report whether the current pipeline shows **internal signs of success**. Do not call that reference-facing accuracy unless a lawful reference-scoring protocol is separately armed.
+1. Identify the previously validated V143 analyzer deployment/endpoint from branch checkpoints/deployment history without exposing or changing unrelated secrets.
+2. Verify whether Production has `ANALYZER_API_URL_V143`; current runtime evidence says it is absent/unavailable to the deployed function.
+3. Restore the already-tested V143 Rhythm analyzer selection in Production using the existing V143 endpoint/configuration, preserving legacy Lead/Bass behavior and all fail-closed safety contracts.
+4. Redeploy Production only if required for the environment change to take effect.
+5. Re-run the aggregate-only Gomyway smoke. Confirm runtime logs show `usingV143RhythmAnalyzer: true` before accepting any pipeline interpretation.
+6. If the V143 analyzer itself cannot fetch the raw GitHub asset, diagnose its download path separately; do not weaken URL/network safety broadly.
+7. Only after a 200 analysis response, pass structured events through Production preview and record aggregate quality/placement and PDF contract metadata while deleting raw transcription/PDF outputs.
+8. Report only **internal signs of success**; reference-facing accuracy remains unarmed.
