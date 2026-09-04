@@ -81,3 +81,11 @@ User authorized non-reference-facing V143 performance work and repository-owned 
 4. No new Demucs/GPU/split-parallel compute should start until cache architecture is understood.
 5. Production/bridge/Vercel/UI remain unchanged until a reference-free exact structural gate passes.
 6. Reference-facing accuracy remains unarmed.
+
+## In-progress cache architecture inspection — 2026-09-04
+
+- Resumed on `v143-contextual-prune-lobo` from this checkpoint.
+- Re-read the frozen boundaries; authorized work remains cache architecture inspection/design only.
+- Inspected `app/api/analyze-audio-tab/route.js`. The app-side API route forwards analysis requests to the remote live V143 analyzer bridge, so a reusable-byte cache should be placed at the analyzer/bridge stage where stable normalized audio identity and deterministic separator outputs are available, not in any reference-facing path.
+- Branch-local analyzer/bridge source is being traced before any cache implementation.
+- No Demucs/GPU/split-parallel runs, reference-facing scoring, analyzer semantic changes, production bridge changes, Vercel changes, or UI changes were made in this pass.
