@@ -1,0 +1,340 @@
+name: V143 Production Gomyway After Download Fix
+
+on:
+  push:
+    branches:
+      - v143-contextual-prune-lobo
+    paths:
+      - '.github/workflows/v143-production-gomyway-after-download-fix.yml'
+
+concurrency:
+  group: v143-production-gomyway-after-download-fix
+  cancel-in-progress: false
+
+permissions:
+  contents: read
+
+env:
+  VERCEL_ORG_ID: team_qJrw8Cuze5bCEg9M3Q67XMWt
+  VERCEL_PROJECT_ID: prj_6biwsn0iHci6FHNswAUCS8UYrAqF
+  MAIN_SHA: bb992d901e78ab19645f8edc8e330d5a142ebd8e
+  PRODUCTION_DEPLOYMENT_ID: dpl_5BdFAMHeiaA3rQ9QGUdHneY1rexM
+  PRODUCTION_DEPLOYMENT_URL: https://dadrock-tabs-android-bbqwbski7-stephen-mcnally-s-projects.vercel.app
+  AUDIO_URL: https://raw.githubusercontent.com/dadrockyt-sys/dadrock-tabs-android/main/public/jimmy-paige-midterm-v1/gomyway-midterm-source.m4a
+  AUDIO_BLOB_SHA: 4dd709e3fa177b4daeed71ca97f0199757729d4b
+  NEXT_TELEMETRY_DISABLED: '1'
+  NO_COLOR: '1'
+
+jobs:
+  production-gomyway-after-download-fix:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    env:
+      VERCEL_TOKEN: ${{ secrets.VERCEL_TOKEN }}
+
+    steps:
+      - name: Checkout diagnostic branch
+        uses: actions/checkout@v4
+
+      - name: Enforce exact Production source and safety boundary
+        shell: bash
+        run: |
+          set -euo pipefail
+          test -n "${VERCEL_TOKEN:-}"
+          ACTUAL_MAIN="$(git ls-remote origin refs/heads/main | awk '{print $1}')"
+          test "$ACTUAL_MAIN" = "$MAIN_SHA"
+          echo "productionSourceCommit=$MAIN_SHA"
+          echo "productionDeploymentId=$PRODUCTION_DEPLOYMENT_ID"
+          echo 'deploymentProtectionChanged=false'
+          echo 'referenceFacingAccuracyScored=false'
+          echo 'referenceScoreCalls=0'
+
+      - name: Set up Node.js 24
+        uses: actions/setup-node@v4
+        with:
+          node-version: '24'
+
+      - name: Install pinned Vercel CLI
+        shell: bash
+        run: |
+          set -euo pipefail
+          npm install --global vercel@59.11.2
+          test "$(vercel --version | tail -n 1)" = '59.11.2'
+
+      - name: Confirm protected Production route access
+        shell: bash
+        run: |
+          set -euo pipefail
+          STATUS="$(
+            vercel curl /ai-tab \
+              --deployment "$PRODUCTION_DEPLOYMENT_URL" \
+              -- \
+              --silent --show-error --location --max-time 30 \
+              --user-agent 'Mozilla/5.0 (compatible; DadRock-V143-Gomyway-Smoke/1.0)' \
+              --output /dev/null --write-out '%{http_code}'
+          )"
+          echo "authenticatedProductionAiTabStatus=$STATUS"
+          test "$STATUS" = '200'
+
+      - name: Analyze Gomyway through patched V143 worker
+        shell: bash
+        run: |
+          set -euo pipefail
+          OUT=debug/v143-contextual-prune/production-gomyway-after-download-fix
+          mkdir -p "$OUT"
+
+          cat > "$OUT/request.json" <<JSON
+          {
+            "audioUrl": "$AUDIO_URL",
+            "pathname": "gomyway-midterm-source.m4a",
+            "song": "Are You Gonna Go My Way",
+            "artist": "Lenny Kravitz",
+            "transcriptionType": "rhythm"
+          }
+          JSON
+
+          STATUS="$(
+            vercel curl /api/analyze-audio-tab \
+              --deployment "$PRODUCTION_DEPLOYMENT_URL" \
+              -- \
+              --silent --show-error --location \
+              --max-time 900 \
+              --request POST \
+              --user-agent 'Mozilla/5.0 (compatible; DadRock-V143-Gomyway-Smoke/1.0)' \
+              --header 'Content-Type: application/json' \
+              --data-binary "@$OUT/request.json" \
+              --output "$OUT/analysis.json" \
+              --write-out '%{http_code}'
+          )"
+
+          export STATUS PRODUCTION_DEPLOYMENT_URL PRODUCTION_DEPLOYMENT_ID MAIN_SHA AUDIO_BLOB_SHA
+
+          python3 - <<'PY'
+          import json
+          import os
+          from pathlib import Path
+
+          out = Path('debug/v143-contextual-prune/production-gomyway-after-download-fix')
+          raw = (out / 'analysis.json').read_text(encoding='utf-8', errors='replace')
+          try:
+              a = json.loads(raw)
+          except Exception:
+              a = {}
+
+          status = int(os.environ['STATUS'])
+          pc = a.get('payloadContract') if isinstance(a.get('payloadContract'), dict) else {}
+          aq = a.get('analysisQuality') if isinstance(a.get('analysisQuality'), dict) else {}
+          metrics = aq.get('metrics') if isinstance(aq.get('metrics'), dict) else {}
+          conditioning = a.get('conditioningContract') if isinstance(a.get('conditioningContract'), dict) else {}
+          mixture = a.get('mixtureStructureContext') if isinstance(a.get('mixtureStructureContext'), dict) else {}
+          dual = a.get('dualContextShadowProjection') if isinstance(a.get('dualContextShadowProjection'), dict) else {}
+          canary = a.get('productPlacementCandidateCanary') if isinstance(a.get('productPlacementCandidateCanary'), dict) else {}
+          promo = a.get('productPlacementPromotion') if isinstance(a.get('productPlacementPromotion'), dict) else {}
+
+          summary = {
+              'schemaVersion': 8,
+              'gate': 'v143-production-gomyway-after-download-fix',
+              'productionDeploymentId': os.environ['PRODUCTION_DEPLOYMENT_ID'],
+              'productionDeploymentUrl': os.environ['PRODUCTION_DEPLOYMENT_URL'],
+              'productionSourceCommit': os.environ['MAIN_SHA'],
+              'audioBlobSha': os.environ['AUDIO_BLOB_SHA'],
+              'audioSource': 'public-raw-github-existing-repository-asset',
+              'protectedAccessMethod': 'vercel-curl-env-token-auto-bypass',
+              'deploymentProtectionDisabled': False,
+              'analysisStatus': status,
+              'rhythmCanaryActive': a.get('rhythmCanaryActive'),
+              'analysisEngine': a.get('analysisEngine'),
+              'generatedTabPresent': bool(str(a.get('generatedTab') or '').strip()),
+              'eventCount': len(a.get('events') or []) if isinstance(a.get('events'), list) else 0,
+              'renderEventCount': len(a.get('renderEvents') or []) if isinstance(a.get('renderEvents'), list) else 0,
+              'payloadContract': {
+                  'version': pc.get('version'),
+                  'referenceFree': pc.get('referenceFree'),
+                  'professionalReferenceNotUsed': pc.get('professionalReferenceNotUsed'),
+                  'referenceRuntimeInputNotUsed': pc.get('referenceRuntimeInputNotUsed'),
+                  'runtimeLabelsNotRequired': pc.get('runtimeLabelsNotRequired'),
+                  'v143RuntimeSafetyVerified': pc.get('v143RuntimeSafetyVerified'),
+                  'boundedEventCount': pc.get('boundedEventCount'),
+                  'renderEventCount': pc.get('renderEventCount'),
+                  'analyzerQualityGatePassed': pc.get('analyzerQualityGatePassed'),
+                  'structuredRenderEligible': pc.get('structuredRenderEligible'),
+              },
+              'analysisQuality': {
+                  'passed': aq.get('passed'),
+                  'failures': aq.get('failures'),
+                  'rawEventCount': metrics.get('rawEventCount'),
+                  'consideredRawEventCount': metrics.get('consideredRawEventCount'),
+                  'validRenderEventCount': metrics.get('validRenderEventCount'),
+                  'renderEventSurvivalPercent': metrics.get('renderEventSurvivalPercent'),
+                  'playableStringFretPercent': metrics.get('playableStringFretPercent'),
+                  'musicalPlacementPercent': metrics.get('musicalPlacementPercent'),
+                  'pitchValidityPercent': metrics.get('pitchValidityPercent'),
+                  'measureRange': metrics.get('measureRange'),
+                  'stepCoverage': metrics.get('stepCoverage'),
+                  'techniqueCoverage': metrics.get('techniqueCoverage'),
+                  'sustainCoverage': metrics.get('sustainCoverage'),
+              },
+              'conditioning': {
+                  'referenceBlind': conditioning.get('referenceBlind'),
+                  'referenceScoreAuthorized': conditioning.get('referenceScoreAuthorized'),
+              },
+              'mixtureStructure': {
+                  'status': mixture.get('status'),
+                  'quantizationStatus': mixture.get('quantizationStatus'),
+                  'observationAdmitted': mixture.get('observationAdmitted'),
+                  'tempoBpm': mixture.get('tempoBpm'),
+                  'timeSignature': mixture.get('timeSignature'),
+                  'feel': mixture.get('feel'),
+              },
+              'dualContext': {
+                  'status': dual.get('status'),
+                  'renderEventCount': len(dual.get('renderEvents') or []) if isinstance(dual.get('renderEvents'), list) else None,
+              },
+              'candidateCanary': {
+                  'eligible': canary.get('eligible'),
+                  'baselineRenderEventCount': canary.get('baselineRenderEventCount'),
+                  'candidateRenderEventCount': canary.get('candidateRenderEventCount'),
+              },
+              'productPlacementPromotion': {
+                  'promoted': promo.get('promoted'),
+                  'reason': promo.get('reason'),
+                  'baselineRenderEventCount': promo.get('baselineRenderEventCount'),
+                  'canonicalRenderEventCount': promo.get('canonicalRenderEventCount'),
+              },
+              'referenceFacingAccuracyScored': False,
+              'referenceScoreCalls': 0,
+          }
+
+          if status != 200:
+              summary['error'] = a.get('error') or a.get('detail') or 'unknown/non-JSON analyzer error'
+
+          (out / 'summary.json').write_text(json.dumps(summary, indent=2) + '\n', encoding='utf-8')
+          print(json.dumps(summary, indent=2))
+
+          if status != 200:
+              raise SystemExit(f'Production analysis returned HTTP {status}')
+          if summary['rhythmCanaryActive'] is not True:
+              raise SystemExit('V143 rhythm canary not active')
+          if not summary['generatedTabPresent']:
+              raise SystemExit('Production analysis returned no tablature')
+
+          required = {
+              'referenceFree': True,
+              'professionalReferenceNotUsed': True,
+              'referenceRuntimeInputNotUsed': True,
+              'runtimeLabelsNotRequired': True,
+              'v143RuntimeSafetyVerified': True,
+          }
+          for key, expected in required.items():
+              if summary['payloadContract'].get(key) is not expected:
+                  raise SystemExit(f'Runtime safety contract failed: {key}')
+          PY
+
+      - name: Generate Production preview from successful structured response
+        shell: bash
+        run: |
+          set -euo pipefail
+          OUT=debug/v143-contextual-prune/production-gomyway-after-download-fix
+
+          python3 - <<'PY'
+          import json
+          from pathlib import Path
+
+          out = Path('debug/v143-contextual-prune/production-gomyway-after-download-fix')
+          a = json.loads((out / 'analysis.json').read_text())
+          payload = {
+              'song': 'Are You Gonna Go My Way',
+              'artist': 'Lenny Kravitz',
+              'transcriptionType': 'rhythm',
+              'generatedTab': a.get('generatedTab'),
+              'tuning': a.get('tuning'),
+              'tempo': a.get('tempo'),
+              'timeSignature': a.get('timeSignature'),
+              'keySignature': a.get('keySignature'),
+              'analysisEngine': a.get('analysisEngine'),
+              'renderEvents': a.get('renderEvents') or [],
+              'measureGrid': a.get('measureGrid'),
+              'confidence': a.get('confidence'),
+              'difficulty': a.get('difficulty'),
+              'techniques': a.get('techniques') or [],
+              'previewSystems': 4,
+          }
+          (out / 'preview-request.json').write_text(json.dumps(payload, separators=(',', ':')))
+          PY
+
+          PREVIEW_STATUS="$(
+            vercel curl /api/generate-tab-preview \
+              --deployment "$PRODUCTION_DEPLOYMENT_URL" \
+              -- \
+              --silent --show-error --location --max-time 180 \
+              --request POST \
+              --user-agent 'Mozilla/5.0 (compatible; DadRock-V143-Gomyway-Smoke/1.0)' \
+              --header 'Content-Type: application/json' \
+              --data-binary "@$OUT/preview-request.json" \
+              --dump-header "$OUT/preview.headers" \
+              --output "$OUT/preview.pdf" \
+              --write-out '%{http_code}'
+          )"
+          export PREVIEW_STATUS
+
+          python3 - <<'PY'
+          import json
+          import os
+          from pathlib import Path
+
+          out = Path('debug/v143-contextual-prune/production-gomyway-after-download-fix')
+          summary = json.loads((out / 'summary.json').read_text())
+          headers = (out / 'preview.headers').read_text(encoding='utf-8', errors='replace')
+          pdf = (out / 'preview.pdf').read_bytes()
+          content_type = ''
+          feature = ''
+          renderer = ''
+          for line in headers.splitlines():
+              low = line.lower()
+              if low.startswith('content-type:'):
+                  content_type = line.split(':', 1)[1].strip()
+              elif low.startswith('x-jimmy-paige-pdf-feature:'):
+                  feature = line.split(':', 1)[1].strip()
+              elif low.startswith('x-jimmy-paige-pdf-renderer:'):
+                  renderer = line.split(':', 1)[1].strip()
+
+          summary['preview'] = {
+              'status': int(os.environ['PREVIEW_STATUS']),
+              'contentType': content_type,
+              'feature': feature,
+              'renderer': renderer,
+              'pdfBytes': len(pdf),
+              'pdfMagic': pdf[:4].decode('ascii', errors='replace'),
+          }
+          (out / 'summary.json').write_text(json.dumps(summary, indent=2) + '\n')
+          print(json.dumps({'preview': summary['preview']}, indent=2))
+
+          if summary['preview']['status'] != 200:
+              raise SystemExit('Production preview route did not return 200')
+          if not content_type.lower().startswith('application/pdf'):
+              raise SystemExit('Production preview did not return PDF content type')
+          if pdf[:4] != b'%PDF' or len(pdf) <= 1000:
+              raise SystemExit('Production preview PDF contract failed')
+          PY
+
+      - name: Delete raw/transcription/PDF evidence from runner
+        if: always()
+        shell: bash
+        run: |
+          set -euo pipefail
+          OUT=debug/v143-contextual-prune/production-gomyway-after-download-fix
+          rm -f \
+            "$OUT/analysis.json" \
+            "$OUT/request.json" \
+            "$OUT/preview-request.json" \
+            "$OUT/preview.pdf" \
+            "$OUT/preview.headers"
+
+      - name: Preserve aggregate evidence only
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: v143-production-gomyway-after-download-fix
+          path: debug/v143-contextual-prune/production-gomyway-after-download-fix/summary.json
+          if-no-files-found: warn
+          retention-days: 14
