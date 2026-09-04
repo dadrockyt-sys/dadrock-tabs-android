@@ -15,8 +15,8 @@ Branch: `v143-contextual-prune-lobo`
 - CPU only unless freshly and specifically needed. No GPU/CUDA/Modal is needed for Phase 10.
 - `main` / Production untouched; never modify/merge/promote without explicit user direction.
 
-**Project Progress Score: 63%.**  
-**Test Score: PHASE 1–9 REFERENCE-BLIND/SYNTHETIC CONTRACT PASS; FULL NEXT BUILD + LOCAL ROUTE SMOKE PASS; PHASE 10 PRODUCT-PLACEMENT CANDIDATE EXPERIMENT FROZEN / IMPLEMENTATION PENDING; ACCURACY SCORE NOT RUN.**
+**Project Progress Score: 64%.**  
+**Test Score: PHASE 1–9 REFERENCE-BLIND/SYNTHETIC CONTRACT PASS; FULL NEXT BUILD + LOCAL ROUTE SMOKE PASS; PHASE 10 PRODUCT-PLACEMENT CANDIDATE HELPER + P1–P12 VERIFIER IMPLEMENTED / CI PENDING; ACCURACY SCORE NOT RUN.**
 
 ## Phases 1–7 — COMPLETE
 
@@ -58,7 +58,7 @@ A concurrent duplicate verifier-only file exists at `7af40b52075a044a8d7333dfef2
 
 This remains **research metadata only**. Canonical `structuredPayload`, generated tab/events/render events/measure grid, Product UI and PDF authority remain independent.
 
-## Phase 10 — `FULL_MIXTURE_PRODUCT_PLACEMENT_CANDIDATE_VALIDATION_V1` FROZEN / ACTIVE
+## Phase 10 — `FULL_MIXTURE_PRODUCT_PLACEMENT_CANDIDATE_VALIDATION_V1` IMPLEMENTED / CI PENDING
 
 The user explicitly authorized running the Product-authority experiment in this continuation.
 
@@ -69,23 +69,30 @@ Freeze commit: `697996069faa1a9167983357d1b94dada7c827fe`.
 
 Frozen status: **`PRODUCT-AUTHORITY EXPERIMENT AUTHORIZED / EXPERIMENT-ONLY PLACEMENT CANDIDATE / LIVE PRODUCT-PDF WIRING NOT AUTHORIZED / CPU SYNTHETIC REFERENCE-BLIND ONLY / NO MODAL-GPU / NO REFERENCE SCORE / MAIN+PRODUCTION UNTOUCHED`**.
 
-Frozen candidate scope:
-- experiment-only; canonical baseline must remain immutable;
-- V143 runtime safety must already be verified;
-- never override existing authenticated `renderEvents`;
-- placement-only authority: may propose `measure` + `step` only while preserving canonical `eventIndex/stringIndex/fret/midi` exactly;
-- initial candidate scope is complete trusted straight 4/4, pickup 0 only, because the existing V143 Product contract uses 16 steps per measure;
-- incomplete/Auto/triplet/non-4/4/pickup/bad-provenance/mismatch inputs fail open to no candidate;
-- existing Product validator must accept every candidate row without compaction;
-- no live route, canonical payload builder, Product UI, Preview/PDF implementation or analyzer implementation may consume the candidate in Phase 10.
+Implementation:
+- `1cff2f5248ce7f8463928cbb3625f70d1bc97e4a` — added experiment-only `analyzer/full_mixture_product_placement_candidate_v1.mjs`;
+- `569b5f02dbf91cd7d7d14f2d3640599bcb776564` — added deterministic known-truth P1–P12 verifier `analyzer/verify_full_mixture_product_placement_candidate_validation_v1.mjs`.
 
-Frozen P1–P12 cover baseline immutability, known synthetic truth, Product-contract compatibility, placement-only authority, determinism, authenticated-render-event precedence, provenance rollback, structure-scope rollback, event-integrity rollback, explicit-prior precedence, live Product/PDF isolation, and safety accounting.
+No live runtime/Product/PDF implementation file was modified.
+
+Frozen candidate behavior implemented:
+- requires canonical V143 runtime safety;
+- refuses to run when canonical authenticated `renderEvents` already exist;
+- requires Phase 4/9 research contracts to remain shadow-only/reference-blind/non-production and a `TRUSTED_FULL_MIXTURE_OBSERVATION` with complete resolved feel/measure projection;
+- limits promotion experiment to straight 4/4, pickup 0, 16-step geometry;
+- proposes only `measure` + `step` while preserving canonical `eventIndex/stringIndex/fret/midi` exactly;
+- ignores conditioned string/fret for Product authority;
+- requires the existing `validateV143RenderEvents` Product validator to accept every row without compaction;
+- any missing/malformed/mismatch/out-of-scope input returns null/no candidate;
+- candidate contract remains `experimentOnly=true`, `liveProductWiringAuthorized=false`, `productionEligible=false`.
+
+The P1–P12 verifier uses deterministic synthetic V143-safe events with no source measure/step plus a known placement oracle spanning measure boundaries. It checks baseline immutability, exact placement recovery, Product-validator compatibility, placement-only authority, determinism, authenticated-placement precedence, safety/provenance rollback, structure-scope rollback, event-integrity rollback, explicit-prior precedence, live Product/PDF isolation and safety accounting.
 
 Safety accounting remains: external/reference assets read=false; GuitarSet=false; SplitMySong=false; GOAT restricted bytes=false; reference score calls=0; Modal invoked/deployed=false; GPU=false; Vercel Preview deployment=false; live Product/PDF authority changed=false; `main`/Production changed=false.
 
 ## NEXT SAFE ACTION
 
-1. Implement the Phase 10 experiment-only placement candidate helper/verifier under `analyzer/` only.
-2. Add an isolated CPU-only read-only workflow and run P1–P12 against deterministic known-truth synthetic fixtures.
-3. If green, write the dedicated Phase 10 result checkpoint with synthetic placement metrics and preserve the live Product/PDF boundary.
-4. Do not wire the candidate into runtime/Product/PDF merely because the experiment passes; any live promotion requires a later separate contract.
+1. Add the isolated CPU-only read-only Phase 10 workflow.
+2. Run/inspect P1–P12 and safety evidence; do not weaken the frozen contract on failure.
+3. If green, write the dedicated Phase 10 result checkpoint including synthetic baseline-vs-candidate placement coverage and exact-known-truth rate.
+4. Preserve live Product/PDF isolation after the experiment; any live promotion requires a later separate contract.
