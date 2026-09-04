@@ -104,6 +104,13 @@ The contract fixes S1–S12 before implementation. Key invariants:
 - Frozen analyzer-runtime shadow wiring before implementation at commit `249c51c8953c06772111b1ce769d5235c3a893e1`.
 - No runtime code, Product/PDF surface, server trust policy, `main`, Production, Modal/GPU, external corpus, GOAT restricted bytes, or reference-facing score has been touched in this resumed session.
 
+### Phase 7 implementation continuation — 2026-09-03
+
+- Resumed from the frozen Phase 7 contract on branch `v143-contextual-prune-lobo`.
+- Reconfirmed the implementation boundary: analyzer-side research metadata only, fail-open shadow behavior, canonical analyzer authority unchanged, and `/api/analyze-audio-tab` remains at `mixtureObservation: null`.
+- Active work is locating the exact normalized-WAV analyzer seam plus the Phase 6 adapter/test seams before any runtime code change.
+- No analyzer runtime behavior has been changed yet in this continuation interval.
+
 ## NEXT SAFE ACTION
 
 1. Identify and pin the exact branch-local analyzer runtime function where the request audio is already normalized to full-mixture PCM WAV and before any separation/carrier/event interpretation.
