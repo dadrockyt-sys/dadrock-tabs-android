@@ -1,0 +1,137 @@
+name: Full Mixture Product Placement Live Candidate Canary V1
+
+on:
+  workflow_dispatch:
+  push:
+    branches:
+      - v143-contextual-prune-lobo
+    paths:
+      - '.github/workflows/full-mixture-product-placement-live-candidate-canary-v1.yml'
+      - 'analyzer/full_mixture_product_placement_candidate_v1.mjs'
+      - 'analyzer/verify_full_mixture_product_placement_live_candidate_canary_v1.mjs'
+      - 'app/api/analyze-audio-tab/route.js'
+      - 'lib/aiTabProductPlacementCandidateCanaryV1.mjs'
+      - 'lib/jimmyPaigeAnalysisPayload.js'
+      - 'lib/v143RenderContract.js'
+      - 'lib/aiTabConditioningV1.mjs'
+      - 'lib/aiTabMixtureStructureContextV1.mjs'
+      - 'lib/aiTabAnalyzerMixtureObservationAdmissionV1.mjs'
+      - 'lib/aiTabDualContextShadowFusionV1.mjs'
+      - 'lib/aiTabConditionedShadowProjectionV1.mjs'
+      - 'package.json'
+      - 'yarn.lock'
+
+permissions:
+  contents: read
+
+env:
+  NEXT_TELEMETRY_DISABLED: '1'
+
+jobs:
+  verify-live-candidate-canary:
+    runs-on: ubuntu-24.04
+    steps:
+      - name: Checkout isolated branch
+        uses: actions/checkout@v4
+        with:
+          ref: v143-contextual-prune-lobo
+
+      - name: Set up Node.js 22
+        uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+          cache: yarn
+
+      - name: Verify Phase 11 C1-C12
+        env:
+          FULL_MIXTURE_PRODUCT_PLACEMENT_LIVE_CANDIDATE_CANARY_V1_RESULT_PATH: debug/v143-contextual-prune/full-mixture-product-placement-live-candidate-canary-v1.json
+        run: node analyzer/verify_full_mixture_product_placement_live_candidate_canary_v1.mjs
+
+      - name: Enforce Phase 11 safety evidence
+        run: |
+          node --input-type=module <<'NODE'
+          import { readFile } from 'node:fs/promises';
+
+          const data = JSON.parse(await readFile(
+            'debug/v143-contextual-prune/full-mixture-product-placement-live-candidate-canary-v1.json',
+            'utf8'
+          ));
+
+          if (data.passed !== true) {
+            throw new Error('Phase 11 live-candidate canary contract failed');
+          }
+
+          if (
+            Object.keys(data.tests || {}).length !== 12 ||
+            !Object.values(data.tests || {}).every((value) => value === 'PASS')
+          ) {
+            throw new Error('Phase 11 C1-C12 evidence incomplete');
+          }
+
+          if (
+            Object.keys(data.validationMatrix || {}).length !== 12 ||
+            !Object.values(data.validationMatrix || {}).every((value) => value === 'PASS')
+          ) {
+            throw new Error('Phase 11 12-case validation matrix incomplete');
+          }
+
+          if (
+            data.referenceBlind !== true ||
+            data.researchOnly !== true ||
+            data.shadowOnly !== true ||
+            data.placementOnlyAuthority !== true ||
+            data.summaryOnlyExposure !== true ||
+            data.candidateRowsExposed !== false
+          ) {
+            throw new Error('Phase 11 canary authority/summary boundary failed');
+          }
+
+          for (const key of [
+            'canonicalPayloadMutated',
+            'existingAuthenticatedRenderEventsOverridden',
+            'productAuthorityChanged',
+            'pdfAuthorityChanged',
+            'analysisEngineChanged',
+            'structuredRenderEligibleChanged',
+            'productUiConsumerChanged',
+            'previewPdfConsumerChanged',
+            'externalAudioAssetsUsed',
+            'guitarSetRead',
+            'splitMySongRead',
+            'goatRestrictedBytesRead',
+            'modalInvoked',
+            'modalDeployed',
+            'gpuUsed',
+            'cudaUsed',
+            'vercelPreviewDeployment',
+            'mainModified',
+            'productionModified',
+            'productionPromotionAuthorized',
+          ]) {
+            if (data[key] !== false) {
+              throw new Error(`Phase 11 safety invariant failed: ${key}`);
+            }
+          }
+
+          if (data.referenceScoreCalls !== 0) {
+            throw new Error('Reference score calls must remain zero');
+          }
+
+          if (
+            data.syntheticCanonicalEventCount !== 7 ||
+            data.syntheticBaselineRenderEventCount !== 0 ||
+            data.syntheticEligibleCandidateRenderEventCount !== 7
+          ) {
+            throw new Error('Phase 11 deterministic synthetic canary counts changed');
+          }
+
+          console.log('PHASE 11 LIVE CANDIDATE CANARY C1-C12 SAFETY GATE PASSED');
+          NODE
+
+      - name: Install branch dependencies
+        run: yarn install --frozen-lockfile
+
+      - name: Build branch without deployment
+        env:
+          NODE_OPTIONS: --max-old-space-size=4096
+        run: yarn build
