@@ -45,45 +45,39 @@ Current-controls L4 run `33916705535`, job `101165425904`, call `fc-01M1Q1ZA6GFS
 
 **GPU PROMOTION CLOSED. Do not rerun GPU or weaken exact parity.**
 
-## Native exact split-parallel opportunity
+## Native split-parallel CPU — TERMINAL / CLOSED
 
-Read-only inspection of exact dependency `python-audio-separator v0.44.5` established:
+Diagnostic-only implementation used exact dependency-native Demucs chunk-level `num_workers=4` concurrency while keeping Torch intra/inter-op, OMP and MKL at 1.
 
-- architecture `demucs_separator.py` calls bundled `apply_model` without `num_workers`, defaulting to 0;
-- bundled `apply_model(..., num_workers=0, pool=None)` natively creates `ThreadPoolExecutor(num_workers)` for CPU;
-- existing Demucs chunks are submitted concurrently;
-- futures are consumed in original offset order and weighted overlap-add/reduction occurs in that same original order;
-- recursive chunk calls use `split=False`; model/settings/chunk boundaries/weights/reduction formula remain unchanged.
-
-This is chunk-level concurrency, **not** the closed intra-op thread-count experiment.
-
-## Split-parallel diagnostic — ARMED / RUNNING
-
-Diagnostic-only implementation; Production code not changed:
-
-- child wrapper `analyzer/v143_demucs_split_parallel_cli.py`, commit `1761f4dfc7231e285ac1b1678feab4b08f478579`;
-- probe `analyzer/v143_demucs_split_parallel_probe.py`, commit `89f6cb26181dfb324c1467e9e3e058074588e8d0`;
-- collector `.github/scripts/v143_demucs_split_parallel_collect.py`, commit `5d6219a0b00945e663cc0393159ca83e03331109`;
-- workflow `.github/workflows/v143-demucs-split-parallel.yml`, trigger commit `6f58507c33a0973c80df2d1afe41ddfb582fcc4a`;
-- run **`33917237702`**, job **`101167122276`** currently starting checkout/preflight.
-
-Gate contract:
-
+- wrapper `analyzer/v143_demucs_split_parallel_cli.py`;
+- probe `analyzer/v143_demucs_split_parallel_probe.py`;
+- collector `.github/scripts/v143_demucs_split_parallel_collect.py`;
+- workflow `.github/workflows/v143-demucs-split-parallel.yml`;
+- run **`33917237702`**, job **`101167122276`**, call **`fc-01M1Q2AZTBAM6NC7WVQQVAF1YR`**;
 - Modal `cpu=4.0`, no GPU, memory 16GB;
-- **Torch intra/inter-op = 1, OMP=1, MKL=1**;
-- only Demucs split executor `num_workers=4`;
-- existing model/seed/shifts/overlap/segment/private RNG/oneDNN-off path unchanged;
-- exact source/normalized/Guitar/PCM/shift parity mandatory;
-- minimum material speedup **1.5x** vs 666.404s anchor;
-- client deadline 360s; terminate remote container on timeout/failure;
-- aggregate-only evidence; raw audio/stems not retained;
-- `always()` cleanup targets only `dadrock-v143-demucs-split-parallel-probe`.
+- Torch intra/inter-op = 1; OMP=1; MKL=1; oneDNN disabled; private shift RNG exact;
+- source SHA exact; normalized SHA exact; shift trace exact `0,22050,6026`;
+- separation **149.928s**; client wall **158.720s**;
+- speedup vs exact CPU anchor **4.199x**; material-speed gate PASS;
+- runtime invariants PASS;
+- Guitar SHA **`52a781bcab05335636c5bfb99168b8c01a9d627c34f1a59acf00f01512a41630`**;
+- PCM SHA **`1f5665f8deceda3b13a9e8a4ac4b561a548530a7bf671f605998139cfc133c2e`**;
+- **exact CPU parity FAIL**;
+- artifact **`9953701945`** uploaded; isolated-app cleanup GREEN; `productionAppTouched=false`.
+
+### Interpretation
+
+The dependency-native split executor is materially faster, but concurrent CPU model execution changes the exact numerical output even though ordered overlap-add/reduction, chunk geometry, frozen model/settings, shift trace, single-threaded kernels and oneDNN-off controls were preserved.
+
+Therefore **split-parallel promotion is CLOSED**. Do not rerun it, weaken exact parity, or promote the faster hash.
 
 ## Authorization / next action
 
 User authorized non-reference-facing V143 performance work and repository-owned Gomyway audio. No authorization for reference-facing scoring, GOAT, sealed GuitarSet, SplitMySong reopening, or weakened fail-closed criteria.
 
-1. Read terminal result/artifact for run `33917237702` and confirm cleanup.
-2. If exact parity + >=1.5x speedup pass, run one additional independent split-parallel call for exact repeatability before Production consideration.
-3. If parity/speed fails, close split-parallel promotion and inspect exact source-hash stage caching architecture.
-4. Production/bridge/Vercel/UI remain unchanged until an exact structural gate passes.
+1. Inspect current V143 request flow and storage for an **exact source-hash stage cache** architecture that can reuse previously computed exact deterministic separator outputs without changing their bytes.
+2. Prefer caching normalized input identity and exact deterministic separator-stage artifacts/derived aggregate outputs keyed by source SHA + frozen execution-policy/version hashes; fail closed on any key mismatch.
+3. Do not retain raw user audio beyond existing policy; determine whether exact deterministic stem cache is acceptable under current retention/privacy boundaries before implementing it. If stem retention is not acceptable, inspect downstream feature/cache boundaries that preserve exact behavior without stem persistence.
+4. No new Demucs/GPU/split-parallel compute should start until cache architecture is understood.
+5. Production/bridge/Vercel/UI remain unchanged until a reference-free exact structural gate passes.
+6. Reference-facing accuracy remains unarmed.
