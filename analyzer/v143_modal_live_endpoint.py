@@ -29,6 +29,7 @@ MODEL_REMOTE_PATH = (
 V143_MODULES = (
     "modal_analyzer",
     "v143_ai_tab_gpu_worker",
+    "v143_audio_download_auth",
     "v143_candidate_timing_adapter",
     "v143_deterministic_separator",
     "v143_modal_rhythm_router",
@@ -111,10 +112,12 @@ def _download_blob_to_path(
     destination: Path,
 ) -> None:
     import requests
+    from v143_audio_download_auth import build_audio_download_headers
 
-    headers: dict[str, str] = {}
-    if blob_token:
-        headers["Authorization"] = f"Bearer {blob_token}"
+    # BLOB_READ_WRITE_TOKEN is a Vercel storage credential. Never forward it to
+    # arbitrary/public audio origins (for example raw.githubusercontent.com).
+    # The helper preserves authenticated private/public Vercel Blob downloads.
+    headers = build_audio_download_headers(audio_url, blob_token)
 
     try:
         response = requests.get(
@@ -262,6 +265,7 @@ def rhythm_v143_request(payload: dict[str, Any]) -> dict[str, Any]:
         "separatorSeed": 143,
         "demucsShifts": 1,
         "professionalReferenceUsed": False,
+        "referenceRuntimeInputUsed": False,
         "runtimeLabelsRequired": False,
     }
     return result
