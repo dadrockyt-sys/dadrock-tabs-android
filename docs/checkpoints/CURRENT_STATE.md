@@ -13,12 +13,12 @@ Branch checkpoint: `v143-contextual-prune-lobo`
 - GuitarSet V3/V4/V5 remain terminal; prospective players `00/01/03` remain sealed; prospective score calls = **0**.
 - No reference-facing accuracy scoring has been run during Production/Modal performance work.
 
-**Project Progress Score: 79%.**  
-**Test Score: PHASE 1–13 GREEN; PROTECTED REAL-VERCEL PREVIEW GREEN; MAIN MERGE/BUILD/DEPLOY GREEN; PRODUCTION V143 ROUTING ACTIVE; DOWNLOAD-AUTH FIX GREEN; FULL GOMYWAY WORKER TIMES OUT AT 1200S; 725.802S STAGE GATE LOCALIZES BOTTLENECK TO FIRST DIRECT DEMUCS CPU/SINGLE-THREAD PASS; ORIGINAL 12S SEQUENTIAL CPU1-vs-CPU4 GATE CANCELLED; CONCURRENT 6S MICRO-PROBE CONFOUNDED BY EXTERNAL APP STOP; RETAINED-CALL INSPECTION GREEN WITH NO RECOVERABLE AGGREGATE; SINGLE 6S FROZEN BASELINE CLEANLY TIMES OUT AT 300S WITH CANCEL/CLEANUP GREEN; CPU THREAD-COUNT TWEAK PATH CLOSED; HISTORICAL ONEDNN-OFF EXACT HASH ANCHOR RECOVERED WITH 10:23 SEPARATION TIME; EXPLICIT `cpu=1.0` NO-GPU FULL-FIXTURE EXACT-ANCHOR GATE RUN 33914759546 ACTIVE; REFERENCE-FACING ACCURACY SCORE NOT RUN.**
+**Project Progress Score: 80%.**  
+**Test Score: PHASE 1–13 GREEN; PROTECTED REAL-VERCEL PREVIEW GREEN; MAIN MERGE/BUILD/DEPLOY GREEN; PRODUCTION V143 ROUTING ACTIVE; DOWNLOAD-AUTH FIX GREEN; FULL GOMYWAY WORKER TIMES OUT AT 1200S; 725.802S STAGE GATE LOCALIZES BOTTLENECK TO FIRST DIRECT DEMUCS CPU/SINGLE-THREAD PASS; ORIGINAL 12S SEQUENTIAL CPU1-vs-CPU4 GATE CANCELLED; CONCURRENT 6S MICRO-PROBE CONFOUNDED BY EXTERNAL APP STOP; RETAINED-CALL INSPECTION GREEN WITH NO RECOVERABLE AGGREGATE; SINGLE 6S FROZEN BASELINE CLEANLY TIMES OUT AT 300S WITH CANCEL/CLEANUP GREEN; CPU THREAD-COUNT TWEAK PATH CLOSED; HISTORICAL ONEDNN-OFF EXACT HASH ANCHOR RECOVERED; EXPLICIT `cpu=1.0` NO-GPU FULL-FIXTURE EXACT-ANCHOR GATE GREEN WITH EXACT HASH PARITY AT 666.404S WALL; GPU STRUCTURAL DIAGNOSTIC NEXT; REFERENCE-FACING ACCURACY SCORE NOT RUN.**
 
 ## Stable Production state
 
-- current `main`: **`bb992d901e78ab19645f8edc8e330d5a142ebd8e`** (re-verified immediately before the single-baseline gate and guarded again by the explicit-CPU gate);
+- current `main`: **`bb992d901e78ab19645f8edc8e330d5a142ebd8e`**;
 - Production deployment: **`dpl_5BdFAMHeiaA3rQ9QGUdHneY1rexM`**, READY;
 - aliases include `dadrocktabs.com` / `www.dadrocktabs.com`;
 - V143 bridge: `https://dadrockyt--dadrock-v143-http-bridge-analyze.modal.run`;
@@ -117,38 +117,49 @@ Repository history contains a successful oneDNN-off CPU-only V143 host probe on 
 - decoded PCM-int16 SHA256 **`2c22f04014c0f5c9c0c036125c3d702c8b87a9f67358e0dd0d3836c39c936bed`**;
 - expected deterministic shift trace `0,22050,6026`;
 - fixture duration reported by separator: **211.44 seconds**;
-- historical Demucs separation duration: **10:23** (about 623 seconds);
-- historical one-probe workflow span: `05:08:27Z` to `05:19:50Z`; the actual Modal probe command ran about `05:08:45Z` to `05:19:34Z`;
+- historical Demucs separation duration: **10:23** (~623 seconds);
 - child runtime: PyTorch **`2.13.0+cu130`**, oneDNN disabled, CPU capability DEFAULT, intra/inter-op threads both 1, no CUDA available/requested.
 
-Compatibility checks before using this as a fail-closed candidate anchor:
+Compatibility checks:
 
-- `analyzer/v143_production_separator.py` current blob **`05ae1978fa02f8c84ccc1e44547fc4e4cea9798b`**, exactly identical to the historical probe version;
-- `analyzer/v143_seeded_audio_separator_cli.py` current blob **`645f324c207d67b32c6d279657805ff8f25c3aa0`**, exactly identical to the oneDNN-off probe version;
-- `analyzer/v143_ai_tab_gpu_worker.py` current blob **`e7cdddfbf9e55e46be8397224b11133e7636ebb6`**, exactly identical image/dependency definition (`audio-separator[gpu]==0.44.5`); this dependency resolved PyTorch 2.13.0+cu130 in the historical run;
-- current seeded wrapper retains the same oneDNN-off/single-thread deterministic controls; its later changes add aggregate stage timing markers, not separator math;
-- the historical oneDNN-off hash was recorded once, not cross-host repeated, so it is treated as a **strict candidate anchor**: fresh mismatch fails closed rather than being explained away.
+- `analyzer/v143_production_separator.py` current blob **`05ae1978fa02f8c84ccc1e44547fc4e4cea9798b`**, identical to the historical probe version;
+- `analyzer/v143_seeded_audio_separator_cli.py` current blob **`645f324c207d67b32c6d279657805ff8f25c3aa0`**, identical to the oneDNN-off probe version;
+- `analyzer/v143_ai_tab_gpu_worker.py` current blob **`e7cdddfbf9e55e46be8397224b11133e7636ebb6`**, identical image/dependency definition (`audio-separator[gpu]==0.44.5`);
+- current seeded wrapper retains the same oneDNN-off/single-thread deterministic controls; later changes add aggregate stage timing markers, not separator math.
 
-Historical pre-oneDNN-disable CPU baseline evidence is not the parity target: at least one oneDNN-enabled baseline produced different Guitar/PCM hashes (`a58e260f...` / `551e22e1...`), reinforcing that the oneDNN-off anchor must remain exact and must not be substituted with the earlier baseline identity.
+Historical oneDNN-enabled CPU evidence is **not** the parity target. It was materially faster (~5:04 separation) but produced different Guitar/PCM identities, so deterministic oneDNN-off identity remains the fail-closed contract.
 
 No restricted reference was read or scored to recover this anchor or timing.
 
-## Explicit `cpu=1.0` exact-anchor structural gate — ARMED / RUNNING
+## Explicit `cpu=1.0` exact-anchor structural gate — TERMINAL / GREEN
 
 - collector `.github/scripts/v143_demucs_explicit_cpu_anchor_collect.py`, commit **`bdd89936c167993f3ae882b76173094dea2d428c`**;
 - workflow `.github/workflows/v143-demucs-explicit-cpu-anchor.yml`, trigger commit **`391ef75d5cf0c4f50a9b9536126cd7a70bdf447f`**;
-- GitHub Actions run **`33914759546`**, job **`101159244192`**;
-- isolated app is existing diagnostic `dadrock-v143-demucs-cpu-host-probe` only;
-- Modal function explicitly requests **`cpu=1.0`**, memory 8192, **no GPU**;
-- Demucs child remains one-thread, oneDNN-disabled, `ATEN_CPU_CAPABILITY=default`, `MKL_CBWR=COMPATIBLE`, seed 143, shifts=1, overlap=.10, segment=6, Guitar only;
-- full approved reference-free fixture is used because it has the historical exact-output anchor;
-- hard client collection deadline **900 seconds**, deliberately above the recovered historical ~623-second separation time;
-- failure/timeout triggers `call.cancel(terminate_containers=True)`;
-- exact Guitar + decoded PCM + normalized-input + shift-trace parity required;
-- runtime controls are validated from the child trace;
-- output artifact is aggregate-only; raw stem/audio bytes are not retained;
-- `always()` cleanup stops only the isolated diagnostic app;
-- Production worker/bridge/Vercel remain untouched; reference score calls remain 0.
+- GitHub Actions run **`33914759546`**, job **`101159244192`**, SUCCESS;
+- function call id **`fc-01M1Q0MFR88FXWAQ1R47TSX77Z`**;
+- isolated diagnostic Modal function requested **`cpu=1.0`**, memory 8192, **no GPU**;
+- hard collection deadline: 900 seconds;
+- measured client wall: **666.404 seconds**;
+- source SHA256 exactly matched **`215bd5a657c5326f08f132ae358595a95c30b39bb7493a52c2f910d5a608149f`**;
+- normalized WAV SHA256 exactly matched **`ab64e7cdd8a792aecfb6eec518577d8d7e9d2f8aa43007e632470d9fe4511e7f`**;
+- direct Guitar SHA256 exactly matched historical anchor **`0ac47da671df6f8387c1ad1343171de0cf7a0db6985dadf3f30e4a9c7cf0189c`**;
+- decoded PCM-int16 SHA256 exactly matched historical anchor **`2c22f04014c0f5c9c0c036125c3d702c8b87a9f67358e0dd0d3836c39c936bed`**;
+- deterministic shift trace exactly matched `0,22050,6026`;
+- runtime: PyTorch `2.13.0+cu130`, CPU capability DEFAULT, intra/inter-op threads = 1, oneDNN disabled;
+- `structuralInvariantsPassed=true`;
+- `exactParityPassed=true`;
+- aggregate artifact id **`9953064061`** uploaded successfully;
+- isolated diagnostic app cleanup succeeded immediately afterward;
+- `productionAppTouched=false`;
+- reference-facing score calls = 0;
+- raw audio/stem retention = false;
+- Production worker/bridge/Vercel changed = false.
+
+### Decisive interpretation
+
+The historical oneDNN-off CPU identity is now independently reproduced exactly under the current code/dependency environment. This is the trustworthy reference-free deterministic identity anchor for any structural acceleration candidate.
+
+The explicit CPU resource envelope still requires **666.404 seconds wall** for the 211.44-second fixture, so it is materially too slow for the product pipeline. CPU thread-count tuning remains closed. The next candidate is GPU Demucs, isolated from Production and gated against this exact CPU identity.
 
 ## Fresh-chat authorization — EXPLICIT
 
@@ -161,6 +172,7 @@ It **does not** authorize reference-facing accuracy scoring, restricted GOAT acc
 - `main`: unchanged;
 - Production V143 routing: ACTIVE;
 - Deployment Protection: preserved;
+- explicit-CPU diagnostic app: STOPPED after successful cleanup;
 - reference-facing score calls: 0;
 - GOAT restricted bytes: 0;
 - GuitarSet prospective sealed reads: 0;
@@ -169,9 +181,9 @@ It **does not** authorize reference-facing accuracy scoring, restricted GOAT acc
 
 ## NEXT SAFE ACTION — AUTHORIZED
 
-1. Read terminal result/artifact for run `33914759546` and confirm isolated-app cleanup.
-2. If explicit `cpu=1.0` completes and reproduces both historical exact hashes, record its wall time as the current trustworthy CPU structural anchor and compare it with the recovered historical ~623-second separation baseline.
-3. Do **not** reopen CPU thread-count tuning.
-4. If explicit CPU allocation is still materially too slow for the product pipeline, evaluate GPU Demucs only in an isolated reference-free deterministic diagnostic, with this exact CPU output identity retained as the fail-closed anchor; do not weaken identity criteria to force promotion.
+1. Do **not** reopen CPU thread-count tuning or oneDNN-enabled promotion.
+2. Search repository history for prior GPU Demucs replay/performance/identity evidence before launching new GPU audio execution.
+3. If prior GPU evidence is insufficient, build one isolated reference-free GPU Demucs diagnostic on the approved anchored fixture with deterministic seed/settings, aggregate-only hashes/timing, explicit cancellation, and `always()` cleanup.
+4. Keep the exact oneDNN-off CPU Guitar/PCM hashes above as the fail-closed output identity anchor. A mismatch must not be silently accepted or explained away as a promotion pass.
 5. Do not change Production model, seed, shifts, reference boundaries, Vercel duration, or UI orchestration until a dedicated deterministic/reference-free structural gate demonstrates material speedup and output safety.
 6. Reference-facing accuracy remains unarmed.
