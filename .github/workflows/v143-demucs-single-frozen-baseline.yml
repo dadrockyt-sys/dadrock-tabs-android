@@ -1,0 +1,102 @@
+name: V143 Demucs Single Frozen Baseline
+
+on:
+  push:
+    branches:
+      - v143-contextual-prune-lobo
+    paths:
+      - '.github/workflows/v143-demucs-single-frozen-baseline.yml'
+
+permissions:
+  contents: read
+
+env:
+  MODAL_ENVIRONMENT: main
+  AUDIO_URL: https://raw.githubusercontent.com/dadrockyt-sys/dadrock-tabs-android/main/public/jimmy-paige-midterm-v1/gomyway-midterm-source.m4a
+  AUDIO_BLOB_SHA: 4dd709e3fa177b4daeed71ca97f0199757729d4b
+  MAIN_SHA: bb992d901e78ab19645f8edc8e330d5a142ebd8e
+  PYTHONUNBUFFERED: '1'
+
+jobs:
+  single-frozen-baseline:
+    runs-on: ubuntu-latest
+    timeout-minutes: 9
+    env:
+      MODAL_TOKEN_ID: ${{ secrets.MODAL_TOKEN_ID }}
+      MODAL_TOKEN_SECRET: ${{ secrets.MODAL_TOKEN_SECRET }}
+
+    steps:
+      - name: Checkout diagnostic branch
+        uses: actions/checkout@v4
+
+      - name: Enforce isolated single-call boundary
+        shell: bash
+        run: |
+          set -euo pipefail
+          ACTUAL_MAIN="$(git ls-remote origin refs/heads/main | awk '{print $1}')"
+          test "$ACTUAL_MAIN" = "$MAIN_SHA"
+          test -n "${MODAL_TOKEN_ID:-}"
+          test -n "${MODAL_TOKEN_SECRET:-}"
+          python3 -m py_compile \
+            analyzer/v143_demucs_single_baseline_probe.py \
+            .github/scripts/v143_demucs_single_baseline_collect.py
+          grep -q 'dadrock-v143-demucs-single-baseline-probe' analyzer/v143_demucs_single_baseline_probe.py
+          grep -q 'run_single_frozen_baseline' analyzer/v143_demucs_single_baseline_probe.py
+          grep -q 'policy="frozen"' analyzer/v143_demucs_single_baseline_probe.py
+          grep -q 'CLIP_SECONDS = 6.0' .github/scripts/v143_demucs_single_baseline_collect.py
+          grep -q 'COLLECTION_DEADLINE_SECONDS = 300.0' .github/scripts/v143_demucs_single_baseline_collect.py
+          grep -q 'call.cancel(terminate_containers=True)' .github/scripts/v143_demucs_single_baseline_collect.py
+          ! grep -q 'threads4' .github/scripts/v143_demucs_single_baseline_collect.py
+          echo "diagnosticSourceCommit=$GITHUB_SHA"
+          echo 'singleRemoteCallOnly=true'
+          echo 'policy=frozen'
+          echo 'clipSeconds=6.0'
+          echo 'collectionDeadlineSeconds=300.0'
+          echo 'productionWorkerChanged=false'
+          echo 'productionBridgeChanged=false'
+          echo 'vercelChanged=false'
+          echo 'referenceFacingAccuracyScored=false'
+          echo 'referenceScoreCalls=0'
+
+      - name: Set up Python 3.11
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Install Modal client
+        shell: bash
+        run: |
+          set -euo pipefail
+          python -m pip install --upgrade pip >/dev/null
+          python -m pip install 'modal==1.5.5' >/dev/null
+          modal token set --token-id "$MODAL_TOKEN_ID" --token-secret "$MODAL_TOKEN_SECRET" >/dev/null
+          modal --version
+
+      - name: Deploy isolated single-baseline app only
+        shell: bash
+        run: |
+          set -euo pipefail
+          modal deploy --env main analyzer/v143_demucs_single_baseline_probe.py
+
+      - name: Run one bounded 6-second frozen baseline
+        shell: bash
+        run: |
+          set -euo pipefail
+          python .github/scripts/v143_demucs_single_baseline_collect.py
+
+      - name: Preserve aggregate baseline evidence only
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: v143-demucs-single-frozen-baseline
+          path: debug/v143-contextual-prune/demucs-single-frozen-baseline/summary.json
+          if-no-files-found: warn
+          retention-days: 14
+
+      - name: Stop isolated single-baseline app after probe
+        if: always()
+        shell: bash
+        run: |
+          modal app stop dadrock-v143-demucs-single-baseline-probe --env main --yes || true
+          echo 'diagnosticAppCleanupAttempted=true'
+          echo 'productionAppTouched=false'
