@@ -12,11 +12,11 @@ Branch: `v143-contextual-prune-lobo`
 - Restricted GOAT bytes admitted/read = **0**; V168 prospective reference-facing score calls = **0**.
 - SplitMySong remains terminal `FAIL_CLOSED_NO_CANDIDATE`; never rerun/score/weaken/interpolate.
 - GuitarSet V3/V4/V5 remain terminal; development hold remains frozen; prospective players `00/01/03` remain sealed and prospective score calls = **0**.
-- CPU only unless freshly and specifically needed. No GPU/CUDA/Modal is needed for Phase 10.
+- CPU only unless freshly and specifically needed. No GPU/CUDA/Modal was used for Phase 10.
 - `main` / Production untouched; never modify/merge/promote without explicit user direction.
 
 **Project Progress Score: 64%.**  
-**Test Score: PHASE 1–9 REFERENCE-BLIND/SYNTHETIC CONTRACT PASS; FULL NEXT BUILD + LOCAL ROUTE SMOKE PASS; PHASE 10 PRODUCT-PLACEMENT CANDIDATE HELPER + P1–P12 VERIFIER IMPLEMENTED / CI PENDING; ACCURACY SCORE NOT RUN.**
+**Test Score: PHASE 1–10 REFERENCE-BLIND/SYNTHETIC CONTRACT PASS; PHASE 10 PRODUCT-PLACEMENT CANDIDATE 0% → 100%, 7/7 EXACT; REFERENCE-FACING ACCURACY SCORE NOT RUN.**
 
 ## Phases 1–7 — COMPLETE
 
@@ -58,41 +58,67 @@ A concurrent duplicate verifier-only file exists at `7af40b52075a044a8d7333dfef2
 
 This remains **research metadata only**. Canonical `structuredPayload`, generated tab/events/render events/measure grid, Product UI and PDF authority remain independent.
 
-## Phase 10 — `FULL_MIXTURE_PRODUCT_PLACEMENT_CANDIDATE_VALIDATION_V1` IMPLEMENTED / CI PENDING
+## Phase 10 — `FULL_MIXTURE_PRODUCT_PLACEMENT_CANDIDATE_VALIDATION_V1` COMPLETE
 
-The user explicitly authorized running the Product-authority experiment in this continuation.
+The user explicitly authorized running the Product-authority experiment. That authorization covered the isolated experiment only; it did not authorize live Product/PDF promotion.
 
 Pre-implementation freeze:
 `docs/checkpoints/SONGSTERR_FULL_MIXTURE_PRODUCT_PLACEMENT_CANDIDATE_VALIDATION_V1_PREIMPLEMENTATION_FREEZE_20260903.md`
 
 Freeze commit: `697996069faa1a9167983357d1b94dada7c827fe`.
 
-Frozen status: **`PRODUCT-AUTHORITY EXPERIMENT AUTHORIZED / EXPERIMENT-ONLY PLACEMENT CANDIDATE / LIVE PRODUCT-PDF WIRING NOT AUTHORIZED / CPU SYNTHETIC REFERENCE-BLIND ONLY / NO MODAL-GPU / NO REFERENCE SCORE / MAIN+PRODUCTION UNTOUCHED`**.
+Result:
+`docs/checkpoints/SONGSTERR_FULL_MIXTURE_PRODUCT_PLACEMENT_CANDIDATE_VALIDATION_V1_PHASE10_RESULT_20260903.md`
 
-Implementation:
-- `1cff2f5248ce7f8463928cbb3625f70d1bc97e4a` — added experiment-only `analyzer/full_mixture_product_placement_candidate_v1.mjs`;
-- `569b5f02dbf91cd7d7d14f2d3640599bcb776564` — added deterministic known-truth P1–P12 verifier `analyzer/verify_full_mixture_product_placement_candidate_validation_v1.mjs`.
+Result creation commit: `f381c665d875d6d308695d6f3486725c75548dac`.
 
-No live runtime/Product/PDF implementation file was modified.
+Status: **`PHASE10_PRODUCT_PLACEMENT_CANDIDATE_PASS / SYNTHETIC_PLACEMENT_0_TO_100_PERCENT / 7_OF_7_EXACT / PRODUCT_VALIDATOR_ACCEPTED / LIVE_PRODUCT-PDF_AUTHORITY_UNCHANGED / NO_MODAL-GPU / NO_REFERENCE_SCORE`**.
 
-Frozen candidate behavior implemented:
-- requires canonical V143 runtime safety;
-- refuses to run when canonical authenticated `renderEvents` already exist;
-- requires Phase 4/9 research contracts to remain shadow-only/reference-blind/non-production and a `TRUSTED_FULL_MIXTURE_OBSERVATION` with complete resolved feel/measure projection;
-- limits promotion experiment to straight 4/4, pickup 0, 16-step geometry;
-- proposes only `measure` + `step` while preserving canonical `eventIndex/stringIndex/fret/midi` exactly;
-- ignores conditioned string/fret for Product authority;
-- requires the existing `validateV143RenderEvents` Product validator to accept every row without compaction;
-- any missing/malformed/mismatch/out-of-scope input returns null/no candidate;
+Implementation lineage:
+- `1cff2f5248ce7f8463928cbb3625f70d1bc97e4a` — experiment-only `analyzer/full_mixture_product_placement_candidate_v1.mjs`;
+- `569b5f02dbf91cd7d7d14f2d3640599bcb776564` — deterministic known-truth P1–P12 verifier;
+- `db247a0ea8343fcfd03a67ead4c987a9ff3be541` — isolated read-only CPU-only workflow.
+
+Canonical evidence:
+- workflow `Full Mixture Product Placement Candidate Validation V1`;
+- run `33829600963`;
+- job `100889565032`;
+- tested head `db247a0ea8343fcfd03a67ead4c987a9ff3be541`;
+- conclusion **SUCCESS**;
+- P1–P12 **PASS**;
+- frozen safety-evidence gate **PASS**.
+
+Synthetic known-truth result:
+- canonical structured placement coverage = **0.0 / 0%**;
+- experiment placement candidate coverage = **1.0 / 100%**;
+- exact known-truth matches = **7/7**;
+- exact known-truth rate = **100%**;
+- median / p95 / worst expected-boundary error = **0 / 0 / 0 bars**;
+- adverse positive movement = **0**;
+- inadmissible fail-open behavior delta = **0**;
+- rerun stability = **PASS**;
+- existing `validateV143RenderEvents` Product validator accepted every candidate row without compaction/drop.
+
+Phase 10 candidate authority remains deliberately narrow:
+- placement only (`measure` + `step`);
+- canonical `eventIndex`, `stringIndex`, `fret`, and `midi` are preserved exactly;
+- existing authenticated Product `renderEvents` always win;
+- only trusted complete straight-4/4, pickup-0, 16-step geometry is admitted;
+- any missing/malformed/provenance/safety/geometry/event-integrity mismatch fails open to no candidate;
 - candidate contract remains `experimentOnly=true`, `liveProductWiringAuthorized=false`, `productionEligible=false`.
 
-The P1–P12 verifier uses deterministic synthetic V143-safe events with no source measure/step plus a known placement oracle spanning measure boundaries. It checks baseline immutability, exact placement recovery, Product-validator compatibility, placement-only authority, determinism, authenticated-placement precedence, safety/provenance rollback, structure-scope rollback, event-integrity rollback, explicit-prior precedence, live Product/PDF isolation and safety accounting.
+Safety accounting remains: external/reference assets read=false; GuitarSet=false; SplitMySong=false; GOAT restricted bytes=false; reference score calls=0; Modal invoked/deployed=false; GPU=false; Vercel Preview deployment=false; live Product/PDF authority changed=false; canonical analyzer output changed=false; canonical Product payload mutated=false; `main`/Production changed=false.
 
-Safety accounting remains: external/reference assets read=false; GuitarSet=false; SplitMySong=false; GOAT restricted bytes=false; reference score calls=0; Modal invoked/deployed=false; GPU=false; Vercel Preview deployment=false; live Product/PDF authority changed=false; `main`/Production changed=false.
+**Interpretation:** Phase 10 materially strengthens the software case for a later narrowly gated live-candidate observation/canary phase. It is a deterministic synthetic Product-contract compatibility result, not a real-audio transcription accuracy score, and it does not itself authorize inferred placement to become canonical Product/PDF output.
 
 ## NEXT SAFE ACTION
 
-1. Add the isolated CPU-only read-only Phase 10 workflow.
-2. Run/inspect P1–P12 and safety evidence; do not weaken the frozen contract on failure.
-3. If green, write the dedicated Phase 10 result checkpoint including synthetic baseline-vs-candidate placement coverage and exact-known-truth rate.
-4. Preserve live Product/PDF isolation after the experiment; any live promotion requires a later separate contract.
+1. **Do not implicitly promote Product/PDF authority.** Phase 10 is closed green, but live promotion remains a separate authority boundary.
+2. The safest prospective Phase 11 is a separately frozen **non-authoritative live-candidate observation/canary contract**: compute and record candidate-vs-baseline eligibility in server research metadata while leaving canonical `renderEvents`, `analysisEngine`, Preview/PDF input, Product UI, and Production behavior unchanged.
+3. Before implementing any Phase 11 live-server canary wiring, create/freeze its exact seam, provenance gate, fail-open behavior, rollback proof, response metadata shape, Product/PDF isolation, synthetic validation, and no-authority-crossing constraints. Implementation remains **NOT AUTHORIZED** until explicitly approved.
+4. Do not run a reference-facing accuracy score until a lawful holdout exists.
+5. Await GOAT owner approval/denial before any GOAT v1 access.
+6. Do not rerun/score/weaken SplitMySong.
+7. Do not rerun/retune GuitarSet V3/V4/V5 and do not start V6 rescue/mining.
+8. Do not use Modal/GPU without fresh explicit authorization immediately before any such work.
+9. Do not change `main` or Production without explicit user direction.
