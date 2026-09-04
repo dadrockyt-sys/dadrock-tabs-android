@@ -103,17 +103,19 @@ Subsequent route-specific output-tracing isolation excluded non-runtime research
 
 ### Canonical READY Preview
 
-Current branch head and deployed commit:
+Deployed application source:
 - branch: `v143-contextual-prune-lobo`;
-- exact SHA: **`df3042180e57df1031a2a529961388a6419d1bc5`**;
+- exact deployed SHA: **`df3042180e57df1031a2a529961388a6419d1bc5`**;
 - commit message: `preview: isolate PDF traces from public research tree`.
+
+Note: later commits that only update `docs/checkpoints/CURRENT_STATE.md` may make the Git branch head newer than this deployed application SHA. A fresh chat must re-fetch the branch and inspect any newer commits rather than assuming the branch head should equal `df304218...`.
 
 GitHub Actions Preview workflow:
 - workflow: `V143 Exact Branch Vercel Preview`;
 - run: **`33836754320`**;
 - job: **`100910747161`** (`deploy-preview`);
 - event: push;
-- head SHA: `df3042180e57df1031a2a529961388a6419d1bc5`;
+- deployed/tested head SHA: `df3042180e57df1031a2a529961388a6419d1bc5`;
 - run conclusion: **SUCCESS**;
 - job conclusion: **SUCCESS**.
 
@@ -170,7 +172,7 @@ The equivalent compiled local built-Next path remains green from Phase 13.
 
 ## NEXT SAFE ACTION — FRESH CHAT HANDOFF
 
-1. Re-read this file and verify branch head is still `df3042180e57df1031a2a529961388a6419d1bc5` before making changes. If head changed, inspect the new commits first.
+1. Re-read this file and re-fetch the current `v143-contextual-prune-lobo` branch head before making changes. The canonical READY Preview is tied to application SHA `df3042180e57df1031a2a529961388a6419d1bc5`; newer **checkpoint-only** commits do not invalidate that deployment, but any newer runtime/config/workflow changes must be inspected and, if relevant, redeployed/tested.
 2. Treat deployment `dpl_HEQHX2nfFhYJzsMMEsAa8ePhcQpX` as the canonical exact-branch READY Preview for this checkpoint.
 3. Complete **protected real-Vercel Preview smoke validation** without changing Production:
    - access the Preview through an authenticated Vercel session/share mechanism that can retain the SSO cookie;
