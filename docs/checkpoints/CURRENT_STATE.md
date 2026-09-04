@@ -82,7 +82,7 @@ The authorized test audio exists in the repository on both the V143 branch and c
 A first Production smoke was launched from the non-Production integration test branch:
 
 - workflow `.github/workflows/v143-production-gomyway-smoke.yml`;
-- run `33844428487`, job `100933164743`.
+- run `33844432185`, job `100933164743`.
 
 That attempt **did not reach `/api/analyze-audio-tab`**. It stopped at the precondition GET because `https://dadrocktabs.com/jimmy-paige-midterm-v1/gomyway-midterm-source.m4a` returned Vercel **404 NOT_FOUND** despite the file existing in GitHub `main`.
 
@@ -94,6 +94,21 @@ Therefore:
 - no generated tab/PDF was preserved or published.
 
 The normal `/api/audio-upload` endpoint uses the browser-side Vercel Blob client protocol. For the next CI smoke, avoid adding protocol complexity and avoid republishing the recording: use the file's already-public raw GitHub URL from the current public repository as the analyzer's temporary fetch URL. Keep only aggregate quality/placement metrics; delete raw generated transcription/PDF outputs before artifact upload.
+
+## Fresh-chat authorization — EXPLICIT
+
+On 2026-09-04 the user explicitly asked to save these next steps to `CURRENT_STATE.md` **with authorization for a fresh chat to continue**.
+
+The next chat is authorized to proceed immediately with the `NEXT SAFE ACTION` below without re-asking for permission. This authorization includes:
+
+- editing/rerunning the **non-Production diagnostic workflow/branch** needed to exercise the already-merged Production pipeline;
+- using the repository-owned/public `gomyway-midterm-source.m4a` as the test input, including its raw GitHub URL if needed;
+- POSTing that test input to the merged Production Rhythm analysis route;
+- exercising the Production preview/PDF route for contract verification while discarding raw generated transcription/PDF outputs afterward;
+- reading GitHub Actions and Vercel runtime/build logs needed to diagnose the test;
+- saving diagnostic checkpoints/results back to `docs/checkpoints/CURRENT_STATE.md` on `v143-contextual-prune-lobo` as work proceeds.
+
+This authorization **does not** arm or authorize any reference-facing accuracy score, restricted GOAT access, sealed GuitarSet prospective asset access, reopening SplitMySong terminal work, or weakening any existing fail-closed/safety boundary. Any such separate scientific boundary remains unchanged and still requires its own lawful/explicit authorization where applicable.
 
 ## Safety / accounting through this checkpoint
 
@@ -108,7 +123,7 @@ The normal `/api/audio-upload` endpoint uses the browser-side Vercel Blob client
 - first real-audio attempt reached analyzer: **false**;
 - first real-audio attempt verdict: **NO PIPELINE VERDICT — STATIC ASSET 404 PRECONDITION**.
 
-## NEXT SAFE ACTION
+## NEXT SAFE ACTION — AUTHORIZED FOR FRESH CHAT
 
 1. Update the non-Production production-smoke workflow to use the existing raw GitHub URL for `gomyway-midterm-source.m4a` instead of the missing Vercel static URL.
 2. POST that URL to the **merged Production** `/api/analyze-audio-tab` Rhythm path.
