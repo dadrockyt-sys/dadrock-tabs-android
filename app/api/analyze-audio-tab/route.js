@@ -8,6 +8,7 @@ import {
 import { buildAiTabConditionedShadowProjectionV1 } from '@/lib/aiTabConditionedShadowProjectionV1.mjs';
 import { buildAiTabMixtureStructureContextV1 } from '@/lib/aiTabMixtureStructureContextV1.mjs';
 import { buildAiTabDualContextShadowFusionV1 } from '@/lib/aiTabDualContextShadowFusionV1.mjs';
+import { buildAiTabMixtureStructureContextFromAnalyzerObservationV1 } from '@/lib/aiTabAnalyzerMixtureObservationAdmissionV1.mjs';
 
 export const runtime = 'nodejs';
 export const maxDuration = 150;
@@ -265,22 +266,29 @@ export async function POST(request) {
         conditioning,
       });
 
-    // Phase 3 deliberately leaves the actual full-mixture observation channel
-    // disconnected. No analyzerData/liveV143/carrier field is permitted to gain
-    // global structure authority. Explicit user priors can still resolve fields;
-    // remaining Auto fields stay unresolved until a separately frozen trusted
-    // full-mixture estimator adapter exists.
-    const mixtureStructureContext =
+    // Phase 8 preserves the exact Phase 3 null-observation context as the
+    // canonical baseline. Only after that server-owned baseline succeeds may a
+    // separately admitted analyzer full-mixture observation fill unresolved
+    // research fields. Any observation-only failure returns this exact baseline.
+    const baselineMixtureStructureContext =
       buildAiTabMixtureStructureContextV1({
         structurePrior: conditioning.structurePrior,
         mixtureObservation: null,
         mixtureSource: conditioningContract.provenance.mixtureSource,
       });
 
+    const mixtureStructureContext =
+      buildAiTabMixtureStructureContextFromAnalyzerObservationV1({
+        baselineContext: baselineMixtureStructureContext,
+        analyzerObservation: analyzerData?.mixtureObservation,
+        structurePrior: conditioning.structurePrior,
+        mixtureSource: conditioningContract.provenance.mixtureSource,
+      });
+
     // Phase 4 completes the dual-context shadow topology. Global structure comes
-    // only from the validated Phase 3 mixture context; role/tuning/capo come only
-    // from Conditioning V1. The fused projection remains research metadata and
-    // cannot alter generatedTab/events/renderEvents/measureGrid/analysisEngine.
+    // only from the validated Phase 3/8 mixture context; role/tuning/capo come
+    // only from Conditioning V1. The fused projection remains research metadata
+    // and cannot alter generatedTab/events/renderEvents/measureGrid/analysisEngine.
     const dualContextShadowProjection =
       buildAiTabDualContextShadowFusionV1({
         events: structuredPayload.events,
