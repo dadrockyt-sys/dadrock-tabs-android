@@ -7,24 +7,123 @@ on:
     paths:
       - '.github/workflows/v143-production-gomyway-smoke.yml'
 
+concurrency:
+  group: v143-production-gomyway-smoke
+  cancel-in-progress: true
+
 permissions:
   contents: read
+
+env:
+  VERCEL_ORG_ID: team_qJrw8Cuze5bCEg9M3Q67XMWt
+  VERCEL_PROJECT_ID: prj_6biwsn0iHci6FHNswAUCS8UYrAqF
+  MAIN_SHA: bb992d901e78ab19645f8edc8e330d5a142ebd8e
+  V143_ANALYZER_URL: https://dadrockyt--dadrock-v143-ai-tab-live-analyze.modal.run
+  AUDIO_URL: https://raw.githubusercontent.com/dadrockyt-sys/dadrock-tabs-android/main/public/jimmy-paige-midterm-v1/gomyway-midterm-source.m4a
+  AUDIO_BLOB_SHA: 4dd709e3fa177b4daeed71ca97f0199757729d4b
+  NEXT_TELEMETRY_DISABLED: '1'
+  NO_COLOR: '1'
 
 jobs:
   production-gomyway-smoke:
     runs-on: ubuntu-latest
-    timeout-minutes: 20
-    steps:
-      - uses: actions/checkout@v4
-        with:
-          ref: ${{ github.sha }}
+    timeout-minutes: 45
+    env:
+      VERCEL_TOKEN: ${{ secrets.VERCEL_TOKEN }}
 
-      - name: Exercise merged Production pipeline with authorized Gomyway audio
+    steps:
+      - name: Checkout exact current main commit
+        uses: actions/checkout@v4
+        with:
+          ref: ${{ env.MAIN_SHA }}
+          fetch-depth: 1
+
+      - name: Enforce exact Production source and authorization boundary
+        shell: bash
+        run: |
+          set -euo pipefail
+          test "$(git rev-parse HEAD)" = "$MAIN_SHA"
+          test -n "${VERCEL_TOKEN:-}"
+          test "$V143_ANALYZER_URL" = 'https://dadrockyt--dadrock-v143-ai-tab-live-analyze.modal.run'
+          echo "productionSourceCommit=$MAIN_SHA"
+          echo "productionEnvChange=ANALYZER_API_URL_V143 only"
+          echo "referenceFacingAccuracyScored=false"
+          echo "referenceScoreCalls=0"
+
+      - name: Set up Node.js 24
+        uses: actions/setup-node@v4
+        with:
+          node-version: '24'
+
+      - name: Install pinned Vercel CLI
+        shell: bash
+        run: |
+          set -euo pipefail
+          npm install --global vercel@59.11.2
+          test "$(vercel --version | tail -n 1)" = "59.11.2"
+
+      - name: Link exact project and restore Production V143 analyzer selection
+        shell: bash
+        run: |
+          set -euo pipefail
+          vercel pull --yes --environment=production --token="$VERCEL_TOKEN" >/dev/null
+
+          ENV_LIST="$(vercel env ls production --token="$VERCEL_TOKEN" 2>&1)"
+          if printf '%s\n' "$ENV_LIST" | grep -q 'ANALYZER_API_URL_V143'; then
+            printf '%s\n' "$V143_ANALYZER_URL" \
+              | vercel env update ANALYZER_API_URL_V143 production --token="$VERCEL_TOKEN" >/dev/null
+            echo 'ANALYZER_API_URL_V143=updated (value not printed)'
+          else
+            printf '%s\n' "$V143_ANALYZER_URL" \
+              | vercel env add ANALYZER_API_URL_V143 production --no-sensitive --token="$VERCEL_TOKEN" >/dev/null
+            echo 'ANALYZER_API_URL_V143=added (value not printed)'
+          fi
+
+          # Refresh local Production settings after the environment mutation.
+          vercel pull --yes --environment=production --token="$VERCEL_TOKEN" >/dev/null
+          grep -q '^ANALYZER_API_URL_V143=' .vercel/.env.production.local
+          echo 'Production V143 analyzer variable is present after refresh.'
+
+      - name: Build exact main with refreshed Production environment
+        shell: bash
+        run: |
+          set -euo pipefail
+          vercel build --prod --token="$VERCEL_TOKEN"
+
+      - name: Deploy exact prebuilt main artifact to Production
+        shell: bash
+        run: |
+          set -euo pipefail
+          OUT="debug/v143-contextual-prune/production-gomyway-smoke"
+          mkdir -p "$OUT"
+          DEPLOY_OUTPUT="$(
+            vercel deploy \
+              --prebuilt \
+              --prod \
+              --yes \
+              --token="$VERCEL_TOKEN" \
+              --meta "dadrockPurpose=v143-production-gomyway-smoke" \
+              --meta "dadrockSourceCommit=$MAIN_SHA" \
+              2>&1 | tee "$OUT/deploy.log"
+          )"
+          URL="$(printf '%s\n' "$DEPLOY_OUTPUT" | grep -Eo 'https://[^[:space:]]+\.vercel\.app' | tail -n 1)"
+          test -n "$URL"
+          echo "PRODUCTION_DEPLOYMENT_URL=$URL" >> "$GITHUB_ENV"
+          echo "Production deployment URL: $URL"
+
+      - name: Confirm deployment target is Production
+        shell: bash
+        run: |
+          set -euo pipefail
+          OUT="debug/v143-contextual-prune/production-gomyway-smoke"
+          vercel inspect "$PRODUCTION_DEPLOYMENT_URL" --wait --token="$VERCEL_TOKEN" \
+            2>&1 | tee "$OUT/inspect.log"
+          grep -Eqi 'target[[:space:]]+production' "$OUT/inspect.log"
+
+      - name: Exercise V143 Production pipeline with authorized Gomyway audio
         shell: bash
         env:
-          PRODUCTION_BASE_URL: https://dadrocktabs.com
-          AUDIO_URL: https://raw.githubusercontent.com/dadrockyt-sys/dadrock-tabs-android/main/public/jimmy-paige-midterm-v1/gomyway-midterm-source.m4a
-          AUDIO_BLOB_SHA: 4dd709e3fa177b4daeed71ca97f0199757729d4b
+          PRODUCTION_BASE_URL: ${{ env.PRODUCTION_DEPLOYMENT_URL }}
         run: |
           set -euo pipefail
           OUT="debug/v143-contextual-prune/production-gomyway-smoke"
@@ -66,9 +165,10 @@ jobs:
           status = int(os.environ['ANALYSIS_STATUS'])
           if status != 200:
               safe = {
-                  'schemaVersion': 2,
+                  'schemaVersion': 3,
                   'gate': 'v143-production-gomyway-real-audio-smoke',
-                  'productionBaseUrl': os.environ['PRODUCTION_BASE_URL'],
+                  'productionDeploymentUrl': os.environ['PRODUCTION_BASE_URL'],
+                  'productionSourceCommit': os.environ.get('MAIN_SHA'),
                   'audioSource': 'existing-public-github-main-asset',
                   'audioBlobSha': os.environ['AUDIO_BLOB_SHA'],
                   'analysisStatus': status,
@@ -92,9 +192,10 @@ jobs:
           conditioning = analysis.get('conditioningContract') if isinstance(analysis.get('conditioningContract'), dict) else {}
 
           summary = {
-              'schemaVersion': 2,
+              'schemaVersion': 3,
               'gate': 'v143-production-gomyway-real-audio-smoke',
-              'productionBaseUrl': os.environ['PRODUCTION_BASE_URL'],
+              'productionDeploymentUrl': os.environ['PRODUCTION_BASE_URL'],
+              'productionSourceCommit': os.environ.get('MAIN_SHA'),
               'audioSource': 'existing-public-github-main-asset',
               'audioBlobSha': os.environ['AUDIO_BLOB_SHA'],
               'analysisStatus': status,
@@ -157,6 +258,11 @@ jobs:
               'referenceFacingAccuracyScored': False,
               'referenceScoreCalls': 0,
           }
+
+          if summary['rhythmCanaryActive'] is not True:
+              (out / 'summary.json').write_text(json.dumps(summary, indent=2) + '\n', encoding='utf-8')
+              print(json.dumps(summary, indent=2))
+              raise SystemExit('Production response did not confirm V143 Rhythm canary activation')
 
           (out / 'summary.json').write_text(json.dumps(summary, indent=2) + '\n', encoding='utf-8')
           print(json.dumps(summary, indent=2))
@@ -235,8 +341,9 @@ jobs:
               raise SystemExit('Production preview PDF contract failed')
           PY
 
-          # Raw analysis/tab/PDF data is never uploaded as evidence.
+          # Never upload raw analyzer output, generated tab, request payload, or PDF.
           rm -f "$OUT/analysis.json" "$OUT/request.json" "$OUT/preview-request.json" "$OUT/preview.pdf" "$OUT/preview.headers"
+          rm -f "$OUT/deploy.log" "$OUT/inspect.log"
 
       - name: Preserve aggregate smoke evidence only
         if: always()
