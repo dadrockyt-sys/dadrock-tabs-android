@@ -2,6 +2,16 @@ import assert from 'node:assert/strict';
 
 import { buildJimmyPaigeAnalysisPayload } from '../lib/jimmyPaigeAnalysisPayload.js';
 
+function safeLiveV143(overrides = {}) {
+  return {
+    referenceFree: true,
+    professionalReferenceUsed: false,
+    referenceRuntimeInputUsed: false,
+    runtimeLabelsRequired: false,
+    ...overrides,
+  };
+}
+
 function validEvent(index) {
   return {
     start: index * 0.25,
@@ -31,9 +41,7 @@ const passingEvents = Array.from(
 const passingPayload = buildJimmyPaigeAnalysisPayload(
   {
     generatedTab: 'e|--3--5--7--8--|',
-    liveV143: {
-      referenceFree: true,
-    },
+    liveV143: safeLiveV143(),
     events: passingEvents,
     tuning: 'E A D G B E',
     tempo: 120,
@@ -88,9 +96,7 @@ const failingEvents = Array.from(
 const failingPayload = buildJimmyPaigeAnalysisPayload(
   {
     generatedTab: 'e|--3-----------|',
-    liveV143: {
-      referenceFree: true,
-    },
+    liveV143: safeLiveV143(),
     events: failingEvents,
   },
   {
@@ -158,9 +164,9 @@ assert.throws(
     buildJimmyPaigeAnalysisPayload(
       {
         generatedTab: 'e|--0--|',
-        liveV143: {
+        liveV143: safeLiveV143({
           referenceFree: false,
-        },
+        }),
         events: passingEvents,
       },
       {
@@ -168,8 +174,8 @@ assert.throws(
         usingV143RhythmAnalyzer: true,
       }
     ),
-  /did not identify itself as reference-free/i,
-  'V143 identity mismatch must remain fail-closed'
+  /failed the reference-free runtime safety contract/i,
+  'V143 anti-leakage identity mismatch must remain fail-closed'
 );
 
 console.log('=== V143 ANALYZER QUALITY GATE VERIFIED ===');
