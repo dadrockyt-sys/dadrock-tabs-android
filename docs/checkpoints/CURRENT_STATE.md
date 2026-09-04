@@ -14,7 +14,7 @@ Branch checkpoint: `v143-contextual-prune-lobo`
 - No reference-facing accuracy scoring has been run during Production/Modal performance work.
 
 **Project Progress Score: 79%.**  
-**Test Score: PHASE 1–13 GREEN; PROTECTED REAL-VERCEL PREVIEW GREEN; MAIN MERGE/BUILD/DEPLOY GREEN; PRODUCTION V143 ROUTING ACTIVE; DOWNLOAD-AUTH FIX GREEN; FULL GOMYWAY WORKER TIMES OUT AT 1200S; 725.802S STAGE GATE LOCALIZES BOTTLENECK TO FIRST DIRECT DEMUCS CPU/SINGLE-THREAD PASS; ORIGINAL 12S SEQUENTIAL CPU1-vs-CPU4 GATE CANCELLED; DIAGNOSTIC APP STOPPED; BOUNDED 6S CONCURRENT MICRO-PROBE TERMINATED SAFELY WITH `RemoteError` AFTER AN EXTERNAL APP STOP, SO NO VALID CPU1/CPU4 PERFORMANCE VERDICT YET; REFERENCE-FACING ACCURACY SCORE NOT RUN.**
+**Test Score: PHASE 1–13 GREEN; PROTECTED REAL-VERCEL PREVIEW GREEN; MAIN MERGE/BUILD/DEPLOY GREEN; PRODUCTION V143 ROUTING ACTIVE; DOWNLOAD-AUTH FIX GREEN; FULL GOMYWAY WORKER TIMES OUT AT 1200S; 725.802S STAGE GATE LOCALIZES BOTTLENECK TO FIRST DIRECT DEMUCS CPU/SINGLE-THREAD PASS; ORIGINAL 12S SEQUENTIAL CPU1-vs-CPU4 GATE CANCELLED; DIAGNOSTIC APP STOPPED; BOUNDED 6S CONCURRENT MICRO-PROBE TERMINATED SAFELY WITH `RemoteError` AFTER AN EXTERNAL APP STOP, SO NO VALID CPU1/CPU4 PERFORMANCE VERDICT YET; RETAINED-CALL READ-ONLY INSPECTION ARMED; REFERENCE-FACING ACCURACY SCORE NOT RUN.**
 
 ## Stable Production state
 
@@ -126,6 +126,22 @@ The only valid terminal conclusions are:
 4. no Production system was touched;
 5. CPU1-vs-CPU4 performance remains unresolved.
 
+## Retained-call inspection — READ ONLY / ARMED
+
+GitHub Actions job-log reinspection confirmed the timing above and exposed no per-call completion aggregate before the external app stop.
+
+A read-only retained-call inspector has now been added:
+
+- script `.github/scripts/v143_demucs_retained_call_inspect.py`, commit `22e6556ef20c372625f3fef15537cf3ad6192164`;
+- workflow `.github/workflows/v143-demucs-retained-call-inspect.yml`, trigger commit `81be5bbe74ac869ed3d9dd11f9d6de3d0a6cc66d`;
+- uses only `modal.FunctionCall.from_id(...).get(...)` against the four existing call IDs;
+- explicitly contains no `.spawn(...)`, `.remote(...)`, or `modal deploy` path;
+- new audio execution = false; new function calls spawned = 0;
+- preserves aggregate-only timing/hash/status fields if an already-completed result is recoverable;
+- reference score calls = 0; raw audio/stem retention = false; Production/Vercel changes = false.
+
+No new Demucs baseline should be launched until this retained-call inspection is terminal and interpreted.
+
 ## Fresh-chat authorization — EXPLICIT
 
 The user explicitly authorized continuation of non-reference-facing Production work. Authorization covers narrowly scoped V143 worker/bridge fixes and deploys, workflow diagnostics, Vercel configuration/redeploy if required, the existing repository-owned Gomyway audio, and aggregate-only Product/PDF contract checks with raw outputs discarded.
@@ -146,10 +162,9 @@ It **does not** authorize reference-facing accuracy scoring, restricted GOAT acc
 
 ## NEXT SAFE ACTION — AUTHORIZED
 
-1. Do **not** restart the four-call micro-probe immediately.
-2. First inspect the retained function-call logs for the four IDs above to determine whether any individual 6-second run completed or where each stopped; this requires no new audio execution.
-3. Then replace the multi-call gate with a **single 6-second frozen baseline call** with an explicit short hard deadline, explicit progress markers, remote cancellation, and `always()` app cleanup.
-4. Only if that single baseline completes cleanly should CPU4 be tested in a separate single-call run.
-5. If a 6-second frozen run cannot complete within the short bounded window, stop pursuing CPU thread-count tweaks and move to a more structural acceleration candidate (explicit CPU resource allocation and deterministic threading, then GPU Demucs if needed) under exact-hash gates.
-6. Do not change Production model, seed, shifts, reference boundaries, Vercel duration, or UI orchestration until a dedicated deterministic/reference-free gate demonstrates material speedup.
-7. Reference-facing accuracy remains unarmed.
+1. Let the read-only retained-call inspection reach a terminal result and inspect its aggregate artifact/logs; do not start new audio execution before that evidence is interpreted.
+2. If no individual completed aggregate is recoverable, replace the multi-call gate with a **single 6-second frozen baseline call** with an explicit short hard deadline, explicit progress markers, remote cancellation, and `always()` app cleanup.
+3. Only if that single baseline completes cleanly should CPU4 be tested in a separate single-call run.
+4. If a 6-second frozen run cannot complete within the short bounded window, stop pursuing CPU thread-count tweaks and move to a more structural acceleration candidate (explicit CPU resource allocation and deterministic threading, then GPU Demucs if needed) under exact-hash gates.
+5. Do not change Production model, seed, shifts, reference boundaries, Vercel duration, or UI orchestration until a dedicated deterministic/reference-free gate demonstrates material speedup.
+6. Reference-facing accuracy remains unarmed.
