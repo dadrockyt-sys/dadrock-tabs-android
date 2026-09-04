@@ -7,6 +7,8 @@ on:
       - v143-contextual-prune-lobo
     paths:
       - '.github/workflows/v143-exact-branch-vercel-preview.yml'
+      - 'vercel.json'
+      - 'app/api/debug/v7-polished-proof/**'
 
 concurrency:
   group: v143-exact-branch-vercel-preview
