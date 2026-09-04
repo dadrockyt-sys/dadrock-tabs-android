@@ -96,3 +96,5 @@ jobs:
           modal app stop dadrock-v143-demucs-perf-probe --env main --yes || true
           echo 'diagnosticAppCleanupAttempted=true'
           echo 'productionAppTouched=false'
+
+# Second path-local push intentionally registers/runs the bounded diagnostic after initial file creation.
