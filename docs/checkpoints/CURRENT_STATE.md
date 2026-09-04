@@ -138,6 +138,12 @@ Frozen Phase 11 limits:
 
 C1–C12 and the 12-case validation matrix are frozen in the dedicated pre-implementation document.
 
+## Continuation integrity note
+
+- Continuation re-read the live route, Phase 8 admission helper, Phase 10 experiment helper, and canonical payload builder against the frozen Phase 11 seam.
+- A duplicate Phase 11 freeze created during a concurrent checkpoint race was removed at commit `c620d13d8f801c649718f413894a5787bf9c4dda`; the checkpoint-referenced `FULL_MIXTURE_PRODUCT_PLACEMENT_LIVE_CANDIDATE_CANARY_V1` freeze remains the single authoritative Phase 11 contract.
+- No Phase 11 helper, route modification, verifier, workflow, Product/PDF/UI consumer, Modal/GPU action, reference access, `main` change, or Production change was performed in this continuation.
+
 ## NEXT SAFE ACTION
 
 1. **Stop at the Phase 11 authority gate unless the user explicitly authorizes implementation of the separately frozen non-authoritative canary contract.**
