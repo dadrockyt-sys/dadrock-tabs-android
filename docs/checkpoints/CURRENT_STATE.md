@@ -16,7 +16,7 @@ Branch: `v143-contextual-prune-lobo`
 - `main` / Production untouched; never modify/merge/promote without explicit user direction.
 
 **Project Progress Score: 65%.**  
-**Test Score: PHASE 1–10 REFERENCE-BLIND/SYNTHETIC CONTRACT PASS; PHASE 10 PRODUCT-PLACEMENT CANDIDATE 0% → 100%, 7/7 EXACT; PHASE 11 IMPLEMENTATION AUTHORIZED / IN PROGRESS / NOT YET VALIDATED; REFERENCE-FACING ACCURACY SCORE NOT RUN.**
+**Test Score: PHASE 1–10 REFERENCE-BLIND/SYNTHETIC CONTRACT PASS; PHASE 10 PRODUCT-PLACEMENT CANDIDATE 0% → 100%, 7/7 EXACT; PHASE 11 IMPLEMENTATION AUTHORIZED / ROUTE WIRED / VALIDATION PENDING; REFERENCE-FACING ACCURACY SCORE NOT RUN.**
 
 ## Phases 1–7 — COMPLETE
 
@@ -111,7 +111,7 @@ Safety accounting remains: external/reference assets read=false; GuitarSet=false
 
 **Interpretation:** Phase 10 materially strengthens the software case for a later narrowly gated live-candidate observation/canary phase. It is a deterministic synthetic Product-contract compatibility result, not a real-audio transcription accuracy score, and it does not itself authorize inferred placement to become canonical Product/PDF output.
 
-## Phase 11 — `FULL_MIXTURE_PRODUCT_PLACEMENT_LIVE_CANDIDATE_CANARY_V1` IMPLEMENTATION AUTHORIZED / IN PROGRESS
+## Phase 11 — `FULL_MIXTURE_PRODUCT_PLACEMENT_LIVE_CANDIDATE_CANARY_V1` IMPLEMENTATION AUTHORIZED / ROUTE WIRED / VALIDATION PENDING
 
 Pre-implementation freeze:
 `docs/checkpoints/SONGSTERR_FULL_MIXTURE_PRODUCT_PLACEMENT_LIVE_CANDIDATE_CANARY_V1_PREIMPLEMENTATION_FREEZE_20260903.md`
@@ -120,34 +120,30 @@ Freeze creation commit: `0900903385ff73fd84200fc80b7c787e0df7f45b`.
 
 User authorization: **explicitly granted in the current continuation on 2026-09-03** to perform the work required by the already-frozen Phase 11 contract. This authorization does not expand Product/PDF authority beyond that freeze.
 
-Frozen prospective seam:
+Frozen seam:
 
 `canonical structuredPayload already built + Phase 8 mixtureStructureContext + Phase 4/9 dualContextShadowProjection -> evaluate existing Phase 10 candidate helper -> append summary-only productPlacementCandidateCanary research metadata`.
 
 Implementation progress:
 - `80c455e365b9ecef1243ef37d4126c1850c7fcd3` — added `lib/aiTabProductPlacementCandidateCanaryV1.mjs`, a summary-only fail-open helper that dynamically loads the existing Phase 10 candidate builder, returns only canary contract/eligibility/bounded counts, and never emits candidate rows.
-- Live route modification, C1–C12 verifier, workflow, and validation evidence are still pending at this checkpoint.
+- `0621e3123343e439585e90e1ebf80dd86a95b9c1` — wired `app/api/analyze-audio-tab/route.js` only after canonical `structuredPayload`, Phase 8 context, and dual-context shadow projection are complete; response appends `productPlacementCandidateCanary` only.
+- C1–C12 verifier, isolated CPU workflow, and validation evidence remain pending at this checkpoint.
 
 Frozen Phase 11 limits remain unchanged:
-- canary evaluation only after canonical Product payload construction;
 - existing authenticated Product `renderEvents` always win;
-- Phase 10 provenance/safety/geometry/event-integrity/Product-validator gates remain unchanged;
-- any import/helper/input/provenance/safety/validation problem fails open to an ineligible/null-equivalent canary while canonical response remains unchanged;
-- response may expose only canary contract, eligibility, baseline render-event count, and candidate render-event count;
-- **candidate row-level `renderEvents` are not authorized to be emitted**;
+- candidate row-level `renderEvents` are never emitted;
 - no Product UI, Preview/PDF, client renderer, token/unlock, payment or delivery consumer may read the canary field;
 - no Product/PDF/runtime/analyzer authority promotion;
-- deterministic synthetic/static CPU verifier required before any Phase 11 result claim;
 - no external/reference assets, GOAT restricted bytes, SplitMySong, GuitarSet, Modal/GPU, Vercel Preview/Production, `main`, or Production changes.
 
 ## NEXT SAFE ACTION
 
-1. Continue only within frozen Phase 11 C1–C12: wire the summary-only helper after `dualContextShadowProjection`, add deterministic verifier/workflow, and validate.
-2. Checkpoint before and after route wiring and again after workflow evidence.
-3. Even a green Phase 11 canary does not authorize canonical Product/PDF placement. Product authority remains a later separately frozen decision.
-4. Do not run a reference-facing accuracy score until a lawful holdout exists.
-5. Await GOAT owner approval/denial before any GOAT v1 access.
-6. Do not rerun/score/weaken SplitMySong.
-7. Do not rerun/retune GuitarSet V3/V4/V5 and do not start V6 rescue/mining.
+1. Add and run the deterministic C1–C12 verifier/workflow against the frozen Phase 11 contract.
+2. If any gate fails, correct only the Phase 11 helper/route/verifier seam and re-run; do not weaken Phase 8/10 gates.
+3. Checkpoint again with workflow evidence and create a Phase 11 result document only after green validation.
+4. Even a green Phase 11 canary does not authorize canonical Product/PDF placement. Product authority remains a later separately frozen decision.
+5. Do not run a reference-facing accuracy score until a lawful holdout exists.
+6. Await GOAT owner approval/denial before any GOAT v1 access.
+7. Do not rerun/score/weaken SplitMySong or GuitarSet terminal phases.
 8. Do not use Modal/GPU without fresh explicit authorization immediately before any such work.
 9. Do not change `main`, Vercel Preview, or Production without explicit user direction.
