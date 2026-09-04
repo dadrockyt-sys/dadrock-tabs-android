@@ -16,7 +16,7 @@ Branch: `v143-contextual-prune-lobo`
 - `main` and Vercel Production remain untouched.
 
 **Project Progress Score: 72%.**  
-**Test Score: PHASE 1–13 GREEN; PHASE 13 COMPILED HTTP CANONICAL-PROMOTION/PDF SEAM CLOSED SUCCESS; REFERENCE-FACING ACCURACY SCORE NOT RUN.**
+**Test Score: PHASE 1–13 GREEN; EXACT-BRANCH VERCEL PREVIEW AUTHORIZED BUT BLOCKED BEFORE DEPLOYMENT BY ACCOUNT/CREDENTIAL CONFIGURATION; REFERENCE-FACING ACCURACY SCORE NOT RUN.**
 
 ## Phases 1–11 — COMPLETE
 
@@ -28,114 +28,146 @@ Branch: `v143-contextual-prune-lobo`
 
 ## Phase 12 — CANONICAL PRODUCT/PDF PLACEMENT PROMOTION CLOSED GREEN
 
-Freeze: `docs/checkpoints/SONGSTERR_FULL_MIXTURE_PRODUCT_PLACEMENT_CANONICAL_PROMOTION_V1_PREIMPLEMENTATION_FREEZE_20260903.md`.
-
-Canonical workflow evidence:
-- workflow: `Full Mixture Product Placement Canonical Promotion V1`;
-- run: `33831663771`;
-- job: `100895770003`;
-- tested head: `fdd54716641d2df73e5794cd3abadf06e78da208`;
-- conclusion: **SUCCESS**;
-- R1–R16: **16/16 PASS**;
-- frozen validation matrix: **12/12 PASS**;
-- structured renderer: `v143-structured-rhythm`;
-- structured render events: **7**;
-- structured PDF bytes: **1,665,393**;
-- deterministic promotion: **0 -> 7**;
-- exact known-truth placement: **7/7**.
+Canonical workflow:
+- run `33831663771`;
+- job `100895770003`;
+- tested head `fdd54716641d2df73e5794cd3abadf06e78da208`;
+- **SUCCESS**;
+- R1–R16 = 16/16 PASS;
+- matrix = 12/12 PASS;
+- structured renderer = `v143-structured-rhythm`;
+- structured PDF bytes = **1,665,393**;
+- deterministic promotion = **0 -> 7**;
+- exact known-truth placement = **7/7**.
 
 Result: `docs/checkpoints/SONGSTERR_FULL_MIXTURE_PRODUCT_PLACEMENT_CANONICAL_PROMOTION_V1_PHASE12_RESULT_20260903.md`.
 
 ## Phase 13 — BUILT-NEXT CANONICAL PROMOTION HTTP GATE CLOSED GREEN
 
-Freeze: `docs/checkpoints/SONGSTERR_V143_BUILT_NEXT_CANONICAL_PROMOTION_HTTP_GATE_PHASE13_PREIMPLEMENTATION_FREEZE_20260903.md`.  
-Freeze commit: `dbb169f92c78c0f030fbd5fd3d5fb5bcae6c432c`.
+Freeze: `docs/checkpoints/SONGSTERR_V143_BUILT_NEXT_CANONICAL_PROMOTION_HTTP_GATE_PHASE13_PREIMPLEMENTATION_FREEZE_20260903.md`.
 
-Implementation lineage:
-- `188e846aa7931ba07c3bb694f9402bdc7a1e6877` — deterministic localhost analyzer-stub HTTP verifier;
-- `c73ad03091f3bc2bacdc3445eea48bc55b8d1039` — compiled Next analysis -> canonical promotion -> Product/PDF HTTP workflow seam;
-- `ed776202b60ee410beb455db16ee820e260ff17b` — verifier-only correction to the already-frozen Conditioning V1 safety field location.
-
-Authoritative workflow evidence:
-- workflow: `V143 AI Tab Branch Build Gate`;
-- run: `33833707924`;
-- job: `100901804298`;
-- tested head: `ed776202b60ee410beb455db16ee820e260ff17b`;
-- conclusion: **SUCCESS**;
-- analyzer-quality verifier: **PASS**;
-- Preview feature verifier: **PASS**;
-- `npm ci --ignore-scripts`: **PASS**;
-- full `next build`: **PASS**, 95/95 static pages generated;
-- built server readiness: **PASS**;
-- existing built Preview route smoke: **PASS**;
-- canonical-promotion HTTP gate: **PASS**;
-- final safety-evidence enforcement: **PASS**.
+Authoritative workflow:
+- run `33833707924`;
+- job `100901804298`;
+- tested head `ed776202b60ee410beb455db16ee820e260ff17b`;
+- **SUCCESS**;
+- analyzer-quality verifier PASS;
+- Preview feature verifier PASS;
+- locked install PASS;
+- full Next build PASS, 95/95 static pages;
+- built server readiness PASS;
+- existing route smoke PASS;
+- analysis -> canonical promotion -> Product/PDF HTTP PASS;
+- final safety enforcement PASS.
 
 Canonical HTTP proof:
-- analysis HTTP status = **200**;
+- analysis status **200**;
 - Rhythm canary active = true;
-- promotion reason = `PROMOTED_PLACEMENT_ONLY`;
-- baseline canonical placement = **0**;
-- promoted canonical placement = **7**;
-- exact known-truth placement = **7/7**;
+- promotion = `PROMOTED_PLACEMENT_ONLY`;
+- canonical placement **0 -> 7**;
+- exact known-truth placement **7/7**;
 - canonical generated tab unchanged = true;
-- canonical musical event count = **7**;
-- Product/PDF HTTP status = **200**;
-- Preview feature = `v143-branch-preview-canary`;
+- Product/PDF status **200**;
+- feature = `v143-branch-preview-canary`;
 - renderer = `v143-structured-rhythm`;
 - structured PDF bytes = **1,665,404**;
-- invalid analysis request fails closed with HTTP **400**.
-
-Initial diagnostic run `33833489572` failed only because the new verifier checked `conditioningContract.provenance.referenceBlind` instead of the frozen root-level `conditioningContract.referenceBlind`. Runtime promotion had already proven 0 -> 7 and exact 7/7. Commit `ed776202...` corrected the verifier field path and added explicit `referenceScoreAuthorized=false`; no runtime/Product code or safety boundary was weakened.
+- malformed analysis request fails closed with **400**.
 
 Result: `docs/checkpoints/SONGSTERR_V143_BUILT_NEXT_CANONICAL_PROMOTION_HTTP_GATE_PHASE13_RESULT_20260903.md`.  
-Result checkpoint creation commit: `977c6113521e4942a57d047ccbb1e962bf7b7e2d`.
+Result checkpoint commit: `977c6113521e4942a57d047ccbb1e962bf7b7e2d`.
 
-## Exact-branch Vercel Preview authority — AUTHORIZED / NOT YET VALIDATED
+## Exact-branch Vercel Preview — AUTHORIZED / FAIL-CLOSED BLOCKED BEFORE DEPLOYMENT
 
-User explicitly authorized the next frozen authority crossing: an exact-branch Vercel **Preview** for `v143-contextual-prune-lobo`.
+Authorization freeze:
 
-Authorization freeze: `docs/checkpoints/SONGSTERR_V143_EXACT_BRANCH_VERCEL_PREVIEW_AUTHORIZATION_FREEZE_20260903.md`.
+`docs/checkpoints/SONGSTERR_V143_EXACT_BRANCH_VERCEL_PREVIEW_AUTHORIZATION_FREEZE_20260903.md`
 
-Authorized:
-- inspect/wire the existing Vercel Git integration;
-- create/trigger Preview deployment for this exact branch;
-- validate Preview target, Git branch, Git SHA, build/runtime behavior;
-- add branch-local proof/checkpoints.
+User authorized Preview-only deployment/validation for `v143-contextual-prune-lobo`. Production and `main` remain outside scope.
 
-Still forbidden:
-- merge/commit to `main`;
-- Vercel Production deploy or Preview-to-Production promotion;
-- Production aliases/domains/environment changes;
-- Modal/GPU/CUDA;
-- restricted/reference asset reads;
-- reference-facing scoring.
+### Native Git attempt
 
-Observed before Preview wiring:
-- Vercel project `dadrock-tabs-android` is connected to the same GitHub repo;
-- current existing Vercel deployment target is Production and remains untouched;
-- multiple pushes to `v143-contextual-prune-lobo` created no Vercel Preview deployment;
-- branch commits showed GitHub Actions/Cloudflare checks but no Vercel Git check;
-- Phase 13 itself explicitly recorded `actualVercelPreviewDeployment=false` and `productionModified=false`.
+Vercel project:
+- project `dadrock-tabs-android`;
+- project ID `prj_6biwsn0iHci6FHNswAUCS8UYrAqF`;
+- team ID `team_qJrw8Cuze5bCEg9M3Q67XMWt`;
+- existing latest deployment target = Production, untouched.
 
-## Safety accounting through Phase 13
+Branch-local Vercel Git intent was made explicit in `vercel.json` at:
 
-- external/reference audio/assets read = false;
-- inert synthetic Phase 13 audio URL fetched = false;
+`cd301274743dc63a59678979ea1c3a28704e19ac`
+
+with `git.deploymentEnabled.v143-contextual-prune-lobo=true`, preserving existing cron/header behavior and adding no wildcard rules.
+
+Result:
+- no Vercel Preview deployment;
+- no Vercel Git check on the branch commit;
+- Vercel deployment list remained Production-only;
+- therefore the blocker is at the project/Git-integration account layer, not Phase 13 or the branch-local rule.
+
+### Connected deploy-action attempt
+
+The connected Vercel deploy action is currently schema-inconsistent: its exposed callable has no arguments, while its backend requires deployment `target`, `name`, and `files`. The attempted empty invocation failed input validation before deployment. No Preview or Production deployment was created.
+
+### Exact-SHA GitHub Actions fallback
+
+Committed Preview-only workflow:
+
+`.github/workflows/v143-exact-branch-vercel-preview.yml`
+
+Workflow commit:
+
+`fef8f257cca86a292f12566282c616e31b83fdf4`
+
+It is branch restricted, checks out exact `${{ github.sha }}`, asserts branch/SHA before deployment, pins Vercel CLI 59.11.2, pulls Preview configuration, builds, and uses only `vercel deploy --prebuilt` with no Production promotion path.
+
+Attempted run:
+- run `33834282584`;
+- job `100903471300`;
+- exact head `fef8f257cca86a292f12566282c616e31b83fdf4`;
+- exact checkout PASS;
+- branch/SHA assertion PASS;
+- credential guard FAIL-CLOSED: **`VERCEL_TOKEN` repository secret is not configured**;
+- Vercel CLI install skipped;
+- Vercel pull skipped;
+- Vercel build skipped;
+- Vercel deploy skipped;
+- deployment created = **false**.
+
+Dedicated blocker checkpoint:
+
+`docs/checkpoints/SONGSTERR_V143_EXACT_BRANCH_VERCEL_PREVIEW_BLOCKED_20260903.md`  
+Checkpoint commit: `01dbc682b1a92172d642da9140925fb9a0e57dac`.
+
+### External prerequisite now required
+
+Either:
+1. enable native Vercel Git Preview deployments for this branch in the connected Vercel project; or
+2. add a GitHub Actions repository secret named `VERCEL_TOKEN`, authorized for the existing team/project.
+
+The token must be stored in GitHub Actions Secrets and must not be pasted into chat or committed to source.
+
+Once either prerequisite exists, rerun `V143 Exact Branch Vercel Preview` and accept the resulting deployment only after proving Preview target and exact expected branch/SHA provenance.
+
+## Safety accounting through current head
+
+- Vercel Preview deployment created = false;
+- Vercel Production deployment created/modified = false;
+- Preview-to-Production promotion = false;
+- Production aliases/domains/env changed = false;
+- `main` modified = false;
+- external/reference assets read = false;
 - GuitarSet read = false;
 - SplitMySong read = false;
 - GOAT restricted bytes read = false;
 - reference score calls = 0;
 - Modal invoked/deployed = false;
-- GPU/CUDA = false;
-- `main` modified = false;
-- Production modified = false;
-- Production deployment/promotion authorized = false.
+- GPU/CUDA = false.
 
 ## NEXT SAFE ACTION
 
-1. Apply the user-authorized, branch-scoped Vercel Git Preview wiring for `v143-contextual-prune-lobo` while preserving existing `vercel.json` behavior.
-2. Accept a deployment only if Vercel proves `target=preview`, Git branch = `v143-contextual-prune-lobo`, and Git SHA = the exact branch head that triggered it.
-3. Validate the resulting Preview build/runtime without Production promotion or reference-facing operations.
-4. Record a dedicated exact-branch Vercel Preview result checkpoint and update this file again.
-5. Stop before any `main` merge or Vercel Production promotion unless the user gives fresh explicit authorization.
+1. Keep branch `v143-contextual-prune-lobo` and all Phase 1–13 gates frozen.
+2. Wait only on the external Vercel Preview prerequisite: native Git Preview enablement or GitHub Actions `VERCEL_TOKEN` secret.
+3. Once configured, rerun `V143 Exact Branch Vercel Preview`.
+4. Inspect the created deployment; require `target=preview` plus exact branch/SHA provenance before accepting it.
+5. Validate `/ai-tab` on that Preview and record deployment/runtime evidence.
+6. Do **not** merge `main` or promote/deploy Vercel Production without fresh explicit user authorization.
