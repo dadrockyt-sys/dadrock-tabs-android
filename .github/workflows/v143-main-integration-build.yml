@@ -30,8 +30,8 @@ jobs:
       - uses: actions/setup-node@v4
         with:
           node-version: '24'
-      - name: Install locked dependencies
-        run: yarn install --frozen-lockfile
+      - name: Install dependencies using repository/Vercel mode
+        run: yarn install
       - name: Build full Next.js application
         env:
           NEXT_TELEMETRY_DISABLED: '1'
