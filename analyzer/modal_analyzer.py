@@ -645,6 +645,20 @@ def analyze(payload: dict) -> dict:
             normalized_metadata = inspect_audio_file(
                 str(normalized_path)
             )
+
+            try:
+                from full_mixture_runtime_shadow_v1 import (
+                    estimate_full_mixture_runtime_shadow_v1,
+                )
+
+                mixture_observation = (
+                    estimate_full_mixture_runtime_shadow_v1(
+                        str(normalized_path)
+                    )
+                )
+            except Exception:
+                mixture_observation = None
+
             result = analyze_audio_file(
                 str(normalized_path),
                 transcription_type,
@@ -662,5 +676,6 @@ def analyze(payload: dict) -> dict:
             "codec": normalized_metadata["codec"],
             "formatName": normalized_metadata["formatName"],
         }
+        result["mixtureObservation"] = mixture_observation
 
     return result
