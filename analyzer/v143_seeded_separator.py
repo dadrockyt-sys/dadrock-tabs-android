@@ -3,6 +3,7 @@ from __future__ import annotations
 import os
 import shutil
 import sys
+import time
 from contextlib import contextmanager
 from pathlib import Path
 from typing import Any, Iterator
@@ -40,6 +41,14 @@ DEMUCS_SINGLE_THREAD_ENV = {
     "ONEDNN_MAX_CPU_ISA": "SSE41",
     "DNNL_MAX_CPU_ISA": "SSE41",
 }
+
+
+def _stage(name: str, started: float) -> None:
+    """Emit bounded aggregate timing only; never emit audio or transcription data."""
+    print(
+        f"V143_STAGE separator.{name} elapsed={time.monotonic() - started:.3f}",
+        flush=True,
+    )
 
 
 def seeded_audio_separator_cli() -> list[str]:
@@ -85,14 +94,19 @@ def build_seeded_v143_stems(
     if not input_path.exists() or input_path.stat().st_size <= 0:
         raise FileNotFoundError(input_path)
 
+    started = time.monotonic()
+    _stage("start", started)
+
     root.mkdir(parents=True, exist_ok=True)
     cli = seeded_audio_separator_cli()
     work = root / "_work"
 
+    _stage("input-normalize.start", started)
     normalized_input = normalize_input_audio(
         input_path,
         work / "normalized",
     )
+    _stage("input-normalize.done", started)
 
     common_env = {
         "PYTHONHASHSEED": SEPARATOR_SEED,
@@ -102,26 +116,32 @@ def build_seeded_v143_stems(
     }
 
     with _temporary_environment(common_env):
+        _stage("direct-demucs.start", started)
         with _temporary_environment(DEMUCS_SINGLE_THREAD_ENV):
             direct = separate_demucs_guitar(
                 cli,
                 normalized_input,
                 work / "direct",
             )
+        _stage("direct-demucs.done", started)
 
+        _stage("roformer.start", started)
         with _temporary_environment({"CUDA_VISIBLE_DEVICES": None}):
             roformer = separate_roformer_instrumental(
                 cli,
                 normalized_input,
                 work / "roformer",
             )
+        _stage("roformer.done", started)
 
+        _stage("cascade-demucs.start", started)
         with _temporary_environment(DEMUCS_SINGLE_THREAD_ENV):
             cascade = separate_demucs_guitar(
                 cli,
                 Path(roformer["path"]),
                 work / "cascade",
             )
+        _stage("cascade-demucs.done", started)
 
     direct_out = root / "direct-demucs6s-guitar.wav"
     roformer_out = root / "bsroformer-instrumental.wav"
@@ -139,6 +159,8 @@ def build_seeded_v143_stems(
         or cascade_out.stat().st_size <= 0
     ):
         raise RuntimeError("Seeded V143 separator outputs were not created correctly")
+
+    _stage("done", started)
 
     return {
         "directGuitar": str(direct_out),
