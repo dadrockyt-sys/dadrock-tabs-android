@@ -16,7 +16,7 @@ Branch: `v143-contextual-prune-lobo`
 - `main` / Production untouched; never modify/merge/promote without explicit user direction.
 
 **Project Progress Score: 64%.**  
-**Test Score: PHASE 1–10 REFERENCE-BLIND/SYNTHETIC CONTRACT PASS; PHASE 10 PRODUCT-PLACEMENT CANDIDATE 0% → 100%, 7/7 EXACT; REFERENCE-FACING ACCURACY SCORE NOT RUN.**
+**Test Score: PHASE 1–10 REFERENCE-BLIND/SYNTHETIC CONTRACT PASS; PHASE 10 PRODUCT-PLACEMENT CANDIDATE 0% → 100%, 7/7 EXACT; PHASE 11 CANARY CONTRACT FROZEN / IMPLEMENTATION NOT AUTHORIZED; REFERENCE-FACING ACCURACY SCORE NOT RUN.**
 
 ## Phases 1–7 — COMPLETE
 
@@ -111,11 +111,38 @@ Safety accounting remains: external/reference assets read=false; GuitarSet=false
 
 **Interpretation:** Phase 10 materially strengthens the software case for a later narrowly gated live-candidate observation/canary phase. It is a deterministic synthetic Product-contract compatibility result, not a real-audio transcription accuracy score, and it does not itself authorize inferred placement to become canonical Product/PDF output.
 
+## Phase 11 — `FULL_MIXTURE_PRODUCT_PLACEMENT_LIVE_CANDIDATE_CANARY_V1` CONTRACT FROZEN / IMPLEMENTATION NOT AUTHORIZED
+
+Pre-implementation freeze:
+`docs/checkpoints/SONGSTERR_FULL_MIXTURE_PRODUCT_PLACEMENT_LIVE_CANDIDATE_CANARY_V1_PREIMPLEMENTATION_FREEZE_20260903.md`
+
+Freeze creation commit: `0900903385ff73fd84200fc80b7c787e0df7f45b`.
+
+Status: **`PHASE11_CANARY_CONTRACT_FROZEN / IMPLEMENTATION_NOT_AUTHORIZED / NON_AUTHORITATIVE_SERVER_RESEARCH_METADATA_ONLY / LIVE_PRODUCT-PDF_AUTHORITY_UNCHANGED / NO_MODAL-GPU / NO_REFERENCE_SCORE / MAIN+PRODUCTION_UNTOUCHED`**.
+
+Frozen prospective seam:
+
+`canonical structuredPayload already built + Phase 8 mixtureStructureContext + Phase 4/9 dualContextShadowProjection -> evaluate existing Phase 10 candidate helper -> append summary-only productPlacementCandidateCanary research metadata`.
+
+Frozen Phase 11 limits:
+- canary evaluation only after canonical Product payload construction;
+- existing authenticated Product `renderEvents` always win;
+- Phase 10 provenance/safety/geometry/event-integrity/Product-validator gates remain unchanged;
+- any import/helper/input/provenance/safety/validation problem fails open to an ineligible/null-equivalent canary while canonical response remains unchanged;
+- response may expose only canary contract, eligibility, baseline render-event count, and candidate render-event count;
+- **candidate row-level `renderEvents` are not authorized to be emitted**;
+- no Product UI, Preview/PDF, client renderer, token/unlock, payment or delivery consumer may read the canary field;
+- no Product/PDF/runtime/analyzer authority promotion;
+- deterministic synthetic/static CPU verifier required before any Phase 11 result claim;
+- no external/reference assets, GOAT restricted bytes, SplitMySong, GuitarSet, Modal/GPU, Vercel Preview/Production, `main`, or Production changes.
+
+C1–C12 and the 12-case validation matrix are frozen in the dedicated pre-implementation document.
+
 ## NEXT SAFE ACTION
 
-1. **Do not implicitly promote Product/PDF authority.** Phase 10 is closed green, but live promotion remains a separate authority boundary.
-2. The safest prospective Phase 11 is a separately frozen **non-authoritative live-candidate observation/canary contract**: compute and record candidate-vs-baseline eligibility in server research metadata while leaving canonical `renderEvents`, `analysisEngine`, Preview/PDF input, Product UI, and Production behavior unchanged.
-3. Before implementing any Phase 11 live-server canary wiring, create/freeze its exact seam, provenance gate, fail-open behavior, rollback proof, response metadata shape, Product/PDF isolation, synthetic validation, and no-authority-crossing constraints. Implementation remains **NOT AUTHORIZED** until explicitly approved.
+1. **Stop at the Phase 11 authority gate unless the user explicitly authorizes implementation of the separately frozen non-authoritative canary contract.**
+2. If explicitly authorized, implement only the summary-only server canary and isolated deterministic verifier/workflow defined by C1–C12; checkpoint before and during implementation.
+3. Even a green Phase 11 canary would not authorize canonical Product/PDF placement. Product authority would remain a later separately frozen decision.
 4. Do not run a reference-facing accuracy score until a lawful holdout exists.
 5. Await GOAT owner approval/denial before any GOAT v1 access.
 6. Do not rerun/score/weaken SplitMySong.
