@@ -9,6 +9,7 @@ import { buildAiTabConditionedShadowProjectionV1 } from '@/lib/aiTabConditionedS
 import { buildAiTabMixtureStructureContextV1 } from '@/lib/aiTabMixtureStructureContextV1.mjs';
 import { buildAiTabDualContextShadowFusionV1 } from '@/lib/aiTabDualContextShadowFusionV1.mjs';
 import { buildAiTabMixtureStructureContextFromAnalyzerObservationV1 } from '@/lib/aiTabAnalyzerMixtureObservationAdmissionV1.mjs';
+import { buildAiTabProductPlacementCandidateCanaryV1 } from '@/lib/aiTabProductPlacementCandidateCanaryV1.mjs';
 
 export const runtime = 'nodejs';
 export const maxDuration = 150;
@@ -296,6 +297,16 @@ export async function POST(request) {
         mixtureStructureContext,
       });
 
+    // Phase 11 is summary-only research metadata. The canonical Product payload
+    // above is already complete and immutable before this call. The canary may
+    // observe whether the existing Phase 10 placement candidate is eligible,
+    // but it never returns candidate rows or changes Product/PDF authority.
+    const productPlacementCandidateCanary =
+      await buildAiTabProductPlacementCandidateCanaryV1({
+        structuredPayload,
+        dualContextShadowProjection,
+      });
+
     return NextResponse.json({
       ...structuredPayload,
       rhythmCanaryActive:
@@ -304,6 +315,7 @@ export async function POST(request) {
       conditioningShadowProjection,
       mixtureStructureContext,
       dualContextShadowProjection,
+      productPlacementCandidateCanary,
     });
   } catch (error) {
     console.error(
