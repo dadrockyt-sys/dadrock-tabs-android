@@ -188,6 +188,8 @@ def _legacy_request(payload: dict[str, Any]) -> dict[str, Any]:
 )
 def rhythm_v143_request(payload: dict[str, Any]) -> dict[str, Any]:
     """Execute one deterministic Rhythm Guitar request inside the Modal L4 worker."""
+    import time
+
     from v143_modal_rhythm_router import route_normalized_audio
     from v143_rhythm_bend_consensus import enrich_router_assembly_with_consensus_bends
     from v143_rhythm_deterministic_stem_provider import (
@@ -196,30 +198,49 @@ def rhythm_v143_request(payload: dict[str, Any]) -> dict[str, Any]:
     from v143_rhythm_legato_evidence import enrich_router_assembly_with_legato
     from v143_vercel_audio_request_adapter import process_vercel_audio_request
 
+    request_started = time.monotonic()
+
+    def stage(name: str) -> None:
+        # Aggregate runtime timing only. Never emit URLs, tokens, audio, events,
+        # generated tablature, labels, or reference-facing information.
+        print(
+            f"V143_STAGE worker.{name} elapsed={time.monotonic() - request_started:.3f}",
+            flush=True,
+        )
+
     audio_metadata_box: dict[str, Any] = {}
     normalized_metadata_box: dict[str, Any] = {}
+
+    stage("start")
 
     def download_blob(
         audio_url: str,
         blob_token: str,
         destination: Path,
     ) -> None:
+        stage("download.start")
         _download_blob_to_path(audio_url, blob_token, destination)
         metadata = legacy.inspect_audio_file(str(destination))
         legacy.validate_audio_metadata(metadata)
         audio_metadata_box.update(metadata)
+        stage("download.done")
 
     def normalize_audio(source: Path, destination: Path) -> None:
+        stage("normalize.start")
         legacy.normalize_audio_file(str(source), str(destination))
         normalized_metadata_box.update(
             legacy.inspect_audio_file(str(destination))
         )
+        stage("normalize.done")
 
     def enrich_rhythm_techniques(assembly: Any, bundle: Any) -> Any:
+        stage("techniques.start")
         # Strict bend consensus runs first so confirmed bends cannot later be
         # reclassified as legato. Legato itself also requires both carrier views.
         with_bends = enrich_router_assembly_with_consensus_bends(assembly, bundle)
-        return enrich_router_assembly_with_legato(with_bends, bundle)
+        enriched = enrich_router_assembly_with_legato(with_bends, bundle)
+        stage("techniques.done")
+        return enriched
 
     def rhythm_router(
         normalized_path: str | Path,
@@ -228,13 +249,16 @@ def rhythm_v143_request(payload: dict[str, Any]) -> dict[str, Any]:
         legacy_analyzer: Callable[[str, str], dict[str, Any]],
         rhythm_stem_provider: Callable[..., Any],
     ) -> dict[str, Any]:
-        return route_normalized_audio(
+        stage("router.start")
+        routed = route_normalized_audio(
             normalized_path,
             transcription_type,
             legacy_analyzer=legacy_analyzer,
             rhythm_stem_provider=rhythm_stem_provider,
             assembly_enricher=enrich_rhythm_techniques,
         )
+        stage("router.done")
+        return routed
 
     result = process_vercel_audio_request(
         payload,
@@ -268,6 +292,7 @@ def rhythm_v143_request(payload: dict[str, Any]) -> dict[str, Any]:
         "referenceRuntimeInputUsed": False,
         "runtimeLabelsRequired": False,
     }
+    stage("done")
     return result
 
 
