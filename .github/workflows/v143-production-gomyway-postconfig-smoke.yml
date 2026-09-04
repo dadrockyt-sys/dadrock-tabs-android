@@ -15,31 +15,55 @@ permissions:
   contents: read
 
 env:
-  PRODUCTION_BASE_URL: https://dadrocktabs.com
+  VERCEL_ORG_ID: team_qJrw8Cuze5bCEg9M3Q67XMWt
+  VERCEL_PROJECT_ID: prj_6biwsn0iHci6FHNswAUCS8UYrAqF
+  PRODUCTION_DEPLOYMENT_URL: https://dadrock-tabs-android-icc2vvo6e-stephen-mcnally-s-projects.vercel.app
   PRODUCTION_DEPLOYMENT_ID: dpl_CojGzPaq77YRh5mLpbVTEseuWjrg
   PRODUCTION_SOURCE_SHA: bb992d901e78ab19645f8edc8e330d5a142ebd8e
   AUDIO_URL: https://raw.githubusercontent.com/dadrockyt-sys/dadrock-tabs-android/main/public/jimmy-paige-midterm-v1/gomyway-midterm-source.m4a
   AUDIO_BLOB_SHA: 4dd709e3fa177b4daeed71ca97f0199757729d4b
+  NEXT_TELEMETRY_DISABLED: '1'
+  NO_COLOR: '1'
 
 jobs:
   production-gomyway-postconfig-smoke:
     runs-on: ubuntu-latest
     timeout-minutes: 25
+    env:
+      VERCEL_TOKEN: ${{ secrets.VERCEL_TOKEN }}
 
     steps:
       - name: Checkout diagnostic branch
         uses: actions/checkout@v4
 
-      - name: Confirm canonical Production is reachable
+      - name: Set up Node.js 24
+        uses: actions/setup-node@v4
+        with:
+          node-version: '24'
+
+      - name: Install pinned Vercel CLI
+        shell: bash
+        run: |
+          set -euo pipefail
+          npm install --global vercel@59.11.2
+          test "$(vercel --version | tail -n 1)" = '59.11.2'
+          test -n "${VERCEL_TOKEN:-}"
+
+      - name: Confirm protected Production is reachable without disabling protection
         shell: bash
         run: |
           set -euo pipefail
           OUT="debug/v143-contextual-prune/production-gomyway-postconfig-smoke"
           mkdir -p "$OUT"
-          STATUS="$(curl --silent --show-error --location --max-time 30 \
-            --output /dev/null --write-out '%{http_code}' \
-            "$PRODUCTION_BASE_URL/ai-tab")"
-          echo "canonicalAiTabStatus=$STATUS"
+          STATUS="$(
+            vercel curl /ai-tab \
+              --deployment "$PRODUCTION_DEPLOYMENT_URL" \
+              -- \
+              --silent --show-error --location --max-time 30 \
+              --user-agent 'Mozilla/5.0 (compatible; DadRock-V143-Production-Smoke/1.0)' \
+              --output /dev/null --write-out '%{http_code}'
+          )"
+          echo "authenticatedProductionAiTabStatus=$STATUS"
           test "$STATUS" = '200'
 
       - name: Exercise configured V143 Production pipeline with authorized Gomyway audio
@@ -59,17 +83,21 @@ jobs:
           }
           JSON
 
-          ANALYSIS_STATUS="$(curl \
-            --silent --show-error --location \
-            --max-time 650 \
-            --request POST \
-            --header 'Content-Type: application/json' \
-            --data-binary "@$OUT/request.json" \
-            --output "$OUT/analysis.json" \
-            --write-out '%{http_code}' \
-            "$PRODUCTION_BASE_URL/api/analyze-audio-tab")"
+          ANALYSIS_STATUS="$(
+            vercel curl /api/analyze-audio-tab \
+              --deployment "$PRODUCTION_DEPLOYMENT_URL" \
+              -- \
+              --silent --show-error --location \
+              --max-time 650 \
+              --request POST \
+              --user-agent 'Mozilla/5.0 (compatible; DadRock-V143-Production-Smoke/1.0)' \
+              --header 'Content-Type: application/json' \
+              --data-binary "@$OUT/request.json" \
+              --output "$OUT/analysis.json" \
+              --write-out '%{http_code}'
+          )"
 
-          export ANALYSIS_STATUS PRODUCTION_BASE_URL AUDIO_BLOB_SHA PRODUCTION_DEPLOYMENT_ID PRODUCTION_SOURCE_SHA
+          export ANALYSIS_STATUS AUDIO_BLOB_SHA PRODUCTION_DEPLOYMENT_ID PRODUCTION_SOURCE_SHA PRODUCTION_DEPLOYMENT_URL
 
           python3 - <<'PY'
           import json, os
@@ -85,11 +113,13 @@ jobs:
           status = int(os.environ['ANALYSIS_STATUS'])
           if status != 200:
               safe = {
-                  'schemaVersion': 4,
+                  'schemaVersion': 5,
                   'gate': 'v143-production-gomyway-postconfig-smoke',
-                  'productionBaseUrl': os.environ['PRODUCTION_BASE_URL'],
+                  'productionDeploymentUrl': os.environ['PRODUCTION_DEPLOYMENT_URL'],
                   'productionDeploymentId': os.environ['PRODUCTION_DEPLOYMENT_ID'],
                   'productionSourceCommit': os.environ['PRODUCTION_SOURCE_SHA'],
+                  'protectedAccessMethod': 'vercel-curl-env-token-auto-bypass',
+                  'deploymentProtectionDisabled': False,
                   'audioSource': 'existing-public-github-main-asset',
                   'audioBlobSha': os.environ['AUDIO_BLOB_SHA'],
                   'analysisStatus': status,
@@ -113,11 +143,13 @@ jobs:
           conditioning = analysis.get('conditioningContract') if isinstance(analysis.get('conditioningContract'), dict) else {}
 
           summary = {
-              'schemaVersion': 4,
+              'schemaVersion': 5,
               'gate': 'v143-production-gomyway-postconfig-smoke',
-              'productionBaseUrl': os.environ['PRODUCTION_BASE_URL'],
+              'productionDeploymentUrl': os.environ['PRODUCTION_DEPLOYMENT_URL'],
               'productionDeploymentId': os.environ['PRODUCTION_DEPLOYMENT_ID'],
               'productionSourceCommit': os.environ['PRODUCTION_SOURCE_SHA'],
+              'protectedAccessMethod': 'vercel-curl-env-token-auto-bypass',
+              'deploymentProtectionDisabled': False,
               'audioSource': 'existing-public-github-main-asset',
               'audioBlobSha': os.environ['AUDIO_BLOB_SHA'],
               'analysisStatus': status,
@@ -213,16 +245,20 @@ jobs:
           (out / 'preview-request.json').write_text(json.dumps(preview, separators=(',', ':')))
           PY
 
-          PREVIEW_STATUS="$(curl \
-            --silent --show-error --location \
-            --max-time 120 \
-            --request POST \
-            --header 'Content-Type: application/json' \
-            --data-binary "@$OUT/preview-request.json" \
-            --dump-header "$OUT/preview.headers" \
-            --output "$OUT/preview.pdf" \
-            --write-out '%{http_code}' \
-            "$PRODUCTION_BASE_URL/api/generate-tab-preview")"
+          PREVIEW_STATUS="$(
+            vercel curl /api/generate-tab-preview \
+              --deployment "$PRODUCTION_DEPLOYMENT_URL" \
+              -- \
+              --silent --show-error --location \
+              --max-time 120 \
+              --request POST \
+              --user-agent 'Mozilla/5.0 (compatible; DadRock-V143-Production-Smoke/1.0)' \
+              --header 'Content-Type: application/json' \
+              --data-binary "@$OUT/preview-request.json" \
+              --dump-header "$OUT/preview.headers" \
+              --output "$OUT/preview.pdf" \
+              --write-out '%{http_code}'
+          )"
           export PREVIEW_STATUS
 
           python3 - <<'PY'
