@@ -1,0 +1,151 @@
+name: Full Mixture Product Placement Canonical Promotion V1
+
+on:
+  workflow_dispatch:
+  push:
+    branches:
+      - v143-contextual-prune-lobo
+    paths:
+      - '.github/workflows/full-mixture-product-placement-canonical-promotion-v1.yml'
+      - 'analyzer/full_mixture_product_placement_candidate_v1.mjs'
+      - 'analyzer/verify_full_mixture_product_placement_canonical_promotion_v1.mjs'
+      - 'app/api/analyze-audio-tab/route.js'
+      - 'app/ai-tab/page.js'
+      - 'app/api/generate-tab-preview/route.js'
+      - 'app/api/generate-tab-pdf/route.js'
+      - 'lib/aiTabProductPlacementPromotionV1.mjs'
+      - 'lib/aiTabProductPlacementCandidateCanaryV1.mjs'
+      - 'lib/jimmyPaigeAnalysisPayload.js'
+      - 'lib/v143AnalyzerQuality.js'
+      - 'lib/v143RenderContract.js'
+      - 'lib/createJimmyPaigeProfessionalPdf.js'
+      - 'lib/createAiTabPdf.js'
+      - 'lib/createV143RhythmPdf.js'
+      - 'lib/aiTabConditioningV1.mjs'
+      - 'lib/aiTabMixtureStructureContextV1.mjs'
+      - 'lib/aiTabAnalyzerMixtureObservationAdmissionV1.mjs'
+      - 'lib/aiTabDualContextShadowFusionV1.mjs'
+      - 'lib/aiTabConditionedShadowProjectionV1.mjs'
+      - 'package.json'
+      - 'package-lock.json'
+
+permissions:
+  contents: read
+
+env:
+  NEXT_TELEMETRY_DISABLED: '1'
+
+jobs:
+  verify-canonical-promotion:
+    runs-on: ubuntu-24.04
+    steps:
+      - name: Checkout isolated branch
+        uses: actions/checkout@v4
+        with:
+          ref: v143-contextual-prune-lobo
+
+      - name: Set up Node.js 22
+        uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+          cache: npm
+
+      - name: Install branch dependencies
+        run: npm ci
+
+      - name: Verify Phase 12 R1-R16
+        env:
+          FULL_MIXTURE_PRODUCT_PLACEMENT_CANONICAL_PROMOTION_V1_RESULT_PATH: debug/v143-contextual-prune/full-mixture-product-placement-canonical-promotion-v1.json
+        run: node analyzer/verify_full_mixture_product_placement_canonical_promotion_v1.mjs
+
+      - name: Enforce Phase 12 authority and safety evidence
+        run: |
+          node --input-type=module <<'NODE'
+          import { readFile } from 'node:fs/promises';
+
+          const data = JSON.parse(await readFile(
+            'debug/v143-contextual-prune/full-mixture-product-placement-canonical-promotion-v1.json',
+            'utf8'
+          ));
+
+          if (data.passed !== true) {
+            throw new Error('Phase 12 canonical Product/PDF placement promotion failed');
+          }
+
+          if (
+            Object.keys(data.tests || {}).length !== 16 ||
+            !Object.values(data.tests || {}).every((value) => value === 'PASS')
+          ) {
+            throw new Error('Phase 12 R1-R16 evidence incomplete');
+          }
+
+          if (
+            Object.keys(data.validationMatrix || {}).length !== 12 ||
+            !Object.values(data.validationMatrix || {}).every((value) => value === 'PASS')
+          ) {
+            throw new Error('Phase 12 validation matrix incomplete');
+          }
+
+          if (
+            data.referenceBlind !== true ||
+            data.productAuthorityPromoted !== true ||
+            data.pdfAuthorityPromoted !== true ||
+            data.placementOnlyAuthority !== true ||
+            data.postPromotionQualityGatePassed !== true
+          ) {
+            throw new Error('Phase 12 Product/PDF placement authority evidence missing');
+          }
+
+          if (
+            data.structuredPdfRendererMode !== 'v143-structured-rhythm' ||
+            data.structuredPdfRenderEventCount !== 7 ||
+            !(data.structuredPdfBytesProduced > 500)
+          ) {
+            throw new Error('Phase 12 structured PDF proof failed');
+          }
+
+          if (
+            data.syntheticCanonicalEventCount !== 7 ||
+            data.syntheticBaselineRenderEventCount !== 0 ||
+            data.syntheticPromotedRenderEventCount !== 7 ||
+            data.syntheticExactKnownTruthMatches !== 7
+          ) {
+            throw new Error('Phase 12 deterministic known-truth promotion changed');
+          }
+
+          for (const key of [
+            'canonicalPayloadBaselineMutated',
+            'existingAuthenticatedRenderEventsOverridden',
+            'generatedTabChangedByPromotion',
+            'canonicalEventsChangedByPromotion',
+            'measureGridChangedByPromotion',
+            'externalAudioAssetsUsed',
+            'referenceAssetsUsed',
+            'guitarSetRead',
+            'splitMySongRead',
+            'goatRestrictedBytesRead',
+            'modalInvoked',
+            'modalDeployed',
+            'gpuUsed',
+            'cudaUsed',
+            'vercelPreviewDeployment',
+            'mainModified',
+            'productionModified',
+            'productionDeploymentAuthorized',
+          ]) {
+            if (data[key] !== false) {
+              throw new Error(`Phase 12 safety invariant failed: ${key}`);
+            }
+          }
+
+          if (data.referenceScoreCalls !== 0) {
+            throw new Error('Reference score calls must remain zero');
+          }
+
+          console.log('PHASE 12 CANONICAL PRODUCT/PDF PLACEMENT PROMOTION SAFETY GATE PASSED');
+          NODE
+
+      - name: Build branch without deployment
+        env:
+          NODE_OPTIONS: --max-old-space-size=4096
+        run: npm run build
