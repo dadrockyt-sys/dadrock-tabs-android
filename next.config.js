@@ -1,6 +1,29 @@
+const pdfRuntimeTraceExcludes = [
+  './public/*gomyway*',
+  './public/*GOMYWAY*',
+  './public/DadRock TABS - gomyway*',
+  './public/Stairway to Heaven AI test.m4a',
+];
+
+const pdfRuntimeTraceIncludes = [
+  './public/DadRock-Tabs-Logo.png',
+];
+
 const nextConfig = {
   images: {
     unoptimized: true,
+  },
+  // Keep branch-only research/test artifacts out of the two real Product/PDF
+  // serverless traces. Both renderers need only the DadRock logo from public/.
+  // /api/pdf-preview is intentionally excluded from this rule because its
+  // development proof path legitimately reads a gomyway notation fixture.
+  outputFileTracingExcludes: {
+    '/api/generate-tab-pdf': pdfRuntimeTraceExcludes,
+    '/api/generate-tab-preview': pdfRuntimeTraceExcludes,
+  },
+  outputFileTracingIncludes: {
+    '/api/generate-tab-pdf': pdfRuntimeTraceIncludes,
+    '/api/generate-tab-preview': pdfRuntimeTraceIncludes,
   },
   // Skip Next.js automatic trailing slash redirect (308) so our middleware handles it with 301
   skipTrailingSlashRedirect: true,
