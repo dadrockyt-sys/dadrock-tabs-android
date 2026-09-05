@@ -1,6 +1,6 @@
 # CURRENT STATE — DadRock `/ai-tab`
 
-Updated: 2026-09-04 23:08 America/Toronto  
+Updated: 2026-09-05 00:12 America/Toronto  
 Branch: `v143-contextual-prune-lobo`
 
 > Compact continuation checkpoint. Older dedicated checkpoints remain authoritative; omission here does not revoke frozen boundaries.
@@ -68,6 +68,7 @@ Repository-owned `public/gomywayfullaitest.m4a`:
 - Exact direct stage-cache run `33938289895`, job `101230445238`, artifact `9961088259` — GREEN/CLOSED.
 - Exact cascade stage-cache run `33939561555`, job `101234177608`, artifact `9961570152` — GREEN/CLOSED.
 - Generic zero-retention view-level concurrency run `33940555992`, job `101237009458`, artifact `9961880403`, `allPassed=true` — GREEN/CLOSED.
+- Generic proof used the same Modal envelope now used by Gate 2: `gpu="L4"`, `cpu=2.0`, `memory=8192`, `timeout=1800`; collector wall `815.325s`, concurrent separation wall `773.381s`.
 - Generic proof preserved exact identities, `spawn`, deterministic CPU Demucs, reference score calls `0`, quality verdict `false`, no raw audio/stem persistence; contextual speedup `1.924x` only, not same-run paired.
 - **Do not rerun the generic concurrency proof merely to validate this scheduler.**
 
@@ -90,8 +91,18 @@ Implementation-specific one-shot harness is branch-local and does **not** import
 - workflow trigger commit `855dc46a87a75f9c8b11f1eaf71a76319e99af1b`;
 - Actions run `33943117001`: **FAILURE**;
 - job `101244196310`: setup, exact boundary, Python, Modal install, and isolated deploy **SUCCESS**; step 7 `Run one approved-fixture seeded scheduler runtime gate` **FAILURE**; aggregate evidence upload **SUCCESS**; isolated Modal app cleanup **SUCCESS**;
+- aggregate artifact `9962641949` records `error=RemoteError`, `runtimeSeconds=787.991715137`, `referenceFacingInputs=0`, `referenceScoreCalls=0`, `qualityVerdictMade=false`;
+- local job log contains only Modal client rethrow (`modal.exception.RemoteError`), with no remote traceback/message; evidence output was not returned from the remote call;
 - runtime workflow push filters include only scheduler/runtime source + workflow paths, so documentation-only checkpoint commits do **not** trigger another approved-fixture execution;
-- **No rerun authorized yet. Diagnose the preserved aggregate evidence and job failure first.**
+- **No rerun authorized yet. Diagnose the preserved failure first.**
+
+### Gate 2 diagnosis so far
+
+- The earlier concern that `spawn` loses deterministic traces is **ruled out**: the scheduler child inherits `V143_DEMUCS_SHIFT_TRACE_PATH` and `V143_DEMUCS_RUNTIME_TRACE_PATH`; `v143_seeded_audio_separator_cli.py` writes those traces directly from each child process.
+- Resource-envelope mismatch is **ruled out as the distinguishing factor**: both the green generic concurrency proof and Gate 2 use production `v143_ai_tab_gpu_worker.image`, `gpu="L4"`, `cpu=2.0`, `memory=8192`, `timeout=1800`.
+- Gate 2 wraps the model invocation and all parity/contract assertions in `except BaseException`; an ordinary model/assertion/parity failure inside that block should therefore return structured aggregate failure evidence rather than surface as a client `RemoteError`.
+- The ~788s failure timing is close to the already-proven ~773s concurrent-separation wall, so the current leading class is **remote process/container-level termination or a failure in cleanup/return outside the caught body**, not yet a demonstrated scheduler parity regression.
+- No approved-fixture rerun has been performed after the failure.
 
 Gate invokes current `build_seeded_v143_stems()` exactly once against the approved fixture and requires:
 
@@ -106,9 +117,9 @@ Gate invokes current `build_seeded_v143_stems()` exactly once against the approv
 
 ## NEXT STEP
 
-1. Fetch run `33943117001` aggregate evidence and step-7 logs.
-2. Diagnose the failure without reference-facing scoring, restricted bytes, or reopening closed lanes.
-3. Checkpoint the exact failure cause and proposed narrow fix before deciding whether a second approved-fixture runtime execution is justified.
+1. Retrieve historical logs for the stopped isolated Modal app/run without invoking the approved fixture again.
+2. Identify whether the `RemoteError` was container/process termination, cleanup failure, or another uncaught remote failure.
+3. Checkpoint the exact cause and a narrow corrective change before authorizing any second Gate 2 execution.
 4. Normal-routing E2E remains **LOCKED** until Gate 2 is GREEN/CLOSED.
 
 ### Hard stops
