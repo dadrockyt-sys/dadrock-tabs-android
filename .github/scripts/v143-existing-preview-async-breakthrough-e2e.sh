@@ -109,20 +109,42 @@ grep -Eq 'status[[:space:]]+.*Ready|status[[:space:]]+● Ready' "$OUT/inspect.l
 echo "existingPreviewIdentityVerified=true"
 
 PREFLIGHT_STATUS="$(
-  vercel curl /ai-tab \
+  vercel curl /api/analyze-audio-tab \
     --deployment "$PREVIEW_URL" \
     -- \
     --silent --show-error --max-time 30 \
-    --output /dev/null \
+    --request POST \
+    --header 'Content-Type: application/json' \
+    --data-binary '{"transcriptionType":"invalid"}' \
+    --output "$OUT/preflight-response.json" \
     --write-out '%{http_code}'
 )"
-echo "protectedPreviewAiTabStatus=$PREFLIGHT_STATUS"
+echo "protectedPreviewRoutePreflightStatus=$PREFLIGHT_STATUS"
+export PREFLIGHT_STATUS
+set +e
+python3 - <<'PY2'
+import json, os
+from pathlib import Path
+out = Path(os.environ["OUT"])
+try:
+    data = json.loads((out / "preflight-response.json").read_text(encoding="utf-8"))
+except Exception:
+    data = {}
+ok = (
+    int(os.environ["PREFLIGHT_STATUS"]) == 400
+    and data.get("error") == "Transcription type must be lead, rhythm, or bass."
+)
+print(f"protectedPreviewRouteReached={str(ok).lower()}")
+raise SystemExit(0 if ok else 1)
+PY2
+PREFLIGHT_PARSE_RC=$?
+set -e
 patch_summary \
   "protectedPreviewStatus=$PREFLIGHT_STATUS" \
   "previewIdentityVerified=true"
-if [ "$PREFLIGHT_STATUS" != "200" ]; then
-  patch_summary "error=Protected Preview preflight failed before real-audio start."
-  echo "Protected Preview preflight failed before real-audio start; do not send a start." >&2
+if [ "$PREFLIGHT_PARSE_RC" -ne 0 ]; then
+  patch_summary "error=Protected Preview model-free route preflight failed before real-audio start."
+  echo "Protected Preview model-free route preflight failed before real-audio start; do not send a start." >&2
   exit 3
 fi
 
