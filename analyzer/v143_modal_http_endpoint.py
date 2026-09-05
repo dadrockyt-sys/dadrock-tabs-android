@@ -29,6 +29,7 @@ ASYNC_RESULT_QUEUE_NAME = str(
     os.environ.get("V143_ASYNC_RESULT_QUEUE_NAME")
     or "dadrock-v143-async-results"
 ).strip()
+ASYNC_CONTROL_KIND = "orchestrator-control"
 
 if not HTTP_APP_NAME or not ASYNC_RESULT_QUEUE_NAME:
     raise RuntimeError("V143 async bridge resource names must not be empty.")
@@ -53,9 +54,10 @@ http_image = (
     .add_local_python_source("v143_async_job_protocol")
 )
 
-# Queue entries are transient structured-result handoff only. Each partition is
-# scoped to one random job id, is cleared after browser acknowledgement, and has
-# a hard 15-minute TTL if the browser disappears. Raw audio/stems never enter it.
+# Queue entries are transient structured-result handoff/control metadata only.
+# Result partitions contain structured analyzer JSON; control partitions contain
+# only one opaque Modal FunctionCall ID. Both use the same hard 15-minute TTL and
+# are cleared on acknowledgement. Raw audio/stems/model bytes never enter them.
 async_result_queue = modal.Queue.from_name(
     ASYNC_RESULT_QUEUE_NAME,
     create_if_missing=True,
@@ -203,6 +205,10 @@ def _validate_rhythm_start_payload(payload: dict[str, Any]) -> None:
         raise ValueError("A Vercel Blob pathname is required.")
 
 
+def _control_partition(job_id: str) -> str:
+    return f"control-{job_id}"
+
+
 def _queue_job_envelope(job_id: str, envelope: dict[str, Any]) -> None:
     items = encode_result_envelope(envelope)
     async_result_queue.put_many(
@@ -211,6 +217,78 @@ def _queue_job_envelope(job_id: str, envelope: dict[str, Any]) -> None:
         partition_ttl=ASYNC_RESULT_TTL_SECONDS,
         timeout=30,
     )
+
+
+def _queue_orchestrator_control(job_id: str, function_call_id: str) -> None:
+    call_id = str(function_call_id or "").strip()
+    if not call_id.startswith("fc-"):
+        raise RuntimeError("The async orchestrator returned no valid FunctionCall ID.")
+
+    control_partition = _control_partition(job_id)
+    async_result_queue.clear(partition=control_partition)
+    async_result_queue.put_many(
+        [
+            {
+                "schemaVersion": 1,
+                "kind": ASYNC_CONTROL_KIND,
+                "functionCallId": call_id,
+            }
+        ],
+        partition=control_partition,
+        partition_ttl=ASYNC_RESULT_TTL_SECONDS,
+        timeout=30,
+    )
+
+
+def _read_orchestrator_control(job_id: str) -> dict[str, Any] | None:
+    items = list(
+        async_result_queue.iterate(
+            partition=_control_partition(job_id),
+            item_poll_timeout=0.0,
+        )
+    )
+    if not items:
+        return None
+    if len(items) != 1 or not isinstance(items[0], dict):
+        raise RuntimeError("The async orchestrator control record is invalid.")
+
+    control = items[0]
+    if (
+        control.get("schemaVersion") != 1
+        or control.get("kind") != ASYNC_CONTROL_KIND
+        or not str(control.get("functionCallId") or "").startswith("fc-")
+    ):
+        raise RuntimeError("The async orchestrator control record is invalid.")
+    return control
+
+
+def _read_job_result(job_id: str) -> dict[str, Any] | None:
+    items = list(
+        async_result_queue.iterate(
+            partition=job_id,
+            item_poll_timeout=0.0,
+        )
+    )
+    if not items:
+        return None
+
+    envelope = decode_result_items(items)
+    status = str(envelope.get("status") or "")
+    if status == "failed":
+        return {
+            "status": "failed",
+            "error": str(
+                envelope.get("error")
+                or "The analyzer could not complete the request."
+            )[:240],
+        }
+    if status != "completed" or not isinstance(envelope.get("result"), dict):
+        raise RuntimeError("The async analyzer returned an invalid result envelope.")
+
+    return {
+        "status": "completed",
+        "result": envelope["result"],
+    }
 
 
 @app.function(
@@ -244,16 +322,11 @@ def async_protocol_smoke() -> dict[str, Any]:
         build_completed_envelope(synthetic_result),
     )
 
-    items = list(
-        async_result_queue.iterate(
-            partition=job_id,
-            item_poll_timeout=0.0,
-        )
-    )
-    decoded = decode_result_items(items)
+    result_state = _read_job_result(job_id)
     roundtrip_ok = (
-        decoded.get("status") == "completed"
-        and decoded.get("result") == synthetic_result
+        isinstance(result_state, dict)
+        and result_state.get("status") == "completed"
+        and result_state.get("result") == synthetic_result
     )
 
     async_result_queue.clear(partition=job_id)
@@ -291,14 +364,18 @@ def run_rhythm_async_job(
     routed_payload: dict[str, Any],
 ) -> dict[str, Any]:
     """Run the existing V143 worker and publish only transient structured JSON."""
+    print("V143_ASYNC_STAGE orchestrator.start", flush=True)
     status = "failed"
     try:
+        print("V143_ASYNC_STAGE worker_call.start", flush=True)
         result = _worker_handle().remote(dict(routed_payload))
+        print("V143_ASYNC_STAGE worker_call.done status=completed", flush=True)
         envelope = build_completed_envelope(result)
         status = "completed"
     except Exception:
         # Never persist exception repr/traceback because routed payloads contain
         # private Blob credentials. The browser gets a bounded generic failure.
+        print("V143_ASYNC_STAGE worker_call.done status=failed", flush=True)
         envelope = build_failed_envelope()
 
     try:
@@ -309,6 +386,7 @@ def run_rhythm_async_job(
         status = "failed"
         _queue_job_envelope(job_id, build_failed_envelope())
 
+    print(f"V143_ASYNC_STAGE result_queue.done status={status}", flush=True)
     return {
         "jobId": job_id,
         "status": status,
@@ -332,7 +410,17 @@ def _start_rhythm_job(
 
     # Keep the already-authoritative Vercel payload contract. The bridge-side
     # orchestrator is lightweight and immediately releases this HTTP request.
-    run_rhythm_async_job.spawn(job_id, dict(payload))
+    call = run_rhythm_async_job.spawn(job_id, dict(payload))
+    try:
+        _queue_orchestrator_control(job_id, call.object_id)
+    except Exception as error:
+        # Never return an untrackable job token. Best-effort cancellation avoids
+        # leaving an orphan orchestrator if transient control storage fails.
+        try:
+            call.cancel()
+        except Exception:
+            pass
+        raise RuntimeError("The async analyzer could not track the job.") from error
 
     return {
         "status": "processing",
@@ -340,6 +428,7 @@ def _start_rhythm_job(
         "pollAfterMs": 3000,
         "expiresInSeconds": ASYNC_RESULT_TTL_SECONDS,
         "rhythmOnly": True,
+        "orchestratorTracked": True,
         "rawAudioQueued": False,
         "stemBytesQueued": False,
     }
@@ -356,35 +445,54 @@ def _status_rhythm_job(
         expected_token,
     )
 
-    items = list(
-        async_result_queue.iterate(
-            partition=job_id,
-            item_poll_timeout=0.0,
-        )
+    result_state = _read_job_result(job_id)
+    if result_state is not None:
+        return result_state
+
+    control = _read_orchestrator_control(job_id)
+    if control is None:
+        return {
+            "status": "failed",
+            "error": "The analyzer job state is no longer available.",
+        }
+
+    call = modal.FunctionCall.from_id(
+        str(control["functionCallId"])
     )
-    if not items:
+    try:
+        call_result = call.get(timeout=0)
+    except modal.exception.TimeoutError:
         return {
             "status": "processing",
             "pollAfterMs": 3000,
             "expiresInSeconds": ASYNC_RESULT_TTL_SECONDS,
+            "orchestratorRunning": True,
         }
-
-    envelope = decode_result_items(items)
-    status = str(envelope.get("status") or "")
-    if status == "failed":
+    except Exception:
         return {
             "status": "failed",
-            "error": str(
-                envelope.get("error")
-                or "The analyzer could not complete the request."
-            )[:240],
+            "error": "The analyzer job stopped before it could complete.",
         }
-    if status != "completed" or not isinstance(envelope.get("result"), dict):
-        raise RuntimeError("The async analyzer returned an invalid result envelope.")
+
+    # The orchestrator writes its Queue result before returning. Re-read after a
+    # completed FunctionCall to close the race where the first Queue read happened
+    # immediately before the call completed.
+    result_state = _read_job_result(job_id)
+    if result_state is not None:
+        return result_state
+
+    if (
+        isinstance(call_result, dict)
+        and call_result.get("resultQueued") is True
+    ):
+        return {
+            "status": "failed",
+            "error": "The analyzer completed but its result was unavailable.",
+        }
 
     return {
-        "status": "completed",
-        "result": envelope["result"],
+        "status": "failed",
+        "error": "The analyzer job ended without a usable result.",
     }
 
 
@@ -399,9 +507,11 @@ def _ack_rhythm_job(
         expected_token,
     )
     async_result_queue.clear(partition=job_id)
+    async_result_queue.clear(partition=_control_partition(job_id))
     return {
         "status": "acknowledged",
         "resultCleared": True,
+        "controlCleared": True,
     }
 
 
