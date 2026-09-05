@@ -41,6 +41,7 @@ jobs:
           set -euo pipefail
           BRIDGE='dadrock-v143-http-bridge'
           WORKER='dadrock-v143-ai-tab-live'
+          echo 'exactCallWindowUtc=2026-09-05T23:52:21Z..2026-09-05T23:52:32Z'
           echo '=== bridge app history ==='
           modal app history "$BRIDGE" --env main --json || true
           echo '=== worker app history ==='
