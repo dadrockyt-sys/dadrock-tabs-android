@@ -1,0 +1,357 @@
+name: V143 Preview Async Breakthrough E2E
+
+on:
+  push:
+    branches:
+      - v143-contextual-prune-lobo
+    paths:
+      - '.github/workflows/v143-preview-async-breakthrough-e2e.yml'
+
+concurrency:
+  group: v143-preview-async-breakthrough-e2e-single
+  cancel-in-progress: false
+
+permissions:
+  contents: read
+
+env:
+  VERCEL_ORG_ID: team_qJrw8Cuze5bCEg9M3Q67XMWt
+  VERCEL_PROJECT_ID: prj_6biwsn0iHci6FHNswAUCS8UYrAqF
+  PREVIEW_DEPLOYMENT_ID: dpl_FzuFoFNsaZcaV73RXSTejoH6cLpz
+  PREVIEW_DEPLOYMENT_URL: https://dadrock-tabs-android-q7v7k9mms-stephen-mcnally-s-projects.vercel.app
+  PREVIEW_SOURCE_COMMIT: 0c023bdf0e395ddf98501317472ea59e99a00eeb
+  EXPECTED_ROUTE_BLOB: 742954146a86aa36485d0bbdb3fbd6691a64a712
+  EXPECTED_PAGE_BLOB: de39f2715c6875d757ef730c9e3182ccd4aa00a4
+  HARDENED_BRIDGE_BLOB: 36584355d9b060fc7b7e20acc62524fbc7bf9005
+  PROTOCOL_BLOB: 1bd55017e16a4e1d8b14c7429492f811a43a28d8
+  WORKER_BLOB: 111bf14a8f91045d3478901f8e36b88a2e7f181a
+  SCHEDULER_BLOB: fc9b4c45c208d80be7abab64a8959f2a3babcee8
+  AUDIO_URL: https://raw.githubusercontent.com/dadrockyt-sys/dadrock-tabs-android/main/public/jimmy-paige-midterm-v1/gomyway-midterm-source.m4a
+  AUDIO_BLOB_SHA: 4dd709e3fa177b4daeed71ca97f0199757729d4b
+  NEXT_TELEMETRY_DISABLED: '1'
+  NO_COLOR: '1'
+
+jobs:
+  preview-async-breakthrough-e2e:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 25
+    env:
+      VERCEL_TOKEN: ${{ secrets.VERCEL_TOKEN }}
+
+    steps:
+      - name: Checkout exact branch head
+        uses: actions/checkout@v4
+
+      - name: Enforce exact Preview and runtime source boundary
+        shell: bash
+        run: |
+          set -euo pipefail
+          test -n "${VERCEL_TOKEN:-}"
+          test "$(git hash-object app/api/analyze-audio-tab/route.js)" = "$EXPECTED_ROUTE_BLOB"
+          test "$(git hash-object app/ai-tab/page.js)" = "$EXPECTED_PAGE_BLOB"
+          test "$(git hash-object analyzer/v143_modal_http_endpoint.py)" = "$HARDENED_BRIDGE_BLOB"
+          test "$(git hash-object analyzer/v143_async_job_protocol.py)" = "$PROTOCOL_BLOB"
+          test "$(git hash-object analyzer/v143_modal_live_endpoint.py)" = "$WORKER_BLOB"
+          test "$(git hash-object analyzer/v143_seeded_separator.py)" = "$SCHEDULER_BLOB"
+          test "$(git hash-object public/jimmy-paige-midterm-v1/gomyway-midterm-source.m4a)" = "$AUDIO_BLOB_SHA"
+          echo 'modelBearingStartRequestsAuthorized=1'
+          echo 'productionEnvironmentTargeted=false'
+          echo 'productionPromotionPerformed=false'
+          echo 'referenceFacingInputs=0'
+          echo 'referenceScoreCalls=0'
+          echo 'qualityVerdictMade=false'
+
+      - name: Set up Node.js 24
+        uses: actions/setup-node@v4
+        with:
+          node-version: '24'
+
+      - name: Install pinned Vercel CLI
+        shell: bash
+        run: |
+          set -euo pipefail
+          npm install --global vercel@59.11.2 >/dev/null
+          test "$(vercel --version | tail -n 1)" = '59.11.2'
+
+      - name: Confirm exact protected Preview deployment
+        shell: bash
+        run: |
+          set -euo pipefail
+          OUT=debug/v143-contextual-prune/preview-async-breakthrough
+          mkdir -p "$OUT"
+          vercel inspect "$PREVIEW_DEPLOYMENT_URL" --wait --token "$VERCEL_TOKEN" 2>&1 | tee "$OUT/inspect.log"
+          grep -q "$PREVIEW_DEPLOYMENT_ID" "$OUT/inspect.log"
+          grep -Eq 'target[[:space:]]+preview' "$OUT/inspect.log"
+          grep -Eq 'status[[:space:]]+.*Ready|status[[:space:]]+● Ready' "$OUT/inspect.log"
+          STATUS="$(
+            vercel curl /ai-tab \
+              --deployment "$PREVIEW_DEPLOYMENT_URL" \
+              -- \
+              --silent --show-error --location --max-time 30 \
+              --output /dev/null --write-out '%{http_code}'
+          )"
+          echo "protectedPreviewAiTabStatus=$STATUS"
+          test "$STATUS" = '200'
+          rm -f "$OUT/inspect.log"
+
+      - name: Start exactly one Rhythm async job and poll to completion
+        shell: bash
+        run: |
+          set -euo pipefail
+          OUT=debug/v143-contextual-prune/preview-async-breakthrough
+          mkdir -p "$OUT"
+
+          cat > "$OUT/start-request.json" <<JSON
+          {
+            "audioUrl": "$AUDIO_URL",
+            "pathname": "gomyway-midterm-source.m4a",
+            "song": "Are You Gonna Go My Way",
+            "artist": "Lenny Kravitz",
+            "transcriptionType": "rhythm"
+          }
+          JSON
+
+          START_EPOCH="$(date +%s)"
+          START_METRICS="$(
+            vercel curl /api/analyze-audio-tab \
+              --deployment "$PREVIEW_DEPLOYMENT_URL" \
+              -- \
+              --silent --show-error --location --max-time 45 \
+              --request POST \
+              --header 'Content-Type: application/json' \
+              --data-binary "@$OUT/start-request.json" \
+              --output "$OUT/start-response.json" \
+              --write-out '%{http_code} %{time_total}'
+          )"
+          START_STATUS="${START_METRICS%% *}"
+          START_SECONDS="${START_METRICS#* }"
+          export START_STATUS START_SECONDS OUT
+
+          python3 - <<'PY'
+          import json, os
+          from pathlib import Path
+          out = Path(os.environ['OUT'])
+          data = json.loads((out / 'start-response.json').read_text(encoding='utf-8'))
+          if int(os.environ['START_STATUS']) != 202:
+              raise SystemExit(f"Async start returned HTTP {os.environ['START_STATUS']}: {data.get('error') or data.get('detail')}")
+          job = data.get('analysisJob') if isinstance(data.get('analysisJob'), dict) else {}
+          token = str(job.get('token') or '')
+          if not token.startswith('v143a1.'):
+              raise SystemExit('Async start did not return signed V143 job token')
+          if job.get('status') != 'processing':
+              raise SystemExit('Async start did not return processing state')
+          (out / 'job-token.txt').write_text(token, encoding='utf-8')
+          print(f"startStatus=202")
+          print(f"startSeconds={float(os.environ['START_SECONDS']):.6f}")
+          print('jobTokenPresent=true')
+          PY
+
+          # The single model-bearing request has now been launched. From here on,
+          # only poll the same signed job token; never POST a second start request.
+          JOB_TOKEN="$(cat "$OUT/job-token.txt")"
+          POLL_COUNT=0
+          COMPLETION_STATUS=''
+          COMPLETION_SECONDS=''
+          COMPLETED=0
+          DEADLINE=$(( START_EPOCH + 20 * 60 ))
+
+          while [ "$(date +%s)" -lt "$DEADLINE" ]; do
+            POLL_COUNT=$((POLL_COUNT + 1))
+            sleep 4
+            cat > "$OUT/status-request.json" <<JSON
+          {"operation":"status","jobToken":"$JOB_TOKEN","transcriptionType":"rhythm"}
+          JSON
+            POLL_METRICS="$(
+              vercel curl /api/analyze-audio-tab \
+                --deployment "$PREVIEW_DEPLOYMENT_URL" \
+                -- \
+                --silent --show-error --location --max-time 45 \
+                --request POST \
+                --header 'Content-Type: application/json' \
+                --data-binary "@$OUT/status-request.json" \
+                --output "$OUT/status-response.json" \
+                --write-out '%{http_code} %{time_total}'
+            )"
+            POLL_STATUS="${POLL_METRICS%% *}"
+            POLL_SECONDS="${POLL_METRICS#* }"
+            ELAPSED=$(( $(date +%s) - START_EPOCH ))
+            echo "poll=$POLL_COUNT status=$POLL_STATUS requestSeconds=$POLL_SECONDS elapsed=$ELAPSED"
+
+            if [ "$POLL_STATUS" = '202' ]; then
+              continue
+            fi
+
+            COMPLETION_STATUS="$POLL_STATUS"
+            COMPLETION_SECONDS="$POLL_SECONDS"
+            if [ "$POLL_STATUS" = '200' ]; then
+              COMPLETED=1
+            fi
+            break
+          done
+
+          export START_EPOCH START_SECONDS START_STATUS POLL_COUNT COMPLETION_STATUS COMPLETION_SECONDS COMPLETED \
+            PREVIEW_DEPLOYMENT_ID PREVIEW_DEPLOYMENT_URL PREVIEW_SOURCE_COMMIT EXPECTED_ROUTE_BLOB EXPECTED_PAGE_BLOB \
+            HARDENED_BRIDGE_BLOB PROTOCOL_BLOB WORKER_BLOB SCHEDULER_BLOB AUDIO_BLOB_SHA
+
+          python3 - <<'PY'
+          import json, os, time
+          from pathlib import Path
+
+          out = Path(os.environ['OUT'])
+          completed = os.environ['COMPLETED'] == '1'
+          terminal = {}
+          if (out / 'status-response.json').exists():
+              try:
+                  terminal = json.loads((out / 'status-response.json').read_text(encoding='utf-8'))
+              except Exception:
+                  terminal = {}
+
+          total_seconds = max(0.0, time.time() - float(os.environ['START_EPOCH']))
+          pc = terminal.get('payloadContract') if isinstance(terminal.get('payloadContract'), dict) else {}
+          aq = terminal.get('analysisQuality') if isinstance(terminal.get('analysisQuality'), dict) else {}
+          metrics = aq.get('metrics') if isinstance(aq.get('metrics'), dict) else {}
+          conditioning = terminal.get('conditioningContract') if isinstance(terminal.get('conditioningContract'), dict) else {}
+          analysis_job = terminal.get('analysisJob') if isinstance(terminal.get('analysisJob'), dict) else {}
+
+          summary = {
+              'schemaVersion': 1,
+              'gate': 'v143-preview-async-breakthrough-e2e',
+              'previewDeploymentId': os.environ['PREVIEW_DEPLOYMENT_ID'],
+              'previewDeploymentUrl': os.environ['PREVIEW_DEPLOYMENT_URL'],
+              'previewSourceCommit': os.environ['PREVIEW_SOURCE_COMMIT'],
+              'routeBlob': os.environ['EXPECTED_ROUTE_BLOB'],
+              'pageBlob': os.environ['EXPECTED_PAGE_BLOB'],
+              'hardenedBridgeBlob': os.environ['HARDENED_BRIDGE_BLOB'],
+              'protocolBlob': os.environ['PROTOCOL_BLOB'],
+              'workerBlob': os.environ['WORKER_BLOB'],
+              'schedulerBlob': os.environ['SCHEDULER_BLOB'],
+              'audioBlobSha': os.environ['AUDIO_BLOB_SHA'],
+              'audioSource': 'public-raw-github-existing-repository-asset',
+              'modelBearingStartRequestCount': 1,
+              'startStatus': int(os.environ['START_STATUS']),
+              'startRequestSeconds': float(os.environ['START_SECONDS']),
+              'pollCount': int(os.environ['POLL_COUNT']),
+              'terminalStatus': int(os.environ['COMPLETION_STATUS'] or 0),
+              'terminalRequestSeconds': float(os.environ['COMPLETION_SECONDS'] or 0),
+              'asyncTotalSeconds': total_seconds,
+              'crossedOld150SecondWall': total_seconds > 150.0,
+              'completed': completed,
+              'analysisJobCompleted': analysis_job.get('status') == 'completed',
+              'rhythmCanaryActive': terminal.get('rhythmCanaryActive'),
+              'generatedTabPresent': bool(str(terminal.get('generatedTab') or '').strip()),
+              'eventCount': len(terminal.get('events') or []) if isinstance(terminal.get('events'), list) else 0,
+              'renderEventCount': len(terminal.get('renderEvents') or []) if isinstance(terminal.get('renderEvents'), list) else 0,
+              'payloadContract': {
+                  'referenceFree': pc.get('referenceFree'),
+                  'professionalReferenceNotUsed': pc.get('professionalReferenceNotUsed'),
+                  'referenceRuntimeInputNotUsed': pc.get('referenceRuntimeInputNotUsed'),
+                  'runtimeLabelsNotRequired': pc.get('runtimeLabelsNotRequired'),
+                  'v143RuntimeSafetyVerified': pc.get('v143RuntimeSafetyVerified'),
+                  'analyzerQualityGatePassed': pc.get('analyzerQualityGatePassed'),
+                  'structuredRenderEligible': pc.get('structuredRenderEligible'),
+              },
+              'productHealthSignals': {
+                  'analysisQualityGatePassed': aq.get('passed'),
+                  'analysisQualityFailures': aq.get('failures'),
+                  'rawEventCount': metrics.get('rawEventCount'),
+                  'validRenderEventCount': metrics.get('validRenderEventCount'),
+                  'renderEventSurvivalPercent': metrics.get('renderEventSurvivalPercent'),
+                  'playableStringFretPercent': metrics.get('playableStringFretPercent'),
+                  'musicalPlacementPercent': metrics.get('musicalPlacementPercent'),
+                  'pitchValidityPercent': metrics.get('pitchValidityPercent'),
+              },
+              'conditioningReferenceBlind': conditioning.get('referenceBlind'),
+              'conditioningReferenceScoreAuthorized': conditioning.get('referenceScoreAuthorized'),
+              'productionEnvironmentChanged': False,
+              'productionPromotionPerformed': False,
+              'deploymentProtectionDisabled': False,
+              'rawTranscriptionRetained': False,
+              'referenceFacingInputs': 0,
+              'referenceFacingAccuracyScored': False,
+              'referenceScoreCalls': 0,
+              'qualityVerdictMade': False,
+          }
+          if not completed:
+              summary['error'] = terminal.get('error') or terminal.get('detail') or 'async job did not complete'
+
+          (out / 'summary-pre-ack.json').write_text(json.dumps(summary, indent=2) + '\n', encoding='utf-8')
+          print(json.dumps(summary, indent=2))
+
+          if not completed:
+              raise SystemExit(f"Async Preview E2E terminal HTTP {summary['terminalStatus']}: {summary.get('error')}")
+          if summary['analysisJobCompleted'] is not True:
+              raise SystemExit('Async completion did not report completed job state')
+          if summary['rhythmCanaryActive'] is not True or not summary['generatedTabPresent']:
+              raise SystemExit('Completed Preview result did not contain V143 Rhythm tablature')
+          required = {
+              'referenceFree': True,
+              'professionalReferenceNotUsed': True,
+              'referenceRuntimeInputNotUsed': True,
+              'runtimeLabelsNotRequired': True,
+              'v143RuntimeSafetyVerified': True,
+          }
+          for key, expected in required.items():
+              if summary['payloadContract'].get(key) is not expected:
+                  raise SystemExit(f'Runtime safety contract failed: {key}')
+          PY
+
+          cat > "$OUT/ack-request.json" <<JSON
+          {"operation":"ack","jobToken":"$JOB_TOKEN","transcriptionType":"rhythm"}
+          JSON
+          ACK_METRICS="$(
+            vercel curl /api/analyze-audio-tab \
+              --deployment "$PREVIEW_DEPLOYMENT_URL" \
+              -- \
+              --silent --show-error --location --max-time 45 \
+              --request POST \
+              --header 'Content-Type: application/json' \
+              --data-binary "@$OUT/ack-request.json" \
+              --output "$OUT/ack-response.json" \
+              --write-out '%{http_code} %{time_total}'
+          )"
+          ACK_STATUS="${ACK_METRICS%% *}"
+          ACK_SECONDS="${ACK_METRICS#* }"
+          export ACK_STATUS ACK_SECONDS
+
+          python3 - <<'PY'
+          import json, os
+          from pathlib import Path
+          out = Path(os.environ['OUT'])
+          summary = json.loads((out / 'summary-pre-ack.json').read_text(encoding='utf-8'))
+          ack = json.loads((out / 'ack-response.json').read_text(encoding='utf-8'))
+          job = ack.get('analysisJob') if isinstance(ack.get('analysisJob'), dict) else {}
+          summary['ackStatus'] = int(os.environ['ACK_STATUS'])
+          summary['ackRequestSeconds'] = float(os.environ['ACK_SECONDS'])
+          summary['acknowledged'] = job.get('status') == 'acknowledged'
+          summary['transientResultCleared'] = job.get('resultCleared') is True
+          (out / 'summary.json').write_text(json.dumps(summary, indent=2) + '\n', encoding='utf-8')
+          print(json.dumps(summary, indent=2))
+          if summary['ackStatus'] != 200 or not summary['acknowledged'] or not summary['transientResultCleared']:
+              raise SystemExit('Async result ACK/cleanup failed')
+          PY
+
+      - name: Delete all raw request/result/token material from runner
+        if: always()
+        shell: bash
+        run: |
+          set -euo pipefail
+          OUT=debug/v143-contextual-prune/preview-async-breakthrough
+          rm -f \
+            "$OUT/start-request.json" \
+            "$OUT/start-response.json" \
+            "$OUT/status-request.json" \
+            "$OUT/status-response.json" \
+            "$OUT/ack-request.json" \
+            "$OUT/ack-response.json" \
+            "$OUT/job-token.txt" \
+            "$OUT/summary-pre-ack.json" \
+            "$OUT/inspect.log"
+
+      - name: Preserve aggregate breakthrough evidence only
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: v143-preview-async-breakthrough-e2e
+          path: debug/v143-contextual-prune/preview-async-breakthrough/summary.json
+          if-no-files-found: warn
+          retention-days: 14
