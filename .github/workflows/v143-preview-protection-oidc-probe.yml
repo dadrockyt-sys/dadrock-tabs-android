@@ -46,6 +46,7 @@ jobs:
               --output /dev/null --write-out '%{http_code}' \
               "$PREVIEW_DEPLOYMENT_URL/ai-tab"
           )"
+          export STATUS
           echo "oidcProtectedPreviewStatus=$STATUS"
           python3 - <<'PY'
           import json, os
@@ -74,9 +75,6 @@ jobs:
           print(json.dumps(summary, indent=2))
           PY
           test "$STATUS" = '200'
-        env:
-          OIDC_TOKEN: ${{ steps.oidc.outputs.token }}
-          STATUS: ${{ env.STATUS }}
 
       - name: Preserve aggregate auth evidence only
         if: always()
