@@ -13,12 +13,13 @@ concurrency:
 
 permissions:
   contents: read
-  id-token: write
 
 env:
   VERCEL_ORG_ID: team_qJrw8Cuze5bCEg9M3Q67XMWt
   VERCEL_PROJECT_ID: prj_6biwsn0iHci6FHNswAUCS8UYrAqF
-  PREVIEW_GIT_BRANCH: v143-contextual-prune-lobo
+  PREVIEW_URL: https://dadrock-tabs-android-bx51iz9tr-stephen-mcnally-s-projects.vercel.app
+  PREVIEW_DEPLOYMENT_ID: dpl_G2WxxMA782j87H7tLpAy9cCB4ihD
+  EXPECTED_PREVIEW_SOURCE_COMMIT: 0a07b393bb47123a1142fd46ea6d9a55b04f0486
   EXPECTED_ROUTE_BLOB: 742954146a86aa36485d0bbdb3fbd6691a64a712
   EXPECTED_PAGE_BLOB: de39f2715c6875d757ef730c9e3182ccd4aa00a4
   HARDENED_BRIDGE_BLOB: 36584355d9b060fc7b7e20acc62524fbc7bf9005
@@ -27,8 +28,8 @@ env:
   SCHEDULER_BLOB: fc9b4c45c208d80be7abab64a8959f2a3babcee8
   AUDIO_URL: https://raw.githubusercontent.com/dadrockyt-sys/dadrock-tabs-android/main/public/jimmy-paige-midterm-v1/gomyway-midterm-source.m4a
   AUDIO_BLOB_SHA: 4dd709e3fa177b4daeed71ca97f0199757729d4b
-  E2E_SCRIPT_BLOB: 92d17ee0b01ff72f71abfac1a7a4b36ff7e02792
-  NEXT_TELEMETRY_DISABLED: '1'
+  E2E_SCRIPT_BLOB: d72faac8c531b6572dc3ce1d2f5ec0f5e1317626
+  VERCEL_TELEMETRY_DISABLED: '1'
   NO_COLOR: '1'
 
 jobs:
@@ -42,7 +43,7 @@ jobs:
       - name: Checkout exact branch head
         uses: actions/checkout@v4
 
-      - name: Enforce exact source, helper, and one-start boundary
+      - name: Enforce exact existing-Preview source and one-start boundary
         shell: bash
         run: |
           set -euo pipefail
@@ -54,11 +55,13 @@ jobs:
           test "$(git hash-object analyzer/v143_modal_live_endpoint.py)" = "$WORKER_BLOB"
           test "$(git hash-object analyzer/v143_seeded_separator.py)" = "$SCHEDULER_BLOB"
           test "$(git hash-object public/jimmy-paige-midterm-v1/gomyway-midterm-source.m4a)" = "$AUDIO_BLOB_SHA"
-          test "$(git hash-object .github/scripts/v143-fresh-preview-async-breakthrough-e2e.sh)" = "$E2E_SCRIPT_BLOB"
-          echo 'modelBearingStartRequestBudget=1'
-          echo 'priorE2EModelStarts=0'
+          test "$(git hash-object .github/scripts/v143-existing-preview-async-breakthrough-e2e.sh)" = "$E2E_SCRIPT_BLOB"
+          echo 'existingPreviewReuse=true'
+          echo 'backendCapableRealAudioStartRequestBudget=1'
+          echo 'provenPriorBackendModelStarts=0'
           echo 'productionEnvironmentTargeted=false'
           echo 'productionPromotionPerformed=false'
+          echo 'deploymentProtectionChanged=false'
           echo 'referenceFacingInputs=0'
           echo 'referenceScoreCalls=0'
           echo 'qualityVerdictMade=false'
@@ -75,16 +78,16 @@ jobs:
           npm install --global vercel@59.11.2 >/dev/null
           test "$(vercel --version | tail -n 1)" = '59.11.2'
 
-      - name: Run one guarded fresh-Preview async breakthrough
+      - name: Run one guarded existing-Preview async breakthrough
         shell: bash
-        run: bash .github/scripts/v143-fresh-preview-async-breakthrough-e2e.sh
+        run: bash .github/scripts/v143-existing-preview-async-breakthrough-e2e.sh
 
-      - name: Delete raw request/result/token material from runner
+      - name: Delete raw request result token material from runner
         if: always()
         shell: bash
         run: |
           set -euo pipefail
-          OUT=debug/v143-contextual-prune/fresh-preview-async-breakthrough
+          OUT=debug/v143-contextual-prune/existing-preview-async-breakthrough
           rm -f \
             "$OUT"/start-request.json \
             "$OUT"/start-response.json \
@@ -93,14 +96,13 @@ jobs:
             "$OUT"/ack-request.json \
             "$OUT"/ack-response.json \
             "$OUT"/job-token.txt \
-            "$OUT"/summary-pre-ack.json \
             "$OUT"/inspect.log
 
       - name: Preserve aggregate breakthrough evidence only
         if: always()
         uses: actions/upload-artifact@v4
         with:
-          name: v143-fresh-preview-async-breakthrough-e2e
-          path: debug/v143-contextual-prune/fresh-preview-async-breakthrough/summary.json
+          name: v143-existing-preview-async-breakthrough-e2e
+          path: debug/v143-contextual-prune/existing-preview-async-breakthrough/summary.json
           if-no-files-found: warn
           retention-days: 14
