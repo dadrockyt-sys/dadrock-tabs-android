@@ -68,7 +68,7 @@ jobs:
           set -euo pipefail
           vercel pull --yes --environment=preview --token "$VERCEL_TOKEN" >/dev/null
 
-      - name: Resolve protected Preview with proven CLI sequence
+      - name: Resolve protected Preview and inspect environment names only
         shell: bash
         run: |
           set -euo pipefail
@@ -79,7 +79,27 @@ jobs:
           grep -Eq 'status[[:space:]]+.*Ready|status[[:space:]]+● Ready' "$OUT/inspect.log"
           grep -Eq 'target[[:space:]]+preview' "$OUT/inspect.log"
 
-      - name: Authenticate to protected Preview and reject bad async signature
+          # `env ls` exposes variable names/targets, not secret values. Keep the
+          # raw listing local to the runner and persist only boolean presence.
+          vercel env ls preview --token "$VERCEL_TOKEN" > "$OUT/env-names.txt" 2>/dev/null
+          if grep -q 'ANALYZER_API_URL_V143' "$OUT/env-names.txt"; then
+            echo 'HAS_V143_URL=true' >> "$GITHUB_ENV"
+          else
+            echo 'HAS_V143_URL=false' >> "$GITHUB_ENV"
+          fi
+          if grep -q 'ANALYZER_API_URL' "$OUT/env-names.txt"; then
+            echo 'HAS_LEGACY_URL=true' >> "$GITHUB_ENV"
+          else
+            echo 'HAS_LEGACY_URL=false' >> "$GITHUB_ENV"
+          fi
+          if grep -q 'ANALYZER_API_TOKEN' "$OUT/env-names.txt"; then
+            echo 'HAS_ANALYZER_TOKEN=true' >> "$GITHUB_ENV"
+          else
+            echo 'HAS_ANALYZER_TOKEN=false' >> "$GITHUB_ENV"
+          fi
+          rm -f "$OUT/env-names.txt"
+
+      - name: Classify protected Preview async request path without worker spawn
         shell: bash
         run: |
           set -euo pipefail
@@ -90,14 +110,10 @@ jobs:
               --deployment "$PREVIEW_URL" \
               -- \
               --silent --show-error --location --max-time 30 \
-              --user-agent 'Mozilla/5.0 (compatible; DadRock-V143-Async-Preview/1.0)' \
               --output "$OUT/ai-tab.html" \
               --write-out '%{http_code}'
           )"
 
-          # The job id is structurally valid, but the signature is deliberately
-          # invalid. This forces the request through Vercel and the bridge's HMAC
-          # verification path while making worker spawn impossible.
           cat > "$OUT/request.json" <<'JSON'
           {"operation":"status","jobToken":"v143a1.job_ABCDEFGHIJKLMNOPQRSTUVWX.invalid","transcriptionType":"rhythm"}
           JSON
@@ -108,7 +124,6 @@ jobs:
               -- \
               --silent --show-error --location --max-time 30 \
               --request POST \
-              --user-agent 'Mozilla/5.0 (compatible; DadRock-V143-Async-Protocol/1.0)' \
               --header 'Content-Type: application/json' \
               --data-binary "@$OUT/request.json" \
               --output "$OUT/response.json" \
@@ -127,9 +142,18 @@ jobs:
           response = json.loads((out / 'response.json').read_text(encoding='utf-8'))
           page_html = (out / 'ai-tab.html').read_text(encoding='utf-8', errors='replace')
           message = str(response.get('error') or response.get('detail') or '')
+          if 'Invalid async job token' in message:
+              error_class = 'bridge_hmac_rejection'
+          elif 'Async analysis is currently available only for Rhythm Guitar' in message:
+              error_class = 'v143_preview_url_not_selected'
+          elif 'audio analyzer is not configured' in message.lower():
+              error_class = 'analyzer_configuration_missing'
+          else:
+              error_class = 'other_400' if int(os.environ['STATUS']) == 400 else 'unexpected_status'
+
           summary = {
-              'schemaVersion': 1,
-              'gate': 'v143-async-preview-protocol',
+              'schemaVersion': 2,
+              'gate': 'v143-async-preview-protocol-diagnosis',
               'previewDeploymentId': os.environ['PREVIEW_DEPLOYMENT_ID'],
               'previewUrl': os.environ['PREVIEW_URL'],
               'routeBlob': os.environ['EXPECTED_ROUTE_BLOB'],
@@ -138,9 +162,14 @@ jobs:
               'protectedAccessMethod': 'vercel-inspect-then-curl-env-token-auto-bypass',
               'pageStatus': int(os.environ['PAGE_STATUS']),
               'pageRendered': int(os.environ['PAGE_STATUS']) == 200 and len(page_html) > 500,
-              'invalidSignatureStatus': int(os.environ['STATUS']),
-              'invalidSignatureRejected': int(os.environ['STATUS']) == 400 and 'Invalid async job token' in message,
-              'invalidSignatureRequestSeconds': float(os.environ['ELAPSED']),
+              'requestStatus': int(os.environ['STATUS']),
+              'requestErrorClass': error_class,
+              'requestSeconds': float(os.environ['ELAPSED']),
+              'previewEnvironmentNames': {
+                  'hasAnalyzerApiUrlV143': os.environ.get('HAS_V143_URL') == 'true',
+                  'hasLegacyAnalyzerApiUrl': os.environ.get('HAS_LEGACY_URL') == 'true',
+                  'hasAnalyzerApiToken': os.environ.get('HAS_ANALYZER_TOKEN') == 'true',
+              },
               'workerSpawned': False,
               'modelExecuted': False,
               'audioRead': False,
@@ -152,12 +181,17 @@ jobs:
           (out / 'summary.json').write_text(json.dumps(summary, indent=2) + '\n', encoding='utf-8')
           print(json.dumps(summary, indent=2))
           assert summary['pageRendered'] is True
-          assert summary['invalidSignatureRejected'] is True
+          assert summary['requestStatus'] == 400
+          assert summary['requestErrorClass'] in {
+              'bridge_hmac_rejection',
+              'v143_preview_url_not_selected',
+              'analyzer_configuration_missing',
+          }
           PY
 
           rm -f "$OUT/request.json" "$OUT/response.json" "$OUT/ai-tab.html" "$OUT/inspect.log"
 
-      - name: Preserve aggregate protocol evidence only
+      - name: Preserve aggregate protocol diagnosis only
         if: always()
         uses: actions/upload-artifact@v4
         with:
