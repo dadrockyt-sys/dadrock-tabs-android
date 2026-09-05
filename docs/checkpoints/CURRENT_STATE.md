@@ -1,6 +1,6 @@
 # CURRENT STATE — DadRock `/ai-tab`
 
-Updated: 2026-09-05 12:14 America/Toronto  
+Updated: 2026-09-05 12:19 America/Toronto  
 Branch: `v143-contextual-prune-lobo`
 
 > Compact continuation checkpoint. Older dedicated checkpoints remain authoritative; omission here does not revoke frozen boundaries.
@@ -76,25 +76,49 @@ Replacement-routing workflow:
 - exact source/scope boundary, Preview-only env add, build/deploy, and bad-HMAC bridge-path proof all succeeded;
 - no production Vercel promotion and no model/audio request in that workflow.
 
-## NEW LIVE ISSUE — MODAL ONESHOT START LOOP / DIAGNOSIS REQUIRED
+## Modal “oneshot” start-loop diagnosis — NARROWED
 
-User reports Modal is showing the async oneshot repeatedly looping and failing to start.
+User reported Modal showing a `oneshot` repeatedly looping/failing to start. Model-bearing E2E remains paused.
 
-Immediate interpretation/boundary:
+Read-only startup diagnosis:
 
-- stop progression toward model-bearing async E2E until this is explained;
-- treat this as an async bridge/orchestrator container-start defect unless logs prove otherwise;
-- do **not** change worker/scheduler/model code;
-- do **not** launch another audio/model request while diagnosing;
-- current `run_rhythm_async_job` uses the bridge `http_image` and calls the unchanged deployed L4 worker by `modal.Function.from_name(...).remote(...)` only after the orchestrator container starts;
-- source inspection alone does not yet establish the startup failure cause.
+- bridge+worker diagnosis workflow commits `476c22d10b68e532c685dd35c7cea0238098bb34` and `169a112552e79b763fb35a285decf63bc33fa10b`;
+- runs `33980341926` / job `101344336671` and `33980388754` / job `101344455300`: **SUCCESS / diagnostic only**;
+- production bridge history shows current v3 deployed `2026-09-05 12:49:53Z`;
+- live worker history shows current v6 deployed `2026-09-05 04:45:23Z` from worker promotion commit `86f83f6`;
+- no running Modal containers were present during diagnosis;
+- recent bridge and worker app logs were empty;
+- diagnosis itself invoked no audio/model/worker and changed no deployment.
+
+### Exact L4 cold-start discriminator — GREEN
+
+A single no-audio dependency call was made to the already-deployed worker function `rhythm_dependency_smoke` specifically to distinguish a general L4 startup failure from the async spawn/orchestration issue:
+
+- workflow `.github/workflows/v143-live-worker-startup-smoke.yml`;
+- commit `bf6ef7009085d52e5dc7a1c20927c99de48670a2`;
+- run `33980499498`, job `101344748201`: **SUCCESS**;
+- artifact `9973612728`, digest `sha256:cd94f62f54c0321fe57ee34f7b8547f445c529bf640ccc7c50efc0f0308b7a32`;
+- cold-start + import wall `43.032s`;
+- `cudaAvailable=true`, `deviceName=NVIDIA L4`;
+- Basic Pitch and deterministic provider imports GREEN;
+- deterministic separator seed `143`; `referenceFree=true`;
+- `audioRead=false`, `separatorModelExecuted=false`, `referenceFacingInputs=0`, `referenceScoreCalls=0`, `qualityVerdictMade=false`.
+
+**Conclusion:** the deployed L4 image/container can cold-start successfully. The reported Modal `oneshot` loop is **not a general worker/GPU startup failure**. Together with the already-GREEN bridge `async_protocol_smoke`, this narrows the defect to the additional async spawned-orchestrator execution path (or another ephemeral oneshot invocation), not the base bridge image and not the base L4 worker image.
+
+Current async start path of interest:
+
+`HTTP start -> run_rhythm_async_job.spawn(job_id, payload) -> orchestrator container -> _worker_handle().remote(payload) -> Queue result`
+
+The next discriminator must exercise the **spawned orchestrator container + Queue write** with a synthetic result while never calling the L4 worker. That will distinguish `spawn`/oneshot startup from the nested worker call.
 
 ## NEXT STEP
 
-1. Retrieve bounded historical logs/container startup diagnostics for `dadrock-v143-http-bridge` only; no audio/model invocation.
-2. Identify the exact oneshot startup exception/restart reason.
-3. Checkpoint the exact cause before changing bridge source.
-4. Apply the narrowest bridge-only fix and prove container startup with a no-model/synthetic test before resuming Preview E2E.
+1. Reuse the existing isolated bridge deployment mechanism with isolated app/Queue names.
+2. Add a diagnostic-only synthetic spawned function using the same `http_image`; it writes a tiny structured completion envelope to the isolated Queue and invokes no worker/audio/model.
+3. Spawn it exactly once, poll the isolated Queue, verify completion/clear, and capture startup logs.
+4. If synthetic spawn fails/loops, fix the orchestrator/spawn layer only. If synthetic spawn is GREEN, inspect the nested cross-app worker-call handoff without audio/model before resuming E2E.
+5. Checkpoint the exact cause before any production bridge redeploy.
 
 ### Hard stops
 
