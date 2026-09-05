@@ -19,7 +19,7 @@ env:
   PYTHONUNBUFFERED: '1'
   V143_HTTP_APP_NAME: dadrock-v143-http-bridge-async-gate
   V143_ASYNC_RESULT_QUEUE_NAME: dadrock-v143-async-results-gate
-  EXPECTED_BRIDGE_BLOB: c512516d47e79df86a780cb8a77bd528fe2a517a
+  EXPECTED_BRIDGE_BLOB: 03dda2d78eb8d1bc892ed12037644a6ceb8e3591
   EXPECTED_PROTOCOL_BLOB: 1bd55017e16a4e1d8b14c7429492f811a43a28d8
   EXPECTED_WORKER_BLOB: 111bf14a8f91045d3478901f8e36b88a2e7f181a
   EXPECTED_SCHEDULER_BLOB: fc9b4c45c208d80be7abab64a8959f2a3babcee8
@@ -64,6 +64,14 @@ jobs:
           modal token set --token-id "$MODAL_TOKEN_ID" --token-secret "$MODAL_TOKEN_SECRET" >/dev/null
           modal --version
 
+      - name: Stop any stale isolated gate app before deploy
+        shell: bash
+        run: |
+          set +e
+          modal app stop "$V143_HTTP_APP_NAME" --env main --yes >/dev/null 2>&1
+          echo 'staleIsolatedBridgeStopAttempted=true'
+          echo 'productionBridgeStopped=false'
+
       - name: Deploy isolated bridge candidate only
         shell: bash
         run: |
@@ -90,7 +98,7 @@ jobs:
           )
           result = fn.remote()
           safe = {
-              'schemaVersion': 1,
+              'schemaVersion': 2,
               'gate': 'v143-async-isolated-bridge-smoke',
               'sourceCommit': os.environ.get('GITHUB_SHA'),
               'bridgeBlob': os.environ['EXPECTED_BRIDGE_BLOB'],
@@ -147,6 +155,6 @@ jobs:
         shell: bash
         run: |
           set +e
-          modal app stop "$V143_HTTP_APP_NAME" --env main
+          modal app stop "$V143_HTTP_APP_NAME" --env main --yes
           echo 'isolatedBridgeStopAttempted=true'
           echo 'productionBridgeStopped=false'
