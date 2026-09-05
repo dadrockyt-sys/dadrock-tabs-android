@@ -1,0 +1,152 @@
+name: V143 Async Isolated Bridge Smoke
+
+on:
+  push:
+    branches:
+      - v143-contextual-prune-lobo
+    paths:
+      - .github/workflows/v143-async-isolated-bridge-smoke.yml
+
+permissions:
+  contents: read
+
+concurrency:
+  group: v143-async-isolated-bridge-smoke
+  cancel-in-progress: false
+
+env:
+  MODAL_ENVIRONMENT: main
+  PYTHONUNBUFFERED: '1'
+  V143_HTTP_APP_NAME: dadrock-v143-http-bridge-async-gate
+  V143_ASYNC_RESULT_QUEUE_NAME: dadrock-v143-async-results-gate
+  EXPECTED_BRIDGE_BLOB: c512516d47e79df86a780cb8a77bd528fe2a517a
+  EXPECTED_PROTOCOL_BLOB: 1bd55017e16a4e1d8b14c7429492f811a43a28d8
+  EXPECTED_WORKER_BLOB: 111bf14a8f91045d3478901f8e36b88a2e7f181a
+  EXPECTED_SCHEDULER_BLOB: fc9b4c45c208d80be7abab64a8959f2a3babcee8
+
+jobs:
+  isolated-bridge-smoke:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 12
+    env:
+      MODAL_TOKEN_ID: ${{ secrets.MODAL_TOKEN_ID }}
+      MODAL_TOKEN_SECRET: ${{ secrets.MODAL_TOKEN_SECRET }}
+    steps:
+      - name: Checkout exact branch head
+        uses: actions/checkout@v4
+
+      - name: Enforce exact isolated-smoke source boundary
+        shell: bash
+        run: |
+          set -euo pipefail
+          test "$(git hash-object analyzer/v143_modal_http_endpoint.py)" = "$EXPECTED_BRIDGE_BLOB"
+          test "$(git hash-object analyzer/v143_async_job_protocol.py)" = "$EXPECTED_PROTOCOL_BLOB"
+          test "$(git hash-object analyzer/v143_modal_live_endpoint.py)" = "$EXPECTED_WORKER_BLOB"
+          test "$(git hash-object analyzer/v143_seeded_separator.py)" = "$EXPECTED_SCHEDULER_BLOB"
+          test "$V143_HTTP_APP_NAME" != 'dadrock-v143-http-bridge'
+          test "$V143_ASYNC_RESULT_QUEUE_NAME" != 'dadrock-v143-async-results'
+          echo 'productionBridgeTargeted=false'
+          echo 'productionWorkerTargeted=false'
+          echo 'audioRead=false'
+          echo 'modelExecuted=false'
+
+      - name: Set up Python 3.11
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Install pinned Modal CLI
+        shell: bash
+        run: |
+          set -euo pipefail
+          python -m pip install --upgrade pip >/dev/null
+          python -m pip install 'modal==1.5.5' >/dev/null
+          modal token set --token-id "$MODAL_TOKEN_ID" --token-secret "$MODAL_TOKEN_SECRET" >/dev/null
+          modal --version
+
+      - name: Deploy isolated bridge candidate only
+        shell: bash
+        run: |
+          set -euo pipefail
+          modal deploy --env main analyzer/v143_modal_http_endpoint.py
+
+      - name: Run synthetic Queue and HMAC smoke only
+        shell: bash
+        run: |
+          set -euo pipefail
+          mkdir -p debug/v143-contextual-prune/async-isolated-bridge-smoke
+          python - <<'PY'
+          import json
+          import os
+          from pathlib import Path
+          import modal
+
+          app_name = os.environ['V143_HTTP_APP_NAME']
+          queue_name = os.environ['V143_ASYNC_RESULT_QUEUE_NAME']
+          fn = modal.Function.from_name(
+              app_name,
+              'async_protocol_smoke',
+              environment_name='main',
+          )
+          result = fn.remote()
+          safe = {
+              'schemaVersion': 1,
+              'gate': 'v143-async-isolated-bridge-smoke',
+              'sourceCommit': os.environ.get('GITHUB_SHA'),
+              'bridgeBlob': os.environ['EXPECTED_BRIDGE_BLOB'],
+              'protocolBlob': os.environ['EXPECTED_PROTOCOL_BLOB'],
+              'workerBlob': os.environ['EXPECTED_WORKER_BLOB'],
+              'schedulerBlob': os.environ['EXPECTED_SCHEDULER_BLOB'],
+              'appName': result.get('appName'),
+              'queueName': result.get('queueName'),
+              'tokenVerified': result.get('tokenVerified'),
+              'queueRoundtrip': result.get('queueRoundtrip'),
+              'queueCleared': result.get('queueCleared'),
+              'resultTtlSeconds': result.get('resultTtlSeconds'),
+              'rawAudioQueued': result.get('rawAudioQueued'),
+              'stemBytesQueued': result.get('stemBytesQueued'),
+              'modelExecuted': result.get('modelExecuted'),
+              'audioRead': result.get('audioRead'),
+              'referenceFacingInputs': result.get('referenceFacingInputs'),
+              'referenceScoreCalls': result.get('referenceScoreCalls'),
+              'qualityVerdictMade': result.get('qualityVerdictMade'),
+              'productionBridgeTargeted': False,
+              'productionWorkerTargeted': False,
+          }
+          Path('debug/v143-contextual-prune/async-isolated-bridge-smoke/summary.json').write_text(
+              json.dumps(safe, indent=2) + '\n', encoding='utf-8'
+          )
+          print(json.dumps(safe, indent=2))
+
+          assert safe['appName'] == app_name
+          assert safe['queueName'] == queue_name
+          assert safe['tokenVerified'] is True
+          assert safe['queueRoundtrip'] is True
+          assert safe['queueCleared'] is True
+          assert safe['resultTtlSeconds'] == 900
+          assert safe['rawAudioQueued'] is False
+          assert safe['stemBytesQueued'] is False
+          assert safe['modelExecuted'] is False
+          assert safe['audioRead'] is False
+          assert safe['referenceFacingInputs'] == 0
+          assert safe['referenceScoreCalls'] == 0
+          assert safe['qualityVerdictMade'] is False
+          PY
+
+      - name: Preserve aggregate smoke evidence only
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: v143-async-isolated-bridge-smoke
+          path: debug/v143-contextual-prune/async-isolated-bridge-smoke/summary.json
+          if-no-files-found: warn
+          retention-days: 14
+
+      - name: Stop isolated bridge app
+        if: always()
+        shell: bash
+        run: |
+          set +e
+          modal app stop "$V143_HTTP_APP_NAME" --env main
+          echo 'isolatedBridgeStopAttempted=true'
+          echo 'productionBridgeStopped=false'
