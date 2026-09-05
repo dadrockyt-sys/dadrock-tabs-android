@@ -110,3 +110,20 @@ Required execution contract:
 - No raw audio/stems/model bytes in async storage/control metadata.
 - No TTL above 15 minutes / no persistent result cache.
 - No whole-branch merge to `main`.
+
+## FRESH CHAT HANDOFF — START HERE
+
+The next chat should **read this file first and continue on `v143-contextual-prune-lobo`**. Do not repeat the Modal lifecycle diagnosis unless new evidence contradicts the GREEN gate above.
+
+Immediate next steps for the fresh chat:
+
+1. Re-read `.github/workflows/v143-fresh-preview-async-breakthrough-e2e.yml` and verify its pinned blobs still equal the source pins in this checkpoint before changing or triggering anything.
+2. Confirm the workflow still enforces exactly one model-bearing Rhythm `start`, status-only polling of the same signed token, one ACK, Preview-only deployment, no production promotion, and aggregate-only retained evidence.
+3. Check GitHub Actions for any already-running or newly-created `V143 Fresh Preview Async Breakthrough E2E` run before arming another one. If one exists, inspect that run instead of creating a duplicate.
+4. If no E2E run exists and all pins/guards remain valid, arm **one and only one** fresh-Preview E2E using the existing workflow. Do not weaken Deployment Protection or bypass its protected Preview access checks.
+5. Watch that single run through: fresh Preview Ready -> `/ai-tab` protected HTTP 200 -> exactly one Rhythm start returns HTTP 202 + `v143a1.*` token -> status polling only -> terminal result.
+6. If terminal HTTP 200 succeeds, require completed analysis, generated tab, V143 runtime safety/product contract, then ACK once and verify transient cleanup. Record aggregate metrics/artifact IDs/digests only.
+7. If the single model-bearing job fails **after worker/model execution begins**, stop. Do not retry. Pull GitHub/Modal logs for that exact call and diagnose before any second start.
+8. Save every meaningful milestone/root cause/result back to `docs/checkpoints/CURRENT_STATE.md` on this branch before continuing.
+
+Current authorization state for the fresh chat: **async lifecycle gate GREEN; first single fresh-Preview model-bearing E2E is the next permitted action, subject to duplicate-run check and exact-pin verification.**
