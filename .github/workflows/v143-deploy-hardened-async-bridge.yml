@@ -1,0 +1,126 @@
+name: V143 Deploy Hardened Async Bridge
+
+on:
+  push:
+    branches:
+      - v143-contextual-prune-lobo
+    paths:
+      - '.github/workflows/v143-deploy-hardened-async-bridge.yml'
+
+permissions:
+  contents: read
+
+env:
+  MODAL_ENVIRONMENT: main
+  PYTHONUNBUFFERED: '1'
+
+jobs:
+  deploy-hardened-async-bridge:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 15
+    env:
+      MODAL_TOKEN_ID: ${{ secrets.MODAL_TOKEN_ID }}
+      MODAL_TOKEN_SECRET: ${{ secrets.MODAL_TOKEN_SECRET }}
+    steps:
+      - name: Checkout exact branch head
+        uses: actions/checkout@v4
+
+      - name: Enforce exact hardened source boundary
+        shell: bash
+        run: |
+          set -euo pipefail
+          bridge=$(git hash-object analyzer/v143_modal_http_endpoint.py)
+          protocol=$(git hash-object analyzer/v143_async_job_protocol.py)
+          worker=$(git hash-object analyzer/v143_modal_live_endpoint.py)
+          scheduler=$(git hash-object analyzer/v143_seeded_separator.py)
+          echo "bridge=$bridge"
+          echo "protocol=$protocol"
+          echo "worker=$worker"
+          echo "scheduler=$scheduler"
+          test "$bridge" = '365843550fa6ee67f3d22a6b4536261f9dc46dba'
+          test "$protocol" = '1bd55017e16a4e1d8b14c7429492f811a43a28d8'
+          test "$worker" = '111bf14a8f91045d3478901f8e36b88a2e7f181a'
+          test "$scheduler" = 'fc9b4c45c208d80be7abab64a8959f2a3babcee8'
+
+      - name: Set up Python 3.11
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Install pinned Modal client
+        shell: bash
+        run: |
+          set -euo pipefail
+          python -m pip install --upgrade pip >/dev/null
+          python -m pip install 'modal==1.5.5' >/dev/null
+          modal token set --token-id "$MODAL_TOKEN_ID" --token-secret "$MODAL_TOKEN_SECRET" >/dev/null
+          modal --version
+
+      - name: Deploy hardened HTTP bridge only
+        shell: bash
+        run: |
+          set -euo pipefail
+          modal deploy --env main analyzer/v143_modal_http_endpoint.py
+
+      - name: Run production bridge synthetic protocol smoke only
+        shell: bash
+        run: |
+          set -euo pipefail
+          mkdir -p debug/v143-contextual-prune/hardened-bridge-production
+          python - <<'PY'
+          import json
+          import modal
+          from pathlib import Path
+
+          fn = modal.Function.from_name(
+              'dadrock-v143-http-bridge',
+              'async_protocol_smoke',
+              environment_name='main',
+          )
+          result = fn.remote()
+          required = {
+              'appName': 'dadrock-v143-http-bridge',
+              'queueName': 'dadrock-v143-async-results',
+              'tokenVerified': True,
+              'queueRoundtrip': True,
+              'queueCleared': True,
+              'resultTtlSeconds': 900,
+              'rawAudioQueued': False,
+              'stemBytesQueued': False,
+              'modelExecuted': False,
+              'audioRead': False,
+              'referenceFacingInputs': 0,
+              'referenceScoreCalls': 0,
+              'qualityVerdictMade': False,
+          }
+          for key, expected in required.items():
+              if result.get(key) != expected:
+                  raise SystemExit(f'{key} mismatch: {result.get(key)!r}')
+
+          summary = {
+              'schemaVersion': 1,
+              'gate': 'v143-production-hardened-async-bridge',
+              'bridgeBlob': '365843550fa6ee67f3d22a6b4536261f9dc46dba',
+              'protocolBlob': '1bd55017e16a4e1d8b14c7429492f811a43a28d8',
+              'workerBlob': '111bf14a8f91045d3478901f8e36b88a2e7f181a',
+              'schedulerBlob': 'fc9b4c45c208d80be7abab64a8959f2a3babcee8',
+              'bridgeOnlyDeploy': True,
+              'productionVercelChanged': False,
+              'workerChanged': False,
+              'schedulerChanged': False,
+              **result,
+          }
+          Path('debug/v143-contextual-prune/hardened-bridge-production/summary.json').write_text(
+              json.dumps(summary, indent=2) + '\n', encoding='utf-8'
+          )
+          print(json.dumps(summary, indent=2))
+          PY
+
+      - name: Preserve aggregate deployment evidence only
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: v143-production-hardened-async-bridge
+          path: debug/v143-contextual-prune/hardened-bridge-production/summary.json
+          if-no-files-found: warn
+          retention-days: 14
