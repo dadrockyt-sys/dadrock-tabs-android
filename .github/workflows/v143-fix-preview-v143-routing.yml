@@ -1,0 +1,211 @@
+name: V143 Fix Preview Rhythm Routing
+
+on:
+  push:
+    branches:
+      - v143-contextual-prune-lobo
+    paths:
+      - .github/workflows/v143-fix-preview-v143-routing.yml
+
+permissions:
+  contents: read
+
+concurrency:
+  group: v143-fix-preview-v143-routing
+  cancel-in-progress: false
+
+env:
+  VERCEL_ORG_ID: team_qJrw8Cuze5bCEg9M3Q67XMWt
+  VERCEL_PROJECT_ID: prj_6biwsn0iHci6FHNswAUCS8UYrAqF
+  NEXT_TELEMETRY_DISABLED: '1'
+  NO_COLOR: '1'
+  PREVIEW_GIT_BRANCH: v143-contextual-prune-lobo
+  V143_BRIDGE_URL: https://dadrockyt--dadrock-v143-http-bridge-analyze.modal.run
+  EXPECTED_ROUTE_BLOB: 742954146a86aa36485d0bbdb3fbd6691a64a712
+  EXPECTED_PAGE_BLOB: de39f2715c6875d757ef730c9e3182ccd4aa00a4
+  EXPECTED_BRIDGE_BLOB: e0cecefacead73d69a905fd6bfb2049b21c87bc3
+  EXPECTED_WORKER_BLOB: 111bf14a8f91045d3478901f8e36b88a2e7f181a
+  EXPECTED_SCHEDULER_BLOB: fc9b4c45c208d80be7abab64a8959f2a3babcee8
+  INVALID_JOB_TOKEN: v143a1.job_ABCDEFGHIJKLMNOPQRSTUVWX.invalid
+
+jobs:
+  fix-preview-routing:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 40
+    env:
+      VERCEL_TOKEN: ${{ secrets.VERCEL_TOKEN }}
+
+    steps:
+      - name: Checkout exact branch head
+        uses: actions/checkout@v4
+
+      - name: Enforce exact source and scope boundary
+        shell: bash
+        run: |
+          set -euo pipefail
+          test -n "${VERCEL_TOKEN:-}"
+          test "$PREVIEW_GIT_BRANCH" = 'v143-contextual-prune-lobo'
+          test "$(git hash-object app/api/analyze-audio-tab/route.js)" = "$EXPECTED_ROUTE_BLOB"
+          test "$(git hash-object app/ai-tab/page.js)" = "$EXPECTED_PAGE_BLOB"
+          test "$(git hash-object analyzer/v143_modal_http_endpoint.py)" = "$EXPECTED_BRIDGE_BLOB"
+          test "$(git hash-object analyzer/v143_modal_live_endpoint.py)" = "$EXPECTED_WORKER_BLOB"
+          test "$(git hash-object analyzer/v143_seeded_separator.py)" = "$EXPECTED_SCHEDULER_BLOB"
+          echo 'productionEnvironmentTargeted=false'
+          echo 'productionPromotionPerformed=false'
+          echo 'modelExecuted=false'
+          echo 'audioRead=false'
+          echo 'referenceFacingInputs=0'
+          echo 'referenceScoreCalls=0'
+          echo 'qualityVerdictMade=false'
+
+      - name: Set up Node.js 24
+        uses: actions/setup-node@v4
+        with:
+          node-version: '24'
+
+      - name: Install pinned Vercel CLI
+        shell: bash
+        run: |
+          set -euo pipefail
+          npm install --global vercel@59.11.2
+          test "$(vercel --version | tail -n 1)" = '59.11.2'
+
+      - name: Link Preview project and verify prerequisite variable names only
+        shell: bash
+        run: |
+          set -euo pipefail
+          OUT=debug/v143-contextual-prune/fix-preview-v143-routing
+          mkdir -p "$OUT"
+          vercel pull --yes --environment=preview --git-branch="$PREVIEW_GIT_BRANCH" --token "$VERCEL_TOKEN" >/dev/null
+          vercel env ls preview --token "$VERCEL_TOKEN" > "$OUT/env-before.txt" 2>/dev/null
+
+          grep -q 'ANALYZER_API_TOKEN' "$OUT/env-before.txt"
+          grep -q 'BLOB_READ_WRITE_TOKEN' "$OUT/env-before.txt"
+          grep -q 'ANALYZER_API_URL' "$OUT/env-before.txt"
+
+          if grep -q 'ANALYZER_API_URL_V143' "$OUT/env-before.txt"; then
+            echo 'ANALYZER_API_URL_V143 unexpectedly already exists in Preview; refusing ambiguous mutation.' >&2
+            exit 1
+          fi
+          rm -f "$OUT/env-before.txt"
+          echo 'previewAnalyzerTokenPresent=true'
+          echo 'previewBlobTokenPresent=true'
+          echo 'previewLegacyAnalyzerUrlPresent=true'
+          echo 'previewV143AnalyzerUrlPresentBefore=false'
+
+      - name: Add V143 bridge URL to this branch Preview only
+        shell: bash
+        run: |
+          set -euo pipefail
+          printf '%s\n' "$V143_BRIDGE_URL" | \
+            vercel env add ANALYZER_API_URL_V143 preview "$PREVIEW_GIT_BRANCH" --token "$VERCEL_TOKEN"
+
+          OUT=debug/v143-contextual-prune/fix-preview-v143-routing
+          vercel env ls preview "$PREVIEW_GIT_BRANCH" --token "$VERCEL_TOKEN" > "$OUT/env-after.txt" 2>/dev/null
+          grep -q 'ANALYZER_API_URL_V143' "$OUT/env-after.txt"
+          rm -f "$OUT/env-after.txt"
+          echo 'previewV143AnalyzerUrlPresentAfter=true'
+          echo 'productionEnvironmentChanged=false'
+
+      - name: Pull corrected branch Preview environment
+        shell: bash
+        run: |
+          set -euo pipefail
+          vercel pull --yes --environment=preview --git-branch="$PREVIEW_GIT_BRANCH" --token "$VERCEL_TOKEN" >/dev/null
+
+      - name: Build exact replacement Preview candidate
+        shell: bash
+        run: |
+          set -euo pipefail
+          vercel build --token "$VERCEL_TOKEN"
+
+      - name: Deploy exactly one replacement Preview
+        id: deploy
+        shell: bash
+        run: |
+          set -euo pipefail
+          DEPLOYMENT_URL="$(vercel deploy --prebuilt --token "$VERCEL_TOKEN" | tail -n 1)"
+          echo "$DEPLOYMENT_URL" | grep -Eq '^https://[^ ]+\.vercel\.app$'
+          echo "url=$DEPLOYMENT_URL" >> "$GITHUB_OUTPUT"
+          echo "replacementPreviewUrl=$DEPLOYMENT_URL"
+          echo 'productionPromotionPerformed=false'
+
+      - name: Resolve replacement Preview and prove V143 bridge HMAC path without model
+        shell: bash
+        env:
+          DEPLOYMENT_URL: ${{ steps.deploy.outputs.url }}
+        run: |
+          set -euo pipefail
+          OUT=debug/v143-contextual-prune/fix-preview-v143-routing
+          vercel inspect "$DEPLOYMENT_URL" --wait --token="$VERCEL_TOKEN" 2>&1 | tee "$OUT/inspect.log"
+          grep -Eq 'status[[:space:]]+.*Ready|status[[:space:]]+● Ready' "$OUT/inspect.log"
+          grep -Eq 'target[[:space:]]+preview' "$OUT/inspect.log"
+
+          cat > "$OUT/request.json" <<JSON
+          {"operation":"status","jobToken":"$INVALID_JOB_TOKEN","transcriptionType":"rhythm"}
+          JSON
+
+          METRICS="$(
+            vercel curl /api/analyze-audio-tab \
+              --deployment "$DEPLOYMENT_URL" \
+              -- \
+              --silent --show-error --location --max-time 30 \
+              --request POST \
+              --header 'Content-Type: application/json' \
+              --data-binary "@$OUT/request.json" \
+              --output "$OUT/response.json" \
+              --write-out '%{http_code} %{time_total}'
+          )"
+          STATUS="${METRICS%% *}"
+          ELAPSED="${METRICS#* }"
+          export STATUS ELAPSED DEPLOYMENT_URL OUT
+
+          python3 - <<'PY'
+          import json
+          import os
+          from pathlib import Path
+
+          out = Path(os.environ['OUT'])
+          response = json.loads((out / 'response.json').read_text(encoding='utf-8'))
+          message = str(response.get('error') or response.get('detail') or '')
+          summary = {
+              'schemaVersion': 1,
+              'gate': 'v143-fix-preview-v143-routing',
+              'sourceCommit': os.environ.get('GITHUB_SHA'),
+              'replacementPreviewUrl': os.environ['DEPLOYMENT_URL'],
+              'previewGitBranch': os.environ['PREVIEW_GIT_BRANCH'],
+              'routeBlob': os.environ['EXPECTED_ROUTE_BLOB'],
+              'pageBlob': os.environ['EXPECTED_PAGE_BLOB'],
+              'bridgeBlob': os.environ['EXPECTED_BRIDGE_BLOB'],
+              'workerBlob': os.environ['EXPECTED_WORKER_BLOB'],
+              'schedulerBlob': os.environ['EXPECTED_SCHEDULER_BLOB'],
+              'previewV143AnalyzerUrlAdded': True,
+              'previewAnalyzerTokenPresent': True,
+              'previewBlobTokenPresent': True,
+              'invalidSignatureStatus': int(os.environ['STATUS']),
+              'bridgeHmacRejectionReached': int(os.environ['STATUS']) == 400 and 'Invalid async job token' in message,
+              'invalidSignatureRequestSeconds': float(os.environ['ELAPSED']),
+              'workerSpawned': False,
+              'modelExecuted': False,
+              'audioRead': False,
+              'referenceFacingInputs': 0,
+              'referenceScoreCalls': 0,
+              'qualityVerdictMade': False,
+              'productionEnvironmentChanged': False,
+              'productionPromotionPerformed': False,
+          }
+          (out / 'summary.json').write_text(json.dumps(summary, indent=2) + '\n', encoding='utf-8')
+          print(json.dumps(summary, indent=2))
+          assert summary['bridgeHmacRejectionReached'] is True
+          PY
+
+          rm -f "$OUT/request.json" "$OUT/response.json" "$OUT/inspect.log"
+
+      - name: Preserve aggregate replacement Preview evidence only
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: v143-fix-preview-v143-routing
+          path: debug/v143-contextual-prune/fix-preview-v143-routing/summary.json
+          if-no-files-found: warn
+          retention-days: 14
