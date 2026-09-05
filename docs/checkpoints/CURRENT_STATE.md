@@ -1,6 +1,6 @@
 # CURRENT STATE — DadRock `/ai-tab`
 
-Updated: 2026-09-05 13:00 America/Toronto  
+Updated: 2026-09-05 13:02 America/Toronto  
 Branch: `v143-contextual-prune-lobo`
 
 > Compact continuation checkpoint. Older dedicated checkpoints remain authoritative; omission here does not revoke frozen boundaries.
@@ -43,46 +43,57 @@ Proofs GREEN:
 
 ## Preview async breakthrough E2E — PREVIOUS PREFLIGHTS / ZERO MODEL STARTS
 
-Attempt 1: run `33982105469`, job `101349042393`, historical Preview Ready but `vercel curl` = 403; model step skipped.
+Attempt 1: run `33982105469`, job `101349042393`, historical Preview Ready but unauthenticated `vercel curl` = 403; model step skipped.
 
 Attempt 2: run `33982235357`, job `101349393362`:
 
 - exact source pins GREEN;
 - local Next 16.1.6 build GREEN;
 - fresh Preview-only deployment **`dpl_F6ksguDvc1nVAt33jNxxoVTmyyJA`**, URL `https://dadrock-tabs-android-r602jctx9-stephen-mcnally-s-projects.vercel.app`, target preview / Ready;
-- plain `vercel curl /ai-tab` = 403;
+- unauthenticated `vercel curl /ai-tab` = 403;
 - model step skipped;
 - model/audio start count remains **0 total**.
 
-Fresh deployment ruled out stale Preview state and isolated the remaining issue to Deployment Protection automation authentication.
+## Deployment Protection authentication — TRUSTED GITHUB OIDC GREEN / REFRESHABLE
 
-## Deployment Protection authentication — TRUSTED GITHUB OIDC GREEN
+Vercel's documented Trusted Sources method was proven without changing or disabling Deployment Protection.
 
-Vercel's documented Trusted Sources method was tested without changing or disabling Deployment Protection:
+Initial trusted-source proof:
 
 - workflow `.github/workflows/v143-preview-protection-oidc-probe.yml`;
-- corrected probe commit `75146e2e03d770b983862149feadcc5026552803`;
-- run **`33982502347`**, job `101350110959`: **SUCCESS**;
-- artifact **`9974159307`**, digest `sha256:d247d08eb2d4d478406056c387e915c33ccfcd0909cfbfa48583821546f4f362`;
-- workflow permission `id-token: write` + `core.getIDToken()`;
-- direct protected request header `x-vercel-trusted-oidc-idp-token: <GitHub OIDC>`;
-- fresh Preview `/ai-tab` returned **HTTP 200**;
-- OIDC token was masked/not retained;
-- Deployment Protection remained enabled;
+- commit `75146e2e03d770b983862149feadcc5026552803`;
+- run `33982502347`, job `101350110959`: SUCCESS;
+- artifact `9974159307`, digest `sha256:d247d08eb2d4d478406056c387e915c33ccfcd0909cfbfa48583821546f4f362`;
+- `id-token: write`, `core.getIDToken()`, header `x-vercel-trusted-oidc-idp-token`;
+- protected fresh Preview `/ai-tab` = HTTP 200;
+- token masked/not retained; model/audio starts=0.
+
+Refreshability proof:
+
+- workflow `.github/workflows/v143-preview-oidc-refresh-probe.yml`;
+- commit `363fdaee439fdb6680943920796b753cfa1e4294`;
+- run **`33982582372`**, job `101350332422`: source probe step SUCCESS;
+- artifact **`9974183273`**, digest `sha256:e5086c0e7a5a81c173a148285b44396a7a86b724903e0b67f091da40d3e81306`;
+- direct shell token mint via GitHub's `ACTIONS_ID_TOKEN_REQUEST_URL` / `ACTIONS_ID_TOKEN_REQUEST_TOKEN` proven;
+- first OIDC token TTL = **300 seconds**, protected Preview HTTP 200;
+- second independently minted token TTL = **300 seconds**, protected Preview HTTP 200;
+- `refreshableTrustedOidc=true`, tokens retained=false, Deployment Protection disabled=false;
 - modelBearingStartRequests=0, audioRead=false, modelExecuted=false, reference inputs/scores=0.
 
-**Conclusion:** Preview protection wiring is now solved. Use GitHub OIDC trusted-source header on every start/status/ACK request in the single model-bearing E2E. Do not use or create a long-lived bypass secret.
+**Conclusion:** every long-poll request can mint a fresh trusted OIDC token. Protection authentication will not expire during the single model-bearing async job.
 
 ## NEXT STEP — ONE MODEL-BEARING ASYNC BREAKTHROUGH E2E
 
-1. Use existing fresh Preview `dpl_F6ksguDvc1nVAt33jNxxoVTmyyJA` and GitHub Actions OIDC trusted-source header.
-2. Exact source/safety pins must pass before start.
-3. POST **exactly one** Rhythm `start` using approved source `public/jimmy-paige-midterm-v1/gomyway-midterm-source.m4a`, Git blob `4dd709e3fa177b4daeed71ca97f0199757729d4b`.
-4. Require prompt HTTP 202 + signed `v143a1.*` job token.
-5. Poll only that token, with OIDC header, beyond 150s if required.
-6. Require terminal 200 + generated tab + existing V143 reference-free safety/product contract.
-7. ACK once with OIDC header and require transient result/control cleanup.
-8. Delete raw request/token/result files; persist aggregate summary only.
+Use existing fresh Preview `dpl_F6ksguDvc1nVAt33jNxxoVTmyyJA`.
+
+1. Exact source/safety pins pass before start.
+2. Mint fresh trusted OIDC token and POST **exactly one** Rhythm start using approved source `public/jimmy-paige-midterm-v1/gomyway-midterm-source.m4a`, Git blob `4dd709e3fa177b4daeed71ca97f0199757729d4b`.
+3. Require HTTP 202 + signed `v143a1.*` job token.
+4. For every status poll, mint a new OIDC token, then poll only the same analysis job token.
+5. Permit total analysis time beyond 150s; each individual Vercel request remains short.
+6. Require terminal 200 + generated tab + V143 reference-free safety/product contract.
+7. Mint fresh OIDC token and ACK once; require result/control cleanup.
+8. Delete request/token/result files; persist aggregate summary only.
 9. If the one model-bearing job fails after start, do not launch another; diagnose first.
 
 ### Hard stops
