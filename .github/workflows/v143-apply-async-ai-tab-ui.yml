@@ -1,0 +1,46 @@
+name: V143 Apply Async AI Tab UI Patch
+
+on:
+  push:
+    branches:
+      - v143-contextual-prune-lobo
+    paths:
+      - .github/scripts/patch_v143_async_ai_tab_ui.py
+      - .github/workflows/v143-apply-async-ai-tab-ui.yml
+
+permissions:
+  contents: write
+
+concurrency:
+  group: v143-apply-async-ai-tab-ui
+  cancel-in-progress: false
+
+jobs:
+  apply-ui-patch:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 5
+    steps:
+      - name: Checkout exact branch head
+        uses: actions/checkout@v4
+        with:
+          ref: v143-contextual-prune-lobo
+          fetch-depth: 1
+
+      - name: Apply deterministic polling patch
+        shell: bash
+        run: |
+          set -euo pipefail
+          python3 .github/scripts/patch_v143_async_ai_tab_ui.py
+          git diff --check
+          git diff -- app/ai-tab/page.js
+
+      - name: Commit patched page to branch
+        shell: bash
+        run: |
+          set -euo pipefail
+          git config user.name 'dadrockyt-sys'
+          git config user.email 'Stephen.s.mcnally@gmail.com'
+          git add app/ai-tab/page.js
+          git diff --cached --quiet && { echo 'No page change to commit.'; exit 0; }
+          git commit -m 'v143: poll async Rhythm analysis jobs'
+          git push origin HEAD:v143-contextual-prune-lobo
