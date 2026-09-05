@@ -93,3 +93,19 @@ Branch: `v143-contextual-prune-lobo`
 - No whole-branch merge to `main`.
 
 Current authorization state: **FINAL RE-ARM GREEN; backend/model start count 0; exactly one helper-blob/cleanup workflow edit is authorized now.**
+
+## FRESH CHAT HANDOFF — START HERE
+
+The next chat should read this file first and continue only on `v143-contextual-prune-lobo`. Do not repeat the closed lifecycle/OIDC/env diagnostics unless new evidence directly contradicts this checkpoint.
+
+1. Re-fetch branch HEAD, this checkpoint, `.github/workflows/v143-fresh-preview-async-breakthrough-e2e.yml`, and `.github/scripts/v143-existing-preview-async-breakthrough-e2e.sh` before any write. Confirm the workflow/helper pins above are still exact.
+2. Re-check branch Actions immediately before arming: require no `in_progress`, `queued`, `waiting`, `requested`, or `pending` breakthrough run. If one exists, inspect that run instead of creating another.
+3. Re-read the existing Preview identity and require `dpl_G2WxxMA782j87H7tLpAy9cCB4ihD` / `dadrock-tabs-android-bx51iz9tr-stephen-mcnally-s-projects.vercel.app` is still READY. Do not build, redeploy, alias, promote, or change protection.
+4. Make **one and only one** edit to `.github/workflows/v143-fresh-preview-async-breakthrough-e2e.yml`: set `E2E_SCRIPT_BLOB=433599afec7fff20a31ea79e4c93ef9a6da03b36` and add `preflight-response.json` to the existing `if: always()` raw-material cleanup. Do not make any other workflow change.
+5. Treat that workflow-file push as the sole re-arm event. Locate exactly one `V143 Fresh Preview Async Breakthrough E2E` run at that commit and watch only that run.
+6. Before real audio, require exact source/helper boundary + exact existing Preview inspect + authenticated malformed POST preflight HTTP 400 with exact error `Transcription type must be lead, rhythm, or bass.`. Any mismatch is a pre-model STOP; do not retry by editing/re-running.
+7. If the single real-audio start is sent: HTTP 202 + signed `v143a1.*` means the backend-capable start budget is consumed. From that moment, **no second start and no rerun under any outcome**. Poll only the same token.
+8. On terminal completed or failed: preserve bounded aggregate evidence, ACK exactly once, require transient cleanup, then evaluate product/runtime assertions. If the start response is ambiguous or no usable token is returned after POST, STOP and diagnose that exact request; never send another start.
+9. Update `docs/checkpoints/CURRENT_STATE.md` after the re-arm commit/run ID and after every meaningful milestone/root cause/terminal result. Keep raw request/response/token/audio/model material out of retained checkpoint/artifacts.
+
+Fresh-chat authorization: **one narrowly scoped re-arm workflow edit is authorized; no ad-hoc real-audio request, no rerun of prior breakthrough runs, and no second backend-capable start after the repaired start is accepted.**
