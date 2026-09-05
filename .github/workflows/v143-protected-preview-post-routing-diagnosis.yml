@@ -65,6 +65,50 @@ jobs:
           PY
           rm -f response.json
 
+      - name: Probe V143 runtime analyzer config with fake status token and no audio
+        shell: bash
+        run: |
+          set -euo pipefail
+          STATUS="$(
+            vercel curl /api/analyze-audio-tab \
+              --deployment "$PREVIEW_URL" \
+              -- \
+              --silent --show-error --max-time 30 \
+              --request POST \
+              --header 'Content-Type: application/json' \
+              --data-binary '{"operation":"status","transcriptionType":"rhythm","jobToken":"v143a1.fake-runtime-config-probe"}' \
+              --output status-response.json \
+              --write-out '%{http_code}'
+          )"
+          echo "runtimeConfigProbeStatus=$STATUS"
+          PROBE_STATUS="$STATUS" python3 - <<'PY'
+          import json, os
+          from pathlib import Path
+
+          path = Path('status-response.json')
+          data = json.loads(path.read_text(encoding='utf-8')) if path.exists() else {}
+          error = str(data.get('error') or data.get('detail') or '')
+          status = int(os.environ['PROBE_STATUS'])
+
+          if status == 503 and error == 'The audio analyzer is not configured.':
+              classification = 'route_runtime_config_missing'
+          elif status in (400, 401, 403, 404, 409, 410, 422, 502):
+              classification = 'route_config_gate_passed_or_bridge_response'
+          elif status >= 500:
+              classification = 'route_config_nonempty_but_request_failed_before_bounded_bridge_response'
+          else:
+              classification = 'unexpected_status'
+
+          print(f'runtimeConfigProbeClass={classification}')
+          print('modelBearingStartRequestCount=0')
+          print('audioUrlSupplied=false')
+          print('analyzerStartOperationSent=false')
+          print('workerSpawnPossible=false')
+          print('referenceFacingInputs=0')
+          print('secretValuesPrinted=false')
+          PY
+          rm -f status-response.json
+
       - name: Classify critical pulled Preview env without printing values
         shell: bash
         run: |
