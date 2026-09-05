@@ -41,15 +41,16 @@ RhythmHandler = Callable[[dict[str, Any]], dict[str, Any]]
 # Keep the public HTTP container deliberately lightweight. The resource names
 # are resolved by the deploy process and then baked into the function image so
 # isolated gate deployments retain their isolated Queue/app identity remotely.
+# Modal requires build steps such as .env() before add_local_* mounts.
 http_image = (
-    legacy.image.add_local_python_source("modal_analyzer")
-    .add_local_python_source("v143_async_job_protocol")
-    .env(
+    legacy.image.env(
         {
             "V143_HTTP_APP_NAME": HTTP_APP_NAME,
             "V143_ASYNC_RESULT_QUEUE_NAME": ASYNC_RESULT_QUEUE_NAME,
         }
     )
+    .add_local_python_source("modal_analyzer")
+    .add_local_python_source("v143_async_job_protocol")
 )
 
 # Queue entries are transient structured-result handoff only. Each partition is
