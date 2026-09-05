@@ -1,6 +1,6 @@
 # CURRENT STATE — DadRock `/ai-tab`
 
-Updated: 2026-09-05 17:43 EDT — async lifecycle GREEN; fresh-Preview exact-pin review IN PROGRESS  
+Updated: 2026-09-05 17:43 EDT — async lifecycle GREEN; fresh-Preview preflight BLOCKED on final failure-path/duplicate-run checks  
 Branch: `v143-contextual-prune-lobo`
 
 > Compact continuation checkpoint. Older dedicated checkpoints remain authoritative; omission here does not revoke frozen boundaries.
@@ -83,13 +83,15 @@ Rerun:
 - production bridge deploy/smoke `33981874155` GREEN;
 - Trusted GitHub OIDC Deployment Protection access GREEN: `33982502347` and refreshability proof `33982582372`.
 
-## DRY GUARD REVIEW — 2026-09-05 17:43 EDT — IN PROGRESS
+## DRY GUARD REVIEW — 2026-09-05 17:43 EDT — SOURCE/SUCCESS PATH GREEN; FINAL PREFLIGHT BLOCKED
 
 - No `V143 Fresh Preview Async Breakthrough E2E` model-bearing run has been dispatched by this continuation.
-- The live branch `app/api/analyze-audio-tab/route.js` blob is `742954146a86aa36485d0bbdb3fbd6691a64a712`, matching the authoritative branch async-route source pin above.
-- Re-read of live workflow blob `bab50f03b26d728084fe898097b02c2470de2d2e` confirms `EXPECTED_ROUTE_BLOB=742954146a86aa36485d0bbdb3fbd6691a64a712`; the route pin is current.
-- An earlier continuation read surfaced stale `ANALYZE_ROUTE_SHA=877722150399048cec431769718664507767894c`; that was not the live workflow now on this branch. The stale-pin stop inference is **withdrawn**.
-- Dispatch remains blocked until every remaining pinned source path/blob is re-verified against current branch HEAD, the one-start/status-only/one-ACK/Preview-only guards are re-read, and Actions is checked for an existing/in-progress breakthrough run.
+- Live workflow blob: `bab50f03b26d728084fe898097b02c2470de2d2e`.
+- All seven workflow source pins have been re-verified against the live branch and match exactly: route `742954146a86aa36485d0bbdb3fbd6691a64a712`, `/ai-tab` page `de39f2715c6875d757ef730c9e3182ccd4aa00a4`, bridge `36584355d9b060fc7b7e20acc62524fbc7bf9005`, protocol `1bd55017e16a4e1d8b14c7429492f811a43a28d8`, worker `111bf14a8f91045d3478901f8e36b88a2e7f181a`, scheduler `fc9b4c45c208d80be7abab64a8959f2a3babcee8`, approved audio `4dd709e3fa177b4daeed71ca97f0199757729d4b`.
+- The earlier continuation read that surfaced stale `ANALYZE_ROUTE_SHA=877722150399048cec431769718664507767894c` was not the live workflow now on this branch. The stale-pin stop inference is **withdrawn**.
+- Success-path guard audit is GREEN: fresh protected Preview only; no production promotion; protected `/ai-tab` HTTP-200 gate before model work; exactly one Rhythm POST start with `MODEL_BEARING_START_BUDGET=1` and `PREVIOUS_E2E_MODEL_STARTS=0`; require HTTP 202 + `v143a1.*` token; status-only polling of that same token; no second start; completed/generated-tab/runtime-contract checks; exactly one DELETE ACK on success; aggregate-only artifact intent; runner cleanup trap removes request/token/status/full-result material.
+- One pre-arm failure-path question remains: if the single model-bearing start reaches a terminal failure, the current poll block appears able to exit before the success-only DELETE ACK and before final `evidence/summary.json` is copied. Confirm route/bridge ACK semantics and, if this is real, repair the workflow so terminal failure is aggregate-recorded and ACKed once before the job is failed. Because this workflow is push-triggered on its own path, any repair commit would itself arm the one E2E; therefore do not edit it until the review is complete.
+- GitHub Actions duplicate/in-progress breakthrough-run verification is not yet conclusively resolved. **Do not dispatch/modify the trigger workflow until it is.**
 
 ## NEXT — FIRST SINGLE MODEL-BEARING END-TO-END TEST
 
@@ -125,13 +127,13 @@ The next chat should **read this file first and continue on `v143-contextual-pru
 
 Immediate next steps for the fresh chat:
 
-1. Re-read `.github/workflows/v143-fresh-preview-async-breakthrough-e2e.yml` and verify its pinned blobs still equal the source pins in this checkpoint before changing or triggering anything.
-2. Confirm the workflow still enforces exactly one model-bearing Rhythm `start`, status-only polling of the same signed token, one ACK, Preview-only deployment, no production promotion, and aggregate-only retained evidence.
-3. Check GitHub Actions for any already-running or newly-created `V143 Fresh Preview Async Breakthrough E2E` run before arming another one. If one exists, inspect that run instead of creating a duplicate.
-4. If no E2E run exists and all pins/guards remain valid, arm **one and only one** fresh-Preview E2E using the existing workflow. Do not weaken Deployment Protection or bypass its protected Preview access checks.
+1. Treat all seven exact source pins and the success-path one-start/status-only/one-ACK/Preview-only guard review as GREEN unless new branch changes invalidate them.
+2. Resolve the terminal-failure path: confirm whether failed terminal jobs can/should be DELETE-ACKed and whether the existing workflow currently loses the final aggregate summary on failure. If repair is required, checkpoint the exact patch plan before changing the trigger workflow.
+3. Conclusively check GitHub Actions for any existing/in-progress `V143 Fresh Preview Async Breakthrough E2E` run. If one exists, inspect it instead of creating a duplicate.
+4. Only after steps 2–3 are GREEN, arm **one and only one** fresh-Preview E2E. Remember: the workflow has no manual dispatch and is triggered by a push that changes its own workflow path, so a workflow repair commit can be the single arming event.
 5. Watch that single run through: fresh Preview Ready -> `/ai-tab` protected HTTP 200 -> exactly one Rhythm start returns HTTP 202 + `v143a1.*` token -> status polling only -> terminal result.
 6. If terminal HTTP 200 succeeds, require completed analysis, generated tab, V143 runtime safety/product contract, then ACK once and verify transient cleanup. Record aggregate metrics/artifact IDs/digests only.
 7. If the single model-bearing job fails **after worker/model execution begins**, stop. Do not retry. Pull GitHub/Modal logs for that exact call and diagnose before any second start.
 8. Save every meaningful milestone/root cause/result back to `docs/checkpoints/CURRENT_STATE.md` on this branch before continuing.
 
-Current authorization state for the fresh chat: **async lifecycle gate GREEN; first single fresh-Preview model-bearing E2E remains the next permitted model-bearing action, but dispatch stays blocked until the remaining exact-pin/guard review and duplicate-run check pass.**
+Current authorization state for the fresh chat: **async lifecycle gate GREEN; exact source pins GREEN; success-path E2E guards GREEN; first single fresh-Preview model-bearing E2E remains the next permitted model-bearing action, but dispatch stays BLOCKED until terminal-failure ACK/evidence behavior and duplicate-run status are conclusively resolved.**
