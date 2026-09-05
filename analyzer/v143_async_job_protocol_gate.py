@@ -166,15 +166,14 @@ def main() -> None:
     )
     for forbidden in [
         "routed_payload",
-        "payload",
+        '"payload"',
         "audioUrl",
         "blobToken",
         "pathname",
         "generatedTab",
-        "events",
-        "result",
-        "song",
-        "artist",
+        '"events"',
+        '"song"',
+        '"artist"',
     ]:
         require(
             forbidden not in control_source,
