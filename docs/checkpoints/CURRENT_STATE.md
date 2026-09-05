@@ -90,6 +90,18 @@ Fingerprint is fail-closed and includes normalized-source SHA, separator/model i
 
 The helper deliberately has **no production default cache root** and does **not** authorize stem retention.
 
+## Active continuation — real-audio exact-cache diagnostic
+
+- Handoff branch tip verified at start of continuation: `ae79e13d49112dc63e39791362a048cb9b935870` (`docs: save V143 fresh-chat wiring handoff`), parent `62282c807eb4c1bdee606205cc06700c9bcff754`.
+- Existing exact CPU execution anchor is source-proven in `analyzer/v143_demucs_cpu_host_probe_modal.py` and `.github/workflows/v143-demucs-explicit-cpu-anchor.yml`.
+- Diagnostic must reuse the unchanged exact path: `normalize_input_audio(...)` then `separate_demucs_guitar(seeded_audio_separator_cli(), ...)` under the frozen `DEMUCS_SINGLE_THREAD_ENV`; no alternate separator implementation.
+- Cache payload will be the exact generated Guitar WAV bytes in an ephemeral `TemporaryDirectory`; cached WAV will be decoded only to re-assert the frozen PCM-int16 identity on the hit path.
+- Cache lookup must occur only after approved source SHA, normalized WAV SHA, and the full fail-closed fingerprint are established. The expensive separator compute callback must run exactly once on the cold miss and zero times on the immediate warm hit.
+- Frozen real-audio acceptance remains source `215bd5a657c5326f08f132ae358595a95c30b39bb7493a52c2f910d5a608149f`, normalized `ab64e7cdd8a792aecfb6eec518577d8d7e9d2f8aa43007e632470d9fe4511e7f`, shift trace `0,22050,6026`, Guitar `0ac47da671df6f8387c1ad1343171de0cf7a0db6985dadf3f30e4a9c7cf0189c`, PCM-int16 `2c22f04014c0f5c9c0c036125c3d702c8b87a9f67358e0dd0d3836c39c936bed`.
+- Structural cache primitive remains unchanged; no concrete cache bug has been demonstrated.
+- Before implementation is committed, resolve/source a truthful deterministic value for the required `separator_weights_sha256` fingerprint field; do not use a fabricated placeholder. This is the only open implementation detail in the isolated diagnostic design at this checkpoint.
+- Production worker/bridge/Vercel/UI remain untouched; reference-facing score calls remain `0`.
+
 ## Source-of-truth wiring boundary
 
 - `app/api/analyze-audio-tab/route.js` only forwards requests to the selected analyzer and enforces the V143 anti-leakage response contract. It does not own normalized audio identity or separator bytes, so it is **not** the cache insertion point.
