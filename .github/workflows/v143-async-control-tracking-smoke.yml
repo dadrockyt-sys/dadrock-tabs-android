@@ -1,0 +1,176 @@
+name: V143 Async Control Tracking Smoke
+
+on:
+  push:
+    branches:
+      - v143-contextual-prune-lobo
+    paths:
+      - analyzer/v143_async_control_tracking_smoke_modal.py
+      - .github/workflows/v143-async-control-tracking-smoke.yml
+
+concurrency:
+  group: v143-async-control-tracking-smoke
+  cancel-in-progress: false
+
+permissions:
+  contents: read
+
+env:
+  MODAL_ENVIRONMENT: main
+  PYTHONUNBUFFERED: "1"
+  V143_HTTP_APP_NAME: dadrock-v143-http-bridge-control-gate
+  V143_ASYNC_RESULT_QUEUE_NAME: dadrock-v143-async-results-control-gate
+  EXPECTED_BRIDGE_BLOB: 365843550fa6ee67f3d22a6b4536261f9dc46dba
+  EXPECTED_PROTOCOL_BLOB: 1bd55017e16a4e1d8b14c7429492f811a43a28d8
+  EXPECTED_WORKER_BLOB: 111bf14a8f91045d3478901f8e36b88a2e7f181a
+  EXPECTED_SCHEDULER_BLOB: fc9b4c45c208d80be7abab64a8959f2a3babcee8
+
+jobs:
+  async-control-tracking-smoke:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 12
+    env:
+      MODAL_TOKEN_ID: ${{ secrets.MODAL_TOKEN_ID }}
+      MODAL_TOKEN_SECRET: ${{ secrets.MODAL_TOKEN_SECRET }}
+    steps:
+      - name: Checkout exact branch head
+        uses: actions/checkout@v4
+
+      - name: Enforce exact isolated source boundary
+        shell: bash
+        run: |
+          set -euo pipefail
+          test "$(git hash-object analyzer/v143_modal_http_endpoint.py)" = "$EXPECTED_BRIDGE_BLOB"
+          test "$(git hash-object analyzer/v143_async_job_protocol.py)" = "$EXPECTED_PROTOCOL_BLOB"
+          test "$(git hash-object analyzer/v143_modal_live_endpoint.py)" = "$EXPECTED_WORKER_BLOB"
+          test "$(git hash-object analyzer/v143_seeded_separator.py)" = "$EXPECTED_SCHEDULER_BLOB"
+          test "$V143_HTTP_APP_NAME" != 'dadrock-v143-http-bridge'
+          test "$V143_ASYNC_RESULT_QUEUE_NAME" != 'dadrock-v143-async-results'
+          echo 'productionBridgeTargeted=false'
+          echo 'productionWorkerDeploymentChanged=false'
+          echo 'audioFixtureRead=false'
+          echo 'separatorModelExecuted=false'
+
+      - name: Set up Python 3.11
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: Install pinned Modal CLI
+        shell: bash
+        run: |
+          set -euo pipefail
+          python -m pip install --upgrade pip >/dev/null
+          python -m pip install 'modal==1.5.5' >/dev/null
+          modal token set --token-id "$MODAL_TOKEN_ID" --token-secret "$MODAL_TOKEN_SECRET" >/dev/null
+          modal --version
+
+      - name: Stop stale isolated app
+        shell: bash
+        run: |
+          set +e
+          modal app stop "$V143_HTTP_APP_NAME" --env main --yes >/dev/null 2>&1
+          exit 0
+
+      - name: Deploy isolated hardened bridge with diagnostic only
+        shell: bash
+        run: |
+          set -euo pipefail
+          modal deploy --env main analyzer/v143_async_control_tracking_smoke_modal.py
+
+      - name: Run tracked fail-before-download lifecycle
+        shell: bash
+        run: |
+          set -euo pipefail
+          mkdir -p debug/v143-contextual-prune/async-control-tracking-smoke
+          timeout 300s python - <<'PY'
+          import json
+          import os
+          from pathlib import Path
+          import modal
+
+          safe = {
+              'schemaVersion': 1,
+              'gate': 'v143-async-control-tracking-smoke',
+              'bridgeBlob': os.environ['EXPECTED_BRIDGE_BLOB'],
+              'protocolBlob': os.environ['EXPECTED_PROTOCOL_BLOB'],
+              'workerBlob': os.environ['EXPECTED_WORKER_BLOB'],
+              'schedulerBlob': os.environ['EXPECTED_SCHEDULER_BLOB'],
+              'productionBridgeTargeted': False,
+              'productionWorkerDeploymentChanged': False,
+              'audioFixtureRead': False,
+              'separatorModelExecuted': False,
+              'referenceFacingInputs': 0,
+              'referenceScoreCalls': 0,
+              'qualityVerdictMade': False,
+          }
+          try:
+              fn = modal.Function.from_name(
+                  os.environ['V143_HTTP_APP_NAME'],
+                  'async_control_tracking_smoke',
+                  environment_name='main',
+              )
+              result = fn.remote()
+              safe.update(result)
+              safe['status'] = 'success'
+          except BaseException as error:
+              safe.update({
+                  'status': 'failed',
+                  'errorClass': type(error).__name__,
+                  'errorMessage': str(error)[:500],
+              })
+
+          Path('debug/v143-contextual-prune/async-control-tracking-smoke/summary.json').write_text(
+              json.dumps(safe, indent=2, sort_keys=True) + '\n', encoding='utf-8'
+          )
+          print(json.dumps(safe, indent=2, sort_keys=True))
+
+          assert safe['status'] == 'success'
+          assert safe['appName'] == os.environ['V143_HTTP_APP_NAME']
+          assert safe['queueName'] == os.environ['V143_ASYNC_RESULT_QUEUE_NAME']
+          assert safe['startStatus'] == 'processing'
+          assert safe['orchestratorTracked'] is True
+          assert safe['firstStatus'] in {'processing', 'failed'}
+          if safe['firstStatus'] == 'processing':
+              assert safe['firstOrchestratorRunning'] is True
+          assert safe['terminalStatus'] == 'failed'
+          assert safe['terminalErrorBounded'] is True
+          assert safe['resultCleared'] is True
+          assert safe['controlCleared'] is True
+          assert safe['resultTtlSeconds'] == 900
+          assert safe['loopbackUrlOnly'] is True
+          assert safe['audioRead'] is False
+          assert safe['audioBytesDownloaded'] == 0
+          assert safe['separatorModelExecuted'] is False
+          assert safe['referenceFacingInputs'] == 0
+          assert safe['referenceScoreCalls'] == 0
+          assert safe['qualityVerdictMade'] is False
+          PY
+
+      - name: Capture isolated aggregate logs
+        if: always()
+        shell: bash
+        run: |
+          set +e
+          echo '=== isolated hardened bridge logs ==='
+          modal app logs "$V143_HTTP_APP_NAME" --env main --since 1h --tail 1500 --timestamps --show-function-id --show-function-call-id --show-container-id 2>&1
+          exit 0
+
+      - name: Preserve aggregate evidence only
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: v143-async-control-tracking-smoke
+          path: debug/v143-contextual-prune/async-control-tracking-smoke/summary.json
+          if-no-files-found: warn
+          retention-days: 14
+
+      - name: Stop isolated app
+        if: always()
+        shell: bash
+        run: |
+          set +e
+          modal app stop "$V143_HTTP_APP_NAME" --env main --yes
+          echo 'isolatedAppStopAttempted=true'
+          echo 'productionBridgeStopped=false'
+          exit 0
