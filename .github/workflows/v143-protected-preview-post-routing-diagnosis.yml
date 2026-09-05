@@ -19,6 +19,7 @@ jobs:
       VERCEL_TOKEN: ${{ secrets.VERCEL_TOKEN }}
       VERCEL_ORG_ID: team_qJrw8Cuze5bCEg9M3Q67XMWt
       VERCEL_PROJECT_ID: prj_6biwsn0iHci6FHNswAUCS8UYrAqF
+      VERCEL_TELEMETRY_DISABLED: '1'
 
     steps:
       - name: Set up Node.js 24
@@ -42,7 +43,6 @@ jobs:
           STATUS="$(
             vercel curl /api/analyze-audio-tab \
               --deployment "$PREVIEW_URL" \
-              --token "$VERCEL_TOKEN" \
               -- \
               --silent --show-error --max-time 30 \
               --request POST \
