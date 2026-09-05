@@ -1,0 +1,117 @@
+name: V143 view-level concurrency gate
+
+on:
+  workflow_dispatch:
+  push:
+    branches:
+      - v143-contextual-prune-lobo
+    paths:
+      - analyzer/v143_view_level_demucs_child.py
+      - analyzer/v143_view_level_concurrency_modal.py
+      - .github/scripts/v143_view_level_concurrency_collect.py
+      - .github/workflows/v143-view-level-concurrency.yml
+
+permissions:
+  contents: read
+
+env:
+  MODAL_ENVIRONMENT: main
+  MAIN_SHA: bb992d901e78ab19645f8edc8e330d5a142ebd8e
+  APPROVED_SOURCE_SHA256: 215bd5a657c5326f08f132ae358595a95c30b39bb7493a52c2f910d5a608149f
+  PYTHONUNBUFFERED: '1'
+
+jobs:
+  view-concurrency-gate:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    env:
+      MODAL_TOKEN_ID: ${{ secrets.MODAL_TOKEN_ID }}
+      MODAL_TOKEN_SECRET: ${{ secrets.MODAL_TOKEN_SECRET }}
+
+    steps:
+      - name: Checkout diagnostic branch
+        uses: actions/checkout@v4
+
+      - name: Enforce exact structural boundary
+        shell: bash
+        run: |
+          set -euo pipefail
+          ACTUAL_MAIN="$(git ls-remote origin refs/heads/main | awk '{print $1}')"
+          test "$ACTUAL_MAIN" = "$MAIN_SHA"
+          test -n "${MODAL_TOKEN_ID:-}"
+          test -n "${MODAL_TOKEN_SECRET:-}"
+          test "$(sha256sum public/gomywayfullaitest.m4a | awk '{print $1}')" = "$APPROVED_SOURCE_SHA256"
+          test "$(git hash-object analyzer/v143_production_separator.py)" = '05ae1978fa02f8c84ccc1e44547fc4e4cea9798b'
+          test "$(git hash-object analyzer/v143_seeded_audio_separator_cli.py)" = '645f324c207d67b32c6d279657805ff8f25c3aa0'
+          test "$(git hash-object analyzer/v143_seeded_separator.py)" = '250534e516cad36e49cae35b6eab2b88654be2d3'
+          test "$(git hash-object analyzer/v143_ai_tab_gpu_worker.py)" = 'e7cdddfbf9e55e46be8397224b11133e7636ebb6'
+          test "$(git hash-object analyzer/v143_view_level_demucs_child.py)" = '7ffdf5183360f18ef2e356a12d1112d3f651ccbf'
+          test "$(git hash-object analyzer/v143_view_level_concurrency_modal.py)" = 'ef14db309500c262d59a50bfaaec4d8ffa9b570a'
+          test "$(git hash-object .github/scripts/v143_view_level_concurrency_collect.py)" = 'd3bcaeec638a3fc078515c0139390b2a4947e53c'
+          python3 -m py_compile \
+            analyzer/v143_view_level_demucs_child.py \
+            analyzer/v143_view_level_concurrency_modal.py \
+            .github/scripts/v143_view_level_concurrency_collect.py
+          grep -q '@app.function(image=image, gpu="L4", cpu=2.0, timeout=1800, memory=8192)' analyzer/v143_view_level_concurrency_modal.py
+          grep -q 'multiprocessing.get_context("spawn")' analyzer/v143_view_level_concurrency_modal.py
+          grep -q 'direct_process.start()' analyzer/v143_view_level_concurrency_modal.py
+          grep -q 'cascade_process.start()' analyzer/v143_view_level_concurrency_modal.py
+          grep -q 'intraDemucsParallelism": False' analyzer/v143_view_level_concurrency_modal.py
+          grep -q 'crossRequestPersistence": False' analyzer/v143_view_level_concurrency_modal.py
+          grep -q 'call.cancel(terminate_containers=True)' .github/scripts/v143_view_level_concurrency_collect.py
+          echo "diagnosticSourceCommit=$GITHUB_SHA"
+          echo 'scope=view-level-concurrency-only'
+          echo 'directDemucsExecutionDevice=cpu'
+          echo 'roformerExecutionDevice=L4'
+          echo 'cascadeDemucsExecutionDevice=cpu'
+          echo 'intraDemucsParallelism=false'
+          echo 'crossRequestPersistence=false'
+          echo 'persistentStemRetentionAuthorized=false'
+          echo 'productionWorkerChanged=false'
+          echo 'productionBridgeChanged=false'
+          echo 'vercelChanged=false'
+          echo 'referenceFacingAccuracyScored=false'
+          echo 'referenceScoreCalls=0'
+
+      - name: Set up Python 3.11
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Install Modal client
+        shell: bash
+        run: |
+          set -euo pipefail
+          python -m pip install --upgrade pip >/dev/null
+          python -m pip install 'modal==1.5.5' >/dev/null
+          modal token set --token-id "$MODAL_TOKEN_ID" --token-secret "$MODAL_TOKEN_SECRET" >/dev/null
+          modal --version
+
+      - name: Deploy isolated view-concurrency probe only
+        shell: bash
+        run: |
+          set -euo pipefail
+          modal deploy --env main analyzer/v143_view_level_concurrency_modal.py
+
+      - name: Run exact view-level concurrency gate
+        shell: bash
+        run: |
+          set -euo pipefail
+          python .github/scripts/v143_view_level_concurrency_collect.py
+
+      - name: Preserve aggregate concurrency evidence only
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: v143-view-level-concurrency
+          path: debug/v143-contextual-prune/view-level-concurrency/summary.json
+          if-no-files-found: warn
+          retention-days: 14
+
+      - name: Stop isolated concurrency app after probe
+        if: always()
+        shell: bash
+        run: |
+          modal app stop dadrock-v143-view-level-concurrency-probe --env main --yes || true
+          echo 'diagnosticAppCleanupAttempted=true'
+          echo 'productionAppTouched=false'
