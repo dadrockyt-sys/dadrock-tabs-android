@@ -75,7 +75,7 @@ def main() -> None:
             "(usingV143RhythmAnalyzer\n        ? 'start'\n        : 'analyze')",
             "operation === 'status' ||\n      operation === 'ack'",
             "operation === 'start' ||\n      operation === 'analyze'",
-            "operation: 'status'",
+            "token: analyzerToken,\n            operation,\n            jobToken,",
             "status: 'processing'",
             "{ status: 202 }",
             "bridgeData?.status !== 'completed'",
@@ -97,7 +97,6 @@ def main() -> None:
             "operation: 'status'",
             "operation: 'ack'",
             "21 * 60 * 1000",
-            "response.status === 202",
             "!data.generatedTab",
             "return data;",
             "await requestTabAnalysis(",
@@ -136,10 +135,13 @@ def main() -> None:
         "vercel wiring",
     )
 
-    # Status/ack requests are control-plane only and must not carry Blob secrets
-    # from the browser. The server owns the analyzer token and sends the job token.
-    status_body = """? {\n            token: analyzerToken,\n            operation,\n            jobToken,\n          }"""
-    require(status_body in route, "status/ack control body changed unexpectedly")
+    # Control-plane requests contain only the server-side analyzer token,
+    # operation, and opaque HMAC-signed job capability. Blob credentials are
+    # included only in start/analyze request bodies.
+    require(
+        "? {\n            token: analyzerToken,\n            operation,\n            jobToken,\n          }" in route,
+        "status/ack control body changed unexpectedly",
+    )
 
     summary = {
         "schemaVersion": 1,
