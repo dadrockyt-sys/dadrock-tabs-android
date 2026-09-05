@@ -1,6 +1,6 @@
 # CURRENT STATE — DadRock `/ai-tab`
 
-Updated: 2026-09-05 12:50 America/Toronto  
+Updated: 2026-09-05 12:56 America/Toronto  
 Branch: `v143-contextual-prune-lobo`
 
 > Compact continuation checkpoint. Older dedicated checkpoints remain authoritative; omission here does not revoke frozen boundaries.
@@ -41,39 +41,60 @@ Proofs GREEN:
 - decisive fail-fast transition `33981664796` / `101347836824`, artifact `9973957720`;
 - hardened production bridge deploy/smoke `33981874155` / `101348420851`.
 
-## Preview async breakthrough E2E — FIRST ATTEMPT STOPPED IN PREFLIGHT / ZERO MODEL STARTS
+## Preview async breakthrough E2E — PROTECTION PREFLIGHT BLOCKED / ZERO MODEL STARTS
 
-Workflow `.github/workflows/v143-preview-async-breakthrough-e2e.yml`, creation commit `27d9af18496888564eec32f8858b29c4b988e4c9`.
+### Attempt 1 — historical Preview
 
-Run `33982105469`, job `101349042393`:
+Workflow `.github/workflows/v143-preview-async-breakthrough-e2e.yml`, commit `27d9af18496888564eec32f8858b29c4b988e4c9`, run `33982105469`, job `101349042393`.
 
-- exact route/page/bridge/protocol/worker/scheduler/audio source fingerprints: **SUCCESS**;
-- Node/Vercel CLI setup: **SUCCESS**;
-- old Preview deployment inspection: still exact ID `dpl_FzuFoFNsaZcaV73RXSTejoH6cLpz`, target `preview`, status `Ready`;
-- protected `/ai-tab` access unexpectedly returned **HTTP 403** through `vercel curl` at `2026-09-05 17:49Z`;
-- therefore Preview preflight step **FAILED** and model-bearing step 7 was **SKIPPED**;
-- `modelBearingStartRequestCount=0` for this attempt;
-- no audio read/model execution caused by this E2E attempt;
-- no job token/result/transcription existed; cleanup completed;
-- Production Vercel untouched.
+- exact source fingerprints GREEN;
+- historical Preview `dpl_FzuFoFNsaZcaV73RXSTejoH6cLpz` still target `preview`, Ready;
+- `vercel curl /ai-tab` returned HTTP 403;
+- model-bearing step skipped;
+- model start count = 0.
 
-The same old Preview had authenticated correctly about five hours earlier in run `33968019067`, so this is a stale/protection-access condition on that historical deployment, not evidence against async routing or the hardened Modal bridge.
+### Attempt 2 — fresh Preview
 
-## NEXT STEP — FRESH PREVIEW, STILL ONE MODEL START TOTAL
+Workflow `.github/workflows/v143-fresh-preview-async-breakthrough-e2e.yml`, commit `58be9aa7b5606783a508917ce4531cfd512d66da`, run `33982235357`, job `101349393362`.
 
-Do **not** weaken/disable Deployment Protection and do not use Production Vercel.
+- exact source fingerprints GREEN;
+- current Preview branch environment pulled;
+- local Next 16.1.6 build GREEN;
+- fresh Preview-only deployment GREEN:
+  - ID **`dpl_F6ksguDvc1nVAt33jNxxoVTmyyJA`**;
+  - URL `https://dadrock-tabs-android-r602jctx9-stephen-mcnally-s-projects.vercel.app`;
+  - target `preview`, status Ready;
+  - production promotion=false;
+- protected `vercel curl /ai-tab` again returned **HTTP 403**;
+- model-bearing start step skipped;
+- model start count remains **0 total**;
+- no job token, audio/model execution, or transcription artifact was created.
 
-1. Modify the E2E workflow to pull current **Preview** branch environment, build the exact current branch source, and deploy a fresh protected Preview only (`vercel build` + `vercel deploy --prebuilt`, never `--prod`).
-2. Require new deployment target `preview`, Ready, route/page/runtime source pins unchanged, and authenticated `vercel curl /ai-tab` = 200.
-3. Only after that preflight succeeds, issue the **first and only model-bearing Rhythm start request**. The failed run launched zero starts, so the authorized model-start budget remains one.
-4. Poll the same signed token beyond 150s if required; require terminal tab + V143 safety/product contract; ACK once; preserve aggregate-only evidence.
-5. On any model-bearing failure, do not start again; diagnose first.
+Fresh deployment therefore rules out stale Preview state. The remaining blocker is specifically **Deployment Protection automation authentication from GitHub Actions**, not Modal async routing, build output, or deployment freshness.
+
+## Deployment Protection authentication diagnosis
+
+Live Vercel documentation confirms supported protected-automation methods:
+
+1. Protection Bypass for Automation via `VERCEL_AUTOMATION_BYPASS_SECRET` and `x-vercel-protection-bypass` header; or
+2. Trusted Sources / GitHub Actions OIDC via `id-token: write`, `core.getIDToken()`, and `x-vercel-trusted-oidc-idp-token` header.
+
+Do not disable/weaken Deployment Protection. Prefer a configured Trusted Sources OIDC path; if unavailable, use only an already-configured automation bypass secret, never expose it and never alter Production protection merely for the test.
+
+## NEXT STEP — AUTH-ONLY PROBE BEFORE THE ONE MODEL START
+
+1. Run a no-model/no-audio protected-access probe against fresh Preview `dpl_F6ksguDvc1nVAt33jNxxoVTmyyJA` using GitHub Actions OIDC as documented by Vercel.
+2. If OIDC returns 200, use the same header on start/status/ACK in the single E2E workflow.
+3. If OIDC is not trusted, probe whether an existing `VERCEL_AUTOMATION_BYPASS_SECRET` GitHub secret is configured without printing it; if present, use the documented bypass header.
+4. Only after protected `/ai-tab` = 200 may the first and only model-bearing Rhythm start occur.
+5. Poll same token beyond 150s if required; require terminal tab + safety contract + ACK cleanup.
+6. Any post-start failure => diagnose, never rerun model automatically.
 
 Approved source remains `public/jimmy-paige-midterm-v1/gomyway-midterm-source.m4a`, Git blob `4dd709e3fa177b4daeed71ca97f0199757729d4b`.
 
 ### Hard stops
 
-- **Exactly one model/audio start request total after successful fresh-Preview preflight.**
+- **Model/audio start requests so far = 0; budget remaining = 1.**
 - No Production Vercel environment change/promotion.
 - No Deployment Protection weakening/disablement.
 - No model/scheduler change.
