@@ -6,6 +6,8 @@ on:
       - v143-contextual-prune-lobo
     paths:
       - '.github/workflows/v143-hardened-async-failfast-smoke.yml'
+      - 'analyzer/v143_hardened_async_failfast_modal.py'
+      - 'analyzer/v143_modal_http_endpoint.py'
 
 permissions:
   contents: read
