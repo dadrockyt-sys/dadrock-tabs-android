@@ -16,6 +16,7 @@ env:
   MODAL_ENVIRONMENT: main
   MAIN_SHA: bb992d901e78ab19645f8edc8e330d5a142ebd8e
   APPROVED_SOURCE_SHA256: 215bd5a657c5326f08f132ae358595a95c30b39bb7493a52c2f910d5a608149f
+  V143_SEEDED_SCHEDULER_RUNTIME_APP_NAME: dadrock-v143-seeded-scheduler-runtime-gate-${{ github.run_id }}-${{ github.run_attempt }}
   PYTHONUNBUFFERED: '1'
 
 jobs:
@@ -38,13 +39,15 @@ jobs:
           test "$ACTUAL_MAIN" = "$MAIN_SHA"
           test -n "${MODAL_TOKEN_ID:-}"
           test -n "${MODAL_TOKEN_SECRET:-}"
+          test -n "${V143_SEEDED_SCHEDULER_RUNTIME_APP_NAME:-}"
+          test "$V143_SEEDED_SCHEDULER_RUNTIME_APP_NAME" = "dadrock-v143-seeded-scheduler-runtime-gate-${GITHUB_RUN_ID}-${GITHUB_RUN_ATTEMPT}"
           test "$(sha256sum public/gomywayfullaitest.m4a | awk '{print $1}')" = "$APPROVED_SOURCE_SHA256"
           test "$(git hash-object analyzer/v143_production_separator.py)" = '05ae1978fa02f8c84ccc1e44547fc4e4cea9798b'
           test "$(git hash-object analyzer/v143_seeded_audio_separator_cli.py)" = '645f324c207d67b32c6d279657805ff8f25c3aa0'
           test "$(git hash-object analyzer/v143_seeded_separator.py)" = 'fc9b4c45c208d80be7abab64a8959f2a3babcee8'
           test "$(git hash-object analyzer/v143_ai_tab_gpu_worker.py)" = 'e7cdddfbf9e55e46be8397224b11133e7636ebb6'
-          test "$(git hash-object analyzer/v143_seeded_scheduler_runtime_modal.py)" = '94ce232eb2a86bafb95815ee693e19c5c38af1b7'
-          test "$(git hash-object .github/scripts/v143_seeded_scheduler_runtime_collect.py)" = 'dea00bc99f5cf06b8e1d1ab60643840c6924968d'
+          test "$(git hash-object analyzer/v143_seeded_scheduler_runtime_modal.py)" = 'acbbee111ee4f8818b5b21f898253d7ea0625bec'
+          test "$(git hash-object .github/scripts/v143_seeded_scheduler_runtime_collect.py)" = 'bd01ce7784c5b05d4b72bfde733342b838e9b30f'
           python3 -m py_compile \
             analyzer/v143_seeded_scheduler_runtime_modal.py \
             analyzer/v143_seeded_separator.py \
@@ -55,12 +58,15 @@ jobs:
           test "$(grep -c 'result = build_seeded_v143_stems(source, output_root)' analyzer/v143_seeded_scheduler_runtime_modal.py)" = '1'
           grep -q 'V143_DEMUCS_SHIFT_TRACE_PATH' analyzer/v143_seeded_scheduler_runtime_modal.py
           grep -q 'V143_DEMUCS_RUNTIME_TRACE_PATH' analyzer/v143_seeded_scheduler_runtime_modal.py
+          grep -q 'V143_SEEDED_SCHEDULER_RUNTIME_APP_NAME' analyzer/v143_seeded_scheduler_runtime_modal.py
+          grep -q 'V143_SEEDED_SCHEDULER_RUNTIME_APP_NAME' .github/scripts/v143_seeded_scheduler_runtime_collect.py
           grep -q 'temp.cleanup()' analyzer/v143_seeded_scheduler_runtime_modal.py
           if grep -q 'v143_view_level_demucs_child' analyzer/v143_seeded_scheduler_runtime_modal.py; then
             echo 'generic concurrency helper import is forbidden in implementation-specific runtime gate' >&2
             exit 1
           fi
           echo "diagnosticSourceCommit=$GITHUB_SHA"
+          echo "isolatedRuntimeApp=$V143_SEEDED_SCHEDULER_RUNTIME_APP_NAME"
           echo 'scope=seeded-scheduler-approved-fixture-runtime-only'
           echo 'implementationSpecific=true'
           echo 'approvedFixtureExecutionsPlanned=1'
@@ -111,6 +117,6 @@ jobs:
         if: always()
         shell: bash
         run: |
-          modal app stop dadrock-v143-seeded-scheduler-runtime-gate --env main --yes || true
-          echo 'diagnosticAppCleanupAttempted=true'
+          modal app stop "$V143_SEEDED_SCHEDULER_RUNTIME_APP_NAME" --env main --yes || true
+          echo "diagnosticAppCleanupAttempted=true app=$V143_SEEDED_SCHEDULER_RUNTIME_APP_NAME"
           echo 'productionAppTouched=false'
