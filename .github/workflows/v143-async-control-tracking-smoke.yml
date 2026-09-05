@@ -1,6 +1,7 @@
 name: V143 Async Control Tracking Smoke
 
 on:
+  workflow_dispatch:
   push:
     branches:
       - v143-contextual-prune-lobo
