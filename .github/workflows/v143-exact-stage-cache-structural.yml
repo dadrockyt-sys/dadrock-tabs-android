@@ -1,0 +1,33 @@
+name: V143 exact stage cache structural gate
+
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  structural-cache-gate:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - name: Checkout diagnostic branch
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: Run synthetic exact-cache gate
+        run: |
+          set -euo pipefail
+          python analyzer/v143_exact_stage_cache_probe.py | tee v143_exact_stage_cache_probe.json
+
+      - name: Upload structural-gate evidence
+        uses: actions/upload-artifact@v4
+        with:
+          name: v143-exact-stage-cache-structural
+          path: v143_exact_stage_cache_probe.json
+          if-no-files-found: error
+          retention-days: 7
