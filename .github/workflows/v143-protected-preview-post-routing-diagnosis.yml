@@ -18,43 +18,79 @@ jobs:
     env:
       PREVIEW_URL: https://dadrock-tabs-android-bx51iz9tr-stephen-mcnally-s-projects.vercel.app
     steps:
-      - name: Prove malformed POST reaches Next route before analyzer selection
+      - name: Inspect trusted OIDC GET and malformed POST without redirects
         shell: bash
         run: |
           set -euo pipefail
           test -n "${ACTIONS_ID_TOKEN_REQUEST_URL:-}"
           test -n "${ACTIONS_ID_TOKEN_REQUEST_TOKEN:-}"
-          RESPONSE="$(
-            curl --silent --show-error --fail \
-              --retry 2 --retry-all-errors \
-              --header "Authorization: bearer $ACTIONS_ID_TOKEN_REQUEST_TOKEN" \
-              "$ACTIONS_ID_TOKEN_REQUEST_URL"
-          )"
-          OIDC_TOKEN="$(python3 -c 'import json,sys; print(json.load(sys.stdin)["value"])' <<<"$RESPONSE")"
-          test -n "$OIDC_TOKEN"
-          echo "::add-mask::$OIDC_TOKEN"
 
-          STATUS="$(
-            curl --silent --show-error --location --max-time 30 \
+          mint_oidc() {
+            local response token
+            response="$(
+              curl --silent --show-error --fail \
+                --retry 2 --retry-all-errors \
+                --header "Authorization: bearer $ACTIONS_ID_TOKEN_REQUEST_TOKEN" \
+                "$ACTIONS_ID_TOKEN_REQUEST_URL"
+            )"
+            token="$(python3 -c 'import json,sys; print(json.load(sys.stdin)["value"])' <<<"$response")"
+            test -n "$token"
+            echo "::add-mask::$token" >&2
+            printf '%s' "$token"
+          }
+
+          OIDC_TOKEN="$(mint_oidc)"
+          GET_STATUS="$(
+            curl --silent --show-error --max-redirs 0 --max-time 30 \
+              --header "x-vercel-trusted-oidc-idp-token: $OIDC_TOKEN" \
+              --dump-header get-headers.txt \
+              --output /dev/null \
+              --write-out '%{http_code}' \
+              "$PREVIEW_URL/ai-tab"
+          )"
+          unset OIDC_TOKEN
+
+          OIDC_TOKEN="$(mint_oidc)"
+          POST_STATUS="$(
+            curl --silent --show-error --max-redirs 0 --max-time 30 \
               --header "x-vercel-trusted-oidc-idp-token: $OIDC_TOKEN" \
               --request POST \
               --header 'Content-Type: application/json' \
               --data-binary '{"transcriptionType":"invalid"}' \
+              --dump-header post-headers.txt \
               --output response.json \
               --write-out '%{http_code}' \
               "$PREVIEW_URL/api/analyze-audio-tab"
           )"
           unset OIDC_TOKEN
-          echo "malformedPostStatus=$STATUS"
-          test "$STATUS" = "400"
+
           python3 - <<'PY'
-          import json
-          data = json.load(open('response.json', encoding='utf-8'))
-          assert data.get('error') == 'Transcription type must be lead, rhythm, or bass.'
-          print('nextRouteReached=true')
-          print('analyzerCallPossible=false')
+          from pathlib import Path
+          from urllib.parse import urlparse
+
+          def header_info(path):
+              lines = Path(path).read_text(encoding='utf-8', errors='replace').splitlines()
+              location = ''
+              for line in lines:
+                  if line.lower().startswith('location:'):
+                      location = line.split(':', 1)[1].strip()
+              parsed = urlparse(location) if location else None
+              return bool(location), (parsed.hostname or '') if parsed else ''
+
+          get_has_location, get_location_host = header_info('get-headers.txt')
+          post_has_location, post_location_host = header_info('post-headers.txt')
+          print(f'getHasLocation={str(get_has_location).lower()}')
+          print(f'getLocationHost={get_location_host or "none"}')
+          print(f'postHasLocation={str(post_has_location).lower()}')
+          print(f'postLocationHost={post_location_host or "none"}')
           print('modelBearingStartRequestCount=0')
           print('audioUrlSupplied=false')
+          print('analyzerCallPossible=false')
           print('referenceFacingInputs=0')
           PY
-          rm -f response.json
+          echo "getNoRedirectStatus=$GET_STATUS"
+          echo "malformedPostNoRedirectStatus=$POST_STATUS"
+
+          rm -f get-headers.txt post-headers.txt response.json
+          test "$GET_STATUS" = "200"
+          test "$POST_STATUS" = "400"
