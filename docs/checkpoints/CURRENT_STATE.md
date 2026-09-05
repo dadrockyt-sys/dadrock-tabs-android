@@ -1,6 +1,6 @@
 # CURRENT STATE — DadRock `/ai-tab`
 
-Updated: 2026-09-05 00:12 America/Toronto  
+Updated: 2026-09-05 00:14 America/Toronto  
 Branch: `v143-contextual-prune-lobo`
 
 > Compact continuation checkpoint. Older dedicated checkpoints remain authoritative; omission here does not revoke frozen boundaries.
@@ -81,7 +81,7 @@ Repository-owned `public/gomywayfullaitest.m4a`:
 - Verified scheduler ordering, literal `spawn`, deterministic child environments, parent RoFormer GPU visibility, fail-closed cleanup, pipe closure, outputs, public keys, and pinned helper blobs.
 - `referenceFacingInputs=0`; `scoreCalls=0`; `qualityVerdictMade=false`.
 
-## Promotion Gate 2 — APPROVED FIXTURE RUNTIME / FAILED / DIAGNOSIS REQUIRED
+## Promotion Gate 2 — APPROVED FIXTURE RUNTIME / FAILED BY DUPLICATE-RUN ISOLATION RACE
 
 Implementation-specific one-shot harness is branch-local and does **not** import/reuse the CLOSED generic concurrency helper:
 
@@ -94,17 +94,30 @@ Implementation-specific one-shot harness is branch-local and does **not** import
 - aggregate artifact `9962641949` records `error=RemoteError`, `runtimeSeconds=787.991715137`, `referenceFacingInputs=0`, `referenceScoreCalls=0`, `qualityVerdictMade=false`;
 - local job log contains only Modal client rethrow (`modal.exception.RemoteError`), with no remote traceback/message; evidence output was not returned from the remote call;
 - runtime workflow push filters include only scheduler/runtime source + workflow paths, so documentation-only checkpoint commits do **not** trigger another approved-fixture execution;
-- **No rerun authorized yet. Diagnose the preserved failure first.**
+- **No rerun authorized yet. Fix duplicate-run/isolation behavior first.**
 
-### Gate 2 diagnosis so far
+### Gate 2 diagnosis — preserved historical logs
 
-- The earlier concern that `spawn` loses deterministic traces is **ruled out**: the scheduler child inherits `V143_DEMUCS_SHIFT_TRACE_PATH` and `V143_DEMUCS_RUNTIME_TRACE_PATH`; `v143_seeded_audio_separator_cli.py` writes those traces directly from each child process.
-- Resource-envelope mismatch is **ruled out as the distinguishing factor**: both the green generic concurrency proof and Gate 2 use production `v143_ai_tab_gpu_worker.image`, `gpu="L4"`, `cpu=2.0`, `memory=8192`, `timeout=1800`.
-- Gate 2 wraps the model invocation and all parity/contract assertions in `except BaseException`; an ordinary model/assertion/parity failure inside that block should therefore return structured aggregate failure evidence rather than surface as a client `RemoteError`.
-- The ~788s failure timing is close to the already-proven ~773s concurrent-separation wall, so the current leading class is **remote process/container-level termination or a failure in cleanup/return outside the caught body**, not yet a demonstrated scheduler parity regression.
-- No approved-fixture rerun has been performed after the failure.
+A diagnosis-only workflow was added without invoking the fixture or touching production:
 
-Gate invokes current `build_seeded_v143_stems()` exactly once against the approved fixture and requires:
+- `.github/workflows/v143-seeded-scheduler-runtime-log-diagnosis.yml` commit `b865e0b6c3eec94f765db942547a38f9214b91aa`;
+- Actions run `33943967529`, job `101246567537`: **SUCCESS**;
+- Modal app history/log retrieval only; `approvedFixtureInvoked=false`, `productionAppTouched=false`, `referenceFacingInputs=0`, `referenceScoreCalls=0`, `qualityVerdictMade=false`.
+
+Historical logs prove **two concurrent remote calls** were running against the same isolated Modal app `dadrock-v143-seeded-scheduler-runtime-gate`:
+
+1. Function call `fc-01M1QV7RXNV2BZSF2688P5PKWY` / container `ta-01M1QV7S83GN1E3P5Z1W9MC3NR` started at `03:54:58Z` and completed the scheduler path: RoFormer done at `80.327s`, direct Demucs done at `716.633s`, cascade Demucs done at `766.620s`, `separator.done elapsed=766.717`.
+2. Function call `fc-01M1QV8G1D2HNMW9BHNZGD9DSR` / container `ta-01M1QV8G9TG3Y25S5DQ9NHFT3R` started at `03:55:16Z`, ~18s later. Its direct Demucs completed at `738.694s`; its cascade Demucs was still running when the shared app was stopped by CLI cleanup at `04:07:47Z`. The child then received cancellation, raised `KeyboardInterrupt`, and the runner terminated.
+
+Therefore:
+
+- the observed `RemoteError` is explained by a **duplicate-run/shared-isolated-app cleanup race**;
+- one scheduler call demonstrably reached `separator.done`; the failure is **not evidence of a scheduler parity regression**;
+- the earlier hypotheses about lost `spawn` traces and a different Gate 2 image/resource envelope are ruled out;
+- no post-failure approved-fixture rerun has been performed;
+- exact source of the second invocation (sibling Actions run vs another duplicate trigger path) is the immediate diagnostic target.
+
+Gate still requires, before promotion:
 
 - all frozen source/normalized/model/WAV/PCM identities above;
 - two exact deterministic Demucs shift events (`0,22050,6026` each);
@@ -112,14 +125,13 @@ Gate invokes current `build_seeded_v143_stems()` exactly once against the approv
 - unchanged top-level return keys, model map, settings map, and output filenames;
 - request-scoped `TemporaryDirectory` removed before evidence return;
 - aggregate evidence only; no audio/stem bytes retained or uploaded;
-- `referenceFacingInputs=0`, `referenceScoreCalls=0`, `qualityVerdictMade=false`;
-- isolated Modal app `dadrock-v143-seeded-scheduler-runtime-gate`, stopped in workflow cleanup; production app is not a deployment target.
+- `referenceFacingInputs=0`, `referenceScoreCalls=0`, `qualityVerdictMade=false`.
 
 ## NEXT STEP
 
-1. Retrieve historical logs for the stopped isolated Modal app/run without invoking the approved fixture again.
-2. Identify whether the `RemoteError` was container/process termination, cleanup failure, or another uncaught remote failure.
-3. Checkpoint the exact cause and a narrow corrective change before authorizing any second Gate 2 execution.
+1. Enumerate sibling `V143 Seeded Scheduler Runtime Gate` Actions runs around `2026-09-05 03:54Z` and identify what launched the second remote call.
+2. Make the narrowest branch-only workflow/isolation correction that prevents concurrent or duplicate approved-fixture executions and prevents one run's cleanup from killing another.
+3. Checkpoint the fix and its exact trigger semantics before authorizing a single fresh Gate 2 execution.
 4. Normal-routing E2E remains **LOCKED** until Gate 2 is GREEN/CLOSED.
 
 ### Hard stops
