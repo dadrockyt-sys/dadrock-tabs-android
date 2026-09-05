@@ -68,18 +68,33 @@ jobs:
           set -euo pipefail
           vercel pull --yes --environment=preview --token "$VERCEL_TOKEN" >/dev/null
 
-      - name: Authenticate to protected preview and fail closed on invalid job token
+      - name: Resolve protected Preview with proven CLI sequence
         shell: bash
         run: |
           set -euo pipefail
           OUT=debug/v143-contextual-prune/async-preview-protocol
           mkdir -p "$OUT"
+          vercel inspect "$PREVIEW_URL" --wait --token="$VERCEL_TOKEN" \
+            2>&1 | tee "$OUT/inspect.log"
+          grep -Eq 'status[[:space:]]+.*Ready|status[[:space:]]+● Ready' "$OUT/inspect.log"
+          grep -Eq 'target[[:space:]]+preview' "$OUT/inspect.log"
 
+      - name: Authenticate to protected Preview and fail closed on invalid job token
+        shell: bash
+        run: |
+          set -euo pipefail
+          OUT=debug/v143-contextual-prune/async-preview-protocol
+
+          # This is the exact access shape already proven GREEN by historical
+          # protected Preview run 33843200741: VERCEL_TOKEN remains in the
+          # environment and `vercel curl` owns the protection bypass. Arguments
+          # after `--` belong only to native curl.
           PAGE_STATUS="$(
-            vercel --token "$VERCEL_TOKEN" curl /ai-tab \
+            vercel curl /ai-tab \
               --deployment "$PREVIEW_URL" \
               -- \
               --silent --show-error --location --max-time 30 \
+              --user-agent 'Mozilla/5.0 (compatible; DadRock-V143-Async-Preview/1.0)' \
               --output "$OUT/ai-tab.html" \
               --write-out '%{http_code}'
           )"
@@ -89,11 +104,12 @@ jobs:
           JSON
 
           METRICS="$(
-            vercel --token "$VERCEL_TOKEN" curl /api/analyze-audio-tab \
+            vercel curl /api/analyze-audio-tab \
               --deployment "$PREVIEW_URL" \
               -- \
               --silent --show-error --location --max-time 30 \
               --request POST \
+              --user-agent 'Mozilla/5.0 (compatible; DadRock-V143-Async-Protocol/1.0)' \
               --header 'Content-Type: application/json' \
               --data-binary "@$OUT/request.json" \
               --output "$OUT/response.json" \
@@ -120,6 +136,7 @@ jobs:
               'routeBlob': os.environ['EXPECTED_ROUTE_BLOB'],
               'pageBlob': os.environ['EXPECTED_PAGE_BLOB'],
               'bridgeBlob': os.environ['EXPECTED_BRIDGE_BLOB'],
+              'protectedAccessMethod': 'vercel-inspect-then-curl-env-token-auto-bypass',
               'pageStatus': int(os.environ['PAGE_STATUS']),
               'pageRendered': int(os.environ['PAGE_STATUS']) == 200 and len(page_html) > 500,
               'invalidTokenStatus': int(os.environ['STATUS']),
@@ -139,7 +156,7 @@ jobs:
           assert summary['invalidTokenRejected'] is True
           PY
 
-          rm -f "$OUT/request.json" "$OUT/response.json" "$OUT/ai-tab.html"
+          rm -f "$OUT/request.json" "$OUT/response.json" "$OUT/ai-tab.html" "$OUT/inspect.log"
 
       - name: Preserve aggregate protocol evidence only
         if: always()
