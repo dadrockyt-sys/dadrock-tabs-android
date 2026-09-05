@@ -11,7 +11,7 @@ import json
 import tempfile
 from pathlib import Path
 
-from v143_exact_stage_cache import ExactStageCache, cache_key, sha256_bytes
+from v143_exact_stage_cache import CacheWriteError, ExactStageCache, cache_key, sha256_bytes
 
 
 def base_fingerprint() -> dict:
@@ -61,40 +61,90 @@ def main() -> int:
             "guitar.stage.bin": b"synthetic-guitar-stage-bytes-v143",
             "aggregate.stage.bin": b"synthetic-derived-aggregate-v143",
         }
+        payload_hashes = {name: sha256_bytes(data) for name, data in payloads.items()}
+        compute_calls = {"count": 0}
+
+        def exact_compute():
+            compute_calls["count"] += 1
+            return dict(payloads)
 
         results["emptyMissPassed"] = cache.lookup(fingerprint) is None
 
-        key = cache.store(fingerprint, payloads)
-        hit = cache.lookup(fingerprint)
+        first = cache.resolve(fingerprint, exact_compute)
+        key = cache_key(fingerprint)
         results["cacheKey"] = key
-        results["cacheKeyDeterministicPassed"] = key == cache_key(fingerprint)
-        results["exactHitPassed"] = hit == payloads
+        results["cacheKeyDeterministicPassed"] = cache.entry_path(fingerprint).name == key
+        results["missComputePopulatePassed"] = (
+            first.cache_hit is False
+            and first.cache_write_succeeded is True
+            and first.payloads == payloads
+            and compute_calls["count"] == 1
+        )
+
+        second = cache.resolve(fingerprint, exact_compute)
+        results["hitSkipsComputePassed"] = (
+            second.cache_hit is True
+            and second.cache_write_succeeded is None
+            and second.payloads == payloads
+            and compute_calls["count"] == 1
+        )
         results["exactHitHashesPassed"] = (
-            hit is not None
-            and {name: sha256_bytes(data) for name, data in hit.items()}
-            == {name: sha256_bytes(data) for name, data in payloads.items()}
+            {name: sha256_bytes(data) for name, data in second.payloads.items()} == payload_hashes
         )
 
         mismatch = copy.deepcopy(fingerprint)
         mismatch["runtime_controls"]["torch_intraop_threads"] = 2
         results["keyMismatchMissPassed"] = cache.lookup(mismatch) is None
         results["keyMismatchChangesKeyPassed"] = cache_key(mismatch) != key
+        mismatch_resolution = cache.resolve(mismatch, exact_compute)
+        results["keyMismatchComputesPassed"] = (
+            mismatch_resolution.cache_hit is False
+            and mismatch_resolution.cache_write_succeeded is True
+            and mismatch_resolution.payloads == payloads
+            and compute_calls["count"] == 2
+        )
 
         corrupt_path = cache.entry_path(fingerprint) / "guitar.stage.bin"
         corrupt_path.write_bytes(b"corrupted")
         results["corruptionMissPassed"] = cache.lookup(fingerprint) is None
+        corrupt_resolution = cache.resolve(fingerprint, exact_compute)
+        results["corruptionExactFallbackPassed"] = (
+            corrupt_resolution.cache_hit is False
+            and corrupt_resolution.cache_write_succeeded is False
+            and corrupt_resolution.payloads == payloads
+            and {name: sha256_bytes(data) for name, data in corrupt_resolution.payloads.items()}
+            == payload_hashes
+            and compute_calls["count"] == 3
+        )
+
+        invalid_compute_rejected = False
+        invalid = copy.deepcopy(fingerprint)
+        invalid["normalized_source_sha256"] = "c" * 64
+        try:
+            cache.resolve(invalid, lambda: {"guitar.stage.bin": "not-bytes"})
+        except CacheWriteError:
+            invalid_compute_rejected = True
+        results["invalidComputeNotHiddenPassed"] = invalid_compute_rejected
 
         cache.remove(fingerprint)
-        results["cleanupPassed"] = not cache.entry_path(fingerprint).exists()
+        cache.remove(mismatch)
+        results["cleanupPassed"] = (
+            not cache.entry_path(fingerprint).exists()
+            and not cache.entry_path(mismatch).exists()
+        )
 
     gate_fields = [
         "emptyMissPassed",
         "cacheKeyDeterministicPassed",
-        "exactHitPassed",
+        "missComputePopulatePassed",
+        "hitSkipsComputePassed",
         "exactHitHashesPassed",
         "keyMismatchMissPassed",
         "keyMismatchChangesKeyPassed",
+        "keyMismatchComputesPassed",
         "corruptionMissPassed",
+        "corruptionExactFallbackPassed",
+        "invalidComputeNotHiddenPassed",
         "cleanupPassed",
     ]
     results["allPassed"] = all(results.get(field) is True for field in gate_fields)
