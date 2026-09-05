@@ -1,6 +1,6 @@
 # CURRENT STATE — DadRock `/ai-tab`
 
-Updated: 2026-09-05 — single guarded start sent; unusable start response; NO RETRY; exact server diagnosis next  
+Updated: 2026-09-05 — single guarded start returned HTTP 401; NO RETRY; auth-boundary diagnosis in progress  
 Branch: `v143-contextual-prune-lobo`
 
 > Compact continuation checkpoint. Older dedicated checkpoints remain authoritative; omission here does not revoke frozen boundaries.
@@ -51,36 +51,60 @@ Branch: `v143-contextual-prune-lobo`
 - Final pre-arm active-state check was clean: `in_progress=0`, `queued=0`, `waiting=0`, `requested=0`, `pending=0`.
 - All authoritative route/page/bridge/protocol/worker/scheduler/audio/helper pins passed in the run before any Preview or start work.
 
-## SINGLE ARMED RUN — STOPPED AFTER UNUSABLE START RESPONSE
+## SINGLE ARMED RUN — EXACT CLIENT EVIDENCE
 
 - Exactly one breakthrough run was created from the arming commit: run `33998283085`, job `101392517265`, conclusion **FAILURE**.
 - Fresh Preview deployment: `dpl_G2WxxMA782j87H7tLpAy9cCB4ihD`, URL `https://dadrock-tabs-android-bx51iz9tr-stephen-mcnally-s-projects.vercel.app`, target **preview**, status **Ready**.
 - Production promotion remained false; no `--prod` or promotion command executed.
 - Protected Preview `/ai-tab` preflight succeeded: **HTTP 200**. The prior 403 blocker is resolved.
-- Immediately after that preflight, the helper sent **exactly one** Rhythm `operation=start` POST to the protected Preview `/api/analyze-audio-tab` endpoint using the approved audio and a freshly minted trusted OIDC token.
-- That single start request **did not return a usable accepted async response** (`HTTP 202` + `analysisJob.status=processing` + signed `v143a1.*` token were not jointly satisfied).
-- The helper fail-closed message was: `The one start request was sent but did not yield a usable accepted token. Do not send a second start; diagnose this request.`
-- Because no usable signed job token was available, **no status poll and no ACK were attempted**. The helper intentionally exited with code 4 rather than issuing another start.
-- Runner cleanup succeeded and removed start/status/ACK request/response/token material.
-- Aggregate-only artifact upload succeeded: artifact `9978732479`, zip digest `sha256:e245ae0a89d9c174ce1da14e47c31b252ad516b601d7793b2d982489efc16aa6`, 937 bytes.
-- The artifact summary is expected to retain only aggregate fields including `modelBearingStartRequestCount=1`, `startStatus`, `startCurlExitCode`, `startAccepted=false`, and `terminalState=start-response-unusable`; exact start status still requires artifact/server-log inspection.
+- The helper then sent **exactly one** Rhythm `operation=start` POST using the approved audio and a freshly minted trusted OIDC token.
+- Aggregate artifact `9978732479` was downloaded and inspected. Exact retained values:
+  - `modelBearingStartRequestCount = 1`
+  - `startStatus = 401`
+  - `startCurlExitCode = 0`
+  - `startAccepted = false`
+  - `terminalState = start-response-unusable`
+  - `completed = false`
+  - `acknowledged = false`
+  - `transientResultCleared = false`
+  - `productionEnvironmentChanged = false`
+  - `productionPromotionPerformed = false`
+  - `deploymentProtectionDisabled = false`
+  - `referenceFacingInputs = 0`
+  - `referenceScoreCalls = 0`
+  - `qualityVerdictMade = false`.
+- Artifact zip digest: `sha256:e245ae0a89d9c174ce1da14e47c31b252ad516b601d7793b2d982489efc16aa6`.
+- Because no usable signed `v143a1.*` token returned, **no status poll and no ACK were attempted**. Runner cleanup deleted raw request/response/token/status/ACK files.
 
-### HARD STOP AFTER THIS RUN
+## AUTH-BOUNDARY DIAGNOSIS — CURRENT EVIDENCE
 
-- **Model-bearing start-request budget is now consumed/ambiguous: exactly one start POST was sent.**
-- Whether the Modal orchestrator/worker/model actually began is **not yet proven**. Do not infer from the fast client failure.
-- **DO NOT RERUN `33998283085`. DO NOT EDIT THE TRIGGER WORKFLOW TO ARM AGAIN. DO NOT SEND A SECOND START.**
-- Since no token returned, cleanup of any possibly-created transient backend job cannot be driven from the runner; determine from exact server/bridge evidence whether a job was created. Any transient async state remains bounded by the existing <=900s TTL if it exists.
-- The terminal-failure ACK repair was not exercised because the failure occurred before a usable signed job token was obtained.
+- Client transport itself succeeded (`curl exit 0`), so this was a real HTTP **401**, not a timeout/lost response.
+- `app/api/analyze-audio-tab/route.js` validates required config first; missing analyzer URL/token/blob token would return **503**, not 401. Its downstream analyzer call propagates the Modal bridge's non-OK HTTP status.
+- Hardened bridge `v143_modal_http_endpoint.py` maps `PermissionError("Unauthorized analyzer request.")` to HTTP **401**. `_start_rhythm_job()` performs `_authorize(payload, expected_token)` **before** creating a job ID, spawning `run_rhythm_async_job`, or writing orchestrator control.
+- Therefore **if the 401 is confirmed to originate from the application/bridge path**, no Modal orchestrator/worker/model could have been spawned by this call.
+- One ambiguity remains before declaring that proof final: Vercel Deployment Protection itself could theoretically return the 401 before the Next.js function. Runtime-log queries for this deployment/window returned no entries, so do not use absence of logs as proof either way.
+- The fresh Preview build log also reported: `1 Secret value cannot be pulled from the preview Environment. Wrote "[SENSITIVE]" as a placeholder`. This is a strong lead for a locally prebuilt secret mismatch, but the exact variable has **not** yet been proven and no secret value has been inspected.
 
-## NEXT — DIAGNOSE THIS EXACT START ONLY
+### MODEL-FREE DISAMBIGUATION ALLOWED
 
-1. Read artifact `9978732479` if possible to recover aggregate `startStatus` / `startCurlExitCode`; do not recover or retain raw start response/token material.
-2. Inspect Vercel logs for deployment `dpl_G2WxxMA782j87H7tLpAy9cCB4ihD` around `2026-09-05T23:19:48Z`, endpoint `/api/analyze-audio-tab`, and determine the exact response status/error category without exposing secrets.
-3. Determine whether the request reached the Modal bridge and whether `_start_rhythm_job` spawned/tracked an orchestrator/worker. Distinguish **pre-bridge configuration/request failure** from **bridge start failure** from **accepted job whose response was lost/malformed**.
-4. If backend execution actually began, diagnose that exact call only. No retry.
-5. If backend execution provably never began, still do not issue another start until the root cause and any proposed repair are checkpointed and the one-start authorization boundary is explicitly reconsidered.
-6. Preserve production/no-reference/no-retention frozen boundaries and save each meaningful diagnosis milestone back here.
+A safe next diagnostic may POST an intentionally invalid request to the **same protected Preview endpoint** using trusted GitHub OIDC, chosen so the Next.js route must return HTTP 400 **before any analyzer/bridge call** (for example an invalid `transcriptionType`). This tests whether protected Preview POST requests reach application code. It must contain no usable audio/model request and must preserve `modelBearingStartRequestCount=0` for the diagnostic itself.
+
+If that malformed POST returns the route's expected 400, then Deployment Protection POST access is proven and the prior 401 is attributable to downstream bridge authorization. Because bridge `_authorize` precedes spawn, that would prove the single start call executed **zero Modal worker/model starts** despite consuming the client start-request budget.
+
+## HARD STOP AFTER THE SINGLE START
+
+- **Exactly one start POST has been sent. No second start is authorized.**
+- **DO NOT RERUN `33998283085`. DO NOT EDIT THE breakthrough trigger workflow to arm again.**
+- The terminal-failure ACK repair was not exercised because no signed job token was obtained.
+- Even if diagnosis proves zero worker/model execution, do not issue another start until root cause + repair are checkpointed and the one-start authorization boundary is explicitly reconsidered.
+
+## NEXT
+
+1. Run only a model-free malformed-POST protected-Preview diagnostic to distinguish Deployment Protection 401 from application/bridge 401.
+2. If application POST access is proven, record that the prior 401 came from Modal bridge authorization and therefore occurred before spawn.
+3. Diagnose the likely locally-prebuilt sensitive environment mismatch without exposing secret values. Prefer metadata/presence/equality-proof mechanisms; never print tokens.
+4. Propose/verify a repair without another model-bearing start. Do not modify scheduler/model/runtime behavior.
+5. Save each meaningful diagnosis milestone back here.
 
 ## HARD STOPS
 
@@ -93,4 +117,4 @@ Branch: `v143-contextual-prune-lobo`
 - No TTL > 15 minutes / no persistent result cache.
 - No whole-branch merge to `main`.
 
-Current authorization state: **OIDC protected access GREEN; exactly one guarded start request has been sent and is now the sole subject of diagnosis; start response was unusable and yielded no signed token; no poll/ACK/second start occurred; NO RETRY is authorized.**
+Current authorization state: **protected Preview GET access GREEN; single guarded start returned exact HTTP 401 with curl transport success; one client start request consumed; no signed token/poll/ACK; model execution remains unproven pending model-free POST disambiguation; NO RETRY.**
