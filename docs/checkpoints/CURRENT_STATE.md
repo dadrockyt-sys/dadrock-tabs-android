@@ -1,6 +1,6 @@
 # CURRENT STATE — DadRock `/ai-tab`
 
-Updated: 2026-09-05 — async lifecycle GREEN; first fresh-Preview E2E next  
+Updated: 2026-09-05 17:43 EDT — async lifecycle GREEN; fresh-Preview dispatch BLOCKED on stale source pin  
 Branch: `v143-contextual-prune-lobo`
 
 > Compact continuation checkpoint. Older dedicated checkpoints remain authoritative; omission here does not revoke frozen boundaries.
@@ -83,6 +83,15 @@ Rerun:
 - production bridge deploy/smoke `33981874155` GREEN;
 - Trusted GitHub OIDC Deployment Protection access GREEN: `33982502347` and refreshability proof `33982582372`.
 
+## DRY GUARD REVIEW — 2026-09-05 17:43 EDT — BLOCKED BEFORE DISPATCH
+
+- No `V143 Fresh Preview Async Breakthrough E2E` model-bearing run has been dispatched by this continuation.
+- The live branch `app/api/analyze-audio-tab/route.js` blob is `742954146a86aa36485d0bbdb3fbd6691a64a712`, matching the authoritative branch async-route source pin above.
+- The committed fresh-Preview workflow currently expects stale `ANALYZE_ROUTE_SHA=877722150399048cec431769718664507767894c`.
+- That mismatch triggers the exact-pin hard stop. **Do not dispatch the workflow in this state.**
+- Before repairing the workflow, re-verify every pinned source path/blob against current branch HEAD and re-read the workflow guards for exactly one model-bearing Rhythm start, status-only polling of the same token, Preview-only deployment, one ACK/cleanup, no production promotion, and aggregate-only retained evidence.
+- Duplicate/in-progress Actions-run verification still must be completed before any dispatch.
+
 ## NEXT — FIRST SINGLE MODEL-BEARING END-TO-END TEST
 
 Use `.github/workflows/v143-fresh-preview-async-breakthrough-e2e.yml` because it builds a **fresh protected Vercel Preview only**, pins the exact route/page/bridge/protocol/worker/scheduler/audio blobs, and hard-codes `modelBearingStartRequestBudget=1` / `priorE2EModelStarts=0` / `productionEnvironmentTargeted=false` / `productionPromotionPerformed=false`.
@@ -126,4 +135,4 @@ Immediate next steps for the fresh chat:
 7. If the single model-bearing job fails **after worker/model execution begins**, stop. Do not retry. Pull GitHub/Modal logs for that exact call and diagnose before any second start.
 8. Save every meaningful milestone/root cause/result back to `docs/checkpoints/CURRENT_STATE.md` on this branch before continuing.
 
-Current authorization state for the fresh chat: **async lifecycle gate GREEN; first single fresh-Preview model-bearing E2E is the next permitted action, subject to duplicate-run check and exact-pin verification.**
+Current authorization state for the fresh chat: **async lifecycle gate GREEN; first single fresh-Preview model-bearing E2E remains the next permitted model-bearing action, but dispatch is currently BLOCKED until the stale source pin is repaired and all duplicate-run/exact-guard checks pass.**
