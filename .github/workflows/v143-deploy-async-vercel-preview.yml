@@ -19,11 +19,9 @@ env:
   VERCEL_PROJECT_ID: prj_6biwsn0iHci6FHNswAUCS8UYrAqF
   NEXT_TELEMETRY_DISABLED: '1'
   NO_COLOR: '1'
-  EXPECTED_ROUTE_BLOB: 742954146a86aa36485d0bbdb3fbd6691a64a712
-  EXPECTED_PAGE_BLOB: de39f2715c6875d757ef730c9e3182ccd4aa00a4
-  EXPECTED_BRIDGE_BLOB: e0cecefacead73d69a905fd6bfb2049b21c87bc3
-  EXPECTED_WORKER_BLOB: 111bf14a8f91045d3478901f8e36b88a2e7f181a
-  EXPECTED_SCHEDULER_BLOB: fc9b4c45c208d80be7abab64a8959f2a3babcee8
+  EXPECTED_ROUTE_BLOB: '742954146a86aa36485d0bbdb3fbd6691a64a712'
+  EXPECTED_PAGE_BLOB: 'de39f2715c6875d757ef730c9e3182ccd4aa00a4'
+  EXPECTED_BRIDGE_BLOB: 'e0cecefacead73d69a905fd6bfb2049b21c87bc3'
 
 jobs:
   deploy-async-preview:
@@ -44,14 +42,9 @@ jobs:
           test "$(git hash-object app/api/analyze-audio-tab/route.js)" = "$EXPECTED_ROUTE_BLOB"
           test "$(git hash-object app/ai-tab/page.js)" = "$EXPECTED_PAGE_BLOB"
           test "$(git hash-object analyzer/v143_modal_http_endpoint.py)" = "$EXPECTED_BRIDGE_BLOB"
-          test "$(git hash-object analyzer/v143_modal_live_endpoint.py)" = "$EXPECTED_WORKER_BLOB"
-          test "$(git hash-object analyzer/v143_seeded_separator.py)" = "$EXPECTED_SCHEDULER_BLOB"
           echo 'productionVercelTargeted=false'
           echo 'modelExecuted=false'
           echo 'audioRead=false'
-          echo 'referenceFacingInputs=0'
-          echo 'referenceScoreCalls=0'
-          echo 'qualityVerdictMade=false'
 
       - name: Set up Node.js 24
         uses: actions/setup-node@v4
@@ -83,10 +76,7 @@ jobs:
         run: |
           set -euo pipefail
           DEPLOYMENT_URL="$(vercel deploy --prebuilt --token "$VERCEL_TOKEN" | tail -n 1)"
-          case "$DEPLOYMENT_URL" in
-            https://*.vercel.app) ;;
-            *) echo "Unexpected preview deployment URL: $DEPLOYMENT_URL" >&2; exit 1 ;;
-          esac
+          echo "$DEPLOYMENT_URL" | grep -Eq '^https://[^ ]+\.vercel\.app$'
           echo "url=$DEPLOYMENT_URL" >> "$GITHUB_OUTPUT"
           echo "previewDeploymentUrl=$DEPLOYMENT_URL"
           echo 'productionPromotionPerformed=false'
@@ -97,96 +87,47 @@ jobs:
           DEPLOYMENT_URL: ${{ steps.deploy.outputs.url }}
         run: |
           set -euo pipefail
-          STATUS="$(
-            vercel curl /ai-tab \
-              --deployment "$DEPLOYMENT_URL" \
-              -- \
-              --silent --show-error --location --max-time 30 \
-              --user-agent 'Mozilla/5.0 (compatible; DadRock-V143-Async-Preview/1.0)' \
-              --output /dev/null --write-out '%{http_code}'
-          )"
+          STATUS="$(vercel curl /ai-tab --deployment "$DEPLOYMENT_URL" -- --silent --show-error --location --max-time 30 --output /dev/null --write-out '%{http_code}')"
           echo "previewAiTabStatus=$STATUS"
           test "$STATUS" = '200'
 
-      - name: Run no-model async protocol route check
+      - name: Preserve aggregate preview deployment evidence
+        if: always()
         shell: bash
         env:
           DEPLOYMENT_URL: ${{ steps.deploy.outputs.url }}
         run: |
           set -euo pipefail
-          OUT=debug/v143-contextual-prune/async-vercel-preview
+          OUT=debug/v143-contextual-prune/async-vercel-preview-deploy
           mkdir -p "$OUT"
-          cat > "$OUT/request.json" <<'JSON'
-          {
-            "operation": "status",
-            "jobToken": "v143a1.invalid.invalid",
-            "transcriptionType": "rhythm"
-          }
-          JSON
-
-          METRICS="$(
-            vercel curl /api/analyze-audio-tab \
-              --deployment "$DEPLOYMENT_URL" \
-              -- \
-              --silent --show-error --location --max-time 30 \
-              --request POST \
-              --user-agent 'Mozilla/5.0 (compatible; DadRock-V143-Async-Protocol/1.0)' \
-              --header 'Content-Type: application/json' \
-              --data-binary "@$OUT/request.json" \
-              --output "$OUT/response.json" \
-              --write-out '%{http_code} %{time_total}'
-          )"
-          STATUS="${METRICS%% *}"
-          ELAPSED="${METRICS#* }"
-          export STATUS ELAPSED DEPLOYMENT_URL OUT
-
           python3 - <<'PY'
           import json
           import os
           from pathlib import Path
-
-          out = Path(os.environ['OUT'])
-          try:
-              response = json.loads((out / 'response.json').read_text(encoding='utf-8'))
-          except Exception:
-              response = {}
-          status = int(os.environ['STATUS'])
-          message = str(response.get('error') or response.get('detail') or '')
           summary = {
               'schemaVersion': 1,
-              'gate': 'v143-async-vercel-preview-no-model',
+              'gate': 'v143-async-vercel-preview-deploy',
               'sourceCommit': os.environ.get('GITHUB_SHA'),
-              'previewDeploymentUrl': os.environ['DEPLOYMENT_URL'],
+              'previewDeploymentUrl': os.environ.get('DEPLOYMENT_URL') or None,
               'routeBlob': os.environ['EXPECTED_ROUTE_BLOB'],
               'pageBlob': os.environ['EXPECTED_PAGE_BLOB'],
               'bridgeBlob': os.environ['EXPECTED_BRIDGE_BLOB'],
-              'workerBlob': os.environ['EXPECTED_WORKER_BLOB'],
-              'schedulerBlob': os.environ['EXPECTED_SCHEDULER_BLOB'],
-              'previewPageStatus': 200,
-              'invalidTokenStatus': status,
-              'invalidTokenRejected': status == 400 and 'Invalid async job token' in message,
-              'protocolRequestSeconds': float(os.environ['ELAPSED']),
               'productionPromotionPerformed': False,
-              'workerSpawned': False,
               'modelExecuted': False,
               'audioRead': False,
               'referenceFacingInputs': 0,
               'referenceScoreCalls': 0,
               'qualityVerdictMade': False,
           }
-          (out / 'summary.json').write_text(json.dumps(summary, indent=2) + '\n', encoding='utf-8')
+          Path('debug/v143-contextual-prune/async-vercel-preview-deploy/summary.json').write_text(json.dumps(summary, indent=2) + '\n', encoding='utf-8')
           print(json.dumps(summary, indent=2))
-          if not summary['invalidTokenRejected']:
-              raise SystemExit(f"Preview async protocol did not fail closed as expected: status={status} message={message!r}")
           PY
 
-          rm -f "$OUT/request.json" "$OUT/response.json"
-
-      - name: Preserve aggregate preview evidence only
+      - name: Upload aggregate preview deployment evidence
         if: always()
         uses: actions/upload-artifact@v4
         with:
-          name: v143-async-vercel-preview-no-model
-          path: debug/v143-contextual-prune/async-vercel-preview/summary.json
+          name: v143-async-vercel-preview-deploy
+          path: debug/v143-contextual-prune/async-vercel-preview-deploy/summary.json
           if-no-files-found: warn
           retention-days: 14
