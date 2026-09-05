@@ -52,7 +52,7 @@ jobs:
           app = modal.App.lookup('dadrock-v143-ai-tab-live', environment_name='main')
           stage_re = re.compile(r'^V143_STAGE\s+([A-Za-z0-9_.-]+)\s+elapsed=([0-9.]+)')
           rows = []
-          since = datetime.now(timezone.utc) - timedelta(minutes=15)
+          since = datetime.now(timezone.utc) - timedelta(minutes=30)
           for entry in app.logs.fetch(since=since, source='stdout', search_text='V143_STAGE'):
               message = str(getattr(entry, 'message', '') or '').strip()
               match = stage_re.match(message)
@@ -62,7 +62,6 @@ jobs:
                   'stage': match.group(1),
                   'elapsedSeconds': float(match.group(2)),
               })
-          # Deduplicate exact markers while preserving chronology.
           deduped = []
           seen = set()
           for row in rows:
@@ -72,11 +71,14 @@ jobs:
               seen.add(key)
               deduped.append(row)
           summary = {
-              'schemaVersion': 1,
-              'gate': 'v143-read-live-stage-markers',
-              'stageMarkers': deduped[-40:],
+              'schemaVersion': 2,
+              'gate': 'v143-post-promotion-breakthrough-stage-read',
+              'stageMarkers': deduped[-80:],
+              'audioOrModelInvokedByThisDiagnostic': False,
+              'referenceFacingInputs': 0,
               'referenceFacingAccuracyScored': False,
               'referenceScoreCalls': 0,
+              'qualityVerdictMade': False,
               'rawTranscriptionRetained': False,
           }
           Path('debug/v143-contextual-prune/live-stage-markers/summary.json').write_text(
