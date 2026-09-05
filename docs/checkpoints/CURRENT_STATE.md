@@ -1,6 +1,6 @@
 # CURRENT STATE — DadRock `/ai-tab`
 
-Updated: 2026-09-05 07:11 America/Toronto  
+Updated: 2026-09-05 08:15 America/Toronto  
 Branch: `v143-contextual-prune-lobo`
 
 > Compact continuation checkpoint. Older dedicated checkpoints remain authoritative; omission here does not revoke frozen boundaries.
@@ -10,14 +10,14 @@ Branch: `v143-contextual-prune-lobo`
 - **V168 = `HOLDOUT_ASSET_MISSING / SCORING_NOT_ARMED`; V167 CLOSED / TERMINAL.**
 - GOAT restricted bytes = **0**; reference-facing score calls = **0**.
 - SplitMySong terminal `FAIL_CLOSED_NO_CANDIDATE`; GuitarSet `00/01/03` sealed.
-- **NO QUALITY VERDICT** — performance/identity/routing diagnostics only.
+- **NO REFERENCE-FACING QUALITY VERDICT** — performance/identity/routing/product-health diagnostics only.
 - Persistent production cache remains `BLOCKED_BY_RETENTION_POLICY`; no persistent user-audio/stem/result retention without explicit permission.
 
 ## Production — SEEDED SCHEDULER WORKER PROMOTED / GREEN
 
 Unchanged surfaces:
 
-- Vercel/web `main`: `bb992d901e78ab19645f8edc8e330d5a142ebd8e`; route blob `06234db3e1cc1680b18fd62a765862b213ede3db`.
+- Vercel/web `main`: `bb992d901e78ab19645f8edc8e330d5a142ebd8e`; route blob `06234db3e1cc1680b18fd62a765862b213ede3db` with `maxDuration = 150`.
 - Vercel deployment `dpl_5BdFAMHeiaA3rQ9QGUdHneY1rexM`, READY / unchanged.
 - HTTP bridge source blob `9a550f0afd5ced3894d8f1ccd18543fa5cd68ad6`; bridge deployment unchanged; it dynamically resolves `dadrock-v143-ai-tab-live`.
 - `main` merge performed: false.
@@ -35,68 +35,104 @@ Promoted worker candidate:
 - Gate 1 structural: run `33942915753` / job `101243642285` — **GREEN/CLOSED**.
 - Gate 2 exact approved-fixture runtime: run `33943100948` / job `101244148835` / artifact `9962641557` — **GREEN/CLOSED**.
 - Gate 3A normal-routing composition: run `33945157629` / job `101249801382` / artifact `9963085825` (`sha256:9084a0d17ca44154e66a89f78546b6e210e3a302110e9e560c99b9f20a39ad09`) — **GREEN/CLOSED**.
-- `MODEL_BEARING_E2E_NOT_JUSTIFIED`; normal-routing pre-production evidence boundary **GREEN/CLOSED**.
-- Production plan `docs/checkpoints/V143_SEEDED_SCHEDULER_PRODUCTION_PLAN.md`, commit `b84d7c05cac15bc2d3196278502029a196412541`.
+- Production worker deployment run `33945389816` / job `101250418913` / artifact `9963159697` — **GREEN/CLOSED**.
 
-## Production worker promotion — GREEN / CLOSED
+## Post-promotion breakthrough check — COMPLETE
 
-Deliberate serialized deployment:
+User explicitly requested one real production test for a possible breakthrough. This test targeted the new property that had not been proven pre-deploy: **synchronous production-route latency after scheduler promotion**.
 
-- workflow `.github/workflows/v143-deploy-patched-worker.yml` blob `39e44d4275578da20c9110ea29ce1a538ab3169f`;
-- trigger/source commit `86f83f6bba33bbe7378ba1eed7294be884e30e45`;
-- Actions run `33945389816`;
-- job `101250418913`: **SUCCESS**;
-- deploy target was only `modal deploy --env main analyzer/v143_modal_live_endpoint.py`.
+### Test execution
 
-Deployment artifact `9963159697` (`v143-patched-worker-deploy`), digest `sha256:627a21923b70c8273b2eceeae64edb17010955b752e0264dbf8a53e2055d855a`, verifies scheduler blob `fc9b4c45...`, live endpoint `111bf14a...`, NVIDIA L4, deterministic seed 143, frozen model identities, reference-free safety, and no audio/model execution during smoke.
+- Workflow `.github/workflows/v143-production-gomyway-after-download-fix.yml` measurement commit `14c46a4d4a57652ebe7dd2257bb37001ade8a834`.
+- Actions run `33965269193`, job `101304165477`.
+- Existing public repository asset `gomyway-midterm-source.m4a`, blob `4dd709e3fa177b4daeed71ca97f0199757729d4b`.
+- No professional/reference score; `referenceFacingInputs=0`, `referenceScoreCalls=0`, `qualityVerdictMade=false`.
+- Raw request/analyzer response deleted after run; aggregate JSON only retained.
 
-## Post-promotion breakthrough check — ONE PRODUCTION REQUEST / IN PROGRESS
+Artifact:
 
-User explicitly requested a test for a possible breakthrough. This creates a genuinely new post-promotion property: **real synchronous production-route latency after the seeded scheduler promotion**.
+- `9969253856`, `v143-production-post-promotion-breakthrough-check`;
+- digest `sha256:e47ee1adca9d2c18eb02c19ee82e3685906c6cb4765636944ddd3013bc46e764`.
 
-- Test workflow `.github/workflows/v143-production-gomyway-after-download-fix.yml` updated in commit `14c46a4d4a57652ebe7dd2257bb37001ade8a834`.
-- Workflow now records exact curl `time_total` as `analysisEndToEndSeconds`, promoted worker/scheduler identity metadata, reference-free contract, and product-health signals only.
-- It does **not** perform professional/reference scoring and explicitly records `qualityVerdictMade=false`.
-- Raw analyzer response/request are deleted; only aggregate JSON is retained.
-- Current Actions run `33965269193`, job `101304165477`.
-- Preflight checkout/source/Node/Vercel setup/protected route access all **SUCCESS**.
-- Step `Analyze Gomyway through promoted V143 worker and measure latency` currently **IN PROGRESS**.
+Measured result:
 
-### Apples-to-apples prior production baseline
+- `analysisStatus=504`;
+- `analysisEndToEndSeconds=150.66095`;
+- `generatedTabPresent=false` because Vercel terminated the synchronous request before analyzer completion;
+- no product payload/quality fields were returned before timeout.
 
-Previous run of the same workflow/source asset:
+### Apples-to-apples prior baseline
+
+Previous run using the same workflow/source asset:
 
 - commit `6f9ed2fa38542a691565a93052bb2be5862f3cf7`;
 - run `33889779953`, job `101078353122`;
-- analysis request started at `2026-09-04T15:30:10.176Z` and returned HTTP `504` at `15:32:41.107Z`;
-- elapsed wall approximately **150.931 seconds**, matching the current Vercel route `maxDuration = 150` ceiling;
-- no tab/payload was returned before timeout.
+- request elapsed approximately `150.931s` before HTTP 504.
 
-### Breakthrough criterion
+Difference: about `0.270s`, which is not a meaningful product latency improvement; both runs hit the same Vercel `maxDuration=150` wall.
 
-- **Major production latency breakthrough:** current promoted request returns HTTP 200 + generated tab + safety contract before the ~150-second Vercel ceiling.
-- If current request still returns 504 around 150 seconds, the new scheduler may still be materially faster internally, but it has **not** crossed the synchronous production-route threshold. In that case retrieve aggregate Modal stage logs without another model invocation to measure the actual post-promotion worker timeline.
+## Log-only post-promotion stage diagnosis — COMPLETE / NO SECOND MODEL RUN
+
+A separate log-only workflow read existing Modal stdout and invoked no audio/model work:
+
+- workflow commit `9e0aec53337309d40d47e43cf177e276e188cf1e`;
+- run `33965453476`, job `101304658150`: SUCCESS;
+- artifact `9969270692`, digest `sha256:4c52eeeefcec913c2723a4bd79f4b48c8a431b2839395e09513b4835b6291d93`;
+- `audioOrModelInvokedByThisDiagnostic=false`.
+
+Live production stage markers for the breakthrough request:
+
+- `worker.start` `0.000s`;
+- download done `1.387s`;
+- worker normalize done `1.969s`;
+- separator input normalize done `0.302s`;
+- direct Demucs child started `0.306s`;
+- RoFormer started `0.319s`;
+- RoFormer completed `84.079s`;
+- cascade Demucs child started immediately at `84.079s`.
+
+No `direct-demucs.done`, `cascade-demucs.done`, or `separator.done` marker had appeared in the bounded log read, even after the Vercel 150-second request had already timed out.
+
+## BREAKTHROUGH VERDICT
+
+**Engineering/scheduler breakthrough: YES, confirmed in production.**
+
+- The new scheduler is actually active.
+- Direct CPU Demucs and parent GPU RoFormer begin essentially together (`0.306s` vs `0.319s`).
+- Cascade Demucs begins immediately when RoFormer completes (`84.079s`).
+- This proves the intended cross-view overlap is working in the live production worker; routing/deployment are not the blocker.
+
+**End-user/product latency breakthrough: NO, not yet.**
+
+- The synchronous production route still returns 504 at about `150.66s`, effectively unchanged from the old `150.93s` timeout.
+- The remaining bottleneck is the Demucs work after/concurrent with the ~84-second RoFormer stage.
+- A scheduler-only optimization cannot help users until the entire synchronous chain completes within the Vercel 150-second ceiling, or the request architecture stops requiring Vercel to hold the connection open for the full model runtime.
+
+**Musical-quality breakthrough: NOT TESTED / NOT IMPLIED BY THIS SCHEDULER CHANGE.**
+
+Gate 2 proved the scheduler preserves exact separator output identities. This scheduler promotion was a performance change, not a musical-quality change. No reference-facing quality score was run.
 
 ## PROMOTION STATUS
 
-- Scheduler structural evidence: **GREEN / CLOSED**.
-- Exact approved-fixture scheduler runtime evidence: **GREEN / CLOSED**.
-- Normal-routing source composition evidence: **GREEN / CLOSED**.
-- Production seeded-scheduler worker promotion: **GREEN / CLOSED**.
-- Post-promotion synchronous production latency breakthrough check: **IN PROGRESS**.
+- Scheduler structural/runtime/composition evidence: **GREEN/CLOSED**.
+- Production scheduler worker promotion: **GREEN/CLOSED**.
+- Concurrent scheduler behavior in live production: **CONFIRMED**.
+- Synchronous production latency threshold (<150s): **NOT MET**.
 - Vercel/HTTP bridge/main: **UNCHANGED**.
 
 ## NEXT STEP
 
-1. Observe run `33965269193` to terminal state; do not retrigger.
-2. Inspect aggregate breakthrough artifact for exact `analysisEndToEndSeconds`, status, tab presence, and safety contract.
-3. Compare against prior ~150.931-second 504 baseline.
-4. If still 504, fetch recent aggregate-only Modal stage markers without invoking audio/model again to determine internal scheduler/worker completion time and next bottleneck.
+1. Treat the production 504 as an architecture/performance-boundary problem, not a routing/deployment regression.
+2. Do not rerun the same production audio merely for reassurance.
+3. Highest-value next investigation is one of:
+   - determine the eventual live direct/cascade Demucs completion times from existing logs only; or
+   - design an asynchronous job/result-polling handoff so Vercel no longer has to wait for the full separator/runtime chain.
+4. Any additional model execution must demonstrate a distinct new property.
 
 ### Hard stops
 
-- No second model-bearing breakthrough request while run `33965269193` is unresolved.
+- No duplicate model-bearing breakthrough request.
 - No reference-facing scoring/quality verdict/restricted assets.
-- No closed performance/cache/concurrency/Gate-2 reruns.
-- No Vercel/bridge/main change merely to make this measurement pass.
+- No closed performance/cache/concurrency/Gate-2 reruns absent invalidating change.
+- No Vercel/bridge/main change without an explicitly checkpointed architecture plan.
 - No weakening exact parity/fail-closed criteria or retention boundaries.
