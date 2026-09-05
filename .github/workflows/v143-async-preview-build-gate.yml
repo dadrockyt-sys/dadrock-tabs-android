@@ -1,0 +1,93 @@
+name: V143 Async Preview Build Gate
+
+on:
+  push:
+    branches:
+      - v143-contextual-prune-lobo
+    paths:
+      - app/api/analyze-audio-tab/route.js
+      - app/ai-tab/page.js
+      - .github/workflows/v143-async-preview-build-gate.yml
+
+permissions:
+  contents: read
+
+concurrency:
+  group: v143-async-preview-build-gate
+  cancel-in-progress: false
+
+env:
+  VERCEL_ORG_ID: team_qJrw8Cuze5bCEg9M3Q67XMWt
+  VERCEL_PROJECT_ID: prj_6biwsn0iHci6FHNswAUCS8UYrAqF
+  NEXT_TELEMETRY_DISABLED: '1'
+  NO_COLOR: '1'
+
+jobs:
+  preview-build:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 30
+    env:
+      VERCEL_TOKEN: ${{ secrets.VERCEL_TOKEN }}
+    steps:
+      - name: Checkout exact branch head
+        uses: actions/checkout@v4
+
+      - name: Set up Node.js 24
+        uses: actions/setup-node@v4
+        with:
+          node-version: '24'
+
+      - name: Install pinned Vercel CLI
+        shell: bash
+        run: |
+          set -euo pipefail
+          test -n "${VERCEL_TOKEN:-}"
+          npm install --global vercel@59.11.2
+          test "$(vercel --version | tail -n 1)" = '59.11.2'
+
+      - name: Pull preview environment only
+        shell: bash
+        run: |
+          set -euo pipefail
+          vercel pull --yes --environment=preview --token "$VERCEL_TOKEN"
+
+      - name: Build preview locally without deployment
+        shell: bash
+        run: |
+          set -euo pipefail
+          vercel build --token "$VERCEL_TOKEN"
+
+      - name: Preserve aggregate build evidence only
+        if: always()
+        shell: bash
+        run: |
+          set -euo pipefail
+          mkdir -p debug/v143-contextual-prune/async-preview-build
+          ROUTE_BLOB="$(git hash-object app/api/analyze-audio-tab/route.js)"
+          PAGE_BLOB="$(git hash-object app/ai-tab/page.js)"
+          cat > debug/v143-contextual-prune/async-preview-build/summary.json <<JSON
+          {
+            "schemaVersion": 1,
+            "gate": "v143-async-preview-build",
+            "sourceCommit": "$GITHUB_SHA",
+            "routeBlob": "$ROUTE_BLOB",
+            "pageBlob": "$PAGE_BLOB",
+            "previewEnvironmentPulled": true,
+            "vercelBuildInvoked": true,
+            "deploymentPerformed": false,
+            "modelExecuted": false,
+            "audioRead": false,
+            "referenceFacingInputs": 0,
+            "referenceScoreCalls": 0,
+            "qualityVerdictMade": false
+          }
+          JSON
+
+      - name: Upload aggregate build evidence only
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: v143-async-preview-build
+          path: debug/v143-contextual-prune/async-preview-build/summary.json
+          if-no-files-found: warn
+          retention-days: 14
