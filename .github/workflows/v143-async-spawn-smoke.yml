@@ -122,5 +122,5 @@ jobs:
         shell: bash
         run: |
           set +e
-          modal app stop "$V143_ASYNC_SPAWN_SMOKE_APP_NAME" --env main
+          modal app stop "$V143_ASYNC_SPAWN_SMOKE_APP_NAME" --env main --yes
           exit 0
