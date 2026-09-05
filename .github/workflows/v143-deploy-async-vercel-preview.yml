@@ -12,7 +12,7 @@ permissions:
 
 concurrency:
   group: v143-deploy-async-vercel-preview
-  cancel-in-progress: false
+  cancel-in-progress: true
 
 env:
   VERCEL_ORG_ID: team_qJrw8Cuze5bCEg9M3Q67XMWt
