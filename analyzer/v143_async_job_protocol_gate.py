@@ -43,6 +43,15 @@ def expect_value_error(fn: Any, message: str) -> None:
     raise AssertionError(message)
 
 
+def function_source(tree: ast.AST, source: str, name: str) -> str:
+    for node in ast.walk(tree):
+        if isinstance(node, (ast.FunctionDef, ast.AsyncFunctionDef)) and node.name == name:
+            segment = ast.get_source_segment(source, node)
+            if segment:
+                return segment
+    raise AssertionError(f"missing function source: {name}")
+
+
 def main() -> None:
     require(ASYNC_RESULT_TTL_SECONDS == 900, "async TTL must remain 15 minutes")
     require(
@@ -100,7 +109,7 @@ def main() -> None:
 
     bridge_source = BRIDGE.read_text(encoding="utf-8")
     protocol_source = PROTOCOL.read_text(encoding="utf-8")
-    ast.parse(bridge_source)
+    bridge_tree = ast.parse(bridge_source)
     ast.parse(protocol_source)
 
     required_bridge_fragments = [
@@ -108,16 +117,35 @@ def main() -> None:
         'or "dadrock-v143-http-bridge"',
         'os.environ.get("V143_ASYNC_RESULT_QUEUE_NAME")',
         'or "dadrock-v143-async-results"',
+        'ASYNC_CONTROL_KIND = "orchestrator-control"',
         "create_if_missing=True",
         "def async_protocol_smoke()",
         "build_completed_envelope(synthetic_result)",
         "queueRoundtrip",
         "queueCleared",
-        "run_rhythm_async_job.spawn(job_id, dict(payload))",
-        "_worker_handle().remote(dict(routed_payload))",
+        "def _control_partition(job_id: str)",
+        'return f"control-{job_id}"',
         "partition_ttl=ASYNC_RESULT_TTL_SECONDS",
+        "def _queue_orchestrator_control(job_id: str, function_call_id: str)",
+        '"functionCallId": call_id',
+        "call = run_rhythm_async_job.spawn(job_id, dict(payload))",
+        "_queue_orchestrator_control(job_id, call.object_id)",
+        "call.cancel()",
+        '"orchestratorTracked": True',
+        "modal.FunctionCall.from_id(",
+        "call.get(timeout=0)",
+        "except modal.exception.TimeoutError:",
+        '"orchestratorRunning": True',
+        "_worker_handle().remote(dict(routed_payload))",
         "item_poll_timeout=0.0",
         "async_result_queue.clear(partition=job_id)",
+        "async_result_queue.clear(partition=_control_partition(job_id))",
+        '"controlCleared": True',
+        'print("V143_ASYNC_STAGE orchestrator.start", flush=True)',
+        'print("V143_ASYNC_STAGE worker_call.start", flush=True)',
+        'print("V143_ASYNC_STAGE worker_call.done status=completed", flush=True)',
+        'print("V143_ASYNC_STAGE worker_call.done status=failed", flush=True)',
+        'print(f"V143_ASYNC_STAGE result_queue.done status={status}", flush=True)',
         'operation == "start"',
         'operation == "status"',
         'operation == "ack"',
@@ -128,6 +156,52 @@ def main() -> None:
     ]
     for fragment in required_bridge_fragments:
         require(fragment in bridge_source, f"missing bridge invariant: {fragment}")
+
+    # The control partition must remain metadata-only. It may contain only the
+    # FunctionCall identity/schema/kind required to query Modal job state.
+    control_source = function_source(
+        bridge_tree,
+        bridge_source,
+        "_queue_orchestrator_control",
+    )
+    for forbidden in [
+        "routed_payload",
+        "payload",
+        "audioUrl",
+        "blobToken",
+        "pathname",
+        "generatedTab",
+        "events",
+        "result",
+        "song",
+        "artist",
+    ]:
+        require(
+            forbidden not in control_source,
+            f"sensitive/non-control field entered orchestrator control: {forbidden}",
+        )
+
+    # Stage logging must stay aggregate-only. Never emit request/job identities,
+    # private URLs/tokens, generated content, or labels from the orchestrator.
+    orchestrator_source = function_source(
+        bridge_tree,
+        bridge_source,
+        "run_rhythm_async_job",
+    )
+    for forbidden in [
+        "print(job_id",
+        "print(routed_payload",
+        "audioUrl",
+        "blobToken",
+        "pathname",
+        "generatedTab",
+        "professionalReference",
+        "runtimeLabels",
+    ]:
+        require(
+            forbidden not in orchestrator_source,
+            f"sensitive orchestrator logging/source fragment: {forbidden}",
+        )
 
     # Field names that explicitly report zero/false reference use are allowed and
     # required evidence. Forbid only executable/import-style scoring/reference
@@ -146,12 +220,13 @@ def main() -> None:
         require(fragment not in bridge_source, f"forbidden bridge fragment: {fragment}")
 
     summary = {
-        "schemaVersion": 3,
+        "schemaVersion": 4,
         "gate": "v143-async-job-protocol",
         "allPassed": True,
         "protocolBlob": git_blob_sha(PROTOCOL),
         "bridgeBlob": git_blob_sha(BRIDGE),
         "resultTtlSeconds": ASYNC_RESULT_TTL_SECONDS,
+        "controlTtlSeconds": ASYNC_RESULT_TTL_SECONDS,
         "chunkBytes": ASYNC_RESULT_CHUNK_BYTES,
         "chunkCount": items[0]["chunkCount"],
         "tokenRoundtrip": True,
@@ -161,6 +236,12 @@ def main() -> None:
         "multiChunkRoundtrip": True,
         "isolatedResourceNamesSupported": True,
         "syntheticModalSmokeDefined": True,
+        "orchestratorFunctionCallTracked": True,
+        "functionCallNonblockingPoll": True,
+        "functionCallFailureFailClosed": True,
+        "controlMetadataOnly": True,
+        "controlClearedOnAck": True,
+        "aggregateStageLoggingOnly": True,
         "defaultSynchronousDispatchPreserved": True,
         "leadBassFallbackPreserved": True,
         "asyncRhythmOnly": True,
