@@ -1,3 +1,4 @@
+# Branch-only one-shot approved-fixture promotion gate; isolated app, aggregate evidence only.
 name: V143 Seeded Scheduler Runtime Gate
 
 on:
