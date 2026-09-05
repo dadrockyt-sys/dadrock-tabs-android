@@ -1,0 +1,54 @@
+name: V143 Async Bridge Startup Diagnosis
+
+on:
+  push:
+    branches:
+      - v143-contextual-prune-lobo
+    paths:
+      - .github/workflows/v143-async-bridge-startup-diagnosis.yml
+
+permissions:
+  contents: read
+
+jobs:
+  async-bridge-startup-diagnosis:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 10
+    env:
+      MODAL_ENVIRONMENT: main
+      PYTHONUNBUFFERED: "1"
+      MODAL_TOKEN_ID: ${{ secrets.MODAL_TOKEN_ID }}
+      MODAL_TOKEN_SECRET: ${{ secrets.MODAL_TOKEN_SECRET }}
+    steps:
+      - name: Set up Python 3.11
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: Install Modal client
+        shell: bash
+        run: |
+          set -euo pipefail
+          python -m pip install --upgrade pip >/dev/null
+          python -m pip install 'modal==1.5.5' >/dev/null
+          modal token set --token-id "$MODAL_TOKEN_ID" --token-secret "$MODAL_TOKEN_SECRET" >/dev/null
+          modal --version
+
+      - name: Read production bridge history and startup logs only
+        shell: bash
+        run: |
+          set -euo pipefail
+          APP='dadrock-v143-http-bridge'
+          echo '=== app history ==='
+          modal app history "$APP" --env main --json || true
+          echo '=== currently running containers ==='
+          modal container list --env main --json || true
+          echo '=== recent bridge logs ==='
+          modal app logs "$APP" --env main --since 4h --tail 2500 --timestamps --show-function-id --show-function-call-id --show-container-id 2>&1 || true
+          echo 'diagnosticOnly=true'
+          echo 'audioOrModelInvokedByThisDiagnostic=false'
+          echo 'workerSpawnedByThisDiagnostic=false'
+          echo 'productionDeploymentChanged=false'
+          echo 'referenceFacingInputs=0'
+          echo 'referenceScoreCalls=0'
+          echo 'qualityVerdictMade=false'
