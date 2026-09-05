@@ -1,0 +1,151 @@
+name: V143 Async Preview Protocol Check
+
+on:
+  push:
+    branches:
+      - v143-contextual-prune-lobo
+    paths:
+      - .github/workflows/v143-async-preview-protocol-check.yml
+
+permissions:
+  contents: read
+
+concurrency:
+  group: v143-async-preview-protocol-check
+  cancel-in-progress: true
+
+env:
+  VERCEL_ORG_ID: team_qJrw8Cuze5bCEg9M3Q67XMWt
+  VERCEL_PROJECT_ID: prj_6biwsn0iHci6FHNswAUCS8UYrAqF
+  NEXT_TELEMETRY_DISABLED: '1'
+  NO_COLOR: '1'
+  PREVIEW_DEPLOYMENT_ID: dpl_8QZKRzPCAiDBauHmkX1SyasHn82s
+  PREVIEW_URL: https://dadrock-tabs-android-r0h3rn5la-stephen-mcnally-s-projects.vercel.app
+  EXPECTED_ROUTE_BLOB: 742954146a86aa36485d0bbdb3fbd6691a64a712
+  EXPECTED_PAGE_BLOB: de39f2715c6875d757ef730c9e3182ccd4aa00a4
+  EXPECTED_BRIDGE_BLOB: e0cecefacead73d69a905fd6bfb2049b21c87bc3
+
+jobs:
+  protected-preview-protocol:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 10
+    env:
+      VERCEL_TOKEN: ${{ secrets.VERCEL_TOKEN }}
+
+    steps:
+      - name: Checkout exact branch source
+        uses: actions/checkout@v4
+
+      - name: Enforce immutable preview/source boundary
+        shell: bash
+        run: |
+          set -euo pipefail
+          test -n "${VERCEL_TOKEN:-}"
+          test "$(git hash-object app/api/analyze-audio-tab/route.js)" = "$EXPECTED_ROUTE_BLOB"
+          test "$(git hash-object app/ai-tab/page.js)" = "$EXPECTED_PAGE_BLOB"
+          test "$(git hash-object analyzer/v143_modal_http_endpoint.py)" = "$EXPECTED_BRIDGE_BLOB"
+          echo "previewDeploymentId=$PREVIEW_DEPLOYMENT_ID"
+          echo "previewUrl=$PREVIEW_URL"
+          echo 'workerSpawnAuthorized=false'
+          echo 'modelExecuted=false'
+          echo 'audioRead=false'
+
+      - name: Set up Node.js 24
+        uses: actions/setup-node@v4
+        with:
+          node-version: '24'
+
+      - name: Install pinned Vercel CLI
+        shell: bash
+        run: |
+          set -euo pipefail
+          npm install --global vercel@59.11.2
+          test "$(vercel --version | tail -n 1)" = '59.11.2'
+
+      - name: Link project without changing deployment
+        shell: bash
+        run: |
+          set -euo pipefail
+          vercel pull --yes --environment=preview --token "$VERCEL_TOKEN" >/dev/null
+
+      - name: Authenticate to protected preview and fail closed on invalid job token
+        shell: bash
+        run: |
+          set -euo pipefail
+          OUT=debug/v143-contextual-prune/async-preview-protocol
+          mkdir -p "$OUT"
+
+          PAGE_STATUS="$(
+            vercel --token "$VERCEL_TOKEN" curl /ai-tab \
+              --deployment "$PREVIEW_URL" \
+              -- \
+              --silent --show-error --location --max-time 30 \
+              --output "$OUT/ai-tab.html" \
+              --write-out '%{http_code}'
+          )"
+
+          cat > "$OUT/request.json" <<'JSON'
+          {"operation":"status","jobToken":"v143a1.invalid.invalid","transcriptionType":"rhythm"}
+          JSON
+
+          METRICS="$(
+            vercel --token "$VERCEL_TOKEN" curl /api/analyze-audio-tab \
+              --deployment "$PREVIEW_URL" \
+              -- \
+              --silent --show-error --location --max-time 30 \
+              --request POST \
+              --header 'Content-Type: application/json' \
+              --data-binary "@$OUT/request.json" \
+              --output "$OUT/response.json" \
+              --write-out '%{http_code} %{time_total}'
+          )"
+          STATUS="${METRICS%% *}"
+          ELAPSED="${METRICS#* }"
+          export PAGE_STATUS STATUS ELAPSED OUT
+
+          python3 - <<'PY'
+          import json
+          import os
+          from pathlib import Path
+
+          out = Path(os.environ['OUT'])
+          response = json.loads((out / 'response.json').read_text(encoding='utf-8'))
+          page_html = (out / 'ai-tab.html').read_text(encoding='utf-8', errors='replace')
+          message = str(response.get('error') or response.get('detail') or '')
+          summary = {
+              'schemaVersion': 1,
+              'gate': 'v143-async-preview-protocol',
+              'previewDeploymentId': os.environ['PREVIEW_DEPLOYMENT_ID'],
+              'previewUrl': os.environ['PREVIEW_URL'],
+              'routeBlob': os.environ['EXPECTED_ROUTE_BLOB'],
+              'pageBlob': os.environ['EXPECTED_PAGE_BLOB'],
+              'bridgeBlob': os.environ['EXPECTED_BRIDGE_BLOB'],
+              'pageStatus': int(os.environ['PAGE_STATUS']),
+              'pageRendered': int(os.environ['PAGE_STATUS']) == 200 and len(page_html) > 500,
+              'invalidTokenStatus': int(os.environ['STATUS']),
+              'invalidTokenRejected': int(os.environ['STATUS']) == 400 and 'Invalid async job token' in message,
+              'invalidTokenRequestSeconds': float(os.environ['ELAPSED']),
+              'workerSpawned': False,
+              'modelExecuted': False,
+              'audioRead': False,
+              'referenceFacingInputs': 0,
+              'referenceScoreCalls': 0,
+              'qualityVerdictMade': False,
+              'productionPromotionPerformed': False,
+          }
+          (out / 'summary.json').write_text(json.dumps(summary, indent=2) + '\n', encoding='utf-8')
+          print(json.dumps(summary, indent=2))
+          assert summary['pageRendered'] is True
+          assert summary['invalidTokenRejected'] is True
+          PY
+
+          rm -f "$OUT/request.json" "$OUT/response.json" "$OUT/ai-tab.html"
+
+      - name: Preserve aggregate protocol evidence only
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: v143-async-preview-protocol
+          path: debug/v143-contextual-prune/async-preview-protocol/summary.json
+          if-no-files-found: warn
+          retention-days: 14
