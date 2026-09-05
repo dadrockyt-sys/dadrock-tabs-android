@@ -1,6 +1,6 @@
 # CURRENT STATE — DadRock `/ai-tab`
 
-Updated: 2026-09-05 12:56 America/Toronto  
+Updated: 2026-09-05 13:00 America/Toronto  
 Branch: `v143-contextual-prune-lobo`
 
 > Compact continuation checkpoint. Older dedicated checkpoints remain authoritative; omission here does not revoke frozen boundaries.
@@ -41,56 +41,49 @@ Proofs GREEN:
 - decisive fail-fast transition `33981664796` / `101347836824`, artifact `9973957720`;
 - hardened production bridge deploy/smoke `33981874155` / `101348420851`.
 
-## Preview async breakthrough E2E — PROTECTION PREFLIGHT BLOCKED / ZERO MODEL STARTS
+## Preview async breakthrough E2E — PREVIOUS PREFLIGHTS / ZERO MODEL STARTS
 
-### Attempt 1 — historical Preview
+Attempt 1: run `33982105469`, job `101349042393`, historical Preview Ready but `vercel curl` = 403; model step skipped.
 
-Workflow `.github/workflows/v143-preview-async-breakthrough-e2e.yml`, commit `27d9af18496888564eec32f8858b29c4b988e4c9`, run `33982105469`, job `101349042393`.
+Attempt 2: run `33982235357`, job `101349393362`:
 
-- exact source fingerprints GREEN;
-- historical Preview `dpl_FzuFoFNsaZcaV73RXSTejoH6cLpz` still target `preview`, Ready;
-- `vercel curl /ai-tab` returned HTTP 403;
-- model-bearing step skipped;
-- model start count = 0.
-
-### Attempt 2 — fresh Preview
-
-Workflow `.github/workflows/v143-fresh-preview-async-breakthrough-e2e.yml`, commit `58be9aa7b5606783a508917ce4531cfd512d66da`, run `33982235357`, job `101349393362`.
-
-- exact source fingerprints GREEN;
-- current Preview branch environment pulled;
+- exact source pins GREEN;
 - local Next 16.1.6 build GREEN;
-- fresh Preview-only deployment GREEN:
-  - ID **`dpl_F6ksguDvc1nVAt33jNxxoVTmyyJA`**;
-  - URL `https://dadrock-tabs-android-r602jctx9-stephen-mcnally-s-projects.vercel.app`;
-  - target `preview`, status Ready;
-  - production promotion=false;
-- protected `vercel curl /ai-tab` again returned **HTTP 403**;
-- model-bearing start step skipped;
-- model start count remains **0 total**;
-- no job token, audio/model execution, or transcription artifact was created.
+- fresh Preview-only deployment **`dpl_F6ksguDvc1nVAt33jNxxoVTmyyJA`**, URL `https://dadrock-tabs-android-r602jctx9-stephen-mcnally-s-projects.vercel.app`, target preview / Ready;
+- plain `vercel curl /ai-tab` = 403;
+- model step skipped;
+- model/audio start count remains **0 total**.
 
-Fresh deployment therefore rules out stale Preview state. The remaining blocker is specifically **Deployment Protection automation authentication from GitHub Actions**, not Modal async routing, build output, or deployment freshness.
+Fresh deployment ruled out stale Preview state and isolated the remaining issue to Deployment Protection automation authentication.
 
-## Deployment Protection authentication diagnosis
+## Deployment Protection authentication — TRUSTED GITHUB OIDC GREEN
 
-Live Vercel documentation confirms supported protected-automation methods:
+Vercel's documented Trusted Sources method was tested without changing or disabling Deployment Protection:
 
-1. Protection Bypass for Automation via `VERCEL_AUTOMATION_BYPASS_SECRET` and `x-vercel-protection-bypass` header; or
-2. Trusted Sources / GitHub Actions OIDC via `id-token: write`, `core.getIDToken()`, and `x-vercel-trusted-oidc-idp-token` header.
+- workflow `.github/workflows/v143-preview-protection-oidc-probe.yml`;
+- corrected probe commit `75146e2e03d770b983862149feadcc5026552803`;
+- run **`33982502347`**, job `101350110959`: **SUCCESS**;
+- artifact **`9974159307`**, digest `sha256:d247d08eb2d4d478406056c387e915c33ccfcd0909cfbfa48583821546f4f362`;
+- workflow permission `id-token: write` + `core.getIDToken()`;
+- direct protected request header `x-vercel-trusted-oidc-idp-token: <GitHub OIDC>`;
+- fresh Preview `/ai-tab` returned **HTTP 200**;
+- OIDC token was masked/not retained;
+- Deployment Protection remained enabled;
+- modelBearingStartRequests=0, audioRead=false, modelExecuted=false, reference inputs/scores=0.
 
-Do not disable/weaken Deployment Protection. Prefer a configured Trusted Sources OIDC path; if unavailable, use only an already-configured automation bypass secret, never expose it and never alter Production protection merely for the test.
+**Conclusion:** Preview protection wiring is now solved. Use GitHub OIDC trusted-source header on every start/status/ACK request in the single model-bearing E2E. Do not use or create a long-lived bypass secret.
 
-## NEXT STEP — AUTH-ONLY PROBE BEFORE THE ONE MODEL START
+## NEXT STEP — ONE MODEL-BEARING ASYNC BREAKTHROUGH E2E
 
-1. Run a no-model/no-audio protected-access probe against fresh Preview `dpl_F6ksguDvc1nVAt33jNxxoVTmyyJA` using GitHub Actions OIDC as documented by Vercel.
-2. If OIDC returns 200, use the same header on start/status/ACK in the single E2E workflow.
-3. If OIDC is not trusted, probe whether an existing `VERCEL_AUTOMATION_BYPASS_SECRET` GitHub secret is configured without printing it; if present, use the documented bypass header.
-4. Only after protected `/ai-tab` = 200 may the first and only model-bearing Rhythm start occur.
-5. Poll same token beyond 150s if required; require terminal tab + safety contract + ACK cleanup.
-6. Any post-start failure => diagnose, never rerun model automatically.
-
-Approved source remains `public/jimmy-paige-midterm-v1/gomyway-midterm-source.m4a`, Git blob `4dd709e3fa177b4daeed71ca97f0199757729d4b`.
+1. Use existing fresh Preview `dpl_F6ksguDvc1nVAt33jNxxoVTmyyJA` and GitHub Actions OIDC trusted-source header.
+2. Exact source/safety pins must pass before start.
+3. POST **exactly one** Rhythm `start` using approved source `public/jimmy-paige-midterm-v1/gomyway-midterm-source.m4a`, Git blob `4dd709e3fa177b4daeed71ca97f0199757729d4b`.
+4. Require prompt HTTP 202 + signed `v143a1.*` job token.
+5. Poll only that token, with OIDC header, beyond 150s if required.
+6. Require terminal 200 + generated tab + existing V143 reference-free safety/product contract.
+7. ACK once with OIDC header and require transient result/control cleanup.
+8. Delete raw request/token/result files; persist aggregate summary only.
+9. If the one model-bearing job fails after start, do not launch another; diagnose first.
 
 ### Hard stops
 
