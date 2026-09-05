@@ -1,6 +1,6 @@
 # CURRENT STATE — DadRock `/ai-tab`
 
-Updated: 2026-09-05 12:19 America/Toronto  
+Updated: 2026-09-05 12:26 America/Toronto  
 Branch: `v143-contextual-prune-lobo`
 
 > Compact continuation checkpoint. Older dedicated checkpoints remain authoritative; omission here does not revoke frozen boundaries.
@@ -69,60 +69,71 @@ Current source pins:
 
 Original Preview was invalid for V143 Rhythm because Preview `ANALYZER_API_URL_V143` was absent. Narrow correction was authorized.
 
-Replacement-routing workflow:
-
-- commit `0c023bdf0e395ddf98501317472ea59e99a00eeb`;
+- replacement-routing commit `0c023bdf0e395ddf98501317472ea59e99a00eeb`;
 - run `33968019067`, job `101311460970`: **SUCCESS**;
-- exact source/scope boundary, Preview-only env add, build/deploy, and bad-HMAC bridge-path proof all succeeded;
-- no production Vercel promotion and no model/audio request in that workflow.
+- Preview-only env add, build/deploy, and bad-HMAC bridge-path proof all GREEN;
+- no production Vercel promotion and no model/audio request.
 
-## Modal “oneshot” start-loop diagnosis — NARROWED
+## Modal “oneshot” start-loop diagnosis — STRONGLY NARROWED
 
 User reported Modal showing a `oneshot` repeatedly looping/failing to start. Model-bearing E2E remains paused.
 
-Read-only startup diagnosis:
+### Base app/image diagnostics — GREEN
 
-- bridge+worker diagnosis workflow commits `476c22d10b68e532c685dd35c7cea0238098bb34` and `169a112552e79b763fb35a285decf63bc33fa10b`;
-- runs `33980341926` / job `101344336671` and `33980388754` / job `101344455300`: **SUCCESS / diagnostic only**;
-- production bridge history shows current v3 deployed `2026-09-05 12:49:53Z`;
-- live worker history shows current v6 deployed `2026-09-05 04:45:23Z` from worker promotion commit `86f83f6`;
-- no running Modal containers were present during diagnosis;
-- recent bridge and worker app logs were empty;
-- diagnosis itself invoked no audio/model/worker and changed no deployment.
+- read-only bridge+worker diagnosis runs `33980341926` / `101344336671` and `33980388754` / `101344455300`: GREEN / diagnostic only;
+- no running production bridge/worker containers were present at read time and recent app logs were empty;
+- deployed L4 no-audio cold-start smoke run `33980499498`, job `101344748201`, artifact `9973612728`, digest `sha256:cd94f62f54c0321fe57ee34f7b8547f445c529bf640ccc7c50efc0f0308b7a32`: **GREEN**;
+- exact worker cold-start + imports `43.032s`, NVIDIA L4/CUDA GREEN, seed 143/reference-free GREEN; no audio or separator execution.
 
-### Exact L4 cold-start discriminator — GREEN
+### Exact `.spawn()`/oneshot discriminator — GREEN
 
-A single no-audio dependency call was made to the already-deployed worker function `rhythm_dependency_smoke` specifically to distinguish a general L4 startup failure from the async spawn/orchestration issue:
+An isolated app now reproduces only the Modal primitive under suspicion:
 
-- workflow `.github/workflows/v143-live-worker-startup-smoke.yml`;
-- commit `bf6ef7009085d52e5dc7a1c20927c99de48670a2`;
-- run `33980499498`, job `101344748201`: **SUCCESS**;
-- artifact `9973612728`, digest `sha256:cd94f62f54c0321fe57ee34f7b8547f445c529bf640ccc7c50efc0f0308b7a32`;
-- cold-start + import wall `43.032s`;
-- `cudaAvailable=true`, `deviceName=NVIDIA L4`;
-- Basic Pitch and deterministic provider imports GREEN;
-- deterministic separator seed `143`; `referenceFree=true`;
-- `audioRead=false`, `separatorModelExecuted=false`, `referenceFacingInputs=0`, `referenceScoreCalls=0`, `qualityVerdictMade=false`.
+- diagnostic source `analyzer/v143_async_spawn_smoke_modal.py`, initial commit `96ad6909cc1630fe1e2ecbd52ad0f7be022878f1`;
+- workflow `.github/workflows/v143-async-spawn-smoke.yml`, initial trigger commit `bf3bacb5e9adf26ec1e34bc4893710ef3ae40718`;
+- run `33980754694`, job `101345414660`: **SUCCESS**;
+- artifact `9973684032`, digest `sha256:f26d418d084fea8b6719dd28f1efe7399307bdbbf0744a9881ee2c389f977164`;
+- parent called `.spawn()` exactly once; spawned oneshot child published a synthetic structured result to an isolated Queue; parent decoded it; Queue cleared;
+- complete spawned handoff `5.123s`;
+- `spawnCallIdPresent=true`, `spawnedResultCompleted=true`, `queueCleared=true`, TTL `900s`;
+- `workerInvoked=false`, `audioRead=false`, `modelExecuted=false`, reference inputs/scores `0`.
 
-**Conclusion:** the deployed L4 image/container can cold-start successfully. The reported Modal `oneshot` loop is **not a general worker/GPU startup failure**. Together with the already-GREEN bridge `async_protocol_smoke`, this narrows the defect to the additional async spawned-orchestrator execution path (or another ephemeral oneshot invocation), not the base bridge image and not the base L4 worker image.
+**Conclusion:** Modal `.spawn()` and the lightweight oneshot container itself are healthy. The production issue is not a generic spawn failure.
 
-Current async start path of interest:
+### Diagnostic cleanup defect found and corrected
 
-`HTTP start -> run_rhythm_async_job.spawn(job_id, payload) -> orchestrator container -> _worker_handle().remote(payload) -> Queue result`
+The first isolated spawn workflow's cleanup command used `modal app stop ...` without confirmation bypass. Modal 1.5.5 aborted in non-interactive CI with: `Rerun with --yes (-y) to skip confirmation`, temporarily leaving two diagnostic containers running.
 
-The next discriminator must exercise the **spawned orchestrator container + Queue write** with a synthetic result while never calling the L4 worker. That will distinguish `spawn`/oneshot startup from the nested worker call.
+- cleanup correction commit `e5c8b0b0d61635f82971a53521d07082821c5d52`;
+- rerun `33980862345`: **SUCCESS** with noninteractive `--yes` cleanup;
+- this defect applies to diagnostic cleanup only, not the production async request path, but it can create misleading lingering oneshot/container activity in the Modal dashboard.
+
+### Remaining seam under test
+
+Current production start path:
+
+`HTTP start -> run_rhythm_async_job.spawn(job_id, payload) -> orchestrator oneshot -> modal.Function.from_name(dadrock-v143-ai-tab-live/rhythm_v143_request).remote(payload) -> Queue result`
+
+Base bridge image GREEN + `.spawn()` GREEN + L4 worker cold-start GREEN. The only unproven startup/wiring seam is now **spawned orchestrator -> nested cross-app worker call**.
+
+A no-audio nested test has been created:
+
+- `analyzer/v143_async_nested_worker_smoke_modal.py` commit `35c06ec544998838b3187a792d2a084b408c432a`;
+- workflow `.github/workflows/v143-async-nested-worker-smoke.yml` trigger commit `62859bd65ad83f361240c278101fd6734e9f26ec`;
+- run `33980891422`, job `101345785629` currently in progress;
+- it spawns an orchestrator with production-like `memory=4096`, then calls only deployed `rhythm_dependency_smoke` across the app boundary and publishes a synthetic Queue result;
+- it reads no audio and executes no separator/model.
 
 ## NEXT STEP
 
-1. Reuse the existing isolated bridge deployment mechanism with isolated app/Queue names.
-2. Add a diagnostic-only synthetic spawned function using the same `http_image`; it writes a tiny structured completion envelope to the isolated Queue and invokes no worker/audio/model.
-3. Spawn it exactly once, poll the isolated Queue, verify completion/clear, and capture startup logs.
-4. If synthetic spawn fails/loops, fix the orchestrator/spawn layer only. If synthetic spawn is GREEN, inspect the nested cross-app worker-call handoff without audio/model before resuming E2E.
-5. Checkpoint the exact cause before any production bridge redeploy.
+1. Observe nested-worker smoke run `33980891422` to terminal state; do not duplicate it.
+2. If GREEN, the async orchestration/start topology is healthy end-to-end without audio; the reported dashboard loop must then be tied to the real `rhythm_v143_request` execution/payload path or stale diagnostic activity, not startup wiring.
+3. If FAILED, use its isolated logs to fix only the nested cross-app handoff/resource seam.
+4. Keep model-bearing Preview E2E paused until this discriminator is closed.
 
 ### Hard stops
 
-- No model-bearing async E2E while oneshot startup failure is unresolved.
+- No model-bearing async E2E while nested-worker discriminator is unresolved.
 - No duplicate model/audio request.
 - No Production Vercel environment change or promotion yet.
 - No Deployment Protection weakening/disablement.
