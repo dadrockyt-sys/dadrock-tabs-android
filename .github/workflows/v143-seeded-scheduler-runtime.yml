@@ -1,0 +1,121 @@
+name: V143 Seeded Scheduler Runtime Gate
+
+on:
+  push:
+    branches:
+      - v143-contextual-prune-lobo
+    paths:
+      - analyzer/v143_seeded_scheduler_runtime_modal.py
+      - analyzer/v143_seeded_separator.py
+      - analyzer/v143_seeded_audio_separator_cli.py
+      - analyzer/v143_production_separator.py
+      - analyzer/v143_ai_tab_gpu_worker.py
+      - .github/scripts/v143_seeded_scheduler_runtime_collect.py
+      - .github/workflows/v143-seeded-scheduler-runtime.yml
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+env:
+  MODAL_ENVIRONMENT: main
+  MAIN_SHA: bb992d901e78ab19645f8edc8e330d5a142ebd8e
+  APPROVED_SOURCE_SHA256: 215bd5a657c5326f08f132ae358595a95c30b39bb7493a52c2f910d5a608149f
+  PYTHONUNBUFFERED: '1'
+
+jobs:
+  seeded-scheduler-runtime-gate:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    env:
+      MODAL_TOKEN_ID: ${{ secrets.MODAL_TOKEN_ID }}
+      MODAL_TOKEN_SECRET: ${{ secrets.MODAL_TOKEN_SECRET }}
+
+    steps:
+      - name: Checkout diagnostic branch
+        uses: actions/checkout@v4
+
+      - name: Enforce exact runtime boundary
+        shell: bash
+        run: |
+          set -euo pipefail
+          ACTUAL_MAIN="$(git ls-remote origin refs/heads/main | awk '{print $1}')"
+          test "$ACTUAL_MAIN" = "$MAIN_SHA"
+          test -n "${MODAL_TOKEN_ID:-}"
+          test -n "${MODAL_TOKEN_SECRET:-}"
+          test "$(sha256sum public/gomywayfullaitest.m4a | awk '{print $1}')" = "$APPROVED_SOURCE_SHA256"
+          test "$(git hash-object analyzer/v143_production_separator.py)" = '05ae1978fa02f8c84ccc1e44547fc4e4cea9798b'
+          test "$(git hash-object analyzer/v143_seeded_audio_separator_cli.py)" = '645f324c207d67b32c6d279657805ff8f25c3aa0'
+          test "$(git hash-object analyzer/v143_seeded_separator.py)" = 'fc9b4c45c208d80be7abab64a8959f2a3babcee8'
+          test "$(git hash-object analyzer/v143_ai_tab_gpu_worker.py)" = 'e7cdddfbf9e55e46be8397224b11133e7636ebb6'
+          test "$(git hash-object analyzer/v143_seeded_scheduler_runtime_modal.py)" = '94ce232eb2a86bafb95815ee693e19c5c38af1b7'
+          test "$(git hash-object .github/scripts/v143_seeded_scheduler_runtime_collect.py)" = 'dea00bc99f5cf06b8e1d1ab60643840c6924968d'
+          python3 -m py_compile \
+            analyzer/v143_seeded_scheduler_runtime_modal.py \
+            analyzer/v143_seeded_separator.py \
+            analyzer/v143_seeded_audio_separator_cli.py \
+            analyzer/v143_production_separator.py \
+            .github/scripts/v143_seeded_scheduler_runtime_collect.py
+          grep -q '@app.function(image=image, gpu="L4", cpu=2.0, timeout=1800, memory=8192)' analyzer/v143_seeded_scheduler_runtime_modal.py
+          test "$(grep -c 'result = build_seeded_v143_stems(source, output_root)' analyzer/v143_seeded_scheduler_runtime_modal.py)" = '1'
+          grep -q 'V143_DEMUCS_SHIFT_TRACE_PATH' analyzer/v143_seeded_scheduler_runtime_modal.py
+          grep -q 'V143_DEMUCS_RUNTIME_TRACE_PATH' analyzer/v143_seeded_scheduler_runtime_modal.py
+          grep -q 'temp.cleanup()' analyzer/v143_seeded_scheduler_runtime_modal.py
+          if grep -q 'v143_view_level_demucs_child' analyzer/v143_seeded_scheduler_runtime_modal.py; then
+            echo 'generic concurrency helper import is forbidden in implementation-specific runtime gate' >&2
+            exit 1
+          fi
+          echo "diagnosticSourceCommit=$GITHUB_SHA"
+          echo 'scope=seeded-scheduler-approved-fixture-runtime-only'
+          echo 'implementationSpecific=true'
+          echo 'approvedFixtureExecutionsPlanned=1'
+          echo 'persistentStemRetentionAuthorized=false'
+          echo 'productionWorkerChanged=false'
+          echo 'productionBridgeChanged=false'
+          echo 'vercelChanged=false'
+          echo 'referenceFacingInputs=0'
+          echo 'referenceScoreCalls=0'
+          echo 'qualityVerdictMade=false'
+
+      - name: Set up Python 3.11
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Install Modal client
+        shell: bash
+        run: |
+          set -euo pipefail
+          python -m pip install --upgrade pip >/dev/null
+          python -m pip install 'modal==1.5.5' >/dev/null
+          modal token set --token-id "$MODAL_TOKEN_ID" --token-secret "$MODAL_TOKEN_SECRET" >/dev/null
+          modal --version
+
+      - name: Deploy isolated seeded scheduler runtime gate only
+        shell: bash
+        run: |
+          set -euo pipefail
+          modal deploy --env main analyzer/v143_seeded_scheduler_runtime_modal.py
+
+      - name: Run one approved-fixture seeded scheduler runtime gate
+        shell: bash
+        run: |
+          set -euo pipefail
+          python .github/scripts/v143_seeded_scheduler_runtime_collect.py
+
+      - name: Preserve aggregate runtime evidence only
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: v143-seeded-scheduler-runtime
+          path: debug/v143-contextual-prune/seeded-scheduler-runtime/summary.json
+          if-no-files-found: warn
+          retention-days: 14
+
+      - name: Stop isolated seeded scheduler runtime app
+        if: always()
+        shell: bash
+        run: |
+          modal app stop dadrock-v143-seeded-scheduler-runtime-gate --env main --yes || true
+          echo 'diagnosticAppCleanupAttempted=true'
+          echo 'productionAppTouched=false'
