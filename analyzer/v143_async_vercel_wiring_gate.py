@@ -16,7 +16,7 @@ PROTOCOL = ROOT / "analyzer" / "v143_async_job_protocol.py"
 EXPECTED = {
     "worker": "111bf14a8f91045d3478901f8e36b88a2e7f181a",
     "scheduler": "fc9b4c45c208d80be7abab64a8959f2a3babcee8",
-    "bridge": "03dda2d78eb8d1bc892ed12037644a6ceb8e3591",
+    "bridge": "e0cecefacead73d69a905fd6bfb2049b21c87bc3",
     "protocol": "1bd55017e16a4e1d8b14c7429492f811a43a28d8",
 }
 
@@ -139,7 +139,7 @@ def main() -> None:
     )
 
     summary = {
-        "schemaVersion": 3,
+        "schemaVersion": 4,
         "gate": "v143-async-vercel-wiring",
         "allPassed": True,
         "routeBlob": git_blob_sha(ROUTE),
