@@ -1,6 +1,6 @@
 # CURRENT STATE — DadRock `/ai-tab`
 
-Updated: 2026-09-05 — repaired POST-preflight helper FINAL RE-ARM GREEN; one workflow helper-blob/cleanup edit authorized  
+Updated: 2026-09-05 — SINGLE BACKEND-CAPABLE START ACCEPTED in run `33999777841`; first poll terminal 502; ACK/cleanup GREEN; **NO SECOND START / NO RERUN**; read-only exact-call diagnosis next  
 Branch: `v143-contextual-prune-lobo`
 
 > Compact continuation checkpoint. Older dedicated checkpoints remain authoritative; omission here does not revoke frozen boundaries.
@@ -16,7 +16,7 @@ Branch: `v143-contextual-prune-lobo`
 - No production Vercel promotion/change; no Deployment Protection weakening; no whole-branch merge.
 - Do not touch unrelated musical/reference issues or `core/engine/chord_mapping.py` octave folding.
 
-## AUTHORITATIVE PINS — FINAL RE-ARM REVERIFIED
+## AUTHORITATIVE PINS
 
 - Route `742954146a86aa36485d0bbdb3fbd6691a64a712`.
 - `/ai-tab` page `de39f2715c6875d757ef730c9e3182ccd4aa00a4`.
@@ -36,76 +36,84 @@ Branch: `v143-contextual-prune-lobo`
 - Deployed Blob token GREEN with invalid-audio pre-spawn rejection (`33999276060`).
 - Local `vercel pull` is incomplete/non-authoritative; no local prebuilt model-bearing attempt.
 
-## BACKEND START ACCOUNTING — ZERO
+## PRIOR BREAKTHROUGH ATTEMPTS — BACKEND STARTS 0
 
-- Old run `33998283085`: one client real-audio POST blocked by Vercel before Next.js; backend/model starts 0.
-- Existing-Preview run `33999522733`: GET `/ai-tab` preflight returned 403 and helper stopped before generating/sending real-audio start.
-- Artifact `9979067110`, digest `sha256:6d2dca3fb29075903f166d73141495bfd8eb6916ed973bf037fc9a5152dd1bb6`, proves `backendCapableRealAudioStartRequestCount=0` and no production/reference changes.
-- **Proven backend/model starts remain 0.** Do not rerun either prior breakthrough run.
+- `33998283085`: real-audio client POST blocked by Vercel before Next.js; backend/model starts 0. Do not rerun.
+- `33999522733`: exact Preview inspect passed, but GET `/ai-tab` preflight returned 403; helper stopped before real-audio start. Artifact `9979067110`, digest `sha256:6d2dca3fb29075903f166d73141495bfd8eb6916ed973bf037fc9a5152dd1bb6`; backend/model starts 0. Do not rerun.
 
-## ROOT CAUSE / REPAIR — MODEL-FREE
+## REPAIRED POST-PREFLIGHT / EXISTING PREVIEW
 
-- GET page preflight was unnecessary and mismatched the already-proven protected transport.
 - Helper repair commit `e24eb3b3ef05f25faa2ddefd1bee66327549b98e`, blob `433599afec7fff20a31ea79e4c93ef9a6da03b36`.
-- Repaired preflight is authenticated `vercel curl` POST to `/api/analyze-audio-tab` with only `{"transcriptionType":"invalid"}`.
-- It requires HTTP 400 + exact Next route error `Transcription type must be lead, rhythm, or bass.` before any real-audio block.
-- No audio URL, valid type, analyzer call, worker spawn, or model path exists in this preflight.
-- Local exact repaired bytes passed `bash -n`; GitHub re-fetch confirms blob and preflight block.
-- One-start/signed-token/same-token-poll/terminal-ACK/no-retry logic otherwise unchanged.
+- Model-free preflight is authenticated `vercel curl` POST to `/api/analyze-audio-tab` with only `{"transcriptionType":"invalid"}`; requires HTTP 400 + exact Next route error before any real-audio block.
+- Exact existing Preview: deployment `dpl_G2WxxMA782j87H7tLpAy9cCB4ihD`, URL `https://dadrock-tabs-android-bx51iz9tr-stephen-mcnally-s-projects.vercel.app`, READY, branch `v143-contextual-prune-lobo`, immutable source commit `0a07b393bb47123a1142fd46ea6d9a55b04f0486`.
+- No build/deploy/alias/promotion/protection change was made.
 
-## EXISTING PREVIEW — FINAL RE-ARM IDENTITY GREEN
+## SINGLE ACCEPTED BACKEND-CAPABLE RUN — `33999777841`
 
-- Deployment `dpl_G2WxxMA782j87H7tLpAy9cCB4ihD`.
-- URL `https://dadrock-tabs-android-bx51iz9tr-stephen-mcnally-s-projects.vercel.app`.
-- Final Vercel re-read: READY; project `prj_6biwsn0iHci6FHNswAUCS8UYrAqF`; source `cli`; branch `v143-contextual-prune-lobo`; immutable source commit `0a07b393bb47123a1142fd46ea6d9a55b04f0486`.
-- No build/deploy/alias/promotion/protection change permitted.
+- Re-arm workflow commit: `67e5224d9a72c11ce5ff5aa26538cd9cbe86a612`.
+- Job: `101396439738`.
+- Workflow conclusion: FAILURE **by deliberate post-ACK stop after terminal job failure**.
+- Exact source/helper one-start boundary passed.
+- Exact Preview inspect passed: ID `dpl_G2WxxMA782j87H7tLpAy9cCB4ihD`, target Preview, status Ready.
+- Model-free protected route preflight GREEN: `protectedPreviewRoutePreflightStatus=400`, `protectedPreviewRouteReached=true`.
 
-## FINAL RE-ARM AUDIT — GREEN
+### Start budget is consumed
 
-- Immediately before source audit: `in_progress=0`, `queued=0`, `waiting=0`, `requested=0`, `pending=0` for branch Actions.
-- All seven source/audio blobs re-fetched exact.
-- Repaired helper re-fetched exact `433599af...`.
-- Existing Preview identity/source lineage re-read exact/READY.
-- Breakthrough workflow blob before re-arm = `47d94520b317956e632690760d1c3cbf76d3ac5a`.
-- Trigger remains only `.github/workflows/v143-fresh-preview-async-breakthrough-e2e.yml`; concurrency group `v143-fresh-preview-async-breakthrough-e2e-single`; `cancel-in-progress: false`.
-- Current workflow already has no build/deploy/OIDC/prod path. Only two changes are authorized: update `E2E_SCRIPT_BLOB` to `433599af...` and add raw `preflight-response.json` to `if: always()` cleanup.
+- Exactly one approved real-audio Rhythm start was sent through authenticated `vercel curl`.
+- Start result: `startStatus=202`, `startCurlExitCode=0`, `startRequestSeconds=4.102068`, `startAccepted=true`.
+- `backendCapableRealAudioStartRequestCount=1`.
+- A usable signed `v143a1.*` job token was returned and then used only for status/ACK; raw token was deleted and not retained.
+- **From this point forward, NO SECOND BACKEND-CAPABLE REAL-AUDIO START and NO RERUN of `33999777841` are authorized under any outcome.**
 
-## NEXT — ONE RE-ARM EDIT / WATCH ONLY THAT RUN
+### Terminal failure
 
-1. Make exactly one workflow edit with only the helper blob + preflight-response cleanup changes above. That push is the sole re-arm event.
-2. Find exactly one breakthrough run at that commit and watch only it.
-3. Require source/helper boundary, exact Preview inspect, then model-free POST preflight HTTP 400 + exact route error.
-4. If the single approved real-audio start returns HTTP 202 + signed `v143a1.*`, the backend-capable start budget is consumed. **No second start or rerun under any outcome.**
-5. Poll same token only; on terminal completed or failed, aggregate -> ACK once -> require transient cleanup -> then pass/fail product/runtime assertions.
-6. If start response is ambiguous after the POST, STOP/no second start.
-7. Save run ID and every meaningful milestone/result here.
+- First same-token status poll returned `HTTP 502` after ~13 seconds: `pollCount=1`, `terminalRequestSeconds=0.555108`, `asyncTotalSeconds=13.075462102890015`.
+- Terminal classification: `terminalState=failed`, `completed=false`, `analysisJobCompleted=false`, `generatedTabPresent=false`.
+- Bounded error retained: `The analyzer job stopped before it could complete.`
+- This is not a reference-facing quality result and no quality verdict was made.
+
+### ACK / cleanup GREEN
+
+- Helper preserved aggregate pre-ACK state, then ACKed exactly once with the same signed token.
+- ACK result: `ackStatus=200`, `ackCurlExitCode=0`, `ackRequestSeconds=0.396544`, `acknowledged=true`, `transientResultCleared=true`, `bridgeAckContractClearsControl=true`.
+- After ACK/cleanup, helper intentionally failed with `The single async job reached terminal failure after ACK/cleanup. STOP: diagnose exact call, no retry.`
+- Raw preflight/start/status/ACK request/response material, job token, and inspect log were deleted in `if: always()` cleanup.
+- Aggregate artifact only: ID `9979140544`, zip digest `sha256:dd5eaf0db145b4b8947b95b01e565893294508dda84c13e6452bf3b9771feca7`, size 1347 bytes.
+
+### Frozen safety/product accounting from run
+
+- `productionEnvironmentChanged=false`
+- `productionPromotionPerformed=false`
+- `deploymentProtectionDisabled=false`
+- `rawTranscriptionRetained=false`
+- `referenceFacingInputs=0`
+- `referenceFacingAccuracyScored=false`
+- `referenceScoreCalls=0`
+- `qualityVerdictMade=false`
+
+## CURRENT ROOT-CAUSE QUESTION
+
+The accepted async job reached a bounded terminal failure extremely quickly (~13s), before any completed product payload. The next task is to determine **where that one FunctionCall/job failed and whether worker/model execution began**. This must be diagnosed from existing evidence only.
+
+## NEXT — READ-ONLY EXACT-CALL DIAGNOSIS ONLY
+
+1. **Do not edit/rearm/rerun the breakthrough workflow and do not send any real-audio start.**
+2. Inspect Vercel runtime logs for deployment `dpl_G2WxxMA782j87H7tLpAy9cCB4ihD` around `2026-09-05T23:52:18Z`–`23:52:36Z` to classify route/bridge start/status/ACK behavior.
+3. Inspect existing Modal bridge/orchestrator/worker logs for the same exact window using read-only/log-only tooling. Do not spawn a FunctionCall, invoke audio, or execute a model as part of diagnosis.
+4. Determine whether the accepted FunctionCall failed before worker execution, during audio download, during separator/model startup, or later. Preserve only bounded error/control evidence; no raw audio/stems/model bytes.
+5. Read route/bridge/worker source as needed to map the observed HTTP 502/error to the exact failure layer.
+6. Checkpoint the exact root cause before proposing any code/config repair. **No repair may be validated with a second model-bearing start in this diagnostic phase.**
 
 ## HARD STOPS
 
-- **DO NOT RERUN `33998283085` OR `33999522733`; DO NOT send ad-hoc real audio.**
-- After an accepted repaired start, no second model-bearing start is authorized.
+- **NO SECOND REAL-AUDIO START. NO RERUN OF `33999777841`, `33999522733`, OR `33998283085`.**
+- No ad-hoc real-audio request.
 - No production Vercel promotion/change.
 - No Deployment Protection weakening/disablement or bypass-secret creation.
-- No scheduler/model change for access/preflight symptom.
+- No scheduler/model change before exact-call diagnosis.
 - No reference-facing scoring/quality verdict/restricted assets.
-- No raw audio/stems/model bytes in async storage/control metadata.
+- No raw audio/stems/model bytes in retained evidence.
 - No TTL > 15 minutes / no persistent result cache.
 - No whole-branch merge to `main`.
 
-Current authorization state: **FINAL RE-ARM GREEN; backend/model start count 0; exactly one helper-blob/cleanup workflow edit is authorized now.**
-
-## FRESH CHAT HANDOFF — START HERE
-
-The next chat should read this file first and continue only on `v143-contextual-prune-lobo`. Do not repeat the closed lifecycle/OIDC/env diagnostics unless new evidence directly contradicts this checkpoint.
-
-1. Re-fetch branch HEAD, this checkpoint, `.github/workflows/v143-fresh-preview-async-breakthrough-e2e.yml`, and `.github/scripts/v143-existing-preview-async-breakthrough-e2e.sh` before any write. Confirm the workflow/helper pins above are still exact.
-2. Re-check branch Actions immediately before arming: require no `in_progress`, `queued`, `waiting`, `requested`, or `pending` breakthrough run. If one exists, inspect that run instead of creating another.
-3. Re-read the existing Preview identity and require `dpl_G2WxxMA782j87H7tLpAy9cCB4ihD` / `dadrock-tabs-android-bx51iz9tr-stephen-mcnally-s-projects.vercel.app` is still READY. Do not build, redeploy, alias, promote, or change protection.
-4. Make **one and only one** edit to `.github/workflows/v143-fresh-preview-async-breakthrough-e2e.yml`: set `E2E_SCRIPT_BLOB=433599afec7fff20a31ea79e4c93ef9a6da03b36` and add `preflight-response.json` to the existing `if: always()` raw-material cleanup. Do not make any other workflow change.
-5. Treat that workflow-file push as the sole re-arm event. Locate exactly one `V143 Fresh Preview Async Breakthrough E2E` run at that commit and watch only that run.
-6. Before real audio, require exact source/helper boundary + exact existing Preview inspect + authenticated malformed POST preflight HTTP 400 with exact error `Transcription type must be lead, rhythm, or bass.`. Any mismatch is a pre-model STOP; do not retry by editing/re-running.
-7. If the single real-audio start is sent: HTTP 202 + signed `v143a1.*` means the backend-capable start budget is consumed. From that moment, **no second start and no rerun under any outcome**. Poll only the same token.
-8. On terminal completed or failed: preserve bounded aggregate evidence, ACK exactly once, require transient cleanup, then evaluate product/runtime assertions. If the start response is ambiguous or no usable token is returned after POST, STOP and diagnose that exact request; never send another start.
-9. Update `docs/checkpoints/CURRENT_STATE.md` after the re-arm commit/run ID and after every meaningful milestone/root cause/terminal result. Keep raw request/response/token/audio/model material out of retained checkpoint/artifacts.
-
-Fresh-chat authorization: **one narrowly scoped re-arm workflow edit is authorized; no ad-hoc real-audio request, no rerun of prior breakthrough runs, and no second backend-capable start after the repaired start is accepted.**
+Current authorization state: **the one backend-capable start is consumed; terminal 502 + ACK/cleanup are proven; only read-only diagnosis of this exact call is authorized now.**
