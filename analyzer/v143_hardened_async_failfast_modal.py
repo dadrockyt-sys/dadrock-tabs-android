@@ -47,7 +47,13 @@ def prove_failfast_status_transition() -> dict[str, Any]:
         "transcriptionType": "rhythm",
     }
 
-    call = bridge.run_rhythm_async_job.spawn(job_id, payload)
+    # The driver is a different Modal app. Resolve the already-deployed isolated
+    # bridge function by name so the Function object is hydrated before spawn.
+    orchestrator = modal.Function.from_name(
+        bridge.HTTP_APP_NAME,
+        "run_rhythm_async_job",
+    )
+    call = orchestrator.spawn(job_id, payload)
     bridge._queue_orchestrator_control(job_id, call.object_id)
 
     saw_processing = False
