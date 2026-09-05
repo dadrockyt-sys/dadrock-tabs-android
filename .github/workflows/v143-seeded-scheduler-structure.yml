@@ -1,3 +1,4 @@
+# Branch-only promotion gate. No secrets, audio, model execution, or deployment.
 name: V143 Seeded Scheduler Structure
 
 on:
