@@ -1,0 +1,60 @@
+name: V143 Protected Preview POST Routing Diagnosis
+
+on:
+  push:
+    branches:
+      - v143-contextual-prune-lobo
+    paths:
+      - '.github/workflows/v143-protected-preview-post-routing-diagnosis.yml'
+
+permissions:
+  contents: read
+  id-token: write
+
+jobs:
+  protected-preview-post-routing-diagnosis:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 5
+    env:
+      PREVIEW_URL: https://dadrock-tabs-android-bx51iz9tr-stephen-mcnally-s-projects.vercel.app
+    steps:
+      - name: Prove malformed POST reaches Next route before analyzer selection
+        shell: bash
+        run: |
+          set -euo pipefail
+          test -n "${ACTIONS_ID_TOKEN_REQUEST_URL:-}"
+          test -n "${ACTIONS_ID_TOKEN_REQUEST_TOKEN:-}"
+          RESPONSE="$(
+            curl --silent --show-error --fail \
+              --retry 2 --retry-all-errors \
+              --header "Authorization: bearer $ACTIONS_ID_TOKEN_REQUEST_TOKEN" \
+              "$ACTIONS_ID_TOKEN_REQUEST_URL"
+          )"
+          OIDC_TOKEN="$(python3 -c 'import json,sys; print(json.load(sys.stdin)["value"])' <<<"$RESPONSE")"
+          test -n "$OIDC_TOKEN"
+          echo "::add-mask::$OIDC_TOKEN"
+
+          STATUS="$(
+            curl --silent --show-error --location --max-time 30 \
+              --header "x-vercel-trusted-oidc-idp-token: $OIDC_TOKEN" \
+              --request POST \
+              --header 'Content-Type: application/json' \
+              --data-binary '{"transcriptionType":"invalid"}' \
+              --output response.json \
+              --write-out '%{http_code}' \
+              "$PREVIEW_URL/api/analyze-audio-tab"
+          )"
+          unset OIDC_TOKEN
+          echo "malformedPostStatus=$STATUS"
+          test "$STATUS" = "400"
+          python3 - <<'PY'
+          import json
+          data = json.load(open('response.json', encoding='utf-8'))
+          assert data.get('error') == 'Transcription type must be lead, rhythm, or bass.'
+          print('nextRouteReached=true')
+          print('analyzerCallPossible=false')
+          print('modelBearingStartRequestCount=0')
+          print('audioUrlSupplied=false')
+          print('referenceFacingInputs=0')
+          PY
+          rm -f response.json
