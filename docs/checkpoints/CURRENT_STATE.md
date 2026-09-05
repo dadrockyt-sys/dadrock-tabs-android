@@ -1,6 +1,6 @@
 # CURRENT STATE — DadRock `/ai-tab`
 
-Updated: 2026-09-05 09:06 America/Toronto  
+Updated: 2026-09-05 12:14 America/Toronto  
 Branch: `v143-contextual-prune-lobo`
 
 > Compact continuation checkpoint. Older dedicated checkpoints remain authoritative; omission here does not revoke frozen boundaries.
@@ -65,84 +65,41 @@ Current source pins:
 - Isolated Modal bridge smoke run `33966816672` / job `101308290865`, artifact `9969693296`, digest `sha256:5a00636970d7426f5c83c4f498e84a4bc6b200700836e94184fd7f272b0d0b53`; HMAC/Queue/clear/TTL 900 GREEN; no model/audio/production worker.
 - Production bridge deploy + synthetic smoke run `33967130980` / job `101309120073`, artifact `9969786854`, digest `sha256:fb1d8267a3241fe4d09343b50a286ce0635f705374326b36ea8e9732c276fdf5`; no model/audio.
 
-## Original async Vercel Preview — SOURCE GOOD / ENVIRONMENT INCOMPLETE
+## Preview routing correction — GREEN / NO MODEL
 
-Duplicate Preview attempts were collapsed:
+Original Preview was invalid for V143 Rhythm because Preview `ANALYZER_API_URL_V143` was absent. Narrow correction was authorized.
 
-- `33967223069` CANCELLED;
-- `33967258052` CANCELLED;
-- source-authoritative Preview run `33967294781`, job `101309569318`;
-- exact build/deploy succeeded;
-- deployment ID `dpl_8QZKRzPCAiDBauHmkX1SyasHn82s`;
-- URL `https://dadrock-tabs-android-r0h3rn5la-stephen-mcnally-s-projects.vercel.app`;
-- READY / Preview only; production alias untouched;
-- route/page/bridge blobs exactly `74295414...` / `de39f271...` / `e0cecefa...`;
-- artifact `9969859750`, digest `sha256:fe28c076faf646087f67b71892b71968f545f0a5ad3e8fa45ed3edeb01edb68a`;
-- no model/audio.
+Replacement-routing workflow:
 
-This deployment is now **invalidated as the final E2E target by a demonstrated Preview-environment omission**, not by source/build failure.
+- commit `0c023bdf0e395ddf98501317472ea59e99a00eeb`;
+- run `33968019067`, job `101311460970`: **SUCCESS**;
+- exact source/scope boundary, Preview-only env add, build/deploy, and bad-HMAC bridge-path proof all succeeded;
+- no production Vercel promotion and no model/audio request in that workflow.
 
-## Protected Preview diagnostics — NO MODEL/AUDIO
+## NEW LIVE ISSUE — MODAL ONESHOT START LOOP / DIAGNOSIS REQUIRED
 
-Historical protection access is known-good (`33843200741`, job `100929522781`): inspect then env-token `vercel curl` returned `/ai-tab` 200 with Deployment Protection enabled.
+User reports Modal is showing the async oneshot repeatedly looping and failing to start.
 
-Current diagnostics:
+Immediate interpretation/boundary:
 
-1. `33967515872` / job `101310124066`: CLI syntax mistake only; no auth/model test.
-2. `33967633461` / job `101310442042`: protected access worked; `/ai-tab` **200**; async status request **400 ~1.00s**; no worker/model/audio. Artifact `9969940088`, digest `sha256:f807e3a871932e493828c1c3ba0ad896b998fda1606e9c6e5dbc563b9a6e1c49`.
-3. `33967744101` / job `101310731627`: `/ai-tab` **200**; structurally-valid bad-signature status request **400 in 0.427092s**; no worker/model/audio. Artifact `9969971331`, digest `sha256:27adcc38e1084132a098bb49742671d3580a97f6722f221d449491fc09d7a110`.
-4. **Decisive environment diagnosis:** workflow commit `4d9aef11f4f0b07e52dd87445750e373e883ccaa`; run `33967838240`, job `101310981516`; artifact `9970000315`, digest `sha256:a891ad80fdb3e2695ea81cb4848fe1043b80e7a37187d0b30be84d3810222e1e`.
-
-Decisive result:
-
-- `requestErrorClass = v143_preview_url_not_selected`;
-- Preview environment name `ANALYZER_API_URL_V143`: **ABSENT**;
-- Preview environment name `ANALYZER_API_URL`: present;
-- Preview environment name `ANALYZER_API_TOKEN`: present;
-- no worker spawn, no model execution, no audio read, no reference inputs/scoring/verdict.
-
-Therefore the current Preview's Rhythm async request is rejected by the Vercel route **before bridge/HMAC** because `usingV143RhythmAnalyzer=false`. This fully explains the repeated 400s and is a real Preview environment wiring defect.
-
-The page-status result varied between 200 and 403 across beta `vercel curl` calls under Deployment Protection, but this is separate from the route diagnosis: prior current runs already proved page 200, and the environment-name + fixed error-class diagnosis is decisive.
-
-## Required narrow wiring correction — AUTHORIZED
-
-The missing variable is configuration, not model/scheduler code. The known production V143 bridge endpoint is:
-
-`https://dadrockyt--dadrock-v143-http-bridge-analyze.modal.run`
-
-`ANALYZER_API_TOKEN` remains a separate secret and is already present in Preview. Add **only** `ANALYZER_API_URL_V143` to the Vercel Preview environment. Do not change Production environment values.
-
-Because Vercel environment changes apply to future deployments, one replacement Preview is now justified despite the earlier no-second-preview stop: the original Preview is demonstrably incapable of selecting V143 Rhythm due missing configuration. The replacement must use the same exact route/page blobs and must remain Preview-only.
-
-Before replacement deployment, verify Preview also contains `BLOB_READ_WRITE_TOKEN` by name (no value disclosure); it is required for real `start` requests.
-
-## Legacy closed scheduler gate note
-
-Old scheduler structure run `33966778906` failed solely on its frozen pre-async HTTP bridge pin (`9a550f0a...` vs authorized `e0cecefa...`). Worker/scheduler unchanged. Do not reopen/repin.
-
-## ASYNC PROMOTION STATUS
-
-- Protocol/source: **GREEN/CLOSED**.
-- Route/UI composition: **GREEN/CLOSED**.
-- Production async bridge: **PROMOTED + SYNTHETIC GREEN/CLOSED**.
-- Original Preview source/build: **GREEN**, but environment is **INVALID FOR V143 RHYTHM** (`ANALYZER_API_URL_V143` absent).
-- Narrow Preview environment correction: **NEXT**.
-- Model-bearing async Preview E2E: **NOT YET RUN**.
-- Production Vercel: **UNCHANGED**.
+- stop progression toward model-bearing async E2E until this is explained;
+- treat this as an async bridge/orchestrator container-start defect unless logs prove otherwise;
+- do **not** change worker/scheduler/model code;
+- do **not** launch another audio/model request while diagnosing;
+- current `run_rhythm_async_job` uses the bridge `http_image` and calls the unchanged deployed L4 worker by `modal.Function.from_name(...).remote(...)` only after the orchestrator container starts;
+- source inspection alone does not yet establish the startup failure cause.
 
 ## NEXT STEP
 
-1. Add `ANALYZER_API_URL_V143=https://dadrockyt--dadrock-v143-http-bridge-analyze.modal.run` to **Preview only** using Vercel CLI; verify `BLOB_READ_WRITE_TOKEN` name is also present; do not expose secret values.
-2. Create exactly one replacement Preview from the same route/page/bridge source pins; production target must remain false.
-3. Run no-model protected Preview protocol check: `/ai-tab` reachable and bad HMAC reaches bridge rejection; worker/model/audio remain zero.
-4. If GREEN, checkpoint replacement Preview and authorize exactly one real async Rhythm Preview E2E.
-5. Breakthrough criterion: `start` returns far below 150s; polling survives beyond the old 150s boundary if needed; completed result passes existing V143 safety/product path; ACK clears transient Queue partition.
-6. Production Vercel promotion only after E2E GREEN.
+1. Retrieve bounded historical logs/container startup diagnostics for `dadrock-v143-http-bridge` only; no audio/model invocation.
+2. Identify the exact oneshot startup exception/restart reason.
+3. Checkpoint the exact cause before changing bridge source.
+4. Apply the narrowest bridge-only fix and prove container startup with a no-model/synthetic test before resuming Preview E2E.
 
 ### Hard stops
 
-- No model-bearing request before replacement Preview no-model protocol is GREEN.
+- No model-bearing async E2E while oneshot startup failure is unresolved.
+- No duplicate model/audio request.
 - No Production Vercel environment change or promotion yet.
 - No Deployment Protection weakening/disablement.
 - No model/scheduler change.
