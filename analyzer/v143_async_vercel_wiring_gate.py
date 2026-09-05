@@ -16,7 +16,7 @@ PROTOCOL = ROOT / "analyzer" / "v143_async_job_protocol.py"
 EXPECTED = {
     "worker": "111bf14a8f91045d3478901f8e36b88a2e7f181a",
     "scheduler": "fc9b4c45c208d80be7abab64a8959f2a3babcee8",
-    "bridge": "d874dce2b612e01a88adbf2ebaf953bfe8c3cb05",
+    "bridge": "c512516d47e79df86a780cb8a77bd528fe2a517a",
     "protocol": "1bd55017e16a4e1d8b14c7429492f811a43a28d8",
 }
 
@@ -107,7 +107,6 @@ def main() -> None:
         "page",
     )
 
-    # Public job capability must stay in component memory/request bodies only.
     forbid_all(
         page,
         [
@@ -120,7 +119,6 @@ def main() -> None:
         "page",
     )
 
-    # Vercel must never receive/import model execution code for this wiring.
     forbid_all(
         route + "\n" + page,
         [
@@ -135,16 +133,13 @@ def main() -> None:
         "vercel wiring",
     )
 
-    # Control-plane requests contain only the server-side analyzer token,
-    # operation, and opaque HMAC-signed job capability. Blob credentials are
-    # included only in start/analyze request bodies.
     require(
         "? {\n            token: analyzerToken,\n            operation,\n            jobToken,\n          }" in route,
         "status/ack control body changed unexpectedly",
     )
 
     summary = {
-        "schemaVersion": 1,
+        "schemaVersion": 2,
         "gate": "v143-async-vercel-wiring",
         "allPassed": True,
         "routeBlob": git_blob_sha(ROUTE),
@@ -156,6 +151,7 @@ def main() -> None:
         "completedResultStillUsesExistingSafetyProductPipeline": True,
         "jobTokenPersistedClientSide": False,
         "ackAfterBrowserReceipt": True,
+        "isolatedBridgeModeSupported": True,
         "workerChanged": False,
         "schedulerChanged": False,
         "modelExecuted": False,
