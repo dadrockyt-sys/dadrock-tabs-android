@@ -51,7 +51,11 @@ MODULES = (
     "v143_seeded_audio_separator_cli",
 )
 
-app = modal.App("dadrock-v143-seeded-scheduler-runtime-gate")
+RUNTIME_APP_NAME = os.environ.get("V143_SEEDED_SCHEDULER_RUNTIME_APP_NAME", "").strip()
+if not RUNTIME_APP_NAME:
+    raise RuntimeError("V143_SEEDED_SCHEDULER_RUNTIME_APP_NAME is required for isolated runtime gate deployment")
+
+app = modal.App(RUNTIME_APP_NAME)
 image = separator_image.add_local_python_source(*MODULES)
 
 
