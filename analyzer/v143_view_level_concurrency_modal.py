@@ -171,6 +171,17 @@ def _assert_exact_demucs_runtime(runtime: dict[str, Any] | None, label: str) -> 
         raise RuntimeError(f"{label} exact CPU runtime invariant changed: {runtime}")
 
 
+def _terminate_if_alive(process: multiprocessing.Process | None) -> None:
+    if process is None:
+        return
+    try:
+        if process.is_alive():
+            process.terminate()
+            process.join(timeout=10)
+    except (AssertionError, ValueError):
+        return
+
+
 @app.function(image=image, gpu="L4", cpu=2.0, timeout=1800, memory=8192)
 def probe(source_audio: bytes, suffix: str = ".m4a") -> dict[str, Any]:
     import soundfile as sf
@@ -194,6 +205,8 @@ def probe(source_audio: bytes, suffix: str = ".m4a") -> dict[str, Any]:
     temp = tempfile.TemporaryDirectory(prefix="v143-view-level-concurrency-")
     root = Path(temp.name)
     summary: dict[str, Any] = {}
+    direct_process: multiprocessing.Process | None = None
+    cascade_process: multiprocessing.Process | None = None
 
     try:
         source = root / f"source{suffix if suffix.startswith('.') else '.audio'}"
@@ -274,8 +287,6 @@ def probe(source_audio: bytes, suffix: str = ".m4a") -> dict[str, Any]:
 
         direct_process.join(timeout=1200)
         if direct_process.is_alive():
-            direct_process.terminate()
-            direct_process.join(timeout=10)
             raise RuntimeError("direct exact Demucs child exceeded concurrency deadline")
         if direct_process.exitcode != 0:
             raise RuntimeError(f"direct exact Demucs child exitCode={direct_process.exitcode}")
@@ -283,8 +294,6 @@ def probe(source_audio: bytes, suffix: str = ".m4a") -> dict[str, Any]:
 
         cascade_process.join(timeout=1200)
         if cascade_process.is_alive():
-            cascade_process.terminate()
-            cascade_process.join(timeout=10)
             raise RuntimeError("cascade exact Demucs child exceeded concurrency deadline")
         if cascade_process.exitcode != 0:
             raise RuntimeError(f"cascade exact Demucs child exitCode={cascade_process.exitcode}")
@@ -376,6 +385,7 @@ def probe(source_audio: bytes, suffix: str = ".m4a") -> dict[str, Any]:
             "sumOfConcurrentStageElapsedSeconds": round(stage_sum, 3),
             "historicalSequentialStageSumSeconds": round(HISTORICAL_SEQUENTIAL_STAGE_SUM_SECONDS, 3),
             "crossRunContextualSpeedup": round(contextual_speedup, 3) if contextual_speedup else None,
+            "crossRunContextualSpeedupOnly": True,
             "exactDirectParityPassed": True,
             "exactCascadeParityPassed": True,
             "exactRoformerParityPassed": True,
@@ -391,6 +401,8 @@ def probe(source_audio: bytes, suffix: str = ".m4a") -> dict[str, Any]:
             "mainMergePerformed": False,
         }
     finally:
+        _terminate_if_alive(cascade_process)
+        _terminate_if_alive(direct_process)
         temp.cleanup()
 
     if root.exists():
