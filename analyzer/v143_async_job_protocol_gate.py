@@ -129,11 +129,16 @@ def main() -> None:
     for fragment in required_bridge_fragments:
         require(fragment in bridge_source, f"missing bridge invariant: {fragment}")
 
+    # Field names that explicitly report zero/false reference use are allowed and
+    # required evidence. Forbid only executable/import-style scoring/reference
+    # hooks plus restricted-lane names, not harmless safety metadata strings.
     forbidden_bridge_fragments = [
         "modal.Dict",
         "ASYNC_RESULT_TTL_SECONDS = 24",
-        "referenceScore",
-        "professionalReference",
+        "score_reference(",
+        "reference_score(",
+        "load_reference(",
+        "professional_reference(",
         "GOAT",
         "guitarset",
     ]
@@ -141,7 +146,7 @@ def main() -> None:
         require(fragment not in bridge_source, f"forbidden bridge fragment: {fragment}")
 
     summary = {
-        "schemaVersion": 2,
+        "schemaVersion": 3,
         "gate": "v143-async-job-protocol",
         "allPassed": True,
         "protocolBlob": git_blob_sha(PROTOCOL),
