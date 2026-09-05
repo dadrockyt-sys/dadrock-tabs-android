@@ -31,12 +31,10 @@ Repository-owned `public/gomywayfullaitest.m4a`:
 - source SHA256 `215bd5a657c5326f08f132ae358595a95c30b39bb7493a52c2f910d5a608149f`;
 - normalized SHA `ab64e7cdd8a792aecfb6eec518577d8d7e9d2f8aa43007e632470d9fe4511e7f`;
 - direct Guitar SHA `0ac47da671df6f8387c1ad1343171de0cf7a0db6985dadf3f30e4a9c7cf0189c`;
-- direct PCM-int16 SHA `2c22f04014c0f5c036125c3d702c8b87a9f67358e0dd0d3836c39c936bed`;
+- direct PCM-int16 SHA `2c22f04014c0f5c9c0c036125c3d702c8b87a9f67358e0dd0d3836c39c936bed`;
 - shift trace `0,22050,6026`;
 - exact anchor run `33914759546`, job `101159244192`, call `fc-01M1Q0MFR88FXWAQ1R47TSX77Z`, artifact `9953064061`;
 - oneDNN off; Torch intra/inter-op = 1; exact parity GREEN.
-
-> NOTE: the PCM digest above must remain the authoritative frozen value from the earlier checkpoint: `2c22f04014c0f5c9c0c036125c3d702c8b87a9f67358e0dd0d3836c39c936bed`. The shortened/mistyped text in the preceding bullet is not an alternate anchor.
 
 ## Direct exact stage-cache — GREEN / CLOSED
 
