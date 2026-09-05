@@ -1,6 +1,6 @@
 # CURRENT STATE — DadRock `/ai-tab`
 
-Updated: 2026-09-05 — SINGLE BACKEND-CAPABLE START ACCEPTED in run `33999777841`; first poll terminal 502; ACK/cleanup GREEN; **NO SECOND START / NO RERUN**; read-only exact-call diagnosis next  
+Updated: 2026-09-05 — SINGLE BACKEND-CAPABLE START ACCEPTED in run `33999777841`; first poll terminal 502; ACK/cleanup GREEN; **NO SECOND START / NO RERUN**; read-only exact-call diagnosis in progress  
 Branch: `v143-contextual-prune-lobo`
 
 > Compact continuation checkpoint. Older dedicated checkpoints remain authoritative; omission here does not revoke frozen boundaries.
@@ -91,6 +91,16 @@ Branch: `v143-contextual-prune-lobo`
 - `referenceScoreCalls=0`
 - `qualityVerdictMade=false`
 
+## READ-ONLY EXACT-CALL DIAGNOSIS — CHECKPOINT 1
+
+No new backend-capable request, FunctionCall, workflow rerun, deployment, protection change, or model execution was performed during this diagnosis.
+
+- Existing Vercel runtime evidence for deployment `dpl_G2WxxMA782j87H7tLpAy9cCB4ihD` confirms the exact request sequence: model-free preflight `400` at ~`23:52:19Z`, accepted start `202` at ~`23:52:21Z`, same-token status `502` at ~`23:52:32Z`, then ACK `200` at ~`23:52:34Z`.
+- Existing Actions job log for run `33999777841` / job `101396439738` independently confirms `startAccepted=true`, then first poll `status=502`, `requestSeconds=0.555108`, elapsed `13s`, followed by successful ACK/cleanup. The status HTTP request itself was therefore fast; `~13s` is elapsed async time since the start path, not a 13-second Vercel status-request timeout.
+- The retained workflow artifact intentionally contains only the bounded error `The analyzer job stopped before it could complete.` Raw status response material was deleted after ACK, so it cannot supply the underlying backend exception.
+- Static mapping of pinned route blob `742954146a86aa36485d0bbdb3fbd6691a64a712`: for `operation === 'status'`, `bridgeData.status === 'failed'` is deliberately returned by Next.js as HTTP `502` with the bridge's bounded `error`. A malformed/non-completed bridge state is a separate `502` branch with `The async analyzer returned an invalid completion response.`
+- Because the observed retained error is the explicit job-failure message rather than the invalid-completion message, the current evidence is consistent with the bridge reporting a terminal failed job; the exact upstream worker/FunctionCall failure layer still requires existing Modal log/control evidence before root cause may be declared.
+
 ## CURRENT ROOT-CAUSE QUESTION
 
 The accepted async job reached a bounded terminal failure extremely quickly (~13s), before any completed product payload. The next task is to determine **where that one FunctionCall/job failed and whether worker/model execution began**. This must be diagnosed from existing evidence only.
@@ -98,10 +108,10 @@ The accepted async job reached a bounded terminal failure extremely quickly (~13
 ## NEXT — READ-ONLY EXACT-CALL DIAGNOSIS ONLY
 
 1. **Do not edit/rearm/rerun the breakthrough workflow and do not send any real-audio start.**
-2. Inspect Vercel runtime logs for deployment `dpl_G2WxxMA782j87H7tLpAy9cCB4ihD` around `2026-09-05T23:52:18Z`–`23:52:36Z` to classify route/bridge start/status/ACK behavior.
+2. Vercel/Actions request-boundary diagnosis is now checkpointed; retain it as evidence and do not reproduce the request.
 3. Inspect existing Modal bridge/orchestrator/worker logs for the same exact window using read-only/log-only tooling. Do not spawn a FunctionCall, invoke audio, or execute a model as part of diagnosis.
 4. Determine whether the accepted FunctionCall failed before worker execution, during audio download, during separator/model startup, or later. Preserve only bounded error/control evidence; no raw audio/stems/model bytes.
-5. Read route/bridge/worker source as needed to map the observed HTTP 502/error to the exact failure layer.
+5. Read bridge/worker/protocol source as needed to map the observed terminal failure to the exact layer.
 6. Checkpoint the exact root cause before proposing any code/config repair. **No repair may be validated with a second model-bearing start in this diagnostic phase.**
 
 ## HARD STOPS
