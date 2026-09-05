@@ -1,6 +1,6 @@
 # CURRENT STATE — DadRock `/ai-tab`
 
-Updated: 2026-09-05 08:15 America/Toronto  
+Updated: 2026-09-05 08:20 America/Toronto  
 Branch: `v143-contextual-prune-lobo`
 
 > Compact continuation checkpoint. Older dedicated checkpoints remain authoritative; omission here does not revoke frozen boundaries.
@@ -41,98 +41,64 @@ Promoted worker candidate:
 
 User explicitly requested one real production test for a possible breakthrough. This test targeted the new property that had not been proven pre-deploy: **synchronous production-route latency after scheduler promotion**.
 
-### Test execution
-
-- Workflow `.github/workflows/v143-production-gomyway-after-download-fix.yml` measurement commit `14c46a4d4a57652ebe7dd2257bb37001ade8a834`.
-- Actions run `33965269193`, job `101304165477`.
-- Existing public repository asset `gomyway-midterm-source.m4a`, blob `4dd709e3fa177b4daeed71ca97f0199757729d4b`.
+- Measurement commit `14c46a4d4a57652ebe7dd2257bb37001ade8a834`; run `33965269193`, job `101304165477`.
+- Artifact `9969253856`, digest `sha256:e47ee1adca9d2c18eb02c19ee82e3685906c6cb4765636944ddd3013bc46e764`.
+- `analysisStatus=504`; `analysisEndToEndSeconds=150.66095`; no tab reached Vercel before timeout.
+- Prior apples-to-apples run was ~`150.931s` → same Vercel ceiling; no meaningful synchronous product-latency gain.
 - No professional/reference score; `referenceFacingInputs=0`, `referenceScoreCalls=0`, `qualityVerdictMade=false`.
-- Raw request/analyzer response deleted after run; aggregate JSON only retained.
 
-Artifact:
+## Log-only post-promotion stage diagnosis — COMPLETE
 
-- `9969253856`, `v143-production-post-promotion-breakthrough-check`;
-- digest `sha256:e47ee1adca9d2c18eb02c19ee82e3685906c6cb4765636944ddd3013bc46e764`.
-
-Measured result:
-
-- `analysisStatus=504`;
-- `analysisEndToEndSeconds=150.66095`;
-- `generatedTabPresent=false` because Vercel terminated the synchronous request before analyzer completion;
-- no product payload/quality fields were returned before timeout.
-
-### Apples-to-apples prior baseline
-
-Previous run using the same workflow/source asset:
-
-- commit `6f9ed2fa38542a691565a93052bb2be5862f3cf7`;
-- run `33889779953`, job `101078353122`;
-- request elapsed approximately `150.931s` before HTTP 504.
-
-Difference: about `0.270s`, which is not a meaningful product latency improvement; both runs hit the same Vercel `maxDuration=150` wall.
-
-## Log-only post-promotion stage diagnosis — COMPLETE / NO SECOND MODEL RUN
-
-A separate log-only workflow read existing Modal stdout and invoked no audio/model work:
-
-- workflow commit `9e0aec53337309d40d47e43cf177e276e188cf1e`;
-- run `33965453476`, job `101304658150`: SUCCESS;
-- artifact `9969270692`, digest `sha256:4c52eeeefcec913c2723a4bd79f4b48c8a431b2839395e09513b4835b6291d93`;
-- `audioOrModelInvokedByThisDiagnostic=false`.
-
-Live production stage markers for the breakthrough request:
-
-- `worker.start` `0.000s`;
-- download done `1.387s`;
-- worker normalize done `1.969s`;
-- separator input normalize done `0.302s`;
-- direct Demucs child started `0.306s`;
-- RoFormer started `0.319s`;
-- RoFormer completed `84.079s`;
-- cascade Demucs child started immediately at `84.079s`.
-
-No `direct-demucs.done`, `cascade-demucs.done`, or `separator.done` marker had appeared in the bounded log read, even after the Vercel 150-second request had already timed out.
+- Log-only commit `9e0aec53337309d40d47e43cf177e276e188cf1e`; run `33965453476`, job `101304658150`; artifact `9969270692`.
+- No audio/model invocation by the diagnostic.
+- Live markers: worker start `0.000s`; download `1.387s`; worker normalize `1.969s`; separator normalize `0.302s`; direct Demucs start `0.306s`; RoFormer start `0.319s`; RoFormer done `84.079s`; cascade Demucs start `84.079s`.
+- Scheduler overlap is therefore active in production; synchronous Vercel waiting is the product blocker.
 
 ## BREAKTHROUGH VERDICT
 
-**Engineering/scheduler breakthrough: YES, confirmed in production.**
+- **Engineering/scheduler breakthrough: YES / CONFIRMED IN PRODUCTION.**
+- **End-user synchronous latency breakthrough: NO / VERCEL 150s CEILING STILL HIT.**
+- Musical-quality breakthrough: not tested and not implied by the scheduler-only change.
 
-- The new scheduler is actually active.
-- Direct CPU Demucs and parent GPU RoFormer begin essentially together (`0.306s` vs `0.319s`).
-- Cascade Demucs begins immediately when RoFormer completes (`84.079s`).
-- This proves the intended cross-view overlap is working in the live production worker; routing/deployment are not the blocker.
+## Async breakthrough architecture — PLAN CHECKPOINTED / IMPLEMENTATION AUTHORIZED
 
-**End-user/product latency breakthrough: NO, not yet.**
+User explicitly instructed: “Lets get this wiring correct and make the breakthrough we need.” This follows the proposed async architecture and authorizes implementation of the transient result handoff required for start/poll completion.
 
-- The synchronous production route still returns 504 at about `150.66s`, effectively unchanged from the old `150.93s` timeout.
-- The remaining bottleneck is the Demucs work after/concurrent with the ~84-second RoFormer stage.
-- A scheduler-only optimization cannot help users until the entire synchronous chain completes within the Vercel 150-second ceiling, or the request architecture stops requiring Vercel to hold the connection open for the full model runtime.
+Plan: `docs/checkpoints/V143_ASYNC_JOB_ARCHITECTURE_PLAN.md`, commit `e0aef99dcdf931b66c0e1a081160e3cc5c6cb3c2`.
 
-**Musical-quality breakthrough: NOT TESTED / NOT IMPLIED BY THIS SCHEDULER CHANGE.**
+Chosen architecture:
 
-Gate 2 proved the scheduler preserves exact separator output identities. This scheduler promotion was a performance change, not a musical-quality change. No reference-facing quality score was run.
+- promoted `dadrock-v143-ai-tab-live/rhythm_v143_request` worker remains unchanged;
+- existing HTTP bridge gains Rhythm-only `start`, `status`, and `ack` operations;
+- bridge start spawns a lightweight orchestrator instead of waiting for the worker;
+- browser receives a signed opaque job token immediately through Vercel;
+- browser polls Vercel; Vercel polls bridge; bridge reads only transient structured-result state;
+- result handoff uses a workspace-only Modal Queue partition with **15-minute maximum TTL**;
+- raw audio, normalized audio, stems, and model bytes never enter the queue;
+- structured result is compressed/chunked for queue size limits;
+- result partition is cleared on successful browser receipt/ack; TTL is the fail-safe cleanup;
+- no persistent result cache is introduced;
+- Lead/Bass remain on the current synchronous legacy path;
+- existing V143 anti-leakage/product postprocessing in Vercel remains authoritative after async completion.
 
-## PROMOTION STATUS
+Implementation/deployment order is fail-closed: bridge source + pure gate → Vercel route/UI source + build → bridge protocol deploy/test without model → Vercel preview protocol test without model → exactly one model-bearing preview e2e proving completion beyond 150s → production promotion only if GREEN.
 
-- Scheduler structural/runtime/composition evidence: **GREEN/CLOSED**.
-- Production scheduler worker promotion: **GREEN/CLOSED**.
-- Concurrent scheduler behavior in live production: **CONFIRMED**.
-- Synchronous production latency threshold (<150s): **NOT MET**.
-- Vercel/HTTP bridge/main: **UNCHANGED**.
+Production remains unchanged at this checkpoint.
 
 ## NEXT STEP
 
-1. Treat the production 504 as an architecture/performance-boundary problem, not a routing/deployment regression.
-2. Do not rerun the same production audio merely for reassurance.
-3. Highest-value next investigation is one of:
-   - determine the eventual live direct/cascade Demucs completion times from existing logs only; or
-   - design an asynchronous job/result-polling handoff so Vercel no longer has to wait for the full separator/runtime chain.
-4. Any additional model execution must demonstrate a distinct new property.
+1. Implement branch-only async bridge helpers/orchestrator/start/status/ack while preserving the current default synchronous endpoint.
+2. Add and run a no-model structural/unit gate for HMAC authorization, queue boundaries, TTL, chunking, and synchronous fallback preservation.
+3. Checkpoint exact bridge blob/gate result before any bridge deployment.
+4. Then wire Vercel API + `/ai-tab` polling UI and build/test branch source.
 
 ### Hard stops
 
 - No duplicate model-bearing breakthrough request.
+- No model/scheduler changes as part of async wiring.
 - No reference-facing scoring/quality verdict/restricted assets.
-- No closed performance/cache/concurrency/Gate-2 reruns absent invalidating change.
-- No Vercel/bridge/main change without an explicitly checkpointed architecture plan.
+- No raw audio/stems/model bytes in async result storage.
+- No async result TTL above 15 minutes; no persistent result cache.
+- No whole-branch merge to `main`.
+- No production Vercel promotion before preview protocol/e2e proof.
 - No weakening exact parity/fail-closed criteria or retention boundaries.
