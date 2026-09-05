@@ -1,6 +1,6 @@
 # CURRENT STATE — DadRock `/ai-tab`
 
-Updated: 2026-09-05 — authenticated `vercel curl` protected POST transport GREEN; zero model spawn preserved; prebuilt env classification next  
+Updated: 2026-09-05 — authenticated `vercel curl` protected POST GREEN; pulled Preview env classifies V143 URL as sensitive placeholder and analyzer/blob tokens missing; zero model spawn preserved  
 Branch: `v143-contextual-prune-lobo`
 
 > Compact continuation checkpoint. Older dedicated checkpoints remain authoritative; omission here does not revoke frozen boundaries.
@@ -47,27 +47,46 @@ Branch: `v143-contextual-prune-lobo`
 
 ## AUTHENTICATED `vercel curl` PROTECTED POST — GREEN
 
-- First CLI diagnostic `33998673175` / job `101393529937` made **no HTTP request** because `--token` was mistakenly placed after the `vercel curl` subcommand and was forwarded to native curl; syntax-only failure.
-- Corrected diagnostic commit `3d3a5ece92c0e5937b93682cff5dc101f7212f01` used the existing masked `VERCEL_TOKEN` environment with pinned Vercel CLI `59.11.2`.
-- Run `33998720454`, job `101393652639` — **SUCCESS**.
+- First CLI diagnostic `33998673175` / job `101393529937` made no HTTP request because `--token` was forwarded to native curl; syntax-only failure.
+- Corrected diagnostic commit `3d3a5ece92c0e5937b93682cff5dc101f7212f01`, run `33998720454`, job `101393652639` — SUCCESS.
 - Exact model-free proof against the existing protected Preview:
-  - `vercelCurlExitCode=0`
   - malformed POST status = **HTTP 400**
-  - exact route error matched `Transcription type must be lead, rhythm, or bass.`
+  - exact route error = `Transcription type must be lead, rhythm, or bass.`
   - `nextRouteReached=true`
   - `analyzerCallPossible=false`
   - `modelBearingStartRequestCount=0`
   - `audioUrlSupplied=false`
   - `referenceFacingInputs=0`.
 - Therefore authenticated `vercel curl --deployment <exact-preview-url>` is a valid protected request transport without weakening/disablement, bypass-secret creation, production promotion, or model execution.
-- Candidate E2E transport repair: use authenticated `vercel curl` for preflight/start/status/ACK instead of direct GitHub-OIDC curl. **Do not arm yet.**
+- Candidate E2E transport repair remains: authenticated `vercel curl` for preflight/start/status/ACK instead of direct GitHub-OIDC curl. **Do not arm yet.**
 
-## PREBUILT SENSITIVE ENV WARNING — NOW THE NEXT MODEL-FREE BLOCKER
+## PREVIEW ENV CLASSIFICATION — MODEL-FREE BLOCKERS CONFIRMED
 
-- The fresh local prebuild emitted: `1 Secret value cannot be pulled from the preview Environment. Wrote "[SENSITIVE]" as a placeholder`.
-- This was not the 401 cause, but it could break analyzer authorization/config once protected transport is fixed.
-- Next safe diagnostic must run `vercel pull --environment=preview --git-branch=v143-contextual-prune-lobo` and classify only critical env entries as `missing`, `sensitive_placeholder`, or `present` without printing values.
-- Critical route/runtime keys must be derived from the pinned route before the diagnostic. No audio, analyzer request, bridge call, or model invocation is permitted.
+- Pinned route requires, for a Rhythm `start`, these three critical Preview runtime values before any bridge call:
+  - `ANALYZER_API_URL_V143`
+  - `ANALYZER_API_TOKEN`
+  - `BLOB_READ_WRITE_TOKEN`.
+- Model-free classification workflow commit `a824ef08137540b42fce51ff9fa462974f34aeb2`, run `33998800056`, job `101393870080`.
+- The run first re-proved protected POST transport GREEN: malformed POST HTTP 400, route reached, analyzer call impossible, audio supplied false, model starts 0.
+- `vercel pull --environment=preview --git-branch=v143-contextual-prune-lobo` then emitted exactly one unpullable Secret warning and classifications only; no secret value was printed:
+  - `ANALYZER_API_URL_V143 = sensitive_placeholder`
+  - `ANALYZER_API_TOKEN = missing`
+  - `BLOB_READ_WRITE_TOKEN = missing`
+  - `secretValuesPrinted=false`
+  - `modelBearingStartRequestCount=0`
+  - `audioUrlSupplied=false`
+  - `analyzerCallPossible=false`.
+- `.vercel` was deleted in the `always()` cleanup step.
+- Interpretation is deliberately limited: this proves the **locally pulled Preview env used by a prebuilt build is unsafe/incomplete** for the V143 Rhythm start path. It does **not yet prove** the two missing keys are absent from Vercel-managed runtime env on a cloud-built Preview; they may be unavailable to `vercel pull` due to scoping/secret handling.
+- Therefore no further `vercel build --prebuilt` model-bearing attempt is authorized.
+
+## NEXT — DISTINGUISH LOCAL-PULL LIMITATION FROM VERCEL RUNTIME CONFIG
+
+1. Inspect Vercel project/environment metadata for the three critical key names/scopes without retrieving/printing values.
+2. Use a model-free runtime probe if needed: a `status` operation with a fake nonempty job token can safely test whether Rhythm analyzer URL/token configuration reaches the route's config gate; it carries no audio and cannot start a worker/model. Prefer metadata inspection first.
+3. Determine whether a **cloud source build/deploy** (rather than local `--prebuilt`) preserves Vercel-managed sensitive Preview runtime env. Any fresh Preview proof must remain model-free and use authenticated `vercel curl`.
+4. Checkpoint the exact cloud-build/config proof and only then design the breakthrough workflow repair.
+5. Only after transport + runtime config are GREEN explicitly reconsider a second client POST, noting the first client POST provably caused zero backend/model starts.
 
 ## HARD STOPS
 
@@ -80,12 +99,4 @@ Branch: `v143-contextual-prune-lobo`
 - No TTL > 15 minutes / no persistent result cache.
 - No whole-branch merge to `main`.
 
-## NEXT
-
-1. Re-read pinned async route to enumerate exact critical environment-variable names.
-2. Run a model-free Preview env classification diagnostic; print classifications only, never values.
-3. If a critical secret is `[SENSITIVE]`, design a fresh Preview deployment path that preserves Vercel-managed sensitive runtime env (prefer cloud source build over local `--prebuilt`) and prove it model-free via authenticated `vercel curl`.
-4. Checkpoint transport/config proof and proposed guarded workflow repair.
-5. Only after all model-free gates are GREEN explicitly reconsider a second client POST, noting the first client POST provably caused zero backend/model starts.
-
-Current authorization state: **protected POST transport via authenticated `vercel curl` GREEN; direct GitHub OIDC trust path not green; first audio POST caused zero backend/model execution; no second model-bearing request authorized pending prebuilt env/config proof.**
+Current authorization state: **authenticated protected POST transport GREEN; direct GitHub OIDC trust path not green; locally pulled Preview env is incomplete for V143 start; first audio POST caused zero backend/model execution; no second model-bearing request authorized pending Vercel-managed runtime config/cloud-build proof.**
