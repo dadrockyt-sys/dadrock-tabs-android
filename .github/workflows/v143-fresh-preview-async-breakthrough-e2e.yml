@@ -28,7 +28,7 @@ env:
   SCHEDULER_BLOB: fc9b4c45c208d80be7abab64a8959f2a3babcee8
   AUDIO_URL: https://raw.githubusercontent.com/dadrockyt-sys/dadrock-tabs-android/main/public/jimmy-paige-midterm-v1/gomyway-midterm-source.m4a
   AUDIO_BLOB_SHA: 4dd709e3fa177b4daeed71ca97f0199757729d4b
-  E2E_SCRIPT_BLOB: d72faac8c531b6572dc3ce1d2f5ec0f5e1317626
+  E2E_SCRIPT_BLOB: 433599afec7fff20a31ea79e4c93ef9a6da03b36
   VERCEL_TELEMETRY_DISABLED: '1'
   NO_COLOR: '1'
 
@@ -89,6 +89,7 @@ jobs:
           set -euo pipefail
           OUT=debug/v143-contextual-prune/existing-preview-async-breakthrough
           rm -f \
+            "$OUT"/preflight-response.json \
             "$OUT"/start-request.json \
             "$OUT"/start-response.json \
             "$OUT"/status-request.json \
