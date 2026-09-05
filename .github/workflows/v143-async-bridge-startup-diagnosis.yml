@@ -34,17 +34,22 @@ jobs:
           modal token set --token-id "$MODAL_TOKEN_ID" --token-secret "$MODAL_TOKEN_SECRET" >/dev/null
           modal --version
 
-      - name: Read production bridge history and startup logs only
+      - name: Read production bridge and worker startup logs only
         shell: bash
         run: |
           set -euo pipefail
-          APP='dadrock-v143-http-bridge'
-          echo '=== app history ==='
-          modal app history "$APP" --env main --json || true
+          BRIDGE='dadrock-v143-http-bridge'
+          WORKER='dadrock-v143-ai-tab-live'
+          echo '=== bridge app history ==='
+          modal app history "$BRIDGE" --env main --json || true
+          echo '=== worker app history ==='
+          modal app history "$WORKER" --env main --json || true
           echo '=== currently running containers ==='
           modal container list --env main --json || true
           echo '=== recent bridge logs ==='
-          modal app logs "$APP" --env main --since 4h --tail 2500 --timestamps --show-function-id --show-function-call-id --show-container-id 2>&1 || true
+          modal app logs "$BRIDGE" --env main --since 4h --tail 2500 --timestamps --show-function-id --show-function-call-id --show-container-id 2>&1 || true
+          echo '=== recent worker logs ==='
+          modal app logs "$WORKER" --env main --since 4h --tail 2500 --timestamps --show-function-id --show-function-call-id --show-container-id 2>&1 || true
           echo 'diagnosticOnly=true'
           echo 'audioOrModelInvokedByThisDiagnostic=false'
           echo 'workerSpawnedByThisDiagnostic=false'
