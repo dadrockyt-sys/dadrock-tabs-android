@@ -1,6 +1,6 @@
 # CURRENT STATE — DadRock `/ai-tab`
 
-Updated: 2026-09-05 12:45 America/Toronto  
+Updated: 2026-09-05 12:47 America/Toronto  
 Branch: `v143-contextual-prune-lobo`
 
 > Compact continuation checkpoint. Older dedicated checkpoints remain authoritative; omission here does not revoke frozen boundaries.
@@ -31,29 +31,11 @@ Promoted L4 worker remains unchanged:
 
 ### Production HTTP bridge — HARDENED ASYNC CONTROL DEPLOYED / GREEN
 
-- hardened bridge blob **`36584355d9b060fc7b7e20acc62524fbc7bf9005`**;
+- hardened bridge blob `36584355d9b060fc7b7e20acc62524fbc7bf9005`;
 - protocol blob `1bd55017e16a4e1d8b14c7429492f811a43a28d8`;
-- previous pre-hardening async bridge blob `e0cecefacead73d69a905fd6bfb2049b21c87bc3`;
-- rollback sync bridge blob `9a550f0afd5ced3894d8f1ccd18543fa5cd68ad6`.
-
-Deliberate bridge-only deployment workflow `.github/workflows/v143-deploy-hardened-async-bridge.yml`:
-
-- first run `33981834369` / job `101348311754` correctly **FAILED CLOSED before deploy** because the checkpointed bridge pin was stale (`365843550f...` vs actual Git blob `36584355d9...`); protocol/worker/scheduler pins matched and Modal was not touched;
-- exact bridge pin corrected in commit `dedda6b64999a68f390e276cc204608cefb55109`;
-- authoritative run `33981874155` / job `101348420851`: **SUCCESS**;
-- exact source boundary GREEN: bridge `36584355d9...`, protocol `1bd55017...`, worker `111bf14a...`, scheduler `fc9b4c45...`;
-- `modal deploy --env main analyzer/v143_modal_http_endpoint.py` SUCCESS;
-- production `dadrock-v143-http-bridge/async_protocol_smoke` SUCCESS;
-- app identity `dadrock-v143-http-bridge`, Queue `dadrock-v143-async-results`, signed token roundtrip GREEN, Queue roundtrip/clear GREEN, TTL `900s`;
+- authoritative bridge-only deploy run `33981874155` / job `101348420851`: SUCCESS;
 - artifact `9973991338`, digest `sha256:19245242230abd022ef84b463e5d75e4f5745d04e1a4f2cf0d123d1398d39b10`;
-- bridge-only deployment: true; production Vercel changed=false; worker changed=false; scheduler changed=false; audioRead=false; modelExecuted=false; reference inputs/scores `0`; quality verdict false.
-
-## Breakthrough diagnosis — CLOSED
-
-- production synchronous request run `33965269193` / job `101304165477`: HTTP 504 at `150.66095s`;
-- previous equivalent ~`150.931s`;
-- log-only run `33965453476` proved direct Demucs and RoFormer overlap (`0.306s` / `0.319s`), RoFormer done/cascade start `84.079s`;
-- scheduler breakthrough YES; synchronous product breakthrough NO.
+- production Vercel changed=false; worker/scheduler changed=false; synthetic Queue/token smoke GREEN; no audio/model/reference scoring.
 
 ## Async architecture
 
@@ -66,59 +48,69 @@ Current branch Vercel/UI pins:
 - route blob `742954146a86aa36485d0bbdb3fbd6691a64a712`;
 - `/ai-tab` page blob `de39f2715c6875d757ef730c9e3182ccd4aa00a4`.
 
-## Modal `oneshot` report — ROOT CAUSE/FIX
+## Modal `oneshot` looping report — FIXED / PROVEN / DEPLOYED
 
-User reported Modal showing an apparent looping/failing `oneshot`. Model-bearing E2E was paused.
+Root cause was not Modal startup. The pre-hardening bridge discarded the `.spawn()` FunctionCall, so an orchestrator that died before result publication could look like `processing` forever.
 
-No-audio startup discriminators proved the primitive/topology works:
-
-- L4 cold-start `33980499498` / `101344748201`, artifact `9973612728`: GREEN;
-- isolated `.spawn()` `33980754694` / `101345414660`, artifact `9973684032`: GREEN;
-- spawned orchestrator -> L4 dependency smoke `33980891422` / `101345785629`, artifact `9973722881`: GREEN;
-- exact deployed production orchestrator -> exact real worker fail-before-download `33981009987` / `101346107709`, artifact `9973751225`: GREEN, FunctionCall `fc-01M1S9SEY1YY29VYHVWWSSSMX6`, 9.061s, no audio/model.
-
-Actual robustness gap: pre-hardening bridge discarded `.spawn()` FunctionCall. Empty result Queue therefore looked like `processing` forever even if the orchestrator had already failed.
-
-Hardened behavior now deployed:
+Hardened bridge now:
 
 - tracks opaque FunctionCall ID in `control-{job_id}`, TTL 900s;
 - status uses `FunctionCall.from_id(...).get(timeout=0)`;
 - only Modal timeout means genuinely processing;
 - remote/completed failure becomes bounded terminal `failed`;
 - ACK clears result + control partitions;
-- no sensitive request/job/audio/tab/reference fields logged;
-- worker/scheduler/model unchanged.
+- no sensitive request/job/audio/tab/reference data logged.
 
-### Hardening proof chain — GREEN
+Proof chain GREEN:
 
-- source/no-model gate `33981347482` / `101347008342`, artifact `9973838904`, digest `sha256:a74c088f9a6e412deba9b47f400dc221bf2c992021ca48d2185ec2f7addab9d5`;
-- exact isolated hardened bridge transport `33981493357` / `101347398382`: GREEN;
-- first fail-fast diagnostic `33981582672` failed only because the diagnostic used an unhydrated cross-app Function object; not product evidence;
-- diagnostic corrected in commit `4698572e18618463555b765ea1730d0da1d7e8ca`, workflow update `776252818c7a0fac886f9d646e2b31a542d456a1`;
-- decisive corrected fail-fast run `33981664796` / job `101347836824`: **SUCCESS**;
-- artifact `9973957720`, digest `sha256:42f372c35049c6883be633400230534cb4f842dcdd85b6c6c56139ee9527b98a`;
-- real isolated orchestrator FunctionCall tracked; invalid URL fails before download/model; status reaches terminal `failed` instead of indefinite `processing`; ACK clears both partitions; no audio/model/reference score.
+- source gate `33981347482` / `101347008342`, artifact `9973838904`;
+- exact isolated bridge transport `33981493357` / `101347398382`;
+- decisive fail-fast transition `33981664796` / `101347836824`, artifact `9973957720`, digest `sha256:42f372c35049c6883be633400230534cb4f842dcdd85b6c6c56139ee9527b98a`;
+- hardened production bridge deploy/smoke `33981874155` / `101348420851`.
 
-**Reported looping symptom is now addressed in the production bridge.**
+## Preview boundary — RECONFIRMED / READY FOR ONE MODEL-BEARING E2E
 
-## Previously closed async/Vercel evidence — GREEN
+Existing protected Preview deployment from routing-correction run `33968019067` / job `101311460970`:
 
-- Protocol current-pin `33966778940`, artifact `9969677990`.
-- Vercel composition `33966794524`, artifact `9969683328`.
-- Preview build `33966323815` / `101306988163`, artifact `9969549184`.
-- Preview routing correction `33968019067` / `101311460970`: GREEN / no model/audio.
+- deployment ID **`dpl_FzuFoFNsaZcaV73RXSTejoH6cLpz`**;
+- URL `https://dadrock-tabs-android-q7v7k9mms-stephen-mcnally-s-projects.vercel.app`;
+- target `preview`, status Ready;
+- source commit `0c023bdf0e395ddf98501317472ea59e99a00eeb`;
+- route blob `742954146a86aa36485d0bbdb3fbd6691a64a712`;
+- page blob `de39f2715c6875d757ef730c9e3182ccd4aa00a4`;
+- Preview branch override `ANALYZER_API_URL_V143` points to `https://dadrockyt--dadrock-v143-http-bridge-analyze.modal.run`;
+- `ANALYZER_API_TOKEN`, `BLOB_READ_WRITE_TOKEN`, and legacy `ANALYZER_API_URL` present in Preview;
+- protected access via `vercel curl` proven;
+- invalid HMAC request reached bridge and returned 400;
+- Production environment changed=false; production promotion=false.
 
-## NEXT STEP
+Although this Preview was built when the bridge source blob was the pre-hardening async revision, its V143 analyzer URL is a dynamic HTTP endpoint URL. That same URL now resolves to the **hardened deployed bridge blob `36584355d9...`**, so no Preview redeploy is required solely for the bridge hardening.
 
-1. Hardened production bridge is now GREEN; the model-bearing pause due to the oneshot control-loop report is lifted.
-2. Reconfirm the current Preview deployment/source identity and preview-only `ANALYZER_API_URL_V143` routing; do not modify Production Vercel.
-3. Run **exactly one** model-bearing Preview async Rhythm E2E using the approved public/repository test source. New property to prove: start request returns promptly, status polling survives past 150s, terminal structured tab arrives through Queue, V143 reference-free safety/product pipeline passes, and ACK clears transient state.
-4. If GREEN, checkpoint the end-user async breakthrough evidence before any production Vercel promotion.
+Approved/reused model-bearing source for the single E2E:
+
+- public repository asset `public/jimmy-paige-midterm-v1/gomyway-midterm-source.m4a`;
+- Git blob `4dd709e3fa177b4daeed71ca97f0199757729d4b`;
+- raw URL previously exercised through the same analyzer path;
+- no professional/reference score authorized.
+
+## EXACT NEXT STEP — SINGLE ASYNC BREAKTHROUGH E2E
+
+Create/execute exactly one Preview-only workflow against `dpl_FzuFoFNsaZcaV73RXSTejoH6cLpz`:
+
+1. POST Rhythm start once using the approved public repository source; require HTTP 202 and a signed job token returned promptly.
+2. Poll status only; individual Vercel requests remain bounded and may continue beyond the old 150s synchronous wall.
+3. Require terminal HTTP 200 with generated tab and existing V143 reference-free runtime/product safety contract.
+4. Record aggregate-only start latency, async total completion latency, poll count, whether total exceeded 150s, product-health/safety fields; do not retain raw transcription.
+5. ACK exactly once after valid completion; require transient result/control cleanup response.
+6. Delete all raw request/completion files from runner; upload aggregate summary only.
+7. Do not launch a second model-bearing request on failure; diagnose first.
+
+A GREEN result proves the needed product breakthrough: analysis can complete even when model runtime exceeds Vercel's 150-second synchronous ceiling.
 
 ### Hard stops
 
-- No duplicate model/audio request.
-- No Production Vercel environment change/promotion until one Preview async E2E is GREEN.
+- **Exactly one model/audio start request.** No duplicate/retry model invocation.
+- No Production Vercel environment change/promotion during this E2E.
 - No Deployment Protection weakening.
 - No model/scheduler change.
 - No reference-facing scoring/quality verdict/restricted assets.
