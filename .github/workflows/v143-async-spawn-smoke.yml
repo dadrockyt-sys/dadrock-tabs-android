@@ -1,0 +1,126 @@
+name: V143 Async Oneshot Spawn Smoke
+
+on:
+  push:
+    branches:
+      - v143-contextual-prune-lobo
+    paths:
+      - analyzer/v143_async_spawn_smoke_modal.py
+      - .github/workflows/v143-async-spawn-smoke.yml
+
+concurrency:
+  group: v143-async-oneshot-spawn-smoke
+  cancel-in-progress: false
+
+permissions:
+  contents: read
+
+jobs:
+  async-oneshot-spawn-smoke:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 10
+    env:
+      MODAL_ENVIRONMENT: main
+      PYTHONUNBUFFERED: "1"
+      MODAL_TOKEN_ID: ${{ secrets.MODAL_TOKEN_ID }}
+      MODAL_TOKEN_SECRET: ${{ secrets.MODAL_TOKEN_SECRET }}
+      V143_ASYNC_SPAWN_SMOKE_APP_NAME: dadrock-v143-async-spawn-smoke
+      V143_ASYNC_SPAWN_SMOKE_QUEUE_NAME: dadrock-v143-async-spawn-smoke-results
+    steps:
+      - name: Checkout exact branch head
+        uses: actions/checkout@v4
+
+      - name: Set up Python 3.11
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: Install Modal client
+        shell: bash
+        run: |
+          set -euo pipefail
+          python -m pip install --upgrade pip >/dev/null
+          python -m pip install 'modal==1.5.5' >/dev/null
+          modal token set --token-id "$MODAL_TOKEN_ID" --token-secret "$MODAL_TOKEN_SECRET" >/dev/null
+          modal --version
+
+      - name: Deploy isolated spawn-smoke app
+        shell: bash
+        run: |
+          set -euo pipefail
+          modal deploy --env main analyzer/v143_async_spawn_smoke_modal.py
+
+      - name: Invoke exactly one synthetic spawned oneshot
+        shell: bash
+        run: |
+          set -euo pipefail
+          mkdir -p debug/v143-contextual-prune/async-spawn-smoke
+          timeout 180s python - <<'PY'
+          import json
+          from pathlib import Path
+          import modal
+
+          safe = {
+              'schemaVersion': 1,
+              'gate': 'v143-async-spawn-smoke',
+              'audioRead': False,
+              'workerInvoked': False,
+              'modelExecuted': False,
+              'referenceFacingInputs': 0,
+              'referenceScoreCalls': 0,
+              'qualityVerdictMade': False,
+          }
+          try:
+              fn = modal.Function.from_name(
+                  'dadrock-v143-async-spawn-smoke',
+                  'synthetic_spawn_smoke',
+                  environment_name='main',
+              )
+              result = fn.remote()
+              safe.update(result)
+              safe['status'] = 'success'
+          except BaseException as error:
+              safe.update({
+                  'status': 'failed',
+                  'errorClass': type(error).__name__,
+                  'errorMessage': str(error)[:500],
+              })
+          Path('debug/v143-contextual-prune/async-spawn-smoke/summary.json').write_text(
+              json.dumps(safe, indent=2, sort_keys=True) + '\n', encoding='utf-8'
+          )
+          print(json.dumps(safe, indent=2, sort_keys=True))
+          if safe.get('status') != 'success':
+              raise SystemExit(1)
+          if safe.get('spawnedResultCompleted') is not True:
+              raise SystemExit(1)
+          if safe.get('queueCleared') is not True:
+              raise SystemExit(1)
+          if safe.get('resultTtlSeconds') != 900:
+              raise SystemExit(1)
+          PY
+
+      - name: Capture isolated app logs
+        if: always()
+        shell: bash
+        run: |
+          set +e
+          echo '=== isolated spawn-smoke logs ==='
+          modal app logs "$V143_ASYNC_SPAWN_SMOKE_APP_NAME" --env main --since 1h --tail 1000 --timestamps --show-function-id --show-function-call-id --show-container-id 2>&1
+          exit 0
+
+      - name: Preserve aggregate evidence only
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: v143-async-spawn-smoke
+          path: debug/v143-contextual-prune/async-spawn-smoke/summary.json
+          if-no-files-found: warn
+          retention-days: 7
+
+      - name: Stop isolated app
+        if: always()
+        shell: bash
+        run: |
+          set +e
+          modal app stop "$V143_ASYNC_SPAWN_SMOKE_APP_NAME" --env main
+          exit 0
