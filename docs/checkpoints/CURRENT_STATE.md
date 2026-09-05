@@ -1,6 +1,6 @@
 # CURRENT STATE — DadRock `/ai-tab`
 
-Updated: 2026-09-05 00:47 America/Toronto  
+Updated: 2026-09-05 00:50 America/Toronto  
 Branch: `v143-contextual-prune-lobo`
 
 > Compact continuation checkpoint. Older dedicated checkpoints remain authoritative; omission here does not revoke frozen boundaries.
@@ -25,46 +25,58 @@ Branch: `v143-contextual-prune-lobo`
 
 - Scheduler implementation commit `6772a0ca1d700ea6861cd4401b51e093144c8d26`.
 - Candidate scheduler blob `fc9b4c45c208d80be7abab64a8959f2a3babcee8`.
-- Immediate pre-candidate rollback commit `2ab73f0e445c1584fc6dce0112e3091985b4a575` has the same live endpoint blob `111bf14a...` and serialized scheduler blob `250534e516cad36e49cae35b6eab2b88654be2d3`.
+- Immediate pre-candidate rollback commit `2ab73f0e445c1584fc6dce0112e3091985b4a575` has same live endpoint blob `111bf14a...` and serialized scheduler blob `250534e516cad36e49cae35b6eab2b88654be2d3`.
 
 ## Closed promotion evidence
 
 - Gate 1 structural: run `33942915753` / job `101243642285` — **GREEN/CLOSED**.
-- Gate 2 exact approved-fixture runtime: run `33943100948` / job `101244148835` / artifact `9962641557` — **GREEN/CLOSED**; exact parity/public contract/runtime/cleanup/safety passed; no scoring/reference/persistence.
-- Gate 3A normal-routing composition: run `33945157629` / job `101249801382` / artifact `9963085825` (`sha256:9084a0d17ca44154e66a89f78546b6e210e3a302110e9e560c99b9f20a39ad09`) — **GREEN/CLOSED**; all pinned source identities and full Rhythm-only chain passed.
-- Decision `MODEL_BEARING_E2E_NOT_JUSTIFIED`; record `docs/checkpoints/V143_NORMAL_ROUTING_PROMOTION_DECISION.md` commit `08c9a98f38b1ca0e23bd9408b8a15bf0713fd7ff`.
+- Gate 2 exact approved-fixture runtime: run `33943100948` / job `101244148835` / artifact `9962641557` — **GREEN/CLOSED**.
+- Gate 3A normal-routing composition: run `33945157629` / job `101249801382` / artifact `9963085825` (`sha256:9084a0d17ca44154e66a89f78546b6e210e3a302110e9e560c99b9f20a39ad09`) — **GREEN/CLOSED**.
+- Decision `MODEL_BEARING_E2E_NOT_JUSTIFIED`; `docs/checkpoints/V143_NORMAL_ROUTING_PROMOTION_DECISION.md` commit `08c9a98f38b1ca0e23bd9408b8a15bf0713fd7ff`.
 - **Normal-routing pre-production promotion evidence boundary: GREEN/CLOSED.**
 
-## Production integration/deploy plan — CHECKPOINTED / AUTHORIZED SCOPE
+## Production integration plan — CHECKPOINTED
 
-Plan: `docs/checkpoints/V143_SEEDED_SCHEDULER_PRODUCTION_PLAN.md`, commit `b84d7c05cac15bc2d3196278502029a196412541`.
+- `docs/checkpoints/V143_SEEDED_SCHEDULER_PRODUCTION_PLAN.md`, commit `b84d7c05cac15bc2d3196278502029a196412541`.
+- Branch is 139 ahead / 227 behind `main`; whole-branch merge explicitly rejected.
+- Worker-only Modal redeploy; no Vercel, bridge, or `main` change.
+- Post-deploy verification limited to no-audio/no-separator-execution `rhythm_dependency_smoke` aggregate evidence.
+- Rollback target `2ab73f0e445c1584fc6dce0112e3091985b4a575`.
 
-The branch is 139 commits ahead and 227 behind `main`; whole-branch merge is explicitly rejected.
+## Production promotion trigger — COMMITTED / AWAITING ACTIONS REGISTRATION
 
-Promotion scope is **worker-only Modal redeploy** from the proven branch source:
+Workflow `.github/workflows/v143-deploy-patched-worker.yml` was hardened and deliberately changed in commit:
 
-- deploy only `analyzer/v143_modal_live_endpoint.py` to app `dadrock-v143-ai-tab-live`;
-- exact pre-deploy pins required: live endpoint `111bf14a...`, scheduler `fc9b4c45...`, deterministic wrapper `28b3e6fe...`, deterministic provider `3c6dcf9b...`, stem provider `cd180bfb...`, request adapter `6d1787f3...`, router `7849f33c...`;
-- no Vercel deploy/change;
-- no HTTP bridge deploy/change;
-- no `main` merge;
-- no approved fixture or model execution during deployment verification;
-- post-deploy verification is `rhythm_dependency_smoke` aggregate dependency/runtime identity only;
-- rollback target is exact commit `2ab73f0e445c1584fc6dce0112e3091985b4a575` if candidate deployment is implicated in a failure.
+- trigger commit `86f83f6bba33bbe7378ba1eed7294be884e30e45`;
+- workflow blob `39e44d4275578da20c9110ea29ce1a538ab3169f`;
+- serialized concurrency remains `v143-deploy-patched-worker`, `cancel-in-progress: false`;
+- pre-deploy `git hash-object` pins now fail closed on exact runtime source identities:
+  - live endpoint `111bf14a8f91045d3478901f8e36b88a2e7f181a`
+  - scheduler `fc9b4c45c208d80be7abab64a8959f2a3babcee8`
+  - deterministic wrapper `28b3e6fe0eb761178b142cf7dcbda533f0bf918d`
+  - deterministic provider `3c6dcf9b8e7360ba1dd886810f3c14c05ac0579b`
+  - stem provider `cd180bfb35e8110f031504035af5f11e502c3dc6`
+  - request adapter `6d1787f34a3b7ca781ced8e5695993a3777406a8`
+  - Rhythm router `7849f33cd3b849283ccebfda9f721cc40704231e`;
+- deploy target remains only `modal deploy --env main analyzer/v143_modal_live_endpoint.py`;
+- smoke records scheduler/live blob pins plus aggregate dependency/runtime/safety fields;
+- `approvedFixtureInvoked=false`, `audioBytesRead=false`, `separatorModelExecuted=false`, reference/scoring/quality verdict all zero/false;
+- bridge/Vercel/main remain unchanged.
 
-The existing `.github/workflows/v143-deploy-patched-worker.yml` may now be hardened with exact pins; its workflow-file commit is the deliberate single production promotion trigger.
+Immediate lookup for Actions runs with head SHA `86f83f6b...` returned zero runs at the instant of this checkpoint; do not create a second trigger commit merely because registration is delayed.
 
 ## NEXT STEP
 
-1. Harden `.github/workflows/v143-deploy-patched-worker.yml` with exact blob pins and no-model worker-only verification.
-2. That workflow-file commit deliberately triggers one serialized production worker deployment.
-3. Observe terminal result and aggregate artifact.
+1. Observe Actions registration for trigger commit `86f83f6b...` without retriggering.
+2. Identify the single `V143 Deploy Patched L4 Worker` run and observe to terminal state.
+3. Inspect aggregate deploy artifact.
 4. GREEN → checkpoint production scheduler promotion CLOSED/GREEN. Failure → diagnose before rollback; rollback only if candidate deployment is implicated.
 
 ### Hard stops
 
+- No second deployment trigger while `86f83f6b...` registration/execution is unresolved.
 - No reference-facing scoring/quality verdict/restricted assets.
 - No closed performance/cache/concurrency/Gate-2 reruns.
 - No additional model-bearing route run absent a unique demonstrated need.
-- No Vercel or bridge production change; no whole-branch/main merge for this promotion.
+- No Vercel or bridge production change; no whole-branch/main merge.
 - No weakening exact parity/fail-closed criteria or retention boundaries.
