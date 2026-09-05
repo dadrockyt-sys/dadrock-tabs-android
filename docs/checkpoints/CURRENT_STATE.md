@@ -1,6 +1,6 @@
 # CURRENT STATE — DadRock `/ai-tab`
 
-Updated: 2026-09-05 — authenticated `vercel curl` transport GREEN; deployed Preview V143 URL/token/Blob runtime config GREEN; zero backend/model starts preserved; next E2E repair can target existing pinned Preview  
+Updated: 2026-09-05 — existing-Preview guarded runner staged and pinned; Preview source lineage verified; final pre-arm audit next  
 Branch: `v143-contextual-prune-lobo`
 
 > Compact continuation checkpoint. Older dedicated checkpoints remain authoritative; omission here does not revoke frozen boundaries.
@@ -32,80 +32,59 @@ Branch: `v143-contextual-prune-lobo`
 
 ## FIRST ARMED RUN — CLIENT AUDIO POST BLOCKED BY PROTECTION / ZERO BACKEND STARTS
 
-- Helper `.github/scripts/v143-fresh-preview-async-breakthrough-e2e.sh` commit `8d536121bb9a38f4a69add31cbf7515400441c5b`, blob `92d17ee0b01ff72f71abfac1a7a4b36ff7e02792`.
+- Old helper `.github/scripts/v143-fresh-preview-async-breakthrough-e2e.sh` commit `8d536121bb9a38f4a69add31cbf7515400441c5b`, blob `92d17ee0b01ff72f71abfac1a7a4b36ff7e02792`.
 - Arming workflow commit `0a07b393bb47123a1142fd46ea6d9a55b04f0486`; run `33998283085`, job `101392517265`, conclusion FAILURE.
 - Fresh Preview `dpl_G2WxxMA782j87H7tLpAy9cCB4ihD`, URL `https://dadrock-tabs-android-bx51iz9tr-stephen-mcnally-s-projects.vercel.app`, Preview/Ready; no production promotion.
-- Aggregate artifact `9978732479`, digest `sha256:e245ae0a89d9c174ce1da14e47c31b252ad516b601d7793b2d982489efc16aa6`: client `modelBearingStartRequestCount=1`, `startStatus=401`, `startAccepted=false`, no signed token/poll/ACK, production/reference fields unchanged.
-- Model-free routing diagnostics later proved that direct protected POST was rejected before Next.js. Therefore the real-audio client request never reached app, Modal bridge, orchestrator, worker, or model.
-- **Backend/model start count from run `33998283085` = 0.** Client real-audio POST count = 1. Do not rerun that workflow attempt.
+- Aggregate artifact `9978732479`, digest `sha256:e245ae0a89d9c174ce1da14e47c31b252ad516b601d7793b2d982489efc16aa6`: client real-audio request count 1, start HTTP 401 before application, no signed token/poll/ACK.
+- Model-free routing diagnostics proved the real-audio client POST never reached Next.js, Modal bridge, orchestrator, worker, or model.
+- **Backend/model start count remains 0.** Do not rerun `33998283085`.
 
-## DIRECT GITHUB OIDC ACCESS — NOT ACCEPTED BY VERCEL PROTECTION
+## PROTECTED TRANSPORT / RUNTIME CONFIG — GREEN MODEL-FREE
 
-- Redirect diagnostic `33998609205`: no-redirect GET `/ai-tab` = 302 to `vercel.com`; malformed POST = 401.
-- Earlier redirect-followed 200 interpretations are withdrawn as app-access proof. GitHub OIDC mint/refresh mechanics are proven, but that identity is not trusted for this Preview.
-- Do not use the direct `x-vercel-trusted-oidc-idp-token` request path for the next E2E.
+- Direct GitHub OIDC request path is NOT accepted by Vercel Deployment Protection; do not use it.
+- Authenticated `vercel curl --deployment <exact-preview-url>` is GREEN: model-free malformed POST reached Next route with HTTP 400 (`33998720454`).
+- Local `vercel pull` remains incomplete and is not runtime-authoritative (`33998800056`). No local prebuilt model-bearing attempt is authorized.
+- Fake-token status probe (`33999203347`) returned HTTP 400 past the route config gate and bridge authorization, proving deployed V143 URL/analyzer token path GREEN with zero model start.
+- Invalid-audio fail-fast `start` probe (`33999276060`) returned exact bridge HTTP 400 `A valid audioUrl is required.` before job ID/FunctionCall spawn, proving deployed Blob token presence too. Outputs explicitly preserved `audioRead=false`, `jobIdCreated=false`, `workerSpawnPossible=false`, `modelBearingStartRequestCount=0`, reference inputs 0.
+- All three deployed runtime values required by a real Rhythm start are therefore GREEN: `ANALYZER_API_URL_V143`, `ANALYZER_API_TOKEN`, `BLOB_READ_WRITE_TOKEN`.
 
-## AUTHENTICATED `vercel curl` PROTECTED REQUEST TRANSPORT — GREEN
+## EXISTING PINNED PREVIEW — IDENTITY / SOURCE LINEAGE VERIFIED
 
-- Corrected model-free diagnostic commit `3d3a5ece92c0e5937b93682cff5dc101f7212f01`, run `33998720454`, job `101393652639` — SUCCESS.
-- Exact protected Preview malformed POST returned HTTP 400 + Next route validation error; no audio/model call possible.
-- `vercel curl --deployment <exact-preview-url>` is therefore the approved protected request transport. It requires no Deployment Protection weakening/disablement, bypass secret, or production promotion.
+- Deployment: `dpl_G2WxxMA782j87H7tLpAy9cCB4ihD`.
+- URL: `dadrock-tabs-android-bx51iz9tr-stephen-mcnally-s-projects.vercel.app`.
+- Connected Vercel deployment read: state/readyState **READY**, source `cli`, project `prj_6biwsn0iHci6FHNswAUCS8UYrAqF`.
+- Vercel deployment metadata pins GitHub ref `v143-contextual-prune-lobo` and exact source commit `0a07b393bb47123a1142fd46ea6d9a55b04f0486` with commit message `test: arm guarded OIDC async breakthrough E2E`.
+- No rebuild is required or permitted for the repaired attempt; use this exact existing Preview only.
 
-## LOCAL `vercel pull` ENV — INCOMPLETE BUT NOT RUNTIME-AUTHORITATIVE
+## SAFE STAGING MILESTONE — EXISTING-PREVIEW RUNNER COMMITTED WITHOUT ARMING
 
-- Run `33998800056` classified local pulled Preview env without printing values:
-  - `ANALYZER_API_URL_V143=sensitive_placeholder`
-  - `ANALYZER_API_TOKEN=missing`
-  - `BLOB_READ_WRITE_TOKEN=missing`.
-- This is only a local materialization limitation. Do not use local `vercel build --prebuilt` as evidence for runtime env absence.
-- Connected Vercel project metadata exposes no env-key/scope list, so runtime was tested model-free instead.
+- New helper: `.github/scripts/v143-existing-preview-async-breakthrough-e2e.sh`.
+- Commit: `ecbc96793d2f21582ddb5df77163d8a54cee64f0`.
+- Git blob: `d72faac8c531b6572dc3ce1d2f5ec0f5e1317626`.
+- The fetched GitHub blob exactly matches the locally computed blob; local bytes passed `bash -n` before commit.
+- This helper-file commit cannot trigger the breakthrough workflow because that workflow watches only `.github/workflows/v143-fresh-preview-async-breakthrough-e2e.yml`.
+- Helper performs no build/deploy/alias/promotion/protection change. It pins source blobs, inspects the exact Preview ID/Ready/Preview state, preflights through authenticated `vercel curl`, sends exactly one backend-capable approved real-audio Rhythm start, then same-token status polling only.
+- If the single real-audio POST is ambiguous or does not return HTTP 202 + signed `v143a1.*` token, helper records aggregate state and **stops with no second start**.
+- After a usable signed token exists, terminal completed or failed state is summarized, then ACK is sent exactly once with the same token; cleanup is required before any terminal/product/runtime failure is raised.
+- Poll deadline also stops without another start. No production/reference-facing operation is added.
+- Raw start/status/ACK bodies and the job token are runner-only and must be deleted by workflow `if: always()`; only aggregate `summary.json` may be uploaded.
 
-## DEPLOYED PREVIEW RUNTIME CONFIG — ALL THREE CRITICAL VALUES GREEN, MODEL-FREE
+## FINAL PRE-ARM AUDIT — NEXT
 
-### V143 URL + analyzer token
+Before touching the breakthrough workflow YAML:
 
-- Diagnostic commit `fe608775454b532c65a4336fc426d82545abd464`; run `33999203347`, job `101394927457`.
-- Fake-token `operation=status`, Rhythm, no audio/start operation returned HTTP **400**, class `route_config_gate_passed_or_bridge_response`.
-- Route would return 503 before bridge if selected V143 URL or analyzer token were absent; bridge would return 401 if analyzer-token authorization mismatched. Observed 400 proves selected URL/token config passed and fake job token failed later at bridge parsing.
-- Safety: model starts 0, no audio, no start operation, worker spawn impossible, reference inputs 0.
-
-### Blob token
-
-- Diagnostic commit `9776de2b2a55c93d7b996c91804befb1a6d0c6a1`; run `33999276060`, job `101395123695`.
-- Authenticated malformed POST and fake-token status probe both re-passed.
-- Exactly one fail-fast config request used `operation=start` but `audioUrl=INVALID-NO-AUDIO`, nonempty text fields, Rhythm. No real/Blob audio URL was supplied.
-- Result: HTTP **400**, exact class `all_route_runtime_config_present_bridge_fail_fast_green`, with bridge validation error `A valid audioUrl is required.`
-- This proves route config passed **including `BLOB_READ_WRITE_TOKEN`**, selected V143 URL/token were usable, and request reached the hardened bridge.
-- `_start_rhythm_job` authorizes and validates URL before job ID creation / FunctionCall spawn. Observed invalid-URL rejection therefore proves `jobIdCreated=false`, `workerSpawnPossible=false`, `audioRead=false`, `modelBearingStartRequestCount=0`, `referenceFacingInputs=0`, no secret values printed.
-- Overall diagnostic workflow conclusion remains expected FAILURE only because the local-pull classifier intentionally stays red; model-free runtime steps themselves were SUCCESS.
-
-## BREAKTHROUGH BLOCKER STATUS
-
-- Protected request transport: **GREEN via authenticated `vercel curl`**.
-- Existing fresh Preview: **GREEN / Ready / exact source deployment `dpl_G2WxxMA782j87H7tLpAy9cCB4ihD`**.
-- V143 runtime URL: **GREEN**.
-- Analyzer token + bridge auth: **GREEN**.
-- Blob token runtime presence: **GREEN**.
-- Async lifecycle/ACK: **GREEN**.
-- Proven backend/model start count so far: **0**.
-- The remaining work is workflow transport/build strategy only; no model/runtime/scheduler change is indicated.
-
-## NEXT — DESIGN ONE SAFE EXISTING-PREVIEW BREAKTHROUGH ATTEMPT
-
-1. **Do not rebuild locally.** Reuse exact existing fresh Preview `dpl_G2WxxMA782j87H7tLpAy9cCB4ihD` / `dadrock-tabs-android-bx51iz9tr-stephen-mcnally-s-projects.vercel.app`, whose protected transport and runtime config were just proven model-free.
-2. Stage a new/updated helper script in a non-triggering commit first. It must use authenticated `vercel curl --deployment "$PREVIEW_URL"` for preflight, the one real-audio start, every same-token status poll, and one terminal ACK.
-3. Pin/inspect the exact existing Preview before the start; require Ready/Preview and the expected deployment ID/source lineage. No `vercel build`, `vercel deploy`, `--prod`, alias/promotion, or protection change.
-4. Preserve exactly one **backend-capable real-audio start budget** for the repaired attempt. Historical backend/model starts remain 0; the prior client audio POST was blocked before application.
-5. Require HTTP 202 + signed `v143a1.*` token; after a usable token exists, never send another start. Poll same token only.
-6. On terminal completed **or failed**, produce aggregate pre-ACK evidence, ACK exactly once, require result cleanup, write final aggregate evidence, then fail after cleanup if terminal/product/runtime contract is not green.
-7. On ambiguous start response after the real-audio POST, STOP with no second start because it may have reached backend.
-8. Delete raw start/status/ACK bodies and job token on runner `if: always()`; upload aggregate summary only.
-9. Recheck no active breakthrough run, source pins, existing Preview identity, and helper blob before editing the breakthrough workflow. The breakthrough workflow edit is the one arming event.
-10. Checkpoint the staged helper and final pre-arm state before arming.
+1. Recheck no active/in-progress/queued/waiting/requested/pending **breakthrough** run exists; do not confuse unrelated cleanup/diagnostic workflows with the breakthrough concurrency gate.
+2. Re-fetch route/page/bridge/protocol/worker/scheduler/audio blobs and require the seven authoritative pins above.
+3. Re-fetch helper and require blob `d72faac8c531b6572dc3ce1d2f5ec0f5e1317626`.
+4. Re-read existing Preview deployment metadata and require `dpl_G2WxxMA782j87H7tLpAy9cCB4ihD`, READY, branch `v143-contextual-prune-lobo`, source commit `0a07b393bb47123a1142fd46ea6d9a55b04f0486`.
+5. Re-read breakthrough trigger/concurrency guard. Preserve single group with `cancel-in-progress: false`.
+6. Checkpoint final clean pre-arm state before editing the workflow.
+7. Make exactly one breakthrough workflow edit. That push is the single repaired arming event. The workflow must use the existing Preview helper/blob, authenticated `vercel curl`, and contain **no build/deploy/prod/promotion/OIDC path**.
+8. Watch only the resulting run. If a real start reaches backend and later fails, require ACK/evidence then STOP. No rerun / no second model-bearing start.
 
 ## HARD STOPS
 
-- **DO NOT RERUN `33998283085`; do not send any ad-hoc real-audio start; do not edit the breakthrough trigger until helper + final pre-arm checks are checkpointed.**
+- **DO NOT RERUN `33998283085`; do not send any ad-hoc real-audio start; do not edit the breakthrough trigger until the final pre-arm audit is checkpointed.**
 - No production Vercel promotion/change.
 - No Deployment Protection weakening/disablement or bypass-secret creation.
 - No scheduler/model change for access/lifecycle symptom.
@@ -114,4 +93,4 @@ Branch: `v143-contextual-prune-lobo`
 - No TTL > 15 minutes / no persistent result cache.
 - No whole-branch merge to `main`.
 
-Current authorization state: **all model-free protected transport/runtime config gates GREEN on the existing pinned fresh Preview; backend/model start count remains 0; next permitted work is non-triggering helper staging for a single existing-Preview authenticated-`vercel curl` breakthrough attempt, then checkpoint + final pre-arm validation before one workflow arming edit.**
+Current authorization state: **model-free transport/runtime gates GREEN; existing Preview identity/source lineage GREEN; backend/model start count 0; existing-Preview guarded helper staged at pinned blob `d72faac8...` without arming; next permitted action is final pre-arm validation + checkpoint, followed by exactly one breakthrough workflow arming edit if still clean.**
