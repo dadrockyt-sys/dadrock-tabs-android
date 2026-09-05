@@ -7,11 +7,22 @@ from typing import Any, Callable
 
 import modal
 import modal_analyzer as legacy
+from v143_async_job_protocol import (
+    ASYNC_RESULT_TTL_SECONDS,
+    build_completed_envelope,
+    build_failed_envelope,
+    build_job_token,
+    create_job_id,
+    decode_result_items,
+    encode_result_envelope,
+    parse_job_token,
+)
 
 
 HTTP_APP_NAME = "dadrock-v143-http-bridge"
 WORKER_APP_NAME = "dadrock-v143-ai-tab-live"
 WORKER_FUNCTION_NAME = "rhythm_v143_request"
+ASYNC_RESULT_QUEUE_NAME = "dadrock-v143-async-results"
 
 app = modal.App(HTTP_APP_NAME)
 
@@ -21,7 +32,24 @@ RhythmHandler = Callable[[dict[str, Any]], dict[str, Any]]
 # Keep the public HTTP container deliberately lightweight. It owns the existing
 # Lead/Bass analyzer and dispatch only. The heavy V143 GPU image remains deployed
 # in WORKER_APP_NAME and is looked up by name at request time.
-http_image = legacy.image.add_local_python_source("modal_analyzer")
+http_image = (
+    legacy.image.add_local_python_source("modal_analyzer")
+    .add_local_python_source("v143_async_job_protocol")
+)
+
+# Queue entries are transient structured-result handoff only. Each partition is
+# scoped to one random job id, is cleared after browser acknowledgement, and has
+# a hard 15-minute TTL if the browser disappears. Raw audio/stems never enter it.
+async_result_queue = modal.Queue.from_name(
+    ASYNC_RESULT_QUEUE_NAME,
+    create_if_missing=True,
+)
+
+
+def _authorize(payload: dict[str, Any], expected_token: str) -> None:
+    supplied_token = str(payload.get("token") or "")
+    if not expected_token or supplied_token != expected_token:
+        raise PermissionError("Unauthorized analyzer request.")
 
 
 def dispatch_authorized_request(
@@ -31,9 +59,7 @@ def dispatch_authorized_request(
     legacy_handler: LegacyHandler,
     rhythm_handler: RhythmHandler,
 ) -> dict[str, Any]:
-    supplied_token = str(payload.get("token") or "")
-    if not expected_token or supplied_token != expected_token:
-        raise PermissionError("Unauthorized analyzer request.")
+    _authorize(payload, expected_token)
 
     transcription_type = str(
         payload.get("transcriptionType") or ""
@@ -139,6 +165,155 @@ def _legacy_request(payload: dict[str, Any]) -> dict[str, Any]:
     return result
 
 
+def _worker_handle() -> modal.Function:
+    return modal.Function.from_name(
+        WORKER_APP_NAME,
+        WORKER_FUNCTION_NAME,
+    )
+
+
+def _validate_rhythm_start_payload(payload: dict[str, Any]) -> None:
+    transcription_type = str(
+        payload.get("transcriptionType") or ""
+    ).strip().lower()
+    if transcription_type != "rhythm":
+        raise ValueError("Async analyzer jobs are available only for rhythm.")
+
+    audio_url = str(payload.get("audioUrl") or "").strip()
+    pathname = str(payload.get("pathname") or "").strip()
+    if not audio_url.startswith(("https://", "http://")):
+        raise ValueError("A valid audioUrl is required.")
+    if not pathname:
+        raise ValueError("A Vercel Blob pathname is required.")
+
+
+def _queue_job_envelope(job_id: str, envelope: dict[str, Any]) -> None:
+    items = encode_result_envelope(envelope)
+    async_result_queue.put_many(
+        items,
+        partition=job_id,
+        partition_ttl=ASYNC_RESULT_TTL_SECONDS,
+        timeout=30,
+    )
+
+
+@app.function(
+    image=http_image,
+    timeout=1200,
+    memory=4096,
+)
+def run_rhythm_async_job(
+    job_id: str,
+    routed_payload: dict[str, Any],
+) -> dict[str, Any]:
+    """Run the existing V143 worker and publish only transient structured JSON."""
+    status = "failed"
+    try:
+        result = _worker_handle().remote(dict(routed_payload))
+        envelope = build_completed_envelope(result)
+        status = "completed"
+    except Exception:
+        # Never persist exception repr/traceback because routed payloads contain
+        # private Blob credentials. The browser gets a bounded generic failure.
+        envelope = build_failed_envelope()
+
+    _queue_job_envelope(job_id, envelope)
+    return {
+        "jobId": job_id,
+        "status": status,
+        "resultQueued": True,
+        "resultTtlSeconds": ASYNC_RESULT_TTL_SECONDS,
+        "rawAudioQueued": False,
+        "stemBytesQueued": False,
+    }
+
+
+def _start_rhythm_job(
+    payload: dict[str, Any],
+    *,
+    expected_token: str,
+) -> dict[str, Any]:
+    _authorize(payload, expected_token)
+    _validate_rhythm_start_payload(payload)
+
+    job_id = create_job_id()
+    job_token = build_job_token(job_id, expected_token)
+
+    # Keep the already-authoritative Vercel payload contract. The bridge-side
+    # orchestrator is lightweight and immediately releases this HTTP request.
+    run_rhythm_async_job.spawn(job_id, dict(payload))
+
+    return {
+        "status": "processing",
+        "jobToken": job_token,
+        "pollAfterMs": 3000,
+        "expiresInSeconds": ASYNC_RESULT_TTL_SECONDS,
+        "rhythmOnly": True,
+        "rawAudioQueued": False,
+        "stemBytesQueued": False,
+    }
+
+
+def _status_rhythm_job(
+    payload: dict[str, Any],
+    *,
+    expected_token: str,
+) -> dict[str, Any]:
+    _authorize(payload, expected_token)
+    job_id = parse_job_token(
+        str(payload.get("jobToken") or ""),
+        expected_token,
+    )
+
+    items = list(
+        async_result_queue.iterate(
+            partition=job_id,
+            item_poll_timeout=0.0,
+        )
+    )
+    if not items:
+        return {
+            "status": "processing",
+            "pollAfterMs": 3000,
+            "expiresInSeconds": ASYNC_RESULT_TTL_SECONDS,
+        }
+
+    envelope = decode_result_items(items)
+    status = str(envelope.get("status") or "")
+    if status == "failed":
+        return {
+            "status": "failed",
+            "error": str(
+                envelope.get("error")
+                or "The analyzer could not complete the request."
+            )[:240],
+        }
+    if status != "completed" or not isinstance(envelope.get("result"), dict):
+        raise RuntimeError("The async analyzer returned an invalid result envelope.")
+
+    return {
+        "status": "completed",
+        "result": envelope["result"],
+    }
+
+
+def _ack_rhythm_job(
+    payload: dict[str, Any],
+    *,
+    expected_token: str,
+) -> dict[str, Any]:
+    _authorize(payload, expected_token)
+    job_id = parse_job_token(
+        str(payload.get("jobToken") or ""),
+        expected_token,
+    )
+    async_result_queue.clear(partition=job_id)
+    return {
+        "status": "acknowledged",
+        "resultCleared": True,
+    }
+
+
 @app.function(
     image=http_image,
     timeout=1200,
@@ -151,27 +326,44 @@ def _legacy_request(payload: dict[str, Any]) -> dict[str, Any]:
 def analyze(payload: dict) -> dict:
     """Production HTTP bridge used by Vercel's /api/analyze-audio-tab route.
 
-    Lead and Bass execute the existing modal_analyzer implementation in this
-    lightweight web container. Rhythm is forwarded across the app boundary to
-    the already-deployed frozen V143 L4 worker. Keeping those apps separate
-    prevents the web container from importing/building the GPU separator stack.
+    Default `operation=analyze` preserves the existing synchronous Lead/Bass and
+    Rhythm behavior for rollback/compatibility. Rhythm may additionally use the
+    async `start`/`status`/`ack` protocol so Vercel never waits on model runtime.
     """
     from fastapi import HTTPException
 
+    routed_payload = dict(payload or {})
     expected_token = str(
         os.environ.get("ANALYZER_API_TOKEN") or ""
     )
+    operation = str(
+        routed_payload.get("operation") or "analyze"
+    ).strip().lower()
 
-    def rhythm_handler(routed_payload: dict[str, Any]) -> dict[str, Any]:
-        worker = modal.Function.from_name(
-            WORKER_APP_NAME,
-            WORKER_FUNCTION_NAME,
-        )
-        return worker.remote(routed_payload)
+    def rhythm_handler(value: dict[str, Any]) -> dict[str, Any]:
+        return _worker_handle().remote(value)
 
     try:
+        if operation == "start":
+            return _start_rhythm_job(
+                routed_payload,
+                expected_token=expected_token,
+            )
+        if operation == "status":
+            return _status_rhythm_job(
+                routed_payload,
+                expected_token=expected_token,
+            )
+        if operation == "ack":
+            return _ack_rhythm_job(
+                routed_payload,
+                expected_token=expected_token,
+            )
+        if operation != "analyze":
+            raise ValueError("Unsupported analyzer operation.")
+
         result = route_http_payload(
-            dict(payload or {}),
+            routed_payload,
             expected_token=expected_token,
             legacy_handler=_legacy_request,
             rhythm_handler=rhythm_handler,
@@ -212,10 +404,13 @@ def analyze(payload: dict) -> dict:
 
 
 __all__ = [
+    "ASYNC_RESULT_QUEUE_NAME",
     "HTTP_APP_NAME",
     "WORKER_APP_NAME",
     "WORKER_FUNCTION_NAME",
     "analyze",
+    "async_result_queue",
     "http_image",
     "route_http_payload",
+    "run_rhythm_async_job",
 ]
