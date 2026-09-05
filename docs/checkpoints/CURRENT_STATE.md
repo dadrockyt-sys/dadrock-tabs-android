@@ -1,6 +1,6 @@
 # CURRENT STATE — DadRock `/ai-tab`
 
-Updated: 2026-09-04 America/Toronto  
+Updated: 2026-09-04 23:06 America/Toronto  
 Branch: `v143-contextual-prune-lobo`
 
 > Compact continuation checkpoint. Older dedicated checkpoints remain authoritative; omission here does not revoke frozen boundaries.
@@ -88,7 +88,9 @@ Implementation-specific one-shot harness is branch-local and does **not** import
 - `.github/scripts/v143_seeded_scheduler_runtime_collect.py` blob `dea00bc99f5cf06b8e1d1ab60643840c6924968d`;
 - workflow `.github/workflows/v143-seeded-scheduler-runtime.yml`;
 - workflow trigger commit `855dc46a87a75f9c8b11f1eaf71a76319e99af1b`;
-- Actions run `33943117001`: **IN PROGRESS** at checkpoint time.
+- Actions run `33943117001`: **IN PROGRESS** at 2026-09-04 23:06 America/Toronto;
+- job `101244196310`: setup, exact boundary, Python, Modal install, and isolated deploy steps **SUCCESS**; step 7 `Run one approved-fixture seeded scheduler runtime gate` **IN PROGRESS**; evidence upload/isolated-app cleanup pending;
+- runtime workflow push filters include only scheduler/runtime source + workflow paths, so documentation-only checkpoint commits do **not** trigger another approved-fixture execution.
 
 Gate invokes current `build_seeded_v143_stems()` exactly once against the approved fixture and requires:
 
