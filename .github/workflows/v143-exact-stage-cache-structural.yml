@@ -2,6 +2,13 @@ name: V143 exact stage cache structural gate
 
 on:
   workflow_dispatch:
+  push:
+    branches:
+      - v143-contextual-prune-lobo
+    paths:
+      - analyzer/v143_exact_stage_cache.py
+      - analyzer/v143_exact_stage_cache_probe.py
+      - .github/workflows/v143-exact-stage-cache-structural.yml
 
 permissions:
   contents: read
