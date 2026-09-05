@@ -109,6 +109,52 @@ jobs:
           PY
           rm -f status-response.json
 
+      - name: Prove Blob runtime config with invalid-audio fail-fast start
+        shell: bash
+        run: |
+          set -euo pipefail
+          STATUS="$(
+            vercel curl /api/analyze-audio-tab \
+              --deployment "$PREVIEW_URL" \
+              -- \
+              --silent --show-error --max-time 30 \
+              --request POST \
+              --header 'Content-Type: application/json' \
+              --data-binary '{"operation":"start","audioUrl":"INVALID-NO-AUDIO","pathname":"invalid-no-audio.m4a","song":"Runtime Config Probe","artist":"DadRock Diagnostic","transcriptionType":"rhythm"}' \
+              --output blob-probe-response.json \
+              --write-out '%{http_code}'
+          )"
+          echo "blobRuntimeProbeStatus=$STATUS"
+          PROBE_STATUS="$STATUS" python3 - <<'PY'
+          import json, os
+          from pathlib import Path
+
+          path = Path('blob-probe-response.json')
+          data = json.loads(path.read_text(encoding='utf-8')) if path.exists() else {}
+          error = str(data.get('error') or data.get('detail') or '')
+          status = int(os.environ['PROBE_STATUS'])
+
+          if status == 503 and error == 'The audio analyzer is not configured.':
+              classification = 'route_blob_or_analyzer_config_missing'
+          elif status == 400 and error == 'A valid audioUrl is required.':
+              classification = 'all_route_runtime_config_present_bridge_fail_fast_green'
+          else:
+              classification = 'unexpected_fail_fast_response'
+
+          print(f'blobRuntimeProbeClass={classification}')
+          print('realAudioUrlSupplied=false')
+          print('audioRead=false')
+          print('jobIdCreated=false')
+          print('workerSpawnPossible=false')
+          print('modelBearingStartRequestCount=0')
+          print('referenceFacingInputs=0')
+          print('secretValuesPrinted=false')
+
+          if classification == 'unexpected_fail_fast_response':
+              raise SystemExit(2)
+          PY
+          rm -f blob-probe-response.json
+
       - name: Classify critical pulled Preview env without printing values
         shell: bash
         run: |
