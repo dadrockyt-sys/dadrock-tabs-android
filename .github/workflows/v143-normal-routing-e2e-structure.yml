@@ -1,0 +1,50 @@
+name: V143 Normal Routing E2E Structure Gate
+
+on:
+  push:
+    branches:
+      - v143-contextual-prune-lobo
+    paths:
+      - analyzer/v143_normal_routing_e2e_structure_gate.py
+      - app/api/analyze-audio-tab/route.js
+      - analyzer/v143_modal_http_endpoint.py
+      - analyzer/v143_modal_live_endpoint.py
+      - analyzer/v143_vercel_audio_request_adapter.py
+      - analyzer/v143_modal_rhythm_router.py
+      - analyzer/v143_rhythm_deterministic_stem_provider.py
+      - analyzer/v143_rhythm_stem_provider.py
+      - analyzer/v143_deterministic_separator.py
+      - analyzer/v143_seeded_separator.py
+      - .github/workflows/v143-normal-routing-e2e-structure.yml
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  normal-routing-structure:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 5
+    steps:
+      - name: Checkout branch
+        uses: actions/checkout@v4
+
+      - name: Set up Python 3.11
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: Run source-only normal-routing composition gate
+        shell: bash
+        run: |
+          set -euo pipefail
+          python analyzer/v143_normal_routing_e2e_structure_gate.py
+
+      - name: Upload aggregate evidence
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: v143-normal-routing-e2e-structure
+          path: debug/v143-contextual-prune/normal-routing-e2e-structure/summary.json
+          if-no-files-found: warn
+          retention-days: 14
