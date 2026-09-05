@@ -1,0 +1,45 @@
+name: V143 Async Vercel Wiring Gate
+
+on:
+  push:
+    branches:
+      - v143-contextual-prune-lobo
+    paths:
+      - app/api/analyze-audio-tab/route.js
+      - app/ai-tab/page.js
+      - analyzer/v143_async_job_protocol.py
+      - analyzer/v143_modal_http_endpoint.py
+      - analyzer/v143_async_vercel_wiring_gate.py
+      - .github/workflows/v143-async-vercel-wiring-gate.yml
+
+permissions:
+  contents: read
+
+concurrency:
+  group: v143-async-vercel-wiring-gate
+  cancel-in-progress: false
+
+jobs:
+  async-vercel-wiring-gate:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 5
+    steps:
+      - name: Checkout exact branch head
+        uses: actions/checkout@v4
+
+      - name: Run no-model Vercel composition gate
+        shell: bash
+        run: |
+          set -euo pipefail
+          mkdir -p debug/v143-contextual-prune/async-vercel-wiring-gate
+          python3 analyzer/v143_async_vercel_wiring_gate.py \
+            | tee debug/v143-contextual-prune/async-vercel-wiring-gate/summary.json
+
+      - name: Preserve aggregate gate evidence only
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: v143-async-vercel-wiring-gate
+          path: debug/v143-contextual-prune/async-vercel-wiring-gate/summary.json
+          if-no-files-found: warn
+          retention-days: 14
