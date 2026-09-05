@@ -1,6 +1,6 @@
 # CURRENT STATE — DadRock `/ai-tab`
 
-Updated: 2026-09-05 00:14 America/Toronto  
+Updated: 2026-09-05 00:24 America/Toronto  
 Branch: `v143-contextual-prune-lobo`
 
 > Compact continuation checkpoint. Older dedicated checkpoints remain authoritative; omission here does not revoke frozen boundaries.
@@ -68,7 +68,7 @@ Repository-owned `public/gomywayfullaitest.m4a`:
 - Exact direct stage-cache run `33938289895`, job `101230445238`, artifact `9961088259` — GREEN/CLOSED.
 - Exact cascade stage-cache run `33939561555`, job `101234177608`, artifact `9961570152` — GREEN/CLOSED.
 - Generic zero-retention view-level concurrency run `33940555992`, job `101237009458`, artifact `9961880403`, `allPassed=true` — GREEN/CLOSED.
-- Generic proof used the same Modal envelope now used by Gate 2: `gpu="L4"`, `cpu=2.0`, `memory=8192`, `timeout=1800`; collector wall `815.325s`, concurrent separation wall `773.381s`.
+- Generic proof used Modal envelope `gpu="L4"`, `cpu=2.0`, `memory=8192`, `timeout=1800`; collector wall `815.325s`, concurrent separation wall `773.381s`.
 - Generic proof preserved exact identities, `spawn`, deterministic CPU Demucs, reference score calls `0`, quality verdict `false`, no raw audio/stem persistence; contextual speedup `1.924x` only, not same-run paired.
 - **Do not rerun the generic concurrency proof merely to validate this scheduler.**
 
@@ -81,58 +81,56 @@ Repository-owned `public/gomywayfullaitest.m4a`:
 - Verified scheduler ordering, literal `spawn`, deterministic child environments, parent RoFormer GPU visibility, fail-closed cleanup, pipe closure, outputs, public keys, and pinned helper blobs.
 - `referenceFacingInputs=0`; `scoreCalls=0`; `qualityVerdictMade=false`.
 
-## Promotion Gate 2 — APPROVED FIXTURE RUNTIME / FAILED BY DUPLICATE-RUN ISOLATION RACE
+## Promotion Gate 2 — APPROVED FIXTURE RUNTIME / GREEN / CLOSED
 
 Implementation-specific one-shot harness is branch-local and does **not** import/reuse the CLOSED generic concurrency helper:
 
-- `analyzer/v143_seeded_scheduler_runtime_modal.py` blob `94ce232eb2a86bafb95815ee693e19c5c38af1b7`;
-- `.github/scripts/v143_seeded_scheduler_runtime_collect.py` blob `dea00bc99f5cf06b8e1d1ab60643840c6924968d`;
-- workflow `.github/workflows/v143-seeded-scheduler-runtime.yml`;
-- workflow trigger commit `855dc46a87a75f9c8b11f1eaf71a76319e99af1b`;
-- Actions run `33943117001`: **FAILURE**;
-- job `101244196310`: setup, exact boundary, Python, Modal install, and isolated deploy **SUCCESS**; step 7 `Run one approved-fixture seeded scheduler runtime gate` **FAILURE**; aggregate evidence upload **SUCCESS**; isolated Modal app cleanup **SUCCESS**;
-- aggregate artifact `9962641949` records `error=RemoteError`, `runtimeSeconds=787.991715137`, `referenceFacingInputs=0`, `referenceScoreCalls=0`, `qualityVerdictMade=false`;
-- local job log contains only Modal client rethrow (`modal.exception.RemoteError`), with no remote traceback/message; evidence output was not returned from the remote call;
-- runtime workflow push filters include only scheduler/runtime source + workflow paths, so documentation-only checkpoint commits do **not** trigger another approved-fixture execution;
-- **No rerun authorized yet. Fix duplicate-run/isolation behavior first.**
+- `analyzer/v143_seeded_scheduler_runtime_modal.py` proof blob `94ce232eb2a86bafb95815ee693e19c5c38af1b7`;
+- `.github/scripts/v143_seeded_scheduler_runtime_collect.py` proof blob `dea00bc99f5cf06b8e1d1ab60643840c6924968d`;
+- scheduler proof blob `fc9b4c45c208d80be7abab64a8959f2a3babcee8`;
+- workflow `.github/workflows/v143-seeded-scheduler-runtime.yml`.
 
-### Gate 2 diagnosis — preserved historical logs
+### Authoritative GREEN execution
 
-A diagnosis-only workflow was added without invoking the fixture or touching production:
+- Workflow-creation commit `bcd00fa4db238ab0efd6ae18212cac164e6c3f71` automatically launched Gate-2 **run #1** `33943100948` at `2026-09-05T03:53:44Z`.
+- Job `101244148835`: **SUCCESS**; every workflow step including approved-fixture execution, aggregate evidence upload, and isolated app cleanup succeeded.
+- Artifact `9962641557` (`sha256:0d88c498f4b1d31895399ee66c65a8efef90e0e69150092cfd8d0a91d7d427b1`): **GREEN**, `allPassed=true`.
+- Function call `fc-01M1QV7RXNV2BZSF2688P5PKWY` completed the actual current `build_seeded_v143_stems()` scheduler path.
+- Runtime evidence: `runtimeSeconds=795.954`, collector wall `810.5s`, Modal GPU `NVIDIA L4`, scheduler start method `spawn`.
+- `exactParityPassed=true`, `publicContractPassed=true`, `runtimeInvariantPassed=true`, `cleanupPassed=true`, `safetyBoundaryPassed=true`.
+- Exact frozen source/normalized/model/WAV/PCM identities all matched.
+- Shift traces exactly direct=`0,22050,6026`, cascade=`0,22050,6026`.
+- Demucs runtime invariant: CUDA unavailable in child, MKLDNN available but disabled, Torch CPU capability `DEFAULT`, Torch intra/inter-op threads `1`, ATen `default`, MKL `COMPATIBLE`, oneDNN/MKLDNN disabled.
+- Public top-level keys, model map, settings map, and output filenames all matched the frozen contract.
+- `referenceFacingInputs=0`; `referenceFacingAccuracyScored=false`; `referenceScoreCalls=0`; `qualityVerdictMade=false`.
+- `rawAudioRetained=false`; `stemBytesRetained=false`; `crossRequestPersistence=false`.
+- `productionWorkerChanged=false`; `productionBridgeChanged=false`; `vercelChanged=false`; `mainMergePerformed=false`.
 
-- `.github/workflows/v143-seeded-scheduler-runtime-log-diagnosis.yml` commit `b865e0b6c3eec94f765db942547a38f9214b91aa`;
-- Actions run `33943967529`, job `101246567537`: **SUCCESS**;
-- Modal app history/log retrieval only; `approvedFixtureInvoked=false`, `productionAppTouched=false`, `referenceFacingInputs=0`, `referenceScoreCalls=0`, `qualityVerdictMade=false`.
+### Why run #2 failed — diagnosis only, does not invalidate run #1
 
-Historical logs prove **two concurrent remote calls** were running against the same isolated Modal app `dadrock-v143-seeded-scheduler-runtime-gate`:
+- Explicit trigger commit `855dc46a87a75f9c8b11f1eaf71a76319e99af1b` launched Gate-2 **run #2** `33943117001` only ~25s after the workflow-creation commit.
+- Run #2 used the same fixed isolated Modal app name as still-running run #1.
+- Historical Modal logs retrieved by diagnosis-only run `33943967529` prove two concurrent calls:
+  - run #1 call `fc-01M1QV7RXNV2BZSF2688P5PKWY` reached `separator.done` and returned the authoritative GREEN evidence;
+  - run #2 call `fc-01M1QV8G1D2HNMW9BHNZGD9DSR` was still in cascade Demucs when run #1 cleanup stopped the shared app, causing cancellation/`KeyboardInterrupt`/client `RemoteError`.
+- GitHub Actions enumeration confirms `bcd00fa...` owned runtime run #1 (`33943100948`) and `855dc46...` owned runtime run #2 (`33943117001`); this was **two automatic push-triggered workflow executions**, not two calls from one collector.
+- Collector source calls `fn.remote()` exactly once per workflow execution.
+- Therefore run #2 is a **shared-isolated-app race artifact**, not a scheduler parity regression and not a reason to rerun the approved fixture.
+- **Gate 2 is CLOSED/GREEN from run #1. No Gate-2 rerun is justified.**
 
-1. Function call `fc-01M1QV7RXNV2BZSF2688P5PKWY` / container `ta-01M1QV7S83GN1E3P5Z1W9MC3NR` started at `03:54:58Z` and completed the scheduler path: RoFormer done at `80.327s`, direct Demucs done at `716.633s`, cascade Demucs done at `766.620s`, `separator.done elapsed=766.717`.
-2. Function call `fc-01M1QV8G1D2HNMW9BHNZGD9DSR` / container `ta-01M1QV8G9TG3Y25S5DQ9NHFT3R` started at `03:55:16Z`, ~18s later. Its direct Demucs completed at `738.694s`; its cascade Demucs was still running when the shared app was stopped by CLI cleanup at `04:07:47Z`. The child then received cancellation, raised `KeyboardInterrupt`, and the runner terminated.
+## PROMOTION STATUS
 
-Therefore:
-
-- the observed `RemoteError` is explained by a **duplicate-run/shared-isolated-app cleanup race**;
-- one scheduler call demonstrably reached `separator.done`; the failure is **not evidence of a scheduler parity regression**;
-- the earlier hypotheses about lost `spawn` traces and a different Gate 2 image/resource envelope are ruled out;
-- no post-failure approved-fixture rerun has been performed;
-- exact source of the second invocation (sibling Actions run vs another duplicate trigger path) is the immediate diagnostic target.
-
-Gate still requires, before promotion:
-
-- all frozen source/normalized/model/WAV/PCM identities above;
-- two exact deterministic Demucs shift events (`0,22050,6026` each);
-- deterministic CPU runtime trace (oneDNN disabled, Torch intra/inter-op 1, ATen DEFAULT, MKL COMPATIBLE);
-- unchanged top-level return keys, model map, settings map, and output filenames;
-- request-scoped `TemporaryDirectory` removed before evidence return;
-- aggregate evidence only; no audio/stem bytes retained or uploaded;
-- `referenceFacingInputs=0`, `referenceScoreCalls=0`, `qualityVerdictMade=false`.
+- Gate 1 structural: **GREEN / CLOSED**.
+- Gate 2 approved-fixture runtime: **GREEN / CLOSED**.
+- Normal-routing E2E pipeline verification is now **UNLOCKED/JUSTIFIED**.
+- Production remains unchanged until that next gate is designed and passes.
 
 ## NEXT STEP
 
-1. Enumerate sibling `V143 Seeded Scheduler Runtime Gate` Actions runs around `2026-09-05 03:54Z` and identify what launched the second remote call.
-2. Make the narrowest branch-only workflow/isolation correction that prevents concurrent or duplicate approved-fixture executions and prevents one run's cleanup from killing another.
-3. Checkpoint the fix and its exact trigger semantics before authorizing a single fresh Gate 2 execution.
-4. Normal-routing E2E remains **LOCKED** until Gate 2 is GREEN/CLOSED.
+1. Harden the dormant Gate-2 workflow so future maintenance cannot auto-launch duplicate expensive approved-fixture executions or share cleanup state.
+2. Do this without invoking the fixture: manual-only trigger + serialized concurrency + per-run isolated Modal app identity.
+3. Checkpoint the hardening and confirm it caused **zero** Gate-2 fixture executions.
+4. Then inspect/design the narrow normal-routing E2E pipeline gate against the current branch candidate, preserving all frozen scoring/retention boundaries.
 
 ### Hard stops
 
@@ -144,6 +142,7 @@ Gate still requires, before promotion:
 - No intra-Demucs split-parallel rerun.
 - No direct/cascade cache rerun absent regression/fingerprint change.
 - No generic view-level concurrency diagnostic rerun absent regression/fingerprint/runtime-policy change.
+- No Gate-2 approved-fixture rerun: existing run #1 is authoritative GREEN.
 - No weakening exact parity/fail-closed criteria.
 - No persistent user-audio/stem/result retention without explicit permission.
-- No production bridge/worker/Vercel/UI change or `main` merge until promotion gates pass.
+- No production bridge/worker/Vercel/UI change or `main` merge until normal-routing E2E passes.
