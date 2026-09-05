@@ -1,0 +1,109 @@
+name: V143 Preview OIDC Refresh Probe
+
+on:
+  push:
+    branches:
+      - v143-contextual-prune-lobo
+    paths:
+      - '.github/workflows/v143-preview-oidc-refresh-probe.yml'
+
+permissions:
+  contents: read
+  id-token: write
+
+env:
+  PREVIEW_DEPLOYMENT_ID: dpl_F6ksguDvc1nVAt33jNxxoVTmyyJA
+  PREVIEW_DEPLOYMENT_URL: https://dadrock-tabs-android-r602jctx9-stephen-mcnally-s-projects.vercel.app
+
+jobs:
+  oidc-refresh-probe:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 5
+    steps:
+      - name: Checkout exact branch head
+        uses: actions/checkout@v4
+
+      - name: Mint and refresh trusted OIDC tokens in shell
+        shell: bash
+        run: |
+          set -euo pipefail
+          OUT=debug/v143-contextual-prune/preview-oidc-refresh
+          mkdir -p "$OUT"
+          test -n "${ACTIONS_ID_TOKEN_REQUEST_URL:-}"
+          test -n "${ACTIONS_ID_TOKEN_REQUEST_TOKEN:-}"
+
+          mint_oidc() {
+            local response token
+            response="$(curl --silent --show-error --fail \
+              --header "Authorization: bearer $ACTIONS_ID_TOKEN_REQUEST_TOKEN" \
+              "$ACTIONS_ID_TOKEN_REQUEST_URL")"
+            token="$(python3 -c 'import json,sys; print(json.load(sys.stdin)["value"])' <<<"$response")"
+            test -n "$token"
+            echo "::add-mask::$token" >&2
+            printf '%s' "$token"
+          }
+
+          jwt_ttl() {
+            TOKEN="$1" python3 - <<'PY'
+          import base64, json, os
+          token = os.environ['TOKEN']
+          part = token.split('.')[1]
+          part += '=' * (-len(part) % 4)
+          payload = json.loads(base64.urlsafe_b64decode(part.encode()).decode())
+          print(int(payload['exp']) - int(payload['iat']))
+          PY
+          }
+
+          TOKEN1="$(mint_oidc)"
+          TTL1="$(jwt_ttl "$TOKEN1")"
+          STATUS1="$(curl --silent --show-error --location --max-time 30 \
+            --header "x-vercel-trusted-oidc-idp-token: $TOKEN1" \
+            --output /dev/null --write-out '%{http_code}' \
+            "$PREVIEW_DEPLOYMENT_URL/ai-tab")"
+
+          sleep 2
+          TOKEN2="$(mint_oidc)"
+          TTL2="$(jwt_ttl "$TOKEN2")"
+          STATUS2="$(curl --silent --show-error --location --max-time 30 \
+            --header "x-vercel-trusted-oidc-idp-token: $TOKEN2" \
+            --output /dev/null --write-out '%{http_code}' \
+            "$PREVIEW_DEPLOYMENT_URL/ai-tab")"
+
+          export TTL1 TTL2 STATUS1 STATUS2
+          python3 - <<'PY'
+          import json, os
+          from pathlib import Path
+          summary = {
+              'schemaVersion': 1,
+              'gate': 'v143-preview-oidc-refresh-probe',
+              'previewDeploymentId': os.environ['PREVIEW_DEPLOYMENT_ID'],
+              'firstTokenTtlSeconds': int(os.environ['TTL1']),
+              'secondTokenTtlSeconds': int(os.environ['TTL2']),
+              'firstHttpStatus': int(os.environ['STATUS1']),
+              'secondHttpStatus': int(os.environ['STATUS2']),
+              'refreshableTrustedOidc': os.environ['STATUS1'] == '200' and os.environ['STATUS2'] == '200',
+              'oidcTokensRetained': False,
+              'deploymentProtectionDisabled': False,
+              'modelBearingStartRequests': 0,
+              'audioRead': False,
+              'modelExecuted': False,
+              'referenceFacingInputs': 0,
+              'referenceScoreCalls': 0,
+              'qualityVerdictMade': False,
+          }
+          Path('debug/v143-contextual-prune/preview-oidc-refresh/summary.json').write_text(
+              json.dumps(summary, indent=2) + '\n', encoding='utf-8'
+          )
+          print(json.dumps(summary, indent=2))
+          if not summary['refreshableTrustedOidc']:
+              raise SystemExit('Trusted OIDC refresh probe failed')
+          PY
+
+      - name: Preserve aggregate auth evidence only
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: v143-preview-oidc-refresh-probe
+          path: debug/v143-contextual-prune/preview-oidc-refresh/summary.json
+          if-no-files-found: warn
+          retention-days: 7
