@@ -20,17 +20,17 @@ Branch: `v143-contextual-prune-lobo`
 ## Production — unchanged
 
 - Vercel/web `main`: `bb992d901e78ab19645f8edc8e330d5a142ebd8e`.
-- Integration merge in that lineage: `ceeccfbbb17968c097bb56136487e7ddeaf1a5a4`.
+- Integration merge: `ceeccfbbb17968c097bb56136487e7ddeaf1a5a4`.
 - Deployment `dpl_5BdFAMHeiaA3rQ9QGUdHneY1rexM`, READY.
 - Bridge `https://dadrockyt--dadrock-v143-http-bridge-analyze.modal.run`.
 - Routing proven `usingV143RhythmAnalyzer=true`.
-- Production worker/bridge/Vercel remains untouched by this branch-only scheduler work.
+- Production worker/bridge/Vercel untouched by this branch-only scheduler work.
 
 ## Seeded scheduler candidate
 
 - Implementation commit `6772a0ca1d700ea6861cd4401b51e093144c8d26`.
-- `analyzer/v143_seeded_separator.py` candidate blob `fc9b4c45c208d80be7abab64a8959f2a3babcee8`.
-- Prior serialized blob `250534e516cad36e49cae35b6eab2b88654be2d3` remains the pre-candidate provenance anchor.
+- `analyzer/v143_seeded_separator.py` blob `fc9b4c45c208d80be7abab64a8959f2a3babcee8`.
+- Prior serialized blob `250534e516cad36e49cae35b6eab2b88654be2d3` remains pre-candidate provenance.
 - Schedule: normalize → spawn direct deterministic CPU Demucs child → unchanged parent RoFormer → spawn cascade deterministic CPU Demucs child → join/validate → copy unchanged outputs → unchanged public return contract.
 - Fail-closed cleanup terminates/joins children and closes all pipe endpoints.
 
@@ -45,66 +45,69 @@ Pinned branch helper/source blobs:
 - `v143_seeded_audio_separator_cli.py` `645f324c207d67b32c6d279657805ff8f25c3aa0`
 - `v143_production_separator.py` `05ae1978fa02f8c84ccc1e44547fc4e4cea9798b`
 
-## Frozen approved fixture
+## Frozen approved fixture identities
 
 Repository-owned `public/gomywayfullaitest.m4a`:
 
 - source SHA256 `215bd5a657c5326f08f132ae358595a95c30b39bb7493a52c2f910d5a608149f`;
-- normalized SHA `ab64e7cdd8a792aecfb6eec518577d8d7e9d2f8aa43007e632470d9fe4511e7f`;
-- direct Guitar WAV SHA `0ac47da671df6f8387c1ad1343171de0cf7a0db6985dadf3f30e4a9c7cf0189c`;
-- direct PCM-int16 SHA `2c22f04014c0f5c9c0c036125c3d702c8b87a9f67358e0dd0d3836c39c936bed`;
-- direct shift trace `0,22050,6026`;
+- normalized WAV SHA256 `ab64e7cdd8a792aecfb6eec518577d8d7e9d2f8aa43007e632470d9fe4511e7f`;
+- direct Guitar WAV SHA256 `0ac47da671df6f8387c1ad1343171de0cf7a0db6985dadf3f30e4a9c7cf0189c`;
+- direct PCM-int16 SHA256 `2c22f04014c0f5c9c0c036125c3d702c8b87a9f67358e0dd0d3836c39c936bed`;
+- RoFormer Instrumental WAV SHA256 `ce7ae8c6c57e00e1e191b8c15a8c4f39627cbcdf3b7a75ac7ca4c246f6f64b14`;
+- RoFormer PCM-int16 SHA256 `16e0a16a54ab1b007d15647d293900ecfbfabceccfa886f004a86162d4a454dd`;
+- cascade Guitar WAV SHA256 `546e5170870cc6c73e1f0a8eeb8314f7b6262079593e0b484207bb38f323cc41`;
+- cascade PCM-int16 SHA256 `75c0feefb416d8438641ceebe903253f935bd19c550e97e9ef0a90426e7727ba`;
+- direct/cascade deterministic shift trace each `0,22050,6026`;
+- RoFormer weight SHA256 `5b84f37e8d444c8cb30c79d77f613a41c05868ff9c9ac6c7049c00aefae115aa`;
+- Demucs weight SHA256 `34c22ccb381c6f9fdbf324f04e1e2fe21aaaf293f5ded163a162697ff9a02ddd`;
+- Demucs config SHA256 `207405151270af8fd81c2373c25d27950916682ac91dca7884a11ce13dad6f58`;
 - oneDNN off; Torch intra/inter-op = 1.
-- Frozen RoFormer WAV/PCM prefixes `ce7ae8...` / `16e0a1...`; cascade WAV/PCM prefixes `546e51...` / `75c0fe...`. Full values remain in dedicated checkpoints and must be recovered before Gate 2 execution.
 
 ## Prior closed diagnostics
 
-### Exact stage-cache — GREEN / CLOSED
-
-- Direct run `33938289895`, job `101230445238`, artifact `9961088259`.
-- Cascade run `33939561555`, job `101234177608`, artifact `9961570152`.
-
-### Zero-retention generic view-level concurrency — GREEN / CLOSED
-
-- `analyzer/v143_view_level_demucs_child.py` blob `7ffdf5183360f18ef2e356a12d1112d3f651ccbf`.
-- `analyzer/v143_view_level_concurrency_modal.py` blob `ef14db309500c262d59a50bfaaec4d8ffa9b570a`.
-- Actions run `33940555992`, job `101237009458`, artifact `9961880403`, `allPassed=true`.
-- Exact identities unchanged; multiprocessing `spawn`; deterministic CPU Demucs; reference score calls `0`; quality verdict `false`; no raw audio/stem persistence.
-- Contextual concurrency wall `773.381s` versus historical sequential stage sum `1487.706s`, contextual speedup `1.924x`; not a same-run paired benchmark.
-- **Do not rerun this generic proof merely to validate the new scheduler.**
+- Exact direct stage-cache run `33938289895`, job `101230445238`, artifact `9961088259` — GREEN/CLOSED.
+- Exact cascade stage-cache run `33939561555`, job `101234177608`, artifact `9961570152` — GREEN/CLOSED.
+- Generic zero-retention view-level concurrency run `33940555992`, job `101237009458`, artifact `9961880403`, `allPassed=true` — GREEN/CLOSED.
+- Generic proof preserved exact identities, `spawn`, deterministic CPU Demucs, reference score calls `0`, quality verdict `false`, no raw audio/stem persistence; contextual speedup `1.924x` only, not same-run paired.
+- **Do not rerun the generic concurrency proof merely to validate this scheduler.**
 
 ## Promotion Gate 1 — STRUCTURAL / GREEN / CLOSED
 
 - Gate source `analyzer/v143_seeded_scheduler_structure_gate.py` blob `f31b5cc7742696975534081c535c0301911c6b87`.
-- Gate source commit `4afd35b0c198982c603f0d375140e53be1862498`.
-- Branch-only workflow `.github/workflows/v143-seeded-scheduler-structure.yml`.
-- Workflow trigger commit `c9f8d0cb2f62d6e6bebda400665b3b2e094225f5`.
-- Actions run `33942915753`: **SUCCESS**; job `101243642285`: **SUCCESS**.
-- Log result: `gate=v143-seeded-scheduler-structure`, `allPassed=true`.
-- Verified ordering: direct start line 112 < RoFormer line 126 < cascade start line 136 < direct join line 140 < cascade join line 146 < first copy line 155 < return line 159.
-- Verified pinned live/helper blobs, literal `spawn`, deterministic child environments, parent RoFormer GPU visibility, fail-closed child cleanup, pipe closure, output names, and public return keys.
+- Gate commit `4afd35b0c198982c603f0d375140e53be1862498`.
+- Workflow `.github/workflows/v143-seeded-scheduler-structure.yml`; trigger commit `c9f8d0cb2f62d6e6bebda400665b3b2e094225f5`.
+- Actions run `33942915753`: **SUCCESS**; job `101243642285`: **SUCCESS**; `allPassed=true`.
+- Verified scheduler ordering, literal `spawn`, deterministic child environments, parent RoFormer GPU visibility, fail-closed cleanup, pipe closure, outputs, public keys, and pinned helper blobs.
 - `referenceFacingInputs=0`; `scoreCalls=0`; `qualityVerdictMade=false`.
-- Source/AST only: no audio/model execution, no secrets, no deployment.
 
-## Promotion Gate 2 — APPROVED FIXTURE RUNTIME / ARMED, NOT YET RUN
+## Promotion Gate 2 — APPROVED FIXTURE RUNTIME / IN PROGRESS
 
-Run exactly one implementation-specific runtime seam through the current `build_seeded_v143_stems()` path after recovering all full frozen expected hashes. Requirements:
+Implementation-specific one-shot harness is branch-local and does **not** import/reuse the CLOSED generic concurrency helper:
 
-- approved source + normalized identity;
-- exact direct WAV + PCM and deterministic shift trace;
-- exact frozen RoFormer WAV + PCM;
-- exact frozen cascade WAV + PCM;
-- unchanged public output contract;
-- request-scoped zero-retention cleanup;
-- `referenceFacingInputs=0`, `scoreCalls=0`, `qualityVerdictMade=false`;
-- no rerun of the CLOSED generic concurrency diagnostic.
+- `analyzer/v143_seeded_scheduler_runtime_modal.py` blob `94ce232eb2a86bafb95815ee693e19c5c38af1b7`;
+- `.github/scripts/v143_seeded_scheduler_runtime_collect.py` blob `dea00bc99f5cf06b8e1d1ab60643840c6924968d`;
+- workflow `.github/workflows/v143-seeded-scheduler-runtime.yml`;
+- workflow trigger commit `855dc46a87a75f9c8b11f1eaf71a76319e99af1b`;
+- Actions run `33943117001`: **IN PROGRESS** at checkpoint time.
+
+Gate invokes current `build_seeded_v143_stems()` exactly once against the approved fixture and requires:
+
+- all frozen source/normalized/model/WAV/PCM identities above;
+- two exact deterministic Demucs shift events (`0,22050,6026` each);
+- deterministic CPU runtime trace (oneDNN disabled, Torch intra/inter-op 1, ATen DEFAULT, MKL COMPATIBLE);
+- unchanged top-level return keys, model map, settings map, and output filenames;
+- request-scoped `TemporaryDirectory` removed before evidence return;
+- aggregate evidence only; no audio/stem bytes retained or uploaded;
+- `referenceFacingInputs=0`, `referenceScoreCalls=0`, `qualityVerdictMade=false`;
+- isolated Modal app `dadrock-v143-seeded-scheduler-runtime-gate`, stopped in workflow cleanup; production app is not a deployment target.
+
+If this completed model execution fails, **do not casually rerun it**: fail closed, inspect evidence, and diagnose first.
 
 ## NEXT STEP
 
-1. Recover full frozen RoFormer/cascade hashes and reuse the prior Modal proof only as infrastructure reference.
-2. Wire and execute exactly one implementation-specific approved-fixture Gate 2 run.
-3. If Gate 2 is GREEN, checkpoint immediately. At that point the normal-routing E2E pipeline test is unlocked/justified.
-4. If Gate 2 fails after model execution, fail closed and diagnose before any rerun.
+1. Observe Actions run `33943117001` to terminal state.
+2. If GREEN, checkpoint Gate 2 as CLOSED/GREEN; the normal-routing E2E pipeline test is then unlocked/justified.
+3. If failed after model execution, checkpoint failure and diagnose before deciding whether any rerun is justified.
 
 ### Hard stops
 
