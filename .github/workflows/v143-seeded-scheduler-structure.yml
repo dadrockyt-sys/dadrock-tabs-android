@@ -1,0 +1,37 @@
+name: V143 Seeded Scheduler Structure
+
+on:
+  push:
+    branches:
+      - v143-contextual-prune-lobo
+    paths:
+      - analyzer/v143_seeded_scheduler_structure_gate.py
+      - analyzer/v143_seeded_separator.py
+      - analyzer/v143_modal_http_endpoint.py
+      - analyzer/v143_modal_live_endpoint.py
+      - analyzer/v143_vercel_audio_request_adapter.py
+      - analyzer/v143_rhythm_deterministic_stem_provider.py
+      - analyzer/v143_rhythm_stem_provider.py
+      - analyzer/v143_deterministic_separator.py
+      - analyzer/v143_seeded_audio_separator_cli.py
+      - analyzer/v143_production_separator.py
+      - .github/workflows/v143-seeded-scheduler-structure.yml
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  structure:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: Run seeded scheduler structural gate
+        run: python analyzer/v143_seeded_scheduler_structure_gate.py
