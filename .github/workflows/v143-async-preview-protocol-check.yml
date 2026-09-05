@@ -79,16 +79,12 @@ jobs:
           grep -Eq 'status[[:space:]]+.*Ready|status[[:space:]]+● Ready' "$OUT/inspect.log"
           grep -Eq 'target[[:space:]]+preview' "$OUT/inspect.log"
 
-      - name: Authenticate to protected Preview and fail closed on invalid job token
+      - name: Authenticate to protected Preview and reject bad async signature
         shell: bash
         run: |
           set -euo pipefail
           OUT=debug/v143-contextual-prune/async-preview-protocol
 
-          # This is the exact access shape already proven GREEN by historical
-          # protected Preview run 33843200741: VERCEL_TOKEN remains in the
-          # environment and `vercel curl` owns the protection bypass. Arguments
-          # after `--` belong only to native curl.
           PAGE_STATUS="$(
             vercel curl /ai-tab \
               --deployment "$PREVIEW_URL" \
@@ -99,8 +95,11 @@ jobs:
               --write-out '%{http_code}'
           )"
 
+          # The job id is structurally valid, but the signature is deliberately
+          # invalid. This forces the request through Vercel and the bridge's HMAC
+          # verification path while making worker spawn impossible.
           cat > "$OUT/request.json" <<'JSON'
-          {"operation":"status","jobToken":"v143a1.invalid.invalid","transcriptionType":"rhythm"}
+          {"operation":"status","jobToken":"v143a1.job_ABCDEFGHIJKLMNOPQRSTUVWX.invalid","transcriptionType":"rhythm"}
           JSON
 
           METRICS="$(
@@ -139,9 +138,9 @@ jobs:
               'protectedAccessMethod': 'vercel-inspect-then-curl-env-token-auto-bypass',
               'pageStatus': int(os.environ['PAGE_STATUS']),
               'pageRendered': int(os.environ['PAGE_STATUS']) == 200 and len(page_html) > 500,
-              'invalidTokenStatus': int(os.environ['STATUS']),
-              'invalidTokenRejected': int(os.environ['STATUS']) == 400 and 'Invalid async job token' in message,
-              'invalidTokenRequestSeconds': float(os.environ['ELAPSED']),
+              'invalidSignatureStatus': int(os.environ['STATUS']),
+              'invalidSignatureRejected': int(os.environ['STATUS']) == 400 and 'Invalid async job token' in message,
+              'invalidSignatureRequestSeconds': float(os.environ['ELAPSED']),
               'workerSpawned': False,
               'modelExecuted': False,
               'audioRead': False,
@@ -153,7 +152,7 @@ jobs:
           (out / 'summary.json').write_text(json.dumps(summary, indent=2) + '\n', encoding='utf-8')
           print(json.dumps(summary, indent=2))
           assert summary['pageRendered'] is True
-          assert summary['invalidTokenRejected'] is True
+          assert summary['invalidSignatureRejected'] is True
           PY
 
           rm -f "$OUT/request.json" "$OUT/response.json" "$OUT/ai-tab.html" "$OUT/inspect.log"
