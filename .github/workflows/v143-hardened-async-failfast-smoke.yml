@@ -1,0 +1,108 @@
+name: V143 Hardened Async Failfast Smoke
+
+on:
+  push:
+    branches:
+      - v143-contextual-prune-lobo
+    paths:
+      - '.github/workflows/v143-hardened-async-failfast-smoke.yml'
+
+permissions:
+  contents: read
+
+env:
+  MODAL_ENVIRONMENT: main
+  PYTHONUNBUFFERED: '1'
+  V143_HTTP_APP_NAME: dadrock-v143-async-failfast-smoke
+  V143_ASYNC_RESULT_QUEUE_NAME: dadrock-v143-async-failfast-smoke-results
+
+jobs:
+  hardened-async-failfast-smoke:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 12
+    env:
+      MODAL_TOKEN_ID: ${{ secrets.MODAL_TOKEN_ID }}
+      MODAL_TOKEN_SECRET: ${{ secrets.MODAL_TOKEN_SECRET }}
+    steps:
+      - name: Checkout exact branch head
+        uses: actions/checkout@v4
+
+      - name: Set up Python 3.11
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Install Modal client
+        shell: bash
+        run: |
+          set -euo pipefail
+          python -m pip install --upgrade pip >/dev/null
+          python -m pip install 'modal==1.5.5' >/dev/null
+          modal token set --token-id "$MODAL_TOKEN_ID" --token-secret "$MODAL_TOKEN_SECRET" >/dev/null
+
+      - name: Deploy exact hardened bridge source to isolated app
+        shell: bash
+        run: |
+          set -euo pipefail
+          modal deploy --env main analyzer/v143_modal_http_endpoint.py
+
+      - name: Deploy isolated failfast driver
+        shell: bash
+        run: |
+          set -euo pipefail
+          modal deploy --env main analyzer/v143_hardened_async_failfast_modal.py
+
+      - name: Prove terminal failure replaces indefinite processing
+        shell: bash
+        run: |
+          set -euo pipefail
+          mkdir -p debug/v143-contextual-prune/hardened-async-failfast
+          python - <<'PY'
+          import json
+          import modal
+          from pathlib import Path
+
+          fn = modal.Function.from_name(
+              'dadrock-v143-async-failfast-driver',
+              'prove_failfast_status_transition',
+              environment_name='main',
+          )
+          result = fn.remote()
+          required = {
+              'terminalStatus': 'failed',
+              'boundedFailure': True,
+              'controlTracked': True,
+              'functionCallIdPresent': True,
+              'resultPartitionCleared': True,
+              'controlPartitionCleared': True,
+              'audioRead': False,
+              'modelExecuted': False,
+              'separatorModelExecuted': False,
+              'referenceFacingInputs': 0,
+              'referenceScoreCalls': 0,
+              'qualityVerdictMade': False,
+          }
+          for key, expected in required.items():
+              if result.get(key) != expected:
+                  raise SystemExit(f'{key} mismatch: {result.get(key)!r}')
+          Path('debug/v143-contextual-prune/hardened-async-failfast/summary.json').write_text(
+              json.dumps(result, indent=2) + '\n', encoding='utf-8'
+          )
+          print(json.dumps(result, indent=2))
+          PY
+
+      - name: Upload aggregate evidence
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: v143-hardened-async-failfast-smoke
+          path: debug/v143-contextual-prune/hardened-async-failfast/summary.json
+          if-no-files-found: warn
+          retention-days: 14
+
+      - name: Stop isolated apps
+        if: always()
+        shell: bash
+        run: |
+          modal app stop dadrock-v143-async-failfast-driver --env main --yes || true
+          modal app stop "$V143_HTTP_APP_NAME" --env main --yes || true
