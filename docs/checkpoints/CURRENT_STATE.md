@@ -126,3 +126,34 @@ Start the next chat by reading this file on branch `v143-contextual-prune-lobo`.
 - Source mapping remains the active task: enumerate branch-local V143 analyzer/workflow/deployment entrypoints and locate the exact privacy-safe cache boundary before implementation.
 - The previously established request-flow clue remains: `app/api/analyze-audio-tab/route.js` forwards to the remote live V143 bridge; the checked-in implementation corresponding to the live `http_bridge` deployment name has not yet been identified.
 - **No runtime behavior, production bridge/worker, Vercel/UI, Demucs/GPU/split-parallel compute, reference-facing scoring, or retention policy was changed in this continuation before this checkpoint save.**
+
+## Exact stage-cache structural gate — GREEN (2026-09-04)
+
+- Branch-local isolated primitive: `analyzer/v143_exact_stage_cache.py`.
+- Synthetic gate: `analyzer/v143_exact_stage_cache_probe.py`.
+- CI gate: `.github/workflows/v143-exact-stage-cache-structural.yml`.
+- Primitive commit lineage:
+  - `54e8af3f429c5129418e2f8e5ff8fa860b43349c` — `feat: add isolated V143 exact stage cache primitive`;
+  - `8c9bee773d81c66bd700d83f450b53c16c4d7ff4` — `feat: wire exact V143 cache miss-hit fallback semantics`;
+  - `351d430b601c83578d385aa162dc971b04d1b310` — `test: cover V143 cache miss-hit fallback wiring`.
+- Structural CI run **`33936373413`**, job **`101224995003`**, head `351d430b601c83578d385aa162dc971b04d1b310`, conclusion **SUCCESS**.
+- Evidence artifact **`9960303358`**, `v143-exact-stage-cache-structural`, SHA256 digest `e6ff4e789edf959d59b2299f9fe916ea6ea21ff83a395bd738f86bb1441468f2`.
+- The gate is synthetic only: no audio used, no Demucs/model import/invocation, no reference-facing scoring.
+- Proven semantics: empty miss; deterministic content-addressed key; exact compute on miss; best-effort populate; hit returns exact stored bytes and skips compute; full fingerprint mismatch changes key and misses; corruption is rejected and falls back to exact compute; invalid compute bytes are not hidden; cleanup succeeds.
+- Fingerprint is fail-closed and includes normalized-source SHA, separator model, separator weights SHA, Demucs parameters, shift policy, sample rate/channels, Torch/OMP/MKL runtime controls including oneDNN state, and code-policy version.
+- The cache helper deliberately has **no production default root** and explicitly does not authorize retention. This preserves the unresolved privacy/retention boundary.
+
+### Source-of-truth wiring boundary
+
+- `app/api/analyze-audio-tab/route.js` remains only the request forwarder and V143 anti-leakage response gate; it is too shallow to host the exact separator-stage cache because it does not own canonical normalized identity or separator bytes.
+- Exact search for the known live bridge name `dadrock-v143-http-bridge` returns **zero checked-in code matches**. The checked-in repository therefore still does not provide a source-proven production bridge insertion point.
+- Do **not** fabricate a production insertion point, wire the cache into the Next route, or persist user stems merely because the structural gate is GREEN.
+- Production/main/bridge/worker/Vercel/UI remain unchanged by this cache work.
+
+### Next authorized gate
+
+1. Preserve the structural gate as GREEN and keep all cache code isolated on `v143-contextual-prune-lobo`.
+2. Before any production-facing cache wiring, obtain/source-map the actual live V143 bridge/worker implementation and resolve whether separated-stem retention is explicitly permitted. Until both are known, production wiring remains BLOCKED BY SOURCE/RETENTION BOUNDARY.
+3. The repository-owned `public/gomywayfullaitest.m4a` may now be used for a **reference-free exact identity/performance cache diagnostic** because the synthetic structural gate is GREEN, but only through an isolated diagnostic path with ephemeral cleanup and the existing exact CPU implementation unchanged.
+4. That first real-audio diagnostic must prove miss output equals the frozen GREEN exact CPU hashes, then hit output equals the same exact hashes while skipping separation; any key mismatch/corruption must fail closed to the exact CPU path.
+5. No reference comparisons, quality scoring, GPU, split-parallel, sealed assets, production bridge/worker/Vercel/UI, or `main` merge are authorized by this structural success.
