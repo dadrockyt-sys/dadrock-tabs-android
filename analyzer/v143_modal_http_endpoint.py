@@ -19,10 +19,19 @@ from v143_async_job_protocol import (
 )
 
 
-HTTP_APP_NAME = "dadrock-v143-http-bridge"
+HTTP_APP_NAME = str(
+    os.environ.get("V143_HTTP_APP_NAME")
+    or "dadrock-v143-http-bridge"
+).strip()
 WORKER_APP_NAME = "dadrock-v143-ai-tab-live"
 WORKER_FUNCTION_NAME = "rhythm_v143_request"
-ASYNC_RESULT_QUEUE_NAME = "dadrock-v143-async-results"
+ASYNC_RESULT_QUEUE_NAME = str(
+    os.environ.get("V143_ASYNC_RESULT_QUEUE_NAME")
+    or "dadrock-v143-async-results"
+).strip()
+
+if not HTTP_APP_NAME or not ASYNC_RESULT_QUEUE_NAME:
+    raise RuntimeError("V143 async bridge resource names must not be empty.")
 
 app = modal.App(HTTP_APP_NAME)
 
@@ -199,6 +208,74 @@ def _queue_job_envelope(job_id: str, envelope: dict[str, Any]) -> None:
 
 @app.function(
     image=http_image,
+    timeout=60,
+    memory=512,
+    secrets=[
+        modal.Secret.from_name("dadrock-analyzer-secret")
+    ],
+)
+def async_protocol_smoke() -> dict[str, Any]:
+    """Exercise token + Queue transport without audio or model execution."""
+    expected_token = str(
+        os.environ.get("ANALYZER_API_TOKEN") or ""
+    )
+    job_id = create_job_id()
+    job_token = build_job_token(job_id, expected_token)
+    token_verified = parse_job_token(job_token, expected_token) == job_id
+
+    synthetic_result = {
+        "generatedTab": "e|--0--|",
+        "liveV143": {
+            "referenceFree": True,
+            "professionalReferenceUsed": False,
+            "referenceRuntimeInputUsed": False,
+            "runtimeLabelsRequired": False,
+        },
+    }
+    _queue_job_envelope(
+        job_id,
+        build_completed_envelope(synthetic_result),
+    )
+
+    items = list(
+        async_result_queue.iterate(
+            partition=job_id,
+            item_poll_timeout=0.0,
+        )
+    )
+    decoded = decode_result_items(items)
+    roundtrip_ok = (
+        decoded.get("status") == "completed"
+        and decoded.get("result") == synthetic_result
+    )
+
+    async_result_queue.clear(partition=job_id)
+    remaining = list(
+        async_result_queue.iterate(
+            partition=job_id,
+            item_poll_timeout=0.0,
+        )
+    )
+
+    return {
+        "appName": HTTP_APP_NAME,
+        "queueName": ASYNC_RESULT_QUEUE_NAME,
+        "tokenVerified": token_verified,
+        "queueRoundtrip": roundtrip_ok,
+        "queueCleared": not remaining,
+        "resultTtlSeconds": ASYNC_RESULT_TTL_SECONDS,
+        "rawAudioQueued": False,
+        "stemBytesQueued": False,
+        "modelExecuted": False,
+        "audioRead": False,
+        "referenceFacingInputs": 0,
+        "referenceScoreCalls": 0,
+        "qualityVerdictMade": False,
+    }
+
+
+@app.function(
+    image=http_image,
     timeout=1200,
     memory=4096,
 )
@@ -217,7 +294,14 @@ def run_rhythm_async_job(
         # private Blob credentials. The browser gets a bounded generic failure.
         envelope = build_failed_envelope()
 
-    _queue_job_envelope(job_id, envelope)
+    try:
+        _queue_job_envelope(job_id, envelope)
+    except ValueError:
+        # A result that crosses the strict JSON/size envelope is converted to a
+        # bounded failure result rather than leaving the browser polling forever.
+        status = "failed"
+        _queue_job_envelope(job_id, build_failed_envelope())
+
     return {
         "jobId": job_id,
         "status": status,
@@ -409,6 +493,7 @@ __all__ = [
     "WORKER_APP_NAME",
     "WORKER_FUNCTION_NAME",
     "analyze",
+    "async_protocol_smoke",
     "async_result_queue",
     "http_image",
     "route_http_payload",
