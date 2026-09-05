@@ -37,7 +37,7 @@ jobs:
           echo "protocol=$protocol"
           echo "worker=$worker"
           echo "scheduler=$scheduler"
-          test "$bridge" = '365843550fa6ee67f3d22a6b4536261f9dc46dba'
+          test "$bridge" = '36584355d9b060fc7b7e20acc62524fbc7bf9005'
           test "$protocol" = '1bd55017e16a4e1d8b14c7429492f811a43a28d8'
           test "$worker" = '111bf14a8f91045d3478901f8e36b88a2e7f181a'
           test "$scheduler" = 'fc9b4c45c208d80be7abab64a8959f2a3babcee8'
@@ -100,7 +100,7 @@ jobs:
           summary = {
               'schemaVersion': 1,
               'gate': 'v143-production-hardened-async-bridge',
-              'bridgeBlob': '365843550fa6ee67f3d22a6b4536261f9dc46dba',
+              'bridgeBlob': '36584355d9b060fc7b7e20acc62524fbc7bf9005',
               'protocolBlob': '1bd55017e16a4e1d8b14c7429492f811a43a28d8',
               'workerBlob': '111bf14a8f91045d3478901f8e36b88a2e7f181a',
               'schedulerBlob': 'fc9b4c45c208d80be7abab64a8959f2a3babcee8',
