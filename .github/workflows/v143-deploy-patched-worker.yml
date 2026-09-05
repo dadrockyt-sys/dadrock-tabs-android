@@ -17,6 +17,13 @@ permissions:
 env:
   MODAL_ENVIRONMENT: main
   PYTHONUNBUFFERED: '1'
+  EXPECTED_LIVE_ENDPOINT_BLOB: '111bf14a8f91045d3478901f8e36b88a2e7f181a'
+  EXPECTED_SEEDED_SCHEDULER_BLOB: 'fc9b4c45c208d80be7abab64a8959f2a3babcee8'
+  EXPECTED_DETERMINISTIC_SEPARATOR_BLOB: '28b3e6fe0eb761178b142cf7dcbda533f0bf918d'
+  EXPECTED_DETERMINISTIC_PROVIDER_BLOB: '3c6dcf9b8e7360ba1dd886810f3c14c05ac0579b'
+  EXPECTED_STEM_PROVIDER_BLOB: 'cd180bfb35e8110f031504035af5f11e502c3dc6'
+  EXPECTED_REQUEST_ADAPTER_BLOB: '6d1787f34a3b7ca781ced8e5695993a3777406a8'
+  EXPECTED_RHYTHM_ROUTER_BLOB: '7849f33cd3b849283ccebfda9f721cc40704231e'
 
 jobs:
   deploy-patched-worker:
@@ -27,13 +34,33 @@ jobs:
       MODAL_TOKEN_SECRET: ${{ secrets.MODAL_TOKEN_SECRET }}
 
     steps:
-      - name: Checkout exact patch branch head
+      - name: Checkout exact promotion branch head
         uses: actions/checkout@v4
 
-      - name: Enforce patch and safety boundary
+      - name: Enforce exact promotion source and safety boundary
         shell: bash
         run: |
           set -euo pipefail
+
+          check_blob() {
+            path="$1"
+            expected="$2"
+            actual="$(git hash-object "$path")"
+            if [ "$actual" != "$expected" ]; then
+              echo "Source pin mismatch: $path actual=$actual expected=$expected" >&2
+              exit 1
+            fi
+            echo "$path=$actual"
+          }
+
+          check_blob analyzer/v143_modal_live_endpoint.py "$EXPECTED_LIVE_ENDPOINT_BLOB"
+          check_blob analyzer/v143_seeded_separator.py "$EXPECTED_SEEDED_SCHEDULER_BLOB"
+          check_blob analyzer/v143_deterministic_separator.py "$EXPECTED_DETERMINISTIC_SEPARATOR_BLOB"
+          check_blob analyzer/v143_rhythm_deterministic_stem_provider.py "$EXPECTED_DETERMINISTIC_PROVIDER_BLOB"
+          check_blob analyzer/v143_rhythm_stem_provider.py "$EXPECTED_STEM_PROVIDER_BLOB"
+          check_blob analyzer/v143_vercel_audio_request_adapter.py "$EXPECTED_REQUEST_ADAPTER_BLOB"
+          check_blob analyzer/v143_modal_rhythm_router.py "$EXPECTED_RHYTHM_ROUTER_BLOB"
+
           python3 .github/scripts/v143_audio_download_auth_test.py
           grep -q '"v143_audio_download_auth"' analyzer/v143_modal_live_endpoint.py
           grep -q 'headers = build_audio_download_headers(audio_url, blob_token)' analyzer/v143_modal_live_endpoint.py
@@ -41,11 +68,18 @@ jobs:
           grep -q '"professionalReferenceUsed": False' analyzer/v143_modal_live_endpoint.py
           grep -q '"referenceRuntimeInputUsed": False' analyzer/v143_modal_live_endpoint.py
           grep -q '"runtimeLabelsRequired": False' analyzer/v143_modal_live_endpoint.py
+
           echo "workerSourceCommit=$GITHUB_SHA"
+          echo "candidateSchedulerBlob=$EXPECTED_SEEDED_SCHEDULER_BLOB"
+          echo 'approvedFixtureInvoked=false'
+          echo 'modelExecutionPerformed=false'
           echo 'bridgeDeploymentChanged=false'
           echo 'vercelDeploymentChanged=false'
+          echo 'mainMergePerformed=false'
+          echo 'referenceFacingInputs=0'
           echo 'referenceFacingAccuracyScored=false'
           echo 'referenceScoreCalls=0'
+          echo 'qualityVerdictMade=false'
 
       - name: Set up Python 3.11
         uses: actions/setup-python@v5
@@ -56,8 +90,8 @@ jobs:
         shell: bash
         run: |
           set -euo pipefail
-          python -m pip install --upgrade pip
-          python -m pip install 'modal==1.3.3'
+          python -m pip install --upgrade pip >/dev/null
+          python -m pip install 'modal==1.3.3' >/dev/null
           modal --version
 
       - name: Authenticate Modal
@@ -73,19 +107,20 @@ jobs:
           modal token set --token-id "$MODAL_TOKEN_ID" --token-secret "$MODAL_TOKEN_SECRET" >/dev/null
           echo 'Modal authentication configured.'
 
-      - name: Deploy patched V143 L4 worker only
+      - name: Deploy seeded scheduler V143 L4 worker only
         shell: bash
         run: |
           set -euo pipefail
           modal deploy --env main analyzer/v143_modal_live_endpoint.py
 
-      - name: Re-run reference-free worker dependency smoke
+      - name: Run no-audio worker dependency smoke
         shell: bash
         run: |
           set -euo pipefail
           mkdir -p debug/v143-contextual-prune/patched-worker-deploy
           python - <<'PY'
           import json
+          import os
           import modal
           from pathlib import Path
 
@@ -96,7 +131,9 @@ jobs:
           )
           result = fn.remote()
           safe = {
-              'workerSourceCommit': __import__('os').environ.get('GITHUB_SHA'),
+              'workerSourceCommit': os.environ.get('GITHUB_SHA'),
+              'seededSchedulerBlob': os.environ.get('EXPECTED_SEEDED_SCHEDULER_BLOB'),
+              'liveEndpointBlob': os.environ.get('EXPECTED_LIVE_ENDPOINT_BLOB'),
               'cudaAvailable': result.get('cudaAvailable'),
               'deviceName': result.get('deviceName'),
               'deterministicSeparatorSeed': result.get('deterministicSeparatorSeed'),
@@ -111,16 +148,26 @@ jobs:
               'legatoEvidenceImported': result.get('legatoEvidenceImported'),
               'deterministicProviderImported': result.get('deterministicProviderImported'),
               'audioDownloadAuthPolicyGatePassed': True,
+              'approvedFixtureInvoked': False,
+              'audioBytesRead': False,
+              'separatorModelExecuted': False,
               'professionalReferenceUsed': False,
               'referenceRuntimeInputUsed': False,
               'runtimeLabelsRequired': False,
+              'referenceFacingInputs': 0,
               'referenceFacingAccuracyScored': False,
               'referenceScoreCalls': 0,
+              'qualityVerdictMade': False,
+              'rawAudioRetained': False,
+              'stemBytesRetained': False,
+              'bridgeDeploymentChanged': False,
+              'vercelDeploymentChanged': False,
+              'mainMergePerformed': False,
           }
           Path('debug/v143-contextual-prune/patched-worker-deploy/summary.json').write_text(
-              json.dumps(safe, indent=2) + '\n', encoding='utf-8'
+              json.dumps(safe, indent=2, sort_keys=True) + '\n', encoding='utf-8'
           )
-          print(json.dumps(safe, indent=2))
+          print(json.dumps(safe, indent=2, sort_keys=True))
           required_true = [
               'cudaAvailable', 'referenceFree', 'basicPitchImported',
               'bendEvidenceImported', 'bendConsensusImported',
@@ -128,11 +175,13 @@ jobs:
               'audioDownloadAuthPolicyGatePassed',
           ]
           if not all(safe.get(key) is True for key in required_true):
-              raise SystemExit('Patched V143 worker dependency smoke failed')
+              raise SystemExit('V143 worker dependency smoke failed')
           if safe.get('deviceName') != 'NVIDIA L4':
               raise SystemExit('Unexpected worker GPU')
           if safe.get('deterministicSeparatorSeed') != 143:
               raise SystemExit('Unexpected deterministic separator seed')
+          if safe.get('seededSchedulerBlob') != 'fc9b4c45c208d80be7abab64a8959f2a3babcee8':
+              raise SystemExit('Unexpected deployed scheduler source pin')
           PY
 
       - name: Preserve aggregate deploy evidence only
