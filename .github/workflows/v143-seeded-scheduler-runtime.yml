@@ -1,19 +1,13 @@
 # Branch-only one-shot approved-fixture promotion gate; isolated app, aggregate evidence only.
 name: V143 Seeded Scheduler Runtime Gate
 
+# Expensive approved-fixture execution is deliberate only. Never run this gate from push.
 on:
-  push:
-    branches:
-      - v143-contextual-prune-lobo
-    paths:
-      - analyzer/v143_seeded_scheduler_runtime_modal.py
-      - analyzer/v143_seeded_separator.py
-      - analyzer/v143_seeded_audio_separator_cli.py
-      - analyzer/v143_production_separator.py
-      - analyzer/v143_ai_tab_gpu_worker.py
-      - .github/scripts/v143_seeded_scheduler_runtime_collect.py
-      - .github/workflows/v143-seeded-scheduler-runtime.yml
   workflow_dispatch:
+
+concurrency:
+  group: v143-seeded-scheduler-runtime-gate
+  cancel-in-progress: false
 
 permissions:
   contents: read
