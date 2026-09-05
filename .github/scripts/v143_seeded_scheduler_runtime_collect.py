@@ -51,13 +51,20 @@ def main() -> None:
     if source_sha != EXPECTED_SOURCE_SHA256:
         raise RuntimeError(f"approved fixture SHA changed: {source_sha}")
 
+    app_name = os.environ.get("V143_SEEDED_SCHEDULER_RUNTIME_APP_NAME", "").strip()
+    if not app_name:
+        raise RuntimeError("V143_SEEDED_SCHEDULER_RUNTIME_APP_NAME is required for isolated runtime gate collection")
+
     fn = modal.Function.from_name(
-        "dadrock-v143-seeded-scheduler-runtime-gate",
+        app_name,
         "probe",
         environment_name="main",
     )
 
-    print("seeded-scheduler-runtime.local.spawn.start implementationSpecific=true", flush=True)
+    print(
+        f"seeded-scheduler-runtime.local.spawn.start implementationSpecific=true appName={app_name}",
+        flush=True,
+    )
     call = fn.spawn(source_bytes, SOURCE.suffix)
     print(f"seeded-scheduler-runtime.local.spawn.done functionCallId={call.object_id}", flush=True)
     started = time.monotonic()
@@ -74,6 +81,7 @@ def main() -> None:
             "schemaVersion": 1,
             "gate": "v143-seeded-scheduler-runtime",
             "diagnosticSourceCommit": os.environ.get("GITHUB_SHA"),
+            "runtimeAppName": app_name,
             "completed": False,
             "terminalType": type(exc).__name__,
             "functionCallId": call.object_id,
@@ -146,6 +154,7 @@ def main() -> None:
             "schemaVersion": 1,
             "gate": "v143-seeded-scheduler-runtime",
             "diagnosticSourceCommit": os.environ.get("GITHUB_SHA"),
+            "runtimeAppName": app_name,
             "functionCallId": call.object_id,
             "collectorWallSeconds": round(wall, 3),
             "collectionDeadlineSeconds": COLLECTION_DEADLINE_SECONDS,
