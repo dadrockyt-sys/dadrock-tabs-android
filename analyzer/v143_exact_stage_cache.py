@@ -14,8 +14,10 @@ import os
 import re
 import shutil
 import uuid
+from collections.abc import Callable, Mapping
+from dataclasses import dataclass
 from pathlib import Path
-from typing import Any, Mapping
+from typing import Any
 
 SCHEMA_VERSION = 1
 
@@ -42,6 +44,15 @@ class FingerprintError(ValueError):
 
 class CacheWriteError(RuntimeError):
     """Raised when a cache entry cannot be written without ambiguity."""
+
+
+@dataclass(frozen=True)
+class CacheResolution:
+    """Result of resolving an exact stage through the diagnostic cache."""
+
+    payloads: dict[str, bytes]
+    cache_hit: bool
+    cache_write_succeeded: bool | None
 
 
 def sha256_bytes(data: bytes) -> str:
@@ -157,6 +168,22 @@ def _safe_payload_name(name: str) -> str:
     return name
 
 
+def _normalize_payloads(payloads: Mapping[str, bytes]) -> dict[str, bytes]:
+    if not isinstance(payloads, Mapping) or not payloads:
+        raise CacheWriteError("payloads must be a non-empty mapping")
+
+    normalized_payloads: dict[str, bytes] = {}
+    for raw_name, raw_data in payloads.items():
+        try:
+            name = _safe_payload_name(raw_name)
+        except ValueError as exc:
+            raise CacheWriteError(str(exc)) from exc
+        if not isinstance(raw_data, bytes):
+            raise CacheWriteError(f"payload {name!r} must be bytes")
+        normalized_payloads[name] = raw_data
+    return normalized_payloads
+
+
 class ExactStageCache:
     """Byte-exact, fail-closed content-addressed cache for isolated diagnostics."""
 
@@ -230,19 +257,7 @@ class ExactStageCache:
     def store(self, fingerprint: Mapping[str, Any], payloads: Mapping[str, bytes]) -> str:
         normalized = validate_fingerprint(fingerprint)
         key = cache_key(normalized)
-
-        if not isinstance(payloads, Mapping) or not payloads:
-            raise CacheWriteError("payloads must be a non-empty mapping")
-
-        normalized_payloads: dict[str, bytes] = {}
-        for raw_name, raw_data in payloads.items():
-            try:
-                name = _safe_payload_name(raw_name)
-            except ValueError as exc:
-                raise CacheWriteError(str(exc)) from exc
-            if not isinstance(raw_data, bytes):
-                raise CacheWriteError(f"payload {name!r} must be bytes")
-            normalized_payloads[name] = raw_data
+        normalized_payloads = _normalize_payloads(payloads)
 
         self.root.mkdir(parents=True, exist_ok=True)
         if self.root.is_symlink() or not self.root.is_dir():
@@ -304,6 +319,40 @@ class ExactStageCache:
         finally:
             if temp.exists():
                 shutil.rmtree(temp, ignore_errors=True)
+
+    def resolve(
+        self,
+        fingerprint: Mapping[str, Any],
+        compute: Callable[[], Mapping[str, bytes]],
+    ) -> CacheResolution:
+        """Return an exact hit or compute exact bytes and best-effort populate the cache.
+
+        Cache acceptance is fail-closed. A miss, corrupt entry, or write failure never
+        substitutes alternate bytes: the supplied exact compute path runs and its
+        validated output is returned unchanged. Invalid compute output is not hidden.
+        """
+
+        normalized = validate_fingerprint(fingerprint)
+        hit = self.lookup(normalized)
+        if hit is not None:
+            return CacheResolution(
+                payloads=hit,
+                cache_hit=True,
+                cache_write_succeeded=None,
+            )
+
+        computed = _normalize_payloads(compute())
+        try:
+            self.store(normalized, computed)
+            write_succeeded = True
+        except CacheWriteError:
+            write_succeeded = False
+
+        return CacheResolution(
+            payloads=computed,
+            cache_hit=False,
+            cache_write_succeeded=write_succeeded,
+        )
 
     def remove(self, fingerprint: Mapping[str, Any]) -> None:
         entry = self.entry_path(fingerprint)
