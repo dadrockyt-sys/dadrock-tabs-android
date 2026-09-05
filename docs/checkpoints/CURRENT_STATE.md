@@ -1,6 +1,6 @@
 # CURRENT STATE — DadRock `/ai-tab`
 
-Updated: 2026-09-05 — protected Preview POST itself returns 401; single model-bearing POST never reached Next/Modal; zero worker/model spawn proven  
+Updated: 2026-09-05 — GitHub OIDC direct access NOT trusted; prior GET 200 was redirect false-positive; zero model spawn still proven  
 Branch: `v143-contextual-prune-lobo`
 
 > Compact continuation checkpoint. Older dedicated checkpoints remain authoritative; omission here does not revoke frozen boundaries.
@@ -33,87 +33,67 @@ Branch: `v143-contextual-prune-lobo`
 ## HISTORICAL BREAKTHROUGH RUN — PRE-MODEL ONLY
 
 - Historical trigger commit `58be9aa7b5606783a508917ce4531cfd512d66da` produced run `33982235357`, job `101349393362`.
-- Source gate and fresh Preview deploy were GREEN; protected `/ai-tab` preflight returned **403**; model-bearing step was **SKIPPED**.
-- Historical Preview deployment: `dpl_F6ksguDvc1nVAt33jNxxoVTmyyJA`; no production promotion. Do not rerun it.
+- Source gate and fresh Preview deploy were GREEN; protected `/ai-tab` check failed before model start. Do not rerun it.
+- Historical Preview deployment: `dpl_F6ksguDvc1nVAt33jNxxoVTmyyJA`; no production promotion.
 
-## PROTECTED PREVIEW GET ACCESS — GREEN
+## GUARDED HELPER / SINGLE ARMED RUN
 
-- Trusted GitHub OIDC proof `33982502347` returned protected Preview GET HTTP 200 using `x-vercel-trusted-oidc-idp-token` without weakening Deployment Protection.
-- Refreshability proof `33982582372` GREEN; on-demand JWT TTL = **300s**.
-- Armed workflow grants `id-token: write`, mints/masks fresh JWTs, and uses direct `curl` against the exact protected Preview. Vercel CLI is build/deploy/inspect only. No production target/promotion command was added.
-
-## GUARDED HELPER / ARMED WORKFLOW
-
-- Helper `.github/scripts/v143-fresh-preview-async-breakthrough-e2e.sh` commit `8d536121bb9a38f4a69add31cbf7515400441c5b`, blob `92d17ee0b01ff72f71abfac1a7a4b36ff7e02792`; exact bytes passed `bash -n` before staging.
-- Single arming workflow commit: `0a07b393bb47123a1142fd46ea6d9a55b04f0486`, message `test: arm guarded OIDC async breakthrough E2E`.
-- Armed workflow blob: `2a48af6aadda3b90a9c9ea24220ac524dbcb5b41`.
-- Trigger remains workflow-path-only push on `v143-contextual-prune-lobo`; concurrency remains `v143-fresh-preview-async-breakthrough-e2e-single`, `cancel-in-progress: false`.
-- Final pre-arm active-state check was clean and all authoritative source/helper pins passed before any Preview/start work.
-
-## SINGLE ARMED RUN — CLIENT START REQUEST BLOCKED BEFORE APPLICATION
-
-- Exactly one breakthrough run was created from the arming commit: run `33998283085`, job `101392517265`, conclusion **FAILURE**.
+- Helper `.github/scripts/v143-fresh-preview-async-breakthrough-e2e.sh` commit `8d536121bb9a38f4a69add31cbf7515400441c5b`, blob `92d17ee0b01ff72f71abfac1a7a4b36ff7e02792`.
+- Single arming workflow commit: `0a07b393bb47123a1142fd46ea6d9a55b04f0486`; armed workflow blob `2a48af6aadda3b90a9c9ea24220ac524dbcb5b41`.
+- Exactly one breakthrough run from that arming commit: run `33998283085`, job `101392517265`, conclusion FAILURE.
 - Fresh Preview deployment: `dpl_G2WxxMA782j87H7tLpAy9cCB4ihD`, URL `https://dadrock-tabs-android-bx51iz9tr-stephen-mcnally-s-projects.vercel.app`, Preview/Ready.
 - Production promotion remained false; no `--prod` or promotion command executed.
-- Protected Preview `/ai-tab` GET preflight succeeded: **HTTP 200**.
-- The helper then sent exactly one Rhythm `operation=start` POST using approved audio + freshly minted trusted GitHub OIDC token.
-- Aggregate artifact `9978732479`, digest `sha256:e245ae0a89d9c174ce1da14e47c31b252ad516b601d7793b2d982489efc16aa6`, retained:
-  - `modelBearingStartRequestCount=1`
-  - `startStatus=401`
-  - `startCurlExitCode=0`
-  - `startAccepted=false`
-  - `terminalState=start-response-unusable`
-  - `completed=false`
-  - `acknowledged=false`
-  - `productionEnvironmentChanged=false`
-  - `productionPromotionPerformed=false`
-  - `deploymentProtectionDisabled=false`
-  - `referenceFacingInputs=0`
-  - `referenceScoreCalls=0`
-  - `qualityVerdictMade=false`.
-- No signed `v143a1.*` token returned; no status poll/ACK was attempted. Runner raw request/response/token/status/ACK material was deleted.
+- Aggregate artifact `9978732479`, digest `sha256:e245ae0a89d9c174ce1da14e47c31b252ad516b601d7793b2d982489efc16aa6`, retained `modelBearingStartRequestCount=1`, `startStatus=401`, `startCurlExitCode=0`, `startAccepted=false`, `completed=false`, `acknowledged=false`, `referenceFacingInputs=0`, `referenceScoreCalls=0`, `qualityVerdictMade=false`.
+- No signed `v143a1.*` token returned; no status poll/ACK; raw request/response/token/status/ACK material deleted.
 
-## MODEL-FREE POST DISAMBIGUATION — DECISIVE
+## MODEL-FREE POST DISAMBIGUATION — ZERO BACKEND/MODEL SPAWN PROVEN
 
-- Separate diagnostic workflow `.github/workflows/v143-protected-preview-post-routing-diagnosis.yml` commit `af2cb47b42a085607ed32b4338ee73e45d978558` was created solely to test the same protected Preview POST transport.
-- Diagnostic run `33998553314`, job `101393220397`.
-- Request body was only `{"transcriptionType":"invalid"}` — **no audio URL, no usable operation, no analyzer/model request**. The Next route would return its fixed HTTP 400 validation response before analyzer selection/call if the request reached application code.
-- The diagnostic instead returned **HTTP 401** before that expected route-level 400.
-- Therefore the protected Preview POST request is being rejected **before the Next.js route executes**. This removes the earlier Modal-token-mismatch hypothesis for the breakthrough start.
-- Consequently the single model-bearing POST from run `33998283085` also stopped at the same protected-Preview POST boundary and **never reached `/api/analyze-audio-tab` application code**.
-- Since the application route never executed, it could not call the Modal bridge; `_start_rhythm_job` was never reached; no job ID/control record/orchestrator/worker/model execution could have been spawned by this start.
-- **Proven backend model-bearing execution count for the armed run = 0.** The client start-request budget was used once, but the model/backend-start budget remains unused.
-- Model-free diagnostic itself: audio bytes 0, analyzer calls 0, worker/model calls 0, reference-facing inputs 0.
+- Diagnostic workflow `.github/workflows/v143-protected-preview-post-routing-diagnosis.yml`, first diagnostic commit `af2cb47b42a085607ed32b4338ee73e45d978558`, run `33998553314`, job `101393220397`.
+- It POSTed only `{"transcriptionType":"invalid"}` — no audio URL and no usable analyzer/model request. If Next.js received it, route validation deterministically returns HTTP 400 before analyzer selection/call.
+- It instead returned HTTP **401**.
+- Therefore the breakthrough start's identical protected-Preview POST transport was blocked before Next.js. It never reached the application route, Modal bridge, `_start_rhythm_job`, FunctionCall spawn, worker, or model.
+- **Proven backend model-bearing execution count for run `33998283085` = 0.** Client POST count = 1; backend/model-start count = 0.
 
-## CURRENT ROOT CAUSE — PROTECTED PREVIEW POST AUTHORIZATION
+## IMPORTANT CORRECTION — PRIOR OIDC “GET 200” PROOF WITHDRAWN
 
-- Trusted GitHub OIDC access is proven for protected GET requests, but direct POST requests carrying a fresh `x-vercel-trusted-oidc-idp-token` currently return 401 before application routing.
-- The prior local-prebuild `[SENSITIVE]` secret warning is **not the cause of this 401**, because the malformed diagnostic never reached application code or any environment-variable-dependent analyzer path. Keep that warning noted separately for future prebuilt-runtime verification, but do not conflate it with this blocker.
-- Vercel runtime-log queries showing no function invocation are now consistent with the route-not-reached diagnosis, though the decisive evidence is the malformed POST returning 401 instead of the route's deterministic 400.
+- Redirect-boundary diagnostic commit `da56e7242e0b7f643b68e1d25083d471f1f1eed2`, run `33998609205`, job `101393363970` compared trusted-OIDC GET and malformed POST **without following redirects**.
+- Exact results:
+  - GET `/ai-tab`: **HTTP 302**, `Location` present, destination host `vercel.com`.
+  - malformed POST `/api/analyze-audio-tab`: **HTTP 401**, no `Location` header.
+  - diagnostic model starts 0; audio supplied false; analyzer call possible false; reference-facing inputs 0.
+- Earlier runs `33982502347` and `33982582372` used/finally interpreted redirect-followed HTTP 200. The new no-redirect evidence proves that final 200 was the Vercel authentication flow/page after a 302, **not successful application access**. Their conclusion “Trusted GitHub OIDC Deployment Protection access GREEN” is **withdrawn**; token mint/refresh mechanics remain proven, but Vercel acceptance does not.
+- The breakthrough preflight also used `curl --location`; its reported `protectedPreviewAiTabStatus=200` was likewise a redirect false-positive, not proof the app was reached.
+- Root cause now: the GitHub-issued OIDC JWT is currently **not accepted as a trusted Deployment Protection source for this project/deployment**. GET is redirected to Vercel auth; non-GET is rejected 401 before application routing.
+- Vercel documentation confirms `x-vercel-trusted-oidc-idp-token` is the intended GitHub Actions header and is not documented as GET-only. Therefore this is trust/configuration/identity acceptance, not a POST-method limitation.
 
-## HARD STOP / AUTHORIZATION
+## SAFE ALTERNATIVE UNDER INVESTIGATION — AUTHENTICATED `vercel curl`
 
-- **DO NOT RERUN `33998283085`; DO NOT send another model-bearing start yet; DO NOT edit the breakthrough trigger to arm again.**
-- Zero backend/model execution is now proven, but the one-start client contract must still be explicitly reconsidered only after the protected-POST access method is fixed and proven model-free.
-- No production promotion/change, no protection weakening/disablement, no reference-facing scoring, no scheduler/model changes.
+- Vercel documentation supports `vercel curl <path> --deployment <preview-url>` and native POST flags after `--`.
+- This uses the existing authorized Vercel CLI token to access a specific protected Preview without disabling Deployment Protection, creating a protection bypass secret, promoting production, or exposing credentials.
+- Next permitted test is **model-free only**: use `vercel curl` against the exact existing Preview with body `{"transcriptionType":"invalid"}` and require the route's deterministic HTTP 400 response. No audio/model/bridge request.
+- If that succeeds, `vercel curl` becomes the candidate protected request transport for the E2E; do not send audio until all remaining configuration and one-start authorization gates are re-proven/checkpointed.
 
-## NEXT — FIX/PROVE PROTECTED POST ACCESS WITHOUT AUDIO
+## PREBUILT SECRET WARNING — SEPARATE, NOT CURRENT 401 ROOT CAUSE
 
-1. Determine the correct Vercel Trusted GitHub OIDC request semantics for non-GET methods. Investigate redirects/cookies/header handling and documented automated-agent access without weakening Deployment Protection.
-2. Use only malformed/model-free POST probes until the same protected Preview endpoint returns the route's expected HTTP 400. No audio, bridge, or model call during this proof.
-3. Prefer a request mode that preserves trusted auth across any Vercel redirect/cookie exchange; do not expose/store OIDC JWTs.
-4. Once model-free POST access is GREEN, separately verify the prebuilt Preview has required analyzer configuration by presence/equality-safe checks that do not print secrets and do not call the model.
-5. Checkpoint the exact repair and proof. Only then decide whether a second client start can be explicitly authorized given that the first provably never crossed the application boundary.
+- Fresh local prebuild reported one sensitive Preview value could not be pulled and wrote `[SENSITIVE]` placeholder.
+- That cannot explain the current 401 because the malformed POST never reached Next.js. Keep it as a separate blocker to verify after protected POST transport is solved, before any future model-bearing request.
 
 ## HARD STOPS
 
-- No second model-bearing POST until model-free protected POST access is GREEN and checkpoint authorization is revisited.
+- **DO NOT RERUN `33998283085`; DO NOT send another model-bearing start; DO NOT edit the breakthrough trigger to arm again yet.**
 - No production Vercel promotion/change.
-- No Deployment Protection weakening/disablement.
+- No Deployment Protection weakening/disablement or bypass-secret creation.
 - No scheduler/model change for access/lifecycle symptom.
 - No reference-facing scoring/quality verdict/restricted assets.
 - No raw audio/stems/model bytes in async storage/control metadata.
 - No TTL > 15 minutes / no persistent result cache.
 - No whole-branch merge to `main`.
 
-Current authorization state: **single client start POST returned 401 at Vercel protection before Next.js; zero Modal/worker/model execution proven; protected GET OIDC works but protected POST OIDC path is blocked; no second model-bearing request authorized until model-free POST access is repaired and re-proven.**
+## NEXT
+
+1. Prove model-free malformed POST through authenticated `vercel curl` to exact Preview; require route HTTP 400 and exact validation error.
+2. If GREEN, verify Preview analyzer configuration safely (presence/equality only; no secret values, no audio/model call), including the local-prebuild sensitive placeholder risk.
+3. Checkpoint transport/config proof and proposed guarded workflow repair.
+4. Only after all model-free gates are GREEN explicitly reconsider whether a second client POST is authorized, noting first client POST provably caused zero backend/model starts.
+
+Current authorization state: **GitHub OIDC token mint/refresh works but Vercel does not trust it for this Preview; earlier redirect-followed 200 access conclusions are withdrawn; single audio POST was rejected before Next.js and caused zero Modal/worker/model execution; no second model-bearing request authorized.**
