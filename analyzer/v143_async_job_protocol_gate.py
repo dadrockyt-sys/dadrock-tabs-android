@@ -63,8 +63,6 @@ def main() -> None:
         "wrong signing secret did not fail closed",
     )
 
-    # Deterministic pseudo-random bytes encoded as text stay poorly compressible,
-    # forcing the transport to exercise multiple sub-1MiB queue items.
     rng = random.Random(143)
     text = base64.b64encode(rng.randbytes(1_600_000)).decode("ascii")
     result = {
@@ -106,8 +104,15 @@ def main() -> None:
     ast.parse(protocol_source)
 
     required_bridge_fragments = [
-        'ASYNC_RESULT_QUEUE_NAME = "dadrock-v143-async-results"',
+        'os.environ.get("V143_HTTP_APP_NAME")',
+        'or "dadrock-v143-http-bridge"',
+        'os.environ.get("V143_ASYNC_RESULT_QUEUE_NAME")',
+        'or "dadrock-v143-async-results"',
         "create_if_missing=True",
+        "def async_protocol_smoke()",
+        "build_completed_envelope(synthetic_result)",
+        "queueRoundtrip",
+        "queueCleared",
         "run_rhythm_async_job.spawn(job_id, dict(payload))",
         "_worker_handle().remote(dict(routed_payload))",
         "partition_ttl=ASYNC_RESULT_TTL_SECONDS",
@@ -136,7 +141,7 @@ def main() -> None:
         require(fragment not in bridge_source, f"forbidden bridge fragment: {fragment}")
 
     summary = {
-        "schemaVersion": 1,
+        "schemaVersion": 2,
         "gate": "v143-async-job-protocol",
         "allPassed": True,
         "protocolBlob": git_blob_sha(PROTOCOL),
@@ -149,6 +154,8 @@ def main() -> None:
         "wrongSecretRejected": True,
         "binaryPayloadRejected": True,
         "multiChunkRoundtrip": True,
+        "isolatedResourceNamesSupported": True,
+        "syntheticModalSmokeDefined": True,
         "defaultSynchronousDispatchPreserved": True,
         "leadBassFallbackPreserved": True,
         "asyncRhythmOnly": True,
