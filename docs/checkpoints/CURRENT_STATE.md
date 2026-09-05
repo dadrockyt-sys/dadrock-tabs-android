@@ -1,6 +1,6 @@
 # CURRENT STATE — DadRock `/ai-tab`
 
-Updated: 2026-09-05 08:43 America/Toronto  
+Updated: 2026-09-05 08:46 America/Toronto  
 Branch: `v143-contextual-prune-lobo`
 
 > Compact continuation checkpoint. Older dedicated checkpoints remain authoritative; omission here does not revoke frozen boundaries.
@@ -30,80 +30,93 @@ Branch: `v143-contextual-prune-lobo`
 - Log-only run `33965453476` / job `101304658150` / artifact `9969270692` proved concurrency live: direct Demucs `0.306s`, RoFormer `0.319s`, RoFormer done/cascade start `84.079s`.
 - **Scheduler breakthrough YES; synchronous product breakthrough NO.**
 
-## Async plan
+## Async architecture
 
-Plan `docs/checkpoints/V143_ASYNC_JOB_ARCHITECTURE_PLAN.md`, commit `e0aef99dcdf931b66c0e1a081160e3cc5c6cb3c2`.
+Plan: `docs/checkpoints/V143_ASYNC_JOB_ARCHITECTURE_PLAN.md`, commit `e0aef99dcdf931b66c0e1a081160e3cc5c6cb3c2`.
 
 Rhythm start -> immediate HMAC-signed opaque job token -> browser polls Vercel -> Vercel polls Modal bridge -> bridge reads transient structured-result Queue partition -> existing Vercel anti-leakage/product pipeline -> browser receives tab -> ACK clears partition. TTL `900s` fallback. Lead/Bass remain synchronous.
 
 ## Current async candidates — BRANCH ONLY
 
-- Protocol `analyzer/v143_async_job_protocol.py`: commit `1b139994b9bf8572093e6644a61b6fde8c14cd89`, blob `1bd55017e16a4e1d8b14c7429492f811a43a28d8`.
-- Bridge `analyzer/v143_modal_http_endpoint.py`: **current commit `24bc086848b3903cb26c7032349fd5f3f289bae0`, blob `e0cecefacead73d69a905fd6bfb2049b21c87bc3`**.
+- Protocol `analyzer/v143_async_job_protocol.py`: blob `1bd55017e16a4e1d8b14c7429492f811a43a28d8`.
+- Bridge `analyzer/v143_modal_http_endpoint.py`: commit `24bc086848b3903cb26c7032349fd5f3f289bae0`, blob `e0cecefacead73d69a905fd6bfb2049b21c87bc3`.
 - Vercel route `app/api/analyze-audio-tab/route.js`: commit `4c94ae0e8bf88f8c0f7f0053c0dec5ad32522b79`, blob `742954146a86aa36485d0bbdb3fbd6691a64a712`.
 - `/ai-tab` page: polling commit `d07b08545296c579dbdb0faf2efc0843cc45d24e`, blob `de39f2715c6875d757ef730c9e3182ccd4aa00a4`.
 
-Current bridge properties:
+Bridge properties:
 
 - default production resource names unchanged; isolated gate names can be supplied at deploy time;
-- deploy-resolved app/Queue names are baked into `http_image` via `legacy.image.env(...)` **before** local-source mounts, satisfying Modal image build ordering;
+- deploy-resolved app/Queue names are baked into `http_image` via `legacy.image.env(...)` before local-source mounts, satisfying Modal image build ordering;
 - default synchronous `analyze` and Lead/Bass fallback preserved;
 - Rhythm `start/status/ack` added;
-- lightweight orchestrator calls unchanged promoted worker;
+- lightweight orchestrator calls the unchanged promoted worker;
 - result-only Queue partition, zlib/chunked, TTL 900, ACK clear;
 - bounded generic failures only; no credential-bearing exception persistence;
-- synthetic `async_protocol_smoke()` performs HMAC + Queue write/read/decode/clear with tiny fake tab and no audio/model.
+- synthetic `async_protocol_smoke()` exercises HMAC + Queue write/read/decode/clear with tiny fake structured result and invokes no audio/model.
 
-## Source/build evidence
+## Current-pin source/build evidence — GREEN
 
-### Protocol source gate
+### Protocol source gate — GREEN/CLOSED
 
-- Last fully authoritative pre-image-order run: `33966541875`, job `101307557030`, artifact `9969602450`, digest `sha256:92eb21640ac52f7fa16fea7916fa534687aa462e7dbe56ff086292854009df85` — GREEN.
-- Current bridge change automatically requires a fresh source-gate run; no production deployment is authorized until current pins return GREEN.
+- run `33966778940` / workflow `V143 Async Job Protocol Gate`: **SUCCESS**;
+- head/source commit `24bc086848b3903cb26c7032349fd5f3f289bae0`;
+- artifact `9969677990`, digest `sha256:b239317ee7ec9c4c6146567658140d4f0459c14ef77218ad4b61585673d666ef`;
+- current bridge blob `e0cecefa...` therefore has fresh source-only protocol evidence.
 
-### Vercel composition gate
+### Vercel wiring/composition gate — GREEN/CLOSED
 
-- Route/page semantics were GREEN in run `33966433579`, artifact `9969569077`.
-- Current gate has been repinned to bridge blob `e0cecefa...` in commit `16f50a4c8908f975006d58070990f5bab1f296e3`; fresh current-pin result pending at this checkpoint.
+- repin commit `16f50a4c8908f975006d58070990f5bab1f296e3`;
+- run `33966794524` / workflow `V143 Async Vercel Wiring Gate`: **SUCCESS**;
+- artifact `9969683328`, digest `sha256:9b22f8cdce8816814dfd6f414cb9fe72b27e727e342f06061c18a9a984225bf3`;
+- route/page async semantics, V143 safety/product postprocessing, frozen worker/scheduler identities, and current bridge pin compose cleanly.
 
-### Vercel preview build
+### Vercel preview build — GREEN
 
 - run `33966323815`, job `101306988163`: **SUCCESS**;
 - artifact `9969549184`, digest `sha256:810c8c3c3012cb43a37d3b463735b9fc4dcbd2a06a4d2c7fd2407c03e2402a5f`;
 - preview environment pulled and `vercel build` succeeded locally; no deployment/model/audio execution.
 
-## Isolated Modal smoke history — FAIL-CLOSED DIAGNOSIS
+## Isolated Modal bridge smoke — GREEN/CLOSED
 
-### Attempt 1 — run `33966600313`, job `101307715834`
+Ordering-fixed isolated workflow source commit `c65614896f32a60fddca75d4a2dc3453484c6eda`.
 
-- exact source boundary and isolated app deployment succeeded;
-- synthetic Queue/HMAC logic itself returned `tokenVerified=true`, `queueRoundtrip=true`, `queueCleared=true`, TTL 900, no audio/model;
-- **failed isolation assertion** because remote container resolved default `appName=dadrock-v143-http-bridge` / `queueName=dadrock-v143-async-results` rather than runner overrides;
-- no worker/model/audio call occurred; only a random synthetic Queue partition was used and cleared;
-- cleanup initially lacked noninteractive confirmation.
+- run `33966816672`, job `101308290865`: **SUCCESS**;
+- artifact `9969693296`, digest `sha256:5a00636970d7426f5c83c4f498e84a4bc6b200700836e94184fd7f272b0d0b53`;
+- exact bridge blob `e0cecefacead73d69a905fd6bfb2049b21c87bc3`;
+- exact protocol blob `1bd55017e16a4e1d8b14c7429492f811a43a28d8`;
+- frozen worker blob `111bf14a8f91045d3478901f8e36b88a2e7f181a` and scheduler blob `fc9b4c45c208d80be7abab64a8959f2a3babcee8` recorded only as identity pins;
+- remote `appName=dadrock-v143-http-bridge-async-gate`;
+- remote `queueName=dadrock-v143-async-results-gate`;
+- `tokenVerified=true`, `queueRoundtrip=true`, `queueCleared=true`, `resultTtlSeconds=900`;
+- `rawAudioQueued=false`, `stemBytesQueued=false`, `modelExecuted=false`, `audioRead=false`;
+- `referenceFacingInputs=0`, `referenceScoreCalls=0`, `qualityVerdictMade=false`;
+- `productionBridgeTargeted=false`, `productionWorkerTargeted=false`;
+- isolated app stopped successfully after smoke.
 
-Diagnosis: runner environment selected the isolated app at deploy time, but the override names were not present when the remote module initialized.
+Prior isolated failures remain fail-closed diagnostic history only: run `33966600313` identified remote-name override initialization; run `33966716295` identified Modal `.env()` image ordering. Both invoked no model/audio.
 
-### Attempt 2 — run `33966716295`, job `101308026027`
+## Legacy seeded-scheduler structural auto-run note
 
-- stale isolated app was successfully stopped using `--yes` before deployment;
-- deployment failed before any function invocation because Modal forbids build step `.env()` after `add_local_*` mounts;
-- synthetic smoke was skipped; no audio/model activity;
-- final isolated-app cleanup reports app already stopped.
+Bridge commit `24bc086...` also auto-triggered the already-closed legacy scheduler structural workflow: run `33966778906`, job `101308192747`, **FAILURE**. Logs show the sole failure is its intentionally frozen HTTP-bridge blob pin (`e0cecefa... != 9a550f0a...`). The scheduler/worker source was not changed. This is expected stale-pin behavior after the explicitly authorized bridge architecture change, **not a scheduler regression**, and the closed scheduler gate must not be rerun/repinned merely to bless unrelated bridge wiring.
 
-Correction now landed:
+## ASYNC PROMOTION STATUS
 
-- bridge blob `e0cecefa...` moves `.env({...})` **before** `.add_local_python_source(...)`, matching Modal's required image ordering;
-- Vercel composition gate repinned to this blob;
-- isolated workflow repinned in commit `c65614896f32a60fddca75d4a2dc3453484c6eda`, with stale pre-stop and final `--yes` cleanup.
+- Async protocol source gate: **GREEN/CLOSED on current bridge**.
+- Vercel route/UI composition gate: **GREEN/CLOSED on current bridge**.
+- Vercel branch preview build: **GREEN**.
+- Isolated Modal Queue/HMAC bridge smoke: **GREEN/CLOSED**.
+- Production bridge: **UNCHANGED so far**.
+- Production Vercel: **UNCHANGED so far**.
+- Model-bearing async preview E2E: **NOT YET RUN**.
 
 ## NEXT STEP
 
-1. Observe fresh current-pin protocol/Vercel source gates and isolated smoke from the ordering-fixed bridge; no model/audio invocation.
-2. Isolated smoke must prove remote `appName=dadrock-v143-http-bridge-async-gate`, `queueName=dadrock-v143-async-results-gate`, HMAC true, Queue roundtrip true, Queue cleared true, TTL 900, audio/model false, then stop isolated app.
-3. Only after all are GREEN: checkpoint and deploy backward-compatible bridge candidate to production; run the same synthetic/no-model smoke there.
-4. Then Vercel preview deploy + no-model protocol check + exactly one model-bearing async preview E2E proving completion past 150 seconds.
-5. Production Vercel promotion only after preview E2E GREEN.
+1. Deploy the backward-compatible bridge candidate `e0cecefa...` to the production bridge app only, with exact source pins and rollback to bridge blob `9a550f0a...` checkpointed.
+2. Immediately run the bridge's synthetic/no-model protocol smoke against production resource names; it must prove token/Queue roundtrip/clear and no worker/model/audio invocation.
+3. If GREEN, create/deploy a Vercel **preview** from the already-built async route/UI candidate; do not promote production.
+4. Run no-model preview protocol checks.
+5. Only then run exactly one model-bearing async Rhythm preview E2E proving a real result can arrive after the old 150-second boundary and be ACK-cleared.
+6. Promote production Vercel only after preview E2E GREEN.
 
 ### Hard stops
 
@@ -113,5 +126,5 @@ Correction now landed:
 - No raw audio/stems/model bytes in async result storage.
 - No async result TTL above 15 minutes; no persistent result cache.
 - No whole-branch merge to `main`.
-- No production bridge deployment until current isolated smoke + current source pins are GREEN.
 - No production Vercel promotion before preview protocol/E2E proof.
+- No weakening exact parity/fail-closed criteria or retention boundaries.
