@@ -1,6 +1,6 @@
 # CURRENT STATE — DadRock `/ai-tab`
 
-Updated: 2026-09-05 — authenticated `vercel curl` protected POST GREEN; pulled Preview env incomplete; Vercel metadata exposes no env-key listing; model-free runtime config probe authorized next  
+Updated: 2026-09-05 — protected `vercel curl` transport GREEN; deployed Preview V143 URL/token runtime gate GREEN; Blob runtime presence remains to prove model-free  
 Branch: `v143-contextual-prune-lobo`
 
 > Compact continuation checkpoint. Older dedicated checkpoints remain authoritative; omission here does not revoke frozen boundaries.
@@ -52,37 +52,42 @@ Branch: `v143-contextual-prune-lobo`
 - Proven: `nextRouteReached=true`, `analyzerCallPossible=false`, `modelBearingStartRequestCount=0`, `audioUrlSupplied=false`, `referenceFacingInputs=0`.
 - Therefore authenticated `vercel curl --deployment <exact-preview-url>` is the correct protected request transport without weakening protection, bypass-secret creation, production promotion, or model execution.
 
-## PREVIEW ENV CLASSIFICATION — LOCAL PULL INCOMPLETE
+## PREVIEW ENV CLASSIFICATION — LOCAL PULL INCOMPLETE, DEPLOYED RUNTIME PARTLY GREEN
 
-- Rhythm `start` requires `ANALYZER_API_URL_V143`, `ANALYZER_API_TOKEN`, and `BLOB_READ_WRITE_TOKEN` before bridge call.
-- Model-free classification commit `a824ef08137540b42fce51ff9fa462974f34aeb2`, run `33998800056`, job `101393870080`.
-- Authenticated malformed POST was re-proven HTTP 400 / route reached / model starts 0.
-- `vercel pull --environment=preview --git-branch=v143-contextual-prune-lobo` classified without printing values:
-  - `ANALYZER_API_URL_V143 = sensitive_placeholder`
-  - `ANALYZER_API_TOKEN = missing`
-  - `BLOB_READ_WRITE_TOKEN = missing`
-  - `secretValuesPrinted=false`, `modelBearingStartRequestCount=0`, `audioUrlSupplied=false`, `analyzerCallPossible=false`.
-- `.vercel` was deleted in `always()` cleanup.
-- This proves only that the **locally pulled Preview env used for a prebuilt build is incomplete/unsafe**. It does not prove Vercel-managed cloud runtime env lacks those values.
-- No further local `vercel build --prebuilt` model-bearing attempt is authorized.
+- Rhythm `start` route config requires `ANALYZER_API_URL_V143`, `ANALYZER_API_TOKEN`, and `BLOB_READ_WRITE_TOKEN`.
+- Local-pull classification commit `a824ef08137540b42fce51ff9fa462974f34aeb2`, run `33998800056`, job `101393870080`: `ANALYZER_API_URL_V143=sensitive_placeholder`, `ANALYZER_API_TOKEN=missing`, `BLOB_READ_WRITE_TOKEN=missing`, no values printed. This proves only local materialization is incomplete.
+- Connected Vercel project metadata confirms the correct project/team/latest Preview but exposes no env-key/scope listing; absence cannot be inferred.
 
-## VERCEL METADATA INSPECTION — ENV-KEY METADATA UNAVAILABLE THROUGH CONNECTED APP
+### Model-free deployed runtime probe — V143 URL + analyzer token GREEN
 
-- Connected Vercel project read confirms project `prj_6biwsn0iHci6FHNswAUCS8UYrAqF`, team `team_qJrw8Cuze5bCEg9M3Q67XMWt`, framework Next.js, Node 24.x, and latest deployment `dpl_G2WxxMA782j87H7tLpAy9cCB4ihD` READY.
-- The connected project/deployment interface does not expose an environment-variable key listing or scopes, so the preferred metadata-only distinction cannot be completed through this connection without retrieving values.
-- Do not infer absence from that limitation.
+- Diagnostic commit `fe608775454b532c65a4336fc426d82545abd464` updated only `.github/workflows/v143-protected-preview-post-routing-diagnosis.yml`; breakthrough workflow untouched.
+- Run `33999203347`, job `101394927457` completed expected overall FAILURE only because the later local-pull classifier intentionally remains red.
+- Authenticated malformed POST re-proved route transport HTTP 400.
+- Fake-token request used `operation=status`, `transcriptionType=rhythm`, fake nonempty `jobToken`, **no audio**, and no start operation.
+- Runtime probe returned HTTP **400**, class `route_config_gate_passed_or_bridge_response`.
+- Because the route returns 503 before bridge fetch when selected V143 URL or analyzer token is absent, HTTP 400 proves the deployed Preview has nonempty selected V143 URL + analyzer token and reached the bridge.
+- The bridge returns 401 on analyzer-token authorization mismatch; the observed 400 therefore also strongly indicates the deployed analyzer token passed bridge authorization and the fake job token failed later in bounded token parsing.
+- Safety outputs: `modelBearingStartRequestCount=0`, `audioUrlSupplied=false`, `analyzerStartOperationSent=false`, `workerSpawnPossible=false`, `referenceFacingInputs=0`, `secretValuesPrinted=false`.
+- **No worker/model start occurred.**
 
-## NEXT — MODEL-FREE RUNTIME CONFIG PROBE
+## REMAINING CONFIG QUESTION — BLOB TOKEN ONLY
 
-1. Extend the existing diagnostic workflow `.github/workflows/v143-protected-preview-post-routing-diagnosis.yml` only; do not touch the breakthrough trigger.
-2. Use authenticated `vercel curl` against the exact existing Preview and POST `operation=status`, `transcriptionType=rhythm`, and a deliberately fake nonempty `jobToken`.
-3. Supply **no audio URL/path/song/artist**, so `needsAudioRequest=false`; this operation cannot create/spawn a job or execute the model.
-4. Interpret strictly:
-   - HTTP 503 + `The audio analyzer is not configured.` => Vercel runtime lacks selected V143 URL and/or analyzer token.
-   - Any bridge-origin response (for example invalid/unauthorized fake token) => route runtime config passed and bridge was reached; still zero model start because `status` never spawns.
-5. Record status/error class only; no secrets/values. Keep `modelBearingStartRequestCount=0`, `audioUrlSupplied=false`, `analyzerStartOperationSent=false`, `referenceFacingInputs=0`.
-6. If existing prebuilt Preview runtime config is missing, next investigate a **cloud source build/deploy** model-free Preview because Vercel-managed cloud builds may receive sensitive runtime env that `vercel pull` cannot materialize.
-7. Checkpoint the exact result before any further deployment/workflow design.
+- The status probe intentionally does not require `BLOB_READ_WRITE_TOKEN`, so deployed runtime Blob-token presence is still unproven.
+- A safe fail-fast probe can test it without audio/model execution using the already-established production one-shot pattern: authenticated `vercel curl`, `operation=start`, all required text fields present, but `audioUrl=INVALID-NO-AUDIO` (not `http://` or `https://`).
+- Route behavior: if Blob token is absent, fail at route config gate with HTTP 503. If Blob token is present, request reaches the hardened bridge; `_start_rhythm_job` authorizes then `_validate_rhythm_start_payload` rejects the invalid URL **before job ID creation / FunctionCall spawn / worker/model execution**, returning bounded HTTP 400.
+- This is a **model-free fail-fast config probe**, not a model-bearing start. It must use no real audio URL and retain `audioRead=false`, `workerSpawnPossible=false`, `modelBearingStartRequestCount=0`, `referenceFacingInputs=0`.
+
+## NEXT — ONE MODEL-FREE BLOB RUNTIME PROBE ONLY
+
+1. Extend only `.github/workflows/v143-protected-preview-post-routing-diagnosis.yml`; do not touch/rearm the breakthrough workflow.
+2. Re-prove malformed authenticated POST transport first.
+3. Preserve the fake-token status probe.
+4. Add exactly one fail-fast `operation=start` using `audioUrl=INVALID-NO-AUDIO`, nonempty pathname/song/artist, Rhythm type; do not use approved/real audio or any Blob URL.
+5. Require either:
+   - HTTP 503 => deployed runtime Blob token/config missing; stop and diagnose cloud runtime configuration.
+   - HTTP 400 from bridge invalid-audio validation => all three critical runtime values are available and bridge auth is usable; worker/model spawn remains zero.
+6. Print classifications only; delete response; no secrets.
+7. Checkpoint result before considering any repair to breakthrough transport/build strategy.
 
 ## HARD STOPS
 
@@ -95,4 +100,4 @@ Branch: `v143-contextual-prune-lobo`
 - No TTL > 15 minutes / no persistent result cache.
 - No whole-branch merge to `main`.
 
-Current authorization state: **authenticated protected POST transport GREEN; direct GitHub OIDC trust path not green; locally pulled Preview env incomplete; Vercel metadata cannot expose env-key scopes; first audio POST caused zero backend/model execution; next permitted action is the model-free fake-token status probe only.**
+Current authorization state: **authenticated protected POST transport GREEN; direct GitHub OIDC trust path not green; deployed Preview V143 URL/analyzer-token path GREEN via model-free bridge probe; local pull incomplete; Blob runtime token remains the only config question; next permitted action is one invalid-audio fail-fast start probe with guaranteed pre-spawn bridge rejection.**
