@@ -1,5 +1,6 @@
 from __future__ import annotations
 
+import multiprocessing
 import os
 import shutil
 import sys
@@ -19,6 +20,7 @@ from v143_production_separator import (
 
 SEPARATOR_SEED = "143"
 CUBLAS_WORKSPACE_CONFIG = ":4096:8"
+DEMUCS_CHILD_TIMEOUT_SECONDS = 1200
 DEMUCS_SINGLE_THREAD_ENV = {
     "CUDA_VISIBLE_DEVICES": "",
     "V143_DEMUCS_FIXED_SHIFT_RNG": "1",
@@ -73,6 +75,96 @@ def _temporary_environment(updates: dict[str, str | None]) -> Iterator[None]:
                 os.environ[key] = value
 
 
+def _run_demucs_child(
+    input_audio: str,
+    output_dir: str,
+    result_connection: Any,
+) -> None:
+    """Run one exact seeded Demucs invocation in an isolated spawned process."""
+    payload: dict[str, Any]
+    try:
+        result = separate_demucs_guitar(
+            seeded_audio_separator_cli(),
+            Path(input_audio),
+            Path(output_dir),
+        )
+        output = Path(str(result["path"]))
+        if not output.is_file() or output.stat().st_size <= 0:
+            raise RuntimeError(f"seeded Demucs child output missing: {output}")
+        payload = {
+            "completed": True,
+            "path": str(output),
+            "model": result.get("model"),
+            "elapsedSeconds": result.get("elapsedSeconds"),
+        }
+    except BaseException as exc:
+        payload = {
+            "completed": False,
+            "terminalType": type(exc).__name__,
+            "message": str(exc)[:2000],
+        }
+
+    try:
+        result_connection.send(payload)
+    finally:
+        result_connection.close()
+
+
+def _terminate_and_join(process: multiprocessing.Process | None) -> None:
+    if process is None:
+        return
+    try:
+        if process.is_alive():
+            process.terminate()
+    except (AssertionError, ValueError):
+        pass
+    try:
+        process.join(timeout=10)
+    except (AssertionError, ValueError):
+        pass
+
+
+def _close_connection(connection: Any | None) -> None:
+    if connection is None:
+        return
+    try:
+        connection.close()
+    except (OSError, ValueError):
+        pass
+
+
+def _join_demucs_child(
+    process: multiprocessing.Process,
+    result_connection: Any,
+    label: str,
+) -> dict[str, Any]:
+    process.join(timeout=DEMUCS_CHILD_TIMEOUT_SECONDS)
+    if process.is_alive():
+        raise RuntimeError(f"{label} exact Demucs child exceeded runtime deadline")
+    if process.exitcode != 0:
+        raise RuntimeError(f"{label} exact Demucs child exitCode={process.exitcode}")
+    if not result_connection.poll(1.0):
+        raise RuntimeError(f"{label} exact Demucs child result missing")
+
+    payload = result_connection.recv()
+    if not isinstance(payload, dict) or payload.get("completed") is not True:
+        raise RuntimeError(f"{label} exact Demucs child failed: {payload}")
+
+    output = Path(str(payload.get("path") or ""))
+    if not output.is_file() or output.stat().st_size <= 0:
+        raise RuntimeError(f"{label} exact Demucs child output missing: {output}")
+    if payload.get("model") != DEMUCS_6S_MODEL:
+        raise RuntimeError(
+            f"{label} exact Demucs child model changed: {payload.get('model')}"
+        )
+
+    return {
+        "path": output,
+        "model": payload.get("model"),
+        "elapsedSeconds": payload.get("elapsedSeconds"),
+    }
+
+
 def build_seeded_v143_stems(
     input_audio: Path | str,
     output_dir: Path | str,
@@ -98,7 +190,6 @@ def build_seeded_v143_stems(
     _stage("start", started)
 
     root.mkdir(parents=True, exist_ok=True)
-    cli = seeded_audio_separator_cli()
     work = root / "_work"
 
     _stage("input-normalize.start", started)
@@ -115,33 +206,81 @@ def build_seeded_v143_stems(
         "NVIDIA_TF32_OVERRIDE": "0",
     }
 
-    with _temporary_environment(common_env):
-        _stage("direct-demucs.start", started)
-        with _temporary_environment(DEMUCS_SINGLE_THREAD_ENV):
-            direct = separate_demucs_guitar(
-                cli,
-                normalized_input,
-                work / "direct",
-            )
-        _stage("direct-demucs.done", started)
+    ctx = multiprocessing.get_context("spawn")
+    direct_process: multiprocessing.Process | None = None
+    cascade_process: multiprocessing.Process | None = None
+    direct_receive: Any | None = None
+    direct_send: Any | None = None
+    cascade_receive: Any | None = None
+    cascade_send: Any | None = None
 
-        _stage("roformer.start", started)
-        with _temporary_environment({"CUDA_VISIBLE_DEVICES": None}):
-            roformer = separate_roformer_instrumental(
-                cli,
-                normalized_input,
-                work / "roformer",
+    try:
+        with _temporary_environment(common_env):
+            direct_receive, direct_send = ctx.Pipe(duplex=False)
+            direct_process = ctx.Process(
+                target=_run_demucs_child,
+                args=(
+                    str(normalized_input),
+                    str(work / "direct"),
+                    direct_send,
+                ),
+                name="v143-direct-exact-demucs",
             )
-        _stage("roformer.done", started)
 
-        _stage("cascade-demucs.start", started)
-        with _temporary_environment(DEMUCS_SINGLE_THREAD_ENV):
-            cascade = separate_demucs_guitar(
-                cli,
-                Path(roformer["path"]),
-                work / "cascade",
+            _stage("direct-demucs.start", started)
+            with _temporary_environment(DEMUCS_SINGLE_THREAD_ENV):
+                direct_process.start()
+            _close_connection(direct_send)
+            direct_send = None
+
+            _stage("roformer.start", started)
+            with _temporary_environment({"CUDA_VISIBLE_DEVICES": None}):
+                roformer = separate_roformer_instrumental(
+                    seeded_audio_separator_cli(),
+                    normalized_input,
+                    work / "roformer",
+                )
+            _stage("roformer.done", started)
+
+            cascade_receive, cascade_send = ctx.Pipe(duplex=False)
+            cascade_process = ctx.Process(
+                target=_run_demucs_child,
+                args=(
+                    str(Path(roformer["path"])),
+                    str(work / "cascade"),
+                    cascade_send,
+                ),
+                name="v143-cascade-exact-demucs",
             )
-        _stage("cascade-demucs.done", started)
+
+            _stage("cascade-demucs.start", started)
+            with _temporary_environment(DEMUCS_SINGLE_THREAD_ENV):
+                cascade_process.start()
+            _close_connection(cascade_send)
+            cascade_send = None
+
+            direct = _join_demucs_child(
+                direct_process,
+                direct_receive,
+                "direct",
+            )
+            _stage("direct-demucs.done", started)
+
+            cascade = _join_demucs_child(
+                cascade_process,
+                cascade_receive,
+                "cascade",
+            )
+            _stage("cascade-demucs.done", started)
+    except BaseException:
+        _terminate_and_join(direct_process)
+        _terminate_and_join(cascade_process)
+        raise
+    finally:
+        _close_connection(direct_send)
+        _close_connection(direct_receive)
+        _close_connection(cascade_send)
+        _close_connection(cascade_receive)
 
     direct_out = root / "direct-demucs6s-guitar.wav"
     roformer_out = root / "bsroformer-instrumental.wav"
