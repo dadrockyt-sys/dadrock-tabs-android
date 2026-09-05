@@ -117,3 +117,12 @@ Start the next chat by reading this file on branch `v143-contextual-prune-lobo`.
 - No weakening exact parity or fail-closed criteria.
 - No production bridge/worker/Vercel/UI change before a reference-free exact structural gate passes.
 - Do not merge this diagnostic/cache work to `main` merely to test architecture; keep it isolated on `v143-contextual-prune-lobo` until the promotion gate is satisfied.
+
+## Continuation checkpoint — source mapping resumed (2026-09-04)
+
+- Fresh-chat resume verified branch tip **`bc79891e4f302871fcd2f79006a49c17130c2e07`** before this save.
+- Its Git tree is **`2b0ce1e80a83f035c39930bd325241982bbc5865`**; this is a tree SHA, not a commit SHA.
+- Re-read the full frozen-boundary and cache-architecture handoff above.
+- Source mapping remains the active task: enumerate branch-local V143 analyzer/workflow/deployment entrypoints and locate the exact privacy-safe cache boundary before implementation.
+- The previously established request-flow clue remains: `app/api/analyze-audio-tab/route.js` forwards to the remote live V143 bridge; the checked-in implementation corresponding to the live `http_bridge` deployment name has not yet been identified.
+- **No runtime behavior, production bridge/worker, Vercel/UI, Demucs/GPU/split-parallel compute, reference-facing scoring, or retention policy was changed in this continuation before this checkpoint save.**
