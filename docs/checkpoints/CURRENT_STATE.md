@@ -108,15 +108,26 @@ Call chain remains:
 
 `process_vercel_audio_request()` still owns the request `TemporaryDirectory`, so all candidate child work remains request-scoped and both children must be joined/terminated before the seeded separator returns.
 
+## Seeded scheduler structural gate — ADDED / NOT YET RUN
+
+- Gate source: `analyzer/v143_seeded_scheduler_structure_gate.py` blob `f31b5cc7742696975534081c535c0301911c6b87`.
+- Gate commit: `4afd35b0c198982c603f0d375140e53be1862498`.
+- Pure stdlib/source/AST gate only: no model invocation, audio execution, reference input, or scorer call.
+- Pins the candidate separator plus the resolved live routing/helper source blobs.
+- Requires literal `spawn` scheduling and exact lexical order: direct child start < RoFormer parent call < cascade child start < direct join < cascade join < output copy < return.
+- Requires both child `Process` targets to remain `_run_demucs_child`, both starts inside `DEMUCS_SINGLE_THREAD_ENV`, and RoFormer inside the GPU-visibility parent environment.
+- Requires `BaseException` cleanup to terminate+join both process handles, re-raise, and close all four pipe endpoints in `finally`.
+- Requires helper-level fail-closed checks (`join`, `is_alive`, `exitcode`, result `poll`/`recv`) plus exact output filenames and public return keys.
+- Rejects active scorer/reference-corpus/sealed-dataset symbols and emits `referenceFacingInputs=0`, `scoreCalls=0`, `qualityVerdictMade=false`.
+
 ## NEXT STEPS
 
-1. Add a branch-only structural/fail-closed scheduler gate that pins the resolved source blobs and proves ordering: direct spawn < RoFormer < cascade spawn < both joins < output copy/return.
-2. Gate explicit failure cleanup: both process handles terminate/join fail-closed and all pipe endpoints close without any reference inputs.
-3. Run syntax/structural gate first. Do not use reference-facing scoring or hidden targets.
-4. Only after that gate is GREEN, run one implementation-specific exact approved-fixture runtime seam gate, requiring the frozen WAV/PCM/shift/runtime identities and zero-retention behavior.
-5. Do **not** rerun the already-CLOSED generic concurrency diagnostic.
-6. Persistent cache remains independently `BLOCKED_BY_RETENTION_POLICY`.
-7. No production deploy or `main` merge until the implementation-specific promotion gate is GREEN.
+1. Wire/run the branch-only pure source/AST scheduler gate. No reference-facing scoring or hidden targets.
+2. If the static gate fails, fix only the scheduler/gate defect and rerun the static gate; do not spend an approved-fixture runtime yet.
+3. Only after that gate is GREEN, run one implementation-specific exact approved-fixture runtime seam gate, requiring the frozen WAV/PCM/shift/runtime identities and zero-retention behavior.
+4. Do **not** rerun the already-CLOSED generic concurrency diagnostic.
+5. Persistent cache remains independently `BLOCKED_BY_RETENTION_POLICY`.
+6. No production deploy or `main` merge until the implementation-specific promotion gate is GREEN.
 
 ### Hard stops
 
