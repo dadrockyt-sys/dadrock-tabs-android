@@ -13,179 +13,126 @@ Branch: `v143-contextual-prune-lobo`
 - Current quality verdict: **NO QUALITY VERDICT — PERFORMANCE/IDENTITY DIAGNOSTICS ONLY**.
 - GPU promotion CLOSED; do not rerun GPU or weaken exact parity.
 - Native split-parallel CPU promotion CLOSED; do not rerun or promote its faster non-identical hash.
-- No production bridge/worker/Vercel/UI change or `main` merge until the exact-cache promotion gates below are satisfied.
+- No persistent user-audio/stem retention without an explicit allowed retention boundary.
+- No production bridge/worker/Vercel/UI change or `main` merge until the cache promotion gates are satisfied.
 
 ## Production — unchanged
 
-- `main`: **`bb992d901e78ab19645f8edc8e330d5a142ebd8e`**.
+- `main`: `bb992d901e78ab19645f8edc8e330d5a142ebd8e`.
 - deployment `dpl_5BdFAMHeiaA3rQ9QGUdHneY1rexM`, READY.
 - bridge `https://dadrockyt--dadrock-v143-http-bridge-analyze.modal.run`.
 - routing proven `usingV143RhythmAnalyzer=true`; Deployment Protection preserved.
-- Production worker/bridge/Vercel unchanged by diagnostics/cache work.
+- Production worker/bridge/Vercel unchanged by cache diagnostics.
 
-## Frozen exact CPU anchor — GREEN
+## Frozen exact CPU direct anchor — GREEN
 
-Repository-owned fixture `public/gomywayfullaitest.m4a`:
+Repository-owned `public/gomywayfullaitest.m4a`:
 
 - source SHA256 `215bd5a657c5326f08f132ae358595a95c30b39bb7493a52c2f910d5a608149f`;
 - normalized SHA `ab64e7cdd8a792aecfb6eec518577d8d7e9d2f8aa43007e632470d9fe4511e7f`;
-- Guitar SHA `0ac47da671df6f8387c1ad1343171de0cf7a0db6985dadf3f30e4a9c7cf0189c`;
-- PCM-int16 SHA `2c22f04014c0f5c9c0c036125c3d702c8b87a9f67358e0dd0d3836c39c936bed`;
+- direct Guitar SHA `0ac47da671df6f8387c1ad1343171de0cf7a0db6985dadf3f30e4a9c7cf0189c`;
+- direct PCM-int16 SHA `2c22f04014c0f5c9c0c036125c3d702c8b87a9f67358e0dd0d3836c39c936bed`;
 - shift trace `0,22050,6026`;
-- run `33914759546`, job `101159244192`, call `fc-01M1Q0MFR88FXWAQ1R47TSX77Z`;
-- client wall **666.404s**; oneDNN off; Torch intra/inter-op = 1; exact parity GREEN;
-- artifact `9953064061`; cleanup GREEN.
+- exact anchor run `33914759546`, job `101159244192`, call `fc-01M1Q0MFR88FXWAQ1R47TSX77Z`, artifact `9953064061`;
+- oneDNN off; Torch intra/inter-op = 1; exact parity GREEN.
 
-## Closed performance branches
+## Direct exact stage-cache — GREEN / CLOSED
 
-### GPU — TERMINAL / CLOSED
+Structural gate:
 
-- run `33916705535`, job `101165425904`, call `fc-01M1Q1ZA6GFSF1NZTPFF2GQA9P`;
-- separation **42.404s**, client wall **51.663s**, **12.899x** faster;
-- runtime invariants passed but exact CPU parity failed;
-- Guitar SHA `5820375b67d6d3ad38386c267f8e21b721a06446ba9d8b4de14260d832d2f5a4`;
-- PCM SHA `376c33be95e277f811f1edc2bea14a4d6287f4ad7ae4e8eca2c5c84134b9341b`;
-- artifact `9953451993`; cleanup GREEN.
+- `analyzer/v143_exact_stage_cache.py`;
+- `analyzer/v143_exact_stage_cache_probe.py`;
+- `.github/workflows/v143-exact-stage-cache-structural.yml`;
+- run `33936373413`, job `101224995003`, artifact `9960303358`;
+- exact miss/populate, hit-skips-compute, fingerprint mismatch, corruption fallback, invalid output, cleanup all GREEN.
 
-### Native split-parallel CPU — TERMINAL / CLOSED
+Real-audio gate implementation:
 
-- wrapper `analyzer/v143_demucs_split_parallel_cli.py`;
-- probe `analyzer/v143_demucs_split_parallel_probe.py`;
-- collector `.github/scripts/v143_demucs_split_parallel_collect.py`;
-- workflow `.github/workflows/v143-demucs-split-parallel.yml`;
-- run `33917237702`, job `101167122276`, call `fc-01M1Q2AZTBAM6NC7WVQQVAF1YR`;
-- separation **149.928s**, client wall **158.720s**, **4.199x** faster;
-- runtime invariants passed but exact CPU parity failed;
-- Guitar SHA `52a781bcab05335636c5bfb99168b8c01a9d627c34f1a59acf00f01512a41630`;
-- PCM SHA `1f5665f8deceda3b13a9e8a4ac4b561a548530a7bf671f605998139cfc133c2e`;
-- artifact `9953701945`; isolated cleanup GREEN; `productionAppTouched=false`.
-
-## Exact stage-cache structural gate — GREEN
-
-Isolated branch-local implementation is structurally proven:
-
-- primitive `analyzer/v143_exact_stage_cache.py`;
-- synthetic probe `analyzer/v143_exact_stage_cache_probe.py`;
-- workflow `.github/workflows/v143-exact-stage-cache-structural.yml`;
-- commits `54e8af3f429c5129418e2f8e5ff8fa860b43349c`, `8c9bee773d81c66bd700d83f450b53c16c4d7ff4`, `351d430b601c83578d385aa162dc971b04d1b310`;
-- CI run `33936373413`, job `101224995003`, conclusion **SUCCESS**;
-- artifact `9960303358`, digest `e6ff4e789edf959d59b2299f9fe916ea6ea21ff83a395bd738f86bb1441468f2`.
-
-Proven without audio/model execution: empty miss, deterministic key, exact compute on miss, best-effort populate, hit skips compute, fingerprint mismatch misses, corruption rejects/falls back to exact compute, invalid compute bytes are not hidden, cleanup succeeds.
-
-Fingerprint is fail-closed and includes normalized-source SHA, separator/model identity, weights SHA, Demucs parameters, shift policy, sample rate/channels, Torch/OMP/MKL controls, oneDNN state, and code-policy version. The helper has **no production default cache root** and does **not** authorize stem retention.
-
-## Direct real-audio exact-Demucs stage-cache gate — GREEN
-
-Isolated implementation, production-disconnected:
-
-- `analyzer/v143_exact_stage_cache_real_audio_modal.py` — commit `9c1abfb30ef074c22a086d3852fbccab3791a0a6`;
-- `.github/scripts/v143_exact_stage_cache_real_audio_collect.py` — commit `1c49adb34085f56a2bf8da9c3667ed7add94d22f`;
-- `.github/workflows/v143-exact-stage-cache-real-audio.yml` — commit `1ce79b41507e8c7db43059e5f2826ffad62b1b09`.
+- `analyzer/v143_exact_stage_cache_real_audio_modal.py` — `9c1abfb30ef074c22a086d3852fbccab3791a0a6`;
+- `.github/scripts/v143_exact_stage_cache_real_audio_collect.py` — `1c49adb34085f56a2bf8da9c3667ed7add94d22f`;
+- `.github/workflows/v143-exact-stage-cache-real-audio.yml` — `1ce79b41507e8c7db43059e5f2826ffad62b1b09`.
 
 Terminal evidence:
 
-- Actions run `33938289895` — **SUCCESS**;
-- job `101230445238` — **SUCCESS**;
-- Modal function call `fc-01M1QN9N9M6NGRTJTFA2DQ3ZA2`;
-- collector wall **665.688s**;
-- exact separator elapsed **649.633s**;
-- cold miss/compute/populate wall **649.970s**;
-- immediate warm hit wall **0.118718s**;
-- measured miss→hit speedup **5474.898x** for this isolated stage-cache resolution;
-- separator compute calls **1** total across miss + immediate hit;
-- corruption sentinel fallback calls **1**;
+- run `33938289895` SUCCESS; job `101230445238` SUCCESS;
+- Modal call `fc-01M1QN9N9M6NGRTJTFA2DQ3ZA2`;
+- collector wall `665.688s`; separator `649.633s`; cold miss `649.970s`; warm hit `0.118718s`; measured isolated speedup `5474.898x`;
+- separator compute calls `1`; corruption sentinel fallback calls `1`;
 - cache key `b9b66d2b4e193681e31f5ee6a924f09f6377ce73b24c663d1c7e492c9d6e559b`;
-- artifact `9961088259`, `v143-exact-stage-cache-real-audio`;
-- artifact ZIP SHA256 `5f6d40aaf7a4850b1f6c1bc172c0793306d369aaad37f17456b46a5aa5d8d3b3`;
-- isolated Modal app cleanup step SUCCESS; `productionAppTouched=false`.
+- miss + hit direct Guitar and PCM hashes exactly match frozen anchor;
+- model weights `5c90dfd2-34c22ccb.th`, SHA `34c22ccb381c6f9fdbf324f04e1e2fe21aaaf293f5ded163a162697ff9a02ddd`, bytes `54996327`;
+- config `htdemucs_6s.yaml`, SHA `207405151270af8fd81c2373c25d27950916682ac91dca7884a11ce13dad6f58`, bytes `21`;
+- artifact `9961088259`, ZIP SHA `5f6d40aaf7a4850b1f6c1bc172c0793306d369aaad37f17456b46a5aa5d8d3b3`;
+- cleanup GREEN; no raw/stem retention; reference score calls `0`; no quality verdict; production untouched.
 
-Exact identities on miss **and** hit:
+**Do not rerun this direct cache gate without a demonstrated regression or changed fingerprint policy.**
 
-- source SHA `215bd5a657c5326f08f132ae358595a95c30b39bb7493a52c2f910d5a608149f`;
-- normalized SHA `ab64e7cdd8a792aecfb6eec518577d8d7e9d2f8aa43007e632470d9fe4511e7f`;
-- direct Guitar SHA `0ac47da671df6f8387c1ad1343171de0cf7a0db6985dadf3f30e4a9c7cf0189c`;
-- direct PCM-int16 SHA `2c22f04014c0f5c9c0c036125c3d702c8b87a9f67358e0dd0d3836c39c936bed`;
-- warm-hit Guitar SHA `0ac47da671df6f8387c1ad1343171de0cf7a0db6985dadf3f30e4a9c7cf0189c`;
-- warm-hit PCM-int16 SHA `2c22f04014c0f5c9c0c036125c3d702c8b87a9f67358e0dd0d3836c39c936bed`;
-- shift trace `0,22050,6026`;
-- direct bytes `37298220`; sample rate `44100`; frames `9324544`; channels `2`.
+## Full two-view separator identity — authenticated current-regime evidence found
 
-Actual model identity used in fingerprint:
+Live Rhythm uses both:
 
-- weights `5c90dfd2-34c22ccb.th`;
-- weights SHA256 `34c22ccb381c6f9fdbf324f04e1e2fe21aaaf293f5ded163a162697ff9a02ddd`;
-- weights bytes `54996327`;
-- config `htdemucs_6s.yaml`;
-- config SHA256 `207405151270af8fd81c2373c25d27950916682ac91dca7884a11ce13dad6f58`;
-- config bytes `21`;
-- code policy `v143-exact-cpu-policy-1;python=3.11.12;audio-separator=0.44.5;torch=2.13.0;numpy=2.4.6;soundfile=0.14.0;code=03e4f07486952d2a3e6c6a9e342fac8eb683ae3580b2f2181406c50b14cff026`.
+1. direct Demucs6s Guitar;
+2. BS-RoFormer Instrumental → Demucs6s Guitar cascade.
 
-All gate fields passed:
+Historical August Section-3 L4 evidence (`9cc3ca2cf9cdb02a0fa82e1f4fba56bc729e7484`, later cross-container record `066fa791bcad0217663d853e06bd792ffd28d8cc`) is useful provenance but **not** the current anchor: it produced direct file SHA `afd1037bc7d62572ac9b99644d13d95b8593e25b4f442aa4a8f85c1111d97c78` and cascade `44e0fe8874b07bcd4bca7e28f4a512b61214061f6bbf8771426c1b1237ffa201` on L4 workers, so those bytes must not be mixed with the later exact CPU regime.
 
-- `initialMissPassed=true`;
-- `missPopulatePassed=true`;
-- `warmHitPassed=true`;
-- `fingerprintMismatchMissPassed=true`;
-- `fingerprintMismatchChangesKeyPassed=true`;
-- `corruptionLookupRejectedPassed=true`;
-- `corruptionFallbackReachedPassed=true`;
-- `cleanupPassed=true`;
-- `exactAnchorParityPassed=true`;
-- `cacheSemanticsPassed=true`;
-- `safetyBoundaryPassed=true`;
-- `allPassed=true`.
+The current oneDNN-off direct regime was established by commit `34471c7cdd061dbbc5ed807ba473bb2e156bc5f8`, which records the same direct anchor now frozen above.
 
-Safety remained frozen: `referenceFacingAccuracyScored=false`, `referenceScoreCalls=0`, `qualityVerdictMade=false`, `rawAudioRetained=false`, `stemBytesRetained=false`, production worker/bridge/Vercel unchanged, no `main` merge.
+Crucially, later cold exact proof `debug/v143-contextual-prune/repaired-timing-precision-cold-exact-proof.json`, recorded by commit `dd1b32a9ba250cbf1520d01411a298c865e88e6d`, contains **two independent passes** with:
 
-**Verdict:** the direct exact-Demucs stage cache is structurally and real-audio proven. This does **not** prove or authorize full V143 paired-stem bundle caching or production persistence.
+- source SHA exactly `215bd5a657c5326f08f132ae358595a95c30b39bb7493a52c2f910d5a608149f`;
+- normalized SHA exactly `ab64e7cdd8a792aecfb6eec518577d8d7e9d2f8aa43007e632470d9fe4511e7f`;
+- direct Guitar SHA exactly `0ac47da671df6f8387c1ad1343171de0cf7a0db6985dadf3f30e4a9c7cf0189c` on both passes;
+- **cascade Guitar SHA `546e5170870cc6c73e1f0a8eeb8314f7b6262079593e0b484207bb38f323cc41` on both passes**;
+- `firstStageHashMismatch=null`, `invariantFailures=[]`, `passed=true`;
+- protected pipeline unchanged; production not modified.
 
-## Production source mapping — SOURCE BOUNDARY RESOLVED
+Therefore the cascade **WAV/file identity** is now authenticated for the same direct execution regime as the frozen current anchor. This avoids inventing a new cascade baseline.
 
-The earlier statement that the live bridge source was absent was caused by default-branch code search. On `v143-contextual-prune-lobo`, the source is present and source-proven:
+What is still missing before a fully fail-closed cascade cache fingerprint can be claimed:
 
-- `analyzer/v143_modal_http_endpoint.py` defines `modal.App("dadrock-v143-http-bridge")` and dispatches rhythm requests to Modal app `dadrock-v143-ai-tab-live`, function `rhythm_v143_request`;
-- `analyzer/v143_modal_live_endpoint.py` defines `modal.App("dadrock-v143-ai-tab-live")`; `rhythm_v143_request(...)` invokes `v143_rhythm_stem_provider.rhythm_v143_stem_provider(...)` before `analyze_v143_audio(...)`;
-- `analyzer/v143_rhythm_stem_provider.py` calls `build_shadow_deterministic_stems(...)`;
-- `analyzer/v143_rhythm_deterministic_stem_provider.py` calls `build_deterministic_v143_stems(...)`;
-- `analyzer/v143_deterministic_separator.py` delegates to `build_seeded_v143_stems(...)`;
-- `analyzer/v143_seeded_separator.py` is therefore the source-proven separator stage seam used by the live rhythm worker.
+- authenticated actual BS-RoFormer model weight hash/config identity for the current path;
+- preferably RoFormer intermediate output identity (file/PCM) so the cascade input is explicitly fingerprinted;
+- cascade PCM-int16 identity is not present in the repaired-timing proof, though the cascade WAV SHA is authenticated.
 
-`app/api/analyze-audio-tab/route.js` remains only the Vercel forwarding/anti-leakage contract and is **not** the separator cache insertion point.
+Do not infer these missing values from the older L4 Section-3 evidence.
 
-`docs/checkpoints/AI_TAB_END_TO_END_CONSTRUCTION.md` confirms Rhythm separation is a **deterministic two-view guitar separation** and that the product flow uses private upload. The live pair is direct Demucs Guitar plus BS-RoFormer Instrumental → Demucs Guitar cascade; both carriers are part of the current Rhythm contract.
+## Production source mapping — RESOLVED
 
-Historical `V143_CODESPACE_MODAL_PROVENANCE.md` confirms both carrier filenames were preserved/restored for diagnostic reproducibility, but the fetched record does not supply authenticated full-pair WAV hashes suitable for inventing a new frozen cascade anchor. Do not manufacture one.
+On this branch:
 
-## Retention boundary — STILL BLOCKING PERSISTENT STEM CACHE
+- `v143_modal_http_endpoint.py` → live app `dadrock-v143-ai-tab-live/rhythm_v143_request`;
+- `v143_modal_live_endpoint.py` → `v143_rhythm_stem_provider.rhythm_v143_stem_provider(...)`;
+- `v143_rhythm_stem_provider.py` → `build_shadow_deterministic_stems(...)`;
+- `v143_rhythm_deterministic_stem_provider.py` → `build_deterministic_v143_stems(...)`;
+- `v143_deterministic_separator.py` → `build_seeded_v143_stems(...)`;
+- `v143_seeded_separator.py` is the source-proven separator seam.
 
-The source-proven live request path uses request-scoped temporary storage:
+`app/api/analyze-audio-tab/route.js` remains forwarding/anti-leakage only, not the cache insertion point.
 
-- `analyzer/v143_vercel_audio_request_adapter.py` creates `TemporaryDirectory(prefix="dadrock-v143-http-request-")`, downloads the request audio there, runs the stem/analyzer builder inside that root, then removes it at request completion.
-- The direct exact-cache real-audio diagnostic likewise used only temporary storage and deleted it at the end.
+## Retention boundary — STILL BLOCKING PERSISTENT CACHE
 
-No explicit `/ai-tab` policy/config/code path has been identified that authorizes deterministic separated Guitar/cascade stems to persist across requests. Existing retention behavior in another product (including Backing Track Studio) is not authorization for this path.
+- `v143_vercel_audio_request_adapter.py` uses request-scoped `TemporaryDirectory(...)` and removes source/stems after each request.
+- No explicit `/ai-tab` policy/config/code authorizes separated stems to persist across requests.
+- Existing Backing Track Studio retention rules do not authorize AI-tab.
+- A deterministic non-audio result seam exists after analysis, but no explicit cross-request `/ai-tab` result-persistence authorization has been found either.
 
-Therefore **persistent production stem caching remains `BLOCKED_BY_RETENTION_POLICY`** despite the GREEN direct cache gate.
-
-A derived non-audio seam is technically available after the expensive stem/analyzer pipeline: the V143 result is deterministic JSON-like analysis (`generatedTab`, events, tempo/tempoMap, techniques, counts, assembly, optional routing), and the live worker adds request metadata. Prior V147 evidence also used derived artifacts without retaining raw/normalized audio. Those facts are design precedents only; no explicit cross-request `/ai-tab` derived-result persistence authorization has yet been found, so no persistent result cache is authorized either.
+Therefore persistent production stem caching remains **`BLOCKED_BY_RETENTION_POLICY`**. Derived-result caching is design-only unless an explicit allowed persistence boundary is found.
 
 ## User authorization / intent
 
-- User has authorized continued non-reference-facing V143 performance/cache work and use of repository-owned Gomyway audio.
-- User explicitly asked to continue the wiring work and to save this checkpoint often on `v143-contextual-prune-lobo`.
-- That authorization does not relax frozen anti-leakage, exact-parity, sealed-asset, or privacy/retention gates.
+- User authorizes continued non-reference-facing V143 performance/cache work and repository-owned Gomyway audio.
+- User asked to save `docs/checkpoints/CURRENT_STATE.md` often on this branch.
+- Authorization does not relax exact-parity, anti-leakage, sealed-asset, reference, or retention gates.
 
 ## NEXT STEPS
 
-1. Treat the **direct exact-Demucs stage-cache gate as GREEN / CLOSED**. Do not rerun it absent a demonstrated regression or changed fingerprint policy.
-2. Do not overclaim full V143 separator-bundle caching: the live Rhythm path also requires the BS-RoFormer Instrumental → Demucs Guitar cascade carrier.
-3. Before any full-bundle cache claim, establish an authenticated reference-free identity baseline for the RoFormer instrumental and cascade Guitar on repository-owned Gomyway audio, including actual model/weights/settings/runtime fingerprints and exact output hashes. Do not infer or invent cascade hashes from old cache metadata.
-4. Prefer an isolated **ephemeral full-bundle identity/cache diagnostic** if further performance proof is needed; keep all audio/stems temporary and remove them at run end.
-5. Preserve `BLOCKED_BY_RETENTION_POLICY` for any cross-request persistent audio/stem cache unless explicit `/ai-tab` retention authorization is source-proven.
-6. Separately investigate whether an explicit allowed persistence boundary exists for deterministic non-audio derived analysis results. If none exists, keep derived-result caching design-only as well.
-7. Production wiring requires exact identity/fail-closed semantics for every cached stage, acceptable retention, source-proven call graph, and unchanged routing/anti-leakage behavior.
-8. Do not merge to `main` merely to test. Keep diagnostic/cache work on `v143-contextual-prune-lobo` until the promotion gate is satisfied.
+1. Search existing repository/history evidence for the **current BS-RoFormer model identity and RoFormer intermediate hash** before running anything expensive.
+2. If those identities exist and match the same current-regime proof, build an isolated ephemeral cascade/full-bundle cache diagnostic using the authenticated cascade SHA `546e5170870cc6c73e1f0a8eeb8314f7b6262079593e0b484207bb38f323cc41`.
+3. If current RoFormer/intermediate identities are absent, create the smallest isolated **cascade-only identity/cache diagnostic** on repository-owned Gomyway audio. Do not rerun the already-closed direct stage.
+4. Any new audio/stem diagnostic must be ephemeral and clean up at run end; no persistent retention.
+5. Preserve `BLOCKED_BY_RETENTION_POLICY` for production persistence until explicit authorization is source-proven.
+6. No production bridge/worker/Vercel/UI changes or `main` merge merely to test.
 
 ### Hard stops
 
@@ -193,9 +140,9 @@ A derived non-audio seam is technically available after the expensive stem/analy
 - No GOAT restricted bytes.
 - No sealed GuitarSet `00/01/03` access.
 - No SplitMySong reopening.
-- No GPU rerun.
+- No GPU performance rerun.
 - No split-parallel rerun.
-- No direct cache rerun without a demonstrated regression/fingerprint change.
-- No weakening exact parity or fail-closed criteria.
-- No persistent user-audio/stem retention without an explicit allowed retention boundary.
-- No production bridge/worker/Vercel/UI changes or `main` merge until the promotion gate passes.
+- No direct cache rerun absent regression/fingerprint change.
+- No weakening exact parity/fail-closed criteria.
+- No persistent user-audio/stem retention without explicit permission.
+- No production change or `main` merge until promotion gates pass.
