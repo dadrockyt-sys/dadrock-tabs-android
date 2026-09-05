@@ -1,6 +1,6 @@
 # CURRENT STATE — DadRock `/ai-tab`
 
-Updated: 2026-09-05 12:26 America/Toronto  
+Updated: 2026-09-05 12:30 America/Toronto  
 Branch: `v143-contextual-prune-lobo`
 
 > Compact continuation checkpoint. Older dedicated checkpoints remain authoritative; omission here does not revoke frozen boundaries.
@@ -29,7 +29,7 @@ Promoted L4 worker unchanged:
 - live endpoint blob `111bf14a8f91045d3478901f8e36b88a2e7f181a`;
 - scheduler blob `fc9b4c45c208d80be7abab64a8959f2a3babcee8`.
 
-Production HTTP bridge is the backward-compatible async bridge:
+Production HTTP bridge currently deployed:
 
 - bridge blob `e0cecefacead73d69a905fd6bfb2049b21c87bc3`;
 - protocol blob `1bd55017e16a4e1d8b14c7429492f811a43a28d8`;
@@ -50,11 +50,11 @@ Plan `docs/checkpoints/V143_ASYNC_JOB_ARCHITECTURE_PLAN.md`, commit `e0aef99dcdf
 
 Rhythm start -> immediate signed token -> browser polls Vercel -> Vercel polls bridge -> transient structured-result Modal Queue -> existing V143 safety/product pipeline -> browser gets result -> ACK clears Queue. TTL `900s`. Lead/Bass stay synchronous.
 
-Current source pins:
+Current branch pins:
 
 - route blob `742954146a86aa36485d0bbdb3fbd6691a64a712`;
 - `/ai-tab` page blob `de39f2715c6875d757ef730c9e3182ccd4aa00a4`;
-- bridge blob `e0cecefacead73d69a905fd6bfb2049b21c87bc3`;
+- bridge blob before hardening `e0cecefacead73d69a905fd6bfb2049b21c87bc3`;
 - worker/scheduler unchanged as above.
 
 ## Closed async evidence — GREEN
@@ -62,83 +62,95 @@ Current source pins:
 - Protocol current-pin run `33966778940`, artifact `9969677990`, digest `sha256:b239317ee7ec9c4c6146567658140d4f0459c14ef77218ad4b61585673d666ef`.
 - Vercel wiring/composition run `33966794524`, artifact `9969683328`, digest `sha256:9b22f8cdce8816814dfd6f414cb9fe72b27e727e342f06061c18a9a984225bf3`.
 - Preview build run `33966323815` / job `101306988163`, artifact `9969549184`, digest `sha256:810c8c3c3012cb43a37d3b463735b9fc4dcbd2a06a4d2c7fd2407c03e2402a5f`.
-- Isolated Modal bridge smoke run `33966816672` / job `101308290865`, artifact `9969693296`, digest `sha256:5a00636970d7426f5c83c4f498e84a4bc6b200700836e94184fd7f272b0d0b53`; HMAC/Queue/clear/TTL 900 GREEN; no model/audio/production worker.
-- Production bridge deploy + synthetic smoke run `33967130980` / job `101309120073`, artifact `9969786854`, digest `sha256:fb1d8267a3241fe4d09343b50a286ce0635f705374326b36ea8e9732c276fdf5`; no model/audio.
+- Isolated Modal bridge smoke run `33966816672` / job `101308290865`, artifact `9969693296`, digest `sha256:5a00636970d7426f5c83c4f498e84a4bc6b200700836e94184fd7f272b0d0b53`.
+- Production bridge deploy + synthetic smoke run `33967130980` / job `101309120073`, artifact `9969786854`, digest `sha256:fb1d8267a3241fe4d09343b50a286ce0635f705374326b36ea8e9732c276fdf5`.
+- Preview routing correction run `33968019067`, job `101311460970`: GREEN / Preview-only env add/build/deploy/bad-HMAC proof; no model/audio.
 
-## Preview routing correction — GREEN / NO MODEL
+## Modal `oneshot` startup report — STARTUP TOPOLOGY GREEN / ROOT ROBUSTNESS GAP IDENTIFIED
 
-Original Preview was invalid for V143 Rhythm because Preview `ANALYZER_API_URL_V143` was absent. Narrow correction was authorized.
+User reported Modal showing a `oneshot` repeatedly looping/failing to start. Model-bearing E2E was paused and a sequence of no-audio discriminators was run.
 
-- replacement-routing commit `0c023bdf0e395ddf98501317472ea59e99a00eeb`;
-- run `33968019067`, job `101311460970`: **SUCCESS**;
-- Preview-only env add, build/deploy, and bad-HMAC bridge-path proof all GREEN;
-- no production Vercel promotion and no model/audio request.
+### Base L4 startup — GREEN
 
-## Modal “oneshot” start-loop diagnosis — STRONGLY NARROWED
+- deployed worker no-audio cold-start run `33980499498`, job `101344748201`, artifact `9973612728`, digest `sha256:cd94f62f54c0321fe57ee34f7b8547f445c529bf640ccc7c50efc0f0308b7a32`;
+- exact cold-start/import wall `43.032s`, NVIDIA L4/CUDA GREEN, seed 143/reference-free GREEN;
+- no audio and no separator/model execution.
 
-User reported Modal showing a `oneshot` repeatedly looping/failing to start. Model-bearing E2E remains paused.
+### Modal `.spawn()` oneshot primitive — GREEN
 
-### Base app/image diagnostics — GREEN
+- isolated run `33980754694`, job `101345414660`, artifact `9973684032`, digest `sha256:f26d418d084fea8b6719dd28f1efe7399307bdbbf0744a9881ee2c389f977164`;
+- one parent `.spawn()` -> one spawned child -> isolated Queue result -> decode -> clear;
+- complete handoff `5.123s`, `spawnCallIdPresent=true`, `spawnedResultCompleted=true`;
+- no worker/audio/model.
 
-- read-only bridge+worker diagnosis runs `33980341926` / `101344336671` and `33980388754` / `101344455300`: GREEN / diagnostic only;
-- no running production bridge/worker containers were present at read time and recent app logs were empty;
-- deployed L4 no-audio cold-start smoke run `33980499498`, job `101344748201`, artifact `9973612728`, digest `sha256:cd94f62f54c0321fe57ee34f7b8547f445c529bf640ccc7c50efc0f0308b7a32`: **GREEN**;
-- exact worker cold-start + imports `43.032s`, NVIDIA L4/CUDA GREEN, seed 143/reference-free GREEN; no audio or separator execution.
+### Diagnostic cleanup bug — FOUND / FIXED
 
-### Exact `.spawn()`/oneshot discriminator — GREEN
+The first isolated smoke used `modal app stop` without `--yes`; Modal 1.5.5 aborted non-interactive cleanup and temporarily left two diagnostic containers running, which can create misleading lingering `oneshot` activity in the Modal dashboard.
 
-An isolated app now reproduces only the Modal primitive under suspicion:
+- cleanup fix commit `e5c8b0b0d61635f82971a53521d07082821c5d52`;
+- rerun `33980862345`: GREEN with `modal app stop ... --yes`.
 
-- diagnostic source `analyzer/v143_async_spawn_smoke_modal.py`, initial commit `96ad6909cc1630fe1e2ecbd52ad0f7be022878f1`;
-- workflow `.github/workflows/v143-async-spawn-smoke.yml`, initial trigger commit `bf3bacb5e9adf26ec1e34bc4893710ef3ae40718`;
-- run `33980754694`, job `101345414660`: **SUCCESS**;
-- artifact `9973684032`, digest `sha256:f26d418d084fea8b6719dd28f1efe7399307bdbbf0744a9881ee2c389f977164`;
-- parent called `.spawn()` exactly once; spawned oneshot child published a synthetic structured result to an isolated Queue; parent decoded it; Queue cleared;
-- complete spawned handoff `5.123s`;
-- `spawnCallIdPresent=true`, `spawnedResultCompleted=true`, `queueCleared=true`, TTL `900s`;
-- `workerInvoked=false`, `audioRead=false`, `modelExecuted=false`, reference inputs/scores `0`.
+### Spawned orchestrator -> cross-app L4 call — GREEN
 
-**Conclusion:** Modal `.spawn()` and the lightweight oneshot container itself are healthy. The production issue is not a generic spawn failure.
+- isolated nested source commit `35c06ec544998838b3187a792d2a084b408c432a`;
+- workflow trigger `62859bd65ad83f361240c278101fd6734e9f26ec`;
+- run `33980891422`, job `101345785629`: **SUCCESS**;
+- artifact `9973722881`, digest `sha256:f205cc3c66a333018eb7e68153389ef72410566f001c4c03576b1f00469bcd1d`;
+- production-shaped spawned orchestrator called deployed `dadrock-v143-ai-tab-live/rhythm_dependency_smoke`, received NVIDIA L4, queued synthetic result, and cleared Queue;
+- elapsed `17.639s`; no audio/model.
 
-### Diagnostic cleanup defect found and corrected
+### Exact deployed production oneshot + exact real worker function — GREEN
 
-The first isolated spawn workflow's cleanup command used `modal app stop ...` without confirmation bypass. Modal 1.5.5 aborted in non-interactive CI with: `Rerun with --yes (-y) to skip confirmation`, temporarily leaving two diagnostic containers running.
+Strongest discriminator:
 
-- cleanup correction commit `e5c8b0b0d61635f82971a53521d07082821c5d52`;
-- rerun `33980862345`: **SUCCESS** with noninteractive `--yes` cleanup;
-- this defect applies to diagnostic cleanup only, not the production async request path, but it can create misleading lingering oneshot/container activity in the Modal dashboard.
+- workflow `.github/workflows/v143-production-oneshot-failfast-smoke.yml`;
+- commit `65bf4355237ee95b43ab8fa382b0de157fec1093`;
+- run `33981009987`, job `101346107709`: **SUCCESS**;
+- artifact `9973751225`, digest `sha256:cc5b3cf3833ca17936c92818548e2cbfb5fbb706348f2a8875548f83edc7b3bf`;
+- spawned the actual deployed `dadrock-v143-http-bridge/run_rhythm_async_job`;
+- that actual oneshot called the actual deployed `dadrock-v143-ai-tab-live/rhythm_v143_request`;
+- deliberately invalid non-URL caused the worker to reject before any download/audio/model work;
+- FunctionCall ID `fc-01M1S9SEY1YY29VYHVWWSSSMX6`;
+- exact lifecycle `9.061s`;
+- bounded failure envelope queued; orchestrator returned `status=failed`, `resultQueued=true`; Queue cleared;
+- `audioRead=false`, `separatorModelExecuted=false`, reference inputs/scores `0`.
 
-### Remaining seam under test
+**Conclusion:** the production oneshot is demonstrably able to start. The user-observed dashboard symptom is not caused by a generic bridge startup failure, `.spawn()` failure, cross-app lookup failure, L4 cold-start failure, or inability of the exact production orchestrator to call the exact worker function.
 
-Current production start path:
+## Actual async robustness gap — FIX AUTHORIZED
 
-`HTTP start -> run_rhythm_async_job.spawn(job_id, payload) -> orchestrator oneshot -> modal.Function.from_name(dadrock-v143-ai-tab-live/rhythm_v143_request).remote(payload) -> Queue result`
+Current `_start_rhythm_job()` discards the `modal.FunctionCall` returned by `run_rhythm_async_job.spawn(...)`. Current `_status_rhythm_job()` interprets an empty result Queue as `processing` without checking whether that orchestrator FunctionCall is still alive, finished, or crashed.
 
-Base bridge image GREEN + `.spawn()` GREEN + L4 worker cold-start GREEN. The only unproven startup/wiring seam is now **spawned orchestrator -> nested cross-app worker call**.
+Therefore a real long-running orchestrator that terminates before publishing its result can look like an endless `processing`/oneshot loop to the browser/dashboard even though the underlying call has failed.
 
-A no-audio nested test has been created:
+Authorized narrow hardening:
 
-- `analyzer/v143_async_nested_worker_smoke_modal.py` commit `35c06ec544998838b3187a792d2a084b408c432a`;
-- workflow `.github/workflows/v143-async-nested-worker-smoke.yml` trigger commit `62859bd65ad83f361240c278101fd6734e9f26ec`;
-- run `33980891422`, job `101345785629` currently in progress;
-- it spawns an orchestrator with production-like `memory=4096`, then calls only deployed `rhythm_dependency_smoke` across the app boundary and publishes a synthetic Queue result;
-- it reads no audio and executes no separator/model.
+1. Persist only the non-sensitive orchestrator FunctionCall ID in a separate control partition of the same Modal Queue, TTL `900s`.
+2. Start must write that control record before returning the signed job token; if control tracking cannot be written, start fails closed.
+3. Status checks the result partition first; if empty, reconstructs `modal.FunctionCall.from_id(call_id)` and calls `.get(timeout=0)`.
+4. `modal.exception.TimeoutError` means genuinely still processing; any completed failure/remote exception becomes an immediate bounded generic failure instead of polling forever.
+5. ACK clears both result and control partitions.
+6. Add safe aggregate stage markers only (`orchestrator.start`, `worker_call.start/done`, `result_queue.done`); never log URL, blob token, audio/tab content, labels, or reference-facing data.
+7. Do not change worker/scheduler/model code.
+
+Modal's current SDK documents `FunctionCall.from_id()` and `get(timeout=0)` specifically for re-instantiating and non-blockingly polling a spawned call.
 
 ## NEXT STEP
 
-1. Observe nested-worker smoke run `33980891422` to terminal state; do not duplicate it.
-2. If GREEN, the async orchestration/start topology is healthy end-to-end without audio; the reported dashboard loop must then be tied to the real `rhythm_v143_request` execution/payload path or stale diagnostic activity, not startup wiring.
-3. If FAILED, use its isolated logs to fix only the nested cross-app handoff/resource seam.
-4. Keep model-bearing Preview E2E paused until this discriminator is closed.
+1. Implement branch-only control tracking + safe orchestrator stage markers in `v143_modal_http_endpoint.py`.
+2. Strengthen source/no-model gates for control TTL, FunctionCall polling, ACK cleanup, and no-sensitive logging.
+3. Prove in an isolated bridge deployment that a synthetic spawned success and a fail-fast real-worker call both transition status without indefinite polling.
+4. Only after GREEN, checkpoint and consider a bridge-only production redeploy.
+5. Model-bearing Preview E2E remains paused until the hardened bridge is deployed/proven.
 
 ### Hard stops
 
-- No model-bearing async E2E while nested-worker discriminator is unresolved.
+- No model-bearing async E2E until control tracking hardening is GREEN.
 - No duplicate model/audio request.
 - No Production Vercel environment change or promotion yet.
 - No Deployment Protection weakening/disablement.
 - No model/scheduler change.
 - No reference-facing scoring/quality verdict/restricted assets.
-- No raw audio/stems/model bytes in async result storage.
+- No raw audio/stems/model bytes in async storage/control metadata.
 - No TTL above 15 minutes / no persistent result cache.
 - No whole-branch merge to `main`.
