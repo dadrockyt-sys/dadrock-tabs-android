@@ -13,6 +13,7 @@ concurrency:
 
 permissions:
   contents: read
+  id-token: write
 
 env:
   VERCEL_ORG_ID: team_qJrw8Cuze5bCEg9M3Q67XMWt
@@ -26,6 +27,7 @@ env:
   SCHEDULER_BLOB: fc9b4c45c208d80be7abab64a8959f2a3babcee8
   AUDIO_URL: https://raw.githubusercontent.com/dadrockyt-sys/dadrock-tabs-android/main/public/jimmy-paige-midterm-v1/gomyway-midterm-source.m4a
   AUDIO_BLOB_SHA: 4dd709e3fa177b4daeed71ca97f0199757729d4b
+  E2E_SCRIPT_BLOB: 92d17ee0b01ff72f71abfac1a7a4b36ff7e02792
   NEXT_TELEMETRY_DISABLED: '1'
   NO_COLOR: '1'
 
@@ -40,7 +42,7 @@ jobs:
       - name: Checkout exact branch head
         uses: actions/checkout@v4
 
-      - name: Enforce exact source and one-start boundary
+      - name: Enforce exact source, helper, and one-start boundary
         shell: bash
         run: |
           set -euo pipefail
@@ -52,6 +54,7 @@ jobs:
           test "$(git hash-object analyzer/v143_modal_live_endpoint.py)" = "$WORKER_BLOB"
           test "$(git hash-object analyzer/v143_seeded_separator.py)" = "$SCHEDULER_BLOB"
           test "$(git hash-object public/jimmy-paige-midterm-v1/gomyway-midterm-source.m4a)" = "$AUDIO_BLOB_SHA"
+          test "$(git hash-object .github/scripts/v143-fresh-preview-async-breakthrough-e2e.sh)" = "$E2E_SCRIPT_BLOB"
           echo 'modelBearingStartRequestBudget=1'
           echo 'priorE2EModelStarts=0'
           echo 'productionEnvironmentTargeted=false'
@@ -72,241 +75,9 @@ jobs:
           npm install --global vercel@59.11.2 >/dev/null
           test "$(vercel --version | tail -n 1)" = '59.11.2'
 
-      - name: Build and deploy fresh protected Preview only
+      - name: Run one guarded fresh-Preview async breakthrough
         shell: bash
-        run: |
-          set -euo pipefail
-          OUT=debug/v143-contextual-prune/fresh-preview-async-breakthrough
-          mkdir -p "$OUT"
-          vercel pull --yes --environment=preview --git-branch="$PREVIEW_GIT_BRANCH" --token "$VERCEL_TOKEN" >/dev/null
-          vercel build --token "$VERCEL_TOKEN"
-          DEPLOYMENT_URL="$(vercel deploy --prebuilt --token "$VERCEL_TOKEN" | tail -n 1)"
-          echo "$DEPLOYMENT_URL" | grep -Eq '^https://[^ ]+\.vercel\.app$'
-          echo "PREVIEW_DEPLOYMENT_URL=$DEPLOYMENT_URL" >> "$GITHUB_ENV"
-          echo "freshPreviewUrl=$DEPLOYMENT_URL"
-          echo 'productionPromotionPerformed=false'
-
-          vercel inspect "$DEPLOYMENT_URL" --wait --token "$VERCEL_TOKEN" 2>&1 | tee "$OUT/inspect.log"
-          grep -Eq 'target[[:space:]]+preview' "$OUT/inspect.log"
-          grep -Eq 'status[[:space:]]+.*Ready|status[[:space:]]+● Ready' "$OUT/inspect.log"
-          DEPLOYMENT_ID="$(awk '$1 == "id" {print $2; exit}' "$OUT/inspect.log")"
-          test -n "$DEPLOYMENT_ID"
-          echo "PREVIEW_DEPLOYMENT_ID=$DEPLOYMENT_ID" >> "$GITHUB_ENV"
-          echo "freshPreviewDeploymentId=$DEPLOYMENT_ID"
-          rm -f "$OUT/inspect.log"
-
-      - name: Verify protected Preview access before model start
-        shell: bash
-        run: |
-          set -euo pipefail
-          STATUS="$(
-            vercel curl /ai-tab \
-              --deployment "$PREVIEW_DEPLOYMENT_URL" \
-              -- \
-              --silent --show-error --location --max-time 30 \
-              --output /dev/null --write-out '%{http_code}'
-          )"
-          echo "protectedPreviewAiTabStatus=$STATUS"
-          test "$STATUS" = '200'
-          echo 'modelBearingStartRequestsSoFar=0'
-
-      - name: Start exactly one Rhythm async job and poll same token
-        shell: bash
-        run: |
-          set -euo pipefail
-          OUT=debug/v143-contextual-prune/fresh-preview-async-breakthrough
-          mkdir -p "$OUT"
-
-          cat > "$OUT/start-request.json" <<JSON
-          {"audioUrl":"$AUDIO_URL","pathname":"gomyway-midterm-source.m4a","song":"Are You Gonna Go My Way","artist":"Lenny Kravitz","transcriptionType":"rhythm"}
-          JSON
-
-          START_EPOCH="$(date +%s)"
-          START_METRICS="$(
-            vercel curl /api/analyze-audio-tab \
-              --deployment "$PREVIEW_DEPLOYMENT_URL" \
-              -- \
-              --silent --show-error --location --max-time 45 \
-              --request POST \
-              --header 'Content-Type: application/json' \
-              --data-binary "@$OUT/start-request.json" \
-              --output "$OUT/start-response.json" \
-              --write-out '%{http_code} %{time_total}'
-          )"
-          START_STATUS="${START_METRICS%% *}"
-          START_SECONDS="${START_METRICS#* }"
-          export OUT START_STATUS START_SECONDS
-
-          python3 - <<'PY'
-          import json, os
-          from pathlib import Path
-          out = Path(os.environ['OUT'])
-          data = json.loads((out / 'start-response.json').read_text(encoding='utf-8'))
-          if int(os.environ['START_STATUS']) != 202:
-              raise SystemExit(f"Async start returned HTTP {os.environ['START_STATUS']}: {data.get('error') or data.get('detail')}")
-          job = data.get('analysisJob') if isinstance(data.get('analysisJob'), dict) else {}
-          token = str(job.get('token') or '')
-          if job.get('status') != 'processing' or not token.startswith('v143a1.'):
-              raise SystemExit('Async start did not return valid processing job token')
-          (out / 'job-token.txt').write_text(token, encoding='utf-8')
-          print(f"startStatus=202 startSeconds={float(os.environ['START_SECONDS']):.6f} modelBearingStartRequests=1")
-          PY
-
-          JOB_TOKEN="$(cat "$OUT/job-token.txt")"
-          POLL_COUNT=0
-          COMPLETION_STATUS=''
-          COMPLETION_SECONDS=''
-          COMPLETED=0
-          DEADLINE=$(( START_EPOCH + 20 * 60 ))
-
-          while [ "$(date +%s)" -lt "$DEADLINE" ]; do
-            POLL_COUNT=$((POLL_COUNT + 1))
-            sleep 5
-            printf '{"operation":"status","jobToken":"%s","transcriptionType":"rhythm"}\n' "$JOB_TOKEN" > "$OUT/status-request.json"
-            POLL_METRICS="$(
-              vercel curl /api/analyze-audio-tab \
-                --deployment "$PREVIEW_DEPLOYMENT_URL" \
-                -- \
-                --silent --show-error --location --max-time 45 \
-                --request POST \
-                --header 'Content-Type: application/json' \
-                --data-binary "@$OUT/status-request.json" \
-                --output "$OUT/status-response.json" \
-                --write-out '%{http_code} %{time_total}'
-            )"
-            POLL_STATUS="${POLL_METRICS%% *}"
-            POLL_SECONDS="${POLL_METRICS#* }"
-            ELAPSED=$(( $(date +%s) - START_EPOCH ))
-            echo "poll=$POLL_COUNT status=$POLL_STATUS requestSeconds=$POLL_SECONDS elapsed=$ELAPSED"
-            if [ "$POLL_STATUS" = '202' ]; then
-              continue
-            fi
-            COMPLETION_STATUS="$POLL_STATUS"
-            COMPLETION_SECONDS="$POLL_SECONDS"
-            [ "$POLL_STATUS" = '200' ] && COMPLETED=1 || true
-            break
-          done
-
-          export START_EPOCH START_STATUS START_SECONDS POLL_COUNT COMPLETION_STATUS COMPLETION_SECONDS COMPLETED \
-            PREVIEW_DEPLOYMENT_ID PREVIEW_DEPLOYMENT_URL GITHUB_SHA EXPECTED_ROUTE_BLOB EXPECTED_PAGE_BLOB \
-            HARDENED_BRIDGE_BLOB PROTOCOL_BLOB WORKER_BLOB SCHEDULER_BLOB AUDIO_BLOB_SHA
-
-          python3 - <<'PY'
-          import json, os, time
-          from pathlib import Path
-          out = Path(os.environ['OUT'])
-          try:
-              terminal = json.loads((out / 'status-response.json').read_text(encoding='utf-8'))
-          except Exception:
-              terminal = {}
-          completed = os.environ['COMPLETED'] == '1'
-          pc = terminal.get('payloadContract') if isinstance(terminal.get('payloadContract'), dict) else {}
-          aq = terminal.get('analysisQuality') if isinstance(terminal.get('analysisQuality'), dict) else {}
-          metrics = aq.get('metrics') if isinstance(aq.get('metrics'), dict) else {}
-          conditioning = terminal.get('conditioningContract') if isinstance(terminal.get('conditioningContract'), dict) else {}
-          job = terminal.get('analysisJob') if isinstance(terminal.get('analysisJob'), dict) else {}
-          total_seconds = max(0.0, time.time() - float(os.environ['START_EPOCH']))
-          summary = {
-              'schemaVersion': 1,
-              'gate': 'v143-fresh-preview-async-breakthrough-e2e',
-              'previewDeploymentId': os.environ['PREVIEW_DEPLOYMENT_ID'],
-              'previewDeploymentUrl': os.environ['PREVIEW_DEPLOYMENT_URL'],
-              'previewBuildSourceCommit': os.environ['GITHUB_SHA'],
-              'routeBlob': os.environ['EXPECTED_ROUTE_BLOB'],
-              'pageBlob': os.environ['EXPECTED_PAGE_BLOB'],
-              'hardenedBridgeBlob': os.environ['HARDENED_BRIDGE_BLOB'],
-              'protocolBlob': os.environ['PROTOCOL_BLOB'],
-              'workerBlob': os.environ['WORKER_BLOB'],
-              'schedulerBlob': os.environ['SCHEDULER_BLOB'],
-              'audioBlobSha': os.environ['AUDIO_BLOB_SHA'],
-              'modelBearingStartRequestCount': 1,
-              'startStatus': int(os.environ['START_STATUS']),
-              'startRequestSeconds': float(os.environ['START_SECONDS']),
-              'pollCount': int(os.environ['POLL_COUNT']),
-              'terminalStatus': int(os.environ['COMPLETION_STATUS'] or 0),
-              'terminalRequestSeconds': float(os.environ['COMPLETION_SECONDS'] or 0),
-              'asyncTotalSeconds': total_seconds,
-              'crossedOld150SecondWall': total_seconds > 150.0,
-              'completed': completed,
-              'analysisJobCompleted': job.get('status') == 'completed',
-              'rhythmCanaryActive': terminal.get('rhythmCanaryActive'),
-              'generatedTabPresent': bool(str(terminal.get('generatedTab') or '').strip()),
-              'eventCount': len(terminal.get('events') or []) if isinstance(terminal.get('events'), list) else 0,
-              'renderEventCount': len(terminal.get('renderEvents') or []) if isinstance(terminal.get('renderEvents'), list) else 0,
-              'payloadContract': {
-                  'referenceFree': pc.get('referenceFree'),
-                  'professionalReferenceNotUsed': pc.get('professionalReferenceNotUsed'),
-                  'referenceRuntimeInputNotUsed': pc.get('referenceRuntimeInputNotUsed'),
-                  'runtimeLabelsNotRequired': pc.get('runtimeLabelsNotRequired'),
-                  'v143RuntimeSafetyVerified': pc.get('v143RuntimeSafetyVerified'),
-                  'analyzerQualityGatePassed': pc.get('analyzerQualityGatePassed'),
-                  'structuredRenderEligible': pc.get('structuredRenderEligible'),
-              },
-              'productHealthSignals': {
-                  'analysisQualityGatePassed': aq.get('passed'),
-                  'analysisQualityFailures': aq.get('failures'),
-                  'rawEventCount': metrics.get('rawEventCount'),
-                  'validRenderEventCount': metrics.get('validRenderEventCount'),
-                  'renderEventSurvivalPercent': metrics.get('renderEventSurvivalPercent'),
-                  'playableStringFretPercent': metrics.get('playableStringFretPercent'),
-                  'musicalPlacementPercent': metrics.get('musicalPlacementPercent'),
-                  'pitchValidityPercent': metrics.get('pitchValidityPercent'),
-              },
-              'conditioningReferenceBlind': conditioning.get('referenceBlind'),
-              'conditioningReferenceScoreAuthorized': conditioning.get('referenceScoreAuthorized'),
-              'productionEnvironmentChanged': False,
-              'productionPromotionPerformed': False,
-              'deploymentProtectionDisabled': False,
-              'rawTranscriptionRetained': False,
-              'referenceFacingInputs': 0,
-              'referenceFacingAccuracyScored': False,
-              'referenceScoreCalls': 0,
-              'qualityVerdictMade': False,
-          }
-          if not completed:
-              summary['error'] = terminal.get('error') or terminal.get('detail') or 'async job did not complete'
-          (out / 'summary-pre-ack.json').write_text(json.dumps(summary, indent=2) + '\n', encoding='utf-8')
-          print(json.dumps(summary, indent=2))
-          if not completed:
-              raise SystemExit(f"Async terminal HTTP {summary['terminalStatus']}: {summary.get('error')}")
-          if summary['analysisJobCompleted'] is not True or summary['rhythmCanaryActive'] is not True or not summary['generatedTabPresent']:
-              raise SystemExit('Completed async result failed required V143 product state')
-          for key in ('referenceFree','professionalReferenceNotUsed','referenceRuntimeInputNotUsed','runtimeLabelsNotRequired','v143RuntimeSafetyVerified'):
-              if summary['payloadContract'].get(key) is not True:
-                  raise SystemExit(f'Runtime safety contract failed: {key}')
-          PY
-
-          printf '{"operation":"ack","jobToken":"%s","transcriptionType":"rhythm"}\n' "$JOB_TOKEN" > "$OUT/ack-request.json"
-          ACK_METRICS="$(
-            vercel curl /api/analyze-audio-tab \
-              --deployment "$PREVIEW_DEPLOYMENT_URL" \
-              -- \
-              --silent --show-error --location --max-time 45 \
-              --request POST \
-              --header 'Content-Type: application/json' \
-              --data-binary "@$OUT/ack-request.json" \
-              --output "$OUT/ack-response.json" \
-              --write-out '%{http_code} %{time_total}'
-          )"
-          ACK_STATUS="${ACK_METRICS%% *}"
-          ACK_SECONDS="${ACK_METRICS#* }"
-          export ACK_STATUS ACK_SECONDS
-          python3 - <<'PY'
-          import json, os
-          from pathlib import Path
-          out = Path(os.environ['OUT'])
-          summary = json.loads((out / 'summary-pre-ack.json').read_text(encoding='utf-8'))
-          ack = json.loads((out / 'ack-response.json').read_text(encoding='utf-8'))
-          job = ack.get('analysisJob') if isinstance(ack.get('analysisJob'), dict) else {}
-          summary['ackStatus'] = int(os.environ['ACK_STATUS'])
-          summary['ackRequestSeconds'] = float(os.environ['ACK_SECONDS'])
-          summary['acknowledged'] = job.get('status') == 'acknowledged'
-          summary['transientResultCleared'] = job.get('resultCleared') is True
-          (out / 'summary.json').write_text(json.dumps(summary, indent=2) + '\n', encoding='utf-8')
-          print(json.dumps(summary, indent=2))
-          if summary['ackStatus'] != 200 or not summary['acknowledged'] or not summary['transientResultCleared']:
-              raise SystemExit('Async ACK/cleanup failed')
-          PY
+        run: bash .github/scripts/v143-fresh-preview-async-breakthrough-e2e.sh
 
       - name: Delete raw request/result/token material from runner
         if: always()
@@ -314,7 +85,16 @@ jobs:
         run: |
           set -euo pipefail
           OUT=debug/v143-contextual-prune/fresh-preview-async-breakthrough
-          rm -f "$OUT"/start-request.json "$OUT"/start-response.json "$OUT"/status-request.json "$OUT"/status-response.json "$OUT"/ack-request.json "$OUT"/ack-response.json "$OUT"/job-token.txt "$OUT"/summary-pre-ack.json "$OUT"/inspect.log
+          rm -f \
+            "$OUT"/start-request.json \
+            "$OUT"/start-response.json \
+            "$OUT"/status-request.json \
+            "$OUT"/status-response.json \
+            "$OUT"/ack-request.json \
+            "$OUT"/ack-response.json \
+            "$OUT"/job-token.txt \
+            "$OUT"/summary-pre-ack.json \
+            "$OUT"/inspect.log
 
       - name: Preserve aggregate breakthrough evidence only
         if: always()
