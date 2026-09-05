@@ -1,6 +1,7 @@
 name: V143 Async Bridge Startup Diagnosis
 
 on:
+  workflow_dispatch:
   push:
     branches:
       - v143-contextual-prune-lobo
