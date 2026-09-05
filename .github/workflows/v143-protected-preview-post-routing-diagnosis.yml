@@ -16,6 +16,7 @@ jobs:
     timeout-minutes: 5
     env:
       PREVIEW_URL: https://dadrock-tabs-android-bx51iz9tr-stephen-mcnally-s-projects.vercel.app
+      PREVIEW_GIT_BRANCH: v143-contextual-prune-lobo
       VERCEL_TOKEN: ${{ secrets.VERCEL_TOKEN }}
       VERCEL_ORG_ID: team_qJrw8Cuze5bCEg9M3Q67XMWt
       VERCEL_PROJECT_ID: prj_6biwsn0iHci6FHNswAUCS8UYrAqF
@@ -39,7 +40,6 @@ jobs:
         shell: bash
         run: |
           set -euo pipefail
-          set +e
           STATUS="$(
             vercel curl /api/analyze-audio-tab \
               --deployment "$PREVIEW_URL" \
@@ -51,11 +51,7 @@ jobs:
               --output response.json \
               --write-out '%{http_code}'
           )"
-          CURL_RC=$?
-          set -e
-          echo "vercelCurlExitCode=$CURL_RC"
           echo "malformedPostStatus=$STATUS"
-          test "$CURL_RC" -eq 0
           test "$STATUS" = "400"
           python3 - <<'PY'
           import json
@@ -68,3 +64,62 @@ jobs:
           print('referenceFacingInputs=0')
           PY
           rm -f response.json
+
+      - name: Classify critical pulled Preview env without printing values
+        shell: bash
+        run: |
+          set -euo pipefail
+          rm -rf .vercel
+          vercel pull \
+            --yes \
+            --environment=preview \
+            --git-branch="$PREVIEW_GIT_BRANCH" \
+            >/dev/null
+
+          python3 - <<'PY'
+          from pathlib import Path
+
+          env_path = Path('.vercel/.env.preview.local')
+          if not env_path.exists():
+              raise SystemExit('Preview env file was not created by vercel pull.')
+
+          values = {}
+          for raw in env_path.read_text(encoding='utf-8', errors='replace').splitlines():
+              line = raw.strip()
+              if not line or line.startswith('#') or '=' not in line:
+                  continue
+              key, value = line.split('=', 1)
+              key = key.strip()
+              value = value.strip()
+              if len(value) >= 2 and value[0] == value[-1] and value[0] in ('"', "'"):
+                  value = value[1:-1]
+              values[key] = value
+
+          keys = (
+              'ANALYZER_API_URL_V143',
+              'ANALYZER_API_TOKEN',
+              'BLOB_READ_WRITE_TOKEN',
+          )
+          bad = False
+          for key in keys:
+              value = values.get(key)
+              if value is None or value == '':
+                  classification = 'missing'
+                  bad = True
+              elif value == '[SENSITIVE]':
+                  classification = 'sensitive_placeholder'
+                  bad = True
+              else:
+                  classification = 'present'
+              print(f'{key}={classification}')
+          print('secretValuesPrinted=false')
+          print('modelBearingStartRequestCount=0')
+          print('audioUrlSupplied=false')
+          print('analyzerCallPossible=false')
+          raise SystemExit(1 if bad else 0)
+          PY
+
+      - name: Delete pulled Preview env from runner
+        if: always()
+        shell: bash
+        run: rm -rf .vercel
