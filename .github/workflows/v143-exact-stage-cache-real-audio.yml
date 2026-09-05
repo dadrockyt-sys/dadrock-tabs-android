@@ -1,0 +1,118 @@
+name: V143 exact stage cache real-audio gate
+
+on:
+  workflow_dispatch:
+  push:
+    branches:
+      - v143-contextual-prune-lobo
+    paths:
+      - analyzer/v143_exact_stage_cache.py
+      - analyzer/v143_exact_stage_cache_real_audio_modal.py
+      - .github/scripts/v143_exact_stage_cache_real_audio_collect.py
+      - .github/workflows/v143-exact-stage-cache-real-audio.yml
+
+permissions:
+  contents: read
+
+env:
+  MODAL_ENVIRONMENT: main
+  MAIN_SHA: bb992d901e78ab19645f8edc8e330d5a142ebd8e
+  APPROVED_SOURCE_SHA256: 215bd5a657c5326f08f132ae358595a95c30b39bb7493a52c2f910d5a608149f
+  PYTHONUNBUFFERED: '1'
+
+jobs:
+  real-audio-cache-gate:
+    runs-on: ubuntu-latest
+    timeout-minutes: 25
+    env:
+      MODAL_TOKEN_ID: ${{ secrets.MODAL_TOKEN_ID }}
+      MODAL_TOKEN_SECRET: ${{ secrets.MODAL_TOKEN_SECRET }}
+
+    steps:
+      - name: Checkout diagnostic branch
+        uses: actions/checkout@v4
+
+      - name: Enforce exact structural boundary
+        shell: bash
+        run: |
+          set -euo pipefail
+          ACTUAL_MAIN="$(git ls-remote origin refs/heads/main | awk '{print $1}')"
+          test "$ACTUAL_MAIN" = "$MAIN_SHA"
+          test -n "${MODAL_TOKEN_ID:-}"
+          test -n "${MODAL_TOKEN_SECRET:-}"
+          test "$(sha256sum public/gomywayfullaitest.m4a | awk '{print $1}')" = "$APPROVED_SOURCE_SHA256"
+          test "$(git hash-object analyzer/v143_production_separator.py)" = '05ae1978fa02f8c84ccc1e44547fc4e4cea9798b'
+          test "$(git hash-object analyzer/v143_seeded_audio_separator_cli.py)" = '645f324c207d67b32c6d279657805ff8f25c3aa0'
+          test "$(git hash-object analyzer/v143_seeded_separator.py)" = '250534e516cad36e49cae35b6eab2b88654be2d3'
+          test "$(git hash-object analyzer/v143_ai_tab_gpu_worker.py)" = 'e7cdddfbf9e55e46be8397224b11133e7636ebb6'
+          test "$(git hash-object analyzer/v143_exact_stage_cache.py)" = 'f6c02ace111964a7f2c210ec509acbb29e67ae55'
+          python3 -m py_compile \
+            analyzer/v143_exact_stage_cache.py \
+            analyzer/v143_exact_stage_cache_real_audio_modal.py \
+            .github/scripts/v143_exact_stage_cache_real_audio_collect.py
+          grep -q '@app.function(image=image, cpu=1.0, timeout=1800, memory=8192)' analyzer/v143_exact_stage_cache_real_audio_modal.py
+          ! grep -q 'gpu=' analyzer/v143_exact_stage_cache_real_audio_modal.py
+          grep -q 'seeded_audio_separator_cli()' analyzer/v143_exact_stage_cache_real_audio_modal.py
+          grep -q 'separate_demucs_guitar(' analyzer/v143_exact_stage_cache_real_audio_modal.py
+          grep -q -- '--download_model_only' analyzer/v143_exact_stage_cache_real_audio_modal.py
+          grep -q '5c90dfd2-34c22ccb.th' analyzer/v143_exact_stage_cache_real_audio_modal.py
+          grep -q 'TemporaryDirectory(prefix="v143-exact-cache-real-audio-")' analyzer/v143_exact_stage_cache_real_audio_modal.py
+          grep -q 'separatorComputeCalls' analyzer/v143_exact_stage_cache_real_audio_modal.py
+          grep -q 'EXPECTED_GUITAR_SHA256 = "0ac47da671df6f8387c1ad1343171de0cf7a0db6985dadf3f30e4a9c7cf0189c"' .github/scripts/v143_exact_stage_cache_real_audio_collect.py
+          grep -q 'EXPECTED_PCM_SHA256 = "2c22f04014c0f5c9c0c036125c3d702c8b87a9f67358e0dd0d3836c39c936bed"' .github/scripts/v143_exact_stage_cache_real_audio_collect.py
+          grep -q 'COLLECTION_DEADLINE_SECONDS = 1200.0' .github/scripts/v143_exact_stage_cache_real_audio_collect.py
+          grep -q 'call.cancel(terminate_containers=True)' .github/scripts/v143_exact_stage_cache_real_audio_collect.py
+          echo "diagnosticSourceCommit=$GITHUB_SHA"
+          echo 'explicitModalCpu=1.0'
+          echo 'modalGpuRequested=false'
+          echo 'historicalExactAnchorRequired=true'
+          echo 'exactCacheRoot=ephemeral'
+          echo 'persistentStemRetentionAuthorized=false'
+          echo 'productionWorkerChanged=false'
+          echo 'productionBridgeChanged=false'
+          echo 'vercelChanged=false'
+          echo 'referenceFacingAccuracyScored=false'
+          echo 'referenceScoreCalls=0'
+
+      - name: Set up Python 3.11
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Install Modal client
+        shell: bash
+        run: |
+          set -euo pipefail
+          python -m pip install --upgrade pip >/dev/null
+          python -m pip install 'modal==1.5.5' >/dev/null
+          modal token set --token-id "$MODAL_TOKEN_ID" --token-secret "$MODAL_TOKEN_SECRET" >/dev/null
+          modal --version
+
+      - name: Deploy isolated real-audio cache probe only
+        shell: bash
+        run: |
+          set -euo pipefail
+          modal deploy --env main analyzer/v143_exact_stage_cache_real_audio_modal.py
+
+      - name: Run real-audio miss-hit exact-cache gate
+        shell: bash
+        run: |
+          set -euo pipefail
+          python .github/scripts/v143_exact_stage_cache_real_audio_collect.py
+
+      - name: Preserve aggregate real-audio cache evidence only
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: v143-exact-stage-cache-real-audio
+          path: debug/v143-contextual-prune/exact-stage-cache-real-audio/summary.json
+          if-no-files-found: warn
+          retention-days: 14
+
+      - name: Stop isolated real-audio cache app after probe
+        if: always()
+        shell: bash
+        run: |
+          modal app stop dadrock-v143-exact-cache-real-audio --env main --yes || true
+          echo 'diagnosticAppCleanupAttempted=true'
+          echo 'productionAppTouched=false'
