@@ -1,6 +1,6 @@
 # CURRENT STATE — DadRock `/ai-tab`
 
-Updated: 2026-09-05 — async lifecycle GREEN; fresh-Preview preflight BLOCKED on historical breakthrough-run check only  
+Updated: 2026-09-05 — async lifecycle GREEN; prior breakthrough run confirmed pre-model; next arm blocked on protected-Preview 403 repair  
 Branch: `v143-contextual-prune-lobo`
 
 > Compact continuation checkpoint. Older dedicated checkpoints remain authoritative; omission here does not revoke frozen boundaries.
@@ -83,7 +83,7 @@ Rerun:
 - production bridge deploy/smoke `33981874155` GREEN;
 - Trusted GitHub OIDC Deployment Protection access GREEN: `33982502347` and refreshability proof `33982582372`.
 
-## DRY GUARD REVIEW — 2026-09-05 — SOURCE/SUCCESS PATH GREEN; FAILURE-PATH PATCH PLANNED; HISTORICAL-RUN CHECK OPEN
+## DRY GUARD REVIEW / BREAKTHROUGH HISTORY — 2026-09-05
 
 - No `V143 Fresh Preview Async Breakthrough E2E` model-bearing run has been dispatched by this continuation.
 - Live workflow blob before any planned repair: `bab50f03b26d728084fe898097b02c2470de2d2e`.
@@ -92,8 +92,18 @@ Rerun:
 - Success-path guard audit is GREEN: fresh protected Preview only; no production promotion; protected `/ai-tab` HTTP-200 gate before model work; exactly one Rhythm POST start with `MODEL_BEARING_START_BUDGET=1` and `PREVIOUS_E2E_MODEL_STARTS=0`; require HTTP 202 + `v143a1.*` token; status-only polling of that same token; no second start; completed/generated-tab/runtime-contract checks; exactly one DELETE ACK on success; aggregate-only artifact intent; runner cleanup trap removes request/token/status/full-result material.
 - Failure-path issue is **confirmed**: current terminal-`failed` handling writes `evidence/summary-pre-ack.json` and exits before the success-only DELETE ACK/final summary. A failed model-bearing job would therefore rely on TTL cleanup and would not preserve the intended final aggregate artifact.
 - Backend semantics support the repair without touching model/runtime behavior: route DELETE can ACK the same signed token, and bridge ACK clears transient result + FunctionCall-control state independent of whether terminal state was `completed` or `failed`.
-- Branch-wide active/pre-start Actions check is GREEN at this checkpoint: `in_progress=0`, `queued=0`, `waiting=0`, `requested=0`, `pending=0`. There is no currently active hidden duplicate on this branch.
-- Historical workflow-specific check is still open. This must prove whether `V143 Fresh Preview Async Breakthrough E2E` has ever run/model-started before, because the execution contract requires `PREVIOUS_E2E_MODEL_STARTS=0`. **Do not edit/arm the trigger workflow until that history check is conclusively GREEN.**
+- Branch-wide active/pre-start Actions check is GREEN: `in_progress=0`, `queued=0`, `waiting=0`, `requested=0`, `pending=0`.
+
+### Historical breakthrough run — found and inspected; model-start budget remains unused
+
+- The workflow path has exactly one historical source commit before this continuation's planned repair: `58be9aa7b5606783a508917ce4531cfd512d66da`, message `test: run single async E2E on fresh Preview`.
+- That commit produced `V143 Fresh Preview Async Breakthrough E2E` run `33982235357`, job `101349393362`, conclusion **failure**.
+- Exact job-step evidence: source boundary GREEN; fresh protected Preview build/deploy GREEN; `Verify protected Preview access before model start` **FAILED**; `Start exactly one Rhythm async job and poll same token` **SKIPPED**.
+- Therefore historical model-bearing start requests from this workflow remain **0**. The one model-bearing start budget has not been consumed.
+- The fresh deployment was Preview target/Ready, deployment `dpl_F6ksguDvc1nVAt33jNxxoVTmyyJA`; production promotion remained false.
+- Root failure at the pre-start gate: `vercel curl /ai-tab --deployment ...` returned HTTP **403** instead of 200. Because the next start step was skipped, no audio/model invocation occurred.
+- The prior run also exposed the expected aggregate-evidence weakness: `summary.json` did not exist when the pre-start gate failed, so artifact upload warned that no file was found.
+- **Do not rerun `33982235357`** and do not arm another E2E yet. Diagnose/fix protected Preview access in the trigger workflow using the already-proven Trusted GitHub OIDC Deployment Protection access pattern; do not disable/weaken protection. Combine that access repair with the checkpointed failure-path ACK/evidence repair so only one future trigger-workflow commit is needed.
 
 ### Exact workflow-only failure-path repair plan — checkpointed before trigger edit
 
@@ -107,24 +117,17 @@ Rerun:
 8. Make aggregate evidence upload `if: always()` so terminal-failure evidence survives the intentional job failure.
 9. Preserve the one-start budget and all existing Preview-only, source-pin, no-production, no-reference-facing, runner-cleanup, and sensitive-data boundaries.
 
-Because this workflow is push-triggered on changes to its own path, **the repair commit itself can be the single arming event**. Therefore no workflow edit is permitted until the historical run/model-start check is GREEN and the live trigger is re-read immediately before editing.
+Because this workflow is push-triggered on changes to its own path, **the repair commit itself can be the single arming event**. Therefore no workflow edit is permitted until the protected-Preview 403 access fix is derived from the already-GREEN OIDC proof and checkpointed, and the live trigger/source pins are re-read immediately before editing.
 
-## NEXT — FIRST SINGLE MODEL-BEARING END-TO-END TEST
+## NEXT — REUSE PROVEN PROTECTED-PREVIEW ACCESS, THEN ARM ONE MODEL-BEARING E2E
 
-Use `.github/workflows/v143-fresh-preview-async-breakthrough-e2e.yml` because it builds a **fresh protected Vercel Preview only**, pins the exact route/page/bridge/protocol/worker/scheduler/audio blobs, and hard-codes `modelBearingStartRequestBudget=1` / `priorE2EModelStarts=0` / `productionEnvironmentTargeted=false` / `productionPromotionPerformed=false`.
-
-Required execution contract:
-
-1. Create a fresh protected Preview from `v143-contextual-prune-lobo`; do not promote it.
-2. Verify protected `/ai-tab` returns HTTP 200 before model start.
-3. POST exactly **one** Rhythm start using approved `gomyway-midterm-source.m4a`.
-4. Require HTTP 202 + signed `v143a1.*` job token.
-5. Poll only that same token; never send a second start.
-6. Allow total analysis time >150s while each Vercel request remains bounded.
-7. Require terminal HTTP 200 + completed job + generated tab + V143 reference-free safety/product contract.
-8. ACK once; require `acknowledged=true` and transient result cleanup. On terminal failure, ACK/cleanup and aggregate evidence must still happen before the workflow fails.
-9. Persist aggregate evidence only; delete request/token/result material on the runner.
-10. If the single model-bearing job fails after it truly starts, **do not launch another**; diagnose the one failed run first.
+1. Inspect the successful Trusted GitHub OIDC Deployment Protection runs `33982502347` and `33982582372` / their workflow source to identify the exact protected-Preview authorization command/header/token exchange that returned authorized access without weakening Deployment Protection.
+2. Plan the minimal breakthrough-workflow access patch and checkpoint it before editing the trigger workflow.
+3. Re-check active/pre-start Actions status and exact source pins after the checkpoint-only commits.
+4. Re-read the trigger block; then make exactly one trigger-workflow repair commit containing both: protected Preview access repair + terminal-failure ACK/evidence repair.
+5. Treat that push as the single arming event. Do not make another trigger-workflow edit or rerun if model execution starts.
+6. Require fresh Preview Ready -> protected `/ai-tab` HTTP 200 -> exactly one Rhythm start -> HTTP 202 + `v143a1.*` token -> same-token status-only polling -> terminal result -> one ACK/cleanup -> aggregate artifact.
+7. If the single model-bearing job fails after it truly starts, stop after ACK/evidence. Do not retry. Diagnose that exact call first.
 
 ## HARD STOPS
 
@@ -143,13 +146,12 @@ The next chat should **read this file first and continue on `v143-contextual-pru
 
 Immediate next steps for the fresh chat:
 
-1. Treat all seven exact source pins, the success-path guard audit, the backend failed-job ACK semantics, the workflow-only failure-path patch plan, and branch active/pre-start Actions counts as GREEN unless new branch changes invalidate them.
-2. Conclusively determine historical `V143 Fresh Preview Async Breakthrough E2E` runs/model-bearing starts. If any run exists, inspect it before arming anything; if a model-bearing start already occurred, HARD STOP and do not launch another.
-3. If historical start count is conclusively zero, re-read the live workflow trigger and exact current source pins immediately before editing.
-4. Apply only the checkpointed workflow failure-path repair. The repair commit can be the single arming push; do not make a second trigger-workflow edit after arming.
-5. Watch that single run through: fresh Preview Ready -> `/ai-tab` protected HTTP 200 -> exactly one Rhythm start returns HTTP 202 + `v143a1.*` token -> status polling only -> terminal result -> one ACK/cleanup -> aggregate artifact.
-6. If terminal HTTP 200 succeeds, require completed analysis, generated tab, V143 runtime safety/product contract, then ACK once and verify transient cleanup. Record aggregate metrics/artifact IDs/digests only.
-7. If the single model-bearing job fails **after worker/model execution begins**, stop after ACK/evidence. Do not retry. Pull GitHub/Modal logs for that exact call and diagnose before any second start.
-8. Save every meaningful milestone/root cause/result back to `docs/checkpoints/CURRENT_STATE.md` on this branch before continuing.
+1. Treat historical breakthrough model-start count as conclusively **0**: prior run `33982235357` failed on protected Preview `/ai-tab` HTTP 403; model-bearing step was skipped.
+2. Inspect the successful Trusted GitHub OIDC Deployment Protection access/refreshability proofs and derive the exact minimal authorization change for the breakthrough workflow. Do not disable protection.
+3. Checkpoint the access patch plan before touching `.github/workflows/v143-fresh-preview-async-breakthrough-e2e.yml`.
+4. Re-check all active/pre-start Action states and seven source pins immediately before the trigger edit.
+5. Apply one combined trigger-workflow commit: protected Preview access repair + already-checkpointed terminal-failure ACK/evidence repair. That commit is the next and only arming event.
+6. Watch the single run through. If model execution starts and later fails, ACK/record aggregate evidence and STOP; do not retry.
+7. Save every meaningful milestone/root cause/result back to `docs/checkpoints/CURRENT_STATE.md` on this branch before continuing.
 
-Current authorization state for the fresh chat: **async lifecycle gate GREEN; exact source pins GREEN; success-path E2E guards GREEN; failure-path repair plan checkpointed; no active/pre-start branch Actions runs; first single fresh-Preview model-bearing E2E remains the next permitted model-bearing action, but dispatch stays BLOCKED until historical breakthrough-run/model-start status is conclusively resolved.**
+Current authorization state: **async lifecycle GREEN; exact source pins GREEN; prior breakthrough run found but model-start count remains 0; failure-path repair plan checkpointed; protected Preview 403 is the only remaining pre-arm technical blocker.**
