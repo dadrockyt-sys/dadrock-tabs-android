@@ -1,0 +1,173 @@
+name: V143 Deploy Async HTTP Bridge
+
+on:
+  push:
+    branches:
+      - v143-contextual-prune-lobo
+    paths:
+      - .github/workflows/v143-deploy-async-http-bridge.yml
+
+permissions:
+  contents: read
+
+concurrency:
+  group: v143-deploy-async-http-bridge
+  cancel-in-progress: false
+
+env:
+  MODAL_ENVIRONMENT: main
+  PYTHONUNBUFFERED: '1'
+  V143_HTTP_APP_NAME: dadrock-v143-http-bridge
+  V143_ASYNC_RESULT_QUEUE_NAME: dadrock-v143-async-results
+  EXPECTED_BRIDGE_BLOB: e0cecefacead73d69a905fd6bfb2049b21c87bc3
+  EXPECTED_PROTOCOL_BLOB: 1bd55017e16a4e1d8b14c7429492f811a43a28d8
+  EXPECTED_WORKER_BLOB: 111bf14a8f91045d3478901f8e36b88a2e7f181a
+  EXPECTED_SCHEDULER_BLOB: fc9b4c45c208d80be7abab64a8959f2a3babcee8
+  ROLLBACK_BRIDGE_BLOB: 9a550f0afd5ced3894d8f1ccd18543fa5cd68ad6
+
+jobs:
+  deploy-async-http-bridge:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 15
+    env:
+      MODAL_TOKEN_ID: ${{ secrets.MODAL_TOKEN_ID }}
+      MODAL_TOKEN_SECRET: ${{ secrets.MODAL_TOKEN_SECRET }}
+
+    steps:
+      - name: Checkout exact branch head
+        uses: actions/checkout@v4
+
+      - name: Enforce exact production bridge source boundary
+        shell: bash
+        run: |
+          set -euo pipefail
+
+          check_blob() {
+            path="$1"
+            expected="$2"
+            actual="$(git hash-object "$path")"
+            if [ "$actual" != "$expected" ]; then
+              echo "Source pin mismatch: $path actual=$actual expected=$expected" >&2
+              exit 1
+            fi
+            echo "$path=$actual"
+          }
+
+          check_blob analyzer/v143_modal_http_endpoint.py "$EXPECTED_BRIDGE_BLOB"
+          check_blob analyzer/v143_async_job_protocol.py "$EXPECTED_PROTOCOL_BLOB"
+          check_blob analyzer/v143_modal_live_endpoint.py "$EXPECTED_WORKER_BLOB"
+          check_blob analyzer/v143_seeded_separator.py "$EXPECTED_SCHEDULER_BLOB"
+
+          test "$V143_HTTP_APP_NAME" = 'dadrock-v143-http-bridge'
+          test "$V143_ASYNC_RESULT_QUEUE_NAME" = 'dadrock-v143-async-results'
+          test "$EXPECTED_BRIDGE_BLOB" != "$ROLLBACK_BRIDGE_BLOB"
+
+          echo "bridgeSourceCommit=$GITHUB_SHA"
+          echo "candidateBridgeBlob=$EXPECTED_BRIDGE_BLOB"
+          echo "rollbackBridgeBlob=$ROLLBACK_BRIDGE_BLOB"
+          echo 'workerDeploymentChanged=false'
+          echo 'vercelDeploymentChanged=false'
+          echo 'mainMergePerformed=false'
+          echo 'audioRead=false'
+          echo 'modelExecuted=false'
+          echo 'referenceFacingInputs=0'
+          echo 'referenceScoreCalls=0'
+          echo 'qualityVerdictMade=false'
+
+      - name: Set up Python 3.11
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Install pinned Modal CLI
+        shell: bash
+        run: |
+          set -euo pipefail
+          python -m pip install --upgrade pip >/dev/null
+          python -m pip install 'modal==1.5.5' >/dev/null
+          modal token set --token-id "$MODAL_TOKEN_ID" --token-secret "$MODAL_TOKEN_SECRET" >/dev/null
+          modal --version
+
+      - name: Deploy backward-compatible production bridge only
+        shell: bash
+        run: |
+          set -euo pipefail
+          modal deploy --env main analyzer/v143_modal_http_endpoint.py
+          echo 'productionBridgeDeploymentChanged=true'
+          echo 'productionWorkerDeploymentChanged=false'
+          echo 'productionVercelDeploymentChanged=false'
+
+      - name: Run production bridge synthetic protocol smoke only
+        shell: bash
+        run: |
+          set -euo pipefail
+          mkdir -p debug/v143-contextual-prune/async-production-bridge-deploy
+          python - <<'PY'
+          import json
+          import os
+          from pathlib import Path
+          import modal
+
+          app_name = os.environ['V143_HTTP_APP_NAME']
+          queue_name = os.environ['V143_ASYNC_RESULT_QUEUE_NAME']
+          fn = modal.Function.from_name(
+              app_name,
+              'async_protocol_smoke',
+              environment_name='main',
+          )
+          result = fn.remote()
+          safe = {
+              'schemaVersion': 1,
+              'gate': 'v143-async-production-bridge-deploy',
+              'sourceCommit': os.environ.get('GITHUB_SHA'),
+              'bridgeBlob': os.environ['EXPECTED_BRIDGE_BLOB'],
+              'protocolBlob': os.environ['EXPECTED_PROTOCOL_BLOB'],
+              'workerBlob': os.environ['EXPECTED_WORKER_BLOB'],
+              'schedulerBlob': os.environ['EXPECTED_SCHEDULER_BLOB'],
+              'rollbackBridgeBlob': os.environ['ROLLBACK_BRIDGE_BLOB'],
+              'appName': result.get('appName'),
+              'queueName': result.get('queueName'),
+              'tokenVerified': result.get('tokenVerified'),
+              'queueRoundtrip': result.get('queueRoundtrip'),
+              'queueCleared': result.get('queueCleared'),
+              'resultTtlSeconds': result.get('resultTtlSeconds'),
+              'rawAudioQueued': result.get('rawAudioQueued'),
+              'stemBytesQueued': result.get('stemBytesQueued'),
+              'modelExecuted': result.get('modelExecuted'),
+              'audioRead': result.get('audioRead'),
+              'referenceFacingInputs': result.get('referenceFacingInputs'),
+              'referenceScoreCalls': result.get('referenceScoreCalls'),
+              'qualityVerdictMade': result.get('qualityVerdictMade'),
+              'productionBridgeTargeted': True,
+              'productionWorkerTargeted': False,
+              'productionVercelTargeted': False,
+              'mainMergePerformed': False,
+          }
+          Path('debug/v143-contextual-prune/async-production-bridge-deploy/summary.json').write_text(
+              json.dumps(safe, indent=2) + '\n', encoding='utf-8'
+          )
+          print(json.dumps(safe, indent=2))
+
+          assert safe['appName'] == app_name
+          assert safe['queueName'] == queue_name
+          assert safe['tokenVerified'] is True
+          assert safe['queueRoundtrip'] is True
+          assert safe['queueCleared'] is True
+          assert safe['resultTtlSeconds'] == 900
+          assert safe['rawAudioQueued'] is False
+          assert safe['stemBytesQueued'] is False
+          assert safe['modelExecuted'] is False
+          assert safe['audioRead'] is False
+          assert safe['referenceFacingInputs'] == 0
+          assert safe['referenceScoreCalls'] == 0
+          assert safe['qualityVerdictMade'] is False
+          PY
+
+      - name: Preserve aggregate deploy evidence only
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: v143-async-production-bridge-deploy
+          path: debug/v143-contextual-prune/async-production-bridge-deploy/summary.json
+          if-no-files-found: warn
+          retention-days: 14
