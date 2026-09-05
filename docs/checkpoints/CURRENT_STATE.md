@@ -1,6 +1,6 @@
 # CURRENT STATE — DadRock `/ai-tab`
 
-Updated: 2026-09-04 (America/Toronto)  
+Updated: 2026-09-04 22:06 America/Toronto  
 Branch: `v143-contextual-prune-lobo`
 
 > Compact continuation checkpoint. Older dedicated checkpoints remain authoritative; omission here does not revoke frozen boundaries.
@@ -89,7 +89,7 @@ Verdict: **direct + cascade exact cache semantics are proven GREEN only for isol
 
 Therefore no persistent stem/result cache may be wired into production without an explicit allowed persistence boundary.
 
-## Zero-retention view-level concurrency diagnostic — IMPLEMENTED / QUEUED
+## Zero-retention view-level concurrency diagnostic — RUNNING
 
 Purpose: overlap independent frozen **views**, not chunks inside Demucs. This is a separate candidate from the CLOSED native split-parallel branch.
 
@@ -104,7 +104,11 @@ Current Actions execution:
 
 - run `33940555992`;
 - job `101237009458`;
-- state at this checkpoint: **QUEUED**.
+- current state: **IN PROGRESS — real-audio exact concurrency gate running**;
+- steps GREEN: checkout, exact structural boundary, Python 3.11, Modal install, isolated probe deploy;
+- step 7 `Run exact view-level concurrency gate`: **IN PROGRESS**;
+- live log download is not yet available while the job is active; GitHub returned the expected temporary blob-not-found response;
+- artifact preservation and isolated app shutdown remain pending until the probe resolves.
 
 Diagnostic schedule and acceptance gate:
 
@@ -123,11 +127,12 @@ Workflow guard pins `main`, approved source SHA, production separator blobs, dia
 
 ## NEXT STEPS
 
-1. Finish run `33940555992`. If structural/deploy fails, fix only the demonstrated isolated diagnostic issue and rerun.
-2. If compute succeeds, inspect the aggregate artifact and record call/artifact IDs, direct/RoFormer/cascade identities, runtime controls, separation wall, stage timings, cleanup, and exact verdict here.
-3. If either WAV/PCM/shift/runtime invariant changes, close view-level concurrency and retain current production behavior.
-4. If byte-exact and materially useful, source-map the smallest production-safe **scheduler-only** change; still do not modify/deploy production merely to test.
-5. Persistent cache remains independently `BLOCKED_BY_RETENTION_POLICY` regardless of concurrency outcome.
+1. Finish run `33940555992`; poll until step 7 resolves.
+2. If compute fails, inspect completed job logs, fix only the demonstrated isolated diagnostic issue, update any changed workflow blob pins, rerun, and checkpoint.
+3. If compute succeeds, inspect the aggregate artifact and record call/artifact IDs, direct/RoFormer/cascade identities, runtime controls, separation wall, stage timings, cleanup, and exact verdict here.
+4. If either WAV/PCM/shift/runtime invariant changes, close view-level concurrency and retain current production behavior.
+5. If byte-exact and materially useful, source-map the smallest production-safe **scheduler-only** change; still do not modify/deploy production merely to test.
+6. Persistent cache remains independently `BLOCKED_BY_RETENTION_POLICY` regardless of concurrency outcome.
 
 ### Hard stops
 
