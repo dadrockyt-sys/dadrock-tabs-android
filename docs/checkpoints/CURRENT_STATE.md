@@ -88,7 +88,32 @@ User authorized non-reference-facing V143 performance work and repository-owned 
 - Re-read the frozen boundaries; authorized work remains cache architecture inspection/design only.
 - Inspected `app/api/analyze-audio-tab/route.js`. The app-side API route forwards analysis requests to the remote live V143 analyzer bridge, so a reusable-byte cache should be placed at the analyzer/bridge stage where stable normalized audio identity and deterministic separator outputs are available, not in any reference-facing path.
 - Branch-local analyzer/bridge source is being traced before any cache implementation.
-- Verified branch head at commit `e13054da0c7f639528f6f5be1394ce811563da01` (`docs: checkpoint cache architecture inspection`) before this save.
+- Earlier inspection checkpoint referenced commit `e13054da0c7f639528f6f5be1394ce811563da01`; the actual branch head immediately before this fresh-chat save is **`9254deb4f4767e56018702bd7ad157f47740f913`** (`docs: checkpoint continuity save`).
 - Recursive branch-tree inspection found no repository path containing `http_bridge`; this strengthens the current boundary finding that the live Modal V143 bridge implementation is external to the checked-in app tree or generated/deployed from a source not named as the live bridge in this branch.
 - No Demucs/GPU/split-parallel runs, reference-facing scoring, analyzer semantic changes, production bridge changes, Vercel changes, or UI changes were made in this pass.
-- Next safe step: enumerate all branch-local `analyzer/` Python entrypoints and deployment/workflow references that construct or invoke the V143 Modal app, then identify the nearest writable pre-separation or post-separation cache boundary. If the production bridge source is absent from the repository, do not fabricate an implementation point; document the missing deployment-source boundary and constrain any cache prototype to isolated diagnostic code until the source is located.
+
+## Fresh-chat handoff — exact next steps
+
+Start the next chat by reading this file on branch `v143-contextual-prune-lobo`. Continue without re-opening closed GPU/split-parallel work.
+
+1. **Enumerate branch-local analyzer entrypoints.** Inspect all `analyzer/` Python files plus `.github/workflows/` and `.github/scripts/` references that create, deploy, call, or name the V143 Modal application. Build a short source-of-truth map: app/API route → HTTP bridge → worker/analyzer → separator → downstream feature stages.
+2. **Locate the live bridge construction source without guessing.** Search for the known production bridge/app naming, Modal decorators/classes/functions, `usingV143RhythmAnalyzer`, request payload fields, and worker invocation names. If the live bridge implementation is genuinely absent from the repository, record that as a deployment-source boundary instead of fabricating an insertion point.
+3. **Identify the nearest exact cache boundary.** Prefer a pre-separation lookup keyed by canonical normalized-source identity plus a frozen execution-policy/version fingerprint, returning exact previously produced separator bytes only on a full key match. Cache miss or any metadata mismatch must fall through to the existing exact CPU path unchanged.
+4. **Define the cache key/fingerprint before implementation.** At minimum account for normalized source SHA, separator/model identity, model weights/version, Demucs parameters, shifts/seed behavior, sample rate/channels, Torch/runtime determinism controls, and any code/policy version that can change output bytes. The design must make stale or ambiguous entries impossible to accept silently.
+5. **Resolve retention/privacy boundary before storing stems.** Do not persist raw uploaded user audio beyond existing policy. Determine from current code/config whether deterministic separated stems may be retained. If stem persistence is not clearly allowed, move the candidate cache boundary downstream to derived non-audio artifacts/features that can still eliminate repeated work while preserving exact semantics.
+6. **Prototype only in isolated diagnostic code after the structural design is clear.** Do not alter the production Modal bridge, production worker, Vercel deployment, UI, or `main` for the first cache experiment. The prototype must prove: cache miss = current exact CPU bytes; cache hit = byte-identical outputs; key mismatch = fail closed/miss; no reference-facing scoring.
+7. **Use repository-owned `public/gomywayfullaitest.m4a` only after the reference-free structural gate exists.** First test should establish exact cache miss→populate→hit parity against the GREEN CPU anchor hashes already recorded above. Do not run GPU or split-parallel variants.
+8. **Measure only performance/identity.** Capture wall time for miss vs hit, cache-hit identity hashes, key metadata, and cleanup/retention behavior. No accuracy/quality claims or reference comparisons are authorized.
+9. **Promotion gate.** Consider any production-facing cache change only if exact bytes are unchanged, privacy/retention is acceptable, key invalidation is fail-closed, production routing semantics stay unchanged, and the speed benefit is material. Otherwise close the cache candidate and document why.
+10. **Checkpoint frequently.** Save meaningful source-map findings, boundary decisions, prototype commits/runs, hashes, and next steps back to this `docs/checkpoints/CURRENT_STATE.md` on `v143-contextual-prune-lobo` so another fresh chat can resume safely.
+
+### Hard stops preserved for the next chat
+
+- No reference-facing scoring or quality verdict.
+- No GOAT restricted bytes.
+- No sealed GuitarSet `00/01/03` access.
+- No SplitMySong reopening.
+- No GPU or split-parallel reruns.
+- No weakening exact parity or fail-closed criteria.
+- No production bridge/worker/Vercel/UI change before a reference-free exact structural gate passes.
+- Do not merge this diagnostic/cache work to `main` merely to test architecture; keep it isolated on `v143-contextual-prune-lobo` until the promotion gate is satisfied.
