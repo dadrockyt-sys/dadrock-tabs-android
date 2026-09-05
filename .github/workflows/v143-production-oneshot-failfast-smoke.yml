@@ -1,0 +1,171 @@
+name: V143 Production Oneshot Failfast Smoke
+
+on:
+  push:
+    branches:
+      - v143-contextual-prune-lobo
+    paths:
+      - .github/workflows/v143-production-oneshot-failfast-smoke.yml
+
+concurrency:
+  group: v143-production-oneshot-failfast-smoke
+  cancel-in-progress: false
+
+permissions:
+  contents: read
+
+jobs:
+  production-oneshot-failfast-smoke:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 10
+    env:
+      MODAL_ENVIRONMENT: main
+      PYTHONUNBUFFERED: "1"
+      MODAL_TOKEN_ID: ${{ secrets.MODAL_TOKEN_ID }}
+      MODAL_TOKEN_SECRET: ${{ secrets.MODAL_TOKEN_SECRET }}
+    steps:
+      - name: Checkout exact branch head
+        uses: actions/checkout@v4
+
+      - name: Set up Python 3.11
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: Install Modal client
+        shell: bash
+        run: |
+          set -euo pipefail
+          python -m pip install --upgrade pip >/dev/null
+          python -m pip install 'modal==1.5.5' >/dev/null
+          modal token set --token-id "$MODAL_TOKEN_ID" --token-secret "$MODAL_TOKEN_SECRET" >/dev/null
+          modal --version
+
+      - name: Spawn exact production orchestrator with fail-before-download payload
+        shell: bash
+        env:
+          PYTHONPATH: analyzer
+        run: |
+          set -euo pipefail
+          mkdir -p debug/v143-contextual-prune/production-oneshot-failfast
+          timeout 180s python - <<'PY'
+          import json
+          import secrets
+          import time
+          from pathlib import Path
+
+          import modal
+          from v143_async_job_protocol import decode_result_items
+
+          job_id = 'diag_' + secrets.token_urlsafe(20)
+          queue = modal.Queue.from_name(
+              'dadrock-v143-async-results',
+              environment_name='main',
+          )
+          queue.clear(partition=job_id)
+
+          payload = {
+              # Deliberately invalid so VercelAudioRequest rejects it before any
+              # requests.get/download, normalization, separator, or model work.
+              'audioUrl': 'INVALID-NO-AUDIO',
+              'pathname': 'diagnostic-no-audio',
+              'transcriptionType': 'rhythm',
+          }
+
+          safe = {
+              'schemaVersion': 1,
+              'gate': 'v143-production-oneshot-failfast-smoke',
+              'bridgeApp': 'dadrock-v143-http-bridge',
+              'orchestratorFunction': 'run_rhythm_async_job',
+              'workerApp': 'dadrock-v143-ai-tab-live',
+              'workerFunction': 'rhythm_v143_request',
+              'audioUrlValid': False,
+              'audioRead': False,
+              'separatorModelExecuted': False,
+              'referenceFacingInputs': 0,
+              'referenceScoreCalls': 0,
+              'qualityVerdictMade': False,
+          }
+
+          started = time.monotonic()
+          call = None
+          try:
+              orchestrator = modal.Function.from_name(
+                  'dadrock-v143-http-bridge',
+                  'run_rhythm_async_job',
+                  environment_name='main',
+              )
+              call = orchestrator.spawn(job_id, payload)
+              safe['functionCallId'] = call.object_id
+              safe['spawnCallIdPresent'] = bool(call.object_id)
+
+              deadline = time.monotonic() + 120.0
+              items = []
+              while time.monotonic() < deadline:
+                  items = list(
+                      queue.iterate(
+                          partition=job_id,
+                          item_poll_timeout=0.0,
+                      )
+                  )
+                  if items:
+                      break
+                  time.sleep(0.5)
+
+              safe['queueResultPresent'] = bool(items)
+              if not items:
+                  raise RuntimeError('Production orchestrator published no failfast Queue result.')
+
+              envelope = decode_result_items(items)
+              safe['queuedStatus'] = envelope.get('status')
+              safe['boundedFailureEnvelope'] = (
+                  envelope.get('status') == 'failed'
+                  and isinstance(envelope.get('error'), str)
+                  and len(envelope.get('error')) <= 240
+              )
+
+              call_result = call.get(timeout=30)
+              safe['callReturned'] = True
+              safe['callStatus'] = call_result.get('status') if isinstance(call_result, dict) else None
+              safe['resultQueued'] = call_result.get('resultQueued') if isinstance(call_result, dict) else None
+              safe['elapsedSeconds'] = round(time.monotonic() - started, 3)
+              safe['status'] = 'success'
+          except BaseException as error:
+              safe.update({
+                  'status': 'failed',
+                  'elapsedSeconds': round(time.monotonic() - started, 3),
+                  'errorClass': type(error).__name__,
+                  'errorMessage': str(error)[:500],
+              })
+          finally:
+              queue.clear(partition=job_id)
+              safe['queueCleared'] = not list(
+                  queue.iterate(
+                      partition=job_id,
+                      item_poll_timeout=0.0,
+                  )
+              )
+
+          Path('debug/v143-contextual-prune/production-oneshot-failfast/summary.json').write_text(
+              json.dumps(safe, indent=2, sort_keys=True) + '\n', encoding='utf-8'
+          )
+          print(json.dumps(safe, indent=2, sort_keys=True))
+
+          if safe.get('status') != 'success':
+              raise SystemExit(1)
+          if safe.get('queuedStatus') != 'failed' or safe.get('boundedFailureEnvelope') is not True:
+              raise SystemExit(1)
+          if safe.get('callReturned') is not True or safe.get('callStatus') != 'failed':
+              raise SystemExit(1)
+          if safe.get('resultQueued') is not True or safe.get('queueCleared') is not True:
+              raise SystemExit(1)
+          PY
+
+      - name: Preserve aggregate evidence only
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: v143-production-oneshot-failfast-smoke
+          path: debug/v143-contextual-prune/production-oneshot-failfast/summary.json
+          if-no-files-found: warn
+          retention-days: 7
