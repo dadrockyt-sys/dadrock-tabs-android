@@ -1,6 +1,6 @@
 # CURRENT STATE — DadRock `/ai-tab`
 
-Updated: 2026-09-05 — lifecycle GREEN; guarded helper staged; final pre-arm revalidation next  
+Updated: 2026-09-05 — single guarded start sent; unusable start response; NO RETRY; exact server diagnosis next  
 Branch: `v143-contextual-prune-lobo`
 
 > Compact continuation checkpoint. Older dedicated checkpoints remain authoritative; omission here does not revoke frozen boundaries.
@@ -30,59 +30,61 @@ Branch: `v143-contextual-prune-lobo`
 - Isolated async control proof `33985474511` / job `101358067142` SUCCESS; artifact `9975020241`, digest `sha256:b701ad58e32d538336f21279289bb189aca4324ec5029242d1f08246d4e1a493`.
 - Proven: one tracked start, deterministic terminal state, ACK clears result/control, TTL 900, no audio/model bytes in transient transport, reference-facing calls 0.
 
-## HISTORICAL BREAKTHROUGH RUN — MODEL BUDGET UNUSED
+## HISTORICAL BREAKTHROUGH RUN — PRE-MODEL ONLY
 
 - Historical trigger commit `58be9aa7b5606783a508917ce4531cfd512d66da` produced run `33982235357`, job `101349393362`.
 - Source gate and fresh Preview deploy were GREEN; protected `/ai-tab` preflight returned **403**; model-bearing step was **SKIPPED**.
-- Historical breakthrough model starts therefore remain **0**. Do not rerun `33982235357`.
-- Historical Preview deployment: `dpl_F6ksguDvc1nVAt33jNxxoVTmyyJA`; no production promotion.
+- Historical Preview deployment: `dpl_F6ksguDvc1nVAt33jNxxoVTmyyJA`; no production promotion. Do not rerun it.
 
-## PROTECTED PREVIEW ACCESS — FIX DERIVED / GREEN PROOF
+## PROTECTED PREVIEW ACCESS — REPAIRED / GREEN
 
-- Trusted GitHub OIDC proof `33982502347` returned protected Preview HTTP 200 using header `x-vercel-trusted-oidc-idp-token` without weakening Deployment Protection.
-- Refreshability proof `33982582372` GREEN: tokens mint on demand from `ACTIONS_ID_TOKEN_REQUEST_URL` using `ACTIONS_ID_TOKEN_REQUEST_TOKEN`; JWT TTL = **300s**; repeated newly-minted tokens returned HTTP 200.
-- Breakthrough workflow repair must add `id-token: write`, mint/mask a fresh token for preflight, the single start POST, each same-token status poll, and terminal ACK; never persist OIDC JWTs.
-- Protected app requests use direct `curl` to exact fresh Preview URL with the trusted OIDC header. Vercel CLI remains build/deploy/inspect only. No `--prod`, promotion, or protection bypass/disable.
+- Trusted GitHub OIDC proof `33982502347` returned protected Preview HTTP 200 using `x-vercel-trusted-oidc-idp-token` without weakening Deployment Protection.
+- Refreshability proof `33982582372` GREEN; on-demand JWT TTL = **300s**.
+- Armed workflow grants `id-token: write`, mints/masks fresh JWTs, and uses direct `curl` against the exact protected Preview. Vercel CLI is build/deploy/inspect only. No production target/promotion command was added.
 
-## FAILURE-PATH REPAIR — REQUIRED
+## GUARDED HELPER / ARMED WORKFLOW
 
-- Old workflow exits on terminal failure before ACK/final aggregate evidence; that is not acceptable for the one model-bearing call.
-- Backend ACK works for completed or failed terminal jobs and clears transient result + FunctionCall-control state.
-- New path must: defer terminal/product assertions -> write aggregate pre-ACK state -> ACK exactly once same signed job token -> require `acknowledged` + `resultCleared` -> write final aggregate `summary.json` -> only then intentionally fail if terminal/product/runtime contract failed -> **do not retry**.
-- Raw request/result/token material must always be deleted; artifact must contain aggregate `summary.json` only.
+- Helper `.github/scripts/v143-fresh-preview-async-breakthrough-e2e.sh` commit `8d536121bb9a38f4a69add31cbf7515400441c5b`, blob `92d17ee0b01ff72f71abfac1a7a4b36ff7e02792`; exact bytes passed `bash -n` before staging.
+- Single arming workflow commit: `0a07b393bb47123a1142fd46ea6d9a55b04f0486`, message `test: arm guarded OIDC async breakthrough E2E`.
+- Armed workflow blob: `2a48af6aadda3b90a9c9ea24220ac524dbcb5b41`.
+- Trigger remains workflow-path-only push on `v143-contextual-prune-lobo`; concurrency remains `v143-fresh-preview-async-breakthrough-e2e-single`, `cancel-in-progress: false`.
+- Final pre-arm active-state check was clean: `in_progress=0`, `queued=0`, `waiting=0`, `requested=0`, `pending=0`.
+- All authoritative route/page/bridge/protocol/worker/scheduler/audio/helper pins passed in the run before any Preview or start work.
 
-## SAFE STAGING MILESTONE — GUARDED HELPER COMMITTED WITHOUT ARMING
+## SINGLE ARMED RUN — STOPPED AFTER UNUSABLE START RESPONSE
 
-- New helper: `.github/scripts/v143-fresh-preview-async-breakthrough-e2e.sh`.
-- Commit: `8d536121bb9a38f4a69add31cbf7515400441c5b`.
-- Git blob: `92d17ee0b01ff72f71abfac1a7a4b36ff7e02792`.
-- Local exact bytes passed `bash -n`; fetched GitHub blob matches the locally computed Git blob.
-- This helper-file commit **cannot trigger** `V143 Fresh Preview Async Breakthrough E2E` because the existing push trigger watches only `.github/workflows/v143-fresh-preview-async-breakthrough-e2e.yml`.
-- Helper preserves all seven authoritative source checks, one-start budget, fresh Preview-only deploy, OIDC fresh-token access, same signed-job-token polling, terminal ACK cleanup, aggregate-only summary, no production promotion, and explicit do-not-retry stops after any ambiguous/failed model-bearing start.
-- A polling deadline after a real model start does **not** issue another start; it records aggregate state and stops for diagnosis. Terminal failure performs ACK first, then fails the job intentionally.
+- Exactly one breakthrough run was created from the arming commit: run `33998283085`, job `101392517265`, conclusion **FAILURE**.
+- Fresh Preview deployment: `dpl_G2WxxMA782j87H7tLpAy9cCB4ihD`, URL `https://dadrock-tabs-android-bx51iz9tr-stephen-mcnally-s-projects.vercel.app`, target **preview**, status **Ready**.
+- Production promotion remained false; no `--prod` or promotion command executed.
+- Protected Preview `/ai-tab` preflight succeeded: **HTTP 200**. The prior 403 blocker is resolved.
+- Immediately after that preflight, the helper sent **exactly one** Rhythm `operation=start` POST to the protected Preview `/api/analyze-audio-tab` endpoint using the approved audio and a freshly minted trusted OIDC token.
+- That single start request **did not return a usable accepted async response** (`HTTP 202` + `analysisJob.status=processing` + signed `v143a1.*` token were not jointly satisfied).
+- The helper fail-closed message was: `The one start request was sent but did not yield a usable accepted token. Do not send a second start; diagnose this request.`
+- Because no usable signed job token was available, **no status poll and no ACK were attempted**. The helper intentionally exited with code 4 rather than issuing another start.
+- Runner cleanup succeeded and removed start/status/ACK request/response/token material.
+- Aggregate-only artifact upload succeeded: artifact `9978732479`, zip digest `sha256:e245ae0a89d9c174ce1da14e47c31b252ad516b601d7793b2d982489efc16aa6`, 937 bytes.
+- The artifact summary is expected to retain only aggregate fields including `modelBearingStartRequestCount=1`, `startStatus`, `startCurlExitCode`, `startAccepted=false`, and `terminalState=start-response-unusable`; exact start status still requires artifact/server-log inspection.
 
-## LIVE TRIGGER WORKFLOW BEFORE ARMING
+### HARD STOP AFTER THIS RUN
 
-- Workflow: `.github/workflows/v143-fresh-preview-async-breakthrough-e2e.yml`.
-- Current blob remains `bab50f03b26d728084fe898097b02c2470de2d2e` at last read.
-- Trigger is push to `v143-contextual-prune-lobo` only when this workflow YAML path changes.
-- Concurrency group: `v143-fresh-preview-async-breakthrough-e2e-single`, `cancel-in-progress: false`.
-- Existing permissions currently only `contents: read`; arming edit must add `id-token: write`.
+- **Model-bearing start-request budget is now consumed/ambiguous: exactly one start POST was sent.**
+- Whether the Modal orchestrator/worker/model actually began is **not yet proven**. Do not infer from the fast client failure.
+- **DO NOT RERUN `33998283085`. DO NOT EDIT THE TRIGGER WORKFLOW TO ARM AGAIN. DO NOT SEND A SECOND START.**
+- Since no token returned, cleanup of any possibly-created transient backend job cannot be driven from the runner; determine from exact server/bridge evidence whether a job was created. Any transient async state remains bounded by the existing <=900s TTL if it exists.
+- The terminal-failure ACK repair was not exercised because the failure occurred before a usable signed job token was obtained.
 
-## FINAL PRE-ARM CONTRACT
+## NEXT — DIAGNOSE THIS EXACT START ONLY
 
-Immediately before editing the workflow YAML:
-
-1. Confirm branch HEAD contains only safe checkpoint/helper staging since the last pin audit; no source-pin drift.
-2. Confirm `in_progress=0`, `queued=0`, `waiting=0`, `requested=0`, `pending=0` for branch Actions and no existing breakthrough run is active.
-3. Re-read trigger/concurrency and workflow blob.
-4. Make **one** workflow-file commit only. That push is the single arming event.
-5. Workflow should pin helper blob `92d17ee0b01ff72f71abfac1a7a4b36ff7e02792`, add `id-token: write`, retain source pins, run helper once, cleanup raw material `if: always()`, upload only aggregate `summary.json` `if: always()`.
-6. Watch the resulting run. If model execution starts and later fails, ACK/evidence then STOP. **No rerun and no second model start.**
+1. Read artifact `9978732479` if possible to recover aggregate `startStatus` / `startCurlExitCode`; do not recover or retain raw start response/token material.
+2. Inspect Vercel logs for deployment `dpl_G2WxxMA782j87H7tLpAy9cCB4ihD` around `2026-09-05T23:19:48Z`, endpoint `/api/analyze-audio-tab`, and determine the exact response status/error category without exposing secrets.
+3. Determine whether the request reached the Modal bridge and whether `_start_rhythm_job` spawned/tracked an orchestrator/worker. Distinguish **pre-bridge configuration/request failure** from **bridge start failure** from **accepted job whose response was lost/malformed**.
+4. If backend execution actually began, diagnose that exact call only. No retry.
+5. If backend execution provably never began, still do not issue another start until the root cause and any proposed repair are checkpointed and the one-start authorization boundary is explicitly reconsidered.
+6. Preserve production/no-reference/no-retention frozen boundaries and save each meaningful diagnosis milestone back here.
 
 ## HARD STOPS
 
-- No duplicate model-bearing request.
+- No duplicate/second model-bearing start request.
 - No production Vercel promotion/change.
 - No Deployment Protection weakening/disablement.
 - No scheduler/model change for async lifecycle symptom.
@@ -91,4 +93,4 @@ Immediately before editing the workflow YAML:
 - No TTL > 15 minutes / no persistent result cache.
 - No whole-branch merge to `main`.
 
-Current authorization state: **lifecycle GREEN; historical model-start count 0; OIDC repair proven; failure cleanup repair designed; guarded helper staged without arming; next permitted action is final active/source/trigger revalidation followed by exactly one workflow YAML arming commit if all checks remain clean.**
+Current authorization state: **OIDC protected access GREEN; exactly one guarded start request has been sent and is now the sole subject of diagnosis; start response was unusable and yielded no signed token; no poll/ACK/second start occurred; NO RETRY is authorized.**
