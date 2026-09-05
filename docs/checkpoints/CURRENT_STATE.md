@@ -1,6 +1,6 @@
 # CURRENT STATE — DadRock `/ai-tab`
 
-Updated: 2026-09-05 — fresh-chat handoff  
+Updated: 2026-09-05 — active continuation  
 Branch: `v143-contextual-prune-lobo`
 
 > Compact continuation checkpoint. Older dedicated checkpoints remain authoritative; omission here does not revoke frozen boundaries.
@@ -65,29 +65,44 @@ Important uncertainty:
 
 The current symptom could be in the bridge `start` endpoint, the lightweight async orchestrator/one-shot FunctionCall, control-state publication, Modal spawn lifecycle, app/container startup, or a duplicate/retry trigger. Do not guess which layer without evidence.
 
+## CONTINUATION DIAGNOSTIC — 2026-09-05 SOURCE TRACE
+
+Live Modal account/history/log access is **not available through the connected tools in this chat**. A plugin/connectivity search found no Modal connector, so live FunctionCall/container IDs and true model/audio start count remain unknown. Do not infer them from source.
+
+Verified from the branch and commit history without executing any model/audio work:
+
+- current branch checkpoint commit is `d7d2c8cdff706119e2806059d6772139508df94d`; its tree is `15b2122d36abb226bacffe28335c3ca7fafbbec2`;
+- commit `2f255cd1b45b47c4a85ad2c5382abb0a6d10a15b` added `.github/workflows/v143-preview-async-breakthrough-oidc-e2e.yml` and is the deliberate one-model-bearing E2E trigger;
+- that workflow triggers on `push` to `v143-contextual-prune-lobo` **only when that workflow file itself changes**, has a single job, and its shell script performs exactly one `POST` start before entering a status-only polling loop;
+- the later checkpoint-only commit does not match that workflow path filter, so GitHub push retriggering from the checkpoint update is not a viable explanation for repeated Modal one-shots;
+- deployed bridge source blob is still `36584355d9b060fc7b7e20acc62524fbc7bf9005` on this branch;
+- `_start_rhythm_job()` creates one new job ID and executes exactly one `run_rhythm_async_job.spawn(...)`, then stores that FunctionCall ID in the control partition;
+- `_status_rhythm_job()` reads result/control metadata and uses `modal.FunctionCall.from_id(...).get(timeout=0)`; it contains **no `spawn` and no call back into `_start_rhythm_job()`**;
+- the `analyze` endpoint dispatches `operation=start`, `status`, and `ack` as separate branches, so a well-formed status request cannot source-level recurse into start;
+- therefore the evidence so far points away from GitHub workflow retriggering or the bridge status poll recursively spawning calls. Remaining source-side focus is Modal startup/image/deployment identity and any external duplicate initial `start` request.
+
+No code behavior has been changed yet. No deployment, no production promotion, no model/audio invocation, and no reference-facing operation occurred during this continuation trace.
+
 ## FRESH-CHAT NEXT STEPS — DIAGNOSTIC ONLY FIRST
 
 ### 1. Establish the exact live failure without starting audio/model work
 
-- Read current Modal app history/logs for the hardened HTTP bridge and any async orchestrator/`oneshot` function.
+- Read current Modal app history/logs for the hardened HTTP bridge and any async orchestrator/`oneshot` function when Modal access is available.
 - Identify exact function-call IDs/container IDs and timestamps for the loop/fail-to-start events.
 - Determine whether Modal is repeatedly creating new FunctionCalls, retrying the same FunctionCall, repeatedly cold-starting a container, or failing before the worker is invoked.
 - Confirm whether `rhythm_v143_request` was ever actually invoked during the reported loop.
 - Count actual model/audio starts from logs rather than relying on the old checkpoint count.
 
-### 2. Verify deployment/source identity before changing code
+### 2. Continue source identity/startup inspection without invoking the worker
 
-- Confirm deployed bridge app still corresponds to bridge blob `36584355d9b060fc7b7e20acc62524fbc7bf9005` and protocol blob `1bd55017e16a4e1d8b14c7429492f811a43a28d8`.
-- Confirm live worker remains blob `111bf14a8f91045d3478901f8e36b88a2e7f181a` with scheduler `fc9b4c45c208d80be7abab64a8959f2a3babcee8`.
-- Check whether any later workflow/deploy unintentionally changed the bridge or created a duplicate app/function target.
+- Inspect `modal_analyzer` image construction used by `http_image` / `run_rhythm_async_job` to verify the supposedly lightweight one-shot is not inheriting an inappropriate/heavy startup image or lifecycle dependency.
+- Inspect bridge deployment workflows and recent bridge-changing commits for duplicate app/function targets or environment-name drift.
+- Confirm live deployment identity from Modal when account access becomes available.
 
 ### 3. Inspect async control/queue state without invoking the worker
 
-- Inspect only metadata/status for the transient control/result partitions involved in the looping job(s).
+- Inspect only metadata/status for the transient control/result partitions involved in the looping job(s) when live access is available.
 - Verify whether FunctionCall IDs are being stored once or overwritten/recreated.
-- Verify `start` is idempotent for a single browser action and cannot recursively invoke itself.
-- Verify `status` performs lookup/poll only and cannot call `start`/`spawn`.
-- Verify browser polling does not resend the original analysis body in a way that the route interprets as a fresh `start`.
 - Verify failed/dead FunctionCall status becomes terminal instead of returning `processing` forever.
 
 ### 4. Reproduce only with a no-model synthetic one-shot if needed
