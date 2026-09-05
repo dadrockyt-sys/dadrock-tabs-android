@@ -1,6 +1,6 @@
 # CURRENT STATE — DadRock `/ai-tab`
 
-Updated: 2026-09-05 — authenticated `vercel curl` protected POST GREEN; pulled Preview env classifies V143 URL as sensitive placeholder and analyzer/blob tokens missing; zero model spawn preserved  
+Updated: 2026-09-05 — authenticated `vercel curl` protected POST GREEN; pulled Preview env incomplete; Vercel metadata exposes no env-key listing; model-free runtime config probe authorized next  
 Branch: `v143-contextual-prune-lobo`
 
 > Compact continuation checkpoint. Older dedicated checkpoints remain authoritative; omission here does not revoke frozen boundaries.
@@ -35,9 +35,9 @@ Branch: `v143-contextual-prune-lobo`
 - Helper `.github/scripts/v143-fresh-preview-async-breakthrough-e2e.sh` commit `8d536121bb9a38f4a69add31cbf7515400441c5b`, blob `92d17ee0b01ff72f71abfac1a7a4b36ff7e02792`.
 - Single arming workflow commit `0a07b393bb47123a1142fd46ea6d9a55b04f0486`; run `33998283085`, job `101392517265`, conclusion FAILURE.
 - Fresh Preview `dpl_G2WxxMA782j87H7tLpAy9cCB4ihD`, URL `https://dadrock-tabs-android-bx51iz9tr-stephen-mcnally-s-projects.vercel.app`, Preview/Ready; no production promotion.
-- Aggregate artifact `9978732479`, digest `sha256:e245ae0a89d9c174ce1da14e47c31b252ad516b601d7793b2d982489efc16aa6`: `modelBearingStartRequestCount=1`, `startStatus=401`, `startCurlExitCode=0`, `startAccepted=false`, no signed token/poll/ACK, production/reference fields unchanged.
-- Model-free malformed POST run `33998553314` proved the same direct protected-Preview POST path returns 401 before Next.js, so the audio POST never reached the application, Modal bridge, orchestrator, worker, or model.
-- **Proven backend/model start count from run `33998283085` = 0.** Client POST count = 1.
+- Aggregate artifact `9978732479`, digest `sha256:e245ae0a89d9c174ce1da14e47c31b252ad516b601d7793b2d982489efc16aa6`: client `modelBearingStartRequestCount=1`, `startStatus=401`, `startCurlExitCode=0`, `startAccepted=false`, no signed token/poll/ACK, production/reference fields unchanged.
+- Subsequent model-free routing diagnostics proved the direct protected-Preview POST 401 occurred before Next.js; therefore the audio POST never reached application, Modal bridge, orchestrator, worker, or model.
+- **Proven backend/model start count from run `33998283085` = 0.** Client audio POST count = 1. Do not rerun it.
 
 ## IMPORTANT CORRECTION — DIRECT GITHUB OIDC ACCESS NOT GREEN
 
@@ -47,46 +47,42 @@ Branch: `v143-contextual-prune-lobo`
 
 ## AUTHENTICATED `vercel curl` PROTECTED POST — GREEN
 
-- First CLI diagnostic `33998673175` / job `101393529937` made no HTTP request because `--token` was forwarded to native curl; syntax-only failure.
 - Corrected diagnostic commit `3d3a5ece92c0e5937b93682cff5dc101f7212f01`, run `33998720454`, job `101393652639` — SUCCESS.
-- Exact model-free proof against the existing protected Preview:
-  - malformed POST status = **HTTP 400**
-  - exact route error = `Transcription type must be lead, rhythm, or bass.`
-  - `nextRouteReached=true`
-  - `analyzerCallPossible=false`
-  - `modelBearingStartRequestCount=0`
-  - `audioUrlSupplied=false`
-  - `referenceFacingInputs=0`.
-- Therefore authenticated `vercel curl --deployment <exact-preview-url>` is a valid protected request transport without weakening/disablement, bypass-secret creation, production promotion, or model execution.
-- Candidate E2E transport repair remains: authenticated `vercel curl` for preflight/start/status/ACK instead of direct GitHub-OIDC curl. **Do not arm yet.**
+- Model-free malformed POST against the exact protected Preview returned HTTP **400** with exact route error `Transcription type must be lead, rhythm, or bass.`
+- Proven: `nextRouteReached=true`, `analyzerCallPossible=false`, `modelBearingStartRequestCount=0`, `audioUrlSupplied=false`, `referenceFacingInputs=0`.
+- Therefore authenticated `vercel curl --deployment <exact-preview-url>` is the correct protected request transport without weakening protection, bypass-secret creation, production promotion, or model execution.
 
-## PREVIEW ENV CLASSIFICATION — MODEL-FREE BLOCKERS CONFIRMED
+## PREVIEW ENV CLASSIFICATION — LOCAL PULL INCOMPLETE
 
-- Pinned route requires, for a Rhythm `start`, these three critical Preview runtime values before any bridge call:
-  - `ANALYZER_API_URL_V143`
-  - `ANALYZER_API_TOKEN`
-  - `BLOB_READ_WRITE_TOKEN`.
-- Model-free classification workflow commit `a824ef08137540b42fce51ff9fa462974f34aeb2`, run `33998800056`, job `101393870080`.
-- The run first re-proved protected POST transport GREEN: malformed POST HTTP 400, route reached, analyzer call impossible, audio supplied false, model starts 0.
-- `vercel pull --environment=preview --git-branch=v143-contextual-prune-lobo` then emitted exactly one unpullable Secret warning and classifications only; no secret value was printed:
+- Rhythm `start` requires `ANALYZER_API_URL_V143`, `ANALYZER_API_TOKEN`, and `BLOB_READ_WRITE_TOKEN` before bridge call.
+- Model-free classification commit `a824ef08137540b42fce51ff9fa462974f34aeb2`, run `33998800056`, job `101393870080`.
+- Authenticated malformed POST was re-proven HTTP 400 / route reached / model starts 0.
+- `vercel pull --environment=preview --git-branch=v143-contextual-prune-lobo` classified without printing values:
   - `ANALYZER_API_URL_V143 = sensitive_placeholder`
   - `ANALYZER_API_TOKEN = missing`
   - `BLOB_READ_WRITE_TOKEN = missing`
-  - `secretValuesPrinted=false`
-  - `modelBearingStartRequestCount=0`
-  - `audioUrlSupplied=false`
-  - `analyzerCallPossible=false`.
-- `.vercel` was deleted in the `always()` cleanup step.
-- Interpretation is deliberately limited: this proves the **locally pulled Preview env used by a prebuilt build is unsafe/incomplete** for the V143 Rhythm start path. It does **not yet prove** the two missing keys are absent from Vercel-managed runtime env on a cloud-built Preview; they may be unavailable to `vercel pull` due to scoping/secret handling.
-- Therefore no further `vercel build --prebuilt` model-bearing attempt is authorized.
+  - `secretValuesPrinted=false`, `modelBearingStartRequestCount=0`, `audioUrlSupplied=false`, `analyzerCallPossible=false`.
+- `.vercel` was deleted in `always()` cleanup.
+- This proves only that the **locally pulled Preview env used for a prebuilt build is incomplete/unsafe**. It does not prove Vercel-managed cloud runtime env lacks those values.
+- No further local `vercel build --prebuilt` model-bearing attempt is authorized.
 
-## NEXT — DISTINGUISH LOCAL-PULL LIMITATION FROM VERCEL RUNTIME CONFIG
+## VERCEL METADATA INSPECTION — ENV-KEY METADATA UNAVAILABLE THROUGH CONNECTED APP
 
-1. Inspect Vercel project/environment metadata for the three critical key names/scopes without retrieving/printing values.
-2. Use a model-free runtime probe if needed: a `status` operation with a fake nonempty job token can safely test whether Rhythm analyzer URL/token configuration reaches the route's config gate; it carries no audio and cannot start a worker/model. Prefer metadata inspection first.
-3. Determine whether a **cloud source build/deploy** (rather than local `--prebuilt`) preserves Vercel-managed sensitive Preview runtime env. Any fresh Preview proof must remain model-free and use authenticated `vercel curl`.
-4. Checkpoint the exact cloud-build/config proof and only then design the breakthrough workflow repair.
-5. Only after transport + runtime config are GREEN explicitly reconsider a second client POST, noting the first client POST provably caused zero backend/model starts.
+- Connected Vercel project read confirms project `prj_6biwsn0iHci6FHNswAUCS8UYrAqF`, team `team_qJrw8Cuze5bCEg9M3Q67XMWt`, framework Next.js, Node 24.x, and latest deployment `dpl_G2WxxMA782j87H7tLpAy9cCB4ihD` READY.
+- The connected project/deployment interface does not expose an environment-variable key listing or scopes, so the preferred metadata-only distinction cannot be completed through this connection without retrieving values.
+- Do not infer absence from that limitation.
+
+## NEXT — MODEL-FREE RUNTIME CONFIG PROBE
+
+1. Extend the existing diagnostic workflow `.github/workflows/v143-protected-preview-post-routing-diagnosis.yml` only; do not touch the breakthrough trigger.
+2. Use authenticated `vercel curl` against the exact existing Preview and POST `operation=status`, `transcriptionType=rhythm`, and a deliberately fake nonempty `jobToken`.
+3. Supply **no audio URL/path/song/artist**, so `needsAudioRequest=false`; this operation cannot create/spawn a job or execute the model.
+4. Interpret strictly:
+   - HTTP 503 + `The audio analyzer is not configured.` => Vercel runtime lacks selected V143 URL and/or analyzer token.
+   - Any bridge-origin response (for example invalid/unauthorized fake token) => route runtime config passed and bridge was reached; still zero model start because `status` never spawns.
+5. Record status/error class only; no secrets/values. Keep `modelBearingStartRequestCount=0`, `audioUrlSupplied=false`, `analyzerStartOperationSent=false`, `referenceFacingInputs=0`.
+6. If existing prebuilt Preview runtime config is missing, next investigate a **cloud source build/deploy** model-free Preview because Vercel-managed cloud builds may receive sensitive runtime env that `vercel pull` cannot materialize.
+7. Checkpoint the exact result before any further deployment/workflow design.
 
 ## HARD STOPS
 
@@ -99,4 +95,4 @@ Branch: `v143-contextual-prune-lobo`
 - No TTL > 15 minutes / no persistent result cache.
 - No whole-branch merge to `main`.
 
-Current authorization state: **authenticated protected POST transport GREEN; direct GitHub OIDC trust path not green; locally pulled Preview env is incomplete for V143 start; first audio POST caused zero backend/model execution; no second model-bearing request authorized pending Vercel-managed runtime config/cloud-build proof.**
+Current authorization state: **authenticated protected POST transport GREEN; direct GitHub OIDC trust path not green; locally pulled Preview env incomplete; Vercel metadata cannot expose env-key scopes; first audio POST caused zero backend/model execution; next permitted action is the model-free fake-token status probe only.**
