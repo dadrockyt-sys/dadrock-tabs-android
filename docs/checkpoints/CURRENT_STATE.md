@@ -1,6 +1,6 @@
 # CURRENT STATE — DadRock `/ai-tab`
 
-Updated: 2026-09-05 00:24 America/Toronto  
+Updated: 2026-09-05 00:28 America/Toronto  
 Branch: `v143-contextual-prune-lobo`
 
 > Compact continuation checkpoint. Older dedicated checkpoints remain authoritative; omission here does not revoke frozen boundaries.
@@ -83,12 +83,13 @@ Repository-owned `public/gomywayfullaitest.m4a`:
 
 ## Promotion Gate 2 — APPROVED FIXTURE RUNTIME / GREEN / CLOSED
 
-Implementation-specific one-shot harness is branch-local and does **not** import/reuse the CLOSED generic concurrency helper:
+Implementation-specific one-shot harness is branch-local and does **not** import/reuse the CLOSED generic concurrency helper.
 
-- `analyzer/v143_seeded_scheduler_runtime_modal.py` proof blob `94ce232eb2a86bafb95815ee693e19c5c38af1b7`;
-- `.github/scripts/v143_seeded_scheduler_runtime_collect.py` proof blob `dea00bc99f5cf06b8e1d1ab60643840c6924968d`;
-- scheduler proof blob `fc9b4c45c208d80be7abab64a8959f2a3babcee8`;
-- workflow `.github/workflows/v143-seeded-scheduler-runtime.yml`.
+Proof-time blobs:
+
+- `analyzer/v143_seeded_scheduler_runtime_modal.py` `94ce232eb2a86bafb95815ee693e19c5c38af1b7`;
+- `.github/scripts/v143_seeded_scheduler_runtime_collect.py` `dea00bc99f5cf06b8e1d1ab60643840c6924968d`;
+- scheduler proof blob `fc9b4c45c208d80be7abab64a8959f2a3babcee8`.
 
 ### Authoritative GREEN execution
 
@@ -106,31 +107,47 @@ Implementation-specific one-shot harness is branch-local and does **not** import
 - `rawAudioRetained=false`; `stemBytesRetained=false`; `crossRequestPersistence=false`.
 - `productionWorkerChanged=false`; `productionBridgeChanged=false`; `vercelChanged=false`; `mainMergePerformed=false`.
 
-### Why run #2 failed — diagnosis only, does not invalidate run #1
+### Run #2 race diagnosis
 
-- Explicit trigger commit `855dc46a87a75f9c8b11f1eaf71a76319e99af1b` launched Gate-2 **run #2** `33943117001` only ~25s after the workflow-creation commit.
-- Run #2 used the same fixed isolated Modal app name as still-running run #1.
-- Historical Modal logs retrieved by diagnosis-only run `33943967529` prove two concurrent calls:
-  - run #1 call `fc-01M1QV7RXNV2BZSF2688P5PKWY` reached `separator.done` and returned the authoritative GREEN evidence;
-  - run #2 call `fc-01M1QV8G1D2HNMW9BHNZGD9DSR` was still in cascade Demucs when run #1 cleanup stopped the shared app, causing cancellation/`KeyboardInterrupt`/client `RemoteError`.
-- GitHub Actions enumeration confirms `bcd00fa...` owned runtime run #1 (`33943100948`) and `855dc46...` owned runtime run #2 (`33943117001`); this was **two automatic push-triggered workflow executions**, not two calls from one collector.
-- Collector source calls `fn.remote()` exactly once per workflow execution.
-- Therefore run #2 is a **shared-isolated-app race artifact**, not a scheduler parity regression and not a reason to rerun the approved fixture.
+- Explicit trigger commit `855dc46a87a75f9c8b11f1eaf71a76319e99af1b` launched Gate-2 run #2 `33943117001` only ~25s after workflow creation.
+- Both runs used the same fixed isolated Modal app.
+- Historical Modal logs retrieved by diagnosis-only run `33943967529` prove run #1 returned GREEN while run #2 was still in cascade Demucs; run #1 cleanup then stopped the shared app and caused run #2 cancellation/`KeyboardInterrupt`/client `RemoteError`.
+- Collector source calls the remote function exactly once per workflow execution.
+- Therefore run #2 is a shared-app race artifact, not a scheduler parity regression.
 - **Gate 2 is CLOSED/GREEN from run #1. No Gate-2 rerun is justified.**
+
+## Gate 2 dormant-workflow hardening — COMPLETE / ZERO FIXTURE EXECUTIONS
+
+The proof remains anchored to the proof-time blobs above. Post-proof harness hardening changes only future gate orchestration and does **not** alter the scheduler candidate blob.
+
+1. Commit `d414f85288b7cbe6e2dd1c14792676c72c613e9c` changed `.github/workflows/v143-seeded-scheduler-runtime.yml` to **manual-only `workflow_dispatch`** and added a static concurrency group with `cancel-in-progress: false`.
+2. Commit `6851b17e6294eed1adafedf28944414a1c115189` changed `analyzer/v143_seeded_scheduler_runtime_modal.py` so the Modal app name is required from `V143_SEEDED_SCHEDULER_RUNTIME_APP_NAME`; new blob `acbbee111ee4f8818b5b21f898253d7ea0625bec`.
+3. Commit `4c050021134779f95c410fc460ebf413b470d683` changed the collector to require/use the same app-name environment variable; new blob `bd01ce7784c5b05d4b72bfde733342b838e9b30f`.
+4. Commit `d2597deb7d710ea724c3110e67cf829ba9660aeb` finished workflow isolation: app name is `dadrock-v143-seeded-scheduler-runtime-gate-${github.run_id}-${github.run_attempt}`, exact helper blob pins were updated, deploy/collector/cleanup share that identity, and cleanup stops only that run's app. Workflow blob `ab6284332c0862d6d75a4088a22c8c6ab7f4a2a4`.
+
+Verification:
+
+- Pushes `d414f852...`, `6851b17e...`, `4c050021...`, and `d2597deb...` each produced **zero `V143 Seeded Scheduler Runtime Gate` executions**. The only Actions entry for each SHA was the unrelated `cleanup-tab-preview.yml` workflow.
+- No approved fixture was invoked by hardening.
+- No Modal production app was deployed/stopped by hardening.
+- No production worker/bridge/Vercel code changed.
+- No reference-facing input/scoring or quality verdict occurred.
+- Future Gate-2 executions are deliberate, serialized, and per-run isolated; however Gate 2 is already closed and must not be rerun absent a demonstrated source/runtime-policy change that invalidates the proof.
 
 ## PROMOTION STATUS
 
 - Gate 1 structural: **GREEN / CLOSED**.
 - Gate 2 approved-fixture runtime: **GREEN / CLOSED**.
-- Normal-routing E2E pipeline verification is now **UNLOCKED/JUSTIFIED**.
+- Gate 2 dormant workflow: **HARDENED / MANUAL-ONLY / SERIALIZED / PER-RUN ISOLATED**.
+- Normal-routing E2E pipeline verification is **UNLOCKED/JUSTIFIED**.
 - Production remains unchanged until that next gate is designed and passes.
 
 ## NEXT STEP
 
-1. Harden the dormant Gate-2 workflow so future maintenance cannot auto-launch duplicate expensive approved-fixture executions or share cleanup state.
-2. Do this without invoking the fixture: manual-only trigger + serialized concurrency + per-run isolated Modal app identity.
-3. Checkpoint the hardening and confirm it caused **zero** Gate-2 fixture executions.
-4. Then inspect/design the narrow normal-routing E2E pipeline gate against the current branch candidate, preserving all frozen scoring/retention boundaries.
+1. Inspect prior checkpoints, routing helpers, existing branch-only harnesses/workflows, and current request path to recover the intended **normal-routing E2E** gate rather than inventing a broader test.
+2. Define the narrowest gate that proves the current scheduler candidate is reached through the normal branch routing stack while preserving zero reference scoring and zero persistent audio/stem retention.
+3. Prefer structural/static checks first; do not invoke an expensive approved-fixture/model path until the exact E2E boundary, app isolation, trigger policy, and evidence contract are pinned.
+4. Checkpoint the E2E design before any model-bearing run.
 
 ### Hard stops
 
