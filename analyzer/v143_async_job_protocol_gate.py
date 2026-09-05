@@ -1,8 +1,10 @@
 from __future__ import annotations
 
 import ast
+import base64
 import hashlib
 import json
+import random
 from pathlib import Path
 from typing import Any
 
@@ -61,8 +63,10 @@ def main() -> None:
         "wrong signing secret did not fail closed",
     )
 
-    # Force multi-chunk transport with highly incompressible-ish structured text.
-    text = "".join(chr(33 + ((index * 37) % 90)) for index in range(2_100_000))
+    # Deterministic pseudo-random bytes encoded as text stay poorly compressible,
+    # forcing the transport to exercise multiple sub-1MiB queue items.
+    rng = random.Random(143)
+    text = base64.b64encode(rng.randbytes(1_600_000)).decode("ascii")
     result = {
         "generatedTab": "e|--0--|\nB|--1--|",
         "events": [{"id": 1, "detail": text}],
@@ -75,7 +79,10 @@ def main() -> None:
     }
     envelope = build_completed_envelope(result)
     items = encode_result_envelope(envelope)
-    require(len(items) >= 2, "encoded envelope must contain header plus data")
+    require(
+        isinstance(items[0], dict) and items[0].get("chunkCount", 0) >= 2,
+        "test payload did not exercise multi-chunk transport",
+    )
     require(
         all(
             not isinstance(item, bytes) or len(item) <= ASYNC_RESULT_CHUNK_BYTES
@@ -136,6 +143,7 @@ def main() -> None:
         "bridgeBlob": git_blob_sha(BRIDGE),
         "resultTtlSeconds": ASYNC_RESULT_TTL_SECONDS,
         "chunkBytes": ASYNC_RESULT_CHUNK_BYTES,
+        "chunkCount": items[0]["chunkCount"],
         "tokenRoundtrip": True,
         "tamperRejected": True,
         "wrongSecretRejected": True,
