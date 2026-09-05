@@ -14,7 +14,7 @@ Branch: `v143-contextual-prune-lobo`
 - GPU promotion CLOSED; do not rerun GPU or weaken exact parity.
 - Native split-parallel CPU promotion CLOSED; do not rerun or promote its faster non-identical hash.
 - No persistent user-audio/stem retention without an explicit allowed retention boundary.
-- No production bridge/worker/Vercel/UI change or `main` merge until the cache promotion gates are satisfied.
+- No production bridge/worker/Vercel/UI change or `main` merge until the cache/promotion gates are satisfied.
 
 ## Production — unchanged
 
@@ -67,7 +67,7 @@ Terminal evidence:
 
 **Do not rerun this direct cache gate without a demonstrated regression or changed fingerprint policy.**
 
-## Full two-view separator identity — authenticated current-regime evidence found
+## Full two-view separator identity — authenticated current-regime evidence
 
 Live Rhythm uses both:
 
@@ -78,57 +78,59 @@ Historical August Section-3 L4 evidence (`9cc3ca2cf9cdb02a0fa82e1f4fba56bc729e74
 
 The current oneDNN-off direct regime was established by commit `34471c7cdd061dbbc5ed807ba473bb2e156bc5f8`, which records the same direct anchor now frozen above.
 
-Crucially, later cold exact proof `debug/v143-contextual-prune/repaired-timing-precision-cold-exact-proof.json`, recorded by commit `dd1b32a9ba250cbf1520d01411a298c865e88e6d`, contains **two independent passes** with:
+Cold exact proof `debug/v143-contextual-prune/repaired-timing-precision-cold-exact-proof.json`, recorded by commit `dd1b32a9ba250cbf1520d01411a298c865e88e6d`, contains two independent passes with:
 
 - source SHA exactly `215bd5a657c5326f08f132ae358595a95c30b39bb7493a52c2f910d5a608149f`;
 - normalized SHA exactly `ab64e7cdd8a792aecfb6eec518577d8d7e9d2f8aa43007e632470d9fe4511e7f`;
 - direct Guitar SHA exactly `0ac47da671df6f8387c1ad1343171de0cf7a0db6985dadf3f30e4a9c7cf0189c` on both passes;
-- **cascade Guitar SHA `546e5170870cc6c73e1f0a8eeb8314f7b6262079593e0b484207bb38f323cc41` on both passes**;
+- cascade Guitar SHA `546e5170870cc6c73e1f0a8eeb8314f7b6262079593e0b484207bb38f323cc41` on both passes;
 - `firstStageHashMismatch=null`, `invariantFailures=[]`, `passed=true`;
 - protected pipeline unchanged; production not modified.
 
-Therefore the cascade **WAV/file identity** is authenticated for the same direct execution regime as the frozen current anchor. This avoids inventing a new cascade baseline.
+Therefore the cascade WAV/file identity is authenticated for the same direct execution regime as the frozen current anchor.
 
-## Cascade exact stage-cache — IMPLEMENTED / RUNNING
+## Cascade exact stage-cache — GREEN / CLOSED
 
-Isolated cascade-only implementation now exists:
+Isolated cascade-only implementation:
 
 - `analyzer/v143_exact_cascade_cache_real_audio_modal.py` — commit `15cb4d019a66b4da3ccc37814e07b854567d3df2`, blob `9ceda1afa6824529a1e58ffbdbd11cdd808d30ee`;
 - `.github/scripts/v143_exact_cascade_cache_real_audio_collect.py` — commit `e591bc43b8957db3dc727ce3b62ed132f0f68c4a`, blob `2fd68ab2c1087039ebf1f51efb460ed7f2b78633`;
 - `.github/workflows/v143-exact-cascade-cache-real-audio.yml` — commit `e1d31e3e397aeefdebf8fc9c407242602f450de2`.
 
-Current Actions execution:
+Terminal evidence:
 
-- run `33939561555`;
-- job `101234177608`;
-- state at this checkpoint: **IN PROGRESS**.
+- run `33939561555` SUCCESS; job `101234177608` SUCCESS;
+- Modal call `fc-01M1QPTKH7K3VAZH9RSGRBY0Q0`;
+- collector wall `898.489s`;
+- cold cascade-cache miss `838.734s`; warm hit `0.127996s`; measured isolated speedup `6552.829x`;
+- RoFormer stage `90.044s`; cascade exact CPU Demucs stage `748.029s`;
+- cache key `bf717808944bde35aed5b6094ba91520af8c3a8dc1bdda31d2db9c563495415d`;
+- compute calls: composite `1`, RoFormer `1`, cascade Demucs `1`, **direct Demucs `0`**, corruption sentinel fallback `1`;
+- BS-RoFormer model `model_bs_roformer_ep_317_sdr_12.9755.ckpt`, SHA `5b84f37e8d444c8cb30c79d77f613a41c05868ff9c9ac6c7049c00aefae115aa`, bytes `639331213`;
+- Demucs weight/config identities exactly match the frozen direct regime;
+- RoFormer Instrumental WAV SHA `ce7ae8c6c57e00e1e191b8c15a8c4f39627cbcdf3b7a75ac7ca4c246f6f64b14`;
+- RoFormer Instrumental PCM-int16 SHA `16e0a16a54ab1b007d15647d293900ecfbfabceccfa886f004a86162d4a454dd`;
+- cascade Guitar WAV SHA `546e5170870cc6c73e1f0a8eeb8314f7b6262079593e0b484207bb38f323cc41` on miss and hit;
+- cascade Guitar PCM-int16 SHA `75c0feefb416d8438641ceebe903253f935bd19c550e97e9ef0a90426e7727ba` on miss and hit;
+- RoFormer/cascade WAVs are 44.1 kHz, 2 channels, `9,324,544` frames, `37,298,220` bytes each;
+- cascade Demucs shift trace exactly `0,22050,6026`;
+- L4 RoFormer runtime: Torch `2.13.0+cu130`, CUDA `13.0`, device `NVIDIA L4`, compute capability `8.9`;
+- miss/populate GREEN; warm hit skips both expensive cascade stages; fingerprint mismatch changes key/misses; corruption rejected and exact-compute fallback boundary reached;
+- artifact `9961570152`, ZIP SHA `775e6443b85358fcdd4dfcf8cba65cc4108e10fcae01f1bed5defd63b6241125`;
+- cleanup GREEN; `rawAudioRetained=false`; `stemBytesRetained=false`; reference score calls `0`; no quality verdict; no GPU performance comparison; production untouched; no `main` merge.
 
-Scope/safety:
+Verdict: **direct + cascade exact stage-cache semantics are proven GREEN for repository-owned real audio in isolated ephemeral diagnostics.** This does **not** authorize persistent production caching.
 
-- only repository-owned Gomyway input;
-- cascade-only compute: BS-RoFormer Instrumental → exact CPU Demucs Guitar;
-- direct Demucs compute count is required to stay `0`; the closed direct cache gate is not rerun;
-- RoFormer runs on the CUDA-capable L4 path because that is the source-proven live cascade path; this is identity/cache validation, **not** a GPU performance comparison;
-- actual BS-RoFormer model bytes are prefetched through the same CLI and SHA-256 fingerprinted before cache lookup;
-- Demucs weight/config hashes are pinned to the already-authenticated exact direct regime;
-- authenticated current-regime cascade WAV SHA required: `546e5170870cc6c73e1f0a8eeb8314f7b6262079593e0b484207bb38f323cc41`;
-- the run will additionally capture RoFormer intermediate WAV/PCM identity and cascade PCM-int16 identity;
-- cold miss must execute RoFormer once and cascade Demucs once, then populate only after exact cascade WAV/runtime/shift invariants pass;
-- immediate warm hit must skip both expensive compute stages and reproduce exact cascade WAV/PCM bytes;
-- mismatch/corruption are fail-closed without a second expensive cascade execution;
-- cache/audio/stems are confined to `TemporaryDirectory` and must be deleted at run end;
-- no reference-facing score, no quality verdict, no production changes, no persistent retention.
-
-Do not promote or generalize the cascade cache until this run is terminal GREEN with inspectable aggregate evidence.
+**Do not rerun the cascade cache gate without a demonstrated regression or changed fingerprint/runtime policy.**
 
 ## Production source mapping — RESOLVED
 
 On this branch:
 
 - `v143_modal_http_endpoint.py` → live app `dadrock-v143-ai-tab-live/rhythm_v143_request`;
-- `v143_modal_live_endpoint.py` → `v143_rhythm_stem_provider.rhythm_v143_stem_provider(...)`;
-- `v143_rhythm_stem_provider.py` → `build_shadow_deterministic_stems(...)`;
-- `v143_rhythm_deterministic_stem_provider.py` → `build_deterministic_v143_stems(...)`;
+- `v143_modal_live_endpoint.py` → one `process_vercel_audio_request(...)` call using `build_deterministic_rhythm_stem_bundle`;
+- `v143_rhythm_stem_provider.py` builds the paired direct/cascade bundle once and downstream routing/technique enrichment reuses those paths;
+- `v143_rhythm_deterministic_stem_provider.py` → deterministic separator;
 - `v143_deterministic_separator.py` → `build_seeded_v143_stems(...)`;
 - `v143_seeded_separator.py` is the source-proven separator seam.
 
@@ -140,8 +142,23 @@ On this branch:
 - No explicit `/ai-tab` policy/config/code authorizes separated stems to persist across requests.
 - Existing Backing Track Studio retention rules do not authorize AI-tab.
 - A deterministic non-audio result seam exists after analysis, but no explicit cross-request `/ai-tab` result-persistence authorization has been found either.
+- The live Rhythm call graph builds the paired stem bundle only once per request and reuses it downstream, so a request-scoped stage cache would not remove a duplicate expensive separator call.
 
 Therefore persistent production stem caching remains **`BLOCKED_BY_RETENTION_POLICY`**. Derived-result caching is design-only unless an explicit allowed persistence boundary is found.
+
+## Zero-retention performance direction — view-level concurrency candidate
+
+Source/evidence now supports investigating a separate **isolated** performance diagnostic that overlaps the two already-frozen view computations without retaining data across requests:
+
+- historical current-regime sequential evidence shows direct Demucs and cascade Demucs dominate wall time;
+- direct and cascade are independent final views once the RoFormer Instrumental exists;
+- safe candidate schedule: normalize → RoFormer Instrumental → run unchanged direct Demucs and unchanged cascade Demucs concurrently in **separate processes**, each retaining its existing deterministic child/runtime controls;
+- do **not** parallelize Demucs chunks or alter Demucs math/order; that closed native split-parallel branch produced a non-identical hash;
+- do **not** use concurrent threads that mutate the shared parent environment via `_temporary_environment`; independent processes are required for isolated environment state;
+- exact direct/cascade WAV + PCM anchors above remain mandatory; any mismatch closes the candidate;
+- this would remain request-scoped/ephemeral and therefore does not require persistent stem caching.
+
+This is a diagnostic candidate only. No production concurrency wiring has been made.
 
 ## User authorization / intent
 
@@ -151,11 +168,12 @@ Therefore persistent production stem caching remains **`BLOCKED_BY_RETENTION_POL
 
 ## NEXT STEPS
 
-1. Finish cascade Actions run `33939561555`; inspect/download the aggregate artifact and record actual RoFormer weight hash, intermediate WAV/PCM hashes, cascade WAV/PCM hashes, cache key, timings, compute counts, cleanup, run/job/call/artifact IDs, and verdict here.
-2. If the cascade run fails, fix only the demonstrated isolated diagnostic issue; do not rerun the closed direct gate and do not change production.
-3. If cascade GREEN, treat direct + cascade exact stage cache semantics as proven **only in ephemeral diagnostics**. Persistent production caching remains blocked by retention policy.
-4. Then determine whether an explicitly non-persistent/request-scoped reuse mechanism provides useful savings, or whether explicit product/privacy authorization is needed before any cross-request cache design can proceed.
-5. No production bridge/worker/Vercel/UI changes or `main` merge merely to test.
+1. Keep direct and cascade exact cache gates CLOSED/GREEN; do not rerun absent a demonstrated regression or changed fingerprint/runtime policy.
+2. Persistent cross-request stem/result caching stays `BLOCKED_BY_RETENTION_POLICY`; do not wire it into production without an explicit allowed persistence boundary.
+3. Build an **isolated view-level concurrency diagnostic** only: same repository-owned Gomyway input, same normalized SHA, unchanged RoFormer + unchanged exact direct/cascade Demucs invocations, independent process environments, ephemeral request-scoped files only.
+4. Require exact direct Guitar WAV/PCM, cascade Guitar WAV/PCM, cascade shift trace, and RoFormer intermediate identity to match the now-frozen anchors. Record sequential-vs-concurrent wall only as performance/identity evidence; make no quality claim.
+5. If view concurrency is byte-exact and materially faster, source-map the smallest production-safe scheduler change and checkpoint it; still do not merge/deploy merely to test.
+6. If concurrency changes either view hash/runtime invariant or provides no useful wall improvement, close it and retain current production behavior.
 
 ### Hard stops
 
@@ -163,9 +181,9 @@ Therefore persistent production stem caching remains **`BLOCKED_BY_RETENTION_POL
 - No GOAT restricted bytes.
 - No sealed GuitarSet `00/01/03` access.
 - No SplitMySong reopening.
-- No GPU performance rerun.
-- No split-parallel rerun.
-- No direct cache rerun absent regression/fingerprint change.
+- No GPU Demucs performance rerun.
+- No intra-Demucs split-parallel rerun.
+- No direct/cascade cache rerun absent regression/fingerprint change.
 - No weakening exact parity/fail-closed criteria.
-- No persistent user-audio/stem retention without explicit permission.
-- No production change or `main` merge until promotion gates pass.
+- No persistent user-audio/stem/result retention without explicit permission.
+- No production bridge/worker/Vercel/UI change or `main` merge until promotion gates pass.
