@@ -1,6 +1,6 @@
 # CURRENT STATE — DadRock `/ai-tab`
 
-Updated: 2026-09-05 00:28 America/Toronto  
+Updated: 2026-09-05 00:35 America/Toronto  
 Branch: `v143-contextual-prune-lobo`
 
 > Compact continuation checkpoint. Older dedicated checkpoints remain authoritative; omission here does not revoke frozen boundaries.
@@ -134,20 +134,46 @@ Verification:
 - No reference-facing input/scoring or quality verdict occurred.
 - Future Gate-2 executions are deliberate, serialized, and per-run isolated; however Gate 2 is already closed and must not be rerun absent a demonstrated source/runtime-policy change that invalidates the proof.
 
+## Promotion Gate 3A — NORMAL-ROUTING COMPOSITION E2E / DESIGNED / NOT RUN
+
+Recovered current branch request path:
+
+1. Vercel `app/api/analyze-audio-tab/route.js` blob `06234db3e1cc1680b18fd62a765862b213ede3db` selects `ANALYZER_API_URL_V143` **only** for `transcriptionType === 'rhythm'`, preserves the legacy analyzer fallback for Lead/Bass, forwards the private Blob handoff contract, and fails closed unless the returned `liveV143` anti-leakage contract is complete.
+2. `analyzer/v143_modal_http_endpoint.py` blob `9a550f0afd5ced3894d8f1ccd18543fa5cd68ad6` dispatches Rhythm to Modal app `dadrock-v143-ai-tab-live`, function `rhythm_v143_request`; Lead/Bass remain legacy.
+3. `analyzer/v143_modal_live_endpoint.py` blob `111bf14a8f91045d3478901f8e36b88a2e7f181a` runs `process_vercel_audio_request(...)` and explicitly supplies `build_deterministic_rhythm_stem_bundle` as the Rhythm stem provider.
+4. `analyzer/v143_vercel_audio_request_adapter.py` blob `6d1787f34a3b7ca781ced8e5695993a3777406a8` owns a request-scoped `TemporaryDirectory`, downloads and normalizes before routing, and hands the provider into the normal Rhythm router.
+5. `analyzer/v143_modal_rhythm_router.py` blob `7849f33cd3b849283ccebfda9f721cc40704231e` invokes the stem provider only for Rhythm and delegates non-Rhythm requests unchanged to the legacy analyzer.
+6. `analyzer/v143_rhythm_deterministic_stem_provider.py` blob `3c6dcf9b8e7360ba1dd886810f3c14c05ac0579b` defaults to `build_deterministic_v143_stems` and passes that exact builder into the authoritative Rhythm stem-bundle layer.
+7. `analyzer/v143_rhythm_stem_provider.py` blob `cd180bfb35e8110f031504035af5f11e502c3dc6` invokes the supplied separator builder and requires independent `directGuitar` + `cascadeGuitar` files.
+8. `analyzer/v143_deterministic_separator.py` blob `28b3e6fe0eb761178b142cf7dcbda533f0bf918d` imports `build_seeded_v143_stems` from `v143_seeded_separator` and calls it once before enforcing the frozen deterministic settings.
+9. The reached scheduler is therefore the already-proven candidate `analyzer/v143_seeded_separator.py` blob `fc9b4c45c208d80be7abab64a8959f2a3babcee8`.
+
+Gate 3A design:
+
+- **Structural/composition only**: Python stdlib source/AST checks plus exact Git-blob identities. No project module import is required.
+- Verify the entire cross-language chain above, including Rhythm-only selection, Lead/Bass fallback, worker app/function identity, request adapter handoff, request-scoped temporary storage, router/provider wiring, deterministic wrapper, and exact seeded scheduler target.
+- Verify the Vercel fail-closed runtime-safety fields remain `referenceFree=true`, `professionalReferenceUsed=false`, `referenceRuntimeInputUsed=false`, `runtimeLabelsRequired=false`.
+- Reject imports/calls into known scoring/reference-development/restricted-corpus lanes in the normal-routing chain.
+- Emit aggregate JSON booleans/source identities only.
+- **No audio bytes, fixture invocation, Modal call/deploy, GPU, model download, secrets, reference-facing input, scoring, or quality verdict.**
+- Safe to auto-run on branch pushes limited to the Gate-3A script/workflow and pinned routing-chain paths because the gate itself cannot execute the analyzer/model path.
+- This composition gate deliberately reuses Gate 2's already-closed runtime evidence rather than rerunning the separator.
+- A later model-bearing normal-route run is **not yet authorized**; after Gate 3A closes, decide whether such a run would add evidence not already provided by the composition proof + authoritative Gate-2 runtime proof.
+
 ## PROMOTION STATUS
 
 - Gate 1 structural: **GREEN / CLOSED**.
 - Gate 2 approved-fixture runtime: **GREEN / CLOSED**.
 - Gate 2 dormant workflow: **HARDENED / MANUAL-ONLY / SERIALIZED / PER-RUN ISOLATED**.
-- Normal-routing E2E pipeline verification is **UNLOCKED/JUSTIFIED**.
-- Production remains unchanged until that next gate is designed and passes.
+- Gate 3A normal-routing composition E2E: **DESIGNED / NOT RUN**.
+- Production remains unchanged.
 
 ## NEXT STEP
 
-1. Inspect prior checkpoints, routing helpers, existing branch-only harnesses/workflows, and current request path to recover the intended **normal-routing E2E** gate rather than inventing a broader test.
-2. Define the narrowest gate that proves the current scheduler candidate is reached through the normal branch routing stack while preserving zero reference scoring and zero persistent audio/stem retention.
-3. Prefer structural/static checks first; do not invoke an expensive approved-fixture/model path until the exact E2E boundary, app isolation, trigger policy, and evidence contract are pinned.
-4. Checkpoint the E2E design before any model-bearing run.
+1. Implement `analyzer/v143_normal_routing_e2e_structure_gate.py` with exact source-identity and semantic routing checks only.
+2. Add a branch-only no-secret/no-model workflow that runs Gate 3A and uploads aggregate JSON evidence.
+3. Observe the structural gate to terminal state and checkpoint the evidence.
+4. If GREEN, evaluate whether any model-bearing normal-route E2E is actually necessary; do not run one merely to repeat Gate 2.
 
 ### Hard stops
 
@@ -160,6 +186,7 @@ Verification:
 - No direct/cascade cache rerun absent regression/fingerprint change.
 - No generic view-level concurrency diagnostic rerun absent regression/fingerprint/runtime-policy change.
 - No Gate-2 approved-fixture rerun: existing run #1 is authoritative GREEN.
+- No Gate-3 model-bearing run until Gate 3A closes and incremental evidentiary value is demonstrated.
 - No weakening exact parity/fail-closed criteria.
 - No persistent user-audio/stem/result retention without explicit permission.
-- No production bridge/worker/Vercel/UI change or `main` merge until normal-routing E2E passes.
+- No production bridge/worker/Vercel/UI change or `main` merge until the normal-routing promotion boundary is closed.
