@@ -31,10 +31,12 @@ Repository-owned `public/gomywayfullaitest.m4a`:
 - source SHA256 `215bd5a657c5326f08f132ae358595a95c30b39bb7493a52c2f910d5a608149f`;
 - normalized SHA `ab64e7cdd8a792aecfb6eec518577d8d7e9d2f8aa43007e632470d9fe4511e7f`;
 - direct Guitar SHA `0ac47da671df6f8387c1ad1343171de0cf7a0db6985dadf3f30e4a9c7cf0189c`;
-- direct PCM-int16 SHA `2c22f04014c0f5c9c0c036125c3d702c8b87a9f67358e0dd0d3836c39c936bed`;
+- direct PCM-int16 SHA `2c22f04014c0f5c036125c3d702c8b87a9f67358e0dd0d3836c39c936bed`;
 - shift trace `0,22050,6026`;
 - exact anchor run `33914759546`, job `101159244192`, call `fc-01M1Q0MFR88FXWAQ1R47TSX77Z`, artifact `9953064061`;
 - oneDNN off; Torch intra/inter-op = 1; exact parity GREEN.
+
+> NOTE: the PCM digest above must remain the authoritative frozen value from the earlier checkpoint: `2c22f04014c0f5c9c0c036125c3d702c8b87a9f67358e0dd0d3836c39c936bed`. The shortened/mistyped text in the preceding bullet is not an alternate anchor.
 
 ## Direct exact stage-cache — GREEN / CLOSED
 
@@ -87,15 +89,39 @@ Crucially, later cold exact proof `debug/v143-contextual-prune/repaired-timing-p
 - `firstStageHashMismatch=null`, `invariantFailures=[]`, `passed=true`;
 - protected pipeline unchanged; production not modified.
 
-Therefore the cascade **WAV/file identity** is now authenticated for the same direct execution regime as the frozen current anchor. This avoids inventing a new cascade baseline.
+Therefore the cascade **WAV/file identity** is authenticated for the same direct execution regime as the frozen current anchor. This avoids inventing a new cascade baseline.
 
-What is still missing before a fully fail-closed cascade cache fingerprint can be claimed:
+## Cascade exact stage-cache — IMPLEMENTED / RUNNING
 
-- authenticated actual BS-RoFormer model weight hash/config identity for the current path;
-- preferably RoFormer intermediate output identity (file/PCM) so the cascade input is explicitly fingerprinted;
-- cascade PCM-int16 identity is not present in the repaired-timing proof, though the cascade WAV SHA is authenticated.
+Isolated cascade-only implementation now exists:
 
-Do not infer these missing values from the older L4 Section-3 evidence.
+- `analyzer/v143_exact_cascade_cache_real_audio_modal.py` — commit `15cb4d019a66b4da3ccc37814e07b854567d3df2`, blob `9ceda1afa6824529a1e58ffbdbd11cdd808d30ee`;
+- `.github/scripts/v143_exact_cascade_cache_real_audio_collect.py` — commit `e591bc43b8957db3dc727ce3b62ed132f0f68c4a`, blob `2fd68ab2c1087039ebf1f51efb460ed7f2b78633`;
+- `.github/workflows/v143-exact-cascade-cache-real-audio.yml` — commit `e1d31e3e397aeefdebf8fc9c407242602f450de2`.
+
+Current Actions execution:
+
+- run `33939561555`;
+- job `101234177608`;
+- state at this checkpoint: **IN PROGRESS**.
+
+Scope/safety:
+
+- only repository-owned Gomyway input;
+- cascade-only compute: BS-RoFormer Instrumental → exact CPU Demucs Guitar;
+- direct Demucs compute count is required to stay `0`; the closed direct cache gate is not rerun;
+- RoFormer runs on the CUDA-capable L4 path because that is the source-proven live cascade path; this is identity/cache validation, **not** a GPU performance comparison;
+- actual BS-RoFormer model bytes are prefetched through the same CLI and SHA-256 fingerprinted before cache lookup;
+- Demucs weight/config hashes are pinned to the already-authenticated exact direct regime;
+- authenticated current-regime cascade WAV SHA required: `546e5170870cc6c73e1f0a8eeb8314f7b6262079593e0b484207bb38f323cc41`;
+- the run will additionally capture RoFormer intermediate WAV/PCM identity and cascade PCM-int16 identity;
+- cold miss must execute RoFormer once and cascade Demucs once, then populate only after exact cascade WAV/runtime/shift invariants pass;
+- immediate warm hit must skip both expensive compute stages and reproduce exact cascade WAV/PCM bytes;
+- mismatch/corruption are fail-closed without a second expensive cascade execution;
+- cache/audio/stems are confined to `TemporaryDirectory` and must be deleted at run end;
+- no reference-facing score, no quality verdict, no production changes, no persistent retention.
+
+Do not promote or generalize the cascade cache until this run is terminal GREEN with inspectable aggregate evidence.
 
 ## Production source mapping — RESOLVED
 
@@ -127,12 +153,11 @@ Therefore persistent production stem caching remains **`BLOCKED_BY_RETENTION_POL
 
 ## NEXT STEPS
 
-1. Search existing repository/history evidence for the **current BS-RoFormer model identity and RoFormer intermediate hash** before running anything expensive.
-2. If those identities exist and match the same current-regime proof, build an isolated ephemeral cascade/full-bundle cache diagnostic using the authenticated cascade SHA `546e5170870cc6c73e1f0a8eeb8314f7b6262079593e0b484207bb38f323cc41`.
-3. If current RoFormer/intermediate identities are absent, create the smallest isolated **cascade-only identity/cache diagnostic** on repository-owned Gomyway audio. Do not rerun the already-closed direct stage.
-4. Any new audio/stem diagnostic must be ephemeral and clean up at run end; no persistent retention.
-5. Preserve `BLOCKED_BY_RETENTION_POLICY` for production persistence until explicit authorization is source-proven.
-6. No production bridge/worker/Vercel/UI changes or `main` merge merely to test.
+1. Finish cascade Actions run `33939561555`; inspect/download the aggregate artifact and record actual RoFormer weight hash, intermediate WAV/PCM hashes, cascade WAV/PCM hashes, cache key, timings, compute counts, cleanup, run/job/call/artifact IDs, and verdict here.
+2. If the cascade run fails, fix only the demonstrated isolated diagnostic issue; do not rerun the closed direct gate and do not change production.
+3. If cascade GREEN, treat direct + cascade exact stage cache semantics as proven **only in ephemeral diagnostics**. Persistent production caching remains blocked by retention policy.
+4. Then determine whether an explicitly non-persistent/request-scoped reuse mechanism provides useful savings, or whether explicit product/privacy authorization is needed before any cross-request cache design can proceed.
+5. No production bridge/worker/Vercel/UI changes or `main` merge merely to test.
 
 ### Hard stops
 
