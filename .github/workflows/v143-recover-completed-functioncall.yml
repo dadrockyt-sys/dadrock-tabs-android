@@ -1,0 +1,127 @@
+name: V143 Recover Completed FunctionCall
+
+on:
+  push:
+    branches:
+      - v143-contextual-prune-lobo
+    paths:
+      - '.github/workflows/v143-recover-completed-functioncall.yml'
+
+permissions:
+  contents: read
+
+concurrency:
+  group: v143-recover-completed-functioncall-never-rerun-model
+  cancel-in-progress: false
+
+env:
+  MODAL_ENVIRONMENT: main
+  WORKER_FUNCTION_CALL_ID: fc-01M1VT9BDS5TYWE52GPYQQ8W9E
+  EXPECTED_WORKER_BLOB: 111bf14a8f91045d3478901f8e36b88a2e7f181a
+  EXPECTED_SCHEDULER_BLOB: fc9b4c45c208d80be7abab64a8959f2a3babcee8
+  PYTHONUNBUFFERED: '1'
+
+jobs:
+  recover-completed-result:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 10
+    env:
+      MODAL_TOKEN_ID: ${{ secrets.MODAL_TOKEN_ID }}
+      MODAL_TOKEN_SECRET: ${{ secrets.MODAL_TOKEN_SECRET }}
+
+    steps:
+      - name: Checkout exact branch
+        uses: actions/checkout@v4
+
+      - name: Enforce recovery boundary
+        shell: bash
+        run: |
+          set -euo pipefail
+          test "$(git hash-object analyzer/v143_modal_live_endpoint.py)" = "$EXPECTED_WORKER_BLOB"
+          test "$(git hash-object analyzer/v143_seeded_separator.py)" = "$EXPECTED_SCHEDULER_BLOB"
+          echo 'modelBearingStartRequestCount=0'
+          echo 'functionInvoked=false'
+          echo 'modelExecuted=false'
+          echo 'professionalScoreCalls=0'
+          echo 'pdfE2EPerformed=false'
+          echo 'deploymentChanged=false'
+
+      - name: Set up Python 3.11
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Install pinned Modal client
+        shell: bash
+        run: |
+          set -euo pipefail
+          python -m pip install --upgrade pip >/dev/null
+          python -m pip install 'modal==1.5.5' >/dev/null
+          modal token set --token-id "$MODAL_TOKEN_ID" --token-secret "$MODAL_TOKEN_SECRET" >/dev/null
+
+      - name: Read exact completed FunctionCall result only
+        shell: bash
+        run: |
+          set -euo pipefail
+          OUT=debug/v143-contextual-prune/recovered-functioncall
+          mkdir -p "$OUT"
+          python - <<'PY'
+          import hashlib
+          import json
+          import os
+          from pathlib import Path
+          import modal
+
+          out = Path('debug/v143-contextual-prune/recovered-functioncall')
+          call_id = os.environ['WORKER_FUNCTION_CALL_ID']
+          call = modal.FunctionCall.from_id(call_id)
+          result = call.get(timeout=0)
+          if not isinstance(result, dict):
+              raise SystemExit('Recovered FunctionCall result is not an object')
+          if not str(result.get('generatedTab') or '').strip():
+              raise SystemExit('Recovered FunctionCall result has no generatedTab')
+          live = result.get('liveV143') if isinstance(result.get('liveV143'), dict) else {}
+          if not (
+              live.get('referenceFree') is True
+              and live.get('professionalReferenceUsed') is False
+              and live.get('referenceRuntimeInputUsed') is False
+              and live.get('runtimeLabelsRequired') is False
+          ):
+              raise SystemExit('Recovered FunctionCall result failed V143 safety contract')
+
+          encoded = (json.dumps(result, ensure_ascii=False, sort_keys=True, separators=(',', ':')) + '\n').encode('utf-8')
+          (out / 'recovered-worker-result.json').write_bytes(encoded)
+          summary = {
+              'schemaVersion': 1,
+              'gate': 'v143-recover-completed-functioncall',
+              'sourceCommit': os.environ.get('GITHUB_SHA'),
+              'functionCallId': call_id,
+              'completedFunctionCallRecovered': True,
+              'resultJsonBytes': len(encoded),
+              'resultSha256': hashlib.sha256(encoded).hexdigest(),
+              'topLevelKeys': sorted(result.keys()),
+              'generatedTabPresent': True,
+              'liveV143SafetyVerified': True,
+              'modelBearingStartRequestCount': 0,
+              'functionInvoked': False,
+              'modelExecuted': False,
+              'professionalScoreCalls': 0,
+              'pdfE2EPerformed': False,
+              'deploymentChanged': False,
+              'rawAudioRetained': False,
+              'rawStemsRetained': False,
+              'modelBytesRetained': False,
+          }
+          (out / 'summary.json').write_text(json.dumps(summary, indent=2, sort_keys=True) + '\n', encoding='utf-8')
+          print(json.dumps(summary, indent=2, sort_keys=True))
+          PY
+
+      - name: Preserve completed structured result temporarily
+        uses: actions/upload-artifact@v4
+        with:
+          name: v143-recovered-completed-functioncall
+          path: |
+            debug/v143-contextual-prune/recovered-functioncall/summary.json
+            debug/v143-contextual-prune/recovered-functioncall/recovered-worker-result.json
+          if-no-files-found: error
+          retention-days: 1
