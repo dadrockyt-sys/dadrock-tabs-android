@@ -1,6 +1,6 @@
 # CURRENT STATE — DadRock `/ai-tab`
 
-Updated: 2026-09-06 — **AUTHORIZED V143 WORKER COMPLETED; CLIENT LOST TRACKING AT 900s TTL; RESULT RECOVERY IN PROGRESS; NO SECOND MODEL RUN.**
+Updated: 2026-09-06 — **AUTHORIZED V143 RESULT RECOVERED + FROZEN; PDF E2E EXACT; PROFESSIONAL SCORE NOT YET CONSUMED.**
 Branch: `v143-contextual-prune-lobo`
 
 ## HARD AUTHORIZATION BOUNDARY
@@ -13,165 +13,144 @@ User authorized exactly:
 Current counters:
 - replacement live: **0 available / 1 consumed**
 - professional full-1–113 score: **1 available / 0 consumed**
-- replacement PDF E2E: **0 performed**
+- replacement PDF E2E: **1 performed / passed**
 
-Hard stop rules:
-- **NO second/replacement/retry Rhythm start** without new explicit user authorization.
-- No Lead/Bass model-bearing run.
-- No professional score until the exact completed replacement result has been recovered, product-normalized, and frozen.
-- No Vercel production deploy/promotion, Deployment Protection weakening, optimizer/training/threshold sweep, or scheduler/model/parameter mutation.
+Do not issue any second/replacement/retry model start. No Lead/Bass model run. No second professional score. No Vercel production promotion/deploy, Deployment Protection weakening, optimizer/training/threshold sweep, or scheduler/model/parameter mutation.
 
-## PINNED REPAIRED BOUNDARY
-
-Old ~7-second 502 root cause was stale production Modal HTTP bridge behavior around zero-timeout pending polls. The repaired bridge was deployed and model-free verified before the authorized replacement start.
+## REPAIRED PREVIEW / ASYNC BOUNDARY
 
 Pinned source:
-- bridge `169b4bb136eba742c3422a73ee5dd0174ca06c49`
+- Preview deployment `dpl_5j26ZS2xq3utrHxW7waCd5NEPaQk`
+- Preview source `631544a8668033392300f2739c87232553dbadc0`
+- route `a3d02876d2c4efeb6f5258586046bc95cfc132b6`
+- repaired bridge `169b4bb136eba742c3422a73ee5dd0174ca06c49`
 - async protocol `1bd55017e16a4e1d8b14c7429492f811a43a28d8`
 - live worker `111bf14a8f91045d3478901f8e36b88a2e7f181a`
 - separator/scheduler `fc9b4c45c208d80be7abab64a8959f2a3babcee8`
-- audio `public/jimmy-paige-midterm-v1/gomyway-midterm-source.m4a`, blob `4dd709e3fa177b4daeed71ca97f0199757729d4b`
+- audio blob `4dd709e3fa177b4daeed71ca97f0199757729d4b`
 - professional reference SHA-256 `18fd868ae960dfcdd1ffb0110f1a9dfd8acc2ffeb46e247d1116cd54291526ac`
-- professional reference coverage: measures 1–113; 113 measures; 603 professional events/onsets; 946 notes
+- professional reference: measures 1–113; 113 measures; 603 professional events/onsets; 946 notes
 
-Repair deploy:
-- workflow run `34041343616`, job `101508549305`, success
-- evidence artifact `9991761743`, SHA-256 `02dff61207bac1b42331cd0359e92ab3bcecd252e00c15cbb0011d714f6aa49e`
+Bridge repair deploy:
+- run `34041343616`, job `101508549305`, success
+- artifact `9991761743`, SHA-256 `02dff61207bac1b42331cd0359e92ab3bcecd252e00c15cbb0011d714f6aa49e`
 
 Green model-free Preview preflight:
 - run `34042266658`, job `101511044644`, success
-- Preview `dpl_5j26ZS2xq3utrHxW7waCd5NEPaQk`
-- URL `https://dadrock-tabs-android-r9uhb2dg9-stephen-mcnally-s-projects.vercel.app`
-- source `631544a8668033392300f2739c87232553dbadc0`
-- `/ai-tab` HTTP 200, 38016 bytes
-- invalid-type analyze probe HTTP 400 as expected
-- evidence artifact `9992037110`, SHA-256 `bf83017022ca3cc15ff7e13841615b3223ac64da05b9e8aed1c62ef7e40e186d`
+- artifact `9992037110`, SHA-256 `bf83017022ca3cc15ff7e13841615b3223ac64da05b9e8aed1c62ef7e40e186d`
 
-## EXACT AUTHORIZED ONE-SHOT
+## EXACT AUTHORIZED MODEL RUN
 
-Runner:
-- workflow `.github/workflows/v143-one-shot-final-rhythm-e2e.yml`
-- helper `.github/scripts/v143-one-shot-final-rhythm-existing-preview.sh`
-- helper blob `e2847e4d05ae1fea781ef07e891fece1bfbecbf0`
+- runner `.github/workflows/v143-one-shot-final-rhythm-e2e.yml`
+- helper `.github/scripts/v143-one-shot-final-rhythm-existing-preview.sh`, blob `e2847e4d05ae1fea781ef07e891fece1bfbecbf0`
 - retarget commit `9f4d8b59a15288cab02c7930093f80db57e52df0`
-- workflow blob `d803af28820cff23750e503cf2fdea5aa8299d83`
 - arm commit `acdf236e5e2649d3beb515fb2fc8a0abf345cc51`
+- workflow run `34046854397`, job `101523324268`
+- exactly one Rhythm start; HTTP 202 around `2026-09-06T16:54:33Z`
+- same-token polls 1–130 returned 202; poll 131 returned 502 at ~908 s
+- same-job ACK HTTP 200; acknowledged=true; transientResultCleared=true
+- bounded artifact `9993601754`, SHA-256 `9c5661024e59ee70068e87eb286aa8e1095f85455c2203ed64870d7dded7f50e`
 
-Authorized run:
-- GitHub workflow run `34046854397`
-- job `101523324268`
-- exactly one model-bearing Rhythm start
-- start HTTP 202, accepted about `2026-09-06T16:54:33Z`
-- same-token polls 1–130 returned HTTP 202
-- poll 130 elapsed about 902 s
-- poll 131 returned HTTP 502 at about 908 s (`2026-09-06T17:09:35Z`)
-- helper stopped with no retry
-- same-job ACK HTTP 200, acknowledged=true, transientResultCleared=true
-- bounded failure artifact `9993601754`, SHA-256 `9c5661024e59ee70068e87eb286aa8e1095f85455c2203ed64870d7dded7f50e`
-- artifact confirms `modelBearingStartRequestCount=1`, `professionalScoreCalls=0`, `pdfE2EPerformed=false`
+## CONFIRMED CLIENT FAILURE CAUSE: 900-SECOND TRACKING TTL
 
-## CONFIRMED 900-SECOND TRACKING TTL BUG
+`ASYNC_RESULT_TTL_SECONDS = 900`, and the control partition holding the only orchestrator FunctionCall ID used the same 900-second TTL while worker/orchestrator timeout is 1200 seconds. When that control expired, status returned `The analyzer job state is no longer available.`
 
-This is now the confirmed reason the Preview/GitHub client reported failure at ~908 seconds.
-
-`analyzer/v143_async_job_protocol.py` defines:
-- `ASYNC_RESULT_TTL_SECONDS = 15 * 60` = **900 seconds**.
-
-`analyzer/v143_modal_http_endpoint.py` uses that same 900-second TTL for the control partition containing the **only tracked orchestrator FunctionCall ID**.
-
-Status behavior:
-1. read result partition;
-2. read control partition;
-3. if control is absent, immediately return failed: `The analyzer job state is no longer available.`
-
-The Modal orchestrator and live worker both allow up to **1200 seconds**, but the only client tracking control expires at **900 seconds**. Therefore any valid run longer than 15 minutes can be falsely reported failed before the worker's 20-minute execution allowance is exhausted.
-
-Observed timing matches this exactly:
+Timing matches exactly:
 - start ~16:54:33Z
-- 900 s boundary ~17:09:33Z
-- terminal client 502 ~17:09:35Z / elapsed ~908 s
+- 900-second boundary ~17:09:33Z
+- client 502 ~17:09:35Z / ~908 seconds
 
-The prior bridge pending-poll bug remains fixed; this is a second, separate async protocol defect.
+This is separate from the earlier pending-poll bridge bug, which was already repaired.
 
-## EXACT MODAL WORKER — COMPLETED, NOT CRASHED
+## EXACT MODAL WORKER COMPLETED SUCCESSFULLY
 
-Read-only Modal log diagnostics proved the exact worker FunctionCall completed all stages.
-
-Exact worker identity:
-- app `dadrock-v143-ai-tab-live`
-- Function ID `fu-cXv3G2TXumycjiCTABviS7`
-- FunctionCall ID `fc-01M1VT9BDS5TYWE52GPYQQ8W9E`
+Read-only exact FunctionCall diagnostics:
+- worker Function ID `fu-cXv3G2TXumycjiCTABviS7`
+- worker FunctionCall `fc-01M1VT9BDS5TYWE52GPYQQ8W9E`
 - container `ta-01M1VT9BRA8YRBNK1DKSC329BR`
+- exact worker logs prove `worker.done elapsed=936.836` at about `17:10:18Z`
+- separator done ~785.929 s
+- Basic Pitch and technique enrichment completed
+- worker completed ~29 seconds after the client lost the 900-second tracking record
 
-Stage timeline from exact FunctionCall logs:
-- `worker.start` 16:54:41Z
-- download done elapsed 0.839 s
-- normalize done elapsed 1.464 s
-- router start elapsed 1.464 s
-- separator direct Demucs + RoFormer started
-- RoFormer done elapsed 78.878 s
-- direct Demucs done elapsed 722.604 s
-- cascade Demucs done elapsed 785.822 s
-- separator done elapsed **785.929 s**
-- Basic Pitch ran on direct and cascade guitar views
-- techniques start elapsed 858.206 s
-- techniques done elapsed 933.898 s
-- router done elapsed 936.834 s
-- **worker.done elapsed 936.836 s** at about `17:10:18Z`
+Exact FunctionCall diagnostic artifact:
+- run `34047990402`
+- artifact `9993685857`
+- SHA-256 `e87bf1f0039ff7d0aa871e32009bf899f187f0c6bc04f3880c77a2bb29b59387`
 
-Critical conclusion:
-- the exact authorized model worker **completed successfully about 29 seconds after the client had already failed due to the 900-second tracking TTL**;
-- the separator did not fail; both Demucs branches and RoFormer completed;
-- Basic Pitch and technique enrichment also completed;
-- the earlier dashboard observation of “crash-looping” was not evidence that this exact FunctionCall failed; exact FunctionCall logs are authoritative and show `worker.done`.
+Do not use the earlier OOM theory; exact worker logs show successful completion, and integer `memory=8192` is not established here as an 8 GB hard cap.
 
-This is encouraging for the Songsterr-inspired process, but musical quality is **not yet scored** because the structured result still must be recovered and frozen.
+## SAME-RUN RESULT RECOVERY — SUCCESS
 
-## MODAL MEMORY CORRECTION
+The child FunctionCall output was already consumed by its parent orchestrator, so direct child `get()` returned NotFound without invoking anything. The already-completed parent orchestrator/result queue was then recovered read-only.
 
-Do not use the earlier 8 GB hard-cap/OOM theory.
-- `memory=8192` in current Modal is a memory request/minimum, not necessarily an 8 GB hard limit; a hard cap requires a `(request, limit)` tuple.
-- Exact logs also show the separator and worker completed, so OOM is not the observed failure here.
-
-## READ-ONLY DIAGNOSTICS / RECOVERY
-
-No diagnostic below invoked a function or model, changed a deployment, or consumed score/PDF budget.
-
-1. Broad worker log diagnostic:
-- workflow `.github/workflows/v143-modal-crash-log-diagnostic.yml`
-- initial commit `f90b4f6611faa440b2febcc11cf0995d7cfebc78`
-- run `34047879478`, job `101526097080`, success
-- artifact `9993657140`, SHA-256 `a07d24e9456c667f48c2abb8146c7393bfc8bd93347390deebb4ab4932f1f2e7`
-
-2. Exact FunctionCall diagnostic:
-- narrowed commit `642df65cbecb03011648721271bbaf04800f492d`
-- run `34047990402`, success
-- artifact `9993685857`, SHA-256 `e87bf1f0039ff7d0aa871e32009bf899f187f0c6bc04f3880c77a2bb29b59387`
-- exact stage log proves worker.done at 936.836 s
-
-3. Direct child FunctionCall result recovery attempt:
-- workflow `.github/workflows/v143-recover-completed-functioncall.yml`
-- commit `71def911839f7d2be6f26472fccf0734dddad1bd`
-- run `34048212996`, job `101526986321`
-- read-only retrieval failed with Modal `NotFoundError` because the child FunctionCall output had already been consumed by its parent orchestrator
-- no model/score/PDF action occurred
-
-4. Parent orchestrator/result-queue recovery:
+Successful recovery:
 - workflow `.github/workflows/v143-recover-orchestrator-queued-result.yml`
 - commit `f493cd095b6f2e00a7b6521951975c8c1e9cc7e7`
-- run `34048291636`, currently in progress at this checkpoint
-- purpose: parse the parent orchestrator FunctionCall ID from `dadrock-v143-http-bridge` logs, read that already-completed parent result, recover its `jobId`, then read/decode the already-written transient completed result queue partition
-- **read-only only; no model invocation; professionalScoreCalls=0; pdfE2EPerformed=false**
+- run `34048291636`, job `101527199470`, success
+- parent orchestrator FunctionCall `fc-01M1VT98JAEX2NZ83DSM5GJQ8A`
+- job ID `K7aeTJDV7fp7l5R5UwsOvJkrC_mCDQt0`
+- artifact `9993769594`, ZIP SHA-256 `342b151824ad7091f69692f24c038d2749f73abbd0d3ca5d1718cca6ebfa24e9`
+- recovered worker-result SHA-256 `185a19dcd58df7bece23a75b300bb3f9fbf6d6322bf61b52b1e667b5ba684293`
+- recovered result: generated tab present, E Standard, ~129.199 BPM, 4/4, 925 events
+- full anti-reference safety contract passed
+- no new function/model invocation
 
-## SAFE NEXT STEPS
+## EXACT PRODUCT NORMALIZATION / FREEZE / PDFs — SUCCESS
 
-1. Inspect run `34048291636` to terminal.
-2. If the exact completed structured worker result is recovered, validate its V143 anti-reference safety contract and hash it.
-3. Reproduce the same deterministic Preview product-normalization/render contract on that exact recovered result; do not regenerate analyzer output.
-4. Freeze that exact normalized result.
-5. Render deterministic preview/full PDFs and verify event fidelity.
-6. Only after freeze/PDF identity is proven, consume the **one authorized professional full-1–113 score**.
-7. Save final bounded evidence and scrub temporary full structured result material.
-8. Independently prepare the smallest async-protocol repair for future runs: tracking/control TTL must safely outlive the 1200-second worker/orchestrator runtime. Do not use that repair to launch another model run without new explicit user authorization.
+Workflow:
+- `.github/workflows/v143-freeze-recovered-completed-result.yml`
+- commit `613d2442adccacfd65217352709a9e8fb70090c0`
+- run `34048512501`
+- job `101527783467`
+- conclusion **success**
+- artifact `9993835360`
+- artifact ZIP SHA-256 `d2b70b285a4cb67aa823e167521193e86b7eb7c71f2e013f8d9e51abc864f061`
 
-Current state: **AUTHORIZED MODEL WORKER COMPLETED SUCCESSFULLY. CLIENT FAILURE WAS THE 900-SECOND TRACKING TTL. ONE MODEL START CONSUMED; NO RETRY. PROFESSIONAL SCORE UNUSED. PDF E2E UNUSED. EXACT RESULT RECOVERY IS IN PROGRESS SO THIS SAME COMPLETED RUN MAY STILL BE FROZEN AND SCORED.**
+The workflow checked out exact Preview source `631544a...`, verified exact route/product/render/quality/promotion/freeze/PDF source blobs, verified recovered result SHA, and then used the same V143 product/render contract before freezing.
+
+Product-normalization evidence:
+- analysis engine `v143-reference-free-rhythm`
+- raw events **925**
+- canonical render events **925**
+- canonical render event JSON SHA-256 `d0fe880f7ae69e44308da610ecf1c9a06e40ca7401eeeac5414fdab16efe0a56`
+- quality gate **passed**
+- render survival **100%**
+- playable string/fret **925/925 = 100%**
+- musical placement **925/925 = 100%**
+- pitch validity **925/925 = 100%**
+- measure range first 1, last 115, **113 unique measures**
+- all 16 sixteenth-grid steps represented
+- technique events 55 (5.9%): bend, bend-release, hammer-on, pull-off, slide-down, slide-up
+- sustain coverage 925/925
+- placement promotion did **not** modify placement: `AUTHENTICATED_RENDER_EVENTS_PRESENT`
+- reference remained unopened
+
+Frozen identity:
+- event count **925**
+- canonical frozen event SHA-256 `f5b526e608fc552925b252ecdbf7d0a6e918b04f423374798d2772939af3e2af`
+- frozen snapshot SHA-256 `896058d729496abb3cd5ccdabfddfcec71e2798b6abbdb904bd9a8dbd695d433`
+- unique measure count **113**
+- professionalReferenceUsed=false
+- referenceOpenedDuringFreeze=false
+- v143RuntimeSafetyVerified=true
+
+PDF identity:
+- PDF event count **925**
+- PDF event SHA-256 `f5b526e608fc552925b252ecdbf7d0a6e918b04f423374798d2772939af3e2af`
+- PDF event fidelity **1.0**
+- renderer projection exactly equal=true
+- full PDF: 1,725,543 bytes, 6 pages, SHA-256 `ec81954f600cc775af30400fb6deadb797156e347e9fbc256fddbae5a93d0a94`
+- preview PDF: 1,686,440 bytes, 6 pages, SHA-256 `415f9009229a5890bbe1ff5d59d6e82f513ce6bc77398e52e447be2dac39de9f`
+- reference remained unopened during PDF validation
+
+## NEXT IRREVERSIBLE ACTION
+
+Run **exactly one** professional full-1–113 score against this exact frozen stream only. Before execution, pin scorer/orchestrator/reference identities and the freeze artifact. Once the score command begins, set professional score to **0 available / 1 consumed**, regardless of pass/fail. Do not perform any second score.
+
+After scoring:
+1. preserve bounded score evidence;
+2. update this checkpoint with exact metrics/verdict/artifact/hash;
+3. then prepare the smallest future async TTL repair so tracking safely outlives the 1200-second worker/orchestrator runtime, but do not launch another model run.
+
+Current state: **SAME AUTHORIZED MODEL RUN RECOVERED, PRODUCT-VALIDATED, FROZEN, AND PDF-VERIFIED EXACTLY. MODEL START 1/1 CONSUMED. PDF E2E PASSED. PROFESSIONAL SCORE STILL 0/1 CONSUMED AND IS THE NEXT/ONLY REMAINING EVALUATION ACTION.**
