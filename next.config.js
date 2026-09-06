@@ -10,16 +10,18 @@ const nextConfig = {
   images: {
     unoptimized: true,
   },
-  // The Product/PDF serverless functions read only the DadRock logo from
-  // public/. Keep the rest of the static/research tree out of these function
-  // bundles; public assets remain deployed normally for the website itself.
-  // /api/pdf-preview is intentionally excluded because its proof path reads
-  // a gomyway notation fixture from public/.
+  // The Product/PDF serverless functions and the V143 analyzer route read only
+  // the DadRock logo from public/. Keep the rest of the large static/research
+  // tree out of these function bundles; public assets remain deployed normally
+  // for the website itself. /api/pdf-preview is intentionally excluded because
+  // its proof path reads a gomyway notation fixture from public/.
   outputFileTracingExcludes: {
+    '/api/analyze-audio-tab': pdfRuntimeTraceExcludes,
     '/api/generate-tab-pdf': pdfRuntimeTraceExcludes,
     '/api/generate-tab-preview': pdfRuntimeTraceExcludes,
   },
   outputFileTracingIncludes: {
+    '/api/analyze-audio-tab': pdfRuntimeTraceIncludes,
     '/api/generate-tab-pdf': pdfRuntimeTraceIncludes,
     '/api/generate-tab-preview': pdfRuntimeTraceIncludes,
   },
