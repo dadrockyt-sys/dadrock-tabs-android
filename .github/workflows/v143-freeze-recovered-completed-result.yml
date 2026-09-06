@@ -1,0 +1,288 @@
+name: V143 Freeze Recovered Completed Result
+
+on:
+  push:
+    branches:
+      - v143-contextual-prune-lobo
+    paths:
+      - '.github/workflows/v143-freeze-recovered-completed-result.yml'
+
+permissions:
+  contents: read
+  actions: read
+
+concurrency:
+  group: v143-freeze-recovered-completed-result
+  cancel-in-progress: false
+
+env:
+  PREVIEW_SOURCE_COMMIT: 631544a8668033392300f2739c87232553dbadc0
+  AUTHORIZED_START_COMMIT: acdf236e5e2649d3beb515fb2fc8a0abf345cc51
+  RECOVERY_RUN_ID: '34048291636'
+  RECOVERY_ARTIFACT_NAME: v143-recovered-orchestrator-result
+  RECOVERED_RESULT_SHA256: 185a19dcd58df7bece23a75b300bb3f9fbf6d6322bf61b52b1e667b5ba684293
+  EXPECTED_ROUTE_BLOB: a3d02876d2c4efeb6f5258586046bc95cfc132b6
+  EXPECTED_PAYLOAD_BLOB: b6077a89a926238879bc4ccd913607c6d7e516d0
+  EXPECTED_RENDER_BLOB: d67289c008e4eaff6a2055ff23b4dd96c1f2c737
+  EXPECTED_QUALITY_BLOB: 60989b8b319559d7c3a8fdffcd64368f26e6896b
+  EXPECTED_PROMOTION_BLOB: 9e701415d5ed3658036ae97ae32b20f769a20b90
+  EXPECTED_FREEZE_BLOB: 710bb6a3b15b99d3d11ceb4948d7c7175d208afc
+  EXPECTED_PDF_RENDER_SCRIPT_BLOB: 3c50c06e2394dfac1c80acb20aefa33583907b33
+  EXPECTED_PDF_RENDERER_BLOB: 4f0e1372dd5903c05c25f0f0a302dd35e81de36b
+
+jobs:
+  freeze-recovered-result:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 15
+
+    steps:
+      - name: Checkout exact Preview source
+        uses: actions/checkout@v4
+        with:
+          ref: ${{ env.PREVIEW_SOURCE_COMMIT }}
+
+      - name: Enforce exact product and validation boundary
+        shell: bash
+        run: |
+          set -euo pipefail
+          test "$(git rev-parse HEAD)" = "$PREVIEW_SOURCE_COMMIT"
+          test "$(git hash-object app/api/analyze-audio-tab/route.js)" = "$EXPECTED_ROUTE_BLOB"
+          test "$(git hash-object lib/jimmyPaigeAnalysisPayload.js)" = "$EXPECTED_PAYLOAD_BLOB"
+          test "$(git hash-object lib/v143RenderContract.js)" = "$EXPECTED_RENDER_BLOB"
+          test "$(git hash-object lib/v143AnalyzerQuality.js)" = "$EXPECTED_QUALITY_BLOB"
+          test "$(git hash-object lib/aiTabProductPlacementPromotionV1.mjs)" = "$EXPECTED_PROMOTION_BLOB"
+          test "$(git hash-object validation/rhythm_holdout/freeze_rhythm_analysis.py)" = "$EXPECTED_FREEZE_BLOB"
+          test "$(git hash-object validation/rhythm_holdout/render_frozen_rhythm_pdf.mjs)" = "$EXPECTED_PDF_RENDER_SCRIPT_BLOB"
+          test "$(git hash-object lib/createV143RhythmPdf.js)" = "$EXPECTED_PDF_RENDERER_BLOB"
+          echo 'modelBearingStartRequestCount=0'
+          echo 'functionInvoked=false'
+          echo 'modelExecuted=false'
+          echo 'professionalScoreCalls=0'
+          echo 'referenceOpened=false'
+          echo 'deploymentChanged=false'
+
+      - name: Download exact recovered completed result
+        uses: actions/download-artifact@v4
+        with:
+          name: ${{ env.RECOVERY_ARTIFACT_NAME }}
+          path: recovery-source
+          github-token: ${{ github.token }}
+          repository: ${{ github.repository }}
+          run-id: ${{ env.RECOVERY_RUN_ID }}
+
+      - name: Verify recovered result identity
+        shell: bash
+        run: |
+          set -euo pipefail
+          test -f recovery-source/recovered-worker-result.json
+          ACTUAL="$(sha256sum recovery-source/recovered-worker-result.json | awk '{print $1}')"
+          echo "recoveredResultSha256=$ACTUAL"
+          test "$ACTUAL" = "$RECOVERED_RESULT_SHA256"
+
+      - name: Set up Node.js 24
+        uses: actions/setup-node@v4
+        with:
+          node-version: '24'
+
+      - name: Normalize through exact V143 product/render contract
+        shell: bash
+        run: |
+          set -euo pipefail
+          mkdir -p recovered-validation/freeze/pdf
+          cat > recovered-validation/normalize.mjs <<'NODE'
+          import fs from 'node:fs/promises';
+          import crypto from 'node:crypto';
+          import { buildJimmyPaigeAnalysisPayload } from '../lib/jimmyPaigeAnalysisPayload.js';
+          import { buildAiTabProductPlacementPromotionV1 } from '../lib/aiTabProductPlacementPromotionV1.mjs';
+
+          const analyzerData = JSON.parse(
+            await fs.readFile('recovery-source/recovered-worker-result.json', 'utf8')
+          );
+          const structuredPayload = buildJimmyPaigeAnalysisPayload(
+            analyzerData,
+            { transcriptionType: 'rhythm', usingV143RhythmAnalyzer: true }
+          );
+          const { promotedPayload, productPlacementPromotion } =
+            buildAiTabProductPlacementPromotionV1({
+              structuredPayload,
+              dualContextShadowProjection: null,
+            });
+
+          const pc = promotedPayload?.payloadContract || {};
+          const required = [
+            'referenceFree',
+            'professionalReferenceNotUsed',
+            'referenceRuntimeInputNotUsed',
+            'runtimeLabelsNotRequired',
+            'v143RuntimeSafetyVerified',
+          ];
+          if (required.some((key) => pc[key] !== true)) {
+            throw new Error('Recovered product payload failed V143 safety contract');
+          }
+          if (promotedPayload?.analysisQuality?.passed !== true) {
+            throw new Error('Recovered product payload failed analyzer quality gate');
+          }
+          if (!Array.isArray(promotedPayload?.renderEvents) || promotedPayload.renderEvents.length === 0) {
+            throw new Error('Recovered product payload has no renderEvents');
+          }
+          if (
+            productPlacementPromotion?.promoted !== false ||
+            productPlacementPromotion?.reason !== 'AUTHENTICATED_RENDER_EVENTS_PRESENT'
+          ) {
+            throw new Error('Recovered product placement was not the expected authenticated no-op path');
+          }
+
+          const freeze = {
+            schemaVersion: 2,
+            instrument: 'rhythm',
+            referenceFree: true,
+            professionalReferenceUsed: false,
+            referenceRuntimeInputUsed: false,
+            runtimeLabelsRequired: false,
+            v143RuntimeSafetyVerified: true,
+            tempoBpm: promotedPayload.tempo,
+            timeSignature: promotedPayload.timeSignature,
+            tuning: promotedPayload.tuning,
+            structuredMode: promotedPayload.analysisEngine,
+            renderEvents: promotedPayload.renderEvents,
+          };
+          await fs.writeFile(
+            'recovered-validation/freeze-input.json',
+            JSON.stringify(freeze, null, 2) + '\n'
+          );
+
+          const eventBytes = Buffer.from(
+            JSON.stringify(promotedPayload.renderEvents)
+          );
+          const bounded = {
+            schemaVersion: 1,
+            gate: 'v143-recovered-product-normalization',
+            recoveredWorkerResultSha256: process.env.RECOVERED_RESULT_SHA256,
+            analysisEngine: promotedPayload.analysisEngine,
+            rawAnalyzerEventCount: Array.isArray(analyzerData.events) ? analyzerData.events.length : 0,
+            canonicalRenderEventCount: promotedPayload.renderEvents.length,
+            canonicalRenderEventSha256: crypto.createHash('sha256').update(eventBytes).digest('hex'),
+            qualityGatePassed: true,
+            qualityMetrics: promotedPayload.analysisQuality.metrics,
+            productPlacementPromoted: false,
+            productPlacementReason: productPlacementPromotion.reason,
+            payloadContract: Object.fromEntries(required.map((key) => [key, pc[key]])),
+            tuning: promotedPayload.tuning,
+            tempoBpm: promotedPayload.tempo,
+            timeSignature: promotedPayload.timeSignature,
+            professionalScoreCalls: 0,
+            referenceOpened: false,
+            modelExecuted: false,
+          };
+          await fs.writeFile(
+            'recovered-validation/terminal-bounded.json',
+            JSON.stringify(bounded, null, 2) + '\n'
+          );
+          console.log(JSON.stringify(bounded, null, 2));
+          NODE
+          node recovered-validation/normalize.mjs
+
+      - name: Freeze exact canonical render stream
+        shell: bash
+        run: |
+          set -euo pipefail
+          python3 validation/rhythm_holdout/freeze_rhythm_analysis.py \
+            recovered-validation/freeze-input.json \
+            recovered-validation/freeze \
+            --source-commit "$AUTHORIZED_START_COMMIT"
+
+      - name: Install pinned PDF dependency
+        shell: bash
+        run: |
+          set -euo pipefail
+          npm install --no-save --ignore-scripts 'pdf-lib@1.17.1' >/dev/null
+
+      - name: Render deterministic preview and full PDFs
+        shell: bash
+        run: |
+          set -euo pipefail
+          node validation/rhythm_holdout/render_frozen_rhythm_pdf.mjs \
+            recovered-validation/freeze/rhythm-frozen-analysis.json \
+            recovered-validation/freeze/pdf \
+            lib/createV143RhythmPdf.js
+          python3 validation/rhythm_holdout/verify_pdf_event_fidelity.py \
+            recovered-validation/freeze \
+            recovered-validation/freeze/pdf/pdf-event-evidence.json
+
+      - name: Bound freeze and PDF evidence
+        shell: bash
+        run: |
+          set -euo pipefail
+          python3 - <<'PY'
+          import hashlib
+          import json
+          from pathlib import Path
+
+          root = Path('recovered-validation')
+          freeze = root / 'freeze'
+          pdf = freeze / 'pdf'
+          bounded = json.loads((root / 'terminal-bounded.json').read_text())
+          manifest = json.loads((freeze / 'rhythm-freeze-manifest.json').read_text())
+          fidelity = json.loads((freeze / 'rhythm-pdf-event-fidelity.json').read_text())
+          evidence = json.loads((pdf / 'pdf-event-evidence.json').read_text())
+          def sha(path):
+              return hashlib.sha256(path.read_bytes()).hexdigest()
+          summary = {
+              'schemaVersion': 1,
+              'gate': 'v143-recovered-freeze-pdf',
+              'recoveredWorkerResultSha256': bounded['recoveredWorkerResultSha256'],
+              'canonicalRenderEventCount': bounded['canonicalRenderEventCount'],
+              'canonicalRenderEventSha256': bounded['canonicalRenderEventSha256'],
+              'analysisEngine': bounded['analysisEngine'],
+              'qualityGatePassed': bounded['qualityGatePassed'],
+              'productPlacementPromoted': bounded['productPlacementPromoted'],
+              'productPlacementReason': bounded['productPlacementReason'],
+              'frozenEventSha256': manifest.get('renderEventSha256') or manifest.get('frozenEventSha256'),
+              'pdfEventFidelity': fidelity.get('pdfEventFidelity'),
+              'rendererProjectionExactlyEqual': evidence.get('rendererProjectionExactlyEqual'),
+              'fullPdfBytes': evidence.get('fullPdfBytes'),
+              'previewPdfBytes': evidence.get('previewPdfBytes'),
+              'fullPageCount': evidence.get('fullPageCount'),
+              'previewPageCount': evidence.get('previewPageCount'),
+              'fullPdfSha256': sha(pdf / 'full-frozen-rhythm.pdf'),
+              'previewPdfSha256': sha(pdf / 'preview-frozen-rhythm.pdf'),
+              'modelBearingStartRequestCount': 0,
+              'functionInvoked': False,
+              'modelExecuted': False,
+              'referenceOpened': False,
+              'professionalScoreCalls': 0,
+              'pdfE2EPerformed': True,
+              'deploymentChanged': False,
+          }
+          if summary['pdfEventFidelity'] != 1.0:
+              raise SystemExit('PDF event fidelity is not exactly 1.0')
+          if summary['rendererProjectionExactlyEqual'] is not True:
+              raise SystemExit('Renderer projection changed frozen events')
+          (root / 'summary.json').write_text(json.dumps(summary, indent=2, sort_keys=True) + '\n')
+          print(json.dumps(summary, indent=2, sort_keys=True))
+          PY
+
+      - name: Scrub temporary recovered worker payload
+        if: always()
+        shell: bash
+        run: |
+          rm -f recovery-source/recovered-worker-result.json
+          rm -f recovered-validation/freeze-input.json
+          rm -f recovered-validation/normalize.mjs
+          rm -f recovered-validation/freeze/pdf/pdf-event-evidence.json
+
+      - name: Preserve frozen same-result evidence and PDFs
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: v143-recovered-freeze-pdf
+          path: |
+            recovered-validation/summary.json
+            recovered-validation/terminal-bounded.json
+            recovered-validation/freeze/rhythm-frozen-analysis.json
+            recovered-validation/freeze/rhythm-freeze-manifest.json
+            recovered-validation/freeze/rhythm-pdf-event-fidelity.json
+            recovered-validation/freeze/pdf/full-frozen-rhythm.pdf
+            recovered-validation/freeze/pdf/preview-frozen-rhythm.pdf
+          if-no-files-found: warn
+          retention-days: 2
