@@ -1,0 +1,2 @@
+V143 research-only electric-guitar TabCNN checkpoint fetch trigger.
+No production code, protected runtime, professional reference, Modal, or L4 involved.
