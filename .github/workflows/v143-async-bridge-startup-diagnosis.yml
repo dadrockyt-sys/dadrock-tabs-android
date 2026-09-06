@@ -35,26 +35,63 @@ jobs:
           modal token set --token-id "$MODAL_TOKEN_ID" --token-secret "$MODAL_TOKEN_SECRET" >/dev/null
           modal --version
 
-      - name: Read production bridge and worker startup logs only
+      - name: Read exact accepted-call Modal stage lines only
         shell: bash
         run: |
           set -euo pipefail
           BRIDGE='dadrock-v143-http-bridge'
           WORKER='dadrock-v143-ai-tab-live'
           echo 'exactCallWindowUtc=2026-09-05T23:52:21Z..2026-09-05T23:52:32Z'
-          echo '=== bridge app history ==='
-          modal app history "$BRIDGE" --env main --json || true
-          echo '=== worker app history ==='
-          modal app history "$WORKER" --env main --json || true
-          echo '=== currently running containers ==='
-          modal container list --env main --json || true
-          echo '=== recent bridge logs ==='
-          modal app logs "$BRIDGE" --env main --since 4h --tail 2500 --timestamps --show-function-id --show-function-call-id --show-container-id 2>&1 || true
-          echo '=== recent worker logs ==='
-          modal app logs "$WORKER" --env main --since 4h --tail 2500 --timestamps --show-function-id --show-function-call-id --show-container-id 2>&1 || true
           echo 'diagnosticOnly=true'
           echo 'audioOrModelInvokedByThisDiagnostic=false'
           echo 'workerSpawnedByThisDiagnostic=false'
+
+          modal app logs "$BRIDGE" --env main --since 4h --tail 2500 --timestamps --show-function-id --show-function-call-id --show-container-id 2>&1 > bridge.log || true
+          modal app logs "$WORKER" --env main --since 4h --tail 2500 --timestamps --show-function-id --show-function-call-id --show-container-id 2>&1 > worker.log || true
+
+          python3 - <<'PY'
+          import re
+          from pathlib import Path
+
+          WINDOW = re.compile(r'2026-09-05(?:T|\s)23:52:(?:2[1-9]|3[0-2])')
+          SIGNAL = re.compile(
+              r'V143_ASYNC_STAGE|Traceback|Exception|Error|ERROR|FAILED|failed|'
+              r'FunctionCall|function call|orchestrator|worker_call|result_queue|'
+              r'container|Container|task|Task|import|Import|ModuleNotFound|Killed|OOM|memory',
+              re.I,
+          )
+          SECRET = re.compile(r'(?i)(authorization|token|secret|bearer)(\s*[:=]\s*)(\S+)')
+          URL = re.compile(r'https?://[^\s"\']+')
+
+          for label, filename in (("bridge", "bridge.log"), ("worker", "worker.log")):
+              print(f'=== exact-window {label} signals ===')
+              lines = Path(filename).read_text(encoding='utf-8', errors='replace').splitlines()
+              selected = []
+              for i, line in enumerate(lines):
+                  if WINDOW.search(line) and SIGNAL.search(line):
+                      lo = max(0, i - 2)
+                      hi = min(len(lines), i + 3)
+                      selected.extend(range(lo, hi))
+              seen = set()
+              emitted = 0
+              for i in selected:
+                  if i in seen:
+                      continue
+                  seen.add(i)
+                  line = lines[i]
+                  if not (WINDOW.search(line) or SIGNAL.search(line)):
+                      continue
+                  line = SECRET.sub(r'\1\2[REDACTED]', line)
+                  line = URL.sub('[URL_REDACTED]', line)
+                  print(line[:2000])
+                  emitted += 1
+                  if emitted >= 220:
+                      print('[output-truncated-at-220-lines]')
+                      break
+              print(f'{label}FilteredLines={emitted}')
+          PY
+
+          rm -f bridge.log worker.log
           echo 'productionDeploymentChanged=false'
           echo 'referenceFacingInputs=0'
           echo 'referenceScoreCalls=0'
