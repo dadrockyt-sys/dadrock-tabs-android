@@ -55,8 +55,10 @@ export async function POST(request) {
         }
 
         return {
+          // The browser uploads directly to Blob, so do not impose the old
+          // 50 MB application ceiling here. Vercel Blob/platform limits remain
+          // authoritative and are surfaced by the upload SDK.
           allowedContentTypes: ALLOWED_AUDIO_TYPES,
-          maximumSizeInBytes: 50 * 1024 * 1024,
           addRandomSuffix: true,
 
           tokenPayload: JSON.stringify({

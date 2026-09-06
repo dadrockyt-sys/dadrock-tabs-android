@@ -643,6 +643,7 @@ const [tokenUsesRemaining, setTokenUsesRemaining] =
           audioFile,
           {
             access: 'private',
+            multipart: true,
 
             handleUploadUrl:
               '/api/audio-upload',
@@ -823,6 +824,9 @@ const [tokenUsesRemaining, setTokenUsesRemaining] =
             jobToken,
             transcriptionType:
               selectedType,
+            delivery: 'pdf-artifacts',
+            song: songTitle.trim(),
+            artist: artistName.trim(),
           }));
 
           if (
@@ -914,6 +918,19 @@ const [tokenUsesRemaining, setTokenUsesRemaining] =
       setStatusMessage(
         'Creating your watermarked tab preview...'
       );
+
+      const artifactPreviewUrl =
+        analysisMetadata?.pdfArtifact?.previewUrl;
+
+      if (
+        selectedType === 'rhythm' &&
+        typeof artifactPreviewUrl === 'string' &&
+        artifactPreviewUrl.startsWith('https://')
+      ) {
+        clearPreviewPdfUrl();
+        setPreviewPdfUrl(artifactPreviewUrl);
+        return artifactPreviewUrl;
+      }
 
       const response = await fetch(
         '/api/generate-tab-preview',
@@ -1506,6 +1523,9 @@ setTokenError('');
 
               generatedTab,
 
+              pdfArtifactId:
+                analysisMetadata?.pdfArtifact?.id || null,
+
               tuning:
                 analysisMetadata?.tuning || 'Standard Tuning',
 
@@ -1563,24 +1583,52 @@ setTokenError('');
             'content-type'
           ) || '';
 
-        if (
-          !contentType.includes(
-            'application/pdf'
-          )
-        ) {
+        let pdfResponse = response;
+
+        if (contentType.includes('application/json')) {
           const data = await response
             .json()
             .catch(() => ({}));
 
+          if (
+            typeof data.downloadUrl !== 'string' ||
+            !data.downloadUrl.startsWith('https://')
+          ) {
+            throw new Error(
+              data.error ||
+                data.message ||
+                'The server did not return a valid PDF download.'
+            );
+          }
+
+          pdfResponse = await fetch(data.downloadUrl, {
+            cache: 'no-store',
+          });
+
+          if (!pdfResponse.ok) {
+            throw new Error(
+              'The signed PDF download could not be retrieved.'
+            );
+          }
+        }
+
+        const pdfContentType =
+          pdfResponse.headers.get(
+            'content-type'
+          ) || '';
+
+        if (
+          !pdfContentType.includes(
+            'application/pdf'
+          )
+        ) {
           throw new Error(
-            data.error ||
-              data.message ||
-              'The server did not return a valid PDF file.'
+            'The server did not return a valid PDF file.'
           );
         }
 
         const pdfBlob =
-          await response.blob();
+          await pdfResponse.blob();
 
         const downloadUrl =
           window.URL.createObjectURL(

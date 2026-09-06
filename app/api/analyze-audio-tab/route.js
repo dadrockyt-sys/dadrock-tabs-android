@@ -11,6 +11,7 @@ import { buildAiTabDualContextShadowFusionV1 } from '@/lib/aiTabDualContextShado
 import { buildAiTabMixtureStructureContextFromAnalyzerObservationV1 } from '@/lib/aiTabAnalyzerMixtureObservationAdmissionV1.mjs';
 import { buildAiTabProductPlacementCandidateCanaryV1 } from '@/lib/aiTabProductPlacementCandidateCanaryV1.mjs';
 import { buildAiTabProductPlacementPromotionV1 } from '@/lib/aiTabProductPlacementPromotionV1.mjs';
+import { createV143RhythmPdfArtifacts } from '@/lib/v143RhythmPdfArtifacts';
 
 export const runtime = 'nodejs';
 export const maxDuration = 150;
@@ -186,6 +187,11 @@ export async function POST(request) {
       body?.jobToken,
       300
     );
+
+    const delivery = cleanText(
+      body?.delivery,
+      40
+    ).toLowerCase();
 
     if (
       !transcriptionType ||
@@ -507,6 +513,50 @@ export async function POST(request) {
         usingV143RhythmAnalyzer,
         conditioning,
       });
+
+    if (
+      operation === 'status' &&
+      usingV143RhythmAnalyzer &&
+      delivery === 'pdf-artifacts'
+    ) {
+      if (!song || !artist) {
+        return NextResponse.json(
+          { error: 'Song and artist are required for Rhythm PDF artifact delivery.' },
+          { status: 400 }
+        );
+      }
+
+      const pdfArtifact =
+        await createV143RhythmPdfArtifacts({
+          completedPayload,
+          song,
+          artist,
+        });
+
+      // Keep the browser response compact. The full structured result was used
+      // above to render both PDFs and remains only in the existing transient
+      // analyzer result until the browser ACKs this same job token.
+      return NextResponse.json({
+        generatedTab: completedPayload.generatedTab,
+        tuning: completedPayload.tuning,
+        tempo: completedPayload.tempo,
+        timeSignature: completedPayload.timeSignature,
+        keySignature: completedPayload.keySignature,
+        difficulty: completedPayload.difficulty,
+        techniques: completedPayload.techniques,
+        confidence: completedPayload.confidence,
+        noteCount: completedPayload.noteCount,
+        analysisEngine: completedPayload.analysisEngine,
+        analysisQuality: completedPayload.analysisQuality,
+        audioMetadata: completedPayload.audioMetadata,
+        payloadContract: completedPayload.payloadContract,
+        pdfArtifact,
+        analysisJob: {
+          status: 'completed',
+          token: jobToken,
+        },
+      });
+    }
 
     return NextResponse.json(
       operation === 'status'

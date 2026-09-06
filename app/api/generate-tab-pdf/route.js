@@ -5,6 +5,10 @@ import { createJimmyPaigeProfessionalPdf } from '@/lib/createJimmyPaigeProfessio
 import { getJimmyPaigeProfessionalPdfFeatureState } from '@/lib/jimmyPaigeProfessionalPdfFeature';
 import { getDb } from '@/lib/mongodb';
 import { NextResponse } from 'next/server';
+import {
+  createSignedV143RhythmPdfDownload,
+  isValidV143RhythmPdfArtifactId,
+} from '@/lib/v143RhythmPdfArtifacts';
 
 export const runtime = 'nodejs';
 export const dynamic = 'force-dynamic';
@@ -207,6 +211,7 @@ export async function POST(request) {
       40
     ).toLowerCase();
     const generatedTab = cleanTabText(body?.generatedTab);
+    const pdfArtifactId = cleanText(body?.pdfArtifactId, 80);
     const customerEmail = cleanText(
       body?.customerEmail,
       254
@@ -290,6 +295,51 @@ export async function POST(request) {
         song,
         artist,
         transcriptionType,
+      });
+    }
+
+    if (
+      transcriptionType === 'rhythm' &&
+      pdfArtifactId
+    ) {
+      if (!isValidV143RhythmPdfArtifactId(pdfArtifactId)) {
+        return NextResponse.json(
+          { error: 'Invalid Rhythm PDF artifact reference.' },
+          { status: 400 }
+        );
+      }
+
+      const { downloadUrl, expiresAt } =
+        await createSignedV143RhythmPdfDownload(pdfArtifactId);
+      const fileName = createSafeFileName({
+        song,
+        artist,
+        transcriptionType,
+      });
+
+      const emailResult = await resend.emails.send({
+        from:
+          process.env.RESEND_FROM_EMAIL ||
+          'DadRock Tabs <onboarding@resend.dev>',
+        to: customerEmail,
+        subject: `${song} — ${transcriptionType} tab PDF`,
+        html: `
+          <h2>Your DadRock Tabs PDF is ready</h2>
+          <p><strong>${song}</strong> by ${artist}</p>
+          <p><a href="${downloadUrl}">Download your finished ${transcriptionType} tab PDF</a></p>
+          <p>This private download link expires at ${expiresAt}.</p>
+          <p>Thank you for supporting DadRock Tabs.</p>
+        `,
+      });
+
+      if (emailResult.error) {
+        console.error('Resend email error:', emailResult.error);
+      }
+
+      return NextResponse.json({
+        downloadUrl,
+        expiresAt,
+        fileName,
       });
     }
 
