@@ -1,0 +1,13 @@
+V143 FINAL RHYTHM ONE-SHOT — REPAIRED PRE-START ARM
+
+The prior workflow run 34012505486 failed during Vercel Preview packaging before route preflight.
+Its preserved artifact proves modelBearingStartRequestCount=0, professionalScoreCalls=0, pdfE2EPerformed=false.
+
+This remains the same single user-authorized model-bearing Rhythm start.
+Exactly one model-bearing Rhythm start is authorized.
+Exactly one professional full-1-113 score is authorized if the live result completes.
+No retry or replacement after a model-bearing start is sent.
+No Lead/Bass run.
+No production promotion/change.
+Reuse the exact same completed structured result for PDF validation and scoring freeze.
+Packaging repair pinned: next.config.js blob d057c0731bc7f8b261c3598a45a7aea6dc5c9583.
