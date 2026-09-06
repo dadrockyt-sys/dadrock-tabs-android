@@ -1,14 +1,34 @@
 # CURRENT STATE — DadRock `/ai-tab`
 
-Updated: 2026-09-05 — **FRESH-CHAT E2E HANDOFF; PIPELINE WIRED + BUILD GREEN; ONE RHYTHM LIVE RUN AUTHORIZED, NOT CONSUMED.**  
+Updated: 2026-09-05 — **PROOF-AND-RUN PLAN SAVED; E2E ARMED; ZERO LIVE/SCORING CONSUMPTION.**  
 Branch: `v143-contextual-prune-lobo`
+
+## 2026-09-05 PROOF-AND-RUN PLAN — SAVED BEFORE CONSUMPTION
+
+User authorized proceeding with the already-scoped one-shot test. Execute strictly in this order:
+
+1. Verify branch head and re-verify approved `gomyway` source blob.
+2. Prove and pin the preserved **professional measures 1–113 Rhythm reference** from the GOAT-testing work: exact path, blob SHA, schema/event fields, measure coverage, and time coverage. Do **not** substitute the known 17–113 fallback.
+3. Prove and pin the deterministic professional scorer compatible with the current V143 Rhythm structured result and the full 1–113 reference; document supported metrics before scoring.
+4. Inspect/pin the one-shot helper + async bridge and prove there is exactly one model-bearing start, same-token polling only, no retry/replacement, and no optimizer/training/scheduler/model/parameter mutation.
+5. Prove the PDF artifact path consumes the **same already-completed structured result** and cannot start analyzer/model inference.
+6. Save another **PRE-CONSUMPTION** checkpoint with all exact provenance and counters still at zero consumed.
+7. Start exactly **ONE** current-V143 `gomyway` Rhythm E2E. The start itself consumes the one live authorization. If it fails, stop with **no retry/replacement**.
+8. Poll only the same returned job/token/FunctionCall to terminal.
+9. If a valid structured result exists, run exactly **ONE** deterministic professional score against the pinned full 1–113 reference. Unsupported metric categories are reported as `not scoreable from current schema`; nothing is guessed.
+10. Preserve only bounded structured evidence required for scoring, then ACK/clear that same analyzer token.
+11. Feed the **SAME completed structured result** to deterministic preview + full PDF generation and validate field preservation; no second analyzer/model invocation.
+12. Save a final checkpoint with run/job/FunctionCall/token/artifact identifiers, provenance, score metrics, PDF outcome, ACK/cleanup state, and final authorization accounting; then return to HOLD.
+
+**Accounting at plan-save:** live start **1 available / 0 consumed**; professional score **1 available / 0 consumed**; PDF E2E **0 performed**.
 
 ## 2026-09-05 CONTINUATION — REFERENCE/SCORER TRACE IN PROGRESS
 
-- Verified branch head before this continuation write: `a4c2de0db61ba67e40fa3d4570df288a5c6ba4fa`.
+- Verified branch head before the prior continuation write: `a4c2de0db61ba67e40fa3d4570df288a5c6ba4fa`.
 - Re-read this checkpoint and confirmed the hard one-run guardrail remains active.
 - Re-confirmed approved source asset path: `public/jimmy-paige-midterm-v1/gomyway-midterm-source.m4a`; pinned checkpoint blob remains `4dd709e3fa177b4daeed71ca97f0199757729d4b` pending final pre-consumption re-verification.
 - Current work is branch-local tracing of the preserved professional Rhythm reference covering measures **1–113** and the deterministic scorer compatible with current V143 Rhythm output.
+- The file `public/jimmy-paige-midterm-v1/jimmy-midterm-113-measure-paper-v1.json` has been identified as the **blind candidate submission**, not the professional answer key.
 - Known fallback `public/gomyway-professional-rhythm-reference-17-113.json` remains explicitly rejected as a substitute for the required full-span reference.
 - No live/model-bearing job has been started in this continuation.
 - Budget remains: **live start 1 available / 0 consumed; professional score 1 available / 0 consumed; PDF E2E 0 performed.**
