@@ -1,6 +1,6 @@
 # CURRENT STATE — DadRock `/ai-tab`
 
-Updated: 2026-09-06 — **FRESH-CHAT HANDOFF: FIX + ONE REPLACEMENT RHYTHM RUN + ONE PROFESSIONAL SCORE.**  
+Updated: 2026-09-06 — **PRE-REPLACEMENT PREFLIGHT FAILED SAFELY; NO MODEL START CONSUMED.**  
 Branch: `v143-contextual-prune-lobo`
 
 ## USER AUTHORIZATION — ACTIVE
@@ -200,3 +200,20 @@ Current state: **ROOT CAUSE REPAIRED + PRODUCTION MODAL BRIDGE VERIFIED. Replace
 - Do not promote/deploy the Vercel app to production.
 - Do not run optimizer/training sweeps.
 - Do not perform a second replacement Rhythm start or a second professional score without new explicit authorization.
+
+## PREFLIGHT FAILURE CHECKPOINT — 2026-09-06 10:20 America/Toronto
+
+- Resumed at current branch head `fd4b28612493998d6640aa7c64b01cc884f7a8d8` and re-read this checkpoint at that immutable commit before acting.
+- Model-free preflight workflow run `34041685767`, job `101509488243`, conclusion **failure**.
+- Immutable source-boundary checks all passed.
+- Preview identity check passed exactly: deployment `dpl_5j26ZS2xq3utrHxW7waCd5NEPaQk`, target `preview`, status `Ready`.
+- Protected analyze-route probe passed: HTTP 400 and exact error `Transcription type must be lead, rhythm, or bass.`; `analyzeRouteReached=true`.
+- The only failed condition was the `/ai-tab` page probe: HTTP **403**, 9 bytes instead of HTTP 200/nontrivial content.
+- Safety evidence remained intact: `operationStartSent=false`, `audioRead=false`, `modelExecuted=false`, `referenceScoreCalls=0`, `productionTargeted=false`, `deploymentProtectionChanged=false`.
+- Failure evidence artifact `9991865605`; uploaded artifact ZIP SHA-256 `648f7406ea4e6d2fa5508c188834eccd7a00d6696985e9072e6a92b59d14a1da`.
+- This failure is confined to the model-free page probe/transport check; it does **not** invalidate the repaired Modal bridge or consume any model/scoring budget.
+- Replacement Rhythm start remains **1 available / 0 consumed**.
+- Professional full-1–113 score remains **1 available / 0 consumed**.
+- Replacement PDF E2E remains **0 performed**.
+
+Exact next step: inspect and minimally patch only `.github/workflows/v143-pre-replacement-preview-preflight.yml` if needed so the protected `/ai-tab` page validation uses the same authenticated Preview access semantics as the successful protected route probe; rerun model-free preflight and require full success before any model start.
