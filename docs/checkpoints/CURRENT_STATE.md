@@ -1,6 +1,6 @@
 # CURRENT STATE — DadRock `/ai-tab`
 
-Updated: 2026-09-05 — SINGLE BACKEND-CAPABLE START ACCEPTED in run `33999777841`; first client poll was falsely classified terminal 502 while the Modal worker later started and continued executing; ACK/cleanup GREEN; **NO SECOND START / NO RERUN**; exact timeout semantics under read-only diagnosis  
+Updated: 2026-09-05 — SINGLE BACKEND-CAPABLE START ACCEPTED in run `33999777841`; first client poll falsely classified terminal 502 while worker remained active; **EXACT ROOT CAUSE CONFIRMED: Modal 1.5.5 built-in `TimeoutError` was not caught by bridge's distinct `modal.exception.TimeoutError`**; ACK/cleanup GREEN; **NO SECOND START / NO RERUN**  
 Branch: `v143-contextual-prune-lobo`
 
 > Compact continuation checkpoint. Older dedicated checkpoints remain authoritative; omission here does not revoke frozen boundaries.
@@ -92,9 +92,9 @@ Branch: `v143-contextual-prune-lobo`
 - `referenceScoreCalls=0`
 - `qualityVerdictMade=false`
 
-## READ-ONLY EXACT-CALL DIAGNOSIS — CHECKPOINT 3
+## READ-ONLY EXACT-CALL DIAGNOSIS — CHECKPOINT 4 / EXACT ROOT CAUSE
 
-No new backend-capable request, FunctionCall, workflow rerun, deployment, protection change, audio invocation, or model invocation was performed by this diagnosis. All Modal evidence below comes from already-completed log-only diagnostic workflows.
+No new backend-capable request, FunctionCall, workflow rerun, deployment, protection change, audio invocation, or model invocation was performed by this diagnosis. All exact-call runtime evidence came from already-completed log-only workflows; Modal semantics were confirmed from the public Modal 1.5.5 release source.
 
 ### Vercel / Actions boundary
 
@@ -102,58 +102,68 @@ No new backend-capable request, FunctionCall, workflow rerun, deployment, protec
 - No Vercel application stack trace/function crash appears in that window. The client `502` came from the bounded bridge/status path, not a Vercel function crash.
 - Actions confirms the status HTTP request itself took only `0.555108s`; `~13s` is elapsed async time since start, not a 13-second Vercel request timeout.
 
-### Source-level 502 mapping
-
-- Pinned route forwards bridge `status === 'failed'` as HTTP `502` with bridge bounded error.
-- Exact retained error `The analyzer job stopped before it could complete.` maps to the bridge branch where no result envelope is available and `modal.FunctionCall.from_id(...).get(timeout=0)` raises an exception that is **not caught by the bridge's `except modal.exception.TimeoutError` clause**; generic `except Exception` then labels the orchestrator call failed.
-- Earlier Checkpoint 2 inferred from source alone that the orchestrator had terminally failed. **That inference is now superseded by direct Modal logs below.**
-
-### Existing exact-call Modal log evidence — decisive lifecycle correction
+### Existing exact-call Modal lifecycle evidence
 
 Broader log-only run `34000077005`, job `101397240115`, completed GREEN and performed only Modal history/container/log reads. It explicitly emitted `diagnosticOnly=true`, `audioOrModelInvokedByThisDiagnostic=false`, `workerSpawnedByThisDiagnostic=false`.
 
-Bridge/orchestrator evidence:
-- bridge/orchestrator container `ta-01M1SZSPZ6QQS0DNAEBJSJ8X8R` start time `2026-09-05 23:52:28+00:00`;
-- orchestrator FunctionCall `fc-01M1SZSP90108F9D2EP8K4PWJ8` logged `V143_ASYNC_STAGE orchestrator.start` at `23:52:28`;
+Bridge/orchestrator:
+- container `ta-01M1SZSPZ6QQS0DNAEBJSJ8X8R` start time `2026-09-05 23:52:28+00:00`;
+- FunctionCall `fc-01M1SZSP90108F9D2EP8K4PWJ8` logged `V143_ASYNC_STAGE orchestrator.start` at `23:52:28`;
 - same FunctionCall logged `V143_ASYNC_STAGE worker_call.start` at `23:52:28`;
-- bridge status POST completed `200` at Modal at `23:52:33` (the Next.js layer translated its bounded `status='failed'` payload to client HTTP `502`);
-- bridge ACK POST completed `200` at `23:52:34`.
+- Modal bridge status POST completed `200` at `23:52:33`; Next.js translated bridge `status='failed'` to client HTTP `502`;
+- ACK POST completed `200` at `23:52:34`.
 
-Worker evidence for the same accepted job:
-- worker container `ta-01M1SZSTNZ2VGH7QD6BZ25J3TR` start time `2026-09-05 23:52:34+00:00`;
-- worker FunctionCall `fc-01M1SZST99RMZWN0SPV88WWEEB` logged `V143_STAGE worker.start` at `23:52:36`;
-- it immediately logged download start/done, normalize start/done, router start, separator start, input normalization, direct Demucs start, and Roformer start;
-- audio download completed in ~`0.780s`, normalization in ~`1.397s` from worker user-code start;
-- separator/model startup logs continued well after the client's `502` and after ACK;
-- Roformer completed at ~`23:54:04` (`separator.roformer.done elapsed=86.850`) and cascade Demucs then started;
-- the worker was still active minutes later when the read-only diagnostic collected logs.
+Worker:
+- container `ta-01M1SZSTNZ2VGH7QD6BZ25J3TR` start time `2026-09-05 23:52:34+00:00`;
+- FunctionCall `fc-01M1SZST99RMZWN0SPV88WWEEB` logged `V143_STAGE worker.start` at `23:52:36`;
+- then download/normalize/router/separator/Demucs/Roformer stages ran;
+- Roformer completed at ~`23:54:04` (`separator.roformer.done elapsed=86.850`) and cascade Demucs started;
+- worker was still active minutes after the false client terminal response and ACK.
 
-**Decisive lifecycle conclusion:** the accepted async job did not terminally fail at the first status poll. The bridge falsely classified a still-in-flight orchestrator/worker as terminal failed. The orchestrator had entered `worker.remote(...)`; the GPU worker cold-started several seconds later and executed substantial download/normalization/separator/model work. ACK cleared bridge-side transient control/result metadata but did not cancel the already-dispatched worker, which therefore continued orphaned from the client lifecycle.
+**Lifecycle conclusion:** the accepted async job did not terminally fail at the first status poll. The orchestrator was legitimately blocked inside `_worker_handle().remote(...)` while its GPU worker cold-started. ACK removed bridge-side tracking but did not cancel the remote worker, so execution continued orphaned from the client lifecycle.
 
 ### Narrowed-log filter caveat
 
-- Later log-only run `34000153347`, job `101397440154`, correctly recovered `orchestrator.start` and `worker_call.start` but printed `workerFilteredLines=0`.
-- That zero is a filtering artifact: the workflow's `SIGNAL` regex includes `V143_ASYNC_STAGE` but omits the worker's actual `V143_STAGE worker.*` marker.
-- Therefore `workerFilteredLines=0` must **not** be used as evidence that the worker failed to start; broader run `34000077005` directly proves it did start.
+- Later log-only run `34000153347`, job `101397440154`, recovered `orchestrator.start` / `worker_call.start` but printed `workerFilteredLines=0`.
+- That is a filter artifact: its regex includes `V143_ASYNC_STAGE` but omits actual worker marker `V143_STAGE worker.*`.
+- Broader run `34000077005` is authoritative for worker execution.
 
-## CURRENT ROOT-CAUSE CANDIDATE — TIMEOUT EXCEPTION CLASS MISMATCH
+### Authoritative Modal 1.5.5 semantics — exact confirmation
 
-The remaining exact question is why a normal pending `FunctionCall.get(timeout=0)` fell through the bridge's generic `except Exception` instead of the intended `modal.exception.TimeoutError` running branch.
+PyPI published `modal-1.5.5` on 2026-08-28. Its provenance identifies source Git origin `712e0bd181ef892d769e26f7bca9fd385d09f606`. The public `modal-labs/modal-client` mirror release commit `c3922a2c5719e5843618e8cd3fcf664cc1ddfeba` is explicitly `Release 1.5.5 of the Python SDK` and carries the same `GitOrigin-RevId: 712e0bd181ef892d769e26f7bca9fd385d09f606`; `py/modal_version/__init__.py` at that commit is exactly `__version__ = "1.5.5"`.
 
-Current strongest candidate:
-- while the orchestrator was legitimately still pending/cold-starting its remote worker, `FunctionCall.get(timeout=0)` raised a timeout/poll-not-ready exception class different from `modal.exception.TimeoutError`;
-- the bridge catches only `modal.exception.TimeoutError`, so that normal pending condition was caught by generic `except Exception` and mislabeled terminal failure;
-- direct timing strongly supports a poll-state bug: bridge status returned failure at `23:52:33`, worker container started at `23:52:34`, and worker user code began at `23:52:36`.
+At that exact release commit:
+- `_Invocation.poll_function(timeout=...)` raises **bare `TimeoutError()`** when there are no outputs but unfinished inputs remain; `timeout=0` therefore uses this path as an immediate pending poll.
+- `py/modal/_functions.py` does **not** import `TimeoutError` from `.exception`; the bare name resolves to Python's built-in `TimeoutError`.
+- `py/modal/exception.py` separately defines `class TimeoutError(Error)`, where `Error` is Modal's custom `Exception` subclass. This is a distinct class; it is not an alias/base class for Python's built-in `TimeoutError`.
 
-This candidate is **not yet promoted to exact root cause** until Modal 1.5.5 `FunctionCall.get(timeout=0)` exception semantics are confirmed from authoritative source/documentation.
+Pinned bridge blob `36584355d9b060fc7b7e20acc62524fbc7bf9005` does:
 
-## NEXT — READ-ONLY SEMANTICS CONFIRMATION ONLY
+`call.get(timeout=0)` -> `except modal.exception.TimeoutError:` => processing -> generic `except Exception:` => bounded terminal failed.
+
+## EXACT ROOT CAUSE — CONFIRMED
+
+**The async bridge catches the wrong timeout exception class for `FunctionCall.get(timeout=0)` under Modal 1.5.5.**
+
+When the orchestrator is still running, Modal 1.5.5 raises Python's built-in `TimeoutError`. The bridge catches only the distinct `modal.exception.TimeoutError`, so the normal pending-poll exception bypasses the intended `processing` branch and falls into generic `except Exception`, returning `status='failed'` / `The analyzer job stopped before it could complete.` Next.js maps that bounded bridge failure to client HTTP `502`.
+
+This exactly explains all observed timing:
+- orchestrator begins `worker.remote(...)` at `23:52:28`;
+- status poll at `23:52:33` sees the FunctionCall still unfinished and receives built-in `TimeoutError`;
+- bridge misclassifies that normal pending condition as terminal failure;
+- worker container starts `23:52:34` and user code starts `23:52:36`;
+- ACK at `23:52:34` clears tracking but does not cancel the already-dispatched worker;
+- worker continues model/separator execution for minutes.
+
+Root cause is now sufficiently established to consider a narrowly scoped bridge repair. No model/scheduler/worker/route change is implicated by this failure.
+
+## NEXT — NARROW MODEL-FREE REPAIR ONLY
 
 1. **Do not edit/rearm/rerun the breakthrough workflow and do not send any real-audio start.**
-2. Read authoritative Modal client/source/docs for the exact exception raised by `FunctionCall.get(timeout=0)` when a call is still pending, with focus on Modal client 1.5.5 used by the bridge deployment/diagnostic tooling.
-3. If the exception-class mismatch is confirmed, checkpoint it as exact root cause before any bridge code repair.
-4. If not confirmed, continue read-only examination of FunctionCall poll semantics/version behavior; do not infer terminal worker failure from the already disproven client `502` classification.
-5. Any eventual repair must first be statically/model-free validated; **no repair may be validated with a second model-bearing start in this diagnostic phase.**
+2. Repair only the bridge status polling timeout catch so Modal 1.5.5's built-in `TimeoutError` is classified `processing`. Prefer the narrowest version-robust catch supported by static tests; do not change worker/model/scheduler behavior.
+3. Add/adjust a local/static/model-free regression test that proves an in-flight `FunctionCall.get(timeout=0)` built-in `TimeoutError` returns `processing`, while a true non-timeout exception remains terminal failed.
+4. Validate only with static/local/model-free checks or an existing no-audio async smoke seam. **Do not validate with another backend-capable real-audio/model-bearing start.**
+5. Checkpoint repair commit, validation evidence, and unchanged safety accounting before any further step.
 
 ## HARD STOPS
 
@@ -161,10 +171,10 @@ This candidate is **not yet promoted to exact root cause** until Modal 1.5.5 `Fu
 - No ad-hoc real-audio request.
 - No production Vercel promotion/change.
 - No Deployment Protection weakening/disablement or bypass-secret creation.
-- No scheduler/model change before exact-call diagnosis.
+- No scheduler/model change for this repair.
 - No reference-facing scoring/quality verdict/restricted assets.
 - No raw audio/stems/model bytes in retained evidence.
 - No TTL > 15 minutes / no persistent result cache.
 - No whole-branch merge to `main`.
 
-Current authorization state: **the one backend-capable start is consumed; client terminal 502 is proven false by existing Modal lifecycle logs; worker execution did occur and continued after ACK; only read-only confirmation of the polling/timeout root cause is authorized now.**
+Current authorization state: **the one backend-capable start is consumed; exact false-terminal root cause is confirmed as a Modal 1.5.5 timeout exception-class mismatch; only a narrow bridge polling repair plus model-free/static validation is authorized next.**
