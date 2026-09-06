@@ -1,6 +1,6 @@
 # CURRENT STATE — DadRock `/ai-tab`
 
-Updated: 2026-09-06 — **PACKAGING REPAIRED; SECOND PRE-START ARM READY; LIVE RUN STILL UNCONSUMED.**  
+Updated: 2026-09-06 — **TWO PRE-START FAILURES ONLY; PROVEN PROTECTED-PREVIEW TRANSPORT STAGED; LIVE RUN STILL UNCONSUMED.**  
 Branch: `v143-contextual-prune-lobo`
 
 ## AUTHORIZATION / HARD BUDGET
@@ -10,75 +10,77 @@ User explicitly authorized making the current V143 `gomyway` Rhythm E2E work and
 - Rhythm live/model-bearing starts: **1 available / 0 consumed**.
 - Professional full-1–113 scoring passes: **1 available / 0 consumed**.
 - PDF E2E: **0 performed**.
-- Retry/replacement **after a live start is sent**: **NOT authorized**.
+- Any retry/replacement **after `operation:"start"` is sent**: **NOT authorized**.
 - Lead/Bass model run: **NOT authorized**.
-- No production deployment/promotion/change, no Deployment Protection weakening, no optimizer/training/threshold sweep/scheduler/model/parameter mutation.
-- If the single live start/job fails after `operation:"start"` is sent: **STOP; no second model start**.
+- No production deployment/promotion/change, no Deployment Protection weakening, no bypass secret/share-link creation, no optimizer/training/threshold sweep/model mutation.
 
-Verified branch head immediately before this checkpoint: `1bfd02a2d4b1d440afa1d00157a981f4205d6a5f`.
+## PRE-START ATTEMPT HISTORY — BOTH ZERO CONSUMPTION
 
-## FIRST ARM — PRE-START FAILURE ONLY; BUDGET NOT SPENT
+### Attempt 1 — packaging failure before route preflight
 
-The first dedicated arm was commit `610ac358cdff8b60970c408b366666425c2d660a`, workflow run `34012505486`, job `101430616920`.
-
-Its fresh Preview deployment was:
-- Deployment ID: `dpl_7fe8G9PswNHpvVr7ovMkiVByMpqU`
-- URL: `dadrock-tabs-android-fxgu52jbs-stephen-mcnally-s-projects.vercel.app`
-- Source commit: `610ac358cdff8b60970c408b366666425c2d660a`
-- Target: Preview / non-production
-- Result: `ERROR` during Vercel `direct:build`
-- Error code: `NOW_SANDBOX_WORKER_MAX_UNCOMPRESSED_FUNCTION_SIZE`
-- Error detail: `api/analyze-audio-tab` was **425.26 MB uncompressed**, exceeding Vercel's 250 MB function limit.
-
-Crucially, the deployment failed before protected-route preflight and before the runner reached the single `operation:"start"` boundary.
-
-Preserved first-arm artifact:
-- Artifact: `v143-final-rhythm-one-shot`
+- Arm commit: `610ac358cdff8b60970c408b366666425c2d660a`
+- Workflow run: `34012505486`
+- Job: `101430616920`
+- Preview deployment: `dpl_7fe8G9PswNHpvVr7ovMkiVByMpqU`
+- Failure: `NOW_SANDBOX_WORKER_MAX_UNCOMPRESSED_FUNCTION_SIZE`; `/api/analyze-audio-tab` was 425.26 MB > 250 MB.
 - Artifact ID: `9982913980`
 - Artifact digest: `sha256:0dab392435d412c34fe2a1946dfa235c3ab658f99cc03878f98cbbce0070cb1e`
-- Its bounded summary explicitly records:
-  - `modelBearingStartRequestCount: 0`
-  - `professionalScoreCalls: 0`
-  - `pdfE2EPerformed: false`
-  - `completed: false`
-  - `acknowledged: false`
-  - `transientResultCleared: false`
-  - `productionEnvironmentChanged: false`
-  - `productionPromotionPerformed: false`
-  - `deploymentProtectionDisabled: false`
-  - `referenceOpenedBeforeFreeze: false`
-  - no raw audio/stems/model bytes retained.
+- Preserved summary proves `modelBearingStartRequestCount=0`, `professionalScoreCalls=0`, `pdfE2EPerformed=false`.
+- Never rerun workflow `34012505486` / job `101430616920`.
 
-Therefore this was **not a model retry** and did not consume the user's one authorized model-bearing run or score.
+Packaging repair:
+- Commit `cd32eccdb2f3b587e6bbae5b4e3e19406d120e3e`
+- `next.config.js` blob `d057c0731bc7f8b261c3598a45a7aea6dc5c9583`
+- Added `/api/analyze-audio-tab` to existing public-trace exclusion while explicitly retaining `public/DadRock-Tabs-Logo.png`.
+- Model/analyzer/bridge/scheduler/reference/production logic unchanged.
 
-Never rerun workflow run `34012505486` or job `101430616920`.
+### Attempt 2 — protected-route transport failure before model start
 
-## MODEL-FREE PACKAGING REPAIR
+- Arm commit: `6212f6c64a2bcebaebfae7f4f7bc22d2a0483894`
+- Workflow run: `34012747879`
+- Job: `101431245172`
+- Exact Preview deployment: `dpl_3LdGRdXb7ZkmNUojrXun72my84M4`
+- Preview URL: `https://dadrock-tabs-android-iwhmrcol7-stephen-mcnally-s-projects.vercel.app`
+- Preview source commit: `6212f6c64a2bcebaebfae7f4f7bc22d2a0483894`
+- Preview target: `preview`
+- Preview state: **READY**
+- Build/package fix validated on the exact armed Preview; no 425 MB failure.
+- Failure: model-free protected-route preflight returned `protectedPreviewRouteReached=false` using the new runner's raw GitHub OIDC curl path.
+- Vercel runtime logs contained no function invocation for that preflight, confirming failure occurred before application route execution.
+- Artifact ID: `9982986412`
+- Artifact zip digest from workflow: `ceb5393458c5bec5d007ec56919c122b6fe911a61509e1e104060918354acc31`
+- Preserved summary proves `modelBearingStartRequestCount=0`, `professionalScoreCalls=0`, `pdfE2EPerformed=false`, `previewReady=true`.
+- Never rerun workflow `34012747879` / job `101431245172`.
 
-Root cause: `app/api/analyze-audio-tab/route.js` imports the V143 Rhythm PDF artifact path, so its Next.js server trace was pulling the large `public/` research/static tree. Existing proven trace isolation covered the PDF routes but not `/api/analyze-audio-tab`.
+Therefore **both attempts were pre-start infrastructure attempts, not model retries. Live budget remains 0 consumed.**
 
-Applied the same existing model-free trace isolation pattern to the analyzer route:
-- Commit: `cd32eccdb2f3b587e6bbae5b4e3e19406d120e3e`
-- File: `next.config.js`
-- New blob: `d057c0731bc7f8b261c3598a45a7aea6dc5c9583`
-- `/api/analyze-audio-tab` now excludes `./public/**/*` from its serverless trace and explicitly includes only `./public/DadRock-Tabs-Logo.png`, matching the Product/PDF trace policy.
-- No analyzer route logic, model, scheduler, bridge, thresholds, reference, or production configuration changed.
+## ROOT CAUSE / PROVEN TRANSPORT FIX
 
-## SECOND PRE-START ARM ISOLATION
+Historical repo helper commit `e24eb3b3ef05f25faa2ddefd1bee66327549b98e` repaired the protected Preview preflight by using the Vercel CLI's authenticated transport:
 
-Updated trigger-only workflow in commit `1bfd02a2d4b1d440afa1d00157a981f4205d6a5f`:
-- Workflow: `.github/workflows/v143-one-shot-final-rhythm-e2e.yml`
-- Workflow blob: `87d662bf25822c89c0d9e5c5b0a8fac3bd347bb5`
-- New trigger path: `.github/one-shot/v143-final-rhythm-run-2.txt`
-- The workflow now also pins `next.config.js` blob `d057c0731bc7f8b261c3598a45a7aea6dc5c9583` before execution.
-- Updating the workflow itself did not match the trigger path and therefore did not issue a live/model request.
-- Concurrency remains `v143-final-rhythm-one-shot-never-retry`, `cancel-in-progress: false`.
-- Permissions remain `contents: read`, `id-token: write`; Vercel authentication comes from the existing Actions secret.
-- The runner builds/deploys **Preview only** and contains no `--prod`, `promote`, rollback, env mutation, or Deployment Protection mutation.
+`vercel curl /api/analyze-audio-tab --deployment <preview> -- ...`
 
-One-shot runner:
-- `.github/scripts/v143-one-shot-final-rhythm-e2e.sh`
-- Blob: `5aa292b23c9dbe3190a49baf59b01d0907d59f4d`
+The current repo helper `.github/scripts/v143-existing-preview-async-breakthrough-e2e.sh` uses that same `vercel curl` transport for **preflight, start, same-token status polling, and ACK**. This is the already-established protected-Preview path; it does not disable protection, create a bypass secret, or create a share link.
+
+New final helper staged:
+- `.github/scripts/v143-one-shot-final-rhythm-existing-preview.sh`
+- Blob: `e2847e4d05ae1fea781ef07e891fece1bfbecbf0`
+- Commit creating helper: `2db1642d8fe54d1b6076131d6a5e91ad1c5852ba`
+- Reuses immutable READY Preview `dpl_3LdGRdXb7ZkmNUojrXun72my84M4`; performs **no deployment**.
+- Uses `vercel inspect` to require exact deployment ID + target preview + READY.
+- Uses proven `vercel curl --deployment` for model-free preflight, the single authorized start, same-token polls, and ACK.
+- Includes EXIT-trap same-job ACK cleanup if validation fails after a live token exists; no replacement model start.
+- Freezes terminal `renderEvents`, renders preview/full PDFs from that same freeze, verifies PDF-event fidelity, then opens the professional reference and scores once.
+- Scrubs raw response/token/reference/full-event transient files before artifact upload.
+
+Workflow staged:
+- `.github/workflows/v143-one-shot-final-rhythm-e2e.yml`
+- Workflow blob: `947690980cf11ef9a53b837a2c70e718b8f7a5d9`
+- Commit: `3c068925cd8fdec272fad456b1f7d0052d43f545`
+- Trigger path: `.github/one-shot/v143-final-rhythm-run-3.txt`
+- `contents: read` only; no OIDC permission needed.
+- Pins exact READY Preview URL/ID/source commit and all current route/model-support blobs.
+- Concurrency remains `v143-final-rhythm-one-shot-never-retry`, `cancel-in-progress:false`.
 
 ## PINNED CURRENT-V143 SOURCE BOUNDARY
 
@@ -86,54 +88,42 @@ One-shot runner:
 - Audio Git blob: `4dd709e3fa177b4daeed71ca97f0199757729d4b`
 - Analyze route blob: `a3d02876d2c4efeb6f5258586046bc95cfc132b6`
 - `/ai-tab` page blob: `c218639afcdbb7540ff7cc34583afc6d83587fa0`
-- `next.config.js` packaging blob: `d057c0731bc7f8b261c3598a45a7aea6dc5c9583`
+- `next.config.js` blob: `d057c0731bc7f8b261c3598a45a7aea6dc5c9583`
 - Async bridge blob: `169b4bb136eba742c3422a73ee5dd0174ca06c49`
 - Async protocol blob: `1bd55017e16a4e1d8b14c7429492f811a43a28d8`
 - Modal live worker blob: `111bf14a8f91045d3478901f8e36b88a2e7f181a`
 - Deterministic separator/scheduler blob: `fc9b4c45c208d80be7abab64a8959f2a3babcee8`
 - Fixed Modal worker: app `dadrock-v143-ai-tab-live`, function `rhythm_v143_request`.
-- Bridge repair commit: `62deec179531b0f3e67c0e833365c2274697f02d`.
 
 ## FULL PROFESSIONAL RHYTHM REFERENCE — 1–113
 
-- Reference: `research/v154-professional-references/rhythm-professional-reference.json`
+- `research/v154-professional-references/rhythm-professional-reference.json`
 - Git blob: `248741bade9665a34648c59a2994bd27d73fc406`
 - SHA-256: `18fd868ae960dfcdd1ffb0110f1a9dfd8acc2ffeb46e247d1116cd54291526ac`
-- Coverage: measures **1–113**, 113 stored measure objects, 603 professional events/onsets, 946 notes.
-- Provenance: `research/v154-professional-references/rhythm-professional-reference-provenance.json`.
-- Professional image source: `public/Professionalexample.jpg`, Git blob `16106197cc1269cca0b3c443908d5ef75e8b4d3e`.
-- Scorer-only temporary reference access is forbidden until the live result is frozen and exact PDF event fidelity has passed.
+- Coverage: measures 1–113, 113 stored measures, 603 professional events/onsets, 946 notes.
+- Reference remains outside scorer-only temp storage until exact live freeze + PDF fidelity are complete.
 
-Excluded from the reserved score:
-- `public/gomyway-professional-rhythm-reference-v2.json` — measures 1–16 only.
-- `public/gomyway-professional-rhythm-reference-17-113.json` — partial fallback.
-- `public/jimmy-paige-midterm-v1/jimmy-midterm-113-measure-paper-v1.json` — blind/paper candidate, not answer key.
+## FINAL FREEZE / PDF / SCORE PINS
 
-## PROFESSIONAL SCORER / FREEZE / PDF PINS
-
-- `validation/rhythm_holdout/freeze_rhythm_analysis.py` blob `710bb6a3b15b99d3d11ceb4948d7c7175d208afc`
-- `validation/rhythm_holdout/render_frozen_rhythm_pdf.mjs` blob `3c50c06e2394dfac1c80acb20aefa33583907b33`
-- `validation/rhythm_holdout/verify_pdf_event_fidelity.py` blob `5e1564216873046237fb545078a04a6b18f72b27`
-- `lib/createV143RhythmPdf.js` blob `4f0e1372dd5903c05c25f0f0a302dd35e81de36b`
-- Professional scorer `validation/rhythm_holdout/score_rhythm_holdout.py` blob `cc4bf61a99f22bf87a6c255e5a81220fbc82223b`
-- Completeness verifier blob `2504581dd72b6c375fbc0b68d4d396fce58deb87`
-- Canonicalizer blob `088d44827fb23e20d9aeeb4944a672989af5846c`
-- Final orchestrator `validation/rhythm_holdout/run_final_holdout_gate.py` blob `c6a84434eefa768a924395b76d1d25b4e5a51307`
-- Professional threshold 0.99; onset tolerance 0.50 step; gross timing tolerance 2.00 steps; duration tolerance 0.25 step.
+- Freeze: `validation/rhythm_holdout/freeze_rhythm_analysis.py` blob `710bb6a3b15b99d3d11ceb4948d7c7175d208afc`
+- PDF render harness: `validation/rhythm_holdout/render_frozen_rhythm_pdf.mjs` blob `3c50c06e2394dfac1c80acb20aefa33583907b33`
+- PDF fidelity verifier: `validation/rhythm_holdout/verify_pdf_event_fidelity.py` blob `5e1564216873046237fb545078a04a6b18f72b27`
+- Renderer: `lib/createV143RhythmPdf.js` blob `4f0e1372dd5903c05c25f0f0a302dd35e81de36b`
+- Scorer: `validation/rhythm_holdout/score_rhythm_holdout.py` blob `cc4bf61a99f22bf87a6c255e5a81220fbc82223b`
+- Final gate: `validation/rhythm_holdout/run_final_holdout_gate.py` blob `c6a84434eefa768a924395b76d1d25b4e5a51307`
+- Threshold: 0.99.
 
 ## EXACT NEXT ACTION
 
-Create `.github/one-shot/v143-final-rhythm-run-2.txt` exactly once. That push is a **second pre-start infrastructure attempt**, not a second model attempt, because the first workflow's immutable artifact proves `modelBearingStartRequestCount = 0`.
+Create `.github/one-shot/v143-final-rhythm-run-3.txt` exactly once.
 
-Then inspect only the resulting `V143 Final Rhythm One Shot` workflow run:
-1. source and packaging pins must pass;
-2. fresh Preview must build READY;
-3. model-free protected-route preflight must pass;
-4. exactly one `operation:"start"` may then be sent — **at that instant live budget becomes 1 consumed / 0 available**;
-5. poll only the same signed job token / same Modal FunctionCall;
-6. no replacement start under any terminal failure;
-7. if completed, freeze the exact structured result, render preview/full PDFs from it, prove PDF event fidelity = 1.0, then open the professional reference and score exactly once;
-8. ACK/clear the same job and scrub raw/token/reference/event-bearing transient files;
-9. save FINAL checkpoint and return to HOLD.
+This third arm still precedes any model start because attempts 1 and 2 have immutable artifacts proving zero start requests. The run must:
+1. verify the exact existing READY Preview and all pinned blobs;
+2. run model-free preflight through proven `vercel curl` transport;
+3. only if preflight passes, send exactly **one** `operation:"start"` — at that instant live budget becomes consumed;
+4. poll only the same signed job token;
+5. never send a replacement start under any failure;
+6. on completion, freeze exact result → render preview/full PDFs → prove PDF fidelity 1.0 → open professional reference → score exactly once → ACK same job → scrub transient material;
+7. save FINAL checkpoint and return to HOLD.
 
-Current state: **READY FOR SECOND PRE-START ARM. Live = 0 consumed; professional score = 0 consumed; PDF E2E = 0 performed.**
+Current state: **READY FOR THIRD PRE-START ARM. Live = 0 consumed; professional score = 0 consumed; PDF E2E = 0 performed.**
