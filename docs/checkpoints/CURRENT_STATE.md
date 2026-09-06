@@ -248,3 +248,27 @@ Do not conflate three different outcomes:
 ## CURRENT STATE
 
 **Infrastructure path succeeded end-to-end after recovery: exact worker completion, same-run result recovery, 925-event product normalization, and 1.0 PDF event fidelity. The single professional holdout score has now been consumed and failed the near-100 gate by a wide margin. No model retry and no score retry are authorized. Next work is model-free diagnosis of musical/scoring alignment, the 900-second async tracking TTL defect, and the user-observed Modal reporting-function crash-loop symptom.**
+
+## CONTINUATION — NOTE / FRET DIAGNOSIS (2026-09-06)
+
+No new model start or professional score run has been authorized or executed during this continuation.
+
+Deterministic frozen-result diagnosis:
+- measure coverage: **111/113 = 98.23%**;
+- pitch-content F1: **30.89%**;
+- pitch+timing tolerant F1: **5.879%**;
+- string/fret+timing tolerant F1: **2.672%**;
+- chord pitch-set / exact-voicing tolerant F1: **0.414%**;
+- PDF event fidelity: **100%**.
+
+Opening evidence already shows the mismatch before fret rendering: the professional reference begins at measure 1 / step 0 with a simultaneous multi-string chord, while the frozen analyzer's first event is measure 1 / step 12. Therefore the next repair target is generic onset/grid anchoring plus preservation of simultaneous/polyphonic pitch groups before string/fret assignment.
+
+The professional reference remains post-freeze diagnostic evidence only. Do not feed it into runtime analyzer logic and do not hardcode holdout-specific pitches, frets, measures, offsets, or thresholds.
+
+Planned model-free repair sequence:
+1. trace the exact onset/quantization, chord grouping, and pitch-to-position code paths;
+2. verify source commits cannot trigger live model/scorer workflows;
+3. add synthetic regression tests for step-0 anchoring, simultaneous-note preservation, unique-string chord voicing, plausible fret span, and smooth adjacent-chord movement;
+4. patch the smallest generic musical-representation defects;
+5. run only model-free tests;
+6. checkpoint again before any future live validation proposal.
