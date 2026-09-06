@@ -1,8 +1,8 @@
 # CURRENT STATE — DadRock `/ai-tab` V143
 
-Updated: 2026-09-06 18:18 America/Toronto
+Updated: 2026-09-06 20:xx America/Toronto
 Branch: `v143-contextual-prune-lobo`
-Branch head observed before this checkpoint write: `6feccbf918cc3ba9833586e13ffc71097d61afd2`
+Branch head observed during continuation: `d3c38ce10f1af0551d20a02ad2a0dc93e750ec23`
 Previous full-detail checkpoint blob: `00bbec5b9a3465db35659f73e957c600c8b985bb` (retained in Git history; use it for the long-form run/artifact record if needed)
 
 ## NON-NEGOTIABLE AUTHORIZATION / BUDGET BOUNDARY
@@ -99,7 +99,14 @@ Known async path inspected:
 
 The timing repair was already committed before this continuation (checkpoint-era commit `f387377b538342f284e03b617ce6f4f13e31e6b0`). Preserve it.
 Later branch evidence/debug commits must also be preserved; do not reset/rebase over them.
-Most recent observed head before this checkpoint was the bot commit `6feccbf918cc3ba9833586e13ffc71097d61afd2` (`Record Bass real-audio structured integration`).
+
+### Verified continuation finding
+
+`analyzer/v143_reference_free_timing.py` is **not** the note/score-construction layer. It estimates timing structure (beat grid/bar phase and related candidate timing context) and exposes adapter data such as `candidate_adapter_kwargs()`. It does not itself construct the final note stream, assign the final score, or perform the target polyphony/voicing decisions.
+
+Therefore the next engineering target is the **consumer downstream of this module**: locate where the returned timing/adaptation data enters the post-model event pipeline, then identify the exact grouping/string-fret/voicing/export hook there.
+
+Do not modify the timing estimator merely to force chord/polyphony behavior unless the downstream trace proves the timing module is actually responsible for the defect.
 
 ## V143 PRODUCT TARGET — SELF-CORRECTING TAB, NOT A DRAFT
 
@@ -114,30 +121,55 @@ Deterministic post-model design rules:
 6. Preserve musical context as first-class data: BPM, meter, pickup, tuning, role/instrument, onset grouping, sustain/voice relationships.
 7. Do not tune the professional reference/scorer thresholds to manufacture a pass.
 
-## CONTINUATION STATUS — 2026-09-06
+## FRESH-CHAT HANDOFF — EXACT NEXT STEPS
 
-No new model-bearing run or professional scorer run has been executed during this continuation.
-No analyzer/live/scorer source has been changed yet in this continuation.
+Start here in a new chat. Do **not** repeat the expensive validation work.
 
-Current investigation focus:
-- trace `analyzer/v143_reference_free_timing.py` into the exact post-model event/score handoff;
-- locate the code that groups simultaneous/near-simultaneous notes and assigns string/fret/voicing;
-- implement the smallest safe model-free polyphony-preservation + deterministic structural validation layer;
-- validate statically/unit-level only where imports cannot initialize models;
-- then locate and repair the exact 900-second ownership/control TTL source;
-- diagnose the user-observed Modal “reporting function crash-looping” read-only.
+1. Read this file first and stay on branch `v143-contextual-prune-lobo`.
+2. Reconfirm the branch head and preserve all existing V143 commits; no reset/rebase over checkpoint/debug evidence.
+3. Trace every branch-specific import/call/use of `analyzer/v143_reference_free_timing.py`, especially `candidate_adapter_kwargs()`, using branch-aware file reads rather than default-branch code search when necessary.
+4. Identify the first downstream function that receives model candidates + reference-free timing context and produces canonical/post-model note events.
+5. From that function, trace the exact code responsible for:
+   - onset/simultaneous-note grouping,
+   - candidate pruning,
+   - pitch retention,
+   - string/fret assignment,
+   - chord/voicing construction,
+   - duration/sustain overlap handling,
+   - final canonical event ordering/export.
+6. Check for any winner-take-all, top-1, nearest-only, confidence-only, same-onset dedupe, same-string overwrite, or “one note per frame/onset” logic that could be collapsing valid polyphony.
+7. Implement the **smallest deterministic post-model repair** at the narrowest confirmed hook:
+   - retain compatible simultaneous/overlapping notes,
+   - prune only physically/musically contradictory candidates,
+   - avoid duplicate-string collisions inside one chord unless sequential/voice logic clearly allows it,
+   - preserve lower-confidence notes when they complete a feasible voicing,
+   - do not use the professional reference at runtime.
+8. Add a deterministic pre-export structural validator/diagnostic layer checking at minimum:
+   - sorted event times,
+   - nonnegative/valid durations,
+   - bar/beat/grid consistency,
+   - tuning-aware pitch ↔ string/fret consistency,
+   - fret reachability,
+   - duplicate-string simultaneous collisions,
+   - impossible simultaneous voicings,
+   - chord grouping integrity,
+   - sustain/overlap coherence,
+   - measure-count/pickup anomalies.
+9. Prefer diagnostics over deletion when a deterministic correction is not unambiguous.
+10. Run **only** model-free static/unit tests or pure functions that cannot initialize the model. Do not trigger Rhythm/Lead/Bass inference indirectly through imports.
+11. Save `docs/checkpoints/CURRENT_STATE.md` again immediately after the downstream hook is found, and again after any source change + validation result. Include exact file paths and commit/blob SHAs.
+12. After score-structure work, locate the **actual** 900-second async ownership/control-state TTL source. Change only the ownership/result retention lifetime so it safely exceeds the 1200-second worker/orchestrator budget; do not guess a constant and do not change the 1200-second compute budget.
+13. Diagnose the user-observed Modal “reporting function crash-looping” read-only unless a deterministic source-level fix is clearly proven.
+14. Before **any** new model-bearing run or professional scorer invocation, explain exactly what would run and obtain fresh explicit user authorization.
 
-## NEXT SAFE ACTIONS — IN ORDER
+## CONTINUATION STATUS — SAVED FOR FRESH CHAT
 
-1. Trace exact imports/usages of `analyzer/v143_reference_free_timing.py` and identify the canonical post-model event structure.
-2. Add deterministic chord/polyphony preservation at the narrowest confirmed hook. Preserve all 925 frozen evidence semantics; do not use the professional reference at runtime.
-3. Add a deterministic pre-export structural gate with diagnostics for impossible/colliding voicings and timing/bar inconsistencies.
-4. Run only model-free syntax/static/unit validation that cannot initialize a model.
-5. Save this checkpoint again with exact files, blob/commit SHAs and validation results.
-6. Locate the exact async ownership/control-state TTL implementation and repair that lifetime only; do not change the 1200-second worker/orchestrator budget.
-7. Diagnose the Modal reporting-loop symptom read-only.
-8. Before any future live validation, explain exactly what the proposed run would test and obtain fresh explicit authorization for any model/scorer invocation.
+No new model-bearing run or professional scorer run was executed during this continuation.
+No live/scorer evaluation budget was consumed.
+No post-model analyzer repair was committed yet during this continuation because the downstream consumer/hook still needs to be located exactly.
+
+The key newly verified fact is that `analyzer/v143_reference_free_timing.py` is a timing/context provider rather than the final score-construction layer. The fresh chat should continue by finding its exact downstream consumer and repairing polyphony/voicing there, not by changing the estimator blindly.
 
 ## CURRENT STATE
 
-**The 925-event frozen V143 result proves the infrastructure/render path can preserve events exactly, but the single consumed professional score proves the musical score construction is still far from the no-human-correction target. Continue with deterministic post-model score-structure work first: preserve polyphony, enforce physically/musically coherent voicings, validate timing/bar structure, and never silently discard compatible evidence. No model/scorer retries are authorized.**
+**The 925-event frozen V143 result proves the infrastructure/render path can preserve events exactly, but the consumed professional score proves the musical score construction is still far from the no-human-correction target. Continue deterministically downstream of `v143_reference_free_timing.py`: find the canonical event-construction hook, preserve valid polyphony, enforce coherent voicings, add structural self-validation, checkpoint frequently, and do not run another model/scorer without fresh authorization.**
