@@ -1,6 +1,6 @@
 # CURRENT STATE — DadRock `/ai-tab`
 
-Updated: 2026-09-05 — SINGLE BACKEND-CAPABLE START ACCEPTED in run `33999777841`; first poll terminal 502; ACK/cleanup GREEN; **NO SECOND START / NO RERUN**; read-only exact-call diagnosis in progress  
+Updated: 2026-09-05 — SINGLE BACKEND-CAPABLE START ACCEPTED in run `33999777841`; first client poll was falsely classified terminal 502 while the Modal worker later started and continued executing; ACK/cleanup GREEN; **NO SECOND START / NO RERUN**; exact timeout semantics under read-only diagnosis  
 Branch: `v143-contextual-prune-lobo`
 
 > Compact continuation checkpoint. Older dedicated checkpoints remain authoritative; omission here does not revoke frozen boundaries.
@@ -52,7 +52,7 @@ Branch: `v143-contextual-prune-lobo`
 
 - Re-arm workflow commit: `67e5224d9a72c11ce5ff5aa26538cd9cbe86a612`.
 - Job: `101396439738`.
-- Workflow conclusion: FAILURE **by deliberate post-ACK stop after terminal job failure**.
+- Workflow conclusion: FAILURE **by deliberate post-ACK stop after the client observed a bridge terminal-failure response**.
 - Exact source/helper one-start boundary passed.
 - Exact Preview inspect passed: ID `dpl_G2WxxMA782j87H7tLpAy9cCB4ihD`, target Preview, status Ready.
 - Model-free protected route preflight GREEN: `protectedPreviewRoutePreflightStatus=400`, `protectedPreviewRouteReached=true`.
@@ -65,11 +65,12 @@ Branch: `v143-contextual-prune-lobo`
 - A usable signed `v143a1.*` job token was returned and then used only for status/ACK; raw token was deleted and not retained.
 - **From this point forward, NO SECOND BACKEND-CAPABLE REAL-AUDIO START and NO RERUN of `33999777841` are authorized under any outcome.**
 
-### Terminal failure
+### Client-observed terminal classification
 
 - First same-token status poll returned `HTTP 502` after ~13 seconds: `pollCount=1`, `terminalRequestSeconds=0.555108`, `asyncTotalSeconds=13.075462102890015`.
-- Terminal classification: `terminalState=failed`, `completed=false`, `analysisJobCompleted=false`, `generatedTabPresent=false`.
+- Client classification: `terminalState=failed`, `completed=false`, `analysisJobCompleted=false`, `generatedTabPresent=false`.
 - Bounded error retained: `The analyzer job stopped before it could complete.`
+- **Later Modal logs prove this client/bridge terminal classification was false: the worker subsequently started and continued running.**
 - This is not a reference-facing quality result and no quality verdict was made.
 
 ### ACK / cleanup GREEN
@@ -91,52 +92,68 @@ Branch: `v143-contextual-prune-lobo`
 - `referenceScoreCalls=0`
 - `qualityVerdictMade=false`
 
-## READ-ONLY EXACT-CALL DIAGNOSIS — CHECKPOINT 2
+## READ-ONLY EXACT-CALL DIAGNOSIS — CHECKPOINT 3
 
-No new backend-capable request, FunctionCall, workflow rerun, deployment, protection change, or model execution was performed during this diagnosis.
+No new backend-capable request, FunctionCall, workflow rerun, deployment, protection change, audio invocation, or model invocation was performed by this diagnosis. All Modal evidence below comes from already-completed log-only diagnostic workflows.
 
 ### Vercel / Actions boundary
 
-- Vercel runtime evidence for deployment `dpl_G2WxxMA782j87H7tLpAy9cCB4ihD` confirms the exact request sequence: model-free preflight `400` at ~`23:52:19Z`, accepted start `202` at ~`23:52:21Z`, same-token status `502` at ~`23:52:32Z`, ACK `200` at ~`23:52:34Z`.
-- No Vercel application stack trace/function crash appears in that window. The `502` therefore came from the bounded bridge/status path, not a Vercel function crash.
-- Actions independently confirms the status HTTP request itself took only `0.555108s`; `~13s` is elapsed async time since start, not a 13-second Vercel request timeout.
+- Vercel runtime evidence for deployment `dpl_G2WxxMA782j87H7tLpAy9cCB4ihD` confirms: model-free preflight `400` at ~`23:52:19Z`, accepted start `202` at ~`23:52:21Z`, same-token client status `502` at ~`23:52:32Z`, ACK `200` at ~`23:52:34Z`.
+- No Vercel application stack trace/function crash appears in that window. The client `502` came from the bounded bridge/status path, not a Vercel function crash.
+- Actions confirms the status HTTP request itself took only `0.555108s`; `~13s` is elapsed async time since start, not a 13-second Vercel request timeout.
 
-### Exact source-level 502 mapping — stronger conclusion
+### Source-level 502 mapping
 
-Pinned route `route.js` forwards a bridge `status === 'failed'` response as HTTP `502` with the bridge's bounded error. The exact retained error `The analyzer job stopped before it could complete.` maps uniquely to the pinned bridge's `_status_rhythm_job` branch where:
+- Pinned route forwards bridge `status === 'failed'` as HTTP `502` with bridge bounded error.
+- Exact retained error `The analyzer job stopped before it could complete.` maps to the bridge branch where no result envelope is available and `modal.FunctionCall.from_id(...).get(timeout=0)` raises an exception that is **not caught by the bridge's `except modal.exception.TimeoutError` clause**; generic `except Exception` then labels the orchestrator call failed.
+- Earlier Checkpoint 2 inferred from source alone that the orchestrator had terminally failed. **That inference is now superseded by direct Modal logs below.**
 
-1. no queued result envelope is available yet;
-2. orchestrator control exists, including a valid `fc-*` FunctionCall ID;
-3. `modal.FunctionCall.from_id(...).get(timeout=0)` is attempted;
-4. the call does **not** raise `modal.exception.TimeoutError` (which would mean still processing);
-5. instead it raises another exception, and bridge returns `status='failed'`, error `The analyzer job stopped before it could complete.`.
+### Existing exact-call Modal log evidence — decisive lifecycle correction
 
-This is materially different from a normal worker failure. `run_rhythm_async_job` wraps `_worker_handle().remote(...)` in its own `try/except`; if the worker itself raises after the orchestrator body is running, the orchestrator catches it, creates a bounded failed envelope, writes that envelope to the transient result Queue, logs `worker_call.done status=failed` / `result_queue.done status=failed`, and returns normally. A subsequent status would read that failed Queue envelope instead of taking the `FunctionCall.get()` exception branch.
+Broader log-only run `34000077005`, job `101397240115`, completed GREEN and performed only Modal history/container/log reads. It explicitly emitted `diagnosticOnly=true`, `audioOrModelInvokedByThisDiagnostic=false`, `workerSpawnedByThisDiagnostic=false`.
 
-**Current source-level conclusion:** the observed `502` proves the tracked orchestrator FunctionCall itself entered an exceptional terminal state before it returned normally. The most likely classes are orchestrator container/function startup/import/runtime failure, or another exception outside/around the worker-call catch. Existing Modal logs are required to determine whether `V143_ASYNC_STAGE orchestrator.start` / `worker_call.start` were ever emitted and therefore whether the worker/model path began.
+Bridge/orchestrator evidence:
+- bridge/orchestrator container `ta-01M1SZSPZ6QQS0DNAEBJSJ8X8R` start time `2026-09-05 23:52:28+00:00`;
+- orchestrator FunctionCall `fc-01M1SZSP90108F9D2EP8K4PWJ8` logged `V143_ASYNC_STAGE orchestrator.start` at `23:52:28`;
+- same FunctionCall logged `V143_ASYNC_STAGE worker_call.start` at `23:52:28`;
+- bridge status POST completed `200` at Modal at `23:52:33` (the Next.js layer translated its bounded `status='failed'` payload to client HTTP `502`);
+- bridge ACK POST completed `200` at `23:52:34`.
 
-### Safe Modal log path recovered
+Worker evidence for the same accepted job:
+- worker container `ta-01M1SZSTNZ2VGH7QD6BZ25J3TR` start time `2026-09-05 23:52:34+00:00`;
+- worker FunctionCall `fc-01M1SZST99RMZWN0SPV88WWEEB` logged `V143_STAGE worker.start` at `23:52:36`;
+- it immediately logged download start/done, normalize start/done, router start, separator start, input normalization, direct Demucs start, and Roformer start;
+- audio download completed in ~`0.780s`, normalization in ~`1.397s` from worker user-code start;
+- separator/model startup logs continued well after the client's `502` and after ACK;
+- Roformer completed at ~`23:54:04` (`separator.roformer.done elapsed=86.850`) and cascade Demucs then started;
+- the worker was still active minutes later when the read-only diagnostic collected logs.
 
-Historical diagnostic run `33985149949`, job `101357179709`, used only:
-- `modal app history dadrock-v143-http-bridge --env main --json`
-- `modal app history dadrock-v143-ai-tab-live --env main --json`
-- `modal container list --env main --json`
-- `modal app logs <bridge> ...`
-- `modal app logs <worker> ...`
+**Decisive lifecycle conclusion:** the accepted async job did not terminally fail at the first status poll. The bridge falsely classified a still-in-flight orchestrator/worker as terminal failed. The orchestrator had entered `worker.remote(...)`; the GPU worker cold-started several seconds later and executed substantial download/normalization/separator/model work. ACK cleared bridge-side transient control/result metadata but did not cancel the already-dispatched worker, which therefore continued orphaned from the client lifecycle.
 
-It explicitly emitted `diagnosticOnly=true`, `audioOrModelInvokedByThisDiagnostic=false`, `workerSpawnedByThisDiagnostic=false`, production/reference fields unchanged. Current workflow `.github/workflows/v143-async-bridge-startup-diagnosis.yml` still contains only those read-only/log-only Modal operations plus client setup; no FunctionCall invocation/spawn exists.
+### Narrowed-log filter caveat
 
-## CURRENT ROOT-CAUSE QUESTION
+- Later log-only run `34000153347`, job `101397440154`, correctly recovered `orchestrator.start` and `worker_call.start` but printed `workerFilteredLines=0`.
+- That zero is a filtering artifact: the workflow's `SIGNAL` regex includes `V143_ASYNC_STAGE` but omits the worker's actual `V143_STAGE worker.*` marker.
+- Therefore `workerFilteredLines=0` must **not** be used as evidence that the worker failed to start; broader run `34000077005` directly proves it did start.
 
-Determine from existing Modal logs whether the accepted orchestrator FunctionCall emitted `orchestrator.start`, whether it reached `worker_call.start`, and whether a worker FunctionCall/container emitted any stage lines in the exact ~`23:52:21Z`–`23:52:32Z` window.
+## CURRENT ROOT-CAUSE CANDIDATE — TIMEOUT EXCEPTION CLASS MISMATCH
 
-## NEXT — READ-ONLY MODAL LOG RETRIEVAL ONLY
+The remaining exact question is why a normal pending `FunctionCall.get(timeout=0)` fell through the bridge's generic `except Exception` instead of the intended `modal.exception.TimeoutError` running branch.
+
+Current strongest candidate:
+- while the orchestrator was legitimately still pending/cold-starting its remote worker, `FunctionCall.get(timeout=0)` raised a timeout/poll-not-ready exception class different from `modal.exception.TimeoutError`;
+- the bridge catches only `modal.exception.TimeoutError`, so that normal pending condition was caught by generic `except Exception` and mislabeled terminal failure;
+- direct timing strongly supports a poll-state bug: bridge status returned failure at `23:52:33`, worker container started at `23:52:34`, and worker user code began at `23:52:36`.
+
+This candidate is **not yet promoted to exact root cause** until Modal 1.5.5 `FunctionCall.get(timeout=0)` exception semantics are confirmed from authoritative source/documentation.
+
+## NEXT — READ-ONLY SEMANTICS CONFIRMATION ONLY
 
 1. **Do not edit/rearm/rerun the breakthrough workflow and do not send any real-audio start.**
-2. Use only the existing log-only Modal diagnostic pattern above to read bridge/worker history/logs covering the exact failure window. Do not spawn/call any Modal Function as part of diagnosis.
-3. Correlate function-call IDs/timestamps and stage lines; retain bounded textual diagnostic evidence only, never raw audio/stems/model bytes or credentials.
-4. Classify failure as orchestrator startup/import, pre-worker-call, worker startup/execution, or post-worker/result-queue only if logs support it.
-5. Checkpoint exact root cause before proposing any code/config repair. **No repair may be validated with a second model-bearing start in this diagnostic phase.**
+2. Read authoritative Modal client/source/docs for the exact exception raised by `FunctionCall.get(timeout=0)` when a call is still pending, with focus on Modal client 1.5.5 used by the bridge deployment/diagnostic tooling.
+3. If the exception-class mismatch is confirmed, checkpoint it as exact root cause before any bridge code repair.
+4. If not confirmed, continue read-only examination of FunctionCall poll semantics/version behavior; do not infer terminal worker failure from the already disproven client `502` classification.
+5. Any eventual repair must first be statically/model-free validated; **no repair may be validated with a second model-bearing start in this diagnostic phase.**
 
 ## HARD STOPS
 
@@ -150,4 +167,4 @@ Determine from existing Modal logs whether the accepted orchestrator FunctionCal
 - No TTL > 15 minutes / no persistent result cache.
 - No whole-branch merge to `main`.
 
-Current authorization state: **the one backend-capable start is consumed; terminal 502 + ACK/cleanup are proven; source maps the error to an exceptional orchestrator FunctionCall state; only log-only Modal diagnosis of this exact call is authorized now.**
+Current authorization state: **the one backend-capable start is consumed; client terminal 502 is proven false by existing Modal lifecycle logs; worker execution did occur and continued after ACK; only read-only confirmation of the polling/timeout root cause is authorized now.**
