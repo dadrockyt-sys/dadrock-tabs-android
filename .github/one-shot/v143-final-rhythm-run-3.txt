@@ -1,14 +1,21 @@
-V143 FINAL RHYTHM ONE-SHOT — PROVEN PROTECTED-PREVIEW TRANSPORT
+V143 FINAL RHYTHM REPLACEMENT ONE-SHOT — REPAIRED PROTECTED PREVIEW
 
-Attempts 1 and 2 both stopped before any model-bearing start.
-Immutable artifacts prove modelBearingStartRequestCount=0, professionalScoreCalls=0, pdfE2EPerformed=false.
+Authorized one-shot arm after repaired Modal bridge verification and green model-free protected Preview preflight.
 
-Reuse READY Preview dpl_3LdGRdXb7ZkmNUojrXun72my84M4.
-Use the repo-proven `vercel curl --deployment` protected Preview transport.
-Exactly one model-bearing Rhythm start is authorized.
-Exactly one professional full-1-113 score is authorized if the live result completes.
-No replacement model start after `operation:start` is sent.
+Preview deployment: dpl_5j26ZS2xq3utrHxW7waCd5NEPaQk
+Preview source: 631544a8668033392300f2739c87232553dbadc0
+Runner retarget commit: 9f4d8b59a15288cab02c7930093f80db57e52df0
+Runner workflow blob: d803af28820cff23750e503cf2fdea5aa8299d83
+Helper blob: e2847e4d05ae1fea781ef07e891fece1bfbecbf0
+Repaired bridge blob: 169b4bb136eba742c3422a73ee5dd0174ca06c49
+
+Exactly one model-bearing gomyway Rhythm start is authorized.
+Poll only the same signed job/token/FunctionCall.
+No replacement start after operation:start is sent, including on failure.
+Exactly one professional full-1-113 score is authorized only after the exact completed result is frozen and deterministic preview/full PDFs are validated from that same result.
 No Lead/Bass run.
-No production deployment/promotion/change.
+No production Vercel deploy/promotion/change.
 No Deployment Protection weakening, bypass secret, or share link.
-Freeze and render PDFs from the exact same completed structured result before opening the professional reference.
+No model/scheduler/parameter/threshold mutation.
+
+Armed: 2026-09-06 11:49 America/Toronto
