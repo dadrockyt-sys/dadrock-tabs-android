@@ -1,0 +1,30 @@
+name: V143 Modal Timeout Contract
+
+on:
+  push:
+    branches:
+      - v143-contextual-prune-lobo
+    paths:
+      - analyzer/v143_modal_http_endpoint.py
+      - analyzer/test_v143_modal_http_endpoint_timeout_contract.py
+      - .github/workflows/v143-modal-timeout-contract.yml
+
+permissions:
+  contents: read
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Compile bridge and regression
+        run: >-
+          python -m py_compile
+          analyzer/v143_modal_http_endpoint.py
+          analyzer/test_v143_modal_http_endpoint_timeout_contract.py
+
+      - name: Run timeout regression
+        run: python analyzer/test_v143_modal_http_endpoint_timeout_contract.py
