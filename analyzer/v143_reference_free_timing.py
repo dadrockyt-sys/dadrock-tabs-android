@@ -17,6 +17,7 @@ MIN_TEMPO_BPM = 55.0
 MAX_TEMPO_BPM = 210.0
 BEATS_PER_MEASURE = 4
 MIN_TRACKED_BEATS = 8
+BAR_PHASE_MIN_SEPARATION_Z = 2.0
 
 
 @dataclass(frozen=True)
@@ -333,6 +334,31 @@ def _refine_beat_frames(
     return np.asarray(refined, dtype=int)
 
 
+def _paired_phase_separation_z(
+    accents: np.ndarray,
+    best_phase: int,
+    runner_up_phase: int,
+) -> float:
+    """Return repeatability of the best-vs-runner accent difference across bars."""
+    differences: list[float] = []
+    for base in range(0, len(accents), BEATS_PER_MEASURE):
+        best_index = base + int(best_phase)
+        runner_index = base + int(runner_up_phase)
+        if best_index < len(accents) and runner_index < len(accents):
+            differences.append(float(accents[best_index] - accents[runner_index]))
+
+    if len(differences) < 2:
+        return 0.0
+    values = np.asarray(differences, dtype=np.float64)
+    mean_difference = float(np.mean(values))
+    if mean_difference <= 0.0:
+        return 0.0
+    standard_error = float(np.std(values, ddof=1)) / math.sqrt(len(values))
+    if standard_error <= 1.0e-12:
+        return float("inf")
+    return float(mean_difference / standard_error)
+
+
 def _bar_phase_from_accents(
     beat_accents: np.ndarray,
 ) -> tuple[int, int, float]:
@@ -354,7 +380,30 @@ def _bar_phase_from_accents(
             )
         )
 
-    downbeat_index_mod4 = int(np.argmax(phase_scores))
+    phase_order = sorted(
+        range(BEATS_PER_MEASURE),
+        key=lambda phase: phase_scores[phase],
+        reverse=True,
+    )
+    strongest_phase = int(phase_order[0])
+    runner_up_phase = int(phase_order[1])
+    separation_z = _paired_phase_separation_z(
+        accents,
+        strongest_phase,
+        runner_up_phase,
+    )
+
+    # Nonzero bar rotation is a destructive relabeling of every downstream
+    # event. Keep the tracked sequence's first beat as the conservative prior
+    # unless the nonzero phase repeatedly separates from the runner-up by about
+    # two standard errors across complete 4-beat cycles. This is a generic
+    # evidence test, not a song/reference-specific threshold.
+    downbeat_index_mod4 = strongest_phase
+    if (
+        strongest_phase != 0
+        and separation_z < BAR_PHASE_MIN_SEPARATION_Z
+    ):
+        downbeat_index_mod4 = 0
     first_beat_in_measure = int((-downbeat_index_mod4) % BEATS_PER_MEASURE)
 
     finite_scores = np.asarray(
@@ -366,6 +415,8 @@ def _bar_phase_from_accents(
     runner_up = float(ordered[-2]) if len(ordered) >= 2 else top
     spread = max(float(np.std(accents)), 1.0e-9)
     confidence = float(np.clip((top - runner_up) / spread, 0.0, 1.0))
+    if downbeat_index_mod4 != strongest_phase:
+        confidence = 0.0
     return first_beat_in_measure, downbeat_index_mod4, confidence
 
 
@@ -487,6 +538,7 @@ __all__ = [
     "MAX_TEMPO_BPM",
     "BEATS_PER_MEASURE",
     "MIN_TRACKED_BEATS",
+    "BAR_PHASE_MIN_SEPARATION_Z",
     "ReferenceFreeTimingEstimate",
     "estimate_reference_free_timing_from_samples",
     "estimate_reference_free_timing",
