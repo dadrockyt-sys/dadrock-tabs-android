@@ -461,7 +461,7 @@ def _status_rhythm_job(
     )
     try:
         call_result = call.get(timeout=0)
-    except modal.exception.TimeoutError:
+    except (TimeoutError, modal.exception.TimeoutError):
         return {
             "status": "processing",
             "pollAfterMs": 3000,
