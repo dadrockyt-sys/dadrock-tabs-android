@@ -1,6 +1,6 @@
 # CURRENT STATE — DadRock `/ai-tab`
 
-Updated: 2026-09-05 — **EXACT FALSE-TERMINAL ROOT CAUSE CONFIRMED AND NARROW BRIDGE REPAIR COMMITTED; MODEL-FREE REGRESSION COMMITTED; VALIDATION PENDING.** Exactly one backend-capable real-audio start has ever been accepted in this phase; **NO SECOND START / NO RERUN**.  
+Updated: 2026-09-05 — **EXACT FALSE-TERMINAL ROOT CAUSE CONFIRMED; NARROW BRIDGE REPAIR + MODEL-FREE REGRESSION COMMITTED; MODEL-FREE VALIDATION LAUNCHED, GREEN PENDING.** Exactly one backend-capable real-audio start has ever been accepted in this phase; **NO SECOND START / NO RERUN**.  
 Branch: `v143-contextual-prune-lobo`
 
 > Compact continuation checkpoint. Checkpoint 4 commit `f16598ac037c57f4166ed4e3d97c234dc61c8eb5` and older dedicated checkpoints remain authoritative for full forensic detail; omission here does not revoke frozen boundaries.
@@ -96,17 +96,24 @@ The test is dependency-free and does not import Modal. It statically parses the 
 3. the following generic `Exception` handler remains terminal `status='failed'` with the existing bounded error;
 4. Python exception matching classifies built-in timeout and a Modal-like timeout as processing while `RuntimeError` remains failed.
 
-No CI status was attached automatically to the test commit. A tiny branch/path-scoped model-free Actions validation is the next step; it must only `py_compile` the bridge/test and run this unittest. It must not authenticate to Modal/Vercel, access Blob/audio, spawn FunctionCalls, or invoke models.
+## CHECKPOINT 6 — MODEL-FREE VALIDATION LAUNCHED
 
-## NEXT — MODEL-FREE VALIDATION ONLY
+Commit `97b94e7fe2afc76e61ff2ddc89138849ed173f7d` adds only `.github/workflows/v143-modal-timeout-contract.yml`.
 
-1. Add/run a minimal branch/path-scoped GitHub Actions check that does only:
-   - checkout;
-   - `python -m py_compile analyzer/v143_modal_http_endpoint.py analyzer/test_v143_modal_http_endpoint_timeout_contract.py`;
-   - `python analyzer/test_v143_modal_http_endpoint_timeout_contract.py`.
-2. Inspect its existing run/log output and require GREEN before declaring repair statically validated.
-3. Checkpoint run ID/job ID/commit and unchanged safety accounting.
-4. **Do not deploy or validate this repair with another backend-capable real-audio/model-bearing request in this diagnostic phase.**
+The workflow is push-scoped to branch `v143-contextual-prune-lobo` and path-scoped to the repaired bridge, timeout regression, and this validation workflow. Permissions are `contents: read`; no secrets or external authentication are referenced. Its only validation commands are:
+
+- `python -m py_compile analyzer/v143_modal_http_endpoint.py analyzer/test_v143_modal_http_endpoint_timeout_contract.py`;
+- `python analyzer/test_v143_modal_http_endpoint_timeout_contract.py`.
+
+Automatic push run `34000667026`, job `101398830737`, attempt `1` started for exact head `97b94e7fe2afc76e61ff2ddc89138849ed173f7d`. At this checkpoint it is still `in_progress`; no manual dispatch/rerun has been issued.
+
+Safety accounting remains unchanged: no Modal/Vercel auth, no Blob/audio access, no FunctionCall spawn, no model execution, no reference-facing scoring, no deployment/protection change.
+
+## NEXT — FINISH MODEL-FREE VALIDATION ONLY
+
+1. Inspect existing run `34000667026` / job `101398830737`; require both compile and unittest steps GREEN before declaring static validation complete.
+2. Save final run conclusion/log evidence and exact branch head in this checkpoint.
+3. **Do not deploy or validate this repair with another backend-capable real-audio/model-bearing request in this diagnostic phase.**
 
 ## HARD STOPS
 
@@ -120,4 +127,4 @@ No CI status was attached automatically to the test commit. A tiny branch/path-s
 - No TTL > 15 minutes / no persistent result cache.
 - No whole-branch merge to `main`.
 
-Current authorization state: **exact root cause is confirmed; one-line bridge repair + dependency-free regression are committed; only model-free static validation and checkpointing are authorized next.**
+Current authorization state: **exact root cause is confirmed; one-line bridge repair + dependency-free regression are committed; model-free static validation run `34000667026` is in progress; only inspection/checkpointing is authorized next.**
