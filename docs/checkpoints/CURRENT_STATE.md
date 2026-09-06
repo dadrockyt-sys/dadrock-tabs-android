@@ -1,134 +1,94 @@
 # CURRENT STATE — DadRock `/ai-tab`
 
-Updated: 2026-09-05 — **PRE-CONSUMPTION GATE GREEN; ONE-SHOT LIVE RUN STILL UNCONSUMED.**  
+Updated: 2026-09-05 — **FINAL PRE-ARM CHECKPOINT; LIVE RUN STILL UNCONSUMED.**  
 Branch: `v143-contextual-prune-lobo`
 
-## AUTHORIZED NEXT ACTION
+## AUTHORIZATION / HARD BUDGET
 
-User explicitly asked to make the one-shot `gomyway` Rhythm E2E work and run it. Do not ask for authorization again. Exactly one backend/model-bearing Rhythm start is authorized. If that start or job fails, STOP: no retry or replacement run.
+User explicitly authorized making the current V143 `gomyway` Rhythm E2E work and running it. Do not ask again.
 
-Pre-consumption branch head verified immediately before this checkpoint: `a1fad9a019517e58f753f8f681a0c35609852566`.
-
-## BUDGET — PRE-CONSUMPTION
-
-- Current-V143 `gomyway` Rhythm live/model-bearing starts: **1 available / 0 consumed**.
+- Rhythm live/model-bearing starts: **1 available / 0 consumed**.
 - Professional full-1–113 scoring passes: **1 available / 0 consumed**.
 - PDF E2E: **0 performed**.
-- Lead/Bass model runs: **not authorized**.
-- Retry/replacement live run: **not authorized**.
+- Retry/replacement live run: **NOT authorized**.
+- Lead/Bass model run: **NOT authorized**.
+- No production deployment/promotion/change, no protection weakening, no optimizer/training/threshold sweep/model mutation.
+- If the single live start/job fails: **STOP; no second start**.
 
-## PINNED INPUT / LIVE PATH
+## PRE-ARM SOURCE STATE
 
-- Approved audio: `public/jimmy-paige-midterm-v1/gomyway-midterm-source.m4a`
-- Approved audio Git blob: `4dd709e3fa177b4daeed71ca97f0199757729d4b`
-- One-shot helper: `.github/scripts/v143-existing-preview-async-breakthrough-e2e.sh`
-- Helper blob: `433599afec7fff20a31ea79e4c93ef9a6da03b36`
-- Analyzer route: `app/api/analyze-audio-tab/route.js`
-- Route blob: `a3d02876d2c4efeb6f5258586046bc95cfc132b6`
-- Async bridge: `analyzer/v143_modal_http_endpoint.py`
-- Bridge blob: `169b4bb136eba742c3422a73ee5dd0174ca06c49`
-- Fixed bridge worker: Modal app `dadrock-v143-ai-tab-live`, function `rhythm_v143_request`
-- Live worker source: `analyzer/v143_modal_live_endpoint.py`
-- Deterministic separator source: `analyzer/v143_seeded_separator.py`
-- Repaired bridge commit: `62deec179531b0f3e67c0e833365c2274697f02d`
-- Bridge validation: workflow run `34000667026`, job `101398830737` — GREEN
-- Model-free large Rhythm regression: workflow run `34006234785`, job `101413830044` — GREEN
-- Next.js production build: workflow run `34006290464`, job `101413989631` — GREEN
+Staged branch head immediately before this checkpoint: `ef5718b5509b42b9afd8dbb94d634a263defd2f4`.
 
-### Live-run safety proof
+The execution has been isolated behind a dedicated trigger path so checkpoint/helper/workflow commits cannot start the model:
 
-Inspection of the pinned helper proves:
-- exactly one JSON request with `operation: "start"` is constructed and sent;
-- after that request, the helper only emits `operation: "status"` using the same returned signed `jobToken`, then `operation: "ack"` for that same token;
-- poll transport errors only continue same-token polling and never issue another start;
-- unusable start response, terminal failure, or polling deadline exits with an explicit STOP/no-second-start path;
-- the helper does not train, optimize, sweep thresholds, mutate model parameters, deploy production, or promote production.
+- One-shot runner: `.github/scripts/v143-one-shot-final-rhythm-e2e.sh`
+- Runner blob: `5aa292b23c9dbe3190a49baf59b01d0907d59f4d`
+- Trigger-only workflow: `.github/workflows/v143-one-shot-final-rhythm-e2e.yml`
+- Workflow triggers **only** when `.github/one-shot/v143-final-rhythm-run.txt` is pushed on this branch.
+- Creating/staging the runner and workflow did **not** match that trigger path; live budget is still untouched.
+- Workflow concurrency: `v143-final-rhythm-one-shot-never-retry`, `cancel-in-progress: false`.
+- Workflow has `contents: read` + `id-token: write`; Vercel token comes only from existing GitHub Actions secret.
+- The workflow performs a fresh **Preview-only** Vercel build/deploy. It contains no `--prod`, `promote`, rollback, env mutation, or Deployment Protection mutation.
 
-Inspection of the pinned bridge proves:
-- Rhythm start spawns one `run_rhythm_async_job` orchestrator;
-- that orchestrator performs one `_worker_handle().remote(...)` call;
-- `_worker_handle()` is fixed to `dadrock-v143-ai-tab-live / rhythm_v143_request`;
-- status uses the signed job ID plus the stored single Modal FunctionCall ID and reads the same transient result partition;
-- ACK/cleanup clears the same tracked job state; it does not invoke the model.
+## PINNED CURRENT-V143 SOURCE BOUNDARY
 
-Inspection of `analyzer/v143_modal_live_endpoint.py` confirms `rhythm_v143_request` is the deterministic reference-free Rhythm request path and reports `professionalReferenceUsed: false`, `referenceRuntimeInputUsed: false`, deterministic separator seed 143 and Demucs shifts 1.
+- Audio: `public/jimmy-paige-midterm-v1/gomyway-midterm-source.m4a`
+- Audio Git blob: `4dd709e3fa177b4daeed71ca97f0199757729d4b`
+- Audio URL used by runner: `https://raw.githubusercontent.com/dadrockyt-sys/dadrock-tabs-android/main/public/jimmy-paige-midterm-v1/gomyway-midterm-source.m4a`
+- Analyze route blob: `a3d02876d2c4efeb6f5258586046bc95cfc132b6`
+- `/ai-tab` page blob: `c218639afcdbb7540ff7cc34583afc6d83587fa0`
+- Async bridge blob: `169b4bb136eba742c3422a73ee5dd0174ca06c49`
+- Async protocol blob: `1bd55017e16a4e1d8b14c7429492f811a43a28d8`
+- Modal live worker blob: `111bf14a8f91045d3478901f8e36b88a2e7f181a`
+- Deterministic scheduler/separator blob: `fc9b4c45c208d80be7abab64a8959f2a3babcee8`
+- Fixed Modal worker: app `dadrock-v143-ai-tab-live`, function `rhythm_v143_request`.
+- Bridge repair commit: `62deec179531b0f3e67c0e833365c2274697f02d`.
 
-## PINNED FULL PROFESSIONAL RHYTHM REFERENCE — 1–113
+The stale existing Preview `dpl_G2WxxMA782j87H7tLpAy9cCB4ihD` / source `0a07b393bb47123a1142fd46ea6d9a55b04f0486` was explicitly **not** used because it predates the current repaired bridge/route boundary. The staged one-shot therefore builds a new Preview from the exact armed branch checkout before the single start.
 
-Authoritative preserved machine-readable reference:
-- Path: `research/v154-professional-references/rhythm-professional-reference.json`
+## FULL PROFESSIONAL 1–113 REFERENCE
+
+- Preserved reference: `research/v154-professional-references/rhythm-professional-reference.json`
 - Git blob: `248741bade9665a34648c59a2994bd27d73fc406`
 - SHA-256: `18fd868ae960dfcdd1ffb0110f1a9dfd8acc2ffeb46e247d1116cd54291526ac`
-- Schema flags: `completeReference: true`, `holdout: true`, `instrument: rhythm`
-- Coverage: measures **1–113**, 113 stored measure objects
-- Professional playable onset/event count: **603**
-- Professional note count: **946**
-- Populated professional measures: **104**
-- Event fields include 16-step `step` timing and notes with `midi`, `stringIndex`, and `fret`; optional source fields handled by the scorer include duration, technique labels, ties and rests.
+- Coverage: measures **1–113**, 113 stored measure objects, 603 professional events/onsets, 946 notes.
+- Provenance: `research/v154-professional-references/rhythm-professional-reference-provenance.json`.
+- Source professional image: `public/Professionalexample.jpg`, Git blob `16106197cc1269cca0b3c443908d5ef75e8b4d3e`.
+- The reference is **not** placed in `validation/rhythm_holdout/reference/` until after the live result is frozen and exact PDF event fidelity is verified. The temporary scorer-only copy is deleted before artifact upload.
 
-Pinned provenance:
-- `research/v154-professional-references/rhythm-professional-reference-provenance.json`
-- Source machine-readable reference: `debug/v144-rhythm-calibration/reference/professional-rhythm-gold-reference.json`
-- Source professional image: `public/Professionalexample.jpg`
-- Source image Git blob: `16106197cc1269cca0b3c443908d5ef75e8b4d3e`
-- Historical immutable scorer-only recovery pinned `Professionalexample.jpg` at commit `e0f91e74c815b9ecdf0a72fae6d1523414b34577`.
-- Preservation provenance states the research copy is byte-identical to the source machine-readable reference and no candidate/model/production modification or reference-facing score occurred during preservation.
+## PROFESSIONAL SCORER / FREEZE / PDF
 
-Scorer-ready identity:
-- `research/v154-professional-references/rhythm-professional-reference-scorer-ready.json`
-- Scorer-ready SHA-256: `d6c9416979f25e6a81b9cd4583389b584a59421a0529fcccb4ca6f5dd47e679f`
-- 946 rows, measures 1–113, steps 0–15, MIDI 40–71
-- Equivalence audit: exact normalized row multiset equivalence PASS.
+- `validation/rhythm_holdout/freeze_rhythm_analysis.py` blob `710bb6a3b15b99d3d11ceb4948d7c7175d208afc`.
+- `validation/rhythm_holdout/render_frozen_rhythm_pdf.mjs` blob `3c50c06e2394dfac1c80acb20aefa33583907b33`.
+- `validation/rhythm_holdout/verify_pdf_event_fidelity.py` blob `5e1564216873046237fb545078a04a6b18f72b27`.
+- PDF renderer: `lib/createV143RhythmPdf.js` blob `4f0e1372dd5903c05c25f0f0a302dd35e81de36b`.
+- Professional scorer: `validation/rhythm_holdout/score_rhythm_holdout.py` blob `cc4bf61a99f22bf87a6c255e5a81220fbc82223b`.
+- Final orchestrator: `validation/rhythm_holdout/run_final_holdout_gate.py` blob `c6a84434eefa768a924395b76d1d25b4e5a51307`.
+- Final threshold: 0.99; onset tolerance 0.50 step; gross timing tolerance 2.00 steps; duration tolerance 0.25 step.
 
-Partial files remain excluded from the reserved final score:
-- `public/gomyway-professional-rhythm-reference-v2.json` — only measures 1–16.
-- `public/gomyway-professional-rhythm-reference-17-113.json` — partial fallback.
-- `public/jimmy-paige-midterm-v1/jimmy-midterm-113-measure-paper-v1.json` — blind/paper candidate, not the professional answer key.
+One-shot runner order is fail-closed:
 
-## PINNED DETERMINISTIC PROFESSIONAL SCORER
+1. Verify all pinned blobs and professional-reference SHA without opening it in scorer infrastructure.
+2. Build/deploy a fresh Vercel **Preview only** from exact `GITHUB_SHA`.
+3. Model-free protected-route preflight using GitHub OIDC.
+4. Send exactly **one** `operation:"start"` Rhythm request. At that instant live budget becomes consumed.
+5. Poll only the same signed job token; transport errors continue same-token polling and never start a replacement.
+6. Require one valid terminal structured result.
+7. Freeze exact `renderEvents` with anti-leakage flags.
+8. Render preview + full PDFs from that frozen event stream and verify exact PDF event fidelity = 1.0.
+9. Only then copy the preserved professional 1–113 reference into scorer-only storage and call `run_final_holdout_gate.py` exactly once; it invokes the professional scorer once.
+10. Capture bounded score evidence; delete temporary scorer-only reference.
+11. ACK/clear the same job token. ACK does not invoke the model.
+12. Scrub raw response/token/full event-bearing JSON. Preserve only bounded summary/evidence, hashes/manifests, and generated PDFs.
+13. If score is below 0.99, report the score and fail the final quality gate **without rerunning the model**.
 
-- Scorer: `validation/rhythm_holdout/score_rhythm_holdout.py`
-- Scorer Git blob: `cc4bf61a99f22bf87a6c255e5a81220fbc82223b`
-- Completeness verifier: `validation/rhythm_holdout/verify_reference_completeness.py`
-- Completeness verifier blob: `2504581dd72b6c375fbc0b68d4d396fce58deb87`
-- Canonicalizer: `validation/rhythm_holdout/canonical.py`
-- Canonicalizer blob: `088d44827fb23e20d9aeeb4944a672989af5846c`
-- Default final threshold: 0.99; onset tolerance 0.50 step; gross tolerance 2.00 steps; duration tolerance 0.25 step.
-- The scorer validates anti-leakage, frozen event hash and exact PDF event identity before opening the professional reference; it is post-hoc only and does not write corrections into analyzer output.
-- Supported scoring includes pitch/note identity, string+fret/voicing identity, onset/measure-step timing, measure coverage, false positives/extras, false negatives/misses, duration where both schemas contain comparable duration, and technique labels where encoded.
-- Current V143 generated schema does not explicitly carry rest/tie flags; do not invent those results. Report them as not scoreable from current generated schema where appropriate.
+## NEXT ACTION — ARM ONCE
 
-## PINNED PDF PATH / NO SECOND ANALYZER PROOF
+Create exactly one file at `.github/one-shot/v143-final-rhythm-run.txt`. That push is the deliberate one-shot trigger. Do not edit/recreate that file to retry. After the workflow begins, inspect the single resulting run only; never rerun its job/run.
 
-- `lib/v143RhythmPdfArtifacts.js` blob `dab369ddce19abeb3b4e27d801f8bc0a2e8ab60b`
-- `lib/createJimmyPaigeProfessionalPdf.js` blob `b1e587b24c38f005294aa5ea960ce9bd9b79724c`
-- `app/api/generate-tab-pdf/route.js` blob `5137831c262e79fe673249dcc8d71ac43efa95e9`
+After terminal workflow state:
+- download/read the `v143-final-rhythm-one-shot` artifact;
+- save a FINAL checkpoint with workflow run/job/deployment IDs, exact armed `GITHUB_SHA`, live start status, score metrics, PDF fidelity/artifact sizes, ACK cleanup state, and final counters;
+- return to HOLD.
 
-Inspection proves the Rhythm artifact builder takes an already-completed `completedPayload`, requires `analysisEngine === "v143-reference-free-rhythm"`, passes that payload's `renderEvents`/measure grid/metadata to the deterministic renderer, and creates preview/full PDFs. `createJimmyPaigeProfessionalPdf` validates the exact structured event stream and renders it; it has no analyzer/model invocation. The download route signs or renders PDF artifacts and likewise contains no analyzer call.
-
-## EXECUTION SEQUENCE FROM HERE
-
-1. Resolve and pin the exact existing Vercel Preview deployment/source commit/environment values required by the helper; do not deploy or promote production.
-2. Run only model-free preview identity + invalid-type preflight.
-3. Issue exactly one `operation:start` for the approved `gomyway` Rhythm audio. **At the instant it is issued, live budget becomes 1 consumed / 0 available.**
-4. Poll only the same returned job token / same Modal FunctionCall until terminal. No second start.
-5. If terminal result is valid, capture the same completed structured result before ACK.
-6. Freeze/normalize that same result deterministically for the holdout scorer and PDF identity gate; no analyzer invocation.
-7. Run exactly one professional scoring pass using the full 1–113 professional reference.
-8. Generate/validate preview + full PDF from the exact same completed structured result; no analyzer invocation.
-9. ACK/clear the same analyzer job after bounded structured evidence is captured.
-10. Save FINAL state here with all IDs, score, PDF result, cleanup state and budget counters; return to HOLD.
-
-## HARD STOPS
-
-- No second Rhythm live start.
-- No second professional score pass.
-- No Lead/Bass model run.
-- No optimizer/training/threshold sweep/scheduler/model/parameter mutation.
-- No second analyzer invocation for PDF.
-- No production Vercel deployment/promotion/change.
-- No Deployment Protection weakening/bypass secret creation.
-- No raw audio/stems/model bytes retained.
-- Never rerun workflow runs `33999777841`, `33999522733`, or `33998283085`.
-
-Current state: **PRE-CONSUMPTION GATE GREEN. Live = 0 consumed; professional score = 0 consumed; PDF E2E = 0 performed. Next: resolve the existing Preview target, then send the single authorized start.**
+Current state: **READY TO ARM. Live = 0 consumed; professional score = 0 consumed; PDF E2E = 0 performed.**
