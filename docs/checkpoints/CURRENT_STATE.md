@@ -1,6 +1,6 @@
 # CURRENT STATE — DadRock `/ai-tab`
 
-Updated: 2026-09-06 — **PRE-REPLACEMENT PREFLIGHT FAILED SAFELY; NO MODEL START CONSUMED.**  
+Updated: 2026-09-06 — **PRE-REPLACEMENT GATE GREEN; NO MODEL START CONSUMED.**  
 Branch: `v143-contextual-prune-lobo`
 
 ## USER AUTHORIZATION — ACTIVE
@@ -217,3 +217,20 @@ Current state: **ROOT CAUSE REPAIRED + PRODUCTION MODAL BRIDGE VERIFIED. Replace
 - Replacement PDF E2E remains **0 performed**.
 
 Exact next step: inspect and minimally patch only `.github/workflows/v143-pre-replacement-preview-preflight.yml` if needed so the protected `/ai-tab` page validation uses the same authenticated Preview access semantics as the successful protected route probe; rerun model-free preflight and require full success before any model start.
+
+## PRE-REPLACEMENT-RUN CHECKPOINT — 2026-09-06 10:32 America/Toronto
+
+- The initial page-only HTTP 403 was diagnosed as `middleware.js` intentionally rejecting curl's user agent, not a Preview/bridge/model failure.
+- Minimal preflight-only fix commit `69807445abc67c09601006a0a52101028bc9bd0d`; only `.github/workflows/v143-pre-replacement-preview-preflight.yml` changed to set a normal browser user agent for `/ai-tab`; middleware and Deployment Protection were unchanged.
+- Model-free preflight run `34042266658`, job `101511044644`, conclusion **success**.
+- Preview exactly `dpl_5j26ZS2xq3utrHxW7waCd5NEPaQk`, target `preview`, Ready, source `631544a8668033392300f2739c87232553dbadc0`.
+- Immutable source boundary passed: route `a3d02876d2c4efeb6f5258586046bc95cfc132b6`, page `c218639afcdbb7540ff7cc34583afc6d83587fa0`, `next.config.js` `d057c0731bc7f8b261c3598a45a7aea6dc5c9583`, repaired bridge `169b4bb136eba742c3422a73ee5dd0174ca06c49`, worker `111bf14a8f91045d3478901f8e36b88a2e7f181a`, protocol `1bd55017e16a4e1d8b14c7429492f811a43a28d8`, scheduler `fc9b4c45c208d80be7abab64a8959f2a3babcee8`.
+- `/ai-tab`: HTTP **200**, **38016 bytes**.
+- Analyze route model-free probe: HTTP **400**, exact error `Transcription type must be lead, rhythm, or bass.`, `analyzeRouteReached=true`.
+- Safety evidence: `operationStartSent=false`, `audioRead=false`, `modelExecuted=false`, `referenceScoreCalls=0`, `productionTargeted=false`, `deploymentProtectionChanged=false`.
+- Evidence artifact `9992037110`; SHA-256 `bf83017022ca3cc15ff7e13841615b3223ac64da05b9e8aed1c62ef7e40e186d`.
+- Replacement Rhythm start remains **1 available / 0 consumed**.
+- Professional full-1–113 score remains **1 available / 0 consumed**.
+- Replacement PDF E2E remains **0 performed**.
+
+Current state: **PRE-REPLACEMENT GREEN. Next: exactly one authorized `gomyway` Rhythm start. Checkpoint immediately when sent/accepted; poll only the same signed job/token/FunctionCall. If it fails, STOP — no retry is authorized.**
