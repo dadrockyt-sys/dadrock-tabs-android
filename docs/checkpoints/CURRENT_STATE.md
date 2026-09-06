@@ -3,11 +3,21 @@
 Updated: 2026-09-05 — **FRESH-CHAT E2E HANDOFF; PIPELINE WIRED + BUILD GREEN; ONE RHYTHM LIVE RUN AUTHORIZED, NOT CONSUMED.**  
 Branch: `v143-contextual-prune-lobo`
 
+## 2026-09-05 CONTINUATION — REFERENCE/SCORER TRACE IN PROGRESS
+
+- Verified branch head before this continuation write: `a4c2de0db61ba67e40fa3d4570df288a5c6ba4fa`.
+- Re-read this checkpoint and confirmed the hard one-run guardrail remains active.
+- Re-confirmed approved source asset path: `public/jimmy-paige-midterm-v1/gomyway-midterm-source.m4a`; pinned checkpoint blob remains `4dd709e3fa177b4daeed71ca97f0199757729d4b` pending final pre-consumption re-verification.
+- Current work is branch-local tracing of the preserved professional Rhythm reference covering measures **1–113** and the deterministic scorer compatible with current V143 Rhythm output.
+- Known fallback `public/gomyway-professional-rhythm-reference-17-113.json` remains explicitly rejected as a substitute for the required full-span reference.
+- No live/model-bearing job has been started in this continuation.
+- Budget remains: **live start 1 available / 0 consumed; professional score 1 available / 0 consumed; PDF E2E 0 performed.**
+
 > Product path is wired and model-free validated. User explicitly authorized one real `gomyway` Rhythm E2E and clarified that the single professional scoring pass must use the preserved full measures 1–113 professional Rhythm reference from the GOAT-testing work. This is a **PRE-CONSUMPTION** checkpoint: no live start, score, or E2E PDF validation has been consumed.
 
 ## VERIFIED PRODUCT STATE
 
-- Branch head immediately before this checkpoint write: `b78d524c7157ccb897dbb184255ee389c68fb567`.
+- Branch head immediately before the original checkpoint write: `b78d524c7157ccb897dbb184255ee389c68fb567`.
 - Product wiring commit: `17397dfae18b56dcb13b9bd7291618dcf5357c6f`.
 - Model-free regression: run `34006234785`, job `101413830044` — GREEN.
 - Next.js production build: run `34006290464`, job `101413989631` — GREEN.
@@ -29,9 +39,9 @@ Branch: `v143-contextual-prune-lobo`
 ## PINNED INPUTS / PROVENANCE
 
 - Approved audio: `public/jimmy-paige-midterm-v1/gomyway-midterm-source.m4a`
-- Audio blob SHA: `4dd709e3fa177b4daeed71ca97f0199757729d4b` — re-verified immediately before this checkpoint.
+- Audio blob SHA: `4dd709e3fa177b4daeed71ca97f0199757729d4b` — re-verified immediately before the original checkpoint.
 - One-shot helper: `.github/scripts/v143-existing-preview-async-breakthrough-e2e.sh`
-- Helper blob SHA: `433599afec7fff20a31ea79e4c93ef9a6da03b36` — re-verified immediately before this checkpoint.
+- Helper blob SHA: `433599afec7fff20a31ea79e4c93ef9a6da03b36` — re-verified immediately before the original checkpoint.
 - Async bridge: `analyzer/v143_modal_http_endpoint.py`
 - Current bridge blob: `169b4bb136eba742c3422a73ee5dd0174ca06c49`
 - Repaired async bridge commit: `62deec179531b0f3e67c0e833365c2274697f02d`
