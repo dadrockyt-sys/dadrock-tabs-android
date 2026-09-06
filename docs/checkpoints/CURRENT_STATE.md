@@ -91,7 +91,7 @@ Pinned bridge behavior:
 - No second replacement Rhythm start without new explicit user authorization.
 - No second professional score without new explicit user authorization.
 - No Lead/Bass model-bearing run.
-- No production promotion/deployment changes.
+- No second/replacement production app promotion.
 - No weakening Deployment Protection.
 - No optimizer/training/threshold sweep.
 - No scheduler/model/parameter mutation.
@@ -116,3 +116,19 @@ Current state: **AUTHORIZED REPAIR MODE. Historical live 1 consumed. New replace
 - Replacement Rhythm start remains **1 available / 0 consumed**.
 - Professional full-1–113 score remains **1 available / 0 consumed**.
 - No model-bearing action, professional scoring call, or replacement PDF E2E has been performed during this continuation.
+
+## DIAGNOSIS CHECKPOINT — 2026-09-06
+
+- Exact async bridge path confirmed: `analyzer/v143_modal_http_endpoint.py`; repaired branch blob `169b4bb136eba742c3422a73ee5dd0174ca06c49`.
+- Exact live Rhythm worker path confirmed: `analyzer/v143_modal_live_endpoint.py`; branch/deployed worker blob `111bf14a8f91045d3478901f8e36b88a2e7f181a`.
+- The live worker deployment source matches the current branch worker blob, including `setuptools==81.0.0` and the no-audio `rhythm_dependency_smoke`; this is **not** a missing-dependency/source drift repair.
+- Exact historical replacement-failure timing refined from job logs: model-bearing start accepted at about `2026-09-06T05:02:21Z`; first status failure at about `2026-09-06T05:02:28Z` (~7 s), far earlier than the known multi-minute separator path.
+- Production bridge deployment history shows the running bridge was deployed from pre-fix commit `dedda6b`; that deployed source catches only `modal.exception.TimeoutError` around `FunctionCall.get(timeout=0)`.
+- Commit `62deec179531b0f3e67c0e833365c2274697f02d` (`fix: treat Modal 1.5.5 pending poll as processing`) made the exact one-line repair: `except modal.exception.TimeoutError` -> `except (TimeoutError, modal.exception.TimeoutError)`; resulting bridge blob is `169b4bb136eba742c3422a73ee5dd0174ca06c49`.
+- Therefore the confirmed root cause is **deployment drift**: the source repair existed before the failed run, but the production Modal HTTP bridge had not been redeployed from repaired blob `169b4bb...`. A normal zero-timeout pending poll could be classified by the stale bridge as a stopped job, producing the fast 502 while the worker was still running.
+- The required repair is bridge-only deployment of repaired blob `169b4bb...`; worker, scheduler, model, parameters, Vercel production target, and Deployment Protection must remain unchanged.
+- Existing bridge deploy workflow is itself stale-pinned to an older bridge blob and must not be blindly rerun.
+- A model-free log-diagnostic workflow edit was attempted but was rejected before repository mutation; no diagnostic/model job was started by that attempt.
+- Replacement Rhythm start remains **1 available / 0 consumed**.
+- Professional full-1–113 score remains **1 available / 0 consumed**.
+- Replacement PDF E2E remains **0 performed**.
