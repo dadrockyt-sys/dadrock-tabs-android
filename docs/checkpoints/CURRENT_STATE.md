@@ -1,14 +1,14 @@
 # CURRENT STATE — DadRock `/ai-tab`
 
-Updated: 2026-09-06 — **NEW USER-AUTHORIZED REPAIR + ONE REPLACEMENT RHYTHM RUN + ONE PROFESSIONAL SCORE.**  
+Updated: 2026-09-06 — **FRESH-CHAT HANDOFF: FIX + ONE REPLACEMENT RHYTHM RUN + ONE PROFESSIONAL SCORE.**  
 Branch: `v143-contextual-prune-lobo`
 
-## NEW AUTHORIZATION — CURRENT TURN
+## USER AUTHORIZATION — ACTIVE
 
-User explicitly said: **“Fix the error and please run again with scorer.”**
+User explicitly authorized the repair and requested: **fix and run the test**.
 
 This grants exactly:
-- **1 additional current-V143 `gomyway` Rhythm model-bearing start** after a model-free diagnosis/repair;
+- **1 additional current-V143 `gomyway` Rhythm model-bearing start** after diagnosis/repair;
 - **1 professional full-1–113 scoring pass** against the completed frozen replacement result;
 - deterministic preview/full PDF validation from that same completed structured result.
 
@@ -32,24 +32,14 @@ Budget now:
 - Artifact: `9983034564`, zip SHA-256 `9efac7899d95008ab36faa95e7384f77256bdc9efbb93454fb31eadb1f958028`.
 - Raw 502 response was intentionally scrubbed, so exact worker failure must be recovered using non-model diagnostics/source history rather than guessed.
 
-## MODEL-FREE DIAGNOSIS IN PROGRESS
+## CONFIRMED FAILURE BOUNDARY
 
 The accepted start proves Vercel packaging/protected transport/start issuance are working. The failure boundary is downstream in the async bridge/orchestrator/Modal worker path.
 
-Current pinned bridge behavior:
+Pinned bridge behavior:
 - `run_rhythm_async_job` calls fixed Modal worker `dadrock-v143-ai-tab-live / rhythm_v143_request`.
 - Any worker exception is intentionally converted to a generic failed envelope, so the Vercel poll becomes 502 without leaking secrets.
 - Status polling reads only the same queued result/control/FunctionCall.
-
-Next actions before consuming the new authorization:
-1. Use only model-free diagnostics/history/source inspection to identify and repair the fast worker failure.
-2. Prefer an existing non-model dependency/smoke function or deployment validation over a live audio/model request.
-3. Pin repaired bridge/worker/helper blobs and verify Preview/source boundary.
-4. Save a **PRE-REPLACEMENT-RUN** checkpoint with new live counter still 0 consumed.
-5. Execute exactly one replacement Rhythm start; once sent, mark new live authorization consumed.
-6. Poll only its same signed job/token/FunctionCall; if it fails, STOP — no second replacement.
-7. If completed, freeze the exact structured result, render preview/full PDFs from the same events, then run exactly one professional scorer pass against the pinned 1–113 reference.
-8. ACK/clear the same job and save FINAL checkpoint.
 
 ## PINNED SOURCE / REFERENCE
 
@@ -68,13 +58,52 @@ Next actions before consuming the new authorization:
 - Professional scorer: `validation/rhythm_holdout/score_rhythm_holdout.py`, prior blob `cc4bf61a99f22bf87a6c255e5a81220fbc82223b`.
 - Final holdout orchestrator: `validation/rhythm_holdout/run_final_holdout_gate.py`, prior blob `c6a84434eefa768a924395b76d1d25b4e5a51307`.
 
-## CONTINUATION — 2026-09-06 MODEL-FREE TRACE
+## FRESH-CHAT NEXT STEPS — EXECUTE IN THIS ORDER
 
-- Resumed directly from this checkpoint on branch `v143-contextual-prune-lobo`.
-- Re-verified the hard authorization boundary before touching runtime: **replacement Rhythm live = 1 available / 0 consumed**; **professional score = 1 available / 0 consumed**.
-- No Rhythm/model-bearing start has been issued during this continuation.
-- Diagnosis is currently restricted to branch source/tree/commit history and non-model worker/dependency inspection.
-- Initial repository-wide identifier searches were too noisy/incomplete for branch-only worker code, so investigation is narrowing through the branch tree and path-specific history before any repair commit.
-- No code patch has been made yet.
+1. **Resume on branch `v143-contextual-prune-lobo` and read this file first.**
+2. **Do not consume the replacement Rhythm start yet.** First inspect the exact branch tree/source for:
+   - the async bridge that invokes `rhythm_v143_request`;
+   - the Modal worker definition/deployment helper;
+   - dependency/image/runtime declarations used by that worker;
+   - commit history around the pinned worker blob `111bf14a8f91045d3478901f8e36b88a2e7f181a`.
+3. Use only model-free diagnostics/history/source inspection to identify the fast worker failure. Prefer an existing dependency/smoke/deployment validation that does **not** run the Rhythm model.
+4. Patch the **smallest confirmed root cause only**. Do not alter scheduler/model/parameters/thresholds or broaden scope.
+5. Save this checkpoint again immediately after the repair commit, recording:
+   - repaired file(s),
+   - commit/blob SHA(s),
+   - exact diagnosis,
+   - replacement live counter still **0 consumed**.
+6. Verify the repaired Preview/source boundary and route preflight without starting the model.
+7. Save a **PRE-REPLACEMENT-RUN** checkpoint with:
+   - exact branch head / preview deployment,
+   - repaired worker/helper blob(s),
+   - `replacement live = 1 available / 0 consumed`,
+   - `professional score = 1 available / 0 consumed`.
+8. Execute **exactly one** replacement `gomyway` Rhythm start. The moment `operation:"start"` is sent/accepted, update this checkpoint to `replacement live = 0 available / 1 consumed`.
+9. Poll **only the same signed job/token/FunctionCall**. If it fails, **STOP — no second replacement is authorized**. Save the failure details/checkpoint.
+10. If completed, freeze that exact structured result. Do not regenerate it.
+11. Render deterministic preview/full PDFs from that same frozen result and validate them.
+12. Run **exactly one** professional scorer pass against the pinned measures 1–113 reference. Then set `professional score = 0 available / 1 consumed`.
+13. ACK/clear the same job and save a FINAL checkpoint containing all result, PDF, scoring, artifact, commit, and deployment identifiers.
+
+## IMPORTANT SAFETY / SCOPE GUARDRAILS
+
+- No second replacement Rhythm start without new explicit user authorization.
+- No second professional score without new explicit user authorization.
+- No Lead/Bass model-bearing run.
+- No production promotion/deployment changes.
+- No weakening Deployment Protection.
+- No optimizer/training/threshold sweep.
+- No scheduler/model/parameter mutation.
+- Keep saving `docs/checkpoints/CURRENT_STATE.md` frequently while working.
+
+## CONTINUATION STATUS AT HANDOFF
+
+- Branch confirmed: `v143-contextual-prune-lobo`.
+- Latest checkpoint-resume commit before this handoff: `f2c741c3121c40ab25289f1f288e30f720dc7cff`.
+- Repository/tree inspection has started, but **no repair code patch has been made yet**.
+- No model-bearing start has been issued during this continuation.
+- No professional scoring pass has been issued.
+- Authorization remains fully intact for the next chat.
 
 Current state: **AUTHORIZED REPAIR MODE. Historical live 1 consumed. New replacement live = 1 available / 0 consumed. Professional score = 1 available / 0 consumed. PDF E2E = 0 performed.**
