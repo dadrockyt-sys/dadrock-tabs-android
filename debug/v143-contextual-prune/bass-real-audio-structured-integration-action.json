@@ -1,9 +1,9 @@
 {
   "schemaVersion": 1,
   "gate": "bass-real-audio-structured-integration-action",
-  "runId": "32613450912",
+  "runId": "34055759839",
   "runAttempt": "1",
-  "sourceCommit": "8a668f9a4af966b8abf14034b975a36d6ed7d587",
+  "sourceCommit": "2ecc8e165db8d0afcd83901ab131d0c63223daef",
   "modalCredentialsAvailableInGitHubActions": true,
   "modalExitCode": 0,
   "rawCanaryOutputPresent": true,
