@@ -4,6 +4,7 @@ import { NextResponse } from 'next/server';
 export const runtime = 'nodejs';
 export const dynamic = 'force-dynamic';
 
+// No-op trigger for repaired V143 protected Preview verification.
 const DEFAULT_GRID_PATH = '/tmp/gomyway-full-song-v7-measure-grid.json';
 
 function buildBlankTabSystem(transcriptionType = 'lead') {
