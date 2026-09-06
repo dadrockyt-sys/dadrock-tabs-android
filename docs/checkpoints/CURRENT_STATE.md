@@ -1,6 +1,6 @@
 # CURRENT STATE — DadRock `/ai-tab`
 
-Updated: 2026-09-06 — **AUTHORIZED V143 RUN RECOVERED + FROZEN; PDF E2E PASSED; PROFESSIONAL SCORE 1/1 CONSUMED; NO RETRIES AUTHORIZED.**
+Updated: 2026-09-06 — **AUTHORIZED V143 RUN RECOVERED + FROZEN; PDF E2E PASSED; PROFESSIONAL SCORE 1/1 CONSUMED; MODEL-FREE TIMING DIAGNOSIS IN PROGRESS; NO RETRIES AUTHORIZED.**
 Branch: `v143-contextual-prune-lobo`
 
 This file is the authoritative fresh-chat handoff. It supersedes older stale instructions that said the professional score was still available.
@@ -272,3 +272,32 @@ Planned model-free repair sequence:
 4. patch the smallest generic musical-representation defects;
 5. run only model-free tests;
 6. checkpoint again before any future live validation proposal.
+
+## CONTINUATION — BAR-PHASE ROOT CAUSE (2026-09-06)
+
+No new model start and no new professional score were run. Branch source inspection and artifact analysis were read-only/model-free.
+
+Branch safety / source boundary:
+- continuation began from branch head `6e20ae4c66ff85ec16963bd96b1b077134f66edd` (`docs: checkpoint v143 note fret diagnosis`);
+- `.github/workflows/v143-score-recovered-frozen-result.yml` is push-path-limited to its own workflow file;
+- `.github/workflows/v143-one-shot-final-rhythm-e2e.yml` is push-path-limited to its own one-shot workflow file;
+- therefore normal source/test/checkpoint commits are safe as long as those one-shot trigger files are not modified.
+
+Deterministic timing diagnosis from the already-frozen/recovered output:
+- the first generated playable event is `gridGlobalStep=0`, `measure=1`, `step=12`, `timeSeconds≈0.10449`, MIDI 57;
+- the pinned professional reference begins at measure 1 / step 0, also with MIDI 57 present;
+- generated event labels satisfy a +12-sixteenth offset relative to `gridGlobalStep`, consistent with `firstBeatInMeasure=3` (the fourth beat) and therefore a three-beat bar-phase rotation;
+- conceptually restoring phase 0 maps global step 0→m1s0, global step 8→m1s8, global step 16→m2s0, etc.;
+- this phase error is upstream of string/fret mapping, so fret changes alone cannot repair the dominant opening timing mismatch.
+
+Confirmed source root cause in `analyzer/v143_reference_free_timing.py`:
+- `_bar_phase_from_accents(...)` computes mean local accent for each beat modulo 4;
+- it unconditionally selects the strongest modulo-4 phase and returns `(-best_phase) % 4`;
+- confidence is calculated after selection, but there is no confidence gate, no conservative fallback, and no start-of-audio prior;
+- consequently a repeating accent pattern can rotate an otherwise usable beat grid even when bar-phase evidence is ambiguous.
+
+Repair discipline:
+- the recovered result does not serialize enough bar-confidence diagnostics to justify a holdout-derived threshold;
+- do not invent or tune a threshold from this one professional song/reference;
+- next repair should be generic and model-free: preserve the accent estimator, add conservative phase selection for weak/ambiguous evidence, and validate it with synthetic regression cases that include both ambiguous phase evidence and clearly dominant nonzero phase evidence;
+- after timing regression coverage, continue the planned simultaneous-note/chord-voicing tests and the separate async TTL/reporting-function diagnosis.
