@@ -147,3 +147,56 @@ Current state: **AUTHORIZED REPAIR MODE. Historical live 1 consumed. New replace
 - Replacement PDF E2E remains **0 performed**.
 
 Current state: **ROOT CAUSE REPAIRED + PRODUCTION MODAL BRIDGE VERIFIED. Replacement live = 1 available / 0 consumed. Professional score = 1 available / 0 consumed. Next: fresh protected Preview/source boundary + model-free preflight, PRE-REPLACEMENT-RUN checkpoint, then exactly one replacement `gomyway` Rhythm start.**
+
+## FRESH-CHAT HANDOFF — 2026-09-06 09:49 America/Toronto
+
+- User requested that the next steps be saved here before opening a fresh chat.
+- Current branch head before this checkpoint write: `da63705fff9ef1d490638290eb83d7fd45f83660` (`ci: add model-free pre-replacement Preview preflight`).
+- That commit adds only `.github/workflows/v143-pre-replacement-preview-preflight.yml` (blob `4f2dbf352fa090aa6e24d2f90ca1f3e246141020`).
+- The preflight workflow is model-free and pins the exact repaired source boundary:
+  - Preview deployment `dpl_5j26ZS2xq3utrHxW7waCd5NEPaQk`
+  - Preview source commit `631544a8668033392300f2739c87232553dbadc0`
+  - analyze route `a3d02876d2c4efeb6f5258586046bc95cfc132b6`
+  - page `c218639afcdbb7540ff7cc34583afc6d83587fa0`
+  - `next.config.js` `d057c0731bc7f8b261c3598a45a7aea6dc5c9583`
+  - repaired async bridge `169b4bb136eba742c3422a73ee5dd0174ca06c49`
+  - live worker `111bf14a8f91045d3478901f8e36b88a2e7f181a`
+  - async protocol `1bd55017e16a4e1d8b14c7429492f811a43a28d8`
+  - deterministic separator/scheduler `fc9b4c45c208d80be7abab64a8959f2a3babcee8`
+- The workflow only verifies immutable Preview identity, loads `/ai-tab`, POSTs an intentionally invalid transcription type to `/api/analyze-audio-tab`, and requires the expected HTTP 400 route response. It explicitly records `operationStartSent=false`, `audioRead=false`, `modelExecuted=false`, `referenceScoreCalls=0`, `productionTargeted=false`, and `deploymentProtectionChanged=false`.
+- **No replacement Rhythm start has been consumed.** Replacement live remains **1 available / 0 consumed**.
+- **No professional score has been consumed.** Professional score remains **1 available / 0 consumed**.
+- Replacement PDF E2E remains **0 performed**.
+
+### EXACT NEXT STEPS FOR THE FRESH CHAT
+
+1. Read this file first and confirm branch `v143-contextual-prune-lobo`.
+2. Inspect the run created by commit `da63705fff9ef1d490638290eb83d7fd45f83660` for workflow `V143 Pre-Replacement Preview Preflight`.
+3. If that workflow has **not** run, dispatch/run only that model-free preflight. If it has run, inspect its job/logs and evidence artifact.
+4. Require all of the following before any model start:
+   - workflow success;
+   - Preview deployment exactly `dpl_5j26ZS2xq3utrHxW7waCd5NEPaQk`, target `preview`, Ready;
+   - source boundary hashes exactly as pinned above;
+   - `/ai-tab` HTTP 200 with nontrivial content;
+   - protected analyze-route preflight HTTP 400 with `Transcription type must be lead, rhythm, or bass.`;
+   - `operationStartSent=false`, `audioRead=false`, `modelExecuted=false`, `referenceScoreCalls=0`.
+5. Immediately save a **PRE-REPLACEMENT-RUN** checkpoint with exact preflight workflow run/job/artifact IDs and evidence SHA-256. Counters must still read:
+   - replacement live **1 available / 0 consumed**;
+   - professional score **1 available / 0 consumed**;
+   - PDF E2E **0 performed**.
+6. Then execute **exactly one** authorized replacement `gomyway` Rhythm `operation:"start"` against that repaired Preview/bridge boundary. Do not issue Lead/Bass or any second start.
+7. The moment the start is accepted/sent, checkpoint `replacement live = 0 available / 1 consumed`, including exact workflow/job/start token or FunctionCall identifiers available from the runner.
+8. Poll only the same signed job/token/FunctionCall. If it fails, **STOP** and checkpoint; there is no authorized retry.
+9. If it completes, freeze the exact structured result and do not regenerate it.
+10. Generate and validate deterministic preview/full PDFs from that same frozen result only.
+11. Run **exactly one** professional full-1–113 score against the pinned reference; then checkpoint `professional score = 0 available / 1 consumed`.
+12. ACK/clear the same job and save the FINAL checkpoint with result, PDF, scoring, artifact, commit, Preview, bridge, workflow/job, and evidence identifiers.
+
+### DO NOT CHANGE
+
+- Do not redeploy or modify the Rhythm worker unless a new independently confirmed defect requires it.
+- Do not alter scheduler/model/parameters/thresholds.
+- Do not weaken Deployment Protection.
+- Do not promote/deploy the Vercel app to production.
+- Do not run optimizer/training sweeps.
+- Do not perform a second replacement Rhythm start or a second professional score without new explicit authorization.
