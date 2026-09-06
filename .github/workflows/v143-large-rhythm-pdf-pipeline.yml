@@ -1,0 +1,306 @@
+name: Patch V143 large Rhythm PDF pipeline
+
+on:
+  push:
+    branches:
+      - v143-contextual-prune-lobo
+    paths:
+      - .github/workflows/v143-large-rhythm-pdf-pipeline.yml
+
+permissions:
+  contents: write
+
+jobs:
+  patch:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: v143-contextual-prune-lobo
+          fetch-depth: 0
+
+      - name: Apply exact large-upload and PDF-artifact patches
+        shell: bash
+        run: |
+          python3 - <<'PY'
+          from pathlib import Path
+
+          def replace_once(path, old, new):
+              p = Path(path)
+              text = p.read_text()
+              count = text.count(old)
+              if count != 1:
+                  raise SystemExit(f'{path}: expected exactly one match, found {count}: {old[:100]!r}')
+              p.write_text(text.replace(old, new, 1))
+
+          replace_once(
+              'app/api/audio-upload/route.js',
+              "          allowedContentTypes: ALLOWED_AUDIO_TYPES,\n          maximumSizeInBytes: 50 * 1024 * 1024,\n          addRandomSuffix: true,",
+              "          // The browser uploads directly to Blob, so do not impose the old\n          // 50 MB application ceiling here. Vercel Blob/platform limits remain\n          // authoritative and are surfaced by the upload SDK.\n          allowedContentTypes: ALLOWED_AUDIO_TYPES,\n          addRandomSuffix: true,"
+          )
+
+          replace_once(
+              'app/ai-tab/page.js',
+              "            access: 'private',\n\n            handleUploadUrl:\n              '/api/audio-upload',",
+              "            access: 'private',\n            multipart: true,\n\n            handleUploadUrl:\n              '/api/audio-upload',"
+          )
+
+          replace_once(
+              'app/ai-tab/page.js',
+              "          } = await sendAnalyzerRequest({\n            operation: 'status',\n            jobToken,\n            transcriptionType:\n              selectedType,\n          }));",
+              "          } = await sendAnalyzerRequest({\n            operation: 'status',\n            jobToken,\n            transcriptionType:\n              selectedType,\n            delivery: 'pdf-artifacts',\n            song: songTitle.trim(),\n            artist: artistName.trim(),\n          }));"
+          )
+
+          replace_once(
+              'app/ai-tab/page.js',
+              "      setStatusMessage(\n        'Creating your watermarked tab preview...'\n      );\n\n      const response = await fetch(",
+              "      setStatusMessage(\n        'Creating your watermarked tab preview...'\n      );\n\n      const artifactPreviewUrl =\n        analysisMetadata?.pdfArtifact?.previewUrl;\n\n      if (\n        selectedType === 'rhythm' &&\n        typeof artifactPreviewUrl === 'string' &&\n        artifactPreviewUrl.startsWith('https://')\n      ) {\n        clearPreviewPdfUrl();\n        setPreviewPdfUrl(artifactPreviewUrl);\n        return artifactPreviewUrl;\n      }\n\n      const response = await fetch("
+          )
+
+          replace_once(
+              'app/ai-tab/page.js',
+              "              generatedTab,\n\n              tuning:",
+              "              generatedTab,\n\n              pdfArtifactId:\n                analysisMetadata?.pdfArtifact?.id || null,\n\n              tuning:"
+          )
+
+          old_download = """        const contentType =\n          response.headers.get(\n            'content-type'\n          ) || '';\n\n        if (\n          !contentType.includes(\n            'application/pdf'\n          )\n        ) {\n          const data = await response\n            .json()\n            .catch(() => ({}));\n\n          throw new Error(\n            data.error ||\n              data.message ||\n              'The server did not return a valid PDF file.'\n          );\n        }\n\n        const pdfBlob =\n          await response.blob();"""
+          new_download = """        const contentType =\n          response.headers.get(\n            'content-type'\n          ) || '';\n\n        let pdfResponse = response;\n\n        if (contentType.includes('application/json')) {\n          const data = await response\n            .json()\n            .catch(() => ({}));\n\n          if (\n            typeof data.downloadUrl !== 'string' ||\n            !data.downloadUrl.startsWith('https://')\n          ) {\n            throw new Error(\n              data.error ||\n                data.message ||\n                'The server did not return a valid PDF download.'\n            );\n          }\n\n          pdfResponse = await fetch(data.downloadUrl, {\n            cache: 'no-store',\n          });\n\n          if (!pdfResponse.ok) {\n            throw new Error(\n              'The signed PDF download could not be retrieved.'\n            );\n          }\n        }\n\n        const pdfContentType =\n          pdfResponse.headers.get(\n            'content-type'\n          ) || '';\n\n        if (\n          !pdfContentType.includes(\n            'application/pdf'\n          )\n        ) {\n          throw new Error(\n            'The server did not return a valid PDF file.'\n          );\n        }\n\n        const pdfBlob =\n          await pdfResponse.blob();"""
+          replace_once('app/ai-tab/page.js', old_download, new_download)
+
+          replace_once(
+              'lib/jimmyPaigeAnalysisPayload.js',
+              'const MAX_EVENTS = 20000;',
+              "// Large practical Rhythm uploads can produce far more than the old 20k\n// event ceiling. Keep a high defensive bound, but do not truncate ordinary\n// full-length recordings at a song-sized limit.\nconst MAX_EVENTS = 100000;"
+          )
+          replace_once(
+              'lib/jimmyPaigeAnalysisPayload.js',
+              '    fileSize: boundedInteger(value.fileSize, 1, 1024 * 1024 * 1024, null),',
+              '    fileSize: boundedInteger(value.fileSize, 1, 5 * 1024 * 1024 * 1024 * 1024, null),'
+          )
+          replace_once(
+              'lib/v143RenderContract.js',
+              'const MAX_RENDER_EVENTS = 5000;',
+              "// The former 5k cap could truncate a valid long Rhythm transcription.\n// Retain a defensive resource bound while allowing large practical recordings.\nconst MAX_RENDER_EVENTS = 100000;"
+          )
+
+          helper = r'''import { randomUUID } from 'node:crypto';
+import { issueSignedToken, presignUrl, put } from '@vercel/blob';
+import { createJimmyPaigeProfessionalPdf } from '@/lib/createJimmyPaigeProfessionalPdf';
+
+const ARTIFACT_PREFIX = 'ai-tab/rhythm-pdf';
+const ARTIFACT_ID_PATTERN = /^[0-9a-f]{8}-[0-9a-f]{4}-4[0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/i;
+const PREVIEW_URL_LIFETIME_MS = 6 * 60 * 60 * 1000;
+const DOWNLOAD_URL_LIFETIME_MS = 60 * 60 * 1000;
+
+function artifactPath(artifactId, name) {
+  if (!ARTIFACT_ID_PATTERN.test(String(artifactId || ''))) {
+    throw new Error('Invalid Rhythm PDF artifact reference.');
+  }
+  return `${ARTIFACT_PREFIX}/${artifactId}/${name}`;
+}
+
+async function createSignedGetUrl(pathname, lifetimeMs) {
+  const validUntil = Date.now() + lifetimeMs;
+  const token = await issueSignedToken({
+    pathname,
+    operations: ['get'],
+    validUntil,
+  });
+  const { presignedUrl } = await presignUrl(token, {
+    pathname,
+    operation: 'get',
+    validUntil,
+    useCache: false,
+  });
+  if (!presignedUrl) {
+    throw new Error('Unable to create a signed Rhythm PDF URL.');
+  }
+  return {
+    url: presignedUrl,
+    expiresAt: new Date(validUntil).toISOString(),
+  };
+}
+
+function rendererInput({ completedPayload, song, artist, preview }) {
+  return {
+    song,
+    artist,
+    transcriptionType: 'rhythm',
+    generatedTab: completedPayload.generatedTab,
+    tuning: completedPayload.tuning || 'Standard Tuning',
+    tempo: completedPayload.tempo || 120,
+    timeSignature: completedPayload.timeSignature || '4/4',
+    keySignature: completedPayload.keySignature || '',
+    analysisEngine: completedPayload.analysisEngine || '',
+    renderEvents: Array.isArray(completedPayload.renderEvents)
+      ? completedPayload.renderEvents
+      : [],
+    measureGrid: completedPayload.measureGrid || null,
+    confidence: completedPayload.confidence ?? null,
+    difficulty: completedPayload.difficulty || null,
+    techniques: Array.isArray(completedPayload.techniques)
+      ? completedPayload.techniques
+      : [],
+    preview,
+    previewSystems: 4,
+  };
+}
+
+export async function createV143RhythmPdfArtifacts({
+  completedPayload,
+  song,
+  artist,
+}) {
+  if (completedPayload?.analysisEngine !== 'v143-reference-free-rhythm') {
+    throw new Error(
+      'Rhythm PDF artifact delivery requires an authenticated structured V143 result.'
+    );
+  }
+
+  const artifactId = randomUUID();
+  const previewPath = artifactPath(artifactId, 'preview.pdf');
+  const fullPath = artifactPath(artifactId, 'full.pdf');
+
+  const [previewResult, fullResult] = await Promise.all([
+    createJimmyPaigeProfessionalPdf(
+      rendererInput({ completedPayload, song, artist, preview: true })
+    ),
+    createJimmyPaigeProfessionalPdf(
+      rendererInput({ completedPayload, song, artist, preview: false })
+    ),
+  ]);
+
+  await Promise.all([
+    put(previewPath, Buffer.from(previewResult.pdfBytes), {
+      access: 'private',
+      addRandomSuffix: false,
+      contentType: 'application/pdf',
+    }),
+    put(fullPath, Buffer.from(fullResult.pdfBytes), {
+      access: 'private',
+      addRandomSuffix: false,
+      contentType: 'application/pdf',
+    }),
+  ]);
+
+  const signedPreview = await createSignedGetUrl(
+    previewPath,
+    PREVIEW_URL_LIFETIME_MS
+  );
+
+  return {
+    id: artifactId,
+    previewUrl: signedPreview.url,
+    previewExpiresAt: signedPreview.expiresAt,
+    rendererMode:
+      fullResult.rendererContract?.mode || 'v143-structured-rhythm',
+  };
+}
+
+export async function createSignedV143RhythmPdfDownload(artifactId) {
+  const fullPath = artifactPath(artifactId, 'full.pdf');
+  const signedDownload = await createSignedGetUrl(
+    fullPath,
+    DOWNLOAD_URL_LIFETIME_MS
+  );
+  return {
+    downloadUrl: signedDownload.url,
+    expiresAt: signedDownload.expiresAt,
+  };
+}
+
+export function isValidV143RhythmPdfArtifactId(value) {
+  return ARTIFACT_ID_PATTERN.test(String(value || ''));
+}
+'''
+          Path('lib/v143RhythmPdfArtifacts.js').write_text(helper)
+
+          replace_once(
+              'app/api/analyze-audio-tab/route.js',
+              "import { buildAiTabProductPlacementPromotionV1 } from '@/lib/aiTabProductPlacementPromotionV1.mjs';",
+              "import { buildAiTabProductPlacementPromotionV1 } from '@/lib/aiTabProductPlacementPromotionV1.mjs';\nimport { createV143RhythmPdfArtifacts } from '@/lib/v143RhythmPdfArtifacts';"
+          )
+          replace_once(
+              'app/api/analyze-audio-tab/route.js',
+              "    const jobToken = cleanText(\n      body?.jobToken,\n      300\n    );",
+              "    const jobToken = cleanText(\n      body?.jobToken,\n      300\n    );\n\n    const delivery = cleanText(\n      body?.delivery,\n      40\n    ).toLowerCase();"
+          )
+
+          old_return = """    return NextResponse.json(\n      operation === 'status'\n        ? {\n            ...completedPayload,\n            analysisJob: {\n              status: 'completed',\n              token: jobToken,\n            },\n          }\n        : completedPayload\n    );"""
+          new_return = """    if (\n      operation === 'status' &&\n      usingV143RhythmAnalyzer &&\n      delivery === 'pdf-artifacts'\n    ) {\n      if (!song || !artist) {\n        return NextResponse.json(\n          { error: 'Song and artist are required for Rhythm PDF artifact delivery.' },\n          { status: 400 }\n        );\n      }\n\n      const pdfArtifact =\n        await createV143RhythmPdfArtifacts({\n          completedPayload,\n          song,\n          artist,\n        });\n\n      // Keep the browser response compact. The full structured result was used\n      // above to render both PDFs and remains only in the existing transient\n      // analyzer result until the browser ACKs this same job token.\n      return NextResponse.json({\n        generatedTab: completedPayload.generatedTab,\n        tuning: completedPayload.tuning,\n        tempo: completedPayload.tempo,\n        timeSignature: completedPayload.timeSignature,\n        keySignature: completedPayload.keySignature,\n        difficulty: completedPayload.difficulty,\n        techniques: completedPayload.techniques,\n        confidence: completedPayload.confidence,\n        noteCount: completedPayload.noteCount,\n        analysisEngine: completedPayload.analysisEngine,\n        analysisQuality: completedPayload.analysisQuality,\n        audioMetadata: completedPayload.audioMetadata,\n        payloadContract: completedPayload.payloadContract,\n        pdfArtifact,\n        analysisJob: {\n          status: 'completed',\n          token: jobToken,\n        },\n      });\n    }\n\n    return NextResponse.json(\n      operation === 'status'\n        ? {\n            ...completedPayload,\n            analysisJob: {\n              status: 'completed',\n              token: jobToken,\n            },\n          }\n        : completedPayload\n    );"""
+          replace_once('app/api/analyze-audio-tab/route.js', old_return, new_return)
+
+          replace_once(
+              'app/api/generate-tab-pdf/route.js',
+              "import { NextResponse } from 'next/server';",
+              "import { NextResponse } from 'next/server';\nimport {\n  createSignedV143RhythmPdfDownload,\n  isValidV143RhythmPdfArtifactId,\n} from '@/lib/v143RhythmPdfArtifacts';"
+          )
+          replace_once(
+              'app/api/generate-tab-pdf/route.js',
+              "    const generatedTab = cleanTabText(body?.generatedTab);",
+              "    const generatedTab = cleanTabText(body?.generatedTab);\n    const pdfArtifactId = cleanText(body?.pdfArtifactId, 80);"
+          )
+
+          marker = """    const professionalPdfFeature =\n      getJimmyPaigeProfessionalPdfFeatureState();"""
+          artifact_branch = """    if (\n      transcriptionType === 'rhythm' &&\n      pdfArtifactId\n    ) {\n      if (!isValidV143RhythmPdfArtifactId(pdfArtifactId)) {\n        return NextResponse.json(\n          { error: 'Invalid Rhythm PDF artifact reference.' },\n          { status: 400 }\n        );\n      }\n\n      const { downloadUrl, expiresAt } =\n        await createSignedV143RhythmPdfDownload(pdfArtifactId);\n      const fileName = createSafeFileName({\n        song,\n        artist,\n        transcriptionType,\n      });\n\n      const emailResult = await resend.emails.send({\n        from:\n          process.env.RESEND_FROM_EMAIL ||\n          'DadRock Tabs <onboarding@resend.dev>',\n        to: customerEmail,\n        subject: `${song} — ${transcriptionType} tab PDF`,\n        html: `\n          <h2>Your DadRock Tabs PDF is ready</h2>\n          <p><strong>${song}</strong> by ${artist}</p>\n          <p><a href=\"${downloadUrl}\">Download your finished ${transcriptionType} tab PDF</a></p>\n          <p>This private download link expires at ${expiresAt}.</p>\n          <p>Thank you for supporting DadRock Tabs.</p>\n        `,\n      });\n\n      if (emailResult.error) {\n        console.error('Resend email error:', emailResult.error);\n      }\n\n      return NextResponse.json({\n        downloadUrl,\n        expiresAt,\n        fileName,\n      });\n    }\n\n    const professionalPdfFeature =\n      getJimmyPaigeProfessionalPdfFeatureState();"""
+          replace_once('app/api/generate-tab-pdf/route.js', marker, artifact_branch)
+
+          regression = r'''import fs from 'node:fs';
+
+function read(path) {
+  return fs.readFileSync(path, 'utf8');
+}
+function assert(condition, message) {
+  if (!condition) throw new Error(message);
+}
+
+const page = read('app/ai-tab/page.js');
+const upload = read('app/api/audio-upload/route.js');
+const analyze = read('app/api/analyze-audio-tab/route.js');
+const pdf = read('app/api/generate-tab-pdf/route.js');
+const payload = read('lib/jimmyPaigeAnalysisPayload.js');
+const render = read('lib/v143RenderContract.js');
+const artifacts = read('lib/v143RhythmPdfArtifacts.js');
+
+assert(page.includes("multipart: true"), 'audio upload must use multipart');
+assert(!upload.includes('50 * 1024 * 1024'), 'old 50 MB upload cap must be removed');
+assert(page.includes("delivery: 'pdf-artifacts'"), 'Rhythm status must request compact PDF artifacts');
+assert(page.includes('analysisMetadata?.pdfArtifact?.previewUrl'), 'preview must consume signed artifact URL');
+assert(page.includes('analysisMetadata?.pdfArtifact?.id || null'), 'download must send artifact id');
+assert(page.includes('pdfResponse = await fetch(data.downloadUrl'), 'full PDF must download directly from signed Blob URL');
+assert(analyze.includes('createV143RhythmPdfArtifacts'), 'status must render PDF artifacts server-side');
+assert(analyze.includes("delivery === 'pdf-artifacts'"), 'artifact delivery gate missing');
+assert(analyze.includes('pdfArtifact,'), 'compact completed response must include artifact reference');
+assert(pdf.includes('createSignedV143RhythmPdfDownload'), 'unlock route must sign existing full PDF artifact');
+assert(pdf.includes('isValidV143RhythmPdfArtifactId'), 'artifact id must be validated');
+assert(artifacts.includes("access: 'private'"), 'PDF artifacts must remain private');
+assert(artifacts.includes("operations: ['get']"), 'signed PDF access must be GET-only');
+assert(artifacts.includes('createJimmyPaigeProfessionalPdf'), 'artifact generation must use deterministic PDF renderer');
+assert(!artifacts.includes('ANALYZER_API'), 'PDF artifact helper must never call analyzer');
+assert(payload.includes('const MAX_EVENTS = 100000;'), 'structured payload long-file cap not raised');
+assert(render.includes('const MAX_RENDER_EVENTS = 100000;'), 'render-event long-file cap not raised');
+console.log('V143 large Rhythm upload -> compact artifact -> PDF regression: GREEN');
+'''
+          Path('.github/scripts/v143-large-rhythm-pipeline-regression.mjs').write_text(regression)
+          PY
+
+      - name: Model-free regression checks
+        run: node .github/scripts/v143-large-rhythm-pipeline-regression.mjs
+
+      - name: Commit patch
+        shell: bash
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add \
+            app/ai-tab/page.js \
+            app/api/audio-upload/route.js \
+            app/api/analyze-audio-tab/route.js \
+            app/api/generate-tab-pdf/route.js \
+            lib/jimmyPaigeAnalysisPayload.js \
+            lib/v143RenderContract.js \
+            lib/v143RhythmPdfArtifacts.js \
+            .github/scripts/v143-large-rhythm-pipeline-regression.mjs
+          git diff --cached --check
+          git commit -m "feat: scale Rhythm upload to PDF artifact flow"
+          git push origin HEAD:v143-contextual-prune-lobo
