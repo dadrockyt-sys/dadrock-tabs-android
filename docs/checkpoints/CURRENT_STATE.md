@@ -1,6 +1,6 @@
 # CURRENT STATE — DadRock `/ai-tab`
 
-Updated: 2026-09-06 — **PRE-REPLACEMENT GATE GREEN; NO MODEL START CONSUMED.**  
+Updated: 2026-09-06 — **RUNNER PINNED TO GREEN REPAIRED PREVIEW; ONE-SHOT NOT YET ARMED.**  
 Branch: `v143-contextual-prune-lobo`
 
 ## USER AUTHORIZATION — ACTIVE
@@ -234,3 +234,22 @@ Exact next step: inspect and minimally patch only `.github/workflows/v143-pre-re
 - Replacement PDF E2E remains **0 performed**.
 
 Current state: **PRE-REPLACEMENT GREEN. Next: exactly one authorized `gomyway` Rhythm start. Checkpoint immediately when sent/accepted; poll only the same signed job/token/FunctionCall. If it fails, STOP — no retry is authorized.**
+
+## ONE-SHOT RUNNER PREP CHECKPOINT — 2026-09-06 11:46 America/Toronto
+
+- Exact proven one-shot workflow confirmed: `.github/workflows/v143-one-shot-final-rhythm-e2e.yml`.
+- Exact helper: `.github/scripts/v143-one-shot-final-rhythm-existing-preview.sh`, blob `e2847e4d05ae1fea781ef07e891fece1bfbecbf0`.
+- Runner safety contract verified: exactly one Rhythm `operation:"start"`; same signed job/token polling only; STOP/no replacement on failure; freeze the exact completed result before any professional reference access; deterministic preview/full PDFs from the same freeze; exactly one professional full-1–113 score; same-job ACK/clear.
+- Minimal retarget commit: `9f4d8b59a15288cab02c7930093f80db57e52df0` (`ci: retarget V143 one-shot to repaired preview`).
+- New one-shot workflow blob: `d803af28820cff23750e503cf2fdea5aa8299d83`.
+- Only the immutable Preview identity changed in the workflow:
+  - URL `https://dadrock-tabs-android-r9uhb2dg9-stephen-mcnally-s-projects.vercel.app`
+  - deployment `dpl_5j26ZS2xq3utrHxW7waCd5NEPaQk`
+  - source `631544a8668033392300f2739c87232553dbadc0`
+- Route/page/config/bridge/protocol/worker/scheduler/helper/audio/reference pins are unchanged.
+- Workflow still triggers only on `.github/one-shot/v143-final-rhythm-run-3.txt`; the retarget commit itself did not arm or start the model.
+- Replacement live = **1 available / 0 consumed**.
+- Professional full-1–113 score = **1 available / 0 consumed**.
+- Replacement PDF E2E = **0 performed**.
+
+Current state: **RUNNER PINNED TO GREEN REPAIRED PREVIEW; ONE-SHOT NOT YET ARMED. Next irreversible action: exactly one marker update to trigger the authorized `gomyway` Rhythm run.**
