@@ -1,6 +1,6 @@
 # CURRENT STATE — DadRock `/ai-tab`
 
-Updated: 2026-09-05 — **EXACT FALSE-TERMINAL ROOT CAUSE CONFIRMED; NARROW BRIDGE REPAIR + MODEL-FREE REGRESSION COMMITTED; AUTHORITATIVE MODEL-FREE CI GREEN; FINAL NET-DIFF AUDIT CLEAN.** Exactly one backend-capable real-audio start has ever been accepted in this phase; **NO SECOND START / NO RERUN**.  
+Updated: 2026-09-05 — **EXACT FALSE-TERMINAL ROOT CAUSE CONFIRMED; NARROW BRIDGE REPAIR + MODEL-FREE REGRESSION COMMITTED; AUTHORITATIVE MODEL-FREE CI GREEN; FINAL NET-DIFF AUDIT CLEAN. NEW USER-AUTHORIZED GOMYWAY E2E + FULL PROFESSIONAL-REFERENCE SCORING BOUNDARY RECORDED, NOT YET CONSUMED.**  
 Branch: `v143-contextual-prune-lobo`
 
 > Compact continuation checkpoint. Checkpoint 4 commit `f16598ac037c57f4166ed4e3d97c234dc61c8eb5` and older dedicated checkpoints remain authoritative for the full forensic timeline; omission here does not revoke frozen boundaries.
@@ -8,12 +8,13 @@ Branch: `v143-contextual-prune-lobo`
 ## FROZEN BOUNDARIES
 
 - **V168 = `HOLDOUT_ASSET_MISSING / SCORING_NOT_ARMED`; V167 CLOSED / TERMINAL.**
-- GOAT restricted bytes = **0**; reference-facing score calls = **0**; **NO REFERENCE-FACING QUALITY VERDICT**.
+- GOAT restricted bytes = **0**; the prior reference-facing score count remains **0** through the completed repair/validation phase.
 - SplitMySong terminal `FAIL_CLOSED_NO_CANDIDATE`; GuitarSet `00/01/03` sealed.
 - Persistent production cache remains `BLOCKED_BY_RETENTION_POLICY`.
 - Async storage remains transient structured result + non-sensitive FunctionCall control metadata only; no raw audio/stems/model bytes; TTL <= 900s; no persistent result cache.
 - No production Vercel promotion/change; no Deployment Protection weakening; no whole-branch merge.
 - Do not touch unrelated musical/reference issues or `core/engine/chord_mapping.py` octave folding.
+- Restricted GOAT bytes/assets remain closed. The newly authorized professional-reference scoring boundary does **not** authorize opening or using GOAT restricted material.
 
 ## AUTHORITATIVE PRE-REPAIR PINS
 
@@ -38,7 +39,7 @@ Run `33999777841`, job `101396439738`, re-arm commit `67e5224d9a72c11ce5ff5aa265
 - raw request/response material + job token deleted after ACK;
 - production/deployment-protection/reference-scoring safety accounting unchanged/zero.
 
-**The one backend-capable start budget is consumed. Never rerun `33999777841`, `33999522733`, or `33998283085`; never send an ad-hoc replacement real-audio/model-bearing start.**
+**Never rerun `33999777841`, `33999522733`, or `33998283085`. The user's new authorization below creates one NEW, separately accounted `gomyway` E2E start; it does not permit any old run to be rerun.**
 
 ## FALSE TERMINAL FORENSICS — PROVEN
 
@@ -108,20 +109,21 @@ A separate temporary workflow created during concurrent work (`97cfab26dafa4fa6e
 ## FINAL NET-DIFF AUDIT — CLEAN
 
 Audited base: exact-root-cause checkpoint `f16598ac037c57f4166ed4e3d97c234dc61c8eb5`.  
-Audited branch head before this checkpoint write: `4f4dbfe102b73967673b91883d57b8f78dbe5c8b` (`docs: checkpoint green modal timeout validation`), parent `5fe9459ac67c5e3bd9b31474a9edc93a4a0d295e`.
+Audited branch head before the audited checkpoint write: `4f4dbfe102b73967673b91883d57b8f78dbe5c8b` (`docs: checkpoint green modal timeout validation`), parent `5fe9459ac67c5e3bd9b31474a9edc93a4a0d295e`.  
+Later docs-only audited checkpoint head before this fresh-chat write: `f34fac438fbba56e958ded84cc4d395819c557fe` (`docs: checkpoint audited green timeout repair`).
 
-GitHub compare reports the branch is `ahead` by 8 commits, behind by 0, with exactly four **net** changed files:
+GitHub compare at the audit reported the repair branch was `ahead` by 8 commits, behind by 0, with exactly four **net** changed files:
 
 - `.github/workflows/v143-modal-timeout-contract.yml` — added, `+30/-0`;
 - `analyzer/test_v143_modal_http_endpoint_timeout_contract.py` — added, `+119/-0`;
 - `analyzer/v143_modal_http_endpoint.py` — modified, `+1/-1`;
 - `docs/checkpoints/CURRENT_STATE.md` — checkpoint-only changes.
 
-The temporary unregistered workflow is absent from the net diff. No worker, scheduler, route, protocol, model, storage, TTL, production, protection, or reference-scoring file is changed by this repair phase.
+The temporary unregistered workflow is absent from the net diff. No worker, scheduler, route, protocol, model, storage, TTL, production, protection, or reference-scoring file was changed by the repair phase.
 
-Safety accounting after diagnosis/repair/validation/audit remains:
+Safety accounting through the completed diagnosis/repair/validation/audit phase remains:
 
-- additional backend-capable real-audio starts: **0**;
+- additional backend-capable real-audio starts after the consumed diagnostic start: **0**;
 - validation FunctionCalls/audio/model invocations: **0**;
 - production promotion/change: **0**;
 - Deployment Protection weakening: **0**;
@@ -130,22 +132,72 @@ Safety accounting after diagnosis/repair/validation/audit remains:
 - quality verdicts: **0**;
 - raw audio/stems/model bytes retained: **0**.
 
-## NEXT — HOLD AT STATICALLY VALIDATED REPAIR
+## FRESH-CHAT HANDOFF — USER-AUTHORIZED GOMYWAY E2E + FULL PROFESSIONAL REFERENCE SCORING
 
-- Preserve the one-start budget as consumed and retain every hard stop below.
-- Do not deploy/promote or perform live real-audio/model-bearing validation in this diagnostic phase without a new explicit authorization boundary.
-- Future work may resume from this checkpoint with the repaired bridge + regression + GREEN model-free CI + clean final net-diff audit as authoritative state.
+User clarification on 2026-09-05:
 
-## HARD STOPS
+- The intended professional benchmark is the **previously uploaded FULL Lead + Bass + Rhythm professional reference set** prepared for this test while waiting for GOAT INFO.
+- Do **not** assume `public/gomyway-professional-rhythm-reference-17-113.json` is the complete intended benchmark. That older/partial rhythm reference must not silently substitute for the full three-part professional reference set.
+- Before consuming the newly authorized live/model start, locate and verify the exact full Lead, Bass, and Rhythm professional-reference artifacts, including exact paths, blob/file SHAs, and coverage.
+- Approved `gomyway` source audio remains `public/jimmy-paige-midterm-v1/gomyway-midterm-source.m4a`, SHA `4dd709e3fa177b4daeed71ca97f0199757729d4b`.
+- The full professional references are distinct from restricted GOAT holdout material. **Do not open/use GOAT restricted bytes** under this authorization.
 
-- **NO SECOND REAL-AUDIO START. NO RERUN OF `33999777841`, `33999522733`, OR `33998283085`.**
-- No ad-hoc real-audio request; no new FunctionCall/audio/model invocation for validation.
+### NEW EXPLICIT AUTHORIZATION BOUNDARY
+
+The user explicitly authorized:
+
+1. **Exactly ONE new end-to-end `gomyway` backend/model-bearing run** through the repaired current V143 path.
+2. **Exactly ONE scoring pass** of that run's text/structured output against the user's full professional **Lead + Bass + Rhythm** reference set.
+3. Reporting the resulting per-part and aggregate score/textual comparison to the user, to the extent supported by the existing bounded scorer.
+
+This is a narrow override of the prior `NO SECOND REAL-AUDIO START` and `NO REFERENCE-FACING SCORE` hard stops **only for this one scoped `gomyway` E2E start + one full professional-reference scoring pass**.
+
+It does **not** authorize:
+
+- rerunning any prior workflow/run or repeating the new E2E if it fails;
+- a second new audio/model start or a second reference-scoring pass;
+- optimization, training, overnight search, parameter changes, scheduler changes, or model changes;
+- production Vercel promotion/deployment or Deployment Protection weakening/bypass-secret creation;
+- opening restricted GOAT bytes/assets or changing V168/V167/GuitarSet/SplitMySong holdout state;
+- unrelated code/music/reference fixes;
+- persistent raw audio/stems/model storage, TTL > 900 seconds, or persistent result cache;
+- whole-branch merge to `main`.
+
+### EXACT NEXT STEPS FOR A FRESH CHAT
+
+1. Re-read this checkpoint and confirm current branch head on `v143-contextual-prune-lobo` before any writes or model-bearing action.
+2. Locate the user's previously uploaded **full Lead, Bass, and Rhythm professional reference artifacts**. Verify exact paths, SHAs, format/schema, and coverage. Search repository/current conversation/library material as appropriate. **If the full three-part set cannot be verified, STOP before consuming the live/model start; do not substitute the legacy rhythm-only bars 17–113 reference.**
+3. Reconfirm the repaired V143 bridge and regression state still correspond to repair commit `62deec179531b0f3e67c0e833365c2274697f02d`, regression commit `056508efdebc5973fde25cd4d83eb40108189231`, and authoritative GREEN validation run `34000667026` / job `101398830737`.
+4. Identify the current **one-shot V143 E2E path/harness** that accepts the approved `gomyway` audio and produces the current Lead/Bass/Rhythm output **without changing parameters and without deployment/promotion**. Do not use the legacy V72 benchmark. Do not use an overnight optimizer or anything that mutates parameters/production.
+5. **Save another `CURRENT_STATE.md` checkpoint before consuming the new live start**, recording: exact audio path + SHA; all three professional-reference paths + SHAs + coverage; exact harness/workflow/route and commit; and one-start/one-score/no-rerun accounting.
+6. Execute **exactly one** current-V143 E2E `gomyway` start. No retry/rerun if it fails; capture bounded diagnostic/status evidence instead.
+7. Poll through the repaired processing path and collect only the bounded transient structured/text result required for scoring. Do not retain raw audio, stems, or model bytes.
+8. Run **exactly one** scoring pass against the verified **FULL Lead + Bass + Rhythm professional reference set**. Prefer existing scoring machinery if it is current and non-mutating. Record per-part metrics plus an aggregate/textual comparison only if the scorer supports them without altering model/parameters.
+9. ACK/clear transient job state as required. Save a final checkpoint with run/job/function-call/artifact IDs as applicable, exact commit/deployment/harness provenance, output/result digest where safe, all score metrics, and safety accounting. Do not retain forbidden raw payloads.
+10. Return to **HOLD**. Any rerun, second live start, second score, optimizer use, production deployment, GOAT restricted access, or broader change requires a new explicit user authorization boundary.
+
+### AUTHORIZATION / CONSUMPTION ACCOUNTING AT THIS HANDOFF
+
+- Newly authorized `gomyway` V143 E2E starts: **1 available, 0 consumed**.
+- Newly authorized full professional-reference scoring passes: **1 available, 0 consumed**.
+- New FunctionCall/audio/model invocation performed while writing this handoff: **0**.
+- New reference-facing score call performed while writing this handoff: **0**.
+- Production promotion/change: **0**.
+- Deployment Protection weakening: **0**.
+- GOAT restricted bytes accessed: **0**.
+- Raw audio/stems/model bytes newly retained: **0**.
+
+## HARD STOPS AFTER THE NEW NARROW AUTHORIZATION
+
+- Never rerun `33999777841`, `33999522733`, or `33998283085`.
+- Outside the single authorized `gomyway` E2E start above: no ad-hoc real-audio request and no additional FunctionCall/audio/model invocation.
+- Outside the single authorized full Lead/Bass/Rhythm professional-reference scoring pass above: no additional reference-facing scoring or quality verdict.
 - No production Vercel promotion/change.
 - No Deployment Protection weakening/disablement or bypass-secret creation.
-- No scheduler/model change for this repair.
-- No reference-facing scoring/quality verdict/restricted assets.
+- No scheduler/model/parameter change for this test.
+- No restricted GOAT asset access.
 - No raw audio/stems/model bytes in retained evidence.
 - No TTL > 15 minutes / no persistent result cache.
 - No whole-branch merge to `main`.
 
-Current authorization state: **exact root cause fixed by the one-line bridge catch; regression committed; authoritative model-free CI GREEN; final net-diff audit clean; diagnostic phase is HOLD unless a new explicit authorization boundary is established.**
+Current authorization state: **fresh-chat handoff armed for exactly one new current-V143 `gomyway` E2E start and exactly one score against the user's verified full professional Lead + Bass + Rhythm reference set. Neither budget has been consumed. First next action is verification of the full three-part reference artifacts; if they cannot be verified, stop before model/audio execution.**
