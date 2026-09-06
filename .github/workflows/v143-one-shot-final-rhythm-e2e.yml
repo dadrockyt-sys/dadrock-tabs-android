@@ -1,0 +1,118 @@
+name: V143 Final Rhythm One Shot
+
+on:
+  push:
+    branches:
+      - v143-contextual-prune-lobo
+    paths:
+      - '.github/one-shot/v143-final-rhythm-run.txt'
+
+concurrency:
+  group: v143-final-rhythm-one-shot-never-retry
+  cancel-in-progress: false
+
+permissions:
+  contents: read
+  id-token: write
+
+env:
+  VERCEL_ORG_ID: team_qJrw8Cuze5bCEg9M3Q67XMWt
+  VERCEL_PROJECT_ID: prj_6biwsn0iHci6FHNswAUCS8UYrAqF
+  PREVIEW_GIT_BRANCH: v143-contextual-prune-lobo
+  EXPECTED_ROUTE_BLOB: a3d02876d2c4efeb6f5258586046bc95cfc132b6
+  EXPECTED_PAGE_BLOB: c218639afcdbb7540ff7cc34583afc6d83587fa0
+  HARDENED_BRIDGE_BLOB: 169b4bb136eba742c3422a73ee5dd0174ca06c49
+  PROTOCOL_BLOB: 1bd55017e16a4e1d8b14c7429492f811a43a28d8
+  WORKER_BLOB: 111bf14a8f91045d3478901f8e36b88a2e7f181a
+  SCHEDULER_BLOB: fc9b4c45c208d80be7abab64a8959f2a3babcee8
+  ONE_SHOT_HELPER_BLOB: 5aa292b23c9dbe3190a49baf59b01d0907d59f4d
+  AUDIO_URL: https://raw.githubusercontent.com/dadrockyt-sys/dadrock-tabs-android/main/public/jimmy-paige-midterm-v1/gomyway-midterm-source.m4a
+  AUDIO_BLOB_SHA: 4dd709e3fa177b4daeed71ca97f0199757729d4b
+  PROFESSIONAL_REFERENCE_SHA256: 18fd868ae960dfcdd1ffb0110f1a9dfd8acc2ffeb46e247d1116cd54291526ac
+  VERCEL_TELEMETRY_DISABLED: '1'
+  NEXT_TELEMETRY_DISABLED: '1'
+  NO_COLOR: '1'
+
+jobs:
+  final-rhythm-one-shot:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 35
+    env:
+      VERCEL_TOKEN: ${{ secrets.VERCEL_TOKEN }}
+
+    steps:
+      - name: Checkout exact armed branch head
+        uses: actions/checkout@v4
+
+      - name: Enforce pinned one-shot source boundary
+        shell: bash
+        run: |
+          set -euo pipefail
+          test -n "${VERCEL_TOKEN:-}"
+          test "$(git hash-object app/api/analyze-audio-tab/route.js)" = "$EXPECTED_ROUTE_BLOB"
+          test "$(git hash-object app/ai-tab/page.js)" = "$EXPECTED_PAGE_BLOB"
+          test "$(git hash-object analyzer/v143_modal_http_endpoint.py)" = "$HARDENED_BRIDGE_BLOB"
+          test "$(git hash-object analyzer/v143_async_job_protocol.py)" = "$PROTOCOL_BLOB"
+          test "$(git hash-object analyzer/v143_modal_live_endpoint.py)" = "$WORKER_BLOB"
+          test "$(git hash-object analyzer/v143_seeded_separator.py)" = "$SCHEDULER_BLOB"
+          test "$(git hash-object public/jimmy-paige-midterm-v1/gomyway-midterm-source.m4a)" = "$AUDIO_BLOB_SHA"
+          test "$(git hash-object .github/scripts/v143-one-shot-final-rhythm-e2e.sh)" = "$ONE_SHOT_HELPER_BLOB"
+          test -f .github/one-shot/v143-final-rhythm-run.txt
+          echo 'authorizedLiveStarts=1'
+          echo 'authorizedProfessionalScores=1'
+          echo 'retryAuthorized=false'
+          echo 'productionTargeted=false'
+
+      - name: Set up Node.js 24
+        uses: actions/setup-node@v4
+        with:
+          node-version: '24'
+
+      - name: Install pinned Vercel CLI
+        shell: bash
+        run: |
+          set -euo pipefail
+          npm install --global vercel@59.11.2 >/dev/null
+          test "$(vercel --version | tail -n 1)" = '59.11.2'
+
+      - name: Run exactly one current-V143 Rhythm E2E
+        shell: bash
+        run: bash .github/scripts/v143-one-shot-final-rhythm-e2e.sh
+
+      - name: Scrub raw one-shot and scorer-only material
+        if: always()
+        shell: bash
+        run: |
+          set -euo pipefail
+          OUT=debug/v143-contextual-prune/final-rhythm-one-shot
+          rm -f validation/rhythm_holdout/reference/.one-shot-professional-rhythm-reference.json
+          rm -f \
+            "$OUT"/preflight-response.json \
+            "$OUT"/start-request.json \
+            "$OUT"/start-response.json \
+            "$OUT"/status-request.json \
+            "$OUT"/status-response.json \
+            "$OUT"/ack-request.json \
+            "$OUT"/ack-response.json \
+            "$OUT"/job-token.txt \
+            "$OUT"/freeze-input.json \
+            "$OUT"/inspect.log \
+            "$OUT"/freeze/rhythm-frozen-analysis.json \
+            "$OUT"/freeze/pdf/pdf-event-evidence.json
+          rm -rf "$OUT"/final-holdout
+
+      - name: Preserve bounded final evidence and generated PDFs
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: v143-final-rhythm-one-shot
+          path: |
+            debug/v143-contextual-prune/final-rhythm-one-shot/summary.json
+            debug/v143-contextual-prune/final-rhythm-one-shot/terminal-bounded.json
+            debug/v143-contextual-prune/final-rhythm-one-shot/professional-score-bounded.json
+            debug/v143-contextual-prune/final-rhythm-one-shot/freeze/rhythm-freeze-manifest.json
+            debug/v143-contextual-prune/final-rhythm-one-shot/freeze/rhythm-pdf-event-fidelity.json
+            debug/v143-contextual-prune/final-rhythm-one-shot/freeze/pdf/full-frozen-rhythm.pdf
+            debug/v143-contextual-prune/final-rhythm-one-shot/freeze/pdf/preview-frozen-rhythm.pdf
+          if-no-files-found: warn
+          retention-days: 14
