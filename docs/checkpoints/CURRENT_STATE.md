@@ -132,3 +132,18 @@ Current state: **AUTHORIZED REPAIR MODE. Historical live 1 consumed. New replace
 - Replacement Rhythm start remains **1 available / 0 consumed**.
 - Professional full-1–113 score remains **1 available / 0 consumed**.
 - Replacement PDF E2E remains **0 performed**.
+
+## REPAIR DEPLOYMENT CHECKPOINT — 2026-09-06
+
+- Minimal repair-support commit: `7b3b21407b2276f8577ca40bfc596fc3429706c5` (`deploy: pin repaired V143 async bridge blob`).
+- Only `.github/workflows/v143-deploy-async-http-bridge.yml` source pin changed: `EXPECTED_BRIDGE_BLOB` -> `169b4bb136eba742c3422a73ee5dd0174ca06c49`; workflow logic/secrets usage unchanged.
+- Production bridge-only deploy workflow: run `34041343616`, job `101508549305`, **success**.
+- Exact source boundary passed at deploy: bridge `169b4bb136eba742c3422a73ee5dd0174ca06c49`, protocol `1bd55017e16a4e1d8b14c7429492f811a43a28d8`, worker `111bf14a8f91045d3478901f8e36b88a2e7f181a`, scheduler `fc9b4c45c208d80be7abab64a8959f2a3babcee8`.
+- Production Modal app `dadrock-v143-http-bridge` redeployed successfully at about `2026-09-06T15:08:28Z`; worker deployment changed=false; Vercel deployment changed=false; main merge=false.
+- Production bridge synthetic smoke passed: tokenVerified=true, queueRoundtrip=true, queueCleared=true, resultTtlSeconds=900, rawAudioQueued=false, stemBytesQueued=false, modelExecuted=false, audioRead=false, referenceScoreCalls=0.
+- Deploy evidence artifact: `9991761743`; zip SHA-256 `02dff61207bac1b42331cd0359e92ab3bcecd252e00c15cbb0011d714f6aa49e`.
+- Replacement Rhythm start remains **1 available / 0 consumed**.
+- Professional full-1–113 score remains **1 available / 0 consumed**.
+- Replacement PDF E2E remains **0 performed**.
+
+Current state: **ROOT CAUSE REPAIRED + PRODUCTION MODAL BRIDGE VERIFIED. Replacement live = 1 available / 0 consumed. Professional score = 1 available / 0 consumed. Next: fresh protected Preview/source boundary + model-free preflight, PRE-REPLACEMENT-RUN checkpoint, then exactly one replacement `gomyway` Rhythm start.**
