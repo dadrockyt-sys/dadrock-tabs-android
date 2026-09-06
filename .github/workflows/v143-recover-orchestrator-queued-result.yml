@@ -1,0 +1,173 @@
+name: V143 Recover Orchestrator Queued Result
+
+on:
+  push:
+    branches:
+      - v143-contextual-prune-lobo
+    paths:
+      - '.github/workflows/v143-recover-orchestrator-queued-result.yml'
+
+permissions:
+  contents: read
+
+concurrency:
+  group: v143-recover-orchestrator-queued-result-no-model
+  cancel-in-progress: false
+
+env:
+  MODAL_ENVIRONMENT: main
+  HTTP_APP_NAME: dadrock-v143-http-bridge
+  RESULT_QUEUE_NAME: dadrock-v143-async-results
+  EXPECTED_PROTOCOL_BLOB: 1bd55017e16a4e1d8b14c7429492f811a43a28d8
+  LOG_SINCE: '2026-09-06T16:54:20Z'
+  LOG_UNTIL: '2026-09-06T17:11:00Z'
+  PYTHONUNBUFFERED: '1'
+
+jobs:
+  recover-queued-result:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 10
+    env:
+      MODAL_TOKEN_ID: ${{ secrets.MODAL_TOKEN_ID }}
+      MODAL_TOKEN_SECRET: ${{ secrets.MODAL_TOKEN_SECRET }}
+
+    steps:
+      - name: Checkout exact branch
+        uses: actions/checkout@v4
+
+      - name: Enforce read-only recovery boundary
+        shell: bash
+        run: |
+          set -euo pipefail
+          test "$(git hash-object analyzer/v143_async_job_protocol.py)" = "$EXPECTED_PROTOCOL_BLOB"
+          echo 'modelBearingStartRequestCount=0'
+          echo 'functionInvoked=false'
+          echo 'modelExecuted=false'
+          echo 'professionalScoreCalls=0'
+          echo 'pdfE2EPerformed=false'
+          echo 'deploymentChanged=false'
+
+      - name: Set up Python 3.11
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Install pinned Modal client
+        shell: bash
+        run: |
+          set -euo pipefail
+          python -m pip install --upgrade pip >/dev/null
+          python -m pip install 'modal==1.5.5' >/dev/null
+          modal token set --token-id "$MODAL_TOKEN_ID" --token-secret "$MODAL_TOKEN_SECRET" >/dev/null
+
+      - name: Recover exact completed queued result read-only
+        shell: bash
+        run: |
+          set -euo pipefail
+          OUT=debug/v143-contextual-prune/recovered-orchestrator-result
+          mkdir -p "$OUT"
+
+          modal app logs "$HTTP_APP_NAME" \
+            --env main \
+            --since "$LOG_SINCE" \
+            --until "$LOG_UNTIL" \
+            --tail 2000 \
+            --source stdout \
+            --search V143_ASYNC_STAGE \
+            --timestamps \
+            --show-function-id \
+            --show-function-call-id \
+            --show-container-id \
+            > "$OUT/orchestrator-stages.log"
+
+          PYTHONPATH=analyzer python - <<'PY'
+          import hashlib
+          import json
+          import os
+          import re
+          from pathlib import Path
+          import modal
+          from v143_async_job_protocol import decode_result_items
+
+          out = Path('debug/v143-contextual-prune/recovered-orchestrator-result')
+          text = (out / 'orchestrator-stages.log').read_text(encoding='utf-8', errors='replace')
+          rows = [line for line in text.splitlines() if 'V143_ASYNC_STAGE' in line]
+          ids = re.findall(r'\b(fc-[A-Za-z0-9]+)\b', text)
+          unique_ids = []
+          for value in ids:
+              if value not in unique_ids:
+                  unique_ids.append(value)
+          if len(unique_ids) != 1:
+              raise SystemExit(f'Expected exactly one orchestrator FunctionCall ID, found {unique_ids}')
+          parent_id = unique_ids[0]
+          if not any('orchestrator.start' in row for row in rows):
+              raise SystemExit('orchestrator.start missing')
+          if not any('worker_call.done status=completed' in row for row in rows):
+              raise SystemExit('worker completion missing from orchestrator logs')
+          if not any('result_queue.done status=completed' in row for row in rows):
+              raise SystemExit('completed result queue write missing from orchestrator logs')
+
+          parent = modal.FunctionCall.from_id(parent_id)
+          parent_result = parent.get(timeout=0)
+          if not isinstance(parent_result, dict) or parent_result.get('resultQueued') is not True:
+              raise SystemExit(f'Unexpected orchestrator result: {type(parent_result).__name__}')
+          job_id = str(parent_result.get('jobId') or '')
+          if not job_id:
+              raise SystemExit('Orchestrator result has no jobId')
+
+          queue = modal.Queue.from_name(os.environ['RESULT_QUEUE_NAME'], environment_name='main')
+          items = list(queue.iterate(partition=job_id, item_poll_timeout=0.0))
+          if not items:
+              raise SystemExit('Completed result queue partition is empty/expired')
+          envelope = decode_result_items(items)
+          if envelope.get('status') != 'completed' or not isinstance(envelope.get('result'), dict):
+              raise SystemExit('Recovered queue envelope is not completed')
+          result = envelope['result']
+          live = result.get('liveV143') if isinstance(result.get('liveV143'), dict) else {}
+          if not str(result.get('generatedTab') or '').strip():
+              raise SystemExit('Recovered result has no generatedTab')
+          if not (
+              live.get('referenceFree') is True
+              and live.get('professionalReferenceUsed') is False
+              and live.get('referenceRuntimeInputUsed') is False
+              and live.get('runtimeLabelsRequired') is False
+          ):
+              raise SystemExit('Recovered result failed V143 safety contract')
+
+          encoded = (json.dumps(result, ensure_ascii=False, sort_keys=True, separators=(',', ':')) + '\n').encode('utf-8')
+          (out / 'recovered-worker-result.json').write_bytes(encoded)
+          summary = {
+              'schemaVersion': 1,
+              'gate': 'v143-recover-orchestrator-queued-result',
+              'sourceCommit': os.environ.get('GITHUB_SHA'),
+              'orchestratorFunctionCallId': parent_id,
+              'jobId': job_id,
+              'workerCompletionLogged': True,
+              'resultQueueCompletionLogged': True,
+              'completedQueueResultRecovered': True,
+              'resultJsonBytes': len(encoded),
+              'resultSha256': hashlib.sha256(encoded).hexdigest(),
+              'topLevelKeys': sorted(result.keys()),
+              'generatedTabPresent': True,
+              'liveV143SafetyVerified': True,
+              'modelBearingStartRequestCount': 0,
+              'functionInvoked': False,
+              'modelExecuted': False,
+              'professionalScoreCalls': 0,
+              'pdfE2EPerformed': False,
+              'deploymentChanged': False,
+          }
+          (out / 'summary.json').write_text(json.dumps(summary, indent=2, sort_keys=True) + '\n', encoding='utf-8')
+          print(json.dumps(summary, indent=2, sort_keys=True))
+          PY
+
+      - name: Preserve recovered completed structured result temporarily
+        uses: actions/upload-artifact@v4
+        with:
+          name: v143-recovered-orchestrator-result
+          path: |
+            debug/v143-contextual-prune/recovered-orchestrator-result/summary.json
+            debug/v143-contextual-prune/recovered-orchestrator-result/orchestrator-stages.log
+            debug/v143-contextual-prune/recovered-orchestrator-result/recovered-worker-result.json
+          if-no-files-found: error
+          retention-days: 1
