@@ -1,0 +1,44 @@
+name: V143 Async Poll Timeout Regression
+
+on:
+  push:
+    branches:
+      - v143-contextual-prune-lobo
+    paths:
+      - analyzer/v143_modal_http_endpoint.py
+      - analyzer/test_v143_modal_http_endpoint_timeout_contract.py
+      - .github/workflows/v143-async-poll-timeout-regression.yml
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  static-model-free:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - name: Checkout exact branch commit
+        uses: actions/checkout@v4
+
+      - name: Compile repaired bridge and regression
+        shell: bash
+        run: |
+          set -euo pipefail
+          python -m py_compile \
+            analyzer/v143_modal_http_endpoint.py \
+            analyzer/test_v143_modal_http_endpoint_timeout_contract.py
+
+      - name: Run timeout classification regression
+        shell: bash
+        run: |
+          set -euo pipefail
+          python analyzer/test_v143_modal_http_endpoint_timeout_contract.py
+          echo 'modelFreeValidation=true'
+          echo 'modalAuthenticated=false'
+          echo 'audioRead=false'
+          echo 'workerSpawned=false'
+          echo 'modelExecuted=false'
+          echo 'referenceFacingInputs=0'
+          echo 'referenceScoreCalls=0'
+          echo 'qualityVerdictMade=false'
