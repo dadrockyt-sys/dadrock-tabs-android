@@ -107,3 +107,12 @@ Pinned bridge behavior:
 - Authorization remains fully intact for the next chat.
 
 Current state: **AUTHORIZED REPAIR MODE. Historical live 1 consumed. New replacement live = 1 available / 0 consumed. Professional score = 1 available / 0 consumed. PDF E2E = 0 performed.**
+
+## CONTINUATION — 2026-09-06
+
+- Resumed from this checkpoint on branch `v143-contextual-prune-lobo`; branch head observed at resume: `ee26abe3563806d5b4081257278e9a914e1895d1`.
+- Model-free diagnosis is in progress: mapping the pinned async bridge / Modal worker source to exact branch paths and inspecting worker dependency/image/runtime history.
+- Pinned Modal live worker blob `111bf14a8f91045d3478901f8e36b88a2e7f181a` has been fetched directly for inspection; exact branch path/history mapping is still being verified before any repair.
+- Replacement Rhythm start remains **1 available / 0 consumed**.
+- Professional full-1–113 score remains **1 available / 0 consumed**.
+- No model-bearing action, professional scoring call, or replacement PDF E2E has been performed during this continuation.
