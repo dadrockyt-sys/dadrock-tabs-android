@@ -101,31 +101,34 @@ Therefore:
 
 ## CURRENT ROOT-CAUSE DIAGNOSIS — MODEL-FREE ONLY
 
-Source inspection after the crash-loop observation found a strong resource-pressure candidate:
-
-- `analyzer/v143_modal_live_endpoint.py` runs the live Rhythm Modal function with `gpu="L4"`, `timeout=1200`, and **`memory=8192`**.
-- The dependency smoke is import-only and does not execute the full separator/model path, so it does not validate peak runtime memory.
-- Current `analyzer/v143_seeded_separator.py` uses spawned Demucs children and overlaps stages:
+Confirmed source/runtime facts:
+- `analyzer/v143_modal_live_endpoint.py` declares the live Rhythm function with `gpu="L4"`, `timeout=1200`, `memory=8192`.
+- **Correction:** current Modal documentation defines an integer `memory=8192` as a memory **request/minimum**, not an 8 GB hard limit. A hard memory limit requires a `(request, limit)` tuple. Therefore the earlier theory that this code necessarily hit an 8 GB Modal hard ceiling is **not supported and must not be treated as root cause**.
+- The dependency smoke is import-only and does not execute the full separator/model path, so it still does not validate runtime behavior of the multiprocessing separator.
+- Current `analyzer/v143_seeded_separator.py` uses spawned Demucs child processes and overlaps stages:
   1. start direct Demucs child;
   2. run BS-RoFormer in the parent while direct Demucs remains alive;
   3. start cascade Demucs child;
   4. only then join the direct child;
   5. join cascade child.
-- Thus there can be a window with **two Demucs child processes alive**, while the parent process has also exercised the RoFormer path.
-- Parent/older scheduler behavior before commit `6772a0ca1d700ea6861cd4401b51e093144c8d26` was serial: direct Demucs -> BS-RoFormer -> cascade Demucs.
-- Commit `6772a0ca1d700ea6861cd4401b51e093144c8d26` (`fix: seed V143 separator child scheduler`) introduced the overlapping child-process scheduler while the Modal live function remained capped at 8 GB.
+- There can therefore be a window with two Demucs child processes alive, and this scheduler is materially different from the older serial path.
+- Parent/older behavior before commit `6772a0ca1d700ea6861cd4401b51e093144c8d26` was serial: direct Demucs -> BS-RoFormer -> cascade Demucs.
+- Commit `6772a0ca1d700ea6861cd4401b51e093144c8d26` (`fix: seed V143 separator child scheduler`) introduced the overlapping child-process scheduler.
 
 Interpretation:
-- **high-confidence hypothesis, not yet an exact OOM proof:** the new concurrent separator schedule creates a peak host-RAM footprint that exceeds the 8 GB Modal container limit, causing container death/restart and the operator-visible function crash loop.
-- The 908-second terminal 502 plus Modal crash-loop observation is consistent with a worker/container failure, but the GitHub/Vercel bounded evidence deliberately does not expose the underlying Modal exception or kill reason.
-- This is presently a runtime/infrastructure failure boundary; it does **not** demonstrate that the Songsterr-inspired transcription logic itself is musically unsuccessful, because no completed transcription result reached freeze/scoring.
+- **confirmed failure boundary:** true Modal worker/runtime failure after a long processing period, not the repaired bridge's prior pending-poll bug.
+- **not yet confirmed:** OOM, memory-limit termination, multiprocessing incompatibility, child-process crash, timeout/retry behavior, or another worker exception.
+- The operator-visible Modal crash loop makes container/process lifecycle failure highly relevant, but GitHub/Vercel bounded evidence intentionally hides the raw Modal exception.
+- Current focus should be the exact multiprocessing/runtime lifecycle introduced by the seeded child scheduler and the full separator execution path, rather than assuming an 8 GB cap.
+- This still does **not** demonstrate that the Songsterr-inspired transcription logic itself is musically unsuccessful, because no completed transcription result reached freeze/scoring.
 
 ## NEXT SAFE WORK
 
 1. Continue **model-free** diagnosis only; do not run/rearm the model.
-2. Look for existing Modal/container logs or historical evidence that can explicitly confirm OOM / memory-limit termination for this exact worker invocation.
-3. Audit the scheduler transition around `6772a0c...` and any prior full separator runs to establish peak-memory behavior without a new model invocation where possible.
-4. If OOM becomes confirmed, prepare the smallest infrastructure-only repair candidate separately (for example resource sizing or eliminating unintended process overlap), but do **not** deploy a model/scheduler change or run it without respecting the authorization boundary.
-5. Save any stronger root-cause evidence here before further action.
+2. Recover exact Modal app/container logs for the failed invocation if an existing authenticated diagnostic path is available; Modal's current CLI supports filtering app logs by FunctionCall/container IDs.
+3. Audit the scheduler transition around `6772a0c...`, child process exit/error handling, and any prior successful full separator runs.
+4. Determine whether the crash loop is caused by multiprocessing/container lifecycle, resource exhaustion, function timeout/retry semantics, or another exact worker exception.
+5. Only after a confirmed cause, prepare the smallest repair candidate separately; do not deploy/run a new model-bearing test without respecting the authorization boundary.
+6. Save stronger root-cause evidence here before further action.
 
-Current state: **TERMINAL REPLACEMENT FAILURE. One authorized live start consumed and ACK/cleared. Professional score unused. PDF E2E not performed. No retry authorized. Leading model-free hypothesis: 8 GB Modal container pressure from overlapping Demucs/RoFormer scheduler.**
+Current state: **TERMINAL REPLACEMENT FAILURE. One authorized live start consumed and ACK/cleared. Professional score unused. PDF E2E not performed. No retry authorized. Bridge fix proven. Exact Modal worker crash-loop cause still under model-free diagnosis.**
