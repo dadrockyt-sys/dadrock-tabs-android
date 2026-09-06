@@ -1,0 +1,148 @@
+name: V143 Pre-Replacement Preview Preflight
+
+on:
+  push:
+    branches:
+      - v143-contextual-prune-lobo
+    paths:
+      - '.github/workflows/v143-pre-replacement-preview-preflight.yml'
+
+permissions:
+  contents: read
+
+concurrency:
+  group: v143-pre-replacement-preview-preflight
+  cancel-in-progress: false
+
+env:
+  PREVIEW_URL: https://dadrock-tabs-android-r9uhb2dg9-stephen-mcnally-s-projects.vercel.app
+  PREVIEW_DEPLOYMENT_ID: dpl_5j26ZS2xq3utrHxW7waCd5NEPaQk
+  PREVIEW_SOURCE_COMMIT: 631544a8668033392300f2739c87232553dbadc0
+  EXPECTED_ROUTE_BLOB: a3d02876d2c4efeb6f5258586046bc95cfc132b6
+  EXPECTED_PAGE_BLOB: c218639afcdbb7540ff7cc34583afc6d83587fa0
+  EXPECTED_NEXT_CONFIG_BLOB: d057c0731bc7f8b261c3598a45a7aea6dc5c9583
+  EXPECTED_BRIDGE_BLOB: 169b4bb136eba742c3422a73ee5dd0174ca06c49
+  EXPECTED_WORKER_BLOB: 111bf14a8f91045d3478901f8e36b88a2e7f181a
+  EXPECTED_PROTOCOL_BLOB: 1bd55017e16a4e1d8b14c7429492f811a43a28d8
+  EXPECTED_SCHEDULER_BLOB: fc9b4c45c208d80be7abab64a8959f2a3babcee8
+
+jobs:
+  preflight:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 10
+    env:
+      VERCEL_TOKEN: ${{ secrets.VERCEL_TOKEN }}
+
+    steps:
+      - name: Checkout exact branch head
+        uses: actions/checkout@v4
+
+      - name: Enforce immutable source boundary
+        shell: bash
+        run: |
+          set -euo pipefail
+          test -n "${VERCEL_TOKEN:-}"
+          test "$(git hash-object app/api/analyze-audio-tab/route.js)" = "$EXPECTED_ROUTE_BLOB"
+          test "$(git hash-object app/ai-tab/page.js)" = "$EXPECTED_PAGE_BLOB"
+          test "$(git hash-object next.config.js)" = "$EXPECTED_NEXT_CONFIG_BLOB"
+          test "$(git hash-object analyzer/v143_modal_http_endpoint.py)" = "$EXPECTED_BRIDGE_BLOB"
+          test "$(git hash-object analyzer/v143_modal_live_endpoint.py)" = "$EXPECTED_WORKER_BLOB"
+          test "$(git hash-object analyzer/v143_async_job_protocol.py)" = "$EXPECTED_PROTOCOL_BLOB"
+          test "$(git hash-object analyzer/v143_seeded_separator.py)" = "$EXPECTED_SCHEDULER_BLOB"
+          echo 'modelExecuted=false'
+          echo 'audioRead=false'
+          echo 'referenceScoreCalls=0'
+
+      - name: Set up Node.js 24
+        uses: actions/setup-node@v4
+        with:
+          node-version: '24'
+
+      - name: Install pinned Vercel CLI
+        shell: bash
+        run: |
+          set -euo pipefail
+          npm install --global vercel@59.11.2 >/dev/null
+          test "$(vercel --version | tail -n 1)" = '59.11.2'
+
+      - name: Verify exact immutable Preview identity
+        shell: bash
+        run: |
+          set -euo pipefail
+          mkdir -p debug/v143-contextual-prune/pre-replacement-preview-preflight
+          vercel inspect "$PREVIEW_URL" --token "$VERCEL_TOKEN" 2>&1 | tee debug/v143-contextual-prune/pre-replacement-preview-preflight/inspect.log
+          grep -Fq "$PREVIEW_DEPLOYMENT_ID" debug/v143-contextual-prune/pre-replacement-preview-preflight/inspect.log
+          grep -Eq 'target[[:space:]]+preview' debug/v143-contextual-prune/pre-replacement-preview-preflight/inspect.log
+          grep -Eq 'status[[:space:]]+.*Ready|status[[:space:]]+● Ready' debug/v143-contextual-prune/pre-replacement-preview-preflight/inspect.log
+
+      - name: Exercise protected route without model start
+        shell: bash
+        run: |
+          set -euo pipefail
+          OUT=debug/v143-contextual-prune/pre-replacement-preview-preflight
+
+          PAGE_STATUS="$(
+            vercel curl /ai-tab \
+              --deployment "$PREVIEW_URL" \
+              -- \
+              --silent --show-error --location \
+              --output "$OUT/ai-tab.html" \
+              --write-out '%{http_code}'
+          )"
+
+          PREFLIGHT_STATUS="$(
+            vercel curl /api/analyze-audio-tab \
+              --deployment "$PREVIEW_URL" \
+              -- \
+              --silent --show-error --location \
+              --request POST \
+              --header 'Content-Type: application/json' \
+              --data-binary '{"transcriptionType":"invalid"}' \
+              --output "$OUT/preflight-response.json" \
+              --write-out '%{http_code}'
+          )"
+
+          export PAGE_STATUS PREFLIGHT_STATUS OUT
+          python3 - <<'PY'
+          import json, os
+          from pathlib import Path
+
+          out = Path(os.environ['OUT'])
+          try:
+              body = json.loads((out / 'preflight-response.json').read_text(encoding='utf-8'))
+          except Exception:
+              body = {}
+
+          page_bytes = (out / 'ai-tab.html').stat().st_size
+          evidence = {
+              'schemaVersion': 1,
+              'gate': 'v143-pre-replacement-preview-preflight',
+              'previewDeploymentId': os.environ['PREVIEW_DEPLOYMENT_ID'],
+              'previewUrl': os.environ['PREVIEW_URL'],
+              'previewSourceCommit': os.environ['PREVIEW_SOURCE_COMMIT'],
+              'aiTabStatus': int(os.environ['PAGE_STATUS']),
+              'aiTabBytes': page_bytes,
+              'analyzePreflightStatus': int(os.environ['PREFLIGHT_STATUS']),
+              'analyzeRouteReached': int(os.environ['PREFLIGHT_STATUS']) == 400 and body.get('error') == 'Transcription type must be lead, rhythm, or bass.',
+              'operationStartSent': False,
+              'audioRead': False,
+              'modelExecuted': False,
+              'referenceScoreCalls': 0,
+              'productionTargeted': False,
+              'deploymentProtectionChanged': False,
+          }
+          evidence['passed'] = evidence['aiTabStatus'] == 200 and page_bytes > 1000 and evidence['analyzeRouteReached']
+          (out / 'evidence.json').write_text(json.dumps(evidence, indent=2) + '\n', encoding='utf-8')
+          print(json.dumps(evidence, indent=2))
+          if not evidence['passed']:
+              raise SystemExit(1)
+          PY
+
+      - name: Preserve bounded evidence only
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: v143-pre-replacement-preview-preflight
+          path: debug/v143-contextual-prune/pre-replacement-preview-preflight/evidence.json
+          if-no-files-found: warn
+          retention-days: 14
