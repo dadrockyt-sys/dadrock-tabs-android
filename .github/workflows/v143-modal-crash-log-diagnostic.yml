@@ -1,0 +1,127 @@
+name: V143 Modal Crash Log Diagnostic
+
+on:
+  push:
+    branches:
+      - v143-contextual-prune-lobo
+    paths:
+      - '.github/workflows/v143-modal-crash-log-diagnostic.yml'
+
+permissions:
+  contents: read
+
+concurrency:
+  group: v143-modal-crash-log-diagnostic
+  cancel-in-progress: false
+
+env:
+  MODAL_ENVIRONMENT: main
+  MODAL_APP_NAME: dadrock-v143-ai-tab-live
+  LOG_SINCE: '2026-09-06T16:54:20Z'
+  LOG_UNTIL: '2026-09-06T17:10:00Z'
+  PYTHONUNBUFFERED: '1'
+
+jobs:
+  capture-modal-crash-logs:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 10
+    env:
+      MODAL_TOKEN_ID: ${{ secrets.MODAL_TOKEN_ID }}
+      MODAL_TOKEN_SECRET: ${{ secrets.MODAL_TOKEN_SECRET }}
+
+    steps:
+      - name: Checkout diagnostic source
+        uses: actions/checkout@v4
+
+      - name: Set up Python 3.11
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Install pinned Modal CLI
+        shell: bash
+        run: |
+          set -euo pipefail
+          python -m pip install --upgrade pip >/dev/null
+          python -m pip install 'modal==1.5.5' >/dev/null
+          modal token set --token-id "$MODAL_TOKEN_ID" --token-secret "$MODAL_TOKEN_SECRET" >/dev/null
+          modal --version
+
+      - name: Capture exact failure-window Modal logs read-only
+        shell: bash
+        run: |
+          set -euo pipefail
+          OUT=debug/v143-contextual-prune/modal-crash-log-diagnostic
+          mkdir -p "$OUT"
+
+          echo 'modelExecuted=false'
+          echo 'functionInvoked=false'
+          echo 'deploymentChanged=false'
+          echo 'productionVercelChanged=false'
+          echo "app=$MODAL_APP_NAME"
+          echo "since=$LOG_SINCE"
+          echo "until=$LOG_UNTIL"
+
+          modal app history "$MODAL_APP_NAME" --env main --json > "$OUT/app-history.json"
+
+          modal app logs "$MODAL_APP_NAME" \
+            --env main \
+            --since "$LOG_SINCE" \
+            --until "$LOG_UNTIL" \
+            --tail 5000 \
+            --source system \
+            --timestamps \
+            --show-function-id \
+            --show-function-call-id \
+            --show-container-id \
+            > "$OUT/system.log"
+
+          modal app logs "$MODAL_APP_NAME" \
+            --env main \
+            --since "$LOG_SINCE" \
+            --until "$LOG_UNTIL" \
+            --tail 5000 \
+            --source stderr \
+            --timestamps \
+            --show-function-id \
+            --show-function-call-id \
+            --show-container-id \
+            > "$OUT/stderr.log"
+
+          python - <<'PY'
+          import json
+          import os
+          from pathlib import Path
+          out = Path('debug/v143-contextual-prune/modal-crash-log-diagnostic')
+          system = (out / 'system.log').read_text(encoding='utf-8', errors='replace')
+          stderr = (out / 'stderr.log').read_text(encoding='utf-8', errors='replace')
+          summary = {
+              'schemaVersion': 1,
+              'gate': 'v143-modal-crash-log-diagnostic',
+              'sourceCommit': os.environ.get('GITHUB_SHA'),
+              'appName': os.environ['MODAL_APP_NAME'],
+              'since': os.environ['LOG_SINCE'],
+              'until': os.environ['LOG_UNTIL'],
+              'systemLineCount': len(system.splitlines()),
+              'stderrLineCount': len(stderr.splitlines()),
+              'modelExecuted': False,
+              'functionInvoked': False,
+              'deploymentChanged': False,
+              'productionVercelChanged': False,
+          }
+          (out / 'summary.json').write_text(json.dumps(summary, indent=2) + '\n', encoding='utf-8')
+          print(json.dumps(summary, indent=2))
+          PY
+
+      - name: Preserve read-only Modal diagnostic evidence
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: v143-modal-crash-log-diagnostic
+          path: |
+            debug/v143-contextual-prune/modal-crash-log-diagnostic/summary.json
+            debug/v143-contextual-prune/modal-crash-log-diagnostic/app-history.json
+            debug/v143-contextual-prune/modal-crash-log-diagnostic/system.log
+            debug/v143-contextual-prune/modal-crash-log-diagnostic/stderr.log
+          if-no-files-found: warn
+          retention-days: 14
