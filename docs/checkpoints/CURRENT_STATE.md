@@ -1,19 +1,30 @@
 # CURRENT STATE — DadRock `/ai-tab`
 
-Updated: 2026-09-05 — **FRESH-CHAT ONE-SHOT E2E HANDOFF SAVED; TEST AUTHORIZED BUT NOT YET CONSUMED.**  
+Updated: 2026-09-05 — **PROVENANCE TRACE IN PROGRESS; ONE-SHOT E2E STILL UNCONSUMED.**  
 Branch: `v143-contextual-prune-lobo`
 
 ## START HERE IN A FRESH CHAT
 
 User wants the next chat to **prove the gates and then run the already-authorized one-shot `gomyway` Rhythm E2E**. Do not ask for authorization again. Do not spend the live start until the proof gates below are satisfied and checkpointed.
 
-Branch head immediately before this handoff save: `891e53fceac70982229a62d4b9751fdacb9e4718`.
+Verified branch head at continuation start: `21daa8da3155cfb9730929a54c315841e313b04c` (`docs: save fresh-chat one-shot E2E handoff`).
+
+### Continuation progress — provenance trace
+
+- Re-read this checkpoint and verified branch `v143-contextual-prune-lobo` at `21daa8da3155cfb9730929a54c315841e313b04c` before any live action.
+- Live/model-bearing Rhythm start remains **0 consumed**.
+- Professional scoring pass remains **0 consumed**.
+- PDF E2E remains **0 performed**.
+- Historical troubleshooting material mentions `analyzer/score_jimmy_midterm_113_measure_v1.py`, but that exact path is **not present at the current branch tip**. It is not pinned or approved yet; history/provenance must be resolved before use.
+- `public/gomyway-professional-rhythm-reference-v2.json` exists at the current branch tip, but inspection shows it is only the **measures 1–16** professional reference. It is not the required full 1–113 answer key and must not be substituted for it.
+- The known `public/gomyway-professional-rhythm-reference-17-113.json` fallback remains explicitly unacceptable for the reserved one-shot score.
+- Next action: trace Git history/tree for the preserved professional measures 1–113 reference and compatible deterministic scorer, then pin exact path/blob/schema/coverage before any model-bearing start.
 
 ### Exact next E2E test sequence
 
 1. Read this file first and verify current branch head.
 2. Re-verify approved source `public/jimmy-paige-midterm-v1/gomyway-midterm-source.m4a` still resolves to blob `4dd709e3fa177b4daeed71ca97f0199757729d4b`.
-3. Locate and pin the preserved **professional Rhythm reference covering measures 1–113** from the GOAT-testing work. Record exact repository path, blob SHA, schema/event fields, first/last measure, and time coverage. The blind candidate file `public/jimmy-paige-midterm-v1/jimmy-midterm-113-measure-paper-v1.json` is **not** the professional answer key. The known `public/gomyway-professional-rhythm-reference-17-113.json` fallback is **not acceptable** as a substitute.
+3. Locate and pin the preserved **professional Rhythm reference covering measures 1–113** from the GOAT-testing work. Record exact repository path, blob SHA, schema/event fields, first/last measure, and time coverage. The blind candidate file `public/jimmy-paige-midterm-v1/jimmy-midterm-113-measure-paper-v1.json` is **not** the professional answer key. The known `public/gomyway-professional-rhythm-reference-17-113.json` fallback is **not acceptable** as a substitute. `public/gomyway-professional-rhythm-reference-v2.json` has now also been excluded because it only covers measures 1–16.
 4. Locate and pin the deterministic professional scorer compatible with the current V143 Rhythm structured result and that full 1–113 reference. Record its exact path/blob/version and which metrics it truly computes.
 5. Inspect `.github/scripts/v143-existing-preview-async-breakthrough-e2e.sh` and `analyzer/v143_modal_http_endpoint.py`. Prove the run path makes exactly **one model-bearing Rhythm start**, polls only the same job/token/FunctionCall, contains no retry/replacement path, and performs no optimizer/training/scheduler/model/parameter mutation.
 6. Inspect `lib/v143RhythmPdfArtifacts.js`, `lib/createJimmyPaigeProfessionalPdf.js`, and `app/api/generate-tab-pdf/route.js`. Prove PDF generation consumes the **already-completed structured result** and cannot invoke analyzer/model inference again.
@@ -57,6 +68,13 @@ Branch head immediately before this handoff save: `891e53fceac70982229a62d4b9751
 - `app/api/analyze-audio-tab/route.js` blob: `a3d02876d2c4efeb6f5258586046bc95cfc132b6`
 - Permanent model-free regression script: `.github/scripts/v143-large-rhythm-pipeline-regression.mjs`, blob `f7a9af0d40cbbb4a094826d4e9b4f4abc8b16082`
 
+### Excluded candidates (do not use for reserved full score)
+
+- `public/jimmy-paige-midterm-v1/jimmy-midterm-113-measure-paper-v1.json` — blind/paper candidate, not professional answer key.
+- `public/gomyway-professional-rhythm-reference-17-113.json` — partial fallback explicitly disallowed.
+- `public/gomyway-professional-rhythm-reference-v2.json` — professional reference but only measures 1–16.
+- `analyzer/score_jimmy_midterm_113_measure_v1.py` — historical troubleshooting filename; absent from current tip and not yet provenance-pinned.
+
 ### Still must be pinned before live start
 
 - Full professional Rhythm reference, measures **1–113**: exact path/blob/schema/coverage.
@@ -97,4 +115,4 @@ Unsupported categories = `not scoreable from current schema`.
 
 Browser upload / Vercel Function payload / structured-result / PDF transport bottlenecks are model-free validated, but the underlying V143 worker's arbitrary-long-file download/decode/RAM/disk/runtime/ffmpeg/segmentation limits are not fully proven. Do not claim unlimited or arbitrary 5 TB analyzer support and do not spend extra model runs on that separate question.
 
-Current state: **SAFE HOLD / FRESH-CHAT E2E ARMED. Live = 0 consumed; professional score = 0 consumed; PDF E2E = 0 performed.**
+Current state: **SAFE HOLD / PROVENANCE TRACE IN PROGRESS. Live = 0 consumed; professional score = 0 consumed; PDF E2E = 0 performed.**
