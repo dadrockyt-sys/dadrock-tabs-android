@@ -1,6 +1,6 @@
 # CURRENT STATE — DadRock `/ai-tab`
 
-Updated: 2026-09-06 — **AUTHORIZED V143 RUN RECOVERED + FROZEN; PDF E2E PASSED; PROFESSIONAL SCORE 1/1 CONSUMED; MODEL-FREE TIMING DIAGNOSIS IN PROGRESS; NO RETRIES AUTHORIZED.**
+Updated: 2026-09-06 — **AUTHORIZED V143 RUN RECOVERED + FROZEN; PDF E2E PASSED; PROFESSIONAL SCORE 1/1 CONSUMED; MODEL-FREE TIMING REPAIR COMMITTED; NO RETRIES AUTHORIZED.**
 Branch: `v143-contextual-prune-lobo`
 
 This file is the authoritative fresh-chat handoff. It supersedes older stale instructions that said the professional score was still available.
@@ -301,3 +301,41 @@ Repair discipline:
 - do not invent or tune a threshold from this one professional song/reference;
 - next repair should be generic and model-free: preserve the accent estimator, add conservative phase selection for weak/ambiguous evidence, and validate it with synthetic regression cases that include both ambiguous phase evidence and clearly dominant nonzero phase evidence;
 - after timing regression coverage, continue the planned simultaneous-note/chord-voicing tests and the separate async TTL/reporting-function diagnosis.
+
+## CONTINUATION — MODEL-FREE BAR-PHASE REPAIR (2026-09-06)
+
+No new model start and no professional score were run.
+
+Committed repair:
+- source commit `2ecc8e165db8d0afcd83901ab131d0c63223daef` — `fix: make v143 bar phase conservative`;
+- timing source blob `5b95e419eb25360e72fe6c6aeb26f8c410b3b6ee`;
+- regression commit `f387377b538342f284e03b617ce6f4f13e31e6b0` — `test: add model-free v143 timing regression`;
+- validator path `validation/v143_model_free_regression/verify_reference_free_timing.py`;
+- validator blob `1f6443e9bc301bb5b9f926fd55fffde60e163971`.
+
+Repair behavior:
+- the original mean-accent phase scoring remains intact;
+- a nonzero phase is now applied only when its best-vs-runner accent advantage is repeatably separated across complete 4-beat cycles;
+- separation is evaluated as a paired per-cycle mean difference divided by its standard error;
+- the fixed criterion is two standard errors (`BAR_PHASE_MIN_SEPARATION_Z = 2.0`), a generic evidence rule not derived from `gomyway` or the professional reference;
+- ambiguous nonzero evidence falls back to phase 0 and reports zero bar confidence for that overridden selection;
+- clearly dominant nonzero phases remain supported, so the patch does not globally force all uploads to start on a downbeat.
+
+Model-free regression coverage:
+- ambiguous phase-1 advantage → conservative phase 0 → first grid slot measure 1 / step 0;
+- clear phase 1 → preserved → first grid slot measure 1 / step 12;
+- clear phase 2 → preserved → first grid slot measure 1 / step 8;
+- clear phase 0 → remains measure 1 / step 0;
+- fewer than 8 tracked beats still raises `ValueError`;
+- equivalent local deterministic cases passed without importing any professional reference and without invoking any model path.
+
+Commit isolation check from checkpoint `ddd90b159522170093cab7ccca1702546a730822` to `f387377b538342f284e03b617ce6f4f13e31e6b0`:
+- only `analyzer/v143_reference_free_timing.py` and the new model-free validator changed;
+- neither one-shot live workflow nor professional scorer workflow changed;
+- a repository housekeeping workflow (`cleanup-tab-preview.yml`) auto-triggered on the push and concluded failure with no jobs; it was not rerun and no model/scorer workflow was invoked.
+
+Next safe work:
+1. inspect simultaneous/polyphonic candidate preservation and guitar voicing with synthetic/model-free cases;
+2. inspect and repair the 900-second async result/control TTL so it safely exceeds the 1200-second runtime budget;
+3. investigate the user-observed Modal reporting-function crash-loop symptom read-only;
+4. checkpoint again before any future validation proposal.
