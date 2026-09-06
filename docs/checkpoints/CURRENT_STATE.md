@@ -68,4 +68,13 @@ Next actions before consuming the new authorization:
 - Professional scorer: `validation/rhythm_holdout/score_rhythm_holdout.py`, prior blob `cc4bf61a99f22bf87a6c255e5a81220fbc82223b`.
 - Final holdout orchestrator: `validation/rhythm_holdout/run_final_holdout_gate.py`, prior blob `c6a84434eefa768a924395b76d1d25b4e5a51307`.
 
+## CONTINUATION — 2026-09-06 MODEL-FREE TRACE
+
+- Resumed directly from this checkpoint on branch `v143-contextual-prune-lobo`.
+- Re-verified the hard authorization boundary before touching runtime: **replacement Rhythm live = 1 available / 0 consumed**; **professional score = 1 available / 0 consumed**.
+- No Rhythm/model-bearing start has been issued during this continuation.
+- Diagnosis is currently restricted to branch source/tree/commit history and non-model worker/dependency inspection.
+- Initial repository-wide identifier searches were too noisy/incomplete for branch-only worker code, so investigation is narrowing through the branch tree and path-specific history before any repair commit.
+- No code patch has been made yet.
+
 Current state: **AUTHORIZED REPAIR MODE. Historical live 1 consumed. New replacement live = 1 available / 0 consumed. Professional score = 1 available / 0 consumed. PDF E2E = 0 performed.**
