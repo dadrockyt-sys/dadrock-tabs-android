@@ -1,0 +1,171 @@
+name: V143 Score Recovered Frozen Result Once
+
+on:
+  push:
+    branches:
+      - v143-contextual-prune-lobo
+    paths:
+      - '.github/workflows/v143-score-recovered-frozen-result.yml'
+
+permissions:
+  contents: read
+  actions: read
+
+concurrency:
+  group: v143-professional-score-once-never-rerun
+  cancel-in-progress: false
+
+env:
+  FREEZE_RUN_ID: '34048512501'
+  FREEZE_ARTIFACT_NAME: v143-recovered-freeze-pdf
+  EXPECTED_FROZEN_EVENT_SHA256: f5b526e608fc552925b252ecdbf7d0a6e918b04f423374798d2772939af3e2af
+  EXPECTED_REFERENCE_BLOB: 248741bade9665a34648c59a2994bd27d73fc406
+  EXPECTED_REFERENCE_SHA256: 18fd868ae960dfcdd1ffb0110f1a9dfd8acc2ffeb46e247d1116cd54291526ac
+  EXPECTED_COMPLETENESS_BLOB: 2504581dd72b6c375fbc0b68d4d396fce58deb87
+  EXPECTED_SCORER_BLOB: cc4bf61a99f22bf87a6c255e5a81220fbc82223b
+  EXPECTED_GATE_BLOB: c6a84434eefa768a924395b76d1d25b4e5a51307
+
+jobs:
+  professional-score-once:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 10
+
+    steps:
+      - name: Checkout exact scoring source
+        uses: actions/checkout@v4
+
+      - name: Enforce immutable scoring boundary
+        shell: bash
+        run: |
+          set -euo pipefail
+          test "$(git hash-object research/v154-professional-references/rhythm-professional-reference.json)" = "$EXPECTED_REFERENCE_BLOB"
+          test "$(git hash-object validation/rhythm_holdout/verify_reference_completeness.py)" = "$EXPECTED_COMPLETENESS_BLOB"
+          test "$(git hash-object validation/rhythm_holdout/score_rhythm_holdout.py)" = "$EXPECTED_SCORER_BLOB"
+          test "$(git hash-object validation/rhythm_holdout/run_final_holdout_gate.py)" = "$EXPECTED_GATE_BLOB"
+          echo 'modelBearingStartRequestCount=0'
+          echo 'functionInvoked=false'
+          echo 'modelExecuted=false'
+          echo 'pdfE2EPerformedEarlier=true'
+          echo 'professionalScoreBudgetBefore=1'
+          echo 'productionChanged=false'
+
+      - name: Download exact frozen same-run artifact
+        uses: actions/download-artifact@v4
+        with:
+          name: ${{ env.FREEZE_ARTIFACT_NAME }}
+          path: score-input
+          github-token: ${{ github.token }}
+          repository: ${{ github.repository }}
+          run-id: ${{ env.FREEZE_RUN_ID }}
+
+      - name: Verify frozen identity before reference access
+        shell: bash
+        run: |
+          set -euo pipefail
+          python3 - <<'PY'
+          import json
+          import os
+          from pathlib import Path
+          freeze = Path('score-input/freeze')
+          manifest = json.loads((freeze / 'rhythm-freeze-manifest.json').read_text())
+          fidelity = json.loads((freeze / 'rhythm-pdf-event-fidelity.json').read_text())
+          expected = os.environ['EXPECTED_FROZEN_EVENT_SHA256']
+          checks = {
+              'eventHash': manifest.get('eventSha256') == expected,
+              'pdfHash': manifest.get('pdfEventSha256') == expected,
+              'pdfFidelity': float(manifest.get('pdfEventFidelity') or 0) == 1.0,
+              'fidelityPassed': fidelity.get('passed') is True,
+              'referenceFree': manifest.get('referenceFree') is True,
+              'referenceUnopened': manifest.get('referenceOpenedDuringFreeze') is False,
+              'runtimeSafety': manifest.get('v143RuntimeSafetyVerified') is True,
+          }
+          print(json.dumps(checks, indent=2, sort_keys=True))
+          if not all(checks.values()):
+              raise SystemExit('Frozen identity check failed before professional reference access')
+          PY
+
+      - name: Run exactly one professional full-1-113 score
+        id: score
+        shell: bash
+        run: |
+          set -euo pipefail
+          OUT=professional-score
+          REF_TMP=validation/rhythm_holdout/reference/.recovered-v143-professional-reference.json
+          mkdir -p "$OUT" validation/rhythm_holdout/reference
+
+          # This step is the single authorized professional-reference/scoring boundary.
+          cp research/v154-professional-references/rhythm-professional-reference.json "$REF_TMP"
+          ACTUAL_REF_SHA="$(sha256sum "$REF_TMP" | awk '{print $1}')"
+          echo "professionalReferenceSha256=$ACTUAL_REF_SHA"
+          test "$ACTUAL_REF_SHA" = "$EXPECTED_REFERENCE_SHA256"
+          echo 'professionalScoreCalls=1'
+
+          set +e
+          python3 validation/rhythm_holdout/run_final_holdout_gate.py \
+            score-input/freeze \
+            "$REF_TMP" \
+            --output-dir "$OUT/final-holdout" \
+            --minimum 0.99
+          SCORE_RC=$?
+          set -e
+          echo "score_exit_code=$SCORE_RC" >> "$GITHUB_OUTPUT"
+          echo "professionalScoreExitCode=$SCORE_RC"
+
+          python3 - <<'PY'
+          import json
+          import os
+          from pathlib import Path
+          out = Path('professional-score')
+          final = out / 'final-holdout'
+          def load(name):
+              p = final / name
+              return json.loads(p.read_text()) if p.exists() else {}
+          completeness = load('rhythm-reference-completeness.json')
+          score = load('rhythm-professional-holdout-score.json')
+          gate = load('rhythm-final-holdout-gate.json')
+          bounded = {
+              'schemaVersion': 1,
+              'gate': 'v143-recovered-professional-score-once',
+              'professionalScoreCalls': 1,
+              'scoreExitCode': int(os.environ.get('SCORE_RC_FOR_BOUND', '-1')),
+              'referenceCompletenessPassed': completeness.get('passed'),
+              'referenceComplete': completeness.get('referenceComplete'),
+              'referenceFirstMeasure': completeness.get('firstMeasure'),
+              'referenceLastMeasure': completeness.get('lastMeasure'),
+              'referenceMeasureCount': completeness.get('measureCount'),
+              'referencePlayableNoteCount': completeness.get('playableNoteCount'),
+              'referenceJsonSha256': completeness.get('referenceJsonSha256'),
+              'frozenEventSha256': score.get('frozenEventSha256') or completeness.get('frozenEventSha256'),
+              'pdfEventSha256': score.get('pdfEventSha256') or completeness.get('pdfEventSha256'),
+              'pdfEventFidelity': score.get('pdfEventFidelity') or completeness.get('pdfEventFidelity'),
+              'gatedMetrics': score.get('gatedMetrics'),
+              'criticalMismatchCount': score.get('criticalMismatchCount'),
+              'near100ProfessionalGatePassed': score.get('near100ProfessionalGatePassed'),
+              'rhythmComplete': score.get('rhythmComplete'),
+              'finalGatePassed': gate.get('passed'),
+              'failedChecks': gate.get('failedChecks'),
+              'professionalReferenceUsedByAnalyzer': score.get('professionalReferenceUsedByAnalyzer'),
+              'referenceRuntimeInputUsed': score.get('referenceRuntimeInputUsed'),
+              'productionChanged': False,
+              'modelExecuted': False,
+          }
+          (out / 'bounded-score.json').write_text(json.dumps(bounded, indent=2, sort_keys=True) + '\n')
+          print(json.dumps(bounded, indent=2, sort_keys=True))
+          PY
+          rm -f "$REF_TMP"
+          exit 0
+        env:
+          SCORE_RC_FOR_BOUND: ${{ steps.score.outputs.score_exit_code }}
+
+      - name: Preserve the single professional score evidence
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: v143-recovered-professional-score-once
+          path: |
+            professional-score/bounded-score.json
+            professional-score/final-holdout/rhythm-reference-completeness.json
+            professional-score/final-holdout/rhythm-professional-holdout-score.json
+            professional-score/final-holdout/rhythm-final-holdout-gate.json
+          if-no-files-found: warn
+          retention-days: 14
