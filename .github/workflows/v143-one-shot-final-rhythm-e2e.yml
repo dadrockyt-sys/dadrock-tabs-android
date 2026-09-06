@@ -17,9 +17,9 @@ permissions:
 env:
   VERCEL_ORG_ID: team_qJrw8Cuze5bCEg9M3Q67XMWt
   VERCEL_PROJECT_ID: prj_6biwsn0iHci6FHNswAUCS8UYrAqF
-  PREVIEW_URL: https://dadrock-tabs-android-iwhmrcol7-stephen-mcnally-s-projects.vercel.app
-  PREVIEW_DEPLOYMENT_ID: dpl_3LdGRdXb7ZkmNUojrXun72my84M4
-  EXPECTED_PREVIEW_SOURCE_COMMIT: 6212f6c64a2bcebaebfae7f4f7bc22d2a0483894
+  PREVIEW_URL: https://dadrock-tabs-android-r9uhb2dg9-stephen-mcnally-s-projects.vercel.app
+  PREVIEW_DEPLOYMENT_ID: dpl_5j26ZS2xq3utrHxW7waCd5NEPaQk
+  EXPECTED_PREVIEW_SOURCE_COMMIT: 631544a8668033392300f2739c87232553dbadc0
   EXPECTED_ROUTE_BLOB: a3d02876d2c4efeb6f5258586046bc95cfc132b6
   EXPECTED_PAGE_BLOB: c218639afcdbb7540ff7cc34583afc6d83587fa0
   EXPECTED_NEXT_CONFIG_BLOB: d057c0731bc7f8b261c3598a45a7aea6dc5c9583
