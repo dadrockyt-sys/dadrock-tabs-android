@@ -1,127 +1,102 @@
 # CURRENT STATE — DadRock `/ai-tab`
 
-Updated: 2026-09-05 — **REAL USER UPLOAD → V143 RHYTHM → PRIVATE PDF ARTIFACT FLOW IMPLEMENTED + BUILD GREEN; WORKER LARGE-FILE RUNTIME PROOF REMAINS.**  
+Updated: 2026-09-05 — **FRESH-CHAT E2E HANDOFF; PIPELINE WIRED + BUILD GREEN; ONE RHYTHM LIVE RUN AUTHORIZED, NOT CONSUMED.**  
 Branch: `v143-contextual-prune-lobo`
 
-> Latest user requirement is the real product path: a user uploads their chosen supported audio at `/ai-tab`, selects **Rhythm Guitar**, the current V143 async analyzer runs once, and the same completed structured result is rendered into the preview/full PDFs consumed by `app/ai-tab/page.js`. PDF generation must never start a second analyzer/model invocation.
+> Product path is wired and model-free validated. User explicitly authorized one real `gomyway` Rhythm E2E and clarified that the single professional scoring pass must use the preserved full measures 1–113 professional Rhythm reference from the GOAT-testing work. This is a **PRE-CONSUMPTION** checkpoint: no live start, score, or E2E PDF validation has been consumed.
 
-## CURRENT VERIFIED BRANCH STATE
+## VERIFIED PRODUCT STATE
 
-- Branch head immediately before this checkpoint write: `daa63261adccd3b7120df825f36f509e8b5cc64e`.
-- Product implementation commit: `17397dfae18b56dcb13b9bd7291618dcf5357c6f` (`feat: scale Rhythm upload to PDF artifact flow`).
-- Patch/model-free regression workflow: run `34006234785`, job `101413830044` — GREEN.
-- Full model-free Next.js production build validation: run `34006290464`, job `101413989631` — GREEN, including:
-  - dependency install;
-  - permanent V143 large-Rhythm regression;
-  - `npm run build` / Next.js production compile.
-- Temporary one-shot patch script removed in commit `d454a93ada5df9ab4668f5fee741dc2a83f52607`.
-- Temporary one-shot validation workflow removed in commit `daa63261adccd3b7120df825f36f509e8b5cc64e`.
-- Permanent model-free regression remains: `.github/scripts/v143-large-rhythm-pipeline-regression.mjs`.
-- No model/audio inference occurred during implementation or validation.
+- Branch head immediately before this checkpoint write: `b78d524c7157ccb897dbb184255ee389c68fb567`.
+- Product wiring commit: `17397dfae18b56dcb13b9bd7291618dcf5357c6f`.
+- Model-free regression: run `34006234785`, job `101413830044` — GREEN.
+- Next.js production build: run `34006290464`, job `101413989631` — GREEN.
+- Real product flow: private multipart upload → one async V143 Rhythm job → same-token polling → same completed structured result → deterministic preview/full private PDF artifacts → compact artifact refs → same-token ACK.
+- `lib/v143RhythmPdfArtifacts.js` blob `dab369ddce19abeb3b4e27d801f8bc0a2e8ab60b` uses `createJimmyPaigeProfessionalPdf` and does not invoke the analyzer/model.
+- Permanent large-Rhythm model-free regression: `.github/scripts/v143-large-rhythm-pipeline-regression.mjs`, blob `f7a9af0d40cbbb4a094826d4e9b4f4abc8b16082`.
 
-## IMPLEMENTED REAL PRODUCT FLOW
+## AUTHORIZATION / BUDGET
 
-### 1. Browser upload (`app/ai-tab/page.js`)
-- User chooses MP3/WAV/M4A/AAC as before.
-- Upload is private Vercel Blob client upload with explicit `multipart: true`.
-- Raw audio goes browser → Blob directly; it is not buffered through a Vercel Function body.
+- Exactly **ONE** current-V143 `gomyway` Rhythm model-bearing start.
+- Exactly **ONE** professional Rhythm-reference scoring pass against the preserved full measures **1–113** reference.
+- The **SAME completed structured result** must be used for deterministic PDF validation; no analyzer/model rerun for PDF.
+- **No retry/replacement** if the one live run fails.
+- Live start: **1 available / 0 consumed**.
+- Professional score: **1 available / 0 consumed**.
+- PDF E2E handoff: **0 performed**.
+- User authorized use of the preserved full 1–113 Rhythm reference from GOAT-testing work for this one score only; unrelated restricted GOAT assets remain closed.
 
-### 2. Upload authorization (`app/api/audio-upload/route.js`)
-- Old application-level 50 MB maximum removed.
-- Existing content-type, copyright-acknowledgement and instrument-selection validation remains.
-- Vercel Blob/platform limits are now the raw-upload transport ceiling rather than an artificial 50 MB app cap.
+## PINNED INPUTS / PROVENANCE
 
-### 3. V143 Rhythm analysis (`app/api/analyze-audio-tab/route.js`)
-- Start still targets the current V143 Rhythm async analyzer for `transcriptionType === 'rhythm'`.
-- Polling reuses the same async job token; no replacement job is introduced.
-- Rhythm status asks for `delivery: 'pdf-artifacts'` plus song/artist metadata.
-- Once that same job returns the valid structured V143 result, the route gives the already-completed structure directly to the deterministic PDF artifact renderer server-side.
-- Browser receives only compact completion metadata + opaque `pdfArtifact`; large `renderEvents` do not need to cross the Vercel Function JSON response boundary.
-- Browser ACKs the same analyzer token afterward, preserving existing transient-result cleanup.
+- Approved audio: `public/jimmy-paige-midterm-v1/gomyway-midterm-source.m4a`
+- Audio blob SHA: `4dd709e3fa177b4daeed71ca97f0199757729d4b` — re-verified immediately before this checkpoint.
+- One-shot helper: `.github/scripts/v143-existing-preview-async-breakthrough-e2e.sh`
+- Helper blob SHA: `433599afec7fff20a31ea79e4c93ef9a6da03b36` — re-verified immediately before this checkpoint.
+- Async bridge: `analyzer/v143_modal_http_endpoint.py`
+- Current bridge blob: `169b4bb136eba742c3422a73ee5dd0174ca06c49`
+- Repaired async bridge commit: `62deec179531b0f3e67c0e833365c2274697f02d`
+- Regression commit: `056508efdebc5973fde25cd4d83eb40108189231`
+- Bridge GREEN validation: run `34000667026`, job `101398830737`.
+- Current bridge source pins Modal worker app/function as: `dadrock-v143-ai-tab-live / rhythm_v143_request`.
+- Full professional Rhythm reference, measures 1–113: **TO PIN BEFORE LIVE START** — exact repository path, blob SHA, schema/event fields, measure coverage and time coverage. User states this is preserved in the GOAT-testing work.
+- Known fallback `public/gomyway-professional-rhythm-reference-17-113.json` **MUST NOT** be silently substituted for the full 1–113 reference.
+- Deterministic professional scorer: **TO PIN BEFORE LIVE START** — exact path/blob/version and metric definitions.
+- Deterministic PDF wrapper: `lib/createJimmyPaigeProfessionalPdf.js`, blob `b1e587b24c38f005294aa5ea960ce9bd9b79724c`.
+- Full-PDF unlock route: `app/api/generate-tab-pdf/route.js`, blob `5137831c262e79fe673249dcc8d71ac43efa95e9`.
+- Analyzer route: `app/api/analyze-audio-tab/route.js`, blob `a3d02876d2c4efeb6f5258586046bc95cfc132b6`.
 
-### 4. Deterministic PDF artifact generation (`lib/v143RhythmPdfArtifacts.js`)
-- New helper calls `createJimmyPaigeProfessionalPdf` on the already-completed V143 structured result.
-- Generates both preview and full PDF **without any analyzer/model/API inference call**.
-- Stores preview/full PDFs as private Vercel Blob artifacts under a random UUID path.
-- Preview GET URL is signed/time-bounded (6 hours).
-- Full PDF GET URL is signed/time-bounded (1 hour) and is only minted through the existing unlock route after authorization/payment/free-token verification.
-
-### 5. Preview + unlocked PDF (`app/ai-tab/page.js`, `app/api/generate-tab-pdf/route.js`)
-- Rhythm preview uses the signed private Blob preview URL directly when present.
-- Full-PDF request sends the opaque artifact ID rather than resending the huge structured transcription.
-- `/api/generate-tab-pdf` preserves existing PayPal/free-token unlock checks, validates the artifact ID, then signs the already-rendered private full PDF.
-- Browser downloads the PDF directly from the signed Blob URL, avoiding the Vercel Function response-size boundary.
-- Artifact-mode email contains the expiring private download URL rather than forcing a large PDF attachment through the function/mail response path.
-- Lead/Bass and legacy non-artifact behavior remains unchanged.
-
-## LARGE-FILE DEFENSIVE BOUNDS
-
-- `lib/jimmyPaigeAnalysisPayload.js`: structured event cap raised 20,000 → 100,000.
-- `lib/v143RenderContract.js`: render event cap raised 5,000 → 100,000.
-- Audio metadata validation bound raised 1 GiB → 5 TiB so valid Blob metadata is not rejected solely by the old app bound.
-- These are defensive application/render bounds, not a statement that the analyzer itself can process 5 TiB audio.
-
-## WHAT “ANY SIZE” MEANS HERE
-
-Do **not** claim literal infinity/unbounded audio.
-
-Verified product transport behavior:
-- old 50 MB DadRock application ceiling is gone;
-- raw uploads use multipart private Blob transport;
-- current Vercel Blob platform documentation allows multipart Blob objects up to the platform maximum (currently documented as 5 TB);
-- large analyzer structures are rendered server-side instead of returned wholesale to the browser;
-- large PDF bytes are served directly by signed private Blob URL instead of through a Vercel Function response.
-
-Remaining finite constraints may include:
-- browser/network/upload reliability and Vercel Blob account/platform quota;
-- exact deployed Modal V143 worker source-download strategy and worker disk/RAM/GPU/runtime;
-- ffmpeg decode behavior/duration;
-- model segmentation/windowing/merging behavior;
-- 100,000-event defensive structured/render limit;
-- Vercel Function execution duration/memory while rendering a very large PDF;
-- PDF renderer memory/page-count/resource behavior.
-
-## REMAINING RUNTIME PROOF GAP
-
-The exact source/deployment implementation of Modal app/function:
-- app: `dadrock-v143-rhythm`
-- function: `rhythm_v143_request`
-
-has **not yet been located/pinned** in the repository during this continuation. `analyzer/v143_modal_http_endpoint.py` is the bridge to that function, not the full underlying worker implementation.
-
-Therefore it is already proven that the **DadRock web transport + structured-result + PDF path no longer imposes the old small-file boundaries**, but it is not yet proven that the deployed analyzer worker can decode/process every large Blob that the storage layer can accept. Locate the worker implementation/deployment evidence before claiming analyzer-side arbitrary-duration support.
-
-## SECURITY / RETENTION BOUNDARIES
-
-- User source audio remains private Blob input.
-- Full structured analyzer result remains in existing transient analyzer state until ACK/TTL; no persistent structured-result JSON cache was added.
-- Persisted new artifacts are output PDFs only and are private.
-- Signed artifact URLs are GET-only and time-bounded.
-- Full PDF access remains behind existing unlock verification.
-- No production Vercel deployment/promotion performed.
-- No Deployment Protection weakening/disablement or bypass secret creation.
-- No restricted GOAT assets accessed.
-- No optimizer/training/model/scheduler/parameter mutation.
-- No whole-branch merge to `main`.
-
-## LIVE-RUN / BUDGET ACCOUNTING
-
-- New V143 Rhythm real-audio/model starts used during this implementation: **0**.
-- Previously authorized single `gomyway` V143 Rhythm start: **1 available / 0 consumed** unless a later explicit authorization supersedes it.
-- Professional Rhythm-reference score passes used: **0**.
-- New PDF artifact model invocation: **0** (PDF renderer is deterministic/non-model).
-- Production promotion/change: **0**.
-- Restricted GOAT access: **0**.
-
-## IMMEDIATE NEXT STEPS FOR A FRESH CHAT
+## FRESH-CHAT NEXT STEPS — DO IN ORDER
 
 1. Re-read this checkpoint and verify current branch head.
-2. Locate/pin authoritative deployed source or deployment evidence for `dadrock-v143-rhythm / rhythm_v143_request`.
-3. Inspect its private Blob download path, whether it buffers the complete compressed/decompressed audio in RAM/disk, ffmpeg invocation, maximum duration/bytes, function timeout, ephemeral disk/RAM/GPU limits, model windowing/segmentation and merge behavior.
-4. If worker contains avoidable whole-file/small-duration limits, make the narrowest worker-side change required to process large practical user recordings; do not mutate model/scheduler/parameters.
-5. Add model-free/static regression checks around those worker limits where possible.
-6. Save `CURRENT_STATE.md` before any live model-bearing validation.
-7. Only after worker-side proof is complete, decide whether the existing explicitly authorized single `gomyway` Rhythm E2E run is useful as the one live validation. No retry/replacement run without new authorization.
-8. No production promotion until explicitly authorized.
+2. Re-verify approved audio still resolves to blob `4dd709e3fa177b4daeed71ca97f0199757729d4b`.
+3. Locate and pin the preserved full measures **1–113** professional Rhythm reference from the GOAT-testing work: exact path, blob SHA, schema, event fields, measure coverage and time coverage. Do not access unrelated restricted GOAT assets.
+4. Locate and pin the deterministic professional scorer compatible with current V143 Rhythm output + that full reference. Document exactly which metrics it computes: note/pitch, exact fret, string/string+fret, onset/beat/measure timing, rhythmic value/duration, technique events, missed/extra events, coverage, and aggregate only if the scorer already defines it.
+5. Inspect the one-shot helper and current bridge. Confirm exactly one model-bearing start, same-token polling only, no retry/replacement, no optimizer/training/model/scheduler/parameter mutation, and pin the actual preview/deployment/source provenance used by the run.
+6. Verify `lib/v143RhythmPdfArtifacts.js` and downstream unlock route consume the already-completed structured result and cannot launch analyzer/model inference.
+7. **Save `CURRENT_STATE.md` again immediately before live consumption** with exact branch head, audio/reference/helper/bridge/scorer/PDF provenance and accounting still `1 live available / 0 consumed`, `1 score available / 0 consumed`.
+8. Execute exactly **ONE** current-V143 `gomyway` Rhythm E2E start. If it fails, **STOP**; do not retry or replace it.
+9. Poll only that same returned job/token/FunctionCall to terminal.
+10. If and only if a valid structured Rhythm result is returned, run exactly **ONE** deterministic professional-reference scoring pass against the full 1–113 reference. Report each supported metric separately. Unsupported categories must be reported as `not scoreable from current schema`, never guessed.
+11. Preserve only bounded structured comparison evidence needed for scoring; do not retain raw audio, stems, or model bytes.
+12. ACK/clear that same analyzer token after required structured evidence is safely captured.
+13. Feed the **SAME completed structured result** into the deterministic PDF artifact flow; validate preview + full PDF and preservation of notes/frets/strings/timing/techniques. **No second analyzer/model invocation.**
+14. Save a final `CURRENT_STATE.md` with run/job/FunctionCall/token/artifact IDs, exact provenance, score outputs, PDF outcome, ACK/cleanup status, and final budget accounting.
+15. Return to **HOLD**. Any second live run, second score, production promotion, optimizer/training, GOAT-access expansion, or broader mutation requires new explicit authorization.
 
-Current state: **WEB/UPLOAD/ASYNC-HANDOFF/PDF PATH IMPLEMENTED AND NEXT.JS BUILD GREEN. LIVE INFERENCE = 0. REMAINING WORK = PROVE/PATCH THE ACTUAL V143 RHYTHM WORKER'S LARGE-FILE DECODE/RUNTIME PATH.**
+## SCORING RULES
+
+Where the pinned scorer/reference schema supports them, report separately:
+- note/pitch correctness;
+- exact fret correctness;
+- string and exact string+fret placement;
+- onset / beat / measure timing;
+- rhythmic value / duration;
+- techniques including slides, bends, hammer-ons/pull-offs, dead/muted notes, ties and other explicitly encoded techniques;
+- missed and extra events;
+- coverage;
+- aggregate only if explicitly defined by the deterministic scorer.
+
+Unsupported categories = `not scoreable from current schema`.
+
+## SEPARATE LARGE-FILE LIMIT NOTE
+
+- Browser upload / Vercel Function payload / structured-result / PDF transport bottlenecks have been fixed and build validated.
+- The underlying V143 worker's arbitrary-long-file download/decode/RAM/disk/runtime/ffmpeg/segmentation limits are not fully proven.
+- Do not claim literally unlimited or arbitrary 5 TB analyzer support.
+- Do not spend extra live/model runs on this separate proof gap without explicit authorization.
+
+## HARD STOPS
+
+- Exactly one Rhythm live start; no retry/replacement.
+- Exactly one professional score pass.
+- No Lead or Bass model run.
+- No second analyzer invocation for PDF.
+- Never rerun `33999777841`, `33999522733`, or `33998283085`.
+- No optimizer/training/overnight search; no scheduler/model/parameter mutation.
+- No production Vercel promotion/change.
+- No Deployment Protection weakening/disablement or bypass-secret creation.
+- No unrelated restricted GOAT asset access.
+- No raw audio/stems/model bytes retained.
+- No whole-branch merge to `main`.
+
+Current state: **SAFE HOLD / E2E ARMED. Live = 0 consumed; professional score = 0 consumed; PDF E2E = 0 performed.**
