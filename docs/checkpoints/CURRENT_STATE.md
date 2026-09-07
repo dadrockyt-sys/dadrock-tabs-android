@@ -117,18 +117,23 @@ Next.js bridge:
 - analyzer start/status responses now expose the shared 1800-second value, so this fallback does **not** own or expire analyzer state
 - leave the advisory fallback unchanged unless doing a separate truthful-fallback cleanup
 
-One stale source comment remains in `analyzer/v143_modal_http_endpoint.py` saying “hard 15-minute TTL”; behavior is governed by the imported shared 1800-second constant. This is documentation-only cleanup, not a runtime defect.
+Documentation-only TTL comment cleanup is complete:
+- file: `analyzer/v143_modal_http_endpoint.py`
+- commit: `2f630afcfa7222a3af823661e45546b19f305f0c`
+- exact diff replaced stale “hard 15-minute TTL” wording with the shared bounded `ASYNC_RESULT_TTL_SECONDS` wording
+- commit scope: one file, comment-only, **3 additions / 2 deletions**, no runtime code change
 
 ## CONTINUATION — DETERMINISTIC CLEANUP INSPECTION
 
 Fresh continuation inspection on 2026-09-07 America/Toronto:
 - branch head before writes was `41dd108c07cb1439f887dbc8f0d1185bd2998848`
 - no newer branch work was present beyond this checkpoint
-- `analyzer/v143_modal_http_endpoint.py` still contains the stale comment “hard 15-minute TTL” while both Queue partition TTL sites use `ASYNC_RESULT_TTL_SECONDS`
-- `app/api/analyze-audio-tab/route.js` still contains advisory `900` fallbacks in both async `start` and `status` response shaping
-- no model/scoring workflow, Modal/GPU inference, deployment, scheduler/model mutation, or professional scoring was triggered during this inspection
+- inspection checkpoint commit: `8df101086c8fb21a4a4dc3da6fb377d57b26c300`
+- stale Modal TTL comment cleanup commit: `2f630afcfa7222a3af823661e45546b19f305f0c`
+- `app/api/analyze-audio-tab/route.js` still contains advisory `900` fallbacks in both async `start` and `status` response shaping; this remains optional cleanup only
+- no model/scoring workflow, Modal/GPU inference, deployment, scheduler/model mutation, or professional scoring was triggered during this continuation
 
-Next safe action is limited to isolated deterministic source cleanup plus static verification. Preserve the root behavior: shared analyzer TTL **1800s**, orchestrator timeout **1200s**, margin **600s**.
+Current safe choice: either stop here or perform a separately isolated truthful-fallback cleanup from `900` to `1800` in the Next.js bridge with ordinary static/JS validation only. Preserve the root behavior: shared analyzer TTL **1800s**, orchestrator timeout **1200s**, margin **600s**.
 
 ## WORKFLOW SAFETY
 
@@ -140,10 +145,8 @@ No model/scoring workflow was manually triggered during these slices. No Modal/G
 2. Treat the precision score-structure slice as **closed**. Do not reopen or alter helper/adapter/model behavior unless there is a new explicit reason. Preserve **725 / 970 / 967 / 3 drops / 0 recovery**.
 3. Treat the async ownership root defect as **code-patched**: shared TTL is now 1800 seconds and the orchestrator timeout remains 1200 seconds, giving a 600-second margin.
 4. If a normal local checkout is available, run only the dependency-free/model-free command `python analyzer/validate_v143_async_result_lifetime.py`. Do **not** trigger a GitHub workflow, Modal function, model run, or deployment just to validate it.
-5. If that validator passes, optional cleanup is limited to deterministic non-runtime semantics:
-   - update the stale “hard 15-minute TTL” comment in `analyzer/v143_modal_http_endpoint.py` to describe the shared bounded TTL accurately;
-   - optionally align the Next.js fallback `ANALYZER_JOB_EXPIRES_SECONDS` from 900 to 1800 so fallback UI semantics match the analyzer, but remember this is advisory and not the ownership root cause.
-6. If making either cleanup, keep it isolated, use ordinary static/JS validation only, and save this checkpoint immediately afterward.
+5. The stale Modal TTL comment cleanup is complete at `2f630afcfa7222a3af823661e45546b19f305f0c`. Optional remaining cleanup is only to align the Next.js advisory async expiry fallback from `900` to `1800`; this is not the ownership root cause.
+6. If making that fallback cleanup, keep it isolated, use ordinary static/JS validation only, and save this checkpoint immediately afterward.
 7. Do **not** deploy, promote Production, weaken Deployment Protection, run model-bearing Rhythm/Lead/Bass analysis, run the professional scorer, invoke Modal/GPU/paid inference, or change model/scheduler/threshold parameters without new explicit user authorization.
 8. Before any future score-quality work, require a fresh explicit authorization/budget decision because the authorized model-bearing and professional-scoring evaluation budget is exhausted.
 
