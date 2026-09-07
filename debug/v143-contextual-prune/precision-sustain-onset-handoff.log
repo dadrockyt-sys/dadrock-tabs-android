@@ -3,7 +3,7 @@ V143 precision sustain physical-onset handoff correction proven
   "schemaVersion": 2,
   "gate": "v143-precision-sustain-onset-handoff-static-proof",
   "assemblySourceSha256": "7e9768e65607b4cb8a353acbe9aaebf50ee800416ffcfb1fbc214da67d519a06",
-  "productSourceSha256": "2ef1cd3dd4a88bc1305e0801866193c236c8b29449d925b9766f8b35bf9a743f",
+  "productSourceSha256": "d9eeb81a329d5b8cd9377b042b35070d884656cb4c9be81114bbeab786d6bce9",
   "promotionSourceSha256": "fe1f3b7dd267d802d2d7d9a4be93b93508d933f1167d452a3fb8b73aae177356",
   "assemblyGridExpression": "float(grid[key])",
   "assemblyPhysicalOnsetExpression": "float(row.get('onsetTime') or grid_time)",
