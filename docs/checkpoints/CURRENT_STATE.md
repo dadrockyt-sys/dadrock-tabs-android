@@ -88,6 +88,24 @@ Observed in this chat:
 
 Therefore, in the fresh chat, inspect the historical commit/tree/file list for the exact persisted replay filenames rather than relying on stale convenience names. Prefer Git-persisted evidence. Read-only inspection of already-consumed Actions evidence is acceptable only if needed to recover the exact persisted payload; do not trigger a workflow.
 
+## IN-PROGRESS CPU-ONLY PRECISION REPLAY RECOVERY
+
+Checkpointed 2026-09-06 during deterministic continuation.
+
+Recovered from historical capture commit `c1451df43cc1162ed2b38aa3f3300b7af4d9b527` without rerunning anything:
+- exact committed evidence files are `precision-v2-capture-lock.json`, `precision-v2-replay-artifact-validation.json`, `precision-v2-replay-policy-compare.json`, and `repaired-timing-precision-candidate-product.json` under `debug/v143-contextual-prune/`
+- schema-2 binding confirms **725 retained attacks**, **970 stored selected pitches**, **967 rendered pitches**, **3 voicing drops**, `referenceFree=true`, `newInferenceUsed=false`, and `failSafeAttackCount=0`
+- all-input replay had **984** input/eligible attacks and **7535** original pitch hypotheses; the retained-only historical checkpoint separately records **6525** original pitch hypotheses across the retained 725
+- historical candidate Git blob is `7e6002cd4d42f355685241e0576c78940056f093`; connector convenience decoding is empty because the payload is oversized, so that empty convenience response must not be treated as absent evidence
+
+No model, GPU, Modal, professional scorer, workflow rerun, optimizer, production mutation, or deployment action was used for this recovery.
+
+Next deterministic recovery:
+1. read the current helper sources by path and verify the expected blobs
+2. inspect/download the already-consumed run `32805316807` artifact read-only for the exact per-attack payload if needed
+3. replay only `resolve_precision_polyphony(...)` against the persisted 725 retained attacks
+4. checkpoint immediately after the result, before changing the helper or candidate assembly
+
 ## EXACT NEXT STEPS FOR FRESH CHAT
 
 1. Stay on branch `v143-contextual-prune-lobo` and preserve all budget restrictions above.
