@@ -1,7 +1,7 @@
 {
   "schemaVersion": 2,
   "gate": "v143-precision-sustain-onset-handoff-static-proof",
-  "assemblySourceSha256": "df14691f9ba21667073ffe0b052844cf8eb7074bdc170067f7a9bc96109e38b0",
+  "assemblySourceSha256": "7e9768e65607b4cb8a353acbe9aaebf50ee800416ffcfb1fbc214da67d519a06",
   "productSourceSha256": "2ef1cd3dd4a88bc1305e0801866193c236c8b29449d925b9766f8b35bf9a743f",
   "promotionSourceSha256": "c875acea0a707ed4a16caa4b79d1ef334107afb68af54a481462c46045de1b72",
   "assemblyGridExpression": "float(grid[key])",
