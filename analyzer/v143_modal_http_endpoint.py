@@ -56,8 +56,9 @@ http_image = (
 
 # Queue entries are transient structured-result handoff/control metadata only.
 # Result partitions contain structured analyzer JSON; control partitions contain
-# only one opaque Modal FunctionCall ID. Both use the same hard 15-minute TTL and
-# are cleared on acknowledgement. Raw audio/stems/model bytes never enter them.
+# only one opaque Modal FunctionCall ID. Both use the shared bounded TTL from
+# ASYNC_RESULT_TTL_SECONDS and are cleared on acknowledgement. Raw audio/stems/model
+# bytes never enter them.
 async_result_queue = modal.Queue.from_name(
     ASYNC_RESULT_QUEUE_NAME,
     create_if_missing=True,
