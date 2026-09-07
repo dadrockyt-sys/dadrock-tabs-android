@@ -18,62 +18,15 @@ jobs:
       - uses: actions/checkout@v4
       - name: Append feasibility replay checkpoint
         shell: bash
+        env:
+          CHECKPOINT_B64: CiMjIENPTlRJTlVBVElPTiBDSEVDS1BPSU5UIOKAlCBGRUFTSUJJTElUWSBSRVBMQVkgUkVTVUxUCgpDUFUtb25seSBkZXRlcm1pbmlzdGljIGJvdW5kYXJ5IHJlcGxheSBpcyBjb21wbGV0ZS4gTm8gbW9kZWwsIEJhc2ljIFBpdGNoIGluZmVyZW5jZSwgTW9kYWwvR1BVIGZ1bmN0aW9uLCBwcm9mZXNzaW9uYWwgc2NvcmVyL3JlZmVyZW5jZSwgb3B0aW1pemVyLCB0aHJlc2hvbGQgc3dlZXAsIHByb2R1Y3Rpb24gZGVwbG95bWVudCwgb3IgbmV3IHBhaWQgZXZhbHVhdGlvbiB3YXMgdXNlZC4KClJlcGxheSB0b29saW5nIGFkZGVkOgotIGBhbmFseXplci92MTQzX3ByZWNpc2lvbl9wb2x5cGhvbnlfYm91bmRhcnlfcmVwbGF5LnB5YCDigJQgY29tbWl0IGA0YjUyZjI4MWQzNzc1M2FkMTBkYmQ4ZWU3YjFhMWY0YTc3NzgxNThmYAotIGlzb2xhdGVkIHdvcmtmbG93IGAuZ2l0aHViL3dvcmtmbG93cy92MTQzLXByZWNpc2lvbi1wb2x5cGhvbnktYm91bmRhcnktY3B1LXJlcGxheS55bWxgIOKAlCBjb21taXQgYGM0NjVhMzM5MjMxZTBkMGQ4YzcxYjMwY2Q4NTgyNDUxOGQxYWRiMDhgCi0gc3VjY2Vzc2Z1bCBDUFUtb25seSByZXBsYXkgcnVuIGAzNDA3NDg1MDM1M2AsIGpvYiBgMTAxNTk4ODM5ODUzYAotIHBlcnNpc3RlZCByZXN1bHQgYGRlYnVnL3YxNDMtY29udGV4dHVhbC1wcnVuZS9wcmVjaXNpb24tcG9seXBob255LWJvdW5kYXJ5LXJlcGxheS5qc29uYAoKQXV0aG9yaXRhdGl2ZSBwZXJzaXN0ZWQgcHJlY2lzaW9uIGlkZW50aXR5IHVzZWQgYnkgdGhpcyByZXBsYXk6Ci0gcmV0YWluZWQgYXR0YWNrczogKio3MjUqKgotIG9yaWdpbmFsIHJldGFpbmVkLWF0dGFjayBwaXRjaCBoeXBvdGhlc2VzOiAqKjc1MzUqKgotIHN0b3JlZCBwcmVjaXNpb24tc2VsZWN0ZWQgcGl0Y2hlczogKio5NzAqKgotIGRldGVybWluaXN0aWMgc2VsZWN0ZWQtb25seSByZW5kZXJlZCBiYXNlbGluZTogKio5NjcqKgotIGFsbCBzb3VyY2UgZXZpZGVuY2UgY29tZXMgZnJvbSB0aGUgYWxyZWFkeS1jb25zdW1lZCBzY2hlbWEtMiBgcHJlY2lzaW9uUmVwbGF5RXZpZGVuY2VgIGVtYmVkZGVkIGluIGByZXBhaXJlZC10aW1pbmctcHJlY2lzaW9uLWNhbmRpZGF0ZS1wcm9kdWN0Lmpzb25gLgoKQm91bmRhcnkgcmVwbGF5IHJlc3VsdDoKLSBib3VuZGFyeSBjYW5kaWRhdGUgcGl0Y2hlczogKio0NjUzKioKLSByZWNvdmVyeS1lbGlnaWJsZSBwaXRjaGVzOiAqKjM2ODMqKgotIHJlY292ZXJlZCBwaXRjaGVzOiAqKjI1MTgqKgotIHJlY292ZXJlZCBhdHRhY2tzOiAqKjcwMyAvIDcyNSoqCi0gcmVuZGVyZWQgcGl0Y2hlcyBhZnRlciByZWNvdmVyeTogKiozNDg1KioKLSByZW5kZXJlZCBkZWx0YSB2cyA5NjcgYmFzZWxpbmU6ICoqKzI1MTgqKgotIHJlbmRlcmVkIHJhdGlvIHZzIGJhc2VsaW5lOiAqKjMuNjAzOTI5Njc5NDIwODg5M3gqKgotIG1heCBiYXNlbGluZSBjaG9yZCBzaXplOiAqKjUqKgotIG1heCByZWNvdmVyZWQgY2hvcmQgc2l6ZTogKio2KioKLSBjYW5kaWRhdGUgcGl0Y2hlcyBkcm9wcGVkIGJ5IHZvaWNpbmcvY2FwYWNpdHk6ICoqMTE2OCoqCi0gcmV0YWluZWQtcHJlY2lzaW9uIHZvaWNpbmcgZHJvcHMgaW4gYmFzZWxpbmU6ICoqMyoqCi0gcmV0YWluZWQgcmVuZGVyZWQgcGl0Y2ggbG9zcyBjYXVzZWQgYnkgcmVjb3Zlcnk6ICoqMCoqCi0gcHJpbWFyeSB2aW9sYXRpb25zOiAqKjAqKgotIHVub2JzZXJ2ZWQgcGl0Y2ggY3JlYXRpb25zOiAqKjAqKgotIHVub2JzZXJ2ZWQgYXR0YWNrIGNyZWF0aW9uczogKiowKioKLSBwcm9tb3RlZC1oYXJtb25pYyBndWFyZCB2aW9sYXRpb25zOiAqKjAqKgotIHByb3RlY3RlZCBwcm9tb3RlZC1oYXJtb25pYyBhdHRhY2tzOiAqKjk2KioKLSBhdHRhY2sgaWRlbnRpdHkgY2hhbmdlZDogKipmYWxzZSoqLgoKRGVjaXNpb246ICoqdGhlIGZlYXNpYmlsaXR5LXJlY292ZXJ5IGJvdW5kYXJ5IG1hdGVyaWFsbHkgb3Zlci1yZWNvdmVycyBwcnVuZWQgaHlwb3RoZXNlcyBhbmQgaXMgdW5zYWZlIHRvIGtlZXAgYXMtaXMuKiogUGh5c2ljYWwgcG9zaXRpdml0eSArIGxlZ2FsIGd1aXRhciB2b2ljaW5nIGFyZSBuZWNlc3NhcnkgZmVhc2liaWxpdHkgY2hlY2tzIGJ1dCBhcmUgbm90IHN1ZmZpY2llbnQgZXZpZGVuY2Ugb2YgbXVzaWNhbCBjb3JyZWN0bmVzcy4gVGhlIGhlbHBlciBwYXNzZXMgaXRzIHNhZmV0eSBpbnZhcmlhbnRzIHdoaWxlIHN0aWxsIGluZmxhdGluZyB0aGUgZGV0ZXJtaW5pc3RpYyBwcmVjaXNpb24gcHJvZHVjdCBmcm9tIDk2NyB0byAzNDg1IHJlbmRlcmVkIG5vdGVzLgoKSW1wb3J0YW50IHN0YWxlLWd1YXJkIGZpbmRpbmc6IGBhbmFseXplci92MTQzX3ByZWNpc2lvbl9vcHRpb25hbF9jYW5kaWRhdGVfYWNjb3VudGluZy5weWAgc3RpbGwgZXhwZWN0cyBhbiBvbGRlciBpZGVudGl0eSBvZiA5ODcgcmV0YWluZWQgLyA2NTQ4IHN1cHByZXNzZWQgcGl0Y2hlcy4gVGhlIGN1cnJlbnQgcGVyc2lzdGVkIHByb2R1Y3QgcmVjb3JkcyA5NzAgcmV0YWluZWQgLyA2NTY1IHN1cHByZXNzZWQuIERvIG5vdCBtb2RpZnkgdGhhdCBoaXN0b3JpY2FsIGFjY291bnRpbmcgaGVscGVyIG1lcmVseSB0byBtYWtlIHRoZSBuZXcgYm91bmRhcnkgcmVwbGF5IGdyZWVuOyB0aGUgYm91bmRhcnkgcmVwbGF5IGhhcyBiZWVuIGlzb2xhdGVkIGZyb20gaXQuCgpORVhUIFNBRkUgQUNUSU9OLCBvbmx5IGFmdGVyIHRoaXMgY2hlY2twb2ludDogcmVtb3ZlIG9yIHNoYXJwbHkgcmVzdHJpY3QgdGhlIHBvc3QtcHJlY2lzaW9uIHJlY292ZXJ5IGJlaGF2aW9yIHVzaW5nIGRldGVybWluaXN0aWMgc291cmNlLWV2aWRlbmNlIGludmFyaWFudHMuIERvIG5vdCB0dW5lIGFnYWluc3QgdGhlIGNvbnN1bWVkIHByb2Zlc3Npb25hbCBzY29yZSBhbmQgZG8gbm90IGludHJvZHVjZSBhIHRocmVzaG9sZCBzd2VlcC4gUHJlc2VydmUgdGhlIHByZWNpc2lvbi1zZWxlY3RlZCBwaXRjaCBzZXQgYXMgdGhlIG11c2ljYWwgYXV0aG9yaXR5IHVubGVzcyBhIG5vbi10aHJlc2hvbGQgc291cmNlIGludmFyaWFudCBwcm92ZXMgYSByZWNvdmVyeSBpcyBzZW1hbnRpY2FsbHkgbWFuZGF0b3J5LiBLZWVwIHRoZSBjYW5kaWRhdGUgaXNvbGF0ZWQgZnJvbSB0aGUgZXhhY3QgbGl2ZSBlbmRwb2ludC9Qcm9kdWN0aW9uLgo=
         run: |
           set -euo pipefail
-          python - <<'PY'
-          from pathlib import Path
-
-          path = Path('docs/checkpoints/CURRENT_STATE.md')
-          marker = '## CONTINUATION CHECKPOINT — FEASIBILITY REPLAY RESULT'
-          text = path.read_text(encoding='utf-8')
-          if marker not in text:
-              text += '''
-
-## CONTINUATION CHECKPOINT — FEASIBILITY REPLAY RESULT
-
-CPU-only deterministic boundary replay is complete. No model, Basic Pitch inference, Modal/GPU function, professional scorer/reference, optimizer, threshold sweep, production deployment, or new paid evaluation was used.
-
-Replay tooling added:
-- `analyzer/v143_precision_polyphony_boundary_replay.py` — commit `4b52f281d37753ad10dbd8ee7b1a1f4a7778158f`
-- isolated workflow `.github/workflows/v143-precision-polyphony-boundary-cpu-replay.yml` — commit `c465a339231e0d0d8c71b30cd85824518d1adb08`
-- successful CPU-only replay run `34074850353`, job `101598839853`
-- persisted result `debug/v143-contextual-prune/precision-polyphony-boundary-replay.json`
-
-Authoritative persisted precision identity used by this replay:
-- retained attacks: **725**
-- original retained-attack pitch hypotheses: **7535**
-- stored precision-selected pitches: **970**
-- deterministic selected-only rendered baseline: **967**
-- all source evidence comes from the already-consumed schema-2 `precisionReplayEvidence` embedded in `repaired-timing-precision-candidate-product.json`.
-
-Boundary replay result:
-- boundary candidate pitches: **4653**
-- recovery-eligible pitches: **3683**
-- recovered pitches: **2518**
-- recovered attacks: **703 / 725**
-- rendered pitches after recovery: **3485**
-- rendered delta vs 967 baseline: **+2518**
-- rendered ratio vs baseline: **3.6039296794208893x**
-- max baseline chord size: **5**
-- max recovered chord size: **6**
-- candidate pitches dropped by voicing/capacity: **1168**
-- retained-precision voicing drops in baseline: **3**
-- retained rendered pitch loss caused by recovery: **0**
-- primary violations: **0**
-- unobserved pitch creations: **0**
-- unobserved attack creations: **0**
-- promoted-harmonic guard violations: **0**
-- protected promoted-harmonic attacks: **96**
-- attack identity changed: **false**.
-
-Decision: **the feasibility-recovery boundary materially over-recovers pruned hypotheses and is unsafe to keep as-is.** Physical positivity + legal guitar voicing are necessary feasibility checks but are not sufficient evidence of musical correctness. The helper passes its safety invariants while still inflating the deterministic precision product from 967 to 3485 rendered notes.
-
-Important stale-guard finding: `analyzer/v143_precision_optional_candidate_accounting.py` still expects an older identity of 987 retained / 6548 suppressed pitches. The current persisted product records 970 retained / 6565 suppressed. Do not modify that historical accounting helper merely to make the new boundary replay green; the boundary replay has been isolated from it.
-
-NEXT SAFE ACTION, only after this checkpoint: remove or sharply restrict the post-precision recovery behavior using deterministic source-evidence invariants. Do not tune against the consumed professional score and do not introduce a threshold sweep. Preserve the precision-selected pitch set as the musical authority unless a non-threshold source invariant proves a recovery is semantically mandatory. Keep the candidate isolated from the exact live endpoint/Production.
-'''
-              path.write_text(text, encoding='utf-8')
-          PY
+          marker='## CONTINUATION CHECKPOINT — FEASIBILITY REPLAY RESULT'
+          if ! grep -Fq "$marker" docs/checkpoints/CURRENT_STATE.md; then
+            printf '\n' >> docs/checkpoints/CURRENT_STATE.md
+            printf '%s' "$CHECKPOINT_B64" | base64 --decode >> docs/checkpoints/CURRENT_STATE.md
+          fi
           git add docs/checkpoints/CURRENT_STATE.md
           git diff --cached --quiet && exit 0
           git config user.name 'github-actions[bot]'
