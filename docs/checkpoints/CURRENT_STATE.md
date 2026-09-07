@@ -16,6 +16,8 @@ Authorized evaluation budget is consumed:
 
 Safe continuation: deterministic/model-free source/history inspection, static/unit validation, and CPU-only/read-only replay of already-persisted evidence. Do not manually trigger workflows.
 
+**New push-safety warning:** ordinary source pushes on this branch can automatically trigger workflows. In particular, changing `analyzer/v143_modal_http_endpoint.py` automatically triggers `V143 Hardened Async Failfast Smoke`, which deploys an isolated Modal bridge + failfast driver and invokes the synthetic driver. Therefore do **not** make another ordinary endpoint/source push without first accounting for workflow side effects. An uppercase `[Skip CI]` commit message did **not** suppress these branch workflows and must not be relied on.
+
 ## FROZEN LIVE / HOLDOUT — DO NOT RERUN
 
 Authorized Rhythm run `34046854397`, recovery `34048291636`:
@@ -107,60 +109,98 @@ Deterministic validator:
 - dependency-free; parses source with Python `ast`; does not import Modal or execute analyzer/model code
 - asserts TTL = 1800, orchestrator timeout = 1200, margin >= 600, both control/result partition TTLs use the shared constant, and start/status expose the same shared expiry
 
-Validation performed in this environment:
-- exact fetched target constructs were replayed through the validator's AST logic model-free
-- result: **PASS — ttl=1800s / worker=1200s / margin=600s / control=result=shared TTL**
-- a full on-checkout invocation of `python analyzer/validate_v143_async_result_lifetime.py` remains optional when a local checkout is available; do not create/trigger a workflow merely to run it
+Validation already established:
+- **PASS — ttl=1800s / worker=1200s / margin=600s / control=result=shared TTL**
+- do not create/trigger a workflow merely to re-run it
 
-Next.js bridge cleanup is complete:
-- file: `app/api/analyze-audio-tab/route.js`
-- commit: `330a3d5dbde5bcc3e51eb577892c8d9643fcba58`
-- both async `start` and `status` advisory fallbacks now use `1800`
-- exact commit diff is only two literal replacements: `900` → `1800`
-- commit scope: one file, **2 additions / 2 deletions**
-- analyzer-provided `expiresInSeconds` remains authoritative; this bridge fallback still does not own or expire analyzer state
+## CURRENT SOURCE STATE
 
-Documentation-only TTL comment cleanup is complete:
-- file: `analyzer/v143_modal_http_endpoint.py`
-- commit: `2f630afcfa7222a3af823661e45546b19f305f0c`
-- exact diff replaced stale “hard 15-minute TTL” wording with the shared bounded `ASYNC_RESULT_TTL_SECONDS` wording
-- commit scope: one file, comment-only, **3 additions / 2 deletions**, no runtime code change
+### Analyzer endpoint — exact pin restored
 
-## CONTINUATION — DETERMINISTIC CLEANUP COMPLETE
+`analyzer/v143_modal_http_endpoint.py` is restored to the pre-cleanup exact blob:
+- blob: `169b4bb136eba742c3422a73ee5dd0174ca06c49`
+- restore commit: `708c4fccb0e6c67c4879fb1ead6446955878f95f`
 
-Fresh continuation on 2026-09-07 America/Toronto:
-- branch head before writes was `41dd108c07cb1439f887dbc8f0d1185bd2998848`
-- no newer branch work was present beyond the starting checkpoint
-- inspection checkpoint commit: `8df101086c8fb21a4a4dc3da6fb377d57b26c300`
-- stale Modal TTL comment cleanup commit: `2f630afcfa7222a3af823661e45546b19f305f0c`
-- intermediate checkpoint commit: `f618b314447430aba6248bc3f474c75d9b2ab79e`
-- Next.js truthful fallback cleanup commit: `330a3d5dbde5bcc3e51eb577892c8d9643fcba58`
-- exact diffs were inspected after each source write; no unintended code changes were present
-- no model/scoring workflow, Modal/GPU inference, deployment, scheduler/model mutation, professional scoring, optimizer, or threshold sweep was triggered
+The stale source comment still says “same hard 15-minute TTL”. This wording is intentionally left stale because a comment-only edit changed the exact endpoint blob and broke exact-source static pins. Runtime behavior remains governed by `ASYNC_RESULT_TTL_SECONDS = 1800`; do **not** reopen the comment cleanup absent a coordinated pin/workflow decision.
 
-Deterministic cleanup is now closed. Preserve the root behavior: shared analyzer TTL **1800s**, orchestrator timeout **1200s**, margin **600s**. No further async-lifetime source change is indicated by the current evidence.
+### Next.js advisory fallback — aligned
 
-## WORKFLOW SAFETY
+`app/api/analyze-audio-tab/route.js` keeps the isolated truthful-fallback cleanup from commit `330a3d5dbde5bcc3e51eb577892c8d9643fcba58`:
+- async `start` fallback: `1800`
+- async `status` fallback: `1800`
+- exact source change was two numeric literal replacements `900` → `1800`
+- analyzer-provided `expiresInSeconds` remains authoritative; the bridge fallback does not own or expire analyzer state
 
-No model/scoring workflow was manually triggered during these slices. No Modal/GPU/paid inference, professional scorer, optimizer, threshold sweep, deployment, Production promotion, model change, or scheduler change was performed.
+Static failures observed after that route push are not caused by the two fallback literals:
+- pre-holdout static preflight failed at existing final Rhythm PDF renderer/branding contract checks; its analyzer-route runtime-safety check passed
+- Full Mixture Server Observation Admission V1 failed a brittle source-order assertion requiring `responseOkIndex < v143SafetyIndex < structuredPayloadIndex`; the route defines `v143RuntimeSafetyVerified` inside `buildCompletedProductPayload()` near the top, so that assertion is independent of the later `900` → `1800` replacements
+
+## AUTOMATIC WORKFLOW SIDE EFFECTS DISCOVERED DURING THIS CONTINUATION
+
+No workflow was manually triggered. However, source pushes automatically triggered branch workflows.
+
+Comment cleanup commit `2f630afcfa7222a3af823661e45546b19f305f0c`:
+- changed only endpoint comment wording
+- automatically triggered seven push workflows
+- exact-source gates failed because the endpoint blob changed from pinned `169b4bb...`
+- `V143 Hardened Async Failfast Smoke` automatically deployed an **isolated** Modal bridge + failfast driver and invoked its synthetic driver
+- that workflow enforces: `audioRead=false`, `modelExecuted=false`, `separatorModelExecuted=false`, `referenceFacingInputs=0`, `referenceScoreCalls=0`, `qualityVerdictMade=false`, then stops the isolated apps
+- no model-bearing analysis, real audio, GPU inference, professional reference scoring, optimizer, or Production promotion occurred
+
+Route fallback commit `330a3d5dbde5bcc3e51eb577892c8d9643fcba58`:
+- automatically triggered route-path static/build workflows
+- `Rhythm Pre-Holdout Static Preflight V2` used synthetic-only input and failed unrelated final-renderer/branding checks
+- the workflow automatically persisted failed static evidence via bot commit `0c4a51879dacc707f6eecc310709acfe3069ce59` in `debug/v143-contextual-prune/rhythm-preholdout-static-preflight.json`
+- no real professional reference was opened and no Production modification was authorized
+
+Endpoint restore commit `708c4fccb0e6c67c4879fb1ead6446955878f95f`:
+- commit message used uppercase `[Skip CI]`, but this repo still created seven push workflows; therefore do **not** rely on that token/casing here
+- `V143 Hardened Async Failfast Smoke` run `34084988160` automatically executed again
+- it completed **successfully**, including the final **Stop isolated apps** step
+- the same enforced no-audio/no-model/no-reference safety contract passed
+- the endpoint exact blob is restored to `169b4bb...`
+
+Cloudflare Pages also reacts to ordinary branch pushes. A checkpoint-only push previously produced a failed Cloudflare build attempt. Treat branch pushes as externally observable actions even when GitHub workflow path filters exclude the changed file.
+
+## CONTINUATION COMMITS
+
+Starting branch head: `41dd108c07cb1439f887dbc8f0d1185bd2998848`
+
+Continuation history:
+- `8df101086c8fb21a4a4dc3da6fb377d57b26c300` — inspection checkpoint
+- `2f630afcfa7222a3af823661e45546b19f305f0c` — attempted comment-only TTL wording cleanup
+- `f618b314447430aba6248bc3f474c75d9b2ab79e` — intermediate checkpoint
+- `330a3d5dbde5bcc3e51eb577892c8d9643fcba58` — Next.js fallback `900` → `1800`
+- `0c4a51879dacc707f6eecc310709acfe3069ce59` — automatic Actions bot static-preflight evidence commit
+- `1aed09858a1e52041e2298eba28d1237f0660e34` — prior checkpoint
+- `708c4fccb0e6c67c4879fb1ead6446955878f95f` — endpoint exact-source restore
+
+## WORKFLOW SAFETY — UPDATED
+
+No model/scoring workflow was manually triggered. No model-bearing Rhythm/Lead/Bass analysis, professional scorer, optimizer, training/threshold sweep, real-audio inference, GPU model execution, Production promotion, or model/scheduler mutation was performed during this continuation.
+
+But automatic push workflows **did** invoke isolated Modal infrastructure twice through the synthetic Hardened Async Failfast Smoke path. Both runs are contractually no-audio/no-model/no-reference, and the latest run `34084988160` completed its `Stop isolated apps` cleanup successfully. This is why future ordinary source pushes must not be treated as purely static.
 
 ## FRESH CHAT — START HERE
 
 1. Re-open this file first on branch `v143-contextual-prune-lobo` and refresh branch head. Treat any newer checkpoint as authoritative.
-2. Treat the precision score-structure slice as **closed**. Do not reopen or alter helper/adapter/model behavior unless there is a new explicit reason. Preserve **725 / 970 / 967 / 3 drops / 0 recovery**.
-3. Treat the async ownership root defect as **code-patched and cleanup-complete**: shared analyzer TTL is 1800 seconds, the orchestrator timeout remains 1200 seconds, and the Next.js advisory fallbacks are also 1800 seconds.
-4. If a normal local checkout is available, the only optional validator command remains dependency-free/model-free: `python analyzer/validate_v143_async_result_lifetime.py`. Do **not** trigger a GitHub workflow, Modal function, model run, or deployment just to validate it.
-5. Do not reopen the TTL cleanup absent new evidence. The stale comment and both bridge fallback literals are aligned with the shared 1800-second lifetime.
-6. Do **not** deploy, promote Production, weaken Deployment Protection, run model-bearing Rhythm/Lead/Bass analysis, run the professional scorer, invoke Modal/GPU/paid inference, or change model/scheduler/threshold parameters without new explicit user authorization.
-7. Before any future score-quality work, require a fresh explicit authorization/budget decision because the authorized model-bearing and professional-scoring evaluation budget is exhausted.
+2. Preserve score structure: **725 retained attacks / 970 selected pitches / 967 rendered / 3 legal-voicing drops / 0 recovery**. Do not reopen the score-structure slice absent new explicit authorization/reason.
+3. Preserve async root behavior: shared analyzer TTL **1800s**, orchestrator timeout **1200s**, margin **600s**.
+4. Preserve endpoint exact blob `169b4bb136eba742c3422a73ee5dd0174ca06c49`. Leave the stale 15-minute comment alone unless exact-source pins and automatic workflow consequences are deliberately handled together.
+5. Keep the Next.js advisory fallback at **1800s on start + status** unless new evidence shows a problem; current observed static failures are unrelated to those two numeric replacements.
+6. **Do not make an ordinary push to `analyzer/v143_modal_http_endpoint.py`**: it auto-triggers an isolated Modal deploy/invocation workflow. Do not assume `[Skip CI]` uppercase suppresses it; it did not.
+7. Do not manually trigger any workflow, Modal function, model run, scorer, deployment, or Production action merely to validate source.
+8. Do **not** run model-bearing Rhythm/Lead/Bass analysis, professional scoring, paid/GPU inference, optimizer/training/threshold sweeps, or change model/scheduler/threshold parameters without new explicit user authorization.
+9. Before any future score-quality work, require a fresh explicit evaluation-budget decision because the authorized model-bearing and professional-scoring evaluation budget is exhausted.
 
 ## FRESH CHAT SUCCESS CONDITION
 
-The safe state to preserve is:
-- score structure: **725 retained attacks / 970 selected pitches / 967 rendered / 3 legal-voicing drops / 0 recovery**
-- async ownership: **1800s shared TTL > 1200s orchestrator budget by 600s**
+Safe state to preserve:
+- score structure: **725 / 970 / 967 / 3 drops / 0 recovery**
+- async ownership: **1800s shared TTL > 1200s orchestrator by 600s**
+- endpoint exact pin: **169b4bb... restored**
 - Next.js fallback semantics: **1800s on start + status**
-- deterministic validator target: **PASS**
-- **no deployment, no model-bearing execution, no professional scoring, no paid/GPU inference**
+- latest automatic synthetic failfast run: **success, isolated apps stopped, no audio/model/reference scoring**
+- **no model-bearing execution, no professional scoring, no paid/GPU inference, no Production promotion**
 
-This branch is at a safe deterministic checkpoint for a fresh chat. Any future score-quality work requires a new explicit evaluation-budget authorization.
+This branch is now at a deterministic checkpoint. Future work should begin with read-only inspection and explicit push-side-effect review before any write.
