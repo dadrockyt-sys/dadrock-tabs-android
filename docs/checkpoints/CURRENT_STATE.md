@@ -3,7 +3,7 @@
 Updated: 2026-09-06 America/Toronto
 Branch: `v143-contextual-prune-lobo`
 
-This file is intentionally compact for fresh-chat continuation. Full prior detail remains in Git history, including the immediately previous checkpoint and the earlier lineage it references.
+This file is the compact fresh-chat source of truth. Full prior detail remains in Git history.
 
 ## NON-NEGOTIABLE AUTHORIZATION / BUDGET BOUNDARY
 
@@ -27,8 +27,7 @@ Authorized Rhythm run:
 - frozen result: 364 selected attacks / 925 rendered notes
 - PDF event fidelity: 1.0
 
-Consumed professional holdout:
-- run `34048719525`
+Consumed professional holdout run `34048719525`:
 - `near100ProfessionalGatePassed = false`
 - pitch-content F1 `0.30892570817744525`
 - pitch-timing tolerant F1 `0.05879208979155532`
@@ -36,22 +35,7 @@ Consumed professional holdout:
 - unmatched generated notes `779`
 - unmatched reference notes `800`
 
-Interpretation remains unchanged: infrastructure/rendering succeeded; musical score construction did not. Do not tune against the professional reference.
-
-## CURRENT SCORE-STRUCTURE SLICE
-
-The exact live/frozen path is separate from the isolated precision candidate. Do **not** wire the precision candidate into the live endpoint by assumption.
-
-Recent deterministic precision-path repair exists:
-- `analyzer/v143_precision_polyphony_boundary.py`
-  - blob `720a068d71ad72719053cdc89bdab81db541c884`
-- `analyzer/v143_contextual_prune_precision_candidate_events.py`
-  - blob `68732a07701a30a455ba9bcbf7c2adddd3930622`
-- fail-closed pre-export validator and sustain integration are already committed.
-
-The new polyphony boundary preserves the precision primary, prioritizes already-retained secondaries, and may recover only same-attack observed MIDI values with positive two-view physical evidence when the full set remains a legal joint guitar voicing. It blocks the protected promoted-harmonic contradiction and cannot add/relocate attacks or invent unobserved pitches.
-
-**Open risk:** this helper may recover too many hypotheses that precision-v2 intentionally pruned. Guitar feasibility alone is not musical evidence. The next step is therefore a CPU-only replay against persisted paid precision evidence before keeping/changing the helper.
+Interpretation remains unchanged: infrastructure/rendering succeeded; musical score construction did not. **Do not tune against the professional reference.**
 
 ## PERSISTED PAID PRECISION EVIDENCE — SOURCE OF TRUTH
 
@@ -59,82 +43,99 @@ Successful authorized paid precision capture:
 - workflow run `32805316807`
 - capture/replay commit `c1451df43cc1162ed2b38aa3f3300b7af4d9b527`
 - approved fixture SHA-256 `215bd5a657c5326f08f132ae358595a95c30b39bb7493a52c2f910d5a608149f`
+- artifact `v143-precision-v2-one-shot-32805316807`, id `9548666053`
+- historical candidate Git blob `7e6002cd4d42f355685241e0576c78940056f093`
 - no further paid capture is authorized.
 
 Persisted baseline facts:
-- full audio-derived range: measures 1–113
+- measures 1–113
 - precision-v2 retained attacks: **725**
 - precision-v2 selected pitches: **970**
-- rendered before later guard convenience layer: **967**
-- historical event-layer replay after guard: **965**
+- rendered after deterministic guitar voicing: **967**
+- voicing drops: **3**
+- historical later event-layer convenience replay: **965**
 - all 113 measures populated
 - exact deterministic replay mismatch counts were zero
 - no unobserved attack/pitch creation
 - professional reference not used
 
-Historical checkpoint also recorded retained-attack replay evidence with **6525 original pitch hypotheses** across the 725 retained attacks and exact live/replay selected-pitch SHA match.
+Schema-2 replay artifact validation also records:
+- input/eligible attacks **984**
+- all-input original pitch hypotheses **7535**
+- retained attacks **725**
+- stored selected pitches **970**
+- rendered pitches **967**
+- `referenceFree=true`
+- `newInferenceUsed=false`
+- `failSafeAttackCount=0`
 
-Commit `c1451df...` additionally contains schema-2 replay-validation material. During this chat, inspecting the commit showed `debug/v143-contextual-prune/precision-v2-replay-artifact-validation.json` with retainedAttackCount 725, storedSelectedPitchCount 970, renderedPitchCount 967, voicingDroppedPitchCount 3, referenceFree true, and newInferenceUsed false. It also showed `precision-v2-replay-policy-compare.json`.
+An older checkpoint stated **6525** retained-only original hypotheses. The downloaded persisted artifact's `precisionReplayEvidence.attacks` currently sums to **7535 candidate hypotheses across the 725 retained attacks**. Treat this as an evidence-lineage discrepancy to document, not as permission to rerun inference; the current replay below uses the exact persisted per-attack artifact payload.
 
-## CONNECTOR / FILE-LOOKUP QUIRKS OBSERVED
+Historical commit `c1451df...` contains:
+- `debug/v143-contextual-prune/precision-v2-capture-lock.json`
+- `debug/v143-contextual-prune/precision-v2-replay-artifact-validation.json`
+- `debug/v143-contextual-prune/precision-v2-replay-policy-compare.json`
+- `debug/v143-contextual-prune/repaired-timing-precision-candidate-product.json`
 
-Do not infer evidence is absent from a failed convenience fetch.
+## CPU-ONLY REPLAY RESULT — FEASIBILITY RECOVERY FAILS
 
-Observed in this chat:
-- direct branch fetch of `debug/v143-contextual-prune/repaired-timing-precision-candidate-product.json` returned empty decoded content but the known blob SHA `7e6002cd4d42f355685241e0576c78940056f093`.
-- direct branch/historical fetch attempts for the older convenience names `replay-validation-a.json` / `replay-validation-b.json` returned 404.
-- direct branch fetch of `.github/workflows/v143-replay-precision-candidate.yml` also returned 404.
-- the historical commit itself is valid and exposed newer exact replay filenames such as `precision-v2-replay-artifact-validation.json` and `precision-v2-replay-policy-compare.json`.
+**Checkpointed immediately after replay and before any helper/candidate change.**
 
-Therefore, in the fresh chat, inspect the historical commit/tree/file list for the exact persisted replay filenames rather than relying on stale convenience names. Prefer Git-persisted evidence. Read-only inspection of already-consumed Actions evidence is acceptable only if needed to recover the exact persisted payload; do not trigger a workflow.
+Current isolated helper before repair:
+- `analyzer/v143_precision_polyphony_boundary.py`
+- blob `720a068d71ad72719053cdc89bdab81db541c884`
+- adapter `analyzer/v143_contextual_prune_precision_candidate_events.py`
+- blob `68732a07701a30a455ba9bcbf7c2adddd3930622`
 
-## IN-PROGRESS CPU-ONLY PRECISION REPLAY RECOVERY
+The exact persisted artifact from already-consumed run `32805316807` was downloaded read-only. No workflow was triggered. `resolve_precision_polyphony(...)` was replayed deterministically against all **725 persisted retained attacks**, using the artifact's per-pitch `attack`, `body`, and `score` evidence, the current floors (`attack > 0.0`, `body > -0.25`), current harmonic interval set `{12,19,24,28,31,36}`, and the current deterministic joint-guitar-voicing constraints.
 
-Checkpointed 2026-09-06 during deterministic continuation.
+Replay result:
+- retained attack identity changed: **NO**
+- replay attacks: **725**
+- original observed candidate hypotheses in persisted retained-attack payload: **7535**
+- baseline precision-v2 selected pitches: **970**
+- baseline precision-only deterministic voicing render: **967**
+- baseline precision-only voicing drops: **3**
+- feasibility-boundary rendered pitches: **3485**
+- recovered pitches beyond precision-v2: **2518**
+- attacks affected by recovery: **703 / 725**
+- inflation versus 970 selected pitches: **+2515 / +259.28%**
+- inflation versus 967 rendered baseline: **+2518 / +260.39%**
+- recovery candidate legal-voicing drops/rejections: **1168**
+- max rendered chord size: **6**
+- primary preservation failures: **0**
+- unobserved pitch count: **0**
+- unobserved attack count: **0**
+- protected promoted-harmonic violations: **0**
+- median recovered pitches on affected attacks: **4**
+- maximum recovered pitches on an affected attack: **5**
 
-Recovered from historical capture commit `c1451df43cc1162ed2b38aa3f3300b7af4d9b527` without rerunning anything:
-- exact committed evidence files are `precision-v2-capture-lock.json`, `precision-v2-replay-artifact-validation.json`, `precision-v2-replay-policy-compare.json`, and `repaired-timing-precision-candidate-product.json` under `debug/v143-contextual-prune/`
-- schema-2 binding confirms **725 retained attacks**, **970 stored selected pitches**, **967 rendered pitches**, **3 voicing drops**, `referenceFree=true`, `newInferenceUsed=false`, and `failSafeAttackCount=0`
-- all-input replay had **984** input/eligible attacks and **7535** original pitch hypotheses; the retained-only historical checkpoint separately records **6525** original pitch hypotheses across the retained 725
-- historical candidate Git blob is `7e6002cd4d42f355685241e0576c78940056f093`; connector convenience decoding is empty because the payload is oversized, so that empty convenience response must not be treated as absent evidence
+**Deterministic decision: the feasibility-recovery boundary materially over-recovers precision-v2-pruned hypotheses and is NOT safe to keep in its current form.** Guitar playability is not sufficient musical evidence. The helper must not re-admit all merely-positive observed hypotheses.
 
-No model, GPU, Modal, professional scorer, workflow rerun, optimizer, production mutation, or deployment action was used for this recovery.
+This result is reference-free. No model, Basic Pitch inference, GPU, Modal, paid inference, professional scorer, optimizer, threshold sweep, production mutation, deployment, or live endpoint integration was used.
 
-Next deterministic recovery:
-1. read the current helper sources by path and verify the expected blobs
-2. inspect/download the already-consumed run `32805316807` artifact read-only for the exact per-attack payload if needed
-3. replay only `resolve_precision_polyphony(...)` against the persisted 725 retained attacks
-4. checkpoint immediately after the result, before changing the helper or candidate assembly
+## NEXT SAFE SCORE-STRUCTURE ACTION
 
-## EXACT NEXT STEPS FOR FRESH CHAT
+Per the preregistered decision rule, remove or restrict the feasibility-recovery behavior using deterministic source-evidence invariants only. The safest minimal repair is **preservation-only polyphony**:
+- keep the precision-v2 retained pitch set authoritative
+- preserve the explicit precision primary
+- perform only deterministic legal joint-guitar voicing over those already-retained precision pitches
+- allow the same historical legal-voicing drops (expected baseline 970 -> 967)
+- recover **zero** precision-v2-pruned hypotheses
+- do not add/relocate attacks or invent pitches
+- keep the helper isolated from the frozen live endpoint/Production
 
-1. Stay on branch `v143-contextual-prune-lobo` and preserve all budget restrictions above.
-2. Open commit `c1451df43cc1162ed2b38aa3f3300b7af4d9b527` and enumerate the exact precision replay/evidence files committed there, especially the schema-2 replay artifact/evidence and CPU-only replay/validation script or workflow equivalents.
-3. Recover the persisted per-retained-attack data needed for replay: `(measure, step)`, original observed pitch set, precision-v2 retained pitch set, explicit primary MIDI, and the two-view physical evidence/carrier information required by `_pitch_evidence`.
-4. Reproduce **only** the new `resolve_precision_polyphony(...)` feasibility-recovery behavior against those 725 retained attacks. No Basic Pitch inference, no Modal, no model, no GPU, no scorer, no optimizer, no professional reference.
-5. Compare against the baseline 725 attacks / 970 selected pitches (967 rendered; 965 historical post-guard event layer).
-6. Record structural deltas only:
-   - retained attack identity changed? (must be no)
-   - original observed hypothesis count
-   - baseline selected pitch count
-   - recovered pitch count
-   - attacks affected by recovery
-   - total selected/rendered note count
-   - legal-voicing drops/rejections
-   - max chord size
-   - primary preservation failures (must be zero)
-   - unobserved pitch count (must be zero)
-   - unobserved attack count (must be zero)
-   - protected promoted-harmonic violations (must be zero)
-7. **Checkpoint `docs/checkpoints/CURRENT_STATE.md` immediately after obtaining that CPU-only replay result, before changing the helper or candidate assembly.**
-8. Decision rule: if feasibility recovery materially inflates the precision product, do not keep it merely because it is legal/playable. Restrict or remove the recovery behavior using deterministic source-evidence invariants only. Do not tune to the consumed professional score.
-9. If the replay is structurally conservative, keep the helper isolated and continue deterministic validation. Still do not integrate it into the live endpoint/Production without a separate explicit product/integration authorization.
-10. Only after this score-structure slice is closed, return to the separate async-result lifetime defect: locate the real ~900-second control/result ownership TTL and patch only that boundary so it safely exceeds the 1200-second worker budget. Do not patch a guessed symbol.
+After changing the isolated helper/adapter:
+1. rerun the same CPU-only persisted-artifact replay only
+2. require 725 attacks, 970 baseline selected, 967 rendered, 3 voicing drops, 0 recovered, 0 primary failures, 0 unobserved attacks/pitches
+3. add/update deterministic unit/static validation for the preservation-only invariant
+4. checkpoint `docs/checkpoints/CURRENT_STATE.md` again
+5. do **not** integrate into live/Production without separate explicit product/integration authorization
+
+Only after this score-structure slice is closed, return to the separate async-result lifetime defect: locate the real ~900-second control/result ownership TTL and patch only that boundary so it safely exceeds the 1200-second worker budget. Do not patch a guessed symbol.
 
 ## FRESH-CHAT SUCCESS CONDITION
 
-Answer, deterministically and reference-free:
+The central question is now answered:
 
-**Does the new feasibility-recovery boundary safely preserve the persisted precision candidate, or does it over-recover precision-v2-pruned hypotheses?**
-
-No new paid/model/professional evaluation budget may be consumed to answer it.
+**The new feasibility-recovery boundary over-recovers precision-v2-pruned hypotheses. Replace it with preservation-only legal voicing, validate deterministically against persisted evidence, and keep it isolated.**
