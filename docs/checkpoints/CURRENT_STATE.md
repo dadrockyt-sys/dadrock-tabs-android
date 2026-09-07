@@ -1,9 +1,8 @@
 # CURRENT STATE — DadRock `/ai-tab` V143
 
-Updated: 2026-09-06 20:xx America/Toronto
+Updated: 2026-09-06 America/Toronto
 Branch: `v143-contextual-prune-lobo`
-Branch head observed during continuation: `d3c38ce10f1af0551d20a02ad2a0dc93e750ec23`
-Previous full-detail checkpoint blob: `00bbec5b9a3465db35659f73e957c600c8b985bb` (retained in Git history; use it for the long-form run/artifact record if needed)
+Previous full-detail checkpoint blob before this continuation: `45001b66c310d860cae560c8c09e396d51eeb033` (retained in Git history)
 
 ## NON-NEGOTIABLE AUTHORIZATION / BUDGET BOUNDARY
 
@@ -27,15 +26,7 @@ Exact authorized Rhythm run:
 - run `34046854397`
 - job `101523324268`
 - one start accepted around `2026-09-06T16:54:33Z`
-- polls 1–130 returned 202
-- poll 131 returned 502 at ~908 s
-
-Exact worker evidence:
-- worker Function ID `fu-cXv3G2TXumycjiCTABviS7`
-- worker FunctionCall `fc-01M1VT9BDS5TYWE52GPYQQ8W9E`
-- parent orchestrator FunctionCall `fc-01M1VT98JAEX2NZ83DSM5GJQ8A`
 - worker completed successfully at `elapsed=936.836`
-- worker completed about 29 seconds after the client-side 900-second tracking record expired
 
 Same-run recovery succeeded read-only:
 - recovery run `34048291636`
@@ -44,15 +35,10 @@ Same-run recovery succeeded read-only:
 - recovered worker-result SHA-256 `185a19dcd58df7bece23a75b300bb3f9fbf6d6322bf61b52b1e667b5ba684293`
 
 Frozen product facts:
-- E Standard
-- ~129.199 BPM
-- 4/4
-- raw events: **925**
-- canonical render events: **925**
-- frozen events: **925**
+- E Standard, ~129.199 BPM, 4/4
+- raw/canonical/frozen events: **925 / 925 / 925**
 - frozen canonical event SHA-256 `f5b526e608fc552925b252ecdbf7d0a6e918b04f423374798d2772939af3e2af`
 - playable string/fret 925/925
-- musical placement 925/925
 - pitch validity 925/925
 - render survival 100%
 - PDF event fidelity **1.0**
@@ -63,113 +49,111 @@ Scoring run:
 - workflow `.github/workflows/v143-score-recovered-frozen-result.yml`
 - run `34048719525`
 - job `101528345557`
-- authoritative result file `rhythm-professional-holdout-score.json`
+- authoritative result `rhythm-professional-holdout-score.json`
 
 Result:
 - `near100ProfessionalGatePassed = false`
 - `rhythmComplete = false`
 - `criticalMismatchCount = 1581`
-- measure coverage recall: `0.9823008849557522`
-- pitch-content F1: `0.30892570817744525`
-- pitch-timing tolerant F1: `0.05879208979155532`
-- string/fret timing tolerant F1: `0.02672367717797969`
-- chord pitch-set tolerant F1: `0.004136504653567736`
-- exact voicing tolerant F1: `0.004136504653567736`
-- PDF event fidelity: `1.0`
-- missing professional measures: `88, 99`
-- extra generated measures: `114, 115`
-- gross unmatched generated notes: `779`
-- gross unmatched reference notes: `800`
+- measure coverage recall `0.9823008849557522`
+- pitch-content F1 `0.30892570817744525`
+- pitch-timing tolerant F1 `0.05879208979155532`
+- string/fret timing tolerant F1 `0.02672367717797969`
+- chord pitch-set tolerant F1 `0.004136504653567736`
+- exact voicing tolerant F1 `0.004136504653567736`
+- PDF event fidelity `1.0`
+- missing measures `88, 99`
+- extra generated measures `114, 115`
+- unmatched generated notes `779`
+- unmatched reference notes `800`
 
-Interpretation: infrastructure/render fidelity succeeded; the frozen musical event stream did not. Primary engineering problem is musical structure—pitch/timing agreement, chord grouping and voicing—not PDF plumbing.
+Interpretation: infrastructure/render fidelity succeeded; musical score construction did not. Do not use the professional reference at runtime and do not tune against its thresholds.
 
-## CONFIRMED ASYNC DEFECT
+## CONFIRMED ASYNC DEFECT — DEFERRED UNTIL SCORE-STRUCTURE SLICE IS SAFE
 
-Evidence says the parent control/result tracking lifetime is **900 seconds** while worker/orchestrator runtime budget is **1200 seconds**.
-Observed worker completion at 936.836 s is consistent with the client losing ownership/tracking before the successful worker result became available.
+The parent control/result tracking lifetime is ~900 seconds while worker/orchestrator runtime budget is 1200 seconds. The successful worker completed at 936.836 s, after the client-side tracking record expired.
 
-Important: older checkpoint prose names `ASYNC_RESULT_TTL_SECONDS = 900`, but branch searches have not yet safely located a literal source symbol with that exact name. **Do not patch a guessed constant.** Find the exact ownership/control-state implementation first, then extend only that lifetime comfortably beyond 1200 seconds while preserving cleanup/runtime semantics.
+Do **not** patch a guessed `ASYNC_RESULT_TTL_SECONDS` symbol. Locate the actual ownership/control-state implementation before changing only that lifetime to safely exceed 1200 seconds.
 
-Known async path inspected:
-- `app/api/analyze-audio-tab/route.js`
-- `.github/scripts/patch_v143_async_ai_tab_ui.py`
-- Modal analyzer/job-token handoff path
+## MODEL-FREE TIMING / POST-MODEL TRACE
 
-## MODEL-FREE TIMING REPAIR
+### Timing provider
 
-The timing repair was already committed before this continuation (checkpoint-era commit `f387377b538342f284e03b617ce6f4f13e31e6b0`). Preserve it.
-Later branch evidence/debug commits must also be preserved; do not reset/rebase over them.
+`analyzer/v143_reference_free_timing.py`
+- estimates beat grid/bar phase;
+- exposes `ReferenceFreeTimingEstimate.candidate_adapter_kwargs()`;
+- does **not** construct final note/chord events.
 
-### Verified continuation finding
+### Carrier consumer — exact branch-local downstream path found
 
-`analyzer/v143_reference_free_timing.py` is **not** the note/score-construction layer. It estimates timing structure (beat grid/bar phase and related candidate timing context) and exposes adapter data such as `candidate_adapter_kwargs()`. It does not itself construct the final note stream, assign the final score, or perform the target polyphony/voicing decisions.
+`analyzer/v143_contextual_prune_reference_free_carrier.py`
+- imports `v143_candidate_timing_adapter` and `v143_reference_free_timing`;
+- calls `build_subdivision_grid(**timing.candidate_adapter_kwargs())`;
+- runs the four historical wide-recall Basic Pitch sweeps on both deterministic guitar views;
+- clusters duplicate detections per `(measure, midi)` and then groups physical candidates by onset;
+- each onset row carries **all** observed `candidateMidis` plus physical two-view evidence.
 
-Therefore the next engineering target is the **consumer downstream of this module**: locate where the returned timing/adaptation data enters the post-model event pipeline, then identify the exact grouping/string-fret/voicing/export hook there.
+This confirms the reference-free timing estimator is only upstream context. The carrier still has polyphonic pitch evidence before precision pruning.
 
-Do not modify the timing estimator merely to force chord/polyphony behavior unless the downstream trace proves the timing module is actually responsible for the defect.
+### First confirmed polyphony-loss risk — narrow repair hook
 
-## V143 PRODUCT TARGET — SELF-CORRECTING TAB, NOT A DRAFT
+`analyzer/v143_contextual_prune_precision_shadow.py`
 
-User wants V143 pushed beyond a Songsterr-style AI draft toward a generator that does not require human correction. Treat this as an engineering target, not a marketing claim until a broad validation corpus proves it.
+The function `_precision_pitch_set(...)` chooses one explicit primary and then admits secondary pitches only if they pass hard relative physical-evidence gates:
+- `SECONDARY_RAW_RATIO = 0.80`
+- `HARMONIC_SECONDARY_RAW_RATIO = 0.92`
 
-Deterministic post-model design rules:
-1. **Preserve polyphony.** Do not collapse compatible dyads, power chords, full chords, ringing notes, or overlapping voices just because one candidate has lower confidence.
-2. **Prune contradictions, not complexity.** Contextual pruning removes mutually impossible evidence; it should not default to winner-take-all monophony.
-3. **Separate confidence from feasibility.** A slightly lower-confidence note may be retained when it completes a musically/physically coherent voicing.
-4. **Self-check before export.** Validate timing/grid, bar count, pickup/meter, tuning, string/fret reachability, duplicate-string collisions, simultaneous-note feasibility, durations/sustain, chord integrity, and event ordering.
-5. **Correct deterministic defects when unambiguous; otherwise retain diagnostics instead of silently deleting evidence.**
-6. Preserve musical context as first-class data: BPM, meter, pickup, tuning, role/instrument, onset grouping, sustain/voice relationships.
-7. Do not tune the professional reference/scorer thresholds to manufacture a pass.
+Those gates run **before** guitar-voicing feasibility is considered. A musically/physically compatible lower-confidence chord tone can therefore be removed even when it would complete a legal voicing.
 
-## FRESH-CHAT HANDOFF — EXACT NEXT STEPS
+This is the first confirmed winner-by-strength style narrowing in the post-model score-construction path.
 
-Start here in a new chat. Do **not** repeat the expensive validation work.
+### Downstream voicing stage is already polyphony-capable
 
-1. Read this file first and stay on branch `v143-contextual-prune-lobo`.
-2. Reconfirm the branch head and preserve all existing V143 commits; no reset/rebase over checkpoint/debug evidence.
-3. Trace every branch-specific import/call/use of `analyzer/v143_reference_free_timing.py`, especially `candidate_adapter_kwargs()`, using branch-aware file reads rather than default-branch code search when necessary.
-4. Identify the first downstream function that receives model candidates + reference-free timing context and produces canonical/post-model note events.
-5. From that function, trace the exact code responsible for:
-   - onset/simultaneous-note grouping,
-   - candidate pruning,
-   - pitch retention,
-   - string/fret assignment,
-   - chord/voicing construction,
-   - duration/sustain overlap handling,
-   - final canonical event ordering/export.
-6. Check for any winner-take-all, top-1, nearest-only, confidence-only, same-onset dedupe, same-string overwrite, or “one note per frame/onset” logic that could be collapsing valid polyphony.
-7. Implement the **smallest deterministic post-model repair** at the narrowest confirmed hook:
-   - retain compatible simultaneous/overlapping notes,
-   - prune only physically/musically contradictory candidates,
-   - avoid duplicate-string collisions inside one chord unless sequential/voice logic clearly allows it,
-   - preserve lower-confidence notes when they complete a feasible voicing,
-   - do not use the professional reference at runtime.
-8. Add a deterministic pre-export structural validator/diagnostic layer checking at minimum:
-   - sorted event times,
-   - nonnegative/valid durations,
-   - bar/beat/grid consistency,
-   - tuning-aware pitch ↔ string/fret consistency,
-   - fret reachability,
-   - duplicate-string simultaneous collisions,
-   - impossible simultaneous voicings,
-   - chord grouping integrity,
-   - sustain/overlap coherence,
-   - measure-count/pickup anomalies.
-9. Prefer diagnostics over deletion when a deterministic correction is not unambiguous.
-10. Run **only** model-free static/unit tests or pure functions that cannot initialize the model. Do not trigger Rhythm/Lead/Bass inference indirectly through imports.
-11. Save `docs/checkpoints/CURRENT_STATE.md` again immediately after the downstream hook is found, and again after any source change + validation result. Include exact file paths and commit/blob SHAs.
-12. After score-structure work, locate the **actual** 900-second async ownership/control-state TTL source. Change only the ownership/result retention lifetime so it safely exceeds the 1200-second worker/orchestrator budget; do not guess a constant and do not change the 1200-second compute budget.
-13. Diagnose the user-observed Modal “reporting function crash-looping” read-only unless a deterministic source-level fix is clearly proven.
-14. Before **any** new model-bearing run or professional scorer invocation, explain exactly what would run and obtain fresh explicit user authorization.
+`analyzer/v143_contextual_prune_precision_candidate_events.py`
+- receives `precision.pitch_sets`;
+- `_voicing_with_explicit_primary(...)` keeps the precision primary immutable;
+- iterates the remaining supported MIDI values and retains each one when `resolve_joint_chord_voicing(...)` says the entire set remains playable;
+- expands one retained attack into multiple final note events when the surviving pitch set supports a legal chord;
+- preserves `pitchHypotheses`, `dominantMidi`, and explicit per-note string/fret assignments.
 
-## CONTINUATION STATUS — SAVED FOR FRESH CHAT
+Therefore **do not** rewrite the final assembly into a new chord engine. The smallest justified repair is one stage earlier: stop confidence-only pruning from deleting otherwise physically supported, legally voiceable secondary tones.
 
-No new model-bearing run or professional scorer run was executed during this continuation.
-No live/scorer evaluation budget was consumed.
-No post-model analyzer repair was committed yet during this continuation because the downstream consumer/hook still needs to be located exactly.
+### Render contract observation
 
-The key newly verified fact is that `analyzer/v143_reference_free_timing.py` is a timing/context provider rather than the final score-construction layer. The fresh chat should continue by finding its exact downstream consumer and repairing polyphony/voicing there, not by changing the estimator blindly.
+The final JS render contract can fall back to `event.dominantMidi` when `event.midi` is absent, but the precision candidate assembly explicitly emits one event per selected MIDI with `event.midi` populated. The currently confirmed loss occurs before that point in `precision.pitch_sets`, not in render serialization.
 
-## CURRENT STATE
+## NEXT IMPLEMENTATION SLICE — IN PROGRESS
 
-**The 925-event frozen V143 result proves the infrastructure/render path can preserve events exactly, but the consumed professional score proves the musical score construction is still far from the no-human-correction target. Continue deterministically downstream of `v143_reference_free_timing.py`: find the canonical event-construction hook, preserve valid polyphony, enforce coherent voicings, add structural self-validation, checkpoint frequently, and do not run another model/scorer without fresh authorization.**
+1. Inspect model-free tests around `v143_contextual_prune_precision_shadow.py`, `v143_contextual_prune_precision_candidate_events.py`, and `v143_rhythm_guitar_note_mapper.py`.
+2. Implement the **smallest deterministic post-model repair** at the precision-pitch-set/voicing boundary:
+   - keep the explicit precision primary;
+   - keep genuinely contradictory/unsupported pitches prunable;
+   - allow lower-confidence observed secondary tones when they have positive two-view physical evidence **and** complete a legal joint guitar voicing;
+   - never invent a pitch, attack, string/fret, chord label, key, or reference-derived fact;
+   - cap by six strings and preserve duplicate-string collision protection through joint voicing resolution.
+3. Add pure/model-free tests proving:
+   - a weaker but physically supported legal chord tone survives;
+   - a conflicting/unplayable secondary is still rejected;
+   - no unobserved pitch can be created;
+   - the primary remains immutable;
+   - final emitted notes have unique simultaneous strings and legal string/fret mappings.
+4. Run only pure/static/unit tests that cannot initialize Basic Pitch, Modal, separator inference, Rhythm/Lead/Bass models, or the professional scorer.
+5. Checkpoint this file again immediately after source/test changes and validation.
+
+## PRODUCT TARGET / SAFETY RULES
+
+- Preserve valid polyphony; prune contradictions, not complexity.
+- Separate confidence from feasibility.
+- Prefer diagnostics over silent deletion when deterministic correction is ambiguous.
+- Preserve timing, meter, pickup, tuning, attack grouping, sustain/voice relationships, and event identity.
+- No reference/scorer leakage into runtime.
+- No new model-bearing run or professional scorer without fresh explicit user authorization.
+
+## CONTINUATION STATUS
+
+No model-bearing run was started in this continuation.
+No professional scorer was run.
+No evaluation budget was consumed.
+No production deployment/promotion was performed.
+
+**Current exact hook:** `analyzer/v143_contextual_prune_precision_shadow.py::_precision_pitch_set(...)` removes secondary tones by strength before `analyzer/v143_contextual_prune_precision_candidate_events.py::_voicing_with_explicit_primary(...)` gets a chance to test whether those tones form a legal polyphonic guitar voicing. Continue there with a deterministic, model-free, reference-blind repair and tests.
