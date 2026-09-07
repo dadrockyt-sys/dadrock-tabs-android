@@ -401,3 +401,47 @@ Confirmed before any runtime-affecting change:
 Static inspection of `v143_precision_polyphony_boundary.py` also found two audit/robustness items to verify during replay rather than changing blindly: `familiesAfter` appears to be computed from the full timeline before filtering by string, and restored-string bookkeeping should be checked against the actual candidate string chosen. Neither observation has changed runtime behavior yet.
 
 No source/runtime behavior was changed in this continuation before this checkpoint. No model call, scorer call, Modal function, production deployment, optimizer, or threshold sweep was performed.
+
+
+## CONTINUATION CHECKPOINT — FEASIBILITY REPLAY RESULT
+
+CPU-only deterministic boundary replay is complete. No model, Basic Pitch inference, Modal/GPU function, professional scorer/reference, optimizer, threshold sweep, production deployment, or new paid evaluation was used.
+
+Replay tooling added:
+- `analyzer/v143_precision_polyphony_boundary_replay.py` — commit `4b52f281d37753ad10dbd8ee7b1a1f4a7778158f`
+- isolated workflow `.github/workflows/v143-precision-polyphony-boundary-cpu-replay.yml` — commit `c465a339231e0d0d8c71b30cd85824518d1adb08`
+- successful CPU-only replay run `34074850353`, job `101598839853`
+- persisted result `debug/v143-contextual-prune/precision-polyphony-boundary-replay.json`
+
+Authoritative persisted precision identity used by this replay:
+- retained attacks: **725**
+- original retained-attack pitch hypotheses: **7535**
+- stored precision-selected pitches: **970**
+- deterministic selected-only rendered baseline: **967**
+- all source evidence comes from the already-consumed schema-2 `precisionReplayEvidence` embedded in `repaired-timing-precision-candidate-product.json`.
+
+Boundary replay result:
+- boundary candidate pitches: **4653**
+- recovery-eligible pitches: **3683**
+- recovered pitches: **2518**
+- recovered attacks: **703 / 725**
+- rendered pitches after recovery: **3485**
+- rendered delta vs 967 baseline: **+2518**
+- rendered ratio vs baseline: **3.6039296794208893x**
+- max baseline chord size: **5**
+- max recovered chord size: **6**
+- candidate pitches dropped by voicing/capacity: **1168**
+- retained-precision voicing drops in baseline: **3**
+- retained rendered pitch loss caused by recovery: **0**
+- primary violations: **0**
+- unobserved pitch creations: **0**
+- unobserved attack creations: **0**
+- promoted-harmonic guard violations: **0**
+- protected promoted-harmonic attacks: **96**
+- attack identity changed: **false**.
+
+Decision: **the feasibility-recovery boundary materially over-recovers pruned hypotheses and is unsafe to keep as-is.** Physical positivity + legal guitar voicing are necessary feasibility checks but are not sufficient evidence of musical correctness. The helper passes its safety invariants while still inflating the deterministic precision product from 967 to 3485 rendered notes.
+
+Important stale-guard finding: `analyzer/v143_precision_optional_candidate_accounting.py` still expects an older identity of 987 retained / 6548 suppressed pitches. The current persisted product records 970 retained / 6565 suppressed. Do not modify that historical accounting helper merely to make the new boundary replay green; the boundary replay has been isolated from it.
+
+NEXT SAFE ACTION, only after this checkpoint: remove or sharply restrict the post-precision recovery behavior using deterministic source-evidence invariants. Do not tune against the consumed professional score and do not introduce a threshold sweep. Preserve the precision-selected pitch set as the musical authority unless a non-threshold source invariant proves a recovery is semantically mandatory. Keep the candidate isolated from the exact live endpoint/Production.
