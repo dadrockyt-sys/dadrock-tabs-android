@@ -44,16 +44,17 @@ def resolve_precision_polyphony(
     positive_body_floor: float,
     harmonic_intervals: Sequence[int],
 ) -> PrecisionPolyphonyDecision:
-    """Resolve a playable voicing without treating confidence as feasibility.
+    """Resolve a playable voicing while preserving precision-v2 authority.
 
-    Precision-retained pitches keep priority. A weaker pitch may be recovered only
-    when it was already observed at the same attack, has positive two-view physical
-    evidence, and the whole selected set remains a legal six-string voicing.
+    The precision-selected pitch set is the musical authority. Observed pitches
+    that precision-v2 pruned are retained only as provenance/diagnostic evidence;
+    physical positivity or guitar feasibility alone cannot re-admit them.
 
-    One deterministic contradiction remains protected: when the explicit primary
-    was promoted below the strongest positive raw pitch and that strongest pitch is
-    an upper harmonic-family interval, the strongest upper is not reintroduced as
-    an independent chord tone. This mirrors the promoted-harmonic guard.
+    The boundary may reject a precision-selected secondary when the complete set
+    cannot be voiced legally on the six-string instrument. The explicit primary
+    is immutable. The promoted-harmonic diagnostic remains available so callers
+    can verify that a strongest upper harmonic is never reintroduced by this
+    boundary.
     """
     primary = int(primary_midi)
     precision = tuple(sorted({int(value) for value in precision_midis}))
@@ -89,18 +90,11 @@ def resolve_precision_polyphony(
     ):
         protected_harmonic = int(strongest_positive)
 
-    recovery_candidates = [
-        midi
-        for midi in positive
-        if midi not in precision_set and midi != protected_harmonic
-    ]
-
     retained_others = _ranked_midis(
         [midi for midi in precision if midi != primary],
         evidence,
     )
-    recovery_others = _ranked_midis(recovery_candidates, evidence)
-    ordered = [primary] + retained_others + recovery_others
+    ordered = [primary] + retained_others
 
     selected = [primary]
     voicing = resolve_joint_chord_voicing(selected)
@@ -119,24 +113,24 @@ def resolve_precision_polyphony(
         selected = trial
         voicing = trial_voicing
 
-    candidate_set = precision_set.union(recovery_candidates)
+    candidate_set = set(precision_set)
     selected_set = set(selected)
-    recovered = selected_set.difference(precision_set)
+    recovered: set[int] = set()
     dropped = candidate_set.difference(selected_set)
 
+    if not selected_set.issubset(precision_set):
+        raise RuntimeError("Polyphony boundary re-admitted a precision-pruned pitch")
     if not selected_set.issubset(observed_set):
         raise RuntimeError("Polyphony boundary invented an unobserved pitch")
     if primary not in selected_set:
         raise RuntimeError("Polyphony boundary dropped the precision primary")
-    if protected_harmonic is not None and protected_harmonic in recovered:
-        raise RuntimeError(
-            "Polyphony boundary reintroduced a protected promoted harmonic"
-        )
+    if recovered:
+        raise RuntimeError("Polyphony boundary recovered a precision-pruned pitch")
 
     return PrecisionPolyphonyDecision(
         selected_midis=tuple(int(value) for value in selected),
         candidate_midis=tuple(sorted(int(value) for value in candidate_set)),
-        recovered_midis=frozenset(int(value) for value in recovered),
+        recovered_midis=frozenset(),
         dropped_midis=frozenset(int(value) for value in dropped),
         protected_harmonic_midi=protected_harmonic,
         voicing={

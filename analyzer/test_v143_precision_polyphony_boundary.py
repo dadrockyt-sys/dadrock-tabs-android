@@ -40,7 +40,7 @@ def _resolve(
 
 
 class PrecisionPolyphonyBoundaryTest(unittest.TestCase):
-    def test_recovers_weaker_observed_tone_when_joint_voicing_is_legal(self) -> None:
+    def test_does_not_recover_pruned_observed_tone_when_joint_voicing_is_legal(self) -> None:
         decision = _resolve(
             primary=40,
             precision=[40],
@@ -48,20 +48,17 @@ class PrecisionPolyphonyBoundaryTest(unittest.TestCase):
             evidence={40: _evidence(1.0), 47: _evidence(0.50)},
         )
 
-        self.assertEqual(set(decision.selected_midis), {40, 47})
-        self.assertEqual(decision.recovered_midis, frozenset({47}))
-        self.assertEqual(decision.protected_harmonic_midi, None)
-        self.assertEqual(
-            len({position["stringIndex"] for position in decision.voicing.values()}),
-            2,
-        )
+        self.assertEqual(decision.selected_midis, (40,))
+        self.assertEqual(decision.candidate_midis, (40,))
+        self.assertFalse(decision.recovered_midis)
+        self.assertNotIn(47, decision.selected_midis)
 
-    def test_rejects_weaker_observed_tone_when_joint_voicing_is_impossible(self) -> None:
+    def test_rejects_precision_selected_tone_when_joint_voicing_is_impossible(self) -> None:
         # MIDI 87 and 88 are each playable only on the high-e string within
         # the mapper's 0-24-fret limit, so they cannot sound simultaneously.
         decision = _resolve(
             primary=87,
-            precision=[87],
+            precision=[87, 88],
             observed=[87, 88],
             evidence={87: _evidence(1.0), 88: _evidence(0.60)},
         )
@@ -81,6 +78,7 @@ class PrecisionPolyphonyBoundaryTest(unittest.TestCase):
         self.assertEqual(decision.selected_midis, (40,))
         self.assertEqual(decision.protected_harmonic_midi, 52)
         self.assertFalse(decision.recovered_midis)
+        self.assertNotIn(52, decision.candidate_midis)
 
     def test_does_not_recover_nonpositive_or_unobserved_pitch(self) -> None:
         decision = _resolve(
@@ -95,9 +93,10 @@ class PrecisionPolyphonyBoundaryTest(unittest.TestCase):
 
         self.assertEqual(decision.selected_midis, (40,))
         self.assertTrue(set(decision.selected_midis).issubset({40, 47}))
+        self.assertNotIn(47, decision.candidate_midis)
         self.assertNotIn(52, decision.selected_midis)
 
-    def test_primary_is_immutable_and_simultaneous_strings_are_unique(self) -> None:
+    def test_primary_is_immutable_and_precision_selected_strings_are_unique(self) -> None:
         decision = _resolve(
             primary=45,
             precision=[45, 52],
@@ -109,13 +108,14 @@ class PrecisionPolyphonyBoundaryTest(unittest.TestCase):
             },
         )
 
-        self.assertIn(45, decision.selected_midis)
+        self.assertEqual(set(decision.selected_midis), {45, 52})
+        self.assertNotIn(57, decision.selected_midis)
         strings = [
             int(decision.voicing[midi]["stringIndex"])
             for midi in decision.selected_midis
         ]
         self.assertEqual(len(strings), len(set(strings)))
-        self.assertTrue(set(decision.selected_midis).issubset({45, 52, 57}))
+        self.assertTrue(set(decision.selected_midis).issubset({45, 52}))
 
 
 if __name__ == "__main__":
