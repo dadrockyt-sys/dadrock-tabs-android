@@ -70,7 +70,7 @@ Older history stated **6525** retained-only hypotheses; the persisted artifact p
 
 ## DETERMINISTIC REPLAY — BROAD FEASIBILITY RECOVERY REJECTED
 
-A CPU-only/read-only replay of the already-consumed persisted artifact showed the historical feasibility-recovery boundary was unsafe:
+Historical CPU-only/read-only replay of the already-consumed artifact showed broad feasibility recovery was unsafe:
 - baseline selected pitches: **970**
 - baseline rendered: **967**
 - broad feasibility-boundary rendered: **3485**
@@ -81,38 +81,53 @@ A CPU-only/read-only replay of the already-consumed persisted artifact showed th
 
 Decision: **guitar feasibility/physical positivity alone must never re-admit precision-v2-pruned pitches.**
 
-## CURRENT SCORE-STRUCTURE SLICE — EXACT REFRESHED STATE
+## SCORE-STRUCTURE SLICE — ADAPTER HARDENED
 
-Fresh branch refresh established these exact current blobs before the adapter patch:
-- `analyzer/v143_precision_polyphony_boundary.py`: `83a1d993ff654c45bb965a7794f2d155aab18a25`
-- `analyzer/v143_contextual_prune_precision_candidate_events.py`: `68732a07701a30a455ba9bcbf7c2adddd3930622`
+Current exact blobs:
+- helper `analyzer/v143_precision_polyphony_boundary.py`: `83a1d993ff654c45bb965a7794f2d155aab18a25`
+- adapter `analyzer/v143_contextual_prune_precision_candidate_events.py`: `509032e3969ea057c05743c148ade2d2d4da4bf0`
+- validator `analyzer/validate_v143_precision_polyphony_preservation.py`: `8f4c420482674f484541a4c6d5bf90df0d7f6465`
 
-Correction to the previous checkpoint: the current adapter **does match** the current helper function signature; there is no current signature `TypeError`.
+Code commits:
+- adapter hardening: `255616674eb4d113804d5a4296b771318717745f`
+- deterministic validator: `838d900732abeb19740bea0ca8a23131a8701fe3`
+
+Correction retained from the prior checkpoint: the adapter matches the helper function signature; there is no signature `TypeError`.
 
 Current helper behavior:
 - precision-v2 retained pitch set is authoritative
 - observed-but-pruned pitches remain provenance/diagnostic evidence only
 - selected pitches are always a subset of the precision-v2 retained set
 - primary is immutable
-- helper `recovered_midis` is always empty and guarded by a runtime invariant
+- `recovered_midis` is empty and guarded by a runtime invariant
 - legal joint-guitar-voicing may drop precision-selected secondaries only
 
-Current adapter issue:
-- behavior is currently safe because the helper returns no recovered pitches, but the adapter still carries recovery-era vocabulary and an invariant that would permit a non-precision MIDI if marked `feasibilityRecoveredSecondary`
-- this is an unnecessary future escape hatch and must be removed
-- retain legacy recovery-shaped output fields only for schema compatibility, with hard-false values; they must never authorize selection
+Adapter hardening now enforces the same policy independently:
+- helper `candidate_midis` must exactly equal the persisted precision-v2 retained pitch set
+- helper selected MIDIs must be a subset of that retained set
+- any non-empty `recovered_midis` raises
+- helper dropped MIDIs must exactly equal retained minus selected
+- final emitted event MIDI must belong to `precision.pitch_sets[key]` unconditionally
+- legacy recovery-shaped metadata fields remain for compatibility but are hard `False`
+- `polyphonyBoundary.recoveredPitchCount = 0` and `recoveryPermitted = False`
+- a recovery marker on an emitted event is itself a runtime error
 
-Next safe patch:
-1. change only `analyzer/v143_contextual_prune_precision_candidate_events.py`
-2. require helper candidate MIDI set and selected MIDI set to remain subsets/equivalent to the persisted precision-v2 authority as appropriate
-3. reject any non-empty helper `recovered_midis`
-4. ensure every emitted event MIDI belongs to `precision.pitch_sets[key]` regardless of any marker
-5. keep legacy feasibility-recovery fields false for compatibility
-6. add deterministic validation that deliberately simulates a helper recovery attempt and proves the adapter rejects/ignores it
-7. checkpoint again immediately after patch/validation
-8. keep this isolated from the frozen live endpoint and Production
+## DETERMINISTIC VALIDATION COMPLETED
 
-Acceptance invariants remain:
+Local, CPU-only, dependency-free validation performed with no workflow/manual analysis trigger and no model/reference access:
+- `py_compile` passed for the hardened adapter
+- preservation assertion accepted a valid drop-only decision
+- hostile synthetic widening from retained `(60,64)` to pruned MIDI `67` was rejected
+- validator executes the actual helper functions from source AST with MIDI `67` deliberately made extremely strong, positive, and playable; helper still excludes `67`
+- validator executes the actual adapter preservation assertion and rejects widened candidate set, widened selected set, and non-empty recovery set
+- validator asserts legacy recovery-shaped output literals are hard-false and the old permissive `midi not in precision_set and not recovered` escape hatch is absent
+- result: **`V143 precision polyphony preservation validation: PASS`**
+
+This validation is reference-free and uses no inference, GPU, Modal, paid service, scorer, optimizer, threshold sweep, deployment, or Production mutation.
+
+## ACCEPTANCE INVARIANTS
+
+Persisted-evidence target remains:
 - **725** retained attacks
 - **970** precision-v2 selected pitches input
 - **967** rendered after legal voicing
@@ -122,14 +137,16 @@ Acceptance invariants remain:
 - **0** unobserved pitches
 - **0** unobserved attacks
 
+The source-level preservation invariant is now closed. A final optional safe check is a CPU-only/read-only replay of the already-persisted artifact against the current helper to reconfirm the 970 -> 967 / 3-drop counts without any new inference. Do not trigger a workflow to do this.
+
 ## WORKFLOW-SAFETY CHECK
 
-The prior checkpoint push (`36fc6bda1247bedbd9642a50b07ca4d52fbadb25`) produced exactly one GitHub Actions run: `.github/workflows/cleanup-tab-preview.yml` run `34080214025`; no model/scoring workflow ran. No workflow was manually triggered.
+Checkpoint push `36fc6bda1247bedbd9642a50b07ca4d52fbadb25` produced exactly one GitHub Actions run: `.github/workflows/cleanup-tab-preview.yml` run `34080214025`; no model/scoring workflow ran. No workflow was manually triggered.
 
 ## AFTER THIS SLICE
 
-Only after the score-structure adapter slice is closed, return to the separate async-result lifetime defect: locate the real ~900-second control/result ownership TTL and patch only that actual boundary so it safely exceeds the 1200-second worker budget. Do not patch a guessed symbol. Do not deploy without explicit authorization.
+After the persisted replay check (or if it cannot be performed read-only), move to the separate async-result lifetime defect: locate the real ~900-second control/result ownership TTL and patch only that actual boundary so it safely exceeds the 1200-second worker budget. Do not patch a guessed symbol. Do not deploy without explicit authorization.
 
 ## FRESH-CHAT SUCCESS CONDITION
 
-**The helper/adapter must never change attack identity, the persisted primary, or admit any pruned/non-precision pitch. Deterministic validation must preserve 725 attacks / 970 retained pitches / 967 rendered / 3 legal-voicing drops with zero recovered hypotheses and zero primary/unobserved violations.**
+**The helper/adapter must never change attack identity, the persisted primary, or admit any pruned/non-precision pitch. Persisted evidence should remain 725 attacks / 970 retained pitches / 967 rendered / 3 legal-voicing drops with zero recovered hypotheses and zero primary/unobserved violations.**
