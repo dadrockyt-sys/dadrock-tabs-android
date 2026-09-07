@@ -1,7 +1,7 @@
 {
   "schemaVersion": 7,
   "gate": "rhythm-preholdout-static-preflight",
-  "sourceCommit": "4c94ae0e8bf88f8c0f7f0053c0dec5ad32522b79",
+  "sourceCommit": "330a3d5dbde5bcc3e51eb577892c8d9643fcba58",
   "passed": false,
   "failedStage": "ai-tab-pdf-product-contract",
   "exitStatus": 1,
