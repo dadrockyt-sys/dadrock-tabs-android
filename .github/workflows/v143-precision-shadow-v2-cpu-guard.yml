@@ -13,9 +13,6 @@ on:
       - analyzer/v143_precision_replay_artifact_validator.py
       - analyzer/v143_precision_replay_voicing_validator.py
       - analyzer/v143_precision_paid_capture_finalizer.py
-      - analyzer/v143_precision_polyphony_boundary.py
-      - analyzer/test_v143_precision_polyphony_boundary.py
-      - analyzer/v143_precision_polyphony_boundary_replay.py
       - analyzer/check_v143_precision_replay_corruption_rejection.py
       - analyzer/check_v143_precision_replay_capture_order.py
       - analyzer/check_v143_precision_capture_readiness.py
@@ -35,7 +32,7 @@ jobs:
       - uses: actions/setup-python@v5
         with:
           python-version: '3.11'
-      - name: Compile CPU-only precision tools
+      - name: Compile and test reference-free v2 policy
         shell: bash
         run: |
           set -euo pipefail
@@ -48,16 +45,9 @@ jobs:
             analyzer/v143_precision_replay_artifact_validator.py \
             analyzer/v143_precision_replay_voicing_validator.py \
             analyzer/v143_precision_paid_capture_finalizer.py \
-            analyzer/v143_precision_polyphony_boundary.py \
-            analyzer/test_v143_precision_polyphony_boundary.py \
-            analyzer/v143_precision_polyphony_boundary_replay.py \
             analyzer/check_v143_precision_replay_corruption_rejection.py \
             analyzer/check_v143_precision_replay_capture_order.py \
             analyzer/check_v143_precision_capture_readiness.py
-      - name: Run existing precision replay guards
-        shell: bash
-        run: |
-          set -euo pipefail
           PYTHONPATH=analyzer python analyzer/check_v143_precision_shadow_v2_policy.py
           PYTHONPATH=analyzer python analyzer/v143_precision_replay_policy_compare.py --self-test
           PYTHONPATH=analyzer python analyzer/v143_precision_replay_artifact_validator.py --self-test
@@ -66,29 +56,9 @@ jobs:
           PYTHONPATH=analyzer python analyzer/check_v143_precision_replay_corruption_rejection.py
           PYTHONPATH=analyzer python analyzer/check_v143_precision_replay_capture_order.py
           PYTHONPATH=analyzer python analyzer/check_v143_precision_capture_readiness.py
-      - name: Run polyphony boundary unit tests
-        shell: bash
-        run: |
-          set -euo pipefail
-          PYTHONPATH=analyzer python analyzer/test_v143_precision_polyphony_boundary.py
-      - name: Validate persisted precision identity
-        shell: bash
-        run: |
-          set -euo pipefail
           python analyzer/v143_precision_optional_candidate_accounting.py \
             --input debug/v143-contextual-prune/repaired-timing-precision-candidate-product.json \
             --output /tmp/precision-optional-candidate-accounting.json
-      - name: Replay polyphony boundary on persisted evidence
-        shell: bash
-        run: |
-          set -euo pipefail
-          PYTHONPATH=analyzer python analyzer/v143_precision_polyphony_boundary_replay.py \
-            --input debug/v143-contextual-prune/repaired-timing-precision-candidate-product.json \
-            --output debug/v143-contextual-prune/precision-polyphony-boundary-replay.json
-      - name: Enforce static safety boundaries
-        shell: bash
-        run: |
-          set -euo pipefail
           test "$(git hash-object analyzer/v143_reference_free_rhythm_pipeline.py)" = '7f72f8ed9b14af8bc93e95544195204d99c6bec1'
           if grep -E -n 'Professionalexample|professional-rhythm-complete|rhythm-professional-holdout-score|Songsterr' \
             analyzer/v143_contextual_prune_precision_shadow_v2.py \
@@ -99,9 +69,6 @@ jobs:
             analyzer/v143_precision_replay_artifact_validator.py \
             analyzer/v143_precision_replay_voicing_validator.py \
             analyzer/v143_precision_paid_capture_finalizer.py \
-            analyzer/v143_precision_polyphony_boundary.py \
-            analyzer/test_v143_precision_polyphony_boundary.py \
-            analyzer/v143_precision_polyphony_boundary_replay.py \
             analyzer/check_v143_precision_replay_corruption_rejection.py \
             analyzer/check_v143_precision_replay_capture_order.py \
             analyzer/check_v143_precision_capture_readiness.py; then
@@ -130,7 +97,7 @@ jobs:
           import json
           from pathlib import Path
           result = {
-              'schemaVersion': 8,
+              'schemaVersion': 7,
               'passed': True,
               'policy': 'envelope-balanced-secondary-v2',
               'sourceSha': '${{ github.sha }}',
@@ -152,8 +119,6 @@ jobs:
               'paidFinalLockBindingPassed': True,
               'fixedBestRowAttackReplayPassed': True,
               'historicalOptionalAccountingPassed': True,
-              'polyphonyBoundaryUnitTestsPassed': True,
-              'polyphonyBoundaryPersistedReplayPassed': True,
               'singlePaidCaptureStaticGuardPassed': True,
               'newInferenceUsed': False,
               'modalInvoked': False,
@@ -164,9 +129,7 @@ jobs:
               json.dumps(result, indent=2, sort_keys=True) + '\n'
           )
           PY
-          git add \
-            debug/v143-contextual-prune/precision-v2-cpu-guard-result.json \
-            debug/v143-contextual-prune/precision-polyphony-boundary-replay.json
+          git add debug/v143-contextual-prune/precision-v2-cpu-guard-result.json
           git config user.name 'github-actions[bot]'
           git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
           git commit -m 'Record precision v2 CPU guard result'
