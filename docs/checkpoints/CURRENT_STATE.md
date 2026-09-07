@@ -445,3 +445,56 @@ Decision: **the feasibility-recovery boundary materially over-recovers pruned hy
 Important stale-guard finding: `analyzer/v143_precision_optional_candidate_accounting.py` still expects an older identity of 987 retained / 6548 suppressed pitches. The current persisted product records 970 retained / 6565 suppressed. Do not modify that historical accounting helper merely to make the new boundary replay green; the boundary replay has been isolated from it.
 
 NEXT SAFE ACTION, only after this checkpoint: remove or sharply restrict the post-precision recovery behavior using deterministic source-evidence invariants. Do not tune against the consumed professional score and do not introduce a threshold sweep. Preserve the precision-selected pitch set as the musical authority unless a non-threshold source invariant proves a recovery is semantically mandatory. Keep the candidate isolated from the exact live endpoint/Production.
+
+
+## CONTINUATION CHECKPOINT — FEASIBILITY REMEDIATION VALIDATED
+
+The over-recovery defect is now deterministically remediated without model/reference/scorer use and without threshold tuning.
+
+Source remediation:
+- commit `137cb97692f618d96ddb61df22d7ac0c56c2b067` — `Stop precision-pruned pitch recovery`
+- `analyzer/v143_precision_polyphony_boundary.py` now treats the precision-v2 selected set as musical authority;
+- pitches pruned by precision-v2 cannot be re-admitted solely because they have positive physical evidence or a legal guitar voicing;
+- legal joint voicing may still reject an impossible precision-selected secondary;
+- the explicit primary remains immutable;
+- observed raw hypotheses remain available for provenance and promoted-harmonic diagnostics;
+- candidate/recovery API shape is retained, but `recovered_midis` is fail-closed empty.
+
+Tests were updated atomically with the helper. No intermediate broken helper/test commit was placed on the branch.
+
+Validation:
+- isolated CPU-only replay run `34075147712`, job `101599687721`
+- all compile, boundary unit-test, persisted-evidence replay, invariant, and persistence steps passed
+- resulting branch bot commit `a0899b458967da3356c7ad4c948d26d2632ef082`
+- persisted result `debug/v143-contextual-prune/precision-polyphony-boundary-replay.json`
+
+Validated structural result:
+- retained attacks: **725**
+- original observed hypotheses: **7535**
+- stored precision-selected pitches: **970**
+- boundary candidate pitches: **970**
+- deterministic rendered pitches: **967**
+- recovery-eligible pitches: **0**
+- recovered pitches: **0**
+- recovered attacks: **0**
+- rendered delta vs baseline: **0**
+- rendered ratio vs baseline: **1.0**
+- max baseline/boundary chord size: **5 / 5**
+- precision-selected pitches rejected by voicing/capacity: **3**
+- retained rendered pitch loss vs selected-only baseline: **0**
+- primary violations: **0**
+- unobserved pitch/attack creation: **0 / 0**
+- promoted-harmonic guard violations: **0**
+- attack identity changed: **false**
+- measure coverage remains **1–113 / 113 measures**
+- referenceFree=true
+- newInferenceUsed=false
+- paidModelRequired=false
+- professionalReferenceUsed=false
+- productionModified=false.
+
+Conclusion: the persisted precision candidate is again structurally preserved exactly. Guitar feasibility is now rejection-only after precision selection rather than an independent pitch-recovery authority.
+
+Score-structure replay slice status: **closed for this defect**. The isolated precision candidate remains isolated and must not be wired into the exact live endpoint or Production without separate explicit product/integration authorization.
+
+NEXT SAFE SLICE: return to the separately confirmed async result/control lifetime defect. Locate the real ownership of the ~900-second tracking/result TTL, verify it against the 1200-second worker/orchestrator budget, and patch only that control/result lifetime boundary to safely exceed worker runtime. Do not guess a symbol and do not touch model/scheduler thresholds.
