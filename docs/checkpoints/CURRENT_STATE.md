@@ -1,9 +1,21 @@
 # CURRENT STATE — DadRock `/ai-tab` V143
 
-Updated: 2026-09-06 22:30 America/Toronto
+Updated: 2026-09-06 22:31 America/Toronto
 Branch: `v143-contextual-prune-lobo`
 
 This file is the compact fresh-chat source of truth. Full prior detail remains in Git history.
+
+## LATEST INSPECTION — PRESERVATION HELPER ALREADY REPAIRED
+
+Fresh branch inspection after reopening this checkpoint found the branch has advanced beyond the helper state described below:
+- current `analyzer/v143_precision_polyphony_boundary.py` blob: `83a1dbbbdfa7ee8f877643954dac180836396860`
+- current `analyzer/v143_contextual_prune_precision_candidate_events.py` blob: `d48edb545e3e908463498498261bf47c1ce8d5f3e`
+
+The current helper is already preservation-only: it never changes `selected_index`; it returns a preservation signal only when the already-selected feasible polyphonic-up precision candidate has an equivalent feasible/polyphonic-up companion with the same `action_key` and an authoritative `candidate_rank`. It does not recover a newly accepted non-precision row.
+
+The adapter is not yet aligned with that helper semantics. It still describes a feasibility/polyphony “recovery” helper, names the helper result `recovered`, conditionally reassigns the selected candidate when that signal is true, and exposes legacy `lobo_*_recovered` flags. The next safe change is therefore adapter-only semantic alignment plus deterministic/static validation. Before changing behavior, inspect downstream uses of the legacy flags so schema compatibility is preserved without implying a selection mutation.
+
+No model-bearing analysis, professional scorer, Modal/GPU/paid inference, threshold sweep, Production change, deployment, or workflow trigger was performed during this inspection.
 
 ## NON-NEGOTIABLE AUTHORIZATION / BUDGET BOUNDARY
 
@@ -81,10 +93,10 @@ Historical commit `c1451df...` contains:
 
 **Checkpointed immediately after replay and before any helper/candidate change.**
 
-Current isolated helper before repair:
+Historical isolated helper before repair:
 - `analyzer/v143_precision_polyphony_boundary.py`
 - blob `720a068d71ad72719053cdc89bdab81db541c884`
-- adapter `analyzer/v143_contextual_prune_precision_candidate_events.py`
+- historical adapter `analyzer/v143_contextual_prune_precision_candidate_events.py`
 - blob `68732a07701a30a455ba9bcbf7c2adddd3930622`
 
 The exact persisted artifact from already-consumed run `32805316807` was downloaded read-only. No workflow was triggered. `resolve_precision_polyphony(...)` was replayed deterministically against all **725 persisted retained attacks**, using the artifact's per-pitch `attack`, `body`, and `score` evidence, the current floors (`attack > 0.0`, `body > -0.25`), current harmonic interval set `{12,19,24,28,31,36}`, and the current deterministic joint-guitar-voicing constraints.
@@ -116,55 +128,49 @@ This result is reference-free. No model, Basic Pitch inference, GPU, Modal, paid
 
 ## NEXT SAFE SCORE-STRUCTURE ACTION
 
-Per the preregistered decision rule, remove or restrict the feasibility-recovery behavior using deterministic source-evidence invariants only. The safest minimal repair is **preservation-only polyphony**:
-- keep the precision-v2 retained pitch set authoritative
-- preserve the explicit precision primary
-- perform only deterministic legal joint-guitar voicing over those already-retained precision pitches
-- allow the same historical legal-voicing drops (expected baseline 970 -> 967)
-- recover **zero** precision-v2-pruned hypotheses
-- do not add/relocate attacks or invent pitches
-- keep the helper isolated from the frozen live endpoint/Production
+The helper repair is already present at the current branch head. Do **not** restore the historical feasibility-recovery behavior.
 
-After changing the isolated helper/adapter:
-1. rerun the same CPU-only persisted-artifact replay only
-2. require 725 attacks, 970 baseline selected, 967 rendered, 3 voicing drops, 0 recovered, 0 primary failures, 0 unobserved attacks/pitches
-3. add/update deterministic unit/static validation for the preservation-only invariant
-4. checkpoint `docs/checkpoints/CURRENT_STATE.md` again
-5. do **not** integrate into live/Production without separate explicit product/integration authorization
+Next:
+1. inspect downstream uses of the adapter's legacy `lobo_*_recovered` fields
+2. align only `analyzer/v143_contextual_prune_precision_candidate_events.py` with preservation-only helper semantics while keeping persisted selection immutable
+3. add/update deterministic unit/static validation proving the helper/adapter cannot select a new candidate or admit a non-precision row
+4. use only already-persisted evidence for any CPU-only/read-only check
+5. checkpoint this file again immediately after the adapter patch and validation
+6. keep the helper/adapter isolated from the frozen live endpoint/Production
+
+Acceptance invariants remain:
+- 725 retained attacks
+- 970 precision-v2 selected pitches input
+- 967 rendered after legal voicing
+- exactly 3 legal-voicing drops
+- 0 recovered/pruned hypotheses re-admitted
+- 0 primary preservation failures
+- 0 unobserved pitches
+- 0 unobserved attacks
 
 Only after this score-structure slice is closed, return to the separate async-result lifetime defect: locate the real ~900-second control/result ownership TTL and patch only that boundary so it safely exceeds the 1200-second worker budget. Do not patch a guessed symbol.
 
 ## FRESH-CHAT START HERE — EXACT NEXT STEPS
 
-Current branch head immediately before this checkpoint update was `15897823811a1676a695339ea0d283878efe0a92` (`checkpoint: record precision polyphony over-recovery replay`). A fresh chat should **not repeat the replay that proved over-recovery**. Start from the saved result above.
-
 1. Refresh branch head and re-open this file first; treat any newer checkpoint as authoritative.
 2. Inspect the current isolated helper and adapter only:
    - `analyzer/v143_precision_polyphony_boundary.py`
    - `analyzer/v143_contextual_prune_precision_candidate_events.py`
-3. Make the smallest deterministic preservation-only repair: `resolve_precision_polyphony(...)` must operate only on the precision-v2 retained pitch set, preserve the explicit primary, and apply legal joint-guitar voicing without recovering any pruned hypothesis.
+3. Treat the current helper blob `83a1dbbbdfa7ee8f877643954dac180836396860` as the preservation-only baseline unless a newer checkpoint says otherwise.
 4. Do not change model inference, attack selection, scheduler parameters, thresholds, professional-reference logic, live endpoint wiring, deployment, or Production.
-5. Add/update a deterministic unit/static test that fails if any MIDI outside the precision-v2 retained set is admitted by the helper; also require primary preservation and no attack relocation/creation.
-6. Use only the already-persisted paid artifact/evidence for the CPU-only replay. Do not trigger any workflow or new analysis. If the artifact is needed again, use the already-consumed Actions artifact id `9548666053` read-only or the persisted Git evidence from `c1451df...`.
-7. Acceptance target for the repaired helper:
-   - 725 retained attacks
-   - 970 precision-v2 selected pitches input
-   - 967 rendered after legal voicing
-   - exactly 3 legal-voicing drops
-   - 0 recovered/pruned hypotheses re-admitted
-   - 0 primary preservation failures
-   - 0 unobserved pitches
-   - 0 unobserved attacks
-8. **Immediately checkpoint this file again after the repaired CPU-only replay result, before any further score-structure changes.**
-9. If the preservation-only replay matches the baseline, keep the helper isolated; do not integrate into the frozen live endpoint/Production without separate explicit authorization.
-10. Then move to the separate async-result lifetime defect: identify the actual control/result ownership TTL around ~900 seconds and patch only the verified lifetime boundary so it safely exceeds the 1200-second worker budget. Preserve all no-model/no-paid/no-deploy restrictions unless the user explicitly changes them.
+5. Align the adapter so the helper signal cannot change the persisted selected index/action. Preserve compatibility deliberately; do not represent preservation as recovery.
+6. Add/update deterministic unit/static validation that fails if the helper/adapter admits a new row, changes selected index/action, or treats a non-precision policy as a preservation event.
+7. Use only already-persisted paid artifact/evidence for CPU-only/read-only checks. Do not trigger any workflow or new analysis.
+8. Checkpoint this file frequently while working.
+9. If deterministic checks match the preservation-only invariants, keep the helper isolated; do not integrate into the frozen live endpoint/Production without separate explicit authorization.
+10. Then move to the separate async-result lifetime defect only after this score-structure slice is closed.
 
 ## FRESH-CHAT SUCCESS CONDITION
 
 The central question is already answered:
 
-**The feasibility-recovery boundary over-recovers precision-v2-pruned hypotheses. Replace it with preservation-only legal voicing, validate deterministically against persisted evidence, and keep it isolated.**
+**The feasibility-recovery boundary over-recovers precision-v2-pruned hypotheses. The current helper is already preservation-only; align the adapter and prove selection immutability deterministically.**
 
 The immediate fresh-chat success condition is therefore:
 
-**Preservation-only replay returns the persisted baseline structure (725 attacks / 970 retained pitches / 967 rendered / 3 legal-voicing drops) with zero recovered hypotheses and zero primary/unobserved violations.**
+**The helper/adapter never changes the persisted selected candidate or admits any pruned/non-precision row, while persisted replay structure remains 725 attacks / 970 retained pitches / 967 rendered / 3 legal-voicing drops with zero recovered hypotheses and zero primary/unobserved violations.**
