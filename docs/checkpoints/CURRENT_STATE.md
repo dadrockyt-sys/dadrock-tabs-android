@@ -363,3 +363,26 @@ No Modal remote function was invoked.
 Only committed history and already-consumed frozen/precision evidence were inspected read-only.
 
 **Current handoff:** history proves the precision product is an intentionally isolated evaluation path, and its one paid capture plus exact CPU replay bundle are committed in Git. Next replay the recent feasibility-recovery boundary against that persisted evidence model-free; be prepared to revise/remove the recovery if it expands the precision result materially. Keep saving this checkpoint often.
+
+## FRESH CHAT START HERE — 2026-09-06
+
+Resume on branch `v143-contextual-prune-lobo`. Do not spend any new model/scorer/Modal budget.
+
+Most important newly confirmed historical fact:
+- successful authorized paid precision retry workflow run `32805316807` completed fully green;
+- capture/replay commit `c1451df43cc1162ed2b38aa3f3300b7af4d9b527` recorded the persisted schema-2 evidence;
+- strict replay mismatch counts were exactly zero (`primaryRecomputeMismatchAttackCount=0`, `v2ReplayMismatchAttackCount=0`);
+- successful-capture checkpoint explicitly says all next precision work must use persisted replay CPU-only and that no further Modal/L4 run is authorized.
+
+Exact fresh-chat next steps:
+1. Open commit `c1451df43cc1162ed2b38aa3f3300b7af4d9b527` and inspect the committed replay files plus `.github/workflows/v143-replay-precision-candidate.yml` / its CPU-only script. Prefer the persisted Git evidence over expired Actions artifacts.
+2. Note connector quirk observed in this chat: direct `fetch_file` of `debug/v143-contextual-prune/repaired-timing-precision-candidate-product.json` on the branch returned an empty decoded `content` while still returning known blob SHA `7e6002cd4d42f355685241e0576c78940056f093`. Do **not** infer the evidence is absent; use the historical commit, blob SHA, replay-evidence file, or committed replay validators as the source of truth.
+3. Run/reproduce only a **CPU-only deterministic replay** of the new `v143_precision_polyphony_boundary.py` feasibility-recovery behavior against the persisted paid precision evidence. No Basic Pitch inference, no Modal, no GPU, no professional reference/scorer, no optimizer, no threshold sweep.
+4. Compare against the persisted precision baseline: 725 retained attacks, 970 selected pitches (967 rendered before later guard convenience layer; historical event-layer replay 965 rendered), all 113 measures populated, and zero unobserved attack/pitch creation.
+5. Record structural deltas only: recovered pitches, affected attacks, total selected/rendered notes, max chord size, legal-voicing rejections, primary preservation, attack identity, unobserved pitch/attack count, and promoted-harmonic-guard violations.
+6. Decision rule: if feasibility recovery materially inflates the precision product, revert/restrict the helper using deterministic source-evidence invariants. Guitar feasibility alone is insufficient. Do not tune against the consumed professional score.
+7. Checkpoint `CURRENT_STATE.md` immediately after the replay result **before** changing the helper or candidate assembly further.
+8. Keep the isolated precision candidate isolated. Do not wire it into the exact live endpoint or Production without a separate explicit integration/product authorization.
+9. Only after this score-structure slice is closed, return to the separate async-result lifetime defect and locate the actual ~900-second ownership TTL before patching it to safely exceed the 1200-second worker budget.
+
+Fresh-chat success condition for the next slice: obtain a deterministic, reference-free answer to **“Does the new feasibility-recovery boundary safely preserve the persisted precision candidate, or does it over-recover pruned hypotheses?”** with zero new paid/model/professional evaluation consumption.
