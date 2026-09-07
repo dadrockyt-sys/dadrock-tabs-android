@@ -3,7 +3,11 @@ from __future__ import annotations
 import math
 from typing import Any, Iterable, Mapping
 
-from v143_rhythm_sustain_technique_enricher import step_seconds_from_tempo, sustain_tier
+from v143_rhythm_preexport_validator import validate_v143_preexport_events
+from v143_rhythm_sustain_technique_enricher import (
+    step_seconds_from_tempo,
+    sustain_tier,
+)
 
 
 def _finite(value: Any, fallback: float) -> float:
@@ -18,7 +22,7 @@ def promote_candidate_sustain(
     events: Iterable[Mapping[str, Any]],
     tempo_bpm: float,
 ) -> list[dict[str, Any]]:
-    """Promote candidate sustain without erasing physical attack provenance.
+    """Promote candidate sustain and validate the final score before export.
 
     `timeSeconds`, `start`, `end`, and `duration` remain the quantized tab-grid
     presentation contract. `onsetTime` remains the physical detected attack that
@@ -26,15 +30,27 @@ def promote_candidate_sustain(
     so `offsetTime` remains the same absolute grid-start-plus-duration endpoint.
     The timing bases are serialized explicitly so downstream code cannot mistake
     the physical attack provenance for the quantized presentation start.
+
+    The final model-free validator fails closed on string/fret/MIDI legality,
+    simultaneous string collisions, primary/recovery provenance, duplicate note
+    identity and deterministic event ordering before any render/export consumer can
+    receive the promoted event list.
     """
     one_step = step_seconds_from_tempo(float(tempo_bpm))
     output: list[dict[str, Any]] = []
 
     for index, raw in enumerate(events):
         event = dict(raw)
-        shadow = event.get("rhythmSustainShadow") if isinstance(event.get("rhythmSustainShadow"), Mapping) else {}
+        shadow = (
+            event.get("rhythmSustainShadow")
+            if isinstance(event.get("rhythmSustainShadow"), Mapping)
+            else {}
+        )
         duration_steps = max(1, int(shadow.get("durationSteps") or 1))
-        duration_seconds = _finite(shadow.get("durationSeconds"), one_step)
+        duration_seconds = _finite(
+            shadow.get("durationSeconds"),
+            one_step,
+        )
         if duration_seconds <= 0.0:
             duration_seconds = float(one_step)
 
@@ -48,12 +64,17 @@ def promote_candidate_sustain(
             "durationSteps": int(duration_steps),
             "stepSeconds": float(one_step),
             "tier": sustain_tier(duration_steps),
-            "source": "reference-free-two-view-harmonic-persistence-repaired-timing-precision-candidate",
+            "source": (
+                "reference-free-two-view-harmonic-persistence-"
+                "repaired-timing-precision-candidate"
+            ),
             "attackTimingChanged": False,
             "physicalOnsetPreserved": True,
             "analysisTimingBasis": "quantized-timeSeconds",
             "presentationStartBasis": "quantized-timeSeconds",
-            "offsetTimingBasis": "quantized-timeSeconds-plus-durationSeconds",
+            "offsetTimingBasis": (
+                "quantized-timeSeconds-plus-durationSeconds"
+            ),
             "professionalReferenceUsed": False,
             "runtimeLabelsRequired": False,
         }
@@ -63,9 +84,16 @@ def promote_candidate_sustain(
         event["duration"] = float(duration_seconds)
         event["onsetTime"] = float(physical_onset)
         event["offsetTime"] = float(end)
-        event["physicalOnsetDeltaFromGridSeconds"] = float(physical_onset - start)
+        event["physicalOnsetDeltaFromGridSeconds"] = float(
+            physical_onset - start
+        )
         output.append(event)
 
+    validate_v143_preexport_events(
+        output,
+        require_event_index=True,
+        require_stable_order=True,
+    )
     return output
 
 
