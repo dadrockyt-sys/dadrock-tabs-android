@@ -23,6 +23,37 @@ from v143_rhythm_event_assembly import RhythmEventAssemblyResult
 EventKey = tuple[int, int]
 
 
+def _assert_preservation_only_decision(
+    *,
+    precision_midis: Sequence[int],
+    selected_midis: Sequence[int],
+    decision: Any,
+) -> None:
+    """Reject any helper decision that widens precision-v2 musical authority."""
+    precision_set = {int(value) for value in precision_midis}
+    selected_set = {int(value) for value in selected_midis}
+    candidate_set = {int(value) for value in decision.candidate_midis}
+    recovered_set = {int(value) for value in decision.recovered_midis}
+    dropped_set = {int(value) for value in decision.dropped_midis}
+
+    if candidate_set != precision_set:
+        raise RuntimeError(
+            "Polyphony helper changed the precision-v2 candidate pitch set"
+        )
+    if not selected_set.issubset(precision_set):
+        raise RuntimeError(
+            "Polyphony helper selected a precision-v2-pruned pitch"
+        )
+    if recovered_set:
+        raise RuntimeError(
+            "Polyphony helper reported recovery under preservation-only policy"
+        )
+    if dropped_set != precision_set.difference(selected_set):
+        raise RuntimeError(
+            "Polyphony helper reported inconsistent precision-v2 drops"
+        )
+
+
 def _voicing_with_explicit_primary(
     row: Mapping[str, Any],
     precision_midis: Sequence[int],
@@ -51,8 +82,14 @@ def _voicing_with_explicit_primary(
         positive_body_floor=POSITIVE_BODY_FLOOR,
         harmonic_intervals=tuple(HARMONIC_INTERVAL_WEIGHTS),
     )
+    selected_midis = list(decision.selected_midis)
+    _assert_preservation_only_decision(
+        precision_midis=precision,
+        selected_midis=selected_midis,
+        decision=decision,
+    )
     return (
-        list(decision.selected_midis),
+        selected_midis,
         decision.voicing,
         evidence,
         decision,
@@ -65,17 +102,17 @@ def build_precision_candidate_assembly(
     precision: PrecisionShadowResult,
     timing: ReferenceFreeTimingEstimate,
 ) -> CorrectedCandidateAssembly:
-    """Render retained precision attacks with feasibility-aware polyphony recovery.
+    """Render retained precision attacks with preservation-only legal voicing.
 
-    The precision stage keeps authority over attack identity and the explicit
-    primary/fundamental. Strong retained secondaries keep priority. A secondary
-    removed only by confidence may still be recovered here when it was physically
-    observed at the same attack, remains positive in both audio views, and completes
-    a legal joint six-string voicing.
+    Precision-v2 keeps sole authority over attack identity, explicit primary, and
+    retained pitch membership. This adapter may drop a retained secondary only
+    when the full retained pitch set cannot be voiced legally on the six-string
+    instrument. Observed pitches that precision-v2 pruned remain diagnostic
+    evidence only and can never be re-admitted by feasibility or positivity.
 
     This adapter cannot add or relocate attacks, invent pitches, change the primary,
-    consult a professional reference, or reintroduce the strongest upper harmonic
-    that a promoted fundamental deliberately interprets as overtone evidence.
+    consult a professional reference, or authorize a precision-pruned pitch through
+    a legacy recovery marker.
     """
     if not isinstance(precision, PrecisionShadowResult):
         raise TypeError("precision must be PrecisionShadowResult")
@@ -132,15 +169,20 @@ def build_precision_candidate_assembly(
             raise RuntimeError(
                 f"Legal voicing dropped precision primary at {key}"
             )
-        supported_pitch_count += len(decision.candidate_midis)
-        rendered_pitch_count += len(selected_midis)
-        grid_time = float(grid[key])
-        physical_onset = float(row.get("onsetTime") or grid_time)
 
         precision_set = set(precision_supported)
-        recovered_set = set(decision.recovered_midis)
         selected_set = set(selected_midis)
         candidate_set = set(decision.candidate_midis)
+        _assert_preservation_only_decision(
+            precision_midis=precision_supported,
+            selected_midis=selected_midis,
+            decision=decision,
+        )
+
+        supported_pitch_count += len(candidate_set)
+        rendered_pitch_count += len(selected_set)
+        grid_time = float(grid[key])
+        physical_onset = float(row.get("onsetTime") or grid_time)
 
         pitch_hypotheses = []
         for midi in observed:
@@ -159,11 +201,10 @@ def build_precision_candidate_assembly(
                     ),
                     "precisionPrimary": int(midi) == primary,
                     "precisionRetained": int(midi) in precision_set,
-                    "feasibilityRecoveryEligible": (
-                        int(midi) in candidate_set
-                        and int(midi) not in precision_set
-                    ),
-                    "feasibilityRecovered": int(midi) in recovered_set,
+                    # Legacy recovery-shaped fields are retained only for schema
+                    # compatibility. They are never selection authority.
+                    "feasibilityRecoveryEligible": False,
+                    "feasibilityRecovered": False,
                     "rendered": int(midi) in selected_set,
                     "source": "reference-free-two-view-cqt-consensus",
                 }
@@ -188,12 +229,12 @@ def build_precision_candidate_assembly(
                 "primary-preserved-feasibility-polyphony"
             ),
             "polyphonyBoundary": {
-                "version": 1,
+                "version": 2,
                 "precisionPitchCount": len(precision_set),
                 "observedPitchCount": len(set(observed)),
                 "candidatePitchCount": len(candidate_set),
                 "renderedPitchCount": len(selected_set),
-                "recoveredPitchCount": len(recovered_set),
+                "recoveredPitchCount": 0,
                 "droppedCandidatePitchCount": len(
                     decision.dropped_midis
                 ),
@@ -205,6 +246,7 @@ def build_precision_candidate_assembly(
                 "primaryMidiChanged": False,
                 "attackIdentityChanged": False,
                 "addsUnobservedPitch": False,
+                "recoveryPermitted": False,
                 "referenceFree": True,
                 "professionalReferenceUsed": False,
                 "runtimeLabelsRequired": False,
@@ -220,6 +262,11 @@ def build_precision_candidate_assembly(
             ),
         )
         for note_index, midi in enumerate(ordered_midis):
+            if int(midi) not in precision_set:
+                raise RuntimeError(
+                    "Precision candidate adapter attempted to render a "
+                    f"precision-v2-pruned pitch at {key}"
+                )
             position = voicing[int(midi)]
             event = deepcopy(source_row)
             event["midi"] = int(midi)
@@ -228,7 +275,7 @@ def build_precision_candidate_assembly(
             event["fret"] = int(position["fret"])
             event["rhythmTechniques"] = []
             event["noteMapping"] = {
-                "version": 5,
+                "version": 6,
                 "mode": (
                     "reference-free-precision-primary-preserved-"
                     "feasibility-polyphony-joint-voicing"
@@ -240,10 +287,9 @@ def build_precision_candidate_assembly(
                 "chordNoteCount": len(ordered_midis),
                 "primaryTechniqueNote": int(midi) == primary,
                 "precisionPrimaryPreserved": True,
-                "precisionPitchRetained": int(midi) in precision_set,
-                "feasibilityRecoveredSecondary": (
-                    int(midi) in recovered_set
-                ),
+                "precisionPitchRetained": True,
+                # Legacy compatibility field; never selection authority.
+                "feasibilityRecoveredSecondary": False,
                 "observedPitchOnly": True,
                 "professionalReferenceUsed": False,
                 "runtimeLabelsRequired": False,
@@ -278,21 +324,25 @@ def build_precision_candidate_assembly(
                 "Precision candidate adapter invented unobserved pitch "
                 f"at {key}"
             )
+        if midi not in precision_set:
+            raise RuntimeError(
+                "Precision candidate adapter emitted precision-v2-pruned "
+                f"pitch at {key}"
+            )
         if int(event["dominantMidi"]) != int(
             precision.primary_midis[key]
         ):
             raise RuntimeError(
                 f"Precision candidate adapter changed primary at {key}"
             )
-        recovered = bool(
+        if bool(
             event.get("noteMapping", {}).get(
                 "feasibilityRecoveredSecondary"
             )
-        )
-        if midi not in precision_set and not recovered:
+        ):
             raise RuntimeError(
-                "Precision candidate emitted non-retained pitch without "
-                f"recovery marker at {key}"
+                "Precision candidate adapter emitted a recovery marker under "
+                f"preservation-only policy at {key}"
             )
 
     return CorrectedCandidateAssembly(
