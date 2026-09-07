@@ -112,10 +112,13 @@ Validation performed in this environment:
 - result: **PASS — ttl=1800s / worker=1200s / margin=600s / control=result=shared TTL**
 - a full on-checkout invocation of `python analyzer/validate_v143_async_result_lifetime.py` remains optional when a local checkout is available; do not create/trigger a workflow merely to run it
 
-Next.js bridge:
-- `app/api/analyze-audio-tab/route.js` still has `900` only as a fallback when analyzer `expiresInSeconds` is missing/invalid
-- analyzer start/status responses now expose the shared 1800-second value, so this fallback does **not** own or expire analyzer state
-- leave the advisory fallback unchanged unless doing a separate truthful-fallback cleanup
+Next.js bridge cleanup is complete:
+- file: `app/api/analyze-audio-tab/route.js`
+- commit: `330a3d5dbde5bcc3e51eb577892c8d9643fcba58`
+- both async `start` and `status` advisory fallbacks now use `1800`
+- exact commit diff is only two literal replacements: `900` → `1800`
+- commit scope: one file, **2 additions / 2 deletions**
+- analyzer-provided `expiresInSeconds` remains authoritative; this bridge fallback still does not own or expire analyzer state
 
 Documentation-only TTL comment cleanup is complete:
 - file: `analyzer/v143_modal_http_endpoint.py`
@@ -123,17 +126,19 @@ Documentation-only TTL comment cleanup is complete:
 - exact diff replaced stale “hard 15-minute TTL” wording with the shared bounded `ASYNC_RESULT_TTL_SECONDS` wording
 - commit scope: one file, comment-only, **3 additions / 2 deletions**, no runtime code change
 
-## CONTINUATION — DETERMINISTIC CLEANUP INSPECTION
+## CONTINUATION — DETERMINISTIC CLEANUP COMPLETE
 
-Fresh continuation inspection on 2026-09-07 America/Toronto:
+Fresh continuation on 2026-09-07 America/Toronto:
 - branch head before writes was `41dd108c07cb1439f887dbc8f0d1185bd2998848`
-- no newer branch work was present beyond this checkpoint
+- no newer branch work was present beyond the starting checkpoint
 - inspection checkpoint commit: `8df101086c8fb21a4a4dc3da6fb377d57b26c300`
 - stale Modal TTL comment cleanup commit: `2f630afcfa7222a3af823661e45546b19f305f0c`
-- `app/api/analyze-audio-tab/route.js` still contains advisory `900` fallbacks in both async `start` and `status` response shaping; this remains optional cleanup only
-- no model/scoring workflow, Modal/GPU inference, deployment, scheduler/model mutation, or professional scoring was triggered during this continuation
+- intermediate checkpoint commit: `f618b314447430aba6248bc3f474c75d9b2ab79e`
+- Next.js truthful fallback cleanup commit: `330a3d5dbde5bcc3e51eb577892c8d9643fcba58`
+- exact diffs were inspected after each source write; no unintended code changes were present
+- no model/scoring workflow, Modal/GPU inference, deployment, scheduler/model mutation, professional scoring, optimizer, or threshold sweep was triggered
 
-Current safe choice: either stop here or perform a separately isolated truthful-fallback cleanup from `900` to `1800` in the Next.js bridge with ordinary static/JS validation only. Preserve the root behavior: shared analyzer TTL **1800s**, orchestrator timeout **1200s**, margin **600s**.
+Deterministic cleanup is now closed. Preserve the root behavior: shared analyzer TTL **1800s**, orchestrator timeout **1200s**, margin **600s**. No further async-lifetime source change is indicated by the current evidence.
 
 ## WORKFLOW SAFETY
 
@@ -143,19 +148,19 @@ No model/scoring workflow was manually triggered during these slices. No Modal/G
 
 1. Re-open this file first on branch `v143-contextual-prune-lobo` and refresh branch head. Treat any newer checkpoint as authoritative.
 2. Treat the precision score-structure slice as **closed**. Do not reopen or alter helper/adapter/model behavior unless there is a new explicit reason. Preserve **725 / 970 / 967 / 3 drops / 0 recovery**.
-3. Treat the async ownership root defect as **code-patched**: shared TTL is now 1800 seconds and the orchestrator timeout remains 1200 seconds, giving a 600-second margin.
-4. If a normal local checkout is available, run only the dependency-free/model-free command `python analyzer/validate_v143_async_result_lifetime.py`. Do **not** trigger a GitHub workflow, Modal function, model run, or deployment just to validate it.
-5. The stale Modal TTL comment cleanup is complete at `2f630afcfa7222a3af823661e45546b19f305f0c`. Optional remaining cleanup is only to align the Next.js advisory async expiry fallback from `900` to `1800`; this is not the ownership root cause.
-6. If making that fallback cleanup, keep it isolated, use ordinary static/JS validation only, and save this checkpoint immediately afterward.
-7. Do **not** deploy, promote Production, weaken Deployment Protection, run model-bearing Rhythm/Lead/Bass analysis, run the professional scorer, invoke Modal/GPU/paid inference, or change model/scheduler/threshold parameters without new explicit user authorization.
-8. Before any future score-quality work, require a fresh explicit authorization/budget decision because the authorized model-bearing and professional-scoring evaluation budget is exhausted.
+3. Treat the async ownership root defect as **code-patched and cleanup-complete**: shared analyzer TTL is 1800 seconds, the orchestrator timeout remains 1200 seconds, and the Next.js advisory fallbacks are also 1800 seconds.
+4. If a normal local checkout is available, the only optional validator command remains dependency-free/model-free: `python analyzer/validate_v143_async_result_lifetime.py`. Do **not** trigger a GitHub workflow, Modal function, model run, or deployment just to validate it.
+5. Do not reopen the TTL cleanup absent new evidence. The stale comment and both bridge fallback literals are aligned with the shared 1800-second lifetime.
+6. Do **not** deploy, promote Production, weaken Deployment Protection, run model-bearing Rhythm/Lead/Bass analysis, run the professional scorer, invoke Modal/GPU/paid inference, or change model/scheduler/threshold parameters without new explicit user authorization.
+7. Before any future score-quality work, require a fresh explicit authorization/budget decision because the authorized model-bearing and professional-scoring evaluation budget is exhausted.
 
 ## FRESH CHAT SUCCESS CONDITION
 
 The safe state to preserve is:
 - score structure: **725 retained attacks / 970 selected pitches / 967 rendered / 3 legal-voicing drops / 0 recovery**
 - async ownership: **1800s shared TTL > 1200s orchestrator budget by 600s**
+- Next.js fallback semantics: **1800s on start + status**
 - deterministic validator target: **PASS**
 - **no deployment, no model-bearing execution, no professional scoring, no paid/GPU inference**
 
-If no further cleanup is desired, this branch is at a safe checkpoint for a fresh chat.
+This branch is at a safe deterministic checkpoint for a fresh chat. Any future score-quality work requires a new explicit evaluation-budget authorization.
