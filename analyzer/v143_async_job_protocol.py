@@ -12,7 +12,10 @@ from typing import Any, Iterable
 
 ASYNC_PROTOCOL_VERSION = 1
 ASYNC_JOB_TOKEN_PREFIX = "v143a1"
-ASYNC_RESULT_TTL_SECONDS = 15 * 60
+# Control ownership begins when the job is spawned, while the async worker is
+# allowed to run for 20 minutes. Keep ownership/result retrieval bounded but
+# leave a full 10-minute margin beyond that legitimate execution budget.
+ASYNC_RESULT_TTL_SECONDS = 30 * 60
 ASYNC_RESULT_CHUNK_BYTES = 700_000
 ASYNC_RESULT_MAX_COMPRESSED_BYTES = 12_000_000
 ASYNC_RESULT_MAX_JSON_BYTES = 24_000_000
