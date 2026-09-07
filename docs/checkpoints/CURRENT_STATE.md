@@ -386,3 +386,18 @@ Exact fresh-chat next steps:
 9. Only after this score-structure slice is closed, return to the separate async-result lifetime defect and locate the actual ~900-second ownership TTL before patching it to safely exceed the 1200-second worker budget.
 
 Fresh-chat success condition for the next slice: obtain a deterministic, reference-free answer to **“Does the new feasibility-recovery boundary safely preserve the persisted precision candidate, or does it over-recover pruned hypotheses?”** with zero new paid/model/professional evaluation consumption.
+
+## CONTINUATION CHECKPOINT — FEASIBILITY REPLAY PREP
+
+Resumed on `v143-contextual-prune-lobo`; branch head at resume was `0d335c15237d8fa0d851edba5df680ab432c089d`.
+
+Confirmed before any runtime-affecting change:
+- the next operation remains a CPU-only deterministic structural replay of `analyzer/v143_precision_polyphony_boundary.py` against already-persisted precision evidence;
+- no new Basic Pitch/model/Modal/GPU/professional scorer/reference/optimizer work is authorized or needed;
+- `debug/v143-contextual-prune/repaired-timing-precision-candidate-product.json` is present with known blob `7e6002cd4d42f355685241e0576c78940056f093`;
+- GitHub's decoded large-file path is unreliable for that product, but the Git Data blob endpoint can read the committed evidence;
+- the historical replay-evidence blob identifier recorded above did not resolve directly in the connector, so the immediate next action is to resolve the exact current path/blob for the persisted replay evidence and CPU-only replay plumbing before executing structural metrics.
+
+Static inspection of `v143_precision_polyphony_boundary.py` also found two audit/robustness items to verify during replay rather than changing blindly: `familiesAfter` appears to be computed from the full timeline before filtering by string, and restored-string bookkeeping should be checked against the actual candidate string chosen. Neither observation has changed runtime behavior yet.
+
+No source/runtime behavior was changed in this continuation before this checkpoint. No model call, scorer call, Modal function, production deployment, optimizer, or threshold sweep was performed.
