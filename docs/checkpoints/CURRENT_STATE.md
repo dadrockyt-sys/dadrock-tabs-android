@@ -70,38 +70,44 @@ Dependency-free validator: **PASS**.
 Persisted current-helper replay: **725 / 970 / 967 / 3 drops / 0 recovery**.
 Exact drops: m40/s14 MIDI 78; m63/s14 MIDI 47; m113/s13 MIDI 43.
 
-## ASYNC RESULT LIFETIME DEFECT — ACTUAL BOUNDARY LOCATED, NOT YET PATCHED
+## ASYNC RESULT LIFETIME DEFECT — ROOT PATCH APPLIED, VALIDATION PENDING
 
-Fresh source inspection proved the ~900-second expiry is a real ownership defect, distinct from worker execution timeout.
+Fresh source/history inspection proved the ~900-second expiry was a real ownership defect, distinct from worker execution timeout.
 
 Actual ownership constant:
 - file: `analyzer/v143_async_job_protocol.py`
 - symbol: `ASYNC_RESULT_TTL_SECONDS`
-- current value: `15 * 60` = **900 seconds**
+- old value: `15 * 60` = **900 seconds**
+- new value: `30 * 60` = **1800 seconds**
+- patch commit: `b55d9db517fe356b40600bae85ba98ead879aeb6`
+- current protocol blob: `3d76808980cf7e3a6f3ce53812eea8cd41f8da72`
 
-Actual ownership use at job start:
-- file: `analyzer/v143_modal_http_endpoint.py`
+Why 1800:
+- `orchestrate_tab_job` and `async_worker` each retain the existing **1200-second / 20-minute** worker budget
+- control ownership begins at job spawn
+- 1800 keeps the protocol bounded/ephemeral while leaving a full **600-second / 10-minute margin** beyond the legitimate worker budget
+- no worker/model/scheduler behavior was changed
+
+History finding:
+- commit `1b139994b9bf8572093e6644a61b6fde8c14cd89` originally introduced the generic 15-minute result TTL
+- later commit `e682e6faf0aa5fe9175684561ea584e9fad8bf9e` added fail-closed orchestrator control tracking and reused that same 15-minute TTL for control ownership
+- no historical evidence showed that 900 seconds was intentionally chosen to cover the later 1200-second worker budget; the reuse created the lifetime mismatch
+
+Actual ownership use at job start remains:
 - `start_tab_job(...)` creates `v143_async_controls.ephemeral(partition_ttl=ASYNC_RESULT_TTL_SECONDS)`
 - it then spawns `orchestrate_tab_job` and stores the spawned `FunctionCall.object_id` in that control partition
 - `poll_tab_job_status(...)` later depends on that control record to reconstruct `modal.functions.FunctionCall.from_id(...)`
-- if the control record is absent/expired, status reports that the token is unknown/expired
 
-Worker execution budget:
-- `orchestrate_tab_job = app.function(... timeout=1200, ...)`
-- `async_worker = app.function(... timeout=1200, ...)`
-
-Therefore the control partition can expire at **t=900** while a valid orchestrator/worker is still allowed to run until **t=1200**. The status/control ownership can disappear **300 seconds before** the legitimate worker budget ends.
-
-Result lifetime is related but starts later:
-- `finalize_tab_job(...)` creates `v143_async_results.ephemeral(partition_ttl=ASYNC_RESULT_TTL_SECONDS)` only when finalizing, so its 900-second clock is a post-completion retrieval window rather than the start-time ownership defect
+Result lifetime remains related but starts later:
+- `finalize_tab_job(...)` creates `v143_async_results.ephemeral(partition_ttl=ASYNC_RESULT_TTL_SECONDS)` only when finalizing
 - ACK explicitly clears result/control partitions
 
-Next.js bridge is not the owner:
-- `app/api/analyze-audio-tab/route.js` has fallback/advisory `ANALYZER_JOB_EXPIRES_SECONDS = 15 * 60`
-- it normalizes `expiresInSeconds`, but does not own or delete the analyzer control/result record
-- align it later only if needed for truthful fallback semantics; do not mistake it for the root cause
+Next.js bridge remains advisory, not ownership:
+- `app/api/analyze-audio-tab/route.js` currently falls back to **900 seconds** when the analyzer omits/invalidates `expiresInSeconds`
+- normal analyzer responses now inherit 1800 through the shared protocol constant
+- decide during static validation whether to align only this advisory fallback for truthful degraded semantics; do not mistake it for the root fix
 
-**Decision before patch:** inspect history and current async validators/tests to determine the intended safe TTL/margin. Do not guess a replacement value. Patch only the actual ownership lifetime (and any purely advisory mirror needed for consistency), then add deterministic/static validation proving ownership TTL exceeds the 1200-second worker budget.
+**Validation is still pending.** Do not claim this async slice closed until a dependency-free deterministic/static validator proves the ownership TTL exceeds the 1200-second worker budget and the intended ownership sites still use the shared constant.
 
 ## WORKFLOW SAFETY
 
@@ -109,13 +115,13 @@ No model/scoring workflow has been manually triggered during this work. Prior ch
 
 ## NEXT EXACT STEPS
 
-1. Inspect commit history for `analyzer/v143_async_job_protocol.py` and `analyzer/v143_modal_http_endpoint.py` around async TTL introduction/changes.
-2. Locate any existing async protocol validator/test on this branch.
-3. Establish intended TTL > 1200 with an explicit safety/retrieval margin from existing design/history rather than guessing.
-4. Checkpoint again before patch if history changes interpretation.
-5. Make the smallest isolated lifetime patch; do not change worker/model/scheduler behavior.
-6. Add/run dependency-free deterministic/static validation.
-7. Checkpoint immediately after patch/validation.
+1. Add a dependency-free deterministic/static validator for the async lifetime boundary.
+2. Prove `ASYNC_RESULT_TTL_SECONDS == 1800` and `> 1200`, with a 600-second margin.
+3. Prove the start-time control partition and final result partition still use `ASYNC_RESULT_TTL_SECONDS`.
+4. Prove both existing worker/orchestrator execution timeouts remain 1200; do not modify them.
+5. Align the Next.js 900-second advisory fallback to 1800 only if validation confirms it is purely fallback/reporting semantics.
+6. Run the validator locally/model-free if possible without triggering workflows or importing Modal; otherwise use static AST/text validation and record the limitation explicitly.
+7. Checkpoint immediately after validation.
 8. **Do not deploy or run model-bearing workflows.**
 
 ## SUCCESS CONDITION
