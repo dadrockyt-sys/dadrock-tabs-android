@@ -119,6 +119,17 @@ Next.js bridge:
 
 One stale source comment remains in `analyzer/v143_modal_http_endpoint.py` saying “hard 15-minute TTL”; behavior is governed by the imported shared 1800-second constant. This is documentation-only cleanup, not a runtime defect.
 
+## CONTINUATION — DETERMINISTIC CLEANUP INSPECTION
+
+Fresh continuation inspection on 2026-09-07 America/Toronto:
+- branch head before writes was `41dd108c07cb1439f887dbc8f0d1185bd2998848`
+- no newer branch work was present beyond this checkpoint
+- `analyzer/v143_modal_http_endpoint.py` still contains the stale comment “hard 15-minute TTL” while both Queue partition TTL sites use `ASYNC_RESULT_TTL_SECONDS`
+- `app/api/analyze-audio-tab/route.js` still contains advisory `900` fallbacks in both async `start` and `status` response shaping
+- no model/scoring workflow, Modal/GPU inference, deployment, scheduler/model mutation, or professional scoring was triggered during this inspection
+
+Next safe action is limited to isolated deterministic source cleanup plus static verification. Preserve the root behavior: shared analyzer TTL **1800s**, orchestrator timeout **1200s**, margin **600s**.
+
 ## WORKFLOW SAFETY
 
 No model/scoring workflow was manually triggered during these slices. No Modal/GPU/paid inference, professional scorer, optimizer, threshold sweep, deployment, Production promotion, model change, or scheduler change was performed.
