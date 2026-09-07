@@ -439,7 +439,7 @@ export async function POST(request) {
               3000,
             expiresInSeconds:
               Number(bridgeData.expiresInSeconds) ||
-              900,
+              1800,
           },
         },
         { status: 202 }
@@ -471,7 +471,7 @@ export async function POST(request) {
                 3000,
               expiresInSeconds:
                 Number(bridgeData.expiresInSeconds) ||
-                900,
+                1800,
             },
           },
           { status: 202 }
