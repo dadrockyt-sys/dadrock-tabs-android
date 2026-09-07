@@ -36,7 +36,9 @@ CANDIDATE_MODULES = (
     "v143_contextual_prune_precision_shadow_v2",
     "v143_precision_promoted_harmonic_guard",
     "v143_contextual_prune_candidate_events",
+    "v143_precision_polyphony_boundary",
     "v143_contextual_prune_precision_candidate_events",
+    "v143_rhythm_preexport_validator",
     "v143_precision_sustain_promotion",
     "v143_correlation_safe_fixed_count_reranker_freeze",
     "v143_intro_sequence_event_model",
@@ -147,6 +149,7 @@ def analyze_repaired_precision_candidate(source_audio: bytes, suffix: str = ".au
     from v143_rhythm_event_assembly import RhythmEventAssemblyResult
     from v143_rhythm_legato_evidence import enrich_rhythm_assembly_with_legato
     from v143_rhythm_output_adapter import render_rhythm_tab
+    from v143_rhythm_preexport_validator import validate_v143_preexport_events
     from v143_rhythm_semantic_primary_note_guard import guard_semantic_events
     from v143_rhythm_sustain_consensus_shadow import annotate_sustain_shadow
 
@@ -198,14 +201,33 @@ def analyze_repaired_precision_candidate(source_audio: bytes, suffix: str = ".au
             carrier.grid,
             precision,
         )
-        candidate = build_precision_candidate_assembly(carrier.rows, carrier.grid, precision, carrier.timing)
+        candidate = build_precision_candidate_assembly(
+            carrier.rows,
+            carrier.grid,
+            precision,
+            carrier.timing,
+        )
 
-        with_bends = enrich_rhythm_assembly_with_consensus_bends(candidate.assembly, carrier_stem_paths=(direct, cascade))
-        with_legato = enrich_rhythm_assembly_with_legato(with_bends, carrier_stem_paths=(direct, cascade))
-        guarded_events, semantic_diagnostics = guard_semantic_events(with_legato.events)
-        guarded = RhythmEventAssemblyResult(source=candidate.source, events=tuple(guarded_events))
+        with_bends = enrich_rhythm_assembly_with_consensus_bends(
+            candidate.assembly,
+            carrier_stem_paths=(direct, cascade),
+        )
+        with_legato = enrich_rhythm_assembly_with_legato(
+            with_bends,
+            carrier_stem_paths=(direct, cascade),
+        )
+        guarded_events, semantic_diagnostics = guard_semantic_events(
+            with_legato.events
+        )
+        guarded = RhythmEventAssemblyResult(
+            source=candidate.source,
+            events=tuple(guarded_events),
+        )
 
-        pitch_views = [build_pitch_energy_view(direct), build_pitch_energy_view(cascade)]
+        pitch_views = [
+            build_pitch_energy_view(direct),
+            build_pitch_energy_view(cascade),
+        ]
         sustained_events, sustain_diagnostics = annotate_sustain_shadow(
             guarded.events,
             pitch_views,
@@ -215,16 +237,42 @@ def analyze_repaired_precision_candidate(source_audio: bytes, suffix: str = ".au
             [dict(event) for event in sustained_events],
             float(carrier.timing.tempo_bpm),
         )
+        preexport_diagnostics = validate_v143_preexport_events(
+            events,
+            require_event_index=True,
+            require_stable_order=True,
+        )
 
-        attack_locations = {(int(event["measure"]), int(event["step"])) for event in events}
+        attack_locations = {
+            (int(event["measure"]), int(event["step"]))
+            for event in events
+        }
         if attack_locations != set(precision.retained_events):
-            raise RuntimeError("repaired precision semantics/sustain changed attack identity")
+            raise RuntimeError(
+                "repaired precision semantics/sustain changed attack identity"
+            )
         if {measure for measure, _step in attack_locations} != targets:
-            raise RuntimeError("repaired precision candidate lost audio-derived measure coverage")
+            raise RuntimeError(
+                "repaired precision candidate lost audio-derived measure coverage"
+            )
         for event in events:
             key = (int(event["measure"]), int(event["step"]))
-            if int(event["midi"]) not in set(precision.pitch_sets[key]):
-                raise RuntimeError(f"repaired precision candidate emitted unsupported pitch at {key}")
+            midi = int(event["midi"])
+            observed = set(precision.original_pitch_sets[key])
+            retained = set(precision.pitch_sets[key])
+            if midi not in observed:
+                raise RuntimeError(
+                    f"repaired precision candidate emitted unobserved pitch at {key}"
+                )
+            recovered = (
+                isinstance(event.get("noteMapping"), dict)
+                and event["noteMapping"].get("feasibilityRecoveredSecondary") is True
+            )
+            if midi not in retained and not recovered:
+                raise RuntimeError(
+                    "repaired precision candidate emitted a non-retained pitch "
+                    f"without feasibility recovery provenance at {key}"
+                )
 
         technique_types = sorted({
             str(item.get("type"))
@@ -267,6 +315,10 @@ def analyze_repaired_precision_candidate(source_audio: bytes, suffix: str = ".au
                 "nonHarmonicSecondaryConsensus": "two-of-three-score-attack-body-at-legacy-0.80-floor",
                 "harmonicUpperSecondaryConsensus": "legacy-three-of-three-score-attack-body-at-0.92-floor",
                 "newNumericThresholdIntroduced": False,
+                "postPrecisionFeasibilityRecovery": (
+                    "positive-two-view-observed-pitches-only-with-legal-joint-voicing"
+                ),
+                "confidenceGateIsNotFinalFeasibilityGate": True,
                 "referenceFree": True,
                 "professionalReferenceUsed": False,
             },
@@ -274,6 +326,7 @@ def analyze_repaired_precision_candidate(source_audio: bytes, suffix: str = ".au
             "promotedHarmonicGuardDiagnostics": promoted_harmonic_guard.to_dict(),
             "semanticGuard": semantic_diagnostics.to_dict(),
             "sustainDiagnostics": sustain_diagnostics,
+            "preExportValidation": preexport_diagnostics.to_dict(),
             "timing": {
                 "tempoBpm": float(carrier.timing.tempo_bpm),
                 "firstBeatInMeasure": int(carrier.timing.first_beat_in_measure),
@@ -334,19 +387,32 @@ def approved_audio(
     result = analyze_repaired_precision_candidate.remote(data, source.suffix)
     candidate = result.get("candidate") or {}
     if candidate.get("approvedFixture") is not True:
-        raise RuntimeError("repaired precision candidate did not receive approved fixture")
+        raise RuntimeError(
+            "repaired precision candidate did not receive approved fixture"
+        )
     if candidate.get("measureRangeDerivedFromAudio") is not True:
-        raise RuntimeError("repaired precision candidate used a non-audio measure range")
+        raise RuntimeError(
+            "repaired precision candidate used a non-audio measure range"
+        )
     if candidate.get("repairedIntervalOutliersZero") is not True:
-        raise RuntimeError("repaired precision candidate timing contains outliers")
+        raise RuntimeError(
+            "repaired precision candidate timing contains outliers"
+        )
     replay = result.get("precisionReplayEvidence") or {}
     if int(replay.get("retainedAttackCount") or 0) <= 0:
-        raise RuntimeError("precision v2 candidate did not persist replay attack evidence")
+        raise RuntimeError(
+            "precision v2 candidate did not persist replay attack evidence"
+        )
     if int(replay.get("originalPitchHypothesisCount") or 0) <= 0:
-        raise RuntimeError("precision v2 candidate did not persist replay pitch evidence")
+        raise RuntimeError(
+            "precision v2 candidate did not persist replay pitch evidence"
+        )
     output = Path(output_path)
     output.parent.mkdir(parents=True, exist_ok=True)
-    output.write_text(json.dumps(result, indent=2, allow_nan=False) + "\n", encoding="utf-8")
+    output.write_text(
+        json.dumps(result, indent=2, allow_nan=False) + "\n",
+        encoding="utf-8",
+    )
     print(json.dumps(result["timing"], sort_keys=True))
     print(json.dumps(result["candidateDiagnostics"], sort_keys=True))
     print(json.dumps(result["precisionDiagnostics"], sort_keys=True))
@@ -355,9 +421,13 @@ def approved_audio(
         "retainedAttackCount": replay.get("retainedAttackCount"),
         "originalPitchHypothesisCount": replay.get("originalPitchHypothesisCount"),
     }, sort_keys=True))
-    print(json.dumps(result["promotedHarmonicGuardDiagnostics"], sort_keys=True))
+    print(json.dumps(
+        result["promotedHarmonicGuardDiagnostics"],
+        sort_keys=True,
+    ))
     print(json.dumps(result["semanticGuard"], sort_keys=True))
     print(json.dumps(result["sustainDiagnostics"], sort_keys=True))
+    print(json.dumps(result["preExportValidation"], sort_keys=True))
     print(f"WROTE={output}")
 
 
