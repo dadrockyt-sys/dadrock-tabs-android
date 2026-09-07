@@ -7,6 +7,7 @@ Prior checkpoint lineage retained in Git history:
 - hook trace checkpoint `0410c6c825d15751163a311f5389a444124a4d1f`
 - polyphony repair checkpoint `4cb4c57e52cf21e95877d984f6002236abca1727`
 - integrated repair checkpoint `b09fddb5da4486e8bccab34636cdd844183c1d85`
+- live-vs-precision split checkpoint `13550deba569cf9c85a5fe7d48294434cbba24ae`
 
 ## NON-NEGOTIABLE AUTHORIZATION / BUDGET BOUNDARY
 
@@ -21,7 +22,7 @@ Current counters:
 **DO NOT** start another Rhythm/Lead/Bass model-bearing analysis and **DO NOT** run the professional scorer again without new explicit user authorization.
 Also do not deploy/promote production, weaken Deployment Protection, run optimizer/training/threshold sweeps, or mutate model/scheduler parameters as part of evaluation.
 
-Safe work now is deterministic/model-free source analysis, repair, static validation, and read-only inspection of already-consumed evidence.
+Safe work now is deterministic/model-free source analysis, repair, static validation, and read-only inspection/replay of already-consumed evidence.
 
 ## IMMUTABLE RECOVERED RUN / FROZEN RESULT
 
@@ -153,7 +154,7 @@ Fixed two deterministic seams:
   - MIDI must be in `precision.original_pitch_sets`;
   - if absent from pruned `precision.pitch_sets`, explicit `feasibilityRecoveredSecondary = true` is mandatory.
 
-Output now records `preExportValidation` and that confidence gating is not the final feasibility gate.
+Output records `preExportValidation` and that confidence gating is not the final feasibility gate.
 
 **Important:** no Modal function was invoked. This is source-only integration and is **not** the exact live path that produced the frozen 925-event result.
 
@@ -169,9 +170,9 @@ Inspected:
 
 These stages preserve multi-note attacks. The Python renderer stores a list per step and rejects duplicate strings. JS projects each event independently and reports maximum chord size / multi-note onset count.
 
-## EXACT FROZEN/LIVE PATH TRACE — NEW CRITICAL FINDING
+## EXACT FROZEN/LIVE PATH TRACE
 
-The exact one-shot workflow `.github/workflows/v143-one-shot-final-rhythm-e2e.yml` pins and reuses the existing preview and verifies these live files, including:
+The exact one-shot workflow `.github/workflows/v143-one-shot-final-rhythm-e2e.yml` pins and reuses the existing preview and verifies live files including:
 - `analyzer/v143_modal_http_endpoint.py`
 - `analyzer/v143_async_job_protocol.py`
 - `analyzer/v143_modal_live_endpoint.py`
@@ -202,7 +203,7 @@ Therefore the exact frozen/live path does **not** call `build_precision_candidat
 - duration ≥ 0.05 s;
 - then near-unison suppression and legal joint voicing.
 
-This is structurally confidence-before-feasibility, but **do not loosen it blindly**.
+Do not loosen it blindly.
 
 ### Read-only replay of already-consumed frozen worker result
 
@@ -212,29 +213,116 @@ Artifact inspected read-only:
 - artifact ID `9993769594`
 - `recovered-worker-result.json`
 
-Facts from the frozen serialized result:
+Facts:
 - candidateCount **1818**
 - selected attacks **364**
 - rendered notes **925**
 - multi-note rendered attacks **259 / 364**
 - all 364 selected attacks have >1 observed pitch hypothesis
-- total observed playable pitch hypotheses across selected attacks: **7624**
-- rendered: **925**
-- observed but not rendered: **6699**
+- total observed playable pitch hypotheses across selected attacks **7624**
+- rendered **925**
+- observed but not rendered **6699**
 
-A deterministic read-only replay of the current mapper rules found:
-- 6300 suppressed hypotheses fail the relative-amplitude gate (non-exclusive reason count);
-- 3929 fail the absolute 0.11 amplitude floor;
-- 3244 fail max-source winner equality;
+Deterministic read-only mapper replay found non-exclusive suppression reasons:
+- 6300 fail relative amplitude;
+- 3929 fail absolute 0.11 amplitude;
+- 3244 fail max-source equality;
 - 2970 fail eventCount≥2;
 - 1086 fail duration≥0.05;
-- only 16 fail grid error≤0.06.
+- 16 fail grid error≤0.06.
 
-Critically, if only the 40% relative-amplitude winner gate were bypassed while retaining max-source + all existing absolute reliability gates, **1511** currently suppressed pitches would become eligible and **1338** are individually legally voiceable with the frozen rendered set across **285 attacks**. A greedy legal-voicing replay preserving the existing near-unison rule would add **812 notes across 283 attacks**, frequently filling attacks to six notes.
+Bypassing only the 40% relative-amplitude gate while retaining the remaining rules would make 1511 suppressed pitches eligible, 1338 individually legally voiceable with the frozen rendered set, and a greedy legal replay could add about **812 notes across 283 attacks**.
 
-Given the professional frozen score already reports **779 unmatched generated notes**, that direction is unsafe and likely worsens over-generation.
+Given the professional frozen score already has **779 unmatched generated notes**, that direction is unsafe.
 
-**Conclusion:** the frozen/live failure is not a one-note-per-attack collapse. The exact live path is already highly polyphonic. Do **not** relax live mapper thresholds or source-count/relative-amplitude gates based solely on feasibility.
+**Conclusion:** the frozen/live failure is not a one-note-per-attack collapse. Do not relax live mapper thresholds or source-count/relative-amplitude gates solely because a pitch is guitar-feasible.
+
+## HISTORY PROOF — PRECISION PRODUCT IS ISOLATED EVALUATION, NOT LIVE REPLACEMENT
+
+Branch history now provides explicit intent:
+- `0626287d410aac69d1a4a61c96301c5172041894` — `v143: add isolated repaired-timing candidate product`
+- `27e52d525459554eed9930802199fcb87e79b884` — `v143: add repaired timing precision candidate product`
+- `84feba722161b18e6ee31b587bd56bfc345d1c3b` — checkpoint authorizing a one-shot paid precision capture
+- `aecdd04771850e7b43f13ced7751cdd11cf3be41` — `v143: add dormant one-shot paid capture workflow`
+- `15d805facdd2c95b5a2f4f3c96be853777e592fe` — checkpoint recording successful paid precision capture
+- `c1451df43cc1162ed2b38aa3f3300b7af4d9b527` — `v143: validate precision candidate`
+
+The candidate repeatedly serialized/declared:
+- `protectedLivePipelineModified: false`
+- `liveEndpointDeployedOrModified: false`
+- `productionModified: false`
+
+Therefore **do not wire this candidate into the live endpoint by assumption**. It was deliberately isolated for evaluation/replay.
+
+## PERSISTED PAID PRECISION CAPTURE — CPU-ONLY REPLAY IS THE AUTHORIZED CONTINUATION PATH
+
+The successful one-shot paid precision capture used approved fixture:
+- `public/gomywayfullaitest.m4a`
+- SHA-256 `215bd5a657c5326f08f132ae358595a95c30b39bb7493a52c2f910d5a608149f`
+
+The capture is already consumed. Do not buy/rerun it without new explicit authorization.
+
+Committed product/evidence from `c1451df43cc1162ed2b38aa3f3300b7af4d9b527`:
+- `debug/v143-contextual-prune/repaired-timing-precision-candidate-product.json`
+  - blob `7e6002cd4d42f355685241e0576c78940056f093`
+- `debug/v143-contextual-prune/repaired-timing-precision-replay-evidence.json`
+  - blob `c1dec90e744624752ebe51676469aa5d99b11e23`
+- `debug/v143-contextual-prune/replay-validation-a.json`
+  - blob `d2633fdc353000bbe9f2954005948265358bb60a`
+- `debug/v143-contextual-prune/replay-validation-b.json`
+  - same blob `d2633fdc353000bbe9f2954005948265358bb60a`
+
+Paid capture facts recorded by the successful-capture checkpoint:
+- final tempo `129.19921875`
+- beat-grid interval outliers `5 → 0`
+- lookahead bridge beats `5`
+- bar phase unchanged
+- repaired attack moves `0`
+- full audio-derived measure range `1–113`
+- corrected retained attacks `858`
+- precision-v2 retained attacks `725`
+- precision-v2 selected pitches `970`
+- final rendered pitches `967`
+- after promoted-harmonic guard convenience count `965` (diagnostic layer)
+- v2 attack additions/removals `0 / 0`
+- v2 pitch additions/removals `22 / 4`
+- promoted-harmonic strongest pitches dropped `2`
+- semantic changed pitch/attack `false / false`
+- onset-present-after guard `725`
+- all 113 measures populated.
+
+Persisted replay evidence stores, for each retained `(measure, step)` attack:
+- original raw pitch hypotheses;
+- final selected pitch set;
+- explicit primary MIDI chosen live;
+- attack strength.
+
+Historical CPU-only replay validation reproduced the capture exactly:
+- retained attacks `725`
+- matched attacks `725`
+- mismatch count `0`
+- original pitch hypotheses `6525`
+- live selected pitches `970`
+- replay selected pitches `970`
+- live/replay flat SHA-256 `b1e3fdf591420871ac1d9a1fa7d5a6fe4572b9febb73bf52b176ad3e90cb06a`
+- deterministic replay `true`
+- repeated replay A/B payloads identical `true`
+- `addsUnobservedAttack=false`
+- `addsUnobservedPitch=false`
+- `referenceFree=true`
+- `professionalReferenceUsed=false`
+- `paidModelRequired=false`.
+
+A later persisted precision event-layer replay also exists:
+- workflow `.github/workflows/v143-replay-precision-candidate.yml`
+- historical run `33803626150`
+- head SHA `4c4c6cb2835708399e531c475b9725c70b405732`
+- artifact `v143-replay-precision-candidate-33803626150`
+- `replay-product-summary.json`
+- `replay-product-events.json`
+- result: 725 attacks / 965 rendered notes; all 113 measures populated; no unobserved attack/pitch; reference-free; paid-model-free.
+
+The successful-capture checkpoint explicitly directs future deterministic policy work to use the persisted CPU-only replay bundle rather than purchasing another capture.
 
 ## CURRENT DIAGNOSIS
 
@@ -242,18 +330,27 @@ There are two distinct paths:
 
 1. **Exact frozen/live path** — broad Basic Pitch hypothesis cloud → conservative live mapper → 364 attacks / 925 notes. It is already polyphonic and has poor pitch/chord correctness. Blindly recovering more notes is contraindicated by the frozen evidence.
 
-2. **Isolated repaired precision path** — contextual-prune precision v2 + promoted-harmonic guard → deterministic legal polyphony boundary + provenance validator. This path is designed to reduce/structure the hypothesis cloud before final voicing, but it has not been proven as the deployed/frozen live route and must not be treated as such.
+2. **Isolated precision evaluation path** — contextual-prune precision v2 + promoted-harmonic guard → deterministic candidate assembly. Its one authorized paid capture is persisted and exactly reproducible CPU-only. This is the correct evidence source for testing deterministic post-capture policy changes, but it is **not** authorization to replace the live path.
 
-The next work should determine the intended safe integration boundary between these paths without running a model or scorer.
+A new risk must now be tested before retaining the recent feasibility-recovery change: the new boundary may recover too many of the 6525 original precision hypotheses that precision-v2 intentionally pruned. Guitar feasibility alone is not evidence of musical correctness. The persisted replay bundle lets us quantify that risk without a model or scorer.
 
 ## NEXT SAFE SLICE
 
-1. Read-only trace branch history/source around the precision-candidate product to determine whether it was explicitly intended as a replacement product path, shadow candidate, or evaluation-only path.
-2. Inspect any adapter/orchestrator already present that can consume **precomputed/frozen** precision evidence without initializing a new model. Prefer replayable deterministic evidence over a new live run.
-3. Do **not** loosen live Basic Pitch polyphony thresholds. Do **not** change model/scheduler thresholds.
-4. If a deterministic source integration can route already-produced precision output through the same final render contract without model execution, implement only that adapter/validation seam and add pure tests.
-5. Checkpoint immediately after that trace/integration decision.
-6. Once score construction/export is genuinely closed, separately locate the real async control/result lifetime (~900 s) and patch only that ownership boundary to exceed the 1200-second worker budget.
+1. Inspect the small committed `replay-validation-a.json` / `b.json` files and the CPU-only replay workflow/script to establish the exact replay schema/tooling.
+2. Replay the **new feasibility-recovery boundary** against the persisted paid precision evidence only, without Basic Pitch, Modal, models, scorer, reference, optimizer, or GPU.
+3. Quantify only reference-free structural effects:
+   - retained attack identity;
+   - original hypothesis count;
+   - selected pitch count before recovery;
+   - number of recovered pitches/attacks;
+   - legal-voicing drops;
+   - max chord size;
+   - whether any unobserved pitch/attack is created;
+   - whether the promoted-harmonic guard is violated.
+4. If the recent helper materially explodes note count, **do not keep it merely because tests pass**. Revise or remove the recovery behavior using only deterministic source-evidence invariants; do not tune to the professional score.
+5. Save checkpoint immediately after the CPU-only replay result and before any further source change.
+6. Do not integrate the isolated precision candidate into live production unless a separate explicit product decision/authorization supports that.
+7. After score-structure/replay work is closed, separately locate the real async control/result lifetime (~900 s) and patch only that ownership boundary to exceed the 1200-second worker budget.
 
 ## CONTINUATION STATUS
 
@@ -263,6 +360,6 @@ No evaluation budget was consumed.
 No production deployment/promotion was performed.
 No model/scheduler/threshold parameter was changed.
 No Modal remote function was invoked.
-The frozen worker artifact was only downloaded and inspected read-only.
+Only committed history and already-consumed frozen/precision evidence were inspected read-only.
 
-**Current handoff:** the isolated precision path is repaired model-free, while the exact frozen/live path is confirmed to be a separate already-highly-polyphonic 364→925 pipeline. Do not relax the live mapper. Next determine the intended precision-path integration/replay boundary using source/history and already-produced evidence only. Keep saving this checkpoint often.
+**Current handoff:** history proves the precision product is an intentionally isolated evaluation path, and its one paid capture plus exact CPU replay bundle are committed in Git. Next replay the recent feasibility-recovery boundary against that persisted evidence model-free; be prepared to revise/remove the recovery if it expands the precision result materially. Keep saving this checkpoint often.
