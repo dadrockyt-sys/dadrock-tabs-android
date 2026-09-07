@@ -1,6 +1,6 @@
 # CURRENT STATE — DadRock `/ai-tab` V143
 
-Updated: 2026-09-06 America/Toronto
+Updated: 2026-09-06 22:30 America/Toronto
 Branch: `v143-contextual-prune-lobo`
 
 This file is the compact fresh-chat source of truth. Full prior detail remains in Git history.
@@ -69,7 +69,7 @@ Schema-2 replay artifact validation also records:
 - `newInferenceUsed=false`
 - `failSafeAttackCount=0`
 
-An older checkpoint stated **6525** retained-only original hypotheses. The downloaded persisted artifact's `precisionReplayEvidence.attacks` currently sums to **7535 candidate hypotheses across the 725 retained attacks**. Treat this as an evidence-lineage discrepancy to document, not as permission to rerun inference; the current replay below uses the exact persisted per-attack artifact payload.
+An older checkpoint stated **6525** retained-only original hypotheses. The downloaded persisted artifact's `precisionReplayEvidence.attacks` currently sums to **7535 candidate hypotheses across the 725 retained attacks**. Treat this as an evidence-lineage discrepancy to document, not as permission to rerun inference; the current replay uses the exact persisted per-attack artifact payload.
 
 Historical commit `c1451df...` contains:
 - `debug/v143-contextual-prune/precision-v2-capture-lock.json`
@@ -134,8 +134,37 @@ After changing the isolated helper/adapter:
 
 Only after this score-structure slice is closed, return to the separate async-result lifetime defect: locate the real ~900-second control/result ownership TTL and patch only that boundary so it safely exceeds the 1200-second worker budget. Do not patch a guessed symbol.
 
+## FRESH-CHAT START HERE — EXACT NEXT STEPS
+
+Current branch head immediately before this checkpoint update was `15897823811a1676a695339ea0d283878efe0a92` (`checkpoint: record precision polyphony over-recovery replay`). A fresh chat should **not repeat the replay that proved over-recovery**. Start from the saved result above.
+
+1. Refresh branch head and re-open this file first; treat any newer checkpoint as authoritative.
+2. Inspect the current isolated helper and adapter only:
+   - `analyzer/v143_precision_polyphony_boundary.py`
+   - `analyzer/v143_contextual_prune_precision_candidate_events.py`
+3. Make the smallest deterministic preservation-only repair: `resolve_precision_polyphony(...)` must operate only on the precision-v2 retained pitch set, preserve the explicit primary, and apply legal joint-guitar voicing without recovering any pruned hypothesis.
+4. Do not change model inference, attack selection, scheduler parameters, thresholds, professional-reference logic, live endpoint wiring, deployment, or Production.
+5. Add/update a deterministic unit/static test that fails if any MIDI outside the precision-v2 retained set is admitted by the helper; also require primary preservation and no attack relocation/creation.
+6. Use only the already-persisted paid artifact/evidence for the CPU-only replay. Do not trigger any workflow or new analysis. If the artifact is needed again, use the already-consumed Actions artifact id `9548666053` read-only or the persisted Git evidence from `c1451df...`.
+7. Acceptance target for the repaired helper:
+   - 725 retained attacks
+   - 970 precision-v2 selected pitches input
+   - 967 rendered after legal voicing
+   - exactly 3 legal-voicing drops
+   - 0 recovered/pruned hypotheses re-admitted
+   - 0 primary preservation failures
+   - 0 unobserved pitches
+   - 0 unobserved attacks
+8. **Immediately checkpoint this file again after the repaired CPU-only replay result, before any further score-structure changes.**
+9. If the preservation-only replay matches the baseline, keep the helper isolated; do not integrate into the frozen live endpoint/Production without separate explicit authorization.
+10. Then move to the separate async-result lifetime defect: identify the actual control/result ownership TTL around ~900 seconds and patch only the verified lifetime boundary so it safely exceeds the 1200-second worker budget. Preserve all no-model/no-paid/no-deploy restrictions unless the user explicitly changes them.
+
 ## FRESH-CHAT SUCCESS CONDITION
 
-The central question is now answered:
+The central question is already answered:
 
-**The new feasibility-recovery boundary over-recovers precision-v2-pruned hypotheses. Replace it with preservation-only legal voicing, validate deterministically against persisted evidence, and keep it isolated.**
+**The feasibility-recovery boundary over-recovers precision-v2-pruned hypotheses. Replace it with preservation-only legal voicing, validate deterministically against persisted evidence, and keep it isolated.**
+
+The immediate fresh-chat success condition is therefore:
+
+**Preservation-only replay returns the persisted baseline structure (725 attacks / 970 retained pitches / 967 rendered / 3 legal-voicing drops) with zero recovered hypotheses and zero primary/unobserved violations.**
