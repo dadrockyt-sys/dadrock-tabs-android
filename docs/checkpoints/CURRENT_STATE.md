@@ -1,6 +1,6 @@
 # CURRENT STATE — DadRock `/ai-tab` V143
 
-Updated: 2026-09-07 00:23 America/Toronto
+Updated: 2026-09-07 America/Toronto
 Branch: `v143-contextual-prune-lobo`
 
 Compact fresh-chat source of truth. Full prior detail remains in Git history.
@@ -72,7 +72,7 @@ Exact drops: m40/s14 MIDI 78; m63/s14 MIDI 47; m113/s13 MIDI 43.
 
 ## ASYNC RESULT LIFETIME DEFECT — ROOT PATCHED + STATIC TARGET PROOF PASSED
 
-The real branch source uses transient Modal **Queue partitions**, not `Dict.ephemeral` helper names. Earlier checkpoint wording naming `start_tab_job` / `v143_async_controls.ephemeral` was stale and is superseded by this section.
+The real branch source uses transient Modal Queue partitions. The ownership defect was the shared Queue partition TTL expiring before the allowed orchestrator runtime.
 
 Actual shared lifetime constant:
 - file: `analyzer/v143_async_job_protocol.py`
@@ -85,14 +85,14 @@ Actual shared lifetime constant:
 Actual ownership path in `analyzer/v143_modal_http_endpoint.py`:
 - `_start_rhythm_job(...)` spawns `run_rhythm_async_job`
 - `_queue_orchestrator_control(...)` stores the spawned `FunctionCall.object_id`
-- that control Queue partition uses `partition_ttl=ASYNC_RESULT_TTL_SECONDS`
+- control Queue partition uses `partition_ttl=ASYNC_RESULT_TTL_SECONDS`
 - `_status_rhythm_job(...)` requires that control record to reconstruct/poll the FunctionCall
-- `_queue_job_envelope(...)` stores the completed/failed structured result and also uses `partition_ttl=ASYNC_RESULT_TTL_SECONDS`
+- `_queue_job_envelope(...)` stores completed/failed structured result with the same TTL
 - ACK clears both result and control partitions
 
-Execution budget proved from current branch source:
+Execution budget from current branch source:
 - `run_rhythm_async_job = @app.function(... timeout=1200, ...)`
-- this timeout was **not changed**
+- timeout was **not changed**
 - 1800-second ownership leaves a **600-second / 10-minute margin** beyond the 1200-second orchestrator budget
 
 History finding:
@@ -100,7 +100,7 @@ History finding:
 - commit `e682e6faf0aa5fe9175684561ea584e9fad8bf9e` later added fail-closed orchestrator control tracking and reused that same 15-minute TTL
 - no historical evidence showed 900 seconds was intentionally chosen to cover the later 1200-second orchestrator allowance
 
-Deterministic validator added:
+Deterministic validator:
 - file: `analyzer/validate_v143_async_result_lifetime.py`
 - commit: `58dac164b45dbdd0ff23100e69969caf911f4ab2`
 - blob: `93c9c8cc79f4bc62ee34ad6a8ddb3c16f9937f41`
@@ -108,30 +108,40 @@ Deterministic validator added:
 - asserts TTL = 1800, orchestrator timeout = 1200, margin >= 600, both control/result partition TTLs use the shared constant, and start/status expose the same shared expiry
 
 Validation performed in this environment:
-- direct repository checkout execution was unavailable because the local sandbox could not resolve GitHub DNS
 - exact fetched target constructs were replayed through the validator's AST logic model-free
 - result: **PASS — ttl=1800s / worker=1200s / margin=600s / control=result=shared TTL**
-- do not overstate this as a full on-checkout invocation of `python analyzer/validate_v143_async_result_lifetime.py`; that direct invocation remains optional when a local checkout is available and does not require any workflow/model/Modal execution
+- a full on-checkout invocation of `python analyzer/validate_v143_async_result_lifetime.py` remains optional when a local checkout is available; do not create/trigger a workflow merely to run it
 
 Next.js bridge:
 - `app/api/analyze-audio-tab/route.js` still has `900` only as a fallback when analyzer `expiresInSeconds` is missing/invalid
-- current analyzer start/status responses expose the shared 1800-second value, so this fallback does **not** own or expire analyzer state
-- leave the advisory fallback unchanged for now to keep the root patch minimal; align separately only if desired, with ordinary JS validation
+- analyzer start/status responses now expose the shared 1800-second value, so this fallback does **not** own or expire analyzer state
+- leave the advisory fallback unchanged unless doing a separate truthful-fallback cleanup
 
-One stale source comment remains in `v143_modal_http_endpoint.py` saying “hard 15-minute TTL”; behavior is governed by the imported shared 1800-second constant. This is documentation-only cleanup, not a runtime defect.
+One stale source comment remains in `analyzer/v143_modal_http_endpoint.py` saying “hard 15-minute TTL”; behavior is governed by the imported shared 1800-second constant. This is documentation-only cleanup, not a runtime defect.
 
 ## WORKFLOW SAFETY
 
-No model/scoring workflow was manually triggered. No Modal/GPU/paid inference, scorer, optimizer, threshold sweep, deployment, Production promotion, model change, or scheduler change was performed in this async slice.
+No model/scoring workflow was manually triggered during these slices. No Modal/GPU/paid inference, professional scorer, optimizer, threshold sweep, deployment, Production promotion, model change, or scheduler change was performed.
 
-## NEXT EXACT STEPS
+## FRESH CHAT — START HERE
 
-1. Treat the async ownership root defect as code-patched: shared TTL is now 1800 and exceeds the 1200 orchestrator allowance by 600 seconds.
-2. If a normal local checkout becomes available, run `python analyzer/validate_v143_async_result_lifetime.py`; this is dependency-free/model-free and should print the same PASS line. Do **not** create/trigger a workflow merely to run it.
-3. Optional deterministic cleanup only: update the stale “hard 15-minute TTL” source comment and, separately, the Next.js 900-second advisory fallback to 1800 if truthful fallback semantics are desired. Neither is the ownership root cause.
-4. Before any further score-quality work, preserve the closed precision invariants **725 / 970 / 967 / 3 / 0 recovery** and obey the exhausted evaluation budget.
-5. **Do not deploy or run model-bearing workflows without new explicit authorization.**
+1. Re-open this file first on branch `v143-contextual-prune-lobo` and refresh branch head. Treat any newer checkpoint as authoritative.
+2. Treat the precision score-structure slice as **closed**. Do not reopen or alter helper/adapter/model behavior unless there is a new explicit reason. Preserve **725 / 970 / 967 / 3 drops / 0 recovery**.
+3. Treat the async ownership root defect as **code-patched**: shared TTL is now 1800 seconds and the orchestrator timeout remains 1200 seconds, giving a 600-second margin.
+4. If a normal local checkout is available, run only the dependency-free/model-free command `python analyzer/validate_v143_async_result_lifetime.py`. Do **not** trigger a GitHub workflow, Modal function, model run, or deployment just to validate it.
+5. If that validator passes, optional cleanup is limited to deterministic non-runtime semantics:
+   - update the stale “hard 15-minute TTL” comment in `analyzer/v143_modal_http_endpoint.py` to describe the shared bounded TTL accurately;
+   - optionally align the Next.js fallback `ANALYZER_JOB_EXPIRES_SECONDS` from 900 to 1800 so fallback UI semantics match the analyzer, but remember this is advisory and not the ownership root cause.
+6. If making either cleanup, keep it isolated, use ordinary static/JS validation only, and save this checkpoint immediately afterward.
+7. Do **not** deploy, promote Production, weaken Deployment Protection, run model-bearing Rhythm/Lead/Bass analysis, run the professional scorer, invoke Modal/GPU/paid inference, or change model/scheduler/threshold parameters without new explicit user authorization.
+8. Before any future score-quality work, require a fresh explicit authorization/budget decision because the authorized model-bearing and professional-scoring evaluation budget is exhausted.
 
-## SUCCESS CONDITION
+## FRESH CHAT SUCCESS CONDITION
 
-Score-structure remains closed at **725 / 970 / 967 / 3 / 0 recovery**. Async ownership code now satisfies **1800s TTL > 1200s orchestrator budget with a 600s margin**, with deterministic static target proof and no deployment/model-bearing execution.
+The safe state to preserve is:
+- score structure: **725 retained attacks / 970 selected pitches / 967 rendered / 3 legal-voicing drops / 0 recovery**
+- async ownership: **1800s shared TTL > 1200s orchestrator budget by 600s**
+- deterministic validator target: **PASS**
+- **no deployment, no model-bearing execution, no professional scoring, no paid/GPU inference**
+
+If no further cleanup is desired, this branch is at a safe checkpoint for a fresh chat.
