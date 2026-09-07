@@ -9,7 +9,7 @@
   "moduleSha256": "763efe637b253e47c3c61aac7ffbd63c92d424f640bab512f12d069bda3bfd65",
   "passed": true,
   "primaryAdapterCheckerSha256": "a75bf197fa7cc833d7803fc5b9376773df97030890853697e9f25472098f063c",
-  "primaryAdapterSha256": "df14691f9ba21667073ffe0b052844cf8eb7074bdc170067f7a9bc96109e38b0",
+  "primaryAdapterSha256": "7e9768e65607b4cb8a353acbe9aaebf50ee800416ffcfb1fbc214da67d519a06",
   "primaryPropagationCheckerPassed": true,
   "productionModified": false,
   "protectedPipelineBlob": "7f72f8ed9b14af8bc93e95544195204d99c6bec1",
@@ -17,5 +17,5 @@
   "referenceFree": true,
   "runtimeLabelsRequired": false,
   "schemaVersion": 2,
-  "triggerSha": "05874926efa83e162c2471399618cce0bf19cd1c"
+  "triggerSha": "bb3a8ddcd86e2fb9df167ff6c5fa60b75820d2e0"
 }
