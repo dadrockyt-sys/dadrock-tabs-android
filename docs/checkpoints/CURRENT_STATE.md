@@ -3,7 +3,9 @@
 Updated: 2026-09-06 America/Toronto
 Branch: `v143-contextual-prune-lobo`
 Previous full-detail checkpoint blob before this continuation: `45001b66c310d860cae560c8c09e396d51eeb033` (retained in Git history)
-First continuation checkpoint commit: `0410c6c825d15751163a311f5389a444124a4d1f`
+Continuation checkpoints:
+- hook trace: `0410c6c825d15751163a311f5389a444124a4d1f`
+- polyphony repair: `4cb4c57e52cf21e95877d984f6002236abca1727`
 
 ## NON-NEGOTIABLE AUTHORIZATION / BUDGET BOUNDARY
 
@@ -70,152 +72,192 @@ Result:
 
 Interpretation: infrastructure/render fidelity succeeded; musical score construction did not. Do not use the professional reference at runtime and do not tune against its thresholds.
 
-## CONFIRMED ASYNC DEFECT — DEFERRED UNTIL SCORE-STRUCTURE SLICE IS SAFE
+## CONFIRMED ASYNC DEFECT — DEFERRED UNTIL SCORE-STRUCTURE SLICE IS CLOSED
 
 The parent control/result tracking lifetime is ~900 seconds while worker/orchestrator runtime budget is 1200 seconds. The successful worker completed at 936.836 s, after the client-side tracking record expired.
 
 Do **not** patch a guessed `ASYNC_RESULT_TTL_SECONDS` symbol. Locate the actual ownership/control-state implementation before changing only that lifetime to safely exceed 1200 seconds.
 
-## MODEL-FREE POST-MODEL TRACE
+## ROOT MUSICAL-STRUCTURE FINDING
 
-### Timing provider
+Reference-free timing itself is not the note-loss source.
 
-`analyzer/v143_reference_free_timing.py`
-- estimates beat grid/bar phase;
-- exposes `ReferenceFreeTimingEstimate.candidate_adapter_kwargs()`;
-- does **not** construct final note/chord events.
+`analyzer/v143_contextual_prune_reference_free_carrier.py` retains same-onset multi-pitch evidence in `candidateMidis` plus two-view CQT evidence. The narrowing occurs later in precision selection.
 
-### Carrier consumer
+Current product uses `analyzer/v143_contextual_prune_precision_shadow_v2.py`:
+- explicit primary is chosen and preserved;
+- non-harmonic secondaries require two of score/attack/body at legacy 0.80;
+- harmonic upper secondaries require all three at 0.92;
+- this is still a confidence gate before guitar feasibility.
 
-`analyzer/v143_contextual_prune_reference_free_carrier.py`
-- calls `build_subdivision_grid(**timing.candidate_adapter_kwargs())`;
-- runs the four historical wide-recall Basic Pitch sweeps on both deterministic guitar views;
-- clusters duplicate detections per `(measure, midi)` and groups physical candidates by onset;
-- each onset row carries all observed `candidateMidis` plus physical two-view CQT evidence.
-
-This confirms polyphonic evidence exists before post-model precision pruning.
-
-### Confirmed confidence-before-feasibility narrowing
-
-`analyzer/v143_contextual_prune_precision_shadow.py::_precision_pitch_set(...)`
-- chooses one explicit primary;
-- retains secondaries only above hard relative evidence gates:
-  - `SECONDARY_RAW_RATIO = 0.80`
-  - `HARMONIC_SECONDARY_RAW_RATIO = 0.92`
-- those gates run before legal guitar voicing is considered.
-
-The existing audio-only polyphonic audit reinforces the issue:
-- 238 multi-hypothesis attacks existed in the audited candidate;
-- rendered secondaries begin almost exactly at the 0.80 confidence floor;
-- serialized support was indistinguishable per pitch for all 238 multi-hypothesis attacks.
-
-### Existing final voicing is already polyphony-capable
-
+The downstream joint voicing resolver is already polyphony-capable:
 `analyzer/v143_rhythm_guitar_note_mapper.py::resolve_joint_chord_voicing(...)`
-- deterministic standard-tuning guitar mapper;
-- max fret 24;
-- max six notes;
-- unique strings required;
-- non-crossing voicing required;
-- max chord span 28 semitones;
-- never adds pitches.
+- standard tuning;
+- frets 0–24;
+- max 6 notes;
+- unique strings;
+- non-crossing voicing;
+- max 28-semitone chord span;
+- never adds a pitch.
 
-`analyzer/v143_contextual_prune_precision_candidate_events.py` already expanded surviving pitch sets through this resolver. The problem was that weaker observed tones could be discarded before the resolver ever saw them.
+`analyzer/v143_precision_promoted_harmonic_guard.py` remains an important contradiction guard: when a lower fundamental is promoted below the strongest positive raw upper harmonic-family pitch, that exact strongest upper may be removed as an independent note. Recovery must not re-add it.
 
-### Existing promoted-harmonic contradiction guard
+## IMPLEMENTED — DETERMINISTIC CONFIDENCE/FEASIBILITY SEPARATION
 
-`analyzer/v143_precision_promoted_harmonic_guard.py`
-- when a lower physical fundamental is promoted below the strongest raw upper pitch, and that strongest upper is a recognized harmonic-family interval, the strongest upper is deliberately removed as an independent chord tone;
-- attack identity and primary are unchanged;
-- no unobserved pitch is added.
+### Pure polyphony boundary
 
-Any polyphony recovery must preserve this invariant and must not re-add that exact strongest promoted harmonic.
-
-## IMPLEMENTED DETERMINISTIC POLYPHONY BOUNDARY
-
-### New pure helper
-
-File:
-- `analyzer/v143_precision_polyphony_boundary.py`
+`analyzer/v143_precision_polyphony_boundary.py`
 - commit `039ddbf7bf4d859c7fa27294be13b58b3757ec3a`
 - blob `720a068d71ad72719053cdc89bdab81db541c884`
 
-`resolve_precision_polyphony(...)` now separates confidence from physical feasibility:
-1. the explicit precision primary is immutable and mandatory;
-2. precision-retained secondaries get priority;
-3. a previously confidence-pruned secondary may be considered only when:
-   - its MIDI was already in `precision.original_pitch_sets` for the same attack;
-   - its two-view physical attack evidence is above the existing positive attack floor;
-   - its two-view physical body evidence is above the existing positive body floor;
-4. the candidate is admitted only if `resolve_joint_chord_voicing(...)` can still place the entire selected set legally;
-5. max six strings, duplicate-string collisions, pitch-span, fret and non-crossing constraints remain enforced by the existing mapper;
-6. the exact strongest promoted upper harmonic contradiction is excluded from recovery;
-7. no pitch outside the observed set can be emitted.
+`resolve_precision_polyphony(...)` now:
+- keeps the precision primary immutable;
+- gives already precision-retained secondaries priority;
+- may reconsider only MIDI values already present in `precision.original_pitch_sets` for that same attack;
+- requires positive two-view attack/body evidence using the existing physical floors;
+- admits a recovered pitch only if the existing joint-guitar-voicing resolver accepts the entire set;
+- preserves six-string/string-collision/fret/span/non-crossing constraints;
+- blocks reintroduction of the exact strongest promoted upper harmonic;
+- cannot add/relocate attacks or invent pitch/chord/key/song/reference information.
 
-No scorer/reference data, chord names, key, song labels, model output reranking, new attack creation, or attack relocation is accepted by the helper.
+### Pure boundary tests
 
-### Model-free regression tests
-
-File:
-- `analyzer/test_v143_precision_polyphony_boundary.py`
+`analyzer/test_v143_precision_polyphony_boundary.py`
 - commit `76ba535a3832204812832cebeac1ee92d028abdd`
 - blob `97fbcf4bd8ce791a3323cb45bcc08c8f17ac438a`
 
-Covered cases:
-- weaker positive observed pitch survives when a legal joint voicing exists;
-- weaker observed pitch is rejected when two notes require the same only-available string (`87 + 88` within the 0–24 fret rule);
-- strongest promoted upper harmonic is not reintroduced (`40 + 52` synthetic guard case);
-- non-positive observed pitch is not recovered;
-- no unobserved pitch is created;
-- primary remains present;
-- simultaneous rendered strings are unique.
+Covers:
+- weaker observed legal chord tone recovered;
+- impossible same-string combination rejected;
+- promoted strongest harmonic not reintroduced;
+- non-positive pitch not recovered;
+- unobserved pitch cannot appear;
+- primary remains immutable;
+- simultaneous strings remain unique.
 
-Local deterministic execution of the pure helper regression cases passed. No Basic Pitch, Modal, separator, Rhythm/Lead/Bass model, scorer, professional reference, optimizer, or GPU path was initialized.
+Local deterministic pure checks passed. No Basic Pitch, Modal, separator, model, scorer, reference, optimizer, or GPU path was initialized.
 
-### Precision assembly wiring
+### Precision candidate assembly wiring
 
-File:
-- `analyzer/v143_contextual_prune_precision_candidate_events.py`
+`analyzer/v143_contextual_prune_precision_candidate_events.py`
 - commit `bb3a8ddcd86e2fb9df167ff6c5fa60b75820d2e0`
 - blob `68732a07701a30a455ba9bcbf7c2adddd3930622`
 
 Changes:
-- consumes both `precision.pitch_sets` and `precision.original_pitch_sets`;
-- obtains CQT physical evidence for all originally observed pitches;
-- calls the new pure feasibility boundary;
-- keeps `dominantMidi` equal to the immutable precision primary;
-- serializes all observed `pitchHypotheses` with explicit diagnostics:
-  - `precisionRetained`
-  - `feasibilityRecoveryEligible`
-  - `feasibilityRecovered`
-  - `rendered`
-- emits recovered notes only when they were observed and legally voiceable;
-- every recovered note is marked `noteMapping.feasibilityRecoveredSecondary = true`;
-- event-level invariants now validate emitted MIDI against `precision.original_pitch_sets`, not an invented external set;
-- a non-precision pitch without the explicit recovery marker is rejected;
+- consumes `precision.pitch_sets` **and** `precision.original_pitch_sets`;
+- runs the pure feasibility boundary using already-present CQT evidence;
+- keeps `dominantMidi` equal to immutable primary;
+- serializes all observed pitch hypotheses with `precisionRetained`, `feasibilityRecoveryEligible`, `feasibilityRecovered`, and `rendered` markers;
+- recovered final notes are explicitly marked `noteMapping.feasibilityRecoveredSecondary = true`;
+- emitted MIDI must remain in `precision.original_pitch_sets`;
+- a non-retained MIDI without explicit recovery provenance is rejected;
 - attack identity remains exactly `precision.retained_events`.
 
-A local stubbed integration exercise of the committed assembly design also passed for a weaker observed `40 + 47` dyad: both notes rendered, primary stayed 40, and recovery was explicitly marked. This was source-level/model-free validation only; it was **not** a model-bearing pipeline run.
+A model-free stubbed integration exercise rendered the weaker observed `40 + 47` dyad, kept primary 40, and marked 47 as recovered.
+
+## DOWNSTREAM MULTI-NOTE TRACE — NO SAME-ONSET COLLAPSE FOUND
+
+Inspected deterministic downstream stages:
+- `v143_rhythm_bend_consensus.py`
+- `v143_rhythm_bend_evidence.py`
+- `v143_rhythm_legato_evidence.py`
+- `v143_rhythm_semantic_primary_note_guard.py`
+- `v143_rhythm_sustain_consensus_shadow.py`
+- `v143_precision_sustain_promotion.py`
+- `v143_rhythm_output_adapter.py`
+- `lib/v143RenderContract.js`
+
+Findings:
+- bend analysis works per emitted event;
+- legato tracks the next event per mapped string, not one event per attack;
+- semantic guard keeps every note and strips attack-level audio techniques from secondary chord notes instead of deleting them;
+- sustain is per event / per string;
+- Python tab output stores a list of events per step and fails on duplicate simultaneous strings rather than overwriting;
+- JS render projection keeps every event independently and explicitly summarizes maximum chord size / multi-note onset count.
+
+No downstream `(measure, step)` winner overwrite or one-note-per-attack collapse was found in these stages.
+
+## IMPLEMENTED — FAIL-CLOSED PRE-EXPORT SCORE VALIDATION
+
+### Validator
+
+`analyzer/v143_rhythm_preexport_validator.py`
+- commit `4c807cb47e8cd4c9ded51591e279d6149004a9cb`
+- verified committed blob `b654c306cdbfec4a998a9f8fb3f33690ff4a97e3`
+
+`validate_v143_preexport_events(...)` checks only already-constructed score events:
+- legal measure / 16th-note step;
+- valid standard-tuning string, fret, and exact string+fret→MIDI relationship;
+- no duplicate identical note identity;
+- stable event order and eventIndex;
+- no duplicate simultaneous string;
+- consistent attack primary / `sourceAttackMidi`;
+- exactly one primary technique note when primary metadata exists;
+- `chordNoteCount` equals rendered group size;
+- `chordNoteIndex` is complete;
+- all notes at one attack serialize the same observed pitch set;
+- a feasibility-recovered secondary must be present in observed `pitchHypotheses` and explicitly marked recovered rather than precision-retained.
+
+Diagnostics include event count, attack count, multi-note attack count, max chord size, recovered secondary count and pass flags.
+
+### Validator tests
+
+`analyzer/test_v143_rhythm_preexport_validator.py`
+- commit `924f2b9d3695c229ebeca9f173ff559d231eca70`
+
+Covers:
+- legal recovered dyad accepted;
+- duplicate simultaneous string rejected;
+- illegal standard-tuning mapping rejected;
+- recovered MIDI without observed provenance rejected;
+- missing/changed primary rejected;
+- unstable event order rejected.
+
+Local pure validation passed; no model-bearing path was initialized.
+
+### Final sustain/presentation boundary now invokes validator
+
+`analyzer/v143_precision_sustain_promotion.py`
+- commit `3d6d80b1aba0154aa423d883bce0fe4d4d5b2f20`
+- blob `30d79f5392324691b95cb91f28cc1f26a0765cef`
+
+After final event indices/start/end/duration/onset/offset are assigned, the complete promoted event list is validated fail-closed before it can be handed to render/export consumers.
+
+## CANDIDATE PRODUCT INTEGRATION BLOCKER FOUND AND REPAIRED
+
+File:
+`analyzer/v143_repaired_timing_precision_candidate_product_modal.py`
+
+Problem found:
+1. its Modal source bundle did not include the new polyphony helper, so the repaired candidate assembly import would fail if the wrapper were later run;
+2. its post-sustain invariant still required every rendered MIDI to be in pruned `precision.pitch_sets`, which would reject every legitimate feasibility-recovered note.
+
+Repair commit:
+- `affe42af558ee597290e8bacf28ce76ce5f0283d`
+- verified committed blob `63a58b1360786abf7ddc89e4aa67e6daeba0496b`
+
+Verified branch-read state:
+- `CANDIDATE_MODULES` now includes `v143_precision_polyphony_boundary` and `v143_rhythm_preexport_validator`;
+- the wrapper explicitly runs pre-export validation after sustain promotion;
+- emitted MIDI is now checked against `precision.original_pitch_sets`;
+- if emitted MIDI is absent from pruned `precision.pitch_sets`, it must carry `feasibilityRecoveredSecondary = true`;
+- output records `preExportValidation` diagnostics;
+- `precisionPolicy` explicitly records that confidence gating is not the final feasibility gate;
+- file terminates normally; no accidental truncation detected.
+
+No Modal function was invoked. This was source-only integration.
 
 ## NEXT SAFE SLICE
 
-1. Add/perform branch-safe static validation of the three committed files without importing or initializing any model-bearing runtime.
-2. Inspect downstream semantic/sustain/export stages for assumptions that one attack has one event, especially:
-   - bend/legato enrichment;
-   - semantic primary-note guard;
-   - sustain shadow/promotion;
-   - final `render_rhythm_tab(...)` / render-event serializer;
-   - any `(measure, step)` dictionary that overwrites same-onset chord notes.
-3. If a downstream same-onset overwrite is found, patch only that deterministic post-model boundary and add model-free regression coverage.
-4. Add a deterministic pre-export validator for:
-   - unique simultaneous strings;
-   - legal string/fret/MIDI mapping;
-   - primary preservation;
-   - no unobserved recovered MIDI;
-   - no duplicate identical note identity;
-   - stable event ordering with multiple notes at one attack.
-5. Checkpoint again immediately after downstream trace/validator work.
-6. Only after the score-structure path is safely closed, locate the actual async control/result ownership TTL and patch that lifetime separately.
+1. Inspect the exact one-shot/live workflow and production/runtime source path that produced the frozen 925-event run, read-only, to determine whether it uses this repaired candidate-product path or a different adapter. Do not assume the isolated candidate-product wrapper is the live path.
+2. Search any other branch-local callers of `build_precision_candidate_assembly(...)` for:
+   - missing source-bundle inclusion of the new helper/validator;
+   - stale `midi in precision.pitch_sets` assertions;
+   - any final-event normalization that could erase recovery provenance.
+3. Perform only static/pure validation available without triggering Actions/Modal/model inference/scorer.
+4. If the actual live source path has a deterministic integration seam, patch only that seam and add model-free coverage.
+5. Checkpoint immediately after the exact live-path trace/integration.
+6. Once score construction/export is genuinely closed, separately locate the actual async control/result state lifetime that expires around 900 seconds and patch only that ownership boundary to exceed the 1200-second worker budget.
 
 ## PRODUCT TARGET / SAFETY RULES
 
@@ -233,5 +275,6 @@ No professional scorer was run.
 No evaluation budget was consumed.
 No production deployment/promotion was performed.
 No model/scheduler/threshold parameter was changed.
+No Modal remote function was invoked.
 
-**Current handoff:** the confidence-before-feasibility polyphony boundary is now repaired and covered by pure deterministic tests. Continue by tracing the already-generated multi-note attack events through semantic, sustain, and export/render stages for any same-onset overwrite or single-note assumption, then add the deterministic pre-export validator. Keep all work model-free and checkpoint often.
+**Current handoff:** the post-precision confidence/feasibility boundary, downstream score invariants, pre-export validation, and isolated candidate-product integration are repaired model-free. Next trace the exact one-shot/live source path read-only before deciding whether another deterministic integration patch is needed. Keep saving this checkpoint often.
