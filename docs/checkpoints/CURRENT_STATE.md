@@ -14,247 +14,198 @@ Authorized evaluation budget is consumed:
 
 **DO NOT** start another model-bearing Rhythm/Lead/Bass analysis, run the professional scorer, invoke Modal/GPU/paid inference, run optimizer/training/threshold sweeps, deploy/promote Production, weaken Deployment Protection, or mutate model/scheduler parameters without new explicit user authorization.
 
-Safe continuation: deterministic/model-free source/history inspection, static/unit validation, and CPU-only/read-only replay of already-persisted evidence. Do not manually trigger workflows.
+Safe continuation: deterministic/model-free source/history inspection, static/unit validation, CPU-only/read-only replay of already-persisted evidence, and safety hardening that prevents accidental model-bearing push workflows. Do not manually trigger workflows.
 
-**New push-safety warning:** ordinary source pushes on this branch can automatically trigger workflows. In particular, changing `analyzer/v143_modal_http_endpoint.py` automatically triggers `V143 Hardened Async Failfast Smoke`, which deploys an isolated Modal bridge + failfast driver and invokes the synthetic driver. Therefore do **not** make another ordinary endpoint/source push without first accounting for workflow side effects. An uppercase `[Skip CI]` commit message did **not** suppress these branch workflows and must not be relied on.
+## FROZEN SCORE / HOLDOUT — DO NOT RERUN
 
-## FROZEN LIVE / HOLDOUT — DO NOT RERUN
+Persisted score-structure invariants are closed and must remain unchanged:
+- **725 retained attacks**
+- **970 selected pitches**
+- **967 rendered notes**
+- exactly **3 legal-voicing drops**
+- **0 recovery**
+- all 113 measures populated
+- `referenceFree=true`
+- `newInferenceUsed=false`
 
-Authorized Rhythm run `34046854397`, recovery `34048291636`:
-- **364 selected attacks / 925 rendered notes**
-- PDF event fidelity **1.0**
+Exact drops: m40/s14 MIDI 78; m63/s14 MIDI 47; m113/s13 MIDI 43.
 
-Consumed professional holdout `34048719525`:
+Consumed professional holdout remains failed musically and must not be tuned against:
 - `near100ProfessionalGatePassed=false`
 - pitch-content F1 `0.30892570817744525`
 - pitch-timing tolerant F1 `0.05879208979155532`
 - chord pitch-set tolerant F1 `0.004136504653567736`
-- unmatched generated/reference: `779 / 800`
 
-Infrastructure/rendering succeeded; musical score construction did not. **Do not tune against the professional reference.**
+## ASYNC RESULT LIFETIME — ROOT PATCHED
 
-## PERSISTED PRECISION EVIDENCE
+Shared ownership lifetime is intentionally:
+- `analyzer/v143_async_job_protocol.py`
+- `ASYNC_RESULT_TTL_SECONDS = 30 * 60` = **1800s**
+- root patch commit `b55d9db517fe356b40600bae85ba98ead879aeb6`
+- protocol blob `3d76808980cf7e3a6f3ce53812eea8cd41f8da72`
 
-Authorized paid capture run `32805316807`:
-- commit `c1451df43cc1162edb38aa3f3300b7af4d9b527`
-- artifact `v143-precision-v2-one-shot-32805316807`, id `9548666053`
-- fixture SHA-256 `215bd5a657c5326f08f132ae358595a95c30b39bb7493a52c2f910d5a608149f`
-- artifact digest `sha256:5104522aab3e6193c6b06fe3abb807994065f858a945a81070c611fc63707d4f`
-- no further paid capture authorized
+Orchestrator budget remains:
+- `run_rhythm_async_job` timeout **1200s**
+- ownership margin **600s**
 
-Persisted invariants:
-- 113 measures
-- 725 retained attacks
-- 970 precision-v2 selected pitches
-- 967 rendered after deterministic guitar voicing
-- exactly 3 legal-voicing drops
-- 0 recovered/pruned hypotheses
-- 0 primary failures
-- 0 unobserved attacks/pitches
-- all 113 measures populated
+The ownership path remains Queue-based: start spawns a Modal `FunctionCall`, control metadata stores its object id under the shared TTL, status reconstructs/polls that FunctionCall, completed/failed structured results use the same TTL, and ACK clears both result/control partitions.
 
-Schema-2: 984 eligible attacks / 7535 candidate hypotheses / 725 retained / 970 selected / 967 rendered; `referenceFree=true`, `newInferenceUsed=false`, `failSafeAttackCount=0`.
+Next.js advisory fallback remains aligned at **1800s** on async start + status via commit `330a3d5dbde5bcc3e51eb577892c8d9643fcba58`.
 
-## SCORE-STRUCTURE PRESERVATION SLICE — CLOSED
+## CRASH-LOOP BREAKTHROUGH — 2026-09-07
 
-Current blobs:
-- helper `analyzer/v143_precision_polyphony_boundary.py`: `83a1d993ff654c45bb965a7794f2d155aab18a25`
-- adapter `analyzer/v143_contextual_prune_precision_candidate_events.py`: `509032e3969ea057c05743c148ade2d2d4da4bf0`
-- validator `analyzer/validate_v143_precision_polyphony_preservation.py`: `8f4c420482674f484541a4c6d5bf90df0d7f6465`
+The preserved historical Modal diagnostic proves the apparent crash-loop job did **not** terminate in a worker crash.
 
-Commits:
-- adapter hardening `255616674eb4d113804d5a4296b771318717745f`
-- validator `838d900732abeb19740bea0ca8a23131a8701fe3`
+Evidence:
+- diagnostic workflow: `.github/workflows/v143-modal-crash-log-diagnostic.yml`
+- diagnostic run: `34047990402`
+- preserved artifact id: `9993685857`
+- live app in diagnostic: `dadrock-v143-ai-tab-live`
+- historical FunctionCall: `fc-01M1VT9BDS5TYWE52GPYQQ8W9E`
+- artifact logs reach `worker.done`
+- measured completion time: **936.836 seconds**
+- the TensorFlow cuDNN/cuFFT/cuBLAS CUDA registration messages in the log were non-terminal startup noise; no later terminal traceback was found
 
-Policy is preservation-only at helper + adapter: precision-v2 retained set is sole authority; primary immutable; any recovery/widening raises; legacy recovery metadata is hard false.
+Root-cause timing match:
+- old shared ownership/control TTL: **900s**
+- worker completion: **936.836s**
+- ownership therefore expired about **36.836s before the worker completed**
 
-Dependency-free validator: **PASS**.
-Persisted current-helper replay: **725 / 970 / 967 / 3 drops / 0 recovery**.
-Exact drops: m40/s14 MIDI 78; m63/s14 MIDI 47; m113/s13 MIDI 43.
+This explains the user-visible/status-layer failure pattern: the long-running job could remain valid and eventually complete while the async control/result ownership record had already expired. The runtime TTL repair to **1800s** removes that premature ownership loss and preserves a **600s margin** over the 1200s orchestrator ceiling.
 
-## ASYNC RESULT LIFETIME DEFECT — ROOT PATCHED + STATIC TARGET PROOF PASSED
+No new Modal/model execution was performed to establish this; the conclusion comes from persisted diagnostic evidence plus current source/history inspection.
 
-The real branch source uses transient Modal Queue partitions. The ownership defect was the shared Queue partition TTL expiring before the allowed orchestrator runtime.
+## STALE ASYNC PROTOCOL GATE — FIXED + GREEN
 
-Actual shared lifetime constant:
-- file: `analyzer/v143_async_job_protocol.py`
-- symbol: `ASYNC_RESULT_TTL_SECONDS`
-- old value: `15 * 60` = **900 seconds**
-- new value: `30 * 60` = **1800 seconds**
-- root patch commit: `b55d9db517fe356b40600bae85ba98ead879aeb6`
-- protocol blob after patch: `3d76808980cf7e3a6f3ce53812eea8cd41f8da72`
+A separate CI error was stale validation, not runtime behavior.
 
-Actual ownership path in `analyzer/v143_modal_http_endpoint.py`:
-- `_start_rhythm_job(...)` spawns `run_rhythm_async_job`
-- `_queue_orchestrator_control(...)` stores the spawned `FunctionCall.object_id`
-- control Queue partition uses `partition_ttl=ASYNC_RESULT_TTL_SECONDS`
-- `_status_rhythm_job(...)` requires that control record to reconstruct/poll the FunctionCall
-- `_queue_job_envelope(...)` stores completed/failed structured result with the same TTL
-- ACK clears both result and control partitions
+`analyzer/v143_async_job_protocol_gate.py` still asserted:
+- TTL `900`
+- exact old exception spelling `except modal.exception.TimeoutError:`
 
-Execution budget from current branch source:
-- `run_rhythm_async_job = @app.function(... timeout=1200, ...)`
-- timeout was **not changed**
-- 1800-second ownership leaves a **600-second / 10-minute margin** beyond the 1200-second orchestrator budget
+Current source intentionally requires:
+- TTL `1800`
+- timeout handling `except (TimeoutError, modal.exception.TimeoutError):`
 
-History finding:
-- commit `1b139994b9bf8572093e6644a61b6fde8c14cd89` introduced the generic 15-minute result TTL
-- commit `e682e6faf0aa5fe9175684561ea584e9fad8bf9e` later added fail-closed orchestrator control tracking and reused that same 15-minute TTL
-- no historical evidence showed 900 seconds was intentionally chosen to cover the later 1200-second orchestrator allowance
+Fix commit:
+- `fd230ee2ad4c19ad4758bbc753f4d110233591ff`
+- message: `fix(v143): align async protocol gate with 30-minute ownership`
+- only `analyzer/v143_async_job_protocol_gate.py` changed
+- no endpoint/model/renderer/scoring code changed
 
-Deterministic validator:
-- file: `analyzer/validate_v143_async_result_lifetime.py`
-- commit: `58dac164b45dbdd0ff23100e69969caf911f4ab2`
-- blob: `93c9c8cc79f4bc62ee34ad6a8ddb3c16f9937f41`
-- dependency-free; parses source with Python `ast`; does not import Modal or execute analyzer/model code
-- asserts TTL = 1800, orchestrator timeout = 1200, margin >= 600, both control/result partition TTLs use the shared constant, and start/status expose the same shared expiry
+Automatic verification:
+- workflow: `V143 Async Job Protocol Gate`
+- run: `34173726834`
+- result: **SUCCESS**
+- source-only; no Modal/model execution
 
-Validation already established:
-- **PASS — ttl=1800s / worker=1200s / margin=600s / control=result=shared TTL**
-- do not create/trigger a workflow merely to re-run it
+An unrelated `cleanup-tab-preview` run `34173725948` also appeared and failed immediately. Its current workflow file only watches `.github/workflows/cleanup-tab-preview.yml`, so it is not a current renderer watcher and is being treated as separate Actions noise/cleanup debt.
 
-## CURRENT SOURCE STATE
+## ENDPOINT EXACT PIN — PRESERVE
 
-### Analyzer endpoint — exact pin restored
+`analyzer/v143_modal_http_endpoint.py` must remain exact blob:
+- `169b4bb136eba742c3422a73ee5dd0174ca06c49`
+- restore commit `708c4fccb0e6c67c4879fb1ead6446955878f95f`
 
-`analyzer/v143_modal_http_endpoint.py` is restored to the pre-cleanup exact blob:
-- blob: `169b4bb136eba742c3422a73ee5dd0174ca06c49`
-- restore commit: `708c4fccb0e6c67c4879fb1ead6446955878f95f`
+The stale source comment mentioning a 15-minute TTL is intentionally left alone because prior comment-only changes broke exact-source pins. Runtime behavior comes from the shared 1800s constant.
 
-The stale source comment still says “same hard 15-minute TTL”. This wording is intentionally left stale because a comment-only edit changed the exact endpoint blob and broke exact-source static pins. Runtime behavior remains governed by `ASYNC_RESULT_TTL_SECONDS = 1800`; do **not** reopen the comment cleanup absent a coordinated pin/workflow decision.
+## PDF CONTRACT DIAGNOSIS — STILL OPEN
 
-### Next.js advisory fallback — aligned
+`lib/createV143RhythmPdf.js` already has:
+- `const events = validateV143RenderEvents(renderEvents)`
+- non-empty complete-stream fail-closed behavior
+- exact logo path `public/DadRock-Tabs-Logo.png`
+- preview watermark `DADROCK TABS PREVIEW`
+- preview lock condition `preview && index >= clearPreviewSystems`
 
-`app/api/analyze-audio-tab/route.js` keeps the isolated truthful-fallback cleanup from commit `330a3d5dbde5bcc3e51eb577892c8d9643fcba58`:
-- async `start` fallback: `1800`
-- async `status` fallback: `1800`
-- exact source change was two numeric literal replacements `900` → `1800`
-- analyzer-provided `expiresInSeconds` remains authoritative; the bridge fallback does not own or expire analyzer state
+The remaining static product-contract drift is four missing exact branding strings:
+- `DIY Guitar & Bass TAB Generator`
+- `Powered by DadRock AI • V143 Rhythm`
+- `FULL TAB LOCKED`
+- `Generated by DadRock Tabs Studio • dadrocktabs.com`
 
-Static failures observed after that route push are not caused by the two fallback literals:
-- pre-holdout static preflight failed at existing final Rhythm PDF renderer/branding contract checks; its analyzer-route runtime-safety check passed
-- Full Mixture Server Observation Admission V1 failed a brittle source-order assertion requiring `responseOkIndex < v143SafetyIndex < structuredPayloadIndex`; the route defines `v143RuntimeSafetyVerified` inside `buildCompletedProductPayload()` near the top, so that assertion is independent of the later `900` → `1800` replacements
+Current renderer instead contains `PREVIEW LOCKED`, a simpler `DadRock Tabs Studio` footer, and `dadrocktabs.com` separately. Musical/event construction must remain untouched.
 
-## READ-ONLY PDF CONTRACT DIAGNOSIS — 2026-09-07
+## RENDERER PUSH WORKFLOW AUDIT — CRITICAL FINDING
 
-Latest continuation began from branch head `0b5a786ad21fbc2890f76706a0e409e2c49d5778` with no intervening work.
+Historical renderer commit `08ee3bcc1cec3428641741a8281206aa4218cb8d` woke seven workflows. Current definitions were re-audited before any renderer edit.
 
-`Rhythm Pre-Holdout Static Preflight V2` is defined by `.github/workflows/rhythm-preholdout-static-preflight-v2.yml` and runs `validation/rhythm_holdout/run_static_preholdout_preflight.sh` against synthetic-only data. The workflow itself persists canonical evidence back to the branch, so ordinary writes to its watched paths can cause an automatic bot evidence commit.
+Current renderer watchers confirmed:
 
-The `ai-tab-pdf-product-contract` failure is now isolated to literal branding-contract drift in `lib/createV143RhythmPdf.js`, not musical placement or render-event validation:
-- exact renderer event validation is present: `const events = validateV143RenderEvents(renderEvents)`
-- non-empty complete stream fail-closed behavior is present
-- exact logo path is present: `path.join(process.cwd(), 'public', 'DadRock-Tabs-Logo.png')`
-- preview watermark `DADROCK TABS PREVIEW` is present
-- preview lock logic `preview && index >= clearPreviewSystems` is present
-- the verifier's branding check additionally requires four strings that are currently absent from this renderer:
-  - `DIY Guitar & Bass TAB Generator`
-  - `Powered by DadRock AI • V143 Rhythm`
-  - `FULL TAB LOCKED`
-  - `Generated by DadRock Tabs Studio • dadrocktabs.com`
-- current renderer instead uses `PREVIEW LOCKED`, a simple `DadRock Tabs Studio` center footer, and `dadrocktabs.com` separately
+1. `.github/workflows/rhythm-render-presentation-proof.yml`
+   - explicitly watches `lib/createV143RhythmPdf.js`
+   - CPU-only synthetic presentation/render proof
+   - installs only isolated `pdf-lib` + `pypdf`
+   - no Modal/GPU/real audio/professional reference/Production action
 
-Therefore `structured-rhythm-polished-branding-and-preview-lock` fails, which makes `polishedBrandingContractPassed=false` and in turn causes `ai-tab-pdf-product-contract` / static preflight failure. This diagnosis is source-only and required no PDF render, model, scorer, Modal, GPU, real audio, or Production action.
+2. `.github/workflows/v143-ai-tab-branch-build-gate.yml`
+   - explicitly watches renderer
+   - local Next.js build/server and stubbed localhost analyzer HTTP tests
+   - evidence explicitly records `actualVercelPreviewDeployment=false`, `vercelDeploymentAttempted=false`, `liveEndpointDeployedOrModified=false`, `productionModified=false`
+   - no external analyzer/model run
 
-Before editing `lib/createV143RhythmPdf.js`, first enumerate every workflow path trigger that watches that file. Do not assume the preflight workflow is the only automatic side effect.
+3. `.github/workflows/rhythm-professional-holdout-self-test.yml`
+   - explicitly watches renderer
+   - despite the name, constructs `.synthetic-self-test.json` with provenance `synthetic CI contract fixture only; not real ground truth`
+   - verifies runtime isolation and positive/negative scorer contract behavior against synthetic fixtures
+   - no real professional reference/model run
 
-## AUTOMATIC WORKFLOW SIDE EFFECTS DISCOVERED DURING THIS CONTINUATION
+4. `.github/workflows/rhythm-preholdout-static-preflight.yml`
+   - explicitly watches renderer
+   - deterministic/static, synthetic-only
+   - can persist compact evidence back to branch
 
-No workflow was manually triggered. However, source pushes automatically triggered branch workflows.
+5. `.github/workflows/rhythm-preholdout-static-preflight-v2.yml`
+   - explicitly watches renderer
+   - deterministic/static, synthetic-only
+   - can persist canonical evidence back to branch
 
-Comment cleanup commit `2f630afcfa7222a3af823661e45546b19f305f0c`:
-- changed only endpoint comment wording
-- automatically triggered seven push workflows
-- exact-source gates failed because the endpoint blob changed from pinned `169b4bb...`
-- `V143 Hardened Async Failfast Smoke` automatically deployed an **isolated** Modal bridge + failfast driver and invoked its synthetic driver
-- that workflow enforces: `audioRead=false`, `modelExecuted=false`, `separatorModelExecuted=false`, `referenceFacingInputs=0`, `referenceScoreCalls=0`, `qualityVerdictMade=false`, then stops the isolated apps
-- no model-bearing analysis, real audio, GPU inference, professional reference scoring, optimizer, or Production promotion occurred
+6. `.github/workflows/v143-ai-tab-real-audio-canary.yml`
+   - **UNSAFE FOR AN ORDINARY RENDERER PUSH UNDER CURRENT AUTHORIZATION**
+   - explicitly watches `lib/createV143RhythmPdf.js`
+   - has Modal credentials in job environment
+   - if credentials exist, runs `python -m modal run analyzer/v143_ai_tab_product_canary_modal.py::run --audio-path public/gomywayfullaitest.m4a ...`
+   - therefore a renderer push can invoke real audio + Modal/model execution
 
-Route fallback commit `330a3d5dbde5bcc3e51eb577892c8d9643fcba58`:
-- automatically triggered route-path static/build workflows
-- `Rhythm Pre-Holdout Static Preflight V2` used synthetic-only input and failed unrelated final-renderer/branding checks
-- the workflow automatically persisted failed static evidence via bot commit `0c4a51879dacc707f6eecc310709acfe3069ce59` in `debug/v143-contextual-prune/rhythm-preholdout-static-preflight.json`
-- no real professional reference was opened and no Production modification was authorized
+7. `.github/workflows/cleanup-tab-preview.yml`
+   - current `push.paths` contains only its own workflow file
+   - **does not currently watch the renderer**
 
-Endpoint restore commit `708c4fccb0e6c67c4879fb1ead6446955878f95f`:
-- commit message used uppercase `[Skip CI]`, but this repo still created seven push workflows; therefore do **not** rely on that token/casing here
-- `V143 Hardened Async Failfast Smoke` run `34084988160` automatically executed again
-- it completed **successfully**, including the final **Stop isolated apps** step
-- the same enforced no-audio/no-model/no-reference safety contract passed
-- the endpoint exact blob is restored to `169b4bb...`
+Conclusion: **DO NOT push the renderer while the real-audio canary remains automatically push-triggered by renderer changes.**
 
-Cloudflare Pages also reacts to ordinary branch pushes. A checkpoint-only push previously produced a failed Cloudflare build attempt. Treat branch pushes as externally observable actions even when GitHub workflow path filters exclude the changed file.
+Preferred safety hardening before renderer patch: make the real-audio product canary manual-only (`workflow_dispatch`) so expensive/model-bearing canary execution requires an explicit action instead of an ordinary source push. Preserve the canary itself; only remove automatic push invocation. Verify that workflow-safety edit itself does not invoke Modal before proceeding.
 
 ## CONTINUATION COMMITS
 
-Starting branch head: `41dd108c07cb1439f887dbc8f0d1185bd2998848`
-
-Continuation history:
-- `8df101086c8fb21a4a4dc3da6fb377d57b26c300` — inspection checkpoint
-- `2f630afcfa7222a3af823661e45546b19f305f0c` — attempted comment-only TTL wording cleanup
-- `f618b314447430aba6248bc3f474c75d9b2ab79e` — intermediate checkpoint
-- `330a3d5dbde5bcc3e51eb577892c8d9643fcba58` — Next.js fallback `900` → `1800`
-- `0c4a51879dacc707f6eecc310709acfe3069ce59` — automatic Actions bot static-preflight evidence commit
-- `1aed09858a1e52041e2298eba28d1237f0660e34` — prior checkpoint
+Relevant recent history:
+- `b55d9db517fe356b40600bae85ba98ead879aeb6` — shared async TTL 900 → 1800
+- `58dac164b45dbdd0ff23100e69969caf911f4ab2` — deterministic async lifetime validator
+- `330a3d5dbde5bcc3e51eb577892c8d9643fcba58` — Next.js fallback 900 → 1800
 - `708c4fccb0e6c67c4879fb1ead6446955878f95f` — endpoint exact-source restore
-- `0b5a786ad21fbc2890f76706a0e409e2c49d5778` — automation-side-effects checkpoint
 - `7876c47d82a4755f296b1c5bb7ecc0c2b3b23cfe` — PDF-contract diagnosis checkpoint
+- `9e7b3a8e42e67c6b304ff44e14f2d6d2b0669987` — prior fresh-chat checkpoint
+- `fd230ee2ad4c19ad4758bbc753f4d110233591ff` — stale async protocol gate aligned; automatic gate green
 
-## WORKFLOW SAFETY — UPDATED
+## NEXT STEPS
 
-No model/scoring workflow was manually triggered. No model-bearing Rhythm/Lead/Bass analysis, professional scorer, optimizer, training/threshold sweep, real-audio inference, GPU model execution, Production promotion, or model/scheduler mutation was performed during this continuation.
+1. Preserve **725 / 970 / 967 / 3 drops / 0 recovery**.
+2. Preserve **1800s / 1200s / 600s**.
+3. Preserve endpoint blob `169b4bb136eba742c3422a73ee5dd0174ca06c49`.
+4. Harden `.github/workflows/v143-ai-tab-real-audio-canary.yml` so the real-audio Modal canary is **manual-only**, not automatically triggered by renderer/source pushes. Do not execute it.
+5. Verify the safety-hardening push spawned no model-bearing/Modal run.
+6. Re-read the exact PDF validator expectations and `lib/createV143RhythmPdf.js` header/subtitle/lock/footer.
+7. Make only the minimal four-string renderer branding patch; do not change events, note placement, attacks, pitches, voicing, model/scheduler parameters, or fail-closed validation.
+8. Immediately inspect all automatic runs after renderer push. Expected safe automatic work after canary hardening: CPU presentation proof, local build/stub smoke, synthetic holdout self-test, static preflights; no real audio/Modal/model.
+9. Expect preflight workflows may persist bot evidence commits.
+10. Diagnose the unrelated `cleanup-tab-preview` failure separately; do not mix it into the renderer or async lifetime repair.
 
-But automatic push workflows **did** invoke isolated Modal infrastructure twice through the synthetic Hardened Async Failfast Smoke path. Both runs are contractually no-audio/no-model/no-reference, and the latest run `34084988160` completed its `Stop isolated apps` cleanup successfully. This is why future ordinary source pushes must not be treated as purely static.
+## SUCCESS CONDITION
 
-## NEXT STEPS FOR A FRESH CHAT — 2026-09-07
-
-Begin with **read-only inspection only**. The branch head immediately before this checkpoint write was `7876c47d82a4755f296b1c5bb7ecc0c2b3b23cfe`.
-
-1. Re-open this checkpoint and refresh the live branch head before doing anything else.
-2. Enumerate **every** workflow under `.github/workflows/` whose `push.paths` can match `lib/createV143RhythmPdf.js`. Do not assume `rhythm-preholdout-static-preflight-v2.yml` is the only watcher.
-3. For every matching workflow, classify whether a normal push would do only deterministic/static work or could invoke external deployment, Modal, GPU/model inference, real audio, professional/reference scoring, Production, or other authorization-sensitive actions. **Do not edit the renderer until this classification is complete.**
-4. Trace `validation/rhythm_holdout/run_static_preholdout_preflight.sh` to the exact validator(s) behind:
-   - `structured-rhythm-polished-branding-and-preview-lock`
-   - `branding-contains-song-artist-tuning-capo`
-   - `final-rhythm-renderer-validates-exact-events`
-   Confirm the literal/source expectations directly rather than inferring from the prior failed report.
-5. Re-read `lib/createV143RhythmPdf.js` around its header, subtitle, preview-lock label, footer, and `validateV143RenderEvents(renderEvents)` call. Keep musical/event construction untouched.
-6. If workflow classification proves a renderer push stays inside the existing deterministic/model-free safety boundary, design the **smallest renderer-only branding patch** needed to satisfy the four known missing contract strings:
-   - `DIY Guitar & Bass TAB Generator`
-   - `Powered by DadRock AI • V143 Rhythm`
-   - `FULL TAB LOCKED`
-   - `Generated by DadRock Tabs Studio • dadrocktabs.com`
-   Do not change note placement, attack selection, pitch selection, voicing, scheduler/model parameters, or render-event semantics.
-7. Before any push, validate the proposed renderer change with deterministic/model-free checks only. Prefer local/static source validation and synthetic-only tests; **do not manually trigger GitHub workflows just to validate**.
-8. If a source push is made, immediately inspect the exact workflows/checks it spawned and stop further writes if anything crosses the authorization boundary. Expect the preflight workflow may persist a bot evidence commit to the branch.
-9. Continue to leave `analyzer/v143_modal_http_endpoint.py` untouched at exact blob `169b4bb136eba742c3422a73ee5dd0174ca06c49` unless a separate coordinated exact-pin/workflow decision is explicitly made.
-10. The unrelated `Full Mixture Server Observation Admission V1` brittle source-order assertion remains a separate static-test issue. Do not mix that repair into the renderer branding patch; diagnose it separately after the PDF contract slice is closed.
-
-Checkpointing rule for future safe docs-only saves: use the exact lowercase commit token `[skip ci]` plus `[CF-Pages-Skip]`, then verify the checkpoint commit created no GitHub Actions runs/check-runs or external Cloudflare check. Do **not** assume those tokens make arbitrary source pushes safe.
-
-## FRESH CHAT — START HERE
-
-1. Re-open this file first on branch `v143-contextual-prune-lobo` and refresh branch head. Treat any newer checkpoint as authoritative.
-2. Preserve score structure: **725 retained attacks / 970 selected pitches / 967 rendered / 3 legal-voicing drops / 0 recovery**. Do not reopen the score-structure slice absent new explicit authorization/reason.
-3. Preserve async root behavior: shared analyzer TTL **1800s**, orchestrator timeout **1200s**, margin **600s**.
-4. Preserve endpoint exact blob `169b4bb136eba742c3422a73ee5dd0174ca06c49`. Leave the stale 15-minute comment alone unless exact-source pins and automatic workflow consequences are deliberately handled together.
-5. Keep the Next.js advisory fallback at **1800s on start + status** unless new evidence shows a problem; current observed static failures are unrelated to those two numeric replacements.
-6. The current PDF static failure is isolated to four missing branding strings in `lib/createV143RhythmPdf.js`; before any edit, enumerate all push workflows watching that file and verify none crosses the authorization boundary.
-7. **Do not make an ordinary push to `analyzer/v143_modal_http_endpoint.py`**: it auto-triggers an isolated Modal deploy/invocation workflow. Do not assume `[Skip CI]` uppercase suppresses it; it did not.
-8. Do not manually trigger any workflow, Modal function, model run, scorer, deployment, or Production action merely to validate source.
-9. Do **not** run model-bearing Rhythm/Lead/Bass analysis, professional scoring, paid/GPU inference, optimizer/training/threshold sweeps, or change model/scheduler/threshold parameters without new explicit user authorization.
-10. Before any future score-quality work, require a fresh explicit evaluation-budget decision because the authorized model-bearing and professional-scoring evaluation budget is exhausted.
-
-## FRESH CHAT SUCCESS CONDITION
-
-Safe state to preserve:
-- score structure: **725 / 970 / 967 / 3 drops / 0 recovery**
-- async ownership: **1800s shared TTL > 1200s orchestrator by 600s**
-- endpoint exact pin: **169b4bb... restored**
-- Next.js fallback semantics: **1800s on start + status**
-- latest automatic synthetic failfast run: **success, isolated apps stopped, no audio/model/reference scoring**
-- current PDF diagnosis: **branding-contract drift only; no render-event/musical-placement defect identified in this slice**
-- next work item: **enumerate renderer push workflows, trace exact PDF contract validators, then consider only a minimal branding-only renderer patch if push side effects remain within the deterministic/model-free safety boundary**
-- **no model-bearing execution, no professional scoring, no paid/GPU inference, no Production promotion**
-
-This branch is at a safe deterministic checkpoint. Future work should begin with read-only inspection and explicit push-side-effect review before any write.
+- crash-loop ownership defect explained by persisted timing evidence: **900s ownership < 936.836s completed worker**
+- runtime ownership fixed: **1800s > 1200s by 600s**
+- stale protocol CI gate fixed and **green** (`34173726834`)
+- score structure unchanged: **725 / 970 / 967 / 3 / 0**
+- endpoint exact pin preserved
+- renderer branding contract still awaiting safe four-string patch
+- real-audio canary must be removed from automatic renderer pushes before that patch
+- **no new model-bearing run, no professional scoring, no paid/GPU inference, no Production promotion**
