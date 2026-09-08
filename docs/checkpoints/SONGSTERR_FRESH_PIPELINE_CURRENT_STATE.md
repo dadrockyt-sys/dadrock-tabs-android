@@ -13,6 +13,48 @@ Build an AI-first guitar/bass tab creator that can go from audio evidence to usa
 
 The immediate engineering priority is not a cosmetic score. It is preserving detected musical identity while progressively making timing, rhythm spelling, chord shapes, fretboard motion, and later real-audio inference musically coherent enough for product use.
 
+## FOUNDATIONAL PROCESSING ORDER — TIMING AND MEASURES FIRST
+
+This is a **non-negotiable architectural rule** for the fresh pipeline.
+
+The Songsterr-inspired public clues discussed with the user strongly reinforce that timing and measure structure belong at the beginning of transcription, not as a cleanup stage after note detection. This is an architectural inference from public clues, not a claim about Songsterr's private implementation.
+
+When real audio is introduced, the pipeline should conceptually operate in this order:
+
+1. **Analyze the full mixture for global structure before trusting individual note placement.**
+2. Resolve or estimate the song's timing scaffold:
+   - tempo / tempo changes;
+   - downbeats;
+   - time signature / meter;
+   - measure boundaries;
+   - pickup/anacrusis;
+   - straight vs triplet feel;
+   - beat/subdivision grid confidence.
+3. Represent this as an explicit structure/measure map that becomes the coordinate system for the rest of transcription.
+4. Perform or interpret role-specific note evidence **conditioned on that structure map**, rather than independently detecting notes and snapping them afterward.
+5. Group simultaneous attacks relative to the musical grid.
+6. Resolve durations, rests, ties, syncopation, and rhythmic spelling inside known beats/measures.
+7. Decode playable string/fret/chord shapes only after musical timing identity is established.
+8. Optimize phrase-level fretboard movement while preserving the timing/measure map and note identity.
+
+The core principle is:
+
+**Audio → timing/measure map → conditioned note evidence → rhythm/notation → playable tab.**
+
+Not:
+
+**Audio → loose notes → attempt to repair timing afterward.**
+
+Why this matters for a no-human-correction product:
+- a wrong measure boundary can make many otherwise correct pitches look wrong;
+- a wrong downbeat can shift an entire phrase musically;
+- duration and rest notation cannot be reliable without beat/measure context;
+- chord simultaneity depends on a stable timing reference;
+- phrase-aware fretboard choices are more meaningful once note groups and rhythmic positions are known;
+- timing errors compound across a song, so structural uncertainty must be surfaced early rather than hidden downstream.
+
+Future real-audio work should therefore maintain separate confidence/provenance for **structure inference** and **note inference** and allow the note stage to consume the resolved structure map directly.
+
 ## PROJECT BOUNDARY
 
 The old branch `v143-contextual-prune-lobo` is archive/evidence only.
@@ -29,15 +71,16 @@ Do not dispatch Modal/GPU/model-bearing workflows, professional scorers, trainin
 
 Carry forward architecture ideas only:
 
-1. preserve full-mixture context for global musical structure;
-2. allow a role-specific/local carrier for note evidence;
-3. make structure first-class: tempo, meter, pickup, straight/triplet feel;
-4. make instrument configuration first-class: lead/rhythm/bass, tuning, capo;
-5. fuse structure + note evidence before final timing/tab decoding;
-6. group simultaneous notes before fretboard assignment;
-7. solve simultaneous notes as a playable chord/shape, not independently;
-8. keep detected note identity separate from notation/render representation;
-9. add phrase-aware rhythm spelling and fretboard continuity before real-audio promotion.
+1. timing/measure structure is foundational and should be established before trusting note placement;
+2. preserve full-mixture context for global musical structure;
+3. allow a role-specific/local carrier for note evidence;
+4. make structure first-class: tempo, tempo changes, downbeat, meter, measures, pickup, straight/triplet feel;
+5. make instrument configuration first-class: lead/rhythm/bass, tuning, capo;
+6. condition/fuse note evidence with the structure map before final timing/tab decoding;
+7. group simultaneous notes before fretboard assignment;
+8. solve simultaneous notes as a playable chord/shape, not independently;
+9. keep detected note identity separate from notation/render representation;
+10. add phrase-aware rhythm spelling and fretboard continuity before real-audio promotion.
 
 Public Songsterr observations are clues only, not claims about Songsterr private implementation.
 
@@ -137,7 +180,21 @@ Required proof:
 
 Do not let old V143 CI failures block this proof.
 
-### 2. Harden rhythm spelling beyond raw boundary splitting
+### 2. Make the structure map a first-class object before any real-audio adapter
+
+Before connecting actual audio/model evidence, define an explicit structure representation capable of carrying:
+- tempo and later tempo changes;
+- time signature and later meter changes;
+- downbeat locations;
+- measure start/end boundaries;
+- pickup duration;
+- beat/subdivision positions;
+- straight/triplet feel;
+- confidence and provenance per structural decision.
+
+The note/audio adapter must consume this structure map rather than treating it as optional postprocessing metadata.
+
+### 3. Harden rhythm spelling beyond raw boundary splitting
 
 Current rhythm notation is deliberately conservative. Next add contextual spelling for:
 - syncopation preference;
@@ -151,7 +208,7 @@ Current rhythm notation is deliberately conservative. Next add contextual spelli
 
 Keep source MIDI/count invariant.
 
-### 3. Upgrade chord/shape decoding
+### 4. Upgrade chord/shape decoding
 
 Improve joint shape selection with:
 - stronger fret-span constraints;
@@ -162,7 +219,7 @@ Improve joint shape selection with:
 
 Do not drop pitches merely to create an easier shape.
 
-### 4. Add phrase-level fretboard path optimization
+### 5. Add phrase-level fretboard path optimization
 
 Use deterministic phrase-level search (beam/Viterbi-style is acceptable) over playable states.
 
@@ -174,9 +231,11 @@ Priority order:
 5. chord-shape continuity;
 6. role-specific behavior.
 
-### 5. Define the fresh evaluator
+### 6. Define the fresh evaluator
 
 Report raw metrics before any composite score:
+- structure-map completeness/confidence;
+- measure/downbeat consistency;
 - source notes vs output events;
 - exact MIDI preservation;
 - onset-cluster preservation;
@@ -190,9 +249,13 @@ Report raw metrics before any composite score:
 
 Any later composite score formula must live in source control beside these raw metrics.
 
-### 6. Only after deterministic notation/fretboard behavior is stable, connect real model/audio output
+### 7. Only after deterministic structure/notation/fretboard behavior is stable, connect real model/audio output
 
-The first real-audio adapter should map model evidence into the clean event schema. It must not import the old V143 scorer/gate maze.
+The first real-audio adapter should follow the foundational order:
+
+**full-mixture structure analysis → structure/measure map → conditioned note evidence → clean event schema → notation → fretboard decoding.**
+
+It must not import the old V143 scorer/gate maze.
 
 Keep Production untouched until a deliberate later promotion decision.
 
@@ -200,13 +263,15 @@ Keep Production untouched until a deliberate later promotion decision.
 
 When starting a new chat, use:
 
-`Please continue from docs/checkpoints/SONGSTERR_FRESH_PIPELINE_CURRENT_STATE.md on branch songsterr-fresh-pipeline-v1. Keep that file updated often while you work. Do not resume the archived V143/Gomyway pipeline unless I explicitly ask.`
+`Please continue from docs/checkpoints/SONGSTERR_FRESH_PIPELINE_CURRENT_STATE.md on branch songsterr-fresh-pipeline-v1. Keep that file updated often while you work. Timing/measure structure is foundational and must precede trusting note placement. Do not resume the archived V143/Gomyway pipeline unless I explicitly ask.`
 
 ## NON-NEGOTIABLES
 
 - canonical checkpoint is `docs/checkpoints/SONGSTERR_FRESH_PIPELINE_CURRENT_STATE.md`;
 - branch is `songsterr-fresh-pipeline-v1`;
 - old V143 branch remains archive/evidence only;
+- **timing/measure structure must be established before trusting note placement in real-audio processing**;
+- the structure map must be first-class and consumed by downstream note/rhythm/tab stages;
 - no Production or main changes;
 - no accidental Modal/GPU/model/professional scorer/training activity;
 - no legacy scorer or old failed test becomes a fresh-pipeline gate merely because it exists;
