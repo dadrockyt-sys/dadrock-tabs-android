@@ -37,6 +37,15 @@ def load_evidence(path):
         raise RuntimeError("CPU_RELEASE_CANARY_MODEL_NOT_ALLOWED")
     if evidence.get("provenance", {}).get("gpuInvoked") is True:
         raise RuntimeError("CPU_RELEASE_CANARY_GPU_NOT_ALLOWED")
+
+    # This stage is the sole duration authority in the current CPU baseline. Refuse
+    # upstream duration/end values rather than overwriting, merging, or silently
+    # preferring one estimator over another.
+    for index, onset in enumerate(evidence.get("onsets", [])):
+        if onset.get("durationSeconds") is not None or onset.get("sourceEnd") is not None:
+            raise RuntimeError(
+                f"RELEASE_EVIDENCE_REQUIRES_DURATION_FREE_INPUT onsetIndex={index} onsetId={onset.get('onsetId')}"
+            )
     return evidence
 
 
@@ -260,6 +269,8 @@ def main():
 
     evidence.setdefault("diagnostics", {})["releaseEvidence"] = {
         "contract": CONTRACT,
+        "soleDurationAuthority": True,
+        "requiresDurationFreeInput": True,
         "attemptedPromotedOnsetCount": attempted,
         "resolvedPromotedOnsetCount": resolved,
         "unresolvedPromotedOnsetCount": attempted - resolved,
@@ -284,6 +295,7 @@ def main():
     evidence["provenance"]["durationEvidenceReferenceBlind"] = True
     evidence["provenance"]["durationEvidenceModelInvoked"] = False
     evidence["provenance"]["durationEvidenceGpuInvoked"] = False
+    evidence["provenance"]["durationEvidenceRequiresDurationFreeInput"] = True
 
     Path(args.output).parent.mkdir(parents=True, exist_ok=True)
     with open(args.output, "w", encoding="utf-8") as handle:
