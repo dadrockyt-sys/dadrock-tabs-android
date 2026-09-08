@@ -181,6 +181,27 @@ test('explicit duration evidence is preserved exactly while missing duration rem
   assert.equal(result.metrics.unresolvedDurationEvidenceCount, 1);
 });
 
+test('analyzer capability declarations and raw diagnostics survive adaptation without becoming a score', () => {
+  const map = structureMap();
+  const raw = evidence(map, {
+    capabilities: {
+      roleRelevanceResolved: false,
+      polyphonyResolved: false,
+      durationResolution: 'none',
+      instrumentIsolation: 'none',
+      confidenceCalibration: 'heuristic-not-calibrated-probability',
+    },
+    diagnostics: {
+      onsetCount: 3,
+      selectedMidiHistogram: { '64': 1 },
+    },
+  });
+  const result = adaptStructureConditionedNoteEvidence(raw, map);
+  assert.deepEqual(result.capabilities, raw.capabilities);
+  assert.deepEqual(result.analyzerDiagnostics, raw.diagnostics);
+  assert.equal('compositeScore' in result.analyzerDiagnostics, false);
+});
+
 test('note evidence adaptation is deterministic', () => {
   const map = structureMap();
   assert.deepEqual(
