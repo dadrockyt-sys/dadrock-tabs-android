@@ -127,6 +127,37 @@ jobs:
             --evidence /tmp/songsterr-fresh-note-canary/raw-note-evidence-pitch.json \
             --output /tmp/songsterr-fresh-note-canary/raw-note-evidence-pitch-guarded.json
 
+      - name: Prove release stage rejects prefilled duration evidence
+        shell: bash
+        run: |
+          set -euo pipefail
+          python - <<'PY'
+          import json
+          source = '/tmp/songsterr-fresh-note-canary/raw-note-evidence-pitch-guarded.json'
+          target = '/tmp/songsterr-fresh-note-canary/negative-prefilled-duration.json'
+          with open(source, 'r', encoding='utf-8') as handle:
+              data = json.load(handle)
+          if not data.get('onsets'):
+              raise SystemExit('NEGATIVE_DURATION_FIXTURE_REQUIRES_ONSET')
+          data['onsets'][0]['durationSeconds'] = 0.25
+          data['onsets'][0]['sourceEnd'] = float(data['onsets'][0]['sourceStart']) + 0.25
+          with open(target, 'w', encoding='utf-8') as handle:
+              json.dump(data, handle)
+          PY
+          set +e
+          python scripts/songsterr-fresh/estimate_selected_pitch_releases.py \
+            --input /tmp/gomyway-midterm-analysis.wav \
+            --evidence /tmp/songsterr-fresh-note-canary/negative-prefilled-duration.json \
+            --output /tmp/songsterr-fresh-note-canary/negative-should-not-exist.json \
+            > /tmp/songsterr-fresh-note-canary/negative-duration.stdout \
+            2> /tmp/songsterr-fresh-note-canary/negative-duration.stderr
+          STATUS=$?
+          set -e
+          test "$STATUS" -ne 0
+          grep -q 'RELEASE_EVIDENCE_REQUIRES_DURATION_FREE_INPUT' \
+            /tmp/songsterr-fresh-note-canary/negative-duration.stderr
+          test ! -f /tmp/songsterr-fresh-note-canary/negative-should-not-exist.json
+
       - name: Estimate conservative selected-pitch release evidence
         shell: bash
         run: |
@@ -143,6 +174,8 @@ jobs:
           release = data.get('diagnostics', {}).get('releaseEvidence', {})
           if release.get('contract') != 'songsterr-fresh-cpu-spectral-release-evidence-v2':
               raise SystemExit('DEDICATED_RELEASE_STAGE_MUST_OWN_DURATION_EVIDENCE')
+          if release.get('soleDurationAuthority') is not True or release.get('requiresDurationFreeInput') is not True:
+              raise SystemExit('RELEASE_STAGE_MUST_DECLARE_INTRINSIC_SINGLE_AUTHORITY')
           if data.get('provenance', {}).get('durationEvidenceSource') != 'songsterr-fresh-cpu-spectral-release-evidence-v2':
               raise SystemExit('DURATION_PROVENANCE_MUST_NAME_DEDICATED_RELEASE_STAGE')
           if release.get('resolvedPromotedOnsetCount', 0) <= 0:
