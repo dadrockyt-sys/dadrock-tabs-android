@@ -114,6 +114,17 @@ Conclusion:
 - no preserved-capture workflow was manually dispatched
 - no model-bearing, paid/GPU, professional-scoring, or Production activity occurred
 
+## RECENT AUTOMATIC CI AUDIT — CLEAN
+
+Inspected branch-level automatic workflow history after the cleanup repair:
+- newest failure remains historical cleanup run `34175719332` at head `ae25972ce1f1d518a40e3dcc00739b70ff2a34ff`
+- newer cleanup verification run `34175871883` at head `ab27ae3b95d6aa5942f2d456c3f29792c96ecc3b` is **SUCCESS**
+- no automatic branch failure exists newer than `34175719332`
+- `V143 AI Tab Real Audio Product Canary` is absent from the recent branch run set
+- checkpoint-only commits did not trigger unrelated workflows
+
+Result: there is no current deterministic/source-only automatic CI failure established that warrants another code or workflow mutation.
+
 ## CURRENT VERIFIED STATE
 
 - crash-loop ownership defect explained and fixed
@@ -129,6 +140,7 @@ Conclusion:
 - real-audio canary automatic trigger removed and remains manual-only
 - cleanup-tab-preview workflow repaired and green
 - preserved-capture PDF historical audit closed with successful persisted evidence for all three harnesses
+- recent automatic CI audit has no newer failure to repair
 - score structure preserved: **725 / 970 / 967 / 3 / 0**
 - async lifetime preserved: **1800 / 1200 / 600**
 - endpoint blob pin preserved
@@ -136,13 +148,11 @@ Conclusion:
 
 ## NEXT SAFE WORK — EXACT ORDER
 
-1. Inspect recent **automatic** branch failures only for remaining deterministic/source-only CI noise.
-2. For any candidate, inspect source/history/log evidence before changing anything.
-3. Repair only stale deterministic harness assertions/transforms or CI registration issues when a current defect is actually established.
-4. Never alter frozen score structure, renderer event construction, async timing constants, model thresholds, scheduler parameters, or endpoint pin to make an old harness green.
-5. Never manually dispatch model/GPU/professional-scoring workflows without new explicit user authorization.
-6. Confirm any source-only cleanup does not auto-start `V143 AI Tab Real Audio Product Canary`.
-7. Keep this checkpoint updated after each meaningful diagnosis/fix.
+1. Perform a final source-only invariant/safety sweep of the branch after the documentation commits.
+2. Verify the frozen score constants/evidence expectations, async timing constants, exact endpoint blob pin, and manual-only real-audio canary remain intact.
+3. Do not run model/GPU/professional-scoring workflows to prove these source invariants.
+4. If the source-only sweep is clean, stop changing code: the branch is at a safe deterministic checkpoint awaiting explicit authorization for any new model-bearing evaluation or Production action.
+5. Keep this checkpoint updated with the final sweep result.
 
 ## FRESH CHAT NON-NEGOTIABLES
 
