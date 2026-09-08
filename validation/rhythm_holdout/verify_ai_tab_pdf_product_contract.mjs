@@ -123,7 +123,7 @@ const checks = [
     'projectV143RenderEvents',
   ]),
   requireAll('final-rhythm-renderer-validates-exact-events', structuredRhythmRendererSource, [
-    "import { validateV143RenderEvents } from '@/lib/v143RenderContract'",
+    'validateV143RenderEvents,', "from './v143RenderContract.js'",
     'const events = validateV143RenderEvents(renderEvents)', 'complete valid render event stream',
   ]),
   forbidAll('final-rhythm-renderer-does-not-reproject-events', structuredRhythmRendererSource, [
