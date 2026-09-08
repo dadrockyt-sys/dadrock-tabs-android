@@ -45,6 +45,13 @@ jobs:
           echo "Authorized fixture blob: ${ACTUAL_BLOB_SHA}"
           test "${ACTUAL_BLOB_SHA}" = "${EXPECTED_BLOB_SHA}"
 
+      - name: Install audio decoder
+        shell: bash
+        run: |
+          set -euo pipefail
+          sudo apt-get update -qq
+          sudo apt-get install -y ffmpeg
+
       - name: Decode fixture to mono analysis WAV
         shell: bash
         run: |
