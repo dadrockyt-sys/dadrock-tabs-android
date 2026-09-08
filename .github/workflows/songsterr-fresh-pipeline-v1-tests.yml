@@ -2,9 +2,19 @@ name: Songsterr Fresh Pipeline V1 Tests
 
 on:
   workflow_dispatch:
+  push:
+    branches:
+      - songsterr-fresh-pipeline-v1
+    paths:
+      - 'songsterr_pipeline/**'
+      - '.github/workflows/songsterr-fresh-pipeline-v1-tests.yml'
 
 permissions:
   contents: read
+
+concurrency:
+  group: songsterr-fresh-pipeline-v1-tests-${{ github.ref }}
+  cancel-in-progress: true
 
 jobs:
   deterministic-core:
