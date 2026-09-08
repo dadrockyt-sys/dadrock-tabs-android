@@ -1,3 +1,5 @@
+import { summarizeNoteEvidence } from './noteEvidenceDiagnostics.mjs';
+
 const EPSILON = 1e-12;
 
 function finiteOrNull(value) {
@@ -68,6 +70,7 @@ export function evaluateNoteEvidence(evidence = {}) {
     ? evidence.adapterContract
     : {};
   const capabilities = normalizeCapabilities(evidence);
+  const inventory = summarizeNoteEvidence(evidence);
 
   const candidateCounts = [];
   const topConfidences = [];
@@ -112,16 +115,18 @@ export function evaluateNoteEvidence(evidence = {}) {
   const topDominant = dominantValue(topMidis);
   const promotedDominant = dominantValue(promotedMidis);
 
-  const onsetCount = Number.isInteger(metrics.onsetCount) ? metrics.onsetCount : onsets.length;
+  const onsetCount = Number.isInteger(metrics.onsetCount)
+    ? metrics.onsetCount
+    : inventory.counts.onsetCount;
   const promotedEventCount = Number.isInteger(metrics.promotedEventCount)
     ? metrics.promotedEventCount
-    : promotedEvents.length;
+    : inventory.counts.promotedEventCount;
   const unresolvedOnsetCount = Number.isInteger(metrics.unresolvedOnsetCount)
     ? metrics.unresolvedOnsetCount
-    : onsets.filter((onset) => onset?.classification !== 'unambiguous').length;
+    : inventory.counts.unresolvedPitchEvidenceCount;
   const durationResolvedEvidenceCount = Number.isInteger(metrics.durationResolvedEvidenceCount)
     ? metrics.durationResolvedEvidenceCount
-    : onsets.filter((onset) => finiteOrNull(onset?.durationSeconds) !== null).length;
+    : inventory.counts.promotedWithDurationCount;
 
   const failures = [];
   if (contract.referenceBlind !== true) failures.push('NOTE_EVIDENCE_NOT_REFERENCE_BLIND');
@@ -130,6 +135,8 @@ export function evaluateNoteEvidence(evidence = {}) {
   if (contract.nearestStructureSlotsVerified !== true) failures.push('NOTE_EVIDENCE_STRUCTURE_SLOTS_UNVERIFIED');
   if (contract.syntheticDurationInference !== false) failures.push('SYNTHETIC_DURATION_INFERENCE_PRESENT');
   if (contract.legacyV143ScorerImported === true) failures.push('LEGACY_SCORER_BOUNDARY_VIOLATION');
+  if (contract.modelInvoked === true) failures.push('MODEL_EVIDENCE_OUTSIDE_CPU_CANARY');
+  if (contract.gpuInvoked === true) failures.push('GPU_EVIDENCE_OUTSIDE_CPU_CANARY');
   if (onsetCount <= 0) failures.push('NOTE_EVIDENCE_EMPTY');
   if (!capabilities.roleRelevanceResolved) failures.push('ROLE_RELEVANCE_UNRESOLVED');
   if (!capabilities.polyphonyResolved) failures.push('POLYPHONY_UNRESOLVED');
@@ -144,7 +151,9 @@ export function evaluateNoteEvidence(evidence = {}) {
   return {
     evaluatorContract: {
       name: 'songsterr-fresh-note-evidence-evaluator',
-      version: 1,
+      version: 2,
+      ownsAcceptanceDecision: true,
+      descriptiveInventoryContract: inventory.contract.name,
       compositeScoreDefined: false,
       compositeScore: null,
       referenceBlind: true,
@@ -153,6 +162,10 @@ export function evaluateNoteEvidence(evidence = {}) {
     acceptedForCompleteTab: failures.length === 0,
     failureReasons: failures,
     capabilities,
+    inventory,
+    analyzerDiagnostics: evidence?.analyzerDiagnostics && typeof evidence.analyzerDiagnostics === 'object'
+      ? structuredClone(evidence.analyzerDiagnostics)
+      : {},
     diagnostics: {
       onsetCount,
       promotedEventCount,
