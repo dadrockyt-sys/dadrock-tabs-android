@@ -10,9 +10,12 @@ on:
       - 'scripts/songsterr-fresh/analyze_structure_conditioned_notes.py'
       - 'scripts/songsterr-fresh/build_note_evidence_context.mjs'
       - 'scripts/songsterr-fresh/build_note_evidence.mjs'
+      - 'scripts/songsterr-fresh/run_note_evidence_pipeline_canary.mjs'
       - 'songsterr_pipeline/noteEvidenceAdapter.mjs'
+      - 'songsterr_pipeline/noteEvidenceDiagnostics.mjs'
       - 'songsterr_pipeline/structureIdentity.mjs'
       - 'songsterr_pipeline/tests/noteEvidenceAdapter.test.mjs'
+      - 'songsterr_pipeline/tests/noteEvidenceDiagnostics.test.mjs'
 
 permissions:
   contents: read
@@ -103,6 +106,26 @@ jobs:
             /tmp/songsterr-fresh-note-canary/raw-note-evidence.json \
             /tmp/songsterr-fresh-note-canary/adapted-note-evidence.json
 
+      - name: Run promoted evidence through deterministic pipeline fail-closed
+        run: |
+          node scripts/songsterr-fresh/run_note_evidence_pipeline_canary.mjs \
+            /tmp/songsterr-fresh-note-canary/adapted-structure-map.json \
+            /tmp/songsterr-fresh-note-canary/adapted-note-evidence.json \
+            /tmp/songsterr-fresh-note-canary/pipeline-canary-result.json
+          node --input-type=module - <<'NODE'
+          import { readFile } from 'node:fs/promises';
+          const result = JSON.parse(await readFile('/tmp/songsterr-fresh-note-canary/pipeline-canary-result.json', 'utf8'));
+          if (result.evidenceDiagnostics.noHumanCorrectionReady !== false) {
+            throw new Error('BASELINE_NOTE_EVIDENCE_MUST_NOT_CLAIM_NO_HUMAN_CORRECTION_READINESS');
+          }
+          if (!result.evidenceDiagnostics.blockers.includes('PROMOTED_EVENTS_MISSING_DURATION_EVIDENCE')) {
+            throw new Error('BASELINE_MUST_EXPOSE_MISSING_DURATION_EVIDENCE');
+          }
+          if (result.pipelineSummary.deliveryReady !== false) {
+            throw new Error('INCOMPLETE_REAL_NOTE_EVIDENCE_MUST_FAIL_CLOSED_FROM_DELIVERY');
+          }
+          NODE
+
       - name: Re-run fresh deterministic suite
         working-directory: songsterr_pipeline
         run: npm test
@@ -112,7 +135,7 @@ jobs:
         run: |
           python - <<'PY'
           import json
-          for name in ('raw-note-evidence.json', 'adapted-note-evidence.json'):
+          for name in ('raw-note-evidence.json', 'adapted-note-evidence.json', 'pipeline-canary-result.json'):
               path = f'/tmp/songsterr-fresh-note-canary/{name}'
               with open(path, 'r', encoding='utf-8') as handle:
                   data = json.load(handle)
@@ -122,6 +145,8 @@ jobs:
                   'diagnostics': data.get('diagnostics'),
                   'metrics': data.get('metrics'),
                   'adapterContract': data.get('adapterContract'),
+                  'evidenceDiagnostics': data.get('evidenceDiagnostics'),
+                  'pipelineSummary': data.get('pipelineSummary'),
                   'provenance': data.get('provenance'),
               }, indent=2))
           PY
