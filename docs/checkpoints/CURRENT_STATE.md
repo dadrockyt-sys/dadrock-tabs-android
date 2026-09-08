@@ -58,39 +58,40 @@ Authoritative deterministic greens:
 
 Static proof includes schema-v7/product/runtime/anti-leakage/rendering checks, **400 synthetic events / 100 measures**, valid full + preview PDFs, **PDF event fidelity = 1.0**, frozen/PDF event hash `6475a7d68071a8810890982e1c06c0d39f99e85d646680706233ceed5a58b37e`, and no production/model activity.
 
-## CLEANUP-TAB-PREVIEW DIAGNOSIS / FIX — ACTIVE
+## CLEANUP-TAB-PREVIEW — CLOSED GREEN
 
-Latest observed failure before repair:
+Historical failure signature before repair:
 - run `34175719332`
 - head `ae25972ce1f1d518a40e3dcc00739b70ff2a34ff`
-- docs-only commit nevertheless created a cleanup workflow run
+- docs-only commit nevertheless created the cleanup workflow run
 - run name appeared as `.github/workflows/cleanup-tab-preview.yml` instead of declared workflow name
 - conclusion `failure`
-- **zero jobs** were scheduled
+- **zero jobs** scheduled
 
-This is an invalid-workflow/registration-style failure signature, not a failure inside the Python patch step.
+This was an invalid-workflow/registration-style failure, not a failure inside the old Python patch step.
 
-Source inspection also proved the cleanup had already been applied in `app/ai-tab/page.js`:
-- `Tab Studio Preview` is present
-- old `Review Your Tab Preview` text absent
-- old `Watermarked preview ready` text absent
+Source inspection proved the UI cleanup had already been applied in `app/ai-tab/page.js`:
+- `Tab Studio Preview` present
+- old `Review Your Tab Preview` absent
+- old `Watermarked preview ready` absent
 - old `Full transcription locked` overlay absent
 
-The old workflow was obsolete one-shot mutation logic and was not idempotent: it expected the removed overlay to still exist and performed a write/commit/push.
+The obsolete one-shot mutator was replaced by an idempotent, read-only verifier:
+- repair commit `ab27ae3b95d6aa5942f2d456c3f29792c96ecc3b` — `Fix cleanup preview workflow`
+- `contents: read` only
+- triggers only when `.github/workflows/cleanup-tab-preview.yml` changes
+- no source mutation, commit, or push
+- verifies the cleaned preview contract and fails only if old UI text returns
 
-Repair commit:
-- `ab27ae3b95d6aa5942f2d456c3f29792c96ecc3b` — `Fix cleanup preview workflow`
+Automatic verification:
+- **Clean up tab preview card** — run `34175871883` — **SUCCESS**
+- job `verify-preview-cleanup` scheduled and succeeded
+- checkout succeeded
+- `Verify preview cleanup is already applied` succeeded
+- no manual dispatch used
+- `V143 AI Tab Real Audio Product Canary` absent from the post-fix run set
 
-Current `.github/workflows/cleanup-tab-preview.yml` now:
-- has `contents: read` only
-- triggers only when the workflow file itself changes
-- does **not** mutate source
-- does **not** commit or push
-- verifies `Tab Studio Preview` is present
-- fails only if old preview/overlay text returns
-- is idempotent
-
-Automatic Actions verification for commit `ab27ae3b95d6aa5942f2d456c3f29792c96ecc3b` still needs to be inspected in the current session; do not manually dispatch anything to obtain it.
+Result: unrelated cleanup workflow noise is closed green without touching V143 musical/model/renderer behavior.
 
 ## CURRENT VERIFIED STATE
 
@@ -105,19 +106,23 @@ Automatic Actions verification for commit `ab27ae3b95d6aa5942f2d456c3f29792c96ec
 - polished branding contract present
 - exact-event fail-closed validation still present
 - real-audio canary automatic trigger removed and remains manual-only
+- cleanup-tab-preview workflow repaired and green
 - score structure preserved: **725 / 970 / 967 / 3 / 0**
 - async lifetime preserved: **1800 / 1200 / 600**
 - endpoint blob pin preserved
 - no new model-bearing run, paid/GPU inference, real professional scoring run, or live Production promotion
-- cleanup workflow source repaired in isolation; V143 musical/model/renderer logic untouched
 
 ## NEXT SAFE WORK — EXACT ORDER
 
-1. Inspect automatic Actions created by cleanup repair commit `ab27ae3b95d6aa5942f2d456c3f29792c96ecc3b`.
-2. Confirm the cleanup workflow parses, schedules a job, and is green.
-3. Confirm `V143 AI Tab Real Audio Product Canary` is absent; do **not** manually dispatch it.
-4. Update this checkpoint with the run ID/result.
-5. Only after cleanup is closed, inspect historical red preserved-capture PDF workflows if dashboard cleanup is still desired. Repair stale deterministic assertions/transforms only; never alter musical/model logic to satisfy a stale harness.
+1. Review historical/current status of deterministic preserved-capture PDF workflows only if dashboard cleanup is still desired:
+   - `v143-professional-pdf-fixture.yml`
+   - `v143-render-real-candidate-pdf.yml`
+   - `v143-render-v5-shadow-professional-pdf.yml`
+2. Inspect logs before changing anything.
+3. Repair only stale deterministic harness assertions/transforms if necessary.
+4. Never alter frozen score structure, renderer event construction, async timing constants, model thresholds, scheduler parameters, or endpoint pin to make an old harness green.
+5. Confirm any source-only cleanup does not auto-start `V143 AI Tab Real Audio Product Canary`.
+6. Keep this checkpoint updated after each meaningful diagnosis/fix.
 
 ## FRESH CHAT NON-NEGOTIABLES
 
