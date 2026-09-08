@@ -58,6 +58,8 @@ const pipelineResult = runFreshDeterministicPipeline({
   productShell: {
     transcriptionType: 'Guitar',
     difficulty: 'unrated-real-audio-canary',
+    upstreamEvidenceReady: evidenceDiagnostics.noHumanCorrectionReady,
+    upstreamEvidenceBlockers: evidenceDiagnostics.blockers,
   },
 });
 
@@ -81,6 +83,9 @@ const output = {
     fretboardPathResolved: pipelineResult.fretboardPath?.resolved ?? null,
     rawIntegrityPassed: pipelineResult.freshDiagnostics?.passedRawIntegrityChecks ?? false,
     failures: pipelineResult.freshDiagnostics?.failures ?? [],
+    upstreamEvidenceReady: pipelineResult.productShell?.payloadContract?.upstreamEvidenceReady ?? null,
+    upstreamEvidenceBlockers: pipelineResult.productShell?.payloadContract?.upstreamEvidenceBlockers ?? [],
+    rawResultReady: pipelineResult.productShell?.payloadContract?.rawResultReady ?? false,
     deliveryReady: pipelineResult.productShell?.payloadContract?.deliveryReady ?? false,
     structuredRenderEligible: pipelineResult.productShell?.payloadContract?.structuredRenderEligible ?? false,
   },
