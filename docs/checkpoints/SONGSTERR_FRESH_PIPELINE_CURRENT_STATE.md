@@ -61,9 +61,9 @@ Namespace: `songsterr_pipeline/`
 - `productShellAdapter.mjs` — maps fresh final state to existing `/ai-tab` fields. Structured legacy render data is emitted only when lossless; otherwise full text fallback remains available.
 
 ### Deterministic orchestration
-- `deterministicPipeline.mjs` — new single non-model composition entry point:
+- `deterministicPipeline.mjs` — single non-model composition entry point:
   **structureMap + note evidence → structure-driven event schema → contextual rhythm spelling → optimized fretboard path → raw evaluator → product-shell payload**.
-- It explicitly reports `modelOrAudioAnalyzerInvoked: false` and `legacyV143ScorerImported: false`.
+- Explicit metadata: `modelOrAudioAnalyzerInvoked: false`, `legacyV143ScorerImported: false`.
 - It does not infer audio, call a model, touch a reference tab, or dispatch any remote analyzer.
 
 ## IMPORTANT COMMITS
@@ -80,68 +80,108 @@ Core architecture:
 - `9a9de7247973a127bc1f8b4709cd5956293e0dbb` — product-shell adapter.
 - `d22a82b0fb947aa83c35c2f707bf1126256d4ccb` — deterministic end-to-end orchestrator.
 
-Recent tests:
-- `c3452d39702df616b52ecd0bac171af2bd099d12` — constrained shape decoder.
-- `d684cd2a42ace038bff85637a2ef9a38b0c37371` — phrase optimizer.
-- `1e0e9514193e76e0b80fd62415c53d801bccb234` — structure/fretboard invariance.
-- `a49695e20ab20f830e31b9f160194cd5137e5f4d` — raw evaluator.
-- `f6e343f85c828318cf3a1d92982018a51b2a9a56` — product-shell adapter.
+Recent verification/guard commits:
 - `acae3c6779feb61c8a06152a92df938667980de5` — cross-layer deterministic composition tests.
+- `f6cc087abf5fdaf546e973b7b8c605dbf2e8266e` — automatic CPU-only fresh-branch CI.
+- `28338aff0fb279e6af3742227629a3c7c07bbac9` — fresh namespace isolation boundary guard test.
 
-CI:
-- `f6cc087abf5fdaf546e973b7b8c605dbf2e8266e` — fresh CPU-only workflow now runs automatically on pushes to `songsterr-fresh-pipeline-v1` that touch `songsterr_pipeline/**` or the fresh workflow file.
-- Workflow: `.github/workflows/songsterr-fresh-pipeline-v1-tests.yml`.
-- Runtime: Ubuntu + Node 22 + `npm test` in `songsterr_pipeline`.
-- `npm test` is `node --test tests/*.test.mjs`, so it covers every committed fresh test file.
-- No model/audio/GPU/scorer/secrets step is present.
+## AUTOMATIC FRESH-BRANCH CI
 
-## VALIDATION STATUS
+Workflow: `.github/workflows/songsterr-fresh-pipeline-v1-tests.yml`.
 
-Earlier proven surfaces:
-- original clean: **13/13 pass**;
-- structure-first: **19/19 pass** after exact-boundary `[start, end)` fix;
-- structure-driven event/rhythm: **25/25 pass**;
-- contextual rhythm namespace run before interruption: **30/30 pass**.
+It now runs on:
+- manual dispatch;
+- pushes to `songsterr-fresh-pipeline-v1` touching `songsterr_pipeline/**` or this workflow.
 
-Later isolated proofs:
-- constrained decoder: **5/5 pass**;
-- decoder + candidate enumeration + phrase optimizer: **10/10 pass**;
-- decoder + phrase optimizer + structure integration: **15/15 pass**;
-- raw evaluator: **6/6 pass**;
-- product-shell adapter: **6/6 pass**.
+Runtime:
+- GitHub-hosted Ubuntu 24.04;
+- Node test runtime configured as Node `22` (green run used v22.23.2);
+- command: `npm test` inside `songsterr_pipeline`;
+- package command: `node --test tests/*.test.mjs`.
 
-### Branch-wide CI — PENDING AT THIS CHECKPOINT
+Permissions are read-only contents. No model, audio, GPU, scorer, deployment, training, or secret-consuming step is present.
 
-A true branch-wide CPU-only GitHub Actions run is now enabled. The latest run was triggered by commit `acae3c6779feb61c8a06152a92df938667980de5` and was still in progress when this checkpoint was written.
+## VALIDATION STATUS — CURRENT PROVEN BASELINE
 
-Do **not** claim a branch-wide pass count until that run reaches a final GitHub conclusion and its test log is inspected.
+### Branch-wide GitHub Actions proof
 
-## CROSS-LAYER ORCHESTRATOR TEST INTENT
+Run ID: `34191214663`
+Job ID: `101949496020`
+Tested commit: `28338aff0fb279e6af3742227629a3c7c07bbac9`
 
-`deterministicPipeline.test.mjs` adds end-to-end synthetic coverage for:
-- straight 4/4 input reaching a delivery-ready structured payload while preserving source MIDI/index/timing identity;
-- triplet input staying delivery-ready but failing closed from the legacy 16th renderer;
-- unresolved simultaneous fingering remaining explicit with both source pitches preserved and delivery blocked;
-- deterministic repeated full-pipeline output.
+Actual Node TAP result from the GitHub Actions log:
+- tests: **62**
+- pass: **62**
+- fail: **0**
+- cancelled: **0**
+- skipped: **0**
+- todo: **0**
+
+This is now the canonical deterministic baseline. It supersedes the earlier need to qualify later layers as isolated-only proofs.
+
+The immediately preceding branch-wide run at `acae3c6779feb61c8a06152a92df938667980de5` also passed **61/61**; the 62nd test is the isolation boundary guard.
+
+### What the 62-test baseline covers
+
+The suite collectively proves synthetic/deterministic behavior for:
+- structure conditioning and validation;
+- pickup-aware measure timing;
+- stable non-chain onset clustering;
+- exact MIDI reconstruction;
+- event-count and MIDI preservation;
+- first-class pickup/downbeat/measure/beat/subdivision maps;
+- tempo and meter changes at exact measure boundaries;
+- rejection of illegal mid-measure structure changes;
+- straight/triplet timing differences;
+- beat/measure/pickup ties;
+- rest diagnostics without fake notes;
+- unresolved duration staying unresolved;
+- contextual standard/dotted/triplet rhythm spelling;
+- weak/strong beat tie decisions;
+- explicit rest spelling;
+- constrained chord/shape playability;
+- role-aware open-string preferences;
+- impossible-shape rejection without note dropping;
+- multiple legal candidate shape states;
+- deterministic phrase fretboard path optimization;
+- reduced targeted hand movement versus independent local choices;
+- structure/timing/notation invariance during fretboard optimization;
+- raw scoreless evaluator and independent failure codes;
+- product-shell mapping into the existing renderer/PDF boundary;
+- fail-closed pickup/triplet legacy-render fallback;
+- full deterministic cross-layer composition;
+- unresolved phrase fingering remaining explicit end-to-end;
+- deterministic repeated pipeline output;
+- fresh namespace isolation from archived/model-bearing runtime dependencies.
+
+## ISOLATION BOUNDARY GUARD
+
+`tests/boundaryGuard.test.mjs` scans every root fresh `.mjs` source module and fails if the namespace:
+- imports a non-local runtime dependency;
+- imports a path containing archived/model-bearing identifiers such as V143, Gomyway, Modal, analyzer, professional, or reference;
+- performs `fetch(...)` network calls;
+- introduces `XMLHttpRequest`;
+- uses child-process execution primitives.
+
+The guard passed in the 62/62 branch-wide run.
+
+This is a mechanical regression guard in addition to the written project rule; it helps prevent accidental contamination of the fresh deterministic namespace.
 
 ## CURRENT ENGINEERING BOUNDARY
 
-The deterministic structure → rhythm → playability → phrase path → evaluator → product-shell path is now composed behind one clean entry point and has automatic CPU-only branch CI.
+The deterministic structure → rhythm → playability → phrase path → evaluator → product-shell path is composed behind one clean entry point, protected by automatic branch CI, and currently **62/62 green**.
 
-The next **model/real-audio** phase still requires explicit user authorization. Do not treat generic “continue” as that authorization.
+The next meaningful phase is the first real-audio/model adapter, but that still requires **explicit user authorization**. Do not treat generic “continue” as authorization for model/GPU/real-audio execution.
 
-When explicitly authorized, the first clean real-audio path must be:
+When explicitly authorized, the clean real-audio path must be:
 
-**full-mixture structure analysis → `structureMap` → role-conditioned note evidence → deterministic pipeline → product-shell adapter**
+**full-mixture structure analysis → `structureMap` → role-conditioned note evidence → `deterministicPipeline.mjs` → product-shell output**
 
 Do not import the archived V143 scorer/gate maze.
 
 ## NEXT SAFE WORK WITHOUT REAL-AUDIO AUTHORIZATION
 
-1. Obtain and inspect the final branch-wide CPU-only CI result.
-2. Fix any deterministic failures it exposes and rerun until green.
-3. Keep this checkpoint synchronized with exact test counts and commits.
-4. Do not cross into model/GPU/real-audio execution without explicit authorization.
+The deterministic implementation is green and the remaining major engineering work crosses into the explicitly protected real-audio/model phase. Safe maintenance work may continue, but do not manufacture busywork or weaken the boundary merely to keep changing code.
 
 ## NON-NEGOTIABLES
 
