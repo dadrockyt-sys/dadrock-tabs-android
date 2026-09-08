@@ -1,0 +1,8 @@
+{
+  "name": "dadrock-songsterr-fresh-pipeline-v1",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "test": "node --test tests/*.test.mjs"
+  }
+}
