@@ -67,7 +67,10 @@ Recorded clean-line commits:
 - `85b175f60406fb47a81bfebfe36ba99e52ed029f` — six structure-map-driven rhythm/notation tests;
 - `d78b01c09707f3a11e876a9e500e788a2b6c4721` — checkpoint recording the 25/25 structure-driven baseline;
 - `b6a3a70369c1d5af269b95428a4a67e0bb2a99d5` — contextual rhythm spelling layer;
-- `15bc52616bee054acea6a4d58c7cfd918b578c13` — contextual rhythm spelling tests.
+- `15bc52616bee054acea6a4d58c7cfd918b578c13` — contextual rhythm spelling tests;
+- `19512a5477cea0845629e0a80723566e5ee41364` — checkpoint repairing the interrupted 30/30 milestone;
+- `e36d734076001767306f53f7bb56c75440787dbd` — constrained playable-shape decoder;
+- `c3452d39702df616b52ecd0bac171af2bd099d12` — constrained playable-shape decoder tests.
 
 ### Compatibility deterministic core
 
@@ -92,69 +95,85 @@ Its `structurePrior` path remains temporarily for backward compatibility and the
 `songsterr_pipeline/contextualRhythmSpelling.mjs` is a downstream readability layer. It does not change source MIDI or event identity.
 
 Current behavior:
-- recognizes standard note values in beat-relative units;
-- recognizes dotted values;
-- recognizes triplet values;
-- can merge a mechanically split duration across a weak beat when one dotted value is musically cleaner;
-- preserves ties across strong-beat boundaries such as beat 3 in 4/4;
-- explicitly segments/spells rest gaps by beat boundaries without creating note events;
+- recognizes standard, dotted, and triplet values;
+- merges a mechanically split duration across a weak beat when one dotted value is cleaner;
+- preserves ties across strong-beat boundaries;
+- explicitly segments/spells rest gaps without creating note events;
 - reports phrase-level straight/triplet feel consistency/change diagnostics;
-- leaves unresolved spellings visible rather than silently fabricating notation.
+- leaves unresolved spellings visible rather than fabricating notation.
+
+### Constrained playable-shape decoder
+
+`songsterr_pipeline/playableShapeDecoder.mjs` adds a stricter local fingering layer while preserving every input MIDI pitch.
+
+Current behavior:
+- enumerates exact-MIDI playable positions from the instrument tuning/capo;
+- enforces unique-string assignment for simultaneous notes;
+- rejects candidate shapes that exceed fretted-span, string-span, or adjacent-string fret-delta constraints;
+- role-specific policies for lead/rhythm/bass;
+- role-aware open-string preference (strongest for rhythm, mild for bass, discouraged for lead when a better fretted choice exists);
+- exposes previous/next hand-position context hooks through center-fret penalties;
+- deterministic tie-breaking;
+- explicit unresolved reasons such as `MORE_NOTES_THAN_STRINGS`, `UNPLAYABLE_PITCH`, and `NO_PLAYABLE_SHAPE_WITHIN_CONSTRAINTS`;
+- never drops or rewrites a MIDI pitch just to manufacture a playable shape;
+- raw diagnostics include fretted span, string span, open-string count, center fret, maximum adjacent fret delta, candidate count, rejected candidate count, and rejection counts.
 
 ## VALIDATION STATUS
 
 ### Original clean surface
 
-`node --test tests/pipeline.test.mjs tests/rhythmNotation.test.mjs`
-
 Result: **13/13 pass, 0 fail**.
 
 ### First-class structure-map surface
 
-Expanded suite result: **19/19 pass, 0 fail** after correcting exact-boundary lookup to half-open `[start, end)` semantics.
+Result: **19/19 pass, 0 fail** after correcting exact-boundary lookup to half-open `[start, end)` semantics.
 
 ### Structure-driven rhythm/notation surface
 
-Complete namespace result after `structureRhythmNotation.mjs`: **25/25 pass, 0 fail**.
+Result: **25/25 pass, 0 fail**.
 
-### Contextual rhythm spelling surface — CURRENT PROVEN BASELINE
+### Contextual rhythm spelling surface
 
-Before the chat interruption, the complete clean namespace suite including `contextualRhythmSpelling.test.mjs` was executed and reported:
-- tests: **30**
-- pass: **30**
+Before the chat interruption, the complete clean namespace suite including contextual rhythm spelling reported **30/30 pass, 0 fail**. The branch commits survived; only the checkpoint write was interrupted and was repaired afterward.
+
+### Constrained playable-shape decoder — ISOLATED PROOF
+
+The new decoder and its exact test surface were executed in an isolated local Node runtime against the same `enumeratePlayablePositions` contract used by `index.mjs`.
+
+Result:
+- tests: **5**
+- pass: **5**
 - fail: **0**
 
-The interruption occurred while writing this checkpoint, not while creating the implementation/tests. Branch head verification after resuming confirmed commit `15bc52616bee054acea6a4d58c7cfd918b578c13` is intact.
+Proven behavior:
+- simultaneous assignments reconstruct every source MIDI exactly and use unique strings;
+- rhythm selects an open E4 where policy favors it while lead selects a fretted E4;
+- deliberately impossible tight constraints reject the whole shape without dropping/changing `[64, 65]`;
+- previous hand-position context can change the selected local fingering deterministically;
+- repeated decoding is deterministic and raw shape diagnostics remain visible.
 
-New proven contextual behavior includes:
-- standard/dotted/triplet duration recognition;
-- weak-beat dotted merge when cleaner than a tie;
-- strong-beat tie preservation;
-- explicit rest spelling without fake MIDI notes;
-- phrase-level feel-change diagnostics;
-- source event IDs and MIDI unchanged through contextual spelling.
+The branch-wide post-decoder suite has not yet been re-executed in this tool environment because the container cannot resolve GitHub directly; do not claim a new 35-test branch-wide result yet.
 
 No Production/main state, model/GPU workflow, professional scorer, training path, real-audio canary, or archived V143/Gomyway pipeline was touched.
 
 ## CURRENT ENGINEERING MILESTONE
 
-Upgrade local playable chord/shape decoding while keeping pitch correctness and structure timing immutable.
+Build phrase-level fretboard path optimization over **multiple valid constrained shape states**, with local pitch/playability as hard constraints and hand movement/position continuity as downstream costs.
 
 Next clean goals:
-- stronger fret-span/stretch constraints;
-- role-aware open-string preference;
-- impossible-shape rejection rather than forced awkward fingering;
-- deterministic tie-breaking;
-- previous/next hand-position context hooks;
-- raw shape diagnostics including fret span, string span, open-string count, hand-position center, and rejection reason;
-- never drop pitches merely to make fingering easier.
-
-After local shape decoding is stable, add phrase-level fretboard path optimization over candidate playable states.
+- expose multiple valid candidate shapes per onset/chord from the constrained decoder;
+- deterministic beam/Viterbi-style phrase search;
+- preserve exact pitch and unique-string playability at every state;
+- movement cost based on center-fret change plus optional string-set continuity;
+- chord-shape continuity diagnostics;
+- stable deterministic path selection;
+- explicit unresolved phrase state if any onset has no legal shape rather than dropping notes;
+- raw phrase diagnostics: candidate counts, chosen centers, total/maximum hand movement, string-set changes, open-string usage, unresolved onset count.
 
 ## NEXT EXECUTION ORDER
 
-1. Upgrade local chord/shape decoding with stronger physical constraints and diagnostics.
-2. Add phrase-level fretboard path optimization with pitch correctness and physical playability ahead of movement aesthetics.
+1. Add candidate-state enumeration and phrase-level fretboard path optimization.
+2. Wire the constrained/path-selected fingering layer into the structure-first event schema without changing structure timing or source MIDI identity.
 3. Define a fresh evaluator that reports raw structure, event, pitch, timing, playability, motion, notation, tie/rest, and unresolved-duration diagnostics before any composite score.
 4. Only after the deterministic structure/notation/fretboard system is stable, connect real-audio evidence in this order: **full-mixture structure analysis → structureMap → role-conditioned note evidence → clean event schema → notation → fretboard decoding**.
 5. Map clean analyzer output into the existing `/ai-tab` metadata/render/PDF contract.
@@ -167,7 +186,8 @@ After local shape decoding is stable, add phrase-level fretboard path optimizati
 - Archived V143/Gomyway work remains archive/evidence only unless explicitly requested.
 - Timing/measure structure precedes trusting note placement.
 - `structureMap` is first-class and must be consumed by downstream note/rhythm/tab stages.
-- Preserve detected MIDI/event identity; never silently alter notes to improve notation appearance.
+- Preserve detected MIDI/event identity; never silently alter notes to improve notation or fingering appearance.
+- Never drop pitches merely to satisfy a shape/path optimizer.
 - Preserve existing `/ai-tab` metadata → technique/render → watermarked preview → PayPal/free-token unlock reference → full PDF → email/download flow.
 - No Production or main changes.
 - No accidental Modal/GPU/model/professional-scorer/training/real-audio activity.
