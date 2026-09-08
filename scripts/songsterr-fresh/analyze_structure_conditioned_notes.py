@@ -82,7 +82,6 @@ def nearest_slot(value, slots):
         candidates.append(slots[index - 1])
     if not candidates:
         return slots[0]
-    # Match structureMap.mjs: nearest distance, then earlier slot on an exact tie.
     return min(candidates, key=lambda candidate: (abs(value - candidate), candidate))
 
 
@@ -120,9 +119,6 @@ def extract_candidates(
     if not np.any(np.isfinite(profile)):
         return []
 
-    # Normalize to the strongest energy across the *guarded* analysis range.
-    # This intentionally lets strong out-of-role energy suppress weak in-range
-    # candidates instead of manufacturing a playable-range edge maximum.
     profile = profile - float(np.max(profile))
 
     candidates = []
@@ -302,6 +298,13 @@ def main():
         "structureFrozen": True,
         "role": args.role,
         "structureIdentity": context["structureIdentity"],
+        "capabilities": {
+            "roleRelevanceResolved": False,
+            "polyphonyResolved": False,
+            "durationResolution": "none",
+            "instrumentIsolation": "none",
+            "confidenceCalibration": "heuristic-not-calibrated-probability",
+        },
         "onsets": onsets,
         "diagnostics": {
             **summarize(onsets),
@@ -342,7 +345,7 @@ def main():
         json.dump(output, handle, indent=2)
         handle.write("\n")
 
-    print(json.dumps({"contract": CONTRACT, "structureIdentity": context["structureIdentity"], **output["diagnostics"]}))
+    print(json.dumps({"contract": CONTRACT, "structureIdentity": context["structureIdentity"], "capabilities": output["capabilities"], **output["diagnostics"]}))
 
 
 if __name__ == "__main__":
