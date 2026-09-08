@@ -8,6 +8,7 @@ on:
     paths:
       - '.github/workflows/songsterr-fresh-gomyway-midterm-note-evidence-canary.yml'
       - 'scripts/songsterr-fresh/analyze_structure_conditioned_notes.py'
+      - 'scripts/songsterr-fresh/inspect_role_boundary_evidence.py'
       - 'scripts/songsterr-fresh/estimate_selected_pitch_releases.py'
       - 'scripts/songsterr-fresh/build_note_evidence_context.mjs'
       - 'scripts/songsterr-fresh/build_note_evidence.mjs'
@@ -102,13 +103,22 @@ jobs:
             --audio-source 'public/jimmy-paige-midterm-v1/gomyway-midterm-source.m4a@main#4dd709e3fa177b4daeed71ca97f0199757729d4b' \
             --expected-structure-signature 'fnv1a32:2f493225'
 
+      - name: Inspect low-boundary role evidence without reclassification
+        shell: bash
+        run: |
+          set -euo pipefail
+          python scripts/songsterr-fresh/inspect_role_boundary_evidence.py \
+            --input /tmp/gomyway-midterm-analysis.wav \
+            --evidence /tmp/songsterr-fresh-note-canary/raw-note-evidence-pitch.json \
+            --output /tmp/songsterr-fresh-note-canary/raw-note-evidence-pitch-guarded.json
+
       - name: Estimate conservative selected-pitch release evidence
         shell: bash
         run: |
           set -euo pipefail
           python scripts/songsterr-fresh/estimate_selected_pitch_releases.py \
             --input /tmp/gomyway-midterm-analysis.wav \
-            --evidence /tmp/songsterr-fresh-note-canary/raw-note-evidence-pitch.json \
+            --evidence /tmp/songsterr-fresh-note-canary/raw-note-evidence-pitch-guarded.json \
             --output /tmp/songsterr-fresh-note-canary/raw-note-evidence.json
 
       - name: Validate and adapt note evidence
@@ -160,7 +170,7 @@ jobs:
         run: |
           python - <<'PY'
           import json
-          for name in ('raw-note-evidence-pitch.json', 'raw-note-evidence.json', 'adapted-note-evidence.json', 'pipeline-canary-result.json'):
+          for name in ('raw-note-evidence-pitch.json', 'raw-note-evidence-pitch-guarded.json', 'raw-note-evidence.json', 'adapted-note-evidence.json', 'pipeline-canary-result.json'):
               path = f'/tmp/songsterr-fresh-note-canary/{name}'
               with open(path, 'r', encoding='utf-8') as handle:
                   data = json.load(handle)
