@@ -45,7 +45,7 @@ Resolved exact fixture on `main`:
 - Git blob SHA: `4dd709e3fa177b4daeed71ca97f0199757729d4b`
 - size: 3,464,988 bytes
 
-The fresh branch does not merge/cherry-pick main. The canary downloads only that exact public blob and verifies `git hash-object` before analysis.
+The fresh branch does not merge/cherry-pick main. Canaries download only that exact public blob and verify `git hash-object` before analysis.
 
 The filename containing “gomyway” authorizes the audio fixture only. It does **not** authorize archived Gomyway/V143 code, scorer knowledge, reference tabs, or reference-based correction.
 
@@ -63,91 +63,21 @@ Namespace: `songsterr_pipeline/`
 - `productShellAdapter.mjs` — maps the clean result into the existing `/ai-tab` payload; legacy structured render projection is emitted only when lossless, otherwise complete text fallback is retained.
 - `deterministicPipeline.mjs` — composes structure + note evidence → event/rhythm schema → contextual rhythm → fretboard path → evaluator → product-shell.
 - `audioStructureAdapter.mjs` — validates full-mixture structure evidence and builds the frozen first-class map.
+- `structureIdentity.mjs` — deterministic frozen-structure identity contract.
+- `noteEvidenceAdapter.mjs` — validates reference-blind structure-conditioned pitch evidence, verifies exact frozen-structure identity and nearest structure slots, preserves ambiguous/no-candidate evidence, promotes only explicitly unambiguous top MIDI evidence, and never fabricates missing duration.
 
 Isolation guard: `tests/boundaryGuard.test.mjs` fails if root fresh `.mjs` source imports archived/model/non-local runtime dependencies, performs network fetches, or launches processes.
 
-## REAL-AUDIO STRUCTURE ANALYZER
+## ACCEPTED/FROZEN REAL-AUDIO STRUCTURE
 
-Scripts:
+Structure scripts:
 - `scripts/songsterr-fresh/analyze_full_mixture_structure.py`
 - `scripts/songsterr-fresh/build_structure_map.mjs`
 
-Canary workflow:
+Structure canary:
 `.github/workflows/songsterr-fresh-gomyway-midterm-structure-canary.yml`
 
-Properties:
-- reference-blind
-- CPU-only
-- no note inference
-- no reference tab
-- no V143/Gomyway scorer
-- exact authorized blob verification
-- pinned Python/librosa/numpy/scipy/soundfile environment
-- explicit ffmpeg decode
-- raw + adapted JSON artifact upload
-- full deterministic regression suite rerun
-
-## IMPORTANT REAL-AUDIO STRUCTURE COMMITS
-
-- `34c8b507865d37415c074db3d631fada403fd3ac` — initial clean full-mixture structure adapter.
-- `9c8e420ff2ccf52adca277bb9335c7feb45f5db2` — initial five structure-adapter tests; branch baseline 67/67.
-- `73c95d8e3d99df6f31df2f2ed10dc950393bc1bd` — CPU reference-blind full-mixture analyzer.
-- `edeb37ccbbb9c79a84786b966ed683ecc6c48e5c` — raw-analysis → frozen-map runner.
-- `f868dc8d18d6bda0a0392755f4a74a60220deecb` — first authorized structure canary.
-- `0ac5936e0c9640dbd0ab2fbf5bab740e6c24d798` — install ffmpeg explicitly.
-- `fb407e1360fa5a563d5b89f7777b5601b900b699` — pinned-librosa beat-tracker API fix.
-- `3fdaacf34dc0a137ad2ab5ee0e66be140641dff8` — preserve observed measure-level tempo + scoreless structure acceptance gate.
-- `2a598f0f38d755faf0cd3d46543221253f1c8997` — variable-tempo/acceptance tests; branch baseline 69/69.
-
-## FIRST CONSTANT-TEMPO CANARY — REJECTED FOR FREEZE
-
-Successful technical run:
-- run `34192022692`
-- job `101951858959`
-- commit `fb407e1360fa5a563d5b89f7777b5601b900b699`
-
-Raw full-mixture evidence:
-- duration: 210.6742857142857 s
-- detected beats: 450
-- onsets: 620
-- global fitted BPM: 130.3589230622599
-- tracker BPM: 129.19921875
-- tempo confidence: 0.8115688622935878
-- beat interval CV: 0.03001200113096819
-- selected meter: 4/4
-- meter confidence: 0.5675900153317085
-- selected bar phase: beat offset 1
-- straight feel confidence: 0.65172110832709
-- pickup / first detected downbeat: 0.6501587301587302 s
-- downbeat confidence: 0.5294700192609527
-
-The first adapter flattened the full song to one BPM. Its observed-beat alignment was:
-- MAE: 0.08308248936424577 s
-- RMSE: 0.10067310557537887 s
-- max: 0.22844553360783593 s
-
-That map was **not frozen**, even though workflow execution succeeded. The error pattern indicated real tempo movement/drift rather than unusable beat detection.
-
-## REFINED MEASURE-TEMPO STRUCTURE — ACCEPTED AND FROZEN
-
-The adapter now derives measure-local tempo segments from consecutive observed downbeats instead of flattening the track to one BPM. Tail timing is explicitly extrapolated from recent observed measures. Raw confidence remains attached.
-
-Scoreless acceptance contract:
-`songsterr-fresh-structure-acceptance-v1`
-
-Thresholds:
-- tempo confidence ≥ 0.70
-- meter confidence ≥ 0.55
-- downbeat confidence ≥ 0.50
-- feel confidence ≥ 0.55
-- beat-interval CV ≤ 0.05
-- beat-grid MAE ≤ 0.025 s
-- beat-grid RMSE ≤ 0.040 s
-- beat-grid max error ≤ 0.080 s
-
-Failures remain independent reason codes; no composite accuracy score is produced.
-
-Latest successful refined canary:
+Latest successful refined structure canary:
 - run: `34192662439`
 - job: `101953726302`
 - tested commit: `2a598f0f38d755faf0cd3d46543221253f1c8997`
@@ -156,71 +86,142 @@ Latest successful refined canary:
 - artifact digest: `sha256:5ff3ce36f559bcc02efcc985a1fa06966576da0445896326e9408ada955e9b6f`
 
 Refined map:
-- `observedMeasureTempoPreserved: true`
-- tempo segments: **113**
-- observed beats evaluated: **449**
-- grid beat starts: **460**
-- beat-grid MAE: **0.007136645304000395 s** (~7.14 ms)
-- beat-grid RMSE: **0.010631405697639835 s** (~10.63 ms)
-- beat-grid max: **0.058049886621325485 s** (~58.05 ms)
-- tempo confidence: 0.8115688622935878
-- meter confidence: 0.5675900153317085
-- downbeat confidence: 0.5294700192609527
-- feel confidence: 0.65172110832709
-- beat interval CV: 0.03001200113096819
-- acceptance: **true**
+- frozen structure identity: `fnv1a32:2f493225`
+- duration: ~210.67465 s
+- selected meter: 4/4, moderate confidence ~0.5676
+- pickup / first detected downbeat: ~0.65016 s, moderate confidence ~0.5295
+- straight feel confidence: ~0.6517
+- tempo confidence: ~0.8116
+- observed measure tempo preserved: true
+- tempo segments: 113
+- observed beats evaluated: 449
+- beat-grid MAE: ~7.14 ms
+- beat-grid RMSE: ~10.63 ms
+- beat-grid max: ~58.05 ms
+- structure acceptance: true
 - failure reasons: `[]`
 
-Improvement versus the rejected flat-BPM map:
-- MAE reduced about 91.4%
-- RMSE reduced about 89.4%
-- max error reduced about 74.6%
+The earlier one-global-BPM map was rejected for freeze because it had ~83 ms MAE / ~101 ms RMS / ~228 ms max beat-grid miss. The measure-local tempo map reduced those errors by roughly 91% / 89% / 75% respectively.
 
 ### FREEZE DECISION
 
-For this exact authorized fixture, this refined `structureMap` is **accepted and frozen for downstream CPU/reference-blind note-evidence experiments**.
+For this exact authorized fixture, the refined `structureMap` is **accepted and frozen** for downstream CPU/reference-blind note-evidence experiments.
 
-The 4/4 meter and first-downbeat interpretation remain only **moderate confidence**, and that uncertainty must remain attached. Do not use a reference tab or archived knowledge to make them look more certain.
+The 4/4 meter and first-downbeat interpretation remain only moderate confidence. That uncertainty stays attached. No reference tab or archived knowledge may be used to make it appear more certain.
 
 Downstream note evidence is not permitted to rewrite this accepted structure.
 
+## CPU NOTE-EVIDENCE BOUNDARY
+
+New files/commits:
+- `48a00cf40c22a6ad4b80a94ac248e448cd841937` — frozen structure identity contract.
+- `576887ceaba8be3f33b7c569608946d58a9ce6d6` — structure-conditioned note-evidence adapter.
+- `b348f12b1e8b2f741481839ee9336055b47607bf` — initial six note-evidence boundary tests.
+- `e6affb7a268f53f8e900b12dffa7f86807808723` — accepted/frozen structure → note-evidence context builder.
+- `bf01bdd339a7159057849843b0205f46312ee914` — verify analyzer timing slots and remove synthetic duration inference.
+- `8a0e5d4b8b4a9d33b21d43a8c649c399a8a068a2` — tests for slot verification and exact/unresolved duration evidence.
+- `01e8f86e063f30b89528134381ebf27aa3c677c8` — preserve actual model/GPU/legacy execution provenance instead of stamping false values.
+- `eeb1887c2b855261f105bc6658db8d82804fd525` — CPU-only full-mixture harmonic-CQT note-evidence analyzer.
+- `e49614e2f16ffbbc38bb61e358b4919cdedd5c86` — CPU canary note-evidence validator.
+- `5d8146559debd3557c1f8662f4a9f7b0f94f7951` — first frozen-structure real-audio note-evidence canary workflow.
+
+Boundary behavior:
+- exact `structureIdentity` must match the frozen map;
+- analyzer-supplied nearest structure slots are recomputed/verified by the deterministic adapter;
+- ambiguous and no-candidate onsets remain explicit;
+- only explicitly `unambiguous` highest-confidence MIDI is promoted;
+- duplicate MIDI candidates inside one onset are rejected;
+- missing duration remains unresolved;
+- duration/end are preserved only when explicitly supplied by evidence;
+- adapter records actual model/GPU/legacy provenance rather than assuming false.
+
+## CPU NOTE-EVIDENCE ANALYZER — FIRST BASELINE
+
+Script:
+`scripts/songsterr-fresh/analyze_structure_conditioned_notes.py`
+
+Purpose: collect a conservative reference-blind baseline, not claim transcription accuracy.
+
+Current v1 behavior:
+- CPU-only;
+- consumes the accepted/frozen structure context;
+- hard-checks expected structure signature `fnv1a32:2f493225`;
+- full-mixture onset detection;
+- harmonic/percussive filtering only — **no instrument source separation**;
+- role-conditioned CQT pitch range (first canary uses guitar MIDI 40–88);
+- preserves up to six local pitch candidates per onset;
+- confidence values are explicitly `heuristic-not-calibrated-probability`;
+- strong competing pitch evidence stays ambiguous rather than forcing a note;
+- no duration inference in this first baseline;
+- no model, GPU, reference tab, or legacy V143 scorer.
+
+Raw evidence is passed through `build_note_evidence.mjs`, which rejects model/GPU/legacy provenance for the current CPU-only canary before adapting it into the deterministic boundary.
+
 ## CURRENT TEST BASELINE
 
-Branch-wide deterministic GitHub Actions run:
-- run `34192662387`
-- job `101953726428`
-- commit `2a598f0f38d755faf0cd3d46543221253f1c8997`
+Branch-wide deterministic GitHub Actions proof after hardening note evidence:
+- run: `34219737107`
+- job: `102039769518`
+- tested commit: `01e8f86e063f30b89528134381ebf27aa3c677c8`
 
 Actual TAP result:
-- tests: **69**
-- pass: **69**
+- tests: **77**
+- pass: **77**
 - fail: **0**
 - cancelled: **0**
 - skipped: **0**
 - todo: **0**
 
-This includes all earlier structure/rhythm/playability/path/evaluator/product-shell/orchestration/isolation tests plus seven audio-structure tests, including variable-tempo preservation and explicit weak-structure rejection reasons.
+The two tests added beyond the 75/75 note-evidence baseline prove:
+1. an analyzer cannot claim a nearest timing slot that disagrees with the frozen `structureMap`;
+2. explicit duration evidence is preserved exactly while missing duration remains unresolved with no synthetic duration.
 
-## CURRENT ENGINEERING BOUNDARY / NEXT STEP
+## ACTIVE REAL-AUDIO NOTE CANARY
 
-The exact authorized fixture now has an accepted/frozen, reference-blind real-audio structure map.
+Workflow:
+`.github/workflows/songsterr-fresh-gomyway-midterm-note-evidence-canary.yml`
 
-Next permitted step is a **CPU-only, reference-blind note-evidence baseline** against this same audio. It must:
-1. consume the frozen structure instead of estimating/revising timing;
-2. emit exact candidate MIDI/event evidence with raw confidence/provenance;
-3. keep ambiguous/polyphonic evidence explicit rather than silently deleting pitches;
-4. use no archived Gomyway/V143 reference/scorer;
-5. feed validated evidence into `deterministicPipeline.mjs` only after the note-evidence boundary itself is tested.
+Run started from commit `5d8146559debd3557c1f8662f4a9f7b0f94f7951`:
+- run: `34219793694`
+- job: `102039951929`
+
+The workflow:
+1. checks out only `songsterr-fresh-pipeline-v1`;
+2. downloads and Git-blob-verifies the exact authorized audio;
+3. decodes to mono 22.05 kHz WAV;
+4. installs the same pinned CPU/librosa stack;
+5. rebuilds the structure reference-blind and requires accepted/frozen context;
+6. requires exact frozen signature `fnv1a32:2f493225`;
+7. runs CPU-only guitar-range note evidence;
+8. validates it through `noteEvidenceAdapter.mjs`;
+9. reruns the deterministic suite;
+10. uploads raw/adapted JSON artifacts.
+
+At this checkpoint the note canary is still running. Do **not** claim its musical note result until the completed artifact/log has been inspected.
+
+## CURRENT ENGINEERING BOUNDARY / NEXT DECISION
+
+The exact authorized fixture has an accepted/frozen timing map and a hardened CPU note-evidence boundary.
+
+Once the first note-evidence canary completes, inspect raw evidence before deciding what to do next. In particular, distinguish:
+- workflow/contract success;
+- evidence coverage;
+- ambiguity rate;
+- structure displacement;
+- whether full-mixture harmonic CQT is useful enough to justify feeding any promoted events into `deterministicPipeline.mjs`.
+
+Do not turn a green workflow into an accuracy claim. Do not tune thresholds against a reference tab.
 
 A model/GPU/Modal note-inference stage is still outside current authorization and requires separate explicit authorization.
 
 ## NON-NEGOTIABLES
 
 - Canonical checkpoint and branch above remain authoritative.
-- Timing/measure structure precedes note placement and is now frozen for this fixture.
+- Timing/measure structure precedes note placement and is frozen for this fixture.
 - Never silently alter detected MIDI/event identity.
 - Never drop pitches merely to satisfy fingering/path/legacy renderer.
 - Preserve existing `/ai-tab` preview → unlock → full PDF → email/download flow.
 - No main/Production changes.
 - No accidental Modal/GPU/model/professional-scorer/training activity.
+- Real-audio work stays inside the explicitly authorized fixture scope.
 - Keep this checkpoint updated after every meaningful milestone.
