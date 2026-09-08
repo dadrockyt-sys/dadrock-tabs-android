@@ -260,15 +260,32 @@ export function buildProductShellPayload({
   difficulty = null,
   techniques = [],
   confidence = null,
+  upstreamEvidenceReady = true,
+  upstreamEvidenceBlockers = [],
 } = {}) {
   if (!result?.structureMap || !Array.isArray(result?.events) || !result?.instrumentConfig) {
     throw new Error('result must contain structureMap, events, and instrumentConfig.');
+  }
+  if (typeof upstreamEvidenceReady !== 'boolean') {
+    throw new Error('upstreamEvidenceReady must be boolean.');
+  }
+  if (!Array.isArray(upstreamEvidenceBlockers)) {
+    throw new Error('upstreamEvidenceBlockers must be an array.');
+  }
+
+  const normalizedUpstreamBlockers = [...new Set(
+    upstreamEvidenceBlockers.map((value) => String(value).trim()).filter(Boolean),
+  )];
+  if (upstreamEvidenceReady && normalizedUpstreamBlockers.length > 0) {
+    throw new Error('upstreamEvidenceReady cannot be true when upstreamEvidenceBlockers are present.');
   }
 
   const evaluation = evaluateFreshPipeline(result, { sourceEvents });
   const compatibility = projectionCompatibility(result);
   const generatedTab = buildGeneratedTab(result);
-  const structuredRenderEligible = evaluation.passedRawIntegrityChecks && compatibility.compatible;
+  const rawResultReady = evaluation.passedRawIntegrityChecks && Boolean(generatedTab);
+  const deliveryReady = upstreamEvidenceReady && rawResultReady;
+  const structuredRenderEligible = deliveryReady && compatibility.compatible;
   const allTechniques = uniqueStrings([
     ...(techniques ?? []),
     ...result.events.flatMap(techniqueTypes),
@@ -282,10 +299,13 @@ export function buildProductShellPayload({
       version: 1,
       referenceBlind: true,
       legacyV143ScorerImported: false,
+      upstreamEvidenceReady,
+      upstreamEvidenceBlockers: normalizedUpstreamBlockers,
+      rawResultReady,
       structuredRenderEligible,
       legacyProjectionCompatible: compatibility.compatible,
       legacyProjectionReason: compatibility.reason,
-      deliveryReady: evaluation.passedRawIntegrityChecks && Boolean(generatedTab),
+      deliveryReady,
     },
     generatedTab,
     transcriptionType: result.instrumentConfig.role,
