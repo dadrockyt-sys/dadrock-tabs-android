@@ -7,19 +7,25 @@ This is the **only canonical fresh-chat checkpoint for the new Songsterr-inspire
 
 Do not use the generic `docs/checkpoints/CURRENT_STATE.md` for this project. Do not resume the old V143/Gomyway investigation unless the user explicitly asks to return to that archived work.
 
+## PRODUCT TARGET
+
+Build an AI-first guitar/bass tab creator that can go from audio evidence to usable tab without a mandatory human correction step.
+
+The immediate engineering priority is not a cosmetic score. It is preserving detected musical identity while progressively making timing, rhythm spelling, chord shapes, fretboard motion, and later real-audio inference musically coherent enough for product use.
+
 ## PROJECT BOUNDARY
 
 The old branch `v143-contextual-prune-lobo` is archive/evidence only.
 
 The new branch intentionally does **not** inherit old V143 scorer contracts, Gomyway percentages, correction plans, canary gates, professional-reference workflows, model budgets, or stale failed-test expectations as acceptance criteria.
 
-Historical values such as `100% pitch / 90.321% onset / 69.004% note-count` may be referenced as old evidence only. They do not define success for this fresh pipeline.
+Historical values such as `100% pitch / 90.321% onset / 69.004% note-count` are old evidence only. They do not define success for this fresh pipeline.
 
-**Do not touch Production.**
+**Do not touch Production or main.**
 
 Do not dispatch Modal/GPU/model-bearing workflows, professional scorers, training, optimizer sweeps, or real-audio canaries unless the user explicitly authorizes them later.
 
-## SONGSTERR-INSPIRED CLUES TO CARRY FORWARD
+## SONGSTERR-INSPIRED ARCHITECTURE CLUES
 
 Carry forward architecture ideas only:
 
@@ -30,152 +36,179 @@ Carry forward architecture ideas only:
 5. fuse structure + note evidence before final timing/tab decoding;
 6. group simultaneous notes before fretboard assignment;
 7. solve simultaneous notes as a playable chord/shape, not independently;
-8. add phrase-aware rhythm spelling and fretboard continuity later.
+8. keep detected note identity separate from notation/render representation;
+9. add phrase-aware rhythm spelling and fretboard continuity before real-audio promotion.
 
 Public Songsterr observations are clues only, not claims about Songsterr private implementation.
 
-## FRESH IMPLEMENTATION ALREADY PRESENT
-
-Branch: `songsterr-fresh-pipeline-v1`
-
-Key commits:
-- `a51f87d24af0cbcb34d9bc477cdef6bef490c16d` — fresh reset checkpoint
-- `212be220b96de687f55cce2ca3e7698b1ac9dadb` — first isolated deterministic Songsterr core
-- `c682355c173f47dbb250175fb4eca718a8c91a20` — focused synthetic tests
-- `f0ac845c2820acb301e801060920d97dd1d4f956` — manual-only CPU test workflow
-- `c39943f176fb557ed9b4a68c1ec609ce1e698aa0` — fresh pipeline README
-- `32479ab6948665964fd164e12d3a629cc5aaeb60` — checkpoint fresh scaffold milestone
+## FRESH IMPLEMENTATION PRESENT
 
 Fresh namespace:
 - `songsterr_pipeline/`
 
-Current deterministic core already provides:
+Key commits:
+- `a51f87d24af0cbcb34d9bc477cdef6bef490c16d` — fresh reset checkpoint
+- `212be220b96de687f55cce2ca3e7698b1ac9dadb` — first isolated deterministic Songsterr core
+- `c682355c173f47dbb250175fb4eca718a8c91a20` — first seven synthetic tests
+- `f0ac845c2820acb301e801060920d97dd1d4f956` — fresh pipeline README
+- `c39943f176fb557ed9b4a68c1ec609ce1e698aa0` — manual-only CPU test workflow
+- `a0fbc5fc54aa1bf91a7cc199f373d5018d158a11` — first-class musical event + rhythm notation layer
+- `9ce440755d1d70813d1043210d8bd8a28a650cd3` — six rhythm/event-schema invariant tests
+
+### Deterministic core
+
+`songsterr_pipeline/index.mjs` currently provides:
 - explicit structure/instrument conditioning;
 - pickup-aware measure timing;
 - stable simultaneous-onset clustering;
 - joint unique-string playable chord-shape solving;
 - exact MIDI reconstruction checks;
-- no intentional note dropping in the deterministic core;
+- no intentional note dropping;
 - raw diagnostics for event count, pitch preservation, timing movement, and unresolved playable assignments.
 
-Validation surface:
-- seven synthetic/reference-free tests;
-- Node built-in test runner only;
-- dedicated manual-only CPU workflow;
-- no legacy V143 test suite required for fresh-pipeline progress;
-- no automatic Actions run was triggered by the initial fresh scaffold commits.
+### First-class musical event / notation layer
 
-The dedicated workflow has **not** been dispatched yet. Do not claim the tests passed until they are actually executed.
+`son gsterr_pipeline/rhythmNotation.mjs` was added as a separate layer above the deterministic core. (Repository path is `songsterr_pipeline/rhythmNotation.mjs`; ignore the accidental spacing in this explanatory sentence if copied elsewhere.)
+
+The module intentionally keeps **one source note = one event identity** while allowing notation to contain multiple tied segments.
+
+Current schema fields include:
+- stable `eventId` and `sourceEventIndex`;
+- chord `clusterId`;
+- exact MIDI pitch;
+- source start/end/duration;
+- projected start/end/duration;
+- onset/end movement flags;
+- measure/beat/fraction/pickup position;
+- role/tuning/capo context;
+- string/fret/reconstructed MIDI/shape state;
+- straight/triplet feel;
+- notation segments;
+- tie-from-previous / tie-to-next flags;
+- reference-blind provenance.
+
+Current rhythm behavior:
+- source `end` or `duration` is accepted explicitly;
+- missing duration stays unresolved rather than being silently invented;
+- duration ends snap to the same structure grid as onsets;
+- a collapsed snapped duration receives a minimum one-subdivision duration;
+- durations are split at beat boundaries;
+- crossing a beat or measure boundary creates tied notation segments without duplicating the source event;
+- silence between duration-resolved onset clusters is represented as a `rests` diagnostic, never as a fake MIDI note;
+- triplet feel uses three subdivisions per beat unit;
+- event-count and MIDI identity are designed to remain invariant through notation spelling.
+
+### Fresh tests
+
+Original core test surface:
+- 7 synthetic/reference-blind tests.
+
+New notation test surface:
+- 6 additional synthetic/reference-blind tests covering:
+  1. one source identity / exact MIDI preservation;
+  2. beat-boundary tie splitting;
+  3. measure-boundary tie splitting;
+  4. rest-gap diagnostics without fake notes;
+  5. triplet subdivision behavior;
+  6. unresolved duration remaining explicit.
+
+Total committed fresh tests: **13**.
+
+IMPORTANT: these tests are committed but have **not yet been executed in this chat/tool environment**. Do not claim they pass until an actual Node test run occurs.
+
+The dedicated workflow remains manual-only and has not been dispatched.
 
 ## NEXT STEPS — IN ORDER
 
-### 1. Execute or locally reproduce only the fresh synthetic tests
+### 1. Execute only the fresh 13-test synthetic suite when a safe execution path is available
 
-Run only the isolated `songsterr_pipeline/` test surface when a safe execution path is available.
+Run only `songsterr_pipeline/`.
 
-Required first proof:
+Required proof:
 - exact MIDI pitch preservation;
 - no event-count drift;
 - stable simultaneous clustering;
 - legal unique-string chord assignment;
 - tuning/capo correctness;
-- pickup-aware measure positioning.
+- pickup-aware positioning;
+- beat/measure tie segmentation;
+- rest diagnostics without note inflation;
+- straight/triplet grid behavior.
 
-Do not use old V143 CI failures as blockers for this proof.
+Do not let old V143 CI failures block this proof.
 
-### 2. Add a first-class internal musical event schema
+### 2. Harden rhythm spelling beyond raw boundary splitting
 
-Separate raw inferred notes from notation/render decisions.
+Current rhythm notation is deliberately conservative. Next add contextual spelling for:
+- syncopation preference;
+- beat-strength-aware tie decisions;
+- dotted values where cleaner than ties;
+- explicit rest spelling by measure/beat;
+- pickup edge cases;
+- phrase-level straight/triplet consistency;
+- quantization displacement diagnostics;
+- preservation of source identity while notation is rewritten.
 
-Target concepts:
-- source onset/end;
-- clustered musical onset;
-- MIDI pitch;
-- confidence/evidence provenance;
-- measure/beat position;
-- role/tuning/capo context;
-- chord-cluster identity;
-- decoded string/fret;
-- duration spelling state;
-- tie/rest state.
+Keep source MIDI/count invariant.
 
-Keep this schema deterministic and reference-blind.
+### 3. Upgrade chord/shape decoding
 
-### 3. Build measure-aware rhythm spelling
-
-Replace simple nearest-grid timing with contextual notation logic that can reason about:
-- beat boundaries;
-- note durations;
-- ties across beats/measures;
-- rests;
-- syncopation;
-- straight vs triplet consistency;
-- pickup handling;
-- phrase continuity.
-
-Protect MIDI pitch and event identity while changing notation representation.
-
-### 4. Upgrade chord/shape decoding
-
-Current joint chord solving is the first clean step. Next improve it with:
-- fret-span penalties;
-- hand-position continuity;
+Improve joint shape selection with:
+- stronger fret-span constraints;
 - open-string preference by role/context;
-- duplicate-string exclusion;
-- impossible-shape rejection;
-- stable ordering for deterministic output.
+- impossible/stretch-shape rejection;
+- stable deterministic tie-breaking;
+- previous/next hand-position context.
 
-Do not drop pitches merely to make a shape easier unless an explicit later policy authorizes that behavior.
+Do not drop pitches merely to create an easier shape.
 
-### 5. Add phrase-level fretboard path optimization
+### 4. Add phrase-level fretboard path optimization
 
-Move from local previous-note heuristics toward deterministic phrase-level path selection, for example beam/Viterbi-style search over playable states.
+Use deterministic phrase-level search (beam/Viterbi-style is acceptable) over playable states.
 
-Optimize for:
-- pitch correctness first;
-- playability;
-- compact hand movement;
-- stable position choices;
-- chord-shape continuity;
-- role-specific behavior.
+Priority order:
+1. pitch correctness;
+2. physical playability;
+3. compact hand movement;
+4. stable position choices;
+5. chord-shape continuity;
+6. role-specific behavior.
 
-### 6. Define a new fresh-pipeline evaluator
+### 5. Define the fresh evaluator
 
-Do not inherit the old Gomyway comparator blindly.
-
-The fresh evaluator should report raw counts before any composite score, including:
-- source notes vs rendered notes;
+Report raw metrics before any composite score:
+- source notes vs output events;
 - exact MIDI preservation;
 - onset-cluster preservation;
-- timing displacement distribution;
+- onset/end displacement distributions;
 - simultaneous-group preservation;
 - playable/unplayable assignments;
 - fret-span and hand-motion diagnostics;
 - notation completeness by measure;
-- ties/rests/duration consistency.
+- ties/rests/duration consistency;
+- unresolved-duration count.
 
-If a composite score is added later, its formula must live in source control beside the raw metrics.
+Any later composite score formula must live in source control beside these raw metrics.
 
-### 7. Only then connect real model/audio output
+### 6. Only after deterministic notation/fretboard behavior is stable, connect real model/audio output
 
-First keep synthetic deterministic tests green.
+The first real-audio adapter should map model evidence into the clean event schema. It must not import the old V143 scorer/gate maze.
 
-After explicit user authorization, connect a real note-carrier/model result to the clean schema without importing the old V143 scorer/gate maze.
-
-Keep Production untouched until a later deliberate promotion decision.
+Keep Production untouched until a deliberate later promotion decision.
 
 ## FRESH-CHAT START INSTRUCTION
 
-When starting a new chat, use this exact instruction:
+When starting a new chat, use:
 
 `Please continue from docs/checkpoints/SONGSTERR_FRESH_PIPELINE_CURRENT_STATE.md on branch songsterr-fresh-pipeline-v1. Keep that file updated often while you work. Do not resume the archived V143/Gomyway pipeline unless I explicitly ask.`
 
 ## NON-NEGOTIABLES
 
-- canonical checkpoint for this project is `docs/checkpoints/SONGSTERR_FRESH_PIPELINE_CURRENT_STATE.md`;
+- canonical checkpoint is `docs/checkpoints/SONGSTERR_FRESH_PIPELINE_CURRENT_STATE.md`;
 - branch is `songsterr-fresh-pipeline-v1`;
 - old V143 branch remains archive/evidence only;
-- no Production changes;
+- no Production or main changes;
 - no accidental Modal/GPU/model/professional scorer/training activity;
-- no legacy scorer or failed test becomes a fresh-pipeline gate merely because it exists in the repository;
+- no legacy scorer or old failed test becomes a fresh-pipeline gate merely because it exists;
+- detected note identity must not be silently altered merely to improve notation appearance;
 - checkpoint this file after each meaningful architecture, implementation, or validation milestone.
