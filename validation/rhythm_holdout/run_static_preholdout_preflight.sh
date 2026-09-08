@@ -313,5 +313,12 @@ if failed:
     raise SystemExit("Static preflight failed: " + ", ".join(failed))
 PY
 
+STAGE="ci-worktree-cleanup"
+if [ "${CI:-false}" = "true" ] && [ -n "${GITHUB_WORKSPACE:-}" ]; then
+  echo "Tracked CI worktree changes before cleanup:"
+  git status --short
+  git restore --worktree -- .
+fi
+
 STAGE="complete"
 trap - EXIT
