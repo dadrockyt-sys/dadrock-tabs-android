@@ -1,0 +1,93 @@
+name: Songsterr Fresh Gomyway Midterm Structure Canary
+
+on:
+  workflow_dispatch:
+  push:
+    branches:
+      - songsterr-fresh-pipeline-v1
+    paths:
+      - '.github/workflows/songsterr-fresh-gomyway-midterm-structure-canary.yml'
+      - 'scripts/songsterr-fresh/analyze_full_mixture_structure.py'
+      - 'scripts/songsterr-fresh/build_structure_map.mjs'
+      - 'songsterr_pipeline/audioStructureAdapter.mjs'
+      - 'songsterr_pipeline/tests/audioStructureAdapter.test.mjs'
+
+permissions:
+  contents: read
+
+jobs:
+  structure-canary:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - name: Check out fresh branch
+        uses: actions/checkout@v4
+
+      - name: Set up Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Fetch exact authorized audio fixture
+        shell: bash
+        run: |
+          set -euo pipefail
+          curl --fail --location --silent --show-error --retry 3 \
+            'https://raw.githubusercontent.com/dadrockyt-sys/dadrock-tabs-android/main/public/jimmy-paige-midterm-v1/gomyway-midterm-source.m4a' \
+            --output /tmp/gomyway-midterm-source.m4a
+          ACTUAL_BLOB_SHA="$(git hash-object /tmp/gomyway-midterm-source.m4a)"
+          EXPECTED_BLOB_SHA='4dd709e3fa177b4daeed71ca97f0199757729d4b'
+          echo "Authorized fixture blob: ${ACTUAL_BLOB_SHA}"
+          test "${ACTUAL_BLOB_SHA}" = "${EXPECTED_BLOB_SHA}"
+
+      - name: Decode fixture to mono analysis WAV
+        shell: bash
+        run: |
+          set -euo pipefail
+          ffmpeg -hide_banner -loglevel error -y \
+            -i /tmp/gomyway-midterm-source.m4a \
+            -ac 1 -ar 22050 \
+            /tmp/gomyway-midterm-analysis.wav
+
+      - name: Install pinned CPU analysis dependencies
+        run: >-
+          python -m pip install --disable-pip-version-check
+          numpy==2.2.6 scipy==1.15.3 librosa==0.11.0 soundfile==0.13.1
+
+      - name: Analyze full-mixture structure only
+        run: |
+          mkdir -p /tmp/songsterr-fresh-canary
+          python scripts/songsterr-fresh/analyze_full_mixture_structure.py \
+            --input /tmp/gomyway-midterm-analysis.wav \
+            --output /tmp/songsterr-fresh-canary/raw-structure-analysis.json \
+            --audio-source 'public/jimmy-paige-midterm-v1/gomyway-midterm-source.m4a@main#4dd709e3fa177b4daeed71ca97f0199757729d4b'
+
+      - name: Build and validate frozen structure map
+        run: |
+          node scripts/songsterr-fresh/build_structure_map.mjs \
+            /tmp/songsterr-fresh-canary/raw-structure-analysis.json \
+            /tmp/songsterr-fresh-canary/adapted-structure-map.json
+
+      - name: Re-run fresh deterministic suite
+        working-directory: songsterr_pipeline
+        run: npm test
+
+      - name: Show raw canary result
+        run: |
+          echo '--- raw structure analysis ---'
+          cat /tmp/songsterr-fresh-canary/raw-structure-analysis.json
+          echo '--- adapted structure map ---'
+          cat /tmp/songsterr-fresh-canary/adapted-structure-map.json
+
+      - name: Upload clean structure evidence
+        uses: actions/upload-artifact@v4
+        with:
+          name: songsterr-fresh-gomyway-midterm-structure
+          path: /tmp/songsterr-fresh-canary/*.json
+          if-no-files-found: error
+          retention-days: 14
