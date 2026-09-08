@@ -46,6 +46,13 @@ Current product metrics carried forward:
 
 The deterministic compare guard is the primary evaluator. The historical final candidate input that encoded 970 selected pitches -> 3 drops -> 967 rendered notes / 0 recovery was a workflow artifact and is not a currently committed file; do not pretend it can be reconstructed from source alone.
 
+## RESUME NOTE — 2026-09-07
+
+- Resumed directly on `v143-contextual-prune-lobo` from branch HEAD `5334ee0ad66c13202c28f269b1e79eb16d8fa923` (`Add contextual lobo rules and snapping guard`).
+- Re-read this checkpoint before making any behavior changes.
+- Current task is the exact evaluator/report lookup and formula scrub described below; no score, product invariant, Production, model/GPU, or workflow state has been changed in this resumed session yet.
+- Next evidence checkpoint will record the evaluator/report paths and formulas before any deterministic patch is attempted.
+
 ## SONGSTERR-INSPIRED PIPELINE REVIEW — ACTIVE
 
 Architecture/history already inspected on the current branch:
