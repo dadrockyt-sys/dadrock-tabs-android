@@ -58,6 +58,116 @@ The deterministic compare guard is the primary evaluator. The historical final c
 - Exact Gomyway comparator formulas and mismatch counts are still being recovered from branch history/artifacts. Do **not** infer them from the percentages.
 - No deterministic decoder patch has been made in this resumed session.
 
+## FRESH CHAT HANDOFF — START HERE
+
+Do **not** restart the Songsterr architecture review. The next chat should continue the evaluator provenance search from the exact point below.
+
+### Immediate task A — recover the exact 967-note Gomyway comparator
+
+Search branch files, commit history, checkpoints, reports, and persisted workflow evidence for the layer that reports all of these together:
+- `pitch_accuracy = 100%`
+- `onset_match = 90.321%`
+- `note_count_quality = 69.004%`
+- `deterministic_score`
+- current candidate facts **725 attacks / 970 selected pitches / 967 rendered notes / 3 drops / 0 recovery**
+
+High-priority branch files to inspect first because they are already present and closely tied to the V143 contextual-prune campaign:
+- `analyzer/V143_CONTEXTUAL_PRUNE_RECOVERY_CHECKPOINT.md`
+- `analyzer/V143_CONTEXTUAL_PRUNE_17_32_EVIDENCE_GAP_CHECKPOINT.md`
+- `analyzer/V143_CONTEXTUAL_PRUNE_17_113_RESEARCH_CLOSURE_CHECKPOINT.md`
+- `analyzer/WORKFLOW_RECOVERY_CHECKPOINT.md`
+- any current or historical `gomyway` file with `compare`, `guard`, `grade`, `report`, `deterministic`, `candidate`, `reference`, or `correction` in its name or contents
+
+Also search commit history by the exact metric names and exact numeric values, because default-branch code search can miss branch-specific or deleted historical files.
+
+Do **not** treat these as the target comparator:
+- `validation/rhythm_holdout/score_rhythm_holdout.py` — different F1/gate holdout evaluator
+- `analyzer/analyze_and_grade_gomyway_gpu_separator_stem_v1.py` — older 949-event professional-reference GPU separator grader
+
+The first checkpoint in the new chat should be made as soon as the exact formula source or a definitive provenance boundary is established.
+
+### Immediate task B — write down formulas and raw counts before touching decoder behavior
+
+Once the comparator/report is found, record the exact definitions and denominators for:
+- pitch accuracy
+- onset match
+- note-count quality
+- deterministic score
+
+Then extract the underlying raw counts, not just percentages. Build a compact mismatch table covering:
+- matched attacks/onsets
+- missing attacks/onsets
+- extra attacks/onsets
+- timing misses outside tolerance
+- matched notes/pitches
+- missing notes/pitches
+- extra notes/pitches
+- simultaneous-note grouping/chord-cluster mismatches
+- duplicated or split events
+- duration/tie/rest-only differences
+- measure-boundary differences
+- any quantization/rhythm-spelling-only differences
+
+Do **not** reverse-engineer counts from `90.321` or `69.004` unless the actual formula is independently found and verified.
+
+### Immediate task C — decide whether the score loss is upstream or downstream
+
+Make one evidence-backed classification:
+
+1. **Upstream event-set problem** — wrong density, grouping, selection, alignment, duplicates/splits, missing/excess attacks.
+   - First patch should target deterministic event selection/grouping/alignment.
+
+2. **Downstream notation/timing-normalization problem** — event set is right but onset snapping, beat placement, ties/rests, or rhythm spelling causes compare loss.
+   - First patch should target contextual onset-cluster decoding/rhythm spelling.
+
+3. **Evaluator-contract limitation** — product is musically right but the metric penalizes representation choices that should not define quality.
+   - Document the contract issue before changing either metric or decoder.
+
+Do not implement fretboard/path improvements merely because they are musically desirable if they cannot move the diagnosed Gomyway metric.
+
+### Immediate task D — patch exactly one highest-impact deterministic stage
+
+Only after A–C are complete, make the smallest deterministic patch that directly targets the largest proven mismatch class.
+
+Protect these invariants unless measured evidence explicitly justifies a deliberate revision:
+- **100% pitch accuracy**
+- **725 retained attacks**
+- **970 selected pitches**
+- **967 rendered notes**
+- exactly **3 legal-voicing drops**
+- **0 recovery**
+- all **113 measures populated**
+- D# standard + capo 2
+
+Preferred Songsterr-inspired changes, in priority order only if supported by the mismatch evidence:
+- contextual onset-cluster snapping using measure/beat position rather than independent nearest-grid rounding
+- simultaneous-note grouping that preserves one attack for one musical chord/shape
+- rhythm spelling aware of beat boundaries, ties, rests, syncopation, triplet consistency, and phrase continuity
+- joint simultaneous-note string/fret optimization as playable shapes
+- phrase-level fretboard path optimization instead of single-note greedy placement
+
+### Immediate task E — deterministic regression proof
+
+For the chosen patch, add or strengthen tests proving:
+- exact MIDI pitch preservation
+- no unintended event-count drift
+- legal tuning/capo fretboard placement
+- stable simultaneous-note grouping
+- improvement in the exact diagnosed onset/note-count compare class
+- no regression to async/runtime invariants
+
+Allowed validation remains source inspection, unit/static tests, deterministic compare tests, CPU-only synthetic fixtures, and read-only historical/artifact inspection.
+
+Do **not** dispatch model-bearing workflows, a professional scorer, Modal/GPU inference, optimizer/training/threshold sweeps, a manual real-audio canary, or Production actions merely to continue this investigation.
+
+### Fresh-chat checkpoint cadence
+
+Update `docs/checkpoints/CURRENT_STATE.md` immediately after each of these milestones:
+1. exact comparator/formulas located or provenance boundary proven;
+2. raw mismatch counts classified;
+3. first deterministic patch committed;
+4. deterministic regression results known.
+
 ## SONGSTERR-INSPIRED PIPELINE REVIEW — ACTIVE
 
 Architecture/history already inspected on the current branch:
@@ -86,88 +196,6 @@ Inspection of `lib/aiTabConditionedShadowProjectionV1.mjs` and `lib/aiTabConditi
 - rhythm spelling does not yet reason about measure context, ties, rests, syncopation, or phrase consistency.
 
 These are credible reasons a pitch-correct result can still look machine-generated. However, changing fingering/rhythm spelling alone may not improve the numeric **90.321% onset** or **69.004% note-count** scores if those metrics are driven by upstream event-set mismatch.
-
-## EXACT NEXT STEPS FOR A FRESH CHAT
-
-Resume directly from this section; do not restart architecture review.
-
-### 1. Locate the exact branch-current deterministic evaluator/report
-
-Find the code and persisted evidence that computes or reports:
-- onset match **90.321%**
-- note-count quality **69.004%**
-- pitch accuracy **100%**
-
-Search by metric names, numeric values, compare/guard/report terminology, and `gomyway` references. Do not rely only on default-branch GitHub code search if it misses branch-specific files; use branch contents/history as needed.
-
-Goal: identify the exact formulas and the compared event sets before changing decoder behavior.
-
-### 2. Break the score loss into concrete mismatch classes and counts
-
-For `gomyway`, determine which penalties come from:
-- missing attacks/events;
-- extra attacks/events;
-- onset timing displacement outside the evaluator tolerance;
-- simultaneous-note grouping/chord clustering;
-- duplicated/split notes;
-- duration/tie/rest normalization;
-- measure-boundary placement;
-- deterministic quantization/rhythm spelling;
-- any note-count denominator/normalization behavior.
-
-Produce a mismatch table/count summary. The key decision is whether the score loss is **upstream event selection/alignment/grouping** or **downstream notation/quantization**.
-
-### 3. Patch the highest-impact deterministic stage only
-
-Decision fork:
-
-- If penalties are upstream event density/alignment/grouping errors, improve deterministic selection/grouping/alignment first.
-- If penalties are downstream timing/notation normalization errors, improve onset-cluster decoding and contextual rhythm spelling first.
-- If numeric score is already limited by the evaluator contract rather than product quality, document that clearly before changing the metric.
-
-Protect **100% pitch accuracy** and preserve **725 / 970 / 967 / exactly 3 drops / 0 recovery** unless measured evidence demonstrates a deliberate contract revision is necessary.
-
-### 4. Preferred Songsterr-inspired deterministic improvements after the score-loss class is known
-
-Highest-value decoder improvements currently identified:
-
-- joint optimization of simultaneous-note string/fret assignments as playable chord shapes;
-- phrase-level fretboard path optimization instead of single-note greedy placement;
-- contextual onset-cluster snapping using measure/beat position rather than independent nearest-grid rounding;
-- rhythm spelling aware of ties, rests, beat boundaries, syncopation, triplet consistency, and phrase continuity;
-- penalties for implausible position jumps/string crossings while preserving exact MIDI pitch;
-- deterministic section/phrase continuity priors from the global structure authority, with no product-scoring authority given to the structure model.
-
-Do **not** implement all of these blindly. Use evaluator evidence to choose the first patch that can move the actual `gomyway` score.
-
-### 5. Add deterministic regression coverage
-
-For every patch, add or strengthen tests that prove:
-- exact pitch preservation;
-- no accidental event-count drift unless explicitly intended;
-- legal tuning/capo fretboard placement;
-- stable simultaneous-note grouping;
-- improved onset/note-count compare behavior for the diagnosed failure class;
-- no regression to the async/runtime safety invariants below.
-
-### 6. Validation allowed now
-
-Safe validation:
-- source inspection;
-- static/unit tests;
-- deterministic compare tests;
-- CPU-only synthetic fixtures;
-- read-only history/artifact inspection.
-
-Do **not** dispatch model-bearing workflows, professional scorer runs, Modal/GPU inference, optimizer/training/threshold sweeps, or Production actions without a new explicit reason/authorization.
-
-### 7. Checkpoint cadence
-
-Update `docs/checkpoints/CURRENT_STATE.md`:
-- after the evaluator/formula is located;
-- after mismatch classes/counts are known;
-- after each meaningful patch;
-- after deterministic validation results.
 
 ## ASYNC / RUNTIME NON-NEGOTIABLES
 
