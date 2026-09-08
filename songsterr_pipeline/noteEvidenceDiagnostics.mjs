@@ -62,17 +62,14 @@ export function summarizeNoteEvidence(adapted = {}) {
     hasFiniteEvidenceValue(event?.duration) || hasFiniteEvidenceValue(event?.end)
   )).length;
   const promotedMissingDurationCount = promotedEvents.length - promotedWithDurationCount;
-  const unresolvedRoleEvidenceCount = classificationCounts.ambiguous + classificationCounts['no-candidate'];
-
-  const blockers = [];
-  if (unresolvedRoleEvidenceCount > 0) blockers.push('UNRESOLVED_ROLE_NOTE_EVIDENCE');
-  if (promotedMissingDurationCount > 0) blockers.push('PROMOTED_EVENTS_MISSING_DURATION_EVIDENCE');
-  if (promotedEvents.length === 0) blockers.push('NO_PROMOTED_NOTE_EVENTS');
+  const unresolvedPitchEvidenceCount = classificationCounts.ambiguous + classificationCounts['no-candidate'];
 
   return {
     contract: {
       name: 'songsterr-fresh-note-evidence-diagnostics',
-      version: 1,
+      version: 2,
+      descriptiveOnly: true,
+      ownsAcceptanceDecision: false,
       compositeScoreDefined: false,
       compositeScore: null,
       referenceBlind: adapted?.adapterContract?.referenceBlind === true,
@@ -84,7 +81,7 @@ export function summarizeNoteEvidence(adapted = {}) {
       promotedEventCount: promotedEvents.length,
       promotedWithDurationCount,
       promotedMissingDurationCount,
-      unresolvedRoleEvidenceCount,
+      unresolvedPitchEvidenceCount,
       classificationCounts,
       singleCandidateAmbiguousCount,
       competingCandidateAmbiguousCount,
@@ -94,7 +91,5 @@ export function summarizeNoteEvidence(adapted = {}) {
     },
     candidateCountHistogram: sortedNumericHistogram(candidateCountHistogram),
     topSecondIntervalHistogram: sortedNumericHistogram(topSecondIntervalHistogram),
-    blockers,
-    noHumanCorrectionReady: blockers.length === 0,
   };
 }
