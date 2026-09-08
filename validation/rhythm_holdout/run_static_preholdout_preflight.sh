@@ -123,7 +123,7 @@ sed \
   > "$WORK/esm/prepare-freeze.mjs"
 
 sed \
-  "s#@/lib/v143RenderContract#./v143RenderContract.mjs#" \
+  "s#'./v143RenderContract.js'#'./v143RenderContract.mjs'#" \
   lib/createV143RhythmPdf.js \
   > "$WORK/esm/createV143RhythmPdf.mjs"
 
