@@ -141,6 +141,25 @@ function normalizeOnset(onset, onsetIndex, structureMap) {
   };
 }
 
+function normalizeCapabilities(raw) {
+  const capabilities = raw?.capabilities && typeof raw.capabilities === 'object'
+    ? raw.capabilities
+    : {};
+  return {
+    roleRelevanceResolved: capabilities.roleRelevanceResolved === true,
+    polyphonyResolved: capabilities.polyphonyResolved === true,
+    durationResolution: ['none', 'partial', 'complete'].includes(capabilities.durationResolution)
+      ? capabilities.durationResolution
+      : 'undeclared',
+    instrumentIsolation: typeof capabilities.instrumentIsolation === 'string'
+      ? capabilities.instrumentIsolation
+      : 'undeclared',
+    confidenceCalibration: typeof capabilities.confidenceCalibration === 'string'
+      ? capabilities.confidenceCalibration
+      : 'undeclared',
+  };
+}
+
 export function adaptStructureConditionedNoteEvidence(raw = {}, structureMap) {
   if (!structureMap) throw new Error('structureMap is required.');
   if (raw?.version !== 1) throw new Error('note evidence version must be 1.');
@@ -186,6 +205,10 @@ export function adaptStructureConditionedNoteEvidence(raw = {}, structureMap) {
   const unambiguousOnsetCount = onsets.filter((onset) => onset.classification === 'unambiguous').length;
   const durationResolvedEvidenceCount = onsets.filter((onset) => onset.durationSeconds !== null).length;
   const provenance = raw?.provenance && typeof raw.provenance === 'object' ? { ...raw.provenance } : {};
+  const capabilities = normalizeCapabilities(raw);
+  const analyzerDiagnostics = raw?.diagnostics && typeof raw.diagnostics === 'object'
+    ? structuredClone(raw.diagnostics)
+    : {};
 
   return {
     adapterContract: {
@@ -202,6 +225,8 @@ export function adaptStructureConditionedNoteEvidence(raw = {}, structureMap) {
     },
     role: raw.role,
     structureIdentity: expectedIdentity,
+    capabilities,
+    analyzerDiagnostics,
     onsets,
     promotedEvents,
     metrics: {
