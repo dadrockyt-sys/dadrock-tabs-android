@@ -57,36 +57,30 @@ Recorded clean-line commits:
 - `c682355c173f47dbb250175fb4eca718a8c91a20` — first seven synthetic tests;
 - `f0ac845c2820acb301e801060920d97dd1d4f956` — fresh pipeline README;
 - `c39943f176fb557ed9b4a68c1ec609ce1e698aa0` — manual-only CPU test workflow;
-- `a0fbc5fc54aa1bf91a7cc199f373d5018d158a11` — first-class musical event + rhythm notation layer;
-- `9ce440755d1d70813d1043210d8bd8a28a650cd3` — six rhythm/event-schema invariant tests;
+- `a0fbc5fc54aa1bf91a7cc199f373d5018d158a11` — compatibility musical-event + rhythm notation layer;
+- `9ce440755d1d70813d1043210d8bd8a28a650cd3` — six compatibility rhythm/event-schema invariant tests;
 - `3bc1c36c4d3fbeefe3a1243415de72b1a4a5a8cd` — checkpoint recording first proven 13/13 local clean-suite pass;
 - `e9b56a0fdceed2dafc9715f22b5c93954098877e` — first-class `structureMap` implementation and structure-conditioned note core;
-- `71e553f13aa37a4c30615c094c2679b1e9504475` — six `structureMap`/structure-conditioned core tests.
+- `71e553f13aa37a4c30615c094c2679b1e9504475` — six `structureMap`/structure-conditioned core tests;
+- `324420a20210a3cd88284b323968366d1e86773c` — checkpoint recording the 19/19 structure-first milestone;
+- `89c6a12d604dd203b65f4e4015d7d1d246f05a9f` — structure-map-driven musical event/rhythm notation schema;
+- `85b175f60406fb47a81bfebfe36ba99e52ed029f` — six structure-map-driven rhythm/notation tests.
 
-### Deterministic core
+### Compatibility deterministic core
 
-`songsterr_pipeline/index.mjs` provides the original clean deterministic baseline:
-- explicit structure/instrument conditioning;
-- pickup-aware measure timing;
-- stable simultaneous-onset clustering;
-- joint unique-string playable chord-shape solving;
-- exact MIDI reconstruction checks;
-- no intentional note dropping;
-- raw diagnostics for event count, pitch preservation, timing movement, and unresolved playable assignments.
+`songsterr_pipeline/index.mjs` provides the original clean deterministic baseline with explicit conditioning, pickup-aware timing, stable onset clustering, unique-string shape solving, exact MIDI reconstruction, no intentional note dropping, and raw count/pitch/timing/playability diagnostics.
 
-This original `structurePrior` path remains temporarily for backward compatibility and its original tests.
+Its `structurePrior` path remains temporarily for backward compatibility and the original tests. New work should use `structureMap` directly.
 
-### Musical event / notation layer
+### Compatibility rhythm layer
 
-`songsterr_pipeline/rhythmNotation.mjs` preserves one source note = one stable event identity while notation may contain multiple tied segments.
-
-Current behavior includes source `end`/`duration`, unresolved missing duration, structure-grid duration projection, minimum subdivision duration for collapsed snaps, beat/measure tie splitting, rest-gap diagnostics without fake MIDI notes, and straight/triplet subdivision behavior.
+`songsterr_pipeline/rhythmNotation.mjs` preserves one source note = one stable event identity while notation may contain multiple tied segments. It remains as compatibility evidence; the first-class structure path is now `structureRhythmNotation.mjs`.
 
 ### First-class `structureMap`
 
-`songsterr_pipeline/structureMap.mjs` now makes structure explicit before note placement.
+`songsterr_pipeline/structureMap.mjs` now establishes structure before note placement.
 
-It currently provides:
+It provides:
 - tempo segments with confidence/provenance;
 - meter segments with confidence/provenance;
 - straight/triplet feel segments with confidence/provenance;
@@ -94,79 +88,102 @@ It currently provides:
 - materialized pickup/full measures;
 - explicit measure start/end boundaries;
 - materialized downbeats;
-- beat boundaries;
-- subdivision timestamps inside beats;
+- beat boundaries and subdivision timestamps;
 - map-level confidence/provenance;
 - continuity/non-overlap validation;
 - rejection of tempo/meter/feel changes that do not align to a measure boundary;
-- half-open segment semantics so a structural change takes effect exactly at its boundary;
+- half-open segment semantics `[start, end)` so changes take effect exactly at the boundary;
 - `locateInStructureMap(...)`;
 - `snapTimestampToStructureMap(...)`;
 - `runStructureMappedCore(...)`, whose note timing consumes the map directly before fretboard assignment.
 
-The structure-conditioned core preserves source event identity/MIDI and uses the same deterministic unique-string shape solver after map-based timing is resolved.
+### First-class structure-driven event / notation layer
+
+`songsterr_pipeline/structureRhythmNotation.mjs` now consumes `structureMap` directly for note starts, note ends, duration projection, beat/measure segmentation, pickup crossings, ties, rest gaps, feel, and timing diagnostics.
+
+Current schema behavior:
+- one source note = one stable `eventId` / event identity;
+- exact MIDI stays attached to the source event;
+- onset projection comes from explicit structure-map subdivision slots;
+- end/duration projection uses the same structure-map slot set;
+- collapsed projected duration advances to the next valid structure slot rather than inventing arbitrary time;
+- beat/measure/pickup crossings split into tied notation segments without duplicating source events;
+- syncopated starts are diagnosed from beat-relative structure positions;
+- rest gaps are diagnostics only, never fake MIDI notes;
+- missing duration remains explicitly unresolved;
+- per-event onset/end displacement is preserved;
+- aggregate mean/max absolute onset/end displacement is reported;
+- provenance records the structure-map version/source;
+- legacy V143 scorer import remains explicitly false.
 
 ## VALIDATION STATUS
 
-### Original clean 13-test surface — PROVEN PASSING
+### Original clean surface
 
-On 2026-09-08, the exact branch-current original `songsterr_pipeline/` implementation and both committed original test files were mirrored into an isolated local Node runtime and executed with:
+On 2026-09-08, the original clean surface was executed in an isolated local Node runtime:
 
 `node --test tests/pipeline.test.mjs tests/rhythmNotation.test.mjs`
 
 Result: **13/13 pass, 0 fail**.
 
-This proves the committed original invariants for exact MIDI preservation, zero source-event-count drift in tested fixtures, stable non-chain onset clustering, unique-string playable chord assignment, tuning/capo reconstruction, pickup-aware positioning, beat/measure ties, rest diagnostics without note inflation, straight/triplet subdivision behavior, and explicit unresolved duration.
+### First-class structure-map surface
 
-### Expanded structure-first clean surface — PROVEN PASSING
-
-After implementing `structureMap`, the exact local implementation corresponding to commits `e9b56a0` + `71e553f` was executed with:
+After implementing `structureMap`, the expanded suite was executed:
 
 `node --test tests/pipeline.test.mjs tests/rhythmNotation.test.mjs tests/structureMap.test.mjs`
 
-Final result:
-- tests: **19**
-- pass: **19**
+Final result: **19/19 pass, 0 fail**.
+
+The first expanded run caught a genuine exact-boundary bug: lookup selected a segment that ended at the change timestamp. Interval semantics were corrected to `[start, end)`, then all 19 tests passed.
+
+### Structure-driven rhythm/notation surface — CURRENT PROVEN BASELINE
+
+After adding `structureRhythmNotation.mjs`, the complete namespace test suite was executed with:
+
+`node --test tests/*.test.mjs`
+
+Result:
+- tests: **25**
+- pass: **25**
 - fail: **0**
 - cancelled: **0**
 - skipped: **0**
 
-The first expanded run intentionally caught a real boundary defect: a tempo/meter segment ending exactly at a change timestamp was still selected at that timestamp. The interval lookup was corrected to half-open `[start, end)` semantics, after which all 19 tests passed.
+New proven behavior includes:
+- pickup note tied across explicit pickup → measure 1 boundary;
+- syncopated attack snapped to a structure-map subdivision with quantization displacement reported;
+- same raw attack resolves differently under straight vs triplet structure maps;
+- measure-crossing duration becomes tied segments without event duplication;
+- silence becomes rest diagnostics without fake MIDI events;
+- missing duration remains unresolved;
+- exact MIDI/event-count preservation remains intact across the structure-driven path.
 
-New proven structure-first behavior includes:
-- pickup/downbeat/measure/beat/subdivision materialization;
-- explicit map-driven snapping/location;
-- tempo change applied exactly at a measure boundary;
-- meter change applied exactly at a measure boundary;
-- slightly spread chord attacks clustered musically then snapped against the map;
-- exact MIDI/event-count preservation through the structure-conditioned note stage;
-- unique-string playable chord assignment after structural timing;
-- rejection of mid-measure structural changes instead of silently warping notation.
-
-No Production/main state, model/GPU workflow, professional scorer, training path, real-audio canary, or archived V143/Gomyway pipeline was touched during either validation.
+No Production/main state, model/GPU workflow, professional scorer, training path, real-audio canary, or archived V143/Gomyway pipeline was touched during validation.
 
 ## CURRENT ENGINEERING MILESTONE
 
-Complete the **structure-first synthetic fixture surface** and connect `structureMap` into the musical-event/rhythm notation path so duration, ties, rests, and syncopation are derived from the same first-class structure contract rather than the old compatibility grid.
+Harden contextual rhythm spelling on top of the now-proven structure-first event schema.
 
-Still needed in the next clean step:
-- syncopated attacks around beat boundaries;
-- notes crossing beat/measure boundaries using `structureMap` directly;
-- straight vs triplet structure-map fixtures;
-- pickup edge cases using explicit map boundaries;
-- explicit quantization displacement diagnostics at event/phrase level;
-- structure-map-driven duration/end projection and rest spelling diagnostics.
+Next clean goals:
+- beat-strength-aware tie decisions rather than splitting every beat crossing mechanically;
+- dotted values where clearer than ties;
+- explicit rest spelling by beat/measure rather than only raw gap diagnostics;
+- stronger syncopation-aware notation;
+- more pickup edge cases;
+- phrase-level straight/triplet consistency diagnostics;
+- preserve raw quantization displacement and source MIDI/event identity throughout.
+
+After rhythm spelling is stable, upgrade local chord/shape decoding with stronger physical constraints and then add phrase-level fretboard path optimization.
 
 ## NEXT EXECUTION ORDER
 
-1. Finish structure-first synthetic fixtures and make musical event/rhythm notation consume `structureMap` directly.
-2. Harden contextual rhythm spelling: beat-strength-aware ties, dotted values, explicit rest spelling, syncopation, pickup edge cases, phrase feel consistency, quantization displacement diagnostics.
-3. Upgrade local chord/shape decoding: stronger fret-span/stretch constraints, role-aware open-string preference, impossible-shape rejection, deterministic tie-breaking, neighboring hand-position context. Never drop pitches merely to make fingering easier.
-4. Add phrase-level fretboard path optimization with pitch correctness and physical playability ahead of movement aesthetics.
-5. Define a fresh evaluator that reports raw structure, event, pitch, timing, playability, motion, notation, tie/rest, and unresolved-duration diagnostics before any composite score.
-6. Only after the deterministic structure/notation/fretboard system is stable, connect real-audio evidence in this order: **full-mixture structure analysis → structureMap → role-conditioned note evidence → clean event schema → notation → fretboard decoding**.
-7. Map clean analyzer output into the existing `/ai-tab` metadata/render/PDF contract.
-8. Define the no-human-correction product acceptance gate across multiple real songs/roles before changing public copy.
+1. Harden contextual rhythm spelling on `structureRhythmNotation.mjs`.
+2. Upgrade local chord/shape decoding: stronger fret-span/stretch constraints, role-aware open-string preference, impossible-shape rejection, deterministic tie-breaking, neighboring hand-position context. Never drop pitches merely to make fingering easier.
+3. Add phrase-level fretboard path optimization with pitch correctness and physical playability ahead of movement aesthetics.
+4. Define a fresh evaluator that reports raw structure, event, pitch, timing, playability, motion, notation, tie/rest, and unresolved-duration diagnostics before any composite score.
+5. Only after the deterministic structure/notation/fretboard system is stable, connect real-audio evidence in this order: **full-mixture structure analysis → structureMap → role-conditioned note evidence → clean event schema → notation → fretboard decoding**.
+6. Map clean analyzer output into the existing `/ai-tab` metadata/render/PDF contract.
+7. Define the no-human-correction product acceptance gate across multiple real songs/roles before changing public copy.
 
 ## NON-NEGOTIABLES
 
