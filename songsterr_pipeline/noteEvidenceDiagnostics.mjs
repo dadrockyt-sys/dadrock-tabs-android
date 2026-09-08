@@ -14,6 +14,10 @@ function sortedNumericHistogram(histogram) {
   );
 }
 
+function hasFiniteEvidenceValue(value) {
+  return value !== null && value !== undefined && Number.isFinite(Number(value));
+}
+
 export function summarizeNoteEvidence(adapted = {}) {
   const onsets = Array.isArray(adapted?.onsets) ? adapted.onsets : [];
   const promotedEvents = Array.isArray(adapted?.promotedEvents) ? adapted.promotedEvents : [];
@@ -55,7 +59,7 @@ export function summarizeNoteEvidence(adapted = {}) {
   }
 
   const promotedWithDurationCount = promotedEvents.filter((event) => (
-    Number.isFinite(Number(event?.duration)) || Number.isFinite(Number(event?.end))
+    hasFiniteEvidenceValue(event?.duration) || hasFiniteEvidenceValue(event?.end)
   )).length;
   const promotedMissingDurationCount = promotedEvents.length - promotedWithDurationCount;
   const unresolvedRoleEvidenceCount = classificationCounts.ambiguous + classificationCounts['no-candidate'];
