@@ -280,6 +280,7 @@ try {
     song: 'V143 Phase 13 Canonical HTTP Gate',
     artist: 'DadRock QA',
     transcriptionType: 'rhythm',
+    operation: 'analyze',
     conditioning: requestConditioning(),
   });
 
