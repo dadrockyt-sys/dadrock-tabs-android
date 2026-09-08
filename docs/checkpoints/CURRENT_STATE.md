@@ -48,10 +48,13 @@ The deterministic compare guard is the primary evaluator. The historical final c
 
 ## RESUME NOTE — 2026-09-07
 
-- Resumed directly on `v143-contextual-prune-lobo` from branch HEAD `5334ee0ad66c13202c28f269b1e79eb16d8fa923` (`Add contextual lobo rules and snapping guard`).
+- Resumed directly on `v143-contextual-prune-lobo`. The actual pre-resume branch commit was `86c1bc7031c385830394ca1626713c0a15181d13` (`Add contextual lobo rules and snapping guard`). The previously recorded `5334ee0ad66c13202c28f269b1e79eb16d8fa923` is that commit's **tree SHA**, not its commit SHA.
 - Re-read this checkpoint before making any behavior changes.
 - Current task is the exact evaluator/report lookup and formula scrub described below; no score, product invariant, Production, model/GPU, or workflow state has been changed in this resumed session yet.
-- Next evidence checkpoint will record the evaluator/report paths and formulas before any deterministic patch is attempted.
+- Branch-current `validation/rhythm_holdout/score_rhythm_holdout.py` has been identified as an F1/gate-style holdout scorer with a ±0.50-step timing tolerance across pitch/timing/string-fret/chord/voicing/coverage/PDF checks. It does **not** define the named `note_count_quality` metric.
+- Historical Gomyway grading/report evidence explicitly names `pitch_accuracy`, `onset_match`, `note_count_quality`, and `deterministic_score`, with underlying onset, onset+string, and pitch+onset match counts. Therefore the carried-forward **90.321% onset** / **69.004% note-count** values belong to a separate Gomyway compare/report layer, not the branch-current rhythm-holdout F1 scorer.
+- Exact Gomyway comparator formulas and mismatch counts are still being recovered from branch history/artifacts. Do **not** infer them from the percentages.
+- No deterministic decoder patch has been made in this resumed session.
 
 ## SONGSTERR-INSPIRED PIPELINE REVIEW — ACTIVE
 
