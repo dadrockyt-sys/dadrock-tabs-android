@@ -13,9 +13,11 @@ on:
       - 'scripts/songsterr-fresh/run_note_evidence_pipeline_canary.mjs'
       - 'songsterr_pipeline/noteEvidenceAdapter.mjs'
       - 'songsterr_pipeline/noteEvidenceDiagnostics.mjs'
+      - 'songsterr_pipeline/noteEvidenceEvaluator.mjs'
       - 'songsterr_pipeline/structureIdentity.mjs'
       - 'songsterr_pipeline/tests/noteEvidenceAdapter.test.mjs'
       - 'songsterr_pipeline/tests/noteEvidenceDiagnostics.test.mjs'
+      - 'songsterr_pipeline/tests/noteEvidenceEvaluator.test.mjs'
 
 permissions:
   contents: read
@@ -115,11 +117,25 @@ jobs:
           node --input-type=module - <<'NODE'
           import { readFile } from 'node:fs/promises';
           const result = JSON.parse(await readFile('/tmp/songsterr-fresh-note-canary/pipeline-canary-result.json', 'utf8'));
-          if (result.evidenceDiagnostics.noHumanCorrectionReady !== false) {
-            throw new Error('BASELINE_NOTE_EVIDENCE_MUST_NOT_CLAIM_NO_HUMAN_CORRECTION_READINESS');
+          const evaluation = result.evidenceEvaluation;
+          if (evaluation?.acceptedForCompleteTab !== false) {
+            throw new Error('BASELINE_NOTE_EVIDENCE_MUST_NOT_CLAIM_COMPLETE_TAB_ACCEPTANCE');
           }
-          if (!result.evidenceDiagnostics.blockers.includes('PROMOTED_EVENTS_MISSING_DURATION_EVIDENCE')) {
-            throw new Error('BASELINE_MUST_EXPOSE_MISSING_DURATION_EVIDENCE');
+          for (const expected of [
+            'ROLE_RELEVANCE_UNRESOLVED',
+            'POLYPHONY_UNRESOLVED',
+            'PITCH_EVIDENCE_UNRESOLVED',
+            'DURATION_EVIDENCE_INCOMPLETE',
+          ]) {
+            if (!evaluation.failureReasons.includes(expected)) {
+              throw new Error(`BASELINE_MUST_EXPOSE_${expected}`);
+            }
+          }
+          if (evaluation.evaluatorContract.compositeScore !== null) {
+            throw new Error('NOTE_EVIDENCE_EVALUATOR_MUST_REMAIN_SCORELESS');
+          }
+          if (result.pipelineSummary.upstreamEvidenceReady !== false) {
+            throw new Error('PRODUCT_SHELL_MUST_RECEIVE_FAILED_UPSTREAM_EVIDENCE_GATE');
           }
           if (result.pipelineSummary.deliveryReady !== false) {
             throw new Error('INCOMPLETE_REAL_NOTE_EVIDENCE_MUST_FAIL_CLOSED_FROM_DELIVERY');
@@ -142,10 +158,11 @@ jobs:
               print(f'--- {name} ---')
               print(json.dumps({
                   'structureIdentity': data.get('structureIdentity'),
+                  'capabilities': data.get('capabilities'),
                   'diagnostics': data.get('diagnostics'),
                   'metrics': data.get('metrics'),
                   'adapterContract': data.get('adapterContract'),
-                  'evidenceDiagnostics': data.get('evidenceDiagnostics'),
+                  'evidenceEvaluation': data.get('evidenceEvaluation'),
                   'pipelineSummary': data.get('pipelineSummary'),
                   'provenance': data.get('provenance'),
               }, indent=2))
