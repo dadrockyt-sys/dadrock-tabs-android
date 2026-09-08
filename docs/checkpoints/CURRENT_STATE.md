@@ -42,13 +42,57 @@ Fresh pipeline code must not import or depend on legacy experimental scoring/gat
 
 Old metrics such as `100% pitch / 90.321% onset / 69.004% note-count` remain historical context only. They are not acceptance criteria for this new pipeline unless the exact evaluator is later recovered and intentionally adopted.
 
+## IMPLEMENTED CLEAN BASELINE
+
+Branch creation base: archived V143 head `555e545ff5a9a55c5b440122186c455e43442a00`.
+
+Fresh commits so far:
+- `a51f87d24af0cbcb34d9bc477cdef6bef490c16d` — replace inherited V143 checkpoint with fresh-pipeline source of truth;
+- `4f9f4d508689abcb907488c6e7ec05fe73a9c8a4` — isolated `songsterr_pipeline/package.json` using only Node's built-in test runner;
+- `212be220b96de687f55cce2ca3e7698b1ac9dadb` — first deterministic core in `songsterr_pipeline/index.mjs`;
+- `c682355c173f47dbb250175fb4eca718a8c91a20` — seven synthetic/reference-blind tests;
+- `f0ac845c2820acb301e801060920d97dd1d4f956` — clean pipeline README/boundary;
+- `c39943f176fb557ed9b4a68c1ec609ce1e698aa0` — manual-only CPU test workflow.
+
+The deterministic core currently:
+- normalizes structure + instrument conditioning independently of V143 helpers;
+- resolves tempo/meter/pickup/straight-or-triplet grid context;
+- groups near-simultaneous events before timing projection;
+- anchors full-measure snapping after the pickup rather than blindly rounding from time zero;
+- enumerates legal tuning/capo string/fret positions while reconstructing exact MIDI pitch;
+- solves simultaneous note clusters as one unique-string playable shape;
+- preserves every source event rather than dropping pitches when a cluster shape cannot be resolved;
+- reports raw transform metrics: source/output count, count delta, exact MIDI matches, pitch-preservation rate, cluster count, moved onsets, playable assignments, unresolved assignments;
+- declares `referenceBlind=true` and `legacyV143ScorerImported=false`.
+
+Synthetic tests cover:
+1. structure/role/tuning/capo serialization;
+2. pickup-aware measure-grid snapping;
+3. stable onset clustering without chain-merging unrelated attacks;
+4. exact MIDI reconstruction from string/fret positions;
+5. simultaneous-note unique-string shape decoding;
+6. zero event-count drift + exact source MIDI preservation through the fresh core;
+7. rejection of invalid tuning.
+
+The dedicated workflow `.github/workflows/songsterr-fresh-pipeline-v1-tests.yml` is `workflow_dispatch` only, `contents: read`, CPU-only, and runs only `npm test` inside `songsterr_pipeline/`. It has **not** been dispatched yet.
+
+GitHub Actions query for head `c39943f...` returned **zero automatic workflow runs**, confirming the initial fresh commits did not wake up the stale CI maze.
+
 ## FRESH PIPELINE LAYOUT
 
-Build under a new isolated top-level area, proposed:
+Current clean top-level area:
 
 `songsterr_pipeline/`
 
-Initial modules:
+Current files:
+- `package.json`
+- `index.mjs`
+- `tests/pipeline.test.mjs`
+- `README.md`
+
+The single-file deterministic core is intentional for the first proof. Split it into focused modules only after its clean invariants/tests are established.
+
+Planned module boundaries when refactoring becomes useful:
 - `contracts/` — structure + instrument configuration schemas;
 - `structure/` — tempo/meter/pickup/beat-grid representation;
 - `events/` — normalized pitch/onset event model and onset clusters;
@@ -67,6 +111,8 @@ Initial modules:
 - implement joint simultaneous-note grouping/voicing legality;
 - add transparent metrics with explicit formulas and raw counts.
 
+Status: first baseline implementation is committed. Next milestone is to execute/verify the isolated tests and fix only fresh-pipeline defects if found.
+
 ### Phase 1 — phrase-level musical decoding
 - ties/rests/syncopation/rhythm spelling;
 - phrase-continuity timing decisions;
@@ -83,20 +129,18 @@ Only after the deterministic core is stable, connect existing/new audio inferenc
 - No automatic Modal/GPU/model inference.
 - No professional/reference scorer.
 - No optimizer/training/threshold sweep.
-- No manual real-audio canary merely to continue development.
+- No legacy V143 canary/gate should block this branch.
 - Prefer CPU-only unit/static/synthetic validation first.
 
 The archived V143 async safety facts remain relevant to the existing product but do not become design constraints for the fresh deterministic core unless/when integration reaches the existing API/runtime.
 
 ## IMMEDIATE NEXT TASK
 
-Create the isolated `songsterr_pipeline/` scaffold and first deterministic contract/tests. The first implementation should prove:
+Verify the isolated fresh-pipeline tests. If they pass, continue Phase 0 with the next genuinely musical deterministic layer:
 
-- structure prior serialization;
-- role/tuning/capo legality;
-- exact MIDI pitch preservation;
-- stable simultaneous onset grouping;
-- measure-aware timing representation;
-- no imports from legacy V143 scoring/gating modules.
+1. separate onset placement from rhythm spelling;
+2. represent beat-boundary-aware duration/tie/rest decisions;
+3. add explicit raw diagnostics for every timing transformation;
+4. keep event count and MIDI pitch invariant while those representations evolve.
 
 Checkpoint this file after each meaningful fresh-pipeline milestone.
