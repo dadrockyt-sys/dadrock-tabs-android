@@ -58,6 +58,14 @@ The deterministic compare guard is the primary evaluator. The historical final c
 - Exact Gomyway comparator formulas and mismatch counts are still being recovered from branch history/artifacts. Do **not** infer them from the percentages.
 - No deterministic decoder patch has been made in this resumed session.
 
+## CONTINUATION PROVENANCE TRACE — 2026-09-07
+
+- Reconfirmed the active target is the exact **967-note** Gomyway compare/report layer behind **100% pitch / 90.321% onset / 69.004% note-count**, not a new architecture pass.
+- Inspected the older autonomous rhythm-search evidence at commit `86566f75bbe5bf3f1ec4da75bac3a1f2b46702d5`; its score is a separate six-category composite (tuning/consensus/reference/decoder/stability/parity), so it is **not** the target comparator.
+- Repository code-search evidence remembers historical `player/evaluate_candidate.js`, `player/scripts/candidate-score.js`, and `player/scripts/gomyway-17-113-sidecar-state.json`, including a legacy sidecar row with score `0.8306460590522214`, pitch accuracy `0.8182769835628637`, onset match `0.8658777120315582`, and note-count quality `0.8753117206982544`.
+- The current branch, current `main`, and the surviving `v143-research-checkpoint-fetch` branch do **not** expose `player/evaluate_candidate.js`; the old short SHA `9336275` is also no longer directly resolvable through the current GitHub commit endpoint. Treat code-search snippets as provenance clues only, not as sufficient proof of the formula.
+- No production/decoder/model/GPU/workflow change was made while establishing this boundary. Continue by recovering a concrete historical commit/blob or cached artifact containing the comparator/loader before touching decoder behavior.
+
 ## FRESH CHAT HANDOFF — START HERE
 
 Do **not** restart the Songsterr architecture review. The next chat should continue the evaluator provenance search from the exact point below.
