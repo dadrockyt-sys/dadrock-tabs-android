@@ -2,18 +2,6 @@ name: V143 AI Tab Real Audio Product Canary
 
 on:
   workflow_dispatch:
-  push:
-    branches:
-      - v143-contextual-prune-lobo
-    paths:
-      - '.github/workflows/v143-ai-tab-real-audio-canary.yml'
-      - 'analyzer/v143_ai_tab_product_canary_modal.py'
-      - 'analyzer/evaluate_v143_real_audio_canary.mjs'
-      - 'analyzer/render_v143_real_audio_canary_pdf.mjs'
-      - 'lib/v143AnalyzerQuality.js'
-      - 'lib/jimmyPaigeAnalysisPayload.js'
-      - 'lib/v143RenderContract.js'
-      - 'lib/createV143RhythmPdf.js'
 
 permissions:
   contents: write
