@@ -172,9 +172,22 @@ jobs:
           git config user.name 'github-actions[bot]'
           git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
           git commit -m 'Record fresh Rhythm static preflight evidence'
-          git fetch origin v143-contextual-prune-lobo
-          git rebase origin/v143-contextual-prune-lobo
-          git push origin HEAD:v143-contextual-prune-lobo
+
+          pushed=false
+          for attempt in 1 2 3 4 5; do
+            git fetch origin v143-contextual-prune-lobo
+            git rebase origin/v143-contextual-prune-lobo
+            if git push origin HEAD:v143-contextual-prune-lobo; then
+              pushed=true
+              break
+            fi
+            echo "Evidence push raced another branch update; retrying ($attempt/5)." >&2
+            sleep "$attempt"
+          done
+          if [ "$pushed" != 'true' ]; then
+            echo 'Failed to persist V2 evidence after 5 race-safe retries.' >&2
+            exit 1
+          fi
 
       - name: Enforce green canonical report
         if: ${{ always() }}
