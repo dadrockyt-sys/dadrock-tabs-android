@@ -1,0 +1,135 @@
+name: Songsterr Fresh Gomyway Midterm Note Evidence Canary
+
+on:
+  workflow_dispatch:
+  push:
+    branches:
+      - songsterr-fresh-pipeline-v1
+    paths:
+      - '.github/workflows/songsterr-fresh-gomyway-midterm-note-evidence-canary.yml'
+      - 'scripts/songsterr-fresh/analyze_structure_conditioned_notes.py'
+      - 'scripts/songsterr-fresh/build_note_evidence_context.mjs'
+      - 'scripts/songsterr-fresh/build_note_evidence.mjs'
+      - 'songsterr_pipeline/noteEvidenceAdapter.mjs'
+      - 'songsterr_pipeline/structureIdentity.mjs'
+      - 'songsterr_pipeline/tests/noteEvidenceAdapter.test.mjs'
+
+permissions:
+  contents: read
+
+jobs:
+  note-evidence-canary:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - name: Check out fresh branch
+        uses: actions/checkout@v4
+
+      - name: Set up Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Fetch exact authorized audio fixture
+        shell: bash
+        run: |
+          set -euo pipefail
+          curl --fail --location --silent --show-error --retry 3 \
+            'https://raw.githubusercontent.com/dadrockyt-sys/dadrock-tabs-android/main/public/jimmy-paige-midterm-v1/gomyway-midterm-source.m4a' \
+            --output /tmp/gomyway-midterm-source.m4a
+          ACTUAL_BLOB_SHA="$(git hash-object /tmp/gomyway-midterm-source.m4a)"
+          EXPECTED_BLOB_SHA='4dd709e3fa177b4daeed71ca97f0199757729d4b'
+          echo "Authorized fixture blob: ${ACTUAL_BLOB_SHA}"
+          test "${ACTUAL_BLOB_SHA}" = "${EXPECTED_BLOB_SHA}"
+
+      - name: Install audio decoder
+        shell: bash
+        run: |
+          set -euo pipefail
+          sudo apt-get update -qq
+          sudo apt-get install -y ffmpeg
+
+      - name: Decode fixture to mono analysis WAV
+        shell: bash
+        run: |
+          set -euo pipefail
+          ffmpeg -hide_banner -loglevel error -y \
+            -i /tmp/gomyway-midterm-source.m4a \
+            -ac 1 -ar 22050 \
+            /tmp/gomyway-midterm-analysis.wav
+
+      - name: Install pinned CPU analysis dependencies
+        run: >-
+          python -m pip install --disable-pip-version-check
+          numpy==2.2.6 scipy==1.15.3 librosa==0.11.0 soundfile==0.13.1
+
+      - name: Rebuild accepted structure evidence reference-blind
+        shell: bash
+        run: |
+          set -euo pipefail
+          mkdir -p /tmp/songsterr-fresh-note-canary
+          python scripts/songsterr-fresh/analyze_full_mixture_structure.py \
+            --input /tmp/gomyway-midterm-analysis.wav \
+            --output /tmp/songsterr-fresh-note-canary/raw-structure-analysis.json \
+            --audio-source 'public/jimmy-paige-midterm-v1/gomyway-midterm-source.m4a@main#4dd709e3fa177b4daeed71ca97f0199757729d4b'
+          node scripts/songsterr-fresh/build_structure_map.mjs \
+            /tmp/songsterr-fresh-note-canary/raw-structure-analysis.json \
+            /tmp/songsterr-fresh-note-canary/adapted-structure-map.json
+          node scripts/songsterr-fresh/build_note_evidence_context.mjs \
+            /tmp/songsterr-fresh-note-canary/adapted-structure-map.json \
+            /tmp/songsterr-fresh-note-canary/note-evidence-context.json
+
+      - name: Analyze CPU note evidence against frozen structure
+        shell: bash
+        run: |
+          set -euo pipefail
+          python scripts/songsterr-fresh/analyze_structure_conditioned_notes.py \
+            --input /tmp/gomyway-midterm-analysis.wav \
+            --context /tmp/songsterr-fresh-note-canary/note-evidence-context.json \
+            --output /tmp/songsterr-fresh-note-canary/raw-note-evidence.json \
+            --role guitar \
+            --audio-source 'public/jimmy-paige-midterm-v1/gomyway-midterm-source.m4a@main#4dd709e3fa177b4daeed71ca97f0199757729d4b' \
+            --expected-structure-signature 'fnv1a32:2f493225'
+
+      - name: Validate and adapt note evidence
+        run: |
+          node scripts/songsterr-fresh/build_note_evidence.mjs \
+            /tmp/songsterr-fresh-note-canary/note-evidence-context.json \
+            /tmp/songsterr-fresh-note-canary/raw-note-evidence.json \
+            /tmp/songsterr-fresh-note-canary/adapted-note-evidence.json
+
+      - name: Re-run fresh deterministic suite
+        working-directory: songsterr_pipeline
+        run: npm test
+
+      - name: Show compact note-evidence diagnostics
+        shell: bash
+        run: |
+          python - <<'PY'
+          import json
+          for name in ('raw-note-evidence.json', 'adapted-note-evidence.json'):
+              path = f'/tmp/songsterr-fresh-note-canary/{name}'
+              with open(path, 'r', encoding='utf-8') as handle:
+                  data = json.load(handle)
+              print(f'--- {name} ---')
+              print(json.dumps({
+                  'structureIdentity': data.get('structureIdentity'),
+                  'diagnostics': data.get('diagnostics'),
+                  'metrics': data.get('metrics'),
+                  'adapterContract': data.get('adapterContract'),
+                  'provenance': data.get('provenance'),
+              }, indent=2))
+          PY
+
+      - name: Upload clean note-evidence artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: songsterr-fresh-gomyway-midterm-note-evidence
+          path: /tmp/songsterr-fresh-note-canary/*.json
+          if-no-files-found: error
+          retention-days: 14
