@@ -53,7 +53,7 @@ def function_source(tree: ast.AST, source: str, name: str) -> str:
 
 
 def main() -> None:
-    require(ASYNC_RESULT_TTL_SECONDS == 900, "async TTL must remain 15 minutes")
+    require(ASYNC_RESULT_TTL_SECONDS == 1800, "async TTL must remain 30 minutes")
     require(
         ASYNC_RESULT_CHUNK_BYTES < 1_000_000,
         "queue chunks must remain safely below Modal's 1 MiB item limit",
@@ -134,7 +134,7 @@ def main() -> None:
         '"orchestratorTracked": True',
         "modal.FunctionCall.from_id(",
         "call.get(timeout=0)",
-        "except modal.exception.TimeoutError:",
+        "except (TimeoutError, modal.exception.TimeoutError):",
         '"orchestratorRunning": True',
         "_worker_handle().remote(dict(routed_payload))",
         "item_poll_timeout=0.0",
