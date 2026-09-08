@@ -8,7 +8,7 @@ import librosa
 import numpy as np
 import soundfile as sf
 
-CONTRACT = "songsterr-fresh-cpu-spectral-release-evidence-v1"
+CONTRACT = "songsterr-fresh-cpu-spectral-release-evidence-v2"
 HOP_LENGTH = 512
 SUSTAINED_LOW_FRAMES = 5
 MIN_DURATION_SECONDS = 0.07
@@ -40,12 +40,14 @@ def load_evidence(path):
     return evidence
 
 
-def sustained_release(profile_db, onset_frame, onset_level_db, pitch_floor_db, sr):
+def sustained_release(profile_db, onset_frame, onset_level_db, pitch_floor_db, sr, censor_frame=None):
     frame_seconds = HOP_LENGTH / float(sr)
     min_frames = max(1, int(np.ceil(MIN_DURATION_SECONDS / frame_seconds)))
     search_frames = max(1, int(np.ceil(MAX_SEARCH_SECONDS / frame_seconds)))
     start = min(len(profile_db), onset_frame + min_frames)
     stop = min(len(profile_db), onset_frame + search_frames)
+    if censor_frame is not None:
+        stop = min(stop, int(censor_frame))
     if start >= stop:
         return None
 
@@ -88,6 +90,31 @@ def sustained_release(profile_db, onset_frame, onset_level_db, pitch_floor_db, s
     return None
 
 
+def next_same_pitch_reattack_frame(onsets, index, midi, sr):
+    for later in onsets[index + 1:]:
+        if later.get("classification") != "unambiguous":
+            continue
+        if later.get("selectedMidi") is None or int(later["selectedMidi"]) != midi:
+            continue
+        frame = int(librosa.time_to_frames(float(later["sourceStart"]), sr=sr, hop_length=HOP_LENGTH))
+        return max(0, frame)
+    return None
+
+
+def increment_reason(reason_counts, reason):
+    reason_counts[reason] = reason_counts.get(reason, 0) + 1
+
+
+def unresolved_duration(onset, reason, *, censored_by_same_pitch_reattack=False):
+    onset.setdefault("provenance", {})["durationEvidence"] = {
+        "source": CONTRACT,
+        "resolved": False,
+        "reason": reason,
+        "samePitchReattackCensored": censored_by_same_pitch_reattack,
+        "nextOnsetUsedAsDuration": False,
+    }
+
+
 def main():
     args = parse_args()
     evidence = load_evidence(args.evidence)
@@ -125,14 +152,20 @@ def main():
     attempted = 0
     durations = []
     confidences = []
+    reason_counts = {}
+    same_pitch_reattack_censor_count = 0
+    onsets = evidence.get("onsets", [])
 
-    for onset in evidence.get("onsets", []):
+    for index, onset in enumerate(onsets):
         if onset.get("classification") != "unambiguous" or onset.get("selectedMidi") is None:
             continue
         attempted += 1
         midi = int(onset["selectedMidi"])
         bin_index = midi - analysis_midi_min
         if bin_index < 0 or bin_index >= cqt_db.shape[0]:
+            reason = "SELECTED_MIDI_OUTSIDE_ANALYSIS_RANGE"
+            unresolved_duration(onset, reason)
+            increment_reason(reason_counts, reason)
             continue
 
         onset_frame = int(librosa.time_to_frames(float(onset["sourceStart"]), sr=sr, hop_length=HOP_LENGTH))
@@ -141,12 +174,16 @@ def main():
         onset_level_db = float(np.max(cqt_db[bin_index, onset_frame:onset_stop]))
         pitch_floor_db = float(pitch_floors[bin_index])
         if onset_level_db - pitch_floor_db < MIN_ONSET_ABOVE_FLOOR_DB:
-            onset.setdefault("provenance", {})["durationEvidence"] = {
-                "source": CONTRACT,
-                "resolved": False,
-                "reason": "INSUFFICIENT_ONSET_TO_FLOOR_CONTRAST",
-            }
+            reason = "INSUFFICIENT_ONSET_TO_FLOOR_CONTRAST"
+            unresolved_duration(onset, reason)
+            increment_reason(reason_counts, reason)
             continue
+
+        reattack_frame = next_same_pitch_reattack_frame(onsets, index, midi, sr)
+        max_search_frame = onset_frame + max(1, int(np.ceil(MAX_SEARCH_SECONDS * sr / HOP_LENGTH)))
+        censored_by_reattack = reattack_frame is not None and reattack_frame < max_search_frame
+        if censored_by_reattack:
+            same_pitch_reattack_censor_count += 1
 
         release = sustained_release(
             cqt_db[bin_index],
@@ -154,25 +191,42 @@ def main():
             onset_level_db,
             pitch_floor_db,
             sr,
+            censor_frame=reattack_frame if censored_by_reattack else None,
         )
         if release is None:
-            onset.setdefault("provenance", {})["durationEvidence"] = {
-                "source": CONTRACT,
-                "resolved": False,
-                "reason": "NO_CLEAR_SUSTAINED_SPECTRAL_RELEASE",
-            }
+            reason = (
+                "NO_CLEAR_RELEASE_BEFORE_SAME_PITCH_REATTACK"
+                if censored_by_reattack
+                else "NO_CLEAR_SUSTAINED_SPECTRAL_RELEASE"
+            )
+            unresolved_duration(
+                onset,
+                reason,
+                censored_by_same_pitch_reattack=censored_by_reattack,
+            )
+            increment_reason(reason_counts, reason)
             continue
 
         source_start = float(onset["sourceStart"])
         source_end = float(release["sourceEnd"])
         duration_seconds = source_end - source_start
         if duration_seconds < MIN_DURATION_SECONDS:
-            onset.setdefault("provenance", {})["durationEvidence"] = {
-                "source": CONTRACT,
-                "resolved": False,
-                "reason": "RELEASE_TOO_CLOSE_TO_ONSET",
-            }
+            reason = "RELEASE_TOO_CLOSE_TO_ONSET"
+            unresolved_duration(
+                onset,
+                reason,
+                censored_by_same_pitch_reattack=censored_by_reattack,
+            )
+            increment_reason(reason_counts, reason)
             continue
+
+        if censored_by_reattack:
+            reattack_seconds = float(librosa.frames_to_time(reattack_frame, sr=sr, hop_length=HOP_LENGTH))
+            if source_end >= reattack_seconds:
+                reason = "RELEASE_NOT_BEFORE_SAME_PITCH_REATTACK"
+                unresolved_duration(onset, reason, censored_by_same_pitch_reattack=True)
+                increment_reason(reason_counts, reason)
+                continue
 
         onset["sourceEnd"] = source_end
         onset["durationSeconds"] = duration_seconds
@@ -182,6 +236,7 @@ def main():
             "resolved": True,
             "method": "selected-pitch-sustained-spectral-decay",
             "nextOnsetUsedAsDuration": False,
+            "samePitchReattackCensored": censored_by_reattack,
             "onsetLevelDb": release["onsetLevelDb"],
             "releaseLevelDb": release["releaseLevelDb"],
             "pitchFloorDb": release["pitchFloorDb"],
@@ -209,8 +264,11 @@ def main():
         "resolvedPromotedOnsetCount": resolved,
         "unresolvedPromotedOnsetCount": attempted - resolved,
         "resolutionRate": resolved / attempted if attempted else 0.0,
+        "unresolvedReasonCounts": reason_counts,
+        "samePitchReattackCensorCount": same_pitch_reattack_censor_count,
         "meanResolvedDurationSeconds": float(np.mean(durations)) if durations else 0.0,
         "medianResolvedDurationSeconds": float(np.median(durations)) if durations else 0.0,
+        "maxResolvedDurationSeconds": float(np.max(durations)) if durations else 0.0,
         "meanDurationConfidence": float(np.mean(confidences)) if confidences else 0.0,
         "minimumDurationSeconds": MIN_DURATION_SECONDS,
         "maximumSearchSeconds": MAX_SEARCH_SECONDS,
@@ -218,6 +276,7 @@ def main():
         "minimumOnsetAboveFloorDb": MIN_ONSET_ABOVE_FLOOR_DB,
         "dropFromOnsetDb": DROP_FROM_ONSET_DB,
         "minimumFloorMarginDb": MIN_FLOOR_MARGIN_DB,
+        "samePitchReattackIsCensorOnly": True,
         "nextOnsetUsedAsDuration": False,
         "confidenceCalibration": "heuristic-not-calibrated-probability",
     }
