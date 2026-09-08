@@ -113,14 +113,54 @@ The run artifact is still available and was inspected read-only:
   4. `precision-v2-one-shot-candidate-product.json`
 - none contains `90.321`, `69.004`, `pitch_accuracy`, `onset_match`, `note_count_quality`, or `deterministic_score`.
 
-Therefore the frozen candidate artifact is **not** the missing score report.
+The exact candidate workflow definition at `74b0f815...` was also inspected. It performs anti-leakage/safety checks, the paid capture, deterministic candidate validation/persistence, and uploads only those four files. It contains no downstream report/scorer invocation and no report handoff. Therefore the candidate workflow and candidate artifact are **not** the missing score report.
 
 The preserved-PDF run **`32821330353`** materializes the immutable candidate CPU-only and renders **967 events / 725 unique onsets**. Its preserved evidence likewise does not provide the target metric trio. The target comparator is downstream/separate from candidate generation and PDF rendering.
 
-## OTHER AUG. 25 HISTORY CHECKED
+## OTHER HISTORY CHECKED
 
-- Commits `a8527bda2e33919495dd8cae0908aa9bf1fc34aa` (`Checkpoint exact downstream source discovery`) and `d6cecb794b93a3bbb6883948789f9dbcdbf3ecd0` (`Checkpoint nested downstream evidence`) were inspected. They document technique/sustain/fingering replay evidence, not the 100 / 90.321 / 69.004 comparator. Do not mix their `score >= 0.99` professional-scorer context into this product-metric trace.
-- Immediate post-candidate history around 04:05–06:00Z includes harmonic-shadow and bounded research-fetch work; no target formula has yet been recovered from that window.
+- Commits `a8527bda2e33919495dd8cae0908aa9bf1fc34aa` (`Checkpoint exact downstream source discovery`) and `d6cecb794b93a3bbb6883948789f9dbcdbf3ecd0` (`Checkpoint nested downstream evidence`) document technique/sustain/fingering replay evidence, not the 100 / 90.321 / 69.004 comparator.
+- Commit `7058e132557da6b9dc034edabfbb7d68a9e03706` (`checkpoint professional tab pipeline investigation`) belongs to the retired professional-score family using pitch F1 / pitch+timing F1 / critical mismatch counts; it explicitly records no new professional scorer after run `32805316807`. It is not the target three-metric product comparator.
+- Aug. 29 commits `6145665b2705e904f657e59ed5631404f03d36d7` and `10a4ff9da5bcd1600ad8677582f9505e7317468b` define a user-facing Project Progress Score / V168 Test Score reporting convention. That convention is motivational/reporting and uses V168 timing-aware pitch F1 when an actual test exists; it is unrelated to `pitch_accuracy / onset_match / note_count_quality`.
+- Immediate post-candidate Actions from 04:05–04:45Z were cleanup-preview housekeeping and attack-shadow CPU diagnostics; no target scorer/report was identified there.
+
+## RECOVERED HISTORICAL GOMYWAY 17–113 MATCHER — PREDECESSOR, NOT YET TARGET
+
+A real historical deterministic Gomyway event matcher has now been recovered, which is useful contract ancestry but is **not yet evidence of the current 967-note wrapper**.
+
+Source:
+- origin commit `90854961b54a97c46b6faeecac3c08213378ef95` — `Add sixteenth-note rhythm training attempt engine`
+- file `analyzer/run_gomyway_rhythm_training_attempt_17_113.py`
+- recovered blob at later usable ref `d07b5968556803da4c721f18cb7aadad644742ed`: `7589a418e99c78a5d695c7d0a706bf4a29d2ceb8`
+- professional reference builder lineage: `1cd9602dd515c6915db4e65b81f51d00908e15f5`
+- candidate/reference population commit: `d07b5968556803da4c721f18cb7aadad644742ed`
+
+Exact historical matcher mechanics:
+- reference/candidate events are compared within the same measure;
+- an unused candidate is eligible when absolute `quantizedStep` distance is within the tolerance;
+- tolerance is **1 sixteenth step** in the scored result;
+- nearest candidate wins, then stronger confidence/strength, then index;
+- each candidate can be consumed by at most one reference event;
+- unresolved references and extra candidates are counted explicitly;
+- exact onset contributes 1.0 onset point, one-step offset contributes 0.5;
+- exact duration contributes 1.0, one-step duration difference contributes 0.5;
+- note/fret, string, and technique categories use per-reference set overlap recall;
+- denominator for event categories is `len(reference)`;
+- extra-candidate onset penalty is `min(0.35, extra_candidates / max(1, len(candidates)) * 0.35)`;
+- `onsetTiming = max(0, (onset_points / reference_count - precision_penalty) * 100)`;
+- output preserves `referenceEventCount`, `candidateEventCount`, `matchedReferenceEventCount`, `extraCandidateEventCount`, `unresolvedReferenceEventCount`, unresolved identities, and used candidate indexes.
+
+However its category names are:
+- `onsetTiming`
+- `durationRhythm`
+- `noteFret`
+- `stringChoice`
+- `technique`
+- `sectionMeasure`
+
+The generic training profile/composite is a separate weighted family (`noteFret`, `timingDuration`, `stringChoice`, `technique`, `chordPhraseConsistency`). The original overnight training run ended at commit `a075c4305ff5bd53cb924e77fba874a21732d652` after 42 attempts with best composite **34.667032%** and still reports `onsetTiming / durationRhythm / noteFret / stringChoice / technique / sectionMeasure`. Thus that run did **not** evolve into or rename itself as `pitch_accuracy / onset_match / note_count_quality`.
+
+Path history up through `d07b596...` shows only the origin commit `90854961...` for this attempt engine. Treat this matcher as a recovered **predecessor contract** and a source of likely event-matching semantics, not as proof of the current formulas.
 
 No decoder, scoring contract, model, workflow dispatch, GPU job, professional scorer, Production state, or frozen product invariant was changed during this provenance investigation.
 
@@ -134,10 +174,10 @@ Continue read-only history/artifact inspection for the layer that reports all of
 - the **725 / 970 / 967 / 3 drops / 0 recovery** candidate family
 
 Best next search order:
-1. historical workflow/report runs after candidate completion at **2026-08-25T04:05:20Z**;
-2. V143 checkpoints/reports that mention professional/reference compare, candidate score, grade, guard, or correction-plan outputs;
-3. historical workflow definitions around `74b0f815...` and subsequent commits for any report artifact or evaluator invocation;
-4. retained artifacts/run logs that contain exact metric labels or raw mismatch counts.
+1. trace **later Gomyway scorer/report evolution after `90854961...`**, especially historical trees/checkpoints around the Aug. 3 training attempts and any later candidate-evaluator/sidecar/report files;
+2. inspect retained Gomyway training/checkpoint trees for sibling files containing `score`, `evaluate`, `candidate`, `sidecar`, `report`, `compare`, or `player` and search their blobs for the target metric labels;
+3. continue historical workflow/report runs after candidate completion at **2026-08-25T04:05:20Z** only where names/evidence suggest a scorer/compare layer;
+4. inspect V143 checkpoints/reports tied to candidate score, grade, guard, or correction-plan outputs.
 
 Once the exact source is found, write down the formulas and raw counts for:
 - matched/missing/extra onsets and timing misses outside tolerance;
