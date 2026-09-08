@@ -89,11 +89,12 @@ Refined map:
 - frozen structure identity: `fnv1a32:2f493225`
 - duration: ~210.67465 s
 - selected meter: 4/4, moderate confidence ~0.5676
-- pickup / first detected downbeat: ~0.65016 s, moderate confidence ~0.5295
-- straight feel confidence: ~0.6517
-- tempo confidence: ~0.8116
+- pickup / first detected downbeat: ~0.65016 s, moderate confidence ~0.5300
+- straight feel confidence: ~0.6519
+- tempo confidence: ~0.8107
 - observed measure tempo preserved: true
 - tempo segments: 113
+- measures: 115
 - observed beats evaluated: 449
 - beat-grid MAE: ~7.14 ms
 - beat-grid RMSE: ~10.63 ms
@@ -113,7 +114,7 @@ Downstream note evidence is not permitted to rewrite this accepted structure.
 
 ## CPU NOTE-EVIDENCE BOUNDARY
 
-New files/commits:
+Important commits:
 - `48a00cf40c22a6ad4b80a94ac248e448cd841937` — frozen structure identity contract.
 - `576887ceaba8be3f33b7c569608946d58a9ce6d6` — structure-conditioned note-evidence adapter.
 - `b348f12b1e8b2f741481839ee9336055b47607bf` — initial six note-evidence boundary tests.
@@ -157,7 +158,7 @@ Current v1 behavior:
 
 Raw evidence is passed through `build_note_evidence.mjs`, which rejects model/GPU/legacy provenance for the current CPU-only canary before adapting it into the deterministic boundary.
 
-## CURRENT TEST BASELINE
+## CURRENT DETERMINISTIC TEST BASELINE
 
 Branch-wide deterministic GitHub Actions proof after hardening note evidence:
 - run: `34219737107`
@@ -172,47 +173,90 @@ Actual TAP result:
 - skipped: **0**
 - todo: **0**
 
-The two tests added beyond the 75/75 note-evidence baseline prove:
-1. an analyzer cannot claim a nearest timing slot that disagrees with the frozen `structureMap`;
-2. explicit duration evidence is preserved exactly while missing duration remains unresolved with no synthetic duration.
+The first real-audio note-evidence canary also reran this complete suite and again passed **77/77**.
 
-## ACTIVE REAL-AUDIO NOTE CANARY
+## FIRST REAL-AUDIO CPU NOTE-EVIDENCE CANARY — COMPLETED
 
 Workflow:
 `.github/workflows/songsterr-fresh-gomyway-midterm-note-evidence-canary.yml`
 
-Run started from commit `5d8146559debd3557c1f8662f4a9f7b0f94f7951`:
+Completed run:
 - run: `34219793694`
 - job: `102039951929`
+- tested commit: `5d8146559debd3557c1f8662f4a9f7b0f94f7951`
+- conclusion: success
+- artifact ID: `10053290067`
+- artifact name: `songsterr-fresh-gomyway-midterm-note-evidence`
+- artifact zip size: 216,061 bytes
+- artifact digest: `sha256:b7056ff48cea49f6458760f1143bad16848b2b08b5b13f7ec960c9f8195b5acc`
 
-The workflow:
-1. checks out only `songsterr-fresh-pipeline-v1`;
-2. downloads and Git-blob-verifies the exact authorized audio;
-3. decodes to mono 22.05 kHz WAV;
-4. installs the same pinned CPU/librosa stack;
-5. rebuilds the structure reference-blind and requires accepted/frozen context;
-6. requires exact frozen signature `fnv1a32:2f493225`;
-7. runs CPU-only guitar-range note evidence;
-8. validates it through `noteEvidenceAdapter.mjs`;
-9. reruns the deterministic suite;
-10. uploads raw/adapted JSON artifacts.
+The run independently rebuilt and reproduced the accepted/frozen structure identity:
+- signature: `fnv1a32:2f493225`
+- canonicalLength: 19653
+- structure accepted: true
+- measures: 115
+- tempo segments: 113
 
-At this checkpoint the note canary is still running. Do **not** claim its musical note result until the completed artifact/log has been inspected.
+### Raw note-evidence result
 
-## CURRENT ENGINEERING BOUNDARY / NEXT DECISION
+- detected onsets: **492**
+- preserved pitch candidates: **1,325**
+- unambiguous onsets under the conservative spectral heuristic: **209**
+- ambiguous onsets: **283**
+- no-candidate onsets: **0**
+- unambiguous rate: **42.48%**
+- unresolved/ambiguous rate: **57.52%**
+- promoted provisional events: **209**
+- mean absolute onset-to-frozen-grid displacement: **~10.96 ms**
+- maximum onset-to-frozen-grid displacement: **~58.05 ms**
+- explicit duration evidence: **0 / 492**
+- unresolved duration evidence: **492 / 492**
 
-The exact authorized fixture has an accepted/frozen timing map and a hardened CPU note-evidence boundary.
+Adapter verification in the real run:
+- referenceBlind: true
+- structureFrozen: true
+- structureIdentityVerified: true
+- nearestStructureSlotsVerified: true
+- syntheticDurationInference: false
+- modelInvoked: false
+- gpuInvoked: false
+- legacyV143ScorerImported: false
 
-Once the first note-evidence canary completes, inspect raw evidence before deciding what to do next. In particular, distinguish:
-- workflow/contract success;
-- evidence coverage;
-- ambiguity rate;
+### INTERPRETATION / ACCEPTANCE DECISION
+
+The canary is a **technical contract pass**, not a musical transcription acceptance.
+
+Positive result:
+- note attacks are being conditioned against the exact frozen timing map successfully;
+- timing displacement is small enough to show the structure-first boundary is functioning as intended;
+- uncertainty is being preserved instead of converted into invented notes or durations.
+
+Important limitation:
+- **57.52% of detected onsets remain pitch-ambiguous**;
+- the analyzer has no instrument source separation, so full-mixture vocal/bass/other harmonic energy can contribute candidates;
+- zero note durations are yet supported;
+- “unambiguous” means only that the current spectral heuristic has a dominant candidate, **not** that the event has been externally proven to be the correct guitar note.
+
+Therefore the current 209 promoted provisional events are **not yet accepted as a finished guitar transcription** and should not be blindly fed into a customer-facing complete tab/PDF as though coverage were sufficient.
+
+No accuracy percentage is defined from this result. No reference tab or archived scorer was consulted.
+
+## CURRENT ENGINEERING BOUNDARY / NEXT STEP
+
+The next clean step is to inspect and evaluate the raw note-candidate evidence itself before increasing coverage or feeding events into the deterministic tab/product path.
+
+Use raw, reference-blind diagnostics such as:
+- candidate count per onset;
+- top/second confidence margins;
+- pitch/harmonic conflict patterns;
+- temporal pitch continuity/repetition;
 - structure displacement;
-- whether full-mixture harmonic CQT is useful enough to justify feeding any promoted events into `deterministicPipeline.mjs`.
+- role-contamination indicators available without a reference tab;
+- unresolved coverage and missing-duration coverage.
 
-Do not turn a green workflow into an accuracy claim. Do not tune thresholds against a reference tab.
+Then define a deterministic, scoreless note-evidence acceptance/evaluation layer with independent failure reasons. Do **not** tune thresholds against a reference transcription and do not hide evidence quality inside a composite score.
 
-A model/GPU/Modal note-inference stage is still outside current authorization and requires separate explicit authorization.
+A model/GPU/source-separation-model stage remains outside current authorization and requires separate explicit authorization.
 
 ## NON-NEGOTIABLES
 
