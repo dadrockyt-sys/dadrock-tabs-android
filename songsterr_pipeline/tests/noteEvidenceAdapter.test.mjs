@@ -66,6 +66,7 @@ test('note evidence verifies the exact frozen structure identity', () => {
   const result = adaptStructureConditionedNoteEvidence(evidence(map), map);
   assert.equal(result.adapterContract.structureIdentityVerified, true);
   assert.equal(result.adapterContract.structureFrozen, true);
+  assert.equal(result.adapterContract.nearestStructureSlotsVerified, true);
   assert.equal(result.structureIdentity.signature, buildStructureIdentity(map).signature);
 });
 
@@ -90,6 +91,9 @@ test('only explicitly unambiguous highest-confidence MIDI is exposed to the dete
   assert.equal(result.promotedEvents[0].midi, 64);
   assert.equal(result.promotedEvents[0].start, 0.51);
   assert.equal(result.promotedEvents[0].provenance.structureIdentity, result.structureIdentity.signature);
+  assert.equal(result.adapterContract.syntheticDurationInference, false);
+  assert.equal('duration' in result.promotedEvents[0], false);
+  assert.equal('end' in result.promotedEvents[0], false);
 });
 
 test('evidence generated against a different structure is rejected before note promotion', () => {
@@ -121,6 +125,60 @@ test('duplicate MIDI candidates inside one onset are rejected rather than double
     }],
   });
   assert.throws(() => adaptStructureConditionedNoteEvidence(raw, map), /duplicate MIDI candidate 64/);
+});
+
+test('analyzer cannot claim a different nearest timing slot than the frozen structure map', () => {
+  const map = structureMap();
+  const raw = evidence(map, {
+    onsets: [{
+      sourceStart: 0.51,
+      nearestStructureSlot: 0.75,
+      onsetConfidence: 0.8,
+      classification: 'unambiguous',
+      selectedMidi: 64,
+      candidates: [{ midi: 64, confidence: 0.85 }],
+    }],
+  });
+  assert.throws(
+    () => adaptStructureConditionedNoteEvidence(raw, map),
+    /nearestStructureSlot does not match frozen structureMap/,
+  );
+});
+
+test('explicit duration evidence is preserved exactly while missing duration remains unresolved', () => {
+  const map = structureMap();
+  const raw = evidence(map, {
+    onsets: [
+      {
+        onsetId: 'resolved',
+        sourceStart: 0.5,
+        nearestStructureSlot: 0.5,
+        sourceEnd: 0.9,
+        durationSeconds: 0.4,
+        durationConfidence: 0.73,
+        onsetConfidence: 0.9,
+        classification: 'unambiguous',
+        selectedMidi: 64,
+        candidates: [{ midi: 64, confidence: 0.9 }],
+      },
+      {
+        onsetId: 'unresolved',
+        sourceStart: 1,
+        nearestStructureSlot: 1,
+        onsetConfidence: 0.9,
+        classification: 'unambiguous',
+        selectedMidi: 67,
+        candidates: [{ midi: 67, confidence: 0.9 }],
+      },
+    ],
+  });
+  const result = adaptStructureConditionedNoteEvidence(raw, map);
+  assert.equal(result.promotedEvents[0].end, 0.9);
+  assert.equal(result.promotedEvents[0].duration, 0.4);
+  assert.equal(result.promotedEvents[0].durationConfidence, 0.73);
+  assert.equal('duration' in result.promotedEvents[1], false);
+  assert.equal(result.metrics.durationResolvedEvidenceCount, 1);
+  assert.equal(result.metrics.unresolvedDurationEvidenceCount, 1);
 });
 
 test('note evidence adaptation is deterministic', () => {
