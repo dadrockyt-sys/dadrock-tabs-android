@@ -52,20 +52,20 @@ The filename containing “gomyway” authorizes the audio fixture only. It does
 
 Namespace: `songsterr_pipeline/`
 
-- `structureMap.mjs` — tempo/meter/feel/pickup/measures/downbeats/beats/subdivisions with confidence/provenance.
+- `structureMap.mjs` — first-class tempo/meter/feel/pickup/measures/downbeats/beats/subdivisions.
 - `structureRhythmNotation.mjs` — map-driven starts/ends, ties, rests, syncopation, stable source identity.
 - `contextualRhythmSpelling.mjs` — readable standard/dotted/triplet notation without altering musical identity.
 - `playableShapeDecoder.mjs` — exact-MIDI legal shape candidates, unique strings, physical constraints, no pitch dropping.
 - `fretboardPathOptimizer.mjs` — phrase-level deterministic path search over legal shapes.
-- `structureFretboardPath.mjs` — applies the path while protecting MIDI/timing/notation/provenance/rests.
+- `structureFretboardPath.mjs` — applies path while protecting MIDI/timing/notation/provenance/rests.
 - `freshEvaluator.mjs` — scoreless final-state diagnostics/failure codes; `compositeScore: null`.
-- `productShellAdapter.mjs` — maps clean state into existing `/ai-tab`; legacy structured rendering only when lossless; upstream evidence blockers fail closed from delivery.
+- `productShellAdapter.mjs` — existing `/ai-tab` payload bridge; legacy structured rendering only when lossless; upstream evidence blockers fail closed from delivery.
 - `deterministicPipeline.mjs` — structure + note events → notation → fretboard path → evaluator → product shell.
 - `audioStructureAdapter.mjs` — validates full-mixture structure evidence and creates frozen `structureMap`.
 - `structureIdentity.mjs` — deterministic frozen-structure identity.
-- `noteEvidenceAdapter.mjs` — verifies exact structure identity/slots, preserves ambiguity, promotes only explicitly unambiguous top MIDI, never fabricates duration, and now preserves analyzer capability declarations/raw diagnostics.
-- `noteEvidenceDiagnostics.mjs` — **descriptive-only** scoreless inventory of ambiguity/harmonic/interval/duration evidence. It does not own readiness or acceptance.
-- `noteEvidenceEvaluator.mjs` — **sole note-evidence acceptance boundary**. It is scoreless and uses independent failure reasons for role relevance, polyphony, unresolved pitch, duration completeness, and contract integrity.
+- `noteEvidenceAdapter.mjs` — exact identity/slot verification, ambiguity preservation, exact MIDI promotion, no synthetic duration.
+- `noteEvidenceDiagnostics.mjs` — descriptive-only scoreless ambiguity/duration inventory.
+- `noteEvidenceEvaluator.mjs` — sole scoreless note-evidence acceptance boundary.
 
 `tests/boundaryGuard.test.mjs` prevents deterministic source modules from importing archived/model-bearing/non-local runtime dependencies, making network calls, or launching processes.
 
@@ -85,176 +85,165 @@ Frozen structure:
 - pickup/first downbeat ~0.65016 s, moderate confidence ~0.5300
 - straight feel confidence ~0.6519
 - tempo confidence ~0.8107
-- observed measure tempo preserved: true
-- 113 tempo segments, 115 measures
+- 113 measure-local tempo segments, 115 measures
 - 449 observed beats evaluated
 - beat-grid MAE ~7.14 ms
 - RMSE ~10.63 ms
 - max ~58.05 ms
 - structure acceptance `true`, failure reasons `[]`
 
-The earlier flat one-BPM map was rejected because alignment was ~83 ms MAE / ~101 ms RMS / ~228 ms max. The measure-local map is the accepted/frozen timing source.
-
-The moderate 4/4/downbeat uncertainty stays attached. No reference is allowed to make it appear more certain.
+The earlier flat one-BPM map was rejected (~83 ms MAE / ~101 ms RMS / ~228 ms max). The measure-local map is frozen. Moderate meter/downbeat uncertainty remains attached; no reference is allowed to make it appear more certain.
 
 ## CPU NOTE-EVIDENCE BOUNDARY
 
-Important recent commits:
-- `48a00cf40c22a6ad4b80a94ac248e448cd841937` — frozen structure identity.
-- `576887ceaba8be3f33b7c569608946d58a9ce6d6` — note-evidence adapter.
-- `bf01bdd339a7159057849843b0205f46312ee914` — verify analyzer timing slots / remove synthetic duration inference.
-- `01e8f86e063f30b89528134381ebf27aa3c677c8` — preserve actual model/GPU/legacy provenance.
-- `5de5a247f8a1b136ad259d2eaedc50565eb4416c` — guarded-range CPU pitch analyzer v2; removes playable-range CQT edge bias.
-- `2fd74862e66898f9d7505da282ee0f43542cdbc9` — initial scoreless note-evidence evaluator.
-- `83202778cc1ba25e5e5b0fd0b5d8929f0d485e73` — analyzer explicitly declares unresolved CPU capabilities.
-- `6936e671f13db38662c822d3b655a9be2eb35cf4` — adapter preserves capabilities and raw analyzer diagnostics.
-- `130dd082bd998f0d6cb0a21992161201f67bde27` / `1185eba63ff3bb616f17df9fc3938ece852a1a72` — diagnostics refactored to descriptive-only inventory + tests.
-- `90336f88cc5d3cc0a91b10da450564a1d277b264` — evaluator becomes sole acceptance owner.
-- `5841697b92c1d218e90647f03fb85d992ee749af` — real deterministic canary now gates through evaluator.
-- `2ad2779e1e6c2c07fb32f6347e3e9124354faade` — workflow assertions use authoritative evaluator.
-- `3d3e74dffbb9dcf9c1697489d3a69fbf1d89f174` — capability/diagnostic preservation test.
-- `7690bb9b69911bb4016f2a12e2545dad8aa7179c` / `9a8150570e68d881a6406804f0c111afcd3997a8` — execution authorization kept outside musical evaluator + test.
-- `c2f7a3d4a7154abbe06174e1e4c58aa815030b64` — conservative selected-pitch spectral release evidence script.
-- `8e6e824c7bc6c79564be5db8e53bce2764b2f020` — workflow adds CPU release-evidence canary.
-
-Boundary rules:
+Current invariant rules:
 - exact frozen `structureIdentity` must match;
-- nearest timing slot is independently recomputed from frozen structure;
+- analyzer timing slots are independently recomputed against frozen structure;
 - ambiguity/no-candidate evidence stays explicit;
-- duplicate candidate MIDI at one onset is rejected;
+- duplicate MIDI candidates at one onset are rejected;
 - missing duration remains unresolved;
 - explicit duration/end is preserved only when supplied by evidence;
-- analyzer capabilities are explicit and survive adaptation;
-- model/GPU provenance is recorded honestly;
-- whether a model/GPU execution is authorized is an execution-policy boundary, not a musical-quality failure reason inside the general evaluator.
+- analyzer capabilities survive adaptation;
+- model/GPU/legacy provenance is recorded honestly;
+- model/GPU authorization is execution policy, not a musical score.
 
-## GUARDED CPU PITCH BASELINE — CURRENT MUSICAL EVIDENCE
+Current analyzer declares:
+- `roleRelevanceResolved: false`
+- `polyphonyResolved: false`
+- `instrumentIsolation: none`
+- confidence is heuristic, not calibrated probability.
 
-Latest completed guarded/fail-closed baseline before release-duration experiment:
-- run `34220474993`
-- job `102042151346`
-- commit `e742a2fb833b49888f73690b369ef4cbefcf780c`
-- artifact `10053569332`
-- digest `sha256:1c52a35e733ba7a9f3945061d82c7377cb1b168c7bb9aa36831b8efee893ec8f`
+## GUARDED CPU PITCH BASELINE
 
-Pitch analyzer v2:
+Latest pitch baseline uses a ±12-semitone CQT analysis guard around the playable range so MIDI 40 is not the transform boundary.
+
+Real fixture facts:
 - onsets: **492**
 - candidates: **1,130**
-- unambiguous: **139**
+- unambiguous pitch selections: **139**
 - ambiguous: **353**
 - no-candidate: **0**
-- unambiguous rate: **28.25%**
-- provisional promoted events: **139**
-- explicit duration evidence at that stage: **0**
-- analysis MIDI range: 28–100
+- pitch-unambiguous rate: **28.25%**
 - playable guitar range: 40–88
-- spectral guard: 12 semitones
+- analysis range: 28–100
 - source separation: none; HPSS only
 - model/GPU/legacy scorer: false
 
-The guard fix removed an actual playable-range boundary artifact and made the analyzer more conservative. It did **not** solve role relevance: 97/139 provisional promoted events remain MIDI 40 even though MIDI 40 is no longer the CQT analysis boundary. That concentration is genuine full-mixture low-frequency evidence and cannot honestly be labeled guitar versus bass with the current no-isolation CPU method.
+Important unresolved quality signal:
+- MIDI 40 appears in **97/139** unambiguous pitch selections (~69.8%).
+- This is not a CQT-edge artifact anymore.
+- It must **not** be interpreted as 97 confirmed guitar E2 notes because role relevance is unresolved in the full mixture.
 
-Raw ambiguity facts from the guarded artifact:
-- candidate-count distribution across 492 onsets: 1→150, 2→194, 3→71, 4→35, 5→13, 6→29
-- multi-candidate onsets: 342
-- octave-related competitor present on 131 multi-candidate onsets (~38.3%)
-- top/second intervals include 12 semitones (97), 7 (37), 9 (31), 11 (24), 3 (22), 8 (22), plus others
-- competing peaks cannot safely be collapsed into “harmonics”; some may be real chord tones
+The 97 MIDI-40 selections are highly repetitive in time:
+- common same-pitch reattack gaps are about 0.46 s and 0.93 s, near one/two beats at the detected tempo;
+- 56/97 have at least one additional playable pitch candidate;
+- common second-candidate interval is +12 semitones (36 cases), with other intervals including 24, 11, 9, 7, etc.
 
-Therefore the current pitch schema still has unresolved **role relevance** and **polyphony**. Threshold relaxation is not an acceptable substitute.
+This supports a **role-unresolved** interpretation. It does not prove those events are bass, and it does not justify blanket MIDI demotion or substitution.
+
+## ROLE-BOUNDARY DIAGNOSTIC — LATEST REAL CANARY
+
+New descriptive-only script:
+`scripts/songsterr-fresh/inspect_role_boundary_evidence.py`
+
+Commits:
+- `df4335ce6dcdbf02916117ba78aea5cb4aa9916f` — diagnostic-only guard-range inspection.
+- `39ddf6e626ef0482a0195c26f8314e2ecba03aa3` — wire inspection into exact-fixture canary.
+
+Latest completed canary:
+- run **`34222891519`**
+- job **`102049950148`**
+- tested commit `39ddf6e626ef0482a0195c26f8314e2ecba03aa3`
+- conclusion **success**
+- artifact **`10054533664`**
+- artifact digest `sha256:8c173c11451aea5d477d2e39de651db5506565f03029ac1d53259eca968ae900`
+
+Role-boundary result for the 97 selected MIDI-40 events:
+- with a lower guard-range local peak above current -18 dB floor: **27**
+- without one: **70**
+- strongest lower guard MIDI among those 27 is concentrated around 35–37 but spans 32–38
+- E2 minus strongest lower-guard peak level:
+  - mean ~9.40 dB
+  - median ~9.12 dB
+  - p10 ~4.49 dB
+  - p90 ~14.30 dB
+  - min ~1.15 dB
+  - max ~14.59 dB
+
+Decision: **do not add a simplistic lower-guard demotion rule.** It explains only 27/97 suspicious boundary selections and would not resolve instrument role for the other 70.
+
+## CPU RELEASE / DURATION EVIDENCE
+
+Dedicated script:
+`scripts/songsterr-fresh/estimate_selected_pitch_releases.py`
+
+Latest dedicated release-stage facts:
+- attempted pitch-unambiguous events: 139
+- resolved: **103**
+- unresolved: **36**
+- resolution rate ~74.1%
+- unresolved reasons:
+  - 33 `NO_CLEAR_RELEASE_BEFORE_SAME_PITCH_REATTACK`
+  - 3 `NO_CLEAR_SUSTAINED_SPECTRAL_RELEASE`
+- same-pitch reattack censor count: 104
+- mean resolved duration ~0.492 s
+- median ~0.302 s
+- max ~3.344 s
+- next onset is never used as invented duration
+- same-pitch reattack is censor-only
+- confidence is heuristic.
+
+Important architecture issue discovered: the pitch analyzer v3 also contains its own selected-pitch release estimator, so duration is currently estimated twice. Final adapted evidence therefore reports 122 duration-resolved events even though the dedicated stage itself resolves 103. This duplication is **not accepted as the final architecture**.
+
+Next deterministic cleanup: make the pitch analyzer pitch-only again and make `estimate_selected_pitch_releases.py` the sole duration authority. Do not merge conflicting duration estimates.
 
 ## SCORELESS NOTE-EVIDENCE ACCEPTANCE
 
 `noteEvidenceDiagnostics.mjs` is descriptive only. `noteEvidenceEvaluator.mjs` is the sole acceptance owner.
 
-Current complete-tab failures are independent, not blended into a percentage:
+Current complete-tab blockers remain independent:
 - `ROLE_RELEVANCE_UNRESOLVED`
 - `POLYPHONY_UNRESOLVED`
 - `PITCH_EVIDENCE_UNRESOLVED`
-- `DURATION_EVIDENCE_INCOMPLETE` when duration evidence remains incomplete
-- plus contract/integrity reasons when applicable
+- `DURATION_EVIDENCE_INCOMPLETE`
+- plus contract/integrity reasons when applicable.
 
 `compositeScoreDefined: false`; `compositeScore: null`.
 
-A future explicitly authorized model/GPU analyzer is not automatically a musical failure; authorization is enforced before execution. The CPU canary itself explicitly rejects unexpected model/GPU/legacy provenance.
-
-## REAL DETERMINISTIC FAIL-CLOSED PROOF
-
-The prior guarded run fed only the 139 provisional promoted MIDI events through the complete deterministic path against frozen structure:
-- source events: 139
-- final events: 139
+Latest real pipeline canary intentionally fails closed:
+- pitch-resolved source events exercised downstream: 139
 - exact MIDI preserved: 139/139
-- fretboard path resolved: true
-- unresolved durations at that stage: 139
-- raw integrity: false
+- fretboard path resolves for that provisional subset
+- upstream evidence accepted: false
+- raw integrity: false while duration/rhythm evidence incomplete
 - `deliveryReady: false`
 - `structuredRenderEligible: false`
 
-Current product-shell integration also supports an upstream note-evidence gate. Even if downstream MIDI/fretboard integrity is clean, failed upstream evidence keeps delivery disabled.
+No provisional full-mixture evidence is customer-deliverable.
 
 ## CURRENT DETERMINISTIC TEST BASELINE
 
-Latest branch-wide deterministic GitHub Actions proof:
-- run `34221271087`
-- job `102044696313`
-- tested commit `9a8150570e68d881a6406804f0c111afcd3997a8`
+Latest branch-wide deterministic proof inside real canary run `34222891519`:
+- tests: **92**
+- pass: **92**
+- fail: **0**
+- cancelled: **0**
+- skipped: **0**
+- todo: **0**
 
-TAP:
-- tests **91**
-- pass **91**
-- fail **0**
-- cancelled **0**
-- skipped **0**
-- todo **0**
+This supersedes the stale 91/91 checkpoint value.
 
-This supersedes the previous 81/81 and 86/86 baselines.
+## CURRENT ENGINEERING DECISION
 
-Coverage now explicitly proves:
-- analyzer capabilities/raw diagnostics survive adaptation;
-- descriptive diagnostics do not own acceptance;
-- evaluator is the sole scoreless note-evidence acceptance boundary;
-- role/polyphony/pitch/duration blockers remain independent;
-- product-shell upstream blockers fail closed from delivery;
-- execution authorization is separate from musical evaluation.
+The next permitted CPU/reference-blind work is:
+1. distinguish **pitch-resolved provisional events** from **role-accepted guitar/bass events** in the clean contract;
+2. while `roleRelevanceResolved:false`, no event may be represented as customer-eligible guitar/bass merely because its pitch is locally unambiguous;
+3. remove the duplicate duration estimator from the pitch analyzer;
+4. keep the dedicated conservative release estimator as sole duration authority;
+5. rerun the exact authorized fixture and the full deterministic suite;
+6. preserve every candidate and exact selected MIDI; do not re-label E2 as bass or substitute another pitch without evidence.
 
-## ACTIVE CPU RELEASE-EVIDENCE EXPERIMENT
-
-Script:
-`scripts/songsterr-fresh/estimate_selected_pitch_releases.py`
-
-Purpose: add duration evidence only to already-unambiguous provisional MIDI events when that selected pitch shows a clear sustained spectral decay.
-
-Rules:
-- CPU-only and reference-blind;
-- cannot create or change MIDI candidates;
-- cannot rewrite frozen structure;
-- **never** uses `next onset = note duration`;
-- requires selected-pitch onset/floor contrast and sustained spectral drop;
-- unresolved release remains unresolved;
-- confidence is explicitly heuristic, not a calibrated probability;
-- role relevance and polyphony stay unresolved regardless of duration coverage.
-
-Current workflow run after adding this stage:
-- run `34221520816`
-- tested commit `8e6e824c7bc6c79564be5db8e53bce2764b2f020`
-- status at this checkpoint: in progress
-
-Do not claim its duration coverage until the run completes and artifact/log are inspected.
-
-## CURRENT ENGINEERING BOUNDARY / NEXT DECISION
-
-The clean CPU path has established:
-1. accepted/frozen real-audio structure;
-2. reference-blind guarded pitch candidates;
-3. exact identity/timing handshakes;
-4. ambiguity preservation;
-5. sole scoreless acceptance gating;
-6. fail-closed product delivery;
-7. an active conservative spectral-release experiment.
-
-Even if the release experiment improves duration coverage, current full-mixture CPU evidence still cannot truthfully resolve guitar-vs-bass role relevance or multi-pitch chord/polyphony decisions. Do not feed the provisional events to customers as a complete tab.
-
-After finishing and recording the CPU release canary, the next material capability jump is likely role/instrument separation + polyphonic note inference. A model/GPU/source-separation-model stage requires **separate explicit user authorization** before dispatch.
+The next large capability jump after this CPU cleanup is true role/instrument separation + polyphonic note inference. A model/GPU/source-separation-model stage still requires **separate explicit user authorization** before dispatch.
 
 ## NON-NEGOTIABLES
 
