@@ -84,6 +84,44 @@ Carry forward architecture ideas only:
 
 Public Songsterr observations are clues only, not claims about Songsterr private implementation.
 
+## EXISTING `/ai-tab` PRODUCT SHELL — PRESERVE IT
+
+The fresh pipeline is replacing the **transcription brain**, not the existing customer/product shell in `app/ai-tab/page.js`.
+
+Preserve the outer customer flow:
+
+**audio upload → AI analysis → analyzer metadata → technique/render events → watermarked preview PDF → unlock/payment reference → full tab PDF → download/email delivery**
+
+The current page already passes these analyzer fields into both preview and finished PDF generation:
+- `generatedTab`;
+- `tuning`;
+- `tempo`;
+- `timeSignature`;
+- `keySignature`;
+- `analysisEngine`;
+- `techniques`;
+- `renderEvents`;
+- `measureGrid`;
+- `confidence`;
+- `difficulty`;
+- PDF artifact metadata where available.
+
+The current product shell already supports:
+- locked watermarked PDF preview;
+- PayPal unlock using an order ID/reference;
+- free-token unlock using a token reference;
+- finished PDF generation;
+- browser download;
+- email delivery.
+
+Treat this unlock reference/token behavior as a product boundary. A later unified purchase-token abstraction can be added if useful, but the fresh transcription core must **not** bypass or discard the preview/paywall/full-PDF flow.
+
+The clean analyzer should ultimately return a stable page-facing result contract, while internal model/structure/note stages remain hidden from the UI.
+
+Core product rule:
+
+**replace the transcription brain; preserve the proven customer journey.**
+
 ## FRESH IMPLEMENTATION PRESENT
 
 Fresh namespace:
@@ -257,13 +295,21 @@ The first real-audio adapter should follow the foundational order:
 
 It must not import the old V143 scorer/gate maze.
 
+### 8. Reconnect the clean analyzer output to the existing `/ai-tab` contract
+
+Validate that the fresh analyzer can populate the existing page-facing metadata fields and product flow without leaking internal pipeline complexity into the UI.
+
+End-to-end acceptance path:
+
+**generate → metadata/techniques/render events → watermarked preview → unlock reference/token → full PDF → email/download**
+
 Keep Production untouched until a deliberate later promotion decision.
 
 ## FRESH-CHAT START INSTRUCTION
 
 When starting a new chat, use:
 
-`Please continue from docs/checkpoints/SONGSTERR_FRESH_PIPELINE_CURRENT_STATE.md on branch songsterr-fresh-pipeline-v1. Keep that file updated often while you work. Timing/measure structure is foundational and must precede trusting note placement. Do not resume the archived V143/Gomyway pipeline unless I explicitly ask.`
+`Please continue from docs/checkpoints/SONGSTERR_FRESH_PIPELINE_CURRENT_STATE.md on branch songsterr-fresh-pipeline-v1. Keep that file updated often while you work. Timing/measure structure is foundational and must precede trusting note placement. Preserve the existing /ai-tab metadata -> technique/render -> watermarked preview -> unlock -> full PDF customer flow. Do not resume the archived V143/Gomyway pipeline unless I explicitly ask.`
 
 ## NON-NEGOTIABLES
 
@@ -272,6 +318,7 @@ When starting a new chat, use:
 - old V143 branch remains archive/evidence only;
 - **timing/measure structure must be established before trusting note placement in real-audio processing**;
 - the structure map must be first-class and consumed by downstream note/rhythm/tab stages;
+- **preserve the existing `/ai-tab` metadata -> technique/render events -> watermarked preview -> unlock reference/token -> full PDF customer journey**;
 - no Production or main changes;
 - no accidental Modal/GPU/model/professional scorer/training activity;
 - no legacy scorer or old failed test becomes a fresh-pipeline gate merely because it exists;
