@@ -64,6 +64,8 @@ test('complete evidence can pass without defining a composite score', () => {
   assert.deepEqual(result.failureReasons, []);
   assert.equal(result.evaluatorContract.compositeScoreDefined, false);
   assert.equal(result.evaluatorContract.compositeScore, null);
+  assert.equal(result.evaluatorContract.ownsAcceptanceDecision, true);
+  assert.equal(result.inventory.contract.ownsAcceptanceDecision, false);
 });
 
 test('unresolved role relevance, polyphony, pitch, and duration remain separate blockers', () => {
@@ -164,6 +166,25 @@ test('dominant MIDI concentration remains visible without automatically rewritin
   assert.equal(result.diagnostics.dominantPromotedMidi.count, 3);
   assert.equal(result.diagnostics.dominantPromotedMidi.share, 0.75);
   assert.equal(promotedEvents.length, 4);
+});
+
+test('model or GPU provenance is an execution authorization concern, not a musical failure reason', () => {
+  const evidence = cleanEvidence({
+    adapterContract: {
+      referenceBlind: true,
+      structureFrozen: true,
+      structureIdentityVerified: true,
+      nearestStructureSlotsVerified: true,
+      syntheticDurationInference: false,
+      legacyV143ScorerImported: false,
+      modelInvoked: true,
+      gpuInvoked: true,
+    },
+  });
+  const result = evaluateNoteEvidence(evidence);
+  assert.equal(result.acceptedForCompleteTab, true);
+  assert.deepEqual(result.failureReasons, []);
+  assert.equal(result.evaluatorContract.executionAuthorizationOutOfScope, true);
 });
 
 test('evaluator is deterministic', () => {
