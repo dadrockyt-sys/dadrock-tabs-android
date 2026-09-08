@@ -185,6 +185,7 @@ export function adaptStructureConditionedNoteEvidence(raw = {}, structureMap) {
   const noCandidateOnsetCount = onsets.filter((onset) => onset.classification === 'no-candidate').length;
   const unambiguousOnsetCount = onsets.filter((onset) => onset.classification === 'unambiguous').length;
   const durationResolvedEvidenceCount = onsets.filter((onset) => onset.durationSeconds !== null).length;
+  const provenance = raw?.provenance && typeof raw.provenance === 'object' ? { ...raw.provenance } : {};
 
   return {
     adapterContract: {
@@ -195,8 +196,9 @@ export function adaptStructureConditionedNoteEvidence(raw = {}, structureMap) {
       structureIdentityVerified: true,
       nearestStructureSlotsVerified: true,
       syntheticDurationInference: false,
-      legacyV143ScorerImported: false,
-      modelInvoked: false,
+      legacyV143ScorerImported: provenance.legacyV143ScorerImported === true,
+      modelInvoked: provenance.modelInvoked === true,
+      gpuInvoked: provenance.gpuInvoked === true,
     },
     role: raw.role,
     structureIdentity: expectedIdentity,
@@ -214,6 +216,6 @@ export function adaptStructureConditionedNoteEvidence(raw = {}, structureMap) {
       durationResolvedEvidenceCount,
       unresolvedDurationEvidenceCount: onsets.length - durationResolvedEvidenceCount,
     },
-    provenance: raw?.provenance && typeof raw.provenance === 'object' ? { ...raw.provenance } : {},
+    provenance,
   };
 }
