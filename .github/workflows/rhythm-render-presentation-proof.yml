@@ -60,7 +60,7 @@ jobs:
           set -euo pipefail
           mkdir -p .presentation-proof/esm
           cp lib/v143RenderContract.js .presentation-proof/esm/v143RenderContract.mjs
-          sed "s#@/lib/v143RenderContract#./v143RenderContract.mjs#" \
+          sed "s#'./v143RenderContract.js'#'./v143RenderContract.mjs'#" \
             lib/createV143RhythmPdf.js > .presentation-proof/esm/createV143RhythmPdf.mjs
           node --check .presentation-proof/esm/v143RenderContract.mjs
           node --check .presentation-proof/esm/createV143RhythmPdf.mjs
