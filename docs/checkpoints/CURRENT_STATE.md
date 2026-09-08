@@ -13,9 +13,11 @@ Keep this checkpoint updated after each meaningful diagnosis/fix.
 
 ## SAFETY / AUTHORIZATION
 
-The prior model-bearing evaluation budget is consumed. The current user request authorizes continued deterministic engineering toward a better `gomyway` score, but does **not** by itself require a new Rhythm/Lead/Bass model run, professional scorer, Modal/GPU inference, Production deployment/promotion, optimizer/training/threshold sweep, or manual workflow run. Prefer source/history inspection, static/unit validation, CPU-only synthetic proofs, and deterministic compare work first.
+The prior model-bearing evaluation budget is consumed. The current user request authorizes continued deterministic engineering toward a better `gomyway` score, but does **not** by itself require a new Rhythm/Lead/Bass model run, professional scorer, Modal/GPU inference, Production deployment/promotion, optimizer/training/threshold sweep, or manual workflow run.
 
-Do **not** touch Production.
+Prefer source/history inspection, static/unit validation, CPU-only synthetic proofs, and deterministic compare work first.
+
+**Do not touch Production.**
 
 ## FROZEN `gomyway` PRODUCT INVARIANTS — PRESERVE UNTIL EVIDENCE REQUIRES A CONTRACT CHANGE
 
@@ -30,7 +32,10 @@ Do **not** touch Production.
 - tuning **D# standard**
 - capo **2**
 
-Exact drops: m40/s14 MIDI 78; m63/s14 MIDI 47; m113/s13 MIDI 43.
+Exact drops:
+- m40/s14 MIDI 78
+- m63/s14 MIDI 47
+- m113/s13 MIDI 43
 
 Current product metrics carried forward:
 - pitch accuracy **100%**
@@ -43,7 +48,7 @@ The deterministic compare guard is the primary evaluator. The historical final c
 
 ## SONGSTERR-INSPIRED PIPELINE REVIEW — ACTIVE
 
-Architecture/history inspected on the current branch:
+Architecture/history already inspected on the current branch:
 
 - `docs/checkpoints/SONGSTERR_ARCHITECTURE_GAP_INVENTORY_20260903.md`
 - `d49f8fcebd3fe5f973562d2c1c403036dcbe8db7` — architecture gap inventory
@@ -58,9 +63,9 @@ The new architecture correctly separates:
 3. **conditioned decoding** — instrument role, tuning, capo, tablature grammar;
 4. **late deterministic shadow/product comparison** — structure model has no product-scoring authority.
 
-### Current high-leverage weaknesses found
+### High-leverage weaknesses already found
 
-Inspection of `lib/aiTabConditionedShadowProjectionV1.mjs` and `lib/aiTabConditioningV1.mjs` shows:
+Inspection of `lib/aiTabConditionedShadowProjectionV1.mjs` and `lib/aiTabConditioningV1.mjs` showed:
 
 - string/fret placement is still essentially **greedy from the previous single note**;
 - simultaneous notes are not optimized as a joint playable chord/shape;
@@ -70,16 +75,87 @@ Inspection of `lib/aiTabConditionedShadowProjectionV1.mjs` and `lib/aiTabConditi
 
 These are credible reasons a pitch-correct result can still look machine-generated. However, changing fingering/rhythm spelling alone may not improve the numeric **90.321% onset** or **69.004% note-count** scores if those metrics are driven by upstream event-set mismatch.
 
-### Immediate diagnostic gate
+## EXACT NEXT STEPS FOR A FRESH CHAT
 
-Before changing the decoder, locate the exact current deterministic evaluator/report that computes onset-match and note-count quality, then classify its errors for `gomyway`.
+Resume directly from this section; do not restart architecture review.
+
+### 1. Locate the exact branch-current deterministic evaluator/report
+
+Find the code and persisted evidence that computes or reports:
+- onset match **90.321%**
+- note-count quality **69.004%**
+- pitch accuracy **100%**
+
+Search by metric names, numeric values, compare/guard/report terminology, and `gomyway` references. Do not rely only on default-branch GitHub code search if it misses branch-specific files; use branch contents/history as needed.
+
+Goal: identify the exact formulas and the compared event sets before changing decoder behavior.
+
+### 2. Break the score loss into concrete mismatch classes and counts
+
+For `gomyway`, determine which penalties come from:
+- missing attacks/events;
+- extra attacks/events;
+- onset timing displacement outside the evaluator tolerance;
+- simultaneous-note grouping/chord clustering;
+- duplicated/split notes;
+- duration/tie/rest normalization;
+- measure-boundary placement;
+- deterministic quantization/rhythm spelling;
+- any note-count denominator/normalization behavior.
+
+Produce a mismatch table/count summary. The key decision is whether the score loss is **upstream event selection/alignment/grouping** or **downstream notation/quantization**.
+
+### 3. Patch the highest-impact deterministic stage only
 
 Decision fork:
-- if note-count/onset penalties are **upstream event density/alignment/grouping** errors, improve selection/grouping/alignment first;
-- if penalties are **downstream quantization/notation normalization** errors, improve onset-cluster decoding and contextual rhythm spelling first;
-- preserve 100% pitch accuracy and the frozen 725/970/967/3/0 contract unless measured evidence demonstrates a necessary contract revision.
 
-No source behavior has been changed yet during this Songsterr review. No workflow, model, Modal/GPU, professional scorer, or Production action has been run.
+- If penalties are upstream event density/alignment/grouping errors, improve deterministic selection/grouping/alignment first.
+- If penalties are downstream timing/notation normalization errors, improve onset-cluster decoding and contextual rhythm spelling first.
+- If numeric score is already limited by the evaluator contract rather than product quality, document that clearly before changing the metric.
+
+Protect **100% pitch accuracy** and preserve **725 / 970 / 967 / exactly 3 drops / 0 recovery** unless measured evidence demonstrates a deliberate contract revision is necessary.
+
+### 4. Preferred Songsterr-inspired deterministic improvements after the score-loss class is known
+
+Highest-value decoder improvements currently identified:
+
+- joint optimization of simultaneous-note string/fret assignments as playable chord shapes;
+- phrase-level fretboard path optimization instead of single-note greedy placement;
+- contextual onset-cluster snapping using measure/beat position rather than independent nearest-grid rounding;
+- rhythm spelling aware of ties, rests, beat boundaries, syncopation, triplet consistency, and phrase continuity;
+- penalties for implausible position jumps/string crossings while preserving exact MIDI pitch;
+- deterministic section/phrase continuity priors from the global structure authority, with no product-scoring authority given to the structure model.
+
+Do **not** implement all of these blindly. Use evaluator evidence to choose the first patch that can move the actual `gomyway` score.
+
+### 5. Add deterministic regression coverage
+
+For every patch, add or strengthen tests that prove:
+- exact pitch preservation;
+- no accidental event-count drift unless explicitly intended;
+- legal tuning/capo fretboard placement;
+- stable simultaneous-note grouping;
+- improved onset/note-count compare behavior for the diagnosed failure class;
+- no regression to the async/runtime safety invariants below.
+
+### 6. Validation allowed now
+
+Safe validation:
+- source inspection;
+- static/unit tests;
+- deterministic compare tests;
+- CPU-only synthetic fixtures;
+- read-only history/artifact inspection.
+
+Do **not** dispatch model-bearing workflows, professional scorer runs, Modal/GPU inference, optimizer/training/threshold sweeps, or Production actions without a new explicit reason/authorization.
+
+### 7. Checkpoint cadence
+
+Update `docs/checkpoints/CURRENT_STATE.md`:
+- after the evaluator/formula is located;
+- after mismatch classes/counts are known;
+- after each meaningful patch;
+- after deterministic validation results.
 
 ## ASYNC / RUNTIME NON-NEGOTIABLES
 
@@ -94,7 +170,7 @@ Real-audio canary remains manual `workflow_dispatch` only.
 
 ## PRESERVED VERIFIED EVIDENCE
 
-Source-only sweep verified with no model/GPU/scorer/Production activity:
+Source-only sweep previously verified with no model/GPU/scorer/Production activity:
 
 - `analyzer/v143_async_job_protocol.py`: `ASYNC_RESULT_TTL_SECONDS = 30 * 60` = 1800s.
 - `app/api/analyze-audio-tab/route.js`: async-result fallback = 1800s.
@@ -110,16 +186,6 @@ Key repair commits:
 - `fd230ee2ad4c19ad4758bbc753f4d110233591ff` — stale async protocol gate aligned
 - `c3c09c2d8e1c93f286d24e3c398922becaf8e8b8` — real-audio canary automatic push trigger removed
 - `ab27ae3b95d6aa5942f2d456c3f29792c96ecc3b` — cleanup preview workflow converted to read-only verifier
-
-## NEXT SAFE WORK — EXACT ORDER
-
-1. Locate the branch-current deterministic compare/evaluator and `gomyway` score evidence for onset-match and note-count quality.
-2. Break the 90.321% / 69.004% penalties into concrete mismatch classes and counts.
-3. Patch the highest-impact deterministic stage while preserving 100% pitch correctness and frozen product invariants where possible.
-4. Add/strengthen deterministic regression tests for the exact failure class.
-5. Re-run only safe deterministic/static/CPU validation available locally or through already-safe CI mechanisms; do not dispatch model-bearing workflows.
-6. Save this checkpoint after the diagnosis and again after each meaningful patch/result.
-7. Only consider new model-bearing evaluation if deterministic work reaches a genuine evidence ceiling and explicit authorization/budget is clear.
 
 ## NON-NEGOTIABLES
 
