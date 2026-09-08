@@ -4,6 +4,7 @@ import { readFile, writeFile } from 'node:fs/promises';
 import { resolve } from 'node:path';
 
 import { runFreshDeterministicPipeline } from '../../songsterr_pipeline/deterministicPipeline.mjs';
+import { buildNoteEventExposure } from '../../songsterr_pipeline/noteEventExposure.mjs';
 import { evaluateNoteEvidence } from '../../songsterr_pipeline/noteEvidenceEvaluator.mjs';
 import { buildStructureIdentity } from '../../songsterr_pipeline/structureIdentity.mjs';
 
@@ -37,7 +38,12 @@ if (noteEvidence?.adapterContract?.modelInvoked !== false
 }
 
 const evidenceEvaluation = evaluateNoteEvidence(noteEvidence);
-const sourceEvents = noteEvidence.promotedEvents.map((event) => {
+const eventExposure = buildNoteEventExposure(noteEvidence, evidenceEvaluation);
+
+// Diagnostic downstream exercise only: pitch-resolved events remain visible so exact
+// MIDI/fretboard/rhythm behavior can be inspected. They are NOT role-accepted or
+// customer-eligible unless the upstream evidence contract says so.
+const sourceEvents = eventExposure.pitchResolvedEvents.map((event) => {
   const source = {
     start: event.start,
     midi: event.midi,
@@ -66,19 +72,30 @@ const pipelineResult = runFreshDeterministicPipeline({
 const output = {
   contract: {
     name: 'songsterr-fresh-real-note-evidence-pipeline-canary',
-    version: 2,
+    version: 3,
     referenceBlind: true,
     structureFrozen: true,
     structureIdentity: identity,
     noteAcceptanceOwnedBy: evidenceEvaluation.evaluatorContract.name,
+    eventExposureOwnedBy: eventExposure.exposureContract.name,
+    diagnosticPipelineUses: 'pitchResolvedEvents',
+    customerEligibilityUses: 'completeTabEligibleEvents',
     modelInvoked: false,
     gpuInvoked: false,
     legacyV143ScorerImported: false,
   },
   evidenceEvaluation,
   evidenceInventory: evidenceEvaluation.inventory,
+  eventExposure: {
+    contract: eventExposure.exposureContract,
+    metrics: eventExposure.metrics,
+    blockers: eventExposure.blockers,
+  },
   pipelineSummary: {
     sourceEventCount: sourceEvents.length,
+    pitchResolvedEventCount: eventExposure.metrics.pitchResolvedEventCount,
+    roleAcceptedEventCount: eventExposure.metrics.roleAcceptedEventCount,
+    completeTabEligibleEventCount: eventExposure.metrics.completeTabEligibleEventCount,
     finalEventCount: pipelineResult.events.length,
     exactMidiPreservedCount: pipelineResult.freshDiagnostics?.events?.exactMidiPreservedCount ?? null,
     unresolvedDurationCount: pipelineResult.freshDiagnostics?.rhythm?.unresolvedDurationCount ?? null,
