@@ -13,10 +13,12 @@ on:
       - 'scripts/songsterr-fresh/build_note_evidence_context.mjs'
       - 'scripts/songsterr-fresh/build_note_evidence.mjs'
       - 'scripts/songsterr-fresh/run_note_evidence_pipeline_canary.mjs'
+      - 'songsterr_pipeline/noteEventExposure.mjs'
       - 'songsterr_pipeline/noteEvidenceAdapter.mjs'
       - 'songsterr_pipeline/noteEvidenceDiagnostics.mjs'
       - 'songsterr_pipeline/noteEvidenceEvaluator.mjs'
       - 'songsterr_pipeline/structureIdentity.mjs'
+      - 'songsterr_pipeline/tests/noteEventExposure.test.mjs'
       - 'songsterr_pipeline/tests/noteEvidenceAdapter.test.mjs'
       - 'songsterr_pipeline/tests/noteEvidenceDiagnostics.test.mjs'
       - 'songsterr_pipeline/tests/noteEvidenceEvaluator.test.mjs'
@@ -102,6 +104,19 @@ jobs:
             --role guitar \
             --audio-source 'public/jimmy-paige-midterm-v1/gomyway-midterm-source.m4a@main#4dd709e3fa177b4daeed71ca97f0199757729d4b' \
             --expected-structure-signature 'fnv1a32:2f493225'
+          python - <<'PY'
+          import json
+          path = '/tmp/songsterr-fresh-note-canary/raw-note-evidence-pitch.json'
+          with open(path, 'r', encoding='utf-8') as handle:
+              data = json.load(handle)
+          if data.get('capabilities', {}).get('durationResolution') != 'none':
+              raise SystemExit('PITCH_ANALYZER_MUST_DECLARE_NO_DURATION_AUTHORITY')
+          if data.get('diagnostics', {}).get('durationEvidence', {}).get('resolvedCount') != 0:
+              raise SystemExit('PITCH_ANALYZER_MUST_RESOLVE_ZERO_DURATIONS')
+          leaking = [o.get('onsetId') for o in data.get('onsets', []) if o.get('durationSeconds') is not None or o.get('sourceEnd') is not None]
+          if leaking:
+              raise SystemExit(f'PITCH_ANALYZER_DURATION_LEAK:{leaking[:5]}')
+          PY
 
       - name: Inspect low-boundary role evidence without reclassification
         shell: bash
@@ -120,6 +135,19 @@ jobs:
             --input /tmp/gomyway-midterm-analysis.wav \
             --evidence /tmp/songsterr-fresh-note-canary/raw-note-evidence-pitch-guarded.json \
             --output /tmp/songsterr-fresh-note-canary/raw-note-evidence.json
+          python - <<'PY'
+          import json
+          path = '/tmp/songsterr-fresh-note-canary/raw-note-evidence.json'
+          with open(path, 'r', encoding='utf-8') as handle:
+              data = json.load(handle)
+          release = data.get('diagnostics', {}).get('releaseEvidence', {})
+          if release.get('contract') != 'songsterr-fresh-cpu-spectral-release-evidence-v2':
+              raise SystemExit('DEDICATED_RELEASE_STAGE_MUST_OWN_DURATION_EVIDENCE')
+          if data.get('provenance', {}).get('durationEvidenceSource') != 'songsterr-fresh-cpu-spectral-release-evidence-v2':
+              raise SystemExit('DURATION_PROVENANCE_MUST_NAME_DEDICATED_RELEASE_STAGE')
+          if release.get('resolvedPromotedOnsetCount', 0) <= 0:
+              raise SystemExit('REAL_CANARY_EXPECTS_SOME_EXPLICIT_RELEASE_EVIDENCE')
+          PY
 
       - name: Validate and adapt note evidence
         run: |
@@ -128,7 +156,7 @@ jobs:
             /tmp/songsterr-fresh-note-canary/raw-note-evidence.json \
             /tmp/songsterr-fresh-note-canary/adapted-note-evidence.json
 
-      - name: Run promoted evidence through deterministic pipeline fail-closed
+      - name: Run pitch-resolved evidence through deterministic pipeline fail-closed
         run: |
           node scripts/songsterr-fresh/run_note_evidence_pipeline_canary.mjs \
             /tmp/songsterr-fresh-note-canary/adapted-structure-map.json \
@@ -152,6 +180,15 @@ jobs:
           }
           if (evaluation.evaluatorContract.compositeScore !== null) {
             throw new Error('NOTE_EVIDENCE_EVALUATOR_MUST_REMAIN_SCORELESS');
+          }
+          if (result.pipelineSummary.pitchResolvedEventCount <= 0) {
+            throw new Error('CANARY_MUST_RETAIN_PITCH_RESOLVED_DIAGNOSTIC_EVENTS');
+          }
+          if (result.pipelineSummary.roleAcceptedEventCount !== 0) {
+            throw new Error('UNRESOLVED_ROLE_MUST_EXPOSE_ZERO_ROLE_ACCEPTED_EVENTS');
+          }
+          if (result.pipelineSummary.completeTabEligibleEventCount !== 0) {
+            throw new Error('FAILED_EVIDENCE_MUST_EXPOSE_ZERO_CUSTOMER_ELIGIBLE_EVENTS');
           }
           if (result.pipelineSummary.upstreamEvidenceReady !== false) {
             throw new Error('PRODUCT_SHELL_MUST_RECEIVE_FAILED_UPSTREAM_EVIDENCE_GATE');
@@ -181,6 +218,7 @@ jobs:
                   'diagnostics': data.get('diagnostics'),
                   'metrics': data.get('metrics'),
                   'adapterContract': data.get('adapterContract'),
+                  'eventExposure': data.get('eventExposure'),
                   'evidenceEvaluation': data.get('evidenceEvaluation'),
                   'pipelineSummary': data.get('pipelineSummary'),
                   'provenance': data.get('provenance'),
