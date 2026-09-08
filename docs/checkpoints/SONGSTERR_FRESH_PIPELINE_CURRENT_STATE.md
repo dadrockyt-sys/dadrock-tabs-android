@@ -68,7 +68,7 @@ Key commits:
 
 ### First-class musical event / notation layer
 
-`son gsterr_pipeline/rhythmNotation.mjs` was added as a separate layer above the deterministic core. (Repository path is `songsterr_pipeline/rhythmNotation.mjs`; ignore the accidental spacing in this explanatory sentence if copied elsewhere.)
+`songsterr_pipeline/rhythmNotation.mjs` was added as a separate layer above the deterministic core.
 
 The module intentionally keeps **one source note = one event identity** while allowing notation to contain multiple tied segments.
 
