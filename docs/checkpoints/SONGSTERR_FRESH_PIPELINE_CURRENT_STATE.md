@@ -47,141 +47,141 @@ Fresh work replaces the transcription brain, not the customer/paywall/PDF journe
 
 Namespace: `songsterr_pipeline/`
 
-Important clean-line commits:
+Core architecture commits:
 - `212be220b96de687f55cce2ca3e7698b1ac9dadb` — isolated deterministic core;
-- `a0fbc5fc54aa1bf91a7cc199f373d5018d158a11` — compatibility musical event/rhythm layer;
 - `e9b56a0fdceed2dafc9715f22b5c93954098877e` — first-class `structureMap` + structure-conditioned note core;
 - `89c6a12d604dd203b65f4e4015d7d1d246f05a9f` — structure-map-driven event/rhythm schema;
 - `b6a3a70369c1d5af269b95428a4a67e0bb2a99d5` — contextual rhythm spelling;
 - `e36d734076001767306f53f7bb56c75440787dbd` — constrained playable-shape decoder;
-- `9f40ed825333e33f0e3f91571d08619d3f05977c` — decoder refactor exposing multiple legal candidate shapes;
-- `467fed67ef35f23a07e45aebfed340a259319b7d` — phrase-level fretboard path optimizer.
+- `9f40ed825333e33f0e3f91571d08619d3f05977c` — multiple legal shape candidate states;
+- `467fed67ef35f23a07e45aebfed340a259319b7d` — phrase-level fretboard path optimizer;
+- `e4e991ad3cdfe5b24e0a198f954acbe77e5ac6e9` — structure-event → optimized fretboard-path integration.
 
-Associated test commits:
+Current associated test commits:
 - `c682355c173f47dbb250175fb4eca718a8c91a20` — original deterministic tests;
 - `9ce440755d1d70813d1043210d8bd8a28a650cd3` — compatibility rhythm tests;
 - `71e553f13aa37a4c30615c094c2679b1e9504475` — structure-map tests;
 - `85b175f60406fb47a81bfebfe36ba99e52ed029f` — structure-driven rhythm tests;
 - `15bc52616bee054acea6a4d58c7cfd918b578c13` — contextual rhythm tests;
 - `c3452d39702df616b52ecd0bac171af2bd099d12` — constrained decoder tests;
-- `d684cd2a42ace038bff85637a2ef9a38b0c37371` — phrase fretboard optimizer tests.
+- `d684cd2a42ace038bff85637a2ef9a38b0c37371` — phrase optimizer tests;
+- `1e0e9514193e76e0b80fd62415c53d801bccb234` — structure-fretboard integration invariance tests.
 
 Recent checkpoint commits:
-- `3bc1c36c4d3fbeefe3a1243415de72b1a4a5a8cd` — first 13/13 proof;
-- `324420a20210a3cd88284b323968366d1e86773c` — 19/19 structure-first milestone;
-- `d78b01c09707f3a11e876a9e500e788a2b6c4721` — 25/25 structure-driven milestone;
+- `3bc1c36c4d3fbeefe3a1243415de72b1a4a5a8cd` — 13/13 proof;
+- `324420a20210a3cd88284b323968366d1e86773c` — 19/19 structure milestone;
+- `d78b01c09707f3a11e876a9e500e788a2b6c4721` — 25/25 structure-rhythm milestone;
 - `19512a5477cea0845629e0a80723566e5ee41364` — repaired interrupted 30/30 contextual checkpoint;
-- `59c1e4977d4f69a6eb83282c29670d972e84fea8` — constrained decoder checkpoint.
+- `59c1e4977d4f69a6eb83282c29670d972e84fea8` — constrained decoder checkpoint;
+- `7a2c029d2c0fe6153a47ee43ad75f240385d5482` — phrase optimizer checkpoint.
 
-### First-class structure path
+## CURRENT CLEAN PIPELINE LAYERS
 
-`structureMap.mjs` provides explicit structure before note placement, including change-boundary validation and half-open `[start, end)` segment semantics.
+### `structureMap.mjs`
 
-`structureRhythmNotation.mjs` uses that same map for onset/end projection, pickup/measure/beat segmentation, tied notation, rests, syncopation, provenance, and displacement diagnostics while preserving one source note = one event identity.
+Structure is explicit before note placement: tempo/meter/feel segments, pickup, measures, downbeats, beats/subdivisions, confidence/provenance, boundary validation, map-driven location/snapping.
 
-`contextualRhythmSpelling.mjs` is downstream readability only: standard/dotted/triplet values, weak-beat dotted merges, strong-beat tie preservation, explicit rest spelling, and phrase feel diagnostics. It must not change MIDI/event identity.
+### `structureRhythmNotation.mjs`
 
-### Constrained playable-shape decoder
+Uses the same structure map for onset/end projection, pickup/measure/beat segmentation, ties, rests, syncopation, provenance, and displacement diagnostics while preserving one source note = one event identity.
 
-`playableShapeDecoder.mjs` now:
-- enumerates exact-MIDI playable positions under tuning/capo;
-- enforces unique-string simultaneous assignment;
-- rejects excessive fretted span, string span, and adjacent-string fret delta;
-- has role-aware lead/rhythm/bass policies and open-string preferences;
-- exposes neighboring hand-position context hooks;
-- exposes **multiple valid candidate shapes** via `enumeratePlayableShapes(...)`;
-- uses deterministic scoring/tie-breaking;
-- returns explicit unresolved reasons instead of dropping pitches;
-- reports raw shape diagnostics and candidate/rejection counts.
+### `contextualRhythmSpelling.mjs`
 
-### Phrase-level fretboard path optimizer
+Readability-only layer: standard/dotted/triplet values, weak-beat dotted merges, strong-beat tie preservation, explicit rest spelling, phrase feel diagnostics. It does not change MIDI/event identity.
 
-`fretboardPathOptimizer.mjs` performs deterministic dynamic-programming search over valid candidate shapes from each onset/chord.
+### `playableShapeDecoder.mjs`
 
-Hard constraints happen before path scoring:
-1. every source MIDI must remain present;
-2. every chosen assignment must reconstruct exact MIDI;
-3. simultaneous notes use unique strings;
-4. physically rejected local shapes never enter the phrase search.
+Enumerates exact-MIDI candidate shapes under tuning/capo, applies physical constraints, role-aware preferences, deterministic scoring, and explicit unresolved reasons. Never drops a pitch to make a shape easier.
 
-Path costs then consider:
-- center-fret movement;
-- string-set changes;
-- a small local-shape quality cost.
+### `fretboardPathOptimizer.mjs`
 
-Current outputs include chosen assignments per onset plus raw diagnostics:
-- candidate count per onset;
-- total/max center-fret movement;
-- string-set change count;
-- open-string usage;
-- total path cost;
-- unresolved onset count.
+Dynamic-programming phrase search over only legal candidate states. Hard playability/pitch constraints precede movement/string-continuity costs. Unresolved onset aborts explicitly with source MIDI groups intact.
 
-If any onset has no legal state, the phrase returns `UNRESOLVED_ONSET_SHAPE` with original MIDI groups intact. It does **not** drop notes to continue.
+### `structureFretboardPath.mjs`
+
+Pure downstream integration layer that maps the optimized phrase path back onto structure-first events.
+
+Protected invariants:
+- `eventId`;
+- `sourceEventIndex`;
+- `clusterId`;
+- MIDI;
+- source/projected starts and ends;
+- measure/beat/fraction/pickup;
+- tempo/time signature/feel;
+- notation/ties;
+- provenance;
+- rests and structure map outside fretboard replacement.
+
+Only fretboard assignment fields are replaced: string, fret, reconstructed MIDI, path metadata.
+
+It refuses inconsistent timing inside a cluster instead of averaging or silently repairing it.
 
 ## VALIDATION STATUS
 
-Proven earlier branch surfaces:
-- original clean surface: **13/13 pass**;
-- structure-first surface: **19/19 pass** after fixing exact-boundary segment semantics;
-- structure-driven event/rhythm surface: **25/25 pass**;
-- contextual rhythm spelling complete namespace run before interruption: **30/30 pass**.
+Earlier proven surfaces:
+- original clean: **13/13 pass**;
+- structure-first: **19/19 pass** after exact-boundary `[start, end)` fix;
+- structure-driven event/rhythm: **25/25 pass**;
+- contextual rhythm namespace run before interruption: **30/30 pass**.
 
-### Constrained decoder isolated proof
+New isolated proofs:
+- constrained decoder: **5/5 pass**;
+- decoder candidate enumeration + phrase optimizer combined: **10/10 pass**;
+- decoder + phrase optimizer + structure integration combined: **15/15 pass**.
 
-Exact new decoder test surface: **5/5 pass**.
+The 15-test combined proof establishes:
+- targeted `[64] → [76] → [64]` phrase movement is reduced versus independent local choices;
+- structure projected starts/ends and notation remain identical during fretboard optimization;
+- rests remain unchanged;
+- source event IDs/MIDI remain unchanged;
+- simultaneous chord mapping preserves exact MIDI and unique strings;
+- unresolved path leaves the event schema semantically untouched and reports failure explicitly;
+- integration is deterministic;
+- inconsistent projected timing within one cluster is rejected.
 
-### Candidate enumeration + phrase path isolated proof — CURRENT NEW PROOF
-
-The refactored decoder plus phrase optimizer were executed together in an isolated local Node runtime against the same playable-position contract used by `index.mjs`.
-
-Result:
-- tests: **10**
-- pass: **10**
-- fail: **0**
-
-Proven behavior includes:
-- multiple legal exact-MIDI candidate states are exposed;
-- phrase search reduces total hand movement versus independent local decoding on a synthetic `[64] → [76] → [64]` phrase;
-- every selected chord state preserves exact MIDI and unique strings;
-- deliberately unresolved onset aborts explicitly with original MIDI groups intact;
-- repeated path selection is deterministic and movement diagnostics are stable;
-- the original five constrained-decoder tests still pass after the candidate-state refactor.
-
-The full branch-wide suite has not been re-executed after the decoder/path additions because this container cannot resolve GitHub directly. Do not claim a new branch-wide 40-test result yet.
+The full branch-wide suite has not been re-executed after the decoder/path/integration additions because this container cannot resolve GitHub directly. Do not claim a new branch-wide 45-test result yet.
 
 No Production/main, model/GPU, professional scorer, training, real-audio canary, or archived V143/Gomyway path was touched.
 
 ## CURRENT ENGINEERING MILESTONE
 
-Wire phrase-selected constrained fingering onto the **structure-first event schema** without allowing fretboard optimization to mutate timing, notation, event IDs, cluster identity, or MIDI.
+Define a **fresh raw evaluator** for the clean structure-first pipeline. It must report diagnostics, not hide them behind a cosmetic composite score.
 
-Required proof:
-- structure-map projected starts/ends unchanged;
-- measure/beat/pickup positions unchanged;
-- notation segments/ties/rests unchanged;
-- event IDs/source indexes/MIDI unchanged;
-- cluster-to-path assignment mapping deterministic;
-- optimized path movement no worse than the pre-existing independent local choices on a targeted fixture;
-- unresolved path remains explicit rather than silently falling back by deleting notes.
+Required evaluator surface:
+- structure-map completeness/confidence;
+- tempo/meter/feel segment counts and measure/downbeat consistency;
+- source vs output event count;
+- exact MIDI preservation;
+- onset/end displacement distribution;
+- simultaneous-cluster preservation;
+- unresolved duration count;
+- notation segment/tie/rest completeness;
+- unresolved rhythm spelling count;
+- playable/unplayable assignment count;
+- unique-string chord violations;
+- fret-span/hand-position diagnostics;
+- phrase total/max movement and string-set changes;
+- explicit failure reasons array.
+
+Any future composite score must be a later optional layer whose formula lives in source control next to these raw metrics.
 
 ## NEXT EXECUTION ORDER
 
-1. Add structure-event → phrase-path integration with invariance tests.
-2. Define a fresh evaluator reporting raw structure, event, pitch, timing, playability, motion, notation, tie/rest, and unresolved-duration diagnostics before any composite score.
-3. Only after the deterministic structure/notation/fretboard system is stable, connect real-audio evidence in this order: **full-mixture structure analysis → structureMap → role-conditioned note evidence → clean event schema → notation → fretboard decoding**.
-4. Map clean analyzer output into the existing `/ai-tab` metadata/render/PDF contract.
-5. Define the no-human-correction product acceptance gate across multiple real songs/roles before changing public copy.
+1. Implement/test fresh raw evaluator.
+2. Define a stable clean analyzer output contract for the existing `/ai-tab` renderer/PDF fields.
+3. Only after deterministic structure/notation/fretboard stability, connect real audio in this order: **full-mixture structure analysis → structureMap → role-conditioned note evidence → clean event schema → notation → fretboard decoding**.
+4. Map analyzer output into the existing preview → unlock → full PDF → email/download flow.
+5. Define the no-human-correction real-song acceptance gate before changing public copy.
 
 ## NON-NEGOTIABLES
 
 - Canonical checkpoint: `docs/checkpoints/SONGSTERR_FRESH_PIPELINE_CURRENT_STATE.md`.
 - Canonical branch: `songsterr-fresh-pipeline-v1`.
-- Archived V143/Gomyway work remains archive/evidence only unless explicitly requested.
+- Archived V143/Gomyway remains archive/evidence only unless explicitly requested.
 - Timing/measure structure precedes trusting note placement.
-- `structureMap` is first-class and consumed downstream.
-- Preserve detected MIDI/event identity; never silently alter notes to improve notation or fingering.
-- Never drop pitches merely to satisfy a shape/path optimizer.
+- Preserve detected MIDI/event identity; never silently alter notes for notation/fingering appearance.
+- Never drop pitches merely to satisfy shape/path optimization.
 - Preserve existing `/ai-tab` preview → unlock → full PDF → email/download customer flow.
 - No Production or main changes.
 - No accidental Modal/GPU/model/professional-scorer/training/real-audio activity.
