@@ -133,8 +133,12 @@ function normalizeOnset(onset, onsetIndex, structureMap) {
   };
 }
 
+function rawCapabilities(raw) {
+  return raw?.capabilities && typeof raw.capabilities === 'object' ? raw.capabilities : {};
+}
+
 function normalizeCapabilities(raw) {
-  const capabilities = raw?.capabilities && typeof raw.capabilities === 'object' ? raw.capabilities : {};
+  const capabilities = rawCapabilities(raw);
   const rawDurationResolution = typeof capabilities.durationResolution === 'string'
     ? capabilities.durationResolution
     : '';
@@ -146,12 +150,20 @@ function normalizeCapabilities(raw) {
     roleRelevanceResolved: capabilities.roleRelevanceResolved === true,
     polyphonyResolved: capabilities.polyphonyResolved === true,
     durationResolution,
-    durationResolutionDetail: rawDurationResolution || 'undeclared',
     instrumentIsolation: typeof capabilities.instrumentIsolation === 'string'
       ? capabilities.instrumentIsolation
       : 'undeclared',
     confidenceCalibration: typeof capabilities.confidenceCalibration === 'string'
       ? capabilities.confidenceCalibration
+      : 'undeclared',
+  };
+}
+
+function capabilityDetails(raw) {
+  const capabilities = rawCapabilities(raw);
+  return {
+    durationResolution: typeof capabilities.durationResolution === 'string'
+      ? capabilities.durationResolution
       : 'undeclared',
   };
 }
@@ -202,6 +214,7 @@ export function adaptStructureConditionedNoteEvidence(raw = {}, structureMap) {
   const durationResolvedEvidenceCount = onsets.filter((onset) => onset.durationSeconds !== null).length;
   const provenance = raw?.provenance && typeof raw.provenance === 'object' ? { ...raw.provenance } : {};
   const capabilities = normalizeCapabilities(raw);
+  const details = capabilityDetails(raw);
   const analyzerDiagnostics = raw?.diagnostics && typeof raw.diagnostics === 'object'
     ? structuredClone(raw.diagnostics)
     : {};
@@ -222,6 +235,7 @@ export function adaptStructureConditionedNoteEvidence(raw = {}, structureMap) {
     role: raw.role,
     structureIdentity: expectedIdentity,
     capabilities,
+    capabilityDetails: details,
     analyzerDiagnostics,
     onsets,
     promotedEvents,
