@@ -1,6 +1,8 @@
 import { buildStructureIdentity } from './structureIdentity.mjs';
+import { snapTimestampToStructureMap } from './structureMap.mjs';
 
 const EPSILON = 1e-9;
+const SLOT_TOLERANCE_SECONDS = 1e-6;
 
 function finite(value, field) {
   const number = Number(value);
@@ -38,15 +40,64 @@ function normalizeCandidate(candidate, onsetIndex, candidateIndex) {
   };
 }
 
+function normalizeDurationEvidence(onset, onsetIndex, sourceStart, structureMap) {
+  const hasEnd = onset?.sourceEnd !== undefined && onset?.sourceEnd !== null;
+  const hasDuration = onset?.durationSeconds !== undefined && onset?.durationSeconds !== null;
+
+  if (!hasEnd && !hasDuration) {
+    return {
+      sourceEnd: null,
+      durationSeconds: null,
+      durationConfidence: null,
+    };
+  }
+
+  let sourceEnd = hasEnd
+    ? finite(onset.sourceEnd, `onsets[${onsetIndex}].sourceEnd`)
+    : null;
+  let durationSeconds = hasDuration
+    ? finite(onset.durationSeconds, `onsets[${onsetIndex}].durationSeconds`)
+    : null;
+
+  if (durationSeconds !== null && durationSeconds <= 0) {
+    throw new Error(`onsets[${onsetIndex}].durationSeconds must be positive.`);
+  }
+  if (sourceEnd !== null && sourceEnd <= sourceStart + EPSILON) {
+    throw new Error(`onsets[${onsetIndex}].sourceEnd must be greater than sourceStart.`);
+  }
+
+  if (sourceEnd === null) sourceEnd = sourceStart + durationSeconds;
+  if (durationSeconds === null) durationSeconds = sourceEnd - sourceStart;
+
+  if (sourceEnd > structureMap.durationSeconds + EPSILON) {
+    throw new Error(`onsets[${onsetIndex}] duration evidence falls outside structureMap.`);
+  }
+  if (hasEnd && hasDuration && Math.abs((sourceStart + durationSeconds) - sourceEnd) > SLOT_TOLERANCE_SECONDS) {
+    throw new Error(`onsets[${onsetIndex}] sourceEnd and durationSeconds disagree.`);
+  }
+
+  const durationConfidence = onset?.durationConfidence === undefined || onset?.durationConfidence === null
+    ? null
+    : boundedConfidence(onset.durationConfidence, `onsets[${onsetIndex}].durationConfidence`);
+
+  return { sourceEnd, durationSeconds, durationConfidence };
+}
+
 function normalizeOnset(onset, onsetIndex, structureMap) {
   const sourceStart = finite(onset?.sourceStart, `onsets[${onsetIndex}].sourceStart`);
   if (sourceStart < -EPSILON || sourceStart > structureMap.durationSeconds + EPSILON) {
     throw new Error(`onsets[${onsetIndex}].sourceStart falls outside structureMap.`);
   }
+
   const nearestStructureSlot = finite(onset?.nearestStructureSlot, `onsets[${onsetIndex}].nearestStructureSlot`);
   if (nearestStructureSlot < -EPSILON || nearestStructureSlot > structureMap.durationSeconds + EPSILON) {
     throw new Error(`onsets[${onsetIndex}].nearestStructureSlot falls outside structureMap.`);
   }
+  const expectedSlot = snapTimestampToStructureMap(sourceStart, structureMap).projectedStart;
+  if (Math.abs(nearestStructureSlot - expectedSlot) > SLOT_TOLERANCE_SECONDS) {
+    throw new Error(`onsets[${onsetIndex}].nearestStructureSlot does not match frozen structureMap.`);
+  }
+
   const candidates = Array.isArray(onset?.candidates)
     ? onset.candidates.map((candidate, candidateIndex) => normalizeCandidate(candidate, onsetIndex, candidateIndex))
     : [];
@@ -72,6 +123,9 @@ function normalizeOnset(onset, onsetIndex, structureMap) {
   if (classification === 'unambiguous' && candidates.length > 0 && onset?.selectedMidi !== top.midi) {
     throw new Error(`onsets[${onsetIndex}].selectedMidi must equal its highest-confidence candidate.`);
   }
+
+  const durationEvidence = normalizeDurationEvidence(onset, onsetIndex, sourceStart, structureMap);
+
   return {
     onsetId: onset?.onsetId ?? `onset-${onsetIndex}`,
     sourceStart,
@@ -81,19 +135,10 @@ function normalizeOnset(onset, onsetIndex, structureMap) {
     classification,
     selectedMidi: classification === 'unambiguous' ? Number(onset.selectedMidi) : null,
     confidenceMargin,
+    ...durationEvidence,
     candidates,
     provenance: onset?.provenance && typeof onset.provenance === 'object' ? { ...onset.provenance } : {},
   };
-}
-
-function inferDuration(onsets, index, structureMap) {
-  const current = onsets[index];
-  const next = onsets[index + 1];
-  if (next && next.sourceStart > current.sourceStart + EPSILON) {
-    return Math.min(next.sourceStart - current.sourceStart, 2);
-  }
-  const remaining = structureMap.durationSeconds - current.sourceStart;
-  return Math.min(Math.max(remaining, 0.05), 0.5);
 }
 
 export function adaptStructureConditionedNoteEvidence(raw = {}, structureMap) {
@@ -115,27 +160,31 @@ export function adaptStructureConditionedNoteEvidence(raw = {}, structureMap) {
     : [];
 
   const promotedEvents = [];
-  onsets.forEach((onset, index) => {
+  onsets.forEach((onset) => {
     if (onset.classification !== 'unambiguous') return;
-    promotedEvents.push({
+    const event = {
       evidenceOnsetId: onset.onsetId,
       midi: onset.selectedMidi,
       start: onset.sourceStart,
-      duration: inferDuration(onsets, index, structureMap),
       evidenceConfidence: onset.candidates[0].confidence,
       onsetConfidence: onset.onsetConfidence,
+      durationConfidence: onset.durationConfidence,
       provenance: {
         referenceBlind: true,
         structureIdentity: expectedIdentity.signature,
         noteEvidenceSource: raw?.provenance?.source ?? null,
       },
-    });
+    };
+    if (onset.sourceEnd !== null) event.end = onset.sourceEnd;
+    if (onset.durationSeconds !== null) event.duration = onset.durationSeconds;
+    promotedEvents.push(event);
   });
 
   const candidateCount = onsets.reduce((sum, onset) => sum + onset.candidates.length, 0);
   const ambiguousOnsetCount = onsets.filter((onset) => onset.classification === 'ambiguous').length;
   const noCandidateOnsetCount = onsets.filter((onset) => onset.classification === 'no-candidate').length;
   const unambiguousOnsetCount = onsets.filter((onset) => onset.classification === 'unambiguous').length;
+  const durationResolvedEvidenceCount = onsets.filter((onset) => onset.durationSeconds !== null).length;
 
   return {
     adapterContract: {
@@ -144,6 +193,8 @@ export function adaptStructureConditionedNoteEvidence(raw = {}, structureMap) {
       referenceBlind: true,
       structureFrozen: true,
       structureIdentityVerified: true,
+      nearestStructureSlotsVerified: true,
+      syntheticDurationInference: false,
       legacyV143ScorerImported: false,
       modelInvoked: false,
     },
@@ -160,6 +211,8 @@ export function adaptStructureConditionedNoteEvidence(raw = {}, structureMap) {
       promotedEventCount: promotedEvents.length,
       unresolvedOnsetCount: ambiguousOnsetCount + noCandidateOnsetCount,
       unresolvedEvidencePreserved: true,
+      durationResolvedEvidenceCount,
+      unresolvedDurationEvidenceCount: onsets.length - durationResolvedEvidenceCount,
     },
     provenance: raw?.provenance && typeof raw.provenance === 'object' ? { ...raw.provenance } : {},
   };
