@@ -10,11 +10,12 @@ import librosa
 import numpy as np
 import soundfile as sf
 
-CONTRACT = "songsterr-fresh-cpu-note-evidence-v1"
+CONTRACT = "songsterr-fresh-cpu-note-evidence-v2"
 MIDI_MIN_GUITAR = 40
 MIDI_MAX_GUITAR = 88
 MIDI_MIN_BASS = 28
 MIDI_MAX_BASS = 67
+SPECTRAL_GUARD_SEMITONES = 12
 HOP_LENGTH = 512
 CANDIDATE_FLOOR_DB = -18.0
 MAX_CANDIDATES = 6
@@ -95,16 +96,6 @@ def robust_onset_confidences(onset_env, onset_frames):
     return [float(np.clip(math.sqrt(max(value, 0.0) / reference), 0.0, 1.0)) for value in sampled]
 
 
-def local_peak_indices(values):
-    peaks = []
-    for index, value in enumerate(values):
-        left = values[index - 1] if index > 0 else -np.inf
-        right = values[index + 1] if index + 1 < len(values) else -np.inf
-        if value >= left and value >= right:
-            peaks.append(index)
-    return peaks
-
-
 def candidate_confidence(relative_db, prominence_db, onset_confidence):
     amplitude_support = float(np.clip((relative_db - CANDIDATE_FLOOR_DB) / abs(CANDIDATE_FLOOR_DB), 0.0, 1.0))
     prominence_support = float(np.clip(prominence_db / 10.0, 0.0, 1.0))
@@ -112,7 +103,14 @@ def candidate_confidence(relative_db, prominence_db, onset_confidence):
     return float(np.clip(value, 0.0, 1.0))
 
 
-def extract_candidates(cqt_db, onset_frame, midi_min, onset_confidence):
+def extract_candidates(
+    cqt_db,
+    onset_frame,
+    analysis_midi_min,
+    playable_midi_min,
+    playable_midi_max,
+    onset_confidence,
+):
     start = max(0, int(onset_frame))
     stop = min(cqt_db.shape[1], start + 5)
     if stop <= start:
@@ -121,33 +119,40 @@ def extract_candidates(cqt_db, onset_frame, midi_min, onset_confidence):
     profile = np.max(cqt_db[:, start:stop], axis=1)
     if not np.any(np.isfinite(profile)):
         return []
+
+    # Normalize to the strongest energy across the *guarded* analysis range.
+    # This intentionally lets strong out-of-role energy suppress weak in-range
+    # candidates instead of manufacturing a playable-range edge maximum.
     profile = profile - float(np.max(profile))
 
-    peaks = local_peak_indices(profile)
     candidates = []
-    for index in peaks:
-        relative_db = float(profile[index])
-        if relative_db < CANDIDATE_FLOOR_DB:
+    for index in range(1, len(profile) - 1):
+        midi = int(analysis_midi_min + index)
+        if midi < playable_midi_min or midi > playable_midi_max:
             continue
-        neighbors = []
-        if index > 0:
-            neighbors.append(float(profile[index - 1]))
-        if index + 1 < len(profile):
-            neighbors.append(float(profile[index + 1]))
-        neighbor_db = max(neighbors) if neighbors else CANDIDATE_FLOOR_DB
-        prominence_db = float(max(0.0, relative_db - neighbor_db))
-        confidence = candidate_confidence(relative_db, prominence_db, onset_confidence)
+
+        value = float(profile[index])
+        left = float(profile[index - 1])
+        right = float(profile[index + 1])
+        if value < left or value < right:
+            continue
+        if value < CANDIDATE_FLOOR_DB:
+            continue
+
+        prominence_db = float(max(0.0, value - max(left, right)))
+        confidence = candidate_confidence(value, prominence_db, onset_confidence)
         candidates.append(
             {
-                "midi": int(midi_min + index),
+                "midi": midi,
                 "confidence": confidence,
-                "spectralDb": relative_db,
+                "spectralDb": value,
                 "prominenceDb": prominence_db,
                 "harmonicSupport": None,
                 "provenance": {
-                    "source": "harmonic-cqt-local-peak",
+                    "source": "guarded-harmonic-cqt-local-peak",
                     "windowFrames": stop - start,
                     "confidenceSemantics": "heuristic-not-calibrated-probability",
+                    "analysisRangeGuarded": True,
                 },
             }
         )
@@ -178,11 +183,25 @@ def summarize(onsets):
     classifications = {"unambiguous": 0, "ambiguous": 0, "no-candidate": 0}
     candidate_count = 0
     displacement = []
+    selected_midis = []
+    top_midis = []
     for onset in onsets:
         classifications[onset["classification"]] += 1
         candidate_count += len(onset["candidates"])
         displacement.append(abs(onset["sourceStart"] - onset["nearestStructureSlot"]))
+        if onset["candidates"]:
+            top_midis.append(int(onset["candidates"][0]["midi"]))
+        if onset.get("selectedMidi") is not None:
+            selected_midis.append(int(onset["selectedMidi"]))
     displacement_np = np.asarray(displacement, dtype=float) if displacement else np.asarray([], dtype=float)
+
+    selected_histogram = {}
+    for midi in selected_midis:
+        selected_histogram[str(midi)] = selected_histogram.get(str(midi), 0) + 1
+    top_histogram = {}
+    for midi in top_midis:
+        top_histogram[str(midi)] = top_histogram.get(str(midi), 0) + 1
+
     return {
         "onsetCount": len(onsets),
         "candidateCount": candidate_count,
@@ -190,6 +209,8 @@ def summarize(onsets):
         "unambiguousRate": classifications["unambiguous"] / len(onsets) if onsets else 0.0,
         "meanAbsStructureDisplacementSeconds": float(np.mean(displacement_np)) if displacement_np.size else 0.0,
         "maxAbsStructureDisplacementSeconds": float(np.max(displacement_np)) if displacement_np.size else 0.0,
+        "selectedMidiHistogram": selected_histogram,
+        "topCandidateMidiHistogram": top_histogram,
     }
 
 
@@ -225,15 +246,17 @@ def main():
     onset_confidences = robust_onset_confidences(onset_env, onset_frames)
 
     harmonic = librosa.effects.harmonic(y, margin=2.0)
-    midi_min = MIDI_MIN_GUITAR if args.role == "guitar" else MIDI_MIN_BASS
-    midi_max = MIDI_MAX_GUITAR if args.role == "guitar" else MIDI_MAX_BASS
-    n_bins = midi_max - midi_min + 1
+    playable_midi_min = MIDI_MIN_GUITAR if args.role == "guitar" else MIDI_MIN_BASS
+    playable_midi_max = MIDI_MAX_GUITAR if args.role == "guitar" else MIDI_MAX_BASS
+    analysis_midi_min = max(0, playable_midi_min - SPECTRAL_GUARD_SEMITONES)
+    analysis_midi_max = min(127, playable_midi_max + SPECTRAL_GUARD_SEMITONES)
+    n_bins = analysis_midi_max - analysis_midi_min + 1
     cqt = np.abs(
         librosa.cqt(
             harmonic,
             sr=sr,
             hop_length=HOP_LENGTH,
-            fmin=librosa.midi_to_hz(midi_min),
+            fmin=librosa.midi_to_hz(analysis_midi_min),
             n_bins=n_bins,
             bins_per_octave=12,
         )
@@ -247,7 +270,14 @@ def main():
         source_start = float(onset_time)
         if source_start < 0 or source_start > structure_duration:
             continue
-        candidates = extract_candidates(cqt_db, onset_frame, midi_min, onset_confidence)
+        candidates = extract_candidates(
+            cqt_db,
+            onset_frame,
+            analysis_midi_min,
+            playable_midi_min,
+            playable_midi_max,
+            onset_confidence,
+        )
         classification, selected_midi = classify(candidates)
         onset = {
             "onsetId": f"cpu-onset-{index}",
@@ -258,9 +288,10 @@ def main():
             "selectedMidi": selected_midi,
             "candidates": candidates,
             "provenance": {
-                "source": "full-mixture-onset-plus-harmonic-cqt",
+                "source": "full-mixture-onset-plus-guarded-harmonic-cqt",
                 "structureConditioned": True,
                 "durationEvidenceProvided": False,
+                "analysisRangeGuarded": True,
             },
         }
         onsets.append(onset)
@@ -277,7 +308,9 @@ def main():
             "audioDurationSeconds": duration,
             "sampleRate": int(sr),
             "hopLength": HOP_LENGTH,
-            "midiRange": [midi_min, midi_max],
+            "playableMidiRange": [playable_midi_min, playable_midi_max],
+            "analysisMidiRange": [analysis_midi_min, analysis_midi_max],
+            "spectralGuardSemitones": SPECTRAL_GUARD_SEMITONES,
             "candidateFloorDb": CANDIDATE_FLOOR_DB,
             "maxCandidatesPerOnset": MAX_CANDIDATES,
             "unambiguousThresholds": {
@@ -300,7 +333,7 @@ def main():
             "gpuInvoked": False,
             "legacyV143ScorerImported": False,
             "roleConditioning": args.role,
-            "note": "Baseline CPU spectral evidence from the full mixture; not instrument-isolated and not an accuracy score.",
+            "note": "Guarded-range baseline CPU spectral evidence from the full mixture; not instrument-isolated and not an accuracy score.",
         },
     }
 
