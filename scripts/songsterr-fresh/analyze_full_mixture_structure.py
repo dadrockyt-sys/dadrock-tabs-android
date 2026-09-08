@@ -185,7 +185,6 @@ def analyze(input_path: Path, audio_source: str) -> dict:
         onset_envelope=onset_envelope,
         hop_length=HOP_LENGTH,
         trim=False,
-        units="frames",
         sparse=True,
     )
     beat_frames = np.asarray(beat_frames, dtype=int).reshape(-1)
