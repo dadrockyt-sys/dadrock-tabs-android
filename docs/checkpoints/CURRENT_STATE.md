@@ -7,19 +7,21 @@ Compact fresh-chat source of truth. Full prior detail remains in Git history.
 
 ## CURRENT USER GOAL
 
-Review the new Songsterr-inspired pipeline and improve the `gomyway` score toward near-perfect quality. Work should be evidence-driven: improve the deterministic score and the musical/notation quality together, not merely cosmetic rendering.
+Improve the `gomyway` deterministic score toward near-perfect quality while preserving musical/notation quality and the frozen real-candidate invariants. Work remains evidence-driven: recover the exact comparator/formulas and raw mismatch counts first, classify the score loss, then patch only the highest-impact deterministic stage.
 
-Keep this checkpoint updated after each meaningful diagnosis/fix.
+Keep this checkpoint updated after each meaningful provenance, diagnosis, fix, or regression milestone.
 
 ## SAFETY / AUTHORIZATION
 
-The prior model-bearing evaluation budget is consumed. The current user request authorizes continued deterministic engineering toward a better `gomyway` score, but does **not** by itself require a new Rhythm/Lead/Bass model run, professional scorer, Modal/GPU inference, Production deployment/promotion, optimizer/training/threshold sweep, or manual workflow run.
-
-Prefer source/history inspection, static/unit validation, CPU-only synthetic proofs, and deterministic compare work first.
+The prior model-bearing evaluation budget is consumed. Current work is limited to source/history inspection, read-only GitHub Actions/artifact inspection, static/unit validation, CPU-only synthetic proofs, and deterministic compare work unless the user explicitly authorizes more.
 
 **Do not touch Production.**
 
-## FROZEN `gomyway` PRODUCT INVARIANTS — PRESERVE UNTIL EVIDENCE REQUIRES A CONTRACT CHANGE
+Do not dispatch a model-bearing workflow, professional scorer, Modal/GPU inference, optimizer/training/threshold sweep, manual real-audio canary, deployment, or promotion merely to continue this investigation.
+
+## FROZEN `gomyway` PRODUCT INVARIANTS
+
+Preserve until measured evidence explicitly requires a deliberate contract change:
 
 - **725 retained attacks**
 - **970 selected pitches**
@@ -44,211 +46,154 @@ Current product metrics carried forward:
 - tablature valid
 - technique valid
 
-The deterministic compare guard is the primary evaluator. The historical final candidate input that encoded 970 selected pitches -> 3 drops -> 967 rendered notes / 0 recovery was a workflow artifact and is not a currently committed file; do not pretend it can be reconstructed from source alone.
+These percentages are protected context, not reconstructed formulas. Do **not** infer denominators or mismatch counts from the rounded values.
 
-## RESUME NOTE — 2026-09-07
+## RESUME / COMPARATOR EXCLUSIONS
 
-- Resumed directly on `v143-contextual-prune-lobo`. The actual pre-resume branch commit was `86c1bc7031c385830394ca1626713c0a15181d13` (`Add contextual lobo rules and snapping guard`). The previously recorded `5334ee0ad66c13202c28f269b1e79eb16d8fa923` is that commit's **tree SHA**, not its commit SHA.
-- Re-read this checkpoint before making any behavior changes.
-- Current task is the exact evaluator/report lookup and formula scrub described below; no score, product invariant, Production, model/GPU, or workflow state has been changed in this resumed session yet.
-- Branch-current `validation/rhythm_holdout/score_rhythm_holdout.py` has been identified as an F1/gate-style holdout scorer with a ±0.50-step timing tolerance across pitch/timing/string-fret/chord/voicing/coverage/PDF checks. It does **not** define the named `note_count_quality` metric.
-- Historical Gomyway grading/report evidence explicitly names `pitch_accuracy`, `onset_match`, `note_count_quality`, and `deterministic_score`, with underlying onset, onset+string, and pitch+onset match counts. Therefore the carried-forward **90.321% onset** / **69.004% note-count** values belong to a separate Gomyway compare/report layer, not the branch-current rhythm-holdout F1 scorer.
-- Historical targeted correction-plan logic (commit `e35b481a3c6103846d10d486c325f1d8ac9da470`) compares events by exact `quantizedStep`, counts unresolved reference events and extras, and separately evaluates fret, duration, and techniques. This proves the older deterministic pipeline explicitly separated event-density/timing mismatch from notation-detail mismatch, but it is not yet the exact wrapper for the carried-forward percentages.
-- Branch-current `analyzer/analyze_and_grade_gomyway_gpu_separator_stem_v1.py` was inspected and ruled out as the current product comparator: it is an older **949-event** GPU separator benchmark grader, uses professional-reference pitch tokens for downstream grading, and protects the 949-event candidate hash. It therefore cannot explain the current protected **967-note / 725-onset** product metrics.
-- Exact Gomyway comparator formulas and mismatch counts are still being recovered from branch history/artifacts. Do **not** infer them from the percentages.
-- No deterministic decoder patch has been made in this resumed session.
+- Actual pre-resume behavior commit: `86c1bc7031c385830394ca1626713c0a15181d13` (`Add contextual lobo rules and snapping guard`). The old recorded `5334ee0...` is its tree SHA, not commit SHA.
+- `validation/rhythm_holdout/score_rhythm_holdout.py` is a different F1/gate holdout scorer with ±0.50-step timing tolerance. It does not define `note_count_quality`.
+- `analyzer/analyze_and_grade_gomyway_gpu_separator_stem_v1.py` is an older **949-event** professional-reference GPU separator grader. It is not the current 967-note comparator.
+- Historical correction-plan commit `e35b481a3c6103846d10d486c325f1d8ac9da470` separates exact-`quantizedStep` unresolved refs/extras from fret/duration/technique mismatches, but is not yet proven to be the wrapper behind the carried percentages.
+- Historical autonomous rhythm-search commit `86566f75bbe5bf3f1ec4da75bac3a1f2b46702d5` uses a different six-category composite score and is not the target comparator.
+- Historical scoring-core blob `ee62a86adc5f60119d00b5b57a25ee8f0b06f4fe` is an upstream fixed-count event-selector/reranker using TP/FP/FN precision/recall/F1. The recovered 17–113 closure proves exact selected-event replay semantics; this blob contains neither `note_count_quality` nor `deterministic_score`, so it is not the target product comparator.
+- Persisted schema evidence at `dc2c2ad843365a5c0d7efaecaebd5226722f594d` independently confirms the relevant **967 total / 725 inherited base** baseline. Later V5 **1209-event** rescue work is a different candidate family and must not be mixed into this trace.
+- Repaired-timing candidate product blob `20e7a583fcb96249636cc63b01cf9ae0044f2c62` contains no `pitch_accuracy`, `onset_match`, `note_count_quality`, or `deterministic_score` fields. The named percentages come from a separate post-product report/compare layer.
 
-## CONTINUATION PROVENANCE TRACE — 2026-09-07
+## PROVENANCE TRACE — METRIC IMPORT BOUNDARY
 
-- Reconfirmed the active target is the exact **967-note** Gomyway compare/report layer behind **100% pitch / 90.321% onset / 69.004% note-count**, not a new architecture pass.
-- Inspected the older autonomous rhythm-search evidence at commit `86566f75bbe5bf3f1ec4da75bac3a1f2b46702d5`; its score is a separate six-category composite (tuning/consensus/reference/decoder/stability/parity), so it is **not** the target comparator.
-- Repository code-search evidence remembers historical `player/evaluate_candidate.js`, `player/scripts/candidate-score.js`, and `player/scripts/gomyway-17-113-sidecar-state.json`, including a legacy sidecar row with score `0.8306460590522214`, pitch accuracy `0.8182769835628637`, onset match `0.8658777120315582`, and note-count quality `0.8753117206982544`.
-- The current branch, current `main`, and the surviving `v143-research-checkpoint-fetch` branch do **not** expose `player/evaluate_candidate.js`; the old short SHA `9336275` is also no longer directly resolvable through the current GitHub commit endpoint. Treat code-search snippets as provenance clues only, not as sufficient proof of the formula.
-- Immutable historical scoring-core blob `ee62a86adc5f60119d00b5b57a25ee8f0b06f4fe` was recovered from the 17–113 provenance closure. It is an upstream fixed-count reranker/event-selector using set TP/FP/FN precision/recall/F1 logic and contains neither `note_count_quality` nor `deterministic_score`; it is therefore **not** the target 967-note product comparator.
-- Persisted V143 schema evidence at commit `dc2c2ad843365a5c0d7efaecaebd5226722f594d` independently confirms the relevant baseline as **967 total events / 725 inherited base events**. Later V5 1209-event rescue work is a different candidate family and must not be mixed into this comparator trace.
-- The repaired-timing candidate product remains addressable as immutable blob `20e7a583fcb96249636cc63b01cf9ae0044f2c62`, but the candidate payload itself contains no `pitch_accuracy`, `onset_match`, `note_count_quality`, or `deterministic_score` fields. The named percentages therefore come from a separate post-product report/compare layer.
-- Checkpoint history now proves the exact **90.321% onset / 69.004% note-count** percentages first enter `docs/checkpoints/CURRENT_STATE.md` in commit `9b695365ae449fd70ec03fbb2e559ab424c54e3f` as **“Current product metrics carried forward”**. Its immediate parent `57a8ad3c8af87d110f4a3144450bf10d6b1fa2de` already freezes **725 / 970 / 967 / 3 drops / 0 recovery** but contains **no score percentages**. Commit `9b695365...` changes only the checkpoint, not evaluator/report code. Therefore the exact formulas were imported from evidence external to that checkpoint commit and must still be recovered from neighboring workflow/report history; do **not** derive formulas from the percentages.
-- GitHub Actions provenance now pins the frozen candidate to one-shot run **`32805316807`**. Its logs explicitly report **984 input attacks -> 725 retained attacks**, **7535 original pitch hypotheses -> 970 retained/selected pitches**, **967 rendered pitches**, exactly **3 voicing drops**, **0 fail-safe attacks**, and `newInferenceUsed=false`. The persisted candidate commit is `c1451df43cc1162ed2b38aa3f3300b7af4d9b527`.
-- The same run's deterministic replay validators report exact-binding/voicing-policy facts only (`precision-v2-replay-artifact-validation.json` and `precision-v2-replay-policy-compare.json`); they do **not** emit `pitch_accuracy`, `onset_match`, `note_count_quality`, or `deterministic_score`. The candidate workflow also contains an anti-leakage gate forbidding professional scorer/source tokens in the candidate-product path, so it cannot be the missing target scoring layer.
-- The preserved-PDF run **`32821330353`** materializes that immutable `c1451df4...` candidate CPU-only and renders **967 events / 725 unique onsets**. Its log/report likewise contains no target score metrics. Therefore the target **100 / 90.321 / 69.004** compare/report layer is definitively **downstream of candidate generation and separate from the preserved PDF renderer**.
-- No GitHub Actions runs are attached directly to boundary commits `57a8ad3c...`, `9b695365...`, or persisted candidate commit `c1451df4...`; the carried metrics were not produced by those commits themselves.
-- No production/decoder/model/GPU/workflow change was made while establishing these boundaries. Continue by tracing read-only workflow/report history downstream of `c1451df4...` and before the `9b695365...` checkpoint transition before touching decoder behavior.
+Checkpoint history gives a hard boundary:
 
-## FRESH CHAT HANDOFF — START HERE
+- `57a8ad3c8af87d110f4a3144450bf10d6b1fa2de` at **2026-09-08T02:05:23Z** already freezes **725 / 970 / 967 / 3 drops / 0 recovery** but contains **no** 100 / 90.321 / 69.004 score percentages.
+- Its direct child `9b695365ae449fd70ec03fbb2e559ab424c54e3f` at **2026-09-08T02:23:10Z** changes only `docs/checkpoints/CURRENT_STATE.md` and introduces the values under the literal label **“Current product metrics carried forward.”**
+- The interval is **17m47s** and there were **zero GitHub Actions runs on the target branch and zero Actions runs anywhere in the repository during that exact interval**.
 
-Do **not** restart the Songsterr architecture review. The next chat should continue the evaluator provenance search from the exact point below.
+Conclusion: `9b695365...` imported prior score evidence; it did not generate or define the formulas. Do not reverse-engineer the formulas from the checkpoint values. The absence of runs in the import interval does **not** prove the evidence was manual/external; an earlier workflow/report may still be the source.
 
-### Immediate task A — recover the exact 967-note Gomyway comparator
+Current default-branch code search has no exact `onset_match` or `note-count` source matches. Historical code-search clues remember `player/evaluate_candidate.js`, `player/scripts/candidate-score.js`, and `player/scripts/gomyway-17-113-sidecar-state.json`, including a legacy row with score `0.8306460590522214`, pitch `0.8182769835628637`, onset `0.8658777120315582`, note-count `0.8753117206982544`. However:
 
-Search branch files, commit history, checkpoints, reports, and persisted workflow evidence for the layer that reports all of these together:
+- the current branch, `main`, and surviving `v143-research-checkpoint-fetch` do not expose those evaluator paths;
+- commit-history-by-path for those deleted `player/` files returns no reachable history;
+- old short SHA `9336275` is not currently resolvable.
+
+Treat those snippets only as provenance clues, not formula proof.
+
+## FROZEN CANDIDATE RUN / ARTIFACT — AUTHORITATIVE DETAILS
+
+Frozen candidate GitHub Actions run: **`32805316807`**.
+
+Authoritative run/job metadata now reconciled:
+- workflow name: **`V143 Repaired Timing Precision Candidate Product`**
+- workflow path: `.github/workflows/v143-repaired-timing-precision-candidate-product.yml`
+- head SHA: `74b0f815ff3f66f325220975c410621503de440f`
+- head commit: `chore: dispatch authorized precision retry`
+- event: `workflow_dispatch`
+- started: **2026-08-25T03:28:39Z**
+- completed: **2026-08-25T04:05:20Z**
+- job: `candidate`
+
+The head commit changes only `debug/v143-contextual-prune/paid-retry-dispatch-authorized.once`, adding `relay-condition-fixed=true`; it does not alter scoring/decoder code.
+
+Run evidence reports:
+- **984 input attacks -> 725 retained attacks**
+- **7535 original pitch hypotheses -> 970 retained/selected pitches**
+- **967 rendered pitches**
+- exactly **3 voicing drops**
+- **0 fail-safe attacks**
+- `newInferenceUsed=false`
+
+Persisted candidate commit: `c1451df43cc1162ed2b38aa3f3300b7af4d9b527`.
+
+The run artifact is still available and was inspected read-only:
+- artifact ID `9548666053`
+- `v143-precision-v2-one-shot-32805316807`
+- four files only:
+  1. `precision-v2-one-shot-artifact-validation.json`
+  2. `precision-v2-one-shot-policy-compare.json`
+  3. `precision-v2-one-shot-candidate-plan.json`
+  4. `precision-v2-one-shot-candidate-product.json`
+- none contains `90.321`, `69.004`, `pitch_accuracy`, `onset_match`, `note_count_quality`, or `deterministic_score`.
+
+Therefore the frozen candidate artifact is **not** the missing score report.
+
+The preserved-PDF run **`32821330353`** materializes the immutable candidate CPU-only and renders **967 events / 725 unique onsets**. Its preserved evidence likewise does not provide the target metric trio. The target comparator is downstream/separate from candidate generation and PDF rendering.
+
+## OTHER AUG. 25 HISTORY CHECKED
+
+- Commits `a8527bda2e33919495dd8cae0908aa9bf1fc34aa` (`Checkpoint exact downstream source discovery`) and `d6cecb794b93a3bbb6883948789f9dbcdbf3ecd0` (`Checkpoint nested downstream evidence`) were inspected. They document technique/sustain/fingering replay evidence, not the 100 / 90.321 / 69.004 comparator. Do not mix their `score >= 0.99` professional-scorer context into this product-metric trace.
+- Immediate post-candidate history around 04:05–06:00Z includes harmonic-shadow and bounded research-fetch work; no target formula has yet been recovered from that window.
+
+No decoder, scoring contract, model, workflow dispatch, GPU job, professional scorer, Production state, or frozen product invariant was changed during this provenance investigation.
+
+## NEXT TASK — EXACT COMPARATOR FIRST
+
+Continue read-only history/artifact inspection for the layer that reports all of these together:
 - `pitch_accuracy = 100%`
 - `onset_match = 90.321%`
 - `note_count_quality = 69.004%`
 - `deterministic_score`
-- current candidate facts **725 attacks / 970 selected pitches / 967 rendered notes / 3 drops / 0 recovery**
+- the **725 / 970 / 967 / 3 drops / 0 recovery** candidate family
 
-High-priority branch files to inspect first because they are already present and closely tied to the V143 contextual-prune campaign:
-- `analyzer/V143_CONTEXTUAL_PRUNE_RECOVERY_CHECKPOINT.md`
-- `analyzer/V143_CONTEXTUAL_PRUNE_17_32_EVIDENCE_GAP_CHECKPOINT.md`
-- `analyzer/V143_CONTEXTUAL_PRUNE_17_113_RESEARCH_CLOSURE_CHECKPOINT.md`
-- `analyzer/WORKFLOW_RECOVERY_CHECKPOINT.md`
-- any current or historical `gomyway` file with `compare`, `guard`, `grade`, `report`, `deterministic`, `candidate`, `reference`, or `correction` in its name or contents
+Best next search order:
+1. historical workflow/report runs after candidate completion at **2026-08-25T04:05:20Z**;
+2. V143 checkpoints/reports that mention professional/reference compare, candidate score, grade, guard, or correction-plan outputs;
+3. historical workflow definitions around `74b0f815...` and subsequent commits for any report artifact or evaluator invocation;
+4. retained artifacts/run logs that contain exact metric labels or raw mismatch counts.
 
-Also search commit history by the exact metric names and exact numeric values, because default-branch code search can miss branch-specific or deleted historical files.
+Once the exact source is found, write down the formulas and raw counts for:
+- matched/missing/extra onsets and timing misses outside tolerance;
+- matched/missing/extra notes/pitches;
+- simultaneous/chord grouping mismatches;
+- duplicate/split events;
+- duration/tie/rest-only differences;
+- measure-boundary and quantization/rhythm-spelling-only differences.
 
-Do **not** treat these as the target comparator:
-- `validation/rhythm_holdout/score_rhythm_holdout.py` — different F1/gate holdout evaluator
-- `analyzer/analyze_and_grade_gomyway_gpu_separator_stem_v1.py` — older 949-event professional-reference GPU separator grader
+Then classify the score loss as exactly one of:
+1. **upstream event-set problem**;
+2. **downstream notation/timing-normalization problem**;
+3. **evaluator-contract limitation**.
 
-The first checkpoint in the new chat should be made as soon as the exact formula source or a definitive provenance boundary is established.
+Only after that classification should one smallest deterministic patch be made.
 
-### Immediate task B — write down formulas and raw counts before touching decoder behavior
+## SONGSTERR-INSPIRED ARCHITECTURE — DO NOT RESTART REVIEW
 
-Once the comparator/report is found, record the exact definitions and denominators for:
-- pitch accuracy
-- onset match
-- note-count quality
-- deterministic score
-
-Then extract the underlying raw counts, not just percentages. Build a compact mismatch table covering:
-- matched attacks/onsets
-- missing attacks/onsets
-- extra attacks/onsets
-- timing misses outside tolerance
-- matched notes/pitches
-- missing notes/pitches
-- extra notes/pitches
-- simultaneous-note grouping/chord-cluster mismatches
-- duplicated or split events
-- duration/tie/rest-only differences
-- measure-boundary differences
-- any quantization/rhythm-spelling-only differences
-
-Do **not** reverse-engineer counts from `90.321` or `69.004` unless the actual formula is independently found and verified.
-
-### Immediate task C — decide whether the score loss is upstream or downstream
-
-Make one evidence-backed classification:
-
-1. **Upstream event-set problem** — wrong density, grouping, selection, alignment, duplicates/splits, missing/excess attacks.
-   - First patch should target deterministic event selection/grouping/alignment.
-
-2. **Downstream notation/timing-normalization problem** — event set is right but onset snapping, beat placement, ties/rests, or rhythm spelling causes compare loss.
-   - First patch should target contextual onset-cluster decoding/rhythm spelling.
-
-3. **Evaluator-contract limitation** — product is musically right but the metric penalizes representation choices that should not define quality.
-   - Document the contract issue before changing either metric or decoder.
-
-Do not implement fretboard/path improvements merely because they are musically desirable if they cannot move the diagnosed Gomyway metric.
-
-### Immediate task D — patch exactly one highest-impact deterministic stage
-
-Only after A–C are complete, make the smallest deterministic patch that directly targets the largest proven mismatch class.
-
-Protect these invariants unless measured evidence explicitly justifies a deliberate revision:
-- **100% pitch accuracy**
-- **725 retained attacks**
-- **970 selected pitches**
-- **967 rendered notes**
-- exactly **3 legal-voicing drops**
-- **0 recovery**
-- all **113 measures populated**
-- D# standard + capo 2
-
-Preferred Songsterr-inspired changes, in priority order only if supported by the mismatch evidence:
-- contextual onset-cluster snapping using measure/beat position rather than independent nearest-grid rounding
-- simultaneous-note grouping that preserves one attack for one musical chord/shape
-- rhythm spelling aware of beat boundaries, ties, rests, syncopation, triplet consistency, and phrase continuity
-- joint simultaneous-note string/fret optimization as playable shapes
-- phrase-level fretboard path optimization instead of single-note greedy placement
-
-### Immediate task E — deterministic regression proof
-
-For the chosen patch, add or strengthen tests proving:
-- exact MIDI pitch preservation
-- no unintended event-count drift
-- legal tuning/capo fretboard placement
-- stable simultaneous-note grouping
-- improvement in the exact diagnosed onset/note-count compare class
-- no regression to async/runtime invariants
-
-Allowed validation remains source inspection, unit/static tests, deterministic compare tests, CPU-only synthetic fixtures, and read-only historical/artifact inspection.
-
-Do **not** dispatch model-bearing workflows, a professional scorer, Modal/GPU inference, optimizer/training/threshold sweeps, a manual real-audio canary, or Production actions merely to continue this investigation.
-
-### Fresh-chat checkpoint cadence
-
-Update `docs/checkpoints/CURRENT_STATE.md` immediately after each of these milestones:
-1. exact comparator/formulas located or provenance boundary proven;
-2. raw mismatch counts classified;
-3. first deterministic patch committed;
-4. deterministic regression results known.
-
-## SONGSTERR-INSPIRED PIPELINE REVIEW — ACTIVE
-
-Architecture/history already inspected on the current branch:
-
+Already inspected:
 - `docs/checkpoints/SONGSTERR_ARCHITECTURE_GAP_INVENTORY_20260903.md`
-- `d49f8fcebd3fe5f973562d2c1c403036dcbe8db7` — architecture gap inventory
-- `d597e7bbf85a206b915e58ee2a62b60cfd0ed236` — dual-context implementation
-- `a36235371441e2e1209335dd4017093a2aa0da7a` — role/tuning/capo conditioning
-- `854b6eb572efec6dc145611395462cb41b0cc965` — conditioned shadow projection
-- `ed776202b60ee410beb455db16ee820e260ff17b` — later hardening phase
+- `d49f8fcebd3fe5f973562d2c1c403036dcbe8db7`
+- `d597e7bbf85a206b915e58ee2a62b60cfd0ed236`
+- `a36235371441e2e1209335dd4017093a2aa0da7a`
+- `854b6eb572efec6dc145611395462cb41b0cc965`
+- `ed776202b60ee410beb455db16ee820e260ff17b`
 
-The new architecture correctly separates:
-1. **global song structure authority** — measure grid, section/harmony/chord trajectory;
-2. **local note-carrier evidence** — pitches/onsets;
-3. **conditioned decoding** — instrument role, tuning, capo, tablature grammar;
-4. **late deterministic shadow/product comparison** — structure model has no product-scoring authority.
+Known deterministic weaknesses:
+- greedy single-note string/fret placement;
+- no joint simultaneous-note chord-shape optimization;
+- no phrase-level fretboard path optimization;
+- independent nearest-grid straight/triplet timing rounding;
+- no measure-aware rhythm spelling, ties/rests/syncopation/phrase consistency.
 
-### High-leverage weaknesses already found
-
-Inspection of `lib/aiTabConditionedShadowProjectionV1.mjs` and `lib/aiTabConditioningV1.mjs` showed:
-
-- string/fret placement is still essentially **greedy from the previous single note**;
-- simultaneous notes are not optimized as a joint playable chord/shape;
-- there is no phrase-level fretboard-position optimization / beam/Viterbi path;
-- timing is independently rounded to the **nearest fixed straight/triplet subdivision**;
-- rhythm spelling does not yet reason about measure context, ties, rests, syncopation, or phrase consistency.
-
-These are credible reasons a pitch-correct result can still look machine-generated. However, changing fingering/rhythm spelling alone may not improve the numeric **90.321% onset** or **69.004% note-count** scores if those metrics are driven by upstream event-set mismatch.
+These are plausible quality issues but must not be patched merely because they are musically desirable; the exact comparator mismatch class must first show which stage can move the protected Gomyway metric.
 
 ## ASYNC / RUNTIME NON-NEGOTIABLES
 
-Async lifetime must remain:
 - shared result/control TTL **1800s**
 - orchestrator timeout **1200s**
 - ownership margin **600s**
+- endpoint exact blob `169b4bb136eba742c3422a73ee5dd0174ca06c49`
+- real-audio canary remains manual `workflow_dispatch` only
 
-Endpoint exact blob must remain `169b4bb136eba742c3422a73ee5dd0174ca06c49` unless a deliberately authorized endpoint change is made later.
-
-Real-audio canary remains manual `workflow_dispatch` only.
-
-## PRESERVED VERIFIED EVIDENCE
-
-Source-only sweep previously verified with no model/GPU/scorer/Production activity:
-
-- `analyzer/v143_async_job_protocol.py`: `ASYNC_RESULT_TTL_SECONDS = 30 * 60` = 1800s.
-- `app/api/analyze-audio-tab/route.js`: async-result fallback = 1800s.
-- `analyzer/v143_modal_http_endpoint.py`: orchestrator timeout = 1200s and exact blob SHA `169b4bb136eba742c3422a73ee5dd0174ca06c49`.
-- `.github/workflows/v143-ai-tab-real-audio-canary.yml`: `workflow_dispatch` only.
-- persisted real-candidate PDF evidence at commit `2470225d9cb726e35a07459e29783997a3447699`: **967 source/projected events**, **113 unique measures**, **725 unique onsets**, `referenceFree: true`, `professionalReferenceUsed: false`, `modalInvoked: false`, `productionModified: false`.
-
-Historical async crash-loop root cause remains closed: persisted run `34047990402` proved `worker.done` after 936.836s while old ownership TTL was 900s; runtime ownership is now 1800s with 600s margin over the 1200s orchestrator ceiling.
-
-Key repair commits:
+Preserved repair commits:
 - `b55d9db517fe356b40600bae85ba98ead879aeb6` — shared async TTL 900 -> 1800
 - `330a3d5dbde5bcc3e51eb577892c8d9643fcba58` — Next.js fallback 900 -> 1800
 - `fd230ee2ad4c19ad4758bbc753f4d110233591ff` — stale async protocol gate aligned
-- `c3c09c2d8e1c93f286d24e3c398922becaf8e8b8` — real-audio canary automatic push trigger removed
-- `ab27ae3b95d6aa5942f2d456c3f29792c96ecc3b` — cleanup preview workflow converted to read-only verifier
+- `c3c09c2d8e1c93f286d24e3c398922becaf8e8b8` — automatic real-audio canary push removed
+- `ab27ae3b95d6aa5942f2d456c3f29792c96ecc3b` — cleanup preview converted to read-only verifier
 
 ## NON-NEGOTIABLES
 
 - protect **100% pitch accuracy**
-- preserve **725 / 970 / 967 / exactly 3 drops / 0 recovery** until evidence requires deliberate revision
+- preserve **725 / 970 / 967 / exactly 3 drops / 0 recovery** until measured evidence requires deliberate revision
 - preserve **1800s / 1200s / 600s** async ownership
-- real-audio canary remains **manual-only**
+- real-audio canary stays **manual-only**
 - no Production modification
-- no accidental new Modal/GPU/model inference, professional scoring, optimizer/training, or threshold sweep
-- keep `docs/checkpoints/CURRENT_STATE.md` updated often
+- no accidental Modal/GPU/model inference, professional scoring, optimizer/training, or threshold sweep
+- keep this checkpoint updated often
