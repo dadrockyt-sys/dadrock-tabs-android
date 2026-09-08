@@ -9,7 +9,7 @@ Compact fresh-chat source of truth. Full prior detail remains in Git history.
 
 Authorized model-bearing evaluation budget is consumed. Do **not** start another Rhythm/Lead/Bass model run, professional scorer, Modal/GPU inference, Production deployment/promotion, optimizer/training/threshold sweep, or manual workflow run without new explicit user authorization.
 
-Safe work: deterministic source/history inspection, static/unit validation, CPU-only synthetic proofs, and safety hardening.
+Safe work: deterministic source/history inspection, static/unit validation, CPU-only synthetic proofs, CI/workflow cleanup, and safety hardening.
 
 ## FROZEN INVARIANTS — PRESERVE
 
@@ -31,125 +31,66 @@ Async lifetime must remain:
 
 Endpoint exact blob must remain `169b4bb136eba742c3422a73ee5dd0174ca06c49`.
 
-## CRASH-LOOP ROOT CAUSE — CLOSED
+## CORE V143 RHYTHM STATE — GREEN / CLOSED
 
-Persisted diagnostic run `34047990402` / artifact `9993685857` proves the historical worker reached `worker.done` after **936.836s**. Old async ownership TTL was **900s**, so ownership expired about **36.836s before completion**. Runtime TTL is now **1800s**, leaving a **600s** margin over the 1200s orchestrator ceiling.
+Historical crash-loop root cause is closed: persisted run `34047990402` proved the worker reached `worker.done` after **936.836s** while old ownership TTL was **900s**. Runtime ownership is now **1800s**, leaving a **600s** margin over the 1200s orchestrator ceiling.
 
-Relevant fixes already green:
+Key completed fixes/evidence:
 - `b55d9db517fe356b40600bae85ba98ead879aeb6` — shared async TTL 900 → 1800
 - `330a3d5dbde5bcc3e51eb577892c8d9643fcba58` — Next.js fallback 900 → 1800
 - `fd230ee2ad4c19ad4758bbc753f4d110233591ff` — stale async protocol gate aligned; run `34173726834` SUCCESS
+- `c3c09c2d8e1c93f286d24e3c398922becaf8e8b8` — real-audio canary automatic push trigger removed; canary is manual-only
+- `0b403b6419180be3bcf9dc0b42894411fa2e34de` — V143 PDF branding contract restored
+- `6b8f3a6b277f13b8c5083fbc64cbe39fd044077f` — whole-number BPM, visible 16th-note timing, SECTION labels
+- `a088bf4957fb5c472ebbd1a280a1b3093e7e30bc` — stale renderer proof transform fixed
+- `da736e5c83772feac1b9471cbad690b296831951` — built HTTP gate now explicitly requests supported `operation: 'analyze'`
+- `b94af651807a7597eedeb9f9d3ba2838493e80cc` — stale PDF product-contract source assertion fixed
+- `17b07a67d13463197b2a30d8e6d38a4627e60a1c` — static preholdout ESM transform fixed
+- `d035dc668141f4e04fa3b80cc93ceb226c914387` — CI-only successful-worktree cleanup before evidence rebase
+- `36dbf6e79a712824dbcf677e2e83ae83e223099b` — bounded evidence push retry for branch races
 
-## REAL-AUDIO CANARY SAFETY HARDENING — COMPLETE
+Authoritative deterministic greens:
+- **V143 AI Tab Branch Build Gate** — `34174714737` — SUCCESS
+- **Rhythm Render Presentation CPU Proof** — `34174831412` — SUCCESS
+- **Rhythm Pre-Holdout Static Preflight** — `34175371296` — SUCCESS
+- **Rhythm Professional Holdout Self Test** — `34175371403` — SUCCESS
+- **Rhythm Pre-Holdout Static Preflight V2** — `34175475746` — SUCCESS
 
-Problem: `.github/workflows/v143-ai-tab-real-audio-canary.yml` previously had a `push.paths` trigger including `lib/createV143RhythmPdf.js` and could run real audio through Modal when credentials were present.
+Static proof includes schema-v7/product/runtime/anti-leakage/rendering checks, **400 synthetic events / 100 measures**, valid full + preview PDFs, **PDF event fidelity = 1.0**, frozen/PDF event hash `6475a7d68071a8810890982e1c06c0d39f99e85d646680706233ceed5a58b37e`, and no production/model activity.
 
-Fix:
-- commit `c3c09c2d8e1c93f286d24e3c398922becaf8e8b8`
-- removed only the automatic `push` trigger
-- preserved `workflow_dispatch` and the complete canary job body
-- safety commit spawned no real-audio canary; only unrelated cleanup run `34174306164`
+## CLEANUP-TAB-PREVIEW DIAGNOSIS / FIX — ACTIVE
 
-Result: renderer/source pushes no longer auto-start real-audio/Modal/model execution.
+Latest observed failure before repair:
+- run `34175719332`
+- head `ae25972ce1f1d518a40e3dcc00739b70ff2a34ff`
+- docs-only commit nevertheless created a cleanup workflow run
+- run name appeared as `.github/workflows/cleanup-tab-preview.yml` instead of declared workflow name
+- conclusion `failure`
+- **zero jobs** were scheduled
 
-## PDF RENDERER — BREAKTHROUGH COMPLETE
+This is an invalid-workflow/registration-style failure signature, not a failure inside the Python patch step.
 
-Renderer file: `lib/createV143RhythmPdf.js`.
+Source inspection also proved the cleanup had already been applied in `app/ai-tab/page.js`:
+- `Tab Studio Preview` is present
+- old `Review Your Tab Preview` text absent
+- old `Watermarked preview ready` text absent
+- old `Full transcription locked` overlay absent
 
-Branding contract restored in commit `0b403b6419180be3bcf9dc0b42894411fa2e34de`:
-- `DIY Guitar & Bass TAB Generator`
-- `Powered by DadRock AI • V143 Rhythm`
-- `FULL TAB LOCKED`
-- `Generated by DadRock Tabs Studio • dadrocktabs.com`
+The old workflow was obsolete one-shot mutation logic and was not idempotent: it expected the removed overlay to still exist and performed a write/commit/push.
 
-Presentation contract completed in commit `6b8f3a6b277f13b8c5083fbc64cbe39fd044077f`:
-- whole-number BPM display (`129.199...` → `129 BPM`)
-- visible `Timing: 16th-note grid`
-- visible `SECTION` rehearsal labels
+Repair commit:
+- `ab27ae3b95d6aa5942f2d456c3f29792c96ecc3b` — `Fix cleanup preview workflow`
 
-Exact-event validation/fail-closed behavior remains intact. Musical event construction, attacks, pitches, voicing, recovery, model parameters, scheduler parameters, and async lifetime were not changed.
+Current `.github/workflows/cleanup-tab-preview.yml` now:
+- has `contents: read` only
+- triggers only when the workflow file itself changes
+- does **not** mutate source
+- does **not** commit or push
+- verifies `Tab Studio Preview` is present
+- fails only if old preview/overlay text returns
+- is idempotent
 
-### Deterministic renderer proof
-
-**Rhythm Render Presentation CPU Proof run `34174831412` = SUCCESS.**
-
-The repaired V143 Rhythm renderer now satisfies the deterministic PDF presentation contract.
-
-## STALE HARNESS / CI FIXES — COMPLETE
-
-1. `.github/workflows/rhythm-render-presentation-proof.yml`
-   - stale ESM transform expected the old alias import
-   - renderer correctly imports `./v143RenderContract.js`
-   - commit `a088bf4957fb5c472ebbd1a280a1b3093e7e30bc`
-
-2. `analyzer/verify_v143_built_next_canonical_promotion_http_gate.mjs`
-   - old synthetic test expected immediate synchronous `200` while V143 Rhythm correctly defaults to async `start`
-   - test now explicitly requests supported `operation: 'analyze'`
-   - runtime route behavior unchanged
-   - commit `da736e5c83772feac1b9471cbad690b296831951`
-   - **V143 AI Tab Branch Build Gate run `34174714737` = SUCCESS**
-
-3. `validation/rhythm_holdout/verify_ai_tab_pdf_product_contract.mjs`
-   - stale source assertion required the old alias import
-   - current relative validator import is now recognized without weakening exact-event/fail-closed requirements
-   - commit `b94af651807a7597eedeb9f9d3ba2838493e80cc`
-
-4. `validation/rhythm_holdout/run_static_preholdout_preflight.sh`
-   - stale standalone ESM transform fixed in `17b07a67d13463197b2a30d8e6d38a4627e60a1c`
-   - product/static proof then passed but CI evidence commits were false-red because `npm ci` left tracked `yarn.lock` changes before `git rebase`
-   - CI-only successful-worktree cleanup added in `d035dc668141f4e04fa3b80cc93ceb226c914387`
-   - cleanup restores tracked CI-generated worktree drift only after a successful proof; local runs are not affected
-
-5. `.github/workflows/rhythm-preholdout-static-preflight-v2.yml`
-   - first repaired V2 run proved the gate green but lost a branch race after successful rebase because another evidence workflow advanced the remote before push
-   - bounded fetch/rebase/push retry added in `36dbf6e79a712824dbcf677e2e83ae83e223099b`
-   - evidence persistence now succeeds under concurrent branch evidence updates
-
-## AUTHORITATIVE GREEN GATES
-
-All core deterministic V143 Rhythm/PDF gates have now converged green:
-
-- **V143 AI Tab Branch Build Gate** — run `34174714737` — SUCCESS
-- **Rhythm Render Presentation CPU Proof** — run `34174831412` — SUCCESS
-- **Rhythm Pre-Holdout Static Preflight** — run `34175371296` — SUCCESS
-- **Rhythm Professional Holdout Self Test** — run `34175371403` — SUCCESS
-- **Rhythm Pre-Holdout Static Preflight V2** — run `34175475746` — SUCCESS
-
-The successful static report proves:
-- schema v7 product contract passed
-- runtime isolation passed
-- V143 anti-leakage contract passed
-- exact structured-renderer routing passed
-- polished branding contract passed
-- **400 synthetic events / 100 measures**
-- renderer projection exactly equal
-- valid full + preview PDF headers
-- **PDF event fidelity = 1.0**
-- frozen event hash equals PDF event hash: `6475a7d68071a8810890982e1c06c0d39f99e85d646680706233ceed5a58b37e`
-- full and preview PDFs both rendered at 5 pages
-- `realProfessionalReferenceOpened=false`
-- `productionModified=false`
-- `productionPromotionAuthorized=false`
-
-Latest evidence bot commit after the successful V2 run:
-- `38878251df70ce278eb2a85263d16207d02bb492` — `Record fresh Rhythm static preflight evidence`
-
-## TRUE RENDERER PUSH WORKFLOW SURFACE
-
-The renderer commit triggered 10 workflows:
-
-1. `v143-professional-pdf-fixture.yml` — deterministic PDF fixture
-2. `full-mixture-product-placement-canonical-promotion-v1.yml` — synthetic/local promotion contract; enforces `modalInvoked=false`, `gpuUsed=false`, `productionModified=false`
-3. `rhythm-render-presentation-proof.yml` — CPU synthetic PDF proof
-4. `cleanup-tab-preview.yml` — unrelated branch-wide cleanup workflow; currently failing noise
-5. `v143-render-real-candidate-pdf.yml` — renders already-preserved candidate capture; no new inference
-6. `rhythm-preholdout-static-preflight-v2.yml` — deterministic/static synthetic-only
-7. `rhythm-preholdout-static-preflight.yml` — deterministic/static synthetic-only
-8. `rhythm-professional-holdout-self-test.yml` — synthetic self-test fixture; not a real professional scoring run
-9. `v143-ai-tab-branch-build-gate.yml` — local Next build/server + stubbed analyzer tests; no live deploy
-10. `v143-render-v5-shadow-professional-pdf.yml` — renders already-preserved shadow capture; no new inference
-
-Critically, **`V143 AI Tab Real Audio Product Canary` did not run** after renderer/harness pushes.
+Automatic Actions verification for commit `ab27ae3b95d6aa5942f2d456c3f29792c96ecc3b` still needs to be inspected in the current session; do not manually dispatch anything to obtain it.
 
 ## CURRENT VERIFIED STATE
 
@@ -163,50 +104,26 @@ Critically, **`V143 AI Tab Real Audio Product Canary` did not run** after render
 - V2 fresh static preflight + evidence persistence green
 - polished branding contract present
 - exact-event fail-closed validation still present
-- real-audio canary automatic trigger removed and verified dormant
+- real-audio canary automatic trigger removed and remains manual-only
 - score structure preserved: **725 / 970 / 967 / 3 / 0**
 - async lifetime preserved: **1800 / 1200 / 600**
 - endpoint blob pin preserved
-- no new model-bearing run, no paid/GPU inference, no real professional scoring run, no live Production promotion
+- no new model-bearing run, paid/GPU inference, real professional scoring run, or live Production promotion
+- cleanup workflow source repaired in isolation; V143 musical/model/renderer logic untouched
 
-## REMAINING NON-CORE NOISE / NEXT SAFE WORK
+## NEXT SAFE WORK — EXACT ORDER
 
-1. `cleanup-tab-preview.yml` still fails on branch pushes and is unrelated to the V143 renderer/product gate. Diagnose separately if a clean Actions dashboard is desired.
-2. Review the remaining deterministic preserved-capture PDF workflows (`v143-professional-pdf-fixture`, real-candidate PDF render, V5 shadow PDF render) only if their historical red status needs cleanup; do not change musical/model logic to satisfy stale harness assertions.
-3. Do **not** manually start the real-audio canary, professional scorer, Modal/GPU inference, or Production promotion without new explicit authorization.
-4. Preserve **725 / 970 / 967 / 3 drops / 0 recovery**, **1800 / 1200 / 600**, and the endpoint blob pin.
+1. Inspect automatic Actions created by cleanup repair commit `ab27ae3b95d6aa5942f2d456c3f29792c96ecc3b`.
+2. Confirm the cleanup workflow parses, schedules a job, and is green.
+3. Confirm `V143 AI Tab Real Audio Product Canary` is absent; do **not** manually dispatch it.
+4. Update this checkpoint with the run ID/result.
+5. Only after cleanup is closed, inspect historical red preserved-capture PDF workflows if dashboard cleanup is still desired. Repair stale deterministic assertions/transforms only; never alter musical/model logic to satisfy a stale harness.
 
-## FRESH CHAT HANDOFF — START HERE
+## FRESH CHAT NON-NEGOTIABLES
 
-The core V143 Rhythm project is no longer blocked by the historical crash-loop symptom or the PDF renderer contract. Both are resolved with deterministic evidence recorded above.
-
-For a fresh chat, continue in this exact order:
-
-1. **Read this file first** on branch `v143-contextual-prune-lobo` before making any source change.
-2. Treat the historical Modal “crash loop” as **closed unless new current runtime evidence contradicts it**. The persisted worker completed at 936.836s; the actual defect was 900s ownership expiry, already repaired to 1800s.
-3. Do not rerun Modal/model/professional scoring just to reconfirm a closed result. Current authorization does not allow another model-bearing run.
-4. If the goal is a clean GitHub Actions dashboard, investigate **only** `.github/workflows/cleanup-tab-preview.yml` first. Determine why its branch-wide push run fails and fix that workflow in isolation if possible. Do not mix cleanup fixes with V143 musical/model/renderer logic.
-5. After any cleanup-only commit, inspect the automatic Actions runs and confirm that `V143 AI Tab Real Audio Product Canary` remains absent. Do not manually dispatch it.
-6. If any preserved-capture PDF workflow is still red, inspect its logs and repair only stale deterministic harness assertions/transforms. Never alter the frozen score structure, renderer event construction, async timing constants, model thresholds, scheduler parameters, or endpoint pin merely to make an old harness green.
-7. Keep `docs/checkpoints/CURRENT_STATE.md` updated after each meaningful diagnosis/fix so another fresh chat can resume without repeating history.
-
-Fresh-chat non-negotiable invariants:
 - **725 / 970 / 967 / exactly 3 drops / 0 recovery**
 - **1800s / 1200s / 600s**
 - endpoint blob `169b4bb136eba742c3422a73ee5dd0174ca06c49`
 - real-audio canary remains **manual-only**
-- no new Modal/GPU/model inference, professional scoring, or Production promotion without explicit new authorization
-
-Recommended first concrete task in the next chat: **diagnose and eliminate the unrelated `cleanup-tab-preview.yml` failure while preserving every V143 invariant above.**
-
-## SUCCESS CONDITION — CORE ACHIEVED
-
-- crash-loop ownership defect fixed
-- V143 branch build/HTTP preview path green
-- V143 Rhythm PDF deterministic presentation contract green
-- static PDF product contract green
-- exact PDF event fidelity green
-- synthetic holdout contract green
-- CI evidence persistence no longer false-red
-- real-audio canary remains manual-only and dormant
-- no new model-bearing run, professional scoring, paid/GPU inference, or Production promotion
+- no new Modal/GPU/model inference, professional scoring, optimizer/training, threshold sweep, or Production promotion without explicit new authorization
+- keep `docs/checkpoints/CURRENT_STATE.md` updated after each meaningful diagnosis/fix
