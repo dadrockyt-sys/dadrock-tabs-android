@@ -176,6 +176,29 @@ Critically, **`V143 AI Tab Real Audio Product Canary` did not run** after render
 3. Do **not** manually start the real-audio canary, professional scorer, Modal/GPU inference, or Production promotion without new explicit authorization.
 4. Preserve **725 / 970 / 967 / 3 drops / 0 recovery**, **1800 / 1200 / 600**, and the endpoint blob pin.
 
+## FRESH CHAT HANDOFF — START HERE
+
+The core V143 Rhythm project is no longer blocked by the historical crash-loop symptom or the PDF renderer contract. Both are resolved with deterministic evidence recorded above.
+
+For a fresh chat, continue in this exact order:
+
+1. **Read this file first** on branch `v143-contextual-prune-lobo` before making any source change.
+2. Treat the historical Modal “crash loop” as **closed unless new current runtime evidence contradicts it**. The persisted worker completed at 936.836s; the actual defect was 900s ownership expiry, already repaired to 1800s.
+3. Do not rerun Modal/model/professional scoring just to reconfirm a closed result. Current authorization does not allow another model-bearing run.
+4. If the goal is a clean GitHub Actions dashboard, investigate **only** `.github/workflows/cleanup-tab-preview.yml` first. Determine why its branch-wide push run fails and fix that workflow in isolation if possible. Do not mix cleanup fixes with V143 musical/model/renderer logic.
+5. After any cleanup-only commit, inspect the automatic Actions runs and confirm that `V143 AI Tab Real Audio Product Canary` remains absent. Do not manually dispatch it.
+6. If any preserved-capture PDF workflow is still red, inspect its logs and repair only stale deterministic harness assertions/transforms. Never alter the frozen score structure, renderer event construction, async timing constants, model thresholds, scheduler parameters, or endpoint pin merely to make an old harness green.
+7. Keep `docs/checkpoints/CURRENT_STATE.md` updated after each meaningful diagnosis/fix so another fresh chat can resume without repeating history.
+
+Fresh-chat non-negotiable invariants:
+- **725 / 970 / 967 / exactly 3 drops / 0 recovery**
+- **1800s / 1200s / 600s**
+- endpoint blob `169b4bb136eba742c3422a73ee5dd0174ca06c49`
+- real-audio canary remains **manual-only**
+- no new Modal/GPU/model inference, professional scoring, or Production promotion without explicit new authorization
+
+Recommended first concrete task in the next chat: **diagnose and eliminate the unrelated `cleanup-tab-preview.yml` failure while preserving every V143 invariant above.**
+
 ## SUCCESS CONDITION — CORE ACHIEVED
 
 - crash-loop ownership defect fixed
