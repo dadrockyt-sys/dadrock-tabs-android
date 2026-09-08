@@ -146,13 +146,43 @@ Result: there is no current deterministic/source-only automatic CI failure estab
 - endpoint blob pin preserved
 - no new model-bearing run, paid/GPU inference, real professional scoring run, or live Production promotion
 
+## FRESH CHAT HANDOFF — START HERE
+
+A final **source-only invariant/safety sweep was started but not completed** before this handoff. No workflow was dispatched and no model/GPU/professional-scoring/Production activity was started.
+
+Latest observed branch head before this handoff was `c3622076d57bfe95b148089f7d73c605fe2ec7fc` (`docs: checkpoint automatic CI audit`). Treat the branch itself as authoritative if newer commits exist when the fresh chat begins.
+
+One history check completed during the partial sweep:
+- commit `b55d9db517fe356b40600bae85ba98ead879aeb6` explicitly changed `analyzer/v143_async_job_protocol.py` `ASYNC_RESULT_TTL_SECONDS` from `15 * 60` to `30 * 60`, documenting the 20-minute worker budget plus 10-minute margin.
+
+Important: that history check is **not** a substitute for inspecting current branch source. The fresh chat should verify the current files directly.
+
 ## NEXT SAFE WORK — EXACT ORDER
 
-1. Perform a final source-only invariant/safety sweep of the branch after the documentation commits.
-2. Verify the frozen score constants/evidence expectations, async timing constants, exact endpoint blob pin, and manual-only real-audio canary remain intact.
-3. Do not run model/GPU/professional-scoring workflows to prove these source invariants.
-4. If the source-only sweep is clean, stop changing code: the branch is at a safe deterministic checkpoint awaiting explicit authorization for any new model-bearing evaluation or Production action.
-5. Keep this checkpoint updated with the final sweep result.
+1. Read this file first and re-read the current branch head before doing anything else.
+2. Complete the source-only invariant sweep on the **current branch source**, with no manual workflow dispatch.
+3. Verify async lifetime remains exactly **1800 / 1200 / 600**:
+   - shared result/control TTL = **1800s**
+   - orchestrator timeout = **1200s**
+   - ownership margin = **600s**
+   - confirm both Python/shared protocol and any Next.js/runtime fallback still agree.
+4. Verify the exact endpoint blob pin remains `169b4bb136eba742c3422a73ee5dd0174ca06c49` everywhere it is expected. Do not replace or repin it during the sweep.
+5. Inspect the `V143 AI Tab Real Audio Product Canary` workflow source and confirm it remains **manual-only** (`workflow_dispatch` only; no automatic `push`, `pull_request`, schedule, or other automatic trigger).
+6. Verify the frozen score/evidence contract still represents exactly:
+   - **725 retained attacks**
+   - **970 selected pitches**
+   - **967 rendered notes**
+   - exactly **3 legal-voicing drops**
+   - **0 recovery**
+   - all **113 measures** populated
+   - `referenceFree=true`
+   - `newInferenceUsed=false`
+   - drops: m40/s14 MIDI 78; m63/s14 MIDI 47; m113/s13 MIDI 43
+7. Confirm no recent documentation/CI cleanup commit altered renderer event construction, thresholds, scheduler settings, model paths, endpoint selection, async ownership semantics, or Production behavior.
+8. Do **not** run Rhythm/Lead/Bass inference, Modal/GPU, professional scorer, optimizer/training, threshold sweeps, Production deploy/promotion, or any manual workflow to prove these source invariants.
+9. If every source-only check is clean, update this checkpoint with the exact files/lines or commits inspected and mark the final sweep **CLEAN**.
+10. Then stop changing code. The branch should remain at the safe deterministic checkpoint until the user gives explicit new authorization for any model-bearing evaluation or Production action.
+11. If any invariant differs, do not automatically “fix” model/renderer behavior. Record the exact discrepancy in this checkpoint first, identify whether it is documentation drift versus runtime behavior, and keep all prohibited activity stopped.
 
 ## FRESH CHAT NON-NEGOTIABLES
 
