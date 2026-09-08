@@ -10,7 +10,7 @@ import librosa
 import numpy as np
 import soundfile as sf
 
-CONTRACT = "songsterr-fresh-cpu-note-evidence-v2"
+CONTRACT = "songsterr-fresh-cpu-note-evidence-v3"
 MIDI_MIN_GUITAR = 40
 MIDI_MAX_GUITAR = 88
 MIDI_MIN_BASS = 28
@@ -23,6 +23,15 @@ UNAMBIGUOUS_MIN_CONFIDENCE = 0.78
 UNAMBIGUOUS_MIN_MARGIN = 0.12
 UNAMBIGUOUS_MIN_PROMINENCE_DB = 3.5
 UNAMBIGUOUS_SECOND_MAX_DB = -9.0
+
+# A duration is emitted only when the selected pitch itself shows a sustained
+# release in its CQT track. A repeated same-pitch attack only censors the search;
+# it is never used as an invented note end.
+DURATION_MIN_SECONDS = 0.08
+DURATION_MAX_SEARCH_SECONDS = 2.50
+DURATION_RELEASE_DROP_DB = 14.0
+DURATION_RELEASE_SUSTAIN_FRAMES = 4
+DURATION_MIN_ATTACK_LEVEL_DB = -45.0
 
 
 def parse_args():
@@ -175,6 +184,149 @@ def classify(candidates):
     return ("unambiguous", top["midi"]) if unambiguous else ("ambiguous", None)
 
 
+def next_same_pitch_attack_frame(onsets, index):
+    midi = onsets[index].get("selectedMidi")
+    if midi is None:
+        return None
+    for later in onsets[index + 1 :]:
+        if later.get("classification") == "unambiguous" and later.get("selectedMidi") == midi:
+            return int(later["_analysisFrame"])
+    return None
+
+
+def duration_evidence_for_onset(onsets, index, cqt_db, analysis_midi_min, sr):
+    onset = onsets[index]
+    if onset.get("classification") != "unambiguous" or onset.get("selectedMidi") is None:
+        return None, "NOT_ELIGIBLE_AMBIGUOUS"
+
+    midi = int(onset["selectedMidi"])
+    row = midi - analysis_midi_min
+    if row < 0 or row >= cqt_db.shape[0]:
+        return None, "SELECTED_MIDI_OUTSIDE_ANALYSIS_RANGE"
+
+    start_frame = int(onset["_analysisFrame"])
+    if start_frame < 0 or start_frame >= cqt_db.shape[1]:
+        return None, "ONSET_FRAME_OUTSIDE_CQT"
+
+    attack_stop = min(cqt_db.shape[1], start_frame + 5)
+    attack_level_db = float(np.max(cqt_db[row, start_frame:attack_stop]))
+    if not np.isfinite(attack_level_db) or attack_level_db < DURATION_MIN_ATTACK_LEVEL_DB:
+        return None, "SELECTED_PITCH_ATTACK_TOO_WEAK"
+
+    min_frames = max(1, int(math.ceil(DURATION_MIN_SECONDS * sr / HOP_LENGTH)))
+    max_search_frames = max(
+        min_frames + DURATION_RELEASE_SUSTAIN_FRAMES,
+        int(math.ceil(DURATION_MAX_SEARCH_SECONDS * sr / HOP_LENGTH)),
+    )
+    search_start = start_frame + min_frames
+    search_end = min(cqt_db.shape[1], start_frame + max_search_frames)
+
+    same_pitch_frame = next_same_pitch_attack_frame(onsets, index)
+    censored_by_same_pitch_reattack = False
+    if same_pitch_frame is not None and same_pitch_frame < search_end:
+        search_end = same_pitch_frame
+        censored_by_same_pitch_reattack = True
+
+    if search_end - search_start < DURATION_RELEASE_SUSTAIN_FRAMES:
+        return None, "SEARCH_CENSORED_BEFORE_RELEASE_EVIDENCE"
+
+    release_threshold_db = attack_level_db - DURATION_RELEASE_DROP_DB
+    track = cqt_db[row]
+    release_start = None
+    release_window = None
+    last_start = search_end - DURATION_RELEASE_SUSTAIN_FRAMES
+    for frame in range(search_start, last_start + 1):
+        window = np.asarray(track[frame : frame + DURATION_RELEASE_SUSTAIN_FRAMES], dtype=float)
+        if window.size != DURATION_RELEASE_SUSTAIN_FRAMES or not np.all(np.isfinite(window)):
+            continue
+        if np.all(window <= release_threshold_db):
+            release_start = frame
+            release_window = window
+            break
+
+    if release_start is None:
+        reason = (
+            "NO_CLEAR_SELECTED_PITCH_RELEASE_BEFORE_CAP"
+            if censored_by_same_pitch_reattack
+            else "NO_CLEAR_SELECTED_PITCH_RELEASE"
+        )
+        return None, reason
+
+    source_end = float(librosa.frames_to_time(release_start, sr=sr, hop_length=HOP_LENGTH))
+    source_start = float(onset["sourceStart"])
+    duration_seconds = source_end - source_start
+    if duration_seconds < DURATION_MIN_SECONDS:
+        return None, "RELEASE_DURATION_BELOW_MINIMUM"
+
+    release_level_db = float(np.mean(release_window))
+    observed_drop_db = attack_level_db - release_level_db
+    drop_support = float(np.clip((observed_drop_db - DURATION_RELEASE_DROP_DB) / 12.0, 0.0, 1.0))
+    pitch_confidence = float(onset["candidates"][0]["confidence"])
+    duration_confidence = float(np.clip(0.50 + 0.25 * drop_support + 0.25 * pitch_confidence, 0.0, 1.0))
+
+    return {
+        "sourceEnd": source_end,
+        "durationSeconds": duration_seconds,
+        "durationConfidence": duration_confidence,
+        "releaseDiagnostics": {
+            "attackLevelDb": attack_level_db,
+            "releaseThresholdDb": release_threshold_db,
+            "releaseLevelDb": release_level_db,
+            "observedDropDb": observed_drop_db,
+            "censoredBySamePitchReattack": censored_by_same_pitch_reattack,
+            "confidenceSemantics": "heuristic-not-calibrated-probability",
+        },
+    }, None
+
+
+def attach_duration_evidence(onsets, cqt_db, analysis_midi_min, sr):
+    reason_counts = {}
+    resolved_durations = []
+    resolved_confidences = []
+    eligible_count = 0
+
+    for index, onset in enumerate(onsets):
+        if onset.get("classification") != "unambiguous":
+            continue
+        eligible_count += 1
+        evidence, reason = duration_evidence_for_onset(onsets, index, cqt_db, analysis_midi_min, sr)
+        if evidence is None:
+            reason_counts[reason] = reason_counts.get(reason, 0) + 1
+            onset["provenance"]["durationEvidenceProvided"] = False
+            onset["provenance"]["durationEvidenceUnresolvedReason"] = reason
+            continue
+
+        onset["sourceEnd"] = evidence["sourceEnd"]
+        onset["durationSeconds"] = evidence["durationSeconds"]
+        onset["durationConfidence"] = evidence["durationConfidence"]
+        onset["provenance"]["durationEvidenceProvided"] = True
+        onset["provenance"]["durationEvidenceSource"] = "selected-pitch-sustained-cqt-release"
+        onset["provenance"]["durationReleaseDiagnostics"] = evidence["releaseDiagnostics"]
+        resolved_durations.append(evidence["durationSeconds"])
+        resolved_confidences.append(evidence["durationConfidence"])
+
+    return {
+        "eligibleUnambiguousCount": eligible_count,
+        "resolvedCount": len(resolved_durations),
+        "unresolvedEligibleCount": eligible_count - len(resolved_durations),
+        "resolvedRateAmongEligible": len(resolved_durations) / eligible_count if eligible_count else 0.0,
+        "unresolvedReasonCounts": reason_counts,
+        "meanResolvedDurationSeconds": float(np.mean(resolved_durations)) if resolved_durations else None,
+        "medianResolvedDurationSeconds": float(np.median(resolved_durations)) if resolved_durations else None,
+        "maxResolvedDurationSeconds": float(np.max(resolved_durations)) if resolved_durations else None,
+        "meanDurationConfidence": float(np.mean(resolved_confidences)) if resolved_confidences else None,
+        "method": "selected-pitch-sustained-cqt-release",
+        "minDurationSeconds": DURATION_MIN_SECONDS,
+        "maxSearchSeconds": DURATION_MAX_SEARCH_SECONDS,
+        "releaseDropDb": DURATION_RELEASE_DROP_DB,
+        "releaseSustainFrames": DURATION_RELEASE_SUSTAIN_FRAMES,
+        "minAttackLevelDb": DURATION_MIN_ATTACK_LEVEL_DB,
+        "samePitchReattackIsCensorOnly": True,
+        "nextOnsetUsedAsDuration": False,
+        "confidenceCalibration": "heuristic-not-calibrated-probability",
+    }
+
+
 def summarize(onsets):
     classifications = {"unambiguous": 0, "ambiguous": 0, "no-candidate": 0}
     candidate_count = 0
@@ -283,6 +435,7 @@ def main():
             "classification": classification,
             "selectedMidi": selected_midi,
             "candidates": candidates,
+            "_analysisFrame": int(onset_frame),
             "provenance": {
                 "source": "full-mixture-onset-plus-guarded-harmonic-cqt",
                 "structureConditioned": True,
@@ -291,6 +444,10 @@ def main():
             },
         }
         onsets.append(onset)
+
+    duration_diagnostics = attach_duration_evidence(onsets, cqt_db, analysis_midi_min, sr)
+    for onset in onsets:
+        onset.pop("_analysisFrame", None)
 
     output = {
         "version": 1,
@@ -301,7 +458,7 @@ def main():
         "capabilities": {
             "roleRelevanceResolved": False,
             "polyphonyResolved": False,
-            "durationResolution": "none",
+            "durationResolution": "partial-selected-pitch-release-only",
             "instrumentIsolation": "none",
             "confidenceCalibration": "heuristic-not-calibrated-probability",
         },
@@ -322,9 +479,9 @@ def main():
                 "minTopProminenceDb": UNAMBIGUOUS_MIN_PROMINENCE_DB,
                 "maxSecondCandidateDb": UNAMBIGUOUS_SECOND_MAX_DB,
             },
+            "durationEvidence": duration_diagnostics,
             "confidenceCalibration": "heuristic-not-calibrated-probability",
             "sourceSeparation": "none; harmonic/percussive filtering only",
-            "durationInference": "none",
         },
         "provenance": {
             "source": CONTRACT,
@@ -336,7 +493,7 @@ def main():
             "gpuInvoked": False,
             "legacyV143ScorerImported": False,
             "roleConditioning": args.role,
-            "note": "Guarded-range baseline CPU spectral evidence from the full mixture; not instrument-isolated and not an accuracy score.",
+            "note": "Guarded-range CPU spectral evidence with conservative selected-pitch release durations; not instrument-isolated and not an accuracy score.",
         },
     }
 
