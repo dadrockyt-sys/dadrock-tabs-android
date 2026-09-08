@@ -4,7 +4,7 @@ import { readFile, writeFile } from 'node:fs/promises';
 import { resolve } from 'node:path';
 
 import { runFreshDeterministicPipeline } from '../../songsterr_pipeline/deterministicPipeline.mjs';
-import { summarizeNoteEvidence } from '../../songsterr_pipeline/noteEvidenceDiagnostics.mjs';
+import { evaluateNoteEvidence } from '../../songsterr_pipeline/noteEvidenceEvaluator.mjs';
 import { buildStructureIdentity } from '../../songsterr_pipeline/structureIdentity.mjs';
 
 const [structureArg, noteEvidenceArg, outputArg] = process.argv.slice(2);
@@ -36,7 +36,7 @@ if (noteEvidence?.adapterContract?.modelInvoked !== false
   throw new Error('REAL_NOTE_CANARY_PROVENANCE_BOUNDARY_VIOLATION');
 }
 
-const evidenceDiagnostics = summarizeNoteEvidence(noteEvidence);
+const evidenceEvaluation = evaluateNoteEvidence(noteEvidence);
 const sourceEvents = noteEvidence.promotedEvents.map((event) => {
   const source = {
     start: event.start,
@@ -58,23 +58,25 @@ const pipelineResult = runFreshDeterministicPipeline({
   productShell: {
     transcriptionType: 'Guitar',
     difficulty: 'unrated-real-audio-canary',
-    upstreamEvidenceReady: evidenceDiagnostics.noHumanCorrectionReady,
-    upstreamEvidenceBlockers: evidenceDiagnostics.blockers,
+    upstreamEvidenceReady: evidenceEvaluation.acceptedForCompleteTab,
+    upstreamEvidenceBlockers: evidenceEvaluation.failureReasons,
   },
 });
 
 const output = {
   contract: {
     name: 'songsterr-fresh-real-note-evidence-pipeline-canary',
-    version: 1,
+    version: 2,
     referenceBlind: true,
     structureFrozen: true,
     structureIdentity: identity,
+    noteAcceptanceOwnedBy: evidenceEvaluation.evaluatorContract.name,
     modelInvoked: false,
     gpuInvoked: false,
     legacyV143ScorerImported: false,
   },
-  evidenceDiagnostics,
+  evidenceEvaluation,
+  evidenceInventory: evidenceEvaluation.inventory,
   pipelineSummary: {
     sourceEventCount: sourceEvents.length,
     finalEventCount: pipelineResult.events.length,
