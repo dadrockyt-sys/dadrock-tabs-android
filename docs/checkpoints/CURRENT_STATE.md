@@ -52,7 +52,7 @@ Fix:
 
 Result: renderer/source pushes no longer auto-start real-audio/Modal/model execution.
 
-## PDF RENDERER — BREAKTHROUGH
+## PDF RENDERER — BREAKTHROUGH COMPLETE
 
 Renderer file: `lib/createV143RhythmPdf.js`.
 
@@ -69,37 +69,74 @@ Presentation contract completed in commit `6b8f3a6b277f13b8c5083fbc64cbe39fd0440
 
 Exact-event validation/fail-closed behavior remains intact. Musical event construction, attacks, pitches, voicing, recovery, model parameters, scheduler parameters, and async lifetime were not changed.
 
-### Deterministic proof
+### Deterministic renderer proof
 
 **Rhythm Render Presentation CPU Proof run `34174831412` = SUCCESS.**
 
-This is the first clean proof that the repaired V143 Rhythm renderer satisfies the deterministic PDF presentation contract.
+The repaired V143 Rhythm renderer now satisfies the deterministic PDF presentation contract.
 
-## STALE HARNESS FIXES
+## STALE HARNESS / CI FIXES — COMPLETE
 
 1. `.github/workflows/rhythm-render-presentation-proof.yml`
    - stale ESM transform expected the old alias import
    - renderer correctly imports `./v143RenderContract.js`
    - commit `a088bf4957fb5c472ebbd1a280a1b3093e7e30bc`
-   - after this fix the proof reached real renderer assertions instead of crashing during ESM import
 
 2. `analyzer/verify_v143_built_next_canonical_promotion_http_gate.mjs`
-   - old test expected immediate synchronous `200` while V143 Rhythm now defaults to async `start`
-   - synthetic test now explicitly requests supported `operation: 'analyze'`
+   - old synthetic test expected immediate synchronous `200` while V143 Rhythm correctly defaults to async `start`
+   - test now explicitly requests supported `operation: 'analyze'`
    - runtime route behavior unchanged
    - commit `da736e5c83772feac1b9471cbad690b296831951`
    - **V143 AI Tab Branch Build Gate run `34174714737` = SUCCESS**
 
 3. `validation/rhythm_holdout/verify_ai_tab_pdf_product_contract.mjs`
-   - stale exact-source assertion required `import { validateV143RenderEvents } from '@/lib/v143RenderContract'`
-   - renderer uses a multiline relative import from `./v143RenderContract.js`
-   - verifier still requires the validator import plus the exact validation call and fail-closed text; contract was not weakened
+   - stale source assertion required the old alias import
+   - current relative validator import is now recognized without weakening exact-event/fail-closed requirements
    - commit `b94af651807a7597eedeb9f9d3ba2838493e80cc`
-   - safe reruns started: Professional Holdout Self Test `34174972582`, Static Preflight `34174972591`, Static Preflight V2 `34174972627`; results pending at this checkpoint write
+
+4. `validation/rhythm_holdout/run_static_preholdout_preflight.sh`
+   - stale standalone ESM transform fixed in `17b07a67d13463197b2a30d8e6d38a4627e60a1c`
+   - product/static proof then passed but CI evidence commits were false-red because `npm ci` left tracked `yarn.lock` changes before `git rebase`
+   - CI-only successful-worktree cleanup added in `d035dc668141f4e04fa3b80cc93ceb226c914387`
+   - cleanup restores tracked CI-generated worktree drift only after a successful proof; local runs are not affected
+
+5. `.github/workflows/rhythm-preholdout-static-preflight-v2.yml`
+   - first repaired V2 run proved the gate green but lost a branch race after successful rebase because another evidence workflow advanced the remote before push
+   - bounded fetch/rebase/push retry added in `36dbf6e79a712824dbcf677e2e83ae83e223099b`
+   - evidence persistence now succeeds under concurrent branch evidence updates
+
+## AUTHORITATIVE GREEN GATES
+
+All core deterministic V143 Rhythm/PDF gates have now converged green:
+
+- **V143 AI Tab Branch Build Gate** — run `34174714737` — SUCCESS
+- **Rhythm Render Presentation CPU Proof** — run `34174831412` — SUCCESS
+- **Rhythm Pre-Holdout Static Preflight** — run `34175371296` — SUCCESS
+- **Rhythm Professional Holdout Self Test** — run `34175371403` — SUCCESS
+- **Rhythm Pre-Holdout Static Preflight V2** — run `34175475746` — SUCCESS
+
+The successful static report proves:
+- schema v7 product contract passed
+- runtime isolation passed
+- V143 anti-leakage contract passed
+- exact structured-renderer routing passed
+- polished branding contract passed
+- **400 synthetic events / 100 measures**
+- renderer projection exactly equal
+- valid full + preview PDF headers
+- **PDF event fidelity = 1.0**
+- frozen event hash equals PDF event hash: `6475a7d68071a8810890982e1c06c0d39f99e85d646680706233ceed5a58b37e`
+- full and preview PDFs both rendered at 5 pages
+- `realProfessionalReferenceOpened=false`
+- `productionModified=false`
+- `productionPromotionAuthorized=false`
+
+Latest evidence bot commit after the successful V2 run:
+- `38878251df70ce278eb2a85263d16207d02bb492` — `Record fresh Rhythm static preflight evidence`
 
 ## TRUE RENDERER PUSH WORKFLOW SURFACE
 
-The renderer commit triggered 10 workflows, not the original five-file estimate:
+The renderer commit triggered 10 workflows:
 
 1. `v143-professional-pdf-fixture.yml` — deterministic PDF fixture
 2. `full-mixture-product-placement-canonical-promotion-v1.yml` — synthetic/local promotion contract; enforces `modalInvoked=false`, `gpuUsed=false`, `productionModified=false`
@@ -112,35 +149,41 @@ The renderer commit triggered 10 workflows, not the original five-file estimate:
 9. `v143-ai-tab-branch-build-gate.yml` — local Next build/server + stubbed analyzer tests; no live deploy
 10. `v143-render-v5-shadow-professional-pdf.yml` — renders already-preserved shadow capture; no new inference
 
-Critically, **`V143 AI Tab Real Audio Product Canary` did not run** after renderer pushes.
+Critically, **`V143 AI Tab Real Audio Product Canary` did not run** after renderer/harness pushes.
 
 ## CURRENT VERIFIED STATE
 
 - crash-loop ownership defect explained and fixed
 - async protocol gate green
-- branch build gate green (`34174714737`)
-- deterministic Rhythm PDF presentation proof green (`34174831412`)
+- V143 branch build/HTTP preview path green
+- V143 Rhythm deterministic PDF presentation proof green
+- static PDF product contract green
+- exact-event PDF fidelity green at **1.0**
+- consolidated synthetic holdout self-test green
+- V2 fresh static preflight + evidence persistence green
 - polished branding contract present
 - exact-event fail-closed validation still present
 - real-audio canary automatic trigger removed and verified dormant
 - score structure preserved: **725 / 970 / 967 / 3 / 0**
 - async lifetime preserved: **1800 / 1200 / 600**
 - endpoint blob pin preserved
-- no new model-bearing run, no paid/GPU inference, no live Production promotion
+- no new model-bearing run, no paid/GPU inference, no real professional scoring run, no live Production promotion
 
-## NEXT STEPS
+## REMAINING NON-CORE NOISE / NEXT SAFE WORK
 
-1. Check the three safe static/holdout reruns from `b94af651...`.
-2. If any fail, inspect the exact stale assertion/harness issue and patch only that verifier/workflow; do not alter renderer event/model logic.
-3. Confirm all renderer-related deterministic gates converge green.
-4. Keep `cleanup-tab-preview` isolated as unrelated Actions noise unless it blocks branch usability.
-5. Preserve **725 / 970 / 967 / 3 drops / 0 recovery**, **1800 / 1200 / 600**, and endpoint blob pin.
+1. `cleanup-tab-preview.yml` still fails on branch pushes and is unrelated to the V143 renderer/product gate. Diagnose separately if a clean Actions dashboard is desired.
+2. Review the remaining deterministic preserved-capture PDF workflows (`v143-professional-pdf-fixture`, real-candidate PDF render, V5 shadow PDF render) only if their historical red status needs cleanup; do not change musical/model logic to satisfy stale harness assertions.
+3. Do **not** manually start the real-audio canary, professional scorer, Modal/GPU inference, or Production promotion without new explicit authorization.
+4. Preserve **725 / 970 / 967 / 3 drops / 0 recovery**, **1800 / 1200 / 600**, and the endpoint blob pin.
 
-## SUCCESS CONDITION
+## SUCCESS CONDITION — CORE ACHIEVED
 
 - crash-loop ownership defect fixed
 - V143 branch build/HTTP preview path green
 - V143 Rhythm PDF deterministic presentation contract green
 - static PDF product contract green
+- exact PDF event fidelity green
+- synthetic holdout contract green
+- CI evidence persistence no longer false-red
 - real-audio canary remains manual-only and dormant
 - no new model-bearing run, professional scoring, paid/GPU inference, or Production promotion
