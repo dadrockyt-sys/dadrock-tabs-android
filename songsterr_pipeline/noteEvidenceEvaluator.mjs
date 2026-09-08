@@ -135,8 +135,6 @@ export function evaluateNoteEvidence(evidence = {}) {
   if (contract.nearestStructureSlotsVerified !== true) failures.push('NOTE_EVIDENCE_STRUCTURE_SLOTS_UNVERIFIED');
   if (contract.syntheticDurationInference !== false) failures.push('SYNTHETIC_DURATION_INFERENCE_PRESENT');
   if (contract.legacyV143ScorerImported === true) failures.push('LEGACY_SCORER_BOUNDARY_VIOLATION');
-  if (contract.modelInvoked === true) failures.push('MODEL_EVIDENCE_OUTSIDE_CPU_CANARY');
-  if (contract.gpuInvoked === true) failures.push('GPU_EVIDENCE_OUTSIDE_CPU_CANARY');
   if (onsetCount <= 0) failures.push('NOTE_EVIDENCE_EMPTY');
   if (!capabilities.roleRelevanceResolved) failures.push('ROLE_RELEVANCE_UNRESOLVED');
   if (!capabilities.polyphonyResolved) failures.push('POLYPHONY_UNRESOLVED');
@@ -158,6 +156,7 @@ export function evaluateNoteEvidence(evidence = {}) {
       compositeScore: null,
       referenceBlind: true,
       legacyV143ScorerImported: false,
+      executionAuthorizationOutOfScope: true,
     },
     acceptedForCompleteTab: failures.length === 0,
     failureReasons: failures,
