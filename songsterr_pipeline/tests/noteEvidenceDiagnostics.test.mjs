@@ -47,8 +47,10 @@ test('diagnostics preserve unresolved evidence categories without creating a com
   const result = summarizeNoteEvidence(adapted());
   assert.equal(result.contract.compositeScoreDefined, false);
   assert.equal(result.contract.compositeScore, null);
+  assert.equal(result.contract.descriptiveOnly, true);
+  assert.equal(result.contract.ownsAcceptanceDecision, false);
   assert.equal(result.counts.onsetCount, 5);
-  assert.equal(result.counts.unresolvedRoleEvidenceCount, 4);
+  assert.equal(result.counts.unresolvedPitchEvidenceCount, 4);
   assert.equal(result.counts.singleCandidateAmbiguousCount, 1);
   assert.equal(result.counts.competingCandidateAmbiguousCount, 2);
   assert.equal(result.counts.harmonicRelationAmbiguousCount, 1);
@@ -57,15 +59,12 @@ test('diagnostics preserve unresolved evidence categories without creating a com
   assert.deepEqual(result.topSecondIntervalHistogram, { '7': 1, '12': 1 });
 });
 
-test('missing promoted duration remains an explicit no-human-correction blocker', () => {
+test('diagnostics report missing promoted duration but do not own readiness decisions', () => {
   const result = summarizeNoteEvidence(adapted());
   assert.equal(result.counts.promotedWithDurationCount, 0);
   assert.equal(result.counts.promotedMissingDurationCount, 1);
-  assert.equal(result.noHumanCorrectionReady, false);
-  assert.deepEqual(result.blockers, [
-    'UNRESOLVED_ROLE_NOTE_EVIDENCE',
-    'PROMOTED_EVENTS_MISSING_DURATION_EVIDENCE',
-  ]);
+  assert.equal('blockers' in result, false);
+  assert.equal('noHumanCorrectionReady' in result, false);
 });
 
 test('null duration/end are not mistaken for real duration evidence', () => {
@@ -77,12 +76,13 @@ test('null duration/end are not mistaken for real duration evidence', () => {
   assert.equal(result.counts.promotedMissingDurationCount, 1);
 });
 
-test('fully resolved evidence can clear the diagnostics gate without a score', () => {
+test('fully resolved evidence stays descriptive and scoreless', () => {
   const input = adapted();
   input.onsets = [{ classification: 'unambiguous', candidates: [{ midi: 64, confidence: 0.9 }] }];
   input.promotedEvents = [{ midi: 64, start: 0.5, duration: 0.25 }];
   const result = summarizeNoteEvidence(input);
-  assert.deepEqual(result.blockers, []);
-  assert.equal(result.noHumanCorrectionReady, true);
+  assert.equal(result.counts.unresolvedPitchEvidenceCount, 0);
+  assert.equal(result.counts.promotedMissingDurationCount, 0);
   assert.equal(result.contract.compositeScore, null);
+  assert.equal(result.contract.ownsAcceptanceDecision, false);
 });
