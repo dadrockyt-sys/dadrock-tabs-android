@@ -8,6 +8,7 @@ on:
     paths:
       - '.github/workflows/songsterr-fresh-gomyway-midterm-note-evidence-canary.yml'
       - 'scripts/songsterr-fresh/analyze_structure_conditioned_notes.py'
+      - 'scripts/songsterr-fresh/estimate_selected_pitch_releases.py'
       - 'scripts/songsterr-fresh/build_note_evidence_context.mjs'
       - 'scripts/songsterr-fresh/build_note_evidence.mjs'
       - 'scripts/songsterr-fresh/run_note_evidence_pipeline_canary.mjs'
@@ -89,17 +90,26 @@ jobs:
             /tmp/songsterr-fresh-note-canary/adapted-structure-map.json \
             /tmp/songsterr-fresh-note-canary/note-evidence-context.json
 
-      - name: Analyze CPU note evidence against frozen structure
+      - name: Analyze CPU pitch evidence against frozen structure
         shell: bash
         run: |
           set -euo pipefail
           python scripts/songsterr-fresh/analyze_structure_conditioned_notes.py \
             --input /tmp/gomyway-midterm-analysis.wav \
             --context /tmp/songsterr-fresh-note-canary/note-evidence-context.json \
-            --output /tmp/songsterr-fresh-note-canary/raw-note-evidence.json \
+            --output /tmp/songsterr-fresh-note-canary/raw-note-evidence-pitch.json \
             --role guitar \
             --audio-source 'public/jimmy-paige-midterm-v1/gomyway-midterm-source.m4a@main#4dd709e3fa177b4daeed71ca97f0199757729d4b' \
             --expected-structure-signature 'fnv1a32:2f493225'
+
+      - name: Estimate conservative selected-pitch release evidence
+        shell: bash
+        run: |
+          set -euo pipefail
+          python scripts/songsterr-fresh/estimate_selected_pitch_releases.py \
+            --input /tmp/gomyway-midterm-analysis.wav \
+            --evidence /tmp/songsterr-fresh-note-canary/raw-note-evidence-pitch.json \
+            --output /tmp/songsterr-fresh-note-canary/raw-note-evidence.json
 
       - name: Validate and adapt note evidence
         run: |
@@ -125,7 +135,6 @@ jobs:
             'ROLE_RELEVANCE_UNRESOLVED',
             'POLYPHONY_UNRESOLVED',
             'PITCH_EVIDENCE_UNRESOLVED',
-            'DURATION_EVIDENCE_INCOMPLETE',
           ]) {
             if (!evaluation.failureReasons.includes(expected)) {
               throw new Error(`BASELINE_MUST_EXPOSE_${expected}`);
@@ -151,7 +160,7 @@ jobs:
         run: |
           python - <<'PY'
           import json
-          for name in ('raw-note-evidence.json', 'adapted-note-evidence.json', 'pipeline-canary-result.json'):
+          for name in ('raw-note-evidence-pitch.json', 'raw-note-evidence.json', 'adapted-note-evidence.json', 'pipeline-canary-result.json'):
               path = f'/tmp/songsterr-fresh-note-canary/{name}'
               with open(path, 'r', encoding='utf-8') as handle:
                   data = json.load(handle)
