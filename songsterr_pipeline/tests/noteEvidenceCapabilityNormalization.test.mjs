@@ -51,7 +51,7 @@ test('descriptive partial duration capability normalizes to partial without losi
 
   const adapted = adaptStructureConditionedNoteEvidence(raw, structureMap);
   assert.equal(adapted.capabilities.durationResolution, 'partial');
-  assert.equal(adapted.capabilities.durationResolutionDetail, 'partial-selected-pitch-release-only');
+  assert.equal(adapted.capabilityDetails.durationResolution, 'partial-selected-pitch-release-only');
   assert.equal(adapted.metrics.durationResolvedEvidenceCount, 1);
   assert.equal(adapted.promotedEvents[0].duration, 0.25);
   assert.equal(adapted.promotedEvents[0].durationConfidence, 0.8);
