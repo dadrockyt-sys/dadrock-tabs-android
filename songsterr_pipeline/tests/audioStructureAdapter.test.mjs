@@ -18,6 +18,7 @@ function rawAnalysis(overrides = {}) {
       numerator: 4,
       denominator: 4,
       confidence: 0.82,
+      phaseBeatOffset: 0,
     },
     meterCandidates: [
       { numerator: 4, denominator: 4, score: 0.8 },
@@ -38,7 +39,10 @@ function rawAnalysis(overrides = {}) {
       source: 'synthetic-full-mixture-analysis',
       analyzerVersion: 1,
     },
-    diagnostics: { beatFitRmseSeconds: 0 },
+    diagnostics: {
+      beatFitRmseSeconds: 0,
+      beatIntervalCoefficientOfVariation: 0,
+    },
     ...overrides,
   };
 }
@@ -49,6 +53,7 @@ test('audio structure adapter creates a first-class reference-blind map aligned 
   assert.equal(result.adapterContract.referenceBlind, true);
   assert.equal(result.adapterContract.structureFrozenBeforeNoteInference, true);
   assert.equal(result.adapterContract.legacyV143ScorerImported, false);
+  assert.equal(result.adapterContract.observedMeasureTempoPreserved, true);
   assert.equal(result.structureMap.referenceBlind, true);
   assert.equal(result.structureMap.pickupDurationSeconds, 0.5);
   assert.equal(result.structureMap.measures[0].pickup, true);
@@ -59,6 +64,7 @@ test('audio structure adapter creates a first-class reference-blind map aligned 
   assert.equal(result.alignmentDiagnostics.observedBeatCount, 8);
   assert.equal(result.alignmentDiagnostics.meanAbsoluteErrorSeconds, 0);
   assert.equal(result.alignmentDiagnostics.rootMeanSquareErrorSeconds, 0);
+  assert.equal(result.structureAcceptance.accepted, true);
 });
 
 test('audio structure adapter preserves raw confidence, candidates, diagnostics, and provenance without scoring them', () => {
@@ -73,6 +79,40 @@ test('audio structure adapter preserves raw confidence, candidates, diagnostics,
   assert.equal(result.structureMap.provenance.upstream.source, 'synthetic-full-mixture-analysis');
 });
 
+test('observed measure timing is preserved instead of flattened to one global BPM', () => {
+  const result = adaptFullMixtureStructureAnalysis(rawAnalysis({
+    durationSeconds: 5.1,
+    beatTimes: [0.5, 1, 1.5, 2, 2.5, 3.02, 3.54, 4.06, 4.58],
+    diagnostics: {
+      beatFitRmseSeconds: 0.04,
+      beatIntervalCoefficientOfVariation: 0.02,
+    },
+  }));
+
+  assert.equal(result.evidence.tempoSegmentCount, 3);
+  assert.ok(Math.abs(result.structureMap.measures[1].tempoBpm - 120) < 1e-9);
+  assert.ok(Math.abs(result.structureMap.measures[2].tempoBpm - (240 / 2.08)) < 1e-9);
+  assert.ok(result.alignmentDiagnostics.meanAbsoluteErrorSeconds < 1e-9);
+  assert.ok(result.alignmentDiagnostics.rootMeanSquareErrorSeconds < 1e-9);
+});
+
+test('structure acceptance exposes independent reasons instead of hiding weak evidence in a composite score', () => {
+  const result = adaptFullMixtureStructureAnalysis(rawAnalysis({
+    selectedMeter: {
+      numerator: 4,
+      denominator: 4,
+      confidence: 0.4,
+      phaseBeatOffset: 0,
+    },
+    pickup: { durationSeconds: 0.5, confidence: 0.35 },
+  }));
+
+  assert.equal(result.structureAcceptance.accepted, false);
+  assert.ok(result.structureAcceptance.reasons.includes('METER_CONFIDENCE_LOW'));
+  assert.ok(result.structureAcceptance.reasons.includes('DOWNBEAT_CONFIDENCE_LOW'));
+  assert.equal(Object.hasOwn(result.structureAcceptance, 'score'), false);
+});
+
 test('audio structure adapter fails closed on non-reference-blind input', () => {
   assert.throws(() => adaptFullMixtureStructureAnalysis(rawAnalysis({
     referenceBlind: false,
@@ -85,7 +125,7 @@ test('audio structure adapter fails closed when tempo/meter beat-unit semantics 
   })), /TEMPO_BEAT_UNIT_UNSUPPORTED/);
 
   assert.throws(() => adaptFullMixtureStructureAnalysis(rawAnalysis({
-    selectedMeter: { numerator: 6, denominator: 8, confidence: 0.8 },
+    selectedMeter: { numerator: 6, denominator: 8, confidence: 0.8, phaseBeatOffset: 0 },
   })), /METER_DENOMINATOR_UNSUPPORTED/);
 });
 
