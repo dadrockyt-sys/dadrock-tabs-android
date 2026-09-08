@@ -93,6 +93,27 @@ Automatic verification:
 
 Result: unrelated cleanup workflow noise is closed green without touching V143 musical/model/renderer behavior.
 
+## PRESERVED-CAPTURE PDF WORKFLOWS — HISTORICAL AUDIT CLOSED
+
+Audited the three deterministic preserved-capture workflows without manual dispatch or model/GPU/professional scoring activity:
+- `.github/workflows/v143-professional-pdf-fixture.yml`
+- `.github/workflows/v143-render-real-candidate-pdf.yml`
+- `.github/workflows/v143-render-v5-shadow-professional-pdf.yml`
+
+Repository history already contains bot-authored persisted successful evidence from each harness:
+- professional fixture: `a5655d56df411cd3011c42807dc9119019b9858d`
+- real candidate: `2470225d9cb726e35a07459e29783997a3447699`
+- V5 shadow: `f160d2a7c0d047584650913d182cf3b427b8d1a2`
+
+The real-candidate persisted evidence records **967 events / 113 measures / 725 onsets**, `reference-free`, Modal unused, and Production untouched. The V5-shadow persisted evidence likewise records reference-free validation with Modal and Production untouched.
+
+Conclusion:
+- no reproducible current deterministic renderer defect was established
+- old red/dashboard entries are superseded historical harness/persistence noise unless a current deterministic run reproduces them
+- no renderer event construction, score structure, thresholds, scheduler settings, async timing, endpoint pin, or model path was changed for this audit
+- no preserved-capture workflow was manually dispatched
+- no model-bearing, paid/GPU, professional-scoring, or Production activity occurred
+
 ## CURRENT VERIFIED STATE
 
 - crash-loop ownership defect explained and fixed
@@ -107,6 +128,7 @@ Result: unrelated cleanup workflow noise is closed green without touching V143 m
 - exact-event fail-closed validation still present
 - real-audio canary automatic trigger removed and remains manual-only
 - cleanup-tab-preview workflow repaired and green
+- preserved-capture PDF historical audit closed with successful persisted evidence for all three harnesses
 - score structure preserved: **725 / 970 / 967 / 3 / 0**
 - async lifetime preserved: **1800 / 1200 / 600**
 - endpoint blob pin preserved
@@ -114,15 +136,13 @@ Result: unrelated cleanup workflow noise is closed green without touching V143 m
 
 ## NEXT SAFE WORK — EXACT ORDER
 
-1. Review historical/current status of deterministic preserved-capture PDF workflows only if dashboard cleanup is still desired:
-   - `v143-professional-pdf-fixture.yml`
-   - `v143-render-real-candidate-pdf.yml`
-   - `v143-render-v5-shadow-professional-pdf.yml`
-2. Inspect logs before changing anything.
-3. Repair only stale deterministic harness assertions/transforms if necessary.
+1. Inspect recent **automatic** branch failures only for remaining deterministic/source-only CI noise.
+2. For any candidate, inspect source/history/log evidence before changing anything.
+3. Repair only stale deterministic harness assertions/transforms or CI registration issues when a current defect is actually established.
 4. Never alter frozen score structure, renderer event construction, async timing constants, model thresholds, scheduler parameters, or endpoint pin to make an old harness green.
-5. Confirm any source-only cleanup does not auto-start `V143 AI Tab Real Audio Product Canary`.
-6. Keep this checkpoint updated after each meaningful diagnosis/fix.
+5. Never manually dispatch model/GPU/professional-scoring workflows without new explicit user authorization.
+6. Confirm any source-only cleanup does not auto-start `V143 AI Tab Real Audio Product Canary`.
+7. Keep this checkpoint updated after each meaningful diagnosis/fix.
 
 ## FRESH CHAT NON-NEGOTIABLES
 
