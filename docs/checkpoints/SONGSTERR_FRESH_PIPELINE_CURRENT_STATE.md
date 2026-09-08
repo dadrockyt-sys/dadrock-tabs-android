@@ -38,9 +38,24 @@ The legacy structured renderer uses measure + integer 16th-step placement. The f
 - Old branch `v143-contextual-prune-lobo` is archive/evidence only.
 - Historical Gomyway/V143 scorer contracts are not fresh acceptance criteria.
 - Do not touch Production or main.
-- Do not dispatch Modal/GPU/model-bearing workflows, professional scorers, training, optimizer sweeps, or real-audio canaries without explicit user authorization.
+- Do not dispatch Modal/GPU/model-bearing workflows, professional scorers, training, optimizer sweeps, or unapproved real-audio fixtures without explicit user authorization.
 - A generic request to “continue” is **not** authorization to dispatch model/GPU/real-audio work.
 - CPU-only deterministic tests on the fresh branch are allowed.
+
+## CURRENT AUTHORIZED REAL-AUDIO SCOPE
+
+On 2026-09-08 the user explicitly authorized the `gomywaymidterm` audio in the public folder for the fresh pipeline.
+
+Resolved exact fixture on `main`:
+- path: `public/jimmy-paige-midterm-v1/gomyway-midterm-source.m4a`;
+- Git blob SHA: `4dd709e3fa177b4daeed71ca97f0199757729d4b`;
+- size: 3,464,988 bytes.
+
+The fresh branch does **not** copy/merge/cherry-pick main. The authorized canary downloads only that exact public fixture and verifies its Git blob SHA before analysis.
+
+The filename containing “gomyway” does **not** authorize resuming archived Gomyway/V143 code, scorer percentages, gates, or references. It is only an audio fixture.
+
+Current authorization is being used for **CPU-only reference-blind audio structure analysis**. No Modal/GPU/model-bearing note inference has been authorized or run in this phase.
 
 ## CURRENT FRESH PIPELINE
 
@@ -50,6 +65,16 @@ Namespace: `songsterr_pipeline/`
 - `structureMap.mjs` — explicit tempo/meter/feel/pickup/measures/downbeats/beats/subdivisions, confidence/provenance, boundary validation.
 - `structureRhythmNotation.mjs` — structure-map-driven starts/ends, ties, rests, syncopation, displacement diagnostics, stable source identity.
 - `contextualRhythmSpelling.mjs` — standard/dotted/triplet values, weak-beat dotted merges, strong-beat tie preservation, explicit rest spelling, feel diagnostics.
+
+### Real-audio structure boundary
+- `audioStructureAdapter.mjs` — validates reference-blind full-mixture timing evidence and converts it into the first-class `structureMap` contract.
+- Requires explicit quarter-note tempo semantics and currently supports conservative 3/4 or 4/4 quarter-note meter projection only; unsupported beat-unit/meter semantics fail closed.
+- Preserves raw tempo/meter/feel confidence, meter candidates, upstream diagnostics, provenance, and observed beat alignment diagnostics.
+- Emits `structureFrozenBeforeNoteInference: true` and `legacyV143ScorerImported: false`.
+
+CPU analyzer outside the pure deterministic namespace:
+- `scripts/songsterr-fresh/analyze_full_mixture_structure.py` — reference-blind full-mixture beat/tempo, conservative 3/4-vs-4/4 bar-phase, and straight/triplet feel evidence; no note inference and no legacy scorer.
+- `scripts/songsterr-fresh/build_structure_map.mjs` — reads the raw audio-analysis JSON, applies `audioStructureAdapter.mjs`, writes the frozen structure-map evidence, and prints raw alignment/confidence diagnostics.
 
 ### Playability and phrase motion
 - `playableShapeDecoder.mjs` — exact-MIDI candidate positions/shapes, unique strings, physical constraints, role-aware policies, explicit rejection reasons, no pitch dropping.
@@ -63,7 +88,6 @@ Namespace: `songsterr_pipeline/`
 ### Deterministic orchestration
 - `deterministicPipeline.mjs` — single non-model composition entry point:
   **structureMap + note evidence → structure-driven event schema → contextual rhythm spelling → optimized fretboard path → raw evaluator → product-shell payload**.
-- Explicit metadata: `modelOrAudioAnalyzerInvoked: false`, `legacyV143ScorerImported: false`.
 - It does not infer audio, call a model, touch a reference tab, or dispatch any remote analyzer.
 
 ## IMPORTANT COMMITS
@@ -80,6 +104,14 @@ Core architecture:
 - `9a9de7247973a127bc1f8b4709cd5956293e0dbb` — product-shell adapter.
 - `d22a82b0fb947aa83c35c2f707bf1126256d4ccb` — deterministic end-to-end orchestrator.
 
+Real-audio structure phase:
+- `34c8b507865d37415c074db3d631fada403fd3ac` — clean full-mixture structure adapter.
+- `9c8e420ff2ccf52adca277bb9335c7feb45f5db2` — five structure-adapter contract tests.
+- `73c95d8e3d99df6f31df2f2ed10dc950393bc1bd` — CPU-only reference-blind full-mixture structure analyzer.
+- `edeb37ccbbb9c79a84786b966ed683ecc6c48e5c` — raw-analysis → frozen-structure-map runner.
+- `f868dc8d18d6bda0a0392755f4a74a60220deecb` — first authorized real-audio structure canary workflow.
+- `0ac5936e0c9640dbd0ab2fbf5bab740e6c24d798` — canary fix to install the audio decoder explicitly.
+
 Recent verification/guard commits:
 - `acae3c6779feb61c8a06152a92df938667980de5` — cross-layer deterministic composition tests.
 - `f6cc087abf5fdaf546e973b7b8c605dbf2e8266e` — automatic CPU-only fresh-branch CI.
@@ -89,99 +121,72 @@ Recent verification/guard commits:
 
 Workflow: `.github/workflows/songsterr-fresh-pipeline-v1-tests.yml`.
 
-It now runs on:
-- manual dispatch;
-- pushes to `songsterr-fresh-pipeline-v1` touching `songsterr_pipeline/**` or this workflow.
+It runs on manual dispatch and pushes to `songsterr-fresh-pipeline-v1` touching `songsterr_pipeline/**` or the workflow.
 
-Runtime:
-- GitHub-hosted Ubuntu 24.04;
-- Node test runtime configured as Node `22` (green run used v22.23.2);
-- command: `npm test` inside `songsterr_pipeline`;
-- package command: `node --test tests/*.test.mjs`.
-
-Permissions are read-only contents. No model, audio, GPU, scorer, deployment, training, or secret-consuming step is present.
+Runtime is GitHub-hosted Ubuntu + Node 22, running `npm test` inside `songsterr_pipeline` (`node --test tests/*.test.mjs`). Permissions are read-only contents.
 
 ## VALIDATION STATUS — CURRENT PROVEN BASELINE
 
-### Branch-wide GitHub Actions proof
+### Branch-wide deterministic GitHub Actions proof
 
-Run ID: `34191214663`
-Job ID: `101949496020`
-Tested commit: `28338aff0fb279e6af3742227629a3c7c07bbac9`
+Adapter test run ID: `34191759524`
+Job ID: `101951099988`
+Tested commit: `9c8e420ff2ccf52adca277bb9335c7feb45f5db2`
 
-Actual Node TAP result from the GitHub Actions log:
-- tests: **62**
-- pass: **62**
+Actual Node TAP result:
+- tests: **67**
+- pass: **67**
 - fail: **0**
 - cancelled: **0**
 - skipped: **0**
 - todo: **0**
 
-This is now the canonical deterministic baseline. It supersedes the earlier need to qualify later layers as isolated-only proofs.
+The five new tests prove:
+- reference-blind audio structure evidence becomes a first-class map aligned to observed beats;
+- raw confidence/candidates/diagnostics/provenance remain visible rather than being converted into a legacy score;
+- non-reference-blind input is rejected;
+- unsupported tempo beat-unit or meter denominator semantics fail closed;
+- adapter output is deterministic.
 
-The immediately preceding branch-wide run at `acae3c6779feb61c8a06152a92df938667980de5` also passed **61/61**; the 62nd test is the isolation boundary guard.
+This supersedes the prior 62/62 deterministic baseline while preserving all earlier coverage.
 
-### What the 62-test baseline covers
+### First authorized real-audio canary attempt
 
-The suite collectively proves synthetic/deterministic behavior for:
-- structure conditioning and validation;
-- pickup-aware measure timing;
-- stable non-chain onset clustering;
-- exact MIDI reconstruction;
-- event-count and MIDI preservation;
-- first-class pickup/downbeat/measure/beat/subdivision maps;
-- tempo and meter changes at exact measure boundaries;
-- rejection of illegal mid-measure structure changes;
-- straight/triplet timing differences;
-- beat/measure/pickup ties;
-- rest diagnostics without fake notes;
-- unresolved duration staying unresolved;
-- contextual standard/dotted/triplet rhythm spelling;
-- weak/strong beat tie decisions;
-- explicit rest spelling;
-- constrained chord/shape playability;
-- role-aware open-string preferences;
-- impossible-shape rejection without note dropping;
-- multiple legal candidate shape states;
-- deterministic phrase fretboard path optimization;
-- reduced targeted hand movement versus independent local choices;
-- structure/timing/notation invariance during fretboard optimization;
-- raw scoreless evaluator and independent failure codes;
-- product-shell mapping into the existing renderer/PDF boundary;
-- fail-closed pickup/triplet legacy-render fallback;
-- full deterministic cross-layer composition;
-- unresolved phrase fingering remaining explicit end-to-end;
-- deterministic repeated pipeline output;
-- fresh namespace isolation from archived/model-bearing runtime dependencies.
+Workflow: `.github/workflows/songsterr-fresh-gomyway-midterm-structure-canary.yml`.
+
+Run ID: `34191849623`
+Tested commit: `f868dc8d18d6bda0a0392755f4a74a60220deecb`
+
+Verified before failure:
+- exact authorized fixture downloaded successfully;
+- `git hash-object` matched `4dd709e3fa177b4daeed71ca97f0199757729d4b`.
+
+Failure was environment-only before analysis:
+- runner did not have `ffmpeg` installed;
+- decode step failed with `ffmpeg: command not found`;
+- no structure inference, note inference, or model execution occurred in that failed run.
+
+Fix commit `0ac5936e0c9640dbd0ab2fbf5bab740e6c24d798` installs `ffmpeg` explicitly before decoding. Retry run `34191909876` is the current authorized canary run; do not claim its musical result until it completes and the raw artifact/log is inspected.
 
 ## ISOLATION BOUNDARY GUARD
 
-`tests/boundaryGuard.test.mjs` scans every root fresh `.mjs` source module and fails if the namespace:
-- imports a non-local runtime dependency;
-- imports a path containing archived/model-bearing identifiers such as V143, Gomyway, Modal, analyzer, professional, or reference;
-- performs `fetch(...)` network calls;
-- introduces `XMLHttpRequest`;
-- uses child-process execution primitives.
+`tests/boundaryGuard.test.mjs` scans every root fresh `.mjs` source module and fails if the deterministic namespace imports non-local/archived/model-bearing runtime dependencies, performs network fetches, or launches external processes.
 
-The guard passed in the 62/62 branch-wide run.
-
-This is a mechanical regression guard in addition to the written project rule; it helps prevent accidental contamination of the fresh deterministic namespace.
+The real-audio ingestion/analyzer scripts live outside `songsterr_pipeline/`; the deterministic namespace receives only validated JSON evidence through `audioStructureAdapter.mjs`.
 
 ## CURRENT ENGINEERING BOUNDARY
 
-The deterministic structure → rhythm → playability → phrase path → evaluator → product-shell path is composed behind one clean entry point, protected by automatic branch CI, and currently **62/62 green**.
+The deterministic structure → rhythm → playability → phrase path → evaluator → product-shell path is composed and **67/67 green**.
 
-The next meaningful phase is the first real-audio/model adapter, but that still requires **explicit user authorization**. Do not treat generic “continue” as authorization for model/GPU/real-audio execution.
+The user has now explicitly authorized the exact `gomyway-midterm-source.m4a` fixture for real-audio work. The current implementation is intentionally executing **structure first** and freezing that map before any note inference.
 
-When explicitly authorized, the clean real-audio path must be:
+Do not proceed to a model/GPU-bearing note-evidence stage unless separately and explicitly authorized. A CPU/reference-blind note-evidence experiment may only follow after the real-audio structure map itself is validated and must not rewrite the frozen structure.
+
+Clean authorized order remains:
 
 **full-mixture structure analysis → `structureMap` → role-conditioned note evidence → `deterministicPipeline.mjs` → product-shell output**
 
 Do not import the archived V143 scorer/gate maze.
-
-## NEXT SAFE WORK WITHOUT REAL-AUDIO AUTHORIZATION
-
-The deterministic implementation is green and the remaining major engineering work crosses into the explicitly protected real-audio/model phase. Safe maintenance work may continue, but do not manufacture busywork or weaken the boundary merely to keep changing code.
 
 ## NON-NEGOTIABLES
 
@@ -193,5 +198,6 @@ The deterministic implementation is green and the remaining major engineering wo
 - Never drop pitches merely to satisfy shape/path/legacy-render projection.
 - Preserve existing `/ai-tab` preview → unlock → full PDF → email/download customer flow.
 - No Production or main changes.
-- No accidental Modal/GPU/model/professional-scorer/training/real-audio activity.
+- No accidental Modal/GPU/model/professional-scorer/training activity.
+- Real-audio work must stay within explicit user authorization.
 - Keep this checkpoint updated after each meaningful milestone.
