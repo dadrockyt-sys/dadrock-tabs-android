@@ -45,19 +45,11 @@ function normalizeDurationEvidence(onset, onsetIndex, sourceStart, structureMap)
   const hasDuration = onset?.durationSeconds !== undefined && onset?.durationSeconds !== null;
 
   if (!hasEnd && !hasDuration) {
-    return {
-      sourceEnd: null,
-      durationSeconds: null,
-      durationConfidence: null,
-    };
+    return { sourceEnd: null, durationSeconds: null, durationConfidence: null };
   }
 
-  let sourceEnd = hasEnd
-    ? finite(onset.sourceEnd, `onsets[${onsetIndex}].sourceEnd`)
-    : null;
-  let durationSeconds = hasDuration
-    ? finite(onset.durationSeconds, `onsets[${onsetIndex}].durationSeconds`)
-    : null;
+  let sourceEnd = hasEnd ? finite(onset.sourceEnd, `onsets[${onsetIndex}].sourceEnd`) : null;
+  let durationSeconds = hasDuration ? finite(onset.durationSeconds, `onsets[${onsetIndex}].durationSeconds`) : null;
 
   if (durationSeconds !== null && durationSeconds <= 0) {
     throw new Error(`onsets[${onsetIndex}].durationSeconds must be positive.`);
@@ -142,15 +134,19 @@ function normalizeOnset(onset, onsetIndex, structureMap) {
 }
 
 function normalizeCapabilities(raw) {
-  const capabilities = raw?.capabilities && typeof raw.capabilities === 'object'
-    ? raw.capabilities
-    : {};
+  const capabilities = raw?.capabilities && typeof raw.capabilities === 'object' ? raw.capabilities : {};
+  const rawDurationResolution = typeof capabilities.durationResolution === 'string'
+    ? capabilities.durationResolution
+    : '';
+  const durationResolution = ['none', 'partial', 'complete'].includes(rawDurationResolution)
+    ? rawDurationResolution
+    : (rawDurationResolution.startsWith('partial-') ? 'partial' : 'undeclared');
+
   return {
     roleRelevanceResolved: capabilities.roleRelevanceResolved === true,
     polyphonyResolved: capabilities.polyphonyResolved === true,
-    durationResolution: ['none', 'partial', 'complete'].includes(capabilities.durationResolution)
-      ? capabilities.durationResolution
-      : 'undeclared',
+    durationResolution,
+    durationResolutionDetail: rawDurationResolution || 'undeclared',
     instrumentIsolation: typeof capabilities.instrumentIsolation === 'string'
       ? capabilities.instrumentIsolation
       : 'undeclared',
