@@ -1,0 +1,317 @@
+name: Songsterr Fresh Model Guitar Polyphonic Canary
+
+on:
+  workflow_dispatch:
+  push:
+    branches:
+      - songsterr-fresh-pipeline-v1
+    paths:
+      - '.github/workflows/songsterr-fresh-model-guitar-polyphonic-canary.yml'
+      - 'scripts/songsterr-fresh/transcribe_isolated_guitar_basic_pitch.py'
+      - 'scripts/songsterr-fresh/build_isolated_polyphonic_note_evidence.mjs'
+      - 'scripts/songsterr-fresh/run_model_note_evidence_pipeline_canary.mjs'
+      - 'scripts/songsterr-fresh/estimate_selected_pitch_releases.py'
+      - 'scripts/songsterr-fresh/build_note_evidence_context.mjs'
+      - 'scripts/songsterr-fresh/build_note_evidence.mjs'
+      - 'songsterr_pipeline/noteEventExposure.mjs'
+      - 'songsterr_pipeline/noteEvidenceAdapter.mjs'
+      - 'songsterr_pipeline/noteEvidenceDiagnostics.mjs'
+      - 'songsterr_pipeline/noteEvidenceEvaluator.mjs'
+      - 'songsterr_pipeline/structureIdentity.mjs'
+      - 'songsterr_pipeline/tests/noteEventExposure.test.mjs'
+      - 'songsterr_pipeline/tests/noteEvidenceAdapter.test.mjs'
+      - 'songsterr_pipeline/tests/noteEvidenceDiagnostics.test.mjs'
+      - 'songsterr_pipeline/tests/noteEvidenceEvaluator.test.mjs'
+
+permissions:
+  contents: read
+
+jobs:
+  model-guitar-canary:
+    runs-on: ubuntu-latest
+    timeout-minutes: 60
+    steps:
+      - name: Check out fresh branch
+        uses: actions/checkout@v4
+
+      - name: Set up Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.10'
+
+      - name: Fetch exact authorized audio fixture
+        shell: bash
+        run: |
+          set -euo pipefail
+          curl --fail --location --silent --show-error --retry 3 \
+            'https://raw.githubusercontent.com/dadrockyt-sys/dadrock-tabs-android/main/public/jimmy-paige-midterm-v1/gomyway-midterm-source.m4a' \
+            --output /tmp/gomyway-midterm-source.m4a
+          ACTUAL_BLOB_SHA="$(git hash-object /tmp/gomyway-midterm-source.m4a)"
+          EXPECTED_BLOB_SHA='4dd709e3fa177b4daeed71ca97f0199757729d4b'
+          echo "Authorized fixture blob: ${ACTUAL_BLOB_SHA}"
+          test "${ACTUAL_BLOB_SHA}" = "${EXPECTED_BLOB_SHA}"
+
+      - name: Install audio decoder
+        shell: bash
+        run: |
+          set -euo pipefail
+          sudo apt-get update -qq
+          sudo apt-get install -y ffmpeg
+
+      - name: Decode analysis and separation WAVs
+        shell: bash
+        run: |
+          set -euo pipefail
+          ffmpeg -hide_banner -loglevel error -y \
+            -i /tmp/gomyway-midterm-source.m4a \
+            -ac 1 -ar 22050 \
+            /tmp/gomyway-midterm-analysis.wav
+          ffmpeg -hide_banner -loglevel error -y \
+            -i /tmp/gomyway-midterm-source.m4a \
+            -ac 2 -ar 44100 \
+            /tmp/gomyway-midterm-separation.wav
+
+      - name: Install pinned model and analysis dependencies
+        shell: bash
+        run: |
+          set -euo pipefail
+          python -m pip install --disable-pip-version-check \
+            demucs==4.1.0 \
+            basic-pitch==0.4.0 \
+            librosa==0.11.0 \
+            soundfile==0.13.1
+          python - <<'PY'
+          import importlib.metadata
+          for name in ('demucs', 'basic-pitch', 'librosa', 'soundfile', 'torch'):
+              print(f'{name}=={importlib.metadata.version(name)}')
+          PY
+
+      - name: Rebuild accepted frozen structure reference-blind
+        shell: bash
+        run: |
+          set -euo pipefail
+          mkdir -p /tmp/songsterr-fresh-model-canary
+          python scripts/songsterr-fresh/analyze_full_mixture_structure.py \
+            --input /tmp/gomyway-midterm-analysis.wav \
+            --output /tmp/songsterr-fresh-model-canary/raw-structure-analysis.json \
+            --audio-source 'public/jimmy-paige-midterm-v1/gomyway-midterm-source.m4a@main#4dd709e3fa177b4daeed71ca97f0199757729d4b'
+          node scripts/songsterr-fresh/build_structure_map.mjs \
+            /tmp/songsterr-fresh-model-canary/raw-structure-analysis.json \
+            /tmp/songsterr-fresh-model-canary/adapted-structure-map.json
+          node scripts/songsterr-fresh/build_note_evidence_context.mjs \
+            /tmp/songsterr-fresh-model-canary/adapted-structure-map.json \
+            /tmp/songsterr-fresh-model-canary/note-evidence-context.json
+          node --input-type=module - <<'NODE'
+          import { readFile } from 'node:fs/promises';
+          const context = JSON.parse(await readFile('/tmp/songsterr-fresh-model-canary/note-evidence-context.json', 'utf8'));
+          if (context?.structureIdentity?.signature !== 'fnv1a32:2f493225') {
+            throw new Error(`FROZEN_STRUCTURE_IDENTITY_CHANGED:${context?.structureIdentity?.signature}`);
+          }
+          NODE
+
+      - name: Separate guitar stem with Demucs htdemucs_6s
+        shell: bash
+        run: |
+          set -euo pipefail
+          python -m demucs \
+            -n htdemucs_6s \
+            --device cpu \
+            --shifts 1 \
+            --overlap 0.25 \
+            --segment 7 \
+            -o /tmp/songsterr-fresh-model-canary/separated \
+            /tmp/gomyway-midterm-separation.wav
+          STEM='/tmp/songsterr-fresh-model-canary/separated/htdemucs_6s/gomyway-midterm-separation/guitar.wav'
+          test -s "$STEM"
+          STEM_SHA="$(sha256sum "$STEM" | awk '{print $1}')"
+          echo "Guitar stem sha256: ${STEM_SHA}"
+          python - <<PY
+          import importlib.metadata
+          import json
+          from pathlib import Path
+          import soundfile as sf
+          stem = Path('$STEM')
+          info = sf.info(stem)
+          payload = {
+              'contract': 'songsterr-fresh-demucs-guitar-separation-v1',
+              'referenceBlind': True,
+              'package': 'demucs',
+              'packageVersion': importlib.metadata.version('demucs'),
+              'model': 'htdemucs_6s',
+              'stem': 'guitar',
+              'device': 'cpu',
+              'gpuInvoked': False,
+              'sourceAudio': 'public/jimmy-paige-midterm-v1/gomyway-midterm-source.m4a@main#4dd709e3fa177b4daeed71ca97f0199757729d4b',
+              'stemSha256': '$STEM_SHA',
+              'sampleRate': info.samplerate,
+              'channels': info.channels,
+              'frames': info.frames,
+              'durationSeconds': info.duration,
+              'legacyV143ScorerImported': False,
+              'referenceTabUsed': False,
+          }
+          with open('/tmp/songsterr-fresh-model-canary/separation-manifest.json', 'w', encoding='utf-8') as handle:
+              json.dump(payload, handle, indent=2)
+              handle.write('\n')
+          print(json.dumps(payload))
+          PY
+
+      - name: Infer polyphonic guitar notes with Basic Pitch
+        shell: bash
+        run: |
+          set -euo pipefail
+          STEM='/tmp/songsterr-fresh-model-canary/separated/htdemucs_6s/gomyway-midterm-separation/guitar.wav'
+          STEM_SHA="$(sha256sum "$STEM" | awk '{print $1}')"
+          python scripts/songsterr-fresh/transcribe_isolated_guitar_basic_pitch.py \
+            --input "$STEM" \
+            --output /tmp/songsterr-fresh-model-canary/basic-pitch-guitar-notes.json \
+            --audio-source 'public/jimmy-paige-midterm-v1/gomyway-midterm-source.m4a@main#4dd709e3fa177b4daeed71ca97f0199757729d4b' \
+            --separation-source "demucs==4.1.0/htdemucs_6s:guitar@sha256:${STEM_SHA}"
+
+      - name: Build duration-free isolated polyphonic note evidence
+        shell: bash
+        run: |
+          set -euo pipefail
+          node scripts/songsterr-fresh/build_isolated_polyphonic_note_evidence.mjs \
+            /tmp/songsterr-fresh-model-canary/note-evidence-context.json \
+            /tmp/songsterr-fresh-model-canary/basic-pitch-guitar-notes.json \
+            /tmp/songsterr-fresh-model-canary/raw-model-note-evidence-duration-free.json
+          python - <<'PY'
+          import json
+          path = '/tmp/songsterr-fresh-model-canary/raw-model-note-evidence-duration-free.json'
+          with open(path, 'r', encoding='utf-8') as handle:
+              data = json.load(handle)
+          caps = data.get('capabilities', {})
+          if caps.get('roleRelevanceResolved') is not True:
+              raise SystemExit('MODEL_GUITAR_ROLE_MUST_BE_RESOLVED_BY_SEPARATION')
+          if caps.get('polyphonyResolved') is not True:
+              raise SystemExit('MODEL_POLYPHONY_MUST_BE_RESOLVED')
+          if caps.get('durationResolution') != 'none':
+              raise SystemExit('MODEL_PITCH_STAGE_MUST_NOT_OWN_DURATION')
+          if data.get('provenance', {}).get('modelInvoked') is not True:
+              raise SystemExit('MODEL_PROVENANCE_MISSING')
+          leaking = [
+              onset.get('onsetId')
+              for onset in data.get('onsets', [])
+              if onset.get('durationSeconds') is not None or onset.get('sourceEnd') is not None
+          ]
+          if leaking:
+              raise SystemExit(f'MODEL_NOTE_END_LEAK_INTO_DURATION:{leaking[:5]}')
+          if data.get('diagnostics', {}).get('modelNoteEndsUsedAsDuration') is not False:
+              raise SystemExit('MODEL_NOTE_ENDS_MUST_REMAIN_DIAGNOSTIC_ONLY')
+          PY
+
+      - name: Apply sole release authority to authorized model evidence
+        shell: bash
+        run: |
+          set -euo pipefail
+          STEM='/tmp/songsterr-fresh-model-canary/separated/htdemucs_6s/gomyway-midterm-separation/guitar.wav'
+          python scripts/songsterr-fresh/estimate_selected_pitch_releases.py \
+            --allow-model-upstream \
+            --input "$STEM" \
+            --evidence /tmp/songsterr-fresh-model-canary/raw-model-note-evidence-duration-free.json \
+            --output /tmp/songsterr-fresh-model-canary/raw-model-note-evidence.json
+          python - <<'PY'
+          import json
+          path = '/tmp/songsterr-fresh-model-canary/raw-model-note-evidence.json'
+          with open(path, 'r', encoding='utf-8') as handle:
+              data = json.load(handle)
+          release = data.get('diagnostics', {}).get('releaseEvidence', {})
+          if release.get('contract') != 'songsterr-fresh-cpu-spectral-release-evidence-v2':
+              raise SystemExit('SOLE_RELEASE_CONTRACT_CHANGED')
+          if release.get('soleDurationAuthority') is not True or release.get('requiresDurationFreeInput') is not True:
+              raise SystemExit('SOLE_RELEASE_AUTHORITY_NOT_PRESERVED')
+          if release.get('modelUpstreamAllowedThisRun') is not True:
+              raise SystemExit('AUTHORIZED_MODEL_UPSTREAM_NOT_RECORDED')
+          if release.get('upstreamModelInvoked') is not True:
+              raise SystemExit('MODEL_UPSTREAM_PROVENANCE_NOT_RECORDED')
+          if data.get('provenance', {}).get('durationEvidenceModelInvoked') is not False:
+              raise SystemExit('RELEASE_STAGE_MUST_REMAIN_NONMODEL_DURATION_AUTHORITY')
+          PY
+
+      - name: Validate and adapt model note evidence
+        shell: bash
+        run: |
+          set -euo pipefail
+          node scripts/songsterr-fresh/build_note_evidence.mjs \
+            /tmp/songsterr-fresh-model-canary/note-evidence-context.json \
+            /tmp/songsterr-fresh-model-canary/raw-model-note-evidence.json \
+            /tmp/songsterr-fresh-model-canary/adapted-model-note-evidence.json
+
+      - name: Exercise model evidence through deterministic pipeline fail-closed
+        shell: bash
+        run: |
+          set -euo pipefail
+          node scripts/songsterr-fresh/run_model_note_evidence_pipeline_canary.mjs \
+            /tmp/songsterr-fresh-model-canary/adapted-structure-map.json \
+            /tmp/songsterr-fresh-model-canary/adapted-model-note-evidence.json \
+            /tmp/songsterr-fresh-model-canary/model-pipeline-canary-result.json
+          node --input-type=module - <<'NODE'
+          import { readFile } from 'node:fs/promises';
+          const result = JSON.parse(await readFile('/tmp/songsterr-fresh-model-canary/model-pipeline-canary-result.json', 'utf8'));
+          const failures = result.evidenceEvaluation?.failureReasons ?? [];
+          if (!failures.includes('MODEL_EVIDENCE_VALIDATION_PENDING')) {
+            throw new Error('MODEL_VALIDATION_GATE_MUST_BLOCK_DELIVERY');
+          }
+          for (const cleared of ['ROLE_RELEVANCE_UNRESOLVED', 'POLYPHONY_UNRESOLVED', 'PITCH_EVIDENCE_UNRESOLVED']) {
+            if (failures.includes(cleared)) throw new Error(`MODEL_CANARY_DID_NOT_CLEAR_${cleared}`);
+          }
+          const exposure = result.eventExposure?.metrics ?? {};
+          if (!(exposure.pitchResolvedEventCount > 0)) throw new Error('MODEL_CANARY_EXPECTS_PITCH_EVENTS');
+          if (exposure.roleAcceptedEventCount !== exposure.pitchResolvedEventCount) {
+            throw new Error('MODEL_CANARY_ROLE_ACCEPTED_COUNT_MISMATCH');
+          }
+          if (exposure.completeTabEligibleEventCount !== 0) {
+            throw new Error('MODEL_CANARY_MUST_EXPOSE_ZERO_CUSTOMER_EVENTS_PENDING_VALIDATION');
+          }
+          if (result.pipelineSummary?.deliveryReady !== false) {
+            throw new Error('MODEL_CANARY_MUST_FAIL_CLOSED_FROM_DELIVERY');
+          }
+          NODE
+
+      - name: Re-run fresh deterministic suite
+        working-directory: songsterr_pipeline
+        run: npm test
+
+      - name: Show compact model diagnostics
+        shell: bash
+        run: |
+          python - <<'PY'
+          import json
+          base = '/tmp/songsterr-fresh-model-canary'
+          for name in (
+              'separation-manifest.json',
+              'basic-pitch-guitar-notes.json',
+              'raw-model-note-evidence-duration-free.json',
+              'raw-model-note-evidence.json',
+              'adapted-model-note-evidence.json',
+              'model-pipeline-canary-result.json',
+          ):
+              with open(f'{base}/{name}', 'r', encoding='utf-8') as handle:
+                  data = json.load(handle)
+              print(f'--- {name} ---')
+              print(json.dumps({
+                  'contract': data.get('contract'),
+                  'model': data.get('model'),
+                  'capabilities': data.get('capabilities'),
+                  'diagnostics': data.get('diagnostics'),
+                  'metrics': data.get('metrics'),
+                  'eventExposure': data.get('eventExposure'),
+                  'evidenceEvaluation': data.get('evidenceEvaluation'),
+                  'pipelineSummary': data.get('pipelineSummary'),
+                  'provenance': data.get('provenance'),
+              }, indent=2))
+          PY
+
+      - name: Upload model canary evidence
+        uses: actions/upload-artifact@v4
+        with:
+          name: songsterr-fresh-model-guitar-polyphonic-evidence
+          path: /tmp/songsterr-fresh-model-canary/*.json
+          if-no-files-found: error
+          retention-days: 14
