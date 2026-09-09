@@ -169,31 +169,38 @@ Important unresolved quality signal:
 - This is not a CQT transform-edge artifact anymore.
 - It must **not** be interpreted as 97 confirmed guitar E2 notes because role relevance is unresolved in the full mixture.
 
-Previously observed descriptive facts for those 97 MIDI-40 selections:
-- 92/97 fall on exact beat-start subdivisions;
-- common same-pitch reattack gaps are about 0.46 s and 0.93 s, near one/two beats at the detected tempo;
-- they span 56 measures;
-- 56/97 have at least one additional playable pitch candidate;
-- +12 semitones is the most common second-candidate interval among those events.
-
-These observations support a **role-unresolved** interpretation. They do not prove those events are bass and do not justify blanket MIDI demotion/substitution. The next CPU-only task is to make these observations reproducible inside the role-boundary diagnostic and prove that diagnostic cannot change pitch/classification identity.
-
-## ROLE-BOUNDARY DIAGNOSTIC
+## ROLE-BOUNDARY DIAGNOSTIC — V2 PROVEN
 
 Script:
 `scripts/songsterr-fresh/inspect_role_boundary_evidence.py`
 
-Current v1 properties:
-- descriptive only;
-- no classification changes;
-- no pitch substitution/deletion;
-- inspects sub-playable guard peaks for lower-boundary MIDI 40 selections.
+Contract:
+`songsterr-fresh-role-boundary-inspection-v2`
 
-For the 97 MIDI-40 selections:
-- with lower guard-range local peak above -18 dB floor: **27**
-- without one: **70**
-- strongest lower guard MIDI among those 27 spans 32–38, concentrated at 35
-- E2 minus strongest lower guard peak:
+Important commit:
+- `f560c30ea0dc8a9c4ca85093399158b47544fb92` — codifies frozen-structure/repetition/candidate diagnostics and CI identity proof.
+
+Properties:
+- CPU/reference-blind and structure-frozen;
+- descriptive only: `descriptiveOnly: true`;
+- cannot own classification: `changesClassification: false`;
+- no pitch substitution/deletion;
+- validates the exact structure identity before inspection;
+- maps lower-boundary selections back to accepted frozen measure/beat/subdivision slots;
+- reports same-pitch reattack spacing and second-candidate relationships;
+- CI compares every onset before/after inspection as `(onsetId, classification, selectedMidi, candidate MIDI list)` and fails on any difference.
+
+Exact-fixture reproducible facts for the 97 selected MIDI-40 events:
+- all **97/97** map to the frozen structure;
+- **92/97** are exact beat-start subdivisions;
+- they span **56** unique measures;
+- **56/97** have multiple playable pitch candidates;
+- **+12 semitones** is the most common second-candidate interval;
+- same-pitch reattack histogram contains the expected ~**0.46 s** and ~**0.93 s** bins;
+- with a sub-playable guard-range local peak above the -18 dB floor: **27**;
+- without one: **70**;
+- strongest lower guard MIDI among those 27 spans 32–38, concentrated at 35;
+- E2 minus strongest lower guard peak remains approximately:
   - mean ~9.40 dB
   - median ~9.12 dB
   - p10 ~4.49 dB
@@ -201,7 +208,9 @@ For the 97 MIDI-40 selections:
   - min ~1.15 dB
   - max ~14.59 dB
 
-Decision: **do not add a simplistic lower-guard demotion rule.** It explains only 27/97 suspicious boundary selections and does not resolve instrument role for the other 70.
+Identity/classification invariant proof passed on the exact fixture: **no onset ID, classification, selected MIDI, or candidate MIDI list changed.**
+
+Decision remains: **do not add a simplistic lower-guard demotion rule and do not relabel MIDI 40 as bass.** These observations establish role uncertainty, not instrument identity.
 
 ## SINGLE DURATION AUTHORITY — HARDENED
 
@@ -235,16 +244,7 @@ Intrinsic single-authority hardening is complete:
 - commit `dab66b7aba0657628ca31ebdba413758bd54bde2` — exact-fixture CI adds a negative proof that pre-filled duration/end input fails and produces no output;
 - release diagnostics declare `soleDurationAuthority: true` and `requiresDurationFreeInput: true`.
 
-Verified exact-fixture proof:
-- run **`34224308657`**
-- job **`102054571754`**
-- tested commit **`dab66b7aba0657628ca31ebdba413758bd54bde2`**
-- conclusion **success**
-- artifact **`10055091265`**
-- digest **`sha256:0d2e4092e66764acb75a9de92beaf2ab58bdb8ad3c80df2cdb9fba10f61a31df`**
-- event exposure remained **139 pitch-resolved / 0 role-accepted / 0 customer-eligible**
-- duration split remained **103 resolved / 36 unresolved**
-- deterministic suite remained **96/96**.
+The v2 role-diagnostic canary reran the duration guard unchanged and again produced **103 resolved / 36 unresolved**.
 
 Do not reintroduce a second duration estimator or relax the duration-free input guard without a justified architectural change.
 
@@ -268,14 +268,28 @@ Workflow:
 `.github/workflows/songsterr-fresh-gomyway-midterm-note-evidence-canary.yml`
 
 Latest successful run:
-- run **`34224308657`**
-- job **`102054571754`**
-- tested commit **`dab66b7aba0657628ca31ebdba413758bd54bde2`**
+- run **`34307605651`**
+- job **`102327436340`**
+- tested commit **`f560c30ea0dc8a9c4ca85093399158b47544fb92`**
 - conclusion **success**
-- artifact **`10055091265`**
-- digest **`sha256:0d2e4092e66764acb75a9de92beaf2ab58bdb8ad3c80df2cdb9fba10f61a31df`**
+- artifact **`10087249463`**
+- artifact name `songsterr-fresh-gomyway-midterm-note-evidence`
+- artifact size 476,899 bytes
+- digest **`sha256:1eab46656446bfaafde9884dfff5b8bf1671b4b48c293fa4cf5af3938e193ee5`**
 
-Real diagnostic pipeline summary:
+The workflow passed every guarded step:
+- exact authorized fixture blob verification;
+- accepted frozen structure rebuild and identity check;
+- duration-free CPU pitch analysis;
+- role-boundary v2 descriptive inspection;
+- semantic identity/classification non-mutation proof;
+- negative proof that the release stage rejects pre-filled duration/end evidence;
+- conservative release evidence;
+- note-evidence adaptation;
+- deterministic pipeline fail-closed delivery proof;
+- full deterministic suite.
+
+Real diagnostic pipeline summary remains:
 - source/pitch-resolved events exercised mechanically: **139**
 - role-accepted events: **0**
 - complete-tab/customer-eligible events: **0**
@@ -296,9 +310,7 @@ This is the desired fail-closed behavior: exact pitch evidence remains inspectab
 
 ## CURRENT DETERMINISTIC TEST BASELINE
 
-Latest branch-wide deterministic proof:
-- run **`34223492248`**, job **`102051925490`** — 96/96 after event-exposure contract.
-- latest exact-audio canary run **`34224308657`**, job **`102054571754`** independently reran the same suite and also passed **96/96**.
+Latest exact-audio canary run **`34307605651`**, job **`102327436340`**, reran the deterministic suite at commit `f560c30ea0dc8a9c4ca85093399158b47544fb92`.
 
 TAP:
 - tests: **96**
@@ -310,14 +322,18 @@ TAP:
 
 ## CURRENT ENGINEERING DECISION / NEXT STEP
 
-Permitted CPU/reference-blind work now:
-1. duration single-authority hardening is complete; preserve it as an invariant;
-2. deepen **descriptive-only** role diagnostics so beat-position/repetition/candidate-relationship observations are generated directly from the exact frozen structure and pitch evidence;
-3. add CI proof that role inspection does not alter onset IDs, classifications, selected MIDI, or candidate MIDI identity;
-4. rerun the exact authorized fixture and full deterministic suite; expected musical exposure remains 139 pitch-resolved / 0 role-accepted / 0 customer events and the 103/36 duration split unless evidence changes for a justified reason;
-5. preserve every candidate and exact selected MIDI; do not relabel E2 as bass or substitute another pitch without evidence.
+Completed CPU/reference-blind hardening milestones:
+1. frozen structure contract and identity;
+2. duration-free guarded pitch analyzer;
+3. event-exposure separation: pitch-resolved vs role-accepted vs customer-eligible;
+4. sole duration authority plus intrinsic rejection of pre-filled durations;
+5. descriptive-only role-boundary v2 diagnostics tied directly to the frozen structure;
+6. exact-fixture CI proof that role inspection cannot mutate onset/classification/selected-MIDI/candidate-MIDI identity;
+7. exact authorized fixture and full deterministic suite green with exposure **139 / 0 / 0** and duration split **103 / 36**.
 
-The next major capability jump is true role/instrument separation plus polyphonic note inference. A model/GPU/source-separation-model stage still requires **separate explicit user authorization** before dispatch.
+Current evidence does **not** justify a CPU heuristic that assigns instrument role or polyphony. In particular, the MIDI-40 repetition/beat/candidate evidence is useful as a warning signal but does not prove bass identity and must not be used to rewrite MIDI.
+
+The next major capability jump is true **role/instrument separation plus polyphonic note inference**. A model/GPU/source-separation-model stage still requires **separate explicit user authorization** before dispatch. Until that authorization exists, preserve the current fail-closed boundary rather than fabricating role certainty from full-mixture heuristics.
 
 ## NON-NEGOTIABLES
 
@@ -326,7 +342,8 @@ The next major capability jump is true role/instrument separation plus polyphoni
 - Never silently alter detected MIDI/event identity.
 - Never drop pitches merely to satisfy fingering/path/legacy rendering.
 - Preserve existing `/ai-tab` preview → unlock → full PDF → email/download flow.
-- No main/Production changes.
+- No `main`/Production changes.
 - No accidental Modal/GPU/model/professional-scorer/training activity.
 - Real-audio work stays inside the exact authorized fixture.
+- Archived V143/Gomyway implementation remains untouched unless the user explicitly asks to resume it.
 - Keep this checkpoint updated after every meaningful milestone.
