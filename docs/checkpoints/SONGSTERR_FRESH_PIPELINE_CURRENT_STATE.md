@@ -146,29 +146,30 @@ Hard guards:
 - no active `sourceEnd` / `durationSeconds` writes
 - no pitch identity changes
 
-Evidence:
+Earlier evidence:
 - run `34310962622`: 89/541 corroborated valleys = 16.45%
 - repaired green run `34311401076`, job `102338636114`: 79/550 = 14.36%, 1,174/1,174 exact same-run MIDI identity, 601 v2 durations resolved / 573 unresolved, 97/97 tests
 - artifact `10088603197`
 - digest `sha256:b13d90601f36ed150429b7d23e8d7073afac8623738498af1b3b20ed4566160c`
 
-This is promising observed release evidence but is **not active duration yet**.
+Latest pinned deterministic evidence is recorded below. Activation valleys remain **descriptive only** and are not active duration yet.
 
-## DEMUCS 4.1 PRIMARY LOADER / EXECUTED ASSET — VERIFIED IDENTITY
+## DEMUCS 4.1 PRIMARY LOADER / EXECUTED ASSET — VERIFIED
 
 Demucs 4.1 first loads named models through Hugging Face and falls back to the legacy remote repo only if HF loading fails.
 
 For `htdemucs_6s`:
 - HF namespace: `adefossez`
 - HF repo: `adefossez/HTDemucs-6s`
-- current pinned `main` snapshot: **`3c5ee475be622df764938de97e4281a7b07ffa58`**
-- its parent / model-file upload commit: **`053e1404489b3dc58bf718224fac4b7316de8c93`**
-- the later `3c5ee475...` commit changed only README license metadata; model assets remain inherited from `053e140...`
+- pinned repo snapshot: **`3c5ee475be622df764938de97e4281a7b07ffa58`**
+- model-file upload revision: **`053e1404489b3dc58bf718224fac4b7316de8c93`**
 - bag: `htdemucs_6s.yaml`
 - bag models: `['5c90dfd2']`
 - executed model asset: `5c90dfd2.safetensors`
 - safetensors SHA256: **`d2a1745f0744721f6b8ca5bf469b67c651ea5ed1b52998cab033b2158609d411`**
 - Xet hash: `4a08ca8231da4bd9433191a95ee700cc8ba8693e980ac5b444f63eff38c807e1`
+- safetensors metadata keys: `args`, `klass`, `kwargs`
+- model class: `demucs.htdemucs.HTDemucs`
 
 Legacy fallback, informational only:
 - `5c90dfd2-34c22ccb.th`
@@ -180,12 +181,18 @@ Verifier:
 Contract:
 `songsterr-fresh-demucs-model-asset-v2`
 
-Revision history:
-- v1 incorrectly targeted the legacy `.th` cache path;
-- early v2 incorrectly treated `053e140...` as current HF `main`;
-- commit **`a27bdb2b5736922b26c32c81454f25d016e725a3`** correctly distinguishes pinned repo snapshot `3c5ee475...` from model-file upload revision `053e140...` while keeping the exact model SHA gate.
+Latest verifier commit:
+**`88dcaf3100311b130ec4c30d2b1cbeb7dae0e24d`**
 
-## DEMUCS REPRODUCIBILITY BOUNDARY
+Important correction history:
+- v1 incorrectly targeted the legacy `.th` cache path;
+- early v2 conflated the current repo snapshot with the model-file upload commit;
+- another early v2 required a nonexistent `5c90dfd2.json` sidecar;
+- current v2 matches the actual Demucs 4.1 HF loader: bag YAML + safetensors, with class/init metadata verified from inside the safetensors file.
+
+The verifier invokes no model and changes no audio/evidence.
+
+## DEMUCS REPRODUCIBILITY — GREEN SAME-RUNTIME PROOF
 
 ### Intentional shift randomness
 
@@ -200,30 +207,9 @@ Root cause: Demucs random shift trick for any `shifts > 0`.
 
 `--shifts 0` removes intentional random augmentation, but stem bytes are not assumed universal across arbitrary runner environments.
 
-Observed `--shifts 0` stems include:
-- two earlier jobs on one runner generation: `8983d2694cbae3a519a65eadc63cc5bf691a6a542f2f6539b9a5f4461cd8727c`
-- later runner: `419fcb5dd869e7d7cd2f66468c6c436fc9bb7767aaf546dd4cb61d34fde62ef1`
-- pinned-runtime pass A on run `34313107961`: `c303f0a0d99f94e2bddedebd0679cc5034aa9505c350cc28a5200d4c419637af`
+Observed `--shifts 0` stem SHA variation across runners includes `8983d269...`, `419fcb5d...`, `c303f0a0...`, `0d9339df...`, and `4227a41f...`.
 
-Pinned-runtime run `34313107961`, job `102343661824` recorded:
-- runner image `20260831.293.1`
-- CPU `INTEL(R) XEON(R) PLATINUM 8573C`
-- Python 3.10.21
-- FFmpeg 6.1.1-3ubuntu5
-- decoded separation WAV SHA `e03e1885185f4983b3eeaa66f36510b7709d607c14010f964e0aad427ecc474a`
-- numpy 1.26.4
-- torch 2.14.0
-- huggingface-hub 1.30.0
-- safetensors 0.8.0
-- sphn 0.2.1
-- demucs 4.1.0
-- soundfile 0.13.1
-- OMP/MKL/OpenBLAS/NumExpr threads = 1
-- PYTHONHASHSEED=0
-
-That run stopped before pass B only because the verifier expected the wrong HF repo revision. Partial artifact `10089166444`, digest `sha256:4ca0ebb33a58bd7d5c79be004581ad41fd0a8a3fa3538c271a3248a5134db885`.
-
-Current reproducibility acceptance contract:
+Therefore the acceptance contract is runtime-scoped:
 1. exact source fixture and decoded input hash;
 2. pinned package/model/runtime identities;
 3. Demucs `--shifts 0`;
@@ -232,35 +218,106 @@ Current reproducibility acceptance contract:
 6. cross-environment stem SHA is diagnostic only;
 7. semantic note/evidence stability is evaluated separately.
 
-## CURRENT CORRECTED CANARIES
+Final green reproducibility canary:
+- workflow `.github/workflows/songsterr-fresh-demucs-reproducibility-canary.yml`
+- run **`34313902753`**
+- job **`102345983922`**
+- head **`88dcaf3100311b130ec4c30d2b1cbeb7dae0e24d`**
+- conclusion **success**
+- runner Ubuntu 24.04.4, image `20260831.293.1`
+- CPU `AMD EPYC 7763 64-Core Processor`
+- Python 3.10.21
+- FFmpeg 6.1.1-3ubuntu5
+- decoded separation WAV SHA `e03e1885185f4983b3eeaa66f36510b7709d607c14010f964e0aad427ecc474a`
+- Demucs 4.1.0 / Torch 2.14.0 / CPU / shifts 0 / overlap 0.25 / segment 7
+- executed asset SHA `d2a1745f0744721f6b8ca5bf469b67c651ea5ed1b52998cab033b2158609d411`
+- pass A stem SHA **`4227a41f58817d32e9e122857c924c486afdc1e411a0a173bec2dfcc0c7b6b81`**
+- pass B stem SHA **`4227a41f58817d32e9e122857c924c486afdc1e411a0a173bec2dfcc0c7b6b81`**
+- `identicalStemSha256: true`
+- `identicalStemBytes: true`
+- sample rate 44,100 Hz, 2 channels, 9,290,752 frames, 210.6746485260771 s
+- determinism contract `songsterr-fresh-demucs-determinism-proof-v2`
+- artifact **`10089522605`**
+- artifact size 3,048 bytes
+- artifact ZIP digest **`sha256:a49e36478b541907b377fb94e9a264003eb69ff1bf20dd2d2904e0fc2f37fb43`**
 
-Reproducibility workflow:
-`.github/workflows/songsterr-fresh-demucs-reproducibility-canary.yml`
+Conclusion: **same-runtime deterministic Demucs separation is now proven for the exact authorized fixture under the pinned runtime.** Cross-environment stem-byte canonicality remains explicitly false.
 
-Current workflow commit:
-**`2c401079b59937d1d3fde6beb4bbba97f411e3ce`**
+## PINNED DETERMINISTIC ACTIVATION CANARY — GREEN
 
-Active corrected run:
-- **`34313527494`**
-- job **`102344892749`**
-
-Goal:
-exact fixture → runtime/input manifest → Demucs shifts=0 pass A → verified HF snapshot `3c5ee475...` + exact safetensors SHA → pass B → same-runtime byte identity → artifact.
-
-Deterministic activation workflow:
+Workflow:
 `.github/workflows/songsterr-fresh-model-activation-valley-deterministic.yml`
 
-Current workflow commit:
-**`afbf901a03f11e93e8b2edf18823a3b25aa1c129`**
+Final green run:
+- run **`34313902747`**
+- job **`102345984013`**
+- head **`88dcaf3100311b130ec4c30d2b1cbeb7dae0e24d`**
+- conclusion **success**
+- artifact **`10089483424`**
+- artifact ZIP digest **`sha256:7d20bb6b18423c8dac44820391161eafa4de2e724465488f99598edf876b8ef5`**
+- artifact size 304,743 bytes
+- 97/97 deterministic tests pass
 
-Active corrected run:
-- **`34313623897`**
-- job **`102345173559`**
+Runtime/input:
+- Ubuntu 24.04.4 / image `20260831.293.1`
+- Python 3.10.21
+- CPU `AMD EPYC 9V74 80-Core Processor`
+- FFmpeg 6.1.1-3ubuntu5
+- analysis WAV SHA `824af60bbc3d701c8c1f085194be2acf59f0ac5d0ae4133e763eadb9793ca873`
+- separation WAV SHA `e03e1885185f4983b3eeaa66f36510b7709d607c14010f964e0aad427ecc474a`
+- frozen structure identity exact `fnv1a32:2f493225`
 
-Goal:
-exact fixture/frozen structure → pinned-runtime Demucs shifts=0 → exact HF asset proof → duration-free Basic Pitch evidence → unchanged v2 sole release authority → unchanged descriptive activation rule → 97/97 suite → artifact.
+Demucs/model separation:
+- guitar stem SHA **`0d9339dfedd13ee4d2d7f1a1262363f8a756dce4fc1168182208b0ed431cec12`**
+- shifts 0, CPU, overlap 0.25, segment 7
+- exact HF repo/snapshot/model SHA verified
+- separation contract `songsterr-fresh-demucs-guitar-separation-v3`
+- `crossEnvironmentStemShaCanonical: false`
 
-No historical fixed stem SHA or Basic Pitch note count is used as a cross-environment gate.
+Basic Pitch / duration-free evidence:
+- **1,139 notes**
+- 1,031 start clusters
+- 97 polyphonic start clusters
+- max cluster size 4
+- MIDI 40 count 34
+- 1,139/1,139 exact same-run model/evidence identity
+- exact MIDI identity true
+- role relevance resolved true
+- polyphony resolved true
+- durationResolution none before release
+- decoded note ends remain diagnostic only
+
+Existing sole v2 release authority:
+- attempted **1,139**
+- resolved **577**
+- unresolved **562**
+- resolution rate ~50.66%
+- `NO_CLEAR_RELEASE_BEFORE_SAME_PITCH_REATTACK`: **537**
+- `NO_CLEAR_SUSTAINED_SPECTRAL_RELEASE`: 7
+- `INSUFFICIENT_ONSET_TO_FLOOR_CONTRAST`: 18
+- same-pitch reattack censor count 967
+- mean resolved duration ~0.463894 s
+- median ~0.341035 s
+- max ~3.652337 s
+- mean duration confidence ~0.913798
+
+Fixed descriptive activation-valley probe on the same evidence:
+- examined reattack-censored: **537**
+- corroborated activation+spectral valleys: **84**
+- fixed-rule hit rate **15.64%**
+- rejections: 5 insufficient activation drop, 76 insufficient spectral corroboration, 372 no sustained subthreshold activation
+- observed spans mean ~0.299432 s, median ~0.290249 s, p90 ~0.430853 s, max ~1.069402 s
+- exact MIDI identity true
+- max start delta 0
+- max confidence delta 0
+- threshold sweep false
+- decoded model note ends used false
+- next onset used as duration false
+- writes `sourceEnd` false
+- writes `durationSeconds` false
+- changes pitch identity false
+
+Conclusion: the unchanged fixed rule again finds a stable minority (~14–16% across the available runs) of reattack-censored events with activation valleys independently corroborated by spectral decay. It is still **descriptive only** pending same-inference activation capture and guarded integration into the sole duration authority.
 
 ## CURRENT ACCEPTANCE STATE
 
@@ -272,16 +329,19 @@ Current blockers remain:
 
 Customer-eligible events remain **0**.
 
+Basic Pitch output is not ground truth. No reference scorer or archived logic is authorized.
+
 ## NEXT ENGINEERING STEPS
 
-1. Require corrected reproducibility run `34313527494` to prove same-runtime pass-A/pass-B byte identity and exact HF asset identity.
-2. Require corrected activation run `34313623897` to produce same-run Basic Pitch/duration/valley diagnostics and 97/97 tests.
-3. If both are green, update the authoritative model canary from stochastic `--shifts 1` to pinned-runtime `--shifts 0` with the same HF-asset proof.
-4. Compare available `--shifts 0` outputs semantically rather than demanding cross-runner audio-byte equality.
-5. Capture Basic Pitch raw `note` activations from the **same existing inference call** rather than rerunning Basic Pitch solely for duration.
-6. Feed those activations into the **same sole duration authority** only as a fallback for events otherwise unresolved by `NO_CLEAR_RELEASE_BEFORE_SAME_PITCH_REATTACK`, using the unchanged fixed activation+spectral rule.
-7. Preserve negative proofs: no decoded BP note-off as active duration, no next-onset duration, no upstream duration leakage, explicit model-upstream authorization, exact MIDI/event identity, no reference/scorer provenance.
-8. Keep model validation false and customer eligibility 0 until separately validated.
+1. Update the authoritative model canary from stochastic Demucs `--shifts 1` to the pinned-runtime `--shifts 0` architecture, including exact HF asset verification and runtime provenance.
+2. Establish the new **runtime-scoped** authoritative model baseline; do not impose a universal cross-runner stem SHA or historical fixed Basic Pitch note-count gate.
+3. Compare available `--shifts 0` outputs semantically rather than demanding cross-runner audio-byte equality: note counts/distributions, onset characteristics, v2 duration coverage, and valley coverage. Do not tune thresholds from this comparison.
+4. Capture Basic Pitch raw `note` activations from the **same existing inference call** rather than rerunning Basic Pitch solely for duration evidence. Tie the activation sidecar to the emitted note list with a deterministic identity hash over `(start,midi,confidence)` and keep it duration/end-free.
+5. Feed that sidecar into the **same sole duration authority** only as a fallback for events otherwise unresolved by `NO_CLEAR_RELEASE_BEFORE_SAME_PITCH_REATTACK`, using the unchanged fixed activation+spectral rule.
+6. Existing v2 spectral release remains first/primary; an activation valley may become observed release only when the fixed activation rule and independent CQT corroboration both pass.
+7. If integrated, provenance must distinguish spectral-only vs activation+spectral observed-valley release. Unqualified events remain unresolved.
+8. Preserve negative proofs: no decoded BP note-off as active duration, no next-onset duration, no upstream duration leakage, explicit model-upstream authorization, exact MIDI/event identity, no reference/scorer provenance.
+9. Keep model validation false and customer eligibility 0 until independent model validation is separately completed.
 
 ## NON-NEGOTIABLES
 
