@@ -1,0 +1,287 @@
+name: Songsterr Fresh Deterministic Activation Valley Probe
+
+on:
+  workflow_dispatch:
+  push:
+    branches:
+      - songsterr-fresh-pipeline-v1
+    paths:
+      - '.github/workflows/songsterr-fresh-model-activation-valley-deterministic.yml'
+      - 'scripts/songsterr-fresh/probe_model_activation_valleys.py'
+      - 'scripts/songsterr-fresh/verify_demucs_model_asset.py'
+      - 'scripts/songsterr-fresh/transcribe_isolated_guitar_basic_pitch.py'
+      - 'scripts/songsterr-fresh/build_isolated_polyphonic_note_evidence.mjs'
+      - 'scripts/songsterr-fresh/estimate_selected_pitch_releases.py'
+      - 'scripts/songsterr-fresh/build_note_evidence_context.mjs'
+      - 'songsterr_pipeline/**'
+
+permissions:
+  contents: read
+
+jobs:
+  deterministic-activation-valley:
+    runs-on: ubuntu-latest
+    timeout-minutes: 60
+    steps:
+      - name: Check out fresh branch
+        uses: actions/checkout@v4
+
+      - name: Set up Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.10'
+
+      - name: Fetch and decode exact authorized fixture
+        shell: bash
+        run: |
+          set -euo pipefail
+          curl --fail --location --silent --show-error --retry 3 \
+            'https://raw.githubusercontent.com/dadrockyt-sys/dadrock-tabs-android/main/public/jimmy-paige-midterm-v1/gomyway-midterm-source.m4a' \
+            --output /tmp/gomyway-midterm-source.m4a
+          test "$(git hash-object /tmp/gomyway-midterm-source.m4a)" = '4dd709e3fa177b4daeed71ca97f0199757729d4b'
+          sudo apt-get update -qq
+          sudo apt-get install -y ffmpeg
+          ffmpeg -hide_banner -loglevel error -y \
+            -i /tmp/gomyway-midterm-source.m4a -ac 1 -ar 22050 \
+            /tmp/gomyway-midterm-analysis.wav
+          ffmpeg -hide_banner -loglevel error -y \
+            -i /tmp/gomyway-midterm-source.m4a -ac 2 -ar 44100 \
+            /tmp/gomyway-midterm-separation.wav
+
+      - name: Install pinned model and analysis dependencies
+        shell: bash
+        run: |
+          set -euo pipefail
+          python -m pip install --disable-pip-version-check \
+            numpy==1.26.4 \
+            demucs==4.1.0 \
+            basic-pitch==0.4.0 \
+            librosa==0.11.0 \
+            soundfile==0.13.1
+
+      - name: Rebuild accepted frozen structure
+        shell: bash
+        run: |
+          set -euo pipefail
+          BASE=/tmp/songsterr-fresh-deterministic-activation
+          mkdir -p "$BASE"
+          python scripts/songsterr-fresh/analyze_full_mixture_structure.py \
+            --input /tmp/gomyway-midterm-analysis.wav \
+            --output "$BASE/raw-structure-analysis.json" \
+            --audio-source 'public/jimmy-paige-midterm-v1/gomyway-midterm-source.m4a@main#4dd709e3fa177b4daeed71ca97f0199757729d4b'
+          node scripts/songsterr-fresh/build_structure_map.mjs \
+            "$BASE/raw-structure-analysis.json" \
+            "$BASE/adapted-structure-map.json"
+          node scripts/songsterr-fresh/build_note_evidence_context.mjs \
+            "$BASE/adapted-structure-map.json" \
+            "$BASE/note-evidence-context.json"
+          node --input-type=module - <<'NODE'
+          import { readFile } from 'node:fs/promises';
+          const c = JSON.parse(await readFile('/tmp/songsterr-fresh-deterministic-activation/note-evidence-context.json', 'utf8'));
+          if (c?.structureIdentity?.signature !== 'fnv1a32:2f493225') {
+            throw new Error(`FROZEN_STRUCTURE_IDENTITY_CHANGED:${c?.structureIdentity?.signature}`);
+          }
+          NODE
+
+      - name: Separate deterministic guitar stem
+        shell: bash
+        run: |
+          set -euo pipefail
+          BASE=/tmp/songsterr-fresh-deterministic-activation
+          python -m demucs \
+            -n htdemucs_6s \
+            --device cpu \
+            --shifts 0 \
+            --overlap 0.25 \
+            --segment 7 \
+            -o "$BASE/separated" \
+            /tmp/gomyway-midterm-separation.wav
+          STEM="$BASE/separated/htdemucs_6s/gomyway-midterm-separation/guitar.wav"
+          test -s "$STEM"
+          STEM_SHA="$(sha256sum "$STEM" | awk '{print $1}')"
+          echo "Deterministic guitar stem sha256: ${STEM_SHA}"
+          python scripts/songsterr-fresh/verify_demucs_model_asset.py \
+            --output "$BASE/demucs-model-asset.json"
+          python - <<PY
+          import json
+          import soundfile as sf
+          path = '$STEM'
+          info = sf.info(path)
+          payload = {
+              'contract': 'songsterr-fresh-demucs-guitar-separation-v2',
+              'version': 2,
+              'referenceBlind': True,
+              'package': 'demucs',
+              'packageVersion': '4.1.0',
+              'model': 'htdemucs_6s',
+              'modelSignature': '5c90dfd2',
+              'stem': 'guitar',
+              'device': 'cpu',
+              'shifts': 0,
+              'overlap': 0.25,
+              'segmentSeconds': 7,
+              'gpuInvoked': False,
+              'sourceAudio': 'public/jimmy-paige-midterm-v1/gomyway-midterm-source.m4a@main#4dd709e3fa177b4daeed71ca97f0199757729d4b',
+              'stemSha256': '$STEM_SHA',
+              'sampleRate': info.samplerate,
+              'channels': info.channels,
+              'frames': info.frames,
+              'durationSeconds': info.duration,
+              'legacyV143ScorerImported': False,
+              'professionalScorerUsed': False,
+              'referenceTabUsed': False,
+          }
+          with open('$BASE/separation-manifest.json', 'w', encoding='utf-8') as handle:
+              json.dump(payload, handle, indent=2)
+              handle.write('\n')
+          print(json.dumps(payload))
+          PY
+
+      - name: Infer duration-free polyphonic guitar notes
+        shell: bash
+        run: |
+          set -euo pipefail
+          BASE=/tmp/songsterr-fresh-deterministic-activation
+          STEM="$BASE/separated/htdemucs_6s/gomyway-midterm-separation/guitar.wav"
+          STEM_SHA="$(sha256sum "$STEM" | awk '{print $1}')"
+          python scripts/songsterr-fresh/transcribe_isolated_guitar_basic_pitch.py \
+            --input "$STEM" \
+            --output "$BASE/basic-pitch-guitar-notes.json" \
+            --audio-source 'public/jimmy-paige-midterm-v1/gomyway-midterm-source.m4a@main#4dd709e3fa177b4daeed71ca97f0199757729d4b' \
+            --separation-source "demucs==4.1.0/htdemucs_6s/shifts=0:guitar@sha256:${STEM_SHA}"
+          node scripts/songsterr-fresh/build_isolated_polyphonic_note_evidence.mjs \
+            "$BASE/note-evidence-context.json" \
+            "$BASE/basic-pitch-guitar-notes.json" \
+            "$BASE/raw-model-note-evidence-duration-free.json"
+          python - <<'PY'
+          import json
+          path = '/tmp/songsterr-fresh-deterministic-activation/raw-model-note-evidence-duration-free.json'
+          with open(path, 'r', encoding='utf-8') as handle:
+              data = json.load(handle)
+          leaking = [
+              onset.get('onsetId') for onset in data.get('onsets', [])
+              if onset.get('durationSeconds') is not None or onset.get('sourceEnd') is not None
+          ]
+          if leaking:
+              raise SystemExit(f'DETERMINISTIC_MODEL_PITCH_STAGE_DURATION_LEAK:{leaking[:5]}')
+          if data.get('capabilities', {}).get('durationResolution') != 'none':
+              raise SystemExit('DETERMINISTIC_MODEL_PITCH_STAGE_MUST_BE_DURATION_FREE')
+          if data.get('diagnostics', {}).get('modelNoteEndsUsedAsDuration') is not False:
+              raise SystemExit('DECODED_MODEL_NOTE_ENDS_MUST_REMAIN_DIAGNOSTIC_ONLY')
+          PY
+
+      - name: Apply existing sole v2 release authority
+        shell: bash
+        run: |
+          set -euo pipefail
+          BASE=/tmp/songsterr-fresh-deterministic-activation
+          STEM="$BASE/separated/htdemucs_6s/gomyway-midterm-separation/guitar.wav"
+          python scripts/songsterr-fresh/estimate_selected_pitch_releases.py \
+            --allow-model-upstream \
+            --input "$STEM" \
+            --evidence "$BASE/raw-model-note-evidence-duration-free.json" \
+            --output "$BASE/raw-model-note-evidence-v2.json"
+          python - <<'PY'
+          import json
+          path = '/tmp/songsterr-fresh-deterministic-activation/raw-model-note-evidence-v2.json'
+          with open(path, 'r', encoding='utf-8') as handle:
+              data = json.load(handle)
+          release = data.get('diagnostics', {}).get('releaseEvidence', {})
+          if release.get('contract') != 'songsterr-fresh-cpu-spectral-release-evidence-v2':
+              raise SystemExit('SOLE_RELEASE_CONTRACT_CHANGED')
+          if release.get('soleDurationAuthority') is not True:
+              raise SystemExit('SOLE_DURATION_AUTHORITY_CHANGED')
+          if release.get('requiresDurationFreeInput') is not True:
+              raise SystemExit('DURATION_FREE_INPUT_GUARD_CHANGED')
+          if release.get('modelUpstreamAllowedThisRun') is not True:
+              raise SystemExit('MODEL_UPSTREAM_AUTHORIZATION_NOT_RECORDED')
+          if release.get('nextOnsetUsedAsDuration') is not False:
+              raise SystemExit('NEXT_ONSET_MUST_NOT_BECOME_DURATION')
+          PY
+
+      - name: Probe fixed activation plus spectral valleys descriptively
+        shell: bash
+        run: |
+          set -euo pipefail
+          BASE=/tmp/songsterr-fresh-deterministic-activation
+          STEM="$BASE/separated/htdemucs_6s/gomyway-midterm-separation/guitar.wav"
+          python scripts/songsterr-fresh/probe_model_activation_valleys.py \
+            --input "$STEM" \
+            --evidence "$BASE/raw-model-note-evidence-v2.json" \
+            --output "$BASE/activation-valley-probe.json"
+          python - <<'PY'
+          import json
+          base = '/tmp/songsterr-fresh-deterministic-activation'
+          with open(f'{base}/activation-valley-probe.json', 'r', encoding='utf-8') as handle:
+              probe = json.load(handle)
+          with open(f'{base}/raw-model-note-evidence-v2.json', 'r', encoding='utf-8') as handle:
+              v2 = json.load(handle)
+          if probe.get('contract') != 'songsterr-fresh-model-activation-valley-probe-v1':
+              raise SystemExit('ACTIVATION_PROBE_CONTRACT_CHANGED')
+          if probe.get('descriptiveOnly') is not True or probe.get('changesDuration') is not False:
+              raise SystemExit('ACTIVATION_PROBE_MUST_REMAIN_DESCRIPTIVE_ONLY')
+          identity = probe.get('identityProof', {})
+          model_count = identity.get('modelEventCount')
+          evidence_count = identity.get('evidenceEventCount')
+          if not isinstance(model_count, int) or model_count <= 0 or model_count != evidence_count:
+              raise SystemExit(f'ACTIVATION_PROBE_SAME_RUN_IDENTITY_COUNT_MISMATCH:{model_count}:{evidence_count}')
+          if identity.get('exactMidiIdentityPreserved') is not True:
+              raise SystemExit('ACTIVATION_PROBE_MIDI_IDENTITY_CHANGED')
+          if identity.get('maxStartDeltaSeconds') != 0.0 or identity.get('maxConfidenceDelta') != 0.0:
+              raise SystemExit('ACTIVATION_PROBE_SAME_RUN_IDENTITY_DRIFT')
+          expected_reattack = (
+              v2.get('diagnostics', {})
+                .get('releaseEvidence', {})
+                .get('unresolvedReasonCounts', {})
+                .get('NO_CLEAR_RELEASE_BEFORE_SAME_PITCH_REATTACK')
+          )
+          examined = probe.get('diagnostics', {}).get('reattackCensoredExaminedCount')
+          if not isinstance(expected_reattack, int) or expected_reattack <= 0 or examined != expected_reattack:
+              raise SystemExit(f'ACTIVATION_PROBE_REATTACK_COUNT_MISMATCH:{examined}:{expected_reattack}')
+          guards = probe.get('hardGuards', {})
+          for key in ('decodedModelNoteEndsUsed', 'nextOnsetUsedAsDuration', 'writesSourceEnd', 'writesDurationSeconds', 'changesPitchIdentity'):
+              if guards.get(key) is not False:
+                  raise SystemExit(f'ACTIVATION_PROBE_GUARD_CHANGED:{key}:{guards.get(key)}')
+          def forbidden(value):
+              if isinstance(value, dict):
+                  for key, child in value.items():
+                      if key in {'durationSeconds', 'sourceEnd'}:
+                          return key
+                      found = forbidden(child)
+                      if found:
+                          return found
+              elif isinstance(value, list):
+                  for child in value:
+                      found = forbidden(child)
+                      if found:
+                          return found
+              return None
+          found = forbidden(probe)
+          if found:
+              raise SystemExit(f'ACTIVATION_PROBE_WROTE_FORBIDDEN_DURATION_FIELD:{found}')
+          print(json.dumps({
+              'identityProof': identity,
+              'sameRunExpectedReattackCount': expected_reattack,
+              'fixedEvidenceRule': probe.get('fixedEvidenceRule'),
+              'diagnostics': probe.get('diagnostics'),
+              'hardGuards': guards,
+          }, indent=2))
+          PY
+
+      - name: Re-run fresh deterministic suite
+        working-directory: songsterr_pipeline
+        run: npm test
+
+      - name: Upload deterministic activation evidence
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: songsterr-fresh-deterministic-activation-valley
+          path: /tmp/songsterr-fresh-deterministic-activation/*.json
+          if-no-files-found: warn
+          retention-days: 14
