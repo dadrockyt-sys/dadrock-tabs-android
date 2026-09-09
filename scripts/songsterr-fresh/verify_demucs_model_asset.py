@@ -8,6 +8,7 @@ from pathlib import Path
 
 import yaml
 from huggingface_hub.constants import HF_HUB_CACHE
+from safetensors import safe_open
 
 import demucs.hf as demucs_hf
 import demucs.pretrained as pretrained
@@ -26,6 +27,7 @@ EXPECTED_BAG_FILENAME = "htdemucs_6s.yaml"
 EXPECTED_ASSET_FILENAME = "5c90dfd2.safetensors"
 EXPECTED_ASSET_SHA256 = "d2a1745f0744721f6b8ca5bf469b67c651ea5ed1b52998cab033b2158609d411"
 EXPECTED_XET_HASH = "4a08ca8231da4bd9433191a95ee700cc8ba8693e980ac5b444f63eff38c807e1"
+REQUIRED_SAFETENSORS_METADATA_KEYS = ("klass", "args", "kwargs")
 
 LEGACY_FALLBACK_FILENAME = "5c90dfd2-34c22ccb.th"
 LEGACY_FALLBACK_CHECKSUM_PREFIX = "34c22ccb"
@@ -85,11 +87,10 @@ def verify_primary_hf_asset():
     snapshot = repo_cache / "snapshots" / EXPECTED_HF_REVISION
     bag_path = snapshot / EXPECTED_BAG_FILENAME
     asset_path = snapshot / EXPECTED_ASSET_FILENAME
-    sidecar_path = snapshot / f"{EXPECTED_SIGNATURE}.json"
 
     missing = [
         str(path)
-        for path in (bag_path, asset_path, sidecar_path)
+        for path in (bag_path, asset_path)
         if not path.is_file()
     ]
     if missing:
@@ -120,6 +121,18 @@ def verify_primary_hf_asset():
     asset_sha = sha256_file(asset_path)
     if asset_sha != EXPECTED_ASSET_SHA256:
         raise RuntimeError(f"DEMUCS_HF_ASSET_SHA_CHANGED:{asset_sha}")
+
+    with safe_open(str(asset_path), framework="pt") as handle:
+        metadata = handle.metadata() or {}
+    missing_metadata = [key for key in REQUIRED_SAFETENSORS_METADATA_KEYS if key not in metadata]
+    if missing_metadata:
+        raise RuntimeError(
+            "DEMUCS_HF_SAFETENSORS_METADATA_MISSING:"
+            + json.dumps(missing_metadata)
+        )
+    model_class = metadata.get("klass")
+    if not isinstance(model_class, str) or not model_class.endswith(".HTDemucs"):
+        raise RuntimeError(f"DEMUCS_HF_MODEL_CLASS_CHANGED:{model_class}")
 
     refs_main = repo_cache / "refs" / "main"
     cached_main_revision = None
@@ -156,7 +169,8 @@ def verify_primary_hf_asset():
         "expectedAssetSha256": EXPECTED_ASSET_SHA256,
         "assetXetHash": EXPECTED_XET_HASH,
         "assetSnapshotPathIdentity": f"snapshots/{EXPECTED_HF_REVISION}/{EXPECTED_ASSET_FILENAME}",
-        "sidecarFilename": sidecar_path.name,
+        "safetensorsMetadataKeys": sorted(metadata.keys()),
+        "modelClass": model_class,
         "legacyFallback": {
             "primary": False,
             "filename": LEGACY_FALLBACK_FILENAME,
