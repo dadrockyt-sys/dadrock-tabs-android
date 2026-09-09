@@ -103,7 +103,7 @@ Invariant rules:
 - ambiguity/no-candidate evidence stays explicit;
 - duplicate MIDI candidates at one onset are rejected;
 - missing duration remains unresolved;
-- explicit duration/end is preserved only when supplied by evidence;
+- duration may be populated only by the dedicated release-evidence stage;
 - analyzer capabilities survive adaptation;
 - model/GPU/legacy provenance is recorded honestly;
 - model/GPU authorization is execution policy, not a musical score.
@@ -116,7 +116,7 @@ Current analyzer declares:
 
 ### Event exposure contract
 
-`noteEventExposure.mjs` now makes three separate surfaces explicit:
+`noteEventExposure.mjs` exposes three separate surfaces:
 - `pitchResolvedEvents` — local exact-pitch selections retained for diagnostics/downstream mechanical checks;
 - `roleAcceptedEvents` — only exposed when `roleRelevanceResolved === true`;
 - `completeTabEligibleEvents` — only exposed when role is resolved **and** `noteEvidenceEvaluator` accepts complete-tab evidence.
@@ -128,9 +128,8 @@ Current exact-fixture result:
 
 This is deliberate. A locally unambiguous MIDI pitch is **not** automatically represented as a guitar event when the full mixture has no instrument isolation.
 
-Important commits:
+Important commit:
 - `8143299b1ac76687d2ccc66ac38a6a86f4e47c88` — note-event exposure contract/tests.
-- deterministic proof for this contract: run `34223492248`, job `102051925490`, **96/96**.
 
 ## GUARDED CPU PITCH BASELINE — V4
 
@@ -170,21 +169,21 @@ Important unresolved quality signal:
 - This is not a CQT transform-edge artifact anymore.
 - It must **not** be interpreted as 97 confirmed guitar E2 notes because role relevance is unresolved in the full mixture.
 
-The 97 MIDI-40 selections are highly repetitive:
+Previously observed descriptive facts for those 97 MIDI-40 selections:
 - 92/97 fall on exact beat-start subdivisions;
 - common same-pitch reattack gaps are about 0.46 s and 0.93 s, near one/two beats at the detected tempo;
 - they span 56 measures;
 - 56/97 have at least one additional playable pitch candidate;
 - +12 semitones is the most common second-candidate interval among those events.
 
-This supports a **role-unresolved** interpretation. It does not prove those events are bass and does not justify blanket MIDI demotion/substitution.
+These observations support a **role-unresolved** interpretation. They do not prove those events are bass and do not justify blanket MIDI demotion/substitution. The next CPU-only task is to make these observations reproducible inside the role-boundary diagnostic and prove that diagnostic cannot change pitch/classification identity.
 
 ## ROLE-BOUNDARY DIAGNOSTIC
 
 Script:
 `scripts/songsterr-fresh/inspect_role_boundary_evidence.py`
 
-Properties:
+Current v1 properties:
 - descriptive only;
 - no classification changes;
 - no pitch substitution/deletion;
@@ -204,7 +203,7 @@ For the 97 MIDI-40 selections:
 
 Decision: **do not add a simplistic lower-guard demotion rule.** It explains only 27/97 suspicious boundary selections and does not resolve instrument role for the other 70.
 
-## SINGLE DURATION AUTHORITY
+## SINGLE DURATION AUTHORITY — HARDENED
 
 Pitch analyzer v4 is intentionally duration-free. The sole active duration-evidence stage is:
 `scripts/songsterr-fresh/estimate_selected_pitch_releases.py`
@@ -229,14 +228,25 @@ Exact real result:
 - mean heuristic duration confidence ~0.979
 - next onset used as duration: false
 
-Final adapted evidence now correctly reports **103** duration-resolved local pitch events, not the previous misleading 122 produced when duration was estimated twice.
+Final adapted evidence correctly reports **103** duration-resolved local pitch events, not the previous misleading 122 produced when duration was estimated twice.
 
-Workflow assertions require:
-- pitch analyzer outputs zero durations;
-- release stage provenance owns duration evidence;
-- dedicated release stage resolves the only accepted duration fields.
+Intrinsic single-authority hardening is complete:
+- commit `dd676d68e2188103e242eb9e7258adee923cb8a0` — release estimator rejects any non-null upstream `durationSeconds` or `sourceEnd` with `RELEASE_EVIDENCE_REQUIRES_DURATION_FREE_INPUT`;
+- commit `dab66b7aba0657628ca31ebdba413758bd54bde2` — exact-fixture CI adds a negative proof that pre-filled duration/end input fails and produces no output;
+- release diagnostics declare `soleDurationAuthority: true` and `requiresDurationFreeInput: true`.
 
-Next cleanup: make `estimate_selected_pitch_releases.py` intrinsically reject any pre-filled `durationSeconds`/`sourceEnd` input so single-authority behavior does not depend only on workflow ordering.
+Verified exact-fixture proof:
+- run **`34224308657`**
+- job **`102054571754`**
+- tested commit **`dab66b7aba0657628ca31ebdba413758bd54bde2`**
+- conclusion **success**
+- artifact **`10055091265`**
+- digest **`sha256:0d2e4092e66764acb75a9de92beaf2ab58bdb8ad3c80df2cdb9fba10f61a31df`**
+- event exposure remained **139 pitch-resolved / 0 role-accepted / 0 customer-eligible**
+- duration split remained **103 resolved / 36 unresolved**
+- deterministic suite remained **96/96**.
+
+Do not reintroduce a second duration estimator or relax the duration-free input guard without a justified architectural change.
 
 ## SCORELESS NOTE-EVIDENCE ACCEPTANCE
 
@@ -257,17 +267,13 @@ No provisional full-mixture evidence is customer-deliverable.
 Workflow:
 `.github/workflows/songsterr-fresh-gomyway-midterm-note-evidence-canary.yml`
 
-Important runner commit:
-- `096521b55f096f86c1f6f45f7ec147bcbefda540` — explicit pitch/role/customer event exposure in the real canary.
-- `87313246c233c809af1f6bd4720847366d2810b2` — enforce single duration authority and role exposure in workflow.
-
 Latest successful run:
-- run **`34223667812`**
-- job **`102052486964`**
-- tested commit **`87313246c233c809af1f6bd4720847366d2810b2`**
+- run **`34224308657`**
+- job **`102054571754`**
+- tested commit **`dab66b7aba0657628ca31ebdba413758bd54bde2`**
 - conclusion **success**
-- artifact **`10054854532`**
-- digest **`sha256:6d445365c951231087cdd0c1af49cefd8cc0560fe70ebb398141753ca4fd223e`**
+- artifact **`10055091265`**
+- digest **`sha256:0d2e4092e66764acb75a9de92beaf2ab58bdb8ad3c80df2cdb9fba10f61a31df`**
 
 Real diagnostic pipeline summary:
 - source/pitch-resolved events exercised mechanically: **139**
@@ -292,7 +298,7 @@ This is the desired fail-closed behavior: exact pitch evidence remains inspectab
 
 Latest branch-wide deterministic proof:
 - run **`34223492248`**, job **`102051925490`** — 96/96 after event-exposure contract.
-- latest exact-audio canary run **`34223667812`**, job **`102052486964`** independently reran the same suite and also passed **96/96**.
+- latest exact-audio canary run **`34224308657`**, job **`102054571754`** independently reran the same suite and also passed **96/96**.
 
 TAP:
 - tests: **96**
@@ -304,11 +310,12 @@ TAP:
 
 ## CURRENT ENGINEERING DECISION / NEXT STEP
 
-Permitted CPU/reference-blind work:
-1. harden `estimate_selected_pitch_releases.py` so it rejects any upstream pre-filled duration/end fields, making it intrinsically the sole duration authority;
-2. rerun the exact authorized fixture and full deterministic suite; expect 139 pitch-resolved / 0 role-accepted / 0 customer events and 103/36 dedicated duration split unless DSP evidence changes for a justified reason;
-3. optionally deepen **descriptive-only** role diagnostics (beat-position/repetition/candidate relationships) without re-labeling MIDI or declaring an instrument;
-4. preserve every candidate and exact selected MIDI; do not relabel E2 as bass or substitute another pitch without evidence.
+Permitted CPU/reference-blind work now:
+1. duration single-authority hardening is complete; preserve it as an invariant;
+2. deepen **descriptive-only** role diagnostics so beat-position/repetition/candidate-relationship observations are generated directly from the exact frozen structure and pitch evidence;
+3. add CI proof that role inspection does not alter onset IDs, classifications, selected MIDI, or candidate MIDI identity;
+4. rerun the exact authorized fixture and full deterministic suite; expected musical exposure remains 139 pitch-resolved / 0 role-accepted / 0 customer events and the 103/36 duration split unless evidence changes for a justified reason;
+5. preserve every candidate and exact selected MIDI; do not relabel E2 as bass or substitute another pitch without evidence.
 
 The next major capability jump is true role/instrument separation plus polyphonic note inference. A model/GPU/source-separation-model stage still requires **separate explicit user authorization** before dispatch.
 
