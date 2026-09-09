@@ -6,7 +6,16 @@ import math
 from importlib.metadata import version as package_version
 from pathlib import Path
 
+import numpy as np
 from basic_pitch.inference import predict
+from basic_pitch.note_creation import model_frames_to_time
+
+from basic_pitch_activation_evidence import (
+    activation_identity_summary,
+    build_activation_sidecar,
+    build_note_identity,
+    note_identity_rows_from_notes,
+)
 
 CONTRACT = "songsterr-fresh-basic-pitch-isolated-guitar-v1"
 DEFAULT_MIN_MIDI = 40
@@ -25,6 +34,13 @@ def parse_args():
     parser.add_argument("--onset-threshold", type=float, default=0.5)
     parser.add_argument("--frame-threshold", type=float, default=0.3)
     parser.add_argument("--minimum-note-length-ms", type=float, default=127.7)
+    parser.add_argument(
+        "--activation-output",
+        help=(
+            "Optional duration-free sidecar containing raw Basic Pitch note activations "
+            "from the same predict() call used to decode the emitted notes."
+        ),
+    )
     parser.add_argument("--gpu-invoked", action="store_true")
     return parser.parse_args()
 
@@ -75,8 +91,12 @@ def main():
         raise RuntimeError("BASIC_PITCH_INVALID_FRAME_THRESHOLD")
     if args.minimum_note_length_ms <= 0:
         raise RuntimeError("BASIC_PITCH_INVALID_MINIMUM_NOTE_LENGTH")
+    if args.activation_output and Path(args.activation_output).resolve() == Path(args.output).resolve():
+        raise RuntimeError("BASIC_PITCH_ACTIVATION_OUTPUT_MUST_BE_DISTINCT")
 
-    _, _, note_events = predict(
+    # One model invocation owns both decoded pitch/onset notes and, when requested,
+    # the raw note-activation sidecar. The decoded note-off remains diagnostic only.
+    model_output, _, note_events = predict(
         args.input,
         onset_threshold=args.onset_threshold,
         frame_threshold=args.frame_threshold,
@@ -105,39 +125,74 @@ def main():
         normalized.append({
             "noteId": f"basic-pitch-note-{index:06d}",
             "startSeconds": start_seconds,
-            # This is diagnostic model output only. It MUST NOT become durationSeconds/sourceEnd.
+            # Diagnostic model output only. It MUST NOT become durationSeconds/sourceEnd.
             "diagnosticModelEndSeconds": diagnostic_end_seconds,
             "midi": midi,
             "confidence": confidence,
             "pitchBendPointCount": len(pitch_bends) if pitch_bends else 0,
         })
 
-    normalized.sort(key=lambda note: (note["startSeconds"], note["midi"], note["diagnosticModelEndSeconds"]))
+    normalized.sort(key=lambda note: (
+        note["startSeconds"],
+        note["midi"],
+        note["diagnosticModelEndSeconds"],
+    ))
     # Reissue deterministic IDs after sorting so identical model output gives identical JSON.
     for index, note in enumerate(normalized):
         note["noteId"] = f"basic-pitch-note-{index:06d}"
 
+    note_identity = build_note_identity(note_identity_rows_from_notes(normalized))
     clusters = build_start_clusters(normalized)
     polyphonic_clusters = [cluster for cluster in clusters if len(cluster["noteIds"]) > 1]
     max_cluster_size = max((len(cluster["noteIds"]) for cluster in clusters), default=0)
+
+    model_metadata = {
+        "family": "Spotify Basic Pitch",
+        "package": "basic-pitch",
+        "packageVersion": package_version("basic-pitch"),
+        "polyphonic": True,
+        "instrumentAgnostic": True,
+        "minimumMidi": args.minimum_midi,
+        "maximumMidi": args.maximum_midi,
+        "onsetThreshold": args.onset_threshold,
+        "frameThreshold": args.frame_threshold,
+        "minimumNoteLengthMs": args.minimum_note_length_ms,
+    }
+
+    activation_identity = None
+    if args.activation_output:
+        note_matrix = np.asarray(model_output.get("note"), dtype=np.float32)
+        if note_matrix.ndim != 2 or note_matrix.shape[0] == 0:
+            raise RuntimeError("BASIC_PITCH_NOTE_ACTIVATION_MATRIX_INVALID")
+        frame_times = np.asarray(model_frames_to_time(note_matrix.shape[0]), dtype=np.float64)
+        activation_payload = build_activation_sidecar(
+            model_note_matrix=note_matrix,
+            frame_times=frame_times,
+            notes=normalized,
+            minimum_midi=args.minimum_midi,
+            maximum_midi=args.maximum_midi,
+            audio_source=args.audio_source,
+            separation_source=args.separation_source,
+            model_metadata=model_metadata,
+            gpu_invoked=args.gpu_invoked,
+        )
+        if activation_payload.get("noteInferenceIdentity") != note_identity:
+            raise RuntimeError("BASIC_PITCH_ACTIVATION_NOTE_IDENTITY_INTERNAL_MISMATCH")
+        activation_identity = activation_identity_summary(activation_payload)
+        activation_path = Path(args.activation_output)
+        activation_path.parent.mkdir(parents=True, exist_ok=True)
+        with open(activation_path, "w", encoding="utf-8") as handle:
+            json.dump(activation_payload, handle, separators=(",", ":"))
+            handle.write("\n")
 
     payload = {
         "contract": CONTRACT,
         "version": 1,
         "referenceBlind": True,
         "role": "guitar",
-        "model": {
-            "family": "Spotify Basic Pitch",
-            "package": "basic-pitch",
-            "packageVersion": package_version("basic-pitch"),
-            "polyphonic": True,
-            "instrumentAgnostic": True,
-            "minimumMidi": args.minimum_midi,
-            "maximumMidi": args.maximum_midi,
-            "onsetThreshold": args.onset_threshold,
-            "frameThreshold": args.frame_threshold,
-            "minimumNoteLengthMs": args.minimum_note_length_ms,
-        },
+        "model": model_metadata,
+        "noteInferenceIdentity": note_identity,
+        "activationEvidenceIdentity": activation_identity,
         "notes": normalized,
         "diagnostics": {
             "noteCount": len(normalized),
@@ -148,6 +203,8 @@ def main():
             "midiHistogram": histogram(note["midi"] for note in normalized),
             "modelNoteEndsAreDiagnosticOnly": True,
             "modelNoteEndsUsedAsDuration": False,
+            "sameInferenceActivationEvidenceCaptured": activation_identity is not None,
+            "predictInvocationCount": 1,
         },
         "provenance": {
             "source": CONTRACT,
@@ -159,6 +216,8 @@ def main():
             "legacyV143ScorerImported": False,
             "professionalScorerUsed": False,
             "referenceTabUsed": False,
+            "activationEvidenceSameInference": activation_identity is not None,
+            "activationEvidenceActiveDurationAuthority": False,
         },
     }
 
@@ -170,6 +229,8 @@ def main():
     print(json.dumps({
         "contract": CONTRACT,
         "model": payload["model"],
+        "noteInferenceIdentity": payload["noteInferenceIdentity"],
+        "activationEvidenceIdentity": payload["activationEvidenceIdentity"],
         "diagnostics": payload["diagnostics"],
         "provenance": payload["provenance"],
     }))
