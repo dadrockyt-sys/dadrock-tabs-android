@@ -6,17 +6,29 @@ import json
 from importlib.metadata import version as package_version
 from pathlib import Path
 
-import torch
 import yaml
+from huggingface_hub.constants import HF_HUB_CACHE
+
+import demucs.hf as demucs_hf
 import demucs.pretrained as pretrained
 
-CONTRACT = "songsterr-fresh-demucs-model-asset-v1"
+CONTRACT = "songsterr-fresh-demucs-model-asset-v2"
 EXPECTED_PACKAGE = "demucs"
+EXPECTED_PACKAGE_VERSION = "4.1.0"
 EXPECTED_MODEL_NAME = "htdemucs_6s"
 EXPECTED_SIGNATURE = "5c90dfd2"
-EXPECTED_FILENAME = "5c90dfd2-34c22ccb.th"
-EXPECTED_CHECKSUM_PREFIX = "34c22ccb"
-EXPECTED_REMOTE_SUFFIX = f"hybrid_transformer/{EXPECTED_FILENAME}"
+EXPECTED_HF_NAMESPACE = "adefossez"
+EXPECTED_HF_REPO_NAME = "HTDemucs-6s"
+EXPECTED_HF_REPO_ID = f"{EXPECTED_HF_NAMESPACE}/{EXPECTED_HF_REPO_NAME}"
+EXPECTED_HF_REVISION = "053e1404489b3dc58bf718224fac4b7316de8c93"
+EXPECTED_BAG_FILENAME = "htdemucs_6s.yaml"
+EXPECTED_ASSET_FILENAME = "5c90dfd2.safetensors"
+EXPECTED_ASSET_SHA256 = "d2a1745f0744721f6b8ca5bf469b67c651ea5ed1b52998cab033b2158609d411"
+EXPECTED_XET_HASH = "4a08ca8231da4bd9433191a95ee700cc8ba8693e980ac5b444f63eff38c807e1"
+
+LEGACY_FALLBACK_FILENAME = "5c90dfd2-34c22ccb.th"
+LEGACY_FALLBACK_CHECKSUM_PREFIX = "34c22ccb"
+LEGACY_FALLBACK_REMOTE_SUFFIX = f"hybrid_transformer/{LEGACY_FALLBACK_FILENAME}"
 
 
 def parse_args():
@@ -36,7 +48,7 @@ def sha256_file(path):
     return digest.hexdigest()
 
 
-def parse_remote_manifest(path):
+def parse_legacy_remote_manifest(path):
     root = ""
     models = {}
     for raw in path.read_text(encoding="utf-8").splitlines():
@@ -51,112 +63,104 @@ def parse_remote_manifest(path):
     return models
 
 
-def cache_roots():
-    roots = [
-        ("torch-hub", Path(torch.hub.get_dir()) / "checkpoints"),
+def hf_repo_cache_path():
+    escaped = EXPECTED_HF_REPO_ID.replace("/", "--")
+    return Path(HF_HUB_CACHE).expanduser() / f"models--{escaped}"
+
+
+def verify_primary_hf_asset():
+    package = package_version(EXPECTED_PACKAGE)
+    if package != EXPECTED_PACKAGE_VERSION:
+        raise RuntimeError(f"DEMUCS_PACKAGE_VERSION_CHANGED:{package}")
+
+    namespace = getattr(demucs_hf, "DEFAULT_NAMESPACE", None)
+    if namespace != EXPECTED_HF_NAMESPACE:
+        raise RuntimeError(f"DEMUCS_HF_NAMESPACE_CHANGED:{namespace}")
+    repo_name = demucs_hf.hf_repo_name(EXPECTED_MODEL_NAME)
+    if repo_name != EXPECTED_HF_REPO_NAME:
+        raise RuntimeError(f"DEMUCS_HF_REPO_MAPPING_CHANGED:{repo_name}")
+
+    repo_cache = hf_repo_cache_path()
+    snapshot = repo_cache / "snapshots" / EXPECTED_HF_REVISION
+    bag_path = snapshot / EXPECTED_BAG_FILENAME
+    asset_path = snapshot / EXPECTED_ASSET_FILENAME
+    sidecar_path = snapshot / f"{EXPECTED_SIGNATURE}.json"
+
+    missing = [
+        str(path)
+        for path in (bag_path, asset_path, sidecar_path)
+        if not path.is_file()
     ]
-    try:
-        from huggingface_hub.constants import HF_HUB_CACHE
-
-        roots.append(("huggingface-hub", Path(HF_HUB_CACHE)))
-    except Exception:
-        roots.append(("huggingface-hub-default", Path.home() / ".cache" / "huggingface" / "hub"))
-
-    deduped = []
-    seen = set()
-    for kind, root in roots:
-        key = str(root.expanduser().resolve(strict=False))
-        if key in seen:
-            continue
-        seen.add(key)
-        deduped.append((kind, root.expanduser()))
-    return deduped
-
-
-def find_expected_checkpoint():
-    matches = []
-    searched = []
-    for kind, root in cache_roots():
-        searched.append({"kind": kind, "root": str(root)})
-        direct = root / EXPECTED_FILENAME
-        if direct.is_file():
-            matches.append((kind, direct))
-        if root.is_dir():
-            for candidate in root.rglob(EXPECTED_FILENAME):
-                if candidate.is_file() and candidate != direct:
-                    matches.append((kind, candidate))
-
-    if not matches:
+    if missing:
+        discovered_snapshots = []
+        snapshots_root = repo_cache / "snapshots"
+        if snapshots_root.is_dir():
+            discovered_snapshots = sorted(
+                child.name for child in snapshots_root.iterdir() if child.is_dir()
+            )
         raise RuntimeError(
-            "DEMUCS_MODEL_CHECKPOINT_NOT_FOUND:" + json.dumps(searched, sort_keys=True)
+            "DEMUCS_HF_PINNED_SNAPSHOT_MISSING:"
+            + json.dumps(
+                {
+                    "expectedRevision": EXPECTED_HF_REVISION,
+                    "repoCache": str(repo_cache),
+                    "missing": missing,
+                    "discoveredSnapshots": discovered_snapshots,
+                },
+                sort_keys=True,
+            )
         )
-
-    verified = []
-    for kind, path in matches:
-        full_sha256 = sha256_file(path)
-        if full_sha256.startswith(EXPECTED_CHECKSUM_PREFIX):
-            verified.append((kind, path, full_sha256))
-
-    if not verified:
-        found = [
-            {"kind": kind, "path": str(path), "sha256": sha256_file(path)}
-            for kind, path in matches
-        ]
-        raise RuntimeError(
-            "DEMUCS_MODEL_CHECKSUM_PREFIX_MISMATCH:" + json.dumps(found, sort_keys=True)
-        )
-
-    unique_hashes = {sha for _, _, sha in verified}
-    if len(unique_hashes) != 1:
-        found = [
-            {"kind": kind, "path": str(path), "sha256": sha}
-            for kind, path, sha in verified
-        ]
-        raise RuntimeError(
-            "DEMUCS_MODEL_MULTIPLE_VERIFIED_ASSET_HASHES:" + json.dumps(found, sort_keys=True)
-        )
-
-    kind, path, full_sha256 = verified[0]
-    return kind, path, full_sha256, searched
-
-
-def main():
-    args = parse_args()
-    remote_root = Path(pretrained.REMOTE_ROOT)
-    bag_path = remote_root / f"{EXPECTED_MODEL_NAME}.yaml"
-    files_path = remote_root / "files.txt"
-    if not bag_path.is_file() or not files_path.is_file():
-        raise RuntimeError("DEMUCS_MODEL_MANIFEST_FILES_MISSING")
 
     bag = yaml.safe_load(bag_path.read_text(encoding="utf-8"))
     signatures = bag.get("models") if isinstance(bag, dict) else None
     if signatures != [EXPECTED_SIGNATURE]:
-        raise RuntimeError(f"DEMUCS_MODEL_SIGNATURE_CHANGED:{signatures}")
+        raise RuntimeError(f"DEMUCS_HF_BAG_SIGNATURE_CHANGED:{signatures}")
 
-    remote_models = parse_remote_manifest(files_path)
-    remote_url = remote_models.get(EXPECTED_SIGNATURE)
-    if not remote_url or not remote_url.endswith(EXPECTED_REMOTE_SUFFIX):
-        raise RuntimeError(f"DEMUCS_MODEL_REMOTE_ASSET_CHANGED:{remote_url}")
+    asset_sha = sha256_file(asset_path)
+    if asset_sha != EXPECTED_ASSET_SHA256:
+        raise RuntimeError(f"DEMUCS_HF_ASSET_SHA_CHANGED:{asset_sha}")
 
-    cache_kind, checkpoint, full_sha256, searched_roots = find_expected_checkpoint()
+    refs_main = repo_cache / "refs" / "main"
+    cached_main_revision = None
+    if refs_main.is_file():
+        cached_main_revision = refs_main.read_text(encoding="utf-8").strip()
+        if cached_main_revision != EXPECTED_HF_REVISION:
+            raise RuntimeError(
+                f"DEMUCS_HF_MAIN_REVISION_CHANGED:{cached_main_revision}"
+            )
 
-    payload = {
+    legacy_models = parse_legacy_remote_manifest(pretrained.REMOTE_ROOT / "files.txt")
+    legacy_url = legacy_models.get(EXPECTED_SIGNATURE)
+    if not legacy_url or not legacy_url.endswith(LEGACY_FALLBACK_REMOTE_SUFFIX):
+        raise RuntimeError(f"DEMUCS_LEGACY_FALLBACK_IDENTITY_CHANGED:{legacy_url}")
+
+    return {
         "contract": CONTRACT,
-        "version": 1,
+        "version": 2,
         "package": EXPECTED_PACKAGE,
-        "packageVersion": package_version(EXPECTED_PACKAGE),
+        "packageVersion": package,
         "modelName": EXPECTED_MODEL_NAME,
         "modelSignature": EXPECTED_SIGNATURE,
-        "assetFilename": EXPECTED_FILENAME,
-        "assetRemoteUrl": remote_url,
-        "assetSha256": full_sha256,
-        "assetChecksumPrefix": EXPECTED_CHECKSUM_PREFIX,
-        "assetChecksumPrefixVerified": True,
-        "assetCacheKind": cache_kind,
-        "assetCheckpointResolvedName": checkpoint.name,
-        "searchedCacheKinds": [item["kind"] for item in searched_roots],
-        "bagManifestSha256": sha256_file(bag_path),
-        "remoteFilesManifestSha256": sha256_file(files_path),
+        "primaryLoader": "huggingface",
+        "hfNamespace": EXPECTED_HF_NAMESPACE,
+        "hfRepoName": EXPECTED_HF_REPO_NAME,
+        "hfRepoId": EXPECTED_HF_REPO_ID,
+        "hfPinnedRevision": EXPECTED_HF_REVISION,
+        "hfCachedMainRevision": cached_main_revision,
+        "bagFilename": EXPECTED_BAG_FILENAME,
+        "bagModels": signatures,
+        "assetFilename": EXPECTED_ASSET_FILENAME,
+        "assetSha256": asset_sha,
+        "expectedAssetSha256": EXPECTED_ASSET_SHA256,
+        "assetXetHash": EXPECTED_XET_HASH,
+        "assetSnapshotPathIdentity": f"snapshots/{EXPECTED_HF_REVISION}/{EXPECTED_ASSET_FILENAME}",
+        "sidecarFilename": sidecar_path.name,
+        "legacyFallback": {
+            "primary": False,
+            "filename": LEGACY_FALLBACK_FILENAME,
+            "checksumPrefix": LEGACY_FALLBACK_CHECKSUM_PREFIX,
+            "remoteUrl": legacy_url,
+        },
         "referenceBlind": True,
         "modelInvokedByThisVerifier": False,
         "gpuInvokedByThisVerifier": False,
@@ -164,6 +168,11 @@ def main():
         "professionalScorerUsed": False,
         "referenceTabUsed": False,
     }
+
+
+def main():
+    args = parse_args()
+    payload = verify_primary_hf_asset()
     output = Path(args.output)
     output.parent.mkdir(parents=True, exist_ok=True)
     with open(output, "w", encoding="utf-8") as handle:
