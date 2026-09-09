@@ -54,6 +54,7 @@ function cleanEvidence(overrides = {}) {
       unresolvedOnsetCount: 0,
       durationResolvedEvidenceCount: 2,
     },
+    provenance: {},
     ...overrides,
   };
 }
@@ -168,7 +169,7 @@ test('dominant MIDI concentration remains visible without automatically rewritin
   assert.equal(promotedEvents.length, 4);
 });
 
-test('model or GPU provenance is an execution authorization concern, not a musical failure reason', () => {
+test('authorized and validated model or GPU provenance is not itself a musical failure reason', () => {
   const evidence = cleanEvidence({
     adapterContract: {
       referenceBlind: true,
@@ -180,11 +181,38 @@ test('model or GPU provenance is an execution authorization concern, not a music
       modelInvoked: true,
       gpuInvoked: true,
     },
+    provenance: {
+      modelValidationComplete: true,
+    },
   });
   const result = evaluateNoteEvidence(evidence);
   assert.equal(result.acceptedForCompleteTab, true);
   assert.deepEqual(result.failureReasons, []);
   assert.equal(result.evaluatorContract.executionAuthorizationOutOfScope, true);
+  assert.equal(result.evaluatorContract.modelEvidenceValidationRequired, true);
+});
+
+test('model note evidence remains fail-closed until model-path validation is complete', () => {
+  const evidence = cleanEvidence({
+    adapterContract: {
+      referenceBlind: true,
+      structureFrozen: true,
+      structureIdentityVerified: true,
+      nearestStructureSlotsVerified: true,
+      syntheticDurationInference: false,
+      legacyV143ScorerImported: false,
+      modelInvoked: true,
+      gpuInvoked: false,
+    },
+    provenance: {
+      modelValidationComplete: false,
+    },
+  });
+  const result = evaluateNoteEvidence(evidence);
+  assert.equal(result.acceptedForCompleteTab, false);
+  assert.ok(result.failureReasons.includes('MODEL_EVIDENCE_VALIDATION_PENDING'));
+  assert.equal(result.diagnostics.modelInvoked, true);
+  assert.equal(result.diagnostics.modelValidationComplete, false);
 });
 
 test('evaluator is deterministic', () => {
