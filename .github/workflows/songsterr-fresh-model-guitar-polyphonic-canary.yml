@@ -242,7 +242,22 @@ jobs:
         shell: bash
         run: |
           set -euo pipefail
+          DENIED_OUTPUT='/tmp/songsterr-fresh-model-canary/unauthorized-model-adaptation-must-not-exist.json'
+          DENIED_LOG='/tmp/songsterr-fresh-model-canary/unauthorized-model-adaptation.log'
+          rm -f "$DENIED_OUTPUT" "$DENIED_LOG"
+          set +e
           node scripts/songsterr-fresh/build_note_evidence.mjs \
+            /tmp/songsterr-fresh-model-canary/note-evidence-context.json \
+            /tmp/songsterr-fresh-model-canary/raw-model-note-evidence.json \
+            "$DENIED_OUTPUT" >"$DENIED_LOG" 2>&1
+          DENIED_STATUS=$?
+          set -e
+          test "$DENIED_STATUS" -ne 0
+          test ! -e "$DENIED_OUTPUT"
+          grep -q 'CPU_NOTE_EVIDENCE_CANARY_MODEL_NOT_ALLOWED' "$DENIED_LOG"
+
+          node scripts/songsterr-fresh/build_note_evidence.mjs \
+            --allow-model-upstream \
             /tmp/songsterr-fresh-model-canary/note-evidence-context.json \
             /tmp/songsterr-fresh-model-canary/raw-model-note-evidence.json \
             /tmp/songsterr-fresh-model-canary/adapted-model-note-evidence.json
@@ -313,9 +328,10 @@ jobs:
           PY
 
       - name: Upload model canary evidence
+        if: always()
         uses: actions/upload-artifact@v4
         with:
           name: songsterr-fresh-model-guitar-polyphonic-evidence
           path: /tmp/songsterr-fresh-model-canary/*.json
-          if-no-files-found: error
+          if-no-files-found: warn
           retention-days: 14
