@@ -7,6 +7,7 @@ on:
       - songsterr-fresh-pipeline-v1
     paths:
       - '.github/workflows/songsterr-fresh-model-activation-valley-deterministic.yml'
+      - 'scripts/songsterr-fresh/basic_pitch_activation_evidence.py'
       - 'scripts/songsterr-fresh/probe_model_activation_valleys.py'
       - 'scripts/songsterr-fresh/verify_demucs_model_asset.py'
       - 'scripts/songsterr-fresh/transcribe_isolated_guitar_basic_pitch.py'
@@ -240,7 +241,7 @@ jobs:
           print(json.dumps(payload))
           PY
 
-      - name: Infer duration-free polyphonic guitar notes
+      - name: Infer duration-free notes plus same-inference activation sidecar
         shell: bash
         run: |
           set -euo pipefail
@@ -250,6 +251,7 @@ jobs:
           python scripts/songsterr-fresh/transcribe_isolated_guitar_basic_pitch.py \
             --input "$STEM" \
             --output "$BASE/basic-pitch-guitar-notes.json" \
+            --activation-output "$BASE/basic-pitch-note-activations.json" \
             --audio-source 'public/jimmy-paige-midterm-v1/gomyway-midterm-source.m4a@main#4dd709e3fa177b4daeed71ca97f0199757729d4b' \
             --separation-source "demucs==4.1.0/htdemucs_6s/shifts=0:guitar@sha256:${STEM_SHA}"
           node scripts/songsterr-fresh/build_isolated_polyphonic_note_evidence.mjs \
@@ -258,22 +260,53 @@ jobs:
             "$BASE/raw-model-note-evidence-duration-free.json"
           python - <<'PY'
           import json
-          path = '/tmp/songsterr-fresh-deterministic-activation/raw-model-note-evidence-duration-free.json'
-          with open(path, 'r', encoding='utf-8') as handle:
-              data = json.load(handle)
+          import sys
+          sys.path.insert(0, 'scripts/songsterr-fresh')
+          from basic_pitch_activation_evidence import decode_and_verify_activation_sidecar
+
+          base = '/tmp/songsterr-fresh-deterministic-activation'
+          with open(f'{base}/basic-pitch-guitar-notes.json', 'r', encoding='utf-8') as handle:
+              notes = json.load(handle)
+          with open(f'{base}/basic-pitch-note-activations.json', 'r', encoding='utf-8') as handle:
+              sidecar = json.load(handle)
+          with open(f'{base}/raw-model-note-evidence-duration-free.json', 'r', encoding='utf-8') as handle:
+              evidence = json.load(handle)
+
+          decoded = decode_and_verify_activation_sidecar(sidecar, evidence=evidence)
+          if notes.get('activationEvidenceIdentity') != decoded.get('inferenceBundleIdentity'):
+              raise SystemExit('SAME_INFERENCE_ACTIVATION_BUNDLE_NOT_BOUND_TO_NOTES')
+          if evidence.get('provenance', {}).get('activationEvidenceIdentity') != decoded.get('inferenceBundleIdentity'):
+              raise SystemExit('SAME_INFERENCE_ACTIVATION_BUNDLE_NOT_PROPAGATED')
+          if notes.get('diagnostics', {}).get('predictInvocationCount') != 1:
+              raise SystemExit('BASIC_PITCH_CAPTURE_MUST_USE_ONE_PREDICT_CALL')
+          if notes.get('diagnostics', {}).get('sameInferenceActivationEvidenceCaptured') is not True:
+              raise SystemExit('SAME_INFERENCE_ACTIVATION_CAPTURE_NOT_RECORDED')
           leaking = [
-              onset.get('onsetId') for onset in data.get('onsets', [])
+              onset.get('onsetId') for onset in evidence.get('onsets', [])
               if onset.get('durationSeconds') is not None or onset.get('sourceEnd') is not None
           ]
           if leaking:
               raise SystemExit(f'DETERMINISTIC_MODEL_PITCH_STAGE_DURATION_LEAK:{leaking[:5]}')
-          if data.get('capabilities', {}).get('durationResolution') != 'none':
+          if evidence.get('capabilities', {}).get('durationResolution') != 'none':
               raise SystemExit('DETERMINISTIC_MODEL_PITCH_STAGE_MUST_BE_DURATION_FREE')
-          if data.get('diagnostics', {}).get('modelNoteEndsUsedAsDuration') is not False:
+          if evidence.get('diagnostics', {}).get('modelNoteEndsUsedAsDuration') is not False:
               raise SystemExit('DECODED_MODEL_NOTE_ENDS_MUST_REMAIN_DIAGNOSTIC_ONLY')
+          guards = sidecar.get('hardGuards', {})
+          if guards.get('sameInferenceAsDecodedNotes') is not True:
+              raise SystemExit('ACTIVATION_SIDECAR_SAME_INFERENCE_GUARD_MISSING')
+          for key in ('decodedModelNoteEndsIncluded', 'decodedModelNoteEndsUsedAsDuration', 'writesSourceEnd', 'writesDurationSeconds', 'activeDurationAuthority', 'changesPitchIdentity'):
+              if guards.get(key) is not False:
+                  raise SystemExit(f'ACTIVATION_SIDECAR_GUARD_CHANGED:{key}:{guards.get(key)}')
+          print(json.dumps({
+              'noteInferenceIdentity': decoded.get('noteInferenceIdentity'),
+              'inferenceBundleIdentity': decoded.get('inferenceBundleIdentity'),
+              'activationShape': list(decoded['activations'].shape),
+              'frameTimeCount': len(decoded['frameTimesSeconds']),
+              'hardGuards': guards,
+          }, indent=2))
           PY
 
-      - name: Apply existing sole v2 release authority
+      - name: Apply existing sole v2 release authority without sidecar
         shell: bash
         run: |
           set -euo pipefail
@@ -302,7 +335,7 @@ jobs:
               raise SystemExit('NEXT_ONSET_MUST_NOT_BECOME_DURATION')
           PY
 
-      - name: Probe fixed activation plus spectral valleys descriptively
+      - name: Probe same-inference activation plus spectral valleys descriptively
         shell: bash
         run: |
           set -euo pipefail
@@ -311,6 +344,7 @@ jobs:
           python scripts/songsterr-fresh/probe_model_activation_valleys.py \
             --input "$STEM" \
             --evidence "$BASE/raw-model-note-evidence-v2.json" \
+            --activation-evidence "$BASE/basic-pitch-note-activations.json" \
             --output "$BASE/activation-valley-probe.json"
           python - <<'PY'
           import json
@@ -319,10 +353,13 @@ jobs:
               probe = json.load(handle)
           with open(f'{base}/raw-model-note-evidence-v2.json', 'r', encoding='utf-8') as handle:
               v2 = json.load(handle)
-          if probe.get('contract') != 'songsterr-fresh-model-activation-valley-probe-v1':
+          if probe.get('contract') != 'songsterr-fresh-model-activation-valley-probe-v2' or probe.get('version') != 2:
               raise SystemExit('ACTIVATION_PROBE_CONTRACT_CHANGED')
           if probe.get('descriptiveOnly') is not True or probe.get('changesDuration') is not False:
               raise SystemExit('ACTIVATION_PROBE_MUST_REMAIN_DESCRIPTIVE_ONLY')
+          source = probe.get('activationSource', {})
+          if source.get('sameInferenceSidecarUsed') is not True or source.get('modelInvokedByProbe') is not False:
+              raise SystemExit('ACTIVATION_PROBE_MUST_USE_SAME_INFERENCE_SIDECAR_WITHOUT_SECOND_MODEL_CALL')
           identity = probe.get('identityProof', {})
           model_count = identity.get('modelEventCount')
           evidence_count = identity.get('evidenceEventCount')
@@ -332,6 +369,8 @@ jobs:
               raise SystemExit('ACTIVATION_PROBE_MIDI_IDENTITY_CHANGED')
           if identity.get('maxStartDeltaSeconds') != 0.0 or identity.get('maxConfidenceDelta') != 0.0:
               raise SystemExit('ACTIVATION_PROBE_SAME_RUN_IDENTITY_DRIFT')
+          if not identity.get('noteIdentitySha256') or not identity.get('inferenceBundleSha256'):
+              raise SystemExit('ACTIVATION_PROBE_CRYPTOGRAPHIC_IDENTITY_MISSING')
           expected_reattack = (
               v2.get('diagnostics', {})
                 .get('releaseEvidence', {})
@@ -342,7 +381,7 @@ jobs:
           if not isinstance(expected_reattack, int) or expected_reattack <= 0 or examined != expected_reattack:
               raise SystemExit(f'ACTIVATION_PROBE_REATTACK_COUNT_MISMATCH:{examined}:{expected_reattack}')
           guards = probe.get('hardGuards', {})
-          for key in ('decodedModelNoteEndsUsed', 'nextOnsetUsedAsDuration', 'writesSourceEnd', 'writesDurationSeconds', 'changesPitchIdentity'):
+          for key in ('decodedModelNoteEndsUsed', 'nextOnsetUsedAsDuration', 'writesSourceEnd', 'writesDurationSeconds', 'changesPitchIdentity', 'thresholdSweepUsed'):
               if guards.get(key) is not False:
                   raise SystemExit(f'ACTIVATION_PROBE_GUARD_CHANGED:{key}:{guards.get(key)}')
           def forbidden(value):
@@ -364,6 +403,7 @@ jobs:
               raise SystemExit(f'ACTIVATION_PROBE_WROTE_FORBIDDEN_DURATION_FIELD:{found}')
           print(json.dumps({
               'identityProof': identity,
+              'activationSource': source,
               'sameRunExpectedReattackCount': expected_reattack,
               'fixedEvidenceRule': probe.get('fixedEvidenceRule'),
               'diagnostics': probe.get('diagnostics'),
