@@ -69,6 +69,9 @@ export function evaluateNoteEvidence(evidence = {}) {
   const contract = evidence?.adapterContract && typeof evidence.adapterContract === 'object'
     ? evidence.adapterContract
     : {};
+  const provenance = evidence?.provenance && typeof evidence.provenance === 'object'
+    ? evidence.provenance
+    : {};
   const capabilities = normalizeCapabilities(evidence);
   const inventory = summarizeNoteEvidence(evidence);
 
@@ -135,6 +138,9 @@ export function evaluateNoteEvidence(evidence = {}) {
   if (contract.nearestStructureSlotsVerified !== true) failures.push('NOTE_EVIDENCE_STRUCTURE_SLOTS_UNVERIFIED');
   if (contract.syntheticDurationInference !== false) failures.push('SYNTHETIC_DURATION_INFERENCE_PRESENT');
   if (contract.legacyV143ScorerImported === true) failures.push('LEGACY_SCORER_BOUNDARY_VIOLATION');
+  if (contract.modelInvoked === true && provenance.modelValidationComplete !== true) {
+    failures.push('MODEL_EVIDENCE_VALIDATION_PENDING');
+  }
   if (onsetCount <= 0) failures.push('NOTE_EVIDENCE_EMPTY');
   if (!capabilities.roleRelevanceResolved) failures.push('ROLE_RELEVANCE_UNRESOLVED');
   if (!capabilities.polyphonyResolved) failures.push('POLYPHONY_UNRESOLVED');
@@ -149,7 +155,7 @@ export function evaluateNoteEvidence(evidence = {}) {
   return {
     evaluatorContract: {
       name: 'songsterr-fresh-note-evidence-evaluator',
-      version: 2,
+      version: 3,
       ownsAcceptanceDecision: true,
       descriptiveInventoryContract: inventory.contract.name,
       compositeScoreDefined: false,
@@ -157,6 +163,7 @@ export function evaluateNoteEvidence(evidence = {}) {
       referenceBlind: true,
       legacyV143ScorerImported: false,
       executionAuthorizationOutOfScope: true,
+      modelEvidenceValidationRequired: true,
     },
     acceptedForCompleteTab: failures.length === 0,
     failureReasons: failures,
@@ -172,6 +179,8 @@ export function evaluateNoteEvidence(evidence = {}) {
       unresolvedOnsetRate: ratio(unresolvedOnsetCount, onsetCount),
       durationResolvedEvidenceCount,
       durationCoverageAgainstPromotedEvents: ratio(durationResolvedEvidenceCount, promotedEventCount),
+      modelInvoked: contract.modelInvoked === true,
+      modelValidationComplete: provenance.modelValidationComplete === true,
       candidateCount: candidateCounts.reduce((sum, value) => sum + value, 0),
       candidateCountPerOnset: {
         mean: mean(candidateCounts),
