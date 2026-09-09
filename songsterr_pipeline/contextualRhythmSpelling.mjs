@@ -4,6 +4,10 @@ function approxEqual(a, b, tolerance = 1e-7) {
   return Math.abs(a - b) <= tolerance;
 }
 
+function nonDegenerateSegment(segment) {
+  return segment.end > segment.start + EPSILON;
+}
+
 function measureFor(structureMap, measureNumber) {
   const measure = structureMap.measures.find((candidate) => candidate.measureNumber === measureNumber);
   if (!measure) throw new Error(`Unknown measureNumber ${measureNumber}.`);
@@ -176,9 +180,20 @@ function spellSegment(segment, structureMap) {
   };
 }
 
+function finalizeSegmentTies(segments) {
+  return segments.map((segment, index) => ({
+    ...segment,
+    segmentIndex: index,
+    tieFromPrevious: index > 0,
+    tieToNext: index < segments.length - 1,
+  }));
+}
+
 function contextualizeEventSegments(event, structureMap) {
-  const raw = event.notation.segments;
-  if (raw.length <= 1) return raw.map((segment) => spellSegment(segment, structureMap));
+  const raw = event.notation.segments.filter(nonDegenerateSegment);
+  if (raw.length <= 1) {
+    return finalizeSegmentTies(raw.map((segment) => spellSegment(segment, structureMap)));
+  }
 
   const merged = [];
   for (let index = 0; index < raw.length; index += 1) {
@@ -205,12 +220,7 @@ function contextualizeEventSegments(event, structureMap) {
     }
   }
 
-  return merged.map((segment, index) => ({
-    ...segment,
-    segmentIndex: index,
-    tieFromPrevious: index > 0,
-    tieToNext: index < merged.length - 1,
-  }));
+  return finalizeSegmentTies(merged);
 }
 
 function splitRangeAtBeatBoundaries(start, end, structureMap) {
@@ -225,7 +235,7 @@ function splitRangeAtBeatBoundaries(start, end, structureMap) {
   return points.slice(0, -1).map((segmentStart, index) => ({
     start: segmentStart,
     end: points[index + 1],
-  }));
+  })).filter(nonDegenerateSegment);
 }
 
 function spellRestGap(rest, structureMap) {
