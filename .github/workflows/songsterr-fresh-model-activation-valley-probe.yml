@@ -81,6 +81,7 @@ jobs:
           BASE=/tmp/songsterr-fresh-activation-probe
           STEM="$BASE/separated/htdemucs_6s/gomyway-midterm-separation/guitar.wav"
           STEM_SHA="$(sha256sum "$STEM" | awk '{print $1}')"
+          echo "Same-run guitar stem sha256: ${STEM_SHA}"
           python scripts/songsterr-fresh/transcribe_isolated_guitar_basic_pitch.py \
             --input "$STEM" \
             --output "$BASE/basic-pitch-guitar-notes.json" \
@@ -108,21 +109,34 @@ jobs:
             --output "$BASE/activation-valley-probe.json"
           python - <<'PY'
           import json
-          path = '/tmp/songsterr-fresh-activation-probe/activation-valley-probe.json'
-          with open(path, 'r', encoding='utf-8') as handle:
+          base = '/tmp/songsterr-fresh-activation-probe'
+          with open(f'{base}/activation-valley-probe.json', 'r', encoding='utf-8') as handle:
               data = json.load(handle)
+          with open(f'{base}/raw-model-note-evidence-v2.json', 'r', encoding='utf-8') as handle:
+              v2 = json.load(handle)
           if data.get('contract') != 'songsterr-fresh-model-activation-valley-probe-v1':
               raise SystemExit('ACTIVATION_PROBE_CONTRACT_CHANGED')
           if data.get('descriptiveOnly') is not True or data.get('changesDuration') is not False:
               raise SystemExit('ACTIVATION_PROBE_MUST_REMAIN_DESCRIPTIVE_ONLY')
           identity = data.get('identityProof', {})
-          if identity.get('modelEventCount') != 1128 or identity.get('evidenceEventCount') != 1128:
-              raise SystemExit('ACTIVATION_PROBE_EXPECTS_EXACT_1128_EVENT_IDENTITY')
+          model_count = identity.get('modelEventCount')
+          evidence_count = identity.get('evidenceEventCount')
+          if not isinstance(model_count, int) or model_count <= 0 or model_count != evidence_count:
+              raise SystemExit(f'ACTIVATION_PROBE_SAME_RUN_EVENT_IDENTITY_COUNT_MISMATCH:{model_count}:{evidence_count}')
           if identity.get('exactMidiIdentityPreserved') is not True:
               raise SystemExit('ACTIVATION_PROBE_MIDI_IDENTITY_CHANGED')
+          if identity.get('maxStartDeltaSeconds') != 0.0 or identity.get('maxConfidenceDelta') != 0.0:
+              raise SystemExit('ACTIVATION_PROBE_SAME_RUN_EVENT_IDENTITY_DRIFT')
+          expected_reattack = (
+              v2.get('diagnostics', {})
+                .get('releaseEvidence', {})
+                .get('unresolvedReasonCounts', {})
+                .get('NO_CLEAR_RELEASE_BEFORE_SAME_PITCH_REATTACK')
+          )
           diagnostics = data.get('diagnostics', {})
-          if diagnostics.get('reattackCensoredExaminedCount') != 517:
-              raise SystemExit(f"ACTIVATION_PROBE_EXPECTS_517_REATTACK_CASES:{diagnostics.get('reattackCensoredExaminedCount')}")
+          examined = diagnostics.get('reattackCensoredExaminedCount')
+          if not isinstance(expected_reattack, int) or expected_reattack <= 0 or examined != expected_reattack:
+              raise SystemExit(f'ACTIVATION_PROBE_SAME_RUN_REATTACK_COUNT_MISMATCH:{examined}:{expected_reattack}')
           guards = data.get('hardGuards', {})
           if any(guards.get(key) is not False for key in ('decodedModelNoteEndsUsed', 'nextOnsetUsedAsDuration', 'writesSourceEnd', 'writesDurationSeconds', 'changesPitchIdentity')):
               raise SystemExit('ACTIVATION_PROBE_GUARDS_CHANGED')
@@ -145,6 +159,7 @@ jobs:
               raise SystemExit(f'ACTIVATION_PROBE_WROTE_FORBIDDEN_ACTIVE_DURATION_FIELD:{found}')
           print(json.dumps({
               'identityProof': identity,
+              'sameRunExpectedReattackCount': expected_reattack,
               'fixedEvidenceRule': data.get('fixedEvidenceRule'),
               'diagnostics': diagnostics,
               'hardGuards': guards,
