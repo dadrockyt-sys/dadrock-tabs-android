@@ -28,7 +28,7 @@ Never silently change/drop detected MIDI or event identity to improve notation, 
 
 - Work only on `songsterr-fresh-pipeline-v1`.
 - Do not modify `main` or Production.
-- Old `v143-contextual-prune-lobo` / Gomyway/V143 is archive/evidence only.
+- Old V143/Gomyway implementation is archive/evidence only.
 - Historical scorer percentages are not fresh acceptance gates.
 - On 2026-09-08 America/Toronto the user explicitly authorized the **fresh reference-blind model/source-separation path**, including GPU use if technically useful.
 - That authorization does **not** authorize archived V143 code, reference tabs, reference-based correction, professional/reference scorer use, training/fine-tuning, or broad optimizer sweeps.
@@ -62,37 +62,13 @@ Key facts:
 
 This structure is immutable downstream.
 
-## DETERMINISTIC FRESH CORE
-
-Namespace: `songsterr_pipeline/`
-
-Important boundaries/modules:
-- `structureMap.mjs`
-- `structureRhythmNotation.mjs`
-- `contextualRhythmSpelling.mjs`
-- `playableShapeDecoder.mjs`
-- `fretboardPathOptimizer.mjs`
-- `structureFretboardPath.mjs`
-- `freshEvaluator.mjs`
-- `productShellAdapter.mjs`
-- `deterministicPipeline.mjs`
-- `audioStructureAdapter.mjs`
-- `structureIdentity.mjs`
-- `noteEvidenceAdapter.mjs`
-- `noteEvidenceDiagnostics.mjs`
-- `noteEvidenceEvaluator.mjs`
-- `noteEventExposure.mjs`
-
-`tests/boundaryGuard.test.mjs` protects the deterministic namespace from archived/model-bearing runtime dependencies, network calls, and process launches.
-
 ## GUARDED CPU BASELINE
 
-CPU pitch analyzer:
-`scripts/songsterr-fresh/analyze_structure_conditioned_notes.py`
+CPU pitch analyzer: `scripts/songsterr-fresh/analyze_structure_conditioned_notes.py`
 
 Contract: `songsterr-fresh-cpu-note-evidence-v4`.
 
-Exact fixture:
+Exact fixture baseline:
 - 492 onsets
 - 1,130 candidates
 - 139 local unambiguous selections
@@ -108,20 +84,9 @@ Event exposure:
 - role-accepted: **0**
 - complete-tab/customer-eligible: **0**
 
-The CPU baseline remains useful as a conservative regression path, not a finished transcription path.
+Latest CPU regression proof remains green: run `34309259214`, job `102332311684`, artifact `10087798684`, digest `sha256:a1dbe85348f66847045e616d9726ffce986a82e995de0817fb20159e6fbf9d08`, 97/97 tests, 103 duration-resolved / 36 unresolved.
 
-### Latest CPU regression proof
-
-Run **`34309259214`**, job **`102332311684`**, head `54d9e4792d8255d56f6aec82977ac083b9c2bae4`:
-- conclusion `success`
-- artifact **`10087798684`**
-- artifact name `songsterr-fresh-gomyway-midterm-note-evidence`
-- digest `sha256:a1dbe85348f66847045e616d9726ffce986a82e995de0817fb20159e6fbf9d08`
-- deterministic tests **97/97 pass**
-- CPU model-upstream default remained denied
-- CPU duration result remained 103 resolved / 36 unresolved
-
-## AUTHORIZED MODEL PATH — FIRST REAL CANARY GREEN, VALIDATION STILL PENDING
+## AUTHORIZED MODEL PATH — VALIDATION PENDING
 
 Architecture:
 1. rebuild and verify frozen full-mixture structure;
@@ -130,72 +95,49 @@ Architecture:
 4. Basic Pitch decoded note-off times remain **diagnostic only**;
 5. model pitch evidence is duration-free when it crosses into the dedicated duration stage;
 6. dedicated release stage remains sole active duration authority;
-7. note evidence is adapted only with an explicit model-upstream authorization flag;
-8. independent `MODEL_EVIDENCE_VALIDATION_PENDING` blocker prevents customer eligibility until model validation is deliberately completed.
+7. note evidence is adapted only with explicit model-upstream authorization;
+8. `MODEL_EVIDENCE_VALIDATION_PENDING` prevents customer eligibility until validation is deliberately completed.
 
-Fresh model files/contracts:
+Core model files/contracts:
 - `scripts/songsterr-fresh/transcribe_isolated_guitar_basic_pitch.py` — `songsterr-fresh-basic-pitch-isolated-guitar-v1`
 - `scripts/songsterr-fresh/build_isolated_polyphonic_note_evidence.mjs` — `songsterr-fresh-isolated-polyphonic-note-evidence-v1`
 - `scripts/songsterr-fresh/run_model_note_evidence_pipeline_canary.mjs`
 - `.github/workflows/songsterr-fresh-model-guitar-polyphonic-canary.yml`
 
-`noteEvidenceEvaluator.mjs` contract is version 3 and requires explicit model-path validation before complete-tab acceptance.
+`noteEvidenceEvaluator.mjs` contract version 3 keeps model evidence fail-closed until independent validation is complete.
 
-### Authoritative model canary
+### First green model canary
 
-Run **`34309319200`**, job **`102332488694`**, head **`9d4a9d823e2d7da9c9e58e0b0d8b1e0881822180`**:
-- conclusion **success**
-- artifact **`10087877760`**
-- artifact name `songsterr-fresh-model-guitar-polyphonic-evidence`
-- artifact size 470,670 bytes
-- digest **`sha256:c051dfe5166a0d4fb019cf50aaae7afa97c7f477225657d9cc31b311c612ca31`**
-- deterministic tests **97/97 pass**
+Run `34309319200`, job `102332488694`, head `9d4a9d823e2d7da9c9e58e0b0d8b1e0881822180`:
+- conclusion success
+- artifact `10087877760`
+- digest `sha256:c051dfe5166a0d4fb019cf50aaae7afa97c7f477225657d9cc31b311c612ca31`
+- 97/97 deterministic tests
+- Demucs guitar stem SHA256 `d47f51ac8fe8f100c91d7f3d3d518e3f39bed25b995ed7982208445bcdc99d3c`
+- Basic Pitch: 1,128 notes, 1,020 start clusters, 98 polyphonic start clusters, max cluster size 3
+- MIDI 40 only 40/1,128 (3.55%), so the old full-mixture E2 collapse is absent
+- role relevance resolved true
+- polyphony resolved true
+- pitch-resolved 1,128
+- role-accepted 1,128
+- complete-tab/customer-eligible 0
+- exact MIDI 1,128/1,128 preserved
+- fretboard path resolved true
 
-Demucs evidence:
-- model `htdemucs_6s`
-- guitar stem SHA256 `d47f51ac8fe8f100c91d7f3d3d518e3f39bed25b995ed7982208445bcdc99d3c`
-- CPU execution for reproducibility
-- no legacy scorer/reference tab
+First model-path duration result:
+- 591 / 1,128 resolved (52.39%)
+- 537 unresolved
+- 517 `NO_CLEAR_RELEASE_BEFORE_SAME_PITCH_REATTACK`
+- 16 `INSUFFICIENT_ONSET_TO_FLOOR_CONTRAST`
+- 4 `NO_CLEAR_SUSTAINED_SPECTRAL_RELEASE`
 
-Basic Pitch evidence:
-- **1,128 notes**
-- **1,020 start clusters**
-- **98 polyphonic start clusters**
-- max simultaneous cluster size **3**
-- note density ~**5.35 notes/sec**
-- decoded model note ends are diagnostic only
-- MIDI 40: **40/1,128 = 3.55%**
-- dominant MIDI 52: **245/1,128 = 21.72%**
-- the old full-mixture E2 collapse is therefore absent on the isolated model path
-
-Selected MIDI histogram highlights:
-- 52: 245
-- 64: 213
-- 59: 137
-- 62: 105
-- 57: 78
-- 67: 41
-- 55: 40
-- 40: 40
-
-Frozen-structure alignment:
-- mean absolute displacement ~29.90 ms
-- median ~29.72 ms
-- p95 ~55.42 ms
-- max ~59.45 ms
-
-Basic Pitch note-amplitude confidence is explicitly **not a calibrated probability**:
-- mean ~0.5022
-- median ~0.4938
-- p10 ~0.3656
-- p90 ~0.6495
-
-Model decoder currently emits one selected MIDI candidate per decoded note. `unambiguous` here means decoder output is singular; it must not be overinterpreted as independently proven ground truth.
+Current evaluation blockers remain:
+- `MODEL_EVIDENCE_VALIDATION_PENDING`
+- `DURATION_EVIDENCE_INCOMPLETE`
 
 ## SINGLE DURATION AUTHORITY
 
-Active duration stage:
-`scripts/songsterr-fresh/estimate_selected_pitch_releases.py`
+Active stage: `scripts/songsterr-fresh/estimate_selected_pitch_releases.py`
 
 Contract: `songsterr-fresh-cpu-spectral-release-evidence-v2`.
 
@@ -204,79 +146,113 @@ Hard rules:
 - any upstream non-null `durationSeconds` or `sourceEnd` is rejected;
 - CPU path rejects model/GPU upstream by default;
 - authorized model evidence requires explicit `--allow-model-upstream`;
-- model note-off times never become active duration;
-- same-pitch reattack remains a censor/search boundary, not an invented duration;
+- Basic Pitch decoded note-off times never become active duration;
+- same-pitch reattack is a censor/search boundary, not an invented duration;
 - next generic onset is never used as duration.
 
-Authoritative model-path duration result:
-- attempted **1,128**
-- resolved **591**
-- unresolved **537**
-- resolution rate **52.39%**
-- unresolved reasons:
-  - **517** `NO_CLEAR_RELEASE_BEFORE_SAME_PITCH_REATTACK`
-  - **16** `INSUFFICIENT_ONSET_TO_FLOOR_CONTRAST`
-  - **4** `NO_CLEAR_SUSTAINED_SPECTRAL_RELEASE`
-- same-pitch reattack censor count **956**
-- mean resolved duration ~0.4800 s
-- median ~0.3484 s
-- max ~3.9268 s
-- mean heuristic duration confidence ~0.9199
+Do not weaken these rules while improving coverage.
 
-Duration completeness is the main current musical blocker.
+## ACTIVATION-VALLEY DURATION INVESTIGATION — DESCRIPTIVE ONLY
 
-## AUTHORIZATION / FAIL-CLOSED PROOF
+New probe:
+- `scripts/songsterr-fresh/probe_model_activation_valleys.py`
+- commit `6181b44cb628e068df75b1ad7c89b18a49b83cc4`
+- contract `songsterr-fresh-model-activation-valley-probe-v1`
+- `descriptiveOnly: true`
+- `changesDuration: false`
 
-The authoritative model workflow proves both sides of the execution boundary:
-- adapting model evidence **without** `--allow-model-upstream` fails with `CPU_NOTE_EVIDENCE_CANARY_MODEL_NOT_ALLOWED` and creates no output;
-- the same evidence **with** the explicit flag adapts successfully;
-- legacy scorer provenance remains forbidden.
+New canary:
+- `.github/workflows/songsterr-fresh-model-activation-valley-probe.yml`
+- initial workflow commit `87961c543fb8984b8d04cece4112f77b8dfc3a21`
+- repaired same-run identity assertions commit `5899d45620629ac9705d1a3682b8821764bc6a02`
 
-Model evidence evaluation currently returns exactly:
-- `MODEL_EVIDENCE_VALIDATION_PENDING`
-- `DURATION_EVIDENCE_INCOMPLETE`
+The probe has fixed predeclared rules; **no threshold sweep**:
+- Basic Pitch per-pitch activation <= 0.20
+- sustained for 3 model frames
+- activation drop >= 0.15 from the onset-window peak
+- observed span >= 0.07 s
+- search ends at the next same-pitch reattack or 4.0 s
+- independent selected-pitch CQT corroboration requires >= 6 dB spectral drop over 3 frames
 
-The earlier blockers are cleared on this model path:
-- no `ROLE_RELEVANCE_UNRESOLVED`
-- no `POLYPHONY_UNRESOLVED`
-- no `PITCH_EVIDENCE_UNRESOLVED`
+Hard guards in probe output:
+- decoded model note ends used: false
+- next onset used as duration: false
+- writes `sourceEnd`: false
+- writes `durationSeconds`: false
+- changes pitch identity: false
 
-Event exposure:
-- pitch-resolved: **1,128**
-- role-accepted: **1,128**
-- complete-tab/customer-eligible: **0**
+### First exact-fixture activation probe — informative but CI-red for stale historical count assumption
 
-Deterministic exercise:
-- source/final events: **1,128**
-- exact MIDI preserved: **1,128/1,128**
-- fretboard path resolves: **true**
-- unresolved durations: **537**
-- unresolved rhythm spellings: **31**
-- rawIntegrityPassed: **false**
-- rawResultReady: **false**
-- deliveryReady: **false**
-- structuredRenderEligible: **false**
+Run `34310962622`, job `102337354610`, head `87961c543fb8984b8d04cece4112f77b8dfc3a21`:
+- exact authorized fixture passed
+- frozen structure identity passed
+- current v2 duration baseline reproduced successfully for that run
+- artifact upload succeeded: `10088439396`
+- artifact digest `sha256:5b7a6e78dfdb17e3ac451deb9c79c33b1229c7d0edc85677394420305a0817bc`
+- probe itself proved exact same-run Basic Pitch identity: 1,170 model events = 1,170 evidence events, exact MIDI identity true, max start delta 0, max confidence delta 0
+- the workflow step failed only because it incorrectly asserted historical cross-run counts 1,128 / 517
+- deterministic suite was therefore skipped in that first probe run
 
-This is the desired state: the major role/polyphony capability jump is visible and mechanically testable, while customer delivery remains fail-closed.
+Same-run model evidence on that probe:
+- Basic Pitch notes: **1,170**
+- start clusters: 1,052
+- polyphonic start clusters: 101
+- max cluster size: 4
+- v2 durations: **609 resolved / 561 unresolved** (~52.05%)
+- reattack-censored unresolved: **541**
+- Demucs guitar stem SHA256: `99ded9ff55f0f0bcab7b79abf5126e873474d69064e6703724e6ae199b63921d`
 
-## NEXT ENGINEERING STEP
+Fixed-rule activation-valley probe result:
+- examined reattack-censored cases: **541**
+- corroborated activation + spectral valley candidates: **89**
+- candidate rate: **16.45%**
+- rejection reasons:
+  - 371 `NO_SUSTAINED_SUBTHRESHOLD_ACTIVATION`
+  - 73 `INSUFFICIENT_SPECTRAL_CORROBORATION`
+  - 8 `INSUFFICIENT_ACTIVATION_DROP`
+- candidate observed-span mean ~0.2877 s
+- median ~0.2786 s
+- p10 ~0.1741 s
+- p90 ~0.4435 s
+- max ~0.5470 s
 
-Do **not** set `modelValidationComplete: true` yet.
+This is promising evidence that a minority of reattack-censored notes contain a real observed release valley. It is **not yet integrated into active duration** and must not be used as a duration gate until the probe is green and reproducibility is hardened.
 
-The next justified milestone is to improve the **same single duration authority**, especially the 517 reattack-censored notes, without copying Basic Pitch decoded note-offs and without setting duration equal to the next onset.
+## NEW REPRODUCIBILITY FINDING — DEMUCS OUTPUT DRIFT
 
-Basic Pitch `predict()` exposes raw model activation matrices (`note`, `onset`, `contour`) in addition to decoded note events. Use the raw per-pitch `note` activation as additional release evidence inside the dedicated duration stage.
+The two exact-fixture model runs used the same declared package/model/device/settings but produced different guitar-stem hashes:
+- earlier: `d47f51ac8fe8f100c91d7f3d3d518e3f39bed25b995ed7982208445bcdc99d3c`
+- later: `99ded9ff55f0f0bcab7b79abf5126e873474d69064e6703724e6ae199b63921d`
 
-Planned approach:
-1. retain a compact, auditable Basic Pitch per-pitch activation representation tied to the exact model run;
-2. for same-pitch rearticulations, search between onset and next same-pitch reattack for a **real sustained activation/spectral valley**;
-3. if a sufficiently strong valley is independently supported, use that observed valley time as release evidence;
-4. otherwise remain unresolved;
-5. never use `diagnosticModelEndSeconds` as active duration;
-6. add negative CI proof that activation evidence cannot populate upstream duration/end fields and that decoded model note-off leakage is still rejected;
-7. inspect resulting coverage/distribution before changing model validation status.
+That changed downstream Basic Pitch counts from 1,128 to 1,170. Therefore **historical exact note count is not a valid cross-run identity gate until Demucs reproducibility is pinned**.
 
-Avoid threshold sweeps or hidden composite scores. Start with fixed, auditable evidence rules and preserve per-event provenance.
+Upstream Demucs manifest facts:
+- `htdemucs_6s.yaml` maps to model signature `5c90dfd2`
+- Demucs remote manifest names asset `hybrid_transformer/5c90dfd2-34c22ccb.th`
+
+Next reproducibility hardening must record/verify the actual downloaded model-weight cryptographic hash and determine whether stem drift comes from changing asset bytes or CPU inference/runtime nondeterminism.
+
+Do not mark model validation complete until this is resolved or explicitly bounded.
+
+## ACTIVE CANARY
+
+Repaired activation-valley canary dispatched from commit `5899d45620629ac9705d1a3682b8821764bc6a02`:
+- run `34311401076`
+- job `102338636114`
+- assertions now compare model/evidence identity **within the same run** and compare examined reattack count to that same run's v2 unresolved-reason count
+- no historical 1,128/517 count is used as a cross-run gate
+
+Update this section when the run completes.
+
+## NEXT ENGINEERING STEPS
+
+1. Finish the repaired exact-fixture activation probe and require the 97-test deterministic suite to remain green.
+2. Record the downloaded Demucs `5c90dfd2-34c22ccb.th` weight SHA256 in CI and compare across exact-fixture runs.
+3. If weights are identical, investigate CPU/runtime determinism before treating Demucs stem bytes or exact Basic Pitch counts as reproducible identities.
+4. Keep activation-valley evidence descriptive until reproducibility is understood.
+5. Only then consider integrating the fixed activation+spectral valley rule into the **same sole duration authority** as a fallback for reattack-censored notes.
+6. Integration must preserve negative proofs: no Basic Pitch decoded note-off may populate active duration/end, no next-onset duration, no MIDI identity changes.
+7. Do **not** set `modelValidationComplete: true` or expose customer-eligible events yet.
 
 ## NON-NEGOTIABLES
 
