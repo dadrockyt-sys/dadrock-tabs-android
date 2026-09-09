@@ -1,0 +1,469 @@
+name: Songsterr Fresh Model Release V3 Canary
+
+on:
+  workflow_dispatch:
+  push:
+    branches:
+      - songsterr-fresh-pipeline-v1
+    paths:
+      - '.github/workflows/songsterr-fresh-model-release-v3-canary.yml'
+      - 'scripts/songsterr-fresh/estimate_selected_pitch_releases_v3.py'
+      - 'scripts/songsterr-fresh/estimate_selected_pitch_releases.py'
+      - 'scripts/songsterr-fresh/activation_valley_release_evidence.py'
+      - 'scripts/songsterr-fresh/basic_pitch_activation_evidence.py'
+      - 'scripts/songsterr-fresh/probe_model_activation_valleys.py'
+      - 'scripts/songsterr-fresh/transcribe_isolated_guitar_basic_pitch.py'
+      - 'scripts/songsterr-fresh/build_isolated_polyphonic_note_evidence.mjs'
+      - 'scripts/songsterr-fresh/build_note_evidence_context.mjs'
+      - 'scripts/songsterr-fresh/build_note_evidence.mjs'
+      - 'scripts/songsterr-fresh/run_model_note_evidence_pipeline_canary.mjs'
+      - 'scripts/songsterr-fresh/verify_demucs_model_asset.py'
+      - 'songsterr_pipeline/**'
+
+permissions:
+  contents: read
+
+env:
+  OMP_NUM_THREADS: '1'
+  MKL_NUM_THREADS: '1'
+  OPENBLAS_NUM_THREADS: '1'
+  NUMEXPR_NUM_THREADS: '1'
+  PYTHONHASHSEED: '0'
+
+jobs:
+  release-v3-canary:
+    runs-on: ubuntu-latest
+    timeout-minutes: 60
+    steps:
+      - name: Check out fresh branch
+        uses: actions/checkout@v4
+
+      - name: Set up Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.10'
+
+      - name: Fetch and decode exact authorized fixture
+        shell: bash
+        run: |
+          set -euo pipefail
+          BASE=/tmp/songsterr-fresh-release-v3
+          mkdir -p "$BASE"
+          curl --fail --location --silent --show-error --retry 3 \
+            'https://raw.githubusercontent.com/dadrockyt-sys/dadrock-tabs-android/main/public/jimmy-paige-midterm-v1/gomyway-midterm-source.m4a' \
+            --output /tmp/gomyway-midterm-source.m4a
+          test "$(git hash-object /tmp/gomyway-midterm-source.m4a)" = '4dd709e3fa177b4daeed71ca97f0199757729d4b'
+          sudo apt-get update -qq
+          sudo apt-get install -y ffmpeg
+          ffmpeg -hide_banner -loglevel error -y \
+            -i /tmp/gomyway-midterm-source.m4a -ac 1 -ar 22050 \
+            /tmp/gomyway-midterm-analysis.wav
+          ffmpeg -hide_banner -loglevel error -y \
+            -i /tmp/gomyway-midterm-source.m4a -ac 2 -ar 44100 \
+            /tmp/gomyway-midterm-separation.wav
+          sha256sum /tmp/gomyway-midterm-analysis.wav | tee "$BASE/analysis-input.sha256"
+          sha256sum /tmp/gomyway-midterm-separation.wav | tee "$BASE/separation-input.sha256"
+
+      - name: Install pinned model and analysis dependencies
+        shell: bash
+        run: |
+          set -euo pipefail
+          python -m pip install --disable-pip-version-check \
+            numpy==1.26.4 \
+            torch==2.14.0 \
+            huggingface-hub==1.30.0 \
+            safetensors==0.8.0 \
+            sphn==0.2.1 \
+            demucs==4.1.0 \
+            basic-pitch==0.4.0 \
+            librosa==0.11.0 \
+            soundfile==0.13.1
+          python - <<'PY'
+          import importlib.metadata
+          for name in ('numpy', 'torch', 'huggingface-hub', 'safetensors', 'sphn', 'demucs', 'basic-pitch', 'librosa', 'soundfile', 'tflite-runtime'):
+              print(f'{name}=={importlib.metadata.version(name)}')
+          PY
+
+      - name: Rebuild accepted frozen structure
+        shell: bash
+        run: |
+          set -euo pipefail
+          BASE=/tmp/songsterr-fresh-release-v3
+          python scripts/songsterr-fresh/analyze_full_mixture_structure.py \
+            --input /tmp/gomyway-midterm-analysis.wav \
+            --output "$BASE/raw-structure-analysis.json" \
+            --audio-source 'public/jimmy-paige-midterm-v1/gomyway-midterm-source.m4a@main#4dd709e3fa177b4daeed71ca97f0199757729d4b'
+          node scripts/songsterr-fresh/build_structure_map.mjs \
+            "$BASE/raw-structure-analysis.json" \
+            "$BASE/adapted-structure-map.json"
+          node scripts/songsterr-fresh/build_note_evidence_context.mjs \
+            "$BASE/adapted-structure-map.json" \
+            "$BASE/note-evidence-context.json"
+          node --input-type=module - <<'NODE'
+          import { readFile } from 'node:fs/promises';
+          const c = JSON.parse(await readFile('/tmp/songsterr-fresh-release-v3/note-evidence-context.json', 'utf8'));
+          if (c?.structureIdentity?.signature !== 'fnv1a32:2f493225') {
+            throw new Error(`FROZEN_STRUCTURE_IDENTITY_CHANGED:${c?.structureIdentity?.signature}`);
+          }
+          NODE
+
+      - name: Separate deterministic guitar stem and verify executed asset
+        shell: bash
+        run: |
+          set -euo pipefail
+          BASE=/tmp/songsterr-fresh-release-v3
+          python -m demucs \
+            -n htdemucs_6s \
+            --device cpu \
+            --shifts 0 \
+            --overlap 0.25 \
+            --segment 7 \
+            -o "$BASE/separated" \
+            /tmp/gomyway-midterm-separation.wav
+          STEM="$BASE/separated/htdemucs_6s/gomyway-midterm-separation/guitar.wav"
+          test -s "$STEM"
+          STEM_SHA="$(sha256sum "$STEM" | awk '{print $1}')"
+          echo "V3 canary guitar stem sha256: ${STEM_SHA}"
+          python scripts/songsterr-fresh/verify_demucs_model_asset.py \
+            --output "$BASE/demucs-model-asset.json"
+          python - <<'PY'
+          import json
+          base = '/tmp/songsterr-fresh-release-v3'
+          with open(f'{base}/demucs-model-asset.json', 'r', encoding='utf-8') as handle:
+              a = json.load(handle)
+          required = {
+              'contract': 'songsterr-fresh-demucs-model-asset-v2',
+              'primaryLoader': 'huggingface',
+              'hfRepoId': 'adefossez/HTDemucs-6s',
+              'hfPinnedRevision': '3c5ee475be622df764938de97e4281a7b07ffa58',
+              'hfAssetUploadRevision': '053e1404489b3dc58bf718224fac4b7316de8c93',
+              'assetFilename': '5c90dfd2.safetensors',
+              'assetSha256': 'd2a1745f0744721f6b8ca5bf469b67c651ea5ed1b52998cab033b2158609d411',
+          }
+          for key, value in required.items():
+              if a.get(key) != value:
+                  raise SystemExit(f'DEMUCS_ASSET_IDENTITY_CHANGED:{key}:{a.get(key)}')
+          PY
+
+      - name: Infer duration-free notes plus same-inference activation evidence
+        shell: bash
+        run: |
+          set -euo pipefail
+          BASE=/tmp/songsterr-fresh-release-v3
+          STEM="$BASE/separated/htdemucs_6s/gomyway-midterm-separation/guitar.wav"
+          STEM_SHA="$(sha256sum "$STEM" | awk '{print $1}')"
+          python scripts/songsterr-fresh/transcribe_isolated_guitar_basic_pitch.py \
+            --input "$STEM" \
+            --output "$BASE/basic-pitch-guitar-notes.json" \
+            --activation-output "$BASE/basic-pitch-note-activations.json" \
+            --audio-source 'public/jimmy-paige-midterm-v1/gomyway-midterm-source.m4a@main#4dd709e3fa177b4daeed71ca97f0199757729d4b' \
+            --separation-source "demucs==4.1.0/htdemucs_6s/shifts=0:guitar@sha256:${STEM_SHA}"
+          node scripts/songsterr-fresh/build_isolated_polyphonic_note_evidence.mjs \
+            "$BASE/note-evidence-context.json" \
+            "$BASE/basic-pitch-guitar-notes.json" \
+            "$BASE/raw-model-note-evidence-duration-free.json"
+          python - <<'PY'
+          import json
+          import sys
+          sys.path.insert(0, 'scripts/songsterr-fresh')
+          from basic_pitch_activation_evidence import decode_and_verify_activation_sidecar
+          base = '/tmp/songsterr-fresh-release-v3'
+          with open(f'{base}/basic-pitch-guitar-notes.json', 'r', encoding='utf-8') as handle:
+              notes = json.load(handle)
+          with open(f'{base}/basic-pitch-note-activations.json', 'r', encoding='utf-8') as handle:
+              sidecar = json.load(handle)
+          with open(f'{base}/raw-model-note-evidence-duration-free.json', 'r', encoding='utf-8') as handle:
+              evidence = json.load(handle)
+          decoded = decode_and_verify_activation_sidecar(sidecar, evidence=evidence)
+          if notes.get('diagnostics', {}).get('predictInvocationCount') != 1:
+              raise SystemExit('V3_CANARY_REQUIRES_ONE_BASIC_PITCH_CALL')
+          if notes.get('activationEvidenceIdentity') != decoded.get('inferenceBundleIdentity'):
+              raise SystemExit('V3_CANARY_ACTIVATION_BUNDLE_NOT_BOUND_TO_NOTES')
+          if evidence.get('provenance', {}).get('activationEvidenceIdentity') != decoded.get('inferenceBundleIdentity'):
+              raise SystemExit('V3_CANARY_ACTIVATION_BUNDLE_NOT_PROPAGATED')
+          leaking = [
+              row.get('onsetId') for row in evidence.get('onsets', [])
+              if row.get('durationSeconds') is not None or row.get('sourceEnd') is not None
+          ]
+          if leaking:
+              raise SystemExit(f'V3_CANARY_PITCH_STAGE_DURATION_LEAK:{leaking[:5]}')
+          print(json.dumps({
+              'noteCount': len(evidence.get('onsets', [])),
+              'noteIdentity': decoded['noteInferenceIdentity'],
+              'bundleIdentity': decoded['inferenceBundleIdentity'],
+          }))
+          PY
+
+      - name: Prove v3 rejects unauthorized and mismatched activation evidence
+        shell: bash
+        run: |
+          set -euo pipefail
+          BASE=/tmp/songsterr-fresh-release-v3
+          STEM="$BASE/separated/htdemucs_6s/gomyway-midterm-separation/guitar.wav"
+
+          set +e
+          python scripts/songsterr-fresh/estimate_selected_pitch_releases_v3.py \
+            --input "$STEM" \
+            --evidence "$BASE/raw-model-note-evidence-duration-free.json" \
+            --activation-evidence "$BASE/basic-pitch-note-activations.json" \
+            --output "$BASE/unauthorized-v3-must-not-exist.json" \
+            >"$BASE/unauthorized-v3.log" 2>&1
+          STATUS=$?
+          set -e
+          test "$STATUS" -ne 0
+          test ! -e "$BASE/unauthorized-v3-must-not-exist.json"
+          grep -q 'CPU_RELEASE_CANARY_MODEL_NOT_ALLOWED' "$BASE/unauthorized-v3.log"
+
+          python - <<'PY'
+          import json
+          base = '/tmp/songsterr-fresh-release-v3'
+          with open(f'{base}/basic-pitch-note-activations.json', 'r', encoding='utf-8') as handle:
+              data = json.load(handle)
+          sha = data['noteInferenceIdentity']['sha256']
+          data['noteInferenceIdentity']['sha256'] = ('0' if sha[0] != '0' else '1') + sha[1:]
+          with open(f'{base}/tampered-activation-evidence.json', 'w', encoding='utf-8') as handle:
+              json.dump(data, handle)
+          PY
+
+          set +e
+          python scripts/songsterr-fresh/estimate_selected_pitch_releases_v3.py \
+            --allow-model-upstream \
+            --input "$STEM" \
+            --evidence "$BASE/raw-model-note-evidence-duration-free.json" \
+            --activation-evidence "$BASE/tampered-activation-evidence.json" \
+            --output "$BASE/tampered-v3-must-not-exist.json" \
+            >"$BASE/tampered-v3.log" 2>&1
+          STATUS=$?
+          set -e
+          test "$STATUS" -ne 0
+          test ! -e "$BASE/tampered-v3-must-not-exist.json"
+          grep -Eq 'BASIC_PITCH_ACTIVATION_(BUNDLE_IDENTITY|NOTE_IDENTITY)_MISMATCH' "$BASE/tampered-v3.log"
+
+      - name: Run unchanged v2 baseline
+        shell: bash
+        run: |
+          set -euo pipefail
+          BASE=/tmp/songsterr-fresh-release-v3
+          STEM="$BASE/separated/htdemucs_6s/gomyway-midterm-separation/guitar.wav"
+          python scripts/songsterr-fresh/estimate_selected_pitch_releases.py \
+            --allow-model-upstream \
+            --input "$STEM" \
+            --evidence "$BASE/raw-model-note-evidence-duration-free.json" \
+            --output "$BASE/raw-model-note-evidence-v2.json"
+
+      - name: Run v3 spectral-first activation fallback
+        shell: bash
+        run: |
+          set -euo pipefail
+          BASE=/tmp/songsterr-fresh-release-v3
+          STEM="$BASE/separated/htdemucs_6s/gomyway-midterm-separation/guitar.wav"
+          python scripts/songsterr-fresh/estimate_selected_pitch_releases_v3.py \
+            --allow-model-upstream \
+            --input "$STEM" \
+            --evidence "$BASE/raw-model-note-evidence-duration-free.json" \
+            --activation-evidence "$BASE/basic-pitch-note-activations.json" \
+            --output "$BASE/raw-model-note-evidence-v3.json"
+
+      - name: Run same-rule descriptive probe for parity
+        shell: bash
+        run: |
+          set -euo pipefail
+          BASE=/tmp/songsterr-fresh-release-v3
+          STEM="$BASE/separated/htdemucs_6s/gomyway-midterm-separation/guitar.wav"
+          python scripts/songsterr-fresh/probe_model_activation_valleys.py \
+            --input "$STEM" \
+            --evidence "$BASE/raw-model-note-evidence-v2.json" \
+            --activation-evidence "$BASE/basic-pitch-note-activations.json" \
+            --output "$BASE/activation-valley-probe.json"
+
+      - name: Prove v2 preservation and v3 fallback invariants
+        shell: bash
+        run: |
+          set -euo pipefail
+          python - <<'PY'
+          import json
+          base = '/tmp/songsterr-fresh-release-v3'
+          with open(f'{base}/raw-model-note-evidence-v2.json', 'r', encoding='utf-8') as handle:
+              v2 = json.load(handle)
+          with open(f'{base}/raw-model-note-evidence-v3.json', 'r', encoding='utf-8') as handle:
+              v3 = json.load(handle)
+          with open(f'{base}/activation-valley-probe.json', 'r', encoding='utf-8') as handle:
+              probe = json.load(handle)
+
+          v2_rows = {row['onsetId']: row for row in v2.get('onsets', [])}
+          v3_rows = {row['onsetId']: row for row in v3.get('onsets', [])}
+          if set(v2_rows) != set(v3_rows):
+              raise SystemExit('V3_EVENT_IDENTITY_SET_CHANGED')
+
+          fallback_ids = set()
+          primary_resolved = 0
+          for onset_id, before in v2_rows.items():
+              after = v3_rows[onset_id]
+              for field in ('sourceStart', 'selectedMidi', 'classification'):
+                  if before.get(field) != after.get(field):
+                      raise SystemExit(f'V3_PITCH_EVENT_IDENTITY_CHANGED:{onset_id}:{field}')
+
+              before_resolved = before.get('durationSeconds') is not None
+              after_resolved = after.get('durationSeconds') is not None
+              before_de = before.get('provenance', {}).get('durationEvidence', {})
+              after_de = after.get('provenance', {}).get('durationEvidence', {})
+
+              if before_resolved:
+                  primary_resolved += 1
+                  for field in ('sourceEnd', 'durationSeconds', 'durationConfidence'):
+                      if before.get(field) != after.get(field):
+                          raise SystemExit(f'V3_CHANGED_V2_RESOLVED_EVENT:{onset_id}:{field}')
+                  if after_de.get('source') != 'songsterr-fresh-cpu-spectral-release-evidence-v2':
+                      raise SystemExit(f'V3_PRIMARY_PROVENANCE_CHANGED:{onset_id}')
+                  if after_de.get('method') != 'selected-pitch-sustained-spectral-decay':
+                      raise SystemExit(f'V3_PRIMARY_METHOD_CHANGED:{onset_id}')
+                  continue
+
+              if not after_resolved:
+                  continue
+
+              if before_de.get('reason') != 'NO_CLEAR_RELEASE_BEFORE_SAME_PITCH_REATTACK':
+                  raise SystemExit(f'V3_FALLBACK_PROMOTED_INELIGIBLE_REASON:{onset_id}:{before_de.get("reason")}')
+              if after_de.get('method') != 'selected-pitch-activation-valley-with-spectral-corroboration':
+                  raise SystemExit(f'V3_FALLBACK_METHOD_CHANGED:{onset_id}')
+              if after.get('durationConfidence') is not None:
+                  raise SystemExit(f'V3_FALLBACK_MUST_NOT_INVENT_CONFIDENCE:{onset_id}')
+              reattack = after_de.get('samePitchReattackSeconds')
+              if not isinstance(reattack, (int, float)) or not (after['sourceEnd'] < reattack):
+                  raise SystemExit(f'V3_FALLBACK_NOT_BEFORE_REATTACK:{onset_id}')
+              if after['sourceEnd'] != after_de.get('observedValleySeconds'):
+                  raise SystemExit(f'V3_FALLBACK_END_MUST_EQUAL_OBSERVED_VALLEY:{onset_id}')
+              for guard in ('nextOnsetUsedAsDuration', 'samePitchReattackUsedAsDuration', 'decodedModelNoteEndUsedAsDuration'):
+                  if after_de.get(guard) is not False:
+                      raise SystemExit(f'V3_FALLBACK_GUARD_CHANGED:{onset_id}:{guard}')
+              fallback_ids.add(onset_id)
+
+          if not fallback_ids:
+              raise SystemExit('V3_CANARY_EXPECTS_AT_LEAST_ONE_FIXED_RULE_FALLBACK')
+
+          release2 = v2.get('diagnostics', {}).get('releaseEvidence', {})
+          release3 = v3.get('diagnostics', {}).get('releaseEvidence', {})
+          if release3.get('contract') != 'songsterr-fresh-spectral-activation-release-evidence-v3':
+              raise SystemExit('V3_RELEASE_CONTRACT_CHANGED')
+          if release3.get('primarySpectralContract') != 'songsterr-fresh-cpu-spectral-release-evidence-v2':
+              raise SystemExit('V3_PRIMARY_SPECTRAL_CONTRACT_CHANGED')
+          if release3.get('primarySpectralRunsFirst') is not True:
+              raise SystemExit('V3_PRIMARY_MUST_RUN_FIRST')
+          if release3.get('primarySpectralResolvedCount') != release2.get('resolvedPromotedOnsetCount'):
+              raise SystemExit('V3_PRIMARY_RESOLVED_COUNT_DIFFERS_FROM_V2')
+          if release3.get('primarySpectralUnresolvedReasonCounts') != release2.get('unresolvedReasonCounts'):
+              raise SystemExit('V3_PRIMARY_REASON_COUNTS_DIFFER_FROM_V2')
+          if release3.get('activationFallbackResolvedCount') != len(fallback_ids):
+              raise SystemExit('V3_FALLBACK_COUNT_ACCOUNTING_MISMATCH')
+          if release3.get('resolvedPromotedOnsetCount') != primary_resolved + len(fallback_ids):
+              raise SystemExit('V3_FINAL_RESOLVED_COUNT_ACCOUNTING_MISMATCH')
+          if release3.get('unresolvedPromotedOnsetCount') != release2.get('unresolvedPromotedOnsetCount') - len(fallback_ids):
+              raise SystemExit('V3_FINAL_UNRESOLVED_COUNT_ACCOUNTING_MISMATCH')
+          if release3.get('activationStageInvokedModel') is not False:
+              raise SystemExit('V3_RELEASE_STAGE_MUST_NOT_INVOKE_MODEL')
+          for guard in ('nextOnsetUsedAsDuration', 'samePitchReattackUsedAsDuration', 'decodedModelNoteEndUsedAsDuration'):
+              if release3.get(guard) is not False:
+                  raise SystemExit(f'V3_RELEASE_GLOBAL_GUARD_CHANGED:{guard}')
+          if release3.get('activationDurationConfidenceInvented') is not False:
+              raise SystemExit('V3_RELEASE_MUST_NOT_INVENT_ACTIVATION_CONFIDENCE')
+
+          probe_ids = {row['onsetId'] for row in probe.get('candidates', [])}
+          if fallback_ids != probe_ids:
+              missing = sorted(probe_ids - fallback_ids)[:5]
+              extra = sorted(fallback_ids - probe_ids)[:5]
+              raise SystemExit(f'V3_FALLBACK_PROBE_PARITY_MISMATCH:missing={missing}:extra={extra}')
+          if probe.get('activationSource', {}).get('modelInvokedByProbe') is not False:
+              raise SystemExit('V3_PARITY_PROBE_MUST_USE_SAME_INFERENCE_SIDECAR')
+          if release3.get('activationFallbackResolvedCount') != probe.get('diagnostics', {}).get('corroboratedValleyCandidateCount'):
+              raise SystemExit('V3_FALLBACK_COUNT_MUST_EQUAL_SAME_RULE_PROBE')
+
+          summary = {
+              'v2Resolved': release2.get('resolvedPromotedOnsetCount'),
+              'v2Unresolved': release2.get('unresolvedPromotedOnsetCount'),
+              'fallbackResolved': len(fallback_ids),
+              'v3Resolved': release3.get('resolvedPromotedOnsetCount'),
+              'v3Unresolved': release3.get('unresolvedPromotedOnsetCount'),
+              'v3ResolutionRate': release3.get('resolutionRate'),
+              'noteIdentitySha256': release3.get('activationNoteIdentitySha256'),
+              'bundleSha256': release3.get('activationInferenceBundleSha256'),
+              'fallbackMidiHistogram': release3.get('activationFallbackResolvedMidiHistogram'),
+              'fallbackRejections': release3.get('activationFallbackRejectionReasonCounts'),
+          }
+          with open(f'{base}/v3-comparison-summary.json', 'w', encoding='utf-8') as handle:
+              json.dump(summary, handle, indent=2)
+              handle.write('\n')
+          print(json.dumps(summary, indent=2))
+          PY
+
+      - name: Validate and adapt v3 evidence
+        shell: bash
+        run: |
+          set -euo pipefail
+          BASE=/tmp/songsterr-fresh-release-v3
+          DENIED="$BASE/v3-unauthorized-adaptation-must-not-exist.json"
+          set +e
+          node scripts/songsterr-fresh/build_note_evidence.mjs \
+            "$BASE/note-evidence-context.json" \
+            "$BASE/raw-model-note-evidence-v3.json" \
+            "$DENIED" >"$BASE/v3-adaptation-denied.log" 2>&1
+          STATUS=$?
+          set -e
+          test "$STATUS" -ne 0
+          test ! -e "$DENIED"
+          grep -q 'CPU_NOTE_EVIDENCE_CANARY_MODEL_NOT_ALLOWED' "$BASE/v3-adaptation-denied.log"
+
+          node scripts/songsterr-fresh/build_note_evidence.mjs \
+            --allow-model-upstream \
+            "$BASE/note-evidence-context.json" \
+            "$BASE/raw-model-note-evidence-v3.json" \
+            "$BASE/adapted-model-note-evidence-v3.json"
+
+      - name: Exercise v3 evidence through deterministic pipeline fail-closed
+        shell: bash
+        run: |
+          set -euo pipefail
+          BASE=/tmp/songsterr-fresh-release-v3
+          node scripts/songsterr-fresh/run_model_note_evidence_pipeline_canary.mjs \
+            "$BASE/adapted-structure-map.json" \
+            "$BASE/adapted-model-note-evidence-v3.json" \
+            "$BASE/model-pipeline-v3-result.json"
+          node --input-type=module - <<'NODE'
+          import { readFile } from 'node:fs/promises';
+          const result = JSON.parse(await readFile('/tmp/songsterr-fresh-release-v3/model-pipeline-v3-result.json', 'utf8'));
+          const failures = result.evidenceEvaluation?.failureReasons ?? [];
+          for (const required of ['MODEL_EVIDENCE_VALIDATION_PENDING', 'DURATION_EVIDENCE_INCOMPLETE']) {
+            if (!failures.includes(required)) throw new Error(`V3_FAIL_CLOSED_GATE_MISSING:${required}`);
+          }
+          const exposure = result.eventExposure?.metrics ?? {};
+          if (!(exposure.pitchResolvedEventCount > 0)) throw new Error('V3_EXPECTS_PITCH_EVENTS');
+          if (exposure.roleAcceptedEventCount !== exposure.pitchResolvedEventCount) {
+            throw new Error('V3_ROLE_ACCEPTED_COUNT_MISMATCH');
+          }
+          if (exposure.completeTabEligibleEventCount !== 0) {
+            throw new Error('V3_CUSTOMER_EVENTS_MUST_REMAIN_ZERO');
+          }
+          if (result.pipelineSummary?.deliveryReady !== false) {
+            throw new Error('V3_DELIVERY_MUST_REMAIN_FAIL_CLOSED');
+          }
+          NODE
+
+      - name: Re-run fresh deterministic suite
+        working-directory: songsterr_pipeline
+        run: npm test
+
+      - name: Upload v3 canary evidence
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: songsterr-fresh-model-release-v3-evidence
+          path: |
+            /tmp/songsterr-fresh-release-v3/*.json
+            /tmp/songsterr-fresh-release-v3/*.sha256
+            /tmp/songsterr-fresh-release-v3/*.log
+          if-no-files-found: warn
+          retention-days: 14
