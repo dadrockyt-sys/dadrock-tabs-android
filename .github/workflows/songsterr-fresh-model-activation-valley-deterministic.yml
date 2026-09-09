@@ -18,6 +18,13 @@ on:
 permissions:
   contents: read
 
+env:
+  OMP_NUM_THREADS: '1'
+  MKL_NUM_THREADS: '1'
+  OPENBLAS_NUM_THREADS: '1'
+  NUMEXPR_NUM_THREADS: '1'
+  PYTHONHASHSEED: '0'
+
 jobs:
   deterministic-activation-valley:
     runs-on: ubuntu-latest
@@ -40,6 +47,8 @@ jobs:
         shell: bash
         run: |
           set -euo pipefail
+          BASE=/tmp/songsterr-fresh-deterministic-activation
+          mkdir -p "$BASE"
           curl --fail --location --silent --show-error --retry 3 \
             'https://raw.githubusercontent.com/dadrockyt-sys/dadrock-tabs-android/main/public/jimmy-paige-midterm-v1/gomyway-midterm-source.m4a' \
             --output /tmp/gomyway-midterm-source.m4a
@@ -52,6 +61,8 @@ jobs:
           ffmpeg -hide_banner -loglevel error -y \
             -i /tmp/gomyway-midterm-source.m4a -ac 2 -ar 44100 \
             /tmp/gomyway-midterm-separation.wav
+          sha256sum /tmp/gomyway-midterm-analysis.wav | tee "$BASE/analysis-input.sha256"
+          sha256sum /tmp/gomyway-midterm-separation.wav | tee "$BASE/separation-input.sha256"
 
       - name: Install pinned model and analysis dependencies
         shell: bash
@@ -59,17 +70,85 @@ jobs:
           set -euo pipefail
           python -m pip install --disable-pip-version-check \
             numpy==1.26.4 \
+            torch==2.14.0 \
+            huggingface-hub==1.30.0 \
+            safetensors==0.8.0 \
+            sphn==0.2.1 \
             demucs==4.1.0 \
             basic-pitch==0.4.0 \
             librosa==0.11.0 \
             soundfile==0.13.1
+          python - <<'PY'
+          import importlib.metadata
+          for name in ('numpy', 'torch', 'huggingface-hub', 'safetensors', 'sphn', 'demucs', 'basic-pitch', 'librosa', 'soundfile', 'tflite-runtime'):
+              print(f'{name}=={importlib.metadata.version(name)}')
+          PY
+
+      - name: Record runtime provenance
+        shell: bash
+        run: |
+          set -euo pipefail
+          FFMPEG_VERSION="$(ffmpeg -version | head -n 1)"
+          python - <<PY
+          import hashlib
+          import importlib.metadata
+          import json
+          import os
+          import platform
+          from pathlib import Path
+
+          def sha256_file(path):
+              h = hashlib.sha256()
+              with open(path, 'rb') as handle:
+                  while True:
+                      block = handle.read(1024 * 1024)
+                      if not block:
+                          break
+                      h.update(block)
+              return h.hexdigest()
+
+          cpu_model = None
+          cpuinfo = Path('/proc/cpuinfo')
+          if cpuinfo.is_file():
+              for line in cpuinfo.read_text(encoding='utf-8', errors='replace').splitlines():
+                  if line.lower().startswith('model name') and ':' in line:
+                      cpu_model = line.split(':', 1)[1].strip()
+                      break
+
+          payload = {
+              'contract': 'songsterr-fresh-model-runtime-provenance-v1',
+              'version': 1,
+              'python': platform.python_version(),
+              'platform': platform.platform(),
+              'machine': platform.machine(),
+              'processor': platform.processor() or None,
+              'cpuModel': cpu_model,
+              'runnerOS': os.environ.get('RUNNER_OS'),
+              'runnerArch': os.environ.get('RUNNER_ARCH'),
+              'imageOS': os.environ.get('ImageOS'),
+              'imageVersion': os.environ.get('ImageVersion'),
+              'ffmpegVersion': '''$FFMPEG_VERSION''',
+              'analysisWavSha256': sha256_file('/tmp/gomyway-midterm-analysis.wav'),
+              'separationWavSha256': sha256_file('/tmp/gomyway-midterm-separation.wav'),
+              'packages': {
+                  name: importlib.metadata.version(name)
+                  for name in ('numpy', 'torch', 'huggingface-hub', 'safetensors', 'sphn', 'demucs', 'basic-pitch', 'librosa', 'soundfile', 'tflite-runtime')
+              },
+              'threadingEnvironment': {
+                  key: os.environ.get(key)
+                  for key in ('OMP_NUM_THREADS', 'MKL_NUM_THREADS', 'OPENBLAS_NUM_THREADS', 'NUMEXPR_NUM_THREADS', 'PYTHONHASHSEED')
+              },
+          }
+          out = Path('/tmp/songsterr-fresh-deterministic-activation/runtime-provenance.json')
+          out.write_text(json.dumps(payload, indent=2) + '\n', encoding='utf-8')
+          print(json.dumps(payload, indent=2))
+          PY
 
       - name: Rebuild accepted frozen structure
         shell: bash
         run: |
           set -euo pipefail
           BASE=/tmp/songsterr-fresh-deterministic-activation
-          mkdir -p "$BASE"
           python scripts/songsterr-fresh/analyze_full_mixture_structure.py \
             --input /tmp/gomyway-midterm-analysis.wav \
             --output "$BASE/raw-structure-analysis.json" \
@@ -88,7 +167,7 @@ jobs:
           }
           NODE
 
-      - name: Separate deterministic guitar stem
+      - name: Separate deterministic guitar stem and verify executed asset
         shell: bash
         run: |
           set -euo pipefail
@@ -110,16 +189,31 @@ jobs:
           python - <<PY
           import json
           import soundfile as sf
-          path = '$STEM'
-          info = sf.info(path)
+          with open('$BASE/demucs-model-asset.json', 'r', encoding='utf-8') as handle:
+              asset = json.load(handle)
+          if asset.get('contract') != 'songsterr-fresh-demucs-model-asset-v2':
+              raise SystemExit('DEMUCS_ASSET_CONTRACT_CHANGED')
+          if asset.get('primaryLoader') != 'huggingface' or asset.get('hfRepoId') != 'adefossez/HTDemucs-6s':
+              raise SystemExit('DEMUCS_PRIMARY_LOADER_CHANGED')
+          if asset.get('hfPinnedRevision') != '053e1404489b3dc58bf718224fac4b7316de8c93':
+              raise SystemExit('DEMUCS_HF_REVISION_CHANGED')
+          if asset.get('assetFilename') != '5c90dfd2.safetensors':
+              raise SystemExit('DEMUCS_HF_ASSET_FILENAME_CHANGED')
+          if asset.get('assetSha256') != 'd2a1745f0744721f6b8ca5bf469b67c651ea5ed1b52998cab033b2158609d411':
+              raise SystemExit('DEMUCS_HF_ASSET_SHA_CHANGED')
+          info = sf.info('$STEM')
           payload = {
-              'contract': 'songsterr-fresh-demucs-guitar-separation-v2',
-              'version': 2,
+              'contract': 'songsterr-fresh-demucs-guitar-separation-v3',
+              'version': 3,
               'referenceBlind': True,
               'package': 'demucs',
               'packageVersion': '4.1.0',
               'model': 'htdemucs_6s',
               'modelSignature': '5c90dfd2',
+              'executedAssetLoader': asset.get('primaryLoader'),
+              'executedAssetRepo': asset.get('hfRepoId'),
+              'executedAssetRevision': asset.get('hfPinnedRevision'),
+              'executedAssetSha256': asset.get('assetSha256'),
               'stem': 'guitar',
               'device': 'cpu',
               'shifts': 0,
@@ -132,6 +226,7 @@ jobs:
               'channels': info.channels,
               'frames': info.frames,
               'durationSeconds': info.duration,
+              'crossEnvironmentStemShaCanonical': False,
               'legacyV143ScorerImported': False,
               'professionalScorerUsed': False,
               'referenceTabUsed': False,
@@ -282,6 +377,8 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: songsterr-fresh-deterministic-activation-valley
-          path: /tmp/songsterr-fresh-deterministic-activation/*.json
+          path: |
+            /tmp/songsterr-fresh-deterministic-activation/*.json
+            /tmp/songsterr-fresh-deterministic-activation/*.sha256
           if-no-files-found: warn
           retention-days: 14
