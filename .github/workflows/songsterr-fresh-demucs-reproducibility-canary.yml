@@ -159,8 +159,10 @@ jobs:
               raise SystemExit('DEMUCS_ASSET_IDENTITY_CHANGED')
           if data.get('primaryLoader') != 'huggingface' or data.get('hfRepoId') != 'adefossez/HTDemucs-6s':
               raise SystemExit('DEMUCS_PRIMARY_LOADER_CHANGED')
-          if data.get('hfPinnedRevision') != '053e1404489b3dc58bf718224fac4b7316de8c93':
+          if data.get('hfPinnedRevision') != '3c5ee475be622df764938de97e4281a7b07ffa58':
               raise SystemExit('DEMUCS_HF_REVISION_CHANGED')
+          if data.get('hfAssetUploadRevision') != '053e1404489b3dc58bf718224fac4b7316de8c93':
+              raise SystemExit('DEMUCS_HF_ASSET_UPLOAD_REVISION_CHANGED')
           if data.get('bagModels') != ['5c90dfd2']:
               raise SystemExit('DEMUCS_HF_BAG_CHANGED')
           if data.get('assetFilename') != '5c90dfd2.safetensors':
