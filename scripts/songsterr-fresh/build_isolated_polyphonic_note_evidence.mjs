@@ -7,6 +7,8 @@ import { snapTimestampToStructureMap } from '../../songsterr_pipeline/structureM
 
 const CONTRACT = 'songsterr-fresh-isolated-polyphonic-note-evidence-v1';
 const EXPECTED_MODEL_CONTRACT = 'songsterr-fresh-basic-pitch-isolated-guitar-v1';
+const EXPECTED_NOTE_IDENTITY_CONTRACT = 'songsterr-fresh-basic-pitch-note-identity-v1';
+const EXPECTED_ACTIVATION_BUNDLE_CONTRACT = 'songsterr-fresh-basic-pitch-inference-bundle-v1';
 const EXPECTED_CONTEXT_CONTRACT = 'songsterr-fresh-note-evidence-context-v1';
 const PLAYABLE_MIDI_MIN = 40;
 const PLAYABLE_MIDI_MAX = 88;
@@ -28,6 +30,10 @@ function boundedConfidence(value, field) {
   const number = finite(value, field);
   if (number < 0 || number > 1) throw new Error(`${field} must be between 0 and 1.`);
   return number;
+}
+
+function validSha256(value) {
+  return typeof value === 'string' && /^[0-9a-f]{64}$/.test(value);
 }
 
 const context = JSON.parse(await readFile(resolve(contextArg), 'utf8'));
@@ -55,10 +61,33 @@ if (modelNotes?.diagnostics?.modelNoteEndsUsedAsDuration !== false) {
   throw new Error('MODEL_NOTE_ENDS_MUST_NOT_OWN_DURATION');
 }
 
-const structureMap = context.structureMap;
-const durationSeconds = finite(structureMap?.durationSeconds, 'structureMap.durationSeconds');
 const notes = Array.isArray(modelNotes?.notes) ? modelNotes.notes : [];
 if (notes.length === 0) throw new Error('MODEL_NOTE_EVIDENCE_EMPTY');
+
+const noteInferenceIdentity = modelNotes?.noteInferenceIdentity;
+if (noteInferenceIdentity?.contract !== EXPECTED_NOTE_IDENTITY_CONTRACT
+  || noteInferenceIdentity?.version !== 1
+  || noteInferenceIdentity?.algorithm !== 'sha256'
+  || Number(noteInferenceIdentity?.eventCount) !== notes.length
+  || !validSha256(noteInferenceIdentity?.sha256)) {
+  throw new Error('MODEL_NOTE_EVIDENCE_NOTE_IDENTITY_INVALID');
+}
+
+const activationEvidenceIdentity = modelNotes?.activationEvidenceIdentity ?? null;
+if (activationEvidenceIdentity !== null) {
+  if (activationEvidenceIdentity?.contract !== EXPECTED_ACTIVATION_BUNDLE_CONTRACT
+    || activationEvidenceIdentity?.version !== 1
+    || activationEvidenceIdentity?.algorithm !== 'sha256'
+    || activationEvidenceIdentity?.noteIdentitySha256 !== noteInferenceIdentity.sha256
+    || !validSha256(activationEvidenceIdentity?.activationMatrixSha256)
+    || !validSha256(activationEvidenceIdentity?.frameTimesSha256)
+    || !validSha256(activationEvidenceIdentity?.sha256)) {
+    throw new Error('MODEL_NOTE_EVIDENCE_ACTIVATION_IDENTITY_INVALID');
+  }
+}
+
+const structureMap = context.structureMap;
+const durationSeconds = finite(structureMap?.durationSeconds, 'structureMap.durationSeconds');
 
 const onsets = notes.map((note, index) => {
   const sourceStart = finite(note?.startSeconds, `notes[${index}].startSeconds`);
@@ -111,7 +140,7 @@ const onsets = notes.map((note, index) => {
       separationSource: modelNotes?.provenance?.separationSource ?? null,
     },
   };
-}).sort((a, b) => a.sourceStart - b.sourceStart || a.midi - b.midi || a.onsetId.localeCompare(b.onsetId));
+}).sort((a, b) => a.sourceStart - b.sourceStart || a.selectedMidi - b.selectedMidi || a.onsetId.localeCompare(b.onsetId));
 
 const diagnostics = {
   contract: CONTRACT,
@@ -129,6 +158,9 @@ const diagnostics = {
   polyphonicInference: modelNotes?.model ?? {},
   polyphonicStartClusterCount: Number(modelNotes?.diagnostics?.polyphonicStartClusterCount ?? 0),
   maxStartClusterSize: Number(modelNotes?.diagnostics?.maxStartClusterSize ?? 0),
+  noteInferenceIdentity: { ...noteInferenceIdentity },
+  activationEvidenceIdentity: activationEvidenceIdentity ? { ...activationEvidenceIdentity } : null,
+  sameInferenceActivationEvidenceCaptured: activationEvidenceIdentity !== null,
   modelNoteEndsAreDiagnosticOnly: true,
   modelNoteEndsUsedAsDuration: false,
   durationEvidence: {
@@ -167,6 +199,10 @@ const evidence = {
     sourceSeparationSource: modelNotes?.provenance?.separationSource ?? null,
     modelInvoked: true,
     gpuInvoked: modelNotes?.provenance?.gpuInvoked === true,
+    noteInferenceIdentity: { ...noteInferenceIdentity },
+    activationEvidenceIdentity: activationEvidenceIdentity ? { ...activationEvidenceIdentity } : null,
+    activationEvidenceSameInference: activationEvidenceIdentity !== null,
+    activationEvidenceActiveDurationAuthority: false,
     legacyV143ScorerImported: false,
     professionalScorerUsed: false,
     referenceTabUsed: false,
