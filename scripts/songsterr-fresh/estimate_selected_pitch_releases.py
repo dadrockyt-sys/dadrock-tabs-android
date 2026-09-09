@@ -23,24 +23,36 @@ def parse_args():
     parser.add_argument("--input", required=True)
     parser.add_argument("--evidence", required=True)
     parser.add_argument("--output", required=True)
+    parser.add_argument(
+        "--allow-model-upstream",
+        action="store_true",
+        help=(
+            "Allow duration-free upstream evidence produced by an explicitly authorized "
+            "model/GPU stage. Default remains fail-closed for the CPU baseline."
+        ),
+    )
     return parser.parse_args()
 
 
-def load_evidence(path):
+def load_evidence(path, *, allow_model_upstream=False):
     with open(path, "r", encoding="utf-8") as handle:
         evidence = json.load(handle)
     if evidence.get("version") != 1:
         raise RuntimeError("RELEASE_EVIDENCE_NOTE_CONTRACT_MISMATCH")
     if evidence.get("referenceBlind") is not True or evidence.get("structureFrozen") is not True:
         raise RuntimeError("RELEASE_EVIDENCE_REQUIRES_FROZEN_REFERENCE_BLIND_INPUT")
-    if evidence.get("provenance", {}).get("modelInvoked") is True:
+
+    provenance = evidence.get("provenance", {})
+    upstream_model = provenance.get("modelInvoked") is True
+    upstream_gpu = provenance.get("gpuInvoked") is True
+    if upstream_model and not allow_model_upstream:
         raise RuntimeError("CPU_RELEASE_CANARY_MODEL_NOT_ALLOWED")
-    if evidence.get("provenance", {}).get("gpuInvoked") is True:
+    if upstream_gpu and not allow_model_upstream:
         raise RuntimeError("CPU_RELEASE_CANARY_GPU_NOT_ALLOWED")
 
-    # This stage is the sole duration authority in the current CPU baseline. Refuse
-    # upstream duration/end values rather than overwriting, merging, or silently
-    # preferring one estimator over another.
+    # This stage remains the sole duration authority. Explicit model authorization
+    # permits only duration-free pitch/role/polyphony evidence to cross this boundary;
+    # it never permits upstream note-off times to populate sourceEnd/durationSeconds.
     for index, onset in enumerate(evidence.get("onsets", [])):
         if onset.get("durationSeconds") is not None or onset.get("sourceEnd") is not None:
             raise RuntimeError(
@@ -126,7 +138,10 @@ def unresolved_duration(onset, reason, *, censored_by_same_pitch_reattack=False)
 
 def main():
     args = parse_args()
-    evidence = load_evidence(args.evidence)
+    evidence = load_evidence(
+        args.evidence,
+        allow_model_upstream=args.allow_model_upstream,
+    )
 
     y, sr = sf.read(args.input, always_2d=False)
     if y.ndim != 1:
@@ -267,10 +282,15 @@ def main():
     capabilities["durationResolution"] = duration_resolution
     capabilities["durationMethod"] = "selected-pitch-sustained-spectral-decay"
 
+    upstream_provenance = evidence.get("provenance", {})
     evidence.setdefault("diagnostics", {})["releaseEvidence"] = {
         "contract": CONTRACT,
         "soleDurationAuthority": True,
         "requiresDurationFreeInput": True,
+        "explicitModelUpstreamAuthorizationRequired": True,
+        "modelUpstreamAllowedThisRun": bool(args.allow_model_upstream),
+        "upstreamModelInvoked": upstream_provenance.get("modelInvoked") is True,
+        "upstreamGpuInvoked": upstream_provenance.get("gpuInvoked") is True,
         "attemptedPromotedOnsetCount": attempted,
         "resolvedPromotedOnsetCount": resolved,
         "unresolvedPromotedOnsetCount": attempted - resolved,
@@ -296,6 +316,9 @@ def main():
     evidence["provenance"]["durationEvidenceModelInvoked"] = False
     evidence["provenance"]["durationEvidenceGpuInvoked"] = False
     evidence["provenance"]["durationEvidenceRequiresDurationFreeInput"] = True
+    evidence["provenance"]["durationEvidenceAcceptedAuthorizedModelUpstream"] = bool(
+        args.allow_model_upstream and upstream_provenance.get("modelInvoked") is True
+    )
 
     Path(args.output).parent.mkdir(parents=True, exist_ok=True)
     with open(args.output, "w", encoding="utf-8") as handle:
