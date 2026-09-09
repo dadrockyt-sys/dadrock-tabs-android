@@ -20,7 +20,8 @@ EXPECTED_SIGNATURE = "5c90dfd2"
 EXPECTED_HF_NAMESPACE = "adefossez"
 EXPECTED_HF_REPO_NAME = "HTDemucs-6s"
 EXPECTED_HF_REPO_ID = f"{EXPECTED_HF_NAMESPACE}/{EXPECTED_HF_REPO_NAME}"
-EXPECTED_HF_REVISION = "053e1404489b3dc58bf718224fac4b7316de8c93"
+EXPECTED_HF_REVISION = "3c5ee475be622df764938de97e4281a7b07ffa58"
+EXPECTED_ASSET_UPLOAD_REVISION = "053e1404489b3dc58bf718224fac4b7316de8c93"
 EXPECTED_BAG_FILENAME = "htdemucs_6s.yaml"
 EXPECTED_ASSET_FILENAME = "5c90dfd2.safetensors"
 EXPECTED_ASSET_SHA256 = "d2a1745f0744721f6b8ca5bf469b67c651ea5ed1b52998cab033b2158609d411"
@@ -146,6 +147,7 @@ def verify_primary_hf_asset():
         "hfRepoName": EXPECTED_HF_REPO_NAME,
         "hfRepoId": EXPECTED_HF_REPO_ID,
         "hfPinnedRevision": EXPECTED_HF_REVISION,
+        "hfAssetUploadRevision": EXPECTED_ASSET_UPLOAD_REVISION,
         "hfCachedMainRevision": cached_main_revision,
         "bagFilename": EXPECTED_BAG_FILENAME,
         "bagModels": signatures,
