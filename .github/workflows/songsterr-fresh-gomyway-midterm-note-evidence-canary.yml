@@ -125,7 +125,63 @@ jobs:
           python scripts/songsterr-fresh/inspect_role_boundary_evidence.py \
             --input /tmp/gomyway-midterm-analysis.wav \
             --evidence /tmp/songsterr-fresh-note-canary/raw-note-evidence-pitch.json \
+            --context /tmp/songsterr-fresh-note-canary/note-evidence-context.json \
             --output /tmp/songsterr-fresh-note-canary/raw-note-evidence-pitch-guarded.json
+          python - <<'PY'
+          import json
+
+          source_path = '/tmp/songsterr-fresh-note-canary/raw-note-evidence-pitch.json'
+          guarded_path = '/tmp/songsterr-fresh-note-canary/raw-note-evidence-pitch-guarded.json'
+          with open(source_path, 'r', encoding='utf-8') as handle:
+              source = json.load(handle)
+          with open(guarded_path, 'r', encoding='utf-8') as handle:
+              guarded = json.load(handle)
+
+          def semantic_pitch_identity(data):
+              return [
+                  (
+                      onset.get('onsetId'),
+                      onset.get('classification'),
+                      onset.get('selectedMidi'),
+                      tuple(candidate.get('midi') for candidate in onset.get('candidates', [])),
+                  )
+                  for onset in data.get('onsets', [])
+              ]
+
+          if semantic_pitch_identity(source) != semantic_pitch_identity(guarded):
+              raise SystemExit('ROLE_BOUNDARY_DIAGNOSTIC_MUTATED_PITCH_OR_CLASSIFICATION_IDENTITY')
+
+          diag = guarded.get('diagnostics', {}).get('roleBoundaryInspection', {})
+          if diag.get('contract') != 'songsterr-fresh-role-boundary-inspection-v2':
+              raise SystemExit('ROLE_BOUNDARY_DIAGNOSTIC_CONTRACT_MISMATCH')
+          if diag.get('descriptiveOnly') is not True or diag.get('changesClassification') is not False:
+              raise SystemExit('ROLE_BOUNDARY_DIAGNOSTIC_MUST_REMAIN_DESCRIPTIVE_ONLY')
+          if diag.get('selectedAtLowerPlayableBoundaryCount') != 97:
+              raise SystemExit('ROLE_BOUNDARY_EXPECTED_97_LOWER_BOUNDARY_SELECTIONS')
+
+          structure = diag.get('selectedBoundaryStructure', {})
+          if structure.get('mappedToFrozenStructureCount') != 97:
+              raise SystemExit('ROLE_BOUNDARY_ALL_SELECTIONS_MUST_MAP_TO_FROZEN_STRUCTURE')
+          if structure.get('beatStartCount') != 92:
+              raise SystemExit('ROLE_BOUNDARY_EXPECTED_92_BEAT_START_SELECTIONS')
+          if structure.get('uniqueMeasureCount') != 56:
+              raise SystemExit('ROLE_BOUNDARY_EXPECTED_56_MEASURE_SPAN')
+
+          relationships = diag.get('selectedBoundaryCandidateRelationships', {})
+          if relationships.get('multiplePlayableCandidateCount') != 56:
+              raise SystemExit('ROLE_BOUNDARY_EXPECTED_56_MULTI_CANDIDATE_SELECTIONS')
+          interval_hist = relationships.get('secondCandidateIntervalSemitoneHistogram', {})
+          if not interval_hist:
+              raise SystemExit('ROLE_BOUNDARY_SECOND_CANDIDATE_INTERVALS_MISSING')
+          most_common_interval = max(interval_hist, key=lambda key: (interval_hist[key], -int(key)))
+          if most_common_interval != '12':
+              raise SystemExit(f'ROLE_BOUNDARY_EXPECTED_PLUS_12_MOST_COMMON_SECOND_INTERVAL:{most_common_interval}')
+
+          reattack = diag.get('selectedBoundarySamePitchReattack', {})
+          rounded_gaps = reattack.get('roundedHundredthsGapHistogram', {})
+          if '0.46' not in rounded_gaps or '0.93' not in rounded_gaps:
+              raise SystemExit('ROLE_BOUNDARY_EXPECTED_COMMON_REATTACK_GAP_BINS')
+          PY
 
       - name: Prove release stage rejects prefilled duration evidence
         shell: bash
