@@ -7,6 +7,7 @@ on:
       - songsterr-fresh-pipeline-v1
     paths:
       - '.github/workflows/songsterr-fresh-model-guitar-polyphonic-canary.yml'
+      - 'scripts/songsterr-fresh/basic_pitch_activation_evidence.py'
       - 'scripts/songsterr-fresh/verify_demucs_model_asset.py'
       - 'scripts/songsterr-fresh/transcribe_isolated_guitar_basic_pitch.py'
       - 'scripts/songsterr-fresh/build_isolated_polyphonic_note_evidence.mjs'
@@ -77,12 +78,10 @@ jobs:
         run: |
           set -euo pipefail
           ffmpeg -hide_banner -loglevel error -y \
-            -i /tmp/gomyway-midterm-source.m4a \
-            -ac 1 -ar 22050 \
+            -i /tmp/gomyway-midterm-source.m4a -ac 1 -ar 22050 \
             /tmp/gomyway-midterm-analysis.wav
           ffmpeg -hide_banner -loglevel error -y \
-            -i /tmp/gomyway-midterm-source.m4a \
-            -ac 2 -ar 44100 \
+            -i /tmp/gomyway-midterm-source.m4a -ac 2 -ar 44100 \
             /tmp/gomyway-midterm-separation.wav
           sha256sum /tmp/gomyway-midterm-analysis.wav | tee /tmp/songsterr-fresh-model-canary/analysis-input.sha256
           sha256sum /tmp/gomyway-midterm-separation.wav | tee /tmp/songsterr-fresh-model-canary/separation-input.sha256
@@ -276,31 +275,54 @@ jobs:
           print(json.dumps(payload, indent=2))
           PY
 
-      - name: Infer polyphonic guitar notes with Basic Pitch
+      - name: Infer notes plus same-inference activation sidecar
         shell: bash
         run: |
           set -euo pipefail
-          STEM='/tmp/songsterr-fresh-model-canary/separated/htdemucs_6s/gomyway-midterm-separation/guitar.wav'
+          BASE=/tmp/songsterr-fresh-model-canary
+          STEM="$BASE/separated/htdemucs_6s/gomyway-midterm-separation/guitar.wav"
           STEM_SHA="$(sha256sum "$STEM" | awk '{print $1}')"
           python scripts/songsterr-fresh/transcribe_isolated_guitar_basic_pitch.py \
             --input "$STEM" \
-            --output /tmp/songsterr-fresh-model-canary/basic-pitch-guitar-notes.json \
+            --output "$BASE/basic-pitch-guitar-notes.json" \
+            --activation-output "$BASE/basic-pitch-note-activations.json" \
             --audio-source 'public/jimmy-paige-midterm-v1/gomyway-midterm-source.m4a@main#4dd709e3fa177b4daeed71ca97f0199757729d4b' \
             --separation-source "demucs==4.1.0/htdemucs_6s/shifts=0:guitar@sha256:${STEM_SHA}"
 
-      - name: Build duration-free isolated polyphonic note evidence
+      - name: Build and verify duration-free isolated polyphonic evidence
         shell: bash
         run: |
           set -euo pipefail
+          BASE=/tmp/songsterr-fresh-model-canary
           node scripts/songsterr-fresh/build_isolated_polyphonic_note_evidence.mjs \
-            /tmp/songsterr-fresh-model-canary/note-evidence-context.json \
-            /tmp/songsterr-fresh-model-canary/basic-pitch-guitar-notes.json \
-            /tmp/songsterr-fresh-model-canary/raw-model-note-evidence-duration-free.json
+            "$BASE/note-evidence-context.json" \
+            "$BASE/basic-pitch-guitar-notes.json" \
+            "$BASE/raw-model-note-evidence-duration-free.json"
           python - <<'PY'
           import json
-          path = '/tmp/songsterr-fresh-model-canary/raw-model-note-evidence-duration-free.json'
-          with open(path, 'r', encoding='utf-8') as handle:
+          import sys
+          sys.path.insert(0, 'scripts/songsterr-fresh')
+          from basic_pitch_activation_evidence import decode_and_verify_activation_sidecar
+
+          base = '/tmp/songsterr-fresh-model-canary'
+          with open(f'{base}/basic-pitch-guitar-notes.json', 'r', encoding='utf-8') as handle:
+              notes = json.load(handle)
+          with open(f'{base}/basic-pitch-note-activations.json', 'r', encoding='utf-8') as handle:
+              sidecar = json.load(handle)
+          with open(f'{base}/raw-model-note-evidence-duration-free.json', 'r', encoding='utf-8') as handle:
               data = json.load(handle)
+
+          decoded = decode_and_verify_activation_sidecar(sidecar, evidence=data)
+          bundle = decoded.get('inferenceBundleIdentity')
+          if notes.get('activationEvidenceIdentity') != bundle:
+              raise SystemExit('MODEL_ACTIVATION_BUNDLE_NOT_BOUND_TO_NOTES')
+          if data.get('provenance', {}).get('activationEvidenceIdentity') != bundle:
+              raise SystemExit('MODEL_ACTIVATION_BUNDLE_NOT_PROPAGATED_TO_EVIDENCE')
+          if notes.get('diagnostics', {}).get('predictInvocationCount') != 1:
+              raise SystemExit('MODEL_CAPTURE_MUST_USE_ONE_BASIC_PITCH_PREDICT_CALL')
+          if notes.get('diagnostics', {}).get('sameInferenceActivationEvidenceCaptured') is not True:
+              raise SystemExit('MODEL_SAME_INFERENCE_ACTIVATION_CAPTURE_MISSING')
+
           caps = data.get('capabilities', {})
           if caps.get('roleRelevanceResolved') is not True:
               raise SystemExit('MODEL_GUITAR_ROLE_MUST_BE_RESOLVED_BY_SEPARATION')
@@ -319,9 +341,23 @@ jobs:
               raise SystemExit(f'MODEL_NOTE_END_LEAK_INTO_DURATION:{leaking[:5]}')
           if data.get('diagnostics', {}).get('modelNoteEndsUsedAsDuration') is not False:
               raise SystemExit('MODEL_NOTE_ENDS_MUST_REMAIN_DIAGNOSTIC_ONLY')
+
+          guards = sidecar.get('hardGuards', {})
+          if guards.get('sameInferenceAsDecodedNotes') is not True:
+              raise SystemExit('ACTIVATION_SIDECAR_SAME_INFERENCE_GUARD_MISSING')
+          for key in ('decodedModelNoteEndsIncluded', 'decodedModelNoteEndsUsedAsDuration', 'writesSourceEnd', 'writesDurationSeconds', 'activeDurationAuthority', 'changesPitchIdentity'):
+              if guards.get(key) is not False:
+                  raise SystemExit(f'ACTIVATION_SIDECAR_GUARD_CHANGED:{key}:{guards.get(key)}')
+          print(json.dumps({
+              'noteInferenceIdentity': decoded.get('noteInferenceIdentity'),
+              'inferenceBundleIdentity': bundle,
+              'activationShape': list(decoded['activations'].shape),
+              'frameTimeCount': len(decoded['frameTimesSeconds']),
+              'hardGuards': guards,
+          }, indent=2))
           PY
 
-      - name: Apply sole release authority to authorized model evidence
+      - name: Apply sole release authority without activation sidecar
         shell: bash
         run: |
           set -euo pipefail
@@ -421,6 +457,7 @@ jobs:
               'demucs-model-asset.json',
               'separation-manifest.json',
               'basic-pitch-guitar-notes.json',
+              'basic-pitch-note-activations.json',
               'raw-model-note-evidence-duration-free.json',
               'raw-model-note-evidence.json',
               'adapted-model-note-evidence.json',
@@ -432,6 +469,10 @@ jobs:
               print(json.dumps({
                   'contract': data.get('contract'),
                   'model': data.get('model'),
+                  'noteInferenceIdentity': data.get('noteInferenceIdentity'),
+                  'activationEvidenceIdentity': data.get('activationEvidenceIdentity'),
+                  'inferenceBundleIdentity': data.get('inferenceBundleIdentity'),
+                  'hardGuards': data.get('hardGuards'),
                   'capabilities': data.get('capabilities'),
                   'diagnostics': data.get('diagnostics'),
                   'metrics': data.get('metrics'),
