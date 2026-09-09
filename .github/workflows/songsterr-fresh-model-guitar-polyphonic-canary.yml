@@ -80,14 +80,18 @@ jobs:
         shell: bash
         run: |
           set -euo pipefail
+          # Basic Pitch 0.4.0 uses tflite-runtime 2.14, whose binary extension is
+          # built against NumPy 1.x. Pinning 1.26.4 avoids the NumPy 2 _ARRAY_API
+          # incompatibility while remaining compatible with librosa/scipy.
           python -m pip install --disable-pip-version-check \
+            numpy==1.26.4 \
             demucs==4.1.0 \
             basic-pitch==0.4.0 \
             librosa==0.11.0 \
             soundfile==0.13.1
           python - <<'PY'
           import importlib.metadata
-          for name in ('demucs', 'basic-pitch', 'librosa', 'soundfile', 'torch'):
+          for name in ('numpy', 'demucs', 'basic-pitch', 'librosa', 'soundfile', 'torch', 'tflite-runtime'):
               print(f'{name}=={importlib.metadata.version(name)}')
           PY
 
