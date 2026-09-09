@@ -97,7 +97,7 @@ Core model files:
 
 `noteEvidenceEvaluator.mjs` contract version 3 keeps model evidence fail-closed until independent validation is complete.
 
-### Historical first green model canary (now known to use stochastic Demucs shift augmentation)
+### Historical first green model canary — stochastic Demucs shift augmentation
 
 Run `34309319200`, job `102332488694`:
 - artifact `10087877760`
@@ -111,7 +111,7 @@ Run `34309319200`, job `102332488694`:
 - customer-eligible 0
 - v2 durations: 591 resolved / 537 unresolved; 517 reattack-censored
 
-This run remains useful evidence, but its exact stem/note counts are **not** a reproducibility baseline because the workflow used `--shifts 1`.
+This run remains useful evidence, but exact stem/note counts are **not** a reproducibility baseline because it used Demucs `--shifts 1`.
 
 ## SINGLE DURATION AUTHORITY
 
@@ -131,14 +131,10 @@ Do not weaken these rules while improving coverage.
 
 ## ACTIVATION-VALLEY INVESTIGATION — DESCRIPTIVE ONLY
 
-Probe:
-- `scripts/songsterr-fresh/probe_model_activation_valleys.py`
-- commit `6181b44cb628e068df75b1ad7c89b18a49b83cc4`
-- contract `songsterr-fresh-model-activation-valley-probe-v1`
-- `descriptiveOnly: true`
-- `changesDuration: false`
+Probe: `scripts/songsterr-fresh/probe_model_activation_valleys.py`
+Contract: `songsterr-fresh-model-activation-valley-probe-v1`.
 
-Fixed predeclared evidence rule; **no threshold sweep**:
+Fixed predeclared rule; **no threshold sweep**:
 - Basic Pitch per-pitch activation <= 0.20
 - sustained for 3 model frames
 - activation drop >= 0.15 from onset-window peak
@@ -146,105 +142,126 @@ Fixed predeclared evidence rule; **no threshold sweep**:
 - search stops at next same-pitch reattack or 4.0 s
 - independent selected-pitch CQT corroboration >= 6 dB spectral drop over 3 frames
 
-Probe hard guards:
+Hard guards:
+- `descriptiveOnly: true`
+- `changesDuration: false`
 - decoded model note ends used: false
 - next onset used as duration: false
 - writes `sourceEnd`: false
 - writes `durationSeconds`: false
 - changes pitch identity: false
 
-### First probe run
+First probe run `34310962622` found 89/541 corroborated valleys (16.45%) on its same-run evidence.
 
-Run `34310962622`, job `102337354610`:
-- exact fixture and frozen structure passed
-- v2 baseline reproduced
-- probe same-run identity 1,170/1,170 exact
-- v2: 609 resolved / 561 unresolved; 541 reattack-censored
-- corroborated activation+spectral valleys: 89/541 = 16.45%
-- artifact `10088439396`, digest `sha256:5b7a6e78dfdb17e3ac451deb9c79c33b1229c7d0edc85677394420305a0817bc`
-- workflow was red only because it incorrectly asserted historical cross-run counts 1,128/517
+Repaired same-run probe `34311401076`, job `102338636114`, head `5899d45620629ac9705d1a3682b8821764bc6a02`:
+- success
+- 97/97 tests
+- same-run Basic Pitch/evidence identity 1,174/1,174 exact
+- v2 durations 601 resolved / 573 unresolved
+- 550 reattack-censored
+- 79/550 fixed-rule valleys = 14.36%
+- artifact `10088603197`
+- digest `sha256:b13d90601f36ed150429b7d23e8d7073afac8623738498af1b3b20ed4566160c`
 
-### Repaired same-run probe — green
+This supports real activation+spectral release evidence for a minority of reattack-censored notes. It still does **not** authorize active duration writes.
 
-Run `34311401076`, job `102338636114`, head `5899d45620629ac9705d1a3682b8821764bc6a02`:
-- conclusion **success**
-- exact fixture / frozen structure / v2 stage passed
-- deterministic suite **97/97 pass**
-- stochastic Demucs guitar stem SHA `dbc198ae55874d2f40325e59fc53a9ed6412eb9b0a836dc549ea88c9a453ae91`
-- Basic Pitch / evidence exact same-run identity: **1,174 / 1,174**, exact MIDI true, max start delta 0, max confidence delta 0
-- v2 durations: **601 resolved / 573 unresolved**
-- reattack-censored unresolved: **550**
-- fixed-rule corroborated valleys: **79 / 550 = 14.36%**
-- candidate observed-span mean ~0.2736 s, median ~0.2438 s, p90 ~0.4180 s, max ~0.5108 s
-- artifact **`10088603197`**
-- artifact digest **`sha256:b13d90601f36ed150429b7d23e8d7073afac8623738498af1b3b20ed4566160c`**
+## DEMUCS 4.1 LOADER / EXECUTED ASSET — CORRECTED
 
-Together with the first probe, this supports the existence of real activation+spectral release valleys in a minority of reattack-censored notes. It does **not** yet authorize writing those valleys as active duration.
+Important correction: Demucs `4.1.0` named models first load through Hugging Face, then fall back to the legacy remote repo only if HF loading fails.
 
-## DEMUCS REPRODUCIBILITY — ROOT CAUSE FOUND
+For `htdemucs_6s` the **primary executed asset identity** is:
+- Hugging Face namespace: `adefossez`
+- repo: `adefossez/HTDemucs-6s`
+- bag file: `htdemucs_6s.yaml`
+- bag models: `['5c90dfd2']`
+- model asset: `5c90dfd2.safetensors`
+- pinned/current verified repo revision: `053e1404489b3dc58bf718224fac4b7316de8c93`
+- safetensors SHA256: `d2a1745f0744721f6b8ca5bf469b67c651ea5ed1b52998cab033b2158609d411`
+- Xet hash: `4a08ca8231da4bd9433191a95ee700cc8ba8693e980ac5b444f63eff38c807e1`
 
-Three exact-fixture runs using the old `--shifts 1` workflow produced different guitar stem hashes and downstream note counts:
-- `d47f51ac...` → 1,128 Basic Pitch notes
+Legacy fallback remains informational only:
+- `5c90dfd2-34c22ccb.th`
+- checksum prefix `34c22ccb`
+
+Verifier history:
+- v1 initially verified the legacy fallback identity and therefore checked the wrong primary cache asset for Demucs 4.1.
+- v2 commit **`f61480b24bbeb4932dad11310df7da8af020c3d1`** verifies Demucs 4.1's actual HF mapping, exact snapshot revision, exact bag membership, exact safetensors filename, and exact full SHA256.
+- contract: `songsterr-fresh-demucs-model-asset-v2`
+- verifier invokes no model and changes no audio/evidence.
+
+## DEMUCS REPRODUCIBILITY — TWO DISTINCT BOUNDARIES
+
+### 1. Intentional random-shift drift
+
+Old `--shifts 1` runs produced different stems/counts because Demucs samples a random time offset whenever `shifts > 0`:
+- `d47f51ac...` → 1,128 notes
 - `99ded9ff...` → 1,170 notes
 - `dbc198ae...` → 1,174 notes
 
-Root cause: Demucs `apply_model()` deliberately samples a random time offset whenever `shifts > 0`. Therefore `--shifts 1` means **one random shift-augmentation pass**, not one deterministic pass.
+`--shifts 0` removes that intentional random augmentation.
 
-This explains the cross-run drift. It is not evidence by itself that model weights changed.
+### 2. Cross-environment floating-point/runtime drift
 
-Demucs packaged manifest facts:
-- `htdemucs_6s.yaml` maps to signature `5c90dfd2`
-- remote asset: `hybrid_transformer/5c90dfd2-34c22ccb.th`
-- Demucs verifies the checksum-bearing filename prefix on download.
+Two earlier independent `--shifts 0` jobs on one runner generation both produced:
+`8983d2694cbae3a519a65eadc63cc5bf691a6a542f2f6539b9a5f4461cd8727c`.
 
-Model-asset verifier:
-- `scripts/songsterr-fresh/verify_demucs_model_asset.py`
-- initial commit `2b1e62a5773b2e088453e7621f8fcf674d49462d`
-- contract `songsterr-fresh-demucs-model-asset-v1`
-- exact identity remains fixed to model `htdemucs_6s`, signature `5c90dfd2`, filename `5c90dfd2-34c22ccb.th`, remote suffix `hybrid_transformer/5c90dfd2-34c22ccb.th`, and checksum prefix `34c22ccb`
-- initial verifier incorrectly assumed the asset lived only under Torch Hub checkpoints
-- Demucs 4.1 logs show the model download is Hugging Face-backed on these runners
-- verifier cache-location fix commit **`f86d5a2f707ef534e343161e914c904879ef050e`** searches the exact expected filename under Torch Hub and Hugging Face cache roots while preserving every identity/checksum guard
-- verifier invokes no model and changes no audio/evidence
+However a later exact-fixture `--shifts 0` run on a different GitHub Ubuntu runner image produced:
+`419fcb5dd869e7d7cd2f66468c6c436fc9bb7767aaf546dd4cb61d34fde62ef1`.
 
-## DETERMINISTIC `--shifts 0` EVIDENCE
+Run `34312579809`, job `102342102147`:
+- runner image Ubuntu 24.04.4 / image `20260831.293.1`
+- Demucs 4.1.0, Torch 2.14.0, CPU, shifts 0, overlap 0.25, segment 7
+- pass A succeeded with `419fcb5d...`
+- job then failed only because the still-old verifier searched for the legacy `.th` asset, so pass B was skipped
+- partial artifact `10088968246`, digest `sha256:7833ce06f2417f0c7b539465c38fb6b63c5c4e64b45da88fb296963a6e179133`
 
-Two **independent GitHub runners/jobs** already produced the exact same guitar-stem SHA with the exact fixture and Demucs `--shifts 0` settings:
+Therefore **cross-runner byte-exact stem equality is not an acceptance requirement**. The valid reproducibility contract is now:
+1. exact source fixture and decoded input hashes recorded;
+2. pinned model/runtime identities recorded;
+3. `--shifts 0`;
+4. same-job / same-runtime pass A and B must be byte-identical;
+5. cross-environment stem hashes are diagnostic;
+6. semantic note/evidence stability across environments must be evaluated separately.
 
-**`8983d2694cbae3a519a65eadc63cc5bf691a6a542f2f6539b9a5f4461cd8727c`**
+Do not call any single stem SHA universally canonical across arbitrary runner hardware/images.
 
-Independent proof A:
-- workflow `Songsterr Fresh Demucs Reproducibility Canary`
-- run `34311705244`, job `102339526614`
-- deterministic pass A produced the SHA above
-- the job then stopped only at the old cache-location verifier bug before pass B
-- partial artifact `10088674125`, digest `sha256:133f7c67cad7ba0915533f36be89a28c979c567966a2f3221060fb35ed97773a`
+## PINNED REPRODUCIBILITY WORKFLOW — ACTIVE
 
-Independent proof B:
-- workflow `Songsterr Fresh Deterministic Activation Valley Probe`
-- run `34311795363`, job `102339801600`
-- rebuilt frozen structure successfully
-- deterministic Demucs stem produced the **same SHA above** on a separate runner
-- the job then stopped only at the same old cache-location verifier bug
-- partial artifact `10088714195`, digest `sha256:0cf7a1e55c52fa923a806ecc0d15cafbaa28c60a941fad0121fadadde7aff15e`
+Workflow: `.github/workflows/songsterr-fresh-demucs-reproducibility-canary.yml`
+Hardened commit: **`ac30d9339847456be07821fd74d70f538a1402fc`**.
 
-This independent cross-runner equality is strong evidence that disabling random shift augmentation restores deterministic stem bytes for the current pinned environment. The formal same-job pass-A/pass-B proof and full model-asset SHA are still required before promotion.
+New controls:
+- explicit `numpy==1.26.4`
+- `torch==2.14.0`
+- `huggingface-hub==1.30.0`
+- `safetensors==0.8.0`
+- `sphn==0.2.1`
+- `demucs==4.1.0`
+- `soundfile==0.13.1`
+- CPU thread env pinned to 1 for OMP/MKL/OpenBLAS/NumExpr
+- `PYTHONHASHSEED=0`
+- decoded separation WAV SHA recorded
+- runner image / CPU / FFmpeg / package runtime manifest recorded
+- executed HF asset v2 verification
+- same-job pass A == pass B SHA and byte `cmp`
+- determinism contract explicitly says cross-environment byte equality is not required.
 
-## REPAIRED DETERMINISTIC CANARIES — ACTIVE
+Active run:
+- **`34313107961`**
+- job **`102343661824`**
 
-Verifier-fix head: **`f86d5a2f707ef534e343161e914c904879ef050e`**.
+## PINNED DETERMINISTIC ACTIVATION CANARY — ACTIVE
 
-Reproducibility run:
-- run **`34312579809`**
-- job **`102342102147`**
-- goal: exact fixture → `--shifts 0` pass A → full asset verification/SHA → `--shifts 0` pass B → SHA equality + byte `cmp` → artifact
+Workflow: `.github/workflows/songsterr-fresh-model-activation-valley-deterministic.yml`
+Hardened commit: **`5baecdc46fcf94f51b4fa4ed968b3231cde28eba`**.
 
-Deterministic activation run:
-- run **`34312579806`**
-- job **`102342102323`**
-- goal: exact fixture/frozen structure → `--shifts 0` separation → full asset verification → Basic Pitch duration-free evidence → unchanged v2 duration authority → unchanged descriptive activation-valley rule → 97-test suite → artifact
+It now uses the same pinned model/runtime/threading controls, records analysis + separation WAV hashes and runtime provenance, verifies the executed HF safetensors asset, rebuilds frozen structure, runs duration-free Basic Pitch evidence, applies unchanged v2 sole release authority, runs the unchanged descriptive activation-valley rule, and requires 97/97 deterministic tests.
 
-Do not integrate activation valleys into active duration until both repaired canaries are green and the full weight SHA / deterministic baseline are recorded.
+It intentionally has **no fixed stem-hash or historical Basic Pitch count gate**; same-run MIDI/event identity remains the gate while cross-environment semantic stability is characterized.
+
+Active run:
+- **`34313160939`**
+- job **`102343811787`**
 
 ## CURRENT ACCEPTANCE STATE
 
@@ -258,12 +275,14 @@ Customer-eligible events remain 0.
 
 ## NEXT ENGINEERING STEPS
 
-1. Finish `34312579809`; record full Demucs asset SHA and two-pass deterministic stem proof.
-2. Finish `34312579806`; record deterministic Basic Pitch count, v2 duration coverage, fixed-rule valley coverage, and 97/97 suite result.
-3. If both are green, update the authoritative model canary from stochastic `--shifts 1` to deterministic `--shifts 0` and establish the new canonical model baseline.
-4. Only after that integrate the **unchanged fixed** activation+spectral valley rule into the same sole duration authority, fallback-only for notes otherwise unresolved by same-pitch reattack censoring.
-5. Integration must preserve negative proofs: no decoded Basic Pitch note-off as duration, no next-onset duration, no upstream duration leakage, explicit model-upstream authorization, no MIDI/event identity changes, and no scorer/reference provenance.
-6. Keep `modelValidationComplete: false` and customer eligibility 0 until independent model validation is explicitly completed.
+1. Finish pinned reproducibility run `34313107961`; require executed HF asset v2 proof and same-job pass-A/pass-B byte identity.
+2. Finish pinned activation run `34313160939`; record exact same-run Basic Pitch count, v2 duration coverage, fixed-rule valley coverage, and 97/97 result.
+3. If both are green, update the authoritative model canary from `--shifts 1` to `--shifts 0`, use the same pinned runtime/HF asset proof, and establish the new **runtime-scoped** model baseline.
+4. Before active duration integration, compare at least the available `--shifts 0` environments semantically: note count/distribution/onset identity characteristics and duration/valley coverage. Do not require stem-byte equality across environments.
+5. Then capture Basic Pitch raw `note` activations from the existing transcription inference rather than rerunning Basic Pitch solely for duration evidence.
+6. Integrate the **unchanged fixed** activation+spectral valley rule into the same sole duration authority, fallback-only for events otherwise unresolved by same-pitch reattack censoring.
+7. Integration negative proofs must preserve: no decoded Basic Pitch note-off as duration, no next-onset duration, no upstream duration leakage, explicit model-upstream authorization, no MIDI/event identity changes, and no scorer/reference provenance.
+8. Keep `modelValidationComplete: false` and customer eligibility 0 until independent model validation is explicitly completed.
 
 ## NON-NEGOTIABLES
 
