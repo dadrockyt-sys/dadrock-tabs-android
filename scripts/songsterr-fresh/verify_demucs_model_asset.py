@@ -51,6 +51,75 @@ def parse_remote_manifest(path):
     return models
 
 
+def cache_roots():
+    roots = [
+        ("torch-hub", Path(torch.hub.get_dir()) / "checkpoints"),
+    ]
+    try:
+        from huggingface_hub.constants import HF_HUB_CACHE
+
+        roots.append(("huggingface-hub", Path(HF_HUB_CACHE)))
+    except Exception:
+        roots.append(("huggingface-hub-default", Path.home() / ".cache" / "huggingface" / "hub"))
+
+    deduped = []
+    seen = set()
+    for kind, root in roots:
+        key = str(root.expanduser().resolve(strict=False))
+        if key in seen:
+            continue
+        seen.add(key)
+        deduped.append((kind, root.expanduser()))
+    return deduped
+
+
+def find_expected_checkpoint():
+    matches = []
+    searched = []
+    for kind, root in cache_roots():
+        searched.append({"kind": kind, "root": str(root)})
+        direct = root / EXPECTED_FILENAME
+        if direct.is_file():
+            matches.append((kind, direct))
+        if root.is_dir():
+            for candidate in root.rglob(EXPECTED_FILENAME):
+                if candidate.is_file() and candidate != direct:
+                    matches.append((kind, candidate))
+
+    if not matches:
+        raise RuntimeError(
+            "DEMUCS_MODEL_CHECKPOINT_NOT_FOUND:" + json.dumps(searched, sort_keys=True)
+        )
+
+    verified = []
+    for kind, path in matches:
+        full_sha256 = sha256_file(path)
+        if full_sha256.startswith(EXPECTED_CHECKSUM_PREFIX):
+            verified.append((kind, path, full_sha256))
+
+    if not verified:
+        found = [
+            {"kind": kind, "path": str(path), "sha256": sha256_file(path)}
+            for kind, path in matches
+        ]
+        raise RuntimeError(
+            "DEMUCS_MODEL_CHECKSUM_PREFIX_MISMATCH:" + json.dumps(found, sort_keys=True)
+        )
+
+    unique_hashes = {sha for _, _, sha in verified}
+    if len(unique_hashes) != 1:
+        found = [
+            {"kind": kind, "path": str(path), "sha256": sha}
+            for kind, path, sha in verified
+        ]
+        raise RuntimeError(
+            "DEMUCS_MODEL_MULTIPLE_VERIFIED_ASSET_HASHES:" + json.dumps(found, sort_keys=True)
+        )
+
+    kind, path, full_sha256 = verified[0]
+    return kind, path, full_sha256, searched
+
+
 def main():
     args = parse_args()
     remote_root = Path(pretrained.REMOTE_ROOT)
@@ -69,14 +138,7 @@ def main():
     if not remote_url or not remote_url.endswith(EXPECTED_REMOTE_SUFFIX):
         raise RuntimeError(f"DEMUCS_MODEL_REMOTE_ASSET_CHANGED:{remote_url}")
 
-    checkpoint = Path(torch.hub.get_dir()) / "checkpoints" / EXPECTED_FILENAME
-    if not checkpoint.is_file():
-        raise RuntimeError(f"DEMUCS_MODEL_CHECKPOINT_NOT_FOUND:{checkpoint}")
-    full_sha256 = sha256_file(checkpoint)
-    if not full_sha256.startswith(EXPECTED_CHECKSUM_PREFIX):
-        raise RuntimeError(
-            f"DEMUCS_MODEL_CHECKSUM_PREFIX_MISMATCH:{full_sha256}:{EXPECTED_CHECKSUM_PREFIX}"
-        )
+    cache_kind, checkpoint, full_sha256, searched_roots = find_expected_checkpoint()
 
     payload = {
         "contract": CONTRACT,
@@ -90,6 +152,9 @@ def main():
         "assetSha256": full_sha256,
         "assetChecksumPrefix": EXPECTED_CHECKSUM_PREFIX,
         "assetChecksumPrefixVerified": True,
+        "assetCacheKind": cache_kind,
+        "assetCheckpointResolvedName": checkpoint.name,
+        "searchedCacheKinds": [item["kind"] for item in searched_roots],
         "bagManifestSha256": sha256_file(bag_path),
         "remoteFilesManifestSha256": sha256_file(files_path),
         "referenceBlind": True,
