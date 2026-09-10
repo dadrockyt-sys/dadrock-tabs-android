@@ -8,6 +8,7 @@ on:
     paths:
       - '.github/workflows/songsterr-fresh-v3-spectral-rejection-context-canary.yml'
       - 'scripts/songsterr-fresh/probe_v3_activation_spectral_rejection_context.py'
+      - 'scripts/songsterr-fresh/probe_v3_spectral_valley_neighborhood_context.py'
       - 'scripts/songsterr-fresh/probe_model_activation_valleys.py'
       - 'scripts/songsterr-fresh/activation_valley_release_evidence.py'
       - 'scripts/songsterr-fresh/basic_pitch_activation_evidence.py'
@@ -237,6 +238,17 @@ jobs:
             --activation-evidence "$BASE/basic-pitch-note-activations.json" \
             --output "$BASE/v3-activation-spectral-rejection-context.json"
 
+      - name: Record spectral neighborhood at already-observed valleys
+        shell: bash
+        run: |
+          set -euo pipefail
+          BASE=/tmp/songsterr-fresh-spectral-context
+          STEM="$BASE/separated/htdemucs_6s/gomyway-midterm-separation/guitar.wav"
+          python scripts/songsterr-fresh/probe_v3_spectral_valley_neighborhood_context.py \
+            --input "$STEM" \
+            --context "$BASE/v3-activation-spectral-rejection-context.json" \
+            --output "$BASE/v3-spectral-valley-neighborhood-context.json"
+
       - name: Prove same-run parity without acceptance inference
         shell: bash
         run: |
@@ -248,6 +260,8 @@ jobs:
               existing = json.load(handle)
           with open(f'{base}/v3-activation-spectral-rejection-context.json', 'r', encoding='utf-8') as handle:
               context = json.load(handle)
+          with open(f'{base}/v3-spectral-valley-neighborhood-context.json', 'r', encoding='utf-8') as handle:
+              neighborhood = json.load(handle)
           with open(f'{base}/raw-model-note-evidence-v3.json', 'r', encoding='utf-8') as handle:
               v3 = json.load(handle)
 
@@ -288,6 +302,25 @@ jobs:
           if release.get('activationStageInvokedModel') is not False:
               raise SystemExit('SPECTRAL_CONTEXT_V3_RELEASE_STAGE_MODEL_GUARD_CHANGED')
 
+          if neighborhood.get('contract') != 'songsterr-fresh-v3-spectral-valley-neighborhood-context-v1':
+              raise SystemExit('VALLEY_NEIGHBORHOOD_CONTRACT_CHANGED')
+          if neighborhood.get('descriptiveOnly') is not True or neighborhood.get('referenceBlind') is not True:
+              raise SystemExit('VALLEY_NEIGHBORHOOD_SCOPE_GUARD_CHANGED')
+          for key in ('changesDuration', 'changesPitchIdentity', 'invokesModel', 'usesDecodedModelNoteEndAsDuration', 'usesNextOnsetAsDuration', 'usesSamePitchReattackAsDuration', 'usesSpectralNeighborhoodAsDuration', 'proposesNewReleaseRule', 'thresholdSelection', 'thresholdSweep', 'ownsAcceptanceDecision'):
+              if neighborhood.get(key) is not False:
+                  raise SystemExit(f'VALLEY_NEIGHBORHOOD_GUARD_CHANGED:{key}')
+          context_rows = context.get('rows', [])
+          neighborhood_rows = neighborhood.get('rows', [])
+          context_identity = [(row.get('onsetId'), row.get('category'), int(row.get('midi'))) for row in context_rows]
+          neighborhood_identity = [(row.get('onsetId'), row.get('category'), int(row.get('midi'))) for row in neighborhood_rows]
+          if context_identity != neighborhood_identity:
+              raise SystemExit('VALLEY_NEIGHBORHOOD_SOURCE_IDENTITY_PARITY_MISMATCH')
+          category_counts = neighborhood.get('diagnostics', {}).get('categoryCounts', {})
+          if int(category_counts.get('CORROBORATED', -1)) != corroborated:
+              raise SystemExit('VALLEY_NEIGHBORHOOD_CORROBORATED_COUNT_MISMATCH')
+          if int(category_counts.get('INSUFFICIENT_SPECTRAL_CORROBORATION', -1)) != insufficient:
+              raise SystemExit('VALLEY_NEIGHBORHOOD_INSUFFICIENT_COUNT_MISMATCH')
+
           summary = {
               'noteCount': len([row for row in v3.get('onsets', []) if row.get('classification') == 'unambiguous' and row.get('selectedMidi') is not None]),
               'corroboratedCount': corroborated,
@@ -296,6 +329,12 @@ jobs:
               'insufficientSpectralDropDb': context['groups']['INSUFFICIENT_SPECTRAL_CORROBORATION']['spectralDropDb'],
               'corroboratedActivationDrop': context['groups']['CORROBORATED']['activationDrop'],
               'insufficientSpectralActivationDrop': context['groups']['INSUFFICIENT_SPECTRAL_CORROBORATION']['activationDrop'],
+              'corroboratedSelectedMinusBestSemitoneNeighborDb': neighborhood['groups']['CORROBORATED']['selectedMinusBestSemitoneNeighborDb'],
+              'insufficientSelectedMinusBestSemitoneNeighborDb': neighborhood['groups']['INSUFFICIENT_SPECTRAL_CORROBORATION']['selectedMinusBestSemitoneNeighborDb'],
+              'corroboratedLocalSemitoneRankHistogram': neighborhood['groups']['CORROBORATED']['localSemitoneRankHistogram'],
+              'insufficientLocalSemitoneRankHistogram': neighborhood['groups']['INSUFFICIENT_SPECTRAL_CORROBORATION']['localSemitoneRankHistogram'],
+              'corroboratedSelectedMinusBestComparedAlternativeDb': neighborhood['groups']['CORROBORATED']['selectedMinusBestComparedAlternativeDb'],
+              'insufficientSelectedMinusBestComparedAlternativeDb': neighborhood['groups']['INSUFFICIENT_SPECTRAL_CORROBORATION']['selectedMinusBestComparedAlternativeDb'],
               'customerDeliveryInvoked': False,
               'acceptanceDecisionMade': False,
           }
@@ -305,11 +344,12 @@ jobs:
           print(json.dumps(summary, sort_keys=True))
           PY
 
-      - name: Run probe contract self-test
+      - name: Run probe contract self-tests
         shell: bash
         run: |
           set -euo pipefail
           python scripts/songsterr-fresh/probe_v3_activation_spectral_rejection_context.py --self-test
+          python scripts/songsterr-fresh/probe_v3_spectral_valley_neighborhood_context.py --self-test
 
       - name: Upload spectral rejection context evidence
         if: always()
