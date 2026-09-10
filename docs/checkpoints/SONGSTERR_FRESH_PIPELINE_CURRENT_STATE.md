@@ -1,6 +1,6 @@
 # CURRENT STATE — Songsterr Fresh Pipeline V1
 
-Updated: 2026-09-10 19:05 America/Toronto
+Updated: 2026-09-10 19:11 America/Toronto
 Canonical branch: `songsterr-fresh-pipeline-v1`
 Canonical checkpoint: `docs/checkpoints/SONGSTERR_FRESH_PIPELINE_CURRENT_STATE.md`
 
@@ -68,14 +68,16 @@ Fixed Demucs settings:
 - overlap 0.25
 - segment 7 s
 
-Pinned model asset authority:
+Pinned model asset authority (`scripts/songsterr-fresh/verify_demucs_model_asset.py`):
 - contract `songsterr-fresh-demucs-model-asset-v2`
 - HF repo `adefossez/HTDemucs-6s`
 - pinned revision `3c5ee475be622df764938de97e4281a7b07ffa58`
-- asset upload revision `053e1404489b3dc58bf718224fac4b7316de8c93b`
+- asset upload revision `053e1404489b3dc58bf718224fac4b7316de8c93`
 - `5c90dfd2.safetensors`
 - SHA-256 `d2a1745f0744721f6b8ca5bf469b67c651ea5ed1b52998cab033b2158609d411`
 - legacy fallback is not primary
+
+Note: an earlier checkpoint/workflow copy accidentally appended a trailing `b` to the 40-hex asset upload revision. The verifier constant above is authoritative; commit `0f4b4cbe0a52657cf4989e07500041335a89db86` corrected the measurement workflow assertion. The asset SHA itself was never mismatched.
 
 ## DURATION AUTHORITY — UNCHANGED / PAUSED
 
@@ -141,7 +143,7 @@ Repository/branch inspection found no branch-tracked fresh controlled compute su
 
 ## UPSTREAM EXECUTION POLICY — POLICY B SELECTED 2026-09-10
 
-The execution-policy fork is now explicitly resolved in favor of **Policy B: permit bounded upstream numerical variation, and admit model evidence only through reference-blind, fail-closed downstream invariants**.
+The execution-policy fork is explicitly resolved in favor of **Policy B: permit bounded upstream numerical variation, and admit model evidence only through reference-blind, fail-closed downstream invariants**.
 
 Reason for the decision:
 - generic `ubuntu-latest` is not byte-reproducible for the fixed Demucs contract across observed hosted CPU classes;
@@ -164,7 +166,7 @@ Inspection of the current fresh model-note boundary confirms these already exist
 - `build_isolated_polyphonic_note_evidence.mjs` requires the frozen reference-blind context, accepted structure, Basic Pitch contract/version/role, model provenance, valid SHA-256 inference identity, event-count identity match, finite values, confidence in [0,1], playable MIDI 40–88, onsets inside frozen structure, and diagnostic end strictly after start. It forces `sourceEnd`, `durationSeconds`, and `durationConfidence` to null.
 - `run_model_note_evidence_pipeline_canary.mjs` requires structure identity match, verified/reference-blind adapter provenance, model invocation, no V143 boundary violation, and validation pending at entry; it verifies pitch-resolved model events exist while `completeTabEligibleEventCount` remains 0 and delivery remains blocked.
 
-These are necessary structural/provenance guards but are **not sufficient** to complete model validation. Policy B still needs a cross-run semantic-variation admission contract.
+These are necessary structural/provenance guards but are **not sufficient** to complete model validation. Policy B still needs a justified cross-run semantic-variation admission contract.
 
 ### Policy B measurement layer — implemented and green
 
@@ -191,6 +193,21 @@ Contract behavior:
 
 The measurement contract being green does **not** validate model evidence. It only provides a safe way to collect independent-run reproducibility evidence for a future bounded-variation admission decision.
 
+### Independent real-model measurement canary — active
+
+New workflow:
+- `.github/workflows/songsterr-fresh-model-evidence-cross-run-measurement-canary.yml`
+- three independent `ubuntu-latest` model observations (`a`, `b`, `c`), each rebuilding/verifying the same frozen reference-blind structure, running the same fixed Demucs contract, running Basic Pitch once with same-inference activation identity, then building duration-free adapted evidence;
+- aggregate job performs all three pairwise comparisons and uploads a measurement-only summary;
+- exact stem/note/activation hashes are diagnostics only; no preferred runner/output is selected;
+- aggregate explicitly refuses thresholds, admission, validation completion, delivery advancement, or duration-authority changes.
+
+Canary bring-up history:
+- run `34540126725` failed before model inference because the workflow checked non-persisted convenience field `structureAccepted` instead of persisted `structureAcceptance.accepted`; no model evidence from that run is authoritative.
+- commit `72665f32ba19ce8729b3cdc1e94616dbc8901036` fixed the persisted structure assertion and quoted the Node heredoc; corrected run `34540364742` passed fixture/dependency/frozen-structure checks on all observations.
+- run `34540364742` then exposed a redundant Demucs asset assertion typo: workflow/checkpoint had `053e...8c93b`, while authoritative verifier constant/output is `053e1404489b3dc58bf718224fac4b7316de8c93`. The exact model asset SHA matched. The failed observation stopped before Basic Pitch inference, so this run is not model-evidence measurement authority.
+- commit `0f4b4cbe0a52657cf4989e07500041335a89db86` corrected that redundant assertion. Run `34540837228` is the current independent measurement run and is in progress on that fixed snapshot.
+
 ## CURRENT ACCEPTANCE STATE
 
 Do **not** set `modelValidationComplete: true` yet.
@@ -203,11 +220,11 @@ Customer-eligible events remain **0**. V2 remains authoritative. V3 remains cand
 
 ## NEXT ENGINEERING STEPS
 
-1. Inspect the existing fresh model-guitar / model-note canary and reuse its fixed Demucs + Basic Pitch path to produce at least two independent adapted evidence artifacts under the same source, frozen structure, model settings, and pinned asset contract. Do not rerun the completed common-AVX2 portability experiment.
-2. Run `compare_basic_pitch_cross_run_evidence.py` over those independent adapted artifacts and retain the measurement report plus exact hashes/provenance as diagnostics.
-3. Confirm the measurement path remains argument-order invariant and that any inventory/slot/onset/confidence differences are reported rather than normalized away.
+1. Complete/inspect run `34540837228` without changing its fixed execution snapshot. If an infrastructure/workflow guard fails, classify and fix it without altering numerical model controls.
+2. If all three independent adapted artifacts complete, inspect the AB/AC/BC measurement reports and runtime provenance: event/key inventory, MIDI histogram, onset/confidence deltas, diagnostic-only end deltas, CPU/image metadata, stem hashes, note identities, and activation identities.
+3. Record those observations here as descriptive reproducibility evidence only; do not turn three observed maxima into a tolerance.
 4. Determine whether any onset/confidence tolerance can be justified from independent-run evidence and/or Basic Pitch representation semantics. If no defensible bound exists, keep admission blocked rather than inventing one.
 5. Only after a bounded-variation admission contract is justified, implemented, tested, and independently demonstrated may `modelValidationComplete` be reconsidered. Duration research remains paused until then.
-6. Update this checkpoint after each material implementation or validation finding.
+6. Continue updating this checkpoint after each material implementation or validation finding.
 
 The archived V143/Gomyway pipeline remains out of scope unless the user explicitly asks to resume it.
