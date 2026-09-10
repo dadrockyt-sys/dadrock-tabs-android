@@ -23,13 +23,11 @@ POWER_EPSILON = 1e-20
 
 
 def parse_args():
-    parser = argparse.ArgumentParser(
-        description=(
-            "Describe fixed STFT harmonic-comb energy at the already-observed V3 activation "
-            "valley and fixed post-valley horizons without changing duration or searching "
-            "for a release timestamp."
-        )
-    )
+    parser = argparse.ArgumentParser(description=(
+        "Describe fixed STFT harmonic-comb energy at the already-observed V3 activation "
+        "valley and fixed post-valley horizons without changing duration or searching "
+        "for a release timestamp."
+    ))
     parser.add_argument("--input", help="exact isolated guitar stem used by the source context")
     parser.add_argument("--context", help="activation/spectral rejection context JSON")
     parser.add_argument("--output", help="output JSON")
@@ -76,15 +74,8 @@ def percentile(values, q):
 def stats(values):
     cleaned = [float(value) for value in values if value is not None and math.isfinite(float(value))]
     if not cleaned:
-        return {
-            "count": 0,
-            "minimum": None,
-            "p10": None,
-            "median": None,
-            "mean": None,
-            "p90": None,
-            "maximum": None,
-        }
+        return {"count": 0, "minimum": None, "p10": None, "median": None,
+                "mean": None, "p90": None, "maximum": None}
     return {
         "count": len(cleaned),
         "minimum": min(cleaned),
@@ -105,43 +96,25 @@ def validate_source_context(context, *, audio_sha256):
     require(context.get("version") == 1, "V3_STFT_SOURCE_VERSION_CHANGED")
     require(context.get("descriptiveOnly") is True, "V3_STFT_SOURCE_NOT_DESCRIPTIVE")
     require(context.get("referenceBlind") is True, "V3_STFT_SOURCE_REFERENCE_GUARD_CHANGED")
-
     for key in (
-        "changesDuration",
-        "changesPitchIdentity",
-        "invokesModel",
-        "readsDecodedModelNoteEnd",
-        "usesDecodedModelNoteEndAsDuration",
-        "usesNextOnsetAsDuration",
-        "usesSamePitchReattackAsDuration",
-        "proposesNewReleaseRule",
-        "thresholdSelection",
-        "thresholdSweep",
+        "changesDuration", "changesPitchIdentity", "invokesModel",
+        "readsDecodedModelNoteEnd", "usesDecodedModelNoteEndAsDuration",
+        "usesNextOnsetAsDuration", "usesSamePitchReattackAsDuration",
+        "proposesNewReleaseRule", "thresholdSelection", "thresholdSweep",
         "ownsAcceptanceDecision",
     ):
         require(context.get(key) is False, f"V3_STFT_SOURCE_GUARD_CHANGED:{key}")
-
     hard = context.get("hardGuards") or {}
     for key in (
-        "inputEventMutation",
-        "durationWrite",
-        "sourceEndWrite",
-        "pitchIdentityWrite",
-        "modelInferenceByProbe",
-        "decodedModelEndRead",
-        "nextOnsetDuration",
-        "samePitchReattackDuration",
-        "newThresholdSelection",
-        "acceptanceDecision",
+        "inputEventMutation", "durationWrite", "sourceEndWrite", "pitchIdentityWrite",
+        "modelInferenceByProbe", "decodedModelEndRead", "nextOnsetDuration",
+        "samePitchReattackDuration", "newThresholdSelection", "acceptanceDecision",
     ):
         require(hard.get(key) is False, f"V3_STFT_SOURCE_HARD_GUARD_CHANGED:{key}")
-
     source = context.get("source") or {}
     require(source.get("audioSha256") == audio_sha256, "V3_STFT_AUDIO_IDENTITY_MISMATCH")
-
     fixed_rule = context.get("fixedEvidenceRule") or {}
     require(fixed_rule.get("thresholdSweepUsed") is False, "V3_STFT_FIXED_RULE_SWEEP_CHANGED")
-
     rows = context.get("rows")
     require(isinstance(rows, list) and rows, "V3_STFT_SOURCE_ROWS_EMPTY")
     seen = set()
@@ -161,7 +134,6 @@ def validate_source_context(context, *, audio_sha256):
                 f"V3_STFT_REATTACK_NOT_AFTER_VALLEY:index={index}")
         require(row.get("spectralCorroborationPassed") is (row.get("category") == CORROBORATED),
                 f"V3_STFT_CATEGORY_PARITY_CHANGED:index={index}")
-
     diagnostics = context.get("diagnostics") or {}
     outcome_counts = diagnostics.get("spectralOutcomeCounts") or {}
     actual = Counter(row["category"] for row in rows)
@@ -210,14 +182,8 @@ def run_probe(input_path, context_path):
     y = np.asarray(y, dtype=np.float32)
     require(sr > 0 and y.size >= N_FFT and np.all(np.isfinite(y)), "V3_STFT_AUDIO_INVALID")
 
-    stft = librosa.stft(
-        y,
-        n_fft=N_FFT,
-        hop_length=HOP_LENGTH,
-        win_length=N_FFT,
-        window=WINDOW,
-        center=CENTER,
-    )
+    stft = librosa.stft(y, n_fft=N_FFT, hop_length=HOP_LENGTH, win_length=N_FFT,
+                        window=WINDOW, center=CENTER)
     power = np.abs(stft) ** 2
     require(power.ndim == 2 and power.shape[1] > 0, "V3_STFT_MATRIX_INVALID")
     fft_frequencies = librosa.fft_frequencies(sr=sr, n_fft=N_FFT)
@@ -238,28 +204,27 @@ def run_probe(input_path, context_path):
             if bin_index in used:
                 continue
             used.add(bin_index)
-            bins.append({
-                "harmonic": harmonic,
-                "targetHz": target_hz,
-                "binIndex": bin_index,
-                "binHz": float(fft_frequencies[bin_index]),
-            })
+            bins.append({"harmonic": harmonic, "targetHz": target_hz,
+                         "binIndex": bin_index, "binHz": float(fft_frequencies[bin_index])})
         require(bins, f"V3_STFT_NO_HARMONIC_BINS:midi={midi}")
         harmonic_bins[midi] = bins
         energy_by_midi[midi] = np.sum(power[[item["binIndex"] for item in bins], :], axis=0)
 
     def frame_for_time(seconds):
-        frame = int(math.floor(float(seconds) * sr / HOP_LENGTH))
+        # center=False: choose the first frame whose start is not before the requested
+        # observation time. No post-valley window may borrow pre-observation samples.
+        frame = int(math.ceil(float(seconds) * sr / HOP_LENGTH))
         return max(0, min(power.shape[1] - 1, frame))
 
     def observation_window(seconds):
         frame = frame_for_time(seconds)
         stop = min(power.shape[1], frame + OBSERVATION_FRAMES)
         require(stop > frame, "V3_STFT_EMPTY_OBSERVATION_WINDOW")
-        return frame, stop
+        actual_start = float(frame * HOP_LENGTH / sr)
+        require(actual_start + 1e-12 >= float(seconds), "V3_STFT_WINDOW_STARTS_BEFORE_OBSERVATION")
+        return frame, stop, actual_start
 
-    def window_end_seconds(start_frame, stop_frame):
-        # center=False: the final STFT frame consumes samples through frame start + N_FFT.
+    def window_end_seconds(stop_frame):
         last_frame = stop_frame - 1
         return float((last_frame * HOP_LENGTH + N_FFT) / sr)
 
@@ -277,20 +242,21 @@ def run_probe(input_path, context_path):
         midi = int(source_row["midi"])
         valley = float(source_row["observedValleySeconds"])
         reattack = float(source_row["samePitchReattackSeconds"])
-
-        valley_start, valley_stop = observation_window(valley)
+        valley_start, valley_stop, valley_actual_start = observation_window(valley)
         valley_db = level_db(midi, valley_start, valley_stop)
         fixed = {}
         for offset_seconds in FIXED_POST_VALLEY_OFFSETS_SECONDS:
             key = offset_key(offset_seconds)
-            observation = valley + float(offset_seconds)
-            start, stop = observation_window(observation)
-            available = window_end_seconds(start, stop) < reattack
+            requested = valley + float(offset_seconds)
+            start, stop, actual_start = observation_window(requested)
+            available = window_end_seconds(stop) < reattack
             if available:
                 observed_db = level_db(midi, start, stop)
                 fixed[key] = {
                     "offsetSeconds": offset_seconds,
                     "available": True,
+                    "requestedObservationSeconds": requested,
+                    "actualWindowStartSeconds": actual_start,
                     "harmonicPowerDb": observed_db,
                     "valleyMinusObservedDb": float(valley_db - observed_db),
                 }
@@ -298,16 +264,18 @@ def run_probe(input_path, context_path):
                 fixed[key] = {
                     "offsetSeconds": offset_seconds,
                     "available": False,
+                    "requestedObservationSeconds": requested,
+                    "actualWindowStartSeconds": actual_start,
                     "harmonicPowerDb": None,
                     "valleyMinusObservedDb": None,
                 }
-
         row = {
             "onsetId": onset_id,
             "category": source_row["category"],
             "midi": midi,
             "sourceStartSeconds": float(source_row["sourceStartSeconds"]),
             "observedValleySeconds": valley,
+            "valleyWindowStartSeconds": valley_actual_start,
             "samePitchReattackSeconds": reattack,
             "valleyHarmonicPowerDb": valley_db,
             "fixedPostValley": fixed,
@@ -335,10 +303,8 @@ def run_probe(input_path, context_path):
         "thresholdSweep": False,
         "ownsAcceptanceDecision": False,
         "source": {
-            "audioPath": str(input_path),
-            "audioSha256": audio_sha256,
-            "contextPath": str(context_path),
-            "contextSha256": sha256_file(context_path),
+            "audioPath": str(input_path), "audioSha256": audio_sha256,
+            "contextPath": str(context_path), "contextSha256": sha256_file(context_path),
             "sourceContract": SOURCE_CONTRACT,
             "structureIdentity": source.get("structureIdentity"),
             "noteInferenceIdentity": source.get("noteInferenceIdentity"),
@@ -346,11 +312,9 @@ def run_probe(input_path, context_path):
         },
         "method": {
             "domain": "isolated-guitar-raw-waveform-stft-harmonic-comb-power",
-            "nFft": N_FFT,
-            "hopLength": HOP_LENGTH,
-            "window": WINDOW,
-            "center": CENTER,
+            "nFft": N_FFT, "hopLength": HOP_LENGTH, "window": WINDOW, "center": CENTER,
             "observationFrames": OBSERVATION_FRAMES,
+            "observationFrameSelection": "first-frame-start-at-or-after-requested-time",
             "harmonics": list(HARMONICS),
             "fixedPostValleyOffsetsSeconds": list(FIXED_POST_VALLEY_OFFSETS_SECONDS),
             "observationOrigin": "already-observed-fixed-activation-valley",
@@ -362,33 +326,21 @@ def run_probe(input_path, context_path):
             "delayThresholdDefined": False,
             "thresholdSweepUsed": False,
         },
-        "harmonicBinsByMidi": {
-            str(midi): harmonic_bins[midi] for midi in selected_midis
-        },
+        "harmonicBinsByMidi": {str(midi): harmonic_bins[midi] for midi in selected_midis},
         "diagnostics": {
-            "sourceRowCount": len(source_rows),
-            "reportedRowCount": len(output_rows),
+            "sourceRowCount": len(source_rows), "reportedRowCount": len(output_rows),
             "categoryCounts": {category: len(by_category[category]) for category in ALLOWED_CATEGORIES},
             "exactOnsetIdentityPreserved": [row["onsetId"] for row in output_rows] == [str(row["onsetId"]) for row in source_rows],
         },
-        "groups": {
-            category: summarize_group(by_category[category]) for category in ALLOWED_CATEGORIES
-        },
+        "groups": {category: summarize_group(by_category[category]) for category in ALLOWED_CATEGORIES},
         "rows": output_rows,
         "hardGuards": {
-            "inputEventMutation": False,
-            "durationWrite": False,
-            "sourceEndWrite": False,
-            "pitchIdentityWrite": False,
-            "modelInferenceByProbe": False,
-            "decodedModelEndRead": False,
-            "nextOnsetDuration": False,
-            "samePitchReattackDuration": False,
-            "fixedObservationDuration": False,
-            "alternateReleaseSearch": False,
-            "alternateReleaseOutput": False,
-            "delayThresholdSelection": False,
-            "newThresholdSelection": False,
+            "inputEventMutation": False, "durationWrite": False, "sourceEndWrite": False,
+            "pitchIdentityWrite": False, "modelInferenceByProbe": False,
+            "decodedModelEndRead": False, "nextOnsetDuration": False,
+            "samePitchReattackDuration": False, "fixedObservationDuration": False,
+            "alternateReleaseSearch": False, "alternateReleaseOutput": False,
+            "delayThresholdSelection": False, "newThresholdSelection": False,
             "acceptanceDecision": False,
         },
     }
@@ -404,16 +356,11 @@ def run_self_test():
             key = offset_key(offset_seconds)
             value = values.get(key)
             fixed[key] = {
-                "offsetSeconds": offset_seconds,
-                "available": value is not None,
+                "offsetSeconds": offset_seconds, "available": value is not None,
                 "harmonicPowerDb": value,
                 "valleyMinusObservedDb": None if value is None else valley - value,
             }
-        return {
-            "midi": midi,
-            "valleyHarmonicPowerDb": valley,
-            "fixedPostValley": fixed,
-        }
+        return {"midi": midi, "valleyHarmonicPowerDb": valley, "fixedPostValley": fixed}
 
     rows = [
         synthetic_row(52, -20.0, {"plus50ms": -23.0, "plus100ms": -25.0, "plus200ms": -26.0}),
@@ -432,16 +379,12 @@ def run_self_test():
     require(N_FFT == 2048 and HOP_LENGTH == 512 and CENTER is False and HARMONICS == (1, 2, 3, 4),
             "V3_STFT_SELF_TEST_METHOD_CHANGED")
     print(json.dumps({
-        "contract": CONTRACT,
-        "selfTest": "passed",
-        "deterministic": True,
-        "changesDuration": False,
-        "modelInvoked": False,
+        "contract": CONTRACT, "selfTest": "passed", "deterministic": True,
+        "observationFrameSelection": "first-frame-start-at-or-after-requested-time",
+        "changesDuration": False, "modelInvoked": False,
         "searchesForAlternateReleaseTimestamp": False,
-        "outputsAlternateReleaseTimestamp": False,
-        "delayThresholdDefined": False,
-        "thresholdSelection": False,
-        "thresholdSweep": False,
+        "outputsAlternateReleaseTimestamp": False, "delayThresholdDefined": False,
+        "thresholdSelection": False, "thresholdSweep": False,
     }, sort_keys=True))
 
 
