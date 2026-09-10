@@ -16,6 +16,7 @@ on:
       - 'scripts/songsterr-fresh/probe_v3_post_valley_spectral_trajectory_context.py'
       - 'scripts/songsterr-fresh/probe_v3_post_valley_stft_harmonic_context.py'
       - 'scripts/songsterr-fresh/compare_v3_post_valley_representations.py'
+      - 'scripts/songsterr-fresh/compare_demucs_stem_reproducibility.py'
 
 permissions:
   contents: read
@@ -46,7 +47,8 @@ jobs:
             scripts/songsterr-fresh/probe_v3_spectral_valley_neighborhood_context.py \
             scripts/songsterr-fresh/probe_v3_post_valley_spectral_trajectory_context.py \
             scripts/songsterr-fresh/probe_v3_post_valley_stft_harmonic_context.py \
-            scripts/songsterr-fresh/compare_v3_post_valley_representations.py
+            scripts/songsterr-fresh/compare_v3_post_valley_representations.py \
+            scripts/songsterr-fresh/compare_demucs_stem_reproducibility.py
 
       - name: Prove inventory comparator remains fail-closed and deterministic
         run: python scripts/songsterr-fresh/compare_v3_unresolved_duration_inventories.py --self-test
@@ -71,3 +73,6 @@ jobs:
 
       - name: Prove same-run representation comparator remains read-only
         run: python scripts/songsterr-fresh/compare_v3_post_valley_representations.py --self-test
+
+      - name: Prove Demucs stem reproducibility comparator remains diagnostic-only
+        run: python scripts/songsterr-fresh/compare_demucs_stem_reproducibility.py --self-test
