@@ -1,6 +1,6 @@
 # CURRENT STATE — Songsterr Fresh Pipeline V1
 
-Updated: 2026-09-10 18:37 America/Toronto
+Updated: 2026-09-10 19:03 America/Toronto
 Canonical branch: `songsterr-fresh-pipeline-v1`
 Canonical checkpoint: `docs/checkpoints/SONGSTERR_FRESH_PIPELINE_CURRENT_STATE.md`
 
@@ -72,7 +72,7 @@ Pinned model asset authority:
 - contract `songsterr-fresh-demucs-model-asset-v2`
 - HF repo `adefossez/HTDemucs-6s`
 - pinned revision `3c5ee475be622df764938de97e4281a7b07ffa58`
-- asset upload revision `053e1404489b3dc58bf718224fac4b7316de8c93`
+- asset upload revision `053e1404489b3dc58bf718224fac4b7316de8c93b`
 - `5c90dfd2.safetensors`
 - SHA-256 `d2a1745f0744721f6b8ca5bf469b67c651ea5ed1b52998cab033b2158609d411`
 - legacy fallback is not primary
@@ -166,6 +166,19 @@ Inspection of the current fresh model-note boundary confirms these already exist
 
 These are necessary structural/provenance guards but are **not sufficient** to complete model validation. Policy B still needs a cross-run semantic-variation admission contract.
 
+### Policy B measurement layer design locked — implementation pending
+
+The first cross-run layer is deliberately **measurement-only**; it does not define or apply an acceptance tolerance.
+
+- Compare adapted `songsterr-fresh-isolated-polyphonic-note-evidence-v1` artifacts, not raw sequential Basic Pitch note IDs. The adapter already binds each note to the frozen reference-blind structure via `nearestStructureSlot`.
+- Preserve `songsterr-fresh-basic-pitch-note-identity-v1` unchanged. Its SHA includes exact floating-point start/confidence and remains authoritative for same-inference integrity; cross-run SHA equality is diagnostic only under Policy B.
+- Use `(nearestStructureSlot, selectedMidi)` as the reference-blind semantic comparison key. This reuses existing frozen-structure semantics and introduces no new onset tolerance. Duplicate events within one semantic key are paired deterministically after sorting by source start/confidence.
+- Canonicalize the two validated inputs independently of CLI argument order so A/B reversal cannot change the report.
+- Measure event-count/key-inventory differences plus paired onset/confidence absolute deltas. Basic Pitch diagnostic end differences, if reported, remain explicitly diagnostic-only and never become duration evidence.
+- Malformed/incomparable inputs fail closed: contract/version/role/reference-blind/frozen-structure mismatches, structure identity mismatch, model-setting mismatch, source-audio mismatch, unsafe provenance, non-finite values, unsupported MIDI, or non-null upstream duration fields must prevent comparison.
+- Exact note/activation/WAV/PCM hashes may be retained as diagnostics but are not pass/fail criteria.
+- The report must explicitly state that no admission decision was made, no thresholds were applied, `modelValidationComplete` remains false, and delivery cannot advance from the measurement report.
+
 ## CURRENT ACCEPTANCE STATE
 
 Do **not** set `modelValidationComplete: true` yet.
@@ -178,12 +191,12 @@ Customer-eligible events remain **0**. V2 remains authoritative. V3 remains cand
 
 ## NEXT ENGINEERING STEPS
 
-1. Inspect the existing fresh cross-run/provenance scripts and workflow outputs for reusable reference-blind fields; do not rerun the completed common-AVX2 portability experiment.
-2. Define a dedicated bounded-variation model-evidence comparison contract before allowing validation to advance. Start from hard invariants already justified by the existing representation: contract/version/model/settings/provenance equality, no inference failures, valid finite event inventory, stable MIDI/event identity semantics, and pairwise comparison rather than a golden host/hash.
-3. Determine whether onset/confidence numerical tolerances can be justified from the Basic Pitch representation and/or existing independent-run evidence. If no defensible bound is available from current evidence, add measurement-only diagnostics first and keep admission blocked rather than inventing a threshold.
-4. Add tests that prove malformed/missing provenance, identity violations, non-finite values, unsupported MIDI, or out-of-policy variation fail closed. Keep raw WAV/PCM/note/activation hashes in diagnostic output but outside the pass/fail criterion unless exact equality is itself an independently justified invariant.
-5. Wire the comparison contract into the fresh model-note canary/workflow without changing `songsterr_pipeline/`, frozen structure, duration authority, `/ai-tab`, or archived code.
-6. Run/inspect branch CI or a focused fresh canary. Only if the new policy contract passes its independent evidence may model validation be reconsidered; duration research remains paused until then.
+1. Implement `scripts/songsterr-fresh/compare_basic_pitch_cross_run_evidence.py` as a pure reference-blind measurement comparator over adapted model evidence. Keep exact inference hashes diagnostic-only.
+2. Add self-tests proving swap-order invariance, exact-copy zero deltas, numerical onset/confidence measurement, inventory/key drift measurement, and fail-closed rejection of malformed provenance, non-finite values, unsupported MIDI, duration leakage, structure/model/source mismatch.
+3. Add a dedicated small fresh model-evidence variation test workflow rather than modifying the deterministic core workflow or paused V3-duration diagnostics.
+4. Run/inspect that branch CI. If green, use independent fresh model-note runs to populate the measurement report; do not rerun the completed common-AVX2 portability experiment.
+5. Determine whether any onset/confidence tolerance can be justified from measured independent-run evidence and/or Basic Pitch representation semantics. If no defensible bound exists, keep admission blocked rather than inventing one.
+6. Only after a bounded-variation admission contract is justified, implemented, tested, and independently demonstrated may `modelValidationComplete` be reconsidered. Duration research remains paused until then.
 7. Update this checkpoint after each material implementation or validation finding.
 
 The archived V143/Gomyway pipeline remains out of scope unless the user explicitly asks to resume it.
