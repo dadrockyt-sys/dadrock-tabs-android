@@ -1,4 +1,4 @@
-name: Songsterr Fresh V3 Post-Valley STFT Harmonic Canary
+name: Songsterr Fresh V3 Post-Valley Representation Canary
 
 on:
   workflow_dispatch:
@@ -7,7 +7,9 @@ on:
       - songsterr-fresh-pipeline-v1
     paths:
       - '.github/workflows/songsterr-fresh-v3-post-valley-stft-harmonic-canary.yml'
+      - 'scripts/songsterr-fresh/probe_v3_post_valley_spectral_trajectory_context.py'
       - 'scripts/songsterr-fresh/probe_v3_post_valley_stft_harmonic_context.py'
+      - 'scripts/songsterr-fresh/compare_v3_post_valley_representations.py'
       - 'scripts/songsterr-fresh/probe_v3_activation_spectral_rejection_context.py'
       - 'scripts/songsterr-fresh/activation_valley_release_evidence.py'
       - 'scripts/songsterr-fresh/basic_pitch_activation_evidence.py'
@@ -31,7 +33,7 @@ env:
   PYTHONHASHSEED: '0'
 
 jobs:
-  stft-harmonic-context:
+  representation-comparison:
     runs-on: ubuntu-latest
     timeout-minutes: 60
     steps:
@@ -52,7 +54,7 @@ jobs:
         shell: bash
         run: |
           set -euo pipefail
-          BASE=/tmp/songsterr-fresh-stft-harmonic
+          BASE=/tmp/songsterr-fresh-representation-comparison
           mkdir -p "$BASE"
           curl --fail --location --silent --show-error --retry 3 \
             'https://raw.githubusercontent.com/dadrockyt-sys/dadrock-tabs-android/main/public/jimmy-paige-midterm-v1/gomyway-midterm-source.m4a' \
@@ -88,7 +90,7 @@ jobs:
         shell: bash
         run: |
           set -euo pipefail
-          BASE=/tmp/songsterr-fresh-stft-harmonic
+          BASE=/tmp/songsterr-fresh-representation-comparison
           python scripts/songsterr-fresh/analyze_full_mixture_structure.py \
             --input /tmp/gomyway-midterm-analysis.wav \
             --output "$BASE/raw-structure-analysis.json" \
@@ -101,7 +103,7 @@ jobs:
             "$BASE/note-evidence-context.json"
           node --input-type=module - <<'NODE'
           import { readFile } from 'node:fs/promises';
-          const c = JSON.parse(await readFile('/tmp/songsterr-fresh-stft-harmonic/note-evidence-context.json', 'utf8'));
+          const c = JSON.parse(await readFile('/tmp/songsterr-fresh-representation-comparison/note-evidence-context.json', 'utf8'));
           if (c?.structureIdentity?.signature !== 'fnv1a32:2f493225') {
             throw new Error(`FROZEN_STRUCTURE_IDENTITY_CHANGED:${c?.structureIdentity?.signature}`);
           }
@@ -114,7 +116,7 @@ jobs:
         shell: bash
         run: |
           set -euo pipefail
-          BASE=/tmp/songsterr-fresh-stft-harmonic
+          BASE=/tmp/songsterr-fresh-representation-comparison
           python -m demucs \
             -n htdemucs_6s \
             --device cpu \
@@ -130,7 +132,7 @@ jobs:
             --output "$BASE/demucs-model-asset.json"
           python - <<'PY'
           import json
-          base = '/tmp/songsterr-fresh-stft-harmonic'
+          base = '/tmp/songsterr-fresh-representation-comparison'
           with open(f'{base}/demucs-model-asset.json', 'r', encoding='utf-8') as handle:
               asset = json.load(handle)
           required = {
@@ -151,7 +153,7 @@ jobs:
         shell: bash
         run: |
           set -euo pipefail
-          BASE=/tmp/songsterr-fresh-stft-harmonic
+          BASE=/tmp/songsterr-fresh-representation-comparison
           STEM="$BASE/separated/htdemucs_6s/gomyway-midterm-separation/guitar.wav"
           STEM_SHA="$(sha256sum "$STEM" | awk '{print $1}')"
           python scripts/songsterr-fresh/transcribe_isolated_guitar_basic_pitch.py \
@@ -168,7 +170,7 @@ jobs:
           import json, sys
           sys.path.insert(0, 'scripts/songsterr-fresh')
           from basic_pitch_activation_evidence import decode_and_verify_activation_sidecar
-          base = '/tmp/songsterr-fresh-stft-harmonic'
+          base = '/tmp/songsterr-fresh-representation-comparison'
           with open(f'{base}/basic-pitch-guitar-notes.json', 'r', encoding='utf-8') as handle:
               notes = json.load(handle)
           with open(f'{base}/basic-pitch-note-activations.json', 'r', encoding='utf-8') as handle:
@@ -177,18 +179,18 @@ jobs:
               evidence = json.load(handle)
           decoded = decode_and_verify_activation_sidecar(sidecar, evidence=evidence)
           if notes.get('diagnostics', {}).get('predictInvocationCount') != 1:
-              raise SystemExit('STFT_CONTEXT_REQUIRES_ONE_BASIC_PITCH_CALL')
+              raise SystemExit('REPRESENTATION_COMPARISON_REQUIRES_ONE_BASIC_PITCH_CALL')
           if evidence.get('provenance', {}).get('activationEvidenceIdentity') != decoded.get('inferenceBundleIdentity'):
-              raise SystemExit('STFT_CONTEXT_ACTIVATION_BUNDLE_NOT_BOUND')
+              raise SystemExit('REPRESENTATION_COMPARISON_ACTIVATION_BUNDLE_NOT_BOUND')
           if any(row.get('durationSeconds') is not None or row.get('sourceEnd') is not None for row in evidence.get('onsets', [])):
-              raise SystemExit('STFT_CONTEXT_DURATION_LEAK_BEFORE_RELEASE')
+              raise SystemExit('REPRESENTATION_COMPARISON_DURATION_LEAK_BEFORE_RELEASE')
           PY
 
       - name: Run unchanged V2 and candidate V3 release evidence
         shell: bash
         run: |
           set -euo pipefail
-          BASE=/tmp/songsterr-fresh-stft-harmonic
+          BASE=/tmp/songsterr-fresh-representation-comparison
           STEM="$BASE/separated/htdemucs_6s/gomyway-midterm-separation/guitar.wav"
           python scripts/songsterr-fresh/estimate_selected_pitch_releases.py \
             --allow-model-upstream \
@@ -206,7 +208,7 @@ jobs:
         shell: bash
         run: |
           set -euo pipefail
-          BASE=/tmp/songsterr-fresh-stft-harmonic
+          BASE=/tmp/songsterr-fresh-representation-comparison
           STEM="$BASE/separated/htdemucs_6s/gomyway-midterm-separation/guitar.wav"
           python scripts/songsterr-fresh/probe_v3_activation_spectral_rejection_context.py \
             --input "$STEM" \
@@ -214,16 +216,37 @@ jobs:
             --activation-evidence "$BASE/basic-pitch-note-activations.json" \
             --output "$BASE/v3-activation-spectral-rejection-context.json"
 
+      - name: Record fixed CQT trajectory context
+        shell: bash
+        run: |
+          set -euo pipefail
+          BASE=/tmp/songsterr-fresh-representation-comparison
+          STEM="$BASE/separated/htdemucs_6s/gomyway-midterm-separation/guitar.wav"
+          python scripts/songsterr-fresh/probe_v3_post_valley_spectral_trajectory_context.py \
+            --input "$STEM" \
+            --context "$BASE/v3-activation-spectral-rejection-context.json" \
+            --output "$BASE/v3-post-valley-spectral-trajectory-context.json"
+
       - name: Record fixed STFT harmonic trajectory context
         shell: bash
         run: |
           set -euo pipefail
-          BASE=/tmp/songsterr-fresh-stft-harmonic
+          BASE=/tmp/songsterr-fresh-representation-comparison
           STEM="$BASE/separated/htdemucs_6s/gomyway-midterm-separation/guitar.wav"
           python scripts/songsterr-fresh/probe_v3_post_valley_stft_harmonic_context.py \
             --input "$STEM" \
             --context "$BASE/v3-activation-spectral-rejection-context.json" \
             --output "$BASE/v3-post-valley-stft-harmonic-context.json"
+
+      - name: Compare same-run CQT and STFT representations
+        shell: bash
+        run: |
+          set -euo pipefail
+          BASE=/tmp/songsterr-fresh-representation-comparison
+          python scripts/songsterr-fresh/compare_v3_post_valley_representations.py \
+            --cqt "$BASE/v3-post-valley-spectral-trajectory-context.json" \
+            --stft "$BASE/v3-post-valley-stft-harmonic-context.json" \
+            --output "$BASE/v3-post-valley-representation-comparison.json"
 
       - name: Prove same-run identity and fail-closed boundaries
         shell: bash
@@ -231,81 +254,107 @@ jobs:
           set -euo pipefail
           python - <<'PY'
           import json
-          base = '/tmp/songsterr-fresh-stft-harmonic'
+          base = '/tmp/songsterr-fresh-representation-comparison'
           with open(f'{base}/v3-activation-spectral-rejection-context.json', 'r', encoding='utf-8') as handle:
               context = json.load(handle)
+          with open(f'{base}/v3-post-valley-spectral-trajectory-context.json', 'r', encoding='utf-8') as handle:
+              cqt = json.load(handle)
           with open(f'{base}/v3-post-valley-stft-harmonic-context.json', 'r', encoding='utf-8') as handle:
               stft = json.load(handle)
+          with open(f'{base}/v3-post-valley-representation-comparison.json', 'r', encoding='utf-8') as handle:
+              comparison = json.load(handle)
           with open(f'{base}/raw-model-note-evidence-v3.json', 'r', encoding='utf-8') as handle:
               v3 = json.load(handle)
 
+          source_identity = [
+              (r.get('onsetId'), r.get('category'), int(r.get('midi')), float(r.get('sourceStartSeconds')),
+               float(r.get('observedValleySeconds')), float(r.get('samePitchReattackSeconds')))
+              for r in context.get('rows', [])
+          ]
+          for label, payload in (('CQT', cqt), ('STFT', stft)):
+              identity = [
+                  (r.get('onsetId'), r.get('category'), int(r.get('midi')), float(r.get('sourceStartSeconds')),
+                   float(r.get('observedValleySeconds')), float(r.get('samePitchReattackSeconds')))
+                  for r in payload.get('rows', [])
+              ]
+              if identity != source_identity:
+                  raise SystemExit(f'{label}_SOURCE_IDENTITY_PARITY_MISMATCH')
+
+          if cqt.get('contract') != 'songsterr-fresh-v3-post-valley-spectral-trajectory-context-v1':
+              raise SystemExit('CQT_TRAJECTORY_CONTRACT_CHANGED')
+          if (cqt.get('method') or {}).get('sourceDbReferenceAligned') is not True:
+              raise SystemExit('CQT_SOURCE_DB_REFERENCE_NOT_ALIGNED')
           if stft.get('contract') != 'songsterr-fresh-v3-post-valley-stft-harmonic-context-v1':
               raise SystemExit('STFT_CONTEXT_CONTRACT_CHANGED')
-          if stft.get('descriptiveOnly') is not True or stft.get('referenceBlind') is not True:
-              raise SystemExit('STFT_CONTEXT_SCOPE_GUARD_CHANGED')
+          stft_method = stft.get('method') or {}
+          if stft_method.get('nFft') != 2048 or stft_method.get('hopLength') != 512:
+              raise SystemExit('STFT_CONTEXT_TRANSFORM_CHANGED')
+          if stft_method.get('window') != 'hann' or stft_method.get('center') is not False:
+              raise SystemExit('STFT_CONTEXT_WINDOW_CHANGED')
+          if stft_method.get('harmonics') != [1, 2, 3, 4]:
+              raise SystemExit('STFT_CONTEXT_HARMONICS_CHANGED')
+
+          if comparison.get('contract') != 'songsterr-fresh-v3-post-valley-representation-comparison-v1':
+              raise SystemExit('REPRESENTATION_COMPARISON_CONTRACT_CHANGED')
+          if comparison.get('descriptiveOnly') is not True or comparison.get('referenceBlind') is not True:
+              raise SystemExit('REPRESENTATION_COMPARISON_SCOPE_CHANGED')
           for key in (
               'changesDuration', 'changesPitchIdentity', 'invokesModel',
               'usesDecodedModelNoteEndAsDuration', 'usesNextOnsetAsDuration',
-              'usesSamePitchReattackAsDuration', 'usesFixedObservationAsDuration',
+              'usesSamePitchReattackAsDuration', 'usesRepresentationAgreementAsDuration',
               'searchesForAlternateReleaseTimestamp', 'outputsAlternateReleaseTimestamp',
               'proposesNewReleaseRule', 'thresholdSelection', 'thresholdSweep',
               'ownsAcceptanceDecision'
           ):
-              if stft.get(key) is not False:
-                  raise SystemExit(f'STFT_CONTEXT_GUARD_CHANGED:{key}')
-          method = stft.get('method') or {}
-          if method.get('nFft') != 2048 or method.get('hopLength') != 512:
-              raise SystemExit('STFT_CONTEXT_TRANSFORM_CHANGED')
-          if method.get('window') != 'hann' or method.get('center') is not False:
-              raise SystemExit('STFT_CONTEXT_WINDOW_CHANGED')
-          if method.get('harmonics') != [1, 2, 3, 4]:
-              raise SystemExit('STFT_CONTEXT_HARMONICS_CHANGED')
-          if method.get('fixedPostValleyOffsetsSeconds') != [0.05, 0.1, 0.2]:
-              raise SystemExit('STFT_CONTEXT_FIXED_OFFSETS_CHANGED')
-          if method.get('delayThresholdDefined') is not False or method.get('acceptanceThresholdDefined') is not False:
-              raise SystemExit('STFT_CONTEXT_THRESHOLD_GUARD_CHANGED')
-
-          source_identity = [(r.get('onsetId'), r.get('category'), int(r.get('midi'))) for r in context.get('rows', [])]
-          stft_identity = [(r.get('onsetId'), r.get('category'), int(r.get('midi'))) for r in stft.get('rows', [])]
-          if source_identity != stft_identity:
-              raise SystemExit('STFT_CONTEXT_IDENTITY_PARITY_MISMATCH')
+              if comparison.get(key) is not False:
+                  raise SystemExit(f'REPRESENTATION_COMPARISON_GUARD_CHANGED:{key}')
+          comparison_method = comparison.get('method') or {}
+          if comparison_method.get('fixedPostValleyOffsetsSeconds') != [0.05, 0.1, 0.2]:
+              raise SystemExit('REPRESENTATION_COMPARISON_OFFSETS_CHANGED')
+          for key in ('acceptanceThresholdDefined', 'delayThresholdDefined', 'agreementThresholdDefined', 'thresholdSweepUsed'):
+              if comparison_method.get(key) is not False:
+                  raise SystemExit(f'REPRESENTATION_COMPARISON_THRESHOLD_GUARD_CHANGED:{key}')
 
           outcomes = context.get('diagnostics', {}).get('spectralOutcomeCounts', {})
-          counts = stft.get('diagnostics', {}).get('categoryCounts', {})
+          counts = comparison.get('diagnostics', {}).get('categoryCounts', {})
           for category in ('CORROBORATED', 'INSUFFICIENT_SPECTRAL_CORROBORATION'):
               if int(counts.get(category, -1)) != int(outcomes.get(category, -2)):
-                  raise SystemExit(f'STFT_CONTEXT_CATEGORY_COUNT_MISMATCH:{category}')
+                  raise SystemExit(f'REPRESENTATION_COMPARISON_CATEGORY_COUNT_MISMATCH:{category}')
 
           release = (v3.get('diagnostics') or {}).get('releaseEvidence') or {}
           if release.get('activationFixedRule') != context.get('fixedEvidenceRule'):
-              raise SystemExit('STFT_CONTEXT_V3_FIXED_RULE_MISMATCH')
+              raise SystemExit('REPRESENTATION_COMPARISON_V3_FIXED_RULE_MISMATCH')
           if release.get('activationStageInvokedModel') is not False:
-              raise SystemExit('STFT_CONTEXT_RELEASE_STAGE_MODEL_GUARD_CHANGED')
+              raise SystemExit('REPRESENTATION_COMPARISON_RELEASE_STAGE_MODEL_GUARD_CHANGED')
 
           summary = {
               'noteCount': len(v3.get('onsets', [])),
               'categoryCounts': counts,
-              'corroborated': stft['groups']['CORROBORATED']['fixedPostValleyOffsets'],
-              'insufficientSpectral': stft['groups']['INSUFFICIENT_SPECTRAL_CORROBORATION']['fixedPostValleyOffsets'],
+              'groups': comparison.get('groups'),
               'customerDeliveryInvoked': False,
               'acceptanceDecisionMade': False,
           }
-          with open(f'{base}/stft-harmonic-summary.json', 'w', encoding='utf-8') as handle:
+          with open(f'{base}/representation-comparison-summary.json', 'w', encoding='utf-8') as handle:
               json.dump(summary, handle, indent=2, sort_keys=True)
               handle.write('\n')
           print(json.dumps(summary, sort_keys=True))
           PY
 
-      - name: Run STFT probe self-test
-        run: python scripts/songsterr-fresh/probe_v3_post_valley_stft_harmonic_context.py --self-test
+      - name: Run representation contract self-tests
+        shell: bash
+        run: |
+          set -euo pipefail
+          python scripts/songsterr-fresh/probe_v3_post_valley_spectral_trajectory_context.py --self-test
+          python scripts/songsterr-fresh/probe_v3_post_valley_stft_harmonic_context.py --self-test
+          python scripts/songsterr-fresh/compare_v3_post_valley_representations.py --self-test
 
-      - name: Upload STFT harmonic evidence
+      - name: Upload same-run representation evidence
         if: always()
         uses: actions/upload-artifact@v4
         with:
-          name: songsterr-fresh-v3-post-valley-stft-harmonic-context
+          name: songsterr-fresh-v3-post-valley-representation-comparison
           path: |
-            /tmp/songsterr-fresh-stft-harmonic/*.json
-            /tmp/songsterr-fresh-stft-harmonic/*.sha256
+            /tmp/songsterr-fresh-representation-comparison/*.json
+            /tmp/songsterr-fresh-representation-comparison/*.sha256
           if-no-files-found: warn
           retention-days: 14
