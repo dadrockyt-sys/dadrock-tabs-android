@@ -12,6 +12,7 @@ on:
       - 'scripts/songsterr-fresh/activation_valley_release_evidence.py'
       - 'scripts/songsterr-fresh/basic_pitch_activation_evidence.py'
       - 'scripts/songsterr-fresh/probe_model_activation_valleys.py'
+      - 'scripts/songsterr-fresh/summarize_v3_unresolved_duration_evidence.py'
       - 'scripts/songsterr-fresh/transcribe_isolated_guitar_basic_pitch.py'
       - 'scripts/songsterr-fresh/build_isolated_polyphonic_note_evidence.mjs'
       - 'scripts/songsterr-fresh/build_note_evidence_context.mjs'
@@ -400,6 +401,15 @@ jobs:
           print(json.dumps(summary, indent=2))
           PY
 
+      - name: Inventory unresolved v3 durations descriptively
+        shell: bash
+        run: |
+          set -euo pipefail
+          BASE=/tmp/songsterr-fresh-release-v3
+          python scripts/songsterr-fresh/summarize_v3_unresolved_duration_evidence.py \
+            --evidence "$BASE/raw-model-note-evidence-v3.json" \
+            --output "$BASE/v3-unresolved-duration-inventory.json"
+
       - name: Validate and adapt v3 evidence
         shell: bash
         run: |
@@ -438,6 +448,15 @@ jobs:
           const failures = result.evidenceEvaluation?.failureReasons ?? [];
           for (const required of ['MODEL_EVIDENCE_VALIDATION_PENDING', 'DURATION_EVIDENCE_INCOMPLETE']) {
             if (!failures.includes(required)) throw new Error(`V3_FAIL_CLOSED_GATE_MISSING:${required}`);
+          }
+          const rawFailures = result.pipelineSummary?.failures ?? [];
+          const unresolvedDurationCount = result.pipelineSummary?.unresolvedDurationCount;
+          if (
+            rawFailures.length !== 1 ||
+            rawFailures[0]?.code !== 'UNRESOLVED_DURATION' ||
+            rawFailures[0]?.count !== unresolvedDurationCount
+          ) {
+            throw new Error(`V3_RAW_FAILURE_SET_CHANGED:${JSON.stringify(rawFailures)}`);
           }
           const exposure = result.eventExposure?.metrics ?? {};
           if (!(exposure.pitchResolvedEventCount > 0)) throw new Error('V3_EXPECTS_PITCH_EVENTS');
