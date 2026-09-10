@@ -523,3 +523,46 @@ No acceptance promotion from self-consistency alone.
 6. Model-validation scaffold design is complete for now. Do not add an accepting path until a genuinely independent validation authority/evidence source is explicitly designed and justified.
 7. Any future V3 promotion must be an explicit documented branch decision with V2 preserved for regression comparison.
 8. Before customer exposure, independently validate the model path and obtain complete required duration evidence; evaluator/delivery stay fail-closed until both blockers are legitimately cleared.
+
+## SPECTRAL REJECTION CONTEXT STUDY — IN FLIGHT
+
+Resume point recorded from branch state on 2026-09-10 America/Toronto.
+
+Implementation:
+- `scripts/songsterr-fresh/probe_v3_activation_spectral_rejection_context.py`
+- probe commit `b0e255dc8f1b8dfd79189647ef9d8effefa95856`
+- guard wiring commit `603f8d5094ac821c8bea837fb3a254d1622a8608`
+- canary workflow commit `4207fa86c68afa3230567d37e185e8a42b76dd68`
+- workflow `.github/workflows/songsterr-fresh-v3-spectral-rejection-context-canary.yml`
+
+Probe contract:
+- descriptive-only and reference-blind
+- reads the already-fixed activation candidate and selected-pitch CQT evidence
+- compares `CORROBORATED` versus `INSUFFICIENT_SPECTRAL_CORROBORATION`
+- recomputes the existing fixed activation/CQT rule only
+- asserts same-run ID parity against unchanged V3 fallback and insufficient-spectral outcomes
+- no duration/sourceEnd writes
+- no pitch-identity mutation
+- no model invocation inside the probe
+- no decoded Basic Pitch note-end use
+- no next-onset or same-pitch-reattack duration use
+- no threshold selection/sweep
+- no new release rule
+- no acceptance authority
+
+Guard status:
+- workflow `Songsterr Fresh V3 Duration Diagnostic Tests` passed at head `603f8d5094ac821c8bea837fb3a254d1622a8608`
+- probe self-test is green and deterministic
+
+Full canary:
+- run `34430069785`
+- job `102723521376`
+- head `4207fa86c68afa3230567d37e185e8a42b76dd68`
+- status when checkpointed: in progress
+- exact authorized fixture fetch/hash verification: passed
+- pinned dependency install: passed
+- frozen structure rebuild and identity/acceptance checks: passed
+- deterministic Demucs separation/model-asset verification: in progress at checkpoint time
+- remaining steps run duration-free model inference, unchanged V2/V3 release evidence, existing fixed-rule parity probe, spectral-context probe, same-run ID parity assertions, self-test, and artifact upload
+
+No V2 or V3 threshold/duration implementation has been changed by this study. V2 remains authoritative, V3 remains candidate-only, customer eligibility remains zero, and the archived V143/Gomyway pipeline remains out of scope.
