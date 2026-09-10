@@ -15,6 +15,9 @@ ALLOWED_CATEGORIES = (CORROBORATED, INSUFFICIENT_SPECTRAL)
 HOP_LENGTH = 512
 BINS_PER_OCTAVE = 12
 SPECTRAL_CONTEXT_FRAMES = 3
+SOURCE_CQT_MIN_MIDI = 40
+SOURCE_CQT_N_BINS = 49
+SOURCE_CQT_MAX_MIDI = SOURCE_CQT_MIN_MIDI + SOURCE_CQT_N_BINS - 1
 FIXED_POST_VALLEY_OFFSETS_SECONDS = (0.05, 0.10, 0.20)
 
 
@@ -149,7 +152,8 @@ def validate_source_context(context, *, audio_sha256):
         require(row.get("category") in ALLOWED_CATEGORIES,
                 f"V3_POST_VALLEY_CATEGORY_INVALID:index={index}")
         midi = int(row.get("midi"))
-        require(0 <= midi <= 127, f"V3_POST_VALLEY_MIDI_INVALID:index={index}")
+        require(SOURCE_CQT_MIN_MIDI <= midi <= SOURCE_CQT_MAX_MIDI,
+                f"V3_POST_VALLEY_MIDI_OUTSIDE_SOURCE_CQT:index={index}")
         for field in (
             "sourceStartSeconds",
             "observedValleySeconds",
@@ -219,22 +223,18 @@ def run_probe(input_path, context_path):
     y = np.asarray(y, dtype=np.float32)
     require(sr > 0 and y.size > 0 and np.all(np.isfinite(y)), "V3_POST_VALLEY_AUDIO_INVALID")
 
-    selected_midis = [int(row["midi"]) for row in source_rows]
-    cqt_min_midi = min(selected_midis)
-    cqt_max_midi = max(selected_midis)
-    n_bins = cqt_max_midi - cqt_min_midi + 1
-    require(n_bins > 0, "V3_POST_VALLEY_CQT_RANGE_INVALID")
-
+    # Use the exact CQT range of the green source spectral-context probe so the
+    # amplitude_to_db(ref=np.max) reference is identical and dB subtraction is valid.
     harmonic = librosa.effects.harmonic(y, margin=2.0)
     cqt = np.abs(librosa.cqt(
         harmonic,
         sr=sr,
         hop_length=HOP_LENGTH,
-        fmin=librosa.midi_to_hz(cqt_min_midi),
-        n_bins=n_bins,
+        fmin=librosa.midi_to_hz(SOURCE_CQT_MIN_MIDI),
+        n_bins=SOURCE_CQT_N_BINS,
         bins_per_octave=BINS_PER_OCTAVE,
     ))
-    require(cqt.ndim == 2 and cqt.shape[0] == n_bins and cqt.shape[1] > 0,
+    require(cqt.ndim == 2 and cqt.shape[0] == SOURCE_CQT_N_BINS and cqt.shape[1] > 0,
             "V3_POST_VALLEY_CQT_INVALID")
     cqt_db = librosa.amplitude_to_db(cqt, ref=np.max, top_db=80.0)
     conservative_window_seconds = float(SPECTRAL_CONTEXT_FRAMES * HOP_LENGTH / sr)
@@ -243,7 +243,7 @@ def run_probe(input_path, context_path):
         frame = int(librosa.time_to_frames(observation_seconds, sr=sr, hop_length=HOP_LENGTH))
         frame = max(0, min(cqt_db.shape[1] - 1, frame))
         stop = min(cqt_db.shape[1], frame + SPECTRAL_CONTEXT_FRAMES)
-        segment = cqt_db[midi - cqt_min_midi, frame:stop]
+        segment = cqt_db[midi - SOURCE_CQT_MIN_MIDI, frame:stop]
         require(segment.size > 0, "V3_POST_VALLEY_EMPTY_WINDOW")
         return float(np.mean(segment))
 
@@ -330,6 +330,10 @@ def run_probe(input_path, context_path):
             "harmonicPreprocessing": "librosa.effects.harmonic(margin=2.0)",
             "hopLength": HOP_LENGTH,
             "binsPerOctave": BINS_PER_OCTAVE,
+            "sourceCqtMinimumMidi": SOURCE_CQT_MIN_MIDI,
+            "sourceCqtMaximumMidi": SOURCE_CQT_MAX_MIDI,
+            "sourceCqtBinCount": SOURCE_CQT_N_BINS,
+            "sourceDbReferenceAligned": True,
             "observationWindowFrames": SPECTRAL_CONTEXT_FRAMES,
             "fixedPostValleyOffsetsSeconds": list(FIXED_POST_VALLEY_OFFSETS_SECONDS),
             "observationOrigin": "already-observed-fixed-activation-valley",
@@ -404,10 +408,13 @@ def run_self_test():
             "V3_POST_VALLEY_SELF_TEST_200MS")
     require(first["fixedPostValleyOffsets"]["plus100ms"]["valleyMinusObservedDb"]["median"] == 2.5,
             "V3_POST_VALLEY_SELF_TEST_DELTA")
+    require(SOURCE_CQT_MIN_MIDI == 40 and SOURCE_CQT_N_BINS == 49 and SOURCE_CQT_MAX_MIDI == 88,
+            "V3_POST_VALLEY_SELF_TEST_SOURCE_CQT_SCALE")
     print(json.dumps({
         "contract": CONTRACT,
         "selfTest": "passed",
         "deterministic": True,
+        "sourceDbReferenceAligned": True,
         "changesDuration": False,
         "modelInvoked": False,
         "searchesForAlternateReleaseTimestamp": False,
@@ -430,6 +437,7 @@ def main():
     print(json.dumps({
         "contract": payload["contract"],
         "categoryCounts": payload["diagnostics"]["categoryCounts"],
+        "sourceDbReferenceAligned": payload["method"]["sourceDbReferenceAligned"],
         "corroboratedFixedOffsets": payload["groups"][CORROBORATED]["fixedPostValleyOffsets"],
         "insufficientFixedOffsets": payload["groups"][INSUFFICIENT_SPECTRAL]["fixedPostValleyOffsets"],
         "hardGuards": payload["hardGuards"],
