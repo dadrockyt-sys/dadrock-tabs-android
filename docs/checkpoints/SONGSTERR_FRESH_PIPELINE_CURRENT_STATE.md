@@ -93,10 +93,10 @@ Latest CPU regression:
 Architecture:
 1. verify frozen full-mixture structure
 2. Demucs 4.1.0 `htdemucs_6s` guitar isolation
-3. Basic Pitch 0.4.0 polyphonic pitch/onset inference on the isolated guitar stem
+3. Basic Pitch 0.4.0 polyphonic pitch/onset inference on isolated guitar
 4. decoded Basic Pitch note-off remains diagnostic only
 5. model pitch evidence crosses the boundary duration-free
-6. the dedicated release stage is sole active duration authority
+6. dedicated release stage is sole active duration authority
 7. model adaptation requires explicit authorization
 8. `MODEL_EVIDENCE_VALIDATION_PENDING` independently blocks customer delivery
 
@@ -213,7 +213,7 @@ The 477 versus 478 difference tracks hosted-runner model-output variation and mu
 Script:
 `scripts/songsterr-fresh/summarize_v3_unresolved_duration_evidence.py`
 
-Implementation commit / current analysis head:
+Implementation commit:
 `7a7180fe151f6b15ff75ba7841878c9704e52adb`
 
 Contract:
@@ -242,21 +242,21 @@ V2 adds descriptive-only context for:
 Cross-run historical inventory observations:
 - 1,138-note run unresolved = 477
 - 1,139-note run unresolved = 478
-- only per-MIDI resolution-count change is MIDI 55, matching the known ~46 s hosted-runner variation
+- only per-MIDI resolution-count change is MIDI 55, matching known hosted-runner variation
 - all other per-MIDI resolved/unresolved counts are unchanged
 
 For the 478-unresolved variant:
-- 453 are same-pitch-reattack-censored
-- 372: no sustained subthreshold activation
-- 76: activation valley candidate but insufficient fixed CQT spectral corroboration
-- 5: insufficient activation drop
-- 18: insufficient onset-to-floor contrast
-- 7: no clear sustained spectral release
+- 453 same-pitch-reattack-censored
+- 372 no sustained subthreshold activation
+- 76 activation candidate but insufficient fixed CQT spectral corroboration
+- 5 insufficient activation drop
+- 18 insufficient onset-to-floor contrast
+- 7 no clear sustained spectral release
 
 Descriptive context only:
-- the 372-event group is dominated by rapid same-pitch repetition; median next reattack gap ~0.221 s
-- the 76-event insufficient-CQT group has more room before reattack; median ~0.709 s
-- these are observations, not release cutoffs or tuning targets
+- 372-event group median next same-pitch reattack gap ~0.221 s
+- 76-event insufficient-CQT group median ~0.709 s
+- observations only; not release cutoffs or tuning targets
 
 Green inventory-v2 canary:
 - run `34427390493`
@@ -270,8 +270,84 @@ Green inventory-v2 canary:
 - 104/104 deterministic tests
 - artifact `10133331991`
 - digest `sha256:9b3cbc27f25d3c960e96a44caa492057c7f8288ba380eb960e835ed7b4573200`
-- artifact size 6,883,095 bytes
+- size 6,883,095 bytes
 - expires 2026-09-24T02:02:39Z
+
+## V3 INVENTORY CROSS-RUN COMPARATOR — GREEN
+
+Comparator:
+`scripts/songsterr-fresh/compare_v3_unresolved_duration_inventories.py`
+
+Implementation commit:
+`ed6d1ea2aaa5ce5302d0d9465825ea0544cf0b96`
+
+Contract:
+`songsterr-fresh-v3-unresolved-duration-inventory-comparison-v1`
+
+Purpose:
+- compare inventory-v2 outputs descriptively
+- keep count/reason changes separate from continuous-statistic drift
+- never infer correctness, acceptance, or a new release threshold
+
+Input guards:
+- requires exact inventory-v2 contract and version
+- requires `descriptiveOnly: true` and `referenceBlind: true`
+- rejects any input with duration/pitch mutation, model invocation, decoded-end use, next-onset/reattack duration use, release-rule proposal, threshold selection, or threshold sweep enabled
+- rejects any changed hard no-mutation/no-model/no-threshold guard
+- requires V3 release contract provenance
+- verifies eligible = resolved + unresolved
+- verifies unresolved primary-reason accounting
+- verifies reattack-fallback accounting
+- verifies per-MIDI eligible/resolved/unresolved accounting
+
+Output is also explicitly fail-closed:
+- `ownsAcceptanceDecision: false`
+- `changesDuration: false`
+- `changesPitchIdentity: false`
+- `invokesModel: false`
+- `proposesNewReleaseRule: false`
+- `thresholdSelection: false`
+- `thresholdSweep: false`
+
+Built-in deterministic self-test:
+- verifies expected count/reason/MIDI deltas on a synthetic pair
+- rejects 12 tampered guard cases
+- verifies repeated comparison output is deterministic
+
+Dedicated lightweight CI:
+- workflow `.github/workflows/songsterr-fresh-v3-inventory-comparator-tests.yml`
+- workflow commit `45260e478ed31b6868cd0a1d8d039975c4dedb01`
+- run `34428828187`
+- job `102719726230`
+- head `45260e478ed31b6868cd0a1d8d039975c4dedb01`
+- Ubuntu 24.04.5 / image `20260907.300.1` / Azure `eastus2`
+- Python 3.10.21
+- both descriptive inventory scripts compile
+- self-test output: `deterministic: true`, `selfTest: passed`, `tamperCasesRejected: 12`
+- conclusion success
+- no model/release execution in this workflow
+
+Historical 1,138-vs-1,139 inventory-v2 replay through the comparator:
+- fixed activation rule equal
+- duration-eligible delta +1
+- resolved delta 0
+- unresolved delta +1
+- primary-reason delta only: `NO_CLEAR_RELEASE_BEFORE_SAME_PITCH_REATTACK` +1
+- fallback-rejection delta only: `NO_SUSTAINED_SUBTHRESHOLD_ACTIVATION` +1
+- count/reason changes occur only under MIDI 55
+- MIDI 55 eligible +1 / unresolved +1 / resolved unchanged
+- MIDI 55 unresolved fraction 0.29411764705882354 → 0.3142857142857143
+- common structural resolution counts otherwise stable
+- continuous onset-confidence/gap statistics show small environment-dependent drift and are reported separately rather than interpreted as accuracy or acceptance evidence
+
+Overall continuous deltas include:
+- resolved onset-confidence median +0.00003635883331298828
+- unresolved onset-confidence median +0.0005692392587661743
+- resolved next-same-pitch-gap mean -0.00012859152099764515 s
+- unresolved next-same-pitch-gap mean -0.0012349702217232528 s
+- unresolved next-same-pitch-gap median unchanged at ~0.2554195011 s
+
+This historical replay is descriptive evidence only. It does not promote V3, change a duration, or define a threshold.
 
 ## INDEPENDENT REFERENCE-BLIND PITCH SUPPORT
 
@@ -316,7 +392,7 @@ Third independent environment sample:
 - note identity SHA `1e41a51a3463aa87b3d4c76f8e4cccadcb708dd3d1f51ae6895b950269a61024`
 - one additional MIDI-64 event at `206.24416916099776 s`
 - all prior 1,138 MIDI/start identities remain present exactly
-- for the common 1,138 events, semitone-rank and octave-rank results are unchanged
+- common 1,138 events retain identical semitone-rank and octave-rank results
 - probe A/B byte-identical within run, SHA `b4841d0121dd80b3561acbc5c6bbdaadc1b81a56b1fcf6eb8c8b116e3a2eb63c`
 - local semitone histogram 915 / 112 / 96 / 13 / 3
 - octave histogram 794 / 323 / 22
@@ -327,9 +403,9 @@ Third independent environment sample:
 - evaluator blockers unchanged; customer eligible 0 / delivery false
 
 Interpretation boundary:
-- this is reproducibility/support evidence, not transcription accuracy or ground truth
-- hosted-runner stem/model variation is real and must stay distinct from probe determinism
-- do not derive an accuracy score or fixture-tuned acceptance threshold
+- reproducibility/support evidence is not transcription accuracy or ground truth
+- hosted-runner stem/model variation stays distinct from probe determinism
+- do not derive accuracy score or fixture-tuned acceptance threshold
 - do not use self-consistency to clear `MODEL_EVIDENCE_VALIDATION_PENDING`
 
 ## MODEL-VALIDATION CONTRACT SCAFFOLD — FAIL-CLOSED
@@ -357,9 +433,9 @@ Hard properties:
 - no reference tab
 - no archived V143 import
 
-The existing evaluator remains unchanged and rejects model-invoked evidence unless top-level `provenance.modelValidationComplete === true`.
+Existing evaluator remains unchanged and rejects model-invoked evidence unless top-level `provenance.modelValidationComplete === true`.
 
-Six new regression tests prove reproducibility/support-only evidence cannot clear validation. Deterministic suite is now 104/104 green.
+Six regression tests prove reproducibility/support-only evidence cannot clear validation. Deterministic suite is 104/104 green.
 
 Scaffold-head regressions all green:
 - core tests run `34426840359`, job `102713775748`, 104/104
@@ -372,7 +448,7 @@ Scaffold-head regressions all green:
 Fix commit:
 `5afab9050a96428fc61a26ffae41c66c09610e7a`
 
-Only generated event/rest slices <= existing module `EPSILON` are discarded. Frozen structure, pitch identity, and release evidence are not rewritten. Regression remains green in the 104-test suite.
+Only generated event/rest slices <= existing module `EPSILON` are discarded. Frozen structure, pitch identity, and release evidence are not rewritten. Regression remains green in 104-test suite.
 
 ## CURRENT ACCEPTANCE STATE
 
@@ -398,10 +474,10 @@ No acceptance promotion from self-consistency alone.
 
 ## NEXT ENGINEERING STEPS — FRESH CHAT HANDOFF
 
-1. Compare inventory-v2 outputs across the known 1,138/1,139 V3 runner variants with a deterministic, descriptive-only comparator. Report count/reason/by-MIDI deltas and continuous-statistic deltas without deciding acceptance or inventing thresholds.
-2. Regression-guard the comparator so it rejects inventory inputs whose hard no-mutation/no-model/no-threshold properties have changed.
-3. Keep V2 authoritative and V3 candidate-only. Any further duration study is descriptive/identity-preserving by default.
-4. Treat the rapid same-pitch-reattack group and the insufficient-CQT-corroboration group as distinct observed mechanisms, but do not loosen the fixed activation/CQT rule on this fixture.
+1. Continue descriptive study of the same-pitch-reattack-censored unresolved class without modifying V2/V3. Focus on context that may explain why fixed evidence is absent, not on selecting a cutoff.
+2. Quantify tempo/structure-relative reattack spacing and repeated-note context for resolved versus unresolved events using frozen structure only. Keep this as read-only diagnostic evidence.
+3. Keep the comparator as a regression boundary for future inventory changes. Any comparison with changed activation rule must be called out explicitly and never treated as an accuracy comparison.
+4. Keep V2 authoritative and V3 candidate-only. Treat rapid repeated-note and insufficient-CQT-corroboration classes as distinct observed mechanisms; do not loosen the fixed activation/CQT rule on this fixture.
 5. Model-validation scaffold design is complete for now. Do not add an accepting path until a genuinely independent validation authority/evidence source is explicitly designed and justified.
 6. Any future v3 promotion must be an explicit documented branch decision with v2 preserved for regression comparison.
-7. Before customer exposure, independently validate the model path and obtain complete required duration evidence; evaluator/delivery remain fail-closed until both blockers are legitimately cleared.
+7. Before customer exposure, independently validate model path and obtain complete required duration evidence; evaluator/delivery remain fail-closed until both blockers are legitimately cleared.
