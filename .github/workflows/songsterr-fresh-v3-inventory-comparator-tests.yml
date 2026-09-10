@@ -11,6 +11,7 @@ on:
       - 'scripts/songsterr-fresh/summarize_v3_unresolved_duration_evidence.py'
       - 'scripts/songsterr-fresh/summarize_v3_reattack_structure_context.py'
       - 'scripts/songsterr-fresh/summarize_v3_repeated_note_structure_context.py'
+      - 'scripts/songsterr-fresh/probe_v3_activation_spectral_rejection_context.py'
 
 permissions:
   contents: read
@@ -36,7 +37,8 @@ jobs:
             scripts/songsterr-fresh/summarize_v3_unresolved_duration_evidence.py \
             scripts/songsterr-fresh/compare_v3_unresolved_duration_inventories.py \
             scripts/songsterr-fresh/summarize_v3_reattack_structure_context.py \
-            scripts/songsterr-fresh/summarize_v3_repeated_note_structure_context.py
+            scripts/songsterr-fresh/summarize_v3_repeated_note_structure_context.py \
+            scripts/songsterr-fresh/probe_v3_activation_spectral_rejection_context.py
 
       - name: Prove inventory comparator remains fail-closed and deterministic
         shell: bash
@@ -55,3 +57,9 @@ jobs:
         run: |
           set -euo pipefail
           python scripts/songsterr-fresh/summarize_v3_repeated_note_structure_context.py --self-test
+
+      - name: Prove spectral-rejection context probe contract stays read-only
+        shell: bash
+        run: |
+          set -euo pipefail
+          python scripts/songsterr-fresh/probe_v3_activation_spectral_rejection_context.py --self-test
