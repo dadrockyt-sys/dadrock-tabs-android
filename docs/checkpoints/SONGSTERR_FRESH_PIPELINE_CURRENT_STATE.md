@@ -1,6 +1,6 @@
 # CURRENT STATE — Songsterr Fresh Pipeline V1
 
-Updated: 2026-09-10 01:15 America/Toronto
+Updated: 2026-09-10 15:05 America/Toronto
 Canonical branch: `songsterr-fresh-pipeline-v1`
 Canonical checkpoint: `docs/checkpoints/SONGSTERR_FRESH_PIPELINE_CURRENT_STATE.md`
 
@@ -239,6 +239,23 @@ Authoritative interpretation:
 - Do not promote either AVX2 cap to Production from these diagnostics.
 - Do not continue with broad ISA/backend knob sweeps.
 
+## CONTROLLED-COMPUTE INVENTORY — NO FRESH CONTROLLED SURFACE IDENTIFIED
+
+Repository/branch inspection completed on 2026-09-10 before any new execution experiment.
+
+- The strict fresh Demucs cross-host canary is explicitly `runs-on: ubuntu-latest`; its successful observations therefore remain GitHub-hosted evidence, not a fixed-machine execution contract.
+- No repository-tracked self-hosted runner label, fresh-pipeline pinned container/VM definition, dedicated CPU class, or dedicated fresh deployment worker was identified on `songsterr-fresh-pipeline-v1`.
+- Repository Docker/devcontainer material observed during inventory belongs to older V168/SplitMySong diagnostic work, not this fresh Songsterr path, and is not being reused here.
+- Historical Modal deployment artifacts observed off-branch are absent from `songsterr-fresh-pipeline-v1`; they remain out of scope and untouched.
+- The available GitHub connection does not expose the registered Actions-runner administration inventory. Therefore this repository inspection cannot prove that no externally configured self-hosted runner exists; it only establishes that no suitable controlled surface is branch-tracked or otherwise identifiable from the accessible fresh infrastructure.
+- No new Demucs execution was performed as part of this inventory. In particular, the archived V143/Gomyway implementation was not resumed.
+
+Engineering boundary now reached:
+- generic `ubuntu-latest` is **not** a byte-reproducible Demucs execution contract for this fixed model/settings across the observed hosted CPU classes;
+- policy A is to introduce/identify a genuinely pinned compute class and then prove repeated independent-lifecycle byte/PCM identity there;
+- policy B is to explicitly accept bounded upstream numerical variation and define reference-blind downstream invariants that remain fail-closed;
+- neither policy is selected by this checkpoint. Do not silently choose one, and do not use vendor/hash/downstream agreement to manufacture a preference.
+
 ## CURRENT ACCEPTANCE STATE
 
 Do **not** set `modelValidationComplete: true`.
@@ -251,11 +268,11 @@ Customer-eligible events remain **0**. V2 remains authoritative. V3 remains cand
 
 ## FRESH-CHAT NEXT ENGINEERING STEPS
 
-Start here in the next chat. Do not repeat the completed common-AVX2 portability experiment unless a specific new reason emerges.
+Start here in the next chat. The controlled-compute inventory is complete; do not repeat the completed common-AVX2 portability experiment unless a specific new reason emerges.
 
-1. **Inspect the repository and available CI/infrastructure for an already-existing controlled compute path** suitable for Demucs: self-hosted runner labels, pinned container/VM definitions, dedicated CPU class, deployment worker, or other execution surface where the CPU/runtime boundary can actually be fixed. This is inspection only first; do not change Production.
-2. If a controlled execution surface already exists, design one **reference-blind reproducibility canary** for that exact compute contract: exact authorized fixture/input/model/dependencies/Demucs settings, at least two independent job/process lifecycles, exact WAV + decoded PCM hashes, environment provenance, and all current hard guards. No Basic Pitch, duration logic, scorer, reference tab, downstream-agreement objective, or customer acceptance in this canary.
-3. If no controllable CPU/runtime surface exists, document that generic `ubuntu-latest` is not a byte-reproducible Demucs execution contract for this model. Then narrow the engineering decision to either (a) introducing a genuinely pinned compute class for model execution or (b) explicitly accepting bounded upstream numerical variation and validating downstream invariants without ever selecting a vendor/hash by agreement. Do not silently choose between these policies.
+1. **Resolve the upstream execution-policy fork explicitly before another Demucs experiment:** either (A) identify/introduce a genuinely pinned compute class, or (B) explicitly accept bounded upstream numerical variation and define reference-blind downstream invariants. Do not silently choose between these policies.
+2. If policy A is selected, first specify the exact compute/runtime contract. Then design one reference-blind reproducibility canary for that exact contract: exact authorized input/model/dependencies/Demucs settings, at least two independent job/process lifecycles, exact WAV + decoded PCM hashes, environment provenance, and all current hard guards. No Basic Pitch, duration logic, scorer, reference tab, downstream-agreement objective, or customer acceptance in this canary.
+3. If policy B is selected, define the permitted upstream variation and independently justified downstream invariants before using any model evidence for acceptance. Never select a vendor, CPU, WAV hash, PCM hash, or output variant because it agrees better downstream.
 4. Do **not** spend the next step on more `ATEN_CPU_CAPABILITY` / oneDNN ISA combinations, oneMKL controls, backend toggles, thread-count sweeps, or optimizer sweeps. The current evidence already shows that the two documented CPU-dispatch caps are insufficient cross-vendor.
 5. Keep duration-rule research paused until the upstream Demucs execution boundary is either reproducibly pinned or an explicit bounded-variation policy is defined. V2 remains the authoritative duration source during this pause; V3 remains candidate-only.
 6. Once the upstream execution policy is resolved, continue **model-evidence validation first**, still reference-blind and preserving stable event identity. Only after that should V3 duration evidence be reconsidered for promotion against independently justified evidence; never use decoded Basic Pitch note-off, generic next onset, or same-pitch reattack as default duration.
