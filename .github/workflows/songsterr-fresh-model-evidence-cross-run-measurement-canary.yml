@@ -1,0 +1,406 @@
+name: Songsterr Fresh Model Evidence Cross-Run Measurement Canary
+
+on:
+  workflow_dispatch:
+  push:
+    branches:
+      - songsterr-fresh-pipeline-v1
+    paths:
+      - '.github/workflows/songsterr-fresh-model-evidence-cross-run-measurement-canary.yml'
+      - 'scripts/songsterr-fresh/compare_basic_pitch_cross_run_evidence.py'
+      - 'scripts/songsterr-fresh/basic_pitch_activation_evidence.py'
+      - 'scripts/songsterr-fresh/verify_demucs_model_asset.py'
+      - 'scripts/songsterr-fresh/transcribe_isolated_guitar_basic_pitch.py'
+      - 'scripts/songsterr-fresh/analyze_full_mixture_structure.py'
+      - 'scripts/songsterr-fresh/build_structure_map.mjs'
+      - 'scripts/songsterr-fresh/build_note_evidence_context.mjs'
+      - 'scripts/songsterr-fresh/build_isolated_polyphonic_note_evidence.mjs'
+      - 'songsterr_pipeline/structureMap.mjs'
+      - 'songsterr_pipeline/structureIdentity.mjs'
+
+permissions:
+  contents: read
+
+env:
+  OMP_NUM_THREADS: '1'
+  MKL_NUM_THREADS: '1'
+  OPENBLAS_NUM_THREADS: '1'
+  NUMEXPR_NUM_THREADS: '1'
+  PYTHONHASHSEED: '0'
+
+jobs:
+  independent-model-observation:
+    name: model-evidence-observation-${{ matrix.sample }}
+    runs-on: ubuntu-latest
+    timeout-minutes: 60
+    strategy:
+      fail-fast: false
+      matrix:
+        sample: [a, b, c]
+
+    steps:
+      - name: Check out fresh branch
+        uses: actions/checkout@v4
+
+      - name: Set up Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.10'
+
+      - name: Fetch and verify exact authorized fixture
+        shell: bash
+        run: |
+          set -euo pipefail
+          BASE="/tmp/songsterr-fresh-model-variation-${{ matrix.sample }}"
+          mkdir -p "$BASE"
+          curl --fail --location --silent --show-error --retry 3 \
+            'https://raw.githubusercontent.com/dadrockyt-sys/dadrock-tabs-android/main/public/jimmy-paige-midterm-v1/gomyway-midterm-source.m4a' \
+            --output /tmp/gomyway-midterm-source.m4a
+          test "$(git hash-object /tmp/gomyway-midterm-source.m4a)" = '4dd709e3fa177b4daeed71ca97f0199757729d4b'
+
+          sudo apt-get update -qq
+          sudo apt-get install -y ffmpeg
+          ffmpeg -hide_banner -loglevel error -y \
+            -i /tmp/gomyway-midterm-source.m4a -ac 1 -ar 22050 \
+            /tmp/gomyway-midterm-analysis.wav
+          ffmpeg -hide_banner -loglevel error -y \
+            -i /tmp/gomyway-midterm-source.m4a -ac 2 -ar 44100 \
+            /tmp/gomyway-midterm-separation.wav
+          test "$(sha256sum /tmp/gomyway-midterm-separation.wav | awk '{print $1}')" = 'e03e1885185f4983b3eeaa66f36510b7709d607c14010f964e0aad427ecc474a'
+
+      - name: Install pinned model and analysis dependencies
+        shell: bash
+        run: |
+          set -euo pipefail
+          python -m pip install --disable-pip-version-check \
+            numpy==1.26.4 \
+            torch==2.14.0 \
+            huggingface-hub==1.30.0 \
+            safetensors==0.8.0 \
+            sphn==0.2.1 \
+            demucs==4.1.0 \
+            basic-pitch==0.4.0 \
+            librosa==0.11.0 \
+            soundfile==0.13.1
+
+      - name: Rebuild and verify frozen reference-blind structure
+        shell: bash
+        run: |
+          set -euo pipefail
+          BASE="/tmp/songsterr-fresh-model-variation-${{ matrix.sample }}"
+          python scripts/songsterr-fresh/analyze_full_mixture_structure.py \
+            --input /tmp/gomyway-midterm-analysis.wav \
+            --output "$BASE/raw-structure-analysis.json" \
+            --audio-source 'public/jimmy-paige-midterm-v1/gomyway-midterm-source.m4a@main#4dd709e3fa177b4daeed71ca97f0199757729d4b'
+          node scripts/songsterr-fresh/build_structure_map.mjs \
+            "$BASE/raw-structure-analysis.json" \
+            "$BASE/adapted-structure-map.json"
+          node scripts/songsterr-fresh/build_note_evidence_context.mjs \
+            "$BASE/adapted-structure-map.json" \
+            "$BASE/note-evidence-context.json"
+          node --input-type=module - <<NODE
+          import { readFile } from 'node:fs/promises';
+          const context = JSON.parse(await readFile('$BASE/note-evidence-context.json', 'utf8'));
+          if (context?.structureIdentity?.signature !== 'fnv1a32:2f493225') {
+            throw new Error(`FROZEN_STRUCTURE_IDENTITY_CHANGED:${context?.structureIdentity?.signature}`);
+          }
+          if (context?.referenceBlind !== true || context?.structureAccepted !== true) {
+            throw new Error('FROZEN_STRUCTURE_CONTEXT_NOT_ACCEPTED_REFERENCE_BLIND');
+          }
+          NODE
+
+      - name: Run fixed Demucs guitar separation and verify asset
+        shell: bash
+        run: |
+          set -euo pipefail
+          BASE="/tmp/songsterr-fresh-model-variation-${{ matrix.sample }}"
+          python -m demucs \
+            -n htdemucs_6s \
+            --device cpu \
+            --shifts 0 \
+            --overlap 0.25 \
+            --segment 7 \
+            -o "$BASE/separated" \
+            /tmp/gomyway-midterm-separation.wav
+          STEM="$BASE/separated/htdemucs_6s/gomyway-midterm-separation/guitar.wav"
+          test -s "$STEM"
+          STEM_SHA="$(sha256sum "$STEM" | awk '{print $1}')"
+          echo "$STEM_SHA  guitar.wav" > "$BASE/guitar-stem.sha256"
+
+          python scripts/songsterr-fresh/verify_demucs_model_asset.py \
+            --output "$BASE/demucs-model-asset.json"
+          python - <<PY
+          import json
+          with open('$BASE/demucs-model-asset.json', 'r', encoding='utf-8') as handle:
+              data = json.load(handle)
+          required = {
+              'contract': 'songsterr-fresh-demucs-model-asset-v2',
+              'modelName': 'htdemucs_6s',
+              'modelSignature': '5c90dfd2',
+              'primaryLoader': 'huggingface',
+              'hfRepoId': 'adefossez/HTDemucs-6s',
+              'hfPinnedRevision': '3c5ee475be622df764938de97e4281a7b07ffa58',
+              'hfAssetUploadRevision': '053e1404489b3dc58bf718224fac4b7316de8c93b',
+              'assetFilename': '5c90dfd2.safetensors',
+              'assetSha256': 'd2a1745f0744721f6b8ca5bf469b67c651ea5ed1b52998cab033b2158609d411',
+          }
+          for key, expected in required.items():
+              if data.get(key) != expected:
+                  raise SystemExit(f'DEMUCS_MODEL_ASSET_CHANGED:{key}:{data.get(key)}')
+          if data.get('legacyFallback', {}).get('primary') is not False:
+              raise SystemExit('DEMUCS_LEGACY_FALLBACK_MUST_NOT_BE_PRIMARY')
+          PY
+
+      - name: Infer Basic Pitch notes and same-inference activation identity
+        shell: bash
+        run: |
+          set -euo pipefail
+          BASE="/tmp/songsterr-fresh-model-variation-${{ matrix.sample }}"
+          STEM="$BASE/separated/htdemucs_6s/gomyway-midterm-separation/guitar.wav"
+          STEM_SHA="$(sha256sum "$STEM" | awk '{print $1}')"
+          python scripts/songsterr-fresh/transcribe_isolated_guitar_basic_pitch.py \
+            --input "$STEM" \
+            --output "$BASE/basic-pitch-guitar-notes.json" \
+            --activation-output "$BASE/basic-pitch-note-activations.json" \
+            --audio-source 'public/jimmy-paige-midterm-v1/gomyway-midterm-source.m4a@main#4dd709e3fa177b4daeed71ca97f0199757729d4b' \
+            --separation-source "demucs==4.1.0/htdemucs_6s/shifts=0/overlap=0.25/segment=7:guitar@sha256:${STEM_SHA}"
+
+      - name: Build duration-free adapted model evidence
+        shell: bash
+        run: |
+          set -euo pipefail
+          BASE="/tmp/songsterr-fresh-model-variation-${{ matrix.sample }}"
+          node scripts/songsterr-fresh/build_isolated_polyphonic_note_evidence.mjs \
+            "$BASE/note-evidence-context.json" \
+            "$BASE/basic-pitch-guitar-notes.json" \
+            "$BASE/evidence-${{ matrix.sample }}.json"
+
+          python - <<PY
+          import json
+          import sys
+          sys.path.insert(0, 'scripts/songsterr-fresh')
+          from basic_pitch_activation_evidence import decode_and_verify_activation_sidecar
+
+          base = '$BASE'
+          with open(f'{base}/basic-pitch-guitar-notes.json', 'r', encoding='utf-8') as handle:
+              notes = json.load(handle)
+          with open(f'{base}/basic-pitch-note-activations.json', 'r', encoding='utf-8') as handle:
+              sidecar = json.load(handle)
+          with open(f'{base}/evidence-${{ matrix.sample }}.json', 'r', encoding='utf-8') as handle:
+              evidence = json.load(handle)
+
+          decoded = decode_and_verify_activation_sidecar(sidecar, evidence=evidence)
+          bundle = decoded.get('inferenceBundleIdentity')
+          if notes.get('activationEvidenceIdentity') != bundle:
+              raise SystemExit('ACTIVATION_BUNDLE_NOT_BOUND_TO_NOTES')
+          if evidence.get('provenance', {}).get('activationEvidenceIdentity') != bundle:
+              raise SystemExit('ACTIVATION_BUNDLE_NOT_PROPAGATED')
+          if notes.get('diagnostics', {}).get('predictInvocationCount') != 1:
+              raise SystemExit('BASIC_PITCH_MUST_RUN_ONCE_PER_OBSERVATION')
+          if evidence.get('capabilities', {}).get('durationResolution') != 'none':
+              raise SystemExit('MODEL_MEASUREMENT_MUST_REMAIN_DURATION_FREE')
+          if any(
+              onset.get('durationSeconds') is not None or onset.get('sourceEnd') is not None
+              for onset in evidence.get('onsets', [])
+          ):
+              raise SystemExit('MODEL_MEASUREMENT_DURATION_LEAK')
+          PY
+
+      - name: Record observation runtime provenance
+        shell: bash
+        run: |
+          set -euo pipefail
+          BASE="/tmp/songsterr-fresh-model-variation-${{ matrix.sample }}"
+          STEM="$BASE/separated/htdemucs_6s/gomyway-midterm-separation/guitar.wav"
+          FFMPEG_VERSION="$(ffmpeg -version | head -n 1)"
+          python - <<PY
+          import hashlib
+          import importlib.metadata
+          import json
+          import os
+          import platform
+          from pathlib import Path
+
+          def sha256_file(path):
+              digest = hashlib.sha256()
+              with open(path, 'rb') as handle:
+                  for block in iter(lambda: handle.read(1024 * 1024), b''):
+                      digest.update(block)
+              return digest.hexdigest()
+
+          cpu_model = None
+          cpuinfo = Path('/proc/cpuinfo')
+          if cpuinfo.is_file():
+              for line in cpuinfo.read_text(encoding='utf-8', errors='replace').splitlines():
+                  if line.lower().startswith('model name') and ':' in line:
+                      cpu_model = line.split(':', 1)[1].strip()
+                      break
+
+          names = ('numpy', 'torch', 'huggingface-hub', 'safetensors', 'sphn', 'demucs', 'basic-pitch', 'librosa', 'soundfile', 'tflite-runtime')
+          with open('$BASE/evidence-${{ matrix.sample }}.json', 'r', encoding='utf-8') as handle:
+              evidence = json.load(handle)
+          payload = {
+              'contract': 'songsterr-fresh-model-evidence-cross-run-observation-v1',
+              'version': 1,
+              'sample': '${{ matrix.sample }}',
+              'referenceBlind': True,
+              'diagnosticOnly': True,
+              'python': platform.python_version(),
+              'platform': platform.platform(),
+              'machine': platform.machine(),
+              'processor': platform.processor() or None,
+              'cpuModel': cpu_model,
+              'runnerOS': os.environ.get('RUNNER_OS'),
+              'runnerArch': os.environ.get('RUNNER_ARCH'),
+              'imageOS': os.environ.get('ImageOS'),
+              'imageVersion': os.environ.get('ImageVersion'),
+              'ffmpegVersion': '''$FFMPEG_VERSION''',
+              'packages': {name: importlib.metadata.version(name) for name in names},
+              'threadingEnvironment': {
+                  key: os.environ.get(key)
+                  for key in ('OMP_NUM_THREADS', 'MKL_NUM_THREADS', 'OPENBLAS_NUM_THREADS', 'NUMEXPR_NUM_THREADS', 'PYTHONHASHSEED')
+              },
+              'decodedSeparationWavSha256': sha256_file('/tmp/gomyway-midterm-separation.wav'),
+              'guitarStemSha256': sha256_file('$STEM'),
+              'canonicalEvidenceSha256': hashlib.sha256(
+                  json.dumps(evidence, sort_keys=True, separators=(',', ':'), ensure_ascii=False, allow_nan=False).encode('utf-8')
+              ).hexdigest(),
+              'noteInferenceIdentity': evidence.get('diagnostics', {}).get('noteInferenceIdentity'),
+              'activationEvidenceIdentity': evidence.get('diagnostics', {}).get('activationEvidenceIdentity'),
+              'structureIdentity': evidence.get('structureIdentity'),
+              'hardGuards': {
+                  'admissionDecisionMade': False,
+                  'modelValidationComplete': False,
+                  'mayAdvanceDelivery': False,
+                  'durationAuthorityChanged': False,
+                  'referenceTabUsed': False,
+                  'professionalScorerUsed': False,
+                  'legacyV143ScorerImported': False,
+              },
+          }
+          Path('$BASE/runtime-${{ matrix.sample }}.json').write_text(json.dumps(payload, indent=2) + '\n', encoding='utf-8')
+          print(json.dumps(payload, indent=2))
+          PY
+
+      - name: Upload independent model observation
+        uses: actions/upload-artifact@v4
+        with:
+          name: songsterr-fresh-model-evidence-observation-${{ matrix.sample }}
+          path: |
+            /tmp/songsterr-fresh-model-variation-${{ matrix.sample }}/evidence-${{ matrix.sample }}.json
+            /tmp/songsterr-fresh-model-variation-${{ matrix.sample }}/runtime-${{ matrix.sample }}.json
+            /tmp/songsterr-fresh-model-variation-${{ matrix.sample }}/demucs-model-asset.json
+            /tmp/songsterr-fresh-model-variation-${{ matrix.sample }}/guitar-stem.sha256
+          if-no-files-found: error
+          retention-days: 14
+
+  compare-independent-observations:
+    name: compare-independent-model-evidence
+    needs: independent-model-observation
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+
+    steps:
+      - name: Check out fresh branch
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.10'
+
+      - name: Download all independent observations
+        uses: actions/download-artifact@v4
+        with:
+          pattern: songsterr-fresh-model-evidence-observation-*
+          path: /tmp/songsterr-fresh-model-evidence-observations
+          merge-multiple: true
+
+      - name: Re-run measurement contract self-test
+        run: python scripts/songsterr-fresh/compare_basic_pitch_cross_run_evidence.py --self-test
+
+      - name: Measure all pairwise model-evidence variation
+        shell: bash
+        run: |
+          set -euo pipefail
+          OUT=/tmp/songsterr-fresh-model-evidence-comparison
+          IN=/tmp/songsterr-fresh-model-evidence-observations
+          mkdir -p "$OUT"
+          python scripts/songsterr-fresh/compare_basic_pitch_cross_run_evidence.py \
+            "$IN/evidence-a.json" "$IN/evidence-b.json" --output "$OUT/comparison-ab.json"
+          python scripts/songsterr-fresh/compare_basic_pitch_cross_run_evidence.py \
+            "$IN/evidence-a.json" "$IN/evidence-c.json" --output "$OUT/comparison-ac.json"
+          python scripts/songsterr-fresh/compare_basic_pitch_cross_run_evidence.py \
+            "$IN/evidence-b.json" "$IN/evidence-c.json" --output "$OUT/comparison-bc.json"
+
+      - name: Build measurement-only aggregate summary
+        shell: bash
+        run: |
+          set -euo pipefail
+          python - <<'PY'
+          import json
+          from pathlib import Path
+
+          base = Path('/tmp/songsterr-fresh-model-evidence-comparison')
+          reports = []
+          for pair in ('ab', 'ac', 'bc'):
+              with open(base / f'comparison-{pair}.json', 'r', encoding='utf-8') as handle:
+                  report = json.load(handle)
+              boundary = report.get('policyBoundary', {})
+              if report.get('measurementOnly') is not True:
+                  raise SystemExit(f'MEASUREMENT_SCOPE_CHANGED:{pair}')
+              if boundary.get('thresholdsApplied') is not False:
+                  raise SystemExit(f'THRESHOLD_UNEXPECTEDLY_APPLIED:{pair}')
+              if boundary.get('admissionDecisionMade') is not False:
+                  raise SystemExit(f'ADMISSION_DECISION_UNEXPECTED:{pair}')
+              if boundary.get('modelValidationComplete') is not False:
+                  raise SystemExit(f'MODEL_VALIDATION_UNEXPECTEDLY_COMPLETED:{pair}')
+              if boundary.get('mayAdvanceDelivery') is not False:
+                  raise SystemExit(f'DELIVERY_UNEXPECTEDLY_ADVANCED:{pair}')
+              measurement = report['measurement']
+              reports.append({
+                  'pair': pair,
+                  'inputs': report['inputs'],
+                  'comparability': report['comparability'],
+                  'inventory': measurement['inventory'],
+                  'pairedNumericalVariation': measurement['pairedNumericalVariation'],
+              })
+
+          summary = {
+              'contract': 'songsterr-fresh-basic-pitch-cross-run-variation-measurement-set-v1',
+              'version': 1,
+              'referenceBlind': True,
+              'measurementOnly': True,
+              'observationCount': 3,
+              'pairwiseComparisonCount': 3,
+              'pairwiseMeasurements': reports,
+              'policyBoundary': {
+                  'status': 'MEASURED_INDEPENDENT_RUN_VARIATION',
+                  'thresholdsApplied': False,
+                  'admissionDecisionMade': False,
+                  'modelValidationComplete': False,
+                  'mayAdvanceDelivery': False,
+                  'durationAuthorityChanged': False,
+                  'referenceTabUsed': False,
+                  'professionalScorerUsed': False,
+                  'legacyV143ScorerImported': False,
+              },
+          }
+          with open(base / 'cross-run-measurement-summary.json', 'w', encoding='utf-8') as handle:
+              json.dump(summary, handle, indent=2, sort_keys=True, allow_nan=False)
+              handle.write('\n')
+          print(json.dumps(summary, indent=2, sort_keys=True, allow_nan=False))
+          PY
+
+      - name: Upload aggregate measurement reports
+        uses: actions/upload-artifact@v4
+        with:
+          name: songsterr-fresh-model-evidence-cross-run-measurement
+          path: /tmp/songsterr-fresh-model-evidence-comparison/*.json
+          if-no-files-found: error
+          retention-days: 14
