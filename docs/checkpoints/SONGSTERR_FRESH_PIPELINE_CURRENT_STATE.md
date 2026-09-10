@@ -1,12 +1,12 @@
 # CURRENT STATE — Songsterr Fresh Pipeline V1
 
-Updated: 2026-09-10 00:05 America/Toronto
+Updated: 2026-09-10 00:12 America/Toronto
 Canonical branch: `songsterr-fresh-pipeline-v1`
 Canonical checkpoint: `docs/checkpoints/SONGSTERR_FRESH_PIPELINE_CURRENT_STATE.md`
 
 This is the only canonical fresh-chat checkpoint for the Songsterr-inspired fresh pipeline.
 
-> Checkpoint compaction note: the prior verbose diagnostic history remains in Git at parent head `b0b8595a28304df64bc5804e8ce472428652e3f4`. This file is intentionally kept focused on current authoritative state, hard boundaries, evidence needed for the next engineering decision, and the most relevant historical run references.
+> Checkpoint compaction note: the prior verbose diagnostic history remains in Git at head `b0b8595a28304df64bc5804e8ce472428652e3f4`. This file is intentionally focused on current authoritative state, hard boundaries, evidence needed for the next engineering decision, and the most relevant historical run references.
 
 ## NON-NEGOTIABLE SCOPE
 
@@ -106,10 +106,10 @@ Pinned model/runtime core:
 - safetensors 0.8.0
 - sphn 0.2.1
 - demucs 4.1.0
-- basic-pitch 0.4.0
-- librosa 0.11.0
+- basic-pitch 0.4.0 where Basic Pitch is explicitly invoked
+- librosa 0.11.0 where release diagnostics require it
 - soundfile 0.13.1
-- tflite-runtime 2.14.0
+- tflite-runtime 2.14.0 where Basic Pitch is explicitly invoked
 - OMP/MKL/OpenBLAS/NumExpr threads = 1
 - PYTHONHASHSEED = 0
 
@@ -207,91 +207,135 @@ These diagnostics are descriptive only and cannot clear model validation or defi
 - Corrected STFT cross-check: run `34433150157`, artifact `10135364820`, digest `sha256:e6401de502cc6159621274a0a5fd39dd9c321d6451f445d07a49cd85cda570c7`; 1,139 model notes; source population 84 corroborated / 76 insufficient.
 - Controlled same-run CQT↔STFT comparator: run `34434013368`, artifact `10135685374`, digest `sha256:3c46d3a1d13e0f946443ea0a990eb422b91c659e5779d2a14a09effc99c946d4`; 1,139 model notes; V2 577/562; V3 661/478; same-run population 84 corroborated / 75 insufficient. Representation correlation remained low, so CQT/STFT are not substitutes and no consensus duration rule follows.
 
-## DEMUCS HOSTED-RUNNER BYTE-REPRODUCIBILITY — CROSS-RUN ISSUE REMAINS OPEN
+## DEMUCS HOSTED-RUNNER REPRODUCIBILITY
 
-Observed with the same decoded separation-input SHA and fixed Demucs model/settings:
-- corrected CQT canary `34432234675`: guitar WAV SHA `4227a41f58817d32e9e122857c924c486afdc1e411a0a173bec2dfcc0c7b6b81`
-- corrected STFT canary `34433150157`: guitar WAV SHA `c303f0a0d99f94e2bddedebd0679cc5034aa9505c350cc28a5200d4c419637af`
-- controlled same-run representation canary `34434013368`: guitar WAV SHA `5b3e7c6feb153ba427303d5f2688cf3442faa74bb4e98ce298ac426824c8db33`
+Same decoded input SHA + same pinned model asset + same fixed Demucs settings have produced different hosted-run guitar stems:
 
-Observed downstream drift associated with those hosted-run differences:
+| Run | Stem WAV SHA-256 | Azure region | Ubuntu | Runner image | CPU model captured? |
+| --- | --- | --- | --- | --- | --- |
+| `34432234675` corrected CQT | `4227a41f58817d32e9e122857c924c486afdc1e411a0a173bec2dfcc0c7b6b81` | eastus | 24.04.4 | `20260831.293.1` | no |
+| `34433150157` corrected STFT | `c303f0a0d99f94e2bddedebd0679cc5034aa9505c350cc28a5200d4c419637af` | centralus | 24.04.5 | `20260907.300.1` | no |
+| `34434013368` controlled CQT↔STFT | `5b3e7c6feb153ba427303d5f2688cf3442faa74bb4e98ce298ac426824c8db33` | centralus | 24.04.4 | `20260831.293.1` | no |
+| `34435154554` same-run reproducibility | `4227a41f58817d32e9e122857c924c486afdc1e411a0a173bec2dfcc0c7b6b81` | eastus | 24.04.5 | `20260907.300.1` | yes: AMD EPYC 7763 |
+
+Shared historical/current runner facts where logged:
+- runner version 2.337.0
+- Hosted Compute Agent provisioner `20260828.587`
+- provisioner commit `abac92662cab4cc7352de4f9f9d2e2419aad9c29`
+- Python 3.10.21
+- exact decoded separation SHA passed
+- top-level pinned Demucs separation stack passed
+- pinned Demucs asset verification passed
+- fixed thread environment passed
+
+Interpretation boundary:
+- runner image version alone is ruled out as a complete explanation: `4227a41f...` occurred on both image generations, while the newer image also produced `c303f0a0...`.
+- region is only a descriptive correlate in these four observations; it is not causal evidence. Do not select or prefer a region/stem from downstream agreement.
+- historical CPU model is unknown for the three older runs, so historical logs cannot isolate CPU/microarchitecture vs other host/runtime factors.
+- this remains a reproducibility engineering issue, not evidence that any hosted-run stem is more correct.
+- do not tune Demucs, Basic Pitch, CQT/STFT, or release thresholds to reproduce a historical inventory.
+- cross-run continuous DSP comparison remains non-authoritative until the environment boundary is characterized.
+
+Observed downstream drift associated with historical stem differences:
 - model-note inventories varied 1,138/1,139
 - one exact MIDI 64 event at source start ~113.071807709751 s shifted unresolved fallback rejection class across historical environments
 - raw sequential Basic Pitch `onsetId` shifted with the inventory; therefore it is not a valid cross-run identity by itself
-- the V3 fallback-resolved count remained 84
+- V3 fallback-resolved count remained 84
 
-Interpretation boundary:
-- this is a reproducibility engineering issue, not evidence that any hosted-run stem is more correct
-- do not select a preferred stem by downstream agreement
-- do not tune Demucs, Basic Pitch, CQT/STFT, or release thresholds to reproduce a historical inventory
-- cross-run continuous DSP comparison remains non-authoritative until the environment boundary is characterized
-
-## DEMUCS SAME-RUN REPRODUCIBILITY DIAGNOSTIC — GREEN
+## AUTHORITATIVE SAME-RUN DEMUCS REPRODUCIBILITY — GREEN
 
 Comparator: `scripts/songsterr-fresh/compare_demucs_stem_reproducibility.py`
 Contract: `songsterr-fresh-demucs-stem-reproducibility-comparison-v1`
-Comparator implementation: `1cdd62040e4c196748f8eeecf2f97c43ec5f9e32`
-Diagnostic guard wiring: `11560137c512128cd1eb108aad77ceb24c531f8a`
-Pinned lightweight dependency repair: `e4d6a732a1b8419408a52599ac32458e053a488b`
-Full reproducibility workflow wiring: `b0b8595a28304df64bc5804e8ce472428652e3f4`
 Workflow: `.github/workflows/songsterr-fresh-demucs-reproducibility-canary.yml`
 
 Authoritative full canary:
 - run `34435154554`
 - job `102738562141`
 - head `b0b8595a28304df64bc5804e8ce472428652e3f4`
-- conclusion: **success**
+- conclusion success
 - completed `2026-09-10T04:03:06Z`
 - artifact `10136054300`
 - artifact digest `sha256:a694ecb4da7ec5f34cbaf9e61833871f81b806ec87b93b18f9392a9cece97a51`
-- artifact expires `2026-09-24T04:03:03Z`
 
 Verified same-job result:
-- decoded separation input SHA: `e03e1885185f4983b3eeaa66f36510b7709d607c14010f964e0aad427ecc474a`
-- pass A WAV SHA: `4227a41f58817d32e9e122857c924c486afdc1e411a0a173bec2dfcc0c7b6b81`
-- pass B WAV SHA: `4227a41f58817d32e9e122857c924c486afdc1e411a0a173bec2dfcc0c7b6b81`
-- pass A PCM SHA: `cf07e142fccf92329e69744a2c2fa886d7d7cdccce0b57763fe8d3ea8d984ba2`
-- pass B PCM SHA: `cf07e142fccf92329e69744a2c2fa886d7d7cdccce0b57763fe8d3ea8d984ba2`
-- file bytes identical: true
-- decoded PCM bytes identical: true
-- exact sample equality: true
-- differing PCM values: 0 / 18,581,504 = 0.0
-- MAE: 0.0
-- RMSE: 0.0
-- max absolute difference: 0.0
-- SNR relative to A: null because error RMS is exactly zero
-- reference stem RMS: `0.05302134928309948`
-- sample rate: 44,100 Hz
-- shape: 9,290,752 frames × 2 channels
+- decoded separation input SHA `e03e1885185f4983b3eeaa66f36510b7709d607c14010f964e0aad427ecc474a`
+- pass A WAV SHA `4227a41f58817d32e9e122857c924c486afdc1e411a0a173bec2dfcc0c7b6b81`
+- pass B WAV SHA identical
+- pass A PCM SHA `cf07e142fccf92329e69744a2c2fa886d7d7cdccce0b57763fe8d3ea8d984ba2`
+- pass B PCM SHA identical
+- file bytes identical true
+- decoded PCM bytes identical true
+- exact sample equality true
+- differing PCM values 0 / 18,581,504
+- MAE 0.0
+- RMSE 0.0
+- max absolute difference 0.0
+- reference stem RMS `0.05302134928309948`
+- 44,100 Hz; 9,290,752 frames × 2 channels
 
-Runtime provenance for this green same-job canary:
-- CPU: `AMD EPYC 7763 64-Core Processor`
-- GitHub runner image: `ubuntu-24.04`, image version `20260907.300.1`
-- hosted compute provisioner version `20260828.587`, Azure region `eastus`
-- OS reported by job: Ubuntu 24.04.5 LTS
-- kernel/platform: `Linux-6.17.0-1022-azure-x86_64-with-glibc2.39`
+Runtime provenance:
+- CPU `AMD EPYC 7763 64-Core Processor`
+- image `ubuntu-24.04` version `20260907.300.1`
+- provisioner `20260828.587`, Azure region eastus
+- Ubuntu 24.04.5 LTS
+- kernel/platform `Linux-6.17.0-1022-azure-x86_64-with-glibc2.39`
 - Python 3.10.21
 - FFmpeg 6.1.1-3ubuntu5
-- Torch runtime `2.14.0+cu130`
+- Torch `2.14.0+cu130`
 - Torch CPU capability AVX2; MKL/MKLDNN/OpenMP available
 - Torch intra-op threads 1; inter-op threads 4
 - CUDA unavailable
-- fixed OMP/MKL/OpenBLAS/NumExpr thread environment = 1; PYTHONHASHSEED=0
-- pinned Demucs asset verification passed exactly
-
-Comparator boundaries remain intact:
-- reference-blind and diagnostic-only
-- cannot select a preferred stem
-- cannot mutate notes, pitch identity, duration, sourceEnd, release evidence, or acceptance state
-- no Basic Pitch invocation and no V2/V3 release invocation in this workflow
-- no threshold selection/sweep or downstream-agreement optimization
 
 Authoritative interpretation:
-- **Demucs is byte/PCM deterministic for two repeated passes inside this one runner/runtime.**
-- This does **not** establish byte-identical output across independent hosted runners/environments.
-- The current pass A/B SHA equals the historical corrected-CQT stem SHA `4227a41f...`, while other historical hosted runs produced `c303f0a0...` and `5b3e7c6f...`.
-- Therefore the next problem is specifically the independent-run runner/CPU/runtime boundary, not within-process/pass nondeterminism.
-- No duration-rule research should resume until that boundary is characterized enough to know what upstream variation is being consumed.
+- Demucs is byte/PCM deterministic for two repeated passes inside this one runner/runtime.
+- This does not establish byte-identical output across independent hosted runners/environments.
+- The next problem is specifically the independent-run runner/CPU/runtime boundary, not within-job pass nondeterminism.
+- Duration-rule research remains paused until that boundary is characterized enough to know what upstream variation is being consumed.
+
+## ACTIVE CROSS-RUN PROVENANCE CANARY — LAUNCHED
+
+New diagnostic-only implementation on the canonical branch:
+- `scripts/songsterr-fresh/record_demucs_cross_run_provenance.py`
+  - commit `41b57e29b26d36a4d3697efd040d2930e4840b87`
+  - contract `songsterr-fresh-demucs-cross-run-provenance-v1`
+- `scripts/songsterr-fresh/compare_demucs_cross_run_provenance.py`
+  - commit `2e714380cd0436a220d8101fa012369660bed8d5`
+  - contract `songsterr-fresh-demucs-cross-run-comparison-v1`
+- `.github/workflows/songsterr-fresh-demucs-cross-run-provenance-canary.yml`
+  - commit/head `fffece201a31d8c56dc49a7e6637df779debc170`
+
+Workflow design:
+- three independent `ubuntu-latest` hosted jobs: samples `a`, `b`, `c`
+- each independently fetches/verifies the exact authorized source blob
+- each independently decodes and requires exact separation-input SHA
+- each installs only the pinned Demucs separation dependencies
+- each executes exactly one fixed Demucs CPU pass using `htdemucs_6s`, shifts 0, overlap 0.25, segment 7
+- each verifies the exact pinned Hugging Face model asset
+- each records file SHA, decoded float32 PCM SHA, sample shape/RMS, CPU model, `lscpu`, image/kernel/libc, Python, NumPy config, Torch build/config/CPU capability/thread state, package versions, and runner/run identifiers
+- no stem audio is uploaded; only provenance/model-asset/hash diagnostics are uploaded
+- the final comparison job consumes only provenance JSON/hashes and groups exact file/PCM equality plus environment dimensions
+
+Hard diagnostic boundaries:
+- reference blind
+- diagnostic only
+- no Basic Pitch invocation
+- no V2 or V3 release invocation
+- no note/pitch/duration/sourceEnd mutation
+- no preferred-stem selection
+- no threshold selection or sweep
+- no downstream-agreement objective
+- no acceptance decision
+- no customer delivery
+- no archived V143 scorer/reference tab logic
+
+Current workflow run:
+- run `34436134514`
+- head `fffece201a31d8c56dc49a7e6637df779debc170`
+- event push
+- launched `2026-09-10T04:10:26Z`
+- status at this checkpoint: active/queued across the three independent provenance jobs; aggregate comparison has not yet produced an authoritative result
+
+Do not infer a cause from this canary until all independent provenance records and the aggregate comparison are complete.
 
 ## CURRENT ACCEPTANCE STATE
 
@@ -316,14 +360,14 @@ No acceptance promotion from self-consistency alone.
 
 ## NEXT ENGINEERING STEPS
 
-1. Treat run `34435154554` as the authoritative same-run reproducibility result: two Demucs passes are byte/PCM identical on one AMD EPYC 7763 hosted runner.
-2. Characterize the **cross-run** hosted-environment boundary next. Start with the known differing-stem runs `34432234675`, `34433150157`, and `34434013368`: compare runner image version/provisioner/OS/kernel where logs expose them. Do not infer CPU model when an older workflow did not record it.
-3. If historical logs are insufficient to isolate the boundary, create one narrow reference-blind Demucs provenance canary that runs the exact verified input + pinned asset + fixed Demucs settings on multiple independent hosted jobs/runners and records CPU model, `lscpu`, runner image, kernel, Torch build/runtime, package versions, file SHA, and decoded PCM SHA. It must not invoke Basic Pitch, V2, V3, or any scorer.
-4. Cross-run provenance diagnostics must define no preferred stem, acceptance threshold, duration rule, threshold sweep, or downstream-agreement objective.
-5. Do not resume duration-rule research until the upstream Demucs cross-run variation is characterized. Do not create another release delay/cutoff, representation-consensus rule, or threshold experiment while this issue remains open.
+1. Finish run `34436134514` and inspect all three independent per-run provenance records plus the aggregate exact hash comparison.
+2. Determine only what the evidence supports about the environment boundary: CPU model/microarchitecture, runner image/kernel/libc, Torch CPU capability/build, and other recorded runtime dimensions. Correlation is not causation; do not prefer an environment because of downstream note/release behavior.
+3. If independent jobs differ in PCM, quantify the environmental partitions using exact hashes and provenance only. Do not introduce Basic Pitch, V2/V3, duration logic, or a scorer into this canary.
+4. If all three jobs are identical, record that bounded result without declaring global determinism; repeat only if another independent sample is necessary to test a specific unresolved environment hypothesis.
+5. Do not resume duration-rule research until the upstream Demucs cross-run variation is characterized enough to know what environment boundary is being consumed.
 6. Keep cross-run event identity based on stable content identity (`MIDI` + exact source start and bound inference identities where applicable), never raw sequential Basic Pitch index alone.
 7. Keep V2 authoritative and V3 candidate-only. Preserve `MODEL_EVIDENCE_VALIDATION_PENDING`, `DURATION_EVIDENCE_INCOMPLETE`, `modelValidationComplete: false`, and customer eligibility 0 unless genuinely independent evidence later clears them through an explicitly designed authority.
 8. Do not use reference tabs/scorers, decoded Basic Pitch note end as duration, generic next onset as duration, same-pitch reattack as default duration, optimizer/threshold sweeps, or archived V143/Gomyway logic.
-9. Update this checkpoint immediately after each authoritative cross-run provenance result or material engineering change.
+9. Update this checkpoint immediately after the authoritative cross-run provenance result or any material engineering change.
 
 The archived V143/Gomyway pipeline remains out of scope.
