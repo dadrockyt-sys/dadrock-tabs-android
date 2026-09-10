@@ -7,14 +7,17 @@ import math
 from collections import Counter, defaultdict
 from pathlib import Path
 
-CONTRACT = "songsterr-fresh-v3-unresolved-duration-inventory-v1"
+CONTRACT = "songsterr-fresh-v3-unresolved-duration-inventory-v2"
 V3_RELEASE_CONTRACT = "songsterr-fresh-spectral-activation-release-evidence-v3"
 REATTACK_REASON = "NO_CLEAR_RELEASE_BEFORE_SAME_PITCH_REATTACK"
 
 
 def parse_args():
     parser = argparse.ArgumentParser(
-        description="Build a descriptive inventory of unresolved v3 duration evidence without changing events."
+        description=(
+            "Build a descriptive inventory of unresolved v3 duration evidence "
+            "without changing events or selecting new thresholds."
+        )
     )
     parser.add_argument("--evidence", required=True, help="v3 note evidence JSON")
     parser.add_argument("--output", required=True, help="inventory JSON")
@@ -98,6 +101,10 @@ def summarize_group(rows, gaps):
     }
 
 
+def fraction(part, whole):
+    return float(part) / float(whole) if whole else 0.0
+
+
 def main():
     args = parse_args()
     evidence_path = Path(args.evidence)
@@ -120,24 +127,52 @@ def main():
         raise RuntimeError("V3_UNRESOLVED_INVENTORY_ONSETS_MISSING")
 
     unresolved = []
+    resolved = []
     primary_groups = defaultdict(list)
     primary_gaps = defaultdict(list)
     fallback_groups = defaultdict(list)
     fallback_gaps = defaultdict(list)
+
+    resolved_gaps = []
+    unresolved_gaps = []
+    by_midi = defaultdict(lambda: {
+        "eligibleCount": 0,
+        "resolvedCount": 0,
+        "unresolvedCount": 0,
+        "resolvedOnsetConfidence": [],
+        "unresolvedOnsetConfidence": [],
+        "resolvedNextSamePitchReattackGapSeconds": [],
+        "unresolvedNextSamePitchReattackGapSeconds": [],
+        "unresolvedPrimaryReasonCounts": Counter(),
+        "unresolvedFallbackReasonCounts": Counter(),
+    })
 
     resolved_count = 0
     eligible_count = 0
     for index, onset in enumerate(onsets):
         if onset.get("classification") != "unambiguous" or onset.get("selectedMidi") is None:
             continue
+
         eligible_count += 1
+        midi = int(onset["selectedMidi"])
+        gap = next_same_pitch_gap(onsets, index, midi)
+        midi_context = by_midi[midi]
+        midi_context["eligibleCount"] += 1
+
         if onset.get("durationSeconds") is not None:
             if onset.get("sourceEnd") is None:
                 raise RuntimeError(
                     f"V3_UNRESOLVED_INVENTORY_RESOLVED_EVENT_MISSING_END:{onset.get('onsetId')}"
                 )
             resolved_count += 1
+            resolved.append(onset)
+            midi_context["resolvedCount"] += 1
+            midi_context["resolvedOnsetConfidence"].append(onset.get("onsetConfidence"))
+            if gap is not None:
+                resolved_gaps.append(gap)
+                midi_context["resolvedNextSamePitchReattackGapSeconds"].append(gap)
             continue
+
         if onset.get("sourceEnd") is not None:
             raise RuntimeError(
                 f"V3_UNRESOLVED_INVENTORY_UNRESOLVED_EVENT_HAS_END:{onset.get('onsetId')}"
@@ -149,12 +184,15 @@ def main():
                 f"V3_UNRESOLVED_INVENTORY_UNRESOLVED_PROVENANCE_CHANGED:{onset.get('onsetId')}"
             )
         reason = duration_evidence.get("reason") or "UNDECLARED"
-        midi = int(onset["selectedMidi"])
-        gap = next_same_pitch_gap(onsets, index, midi)
 
         unresolved.append(onset)
+        midi_context["unresolvedCount"] += 1
+        midi_context["unresolvedOnsetConfidence"].append(onset.get("onsetConfidence"))
+        midi_context["unresolvedPrimaryReasonCounts"][reason] += 1
         primary_groups[reason].append(onset)
         if gap is not None:
+            unresolved_gaps.append(gap)
+            midi_context["unresolvedNextSamePitchReattackGapSeconds"].append(gap)
             primary_gaps[reason].append(gap)
 
         fallback = duration_evidence.get("activationFallback")
@@ -168,6 +206,7 @@ def main():
                     f"V3_UNRESOLVED_INVENTORY_FALLBACK_RESOLUTION_MISMATCH:{onset.get('onsetId')}"
                 )
             fallback_reason = fallback.get("reason") or "UNDECLARED"
+            midi_context["unresolvedFallbackReasonCounts"][fallback_reason] += 1
             fallback_groups[fallback_reason].append(onset)
             if gap is not None:
                 fallback_gaps[fallback_reason].append(gap)
@@ -201,9 +240,34 @@ def main():
         for reason, rows in sorted(fallback_groups.items())
     }
 
+    midi_resolution = {}
+    for midi, context in sorted(by_midi.items()):
+        midi_resolution[str(midi)] = {
+            "eligibleCount": context["eligibleCount"],
+            "resolvedCount": context["resolvedCount"],
+            "unresolvedCount": context["unresolvedCount"],
+            "unresolvedFraction": fraction(
+                context["unresolvedCount"], context["eligibleCount"]
+            ),
+            "resolvedOnsetConfidence": stats(context["resolvedOnsetConfidence"]),
+            "unresolvedOnsetConfidence": stats(context["unresolvedOnsetConfidence"]),
+            "resolvedNextSamePitchReattackGapSeconds": stats(
+                context["resolvedNextSamePitchReattackGapSeconds"]
+            ),
+            "unresolvedNextSamePitchReattackGapSeconds": stats(
+                context["unresolvedNextSamePitchReattackGapSeconds"]
+            ),
+            "unresolvedPrimaryReasonCounts": dict(sorted(
+                context["unresolvedPrimaryReasonCounts"].items()
+            )),
+            "unresolvedFallbackReasonCounts": dict(sorted(
+                context["unresolvedFallbackReasonCounts"].items()
+            )),
+        }
+
     output = {
         "contract": CONTRACT,
-        "version": 1,
+        "version": 2,
         "descriptiveOnly": True,
         "referenceBlind": True,
         "changesDuration": False,
@@ -214,6 +278,7 @@ def main():
         "usesNextOnsetAsDuration": False,
         "usesSamePitchReattackAsDuration": False,
         "proposesNewReleaseRule": False,
+        "thresholdSelection": False,
         "thresholdSweep": False,
         "sourceEvidence": {
             "path": str(evidence_path),
@@ -225,6 +290,17 @@ def main():
             "durationEligibleEvents": eligible_count,
             "resolvedEvents": resolved_count,
             "unresolvedEvents": len(unresolved),
+        },
+        "resolutionContext": {
+            "resolvedOnsetConfidence": stats([
+                row.get("onsetConfidence") for row in resolved
+            ]),
+            "unresolvedOnsetConfidence": stats([
+                row.get("onsetConfidence") for row in unresolved
+            ]),
+            "resolvedNextSamePitchReattackGapSeconds": stats(resolved_gaps),
+            "unresolvedNextSamePitchReattackGapSeconds": stats(unresolved_gaps),
+            "byMidi": midi_resolution,
         },
         "unresolvedPrimaryReasons": primary,
         "reattackCensoredFallbackRejections": fallback,
@@ -249,6 +325,8 @@ def main():
         "counts": output["counts"],
         "primaryReasons": {k: v["count"] for k, v in primary.items()},
         "fallbackRejections": {k: v["count"] for k, v in fallback.items()},
+        "resolvedMedianNextSamePitchGapSeconds": output["resolutionContext"]["resolvedNextSamePitchReattackGapSeconds"]["median"],
+        "unresolvedMedianNextSamePitchGapSeconds": output["resolutionContext"]["unresolvedNextSamePitchReattackGapSeconds"]["median"],
     }, sort_keys=True))
 
 
