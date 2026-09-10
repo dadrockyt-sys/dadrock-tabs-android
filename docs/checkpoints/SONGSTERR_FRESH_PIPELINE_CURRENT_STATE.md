@@ -513,20 +513,7 @@ No same-pitch reattack default duration.
 No threshold sweep.
 No acceptance promotion from self-consistency alone.
 
-## NEXT ENGINEERING STEPS — FRESH CHAT HANDOFF
-
-1. Keep the new repeated-note diagnostic read-only. If extended, prefer additional distribution/context fields over any acceptance cutoff.
-2. Next useful duration study: inspect the `INSUFFICIENT_SPECTRAL_CORROBORATION` class descriptively using the already-fixed activation candidate and CQT evidence fields. Compare candidate spectral-drop/activation behavior with the 84 fixed-rule fallback-resolved events, but do not tune the 6 dB / activation thresholds on this fixture.
-3. Keep rapid-repeat (`NO_SUSTAINED_SUBTHRESHOLD_ACTIVATION`) and insufficient-CQT mechanisms separate; current structure-relative evidence says they are observably different.
-4. Keep all diagnostic CI guards. Future changes must reject altered no-mutation/no-model/no-threshold properties.
-5. Keep V2 authoritative and V3 candidate-only. Do not loosen the fixed activation/CQT rule on this fixture.
-6. Model-validation scaffold design is complete for now. Do not add an accepting path until a genuinely independent validation authority/evidence source is explicitly designed and justified.
-7. Any future V3 promotion must be an explicit documented branch decision with V2 preserved for regression comparison.
-8. Before customer exposure, independently validate the model path and obtain complete required duration evidence; evaluator/delivery stay fail-closed until both blockers are legitimately cleared.
-
-## SPECTRAL REJECTION CONTEXT STUDY — IN FLIGHT
-
-Resume point recorded from branch state on 2026-09-10 America/Toronto.
+## SPECTRAL REJECTION CONTEXT STUDY — GREEN
 
 Implementation:
 - `scripts/songsterr-fresh/probe_v3_activation_spectral_rejection_context.py`
@@ -535,34 +522,105 @@ Implementation:
 - canary workflow commit `4207fa86c68afa3230567d37e185e8a42b76dd68`
 - workflow `.github/workflows/songsterr-fresh-v3-spectral-rejection-context-canary.yml`
 
-Probe contract:
-- descriptive-only and reference-blind
-- reads the already-fixed activation candidate and selected-pitch CQT evidence
-- compares `CORROBORATED` versus `INSUFFICIENT_SPECTRAL_CORROBORATION`
-- recomputes the existing fixed activation/CQT rule only
-- asserts same-run ID parity against unchanged V3 fallback and insufficient-spectral outcomes
-- no duration/sourceEnd writes
-- no pitch-identity mutation
-- no model invocation inside the probe
-- no decoded Basic Pitch note-end use
-- no next-onset or same-pitch-reattack duration use
-- no threshold selection/sweep
-- no new release rule
-- no acceptance authority
+Probe contract remains descriptive-only/reference-blind and recomputes the already-fixed activation/CQT rule only. It cannot write duration/sourceEnd, change pitch identity, invoke a model, use decoded Basic Pitch note-off/next onset/reattack as duration, select/sweep a threshold, define a new release rule, or own acceptance.
 
-Guard status:
-- workflow `Songsterr Fresh V3 Duration Diagnostic Tests` passed at head `603f8d5094ac821c8bea837fb3a254d1622a8608`
-- probe self-test is green and deterministic
-
-Full canary:
+Green full canary:
 - run `34430069785`
 - job `102723521376`
 - head `4207fa86c68afa3230567d37e185e8a42b76dd68`
-- status when checkpointed: in progress
-- exact authorized fixture fetch/hash verification: passed
-- pinned dependency install: passed
-- frozen structure rebuild and identity/acceptance checks: passed
-- deterministic Demucs separation/model-asset verification: in progress at checkpoint time
-- remaining steps run duration-free model inference, unchanged V2/V3 release evidence, existing fixed-rule parity probe, spectral-context probe, same-run ID parity assertions, self-test, and artifact upload
+- conclusion success
+- exact authorized fixture hash verified
+- frozen structure rebuilt and identity/acceptance verified
+- deterministic Demucs separation completed
+- duration-free Basic Pitch inference completed
+- unchanged V2 and candidate V3 release evidence completed
+- existing fixed-rule parity probe completed
+- spectral-context probe completed
+- exact same-run corroborated/insufficient ID parity with V3 passed
+- probe self-test passed
+- artifact upload passed
+- artifact `10134306664`
+- digest `sha256:9e97f53e1ab3b0fdbdc0670a7fd3cc180f617d19244e7a732694b69f4787e7cb`
+- expires 2026-09-24T02:43:22Z
 
-No V2 or V3 threshold/duration implementation has been changed by this study. V2 remains authoritative, V3 remains candidate-only, customer eligibility remains zero, and the archived V143/Gomyway pipeline remains out of scope.
+Observed fixed-rule population:
+- 160 events passed the existing activation qualifications
+- 84 were fixed-rule CQT corroborated
+- 76 were `INSUFFICIENT_SPECTRAL_CORROBORATION`
+- activation-drop median: corroborated ~0.4044; insufficient ~0.3499
+- valley-activation median: corroborated ~0.1776; insufficient ~0.1751
+- selected-pitch spectral-drop median: corroborated ~11.5105 dB; insufficient ~-0.1098 dB
+- selected-pitch onset level median: corroborated ~-23.0745 dB; insufficient ~-30.6866 dB
+- selected-pitch valley level median: corroborated ~-36.2008 dB; insufficient ~-29.2576 dB
+- same-pitch-reattack-gap median: corroborated ~0.5521 s; insufficient ~0.7095 s
+- valley-to-reattack margin median: corroborated ~0.2380 s; insufficient ~0.3715 s
+- among the 76 insufficient events, 39 have negative selected-pitch spectral drop, 17 are 0–3 dB, and 20 are 3–6 dB
+- activation-drop versus spectral-drop correlation inside the insufficient group is weak (~0.13)
+
+Descriptive interpretation only:
+- activation valleys are similarly low in both groups
+- the insufficient class is not explained by obviously less time before reattack
+- after the activation valley exists, the principal observed separation is selected-pitch audio-domain CQT behavior
+- many insufficient events retain or gain selected-pitch CQT energy at the activation valley
+- this does not show that the fixed 6 dB rule is wrong and is not threshold-tuning evidence
+
+No V2 or V3 threshold/duration implementation changed. V2 remains authoritative, V3 remains candidate-only, customer eligibility remains zero.
+
+## SPECTRAL VALLEY NEIGHBORHOOD CONTEXT — IN FLIGHT
+
+New diagnostic:
+`scripts/songsterr-fresh/probe_v3_spectral_valley_neighborhood_context.py`
+
+Implementation commit:
+`1d7ca8b0bf0fb1394f7095b661c13ae901513159`
+
+Guard wiring commit:
+`8e8441f5a36073089374f268cf766b797c04e553`
+
+Contract:
+`songsterr-fresh-v3-spectral-valley-neighborhood-context-v1`
+
+Purpose:
+- inspect where residual audio-domain energy sits at the already-observed fixed activation valley
+- compare selected MIDI with local ±1/±2 semitone and ±12 octave CQT bins
+- report selected-bin rank and margins within that fixed neighborhood
+- keep `CORROBORATED` and `INSUFFICIENT_SPECTRAL_CORROBORATION` identities exactly inherited from the green source context
+
+Hard boundaries:
+- descriptive-only and reference-blind
+- consumes the green spectral-rejection context, not reference tabs/scorers
+- exact isolated-stem SHA must match source context
+- uses the already-observed activation valley; it does not search for a new release
+- neighborhood energy cannot become duration
+- no duration/sourceEnd writes
+- no pitch-identity writes
+- no model invocation inside the diagnostic
+- no decoded model-end read/use
+- no next-onset or same-pitch-reattack duration use
+- no threshold definition/selection/sweep
+- no new release rule
+- no acceptance authority
+
+Lightweight guard CI:
+- workflow `Songsterr Fresh V3 Duration Diagnostic Tests`
+- run `34430975401`
+- job `102726237832`
+- head `8e8441f5a36073089374f268cf766b797c04e553`
+- conclusion success
+- all existing descriptive diagnostics remain green
+- new diagnostic compiles and deterministic self-test passes
+
+Next action is to wire this diagnostic into the same frozen-fixture spectral canary, assert exact source-row/category parity, and inspect only the resulting neighborhood distributions. Do not tune the 6 dB or activation thresholds from this fixture.
+
+## NEXT ENGINEERING STEPS — FRESH CHAT HANDOFF
+
+1. Finish the spectral-valley neighborhood canary with exact source-row/category parity and fail-closed guard assertions.
+2. Compare local semitone/octave energy only descriptively between the 84 fixed-rule corroborated and 76 insufficient-spectral events; do not derive a cutoff from this fixture.
+3. Keep rapid-repeat (`NO_SUSTAINED_SUBTHRESHOLD_ACTIVATION`) separate from insufficient-CQT mechanisms.
+4. Keep all diagnostic CI guards. Future changes must reject altered no-mutation/no-model/no-threshold properties.
+5. Keep V2 authoritative and V3 candidate-only. Do not loosen the fixed activation/CQT rule on this fixture.
+6. Model-validation scaffold design is complete for now. Do not add an accepting path until a genuinely independent validation authority/evidence source is explicitly designed and justified.
+7. Any future V3 promotion must be an explicit documented branch decision with V2 preserved for regression comparison.
+8. Before customer exposure, independently validate the model path and obtain complete required duration evidence; evaluator/delivery stay fail-closed until both blockers are legitimately cleared.
+
+The archived V143/Gomyway pipeline remains out of scope.
