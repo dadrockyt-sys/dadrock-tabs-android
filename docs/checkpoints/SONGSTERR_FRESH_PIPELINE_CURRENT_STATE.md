@@ -1,6 +1,6 @@
 # CURRENT STATE — Songsterr Fresh Pipeline V1
 
-Updated: 2026-09-10 19:11 America/Toronto
+Updated: 2026-09-10 19:51 America/Toronto
 Canonical branch: `songsterr-fresh-pipeline-v1`
 Canonical checkpoint: `docs/checkpoints/SONGSTERR_FRESH_PIPELINE_CURRENT_STATE.md`
 
@@ -193,20 +193,35 @@ Contract behavior:
 
 The measurement contract being green does **not** validate model evidence. It only provides a safe way to collect independent-run reproducibility evidence for a future bounded-variation admission decision.
 
-### Independent real-model measurement canary — active
+### Independent real-model measurement canary — completed green
 
-New workflow:
+Workflow:
 - `.github/workflows/songsterr-fresh-model-evidence-cross-run-measurement-canary.yml`
 - three independent `ubuntu-latest` model observations (`a`, `b`, `c`), each rebuilding/verifying the same frozen reference-blind structure, running the same fixed Demucs contract, running Basic Pitch once with same-inference activation identity, then building duration-free adapted evidence;
 - aggregate job performs all three pairwise comparisons and uploads a measurement-only summary;
 - exact stem/note/activation hashes are diagnostics only; no preferred runner/output is selected;
 - aggregate explicitly refuses thresholds, admission, validation completion, delivery advancement, or duration-authority changes.
 
-Canary bring-up history:
+Bring-up history:
 - run `34540126725` failed before model inference because the workflow checked non-persisted convenience field `structureAccepted` instead of persisted `structureAcceptance.accepted`; no model evidence from that run is authoritative.
 - commit `72665f32ba19ce8729b3cdc1e94616dbc8901036` fixed the persisted structure assertion and quoted the Node heredoc; corrected run `34540364742` passed fixture/dependency/frozen-structure checks on all observations.
 - run `34540364742` then exposed a redundant Demucs asset assertion typo: workflow/checkpoint had `053e...8c93b`, while authoritative verifier constant/output is `053e1404489b3dc58bf718224fac4b7316de8c93`. The exact model asset SHA matched. The failed observation stopped before Basic Pitch inference, so this run is not model-evidence measurement authority.
-- commit `0f4b4cbe0a52657cf4989e07500041335a89db86` corrected that redundant assertion. Run `34540837228` is the current independent measurement run and is in progress on that fixed snapshot.
+- commit `0f4b4cbe0a52657cf4989e07500041335a89db86` corrected that redundant assertion.
+
+Authoritative completed measurement:
+- run `34540837228`, head `0f4b4cbe0a52657cf4989e07500041335a89db86`, success
+- observation jobs: A `103082902022`, B `103082902438`, C `103082902292`; all succeeded through frozen structure, fixed Demucs, Basic Pitch, duration-free evidence, provenance, and artifact upload
+- aggregate job `103084400834`, success
+- aggregate artifact `10177361715`, digest `sha256:74c4c1acb4830ec00b63ad19e1c26925aec0bc0b871ed073913cd10d5aea262c`
+- observation artifacts: A `10177349811` / `sha256:9fd189d4137734f27d04e94771b7b940f6fb3719415e53ddc9bbfa9d82725903`; B `10177345635` / `sha256:000bd93d87103bcae6f789d0c18a0e707896950c12f662f1c7b7ec7884b72ebf`; C `10177335624` / `sha256:76a265824600bcf5962861b7e59cc57d4228e8ffdee0ed837e37968a2a09a7c5`
+- A and B were exact matches: 1,139 events, 1,139 semantic keys, zero inventory drift, zero onset/confidence/model-end delta; same Demucs guitar stem SHA `5b3e7c6feb153ba427303d5f2688cf3442faa74bb4e98ce298ac426824c8db33`, same note identity `1e41a51a3463aa87b3d4c76f8e4cccadcb708dd3d1f51ae6895b950269a61024`, same activation bundle `4d2c1c7af035e26ff86919fb169354676bc35b56658d306c7410a94f573f1151`
+- C produced a different Demucs stem SHA `4227a41f58817d32e9e122857c924c486afdc1e411a0a173bec2dfcc0c7b6b81`, 1,138 events, note identity `e85323e5b7449ac84be7ad6076ed3ee9c2da1e9a37b3c64247637e4b82dcbe77`, activation bundle `5e1aa1f76bfb2b3dae77f6aeb6bf6dd1fc5f84e102292dd12a5432683b330159`
+- A↔C and B↔C each matched 1,138 semantic events with **zero source-start delta**; exactly one event differed in inventory: MIDI 64 at frozen `nearestStructureSlot=206.22657596371883` was present in A/B and absent in C
+- across the 1,138 common events, onset-confidence absolute delta: max `0.0124053955078125`, mean `0.00008660461917283875`, RMS `0.0004107038163407931`
+- diagnostic-only model-end absolute delta: max `0.6398326530612053` s, mean `0.0005622431046232033` s, RMS `0.01896685259331218` s; model ends remain excluded from duration evidence
+- A and B ran on AMD EPYC 9V74; C ran on AMD EPYC 7763; all used the same Ubuntu image `20260907.300.1`, package pins, thread environment, decoded input SHA, frozen structure identity, and fixed contract
+- this CPU association is descriptive only and must not be treated as a causal selector or correctness signal; earlier controlled evidence already showed CPU/image/region are not complete explanations of Demucs numerical variation
+- the observed maxima are descriptive only. Three observations do **not** justify an admission tolerance or a preferred output.
 
 ## CURRENT ACCEPTANCE STATE
 
@@ -220,11 +235,12 @@ Customer-eligible events remain **0**. V2 remains authoritative. V3 remains cand
 
 ## NEXT ENGINEERING STEPS
 
-1. Complete/inspect run `34540837228` without changing its fixed execution snapshot. If an infrastructure/workflow guard fails, classify and fix it without altering numerical model controls.
-2. If all three independent adapted artifacts complete, inspect the AB/AC/BC measurement reports and runtime provenance: event/key inventory, MIDI histogram, onset/confidence deltas, diagnostic-only end deltas, CPU/image metadata, stem hashes, note identities, and activation identities.
-3. Record those observations here as descriptive reproducibility evidence only; do not turn three observed maxima into a tolerance.
-4. Determine whether any onset/confidence tolerance can be justified from independent-run evidence and/or Basic Pitch representation semantics. If no defensible bound exists, keep admission blocked rather than inventing one.
-5. Only after a bounded-variation admission contract is justified, implemented, tested, and independently demonstrated may `modelValidationComplete` be reconsidered. Duration research remains paused until then.
-6. Continue updating this checkpoint after each material implementation or validation finding.
+1. Promote the inline three-observation aggregation logic into a dedicated fresh measurement-set script with its own fail-closed validation and self-tests, so future evidence sets are comparable and auditable independent of workflow YAML.
+2. The measurement-set contract should validate observation/runtime contracts and hard guards, verify all pairwise reports are measurement-only and cover the complete observation pair set, group exact stem/note/activation/evidence outcomes descriptively, and summarize maxima without converting them into tolerances.
+3. Wire the dedicated aggregate script into the fresh cross-run measurement canary and keep exact CPU/vendor/image/hash values diagnostic only.
+4. Run the focused aggregate CI/canary. Do not rerun the completed common-AVX2 portability experiment and do not alter numerical model controls simply to reduce the observed one-event difference.
+5. Determine later whether a defensible bounded-variation admission rule can be derived from representation semantics plus a broader independent evidence base. If not, keep admission blocked rather than inventing one.
+6. Only after a bounded-variation admission contract is justified, implemented, tested, and independently demonstrated may `modelValidationComplete` be reconsidered. Duration research remains paused until then.
+7. Continue updating this checkpoint after each material implementation or validation finding.
 
 The archived V143/Gomyway pipeline remains out of scope unless the user explicitly asks to resume it.
