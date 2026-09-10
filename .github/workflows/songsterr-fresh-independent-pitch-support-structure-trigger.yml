@@ -1,0 +1,27 @@
+name: Songsterr Fresh Pitch Support Structure Trigger
+
+on:
+  push:
+    branches:
+      - songsterr-fresh-pipeline-v1
+    paths:
+      - '.github/workflows/songsterr-fresh-independent-pitch-support-structure-trigger.yml'
+      - 'scripts/songsterr-fresh/analyze_full_mixture_structure.py'
+      - 'scripts/songsterr-fresh/build_structure_map.mjs'
+
+permissions:
+  actions: write
+  contents: read
+
+jobs:
+  dispatch-independent-pitch-support:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Dispatch independent pitch-support canary at current branch HEAD
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          set -euo pipefail
+          gh workflow run songsterr-fresh-independent-pitch-support-canary.yml \
+            --repo "$GITHUB_REPOSITORY" \
+            --ref songsterr-fresh-pipeline-v1
