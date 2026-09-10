@@ -21,6 +21,10 @@ on:
 permissions:
   contents: read
 
+concurrency:
+  group: songsterr-fresh-model-evidence-cross-run-measurement-${{ github.ref }}
+  cancel-in-progress: true
+
 env:
   OMP_NUM_THREADS: '1'
   MKL_NUM_THREADS: '1'
@@ -103,13 +107,13 @@ jobs:
           node scripts/songsterr-fresh/build_note_evidence_context.mjs \
             "$BASE/adapted-structure-map.json" \
             "$BASE/note-evidence-context.json"
-          node --input-type=module - <<NODE
+          CONTEXT_PATH="$BASE/note-evidence-context.json" node --input-type=module - <<'NODE'
           import { readFile } from 'node:fs/promises';
-          const context = JSON.parse(await readFile('$BASE/note-evidence-context.json', 'utf8'));
+          const context = JSON.parse(await readFile(process.env.CONTEXT_PATH, 'utf8'));
           if (context?.structureIdentity?.signature !== 'fnv1a32:2f493225') {
             throw new Error(`FROZEN_STRUCTURE_IDENTITY_CHANGED:${context?.structureIdentity?.signature}`);
           }
-          if (context?.referenceBlind !== true || context?.structureAccepted !== true) {
+          if (context?.referenceBlind !== true || context?.structureFrozen !== true || context?.structureAcceptance?.accepted !== true) {
             throw new Error('FROZEN_STRUCTURE_CONTEXT_NOT_ACCEPTED_REFERENCE_BLIND');
           }
           NODE
