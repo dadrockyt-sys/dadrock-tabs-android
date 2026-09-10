@@ -502,6 +502,94 @@ The post-rhythm-fix run on stem variant `4227a41f...` had 1,138 notes and 477 un
 
 The v3 fallback remained exactly 84 in both observed variants. The one-event difference belongs to the already documented hosted-runner model-output variation and must **not** become a hardcoded acceptance count. The CI gate intentionally checks dynamic unresolved-count parity rather than requiring 477 or 478.
 
+## INDEPENDENT REFERENCE-BLIND PITCH SUPPORT — FIRST CANARY GREEN
+
+Probe:
+`scripts/songsterr-fresh/probe_independent_pitch_support.py`
+
+Probe commit:
+`b8082a63...`
+
+Dedicated canary:
+`.github/workflows/songsterr-fresh-independent-pitch-support-canary.yml`
+
+Workflow commit:
+`4b806c247857458c6158e50a59d15b7130276c79`
+
+Probe method is descriptive only and was fixed before inspecting fixture results:
+- 80 ms post-onset measurement window
+- direct semitone CQT bins
+- local comparisons at ±1 and ±2 semitones
+- octave comparisons at ±12 semitones
+- selected-pitch long-run 20th-percentile spectral floor
+- no acceptance threshold
+- no threshold sweep
+- no pitch rewrite/drop
+- no duration/sourceEnd writes
+- no reference tab
+- no professional/reference scorer
+- no archived V143 logic
+- no Basic Pitch activation use
+- no decoded Basic Pitch note-end use
+- no model invocation inside the probe
+- no `modelValidationComplete` mutation
+
+Static independence guard rejects direct model/process/network imports in the probe. The probe also verifies exact duration-free note identity and hashes the actual guitar-stem bytes against declared separation provenance before reporting.
+
+First green canary:
+- run `34424545232`
+- job `102706873344`
+- head `4b806c247857458c6158e50a59d15b7130276c79`
+- Demucs stem SHA `4227a41f58817d32e9e122857c924c486afdc1e411a0a173bec2dfcc0c7b6b81`
+- Basic Pitch 1,138 notes
+- note identity SHA `e85323e5b7449ac84be7ad6076ed3ee9c2da1e9a37b3c64247637e4b82dcbe77`
+- probe A/B JSON byte-identical
+- probe JSON SHA `534015d01246965228bfc6988d92117861ff2bcd360b32060ec1f8a95b7e08db`
+- all 1,138 `(onsetId, sourceStart, selectedMidi)` rows preserved exactly
+- selected MIDI ranked #1 among ±1/±2 semitone comparison bins on 914/1,138 events (~80.3%)
+- selected MIDI ranked #1 among selected + ±1-octave comparison bins on 793/1,138 events (~69.7%)
+- local semitone rank histogram: 914 / 112 / 96 / 13 / 3 for ranks 1–5
+- octave rank histogram: 793 / 323 / 22 for ranks 1–3
+- selected-minus-best-semitone-neighbor median ~3.091 dB; mean ~1.906 dB
+- selected-minus-best-compared-alternative median ~1.404 dB; mean ~-1.496 dB
+- selected-pitch-above-floor median ~39.322 dB
+- evaluator still blocks on `MODEL_EVIDENCE_VALIDATION_PENDING` + `DURATION_EVIDENCE_INCOMPLETE`
+- complete/customer eligible 0
+- delivery false
+- 98/98 tests
+- artifact `10132278606`
+- artifact digest `sha256:953af38fb6216706dab989d98b83c4fb2edba9826b7a810dda20ee15052766a6`
+
+Interpretation boundary:
+- this is independent audio-domain support evidence, not ground truth
+- semitone-local support is substantially stronger than octave discrimination
+- do not collapse these metrics into a single accuracy score
+- do not derive an acceptance threshold from this fixture
+- do not use this first-run self-consistency to clear `MODEL_EVIDENCE_VALIDATION_PENDING`
+
+## PITCH-SUPPORT STRUCTURE TRIGGER — GREEN
+
+Trigger-hardening commit:
+`cf2afeb357b247d6cccaf648eef32dd3a52373fb`
+
+Dispatcher:
+`.github/workflows/songsterr-fresh-independent-pitch-support-structure-trigger.yml`
+
+Purpose:
+- watch the full-mixture structure-analysis dependencies used by the pitch-support canary
+- dispatch the existing independent pitch-support canary at the current branch HEAD
+- avoid duplicating or weakening the established proof workflow
+
+Dispatcher run:
+- run `34425135282`
+- job `102708656431`
+- head `cf2afeb357b247d6cccaf648eef32dd3a52373fb`
+- conclusion success
+
+The dispatcher successfully launched second full pitch-support canary run `34425140684` at the same head.
+
+At checkpoint-save time, second run `34425140684` is still in progress. Do not assume its result; fetch its final run/job status and artifact before performing cross-run semantic comparison.
+
 ## CURRENT ACCEPTANCE STATE
 
 Do **not** set `modelValidationComplete: true`.
@@ -526,21 +614,24 @@ No same-pitch reattack default duration.
 No threshold sweep.
 No acceptance promotion from self-consistency alone.
 
-## NEXT ENGINEERING STEPS
+## NEXT ENGINEERING STEPS — FRESH CHAT HANDOFF
 
-1. Keep audited v2 authoritative and v3 candidate-only.
-2. Preserve the fixed activation + spectral rule exactly; do not tune thresholds on the authorized fixture.
-3. Build a **descriptive independent reference-blind audio-domain pitch-support probe** for current Basic Pitch MIDI/onset evidence:
-   - input exact isolated guitar stem + current duration-free model evidence
-   - no reference tab, scorer, archived logic, or model invocation inside the probe
-   - verify evidence/audio identity before reporting
-   - compute independent spectral/CQT support around each already-selected MIDI and relevant local semitone/octave alternatives
-   - report continuous descriptive support/rank/margin metrics only
-   - do not rewrite/drop pitch identity
-   - do not write duration/sourceEnd
-   - do not set `modelValidationComplete`
-   - do not choose/tune an acceptance threshold from this fixture
-4. Use that independent probe only to determine whether a future explicit model-validation contract can be designed without circularly validating Basic Pitch against itself.
-5. Continue descriptive study of the remaining 477/478 duration ambiguity without inventing durations or changing the fixed v3 fallback rule.
-6. Any future v3 promotion from candidate to authoritative release authority must be an explicit documented branch decision with v2 preserved for regression comparison.
-7. Before any customer exposure, require independent model-path validation and complete required duration evidence; keep evaluator and delivery path fail-closed until then.
+1. Start by fetching canonical branch `songsterr-fresh-pipeline-v1` and re-reading this checkpoint. Do not work on `main` or Production.
+2. Check second independent pitch-support canary run `34425140684` to completion. It was launched by the green structure-trigger dispatcher at head `cf2afeb357b247d6cccaf648eef32dd3a52373fb` and was still running when this checkpoint was saved.
+3. If run `34425140684` is green:
+   - fetch its job logs and artifact metadata
+   - record exact run/job/head/artifact/digest
+   - record its Demucs stem SHA, Basic Pitch note count, note-identity SHA, probe A/B SHA, rank histograms, and continuous dB summaries
+   - confirm 98/98 deterministic tests, evaluator blockers unchanged, customer eligible 0, and delivery false
+4. Download/inspect both pitch-support artifacts and perform a **descriptive cross-run semantic comparison** only:
+   - compare exact note identities where they overlap
+   - reuse the already established 10 ms simultaneous/start-cluster tolerance only if needed for hosted-runner event matching; do not invent a new tolerance
+   - report matched event count, unmatched event identities, start-time deltas, and stability of semitone/octave rank/support metrics
+   - distinguish hosted-runner model-output variation from probe determinism
+   - do not convert the comparison into an accuracy score or acceptance threshold
+5. If run `34425140684` fails, fix only the isolated pitch-support probe/workflow/dispatcher boundary implicated by the failure. Do not modify v2 release authority, v3 fixed fallback thresholds, frozen structure, or customer delivery gates unless independently justified by a separate defect.
+6. Update this checkpoint immediately after the second-run/cross-run milestone with exact evidence. Keep the first green canary (`34424545232`, artifact `10132278606`, digest `sha256:953af38f...`) as the baseline comparison point.
+7. After the cross-run comparison, decide only whether the independent probe is stable enough to support designing a **future explicit model-validation contract**. Do not set `modelValidationComplete: true` from this fixture or from Basic Pitch/CQT self-consistency alone.
+8. Continue descriptive study of the remaining 477/478 duration ambiguity separately. Keep audited v2 authoritative and v3 candidate-only; preserve the fixed activation + spectral rule exactly and do not tune it on this fixture.
+9. Any future v3 promotion from candidate to authoritative release authority must be an explicit documented branch decision with v2 preserved for regression comparison.
+10. Before any customer exposure, independently validate the model path and obtain complete required duration evidence; evaluator and delivery must remain fail-closed until both blockers are legitimately cleared.
