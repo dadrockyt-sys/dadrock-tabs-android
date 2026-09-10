@@ -1,6 +1,6 @@
 # CURRENT STATE — Songsterr Fresh Pipeline V1
 
-Updated: 2026-09-09 America/Toronto
+Updated: 2026-09-09 23:58 America/Toronto
 Canonical branch: `songsterr-fresh-pipeline-v1`
 Canonical checkpoint: `docs/checkpoints/SONGSTERR_FRESH_PIPELINE_CURRENT_STATE.md`
 
@@ -584,6 +584,49 @@ Interpretation boundary:
 - do not tune Demucs/Basic Pitch/release thresholds to force the historical 160-row inventory
 - characterize/stabilize upstream reproducibility before relying on cross-run continuous DSP statistics
 
+## DEMUCS SAME-RUN REPRODUCIBILITY DIAGNOSTIC — IN FLIGHT
+
+Comparator: `scripts/songsterr-fresh/compare_demucs_stem_reproducibility.py`
+Comparator implementation: `1cdd62040e4c196748f8eeecf2f97c43ec5f9e32`
+Diagnostic guard wiring: `11560137c512128cd1eb108aad77ceb24c531f8a`
+Pinned lightweight dependency repair: `e4d6a732a1b8419408a52599ac32458e053a488b`
+Full reproducibility workflow wiring: `b0b8595a28304df64bc5804e8ce472428652e3f4`
+Workflow: `.github/workflows/songsterr-fresh-demucs-reproducibility-canary.yml`
+
+Comparator boundaries:
+- reference-blind and diagnostic-only
+- compares two stems from the same verified separation input and fixed Demucs settings/model asset
+- reports file SHA, decoded PCM SHA, exact sample equality, differing sample count/fraction, MAE, RMSE, max absolute error and SNR when applicable
+- records runtime/CPU/Torch/package provenance
+- cannot select a preferred stem
+- cannot mutate notes, pitch identity, duration, sourceEnd, release evidence or acceptance state
+- no Basic Pitch invocation and no V2/V3 release invocation in this reproducibility workflow
+- no threshold sweep or downstream-agreement optimization
+
+Lightweight guard history:
+- initial run `34434904088` failed only because the lightweight environment did not yet install NumPy/SoundFile required by the comparator self-test; all prior diagnostics were green
+- self-test was not weakened or skipped
+- repaired run `34434994210`, job `102738092282`, head `e4d6a732a1b8419408a52599ac32458e053a488b`, completed green
+- all prior diagnostic guards and the Demucs comparator self-test passed
+
+Authoritative full reproducibility canary at handoff:
+- run `34435154554`
+- job `102738562141`
+- head `b0b8595a28304df64bc5804e8ce472428652e3f4`
+- status at 2026-09-09 23:58 America/Toronto: **IN PROGRESS**
+- exact authorized fixture fetch/hash: passed
+- decoded separation-input SHA enforcement: passed; expected `e03e1885185f4983b3eeaa66f36510b7709d607c14010f964e0aad427ecc474a`
+- pinned separation dependency installation: passed
+- runtime provenance recording: passed
+- fixed Demucs pass A: in progress at last check
+- pass B, numeric comparator, diagnostic-boundary assertions, self-test and artifact upload had not yet run
+- no artifact existed at the last check
+
+Fresh-chat interpretation boundary:
+- do not infer same-run determinism from the run until pass A + pass B + comparator + artifact complete
+- if A/B hashes differ, that is diagnostic evidence to quantify, not a reason to choose one output
+- if A/B are byte-identical inside one runner while historical hosted runs differ, investigate/characterize the cross-run runtime/CPU/environment boundary before any more duration-rule research
+
 ## CURRENT ACCEPTANCE STATE
 
 Do **not** set `modelValidationComplete: true`.
@@ -607,16 +650,16 @@ No acceptance promotion from self-consistency alone.
 
 ## NEXT ENGINEERING STEPS — FRESH CHAT HANDOFF
 
-1. Treat the CQT trajectory, corrected STFT harmonic study, and same-run representation comparator as complete and descriptive. Do not convert +50/+100/+200 ms, correlation, or agreement into a release rule.
-2. Prioritize the newly exposed Demucs hosted-runner byte-reproducibility issue before more duration-rule research. The next safe experiment is to run the exact same verified separation input through the exact same pinned Demucs configuration twice inside one runner, hash both stems, and report sample-level difference statistics if hashes differ.
-3. The Demucs reproducibility probe must be reference-blind and diagnostic-only: record model asset identity, runtime/CPU/Torch metadata, input SHA, both output SHAs, and waveform difference summaries; it must not choose a preferred output, mutate notes, or affect duration/acceptance.
-4. If duplicate separation is byte-identical within one runner while different hosted runs remain different, characterize the runner/environment boundary rather than tuning downstream thresholds around it.
-5. Keep cross-run identity based on stable event content (`MIDI` + exact source start and bound inference identities where applicable), not sequential Basic Pitch index alone.
-6. Do not tune the 6 dB, activation, STFT, Demucs, or time-delay thresholds on this fixture. No optimizer sweep.
-7. Keep rapid-repeat (`NO_SUSTAINED_SUBTHRESHOLD_ACTIVATION`) separate from insufficient-CQT mechanisms; the observed one-event cross-run shift is diagnostic variance, not permission to merge reasons.
-8. Keep all diagnostic CI guards. Future changes must reject altered no-mutation/no-model/no-threshold/no-release-search properties.
-9. Keep V2 authoritative and V3 candidate-only. Any future V3 promotion must be an explicit documented branch decision with V2 preserved for regression comparison.
-10. Model-validation scaffold remains fail-closed. Do not add an accepting path until a genuinely independent validation authority/evidence source is explicitly designed and justified.
-11. Before customer exposure, independently validate the model path and obtain complete required duration evidence; evaluator/delivery stay fail-closed until both blockers are legitimately cleared.
+1. **Start by checking run `34435154554`, job `102738562141`; do not launch a new experiment first.** It is the authoritative same-run Demucs reproducibility canary at head `b0b8595a28304df64bc5804e8ce472428652e3f4`.
+2. If that run completes green, fetch its workflow artifact, download/extract it, and inspect the Demucs reproducibility comparison plus runtime/model provenance. Record the artifact ID, digest, expiration, pass-A SHA, pass-B SHA, decoded PCM equality, differing-sample count/fraction, MAE, RMSE, max absolute error and SNR.
+3. Immediately update this checkpoint from **IN FLIGHT** to **GREEN** with the measured result. Do not summarize an unfinished run as evidence.
+4. If the run fails, inspect the exact failing step/log before changing anything. Do not blindly rerun and do not weaken the diagnostic-only comparator/guards merely to make CI green. Fix only a demonstrated workflow/comparator defect, then rerun the corrected version and mark any superseded run explicitly.
+5. Do **not** resume duration-rule research until the Demucs same-run reproducibility result is understood. In particular, do not create another release delay/cutoff, representation-consensus rule, or threshold experiment while this upstream reproducibility issue is open.
+6. If duplicate Demucs outputs are byte/PCM identical within one runner but differ across hosted runs, characterize the runner/environment boundary next. Compare recorded CPU model, runner image, Torch/runtime metadata and other fixed provenance; do not choose a preferred stem by downstream transcription agreement.
+7. If duplicate outputs differ even within one runner, quantify the numeric drift first and isolate likely nondeterministic CPU/runtime behavior with narrowly controlled diagnostics. Do not tune Demucs, Basic Pitch, CQT/STFT or release thresholds around the drift.
+8. Keep cross-run event identity based on stable content identity (`MIDI` + exact source start and bound inference identities where applicable), never raw sequential Basic Pitch index alone.
+9. Keep V2 authoritative and V3 candidate-only. Preserve `MODEL_EVIDENCE_VALIDATION_PENDING`, `DURATION_EVIDENCE_INCOMPLETE`, `modelValidationComplete: false`, and customer eligibility 0 unless genuinely independent evidence later clears them through an explicitly designed authority.
+10. Do not use reference tabs/scorers, decoded Basic Pitch note end as duration, generic next onset as duration, same-pitch reattack as default duration, optimizer/threshold sweeps, or archived V143/Gomyway logic.
+11. Keep this checkpoint updated immediately after every authoritative canary result or material change so the next fresh chat can resume from this file alone.
 
 The archived V143/Gomyway pipeline remains out of scope.
