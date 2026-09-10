@@ -1,6 +1,6 @@
 # CURRENT STATE — Songsterr Fresh Pipeline V1
 
-Updated: 2026-09-10 00:45 America/Toronto
+Updated: 2026-09-10 00:58 America/Toronto
 Canonical branch: `songsterr-fresh-pipeline-v1`
 Canonical checkpoint: `docs/checkpoints/SONGSTERR_FRESH_PIPELINE_CURRENT_STATE.md`
 
@@ -94,11 +94,9 @@ Run `34435154554`, job `102738562141`, head `b0b8595a28304df64bc5804e8ce47242865
 - pass A/B WAV SHA both `4227a41f58817d32e9e122857c924c486afdc1e411a0a173bec2dfcc0c7b6b81`
 - pass A/B float32 PCM SHA both `cf07e142fccf92329e69744a2c2fa886d7d7cdccce0b57763fe8d3ea8d984ba2`
 - exact sample equality; 0 / 18,581,504 differing PCM values; MAE/RMSE/max 0.0
-- RMS `0.05302134928309948`; 44,100 Hz; shape 9,290,752 × 2
-- AMD EPYC 7763; Torch capability AVX2; eastus; runner image `20260907.300.1`, Ubuntu 24.04.5
-- platform `Linux-6.17.0-1022-azure-x86_64-with-glibc2.39`; Torch `2.14.0+cu130`; intra-op 1 / inter-op 4; CUDA unavailable
+- AMD EPYC 7763; Torch capability AVX2; eastus; image `20260907.300.1`
 
-Interpretation: Demucs is byte/PCM deterministic for repeated passes within this one runner/runtime. This does not prove equality across independent hosted environments.
+Interpretation: deterministic within this runner/runtime only, not proof of independent-run equality.
 
 ## AUTHORITATIVE CROSS-RUN DEMUCS PROVENANCE — VARIATION CONFIRMED
 
@@ -107,70 +105,94 @@ Implementation:
 - `scripts/songsterr-fresh/compare_demucs_cross_run_provenance.py`, commit `2e714380cd0436a220d8101fa012369660bed8d5`, contract `songsterr-fresh-demucs-cross-run-comparison-v1`
 - workflow `.github/workflows/songsterr-fresh-demucs-cross-run-provenance-canary.yml`, head `fffece201a31d8c56dc49a7e6637df779debc170`
 
-Authoritative run `34436134514`: success; aggregate job `102742547664`; aggregate artifact `10136341469`, digest `sha256:c8481becb4ebb5444e0b0b2e50bcf7ecf3273b84ed03b9d0b421d3557722c69e`.
+Run `34436134514`: success; aggregate job `102742547664`; aggregate artifact `10136341469`, digest `sha256:c8481becb4ebb5444e0b0b2e50bcf7ecf3273b84ed03b9d0b421d3557722c69e`.
 
-All three independent jobs matched exact source/input/model asset/top-level pins/fixed Demucs settings/Python 3.10.21/Torch `2.14.0+cu130`/kernel+glibc/thread settings/output geometry, yet produced three distinct file and PCM hashes:
+| Sample | Region | Image | CPU | Torch cap | WAV SHA | PCM SHA |
+| --- | --- | --- | --- | --- | --- | --- |
+| a | eastus | `20260831.293.1` | EPYC 7763 | AVX2 | `4227a41f58817d32e9e122857c924c486afdc1e411a0a173bec2dfcc0c7b6b81` | `cf07e142fccf92329e69744a2c2fa886d7d7cdccce0b57763fe8d3ea8d984ba2` |
+| b | northcentralus | `20260831.293.1` | EPYC 9V74 | AVX512 | `0d9339dfedd13ee4d2d7f1a1262363f8a756dce4fc1168182208b0ed431cec12` | `0bd756ad4362f150fd6997835c9a91791963fe30722d4ec4d41283a41ae70219` |
+| c | eastus2 | `20260907.300.1` | EPYC 9V74 | AVX2 | `5b3e7c6feb153ba427303d5f2688cf3442faa74bb4e98ce298ac426824c8db33` | `6d3ac44cd3f0156253ff7b820b72f5eda8d59eb8c60f8abd68a87c0598ec4987` |
 
-| Sample | Job | Region | Image | CPU | Torch cap | WAV SHA | PCM SHA |
-| --- | --- | --- | --- | --- | --- | --- | --- |
-| a | `102741473454` | eastus | `20260831.293.1` | EPYC 7763 | AVX2 | `4227a41f58817d32e9e122857c924c486afdc1e411a0a173bec2dfcc0c7b6b81` | `cf07e142fccf92329e69744a2c2fa886d7d7cdccce0b57763fe8d3ea8d984ba2` |
-| b | `102741473233` | northcentralus | `20260831.293.1` | EPYC 9V74 | AVX512 | `0d9339dfedd13ee4d2d7f1a1262363f8a756dce4fc1168182208b0ed431cec12` | `0bd756ad4362f150fd6997835c9a91791963fe30722d4ec4d41283a41ae70219` |
-| c | `102741473405` | eastus2 | `20260907.300.1` | EPYC 9V74 | AVX2 | `5b3e7c6feb153ba427303d5f2688cf3442faa74bb4e98ce298ac426824c8db33` | `6d3ac44cd3f0156253ff7b820b72f5eda8d59eb8c60f8abd68a87c0598ec4987` |
+Evidence rules out runner image alone, CPU model alone, Torch-reported AVX capability alone, and region alone as complete explanations. Effective hosted CPU/runtime dispatch is part of the boundary. No stem or environment is preferred or more correct.
 
-Artifacts: a `10136333426` digest `sha256:1c4e4caa9b0555ca3d535120c95bf5fb01198dd2b9fbf6c7a34a75b12d227a31`; b `10136318426` digest `sha256:047c77e6cd9980c86fdf88badc032dbb7fdc789dbb84b66c7991721f6d3d2d5e`; c `10136334343` digest `sha256:34220b9a67106cd3158661b2a29547f06634be2c72f15d94d203effc94540f74`.
-
-Evidence rules out runner image alone, CPU model alone, Torch-reported AVX capability alone, and region alone as complete explanations. Effective hosted CPU/runtime dispatch is part of the remaining boundary, but no single cause is proven. No stem or environment is preferred or more correct.
-
-Historical comparison: corrected CQT run `34432234675` gave `4227a41f...`; corrected STFT `34433150157` gave `c303f0a0...`; controlled CQT↔STFT `34434013368` gave `5b3e7c6f...`. Historical downstream BP/release drift remains descriptive only and cannot select an environment or stem.
+Historical hosted stems include `4227a41f...` (corrected CQT), `c303f0a0...` (corrected STFT), and `5b3e7c6f...` (controlled CQT↔STFT). Historical downstream BP/release drift remains descriptive only and cannot select an environment or stem.
 
 ## CPU-DISPATCH CONTROL VERIFICATION
 
-Authoritative upstream runtime controls were checked before changing diagnostic execution:
-- PyTorch documents `ATEN_CPU_CAPABILITY=avx2` to cap ATen CPU dispatch and recognizes AVX2/AVX512.
-- oneDNN documents `ONEDNN_MAX_CPU_ISA=AVX2` as a CPU dispatcher upper bound; oneDNN verbose can expose effective `cpu,isa`.
-- Intel oneMKL `MKL_ENABLE_INSTRUCTIONS` is not applicable as a portability control on these AMD EPYC hosts and is not used.
+- PyTorch documents `ATEN_CPU_CAPABILITY=avx2` and recognizes AVX2/AVX512 dispatch.
+- oneDNN documents `ONEDNN_MAX_CPU_ISA=AVX2`; oneDNN verbose exposes effective `cpu,isa`.
+- Intel oneMKL ISA control is not used as a cross-vendor portability control.
 
-These controls are diagnostic only and are not production settings.
+These are diagnostic controls only, not production settings.
 
-## SAME-HOST CPU-DISPATCH DIAGNOSTIC — REPLACEMENT RUN ACTIVE
+## AUTHORITATIVE SAME-HOST CPU-DISPATCH DIAGNOSTIC — GREEN
 
-Comparator:
-- `scripts/songsterr-fresh/compare_demucs_same_host_cpu_dispatch.py`
-- commit `cd00024da042f9da64c2c2fe0e0a4c9562cc40e9`
-- contract `songsterr-fresh-demucs-same-host-cpu-dispatch-comparison-v1`
+Comparator `scripts/songsterr-fresh/compare_demucs_same_host_cpu_dispatch.py`, commit `cd00024da042f9da64c2c2fe0e0a4c9562cc40e9`, contract `songsterr-fresh-demucs-same-host-cpu-dispatch-comparison-v1`.
 
-Workflow: `.github/workflows/songsterr-fresh-demucs-same-host-cpu-dispatch-canary.yml`.
+Workflow `.github/workflows/songsterr-fresh-demucs-same-host-cpu-dispatch-canary.yml`.
 
-### Superseded run
+### Superseded diagnostic
 
-- original workflow head `d11042c8c606de51ba8976e3d3f6651ab79f7695`
-- run `34436904125`
-- **NON-AUTHORITATIVE / SUPERSEDED**
-- reason: the oneDNN verbose probe constructed `Conv2d(16, 32, 3)` and then reused it for three loop iterations; after the first iteration the tensor had 32 channels while the module still expected 16, so an eligible host would fail on the second iteration.
-- no result from this run may be used as evidence, even if other probe metadata/artifacts exist.
-- this diagnostic bug did not affect the authoritative same-run or cross-run canaries, production execution, Basic Pitch, V2/V3, or acceptance state.
+Original run `34436904125` at head `d11042c8c606de51ba8976e3d3f6651ab79f7695` is **NON-AUTHORITATIVE / SUPERSEDED** because its oneDNN verbose probe reused `Conv2d(16, 32, 3)` across iterations and would fail after the first channel expansion. It did not affect any production, Basic Pitch, V2/V3, or acceptance state.
 
-### Fix and replacement
+Fix commit `282a85a9645302be6d1e02d1abc2e57b4f9994d2` changed both diagnostic convolutions to `Conv2d(16, 16, 3)` so repeated iterations preserve channel geometry.
 
-- fix commit `282a85a9645302be6d1e02d1abc2e57b4f9994d2`
-- both oneDNN probe convolutions now use `Conv2d(16, 16, 3)`, preserving channel count across all three loop iterations while the pad restores spatial geometry.
-- replacement workflow run `34438368530`
-- replacement head `282a85a9645302be6d1e02d1abc2e57b4f9994d2`
-- event push; launched `2026-09-10T04:44:49Z`
-- status at this checkpoint: queued; no host capability or comparison result is authoritative yet.
+### Authoritative replacement run
 
-Replacement design remains unchanged:
-- three independently assigned hosted probe jobs verify exact fixture/input/dependencies and record native CPU model/Torch capability.
-- only a native AVX512 host runs four fixed Demucs passes on the same host in separate processes: native; ATen AVX2 cap; oneDNN AVX2 cap; combined caps.
-- ATen cap must verify as AVX2 before Demucs; oneDNN native/capped verbose headers are diagnostic evidence.
-- compare file/PCM hashes and numerical deltas only; upload diagnostics, not stem audio.
-- no Basic Pitch, V2/V3, note/pitch/duration/sourceEnd mutation, scorer/reference tab, threshold selection/sweep, downstream-agreement objective, acceptance/customer delivery, or archived V143 logic.
+Run `34438368530`, head `282a85a9645302be6d1e02d1abc2e57b4f9994d2`, **success**.
+
+Jobs:
+- a `102748071040`: Intel Xeon Platinum 8573C, westus3, native Torch AVX512
+- b `102748071184`: AMD EPYC 7763, westcentralus, native Torch AVX2; provenance-only as designed
+- c `102748071203`: Intel Xeon 6973P-C, centralus, native Torch AVX512
+- summary `102750245161`: success, `RESULT_AVAILABLE`, 3 probes, 2 eligible AVX512 hosts, 2 completed comparisons
+
+Artifacts:
+- a `10137259557`, digest `sha256:e9bea047f0239bbc5f27acd376f3596ab1800b9f891a5449f81071d5b905adab`
+- b `10137038974`, digest `sha256:730d4123e5e267d9658c5bdda76903cd7119ecf2a100dd07c02aa826445bdaea`
+- c `10137259399`, digest `sha256:5aa0fad548ac7ae76979b09bdbd0d30c5dfb7d0d1d23fd64d1f8305440f1f3ef`
+- summary `10137262672`, digest `sha256:61c5d9c64e973da080c82adabd334d5ec1360ae57064415fd5c5cc9866c879a3`
+
+Both AVX512 hosts verified:
+- `ATEN_CPU_CAPABILITY=avx2` makes Torch report AVX2 in a fresh process.
+- oneDNN native verbose reported the host-native Intel AVX10.1/AMX path; `ONEDNN_MAX_CPU_ISA=AVX2` reported Intel AVX2.
+- exact fixture/input/model asset/dependency pins/Demucs settings were unchanged.
+
+### Exact four-way result — identical across both different Intel AVX512 hosts
+
+| Mode | WAV SHA-256 | PCM SHA-256 |
+| --- | --- | --- |
+| native | `c303f0a0d99f94e2bddedebd0679cc5034aa9505c350cc28a5200d4c419637af` | `0b92b9b28001a6cbc7bdb15da2324e4c2d5ea62cf76c29bd2ba5192b5d2f75fa` |
+| ATen AVX2 cap | `6692d15e3c97ab8ef7c501c345710a6cfb58169a07e84a004401f64e28478ab2` | `fdc3f6fa4e9b1e442b40966606243571eb3766c8768b11ef52955eec178f531a` |
+| oneDNN AVX2 cap | `9d95261fdda6eaed574010f6474adda2988f50dc8e363b5f91a201bf42948b52` | `2de9060889087b0e39de86f03c0547d41e125c374bf7111afe45266321509ede` |
+| combined ATen + oneDNN AVX2 caps | `db6e52b012232aae18419de9d2efdccf3e8adf92ee6524ffe52573973d164ea0` | `62bf61909fa52529e2c1cac980a02d546910f5daed34b117769283ec3df4a49a` |
+
+On **each** of the two Intel hosts, native vs cap numerical deltas were also identical:
+- native vs ATen cap: 18,202 / 18,581,504 PCM values differ; RMSE `9.551447402342991e-07`; max abs `3.0517578125e-05`
+- native vs oneDNN cap: 45,076 differ; RMSE `1.5030807698819657e-06`; max abs `3.0517578125e-05`
+- native vs combined cap: 44,322 differ; RMSE `1.4904565095481278e-06`; max abs `3.0517578125e-05`
+
+### Authoritative interpretation
+
+What is now positively demonstrated:
+- CPU library dispatch **causally changes exact Demucs numerical output on the same physical hosted runner**, because changing only the documented dispatch control changes exact PCM/file hashes.
+- ATen-only and oneDNN-only controls each independently alter the result; the combined control yields another distinct deterministic result.
+- For this run, every fixed dispatch mode reproduced **byte/PCM exactly across two different Intel AVX512 CPU models in two different Azure regions**.
+- The native Intel result exactly reproduces the historical `c303f0a0...` hosted stem, but that is descriptive only and does not make it preferred or correct.
+
+What is **not** yet established:
+- no evidence yet shows that the combined AVX2 cap makes AMD and Intel hosts converge to the same PCM.
+- no production execution contract has been selected.
+- no cap has been shown more accurate than another; downstream Basic Pitch/release agreement may not be used to choose one.
+- these tiny numerical deltas are reproducibility evidence only, not musical-quality evidence.
+
+Hard boundaries passed: reference blind; diagnostic only; no Basic Pitch; no V2/V3; no note/pitch/duration/sourceEnd mutation; no scorer/reference tab; no threshold selection/sweep; no downstream-agreement objective; no acceptance/customer delivery; no archived V143 logic.
 
 ## CURRENT ACCEPTANCE STATE
 
 Do **not** set `modelValidationComplete: true`.
 
-Current blockers:
+Current blockers remain:
 - `MODEL_EVIDENCE_VALIDATION_PENDING`
 - `DURATION_EVIDENCE_INCOMPLETE`
 
@@ -178,14 +200,15 @@ Customer-eligible events remain **0**. V2 remains authoritative. V3 remains cand
 
 ## NEXT ENGINEERING STEPS
 
-1. Finish replacement same-host CPU-dispatch run `34438368530`; inspect all three probe records and any native-AVX512 four-way comparison.
-2. If no AVX512 host is assigned, record only the bounded inconclusive result; do not infer dispatch causality from AVX2-only probes.
-3. If an AVX512 host is assigned, use same-host file/PCM hashes and numerical deltas only to determine whether ATen dispatch, oneDNN dispatch, or their combination changes the fixed Demucs result on that host. This addresses numerical causality only, never correctness.
-4. Do not promote any CPU cap to production from a single diagnostic. A reproducible execution contract requires explicitly designed repeated independent evidence.
-5. Keep duration-rule research paused until upstream Demucs variation is characterized enough to define a reproducible execution contract or explicitly accept bounded numerical variation without downstream-agreement selection.
-6. Keep stable cross-run event identity; never use sequential BP index as identity.
-7. Preserve both blockers, V2 authority, V3 candidate status, `modelValidationComplete: false`, and customer eligibility 0.
-8. Do not use reference tabs/scorers, decoded BP note end as duration, generic next onset as duration, same-pitch reattack as default duration, optimizer/threshold sweeps, or archived V143/Gomyway logic.
-9. Update this checkpoint immediately after host capability is known, any same-host comparison result, or material engineering change.
+1. Keep duration-rule research paused.
+2. Run one narrow **cross-host common-dispatch** diagnostic using only the fixed combined controls `ATEN_CPU_CAPABILITY=avx2` + `ONEDNN_MAX_CPU_ISA=AVX2` on several independent hosted jobs. Each job must verify the exact fixture/input/model asset/settings and record CPU vendor/model, region, image, native capability, capped capability/oneDNN ISA, file SHA and PCM SHA.
+3. This is a single fixed portability hypothesis, not a sweep. Do not run Basic Pitch, V2/V3, a scorer, duration logic, or downstream-agreement analysis.
+4. The specific question is whether the same combined AVX2 execution contract yields exact PCM across both Intel and AMD hosted CPUs. If all sampled vendors converge, record it as a reproducibility-contract candidate only and require an independent confirmation before any production change.
+5. If AMD and Intel remain different under the combined cap, record that the documented dispatch caps are insufficient to normalize the remaining vendor/microarchitecture/runtime boundary; do not choose a vendor by downstream behavior.
+6. No production runtime cap may be adopted until explicitly supported by repeated independent cross-vendor evidence and a separate deployment/contract decision.
+7. Keep cross-run event identity based on stable content identity, never raw sequential BP index alone.
+8. Preserve V2 authority, V3 candidate-only state, both blockers, `modelValidationComplete: false`, and customer eligibility 0.
+9. Do not use reference tabs/scorers, decoded BP note end as duration, generic next onset as duration, same-pitch reattack as default duration, optimizer/threshold sweeps, or archived V143/Gomyway logic.
+10. Update this checkpoint immediately after the cross-host common-dispatch canary is implemented/launched and after any authoritative result.
 
 The archived V143/Gomyway pipeline remains out of scope.
