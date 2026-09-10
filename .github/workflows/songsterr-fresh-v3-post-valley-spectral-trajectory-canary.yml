@@ -1,0 +1,314 @@
+name: Songsterr Fresh V3 Post-Valley Spectral Trajectory Canary
+
+on:
+  workflow_dispatch:
+  push:
+    branches:
+      - songsterr-fresh-pipeline-v1
+    paths:
+      - '.github/workflows/songsterr-fresh-v3-post-valley-spectral-trajectory-canary.yml'
+      - 'scripts/songsterr-fresh/probe_v3_post_valley_spectral_trajectory_context.py'
+      - 'scripts/songsterr-fresh/probe_v3_activation_spectral_rejection_context.py'
+      - 'scripts/songsterr-fresh/activation_valley_release_evidence.py'
+      - 'scripts/songsterr-fresh/basic_pitch_activation_evidence.py'
+      - 'scripts/songsterr-fresh/transcribe_isolated_guitar_basic_pitch.py'
+      - 'scripts/songsterr-fresh/estimate_selected_pitch_releases.py'
+      - 'scripts/songsterr-fresh/estimate_selected_pitch_releases_v3.py'
+      - 'scripts/songsterr-fresh/analyze_full_mixture_structure.py'
+      - 'scripts/songsterr-fresh/build_structure_map.mjs'
+      - 'scripts/songsterr-fresh/build_note_evidence_context.mjs'
+      - 'scripts/songsterr-fresh/build_isolated_polyphonic_note_evidence.mjs'
+      - 'scripts/songsterr-fresh/verify_demucs_model_asset.py'
+
+permissions:
+  contents: read
+
+env:
+  OMP_NUM_THREADS: '1'
+  MKL_NUM_THREADS: '1'
+  OPENBLAS_NUM_THREADS: '1'
+  NUMEXPR_NUM_THREADS: '1'
+  PYTHONHASHSEED: '0'
+
+jobs:
+  post-valley-spectral-trajectory:
+    runs-on: ubuntu-latest
+    timeout-minutes: 60
+    steps:
+      - name: Check out fresh branch
+        uses: actions/checkout@v4
+
+      - name: Set up Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.10'
+
+      - name: Fetch and decode exact authorized fixture
+        shell: bash
+        run: |
+          set -euo pipefail
+          BASE=/tmp/songsterr-fresh-post-valley
+          mkdir -p "$BASE"
+          curl --fail --location --silent --show-error --retry 3 \
+            'https://raw.githubusercontent.com/dadrockyt-sys/dadrock-tabs-android/main/public/jimmy-paige-midterm-v1/gomyway-midterm-source.m4a' \
+            --output /tmp/gomyway-midterm-source.m4a
+          test "$(git hash-object /tmp/gomyway-midterm-source.m4a)" = '4dd709e3fa177b4daeed71ca97f0199757729d4b'
+          sudo apt-get update -qq
+          sudo apt-get install -y ffmpeg
+          ffmpeg -hide_banner -loglevel error -y \
+            -i /tmp/gomyway-midterm-source.m4a -ac 1 -ar 22050 \
+            /tmp/gomyway-midterm-analysis.wav
+          ffmpeg -hide_banner -loglevel error -y \
+            -i /tmp/gomyway-midterm-source.m4a -ac 2 -ar 44100 \
+            /tmp/gomyway-midterm-separation.wav
+          sha256sum /tmp/gomyway-midterm-analysis.wav | tee "$BASE/analysis-input.sha256"
+          sha256sum /tmp/gomyway-midterm-separation.wav | tee "$BASE/separation-input.sha256"
+
+      - name: Install pinned model and analysis dependencies
+        shell: bash
+        run: |
+          set -euo pipefail
+          python -m pip install --disable-pip-version-check \
+            numpy==1.26.4 \
+            torch==2.14.0 \
+            huggingface-hub==1.30.0 \
+            safetensors==0.8.0 \
+            sphn==0.2.1 \
+            demucs==4.1.0 \
+            basic-pitch==0.4.0 \
+            librosa==0.11.0 \
+            soundfile==0.13.1
+
+      - name: Rebuild accepted frozen structure
+        shell: bash
+        run: |
+          set -euo pipefail
+          BASE=/tmp/songsterr-fresh-post-valley
+          python scripts/songsterr-fresh/analyze_full_mixture_structure.py \
+            --input /tmp/gomyway-midterm-analysis.wav \
+            --output "$BASE/raw-structure-analysis.json" \
+            --audio-source 'public/jimmy-paige-midterm-v1/gomyway-midterm-source.m4a@main#4dd709e3fa177b4daeed71ca97f0199757729d4b'
+          node scripts/songsterr-fresh/build_structure_map.mjs \
+            "$BASE/raw-structure-analysis.json" \
+            "$BASE/adapted-structure-map.json"
+          node scripts/songsterr-fresh/build_note_evidence_context.mjs \
+            "$BASE/adapted-structure-map.json" \
+            "$BASE/note-evidence-context.json"
+          node --input-type=module - <<'NODE'
+          import { readFile } from 'node:fs/promises';
+          const c = JSON.parse(await readFile('/tmp/songsterr-fresh-post-valley/note-evidence-context.json', 'utf8'));
+          if (c?.structureIdentity?.signature !== 'fnv1a32:2f493225') {
+            throw new Error(`FROZEN_STRUCTURE_IDENTITY_CHANGED:${c?.structureIdentity?.signature}`);
+          }
+          if (c?.structureAcceptance?.accepted !== true) {
+            throw new Error('FROZEN_STRUCTURE_NOT_ACCEPTED');
+          }
+          NODE
+
+      - name: Separate deterministic guitar stem and verify model asset
+        shell: bash
+        run: |
+          set -euo pipefail
+          BASE=/tmp/songsterr-fresh-post-valley
+          python -m demucs \
+            -n htdemucs_6s \
+            --device cpu \
+            --shifts 0 \
+            --overlap 0.25 \
+            --segment 7 \
+            -o "$BASE/separated" \
+            /tmp/gomyway-midterm-separation.wav
+          STEM="$BASE/separated/htdemucs_6s/gomyway-midterm-separation/guitar.wav"
+          test -s "$STEM"
+          sha256sum "$STEM" | tee "$BASE/guitar-stem.sha256"
+          python scripts/songsterr-fresh/verify_demucs_model_asset.py \
+            --output "$BASE/demucs-model-asset.json"
+          python - <<'PY'
+          import json
+          base = '/tmp/songsterr-fresh-post-valley'
+          with open(f'{base}/demucs-model-asset.json', 'r', encoding='utf-8') as handle:
+              asset = json.load(handle)
+          required = {
+              'contract': 'songsterr-fresh-demucs-model-asset-v2',
+              'primaryLoader': 'huggingface',
+              'hfRepoId': 'adefossez/HTDemucs-6s',
+              'hfPinnedRevision': '3c5ee475be622df764938de97e4281a7b07ffa58',
+              'hfAssetUploadRevision': '053e1404489b3dc58bf718224fac4b7316de8c93',
+              'assetFilename': '5c90dfd2.safetensors',
+              'assetSha256': 'd2a1745f0744721f6b8ca5bf469b67c651ea5ed1b52998cab033b2158609d411',
+          }
+          for key, value in required.items():
+              if asset.get(key) != value:
+                  raise SystemExit(f'DEMUCS_ASSET_IDENTITY_CHANGED:{key}:{asset.get(key)}')
+          PY
+
+      - name: Infer duration-free notes and bind activation sidecar
+        shell: bash
+        run: |
+          set -euo pipefail
+          BASE=/tmp/songsterr-fresh-post-valley
+          STEM="$BASE/separated/htdemucs_6s/gomyway-midterm-separation/guitar.wav"
+          STEM_SHA="$(sha256sum "$STEM" | awk '{print $1}')"
+          python scripts/songsterr-fresh/transcribe_isolated_guitar_basic_pitch.py \
+            --input "$STEM" \
+            --output "$BASE/basic-pitch-guitar-notes.json" \
+            --activation-output "$BASE/basic-pitch-note-activations.json" \
+            --audio-source 'public/jimmy-paige-midterm-v1/gomyway-midterm-source.m4a@main#4dd709e3fa177b4daeed71ca97f0199757729d4b' \
+            --separation-source "demucs==4.1.0/htdemucs_6s/shifts=0:guitar@sha256:${STEM_SHA}"
+          node scripts/songsterr-fresh/build_isolated_polyphonic_note_evidence.mjs \
+            "$BASE/note-evidence-context.json" \
+            "$BASE/basic-pitch-guitar-notes.json" \
+            "$BASE/raw-model-note-evidence-duration-free.json"
+          python - <<'PY'
+          import json, sys
+          sys.path.insert(0, 'scripts/songsterr-fresh')
+          from basic_pitch_activation_evidence import decode_and_verify_activation_sidecar
+          base = '/tmp/songsterr-fresh-post-valley'
+          with open(f'{base}/basic-pitch-guitar-notes.json', 'r', encoding='utf-8') as handle:
+              notes = json.load(handle)
+          with open(f'{base}/basic-pitch-note-activations.json', 'r', encoding='utf-8') as handle:
+              sidecar = json.load(handle)
+          with open(f'{base}/raw-model-note-evidence-duration-free.json', 'r', encoding='utf-8') as handle:
+              evidence = json.load(handle)
+          decoded = decode_and_verify_activation_sidecar(sidecar, evidence=evidence)
+          if notes.get('diagnostics', {}).get('predictInvocationCount') != 1:
+              raise SystemExit('POST_VALLEY_REQUIRES_ONE_BASIC_PITCH_CALL')
+          if evidence.get('provenance', {}).get('activationEvidenceIdentity') != decoded.get('inferenceBundleIdentity'):
+              raise SystemExit('POST_VALLEY_ACTIVATION_BUNDLE_NOT_BOUND')
+          if any(row.get('durationSeconds') is not None or row.get('sourceEnd') is not None for row in evidence.get('onsets', [])):
+              raise SystemExit('POST_VALLEY_DURATION_LEAK_BEFORE_RELEASE')
+          PY
+
+      - name: Run unchanged V2 and candidate V3 release evidence
+        shell: bash
+        run: |
+          set -euo pipefail
+          BASE=/tmp/songsterr-fresh-post-valley
+          STEM="$BASE/separated/htdemucs_6s/gomyway-midterm-separation/guitar.wav"
+          python scripts/songsterr-fresh/estimate_selected_pitch_releases.py \
+            --allow-model-upstream \
+            --input "$STEM" \
+            --evidence "$BASE/raw-model-note-evidence-duration-free.json" \
+            --output "$BASE/raw-model-note-evidence-v2.json"
+          python scripts/songsterr-fresh/estimate_selected_pitch_releases_v3.py \
+            --allow-model-upstream \
+            --input "$STEM" \
+            --evidence "$BASE/raw-model-note-evidence-duration-free.json" \
+            --activation-evidence "$BASE/basic-pitch-note-activations.json" \
+            --output "$BASE/raw-model-note-evidence-v3.json"
+
+      - name: Rebuild green spectral rejection context
+        shell: bash
+        run: |
+          set -euo pipefail
+          BASE=/tmp/songsterr-fresh-post-valley
+          STEM="$BASE/separated/htdemucs_6s/gomyway-midterm-separation/guitar.wav"
+          python scripts/songsterr-fresh/probe_v3_activation_spectral_rejection_context.py \
+            --input "$STEM" \
+            --evidence "$BASE/raw-model-note-evidence-v2.json" \
+            --activation-evidence "$BASE/basic-pitch-note-activations.json" \
+            --output "$BASE/v3-activation-spectral-rejection-context.json"
+
+      - name: Record fixed post-valley spectral trajectory context
+        shell: bash
+        run: |
+          set -euo pipefail
+          BASE=/tmp/songsterr-fresh-post-valley
+          STEM="$BASE/separated/htdemucs_6s/gomyway-midterm-separation/guitar.wav"
+          python scripts/songsterr-fresh/probe_v3_post_valley_spectral_trajectory_context.py \
+            --input "$STEM" \
+            --context "$BASE/v3-activation-spectral-rejection-context.json" \
+            --output "$BASE/v3-post-valley-spectral-trajectory-context.json"
+
+      - name: Prove same-run parity and fail-closed boundaries
+        shell: bash
+        run: |
+          set -euo pipefail
+          python - <<'PY'
+          import json
+          base = '/tmp/songsterr-fresh-post-valley'
+          with open(f'{base}/v3-activation-spectral-rejection-context.json', 'r', encoding='utf-8') as handle:
+              context = json.load(handle)
+          with open(f'{base}/v3-post-valley-spectral-trajectory-context.json', 'r', encoding='utf-8') as handle:
+              trajectory = json.load(handle)
+          with open(f'{base}/raw-model-note-evidence-v3.json', 'r', encoding='utf-8') as handle:
+              v3 = json.load(handle)
+
+          if trajectory.get('contract') != 'songsterr-fresh-v3-post-valley-spectral-trajectory-context-v1':
+              raise SystemExit('POST_VALLEY_CONTRACT_CHANGED')
+          if trajectory.get('descriptiveOnly') is not True or trajectory.get('referenceBlind') is not True:
+              raise SystemExit('POST_VALLEY_SCOPE_GUARD_CHANGED')
+          for key in (
+              'changesDuration', 'changesPitchIdentity', 'invokesModel',
+              'usesDecodedModelNoteEndAsDuration', 'usesNextOnsetAsDuration',
+              'usesSamePitchReattackAsDuration', 'usesFixedPostValleyObservationAsDuration',
+              'searchesForAlternateReleaseTimestamp', 'outputsAlternateReleaseTimestamp',
+              'proposesNewReleaseRule', 'thresholdSelection', 'thresholdSweep',
+              'ownsAcceptanceDecision'
+          ):
+              if trajectory.get(key) is not False:
+                  raise SystemExit(f'POST_VALLEY_GUARD_CHANGED:{key}')
+          method = trajectory.get('method') or {}
+          if method.get('fixedPostValleyOffsetsSeconds') != [0.05, 0.1, 0.2]:
+              raise SystemExit('POST_VALLEY_FIXED_OFFSETS_CHANGED')
+          if method.get('delayThresholdDefined') is not False or method.get('acceptanceThresholdDefined') is not False:
+              raise SystemExit('POST_VALLEY_THRESHOLD_GUARD_CHANGED')
+
+          context_identity = [
+              (row.get('onsetId'), row.get('category'), int(row.get('midi')))
+              for row in context.get('rows', [])
+          ]
+          trajectory_identity = [
+              (row.get('onsetId'), row.get('category'), int(row.get('midi')))
+              for row in trajectory.get('rows', [])
+          ]
+          if context_identity != trajectory_identity:
+              raise SystemExit('POST_VALLEY_SOURCE_IDENTITY_PARITY_MISMATCH')
+
+          outcomes = context.get('diagnostics', {}).get('spectralOutcomeCounts', {})
+          counts = trajectory.get('diagnostics', {}).get('categoryCounts', {})
+          for category in ('CORROBORATED', 'INSUFFICIENT_SPECTRAL_CORROBORATION'):
+              if int(counts.get(category, -1)) != int(outcomes.get(category, -2)):
+                  raise SystemExit(f'POST_VALLEY_CATEGORY_COUNT_MISMATCH:{category}')
+
+          release = (v3.get('diagnostics') or {}).get('releaseEvidence') or {}
+          if release.get('activationFixedRule') != context.get('fixedEvidenceRule'):
+              raise SystemExit('POST_VALLEY_V3_FIXED_RULE_MISMATCH')
+          if release.get('activationStageInvokedModel') is not False:
+              raise SystemExit('POST_VALLEY_V3_RELEASE_STAGE_MODEL_GUARD_CHANGED')
+
+          summary = {
+              'noteCount': len(v3.get('onsets', [])),
+              'categoryCounts': counts,
+              'corroborated': trajectory['groups']['CORROBORATED']['fixedPostValleyOffsets'],
+              'insufficientSpectral': trajectory['groups']['INSUFFICIENT_SPECTRAL_CORROBORATION']['fixedPostValleyOffsets'],
+              'customerDeliveryInvoked': False,
+              'acceptanceDecisionMade': False,
+          }
+          with open(f'{base}/post-valley-summary.json', 'w', encoding='utf-8') as handle:
+              json.dump(summary, handle, indent=2, sort_keys=True)
+              handle.write('\n')
+          print(json.dumps(summary, sort_keys=True))
+          PY
+
+      - name: Run post-valley probe self-test
+        shell: bash
+        run: |
+          set -euo pipefail
+          python scripts/songsterr-fresh/probe_v3_post_valley_spectral_trajectory_context.py --self-test
+
+      - name: Upload post-valley spectral trajectory evidence
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: songsterr-fresh-v3-post-valley-spectral-trajectory
+          path: |
+            /tmp/songsterr-fresh-post-valley/*.json
+            /tmp/songsterr-fresh-post-valley/*.sha256
+          if-no-files-found: warn
+          retention-days: 14
