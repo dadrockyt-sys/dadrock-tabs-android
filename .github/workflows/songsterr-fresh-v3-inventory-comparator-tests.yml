@@ -1,0 +1,41 @@
+name: Songsterr Fresh V3 Inventory Comparator Tests
+
+on:
+  workflow_dispatch:
+  push:
+    branches:
+      - songsterr-fresh-pipeline-v1
+    paths:
+      - '.github/workflows/songsterr-fresh-v3-inventory-comparator-tests.yml'
+      - 'scripts/songsterr-fresh/compare_v3_unresolved_duration_inventories.py'
+      - 'scripts/songsterr-fresh/summarize_v3_unresolved_duration_evidence.py'
+
+permissions:
+  contents: read
+
+jobs:
+  comparator-tests:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - name: Check out fresh branch
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.10'
+
+      - name: Compile descriptive inventory tools
+        shell: bash
+        run: |
+          set -euo pipefail
+          python -m py_compile \
+            scripts/songsterr-fresh/summarize_v3_unresolved_duration_evidence.py \
+            scripts/songsterr-fresh/compare_v3_unresolved_duration_inventories.py
+
+      - name: Prove comparator remains fail-closed and deterministic
+        shell: bash
+        run: |
+          set -euo pipefail
+          python scripts/songsterr-fresh/compare_v3_unresolved_duration_inventories.py --self-test
