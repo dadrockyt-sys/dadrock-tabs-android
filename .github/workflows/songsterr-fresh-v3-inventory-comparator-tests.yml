@@ -13,6 +13,7 @@ on:
       - 'scripts/songsterr-fresh/summarize_v3_repeated_note_structure_context.py'
       - 'scripts/songsterr-fresh/probe_v3_activation_spectral_rejection_context.py'
       - 'scripts/songsterr-fresh/probe_v3_spectral_valley_neighborhood_context.py'
+      - 'scripts/songsterr-fresh/probe_v3_post_valley_spectral_trajectory_context.py'
 
 permissions:
   contents: read
@@ -40,7 +41,8 @@ jobs:
             scripts/songsterr-fresh/summarize_v3_reattack_structure_context.py \
             scripts/songsterr-fresh/summarize_v3_repeated_note_structure_context.py \
             scripts/songsterr-fresh/probe_v3_activation_spectral_rejection_context.py \
-            scripts/songsterr-fresh/probe_v3_spectral_valley_neighborhood_context.py
+            scripts/songsterr-fresh/probe_v3_spectral_valley_neighborhood_context.py \
+            scripts/songsterr-fresh/probe_v3_post_valley_spectral_trajectory_context.py
 
       - name: Prove inventory comparator remains fail-closed and deterministic
         shell: bash
@@ -71,3 +73,9 @@ jobs:
         run: |
           set -euo pipefail
           python scripts/songsterr-fresh/probe_v3_spectral_valley_neighborhood_context.py --self-test
+
+      - name: Prove post-valley spectral trajectory probe stays read-only
+        shell: bash
+        run: |
+          set -euo pipefail
+          python scripts/songsterr-fresh/probe_v3_post_valley_spectral_trajectory_context.py --self-test
