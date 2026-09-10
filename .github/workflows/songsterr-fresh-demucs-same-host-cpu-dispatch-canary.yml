@@ -1,0 +1,397 @@
+name: Songsterr Fresh Demucs Same-Host CPU Dispatch Canary
+
+on:
+  workflow_dispatch:
+  push:
+    branches:
+      - songsterr-fresh-pipeline-v1
+    paths:
+      - '.github/workflows/songsterr-fresh-demucs-same-host-cpu-dispatch-canary.yml'
+      - 'scripts/songsterr-fresh/compare_demucs_same_host_cpu_dispatch.py'
+      - 'scripts/songsterr-fresh/verify_demucs_model_asset.py'
+
+permissions:
+  contents: read
+
+env:
+  OMP_NUM_THREADS: '1'
+  MKL_NUM_THREADS: '1'
+  OPENBLAS_NUM_THREADS: '1'
+  NUMEXPR_NUM_THREADS: '1'
+  PYTHONHASHSEED: '0'
+
+jobs:
+  probe:
+    name: cpu-dispatch-probe-${{ matrix.sample }}
+    runs-on: ubuntu-latest
+    timeout-minutes: 55
+    strategy:
+      fail-fast: false
+      matrix:
+        sample: [a, b, c]
+
+    steps:
+      - name: Check out fresh branch
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.10'
+
+      - name: Fetch and verify exact authorized fixture
+        shell: bash
+        run: |
+          set -euo pipefail
+          BASE="/tmp/songsterr-fresh-demucs-dispatch-${{ matrix.sample }}"
+          mkdir -p "$BASE"
+          curl --fail --location --silent --show-error --retry 3 \
+            'https://raw.githubusercontent.com/dadrockyt-sys/dadrock-tabs-android/main/public/jimmy-paige-midterm-v1/gomyway-midterm-source.m4a' \
+            --output /tmp/gomyway-midterm-source.m4a
+          test "$(git hash-object /tmp/gomyway-midterm-source.m4a)" = '4dd709e3fa177b4daeed71ca97f0199757729d4b'
+          sudo apt-get update -qq
+          sudo apt-get install -y ffmpeg
+          ffmpeg -hide_banner -loglevel error -y \
+            -i /tmp/gomyway-midterm-source.m4a \
+            -ac 2 -ar 44100 \
+            /tmp/gomyway-midterm-separation.wav
+          INPUT_SHA="$(sha256sum /tmp/gomyway-midterm-separation.wav | awk '{print $1}')"
+          test "$INPUT_SHA" = 'e03e1885185f4983b3eeaa66f36510b7709d607c14010f964e0aad427ecc474a'
+
+      - name: Install pinned separation dependencies
+        shell: bash
+        run: |
+          set -euo pipefail
+          python -m pip install --disable-pip-version-check \
+            numpy==1.26.4 \
+            torch==2.14.0 \
+            huggingface-hub==1.30.0 \
+            safetensors==0.8.0 \
+            sphn==0.2.1 \
+            demucs==4.1.0 \
+            soundfile==0.13.1
+
+      - name: Detect native host and decide whether AVX512 isolation is applicable
+        id: native
+        shell: bash
+        run: |
+          set -euo pipefail
+          BASE="/tmp/songsterr-fresh-demucs-dispatch-${{ matrix.sample }}"
+          CPU_MODEL="$(awk -F: '/^model name/{gsub(/^[ \t]+|[ \t]+$/, "", $2); print $2; exit}' /proc/cpuinfo)"
+          NATIVE_CAP="$(python - <<'PY'
+          import torch
+          print(torch.backends.cpu.get_cpu_capability())
+          PY
+          )"
+          printf 'cpu_model=%s\n' "$CPU_MODEL" >> "$GITHUB_OUTPUT"
+          printf 'native_cap=%s\n' "$NATIVE_CAP" >> "$GITHUB_OUTPUT"
+          if [ "$NATIVE_CAP" = 'AVX512' ]; then
+            echo 'eligible=true' >> "$GITHUB_OUTPUT"
+          else
+            echo 'eligible=false' >> "$GITHUB_OUTPUT"
+          fi
+          python - <<PY
+          import json, os, platform, subprocess
+          payload = {
+              'contract': 'songsterr-fresh-demucs-same-host-cpu-dispatch-probe-v1',
+              'sampleLabel': '${{ matrix.sample }}',
+              'referenceBlind': True,
+              'diagnosticOnly': True,
+              'cpuModel': '''$CPU_MODEL''',
+              'nativeTorchCpuCapability': '$NATIVE_CAP',
+              'eligibleNativeAvx512': '$NATIVE_CAP' == 'AVX512',
+              'ranDispatchComparison': False,
+              'imageOS': os.environ.get('ImageOS'),
+              'imageVersion': os.environ.get('ImageVersion'),
+              'runnerOS': os.environ.get('RUNNER_OS'),
+              'runnerArch': os.environ.get('RUNNER_ARCH'),
+              'platform': platform.platform(),
+              'python': platform.python_version(),
+              'lscpu': subprocess.check_output(['lscpu'], text=True),
+              'githubRunId': os.environ.get('GITHUB_RUN_ID'),
+              'githubJob': os.environ.get('GITHUB_JOB'),
+              'hardGuards': {
+                  'preferredStemSelection': False,
+                  'basicPitchInvocation': False,
+                  'releaseEvidenceInvocation': False,
+                  'durationWrite': False,
+                  'sourceEndWrite': False,
+                  'pitchIdentityWrite': False,
+                  'thresholdSelection': False,
+                  'thresholdSweep': False,
+                  'downstreamAgreementObjective': False,
+                  'acceptanceDecision': False,
+                  'customerDeliveryInvoked': False,
+                  'legacyV143ScorerImported': False,
+                  'professionalScorerUsed': False,
+                  'referenceTabUsed': False,
+              },
+          }
+          with open('$BASE/probe-${{ matrix.sample }}.json', 'w', encoding='utf-8') as handle:
+              json.dump(payload, handle, indent=2, sort_keys=True)
+              handle.write('\n')
+          print(json.dumps({'cpuModel': payload['cpuModel'], 'nativeTorchCpuCapability': payload['nativeTorchCpuCapability'], 'eligibleNativeAvx512': payload['eligibleNativeAvx512']}, indent=2))
+          PY
+
+      - name: Verify ATen AVX2 control in a fresh process
+        if: steps.native.outputs.eligible == 'true'
+        shell: bash
+        run: |
+          set -euo pipefail
+          CAP="$(ATEN_CPU_CAPABILITY=avx2 python - <<'PY'
+          import torch
+          print(torch.backends.cpu.get_cpu_capability())
+          PY
+          )"
+          test "$CAP" = 'AVX2'
+          echo "ATEN_CPU_CAPABILITY=avx2 verified as $CAP"
+
+      - name: Capture oneDNN native and AVX2-capped dispatcher headers
+        if: steps.native.outputs.eligible == 'true'
+        shell: bash
+        run: |
+          set -euo pipefail
+          BASE="/tmp/songsterr-fresh-demucs-dispatch-${{ matrix.sample }}"
+          ONEDNN_VERBOSE=1 python - <<'PY' > "$BASE/onednn-native.log" 2>&1
+          import torch
+          x = torch.randn(2, 16, 64, 64)
+          m = torch.nn.Conv2d(16, 32, 3).eval()
+          with torch.no_grad():
+              for _ in range(3):
+                  x = m(x)
+                  x = torch.nn.functional.pad(x, (1, 1, 1, 1))
+          print(float(x.sum()))
+          PY
+          ONEDNN_VERBOSE=1 ONEDNN_MAX_CPU_ISA=AVX2 python - <<'PY' > "$BASE/onednn-avx2.log" 2>&1
+          import torch
+          x = torch.randn(2, 16, 64, 64)
+          m = torch.nn.Conv2d(16, 32, 3).eval()
+          with torch.no_grad():
+              for _ in range(3):
+                  x = m(x)
+                  x = torch.nn.functional.pad(x, (1, 1, 1, 1))
+          print(float(x.sum()))
+          PY
+          grep -m1 -E 'onednn_verbose.*cpu,isa:' "$BASE/onednn-native.log" || true
+          grep -m1 -E 'onednn_verbose.*cpu,isa:' "$BASE/onednn-avx2.log" || true
+
+      - name: Run native fixed Demucs pass
+        if: steps.native.outputs.eligible == 'true'
+        shell: bash
+        run: |
+          set -euo pipefail
+          BASE="/tmp/songsterr-fresh-demucs-dispatch-${{ matrix.sample }}"
+          python -m demucs \
+            -n htdemucs_6s --device cpu --shifts 0 --overlap 0.25 --segment 7 \
+            -o "$BASE/native" /tmp/gomyway-midterm-separation.wav
+
+      - name: Verify exact pinned Demucs model asset
+        if: steps.native.outputs.eligible == 'true'
+        shell: bash
+        run: |
+          set -euo pipefail
+          BASE="/tmp/songsterr-fresh-demucs-dispatch-${{ matrix.sample }}"
+          python scripts/songsterr-fresh/verify_demucs_model_asset.py --output "$BASE/demucs-model-asset.json"
+          python - <<PY
+          import json
+          data = json.load(open('$BASE/demucs-model-asset.json', encoding='utf-8'))
+          required = {
+              'contract': 'songsterr-fresh-demucs-model-asset-v2',
+              'primaryLoader': 'huggingface',
+              'hfRepoId': 'adefossez/HTDemucs-6s',
+              'hfPinnedRevision': '3c5ee475be622df764938de97e4281a7b07ffa58',
+              'hfAssetUploadRevision': '053e1404489b3dc58bf718224fac4b7316de8c93',
+              'assetFilename': '5c90dfd2.safetensors',
+              'assetSha256': 'd2a1745f0744721f6b8ca5bf469b67c651ea5ed1b52998cab033b2158609d411',
+          }
+          for key, expected in required.items():
+              if data.get(key) != expected:
+                  raise SystemExit(f'DEMUCS_DISPATCH_MODEL_ASSET_CHANGED:{key}:{data.get(key)}')
+          if data.get('legacyFallback', {}).get('primary') is not False:
+              raise SystemExit('DEMUCS_DISPATCH_LEGACY_FALLBACK_PRIMARY')
+          PY
+
+      - name: Run ATen-only AVX2-capped fixed Demucs pass
+        if: steps.native.outputs.eligible == 'true'
+        shell: bash
+        run: |
+          set -euo pipefail
+          BASE="/tmp/songsterr-fresh-demucs-dispatch-${{ matrix.sample }}"
+          ATEN_CPU_CAPABILITY=avx2 python -m demucs \
+            -n htdemucs_6s --device cpu --shifts 0 --overlap 0.25 --segment 7 \
+            -o "$BASE/aten-avx2" /tmp/gomyway-midterm-separation.wav
+
+      - name: Run oneDNN-only AVX2-capped fixed Demucs pass
+        if: steps.native.outputs.eligible == 'true'
+        shell: bash
+        run: |
+          set -euo pipefail
+          BASE="/tmp/songsterr-fresh-demucs-dispatch-${{ matrix.sample }}"
+          ONEDNN_MAX_CPU_ISA=AVX2 python -m demucs \
+            -n htdemucs_6s --device cpu --shifts 0 --overlap 0.25 --segment 7 \
+            -o "$BASE/onednn-avx2" /tmp/gomyway-midterm-separation.wav
+
+      - name: Run combined ATen plus oneDNN AVX2-capped fixed Demucs pass
+        if: steps.native.outputs.eligible == 'true'
+        shell: bash
+        run: |
+          set -euo pipefail
+          BASE="/tmp/songsterr-fresh-demucs-dispatch-${{ matrix.sample }}"
+          ATEN_CPU_CAPABILITY=avx2 ONEDNN_MAX_CPU_ISA=AVX2 python -m demucs \
+            -n htdemucs_6s --device cpu --shifts 0 --overlap 0.25 --segment 7 \
+            -o "$BASE/combined-avx2" /tmp/gomyway-midterm-separation.wav
+
+      - name: Compare same-host dispatch outputs
+        if: steps.native.outputs.eligible == 'true'
+        shell: bash
+        run: |
+          set -euo pipefail
+          BASE="/tmp/songsterr-fresh-demucs-dispatch-${{ matrix.sample }}"
+          STEM_REL='htdemucs_6s/gomyway-midterm-separation/guitar.wav'
+          python - <<PY
+          import importlib.metadata, json, os, platform
+          payload = {
+              'sampleLabel': '${{ matrix.sample }}',
+              'imageOS': os.environ.get('ImageOS'),
+              'imageVersion': os.environ.get('ImageVersion'),
+              'platform': platform.platform(),
+              'packages': {name: importlib.metadata.version(name) for name in ('numpy','torch','demucs','soundfile','huggingface-hub','safetensors','sphn')},
+              'threadingEnvironment': {key: os.environ.get(key) for key in ('OMP_NUM_THREADS','MKL_NUM_THREADS','OPENBLAS_NUM_THREADS','NUMEXPR_NUM_THREADS','PYTHONHASHSEED')},
+          }
+          json.dump(payload, open('$BASE/runtime-metadata.json','w',encoding='utf-8'), indent=2, sort_keys=True)
+          PY
+          python scripts/songsterr-fresh/compare_demucs_same_host_cpu_dispatch.py \
+            --native "$BASE/native/$STEM_REL" \
+            --aten-avx2 "$BASE/aten-avx2/$STEM_REL" \
+            --onednn-avx2 "$BASE/onednn-avx2/$STEM_REL" \
+            --combined-avx2 "$BASE/combined-avx2/$STEM_REL" \
+            --native-cpu-model '${{ steps.native.outputs.cpu_model }}' \
+            --native-torch-capability '${{ steps.native.outputs.native_cap }}' \
+            --runtime-metadata "$BASE/runtime-metadata.json" \
+            --output "$BASE/comparison-${{ matrix.sample }}.json"
+          python - <<PY
+          import json
+          path = '$BASE/probe-${{ matrix.sample }}.json'
+          data = json.load(open(path, encoding='utf-8'))
+          data['ranDispatchComparison'] = True
+          data['comparisonFile'] = 'comparison-${{ matrix.sample }}.json'
+          json.dump(data, open(path,'w',encoding='utf-8'), indent=2, sort_keys=True)
+          PY
+
+      - name: Prove diagnostic boundaries
+        if: steps.native.outputs.eligible == 'true'
+        shell: bash
+        run: |
+          set -euo pipefail
+          BASE="/tmp/songsterr-fresh-demucs-dispatch-${{ matrix.sample }}"
+          python - <<PY
+          import json
+          payload = json.load(open('$BASE/comparison-${{ matrix.sample }}.json', encoding='utf-8'))
+          if payload.get('contract') != 'songsterr-fresh-demucs-same-host-cpu-dispatch-comparison-v1':
+              raise SystemExit('DEMUCS_DISPATCH_CONTRACT_CHANGED')
+          if payload.get('referenceBlind') is not True or payload.get('diagnosticOnly') is not True:
+              raise SystemExit('DEMUCS_DISPATCH_SCOPE_CHANGED')
+          hard = payload.get('hardGuards') or {}
+          if not hard or any(value is not False for value in hard.values()):
+              raise SystemExit('DEMUCS_DISPATCH_GUARD_CHANGED')
+          PY
+
+      - name: Upload probe and comparison diagnostics only
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: songsterr-fresh-demucs-dispatch-${{ matrix.sample }}
+          path: |
+            /tmp/songsterr-fresh-demucs-dispatch-${{ matrix.sample }}/probe-${{ matrix.sample }}.json
+            /tmp/songsterr-fresh-demucs-dispatch-${{ matrix.sample }}/comparison-${{ matrix.sample }}.json
+            /tmp/songsterr-fresh-demucs-dispatch-${{ matrix.sample }}/runtime-metadata.json
+            /tmp/songsterr-fresh-demucs-dispatch-${{ matrix.sample }}/demucs-model-asset.json
+            /tmp/songsterr-fresh-demucs-dispatch-${{ matrix.sample }}/onednn-native.log
+            /tmp/songsterr-fresh-demucs-dispatch-${{ matrix.sample }}/onednn-avx2.log
+          if-no-files-found: warn
+          retention-days: 14
+
+  summarize:
+    name: summarize-same-host-dispatch
+    needs: probe
+    if: always()
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+
+    steps:
+      - name: Download probe diagnostics
+        uses: actions/download-artifact@v4
+        with:
+          pattern: songsterr-fresh-demucs-dispatch-*
+          path: /tmp/songsterr-fresh-demucs-dispatch-inputs
+          merge-multiple: true
+
+      - name: Build aggregate diagnostic summary
+        shell: bash
+        run: |
+          set -euo pipefail
+          mkdir -p /tmp/songsterr-fresh-demucs-dispatch-summary
+          python - <<'PY'
+          import glob, json, os
+          probes = [json.load(open(path, encoding='utf-8')) for path in sorted(glob.glob('/tmp/songsterr-fresh-demucs-dispatch-inputs/probe-*.json'))]
+          comparisons = [json.load(open(path, encoding='utf-8')) for path in sorted(glob.glob('/tmp/songsterr-fresh-demucs-dispatch-inputs/comparison-*.json'))]
+          if len(probes) != 3:
+              raise SystemExit(f'DEMUCS_DISPATCH_EXPECTED_THREE_PROBES:{len(probes)}')
+          for probe in probes:
+              if probe.get('referenceBlind') is not True or probe.get('diagnosticOnly') is not True:
+                  raise SystemExit('DEMUCS_DISPATCH_PROBE_SCOPE_CHANGED')
+              hard = probe.get('hardGuards') or {}
+              if not hard or any(value is not False for value in hard.values()):
+                  raise SystemExit('DEMUCS_DISPATCH_PROBE_GUARD_CHANGED')
+          for comparison in comparisons:
+              if comparison.get('contract') != 'songsterr-fresh-demucs-same-host-cpu-dispatch-comparison-v1':
+                  raise SystemExit('DEMUCS_DISPATCH_COMPARISON_CONTRACT_CHANGED')
+              hard = comparison.get('hardGuards') or {}
+              if not hard or any(value is not False for value in hard.values()):
+                  raise SystemExit('DEMUCS_DISPATCH_COMPARISON_GUARD_CHANGED')
+          payload = {
+              'contract': 'songsterr-fresh-demucs-same-host-cpu-dispatch-summary-v1',
+              'version': 1,
+              'referenceBlind': True,
+              'diagnosticOnly': True,
+              'probeCount': len(probes),
+              'eligibleNativeAvx512Count': sum(bool(p.get('eligibleNativeAvx512')) for p in probes),
+              'completedDispatchComparisonCount': len(comparisons),
+              'status': 'RESULT_AVAILABLE' if comparisons else 'NO_NATIVE_AVX512_HOST_OBSERVED',
+              'probes': probes,
+              'comparisons': comparisons,
+              'hardGuards': {
+                  'preferredStemSelection': False,
+                  'basicPitchInvocation': False,
+                  'releaseEvidenceInvocation': False,
+                  'durationWrite': False,
+                  'sourceEndWrite': False,
+                  'pitchIdentityWrite': False,
+                  'thresholdSelection': False,
+                  'thresholdSweep': False,
+                  'downstreamAgreementObjective': False,
+                  'acceptanceDecision': False,
+                  'customerDeliveryInvoked': False,
+                  'legacyV143ScorerImported': False,
+                  'professionalScorerUsed': False,
+                  'referenceTabUsed': False,
+              },
+          }
+          output = '/tmp/songsterr-fresh-demucs-dispatch-summary/summary.json'
+          json.dump(payload, open(output,'w',encoding='utf-8'), indent=2, sort_keys=True)
+          print(json.dumps({
+              'status': payload['status'],
+              'probeCount': payload['probeCount'],
+              'eligibleNativeAvx512Count': payload['eligibleNativeAvx512Count'],
+              'completedDispatchComparisonCount': payload['completedDispatchComparisonCount'],
+              'hosts': [{'sampleLabel': p.get('sampleLabel'), 'cpuModel': p.get('cpuModel'), 'nativeTorchCpuCapability': p.get('nativeTorchCpuCapability'), 'imageVersion': p.get('imageVersion')} for p in probes],
+          }, indent=2))
+          PY
+
+      - name: Upload aggregate summary
+        uses: actions/upload-artifact@v4
+        with:
+          name: songsterr-fresh-demucs-same-host-cpu-dispatch-summary
+          path: /tmp/songsterr-fresh-demucs-dispatch-summary/summary.json
+          if-no-files-found: error
+          retention-days: 14
