@@ -1,10 +1,12 @@
 # CURRENT STATE — Songsterr Fresh Pipeline V1
 
-Updated: 2026-09-09 23:58 America/Toronto
+Updated: 2026-09-10 00:05 America/Toronto
 Canonical branch: `songsterr-fresh-pipeline-v1`
 Canonical checkpoint: `docs/checkpoints/SONGSTERR_FRESH_PIPELINE_CURRENT_STATE.md`
 
 This is the only canonical fresh-chat checkpoint for the Songsterr-inspired fresh pipeline.
+
+> Checkpoint compaction note: the prior verbose diagnostic history remains in Git at parent head `b0b8595a28304df64bc5804e8ce472428652e3f4`. This file is intentionally kept focused on current authoritative state, hard boundaries, evidence needed for the next engineering decision, and the most relevant historical run references.
 
 ## NON-NEGOTIABLE SCOPE
 
@@ -17,6 +19,7 @@ This is the only canonical fresh-chat checkpoint for the Songsterr-inspired fres
 - Model/DSP execution stays under `scripts/songsterr-fresh/`.
 - Frozen structure precedes note inference and cannot be rewritten downstream.
 - Never silently change/drop detected MIDI/event identity.
+- Cross-run event identity must use stable content identity (`MIDI` + exact source start and bound inference identity where applicable), not raw sequential Basic Pitch index alone.
 - Preserve `/ai-tab`: audio upload → AI analysis → analyzer metadata/events → preview PDF → unlock → full PDF → browser/email.
 
 ## EXACT AUTHORIZED FIXTURE
@@ -30,7 +33,10 @@ Git blob SHA:
 Duration:
 ~210.674648526 s
 
-Canaries fetch the raw fixture from `main` and verify `git hash-object` before use.
+Decoded separation WAV expected SHA-256:
+`e03e1885185f4983b3eeaa66f36510b7709d607c14010f964e0aad427ecc474a`
+
+Canaries fetch the raw fixture from `main`, verify `git hash-object`, decode it, and fail closed if the decoded separation SHA changes.
 
 ## FROZEN STRUCTURE
 
@@ -93,7 +99,7 @@ Architecture:
 7. model adaptation requires explicit authorization
 8. `MODEL_EVIDENCE_VALIDATION_PENDING` independently blocks customer delivery
 
-Pinned environment:
+Pinned model/runtime core:
 - numpy 1.26.4
 - torch 2.14.0
 - huggingface-hub 1.30.0
@@ -106,6 +112,22 @@ Pinned environment:
 - tflite-runtime 2.14.0
 - OMP/MKL/OpenBLAS/NumExpr threads = 1
 - PYTHONHASHSEED = 0
+
+Current fixed Demucs settings:
+- model `htdemucs_6s`
+- `--device cpu`
+- `--shifts 0`
+- `--overlap 0.25`
+- `--segment 7`
+
+Pinned Demucs asset authority:
+- verifier contract `songsterr-fresh-demucs-model-asset-v2`
+- HF repo `adefossez/HTDemucs-6s`
+- pinned revision `3c5ee475be622df764938de97e4281a7b07ffa58`
+- asset upload revision `053e1404489b3dc58bf718224fac4b7316de8c93`
+- asset `5c90dfd2.safetensors`
+- asset SHA-256 `d2a1745f0744721f6b8ca5bf469b67c651ea5ed1b52998cab033b2158609d411`
+- legacy fallback is not primary
 
 Historical first model canary used Demucs `--shifts 1`; its exact 1,128-note output is historical only, not a reproducibility baseline.
 
@@ -132,8 +154,7 @@ Fixed V2 parameters:
 - DROP_FROM_ONSET_DB 18
 - MIN_FLOOR_MARGIN_DB 6
 
-Resolved V2 method: `selected-pitch-sustained-spectral-decay`
-
+Resolved V2 method: `selected-pitch-sustained-spectral-decay`.
 Do not mutate this audited V2 implementation while V3 is being evaluated.
 
 ## V3 RELEASE FALLBACK — GREEN, REPEATED, NON-AUTHORITATIVE
@@ -165,467 +186,112 @@ Fixed activation + spectral rule:
 Stable fallback evidence:
 - hosted-runner inventories have produced 1,138 or 1,139 model notes
 - 1,137 exact MIDI/start matches across historical variants
-- all 84 fallback-resolved events have remained stable in compared historical variants
+- all 84 fallback-resolved events remained stable in compared historical variants
 - historical output variation is isolated to extra/unresolved detections and activation rejection classification drift; it must never become a hardcoded acceptance count
 
-Representative 1,138-note V3 environment:
-- V2 577 resolved / 561 unresolved
-- V3 +84 fallback = 661 resolved / 477 unresolved
-- customer events 0 / delivery false
-
-Representative 1,139-note V3 environments:
-- V2 577 resolved / 562 unresolved
-- V3 +84 fallback = 661 resolved / 478 unresolved
-- customer events 0 / delivery false
-
-## READ-ONLY V3 DIAGNOSTICS — GREEN
-
-### Duration inventory
-
-Script: `scripts/songsterr-fresh/summarize_v3_unresolved_duration_evidence.py`
-Contract: `songsterr-fresh-v3-unresolved-duration-inventory-v2`
-Implementation: `7a7180fe151f6b15ff75ba7841878c9704e52adb`
-
-Green canary run `34427390493`, artifact `10133331991`.
-For the 478-unresolved historical variant:
-- 453 same-pitch-reattack-censored
-- 372 no sustained subthreshold activation
-- 76 activation candidate but insufficient fixed CQT spectral corroboration
-- 5 insufficient activation drop
-- 18 insufficient onset-to-floor contrast
-- 7 no clear sustained spectral release
-
-### Cross-run inventory comparator
-
-Script: `scripts/songsterr-fresh/compare_v3_unresolved_duration_inventories.py`
-Contract: `songsterr-fresh-v3-unresolved-duration-inventory-comparison-v1`
-Implementation: `ed6d1ea2aaa5ce5302d0d9465825ea0544cf0b96`
-
-Comparator remains descriptive-only and separates count/reason changes from continuous-statistic drift. Historical 1,138-vs-1,139 replay changes only one unresolved model event; no acceptance inference follows.
-
-### Frozen-structure reattack context
-
-Script: `scripts/songsterr-fresh/summarize_v3_reattack_structure_context.py`
-Contract: `songsterr-fresh-v3-reattack-structure-context-v1`
-Implementation: `b588a6f00d7cd2a4814ef2b0efad73265acb1c7b`
-
-Observed historical context:
-- V3 fallback-resolved next same-pitch spacing median ~1.20 beats
-- `NO_SUSTAINED_SUBTHRESHOLD_ACTIVATION` ~0.46 beats
-- `INSUFFICIENT_SPECTRAL_CORROBORATION` ~1.55 beats
-
-Interpretation boundary: rapid-repeat and insufficient-CQT mechanisms are observably different; spacing is not a release cutoff or acceptance rule.
-
-### Repeated-note + structure-slot context
-
-Script: `scripts/songsterr-fresh/summarize_v3_repeated_note_structure_context.py`
-Contract: `songsterr-fresh-v3-repeated-note-structure-context-v1`
-Implementation history: `5387e815d485b09363ea238cca65f914fed7dccf`, `62ed79ded9ff0010d94ed193828edb4dab098e76`, `cf98c06505456376e1032dd6545cd0c6a7f1ab24`
-
-Corrected green CI run `34429657211`, job `102722261026`.
-Key observation: next same-pitch spacing separates groups much more than frozen-slot alignment; structure alignment is not acceptance evidence.
-
-## INDEPENDENT REFERENCE-BLIND PITCH SUPPORT
-
-Probe: `scripts/songsterr-fresh/probe_independent_pitch_support.py`
-
-Probe is descriptive-only:
-- fixed 80 ms post-onset window
-- direct semitone CQT bins
-- local ±1/±2 semitone comparisons
-- octave ±12 comparisons
-- selected-pitch long-run 20th-percentile spectral floor
-- no acceptance threshold/sweep
-- no pitch rewrite/drop
-- no duration/sourceEnd writes
-- no reference tab/scorer/archived logic
-- no Basic Pitch activation use
-- no decoded Basic Pitch note-end use
-- no model invocation inside probe
-- no `modelValidationComplete` mutation
-
-First two canaries reproduced exactly at payload level:
-- run `34424545232`, artifact `10132278606`
-- run `34425140684`, artifact `10132507650`
-- 15/15 payload files byte-identical
-- common probe SHA `534015d01246965228bfc6988d92117861ff2bcd360b32060ec1f8a95b7e08db`
-
-Third environment sample:
-- run `34426840393`
-- job `102713775670`
-- Basic Pitch 1,139 notes
-- all prior 1,138 MIDI/start identities remain present exactly
-- common 1,138 events retain identical semitone-rank and octave-rank results
-- probe A/B byte-identical within run
-- artifact `10133134549`
-
-Reproducibility/support evidence is not transcription accuracy or ground truth and cannot clear `MODEL_EVIDENCE_VALIDATION_PENDING`.
-
-## MODEL-VALIDATION CONTRACT SCAFFOLD — FAIL-CLOSED
-
-Module: `songsterr_pipeline/modelValidationContractScaffold.mjs`
-Contract: `songsterr-fresh-model-validation-contract-scaffold` v1
-Implementation: `7f8b88c4421ad3465fd1aa532d629fa1e27772ab`
-
-Hard properties:
-- `ownsAcceptanceDecision: false`
-- `externalValidationAuthorityDefined: false`
-- `diagnosticEvidenceCanClearValidation: false`
-- `mutatesModelValidationComplete: false`
-- `validation.validated: false`
-- `validation.acceptanceAuthority: null`
-- blocker fixed to `MODEL_EVIDENCE_VALIDATION_PENDING`
-- no threshold definition/sweep
-- no pitch rewrite
-- no model/process/network access
-- no reference tab
-- no archived V143 import
-
-Existing evaluator remains fail-closed and rejects model-invoked evidence unless top-level `provenance.modelValidationComplete === true`.
-
-## RHYTHM FLOATING-POINT BOUNDARY DEFECT — FIXED
-
-Fix commit: `5afab9050a96428fc61a26ffae41c66c09610e7a`
-Only generated event/rest slices <= existing module `EPSILON` are discarded. Frozen structure, pitch identity, and release evidence are not rewritten.
-
-## SPECTRAL REJECTION CONTEXT STUDY — GREEN
-
-Diagnostic: `scripts/songsterr-fresh/probe_v3_activation_spectral_rejection_context.py`
-Contract: `songsterr-fresh-v3-activation-spectral-rejection-context-v1`
-Probe commit: `b0e255dc8f1b8dfd79189647ef9d8effefa95856`
-Guard wiring: `603f8d5094ac821c8bea837fb3a254d1622a8608`
-Canary workflow commit: `4207fa86c68afa3230567d37e185e8a42b76dd68`
-
-Green full canary:
-- run `34430069785`
-- job `102723521376`
-- head `4207fa86c68afa3230567d37e185e8a42b76dd68`
-- artifact `10134306664`
-- digest `sha256:9e97f53e1ab3b0fdbdc0670a7fd3cc180f617d19244e7a732694b69f4787e7cb`
-- expires 2026-09-24T02:43:22Z
-
-Observed fixed-rule population:
-- 160 events passed the existing activation qualifications
-- 84 were fixed-rule CQT corroborated
-- 76 were `INSUFFICIENT_SPECTRAL_CORROBORATION`
-- activation-drop median: corroborated ~0.4044; insufficient ~0.3499
-- valley-activation median: corroborated ~0.1776; insufficient ~0.1751
-- selected-pitch spectral-drop median: corroborated ~11.5105 dB; insufficient ~-0.1098 dB
-- selected-pitch onset level median: corroborated ~-23.0745 dB; insufficient ~-30.6866 dB
-- selected-pitch valley level median: corroborated ~-36.2008 dB; insufficient ~-29.2576 dB
-- same-pitch-reattack-gap median: corroborated ~0.5521 s; insufficient ~0.7095 s
-- valley-to-reattack margin median: corroborated ~0.2380 s; insufficient ~0.3715 s
-- among the 76 insufficient events, 39 have negative selected-pitch spectral drop, 17 are 0–3 dB, and 20 are 3–6 dB
-- activation-drop versus spectral-drop correlation inside the insufficient group is weak (~0.13)
-
-Descriptive interpretation only:
-- activation valleys are similarly low in both groups
-- the insufficient class is not explained by obviously less time before reattack
-- after the activation valley exists, the principal observed separation is selected-pitch audio-domain CQT behavior
-- many insufficient events retain or gain selected-pitch CQT energy at the activation valley
-- this does not show that the fixed 6 dB rule is wrong and is not threshold-tuning evidence
-
-## SPECTRAL VALLEY NEIGHBORHOOD CONTEXT — GREEN
-
-Diagnostic: `scripts/songsterr-fresh/probe_v3_spectral_valley_neighborhood_context.py`
-Contract: `songsterr-fresh-v3-spectral-valley-neighborhood-context-v1`
-Implementation: `1d7ca8b0bf0fb1394f7095b661c13ae901513159`
-Guard wiring: `8e8441f5a36073089374f268cf766b797c04e553`
-Canary wiring: `eb023119a568a6113f91eb225ffa0640ee69e0fc`
-
-Green full frozen-fixture canary:
-- run `34431148700`
-- job `102726742070`
-- head `eb023119a568a6113f91eb225ffa0640ee69e0fc`
-- conclusion success
-- 1,138 duration-free model notes
-- unchanged V2: 577 resolved / 561 unresolved
-- unchanged candidate V3: 661 resolved / 477 unresolved
-- exact source-row/category parity passed for all 160 activation-qualified events
-- artifact `10134681813`
-- digest `sha256:a804f394cec3c4e1294e05ddbf340e4412dc95ef11bcfb60a0959d99cd41647d`
-- expires 2026-09-24T03:00:03Z
-
-Observed valley-neighborhood distributions:
-- corroborated selected-pitch valley level median ~-35.2853 dB
-- insufficient selected-pitch valley level median ~-28.5956 dB
-- selected MIDI is strongest among selected + ±1/±2 semitone bins in 32/84 corroborated (~38.1%) versus 45/76 insufficient (~59.2%)
-- median selected-minus-best-semitone-neighbor margin: corroborated ~-2.6623 dB; insufficient ~+1.4130 dB
-- selected MIDI is strongest among selected + available octave bins in 46/84 corroborated (~54.8%) versus 46/76 insufficient (~60.5%)
-- median selected-minus-best-compared-alternative margin: corroborated ~-5.7209 dB; insufficient ~-1.2773 dB
-- selected MIDI is stronger than every compared semitone/octave alternative in 16/84 corroborated (~19.0%) versus 29/76 insufficient (~38.2%)
-- within the 39 insufficient events with negative onset-to-valley spectral drop, 28/39 (~71.8%) still rank first among the local ±2-semitone neighborhood at the valley
-
-Descriptive interpretation only:
-- insufficient-CQT events are not primarily explained by selected-pitch energy migrating into immediately adjacent semitone bins
-- many insufficient events retain a locally dominant selected-pitch spectral component after Basic Pitch activation has already fallen into the fixed valley
-- corroborated events more often have the selected-pitch bin fall below other simultaneous local/octave spectral content by the valley
-- this supports an activation-versus-audio temporal disagreement hypothesis, not a new release rule
-
-## POST-VALLEY SPECTRAL TRAJECTORY CONTEXT — GREEN
-
-Diagnostic: `scripts/songsterr-fresh/probe_v3_post_valley_spectral_trajectory_context.py`
-Contract: `songsterr-fresh-v3-post-valley-spectral-trajectory-context-v1`
-Initial implementation: `2f10e78fe8d06871bd920b6f86dc175c3a19a8b3`
-Guard wiring: `d5928354c0fcc64be934862fe85d5d8afa0c6293`
-Dedicated canary workflow: `3aca037ae70aba4748eb37705a0652f13399fcf8`
-CQT-reference correction: `60bad8458ca846e03f433472c9b53111d1f8d6c7`
-
-Purpose:
-- observe selected-pitch CQT at fixed +50 ms, +100 ms, and +200 ms horizons after the already-observed activation valley
-- horizons are observation points only, not release delays/cutoffs
-- an observation is omitted if its 3-frame CQT window would reach the same-pitch reattack
-- no alternate release timestamp is searched for or output
-
-Hard guards:
-- descriptive-only / reference-blind
-- exact source-row category/MIDI identity preserved
-- no duration/sourceEnd writes
-- no pitch mutation
-- no model invocation inside probe
-- no decoded model end
-- no next-onset or reattack duration
-- fixed observation is not duration
-- no alternate release search/output
-- no delay threshold
-- no release-rule proposal
-- no threshold selection/sweep
-- no acceptance authority
-
-Important implementation correction:
-- the first draft used a narrower CQT range based on selected MIDI values
-- because `librosa.amplitude_to_db(..., ref=np.max)` depends on the transform-wide maximum, that range would make its dB scale not strictly comparable to the green source probe
-- this was caught before any result was accepted
-- corrected implementation uses the exact source spectral-context CQT range: MIDI 40–88, 49 bins, same harmonic preprocessing, same 512 hop, same 12 bins/octave, same global dB reference construction
-- method reports `sourceDbReferenceAligned: true`
-- pre-fix full canary run `34432148553` is superseded and must not be used as evidence even if its workflow conclusion is green
-
-Corrected lightweight guard CI:
-- run `34432234645`
-- job `102729956896`
-- head `60bad8458ca846e03f433472c9b53111d1f8d6c7`
-- conclusion success
-
-Corrected green full canary:
-- run `34432234675`
-- job `102729956943`
-- head `60bad8458ca846e03f433472c9b53111d1f8d6c7`
-- conclusion success
-- artifact `10135045827`
-- digest `sha256:dc1cebfff20dd1d8856ec2df27129ee694edda40fe12ee5178309f0a87c1c83b`
-- expires 2026-09-24T03:16:25Z
-- model note count 1,138
-- unchanged V2: 577 resolved / 561 unresolved
-- unchanged candidate V3: 661 resolved / 477 unresolved
-
-Observed fixed-horizon coverage and within-row valley-to-observation change:
-
-Corroborated, 84 total:
-- +50 ms available 79/84; median `valleyMinusObservedDb` ~-0.6185 dB; 37/79 fell further, 42/79 rose relative to valley
-- +100 ms available 68/84; median ~-1.5236 dB; 28/68 fell further, 40/68 rose
-- +200 ms available 42/84; median ~-6.0886 dB; 13/42 fell further, 29/42 rose
-
-Insufficient spectral corroboration, 76 total:
-- +50 ms available 74/76; median `valleyMinusObservedDb` ~+3.6448 dB; 53/74 fell further, 21/74 rose relative to valley
-- +100 ms available 69/76; median ~+3.6122 dB; 53/69 fell further, 16/69 rose
-- +200 ms available 58/76; median ~+6.7710 dB; 45/58 fell further, 13/58 rose
-
-Paired same-event subset with a full +200 ms pre-reattack observation window:
-- corroborated 42 events: median ~-0.7969 dB at +50 ms, ~-1.8218 dB at +100 ms, ~-6.0886 dB at +200 ms
-- insufficient 58 events: median ~+3.8207 dB at +50 ms, ~+5.1212 dB at +100 ms, ~+6.7710 dB at +200 ms
-
-Descriptive interpretation only:
-- the insufficient-CQT class commonly continues losing selected-pitch acoustic energy after Basic Pitch activation has already entered the fixed low valley
-- the corroborated class has already reached a substantially lower selected-pitch CQT state at the valley and often rebounds afterward
-- this strengthens an activation-versus-audio temporal disagreement hypothesis on this fixture
-- it does not establish a correct release timestamp, fixed delay, new cutoff, changed 6 dB threshold, transcription correctness, or promotion evidence
-- fixed +50/+100/+200 ms horizons must not be repurposed as release candidates
-
-## POST-VALLEY STFT HARMONIC CROSS-CHECK — GREEN
-
-Diagnostic: `scripts/songsterr-fresh/probe_v3_post_valley_stft_harmonic_context.py`
-Contract: `songsterr-fresh-v3-post-valley-stft-harmonic-context-v1`
-Initial implementation: `a3604388d2ea9fc9bd956919bb69f9638125586e`
-Initial guard wiring: `f7ceefc197710cd27c9c7d926b1a5dc29a3446dc`
-Dedicated canary workflow: `837663db094449ab3601745eac93b820d5590ad5`
-Observation-start correction: `3e980a8617a1134dabbf9bf545af63a240162130`
-
-Purpose and fixed representation:
-- independent audio-domain cross-check of the already-observed activation valley and the same fixed +50/+100/+200 ms horizons
-- raw isolated-guitar waveform STFT, not CQT
-- `n_fft=2048`, hop 512, Hann window, `center=False`
-- fixed harmonic-comb power from nearest FFT bins for harmonics 1–4 below Nyquist
-- no release search or alternate release timestamp
-
-Important timing correction:
-- initial STFT draft mapped fixed observation time to `floor(time * sr / hop)`, which with `center=False` could begin the first STFT frame slightly before the requested valley/horizon
-- corrected implementation uses `ceil(...)`, records requested and actual observation start, and requires each window to begin at or after the fixed observation time
-- first full STFT canary run `34433053082` is superseded and must not be used as evidence
-
-Corrected lightweight guard CI:
-- run `34433150144`
-- job `102732687141`
-- head `3e980a8617a1134dabbf9bf545af63a240162130`
-- conclusion success
-
-Corrected green full canary:
-- run `34433150157`
-- job `102732687059`
-- head `3e980a8617a1134dabbf9bf545af63a240162130`
-- conclusion success
-- artifact `10135364820`
-- digest `sha256:e6401de502cc6159621274a0a5fd39dd9c321d6451f445d07a49cd85cda570c7`
-- expires 2026-09-24T03:30:48Z
-- model note count 1,139
-- source population 84 corroborated / 76 insufficient
-
-Observed STFT valley-to-fixed-horizon change (`valleyMinusObservedDb`; positive means less harmonic power than at the valley):
-
-Corroborated, 84 total:
-- +50 ms available 72/84; median ~-1.0836 dB; 28/72 fell further and 44/72 rose
-- +100 ms available 55/84; median ~-2.1594 dB; 18/55 fell further and 37/55 rose
-- +200 ms available 34/84; median ~-0.2511 dB; 17/34 fell further and 17/34 rose
-
-Insufficient spectral corroboration, 76 total:
-- +50 ms available 69/76; median ~-0.2853 dB; 34/69 fell further and 35/69 rose
-- +100 ms available 63/76; median ~+0.4396 dB; 35/63 fell further and 28/63 rose
-- +200 ms available 53/76; median ~+1.8762 dB; 32/53 fell further and 21/53 rose
-
-Descriptive interpretation only:
-- STFT gives weaker separation than selected-bin CQT and does not support treating +50 ms as a universal delayed-decay point
-- at +100 and +200 ms, the insufficient group shows modest median continued harmonic-power decay while the corroborated group is median rebound/roughly flat
-- event-wise CQT/STFT direction agreement is only moderate, so the two representations are not interchangeable
-- no fixed horizon, CQT threshold, STFT power change, or representation agreement may be promoted into a duration rule from this fixture
-
-## SAME-RUN CQT ↔ STFT REPRESENTATION COMPARISON — GREEN
-
-Comparator: `scripts/songsterr-fresh/compare_v3_post_valley_representations.py`
-Contract: `songsterr-fresh-v3-post-valley-representation-comparison-v1`
-Implementation: `e277516b181bf87dc88cc8700f882437306962ff`
-Guard wiring: `1b1069997133ac0600c04bc38f013ab4469939b6`
-Full same-run canary wiring: `9f8ed40cd5fdbbecd3ea822c22ac404ea1d5a9c8`
-
-Comparator boundaries:
-- pure JSON; invokes no DSP and no model
-- requires identical same-run audio SHA, source-context SHA, structure identity, note-inference identity and inference-bundle identity
-- requires exact row order/identity tuple `(onsetId, category, MIDI, sourceStartSeconds, observedValleySeconds, samePitchReattackSeconds)`
-- statistics use only horizons available in both representations
-- reports CQT/STFT delta distributions, Pearson correlation, and direction combinations
-- defines no agreement threshold
-- no duration/sourceEnd write
-- no pitch rewrite
-- no release search or release timestamp
-- no threshold selection/sweep
-- no acceptance authority
-
-Lightweight guard:
-- run `34433942345`
-- job `102735025896`
-- head `1b1069997133ac0600c04bc38f013ab4469939b6`
-- conclusion success
-- all prior diagnostic guards remain green
-
-Green controlled full canary:
-- run `34434013368`
-- job `102735243846`
-- head `9f8ed40cd5fdbbecd3ea822c22ac404ea1d5a9c8`
-- conclusion success
-- exact fixture, pinned stack, frozen structure, fixed-setting Demucs/model asset, one duration-free Basic Pitch inference/binding, unchanged V2/V3, spectral context, corrected CQT, corrected STFT, comparator, parity assertions, three self-tests and artifact upload all passed
-- artifact `10135685374`
-- digest `sha256:3c46d3a1d13e0f946443ea0a990eb422b91c659e5779d2a14a09effc99c946d4`
-- expires 2026-09-24T03:45:38Z
-- model note count 1,139
-- unchanged V2: 577 resolved / 562 unresolved
-- unchanged candidate V3: 661 resolved / 478 unresolved
-- activation-qualified comparison population this environment: 159 = 84 corroborated + 75 insufficient
-
-Same-run paired representation results:
-
-Corroborated:
-- +50 ms: 72 paired; CQT median ~+0.1691 dB, STFT median ~-1.0836 dB, Pearson ~0.1133, direction agreement ~52.78%; direction counts 15 both-decay / 23 both-rise / 21 CQT-decay-STFT-rise / 13 CQT-rise-STFT-decay
-- +100 ms: 55 paired; CQT median ~-1.4867 dB, STFT median ~-2.1594 dB, Pearson ~0.2257, direction agreement ~52.73%; direction counts 8 / 21 / 16 / 10
-- +200 ms: 34 paired; CQT median ~-5.4341 dB, STFT median ~-0.2512 dB, Pearson ~0.1389, direction agreement ~52.94%; direction counts 6 / 12 / 5 / 11
-
-Insufficient spectral corroboration:
-- +50 ms: 69 paired; CQT median ~+3.6670 dB, STFT median ~-0.2853 dB, Pearson ~0.2262, direction agreement ~56.52%; direction counts 27 both-decay / 12 both-rise / 23 CQT-decay-STFT-rise / 7 CQT-rise-STFT-decay
-- +100 ms: 63 paired; CQT median ~+4.7532 dB, STFT median ~+0.4396 dB, Pearson ~0.2717, direction agreement ~60.32%; direction counts 31 / 7 / 21 / 4
-- +200 ms: 53 paired; CQT median ~+6.8407 dB, STFT median ~+1.8761 dB, Pearson ~0.3119, direction agreement ~62.26%; direction counts 27 / 6 / 15 / 5
-
-Descriptive interpretation only:
-- same-run control removes cross-run stem/environment mismatch from the CQT-versus-STFT comparison
-- correlation remains low in both groups, so the representations measure materially different local behavior and cannot substitute for each other
-- insufficient events show somewhat more directional agreement at later horizons than corroborated events, and both representations have positive median decay by +100/+200 ms there
-- substantial disagreement remains, especially at +50 ms and in the corroborated class
-- this is compatible with delayed acoustic decay after the activation valley for part of the insufficient population, but it does not define a physical release time or a representation-consensus rule
-- no correlation, agreement rate, direction combination, or horizon may become a duration or acceptance threshold from this fixture
-
-## DEMUCS HOSTED-RUNNER BYTE-REPRODUCIBILITY — OPEN ISSUE
-
-Newly observed during representation work:
-- exact separation-input SHA is stable across the compared canaries: `e03e1885185f4983b3eeaa66f36510b7709d607c14010f964e0aad427ecc474a`
-- pinned Demucs model identity/settings are unchanged
-- nevertheless, isolated guitar WAV SHA-256 differs across hosted runs:
-  - corrected CQT canary `34432234675`: `4227a41f58817d32e9e122857c924c486afdc1e411a0a173bec2dfcc0c7b6b81`
-  - corrected STFT canary `34433150157`: `c303f0a0d99f94e2bddedebd0679cc5034aa9505c350cc28a5200d4c419637af`
-  - controlled same-run comparator canary `34434013368`: `5b3e7c6feb153ba427303d5f2688cf3442faa74bb4e98ce298ac426824c8db33`
-- therefore previous wording such as “deterministic Demucs separation” means fixed deterministic configuration/model identity within the pipeline, not demonstrated byte-identical cross-run output
-- cross-run CQT/STFT comparison is not authoritative for representation agreement; the new same-run comparator is the controlled evidence source
-
-Observed downstream classification drift associated with hosted-run variation:
-- corrected STFT run had activation-qualified population 160 = 84 corroborated + 76 insufficient and 372 `NO_SUSTAINED_SUBTHRESHOLD_ACTIVATION`
-- controlled same-run comparator environment has 159 = 84 corroborated + 75 insufficient and 373 `NO_SUSTAINED_SUBTHRESHOLD_ACTIVATION`
-- exact MIDI 64 / source start ~113.071807709751 s was `INSUFFICIENT_SPECTRAL_CORROBORATION` in the earlier STFT environment but became `NO_SUSTAINED_SUBTHRESHOLD_ACTIVATION` in the controlled comparator environment
-- the fallback-resolved count remains 84; this one-event shift is inside unresolved fallback rejection classification
-- Basic Pitch index `onsetId` also shifts (`...000665` vs `...000664`), reinforcing that cross-run identity must use stable content identity such as exact MIDI/start rather than raw sequential index alone
+Representative outputs:
+- 1,138-note environment: V2 577/561; V3 +84 => 661/477
+- 1,139-note environment: V2 577/562; V3 +84 => 661/478
+- customer events 0 / delivery false in both
+
+## IMPORTANT REFERENCE-BLIND DIAGNOSTIC HISTORY
+
+These diagnostics are descriptive only and cannot clear model validation or define a release threshold.
+
+- V3 unresolved inventory: run `34427390493`, artifact `10133331991`.
+- Frozen reattack/structure context: corrected run `34429657211`, job `102722261026`; spacing separated groups more than structure-slot alignment, but spacing is not a release cutoff.
+- Independent pitch support: runs `34424545232`, `34425140684`, and `34426840393`; common historical events retained semitone/octave rank support across model-count variants, but self-consistency is not ground truth.
+- Model-validation scaffold remains fail-closed: `songsterr_pipeline/modelValidationContractScaffold.mjs`, implementation `7f8b88c4421ad3465fd1aa532d629fa1e27772ab`.
+- Spectral rejection context: green run `34430069785`, artifact `10134306664`; 84 corroborated / 76 insufficient in that environment; activation valley alone did not explain CQT rejection.
+- Corrected CQT post-valley trajectory: run `34432234675`, artifact `10135045827`, digest `sha256:dc1cebfff20dd1d8856ec2df27129ee694edda40fe12ee5178309f0a87c1c83b`; 1,138 model notes; V2 577/561; V3 661/477.
+- Corrected STFT cross-check: run `34433150157`, artifact `10135364820`, digest `sha256:e6401de502cc6159621274a0a5fd39dd9c321d6451f445d07a49cd85cda570c7`; 1,139 model notes; source population 84 corroborated / 76 insufficient.
+- Controlled same-run CQT↔STFT comparator: run `34434013368`, artifact `10135685374`, digest `sha256:3c46d3a1d13e0f946443ea0a990eb422b91c659e5779d2a14a09effc99c946d4`; 1,139 model notes; V2 577/562; V3 661/478; same-run population 84 corroborated / 75 insufficient. Representation correlation remained low, so CQT/STFT are not substitutes and no consensus duration rule follows.
+
+## DEMUCS HOSTED-RUNNER BYTE-REPRODUCIBILITY — CROSS-RUN ISSUE REMAINS OPEN
+
+Observed with the same decoded separation-input SHA and fixed Demucs model/settings:
+- corrected CQT canary `34432234675`: guitar WAV SHA `4227a41f58817d32e9e122857c924c486afdc1e411a0a173bec2dfcc0c7b6b81`
+- corrected STFT canary `34433150157`: guitar WAV SHA `c303f0a0d99f94e2bddedebd0679cc5034aa9505c350cc28a5200d4c419637af`
+- controlled same-run representation canary `34434013368`: guitar WAV SHA `5b3e7c6feb153ba427303d5f2688cf3442faa74bb4e98ce298ac426824c8db33`
+
+Observed downstream drift associated with those hosted-run differences:
+- model-note inventories varied 1,138/1,139
+- one exact MIDI 64 event at source start ~113.071807709751 s shifted unresolved fallback rejection class across historical environments
+- raw sequential Basic Pitch `onsetId` shifted with the inventory; therefore it is not a valid cross-run identity by itself
+- the V3 fallback-resolved count remained 84
 
 Interpretation boundary:
-- this is a reproducibility engineering issue, not evidence that either hosted-run stem is more correct
-- do not choose a “preferred” stem by downstream agreement on this fixture
-- do not tune Demucs/Basic Pitch/release thresholds to force the historical 160-row inventory
-- characterize/stabilize upstream reproducibility before relying on cross-run continuous DSP statistics
+- this is a reproducibility engineering issue, not evidence that any hosted-run stem is more correct
+- do not select a preferred stem by downstream agreement
+- do not tune Demucs, Basic Pitch, CQT/STFT, or release thresholds to reproduce a historical inventory
+- cross-run continuous DSP comparison remains non-authoritative until the environment boundary is characterized
 
-## DEMUCS SAME-RUN REPRODUCIBILITY DIAGNOSTIC — IN FLIGHT
+## DEMUCS SAME-RUN REPRODUCIBILITY DIAGNOSTIC — GREEN
 
 Comparator: `scripts/songsterr-fresh/compare_demucs_stem_reproducibility.py`
+Contract: `songsterr-fresh-demucs-stem-reproducibility-comparison-v1`
 Comparator implementation: `1cdd62040e4c196748f8eeecf2f97c43ec5f9e32`
 Diagnostic guard wiring: `11560137c512128cd1eb108aad77ceb24c531f8a`
 Pinned lightweight dependency repair: `e4d6a732a1b8419408a52599ac32458e053a488b`
 Full reproducibility workflow wiring: `b0b8595a28304df64bc5804e8ce472428652e3f4`
 Workflow: `.github/workflows/songsterr-fresh-demucs-reproducibility-canary.yml`
 
-Comparator boundaries:
-- reference-blind and diagnostic-only
-- compares two stems from the same verified separation input and fixed Demucs settings/model asset
-- reports file SHA, decoded PCM SHA, exact sample equality, differing sample count/fraction, MAE, RMSE, max absolute error and SNR when applicable
-- records runtime/CPU/Torch/package provenance
-- cannot select a preferred stem
-- cannot mutate notes, pitch identity, duration, sourceEnd, release evidence or acceptance state
-- no Basic Pitch invocation and no V2/V3 release invocation in this reproducibility workflow
-- no threshold sweep or downstream-agreement optimization
-
-Lightweight guard history:
-- initial run `34434904088` failed only because the lightweight environment did not yet install NumPy/SoundFile required by the comparator self-test; all prior diagnostics were green
-- self-test was not weakened or skipped
-- repaired run `34434994210`, job `102738092282`, head `e4d6a732a1b8419408a52599ac32458e053a488b`, completed green
-- all prior diagnostic guards and the Demucs comparator self-test passed
-
-Authoritative full reproducibility canary at handoff:
+Authoritative full canary:
 - run `34435154554`
 - job `102738562141`
 - head `b0b8595a28304df64bc5804e8ce472428652e3f4`
-- status at 2026-09-09 23:58 America/Toronto: **IN PROGRESS**
-- exact authorized fixture fetch/hash: passed
-- decoded separation-input SHA enforcement: passed; expected `e03e1885185f4983b3eeaa66f36510b7709d607c14010f964e0aad427ecc474a`
-- pinned separation dependency installation: passed
-- runtime provenance recording: passed
-- fixed Demucs pass A: in progress at last check
-- pass B, numeric comparator, diagnostic-boundary assertions, self-test and artifact upload had not yet run
-- no artifact existed at the last check
+- conclusion: **success**
+- completed `2026-09-10T04:03:06Z`
+- artifact `10136054300`
+- artifact digest `sha256:a694ecb4da7ec5f34cbaf9e61833871f81b806ec87b93b18f9392a9cece97a51`
+- artifact expires `2026-09-24T04:03:03Z`
 
-Fresh-chat interpretation boundary:
-- do not infer same-run determinism from the run until pass A + pass B + comparator + artifact complete
-- if A/B hashes differ, that is diagnostic evidence to quantify, not a reason to choose one output
-- if A/B are byte-identical inside one runner while historical hosted runs differ, investigate/characterize the cross-run runtime/CPU/environment boundary before any more duration-rule research
+Verified same-job result:
+- decoded separation input SHA: `e03e1885185f4983b3eeaa66f36510b7709d607c14010f964e0aad427ecc474a`
+- pass A WAV SHA: `4227a41f58817d32e9e122857c924c486afdc1e411a0a173bec2dfcc0c7b6b81`
+- pass B WAV SHA: `4227a41f58817d32e9e122857c924c486afdc1e411a0a173bec2dfcc0c7b6b81`
+- pass A PCM SHA: `cf07e142fccf92329e69744a2c2fa886d7d7cdccce0b57763fe8d3ea8d984ba2`
+- pass B PCM SHA: `cf07e142fccf92329e69744a2c2fa886d7d7cdccce0b57763fe8d3ea8d984ba2`
+- file bytes identical: true
+- decoded PCM bytes identical: true
+- exact sample equality: true
+- differing PCM values: 0 / 18,581,504 = 0.0
+- MAE: 0.0
+- RMSE: 0.0
+- max absolute difference: 0.0
+- SNR relative to A: null because error RMS is exactly zero
+- reference stem RMS: `0.05302134928309948`
+- sample rate: 44,100 Hz
+- shape: 9,290,752 frames × 2 channels
+
+Runtime provenance for this green same-job canary:
+- CPU: `AMD EPYC 7763 64-Core Processor`
+- GitHub runner image: `ubuntu-24.04`, image version `20260907.300.1`
+- hosted compute provisioner version `20260828.587`, Azure region `eastus`
+- OS reported by job: Ubuntu 24.04.5 LTS
+- kernel/platform: `Linux-6.17.0-1022-azure-x86_64-with-glibc2.39`
+- Python 3.10.21
+- FFmpeg 6.1.1-3ubuntu5
+- Torch runtime `2.14.0+cu130`
+- Torch CPU capability AVX2; MKL/MKLDNN/OpenMP available
+- Torch intra-op threads 1; inter-op threads 4
+- CUDA unavailable
+- fixed OMP/MKL/OpenBLAS/NumExpr thread environment = 1; PYTHONHASHSEED=0
+- pinned Demucs asset verification passed exactly
+
+Comparator boundaries remain intact:
+- reference-blind and diagnostic-only
+- cannot select a preferred stem
+- cannot mutate notes, pitch identity, duration, sourceEnd, release evidence, or acceptance state
+- no Basic Pitch invocation and no V2/V3 release invocation in this workflow
+- no threshold selection/sweep or downstream-agreement optimization
+
+Authoritative interpretation:
+- **Demucs is byte/PCM deterministic for two repeated passes inside this one runner/runtime.**
+- This does **not** establish byte-identical output across independent hosted runners/environments.
+- The current pass A/B SHA equals the historical corrected-CQT stem SHA `4227a41f...`, while other historical hosted runs produced `c303f0a0...` and `5b3e7c6f...`.
+- Therefore the next problem is specifically the independent-run runner/CPU/runtime boundary, not within-process/pass nondeterminism.
+- No duration-rule research should resume until that boundary is characterized enough to know what upstream variation is being consumed.
 
 ## CURRENT ACCEPTANCE STATE
 
@@ -648,18 +314,16 @@ No same-pitch reattack default duration.
 No threshold sweep.
 No acceptance promotion from self-consistency alone.
 
-## NEXT ENGINEERING STEPS — FRESH CHAT HANDOFF
+## NEXT ENGINEERING STEPS
 
-1. **Start by checking run `34435154554`, job `102738562141`; do not launch a new experiment first.** It is the authoritative same-run Demucs reproducibility canary at head `b0b8595a28304df64bc5804e8ce472428652e3f4`.
-2. If that run completes green, fetch its workflow artifact, download/extract it, and inspect the Demucs reproducibility comparison plus runtime/model provenance. Record the artifact ID, digest, expiration, pass-A SHA, pass-B SHA, decoded PCM equality, differing-sample count/fraction, MAE, RMSE, max absolute error and SNR.
-3. Immediately update this checkpoint from **IN FLIGHT** to **GREEN** with the measured result. Do not summarize an unfinished run as evidence.
-4. If the run fails, inspect the exact failing step/log before changing anything. Do not blindly rerun and do not weaken the diagnostic-only comparator/guards merely to make CI green. Fix only a demonstrated workflow/comparator defect, then rerun the corrected version and mark any superseded run explicitly.
-5. Do **not** resume duration-rule research until the Demucs same-run reproducibility result is understood. In particular, do not create another release delay/cutoff, representation-consensus rule, or threshold experiment while this upstream reproducibility issue is open.
-6. If duplicate Demucs outputs are byte/PCM identical within one runner but differ across hosted runs, characterize the runner/environment boundary next. Compare recorded CPU model, runner image, Torch/runtime metadata and other fixed provenance; do not choose a preferred stem by downstream transcription agreement.
-7. If duplicate outputs differ even within one runner, quantify the numeric drift first and isolate likely nondeterministic CPU/runtime behavior with narrowly controlled diagnostics. Do not tune Demucs, Basic Pitch, CQT/STFT or release thresholds around the drift.
-8. Keep cross-run event identity based on stable content identity (`MIDI` + exact source start and bound inference identities where applicable), never raw sequential Basic Pitch index alone.
-9. Keep V2 authoritative and V3 candidate-only. Preserve `MODEL_EVIDENCE_VALIDATION_PENDING`, `DURATION_EVIDENCE_INCOMPLETE`, `modelValidationComplete: false`, and customer eligibility 0 unless genuinely independent evidence later clears them through an explicitly designed authority.
-10. Do not use reference tabs/scorers, decoded Basic Pitch note end as duration, generic next onset as duration, same-pitch reattack as default duration, optimizer/threshold sweeps, or archived V143/Gomyway logic.
-11. Keep this checkpoint updated immediately after every authoritative canary result or material change so the next fresh chat can resume from this file alone.
+1. Treat run `34435154554` as the authoritative same-run reproducibility result: two Demucs passes are byte/PCM identical on one AMD EPYC 7763 hosted runner.
+2. Characterize the **cross-run** hosted-environment boundary next. Start with the known differing-stem runs `34432234675`, `34433150157`, and `34434013368`: compare runner image version/provisioner/OS/kernel where logs expose them. Do not infer CPU model when an older workflow did not record it.
+3. If historical logs are insufficient to isolate the boundary, create one narrow reference-blind Demucs provenance canary that runs the exact verified input + pinned asset + fixed Demucs settings on multiple independent hosted jobs/runners and records CPU model, `lscpu`, runner image, kernel, Torch build/runtime, package versions, file SHA, and decoded PCM SHA. It must not invoke Basic Pitch, V2, V3, or any scorer.
+4. Cross-run provenance diagnostics must define no preferred stem, acceptance threshold, duration rule, threshold sweep, or downstream-agreement objective.
+5. Do not resume duration-rule research until the upstream Demucs cross-run variation is characterized. Do not create another release delay/cutoff, representation-consensus rule, or threshold experiment while this issue remains open.
+6. Keep cross-run event identity based on stable content identity (`MIDI` + exact source start and bound inference identities where applicable), never raw sequential Basic Pitch index alone.
+7. Keep V2 authoritative and V3 candidate-only. Preserve `MODEL_EVIDENCE_VALIDATION_PENDING`, `DURATION_EVIDENCE_INCOMPLETE`, `modelValidationComplete: false`, and customer eligibility 0 unless genuinely independent evidence later clears them through an explicitly designed authority.
+8. Do not use reference tabs/scorers, decoded Basic Pitch note end as duration, generic next onset as duration, same-pitch reattack as default duration, optimizer/threshold sweeps, or archived V143/Gomyway logic.
+9. Update this checkpoint immediately after each authoritative cross-run provenance result or material engineering change.
 
 The archived V143/Gomyway pipeline remains out of scope.
