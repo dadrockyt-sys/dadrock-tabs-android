@@ -398,7 +398,7 @@ Important implementation correction:
 - because `librosa.amplitude_to_db(..., ref=np.max)` depends on the transform-wide maximum, that range would make its dB scale not strictly comparable to the green source probe
 - this was caught before any result was accepted
 - corrected implementation uses the exact source spectral-context CQT range: MIDI 40–88, 49 bins, same harmonic preprocessing, same 512 hop, same 12 bins/octave, same global dB reference construction
-- method now reports `sourceDbReferenceAligned: true`
+- method reports `sourceDbReferenceAligned: true`
 - pre-fix full canary run `34432148553` is superseded and must not be used as evidence even if its workflow conclusion is green
 
 Corrected lightweight guard CI:
@@ -461,6 +461,95 @@ Descriptive interpretation only:
 - it does not establish a correct release timestamp, a fixed delay, a new cutoff, a changed 6 dB threshold, transcription correctness, or promotion evidence
 - fixed +50/+100/+200 ms horizons must not be repurposed as release candidates
 
+## POST-VALLEY STFT HARMONIC CROSS-CHECK — GREEN
+
+Diagnostic: `scripts/songsterr-fresh/probe_v3_post_valley_stft_harmonic_context.py`
+Contract: `songsterr-fresh-v3-post-valley-stft-harmonic-context-v1`
+Initial implementation: `a3604388d2ea9fc9bd956919bb69f9638125586e`
+Initial guard wiring: `f7ceefc197710cd27c9c7d926b1a5dc29a3446dc`
+Dedicated canary workflow: `837663db094449ab3601745eac93b820d5590ad5`
+Observation-start correction: `3e980a8617a1134dabbf9bf545af63a240162130`
+
+Purpose and fixed representation:
+- independent audio-domain cross-check of the already-observed activation valley and the same fixed +50/+100/+200 ms horizons
+- raw isolated-guitar waveform STFT, not CQT
+- `n_fft=2048`, hop 512, Hann window, `center=False`
+- fixed harmonic-comb power from nearest FFT bins for harmonics 1–4 below Nyquist
+- `10*log10(mean(sum(selected harmonic-bin power)))`
+- no Basic Pitch activation values are used by the STFT measurement itself
+- no release search or alternate release timestamp
+
+Hard guards:
+- descriptive-only / reference-blind
+- consumes the existing spectral-rejection context only for fixed identities/category/valley/reattack boundary
+- exact isolated-stem SHA must match source context
+- no duration/sourceEnd writes
+- no pitch mutation
+- no model invocation inside probe
+- no decoded model end
+- no next-onset or same-pitch-reattack duration
+- fixed observations are not duration
+- no alternate release search/output
+- no delay or acceptance threshold
+- no release-rule proposal
+- no threshold selection/sweep
+- no acceptance authority
+
+Important timing correction:
+- initial STFT draft mapped fixed observation time to `floor(time * sr / hop)`, which with `center=False` could begin the first STFT frame slightly before the requested valley/horizon
+- this was caught before any STFT result was accepted
+- corrected implementation uses `ceil(...)`, records requested and actual observation start, and requires each window to begin at or after the fixed observation time
+- first full STFT canary run `34433053082` is superseded and must not be used as evidence
+
+Corrected lightweight guard CI:
+- run `34433150144`
+- job `102732687141`
+- head `3e980a8617a1134dabbf9bf545af63a240162130`
+- conclusion success
+- all prior diagnostic compile/self-tests remain green
+
+Corrected green full canary:
+- run `34433150157`
+- job `102732687059`
+- head `3e980a8617a1134dabbf9bf545af63a240162130`
+- conclusion success
+- exact authorized fixture, frozen structure, deterministic Demucs/model asset, duration-free Basic Pitch binding, unchanged V2/V3, green spectral context, corrected STFT measurement, parity guards, self-test and artifact upload all passed
+- artifact `10135364820`
+- digest `sha256:e6401de502cc6159621274a0a5fd39dd9c321d6451f445d07a49cd85cda570c7`
+- expires 2026-09-24T03:30:48Z
+- model note count 1,139
+- source population remained exactly 84 corroborated / 76 insufficient
+- all 160 source-row identities/categories were preserved within the run
+
+Observed STFT valley-to-fixed-horizon change (`valleyMinusObservedDb`; positive means less harmonic power than at the valley):
+
+Corroborated, 84 total:
+- +50 ms available 72/84; median ~-1.0836 dB; 28/72 fell further and 44/72 rose
+- +100 ms available 55/84; median ~-2.1594 dB; 18/55 fell further and 37/55 rose
+- +200 ms available 34/84; median ~-0.2511 dB; 17/34 fell further and 17/34 rose
+
+Insufficient spectral corroboration, 76 total:
+- +50 ms available 69/76; median ~-0.2853 dB; 34/69 fell further and 35/69 rose
+- +100 ms available 63/76; median ~+0.4396 dB; 35/63 fell further and 28/63 rose
+- +200 ms available 53/76; median ~+1.8762 dB; 32/53 fell further and 21/53 rose
+
+Same-event subset with full +200 ms STFT coverage:
+- corroborated 34: median ~-1.2590 dB at +50 ms, ~-1.3822 dB at +100 ms, ~-0.2511 dB at +200 ms
+- insufficient 53: median ~-0.2853 dB at +50 ms, ~+0.4396 dB at +100 ms, ~+1.8762 dB at +200 ms
+
+Cross-environment identity check against the corrected CQT trajectory artifact:
+- Basic Pitch index-based `onsetId` strings can shift when the hosted environment emits 1,138 versus 1,139 total notes, so raw IDs are not used as a cross-run identity authority
+- exact `(selected MIDI, sourceStartSeconds)` matching recovers all 160/160 activation-qualified events between the CQT and STFT runs
+- all 160/160 retain the same corroborated/insufficient category under that exact MIDI/start join
+- this is reproducibility/context evidence only, not ground truth
+
+Descriptive interpretation only:
+- STFT gives weaker separation than selected-bin CQT and does not support treating +50 ms as a universal delayed-decay point
+- at +100 and +200 ms, the insufficient group shows modest median continued harmonic-power decay while the corroborated group is median rebound/roughly flat
+- event-wise CQT/STFT direction agreement is only moderate, so the two representations are not interchangeable
+- the independent late-horizon tendency is compatible with the activation-versus-audio temporal disagreement hypothesis, but it does not prove a common physical release timestamp
+- no fixed horizon, CQT threshold, STFT power change, or representation agreement may be promoted into a duration rule from this fixture
+
 ## CURRENT ACCEPTANCE STATE
 
 Do **not** set `modelValidationComplete: true`.
@@ -484,10 +573,10 @@ No acceptance promotion from self-consistency alone.
 
 ## NEXT ENGINEERING STEPS — FRESH CHAT HANDOFF
 
-1. Treat the post-valley CQT study as complete and descriptive. Do not convert +50/+100/+200 ms into a release delay or cutoff.
-2. The next useful duration-side question is whether the delayed-decay pattern is specific to selected-bin CQT representation or is also visible in an independent audio-domain representation at the same already-fixed observation horizons. If studied, use a fixed representation and the same exact 160 identities; do not search for a release timestamp.
-3. A suitable next read-only cross-check is fixed-band STFT/harmonic energy around the selected pitch at the already-observed valley and the same +50/+100/+200 ms horizons. It must be descriptive-only, reference-blind, and unable to write duration or choose thresholds.
-4. Do not tune the 6 dB, activation, or time-delay thresholds on this fixture. No optimizer sweep.
+1. Treat both post-valley CQT and corrected STFT harmonic studies as complete and descriptive. Do not convert +50/+100/+200 ms into a release delay or cutoff.
+2. The next useful diagnostic is a same-run, read-only CQT-versus-STFT trajectory comparator so both representations use one identical Basic Pitch environment, the same 160 source identities, and the same fixed valley/horizon timestamps. It must report agreement/correlation only and must not choose a threshold or release rule.
+3. Any same-run representation comparator must key exact source identity robustly and keep Basic Pitch index IDs diagnostic-only; no cross-run index-ID assumption.
+4. Do not tune the 6 dB, activation, STFT, or time-delay thresholds on this fixture. No optimizer sweep.
 5. Keep rapid-repeat (`NO_SUSTAINED_SUBTHRESHOLD_ACTIVATION`) separate from insufficient-CQT mechanisms.
 6. Keep all diagnostic CI guards. Future changes must reject altered no-mutation/no-model/no-threshold/no-release-search properties.
 7. Keep V2 authoritative and V3 candidate-only. Any future V3 promotion must be an explicit documented branch decision with V2 preserved for regression comparison.
