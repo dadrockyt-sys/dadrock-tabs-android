@@ -7,7 +7,8 @@ on:
       - songsterr-fresh-pipeline-v1
     paths:
       - '.github/workflows/songsterr-fresh-demucs-common-avx2-cross-host-canary.yml'
-      - 'scripts/songsterr-fresh/record_demucs_cross_run_provenance.py'
+      - 'scripts/songsterr-fresh/record_demucs_common_avx2_provenance.py'
+      - 'scripts/songsterr-fresh/compare_demucs_common_avx2_cross_host.py'
       - 'scripts/songsterr-fresh/verify_demucs_model_asset.py'
 
 permissions:
@@ -43,7 +44,7 @@ jobs:
         shell: bash
         run: |
           set -euo pipefail
-          BASE="/tmp/songsterr-fresh-common-avx2-${{ matrix.sample }}"
+          BASE="/tmp/songsterr-fresh-demucs-common-avx2-${{ matrix.sample }}"
           mkdir -p "$BASE"
           curl --fail --location --silent --show-error --retry 3 \
             'https://raw.githubusercontent.com/dadrockyt-sys/dadrock-tabs-android/main/public/jimmy-paige-midterm-v1/gomyway-midterm-source.m4a' \
@@ -72,84 +73,45 @@ jobs:
             demucs==4.1.0 \
             soundfile==0.13.1
 
-      - name: Record native host before applying common dispatch contract
-        id: host
+      - name: Capture native host before caps
+        id: native
         shell: bash
         run: |
           set -euo pipefail
-          BASE="/tmp/songsterr-fresh-common-avx2-${{ matrix.sample }}"
           CPU_MODEL="$(awk -F: '/^model name/{gsub(/^[ \t]+|[ \t]+$/, "", $2); print $2; exit}' /proc/cpuinfo)"
+          CPU_VENDOR_RAW="$(lscpu | awk -F: '/^Vendor ID:/{gsub(/^[ \t]+|[ \t]+$/, "", $2); print $2; exit}')"
+          case "$CPU_VENDOR_RAW" in
+            GenuineIntel) CPU_VENDOR='Intel' ;;
+            AuthenticAMD) CPU_VENDOR='AMD' ;;
+            *) CPU_VENDOR="$CPU_VENDOR_RAW" ;;
+          esac
           NATIVE_CAP="$(python - <<'PY'
           import torch
           print(torch.backends.cpu.get_cpu_capability())
           PY
           )"
+          REGION="$(curl -fsS --max-time 2 -H Metadata:true \
+            'http://169.254.169.254/metadata/instance/compute/location?api-version=2021-02-01&format=text' || true)"
           printf 'cpu_model=%s\n' "$CPU_MODEL" >> "$GITHUB_OUTPUT"
+          printf 'cpu_vendor=%s\n' "$CPU_VENDOR" >> "$GITHUB_OUTPUT"
           printf 'native_cap=%s\n' "$NATIVE_CAP" >> "$GITHUB_OUTPUT"
-          python - <<PY
-          import json, os, platform, subprocess
-          cpu_model = '''$CPU_MODEL'''
-          vendor = 'Intel' if 'Intel' in cpu_model.upper() else ('AMD' if 'AMD' in cpu_model.upper() else 'Other')
-          payload = {
-              'contract': 'songsterr-fresh-demucs-common-avx2-host-v1',
-              'sampleLabel': '${{ matrix.sample }}',
-              'referenceBlind': True,
-              'diagnosticOnly': True,
-              'cpuVendor': vendor,
-              'cpuModel': cpu_model,
-              'nativeTorchCpuCapability': '$NATIVE_CAP',
-              'imageOS': os.environ.get('ImageOS'),
-              'imageVersion': os.environ.get('ImageVersion'),
-              'runnerOS': os.environ.get('RUNNER_OS'),
-              'runnerArch': os.environ.get('RUNNER_ARCH'),
-              'platform': platform.platform(),
-              'python': platform.python_version(),
-              'lscpu': subprocess.check_output(['lscpu'], text=True),
-              'githubRunId': os.environ.get('GITHUB_RUN_ID'),
-              'githubJob': os.environ.get('GITHUB_JOB'),
-              'controls': {
-                  'ATEN_CPU_CAPABILITY': 'avx2',
-                  'ONEDNN_MAX_CPU_ISA': 'AVX2',
-              },
-              'hardGuards': {
-                  'preferredStemSelection': False,
-                  'basicPitchInvocation': False,
-                  'releaseEvidenceInvocation': False,
-                  'durationWrite': False,
-                  'sourceEndWrite': False,
-                  'pitchIdentityWrite': False,
-                  'thresholdSelection': False,
-                  'thresholdSweep': False,
-                  'downstreamAgreementObjective': False,
-                  'acceptanceDecision': False,
-                  'customerDeliveryInvoked': False,
-                  'legacyV143ScorerImported': False,
-                  'professionalScorerUsed': False,
-                  'referenceTabUsed': False,
-              },
-          }
-          json.dump(payload, open('$BASE/host-${{ matrix.sample }}.json','w',encoding='utf-8'), indent=2, sort_keys=True)
-          print(json.dumps({'cpuVendor': vendor, 'cpuModel': cpu_model, 'nativeTorchCpuCapability': '$NATIVE_CAP'}, indent=2))
-          PY
+          printf 'azure_region=%s\n' "$REGION" >> "$GITHUB_OUTPUT"
+          printf 'Native host: vendor=%s model=%s torch_cap=%s region=%s\n' \
+            "$CPU_VENDOR" "$CPU_MODEL" "$NATIVE_CAP" "${REGION:-unknown}"
 
-      - name: Verify common ATen AVX2 cap
+      - name: Verify combined AVX2 controls
+        id: caps
         shell: bash
         run: |
           set -euo pipefail
-          CAP="$(ATEN_CPU_CAPABILITY=avx2 ONEDNN_MAX_CPU_ISA=AVX2 python - <<'PY'
+          BASE="/tmp/songsterr-fresh-demucs-common-avx2-${{ matrix.sample }}"
+          CAP="$(ATEN_CPU_CAPABILITY=avx2 python - <<'PY'
           import torch
           print(torch.backends.cpu.get_cpu_capability())
           PY
           )"
           test "$CAP" = 'AVX2'
-          echo "Combined contract reports Torch CPU capability $CAP"
-
-      - name: Verify oneDNN common AVX2 cap with verbose probe
-        shell: bash
-        run: |
-          set -euo pipefail
-          BASE="/tmp/songsterr-fresh-common-avx2-${{ matrix.sample }}"
-          ONEDNN_VERBOSE=1 ATEN_CPU_CAPABILITY=avx2 ONEDNN_MAX_CPU_ISA=AVX2 python - <<'PY' > "$BASE/onednn-common-avx2.log" 2>&1
+          ONEDNN_VERBOSE=1 ONEDNN_MAX_CPU_ISA=AVX2 python - <<'PY' > "$BASE/onednn-avx2.log" 2>&1
           import torch
           x = torch.randn(2, 16, 64, 64)
           m = torch.nn.Conv2d(16, 16, 3).eval()
@@ -159,17 +121,20 @@ jobs:
                   x = torch.nn.functional.pad(x, (1, 1, 1, 1))
           print(float(x.sum()))
           PY
-          grep -m1 -E 'onednn_verbose.*cpu,isa:' "$BASE/onednn-common-avx2.log" | tee "$BASE/onednn-effective-isa.txt"
-          grep -qi 'AVX2' "$BASE/onednn-effective-isa.txt"
+          ONEDNN_ISA_LINE="$(grep -m1 -E 'onednn_verbose.*cpu,isa:.*AVX2' "$BASE/onednn-avx2.log")"
+          test -n "$ONEDNN_ISA_LINE"
+          printf 'onednn_isa_line=%s\n' "$ONEDNN_ISA_LINE" >> "$GITHUB_OUTPUT"
+          echo "ATen capped capability: $CAP"
+          echo "oneDNN capped ISA: $ONEDNN_ISA_LINE"
 
-      - name: Run one fixed Demucs pass under common AVX2 contract
+      - name: Run one fixed Demucs pass under combined AVX2 caps
         shell: bash
         env:
           ATEN_CPU_CAPABILITY: avx2
           ONEDNN_MAX_CPU_ISA: AVX2
         run: |
           set -euo pipefail
-          BASE="/tmp/songsterr-fresh-common-avx2-${{ matrix.sample }}"
+          BASE="/tmp/songsterr-fresh-demucs-common-avx2-${{ matrix.sample }}"
           python -m demucs \
             -n htdemucs_6s \
             --device cpu \
@@ -184,12 +149,9 @@ jobs:
 
       - name: Verify exact pinned Demucs model asset
         shell: bash
-        env:
-          ATEN_CPU_CAPABILITY: avx2
-          ONEDNN_MAX_CPU_ISA: AVX2
         run: |
           set -euo pipefail
-          BASE="/tmp/songsterr-fresh-common-avx2-${{ matrix.sample }}"
+          BASE="/tmp/songsterr-fresh-demucs-common-avx2-${{ matrix.sample }}"
           python scripts/songsterr-fresh/verify_demucs_model_asset.py \
             --output "$BASE/demucs-model-asset.json"
           python - <<PY
@@ -211,181 +173,118 @@ jobs:
               raise SystemExit('DEMUCS_COMMON_AVX2_LEGACY_FALLBACK_PRIMARY')
           PY
 
-      - name: Record capped stem provenance
+      - name: Record strict common-AVX2 provenance
         shell: bash
         env:
           ATEN_CPU_CAPABILITY: avx2
           ONEDNN_MAX_CPU_ISA: AVX2
         run: |
           set -euo pipefail
-          BASE="/tmp/songsterr-fresh-common-avx2-${{ matrix.sample }}"
+          BASE="/tmp/songsterr-fresh-demucs-common-avx2-${{ matrix.sample }}"
           STEM="$BASE/separated/htdemucs_6s/gomyway-midterm-separation/guitar.wav"
           INPUT_SHA="$(cat "$BASE/separation-input.sha256")"
-          python scripts/songsterr-fresh/record_demucs_cross_run_provenance.py \
+          python scripts/songsterr-fresh/record_demucs_common_avx2_provenance.py \
             --stem "$STEM" \
             --input-sha256 "$INPUT_SHA" \
             --model-asset "$BASE/demucs-model-asset.json" \
             --sample-label '${{ matrix.sample }}' \
+            --native-cpu-model '${{ steps.native.outputs.cpu_model }}' \
+            --native-cpu-vendor '${{ steps.native.outputs.cpu_vendor }}' \
+            --native-torch-capability '${{ steps.native.outputs.native_cap }}' \
+            --onednn-isa-line '${{ steps.caps.outputs.onednn_isa_line }}' \
+            --azure-region '${{ steps.native.outputs.azure_region }}' \
             --output "$BASE/provenance-${{ matrix.sample }}.json"
+
+      - name: Prove per-host diagnostic boundaries
+        shell: bash
+        run: |
+          set -euo pipefail
+          BASE="/tmp/songsterr-fresh-demucs-common-avx2-${{ matrix.sample }}"
           python - <<PY
           import json
-          base = '$BASE'
-          host = json.load(open(f'{base}/host-${{ matrix.sample }}.json', encoding='utf-8'))
-          provenance = json.load(open(f'{base}/provenance-${{ matrix.sample }}.json', encoding='utf-8'))
-          effective = open(f'{base}/onednn-effective-isa.txt', encoding='utf-8').read().strip()
-          payload = {
-              'contract': 'songsterr-fresh-demucs-common-avx2-observation-v1',
-              'version': 1,
-              'referenceBlind': True,
-              'diagnosticOnly': True,
-              'sampleLabel': '${{ matrix.sample }}',
-              'host': host,
-              'effectiveOneDnnIsaLine': effective,
-              'cappedTorchCpuCapability': provenance['runtime']['torch']['cpuCapability'],
-              'source': provenance['source'],
-              'demucs': provenance['demucs'],
-              'controls': {'ATEN_CPU_CAPABILITY': 'avx2', 'ONEDNN_MAX_CPU_ISA': 'AVX2'},
-              'hardGuards': host['hardGuards'],
-          }
-          if payload['cappedTorchCpuCapability'] != 'AVX2':
-              raise SystemExit('DEMUCS_COMMON_AVX2_TORCH_CAP_NOT_AVX2')
-          if any(value is not False for value in payload['hardGuards'].values()):
-              raise SystemExit('DEMUCS_COMMON_AVX2_GUARD_CHANGED')
-          json.dump(payload, open(f'{base}/observation-${{ matrix.sample }}.json','w',encoding='utf-8'), indent=2, sort_keys=True)
-          print(json.dumps({
-              'sampleLabel': payload['sampleLabel'],
-              'cpuVendor': host['cpuVendor'],
-              'cpuModel': host['cpuModel'],
-              'nativeTorchCpuCapability': host['nativeTorchCpuCapability'],
-              'cappedTorchCpuCapability': payload['cappedTorchCpuCapability'],
-              'stemFileSha256': payload['source']['stemFileSha256'],
-              'stemPcmSha256': payload['source']['stemPcmSha256'],
-          }, indent=2))
+          payload = json.load(open('$BASE/provenance-${{ matrix.sample }}.json', encoding='utf-8'))
+          if payload.get('contract') != 'songsterr-fresh-demucs-common-avx2-provenance-v1':
+              raise SystemExit('DEMUCS_COMMON_AVX2_PROVENANCE_CONTRACT_CHANGED')
+          if payload.get('referenceBlind') is not True or payload.get('diagnosticOnly') is not True:
+              raise SystemExit('DEMUCS_COMMON_AVX2_PROVENANCE_SCOPE_CHANGED')
+          if payload.get('executionContractCandidate', {}).get('productionAuthorized') is not False:
+              raise SystemExit('DEMUCS_COMMON_AVX2_PRODUCTION_AUTH_CHANGED')
+          hard = payload.get('hardGuards') or {}
+          if not hard or any(value is not False for value in hard.values()):
+              raise SystemExit('DEMUCS_COMMON_AVX2_PROVENANCE_GUARD_CHANGED')
           PY
 
-      - name: Upload common-AVX2 observation only
+      - name: Upload provenance only
         if: always()
         uses: actions/upload-artifact@v4
         with:
-          name: songsterr-fresh-common-avx2-${{ matrix.sample }}
+          name: songsterr-fresh-demucs-common-avx2-${{ matrix.sample }}
           path: |
-            /tmp/songsterr-fresh-common-avx2-${{ matrix.sample }}/observation-${{ matrix.sample }}.json
-            /tmp/songsterr-fresh-common-avx2-${{ matrix.sample }}/host-${{ matrix.sample }}.json
-            /tmp/songsterr-fresh-common-avx2-${{ matrix.sample }}/onednn-effective-isa.txt
-            /tmp/songsterr-fresh-common-avx2-${{ matrix.sample }}/guitar-stem.sha256
-            /tmp/songsterr-fresh-common-avx2-${{ matrix.sample }}/demucs-model-asset.json
+            /tmp/songsterr-fresh-demucs-common-avx2-${{ matrix.sample }}/provenance-${{ matrix.sample }}.json
+            /tmp/songsterr-fresh-demucs-common-avx2-${{ matrix.sample }}/demucs-model-asset.json
+            /tmp/songsterr-fresh-demucs-common-avx2-${{ matrix.sample }}/separation-input.sha256
+            /tmp/songsterr-fresh-demucs-common-avx2-${{ matrix.sample }}/guitar-stem.sha256
+            /tmp/songsterr-fresh-demucs-common-avx2-${{ matrix.sample }}/onednn-avx2.log
           if-no-files-found: warn
           retention-days: 14
 
-  summarize:
-    name: summarize-common-avx2-cross-host
+  compare-common-avx2:
+    name: compare-common-avx2-cross-host
     needs: common-avx2
     runs-on: ubuntu-latest
     timeout-minutes: 10
 
     steps:
-      - name: Download independent observations
+      - name: Check out fresh branch
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.10'
+
+      - name: Download independent common-AVX2 provenance
         uses: actions/download-artifact@v4
         with:
-          pattern: songsterr-fresh-common-avx2-*
-          path: /tmp/songsterr-fresh-common-avx2-inputs
+          pattern: songsterr-fresh-demucs-common-avx2-*
+          path: /tmp/songsterr-fresh-demucs-common-avx2-inputs
           merge-multiple: true
 
-      - name: Aggregate exact hashes without preference
+      - name: Compare exact hashes and vendor coverage only
         shell: bash
         run: |
           set -euo pipefail
-          mkdir -p /tmp/songsterr-fresh-common-avx2-summary
+          mkdir -p /tmp/songsterr-fresh-demucs-common-avx2-comparison
+          python scripts/songsterr-fresh/compare_demucs_common_avx2_cross_host.py \
+            --inputs /tmp/songsterr-fresh-demucs-common-avx2-inputs/provenance-*.json \
+            --output /tmp/songsterr-fresh-demucs-common-avx2-comparison/comparison.json
+
+      - name: Prove aggregate diagnostic boundaries
+        shell: bash
+        run: |
+          set -euo pipefail
           python - <<'PY'
-          import glob, json
-          paths = sorted(glob.glob('/tmp/songsterr-fresh-common-avx2-inputs/observation-*.json'))
-          observations = [json.load(open(path, encoding='utf-8')) for path in paths]
-          if len(observations) != 5:
-              raise SystemExit(f'DEMUCS_COMMON_AVX2_EXPECTED_FIVE_OBSERVATIONS:{len(observations)}')
-          rows = []
-          for obs in observations:
-              if obs.get('contract') != 'songsterr-fresh-demucs-common-avx2-observation-v1':
-                  raise SystemExit('DEMUCS_COMMON_AVX2_OBSERVATION_CONTRACT_CHANGED')
-              if obs.get('referenceBlind') is not True or obs.get('diagnosticOnly') is not True:
-                  raise SystemExit('DEMUCS_COMMON_AVX2_SCOPE_CHANGED')
-              hard = obs.get('hardGuards') or {}
-              if not hard or any(value is not False for value in hard.values()):
-                  raise SystemExit('DEMUCS_COMMON_AVX2_GUARD_CHANGED')
-              if obs.get('controls') != {'ATEN_CPU_CAPABILITY': 'avx2', 'ONEDNN_MAX_CPU_ISA': 'AVX2'}:
-                  raise SystemExit('DEMUCS_COMMON_AVX2_CONTROL_CHANGED')
-              if obs.get('cappedTorchCpuCapability') != 'AVX2':
-                  raise SystemExit('DEMUCS_COMMON_AVX2_CAPABILITY_CHANGED')
-              host = obs['host']
-              source = obs['source']
-              rows.append({
-                  'sampleLabel': obs['sampleLabel'],
-                  'cpuVendor': host['cpuVendor'],
-                  'cpuModel': host['cpuModel'],
-                  'nativeTorchCpuCapability': host['nativeTorchCpuCapability'],
-                  'cappedTorchCpuCapability': obs['cappedTorchCpuCapability'],
-                  'imageVersion': host['imageVersion'],
-                  'platform': host['platform'],
-                  'effectiveOneDnnIsaLine': obs['effectiveOneDnnIsaLine'],
-                  'stemFileSha256': source['stemFileSha256'],
-                  'stemPcmSha256': source['stemPcmSha256'],
-                  'stemRms': source['stemRms'],
-              })
-          file_hashes = sorted({r['stemFileSha256'] for r in rows})
-          pcm_hashes = sorted({r['stemPcmSha256'] for r in rows})
-          vendors = sorted({r['cpuVendor'] for r in rows})
-          file_groups = {h: sorted(r['sampleLabel'] for r in rows if r['stemFileSha256'] == h) for h in file_hashes}
-          pcm_groups = {h: sorted(r['sampleLabel'] for r in rows if r['stemPcmSha256'] == h) for h in pcm_hashes}
-          payload = {
-              'contract': 'songsterr-fresh-demucs-common-avx2-cross-host-summary-v1',
-              'version': 1,
-              'referenceBlind': True,
-              'diagnosticOnly': True,
-              'observationCount': len(rows),
-              'cpuVendorsObserved': vendors,
-              'crossVendorSampleObserved': 'Intel' in vendors and 'AMD' in vendors,
-              'distinctStemFileSha256Count': len(file_hashes),
-              'distinctStemPcmSha256Count': len(pcm_hashes),
-              'allStemFileBytesIdentical': len(file_hashes) == 1,
-              'allDecodedPcmIdentical': len(pcm_hashes) == 1,
-              'stemFileSha256Groups': file_groups,
-              'stemPcmSha256Groups': pcm_groups,
-              'observations': sorted(rows, key=lambda r: r['sampleLabel']),
-              'hardGuards': {
-                  'preferredStemSelection': False,
-                  'basicPitchInvocation': False,
-                  'releaseEvidenceInvocation': False,
-                  'durationWrite': False,
-                  'sourceEndWrite': False,
-                  'pitchIdentityWrite': False,
-                  'thresholdSelection': False,
-                  'thresholdSweep': False,
-                  'downstreamAgreementObjective': False,
-                  'acceptanceDecision': False,
-                  'customerDeliveryInvoked': False,
-                  'legacyV143ScorerImported': False,
-                  'professionalScorerUsed': False,
-                  'referenceTabUsed': False,
-              },
-          }
-          if any(value is not False for value in payload['hardGuards'].values()):
-              raise SystemExit('DEMUCS_COMMON_AVX2_SUMMARY_GUARD_CHANGED')
-          out = '/tmp/songsterr-fresh-common-avx2-summary/summary.json'
-          json.dump(payload, open(out,'w',encoding='utf-8'), indent=2, sort_keys=True)
-          print(json.dumps({
-              'observationCount': payload['observationCount'],
-              'cpuVendorsObserved': vendors,
-              'crossVendorSampleObserved': payload['crossVendorSampleObserved'],
-              'distinctStemFileSha256Count': payload['distinctStemFileSha256Count'],
-              'distinctStemPcmSha256Count': payload['distinctStemPcmSha256Count'],
-              'allDecodedPcmIdentical': payload['allDecodedPcmIdentical'],
-              'rows': rows,
-          }, indent=2))
+          import json
+          path = '/tmp/songsterr-fresh-demucs-common-avx2-comparison/comparison.json'
+          payload = json.load(open(path, encoding='utf-8'))
+          if payload.get('contract') != 'songsterr-fresh-demucs-common-avx2-cross-host-comparison-v1':
+              raise SystemExit('DEMUCS_COMMON_AVX2_COMPARISON_CONTRACT_CHANGED')
+          if payload.get('referenceBlind') is not True or payload.get('diagnosticOnly') is not True:
+              raise SystemExit('DEMUCS_COMMON_AVX2_COMPARISON_SCOPE_CHANGED')
+          interpretation = payload.get('interpretationGuards') or {}
+          if not interpretation or any(value is not False for value in interpretation.values()):
+              raise SystemExit('DEMUCS_COMMON_AVX2_INTERPRETATION_GUARD_CHANGED')
+          hard = payload.get('hardGuards') or {}
+          if not hard or any(value is not False for value in hard.values()):
+              raise SystemExit('DEMUCS_COMMON_AVX2_HARD_GUARD_CHANGED')
+          if payload.get('observationCount') != 5:
+              raise SystemExit('DEMUCS_COMMON_AVX2_EXPECTED_FIVE_HOSTS')
           PY
 
-      - name: Upload aggregate summary
+      - name: Upload aggregate comparison
         uses: actions/upload-artifact@v4
         with:
-          name: songsterr-fresh-common-avx2-cross-host-summary
-          path: /tmp/songsterr-fresh-common-avx2-summary/summary.json
+          name: songsterr-fresh-demucs-common-avx2-cross-host-comparison
+          path: /tmp/songsterr-fresh-demucs-common-avx2-comparison/comparison.json
           if-no-files-found: error
           retention-days: 14
