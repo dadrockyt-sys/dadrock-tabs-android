@@ -443,7 +443,7 @@ def run_self_test():
         raise AssertionError("reattack-duration tamper accepted")
 
     mismatched = copy.deepcopy(context)
-    mismatched["structureMap"]["measures"][0]["beats"][2]["subdivisions"][0] = 1.01
+    mismatched["structureMap"]["measures"][0]["beats"][0]["subdivisions"][2] = 0.26
     try:
         build_summary(evidence, mismatched)
     except RuntimeError as error:
