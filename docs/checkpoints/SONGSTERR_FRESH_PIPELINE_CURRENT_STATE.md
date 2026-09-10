@@ -36,7 +36,9 @@ Canaries fetch the raw file from `main` and verify `git hash-object`.
 
 Structure identity:
 `fnv1a32:2f493225`
-canonicalLength 19653
+
+Canonical length:
+19653
 
 Accepted facts:
 - duration ~210.67465 s
@@ -221,12 +223,6 @@ Contracts:
 - `songsterr-fresh-basic-pitch-note-identity-v1`
 - `songsterr-fresh-basic-pitch-inference-bundle-v1`
 
-The same Basic Pitch `predict()` call emits decoded notes and optionally captures the playable-MIDI activation slice. The sidecar cryptographically binds:
-- sorted note identity `(startSeconds, midi, confidence)`
-- exact float32 activation matrix bytes
-- exact float64 frame-time bytes
-- MIDI range and matrix shape
-
 Hard guards:
 - exactly one Basic Pitch `predict()` call
 - same-inference activation evidence true
@@ -262,38 +258,26 @@ Contract:
 Dedicated canary:
 `.github/workflows/songsterr-fresh-model-release-v3-canary.yml`
 
-V3 design:
-1. require duration-free evidence
-2. preserve explicit model-upstream authorization
-3. cryptographically verify the same-inference activation sidecar
-4. run existing v2 spectral logic first using unchanged v2 constants/functions
-5. never change a v2-resolved event
-6. activation fallback is eligible only for exact v2 reason `NO_CLEAR_RELEASE_BEFORE_SAME_PITCH_REATTACK`
-7. apply the unchanged fixed activation + CQT rule
-8. release is the observed valley timestamp only
-9. require release < next same-pitch reattack
-10. generic next onset never becomes duration
-11. decoded Basic Pitch note-off never becomes duration
-12. same-pitch reattack itself never becomes duration
-13. activation fallback emits `durationConfidence: null`
-14. exact MIDI/start/event identity is preserved within each run
-15. failed fallback keeps the original v2 unresolved reason
-16. provenance distinguishes v2 spectral release from activation+spectral fallback
-17. activation release stage invokes no model
-18. model validation remains false
-19. customer eligibility remains zero
+V3 design invariants:
+- v2 spectral logic runs first unchanged
+- v2-resolved events are never changed
+- activation fallback is eligible only for exact v2 reason `NO_CLEAR_RELEASE_BEFORE_SAME_PITCH_REATTACK`
+- fixed activation + CQT rule only; no tuning/sweep
+- release is the observed valley timestamp only and must precede same-pitch reattack
+- generic next onset, same-pitch reattack timestamp, and decoded Basic Pitch note-off never become duration
+- exact MIDI/start/event identity is preserved within each run
+- activation release stage invokes no model
+- model validation remains false
+- customer eligibility remains zero
 
-### Repeated semantic fallback stability
-
-Two independent green attempts on commit `39f22fc49755f421aeac8d4b7caa7af2fdca0af2` produced slightly different hosted-runner model inventories (1,139 versus 1,138 notes) but the same 84 v3 fallback events.
-
-Cross-attempt comparison found:
+Repeated semantic fallback stability on commit `39f22fc49755f421aeac8d4b7caa7af2fdca0af2`:
+- hosted-runner model inventories differed 1,139 versus 1,138 notes
 - 1,137 events matched by exact MIDI and start time
 - max matched start delta 0.0 s
 - all 84 fallback events present in both attempts
 - all 84 fallback durations exactly equal; max duration delta 0.0 s
 - only unmatched events were unresolved MIDI-55 detections around 46 s
-- none of those unmatched events was a v3 fallback promotion
+- none was a v3 fallback promotion
 
 This is semantic fallback repeatability, not byte-identical cross-run model determinism.
 
@@ -316,39 +300,33 @@ Hard metadata:
 - `usesDecodedModelNoteEnd: false`
 - `thresholdSelection: false`
 
-The inventory cross-checks its counts against v3 release evidence and reports unresolved reason / fallback-rejection distributions and same-pitch reattack-gap statistics. It creates no release decisions.
-
-Observed stable unresolved classes across the two v3 runner variants:
+Observed stable unresolved classes across two v3 runner variants:
 - 18 insufficient onset-to-floor contrast
 - 7 no clear sustained spectral release
 - 76 activation candidate but insufficient fixed CQT spectral corroboration
 - 5 insufficient activation drop
 - no-sustained-subthreshold-activation varies by one event: 371 versus 372
 
-The no-sustained-activation group has short reattack gaps (median ~0.221 s, p90 ~0.442 s); the insufficient-spectral-corroboration group has a longer median gap (~0.709 s). These are descriptive measurements only, not thresholds or proposed cutoffs.
+These are descriptive measurements only, not thresholds or proposed cutoffs.
 
 ## RHYTHM FLOATING-POINT BOUNDARY DEFECT — FIXED
-
-Root cause of the previous 32 `UNRESOLVED_RHYTHM_SPELLING` failures:
-- 21 event segments + 11 rest segments
-- segment lengths roughly 3.6e-15 to 2.8e-14 s
-- mathematically identical beat/measure boundaries had tiny floating-point representation differences
-- exact `Set` deduplication treated those values as separate cuts and created numerical-dust note/rest slices
 
 Fix commit:
 `5afab9050a96428fc61a26ffae41c66c09610e7a`
 
-Fix:
-- discard only generated event/rest segments with length <= the module's existing `EPSILON`
-- do not rewrite frozen structure
-- do not change pitch identity
-- do not change source duration/release evidence
+Root cause:
+- 21 event segments + 11 rest segments were numerical dust
+- lengths roughly 3.6e-15 to 2.8e-14 s
+- exact `Set` deduplication split mathematically identical beat/measure boundaries
 
-Regression test:
+Fix:
+- discard only generated event/rest segments with length <= existing module `EPSILON`
+- do not rewrite frozen structure, pitch identity, or release evidence
+
+Regression:
 `contextual rhythm spelling discards only sub-EPSILON floating-point boundary slices`
 
-Post-fix deterministic suite:
-98/98 green.
+Post-fix deterministic suite: 98/98 green.
 
 Post-fix full v3 canary:
 - run `34319558226`
@@ -371,150 +349,28 @@ Post-fix full v3 canary:
 Workflow-only hardening commit:
 `d332cdf2fdf930aacf9023c63989270b16c5e736`
 
-Commit message:
-`ci: harden v3 raw failure and inventory guards`
-
-Changed only:
-`.github/workflows/songsterr-fresh-model-release-v3-canary.yml`
-
-No v2 source, v3 release logic, model logic, deterministic pipeline source, Production, or `main` changes were made.
-
-Permanent guards added:
-1. the read-only unresolved-duration inventory script is a workflow trigger dependency
-2. the canary generates `v3-unresolved-duration-inventory.json`; the existing `*.json` artifact glob includes it
-3. the deterministic pipeline raw failure set must contain exactly one entry:
-   - code `UNRESOLVED_DURATION`
-   - count exactly equal to `pipelineSummary.unresolvedDurationCount`
-4. any additional raw rhythm/notation/MIDI/structure/playability failure now fails the v3 canary
-
-### Latest hardened v3 canary — GREEN
-
-Run:
-`34423610600`
-
-Job:
-`102704074546`
-
-Head:
-`d332cdf2fdf930aacf9023c63989270b16c5e736`
-
-Runner:
-- ubuntu-24.04
-- image `20260907.300.1`
-- Azure `centralus`
-
-Decoded inputs:
-- analysis WAV SHA `824af60bbc3d701c8c1f085194be2acf59f0ac5d0ae4133e763eadb9793ca873`
-- separation WAV SHA `e03e1885185f4983b3eeaa66f36510b7709d607c14010f964e0aad427ecc474a`
-
-Runtime-scoped Demucs guitar stem SHA:
-`c303f0a0d99f94e2bddedebd0679cc5034aa9505c350cc28a5200d4c419637af`
-
-This stem SHA is diagnostic only and is a previously observed valid hosted-runner variant.
-
-Basic Pitch latest-run evidence:
-- 1,139 notes
-- 97 polyphonic start clusters
-- max cluster size 4
-- note identity SHA `46e4ca9ff9722e0c7f787de234c1f03bbdaa188dac6e7c27929a1f2591365608`
-- inference bundle SHA `e8f40c295125313835264c5781414c3ada2fd4986942c9f2a65fe526a5b0253f`
-- single predict invocation
-- decoded model ends diagnostic only
-
-V2 latest-run evidence:
-- attempted 1,139
-- 577 resolved / 562 unresolved
-- 537 `NO_CLEAR_RELEASE_BEFORE_SAME_PITCH_REATTACK`
-- 18 `INSUFFICIENT_ONSET_TO_FLOOR_CONTRAST`
-- 7 `NO_CLEAR_SUSTAINED_SPECTRAL_RELEASE`
-- same-pitch censor count 967
-
-V3 latest-run evidence:
-- v2 runs first: 577 resolved
-- fallback attempted 537
-- fallback resolved 84
-- fallback unresolved 453
-- fallback rejection reasons:
-  - 5 `INSUFFICIENT_ACTIVATION_DROP`
-  - 76 `INSUFFICIENT_SPECTRAL_CORROBORATION`
-  - 372 `NO_SUSTAINED_SUBTHRESHOLD_ACTIVATION`
-- final 661 resolved / 478 unresolved
-- resolution rate ~0.580333626
-- final unresolved reasons:
-  - 453 `NO_CLEAR_RELEASE_BEFORE_SAME_PITCH_REATTACK`
-  - 18 `INSUFFICIENT_ONSET_TO_FLOOR_CONTRAST`
-  - 7 `NO_CLEAR_SUSTAINED_SPECTRAL_RELEASE`
-- fallback mean span ~0.299432 s
-- fallback median span ~0.290249 s
-- fallback max span ~1.069402 s
-- no next-onset duration
-- no reattack timestamp as duration
-- no decoded model-end duration
-- no invented activation confidence
-- activation release stage invokes no model
-
-Probe parity latest run:
-- 537 reattack-censored events examined
-- exactly 84 corroborated valleys
-- exact onset-ID parity with v3 fallback
-- candidate rate ~15.6425%
-- rejection split exactly 5 / 76 / 372
-- probe model invocation false
-
-Read-only inventory latest run:
-- duration-eligible events 1,139
-- resolved 661
-- unresolved 478
-- fallback rejections 5 / 76 / 372
-- primary final unresolved reasons 18 / 453 / 7
-- hard descriptive-only guards passed
-
-Deterministic pipeline latest run:
-- source events 1,139
-- pitch-resolved 1,139
-- role-accepted 1,139
-- exact MIDI preserved 1,139/1,139
-- complete/customer eligible 0
-- unresolved duration 478
-- fretboard path resolved true
-- raw failures exactly `[{"code":"UNRESOLVED_DURATION","count":478}]`
-- `UNRESOLVED_RHYTHM_SPELLING` absent
-- rawIntegrityPassed false
-- upstream blockers exactly include `MODEL_EVIDENCE_VALIDATION_PENDING` and `DURATION_EVIDENCE_INCOMPLETE`
-- modelValidationComplete false
-- deliveryReady false
-- structuredRenderEligible false
-
-Tests:
-98/98 green.
-
-Artifact:
-- name `songsterr-fresh-model-release-v3-evidence`
-- ID `10131961888`
-- ZIP size 6,875,747 bytes
-- 20 files
+Latest hardened v3 canary:
+- run `34423610600`
+- job `102704074546`
+- head `d332cdf2fdf930aacf9023c63989270b16c5e736`
+- Basic Pitch 1,139 notes
+- v2 577 resolved / 562 unresolved
+- v3 +84 fallback = 661 resolved / 478 unresolved
+- exact MIDI 1,139/1,139
+- raw failures exactly `UNRESOLVED_DURATION: 478`
+- evaluator blockers unchanged
+- customer eligible 0
+- delivery false
+- 98/98 tests
+- artifact `10131961888`
 - digest `sha256:660ba794985cda8b43db31e27d15f9510fc55cc5588fbd9a851a194f07747085`
-- retention through 2026-09-24 UTC
 
-### Important 477 versus 478 boundary
+The 477 versus 478 difference tracks the known 1,138 versus 1,139 hosted-runner model-output variation. It must not become a hardcoded acceptance count. V3 fallback remained exactly 84 in both variants.
 
-The post-rhythm-fix run on stem variant `4227a41f...` had 1,138 notes and 477 unresolved durations. The latest hardened run on stem variant `c303f0a0...` had 1,139 notes and 478 unresolved durations.
-
-The v3 fallback remained exactly 84 in both observed variants. The one-event difference belongs to the already documented hosted-runner model-output variation and must **not** become a hardcoded acceptance count. The CI gate intentionally checks dynamic unresolved-count parity rather than requiring 477 or 478.
-
-## INDEPENDENT REFERENCE-BLIND PITCH SUPPORT — FIRST CANARY GREEN
+## INDEPENDENT REFERENCE-BLIND PITCH SUPPORT — TWO GREEN CANARIES
 
 Probe:
 `scripts/songsterr-fresh/probe_independent_pitch_support.py`
-
-Probe commit:
-`b8082a63...`
-
-Dedicated canary:
-`.github/workflows/songsterr-fresh-independent-pitch-support-canary.yml`
-
-Workflow commit:
-`4b806c247857458c6158e50a59d15b7130276c79`
 
 Probe method is descriptive only and was fixed before inspecting fixture results:
 - 80 ms post-onset measurement window
@@ -534,9 +390,10 @@ Probe method is descriptive only and was fixed before inspecting fixture results
 - no model invocation inside the probe
 - no `modelValidationComplete` mutation
 
-Static independence guard rejects direct model/process/network imports in the probe. The probe also verifies exact duration-free note identity and hashes the actual guitar-stem bytes against declared separation provenance before reporting.
+Static independence guard rejects direct model/process/network imports in the probe. The probe verifies exact duration-free note identity and hashes the actual guitar-stem bytes against declared separation provenance before reporting.
 
-First green canary:
+### First green canary — baseline
+
 - run `34424545232`
 - job `102706873344`
 - head `4b806c247857458c6158e50a59d15b7130276c79`
@@ -546,28 +403,26 @@ First green canary:
 - probe A/B JSON byte-identical
 - probe JSON SHA `534015d01246965228bfc6988d92117861ff2bcd360b32060ec1f8a95b7e08db`
 - all 1,138 `(onsetId, sourceStart, selectedMidi)` rows preserved exactly
-- selected MIDI ranked #1 among ±1/±2 semitone comparison bins on 914/1,138 events (~80.3%)
-- selected MIDI ranked #1 among selected + ±1-octave comparison bins on 793/1,138 events (~69.7%)
-- local semitone rank histogram: 914 / 112 / 96 / 13 / 3 for ranks 1–5
-- octave rank histogram: 793 / 323 / 22 for ranks 1–3
+- local semitone rank histogram 914 / 112 / 96 / 13 / 3
+- octave rank histogram 793 / 323 / 22
 - selected-minus-best-semitone-neighbor median ~3.091 dB; mean ~1.906 dB
 - selected-minus-best-compared-alternative median ~1.404 dB; mean ~-1.496 dB
 - selected-pitch-above-floor median ~39.322 dB
-- evaluator still blocks on `MODEL_EVIDENCE_VALIDATION_PENDING` + `DURATION_EVIDENCE_INCOMPLETE`
-- complete/customer eligible 0
+- evaluator blockers unchanged
+- customer eligible 0
 - delivery false
 - 98/98 tests
 - artifact `10132278606`
-- artifact digest `sha256:953af38fb6216706dab989d98b83c4fb2edba9826b7a810dda20ee15052766a6`
+- digest `sha256:953af38fb6216706dab989d98b83c4fb2edba9826b7a810dda20ee15052766a6`
 
 Interpretation boundary:
 - this is independent audio-domain support evidence, not ground truth
 - semitone-local support is substantially stronger than octave discrimination
 - do not collapse these metrics into a single accuracy score
 - do not derive an acceptance threshold from this fixture
-- do not use this first-run self-consistency to clear `MODEL_EVIDENCE_VALIDATION_PENDING`
+- do not use self-consistency to clear `MODEL_EVIDENCE_VALIDATION_PENDING`
 
-## PITCH-SUPPORT STRUCTURE TRIGGER — GREEN
+### Structure-trigger dispatcher — green
 
 Trigger-hardening commit:
 `cf2afeb357b247d6cccaf648eef32dd3a52373fb`
@@ -575,20 +430,89 @@ Trigger-hardening commit:
 Dispatcher:
 `.github/workflows/songsterr-fresh-independent-pitch-support-structure-trigger.yml`
 
-Purpose:
-- watch the full-mixture structure-analysis dependencies used by the pitch-support canary
-- dispatch the existing independent pitch-support canary at the current branch HEAD
-- avoid duplicating or weakening the established proof workflow
-
 Dispatcher run:
 - run `34425135282`
 - job `102708656431`
 - head `cf2afeb357b247d6cccaf648eef32dd3a52373fb`
 - conclusion success
 
-The dispatcher successfully launched second full pitch-support canary run `34425140684` at the same head.
+It dispatched second canary run `34425140684` at the same head.
 
-At checkpoint-save time, second run `34425140684` is still in progress. Do not assume its result; fetch its final run/job status and artifact before performing cross-run semantic comparison.
+### Second green canary — completed
+
+Run:
+`34425140684`
+
+Job:
+`102708677916`
+
+Head:
+`cf2afeb357b247d6cccaf648eef32dd3a52373fb`
+
+Runner:
+- ubuntu-24.04
+- image `20260831.293.1`
+- Azure `westcentralus`
+- Python 3.10.21
+- Node 22.23.2
+
+Decoded input SHAs:
+- analysis WAV `824af60bbc3d701c8c1f085194be2acf59f0ac5d0ae4133e763eadb9793ca873`
+- separation WAV `e03e1885185f4983b3eeaa66f36510b7709d607c14010f964e0aad427ecc474a`
+
+Frozen structure:
+- identity `fnv1a32:2f493225`
+- duration 210.6746485260771 s
+- pickup 0.6501587301587302 s
+- 115 measures / 113 tempo segments
+- 4/4 straight
+- accepted true
+
+Demucs / Basic Pitch:
+- guitar stem SHA `4227a41f58817d32e9e122857c924c486afdc1e411a0a173bec2dfcc0c7b6b81`
+- Basic Pitch 1,138 notes
+- note identity SHA `e85323e5b7449ac84be7ad6076ed3ee9c2da1e9a37b3c64247637e4b82dcbe77`
+- start clusters 1,031
+- polyphonic start clusters 96
+- max cluster size 4
+- exactly one Basic Pitch `predict()` invocation
+- decoded model ends diagnostic only
+
+Probe A/B:
+- byte-identical inside the run
+- A SHA `534015d01246965228bfc6988d92117861ff2bcd360b32060ec1f8a95b7e08db`
+- B SHA `534015d01246965228bfc6988d92117861ff2bcd360b32060ec1f8a95b7e08db`
+- exact same probe SHA as first canary
+- local semitone rank histogram 914 / 112 / 96 / 13 / 3
+- octave rank histogram 793 / 323 / 22
+- selected-minus-best-semitone-neighbor: mean 1.9064934408727556 dB; median 3.0905303955078125 dB
+- selected-minus-best-compared-alternative: mean -1.4956962291301867 dB; median 1.403792381286621 dB
+- selected-pitch-above-floor: mean 38.670555924531236 dB; median 39.32196750640869 dB
+- selected-minus-octave-above: mean 8.893831113939335 dB; median 8.784372806549072 dB
+- selected-minus-octave-below: mean 27.434707292563466 dB; median 27.877296447753906 dB
+
+Fail-closed validation remained intact:
+- exact MIDI preserved 1,138/1,138
+- `modelValidationComplete` false
+- blockers include `MODEL_EVIDENCE_VALIDATION_PENDING` and `DURATION_EVIDENCE_INCOMPLETE`
+- customer eligible 0
+- delivery false
+- structured render false
+- 98/98 tests
+
+Artifact:
+- name `songsterr-fresh-independent-pitch-support-evidence`
+- ID `10132507650`
+- ZIP size 757,426 bytes
+- 15 files
+- digest `sha256:d0c01375094055377c04739ec41eef41cb450cafccac654137359f72ac543585`
+- expires `2026-09-24T01:28:05Z`
+
+### Cross-run semantic comparison status
+
+The summaries already show exact agreement on stem SHA, Basic Pitch note count, note-identity SHA, probe SHA, both rank histograms, and all recorded continuous dB summaries. This strongly suggests exact reproduction for this runner pair, but the required artifact-to-artifact event comparison is still pending at this checkpoint update.
+
+Do not treat summary equality alone as the completed cross-run proof. Inspect both artifacts and report exact matched/unmatched identities and start-time deltas before closing this milestone.
 
 ## CURRENT ACCEPTANCE STATE
 
@@ -598,7 +522,7 @@ Current blockers remain:
 - `MODEL_EVIDENCE_VALIDATION_PENDING`
 - `DURATION_EVIDENCE_INCOMPLETE`
 
-Raw deterministic failures are now duration-only. The previous 32 numerical-dust rhythm failures are resolved and guarded against regression.
+Raw deterministic failures on the full v3 canary are duration-only. The previous numerical-dust rhythm failures are fixed and regression-guarded.
 
 Customer-eligible events remain **0**.
 
@@ -616,22 +540,17 @@ No acceptance promotion from self-consistency alone.
 
 ## NEXT ENGINEERING STEPS — FRESH CHAT HANDOFF
 
-1. Start by fetching canonical branch `songsterr-fresh-pipeline-v1` and re-reading this checkpoint. Do not work on `main` or Production.
-2. Check second independent pitch-support canary run `34425140684` to completion. It was launched by the green structure-trigger dispatcher at head `cf2afeb357b247d6cccaf648eef32dd3a52373fb` and was still running when this checkpoint was saved.
-3. If run `34425140684` is green:
-   - fetch its job logs and artifact metadata
-   - record exact run/job/head/artifact/digest
-   - record its Demucs stem SHA, Basic Pitch note count, note-identity SHA, probe A/B SHA, rank histograms, and continuous dB summaries
-   - confirm 98/98 deterministic tests, evaluator blockers unchanged, customer eligible 0, and delivery false
-4. Download/inspect both pitch-support artifacts and perform a **descriptive cross-run semantic comparison** only:
+1. Download/inspect both independent pitch-support artifacts:
+   - first run `34424545232`, artifact `10132278606`, digest `sha256:953af38fb6216706dab989d98b83c4fb2edba9826b7a810dda20ee15052766a6`
+   - second run `34425140684`, artifact `10132507650`, digest `sha256:d0c01375094055377c04739ec41eef41cb450cafccac654137359f72ac543585`
+2. Perform a descriptive cross-run semantic comparison only:
    - compare exact note identities where they overlap
    - reuse the already established 10 ms simultaneous/start-cluster tolerance only if needed for hosted-runner event matching; do not invent a new tolerance
    - report matched event count, unmatched event identities, start-time deltas, and stability of semitone/octave rank/support metrics
    - distinguish hosted-runner model-output variation from probe determinism
    - do not convert the comparison into an accuracy score or acceptance threshold
-5. If run `34425140684` fails, fix only the isolated pitch-support probe/workflow/dispatcher boundary implicated by the failure. Do not modify v2 release authority, v3 fixed fallback thresholds, frozen structure, or customer delivery gates unless independently justified by a separate defect.
-6. Update this checkpoint immediately after the second-run/cross-run milestone with exact evidence. Keep the first green canary (`34424545232`, artifact `10132278606`, digest `sha256:953af38f...`) as the baseline comparison point.
-7. After the cross-run comparison, decide only whether the independent probe is stable enough to support designing a **future explicit model-validation contract**. Do not set `modelValidationComplete: true` from this fixture or from Basic Pitch/CQT self-consistency alone.
-8. Continue descriptive study of the remaining 477/478 duration ambiguity separately. Keep audited v2 authoritative and v3 candidate-only; preserve the fixed activation + spectral rule exactly and do not tune it on this fixture.
-9. Any future v3 promotion from candidate to authoritative release authority must be an explicit documented branch decision with v2 preserved for regression comparison.
-10. Before any customer exposure, independently validate the model path and obtain complete required duration evidence; evaluator and delivery must remain fail-closed until both blockers are legitimately cleared.
+3. Update this checkpoint immediately after the artifact comparison with exact evidence.
+4. After the comparison, decide only whether the independent probe is stable enough to support designing a **future explicit model-validation contract**. Do not set `modelValidationComplete: true` from this fixture or from Basic Pitch/CQT self-consistency alone.
+5. Continue descriptive study of the remaining 477/478 duration ambiguity separately. Keep audited v2 authoritative and v3 candidate-only; preserve the fixed activation + spectral rule exactly and do not tune it on this fixture.
+6. Any future v3 promotion from candidate to authoritative release authority must be an explicit documented branch decision with v2 preserved for regression comparison.
+7. Before any customer exposure, independently validate the model path and obtain complete required duration evidence; evaluator and delivery must remain fail-closed until both blockers are legitimately cleared.
