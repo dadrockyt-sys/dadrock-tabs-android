@@ -1,6 +1,6 @@
 # CURRENT STATE — Songsterr Fresh Pipeline V1
 
-Updated: 2026-09-10 19:03 America/Toronto
+Updated: 2026-09-10 19:05 America/Toronto
 Canonical branch: `songsterr-fresh-pipeline-v1`
 Canonical checkpoint: `docs/checkpoints/SONGSTERR_FRESH_PIPELINE_CURRENT_STATE.md`
 
@@ -166,18 +166,30 @@ Inspection of the current fresh model-note boundary confirms these already exist
 
 These are necessary structural/provenance guards but are **not sufficient** to complete model validation. Policy B still needs a cross-run semantic-variation admission contract.
 
-### Policy B measurement layer design locked — implementation pending
+### Policy B measurement layer — implemented and green
 
 The first cross-run layer is deliberately **measurement-only**; it does not define or apply an acceptance tolerance.
 
-- Compare adapted `songsterr-fresh-isolated-polyphonic-note-evidence-v1` artifacts, not raw sequential Basic Pitch note IDs. The adapter already binds each note to the frozen reference-blind structure via `nearestStructureSlot`.
-- Preserve `songsterr-fresh-basic-pitch-note-identity-v1` unchanged. Its SHA includes exact floating-point start/confidence and remains authoritative for same-inference integrity; cross-run SHA equality is diagnostic only under Policy B.
-- Use `(nearestStructureSlot, selectedMidi)` as the reference-blind semantic comparison key. This reuses existing frozen-structure semantics and introduces no new onset tolerance. Duplicate events within one semantic key are paired deterministically after sorting by source start/confidence.
-- Canonicalize the two validated inputs independently of CLI argument order so A/B reversal cannot change the report.
-- Measure event-count/key-inventory differences plus paired onset/confidence absolute deltas. Basic Pitch diagnostic end differences, if reported, remain explicitly diagnostic-only and never become duration evidence.
-- Malformed/incomparable inputs fail closed: contract/version/role/reference-blind/frozen-structure mismatches, structure identity mismatch, model-setting mismatch, source-audio mismatch, unsafe provenance, non-finite values, unsupported MIDI, or non-null upstream duration fields must prevent comparison.
-- Exact note/activation/WAV/PCM hashes may be retained as diagnostics but are not pass/fail criteria.
-- The report must explicitly state that no admission decision was made, no thresholds were applied, `modelValidationComplete` remains false, and delivery cannot advance from the measurement report.
+Implementation:
+- comparator `scripts/songsterr-fresh/compare_basic_pitch_cross_run_evidence.py`
+- contract `songsterr-fresh-basic-pitch-cross-run-variation-measurement-v1`
+- dedicated CI `.github/workflows/songsterr-fresh-model-evidence-variation-tests.yml`
+- implementation commit `aae62eba938814a9d38dcf08f39cfdfa0456b4d9`
+- workflow commit `ea1283f549e137b2a3630636877479f49b4da9b2`
+- green workflow run `34539883074`, job `103079908440`; compile + reference-blind/fail-closed self-test both passed
+
+Contract behavior:
+- compares adapted `songsterr-fresh-isolated-polyphonic-note-evidence-v1` artifacts, not raw sequential Basic Pitch note IDs;
+- preserves `songsterr-fresh-basic-pitch-note-identity-v1` unchanged as same-inference exact integrity identity; cross-run exact SHA equality is diagnostic only;
+- uses `(nearestStructureSlot, selectedMidi)` as the semantic comparison key, reusing the frozen structure's deterministic projected slot without inventing an onset tolerance;
+- duplicate events within one semantic key are paired deterministically after sorting by source start/confidence/diagnostic end;
+- canonicalizes validated inputs by content digest so reversing CLI A/B order yields the same report;
+- measures event/key inventory drift, MIDI histogram drift, paired source-start deltas, paired confidence deltas, and diagnostic-only model-end deltas;
+- malformed/incomparable inputs fail closed for contract/version/role/reference-blind/frozen-structure mismatch, structure identity mismatch, model-setting mismatch, source-audio mismatch, unsafe provenance, non-finite event values, unsupported MIDI, candidate inconsistency, exact inference-identity inconsistency, or non-null duration leakage;
+- self-tests cover exact-copy zero variation, A/B swap invariance, onset/confidence perturbation, extra-event inventory drift, structure-slot drift, unsafe provenance, non-finite values, unsupported MIDI, duration leakage, and structure/source/model mismatch;
+- output explicitly records `thresholdsApplied: false`, `admissionDecisionMade: false`, `modelValidationComplete: false`, `mayAdvanceDelivery: false`, and `durationAuthorityChanged: false`.
+
+The measurement contract being green does **not** validate model evidence. It only provides a safe way to collect independent-run reproducibility evidence for a future bounded-variation admission decision.
 
 ## CURRENT ACCEPTANCE STATE
 
@@ -191,12 +203,11 @@ Customer-eligible events remain **0**. V2 remains authoritative. V3 remains cand
 
 ## NEXT ENGINEERING STEPS
 
-1. Implement `scripts/songsterr-fresh/compare_basic_pitch_cross_run_evidence.py` as a pure reference-blind measurement comparator over adapted model evidence. Keep exact inference hashes diagnostic-only.
-2. Add self-tests proving swap-order invariance, exact-copy zero deltas, numerical onset/confidence measurement, inventory/key drift measurement, and fail-closed rejection of malformed provenance, non-finite values, unsupported MIDI, duration leakage, structure/model/source mismatch.
-3. Add a dedicated small fresh model-evidence variation test workflow rather than modifying the deterministic core workflow or paused V3-duration diagnostics.
-4. Run/inspect that branch CI. If green, use independent fresh model-note runs to populate the measurement report; do not rerun the completed common-AVX2 portability experiment.
-5. Determine whether any onset/confidence tolerance can be justified from measured independent-run evidence and/or Basic Pitch representation semantics. If no defensible bound exists, keep admission blocked rather than inventing one.
-6. Only after a bounded-variation admission contract is justified, implemented, tested, and independently demonstrated may `modelValidationComplete` be reconsidered. Duration research remains paused until then.
-7. Update this checkpoint after each material implementation or validation finding.
+1. Inspect the existing fresh model-guitar / model-note canary and reuse its fixed Demucs + Basic Pitch path to produce at least two independent adapted evidence artifacts under the same source, frozen structure, model settings, and pinned asset contract. Do not rerun the completed common-AVX2 portability experiment.
+2. Run `compare_basic_pitch_cross_run_evidence.py` over those independent adapted artifacts and retain the measurement report plus exact hashes/provenance as diagnostics.
+3. Confirm the measurement path remains argument-order invariant and that any inventory/slot/onset/confidence differences are reported rather than normalized away.
+4. Determine whether any onset/confidence tolerance can be justified from independent-run evidence and/or Basic Pitch representation semantics. If no defensible bound exists, keep admission blocked rather than inventing one.
+5. Only after a bounded-variation admission contract is justified, implemented, tested, and independently demonstrated may `modelValidationComplete` be reconsidered. Duration research remains paused until then.
+6. Update this checkpoint after each material implementation or validation finding.
 
 The archived V143/Gomyway pipeline remains out of scope unless the user explicitly asks to resume it.
