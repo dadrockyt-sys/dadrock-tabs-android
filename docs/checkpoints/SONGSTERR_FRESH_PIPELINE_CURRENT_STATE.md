@@ -1,10 +1,10 @@
 # CURRENT STATE — Songsterr Fresh Pipeline V1
 
-Updated: 2026-09-10 01:07 America/Toronto
+Updated: 2026-09-10 01:15 America/Toronto
 Canonical branch: `songsterr-fresh-pipeline-v1`
 Canonical checkpoint: `docs/checkpoints/SONGSTERR_FRESH_PIPELINE_CURRENT_STATE.md`
 
-This is the only canonical fresh-chat checkpoint for this workstream. Earlier verbose diagnostic history remains available in Git history; this file intentionally keeps the current authoritative state, hard boundaries, active experiment, and next actions compact.
+This is the only canonical fresh-chat checkpoint for this workstream. Earlier verbose diagnostic history remains available in Git history; this file intentionally keeps the current authoritative state, hard boundaries, latest reproducibility evidence, and next actions compact.
 
 ## NON-NEGOTIABLE SCOPE
 
@@ -173,22 +173,20 @@ Identical per-host native deltas:
 Authoritative interpretation:
 - ATen CPU dispatch and oneDNN CPU dispatch are **causal numerical variables** for this fixed Demucs execution because each documented control changes exact PCM on the same host.
 - Every fixed mode reproduced exactly across the two sampled Intel hosts.
-- This does not establish Intel↔AMD convergence under a common cap.
+- This did not establish Intel↔AMD convergence under a common cap.
 - Native Intel reproduced historical `c303f0a0...`; descriptive only, never a correctness or preference signal.
 
 ## CPU-DISPATCH CONTROL VERIFICATION
 
-Upstream-supported diagnostic controls:
+Upstream-supported diagnostic controls used:
 - `ATEN_CPU_CAPABILITY=avx2`
 - `ONEDNN_MAX_CPU_ISA=AVX2`
 
-oneDNN verbose is used to verify the effective ISA. Intel oneMKL ISA controls are not being used as a cross-vendor portability mechanism.
+oneDNN verbose verifies the effective ISA. Intel oneMKL ISA controls are not being used as a cross-vendor portability mechanism. These controls remain diagnostic only; no production execution contract is selected.
 
-These controls are diagnostic only. No production execution contract is selected.
+## AUTHORITATIVE STRICT COMMON-AVX2 CROSS-HOST CANARY — CROSS-VENDOR VARIATION CONFIRMED
 
-## ACTIVE COMMON-AVX2 CROSS-HOST CANARY — LAUNCHED
-
-Purpose: directly test one fixed portability hypothesis across independent hosts: constrain **both** CPU-dispatch surfaces already proven causal, without using audio quality or downstream agreement to choose a result.
+Purpose: test one fixed portability hypothesis only: constrain both CPU-dispatch surfaces already proven causal and ask whether exact Demucs PCM converges across independent hosted CPU classes. No downstream audio/note agreement was used to choose a result.
 
 Dedicated implementation:
 - `scripts/songsterr-fresh/record_demucs_common_avx2_provenance.py`
@@ -198,44 +196,48 @@ Dedicated implementation:
   - commit `9dcb9cef95798599d2db3f243a183ff7a60b1ee5`
   - contract `songsterr-fresh-demucs-common-avx2-cross-host-comparison-v1`
 - workflow `.github/workflows/songsterr-fresh-demucs-common-avx2-cross-host-canary.yml`
-  - strict wiring commit/head `0d6fc7b90d2d673d2d4536bbbb87bd7cdda968c3`
+  - strict wiring head `0d6fc7b90d2d673d2d4536bbbb87bd7cdda968c3`
 
-Current run:
-- `34439594582`
-- event push
-- created `2026-09-10T05:04:10Z`
-- status at this checkpoint: queued
-- five independent `ubuntu-latest` jobs: a/b/c/d/e
+Authoritative run:
+- run `34439594582`: **success**
+- aggregate job `102752709333`: **success**
+- aggregate artifact `10137556244`
+- aggregate artifact digest `sha256:4551d7e384786bc366168b2ba3368c2f9daa63053bca7eae2c01e4f7a145b02f`
+- five independent observations
+- vendors observed: AMD + Intel
+- CPU models observed: AMD EPYC 7763, AMD EPYC 9V45, AMD EPYC 9V74, Intel Xeon 6973P-C
+- every host verified effective Torch AVX2 and oneDNN AVX2 before the fixed Demucs pass
+- exact pinned fixture, decoded input SHA, model asset, dependency versions, model/settings, thread limits, and diagnostic guards were held fixed
+- comparator status: `CROSS_VENDOR_PCM_VARIATION_OBSERVED`
+- `allDecodedPcmIdentical: false`
+- distinct WAV SHA groups: 3
+- distinct decoded PCM SHA groups: 3
 
-Every host must:
-1. fetch and verify the exact authorized Git blob and decoded separation SHA;
-2. install the same pinned Demucs separation dependencies;
-3. record native CPU vendor/model and native Torch CPU capability **before** caps;
-4. verify `ATEN_CPU_CAPABILITY=avx2` causes Torch to report AVX2;
-5. verify oneDNN verbose under `ONEDNN_MAX_CPU_ISA=AVX2` reports an AVX2 path;
-6. execute exactly one fixed Demucs pass with both caps active;
-7. verify the exact pinned HF model asset;
-8. record WAV SHA, decoded float32 PCM SHA, RMS/geometry, host/image/region/runtime provenance, and the effective controls;
-9. upload diagnostics/hashes only, not stem audio.
+Exact hash groups:
 
-The aggregate comparator reports vendor/model coverage, exact hash groups, and one of these descriptive states only:
-- `CROSS_VENDOR_EXACT_PCM_CONVERGENCE_OBSERVED`
-- `CROSS_VENDOR_PCM_VARIATION_OBSERVED`
-- `SINGLE_VENDOR_EXACT_PCM_CONVERGENCE_ONLY`
-- `SINGLE_VENDOR_PCM_VARIATION_OBSERVED`
+| Samples | WAV SHA-256 | PCM SHA-256 |
+| --- | --- | --- |
+| b, e | `4227a41f58817d32e9e122857c924c486afdc1e411a0a173bec2dfcc0c7b6b81` | `cf07e142fccf92329e69744a2c2fa886d7d7cdccce0b57763fe8d3ea8d984ba2` |
+| a, c | `5b3e7c6feb153ba427303d5f2688cf3442faa74bb4e98ce298ac426824c8db33` | `6d3ac44cd3f0156253ff7b820b72f5eda8d59eb8c60f8abd68a87c0598ec4987` |
+| d | `db6e52b012232aae18419de9d2efdccf3e8adf92ee6524ffe52573973d164ea0` | `62bf61909fa52529e2c1cac980a02d546910f5daed34b117769283ec3df4a49a` |
 
-Hard guards:
-- reference blind / diagnostic only
-- no Basic Pitch
-- no V2/V3 release invocation
-- no note/pitch/duration/sourceEnd mutation
-- no scorer/reference tab
-- no preferred-stem selection
-- no threshold selection/sweep
-- no downstream-agreement objective
-- no acceptance/customer delivery
-- no archived V143 logic
-- `productionAuthorized: false`
+Per-host artifacts:
+- a `10137543653`, digest `sha256:86e477e3664db81cb17158876611b4068d2b1f38c17839cdd9c47dd4e3c5fe1f`
+- b `10137543684`, digest `sha256:7916fe1254f93eeb765f9a1de644c0277acb0ae71e15c07aa9e6eabe5e8730ed`
+- c `10137537337`, digest `sha256:27357b933fe8ae387099498a8677af7b86e27fa2cbb34b7844fe3c3530d86eeb`
+- d `10137540776`, digest `sha256:20e4301ae1513bc193f0825932d31dfb0f512e64200fe1293eaf5acaece5ea96`
+- e `10137547512`, digest `sha256:851d7424dfecc435b6cd504ca1f1e712263b03d8223da8071f6eb5f2a2815b4c`
+
+Additional bounded evidence:
+- samples b and e were independent AMD EPYC 7763 hosts and reproduced the same `4227a41f...` WAV / `cf07e142...` PCM result despite different hosted runner-image observations in the broader test history.
+- the earlier preliminary run `34439336421` sampled only AMD EPYC 7763 hosts and was therefore cross-vendor-inconclusive; it is supporting repeatability evidence only, not the portability answer.
+
+Authoritative interpretation:
+- **Reject the hypothesis that combined `ATEN_CPU_CAPABILITY=avx2` + `ONEDNN_MAX_CPU_ISA=AVX2` makes generic GitHub-hosted CPU execution byte/PCM-identical across Intel and AMD.**
+- The documented dispatch controls are real causal variables, but they are insufficient to normalize the remaining CPU/microarchitecture/runtime numerical boundary.
+- Do not select a preferred vendor, CPU, WAV hash, or PCM hash from downstream agreement or perceived audio quality.
+- Do not promote either AVX2 cap to Production from these diagnostics.
+- Do not continue with broad ISA/backend knob sweeps.
 
 ## CURRENT ACCEPTANCE STATE
 
@@ -245,18 +247,19 @@ Blockers remain:
 - `MODEL_EVIDENCE_VALIDATION_PENDING`
 - `DURATION_EVIDENCE_INCOMPLETE`
 
-Customer-eligible events remain **0**. V2 remains authoritative. V3 remains candidate-only. Basic Pitch output is not ground truth. No reference scorer/tab/archived logic. No decoded BP end as duration. No generic next-onset duration. No same-pitch reattack default duration. No threshold sweep. No acceptance promotion from self-consistency alone.
+Customer-eligible events remain **0**. V2 remains authoritative. V3 remains candidate-only. Basic Pitch output is not ground truth. No reference scorer/tab/archived logic. No decoded BP end as duration. No generic next-onset duration. No same-pitch reattack default duration. No threshold sweep. No acceptance promotion from self-consistency or downstream agreement alone.
 
-## NEXT ENGINEERING STEPS
+## FRESH-CHAT NEXT ENGINEERING STEPS
 
-1. Finish run `34439594582` and inspect all five strict common-AVX2 provenance records plus the aggregate comparison.
-2. If Intel and AMD are both sampled and exact PCM converges, record that as a **reproducibility-contract candidate only** and require a second independent confirmation run before any production runtime decision.
-3. If Intel and AMD are both sampled and PCM differs, record that the combined documented dispatch caps are insufficient; isolate the remaining math/backend boundary without using downstream behavior to choose a vendor or hash.
-4. If only one CPU vendor is sampled, record the bounded inconclusive result and repeat only this same fixed hypothesis until cross-vendor evidence exists; do not infer convergence from one vendor.
-5. No CPU cap may be promoted to Production from this diagnostic alone.
-6. Keep duration-rule research paused until upstream Demucs reproducibility is characterized enough to define a reproducible execution contract or explicitly accept bounded numerical variation without downstream-agreement selection.
-7. Preserve stable cross-run event identity, both blockers, V2 authority, V3 candidate-only state, `modelValidationComplete: false`, and customer eligibility 0.
-8. Do not use reference tabs/scorers, decoded BP note end as duration, generic next onset as duration, same-pitch reattack as default duration, optimizer/threshold sweeps, or archived V143/Gomyway logic.
-9. Update this checkpoint immediately after host coverage is known and after the authoritative common-AVX2 result.
+Start here in the next chat. Do not repeat the completed common-AVX2 portability experiment unless a specific new reason emerges.
 
-The archived V143/Gomyway pipeline remains out of scope.
+1. **Inspect the repository and available CI/infrastructure for an already-existing controlled compute path** suitable for Demucs: self-hosted runner labels, pinned container/VM definitions, dedicated CPU class, deployment worker, or other execution surface where the CPU/runtime boundary can actually be fixed. This is inspection only first; do not change Production.
+2. If a controlled execution surface already exists, design one **reference-blind reproducibility canary** for that exact compute contract: exact authorized fixture/input/model/dependencies/Demucs settings, at least two independent job/process lifecycles, exact WAV + decoded PCM hashes, environment provenance, and all current hard guards. No Basic Pitch, duration logic, scorer, reference tab, downstream-agreement objective, or customer acceptance in this canary.
+3. If no controllable CPU/runtime surface exists, document that generic `ubuntu-latest` is not a byte-reproducible Demucs execution contract for this model. Then narrow the engineering decision to either (a) introducing a genuinely pinned compute class for model execution or (b) explicitly accepting bounded upstream numerical variation and validating downstream invariants without ever selecting a vendor/hash by agreement. Do not silently choose between these policies.
+4. Do **not** spend the next step on more `ATEN_CPU_CAPABILITY` / oneDNN ISA combinations, oneMKL controls, backend toggles, thread-count sweeps, or optimizer sweeps. The current evidence already shows that the two documented CPU-dispatch caps are insufficient cross-vendor.
+5. Keep duration-rule research paused until the upstream Demucs execution boundary is either reproducibly pinned or an explicit bounded-variation policy is defined. V2 remains the authoritative duration source during this pause; V3 remains candidate-only.
+6. Once the upstream execution policy is resolved, continue **model-evidence validation first**, still reference-blind and preserving stable event identity. Only after that should V3 duration evidence be reconsidered for promotion against independently justified evidence; never use decoded Basic Pitch note-off, generic next onset, or same-pitch reattack as default duration.
+7. Preserve throughout: frozen structure, `/ai-tab` flow, stable cross-run event identity, both blockers, `modelValidationComplete: false`, customer eligibility 0, V2 authority, V3 candidate-only status, and all fail-closed guards.
+8. Keep this checkpoint updated after each material finding or branch-only implementation change.
+
+The archived V143/Gomyway pipeline remains out of scope unless the user explicitly asks to resume it.
