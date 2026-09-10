@@ -155,7 +155,7 @@ jobs:
           ONEDNN_VERBOSE=1 python - <<'PY' > "$BASE/onednn-native.log" 2>&1
           import torch
           x = torch.randn(2, 16, 64, 64)
-          m = torch.nn.Conv2d(16, 32, 3).eval()
+          m = torch.nn.Conv2d(16, 16, 3).eval()
           with torch.no_grad():
               for _ in range(3):
                   x = m(x)
@@ -165,7 +165,7 @@ jobs:
           ONEDNN_VERBOSE=1 ONEDNN_MAX_CPU_ISA=AVX2 python - <<'PY' > "$BASE/onednn-avx2.log" 2>&1
           import torch
           x = torch.randn(2, 16, 64, 64)
-          m = torch.nn.Conv2d(16, 32, 3).eval()
+          m = torch.nn.Conv2d(16, 16, 3).eval()
           with torch.no_grad():
               for _ in range(3):
                   x = m(x)
