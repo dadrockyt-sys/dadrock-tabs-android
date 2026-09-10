@@ -165,16 +165,15 @@ Fixed activation + spectral rule:
 Stable fallback evidence:
 - hosted-runner inventories have produced 1,138 or 1,139 model notes
 - 1,137 exact MIDI/start matches across historical variants
-- all 84 fallback events present in both attempts
-- all 84 fallback durations exactly equal
-- historical output variation is isolated to extra unresolved detections and must never become a hardcoded acceptance count
+- all 84 fallback-resolved events have remained stable in compared historical variants
+- historical output variation is isolated to extra/unresolved detections and activation rejection classification drift; it must never become a hardcoded acceptance count
 
 Representative 1,138-note V3 environment:
 - V2 577 resolved / 561 unresolved
 - V3 +84 fallback = 661 resolved / 477 unresolved
 - customer events 0 / delivery false
 
-Representative 1,139-note V3 environment:
+Representative 1,139-note V3 environments:
 - V2 577 resolved / 562 unresolved
 - V3 +84 fallback = 661 resolved / 478 unresolved
 - customer events 0 / delivery false
@@ -406,24 +405,12 @@ Corrected lightweight guard CI:
 - job `102729956896`
 - head `60bad8458ca846e03f433472c9b53111d1f8d6c7`
 - conclusion success
-- all earlier diagnostics remain green
-- trajectory probe compiles and deterministic self-test passes
 
 Corrected green full canary:
 - run `34432234675`
 - job `102729956943`
 - head `60bad8458ca846e03f433472c9b53111d1f8d6c7`
 - conclusion success
-- exact authorized fixture hash verified
-- frozen structure rebuilt and accepted
-- deterministic Demucs separation/model asset verified
-- duration-free Basic Pitch + activation sidecar bound
-- unchanged V2 and candidate V3 release stages passed
-- green spectral-rejection context rebuilt
-- fixed post-valley trajectory probe passed
-- exact `(onsetId, category, midi)` parity passed for all 160 rows
-- fail-closed boundary assertions passed
-- deterministic self-test passed
 - artifact `10135045827`
 - digest `sha256:dc1cebfff20dd1d8856ec2df27129ee694edda40fe12ee5178309f0a87c1c83b`
 - expires 2026-09-24T03:16:25Z
@@ -444,21 +431,14 @@ Insufficient spectral corroboration, 76 total:
 - +200 ms available 58/76; median ~+6.7710 dB; 45/58 fell further, 13/58 rose
 
 Paired same-event subset with a full +200 ms pre-reattack observation window:
-- corroborated 42 events: median valley-to-observation change ~-0.7969 dB at +50 ms, ~-1.8218 dB at +100 ms, ~-6.0886 dB at +200 ms
+- corroborated 42 events: median ~-0.7969 dB at +50 ms, ~-1.8218 dB at +100 ms, ~-6.0886 dB at +200 ms
 - insufficient 58 events: median ~+3.8207 dB at +50 ms, ~+5.1212 dB at +100 ms, ~+6.7710 dB at +200 ms
-
-Additional insufficient-class context:
-- all 39 events whose selected-pitch CQT level was higher at the activation valley than at onset still have a valid +50 ms window
-- their median change from valley to +50 ms is ~+2.4045 dB; 26/39 fall further by +50 ms
-- 36/39 have +100 ms coverage; median valley-to-+100 ms change ~+3.7347 dB
-- 29/39 have +200 ms coverage; median valley-to-+200 ms change ~+9.8028 dB
 
 Descriptive interpretation only:
 - the insufficient-CQT class commonly continues losing selected-pitch acoustic energy after Basic Pitch activation has already entered the fixed low valley
 - the corroborated class has already reached a substantially lower selected-pitch CQT state at the valley and often rebounds afterward
-- the paired +200 ms subset preserves the same direction of separation, reducing concern that the headline pattern is only caused by different horizon availability
-- this strengthens the activation-versus-audio temporal disagreement hypothesis on this fixture
-- it does not establish a correct release timestamp, a fixed delay, a new cutoff, a changed 6 dB threshold, transcription correctness, or promotion evidence
+- this strengthens an activation-versus-audio temporal disagreement hypothesis on this fixture
+- it does not establish a correct release timestamp, fixed delay, new cutoff, changed 6 dB threshold, transcription correctness, or promotion evidence
 - fixed +50/+100/+200 ms horizons must not be repurposed as release candidates
 
 ## POST-VALLEY STFT HARMONIC CROSS-CHECK — GREEN
@@ -475,29 +455,10 @@ Purpose and fixed representation:
 - raw isolated-guitar waveform STFT, not CQT
 - `n_fft=2048`, hop 512, Hann window, `center=False`
 - fixed harmonic-comb power from nearest FFT bins for harmonics 1–4 below Nyquist
-- `10*log10(mean(sum(selected harmonic-bin power)))`
-- no Basic Pitch activation values are used by the STFT measurement itself
 - no release search or alternate release timestamp
-
-Hard guards:
-- descriptive-only / reference-blind
-- consumes the existing spectral-rejection context only for fixed identities/category/valley/reattack boundary
-- exact isolated-stem SHA must match source context
-- no duration/sourceEnd writes
-- no pitch mutation
-- no model invocation inside probe
-- no decoded model end
-- no next-onset or same-pitch-reattack duration
-- fixed observations are not duration
-- no alternate release search/output
-- no delay or acceptance threshold
-- no release-rule proposal
-- no threshold selection/sweep
-- no acceptance authority
 
 Important timing correction:
 - initial STFT draft mapped fixed observation time to `floor(time * sr / hop)`, which with `center=False` could begin the first STFT frame slightly before the requested valley/horizon
-- this was caught before any STFT result was accepted
 - corrected implementation uses `ceil(...)`, records requested and actual observation start, and requires each window to begin at or after the fixed observation time
 - first full STFT canary run `34433053082` is superseded and must not be used as evidence
 
@@ -506,20 +467,17 @@ Corrected lightweight guard CI:
 - job `102732687141`
 - head `3e980a8617a1134dabbf9bf545af63a240162130`
 - conclusion success
-- all prior diagnostic compile/self-tests remain green
 
 Corrected green full canary:
 - run `34433150157`
 - job `102732687059`
 - head `3e980a8617a1134dabbf9bf545af63a240162130`
 - conclusion success
-- exact authorized fixture, frozen structure, deterministic Demucs/model asset, duration-free Basic Pitch binding, unchanged V2/V3, green spectral context, corrected STFT measurement, parity guards, self-test and artifact upload all passed
 - artifact `10135364820`
 - digest `sha256:e6401de502cc6159621274a0a5fd39dd9c321d6451f445d07a49cd85cda570c7`
 - expires 2026-09-24T03:30:48Z
 - model note count 1,139
-- source population remained exactly 84 corroborated / 76 insufficient
-- all 160 source-row identities/categories were preserved within the run
+- source population 84 corroborated / 76 insufficient
 
 Observed STFT valley-to-fixed-horizon change (`valleyMinusObservedDb`; positive means less harmonic power than at the valley):
 
@@ -533,22 +491,98 @@ Insufficient spectral corroboration, 76 total:
 - +100 ms available 63/76; median ~+0.4396 dB; 35/63 fell further and 28/63 rose
 - +200 ms available 53/76; median ~+1.8762 dB; 32/53 fell further and 21/53 rose
 
-Same-event subset with full +200 ms STFT coverage:
-- corroborated 34: median ~-1.2590 dB at +50 ms, ~-1.3822 dB at +100 ms, ~-0.2511 dB at +200 ms
-- insufficient 53: median ~-0.2853 dB at +50 ms, ~+0.4396 dB at +100 ms, ~+1.8762 dB at +200 ms
-
-Cross-environment identity check against the corrected CQT trajectory artifact:
-- Basic Pitch index-based `onsetId` strings can shift when the hosted environment emits 1,138 versus 1,139 total notes, so raw IDs are not used as a cross-run identity authority
-- exact `(selected MIDI, sourceStartSeconds)` matching recovers all 160/160 activation-qualified events between the CQT and STFT runs
-- all 160/160 retain the same corroborated/insufficient category under that exact MIDI/start join
-- this is reproducibility/context evidence only, not ground truth
-
 Descriptive interpretation only:
 - STFT gives weaker separation than selected-bin CQT and does not support treating +50 ms as a universal delayed-decay point
 - at +100 and +200 ms, the insufficient group shows modest median continued harmonic-power decay while the corroborated group is median rebound/roughly flat
 - event-wise CQT/STFT direction agreement is only moderate, so the two representations are not interchangeable
-- the independent late-horizon tendency is compatible with the activation-versus-audio temporal disagreement hypothesis, but it does not prove a common physical release timestamp
 - no fixed horizon, CQT threshold, STFT power change, or representation agreement may be promoted into a duration rule from this fixture
+
+## SAME-RUN CQT ↔ STFT REPRESENTATION COMPARISON — GREEN
+
+Comparator: `scripts/songsterr-fresh/compare_v3_post_valley_representations.py`
+Contract: `songsterr-fresh-v3-post-valley-representation-comparison-v1`
+Implementation: `e277516b181bf87dc88cc8700f882437306962ff`
+Guard wiring: `1b1069997133ac0600c04bc38f013ab4469939b6`
+Full same-run canary wiring: `9f8ed40cd5fdbbecd3ea822c22ac404ea1d5a9c8`
+
+Comparator boundaries:
+- pure JSON; invokes no DSP and no model
+- requires identical same-run audio SHA, source-context SHA, structure identity, note-inference identity and inference-bundle identity
+- requires exact row order/identity tuple `(onsetId, category, MIDI, sourceStartSeconds, observedValleySeconds, samePitchReattackSeconds)`
+- statistics use only horizons available in both representations
+- reports CQT/STFT delta distributions, Pearson correlation, and direction combinations
+- defines no agreement threshold
+- no duration/sourceEnd write
+- no pitch rewrite
+- no release search or release timestamp
+- no threshold selection/sweep
+- no acceptance authority
+
+Lightweight guard:
+- run `34433942345`
+- job `102735025896`
+- head `1b1069997133ac0600c04bc38f013ab4469939b6`
+- conclusion success
+- all prior diagnostic guards remain green
+
+Green controlled full canary:
+- run `34434013368`
+- job `102735243846`
+- head `9f8ed40cd5fdbbecd3ea822c22ac404ea1d5a9c8`
+- conclusion success
+- exact fixture, pinned stack, frozen structure, fixed-setting Demucs/model asset, one duration-free Basic Pitch inference/binding, unchanged V2/V3, spectral context, corrected CQT, corrected STFT, comparator, parity assertions, three self-tests and artifact upload all passed
+- artifact `10135685374`
+- digest `sha256:3c46d3a1d13e0f946443ea0a990eb422b91c659e5779d2a14a09effc99c946d4`
+- expires 2026-09-24T03:45:38Z
+- model note count 1,139
+- unchanged V2: 577 resolved / 562 unresolved
+- unchanged candidate V3: 661 resolved / 478 unresolved
+- activation-qualified comparison population this environment: 159 = 84 corroborated + 75 insufficient
+
+Same-run paired representation results:
+
+Corroborated:
+- +50 ms: 72 paired; CQT median ~+0.1691 dB, STFT median ~-1.0836 dB, Pearson ~0.1133, direction agreement ~52.78%; direction counts 15 both-decay / 23 both-rise / 21 CQT-decay-STFT-rise / 13 CQT-rise-STFT-decay
+- +100 ms: 55 paired; CQT median ~-1.4867 dB, STFT median ~-2.1594 dB, Pearson ~0.2257, direction agreement ~52.73%; direction counts 8 / 21 / 16 / 10
+- +200 ms: 34 paired; CQT median ~-5.4341 dB, STFT median ~-0.2512 dB, Pearson ~0.1389, direction agreement ~52.94%; direction counts 6 / 12 / 5 / 11
+
+Insufficient spectral corroboration:
+- +50 ms: 69 paired; CQT median ~+3.6670 dB, STFT median ~-0.2853 dB, Pearson ~0.2262, direction agreement ~56.52%; direction counts 27 both-decay / 12 both-rise / 23 CQT-decay-STFT-rise / 7 CQT-rise-STFT-decay
+- +100 ms: 63 paired; CQT median ~+4.7532 dB, STFT median ~+0.4396 dB, Pearson ~0.2717, direction agreement ~60.32%; direction counts 31 / 7 / 21 / 4
+- +200 ms: 53 paired; CQT median ~+6.8407 dB, STFT median ~+1.8761 dB, Pearson ~0.3119, direction agreement ~62.26%; direction counts 27 / 6 / 15 / 5
+
+Descriptive interpretation only:
+- same-run control removes cross-run stem/environment mismatch from the CQT-versus-STFT comparison
+- correlation remains low in both groups, so the representations measure materially different local behavior and cannot substitute for each other
+- insufficient events show somewhat more directional agreement at later horizons than corroborated events, and both representations have positive median decay by +100/+200 ms there
+- substantial disagreement remains, especially at +50 ms and in the corroborated class
+- this is compatible with delayed acoustic decay after the activation valley for part of the insufficient population, but it does not define a physical release time or a representation-consensus rule
+- no correlation, agreement rate, direction combination, or horizon may become a duration or acceptance threshold from this fixture
+
+## DEMUCS HOSTED-RUNNER BYTE-REPRODUCIBILITY — OPEN ISSUE
+
+Newly observed during representation work:
+- exact separation-input SHA is stable across the compared canaries: `e03e1885185f4983b3eeaa66f36510b7709d607c14010f964e0aad427ecc474a`
+- pinned Demucs model identity/settings are unchanged
+- nevertheless, isolated guitar WAV SHA-256 differs across hosted runs:
+  - corrected CQT canary `34432234675`: `4227a41f58817d32e9e122857c924c486afdc1e411a0a173bec2dfcc0c7b6b81`
+  - corrected STFT canary `34433150157`: `c303f0a0d99f94e2bddedebd0679cc5034aa9505c350cc28a5200d4c419637af`
+  - controlled same-run comparator canary `34434013368`: `5b3e7c6feb153ba427303d5f2688cf3442faa74bb4e98ce298ac426824c8db33`
+- therefore previous wording such as “deterministic Demucs separation” means fixed deterministic configuration/model identity within the pipeline, not demonstrated byte-identical cross-run output
+- cross-run CQT/STFT comparison is not authoritative for representation agreement; the new same-run comparator is the controlled evidence source
+
+Observed downstream classification drift associated with hosted-run variation:
+- corrected STFT run had activation-qualified population 160 = 84 corroborated + 76 insufficient and 372 `NO_SUSTAINED_SUBTHRESHOLD_ACTIVATION`
+- controlled same-run comparator environment has 159 = 84 corroborated + 75 insufficient and 373 `NO_SUSTAINED_SUBTHRESHOLD_ACTIVATION`
+- exact MIDI 64 / source start ~113.071807709751 s was `INSUFFICIENT_SPECTRAL_CORROBORATION` in the earlier STFT environment but became `NO_SUSTAINED_SUBTHRESHOLD_ACTIVATION` in the controlled comparator environment
+- the fallback-resolved count remains 84; this one-event shift is inside unresolved fallback rejection classification
+- Basic Pitch index `onsetId` also shifts (`...000665` vs `...000664`), reinforcing that cross-run identity must use stable content identity such as exact MIDI/start rather than raw sequential index alone
+
+Interpretation boundary:
+- this is a reproducibility engineering issue, not evidence that either hosted-run stem is more correct
+- do not choose a “preferred” stem by downstream agreement on this fixture
+- do not tune Demucs/Basic Pitch/release thresholds to force the historical 160-row inventory
+- characterize/stabilize upstream reproducibility before relying on cross-run continuous DSP statistics
 
 ## CURRENT ACCEPTANCE STATE
 
@@ -573,14 +607,16 @@ No acceptance promotion from self-consistency alone.
 
 ## NEXT ENGINEERING STEPS — FRESH CHAT HANDOFF
 
-1. Treat both post-valley CQT and corrected STFT harmonic studies as complete and descriptive. Do not convert +50/+100/+200 ms into a release delay or cutoff.
-2. The next useful diagnostic is a same-run, read-only CQT-versus-STFT trajectory comparator so both representations use one identical Basic Pitch environment, the same 160 source identities, and the same fixed valley/horizon timestamps. It must report agreement/correlation only and must not choose a threshold or release rule.
-3. Any same-run representation comparator must key exact source identity robustly and keep Basic Pitch index IDs diagnostic-only; no cross-run index-ID assumption.
-4. Do not tune the 6 dB, activation, STFT, or time-delay thresholds on this fixture. No optimizer sweep.
-5. Keep rapid-repeat (`NO_SUSTAINED_SUBTHRESHOLD_ACTIVATION`) separate from insufficient-CQT mechanisms.
-6. Keep all diagnostic CI guards. Future changes must reject altered no-mutation/no-model/no-threshold/no-release-search properties.
-7. Keep V2 authoritative and V3 candidate-only. Any future V3 promotion must be an explicit documented branch decision with V2 preserved for regression comparison.
-8. Model-validation scaffold remains fail-closed. Do not add an accepting path until a genuinely independent validation authority/evidence source is explicitly designed and justified.
-9. Before customer exposure, independently validate the model path and obtain complete required duration evidence; evaluator/delivery stay fail-closed until both blockers are legitimately cleared.
+1. Treat the CQT trajectory, corrected STFT harmonic study, and same-run representation comparator as complete and descriptive. Do not convert +50/+100/+200 ms, correlation, or agreement into a release rule.
+2. Prioritize the newly exposed Demucs hosted-runner byte-reproducibility issue before more duration-rule research. The next safe experiment is to run the exact same verified separation input through the exact same pinned Demucs configuration twice inside one runner, hash both stems, and report sample-level difference statistics if hashes differ.
+3. The Demucs reproducibility probe must be reference-blind and diagnostic-only: record model asset identity, runtime/CPU/Torch metadata, input SHA, both output SHAs, and waveform difference summaries; it must not choose a preferred output, mutate notes, or affect duration/acceptance.
+4. If duplicate separation is byte-identical within one runner while different hosted runs remain different, characterize the runner/environment boundary rather than tuning downstream thresholds around it.
+5. Keep cross-run identity based on stable event content (`MIDI` + exact source start and bound inference identities where applicable), not sequential Basic Pitch index alone.
+6. Do not tune the 6 dB, activation, STFT, Demucs, or time-delay thresholds on this fixture. No optimizer sweep.
+7. Keep rapid-repeat (`NO_SUSTAINED_SUBTHRESHOLD_ACTIVATION`) separate from insufficient-CQT mechanisms; the observed one-event cross-run shift is diagnostic variance, not permission to merge reasons.
+8. Keep all diagnostic CI guards. Future changes must reject altered no-mutation/no-model/no-threshold/no-release-search properties.
+9. Keep V2 authoritative and V3 candidate-only. Any future V3 promotion must be an explicit documented branch decision with V2 preserved for regression comparison.
+10. Model-validation scaffold remains fail-closed. Do not add an accepting path until a genuinely independent validation authority/evidence source is explicitly designed and justified.
+11. Before customer exposure, independently validate the model path and obtain complete required duration evidence; evaluator/delivery stay fail-closed until both blockers are legitimately cleared.
 
 The archived V143/Gomyway pipeline remains out of scope.
