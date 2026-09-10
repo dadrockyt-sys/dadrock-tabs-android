@@ -149,7 +149,7 @@ jobs:
               'primaryLoader': 'huggingface',
               'hfRepoId': 'adefossez/HTDemucs-6s',
               'hfPinnedRevision': '3c5ee475be622df764938de97e4281a7b07ffa58',
-              'hfAssetUploadRevision': '053e1404489b3dc58bf718224fac4b7316de8c93b',
+              'hfAssetUploadRevision': '053e1404489b3dc58bf718224fac4b7316de8c93',
               'assetFilename': '5c90dfd2.safetensors',
               'assetSha256': 'd2a1745f0744721f6b8ca5bf469b67c651ea5ed1b52998cab033b2158609d411',
           }
