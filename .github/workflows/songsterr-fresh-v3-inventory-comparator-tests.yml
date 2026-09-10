@@ -15,6 +15,7 @@ on:
       - 'scripts/songsterr-fresh/probe_v3_spectral_valley_neighborhood_context.py'
       - 'scripts/songsterr-fresh/probe_v3_post_valley_spectral_trajectory_context.py'
       - 'scripts/songsterr-fresh/probe_v3_post_valley_stft_harmonic_context.py'
+      - 'scripts/songsterr-fresh/compare_v3_post_valley_representations.py'
 
 permissions:
   contents: read
@@ -44,7 +45,8 @@ jobs:
             scripts/songsterr-fresh/probe_v3_activation_spectral_rejection_context.py \
             scripts/songsterr-fresh/probe_v3_spectral_valley_neighborhood_context.py \
             scripts/songsterr-fresh/probe_v3_post_valley_spectral_trajectory_context.py \
-            scripts/songsterr-fresh/probe_v3_post_valley_stft_harmonic_context.py
+            scripts/songsterr-fresh/probe_v3_post_valley_stft_harmonic_context.py \
+            scripts/songsterr-fresh/compare_v3_post_valley_representations.py
 
       - name: Prove inventory comparator remains fail-closed and deterministic
         run: python scripts/songsterr-fresh/compare_v3_unresolved_duration_inventories.py --self-test
@@ -66,3 +68,6 @@ jobs:
 
       - name: Prove post-valley STFT harmonic probe remains read-only
         run: python scripts/songsterr-fresh/probe_v3_post_valley_stft_harmonic_context.py --self-test
+
+      - name: Prove same-run representation comparator remains read-only
+        run: python scripts/songsterr-fresh/compare_v3_post_valley_representations.py --self-test
