@@ -413,14 +413,9 @@ Static independence guard rejects direct model/process/network imports in the pr
 - delivery false
 - 98/98 tests
 - artifact `10132278606`
+- ZIP size 757,426 bytes
 - digest `sha256:953af38fb6216706dab989d98b83c4fb2edba9826b7a810dda20ee15052766a6`
-
-Interpretation boundary:
-- this is independent audio-domain support evidence, not ground truth
-- semitone-local support is substantially stronger than octave discrimination
-- do not collapse these metrics into a single accuracy score
-- do not derive an acceptance threshold from this fixture
-- do not use self-consistency to clear `MODEL_EVIDENCE_VALIDATION_PENDING`
+- expires `2026-09-24T01:19:08Z`
 
 ### Structure-trigger dispatcher — green
 
@@ -440,79 +435,98 @@ It dispatched second canary run `34425140684` at the same head.
 
 ### Second green canary — completed
 
-Run:
-`34425140684`
-
-Job:
-`102708677916`
-
-Head:
-`cf2afeb357b247d6cccaf648eef32dd3a52373fb`
-
-Runner:
-- ubuntu-24.04
-- image `20260831.293.1`
-- Azure `westcentralus`
-- Python 3.10.21
-- Node 22.23.2
-
-Decoded input SHAs:
-- analysis WAV `824af60bbc3d701c8c1f085194be2acf59f0ac5d0ae4133e763eadb9793ca873`
-- separation WAV `e03e1885185f4983b3eeaa66f36510b7709d607c14010f964e0aad427ecc474a`
-
-Frozen structure:
-- identity `fnv1a32:2f493225`
-- duration 210.6746485260771 s
-- pickup 0.6501587301587302 s
-- 115 measures / 113 tempo segments
-- 4/4 straight
-- accepted true
-
-Demucs / Basic Pitch:
+- run `34425140684`
+- job `102708677916`
+- head `cf2afeb357b247d6cccaf648eef32dd3a52373fb`
+- runner ubuntu-24.04 image `20260831.293.1`, Azure `westcentralus`
+- Python 3.10.21 / Node 22.23.2
+- analysis WAV SHA `824af60bbc3d701c8c1f085194be2acf59f0ac5d0ae4133e763eadb9793ca873`
+- separation WAV SHA `e03e1885185f4983b3eeaa66f36510b7709d607c14010f964e0aad427ecc474a`
+- frozen structure identity `fnv1a32:2f493225`, accepted true
 - guitar stem SHA `4227a41f58817d32e9e122857c924c486afdc1e411a0a173bec2dfcc0c7b6b81`
 - Basic Pitch 1,138 notes
 - note identity SHA `e85323e5b7449ac84be7ad6076ed3ee9c2da1e9a37b3c64247637e4b82dcbe77`
-- start clusters 1,031
-- polyphonic start clusters 96
-- max cluster size 4
+- start clusters 1,031 / polyphonic start clusters 96 / max cluster size 4
 - exactly one Basic Pitch `predict()` invocation
-- decoded model ends diagnostic only
-
-Probe A/B:
-- byte-identical inside the run
-- A SHA `534015d01246965228bfc6988d92117861ff2bcd360b32060ec1f8a95b7e08db`
-- B SHA `534015d01246965228bfc6988d92117861ff2bcd360b32060ec1f8a95b7e08db`
-- exact same probe SHA as first canary
+- probe A/B byte-identical
+- probe A/B SHA `534015d01246965228bfc6988d92117861ff2bcd360b32060ec1f8a95b7e08db`
 - local semitone rank histogram 914 / 112 / 96 / 13 / 3
 - octave rank histogram 793 / 323 / 22
-- selected-minus-best-semitone-neighbor: mean 1.9064934408727556 dB; median 3.0905303955078125 dB
-- selected-minus-best-compared-alternative: mean -1.4956962291301867 dB; median 1.403792381286621 dB
-- selected-pitch-above-floor: mean 38.670555924531236 dB; median 39.32196750640869 dB
-- selected-minus-octave-above: mean 8.893831113939335 dB; median 8.784372806549072 dB
-- selected-minus-octave-below: mean 27.434707292563466 dB; median 27.877296447753906 dB
-
-Fail-closed validation remained intact:
+- selected-minus-best-semitone-neighbor mean 1.9064934408727556 dB; median 3.0905303955078125 dB
+- selected-minus-best-compared-alternative mean -1.4956962291301867 dB; median 1.403792381286621 dB
+- selected-pitch-above-floor mean 38.670555924531236 dB; median 39.32196750640869 dB
+- selected-minus-octave-above mean 8.893831113939335 dB; median 8.784372806549072 dB
+- selected-minus-octave-below mean 27.434707292563466 dB; median 27.877296447753906 dB
 - exact MIDI preserved 1,138/1,138
 - `modelValidationComplete` false
-- blockers include `MODEL_EVIDENCE_VALIDATION_PENDING` and `DURATION_EVIDENCE_INCOMPLETE`
+- blockers unchanged
 - customer eligible 0
 - delivery false
 - structured render false
 - 98/98 tests
-
-Artifact:
-- name `songsterr-fresh-independent-pitch-support-evidence`
-- ID `10132507650`
+- artifact `10132507650`
 - ZIP size 757,426 bytes
-- 15 files
 - digest `sha256:d0c01375094055377c04739ec41eef41cb450cafccac654137359f72ac543585`
 - expires `2026-09-24T01:28:05Z`
 
-### Cross-run semantic comparison status
+### Cross-run semantic comparison — GREEN
 
-The summaries already show exact agreement on stem SHA, Basic Pitch note count, note-identity SHA, probe SHA, both rank histograms, and all recorded continuous dB summaries. This strongly suggests exact reproduction for this runner pair, but the required artifact-to-artifact event comparison is still pending at this checkpoint update.
+The two artifacts were downloaded and extracted, then compared directly.
 
-Do not treat summary equality alone as the completed cross-run proof. Inspect both artifacts and report exact matched/unmatched identities and start-time deltas before closing this milestone.
+Archive-level observation:
+- both ZIPs are 757,426 bytes and contain 15 files
+- archive digests differ (`953af38f…` versus `d0c01375…`)
+- every one of the 15 extracted payload files is byte-identical across the two runs
+- therefore the differing ZIP digest is archive-container variation, not evidence-payload variation
+
+Exact extracted payload comparison:
+- all 15 files have equal file sizes and equal SHA256 hashes across runs
+- `basic-pitch-guitar-notes.json` SHA `494c48921c279277f5eba5a6678f70f081d95781136fef1e43e2304fec27faa2`
+- `raw-model-note-evidence-duration-free.json` SHA `ab9a5bfcd5ff12f368dcbe1bfe1e10a53ba7785cdeac3446ae120b3a16a2a090`
+- `adapted-model-note-evidence-duration-free.json` SHA `4b2940c910cf63c23ebb6a1c834a86eeb3283328c7e2190dabfd3ac19a75757b`
+- `independent-pitch-support-a.json` SHA `534015d01246965228bfc6988d92117861ff2bcd360b32060ec1f8a95b7e08db`
+- `independent-pitch-support-b.json` SHA `534015d01246965228bfc6988d92117861ff2bcd360b32060ec1f8a95b7e08db`
+- `model-pipeline-duration-free-result.json` SHA `4d899521d166157b38789c936b452e994eb51c317636583944c225e7899ebd5e`
+- `adapted-structure-map.json` SHA `8cc62bd649aa921643e39ecbdd4ab39837a6621f3f66d5c4407579f169f84770`
+
+Event-level comparison of the independent probe payloads:
+- run A events 1,138
+- run B events 1,138
+- unique `(onsetId, selectedMidi)` keys 1,138 in each
+- exact `(onsetId, sourceStart, selectedMidi)` intersection 1,138
+- unmatched identities in first artifact: 0
+- unmatched identities in second artifact: 0
+- nonzero matched start-time deltas: 0
+- maximum matched start-time delta: 0.0 s
+- complete event arrays are byte/JSON-value identical
+- the existing 10 ms simultaneous/start-cluster tolerance was not needed because exact identity matching succeeded
+
+Support-metric stability:
+- local semitone rank histogram exact
+- octave rank histogram exact
+- every recorded statistic for selected-minus-best-compared-alternative, selected-minus-best-semitone-neighbor, selected-minus-octave-above, selected-minus-octave-below, and selected-pitch-above-floor has max absolute cross-run delta 0.0
+
+Interpretation boundary:
+- for this runner pair there was **no hosted-runner model-output variation**; Demucs stem bytes, Basic Pitch event inventory, note identity, probe event payload, and support metrics all reproduced exactly
+- this is stronger reproducibility evidence than the earlier v3 1,138/1,139 runner pair, where one unresolved model event varied
+- this proves probe determinism/reproducibility for these two independent hosted runs, not transcription accuracy or ground truth
+- the probe remains descriptive and identity-preserving; it is not acceptance authority
+- do not derive an accuracy score or fixture-tuned acceptance threshold
+- do not clear `MODEL_EVIDENCE_VALIDATION_PENDING` from this self-consistency result
+
+## MODEL-VALIDATION CONTRACT DESIGN DECISION
+
+The independent pitch-support probe is now mechanically stable enough to serve as a **supporting diagnostic input** to the design of a future explicit model-validation contract.
+
+That statement does **not** mean the model path is validated. A legitimate future validation contract must obtain evidence independent of the Basic Pitch prediction itself and must not be defined by tuning thresholds against this single authorized fixture. Until such a contract is explicitly designed, independently justified, and satisfied, `modelValidationComplete` remains false.
+
+The future contract must preserve these separations:
+- reproducibility is not accuracy
+- independent audio-domain support is not ground truth
+- model validation is separate from duration completeness
+- pitch validation cannot mutate pitch identity
+- duration authority cannot leak back into pitch validation
+- evaluator/delivery remain fail-closed
 
 ## CURRENT ACCEPTANCE STATE
 
@@ -540,17 +554,9 @@ No acceptance promotion from self-consistency alone.
 
 ## NEXT ENGINEERING STEPS — FRESH CHAT HANDOFF
 
-1. Download/inspect both independent pitch-support artifacts:
-   - first run `34424545232`, artifact `10132278606`, digest `sha256:953af38fb6216706dab989d98b83c4fb2edba9826b7a810dda20ee15052766a6`
-   - second run `34425140684`, artifact `10132507650`, digest `sha256:d0c01375094055377c04739ec41eef41cb450cafccac654137359f72ac543585`
-2. Perform a descriptive cross-run semantic comparison only:
-   - compare exact note identities where they overlap
-   - reuse the already established 10 ms simultaneous/start-cluster tolerance only if needed for hosted-runner event matching; do not invent a new tolerance
-   - report matched event count, unmatched event identities, start-time deltas, and stability of semitone/octave rank/support metrics
-   - distinguish hosted-runner model-output variation from probe determinism
-   - do not convert the comparison into an accuracy score or acceptance threshold
-3. Update this checkpoint immediately after the artifact comparison with exact evidence.
-4. After the comparison, decide only whether the independent probe is stable enough to support designing a **future explicit model-validation contract**. Do not set `modelValidationComplete: true` from this fixture or from Basic Pitch/CQT self-consistency alone.
-5. Continue descriptive study of the remaining 477/478 duration ambiguity separately. Keep audited v2 authoritative and v3 candidate-only; preserve the fixed activation + spectral rule exactly and do not tune it on this fixture.
-6. Any future v3 promotion from candidate to authoritative release authority must be an explicit documented branch decision with v2 preserved for regression comparison.
-7. Before any customer exposure, independently validate the model path and obtain complete required duration evidence; evaluator and delivery must remain fail-closed until both blockers are legitimately cleared.
+1. Design a future explicit model-validation contract scaffold without clearing the validation gate. The scaffold should record independent evidence categories and hard provenance/identity guards, but should default to `validated: false` until legitimate external/independent evidence is supplied.
+2. Keep the independent pitch-support probe descriptive-only. If wired into the scaffold, it may contribute diagnostics/provenance but must not own acceptance, rewrite MIDI, invent thresholds, or set `modelValidationComplete`.
+3. Add deterministic tests proving that reproducibility/support-only evidence cannot clear `MODEL_EVIDENCE_VALIDATION_PENDING` by itself.
+4. Continue descriptive study of the remaining 477/478 duration ambiguity separately. Keep audited v2 authoritative and v3 candidate-only; preserve the fixed activation + spectral rule exactly and do not tune it on this fixture.
+5. Any future v3 promotion from candidate to authoritative release authority must be an explicit documented branch decision with v2 preserved for regression comparison.
+6. Before any customer exposure, independently validate the model path and obtain complete required duration evidence; evaluator and delivery must remain fail-closed until both blockers are legitimately cleared.
