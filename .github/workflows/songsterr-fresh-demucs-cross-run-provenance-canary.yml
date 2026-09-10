@@ -1,0 +1,233 @@
+name: Songsterr Fresh Demucs Cross-Run Provenance Canary
+
+on:
+  workflow_dispatch:
+  push:
+    branches:
+      - songsterr-fresh-pipeline-v1
+    paths:
+      - '.github/workflows/songsterr-fresh-demucs-cross-run-provenance-canary.yml'
+      - 'scripts/songsterr-fresh/record_demucs_cross_run_provenance.py'
+      - 'scripts/songsterr-fresh/compare_demucs_cross_run_provenance.py'
+      - 'scripts/songsterr-fresh/verify_demucs_model_asset.py'
+
+permissions:
+  contents: read
+
+env:
+  OMP_NUM_THREADS: '1'
+  MKL_NUM_THREADS: '1'
+  OPENBLAS_NUM_THREADS: '1'
+  NUMEXPR_NUM_THREADS: '1'
+  PYTHONHASHSEED: '0'
+
+jobs:
+  demucs-provenance:
+    name: demucs-provenance-${{ matrix.sample }}
+    runs-on: ubuntu-latest
+    timeout-minutes: 45
+    strategy:
+      fail-fast: false
+      matrix:
+        sample: [a, b, c]
+
+    steps:
+      - name: Check out fresh branch
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.10'
+
+      - name: Fetch and verify exact authorized fixture
+        shell: bash
+        run: |
+          set -euo pipefail
+          BASE="/tmp/songsterr-fresh-demucs-cross-run-${{ matrix.sample }}"
+          mkdir -p "$BASE"
+          curl --fail --location --silent --show-error --retry 3 \
+            'https://raw.githubusercontent.com/dadrockyt-sys/dadrock-tabs-android/main/public/jimmy-paige-midterm-v1/gomyway-midterm-source.m4a' \
+            --output /tmp/gomyway-midterm-source.m4a
+          test "$(git hash-object /tmp/gomyway-midterm-source.m4a)" = '4dd709e3fa177b4daeed71ca97f0199757729d4b'
+          sudo apt-get update -qq
+          sudo apt-get install -y ffmpeg
+          ffmpeg -hide_banner -loglevel error -y \
+            -i /tmp/gomyway-midterm-source.m4a \
+            -ac 2 -ar 44100 \
+            /tmp/gomyway-midterm-separation.wav
+          INPUT_SHA="$(sha256sum /tmp/gomyway-midterm-separation.wav | awk '{print $1}')"
+          test "$INPUT_SHA" = 'e03e1885185f4983b3eeaa66f36510b7709d607c14010f964e0aad427ecc474a'
+          sha256sum /tmp/gomyway-midterm-separation.wav | tee "$BASE/separation-input.sha256"
+
+      - name: Install pinned separation dependencies
+        shell: bash
+        run: |
+          set -euo pipefail
+          python -m pip install --disable-pip-version-check \
+            numpy==1.26.4 \
+            torch==2.14.0 \
+            huggingface-hub==1.30.0 \
+            safetensors==0.8.0 \
+            sphn==0.2.1 \
+            demucs==4.1.0 \
+            soundfile==0.13.1
+          python - <<'PY'
+          import importlib.metadata
+          for name in ('numpy', 'torch', 'huggingface-hub', 'safetensors', 'sphn', 'demucs', 'soundfile'):
+              print(f'{name}=={importlib.metadata.version(name)}')
+          PY
+
+      - name: Run fixed Demucs pass
+        shell: bash
+        run: |
+          set -euo pipefail
+          BASE="/tmp/songsterr-fresh-demucs-cross-run-${{ matrix.sample }}"
+          python -m demucs \
+            -n htdemucs_6s \
+            --device cpu \
+            --shifts 0 \
+            --overlap 0.25 \
+            --segment 7 \
+            -o "$BASE/separated" \
+            /tmp/gomyway-midterm-separation.wav
+          STEM="$BASE/separated/htdemucs_6s/gomyway-midterm-separation/guitar.wav"
+          test -s "$STEM"
+          sha256sum "$STEM" | tee "$BASE/guitar-stem.sha256"
+
+      - name: Verify executed Demucs Hugging Face asset
+        shell: bash
+        run: |
+          set -euo pipefail
+          BASE="/tmp/songsterr-fresh-demucs-cross-run-${{ matrix.sample }}"
+          python scripts/songsterr-fresh/verify_demucs_model_asset.py \
+            --output "$BASE/demucs-model-asset.json"
+          python - <<PY
+          import json
+          path = '$BASE/demucs-model-asset.json'
+          with open(path, 'r', encoding='utf-8') as handle:
+              data = json.load(handle)
+          required = {
+              'contract': 'songsterr-fresh-demucs-model-asset-v2',
+              'primaryLoader': 'huggingface',
+              'hfRepoId': 'adefossez/HTDemucs-6s',
+              'hfPinnedRevision': '3c5ee475be622df764938de97e4281a7b07ffa58',
+              'hfAssetUploadRevision': '053e1404489b3dc58bf718224fac4b7316de8c93',
+              'assetFilename': '5c90dfd2.safetensors',
+              'assetSha256': 'd2a1745f0744721f6b8ca5bf469b67c651ea5ed1b52998cab033b2158609d411',
+          }
+          for key, value in required.items():
+              if data.get(key) != value:
+                  raise SystemExit(f'DEMUCS_CROSS_RUN_MODEL_ASSET_CHANGED:{key}:{data.get(key)}')
+          if data.get('legacyFallback', {}).get('primary') is not False:
+              raise SystemExit('DEMUCS_CROSS_RUN_LEGACY_FALLBACK_MUST_NOT_BE_PRIMARY')
+          PY
+
+      - name: Record fixed-stem runtime provenance
+        shell: bash
+        run: |
+          set -euo pipefail
+          BASE="/tmp/songsterr-fresh-demucs-cross-run-${{ matrix.sample }}"
+          STEM="$BASE/separated/htdemucs_6s/gomyway-midterm-separation/guitar.wav"
+          INPUT_SHA="$(awk '{print $1}' "$BASE/separation-input.sha256")"
+          python scripts/songsterr-fresh/record_demucs_cross_run_provenance.py \
+            --stem "$STEM" \
+            --input-sha256 "$INPUT_SHA" \
+            --model-asset "$BASE/demucs-model-asset.json" \
+            --sample-label '${{ matrix.sample }}' \
+            --output "$BASE/provenance-${{ matrix.sample }}.json"
+          python scripts/songsterr-fresh/record_demucs_cross_run_provenance.py --self-test
+
+      - name: Prove provenance diagnostic boundaries
+        shell: bash
+        run: |
+          set -euo pipefail
+          BASE="/tmp/songsterr-fresh-demucs-cross-run-${{ matrix.sample }}"
+          python - <<PY
+          import json
+          path = '$BASE/provenance-${{ matrix.sample }}.json'
+          with open(path, 'r', encoding='utf-8') as handle:
+              payload = json.load(handle)
+          if payload.get('contract') != 'songsterr-fresh-demucs-cross-run-provenance-v1':
+              raise SystemExit('DEMUCS_CROSS_RUN_PROVENANCE_CONTRACT_CHANGED')
+          if payload.get('referenceBlind') is not True or payload.get('diagnosticOnly') is not True:
+              raise SystemExit('DEMUCS_CROSS_RUN_PROVENANCE_SCOPE_CHANGED')
+          hard = payload.get('hardGuards') or {}
+          if not hard or any(value is not False for value in hard.values()):
+              raise SystemExit('DEMUCS_CROSS_RUN_PROVENANCE_GUARD_CHANGED')
+          if payload.get('source', {}).get('decodedSeparationWavSha256') != 'e03e1885185f4983b3eeaa66f36510b7709d607c14010f964e0aad427ecc474a':
+              raise SystemExit('DEMUCS_CROSS_RUN_PROVENANCE_INPUT_CHANGED')
+          PY
+
+      - name: Upload provenance only
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: songsterr-fresh-demucs-cross-run-${{ matrix.sample }}
+          path: |
+            /tmp/songsterr-fresh-demucs-cross-run-${{ matrix.sample }}/provenance-${{ matrix.sample }}.json
+            /tmp/songsterr-fresh-demucs-cross-run-${{ matrix.sample }}/demucs-model-asset.json
+            /tmp/songsterr-fresh-demucs-cross-run-${{ matrix.sample }}/separation-input.sha256
+            /tmp/songsterr-fresh-demucs-cross-run-${{ matrix.sample }}/guitar-stem.sha256
+          if-no-files-found: warn
+          retention-days: 14
+
+  compare-provenance:
+    name: compare-cross-run-provenance
+    needs: demucs-provenance
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+
+    steps:
+      - name: Check out fresh branch
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.10'
+
+      - name: Download independent provenance records
+        uses: actions/download-artifact@v4
+        with:
+          pattern: songsterr-fresh-demucs-cross-run-*
+          path: /tmp/songsterr-fresh-demucs-cross-run-inputs
+          merge-multiple: true
+
+      - name: Compare hashes and environment dimensions without preference
+        shell: bash
+        run: |
+          set -euo pipefail
+          mkdir -p /tmp/songsterr-fresh-demucs-cross-run-comparison
+          python scripts/songsterr-fresh/compare_demucs_cross_run_provenance.py --self-test
+          python scripts/songsterr-fresh/compare_demucs_cross_run_provenance.py \
+            --inputs /tmp/songsterr-fresh-demucs-cross-run-inputs/provenance-*.json \
+            --output /tmp/songsterr-fresh-demucs-cross-run-comparison/demucs-cross-run-comparison.json
+
+      - name: Prove aggregate diagnostic boundaries
+        shell: bash
+        run: |
+          set -euo pipefail
+          python - <<'PY'
+          import json
+          path = '/tmp/songsterr-fresh-demucs-cross-run-comparison/demucs-cross-run-comparison.json'
+          with open(path, 'r', encoding='utf-8') as handle:
+              payload = json.load(handle)
+          if payload.get('contract') != 'songsterr-fresh-demucs-cross-run-comparison-v1':
+              raise SystemExit('DEMUCS_CROSS_RUN_COMPARISON_CONTRACT_CHANGED')
+          if payload.get('referenceBlind') is not True or payload.get('diagnosticOnly') is not True:
+              raise SystemExit('DEMUCS_CROSS_RUN_COMPARISON_SCOPE_CHANGED')
+          if payload.get('observationCount') != 3:
+              raise SystemExit('DEMUCS_CROSS_RUN_COMPARISON_REQUIRES_THREE_INDEPENDENT_JOBS')
+          hard = payload.get('hardGuards') or {}
+          if not hard or any(value is not False for value in hard.values()):
+              raise SystemExit('DEMUCS_CROSS_RUN_COMPARISON_GUARD_CHANGED')
+          PY
+
+      - name: Upload aggregate comparison only
+        uses: actions/upload-artifact@v4
+        with:
+          name: songsterr-fresh-demucs-cross-run-comparison
+          path: /tmp/songsterr-fresh-demucs-cross-run-comparison/demucs-cross-run-comparison.json
+          if-no-files-found: error
+          retention-days: 14
