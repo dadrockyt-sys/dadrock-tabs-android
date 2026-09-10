@@ -1,6 +1,6 @@
 # CURRENT STATE — Songsterr Fresh Pipeline V1
 
-Updated: 2026-09-10 America/Toronto
+Updated: 2026-09-09 America/Toronto
 Canonical branch: `songsterr-fresh-pipeline-v1`
 Canonical checkpoint: `docs/checkpoints/SONGSTERR_FRESH_PIPELINE_CURRENT_STATE.md`
 
@@ -11,8 +11,8 @@ This is the only canonical fresh-chat checkpoint for the Songsterr-inspired fres
 - Work only on `songsterr-fresh-pipeline-v1`.
 - Do not change `main` or Production.
 - Do not resume archived V143/Gomyway implementation, reference tabs, reference-based correction, professional/reference scorer logic, training/fine-tuning, or broad optimizer sweeps unless explicitly requested.
-- The exact fixture name containing `gomyway` authorizes that audio file only.
-- Fresh reference-blind source separation/model work is authorized, including GPU if useful, while preserving fail-closed contracts.
+- The exact fixture name containing `gomyway` authorizes that audio file only; it does not authorize the archived V143/Gomyway pipeline.
+- Fresh reference-blind source separation/model/DSP work is authorized while preserving fail-closed contracts.
 - `songsterr_pipeline/` remains deterministic/model-free/process-free/network-free.
 - Model/DSP execution stays under `scripts/songsterr-fresh/`.
 - Frozen structure precedes note inference and cannot be rewritten downstream.
@@ -30,7 +30,7 @@ Git blob SHA:
 Duration:
 ~210.674648526 s
 
-Canaries fetch raw fixture from `main` and verify `git hash-object`.
+Canaries fetch the raw fixture from `main` and verify `git hash-object` before use.
 
 ## FROZEN STRUCTURE
 
@@ -169,12 +169,12 @@ Stable fallback evidence:
 - all 84 fallback durations exactly equal
 - historical output variation is isolated to extra unresolved detections and must never become a hardcoded acceptance count
 
-Representative 1,138-note V3 run:
+Representative 1,138-note V3 environment:
 - V2 577 resolved / 561 unresolved
 - V3 +84 fallback = 661 resolved / 477 unresolved
 - customer events 0 / delivery false
 
-Representative 1,139-note V3 run:
+Representative 1,139-note V3 environment:
 - V2 577 resolved / 562 unresolved
 - V3 +84 fallback = 661 resolved / 478 unresolved
 - customer events 0 / delivery false
@@ -188,7 +188,7 @@ Contract: `songsterr-fresh-v3-unresolved-duration-inventory-v2`
 Implementation: `7a7180fe151f6b15ff75ba7841878c9704e52adb`
 
 Green canary run `34427390493`, artifact `10133331991`.
-For the 478-unresolved variant:
+For the 478-unresolved historical variant:
 - 453 same-pitch-reattack-censored
 - 372 no sustained subthreshold activation
 - 76 activation candidate but insufficient fixed CQT spectral corroboration
@@ -330,30 +330,9 @@ Descriptive interpretation only:
 
 Diagnostic: `scripts/songsterr-fresh/probe_v3_spectral_valley_neighborhood_context.py`
 Contract: `songsterr-fresh-v3-spectral-valley-neighborhood-context-v1`
-Implementation commit: `1d7ca8b0bf0fb1394f7095b661c13ae901513159`
+Implementation: `1d7ca8b0bf0fb1394f7095b661c13ae901513159`
 Guard wiring: `8e8441f5a36073089374f268cf766b797c04e553`
 Canary wiring: `eb023119a568a6113f91eb225ffa0640ee69e0fc`
-
-Hard boundaries:
-- descriptive-only and reference-blind
-- consumes the green spectral-rejection context
-- exact isolated-stem SHA must match source context
-- uses the already-observed activation valley; it does not search for a new release
-- neighborhood energy cannot become duration
-- no duration/sourceEnd writes
-- no pitch-identity writes
-- no model invocation inside the diagnostic
-- no decoded model-end read/use
-- no next-onset or same-pitch-reattack duration use
-- no threshold definition/selection/sweep
-- no new release rule
-- no acceptance authority
-
-Lightweight guard CI:
-- run `34430975401`
-- job `102726237832`
-- head `8e8441f5a36073089374f268cf766b797c04e553`
-- conclusion success
 
 Green full frozen-fixture canary:
 - run `34431148700`
@@ -364,7 +343,6 @@ Green full frozen-fixture canary:
 - unchanged V2: 577 resolved / 561 unresolved
 - unchanged candidate V3: 661 resolved / 477 unresolved
 - exact source-row/category parity passed for all 160 activation-qualified events
-- both spectral-context and neighborhood self-tests passed
 - artifact `10134681813`
 - digest `sha256:a804f394cec3c4e1294e05ddbf340e4412dc95ef11bcfb60a0959d99cd41647d`
 - expires 2026-09-24T03:00:03Z
@@ -372,19 +350,116 @@ Green full frozen-fixture canary:
 Observed valley-neighborhood distributions:
 - corroborated selected-pitch valley level median ~-35.2853 dB
 - insufficient selected-pitch valley level median ~-28.5956 dB
-- selected MIDI is strongest among selected + ±1/±2 semitone bins in 32/84 corroborated events (~38.1%) versus 45/76 insufficient events (~59.2%)
+- selected MIDI is strongest among selected + ±1/±2 semitone bins in 32/84 corroborated (~38.1%) versus 45/76 insufficient (~59.2%)
 - median selected-minus-best-semitone-neighbor margin: corroborated ~-2.6623 dB; insufficient ~+1.4130 dB
 - selected MIDI is strongest among selected + available octave bins in 46/84 corroborated (~54.8%) versus 46/76 insufficient (~60.5%)
 - median selected-minus-best-compared-alternative margin: corroborated ~-5.7209 dB; insufficient ~-1.2773 dB
 - selected MIDI is stronger than every compared semitone/octave alternative in 16/84 corroborated (~19.0%) versus 29/76 insufficient (~38.2%)
-- within the 39 insufficient events with negative onset-to-valley spectral drop, 28/39 (~71.8%) still rank first among the local ±2-semitone neighborhood at the valley; their median valley level is ~-25.819 dB and median selected-minus-best-semitone margin is ~+2.238 dB
+- within the 39 insufficient events with negative onset-to-valley spectral drop, 28/39 (~71.8%) still rank first among the local ±2-semitone neighborhood at the valley
 
 Descriptive interpretation only:
 - insufficient-CQT events are not primarily explained by selected-pitch energy migrating into immediately adjacent semitone bins
 - many insufficient events retain a locally dominant selected-pitch spectral component after Basic Pitch activation has already fallen into the fixed valley
 - corroborated events more often have the selected-pitch bin fall below other simultaneous local/octave spectral content by the valley
 - this supports an activation-versus-audio temporal disagreement hypothesis, not a new release rule
-- no threshold, delay, cutoff, promotion, or correctness claim follows from this fixture
+
+## POST-VALLEY SPECTRAL TRAJECTORY CONTEXT — GREEN
+
+Diagnostic: `scripts/songsterr-fresh/probe_v3_post_valley_spectral_trajectory_context.py`
+Contract: `songsterr-fresh-v3-post-valley-spectral-trajectory-context-v1`
+Initial implementation: `2f10e78fe8d06871bd920b6f86dc175c3a19a8b3`
+Guard wiring: `d5928354c0fcc64be934862fe85d5d8afa0c6293`
+Dedicated canary workflow: `3aca037ae70aba4748eb37705a0652f13399fcf8`
+CQT-reference correction: `60bad8458ca846e03f433472c9b53111d1f8d6c7`
+
+Purpose:
+- observe selected-pitch CQT at fixed +50 ms, +100 ms, and +200 ms horizons after the already-observed activation valley
+- horizons are observation points only, not release delays/cutoffs
+- an observation is omitted if its 3-frame CQT window would reach the same-pitch reattack
+- no alternate release timestamp is searched for or output
+
+Hard guards:
+- descriptive-only / reference-blind
+- exact source-row category/MIDI identity preserved
+- no duration/sourceEnd writes
+- no pitch mutation
+- no model invocation inside probe
+- no decoded model end
+- no next-onset or reattack duration
+- fixed observation is not duration
+- no alternate release search/output
+- no delay threshold
+- no release-rule proposal
+- no threshold selection/sweep
+- no acceptance authority
+
+Important implementation correction:
+- the first draft used a narrower CQT range based on selected MIDI values
+- because `librosa.amplitude_to_db(..., ref=np.max)` depends on the transform-wide maximum, that range would make its dB scale not strictly comparable to the green source probe
+- this was caught before any result was accepted
+- corrected implementation uses the exact source spectral-context CQT range: MIDI 40–88, 49 bins, same harmonic preprocessing, same 512 hop, same 12 bins/octave, same global dB reference construction
+- method now reports `sourceDbReferenceAligned: true`
+- pre-fix full canary run `34432148553` is superseded and must not be used as evidence even if its workflow conclusion is green
+
+Corrected lightweight guard CI:
+- run `34432234645`
+- job `102729956896`
+- head `60bad8458ca846e03f433472c9b53111d1f8d6c7`
+- conclusion success
+- all earlier diagnostics remain green
+- trajectory probe compiles and deterministic self-test passes
+
+Corrected green full canary:
+- run `34432234675`
+- job `102729956943`
+- head `60bad8458ca846e03f433472c9b53111d1f8d6c7`
+- conclusion success
+- exact authorized fixture hash verified
+- frozen structure rebuilt and accepted
+- deterministic Demucs separation/model asset verified
+- duration-free Basic Pitch + activation sidecar bound
+- unchanged V2 and candidate V3 release stages passed
+- green spectral-rejection context rebuilt
+- fixed post-valley trajectory probe passed
+- exact `(onsetId, category, midi)` parity passed for all 160 rows
+- fail-closed boundary assertions passed
+- deterministic self-test passed
+- artifact `10135045827`
+- digest `sha256:dc1cebfff20dd1d8856ec2df27129ee694edda40fe12ee5178309f0a87c1c83b`
+- expires 2026-09-24T03:16:25Z
+- model note count 1,138
+- unchanged V2: 577 resolved / 561 unresolved
+- unchanged candidate V3: 661 resolved / 477 unresolved
+
+Observed fixed-horizon coverage and within-row valley-to-observation change:
+
+Corroborated, 84 total:
+- +50 ms available 79/84; median `valleyMinusObservedDb` ~-0.6185 dB; 37/79 fell further, 42/79 rose relative to valley
+- +100 ms available 68/84; median ~-1.5236 dB; 28/68 fell further, 40/68 rose
+- +200 ms available 42/84; median ~-6.0886 dB; 13/42 fell further, 29/42 rose
+
+Insufficient spectral corroboration, 76 total:
+- +50 ms available 74/76; median `valleyMinusObservedDb` ~+3.6448 dB; 53/74 fell further, 21/74 rose relative to valley
+- +100 ms available 69/76; median ~+3.6122 dB; 53/69 fell further, 16/69 rose
+- +200 ms available 58/76; median ~+6.7710 dB; 45/58 fell further, 13/58 rose
+
+Paired same-event subset with a full +200 ms pre-reattack observation window:
+- corroborated 42 events: median valley-to-observation change ~-0.7969 dB at +50 ms, ~-1.8218 dB at +100 ms, ~-6.0886 dB at +200 ms
+- insufficient 58 events: median ~+3.8207 dB at +50 ms, ~+5.1212 dB at +100 ms, ~+6.7710 dB at +200 ms
+
+Additional insufficient-class context:
+- all 39 events whose selected-pitch CQT level was higher at the activation valley than at onset still have a valid +50 ms window
+- their median change from valley to +50 ms is ~+2.4045 dB; 26/39 fall further by +50 ms
+- 36/39 have +100 ms coverage; median valley-to-+100 ms change ~+3.7347 dB
+- 29/39 have +200 ms coverage; median valley-to-+200 ms change ~+9.8028 dB
+
+Descriptive interpretation only:
+- the insufficient-CQT class commonly continues losing selected-pitch acoustic energy after Basic Pitch activation has already entered the fixed low valley
+- the corroborated class has already reached a substantially lower selected-pitch CQT state at the valley and often rebounds afterward
+- the paired +200 ms subset preserves the same direction of separation, reducing concern that the headline pattern is only caused by different horizon availability
+- this strengthens the activation-versus-audio temporal disagreement hypothesis on this fixture
+- it does not establish a correct release timestamp, a fixed delay, a new cutoff, a changed 6 dB threshold, transcription correctness, or promotion evidence
+- fixed +50/+100/+200 ms horizons must not be repurposed as release candidates
 
 ## CURRENT ACCEPTANCE STATE
 
@@ -409,12 +484,12 @@ No acceptance promotion from self-consistency alone.
 
 ## NEXT ENGINEERING STEPS — FRESH CHAT HANDOFF
 
-1. Next safe duration study: inspect selected-pitch CQT behavior at fixed post-valley time offsets for the same 160 green spectral-context events. This must remain descriptive-only; fixed offsets are observation horizons, not release delays or cutoffs.
-2. Determine whether `INSUFFICIENT_SPECTRAL_CORROBORATION` commonly shows delayed acoustic decay after the activation valley, or instead persistent selected-pitch energy through the available pre-reattack window.
-3. Preserve exact source-row/category identity and isolated-stem SHA. Do not search for or output an alternate release timestamp.
-4. Do not tune the 6 dB, activation, or any time-delay threshold from this fixture.
+1. Treat the post-valley CQT study as complete and descriptive. Do not convert +50/+100/+200 ms into a release delay or cutoff.
+2. The next useful duration-side question is whether the delayed-decay pattern is specific to selected-bin CQT representation or is also visible in an independent audio-domain representation at the same already-fixed observation horizons. If studied, use a fixed representation and the same exact 160 identities; do not search for a release timestamp.
+3. A suitable next read-only cross-check is fixed-band STFT/harmonic energy around the selected pitch at the already-observed valley and the same +50/+100/+200 ms horizons. It must be descriptive-only, reference-blind, and unable to write duration or choose thresholds.
+4. Do not tune the 6 dB, activation, or time-delay thresholds on this fixture. No optimizer sweep.
 5. Keep rapid-repeat (`NO_SUSTAINED_SUBTHRESHOLD_ACTIVATION`) separate from insufficient-CQT mechanisms.
-6. Keep all diagnostic CI guards. Future changes must reject altered no-mutation/no-model/no-threshold properties.
+6. Keep all diagnostic CI guards. Future changes must reject altered no-mutation/no-model/no-threshold/no-release-search properties.
 7. Keep V2 authoritative and V3 candidate-only. Any future V3 promotion must be an explicit documented branch decision with V2 preserved for regression comparison.
 8. Model-validation scaffold remains fail-closed. Do not add an accepting path until a genuinely independent validation authority/evidence source is explicitly designed and justified.
 9. Before customer exposure, independently validate the model path and obtain complete required duration evidence; evaluator/delivery stay fail-closed until both blockers are legitimately cleared.
