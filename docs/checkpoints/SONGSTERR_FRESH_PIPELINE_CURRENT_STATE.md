@@ -309,56 +309,109 @@ Purpose:
 - never invoke a model
 - never choose a threshold or acceptance rule
 
-Input guards require:
-- exact isolated-polyphonic note-evidence v1 contract
-- reference-blind, structure-conditioned, frozen evidence
-- exact V3 duration-evidence source
-- release stage model-invoked false
-- decoded model end / generic next onset / same-pitch reattack all false as duration sources
-- exact note-evidence-context v1
-- accepted frozen structure identity/map
-- valid ordered tempo segments
-- each eligible event's `nearestStructureSlot` must actually exist in the supplied frozen structure map
+Input guards require exact V3 note-evidence and frozen-context contracts, reference-blind/frozen structure, accepted structure identity, valid tempo segments, and every eligible event's `nearestStructureSlot` to exist in the supplied map.
 
-The diagnostic integrates the frozen tempo segments between an event and its next detected same-pitch event to express spacing in local tempo beats. That integrated span is diagnostic context only.
-
-Green lightweight duration-diagnostic CI:
+Green CI:
 - workflow `.github/workflows/songsterr-fresh-v3-inventory-comparator-tests.yml`
-- workflow name `Songsterr Fresh V3 Duration Diagnostic Tests`
-- head `327fa31ee29fc816afd408a2d46a22da1247a704`
 - run `34429213420`
 - job `102720916608`
-- conclusion success
-- Python 3.10.21
-- all three descriptive tools compile
-- inventory comparator self-test passes, 12 tamper cases rejected
+- head `327fa31ee29fc816afd408a2d46a22da1247a704`
+- success
+- comparator self-test still passes
 - structure-context self-test passes
-- structure-context `reattackUsedAsDuration: false`
-- structure-context `tempoBeatIntegrationVerified: true`
-- structure-context tamper cases rejected: 3
-- no model/release execution in this workflow
+- `reattackUsedAsDuration: false`
+- `tempoBeatIntegrationVerified: true`
+- 3 structure-context tamper cases rejected
 
-Historical frozen-structure replay, 1,138-note artifact:
-- resolved events with a future same-pitch reattack: 632; median gap ~1.278381406 s; median local-tempo span ~2.759494 beats
-- unresolved with a future same-pitch reattack: 473; median gap ~0.255419501 s; median ~0.556962 beats
-- same-pitch-reattack-censored unresolved: 452 with future reattack; median ~0.255419501 s / ~0.544231 beats
+Historical 1,138-note replay:
+- resolved with future same-pitch reattack: 632; median ~1.278381406 s / ~2.759494 beats
+- unresolved with future reattack: 473; median ~0.255419501 s / ~0.556962 beats
+- reattack-censored unresolved: 452; median ~0.255419501 s / ~0.544231 beats
 - `NO_SUSTAINED_SUBTHRESHOLD_ACTIVATION`: 371; median ~0.220589569 s / ~0.463415 beats
 - `INSUFFICIENT_SPECTRAL_CORROBORATION`: 76; median ~0.709492517 s / ~1.547103 beats
 - `INSUFFICIENT_ACTIVATION_DROP`: 5; median ~0.684988662 s / ~1.439024 beats
 
-Historical frozen-structure replay, 1,139-note artifact:
+Historical 1,139-note replay:
 - resolved count remains 661; unresolved 478
 - resolved with future same-pitch reattack: 632; median ~1.278381406 s / ~2.759494 beats
-- unresolved with future same-pitch reattack: 474; median ~0.255419501 s / ~0.556962 beats
-- same-pitch-reattack-censored unresolved: 453; median ~0.245093424 s / ~0.536585 beats
+- unresolved with future reattack: 474; median ~0.255419501 s / ~0.556962 beats
+- reattack-censored unresolved: 453; median ~0.245093424 s / ~0.536585 beats
 - `NO_SUSTAINED_SUBTHRESHOLD_ACTIVATION`: 372; median ~0.220589569 s / ~0.463415 beats
 - `INSUFFICIENT_SPECTRAL_CORROBORATION`: 76; median ~0.709492517 s / ~1.547103 beats
 - `INSUFFICIENT_ACTIVATION_DROP`: 5; median ~0.684988662 s / ~1.439024 beats
 
 Interpretation boundary:
-- the no-sustained-activation class is strongly concentrated in rapid repeated-note context
-- insufficient spectral corroboration occurs at materially wider reattack spacing and is therefore a distinct observed mechanism
-- this is not a release cutoff, not a tuning target, not ground truth, and not acceptance evidence
+- no-sustained-activation is concentrated in rapid repeated-note context
+- insufficient spectral corroboration occurs at materially wider reattack spacing and is a distinct observed mechanism
+- not a release cutoff, tuning target, ground truth, or acceptance evidence
+
+## REPEATED-NOTE + STRUCTURE-SLOT CONTEXT — GREEN
+
+Diagnostic:
+`scripts/songsterr-fresh/summarize_v3_repeated_note_structure_context.py`
+
+Contract:
+`songsterr-fresh-v3-repeated-note-structure-context-v1`
+
+Implementation history:
+- initial implementation commit `5387e815d485b09363ea238cca65f914fed7dccf`
+- CI wiring commit `62ed79ded9ff0010d94ed193828edb4dab098e76`
+- synthetic mismatch-test correction `cf98c06505456376e1032dd6545cd0c6a7f1ab24`
+
+The initial CI failure was test-only: its synthetic mismatch changed an unreferenced structure slot, so the diagnostic correctly accepted it. The corrected test changes a slot actually referenced by synthetic evidence. No production diagnostic or release logic was relaxed.
+
+Purpose:
+- describe previous same-pitch spacing
+- describe next same-pitch spacing
+- describe absolute and signed distance from each detected onset to its already-frozen nearest structure slot
+- express those spans in seconds and integrated local-tempo beats
+- separate V2-primary resolved, V3-fallback resolved, unresolved primary reasons, and V3 fallback-rejection reasons
+
+Hard output guards:
+- `descriptiveOnly: true`
+- `referenceBlind: true`
+- `changesDuration: false`
+- `changesPitchIdentity: false`
+- `invokesModel: false`
+- decoded end / next onset / same-pitch neighbor are never duration sources
+- structure alignment is never acceptance evidence
+- no new release rule
+- no threshold selection/sweep
+- `ownsAcceptanceDecision: false`
+
+Corrected green CI:
+- workflow `Songsterr Fresh V3 Duration Diagnostic Tests`
+- run `34429657211`
+- job `102722261026`
+- head `cf98c06505456376e1032dd6545cd0c6a7f1ab24`
+- conclusion success
+- all four descriptive scripts compile
+- inventory comparator self-test passes
+- reattack-context self-test passes
+- repeated-note self-test passes
+- repeated-note test verifies same-pitch neighbor is not duration
+- repeated-note test verifies structure alignment is not acceptance evidence
+- two repeated-note tamper cases rejected
+- no model/release execution
+
+Historical 1,138-note repeated-note replay:
+- V2 primary resolved, 577 events: previous same-pitch median ~1.922885 beats; next median ~3.192014 beats; absolute slot-alignment median ~0.029971 s / ~0.065241 beats
+- V3 fallback resolved, 84 events: previous median ~1.566997 beats; next median ~1.196319 beats; absolute alignment median ~0.029752 s / ~0.064030 beats
+- `NO_SUSTAINED_SUBTHRESHOLD_ACTIVATION`, 371 events: previous median ~1.076923 beats; next median ~0.463415 beats; absolute alignment median ~0.028575 s / ~0.061483 beats
+- `INSUFFICIENT_SPECTRAL_CORROBORATION`, 76 events: previous median ~2.037401 beats; next median ~1.547103 beats; absolute alignment median ~0.022663 s / ~0.048839 beats
+
+Historical 1,139-note repeated-note replay:
+- V2 primary resolved, 577: previous median ~1.922885 beats; next ~3.192014 beats; absolute alignment ~0.029971 s / ~0.065241 beats
+- V3 fallback resolved, 84: previous ~1.566997 beats; next ~1.196319 beats; absolute alignment ~0.029752 s / ~0.064030 beats
+- `NO_SUSTAINED_SUBTHRESHOLD_ACTIVATION`, 372: previous ~1.075047 beats; next ~0.463415 beats; absolute alignment ~0.028742 s / ~0.061507 beats
+- `INSUFFICIENT_SPECTRAL_CORROBORATION`, 76: previous ~2.037401 beats; next ~1.547103 beats; absolute alignment ~0.022663 s / ~0.048839 beats
+
+Descriptive interpretation only:
+- next same-pitch spacing separates these groups much more than frozen-slot alignment does
+- the 84 fallback-resolved events sit between V2-primary resolved and rapid-repeat unresolved events in next-same-pitch spacing
+- the rapid `NO_SUSTAINED_SUBTHRESHOLD_ACTIVATION` group is not distinguished by obviously worse structure-slot alignment on this fixture
+- `INSUFFICIENT_SPECTRAL_CORROBORATION` again behaves differently from the rapid-repeat group
+- no threshold, causal claim, or acceptance rule follows from these observations
 
 ## INDEPENDENT REFERENCE-BLIND PITCH SUPPORT
 
@@ -462,10 +515,11 @@ No acceptance promotion from self-consistency alone.
 
 ## NEXT ENGINEERING STEPS — FRESH CHAT HANDOFF
 
-1. Continue read-only repeated-note analysis using frozen structure. Add previous-same-pitch spacing and nearest-structure-slot alignment diagnostics so the rapid-repeat class can be characterized without defining a release cutoff.
-2. Compare those diagnostics for V3-primary resolved, V3-fallback resolved, `NO_SUSTAINED_SUBTHRESHOLD_ACTIVATION`, and `INSUFFICIENT_SPECTRAL_CORROBORATION` groups. Report distributions only.
-3. Keep the inventory comparator and structure-context diagnostic as regression boundaries. Future changes must reject altered no-mutation/no-model/no-threshold guards.
-4. Keep V2 authoritative and V3 candidate-only. Do not loosen the fixed activation/CQT rule on this fixture.
-5. Model-validation scaffold design is complete for now. Do not add an accepting path until a genuinely independent validation authority/evidence source is explicitly designed and justified.
-6. Any future V3 promotion must be an explicit documented branch decision with V2 preserved for regression comparison.
-7. Before customer exposure, independently validate the model path and obtain complete required duration evidence; evaluator/delivery stay fail-closed until both blockers are legitimately cleared.
+1. Keep the new repeated-note diagnostic read-only. If extended, prefer additional distribution/context fields over any acceptance cutoff.
+2. Next useful duration study: inspect the `INSUFFICIENT_SPECTRAL_CORROBORATION` class descriptively using the already-fixed activation candidate and CQT evidence fields. Compare candidate spectral-drop/activation behavior with the 84 fixed-rule fallback-resolved events, but do not tune the 6 dB / activation thresholds on this fixture.
+3. Keep rapid-repeat (`NO_SUSTAINED_SUBTHRESHOLD_ACTIVATION`) and insufficient-CQT mechanisms separate; current structure-relative evidence says they are observably different.
+4. Keep all diagnostic CI guards. Future changes must reject altered no-mutation/no-model/no-threshold properties.
+5. Keep V2 authoritative and V3 candidate-only. Do not loosen the fixed activation/CQT rule on this fixture.
+6. Model-validation scaffold design is complete for now. Do not add an accepting path until a genuinely independent validation authority/evidence source is explicitly designed and justified.
+7. Any future V3 promotion must be an explicit documented branch decision with V2 preserved for regression comparison.
+8. Before customer exposure, independently validate the model path and obtain complete required duration evidence; evaluator/delivery stay fail-closed until both blockers are legitimately cleared.
