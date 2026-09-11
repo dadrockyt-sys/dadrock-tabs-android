@@ -1,6 +1,6 @@
 # CURRENT STATE — Songsterr Fresh Pipeline V1
 
-Updated: 2026-09-10 22:43 America/Toronto
+Updated: 2026-09-10 22:44 America/Toronto
 Canonical branch: `songsterr-fresh-pipeline-v1`
 Canonical checkpoint: `docs/checkpoints/SONGSTERR_FRESH_PIPELINE_CURRENT_STATE.md`
 
@@ -277,12 +277,12 @@ Customer-eligible events remain **0**. V2 authoritative; V3 candidate-only. Basi
 
 1. Treat Policy B numerical-bound research and finite semantic-consensus analysis as completed negative results; do not revive threshold fitting or hosted unanimity as customer admission rules.
 2. Policy C code, hardening, bootstrap, enrollment runbook, and focused CI are complete and green, but authority remains `UNENROLLED`. Keep `modelValidationComplete:false`, customer-eligible events at 0, and duration research paused.
-3. Provision one persistent Ubuntu 22.04 Linux x64 host (DigitalOcean is acceptable as the reproducibility surface), not an autoscaling/ephemeral pool. Use only one authority-labeled runner at a time.
-4. Install host prerequisites (Python 3.10 + venv, Node 22, FFmpeg, Git, cURL), then run `sudo bash scripts/songsterr-fresh/bootstrap_pinned_compute_authority.sh` to create `/opt/songsterr-fresh-authority/venv`. Do not rebuild that venv after enrollment without re-enrollment.
-5. Register the GitHub self-hosted runner with custom label `songsterr-fresh-authority-v1` and `--disableupdate`; do not commit the time-limited registration token. Install/start it as a service.
-6. Manually dispatch `Songsterr Fresh Policy C Pinned Compute Authority` with `mode=probe`. Review the safe `authority-probe.json`; only then deliberately commit its exact `fingerprint` and `fingerprintSha256` into `pinned_compute_authority_v1.json` and set `enrollmentStatus=ENROLLED`.
-7. From one unchanged source commit, run at least three separate `mode=canary` dispatches. Every run must verify the same enrolled authority fingerprint before model execution and produce exact stem, note-inference, activation, decision-surface, and canonical-evidence identities.
-8. Aggregate the ≥3 canary summaries with `aggregate_pinned_compute_authority_canaries.py`. Any source/fingerprint/output mismatch fails closed. Exact aggregation proves pinned-authority reproducibility only; it must not auto-set `modelValidationComplete:true` or resume duration/delivery.
-9. After reproducibility is demonstrated, perform a separate model-evidence validation review. Keep hosted canaries/decoder traces measurement-only and keep archived V143/Gomyway implementation/reference/pro-scorer work out of scope.
+3. Budget-first step: use the non-authority GitHub Codespaces workbench before buying persistent compute. Create a Codespace from `songsterr-fresh-pipeline-v1`, select `.devcontainer/songsterr-fresh-workbench/devcontainer.json`, and choose the smallest compatible 2-core / 8 GB / 32 GB machine. Codespaces work remains measurement/development only.
+4. Let `.devcontainer/songsterr-fresh-workbench/setup.sh` finish. Confirm `/workspaces/.songsterr-fresh-workbench/workbench-probe.json` exists and that the setup reports `authorityEligible=false`, `modelValidationComplete=false`, and customer-eligible events 0. Do not enroll the Codespaces fingerprint.
+5. Run `bash scripts/songsterr-fresh/run_codespaces_workbench_measurement.sh` once. Inspect `workbench-measurement-summary.json`, especially total/Demucs/Basic-Pitch runtime, maximum resident memory, and output identities. This measurement determines whether the cheapest 2-core / 8 GB workbench is operationally sufficient.
+6. Stop the Codespace immediately after measurement so compute billing stops. Preserve only the workbench caches/results needed for follow-up; do not treat stop/restart/rebuild identity as fixed Policy C authority.
+7. After the 2-core / 8 GB result is known, choose the lowest-cost fixed authority surface that can satisfy the measured memory/runtime requirement. Policy C still requires one explicitly enrolled fixed Linux x64 surface and remains `UNENROLLED` until that separate authority surface is deliberately selected and probed.
+8. Only after a fixed authority surface exists: bootstrap its dedicated `/opt/songsterr-fresh-authority/venv`, register the sole `songsterr-fresh-authority-v1` self-hosted runner with `--disableupdate`, run and review `mode=probe`, deliberately enroll the exact fingerprint, then run ≥3 exact canaries from one unchanged source commit and aggregate them fail-closed.
+9. Exact authority aggregation demonstrates pinned-surface reproducibility only. After that, perform a separate model-evidence validation review; keep `modelValidationComplete:false`, customer-eligible events 0, duration research paused, hosted/Codespaces measurements non-authoritative, and archived V143/Gomyway implementation/reference/pro-scorer work out of scope until independently justified.
 
 The archived V143/Gomyway pipeline remains out of scope unless explicitly requested.
