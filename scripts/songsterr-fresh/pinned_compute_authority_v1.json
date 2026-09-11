@@ -1,0 +1,68 @@
+{
+  "contract": "songsterr-fresh-pinned-compute-authority-v1",
+  "version": 1,
+  "policy": "POLICY_C_PINNED_COMPUTE_AUTHORITY",
+  "authorityId": "songsterr-fresh-authority-v1",
+  "authorityClass": "fixed-self-hosted-machine",
+  "enrollmentStatus": "UNENROLLED",
+  "requiredRunnerLabels": [
+    "self-hosted",
+    "linux",
+    "x64",
+    "songsterr-fresh-authority-v1"
+  ],
+  "requiredEnvironment": {
+    "OMP_NUM_THREADS": "1",
+    "MKL_NUM_THREADS": "1",
+    "OPENBLAS_NUM_THREADS": "1",
+    "NUMEXPR_NUM_THREADS": "1",
+    "PYTHONHASHSEED": "0"
+  },
+  "fixedModelPath": {
+    "fixtureGitBlob": "4dd709e3fa177b4daeed71ca97f0199757729d4b",
+    "decodedSeparationWavSha256": "e03e1885185f4983b3eeaa66f36510b7709d607c14010f964e0aad427ecc474a",
+    "structureIdentity": "fnv1a32:2f493225",
+    "demucs": {
+      "packageVersion": "4.1.0",
+      "modelName": "htdemucs_6s",
+      "device": "cpu",
+      "shifts": 0,
+      "overlap": 0.25,
+      "segmentSeconds": 7,
+      "assetSha256": "d2a1745f0744721f6b8ca5bf469b67c651ea5ed1b52998cab033b2158609d411"
+    },
+    "basicPitch": {
+      "packageVersion": "0.4.0",
+      "minimumMidi": 40,
+      "maximumMidi": 88,
+      "onsetThreshold": 0.5,
+      "frameThreshold": 0.3,
+      "minimumNoteLengthMs": 127.7
+    }
+  },
+  "enrolledFingerprintSha256": null,
+  "enrolledFingerprint": null,
+  "reproducibilityRequirement": {
+    "minimumSeparateCanaryRuns": 3,
+    "sameSourceCommitRequired": true,
+    "sameAuthorityFingerprintRequired": true,
+    "exactGuitarStemSha256Required": true,
+    "exactNoteInferenceSha256Required": true,
+    "exactActivationBundleSha256Required": true,
+    "exactDecisionSurfaceSha256Required": true,
+    "exactCanonicalEvidenceSha256Required": true
+  },
+  "policyBoundary": {
+    "hostedModelRunsRemainMeasurementOnly": true,
+    "fallbackToUnenrolledHardwareAllowed": false,
+    "authorityDriftFailsClosed": true,
+    "authorityIsReproducibilityScopeNotSecurityAttestation": true,
+    "referenceTabUsed": false,
+    "professionalScorerUsed": false,
+    "legacyV143ScorerImported": false,
+    "modelValidationComplete": false,
+    "mayAdvanceDelivery": false,
+    "durationAuthorityChanged": false,
+    "customerEligibleEvents": 0
+  }
+}
