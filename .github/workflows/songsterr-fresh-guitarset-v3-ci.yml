@@ -1,0 +1,101 @@
+name: Songsterr Fresh GuitarSet V3 Contract CI
+
+on:
+  push:
+    branches:
+      - songsterr-fresh-pipeline-v1
+    paths:
+      - scripts/songsterr-fresh/external_guitarset_validation_v3.py
+      - scripts/songsterr-fresh/independent_pitch_corroboration_v2.py
+      - docs/checkpoints/SONGSTERR_FRESH_MODEL_EVIDENCE_ADMISSION_PREREGISTRATION_V3.md
+      - docs/checkpoints/SONGSTERR_FRESH_EXTERNAL_GUITARSET_VALIDATION_V3.md
+      - .github/workflows/songsterr-fresh-guitarset-v3-ci.yml
+  workflow_dispatch:
+
+jobs:
+  controlled-contract-only:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - name: Checkout exact branch source
+        uses: actions/checkout@v4
+
+      - name: Set up Python 3.10
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.10'
+
+      - name: Install frozen lightweight dependencies
+        run: |
+          python -m pip install --upgrade pip
+          python -m pip install numpy==1.26.4 soundfile==0.13.1
+
+      - name: Compile V2 and V3 harness
+        run: |
+          python -m py_compile scripts/songsterr-fresh/independent_pitch_corroboration_v2.py
+          python -m py_compile scripts/songsterr-fresh/external_guitarset_validation_v3.py
+
+      - name: Run V3 synthetic and contract self-test only
+        run: |
+          python scripts/songsterr-fresh/external_guitarset_validation_v3.py \
+            --self-test \
+            --repo-root . | tee /tmp/v3-self-test.json
+          grep -F '"selfTest":"PASS"' /tmp/v3-self-test.json
+          grep -F '"guitarsetEvaluated":false' /tmp/v3-self-test.json
+          grep -F '"protectedSongEvaluated":false' /tmp/v3-self-test.json
+          grep -F '"modelValidationComplete":false' /tmp/v3-self-test.json
+          grep -F '"customerEligibleEvents":0' /tmp/v3-self-test.json
+
+      - name: Enforce preregistered constants and exclusions
+        run: |
+          python - <<'PY'
+          import importlib.util
+          from pathlib import Path
+          path=Path('scripts/songsterr-fresh/external_guitarset_validation_v3.py')
+          spec=importlib.util.spec_from_file_location('v3', path)
+          mod=importlib.util.module_from_spec(spec)
+          spec.loader.exec_module(mod)
+          assert mod.CONTRACT == 'songsterr-fresh-guitarset-external-validation-v3'
+          assert mod.DATASET_VERSION == '1.1.0'
+          assert mod.DATASET_DOI == '10.5281/zenodo.3371780'
+          assert mod.ANNOTATION_ARCHIVE_MD5 == 'b39b78e63d3446f2e54ddb7a54df9b10'
+          assert mod.AUDIO_ARCHIVE_MD5 == '275966d6610ac34999b58426beb119c3'
+          assert mod.EXPECTED_DATASET_TRACK_COUNT == 360
+          assert mod.LOCKED_EVALUATION_TRACK_COUNT == 357
+          assert set(mod.EXCLUDED_TRACK_IDS) == {
+              '02_Funk2-119-G_comp',
+              '04_BN3-154-E_comp',
+              '04_Jazz1-200-B_comp',
+          }
+          assert mod.ONSET_TOLERANCE_SECONDS == 0.050
+          assert mod.PITCH_TOLERANCE_CENTS == 50.0
+          assert mod.MIN_TOTAL_POSITIVES == 1000
+          assert mod.OVERALL_WILSON_LOWER_BOUND_MIN == 0.9900
+          assert mod.STRATUM_MIN_POSITIVES == 50
+          assert mod.STRATUM_POINT_PRECISION_MIN == 0.9500
+          assert mod.WILSON_Z_ONE_SIDED_95 == 1.6448536269514722
+          print('V3_PREREGISTERED_CONSTANTS_VALID')
+          PY
+
+      - name: Enforce controlled-only CI boundary
+        run: |
+          python - <<'PY'
+          from pathlib import Path
+          workflow=Path('.github/workflows/songsterr-fresh-guitarset-v3-ci.yml').read_text()
+          forbidden=(
+              'audio_mono-mic.zip?download=',
+              'annotation.zip?download=',
+              'zenodo.org/record/3371780/files/',
+              '--annotation-zip /',
+              '--audio-mic-zip /',
+          )
+          for token in forbidden:
+              assert token not in workflow, token
+          script=Path('scripts/songsterr-fresh/external_guitarset_validation_v3.py').read_text()
+          assert 'gomyway-midterm-source' not in script
+          assert '79.6261406' not in script
+          assert '46.2024095' not in script
+          print('V3_CONTROLLED_ONLY_BOUNDARY_VALID')
+          print('GUITARSET_NOT_EVALUATED_BY_V3_CI')
+          print('PROTECTED_SONG_NOT_EVALUATED_BY_V3_CI')
+          PY
