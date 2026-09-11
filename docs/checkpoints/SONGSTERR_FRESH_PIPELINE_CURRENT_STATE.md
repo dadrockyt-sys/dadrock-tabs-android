@@ -1,6 +1,6 @@
 # CURRENT STATE — Songsterr Fresh Pipeline V1
 
-Updated: 2026-09-10 21:22 America/Toronto
+Updated: 2026-09-10 21:25 America/Toronto
 Canonical branch: `songsterr-fresh-pipeline-v1`
 Canonical checkpoint: `docs/checkpoints/SONGSTERR_FRESH_PIPELINE_CURRENT_STATE.md`
 
@@ -190,6 +190,17 @@ Decision-enabled real model canary — COMPLETED GREEN:
 - Official focused variation-test CI for tracer-fix commit `ab87287d1d951fcd9988d9d4c017b7a765660cb0`: run `34550351149`, conclusion `success`, jobs `103111767249:success`.
 - `modelValidationComplete` remains false; customer-eligible events remain 0; duration research remains paused.
 
+## DECODER TRACE COMPARISON — IMPLEMENTED / REAL A-B-C MEASURED
+
+- `scripts/songsterr-fresh/compare_basic_pitch_decoder_traces.py`, contract `songsterr-fresh-basic-pitch-decoder-trace-comparison-v1`, commit `6a752b820db3e572ce23167f346954b80123de6b`.
+- Reference-blind, argument-order invariant, measurement-only, and fail-closed unless each input trace declares exact evidence replay plus all non-promotion guards. It compares semantic inventory, common-event decoder mechanism, and decoder frame-span variation; observed values cannot become admission tolerances.
+- Focused CI wiring commit `ce9f28b9ae4ecb5bc60331349f4e70ff2a6f8442`; run `34550527914`, job `103112287283`, success.
+- Real trace comparison execution run `34550610640` reused exact traces from replay artifact `10180559766` (`sha256:46f918d841c86f3c15c3c2177791d95fb0e414cd3a52196cd34625e490cb49e4`); no model rerun.
+- A/B: 1138 common paired events, 1 unmatched semantic event, 0 common mechanism mismatches; decoder-start differs for 1 common event (max 7 frames), decoder-end differs for 1 (max 20 frames). Max common source-start delta `0.08126984126983672` s; diagnostic model-end delta `0.23219954648526198` s; note-span mean-activation delta `0.09106314182281494`.
+- A/C: 1138 common paired events, 0 unmatched, 0 mechanism mismatches; start/end different counts 0/0 with maxima 0/0 frames. A and C remain exact at trace level.
+- B/C matches the A/B pattern: 1138 common, 1 unmatched, 0 common mechanism mismatches; start/end maxima 7/20 frames.
+- Mechanism identity is stable for every common A/B/C semantic event in this sample. The only semantic inventory instability remains the B-only MIDI-55 threshold-onset event; this does not justify an admission band around 0.5.
+
 ## CURRENT ACCEPTANCE STATE
 
 Do **not** set `modelValidationComplete:true`.
@@ -202,18 +213,12 @@ Customer-eligible events remain **0**. V2 authoritative; V3 candidate-only. Basi
 
 ## FRESH-CHAT NEXT ENGINEERING STEPS
 
-Start a new chat by reading this file and working only from `songsterr-fresh-pipeline-v1`. Do not rerun Demucs/Basic Pitch first; the completed decision-enabled run already contains the next evidence to inspect.
-
-1. Treat run `34546969446` as completed/green and begin from aggregate artifact `10179540711` plus observation artifacts A `10179528439`, B `10179504174`, C `10179525061`. Inspect the machine-produced pairwise model-evidence and decision-surface JSON reports before making any code or policy change.
-2. Enumerate every unmatched semantic event across A/B/C using the existing frozen semantic key `(nearestStructureSlot, selectedMidi)`. Explicitly include the historical MIDI-64 slot `206.22657596371883`, but do not assume it is the only instability in this newer Intel/AMD set.
-3. For each unmatched event, inspect both sides' captured raw onset, effective/inferred onset, note-frame activation, strict-local-peak state, threshold margin, and local three-frame maxima. This is explanation-only; no observed margin becomes a tolerance.
-4. Verify the focused self-test/CI for `trace_basic_pitch_decoder_mechanisms.py` (`9b4515fddd2ed6605a5494b0e75dc3cdfa390463`, CI wiring `b5a625a4ce12f530af2a63a0e52c5c8728fa9fef`). Then run the tracer against the already-captured A/B/C sidecars. It must reproduce the existing evidence multiset exactly before any decoder-pass label is trusted.
-5. Classify unmatched events by actual Basic Pitch 0.4.0 decoder mechanism: `threshold-onset` pass versus `melodia-residual` pass. Do not infer the mechanism from the legacy `confidence` field; that value is mean note-span activation and is acceptance-diagnostic-only.
-6. If instability is on the threshold-onset path, measure the representation-native decision quantities across independent observations but do **not** turn the smallest/largest observed margin, one-frame spacing, or current sample envelope into an admission tolerance. A bound still requires separate independent justification.
-7. If instability is on the melodia residual-energy path, inspect the residual-energy decision boundary generically and reference-blindly from the captured matrices/replay. Do not tune thresholds/model settings to make this fixture stable, and do not select a CPU/vendor/output that happens to suppress or emit a note.
-8. If the new run reveals more than one semantic instability or a mechanism not cleanly attributable to one decoder path, preserve that result as measurement evidence and keep validation blocked. Do not force a binary explanation.
-9. Only propose a model-evidence admission contract if it is fail-closed, reference-blind, independent of exact hashes/CPU/event count/reference tabs/downstream agreement, and justified beyond the observed sample. Until then keep `modelValidationComplete:false` and customer-eligible events at 0.
-10. Keep duration research paused. V2 remains authoritative and V3 candidate-only; do not resume release/duration work until upstream model-evidence validation is actually resolved.
-11. Update this checkpoint after the A/B/C decision-surface + exact-decoder replay findings, including any material failure/fix and the exact run/artifact/commit identities used.
+1. Treat the A/B/C decision-surface inspection, exact decoder replay, and decoder-trace comparison as completed evidence. Do not rerun them merely to rediscover the current sample.
+2. Keep `modelValidationComplete:false`, customer-eligible events at 0, and duration research paused. The B-only MIDI-55 event is a proven `threshold-onset-pass` toggle around the fixed Basic Pitch onset threshold, but its observed margins and the 7/20-frame common-event span drift are measurement evidence only.
+3. Integrate exact decoder traces and pairwise decoder-trace comparisons into the decision-enabled cross-run measurement canary so future independent observations automatically preserve mechanism-level evidence. Keep this integration diagnostic-only and non-promotional.
+4. Before proposing any onset-boundary admission rule, look for an independent reference-blind justification for a decision uncertainty boundary. Do not derive a tolerance from the current observed margins, matrix maxima, frame spacing, CPU/vendor grouping, event frequency, or downstream agreement.
+5. If no independent bound exists, record that Policy B still lacks a justified admission contract for threshold-boundary inventory toggles. Do not manufacture one from more samples alone.
+6. If additional independent observations are later collected, use the existing frozen settings and automatic trace-comparison path; treat them as measurement/history evidence, not as a way to tune thresholds to this fixture.
+7. Keep the archived V143/Gomyway implementation/reference/pro scorer path out of scope and keep V2/V3 duration work paused until upstream model-evidence validation is actually resolved.
 
 The archived V143/Gomyway pipeline remains out of scope unless explicitly requested.
