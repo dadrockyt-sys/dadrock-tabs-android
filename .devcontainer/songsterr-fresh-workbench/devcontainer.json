@@ -1,0 +1,29 @@
+{
+  "name": "Songsterr Fresh Workbench",
+  "image": "mcr.microsoft.com/devcontainers/base:ubuntu-22.04",
+  "features": {
+    "ghcr.io/devcontainers/features/python:1": {
+      "version": "3.10"
+    },
+    "ghcr.io/devcontainers/features/node:1": {
+      "version": "22"
+    }
+  },
+  "remoteUser": "vscode",
+  "postCreateCommand": "bash .devcontainer/songsterr-fresh-workbench/setup.sh",
+  "hostRequirements": {
+    "cpus": 2,
+    "memory": "8gb",
+    "storage": "32gb"
+  },
+  "containerEnv": {
+    "OMP_NUM_THREADS": "1",
+    "MKL_NUM_THREADS": "1",
+    "OPENBLAS_NUM_THREADS": "1",
+    "NUMEXPR_NUM_THREADS": "1",
+    "PYTHONHASHSEED": "0",
+    "PIP_CACHE_DIR": "/workspaces/.songsterr-fresh-workbench/pip-cache",
+    "HF_HOME": "/workspaces/.songsterr-fresh-workbench/huggingface",
+    "TORCH_HOME": "/workspaces/.songsterr-fresh-workbench/torch"
+  }
+}
