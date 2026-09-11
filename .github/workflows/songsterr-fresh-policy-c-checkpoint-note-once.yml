@@ -1,0 +1,106 @@
+name: Songsterr Fresh Policy C Checkpoint Note Once
+
+on:
+  push:
+    branches:
+      - songsterr-fresh-pipeline-v1
+    paths:
+      - '.github/workflows/songsterr-fresh-policy-c-checkpoint-note-once.yml'
+
+permissions:
+  contents: write
+
+jobs:
+  record:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - name: Check out fresh branch
+        uses: actions/checkout@v4
+        with:
+          ref: songsterr-fresh-pipeline-v1
+          fetch-depth: 0
+
+      - name: Patch canonical checkpoint
+        shell: bash
+        run: |
+          python - <<'PY'
+          from datetime import datetime
+          from pathlib import Path
+          from zoneinfo import ZoneInfo
+
+          path = Path('docs/checkpoints/SONGSTERR_FRESH_PIPELINE_CURRENT_STATE.md')
+          text = path.read_text(encoding='utf-8')
+          text = text.replace(
+              '## UPSTREAM EXECUTION POLICY — POLICY B SELECTED',
+              '## UPSTREAM EXECUTION POLICY — POLICY B HOSTED MEASUREMENT BASELINE / POLICY C AUTHORITY SELECTED',
+              1,
+          )
+          heading = '## POLICY C PINNED COMPUTE AUTHORITY — IMPLEMENTED SCAFFOLD / UNENROLLED\n'
+          section_lines = [
+              '## POLICY C PINNED COMPUTE AUTHORITY — IMPLEMENTED SCAFFOLD / UNENROLLED',
+              '',
+              '- User explicitly authorized the architecture/policy change after Policy B numerical-bound and finite-consensus approaches were shown insufficient.',
+              '- Policy C defines one explicitly enrolled fixed self-hosted Linux x64 compute surface as the only authority-eligible Demucs → Basic Pitch execution surface. GitHub-hosted model runs remain measurement/history evidence only; there is no hosted fallback.',
+              '- Architecture contract: `docs/checkpoints/SONGSTERR_FRESH_PINNED_COMPUTE_AUTHORITY_V1.md`, commit `31a351e33e952686de4d8e9a5d6fe6239a3b35e1`.',
+              '- Manifest `scripts/songsterr-fresh/pinned_compute_authority_v1.json`: created `8cbe046e1c2f06e3ff568775ad98874d4fbdef56`, full package set pinned `3b42aacf8449ea13ad6960259125c84810ac6134`; current `enrollmentStatus=UNENROLLED` and no enrolled fingerprint exists.',
+              '- Fail-closed verifier `verify_pinned_compute_authority.py`, commit `94d513d90c8ca4d5f951413a7440c6a924e7d759`, binds reproducibility-relevant CPU/microcode/kernel/libc/interpreter/toolchain/package/numerical-library/thread state while intentionally excluding machine IDs/network/user identity. Un-enrolled, hardware-drift, and software-drift states fail closed.',
+              '- One-canary summary contract `build_pinned_compute_authority_canary.py`, commit `3a05084ab046cb2ff9a11491da3fde9d9fede226`, requires authority verification before model execution and cannot promote model validation.',
+              '- Three-canary aggregation contract `aggregate_pinned_compute_authority_canaries.py`, commit `408e071cfe538dff1c9f633d8756b4e2d8679b50`, requires ≥3 distinct workflow run IDs from one source commit and one enrolled authority fingerprint with exact stem/note/activation/decision/evidence identity. Any drift fails closed. Even exact reproducibility does not auto-promote `modelValidationComplete`.',
+              '- Manual workflow `.github/workflows/songsterr-fresh-pinned-compute-authority.yml`, commit `623cce5b605397afe9d105c57fd8a35d2efed041`, runs only on `[self-hosted, linux, x64, songsterr-fresh-authority-v1]`, has `probe` and `canary` modes, installs no model/toolchain dependencies, has no automatic model trigger, and has no hosted fallback.',
+              '- Hosted pure-contract CI wiring commit `43fdb35e7d6f247b31f32449a06dfafa07586051`; run `34552124958`, job `103117037937`, success. It proved manifest validation, un-enrolled/drift fail-closed behavior, single-canary non-promotion, three-canary exactness/non-promotion, and all prior fresh measurement guards.',
+              '- Current authority state is intentionally **UNENROLLED**. No real Policy C model canary has been run and no output has authority status yet.',
+              '- `modelValidationComplete` remains false; customer-eligible events remain 0; duration research remains paused. V2 remains authoritative and V3 candidate-only.',
+              '',
+          ]
+          section = '\n'.join(section_lines) + '\n'
+          marker = '## CURRENT ACCEPTANCE STATE\n'
+          if heading in text:
+              start = text.index(heading)
+              end = text.index(marker, start)
+              text = text[:start] + section + text[end:]
+          else:
+              if marker not in text:
+                  raise SystemExit('CURRENT_ACCEPTANCE_STATE_MARKER_MISSING')
+              text = text.replace(marker, section + marker, 1)
+
+          next_marker = '## FRESH-CHAT NEXT ENGINEERING STEPS\n'
+          archive_line = 'The archived V143/Gomyway pipeline remains out of scope unless explicitly requested.'
+          if next_marker not in text or archive_line not in text:
+              raise SystemExit('NEXT_STEP_MARKERS_MISSING')
+          start = text.index(next_marker)
+          end = text.index(archive_line, start)
+          next_lines = [
+              '## FRESH-CHAT NEXT ENGINEERING STEPS',
+              '',
+              '1. Treat Policy B numerical-bound research and finite semantic-consensus analysis as completed negative results; do not revive threshold fitting or hosted unanimity as customer admission rules.',
+              '2. Policy C pinned-compute authority scaffolding and hosted contract tests are complete, but the authority is `UNENROLLED`. Keep `modelValidationComplete:false`, customer-eligible events at 0, and duration research paused.',
+              '3. Provision one dedicated fixed Linux x64 machine as a GitHub self-hosted runner with labels `self-hosted`, `linux`, `x64`, `songsterr-fresh-authority-v1`. Do not use an autoscaling/ephemeral pool and do not treat an ordinary container on variable hosted hardware as authority.',
+              '4. Preinstall the exact branch-pinned Python packages plus Node/FFmpeg on that machine. The authority workflow intentionally performs no package/toolchain installation before model execution.',
+              '5. Manually dispatch `Songsterr Fresh Policy C Pinned Compute Authority` with `mode=probe`. Review the safe probe artifact; only then deliberately commit its exact fingerprint into `pinned_compute_authority_v1.json` and change `enrollmentStatus` to `ENROLLED`.',
+              '6. From one unchanged source commit, run at least three separate `mode=canary` dispatches on the enrolled authority, then aggregate their canary summaries. Stem, note inference, activation bundle, decision surface, and canonical evidence must be exact across all runs or the authority proof fails closed.',
+              '7. If exact pinned-authority reproducibility is demonstrated, perform a separate model-evidence validation review. The canary aggregator itself must not set `modelValidationComplete:true` or advance delivery/duration.',
+              '8. Keep hosted cross-run canaries and automatic decoder-trace follow-up as measurement/history evidence only. No hosted CPU/vendor/output becomes a fallback authority.',
+              '9. Keep archived V143/Gomyway implementation/reference/pro-scorer work out of scope and keep V2/V3 duration/release work paused until upstream model-evidence validation is actually resolved.',
+              '',
+          ]
+          text = text[:start] + '\n'.join(next_lines) + '\n' + text[end:]
+
+          stamp = datetime.now(ZoneInfo('America/Toronto')).strftime('%Y-%m-%d %H:%M America/Toronto')
+          lines = text.splitlines()
+          for index, line in enumerate(lines):
+              if line.startswith('Updated: '):
+                  lines[index] = f'Updated: {stamp}'
+                  break
+          path.write_text('\n'.join(lines) + '\n', encoding='utf-8')
+          PY
+
+      - name: Commit checkpoint update
+        shell: bash
+        run: |
+          set -euo pipefail
+          git config user.name 'dadrockyt-sys'
+          git config user.email 'Stephen.s.mcnally@gmail.com'
+          git add docs/checkpoints/SONGSTERR_FRESH_PIPELINE_CURRENT_STATE.md
+          git commit -m 'docs: record fresh Policy C pinned compute authority scaffold'
+          git push origin HEAD:songsterr-fresh-pipeline-v1
