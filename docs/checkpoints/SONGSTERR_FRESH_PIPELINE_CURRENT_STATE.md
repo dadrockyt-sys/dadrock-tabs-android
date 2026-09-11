@@ -20,13 +20,13 @@ Current authority remains fail-closed:
 - duration research paused
 - persistent Policy C `UNENROLLED`.
 
-## HISTORICAL CLOSED WORK
+## V1 / V2 / V3 — CLOSED
 
-V1/V2 are frozen research diagnostics rejected as admission authority.
+V1 and V2 remain frozen research diagnostics rejected as admission authority.
 
-Historical V2 protected-song result: 1,140 preserved events; 187 corroborated / 951 not / 2 insufficient. It cannot tune V4.
+Historical V2 protected-song result: 1,140 preserved events; 187 corroborated / 951 not / 2 insufficient. Historical protected-song outcomes may not tune successors.
 
-V3 is closed after GuitarSet v1.1.0 external validation failed preregistered gates:
+V3 is closed after frozen GuitarSet v1.1.0 validation failed preregistered gates:
 - 357/357 tracks
 - 62,438 decoded events
 - 11,252 V3-positive
@@ -35,16 +35,16 @@ V3 is closed after GuitarSet v1.1.0 external validation failed preregistered gat
 - one-sided 95% Wilson lower bound `0.8854816094599652`
 - required lower bound `0.9900` → FAIL.
 
-GuitarSet is historical only and MUST NOT be reused as V4 pass/fail validation.
+GuitarSet is historical only.
 
-## V4 FROZEN METHOD
+## V4 — CLOSED / REJECTED AS ADMISSION AUTHORITY
 
-V4 preregistration:
+V4 method preregistration:
 - `docs/checkpoints/SONGSTERR_FRESH_MODEL_EVIDENCE_ADMISSION_PREREGISTRATION_V4.md`
 - initial commit `a5cec402cf3bcd6c28ac3339d4d00de4d8cdf8b2`
-- synthetic-only amendment `30b2769772d0a2a2edeaa8e92bff66ce3518fede`.
+- pre-implementation synthetic amendment `30b2769772d0a2a2edeaa8e92bff66ce3518fede`.
 
-Frozen implementation:
+Frozen V4 implementation:
 - `scripts/songsterr-fresh/independent_pitch_corroboration_v4.py`
 - commit `6e9e11e60d0d6958c30edf6bb5d686d545936a19`
 - contract `songsterr-fresh-temporal-consensus-pitch-corroboration-research-v4`.
@@ -57,9 +57,9 @@ Frozen rule:
 - spectral strict global winner + YIN semitone-cell winner required in all three windows;
 - no margins, voting, confidence, duration, next onset, activation, decision surface, reference, performer/style identity or event deletion.
 
-No protected-song V4 execution has occurred.
+No protected-song V4 execution occurred.
 
-## IDMT DATASET / STAGE A
+## IDMT V4 INPUT / MANIFEST FREEZE
 
 Dataset:
 - IDMT-SMT-Guitar Dataset v1.0.0
@@ -75,108 +75,78 @@ Immutable Stage A result:
 - `docs/checkpoints/SONGSTERR_FRESH_IDMT_V4_EXTERNAL_VALIDATION_STAGE_A_RESULT.md`
 - commit `b5516dd0b2d84014f4e28d45bb04bce1ba0617ca`.
 
-Observed inventory:
-- 4,292 ZIP members
-- 1,173 WAV
-- 667 XML
-- 569 exact WAV/XML leaf-stem pairs
-- dataset1=312 / dataset2=252 / dataset3=5 before mechanical filtering
-- 512 unpaired WAV / 9 unpaired XML / 45 ambiguous stem groups.
-
-Stage A performed no model inference or correctness scoring.
-
-## IDMT STAGE B MANIFEST — FROZEN
-
-Manifest result:
+Stage B manifest freeze:
 - output SHA-256 `dfea0060296ea2289e82041545e8da0f80dd81c5dee6668e8bc7ab08293bbdeb`
 - included-manifest SHA-256 `0c7946f6ac5af341bcca155a24189c4cd85b9366c0cab3282469ad43236ca344`
 - 568 included pairs / 1 mechanically excluded pair
-- included counts dataset1=312 / dataset2=252 / dataset3=4
-- 4,661 reference note events
-- reference pitch range MIDI 40..92, all integer-valued
-- onset range 0.19..68.0664 s
-- offset range 1.4448..73.9406 s.
+- dataset1=312 / dataset2=252 / dataset3=4
+- 4,661 reference note events.
 
-Stage B manifest generation performed no model inference or correctness scoring.
+## V4 OFFICIAL SCORING CONTRACT — FROZEN BEFORE RESULTS
 
-## FINAL V4 SCORING CONTRACT — FROZEN BEFORE RESULTS
+Primary scoring preregistration:
+- `docs/checkpoints/SONGSTERR_FRESH_IDMT_V4_STAGE_B_SCORING_PREREGISTRATION.md`
+- commit `63c4a2ce74b7a9da213a176f76cfac781cec0769`.
 
-Primary preregistration:
-`docs/checkpoints/SONGSTERR_FRESH_IDMT_V4_STAGE_B_SCORING_PREREGISTRATION.md`
-commit `63c4a2ce74b7a9da213a176f76cfac781cec0769`.
+Pre-result numerical-boundary amendment:
+- `docs/checkpoints/SONGSTERR_FRESH_IDMT_V4_STAGE_B_SCORING_NUMERICAL_AMENDMENT.md`
+- commit `4ee6f2c557c51fbeeaa626bdc12f790311117f36`.
 
-Numerical-boundary amendment before any real correctness result:
-`docs/checkpoints/SONGSTERR_FRESH_IDMT_V4_STAGE_B_SCORING_NUMERICAL_AMENDMENT.md`
-commit `4ee6f2c557c51fbeeaa626bdc12f790311117f36`.
+Frozen matching/gates:
+- per-file one-to-one maximum-cardinality matching;
+- onset difference <= 0.050 s;
+- pitch difference <= 50 cents;
+- offsets ignored;
+- primary metric = V4-positive precision;
+- one-sided 95% Wilson lower bound with `z=1.6448536269514722`;
+- all 568 files complete;
+- >=1000 positives;
+- pooled Wilson lower bound >=0.9900;
+- dataset1 and dataset2 point precision >=0.9500 when >=100 positives;
+- any sample-width stratum with >=100 positives precision >=0.9500;
+- dataset3 diagnostic-only because only four files.
 
-Frozen matching:
-- per-file one-to-one maximum-cardinality bipartite matching
-- onset absolute difference <= 0.050 s
-- pitch absolute difference <= 50 cents
-- offsets ignored
-- inclusive binary64 boundary implemented with `1e-12` absolute numerical epsilon only to preserve the preregistered inclusive boundary.
-
-Primary metric:
-- V4-positive precision
-- one-sided 95% Wilson lower bound, `z=1.6448536269514722`.
-
-Frozen gates:
-1. all 568 files complete;
-2. at least 1,000 V4-positive events;
-3. pooled one-sided 95% Wilson lower bound >= 0.9900;
-4. dataset1 >=100 positives and precision >=0.9500;
-5. dataset2 >=100 positives and precision >=0.9500;
-6. dataset3 pooled/diagnostic only because only four files;
-7. any sample-width stratum with >=100 positives requires precision >=0.9500;
-8. identity/policy guards intact.
-
-## OFFICIAL VALIDATION HARNESS
-
-Core harness:
-`scripts/songsterr-fresh/external_idmt_v4_validation.py`
-commit `6b48911b3694d9057b3da279fe7a8ba820395c76`.
-
-Official entrypoint:
-`scripts/songsterr-fresh/run_external_idmt_v4_validation.py`
-commit `b4a224c399263bd8ecb906727f6d7331af4db5fe`.
-
-Controlled official-entrypoint CI green:
-- run `34657193712`
-- job `103452045087`
-- source `2d07d73aa3d6d5a6088eb26c53bf1905d22f7b78`.
+Official harness:
+- core `scripts/songsterr-fresh/external_idmt_v4_validation.py`, commit `6b48911b3694d9057b3da279fe7a8ba820395c76`
+- adapter `scripts/songsterr-fresh/run_external_idmt_v4_validation.py`, commit `b4a224c399263bd8ecb906727f6d7331af4db5fe`
+- controlled CI run `34657193712`, job `103452045087`: SUCCESS.
 
 Official scoring source commit:
 `ef92d873ed6cdb6b78fe06e42d0b8ffd24cce237`.
 
-## OFFICIAL IDMT V4 RESULT — COMPLETED / FAILED FROZEN GATES
+## OFFICIAL IDMT V4 RESULT — IMMUTABLE FAILURE
 
-The one official 568-file IDMT V4 holdout execution completed successfully in Codespaces on frozen source `ef92d873ed6cdb6b78fe06e42d0b8ffd24cce237`.
+Immutable result record:
+- `docs/checkpoints/SONGSTERR_FRESH_IDMT_V4_EXTERNAL_VALIDATION_RESULT.md`
+- commit `303e048f07d58370ab3256cdc226cdfd3628cf8a`
+- official result artifact SHA-256 `d97ea2c7f004876fc43f6c3d2e28e4838df86a4a4c4a8bc8f8a2a98ab5e37d2c`.
 
-Observed aggregate result:
+Runtime:
+- Python `3.10.21`
+- Basic Pitch `0.4.0`
+- NumPy `1.26.4`
+- SoundFile `0.13.1`
+- librosa `0.11.0`.
+
+Aggregate result:
 - completed files: `568 / 568`
 - reference events: `4661`
 - decoded events: `7619`
-- classification counts:
-  - `independently-corroborated-candidate`: `1644`
-  - `not-independently-corroborated`: `5906`
-  - `insufficient-evidence`: `69`
-- V4-positive events: `1644`
-- correct positives: `1292`
-- positive precision: `0.7858880778588808`
-- one-sided 95% Wilson lower bound: `0.7687844934184139`
-- required lower bound: `0.9900` → **FAIL**
-- positive recall: `0.27719373524994634`
-- baseline correct count: `3752`
-- baseline precision: `0.4924530778317365`.
+- classifications: 1644 corroborated / 5906 not / 69 insufficient
+- positive correct: `1292 / 1644`
+- positive precision `0.7858880778588808`
+- one-sided 95% Wilson lower bound `0.7687844934184139`
+- required lower bound `0.9900` → FAIL
+- positive recall `0.27719373524994634`.
 
-Strata observed in the official result:
-- dataset1: 323 positives / 309 correct / precision `0.9566563467492261` → mandatory dataset gate PASS
-- dataset2: 1293 positives / 958 correct / precision `0.7409126063418406` → mandatory dataset gate FAIL
-- dataset3: 28 positives / 25 correct / precision `0.8928571428571429` → diagnostic only
-- sample width 16-bit (`2`): 351 positives / 334 correct / precision `0.9515669515669516` → gate PASS
-- sample width 24-bit (`3`): 1293 positives / 958 correct / precision `0.7409126063418406` → gate FAIL.
+Strata:
+- dataset1: 309/323, precision `0.9566563467492261` → PASS
+- dataset2: 958/1293, precision `0.7409126063418406` → FAIL
+- dataset3: 25/28, precision `0.8928571428571429` → diagnostic only
+- 16-bit: 334/351, precision `0.9515669515669516` → PASS
+- 24-bit: 958/1293, precision `0.7409126063418406` → FAIL.
 
-Frozen gate outcomes:
+Frozen gates:
 - `allIncludedFilesCompleted:true`
 - `minimumTotalPositiveEvents:true`
 - `overallWilsonLowerBound:false`
@@ -186,42 +156,42 @@ Frozen gate outcomes:
 - `sampleWidthBytes3:false`
 - `externalValidationPassed:false`.
 
-Runtime/provenance captured from the official artifact:
-- source commit `ef92d873ed6cdb6b78fe06e42d0b8ffd24cce237`
-- Python `3.10.21`
-- Basic Pitch `0.4.0`
-- NumPy `1.26.4`
-- SoundFile `0.13.1`
-- librosa `0.11.0`
-- result-file SHA-256: **PENDING FINAL READ-ONLY CAPTURE FROM COMPLETED ARTIFACT**.
+## V4 POLICY REVIEW — REJECTED
 
-The result is a frozen external-validation failure. V4 MUST NOT be retuned, threshold-adjusted, post-hoc filtered, or rerun against IDMT under this preregistration.
+Separate policy review:
+- `docs/checkpoints/SONGSTERR_FRESH_IDMT_V4_POLICY_REVIEW.md`
+- commit `01a276045d32b643aa17013b959e89e41b0f305e`.
+
+Decision:
+- **V4 is CLOSED / REJECTED AS ADMISSION AUTHORITY.**
+- Dataset1/16-bit success cannot override pooled, dataset2, and 24-bit failures.
+- no post-hoc subset selection, threshold adjustment, retuning, filtering, or IDMT rerun is authorized under V4;
+- no protected-song V4 execution is authorized;
+- result retained as research diagnostic only.
 
 Authority remains unchanged:
-- `externalValidationPassed:false`
-- `admissionDecisionMade:false`
 - `modelValidationComplete:false`
 - customer-eligible events `0`
 - `mayAdvanceDelivery:false`
 - duration authority unchanged
-- protected song not used
-- separate policy review required.
+- duration research paused
+- protected song not used.
 
-## NEXT REQUIRED STEP — CLOSE V4
+## NEXT ALLOWED ACTION
 
-1. Capture the exact SHA-256 of the completed `idmt-v4-official-result.json` artifact only; no rescoring/reexecution.
-2. Write immutable V4 official result record binding that artifact hash, source/runtime/input identities and aggregate gates.
-3. Write a separate V4 policy review rejecting V4 as admission authority because the frozen external-validation gates failed.
-4. Update this checkpoint to CLOSED / REJECTED AS ADMISSION AUTHORITY.
-5. Do not open a V5/successor without explicit user authorization.
+There is no active successor.
+
+Do **not** open V5 or any new model-evidence successor unless the user explicitly authorizes one. A successor must use a fresh preregistration before implementation/external scoring and must not tune against protected-song historical outcomes or reuse a previously observed admission holdout as though it were untouched.
+
+The Codespace used for V4 may now be stopped; no active boot/session authority is needed.
 
 ## STILL FORBIDDEN
 
-- any IDMT V4 rerun or tuning after this result
+- IDMT V4 rerun/tuning
 - protected-song V4 execution
 - duration research
 - GuitarSet rerun/tuning
 - archived V143/Gomyway / GOAT / reference scoring
 - threshold sweeps
 - training/fine-tuning
-- customer promotion from this failed result.
+- customer promotion from V4.
