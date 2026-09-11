@@ -6,6 +6,7 @@ on:
       - songsterr-fresh-pipeline-v1
     paths:
       - scripts/songsterr-fresh/external_guitarset_validation_v3.py
+      - scripts/songsterr-fresh/run_external_guitarset_validation_v3.py
       - scripts/songsterr-fresh/independent_pitch_corroboration_v2.py
       - docs/checkpoints/SONGSTERR_FRESH_MODEL_EVIDENCE_ADMISSION_PREREGISTRATION_V3.md
       - docs/checkpoints/SONGSTERR_FRESH_EXTERNAL_GUITARSET_VALIDATION_V3.md
@@ -30,10 +31,11 @@ jobs:
           python -m pip install --upgrade pip
           python -m pip install numpy==1.26.4 soundfile==0.13.1
 
-      - name: Compile V2 and V3 harness
+      - name: Compile frozen V2 and V3 surfaces
         run: |
           python -m py_compile scripts/songsterr-fresh/independent_pitch_corroboration_v2.py
           python -m py_compile scripts/songsterr-fresh/external_guitarset_validation_v3.py
+          python -m py_compile scripts/songsterr-fresh/run_external_guitarset_validation_v3.py
 
       - name: Run V3 synthetic and contract self-test only
         run: |
@@ -46,15 +48,33 @@ jobs:
           grep -F '"modelValidationComplete":false' /tmp/v3-self-test.json
           grep -F '"customerEligibleEvents":0' /tmp/v3-self-test.json
 
-      - name: Enforce preregistered constants and exclusions
+      - name: Run V3 execution-provenance self-test only
+        run: |
+          python scripts/songsterr-fresh/run_external_guitarset_validation_v3.py \
+            --self-test \
+            --repo-root . | tee /tmp/v3-execution-self-test.json
+          grep -F '"selfTest":"PASS"' /tmp/v3-execution-self-test.json
+          grep -F '"officialEvaluationExecuted":false' /tmp/v3-execution-self-test.json
+          grep -F '"guitarsetEvaluated":false' /tmp/v3-execution-self-test.json
+          grep -F '"protectedSongEvaluated":false' /tmp/v3-execution-self-test.json
+          grep -F '"sourceCommitBound":true' /tmp/v3-execution-self-test.json
+          grep -F '"runtimePinDeclared":true' /tmp/v3-execution-self-test.json
+          grep -F '"modelValidationComplete":false' /tmp/v3-execution-self-test.json
+          grep -F '"customerEligibleEvents":0' /tmp/v3-execution-self-test.json
+
+      - name: Enforce preregistered constants and provenance pins
         run: |
           python - <<'PY'
           import importlib.util
           from pathlib import Path
-          path=Path('scripts/songsterr-fresh/external_guitarset_validation_v3.py')
-          spec=importlib.util.spec_from_file_location('v3', path)
-          mod=importlib.util.module_from_spec(spec)
-          spec.loader.exec_module(mod)
+
+          def load(name, path):
+              spec=importlib.util.spec_from_file_location(name, Path(path))
+              mod=importlib.util.module_from_spec(spec)
+              spec.loader.exec_module(mod)
+              return mod
+
+          mod=load('v3', 'scripts/songsterr-fresh/external_guitarset_validation_v3.py')
           assert mod.CONTRACT == 'songsterr-fresh-guitarset-external-validation-v3'
           assert mod.DATASET_VERSION == '1.1.0'
           assert mod.DATASET_DOI == '10.5281/zenodo.3371780'
@@ -74,7 +94,17 @@ jobs:
           assert mod.STRATUM_MIN_POSITIVES == 50
           assert mod.STRATUM_POINT_PRECISION_MIN == 0.9500
           assert mod.WILSON_Z_ONE_SIDED_95 == 1.6448536269514722
-          print('V3_PREREGISTERED_CONSTANTS_VALID')
+
+          wrapper=load('v3exec', 'scripts/songsterr-fresh/run_external_guitarset_validation_v3.py')
+          assert wrapper.EXPECTED_BRANCH == 'songsterr-fresh-pipeline-v1'
+          assert wrapper.REQUIRED_PYTHON_MAJOR_MINOR == (3, 10)
+          assert wrapper.REQUIRED_PACKAGES == {
+              'basic-pitch': '0.4.0',
+              'numpy': '1.26.4',
+              'soundfile': '0.13.1',
+          }
+          assert wrapper.CORE_CONTRACT == mod.CONTRACT
+          print('V3_PREREGISTERED_CONSTANTS_AND_PROVENANCE_PINS_VALID')
           PY
 
       - name: Enforce controlled-only CI boundary
@@ -91,10 +121,14 @@ jobs:
           )
           for token in forbidden:
               assert token not in workflow, token
-          script=Path('scripts/songsterr-fresh/external_guitarset_validation_v3.py').read_text()
-          assert 'gomyway-' + 'midterm-source' not in script
-          assert '79.626' + '1406' not in script
-          assert '46.202' + '4095' not in script
+          for path in (
+              'scripts/songsterr-fresh/external_guitarset_validation_v3.py',
+              'scripts/songsterr-fresh/run_external_guitarset_validation_v3.py',
+          ):
+              script=Path(path).read_text()
+              assert 'gomyway-' + 'midterm-source' not in script
+              assert '79.626' + '1406' not in script
+              assert '46.202' + '4095' not in script
           print('V3_CONTROLLED_ONLY_BOUNDARY_VALID')
           print('GUITARSET_NOT_EVALUATED_BY_V3_CI')
           print('PROTECTED_SONG_NOT_EVALUATED_BY_V3_CI')
