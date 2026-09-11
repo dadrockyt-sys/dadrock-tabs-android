@@ -21,6 +21,49 @@ jobs:
           ref: songsterr-fresh-pipeline-v1
           fetch-depth: 0
 
+      - name: Record integration helper failures in canonical checkpoint
+        run: |
+          python - <<'PY'
+          from datetime import datetime
+          from pathlib import Path
+          from zoneinfo import ZoneInfo
+
+          cp = Path('docs/checkpoints/SONGSTERR_FRESH_PIPELINE_CURRENT_STATE.md')
+          text = cp.read_text(encoding='utf-8')
+          heading = '## DECODER TRACE CANARY INTEGRATION — IN PROGRESS\n'
+          block = '\n'.join([
+              '## DECODER TRACE CANARY INTEGRATION — IN PROGRESS',
+              '',
+              '- Target: integrate exact per-observation decoder traces and pairwise decoder-trace comparisons into the existing decision-enabled cross-run measurement canary, diagnostic-only and non-promotional.',
+              '- Temporary helper run `34550779925` was rejected before job creation because an embedded multiline fragment broke helper YAML parsing. No canary or pipeline code changed.',
+              '- Corrected helper run `34550819480`, job `103113160920`, parsed and ran but failed closed before commit at `observation-upload:EXPECTED_ONE_MATCH:GOT:0`. Cause: GitHub Actions pre-expanded literal `${{ matrix.sample }}` tokens inside the helper where no matrix context existed, producing empty sample tokens. No canary or pipeline code changed.',
+              '- Current repair constructs the literal downstream matrix token inside Python as `\'$\' + \'{{ matrix.sample }}\'`, preventing helper-time expression expansion. Validation still pending.',
+              '- `modelValidationComplete` remains false; customer-eligible events remain 0; duration research remains paused.',
+              '',
+          ]) + '\n'
+          marker = '## CURRENT ACCEPTANCE STATE\n'
+          if heading in text:
+              start = text.index(heading)
+              end = text.index(marker, start)
+              text = text[:start] + block + text[end:]
+          else:
+              if marker not in text:
+                  raise SystemExit('checkpoint acceptance marker missing; fail closed')
+              text = text.replace(marker, block + marker, 1)
+          stamp = datetime.now(ZoneInfo('America/Toronto')).strftime('%Y-%m-%d %H:%M America/Toronto')
+          lines = text.splitlines()
+          for index, line in enumerate(lines):
+              if line.startswith('Updated: '):
+                  lines[index] = f'Updated: {stamp}'
+                  break
+          cp.write_text('\n'.join(lines) + '\n', encoding='utf-8')
+          PY
+          git config user.name 'dadrockyt-sys'
+          git config user.email 'Stephen.s.mcnally@gmail.com'
+          git add docs/checkpoints/SONGSTERR_FRESH_PIPELINE_CURRENT_STATE.md
+          git commit -m 'docs: record fresh trace integration helper failures'
+          git push origin HEAD:songsterr-fresh-pipeline-v1
+
       - name: Integrate exact decoder traces into measurement canary
         run: |
           python - <<'PY'
@@ -28,6 +71,7 @@ jobs:
 
           path = Path('.github/workflows/songsterr-fresh-model-evidence-cross-run-measurement-canary.yml')
           text = path.read_text(encoding='utf-8')
+          token = '$' + '{{ matrix.sample }}'
 
           def replace_once(old, new, label):
               global text
@@ -49,12 +93,12 @@ jobs:
               "        shell: bash",
               "        run: |",
               "          set -euo pipefail",
-              "          BASE=\"/tmp/songsterr-fresh-model-variation-${{ matrix.sample }}\"",
+              f"          BASE=\"/tmp/songsterr-fresh-model-variation-{token}\"",
               "          python scripts/songsterr-fresh/trace_basic_pitch_decoder_mechanisms.py \\",
-              "            \"$BASE/evidence-${{ matrix.sample }}.json\" \\",
-              "            \"$BASE/basic-pitch-note-activations-${{ matrix.sample }}.json\" \\",
-              "            \"$BASE/basic-pitch-decision-surface-${{ matrix.sample }}.json\" \\",
-              "            --output \"$BASE/basic-pitch-decoder-trace-${{ matrix.sample }}.json\"",
+              f"            \"$BASE/evidence-{token}.json\" \\",
+              f"            \"$BASE/basic-pitch-note-activations-{token}.json\" \\",
+              f"            \"$BASE/basic-pitch-decision-surface-{token}.json\" \\",
+              f"            --output \"$BASE/basic-pitch-decoder-trace-{token}.json\"",
               "",
               "      - name: Record observation runtime provenance",
           ])
@@ -64,11 +108,16 @@ jobs:
               'observation-trace-step',
           )
 
-          replace_once(
-              "            /tmp/songsterr-fresh-model-variation-${{ matrix.sample }}/basic-pitch-decision-surface-${{ matrix.sample }}.json\n            /tmp/songsterr-fresh-model-variation-${{ matrix.sample }}/demucs-model-asset.json",
-              "            /tmp/songsterr-fresh-model-variation-${{ matrix.sample }}/basic-pitch-decision-surface-${{ matrix.sample }}.json\n            /tmp/songsterr-fresh-model-variation-${{ matrix.sample }}/basic-pitch-decoder-trace-${{ matrix.sample }}.json\n            /tmp/songsterr-fresh-model-variation-${{ matrix.sample }}/demucs-model-asset.json",
-              'observation-upload',
+          old_upload = (
+              f"            /tmp/songsterr-fresh-model-variation-{token}/basic-pitch-decision-surface-{token}.json\n"
+              f"            /tmp/songsterr-fresh-model-variation-{token}/demucs-model-asset.json"
           )
+          new_upload = (
+              f"            /tmp/songsterr-fresh-model-variation-{token}/basic-pitch-decision-surface-{token}.json\n"
+              f"            /tmp/songsterr-fresh-model-variation-{token}/basic-pitch-decoder-trace-{token}.json\n"
+              f"            /tmp/songsterr-fresh-model-variation-{token}/demucs-model-asset.json"
+          )
+          replace_once(old_upload, new_upload, 'observation-upload')
 
           replace_once(
               "          python scripts/songsterr-fresh/compare_basic_pitch_decision_surfaces.py --self-test\n",
@@ -140,8 +189,6 @@ jobs:
       - name: Commit canary integration and remove helper
         run: |
           rm .github/workflows/songsterr-fresh-integrate-traces-valid-once.yml
-          git config user.name 'dadrockyt-sys'
-          git config user.email 'Stephen.s.mcnally@gmail.com'
           git add .github/workflows/songsterr-fresh-model-evidence-cross-run-measurement-canary.yml .github/workflows/songsterr-fresh-integrate-traces-valid-once.yml
           git commit -m 'feat: integrate decoder traces into fresh model canary'
           git push origin HEAD:songsterr-fresh-pipeline-v1
