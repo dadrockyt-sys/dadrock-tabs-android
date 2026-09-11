@@ -1,0 +1,90 @@
+name: Songsterr Fresh Policy B Guarantee Note Valid Once
+
+on:
+  push:
+    branches:
+      - songsterr-fresh-pipeline-v1
+    paths:
+      - '.github/workflows/songsterr-fresh-policy-b-guarantee-note-valid-once.yml'
+
+permissions:
+  contents: write
+
+jobs:
+  record:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - name: Check out fresh branch
+        uses: actions/checkout@v4
+        with:
+          ref: songsterr-fresh-pipeline-v1
+          fetch-depth: 0
+
+      - name: Patch canonical checkpoint
+        run: |
+          python - <<'PY'
+          from datetime import datetime
+          from pathlib import Path
+          from zoneinfo import ZoneInfo
+
+          path = Path('docs/checkpoints/SONGSTERR_FRESH_PIPELINE_CURRENT_STATE.md')
+          text = path.read_text(encoding='utf-8')
+          heading = '## POLICY B INDEPENDENT NUMERICAL-GUARANTEE REVIEW — NO JUSTIFIED BOUND\n'
+          section_lines = [
+              '## POLICY B INDEPENDENT NUMERICAL-GUARANTEE REVIEW — NO JUSTIFIED BOUND',
+              '',
+              '- Reviewed upstream framework contracts rather than fitting the observed A/B/C envelope.',
+              '- PyTorch reproducibility documentation states that complete reproducibility is not guaranteed across releases, commits, or platforms, and its deterministic-algorithm guarantee is scoped to the same software and hardware with the same input. Source: https://docs.pytorch.org/docs/stable/notes/randomness.html',
+              '- PyTorch numerical-accuracy documentation states that floating-point computations that are mathematically identical are not guaranteed to be bitwise identical across platforms because finite precision and operation ordering affect results. Source: https://docs.pytorch.org/docs/main/notes/numerical_accuracy.html',
+              "- TensorFlow's compatibility policy explicitly excludes floating-point numerical details from compatibility guarantees and tells users to rely on approximate accuracy/numerical stability rather than specific computed bits. Source: https://www.tensorflow.org/guide/versions",
+              '- TensorFlow Lite/LiteRT documentation exposes implementation-dependent/platform-dependent CPU execution choices (for example interpreter threading/default delegates) but does not provide an end-to-end numerical error bound that can be propagated through Demucs → Basic Pitch into a safe onset-threshold uncertainty interval. Source: https://www.tensorflow.org/api_docs/python/tf/lite/Interpreter',
+              '- Therefore there is no documented upstream contract that independently justifies turning the observed `0.5000237822532654` versus `0.49999192357063293` crossing, the 7/20-frame trace drift, float32 ULP scale, or any current historical envelope into an admission tolerance.',
+              '- Policy B consequently has **no justified admission contract for threshold-boundary semantic inventory toggles** under the current supported stack. Additional observations may characterize frequency/shape of variation but cannot manufacture a correctness bound.',
+              '- This is a fail-closed result, not a model-quality verdict: `modelValidationComplete` remains false, customer-eligible events remain 0, and duration research remains paused.',
+              '',
+          ]
+          section = '\n'.join(section_lines) + '\n'
+          current_marker = '## CURRENT ACCEPTANCE STATE\n'
+          if heading not in text:
+              if current_marker not in text:
+                  raise SystemExit('CURRENT ACCEPTANCE STATE marker missing')
+              text = text.replace(current_marker, section + current_marker, 1)
+
+          next_marker = '## FRESH-CHAT NEXT ENGINEERING STEPS\n'
+          archive_line = 'The archived V143/Gomyway pipeline remains out of scope unless explicitly requested.'
+          if next_marker not in text or archive_line not in text:
+              raise SystemExit('next-step markers missing')
+          start = text.index(next_marker)
+          end = text.index(archive_line, start)
+          replacement_lines = [
+              '## FRESH-CHAT NEXT ENGINEERING STEPS',
+              '',
+              '1. Treat the A/B/C decision-surface inspection, exact decoder replay, reference-blind decoder-trace comparison, automatic post-canary trace preservation, and upstream numerical-guarantee review as completed evidence.',
+              '2. Policy B currently has no independently justified admission bound for threshold-boundary semantic inventory toggles. Do not invent one from the observed onset margins, frame spacing/drift, float32 ULPs, historical envelopes, or additional sample frequency.',
+              '3. Keep `modelValidationComplete:false`, customer-eligible events at 0, and duration research paused. The B-only MIDI-55 event remains a proven threshold-onset inventory toggle; mechanism identity for common A/B/C events is stable in the measured sample but is not an admission rule.',
+              '4. The next design question is policy-level, not another threshold sweep: evaluate a fail-closed reference-blind alternative that does not require a numeric tolerance (for example an independently executed semantic-consensus/reproducibility gate), and explicitly analyze its false-pass/false-reject behavior before implementation. Do not prefer any CPU/vendor/hash/output.',
+              '5. If no alternative can be justified independently, preserve the blocked state and document that the current floating-point model path cannot support customer admission under the stated Policy B requirements.',
+              '6. Keep the automatic decoder-trace follow-up enabled for future independent canaries. New observations remain measurement/history evidence only unless a separate admission rule is independently justified.',
+              '7. Keep archived V143/Gomyway implementation/reference/pro-scorer work out of scope and keep V2/V3 duration/release work paused until upstream model-evidence validation is actually resolved.',
+              '',
+          ]
+          replacement = '\n'.join(replacement_lines) + '\n'
+          text = text[:start] + replacement + text[end:]
+
+          stamp = datetime.now(ZoneInfo('America/Toronto')).strftime('%Y-%m-%d %H:%M America/Toronto')
+          lines = text.splitlines()
+          for i, line in enumerate(lines):
+              if line.startswith('Updated: '):
+                  lines[i] = f'Updated: {stamp}'
+                  break
+          path.write_text('\n'.join(lines) + '\n', encoding='utf-8')
+          PY
+
+      - name: Commit checkpoint update
+        run: |
+          git config user.name 'dadrockyt-sys'
+          git config user.email 'Stephen.s.mcnally@gmail.com'
+          git add docs/checkpoints/SONGSTERR_FRESH_PIPELINE_CURRENT_STATE.md
+          git commit -m 'docs: record Policy B upstream guarantee result'
+          git push origin HEAD:songsterr-fresh-pipeline-v1
