@@ -18,6 +18,18 @@
     "NUMEXPR_NUM_THREADS": "1",
     "PYTHONHASHSEED": "0"
   },
+  "requiredPackageVersions": {
+    "numpy": "1.26.4",
+    "torch": "2.14.0",
+    "huggingface-hub": "1.30.0",
+    "safetensors": "0.8.0",
+    "sphn": "0.2.1",
+    "demucs": "4.1.0",
+    "basic-pitch": "0.4.0",
+    "librosa": "0.11.0",
+    "soundfile": "0.13.1",
+    "tflite-runtime": "2.14.0"
+  },
   "fixedModelPath": {
     "fixtureGitBlob": "4dd709e3fa177b4daeed71ca97f0199757729d4b",
     "decodedSeparationWavSha256": "e03e1885185f4983b3eeaa66f36510b7709d607c14010f964e0aad427ecc474a",
