@@ -1,6 +1,6 @@
 # CURRENT STATE — Songsterr Fresh Pipeline V1
 
-Updated: 2026-09-10 21:35 America/Toronto
+Updated: 2026-09-10 21:37 America/Toronto
 Canonical branch: `songsterr-fresh-pipeline-v1`
 Canonical checkpoint: `docs/checkpoints/SONGSTERR_FRESH_PIPELINE_CURRENT_STATE.md`
 
@@ -226,6 +226,17 @@ Decision-enabled real model canary — COMPLETED GREEN:
 - Policy B consequently has **no justified admission contract for threshold-boundary semantic inventory toggles** under the current supported stack. Additional observations may characterize frequency/shape of variation but cannot manufacture a correctness bound.
 - This is a fail-closed result, not a model-quality verdict: `modelValidationComplete` remains false, customer-eligible events remain 0, and duration research remains paused.
 
+## POLICY B NUMERICAL BOUND RESEARCH — COMPLETED / NO JUSTIFIED END-TO-END BOUND
+
+- Detailed research: `docs/checkpoints/SONGSTERR_FRESH_POLICY_B_NUMERICAL_BOUND_RESEARCH.md`, commit `5baa4d7837401b68f2f8198bc522c48f705cdaf9`.
+- Basic Pitch v0.4.0 decoder semantics use strict local maxima followed by `peak_thresh_mat >= onset_thresh`; the library defines a hard threshold, not an uncertainty/dead-band around 0.5.
+- Spotify Basic Pitch v0.4.0 tests use `atol=1e-4, rtol=0` for the fixed `vocadito_10.wav` model-output arrays and expected note events, and its CI spans Ubuntu, Windows, and macOS. This is project regression-test tolerance for that fixture, not a documented arbitrary-input or end-to-end error guarantee.
+- The fresh Linux/Python 3.10 Basic Pitch path uses `tflite-runtime`, while the full fresh chain also includes Demucs/PyTorch upstream. PyTorch does not provide complete reproducibility across releases/platforms, and TensorFlow determinism guidance likewise depends on controlled hardware/software conditions. No independent worst-case activation-error envelope for Demucs → Basic Pitch was found.
+- Float32 machine epsilon alone cannot justify a decoder-threshold band because no independently established forward-error/Lipschitz bound exists for the full decoding/resampling → Demucs → Basic Pitch → inferred-onset/local-peak chain.
+- Therefore Spotify’s `1e-4`, the observed A/B/C margins, current matrix maxima, current 7/20-frame drift, CPU/vendor identity, exact hashes, event frequency/count, candidate confidence, downstream agreement, or reference/professional tabs may not be used as an admission tolerance.
+- Policy B currently has **no independently justified numerical admission contract** for threshold-boundary inventory toggles. The B-only MIDI-55 threshold-onset event remains unresolved model-evidence variation rather than something that may be absorbed into a fitted band.
+- `MODEL_EVIDENCE_VALIDATION_PENDING` remains active. `modelValidationComplete` remains false; customer-eligible events remain 0; duration research remains paused.
+
 ## CURRENT ACCEPTANCE STATE
 
 Do **not** set `modelValidationComplete:true`.
@@ -238,12 +249,14 @@ Customer-eligible events remain **0**. V2 authoritative; V3 candidate-only. Basi
 
 ## FRESH-CHAT NEXT ENGINEERING STEPS
 
-1. Treat the A/B/C decision-surface inspection, exact decoder replay, reference-blind decoder-trace comparison, automatic post-canary trace preservation, and upstream numerical-guarantee review as completed evidence.
-2. Policy B currently has no independently justified admission bound for threshold-boundary semantic inventory toggles. Do not invent one from the observed onset margins, frame spacing/drift, float32 ULPs, historical envelopes, or additional sample frequency.
-3. Keep `modelValidationComplete:false`, customer-eligible events at 0, and duration research paused. The B-only MIDI-55 event remains a proven threshold-onset inventory toggle; mechanism identity for common A/B/C events is stable in the measured sample but is not an admission rule.
-4. The next design question is policy-level, not another threshold sweep: evaluate a fail-closed reference-blind alternative that does not require a numeric tolerance (for example an independently executed semantic-consensus/reproducibility gate), and explicitly analyze its false-pass/false-reject behavior before implementation. Do not prefer any CPU/vendor/hash/output.
-5. If no alternative can be justified independently, preserve the blocked state and document that the current floating-point model path cannot support customer admission under the stated Policy B requirements.
-6. Keep the automatic decoder-trace follow-up enabled for future independent canaries. New observations remain measurement/history evidence only unless a separate admission rule is independently justified.
-7. Keep archived V143/Gomyway implementation/reference/pro-scorer work out of scope and keep V2/V3 duration/release work paused until upstream model-evidence validation is actually resolved.
+1. Treat A/B/C decision-surface inspection, exact decoder replay, decoder-trace comparison, automatic post-canary trace preservation, and independent numerical-bound research as completed evidence/infrastructure. Do not rerun them merely to rediscover the current sample.
+2. Keep `modelValidationComplete:false`, customer-eligible events at 0, and duration research paused. Policy B currently has no justified end-to-end numerical admission tolerance for threshold-boundary inventory toggles.
+3. Evaluate architectural resolution options without post-hoc CPU/output selection or observed-margin fitting. The main safe question is whether the supported execution contract can be narrowed or redesigned so model evidence has a separately justified deterministic/reproducibility contract.
+4. Distinguish an **execution contract** from a CPU/vendor selector: a valid contract must be specified prospectively, reference-blind, reproducible, and testable before seeing fixture output. Do not admit/reject based on which vendor or exact hash happens to produce a desired note inventory.
+5. Consider whether a runtime/model representation with stronger deterministic semantics (for example a separately validated fixed/quantized execution path) could remove threshold-crossing ambiguity. Any such change is a new model/runtime architecture and must be validated independently; do not silently swap runtimes or thresholds.
+6. If no prospective execution/runtime contract can supply the missing guarantee, preserve the explicit result that current Policy B cannot advance model validation. Do not manufacture a tolerance from additional samples.
+7. Keep `.github/workflows/songsterr-fresh-decoder-trace-followup.yml` enabled for future successful independent canaries so mechanism evidence remains automatically preserved.
+8. Do not use exact hashes, CPU/vendor identity, historical frequency, event count, candidate confidence, reference tabs, downstream agreement, Spotify’s `1e-4` fixture tolerance, or current min/max margins as admission criteria.
+9. Keep the archived V143/Gomyway implementation/reference/pro scorer path out of scope and keep V2/V3 duration work paused until upstream model-evidence validation is actually resolved.
 
 The archived V143/Gomyway pipeline remains out of scope unless explicitly requested.
