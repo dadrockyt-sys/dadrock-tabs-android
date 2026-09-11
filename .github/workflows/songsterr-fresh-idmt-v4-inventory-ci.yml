@@ -1,0 +1,83 @@
+name: Songsterr Fresh IDMT V4 Inventory Contract CI
+
+on:
+  push:
+    branches:
+      - songsterr-fresh-pipeline-v1
+    paths:
+      - 'scripts/songsterr-fresh/inventory_idmt_v4_external_validation.py'
+      - 'docs/checkpoints/SONGSTERR_FRESH_IDMT_V4_EXTERNAL_VALIDATION_INVENTORY_PREREGISTRATION.md'
+      - '.github/workflows/songsterr-fresh-idmt-v4-inventory-ci.yml'
+  workflow_dispatch:
+
+jobs:
+  inventory-contract-only:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout exact branch source
+        uses: actions/checkout@v4
+
+      - name: Set up Python 3.10
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.10'
+
+      - name: Compile inventory tool
+        run: python -m py_compile scripts/songsterr-fresh/inventory_idmt_v4_external_validation.py
+
+      - name: Run synthetic ZIP self-test
+        run: |
+          python scripts/songsterr-fresh/inventory_idmt_v4_external_validation.py --self-test > /tmp/idmt-v4-inventory-self-test.json
+          python - <<'PY'
+          import json
+          r=json.load(open('/tmp/idmt-v4-inventory-self-test.json'))
+          assert r['contract']=='songsterr-fresh-idmt-v4-inventory-v1'
+          assert r['selfTest']=='PASS'
+          assert r['summary']['exactOneToOneLeafStemPairCount']==2
+          assert r['summary']['wavHeaderSignatureCount']==1
+          assert r['summary']['xmlStructureSignatureCount']==1
+          p=r['policyBoundary']
+          assert p['basicPitchInvoked'] is False
+          assert p['v4ClassifierInvoked'] is False
+          assert p['correctnessMetricComputed'] is False
+          assert p['modelValidationComplete'] is False
+          assert p['customerEligibleEvents']==0
+          assert p['mayAdvanceDelivery'] is False
+          print('IDMT_V4_INVENTORY_SYNTHETIC_PASS')
+          PY
+
+      - name: Enforce frozen archive identity constants
+        run: |
+          python - <<'PY'
+          import importlib.util
+          p='scripts/songsterr-fresh/inventory_idmt_v4_external_validation.py'
+          s=importlib.util.spec_from_file_location('inv',p)
+          m=importlib.util.module_from_spec(s); s.loader.exec_module(m)
+          assert m.EXPECTED_ARCHIVE_NAME=='IDMT-SMT-GUITAR_V2.zip'
+          assert m.EXPECTED_ARCHIVE_MD5=='06796e08731bccffaed6ae59361486e4'
+          assert m.CONTRACT=='songsterr-fresh-idmt-v4-inventory-v1'
+          print('IDMT_V4_INVENTORY_CONSTANTS_PASS')
+          PY
+
+      - name: Enforce stdlib inventory-only boundary
+        run: |
+          python - <<'PY'
+          import ast, pathlib
+          p=pathlib.Path('scripts/songsterr-fresh/inventory_idmt_v4_external_validation.py')
+          tree=ast.parse(p.read_text())
+          forbidden={'numpy','librosa','basic_pitch','torch','tensorflow','demucs','scipy'}
+          seen=set()
+          for n in ast.walk(tree):
+              if isinstance(n,ast.Import):
+                  seen.update(a.name.split('.')[0] for a in n.names)
+              elif isinstance(n,ast.ImportFrom) and n.module:
+                  seen.add(n.module.split('.')[0])
+          bad=sorted(forbidden & seen)
+          assert not bad, bad
+          print('IDMT_V4_INVENTORY_STDLIB_ONLY_PASS')
+          PY
+
+      - name: Confirm no real holdout execution in CI
+        run: |
+          test ! -e IDMT-SMT-GUITAR_V2.zip
+          echo IDMT_NOT_DOWNLOADED_OR_SCORED_BY_CI
