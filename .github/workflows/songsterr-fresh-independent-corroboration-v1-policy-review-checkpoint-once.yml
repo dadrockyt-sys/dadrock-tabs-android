@@ -1,0 +1,58 @@
+name: Songsterr Fresh Independent Corroboration V1 Policy Review Checkpoint Once
+
+on:
+  push:
+    branches:
+      - songsterr-fresh-pipeline-v1
+    paths:
+      - '.github/workflows/songsterr-fresh-independent-corroboration-v1-policy-review-checkpoint-once.yml'
+
+permissions:
+  contents: write
+
+jobs:
+  update:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: songsterr-fresh-pipeline-v1
+          fetch-depth: 0
+      - name: Update canonical checkpoint
+        shell: bash
+        run: |
+          set -euo pipefail
+          python - <<'PY'
+          from pathlib import Path
+          p=Path('docs/checkpoints/SONGSTERR_FRESH_PIPELINE_CURRENT_STATE.md')
+          text=p.read_text(encoding='utf-8')
+          marker='\n## CURRENT ACCEPTANCE STATE\n'
+          if marker not in text:
+              raise SystemExit('checkpoint marker missing')
+          heading='## INDEPENDENT CORROBORATION V1 — POLICY REVIEW COMPLETE / NOT ADMISSION AUTHORITY'
+          if heading in text:
+              raise SystemExit('section already present')
+          lines=[
+              heading,
+              '',
+              '- Independent Corroboration V1 is rejected as customer-admission authority and retained as a frozen research diagnostic.',
+              '- Authorized-song research result remains 471 corroborated / 667 not corroborated / 2 insufficient across 1,140 qualified events.',
+              '- Prospective MIDI-64 stress case near 79.6261406 s failed the frozen two-channel rule: Channel A preferred MIDI 52 (margin `-0.7545700107018032`), while Channel B uniquely preferred MIDI 64 (margin `+0.06704049122757871`).',
+              '- This is a policy-adequacy failure for promotion, not a Policy C-S reproducibility/model execution failure.',
+              '- Do not post-hoc relax Channel A, competitor offsets, harmonic weights, tie tolerance, or choose a new authorized-song-derived threshold to make this case pass.',
+              '- Any successor must be a new preregistered version developed from independently justified signal-processing principles and/or predeclared controlled/public validation data separate from the authorized song.',
+              '- MIDI-55 and MIDI-64 are now retrospective stress diagnostics only for future frozen methods.',
+              '- Formal policy review: `docs/checkpoints/SONGSTERR_FRESH_INDEPENDENT_CORROBORATION_V1_POLICY_REVIEW.md`, commit `ea20e404a980e0d4e25a15855eb8b6e6d8de978f`.',
+              '- `modelValidationComplete:false`; customer-eligible events 0; `mayAdvanceDelivery:false`; duration research remains paused.',
+              '',
+          ]
+          text=text.replace(marker, '\n'+'\n'.join(lines)+marker, 1)
+          text=text.replace('Updated: 2026-09-11 12:04 America/Toronto','Updated: 2026-09-11 12:08 America/Toronto',1)
+          p.write_text(text,encoding='utf-8')
+          PY
+          git config user.name 'dadrockyt-sys'
+          git config user.email 'Stephen.s.mcnally@gmail.com'
+          git add docs/checkpoints/SONGSTERR_FRESH_PIPELINE_CURRENT_STATE.md
+          git commit -m 'docs: checkpoint corroboration V1 policy review'
+          git push origin HEAD:songsterr-fresh-pipeline-v1
