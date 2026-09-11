@@ -1,0 +1,62 @@
+name: Songsterr Fresh Codespaces Corroboration Wrapper CI
+
+on:
+  workflow_dispatch:
+  push:
+    branches:
+      - songsterr-fresh-pipeline-v1
+    paths:
+      - 'scripts/songsterr-fresh/run_codespaces_independent_corroboration_v1.py'
+      - '.github/workflows/songsterr-fresh-codespaces-corroboration-wrapper-ci.yml'
+
+permissions:
+  contents: read
+
+jobs:
+  contract:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: songsterr-fresh-pipeline-v1
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.10'
+
+      - name: Compile session-bound runner
+        shell: bash
+        run: |
+          set -euo pipefail
+          python -m py_compile scripts/songsterr-fresh/run_codespaces_independent_corroboration_v1.py
+
+      - name: Verify static fail-closed contract
+        shell: bash
+        run: |
+          set -euo pipefail
+          python - <<'PY'
+          from pathlib import Path
+          text=Path('scripts/songsterr-fresh/run_codespaces_independent_corroboration_v1.py').read_text(encoding='utf-8')
+          required=[
+              'ENROLLMENT_SOURCE_COMMIT_DOES_NOT_MATCH_HEAD',
+              'QUALIFICATION_SOURCE_COMMIT_DOES_NOT_MATCH_HEAD',
+              'SESSION_SURFACE_NOT_QUALIFIED',
+              'QUALIFIED_GUITAR_STEM_HASH_MISMATCH',
+              'RESEARCH_EVIDENCE_IDENTITY_NOT_QUALIFICATION_BOUND',
+              'SESSION_CHANGED_DURING_RESEARCH',
+              'modelValidationComplete',
+              'customerEligibleEvents',
+              'independent_pitch_corroboration_v1.py',
+          ]
+          for token in required:
+              assert token in text, token
+          forbidden=[
+              'modelValidationComplete": True',
+              'customerEligibleEvents": 1',
+              'mayAdvanceDelivery": True',
+          ]
+          for token in forbidden:
+              assert token not in text, token
+          print('CODESPACES_CORROBORATION_WRAPPER_CONTRACT_PASS')
+          PY
