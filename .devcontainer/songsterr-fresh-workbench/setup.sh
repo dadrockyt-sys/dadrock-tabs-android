@@ -2,8 +2,11 @@
 set -euo pipefail
 
 # Songsterr Fresh Codespaces workbench bootstrap.
-# This environment is measurement/development only. It MUST NOT be enrolled as
-# Policy C authority and MUST NOT be used to advance delivery/model validation.
+# Default state is measurement/development only. It MUST NOT be enrolled as the
+# persistent Policy C authority and MUST NOT advance delivery/model validation.
+# Optional Policy C-S session authority is a separate explicit process: it binds
+# one exact Codespaces Linux boot/fingerprint/source commit, requires three exact
+# canaries, and expires fail-closed on stop/restart/rebuild or any drift.
 
 WORKBENCH_ROOT="${SONGSTERR_FRESH_WORKBENCH_ROOT:-/workspaces/.songsterr-fresh-workbench}"
 VENV="${WORKBENCH_ROOT}/venv"
@@ -83,7 +86,7 @@ PY
 }
 
 if ! venv_matches; then
-  echo "Rebuilding non-authority Codespaces workbench venv at $VENV"
+  echo "Rebuilding Codespaces workbench venv at $VENV"
   rm -rf "$VENV"
   "$PYTHON_BIN" -m venv "$VENV"
   "$VENV/bin/python" -m pip install --disable-pip-version-check \
@@ -125,8 +128,9 @@ PATH="$VENV/bin:$PATH" "$VENV/bin/python" scripts/songsterr-fresh/verify_pinned_
 cat > "${WORKBENCH_ROOT}/README.txt" <<EOF
 SONGSTERR FRESH CODESPACES WORKBENCH
 
-Authority eligible: NO
-Policy C enrollment changed: NO
+Persistent Policy C authority eligible: NO
+Persistent Policy C enrollment changed: NO
+Policy C-S session authority enrolled by setup: NO
 Model validation complete: NO
 Customer eligible events: 0
 Duration authority changed: NO
@@ -137,10 +141,19 @@ Probe: $PROBE
 Activate with:
   source $VENV/bin/activate
 
-Run the measurement-only 2-core/8-GB model smoke benchmark with:
+Measurement-only benchmark:
   bash scripts/songsterr-fresh/run_codespaces_workbench_measurement.sh
 
-Stop the codespace when you are finished so compute billing stops.
+Optional Policy C-S session authority (explicit; session expires on restart):
+  bash scripts/songsterr-fresh/codespaces_session_authority.sh probe
+  bash scripts/songsterr-fresh/codespaces_session_authority.sh enroll
+  bash scripts/songsterr-fresh/codespaces_session_authority.sh qualify
+
+Policy C-S surface qualification still does NOT set modelValidationComplete or
+customer delivery eligibility.
+
+Stop the codespace when you are finished so compute billing stops. Stopping it
+also invalidates any Policy C-S session qualification.
 EOF
 
 cat <<EOF
@@ -151,7 +164,8 @@ probe=$PROBE
 python=$($VENV/bin/python --version 2>&1)
 node=$(node --version)
 ffmpeg=$(ffmpeg -version 2>/dev/null | head -n1)
-authorityEligible=false
+persistentPolicyCAuthorityEligible=false
+policyCSessionAuthorityEnrolled=false
 modelValidationComplete=false
 customerEligibleEvents=0
 EOF
