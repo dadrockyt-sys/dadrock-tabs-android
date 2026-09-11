@@ -1,6 +1,6 @@
 # CURRENT STATE — Songsterr Fresh Pipeline V1
 
-Updated: 2026-09-11 01:15 America/Toronto
+Updated: 2026-09-11 10:26 America/Toronto
 Canonical branch: `songsterr-fresh-pipeline-v1`
 Canonical checkpoint: `docs/checkpoints/SONGSTERR_FRESH_PIPELINE_CURRENT_STATE.md`
 
@@ -308,6 +308,17 @@ Decision-enabled real model canary — COMPLETED GREEN:
 - No authorized-song result exists for Independent Corroboration V1 yet. The prior C-S epoch at `b2f246769340e4f7f6929e679692956c731efd93` cannot be reused because this implementation did not exist in that source commit.
 - Next execution boundary: create/start a fresh Codespace at the stable branch HEAD after checkpoint cleanup, probe -> deliberate C-S enrollment -> verify -> three-canary qualify, then run `python scripts/songsterr-fresh/run_codespaces_independent_corroboration_v1.py` once. Any restart/source/fingerprint drift invalidates that epoch and requires fresh qualification.
 - Even after a green future corroboration run: `modelValidationComplete:false`, customer-eligible events 0, `mayAdvanceDelivery:false`, duration authority unchanged, duration research paused until separate explicit policy review.
+
+## GOAT RESEARCH PATH — CLOSED / REFERENCE ONLY
+
+- External GOAT research/data access was denied by the research agency; the GOAT path is closed for active development as of 2026-09-11.
+- No restricted GOAT bytes, annotations, reference transcriptions, internal research outputs, or evaluation artifacts were obtained or imported.
+- GOAT material must not be used to tune, calibrate, score, admit, reject, or promote the fresh pipeline, and no attempt may be made to bypass the denied access.
+- Historical branch `v143-contextual-prune-lobo` is retained strictly as reference/provenance. Its open-corpus preregistration is marked CLOSED / REFERENCE ONLY at commit `99e05eacbc3d8a38208ed41edadeee5b2f823c7b`.
+- Do not resume V143/Gomyway/GOAT implementation, holdout scoring, or reference/professional scorer logic unless the user explicitly reopens that workstream.
+- Active work remains exclusively on `songsterr-fresh-pipeline-v1`; Independent Corroboration V1, Policy C-S, and all non-promotion boundaries are unchanged.
+- Closure record: `docs/checkpoints/SONGSTERR_FRESH_GOAT_RESEARCH_CLOSED_REFERENCE_ONLY.md`.
+- `modelValidationComplete:false`; customer-eligible events 0; `mayAdvanceDelivery:false`; duration research remains paused.
 
 ## CURRENT ACCEPTANCE STATE
 
