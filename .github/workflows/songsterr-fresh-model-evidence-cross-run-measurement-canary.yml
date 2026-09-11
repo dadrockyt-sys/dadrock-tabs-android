@@ -10,6 +10,8 @@ on:
       - 'scripts/songsterr-fresh/compare_basic_pitch_cross_run_evidence.py'
       - 'scripts/songsterr-fresh/aggregate_basic_pitch_cross_run_measurements.py'
       - 'scripts/songsterr-fresh/basic_pitch_activation_evidence.py'
+      - 'scripts/songsterr-fresh/basic_pitch_decision_surface_diagnostic.py'
+      - 'scripts/songsterr-fresh/compare_basic_pitch_decision_surfaces.py'
       - 'scripts/songsterr-fresh/verify_demucs_model_asset.py'
       - 'scripts/songsterr-fresh/transcribe_isolated_guitar_basic_pitch.py'
       - 'scripts/songsterr-fresh/analyze_full_mixture_structure.py'
@@ -161,7 +163,7 @@ jobs:
               raise SystemExit('DEMUCS_LEGACY_FALLBACK_MUST_NOT_BE_PRIMARY')
           PY
 
-      - name: Infer Basic Pitch notes and same-inference activation identity
+      - name: Infer Basic Pitch notes and same-inference diagnostic surfaces
         shell: bash
         run: |
           set -euo pipefail
@@ -171,11 +173,12 @@ jobs:
           python scripts/songsterr-fresh/transcribe_isolated_guitar_basic_pitch.py \
             --input "$STEM" \
             --output "$BASE/basic-pitch-guitar-notes.json" \
-            --activation-output "$BASE/basic-pitch-note-activations.json" \
+            --activation-output "$BASE/basic-pitch-note-activations-${{ matrix.sample }}.json" \
+            --decision-surface-output "$BASE/basic-pitch-decision-surface-${{ matrix.sample }}.json" \
             --audio-source 'public/jimmy-paige-midterm-v1/gomyway-midterm-source.m4a@main#4dd709e3fa177b4daeed71ca97f0199757729d4b' \
             --separation-source "demucs==4.1.0/htdemucs_6s/shifts=0/overlap=0.25/segment=7:guitar@sha256:${STEM_SHA}"
 
-      - name: Build duration-free adapted model evidence
+      - name: Build duration-free adapted model evidence and verify diagnostic bindings
         shell: bash
         run: |
           set -euo pipefail
@@ -185,28 +188,44 @@ jobs:
             "$BASE/basic-pitch-guitar-notes.json" \
             "$BASE/evidence-${{ matrix.sample }}.json"
 
-          python - <<PY
+          SAMPLE="${{ matrix.sample }}" BASE="$BASE" python - <<'PY'
           import json
+          import os
           import sys
           sys.path.insert(0, 'scripts/songsterr-fresh')
           from basic_pitch_activation_evidence import decode_and_verify_activation_sidecar
+          from basic_pitch_decision_surface_diagnostic import decode_and_verify_decision_surface
 
-          base = '$BASE'
+          base = os.environ['BASE']
+          sample = os.environ['SAMPLE']
           with open(f'{base}/basic-pitch-guitar-notes.json', 'r', encoding='utf-8') as handle:
               notes = json.load(handle)
-          with open(f'{base}/basic-pitch-note-activations.json', 'r', encoding='utf-8') as handle:
-              sidecar = json.load(handle)
-          with open(f'{base}/evidence-${{ matrix.sample }}.json', 'r', encoding='utf-8') as handle:
+          with open(f'{base}/basic-pitch-note-activations-{sample}.json', 'r', encoding='utf-8') as handle:
+              activation = json.load(handle)
+          with open(f'{base}/basic-pitch-decision-surface-{sample}.json', 'r', encoding='utf-8') as handle:
+              decision = json.load(handle)
+          with open(f'{base}/evidence-{sample}.json', 'r', encoding='utf-8') as handle:
               evidence = json.load(handle)
 
-          decoded = decode_and_verify_activation_sidecar(sidecar, evidence=evidence)
+          decoded = decode_and_verify_activation_sidecar(activation, evidence=evidence)
           bundle = decoded.get('inferenceBundleIdentity')
+          decision_decoded = decode_and_verify_decision_surface(
+              decision,
+              activation_payload=activation,
+              evidence=evidence,
+          )
           if notes.get('activationEvidenceIdentity') != bundle:
               raise SystemExit('ACTIVATION_BUNDLE_NOT_BOUND_TO_NOTES')
           if evidence.get('provenance', {}).get('activationEvidenceIdentity') != bundle:
               raise SystemExit('ACTIVATION_BUNDLE_NOT_PROPAGATED')
+          if decision_decoded.get('activationEvidenceIdentity') != bundle:
+              raise SystemExit('DECISION_SURFACE_NOT_BOUND_TO_ACTIVATION_BUNDLE')
           if notes.get('diagnostics', {}).get('predictInvocationCount') != 1:
               raise SystemExit('BASIC_PITCH_MUST_RUN_ONCE_PER_OBSERVATION')
+          guards = decision.get('hardGuards', {})
+          for field in ('usedForAcceptance', 'usedForDuration', 'writesSourceEnd', 'writesDurationSeconds', 'changesPitchIdentity', 'changesDecodedEventInventory'):
+              if guards.get(field) is not False:
+                  raise SystemExit(f'DECISION_SURFACE_PROMOTIONAL_GUARD_CHANGED:{field}')
           if evidence.get('capabilities', {}).get('durationResolution') != 'none':
               raise SystemExit('MODEL_MEASUREMENT_MUST_REMAIN_DURATION_FREE')
           if any(
@@ -329,6 +348,8 @@ jobs:
           path: |
             /tmp/songsterr-fresh-model-variation-${{ matrix.sample }}/evidence-${{ matrix.sample }}.json
             /tmp/songsterr-fresh-model-variation-${{ matrix.sample }}/runtime-${{ matrix.sample }}.json
+            /tmp/songsterr-fresh-model-variation-${{ matrix.sample }}/basic-pitch-note-activations-${{ matrix.sample }}.json
+            /tmp/songsterr-fresh-model-variation-${{ matrix.sample }}/basic-pitch-decision-surface-${{ matrix.sample }}.json
             /tmp/songsterr-fresh-model-variation-${{ matrix.sample }}/demucs-model-asset.json
             /tmp/songsterr-fresh-model-variation-${{ matrix.sample }}/guitar-stem.sha256
           if-no-files-found: error
@@ -349,6 +370,9 @@ jobs:
         with:
           python-version: '3.10'
 
+      - name: Install pinned array dependency for decision-surface comparison
+        run: python -m pip install --disable-pip-version-check numpy==1.26.4
+
       - name: Download all independent observations
         uses: actions/download-artifact@v4
         with:
@@ -360,6 +384,8 @@ jobs:
         run: |
           python scripts/songsterr-fresh/compare_basic_pitch_cross_run_evidence.py --self-test
           python scripts/songsterr-fresh/aggregate_basic_pitch_cross_run_measurements.py --self-test
+          python scripts/songsterr-fresh/basic_pitch_decision_surface_diagnostic.py
+          python scripts/songsterr-fresh/compare_basic_pitch_decision_surfaces.py --self-test
 
       - name: Measure all pairwise model-evidence variation
         shell: bash
@@ -374,6 +400,25 @@ jobs:
             "$IN/evidence-a.json" "$IN/evidence-c.json" --output "$OUT/comparison-ac.json"
           python scripts/songsterr-fresh/compare_basic_pitch_cross_run_evidence.py \
             "$IN/evidence-b.json" "$IN/evidence-c.json" --output "$OUT/comparison-bc.json"
+
+      - name: Measure all pairwise Basic Pitch decision-surface variation
+        shell: bash
+        run: |
+          set -euo pipefail
+          OUT=/tmp/songsterr-fresh-model-evidence-comparison
+          IN=/tmp/songsterr-fresh-model-evidence-observations
+          python scripts/songsterr-fresh/compare_basic_pitch_decision_surfaces.py \
+            "$IN/evidence-a.json" "$IN/basic-pitch-note-activations-a.json" "$IN/basic-pitch-decision-surface-a.json" \
+            "$IN/evidence-b.json" "$IN/basic-pitch-note-activations-b.json" "$IN/basic-pitch-decision-surface-b.json" \
+            --output "$OUT/decision-comparison-ab.json"
+          python scripts/songsterr-fresh/compare_basic_pitch_decision_surfaces.py \
+            "$IN/evidence-a.json" "$IN/basic-pitch-note-activations-a.json" "$IN/basic-pitch-decision-surface-a.json" \
+            "$IN/evidence-c.json" "$IN/basic-pitch-note-activations-c.json" "$IN/basic-pitch-decision-surface-c.json" \
+            --output "$OUT/decision-comparison-ac.json"
+          python scripts/songsterr-fresh/compare_basic_pitch_decision_surfaces.py \
+            "$IN/evidence-b.json" "$IN/basic-pitch-note-activations-b.json" "$IN/basic-pitch-decision-surface-b.json" \
+            "$IN/evidence-c.json" "$IN/basic-pitch-note-activations-c.json" "$IN/basic-pitch-decision-surface-c.json" \
+            --output "$OUT/decision-comparison-bc.json"
 
       - name: Build and validate measurement-only aggregate summary
         shell: bash
@@ -390,14 +435,16 @@ jobs:
             --comparison b c "$OUT/comparison-bc.json" \
             --output "$OUT/cross-run-measurement-summary.json"
 
-      - name: Prove aggregate remains non-promotional
+      - name: Prove aggregate and decision diagnostics remain non-promotional
         shell: bash
         run: |
           set -euo pipefail
           python - <<'PY'
           import json
-          path = '/tmp/songsterr-fresh-model-evidence-comparison/cross-run-measurement-summary.json'
-          with open(path, 'r', encoding='utf-8') as handle:
+          from pathlib import Path
+
+          root = Path('/tmp/songsterr-fresh-model-evidence-comparison')
+          with open(root / 'cross-run-measurement-summary.json', 'r', encoding='utf-8') as handle:
               report = json.load(handle)
           boundary = report.get('policyBoundary', {})
           if report.get('measurementOnly') is not True:
@@ -417,6 +464,31 @@ jobs:
                   raise SystemExit(f'POLICY_BOUNDARY_CHANGED:{field}:{boundary.get(field)}')
           if report.get('descriptiveVariationEnvelope', {}).get('mayDefineTolerance') is not False:
               raise SystemExit('OBSERVED_ENVELOPE_MUST_NOT_DEFINE_TOLERANCE')
+
+          for pair in ('ab', 'ac', 'bc'):
+              with open(root / f'decision-comparison-{pair}.json', 'r', encoding='utf-8') as handle:
+                  decision = json.load(handle)
+              if decision.get('measurementOnly') is not True or decision.get('referenceBlind') is not True:
+                  raise SystemExit(f'DECISION_DIAGNOSTIC_SCOPE_CHANGED:{pair}')
+              db = decision.get('policyBoundary', {})
+              for field in (
+                  'thresholdsAppliedForAdmission',
+                  'admissionDecisionMade',
+                  'modelValidationComplete',
+                  'mayAdvanceDelivery',
+                  'durationAuthorityChanged',
+                  'changesDecodedEventInventory',
+                  'referenceTabUsed',
+                  'professionalScorerUsed',
+                  'legacyV143ScorerImported',
+              ):
+                  if db.get(field) is not False:
+                      raise SystemExit(f'DECISION_POLICY_BOUNDARY_CHANGED:{pair}:{field}:{db.get(field)}')
+              interpretation = decision.get('interpretationBoundary', {})
+              if interpretation.get('thresholdMarginIsDescriptiveOnly') is not True:
+                  raise SystemExit(f'DECISION_THRESHOLD_MARGIN_BECAME_PROMOTIONAL:{pair}')
+              if interpretation.get('unmatchedEventIsNotAutomaticallyThresholdFailure') is not True:
+                  raise SystemExit(f'DECISION_UNMATCHED_INTERPRETATION_CHANGED:{pair}')
           PY
 
       - name: Upload aggregate measurement reports
