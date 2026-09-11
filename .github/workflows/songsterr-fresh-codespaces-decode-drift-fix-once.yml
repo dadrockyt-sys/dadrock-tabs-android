@@ -1,0 +1,76 @@
+name: Songsterr Fresh Codespaces Decode Drift Fix Once
+
+on:
+  push:
+    branches:
+      - songsterr-fresh-pipeline-v1
+    paths:
+      - '.github/workflows/songsterr-fresh-codespaces-decode-drift-fix-once.yml'
+
+permissions:
+  contents: write
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: songsterr-fresh-pipeline-v1
+          fetch-depth: 0
+
+      - name: Validate workbench v2 semantics
+        shell: bash
+        run: |
+          set -euo pipefail
+          bash -n scripts/songsterr-fresh/run_codespaces_workbench_measurement.sh
+          grep -F "songsterr-fresh-codespaces-workbench-measurement-v2" scripts/songsterr-fresh/run_codespaces_workbench_measurement.sh
+          grep -F "SEPARATION_WAV_DIFFERS_FROM_AUTHORITY_BASELINE" scripts/songsterr-fresh/run_codespaces_workbench_measurement.sh
+          grep -F "'authorityEligible': False" scripts/songsterr-fresh/run_codespaces_workbench_measurement.sh
+          grep -F "'modelValidationComplete': False" scripts/songsterr-fresh/run_codespaces_workbench_measurement.sh
+          grep -F "'customerEligibleEvents': 0" scripts/songsterr-fresh/run_codespaces_workbench_measurement.sh
+          if grep -Fq "test \"\$(sha256sum \"\$RUN_DIR/separation.wav\"" scripts/songsterr-fresh/run_codespaces_workbench_measurement.sh; then
+            echo 'STRICT_WORKBENCH_DECODE_GATE_STILL_PRESENT' >&2
+            exit 2
+          fi
+
+      - name: Record confirmed Codespaces decode drift
+        shell: bash
+        run: |
+          python - <<'PY'
+          from datetime import datetime
+          from pathlib import Path
+          from zoneinfo import ZoneInfo
+
+          p = Path('docs/checkpoints/SONGSTERR_FRESH_PIPELINE_CURRENT_STATE.md')
+          t = p.read_text(encoding='utf-8')
+          old = 'No Codespaces model measurement has run yet. Policy C remains `UNENROLLED`; no authority host, enrolled fingerprint, authority probe, or authority canary exists.'
+          new = ('The first Codespaces measurement attempt stopped before structure/Demucs/Basic Pitch because the exact authorized source blob matched '
+                 '`4dd709e3fa177b4daeed71ca97f0199757729d4b` but the Codespaces FFmpeg decode produced separation WAV SHA-256 '
+                 '`2d6e13d1a8e1f1ec8e35acaaebe9f8877ee3a308302063e753ce75fee1e208c1` instead of the authority baseline '
+                 '`e03e1885185f4983b3eeaa66f36510b7709d607c14010f964e0aad427ecc474a`. This is an environment/decode-byte difference, not a source-fixture or model failure. '
+                 'Workbench measurement contract v2 now records decode/structure differences diagnostically and continues the performance benchmark while remaining '
+                 '`authorityEligible=false`; the Policy C authority workflow and manifest remain strict and unchanged. No Codespaces Demucs/Basic Pitch measurement has completed yet. '
+                 'Policy C remains `UNENROLLED`; no authority host, enrolled fingerprint, authority probe, or authority canary exists.')
+          if old not in t:
+              raise SystemExit('CODESPACES_MEASUREMENT_MARKER_CHANGED')
+          t = t.replace(old, new, 1)
+          lines = t.splitlines()
+          stamp = datetime.now(ZoneInfo('America/Toronto')).strftime('%Y-%m-%d %H:%M America/Toronto')
+          for i, line in enumerate(lines):
+              if line.startswith('Updated: '):
+                  lines[i] = f'Updated: {stamp}'
+                  break
+          p.write_text('\n'.join(lines) + '\n', encoding='utf-8')
+          PY
+
+      - name: Commit checkpoint
+        shell: bash
+        run: |
+          set -euo pipefail
+          git config user.name 'dadrockyt-sys'
+          git config user.email 'Stephen.s.mcnally@gmail.com'
+          git add docs/checkpoints/SONGSTERR_FRESH_PIPELINE_CURRENT_STATE.md
+          git commit -m 'docs: record Codespaces FFmpeg decode drift'
+          git push origin HEAD:songsterr-fresh-pipeline-v1
