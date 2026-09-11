@@ -5,7 +5,9 @@ on:
     branches: [songsterr-fresh-pipeline-v1]
     paths:
       - 'scripts/songsterr-fresh/external_idmt_v4_validation.py'
+      - 'scripts/songsterr-fresh/run_external_idmt_v4_validation.py'
       - 'docs/checkpoints/SONGSTERR_FRESH_IDMT_V4_STAGE_B_SCORING_PREREGISTRATION.md'
+      - 'docs/checkpoints/SONGSTERR_FRESH_IDMT_V4_STAGE_B_SCORING_NUMERICAL_AMENDMENT.md'
       - '.github/workflows/songsterr-fresh-idmt-v4-external-validation-ci.yml'
   workflow_dispatch:
 
@@ -21,11 +23,13 @@ jobs:
         with:
           python-version: '3.10'
 
-      - name: Compile validation harness
-        run: python -m py_compile scripts/songsterr-fresh/external_idmt_v4_validation.py
+      - name: Compile validation harness and official adapter
+        run: |
+          python -m py_compile scripts/songsterr-fresh/external_idmt_v4_validation.py
+          python -m py_compile scripts/songsterr-fresh/run_external_idmt_v4_validation.py
 
-      - name: Run synthetic matching and gate self-test
-        run: python scripts/songsterr-fresh/external_idmt_v4_validation.py --self-test
+      - name: Run amended synthetic matching and gate self-test
+        run: python scripts/songsterr-fresh/run_external_idmt_v4_validation.py --self-test
 
       - name: Enforce frozen scoring constants and identities
         run: |
@@ -52,28 +56,40 @@ jobs:
           print('IDMT_V4_SCORING_CONSTANTS_FROZEN')
           PY
 
-      - name: Enforce execution and non-promotion guards
+      - name: Enforce numerical amendment and execution guards
         run: |
           python - <<'PY'
-          import ast
+          import ast, importlib.util
           from pathlib import Path
-          p=Path('scripts/songsterr-fresh/external_idmt_v4_validation.py')
-          s=p.read_text()
-          tree=ast.parse(s)
+
+          core_path=Path('scripts/songsterr-fresh/external_idmt_v4_validation.py')
+          adapter_path=Path('scripts/songsterr-fresh/run_external_idmt_v4_validation.py')
+          core=core_path.read_text()
+          adapter=adapter_path.read_text()
+
+          spec=importlib.util.spec_from_file_location('adapter', adapter_path)
+          a=importlib.util.module_from_spec(spec); spec.loader.exec_module(a)
+          assert a.NUMERICAL_INCLUSIVE_EPSILON == 1e-12
+          assert a.inclusive_leq(1.05 - 1.0, 0.050)
+          assert not a.inclusive_leq(0.0500001, 0.050)
+
+          tree=ast.parse(core)
           imports=[]
           for n in ast.walk(tree):
-            if isinstance(n, ast.Import): imports.extend(a.name for a in n.names)
+            if isinstance(n, ast.Import): imports.extend(x.name for x in n.names)
             elif isinstance(n, ast.ImportFrom) and n.module: imports.append(n.module)
-          forbidden_import_prefixes=('demucs','songsterr_pipeline','torch')
-          assert not any(any(name==f or name.startswith(f+'.') for f in forbidden_import_prefixes) for name in imports), imports
+          forbidden=('demucs','songsterr_pipeline','torch')
+          assert not any(any(name==f or name.startswith(f+'.') for f in forbidden) for name in imports), imports
           for token in ('gomyway-midterm-source','GuitarSet','V143','GOAT'):
-            assert token not in s, token
-          assert 'python_executable = sys.executable' in s
-          assert 'modelValidationComplete' in s
-          assert 'customerEligibleEvents' in s
-          assert 'mayAdvanceDelivery' in s
-          assert 'separatePolicyReviewRequired' in s
-          print('IDMT_V4_EXECUTION_BOUNDARY_VALID')
+            assert token not in core, token
+          assert 'python_executable = sys.executable' in core
+          assert 'modelValidationComplete' in core
+          assert 'customerEligibleEvents' in core
+          assert 'mayAdvanceDelivery' in core
+          assert 'separatePolicyReviewRequired' in core
+          assert 'core.valid_match = valid_match' in adapter
+          assert 'core.implementation_hashes = implementation_hashes' in adapter
+          print('IDMT_V4_AMENDED_EXECUTION_BOUNDARY_VALID')
           PY
 
       - name: Confirm no real IDMT holdout in CI
