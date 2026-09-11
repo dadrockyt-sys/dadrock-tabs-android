@@ -1,6 +1,6 @@
 # CURRENT STATE — Songsterr Fresh Pipeline V1
 
-Updated: 2026-09-10 20:07 America/Toronto
+Updated: 2026-09-10 20:25 America/Toronto
 Canonical branch: `songsterr-fresh-pipeline-v1`
 Canonical checkpoint: `docs/checkpoints/SONGSTERR_FRESH_PIPELINE_CURRENT_STATE.md`
 
@@ -82,60 +82,90 @@ Hard rules:
 
 Existing model-note guards remain: valid finite MIDI/start/confidence; Basic Pitch model invocation; accepted frozen/reference-blind structure; matching structure identity; verified adapter/model provenance; no V143 boundary; decoded model end remains diagnostic; adapted model evidence forces `sourceEnd`, `durationSeconds`, `durationConfidence` null; customer delivery stays blocked.
 
-## PAIRWISE VARIATION MEASUREMENT — GREEN / MEASUREMENT ONLY
+## PAIRWISE / SET / HISTORY MEASUREMENT CONTRACTS — GREEN / NON-PROMOTIONAL
 
-`scripts/songsterr-fresh/compare_basic_pitch_cross_run_evidence.py`
+Pair comparator `scripts/songsterr-fresh/compare_basic_pitch_cross_run_evidence.py`:
 - contract `songsterr-fresh-basic-pitch-cross-run-variation-measurement-v1`
 - implementation commit `aae62eba938814a9d38dcf08f39cfdfa0456b4d9`
-- CI run `34539883074`, job `103079908440`, green
-- semantic key `(nearestStructureSlot, selectedMidi)` from frozen structure; deterministic duplicate pairing
-- canonical A/B ordering makes reports argument-order invariant
-- measures inventory/MIDI histogram/source-start/confidence/diagnostic-end variation
-- malformed or incomparable evidence fails closed
-- explicitly `thresholdsApplied:false`, `admissionDecisionMade:false`, `modelValidationComplete:false`, `mayAdvanceDelivery:false`, `durationAuthorityChanged:false`
+- semantic key `(nearestStructureSlot, selectedMidi)` from frozen structure; deterministic duplicate pairing; argument-order invariant
+- measures inventory/MIDI/source-start/confidence/diagnostic-end variation only
+- malformed/incomparable evidence fails closed; no threshold/admission/validation/delivery promotion
 
-## FORMAL MEASUREMENT-SET CONTRACT — IMPLEMENTED / GREEN
-
-`scripts/songsterr-fresh/aggregate_basic_pitch_cross_run_measurements.py`:
+Per-run formal aggregator `scripts/songsterr-fresh/aggregate_basic_pitch_cross_run_measurements.py`:
 - contract `songsterr-fresh-basic-pitch-cross-run-variation-measurement-set-v1`
-- implementation commit `d3b99a1c1fffd6fde8c13c0a0b9af89673749391`
-- test wiring commit `ccb1d04496ed245641da7863b452230c2b3bed1c`
+- implementation commit `d3b99a1c1fffd6fde8c13c0a0b9af89673749391`; test wiring `ccb1d04496ed245641da7863b452230c2b3bed1c`
 - focused CI run `34544408404`, job `103093808844`, success
-- validates exact source/decoded-input/frozen-structure/model/package/thread snapshot and safe runtime guards
-- recomputes each pair report from supplied evidence and rejects altered reports
-- requires the complete unordered pair set with no missing/extra pair
-- binds runtime canonical-evidence SHA, note identity, activation identity, and structure identity back to validated evidence
-- groups exact stem/evidence/note/activation/frame-time outcomes descriptively; no preferred group
-- summarizes observed maxima as `descriptiveOnly:true`, `mayDefineTolerance:false`
-- hard boundary includes `preferredOutputSelected:false`, `exactHashesAreAdmissionCriteria:false`, `runtimeProvenanceIsAdmissionCriterion:false`, `observedMaximaAreAdmissionCriteria:false`
-- self-tests cover complete pair set, argument-order invariance, exact grouping, unsafe runtime guard, digest binding, missing pair, thresholded pair, pair recomputation, package drift, and no preferred output/admission
+- validates fixed source/decoded input/structure/model/packages/thread env; recomputes every pair; requires complete pair set; binds runtime/evidence identities; exact groups descriptive only
+- envelope is `descriptiveOnly:true`, `mayDefineTolerance:false`
 
-Canary wiring commit `1a005b3cfba084374667e1132574ca804c98d6fc` replaces the prior inline aggregate with the formal aggregate script and adds an independent non-promotional assertion. No numerical model controls changed.
+Multi-set history accumulator `scripts/songsterr-fresh/accumulate_basic_pitch_measurement_sets.py`:
+- contract `songsterr-fresh-basic-pitch-cross-run-measurement-history-v1`
+- implementation commit `3951e61d75720bad855dc3d7f0d85c60af02df1f`; focused test wiring `186050b8106e3dfa0089fb0bb837a189b7bbff05`
+- focused CI run `34545931556`, job `103098411035`, success
+- requires >=2 unique measurement-set digests with identical fixed contracts
+- rejects duplicate sets, fixed-contract drift, promotional boundaries, incomplete pair sets, recomputed-envelope mismatch, and recomputed exact-group mismatch
+- preserves individual set identities and groups exact stem/evidence/note/activation/frame-time outcomes descriptively
+- runtime/CPU associations and historical frequency are explicitly not admission criteria
+- combined envelope remains `descriptiveOnly:true`, `mayDefineTolerance:false`
+
+History-only canary `.github/workflows/songsterr-fresh-model-evidence-history-canary.yml`:
+- commit `21f72e8cf7bd8528b6a2d686452133b4d8ae1095`
+- downloads original immutable run-3/run-4 observation artifacts; reruns no Demucs or Basic Pitch inference
+- recomputes both formal measurement sets with current contracts, then accumulates them
+- run `34546052846`, job `103098786394`, success
+- artifact `10179043243`, digest `sha256:ef50a11df633bc6da5e795e64880e56ebed38bbb4a99f036f096c197a1f23cd7`
+- machine-produced history: 2 sets, 6 observations, 6 within-set pair comparisons, identical descriptive envelopes, 2 exact stem outcomes, 2 exact canonical evidence outcomes
+- formal set digests `11794be2d8aab09301cef2e391926a30bc7f3bb1dd7931901f9b7971a2e4b451` and `d66206cc2db467c46150c9e0069fcc38ba5f82cebc1a253cf235aa91cd7df019`
 
 ## AUTHORITATIVE REAL-MODEL MEASUREMENT SETS
 
 Run 3 — `34540837228`, head `0f4b4cbe0a52657cf4989e07500041335a89db86`, success:
 - jobs A `103082902022`, B `103082902438`, C `103082902292`; aggregate `103084400834`
-- aggregate artifact `10177361715`, digest `sha256:74c4c1acb4830ec00b63ad19e1c26925aec0bc0b871ed073913cd10d5aea262c`
+- original aggregate artifact `10177361715`, digest `sha256:74c4c1acb4830ec00b63ad19e1c26925aec0bc0b871ed073913cd10d5aea262c`
 - A/B exact 1,139-event outcome; C exact 1,138-event outcome
 
 Run 4 — `34544587948`, head `1a005b3cfba084374667e1132574ca804c98d6fc`, success:
 - jobs A `103094352497`, B `103094352600`, C `103094352290`; formal aggregate `103095712976`
 - aggregate artifact `10178691537`, digest `sha256:a7d195f273a95e82691aea15d3dd40e3ad32f9039b8976eb0b851db634d5b4d0`
-- formal aggregate contract and independent non-promotional guard both passed
 - A/C exact 1,138-event outcome; B exact 1,139-event outcome
 
 Across both sets / six independent observations:
 - exactly two repeated stem/note/activation/evidence outcomes were observed
-- 1,139-event outcome: stem SHA `5b3e7c6feb153ba427303d5f2688cf3442faa74bb4e98ce298ac426824c8db33`; note SHA `1e41a51a3463aa87b3d4c76f8e4cccadcb708dd3d1f51ae6895b950269a61024`; activation bundle `4d2c1c7af035e26ff86919fb169354676bc35b56658d306c7410a94f573f1151`; observed 3/3 on AMD EPYC 9V74
-- 1,138-event outcome: stem SHA `4227a41f58817d32e9e122857c924c486afdc1e411a0a173bec2dfcc0c7b6b81`; note SHA `e85323e5b7449ac84be7ad6076ed3ee9c2da1e9a37b3c64247637e4b82dcbe77`; activation bundle `5e1aa1f76bfb2b3dae77f6aeb6bf6dd1fc5f84e102292dd12a5432683b330159`; observed 3/3 on AMD EPYC 7763
-- the only semantic inventory difference is one MIDI-64 event at frozen slot `206.22657596371883`, present in the 1,139-event outcome and absent in the 1,138-event outcome
+- 1,139-event outcome: stem SHA `5b3e7c6feb153ba427303d5f2688cf3442faa74bb4e98ce298ac426824c8db33`; note SHA `1e41a51a3463aa87b3d4c76f8e4cccadcb708dd3d1f51ae6895b950269a61024`; activation bundle `4d2c1c7af035e26ff86919fb169354676bc35b56658d306c7410a94f573f1151`; canonical evidence SHA `30abdfa67dd43547629bba10c19474e5b6b304ab07bc521bd57b76c0839d3c86`; observed 3/3 on AMD EPYC 9V74
+- 1,138-event outcome: stem SHA `4227a41f58817d32e9e122857c924c486afdc1e411a0a173bec2dfcc0c7b6b81`; note SHA `e85323e5b7449ac84be7ad6076ed3ee9c2da1e9a37b3c64247637e4b82dcbe77`; activation bundle `5e1aa1f76bfb2b3dae77f6aeb6bf6dd1fc5f84e102292dd12a5432683b330159`; canonical evidence SHA `475c501a5d44b605eab623f2c5a6b22e962aaf13d7baa9a9d208566d01eca501`; observed 3/3 on AMD EPYC 7763
+- CPU association is descriptive provenance only and cannot select a preferred output
+- only semantic inventory difference: one MIDI-64 event at frozen slot `206.22657596371883`, present in the 1,139-event outcome and absent in the 1,138-event outcome
 - all 1,138 common semantic events have source-start delta exactly 0.0 s
-- common-event confidence delta max `0.0124053955078125`, mean `0.00008660461917283875`, RMS `0.0004107038163407931`
+- confidence delta max `0.0124053955078125`, mean `0.00008660461917283875`, RMS `0.0004107038163407931`
 - diagnostic-only model-end delta max `0.6398326530612053` s, mean `0.0005622431046232033` s, RMS `0.01896685259331218` s; never duration evidence
-- frame-time identity is exact across run 4 observations; numerical model output/stem identities are not
-- the CPU association is descriptive provenance only. It does not make either CPU/output correct, cannot select a preferred output, and is not an admission criterion.
-- two repeated three-observation sets still do not justify turning observed maxima into tolerances.
+- two repeated sets / six observations still do not justify turning observed maxima into tolerances
+
+## BASIC PITCH 0.4.0 REPRESENTATION SEMANTICS — NEW FINDING
+
+Exact upstream `v0.4.0` source was inspected before drawing any bound conclusion.
+
+Timing representation:
+- `FFT_HOP = 256`, `AUDIO_SAMPLE_RATE = 22050`, so nominal model-frame spacing is ~11.61 ms
+- decoded note starts are frame indices mapped by `model_frames_to_time`
+- `model_frames_to_time` also applies a per-window alignment correction including a hard-coded `0.0018` s term described upstream as a required alignment magic number
+- therefore the frame grid gives a representation scale, not an independently justified cross-run onset tolerance
+- our six-observation common-event onset variation remains exactly 0.0 s; do not introduce a one-frame (~11.61 ms) admission tolerance merely because the representation is frame-based
+
+Confidence representation:
+- Basic Pitch `output_to_notes_polyphonic` emits `(start_frame, end_frame, midi, amplitude)`
+- that `amplitude` is `mean(frames[start:end, midi_bin])`, i.e. mean note-frame activation over the decoded note span, not an onset-peak probability
+- current transcriber names this value `confidence`; current evidence builder propagates it as `onsetConfidence` and single candidate `confidence`, while correctly labelling calibration `basic-pitch-note-amplitude-not-calibrated-probability`
+- the `onsetConfidence` name is therefore semantically misleading/legacy; the value partly depends on the model-decoded note span, including its diagnostic end
+- V2 and V3 release logic do not use this candidate confidence; the acceptance evaluator uses it only for descriptive confidence diagnostics, not failure reasons or composite scoring
+- do not use the observed `0.012405...` confidence drift to define admission without a separately justified semantic rule
+
+Confidence-boundary hardening:
+- behavioral test `scripts/songsterr-fresh/test_candidate_confidence_diagnostic_only.mjs`, initial commit `9636aff0d56a5fe30857fa3d42ae59c3d6c2d0b0`
+- focused CI wiring commit `c4ad1c9481ac8617f8b127cad9361cdee48af5db`; run `34546291994`, confidence behavioral test green
+- evaluator contract commit `272b8430ff6d016fff2692ed621380b9a63e9115` adds `candidateConfidenceUsedForAcceptance:false` and `candidateConfidenceDiagnosticsOnly:true`; no acceptance logic changed
+- test commit `8cb0d4f0177595c223075214931492aeae2caf04` asserts those flags plus low-vs-high confidence acceptance invariance in both validation-pending and otherwise-complete cases
+- focused CI run `34546370247` is active for the final explicit-contract version; do not call that version green until the job succeeds
+- no model evidence payload was changed, preserving historical evidence identities
 
 ## CURRENT ACCEPTANCE STATE
 
@@ -145,16 +175,17 @@ Blockers remain:
 - `MODEL_EVIDENCE_VALIDATION_PENDING`
 - `DURATION_EVIDENCE_INCOMPLETE`
 
-Customer-eligible events remain **0**. V2 authoritative; V3 candidate-only. Basic Pitch is not ground truth. No reference scorer/tab/archive logic. No BP end as duration. No generic next-onset duration. No same-pitch-reattack default. No threshold sweep. No promotion from self-consistency, exact hashes, CPU association, or downstream agreement.
+Customer-eligible events remain **0**. V2 authoritative; V3 candidate-only. Basic Pitch is not ground truth. No reference scorer/tab/archive logic. No BP end as duration. No generic next-onset duration. No same-pitch-reattack default. No threshold sweep. No promotion from self-consistency, exact hashes, CPU association, historical frequency, candidate confidence, or downstream agreement.
 
 ## NEXT ENGINEERING STEPS
 
-1. Add a measurement-only accumulator for multiple validated measurement-set summaries so independent canary history can be combined without hand comparison.
-2. The accumulator must require identical fixed contracts and non-promotional boundaries, preserve individual set identities, group exact outcomes and runtime associations descriptively, and compute only cross-set descriptive envelopes/counts.
-3. It must never choose a preferred CPU/output/hash, apply a threshold, or set validation/delivery true; malformed/incompatible sets fail closed.
-4. Use the two completed sets as the first historical evidence base after the accumulator contract is tested.
-5. Investigate whether Basic Pitch representation semantics provide any independently defensible onset/confidence bound. If not, keep admission blocked rather than turning six observations into a tuned tolerance.
-6. Duration research remains paused until upstream model-evidence validation is resolved.
-7. Keep this checkpoint updated after material findings.
+1. Complete/inspect focused CI run `34546370247` for the explicit candidate-confidence evaluator contract.
+2. If green, treat candidate confidence as explicitly diagnostic-only and do not spend the validation budget inventing a confidence threshold.
+3. Focus the remaining upstream validation problem on semantic inventory stability: the single MIDI-64 event that toggles across the two repeated exact model outcomes.
+4. Before proposing any inventory admission rule, add measurement-only evidence that can explain the toggled event using same-inference Basic Pitch onset/frame activations or other representation-native diagnostics. Do not infer threshold proximity from the current `confidence` field because it is mean note-span activation, not onset activation.
+5. Any new diagnostic must remain reference-blind, same-inference, duration-free, and non-promotional; avoid changing model numerical settings simply to make the inventory stable.
+6. Do not create an onset/inventory/confidence tolerance unless independently justified. If no defensible bound exists, keep validation blocked.
+7. Duration research remains paused until upstream model-evidence validation is resolved.
+8. Keep this checkpoint updated after material findings.
 
 The archived V143/Gomyway pipeline remains out of scope unless the user explicitly asks to resume it.
