@@ -16,6 +16,7 @@ from basic_pitch_activation_evidence import (
     build_note_identity,
     note_identity_rows_from_notes,
 )
+from basic_pitch_decision_surface_diagnostic import build_decision_surface_sidecar
 
 CONTRACT = "songsterr-fresh-basic-pitch-isolated-guitar-v1"
 DEFAULT_MIN_MIDI = 40
@@ -39,6 +40,15 @@ def parse_args():
         help=(
             "Optional duration-free sidecar containing raw Basic Pitch note activations "
             "from the same predict() call used to decode the emitted notes."
+        ),
+    )
+    parser.add_argument(
+        "--decision-surface-output",
+        help=(
+            "Optional diagnostic-only sidecar containing Basic Pitch raw/effective onset "
+            "surfaces from the same predict() call. Requires --activation-output so its "
+            "frame axis and note activations are cryptographically bound without changing "
+            "the decoded-note artifact."
         ),
     )
     parser.add_argument("--gpu-invoked", action="store_true")
@@ -91,11 +101,21 @@ def main():
         raise RuntimeError("BASIC_PITCH_INVALID_FRAME_THRESHOLD")
     if args.minimum_note_length_ms <= 0:
         raise RuntimeError("BASIC_PITCH_INVALID_MINIMUM_NOTE_LENGTH")
-    if args.activation_output and Path(args.activation_output).resolve() == Path(args.output).resolve():
-        raise RuntimeError("BASIC_PITCH_ACTIVATION_OUTPUT_MUST_BE_DISTINCT")
 
-    # One model invocation owns both decoded pitch/onset notes and, when requested,
-    # the raw note-activation sidecar. The decoded note-off remains diagnostic only.
+    output_path = Path(args.output).resolve()
+    activation_path = Path(args.activation_output).resolve() if args.activation_output else None
+    decision_path = Path(args.decision_surface_output).resolve() if args.decision_surface_output else None
+    if activation_path is not None and activation_path == output_path:
+        raise RuntimeError("BASIC_PITCH_ACTIVATION_OUTPUT_MUST_BE_DISTINCT")
+    if decision_path is not None:
+        if activation_path is None:
+            raise RuntimeError("BASIC_PITCH_DECISION_SURFACE_REQUIRES_ACTIVATION_OUTPUT")
+        if decision_path in (output_path, activation_path):
+            raise RuntimeError("BASIC_PITCH_DECISION_SURFACE_OUTPUT_MUST_BE_DISTINCT")
+
+    # Exactly one model invocation owns decoded notes and every optional diagnostic
+    # sidecar. Diagnostics are derived from this returned model_output and never call
+    # predict() again. Decoded note-off remains diagnostic only.
     model_output, _, note_events = predict(
         args.input,
         onset_threshold=args.onset_threshold,
@@ -160,6 +180,8 @@ def main():
     }
 
     activation_identity = None
+    activation_payload = None
+    note_matrix = None
     if args.activation_output:
         note_matrix = np.asarray(model_output.get("note"), dtype=np.float32)
         if note_matrix.ndim != 2 or note_matrix.shape[0] == 0:
@@ -179,12 +201,37 @@ def main():
         if activation_payload.get("noteInferenceIdentity") != note_identity:
             raise RuntimeError("BASIC_PITCH_ACTIVATION_NOTE_IDENTITY_INTERNAL_MISMATCH")
         activation_identity = activation_identity_summary(activation_payload)
-        activation_path = Path(args.activation_output)
-        activation_path.parent.mkdir(parents=True, exist_ok=True)
-        with open(activation_path, "w", encoding="utf-8") as handle:
+        activation_file = Path(args.activation_output)
+        activation_file.parent.mkdir(parents=True, exist_ok=True)
+        with open(activation_file, "w", encoding="utf-8") as handle:
             json.dump(activation_payload, handle, separators=(",", ":"))
             handle.write("\n")
 
+    if args.decision_surface_output:
+        if activation_payload is None or activation_identity is None or note_matrix is None:
+            raise RuntimeError("BASIC_PITCH_DECISION_SURFACE_INTERNAL_ACTIVATION_BINDING_MISSING")
+        onset_matrix = np.asarray(model_output.get("onset"), dtype=np.float32)
+        if onset_matrix.ndim != 2 or onset_matrix.shape != note_matrix.shape:
+            raise RuntimeError("BASIC_PITCH_ONSET_DECISION_MATRIX_INVALID")
+        decision_payload = build_decision_surface_sidecar(
+            model_onset_matrix=onset_matrix,
+            model_note_matrix=note_matrix,
+            note_identity=note_identity,
+            activation_bundle_identity=activation_identity,
+            minimum_midi=args.minimum_midi,
+            maximum_midi=args.maximum_midi,
+            audio_source=args.audio_source,
+            separation_source=args.separation_source,
+            model_metadata=model_metadata,
+        )
+        decision_file = Path(args.decision_surface_output)
+        decision_file.parent.mkdir(parents=True, exist_ok=True)
+        with open(decision_file, "w", encoding="utf-8") as handle:
+            json.dump(decision_payload, handle, separators=(",", ":"))
+            handle.write("\n")
+
+    # Keep the primary decoded-note payload unchanged by optional decision diagnostics.
+    # This preserves existing same-inference note/evidence identity semantics.
     payload = {
         "contract": CONTRACT,
         "version": 1,
