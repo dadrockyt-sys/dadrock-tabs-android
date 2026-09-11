@@ -1,6 +1,6 @@
 # CURRENT STATE — Songsterr Fresh Pipeline V1
 
-Updated: 2026-09-10 21:50 America/Toronto
+Updated: 2026-09-10 22:04 America/Toronto
 Canonical branch: `songsterr-fresh-pipeline-v1`
 Canonical checkpoint: `docs/checkpoints/SONGSTERR_FRESH_PIPELINE_CURRENT_STATE.md`
 
@@ -247,18 +247,20 @@ Decision-enabled real model canary — COMPLETED GREEN:
 - Historical outcome frequencies cannot repair this because current policy forbids promoting observed frequency into correctness. Requiring more runs therefore characterizes reproducibility but does not prove universal semantic portability.
 - Result: finite semantic-consensus/repeated-execution gating is **not justified as a Policy B customer-admission contract**. `modelValidationComplete` remains false, customer-eligible events remain 0, and duration research remains paused.
 
-## POLICY C PINNED COMPUTE AUTHORITY — IMPLEMENTED SCAFFOLD / UNENROLLED
+## POLICY C PINNED COMPUTE AUTHORITY — IMPLEMENTED / HARDENED / UNENROLLED
 
 - User explicitly authorized the architecture/policy change after Policy B numerical-bound and finite-consensus approaches were shown insufficient.
-- Policy C defines one explicitly enrolled fixed self-hosted Linux x64 compute surface as the only authority-eligible Demucs → Basic Pitch execution surface. GitHub-hosted model runs remain measurement/history evidence only; there is no hosted fallback.
-- Architecture contract: `docs/checkpoints/SONGSTERR_FRESH_PINNED_COMPUTE_AUTHORITY_V1.md`, commit `31a351e33e952686de4d8e9a5d6fe6239a3b35e1`.
-- Manifest `scripts/songsterr-fresh/pinned_compute_authority_v1.json`: created `8cbe046e1c2f06e3ff568775ad98874d4fbdef56`, full package set pinned `3b42aacf8449ea13ad6960259125c84810ac6134`; current `enrollmentStatus=UNENROLLED` and no enrolled fingerprint exists.
-- Fail-closed verifier `verify_pinned_compute_authority.py`, commit `94d513d90c8ca4d5f951413a7440c6a924e7d759`, binds reproducibility-relevant CPU/microcode/kernel/libc/interpreter/toolchain/package/numerical-library/thread state while intentionally excluding machine IDs/network/user identity. Un-enrolled, hardware-drift, and software-drift states fail closed.
-- One-canary summary contract `build_pinned_compute_authority_canary.py`, commit `3a05084ab046cb2ff9a11491da3fde9d9fede226`, requires authority verification before model execution and cannot promote model validation.
-- Three-canary aggregation contract `aggregate_pinned_compute_authority_canaries.py`, commit `408e071cfe538dff1c9f633d8756b4e2d8679b50`, requires ≥3 distinct workflow run IDs from one source commit and one enrolled authority fingerprint with exact stem/note/activation/decision/evidence identity. Any drift fails closed. Even exact reproducibility does not auto-promote `modelValidationComplete`.
-- Manual workflow `.github/workflows/songsterr-fresh-pinned-compute-authority.yml`, commit `623cce5b605397afe9d105c57fd8a35d2efed041`, runs only on `[self-hosted, linux, x64, songsterr-fresh-authority-v1]`, has `probe` and `canary` modes, installs no model/toolchain dependencies, has no automatic model trigger, and has no hosted fallback.
-- Hosted pure-contract CI wiring commit `43fdb35e7d6f247b31f32449a06dfafa07586051`; run `34552124958`, job `103117037937`, success. It proved manifest validation, un-enrolled/drift fail-closed behavior, single-canary non-promotion, three-canary exactness/non-promotion, and all prior fresh measurement guards.
-- Current authority state is intentionally **UNENROLLED**. No real Policy C model canary has been run and no output has authority status yet.
+- Policy C defines one explicitly enrolled Linux x64 reproducibility surface as the only authority-eligible Demucs → Basic Pitch execution surface. GitHub-hosted model runs remain measurement/history evidence only; there is no hosted fallback.
+- Architecture contract: `docs/checkpoints/SONGSTERR_FRESH_PINNED_COMPUTE_AUTHORITY_V1.md`, original architecture commit `31a351e33e952686de4d8e9a5d6fe6239a3b35e1`.
+- Manifest `scripts/songsterr-fresh/pinned_compute_authority_v1.json`: current `enrollmentStatus=UNENROLLED`; no enrolled fingerprint exists and no model output has authority status yet.
+- Fail-closed verifier `verify_pinned_compute_authority.py` binds CPU/model/family/stepping/microcode/features, logical CPU count, kernel/libc, Python interpreter hash/version, Node/FFmpeg executable hashes/versions, exact named package versions, NumPy/PyTorch build configuration, deterministic thread/hash environment, and a full installed Python-distribution lock. Full-distribution-lock hardening commit `1701dabd40d52517df8fa09e4c8d4f9bfbcfe9af` catches transitive/package-content drift as authority drift.
+- Hardened focused CI run `34552705768`, job `103118742497`, success: verifier, full-distribution drift, single-canary non-promotion, three-canary exactness/non-promotion, and all previous fresh measurement guards passed.
+- Dedicated bootstrap `scripts/songsterr-fresh/bootstrap_pinned_compute_authority.sh`, commit `77a5261e05267eed3b8e3501a3a36becc0b16538`, creates `/opt/songsterr-fresh-authority/venv` once and installs the exact named model package set; it does not accept or persist GitHub runner credentials.
+- Authority workflow `.github/workflows/songsterr-fresh-pinned-compute-authority.yml`, hardened commit `c69059ab1939ca69ed4eec9b27679c5bb15e06de`, requires `[self-hosted, linux, x64, songsterr-fresh-authority-v1]`, prepends only the dedicated authority venv, verifies Python 3.10 / Node 22 / FFmpeg and the enrolled fingerprint before model execution, has no automatic model trigger, installs no model dependencies during a canary, and has no hosted fallback.
+- Enrollment runbook `docs/checkpoints/SONGSTERR_FRESH_PINNED_COMPUTE_AUTHORITY_ENROLLMENT.md`, commit `d370e9728164d7985b5590beb187e5324508780d`, defines persistent-host provisioning, GitHub runner registration with `--disableupdate`, safe probe, deliberate fingerprint enrollment, ≥3 separate exact canaries, aggregation, and drift/re-enrollment procedure.
+- Bootstrap/static coverage commit `adf8146f8ca2ed7efa0b7ff71948bee1b0bed898`; run `34553026675`, job `103119686510`, success. Bootstrap shell syntax plus all Policy C fail-closed/non-promotion contracts passed.
+- Cloud/VM use is acceptable only as a reproducibility surface because every canary verifies the exact enrolled fingerprint before model execution. A materially changed VM/hardware/software surface fails closed and requires re-enrollment; Policy C is not a physical-host security attestation.
+- Current external blocker: provision/register one persistent Linux x64 host as the sole `songsterr-fresh-authority-v1` runner, build the dedicated venv, and run `mode=probe`. No real Policy C probe or canary has run yet.
 - `modelValidationComplete` remains false; customer-eligible events remain 0; duration research remains paused. V2 remains authoritative and V3 candidate-only.
 
 ## CURRENT ACCEPTANCE STATE
@@ -274,13 +276,13 @@ Customer-eligible events remain **0**. V2 authoritative; V3 candidate-only. Basi
 ## FRESH-CHAT NEXT ENGINEERING STEPS
 
 1. Treat Policy B numerical-bound research and finite semantic-consensus analysis as completed negative results; do not revive threshold fitting or hosted unanimity as customer admission rules.
-2. Policy C pinned-compute authority scaffolding and hosted contract tests are complete, but the authority is `UNENROLLED`. Keep `modelValidationComplete:false`, customer-eligible events at 0, and duration research paused.
-3. Provision one dedicated fixed Linux x64 machine as a GitHub self-hosted runner with labels `self-hosted`, `linux`, `x64`, `songsterr-fresh-authority-v1`. Do not use an autoscaling/ephemeral pool and do not treat an ordinary container on variable hosted hardware as authority.
-4. Preinstall the exact branch-pinned Python packages plus Node/FFmpeg on that machine. The authority workflow intentionally performs no package/toolchain installation before model execution.
-5. Manually dispatch `Songsterr Fresh Policy C Pinned Compute Authority` with `mode=probe`. Review the safe probe artifact; only then deliberately commit its exact fingerprint into `pinned_compute_authority_v1.json` and change `enrollmentStatus` to `ENROLLED`.
-6. From one unchanged source commit, run at least three separate `mode=canary` dispatches on the enrolled authority, then aggregate their canary summaries. Stem, note inference, activation bundle, decision surface, and canonical evidence must be exact across all runs or the authority proof fails closed.
-7. If exact pinned-authority reproducibility is demonstrated, perform a separate model-evidence validation review. The canary aggregator itself must not set `modelValidationComplete:true` or advance delivery/duration.
-8. Keep hosted cross-run canaries and automatic decoder-trace follow-up as measurement/history evidence only. No hosted CPU/vendor/output becomes a fallback authority.
-9. Keep archived V143/Gomyway implementation/reference/pro-scorer work out of scope and keep V2/V3 duration/release work paused until upstream model-evidence validation is actually resolved.
+2. Policy C code, hardening, bootstrap, enrollment runbook, and focused CI are complete and green, but authority remains `UNENROLLED`. Keep `modelValidationComplete:false`, customer-eligible events at 0, and duration research paused.
+3. Provision one persistent Ubuntu 22.04 Linux x64 host (DigitalOcean is acceptable as the reproducibility surface), not an autoscaling/ephemeral pool. Use only one authority-labeled runner at a time.
+4. Install host prerequisites (Python 3.10 + venv, Node 22, FFmpeg, Git, cURL), then run `sudo bash scripts/songsterr-fresh/bootstrap_pinned_compute_authority.sh` to create `/opt/songsterr-fresh-authority/venv`. Do not rebuild that venv after enrollment without re-enrollment.
+5. Register the GitHub self-hosted runner with custom label `songsterr-fresh-authority-v1` and `--disableupdate`; do not commit the time-limited registration token. Install/start it as a service.
+6. Manually dispatch `Songsterr Fresh Policy C Pinned Compute Authority` with `mode=probe`. Review the safe `authority-probe.json`; only then deliberately commit its exact `fingerprint` and `fingerprintSha256` into `pinned_compute_authority_v1.json` and set `enrollmentStatus=ENROLLED`.
+7. From one unchanged source commit, run at least three separate `mode=canary` dispatches. Every run must verify the same enrolled authority fingerprint before model execution and produce exact stem, note-inference, activation, decision-surface, and canonical-evidence identities.
+8. Aggregate the ≥3 canary summaries with `aggregate_pinned_compute_authority_canaries.py`. Any source/fingerprint/output mismatch fails closed. Exact aggregation proves pinned-authority reproducibility only; it must not auto-set `modelValidationComplete:true` or resume duration/delivery.
+9. After reproducibility is demonstrated, perform a separate model-evidence validation review. Keep hosted canaries/decoder traces measurement-only and keep archived V143/Gomyway implementation/reference/pro-scorer work out of scope.
 
 The archived V143/Gomyway pipeline remains out of scope unless explicitly requested.
