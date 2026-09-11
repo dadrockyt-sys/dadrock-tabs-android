@@ -1,0 +1,72 @@
+name: Songsterr Fresh IDMT V4 Stage B Manifest CI
+
+on:
+  push:
+    branches: [songsterr-fresh-pipeline-v1]
+    paths:
+      - 'scripts/songsterr-fresh/prepare_idmt_v4_stage_b_manifest.py'
+      - 'docs/checkpoints/SONGSTERR_FRESH_IDMT_V4_STAGE_B_MANIFEST_PREREGISTRATION.md'
+      - '.github/workflows/songsterr-fresh-idmt-v4-stage-b-manifest-ci.yml'
+  workflow_dispatch:
+
+jobs:
+  manifest-contract-only:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout exact branch source
+        uses: actions/checkout@v4
+
+      - name: Set up Python 3.10
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.10'
+
+      - name: Compile Stage B manifest tool
+        run: python -m py_compile scripts/songsterr-fresh/prepare_idmt_v4_stage_b_manifest.py
+
+      - name: Run synthetic Stage B manifest self-test
+        run: python scripts/songsterr-fresh/prepare_idmt_v4_stage_b_manifest.py --self-test
+
+      - name: Enforce frozen Stage A identities
+        run: |
+          python - <<'PY'
+          import importlib.util
+          from pathlib import Path
+          p=Path('scripts/songsterr-fresh/prepare_idmt_v4_stage_b_manifest.py')
+          spec=importlib.util.spec_from_file_location('m', p)
+          m=importlib.util.module_from_spec(spec); spec.loader.exec_module(m)
+          assert m.EXPECTED_ARCHIVE_NAME == 'IDMT-SMT-GUITAR_V2.zip'
+          assert m.EXPECTED_ARCHIVE_MD5 == '06796e08731bccffaed6ae59361486e4'
+          assert m.EXPECTED_ARCHIVE_SHA256 == '02816258252538603c051054219cb4bba1c0ae8c9d0a3ca5418dfc951eae997a'
+          assert m.EXPECTED_STAGE_A_REPORT_SHA256 == 'fd9086891a9a699619810f4bccd6f0f2533c194afc6cc1b09cf80484626d704f'
+          assert m.ELIGIBLE_DATASETS == {'dataset1','dataset2','dataset3'}
+          assert m.REQUIRED_FIELDS == {'onsetSec','offsetSec','pitch'}
+          print('FROZEN_STAGE_A_IDENTITIES_VALID')
+          PY
+
+      - name: Enforce non-scoring source boundary
+        run: |
+          python - <<'PY'
+          from pathlib import Path
+          s=Path('scripts/songsterr-fresh/prepare_idmt_v4_stage_b_manifest.py').read_text()
+          forbidden=[
+            'basic_pitch', 'independent_pitch_corroboration_v4', 'demucs',
+            'librosa', 'numpy', 'precision_score', 'wilson', 'gomyway-midterm-source'
+          ]
+          for token in forbidden:
+            assert token not in s.lower(), token
+          required=[
+            'basicPitchInvoked', 'v4ClassifierInvoked', 'correctnessMetricComputed',
+            'estimateReferenceMatchingPerformed', 'modelValidationComplete',
+            'customerEligibleEvents', 'mayAdvanceDelivery'
+          ]
+          for token in required:
+            assert token in s, token
+          print('NON_SCORING_STAGE_B_MANIFEST_BOUNDARY_VALID')
+          PY
+
+      - name: Confirm no real IDMT holdout in CI
+        run: |
+          test ! -e IDMT-SMT-GUITAR_V2.zip
+          test ! -e /workspaces/.songsterr-fresh-idmt-v4-stage-a-3ce57810/IDMT-SMT-GUITAR_V2.zip
+          echo 'REAL_IDMT_NOT_EVALUATED_BY_STAGE_B_MANIFEST_CI'
