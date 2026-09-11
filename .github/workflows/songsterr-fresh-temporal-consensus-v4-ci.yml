@@ -1,0 +1,142 @@
+name: Songsterr Fresh Temporal Consensus V4 Contract CI
+
+on:
+  push:
+    branches:
+      - songsterr-fresh-pipeline-v1
+    paths:
+      - 'scripts/songsterr-fresh/independent_pitch_corroboration_v4.py'
+      - 'docs/checkpoints/SONGSTERR_FRESH_MODEL_EVIDENCE_ADMISSION_PREREGISTRATION_V4.md'
+      - 'docs/checkpoints/SONGSTERR_FRESH_TEMPORAL_CONSENSUS_V4.md'
+      - '.github/workflows/songsterr-fresh-temporal-consensus-v4-ci.yml'
+  workflow_dispatch:
+
+jobs:
+  controlled-synthetic-only:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout exact branch source
+        uses: actions/checkout@v4
+
+      - name: Set up Python 3.10
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.10'
+
+      - name: Install frozen lightweight dependencies
+        run: |
+          python -m pip install --disable-pip-version-check \
+            numpy==1.26.4 \
+            librosa==0.11.0 \
+            soundfile==0.13.1
+
+      - name: Compile V4 evaluator
+        run: |
+          python -m py_compile scripts/songsterr-fresh/independent_pitch_corroboration_v4.py
+
+      - name: Run synthetic-only V4 self-test
+        run: |
+          python scripts/songsterr-fresh/independent_pitch_corroboration_v4.py --self-test | tee /tmp/v4-self-test.json
+          python - <<'PY'
+          import json
+          report = json.load(open('/tmp/v4-self-test.json', encoding='utf-8'))
+          assert report['contract'] == 'songsterr-fresh-temporal-consensus-pitch-corroboration-research-v4'
+          assert report['version'] == 4
+          assert report['selfTest'] == 'PASS'
+          assert len(report['fixtures']) == 12
+          boundary = report['policyBoundary']
+          for field in (
+              'guitarsetEvaluated', 'idmtEvaluated', 'protectedSongEvaluated',
+              'referenceTabUsed', 'professionalScorerUsed', 'archivedV143Imported',
+              'goatResearchUsed', 'durationAuthorityChanged', 'admissionDecisionMade',
+              'modelValidationComplete', 'mayAdvanceDelivery',
+          ):
+              assert boundary[field] is False, (field, boundary[field])
+          assert boundary['customerEligibleEvents'] == 0
+          print('V4_SYNTHETIC_CONTRACT_SUITE_VALID')
+          PY
+
+      - name: Enforce preregistered constants
+        run: |
+          python - <<'PY'
+          import importlib.util
+          import pathlib
+          path = pathlib.Path('scripts/songsterr-fresh/independent_pitch_corroboration_v4.py')
+          spec = importlib.util.spec_from_file_location('v4', path)
+          module = importlib.util.module_from_spec(spec)
+          spec.loader.exec_module(module)
+          assert module.SAMPLE_RATE == 44100
+          assert module.WINDOW_SAMPLES == 8192
+          assert tuple(module.WINDOW_OFFSETS) == (1024, 7168, 13312)
+          assert module.FFT_SIZE == 32768
+          assert (module.PLAYABLE_MIDI_MIN, module.PLAYABLE_MIDI_MAX) == (40, 88)
+          assert module.HARMONIC_COUNT_MAX == 6
+          assert module.SPECTRAL_LOG_FLOOR == 1e-15
+          assert module.YIN_TROUGH_THRESHOLD == 0.1
+          assert module.LIBROSA_VERSION == '0.11.0'
+          assert set(module._spectral_scores(module._normalize(module._synth_note(64))[:8192])[0]) == set(range(40, 89))
+          assert module._unique_winner({40: 1.0, 41: 1.0}) is None
+          print('V4_PREREGISTERED_CONSTANTS_VALID')
+          PY
+
+      - name: Enforce evidence identity and duration guards
+        run: |
+          python - <<'PY'
+          import importlib.util
+          import pathlib
+          path = pathlib.Path('scripts/songsterr-fresh/independent_pitch_corroboration_v4.py')
+          spec = importlib.util.spec_from_file_location('v4', path)
+          module = importlib.util.module_from_spec(spec)
+          spec.loader.exec_module(module)
+          base = {
+              'contract': module.EXPECTED_EVIDENCE_CONTRACT,
+              'referenceBlind': True,
+              'structureFrozen': True,
+              'role': 'guitar',
+              'provenance': {
+                  'referenceTabUsed': False,
+                  'professionalScorerUsed': False,
+                  'legacyV143ScorerImported': False,
+                  'modelNoteEndsUsedAsDuration': False,
+              },
+              'onsets': [{
+                  'onsetId': 'synthetic-event-1',
+                  'sourceStart': 1.25,
+                  'selectedMidi': 64,
+                  'sourceEnd': None,
+                  'durationSeconds': None,
+              }],
+          }
+          rows = module._validate_evidence(base)
+          assert rows == [{'onsetId': 'synthetic-event-1', 'sourceStart': 1.25, 'selectedMidi': 64}]
+          broken = {**base, 'onsets': [dict(base['onsets'][0], durationSeconds=0.5)]}
+          try:
+              module._validate_evidence(broken)
+          except module.CorroborationError:
+              pass
+          else:
+              raise AssertionError('duration-bearing evidence was not rejected')
+          print('V4_EVENT_IDENTITY_DURATION_GUARDS_VALID')
+          PY
+
+      - name: Enforce controlled-only source boundary
+        run: |
+          python - <<'PY'
+          from pathlib import Path
+          source = Path('scripts/songsterr-fresh/independent_pitch_corroboration_v4.py').read_text(encoding='utf-8')
+          forbidden = [
+              'zenodo' + '.org',
+              'gomyway-' + 'midterm-source',
+              'audio_' + 'mono-mic.zip',
+              'IDMT-SMT-' + 'GUITAR_V2.zip',
+              'requests' + '.get(',
+              'urllib' + '.request',
+          ]
+          for token in forbidden:
+              assert token not in source, token
+          assert 'subprocess' not in source
+          print('V4_CONTROLLED_ONLY_BOUNDARY_VALID')
+          print('GUITARSET_NOT_EVALUATED_BY_V4_CI')
+          print('IDMT_NOT_EVALUATED_BY_V4_CI')
+          print('PROTECTED_SONG_NOT_EVALUATED_BY_V4_CI')
+          PY
