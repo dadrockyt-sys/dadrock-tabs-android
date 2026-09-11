@@ -118,8 +118,9 @@ Inventory tool:
 
 Inventory CI:
 - `.github/workflows/songsterr-fresh-idmt-v4-inventory-ci.yml`
-- commit `9346d2c651e5a7ae0bbe8f53f66bcccdd7fbc3e7`
-- run `34654695068`, job `103444417084` currently validating a synthetic ZIP only.
+- workflow commit `9346d2c651e5a7ae0bbe8f53f66bcccdd7fbc3e7`
+- run `34654695068`, job `103444417084`: **SUCCESS**
+- synthetic ZIP self-test, frozen archive constants, stdlib-only boundary, and no-real-holdout guard all green.
 
 Stage A may only:
 - verify exact archive MD5 and record SHA-256;
@@ -163,10 +164,10 @@ Active blockers:
 - `DURATION_EVIDENCE_INCOMPLETE`.
 
 Next allowed work:
-1. finish synthetic Stage A inventory CI;
-2. if green, freeze checkpoint/source;
-3. download exact IDMT archive in Codespaces outside repo and verify MD5;
-4. run inventory tool once, outside repo;
+1. update a Codespace to the current branch head and keep the worktree clean;
+2. download exact `IDMT-SMT-GUITAR_V2.zip` outside the repo;
+3. verify MD5 `06796e08731bccffaed6ae59361486e4`;
+4. run `inventory_idmt_v4_external_validation.py` once with output outside the repo;
 5. inspect only integrity/schema output;
 6. freeze Stage B external-validation preregistration;
 7. only then run official Basic Pitch + V4 holdout correctness evaluation.
