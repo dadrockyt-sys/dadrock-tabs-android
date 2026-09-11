@@ -83,18 +83,18 @@ jobs:
           from pathlib import Path
           workflow=Path('.github/workflows/songsterr-fresh-guitarset-v3-ci.yml').read_text()
           forbidden=(
-              'audio_mono-mic.zip?download=',
-              'annotation.zip?download=',
-              'zenodo.org/record/3371780/files/',
-              '--annotation-zip /',
-              '--audio-mic-zip /',
+              'audio_mono' + '-mic.zip?download=',
+              'annotation' + '.zip?download=',
+              'zenodo.org/record/' + '3371780/files/',
+              '--annotation-' + 'zip /',
+              '--audio-mic-' + 'zip /',
           )
           for token in forbidden:
               assert token not in workflow, token
           script=Path('scripts/songsterr-fresh/external_guitarset_validation_v3.py').read_text()
-          assert 'gomyway-midterm-source' not in script
-          assert '79.6261406' not in script
-          assert '46.2024095' not in script
+          assert 'gomyway-' + 'midterm-source' not in script
+          assert '79.626' + '1406' not in script
+          assert '46.202' + '4095' not in script
           print('V3_CONTROLLED_ONLY_BOUNDARY_VALID')
           print('GUITARSET_NOT_EVALUATED_BY_V3_CI')
           print('PROTECTED_SONG_NOT_EVALUATED_BY_V3_CI')
