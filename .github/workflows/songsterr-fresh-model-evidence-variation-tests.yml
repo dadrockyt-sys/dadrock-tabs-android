@@ -9,6 +9,9 @@ on:
       - 'scripts/songsterr-fresh/compare_basic_pitch_cross_run_evidence.py'
       - 'scripts/songsterr-fresh/aggregate_basic_pitch_cross_run_measurements.py'
       - 'scripts/songsterr-fresh/accumulate_basic_pitch_measurement_sets.py'
+      - 'scripts/songsterr-fresh/test_candidate_confidence_diagnostic_only.mjs'
+      - 'songsterr_pipeline/noteEvidenceEvaluator.mjs'
+      - 'songsterr_pipeline/noteEvidenceDiagnostics.mjs'
       - '.github/workflows/songsterr-fresh-model-evidence-variation-tests.yml'
 
 permissions:
@@ -25,6 +28,11 @@ jobs:
     steps:
       - name: Check out fresh branch
         uses: actions/checkout@v4
+
+      - name: Set up Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: '22'
 
       - name: Set up Python
         uses: actions/setup-python@v5
@@ -45,3 +53,6 @@ jobs:
 
       - name: Prove measurement-history accumulation is complete and non-promotional
         run: python scripts/songsterr-fresh/accumulate_basic_pitch_measurement_sets.py --self-test
+
+      - name: Prove Basic Pitch candidate confidence is diagnostic-only for acceptance
+        run: node scripts/songsterr-fresh/test_candidate_confidence_diagnostic_only.mjs
