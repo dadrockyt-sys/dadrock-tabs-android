@@ -1,6 +1,6 @@
 # CURRENT STATE — Songsterr Fresh Pipeline V1
 
-Updated: 2026-09-11 12:08 America/Toronto
+Updated: 2026-09-11 12:10 America/Toronto
 Canonical branch: `songsterr-fresh-pipeline-v1`
 Canonical checkpoint: `docs/checkpoints/SONGSTERR_FRESH_PIPELINE_CURRENT_STATE.md`
 
@@ -343,6 +343,30 @@ Decision-enabled real model canary — COMPLETED GREEN:
 - MIDI-55 and MIDI-64 are now retrospective stress diagnostics only for future frozen methods.
 - Formal policy review: `docs/checkpoints/SONGSTERR_FRESH_INDEPENDENT_CORROBORATION_V1_POLICY_REVIEW.md`, commit `ea20e404a980e0d4e25a15855eb8b6e6d8de978f`.
 - `modelValidationComplete:false`; customer-eligible events 0; `mayAdvanceDelivery:false`; duration research remains paused.
+
+## FRESH CHAT HANDOFF — NEXT STEPS
+
+Use this section as the resume point in a new chat.
+
+1. Continue only on `songsterr-fresh-pipeline-v1`; do not touch `main` / Production.
+2. GOAT research is CLOSED / REFERENCE ONLY. Do not resume GOAT, V143/Gomyway implementation, reference/professional scorer logic, holdout scoring, or any attempt to obtain/reconstruct denied GOAT material unless the user explicitly reopens that workstream.
+3. Independent Corroboration V1 is CLOSED AS ADMISSION AUTHORITY and retained only as a frozen research diagnostic. Its authorized-song result was 471 corroborated / 667 not corroborated / 2 insufficient across 1,140 qualified events.
+4. Do not post-hoc tune V1 from the authorized song. In particular, MIDI-55 near 46.2024095 s and MIDI-64 near 79.6261406 s are retrospective stress diagnostics only; do not change V1 harmonic weights, competitor offsets, tie tolerance, channel logic, or invent song-derived thresholds to make either case pass.
+5. If continuing model-evidence research, create a NEW preregistered successor (e.g. Independent Corroboration V2) before implementation. Its design must come from independently justified signal-processing principles and/or predeclared controlled/public validation material separate from the authorized song.
+6. V2 preregistration must freeze the allowed inputs, signal-processing channels, candidate/competitor definitions, windows, thresholds/tie rules, failure semantics, and non-promotion guards BEFORE any authorized-song evaluation.
+7. Build deterministic controlled fixtures and, if used, predeclare any public validation corpus/licensing and evaluation protocol before seeing results. Hosted CI may exercise only controlled/public validation material and contract/self-tests; it must not evaluate the authorized song.
+8. Do not reuse the previous live Codespaces authority epoch. It may be stopped/deleted to save quota. After V2 is frozen and CI is green, start/reopen Codespaces, pull the exact frozen commit, expire any old C-S enrollment, probe, deliberately enroll, verify, and qualify a NEW Policy C-S epoch with three exact canaries.
+9. Only after that new epoch qualifies may the frozen V2 evaluator run once on the authorized song. Bind the run to the qualified stem/evidence identities and verify the same C-S session before and after. Do not modify the qualified worktree during the run.
+10. After the first authorized-song V2 result, perform a separate explicit policy review. No aggregate count or stress-case result may automatically authorize customer output. A failed prospective stress check means fail closed; do not tune on the song and retry under the same preregistration.
+11. Until a future policy review independently justifies promotion: `modelValidationComplete:false`, customer-eligible events `0`, `mayAdvanceDelivery:false`, and duration V2/V3 research remains paused.
+12. Keep this checkpoint updated frequently. Clearly distinguish helper/CI/integration failures from actual model/pipeline failures.
+
+Current stable policy references:
+- GOAT closeout: `docs/checkpoints/SONGSTERR_FRESH_GOAT_RESEARCH_CLOSED_REFERENCE_ONLY.md`.
+- V1 preregistration: `docs/checkpoints/SONGSTERR_FRESH_MODEL_EVIDENCE_ADMISSION_PREREGISTRATION_V1.md`.
+- V1 authorized-song result: `docs/checkpoints/SONGSTERR_FRESH_INDEPENDENT_CORROBORATION_V1_AUTHORIZED_SONG_RESULT.md`.
+- V1 policy review: `docs/checkpoints/SONGSTERR_FRESH_INDEPENDENT_CORROBORATION_V1_POLICY_REVIEW.md`.
+- Policy C-S implementation remains the reproducibility authority mechanism for ephemeral Codespaces sessions; a new boot/source/compute fingerprint requires a new enrollment and three new canaries.
 
 ## CURRENT ACCEPTANCE STATE
 
