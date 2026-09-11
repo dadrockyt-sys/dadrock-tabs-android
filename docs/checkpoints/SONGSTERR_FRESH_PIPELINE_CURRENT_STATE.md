@@ -1,6 +1,6 @@
 # CURRENT STATE — Songsterr Fresh Pipeline V1
 
-Updated: 2026-09-10 20:00 America/Toronto
+Updated: 2026-09-10 20:07 America/Toronto
 Canonical branch: `songsterr-fresh-pipeline-v1`
 Canonical checkpoint: `docs/checkpoints/SONGSTERR_FRESH_PIPELINE_CURRENT_STATE.md`
 
@@ -94,32 +94,15 @@ Existing model-note guards remain: valid finite MIDI/start/confidence; Basic Pit
 - malformed or incomparable evidence fails closed
 - explicitly `thresholdsApplied:false`, `admissionDecisionMade:false`, `modelValidationComplete:false`, `mayAdvanceDelivery:false`, `durationAuthorityChanged:false`
 
-## AUTHORITATIVE REAL-MODEL MEASUREMENT
+## FORMAL MEASUREMENT-SET CONTRACT — IMPLEMENTED / GREEN
 
-Three-independent-run canary `.github/workflows/songsterr-fresh-model-evidence-cross-run-measurement-canary.yml`.
-
-Bring-up failures were workflow guards only and are non-authoritative: run `34540126725` used wrong persisted structure field; run `34540364742` exposed the copied asset-revision typo and stopped before Basic Pitch.
-
-Authoritative completed run `34540837228`, head `0f4b4cbe0a52657cf4989e07500041335a89db86`, success:
-- jobs A `103082902022`, B `103082902438`, C `103082902292`; aggregate `103084400834`
-- aggregate artifact `10177361715`, digest `sha256:74c4c1acb4830ec00b63ad19e1c26925aec0bc0b871ed073913cd10d5aea262c`
-- A/B exact: 1,139 events; stem SHA `5b3e7c6feb153ba427303d5f2688cf3442faa74bb4e98ce298ac426824c8db33`; note SHA `1e41a51a3463aa87b3d4c76f8e4cccadcb708dd3d1f51ae6895b950269a61024`; activation bundle `4d2c1c7af035e26ff86919fb169354676bc35b56658d306c7410a94f573f1151`
-- C: 1,138 events; stem SHA `4227a41f58817d32e9e122857c924c486afdc1e411a0a173bec2dfcc0c7b6b81`; note SHA `e85323e5b7449ac84be7ad6076ed3ee9c2da1e9a37b3c64247637e4b82dcbe77`; activation bundle `5e1aa1f76bfb2b3dae77f6aeb6bf6dd1fc5f84e102292dd12a5432683b330159`
-- A↔C and B↔C: 1,138 common semantic events, zero source-start delta; one MIDI-64 event at slot `206.22657596371883` present in A/B and absent in C
-- common-event confidence delta max `0.0124053955078125`, mean `0.00008660461917283875`, RMS `0.0004107038163407931`
-- diagnostic-only model-end delta max `0.6398326530612053` s, mean `0.0005622431046232033` s, RMS `0.01896685259331218` s; never duration evidence
-- A/B CPU AMD EPYC 9V74; C AMD EPYC 7763; same image/pins/thread env/source/structure. CPU association is descriptive only and is not a selector.
-- three observations do not justify a tolerance.
-
-## FORMAL MEASUREMENT-SET CONTRACT — IMPLEMENTED / FOCUSED CI GREEN
-
-New `scripts/songsterr-fresh/aggregate_basic_pitch_cross_run_measurements.py`:
+`scripts/songsterr-fresh/aggregate_basic_pitch_cross_run_measurements.py`:
 - contract `songsterr-fresh-basic-pitch-cross-run-variation-measurement-set-v1`
 - implementation commit `d3b99a1c1fffd6fde8c13c0a0b9af89673749391`
 - test wiring commit `ccb1d04496ed245641da7863b452230c2b3bed1c`
 - focused CI run `34544408404`, job `103093808844`, success
 - validates exact source/decoded-input/frozen-structure/model/package/thread snapshot and safe runtime guards
-- recomputes each pair report from the supplied evidence and rejects altered reports
+- recomputes each pair report from supplied evidence and rejects altered reports
 - requires the complete unordered pair set with no missing/extra pair
 - binds runtime canonical-evidence SHA, note identity, activation identity, and structure identity back to validated evidence
 - groups exact stem/evidence/note/activation/frame-time outcomes descriptively; no preferred group
@@ -127,9 +110,32 @@ New `scripts/songsterr-fresh/aggregate_basic_pitch_cross_run_measurements.py`:
 - hard boundary includes `preferredOutputSelected:false`, `exactHashesAreAdmissionCriteria:false`, `runtimeProvenanceIsAdmissionCriterion:false`, `observedMaximaAreAdmissionCriteria:false`
 - self-tests cover complete pair set, argument-order invariance, exact grouping, unsafe runtime guard, digest binding, missing pair, thresholded pair, pair recomputation, package drift, and no preferred output/admission
 
-Canary wiring commit `1a005b3cfba084374667e1132574ca804c98d6fc` replaces the prior inline aggregate summary with the formal aggregate script and adds an independent non-promotional boundary assertion. No numerical model controls changed.
+Canary wiring commit `1a005b3cfba084374667e1132574ca804c98d6fc` replaces the prior inline aggregate with the formal aggregate script and adds an independent non-promotional assertion. No numerical model controls changed.
 
-Active validation: run `34544587948` at head `1a005b3cfba084374667e1132574ca804c98d6fc`; three independent model observations are in progress. Treat no result from this run as authoritative until all observation jobs and the formal aggregate job succeed.
+## AUTHORITATIVE REAL-MODEL MEASUREMENT SETS
+
+Run 3 — `34540837228`, head `0f4b4cbe0a52657cf4989e07500041335a89db86`, success:
+- jobs A `103082902022`, B `103082902438`, C `103082902292`; aggregate `103084400834`
+- aggregate artifact `10177361715`, digest `sha256:74c4c1acb4830ec00b63ad19e1c26925aec0bc0b871ed073913cd10d5aea262c`
+- A/B exact 1,139-event outcome; C exact 1,138-event outcome
+
+Run 4 — `34544587948`, head `1a005b3cfba084374667e1132574ca804c98d6fc`, success:
+- jobs A `103094352497`, B `103094352600`, C `103094352290`; formal aggregate `103095712976`
+- aggregate artifact `10178691537`, digest `sha256:a7d195f273a95e82691aea15d3dd40e3ad32f9039b8976eb0b851db634d5b4d0`
+- formal aggregate contract and independent non-promotional guard both passed
+- A/C exact 1,138-event outcome; B exact 1,139-event outcome
+
+Across both sets / six independent observations:
+- exactly two repeated stem/note/activation/evidence outcomes were observed
+- 1,139-event outcome: stem SHA `5b3e7c6feb153ba427303d5f2688cf3442faa74bb4e98ce298ac426824c8db33`; note SHA `1e41a51a3463aa87b3d4c76f8e4cccadcb708dd3d1f51ae6895b950269a61024`; activation bundle `4d2c1c7af035e26ff86919fb169354676bc35b56658d306c7410a94f573f1151`; observed 3/3 on AMD EPYC 9V74
+- 1,138-event outcome: stem SHA `4227a41f58817d32e9e122857c924c486afdc1e411a0a173bec2dfcc0c7b6b81`; note SHA `e85323e5b7449ac84be7ad6076ed3ee9c2da1e9a37b3c64247637e4b82dcbe77`; activation bundle `5e1aa1f76bfb2b3dae77f6aeb6bf6dd1fc5f84e102292dd12a5432683b330159`; observed 3/3 on AMD EPYC 7763
+- the only semantic inventory difference is one MIDI-64 event at frozen slot `206.22657596371883`, present in the 1,139-event outcome and absent in the 1,138-event outcome
+- all 1,138 common semantic events have source-start delta exactly 0.0 s
+- common-event confidence delta max `0.0124053955078125`, mean `0.00008660461917283875`, RMS `0.0004107038163407931`
+- diagnostic-only model-end delta max `0.6398326530612053` s, mean `0.0005622431046232033` s, RMS `0.01896685259331218` s; never duration evidence
+- frame-time identity is exact across run 4 observations; numerical model output/stem identities are not
+- the CPU association is descriptive provenance only. It does not make either CPU/output correct, cannot select a preferred output, and is not an admission criterion.
+- two repeated three-observation sets still do not justify turning observed maxima into tolerances.
 
 ## CURRENT ACCEPTANCE STATE
 
@@ -143,11 +149,11 @@ Customer-eligible events remain **0**. V2 authoritative; V3 candidate-only. Basi
 
 ## NEXT ENGINEERING STEPS
 
-1. Complete/inspect run `34544587948` on the fixed snapshot.
-2. If the formal aggregate fails, classify contract/workflow bugs separately from model variation; do not alter model numerical controls to make it pass.
-3. If it succeeds, record artifact digest, exact outcome groups, descriptive envelope, and whether it reproduces or expands the previous one-event variation. Observed maxima remain non-admission evidence.
-4. Build a broader independent measurement base only if needed to reason about representation-semantic bounds; do not rerun the completed common-AVX2 portability experiment.
-5. Do not create an admission threshold unless independently justified. If no defensible bound exists, keep validation blocked.
+1. Add a measurement-only accumulator for multiple validated measurement-set summaries so independent canary history can be combined without hand comparison.
+2. The accumulator must require identical fixed contracts and non-promotional boundaries, preserve individual set identities, group exact outcomes and runtime associations descriptively, and compute only cross-set descriptive envelopes/counts.
+3. It must never choose a preferred CPU/output/hash, apply a threshold, or set validation/delivery true; malformed/incompatible sets fail closed.
+4. Use the two completed sets as the first historical evidence base after the accumulator contract is tested.
+5. Investigate whether Basic Pitch representation semantics provide any independently defensible onset/confidence bound. If not, keep admission blocked rather than turning six observations into a tuned tolerance.
 6. Duration research remains paused until upstream model-evidence validation is resolved.
 7. Keep this checkpoint updated after material findings.
 
