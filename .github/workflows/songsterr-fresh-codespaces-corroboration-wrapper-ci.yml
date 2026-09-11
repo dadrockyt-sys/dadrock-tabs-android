@@ -7,6 +7,7 @@ on:
       - songsterr-fresh-pipeline-v1
     paths:
       - 'scripts/songsterr-fresh/run_codespaces_independent_corroboration_v1.py'
+      - 'scripts/songsterr-fresh/aggregate_codespaces_session_authority_canaries.py'
       - '.github/workflows/songsterr-fresh-codespaces-corroboration-wrapper-ci.yml'
 
 permissions:
@@ -31,13 +32,75 @@ jobs:
           set -euo pipefail
           python -m py_compile scripts/songsterr-fresh/run_codespaces_independent_corroboration_v1.py
 
-      - name: Verify static fail-closed contract
+      - name: Verify fail-closed contract against real qualification schema
         shell: bash
         run: |
           set -euo pipefail
           python - <<'PY'
+          import importlib.util
           from pathlib import Path
-          text=Path('scripts/songsterr-fresh/run_codespaces_independent_corroboration_v1.py').read_text(encoding='utf-8')
+
+          wrapper_path=Path('scripts/songsterr-fresh/run_codespaces_independent_corroboration_v1.py')
+          aggregate_path=Path('scripts/songsterr-fresh/aggregate_codespaces_session_authority_canaries.py')
+
+          def load_module(name, path):
+              spec=importlib.util.spec_from_file_location(name, path)
+              module=importlib.util.module_from_spec(spec)
+              spec.loader.exec_module(module)
+              return module
+
+          wrapper=load_module('wrapper', wrapper_path)
+          aggregate=load_module('aggregate', aggregate_path)
+
+          # Use the actual qualification builder so schema drift cannot hide behind a static token test.
+          qualification=aggregate.aggregate([
+              aggregate.make_canary(1),
+              aggregate.make_canary(2),
+              aggregate.make_canary(3),
+          ])
+          wrapper.validate_qualification_policy_boundary(qualification)
+
+          # Every promotion/reference guard must still fail closed if changed.
+          guarded_fields={
+              'surfaceQualificationIsModelValidation': True,
+              'newSessionInheritsQualification': True,
+              'reproducibilityProofAlonePromotesModelValidation': True,
+              'modelValidationComplete': True,
+              'mayAdvanceDelivery': True,
+              'durationAuthorityChanged': True,
+              'customerEligibleEvents': 1,
+              'referenceTabUsed': True,
+              'professionalScorerUsed': True,
+              'legacyV143ScorerImported': True,
+          }
+          for field, bad_value in guarded_fields.items():
+              broken=aggregate.aggregate([
+                  aggregate.make_canary(11),
+                  aggregate.make_canary(12),
+                  aggregate.make_canary(13),
+              ])
+              broken['policyBoundary'][field]=bad_value
+              try:
+                  wrapper.validate_qualification_policy_boundary(broken)
+              except wrapper.SessionResearchError as exc:
+                  assert str(exc) == f'QUALIFICATION_POLICY_GUARD_CHANGED:{field}'
+              else:
+                  raise AssertionError(f'qualification guard did not fail closed: {field}')
+
+          missing=aggregate.aggregate([
+              aggregate.make_canary(21),
+              aggregate.make_canary(22),
+              aggregate.make_canary(23),
+          ])
+          del missing['policyBoundary']
+          try:
+              wrapper.validate_qualification_policy_boundary(missing)
+          except wrapper.SessionResearchError as exc:
+              assert str(exc) == 'QUALIFICATION_POLICY_BOUNDARY_MISSING'
+          else:
+              raise AssertionError('missing policy boundary must fail closed')
+
+          text=wrapper_path.read_text(encoding='utf-8')
           required=[
               'ENROLLMENT_SOURCE_COMMIT_DOES_NOT_MATCH_HEAD',
               'QUALIFICATION_SOURCE_COMMIT_DOES_NOT_MATCH_HEAD',
@@ -45,18 +108,16 @@ jobs:
               'QUALIFIED_GUITAR_STEM_HASH_MISMATCH',
               'RESEARCH_EVIDENCE_IDENTITY_NOT_QUALIFICATION_BOUND',
               'SESSION_CHANGED_DURING_RESEARCH',
-              'modelValidationComplete',
-              'customerEligibleEvents',
               'independent_pitch_corroboration_v1.py',
           ]
           for token in required:
               assert token in text, token
           forbidden=[
-              'modelValidationComplete": True',
-              'customerEligibleEvents": 1',
-              'mayAdvanceDelivery": True',
+              'modelValidationComplete\": True',
+              'customerEligibleEvents\": 1',
+              'mayAdvanceDelivery\": True',
           ]
           for token in forbidden:
               assert token not in text, token
-          print('CODESPACES_CORROBORATION_WRAPPER_CONTRACT_PASS')
+          print('CODESPACES_CORROBORATION_WRAPPER_SCHEMA_CONTRACT_PASS')
           PY
