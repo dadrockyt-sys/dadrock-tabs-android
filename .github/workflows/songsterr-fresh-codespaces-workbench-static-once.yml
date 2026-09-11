@@ -1,0 +1,69 @@
+name: Songsterr Fresh Codespaces Workbench Static Once
+
+on:
+  push:
+    branches:
+      - songsterr-fresh-pipeline-v1
+    paths:
+      - '.github/workflows/songsterr-fresh-codespaces-workbench-static-once.yml'
+
+permissions:
+  contents: write
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: songsterr-fresh-pipeline-v1
+          fetch-depth: 0
+
+      - name: Validate Codespaces workbench files
+        shell: bash
+        run: |
+          set -euo pipefail
+          python -m json.tool .devcontainer/songsterr-fresh-workbench/devcontainer.json >/dev/null
+          bash -n .devcontainer/songsterr-fresh-workbench/setup.sh
+          bash -n scripts/songsterr-fresh/run_codespaces_workbench_measurement.sh
+          grep -F '"cpus": 2' .devcontainer/songsterr-fresh-workbench/devcontainer.json
+          grep -F '"memory": "8gb"' .devcontainer/songsterr-fresh-workbench/devcontainer.json
+          grep -F '"authorityEligible": false' scripts/songsterr-fresh/run_codespaces_workbench_measurement.sh || true
+          grep -F "'authorityEligible': False" scripts/songsterr-fresh/run_codespaces_workbench_measurement.sh
+          grep -F "'modelValidationComplete': False" scripts/songsterr-fresh/run_codespaces_workbench_measurement.sh
+          grep -F "'customerEligibleEvents': 0" scripts/songsterr-fresh/run_codespaces_workbench_measurement.sh
+
+      - name: Record workbench in canonical checkpoint
+        shell: bash
+        run: |
+          python - <<'PY'
+          from datetime import datetime
+          from pathlib import Path
+          from zoneinfo import ZoneInfo
+
+          p = Path('docs/checkpoints/SONGSTERR_FRESH_PIPELINE_CURRENT_STATE.md')
+          t = p.read_text(encoding='utf-8')
+          old = '- Current external blocker: DigitalOcean provisioning remains blocked at account billing setup even after the user reported adding a payment method. A fresh resource-creation retry returned HTTP 403 with `You need to provide a payment method before trying to create resources under your account` while creating the authority SSH key. The connected API context is team `My Team`; balance/usage are `0.00`, billing history/invoices are empty, Droplet list is empty, and account status still reports `warning` with a conflicting maximum-Droplets message. No Droplet, DigitalOcean SSH key, Policy C probe, canary, or billable resource was created. Cost strategy is now the least expensive configuration that still meets the established authority runbook minimum: Toronto `tor1`, Ubuntu 22.04 x64, standard shared-CPU 4 vCPU / 8 GB size `s-4vcpu-8gb` (listed at $48/month), rather than the $56 Intel-specific variant. Policy C fingerprints the actual enrolled CPU/toolchain and fails closed on drift. After billing is active for this connected team, provision that persistent host, bootstrap the dedicated venv, register it as the sole `songsterr-fresh-authority-v1` runner, and run `mode=probe`.\n'
+          new = '- Current budget path: a persistent DigitalOcean authority host is deferred because the available $24-$48/month options are over the user budget; the connected DigitalOcean team also still reports a billing restriction. A separate non-authority GitHub Codespaces workbench is now implemented at `.devcontainer/songsterr-fresh-workbench/devcontainer.json`, targeting the smallest 2-core / 8 GB / 32 GB Codespaces class. Bootstrap `.devcontainer/songsterr-fresh-workbench/setup.sh` installs/reuses the exact pinned model stack and writes a prerequisite-valid workbench probe; `scripts/songsterr-fresh/run_codespaces_workbench_measurement.sh` runs one full measurement-only frozen-structure → Demucs → Basic Pitch → duration-free-evidence path while recording runtime, max RSS, and output identities. Codespaces output is explicitly `authorityEligible=false`, `modelValidationComplete=false`, customer eligible events 0, and cannot change duration authority. No Codespaces model measurement has run yet. Policy C remains `UNENROLLED`; no authority host, enrolled fingerprint, authority probe, or authority canary exists. Next: create the cheapest Codespace using the Songsterr Fresh Workbench configuration, let bootstrap finish, run the measurement harness once, and inspect whether 2 cores / 8 GB is sufficient before choosing any paid persistent authority surface.\n'
+          if old not in t:
+              raise SystemExit('CURRENT_EXTERNAL_BLOCKER_MARKER_CHANGED')
+          t = t.replace(old, new, 1)
+          lines = t.splitlines()
+          stamp = datetime.now(ZoneInfo('America/Toronto')).strftime('%Y-%m-%d %H:%M America/Toronto')
+          for i, line in enumerate(lines):
+              if line.startswith('Updated: '):
+                  lines[i] = f'Updated: {stamp}'
+                  break
+          p.write_text('\n'.join(lines) + '\n', encoding='utf-8')
+          PY
+
+      - name: Commit checkpoint
+        shell: bash
+        run: |
+          set -euo pipefail
+          git config user.name 'dadrockyt-sys'
+          git config user.email 'Stephen.s.mcnally@gmail.com'
+          git add docs/checkpoints/SONGSTERR_FRESH_PIPELINE_CURRENT_STATE.md
+          git commit -m 'docs: record Codespaces workbench budget path'
+          git push origin HEAD:songsterr-fresh-pipeline-v1
