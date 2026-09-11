@@ -2,7 +2,21 @@
 
 Date: 2026-09-01 UTC  
 Branch: `v143-contextual-prune-lobo`
-Status: **PARALLEL DEVELOPMENT LANE / V168 UNCHANGED**
+Status: **CLOSED / REFERENCE ONLY — 2026-09-11**
+
+## Closeout — GOAT access denied
+
+The external GOAT research-access path is officially closed for active development. Access to the restricted GOAT research/data was denied by the research agency.
+
+Closure boundary:
+- no restricted GOAT bytes, annotations, reference transcriptions, internal research outputs, or evaluation artifacts were obtained;
+- no GOAT material was imported into this repository or used to tune, calibrate, score, admit, reject, or promote any Songsterr pipeline output;
+- no future work should wait on, request, scrape, infer, reconstruct, or otherwise attempt to bypass the denied GOAT access;
+- this branch and its documents are retained only as historical/reference provenance;
+- do not resume implementation, threshold development, holdout scoring, or reference-facing evaluation from this branch unless the user explicitly reopens it;
+- active Songsterr development remains on `songsterr-fresh-pipeline-v1` under its own reference-blind policy and current checkpoint.
+
+The historical material below is preserved unchanged in substance so prior research intent remains auditable. Any statement below that describes GOAT access as “pending” is historical context only and is superseded by this closeout.
 
 ## Purpose
 Use permissively licensed public guitar datasets to search for genuinely new, reference-grounded transcription insights while GOAT restricted access is pending.
