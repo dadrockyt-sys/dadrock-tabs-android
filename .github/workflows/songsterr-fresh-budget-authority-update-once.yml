@@ -1,0 +1,64 @@
+name: Songsterr Fresh Budget Authority Update Once
+
+on:
+  push:
+    branches:
+      - songsterr-fresh-pipeline-v1
+    paths:
+      - '.github/workflows/songsterr-fresh-budget-authority-update-once.yml'
+
+permissions:
+  contents: write
+
+jobs:
+  update:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: songsterr-fresh-pipeline-v1
+          fetch-depth: 0
+      - name: Record preservation helper and low-cost authority candidate
+        shell: bash
+        run: |
+          python - <<'PY'
+          from datetime import datetime
+          from pathlib import Path
+          from zoneinfo import ZoneInfo
+
+          p = Path('docs/checkpoints/SONGSTERR_FRESH_PIPELINE_CURRENT_STATE.md')
+          t = p.read_text(encoding='utf-8')
+          heading = '## POLICY C PINNED COMPUTE AUTHORITY — IMPLEMENTED / HARDENED / UNENROLLED\n'
+          start = t.find(heading)
+          if start < 0:
+              raise SystemExit('POLICY_C_HEADING_NOT_FOUND')
+          marker = '- `modelValidationComplete` remains false; customer-eligible events remain 0; duration research remains paused. V2 remains authoritative and V3 candidate-only.\n'
+          pos = t.find(marker, start)
+          if pos < 0:
+              raise SystemExit('POLICY_C_END_MARKER_NOT_FOUND')
+          additions = [
+              '- Measurement preservation helper `scripts/songsterr-fresh/preserve_codespaces_workbench_measurement.sh`, commit `69a293c334e8d8d1f130910b5372ef1faff7c184`, validates the completed workbench v2 summary and copies only the small non-authoritative JSON into `docs/checkpoints/SONGSTERR_FRESH_CODESPACES_WORKBENCH_MEASUREMENT_V2.json`; all promotion guards must remain false and all five output identities must be valid SHA-256 values.',
+              '- Low-cost authority review `docs/checkpoints/SONGSTERR_FRESH_LOW_COST_AUTHORITY_OPTIONS.md`, commit `2a790a309449ef93c1fc8bda2252ffa081dd69cc`: completed Codespaces capacity evidence makes 4 GB RAM the minimum practical target. Provider-owned pricing checked 2026-09-10 makes OVHcloud Canada VPS-1 the current preferred budget candidate at 2 vCores / 4 GB / 40 GB NVMe from CAD $6.20/month with Ubuntu 22.04 available. IONOS Canada is a fallback; DigitalOcean 4 GiB remains USD $24/month and over budget. No provider has been purchased or enrolled.',
+              '- Immediate next step before stopping/deleting the current Codespace: run the preservation helper, commit only `docs/checkpoints/SONGSTERR_FRESH_CODESPACES_WORKBENCH_MEASUREMENT_V2.json`, and push it to `songsterr-fresh-pipeline-v1`. After that, stop the Codespace so compute billing stops. Do not enroll the Codespaces fingerprint.',
+          ]
+          block = '\n'.join(additions) + '\n'
+          if additions[0] not in t:
+              t = t[:pos] + block + t[pos:]
+          lines = t.splitlines()
+          stamp = datetime.now(ZoneInfo('America/Toronto')).strftime('%Y-%m-%d %H:%M America/Toronto')
+          for i, line in enumerate(lines):
+              if line.startswith('Updated: '):
+                  lines[i] = f'Updated: {stamp}'
+                  break
+          p.write_text('\n'.join(lines) + '\n', encoding='utf-8')
+          PY
+      - name: Commit checkpoint
+        shell: bash
+        run: |
+          set -euo pipefail
+          git config user.name 'dadrockyt-sys'
+          git config user.email 'Stephen.s.mcnally@gmail.com'
+          git add docs/checkpoints/SONGSTERR_FRESH_PIPELINE_CURRENT_STATE.md
+          git commit -m 'docs: record low-cost Policy C authority path'
+          git push origin HEAD:songsterr-fresh-pipeline-v1
