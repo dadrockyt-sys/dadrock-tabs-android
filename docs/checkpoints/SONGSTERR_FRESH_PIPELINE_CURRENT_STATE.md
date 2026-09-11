@@ -89,57 +89,14 @@ V3 was preregistered before any GuitarSet correctness result:
 - provenance-complete method commit `1792739fa30c9304d37e94066794a38898dc98aa`
 - frozen official execution source `783c3b572aff4edd9d6298e9131dffd02454a61e`.
 
-### Locked V3 corpus / gates
-
-Dataset: GuitarSet v1.1.0, DOI `10.5281/zenodo.3371780`.
-
-Verified archives:
-- `annotation.zip` MD5 `b39b78e63d3446f2e54ddb7a54df9b10`
-- `audio_mono-mic.zip` MD5 `275966d6610ac34999b58426beb119c3`.
-
-Preregistered exclusions only:
-- `02_Funk2-119-G_comp`
-- `04_BN3-154-E_comp`
-- `04_Jazz1-200-B_comp`.
-
-Locked evaluation = all other 357 tracks.
-
-Frozen V3-positive definition = unchanged V2 `independently-corroborated-candidate` on Basic Pitch events from the isolated GuitarSet microphone audio.
-
-Matching = one-to-one maximum-cardinality against union of six GuitarSet `note_midi` annotations with onset difference `<=0.050 s`, pitch difference `<=50 cents`, offsets ignored.
-
-Frozen gates required all of:
-1. exact dataset/archive/exclusion contract
-2. 357/357 tracks complete
-3. >=1,000 positives
-4. pooled positive precision one-sided 95% Wilson lower bound `>=0.9900`
-5. each player `00..05` >=50 positives and precision `>=0.9500`
-6. both `comp` and `solo` >=50 positives and precision `>=0.9500`
-7. event identity preserved and all non-promotion guards false/zero.
-
-### V3 execution
-
-First launch failed before any inference/correctness result: the harness dereferenced the venv Python symlink to system Python and the first Basic Pitch child failed with `ModuleNotFoundError: No module named 'numpy'`. Zero completed inference JSONs existed from that launch.
-
-The valid run used a regular-file copy of the same pinned Python executable inside the same pinned venv; repository source and every substantive V3 method/gate remained unchanged.
-
-Valid execution provenance:
-- branch `songsterr-fresh-pipeline-v1`
-- source `783c3b572aff4edd9d6298e9131dffd02454a61e`
-- worktree clean
-- Python `3.10.21`
-- Basic Pitch `0.4.0`
-- NumPy `1.26.4`
-- SoundFile `0.13.1`
-- 357/357 tracks completed.
-
-Frozen result:
-- decoded events: **62,438**
-- V3-positive: **11,252**
-- correct V3-positive: **10,019**
-- precision: **0.8904194809811589**
-- one-sided 95% Wilson lower bound: **0.8854816094599652**
-- required lower bound: **0.9900** → FAIL
+Locked V3 external result:
+- GuitarSet v1.1.0, 357 locked tracks after exactly three preregistered public-data exclusions
+- 62,438 decoded events
+- 11,252 V3-positive
+- 10,019 correct V3-positive
+- precision `0.8904194809811589`
+- one-sided 95% Wilson lower bound `0.8854816094599652`
+- required lower bound `0.9900` → FAIL
 - every player `00..05` failed point precision `>=0.9500`
 - `comp` precision `0.8441590516176833` → FAIL
 - `solo` precision `0.9164237123420796` → FAIL.
@@ -148,49 +105,67 @@ Artifact hashes:
 - outer official result SHA-256 `e6edd37e72f24bef069d16b4accb48423b9472fe26eb90adee15e401e5b4196d`
 - core result SHA-256 `9a2d103cfbe6f9c3bd8b7903c665affa41729ec2da7f303a5b1c416a2a532e4e`.
 
-Immutable result record:
+Immutable result:
 - `docs/checkpoints/SONGSTERR_FRESH_EXTERNAL_GUITARSET_VALIDATION_V3_RESULT.md`
 - commit `91b021f6b3f43cee73dc58d1aebf29492a547928`.
 
-Separate policy review:
+Policy review:
 - `docs/checkpoints/SONGSTERR_FRESH_EXTERNAL_GUITARSET_VALIDATION_V3_POLICY_REVIEW.md`
 - commit `3b8159be0898a71b33069f94a4ca4d1ada0a7047`
-- decision: **CLOSED / REJECTED AS ADMISSION AUTHORITY / RETAINED AS RESEARCH DIAGNOSTIC**.
+- **CLOSED / REJECTED AS ADMISSION AUTHORITY / RETAINED AS RESEARCH DIAGNOSTIC**.
 
-No V3 gate may be relaxed or tuned after this result. Do not add exclusions, lower thresholds, reinterpret the 89% precision as sufficient, or use historical protected-song behavior to override the external result.
+No V3 gate may be relaxed or tuned. GuitarSet is historical after V3 and MUST NOT be reused as a V4 pass/fail corpus. No protected-song V3 execution occurred.
 
-No protected-song V3 execution occurred and none is authorized from this failed V3 result.
+## V4 — ACTIVE / FROZEN SYNTHETIC-ONLY SUCCESSOR
 
-## V4 — ACTIVE / PREREGISTERED SYNTHETIC-ONLY SUCCESSOR
+User explicitly authorized the V4 successor after V3 closeout.
 
-User explicitly authorized a successor after V3 closeout.
-
-Preregistration:
+Operative preregistration:
 - `docs/checkpoints/SONGSTERR_FRESH_MODEL_EVIDENCE_ADMISSION_PREREGISTRATION_V4.md`
-- commit `a5cec402cf3bcd6c28ac3339d4d00de4d8cdf8b2`
-- status: **preregistered; not admission authority**.
+- initial prereg commit `a5cec402cf3bcd6c28ac3339d4d00de4d8cdf8b2`
+- pre-implementation synthetic-only amendment `30b2769772d0a2a2edeaa8e92bff66ce3518fede`.
 
-V4 is a new temporal-consensus signal test, not a V3 patch. It may use only the qualitative historical fact that earlier candidates failed admission. It MUST NOT use V3 event-level/per-track errors, player/mode differences, protected-song outcomes, or any threshold sweep.
+The amendment replaced the initially proposed plain real-cepstrum view after a generated E2 fixture exposed octave/harmonic aliasing. This occurred before implementation and before any external/protected correctness result. The operative second view is standard YIN.
 
-Frozen V4 core contract before implementation:
-- isolated mono guitar audio only, exactly 44100 Hz;
-- existing `sourceStart` and integer `selectedMidi` only;
-- playable/full competitor range MIDI `40..88` in every view;
-- three exact 8192-sample post-onset windows beginning at relative offsets `1024`, `7168`, `13312` samples;
-- spectral view: coherent harmonic score using up to harmonics 1..6 and a 32768-point FFT;
-- periodicity view: real cepstrum from the same window/spectrum;
-- selected MIDI must be strict unique winner in spectral + cepstral views for **all three** windows;
-- no score-margin threshold, voting, fallback, confidence, duration, next-onset, activation, decision-surface, reference, performer/style identity, or event deletion;
-- invalid/truncated/zero-energy required view => `insufficient-evidence`;
-- otherwise any non-unanimity => `not-independently-corroborated`.
+Frozen implementation:
+- `scripts/songsterr-fresh/independent_pitch_corroboration_v4.py`
+- commit `6e9e11e60d0d6958c30edf6bb5d686d545936a19`
+- contract `songsterr-fresh-temporal-consensus-pitch-corroboration-research-v4`.
 
-V4 development is synthetic-only. GuitarSet is historical and MUST NOT be reused as V4 pass/fail validation.
+Focused CI:
+- `.github/workflows/songsterr-fresh-temporal-consensus-v4-ci.yml`
+- workflow commit `736872e8fdf922c3975eda833ebd9616692bbd65`.
 
-Potential future untouched validation candidate, metadata only:
+Frozen method record:
+- `docs/checkpoints/SONGSTERR_FRESH_TEMPORAL_CONSENSUS_V4.md`
+- method commit `1f4e42a53d74d1ef6bec85a00546d7196f021135`.
+
+V4 fixed method:
+- isolated mono guitar audio only; exactly 44100 Hz;
+- existing `sourceStart` + integer `selectedMidi` only;
+- full playable MIDI `40..88` spectral competition;
+- three exact 8192-sample windows at onset-relative offsets `1024`, `7168`, `13312`;
+- spectral view: Hanning 8192, rFFT 32768, semitone-cell fundamental, coherent harmonics 1..6, log-mean score, strict unique global winner;
+- YIN view: `librosa==0.11.0`, frame/hop 8192, center false, fmin MIDI 39.5, fmax MIDI 88.5, trough threshold 0.1, winner by equal-tempered semitone cell;
+- selected MIDI must win both decisions in all three windows;
+- no voting, fallback, margin threshold, confidence, duration, next onset, activation, decision surface, reference, performer/style identity, or event deletion;
+- invalid/nonfinite/truncated/zero-energy/YIN-invalid required view => insufficient;
+- otherwise any disagreement => not independently corroborated.
+
+Controlled synthetic CI:
+- run `34653819306`, job `103441756944`, source `736872e8fdf922c3975eda833ebd9616692bbd65`: **SUCCESS**;
+- final documentation-complete freeze run `34653917007`, job `103442054828`, exact source `1f4e42a53d74d1ef6bec85a00546d7196f021135`: **SUCCESS**.
+
+Green contract coverage includes stable low/mid/high pitches, +25-cent detune, attack noise, wrong octave, stronger adjacent/fifth/polyphonic competitors, temporal pitch change, zero audio, truncation, strict tie rejection, full MIDI competition, evidence identity preservation, duration rejection, and all policy guards false/zero.
+
+No GuitarSet, IDMT, or protected-song V4 correctness result has been produced. Controlled CI explicitly remained synthetic-only.
+
+Untouched candidate external corpus metadata only:
 - IDMT-SMT-Guitar Dataset, Zenodo v1.0.0, DOI `10.5281/zenodo.7544110`;
-- archive `IDMT-SMT-GUITAR_V2.zip`, MD5 `06796e08731bccffaed6ae59361486e4`.
+- archive `IDMT-SMT-GUITAR_V2.zip`, MD5 `06796e08731bccffaed6ae59361486e4`;
+- public documentation describes mono 44100-Hz guitar audio and XML note-event annotations.
 
-**Holdout scoring remains closed.** The V4 preregistration does not authorize downloading/scoring IDMT. Before any such execution, a separate versioned external-validation preregistration and explicit user reopening of holdout evaluation are required.
+**Holdout scoring remains closed.** V4 is frozen at the pre-external-validation boundary. Do not download/infer/score IDMT until the user explicitly reopens holdout/external validation and a separate versioned validation preregistration freezes exact subsets/files, manifest, XML interpretation, matching, sample-size/uncertainty gates and execution provenance before any correctness result.
 
 ## CURRENT ACCEPTANCE STATE
 
@@ -206,33 +181,38 @@ Current authority state:
 
 Active blockers:
 - model-evidence admission remains unresolved after V3 external-validation failure
-- V4 has no real-world validation authority
+- V4 has synthetic contract evidence only and no real-world validation authority
+- external/holdout validation is not reopened
 - `DURATION_EVIDENCE_INCOMPLETE`.
 
-No reference scorer/tab/archive logic. No GOAT. No threshold sweep. No training/fine-tuning. No promotion from hashes, reproducibility, confidence, event counts, synthetic-suite success, C-S agreement, historical protected-song results, or an external result that failed frozen gates.
+No reference scorer/tab/archive logic. No GOAT. No threshold sweep. No training/fine-tuning. No promotion from hashes, reproducibility, confidence, event counts, synthetic-suite success, C-S agreement, historical protected-song results, or failed external results.
 
 ## NEXT ALLOWED WORK
 
-1. Implement the preregistered V4 temporal-consensus evaluator under `scripts/songsterr-fresh/`.
-2. Add deterministic synthetic/contract self-tests only.
-3. Add focused CI that cannot download/evaluate GuitarSet, IDMT, or the protected song.
-4. Freeze V4 implementation/method after green controlled CI.
-5. Stop before any real external-corpus scoring unless holdout evaluation is explicitly reopened.
+V4 implementation/method/controlled CI are frozen and green. Under the current scope, the next external correctness step is intentionally blocked.
 
-During V4 synthetic development:
-- do not rerun GuitarSet V3;
-- do not run the protected song;
-- do not resume duration;
-- do not reopen archived V143/Gomyway, GOAT, reference scoring, threshold sweeps, or training/fine-tuning.
+Allowed without reopening holdout:
+- documentation-only maintenance;
+- inspect public IDMT documentation/metadata without downloading/scoring audio;
+- design a future versioned external-validation preregistration, but do not execute it.
+
+Requires explicit user reopening of holdout/external validation:
+- download/inventory the IDMT archive;
+- run Basic Pitch/V4 on IDMT;
+- compute any real correctness metric or pass/fail result.
+
+Still forbidden:
+- rerun GuitarSet V3 for tuning;
+- run the protected song;
+- resume duration;
+- reopen archived V143/Gomyway, GOAT, reference scoring, threshold sweeps, or training/fine-tuning.
 
 ## STABLE REFERENCES
 
 - canonical current state: `SONGSTERR_FRESH_PIPELINE_CURRENT_STATE.md`
 - V4 prereg: `SONGSTERR_FRESH_MODEL_EVIDENCE_ADMISSION_PREREGISTRATION_V4.md`
-- V3 prereg: `SONGSTERR_FRESH_MODEL_EVIDENCE_ADMISSION_PREREGISTRATION_V3.md`
-- V3 method: `SONGSTERR_FRESH_EXTERNAL_GUITARSET_VALIDATION_V3.md`
-- V3 immutable result: `SONGSTERR_FRESH_EXTERNAL_GUITARSET_VALIDATION_V3_RESULT.md`
-- V3 policy review: `SONGSTERR_FRESH_EXTERNAL_GUITARSET_VALIDATION_V3_POLICY_REVIEW.md`
+- V4 method: `SONGSTERR_FRESH_TEMPORAL_CONSENSUS_V4.md`
+- V3 prereg/method/result/policy review remain frozen historical references
 - V2 prereg/method/result/policy review remain frozen historical references
 - Policy C-S runbook: `SONGSTERR_FRESH_CODESPACES_SESSION_AUTHORITY.md`
 - GOAT closeout: `SONGSTERR_FRESH_GOAT_RESEARCH_CLOSED_REFERENCE_ONLY.md`.
