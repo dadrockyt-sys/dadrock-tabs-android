@@ -1,6 +1,6 @@
 # CURRENT STATE — Songsterr Fresh Pipeline V1
 
-Updated: 2026-09-10 21:21 America/Toronto
+Updated: 2026-09-10 21:22 America/Toronto
 Canonical branch: `songsterr-fresh-pipeline-v1`
 Canonical checkpoint: `docs/checkpoints/SONGSTERR_FRESH_PIPELINE_CURRENT_STATE.md`
 
@@ -187,6 +187,7 @@ Decision-enabled real model canary — COMPLETED GREEN:
 - At the unmatched MIDI-55 frame, B's captured effective onset is `0.5000237822532654` with threshold margin `2.378225326538086e-05`; A/C is `0.49999192357063293` with margin `-8.07642936706543e-06`. Both are strict local peaks. This observed sample toggles on the threshold-onset path; these margins are descriptive only and are not admission tolerances.
 - Tracer focused CI wiring commit `b5a625a4ce12f530af2a63a0e52c5c8728fa9fef` failed in run `34547372731`, job `103102811353` because the synthetic intended-melodia activation `0.7` scaled to inferred onset about `0.7875`, so it entered the threshold-onset pass. The synthetic fixture only is now `0.4`, which remains above frame threshold `0.3` while inferred onset is about `0.45`, below onset threshold `0.5`. No model, production threshold, admission, or duration setting changed.
 - Repaired tracer self-test passed in helper run `34550328840`. Exact replay against captured sidecars: A PASS eventCount=1138 mechanisms={'melodia-residual-pass': 128, 'threshold-onset-pass': 1010} target55=none; B PASS eventCount=1139 mechanisms={'melodia-residual-pass': 128, 'threshold-onset-pass': 1011} target55=threshold-onset-pass; C PASS eventCount=1138 mechanisms={'melodia-residual-pass': 128, 'threshold-onset-pass': 1010} target55=none. Decoder labels are trusted only where exact replay succeeded.
+- Official focused variation-test CI for tracer-fix commit `ab87287d1d951fcd9988d9d4c017b7a765660cb0`: run `34550351149`, conclusion `success`, jobs `103111767249:success`.
 - `modelValidationComplete` remains false; customer-eligible events remain 0; duration research remains paused.
 
 ## CURRENT ACCEPTANCE STATE
