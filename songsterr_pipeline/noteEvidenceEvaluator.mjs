@@ -160,6 +160,8 @@ export function evaluateNoteEvidence(evidence = {}) {
       descriptiveInventoryContract: inventory.contract.name,
       compositeScoreDefined: false,
       compositeScore: null,
+      candidateConfidenceUsedForAcceptance: false,
+      candidateConfidenceDiagnosticsOnly: true,
       referenceBlind: true,
       legacyV143ScorerImported: false,
       executionAuthorizationOutOfScope: true,
