@@ -160,12 +160,24 @@ Green contract coverage includes stable low/mid/high pitches, +25-cent detune, a
 
 No GuitarSet, IDMT, or protected-song V4 correctness result has been produced. Controlled CI explicitly remained synthetic-only.
 
-Untouched candidate external corpus metadata only:
-- IDMT-SMT-Guitar Dataset, Zenodo v1.0.0, DOI `10.5281/zenodo.7544110`;
-- archive `IDMT-SMT-GUITAR_V2.zip`, MD5 `06796e08731bccffaed6ae59361486e4`;
-- public documentation describes mono 44100-Hz guitar audio and XML note-event annotations.
+### IDMT metadata-only planning
 
-**Holdout scoring remains closed.** V4 is frozen at the pre-external-validation boundary. Do not download/infer/score IDMT until the user explicitly reopens holdout/external validation and a separate versioned validation preregistration freezes exact subsets/files, manifest, XML interpretation, matching, sample-size/uncertainty gates and execution provenance before any correctness result.
+Metadata planning record:
+- `docs/checkpoints/SONGSTERR_FRESH_IDMT_V4_EXTERNAL_VALIDATION_METADATA_PLAN.md`
+- commit `625a29d04e26fd312c0294fe91bd446a04fdde85`
+- status: **planning only; not an external-validation preregistration**.
+
+Public authoritative metadata currently records:
+- IDMT-SMT-Guitar Dataset, Zenodo v1.0.0, DOI `10.5281/zenodo.7544110`;
+- archive `IDMT-SMT-GUITAR_V2.zip`, approximately 1.3 GB, MD5 `06796e08731bccffaed6ae59361486e4`;
+- Fraunhofer describes one-channel RIFF WAVE audio at 44100 Hz and seven guitars in standard tuning;
+- Fraunhofer states the dataset is provided for evaluation under CC BY-NC-ND 4.0;
+- subsets 1 and 2 use XML parameter annotations, subset 3 has an XML parameter annotation per file, and subset 4 is oriented to chord recognition/rhythm-style estimation;
+- the Zenodo archive preview visibly pairs XML/WAV filenames in `dataset1`, but explicitly warns that it does not show all files.
+
+Therefore exact future file counts, subset membership, XML field semantics, exclusions and evaluation population remain deliberately unresolved. The metadata record provisionally identifies subsets 1–3 as possible note-level validation candidates and does not assume subset 4 is eligible for V4 pitch/onset validation.
+
+**Holdout scoring remains closed.** V4 is frozen at the pre-external-validation boundary. Do not download/infer/score IDMT until the user explicitly reopens holdout/external validation and a separate versioned validation preregistration freezes exact subsets/files, archive manifest, XML interpretation, matching, sample-size/uncertainty gates and execution provenance before any correctness result.
 
 ## CURRENT ACCEPTANCE STATE
 
@@ -194,10 +206,11 @@ V4 implementation/method/controlled CI are frozen and green. Under the current s
 Allowed without reopening holdout:
 - documentation-only maintenance;
 - inspect public IDMT documentation/metadata without downloading/scoring audio;
-- design a future versioned external-validation preregistration, but do not execute it.
+- refine the future versioned external-validation preregistration on public metadata only, but do not execute it.
 
 Requires explicit user reopening of holdout/external validation:
 - download/inventory the IDMT archive;
+- parse the archive for a locked file manifest beyond the incomplete public preview;
 - run Basic Pitch/V4 on IDMT;
 - compute any real correctness metric or pass/fail result.
 
@@ -212,6 +225,7 @@ Still forbidden:
 - canonical current state: `SONGSTERR_FRESH_PIPELINE_CURRENT_STATE.md`
 - V4 prereg: `SONGSTERR_FRESH_MODEL_EVIDENCE_ADMISSION_PREREGISTRATION_V4.md`
 - V4 method: `SONGSTERR_FRESH_TEMPORAL_CONSENSUS_V4.md`
+- V4 IDMT metadata plan: `SONGSTERR_FRESH_IDMT_V4_EXTERNAL_VALIDATION_METADATA_PLAN.md`
 - V3 prereg/method/result/policy review remain frozen historical references
 - V2 prereg/method/result/policy review remain frozen historical references
 - Policy C-S runbook: `SONGSTERR_FRESH_CODESPACES_SESSION_AUTHORITY.md`
