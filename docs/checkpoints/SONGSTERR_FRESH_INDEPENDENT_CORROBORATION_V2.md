@@ -88,7 +88,7 @@ The evaluator regenerates every fixture and requires the exact committed SHA-256
 
 The canonical fixture-generation environment for CI is Python 3.10 with NumPy `1.26.4` and SoundFile `0.13.1`, matching the frozen lightweight V2 workflow dependencies. Exact PCM fixture identities must be frozen from that environment; a hash produced by a different NumPy/libm environment is not accepted as the canonical fixture identity.
 
-## Controlled verification already performed before CI wiring
+## Controlled verification before hosted CI
 
 Local controlled-only checks passed before CI was added:
 - Python compile;
@@ -101,19 +101,39 @@ Local controlled-only checks passed before CI was added:
 
 No authorized-song evaluation was performed during these checks.
 
-## First focused CI integration result
+## Hosted controlled CI history
 
-Focused run `34622138929`, job `103338450038`, compiled the V2 evaluator successfully but stopped at exact fixture identity verification: `attack_noise_m64` differed from the initially committed hash. This is an environment/fixture-freeze integration mismatch, not a classification/scoring failure: the initial manifest was generated in a newer local NumPy environment while CI intentionally uses NumPy `1.26.4`.
+Focused run `34622138929`, job `103338450038`, compiled the V2 evaluator successfully but stopped at exact fixture identity verification because the initially committed fixture hashes came from a newer local NumPy/Python runtime rather than the workflow's pinned runtime. This was an environment/fixture-freeze integration mismatch, not a classification/scoring failure.
 
-The scoring method, fixture signal definitions, expected 6/7/2 class labels, preregistered constants, and promotion guards were not changed in response. CI instrumentation was extended to emit all generated fixture identities under the pinned Python 3.10 / NumPy 1.26.4 environment so the exact canonical PCM identities can be corrected once, before controlled classification assertions proceed.
+Run `34622342886`, job `103339112223`, emitted the exact fixture identities under Python 3.10 / NumPy `1.26.4` / SoundFile `0.13.1`. The manifest was then corrected to those pinned-runtime identities only. The scoring method, fixture signal definitions, expected class labels, preregistered constants, and promotion guards were not changed.
+
+Canonical pinned-runtime fixture identity commit:
+- `b1e478bfc1cb185193f3226e35e1c11841b659a2`
+
+Focused run `34622465693`, job `103339500987`, on that source commit completed **SUCCESS**. It proved:
+- exact regeneration of all 15 PCM16 fixture identities;
+- all 15 expected classifications: 6 corroborated / 7 not corroborated / 2 insufficient;
+- strict equality fails unique-best and strict `>` wins;
+- FFT linear-autocorrelation implementation agrees with direct positive-lag dot products within the fixed CI tolerance;
+- duration-bearing evidence is rejected;
+- fixed-window overrun returns `insufficient-evidence` rather than borrowing timing information;
+- event onset/MIDI identity is preserved;
+- all non-promotion guards remain false/zero;
+- the authorized song was not evaluated by V2 CI.
+
+The controlled V2 research implementation is therefore frozen and green for its preregistered synthetic/contract boundary. This is not evidence that V2 is correct on the authorized song and is not admission authority.
+
+## Policy C-S boundary after controlled CI
+
+The next permissible execution step is a **new** Policy C-S Codespaces epoch. Historical epochs may not be reused.
+
+The new epoch must bind a clean exact branch commit, the hardened compute/toolchain fingerprint, the current Codespaces boot binding, Linux x64 runtime, and required CPU/RAM surface, then pass exactly three same-session qualification canaries. Hosted GitHub Actions cannot substitute for this Codespaces session authority because they do not satisfy the C-S boot/session identity contract.
+
+No V2 authorized-song evaluation may occur until that new epoch is enrolled and all three canaries aggregate exactly.
 
 ## Promotion / execution boundary
 
-Hosted CI may run only controlled fixtures and contract tests. It must not evaluate the authorized song.
-
-Authorized-song evaluation requires a new Policy C-S epoch enrolled and three-canary qualified on the exact frozen V2 source commit after controlled CI is green.
-
-Even a successful future authorized-song V2 research run does not automatically set customer eligibility. A separate explicit policy review is mandatory.
+Even a successful future C-S qualification and authorized-song V2 research run does not automatically set customer eligibility. A separate explicit policy review is mandatory.
 
 Until such a review:
 - `modelValidationComplete:false`
