@@ -18,10 +18,12 @@ on:
       - 'scripts/songsterr-fresh/verify_pinned_compute_authority.py'
       - 'scripts/songsterr-fresh/build_pinned_compute_authority_canary.py'
       - 'scripts/songsterr-fresh/aggregate_pinned_compute_authority_canaries.py'
+      - 'scripts/songsterr-fresh/bootstrap_pinned_compute_authority.sh'
       - 'scripts/songsterr-fresh/test_candidate_confidence_diagnostic_only.mjs'
       - 'songsterr_pipeline/noteEvidenceEvaluator.mjs'
       - 'songsterr_pipeline/noteEvidenceDiagnostics.mjs'
       - '.github/workflows/songsterr-fresh-model-evidence-variation-tests.yml'
+      - '.github/workflows/songsterr-fresh-pinned-compute-authority.yml'
 
 permissions:
   contents: read
@@ -51,7 +53,7 @@ jobs:
       - name: Install pinned array dependency for decision-surface self-test
         run: python -m pip install --disable-pip-version-check numpy==1.26.4
 
-      - name: Compile cross-run measurement contracts
+      - name: Compile and parse fresh authority contracts
         run: |
           python -m py_compile scripts/songsterr-fresh/compare_basic_pitch_cross_run_evidence.py
           python -m py_compile scripts/songsterr-fresh/aggregate_basic_pitch_cross_run_measurements.py
@@ -64,6 +66,7 @@ jobs:
           python -m py_compile scripts/songsterr-fresh/verify_pinned_compute_authority.py
           python -m py_compile scripts/songsterr-fresh/build_pinned_compute_authority_canary.py
           python -m py_compile scripts/songsterr-fresh/aggregate_pinned_compute_authority_canaries.py
+          bash -n scripts/songsterr-fresh/bootstrap_pinned_compute_authority.sh
 
       - name: Prove pair measurement contract is reference-blind and fail-closed
         run: python scripts/songsterr-fresh/compare_basic_pitch_cross_run_evidence.py --self-test
