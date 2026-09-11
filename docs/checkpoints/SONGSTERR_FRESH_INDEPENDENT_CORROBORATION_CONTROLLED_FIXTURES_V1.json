@@ -1,0 +1,115 @@
+{
+  "authorizedSongUsed": false,
+  "contract": "songsterr-fresh-independent-pitch-corroboration-fixtures-v1",
+  "encoding": "mono-pcm16-little-endian-wav",
+  "fixedSeed": {
+    "lowNoise": 2468
+  },
+  "fixtures": [
+    {
+      "channels": 1,
+      "expectedClassification": "independently-corroborated-candidate",
+      "family": "monophonic-plucked-like-low",
+      "name": "mono_low_m40",
+      "pcm16WavSha256": "0c6e9db149dfd3a9b8ec38a1a942f40953f3f3722512a28ff8c2e07d7de52f11",
+      "sampleCount": 8192,
+      "sampleRate": 44100,
+      "selectedMidi": 40
+    },
+    {
+      "channels": 1,
+      "expectedClassification": "independently-corroborated-candidate",
+      "family": "monophonic-plucked-like-mid",
+      "name": "mono_mid_m64",
+      "pcm16WavSha256": "ac1191b1c8d062688cf021081b371fb0ff4f5e7d1635aaa734307ed85914a0e1",
+      "sampleCount": 8192,
+      "sampleRate": 44100,
+      "selectedMidi": 64
+    },
+    {
+      "channels": 1,
+      "expectedClassification": "independently-corroborated-candidate",
+      "family": "monophonic-plucked-like-high",
+      "name": "mono_high_m88",
+      "pcm16WavSha256": "fbcf29d1e7b4f65ed946fd66357fcef95b766d6869fa04bb01af30b7f8a0e13b",
+      "sampleCount": 8192,
+      "sampleRate": 44100,
+      "selectedMidi": 88
+    },
+    {
+      "channels": 1,
+      "expectedClassification": "not-independently-corroborated",
+      "family": "octave-confusion-strong-second-harmonic",
+      "name": "octave_confusion_m52",
+      "pcm16WavSha256": "96a5d0a2df0cfa7ffa8f4f7b18d46ae85eb82da17a1bba98a64c85427be08db0",
+      "sampleCount": 8192,
+      "sampleRate": 44100,
+      "selectedMidi": 52
+    },
+    {
+      "channels": 1,
+      "expectedClassification": "not-independently-corroborated",
+      "family": "neighboring-semitone-adversarial",
+      "name": "semitone_adversarial_m60",
+      "pcm16WavSha256": "a3939e0ef6acb2dc615d6265b40928a085ab373861407cb89940d78715e69c28",
+      "sampleCount": 8192,
+      "sampleRate": 44100,
+      "selectedMidi": 60
+    },
+    {
+      "channels": 1,
+      "expectedClassification": "not-independently-corroborated",
+      "family": "polyphonic-dyad-close-semitone",
+      "name": "dyad_close_m60",
+      "pcm16WavSha256": "a6af0aa975f035cd36422c31933fc75d7a078ace563f85da0f51aa6adf0bb4d0",
+      "sampleCount": 8192,
+      "sampleRate": 44100,
+      "selectedMidi": 60
+    },
+    {
+      "channels": 1,
+      "expectedClassification": "not-independently-corroborated",
+      "family": "polyphonic-triad-semitone-cluster",
+      "name": "triad_cluster_m60",
+      "pcm16WavSha256": "2f7fa24ec0df63e42328985d66f650ed3bccc208e69b6a3d6da83b04035e2ac4",
+      "sampleCount": 8192,
+      "sampleRate": 44100,
+      "selectedMidi": 60
+    },
+    {
+      "channels": 1,
+      "expectedClassification": "insufficient-evidence",
+      "family": "insufficient-support-silence",
+      "name": "silence_m60",
+      "pcm16WavSha256": "8f2adfe8f7e94e6965294022b7b2f274dcc75ae8e8a1747ea6996953d3f233ce",
+      "sampleCount": 8192,
+      "sampleRate": 44100,
+      "selectedMidi": 60
+    },
+    {
+      "channels": 1,
+      "expectedClassification": "insufficient-evidence",
+      "family": "insufficient-support-fixed-low-noise",
+      "name": "low_noise_m60",
+      "pcm16WavSha256": "ae28dc4869201fafc842051af64d199e919663ba5e941810a99e9d13e0cc03e4",
+      "sampleCount": 8192,
+      "sampleRate": 44100,
+      "selectedMidi": 60
+    }
+  ],
+  "policyBoundary": {
+    "admissionDecisionMade": false,
+    "authorizedSongEvaluated": false,
+    "customerEligibleEvents": 0,
+    "durationAuthorityChanged": false,
+    "legacyV143ScorerImported": false,
+    "mayAdvanceDelivery": false,
+    "modelValidationComplete": false,
+    "professionalScorerUsed": false,
+    "referenceTabUsed": false
+  },
+  "referenceBlind": true,
+  "sampleCount": 8192,
+  "sampleRate": 44100,
+  "version": 1
+}
