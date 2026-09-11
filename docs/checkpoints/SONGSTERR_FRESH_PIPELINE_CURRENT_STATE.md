@@ -1,6 +1,6 @@
 # CURRENT STATE — Songsterr Fresh Pipeline V1
 
-Updated: 2026-09-11 12:15 America/Toronto
+Updated: 2026-09-11 12:32 America/Toronto
 Canonical branch: `songsterr-fresh-pipeline-v1`
 Canonical checkpoint: `docs/checkpoints/SONGSTERR_FRESH_PIPELINE_CURRENT_STATE.md`
 
@@ -11,12 +11,12 @@ This is the canonical current-state checkpoint for the active fresh workstream. 
 - Work only on `songsterr-fresh-pipeline-v1`; do not change `main` or Production.
 - Do not resume archived V143/Gomyway implementation, reference tabs, reference/professional scorer logic, holdout scoring, GOAT research, training/fine-tuning, or broad optimizer/ISA sweeps unless the user explicitly reopens that workstream.
 - The `gomyway` filename authorizes the exact audio fixture only; it does not authorize the archived pipeline.
-- GOAT research is CLOSED / REFERENCE ONLY. No restricted GOAT data was obtained or imported, and no attempt may be made to bypass the denied access.
+- GOAT research is CLOSED / REFERENCE ONLY.
 - `songsterr_pipeline/` stays deterministic/model-free/process-free/network-free; model/DSP execution stays in `scripts/songsterr-fresh/`.
 - Frozen full-mixture structure precedes note inference and cannot be rewritten downstream.
-- Never silently change/drop MIDI/event identity. Raw sequential Basic Pitch indices are not cross-run identity.
+- Never silently change/drop MIDI/event identity.
 - Preserve `/ai-tab`: audio upload → AI analysis → analyzer metadata/events → preview PDF → unlock → full PDF → browser/email.
-- Duration research remains paused while upstream model-evidence validation is unresolved. Ignore unrelated duration/V3 workflow activity as authority for this workstream.
+- Duration research remains paused while upstream model-evidence validation is unresolved.
 
 ## AUTHORIZED FIXTURE / FROZEN STRUCTURE
 
@@ -29,7 +29,7 @@ Authorized audio fixture only:
 - canonical structure length `19653`
 - 4/4; first downbeat ~`0.65016 s`; 115 measures; 113 tempo segments
 
-The filename/fixture does not authorize any archived V143/Gomyway scoring or implementation logic.
+The filename/fixture does not authorize archived V143/Gomyway scoring or implementation logic.
 
 ## FIXED MODEL PATH / DURATION STATE
 
@@ -37,7 +37,7 @@ Architecture remains:
 
 frozen full-mixture structure → Demucs guitar isolation → Basic Pitch pitch/onset inference → duration-free model evidence boundary → independent model-evidence validation → dedicated release authority
 
-Pinned model behavior remains unchanged. Demucs is `htdemucs_6s`; Basic Pitch is `0.4.0`; model asset authority remains `verify_demucs_model_asset.py`. Basic Pitch is not ground truth and candidate note-span amplitude/confidence remains diagnostic-only.
+Pinned model behavior remains unchanged. Demucs is `htdemucs_6s`; Basic Pitch is `0.4.0`; Basic Pitch is not ground truth.
 
 Duration remains unchanged and paused:
 - V2 authoritative: `estimate_selected_pitch_releases.py`, contract `songsterr-fresh-cpu-spectral-release-evidence-v2`.
@@ -46,9 +46,9 @@ Duration remains unchanged and paused:
 
 ## HOSTED REPRODUCIBILITY / POLICY B
 
-Hosted measurements established real cross-run numerical/semantic variation in Demucs → Basic Pitch output. Exact hashes, CPU/vendor associations, historical frequency, event count, confidence, and downstream agreement remain diagnostics only.
+Hosted measurements established real cross-run numerical/semantic variation in Demucs → Basic Pitch output. Exact hashes, CPU/vendor associations, historical frequency, event count, confidence, downstream agreement, or finite unanimity remain diagnostics only and do not establish correctness.
 
-No independently justified end-to-end numerical admission bound was found, the observed threshold-boundary variation may not be converted into a fitted tolerance, and finite repeated-run/unanimity consensus is not a proof of correctness. Policy B therefore has no justified customer-admission contract for threshold-boundary semantic inventory toggles.
+No independently justified end-to-end numerical admission bound was found. Policy B therefore has no justified customer-admission contract for threshold-boundary semantic inventory toggles.
 
 ## POLICY C / POLICY C-S
 
@@ -62,68 +62,92 @@ Reproducibility does not imply model correctness.
 
 ## INDEPENDENT CORROBORATION V1 — CLOSED AS ADMISSION AUTHORITY
 
-V1 is frozen as research diagnostic only.
+V1 is frozen as research diagnostic only and was rejected as customer-admission authority.
 
-Stable records:
+Historical authorized-song research result: 471 corroborated / 667 not corroborated / 2 insufficient across 1,140 events.
+
+The historical MIDI-55 (~46.2024095 s) and MIDI-64 (~79.6261406 s) events are retrospective stress diagnostics only and may not tune V2.
+
+Stable V1 records remain:
 - `SONGSTERR_FRESH_MODEL_EVIDENCE_ADMISSION_PREREGISTRATION_V1.md`
 - `SONGSTERR_FRESH_INDEPENDENT_CORROBORATION_V1.md`
 - `SONGSTERR_FRESH_INDEPENDENT_CORROBORATION_CONTROLLED_FIXTURES_V1.json`
 - `SONGSTERR_FRESH_INDEPENDENT_CORROBORATION_V1_AUTHORIZED_SONG_RESULT.md`
 - `SONGSTERR_FRESH_INDEPENDENT_CORROBORATION_V1_POLICY_REVIEW.md`
 
-Historical V1 authorized-song research result: 471 corroborated / 667 not corroborated / 2 insufficient across 1,140 events. V1 was rejected as customer-admission authority.
-
-The historical MIDI-55 (~46.2024095 s) and MIDI-64 (~79.6261406 s) events are retrospective stress diagnostics only. They may not tune V2.
-
-## INDEPENDENT CORROBORATION V2 — PREREGISTERED / IMPLEMENTED / CONTROLLED CI PENDING
+## INDEPENDENT CORROBORATION V2 — PREREGISTERED / IMPLEMENTED / CONTROLLED CI GREEN
 
 Preregistration:
 - `docs/checkpoints/SONGSTERR_FRESH_MODEL_EVIDENCE_ADMISSION_PREREGISTRATION_V2.md`
 - commit `64b4e7fca64b09dc124f991a170caafcb5988d0b`
 
-Evaluator implementation:
+Evaluator:
 - `scripts/songsterr-fresh/independent_pitch_corroboration_v2.py`
-- commit `a7fcf0cf0ab67673049dcc9468700280aff689a2`
+- implementation commit `a7fcf0cf0ab67673049dcc9468700280aff689a2`
 - contract `songsterr-fresh-independent-pitch-corroboration-research-v2`
 
-Frozen exact controlled-fixture manifest:
+Frozen method record:
+- `docs/checkpoints/SONGSTERR_FRESH_INDEPENDENT_CORROBORATION_V2.md`
+- created at commit `6dda1a45b536ad211fe6cd094d38401a082e3831`
+- integration note update at commit `189cded24f16ea84ede3be74fe8d668a588725b7`
+
+Controlled-fixture manifest:
 - `docs/checkpoints/SONGSTERR_FRESH_INDEPENDENT_CORROBORATION_CONTROLLED_FIXTURES_V2.json`
-- commit `81abda5ffda85484d3e01f66737573b6b9192448`
 - fixture contract `songsterr-fresh-independent-pitch-corroboration-fixtures-v2`
 - 15 deterministic PCM16 fixtures: 6 expected corroborated / 7 expected not corroborated / 2 expected insufficient.
+- initial local-runtime hash freeze commit `81abda5ffda85484d3e01f66737573b6b9192448` was superseded before any authorized-song run because Python/NumPy runtime differences changed exact generated PCM hashes.
+- canonical pinned-environment fixture identity commit: `b1e478bfc1cb185193f3226e35e1c11841b659a2`.
+- canonical controlled-fixture generation environment: Python `3.10`, NumPy `1.26.4`, SoundFile `0.13.1` on the focused hosted workflow.
+- scoring method, signal definitions, expected class labels, and preregistered constants were not changed during identity correction.
 
-Local controlled-only verification before commit:
-- Python compile passed.
-- All 15 generated fixture WAV identities matched the frozen manifest used for the self-test.
-- All 15 classifications matched the preregistered expected classes: 6/7/2.
-- Channel-B FFT autocorrelation was compared against direct dot-product positive-lag autocorrelation on deterministic numeric data; maximum absolute difference was ~`1.99e-13` in that check.
-- Exact score tie fails unique-best; an arbitrarily small strict greater-than score is a winner because V2 intentionally has no fitted margin threshold.
-- duration-bearing evidence fails closed with `DURATION_MUST_REMAIN_UNRESOLVED`.
-- fixed analysis window extending past available audio returns `insufficient-evidence` / `FIXED_WINDOW_OUTSIDE_AUDIO` rather than borrowing duration/next-onset information.
-- evaluator source contains no authorized-song event timestamp/value tuning. No authorized-song evaluation has occurred.
+Focused workflow:
+- `.github/workflows/songsterr-fresh-independent-corroboration-v2-ci.yml`
+- initial workflow commit `610245dd7bba66a358f90490a7b5746f9f87c8be`
+- pinned-identity diagnostic update `90f0a4dd3717091f8f6aeee959212240bd35e56d`.
 
-Frozen V2 constants/logic remain as preregistered:
-- sample rate `44100 Hz`; fixed window `16384` samples; playable MIDI `40..88`;
+CI history:
+- run `34622138929`, job `103338450038`: failed at exact fixture identity because the initial manifest had been produced in a newer local NumPy/Python runtime; compile had passed. This was an integration identity-freeze failure, not a scoring/classification failure.
+- run `34622342886`, job `103339112223`: emitted all exact pinned-environment fixture identities and intentionally still failed against the not-yet-corrected manifest.
+- run `34622465693`, job `103339500987`, source commit `b1e478bfc1cb185193f3226e35e1c11841b659a2`: **SUCCESS**.
+
+Green run `34622465693` proved:
+- checkout/setup/dependency install/compile all passed;
+- all 15 regenerated PCM identities exactly matched the corrected frozen manifest;
+- all 15 observed classifications matched expected labels: **6 corroborated / 7 not corroborated / 2 insufficient**;
+- strict score equality fails unique-best and strict `>` wins, with no fitted score-margin threshold;
+- FFT linear autocorrelation agrees with direct positive-lag dot products within the fixed CI tolerance;
+- duration-bearing evidence is rejected before research scoring;
+- fixed-window overrun returns `insufficient-evidence` / `FIXED_WINDOW_OUTSIDE_AUDIO`;
+- event onset/MIDI identity is preserved;
+- every non-promotion guard remained false/zero;
+- `AUTHORIZED_SONG_NOT_EVALUATED_BY_V2_CI` passed.
+
+Frozen V2 constants/logic remain exactly as preregistered:
+- `44100 Hz`; fixed `16384`-sample window; MIDI `40..88`;
 - competitors `{-12,-7,-2,-1,+1,+2,+7,+12}`;
 - RMS `<1e-4` => insufficient;
-- strict `>` unique-best with no substantive score-margin threshold;
-- Channel A: coherent semitone-cell fundamental-bin selection plus four-harmonic normalized-magnitude log-mean;
-- Channel B: YIN/CMND semitone-cell minimum with half-period contrast `CMND(tau/2)-CMND(tau)`;
-- both channels must choose selected MIDI as strict unique best;
+- strict `>` unique-best, no substantive score-margin threshold;
+- Channel A: coherent semitone-cell fundamental-bin selection + four-harmonic normalized-magnitude log-mean;
+- Channel B: YIN/CMND semitone-cell minimum + `CMND(tau/2)-CMND(tau)`;
+- both channels must choose the selected MIDI as strict unique best;
 - no voting/fallback/confidence averaging/learned calibration/reference scorer/Basic Pitch activation/authorized-song tuning/event deletion.
 
-No public validation corpus is authorized by V2. Hosted CI may run only the deterministic controlled fixtures and contract tests.
+No public validation corpus is authorized by V2.
 
 ## V2 AUTHORIZED-SONG EXECUTION BOUNDARY
 
-Do not evaluate the authorized song with V2 until all of the following are true:
-1. evaluator + exact controlled fixture manifest are frozen;
-2. focused controlled/contract CI is green;
-3. hard non-promotion guards are green;
-4. a NEW Policy C-S epoch is enrolled on the exact frozen source commit;
-5. that epoch passes three exact qualification canaries.
+The first three prerequisites are now satisfied:
+1. evaluator + exact controlled fixture manifest are frozen — **YES**;
+2. focused controlled/contract CI is green — **YES**;
+3. hard non-promotion guards are green — **YES**.
 
-Only then may frozen V2 run once on the authorized song while verifying the same C-S session before and after. A separate policy review remains mandatory afterward; the run cannot automatically authorize customer output.
+Still required before any V2 authorized-song evaluation:
+4. enroll a **NEW** Policy C-S epoch on the exact frozen V2 source state;
+5. pass three exact qualification canaries in that same epoch.
+
+Only after 4–5 may frozen V2 run once on the authorized song while verifying the same C-S session before and after.
+
+A separate explicit policy review remains mandatory afterward; a successful research run does not automatically authorize customer output.
 
 ## CURRENT ACCEPTANCE STATE
 
@@ -137,16 +161,16 @@ Customer-eligible events: **0**.
 `mayAdvanceDelivery:false`.
 Duration research remains paused.
 
-No reference scorer/tab/archive logic. No GOAT. No threshold sweep. No promotion from exact hashes, CPU association, historical frequency, candidate confidence, event count, downstream agreement, or aggregate corroboration count.
+No reference scorer/tab/archive logic. No GOAT. No threshold sweep. No promotion from exact hashes, CPU association, historical frequency, candidate confidence, event count, downstream agreement, controlled-suite pass, or aggregate corroboration count.
 
 ## ACTIVE NEXT ENGINEERING STEPS
 
-1. Add focused hosted CI for V2 compile/self-test/exact fixture identities/classifications and hard non-promotion guards only.
-2. Add a frozen V2 method record documenting the exact implementation contract.
-3. Run/inspect focused CI. Distinguish integration/helper failures from actual controlled-method failures.
-4. If a preregistered fixture expectation genuinely fails, fail closed; do not tune from the authorized song. Any method change requires a new preregistration version before song evaluation.
-5. Update this checkpoint with CI commit/run/job/conclusion.
-6. Do not enroll/reuse a C-S epoch yet. A new epoch comes only after V2 code and controlled CI are frozen/green.
+1. Read the Policy C-S enrollment/runbook again and identify the exact frozen V2 source state that must be enrolled after this checkpoint update.
+2. Create/enroll a **new** C-S epoch only if the available Codespaces tooling can preserve and verify the exact required boot/source/toolchain fingerprint; never reuse a historical epoch.
+3. Run exactly three qualification canaries in the same new epoch and require exact equality under the existing C-S contract.
+4. Update this checkpoint after enrollment and after each qualification outcome.
+5. Do **not** evaluate the authorized song until the new epoch is fully qualified.
+6. Do not resume duration research, archived V143/Gomyway, reference scoring, or GOAT work.
 
 ## STABLE POLICY REFERENCES
 
@@ -158,4 +182,5 @@ No reference scorer/tab/archive logic. No GOAT. No threshold sweep. No promotion
 - Policy C-S: `docs/checkpoints/SONGSTERR_FRESH_CODESPACES_SESSION_AUTHORITY.md`
 - V1 policy review: `docs/checkpoints/SONGSTERR_FRESH_INDEPENDENT_CORROBORATION_V1_POLICY_REVIEW.md`
 - V2 preregistration: `docs/checkpoints/SONGSTERR_FRESH_MODEL_EVIDENCE_ADMISSION_PREREGISTRATION_V2.md`
+- V2 method: `docs/checkpoints/SONGSTERR_FRESH_INDEPENDENT_CORROBORATION_V2.md`
 - V2 controlled fixtures: `docs/checkpoints/SONGSTERR_FRESH_INDEPENDENT_CORROBORATION_CONTROLLED_FIXTURES_V2.json`
