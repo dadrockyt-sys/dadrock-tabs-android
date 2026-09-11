@@ -1,0 +1,50 @@
+name: Songsterr Fresh OVH Runbook Checkpoint Once
+
+on:
+  push:
+    branches:
+      - songsterr-fresh-pipeline-v1
+    paths:
+      - '.github/workflows/songsterr-fresh-ovh-runbook-checkpoint-once.yml'
+
+permissions:
+  contents: write
+
+jobs:
+  update:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: songsterr-fresh-pipeline-v1
+          fetch-depth: 0
+      - name: Record OVH runbook
+        shell: bash
+        run: |
+          python - <<'PY'
+          from datetime import datetime
+          from pathlib import Path
+          from zoneinfo import ZoneInfo
+          p=Path('docs/checkpoints/SONGSTERR_FRESH_PIPELINE_CURRENT_STATE.md')
+          t=p.read_text(encoding='utf-8')
+          marker='- Low-cost authority review `docs/checkpoints/SONGSTERR_FRESH_LOW_COST_AUTHORITY_OPTIONS.md`, commit `2a790a309449ef93c1fc8bda2252ffa081dd69cc`: completed Codespaces capacity evidence makes 4 GB RAM the minimum practical target. Provider-owned pricing checked 2026-09-10 makes OVHcloud Canada VPS-1 the current preferred budget candidate at 2 vCores / 4 GB / 40 GB NVMe from CAD $6.20/month with Ubuntu 22.04 available. IONOS Canada is a fallback; DigitalOcean 4 GiB remains USD $24/month and over budget. No provider has been purchased or enrolled.'
+          addition='\n- Provider-specific provisioning runbook `docs/checkpoints/SONGSTERR_FRESH_OVHCLOUD_AUTHORITY_RUNBOOK.md`, commit `ce2c206d8a883b5776ec657bf5f1e2078b9c6b6b`, pins the first paid candidate to OVHcloud Canada VPS-1 only: 2 vCores / 4 GB / 40 GB NVMe, Ubuntu 22.04 x64, no paid extras, fail closed on plan mismatch/OOM/drift, then existing Policy C bootstrap → sole self-hosted runner → probe → deliberate enrollment → ≥3 exact canaries. Purchase has NOT occurred; this remains the explicit spending boundary.'
+          if addition.strip() not in t:
+              if marker not in t: raise SystemExit('LOW_COST_MARKER_CHANGED')
+              t=t.replace(marker, marker+addition, 1)
+          lines=t.splitlines()
+          stamp=datetime.now(ZoneInfo('America/Toronto')).strftime('%Y-%m-%d %H:%M America/Toronto')
+          for i,line in enumerate(lines):
+              if line.startswith('Updated: '): lines[i]=f'Updated: {stamp}'; break
+          p.write_text('\n'.join(lines)+'\n', encoding='utf-8')
+          PY
+      - name: Commit checkpoint
+        shell: bash
+        run: |
+          set -euo pipefail
+          git config user.name 'dadrockyt-sys'
+          git config user.email 'Stephen.s.mcnally@gmail.com'
+          git add docs/checkpoints/SONGSTERR_FRESH_PIPELINE_CURRENT_STATE.md
+          git commit -m 'docs: record OVH Policy C runbook'
+          git push origin HEAD:songsterr-fresh-pipeline-v1
