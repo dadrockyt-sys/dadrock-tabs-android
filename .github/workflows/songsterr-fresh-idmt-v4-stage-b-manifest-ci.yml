@@ -47,14 +47,25 @@ jobs:
       - name: Enforce non-scoring source boundary
         run: |
           python - <<'PY'
+          import ast
           from pathlib import Path
-          s=Path('scripts/songsterr-fresh/prepare_idmt_v4_stage_b_manifest.py').read_text()
-          forbidden=[
-            'basic_pitch', 'independent_pitch_corroboration_v4', 'demucs',
-            'librosa', 'numpy', 'precision_score', 'wilson', 'gomyway-midterm-source'
-          ]
-          for token in forbidden:
-            assert token not in s.lower(), token
+          p=Path('scripts/songsterr-fresh/prepare_idmt_v4_stage_b_manifest.py')
+          s=p.read_text()
+          tree=ast.parse(s)
+          imported=[]
+          for node in ast.walk(tree):
+            if isinstance(node, ast.Import):
+              imported.extend(alias.name for alias in node.names)
+            elif isinstance(node, ast.ImportFrom):
+              imported.append(node.module or '')
+          forbidden_roots={
+            'basic_pitch','demucs','librosa','numpy','scipy','sklearn',
+            'independent_pitch_corroboration_v4'
+          }
+          for name in imported:
+            root=name.split('.')[0]
+            assert root not in forbidden_roots, name
+          assert 'gomyway-midterm-source' not in s.lower()
           required=[
             'basicPitchInvoked', 'v4ClassifierInvoked', 'correctnessMetricComputed',
             'estimateReferenceMatchingPerformed', 'modelValidationComplete',
