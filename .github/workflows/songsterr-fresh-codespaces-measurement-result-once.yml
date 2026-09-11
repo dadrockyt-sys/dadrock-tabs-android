@@ -1,0 +1,72 @@
+name: Songsterr Fresh Codespaces Measurement Result Once
+
+on:
+  push:
+    branches:
+      - songsterr-fresh-pipeline-v1
+    paths:
+      - '.github/workflows/songsterr-fresh-codespaces-measurement-result-once.yml'
+
+permissions:
+  contents: write
+
+jobs:
+  update:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: songsterr-fresh-pipeline-v1
+          fetch-depth: 0
+      - name: Record completed Codespaces measurement
+        shell: bash
+        run: |
+          python - <<'PY'
+          from datetime import datetime
+          from pathlib import Path
+          from zoneinfo import ZoneInfo
+
+          p = Path('docs/checkpoints/SONGSTERR_FRESH_PIPELINE_CURRENT_STATE.md')
+          t = p.read_text(encoding='utf-8')
+          old = ('No Codespaces Demucs/Basic Pitch measurement has completed yet. '
+                 'Policy C remains `UNENROLLED`; no authority host, enrolled fingerprint, authority probe, or authority canary exists.')
+          new = ('Codespaces workbench measurement v2 has now completed successfully on the user-available 4-core Codespace at source commit '
+                 '`3faf16b740846ebd3106d81cb1cf1dcefe1001d5`. Measured wall times: structure 31 s, Demucs 236 s, Basic Pitch 11 s, '
+                 'total 283 s (4 min 43 s). Peak resident memory: Demucs 2,492,104 KiB (~2.38 GiB) and Basic Pitch 396,552 KiB (~387 MiB). '
+                 'The frozen structure remained accepted and exactly matched `fnv1a32:2f493225`. This establishes that the 4-core / 8 GB Codespaces '
+                 'workbench is operationally sufficient with substantial memory headroom; it is performance/capacity evidence only, not authority evidence. '
+                 'The observed ~2.38 GiB Demucs peak means a future fixed authority surface should have at least 4 GB RAM for practical headroom; 2 GB is not sufficient. '
+                 'Policy C remains `UNENROLLED`; `authorityEligible=false`, `modelValidationComplete=false`, customer-eligible events remain 0, and no authority host, '
+                 'enrolled fingerprint, authority probe, or authority canary exists.')
+          if old not in t:
+              raise SystemExit('CODESPACES_RESULT_MARKER_CHANGED')
+          t = t.replace(old, new, 1)
+
+          old2 = ('5. Run `bash scripts/songsterr-fresh/run_codespaces_workbench_measurement.sh` once. Inspect `workbench-measurement-summary.json`, especially total/Demucs/Basic-Pitch runtime, maximum resident memory, and output identities. This measurement determines whether the cheapest 2-core / 8 GB workbench is operationally sufficient.')
+          new2 = ('5. Codespaces capacity measurement is complete: 4 cores / 8 GB finished the full measurement path in 283 s with Demucs peak RSS ~2.38 GiB and Basic Pitch peak RSS ~387 MiB. Treat this as workbench sizing evidence only; do not enroll the Codespaces fingerprint or promote any model output from it.')
+          if old2 in t:
+              t = t.replace(old2, new2, 1)
+
+          old3 = ('6. Stop the Codespace immediately after measurement so compute billing stops. Preserve only the workbench caches/results needed for follow-up; do not treat stop/restart/rebuild identity as fixed Policy C authority.')
+          new3 = ('6. Stop the Codespace now so compute billing stops. Preserve only the workbench caches/results needed for follow-up; do not treat stop/restart/rebuild identity as fixed Policy C authority.')
+          if old3 in t:
+              t = t.replace(old3, new3, 1)
+
+          lines = t.splitlines()
+          stamp = datetime.now(ZoneInfo('America/Toronto')).strftime('%Y-%m-%d %H:%M America/Toronto')
+          for i, line in enumerate(lines):
+              if line.startswith('Updated: '):
+                  lines[i] = f'Updated: {stamp}'
+                  break
+          p.write_text('\n'.join(lines) + '\n', encoding='utf-8')
+          PY
+      - name: Commit checkpoint
+        shell: bash
+        run: |
+          set -euo pipefail
+          git config user.name 'dadrockyt-sys'
+          git config user.email 'Stephen.s.mcnally@gmail.com'
+          git add docs/checkpoints/SONGSTERR_FRESH_PIPELINE_CURRENT_STATE.md
+          git commit -m 'docs: record completed Codespaces capacity measurement'
+          git push origin HEAD:songsterr-fresh-pipeline-v1
