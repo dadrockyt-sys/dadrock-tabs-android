@@ -90,7 +90,7 @@ Controlled V4 CI is green:
 
 No protected-song V4 execution has occurred.
 
-## IDMT V4 EXTERNAL VALIDATION — STAGE A INVENTORY REOPENED
+## IDMT V4 EXTERNAL VALIDATION — STAGE A INVENTORY COMPLETE
 
 Metadata plan:
 - `docs/checkpoints/SONGSTERR_FRESH_IDMT_V4_EXTERNAL_VALIDATION_METADATA_PLAN.md`
@@ -122,26 +122,29 @@ Inventory CI:
 - run `34654695068`, job `103444417084`: **SUCCESS**
 - synthetic ZIP self-test, frozen archive constants, stdlib-only boundary, and no-real-holdout guard all green.
 
-Stage A may only:
-- verify exact archive MD5 and record SHA-256;
-- list/hash every ZIP member;
-- inventory directory/subset structure;
-- read WAV container headers only;
-- record XML tag/attribute structural signatures;
-- establish exact WAV/XML pairings and integrity issues;
-- write inventory results outside the repo.
+Real Stage A inventory completed once in Codespaces outside the repo. The observed policy boundary remained fail-closed:
+- `basicPitchInvoked:false`
+- `v4ClassifierInvoked:false`
+- `estimateReferenceMatchingPerformed:false`
+- `correctnessMetricComputed:false`
+- `protectedSongUsed:false`
+- `modelValidationComplete:false`
+- customer-eligible events `0`
+- `mayAdvanceDelivery:false`.
 
-Stage A MUST NOT:
-- invoke Basic Pitch, V4 or Demucs;
-- compute correctness, matching, precision/recall/F-score/Wilson metrics;
-- use audio samples for signal scoring;
-- alter V4;
-- run GuitarSet or the protected song;
-- resume duration or change product authority.
+Observed XML structure confirms note-event fields including:
+- `instrumentRecording/transcription/event/onsetSec`
+- `instrumentRecording/transcription/event/pitch`
+- `instrumentRecording/transcription/event/offsetSec`
+- `instrumentRecording/transcription/event/fretNumber`
+- `instrumentRecording/transcription/event/stringNumber`
+- expression/modulation metadata fields.
+
+The exact Stage A report hash, archive SHA-256, member counts, dataset pair counts, WAV header signatures and compact XML-signature inventory are still being extracted for the immutable Stage A freeze record. No correctness result exists yet.
 
 ## STAGE B — REQUIRED BEFORE ANY CORRECTNESS RESULT
 
-After Stage A inventory is complete, commit a separate versioned V4 IDMT execution preregistration before model inference/correctness scoring. It must freeze:
+After the Stage A freeze data are recorded, commit a separate versioned V4 IDMT execution preregistration before model inference/correctness scoring. It must freeze:
 - exact included subsets/files and any exclusions/reasons;
 - exact XML pitch/onset semantics and units;
 - exact Basic Pitch settings/runtime;
@@ -159,18 +162,15 @@ No GuitarSet result may choose these gates or tune V4.
 
 Active blockers:
 - V4 has no real-world correctness result yet;
-- Stage A IDMT inventory is not yet complete;
+- Stage A compact freeze data are not yet recorded in-repo;
 - Stage B scoring contract is not yet frozen;
 - `DURATION_EVIDENCE_INCOMPLETE`.
 
 Next allowed work:
-1. update a Codespace to the current branch head and keep the worktree clean;
-2. download exact `IDMT-SMT-GUITAR_V2.zip` outside the repo;
-3. verify MD5 `06796e08731bccffaed6ae59361486e4`;
-4. run `inventory_idmt_v4_external_validation.py` once with output outside the repo;
-5. inspect only integrity/schema output;
-6. freeze Stage B external-validation preregistration;
-7. only then run official Basic Pitch + V4 holdout correctness evaluation.
+1. extract compact Stage A freeze data from the completed inventory report;
+2. record the immutable Stage A inventory result;
+3. freeze Stage B external-validation preregistration;
+4. only then run official Basic Pitch + V4 holdout correctness evaluation.
 
 Still forbidden until the appropriate later gate:
 - protected-song V4 execution;
