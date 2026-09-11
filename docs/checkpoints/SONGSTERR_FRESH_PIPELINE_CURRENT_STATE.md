@@ -1,6 +1,6 @@
 # CURRENT STATE — Songsterr Fresh Pipeline V1
 
-Updated: 2026-09-10 22:04 America/Toronto
+Updated: 2026-09-10 22:09 America/Toronto
 Canonical branch: `songsterr-fresh-pipeline-v1`
 Canonical checkpoint: `docs/checkpoints/SONGSTERR_FRESH_PIPELINE_CURRENT_STATE.md`
 
@@ -260,7 +260,7 @@ Decision-enabled real model canary — COMPLETED GREEN:
 - Enrollment runbook `docs/checkpoints/SONGSTERR_FRESH_PINNED_COMPUTE_AUTHORITY_ENROLLMENT.md`, commit `d370e9728164d7985b5590beb187e5324508780d`, defines persistent-host provisioning, GitHub runner registration with `--disableupdate`, safe probe, deliberate fingerprint enrollment, ≥3 separate exact canaries, aggregation, and drift/re-enrollment procedure.
 - Bootstrap/static coverage commit `adf8146f8ca2ed7efa0b7ff71948bee1b0bed898`; run `34553026675`, job `103119686510`, success. Bootstrap shell syntax plus all Policy C fail-closed/non-promotion contracts passed.
 - Cloud/VM use is acceptable only as a reproducibility surface because every canary verifies the exact enrolled fingerprint before model execution. A materially changed VM/hardware/software surface fails closed and requires re-enrollment; Policy C is not a physical-host security attestation.
-- Current external blocker: provision/register one persistent Linux x64 host as the sole `songsterr-fresh-authority-v1` runner, build the dedicated venv, and run `mode=probe`. No real Policy C probe or canary has run yet.
+- Current external blocker: DigitalOcean provisioning is blocked at account billing setup. Connected account reports status `warning`; SSH-key creation returned HTTP 403 with `You need to provide a payment method before trying to create resources under your account`. No Droplet, SSH key, Policy C probe, or canary was created by this attempt. After billing is enabled, provision the persistent Linux x64 host, register it as the sole `songsterr-fresh-authority-v1` runner, build the dedicated venv, and run `mode=probe`.
 - `modelValidationComplete` remains false; customer-eligible events remain 0; duration research remains paused. V2 remains authoritative and V3 candidate-only.
 
 ## CURRENT ACCEPTANCE STATE
