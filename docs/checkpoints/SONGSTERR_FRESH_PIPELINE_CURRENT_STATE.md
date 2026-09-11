@@ -1,6 +1,6 @@
 # CURRENT STATE — Songsterr Fresh Pipeline V1
 
-Updated: 2026-09-11 12:04 America/Toronto
+Updated: 2026-09-11 12:08 America/Toronto
 Canonical branch: `songsterr-fresh-pipeline-v1`
 Canonical checkpoint: `docs/checkpoints/SONGSTERR_FRESH_PIPELINE_CURRENT_STATE.md`
 
@@ -331,6 +331,18 @@ Decision-enabled real model canary — COMPLETED GREEN:
 - Aggregate counts are research evidence only. Preregistration still requires a separate explicit policy review before any customer-eligible subset may be authorized.
 - Immediate review target: inspect frozen-method classifications/channel measurements for the previously identified MIDI-55 (~46.2024095 s) and MIDI-64 (~79.6261406 s) stress-test events before any promotion decision.
 - `modelValidationComplete:false`; customer-eligible events 0; `mayAdvanceDelivery:false`; duration authority unchanged; duration research remains paused.
+
+## INDEPENDENT CORROBORATION V1 — POLICY REVIEW COMPLETE / NOT ADMISSION AUTHORITY
+
+- Independent Corroboration V1 is rejected as customer-admission authority and retained as a frozen research diagnostic.
+- Authorized-song research result remains 471 corroborated / 667 not corroborated / 2 insufficient across 1,140 qualified events.
+- Prospective MIDI-64 stress case near 79.6261406 s failed the frozen two-channel rule: Channel A preferred MIDI 52 (margin `-0.7545700107018032`), while Channel B uniquely preferred MIDI 64 (margin `+0.06704049122757871`).
+- This is a policy-adequacy failure for promotion, not a Policy C-S reproducibility/model execution failure.
+- Do not post-hoc relax Channel A, competitor offsets, harmonic weights, tie tolerance, or choose a new authorized-song-derived threshold to make this case pass.
+- Any successor must be a new preregistered version developed from independently justified signal-processing principles and/or predeclared controlled/public validation data separate from the authorized song.
+- MIDI-55 and MIDI-64 are now retrospective stress diagnostics only for future frozen methods.
+- Formal policy review: `docs/checkpoints/SONGSTERR_FRESH_INDEPENDENT_CORROBORATION_V1_POLICY_REVIEW.md`, commit `ea20e404a980e0d4e25a15855eb8b6e6d8de978f`.
+- `modelValidationComplete:false`; customer-eligible events 0; `mayAdvanceDelivery:false`; duration research remains paused.
 
 ## CURRENT ACCEPTANCE STATE
 
