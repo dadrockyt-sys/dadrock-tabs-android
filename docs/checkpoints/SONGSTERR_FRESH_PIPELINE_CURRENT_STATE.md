@@ -1,6 +1,6 @@
 # CURRENT STATE — Songsterr Fresh Pipeline V1
 
-Updated: 2026-09-11 12:10 America/Toronto
+Updated: 2026-09-11 12:14 America/Toronto
 Canonical branch: `songsterr-fresh-pipeline-v1`
 Canonical checkpoint: `docs/checkpoints/SONGSTERR_FRESH_PIPELINE_CURRENT_STATE.md`
 
@@ -378,16 +378,8 @@ Blockers remain:
 
 Customer-eligible events remain **0**. V2 authoritative; V3 candidate-only. Basic Pitch is not ground truth. No reference scorer/tab/archive logic. No BP end as duration. No generic next-onset duration. No same-pitch-reattack default. No threshold sweep. No promotion from exact hashes, CPU association, historical frequency, candidate confidence, event count, or downstream agreement.
 
-## FRESH-CHAT NEXT ENGINEERING STEPS
+## FRESH-CHAT NEXT ENGINEERING STEPS — SUPERSEDED
 
-1. Treat Policy B numerical-bound research and finite semantic-consensus analysis as completed negative results; do not revive threshold fitting or hosted unanimity as customer admission rules.
-2. Policy C code, hardening, bootstrap, enrollment runbook, and focused CI are complete and green, but authority remains `UNENROLLED`. Keep `modelValidationComplete:false`, customer-eligible events at 0, and duration research paused.
-3. Budget-first Codespaces capacity test is complete: the available 4-core / 8 GB workbench finished the path in 283 s with Demucs peak RSS ~2.38 GiB. The workbench remains non-authority by default; optional Policy C-S may qualify one exact active Codespaces boot session only after explicit probe/enrollment and three exact canaries.
-4. Before real Policy C-S work, ensure GitHub Codespaces usage/budget is acceptable, update the existing Codespace to the final branch commit, keep the worktree clean, and do not pull/commit/rebuild/restart after enrollment. Setup must still report persistent Policy C authority false and model validation false.
-5. Policy C-S probe/enrollment/three-canary qualification is complete and green for the currently active Codespace epoch `263237f0-b5dc-4710-bef4-e0ac855c2312` at source commit `b2f246769340e4f7f6929e679692956c731efd93`. Do not pull, commit, rebuild, stop, or restart this Codespace while using the qualified session.
-6. Use the still-active qualified Policy C-S session for the separate model-evidence validation review. Reproducibility qualification alone does not establish Basic Pitch correctness and must not change model-validation or delivery state.
-7. If Policy C-S qualification is green, keep that exact Codespace session active for the separate model-evidence validation review. Do not treat surface reproducibility as model correctness. If the Codespace stops/restarts or the fingerprint/source changes, that epoch expires and a new epoch starts from zero.
-8. Persistent paid Policy C remains a fallback, not the immediate path. If session-bound Codespaces proves operationally inadequate, use the low-cost 4-GB host runbooks; do not purchase or enroll one merely because persistent Policy C exists.
-9. Whether authority is persistent Policy C or session-bound Policy C-S, exact canaries demonstrate reproducibility scope only. Model-evidence validation is a separate review; keep `modelValidationComplete:false`, customer-eligible events 0, duration research paused, and archived V143/Gomyway/reference/pro-scorer work out of scope until independently justified.
+This older handoff is superseded by `## FRESH CHAT HANDOFF — NEXT STEPS` above. A fresh chat must resume from that newer section only; do not reuse prior live Codespaces epoch IDs or the earlier V1 implementation sequence.
 
-The archived V143/Gomyway pipeline remains out of scope unless explicitly requested.
+The archived V143/Gomyway/GOAT workstreams remain out of scope unless the user explicitly reopens them.
