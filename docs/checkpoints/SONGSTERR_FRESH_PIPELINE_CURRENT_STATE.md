@@ -1,6 +1,6 @@
 # CURRENT STATE — Songsterr Fresh Pipeline V1
 
-Updated: 2026-09-10 20:42 America/Toronto
+Updated: 2026-09-10 21:21 America/Toronto
 Canonical branch: `songsterr-fresh-pipeline-v1`
 Canonical checkpoint: `docs/checkpoints/SONGSTERR_FRESH_PIPELINE_CURRENT_STATE.md`
 
@@ -178,6 +178,16 @@ Decision-enabled real model canary — COMPLETED GREEN:
 - aggregate non-promotion guard passed; no numeric diagnostic became pass/fail or an admission bound
 - preliminary inspection of observation B: hosted runner CPU `Intel Xeon Platinum 8573C`, 1,139 decoded events, new exact stem/note/activation hashes relative to the earlier six-observation AMD history, and the historical MIDI-64 event at frozen slot `206.22657596371883` is absent
 - therefore event count alone is not a semantic-output signature, and the earlier AMD CPU/output association must not be generalized or used as an admission selector
+
+## ACTIVE WORK LOG — A/B/C DECISION SURFACE + DECODER REPLAY
+
+- Inspected completed green run `34546969446` directly: aggregate artifact `10179540711`; observations A `10179528439`, B `10179504174`, C `10179525061`. No Demucs or Basic Pitch rerun was performed.
+- A=1138 events, B=1139, C=1138. Across A/B/C there is exactly one unmatched semantic event: MIDI `55` at frozen slot `46.151111111111106`, source start `46.20240952380952` s, present only in B.
+- Historical MIDI-64 slot `206.22657596371883` presence is A=0, B=0, C=0; new MIDI-55 slot presence is A=0, B=1, C=0. B's 1,139-event result is therefore not the historical 1,139 semantic inventory.
+- At the unmatched MIDI-55 frame, B's captured effective onset is `0.5000237822532654` with threshold margin `2.378225326538086e-05`; A/C is `0.49999192357063293` with margin `-8.07642936706543e-06`. Both are strict local peaks. This observed sample toggles on the threshold-onset path; these margins are descriptive only and are not admission tolerances.
+- Tracer focused CI wiring commit `b5a625a4ce12f530af2a63a0e52c5c8728fa9fef` failed in run `34547372731`, job `103102811353` because the synthetic intended-melodia activation `0.7` scaled to inferred onset about `0.7875`, so it entered the threshold-onset pass. The synthetic fixture only is now `0.4`, which remains above frame threshold `0.3` while inferred onset is about `0.45`, below onset threshold `0.5`. No model, production threshold, admission, or duration setting changed.
+- Repaired tracer self-test passed in helper run `34550328840`. Exact replay against captured sidecars: A PASS eventCount=1138 mechanisms={'melodia-residual-pass': 128, 'threshold-onset-pass': 1010} target55=none; B PASS eventCount=1139 mechanisms={'melodia-residual-pass': 128, 'threshold-onset-pass': 1011} target55=threshold-onset-pass; C PASS eventCount=1138 mechanisms={'melodia-residual-pass': 128, 'threshold-onset-pass': 1010} target55=none. Decoder labels are trusted only where exact replay succeeded.
+- `modelValidationComplete` remains false; customer-eligible events remain 0; duration research remains paused.
 
 ## CURRENT ACCEPTANCE STATE
 

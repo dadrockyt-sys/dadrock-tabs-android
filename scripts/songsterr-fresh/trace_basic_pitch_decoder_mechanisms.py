@@ -354,8 +354,9 @@ def _make_sidecars():
     raw_onsets[10, col40] = 0.9
     frames[10:25, col40] = 0.8
     # Melodia event with no thresholded onset peak, frames 40:56.
-    frames[40:56, col64] = 0.7
-    # Ensure inferred-onset scale is non-degenerate but subthreshold at MIDI64.
+    # 0.4 stays above frameThreshold=0.3 while inferred onset scales to 0.45 < 0.5.
+    frames[40:56, col64] = 0.4
+    # Ensure inferred-onset scale is non-degenerate and remains subthreshold at MIDI64.
     raw_onsets[35, 52 - 21] = 0.8
     frames[35:39, 52 - 21] = [0.5, 0.4, 0.2, 0.1]
 
