@@ -291,6 +291,7 @@ Decision-enabled real model canary — COMPLETED GREEN:
 - These observations explicitly separate reproducibility from model correctness. The MIDI-55 event is a concrete counterexample to promoting a stable C-S output merely because it is exact across repeated executions.
 - The independent pitch-support probe remains descriptive only. No threshold may be back-fit from these observed examples, and neither mismatch may be used to define an admission cutoff post hoc.
 - Detailed record: `docs/checkpoints/SONGSTERR_FRESH_CODESPACES_MODEL_EVIDENCE_REVIEW.md`.
+- Next model-validation research is preregistered in `docs/checkpoints/SONGSTERR_FRESH_MODEL_EVIDENCE_ADMISSION_PREREGISTRATION_V1.md`: a new two-channel audio-domain corroborator (harmonic-stack spectral competition + independent time-domain periodicity competition) must be frozen and pass controlled synthetic fixtures before any execution on the authorized song. The already-observed CQT values may not tune it. A new Policy C-S epoch will be required for eventual authorized-song evaluation.
 - Therefore `modelValidationComplete:false`, customer-eligible events remain 0, `mayAdvanceDelivery:false`, and duration research remains paused.
 
 ## CURRENT ACCEPTANCE STATE
