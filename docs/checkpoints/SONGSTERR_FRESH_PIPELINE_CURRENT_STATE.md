@@ -161,6 +161,37 @@ No V3 gate may be relaxed or tuned after this result. Do not add exclusions, low
 
 No protected-song V3 execution occurred and none is authorized from this failed V3 result.
 
+## V4 — ACTIVE / PREREGISTERED SYNTHETIC-ONLY SUCCESSOR
+
+User explicitly authorized a successor after V3 closeout.
+
+Preregistration:
+- `docs/checkpoints/SONGSTERR_FRESH_MODEL_EVIDENCE_ADMISSION_PREREGISTRATION_V4.md`
+- commit `a5cec402cf3bcd6c28ac3339d4d00de4d8cdf8b2`
+- status: **preregistered; not admission authority**.
+
+V4 is a new temporal-consensus signal test, not a V3 patch. It may use only the qualitative historical fact that earlier candidates failed admission. It MUST NOT use V3 event-level/per-track errors, player/mode differences, protected-song outcomes, or any threshold sweep.
+
+Frozen V4 core contract before implementation:
+- isolated mono guitar audio only, exactly 44100 Hz;
+- existing `sourceStart` and integer `selectedMidi` only;
+- playable/full competitor range MIDI `40..88` in every view;
+- three exact 8192-sample post-onset windows beginning at relative offsets `1024`, `7168`, `13312` samples;
+- spectral view: coherent harmonic score using up to harmonics 1..6 and a 32768-point FFT;
+- periodicity view: real cepstrum from the same window/spectrum;
+- selected MIDI must be strict unique winner in spectral + cepstral views for **all three** windows;
+- no score-margin threshold, voting, fallback, confidence, duration, next-onset, activation, decision-surface, reference, performer/style identity, or event deletion;
+- invalid/truncated/zero-energy required view => `insufficient-evidence`;
+- otherwise any non-unanimity => `not-independently-corroborated`.
+
+V4 development is synthetic-only. GuitarSet is historical and MUST NOT be reused as V4 pass/fail validation.
+
+Potential future untouched validation candidate, metadata only:
+- IDMT-SMT-Guitar Dataset, Zenodo v1.0.0, DOI `10.5281/zenodo.7544110`;
+- archive `IDMT-SMT-GUITAR_V2.zip`, MD5 `06796e08731bccffaed6ae59361486e4`.
+
+**Holdout scoring remains closed.** The V4 preregistration does not authorize downloading/scoring IDMT. Before any such execution, a separate versioned external-validation preregistration and explicit user reopening of holdout evaluation are required.
+
 ## CURRENT ACCEPTANCE STATE
 
 Do **not** set `modelValidationComplete:true`.
@@ -175,25 +206,29 @@ Current authority state:
 
 Active blockers:
 - model-evidence admission remains unresolved after V3 external-validation failure
+- V4 has no real-world validation authority
 - `DURATION_EVIDENCE_INCOMPLETE`.
 
-No reference scorer/tab/archive logic. No GOAT. No threshold sweep. No training/fine-tuning. No promotion from hashes, reproducibility, confidence, event counts, synthetic-suite success, C-S agreement, historical protected-song results, or an external result that failed the frozen gates.
+No reference scorer/tab/archive logic. No GOAT. No threshold sweep. No training/fine-tuning. No promotion from hashes, reproducibility, confidence, event counts, synthetic-suite success, C-S agreement, historical protected-song results, or an external result that failed frozen gates.
 
 ## NEXT ALLOWED WORK
 
-V1, V2, and V3 are closed as admission-authority candidates.
+1. Implement the preregistered V4 temporal-consensus evaluator under `scripts/songsterr-fresh/`.
+2. Add deterministic synthetic/contract self-tests only.
+3. Add focused CI that cannot download/evaluate GuitarSet, IDMT, or the protected song.
+4. Freeze V4 implementation/method after green controlled CI.
+5. Stop before any real external-corpus scoring unless holdout evaluation is explicitly reopened.
 
-No V4/successor workstream is opened by this checkpoint. A future successor requires explicit user authorization and a **new preregistration before any successor result is viewed**. It may use V3 only as historical research evidence; it may not patch or retune V3 in place.
-
-Until such authorization:
-- do not rerun GuitarSet V3
-- do not run the protected song
-- do not resume duration
+During V4 synthetic development:
+- do not rerun GuitarSet V3;
+- do not run the protected song;
+- do not resume duration;
 - do not reopen archived V143/Gomyway, GOAT, reference scoring, threshold sweeps, or training/fine-tuning.
 
 ## STABLE REFERENCES
 
 - canonical current state: `SONGSTERR_FRESH_PIPELINE_CURRENT_STATE.md`
+- V4 prereg: `SONGSTERR_FRESH_MODEL_EVIDENCE_ADMISSION_PREREGISTRATION_V4.md`
 - V3 prereg: `SONGSTERR_FRESH_MODEL_EVIDENCE_ADMISSION_PREREGISTRATION_V3.md`
 - V3 method: `SONGSTERR_FRESH_EXTERNAL_GUITARSET_VALIDATION_V3.md`
 - V3 immutable result: `SONGSTERR_FRESH_EXTERNAL_GUITARSET_VALIDATION_V3_RESULT.md`
