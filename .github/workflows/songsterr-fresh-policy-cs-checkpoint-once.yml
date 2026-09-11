@@ -1,0 +1,96 @@
+name: Songsterr Fresh Policy C-S Checkpoint Once
+
+on:
+  push:
+    branches:
+      - songsterr-fresh-pipeline-v1
+    paths:
+      - '.github/workflows/songsterr-fresh-policy-cs-checkpoint-once.yml'
+
+permissions:
+  contents: write
+
+jobs:
+  update:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: songsterr-fresh-pipeline-v1
+          fetch-depth: 0
+
+      - name: Record Policy C-S implementation state
+        shell: bash
+        run: |
+          set -euo pipefail
+          python - <<'PY'
+          from datetime import datetime
+          from pathlib import Path
+          from zoneinfo import ZoneInfo
+
+          p=Path('docs/checkpoints/SONGSTERR_FRESH_PIPELINE_CURRENT_STATE.md')
+          t=p.read_text(encoding='utf-8')
+          current_heading='## CURRENT ACCEPTANCE STATE\n'
+          if current_heading not in t:
+              raise SystemExit('CURRENT_ACCEPTANCE_HEADING_NOT_FOUND')
+
+          section_lines=[
+              '## POLICY C-S CODESPACES SESSION AUTHORITY — IMPLEMENTED / NOT YET REAL-QUALIFIED',
+              '',
+              '- User has GitHub Pro Codespaces available and a payment method configured. Official GitHub billing docs checked 2026-09-10 show 180 included Codespaces core-hours/month and 20 GB-month storage for personal GitHub Pro. On the user-available 4-core machine this is about 45 active wall-clock hours before paid compute overage, assuming personal-account billing and remaining monthly quota. Because payment details are present, a Codespaces budget with `Stop usage when budget limit is reached` is recommended; stopped Codespaces stop compute billing but storage remains metered while the Codespace exists.',
+              '- Policy C-S is an alternate zero-cost-first authority mode and does NOT alter persistent Policy C. `scripts/songsterr-fresh/pinned_compute_authority_v1.json` remains `UNENROLLED`; Codespaces must not be enrolled into that persistent manifest.',
+              '- Architecture/runbook: `docs/checkpoints/SONGSTERR_FRESH_CODESPACES_SESSION_AUTHORITY.md`, implementation-doc commit `172a857a1b4af8a7579efb04f48274992cf40548`.',
+              '- Session verifier `scripts/songsterr-fresh/codespaces_session_authority.py` binds one authority epoch to GitHub Codespaces Linux x64, a clean exact `songsterr-fresh-pipeline-v1` source commit, the existing hardened Policy C compute/toolchain fingerprint, SHA-256 of the current Linux boot ID, >=4 logical CPUs, and >=4 GiB reported RAM. Raw boot ID, machine-id, network identity, and user identity are not persisted.',
+              '- Explicit `probe` does not enroll. Explicit `enroll` creates a new UUID authority epoch only after the literal `SESSION_BOUND_AUTHORITY_EXPIRES_ON_RESTART` acknowledgement. Enrollment alone does not qualify the session. Stop/restart/rebuild, source change, or compute/toolchain drift fails closed; a fresh epoch never inherits prior model-validation or delivery state.',
+              '- Canary path: `run_codespaces_session_authority_canary.sh` verifies the exact enrolled epoch immediately before model execution, reuses the already-proven workbench full model path, verifies the same epoch immediately afterward, then `build_codespaces_session_authority_canary.py` validates authorized source, frozen reference-blind structure, exact Demucs asset, duration-free evidence, same-inference note/activation binding, decision-surface non-promotion guards, and exact output identities.',
+              '- Qualification path: `qualify_codespaces_session_authority.sh` executes three distinct canaries (IDs 1/2/3), then `aggregate_codespaces_session_authority_canaries.py` requires the same epoch/session/boot/source/fixed-input identity and exact stem/note/activation/decision/evidence/event-count identity across all three. A green result sets only `sessionAuthoritySurfaceQualified=true` for that current boot session.',
+              '- Pure contract CI run `34560456258`, job `103141926595`, succeeded: Python compile, shell syntax, boot/source/compute drift fail-closed tests, single-canary non-promotion, and exact three-canary aggregation tests all passed. No Demucs/Basic Pitch model run occurred in that CI test.',
+              '- `.devcontainer/songsterr-fresh-workbench/setup.sh` now distinguishes persistent Policy C (never enrolled by Codespaces) from optional explicit Policy C-S. Setup itself enrolls neither authority mode.',
+              '- No real Policy C-S probe, enrollment, canary, or qualification has run yet. The next real step is to update the existing 4-core Codespace to the final branch commit, keep the worktree clean, run `probe`, review it, run `enroll`, then run `qualify` without stopping/restarting or pulling further branch changes between enrollment and completion.',
+              '- Even after a green C-S qualification: `modelValidationComplete:false`, customer-eligible events remain 0, duration research remains paused, and a separate model-evidence validation review is still required. A new Codespaces epoch may not inherit that review automatically.',
+              '',
+          ]
+          section='\n'.join(section_lines)+'\n'
+          if section_lines[0] not in t:
+              t=t.replace(current_heading, section+current_heading, 1)
+
+          replacements={
+              '3. Budget-first Codespaces workbench test is complete. The user account exposed 4 cores / 8 GB / 32 GB as the smallest compatible machine, and that configuration completed the measurement path successfully. Codespaces work remains measurement/development only.':
+              '3. Budget-first Codespaces capacity test is complete: the available 4-core / 8 GB workbench finished the path in 283 s with Demucs peak RSS ~2.38 GiB. The workbench remains non-authority by default; optional Policy C-S may qualify one exact active Codespaces boot session only after explicit probe/enrollment and three exact canaries.',
+              '4. Let `.devcontainer/songsterr-fresh-workbench/setup.sh` finish. Confirm `/workspaces/.songsterr-fresh-workbench/workbench-probe.json` exists and that the setup reports `authorityEligible=false`, `modelValidationComplete=false`, and customer-eligible events 0. Do not enroll the Codespaces fingerprint.':
+              '4. Before real Policy C-S work, ensure GitHub Codespaces usage/budget is acceptable, update the existing Codespace to the final branch commit, keep the worktree clean, and do not pull/commit/rebuild/restart after enrollment. Setup must still report persistent Policy C authority false and model validation false.',
+              '5. Codespaces capacity measurement is complete: 4 cores / 8 GB finished the full measurement path in 283 s with Demucs peak RSS ~2.38 GiB and Basic Pitch peak RSS ~387 MiB. Treat this as workbench sizing evidence only; do not enroll the Codespaces fingerprint or promote any model output from it.':
+              '5. Run `bash scripts/songsterr-fresh/codespaces_session_authority.sh probe` and review `/workspaces/.songsterr-fresh-session-authority/session-probe.json`. Probe alone remains non-authoritative. Then explicitly run `... enroll`; this creates one boot/session/source-bound authority epoch but still does not qualify it.',
+              '6. Stop the Codespace now so compute billing stops. Preserve only the workbench caches/results needed for follow-up; do not treat stop/restart/rebuild identity as fixed Policy C authority.':
+              '6. Without stopping/restarting/rebuilding or changing the source commit, run `bash scripts/songsterr-fresh/codespaces_session_authority.sh qualify`. This performs three fresh full model executions and exact aggregation. Any pre/post session drift or output drift fails closed.',
+              '7. Choose the lowest-cost fixed authority surface that can satisfy the measured requirement: Demucs peak RSS was ~2.38 GiB, so target at least 4 GB RAM; 8 GB is optional headroom rather than a demonstrated requirement. Policy C still requires one explicitly enrolled fixed Linux x64 surface and remains `UNENROLLED` until that separate authority surface is deliberately selected and probed.':
+              '7. If Policy C-S qualification is green, keep that exact Codespace session active for the separate model-evidence validation review. Do not treat surface reproducibility as model correctness. If the Codespace stops/restarts or the fingerprint/source changes, that epoch expires and a new epoch starts from zero.',
+              '8. Only after a fixed authority surface exists: bootstrap its dedicated `/opt/songsterr-fresh-authority/venv`, register the sole `songsterr-fresh-authority-v1` self-hosted runner with `--disableupdate`, run and review `mode=probe`, deliberately enroll the exact fingerprint, then run ≥3 exact canaries from one unchanged source commit and aggregate them fail-closed.':
+              '8. Persistent paid Policy C remains a fallback, not the immediate path. If session-bound Codespaces proves operationally inadequate, use the low-cost 4-GB host runbooks; do not purchase or enroll one merely because persistent Policy C exists.',
+              '9. Exact authority aggregation demonstrates pinned-surface reproducibility only. After that, perform a separate model-evidence validation review; keep `modelValidationComplete:false`, customer-eligible events 0, duration research paused, hosted/Codespaces measurements non-authoritative, and archived V143/Gomyway implementation/reference/pro-scorer work out of scope until independently justified.':
+              '9. Whether authority is persistent Policy C or session-bound Policy C-S, exact canaries demonstrate reproducibility scope only. Model-evidence validation is a separate review; keep `modelValidationComplete:false`, customer-eligible events 0, duration research paused, and archived V143/Gomyway/reference/pro-scorer work out of scope until independently justified.'
+          }
+          for old,new in replacements.items():
+              if old not in t:
+                  raise SystemExit('NEXT_STEP_MARKER_CHANGED:'+old[:20])
+              t=t.replace(old,new,1)
+
+          lines=t.splitlines()
+          stamp=datetime.now(ZoneInfo('America/Toronto')).strftime('%Y-%m-%d %H:%M America/Toronto')
+          for i,line in enumerate(lines):
+              if line.startswith('Updated: '):
+                  lines[i]=f'Updated: {stamp}'
+                  break
+          p.write_text('\n'.join(lines)+'\n', encoding='utf-8')
+          PY
+
+      - name: Commit checkpoint
+        shell: bash
+        run: |
+          set -euo pipefail
+          git config user.name 'dadrockyt-sys'
+          git config user.email 'Stephen.s.mcnally@gmail.com'
+          git add docs/checkpoints/SONGSTERR_FRESH_PIPELINE_CURRENT_STATE.md
+          git commit -m 'docs: checkpoint Policy C-S session authority'
+          git push origin HEAD:songsterr-fresh-pipeline-v1
