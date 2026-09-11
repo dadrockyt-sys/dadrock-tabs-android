@@ -55,18 +55,29 @@ function acceptanceProjection(result) {
   };
 }
 
+function assertContract(result) {
+  if (result.evaluatorContract.candidateConfidenceUsedForAcceptance !== false) {
+    throw new Error('CANDIDATE_CONFIDENCE_ACCEPTANCE_CONTRACT_CHANGED');
+  }
+  if (result.evaluatorContract.candidateConfidenceDiagnosticsOnly !== true) {
+    throw new Error('CANDIDATE_CONFIDENCE_DIAGNOSTIC_CONTRACT_CHANGED');
+  }
+  if (result.evaluatorContract.compositeScoreDefined !== false) {
+    throw new Error('CANDIDATE_CONFIDENCE_MUST_NOT_ENTER_COMPOSITE_SCORE');
+  }
+}
+
 function assertConfidenceOnlyChangesDiagnostics(options) {
   const low = evaluateNoteEvidence(makeEvidence({ ...options, confidence: 0.01 }));
   const high = evaluateNoteEvidence(makeEvidence({ ...options, confidence: 0.99 }));
 
+  assertContract(low);
+  assertContract(high);
   if (JSON.stringify(acceptanceProjection(low)) !== JSON.stringify(acceptanceProjection(high))) {
     throw new Error('CANDIDATE_CONFIDENCE_CHANGED_ACCEPTANCE_SEMANTICS');
   }
   if (low.diagnostics.topConfidence.mean === high.diagnostics.topConfidence.mean) {
     throw new Error('CANDIDATE_CONFIDENCE_DIAGNOSTIC_DID_NOT_CHANGE');
-  }
-  if (low.evaluatorContract.compositeScoreDefined !== false || high.evaluatorContract.compositeScoreDefined !== false) {
-    throw new Error('CANDIDATE_CONFIDENCE_MUST_NOT_ENTER_COMPOSITE_SCORE');
   }
   return { low, high };
 }
@@ -89,6 +100,7 @@ if (otherwiseComplete.low.acceptedForCompleteTab !== true || otherwiseComplete.h
 
 console.log(JSON.stringify({
   contract: 'songsterr-fresh-candidate-confidence-diagnostic-only-test-v1',
+  evaluatorContractFlagsAsserted: true,
   candidateConfidenceUsedForAcceptance: false,
   candidateConfidenceDiagnosticsOnly: true,
   validationPendingInvariant: true,
