@@ -3,6 +3,7 @@ set -euo pipefail
 
 # Run one full Songsterr Fresh model-path measurement inside the dedicated
 # Codespaces workbench. This is explicitly NOT Policy C authority evidence.
+# Hosted/container decode differences are measured, never promoted to authority.
 
 REPO_ROOT="$(git rev-parse --show-toplevel)"
 cd "$REPO_ROOT"
@@ -13,6 +14,9 @@ RUN_STAMP="$(date -u +%Y%m%dT%H%M%SZ)"
 SOURCE_COMMIT="$(git rev-parse HEAD)"
 RUN_DIR="${WORKBENCH_ROOT}/runs/${RUN_STAMP}-${SOURCE_COMMIT:0:12}"
 PYTHON="${VENV}/bin/python"
+EXPECTED_SOURCE_BLOB='4dd709e3fa177b4daeed71ca97f0199757729d4b'
+EXPECTED_SEPARATION_SHA='e03e1885185f4983b3eeaa66f36510b7709d607c14010f964e0aad427ecc474a'
+EXPECTED_STRUCTURE_SIGNATURE='fnv1a32:2f493225'
 
 export OMP_NUM_THREADS=1
 export MKL_NUM_THREADS=1
@@ -32,6 +36,7 @@ fi
 
 mkdir -p "$RUN_DIR"
 START_TOTAL="$(date +%s)"
+echo "WORKBENCH_STAGE:probe runDir=$RUN_DIR"
 
 "$PYTHON" scripts/songsterr-fresh/verify_pinned_compute_authority.py \
   --validate-manifest \
@@ -39,40 +44,68 @@ START_TOTAL="$(date +%s)"
   > "$RUN_DIR/workbench-probe.stdout.json"
 
 # Fixed authorized fixture only. This does not authorize any archived pipeline.
+echo "WORKBENCH_STAGE:fixture"
 curl --fail --location --silent --show-error --retry 3 \
   'https://raw.githubusercontent.com/dadrockyt-sys/dadrock-tabs-android/main/public/jimmy-paige-midterm-v1/gomyway-midterm-source.m4a' \
   --output "$RUN_DIR/source.m4a"
-test "$(git hash-object "$RUN_DIR/source.m4a")" = '4dd709e3fa177b4daeed71ca97f0199757729d4b'
+SOURCE_BLOB="$(git hash-object "$RUN_DIR/source.m4a")"
+if [[ "$SOURCE_BLOB" != "$EXPECTED_SOURCE_BLOB" ]]; then
+  echo "SONGSTERR_FRESH_WORKBENCH_ERROR:SOURCE_FIXTURE_IDENTITY_CHANGED:expected=$EXPECTED_SOURCE_BLOB:actual=$SOURCE_BLOB" >&2
+  exit 2
+fi
 
+# Decode-byte identity is authority provenance, not a workbench correctness gate.
+# The exact source blob remains mandatory. Codespaces FFmpeg variation is captured
+# explicitly and keeps this run non-authoritative.
+echo "WORKBENCH_STAGE:decode"
 ffmpeg -hide_banner -loglevel error -y -i "$RUN_DIR/source.m4a" -ac 1 -ar 22050 "$RUN_DIR/analysis.wav"
 ffmpeg -hide_banner -loglevel error -y -i "$RUN_DIR/source.m4a" -ac 2 -ar 44100 "$RUN_DIR/separation.wav"
-test "$(sha256sum "$RUN_DIR/separation.wav" | awk '{print $1}')" = 'e03e1885185f4983b3eeaa66f36510b7709d607c14010f964e0aad427ecc474a'
+ANALYSIS_SHA="$(sha256sum "$RUN_DIR/analysis.wav" | awk '{print $1}')"
+SEPARATION_SHA="$(sha256sum "$RUN_DIR/separation.wav" | awk '{print $1}')"
+if [[ "$SEPARATION_SHA" != "$EXPECTED_SEPARATION_SHA" ]]; then
+  echo "WORKBENCH_DIAGNOSTIC:SEPARATION_WAV_DIFFERS_FROM_AUTHORITY_BASELINE:expected=$EXPECTED_SEPARATION_SHA:actual=$SEPARATION_SHA"
+fi
 
 START_STRUCTURE="$(date +%s)"
+echo "WORKBENCH_STAGE:structure"
 "$PYTHON" scripts/songsterr-fresh/analyze_full_mixture_structure.py \
   --input "$RUN_DIR/analysis.wav" \
   --output "$RUN_DIR/raw-structure-analysis.json" \
   --audio-source 'public/jimmy-paige-midterm-v1/gomyway-midterm-source.m4a@main#4dd709e3fa177b4daeed71ca97f0199757729d4b'
 node scripts/songsterr-fresh/build_structure_map.mjs "$RUN_DIR/raw-structure-analysis.json" "$RUN_DIR/adapted-structure-map.json"
 node scripts/songsterr-fresh/build_note_evidence_context.mjs "$RUN_DIR/adapted-structure-map.json" "$RUN_DIR/note-evidence-context.json"
-RUN_DIR="$RUN_DIR" node --input-type=module - <<'NODE'
-import { readFile } from 'node:fs/promises';
+RUN_DIR="$RUN_DIR" EXPECTED_STRUCTURE_SIGNATURE="$EXPECTED_STRUCTURE_SIGNATURE" node --input-type=module - <<'NODE'
+import { readFile, writeFile } from 'node:fs/promises';
 const context = JSON.parse(await readFile(`${process.env.RUN_DIR}/note-evidence-context.json`, 'utf8'));
-if (context?.structureIdentity?.signature !== 'fnv1a32:2f493225') throw new Error('FROZEN_STRUCTURE_IDENTITY_CHANGED');
-if (context?.referenceBlind !== true || context?.structureFrozen !== true || context?.structureAcceptance?.accepted !== true) {
-  throw new Error('FROZEN_STRUCTURE_CONTEXT_NOT_ACCEPTED_REFERENCE_BLIND');
-}
+if (context?.referenceBlind !== true) throw new Error('WORKBENCH_REFERENCE_BLIND_GUARD_FAILED');
+const actual = context?.structureIdentity?.signature ?? null;
+const expected = process.env.EXPECTED_STRUCTURE_SIGNATURE;
+const diagnostic = {
+  expectedStructureSignature: expected,
+  actualStructureSignature: actual,
+  structureIdentityMatchesAuthorityBaseline: actual === expected,
+  referenceBlind: context?.referenceBlind === true,
+  structureFrozen: context?.structureFrozen === true,
+  structureAccepted: context?.structureAcceptance?.accepted === true,
+  authorityEligible: false,
+};
+await writeFile(`${process.env.RUN_DIR}/structure-diagnostic.json`, `${JSON.stringify(diagnostic, null, 2)}\n`, 'utf8');
+if (actual !== expected) console.log(`WORKBENCH_DIAGNOSTIC:STRUCTURE_IDENTITY_DIFFERS_FROM_AUTHORITY_BASELINE:expected=${expected}:actual=${actual}`);
 NODE
 END_STRUCTURE="$(date +%s)"
 
 START_DEMUCS="$(date +%s)"
+echo "WORKBENCH_STAGE:demucs"
 /usr/bin/time -v -o "$RUN_DIR/demucs-resource.txt" \
   "$PYTHON" -m demucs -n htdemucs_6s --device cpu --shifts 0 --overlap 0.25 --segment 7 \
   -o "$RUN_DIR/separated" "$RUN_DIR/separation.wav"
 END_DEMUCS="$(date +%s)"
 
 STEM="$RUN_DIR/separated/htdemucs_6s/separation/guitar.wav"
-test -s "$STEM"
+if [[ ! -s "$STEM" ]]; then
+  echo "SONGSTERR_FRESH_WORKBENCH_ERROR:DEMUCS_GUITAR_STEM_MISSING" >&2
+  exit 2
+fi
 "$PYTHON" scripts/songsterr-fresh/verify_demucs_model_asset.py --output "$RUN_DIR/demucs-model-asset.json"
 RUN_DIR="$RUN_DIR" "$PYTHON" - <<'PY'
 import json, os
@@ -86,6 +119,7 @@ PY
 
 STEM_SHA="$(sha256sum "$STEM" | awk '{print $1}')"
 START_BP="$(date +%s)"
+echo "WORKBENCH_STAGE:basic-pitch"
 /usr/bin/time -v -o "$RUN_DIR/basic-pitch-resource.txt" \
   "$PYTHON" scripts/songsterr-fresh/transcribe_isolated_guitar_basic_pitch.py \
     --input "$STEM" \
@@ -96,6 +130,7 @@ START_BP="$(date +%s)"
     --separation-source "demucs==4.1.0/htdemucs_6s/shifts=0/overlap=0.25/segment=7:guitar@sha256:${STEM_SHA}"
 END_BP="$(date +%s)"
 
+echo "WORKBENCH_STAGE:evidence"
 node scripts/songsterr-fresh/build_isolated_polyphonic_note_evidence.mjs \
   "$RUN_DIR/note-evidence-context.json" \
   "$RUN_DIR/basic-pitch-guitar-notes.json" \
@@ -105,6 +140,8 @@ END_TOTAL="$(date +%s)"
 
 RUN_DIR="$RUN_DIR" \
 SOURCE_COMMIT="$SOURCE_COMMIT" \
+SOURCE_BLOB="$SOURCE_BLOB" ANALYSIS_SHA="$ANALYSIS_SHA" SEPARATION_SHA="$SEPARATION_SHA" \
+EXPECTED_SOURCE_BLOB="$EXPECTED_SOURCE_BLOB" EXPECTED_SEPARATION_SHA="$EXPECTED_SEPARATION_SHA" \
 START_TOTAL="$START_TOTAL" END_TOTAL="$END_TOTAL" \
 START_STRUCTURE="$START_STRUCTURE" END_STRUCTURE="$END_STRUCTURE" \
 START_DEMUCS="$START_DEMUCS" END_DEMUCS="$END_DEMUCS" \
@@ -135,9 +172,10 @@ def time_value(path, prefix):
     return None
 
 probe = json.loads((base / 'workbench-probe.json').read_text(encoding='utf-8'))
+structure = json.loads((base / 'structure-diagnostic.json').read_text(encoding='utf-8'))
 summary = {
-    'contract': 'songsterr-fresh-codespaces-workbench-measurement-v1',
-    'version': 1,
+    'contract': 'songsterr-fresh-codespaces-workbench-measurement-v2',
+    'version': 2,
     'sourceCommit': os.environ['SOURCE_COMMIT'],
     'workbenchOnly': True,
     'authorityEligible': False,
@@ -152,6 +190,17 @@ summary = {
         'modelName': probe['fingerprint']['hardware']['modelName'],
         'vendorId': probe['fingerprint']['hardware']['vendorId'],
     },
+    'decodeDiagnostics': {
+        'sourceBlob': os.environ['SOURCE_BLOB'],
+        'expectedSourceBlob': os.environ['EXPECTED_SOURCE_BLOB'],
+        'sourceBlobMatchesAuthorizedFixture': os.environ['SOURCE_BLOB'] == os.environ['EXPECTED_SOURCE_BLOB'],
+        'analysisWavSha256': os.environ['ANALYSIS_SHA'],
+        'separationWavSha256': os.environ['SEPARATION_SHA'],
+        'authorityBaselineSeparationWavSha256': os.environ['EXPECTED_SEPARATION_SHA'],
+        'separationWavMatchesAuthorityBaseline': os.environ['SEPARATION_SHA'] == os.environ['EXPECTED_SEPARATION_SHA'],
+        'decodeByteIdentityUsedForAuthority': False,
+    },
+    'structureDiagnostics': structure,
     'timingsSeconds': {
         'structure': seconds('START_STRUCTURE', 'END_STRUCTURE'),
         'demucs': seconds('START_DEMUCS', 'END_DEMUCS'),
