@@ -1,0 +1,227 @@
+name: Songsterr Fresh Independent Corroboration V2 CI
+
+on:
+  workflow_dispatch:
+  push:
+    branches:
+      - songsterr-fresh-pipeline-v1
+    paths:
+      - 'scripts/songsterr-fresh/independent_pitch_corroboration_v2.py'
+      - 'docs/checkpoints/SONGSTERR_FRESH_INDEPENDENT_CORROBORATION_CONTROLLED_FIXTURES_V2.json'
+      - 'docs/checkpoints/SONGSTERR_FRESH_INDEPENDENT_CORROBORATION_V2.md'
+      - 'docs/checkpoints/SONGSTERR_FRESH_MODEL_EVIDENCE_ADMISSION_PREREGISTRATION_V2.md'
+      - '.github/workflows/songsterr-fresh-independent-corroboration-v2-ci.yml'
+
+permissions:
+  contents: read
+
+jobs:
+  controlled-fixtures:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.10'
+
+      - name: Install fixed lightweight research dependencies
+        shell: bash
+        run: |
+          set -euo pipefail
+          python -m pip install --disable-pip-version-check \
+            numpy==1.26.4 \
+            soundfile==0.13.1
+
+      - name: Compile frozen V2 corroborator
+        shell: bash
+        run: |
+          set -euo pipefail
+          python -m py_compile scripts/songsterr-fresh/independent_pitch_corroboration_v2.py
+
+      - name: Run exact controlled V2 fixture suite
+        shell: bash
+        run: |
+          set -euo pipefail
+          rm -rf /tmp/songsterr-independent-corroboration-v2-fixtures
+          python scripts/songsterr-fresh/independent_pitch_corroboration_v2.py \
+            --self-test \
+            --fixture-manifest docs/checkpoints/SONGSTERR_FRESH_INDEPENDENT_CORROBORATION_CONTROLLED_FIXTURES_V2.json \
+            --fixture-output-dir /tmp/songsterr-independent-corroboration-v2-fixtures \
+            | tee /tmp/songsterr-independent-corroboration-v2-report.json
+
+      - name: Verify V2 contract and fail-closed guards
+        shell: bash
+        run: |
+          set -euo pipefail
+          python - <<'PY'
+          import importlib.util
+          import json
+          import tempfile
+          from collections import Counter
+          from pathlib import Path
+
+          import numpy as np
+          import soundfile as sf
+
+          report = json.loads(
+              Path('/tmp/songsterr-independent-corroboration-v2-report.json').read_text(encoding='utf-8')
+          )
+          assert report['contract'] == 'songsterr-fresh-independent-pitch-corroboration-research-v2'
+          assert report['fixtureContract'] == 'songsterr-fresh-independent-pitch-corroboration-fixtures-v2'
+          assert report['suiteStatus'] == 'PASS'
+          assert report['fixtureCount'] == 15
+
+          counts = Counter(row['observedClassification'] for row in report['fixtures'])
+          assert counts == {
+              'independently-corroborated-candidate': 6,
+              'not-independently-corroborated': 7,
+              'insufficient-evidence': 2,
+          }
+          for row in report['fixtures']:
+              assert row['observedClassification'] == row['expectedClassification']
+              assert len(row['pcm16WavSha256']) == 64
+
+          boundary = report['policyBoundary']
+          for key in (
+              'authorizedSongEvaluated',
+              'referenceTabUsed',
+              'professionalScorerUsed',
+              'legacyV143ScorerImported',
+              'goatResearchUsed',
+              'basicPitchActivationUsed',
+              'basicPitchDecisionSurfaceUsed',
+              'basicPitchNoteSpanAmplitudeUsed',
+              'basicPitchDecodedNoteEndUsed',
+              'durationAuthorityChanged',
+              'admissionDecisionMade',
+              'modelValidationComplete',
+              'mayAdvanceDelivery',
+          ):
+              assert boundary[key] is False, (key, boundary[key])
+          assert boundary['customerEligibleEvents'] == 0
+
+          path = Path('scripts/songsterr-fresh/independent_pitch_corroboration_v2.py')
+          spec = importlib.util.spec_from_file_location('corroborator_v2', path)
+          module = importlib.util.module_from_spec(spec)
+          spec.loader.exec_module(module)
+
+          assert module.SAMPLE_RATE == 44100
+          assert module.WINDOW_SAMPLES == 16384
+          assert module.FFT_SIZE == 32768
+          assert module.PLAYABLE_MIDI_MIN == 40
+          assert module.PLAYABLE_MIDI_MAX == 88
+          assert module.COMPETITOR_OFFSETS == (-12, -7, -2, -1, 1, 2, 7, 12)
+          assert module.HARMONIC_COUNT == 4
+          assert module.SPECTRAL_LOG_FLOOR == 1e-15
+          assert module.MIN_WINDOW_RMS == 1e-4
+
+          tied = module._winner_measurement({60: 1.0, 61: 1.0}, 60)
+          assert tied['uniqueBest'] is False
+          strict = module._winner_measurement({60: 1.0 + 1e-12, 61: 1.0}, 60)
+          assert strict['uniqueBest'] is True
+
+          rng = np.random.default_rng(123)
+          values = module._prepare_window(rng.standard_normal(module.WINDOW_SAMPLES))
+          acf = module._linear_autocorrelation(values, 50)
+          errors = []
+          for lag in range(51):
+              direct = float(np.dot(values, values)) if lag == 0 else float(
+                  np.dot(values[:-lag], values[lag:])
+              )
+              errors.append(abs(float(acf[lag]) - direct))
+          assert max(errors) < 1e-9, max(errors)
+
+          low = module.classify_window(np.zeros(module.WINDOW_SAMPLES), 60)
+          assert low['classification'] == module.CLASS_INSUFFICIENT
+
+          bad_evidence = {
+              'contract': module.EXPECTED_EVIDENCE_CONTRACT,
+              'referenceBlind': True,
+              'structureFrozen': True,
+              'role': 'guitar',
+              'provenance': {
+                  'referenceTabUsed': False,
+                  'professionalScorerUsed': False,
+                  'legacyV143ScorerImported': False,
+                  'modelNoteEndsUsedAsDuration': False,
+              },
+              'onsets': [{
+                  'onsetId': 'bad-duration',
+                  'sourceStart': 0.0,
+                  'selectedMidi': 60,
+                  'sourceEnd': 0.2,
+                  'durationSeconds': 0.2,
+              }],
+          }
+          try:
+              module._validate_evidence(bad_evidence)
+          except module.CorroborationError as exc:
+              assert 'DURATION_MUST_REMAIN_UNRESOLVED' in str(exc)
+          else:
+              raise AssertionError('duration-bearing evidence must fail closed')
+
+          with tempfile.TemporaryDirectory() as td:
+              td = Path(td)
+              stem = td / 'one-window.wav'
+              sf.write(
+                  stem,
+                  np.zeros(module.WINDOW_SAMPLES, dtype=np.float64),
+                  module.SAMPLE_RATE,
+                  subtype='PCM_16',
+              )
+              evidence = {
+                  'contract': module.EXPECTED_EVIDENCE_CONTRACT,
+                  'referenceBlind': True,
+                  'structureFrozen': True,
+                  'role': 'guitar',
+                  'structureIdentity': 'controlled-test',
+                  'provenance': {
+                      'referenceTabUsed': False,
+                      'professionalScorerUsed': False,
+                      'legacyV143ScorerImported': False,
+                      'modelNoteEndsUsedAsDuration': False,
+                  },
+                  'onsets': [{
+                      'onsetId': 'near-end',
+                      'sourceStart': 0.30,
+                      'selectedMidi': 60,
+                      'sourceEnd': None,
+                      'durationSeconds': None,
+                  }],
+              }
+              evidence_path = td / 'evidence.json'
+              evidence_path.write_text(json.dumps(evidence), encoding='utf-8')
+              evaluated = module.evaluate_evidence(stem, evidence_path)
+              event = evaluated['events'][0]
+              assert event['classification'] == module.CLASS_INSUFFICIENT
+              assert event['reason'] == 'FIXED_WINDOW_OUTSIDE_AUDIO'
+              assert event['onsetId'] == 'near-end'
+              assert event['sourceStart'] == 0.30
+              assert event['selectedMidi'] == 60
+              assert evaluated['identityProof']['exactEventIdentityPreserved'] is True
+              assert evaluated['policyBoundary']['modelValidationComplete'] is False
+              assert evaluated['policyBoundary']['customerEligibleEvents'] == 0
+              assert evaluated['policyBoundary']['mayAdvanceDelivery'] is False
+
+          text = path.read_text(encoding='utf-8').lower()
+          for forbidden in (
+              'gomyway-midterm-source',
+              '46.2024095',
+              '79.6261406',
+              'professional scorer',
+          ):
+              assert forbidden not in text
+
+          print('INDEPENDENT_CORROBORATION_V2_CONTRACT_GUARDS_PASS')
+          PY
+
+      - name: Confirm controlled-only execution boundary
+        shell: bash
+        run: |
+          set -euo pipefail
+          test -d /tmp/songsterr-independent-corroboration-v2-fixtures
+          test -f /tmp/songsterr-independent-corroboration-v2-report.json
+          ! grep -qi 'gomyway-midterm-source' scripts/songsterr-fresh/independent_pitch_corroboration_v2.py
+          echo 'AUTHORIZED_SONG_NOT_EVALUATED_BY_V2_CI'
