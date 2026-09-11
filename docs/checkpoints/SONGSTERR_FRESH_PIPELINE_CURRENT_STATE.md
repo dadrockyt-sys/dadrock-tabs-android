@@ -1,6 +1,6 @@
 # CURRENT STATE — Songsterr Fresh Pipeline V1
 
-Updated: 2026-09-11 00:35 America/Toronto
+Updated: 2026-09-11 01:02 America/Toronto
 Canonical branch: `songsterr-fresh-pipeline-v1`
 Canonical checkpoint: `docs/checkpoints/SONGSTERR_FRESH_PIPELINE_CURRENT_STATE.md`
 
@@ -280,6 +280,18 @@ Decision-enabled real model canary — COMPLETED GREEN:
 - `.devcontainer/songsterr-fresh-workbench/setup.sh` now distinguishes persistent Policy C (never enrolled by Codespaces) from optional explicit Policy C-S. Setup itself enrolls neither authority mode.
 - LIVE POLICY C-S QUALIFICATION SUCCEEDED on the user's active 4-core Codespace boot session at source commit `b2f246769340e4f7f6929e679692956c731efd93`. Terminal output reported `CODESPACES_SESSION_AUTHORITY_QUALIFICATION_COMPLETE`, `surfaceQualifiedForCurrentBootSession=true`, `canaryExecutions=3`, authority epoch `263237f0-b5dc-4710-bef4-e0ac855c2312`, session fingerprint `665db72ea170c6ebc51ad34348158bb12a5ded423068519f0281f4c67121ccef`, base compute fingerprint `f2ef7b579bc41b071e3856b1e02e46bc60acfc43f5d0ef7f440026ddc00bd449`, and boot-id SHA-256 `df14d2784ffff900225b7c48b2d231ee6154ab14eae95b787a55c7c59499db2d`. The exact three-canary aggregator therefore demonstrated reproducibility for this current boot session only. `modelValidationComplete=false`, customer-eligible events remain 0, `durationAuthorityChanged=false`. Stopping/restarting/rebuilding or source/fingerprint drift invalidates this qualification.
 - Even after a green C-S qualification: `modelValidationComplete:false`, customer-eligible events remain 0, duration research remains paused, and a separate model-evidence validation review is still required. A new Codespaces epoch may not inherit that review automatically.
+
+## QUALIFIED CODESPACES MODEL-EVIDENCE REVIEW — COMPLETED / NON-PROMOTIONAL
+
+- Policy C-S live session remained verified before and after the read-only model-evidence review; source commit `b2f246769340e4f7f6929e679692956c731efd93`, session fingerprint `665db72ea170c6ebc51ad34348158bb12a5ded423068519f0281f4c67121ccef`.
+- Qualified session produced exactly 1,140 events across its three qualification canaries. Hosted observation A baseline contains 1,138 events. The qualified-session decoder inventory is 1,012 threshold-onset-pass + 128 melodia-residual-pass.
+- Exactly two semantic count mismatches exist relative to hosted A.
+- MIDI 55 at frozen slot `46.151111111111106`, source start `46.20240952380952`, is the historical boundary event. It is reproducible on the qualified C-S surface and uses `threshold-onset-pass`, but independent CQT support is weak/contradictory: local semitone rank 2, octave rank 2, selected-minus-best-semitone `-0.09838294982910156 dB`, selected-minus-best-compared-alternative `-10.063761711120605 dB`.
+- MIDI 64 at frozen slot `79.60816326530613`, source start `79.62614058956916`, is the second qualified-session-only event. It uses `threshold-onset-pass` and has stronger independent CQT support: local semitone rank 1, octave rank 1, selected-minus-best-semitone and selected-minus-best-compared-alternative both `+3.947506904602051 dB`.
+- These observations explicitly separate reproducibility from model correctness. The MIDI-55 event is a concrete counterexample to promoting a stable C-S output merely because it is exact across repeated executions.
+- The independent pitch-support probe remains descriptive only. No threshold may be back-fit from these observed examples, and neither mismatch may be used to define an admission cutoff post hoc.
+- Detailed record: `docs/checkpoints/SONGSTERR_FRESH_CODESPACES_MODEL_EVIDENCE_REVIEW.md`.
+- Therefore `modelValidationComplete:false`, customer-eligible events remain 0, `mayAdvanceDelivery:false`, and duration research remains paused.
 
 ## CURRENT ACCEPTANCE STATE
 
