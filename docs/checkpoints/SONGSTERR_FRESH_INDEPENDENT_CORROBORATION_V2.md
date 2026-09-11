@@ -86,11 +86,13 @@ The manifest contains 15 deterministic exact PCM16 WAV identities:
 
 The evaluator regenerates every fixture and requires the exact committed SHA-256 before accepting the classification assertion.
 
+The canonical fixture-generation environment for CI is Python 3.10 with NumPy `1.26.4` and SoundFile `0.13.1`, matching the frozen lightweight V2 workflow dependencies. Exact PCM fixture identities must be frozen from that environment; a hash produced by a different NumPy/libm environment is not accepted as the canonical fixture identity.
+
 ## Controlled verification already performed before CI wiring
 
 Local controlled-only checks passed before CI was added:
 - Python compile;
-- 15/15 exact fixture classifications, distribution 6/7/2;
+- 15/15 fixture classifications, distribution 6/7/2;
 - direct-dot-product versus FFT positive-lag autocorrelation numerical check (maximum absolute difference approximately `1.99e-13` in that deterministic check);
 - exact score tie fails unique-best;
 - duration-bearing upstream evidence is rejected;
@@ -98,6 +100,12 @@ Local controlled-only checks passed before CI was added:
 - policy boundary remains non-promotional.
 
 No authorized-song evaluation was performed during these checks.
+
+## First focused CI integration result
+
+Focused run `34622138929`, job `103338450038`, compiled the V2 evaluator successfully but stopped at exact fixture identity verification: `attack_noise_m64` differed from the initially committed hash. This is an environment/fixture-freeze integration mismatch, not a classification/scoring failure: the initial manifest was generated in a newer local NumPy environment while CI intentionally uses NumPy `1.26.4`.
+
+The scoring method, fixture signal definitions, expected 6/7/2 class labels, preregistered constants, and promotion guards were not changed in response. CI instrumentation was extended to emit all generated fixture identities under the pinned Python 3.10 / NumPy 1.26.4 environment so the exact canonical PCM identities can be corrected once, before controlled classification assertions proceed.
 
 ## Promotion / execution boundary
 
