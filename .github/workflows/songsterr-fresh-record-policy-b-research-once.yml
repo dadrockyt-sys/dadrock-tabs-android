@@ -1,0 +1,98 @@
+name: Songsterr Fresh Record Policy B Research Once
+
+on:
+  push:
+    branches:
+      - songsterr-fresh-pipeline-v1
+    paths:
+      - '.github/workflows/songsterr-fresh-record-policy-b-research-once.yml'
+
+permissions:
+  contents: write
+
+jobs:
+  update-checkpoint:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 10
+    steps:
+      - name: Check out fresh branch
+        uses: actions/checkout@v4
+        with:
+          ref: songsterr-fresh-pipeline-v1
+          fetch-depth: 0
+
+      - name: Record Policy B numerical-bound conclusion
+        run: |
+          python - <<'PY'
+          from datetime import datetime
+          from pathlib import Path
+          from zoneinfo import ZoneInfo
+
+          cp = Path('docs/checkpoints/SONGSTERR_FRESH_PIPELINE_CURRENT_STATE.md')
+          text = cp.read_text(encoding='utf-8')
+
+          section = '\n'.join([
+              '## POLICY B NUMERICAL BOUND RESEARCH — COMPLETED / NO JUSTIFIED END-TO-END BOUND',
+              '',
+              '- Detailed research: `docs/checkpoints/SONGSTERR_FRESH_POLICY_B_NUMERICAL_BOUND_RESEARCH.md`, commit `5baa4d7837401b68f2f8198bc522c48f705cdaf9`.',
+              '- Basic Pitch v0.4.0 decoder semantics use strict local maxima followed by `peak_thresh_mat >= onset_thresh`; the library defines a hard threshold, not an uncertainty/dead-band around 0.5.',
+              '- Spotify Basic Pitch v0.4.0 tests use `atol=1e-4, rtol=0` for the fixed `vocadito_10.wav` model-output arrays and expected note events, and its CI spans Ubuntu, Windows, and macOS. This is project regression-test tolerance for that fixture, not a documented arbitrary-input or end-to-end error guarantee.',
+              '- The fresh Linux/Python 3.10 Basic Pitch path uses `tflite-runtime`, while the full fresh chain also includes Demucs/PyTorch upstream. PyTorch does not provide complete reproducibility across releases/platforms, and TensorFlow determinism guidance likewise depends on controlled hardware/software conditions. No independent worst-case activation-error envelope for Demucs → Basic Pitch was found.',
+              '- Float32 machine epsilon alone cannot justify a decoder-threshold band because no independently established forward-error/Lipschitz bound exists for the full decoding/resampling → Demucs → Basic Pitch → inferred-onset/local-peak chain.',
+              '- Therefore Spotify’s `1e-4`, the observed A/B/C margins, current matrix maxima, current 7/20-frame drift, CPU/vendor identity, exact hashes, event frequency/count, candidate confidence, downstream agreement, or reference/professional tabs may not be used as an admission tolerance.',
+              '- Policy B currently has **no independently justified numerical admission contract** for threshold-boundary inventory toggles. The B-only MIDI-55 threshold-onset event remains unresolved model-evidence variation rather than something that may be absorbed into a fitted band.',
+              '- `MODEL_EVIDENCE_VALIDATION_PENDING` remains active. `modelValidationComplete` remains false; customer-eligible events remain 0; duration research remains paused.',
+              '',
+          ]) + '\n'
+
+          acceptance = '## CURRENT ACCEPTANCE STATE\n'
+          heading = '## POLICY B NUMERICAL BOUND RESEARCH — COMPLETED / NO JUSTIFIED END-TO-END BOUND\n'
+          if heading in text:
+              start = text.index(heading)
+              end = text.index(acceptance, start)
+              text = text[:start] + section + text[end:]
+          else:
+              if acceptance not in text:
+                  raise SystemExit('checkpoint acceptance marker missing; fail closed')
+              text = text.replace(acceptance, section + acceptance, 1)
+
+          next_heading = '## FRESH-CHAT NEXT ENGINEERING STEPS\n'
+          archive_marker = 'The archived V143/Gomyway pipeline remains out of scope unless explicitly requested.'
+          next_section = '\n'.join([
+              '## FRESH-CHAT NEXT ENGINEERING STEPS',
+              '',
+              '1. Treat A/B/C decision-surface inspection, exact decoder replay, decoder-trace comparison, automatic post-canary trace preservation, and independent numerical-bound research as completed evidence/infrastructure. Do not rerun them merely to rediscover the current sample.',
+              '2. Keep `modelValidationComplete:false`, customer-eligible events at 0, and duration research paused. Policy B currently has no justified end-to-end numerical admission tolerance for threshold-boundary inventory toggles.',
+              '3. Evaluate architectural resolution options without post-hoc CPU/output selection or observed-margin fitting. The main safe question is whether the supported execution contract can be narrowed or redesigned so model evidence has a separately justified deterministic/reproducibility contract.',
+              '4. Distinguish an **execution contract** from a CPU/vendor selector: a valid contract must be specified prospectively, reference-blind, reproducible, and testable before seeing fixture output. Do not admit/reject based on which vendor or exact hash happens to produce a desired note inventory.',
+              '5. Consider whether a runtime/model representation with stronger deterministic semantics (for example a separately validated fixed/quantized execution path) could remove threshold-crossing ambiguity. Any such change is a new model/runtime architecture and must be validated independently; do not silently swap runtimes or thresholds.',
+              '6. If no prospective execution/runtime contract can supply the missing guarantee, preserve the explicit result that current Policy B cannot advance model validation. Do not manufacture a tolerance from additional samples.',
+              '7. Keep `.github/workflows/songsterr-fresh-decoder-trace-followup.yml` enabled for future successful independent canaries so mechanism evidence remains automatically preserved.',
+              '8. Do not use exact hashes, CPU/vendor identity, historical frequency, event count, candidate confidence, reference tabs, downstream agreement, Spotify’s `1e-4` fixture tolerance, or current min/max margins as admission criteria.',
+              '9. Keep the archived V143/Gomyway implementation/reference/pro scorer path out of scope and keep V2/V3 duration work paused until upstream model-evidence validation is actually resolved.',
+              '',
+          ]) + '\n'
+
+          if next_heading not in text or archive_marker not in text:
+              raise SystemExit('checkpoint next-step markers missing; fail closed')
+          start = text.index(next_heading)
+          end = text.index(archive_marker, start)
+          text = text[:start] + next_section + text[end:]
+
+          stamp = datetime.now(ZoneInfo('America/Toronto')).strftime('%Y-%m-%d %H:%M America/Toronto')
+          lines = text.splitlines()
+          for index, line in enumerate(lines):
+              if line.startswith('Updated: '):
+                  lines[index] = f'Updated: {stamp}'
+                  break
+          cp.write_text('\n'.join(lines) + '\n', encoding='utf-8')
+          PY
+          git diff --check
+
+      - name: Commit canonical checkpoint update
+        run: |
+          git config user.name 'dadrockyt-sys'
+          git config user.email 'Stephen.s.mcnally@gmail.com'
+          git add docs/checkpoints/SONGSTERR_FRESH_PIPELINE_CURRENT_STATE.md
+          git commit -m 'docs: record Policy B numerical-bound conclusion'
+          git push origin HEAD:songsterr-fresh-pipeline-v1
