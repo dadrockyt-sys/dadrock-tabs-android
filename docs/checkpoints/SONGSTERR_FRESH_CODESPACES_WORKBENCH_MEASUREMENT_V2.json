@@ -1,0 +1,54 @@
+{
+  "authorityEligible": false,
+  "contract": "songsterr-fresh-codespaces-workbench-measurement-v2",
+  "customerEligibleEvents": 0,
+  "decodeDiagnostics": {
+    "analysisWavSha256": "01c504b7a1042ff18f88fd477bc3685e0a283adfb1690aa45c4abda52e88c546",
+    "authorityBaselineSeparationWavSha256": "e03e1885185f4983b3eeaa66f36510b7709d607c14010f964e0aad427ecc474a",
+    "decodeByteIdentityUsedForAuthority": false,
+    "expectedSourceBlob": "4dd709e3fa177b4daeed71ca97f0199757729d4b",
+    "separationWavMatchesAuthorityBaseline": false,
+    "separationWavSha256": "2d6e13d1a8e1f1ec8e35acaaebe9f8877ee3a308302063e753ce75fee1e208c1",
+    "sourceBlob": "4dd709e3fa177b4daeed71ca97f0199757729d4b",
+    "sourceBlobMatchesAuthorizedFixture": true
+  },
+  "durationAuthorityChanged": false,
+  "hardware": {
+    "logicalCpuCount": 4,
+    "modelName": "AMD EPYC 7763 64-Core Processor",
+    "vendorId": "AuthenticAMD"
+  },
+  "identities": {
+    "activationBundleSha256": "92f14a4c18c53b6e1b0490adde45e72da17de0e32e565770a1d8fc7e1246273d",
+    "canonicalEvidenceSha256": "dacd303abb868eb5d5e15877337ac67afeb6f23ebb2aa0cd3f5550810a6172da",
+    "decisionSurfaceSha256": "1d089df0116313f20252d3db84fdc21a142e7101e083a0a881d8e6cc508a619f",
+    "guitarStemSha256": "4bbcefd2b8bdf057af407640604106dc6438560155c378290ccc8b3e1ac9c656",
+    "noteInferenceSha256": "8691a162c53b9894b5e3c4f9ddf86695ae8b7b33dc2d465517d2388c99535f63"
+  },
+  "mayAdvanceDelivery": false,
+  "modelValidationComplete": false,
+  "probeAloneEnrollsAuthority": false,
+  "resources": {
+    "basicPitchMaximumResidentSetKb": "396552",
+    "demucsMaximumResidentSetKb": "2492104"
+  },
+  "sourceCommit": "3faf16b740846ebd3106d81cb1cf1dcefe1001d5",
+  "structureDiagnostics": {
+    "actualStructureSignature": "fnv1a32:2f493225",
+    "authorityEligible": false,
+    "expectedStructureSignature": "fnv1a32:2f493225",
+    "referenceBlind": true,
+    "structureAccepted": true,
+    "structureFrozen": true,
+    "structureIdentityMatchesAuthorityBaseline": true
+  },
+  "timingsSeconds": {
+    "basicPitch": 11,
+    "demucs": 236,
+    "structure": 31,
+    "total": 283
+  },
+  "version": 2,
+  "workbenchFingerprintSha256": "f2ef7b579bc41b071e3856b1e02e46bc60acfc43f5d0ef7f440026ddc00bd449",
+  "workbenchOnly": true
+}
