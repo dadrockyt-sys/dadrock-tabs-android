@@ -12,9 +12,17 @@ V1, V2, and V3 are closed as admission-authority candidates. V3 completed a froz
 
 V4 asks a narrower question:
 
-> Can a deliberately conservative, duration-free, model-independent temporal-consensus signal test identify a subset of existing Basic Pitch note events whose selected MIDI remains the unique winner across multiple post-onset time views and two distinct signal representations?
+> Can a deliberately conservative, duration-free, model-independent temporal-consensus signal test identify a subset of existing Basic Pitch note events whose selected MIDI remains supported across multiple post-onset time views and two distinct signal representations?
 
 V4 does **not** change Basic Pitch, does not alter event onset/MIDI identity, and does not authorize delivery.
+
+## Preregistration amendment before implementation
+
+The initial V4 draft proposed a real-cepstrum second view. Before implementation and before any real-corpus/protected-song execution, a synthetic-only E2 fixture exposed octave/harmonic aliasing: the plain cepstral maximum preferred a high harmonic rather than the synthetic fundamental.
+
+Because this occurred entirely on generated synthetic audio, before implementation freeze and before any external correctness result, View 2 is replaced here with standard YIN fundamental estimation. No GuitarSet event, IDMT event, protected-song event, reference tab, or historical V3 false-positive example was inspected to make this change.
+
+This amended document is the operative V4 preregistration for implementation.
 
 ## Anti-retuning boundary
 
@@ -56,8 +64,8 @@ Forbidden classification inputs:
 
 - sample rate: exactly `44100` Hz;
 - playable MIDI range: exactly `40..88` inclusive;
-- every candidate MIDI in the complete range `40..88` competes in every view;
-- no local competitor subset.
+- every MIDI in `40..88` competes in the spectral view;
+- no local spectral competitor subset.
 
 ## Frozen temporal windows
 
@@ -70,7 +78,7 @@ Relative start offsets from the rounded onset sample `floor(sourceStart*44100 + 
 
 Thus the final required sample is onset + `21504` samples.
 
-Rationale frozen before results: a plucked guitar note should exhibit pitch evidence beyond the immediate attack transient. Requiring the same selected MIDI to survive separated early/mid/late views is intentionally conservative and trades recall for precision.
+Rationale frozen before real results: a plucked guitar note should exhibit pitch evidence beyond the immediate attack transient. Requiring the same selected MIDI to survive separated early/mid/late views is intentionally conservative and trades recall for precision.
 
 If any required window is outside the audio, classification is `insufficient-evidence`.
 
@@ -91,25 +99,30 @@ For each temporal window:
 
 The spectral winner is the unique MIDI with strictly greatest score across all `40..88`. Any exact tie means no unique winner.
 
-## View 2 — real-cepstrum periodicity
+## View 2 — standard YIN fundamental estimate
 
-From the same demeaned/Hann window and exact `32768`-point magnitude spectrum:
-1. floor magnitudes at `1e-15` only for finite logarithms;
-2. compute the real cepstrum as `irfft(log(magnitude), n=32768)`;
-3. for each MIDI candidate, convert its semitone frequency cell to the corresponding lag interval in samples;
-4. inspect integer quefrency samples inside that interval;
-5. candidate cepstral score = maximum real-cepstrum value in the interval; ties inside the cell use the smaller lag;
-6. the cepstral winner is the unique MIDI with strictly greatest score across all `40..88`.
+For each same raw 8192-sample temporal window, use `librosa.yin` version `0.11.0` with exactly:
+- `sr=44100`;
+- `frame_length=8192`;
+- `hop_length=8192`;
+- `center=False`;
+- `fmin = midi_to_hz(39.5)`;
+- `fmax = midi_to_hz(88.5)`;
+- `trough_threshold=0.1` (the standard YIN/librosa default threshold; frozen before real data).
 
-No score-margin threshold is permitted.
+Exactly one frame/fundamental estimate is expected.
+
+Convert finite positive YIN frequency to floating MIDI using `69 + 12*log2(f0/440)`. The YIN winner is the integer MIDI whose equal-tempered semitone cell `[m-0.5,m+0.5)` contains that estimate. If no playable cell contains the estimate, the YIN view does not select the input MIDI.
+
+No confidence score, probability, score margin, or learned calibration is used.
 
 ## Frozen V4 classification
 
-For each of the three windows there are exactly two required winners: spectral and cepstral.
+For each of the three windows there are exactly two required decisions: spectral unique winner and YIN semitone-cell winner.
 
-- `independently-corroborated-candidate` only if `selectedMidi` is the strict unique winner in **all six** views (spectral + cepstral across A/B/C).
-- `not-independently-corroborated` if every window is valid but any view has another winner or no unique winner.
-- `insufficient-evidence` if input is invalid/non-finite, MIDI/sample-rate contract fails, any required window is truncated, or any window has exactly zero demeaned energy.
+- `independently-corroborated-candidate` only if `selectedMidi` is the spectral strict unique winner **and** the YIN winner in **all three** windows.
+- `not-independently-corroborated` if every required window is valid but any of the six decisions disagrees or the spectral view has no unique winner.
+- `insufficient-evidence` if input is invalid/non-finite, MIDI/sample-rate contract fails, any required window is truncated, any window has exactly zero demeaned energy, or YIN cannot return one finite positive estimate.
 
 There is no voting, fallback, confidence average, learned calibration, reference-informed threshold, or event deletion.
 
@@ -124,6 +137,7 @@ V4 MUST NOT:
 - alter duration authority;
 - invoke protected-song audio;
 - invoke GuitarSet during development/CI;
+- invoke IDMT during development/CI;
 - import archived V143/Gomyway logic, GOAT, or professional/reference scorers.
 
 ## Synthetic-only development protocol
@@ -139,8 +153,8 @@ Before any external corpus execution, implementation must pass deterministic syn
 - polyphonic competing tone;
 - exact-zero audio;
 - truncated late window;
-- strict tie behavior;
-- full-range `40..88` competition;
+- strict spectral tie behavior;
+- full-range `40..88` spectral competition;
 - event identity preservation;
 - all non-promotion guards false/zero.
 
@@ -183,7 +197,7 @@ V4 preregistration itself changes no authority:
 
 ## Next allowed steps
 
-1. implement the V4 temporal-consensus evaluator exactly as preregistered;
+1. implement the amended V4 temporal-consensus evaluator exactly as preregistered;
 2. add deterministic synthetic fixtures/self-tests;
 3. add focused controlled CI that cannot access GuitarSet, IDMT, or the protected song;
 4. freeze method/implementation after green CI;
