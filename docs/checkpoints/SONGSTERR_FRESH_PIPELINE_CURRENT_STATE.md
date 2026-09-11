@@ -1,6 +1,6 @@
 # CURRENT STATE — Songsterr Fresh Pipeline V1
 
-Updated: 2026-09-10 22:09 America/Toronto
+Updated: 2026-09-10 22:16 America/Toronto
 Canonical branch: `songsterr-fresh-pipeline-v1`
 Canonical checkpoint: `docs/checkpoints/SONGSTERR_FRESH_PIPELINE_CURRENT_STATE.md`
 
@@ -260,7 +260,7 @@ Decision-enabled real model canary — COMPLETED GREEN:
 - Enrollment runbook `docs/checkpoints/SONGSTERR_FRESH_PINNED_COMPUTE_AUTHORITY_ENROLLMENT.md`, commit `d370e9728164d7985b5590beb187e5324508780d`, defines persistent-host provisioning, GitHub runner registration with `--disableupdate`, safe probe, deliberate fingerprint enrollment, ≥3 separate exact canaries, aggregation, and drift/re-enrollment procedure.
 - Bootstrap/static coverage commit `adf8146f8ca2ed7efa0b7ff71948bee1b0bed898`; run `34553026675`, job `103119686510`, success. Bootstrap shell syntax plus all Policy C fail-closed/non-promotion contracts passed.
 - Cloud/VM use is acceptable only as a reproducibility surface because every canary verifies the exact enrolled fingerprint before model execution. A materially changed VM/hardware/software surface fails closed and requires re-enrollment; Policy C is not a physical-host security attestation.
-- Current external blocker: DigitalOcean provisioning is blocked at account billing setup. Connected account reports status `warning`; SSH-key creation returned HTTP 403 with `You need to provide a payment method before trying to create resources under your account`. No Droplet, SSH key, Policy C probe, or canary was created by this attempt. After billing is enabled, provision the persistent Linux x64 host, register it as the sole `songsterr-fresh-authority-v1` runner, build the dedicated venv, and run `mode=probe`.
+- Current external blocker: DigitalOcean provisioning remains blocked at account billing setup. A fresh retry at 2026-09-10 22:15 America/Toronto again returned HTTP 403 with `You need to provide a payment method before trying to create resources under your account` while creating the authority SSH key. The API currently reports account balance/usage `0.00`, an empty Droplet list, and account status `warning` with a conflicting maximum-Droplets message. No Droplet, DigitalOcean SSH key, Policy C probe, or canary was created. The intended first authority host when unblocked is Toronto `tor1`, Intel 4 vCPU / 8 GB size `s-4vcpu-8gb-intel` (listed at $56/month at this check). After billing is enabled, provision that persistent Linux x64 host, register it as the sole `songsterr-fresh-authority-v1` runner, build the dedicated venv, and run `mode=probe`.
 - `modelValidationComplete` remains false; customer-eligible events remain 0; duration research remains paused. V2 remains authoritative and V3 candidate-only.
 
 ## CURRENT ACCEPTANCE STATE
