@@ -1,0 +1,39 @@
+name: Songsterr Fresh Codespaces Session Authority Contract Once
+
+on:
+  push:
+    branches:
+      - songsterr-fresh-pipeline-v1
+    paths:
+      - '.github/workflows/songsterr-fresh-codespaces-session-authority-contract-once.yml'
+
+permissions:
+  contents: read
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: songsterr-fresh-pipeline-v1
+
+      - name: Validate Policy C-S contracts
+        shell: bash
+        run: |
+          set -euo pipefail
+          python -m py_compile \
+            scripts/songsterr-fresh/codespaces_session_authority.py \
+            scripts/songsterr-fresh/build_codespaces_session_authority_canary.py \
+            scripts/songsterr-fresh/aggregate_codespaces_session_authority_canaries.py
+          bash -n scripts/songsterr-fresh/codespaces_session_authority.sh
+          bash -n scripts/songsterr-fresh/run_codespaces_session_authority_canary.sh
+          bash -n scripts/songsterr-fresh/qualify_codespaces_session_authority.sh
+          python scripts/songsterr-fresh/codespaces_session_authority.py self-test
+          python scripts/songsterr-fresh/build_codespaces_session_authority_canary.py --self-test
+          python scripts/songsterr-fresh/aggregate_codespaces_session_authority_canaries.py --self-test
+          grep -F 'stopRestartRebuildInvalidatesQualification' scripts/songsterr-fresh/aggregate_codespaces_session_authority_canaries.py
+          grep -F 'reEnrollmentInheritsPriorModelValidation' scripts/songsterr-fresh/codespaces_session_authority.py
+          grep -F 'customerEligibleEvents": 0' scripts/songsterr-fresh/codespaces_session_authority.py
+          grep -F 'modelValidationComplete": False' scripts/songsterr-fresh/aggregate_codespaces_session_authority_canaries.py
