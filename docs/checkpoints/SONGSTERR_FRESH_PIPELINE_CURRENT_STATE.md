@@ -158,12 +158,26 @@ Transcriber integration:
 - main decoded-note JSON is intentionally unchanged by this optional sidecar, preserving historical note/evidence identity semantics
 - shared-path edit auto-triggered several unrelated fresh workflows, including duration/V3 workflows. They are out of scope and must not be used to resume paused duration research.
 
-Decision-enabled real model canary:
+Exact decoder-mechanism replay tracer:
+- `scripts/songsterr-fresh/trace_basic_pitch_decoder_mechanisms.py`
+- implementation commit `9b4515fddd2ed6605a5494b0e75dc3cdfa390463`
+- replays Basic Pitch 0.4.0 decoder mechanics from captured same-inference matrices only; no second model invocation
+- must reproduce the existing evidence event multiset before labeling events by decoder pass (`threshold-onset` vs `melodia-residual`)
+- remains measurement-only/reference-blind/non-promotional and may not define acceptance or duration
+- focused-CI wiring commit `b5a625a4ce12f530af2a63a0e52c5c8728fa9fef`; fresh chat should verify that focused CI result/self-test before relying on tracer output
+
+Decision-enabled real model canary — COMPLETED GREEN:
 - `.github/workflows/songsterr-fresh-model-evidence-cross-run-measurement-canary.yml`
-- commit `a9671f746935fe18da1c0c48807b81ce4d1ce590`
-- run `34546969446` is active on that fixed snapshot
-- three independent observations use unchanged Demucs/Basic Pitch numerical settings, one `predict()` each, label-specific activation/decision sidecars, duration-free evidence, and all pairwise model-evidence + decision-surface comparisons
-- aggregate retains formal non-promotion assertions; no numeric diagnostic is pass/fail
+- head `a9671f746935fe18da1c0c48807b81ce4d1ce590`
+- run `34546969446`, success
+- observation jobs: A `103101649728`, B `103101649915`, C `103101649838`; all success
+- aggregate comparison job `103103047931`, success
+- aggregate artifact `10179540711`, digest `sha256:b278ab9b685bec32e9771083a158f9a51eed82f43db3c6e29d34346acaaee22f`
+- observation artifacts: A `10179528439` (`sha256:64824573cb007b4878c5b34299b2d4838909b44bd2a1f3bae158a66017ccbf6b`), B `10179504174` (`sha256:1f60d0da7a6d39ef9ec4af42a0c1b2025a4209c456d196e4a6108b9519786b2b`), C `10179525061` (`sha256:e5ebea045452b0e8d2fe74b1f2bc94f0dc923162f8cb817a6823b992ec78c524`)
+- all three observations used unchanged Demucs/Basic Pitch numerical settings, one `predict()` each, label-specific activation/decision sidecars, duration-free evidence, and all pairwise model-evidence + decision-surface comparisons
+- aggregate non-promotion guard passed; no numeric diagnostic became pass/fail or an admission bound
+- preliminary inspection of observation B: hosted runner CPU `Intel Xeon Platinum 8573C`, 1,139 decoded events, new exact stem/note/activation hashes relative to the earlier six-observation AMD history, and the historical MIDI-64 event at frozen slot `206.22657596371883` is absent
+- therefore event count alone is not a semantic-output signature, and the earlier AMD CPU/output association must not be generalized or used as an admission selector
 
 ## CURRENT ACCEPTANCE STATE
 
@@ -173,17 +187,22 @@ Blockers remain:
 - `MODEL_EVIDENCE_VALIDATION_PENDING`
 - `DURATION_EVIDENCE_INCOMPLETE`
 
-Customer-eligible events remain **0**. V2 authoritative; V3 candidate-only. Basic Pitch is not ground truth. No reference scorer/tab/archive logic. No BP end as duration. No generic next-onset duration. No same-pitch-reattack default. No threshold sweep. No promotion from exact hashes, CPU association, historical frequency, candidate confidence, or downstream agreement.
+Customer-eligible events remain **0**. V2 authoritative; V3 candidate-only. Basic Pitch is not ground truth. No reference scorer/tab/archive logic. No BP end as duration. No generic next-onset duration. No same-pitch-reattack default. No threshold sweep. No promotion from exact hashes, CPU association, historical frequency, candidate confidence, event count, or downstream agreement.
 
-## NEXT ENGINEERING STEPS
+## FRESH-CHAT NEXT ENGINEERING STEPS
 
-1. Complete/inspect decision-enabled run `34546969446` without changing model numerical controls.
-2. If all A/B/C artifacts complete, inspect decision-comparison reports only for reference-blind decoder-mechanism explanation of the toggled MIDI-64 semantic event.
-3. Determine whether the toggle is associated with a thresholded effective-onset peak or the melodia residual-energy path; do not infer acceptance from either result.
-4. If threshold crossing is observed, classify it measurement-only across independent observations before considering any invariant. Do not turn observed margin into tolerance.
-5. If melodia path is implicated, inspect its residual-energy decision boundary generically/reference-blind; do not tune the model to stabilize this fixture.
-6. Keep `modelValidationComplete:false` unless a separately justified, fail-closed admission contract emerges and is independently demonstrated.
-7. Duration research remains paused until upstream model-evidence validation is resolved.
-8. Update this checkpoint after the canary result or any material failure/fix.
+Start a new chat by reading this file and working only from `songsterr-fresh-pipeline-v1`. Do not rerun Demucs/Basic Pitch first; the completed decision-enabled run already contains the next evidence to inspect.
+
+1. Treat run `34546969446` as completed/green and begin from aggregate artifact `10179540711` plus observation artifacts A `10179528439`, B `10179504174`, C `10179525061`. Inspect the machine-produced pairwise model-evidence and decision-surface JSON reports before making any code or policy change.
+2. Enumerate every unmatched semantic event across A/B/C using the existing frozen semantic key `(nearestStructureSlot, selectedMidi)`. Explicitly include the historical MIDI-64 slot `206.22657596371883`, but do not assume it is the only instability in this newer Intel/AMD set.
+3. For each unmatched event, inspect both sides' captured raw onset, effective/inferred onset, note-frame activation, strict-local-peak state, threshold margin, and local three-frame maxima. This is explanation-only; no observed margin becomes a tolerance.
+4. Verify the focused self-test/CI for `trace_basic_pitch_decoder_mechanisms.py` (`9b4515fddd2ed6605a5494b0e75dc3cdfa390463`, CI wiring `b5a625a4ce12f530af2a63a0e52c5c8728fa9fef`). Then run the tracer against the already-captured A/B/C sidecars. It must reproduce the existing evidence multiset exactly before any decoder-pass label is trusted.
+5. Classify unmatched events by actual Basic Pitch 0.4.0 decoder mechanism: `threshold-onset` pass versus `melodia-residual` pass. Do not infer the mechanism from the legacy `confidence` field; that value is mean note-span activation and is acceptance-diagnostic-only.
+6. If instability is on the threshold-onset path, measure the representation-native decision quantities across independent observations but do **not** turn the smallest/largest observed margin, one-frame spacing, or current sample envelope into an admission tolerance. A bound still requires separate independent justification.
+7. If instability is on the melodia residual-energy path, inspect the residual-energy decision boundary generically and reference-blindly from the captured matrices/replay. Do not tune thresholds/model settings to make this fixture stable, and do not select a CPU/vendor/output that happens to suppress or emit a note.
+8. If the new run reveals more than one semantic instability or a mechanism not cleanly attributable to one decoder path, preserve that result as measurement evidence and keep validation blocked. Do not force a binary explanation.
+9. Only propose a model-evidence admission contract if it is fail-closed, reference-blind, independent of exact hashes/CPU/event count/reference tabs/downstream agreement, and justified beyond the observed sample. Until then keep `modelValidationComplete:false` and customer-eligible events at 0.
+10. Keep duration research paused. V2 remains authoritative and V3 candidate-only; do not resume release/duration work until upstream model-evidence validation is actually resolved.
+11. Update this checkpoint after the A/B/C decision-surface + exact-decoder replay findings, including any material failure/fix and the exact run/artifact/commit identities used.
 
 The archived V143/Gomyway pipeline remains out of scope unless explicitly requested.
