@@ -1,0 +1,187 @@
+name: Songsterr Fresh Policy C Pinned Compute Authority
+
+on:
+  workflow_dispatch:
+    inputs:
+      mode:
+        description: Probe an un-enrolled authority or run one enrolled authority canary
+        required: true
+        type: choice
+        options:
+          - probe
+          - canary
+
+permissions:
+  contents: read
+
+env:
+  OMP_NUM_THREADS: '1'
+  MKL_NUM_THREADS: '1'
+  OPENBLAS_NUM_THREADS: '1'
+  NUMEXPR_NUM_THREADS: '1'
+  PYTHONHASHSEED: '0'
+
+concurrency:
+  group: songsterr-fresh-pinned-compute-authority-v1
+  cancel-in-progress: false
+
+jobs:
+  probe:
+    if: inputs.mode == 'probe'
+    runs-on: [self-hosted, linux, x64, songsterr-fresh-authority-v1]
+    timeout-minutes: 10
+    steps:
+      - name: Check out exact fresh branch revision
+        uses: actions/checkout@v4
+
+      - name: Validate unambiguous Policy C manifest and collect safe fingerprint
+        shell: bash
+        run: |
+          set -euo pipefail
+          mkdir -p /tmp/songsterr-fresh-authority-probe
+          python3 scripts/songsterr-fresh/verify_pinned_compute_authority.py \
+            --validate-manifest \
+            --probe-output /tmp/songsterr-fresh-authority-probe/authority-probe.json
+
+      - name: Require the branch-pinned package set before enrollment review
+        shell: bash
+        run: |
+          set -euo pipefail
+          python3 - <<'PY'
+          import json
+          manifest = json.load(open('scripts/songsterr-fresh/pinned_compute_authority_v1.json', encoding='utf-8'))
+          probe = json.load(open('/tmp/songsterr-fresh-authority-probe/authority-probe.json', encoding='utf-8'))
+          actual = probe['fingerprint']['packages']
+          expected = manifest['requiredPackageVersions']
+          if actual != expected:
+              raise SystemExit(f'PINNED_PACKAGE_SET_MISMATCH:expected={expected}:actual={actual}')
+          if manifest['enrollmentStatus'] not in ('UNENROLLED', 'ENROLLED'):
+              raise SystemExit('AUTHORITY_ENROLLMENT_STATE_INVALID')
+          print('PINNED_PACKAGE_SET_OK')
+          PY
+
+      - name: Upload enrollment probe only
+        uses: actions/upload-artifact@v4
+        with:
+          name: songsterr-fresh-pinned-authority-probe-${{ github.run_id }}
+          path: /tmp/songsterr-fresh-authority-probe/authority-probe.json
+          if-no-files-found: error
+          retention-days: 30
+
+  canary:
+    if: inputs.mode == 'canary'
+    runs-on: [self-hosted, linux, x64, songsterr-fresh-authority-v1]
+    timeout-minutes: 90
+    steps:
+      - name: Check out exact fresh branch revision
+        uses: actions/checkout@v4
+
+      - name: Verify enrolled pinned authority before any model execution
+        shell: bash
+        run: |
+          set -euo pipefail
+          BASE="/tmp/songsterr-fresh-authority-${{ github.run_id }}"
+          mkdir -p "$BASE"
+          python3 scripts/songsterr-fresh/verify_pinned_compute_authority.py \
+            --verify-current \
+            > "$BASE/authority-verification.json"
+
+      - name: Fetch and verify exact authorized fixture with pre-enrolled toolchain
+        shell: bash
+        run: |
+          set -euo pipefail
+          BASE="/tmp/songsterr-fresh-authority-${{ github.run_id }}"
+          curl --fail --location --silent --show-error --retry 3 \
+            'https://raw.githubusercontent.com/dadrockyt-sys/dadrock-tabs-android/main/public/jimmy-paige-midterm-v1/gomyway-midterm-source.m4a' \
+            --output "$BASE/source.m4a"
+          test "$(git hash-object "$BASE/source.m4a")" = '4dd709e3fa177b4daeed71ca97f0199757729d4b'
+          ffmpeg -hide_banner -loglevel error -y -i "$BASE/source.m4a" -ac 1 -ar 22050 "$BASE/analysis.wav"
+          ffmpeg -hide_banner -loglevel error -y -i "$BASE/source.m4a" -ac 2 -ar 44100 "$BASE/separation.wav"
+          test "$(sha256sum "$BASE/separation.wav" | awk '{print $1}')" = 'e03e1885185f4983b3eeaa66f36510b7709d607c14010f964e0aad427ecc474a'
+
+      - name: Rebuild and verify frozen reference-blind structure
+        shell: bash
+        run: |
+          set -euo pipefail
+          BASE="/tmp/songsterr-fresh-authority-${{ github.run_id }}"
+          python3 scripts/songsterr-fresh/analyze_full_mixture_structure.py \
+            --input "$BASE/analysis.wav" \
+            --output "$BASE/raw-structure-analysis.json" \
+            --audio-source 'public/jimmy-paige-midterm-v1/gomyway-midterm-source.m4a@main#4dd709e3fa177b4daeed71ca97f0199757729d4b'
+          node scripts/songsterr-fresh/build_structure_map.mjs "$BASE/raw-structure-analysis.json" "$BASE/adapted-structure-map.json"
+          node scripts/songsterr-fresh/build_note_evidence_context.mjs "$BASE/adapted-structure-map.json" "$BASE/note-evidence-context.json"
+          BASE="$BASE" node --input-type=module - <<'NODE'
+          import { readFile } from 'node:fs/promises';
+          const context = JSON.parse(await readFile(`${process.env.BASE}/note-evidence-context.json`, 'utf8'));
+          if (context?.structureIdentity?.signature !== 'fnv1a32:2f493225') throw new Error('FROZEN_STRUCTURE_IDENTITY_CHANGED');
+          if (context?.referenceBlind !== true || context?.structureFrozen !== true || context?.structureAcceptance?.accepted !== true) {
+            throw new Error('FROZEN_STRUCTURE_CONTEXT_NOT_ACCEPTED_REFERENCE_BLIND');
+          }
+          NODE
+
+      - name: Run fixed Demucs separation and verify model asset
+        shell: bash
+        run: |
+          set -euo pipefail
+          BASE="/tmp/songsterr-fresh-authority-${{ github.run_id }}"
+          python3 -m demucs -n htdemucs_6s --device cpu --shifts 0 --overlap 0.25 --segment 7 -o "$BASE/separated" "$BASE/separation.wav"
+          STEM="$BASE/separated/htdemucs_6s/separation/guitar.wav"
+          test -s "$STEM"
+          python3 scripts/songsterr-fresh/verify_demucs_model_asset.py --output "$BASE/demucs-model-asset.json"
+          BASE="$BASE" python3 - <<'PY'
+          import json, os
+          base = os.environ['BASE']
+          data = json.load(open(f'{base}/demucs-model-asset.json', encoding='utf-8'))
+          if data.get('assetSha256') != 'd2a1745f0744721f6b8ca5bf469b67c651ea5ed1b52998cab033b2158609d411':
+              raise SystemExit('DEMUCS_MODEL_ASSET_CHANGED')
+          if data.get('legacyFallback', {}).get('primary') is not False:
+              raise SystemExit('DEMUCS_LEGACY_FALLBACK_MUST_NOT_BE_PRIMARY')
+          PY
+
+      - name: Run one Basic Pitch inference and preserve same-inference diagnostics
+        shell: bash
+        run: |
+          set -euo pipefail
+          BASE="/tmp/songsterr-fresh-authority-${{ github.run_id }}"
+          STEM="$BASE/separated/htdemucs_6s/separation/guitar.wav"
+          STEM_SHA="$(sha256sum "$STEM" | awk '{print $1}')"
+          python3 scripts/songsterr-fresh/transcribe_isolated_guitar_basic_pitch.py \
+            --input "$STEM" \
+            --output "$BASE/basic-pitch-guitar-notes.json" \
+            --activation-output "$BASE/basic-pitch-note-activations.json" \
+            --decision-surface-output "$BASE/basic-pitch-decision-surface.json" \
+            --audio-source 'public/jimmy-paige-midterm-v1/gomyway-midterm-source.m4a@main#4dd709e3fa177b4daeed71ca97f0199757729d4b' \
+            --separation-source "demucs==4.1.0/htdemucs_6s/shifts=0/overlap=0.25/segment=7:guitar@sha256:${STEM_SHA}"
+          node scripts/songsterr-fresh/build_isolated_polyphonic_note_evidence.mjs \
+            "$BASE/note-evidence-context.json" \
+            "$BASE/basic-pitch-guitar-notes.json" \
+            "$BASE/evidence.json"
+
+      - name: Build fail-closed authority canary summary
+        shell: bash
+        run: |
+          set -euo pipefail
+          BASE="/tmp/songsterr-fresh-authority-${{ github.run_id }}"
+          STEM="$BASE/separated/htdemucs_6s/separation/guitar.wav"
+          python3 scripts/songsterr-fresh/build_pinned_compute_authority_canary.py \
+            --manifest scripts/songsterr-fresh/pinned_compute_authority_v1.json \
+            --authority-verification "$BASE/authority-verification.json" \
+            --evidence "$BASE/evidence.json" \
+            --activation "$BASE/basic-pitch-note-activations.json" \
+            --decision "$BASE/basic-pitch-decision-surface.json" \
+            --notes "$BASE/basic-pitch-guitar-notes.json" \
+            --stem "$STEM" \
+            --source-commit '${{ github.sha }}' \
+            --run-id '${{ github.run_id }}' \
+            --output "$BASE/authority-canary.json"
+
+      - name: Upload one authority canary without promotion
+        uses: actions/upload-artifact@v4
+        with:
+          name: songsterr-fresh-pinned-authority-canary-${{ github.run_id }}
+          path: |
+            /tmp/songsterr-fresh-authority-${{ github.run_id }}/authority-verification.json
+            /tmp/songsterr-fresh-authority-${{ github.run_id }}/authority-canary.json
+            /tmp/songsterr-fresh-authority-${{ github.run_id }}/demucs-model-asset.json
+          if-no-files-found: error
+          retention-days: 30
