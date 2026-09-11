@@ -65,6 +65,28 @@ def qualification_exact_outputs(qualification: dict) -> dict[str, object]:
     return values
 
 
+def validate_qualification_policy_boundary(qualification: dict) -> None:
+    """Validate the non-promotion boundary using the qualification v1 schema."""
+    boundary = qualification.get("policyBoundary")
+    if not isinstance(boundary, dict):
+        raise SessionResearchError("QUALIFICATION_POLICY_BOUNDARY_MISSING")
+    required = {
+        "surfaceQualificationIsModelValidation": False,
+        "newSessionInheritsQualification": False,
+        "reproducibilityProofAlonePromotesModelValidation": False,
+        "modelValidationComplete": False,
+        "mayAdvanceDelivery": False,
+        "durationAuthorityChanged": False,
+        "customerEligibleEvents": 0,
+        "referenceTabUsed": False,
+        "professionalScorerUsed": False,
+        "legacyV143ScorerImported": False,
+    }
+    for field, expected in required.items():
+        if boundary.get(field) != expected:
+            raise SessionResearchError(f"QUALIFICATION_POLICY_GUARD_CHANGED:{field}")
+
+
 def main() -> int:
     if not REPO_ROOT.is_dir():
         raise SessionResearchError("REPOSITORY_ROOT_MISSING")
@@ -93,10 +115,7 @@ def main() -> int:
         raise SessionResearchError("QUALIFICATION_SOURCE_COMMIT_DOES_NOT_MATCH_HEAD")
     if qualification.get("measurement", {}).get("sessionAuthoritySurfaceQualified") is not True:
         raise SessionResearchError("SESSION_SURFACE_NOT_QUALIFIED")
-    if qualification.get("modelValidationComplete") is not False:
-        raise SessionResearchError("QUALIFICATION_PROMOTION_GUARD_CHANGED")
-    if qualification.get("customerEligibleEvents") != 0:
-        raise SessionResearchError("QUALIFICATION_CUSTOMER_ELIGIBILITY_CHANGED")
+    validate_qualification_policy_boundary(qualification)
 
     research_root = epoch_root / "independent-corroboration-v1"
     research_root.mkdir(parents=True, exist_ok=True)
