@@ -1,0 +1,152 @@
+name: Songsterr Fresh Independent Corroboration CI
+
+on:
+  workflow_dispatch:
+  push:
+    branches:
+      - songsterr-fresh-pipeline-v1
+    paths:
+      - 'scripts/songsterr-fresh/independent_pitch_corroboration_v1.py'
+      - 'docs/checkpoints/SONGSTERR_FRESH_INDEPENDENT_CORROBORATION_CONTROLLED_FIXTURES_V1.json'
+      - 'docs/checkpoints/SONGSTERR_FRESH_INDEPENDENT_CORROBORATION_V1.md'
+      - 'docs/checkpoints/SONGSTERR_FRESH_MODEL_EVIDENCE_ADMISSION_PREREGISTRATION_V1.md'
+      - '.github/workflows/songsterr-fresh-independent-corroboration-ci.yml'
+
+permissions:
+  contents: read
+
+jobs:
+  controlled-fixtures:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: songsterr-fresh-pipeline-v1
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.10'
+
+      - name: Install fixed lightweight research dependencies
+        shell: bash
+        run: |
+          set -euo pipefail
+          python -m pip install --disable-pip-version-check \
+            numpy==1.26.4 \
+            soundfile==0.13.1
+
+      - name: Compile frozen corroborator
+        shell: bash
+        run: |
+          set -euo pipefail
+          python -m py_compile scripts/songsterr-fresh/independent_pitch_corroboration_v1.py
+
+      - name: Run exact controlled fixture suite
+        shell: bash
+        run: |
+          set -euo pipefail
+          rm -rf /tmp/songsterr-independent-corroboration-fixtures
+          python scripts/songsterr-fresh/independent_pitch_corroboration_v1.py \
+            --self-test \
+            --fixture-manifest docs/checkpoints/SONGSTERR_FRESH_INDEPENDENT_CORROBORATION_CONTROLLED_FIXTURES_V1.json \
+            --fixture-output-dir /tmp/songsterr-independent-corroboration-fixtures \
+            | tee /tmp/songsterr-independent-corroboration-report.json
+
+      - name: Verify contract and fail-closed guards
+        shell: bash
+        run: |
+          set -euo pipefail
+          python - <<'PY'
+          import importlib.util
+          import json
+          import numpy as np
+          from pathlib import Path
+
+          report = json.loads(Path('/tmp/songsterr-independent-corroboration-report.json').read_text(encoding='utf-8'))
+          assert report['contract'] == 'songsterr-fresh-independent-pitch-corroboration-research-v1'
+          assert report['suiteStatus'] == 'PASS'
+          assert report['fixtureCount'] == 9
+          boundary = report['policyBoundary']
+          assert boundary['authorizedSongEvaluated'] is False
+          assert boundary['referenceTabUsed'] is False
+          assert boundary['professionalScorerUsed'] is False
+          assert boundary['legacyV143ScorerImported'] is False
+          assert boundary['basicPitchActivationUsed'] is False
+          assert boundary['basicPitchDecisionSurfaceUsed'] is False
+          assert boundary['basicPitchNoteSpanAmplitudeUsed'] is False
+          assert boundary['basicPitchDecodedNoteEndUsed'] is False
+          assert boundary['admissionDecisionMade'] is False
+          assert boundary['modelValidationComplete'] is False
+          assert boundary['mayAdvanceDelivery'] is False
+          assert boundary['durationAuthorityChanged'] is False
+          assert boundary['customerEligibleEvents'] == 0
+
+          counts = {}
+          for row in report['fixtures']:
+              counts[row['observedClassification']] = counts.get(row['observedClassification'], 0) + 1
+              assert row['observedClassification'] == row['expectedClassification']
+          assert counts == {
+              'independently-corroborated-candidate': 3,
+              'not-independently-corroborated': 4,
+              'insufficient-evidence': 2,
+          }
+
+          path = Path('scripts/songsterr-fresh/independent_pitch_corroboration_v1.py')
+          spec = importlib.util.spec_from_file_location('corroborator', path)
+          module = importlib.util.module_from_spec(spec)
+          spec.loader.exec_module(module)
+
+          # Numerically unresolved ties fail closed by the preregistered 1e-6 rule.
+          unresolved = module._winner_measurement({60: 1.0, 61: 1.0 - 5e-7}, 60)
+          assert unresolved['uniqueBest'] is False
+          resolved = module._winner_measurement({60: 1.0, 61: 1.0 - 2e-6}, 60)
+          assert resolved['uniqueBest'] is True
+
+          # Fixed low-support behavior fails closed.
+          low = module.classify_window(np.zeros(module.WINDOW_SAMPLES), 60)
+          assert low['classification'] == module.CLASS_INSUFFICIENT
+
+          # Duration-bearing upstream evidence is rejected before research scoring.
+          bad_evidence = {
+              'contract': module.EXPECTED_EVIDENCE_CONTRACT,
+              'referenceBlind': True,
+              'structureFrozen': True,
+              'role': 'guitar',
+              'provenance': {
+                  'referenceTabUsed': False,
+                  'professionalScorerUsed': False,
+                  'legacyV143ScorerImported': False,
+                  'modelNoteEndsUsedAsDuration': False,
+              },
+              'onsets': [{
+                  'onsetId': 'bad-duration',
+                  'sourceStart': 1.0,
+                  'selectedMidi': 60,
+                  'sourceEnd': 1.2,
+                  'durationSeconds': 0.2,
+              }],
+          }
+          try:
+              module._validate_evidence(bad_evidence)
+          except module.CorroborationError as exc:
+              assert 'DURATION_MUST_REMAIN_UNRESOLVED' in str(exc)
+          else:
+              raise AssertionError('duration-bearing evidence must fail closed')
+
+          assert module.SAMPLE_RATE == 44100
+          assert module.WINDOW_SAMPLES == 8192
+          assert module.FFT_SIZE == 8192
+          assert module.COMPETITOR_OFFSETS == (-12, -2, -1, 1, 2, 12)
+          assert module.HARMONIC_WEIGHTS == (1.0, 0.75, 0.5, 0.35, 0.25)
+          assert module.TIE_ABS_TOLERANCE == 1e-6
+          assert module.MIN_WINDOW_RMS == 1e-4
+          print('INDEPENDENT_CORROBORATION_CONTRACT_GUARDS_PASS')
+          PY
+
+      - name: Prove CI did not use authorized-song fixture
+        shell: bash
+        run: |
+          set -euo pipefail
+          test ! -e /tmp/gomyway-midterm-source.m4a
+          echo 'AUTHORIZED_SONG_NOT_EVALUATED'
