@@ -1,6 +1,6 @@
 # CURRENT STATE — Songsterr Fresh Pipeline V1
 
-Updated: 2026-09-10 21:25 America/Toronto
+Updated: 2026-09-10 21:30 America/Toronto
 Canonical branch: `songsterr-fresh-pipeline-v1`
 Canonical checkpoint: `docs/checkpoints/SONGSTERR_FRESH_PIPELINE_CURRENT_STATE.md`
 
@@ -200,6 +200,14 @@ Decision-enabled real model canary — COMPLETED GREEN:
 - A/C: 1138 common paired events, 0 unmatched, 0 mechanism mismatches; start/end different counts 0/0 with maxima 0/0 frames. A and C remain exact at trace level.
 - B/C matches the A/B pattern: 1138 common, 1 unmatched, 0 common mechanism mismatches; start/end maxima 7/20 frames.
 - Mechanism identity is stable for every common A/B/C semantic event in this sample. The only semantic inventory instability remains the B-only MIDI-55 threshold-onset event; this does not justify an admission band around 0.5.
+
+## DECODER TRACE CANARY INTEGRATION — IN PROGRESS
+
+- Target: integrate exact per-observation decoder traces and pairwise decoder-trace comparisons into the existing decision-enabled cross-run measurement canary, diagnostic-only and non-promotional.
+- Temporary helper run `34550779925` was rejected before job creation because an embedded multiline fragment broke helper YAML parsing. No canary or pipeline code changed.
+- Corrected helper run `34550819480`, job `103113160920`, parsed and ran but failed closed before commit at `observation-upload:EXPECTED_ONE_MATCH:GOT:0`. Cause: GitHub Actions pre-expanded literal `` tokens inside the helper where no matrix context existed, producing empty sample tokens. No canary or pipeline code changed.
+- Current repair constructs the literal downstream matrix token inside Python as `'$' + '{{ matrix.sample }}'`, preventing helper-time expression expansion. Validation still pending.
+- `modelValidationComplete` remains false; customer-eligible events remain 0; duration research remains paused.
 
 ## CURRENT ACCEPTANCE STATE
 
