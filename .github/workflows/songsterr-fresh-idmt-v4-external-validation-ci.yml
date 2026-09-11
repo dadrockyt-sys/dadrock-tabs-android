@@ -1,0 +1,84 @@
+name: Songsterr Fresh IDMT V4 External Validation Contract CI
+
+on:
+  push:
+    branches: [songsterr-fresh-pipeline-v1]
+    paths:
+      - 'scripts/songsterr-fresh/external_idmt_v4_validation.py'
+      - 'docs/checkpoints/SONGSTERR_FRESH_IDMT_V4_STAGE_B_SCORING_PREREGISTRATION.md'
+      - '.github/workflows/songsterr-fresh-idmt-v4-external-validation-ci.yml'
+  workflow_dispatch:
+
+jobs:
+  validation-contract-only:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout exact branch source
+        uses: actions/checkout@v4
+
+      - name: Set up Python 3.10
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.10'
+
+      - name: Compile validation harness
+        run: python -m py_compile scripts/songsterr-fresh/external_idmt_v4_validation.py
+
+      - name: Run synthetic matching and gate self-test
+        run: python scripts/songsterr-fresh/external_idmt_v4_validation.py --self-test
+
+      - name: Enforce frozen scoring constants and identities
+        run: |
+          python - <<'PY'
+          import importlib.util
+          from pathlib import Path
+          p=Path('scripts/songsterr-fresh/external_idmt_v4_validation.py')
+          spec=importlib.util.spec_from_file_location('m', p)
+          m=importlib.util.module_from_spec(spec); spec.loader.exec_module(m)
+          assert m.ARCHIVE_MD5 == '06796e08731bccffaed6ae59361486e4'
+          assert m.ARCHIVE_SHA256 == '02816258252538603c051054219cb4bba1c0ae8c9d0a3ca5418dfc951eae997a'
+          assert m.STAGE_A_REPORT_SHA256 == 'fd9086891a9a699619810f4bccd6f0f2533c194afc6cc1b09cf80484626d704f'
+          assert m.STAGE_B_RESULT_SHA256 == 'dfea0060296ea2289e82041545e8da0f80dd81c5dee6668e8bc7ab08293bbdeb'
+          assert m.INCLUDED_MANIFEST_SHA256 == '0c7946f6ac5af341bcca155a24189c4cd85b9366c0cab3282469ad43236ca344'
+          assert m.INCLUDED_PAIR_COUNT == 568
+          assert m.TOTAL_REFERENCE_EVENT_COUNT == 4661
+          assert m.EXPECTED_DATASET_COUNTS == {'dataset1':312,'dataset2':252,'dataset3':4}
+          assert m.ONSET_TOLERANCE_SECONDS == 0.050
+          assert m.PITCH_TOLERANCE_CENTS == 50.0
+          assert m.MIN_TOTAL_POSITIVES == 1000
+          assert m.OVERALL_WILSON_LOWER_BOUND_MIN == 0.9900
+          assert m.MANDATORY_DATASET_MIN_POSITIVES == 100
+          assert m.STRATUM_POINT_PRECISION_MIN == 0.9500
+          print('IDMT_V4_SCORING_CONSTANTS_FROZEN')
+          PY
+
+      - name: Enforce execution and non-promotion guards
+        run: |
+          python - <<'PY'
+          import ast
+          from pathlib import Path
+          p=Path('scripts/songsterr-fresh/external_idmt_v4_validation.py')
+          s=p.read_text()
+          tree=ast.parse(s)
+          imports=[]
+          for n in ast.walk(tree):
+            if isinstance(n, ast.Import): imports.extend(a.name for a in n.names)
+            elif isinstance(n, ast.ImportFrom) and n.module: imports.append(n.module)
+          forbidden_import_prefixes=('demucs','songsterr_pipeline','torch')
+          assert not any(any(name==f or name.startswith(f+'.') for f in forbidden_import_prefixes) for name in imports), imports
+          for token in ('gomyway-midterm-source','GuitarSet','V143','GOAT'):
+            assert token not in s, token
+          assert 'python_executable = sys.executable' in s
+          assert 'modelValidationComplete' in s
+          assert 'customerEligibleEvents' in s
+          assert 'mayAdvanceDelivery' in s
+          assert 'separatePolicyReviewRequired' in s
+          print('IDMT_V4_EXECUTION_BOUNDARY_VALID')
+          PY
+
+      - name: Confirm no real IDMT holdout in CI
+        run: |
+          test ! -e IDMT-SMT-GUITAR_V2.zip
+          test ! -e /workspaces/.songsterr-fresh-idmt-v4-stage-a-3ce57810/IDMT-SMT-GUITAR_V2.zip
+          test ! -e /workspaces/.songsterr-fresh-idmt-v4-stage-b-add30e94/idmt-v4-stage-b-manifest.json
+          echo 'REAL_IDMT_NOT_EVALUATED_BY_V4_VALIDATION_CI'
