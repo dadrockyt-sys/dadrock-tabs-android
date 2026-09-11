@@ -1,6 +1,6 @@
 # CURRENT STATE — Songsterr Fresh Pipeline V1
 
-Updated: 2026-09-10 21:30 America/Toronto
+Updated: 2026-09-10 21:33 America/Toronto
 Canonical branch: `songsterr-fresh-pipeline-v1`
 Canonical checkpoint: `docs/checkpoints/SONGSTERR_FRESH_PIPELINE_CURRENT_STATE.md`
 
@@ -201,12 +201,18 @@ Decision-enabled real model canary — COMPLETED GREEN:
 - B/C matches the A/B pattern: 1138 common, 1 unmatched, 0 common mechanism mismatches; start/end maxima 7/20 frames.
 - Mechanism identity is stable for every common A/B/C semantic event in this sample. The only semantic inventory instability remains the B-only MIDI-55 threshold-onset event; this does not justify an admission band around 0.5.
 
-## DECODER TRACE CANARY INTEGRATION — IN PROGRESS
+## DECODER TRACE CANARY FOLLOW-UP — AUTOMATED / LATEST GREEN
 
-- Target: integrate exact per-observation decoder traces and pairwise decoder-trace comparisons into the existing decision-enabled cross-run measurement canary, diagnostic-only and non-promotional.
-- Temporary helper run `34550779925` was rejected before job creation because an embedded multiline fragment broke helper YAML parsing. No canary or pipeline code changed.
-- Corrected helper run `34550819480`, job `103113160920`, parsed and ran but failed closed before commit at `observation-upload:EXPECTED_ONE_MATCH:GOT:0`. Cause: GitHub Actions pre-expanded literal `` tokens inside the helper where no matrix context existed, producing empty sample tokens. No canary or pipeline code changed.
-- Current repair constructs the literal downstream matrix token inside Python as `'$' + '{{ matrix.sample }}'`, preventing helper-time expression expansion. Validation still pending.
+- Permanent workflow `.github/workflows/songsterr-fresh-decoder-trace-followup.yml` automatically runs after each successful `Songsterr Fresh Model Evidence Cross-Run Measurement Canary` on `songsterr-fresh-pipeline-v1`.
+- It reuses that canary run’s already-captured A/B/C evidence + activation + decision sidecars; it does not invoke Demucs or Basic Pitch. Each trace must exactly reproduce its bound evidence before pairwise mechanism labels are accepted.
+- It runs the tracer/comparator self-tests, writes A/B/C exact decoder traces, writes pairwise decoder-trace comparisons, enforces all non-promotion guards, and uploads one trace-evidence artifact.
+- Latest source canary run `34546969446` at head `a9671f746935fe18da1c0c48807b81ce4d1ce590`; automatic trace follow-up run `34551100451`.
+- Latest trace artifact `10180829255`; digest `sha256:3e30caba4a420bd8204cd95e7b34b66294bcfd8a9bfd492762be097728422b42`; expires `2026-09-25T01:33:09Z`.
+- A/B: common=1138, unmatched=1, mechanismMismatch=0, startDiff=1 max=7, endDiff=1 max=20.
+- A/C: common=1138, unmatched=0, mechanismMismatch=0, startDiff=0 max=0, endDiff=0 max=0.
+- B/C: common=1138, unmatched=1, mechanismMismatch=0, startDiff=1 max=7, endDiff=1 max=20.
+- This automation preserves mechanism-level measurement evidence for future independent canaries. It does not create an onset tolerance, choose a preferred CPU/output, mark model validation complete, or resume duration work.
+- Prior helper failures `34550779925`, `34550819480`, and `34550900008` were integration mechanics only. The last helper successfully built the intended canary diff but GitHub correctly rejected its workflow-file push because Actions `GITHUB_TOKEN` lacks workflow-file write scope; no model/pipeline behavior was changed by those failures.
 - `modelValidationComplete` remains false; customer-eligible events remain 0; duration research remains paused.
 
 ## CURRENT ACCEPTANCE STATE
@@ -221,12 +227,12 @@ Customer-eligible events remain **0**. V2 authoritative; V3 candidate-only. Basi
 
 ## FRESH-CHAT NEXT ENGINEERING STEPS
 
-1. Treat the A/B/C decision-surface inspection, exact decoder replay, and decoder-trace comparison as completed evidence. Do not rerun them merely to rediscover the current sample.
-2. Keep `modelValidationComplete:false`, customer-eligible events at 0, and duration research paused. The B-only MIDI-55 event is a proven `threshold-onset-pass` toggle around the fixed Basic Pitch onset threshold, but its observed margins and the 7/20-frame common-event span drift are measurement evidence only.
-3. Integrate exact decoder traces and pairwise decoder-trace comparisons into the decision-enabled cross-run measurement canary so future independent observations automatically preserve mechanism-level evidence. Keep this integration diagnostic-only and non-promotional.
-4. Before proposing any onset-boundary admission rule, look for an independent reference-blind justification for a decision uncertainty boundary. Do not derive a tolerance from the current observed margins, matrix maxima, frame spacing, CPU/vendor grouping, event frequency, or downstream agreement.
-5. If no independent bound exists, record that Policy B still lacks a justified admission contract for threshold-boundary inventory toggles. Do not manufacture one from more samples alone.
-6. If additional independent observations are later collected, use the existing frozen settings and automatic trace-comparison path; treat them as measurement/history evidence, not as a way to tune thresholds to this fixture.
+1. Treat A/B/C decision-surface inspection, exact decoder replay, decoder-trace comparison, and automatic post-canary trace preservation as completed infrastructure. Do not rerun them merely to rediscover the current sample.
+2. Keep `modelValidationComplete:false`, customer-eligible events at 0, and duration research paused. The B-only MIDI-55 event remains a proven threshold-onset toggle; current observed margins and frame drift remain measurement-only.
+3. Investigate whether any independent, reference-blind numerical or decoder-semantic guarantee can justify an onset decision uncertainty boundary across supported execution environments. The bound must come from an external contract/guarantee or a separately justified numerical analysis, not from fitting the observed A/B/C envelope.
+4. If no independent bound exists, record explicitly that Policy B has no justified admission contract for threshold-boundary inventory toggles. More samples may characterize frequency but cannot by themselves manufacture a tolerance.
+5. Do not use exact hashes, CPU/vendor identity, historical frequency, event count, candidate confidence, reference tabs, downstream agreement, or the current min/max margins as admission criteria.
+6. Keep the automatic trace follow-up enabled for any future independent canary. New observations are measurement/history evidence only unless a separate admission rule is independently justified.
 7. Keep the archived V143/Gomyway implementation/reference/pro scorer path out of scope and keep V2/V3 duration work paused until upstream model-evidence validation is actually resolved.
 
 The archived V143/Gomyway pipeline remains out of scope unless explicitly requested.
