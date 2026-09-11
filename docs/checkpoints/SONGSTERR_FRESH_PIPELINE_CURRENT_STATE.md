@@ -1,6 +1,6 @@
 # CURRENT STATE — Songsterr Fresh Pipeline V1
 
-Updated: 2026-09-10 21:49 America/Toronto
+Updated: 2026-09-10 21:50 America/Toronto
 Canonical branch: `songsterr-fresh-pipeline-v1`
 Canonical checkpoint: `docs/checkpoints/SONGSTERR_FRESH_PIPELINE_CURRENT_STATE.md`
 
@@ -68,7 +68,7 @@ Hard rules:
 - no preferred hosted output, CPU, vendor, hash, or runner may be selected
 - `modelValidationComplete` stays false until a justified admission contract is implemented, tested, and independently demonstrated
 
-Demucs evidence already established: same-run exact determinism (`34435154554`), hosted cross-run exact variation (`34436134514`), dispatch causality (`34438368530`), and failed cross-vendor common-AVX2 byte portability (`34439594582`, five observations, three exact groups). No branch-tracked fresh pinned compute surface is identified.
+Demucs evidence already established: same-run exact determinism (`34435154554`), hosted cross-run exact variation (`34436134514`), dispatch causality (`34438368530`), and failed cross-vendor common-AVX2 byte portability (`34439594582`, five observations, three exact groups). Those hosted portability failures motivated the separately defined Policy C pinned-compute authority; they are not authority-selection evidence themselves.
 
 ## MODEL-EVIDENCE MEASUREMENT CONTRACTS — GREEN / NON-PROMOTIONAL
 
