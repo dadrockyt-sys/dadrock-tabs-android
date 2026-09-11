@@ -15,6 +15,7 @@ permissions:
   contents: read
 
 env:
+  PATH: '/opt/songsterr-fresh-authority/venv/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin'
   OMP_NUM_THREADS: '1'
   MKL_NUM_THREADS: '1'
   OPENBLAS_NUM_THREADS: '1'
@@ -34,10 +35,21 @@ jobs:
       - name: Check out exact fresh branch revision
         uses: actions/checkout@v4
 
+      - name: Require dedicated authority environment
+        shell: bash
+        run: |
+          set -euo pipefail
+          test -x /opt/songsterr-fresh-authority/venv/bin/python3
+          test "$(command -v python3)" = '/opt/songsterr-fresh-authority/venv/bin/python3'
+          python3 -c 'import platform, sys; assert platform.python_version().startswith("3.10."); assert sys.prefix == "/opt/songsterr-fresh-authority/venv"'
+          case "$(node --version)" in v22.*) ;; *) echo 'POLICY_C_AUTHORITY_ERROR:NODE_22_REQUIRED' >&2; exit 2 ;; esac
+          ffmpeg -version >/dev/null
+
       - name: Validate unambiguous Policy C manifest and collect safe fingerprint
         shell: bash
         run: |
           set -euo pipefail
+          rm -rf /tmp/songsterr-fresh-authority-probe
           mkdir -p /tmp/songsterr-fresh-authority-probe
           python3 scripts/songsterr-fresh/verify_pinned_compute_authority.py \
             --validate-manifest \
@@ -76,11 +88,17 @@ jobs:
       - name: Check out exact fresh branch revision
         uses: actions/checkout@v4
 
-      - name: Verify enrolled pinned authority before any model execution
+      - name: Require dedicated authority environment and verify enrollment before model execution
         shell: bash
         run: |
           set -euo pipefail
+          test -x /opt/songsterr-fresh-authority/venv/bin/python3
+          test "$(command -v python3)" = '/opt/songsterr-fresh-authority/venv/bin/python3'
+          python3 -c 'import platform, sys; assert platform.python_version().startswith("3.10."); assert sys.prefix == "/opt/songsterr-fresh-authority/venv"'
+          case "$(node --version)" in v22.*) ;; *) echo 'POLICY_C_AUTHORITY_ERROR:NODE_22_REQUIRED' >&2; exit 2 ;; esac
+          ffmpeg -version >/dev/null
           BASE="/tmp/songsterr-fresh-authority-${{ github.run_id }}"
+          rm -rf "$BASE"
           mkdir -p "$BASE"
           python3 scripts/songsterr-fresh/verify_pinned_compute_authority.py \
             --verify-current \
