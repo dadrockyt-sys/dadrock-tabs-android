@@ -1,0 +1,43 @@
+name: Songsterr Fresh Remove Stale Fresh-Chat Steps Once
+
+on:
+  push:
+    branches:
+      - songsterr-fresh-pipeline-v1
+    paths:
+      - '.github/workflows/songsterr-fresh-remove-stale-fresh-chat-steps-once.yml'
+
+permissions:
+  contents: write
+
+jobs:
+  update:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: songsterr-fresh-pipeline-v1
+          fetch-depth: 0
+      - name: Remove stale handoff section
+        shell: bash
+        run: |
+          set -euo pipefail
+          python - <<'PY'
+          from pathlib import Path
+
+          p = Path('docs/checkpoints/SONGSTERR_FRESH_PIPELINE_CURRENT_STATE.md')
+          text = p.read_text(encoding='utf-8')
+          start = text.find('\n## FRESH-CHAT NEXT ENGINEERING STEPS\n')
+          if start < 0:
+              raise SystemExit('stale fresh-chat section missing')
+          replacement = '''\n## FRESH-CHAT NEXT ENGINEERING STEPS — SUPERSEDED\n\nThis older handoff is superseded by `## FRESH CHAT HANDOFF — NEXT STEPS` above. A fresh chat must resume from that newer section only; do not reuse prior live Codespaces epoch IDs or the earlier V1 implementation sequence.\n\nThe archived V143/Gomyway/GOAT workstreams remain out of scope unless the user explicitly reopens them.\n'''
+          text = text[:start] + replacement
+          text = text.replace('Updated: 2026-09-11 12:10 America/Toronto', 'Updated: 2026-09-11 12:14 America/Toronto', 1)
+          p.write_text(text, encoding='utf-8')
+          PY
+          git config user.name 'dadrockyt-sys'
+          git config user.email 'Stephen.s.mcnally@gmail.com'
+          git add docs/checkpoints/SONGSTERR_FRESH_PIPELINE_CURRENT_STATE.md
+          git commit -m 'docs: remove stale fresh-chat next steps'
+          git push origin HEAD:songsterr-fresh-pipeline-v1
