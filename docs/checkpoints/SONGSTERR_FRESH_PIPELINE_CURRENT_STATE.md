@@ -1,6 +1,6 @@
 # CURRENT STATE — Songsterr Fresh Pipeline V1
 
-Updated: 2026-09-10 21:37 America/Toronto
+Updated: 2026-09-10 21:49 America/Toronto
 Canonical branch: `songsterr-fresh-pipeline-v1`
 Canonical checkpoint: `docs/checkpoints/SONGSTERR_FRESH_PIPELINE_CURRENT_STATE.md`
 
@@ -56,7 +56,7 @@ V2 remains authoritative: `estimate_selected_pitch_releases.py`, contract `songs
 
 V3 remains candidate-only: `estimate_selected_pitch_releases_v3.py`, contract `songsterr-fresh-spectral-activation-release-evidence-v3`; V2 executes first unchanged; fallback only for `NO_CLEAR_RELEASE_BEFORE_SAME_PITCH_REATTACK`. Representative 577 resolved → 661 resolved remains descriptive only.
 
-## UPSTREAM EXECUTION POLICY — POLICY B SELECTED
+## UPSTREAM EXECUTION POLICY — POLICY B HOSTED MEASUREMENT BASELINE / POLICY C AUTHORITY SELECTED
 
 Policy B permits bounded upstream numerical variation only through reference-blind, fail-closed downstream invariants.
 
@@ -247,6 +247,20 @@ Decision-enabled real model canary — COMPLETED GREEN:
 - Historical outcome frequencies cannot repair this because current policy forbids promoting observed frequency into correctness. Requiring more runs therefore characterizes reproducibility but does not prove universal semantic portability.
 - Result: finite semantic-consensus/repeated-execution gating is **not justified as a Policy B customer-admission contract**. `modelValidationComplete` remains false, customer-eligible events remain 0, and duration research remains paused.
 
+## POLICY C PINNED COMPUTE AUTHORITY — IMPLEMENTED SCAFFOLD / UNENROLLED
+
+- User explicitly authorized the architecture/policy change after Policy B numerical-bound and finite-consensus approaches were shown insufficient.
+- Policy C defines one explicitly enrolled fixed self-hosted Linux x64 compute surface as the only authority-eligible Demucs → Basic Pitch execution surface. GitHub-hosted model runs remain measurement/history evidence only; there is no hosted fallback.
+- Architecture contract: `docs/checkpoints/SONGSTERR_FRESH_PINNED_COMPUTE_AUTHORITY_V1.md`, commit `31a351e33e952686de4d8e9a5d6fe6239a3b35e1`.
+- Manifest `scripts/songsterr-fresh/pinned_compute_authority_v1.json`: created `8cbe046e1c2f06e3ff568775ad98874d4fbdef56`, full package set pinned `3b42aacf8449ea13ad6960259125c84810ac6134`; current `enrollmentStatus=UNENROLLED` and no enrolled fingerprint exists.
+- Fail-closed verifier `verify_pinned_compute_authority.py`, commit `94d513d90c8ca4d5f951413a7440c6a924e7d759`, binds reproducibility-relevant CPU/microcode/kernel/libc/interpreter/toolchain/package/numerical-library/thread state while intentionally excluding machine IDs/network/user identity. Un-enrolled, hardware-drift, and software-drift states fail closed.
+- One-canary summary contract `build_pinned_compute_authority_canary.py`, commit `3a05084ab046cb2ff9a11491da3fde9d9fede226`, requires authority verification before model execution and cannot promote model validation.
+- Three-canary aggregation contract `aggregate_pinned_compute_authority_canaries.py`, commit `408e071cfe538dff1c9f633d8756b4e2d8679b50`, requires ≥3 distinct workflow run IDs from one source commit and one enrolled authority fingerprint with exact stem/note/activation/decision/evidence identity. Any drift fails closed. Even exact reproducibility does not auto-promote `modelValidationComplete`.
+- Manual workflow `.github/workflows/songsterr-fresh-pinned-compute-authority.yml`, commit `623cce5b605397afe9d105c57fd8a35d2efed041`, runs only on `[self-hosted, linux, x64, songsterr-fresh-authority-v1]`, has `probe` and `canary` modes, installs no model/toolchain dependencies, has no automatic model trigger, and has no hosted fallback.
+- Hosted pure-contract CI wiring commit `43fdb35e7d6f247b31f32449a06dfafa07586051`; run `34552124958`, job `103117037937`, success. It proved manifest validation, un-enrolled/drift fail-closed behavior, single-canary non-promotion, three-canary exactness/non-promotion, and all prior fresh measurement guards.
+- Current authority state is intentionally **UNENROLLED**. No real Policy C model canary has been run and no output has authority status yet.
+- `modelValidationComplete` remains false; customer-eligible events remain 0; duration research remains paused. V2 remains authoritative and V3 candidate-only.
+
 ## CURRENT ACCEPTANCE STATE
 
 Do **not** set `modelValidationComplete:true`.
@@ -259,12 +273,14 @@ Customer-eligible events remain **0**. V2 authoritative; V3 candidate-only. Basi
 
 ## FRESH-CHAT NEXT ENGINEERING STEPS
 
-1. Treat decision-surface inspection, exact decoder replay/trace comparison, automatic trace preservation, upstream numerical-guarantee review, and finite semantic-consensus analysis as completed evidence.
-2. Under the current Policy B requirements, neither a numeric threshold uncertainty band nor a finite repeated-execution unanimity gate has an independently justified admission guarantee.
-3. Keep `modelValidationComplete:false`, customer-eligible events at 0, and duration research paused. Do not rerun threshold sweeps or add repetitions merely to fit/strengthen an empirical envelope.
-4. The next engineering decision now requires an architecture/policy change if customer admission is to proceed: either establish a genuinely pinned/hermetic compute contract with reproducibility authority, or move to an inference representation/runtime with an independently specified deterministic/numerical contract. Any such change must be proposed and validated separately; do not silently reinterpret Policy B.
-5. If no such architecture/policy change is authorized, preserve the blocked state. The current floating-point Demucs → Basic Pitch path cannot be promoted to customer admission under the stated Policy B rules.
-6. Keep the automatic decoder-trace follow-up enabled for future independent canaries as measurement/history evidence only.
-7. Keep archived V143/Gomyway implementation/reference/pro-scorer work out of scope and keep V2/V3 duration/release work paused until upstream model-evidence validation is actually resolved.
+1. Treat Policy B numerical-bound research and finite semantic-consensus analysis as completed negative results; do not revive threshold fitting or hosted unanimity as customer admission rules.
+2. Policy C pinned-compute authority scaffolding and hosted contract tests are complete, but the authority is `UNENROLLED`. Keep `modelValidationComplete:false`, customer-eligible events at 0, and duration research paused.
+3. Provision one dedicated fixed Linux x64 machine as a GitHub self-hosted runner with labels `self-hosted`, `linux`, `x64`, `songsterr-fresh-authority-v1`. Do not use an autoscaling/ephemeral pool and do not treat an ordinary container on variable hosted hardware as authority.
+4. Preinstall the exact branch-pinned Python packages plus Node/FFmpeg on that machine. The authority workflow intentionally performs no package/toolchain installation before model execution.
+5. Manually dispatch `Songsterr Fresh Policy C Pinned Compute Authority` with `mode=probe`. Review the safe probe artifact; only then deliberately commit its exact fingerprint into `pinned_compute_authority_v1.json` and change `enrollmentStatus` to `ENROLLED`.
+6. From one unchanged source commit, run at least three separate `mode=canary` dispatches on the enrolled authority, then aggregate their canary summaries. Stem, note inference, activation bundle, decision surface, and canonical evidence must be exact across all runs or the authority proof fails closed.
+7. If exact pinned-authority reproducibility is demonstrated, perform a separate model-evidence validation review. The canary aggregator itself must not set `modelValidationComplete:true` or advance delivery/duration.
+8. Keep hosted cross-run canaries and automatic decoder-trace follow-up as measurement/history evidence only. No hosted CPU/vendor/output becomes a fallback authority.
+9. Keep archived V143/Gomyway implementation/reference/pro-scorer work out of scope and keep V2/V3 duration/release work paused until upstream model-evidence validation is actually resolved.
 
 The archived V143/Gomyway pipeline remains out of scope unless explicitly requested.
