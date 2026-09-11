@@ -108,121 +108,77 @@ V2 policy review:
 
 Reason: controlled fixtures prove contract behavior, C-S proves reproducibility, and the protected song is not independent ground truth. The historical 187/951/2 result may not become a threshold, prior, tuning target, or retrospective promotion rule.
 
-## V3 — ACTIVE, FROZEN BEFORE FIRST EXTERNAL-CORPUS RESULT
+## V3 — EXTERNAL VALIDATION COMPLETED / FAILED FROZEN GATES
 
-User explicitly authorized the successor external-validation workstream.
+V3 was preregistered and frozen before any GuitarSet model correctness result was viewed.
 
-### Preregistration
+### Preregistration / frozen method
 
-- `docs/checkpoints/SONGSTERR_FRESH_MODEL_EVIDENCE_ADMISSION_PREREGISTRATION_V3.md`
-- commit `2dfd8c5d52093c36c0924e5f0b57eb2b2284e7d0`
-- status: preregistered; **not admission authority**.
+- prereg: `docs/checkpoints/SONGSTERR_FRESH_MODEL_EVIDENCE_ADMISSION_PREREGISTRATION_V3.md`
+- prereg commit `2dfd8c5d52093c36c0924e5f0b57eb2b2284e7d0`
+- core harness `scripts/songsterr-fresh/external_guitarset_validation_v3.py`
+- official wrapper `scripts/songsterr-fresh/run_external_guitarset_validation_v3.py`
+- frozen method record `docs/checkpoints/SONGSTERR_FRESH_EXTERNAL_GUITARSET_VALIDATION_V3.md`
+- final pre-corpus source/checkpoint `783c3b572aff4edd9d6298e9131dffd02454a61e`.
 
-V3 does not alter or tune the frozen V2 per-event classifier. It asks: on a locked independently annotated guitar corpus, how precise are Basic Pitch events that pass unchanged V2 corroboration?
-
-### Frozen implementation / provenance surface
-
-Core harness:
-- `scripts/songsterr-fresh/external_guitarset_validation_v3.py`
-- implementation commit `a8a7b5f05950de6dfa061f7ee4995bafd778f17b`
-- contract `songsterr-fresh-guitarset-external-validation-v3`.
-
-Official execution wrapper:
-- `scripts/songsterr-fresh/run_external_guitarset_validation_v3.py`
-- commit `49e98254417c416f59575097ee6cdbf62636374a`
-- contract `songsterr-fresh-guitarset-external-validation-execution-v3`.
-
-Frozen method record:
-- `docs/checkpoints/SONGSTERR_FRESH_EXTERNAL_GUITARSET_VALIDATION_V3.md`
-- provenance-complete method commit `1792739fa30c9304d37e94066794a38898dc98aa`.
-
-Focused controlled CI:
-- `.github/workflows/songsterr-fresh-guitarset-v3-ci.yml`
-- initial workflow `27b1916ef5c9fa287b0186bdf03fa9e05fcd225a`
-- self-match guard fix `96ae75bcfb7ddc4d469b4f96d4126f276f4c9d15`
-- provenance verification update `e3e6f1fa1292d9ad82d55d64d1da9463829f064f`.
-
-Controlled CI history:
-- run `34642016377`, job `103403803350`: core compile/self-tests/constants green; final boundary guard self-matched its own forbidden literal. Integration guard-text failure only; no corpus execution.
-- run `34642084982`, job `103404026067`, source `96ae75bc...`: **SUCCESS**.
-- run `34642234908`, job `103404515324`, source `3d441088...`: **SUCCESS** after initial method-record freeze.
-- run `34642484069`, job `103405310705`, source `e3e6f1fa...`: **SUCCESS** with execution-provenance wrapper checks.
-- run `34642582311`, job `103405628860`, source `1792739f...`: **SUCCESS** after final provenance-complete method-record freeze.
-
-All green runs remained controlled-only. No GuitarSet archive was downloaded/evaluated by V3 CI and the protected song was not evaluated. Current real-corpus result count remains **zero**.
+The frozen V2 classifier, Basic Pitch settings, GuitarSet files/exclusions, matching rules, Wilson calculation and policy gates were not tuned after results.
 
 ### Locked external corpus
 
 Dataset: GuitarSet v1.1.0, DOI `10.5281/zenodo.3371780`.
 
-Authorized files only:
+Verified archives:
 - `audio_mono-mic.zip`, MD5 `275966d6610ac34999b58426beb119c3`
 - `annotation.zip`, MD5 `b39b78e63d3446f2e54ddb7a54df9b10`.
 
-Exactly three publicly documented defective tracks were excluded before model results:
+Exactly three preregistered public-defect exclusions:
 - `04_BN3-154-E_comp`
 - `04_Jazz1-200-B_comp`
 - `02_Funk2-119-G_comp`.
 
-Locked evaluation corpus = all other **357 tracks**. GuitarSet is evaluation-only; no GuitarSet development split exists.
+Locked evaluation corpus = all other **357 tracks**.
 
-### Frozen inference / matching
+### Execution history
 
-For every locked track:
-- microphone WAV must already be mono 44100 Hz; no resampling/drop
-- no Demucs: GuitarSet microphone audio is already isolated guitar
-- existing Basic Pitch wrapper invoked once with Basic Pitch 0.4.0, MIDI 40..88, onset .5, frame .3, minimum note length 127.7 ms, no multiple pitch bends, melodia trick enabled
-- only event identity, onset seconds and integer MIDI enter validation
-- Basic Pitch end/confidence remain diagnostic only
-- unchanged V2 classifier runs on the exact microphone-audio window
-- V3-positive = V2 `independently-corroborated-candidate`.
+Attempt 1 at source `783c3b572aff4edd9d6298e9131dffd02454a61e` failed before any Basic Pitch inference result was produced. Root cause: the core harness resolved the venv interpreter symlink to system Python, which lacked NumPy. This was an execution-environment path issue, not a model/scoring/dataset result. Zero completed inference JSONs were produced.
 
-Ground truth = union of all six per-string GuitarSet `note_midi` annotations. Matching is one-to-one maximum-cardinality with onset difference `<=0.050 s`, pitch difference `<=50 cents`, offsets ignored, no confidence/score tie policy.
+Attempt 2 preserved the exact same frozen repository source and scoring/matching method. A non-symlink copy of the same pinned venv Python executable was used so the harness could retain the venv package context after path resolution. Runtime checks confirmed Python 3.10, NumPy 1.26.4, Basic Pitch 0.4.0 and SoundFile 0.13.1. No repository code or frozen policy threshold changed.
 
-### Frozen pass gates
+### Completed V3 external result
 
-All must pass:
-1. exact dataset/version/archive identities + exact preregistered exclusions
-2. all 357 locked tracks complete; no post-hoc exclusion
-3. at least 1,000 V3-positive events
-4. pooled V3-positive precision one-sided 95% Wilson lower bound `>=0.9900`, `z=1.6448536269514722`
-5. each player `00..05`: >=50 V3-positive and point precision >=0.9500
-6. both `comp` and `solo`: >=50 V3-positive and point precision >=0.9500
-7. event identity preserved + all non-promotion guards false/zero.
+Official attempt 2 completed all **357/357** locked tracks and emitted `V3_OFFICIAL_EXTERNAL_VALIDATION_COMPLETE`.
 
-No gate may be relaxed after results. No GuitarSet result may tune V3 under this preregistration.
+Observed aggregate result:
+- source commit: `783c3b572aff4edd9d6298e9131dffd02454a61e`
+- decoded events: **62,438**
+- V3-positive events: **11,252**
+- V3-positive correct: **10,019**
+- V3-positive precision: **0.8904194809811589** (~89.04%)
+- one-sided 95% Wilson lower bound: **0.8854816094599652** (~88.55%)
+- `externalValidationPassed:false`.
 
-### Frozen official execution provenance
+Frozen gate outcomes visible from the official result:
+- all 357 locked tracks completed: **PASS**
+- minimum 1,000 positive events: **PASS**
+- pooled Wilson lower bound >=0.9900: **FAIL**
+- every player `00..05` point precision >=0.9500 with >=50 positives: **FAIL for all six players**
+- both `comp` and `solo` point precision >=0.9500 with >=50 positives: **FAIL for both modes**.
 
-Official execution fails closed unless:
-- branch exactly `songsterr-fresh-pipeline-v1`
-- clean worktree
-- exact source commit recorded
-- Python 3.10
-- Basic Pitch 0.4.0
-- NumPy 1.26.4
-- SoundFile 0.13.1
-- work/result paths outside repo
-- source and runtime unchanged before/after full execution.
+Policy boundary remained correctly fail-closed:
+- `admissionDecisionMade:false`
+- `modelValidationComplete:false`
+- `customerEligibleEvents:0`
+- `mayAdvanceDelivery:false`
+- `durationAuthorityChanged:false`
+- `separatePolicyReviewRequired:true`.
 
-Final result records full source/runtime/package provenance, SHA-256 identities for the wrapper/core/V2/Basic-Pitch wrapper/prereg/method record, complete core result + its SHA-256, exact 357-track identities, metrics/gates and unchanged false/zero policy boundary.
+### V3 policy status
 
-### FIRST REAL CORPUS EXECUTION IS NOW PERMITTED
+Because V3 failed the preregistered external-validation gates, it **MUST NOT** become admission authority. Do not relax the 0.9900 Wilson gate, the 0.9500 stratum gates, matching tolerances, exclusions, Basic Pitch settings, or the frozen V2 classifier in response to this result.
 
-Prerequisites are satisfied:
-1. external validation preregistered before results — **YES**
-2. locked corpus/version/files/exclusions frozen — **YES**
-3. scorer/matching/gates frozen — **YES**
-4. core harness implemented and synthetic/contract tested — **YES**
-5. provenance-bound official execution wrapper frozen — **YES**
-6. final controlled CI green after method/provenance freeze — **YES**
-7. GuitarSet correctness result viewed so far — **NO / zero executions**.
+The protected song remains embargoed; there is no justification for a protected-song V3 rerun. Historical V1/V2 protected-song results remain research diagnostics only.
 
-The next permitted operation is exactly one full official 357-track GuitarSet execution using `run_external_guitarset_validation_v3.py`. Do not inspect partial correctness results and patch the method. Execution/integrity failure fails closed; do not add a track exclusion or relax a gate.
-
-The protected song remains embargoed during V3 external validation. Historical V2 187/951/2 cannot be retrospectively promoted by any V3 result.
-
-If external validation passes, a separate explicit policy review remains mandatory before any new protected-song execution. Any future protected-song execution requires a NEW C-S epoch after that review/authorization.
+A concise archival V3 result record and fail-closed policy closeout should be written next using the completed official result. If any future successor is explored, it requires a new preregistration before looking at new evaluation results and may not tune against this same GuitarSet result under the V3 contract.
 
 ## CURRENT ACCEPTANCE STATE
 
@@ -236,17 +192,16 @@ Customer-eligible events: **0**.
 `mayAdvanceDelivery:false`.
 Duration research remains paused.
 
-No reference scorer/tab/archive logic. No GOAT. No threshold sweep. No training/fine-tuning. No promotion from exact hashes, CPU association, historical frequency, candidate confidence, event count, downstream agreement, controlled-suite pass, C-S reproducibility, aggregate corroboration count, or any external point estimate that fails the frozen V3 gates.
+No reference scorer/tab/archive logic. No GOAT. No threshold sweep. No training/fine-tuning. No promotion from exact hashes, CPU association, historical frequency, candidate confidence, event count, downstream agreement, controlled-suite pass, C-S reproducibility, aggregate corroboration count, or an external result that fails the frozen V3 gates.
 
 ## ACTIVE NEXT ENGINEERING STEPS
 
-1. Use a clean current `songsterr-fresh-pipeline-v1` source state and the pinned Python 3.10 / Basic Pitch 0.4.0 / NumPy 1.26.4 / SoundFile 0.13.1 runtime.
-2. Obtain only the exact GuitarSet v1.1.0 `annotation.zip` and `audio_mono-mic.zip` archives and verify the frozen MD5s before any model work.
-3. Run the official provenance wrapper once over the full locked 357-track corpus, writing work/results outside the repository.
-4. Preserve the immutable result artifact and core result; do not rerun/tune based on partial results.
-5. Record the completed external result and perform the mandatory separate V3 policy review.
-6. Keep model validation false/customer eligibility 0/delivery false and duration paused until that review explicitly decides otherwise.
-7. Do not resume protected-song execution, duration, archived V143/Gomyway, reference scoring, GOAT, threshold sweeps, or training/fine-tuning during this phase.
+1. Preserve the completed attempt-2 V3 official result/core result and first-attempt execution-failure evidence outside the repository until their compact identities/strata are recorded.
+2. Write an immutable archival V3 external-result record with exact aggregate metrics, provenance and gate outcomes.
+3. Write a V3 policy closeout: failed preregistered external validation; rejected as admission authority; retained only as research evidence.
+4. Do not rerun/tune V3 against GuitarSet.
+5. Do not run the protected song, resume duration, archived V143/Gomyway, reference scoring, GOAT, threshold sweeps, or training/fine-tuning.
+6. Any successor validation/scorer work requires a new explicit preregistration and authorization before execution.
 
 ## STABLE POLICY REFERENCES
 
@@ -261,4 +216,4 @@ No reference scorer/tab/archive logic. No GOAT. No threshold sweep. No training/
 - V2 protected result: `SONGSTERR_FRESH_INDEPENDENT_CORROBORATION_V2_AUTHORIZED_SONG_RESULT.md`
 - V2 policy review: `SONGSTERR_FRESH_INDEPENDENT_CORROBORATION_V2_POLICY_REVIEW.md`
 - V3 prereg: `SONGSTERR_FRESH_MODEL_EVIDENCE_ADMISSION_PREREGISTRATION_V3.md`
-- V3 method: `SONGSTERR_FRESH_EXTERNAL_GUITARSET_VALIDATION_V3.md`
+- V3 frozen method: `SONGSTERR_FRESH_EXTERNAL_GUITARSET_VALIDATION_V3.md`
