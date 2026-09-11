@@ -1,246 +1,154 @@
 # CURRENT STATE — Songsterr Fresh Pipeline V1
 
-Updated: 2026-09-10 19:51 America/Toronto
+Updated: 2026-09-10 20:00 America/Toronto
 Canonical branch: `songsterr-fresh-pipeline-v1`
 Canonical checkpoint: `docs/checkpoints/SONGSTERR_FRESH_PIPELINE_CURRENT_STATE.md`
 
-This is the only canonical fresh-chat checkpoint for this workstream. Earlier verbose diagnostic history remains available in Git history; this file intentionally keeps the current authoritative state, hard boundaries, latest reproducibility evidence, and next actions compact.
+This is the canonical current-state checkpoint for the fresh workstream. Use Git history for older verbose diagnostics.
 
 ## NON-NEGOTIABLE SCOPE
 
 - Work only on `songsterr-fresh-pipeline-v1`; do not change `main` or Production.
-- Do not resume archived V143/Gomyway implementation, reference tabs, reference-based correction, professional/reference scorer logic, training/fine-tuning, or broad optimizer sweeps unless explicitly requested.
-- The fixture filename containing `gomyway` authorizes that exact audio fixture only; it does not authorize the archived pipeline.
-- Fresh reference-blind source-separation/model/DSP diagnostics are allowed only while preserving fail-closed contracts.
-- `songsterr_pipeline/` remains deterministic/model-free/process-free/network-free; model/DSP execution stays under `scripts/songsterr-fresh/`.
-- Frozen structure precedes note inference and cannot be rewritten downstream.
-- Never silently change/drop detected MIDI/event identity. Cross-run identity uses stable content identity (`MIDI` + exact source start and bound inference identity where applicable), never raw sequential Basic Pitch index alone.
+- Do not resume archived V143/Gomyway implementation, reference tabs, reference/professional scorer logic, training/fine-tuning, or broad optimizer/ISA sweeps unless explicitly requested.
+- The `gomyway` filename authorizes the exact audio fixture only; it does not authorize the archived pipeline.
+- `songsterr_pipeline/` remains deterministic/model-free/process-free/network-free; model/DSP execution stays in `scripts/songsterr-fresh/`.
+- Frozen full-mixture structure precedes note inference and cannot be rewritten downstream.
+- Never silently change/drop MIDI/event identity. Raw sequential Basic Pitch indices are not cross-run identity.
 - Preserve `/ai-tab`: audio upload → AI analysis → analyzer metadata/events → preview PDF → unlock → full PDF → browser/email.
 
-## AUTHORIZED FIXTURE AND FROZEN STRUCTURE
+## AUTHORIZED FIXTURE / FROZEN STRUCTURE
 
-Fixture on `main`: `public/jimmy-paige-midterm-v1/gomyway-midterm-source.m4a`.
+Fixture: `public/jimmy-paige-midterm-v1/gomyway-midterm-source.m4a` on `main`.
 
-- Git blob SHA `4dd709e3fa177b4daeed71ca97f0199757729d4b`
+- Git blob `4dd709e3fa177b4daeed71ca97f0199757729d4b`
 - duration ~210.674648526 s
-- expected decoded separation WAV SHA-256 `e03e1885185f4983b3eeaa66f36510b7709d607c14010f964e0aad427ecc474a`
-- frozen structure identity `fnv1a32:2f493225`; canonical length `19653`
-- 4/4, straight feel, pickup / first downbeat ~0.65016 s
-- 115 measures; 113 measure-local tempo segments
-- beat-grid MAE ~7.14 ms; RMSE ~10.63 ms; max ~58.05 ms; accepted true
+- decoded separation WAV SHA-256 `e03e1885185f4983b3eeaa66f36510b7709d607c14010f964e0aad427ecc474a`
+- structure identity `fnv1a32:2f493225`; canonical length `19653`
+- 4/4, straight, first downbeat ~0.65016 s; 115 measures; 113 tempo segments
+- beat-grid MAE ~7.14 ms, RMSE ~10.63 ms, max ~58.05 ms; accepted true
 - historical structure canary run `34192662439`, job `101953726302`, commit `2a598f0f38d755faf0cd3d46543221253f1c8997`, artifact `10042777518`, digest `sha256:5ff3ce36f559bcc02efcc985a1fa06966576da0445896326e9408ada955e9b6f`
 
 ## GUARDED CPU BASELINE
 
-Analyzer `scripts/songsterr-fresh/analyze_structure_conditioned_notes.py`; contract `songsterr-fresh-cpu-note-evidence-v4`.
+`scripts/songsterr-fresh/analyze_structure_conditioned_notes.py`, contract `songsterr-fresh-cpu-note-evidence-v4`:
+- 492 onsets, 1,130 candidates, 139 local unambiguous, 353 ambiguous, MIDI 40 in 97/139 selections
+- role relevance/polyphony unresolved, customer eligible 0
+- regression run `34309259214`, job `102332311684`, head `54d9e4792d8255d56f6aec82977ac083b9c2bae4`, artifact `10087798684`, digest `sha256:a1dbe85348f66847045e616d9726ffce986a82e995de0817fb20159e6fbf9d08`, 97/97 tests
 
-- 492 onsets; 1,130 candidates
-- 139 local unambiguous selections; 353 ambiguous; 0 no-candidate
-- MIDI 40 in 97/139 selections
-- role relevance unresolved; polyphony unresolved; instrument isolation none
-- customer eligible 0
-- latest regression run `34309259214`, job `102332311684`, head `54d9e4792d8255d56f6aec82977ac083b9c2bae4`, artifact `10087798684`, digest `sha256:a1dbe85348f66847045e616d9726ffce986a82e995de0817fb20159e6fbf9d08`, 97/97 tests, CPU duration evidence 103 resolved / 36 unresolved
+## FIXED MODEL PATH
 
-## MODEL PATH AND FIXED DEMUCS CONTRACT UNDER STUDY
-
-Architecture remains:
+Architecture:
 frozen full-mixture structure → Demucs guitar isolation → Basic Pitch pitch/onset inference → duration-free model evidence boundary → dedicated release authority.
 
-Decoded Basic Pitch note-off remains diagnostic only. `MODEL_EVIDENCE_VALIDATION_PENDING` independently blocks customer delivery.
+Pinned where applicable: numpy 1.26.4; torch 2.14.0; huggingface-hub 1.30.0; safetensors 0.8.0; sphn 0.2.1; demucs 4.1.0; basic-pitch 0.4.0; librosa 0.11.0; soundfile 0.13.1; tflite-runtime 2.14.0; OMP/MKL/OpenBLAS/NumExpr threads = 1; `PYTHONHASHSEED=0`.
 
-Pinned core where applicable:
-- numpy 1.26.4
-- torch 2.14.0
-- huggingface-hub 1.30.0
-- safetensors 0.8.0
-- sphn 0.2.1
-- demucs 4.1.0
-- basic-pitch 0.4.0 where explicitly invoked
-- librosa 0.11.0 where release diagnostics require it
-- soundfile 0.13.1
-- tflite-runtime 2.14.0 where Basic Pitch is invoked
-- OMP/MKL/OpenBLAS/NumExpr threads = 1; `PYTHONHASHSEED=0`
+Fixed Demucs: `htdemucs_6s`, CPU, shifts 0, overlap 0.25, segment 7 s.
 
-Fixed Demucs settings:
-- model `htdemucs_6s`
-- device CPU
-- shifts 0
-- overlap 0.25
-- segment 7 s
-
-Pinned model asset authority (`scripts/songsterr-fresh/verify_demucs_model_asset.py`):
+Model asset authority `scripts/songsterr-fresh/verify_demucs_model_asset.py`:
 - contract `songsterr-fresh-demucs-model-asset-v2`
 - HF repo `adefossez/HTDemucs-6s`
 - pinned revision `3c5ee475be622df764938de97e4281a7b07ffa58`
-- asset upload revision `053e1404489b3dc58bf718224fac4b7316de8c93`
-- `5c90dfd2.safetensors`
-- SHA-256 `d2a1745f0744721f6b8ca5bf469b67c651ea5ed1b52998cab033b2158609d411`
-- legacy fallback is not primary
+- authoritative asset upload revision `053e1404489b3dc58bf718224fac4b7316de8c93`
+- `5c90dfd2.safetensors`, SHA-256 `d2a1745f0744721f6b8ca5bf469b67c651ea5ed1b52998cab033b2158609d411`
+- legacy fallback not primary
 
-Note: an earlier checkpoint/workflow copy accidentally appended a trailing `b` to the 40-hex asset upload revision. The verifier constant above is authoritative; commit `0f4b4cbe0a52657cf4989e07500041335a89db86` corrected the measurement workflow assertion. The asset SHA itself was never mismatched.
+An earlier copied asset-upload revision had an erroneous trailing `b`; commit `0f4b4cbe0a52657cf4989e07500041335a89db86` corrected the workflow/checkpoint assertion. Asset SHA never mismatched.
 
 ## DURATION AUTHORITY — UNCHANGED / PAUSED
 
-V2 remains authoritative:
-- `scripts/songsterr-fresh/estimate_selected_pitch_releases.py`
-- contract `songsterr-fresh-cpu-spectral-release-evidence-v2`
-- duration-free input required; non-null upstream `durationSeconds` / `sourceEnd` rejected
-- decoded Basic Pitch note-off never becomes duration
-- generic next onset never becomes duration
-- same-pitch reattack is a censor/search boundary only
-- unresolved stays unresolved without observed release
-- fixed V2: hop 512; sustained-low frames 5; min duration 0.07 s; max search 4.0 s; onset above floor >=12 dB; drop from onset >=18 dB; floor margin >=6 dB
-- resolved method `selected-pitch-sustained-spectral-decay`
+V2 remains authoritative: `estimate_selected_pitch_releases.py`, contract `songsterr-fresh-cpu-spectral-release-evidence-v2`. Duration-free input required. Decoded Basic Pitch note-off is diagnostic only; generic next onset is never duration; same-pitch reattack is censor/search boundary only; unresolved stays unresolved without observed release. Fixed V2: hop 512, sustained-low 5 frames, minimum 0.07 s, max search 4.0 s, onset >=12 dB above floor, drop >=18 dB, floor margin >=6 dB.
 
-V3 remains green/repeated but candidate-only:
-- `scripts/songsterr-fresh/estimate_selected_pitch_releases_v3.py`
-- contract `songsterr-fresh-spectral-activation-release-evidence-v3`
-- V2 runs first unchanged; V2-resolved events never change
-- fallback only for exact V2 reason `NO_CLEAR_RELEASE_BEFORE_SAME_PITCH_REATTACK`
-- fixed activation + CQT rule only; no sweep/tuning
-- representative historical inventories: 1,138/1,139 notes with 1,137 exact MIDI/start common matches; all 84 fallback-resolved common events stayed stable
-- representative results: 1,138-note environment V2 577/561 → V3 661/477; 1,139-note environment V2 577/562 → V3 661/478
-- these counts are descriptive only and must never become acceptance constants
+V3 remains candidate-only: `estimate_selected_pitch_releases_v3.py`, contract `songsterr-fresh-spectral-activation-release-evidence-v3`. V2 executes unchanged first; fallback only for `NO_CLEAR_RELEASE_BEFORE_SAME_PITCH_REATTACK`. Representative results remain 577 resolved → 661 resolved; descriptive only, not acceptance constants.
 
-Do not mutate audited V2 while V3 remains under evaluation. Duration-rule research stays paused until the upstream model-evidence execution policy is implemented and validated.
+## DEMUCS REPRODUCIBILITY FINDINGS
 
-## DEMUCS REPRODUCIBILITY EVIDENCE — AUTHORITATIVE SUMMARY
+- same-run determinism green: run `34435154554`, exact pass A/B WAV/PCM equality, zero sample error; proves only same runner/runtime determinism
+- uncontrolled hosted cross-run variation: run `34436134514`; three environment-dependent exact outcomes; no preferred output
+- same-host dispatch causality: run `34438368530`; ATen/oneDNN dispatch controls alter exact PCM and are numerical variables, not correctness selectors
+- common-AVX2 cross-host canary: run `34439594582`, five AMD+Intel observations, all verified AVX2, comparator `CROSS_VENDOR_PCM_VARIATION_OBSERVED`, three exact hash groups; generic hosted byte identity is not portable
+- no branch-tracked fresh pinned compute surface identified; do not invent one or select a host/vendor/hash as canonical
 
-Same-run reproducibility is green on one hosted runner:
-- run `34435154554`, job `102738562141`, head `b0b8595a28304df64bc5804e8ce472428652e3f4`, success
-- pass A/B WAV SHA both `4227a41f58817d32e9e122857c924c486afdc1e411a0a173bec2dfcc0c7b6b81`
-- pass A/B decoded PCM SHA both `cf07e142fccf92329e69744a2c2fa886d7d7cdccce0b57763fe8d3ea8d984ba2`
-- exact sample equality; MAE/RMSE/max all zero
-- this proves repeated determinism within that runner/runtime only
+## UPSTREAM EXECUTION POLICY — POLICY B SELECTED
 
-Uncontrolled cross-run provenance confirmed variation:
-- run `34436134514`, aggregate job `102742547664`, artifact `10136341469`
-- three independent hosted observations produced three environment-dependent exact outcomes across AMD EPYC 7763 / AMD EPYC 9V74 and AVX2 / AVX512 observations
-- image version, CPU model, Torch-reported AVX capability, and region were each ruled out as a complete explanation
-- no stem/environment is preferred or more correct
+Policy B permits bounded upstream numerical variation only through reference-blind, fail-closed downstream invariants.
 
-Same-host CPU-dispatch diagnostic established causality:
-- corrected run `34438368530`, head `282a85a9645302be6d1e02d1abc2e57b4f9994d2`, success
-- `ATEN_CPU_CAPABILITY=avx2` and `ONEDNN_MAX_CPU_ISA=AVX2` each changed exact PCM on the same host
-- fixed modes reproduced exactly across two sampled Intel hosts
-- dispatch controls are causal numerical variables, not a correctness selector
+Hard rules:
+- hashes/vendor/CPU/image/region remain provenance diagnostics, never correctness selectors
+- no reference tab, archived/pro scorer, or downstream agreement objective may define a variation bound
+- admission must be pairwise/reference-blind or independently justified from representation semantics
+- missing/invalid comparison evidence fails closed
+- thresholds may only be introduced with independent justification; observed maxima are never automatically tolerances
+- `modelValidationComplete` stays false until a justified admission contract is implemented, tested, and independently demonstrated
 
-Strict common-AVX2 cross-host canary rejected byte portability:
-- implementation: `record_demucs_common_avx2_provenance.py`, `compare_demucs_common_avx2_cross_host.py`, `.github/workflows/songsterr-fresh-demucs-common-avx2-cross-host-canary.yml`
-- authoritative run `34439594582`, aggregate job `102752709333`, success; five independent observations; AMD + Intel
-- all hosts verified Torch AVX2 + oneDNN AVX2 before the fixed Demucs pass
-- comparator status `CROSS_VENDOR_PCM_VARIATION_OBSERVED`; `allDecodedPcmIdentical: false`; three WAV/PCM hash groups
-- conclusion: combined ATen + oneDNN AVX2 caps do not make generic GitHub-hosted Demucs byte/PCM-identical across Intel and AMD
-- do not select a preferred vendor, CPU, WAV hash, PCM hash, or output variant; do not continue broad ISA/backend knob sweeps
+Existing model-note guards remain: valid finite MIDI/start/confidence; Basic Pitch model invocation; accepted frozen/reference-blind structure; matching structure identity; verified adapter/model provenance; no V143 boundary; decoded model end remains diagnostic; adapted model evidence forces `sourceEnd`, `durationSeconds`, `durationConfidence` null; customer delivery stays blocked.
 
-## CONTROLLED-COMPUTE INVENTORY
+## PAIRWISE VARIATION MEASUREMENT — GREEN / MEASUREMENT ONLY
 
-Repository/branch inspection found no branch-tracked fresh controlled compute surface:
-- strict fresh cross-host canary uses `ubuntu-latest`
-- no fresh self-hosted runner label, pinned container/VM definition, dedicated CPU class, or dedicated fresh deployment worker identified
-- older Docker/devcontainer and off-branch Modal artifacts belong to other workstreams and remain untouched
-- GitHub connection does not expose registered Actions-runner administration inventory, so this does not prove no external self-hosted runner exists; it establishes only that no suitable controlled surface is branch-tracked or identifiable from accessible fresh infrastructure
-
-## UPSTREAM EXECUTION POLICY — POLICY B SELECTED 2026-09-10
-
-The execution-policy fork is explicitly resolved in favor of **Policy B: permit bounded upstream numerical variation, and admit model evidence only through reference-blind, fail-closed downstream invariants**.
-
-Reason for the decision:
-- generic `ubuntu-latest` is not byte-reproducible for the fixed Demucs contract across observed hosted CPU classes;
-- the documented common-AVX2 controls are insufficient cross-vendor;
-- no branch-tracked pinned compute surface is available to implement Policy A without inventing new infrastructure;
-- exact hosted WAV/PCM hashes therefore remain provenance/audit diagnostics, not admission criteria.
-
-Hard policy rules:
-- never choose a canonical vendor, CPU model, runner image, WAV hash, PCM hash, or model output because it looks better downstream;
-- no reference tab, archived scorer, professional scorer, or downstream agreement objective may define the variation bound;
-- acceptance must be pairwise/reference-blind or based on independently justified representation semantics, not equality to one blessed host;
-- missing/invalid comparison evidence fails closed;
-- thresholds may be introduced only when justified by the model/output representation or measured reproducibility evidence, never by arbitrary tuning;
-- `modelValidationComplete` stays false until this policy is implemented, tested, and demonstrated on independent runs.
-
-### Existing fail-closed guards inherited by Policy B
-
-Inspection of the current fresh model-note boundary confirms these already exist and must remain intact:
-- `transcribe_isolated_guitar_basic_pitch.py` validates model event shape, finite starts/ends/confidences, requested MIDI range, valid temporal ordering, deterministic sorted IDs, and records a content note-inference identity; decoded note-off remains diagnostic only.
-- `build_isolated_polyphonic_note_evidence.mjs` requires the frozen reference-blind context, accepted structure, Basic Pitch contract/version/role, model provenance, valid SHA-256 inference identity, event-count identity match, finite values, confidence in [0,1], playable MIDI 40–88, onsets inside frozen structure, and diagnostic end strictly after start. It forces `sourceEnd`, `durationSeconds`, and `durationConfidence` to null.
-- `run_model_note_evidence_pipeline_canary.mjs` requires structure identity match, verified/reference-blind adapter provenance, model invocation, no V143 boundary violation, and validation pending at entry; it verifies pitch-resolved model events exist while `completeTabEligibleEventCount` remains 0 and delivery remains blocked.
-
-These are necessary structural/provenance guards but are **not sufficient** to complete model validation. Policy B still needs a justified cross-run semantic-variation admission contract.
-
-### Policy B measurement layer — implemented and green
-
-The first cross-run layer is deliberately **measurement-only**; it does not define or apply an acceptance tolerance.
-
-Implementation:
-- comparator `scripts/songsterr-fresh/compare_basic_pitch_cross_run_evidence.py`
+`scripts/songsterr-fresh/compare_basic_pitch_cross_run_evidence.py`
 - contract `songsterr-fresh-basic-pitch-cross-run-variation-measurement-v1`
-- dedicated CI `.github/workflows/songsterr-fresh-model-evidence-variation-tests.yml`
 - implementation commit `aae62eba938814a9d38dcf08f39cfdfa0456b4d9`
-- workflow commit `ea1283f549e137b2a3630636877479f49b4da9b2`
-- green workflow run `34539883074`, job `103079908440`; compile + reference-blind/fail-closed self-test both passed
+- CI run `34539883074`, job `103079908440`, green
+- semantic key `(nearestStructureSlot, selectedMidi)` from frozen structure; deterministic duplicate pairing
+- canonical A/B ordering makes reports argument-order invariant
+- measures inventory/MIDI histogram/source-start/confidence/diagnostic-end variation
+- malformed or incomparable evidence fails closed
+- explicitly `thresholdsApplied:false`, `admissionDecisionMade:false`, `modelValidationComplete:false`, `mayAdvanceDelivery:false`, `durationAuthorityChanged:false`
 
-Contract behavior:
-- compares adapted `songsterr-fresh-isolated-polyphonic-note-evidence-v1` artifacts, not raw sequential Basic Pitch note IDs;
-- preserves `songsterr-fresh-basic-pitch-note-identity-v1` unchanged as same-inference exact integrity identity; cross-run exact SHA equality is diagnostic only;
-- uses `(nearestStructureSlot, selectedMidi)` as the semantic comparison key, reusing the frozen structure's deterministic projected slot without inventing an onset tolerance;
-- duplicate events within one semantic key are paired deterministically after sorting by source start/confidence/diagnostic end;
-- canonicalizes validated inputs by content digest so reversing CLI A/B order yields the same report;
-- measures event/key inventory drift, MIDI histogram drift, paired source-start deltas, paired confidence deltas, and diagnostic-only model-end deltas;
-- malformed/incomparable inputs fail closed for contract/version/role/reference-blind/frozen-structure mismatch, structure identity mismatch, model-setting mismatch, source-audio mismatch, unsafe provenance, non-finite event values, unsupported MIDI, candidate inconsistency, exact inference-identity inconsistency, or non-null duration leakage;
-- self-tests cover exact-copy zero variation, A/B swap invariance, onset/confidence perturbation, extra-event inventory drift, structure-slot drift, unsafe provenance, non-finite values, unsupported MIDI, duration leakage, and structure/source/model mismatch;
-- output explicitly records `thresholdsApplied: false`, `admissionDecisionMade: false`, `modelValidationComplete: false`, `mayAdvanceDelivery: false`, and `durationAuthorityChanged: false`.
+## AUTHORITATIVE REAL-MODEL MEASUREMENT
 
-The measurement contract being green does **not** validate model evidence. It only provides a safe way to collect independent-run reproducibility evidence for a future bounded-variation admission decision.
+Three-independent-run canary `.github/workflows/songsterr-fresh-model-evidence-cross-run-measurement-canary.yml`.
 
-### Independent real-model measurement canary — completed green
+Bring-up failures were workflow guards only and are non-authoritative: run `34540126725` used wrong persisted structure field; run `34540364742` exposed the copied asset-revision typo and stopped before Basic Pitch.
 
-Workflow:
-- `.github/workflows/songsterr-fresh-model-evidence-cross-run-measurement-canary.yml`
-- three independent `ubuntu-latest` model observations (`a`, `b`, `c`), each rebuilding/verifying the same frozen reference-blind structure, running the same fixed Demucs contract, running Basic Pitch once with same-inference activation identity, then building duration-free adapted evidence;
-- aggregate job performs all three pairwise comparisons and uploads a measurement-only summary;
-- exact stem/note/activation hashes are diagnostics only; no preferred runner/output is selected;
-- aggregate explicitly refuses thresholds, admission, validation completion, delivery advancement, or duration-authority changes.
-
-Bring-up history:
-- run `34540126725` failed before model inference because the workflow checked non-persisted convenience field `structureAccepted` instead of persisted `structureAcceptance.accepted`; no model evidence from that run is authoritative.
-- commit `72665f32ba19ce8729b3cdc1e94616dbc8901036` fixed the persisted structure assertion and quoted the Node heredoc; corrected run `34540364742` passed fixture/dependency/frozen-structure checks on all observations.
-- run `34540364742` then exposed a redundant Demucs asset assertion typo: workflow/checkpoint had `053e...8c93b`, while authoritative verifier constant/output is `053e1404489b3dc58bf718224fac4b7316de8c93`. The exact model asset SHA matched. The failed observation stopped before Basic Pitch inference, so this run is not model-evidence measurement authority.
-- commit `0f4b4cbe0a52657cf4989e07500041335a89db86` corrected that redundant assertion.
-
-Authoritative completed measurement:
-- run `34540837228`, head `0f4b4cbe0a52657cf4989e07500041335a89db86`, success
-- observation jobs: A `103082902022`, B `103082902438`, C `103082902292`; all succeeded through frozen structure, fixed Demucs, Basic Pitch, duration-free evidence, provenance, and artifact upload
-- aggregate job `103084400834`, success
+Authoritative completed run `34540837228`, head `0f4b4cbe0a52657cf4989e07500041335a89db86`, success:
+- jobs A `103082902022`, B `103082902438`, C `103082902292`; aggregate `103084400834`
 - aggregate artifact `10177361715`, digest `sha256:74c4c1acb4830ec00b63ad19e1c26925aec0bc0b871ed073913cd10d5aea262c`
-- observation artifacts: A `10177349811` / `sha256:9fd189d4137734f27d04e94771b7b940f6fb3719415e53ddc9bbfa9d82725903`; B `10177345635` / `sha256:000bd93d87103bcae6f789d0c18a0e707896950c12f662f1c7b7ec7884b72ebf`; C `10177335624` / `sha256:76a265824600bcf5962861b7e59cc57d4228e8ffdee0ed837e37968a2a09a7c5`
-- A and B were exact matches: 1,139 events, 1,139 semantic keys, zero inventory drift, zero onset/confidence/model-end delta; same Demucs guitar stem SHA `5b3e7c6feb153ba427303d5f2688cf3442faa74bb4e98ce298ac426824c8db33`, same note identity `1e41a51a3463aa87b3d4c76f8e4cccadcb708dd3d1f51ae6895b950269a61024`, same activation bundle `4d2c1c7af035e26ff86919fb169354676bc35b56658d306c7410a94f573f1151`
-- C produced a different Demucs stem SHA `4227a41f58817d32e9e122857c924c486afdc1e411a0a173bec2dfcc0c7b6b81`, 1,138 events, note identity `e85323e5b7449ac84be7ad6076ed3ee9c2da1e9a37b3c64247637e4b82dcbe77`, activation bundle `5e1aa1f76bfb2b3dae77f6aeb6bf6dd1fc5f84e102292dd12a5432683b330159`
-- A↔C and B↔C each matched 1,138 semantic events with **zero source-start delta**; exactly one event differed in inventory: MIDI 64 at frozen `nearestStructureSlot=206.22657596371883` was present in A/B and absent in C
-- across the 1,138 common events, onset-confidence absolute delta: max `0.0124053955078125`, mean `0.00008660461917283875`, RMS `0.0004107038163407931`
-- diagnostic-only model-end absolute delta: max `0.6398326530612053` s, mean `0.0005622431046232033` s, RMS `0.01896685259331218` s; model ends remain excluded from duration evidence
-- A and B ran on AMD EPYC 9V74; C ran on AMD EPYC 7763; all used the same Ubuntu image `20260907.300.1`, package pins, thread environment, decoded input SHA, frozen structure identity, and fixed contract
-- this CPU association is descriptive only and must not be treated as a causal selector or correctness signal; earlier controlled evidence already showed CPU/image/region are not complete explanations of Demucs numerical variation
-- the observed maxima are descriptive only. Three observations do **not** justify an admission tolerance or a preferred output.
+- A/B exact: 1,139 events; stem SHA `5b3e7c6feb153ba427303d5f2688cf3442faa74bb4e98ce298ac426824c8db33`; note SHA `1e41a51a3463aa87b3d4c76f8e4cccadcb708dd3d1f51ae6895b950269a61024`; activation bundle `4d2c1c7af035e26ff86919fb169354676bc35b56658d306c7410a94f573f1151`
+- C: 1,138 events; stem SHA `4227a41f58817d32e9e122857c924c486afdc1e411a0a173bec2dfcc0c7b6b81`; note SHA `e85323e5b7449ac84be7ad6076ed3ee9c2da1e9a37b3c64247637e4b82dcbe77`; activation bundle `5e1aa1f76bfb2b3dae77f6aeb6bf6dd1fc5f84e102292dd12a5432683b330159`
+- A↔C and B↔C: 1,138 common semantic events, zero source-start delta; one MIDI-64 event at slot `206.22657596371883` present in A/B and absent in C
+- common-event confidence delta max `0.0124053955078125`, mean `0.00008660461917283875`, RMS `0.0004107038163407931`
+- diagnostic-only model-end delta max `0.6398326530612053` s, mean `0.0005622431046232033` s, RMS `0.01896685259331218` s; never duration evidence
+- A/B CPU AMD EPYC 9V74; C AMD EPYC 7763; same image/pins/thread env/source/structure. CPU association is descriptive only and is not a selector.
+- three observations do not justify a tolerance.
+
+## FORMAL MEASUREMENT-SET CONTRACT — IMPLEMENTED / FOCUSED CI GREEN
+
+New `scripts/songsterr-fresh/aggregate_basic_pitch_cross_run_measurements.py`:
+- contract `songsterr-fresh-basic-pitch-cross-run-variation-measurement-set-v1`
+- implementation commit `d3b99a1c1fffd6fde8c13c0a0b9af89673749391`
+- test wiring commit `ccb1d04496ed245641da7863b452230c2b3bed1c`
+- focused CI run `34544408404`, job `103093808844`, success
+- validates exact source/decoded-input/frozen-structure/model/package/thread snapshot and safe runtime guards
+- recomputes each pair report from the supplied evidence and rejects altered reports
+- requires the complete unordered pair set with no missing/extra pair
+- binds runtime canonical-evidence SHA, note identity, activation identity, and structure identity back to validated evidence
+- groups exact stem/evidence/note/activation/frame-time outcomes descriptively; no preferred group
+- summarizes observed maxima as `descriptiveOnly:true`, `mayDefineTolerance:false`
+- hard boundary includes `preferredOutputSelected:false`, `exactHashesAreAdmissionCriteria:false`, `runtimeProvenanceIsAdmissionCriterion:false`, `observedMaximaAreAdmissionCriteria:false`
+- self-tests cover complete pair set, argument-order invariance, exact grouping, unsafe runtime guard, digest binding, missing pair, thresholded pair, pair recomputation, package drift, and no preferred output/admission
+
+Canary wiring commit `1a005b3cfba084374667e1132574ca804c98d6fc` replaces the prior inline aggregate summary with the formal aggregate script and adds an independent non-promotional boundary assertion. No numerical model controls changed.
+
+Active validation: run `34544587948` at head `1a005b3cfba084374667e1132574ca804c98d6fc`; three independent model observations are in progress. Treat no result from this run as authoritative until all observation jobs and the formal aggregate job succeed.
 
 ## CURRENT ACCEPTANCE STATE
 
-Do **not** set `modelValidationComplete: true` yet.
+Do **not** set `modelValidationComplete:true`.
 
 Blockers remain:
 - `MODEL_EVIDENCE_VALIDATION_PENDING`
 - `DURATION_EVIDENCE_INCOMPLETE`
 
-Customer-eligible events remain **0**. V2 remains authoritative. V3 remains candidate-only. Basic Pitch output is not ground truth. No reference scorer/tab/archived logic. No decoded BP end as duration. No generic next-onset duration. No same-pitch reattack default duration. No threshold sweep. No acceptance promotion from self-consistency or downstream agreement alone.
+Customer-eligible events remain **0**. V2 authoritative; V3 candidate-only. Basic Pitch is not ground truth. No reference scorer/tab/archive logic. No BP end as duration. No generic next-onset duration. No same-pitch-reattack default. No threshold sweep. No promotion from self-consistency, exact hashes, CPU association, or downstream agreement.
 
 ## NEXT ENGINEERING STEPS
 
-1. Promote the inline three-observation aggregation logic into a dedicated fresh measurement-set script with its own fail-closed validation and self-tests, so future evidence sets are comparable and auditable independent of workflow YAML.
-2. The measurement-set contract should validate observation/runtime contracts and hard guards, verify all pairwise reports are measurement-only and cover the complete observation pair set, group exact stem/note/activation/evidence outcomes descriptively, and summarize maxima without converting them into tolerances.
-3. Wire the dedicated aggregate script into the fresh cross-run measurement canary and keep exact CPU/vendor/image/hash values diagnostic only.
-4. Run the focused aggregate CI/canary. Do not rerun the completed common-AVX2 portability experiment and do not alter numerical model controls simply to reduce the observed one-event difference.
-5. Determine later whether a defensible bounded-variation admission rule can be derived from representation semantics plus a broader independent evidence base. If not, keep admission blocked rather than inventing one.
-6. Only after a bounded-variation admission contract is justified, implemented, tested, and independently demonstrated may `modelValidationComplete` be reconsidered. Duration research remains paused until then.
-7. Continue updating this checkpoint after each material implementation or validation finding.
+1. Complete/inspect run `34544587948` on the fixed snapshot.
+2. If the formal aggregate fails, classify contract/workflow bugs separately from model variation; do not alter model numerical controls to make it pass.
+3. If it succeeds, record artifact digest, exact outcome groups, descriptive envelope, and whether it reproduces or expands the previous one-event variation. Observed maxima remain non-admission evidence.
+4. Build a broader independent measurement base only if needed to reason about representation-semantic bounds; do not rerun the completed common-AVX2 portability experiment.
+5. Do not create an admission threshold unless independently justified. If no defensible bound exists, keep validation blocked.
+6. Duration research remains paused until upstream model-evidence validation is resolved.
+7. Keep this checkpoint updated after material findings.
 
 The archived V143/Gomyway pipeline remains out of scope unless the user explicitly asks to resume it.
