@@ -1,6 +1,6 @@
 # CURRENT STATE — Songsterr Fresh Pipeline V1
 
-Updated: 2026-09-11 10:26 America/Toronto
+Updated: 2026-09-11 12:04 America/Toronto
 Canonical branch: `songsterr-fresh-pipeline-v1`
 Canonical checkpoint: `docs/checkpoints/SONGSTERR_FRESH_PIPELINE_CURRENT_STATE.md`
 
@@ -319,6 +319,18 @@ Decision-enabled real model canary — COMPLETED GREEN:
 - Active work remains exclusively on `songsterr-fresh-pipeline-v1`; Independent Corroboration V1, Policy C-S, and all non-promotion boundaries are unchanged.
 - Closure record: `docs/checkpoints/SONGSTERR_FRESH_GOAT_RESEARCH_CLOSED_REFERENCE_ONLY.md`.
 - `modelValidationComplete:false`; customer-eligible events 0; `mayAdvanceDelivery:false`; duration research remains paused.
+
+## INDEPENDENT CORROBORATION V1 — FIRST AUTHORIZED-SONG RESULT COMPLETE
+
+- First authorized-song execution completed on qualified Policy C-S epoch `62a82204-e0cc-4daa-8022-93f73352310f`, source commit `e2efb6392d27edfb37cbb19a2071e5e13fdcb039`, session fingerprint `b5ba8ddf3faf2c5f4f948e922e5e29a490ab7650397dee962874852d86ebe887`.
+- Session verification passed before and after research; qualified event count 1,140.
+- Frozen Independent Corroboration V1 classifications: 471 `independently-corroborated-candidate`, 667 `not-independently-corroborated`, 2 `insufficient-evidence`.
+- The first wrapper invocation failed before evaluator execution because it read qualification promotion guards from the wrong JSON level. This was a wrapper parser bug, not a model/evaluator failure. Parser-only fix commit `0ef42376fd9b9a91f23f2e8521c71b23566d4d81`; strengthened schema CI commit `05f484e17590a27608ef5689c2b27ef6ad2e45d8`; run `34612875574` SUCCESS.
+- The frozen evaluator itself was not changed after seeing the song result. Corrected wrapper was executed from `/tmp` without pulling into or modifying the qualified source worktree.
+- Formal result record: `docs/checkpoints/SONGSTERR_FRESH_INDEPENDENT_CORROBORATION_V1_AUTHORIZED_SONG_RESULT.md`, commit `e4321566887ade4e802fa36663ccee414656f6f1`.
+- Aggregate counts are research evidence only. Preregistration still requires a separate explicit policy review before any customer-eligible subset may be authorized.
+- Immediate review target: inspect frozen-method classifications/channel measurements for the previously identified MIDI-55 (~46.2024095 s) and MIDI-64 (~79.6261406 s) stress-test events before any promotion decision.
+- `modelValidationComplete:false`; customer-eligible events 0; `mayAdvanceDelivery:false`; duration authority unchanged; duration research remains paused.
 
 ## CURRENT ACCEPTANCE STATE
 
