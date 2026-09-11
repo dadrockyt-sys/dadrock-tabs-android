@@ -89,6 +89,7 @@ jobs:
       - name: Prove finite semantic consensus is not a distribution-free portability proof
         run: python scripts/songsterr-fresh/analyze_semantic_consensus_gate.py --self-test
 
+      # Policy C fingerprints the exact named package set and full installed Python distribution metadata.
       - name: Prove Policy C authority is fail-closed before enrollment and on drift
         run: |
           python scripts/songsterr-fresh/verify_pinned_compute_authority.py --validate-manifest
