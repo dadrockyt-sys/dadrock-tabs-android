@@ -31,6 +31,7 @@ The authority fingerprint covers reproducibility-relevant state including:
 - exact Python version, implementation, and interpreter executable SHA-256
 - Node and FFmpeg first-line versions plus executable SHA-256
 - pinned Python package versions
+- full installed Python-distribution lock hash, including normalized versions plus installed `RECORD`, `direct_url.json`, and `INSTALLER` metadata hashes, so transitive/package-content drift invalidates authority
 - NumPy build/configuration hash
 - PyTorch build/configuration hash
 - deterministic thread/hash environment

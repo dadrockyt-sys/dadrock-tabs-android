@@ -189,6 +189,25 @@ def package_versions():
     return versions
 
 
+def installed_distribution_lock():
+    rows = []
+    for dist in importlib.metadata.distributions():
+        raw_name = dist.metadata.get("Name") or ""
+        normalized_name = raw_name.strip().lower().replace("_", "-").replace(".", "-")
+        record = dist.read_text("RECORD")
+        direct_url = dist.read_text("direct_url.json")
+        installer = dist.read_text("INSTALLER")
+        rows.append({
+            "name": normalized_name,
+            "version": str(dist.version),
+            "recordSha256": sha256_text(record) if record is not None else None,
+            "directUrlSha256": sha256_text(direct_url) if direct_url is not None else None,
+            "installerSha256": sha256_text(installer) if installer is not None else None,
+        })
+    rows.sort(key=canonical_json)
+    return {"distributionCount": len(rows), "sha256": digest_json(rows)}
+
+
 def numeric_library_configuration():
     result = {
         "numpyConfigSha256": None,
@@ -235,6 +254,7 @@ def collect_probe(authority_id="songsterr-fresh-authority-v1"):
             "ffmpeg": command_output(["ffmpeg", "-version"]),
         },
         "packages": package_versions(),
+        "pythonDistributionLock": installed_distribution_lock(),
         "numericLibraries": numeric_library_configuration(),
         "deterministicEnvironment": {key: os.environ.get(key) for key in ENV_KEYS},
     }
@@ -274,6 +294,21 @@ def validate_manifest(manifest):
     required_env = manifest.get("requiredEnvironment")
     if not isinstance(required_env, dict) or required_env != {key: "1" for key in ENV_KEYS[:-1]} | {"PYTHONHASHSEED": "0"}:
         raise AuthorityError("REQUIRED_DETERMINISTIC_ENVIRONMENT_CHANGED")
+
+    expected_packages = {
+        "numpy": "1.26.4",
+        "torch": "2.14.0",
+        "huggingface-hub": "1.30.0",
+        "safetensors": "0.8.0",
+        "sphn": "0.2.1",
+        "demucs": "4.1.0",
+        "basic-pitch": "0.4.0",
+        "librosa": "0.11.0",
+        "soundfile": "0.13.1",
+        "tflite-runtime": "2.14.0",
+    }
+    if manifest.get("requiredPackageVersions") != expected_packages:
+        raise AuthorityError("REQUIRED_PACKAGE_VERSION_SET_CHANGED")
 
     fixed = manifest.get("fixedModelPath")
     if not isinstance(fixed, dict):
@@ -362,13 +397,15 @@ def validate_probe_prerequisites(manifest, probe):
     packages = fingerprint.get("packages")
     if not isinstance(packages, dict):
         raise AuthorityError("PACKAGE_VERSION_MAP_REQUIRED")
-    if packages.get("demucs") != manifest["fixedModelPath"]["demucs"]["packageVersion"]:
-        raise AuthorityError("DEMUCS_PACKAGE_VERSION_MISMATCH")
-    if packages.get("basic-pitch") != manifest["fixedModelPath"]["basicPitch"]["packageVersion"]:
-        raise AuthorityError("BASIC_PITCH_PACKAGE_VERSION_MISMATCH")
-    if any(packages.get(name) is None for name in PACKAGE_NAMES):
-        missing = sorted(name for name in PACKAGE_NAMES if packages.get(name) is None)
-        raise AuthorityError("PINNED_PACKAGE_MISSING:" + ",".join(missing))
+    if packages != manifest.get("requiredPackageVersions"):
+        raise AuthorityError("PINNED_PACKAGE_VERSION_SET_MISMATCH")
+    distribution_lock = fingerprint.get("pythonDistributionLock")
+    if not isinstance(distribution_lock, dict):
+        raise AuthorityError("PYTHON_DISTRIBUTION_LOCK_REQUIRED")
+    count = distribution_lock.get("distributionCount")
+    if isinstance(count, bool) or not isinstance(count, int) or count <= 0:
+        raise AuthorityError("PYTHON_DISTRIBUTION_COUNT_INVALID")
+    require_sha256(distribution_lock.get("sha256"), "pythonDistributionLock.sha256")
     python = fingerprint.get("python", {})
     require_sha256(python.get("executableSha256"), "python.executableSha256")
     tools = fingerprint.get("toolchain", {})
@@ -427,6 +464,7 @@ def synthetic_fingerprint():
             "basic-pitch": "0.4.0", "librosa": "0.11.0", "soundfile": "0.13.1",
             "tflite-runtime": "2.14.0",
         },
+        "pythonDistributionLock": {"distributionCount": 42, "sha256": "7" * 64},
         "numericLibraries": {"numpyConfigSha256": "5" * 64, "torchConfigSha256": "6" * 64, "torchVersion": "2.14.0"},
         "deterministicEnvironment": {
             "OMP_NUM_THREADS": "1", "MKL_NUM_THREADS": "1", "OPENBLAS_NUM_THREADS": "1",
@@ -482,9 +520,19 @@ def run_self_test():
     try:
         verify_probe(enrolled, software_drift)
     except AuthorityError as exc:
-        assert str(exc) == "AUTHORITY_FINGERPRINT_DRIFT"
+        assert str(exc) == "PINNED_PACKAGE_VERSION_SET_MISMATCH"
     else:
         raise AssertionError("software drift must fail closed")
+
+    transitive_drift = copy.deepcopy(probe)
+    transitive_drift["fingerprint"]["pythonDistributionLock"]["sha256"] = "8" * 64
+    transitive_drift["fingerprintSha256"] = digest_json(transitive_drift["fingerprint"])
+    try:
+        verify_probe(enrolled, transitive_drift)
+    except AuthorityError as exc:
+        assert str(exc) == "AUTHORITY_FINGERPRINT_DRIFT"
+    else:
+        raise AssertionError("transitive distribution drift must fail closed")
 
     print(json.dumps({
         "contract": MANIFEST_CONTRACT,
@@ -492,6 +540,7 @@ def run_self_test():
         "unenrolledFailsClosed": True,
         "hardwareDriftFailsClosed": True,
         "softwareDriftFailsClosed": True,
+        "transitiveDistributionDriftFailsClosed": True,
         "modelValidationComplete": False,
     }, sort_keys=True))
 
