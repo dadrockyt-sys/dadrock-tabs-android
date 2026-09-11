@@ -7,226 +7,182 @@ Canonical checkpoint: `docs/checkpoints/SONGSTERR_FRESH_PIPELINE_CURRENT_STATE.m
 ## NON-NEGOTIABLE SCOPE
 
 - Work only on `songsterr-fresh-pipeline-v1`; do not change `main` or Production.
-- Do not resume archived V143/Gomyway implementation, reference tabs, professional/reference scoring, GOAT research, holdout scoring, training/fine-tuning, broad optimizer/ISA sweeps, or archived pipeline logic unless explicitly reopened.
-- The `gomyway` filename authorizes only the exact protected audio fixture, not archived implementation logic.
-- GOAT remains CLOSED / REFERENCE ONLY.
+- Do not resume archived V143/Gomyway implementation, reference tabs/pro scorers, GOAT research, training/fine-tuning, broad optimizer sweeps, or duration work unless explicitly reopened.
+- The protected `gomyway` fixture authorizes only that exact audio fixture, not archived implementation logic.
 - `songsterr_pipeline/` remains deterministic/model-free/process-free/network-free; model/DSP work remains under `scripts/songsterr-fresh/`.
 - Frozen full-mixture structure precedes note inference and cannot be rewritten downstream.
 - Never silently alter/drop MIDI or event identity.
-- Preserve `/ai-tab`: upload → AI analysis → analyzer metadata/events → preview PDF → unlock → full PDF → browser/email.
-- Duration research remains paused until upstream model-evidence validation is explicitly resolved.
+- Preserve `/ai-tab` UX flow.
+- Duration research remains paused until model-evidence admission is explicitly resolved.
 
-## PROTECTED FIXTURE / FIXED MODEL PATH
+## FIXED MODEL / AUTHORITY BOUNDARY
 
-Protected authorized-song fixture:
-- `public/jimmy-paige-midterm-v1/gomyway-midterm-source.m4a`
-- Git blob `4dd709e3fa177b4daeed71ca97f0199757729d4b`
-- duration ~`210.674648526 s`
-- authority-baseline decoded separation WAV SHA-256 `e03e1885185f4983b3eeaa66f36510b7709d607c14010f964e0aad427ecc474a`
-- frozen structure identity `fnv1a32:2f493225`
-- canonical structure length `19653`
-- 4/4; first downbeat ~`0.65016 s`; 115 measures; 113 tempo segments.
-
-Fixed production model path remains:
+Fixed model path remains:
 
 frozen full-mixture structure → Demucs guitar isolation → Basic Pitch pitch/onset inference → duration-free model evidence → independent model-evidence validation → dedicated release authority
 
 Pinned model behavior remains Demucs `htdemucs_6s`, Basic Pitch `0.4.0`. Basic Pitch is not ground truth.
 
-Duration remains unchanged and paused:
-- authoritative release V2: `estimate_selected_pitch_releases.py`, contract `songsterr-fresh-cpu-spectral-release-evidence-v2`
-- candidate-only release V3: `estimate_selected_pitch_releases_v3.py`, contract `songsterr-fresh-spectral-activation-release-evidence-v3`
-- no Basic Pitch end as duration, generic next-onset duration, or same-pitch-reattack default.
-
-## POLICY B / POLICY C / POLICY C-S
-
-Policy B remains fail-closed: reproducibility, exact hashes, CPU association, historical frequency, confidence, event count, downstream agreement, finite unanimity, or synthetic-suite success do not prove semantic correctness.
-
 Persistent Policy C remains `UNENROLLED`.
 
-Historical Policy C-S V2 epoch:
-- epoch `87926671-e6e9-4cda-87ea-8f248a6dae93`
-- source `a76ab8cebb47a2dd1cf78243f00e436470e32df3`
-- probe/enroll/verify green
-- exactly three same-session canaries green
-- one protected-song V2 research execution completed in that same epoch
-- post-run verify green
-- source later changed; epoch is historical only and MUST NOT be reused.
+Historical Policy C-S V2 epoch `87926671-e6e9-4cda-87ea-8f248a6dae93` is closed/historical only and MUST NOT be reused.
 
-## V1 — CLOSED / REJECTED AS ADMISSION AUTHORITY
+Current authority remains fail-closed:
+- `modelValidationComplete:false`
+- customer-eligible events: `0`
+- `mayAdvanceDelivery:false`
+- duration authority unchanged
+- duration research paused.
 
-V1 is a frozen research diagnostic only.
+## V1 / V2 / V3 — CLOSED
 
-Historical protected-song result: 471 corroborated / 667 not / 2 insufficient across 1,140 events.
+V1 and V2 are frozen research diagnostics rejected as admission authority.
 
-Historical MIDI-55 (~46.2024095 s) and MIDI-64 (~79.6261406 s) cases remain retrospective stress diagnostics only and may not tune successors.
+V2 protected-song result remains historical only: 1,140 preserved events; 187 corroborated / 951 not / 2 insufficient. No historical protected-song result may tune V4.
 
-## V2 — CLOSED / REJECTED AS ADMISSION AUTHORITY
-
-Frozen V2 evaluator:
-- `scripts/songsterr-fresh/independent_pitch_corroboration_v2.py`
-- contract `songsterr-fresh-independent-pitch-corroboration-research-v2`
-- 44.1 kHz; 16384-sample fixed post-onset window
-- MIDI 40..88
-- competitors `{-12,-7,-2,-1,+1,+2,+7,+12}`
-- demeaned RMS `<1e-4` insufficient
-- strict unique-best in both spectral and YIN/CMND channels
-- no voting/fallback/confidence fitting/reference scorer/authorized-song tuning/event deletion.
-
-Protected-song V2 result:
-- 1,140 events
-- 187 corroborated / 951 not / 2 insufficient
-- result record `SONGSTERR_FRESH_INDEPENDENT_CORROBORATION_V2_AUTHORIZED_SONG_RESULT.md`
-- policy review `SONGSTERR_FRESH_INDEPENDENT_CORROBORATION_V2_POLICY_REVIEW.md`
-- decision: **REJECTED AS ADMISSION AUTHORITY / RETAINED AS RESEARCH DIAGNOSTIC**.
-
-## V3 — CLOSED / EXTERNAL VALIDATION FAILED
-
-V3 was preregistered before any GuitarSet correctness result:
-- prereg `docs/checkpoints/SONGSTERR_FRESH_MODEL_EVIDENCE_ADMISSION_PREREGISTRATION_V3.md`
-- prereg commit `2dfd8c5d52093c36c0924e5f0b57eb2b2284e7d0`
-- frozen method record `docs/checkpoints/SONGSTERR_FRESH_EXTERNAL_GUITARSET_VALIDATION_V3.md`
-- provenance-complete method commit `1792739fa30c9304d37e94066794a38898dc98aa`
-- frozen official execution source `783c3b572aff4edd9d6298e9131dffd02454a61e`.
-
-Locked V3 external result:
-- GuitarSet v1.1.0, 357 locked tracks after exactly three preregistered public-data exclusions
+V3 is closed after frozen GuitarSet v1.1.0 external validation failed its preregistered gates:
+- 357/357 tracks
 - 62,438 decoded events
 - 11,252 V3-positive
-- 10,019 correct V3-positive
+- 10,019 correct positives
 - precision `0.8904194809811589`
 - one-sided 95% Wilson lower bound `0.8854816094599652`
 - required lower bound `0.9900` → FAIL
-- every player `00..05` failed point precision `>=0.9500`
-- `comp` precision `0.8441590516176833` → FAIL
-- `solo` precision `0.9164237123420796` → FAIL.
+- every player stratum and both `comp`/`solo` precision gates failed.
 
-Artifact hashes:
-- outer official result SHA-256 `e6edd37e72f24bef069d16b4accb48423b9472fe26eb90adee15e401e5b4196d`
-- core result SHA-256 `9a2d103cfbe6f9c3bd8b7903c665affa41729ec2da7f303a5b1c416a2a532e4e`.
+V3 immutable result SHA-256 `e6edd37e72f24bef069d16b4accb48423b9472fe26eb90adee15e401e5b4196d`.
+V3 is **CLOSED / REJECTED AS ADMISSION AUTHORITY / RETAINED AS RESEARCH DIAGNOSTIC**.
+GuitarSet is historical only and MUST NOT be reused as V4 pass/fail validation.
 
-Immutable result:
-- `docs/checkpoints/SONGSTERR_FRESH_EXTERNAL_GUITARSET_VALIDATION_V3_RESULT.md`
-- commit `91b021f6b3f43cee73dc58d1aebf29492a547928`.
+## V4 — FROZEN METHOD, EXTERNAL VALIDATION REOPENED
 
-Policy review:
-- `docs/checkpoints/SONGSTERR_FRESH_EXTERNAL_GUITARSET_VALIDATION_V3_POLICY_REVIEW.md`
-- commit `3b8159be0898a71b33069f94a4ca4d1ada0a7047`
-- **CLOSED / REJECTED AS ADMISSION AUTHORITY / RETAINED AS RESEARCH DIAGNOSTIC**.
+User explicitly authorized the V4 successor and later explicitly reopened V4 holdout/external validation.
 
-No V3 gate may be relaxed or tuned. GuitarSet is historical after V3 and MUST NOT be reused as a V4 pass/fail corpus. No protected-song V3 execution occurred.
-
-## V4 — ACTIVE / FROZEN SYNTHETIC-ONLY SUCCESSOR
-
-User explicitly authorized the V4 successor after V3 closeout.
-
-Operative preregistration:
+Operative V4 preregistration:
 - `docs/checkpoints/SONGSTERR_FRESH_MODEL_EVIDENCE_ADMISSION_PREREGISTRATION_V4.md`
-- initial prereg commit `a5cec402cf3bcd6c28ac3339d4d00de4d8cdf8b2`
-- pre-implementation synthetic-only amendment `30b2769772d0a2a2edeaa8e92bff66ce3518fede`.
+- initial commit `a5cec402cf3bcd6c28ac3339d4d00de4d8cdf8b2`
+- pre-implementation synthetic amendment `30b2769772d0a2a2edeaa8e92bff66ce3518fede`.
 
-The amendment replaced the initially proposed plain real-cepstrum view after a generated E2 fixture exposed octave/harmonic aliasing. This occurred before implementation and before any external/protected correctness result. The operative second view is standard YIN.
-
-Frozen implementation:
+Frozen V4 implementation:
 - `scripts/songsterr-fresh/independent_pitch_corroboration_v4.py`
 - commit `6e9e11e60d0d6958c30edf6bb5d686d545936a19`
 - contract `songsterr-fresh-temporal-consensus-pitch-corroboration-research-v4`.
 
-Focused CI:
-- `.github/workflows/songsterr-fresh-temporal-consensus-v4-ci.yml`
-- workflow commit `736872e8fdf922c3975eda833ebd9616692bbd65`.
-
 Frozen method record:
 - `docs/checkpoints/SONGSTERR_FRESH_TEMPORAL_CONSENSUS_V4.md`
-- method commit `1f4e42a53d74d1ef6bec85a00546d7196f021135`.
+- commit `1f4e42a53d74d1ef6bec85a00546d7196f021135`.
 
-V4 fixed method:
-- isolated mono guitar audio only; exactly 44100 Hz;
+Frozen V4 rule:
+- mono isolated guitar, exactly 44100 Hz;
 - existing `sourceStart` + integer `selectedMidi` only;
 - full playable MIDI `40..88` spectral competition;
-- three exact 8192-sample windows at onset-relative offsets `1024`, `7168`, `13312`;
-- spectral view: Hanning 8192, rFFT 32768, semitone-cell fundamental, coherent harmonics 1..6, log-mean score, strict unique global winner;
+- three exact 8192-sample post-onset windows at relative offsets `1024`, `7168`, `13312`;
+- spectral view: Hanning 8192, rFFT 32768, coherent harmonics 1..6, strict unique global winner;
 - YIN view: `librosa==0.11.0`, frame/hop 8192, center false, fmin MIDI 39.5, fmax MIDI 88.5, trough threshold 0.1, winner by equal-tempered semitone cell;
-- selected MIDI must win both decisions in all three windows;
-- no voting, fallback, margin threshold, confidence, duration, next onset, activation, decision surface, reference, performer/style identity, or event deletion;
+- selected MIDI must win spectral + YIN in all three windows;
+- no margin threshold, voting, fallback, confidence, duration, next onset, activation, decision surface, reference, performer/style identity, or event deletion;
 - invalid/nonfinite/truncated/zero-energy/YIN-invalid required view => insufficient;
 - otherwise any disagreement => not independently corroborated.
 
-Controlled synthetic CI:
-- run `34653819306`, job `103441756944`, source `736872e8fdf922c3975eda833ebd9616692bbd65`: **SUCCESS**;
-- final documentation-complete freeze run `34653917007`, job `103442054828`, exact source `1f4e42a53d74d1ef6bec85a00546d7196f021135`: **SUCCESS**.
+Controlled V4 CI is green:
+- run `34653819306`, job `103441756944`
+- final method-freeze run `34653917007`, job `103442054828`.
 
-Green contract coverage includes stable low/mid/high pitches, +25-cent detune, attack noise, wrong octave, stronger adjacent/fifth/polyphonic competitors, temporal pitch change, zero audio, truncation, strict tie rejection, full MIDI competition, evidence identity preservation, duration rejection, and all policy guards false/zero.
+No protected-song V4 execution has occurred.
 
-No GuitarSet, IDMT, or protected-song V4 correctness result has been produced. Controlled CI explicitly remained synthetic-only.
+## IDMT V4 EXTERNAL VALIDATION — STAGE A INVENTORY REOPENED
 
-### IDMT metadata-only planning
-
-Metadata planning record:
+Metadata plan:
 - `docs/checkpoints/SONGSTERR_FRESH_IDMT_V4_EXTERNAL_VALIDATION_METADATA_PLAN.md`
-- commit `625a29d04e26fd312c0294fe91bd446a04fdde85`
-- status: **planning only; not an external-validation preregistration**.
+- commit `625a29d04e26fd312c0294fe91bd446a04fdde85`.
 
-Public authoritative metadata currently records:
-- IDMT-SMT-Guitar Dataset, Zenodo v1.0.0, DOI `10.5281/zenodo.7544110`;
-- archive `IDMT-SMT-GUITAR_V2.zip`, approximately 1.3 GB, MD5 `06796e08731bccffaed6ae59361486e4`;
-- Fraunhofer describes one-channel RIFF WAVE audio at 44100 Hz and seven guitars in standard tuning;
-- Fraunhofer states the dataset is provided for evaluation under CC BY-NC-ND 4.0;
-- subsets 1 and 2 use XML parameter annotations, subset 3 has an XML parameter annotation per file, and subset 4 is oriented to chord recognition/rhythm-style estimation;
-- the Zenodo archive preview visibly pairs XML/WAV filenames in `dataset1`, but explicitly warns that it does not show all files.
+User explicitly reopened V4 holdout/external validation.
 
-Therefore exact future file counts, subset membership, XML field semantics, exclusions and evaluation population remain deliberately unresolved. The metadata record provisionally identifies subsets 1–3 as possible note-level validation candidates and does not assume subset 4 is eligible for V4 pitch/onset validation.
+Stage A inventory preregistration:
+- `docs/checkpoints/SONGSTERR_FRESH_IDMT_V4_EXTERNAL_VALIDATION_INVENTORY_PREREGISTRATION.md`
+- commit `7ce70dd6fb9e61ec15e7fc6fb71b0e1519d67581`
+- status: **inventory only; correctness scoring still blocked**.
 
-**Holdout scoring remains closed.** V4 is frozen at the pre-external-validation boundary. Do not download/infer/score IDMT until the user explicitly reopens holdout/external validation and a separate versioned validation preregistration freezes exact subsets/files, archive manifest, XML interpretation, matching, sample-size/uncertainty gates and execution provenance before any correctness result.
+Authorized Stage A dataset identity:
+- IDMT-SMT-Guitar Dataset
+- Zenodo v1.0.0
+- DOI `10.5281/zenodo.7544110`
+- archive `IDMT-SMT-GUITAR_V2.zip`
+- expected MD5 `06796e08731bccffaed6ae59361486e4`.
 
-## CURRENT ACCEPTANCE STATE
+Inventory tool:
+- `scripts/songsterr-fresh/inventory_idmt_v4_external_validation.py`
+- implementation commit `b955249d02d6dc3554ec6c69bca0883ef673951e`
+- contract `songsterr-fresh-idmt-v4-inventory-v1`
+- stdlib only; no Basic Pitch/V4/Demucs/NumPy/librosa/scoring imports.
 
-Do **not** set `modelValidationComplete:true`.
+Inventory CI:
+- `.github/workflows/songsterr-fresh-idmt-v4-inventory-ci.yml`
+- commit `9346d2c651e5a7ae0bbe8f53f66bcccdd7fbc3e7`
+- run `34654695068`, job `103444417084` currently validating a synthetic ZIP only.
 
-Current authority state:
-- `modelValidationComplete:false`
-- customer-eligible events: **0**
-- `mayAdvanceDelivery:false`
-- duration authority unchanged
-- duration research paused
-- persistent Policy C `UNENROLLED`.
+Stage A may only:
+- verify exact archive MD5 and record SHA-256;
+- list/hash every ZIP member;
+- inventory directory/subset structure;
+- read WAV container headers only;
+- record XML tag/attribute structural signatures;
+- establish exact WAV/XML pairings and integrity issues;
+- write inventory results outside the repo.
+
+Stage A MUST NOT:
+- invoke Basic Pitch, V4 or Demucs;
+- compute correctness, matching, precision/recall/F-score/Wilson metrics;
+- use audio samples for signal scoring;
+- alter V4;
+- run GuitarSet or the protected song;
+- resume duration or change product authority.
+
+## STAGE B — REQUIRED BEFORE ANY CORRECTNESS RESULT
+
+After Stage A inventory is complete, commit a separate versioned V4 IDMT execution preregistration before model inference/correctness scoring. It must freeze:
+- exact included subsets/files and any exclusions/reasons;
+- exact XML pitch/onset semantics and units;
+- exact Basic Pitch settings/runtime;
+- exact V4 implementation identity;
+- exact one-to-one estimate/reference matching and tolerances;
+- minimum positive count;
+- uncertainty method;
+- overall/stratum pass gates;
+- execution provenance/fail-closed rules;
+- protected-song embargo until separate policy review.
+
+No GuitarSet result may choose these gates or tune V4.
+
+## ACTIVE BLOCKERS / NEXT STEPS
 
 Active blockers:
-- model-evidence admission remains unresolved after V3 external-validation failure
-- V4 has synthetic contract evidence only and no real-world validation authority
-- external/holdout validation is not reopened
+- V4 has no real-world correctness result yet;
+- Stage A IDMT inventory is not yet complete;
+- Stage B scoring contract is not yet frozen;
 - `DURATION_EVIDENCE_INCOMPLETE`.
 
-No reference scorer/tab/archive logic. No GOAT. No threshold sweep. No training/fine-tuning. No promotion from hashes, reproducibility, confidence, event counts, synthetic-suite success, C-S agreement, historical protected-song results, or failed external results.
+Next allowed work:
+1. finish synthetic Stage A inventory CI;
+2. if green, freeze checkpoint/source;
+3. download exact IDMT archive in Codespaces outside repo and verify MD5;
+4. run inventory tool once, outside repo;
+5. inspect only integrity/schema output;
+6. freeze Stage B external-validation preregistration;
+7. only then run official Basic Pitch + V4 holdout correctness evaluation.
 
-## NEXT ALLOWED WORK
-
-V4 implementation/method/controlled CI are frozen and green. Under the current scope, the next external correctness step is intentionally blocked.
-
-Allowed without reopening holdout:
-- documentation-only maintenance;
-- inspect public IDMT documentation/metadata without downloading/scoring audio;
-- refine the future versioned external-validation preregistration on public metadata only, but do not execute it.
-
-Requires explicit user reopening of holdout/external validation:
-- download/inventory the IDMT archive;
-- parse the archive for a locked file manifest beyond the incomplete public preview;
-- run Basic Pitch/V4 on IDMT;
-- compute any real correctness metric or pass/fail result.
-
-Still forbidden:
-- rerun GuitarSet V3 for tuning;
-- run the protected song;
-- resume duration;
-- reopen archived V143/Gomyway, GOAT, reference scoring, threshold sweeps, or training/fine-tuning.
+Still forbidden until the appropriate later gate:
+- protected-song V4 execution;
+- duration research;
+- GuitarSet rerun/tuning;
+- archived V143/Gomyway, GOAT, reference scoring, threshold sweeps, training/fine-tuning.
 
 ## STABLE REFERENCES
 
-- canonical current state: `SONGSTERR_FRESH_PIPELINE_CURRENT_STATE.md`
 - V4 prereg: `SONGSTERR_FRESH_MODEL_EVIDENCE_ADMISSION_PREREGISTRATION_V4.md`
 - V4 method: `SONGSTERR_FRESH_TEMPORAL_CONSENSUS_V4.md`
-- V4 IDMT metadata plan: `SONGSTERR_FRESH_IDMT_V4_EXTERNAL_VALIDATION_METADATA_PLAN.md`
-- V3 prereg/method/result/policy review remain frozen historical references
-- V2 prereg/method/result/policy review remain frozen historical references
+- IDMT metadata plan: `SONGSTERR_FRESH_IDMT_V4_EXTERNAL_VALIDATION_METADATA_PLAN.md`
+- IDMT inventory prereg: `SONGSTERR_FRESH_IDMT_V4_EXTERNAL_VALIDATION_INVENTORY_PREREGISTRATION.md`
+- V3 result/policy records remain frozen historical references
 - Policy C-S runbook: `SONGSTERR_FRESH_CODESPACES_SESSION_AUTHORITY.md`
-- GOAT closeout: `SONGSTERR_FRESH_GOAT_RESEARCH_CLOSED_REFERENCE_ONLY.md`.
+- GOAT closeout remains closed/reference only.
