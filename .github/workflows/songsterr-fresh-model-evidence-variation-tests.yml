@@ -13,6 +13,7 @@ on:
       - 'scripts/songsterr-fresh/compare_basic_pitch_decision_surfaces.py'
       - 'scripts/songsterr-fresh/trace_basic_pitch_decoder_mechanisms.py'
       - 'scripts/songsterr-fresh/compare_basic_pitch_decoder_traces.py'
+      - 'scripts/songsterr-fresh/analyze_semantic_consensus_gate.py'
       - 'scripts/songsterr-fresh/test_candidate_confidence_diagnostic_only.mjs'
       - 'songsterr_pipeline/noteEvidenceEvaluator.mjs'
       - 'songsterr_pipeline/noteEvidenceDiagnostics.mjs'
@@ -55,6 +56,7 @@ jobs:
           python -m py_compile scripts/songsterr-fresh/compare_basic_pitch_decision_surfaces.py
           python -m py_compile scripts/songsterr-fresh/trace_basic_pitch_decoder_mechanisms.py
           python -m py_compile scripts/songsterr-fresh/compare_basic_pitch_decoder_traces.py
+          python -m py_compile scripts/songsterr-fresh/analyze_semantic_consensus_gate.py
 
       - name: Prove pair measurement contract is reference-blind and fail-closed
         run: python scripts/songsterr-fresh/compare_basic_pitch_cross_run_evidence.py --self-test
@@ -76,6 +78,9 @@ jobs:
 
       - name: Prove Basic Pitch decoder-trace comparison is reference-blind and non-promotional
         run: python scripts/songsterr-fresh/compare_basic_pitch_decoder_traces.py --self-test
+
+      - name: Prove finite semantic consensus is not a distribution-free portability proof
+        run: python scripts/songsterr-fresh/analyze_semantic_consensus_gate.py --self-test
 
       - name: Prove Basic Pitch candidate confidence is diagnostic-only for acceptance
         run: node scripts/songsterr-fresh/test_candidate_confidence_diagnostic_only.mjs
