@@ -33,7 +33,7 @@
       "channels": 1,
       "expectedClassification": "independently-corroborated-candidate",
       "name": "detuned_plus35_m64",
-      "pcm16WavSha256": "d25d38ee91275077e1a4c8a2a2d419ae59682604c5d7dfeef94f76f86aa94c12",
+      "pcm16WavSha256": "07de3a339da0cce2a8b7f35efd26665399c12a74ec790bab5d6e3a3c8725839b",
       "sampleCount": 16384,
       "sampleRate": 44100,
       "selectedMidi": 64
@@ -42,7 +42,7 @@
       "channels": 1,
       "expectedClassification": "independently-corroborated-candidate",
       "name": "detuned_minus35_m52",
-      "pcm16WavSha256": "5ae3f3cf2822025a5dd460ff13c2396789116631980bdd4247554bb0cc1ddf93",
+      "pcm16WavSha256": "0be5c78f9498d9592a3c081f31279a71d06449a93c0201418c167954cea2619c",
       "sampleCount": 16384,
       "sampleRate": 44100,
       "selectedMidi": 52
@@ -51,7 +51,7 @@
       "channels": 1,
       "expectedClassification": "independently-corroborated-candidate",
       "name": "attack_noise_m64",
-      "pcm16WavSha256": "2e7e2cbfa03477fe4524d597986128b85bd288bfb4870814885938192ced6838",
+      "pcm16WavSha256": "327449384eb7f0eb877886492aba42cc72749188d6a5a1d4ee56af01dbb9cf7a",
       "sampleCount": 16384,
       "sampleRate": 44100,
       "selectedMidi": 64
@@ -69,7 +69,7 @@
       "channels": 1,
       "expectedClassification": "not-independently-corroborated",
       "name": "wrong_octave_down_selected_m64",
-      "pcm16WavSha256": "16512d3503968443826dbf9e6e332324ddaf8cbad28c41559e794dfe5544a003",
+      "pcm16WavSha256": "15bd9c3226e515f673dbba75813812d51df2c64afb993d17f9add0d0309030df",
       "sampleCount": 16384,
       "sampleRate": 44100,
       "selectedMidi": 64
@@ -78,7 +78,7 @@
       "channels": 1,
       "expectedClassification": "not-independently-corroborated",
       "name": "dominant_second_harmonic_m52",
-      "pcm16WavSha256": "1f8bcb931236c6ce6f569f8a84bba4f39ac5941885826405c6baf3f31a534467",
+      "pcm16WavSha256": "51c6d4533d76ec47b010a6439afacc2e1891ecbb5c99ff7857bcb605f22f1639",
       "sampleCount": 16384,
       "sampleRate": 44100,
       "selectedMidi": 52
@@ -87,7 +87,7 @@
       "channels": 1,
       "expectedClassification": "not-independently-corroborated",
       "name": "stronger_semitone_m60",
-      "pcm16WavSha256": "222d0f223ea02859b137f0f21fe4ade6dd0e1c45a1c90417fa4a126b81cc416a",
+      "pcm16WavSha256": "6e3f6902e15e7d4fa38c017b718274127954f1e9a33411e81d43c1a8c2d9b1ff",
       "sampleCount": 16384,
       "sampleRate": 44100,
       "selectedMidi": 60
@@ -96,7 +96,7 @@
       "channels": 1,
       "expectedClassification": "not-independently-corroborated",
       "name": "stronger_fifth_m60",
-      "pcm16WavSha256": "4997798c1d3ab85b5c6396abb31a81dfdf2459fb50cb96b26d2ee1e48a483c11",
+      "pcm16WavSha256": "3ae832dc631469f32330c845bb3be6f07642c8c1f07ba03cee40d3106da7940b",
       "sampleCount": 16384,
       "sampleRate": 44100,
       "selectedMidi": 60
@@ -105,7 +105,7 @@
       "channels": 1,
       "expectedClassification": "not-independently-corroborated",
       "name": "equal_close_dyad_m60",
-      "pcm16WavSha256": "3d12aa2fa74e27ef9d709a621812414b6ab4f21816d79d64b778ff93c3315976",
+      "pcm16WavSha256": "1c62a2a38e0c7824dc3ceaee666b78eb9d2f58a06e28c58857b80891bda79724",
       "sampleCount": 16384,
       "sampleRate": 44100,
       "selectedMidi": 60
@@ -114,7 +114,7 @@
       "channels": 1,
       "expectedClassification": "not-independently-corroborated",
       "name": "cluster_polyphony_m60",
-      "pcm16WavSha256": "e66084edca28f7de0a3b4366241ac506fba72073c977668a40cf20cf660f4c57",
+      "pcm16WavSha256": "8727722c471f11b3acc40a435b5e1a8caac192852b79ec62147f279f1fff486e",
       "sampleCount": 16384,
       "sampleRate": 44100,
       "selectedMidi": 60
@@ -123,7 +123,7 @@
       "channels": 1,
       "expectedClassification": "insufficient-evidence",
       "name": "silence_m60",
-      "pcm16WavSha256": "2263f410419b7efad8f8e211838b197ac6ef5c75ac0efca9b07a4a070b4eecf6",
+      "pcm16WavSha256": "17a1503dfc5fdc4b84bef35c62b69b5d96700183fa0de5b0a113cdc2f0aa512e",
       "sampleCount": 16384,
       "sampleRate": 44100,
       "selectedMidi": 60
@@ -132,7 +132,7 @@
       "channels": 1,
       "expectedClassification": "insufficient-evidence",
       "name": "low_noise_m60",
-      "pcm16WavSha256": "b1cfaace528c5aa94a14b9712a19ae3f42b33053cc4ab7cbfbd3ea3fd45b593d",
+      "pcm16WavSha256": "dd2cf333afb30b4f8efa5f98e791b51e99044a4e6251ced0c1d423d5964fe13c",
       "sampleCount": 16384,
       "sampleRate": 44100,
       "selectedMidi": 60
