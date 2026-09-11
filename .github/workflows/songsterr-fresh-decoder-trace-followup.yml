@@ -1,0 +1,335 @@
+name: Songsterr Fresh Decoder Trace Follow-Up
+
+on:
+  workflow_run:
+    workflows:
+      - Songsterr Fresh Model Evidence Cross-Run Measurement Canary
+    types:
+      - completed
+    branches:
+      - songsterr-fresh-pipeline-v1
+  push:
+    branches:
+      - songsterr-fresh-pipeline-v1
+    paths:
+      - '.github/workflows/songsterr-fresh-decoder-trace-followup.yml'
+
+permissions:
+  contents: write
+  actions: read
+
+jobs:
+  preserve-decoder-trace-evidence:
+    if: ${{ github.event_name == 'push' || github.event.workflow_run.conclusion == 'success' }}
+    runs-on: ubuntu-24.04
+    timeout-minutes: 15
+
+    steps:
+      - name: Check out fresh branch
+        uses: actions/checkout@v4
+        with:
+          ref: songsterr-fresh-pipeline-v1
+          fetch-depth: 0
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.10'
+
+      - name: Install pinned trace dependency
+        run: python -m pip install --disable-pip-version-check numpy==1.26.4
+
+      - name: Resolve and verify source canary run
+        env:
+          GH_TOKEN: ${{ github.token }}
+          BOOTSTRAP_SOURCE_RUN_ID: '34546969446'
+        run: |
+          set -euo pipefail
+          if [ "${{ github.event_name }}" = 'workflow_run' ]; then
+            SOURCE_RUN_ID='${{ github.event.workflow_run.id }}'
+          else
+            SOURCE_RUN_ID="$BOOTSTRAP_SOURCE_RUN_ID"
+          fi
+          echo "SOURCE_RUN_ID=$SOURCE_RUN_ID" >> "$GITHUB_ENV"
+          gh api "repos/$GITHUB_REPOSITORY/actions/runs/$SOURCE_RUN_ID" > /tmp/source-run.json
+          python - <<'PY'
+          import json
+          with open('/tmp/source-run.json', 'r', encoding='utf-8') as handle:
+              run = json.load(handle)
+          if run.get('name') != 'Songsterr Fresh Model Evidence Cross-Run Measurement Canary':
+              raise SystemExit(f"SOURCE_WORKFLOW_CHANGED:{run.get('name')}")
+          if run.get('head_branch') != 'songsterr-fresh-pipeline-v1':
+              raise SystemExit(f"SOURCE_BRANCH_CHANGED:{run.get('head_branch')}")
+          if run.get('conclusion') != 'success':
+              raise SystemExit(f"SOURCE_RUN_NOT_GREEN:{run.get('conclusion')}")
+          PY
+
+      - name: Download source A B C observation artifacts
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          set -euo pipefail
+          mkdir -p /tmp/songsterr/a /tmp/songsterr/b /tmp/songsterr/c /tmp/songsterr/out
+          gh run download "$SOURCE_RUN_ID" -n songsterr-fresh-model-evidence-observation-a -D /tmp/songsterr/a
+          gh run download "$SOURCE_RUN_ID" -n songsterr-fresh-model-evidence-observation-b -D /tmp/songsterr/b
+          gh run download "$SOURCE_RUN_ID" -n songsterr-fresh-model-evidence-observation-c -D /tmp/songsterr/c
+
+      - name: Prove trace contracts before using real evidence
+        run: |
+          set -euo pipefail
+          python scripts/songsterr-fresh/trace_basic_pitch_decoder_mechanisms.py --self-test
+          python scripts/songsterr-fresh/compare_basic_pitch_decoder_traces.py --self-test
+
+      - name: Exact-replay A B C decoder mechanisms
+        run: |
+          set -euo pipefail
+          for label in a b c; do
+            python scripts/songsterr-fresh/trace_basic_pitch_decoder_mechanisms.py \
+              "/tmp/songsterr/$label/evidence-$label.json" \
+              "/tmp/songsterr/$label/basic-pitch-note-activations-$label.json" \
+              "/tmp/songsterr/$label/basic-pitch-decision-surface-$label.json" \
+              --output "/tmp/songsterr/out/trace-$label.json"
+          done
+
+      - name: Measure all pairwise decoder-trace variation
+        run: |
+          set -euo pipefail
+          python scripts/songsterr-fresh/compare_basic_pitch_decoder_traces.py \
+            /tmp/songsterr/out/trace-a.json /tmp/songsterr/out/trace-b.json \
+            --output /tmp/songsterr/out/trace-comparison-ab.json
+          python scripts/songsterr-fresh/compare_basic_pitch_decoder_traces.py \
+            /tmp/songsterr/out/trace-a.json /tmp/songsterr/out/trace-c.json \
+            --output /tmp/songsterr/out/trace-comparison-ac.json
+          python scripts/songsterr-fresh/compare_basic_pitch_decoder_traces.py \
+            /tmp/songsterr/out/trace-b.json /tmp/songsterr/out/trace-c.json \
+            --output /tmp/songsterr/out/trace-comparison-bc.json
+
+      - name: Build fail-closed non-promotional trace summary
+        run: |
+          python - <<'PY'
+          import json
+          from pathlib import Path
+
+          root = Path('/tmp/songsterr/out')
+          with open('/tmp/source-run.json', 'r', encoding='utf-8') as handle:
+              source = json.load(handle)
+
+          traces = {}
+          for label in ('a', 'b', 'c'):
+              with open(root / f'trace-{label}.json', 'r', encoding='utf-8') as handle:
+                  trace = json.load(handle)
+              hard = trace.get('hardGuards', {})
+              policy = trace.get('policyBoundary', {})
+              if hard.get('decoderReplayExactlyReproducedEvidence') is not True:
+                  raise SystemExit(f'TRACE_NOT_EXACT:{label}')
+              for field in (
+                  'modelInvokedByTracer',
+                  'changesDecodedEventInventory',
+                  'usedForAcceptance',
+                  'usedForDuration',
+                  'referenceTabUsed',
+                  'professionalScorerUsed',
+                  'legacyV143ScorerImported',
+              ):
+                  if hard.get(field) is not False:
+                      raise SystemExit(f'TRACE_HARD_GUARD_CHANGED:{label}:{field}:{hard.get(field)}')
+              for field in (
+                  'thresholdsAppliedForAdmission',
+                  'admissionDecisionMade',
+                  'modelValidationComplete',
+                  'mayAdvanceDelivery',
+                  'durationAuthorityChanged',
+              ):
+                  if policy.get(field) is not False:
+                      raise SystemExit(f'TRACE_POLICY_CHANGED:{label}:{field}:{policy.get(field)}')
+              traces[label] = {
+                  'eventCount': trace['eventCount'],
+                  'mechanismCounts': trace['mechanismCounts'],
+                  'sourceEvidenceSha256': trace['sourceEvidenceSha256'],
+                  'decisionSurfaceSha256': trace['decisionSurfaceIdentity']['sha256'],
+              }
+
+          pairs = {}
+          for pair in ('ab', 'ac', 'bc'):
+              with open(root / f'trace-comparison-{pair}.json', 'r', encoding='utf-8') as handle:
+                  report = json.load(handle)
+              if report.get('referenceBlind') is not True or report.get('measurementOnly') is not True:
+                  raise SystemExit(f'TRACE_COMPARISON_SCOPE_CHANGED:{pair}')
+              boundary = report.get('policyBoundary', {})
+              for field in (
+                  'thresholdsAppliedForAdmission',
+                  'admissionDecisionMade',
+                  'modelValidationComplete',
+                  'mayAdvanceDelivery',
+                  'durationAuthorityChanged',
+                  'changesDecodedEventInventory',
+                  'referenceTabUsed',
+                  'professionalScorerUsed',
+                  'legacyV143ScorerImported',
+              ):
+                  if boundary.get(field) is not False:
+                      raise SystemExit(f'TRACE_COMPARISON_POLICY_CHANGED:{pair}:{field}:{boundary.get(field)}')
+              interpretation = report.get('interpretationBoundary', {})
+              if interpretation.get('observedVariationDoesNotDefineAdmissionTolerance') is not True:
+                  raise SystemExit(f'TRACE_VARIATION_BECAME_TOLERANCE:{pair}')
+              if interpretation.get('mechanismStabilityDoesNotPromoteModelValidation') is not True:
+                  raise SystemExit(f'TRACE_STABILITY_BECAME_PROMOTIONAL:{pair}')
+              measurement = report['measurement']
+              pairs[pair] = {
+                  'semanticInventory': measurement['semanticInventory'],
+                  'decoderMechanism': measurement['decoderMechanism'],
+                  'commonEventVariation': measurement['commonEventVariation'],
+              }
+
+          summary = {
+              'contract': 'songsterr-fresh-decoder-trace-followup-v1',
+              'version': 1,
+              'referenceBlind': True,
+              'measurementOnly': True,
+              'sourceCanaryRun': source['id'],
+              'sourceCanaryHeadSha': source['head_sha'],
+              'sourceCanaryConclusion': source['conclusion'],
+              'traces': traces,
+              'pairwise': pairs,
+              'policyBoundary': {
+                  'thresholdsAppliedForAdmission': False,
+                  'admissionDecisionMade': False,
+                  'modelValidationComplete': False,
+                  'mayAdvanceDelivery': False,
+                  'durationAuthorityChanged': False,
+                  'referenceTabUsed': False,
+                  'professionalScorerUsed': False,
+                  'legacyV143ScorerImported': False,
+              },
+          }
+          (root / 'decoder-trace-followup-summary.json').write_text(
+              json.dumps(summary, indent=2, sort_keys=True) + '\n',
+              encoding='utf-8',
+          )
+          PY
+
+      - name: Upload automatic decoder trace evidence
+        uses: actions/upload-artifact@v4
+        with:
+          name: songsterr-fresh-decoder-trace-cross-run-measurement
+          path: /tmp/songsterr/out/*.json
+          if-no-files-found: error
+          retention-days: 14
+
+      - name: Resolve uploaded artifact identity
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          set -euo pipefail
+          gh api "repos/$GITHUB_REPOSITORY/actions/runs/$GITHUB_RUN_ID/artifacts" > /tmp/followup-artifacts.json
+          python - <<'PY'
+          import json
+          with open('/tmp/followup-artifacts.json', 'r', encoding='utf-8') as handle:
+              payload = json.load(handle)
+          matches = [a for a in payload.get('artifacts', []) if a.get('name') == 'songsterr-fresh-decoder-trace-cross-run-measurement']
+          if len(matches) != 1:
+              raise SystemExit(f'EXPECTED_ONE_TRACE_ARTIFACT:GOT:{len(matches)}')
+          artifact = matches[0]
+          with open('/tmp/followup-artifact-selected.json', 'w', encoding='utf-8') as handle:
+              json.dump(artifact, handle, indent=2)
+          PY
+
+      - name: Update canonical checkpoint with latest automatic trace layer
+        run: |
+          python - <<'PY'
+          import json
+          from datetime import datetime
+          from pathlib import Path
+          from zoneinfo import ZoneInfo
+
+          cp = Path('docs/checkpoints/SONGSTERR_FRESH_PIPELINE_CURRENT_STATE.md')
+          text = cp.read_text(encoding='utf-8')
+          with open('/tmp/songsterr/out/decoder-trace-followup-summary.json', 'r', encoding='utf-8') as handle:
+              summary = json.load(handle)
+          with open('/tmp/followup-artifact-selected.json', 'r', encoding='utf-8') as handle:
+              artifact = json.load(handle)
+
+          ab = summary['pairwise']['ab']
+          ac = summary['pairwise']['ac']
+          bc = summary['pairwise']['bc']
+          def compact(pair):
+              semantic = pair['semanticInventory']
+              mechanism = pair['decoderMechanism']
+              variation = pair['commonEventVariation']
+              return (
+                  f"common={semantic['commonPairedEventCount']}, unmatched={semantic['unmatchedSemanticEventCount']}, "
+                  f"mechanismMismatch={mechanism['commonMechanismMismatchCount']}, "
+                  f"startDiff={variation['decoderStartFrameDelta']['differentCount']} max={variation['decoderStartFrameDelta']['maxAbsolute']}, "
+                  f"endDiff={variation['decoderEndFrameDelta']['differentCount']} max={variation['decoderEndFrameDelta']['maxAbsolute']}"
+              )
+
+          block = '\n'.join([
+              '## DECODER TRACE CANARY FOLLOW-UP — AUTOMATED / LATEST GREEN',
+              '',
+              '- Permanent workflow `.github/workflows/songsterr-fresh-decoder-trace-followup.yml` automatically runs after each successful `Songsterr Fresh Model Evidence Cross-Run Measurement Canary` on `songsterr-fresh-pipeline-v1`.',
+              '- It reuses that canary run’s already-captured A/B/C evidence + activation + decision sidecars; it does not invoke Demucs or Basic Pitch. Each trace must exactly reproduce its bound evidence before pairwise mechanism labels are accepted.',
+              '- It runs the tracer/comparator self-tests, writes A/B/C exact decoder traces, writes pairwise decoder-trace comparisons, enforces all non-promotion guards, and uploads one trace-evidence artifact.',
+              f"- Latest source canary run `{summary['sourceCanaryRun']}` at head `{summary['sourceCanaryHeadSha']}`; automatic trace follow-up run `{__import__('os').environ['GITHUB_RUN_ID']}`.",
+              f"- Latest trace artifact `{artifact['id']}`; digest `{artifact.get('digest')}`; expires `{artifact.get('expires_at')}`.",
+              f"- A/B: {compact(ab)}.",
+              f"- A/C: {compact(ac)}.",
+              f"- B/C: {compact(bc)}.",
+              '- This automation preserves mechanism-level measurement evidence for future independent canaries. It does not create an onset tolerance, choose a preferred CPU/output, mark model validation complete, or resume duration work.',
+              '- Prior helper failures `34550779925`, `34550819480`, and `34550900008` were integration mechanics only. The last helper successfully built the intended canary diff but GitHub correctly rejected its workflow-file push because Actions `GITHUB_TOKEN` lacks workflow-file write scope; no model/pipeline behavior was changed by those failures.',
+              '- `modelValidationComplete` remains false; customer-eligible events remain 0; duration research remains paused.',
+              '',
+          ]) + '\n'
+
+          acceptance = '## CURRENT ACCEPTANCE STATE\n'
+          old_headings = [
+              '## DECODER TRACE CANARY INTEGRATION — IN PROGRESS\n',
+              '## DECODER TRACE CANARY FOLLOW-UP — AUTOMATED / LATEST GREEN\n',
+          ]
+          found = None
+          for heading in old_headings:
+              if heading in text:
+                  found = heading
+                  break
+          if found:
+              start = text.index(found)
+              end = text.index(acceptance, start)
+              text = text[:start] + block + text[end:]
+          else:
+              if acceptance not in text:
+                  raise SystemExit('checkpoint acceptance marker missing; fail closed')
+              text = text.replace(acceptance, block + acceptance, 1)
+
+          next_heading = '## FRESH-CHAT NEXT ENGINEERING STEPS\n'
+          archive_marker = 'The archived V143/Gomyway pipeline remains out of scope unless explicitly requested.'
+          next_block = '\n'.join([
+              '## FRESH-CHAT NEXT ENGINEERING STEPS',
+              '',
+              '1. Treat A/B/C decision-surface inspection, exact decoder replay, decoder-trace comparison, and automatic post-canary trace preservation as completed infrastructure. Do not rerun them merely to rediscover the current sample.',
+              '2. Keep `modelValidationComplete:false`, customer-eligible events at 0, and duration research paused. The B-only MIDI-55 event remains a proven threshold-onset toggle; current observed margins and frame drift remain measurement-only.',
+              '3. Investigate whether any independent, reference-blind numerical or decoder-semantic guarantee can justify an onset decision uncertainty boundary across supported execution environments. The bound must come from an external contract/guarantee or a separately justified numerical analysis, not from fitting the observed A/B/C envelope.',
+              '4. If no independent bound exists, record explicitly that Policy B has no justified admission contract for threshold-boundary inventory toggles. More samples may characterize frequency but cannot by themselves manufacture a tolerance.',
+              '5. Do not use exact hashes, CPU/vendor identity, historical frequency, event count, candidate confidence, reference tabs, downstream agreement, or the current min/max margins as admission criteria.',
+              '6. Keep the automatic trace follow-up enabled for any future independent canary. New observations are measurement/history evidence only unless a separate admission rule is independently justified.',
+              '7. Keep the archived V143/Gomyway implementation/reference/pro scorer path out of scope and keep V2/V3 duration work paused until upstream model-evidence validation is actually resolved.',
+              '',
+          ]) + '\n'
+          if next_heading not in text or archive_marker not in text:
+              raise SystemExit('checkpoint next-step markers missing; fail closed')
+          start = text.index(next_heading)
+          end = text.index(archive_marker, start)
+          text = text[:start] + next_block + text[end:]
+
+          stamp = datetime.now(ZoneInfo('America/Toronto')).strftime('%Y-%m-%d %H:%M America/Toronto')
+          lines = text.splitlines()
+          for index, line in enumerate(lines):
+              if line.startswith('Updated: '):
+                  lines[index] = f'Updated: {stamp}'
+                  break
+          cp.write_text('\n'.join(lines) + '\n', encoding='utf-8')
+          PY
+
+          git config user.name 'dadrockyt-sys'
+          git config user.email 'Stephen.s.mcnally@gmail.com'
+          git add docs/checkpoints/SONGSTERR_FRESH_PIPELINE_CURRENT_STATE.md
+          git commit -m 'docs: record automatic fresh decoder trace follow-up'
+          git push origin HEAD:songsterr-fresh-pipeline-v1
