@@ -1,6 +1,6 @@
 # CURRENT STATE — Songsterr Fresh Pipeline V1
 
-Updated: 2026-09-11 01:02 America/Toronto
+Updated: 2026-09-11 01:15 America/Toronto
 Canonical branch: `songsterr-fresh-pipeline-v1`
 Canonical checkpoint: `docs/checkpoints/SONGSTERR_FRESH_PIPELINE_CURRENT_STATE.md`
 
@@ -293,6 +293,21 @@ Decision-enabled real model canary — COMPLETED GREEN:
 - Detailed record: `docs/checkpoints/SONGSTERR_FRESH_CODESPACES_MODEL_EVIDENCE_REVIEW.md`.
 - Next model-validation research is preregistered in `docs/checkpoints/SONGSTERR_FRESH_MODEL_EVIDENCE_ADMISSION_PREREGISTRATION_V1.md`: a new two-channel audio-domain corroborator (harmonic-stack spectral competition + independent time-domain periodicity competition) must be frozen and pass controlled synthetic fixtures before any execution on the authorized song. The already-observed CQT values may not tune it. A new Policy C-S epoch will be required for eventual authorized-song evaluation.
 - Therefore `modelValidationComplete:false`, customer-eligible events remain 0, `mayAdvanceDelivery:false`, and duration research remains paused.
+
+## INDEPENDENT CORROBORATION V1 — FROZEN / CONTROLLED CI GREEN / SONG NOT YET EVALUATED
+
+- Preregistered plan remains `docs/checkpoints/SONGSTERR_FRESH_MODEL_EVIDENCE_ADMISSION_PREREGISTRATION_V1.md`; the prior observed CQT values for the MIDI-55/MIDI-64 mismatches were not used to tune this new method.
+- Frozen implementation: `scripts/songsterr-fresh/independent_pitch_corroboration_v1.py`, implementation commit `961f4303492b008e75a836c738f3f22235255b74`.
+- Frozen method record: `docs/checkpoints/SONGSTERR_FRESH_INDEPENDENT_CORROBORATION_V1.md`, commit `8b88555fb428704aef90b59679a7ac21b90e9226`.
+- Exact fixture manifest: `docs/checkpoints/SONGSTERR_FRESH_INDEPENDENT_CORROBORATION_CONTROLLED_FIXTURES_V1.json`, commit `3a2dad02691f106fe2aa38ced17963102d00d995`.
+- Method constants are frozen before authorized-song execution: 44.1 kHz, 8192-sample post-onset window, MIDI competitors {-12,-2,-1,+1,+2,+12}, five fixed harmonic weights [1.0,0.75,0.5,0.35,0.25], independent normalized-autocorrelation score NAC(T)-max(0,NAC(T/2)), unique-best requirement in both channels, fixed numerical tie tolerance 1e-6, fixed minimum demeaned RMS 1e-4.
+- Controlled suite contains 9 deterministic PCM16 WAV identities: 3 monophonic plucked-like positives, 4 octave/semitone/polyphonic conservative negatives, and 2 low-support insufficient-evidence cases.
+- Focused controlled-fixture CI workflow `.github/workflows/songsterr-fresh-independent-corroboration-ci.yml`, commit `509f9685b4df3bb0d6f09074d87bbd2f92d33672`; run `34565065241`, job `103155388964`, SUCCESS. Every fixture regenerated to its committed WAV SHA-256; classification counts were 3 independently-corroborated-candidate / 4 not-independently-corroborated / 2 insufficient-evidence. Tie, duration-leak, and non-promotion guards passed. The authorized song was not evaluated.
+- Session-bound authorized-song research runner: `scripts/songsterr-fresh/run_codespaces_independent_corroboration_v1.py`, commit `0b215a7b26179ef25b8b860ad2de83058978e5ff`. It requires enrollment and qualification source commit == current HEAD, verifies the C-S session before/after, binds guitar-stem SHA-256 + canonical-evidence SHA-256 + event count to the qualification, and refuses promotion.
+- Wrapper focused CI `.github/workflows/songsterr-fresh-codespaces-corroboration-wrapper-ci.yml`, commit `da18a961063098dceea608bb5a6753819327af16`; run `34565179152`, job `103155725756`, SUCCESS.
+- No authorized-song result exists for Independent Corroboration V1 yet. The prior C-S epoch at `b2f246769340e4f7f6929e679692956c731efd93` cannot be reused because this implementation did not exist in that source commit.
+- Next execution boundary: create/start a fresh Codespace at the stable branch HEAD after checkpoint cleanup, probe -> deliberate C-S enrollment -> verify -> three-canary qualify, then run `python scripts/songsterr-fresh/run_codespaces_independent_corroboration_v1.py` once. Any restart/source/fingerprint drift invalidates that epoch and requires fresh qualification.
+- Even after a green future corroboration run: `modelValidationComplete:false`, customer-eligible events 0, `mayAdvanceDelivery:false`, duration authority unchanged, duration research paused until separate explicit policy review.
 
 ## CURRENT ACCEPTANCE STATE
 
