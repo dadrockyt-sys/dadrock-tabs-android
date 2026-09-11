@@ -1,6 +1,6 @@
 # CURRENT STATE — Songsterr Fresh Pipeline V1
 
-Updated: 2026-09-10 21:33 America/Toronto
+Updated: 2026-09-10 21:35 America/Toronto
 Canonical branch: `songsterr-fresh-pipeline-v1`
 Canonical checkpoint: `docs/checkpoints/SONGSTERR_FRESH_PIPELINE_CURRENT_STATE.md`
 
@@ -215,6 +215,17 @@ Decision-enabled real model canary — COMPLETED GREEN:
 - Prior helper failures `34550779925`, `34550819480`, and `34550900008` were integration mechanics only. The last helper successfully built the intended canary diff but GitHub correctly rejected its workflow-file push because Actions `GITHUB_TOKEN` lacks workflow-file write scope; no model/pipeline behavior was changed by those failures.
 - `modelValidationComplete` remains false; customer-eligible events remain 0; duration research remains paused.
 
+## POLICY B INDEPENDENT NUMERICAL-GUARANTEE REVIEW — NO JUSTIFIED BOUND
+
+- Reviewed upstream framework contracts rather than fitting the observed A/B/C envelope.
+- PyTorch reproducibility documentation states that complete reproducibility is not guaranteed across releases, commits, or platforms, and its deterministic-algorithm guarantee is scoped to the same software and hardware with the same input. Source: https://docs.pytorch.org/docs/stable/notes/randomness.html
+- PyTorch numerical-accuracy documentation states that floating-point computations that are mathematically identical are not guaranteed to be bitwise identical across platforms because finite precision and operation ordering affect results. Source: https://docs.pytorch.org/docs/main/notes/numerical_accuracy.html
+- TensorFlow's compatibility policy explicitly excludes floating-point numerical details from compatibility guarantees and tells users to rely on approximate accuracy/numerical stability rather than specific computed bits. Source: https://www.tensorflow.org/guide/versions
+- TensorFlow Lite/LiteRT documentation exposes implementation-dependent/platform-dependent CPU execution choices (for example interpreter threading/default delegates) but does not provide an end-to-end numerical error bound that can be propagated through Demucs → Basic Pitch into a safe onset-threshold uncertainty interval. Source: https://www.tensorflow.org/api_docs/python/tf/lite/Interpreter
+- Therefore there is no documented upstream contract that independently justifies turning the observed `0.5000237822532654` versus `0.49999192357063293` crossing, the 7/20-frame trace drift, float32 ULP scale, or any current historical envelope into an admission tolerance.
+- Policy B consequently has **no justified admission contract for threshold-boundary semantic inventory toggles** under the current supported stack. Additional observations may characterize frequency/shape of variation but cannot manufacture a correctness bound.
+- This is a fail-closed result, not a model-quality verdict: `modelValidationComplete` remains false, customer-eligible events remain 0, and duration research remains paused.
+
 ## CURRENT ACCEPTANCE STATE
 
 Do **not** set `modelValidationComplete:true`.
@@ -227,12 +238,12 @@ Customer-eligible events remain **0**. V2 authoritative; V3 candidate-only. Basi
 
 ## FRESH-CHAT NEXT ENGINEERING STEPS
 
-1. Treat A/B/C decision-surface inspection, exact decoder replay, decoder-trace comparison, and automatic post-canary trace preservation as completed infrastructure. Do not rerun them merely to rediscover the current sample.
-2. Keep `modelValidationComplete:false`, customer-eligible events at 0, and duration research paused. The B-only MIDI-55 event remains a proven threshold-onset toggle; current observed margins and frame drift remain measurement-only.
-3. Investigate whether any independent, reference-blind numerical or decoder-semantic guarantee can justify an onset decision uncertainty boundary across supported execution environments. The bound must come from an external contract/guarantee or a separately justified numerical analysis, not from fitting the observed A/B/C envelope.
-4. If no independent bound exists, record explicitly that Policy B has no justified admission contract for threshold-boundary inventory toggles. More samples may characterize frequency but cannot by themselves manufacture a tolerance.
-5. Do not use exact hashes, CPU/vendor identity, historical frequency, event count, candidate confidence, reference tabs, downstream agreement, or the current min/max margins as admission criteria.
-6. Keep the automatic trace follow-up enabled for any future independent canary. New observations are measurement/history evidence only unless a separate admission rule is independently justified.
-7. Keep the archived V143/Gomyway implementation/reference/pro scorer path out of scope and keep V2/V3 duration work paused until upstream model-evidence validation is actually resolved.
+1. Treat the A/B/C decision-surface inspection, exact decoder replay, reference-blind decoder-trace comparison, automatic post-canary trace preservation, and upstream numerical-guarantee review as completed evidence.
+2. Policy B currently has no independently justified admission bound for threshold-boundary semantic inventory toggles. Do not invent one from the observed onset margins, frame spacing/drift, float32 ULPs, historical envelopes, or additional sample frequency.
+3. Keep `modelValidationComplete:false`, customer-eligible events at 0, and duration research paused. The B-only MIDI-55 event remains a proven threshold-onset inventory toggle; mechanism identity for common A/B/C events is stable in the measured sample but is not an admission rule.
+4. The next design question is policy-level, not another threshold sweep: evaluate a fail-closed reference-blind alternative that does not require a numeric tolerance (for example an independently executed semantic-consensus/reproducibility gate), and explicitly analyze its false-pass/false-reject behavior before implementation. Do not prefer any CPU/vendor/hash/output.
+5. If no alternative can be justified independently, preserve the blocked state and document that the current floating-point model path cannot support customer admission under the stated Policy B requirements.
+6. Keep the automatic decoder-trace follow-up enabled for future independent canaries. New observations remain measurement/history evidence only unless a separate admission rule is independently justified.
+7. Keep archived V143/Gomyway implementation/reference/pro-scorer work out of scope and keep V2/V3 duration/release work paused until upstream model-evidence validation is actually resolved.
 
 The archived V143/Gomyway pipeline remains out of scope unless explicitly requested.
