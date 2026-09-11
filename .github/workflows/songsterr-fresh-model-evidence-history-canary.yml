@@ -1,0 +1,157 @@
+name: Songsterr Fresh Model Evidence History Canary
+
+on:
+  workflow_dispatch:
+  push:
+    branches:
+      - songsterr-fresh-pipeline-v1
+    paths:
+      - '.github/workflows/songsterr-fresh-model-evidence-history-canary.yml'
+      - 'scripts/songsterr-fresh/compare_basic_pitch_cross_run_evidence.py'
+      - 'scripts/songsterr-fresh/aggregate_basic_pitch_cross_run_measurements.py'
+      - 'scripts/songsterr-fresh/accumulate_basic_pitch_measurement_sets.py'
+
+permissions:
+  contents: read
+  actions: read
+
+concurrency:
+  group: songsterr-fresh-model-evidence-history-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  historical-measurement-only:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - name: Check out fresh branch
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.10'
+
+      - name: Re-run all measurement contract self-tests
+        run: |
+          python -m py_compile scripts/songsterr-fresh/compare_basic_pitch_cross_run_evidence.py
+          python -m py_compile scripts/songsterr-fresh/aggregate_basic_pitch_cross_run_measurements.py
+          python -m py_compile scripts/songsterr-fresh/accumulate_basic_pitch_measurement_sets.py
+          python scripts/songsterr-fresh/compare_basic_pitch_cross_run_evidence.py --self-test
+          python scripts/songsterr-fresh/aggregate_basic_pitch_cross_run_measurements.py --self-test
+          python scripts/songsterr-fresh/accumulate_basic_pitch_measurement_sets.py --self-test
+
+      - name: Download authoritative run 3 observations
+        uses: actions/download-artifact@v4
+        with:
+          pattern: songsterr-fresh-model-evidence-observation-*
+          path: /tmp/songsterr-fresh-history/run3
+          merge-multiple: true
+          github-token: ${{ github.token }}
+          repository: ${{ github.repository }}
+          run-id: 34540837228
+
+      - name: Download authoritative run 4 observations
+        uses: actions/download-artifact@v4
+        with:
+          pattern: songsterr-fresh-model-evidence-observation-*
+          path: /tmp/songsterr-fresh-history/run4
+          merge-multiple: true
+          github-token: ${{ github.token }}
+          repository: ${{ github.repository }}
+          run-id: 34544587948
+
+      - name: Recompute formal measurement sets from original observations
+        shell: bash
+        run: |
+          set -euo pipefail
+          ROOT=/tmp/songsterr-fresh-history
+          for RUN in run3 run4; do
+            IN="$ROOT/$RUN"
+            OUT="$ROOT/$RUN-formal"
+            mkdir -p "$OUT"
+            for LABEL in a b c; do
+              test -s "$IN/evidence-$LABEL.json"
+              test -s "$IN/runtime-$LABEL.json"
+            done
+            python scripts/songsterr-fresh/compare_basic_pitch_cross_run_evidence.py \
+              "$IN/evidence-a.json" "$IN/evidence-b.json" --output "$OUT/comparison-ab.json"
+            python scripts/songsterr-fresh/compare_basic_pitch_cross_run_evidence.py \
+              "$IN/evidence-a.json" "$IN/evidence-c.json" --output "$OUT/comparison-ac.json"
+            python scripts/songsterr-fresh/compare_basic_pitch_cross_run_evidence.py \
+              "$IN/evidence-b.json" "$IN/evidence-c.json" --output "$OUT/comparison-bc.json"
+            python scripts/songsterr-fresh/aggregate_basic_pitch_cross_run_measurements.py \
+              --observation a "$IN/runtime-a.json" "$IN/evidence-a.json" \
+              --observation b "$IN/runtime-b.json" "$IN/evidence-b.json" \
+              --observation c "$IN/runtime-c.json" "$IN/evidence-c.json" \
+              --comparison a b "$OUT/comparison-ab.json" \
+              --comparison a c "$OUT/comparison-ac.json" \
+              --comparison b c "$OUT/comparison-bc.json" \
+              --output "$OUT/measurement-set.json"
+          done
+
+      - name: Accumulate the two validated measurement sets
+        shell: bash
+        run: |
+          set -euo pipefail
+          ROOT=/tmp/songsterr-fresh-history
+          python scripts/songsterr-fresh/accumulate_basic_pitch_measurement_sets.py \
+            "$ROOT/run3-formal/measurement-set.json" \
+            "$ROOT/run4-formal/measurement-set.json" \
+            --output "$ROOT/measurement-history.json"
+
+      - name: Prove historical aggregate remains measurement-only
+        shell: bash
+        run: |
+          set -euo pipefail
+          python - <<'PY'
+          import json
+          path = '/tmp/songsterr-fresh-history/measurement-history.json'
+          with open(path, 'r', encoding='utf-8') as handle:
+              history = json.load(handle)
+          if history.get('contract') != 'songsterr-fresh-basic-pitch-cross-run-measurement-history-v1':
+              raise SystemExit('HISTORY_CONTRACT_CHANGED')
+          if history.get('referenceBlind') is not True or history.get('measurementOnly') is not True:
+              raise SystemExit('HISTORY_SCOPE_CHANGED')
+          boundary = history.get('policyBoundary', {})
+          required_false = (
+              'thresholdsApplied',
+              'admissionDecisionMade',
+              'modelValidationComplete',
+              'mayAdvanceDelivery',
+              'durationAuthorityChanged',
+              'referenceTabUsed',
+              'professionalScorerUsed',
+              'legacyV143ScorerImported',
+              'preferredOutputSelected',
+              'exactHashesAreAdmissionCriteria',
+              'runtimeProvenanceIsAdmissionCriterion',
+              'observedMaximaAreAdmissionCriteria',
+              'historicalFrequencyIsAdmissionCriterion',
+          )
+          for field in required_false:
+              if boundary.get(field) is not False:
+                  raise SystemExit(f'HISTORY_PROMOTIONAL_BOUNDARY_CHANGED:{field}')
+          envelope = history.get('descriptiveVariationEnvelopeAcrossSets', {})
+          if envelope.get('descriptiveOnly') is not True or envelope.get('mayDefineTolerance') is not False:
+              raise SystemExit('HISTORY_ENVELOPE_BECAME_ADMISSION_RULE')
+          print(json.dumps({
+              'measurementSetCount': history.get('measurementSetCount'),
+              'totalObservationCount': history.get('totalObservationCount'),
+              'crossSetDescription': history.get('crossSetDescription'),
+              'descriptiveVariationEnvelopeAcrossSets': envelope,
+              'runtimeAssociations': history.get('runtimeAssociations'),
+              'policyBoundary': boundary,
+          }, indent=2, sort_keys=True))
+          PY
+
+      - name: Upload historical measurement-only summary
+        uses: actions/upload-artifact@v4
+        with:
+          name: songsterr-fresh-model-evidence-measurement-history
+          path: |
+            /tmp/songsterr-fresh-history/run3-formal/*.json
+            /tmp/songsterr-fresh-history/run4-formal/*.json
+            /tmp/songsterr-fresh-history/measurement-history.json
+          if-no-files-found: error
+          retention-days: 14
