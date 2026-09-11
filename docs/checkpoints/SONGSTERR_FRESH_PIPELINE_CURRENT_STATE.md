@@ -237,6 +237,16 @@ Decision-enabled real model canary — COMPLETED GREEN:
 - Policy B currently has **no independently justified numerical admission contract** for threshold-boundary inventory toggles. The B-only MIDI-55 threshold-onset event remains unresolved model-evidence variation rather than something that may be absorbed into a fitted band.
 - `MODEL_EVIDENCE_VALIDATION_PENDING` remains active. `modelValidationComplete` remains false; customer-eligible events remain 0; duration research remains paused.
 
+## SEMANTIC CONSENSUS GATE ANALYSIS — REJECTED AS POLICY B ADMISSION PROOF
+
+- Added `scripts/songsterr-fresh/analyze_semantic_consensus_gate.py`, contract `songsterr-fresh-semantic-consensus-gate-analysis-v1`, as a reference-blind/non-promotional policy analysis; it implements no admission rule.
+- Focused CI wiring commit `80a5d375bd205c23567ebc7d8980255ca6025cc7`; run `34551361626`, job `103114768116`; the consensus analysis self-test and all existing fresh measurement/non-promotion checks passed.
+- For N independent executions with semantic-mode probabilities p_i, an unanimity gate passes with probability `sum(p_i^N)`. If more than one semantic mode is possible, unanimity can still pass on one non-universal mode.
+- Distribution-free worst case: for any finite N and any desired error delta > 0, choose a two-mode process with probabilities `1-epsilon` and `epsilon` small enough that `(1-epsilon)^N + epsilon^N > 1-delta`. Thus no finite unanimity count has a false-pass upper bound below 1 without an independently justified execution-distribution assumption.
+- Hosted runs are also not proven independent draws across all supported compute surfaces; correlated runs can agree because they share a hidden environment while another supported environment produces different semantics.
+- Historical outcome frequencies cannot repair this because current policy forbids promoting observed frequency into correctness. Requiring more runs therefore characterizes reproducibility but does not prove universal semantic portability.
+- Result: finite semantic-consensus/repeated-execution gating is **not justified as a Policy B customer-admission contract**. `modelValidationComplete` remains false, customer-eligible events remain 0, and duration research remains paused.
+
 ## CURRENT ACCEPTANCE STATE
 
 Do **not** set `modelValidationComplete:true`.
@@ -249,14 +259,12 @@ Customer-eligible events remain **0**. V2 authoritative; V3 candidate-only. Basi
 
 ## FRESH-CHAT NEXT ENGINEERING STEPS
 
-1. Treat A/B/C decision-surface inspection, exact decoder replay, decoder-trace comparison, automatic post-canary trace preservation, and independent numerical-bound research as completed evidence/infrastructure. Do not rerun them merely to rediscover the current sample.
-2. Keep `modelValidationComplete:false`, customer-eligible events at 0, and duration research paused. Policy B currently has no justified end-to-end numerical admission tolerance for threshold-boundary inventory toggles.
-3. Evaluate architectural resolution options without post-hoc CPU/output selection or observed-margin fitting. The main safe question is whether the supported execution contract can be narrowed or redesigned so model evidence has a separately justified deterministic/reproducibility contract.
-4. Distinguish an **execution contract** from a CPU/vendor selector: a valid contract must be specified prospectively, reference-blind, reproducible, and testable before seeing fixture output. Do not admit/reject based on which vendor or exact hash happens to produce a desired note inventory.
-5. Consider whether a runtime/model representation with stronger deterministic semantics (for example a separately validated fixed/quantized execution path) could remove threshold-crossing ambiguity. Any such change is a new model/runtime architecture and must be validated independently; do not silently swap runtimes or thresholds.
-6. If no prospective execution/runtime contract can supply the missing guarantee, preserve the explicit result that current Policy B cannot advance model validation. Do not manufacture a tolerance from additional samples.
-7. Keep `.github/workflows/songsterr-fresh-decoder-trace-followup.yml` enabled for future successful independent canaries so mechanism evidence remains automatically preserved.
-8. Do not use exact hashes, CPU/vendor identity, historical frequency, event count, candidate confidence, reference tabs, downstream agreement, Spotify’s `1e-4` fixture tolerance, or current min/max margins as admission criteria.
-9. Keep the archived V143/Gomyway implementation/reference/pro scorer path out of scope and keep V2/V3 duration work paused until upstream model-evidence validation is actually resolved.
+1. Treat decision-surface inspection, exact decoder replay/trace comparison, automatic trace preservation, upstream numerical-guarantee review, and finite semantic-consensus analysis as completed evidence.
+2. Under the current Policy B requirements, neither a numeric threshold uncertainty band nor a finite repeated-execution unanimity gate has an independently justified admission guarantee.
+3. Keep `modelValidationComplete:false`, customer-eligible events at 0, and duration research paused. Do not rerun threshold sweeps or add repetitions merely to fit/strengthen an empirical envelope.
+4. The next engineering decision now requires an architecture/policy change if customer admission is to proceed: either establish a genuinely pinned/hermetic compute contract with reproducibility authority, or move to an inference representation/runtime with an independently specified deterministic/numerical contract. Any such change must be proposed and validated separately; do not silently reinterpret Policy B.
+5. If no such architecture/policy change is authorized, preserve the blocked state. The current floating-point Demucs → Basic Pitch path cannot be promoted to customer admission under the stated Policy B rules.
+6. Keep the automatic decoder-trace follow-up enabled for future independent canaries as measurement/history evidence only.
+7. Keep archived V143/Gomyway implementation/reference/pro-scorer work out of scope and keep V2/V3 duration/release work paused until upstream model-evidence validation is actually resolved.
 
 The archived V143/Gomyway pipeline remains out of scope unless explicitly requested.
