@@ -8,6 +8,7 @@ on:
     paths:
       - 'scripts/songsterr-fresh/compare_basic_pitch_cross_run_evidence.py'
       - 'scripts/songsterr-fresh/aggregate_basic_pitch_cross_run_measurements.py'
+      - 'scripts/songsterr-fresh/accumulate_basic_pitch_measurement_sets.py'
       - '.github/workflows/songsterr-fresh-model-evidence-variation-tests.yml'
 
 permissions:
@@ -34,9 +35,13 @@ jobs:
         run: |
           python -m py_compile scripts/songsterr-fresh/compare_basic_pitch_cross_run_evidence.py
           python -m py_compile scripts/songsterr-fresh/aggregate_basic_pitch_cross_run_measurements.py
+          python -m py_compile scripts/songsterr-fresh/accumulate_basic_pitch_measurement_sets.py
 
       - name: Prove pair measurement contract is reference-blind and fail-closed
         run: python scripts/songsterr-fresh/compare_basic_pitch_cross_run_evidence.py --self-test
 
       - name: Prove measurement-set contract is complete, bound, and non-promotional
         run: python scripts/songsterr-fresh/aggregate_basic_pitch_cross_run_measurements.py --self-test
+
+      - name: Prove measurement-history accumulation is complete and non-promotional
+        run: python scripts/songsterr-fresh/accumulate_basic_pitch_measurement_sets.py --self-test
