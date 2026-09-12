@@ -1,0 +1,120 @@
+name: Songsterr Fresh FLGD V5 Scoring Contract CI
+
+on:
+  push:
+    branches:
+      - songsterr-fresh-pipeline-v1
+    paths:
+      - scripts/songsterr-fresh/external_flgd_v5_validation.py
+      - scripts/songsterr-fresh/test_external_flgd_v5_validation.py
+      - docs/checkpoints/SONGSTERR_FRESH_FLGD_V5_FINAL_SCORING_PREREGISTRATION.md
+      - docs/checkpoints/SONGSTERR_FRESH_FLGD_V5_SCORING_NUMERICAL_AMENDMENT.md
+      - .github/workflows/songsterr-fresh-flgd-v5-scoring-contract-ci.yml
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  controlled-contract:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - name: Checkout exact branch source
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 1
+
+      - name: Set up Python 3.10
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.10'
+
+      - name: Compile scoring harness and controlled test
+        run: |
+          set -euo pipefail
+          python -m py_compile \
+            scripts/songsterr-fresh/external_flgd_v5_validation.py \
+            scripts/songsterr-fresh/test_external_flgd_v5_validation.py
+
+      - name: Run synthetic scoring self-test only
+        run: |
+          set -euo pipefail
+          python scripts/songsterr-fresh/external_flgd_v5_validation.py --self-test \
+            | tee /tmp/flgd-v5-scoring-self-test.json
+          python - <<'PY'
+          import json
+          p=json.load(open('/tmp/flgd-v5-scoring-self-test.json'))
+          assert p['contract']=='songsterr-fresh-flgd-v5-external-validation-v1'
+          assert p['selfTest']=='PASS'
+          b=p['policyBoundary']
+          assert b['realFLGDAccessed'] is False
+          assert b['basicPitchInvoked'] is False
+          assert b['v5ClassifierInvoked'] is False
+          assert b['correctnessMetricComputedOnRealCorpus'] is False
+          assert b['protectedSongUsed'] is False
+          assert b['modelValidationComplete'] is False
+          assert b['customerEligibleEvents']==0
+          assert b['mayAdvanceDelivery'] is False
+          assert b['durationAuthorityChanged'] is False
+          print('FLGD_V5_SCORING_SELF_TEST_POLICY_BOUNDARY_PASS')
+          PY
+
+      - name: Run focused controlled contract tests
+        run: |
+          set -euo pipefail
+          python scripts/songsterr-fresh/test_external_flgd_v5_validation.py
+
+      - name: Verify frozen constants and no real holdout workflow behavior
+        run: |
+          set -euo pipefail
+          python - <<'PY'
+          import ast
+          from pathlib import Path
+          p=Path('scripts/songsterr-fresh/external_flgd_v5_validation.py')
+          src=p.read_text()
+          tree=ast.parse(src)
+          constants={}
+          for node in tree.body:
+              if isinstance(node, ast.Assign) and len(node.targets)==1 and isinstance(node.targets[0], ast.Name):
+                  try:
+                      constants[node.targets[0].id]=ast.literal_eval(node.value)
+                  except Exception:
+                      pass
+          expected={
+              'EXPECTED_DATASET_REVISION':'a38306c244b3ea81496ad58b4514622185e58211',
+              'EXPECTED_STAGE_B_REPORT_SHA256':'065335aac5a6cd46ef713bae9f19d6f7ca7d764233419f6d8eb9ec6bace9911e',
+              'EXPECTED_INCLUDED_POPULATION_SHA256':'def77a45baf1b453e3f8ec0feed82e1cd3964bd85d50fb30f4912c0564425b02',
+              'EXPECTED_REFERENCE_IDENTITY_SHA256':'e34b360515d35dc77a6f423eb8a36e860e46f9469c16a499243186aea1f6223a',
+              'EXPECTED_IGNORED_RELEASE_IDENTITY_SHA256':'8751a5425e3348b4e7005b09121bd43425c23a9f296b8f2e58c8da1c245fcfd3',
+              'EXPECTED_PERFORMANCE_COUNT':79,
+              'EXPECTED_REFERENCE_EVENT_COUNT':76392,
+              'SAMPLE_RATE':44100,
+              'MIN_MIDI':40,
+              'MAX_MIDI':88,
+              'BASIC_PITCH_VERSION':'0.4.0',
+              'NUMPY_VERSION':'1.26.4',
+              'SCIPY_VERSION':'1.15.3',
+              'LIBROSA_VERSION':'0.11.0',
+              'SOUNDFILE_VERSION':'0.13.1',
+              'ONSET_THRESHOLD':0.5,
+              'FRAME_THRESHOLD':0.3,
+              'MINIMUM_NOTE_LENGTH_MS':127.7,
+              'ONSET_TOLERANCE_SECONDS':0.05,
+              'PITCH_TOLERANCE_CENTS':50.0,
+              'INCLUSIVE_ABS_TOL':1e-12,
+              'MIN_TOTAL_POSITIVES':1000,
+              'OVERALL_WILSON_LOWER_BOUND_MIN':0.99,
+              'STRATUM_MIN_POSITIVES':100,
+              'STRATUM_POINT_PRECISION_MIN':0.95,
+          }
+          for key,value in expected.items():
+              assert constants.get(key)==value,(key,constants.get(key),value)
+          print('FLGD_V5_SCORING_FROZEN_CONSTANTS_PASS')
+          PY
+
+          # This controlled job deliberately installs no project/model/audio
+          # dependencies and contains no dataset clone/download step.  The only
+          # executed harness mode above is --self-test.
+          test ! -d /tmp/FrancoisLeducGuitarDataset
+          echo FLGD_V5_REAL_HOLDOUT_NOT_AVAILABLE_IN_SCORING_CI
