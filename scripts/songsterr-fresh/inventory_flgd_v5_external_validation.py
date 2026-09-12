@@ -21,6 +21,7 @@ from pathlib import Path
 CONTRACT = "songsterr-fresh-flgd-v5-inventory-v1"
 VERSION = 1
 EXPECTED_REPOSITORY = "xavriley/FrancoisLeducGuitarDataset"
+EXPECTED_ORIGIN_CANONICAL = "https://huggingface.co/datasets/xavriley/FrancoisLeducGuitarDataset"
 EXPECTED_REVISION = "a38306c244b3ea81496ad58b4514622185e58211"
 AUDIO_EXTENSIONS = {".wav", ".flac", ".mp3", ".ogg", ".m4a", ".aiff", ".aif"}
 MIDI_EXTENSIONS = {".mid", ".midi"}
@@ -64,6 +65,13 @@ def git_output(root: Path, *args: str) -> str:
     return proc.stdout.strip()
 
 
+def normalize_origin_url(value: str) -> str:
+    normalized = str(value).strip().rstrip("/")
+    if normalized.endswith(".git"):
+        normalized = normalized[:-4]
+    return normalized
+
+
 def verify_git_revision(root: Path) -> dict:
     if not (root / ".git").exists():
         raise InventoryError("DATASET_GIT_CHECKOUT_REQUIRED")
@@ -74,7 +82,17 @@ def verify_git_revision(root: Path) -> dict:
     if status:
         raise InventoryError("DATASET_WORKTREE_MUST_BE_CLEAN")
     remote = git_output(root, "remote", "get-url", "origin")
-    return {"headSha": head, "originUrl": remote, "worktreeClean": True}
+    normalized_remote = normalize_origin_url(remote)
+    if normalized_remote != EXPECTED_ORIGIN_CANONICAL:
+        raise InventoryError(
+            f"DATASET_ORIGIN_CHANGED:{normalized_remote}!={EXPECTED_ORIGIN_CANONICAL}"
+        )
+    return {
+        "headSha": head,
+        "originUrl": remote,
+        "originCanonical": normalized_remote,
+        "worktreeClean": True,
+    }
 
 
 def relative_regular_files(root: Path) -> list[Path]:
@@ -254,6 +272,7 @@ def inventory(root: Path) -> dict:
         "dataset": {
             "name": "Francois Leduc Guitar Dataset",
             "repository": EXPECTED_REPOSITORY,
+            "expectedOriginCanonical": EXPECTED_ORIGIN_CANONICAL,
             "expectedRevision": EXPECTED_REVISION,
             "git": git_identity,
             "selectedReleaseLicenseDeclaration": "MIT",
