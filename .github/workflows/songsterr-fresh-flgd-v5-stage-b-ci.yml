@@ -1,0 +1,76 @@
+name: Songsterr Fresh FLGD V5 Stage B Contract CI
+
+on:
+  push:
+    branches: [songsterr-fresh-pipeline-v1]
+    paths:
+      - 'scripts/songsterr-fresh/prepare_flgd_v5_stage_b_manifest.py'
+      - 'scripts/songsterr-fresh/test_prepare_flgd_v5_stage_b_manifest.py'
+      - 'docs/checkpoints/SONGSTERR_FRESH_FLGD_V5_STAGE_B_MANIFEST_PREREGISTRATION.md'
+      - '.github/workflows/songsterr-fresh-flgd-v5-stage-b-ci.yml'
+
+permissions:
+  contents: read
+
+jobs:
+  controlled-stage-b-contract:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up Python 3.10
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.10'
+
+      - name: Compile Stage B sources
+        shell: bash
+        run: |
+          set -euo pipefail
+          python -m py_compile \
+            scripts/songsterr-fresh/prepare_flgd_v5_stage_b_manifest.py \
+            scripts/songsterr-fresh/test_prepare_flgd_v5_stage_b_manifest.py
+
+      - name: Run synthetic Stage B contract
+        shell: bash
+        run: |
+          set -euo pipefail
+          python scripts/songsterr-fresh/test_prepare_flgd_v5_stage_b_manifest.py
+
+      - name: Verify frozen production identities and non-scoring boundary
+        shell: bash
+        run: |
+          set -euo pipefail
+          python - <<'PY'
+          import ast
+          from pathlib import Path
+          p=Path('scripts/songsterr-fresh/prepare_flgd_v5_stage_b_manifest.py')
+          source=p.read_text(encoding='utf-8')
+          tree=ast.parse(source)
+          imports=set()
+          for node in ast.walk(tree):
+              if isinstance(node, ast.Import):
+                  imports.update(alias.name.split('.')[0] for alias in node.names)
+              elif isinstance(node, ast.ImportFrom) and node.module:
+                  imports.add(node.module.split('.')[0])
+          forbidden={'numpy','scipy','librosa','torch','tensorflow','basic_pitch','demucs','songsterr_pipeline'}
+          assert not (imports & forbidden), sorted(imports & forbidden)
+          assert 'a38306c244b3ea81496ad58b4514622185e58211' in source
+          assert '05047b224d65dcf37b6f2e85e3c1457e9a3f26a50d4a9a87526b7ea4bde8048b' in source
+          assert 'f03d6e3b9549a13dbcc9557ec6f13516fb52ac9d4fbf64138a0bb008b7a891b3' in source
+          assert 'EXPECTED_ROW_COUNT = 79' in source
+          assert 'correctnessMetricComputed": False' in source
+          assert 'estimateReferenceMatchingPerformed": False' in source
+          print('FLGD_V5_STAGE_B_SOURCE_BOUNDARY_VALID')
+          PY
+
+      - name: Confirm real holdout absent
+        shell: bash
+        run: |
+          set -euo pipefail
+          test ! -d /tmp/FrancoisLeducGuitarDataset
+          test ! -d FrancoisLeducGuitarDataset
+          ! find . -path './.git' -prune -o -type f -name '*.mp3' -print | grep -q .
+          echo 'FLGD_REAL_HOLDOUT_NOT_PRESENT_IN_STAGE_B_CI'
