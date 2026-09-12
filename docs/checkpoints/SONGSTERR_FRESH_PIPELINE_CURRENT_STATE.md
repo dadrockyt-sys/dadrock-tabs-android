@@ -23,55 +23,41 @@ Current authority remains fail-closed:
 ## V1 / V2 / V3 — CLOSED
 
 V1 and V2 remain frozen research diagnostics rejected as admission authority.
+Historical protected-song outcomes may not tune successors.
 
-Historical V2 protected-song result: 1,140 preserved events; 187 corroborated / 951 not / 2 insufficient. Historical protected-song outcomes may not tune successors.
-
-V3 is closed after frozen GuitarSet v1.1.0 validation failed preregistered gates:
-- 357/357 tracks
-- 62,438 decoded events
-- 11,252 V3-positive
-- 10,019 correct positives
-- precision `0.8904194809811589`
-- one-sided 95% Wilson lower bound `0.8854816094599652`
-- required lower bound `0.9900` → FAIL.
-
-GuitarSet is historical only and is not an untouched V5 holdout.
+V3 is closed after GuitarSet v1.1.0 external validation failed preregistered gates. GuitarSet is historical only and is not an untouched V5 holdout.
 
 ## V4 — CLOSED / REJECTED AS ADMISSION AUTHORITY
 
-V4 preregistration:
-`docs/checkpoints/SONGSTERR_FRESH_MODEL_EVIDENCE_ADMISSION_PREREGISTRATION_V4.md`
-
-Frozen V4 implementation:
+V4 implementation:
 `scripts/songsterr-fresh/independent_pitch_corroboration_v4.py`
 commit `6e9e11e60d0d6958c30edf6bb5d686d545936a19`.
 
-Official IDMT V4 result record:
+Official V4 result record:
 `docs/checkpoints/SONGSTERR_FRESH_IDMT_V4_EXTERNAL_VALIDATION_RESULT.md`
 commit `303e048f07d58370ab3256cdc226cdfd3628cf8a`.
 
-Official result artifact SHA-256:
+Official V4 result artifact SHA-256:
 `d97ea2c7f004876fc43f6c3d2e28e4838df86a4a4c4a8bc8f8a2a98ab5e37d2c`.
 
-Aggregate V4 result:
-- completed files `568 / 568`
-- decoded events `7619`
-- V4 positives `1644`
-- correct positives `1292`
-- positive precision `0.7858880778588808`
+V4 aggregate:
+- 568/568 files
+- 7,619 decoded
+- 1,644 positive
+- 1,292 correct
+- precision `0.7858880778588808`
 - one-sided 95% Wilson lower bound `0.7687844934184139`
-- required lower bound `0.9900` → FAIL.
+- required `0.9900` → FAIL.
 
-Separate policy review:
+Policy review:
 `docs/checkpoints/SONGSTERR_FRESH_IDMT_V4_POLICY_REVIEW.md`
 commit `01a276045d32b643aa17013b959e89e41b0f305e`.
 
-Decision: **V4 CLOSED / REJECTED AS ADMISSION AUTHORITY.**
-No IDMT V4 rerun, retuning, post-hoc filtering, protected-song V4 execution, or customer promotion is authorized. IDMT is historical only and is not an untouched V5 holdout.
+Decision: **V4 CLOSED / REJECTED AS ADMISSION AUTHORITY.** IDMT is historical only and is not an untouched V5 holdout.
 
 ## V5 — ACTIVE SUCCESSOR / SYNTHETIC CONTRACT GREEN
 
-User explicitly authorized a new successor on 2026-09-12 with the instruction to fix the failures.
+User explicitly authorized V5 on 2026-09-12 to fix the prior failure mechanism.
 
 ### V5 preregistration
 
@@ -81,103 +67,84 @@ commit `beb80f32311bd0b713b78d81049d68dbeec7afe3`.
 Contract:
 `songsterr-fresh-polyphonic-harmonic-necessity-corroboration-research-v5`.
 
-V5 is **not** a V4 threshold retune. It replaces single-winner pitch corroboration with a polyphony-aware harmonic-necessity test: the existing selected MIDI must remain necessary to explain the local spectrum when all playable guitar pitches are allowed to explain the signal simultaneously.
+V5 is not a V4 threshold retune. It uses a polyphony-aware harmonic dictionary and selected-pitch leave-one-out NNLS necessity test.
 
-Frozen V5 inputs:
-- mono isolated guitar exactly 44,100 Hz;
-- existing onset as integer sample index;
-- existing selected MIDI integer 40..88;
-- no reference truth, duration/end, next onset, Basic Pitch confidence/activation, performer/style/dataset/bit-depth identity, downstream tablature or historical labels.
+Frozen design:
+- mono isolated guitar, 44,100 Hz;
+- existing onset + existing MIDI 40..88 only;
+- windows: 8192 samples at offsets `2048`, `8192`, `14336`;
+- FFT `32768`;
+- MIDI dictionary 40..88;
+- harmonics 1..8, `1/h` weights, L2 normalization;
+- deterministic NNLS, SciPy `1.15.3`, NumPy `1.26.4`;
+- necessity fraction `>=0.01`;
+- fundamental/max-own-harmonic ratio `>=0.05`;
+- all 3 views required;
+- RMS `<1e-4`, truncation or invalid evidence => insufficient;
+- no duration, next onset, Basic Pitch confidence/activation, reference truth, style/dataset/bit-depth identity or event rewriting.
 
-Frozen V5 signal design:
-- three 8192-sample windows at post-onset offsets `2048`, `8192`, `14336`;
-- FFT size `32768`;
-- full candidate MIDI dictionary 40..88;
-- coherent fundamental estimate inside each candidate semitone cell;
-- harmonics 1..8, template amplitude weights `1/h`, L2-normalized;
-- simultaneous deterministic NNLS using SciPy `1.15.3`;
-- selected-pitch leave-one-out residual necessity fraction `>=0.01`;
-- fundamental/own-max-harmonic magnitude ratio `>=0.05`;
-- all three temporal views required; no voting/fallback;
-- demeaned RMS `<1e-4`, truncation, invalid/nonfinite template or solver failure => insufficient evidence.
+### Implementation / synthetic freeze
 
-Development contamination boundary:
-- do not choose V5 constants from protected-song outcomes, GuitarSet V3 correctness, IDMT V4 correctness/strata, or post-hoc sweeps on observed holdouts;
-- previously observed corpora remain historical diagnostics only;
-- future admission validation requires a genuinely untouched corpus/partition frozen before correctness results.
-
-### V5 implementation
-
+Implementation:
 `scripts/songsterr-fresh/independent_pitch_corroboration_v5.py`
-implementation commit `0b02fc949ba9fa0e3fac6b2edb9f19002f58fc99`.
+commit `0b02fc949ba9fa0e3fac6b2edb9f19002f58fc99`.
 
-The implementation has no standalone real-corpus mode and invokes no Basic Pitch, Demucs, Torch or `songsterr_pipeline` code.
-
-### V5 synthetic fixture manifest
-
+Synthetic manifest:
 `docs/checkpoints/SONGSTERR_FRESH_V5_SYNTHETIC_FIXTURES.json`
-manifest commit `efca2994efdce2c5a3b35d6e12fb9dc82096a268`.
+commit `efca2994efdce2c5a3b35d6e12fb9dc82096a268`.
 
-Frozen fixture count `20` with expected class counts:
-- corroborated `13`
-- not corroborated `4`
-- insufficient `3`.
-
-Coverage includes:
-- monophonic low/mid/high guitar range;
-- ±25-cent detuning;
-- attack noise;
-- dominant second harmonic;
-- perfect-fifth dyad;
-- major/minor triads with different selected chord tones;
-- dense six-note mixture;
-- equal close dyad;
-- wrong-octave traps;
-- neighboring-semitone trap;
-- temporal pitch change;
-- silence, low-level noise and truncation;
-- selected-MIDI identity preservation.
-
-### V5 controlled CI — GREEN
-
-Workflow:
+Controlled CI:
 `.github/workflows/songsterr-fresh-v5-polyphonic-necessity-ci.yml`
-workflow commit `7f07aa34ffb45860d55bcd755372abca98019717`.
+run `34718020842`, job `103618636972`, source `7f07aa34ffb45860d55bcd755372abca98019717`: **SUCCESS**.
 
-Run `34718020842`, job `103618636972`: **SUCCESS**.
-
-Exact CI source: `7f07aa34ffb45860d55bcd755372abca98019717`.
-
-Runtime:
-- CPython `3.10.21`
-- NumPy `1.26.4`
-- SciPy `1.15.3`.
-
-All 20 frozen fixture classifications matched exactly (`13 / 4 / 3`). In particular V5 retained true selected notes in dyads, triads, a dense six-note mixture, a close dyad and a dominant-harmonic case while rejecting wrong octaves, a stronger neighboring semitone and a temporal pitch change.
-
-The CI also verified exact constants, synthetic-only execution, non-promotion guards, no protected-song fixture and no real GuitarSet/IDMT holdout access.
+All 20 frozen synthetic fixtures matched exactly (`13 corroborated / 4 not / 3 insufficient`). V5 retained true selected notes in dyads, triads, a six-note mixture, a close dyad and a dominant-harmonic case while rejecting wrong octaves, a neighboring semitone and temporal pitch change.
 
 Method record:
 `docs/checkpoints/SONGSTERR_FRESH_POLYPHONIC_HARMONIC_NECESSITY_V5.md`
 commit `73e451b17f514909f204ca1a6f5fe7a5c96f6bfc`.
 
-### Current interpretation
+This is meaningful synthetic progress but not admission evidence.
 
-V5 has demonstrated that its polyphonic formulation is mathematically viable on the frozen synthetic contract and directly improves the structural weakness that motivated the successor: simultaneous true chord tones can coexist in the explanation rather than competing for one global pitch winner.
+## V5 EXTERNAL HOLDOUT — FLGD STAGE A INVENTORY SELECTED / NO SCORING
 
-This is meaningful engineering progress but **not** real-guitar admission evidence.
+Candidate: François Leduc Guitar Dataset (FLGD).
 
-### Next V5 gate
+Selected canonical source:
+- Hugging Face repository `xavriley/FrancoisLeducGuitarDataset` owned by dataset co-author Xavier Riley;
+- exact verified revision `a38306c244b3ea81496ad58b4514622185e58211`;
+- current provider card declares MIT;
+- provider describes audio + aligned MIDI for 79 solo-guitar performances;
+- reported repository size about 282 MB.
 
-1. inventory candidate external corpora against repository history and reject anything already materially analyzed;
-2. choose a genuinely untouched corpus or untouched preregistered partition using metadata/inventory only;
-3. freeze exact dataset/version/files, mechanical exclusions, annotation semantics, Basic Pitch runtime/settings, matching protocol, uncertainty method, minimum positive count, overall/stratum pass gates, source/runtime/provenance and fail-closed policy boundary **before** any correctness result;
-4. controlled validation-harness CI with no real holdout access;
-5. one official external V5 correctness run;
-6. immutable result record;
-7. separate policy review.
+The older Zenodo v1.0.0 artifact is not selected. Its record explicitly redirects future research to the newer freely available Hugging Face version. V5 binds only the exact HF revision above.
 
-Until step 7 explicitly approves V5:
+Inventory-only preregistration:
+`docs/checkpoints/SONGSTERR_FRESH_FLGD_V5_EXTERNAL_VALIDATION_INVENTORY_PREREGISTRATION.md`
+commit `9d039b8956a61336892d26f7763494a9440e4037`.
+
+Untouched-holdout screening:
+- GuitarSet: contaminated/historical → rejected;
+- IDMT: contaminated/historical → rejected;
+- Guitar-TECHS: historical checkpoint work exists → rejected;
+- GAPS: scientifically attractive but upstream/current license terms conflict across official surfaces → not selected;
+- EGFxSet: clearly open real electric-guitar data but isolated single tones, not sufficient primary polyphonic event holdout;
+- isolated-guitar-chords: permissive and polyphonic but lacks exact event-level MIDI/onset truth needed for this admission metric;
+- FLGD selected for Stage A because it is real solo guitar with aligned MIDI and no prior Songsterr Fresh correctness result identified.
+
+Stage A is inventory-only. It may enumerate/hash files, inspect metadata/container/MIDI structure and mechanical audio/MIDI pairing. It MUST NOT run Basic Pitch, V5, Demucs, audio pitch analysis, estimate/reference matching or any correctness metric.
+
+### Next V5 steps
+
+1. implement deterministic FLGD inventory tool with no model/scoring imports;
+2. controlled synthetic/local-directory CI for the inventory tool, with no FLGD data;
+3. obtain exact HF revision outside the repo and run inventory once;
+4. bind inventory report SHA-256 and exact audio/MIDI population;
+5. freeze Stage B population, MIDI time semantics, Basic Pitch runtime/settings, matching, uncertainty, minimum positives, overall/stratum gates and provenance **before correctness**;
+6. controlled validation-harness CI with no real FLGD correctness access;
+7. one official FLGD V5 correctness run;
+8. immutable result + separate policy review.
+
+Until a later policy review explicitly approves V5:
 - `modelValidationComplete:false`
 - customer-eligible events `0`
 - `mayAdvanceDelivery:false`
@@ -186,19 +153,19 @@ Until step 7 explicitly approves V5:
 
 ## FRESH-CHAT RESUME / NEXT STEPS
 
-A fresh chat must begin by reading this file in full and treating it as authoritative. Work only on `songsterr-fresh-pipeline-v1`.
+Read this file first. Work only on `songsterr-fresh-pipeline-v1`.
 
-V1–V4 are closed. V5 is the only active successor. Its implementation and 20-case synthetic contract are green. The next permitted work is untouched-holdout metadata/inventory and preregistration only; do not score a real corpus until the exact external-validation contract is frozen.
+V1–V4 are closed. V5 is active. Its implementation and synthetic contract are green. FLGD exact HF revision `a38306c244b3ea81496ad58b4514622185e58211` is selected for inventory-only Stage A. The immediate permitted work is to implement/CI the inventory tool and inventory the exact revision without any model correctness scoring.
 
 Do not rerun/tune GuitarSet or IDMT, do not touch the protected song, and do not resume duration, archived V143/Gomyway, GOAT, reference scoring, broad threshold sweeps or training/fine-tuning.
 
-Keep this checkpoint updated at major holdout selection, preregistration, validation-harness CI, external-result and policy-review boundaries.
+Keep this checkpoint updated at inventory, Stage B preregistration, validation-harness CI, external-result and policy-review boundaries.
 
 ## STILL FORBIDDEN
 
-- IDMT V4 rerun/tuning
-- GuitarSet rerun/tuning
-- protected-song execution under V4 or V5 before future external validation + policy approval
+- any V5 real-corpus correctness run before Stage B scoring preregistration + green contract CI
+- IDMT V4/GuitarSet rerun or tuning
+- protected-song execution before future V5 external validation + policy approval
 - duration research
 - archived V143/Gomyway / GOAT / reference scoring
 - broad threshold sweeps
