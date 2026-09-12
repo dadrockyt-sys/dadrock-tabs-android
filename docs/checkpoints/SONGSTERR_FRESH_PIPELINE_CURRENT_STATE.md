@@ -80,59 +80,57 @@ Result `docs/checkpoints/SONGSTERR_FRESH_FLGD_V5_ALIGNMENT_SEMANTICS_RESULT.md`,
 
 Frozen decision: canonical metadata-named MIDI note times under standard SMF/PrettyMIDI tempo semantics are the authoritative audio-aligned reference times. Syncpoints are auxiliary score/downbeat metadata and are not used to warp note onsets/offsets for correctness scoring.
 
-### Final V5 scoring preregistration — FROZEN / NO CORRECTNESS RESULT YET
+### Final V5 scoring preregistration — FROZEN / CORRECTNESS UNSEEN
 
-Final contract:
-`docs/checkpoints/SONGSTERR_FRESH_FLGD_V5_FINAL_SCORING_PREREGISTRATION.md`
-commit `846cdedad46c10553569011a28ae01c72a9f6504`.
+Final contract: `docs/checkpoints/SONGSTERR_FRESH_FLGD_V5_FINAL_SCORING_PREREGISTRATION.md`, commit `846cdedad46c10553569011a28ae01c72a9f6504`.
+Numerical inclusive-boundary amendment: `docs/checkpoints/SONGSTERR_FRESH_FLGD_V5_SCORING_NUMERICAL_AMENDMENT.md`, commit `2d547c6d034defebf8369db7f48fafcf15a02cec`.
 
-Numerical inclusive-boundary amendment:
-`docs/checkpoints/SONGSTERR_FRESH_FLGD_V5_SCORING_NUMERICAL_AMENDMENT.md`
-commit `2d547c6d034defebf8369db7f48fafcf15a02cec`.
-
-Frozen model/scoring path:
+Frozen scoring path:
 - all 79 Stage B performances; no result-based exclusions;
-- direct solo-guitar audio; no Demucs;
-- decode each canonical MP3 mono at exactly 44,100 Hz using librosa 0.11.0;
-- write/read a canonical float WAV with SoundFile 0.13.1 so Basic Pitch and V5 consume the same waveform;
+- no Demucs; canonical MP3 decoded mono at 44.1 kHz with librosa 0.11.0, written/read as SoundFile 0.13.1 FLOAT WAV;
 - Basic Pitch 0.4.0, CPU only, MIDI 40..88, onset threshold 0.5, frame threshold 0.3, minimum note length 127.7 ms, `multiple_pitch_bends=False`, `melodia_trick=True`;
-- preserve every decoded note identity; Basic Pitch end/confidence are diagnostic only;
-- `onsetSample=floor(startSeconds*44100+0.5)`; V5 exactly once per decoded event;
-- V5-positive class only `independently-corroborated-candidate`; negative/insufficient are not positives;
-- correctness matcher is per performance, one-to-one maximum-cardinality, onset delta <= 0.050 s and pitch delta <= 50 cents; duration/offset ignored;
-- inclusive thresholds use only `delta < limit OR math.isclose(delta,limit,rel_tol=0,abs_tol=1e-12)` to preserve the mathematical boundary;
-- primary metric = precision of V5-positive estimates;
-- one-sided 95% Wilson LB uses z `1.6448536269514722`;
-- mandatory pooled positives >=1000;
-- pooled Wilson LB >=0.9900;
-- each split stratum with >=100 positives must have point precision >=0.9500;
-- each guitar-type stratum with >=100 positives must have point precision >=0.9500;
-- event preservation/runtime/identity/policy guards must pass;
-- even a passing run does not itself set model validation or customer delivery eligibility.
+- every decoded event preserved and classified by V5 exactly once;
+- only `independently-corroborated-candidate` is V5-positive;
+- matching per performance, deterministic maximum-cardinality, onset <=50 ms inclusive and pitch <=50 cents inclusive; offsets/durations ignored;
+- numerical boundary uses only `delta < limit OR math.isclose(delta,limit,rel_tol=0,abs_tol=1e-12)`;
+- primary metric V5-positive precision; one-sided 95% Wilson LB z `1.6448536269514722`;
+- pooled positives >=1000 and pooled Wilson LB >=0.9900;
+- each split/guitar-type stratum with >=100 positives requires point precision >=0.9500;
+- all runtime/identity/event-preservation/policy guards must pass;
+- a passing execution still cannot promote without separate policy review.
+
+### Scoring harness — FROZEN CONTROLLED GREEN / CORRECTNESS UNSEEN
+
+Harness: `scripts/songsterr-fresh/external_flgd_v5_validation.py`.
+Initial harness commit `b7561defee0ec39d3be8ba877592b13d39d8e8d2`.
+Controlled test: `scripts/songsterr-fresh/test_external_flgd_v5_validation.py`.
+Method record: `docs/checkpoints/SONGSTERR_FRESH_FLGD_V5_SCORING_HARNESS.md`, commit `2509ccfe24ded590148110d8485f1b2e0ff6173d`.
+
+Final controlled workflow source `2ae9b6b797449b5b11de370b2e5836c4707fd5c9`.
+Run `34720390259`, job `103625060255`: **SUCCESS**.
+
+Green controlled checks include compile, frozen identities/constants, exact 50-ms/50-cent inclusive numerics, deterministic maximum-cardinality matching, duration/end irrelevance, fake-V5 event preservation/class bookkeeping, Wilson/stratum gates, runtime drift rejection, Basic Pitch payload guards without installing Basic Pitch, fake Stage B rejection, and synthetic MP3 → librosa 44.1-kHz mono → SoundFile FLOAT WAV → reread canonicalization. The final job had no real FLGD checkout and no Basic Pitch model invocation.
+
+An earlier synthetic-audio attempt failed only because the runner lacked `ffmpeg`; the final workflow explicitly installed it. This changed CI fixture infrastructure only, not the scoring contract.
 
 **No FLGD Basic Pitch/V5 correctness result exists at this checkpoint.**
 
-## NEXT ALLOWED ACTION
+## NEXT ALLOWED ACTION — ONE OFFICIAL FLGD V5 CORRECTNESS RUN
 
-Implement the final FLGD V5 scoring harness and controlled synthetic/contract CI only.
+The preregistered prerequisites are satisfied. Exactly one official full 79-performance FLGD V5 correctness run is now authorized on one exact clean source commit.
 
-Controlled CI must not clone/materialize the real FLGD audio or run a real holdout correctness evaluation. It must validate at minimum:
-- frozen dataset/Stage B/prereg identities and source constants;
-- runtime/version guards;
-- canonical audio decode/write/read contract at 44.1 kHz on synthetic audio only;
-- Basic Pitch payload validation without real FLGD scoring;
-- V5 event-preservation/classification bookkeeping using synthetic/fake classifier paths;
-- inclusive 50-ms/50-cent matching boundaries including the 1e-12 numerical representation rule;
-- deterministic maximum-cardinality one-to-one matching;
-- Wilson calculation and pooled/stratum gate logic;
-- fail-closed malformed/identity/runtime cases;
-- policy output remains false/zero and separate review required.
+The official execution must:
+- use the exact frozen FLGD revision and exact immutable Stage B JSON;
+- use the pinned Python/package/runtime contract and CPU-only Basic Pitch path;
+- use the frozen scoring harness unchanged;
+- process all 79 performances with no result-based exclusions;
+- write one deterministic result artifact and preserve its SHA-256/provenance;
+- emit policy authority false/zero with separate review required.
 
-Only after the harness and controlled CI are frozen green may one official full 79-performance FLGD correctness run occur on one exact clean source commit. After any correctness result is observed: no tuning, no threshold/gate/matcher changes, no file/stratum exclusions, and no rerun under this preregistration to seek a better result. Then write immutable result → separate policy review.
+After any correctness result is observed: do not tune V5, Basic Pitch settings, matching/tolerances/gates, files or strata; do not rerun FLGD under this preregistration to seek a better result. Next steps become immutable result record → separate policy review only.
 
 ## STILL FORBIDDEN
 
-- any real FLGD Basic Pitch/V5 correctness run before scoring-harness controlled CI is green and checkpointed
 - any post-result tuning/rerun under this preregistration
 - post-hoc FLGD row/stratum selection
 - `test_set/` model outputs as truth
