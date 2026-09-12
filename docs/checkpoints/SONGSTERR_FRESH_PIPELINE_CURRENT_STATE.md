@@ -185,6 +185,30 @@ Do **not** open V5 or any new model-evidence successor unless the user explicitl
 
 The Codespace used for V4 may now be stopped; no active boot/session authority is needed.
 
+## FRESH-CHAT RESUME / NEXT STEPS
+
+A fresh chat must begin by reading this file in full and treating it as authoritative. Then:
+
+1. Confirm work is still on branch `songsterr-fresh-pipeline-v1`; do not touch `main` or Production.
+2. Preserve the current fail-closed authority state: `modelValidationComplete:false`, customer-eligible events `0`, `mayAdvanceDelivery:false`, duration paused.
+3. Treat V1, V2, V3 and V4 as closed research diagnostics. Do not rerun/tune their holdouts and do not execute the protected song under V4.
+4. Do not interpret a generic “continue” as permission to silently reopen archived V143/Gomyway, GOAT, reference scoring, duration, threshold sweeps, or training/fine-tuning.
+5. Do not create or activate V5/a successor unless the user explicitly authorizes a new successor/model-evidence line.
+6. If the user explicitly authorizes a successor, start with a **new preregistration before implementation**. The design must be derived from independent signal/model-validation principles and must not optimize specifically for V4’s observed dataset2/24-bit failure, protected-song history, GuitarSet results, or IDMT results.
+7. Successor development should be synthetic/contract-only first. Freeze constants, input contract, event-identity guarantees, failure semantics, runtime/provenance, and non-promotion guards before external scoring.
+8. Choose any future admission holdout before viewing correctness results, using metadata/inventory only at first. Previously observed GuitarSet and IDMT correctness results are not untouched holdouts and must not be reused as if they were.
+9. Before any real external correctness run, freeze the exact corpus manifest, exclusions, annotation semantics, matching protocol, uncertainty method, minimum sample size, overall/stratum pass gates, source/runtime hashes, and fail-closed policy boundary.
+10. Run controlled CI with synthetic fixtures and no real holdout access. Only after that source is frozen green may one official holdout execution occur.
+11. After any future official holdout result, do not tune/rerun against that holdout. Write an immutable result record and a separate policy review. Only a passing preregistered external-validation result plus separate policy approval may change `modelValidationComplete` or customer eligibility.
+12. Duration/release research remains paused until model-evidence admission is genuinely resolved by a future approved successor.
+13. Keep this checkpoint updated at major preregistration, implementation, CI-freeze, external-result, and policy-review boundaries. Do not commit checkpoint changes during any boot/source-bound authority epoch if doing so would invalidate that epoch.
+
+Recommended first fresh-chat user prompt if they want to continue the research line:
+
+`Please continue from docs/checkpoints/SONGSTERR_FRESH_PIPELINE_CURRENT_STATE.md on branch songsterr-fresh-pipeline-v1. I explicitly authorize opening a new successor after V4.`
+
+If the user does not explicitly authorize a successor, stop at closed-state review/planning only.
+
 ## STILL FORBIDDEN
 
 - IDMT V4 rerun/tuning
