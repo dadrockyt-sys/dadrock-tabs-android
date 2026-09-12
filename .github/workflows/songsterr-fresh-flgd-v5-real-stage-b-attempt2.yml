@@ -1,0 +1,67 @@
+name: Songsterr Fresh FLGD V5 Real Stage B Attempt 2
+
+on:
+  push:
+    branches: [songsterr-fresh-pipeline-v1]
+    paths:
+      - '.github/workflows/songsterr-fresh-flgd-v5-real-stage-b-attempt2.yml'
+
+permissions:
+  contents: read
+
+jobs:
+  real-stage-b-amended:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.10'
+      - name: Ensure Git LFS available
+        run: |
+          set -euo pipefail
+          if ! git lfs version >/dev/null 2>&1; then sudo apt-get update && sudo apt-get install -y git-lfs; fi
+      - name: Clone exact FLGD revision
+        run: |
+          set -euo pipefail
+          DATASET="$RUNNER_TEMP/flgd-v5-stage-b-attempt2"
+          export GIT_LFS_SKIP_SMUDGE=1
+          git clone --no-checkout https://huggingface.co/datasets/xavriley/FrancoisLeducGuitarDataset "$DATASET"
+          git -C "$DATASET" checkout --detach a38306c244b3ea81496ad58b4514622185e58211
+          git -C "$DATASET" lfs install --local
+          git -C "$DATASET" lfs pull
+          test "$(git -C "$DATASET" rev-parse HEAD)" = 'a38306c244b3ea81496ad58b4514622185e58211'
+          test -z "$(git -C "$DATASET" status --porcelain)"
+      - name: Run amended frozen Stage B manifest
+        run: |
+          set -euo pipefail
+          DATASET="$RUNNER_TEMP/flgd-v5-stage-b-attempt2"
+          REPORT="$RUNNER_TEMP/flgd-v5-stage-b-manifest-amended.json"
+          python scripts/songsterr-fresh/prepare_flgd_v5_stage_b_manifest_amended.py \
+            --dataset-root "$DATASET" --output "$REPORT"
+          echo "REPORT_SHA256=$(sha256sum "$REPORT" | awk '{print $1}')"
+          python - "$REPORT" <<'PY'
+          import json,sys
+          r=json.load(open(sys.argv[1],encoding='utf-8'))
+          print('FLGD_STAGE_B_SUMMARY='+json.dumps(r['summary'],sort_keys=True,separators=(',',':')))
+          print('FLGD_STAGE_B_METADATA='+json.dumps(r['metadata'],sort_keys=True,separators=(',',':')))
+          print('FLGD_STAGE_B_POPULATION_SHA256='+r['includedPopulationSha256'])
+          print('FLGD_STAGE_B_REFERENCE_EVENT_SHA256='+r['referenceEventIdentitySha256'])
+          print('FLGD_STAGE_B_IGNORED_RELEASE_SHA256='+r['ignoredDuplicateReleaseIdentitySha256'])
+          print('FLGD_STAGE_B_POLICY='+json.dumps(r['policyBoundary'],sort_keys=True,separators=(',',':')))
+          assert r['summary']['includedPerformanceCount']==79
+          assert r['summary']['ignoredDuplicateReleaseCount']==24
+          assert r['policyBoundary']['correctnessMetricComputed'] is False
+          assert r['policyBoundary']['basicPitchInvoked'] is False
+          assert r['policyBoundary']['v5ClassifierInvoked'] is False
+          print('FLGD_STAGE_B_AMENDED_RESULT_VALID')
+          PY
+          echo FLGD_V5_REAL_STAGE_B_ATTEMPT2_COMPLETE
+      - name: Upload Stage B report only
+        uses: actions/upload-artifact@v4
+        with:
+          name: flgd-v5-stage-b-manifest-amended
+          path: ${{ runner.temp }}/flgd-v5-stage-b-manifest-amended.json
+          if-no-files-found: error
+          retention-days: 30
