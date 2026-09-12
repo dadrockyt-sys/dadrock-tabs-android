@@ -103,8 +103,6 @@ Frozen inventory tool:
 `scripts/songsterr-fresh/inventory_flgd_v5_external_validation.py`.
 It requires exact revision + canonical HF origin and performs hashing/metadata/header/pairing only; no sample-domain pitch analysis or model scoring.
 
-Controlled inventory CI was green before real FLGD access.
-
 One-shot real Stage A workflow:
 `.github/workflows/songsterr-fresh-flgd-v5-real-inventory.yml`
 source commit `77a0c8fddeecaf6e361e4c95772e2e80378258b9`.
@@ -143,20 +141,9 @@ Observed selected checkout:
 
 The checkout also contains noncanonical `test_set/` duplicates/model-output material. That material is forbidden as reference truth.
 
-Stage A policy boundary remained exactly false/zero:
-- Basic Pitch/V5/Demucs not invoked
-- no audio pitch analysis
-- no estimate/reference matching
-- no correctness metric
-- protected song unused
-- `modelValidationComplete:false`
-- customer eligible `0`
-- `mayAdvanceDelivery:false`
-- duration unchanged.
+Stage A policy boundary remained exactly false/zero. **No FLGD correctness result exists yet.**
 
-**No FLGD correctness result exists yet.**
-
-## FLGD STAGE B — MANIFEST / ANNOTATION SEMANTICS PREREGISTERED
+## FLGD STAGE B — MANIFEST / ANNOTATION SEMANTICS FROZEN GREEN
 
 Preregistration:
 `docs/checkpoints/SONGSTERR_FRESH_FLGD_V5_STAGE_B_MANIFEST_PREREGISTRATION.md`
@@ -164,27 +151,45 @@ commit `41b49d5f911ce27c6f1ca4834d56d4242a0e8b75`.
 
 Frozen Stage B population rule:
 - all and only the 79 root `metadata.csv` rows;
-- every row must bind exactly one canonical `audio/` file + one canonical `midi/` file;
-- `split` and `guitar_type` are strata metadata only, not inclusion/exclusion criteria;
+- every row binds exactly one canonical `audio/` + one canonical `midi/` file;
+- `split` and `guitar_type` are strata metadata only, never inclusion/exclusion criteria;
 - no row may be silently dropped;
 - `test_set/` and model-output MIDI are forbidden as reference truth;
-- syncpoint JSON is structural/timing metadata only and must pair mechanically by canonical stem;
+- syncpoint JSON is structural/timing metadata only and pairs mechanically by canonical stem;
 - canonical MIDI only may be parsed for structural reference timing/event statistics;
-- standard deterministic SMF PPQ + tempo-map conversion is preregistered;
-- annotation timing/duration statistics do not grant duration authority;
+- deterministic standard SMF PPQ + global tempo-map conversion is preregistered;
+- note-on velocity zero is note-off; same-key overlap pairs FIFO; unmatched events fail closed;
+- annotation duration statistics do not grant duration authority;
 - no model inference, V5 classification, estimate/reference matching or correctness metric is authorized.
 
-Stage B must output exact population/reference-event hashes, metadata strata counts, syncpoint structure, MIDI timing semantics and event-count/range diagnostics with the same false/zero policy boundary.
+Implementation:
+`scripts/songsterr-fresh/prepare_flgd_v5_stage_b_manifest.py`
+commit `390916ca0df20b2163ac68f19ea595f3834a9b18`.
+
+Synthetic contract test:
+`scripts/songsterr-fresh/test_prepare_flgd_v5_stage_b_manifest.py`
+commit `1713caf1aceaa0894bf3b4c19b2fdb089431aff9`.
+
+Controlled workflow:
+`.github/workflows/songsterr-fresh-flgd-v5-stage-b-ci.yml`
+source commit `e050f42a2666ae9251b749ba678626abfa4499da`.
+
+Controlled Stage B CI:
+- run `34719339613`
+- job `103622186675`
+- SUCCESS.
+
+The green contract verified compile, metadata/path bijection, canonical-only population, `test_set/` exclusion, syncpoint arities, MIDI running status, explicit/default tempo handling, overlapping same-key FIFO pairing, exact tick-to-second conversion, provenance/clean-worktree guards, malformed MIDI fail-closed behavior, frozen production identities, stdlib/non-scoring source boundary, and absence of real FLGD from CI.
+
+Stage B output contract must contain exact population/reference-event hashes, metadata strata counts, syncpoint structure, MIDI timing semantics and event-count/range diagnostics with the same false/zero policy boundary.
 
 ## NEXT ALLOWED ACTION
 
-Implement the Stage B manifest/annotation-semantics tool and controlled synthetic CI only.
+Run **one real Stage B non-scoring manifest/timing pass** on the exact FLGD revision using the frozen Stage B tool. It may inspect metadata, file identities, syncpoint structure and canonical reference-MIDI annotation timing only.
 
-Controlled CI must validate exact provenance, metadata bijection, canonical-only paths, `test_set/` exclusion, syncpoint structure, MIDI running status/tempo/note pairing/tick-to-second conversion, deterministic hashes, malformed-input fail-closed behavior, and no real FLGD/model scoring.
+It must not invoke Basic Pitch, V5, Demucs, audio-sample pitch analysis, estimate/reference matching or correctness metrics. Preserve the report outside repo initially, capture its SHA-256, and then write an immutable Stage B result record.
 
-Only after Stage B tool/CI are frozen green may one real Stage B non-scoring manifest run occur.
-
-After the real Stage B result is immutably bound, a **separate final scoring preregistration** must freeze Basic Pitch runtime/settings, V5 hashes, matching, uncertainty, minimum positives, pooled/stratum pass gates and provenance before any FLGD correctness run.
+Only after real Stage B is immutably bound may a **separate final scoring preregistration** freeze Basic Pitch runtime/settings, V5 hashes, matching, uncertainty, minimum positives, pooled/stratum pass gates and provenance before any FLGD correctness run.
 
 Then: controlled scoring-harness CI with no real correctness access → one official FLGD V5 correctness run → immutable result → separate policy review.
 
@@ -199,11 +204,11 @@ Until a later policy review explicitly approves V5:
 
 Read this file first and work only on `songsterr-fresh-pipeline-v1`.
 
-V1–V4 are closed. V5 is active. V5 synthetic contract is green. FLGD Stage A real inventory is complete with no scoring. Stage B manifest/annotation-semantics work is preregistered but not yet implemented at this checkpoint.
+V1–V4 are closed. V5 is active. V5 synthetic contract is green. FLGD Stage A real inventory is complete with no scoring. Stage B manifest/annotation-semantics implementation and controlled CI are frozen green. The next operation is one real Stage B non-scoring manifest/timing pass.
 
 Do not rerun/tune GuitarSet or IDMT; do not use FLGD `test_set/` model outputs as truth; do not touch the protected song; do not resume duration, archived V143/Gomyway, GOAT, reference scoring, broad threshold sweeps or training/fine-tuning.
 
-Keep this checkpoint updated at Stage B implementation/CI, real Stage B result, scoring preregistration, scoring-harness CI, external result and policy review boundaries.
+Keep this checkpoint updated at real Stage B result, scoring preregistration, scoring-harness CI, external result and policy review boundaries.
 
 ## STILL FORBIDDEN
 
