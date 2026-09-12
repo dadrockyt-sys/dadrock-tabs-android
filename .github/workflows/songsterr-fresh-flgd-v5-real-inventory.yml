@@ -1,0 +1,99 @@
+name: Songsterr Fresh FLGD V5 Real Stage A Inventory
+
+on:
+  push:
+    branches: [songsterr-fresh-pipeline-v1]
+    paths:
+      - '.github/workflows/songsterr-fresh-flgd-v5-real-inventory.yml'
+
+permissions:
+  contents: read
+
+jobs:
+  real-stage-a-inventory:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+      - name: Checkout Songsterr Fresh source
+        uses: actions/checkout@v4
+
+      - name: Set up Python 3.10
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.10'
+
+      - name: Ensure Git LFS available
+        shell: bash
+        run: |
+          set -euo pipefail
+          if ! git lfs version >/dev/null 2>&1; then
+            sudo apt-get update
+            sudo apt-get install -y git-lfs
+          fi
+          git lfs version
+
+      - name: Clone exact FLGD revision outside application repository
+        shell: bash
+        run: |
+          set -euo pipefail
+          DATASET="$RUNNER_TEMP/flgd-v5-stage-a"
+          test ! -e "$DATASET"
+          export GIT_LFS_SKIP_SMUDGE=1
+          git clone --no-checkout \
+            https://huggingface.co/datasets/xavriley/FrancoisLeducGuitarDataset \
+            "$DATASET"
+          git -C "$DATASET" checkout --detach a38306c244b3ea81496ad58b4514622185e58211
+          git -C "$DATASET" lfs install --local
+          git -C "$DATASET" lfs pull
+          test "$(git -C "$DATASET" rev-parse HEAD)" = "a38306c244b3ea81496ad58b4514622185e58211"
+          test -z "$(git -C "$DATASET" status --porcelain)"
+          echo "FLGD_EXACT_REVISION_READY"
+
+      - name: Run frozen inventory only
+        shell: bash
+        run: |
+          set -euo pipefail
+          DATASET="$RUNNER_TEMP/flgd-v5-stage-a"
+          REPORT="$RUNNER_TEMP/flgd-v5-stage-a-inventory.json"
+          test ! -e "$REPORT"
+          python scripts/songsterr-fresh/inventory_flgd_v5_external_validation.py \
+            --dataset-root "$DATASET" \
+            --output "$REPORT"
+          echo "REPORT_SHA256=$(sha256sum "$REPORT" | awk '{print $1}')"
+          python - "$REPORT" <<'PY'
+          import json,sys
+          r=json.load(open(sys.argv[1],encoding='utf-8'))
+          s=r['summary']
+          print('FLGD_REAL_STAGE_A_SUMMARY='+json.dumps(s,sort_keys=True,separators=(',',':')))
+          print('FLGD_REAL_STAGE_A_METADATA='+json.dumps(r['metadata'],sort_keys=True,separators=(',',':')))
+          print('FLGD_REAL_STAGE_A_WAV_HEADERS='+json.dumps(r['wavHeaderSignatures'],sort_keys=True,separators=(',',':')))
+          print('FLGD_REAL_STAGE_A_MIDI_HEADERS='+json.dumps(r['midiHeaderSignatures'],sort_keys=True,separators=(',',':')))
+          print('FLGD_REAL_STAGE_A_POLICY='+json.dumps(r['policyBoundary'],sort_keys=True,separators=(',',':')))
+          expected={
+            'basicPitchInvoked':False,
+            'v5ClassifierInvoked':False,
+            'demucsInvoked':False,
+            'audioSamplesUsedForPitchAnalysis':False,
+            'estimateReferenceMatchingPerformed':False,
+            'correctnessMetricComputed':False,
+            'protectedSongUsed':False,
+            'modelValidationComplete':False,
+            'customerEligibleEvents':0,
+            'mayAdvanceDelivery':False,
+            'durationAuthorityChanged':False,
+          }
+          assert r['policyBoundary']==expected, r['policyBoundary']
+          print('FLGD_REAL_STAGE_A_POLICY_BOUNDARY_VALID')
+          PY
+          echo '=== FLGD_STAGE_A_REPORT_JSON_BEGIN ==='
+          cat "$REPORT"
+          echo '=== FLGD_STAGE_A_REPORT_JSON_END ==='
+          echo 'FLGD_V5_REAL_STAGE_A_INVENTORY_COMPLETE'
+
+      - name: Upload inventory report only
+        uses: actions/upload-artifact@v4
+        with:
+          name: flgd-v5-stage-a-inventory
+          path: ${{ runner.temp }}/flgd-v5-stage-a-inventory.json
+          if-no-files-found: error
+          retention-days: 30
