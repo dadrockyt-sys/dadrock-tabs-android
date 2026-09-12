@@ -1,0 +1,69 @@
+name: Songsterr Fresh FLGD V5 Real MIDI Edge Audit
+
+on:
+  push:
+    branches: [songsterr-fresh-pipeline-v1]
+    paths:
+      - '.github/workflows/songsterr-fresh-flgd-v5-real-midi-edge-audit.yml'
+
+permissions:
+  contents: read
+
+jobs:
+  real-midi-edge-audit:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.10'
+      - name: Prepare exact FLGD MIDI checkout
+        shell: bash
+        run: |
+          set -euo pipefail
+          DATASET="$RUNNER_TEMP/flgd-v5-midi-edge-audit"
+          export GIT_LFS_SKIP_SMUDGE=1
+          git clone --no-checkout https://huggingface.co/datasets/xavriley/FrancoisLeducGuitarDataset "$DATASET"
+          git -C "$DATASET" checkout --detach a38306c244b3ea81496ad58b4514622185e58211
+          git -C "$DATASET" lfs install --local
+          git -C "$DATASET" lfs pull --include='midi/**'
+          test "$(git -C "$DATASET" rev-parse HEAD)" = 'a38306c244b3ea81496ad58b4514622185e58211'
+          test -z "$(git -C "$DATASET" status --porcelain)"
+          echo FLGD_MIDI_EDGE_AUDIT_REVISION_READY
+      - name: Run structural MIDI edge audit only
+        shell: bash
+        run: |
+          set -euo pipefail
+          DATASET="$RUNNER_TEMP/flgd-v5-midi-edge-audit"
+          REPORT="$RUNNER_TEMP/flgd-v5-midi-edge-audit.json"
+          python scripts/songsterr-fresh/audit_flgd_v5_midi_edges.py \
+            --dataset-root "$DATASET" \
+            --output "$REPORT"
+          echo "REPORT_SHA256=$(sha256sum "$REPORT" | awk '{print $1}')"
+          python - "$REPORT" <<'PY'
+          import json,sys
+          r=json.load(open(sys.argv[1],encoding='utf-8'))
+          print('FLGD_MIDI_EDGE_AUDIT_SUMMARY='+json.dumps(r['summary'],sort_keys=True,separators=(',',':')))
+          print('FLGD_MIDI_EDGE_IDENTITY_SHA256='+r['edgeIdentitySha256'])
+          edges=[]
+          for f in r['files']:
+              for e in f['unmatchedNoteOffs']:
+                  edges.append({'midiPath':f['midiPath'],'kind':'off',**e})
+              for e in f['unmatchedNoteOns']:
+                  edges.append({'midiPath':f['midiPath'],'kind':'on',**e})
+          print('FLGD_MIDI_EDGE_DETAILS='+json.dumps(edges,sort_keys=True,separators=(',',':')))
+          print('FLGD_MIDI_EDGE_POLICY='+json.dumps(r['policyBoundary'],sort_keys=True,separators=(',',':')))
+          assert r['policyBoundary']['correctnessMetricComputed'] is False
+          assert r['policyBoundary']['basicPitchInvoked'] is False
+          assert r['policyBoundary']['v5ClassifierInvoked'] is False
+          print('FLGD_REAL_MIDI_EDGE_AUDIT_POLICY_VALID')
+          PY
+          echo FLGD_V5_REAL_MIDI_EDGE_AUDIT_COMPLETE
+      - name: Upload audit report only
+        uses: actions/upload-artifact@v4
+        with:
+          name: flgd-v5-midi-edge-audit
+          path: ${{ runner.temp }}/flgd-v5-midi-edge-audit.json
+          if-no-files-found: error
+          retention-days: 30
