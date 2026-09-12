@@ -1,0 +1,56 @@
+name: Songsterr Fresh FLGD V5 MIDI Edge Audit CI
+
+on:
+  push:
+    branches: [songsterr-fresh-pipeline-v1]
+    paths:
+      - 'scripts/songsterr-fresh/audit_flgd_v5_midi_edges.py'
+      - 'docs/checkpoints/SONGSTERR_FRESH_FLGD_V5_STAGE_B_MIDI_EDGE_AUDIT_AMENDMENT.md'
+      - '.github/workflows/songsterr-fresh-flgd-v5-midi-edge-audit-ci.yml'
+
+permissions:
+  contents: read
+
+jobs:
+  controlled-edge-audit:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.10'
+      - name: Compile
+        run: |
+          set -euo pipefail
+          python -m py_compile \
+            scripts/songsterr-fresh/prepare_flgd_v5_stage_b_manifest.py \
+            scripts/songsterr-fresh/audit_flgd_v5_midi_edges.py
+      - name: Synthetic edge audit self-test
+        run: |
+          set -euo pipefail
+          python scripts/songsterr-fresh/audit_flgd_v5_midi_edges.py --self-test
+      - name: Verify structural-only source boundary
+        run: |
+          set -euo pipefail
+          python - <<'PY'
+          import ast
+          from pathlib import Path
+          p=Path('scripts/songsterr-fresh/audit_flgd_v5_midi_edges.py')
+          tree=ast.parse(p.read_text(encoding='utf-8'))
+          imports=set()
+          for node in ast.walk(tree):
+              if isinstance(node, ast.Import):
+                  imports.update(a.name.split('.')[0] for a in node.names)
+              elif isinstance(node, ast.ImportFrom) and node.module:
+                  imports.add(node.module.split('.')[0])
+          forbidden={'numpy','scipy','librosa','torch','tensorflow','basic_pitch','demucs','songsterr_pipeline'}
+          assert not (imports & forbidden), imports & forbidden
+          print('FLGD_V5_MIDI_EDGE_AUDIT_SOURCE_BOUNDARY_VALID')
+          PY
+      - name: Confirm real FLGD absent
+        run: |
+          set -euo pipefail
+          test ! -d FrancoisLeducGuitarDataset
+          ! find . -path './.git' -prune -o -type f -name '*.mp3' -print | grep -q .
+          echo FLGD_REAL_HOLDOUT_NOT_PRESENT_IN_EDGE_AUDIT_CI
