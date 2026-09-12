@@ -84,6 +84,7 @@ Candidate: François Leduc Guitar Dataset (FLGD).
 
 Selected source:
 - Hugging Face `xavriley/FrancoisLeducGuitarDataset`;
+- canonical origin `https://huggingface.co/datasets/xavriley/FrancoisLeducGuitarDataset` (optional trailing `.git` normalizes to this exact value);
 - exact verified revision `a38306c244b3ea81496ad58b4514622185e58211`;
 - author-owned current release card declares MIT;
 - audio + aligned MIDI for 79 solo-guitar performances;
@@ -106,11 +107,13 @@ Untouched-holdout screening:
 
 Inventory tool:
 `scripts/songsterr-fresh/inventory_flgd_v5_external_validation.py`
-commit `144c18cbc9cf354053b3edfbb537348318e1a59f`.
+initial implementation commit `144c18cbc9cf354053b3edfbb537348318e1a59f`;
+origin-binding hardening commit `43cfb6785fa36cf20eaedee986e7176d7128867c`.
 Contract `songsterr-fresh-flgd-v5-inventory-v1`.
 
 Tool behavior:
 - requires a clean Git checkout at exact FLGD revision;
+- now also requires the canonical FLGD Hugging Face origin, rejecting a same-commit checkout from any other origin;
 - recursively inventories every regular file except `.git/` implementation metadata;
 - hashes every file SHA-256;
 - records extensions/sizes;
@@ -122,11 +125,12 @@ Tool behavior:
 - no NumPy/SciPy/librosa/Basic Pitch/Demucs/Torch/songsterr_pipeline imports;
 - no sample-domain pitch analysis, V5 classification, reference matching or correctness metric.
 
-Inventory CI:
-`.github/workflows/songsterr-fresh-flgd-v5-inventory-ci.yml`
-commit `153767b4a3878c1d92f479b5bfa33cd78bef88b6`.
-Run `34718347519`, job `103619499809`: **SUCCESS**.
-CI used only a tiny synthetic local Git repository and confirmed real FLGD was absent. Compile, revision binding, hashes, metadata parsing, WAV/MIDI headers, exact pairing and all non-scoring guards passed.
+Inventory CI workflow:
+`.github/workflows/songsterr-fresh-flgd-v5-inventory-ci.yml`.
+Initial green run before origin hardening: run `34718347519`, job `103619499809`.
+Origin-binding CI update commit `1d8a34920f09d7e81ea04a7af487812b90edb65d`.
+Final hardened run `34718453921`, job `103619782125`: **SUCCESS**.
+The final run validated compile, exact revision, exact canonical HF origin, hashing, metadata parsing, WAV/MIDI headers, exact pairing and all no-scoring guards on a synthetic local Git repository. Real FLGD was absent.
 
 Stage A policy boundary remains:
 - Basic Pitch not invoked;
@@ -171,7 +175,7 @@ Until a later policy review explicitly approves V5:
 
 Read this file first. Work only on `songsterr-fresh-pipeline-v1`.
 
-V1–V4 are closed. V5 is active. V5 synthetic contract and FLGD inventory-tool CI are green. The next permitted real-data operation is **FLGD Stage A inventory only** on exact HF revision `a38306c244b3ea81496ad58b4514622185e58211`; no Basic Pitch/V5 correctness scoring is authorized yet.
+V1–V4 are closed. V5 is active. V5 synthetic contract and hardened FLGD inventory-tool CI are green. The next permitted real-data operation is **FLGD Stage A inventory only** on exact canonical HF origin and revision `a38306c244b3ea81496ad58b4514622185e58211`; no Basic Pitch/V5 correctness scoring is authorized yet.
 
 Do not rerun/tune GuitarSet or IDMT, do not touch the protected song, and do not resume duration, archived V143/Gomyway, GOAT, reference scoring, broad threshold sweeps or training/fine-tuning.
 
