@@ -1,6 +1,6 @@
 # CURRENT STATE — Songsterr Fresh Pipeline V1
 
-Updated: 2026-09-11 America/Toronto
+Updated: 2026-09-12 America/Toronto
 Canonical branch: `songsterr-fresh-pipeline-v1`
 Canonical checkpoint: `docs/checkpoints/SONGSTERR_FRESH_PIPELINE_CURRENT_STATE.md`
 
@@ -49,14 +49,6 @@ Frozen V4 implementation:
 - commit `6e9e11e60d0d6958c30edf6bb5d686d545936a19`
 - contract `songsterr-fresh-temporal-consensus-pitch-corroboration-research-v4`.
 
-Frozen rule:
-- mono isolated guitar, 44,100 Hz;
-- existing onset + integer selected MIDI only;
-- full MIDI 40..88 spectral competition;
-- three 8192-sample post-onset windows at offsets 1024 / 7168 / 13312;
-- spectral strict global winner + YIN semitone-cell winner required in all three windows;
-- no margins, voting, confidence, duration, next onset, activation, decision surface, reference, performer/style identity or event deletion.
-
 No protected-song V4 execution occurred.
 
 ## IDMT V4 INPUT / MANIFEST FREEZE
@@ -71,48 +63,12 @@ Dataset:
 Stage A inventory report SHA-256:
 `fd9086891a9a699619810f4bccd6f0f2533c194afc6cc1b09cf80484626d704f`.
 
-Immutable Stage A result:
-- `docs/checkpoints/SONGSTERR_FRESH_IDMT_V4_EXTERNAL_VALIDATION_STAGE_A_RESULT.md`
-- commit `b5516dd0b2d84014f4e28d45bb04bce1ba0617ca`.
-
 Stage B manifest freeze:
 - output SHA-256 `dfea0060296ea2289e82041545e8da0f80dd81c5dee6668e8bc7ab08293bbdeb`
 - included-manifest SHA-256 `0c7946f6ac5af341bcca155a24189c4cd85b9366c0cab3282469ad43236ca344`
 - 568 included pairs / 1 mechanically excluded pair
 - dataset1=312 / dataset2=252 / dataset3=4
 - 4,661 reference note events.
-
-## V4 OFFICIAL SCORING CONTRACT — FROZEN BEFORE RESULTS
-
-Primary scoring preregistration:
-- `docs/checkpoints/SONGSTERR_FRESH_IDMT_V4_STAGE_B_SCORING_PREREGISTRATION.md`
-- commit `63c4a2ce74b7a9da213a176f76cfac781cec0769`.
-
-Pre-result numerical-boundary amendment:
-- `docs/checkpoints/SONGSTERR_FRESH_IDMT_V4_STAGE_B_SCORING_NUMERICAL_AMENDMENT.md`
-- commit `4ee6f2c557c51fbeeaa626bdc12f790311117f36`.
-
-Frozen matching/gates:
-- per-file one-to-one maximum-cardinality matching;
-- onset difference <= 0.050 s;
-- pitch difference <= 50 cents;
-- offsets ignored;
-- primary metric = V4-positive precision;
-- one-sided 95% Wilson lower bound with `z=1.6448536269514722`;
-- all 568 files complete;
-- >=1000 positives;
-- pooled Wilson lower bound >=0.9900;
-- dataset1 and dataset2 point precision >=0.9500 when >=100 positives;
-- any sample-width stratum with >=100 positives precision >=0.9500;
-- dataset3 diagnostic-only because only four files.
-
-Official harness:
-- core `scripts/songsterr-fresh/external_idmt_v4_validation.py`, commit `6b48911b3694d9057b3da279fe7a8ba820395c76`
-- adapter `scripts/songsterr-fresh/run_external_idmt_v4_validation.py`, commit `b4a224c399263bd8ecb906727f6d7331af4db5fe`
-- controlled CI run `34657193712`, job `103452045087`: SUCCESS.
-
-Official scoring source commit:
-`ef92d873ed6cdb6b78fe06e42d0b8ffd24cce237`.
 
 ## OFFICIAL IDMT V4 RESULT — IMMUTABLE FAILURE
 
@@ -121,101 +77,88 @@ Immutable result record:
 - commit `303e048f07d58370ab3256cdc226cdfd3628cf8a`
 - official result artifact SHA-256 `d97ea2c7f004876fc43f6c3d2e28e4838df86a4a4c4a8bc8f8a2a98ab5e37d2c`.
 
-Runtime:
-- Python `3.10.21`
-- Basic Pitch `0.4.0`
-- NumPy `1.26.4`
-- SoundFile `0.13.1`
-- librosa `0.11.0`.
-
 Aggregate result:
-- completed files: `568 / 568`
-- reference events: `4661`
-- decoded events: `7619`
-- classifications: 1644 corroborated / 5906 not / 69 insufficient
-- positive correct: `1292 / 1644`
+- completed files `568 / 568`
+- decoded events `7619`
+- V4 positives `1644`
+- correct positives `1292`
 - positive precision `0.7858880778588808`
 - one-sided 95% Wilson lower bound `0.7687844934184139`
-- required lower bound `0.9900` → FAIL
-- positive recall `0.27719373524994634`.
-
-Strata:
-- dataset1: 309/323, precision `0.9566563467492261` → PASS
-- dataset2: 958/1293, precision `0.7409126063418406` → FAIL
-- dataset3: 25/28, precision `0.8928571428571429` → diagnostic only
-- 16-bit: 334/351, precision `0.9515669515669516` → PASS
-- 24-bit: 958/1293, precision `0.7409126063418406` → FAIL.
-
-Frozen gates:
-- `allIncludedFilesCompleted:true`
-- `minimumTotalPositiveEvents:true`
-- `overallWilsonLowerBound:false`
-- `dataset1:true`
-- `dataset2:false`
-- `sampleWidthBytes2:true`
-- `sampleWidthBytes3:false`
-- `externalValidationPassed:false`.
-
-## V4 POLICY REVIEW — REJECTED
+- required lower bound `0.9900` → FAIL.
 
 Separate policy review:
 - `docs/checkpoints/SONGSTERR_FRESH_IDMT_V4_POLICY_REVIEW.md`
 - commit `01a276045d32b643aa17013b959e89e41b0f305e`.
 
-Decision:
-- **V4 is CLOSED / REJECTED AS ADMISSION AUTHORITY.**
-- Dataset1/16-bit success cannot override pooled, dataset2, and 24-bit failures.
-- no post-hoc subset selection, threshold adjustment, retuning, filtering, or IDMT rerun is authorized under V4;
-- no protected-song V4 execution is authorized;
-- result retained as research diagnostic only.
+Decision: **V4 CLOSED / REJECTED AS ADMISSION AUTHORITY.**
+No IDMT V4 rerun, retuning, post-hoc filtering, protected-song V4 execution, or customer promotion is authorized.
 
-Authority remains unchanged:
+## V5 — ACTIVE SUCCESSOR / SYNTHETIC DEVELOPMENT ONLY
+
+User explicitly authorized a new successor on 2026-09-12 with the instruction to fix the failures.
+
+V5 preregistration:
+- `docs/checkpoints/SONGSTERR_FRESH_MODEL_EVIDENCE_ADMISSION_PREREGISTRATION_V5.md`
+- commit `beb80f32311bd0b713b78d81049d68dbeec7afe3`
+- contract `songsterr-fresh-polyphonic-harmonic-necessity-corroboration-research-v5`.
+
+V5 is intentionally **not** a V4 threshold retune. It replaces single-winner pitch corroboration with a polyphony-aware harmonic-necessity question: whether the selected Basic Pitch MIDI is independently necessary to explain the local harmonic spectrum when all playable guitar pitches are allowed to explain the signal simultaneously.
+
+Frozen preregistered V5 inputs:
+- mono isolated guitar, exactly 44,100 Hz;
+- existing event onset as integer sample index;
+- existing selected MIDI as integer, playable 40..88;
+- no reference truth, duration/end, next onset, Basic Pitch confidence/activation, performer/style/dataset/bit-depth identity, downstream tablature or historical labels.
+
+Frozen V5 signal design before implementation:
+- three 8192-sample windows at post-onset offsets `2048`, `8192`, `14336`;
+- FFT size `32768`, Hann after demeaning;
+- full candidate MIDI dictionary 40..88;
+- each candidate gets a coherent fundamental estimate inside its own semitone cell;
+- nonnegative harmonic templates use harmonics 1..8 with `1/h` amplitude weighting and L2 normalization;
+- simultaneous deterministic NNLS fit using SciPy `1.15.3`;
+- selected-pitch necessity is measured by leave-one-selected-pitch-out residual increase;
+- necessity fraction gate frozen at `>=0.01` of observed feature-vector L2 norm;
+- fundamental-presence guard frozen at fundamental magnitude >= `0.05` of that candidate's strongest harmonic magnitude;
+- all three temporal views must pass; no voting/fallback/majority rule;
+- demeaned RMS below `1e-4`, truncation, invalid/nonfinite templates or solver failure => insufficient evidence.
+
+V5 development contamination boundary:
+- do not choose V5 constants from protected-song outcomes, GuitarSet V3 correctness, IDMT V4 correctness/strata, or post-hoc sweeps on observed holdouts;
+- GuitarSet and IDMT are historical diagnostics only and are not untouched V5 admission holdouts;
+- future external correctness scoring requires a different untouched holdout selected/frozen before results.
+
+Next V5 steps, in order:
+1. implement the frozen V5 corroborator under `scripts/songsterr-fresh/`;
+2. freeze a deterministic synthetic fixture manifest covering monophonic range, detuning, chords/polyphony, octave traps, dominant harmonics, neighboring semitone, six-note mixture, attack noise, temporal change, silence/noise/truncation and event identity;
+3. controlled synthetic/contract CI only; no real corpus access;
+4. if the preregistered method is mathematically ill-posed on synthetic fixtures, document any synthetic-only amendment before using it; do not use real-corpus results to amend it;
+5. only after implementation/CI is frozen green, select a genuinely untouched external holdout using metadata/inventory first;
+6. freeze exact corpus manifest, annotation semantics, matching, uncertainty, minimum sample size and pass gates before any V5 correctness result;
+7. one official external run, immutable result, then separate policy review.
+
+V5 does not change authority. Current state remains:
 - `modelValidationComplete:false`
 - customer-eligible events `0`
 - `mayAdvanceDelivery:false`
-- duration authority unchanged
-- duration research paused
-- protected song not used.
-
-## NEXT ALLOWED ACTION
-
-There is no active successor.
-
-Do **not** open V5 or any new model-evidence successor unless the user explicitly authorizes one. A successor must use a fresh preregistration before implementation/external scoring and must not tune against protected-song historical outcomes or reuse a previously observed admission holdout as though it were untouched.
-
-The Codespace used for V4 may now be stopped; no active boot/session authority is needed.
+- duration paused
+- protected song embargoed.
 
 ## FRESH-CHAT RESUME / NEXT STEPS
 
-A fresh chat must begin by reading this file in full and treating it as authoritative. Then:
+A fresh chat must begin by reading this file in full and treating it as authoritative. Work only on `songsterr-fresh-pipeline-v1`.
 
-1. Confirm work is still on branch `songsterr-fresh-pipeline-v1`; do not touch `main` or Production.
-2. Preserve the current fail-closed authority state: `modelValidationComplete:false`, customer-eligible events `0`, `mayAdvanceDelivery:false`, duration paused.
-3. Treat V1, V2, V3 and V4 as closed research diagnostics. Do not rerun/tune their holdouts and do not execute the protected song under V4.
-4. Do not interpret a generic “continue” as permission to silently reopen archived V143/Gomyway, GOAT, reference scoring, duration, threshold sweeps, or training/fine-tuning.
-5. Do not create or activate V5/a successor unless the user explicitly authorizes a new successor/model-evidence line.
-6. If the user explicitly authorizes a successor, start with a **new preregistration before implementation**. The design must be derived from independent signal/model-validation principles and must not optimize specifically for V4’s observed dataset2/24-bit failure, protected-song history, GuitarSet results, or IDMT results.
-7. Successor development should be synthetic/contract-only first. Freeze constants, input contract, event-identity guarantees, failure semantics, runtime/provenance, and non-promotion guards before external scoring.
-8. Choose any future admission holdout before viewing correctness results, using metadata/inventory only at first. Previously observed GuitarSet and IDMT correctness results are not untouched holdouts and must not be reused as if they were.
-9. Before any real external correctness run, freeze the exact corpus manifest, exclusions, annotation semantics, matching protocol, uncertainty method, minimum sample size, overall/stratum pass gates, source/runtime hashes, and fail-closed policy boundary.
-10. Run controlled CI with synthetic fixtures and no real holdout access. Only after that source is frozen green may one official holdout execution occur.
-11. After any future official holdout result, do not tune/rerun against that holdout. Write an immutable result record and a separate policy review. Only a passing preregistered external-validation result plus separate policy approval may change `modelValidationComplete` or customer eligibility.
-12. Duration/release research remains paused until model-evidence admission is genuinely resolved by a future approved successor.
-13. Keep this checkpoint updated at major preregistration, implementation, CI-freeze, external-result, and policy-review boundaries. Do not commit checkpoint changes during any boot/source-bound authority epoch if doing so would invalidate that epoch.
+V1–V4 are closed. V5 is the only active successor and is currently synthetic-development-only. Do not rerun/tune GuitarSet or IDMT, do not touch the protected song, and do not resume duration, archived V143/Gomyway, GOAT, reference scoring, threshold sweeps or training/fine-tuning.
 
-Recommended first fresh-chat user prompt if they want to continue the research line:
-
-`Please continue from docs/checkpoints/SONGSTERR_FRESH_PIPELINE_CURRENT_STATE.md on branch songsterr-fresh-pipeline-v1. I explicitly authorize opening a new successor after V4.`
-
-If the user does not explicitly authorize a successor, stop at closed-state review/planning only.
+Continue V5 from the ordered steps above. Keep this checkpoint updated at major preregistration, implementation, CI-freeze, external-result and policy-review boundaries.
 
 ## STILL FORBIDDEN
 
 - IDMT V4 rerun/tuning
-- protected-song V4 execution
-- duration research
 - GuitarSet rerun/tuning
+- protected-song execution under V4 or V5 before future external validation + policy approval
+- duration research
 - archived V143/Gomyway / GOAT / reference scoring
-- threshold sweeps
+- broad threshold sweeps
 - training/fine-tuning
-- customer promotion from V4.
+- customer promotion without passing preregistered external validation and separate policy approval.
