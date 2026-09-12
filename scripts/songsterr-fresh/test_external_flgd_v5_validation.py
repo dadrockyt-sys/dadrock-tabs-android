@@ -1,8 +1,8 @@
 #!/usr/bin/env python3
 """Controlled contract tests for external_flgd_v5_validation.py.
 
-No FLGD checkout, Basic Pitch model call, V5 call or real-corpus correctness is
-permitted here.
+No FLGD checkout, Basic Pitch model call, real V5 call or real-corpus
+correctness is permitted here.
 """
 
 from __future__ import annotations
@@ -26,6 +26,19 @@ def expect_error(fn, text: str) -> None:
         assert text in str(exc), (text, str(exc))
     else:
         raise AssertionError(f"expected ValidationError containing {text}")
+
+
+class FakeV5:
+    """Synthetic classifier used only to test event bookkeeping."""
+
+    @staticmethod
+    def classify_audio_event(_audio, _onset_sample: int, midi: int) -> dict:
+        mapping = {
+            60: m.CLASS_POSITIVE,
+            61: m.CLASS_NEGATIVE,
+            62: m.CLASS_INSUFFICIENT,
+        }
+        return {"classification": mapping[midi], "reason": f"FAKE_{midi}"}
 
 
 def main() -> int:
@@ -78,6 +91,23 @@ def main() -> int:
     matches = m.maximum_cardinality_matches(estimates, refs)
     assert len(matches) == 2
     assert len(set(matches.values())) == 2
+
+    # Event identity/classification bookkeeping is tested with a fake classifier,
+    # so this controlled test never imports or executes the real V5 implementation.
+    identity_events = [
+        {"noteId": "n0", "startSeconds": 0.10, "midi": 60},
+        {"noteId": "n1", "startSeconds": 0.20, "midi": 61},
+        {"noteId": "n2", "startSeconds": 0.30, "midi": 62},
+    ]
+    classified, counts = m.classify_events(FakeV5(), object(), identity_events)
+    assert counts == {
+        m.CLASS_POSITIVE: 1,
+        m.CLASS_NEGATIVE: 1,
+        m.CLASS_INSUFFICIENT: 1,
+    }
+    assert [(x["noteId"], x["startSeconds"], x["midi"]) for x in classified] == [
+        (x["noteId"], x["startSeconds"], x["midi"]) for x in identity_events
+    ]
 
     # Wilson primary gate is deliberately stricter than point precision.
     assert m.wilson_lower_one_sided_95(1000, 1000) > 0.99
@@ -145,6 +175,28 @@ def main() -> int:
     assert gates["splitRobustness"]["train"] is False
     assert gates["guitarTypeRobustness"]["nylon"] is False
     assert gates["allMandatoryGatesPassed"] is False
+
+    # Runtime guard logic is exercised without installing Basic Pitch.  The
+    # metadata-version source is temporarily replaced with exact synthetic
+    # package identities, then one deliberate drift must fail closed.
+    real_version = m.importlib.metadata.version
+    expected_versions = {
+        "basic-pitch": m.BASIC_PITCH_VERSION,
+        "numpy": m.NUMPY_VERSION,
+        "scipy": m.SCIPY_VERSION,
+        "librosa": m.LIBROSA_VERSION,
+        "soundfile": m.SOUNDFILE_VERSION,
+    }
+    try:
+        m.importlib.metadata.version = lambda name: expected_versions[name]
+        runtime = m.package_runtime()
+        assert runtime["packages"] == expected_versions
+        drifted = dict(expected_versions)
+        drifted["numpy"] = "9.9.9"
+        m.importlib.metadata.version = lambda name: drifted[name]
+        expect_error(lambda: m.package_runtime(), "RUNTIME_PACKAGE_VERSION_CHANGED:numpy")
+    finally:
+        m.importlib.metadata.version = real_version
 
     # Synthetic Basic Pitch payload validation checks settings/provenance while
     # ignoring diagnostic model end/confidence as scoring inputs.
