@@ -6,9 +6,11 @@ on:
       - songsterr-fresh-pipeline-v1
     paths:
       - scripts/songsterr-fresh/external_flgd_v5_validation.py
+      - scripts/songsterr-fresh/run_external_flgd_v5_validation.py
       - scripts/songsterr-fresh/test_external_flgd_v5_validation.py
       - docs/checkpoints/SONGSTERR_FRESH_FLGD_V5_FINAL_SCORING_PREREGISTRATION.md
       - docs/checkpoints/SONGSTERR_FRESH_FLGD_V5_SCORING_NUMERICAL_AMENDMENT.md
+      - docs/checkpoints/SONGSTERR_FRESH_FLGD_V5_CORRECTNESS_REVEAL_AMENDMENT.md
       - .github/workflows/songsterr-fresh-flgd-v5-scoring-contract-ci.yml
   workflow_dispatch:
 
@@ -46,14 +48,15 @@ jobs:
           print('FLGD_V5_BASIC_PITCH_NOT_INSTALLED_IN_CONTROLLED_CI')
           PY
 
-      - name: Compile scoring harness and controlled test
+      - name: Compile scoring harness, deferred entrypoint and controlled test
         run: |
           set -euo pipefail
           python -m py_compile \
             scripts/songsterr-fresh/external_flgd_v5_validation.py \
+            scripts/songsterr-fresh/run_external_flgd_v5_validation.py \
             scripts/songsterr-fresh/test_external_flgd_v5_validation.py
 
-      - name: Run synthetic scoring self-test only
+      - name: Run core synthetic scoring self-test only
         run: |
           set -euo pipefail
           python scripts/songsterr-fresh/external_flgd_v5_validation.py --self-test \
@@ -74,6 +77,32 @@ jobs:
           assert b['mayAdvanceDelivery'] is False
           assert b['durationAuthorityChanged'] is False
           print('FLGD_V5_SCORING_SELF_TEST_POLICY_BOUNDARY_PASS')
+          PY
+
+      - name: Run deferred correctness-reveal self-test
+        run: |
+          set -euo pipefail
+          python scripts/songsterr-fresh/run_external_flgd_v5_validation.py --self-test \
+            | tee /tmp/flgd-v5-deferred-self-test.json
+          python - <<'PY'
+          import json
+          p=json.load(open('/tmp/flgd-v5-deferred-self-test.json'))
+          assert p['contract']=='songsterr-fresh-flgd-v5-deferred-correctness-reveal-v1'
+          assert p['selfTest']=='PASS'
+          assert p['phase1ApiContainsReferences'] is False
+          assert p['syntheticPhase1FailureEnteredScoring'] is False
+          assert p['partialCorrectnessProgressEmitted'] is False
+          b=p['policyBoundary']
+          assert b['realFLGDAccessed'] is False
+          assert b['basicPitchInvoked'] is False
+          assert b['v5ClassifierInvoked'] is False
+          assert b['correctnessMetricComputedOnRealCorpus'] is False
+          assert b['protectedSongUsed'] is False
+          assert b['modelValidationComplete'] is False
+          assert b['customerEligibleEvents']==0
+          assert b['mayAdvanceDelivery'] is False
+          assert b['durationAuthorityChanged'] is False
+          print('FLGD_V5_DEFERRED_REVEAL_CONTROLLED_PASS')
           PY
 
       - name: Run focused controlled contract tests
@@ -119,6 +148,8 @@ jobs:
           set -euo pipefail
           python - <<'PY'
           import ast
+          import inspect
+          import importlib.util
           from pathlib import Path
           p=Path('scripts/songsterr-fresh/external_flgd_v5_validation.py')
           src=p.read_text()
@@ -159,7 +190,14 @@ jobs:
           }
           for key,value in expected.items():
               assert constants.get(key)==value,(key,constants.get(key),value)
-          print('FLGD_V5_SCORING_FROZEN_CONSTANTS_PASS')
+
+          q=Path('scripts/songsterr-fresh/run_external_flgd_v5_validation.py')
+          spec=importlib.util.spec_from_file_location('deferred',q)
+          d=importlib.util.module_from_spec(spec); spec.loader.exec_module(d)
+          assert 'references' not in inspect.signature(d.process_one_file_reference_blind).parameters
+          assert d.CONTRACT=='songsterr-fresh-flgd-v5-external-validation-v1'
+          assert d.ADAPTER_CONTRACT=='songsterr-fresh-flgd-v5-deferred-correctness-reveal-v1'
+          print('FLGD_V5_SCORING_FROZEN_CONSTANTS_AND_DEFERRED_API_PASS')
           PY
 
           test ! -d /tmp/FrancoisLeducGuitarDataset
