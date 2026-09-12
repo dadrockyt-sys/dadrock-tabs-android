@@ -1,0 +1,63 @@
+name: Songsterr Fresh FLGD V5 Stage B Pairing Amendment CI
+
+on:
+  push:
+    branches: [songsterr-fresh-pipeline-v1]
+    paths:
+      - 'scripts/songsterr-fresh/prepare_flgd_v5_stage_b_manifest_amended.py'
+      - 'docs/checkpoints/SONGSTERR_FRESH_FLGD_V5_STAGE_B_MIDI_PAIRING_AMENDMENT.md'
+      - '.github/workflows/songsterr-fresh-flgd-v5-stage-b-pairing-amendment-ci.yml'
+
+permissions:
+  contents: read
+
+jobs:
+  controlled-pairing-amendment:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.10'
+      - name: Compile core and adapter
+        run: |
+          set -euo pipefail
+          python -m py_compile \
+            scripts/songsterr-fresh/prepare_flgd_v5_stage_b_manifest.py \
+            scripts/songsterr-fresh/prepare_flgd_v5_stage_b_manifest_amended.py
+      - name: Run amended pairing self-test
+        run: |
+          set -euo pipefail
+          python scripts/songsterr-fresh/prepare_flgd_v5_stage_b_manifest_amended.py --self-test
+      - name: Preserve original Stage B controlled contract
+        run: |
+          set -euo pipefail
+          python scripts/songsterr-fresh/test_prepare_flgd_v5_stage_b_manifest.py
+      - name: Verify audit binding and source boundary
+        run: |
+          set -euo pipefail
+          python - <<'PY'
+          import ast
+          from pathlib import Path
+          p=Path('scripts/songsterr-fresh/prepare_flgd_v5_stage_b_manifest_amended.py')
+          source=p.read_text(encoding='utf-8')
+          assert '111661c52b3cc5c5bd647d84bdd74af8fcef38799ff829e6edf23b2bd2f8fd24' in source
+          assert 'EXPECTED_REAL_IGNORED_DUPLICATE_RELEASE_COUNT = 24' in source
+          tree=ast.parse(source)
+          imports=set()
+          for node in ast.walk(tree):
+              if isinstance(node, ast.Import):
+                  imports.update(a.name.split('.')[0] for a in node.names)
+              elif isinstance(node, ast.ImportFrom) and node.module:
+                  imports.add(node.module.split('.')[0])
+          forbidden={'numpy','scipy','librosa','torch','tensorflow','basic_pitch','demucs','songsterr_pipeline'}
+          assert not (imports & forbidden), sorted(imports & forbidden)
+          print('FLGD_V5_STAGE_B_PAIRING_AMENDMENT_BOUNDARY_VALID')
+          PY
+      - name: Confirm real holdout absent
+        run: |
+          set -euo pipefail
+          test ! -d FrancoisLeducGuitarDataset
+          ! find . -path './.git' -prune -o -type f -name '*.mp3' -print | grep -q .
+          echo FLGD_REAL_HOLDOUT_NOT_PRESENT_IN_PAIRING_AMENDMENT_CI
