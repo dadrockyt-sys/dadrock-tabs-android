@@ -1,0 +1,115 @@
+name: Songsterr Fresh FLGD V5 Inventory CI
+
+on:
+  push:
+    branches: [songsterr-fresh-pipeline-v1]
+    paths:
+      - 'scripts/songsterr-fresh/inventory_flgd_v5_external_validation.py'
+      - 'docs/checkpoints/SONGSTERR_FRESH_FLGD_V5_EXTERNAL_VALIDATION_INVENTORY_PREREGISTRATION.md'
+      - '.github/workflows/songsterr-fresh-flgd-v5-inventory-ci.yml'
+  workflow_dispatch:
+
+jobs:
+  inventory-contract-only:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout exact branch source
+        uses: actions/checkout@v4
+
+      - name: Set up Python 3.10
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.10'
+
+      - name: Compile inventory tool
+        run: python -m py_compile scripts/songsterr-fresh/inventory_flgd_v5_external_validation.py
+
+      - name: Run synthetic local-repository inventory test
+        run: |
+          python - <<'PY'
+          import csv
+          import importlib.util
+          import json
+          import pathlib
+          import struct
+          import subprocess
+          import tempfile
+          import wave
+
+          module_path=pathlib.Path('scripts/songsterr-fresh/inventory_flgd_v5_external_validation.py')
+          spec=importlib.util.spec_from_file_location('inv', module_path)
+          m=importlib.util.module_from_spec(spec); spec.loader.exec_module(m)
+
+          with tempfile.TemporaryDirectory() as td:
+              root=pathlib.Path(td)/'flgd'
+              (root/'audio').mkdir(parents=True)
+              (root/'midi').mkdir()
+              (root/'syncpoints').mkdir()
+
+              for stem in ('alpha','beta'):
+                  wav_path=root/'audio'/f'{stem}.wav'
+                  with wave.open(str(wav_path),'wb') as w:
+                      w.setnchannels(1); w.setsampwidth(2); w.setframerate(44100)
+                      w.writeframes(b'\x00\x00'*441)
+                  midi_path=root/'midi'/f'{stem}.mid'
+                  midi_path.write_bytes(b'MThd'+struct.pack('>IHHH',6,1,1,480)+b'MTrk'+struct.pack('>I',4)+b'\x00\xff\x2f\x00')
+              (root/'audio'/'unpaired.wav').write_bytes((root/'audio'/'alpha.wav').read_bytes())
+              (root/'syncpoints'/'alpha-syncpoints.json').write_text('[]\n')
+              with (root/'metadata.csv').open('w',newline='',encoding='utf-8') as fh:
+                  writer=csv.DictWriter(fh,fieldnames=['id','split'])
+                  writer.writeheader(); writer.writerow({'id':'alpha','split':'train'}); writer.writerow({'id':'beta','split':'test'})
+
+              subprocess.run(['git','init'],cwd=root,check=True,stdout=subprocess.DEVNULL)
+              subprocess.run(['git','config','user.email','ci@example.invalid'],cwd=root,check=True)
+              subprocess.run(['git','config','user.name','CI'],cwd=root,check=True)
+              subprocess.run(['git','add','.'],cwd=root,check=True)
+              subprocess.run(['git','commit','-m','fixture'],cwd=root,check=True,stdout=subprocess.DEVNULL)
+              subprocess.run(['git','remote','add','origin','https://huggingface.co/datasets/example/synthetic'],cwd=root,check=True)
+              head=subprocess.check_output(['git','rev-parse','HEAD'],cwd=root,text=True).strip()
+              m.EXPECTED_REVISION=head
+              result=m.inventory(root)
+              s=result['summary']
+              assert s['audioFileCount']==3, s
+              assert s['midiFileCount']==2, s
+              assert s['exactOneToOnePairCount']==2, s
+              assert s['unpairedAudioCount']==1, s
+              assert s['unpairedMidiCount']==0, s
+              assert s['ambiguousStemGroupCount']==0, s
+              assert result['metadata']['rowCount']==2
+              assert result['metadata']['columns']==['id','split']
+              assert result['wavHeaderSignatures']==[{'header': {'channels':1,'compressionType':'NONE','frameCount':441,'sampleRate':44100,'sampleWidthBytes':2}, 'count':3}]
+              assert result['midiHeaderSignatures']==[{'header': {'divisionRaw':480,'format':1,'ticksPerQuarterIfMetric':480,'trackCount':1,'usesSmpteDivision':False}, 'count':2}]
+              assert all(v is False or v==0 for v in result['policyBoundary'].values())
+              print(json.dumps({'summary':s,'policyBoundary':result['policyBoundary']},sort_keys=True))
+              print('FLGD_V5_INVENTORY_SYNTHETIC_PASS')
+          PY
+
+      - name: Enforce frozen candidate identity and non-scoring boundary
+        run: |
+          python - <<'PY'
+          import ast
+          import importlib.util
+          from pathlib import Path
+          p=Path('scripts/songsterr-fresh/inventory_flgd_v5_external_validation.py')
+          spec=importlib.util.spec_from_file_location('inv',p)
+          m=importlib.util.module_from_spec(spec); spec.loader.exec_module(m)
+          assert m.EXPECTED_REPOSITORY == 'xavriley/FrancoisLeducGuitarDataset'
+          assert m.EXPECTED_REVISION == 'a38306c244b3ea81496ad58b4514622185e58211'
+          tree=ast.parse(p.read_text())
+          imports=[]
+          for n in ast.walk(tree):
+              if isinstance(n,ast.Import): imports.extend(a.name for a in n.names)
+              elif isinstance(n,ast.ImportFrom) and n.module: imports.append(n.module)
+          forbidden=('numpy','scipy','librosa','basic_pitch','demucs','torch','songsterr_pipeline')
+          assert not any(any(x==f or x.startswith(f+'.') for f in forbidden) for x in imports), imports
+          source=p.read_text()
+          for key in ('basicPitchInvoked','v5ClassifierInvoked','estimateReferenceMatchingPerformed','correctnessMetricComputed','modelValidationComplete','customerEligibleEvents','mayAdvanceDelivery'):
+              assert key in source
+          print('FLGD_V5_INVENTORY_BOUNDARY_VALID')
+          PY
+
+      - name: Confirm real FLGD absent
+        run: |
+          test ! -e FrancoisLeducGuitarDataset
+          test ! -e /workspaces/.songsterr-fresh-flgd-v5-stage-a
+          echo 'REAL_FLGD_NOT_ACCESSED_BY_INVENTORY_CI'
