@@ -18,7 +18,7 @@ permissions:
 jobs:
   controlled-contract:
     runs-on: ubuntu-latest
-    timeout-minutes: 10
+    timeout-minutes: 15
     steps:
       - name: Checkout exact branch source
         uses: actions/checkout@v4
@@ -29,6 +29,20 @@ jobs:
         uses: actions/setup-python@v5
         with:
           python-version: '3.10'
+
+      - name: Install pinned synthetic-audio dependencies only
+        run: |
+          set -euo pipefail
+          python -m pip install --disable-pip-version-check \
+            numpy==1.26.4 \
+            scipy==1.15.3 \
+            librosa==0.11.0 \
+            soundfile==0.13.1
+          python - <<'PY'
+          import importlib.util
+          assert importlib.util.find_spec('basic_pitch') is None, 'Basic Pitch must not be installed in controlled scoring CI'
+          print('FLGD_V5_BASIC_PITCH_NOT_INSTALLED_IN_CONTROLLED_CI')
+          PY
 
       - name: Compile scoring harness and controlled test
         run: |
@@ -64,6 +78,39 @@ jobs:
         run: |
           set -euo pipefail
           python scripts/songsterr-fresh/test_external_flgd_v5_validation.py
+
+      - name: Exercise canonical MP3 to float-WAV path on synthetic audio
+        run: |
+          set -euo pipefail
+          command -v ffmpeg
+          python - <<'PY'
+          import numpy as np
+          import soundfile as sf
+          sr=44100
+          t=np.arange(sr, dtype=np.float32)/sr
+          x=(0.25*np.sin(2*np.pi*220.0*t)).astype(np.float32)
+          sf.write('/tmp/flgd-v5-source.wav',x,sr,subtype='PCM_16')
+          PY
+          ffmpeg -hide_banner -loglevel error -y \
+            -i /tmp/flgd-v5-source.wav -codec:a libmp3lame -q:a 4 \
+            /tmp/flgd-v5-source.mp3
+          python - <<'PY'
+          import importlib.util
+          from pathlib import Path
+          p=Path('scripts/songsterr-fresh/external_flgd_v5_validation.py')
+          spec=importlib.util.spec_from_file_location('flgd_v5_scoring',p)
+          m=importlib.util.module_from_spec(spec); spec.loader.exec_module(m)
+          audio,meta=m.canonicalize_audio(
+              Path('/tmp/flgd-v5-source.mp3'),
+              Path('/tmp/flgd-v5-canonical.wav'),
+          )
+          assert meta['sampleRate']==44100
+          assert meta['sampleCount']==len(audio)>0
+          assert meta['wavSubtype']=='FLOAT'
+          assert len(meta['wavSha256'])==64
+          assert abs(meta['durationSeconds']-1.0)<0.01
+          print('FLGD_V5_SYNTHETIC_AUDIO_CANONICALIZATION_PASS',meta['wavSha256'])
+          PY
 
       - name: Verify frozen constants and no real holdout workflow behavior
         run: |
@@ -113,8 +160,5 @@ jobs:
           print('FLGD_V5_SCORING_FROZEN_CONSTANTS_PASS')
           PY
 
-          # This controlled job deliberately installs no project/model/audio
-          # dependencies and contains no dataset clone/download step.  The only
-          # executed harness mode above is --self-test.
           test ! -d /tmp/FrancoisLeducGuitarDataset
           echo FLGD_V5_REAL_HOLDOUT_NOT_AVAILABLE_IN_SCORING_CI
