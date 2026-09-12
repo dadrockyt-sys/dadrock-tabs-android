@@ -5,6 +5,9 @@ This tool is deliberately stdlib-only. It binds the exact FLGD Git release,
 metadata-named canonical audio/MIDI/syncpoint identities, and parses canonical
 reference MIDI timing/notes. It does not decode audio samples, run Basic Pitch,
 run V5, match estimates to references, or compute correctness.
+
+V2 preserves structurally audited duplicate-release MIDI messages as explicit
+edge identities without manufacturing a second reference note event.
 """
 
 from __future__ import annotations
@@ -19,12 +22,14 @@ import subprocess
 from collections import Counter, defaultdict, deque
 from pathlib import Path, PurePosixPath
 
-CONTRACT = "songsterr-fresh-flgd-v5-stage-b-manifest-v1"
-VERSION = 1
+CONTRACT = "songsterr-fresh-flgd-v5-stage-b-manifest-v2"
+VERSION = 2
 EXPECTED_ORIGIN_CANONICAL = "https://huggingface.co/datasets/xavriley/FrancoisLeducGuitarDataset"
 EXPECTED_REVISION = "a38306c244b3ea81496ad58b4514622185e58211"
 EXPECTED_STAGE_A_REPORT_SHA256 = "f03d6e3b9549a13dbcc9557ec6f13516fb52ac9d4fbf64138a0bb008b7a891b3"
 EXPECTED_METADATA_SHA256 = "05047b224d65dcf37b6f2e85e3c1457e9a3f26a50d4a9a87526b7ea4bde8048b"
+EXPECTED_EDGE_AUDIT_REPORT_SHA256 = "111661c52b3cc5c5bd647d84bdd74af8fcef38799ff829e6edf23b2bd2f8fd24"
+EXPECTED_EDGE_AUDIT_IDENTITY_SHA256 = "375029c7a0e2d80f25083743aa2d65c24c0de061f0e476db68987f218fcedef6"
 EXPECTED_METADATA_COLUMNS = [
     "split",
     "midi_filename",
@@ -450,19 +455,22 @@ def inspect_reference_midi(path: Path, stem: str) -> dict:
         key=lambda row: (row["tick"], row["trackIndex"], row["eventOrder"]),
     )
     active: dict[tuple[int, int], deque[dict]] = defaultdict(deque)
+    completed_pairs: Counter = Counter()
     paired = []
+    duplicate_release_edges = []
     overlap_count = 0
     channels = set()
-    for message in messages:
+
+    for message_ordinal, message in enumerate(messages, start=1):
         key = (int(message["channel"]), int(message["midi"]))
         channels.add(key[0])
         if message["isOn"]:
             if active[key]:
                 overlap_count += 1
             active[key].append(message)
-        else:
-            if not active[key]:
-                raise StageBError(f"MIDI_UNMATCHED_NOTE_OFF:{path}:{key}:{message['tick']}")
+            continue
+
+        if active[key]:
             onset = active[key].popleft()
             if int(message["tick"]) < int(onset["tick"]):
                 raise StageBError("MIDI_NOTE_OFFSET_BEFORE_ONSET")
@@ -474,6 +482,23 @@ def inspect_reference_midi(path: Path, stem: str) -> dict:
                 "onsetTrackIndex": int(onset["trackIndex"]),
                 "onsetEventOrder": int(onset["eventOrder"]),
             })
+            completed_pairs[key] += 1
+            continue
+
+        if completed_pairs[key] <= 0:
+            raise StageBError(
+                f"MIDI_UNMATCHED_NOTE_OFF_BEFORE_MATCHED_PAIR:{path}:{key}:{message['tick']}"
+            )
+        duplicate_release_edges.append({
+            "stem": stem,
+            "messageOrdinal": message_ordinal,
+            "tick": int(message["tick"]),
+            "trackIndex": int(message["trackIndex"]),
+            "eventOrder": int(message["eventOrder"]),
+            "channel": key[0],
+            "midi": key[1],
+            "velocity": int(message["velocity"]),
+        })
 
     leftovers = [key for key, queue in active.items() if queue]
     if leftovers:
@@ -524,6 +549,11 @@ def inspect_reference_midi(path: Path, stem: str) -> dict:
         "channelDomain": sorted(channels),
         "sameKeyOverlapCount": overlap_count,
         "referenceEventCount": len(identities),
+        "duplicateReleaseEdgeCount": len(duplicate_release_edges),
+        "duplicateReleaseEdgeIdentitySha256": sha256_bytes(
+            canonical_json(duplicate_release_edges).encode("utf-8")
+        ),
+        "duplicateReleaseEdges": duplicate_release_edges,
         "midiMin": min(notes) if notes else None,
         "midiMax": max(notes) if notes else None,
         "onsetMinSeconds": min(onsets) if onsets else None,
@@ -547,12 +577,15 @@ def build_stage_b(root: Path) -> dict:
 
     population_rows = []
     global_reference_identities = []
+    global_duplicate_release_edges = []
     ppq_counts = Counter()
     track_count_counts = Counter()
     format_counts = Counter()
     sync_arity_counts = Counter()
     total_events = 0
     total_overlap = 0
+    total_duplicate_release_edges = 0
+    files_with_duplicate_release_edges = []
     all_midis = []
     all_onsets = []
     all_offsets = []
@@ -574,6 +607,10 @@ def build_stage_b(root: Path) -> dict:
         midi = inspect_reference_midi(midi_path, row["stem"])
         identities = midi.pop("_identities")
         global_reference_identities.extend(identities)
+        duplicate_edges = list(midi["duplicateReleaseEdges"])
+        global_duplicate_release_edges.extend(
+            [{"midiPath": row["midiPath"], **edge} for edge in duplicate_edges]
+        )
 
         for arity, count in sync["arityCounts"].items():
             sync_arity_counts[arity] += int(count)
@@ -582,6 +619,9 @@ def build_stage_b(root: Path) -> dict:
         format_counts[str(midi["format"])] += 1
         total_events += int(midi["referenceEventCount"])
         total_overlap += int(midi["sameKeyOverlapCount"])
+        total_duplicate_release_edges += int(midi["duplicateReleaseEdgeCount"])
+        if midi["duplicateReleaseEdgeCount"]:
+            files_with_duplicate_release_edges.append(row["midiPath"])
         tempo_domain.update(midi["tempoUsPerQuarterDomain"])
         channel_domain.update(midi["channelDomain"])
         if midi["midiMin"] is not None:
@@ -625,6 +665,8 @@ def build_stage_b(root: Path) -> dict:
 
     if len(global_reference_identities) != total_events:
         raise StageBError("REFERENCE_IDENTITY_COUNT_MISMATCH")
+    if len(global_duplicate_release_edges) != total_duplicate_release_edges:
+        raise StageBError("DUPLICATE_RELEASE_EDGE_COUNT_MISMATCH")
 
     return {
         "contract": CONTRACT,
@@ -637,6 +679,8 @@ def build_stage_b(root: Path) -> dict:
             "selectedReleaseLicenseDeclaration": "MIT",
             "stageAReportSha256": EXPECTED_STAGE_A_REPORT_SHA256,
             "metadataSha256": EXPECTED_METADATA_SHA256,
+            "edgeAuditReportSha256": EXPECTED_EDGE_AUDIT_REPORT_SHA256,
+            "edgeAuditIdentitySha256": EXPECTED_EDGE_AUDIT_IDENTITY_SHA256,
         },
         "metadata": metadata,
         "summary": {
@@ -644,6 +688,9 @@ def build_stage_b(root: Path) -> dict:
             "splitCounts": metadata["splitCounts"],
             "guitarTypeCounts": metadata["guitarTypeCounts"],
             "referenceEventCount": total_events,
+            "duplicateReleaseEdgeCount": total_duplicate_release_edges,
+            "filesWithDuplicateReleaseEdgeCount": len(files_with_duplicate_release_edges),
+            "filesWithDuplicateReleaseEdges": files_with_duplicate_release_edges,
             "midiMin": min(all_midis) if all_midis else None,
             "midiMax": max(all_midis) if all_midis else None,
             "onsetMinSeconds": min(all_onsets) if all_onsets else None,
@@ -666,6 +713,10 @@ def build_stage_b(root: Path) -> dict:
         "referenceEventIdentitySha256": sha256_bytes(
             canonical_json(global_reference_identities).encode("utf-8")
         ),
+        "duplicateReleaseEdgeIdentitySha256": sha256_bytes(
+            canonical_json(global_duplicate_release_edges).encode("utf-8")
+        ),
+        "duplicateReleaseEdges": global_duplicate_release_edges,
         "included": population_rows,
         "policyBoundary": dict(POLICY_BOUNDARY),
     }
@@ -692,6 +743,7 @@ def main() -> int:
         "summary": result["summary"],
         "includedPopulationSha256": result["includedPopulationSha256"],
         "referenceEventIdentitySha256": result["referenceEventIdentitySha256"],
+        "duplicateReleaseEdgeIdentitySha256": result["duplicateReleaseEdgeIdentitySha256"],
         "policyBoundary": result["policyBoundary"],
     }))
     return 0
