@@ -1,0 +1,92 @@
+name: Songsterr Fresh FLGD V5 Alignment Semantics Audit
+
+on:
+  push:
+    branches: [songsterr-fresh-pipeline-v1]
+    paths:
+      - '.github/workflows/songsterr-fresh-flgd-v5-alignment-semantics-audit.yml'
+
+permissions:
+  contents: read
+
+jobs:
+  alignment-semantics-audit:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.10'
+      - name: Clone exact FLGD release without media smudge
+        run: |
+          set -euo pipefail
+          DATASET="$RUNNER_TEMP/flgd-v5-alignment-audit"
+          export GIT_LFS_SKIP_SMUDGE=1
+          git clone --no-checkout https://huggingface.co/datasets/xavriley/FrancoisLeducGuitarDataset "$DATASET"
+          git -C "$DATASET" checkout --detach a38306c244b3ea81496ad58b4514622185e58211
+          test "$(git -C "$DATASET" rev-parse HEAD)" = 'a38306c244b3ea81496ad58b4514622185e58211'
+      - name: Inventory support/text paths
+        run: |
+          set -euo pipefail
+          DATASET="$RUNNER_TEMP/flgd-v5-alignment-audit"
+          echo '=== NON-MEDIA PATHS ==='
+          git -C "$DATASET" ls-tree -r --name-only HEAD \
+            | grep -Ev '^(audio/|midi/|syncpoints/)' \
+            | sort
+          echo '=== SYNCPOINT REFERENCES IN TEXT ==='
+          git -C "$DATASET" grep -n -i -E 'syncpoint|align|midi.*audio|audio.*midi|pretty_midi|beat|tick' HEAD -- '*.py' '*.md' '*.txt' '*.log' '*.csv' || true
+      - name: Inspect support scripts and syncpoint shape
+        run: |
+          set -euo pipefail
+          DATASET="$RUNNER_TEMP/flgd-v5-alignment-audit"
+          echo '=== PYTHON SUPPORT FILES ==='
+          while IFS= read -r f; do
+            echo "--- $f ---"
+            git -C "$DATASET" show "HEAD:$f" || true
+          done < <(git -C "$DATASET" ls-tree -r --name-only HEAD | grep '\.py$' | sort)
+          echo '=== SAMPLE SYNCPOINTS ==='
+          python - "$DATASET" <<'PY'
+          import json,sys
+          from pathlib import Path
+          root=Path(sys.argv[1])
+          files=sorted((root/'syncpoints').glob('*.json'))
+          for p in files[:3]:
+              v=json.loads(p.read_text())
+              print(p.name, json.dumps(v[:12],separators=(',',':')))
+          PY
+      - name: Parse MIDI metrical meta-events structurally
+        run: |
+          set -euo pipefail
+          DATASET="$RUNNER_TEMP/flgd-v5-alignment-audit"
+          git -C "$DATASET" lfs install --local
+          git -C "$DATASET" lfs pull --include='midi/8DC4c.mid'
+          python - "$DATASET/midi/8DC4c.mid" <<'PY'
+          import struct,sys
+          data=open(sys.argv[1],'rb').read()
+          assert data[:4]==b'MThd'
+          fmt,ntracks,div=struct.unpack('>HHH',data[8:14])
+          print('MIDI_HEADER',fmt,ntracks,div)
+          def vlq(buf,p):
+              x=0
+              for _ in range(4):
+                  b=buf[p]; p+=1; x=(x<<7)|(b&127)
+                  if not b&128:return x,p
+              raise RuntimeError('vlq')
+          pos=14
+          for ti in range(ntracks):
+              assert data[pos:pos+4]==b'MTrk'; L=struct.unpack('>I',data[pos+4:pos+8])[0]; pos+=8
+              tr=data[pos:pos+L];pos+=L;p=0;tick=0;rs=None
+              while p<len(tr):
+                  d,p=vlq(tr,p);tick+=d;b=tr[p]
+                  if b&128: st=b;p+=1; first=None
+                  else: st=rs;first=b;p+=1
+                  if st==0xff:
+                      typ=tr[p];p+=1;n,p=vlq(tr,p);payload=tr[p:p+n];p+=n
+                      if typ in (0x51,0x58):print('META',ti,tick,hex(typ),payload.hex())
+                      continue
+                  if st in (0xf0,0xf7): n,p=vlq(tr,p);p+=n;continue
+                  rs=st;kind=st&0xf0;need=1 if kind in (0xc0,0xd0) else 2
+                  have=1 if first is not None else 0;p+=need-have
+          PY
+          echo FLGD_V5_ALIGNMENT_SEMANTICS_AUDIT_COMPLETE
