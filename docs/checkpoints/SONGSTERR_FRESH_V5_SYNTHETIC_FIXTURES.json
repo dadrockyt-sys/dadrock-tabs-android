@@ -1,0 +1,186 @@
+{
+  "contract": "songsterr-fresh-v5-synthetic-fixtures-v1",
+  "version": 1,
+  "sampleRate": 44100,
+  "generator": "independent_pitch_corroboration_v5.py:_fixture_audio",
+  "boundary": "synthetic-only-no-real-corpus",
+  "fixtures": [
+    {
+      "id": "mono_low_m40",
+      "kind": "harmonic_mix",
+      "durationSeconds": 0.8,
+      "selectedMidi": 40,
+      "notes": [{"midi": 40, "amplitude": 1.0}],
+      "expectedClassification": "independently-corroborated-candidate"
+    },
+    {
+      "id": "mono_mid_m64",
+      "kind": "harmonic_mix",
+      "durationSeconds": 0.8,
+      "selectedMidi": 64,
+      "notes": [{"midi": 64, "amplitude": 1.0}],
+      "expectedClassification": "independently-corroborated-candidate"
+    },
+    {
+      "id": "mono_high_m88",
+      "kind": "harmonic_mix",
+      "durationSeconds": 0.8,
+      "selectedMidi": 88,
+      "notes": [{"midi": 88, "amplitude": 1.0}],
+      "expectedClassification": "independently-corroborated-candidate"
+    },
+    {
+      "id": "detuned_plus25_m64",
+      "kind": "harmonic_mix",
+      "durationSeconds": 0.8,
+      "selectedMidi": 64,
+      "notes": [{"midi": 64, "cents": 25, "amplitude": 1.0}],
+      "expectedClassification": "independently-corroborated-candidate"
+    },
+    {
+      "id": "detuned_minus25_m52",
+      "kind": "harmonic_mix",
+      "durationSeconds": 0.8,
+      "selectedMidi": 52,
+      "notes": [{"midi": 52, "cents": -25, "amplitude": 1.0}],
+      "expectedClassification": "independently-corroborated-candidate"
+    },
+    {
+      "id": "attack_noise_m64",
+      "kind": "harmonic_mix",
+      "durationSeconds": 0.8,
+      "selectedMidi": 64,
+      "seed": 17,
+      "attackNoise": 0.25,
+      "notes": [{"midi": 64, "amplitude": 1.0}],
+      "expectedClassification": "independently-corroborated-candidate"
+    },
+    {
+      "id": "dominant_second_harmonic_m52",
+      "kind": "harmonic_mix",
+      "durationSeconds": 0.8,
+      "selectedMidi": 52,
+      "notes": [{
+        "midi": 52,
+        "amplitude": 1.0,
+        "harmonicAmplitudes": [0.08, 1.0, 0.22, 0.14, 0.10, 0.08, 0.06, 0.05]
+      }],
+      "expectedClassification": "independently-corroborated-candidate"
+    },
+    {
+      "id": "perfect_fifth_dyad_selected_root",
+      "kind": "harmonic_mix",
+      "durationSeconds": 0.8,
+      "selectedMidi": 60,
+      "notes": [{"midi": 60, "amplitude": 1.0}, {"midi": 67, "amplitude": 0.9}],
+      "expectedClassification": "independently-corroborated-candidate"
+    },
+    {
+      "id": "major_triad_selected_root",
+      "kind": "harmonic_mix",
+      "durationSeconds": 0.8,
+      "selectedMidi": 60,
+      "notes": [{"midi": 60, "amplitude": 1.0}, {"midi": 64, "amplitude": 0.85}, {"midi": 67, "amplitude": 0.8}],
+      "expectedClassification": "independently-corroborated-candidate"
+    },
+    {
+      "id": "major_triad_selected_third",
+      "kind": "harmonic_mix",
+      "durationSeconds": 0.8,
+      "selectedMidi": 64,
+      "notes": [{"midi": 60, "amplitude": 1.0}, {"midi": 64, "amplitude": 0.85}, {"midi": 67, "amplitude": 0.8}],
+      "expectedClassification": "independently-corroborated-candidate"
+    },
+    {
+      "id": "minor_triad_selected_fifth",
+      "kind": "harmonic_mix",
+      "durationSeconds": 0.8,
+      "selectedMidi": 67,
+      "notes": [{"midi": 60, "amplitude": 1.0}, {"midi": 63, "amplitude": 0.85}, {"midi": 67, "amplitude": 0.8}],
+      "expectedClassification": "independently-corroborated-candidate"
+    },
+    {
+      "id": "dense_six_note_mixture_selected64",
+      "kind": "harmonic_mix",
+      "durationSeconds": 0.8,
+      "selectedMidi": 64,
+      "notes": [
+        {"midi": 40, "amplitude": 0.8},
+        {"midi": 45, "amplitude": 0.75},
+        {"midi": 52, "amplitude": 0.8},
+        {"midi": 57, "amplitude": 0.75},
+        {"midi": 64, "amplitude": 0.9},
+        {"midi": 69, "amplitude": 0.7}
+      ],
+      "expectedClassification": "independently-corroborated-candidate"
+    },
+    {
+      "id": "equal_close_dyad_selected60",
+      "kind": "harmonic_mix",
+      "durationSeconds": 0.8,
+      "selectedMidi": 60,
+      "notes": [{"midi": 60, "amplitude": 1.0}, {"midi": 61, "amplitude": 1.0}],
+      "expectedClassification": "independently-corroborated-candidate"
+    },
+    {
+      "id": "wrong_octave_up_selected52",
+      "kind": "harmonic_mix",
+      "durationSeconds": 0.8,
+      "selectedMidi": 52,
+      "notes": [{"midi": 64, "amplitude": 1.0}],
+      "expectedClassification": "not-independently-corroborated"
+    },
+    {
+      "id": "wrong_octave_down_selected64",
+      "kind": "harmonic_mix",
+      "durationSeconds": 0.8,
+      "selectedMidi": 64,
+      "notes": [{"midi": 52, "amplitude": 1.0}],
+      "expectedClassification": "not-independently-corroborated"
+    },
+    {
+      "id": "stronger_neighbor_selected60",
+      "kind": "harmonic_mix",
+      "durationSeconds": 0.8,
+      "selectedMidi": 60,
+      "notes": [{"midi": 61, "amplitude": 1.0}],
+      "expectedClassification": "not-independently-corroborated"
+    },
+    {
+      "id": "temporal_pitch_change_selected60",
+      "kind": "harmonic_mix",
+      "durationSeconds": 0.8,
+      "selectedMidi": 60,
+      "notes": [{"midi": 60, "amplitude": 1.0}],
+      "temporalChange": {
+        "atSeconds": 0.22,
+        "notes": [{"midi": 67, "amplitude": 1.0}]
+      },
+      "expectedClassification": "not-independently-corroborated"
+    },
+    {
+      "id": "silence_m60",
+      "kind": "silence",
+      "durationSeconds": 0.8,
+      "selectedMidi": 60,
+      "expectedClassification": "insufficient-evidence"
+    },
+    {
+      "id": "low_noise_m60",
+      "kind": "low_noise",
+      "durationSeconds": 0.8,
+      "selectedMidi": 60,
+      "seed": 23,
+      "noiseAmplitude": 0.00001,
+      "expectedClassification": "insufficient-evidence"
+    },
+    {
+      "id": "truncated_m60",
+      "kind": "harmonic_mix",
+      "durationSeconds": 0.35,
+      "selectedMidi": 60,
+      "notes": [{"midi": 60, "amplitude": 1.0}],
+      "expectedClassification": "insufficient-evidence"
+    }
+  ]
+}
