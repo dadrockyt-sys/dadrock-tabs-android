@@ -64,11 +64,12 @@ jobs:
               subprocess.run(['git','config','user.name','CI'],cwd=root,check=True)
               subprocess.run(['git','add','.'],cwd=root,check=True)
               subprocess.run(['git','commit','-m','fixture'],cwd=root,check=True,stdout=subprocess.DEVNULL)
-              subprocess.run(['git','remote','add','origin','https://huggingface.co/datasets/example/synthetic'],cwd=root,check=True)
+              subprocess.run(['git','remote','add','origin','https://huggingface.co/datasets/xavriley/FrancoisLeducGuitarDataset.git'],cwd=root,check=True)
               head=subprocess.check_output(['git','rev-parse','HEAD'],cwd=root,text=True).strip()
               m.EXPECTED_REVISION=head
               result=m.inventory(root)
               s=result['summary']
+              assert result['dataset']['git']['originCanonical']==m.EXPECTED_ORIGIN_CANONICAL
               assert s['audioFileCount']==3, s
               assert s['midiFileCount']==2, s
               assert s['exactOneToOnePairCount']==2, s
@@ -94,6 +95,7 @@ jobs:
           spec=importlib.util.spec_from_file_location('inv',p)
           m=importlib.util.module_from_spec(spec); spec.loader.exec_module(m)
           assert m.EXPECTED_REPOSITORY == 'xavriley/FrancoisLeducGuitarDataset'
+          assert m.EXPECTED_ORIGIN_CANONICAL == 'https://huggingface.co/datasets/xavriley/FrancoisLeducGuitarDataset'
           assert m.EXPECTED_REVISION == 'a38306c244b3ea81496ad58b4514622185e58211'
           tree=ast.parse(p.read_text())
           imports=[]
