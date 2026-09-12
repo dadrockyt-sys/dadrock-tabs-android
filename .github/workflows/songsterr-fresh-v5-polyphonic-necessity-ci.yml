@@ -1,0 +1,101 @@
+name: Songsterr Fresh V5 Polyphonic Necessity CI
+
+on:
+  push:
+    branches: [songsterr-fresh-pipeline-v1]
+    paths:
+      - 'scripts/songsterr-fresh/independent_pitch_corroboration_v5.py'
+      - 'docs/checkpoints/SONGSTERR_FRESH_MODEL_EVIDENCE_ADMISSION_PREREGISTRATION_V5.md'
+      - 'docs/checkpoints/SONGSTERR_FRESH_V5_SYNTHETIC_FIXTURES.json'
+      - '.github/workflows/songsterr-fresh-v5-polyphonic-necessity-ci.yml'
+  workflow_dispatch:
+
+jobs:
+  synthetic-contract-only:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout exact branch source
+        uses: actions/checkout@v4
+
+      - name: Set up Python 3.10
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.10'
+
+      - name: Install frozen V5 numerical runtime
+        run: python -m pip install --disable-pip-version-check numpy==1.26.4 scipy==1.15.3
+
+      - name: Compile V5
+        run: python -m py_compile scripts/songsterr-fresh/independent_pitch_corroboration_v5.py
+
+      - name: Run frozen synthetic fixture contract
+        run: |
+          python scripts/songsterr-fresh/independent_pitch_corroboration_v5.py \
+            --self-test \
+            --fixture-manifest docs/checkpoints/SONGSTERR_FRESH_V5_SYNTHETIC_FIXTURES.json \
+            | tee /tmp/v5-self-test.json
+
+      - name: Enforce frozen constants and fixture population
+        run: |
+          python - <<'PY'
+          import importlib.util, json
+          from pathlib import Path
+          p=Path('scripts/songsterr-fresh/independent_pitch_corroboration_v5.py')
+          spec=importlib.util.spec_from_file_location('v5', p)
+          m=importlib.util.module_from_spec(spec); spec.loader.exec_module(m)
+          assert m.SAMPLE_RATE == 44100
+          assert m.WINDOW_SAMPLES == 8192
+          assert m.WINDOW_OFFSETS == (2048,8192,14336)
+          assert m.FFT_SIZE == 32768
+          assert (m.PLAYABLE_MIDI_MIN,m.PLAYABLE_MIDI_MAX) == (40,88)
+          assert m.HARMONIC_COUNT_MAX == 8
+          assert m.MIN_DEMEANED_RMS == 1e-4
+          assert m.NECESSITY_FRACTION_MIN == 0.01
+          assert m.FUNDAMENTAL_TO_MAX_HARMONIC_MIN == 0.05
+          assert m.NUMPY_VERSION == '1.26.4'
+          assert m.SCIPY_VERSION == '1.15.3'
+          f=json.loads(Path('docs/checkpoints/SONGSTERR_FRESH_V5_SYNTHETIC_FIXTURES.json').read_text())
+          assert f['contract'] == 'songsterr-fresh-v5-synthetic-fixtures-v1'
+          assert len(f['fixtures']) == 20
+          ids=[x['id'] for x in f['fixtures']]
+          assert len(ids) == len(set(ids))
+          counts={}
+          for x in f['fixtures']:
+              counts[x['expectedClassification']] = counts.get(x['expectedClassification'],0)+1
+          assert counts == {
+              'independently-corroborated-candidate': 13,
+              'not-independently-corroborated': 4,
+              'insufficient-evidence': 3,
+          }
+          print('V5_CONSTANTS_AND_FIXTURES_FROZEN')
+          PY
+
+      - name: Enforce synthetic-only and non-promotion boundary
+        run: |
+          python - <<'PY'
+          import ast
+          from pathlib import Path
+          paths=[
+            Path('scripts/songsterr-fresh/independent_pitch_corroboration_v5.py'),
+            Path('docs/checkpoints/SONGSTERR_FRESH_V5_SYNTHETIC_FIXTURES.json'),
+          ]
+          source='\n'.join(p.read_text() for p in paths)
+          for token in ('gomyway-midterm-source','GuitarSet','IDMT-SMT-GUITAR_V2.zip'):
+              assert token not in source, token
+          tree=ast.parse(paths[0].read_text())
+          imports=[]
+          for n in ast.walk(tree):
+              if isinstance(n,ast.Import): imports.extend(a.name for a in n.names)
+              elif isinstance(n,ast.ImportFrom) and n.module: imports.append(n.module)
+          for forbidden in ('basic_pitch','demucs','torch','songsterr_pipeline'):
+              assert not any(x==forbidden or x.startswith(forbidden+'.') for x in imports), imports
+          assert 'NO_STANDALONE_REAL_CORPUS_MODE_AUTHORIZED' in paths[0].read_text()
+          print('V5_SYNTHETIC_ONLY_BOUNDARY_VALID')
+          PY
+
+      - name: Confirm real holdouts absent
+        run: |
+          test ! -e IDMT-SMT-GUITAR_V2.zip
+          test ! -e annotation.zip
+          test ! -e audio_mono-mic.zip
+          echo 'REAL_HOLDOUT_NOT_EVALUATED_BY_V5_CI'
