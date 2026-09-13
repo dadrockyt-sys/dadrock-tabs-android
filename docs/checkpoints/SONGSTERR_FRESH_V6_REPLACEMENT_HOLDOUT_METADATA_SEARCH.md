@@ -99,37 +99,34 @@ Current blockers:
 
 Current disposition: **promising scientific metadata lead but not audit-ready; do not infer a dataset package or license from the paper record.**
 
-## Candidate 4 — EGSet12 — NEW LEADING OPEN-LICENSE LEAD, NOT YET SELECTED
+## Candidate 4 — EGSet12 — REJECTED AS NOT UNTOUCHED
 
 Public sources:
 - Zenodo record `11406378`: https://zenodo.org/records/11406378
 - project page: https://robust-guitar-tabs.github.io/
 - DAFx 2024 paper: “Leveraging Real Electric Guitar Tones and Effects to Improve Robustness in Guitar Tablature Transcription Modeling.”
 
-Public metadata says:
-- twelve **original, real solo electric-guitar performances**;
-- 31.65 s average duration / 379.8 s total;
-- diverse pop, funk, jazz and twelve-tone material with melodies and chord complexity;
-- single professional guitarist, Sire T7 Telecaster and Yamaha B15 amplifier;
-- microphone capture at 48 kHz, stereo channels duplicated from an effectively mono recording;
-- twelve WAV/JAMS/GP triplets are deposited with stable per-file MD5 identities;
-- JAMS is used publicly as the ground-truth tablature/reference representation in downstream evaluations;
-- Zenodo API license metadata has been independently surfaced as `cc-by-4.0`, `access_right: open`, permitting commercial use with attribution.
+Public metadata is otherwise attractive: twelve original real solo electric-guitar performances, 379.8 s total, WAV/JAMS/GP triplets, real musical/polyphonic material, and permissive CC BY 4.0/open-access metadata.
 
-Scientific/legal strengths:
-- original performances made for the research project, unlike GAPS third-party/YouTube provenance;
-- real electric guitar and real musical/polyphonic content;
-- permissive CC BY 4.0 deposit-level license;
-- stable small Zenodo corpus with explicit WAV/JAMS/GP identities;
-- likely much simpler reference-blind inventory/alignment audit than GAPS.
+However a controlled full-history audit on `songsterr-fresh-pipeline-v1` found **pre-search corpus/project exposure in 21 distinct reachable commits**. The immutable result is:
+`docs/checkpoints/SONGSTERR_FRESH_EGSET12_CONTAMINATION_AUDIT_RESULT.md`.
 
-Unresolved gates before selection:
-1. **Untouched status:** perform a branch-specific contamination/history audit for any prior EGSet12 truth/correctness use on `songsterr-fresh-pipeline-v1`. Default-branch GitHub search is not sufficient.
-2. **Evidence volume:** only 379.8 s / twelve tracks. The frozen V6 framework requires >=1,000 V6-positive events; public metadata does not provide a defensible pre-correctness event-count guarantee. Do not inspect JAMS event truth merely to optimize candidate choice without a preregistered reference-blind audit.
-3. **Reference timing semantics:** confirm in a preregistered structural audit that JAMS note timing represents the performed audio closely enough for the frozen <=50 ms onset matcher, rather than only score/grid timing.
-4. **Population diversity:** one performer means the frozen player-stratum rule would have only one player; this is permitted mechanically but weakens external-diversity evidence versus Guitar-TECHS/GAPS.
+Audit identity:
+- workflow `.github/workflows/songsterr-fresh-egset12-contamination-audit.yml`
+- run `34760898067`, job `103733427004`
+- branch head `f4d347a04b14340ac441ff35375413e4d479a38a`
+- reachable commits audited: `7662`
+- match lines: `42`
+- unique matching commits: `21`
+- audit text SHA-256 `21e8da1cc4385b702df4ee9c141c5b952d83acc39bc6bedbf8a391ecf46fc294`
+- artifact ID `10318981287`
+- artifact ZIP SHA-256 `858da60e05998cacbee0a78cb566533403859c9fa632789240b190f50bf31301`
 
-Current disposition: **best clean-license candidate currently surfaced, but not yet selected or downloaded. A branch-specific contamination audit plus a corpus-specific reference-blind inventory/alignment preregistration are required before touching its real WAV/JAMS truth.**
+Representative prior matching history includes earlier electric-guitar TabCNN/electric-consensus evidence, V168 external candidate screening, and open-corpus research lanes. This is sufficient to fail the conservative untouched-holdout requirement regardless of whether every prior occurrence exposed final correctness.
+
+Current disposition: **REJECTED as the V6 untouched external admission holdout. Do not download/score EGSet12 for V6 admission and do not rewrite history to attempt to restore untouched status.**
+
+No V6 correctness was run during this contamination audit.
 
 ## Explicit exclusions
 
@@ -137,15 +134,16 @@ Current disposition: **best clean-license candidate currently surfaced, but not 
 - IDMT-SMT-Guitar: closed/revealed by prior V4 work; not eligible.
 - Guitar-TECHS: outcome C; closed for V6 correctness and cannot be repaired/rescued.
 - GAPS: explicit non-commercial/copyright-material terms conflict with this admission path absent written permission.
+- EGSet12: branch-history contamination; not untouched.
 - Slakh/SynthTab: synthesized rather than untouched real-guitar performance holdouts.
 - GuitarJam: clean real DI audio but currently no surfaced note-level ground-truth annotations, so not suitable for admission correctness as-is.
 
 ## Next metadata-only work
 
-1. Perform a branch-specific contamination/history audit for EGSet12 on `songsterr-fresh-pipeline-v1`; do not rely on default-branch code search.
-2. Continue searching for another permissively licensed real-guitar corpus with note-level performed timing and more diversity/volume than EGSet12.
-3. Resolve GIHME's actual dataset download location/license/annotation representation; the paper record is not sufficient.
-4. Keep EGFxSet as a narrow backup; determine whether a fixed/preregisterable note onset exists in metadata or recording protocol before considering an audit.
+1. Continue searching for a different **untouched**, permissively licensed real-guitar corpus with note-level performed timing and enough independent material to plausibly support the frozen >=1,000 V6-positive gate.
+2. Resolve GIHME's actual dataset download location/license/annotation representation; the paper record is not sufficient.
+3. Keep EGFxSet as a narrow backup; determine whether a fixed/preregisterable note onset exists in metadata or recording protocol before considering an audit.
+4. Perform branch-specific contamination checks before selecting any newly surfaced candidate; default-branch code search is insufficient.
 5. Select one candidate only after license/provenance/untouched status are defensible and the frozen evidence-volume gate is plausibly satisfiable without duplication/rescue rules.
 6. Freeze a new corpus-specific reference-blind inventory/alignment preregistration before downloading/auditing real audio-reference pairs.
 7. If that audit is structurally suitable, bind immutable identities into the already-frozen V6 scoring framework; otherwise reject without correctness.
