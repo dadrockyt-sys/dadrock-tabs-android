@@ -1,0 +1,65 @@
+name: Songsterr Fresh Guitar-TECHS V6 Audit CI
+
+on:
+  push:
+    branches:
+      - songsterr-fresh-pipeline-v1
+    paths:
+      - 'scripts/songsterr-fresh/external_guitar_techs_v6_alignment_inventory.py'
+      - 'scripts/songsterr-fresh/test_external_guitar_techs_v6_alignment_inventory.py'
+      - '.github/workflows/songsterr-fresh-guitar-techs-v6-audit-ci.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  controlled-audit-tests:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 15
+    env:
+      CUDA_VISIBLE_DEVICES: ''
+    steps:
+      - name: Checkout branch
+        uses: actions/checkout@v4
+        with:
+          ref: songsterr-fresh-pipeline-v1
+          fetch-depth: 1
+
+      - name: Set up Python 3.10
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.10'
+
+      - name: Install pinned CPU audit runtime
+        shell: bash
+        run: |
+          set -euo pipefail
+          python -m pip install --upgrade pip
+          python -m pip install \
+            'numpy==1.26.4' \
+            'scipy==1.15.3' \
+            'soundfile==0.13.1' \
+            'mido==1.3.3'
+          python - <<'PY'
+          from importlib.metadata import version
+          assert version('numpy') == '1.26.4'
+          assert version('scipy') == '1.15.3'
+          assert version('soundfile') == '0.13.1'
+          assert version('mido') == '1.3.3'
+          print('GUITAR_TECHS_AUDIT_PINNED_RUNTIME_OK')
+          PY
+
+      - name: Run controlled alignment audit tests
+        shell: bash
+        run: |
+          set -euo pipefail
+          python scripts/songsterr-fresh/test_external_guitar_techs_v6_alignment_inventory.py
+
+      - name: Verify no scorer imports
+        shell: bash
+        run: |
+          set -euo pipefail
+          ! grep -E '(^|[^A-Za-z])(basic[_ -]?pitch|onset_birth_corroboration_v6|independent_pitch_corroboration)' \
+            scripts/songsterr-fresh/external_guitar_techs_v6_alignment_inventory.py
+          echo 'GUITAR_TECHS_AUDIT_NO_SCORER_IMPORTS_OK'
