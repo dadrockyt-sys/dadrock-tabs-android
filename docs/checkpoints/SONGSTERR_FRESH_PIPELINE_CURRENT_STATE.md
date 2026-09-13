@@ -75,31 +75,35 @@ Basic Pitch was not invoked, V6 was not invoked, correctness was not computed. G
 
 Metadata/license/structure research checkpoint:
 `docs/checkpoints/SONGSTERR_FRESH_V6_REPLACEMENT_HOLDOUT_METADATA_SEARCH.md`
-commit `21443972af16e88fcc4284ae741e5e34bb5a1090`.
+latest refinement commit `f91c25c5b3a781a87ea024e296af1e9231df14af`.
 
 No correctness has been run on any replacement candidate.
 
-### Leading candidate: GAPS
+### Leading candidate: GAPS — STILL BLOCKED
 
-Public metadata describes GAPS (Guitar-Aligned Performance Scores) as ~14 hours / 300 real solo classical-guitar performances from >200 performers with high-resolution note-level MIDI/MusicXML alignment. Hugging Face v1.1 includes audio and declares MIT license. Scientifically this is the strongest current lead because it is real, polyphonic and large enough for the frozen evidence-volume requirement to be plausible.
+Public metadata describes GAPS (Guitar-Aligned Performance Scores) as ~14 hours / 300 real solo classical-guitar performances from >200 performers with high-resolution note-level MIDI/MusicXML alignment. Hugging Face v1.1 includes audio, exposes audio/match/midi/musicxml resources, is ~16.4 GB, and its dataset-card metadata declares MIT.
 
-Unresolved pre-audit gate: the original audio provenance is public performance audio linked to YouTube. The dataset-level MIT declaration may not necessarily grant independent rights to every underlying performance recording. Resolve rights/provenance before choosing GAPS. Also perform a branch/checkpoint contamination audit for any prior GAPS truth/correctness use; prior inspection of Xavier Riley's separate monophonic model does not itself establish corpus contamination.
+Fresh review also confirms the older Zenodo release distributed aligned MIDI/scores/downbeats while pointing to YouTube URLs for audio/video and recommends the later Hugging Face release that includes audio.
+
+This does **not** resolve the pre-audit rights gate: no separate surfaced statement explicitly grants redistribution/relicensing rights for every underlying third-party performance recording. Do not assume repository-level MIT metadata clears independent audio copyright/provenance. Do not download/audit GAPS audio yet.
+
+Contamination review remains incomplete: exact-corpus-name GitHub code search returned no indexed hit and generic `GAPS` hits were unrelated analyzer variables, but repository search is not a guaranteed branch-history audit of `songsterr-fresh-pipeline-v1`. A branch-specific contamination check is still required before selection.
 
 ### Backup: EGFxSet
 
 Real electric-guitar hardware recordings, stable Zenodo release, CC BY 4.0/open-access description, 8,970 five-second files. However only 690 unique clean tones exist and public metadata does not establish high-resolution onset times. It is probably too narrow/duplicative for the official admission holdout unless those issues can be resolved pre-correctness.
 
-### Metadata lead: GIHME
+### Metadata lead: GIHME — PAPER FOUND, DATASET STILL UNRESOLVED
 
-Public paper metadata describes ~10 hours of richly annotated real hexaphonic-guitar improvisations with note/technique/tuning/effect annotations. Actual dataset package location, license and exact annotation format remain unresolved.
+Public metadata describes ~10 hours of richly annotated real hexaphonic-guitar improvisations with note/technique/tuning/effect annotations. The surfaced Zenodo record `6798338` is definitively the conference paper only (`79.pdf`, ~680.6 kB), not the underlying dataset. Dataset package location, license, exact annotation timing representation and immutable audio/reference identities remain unresolved.
 
 Explicit exclusions: GuitarSet (V3 revealed), IDMT (V4 revealed), Guitar-TECHS (outcome C), Slakh/SynthTab (synthetic), GuitarJam (no surfaced note-level truth).
 
 ## NEXT ALLOWED ACTION
 
-1. Resolve GAPS audio rights/provenance and exact current v1.1 artifact/file identities without correctness.
-2. Audit current branch/checkpoints for prior GAPS corpus truth/correctness use.
-3. Resolve GIHME dataset location/license/annotation representation.
+1. Continue GAPS rights/provenance research, seeking explicit audio redistribution/reuse authority rather than relying solely on repository-level MIT metadata.
+2. Perform a branch-specific contamination audit of `songsterr-fresh-pipeline-v1` for prior GAPS corpus truth/correctness use.
+3. Resolve GIHME dataset location/license/annotation representation; do not treat the paper record as the dataset.
 4. Keep EGFxSet as a narrow backup and determine whether a fixed/preregisterable note onset exists.
 5. Select one replacement only after rights/provenance/untouched status are defensible.
 6. Freeze a corpus-specific reference-blind inventory/alignment preregistration before downloading/auditing real audio/reference pairs.
@@ -123,4 +127,4 @@ Explicit exclusions: GuitarSet (V3 revealed), IDMT (V4 revealed), Guitar-TECHS (
 
 ## FRESH-CHAT HANDOFF
 
-Continue only on `songsterr-fresh-pipeline-v1` and read this file first. Guitar-TECHS audit is complete and immutable with outcome C; do not score or rescue it. V6 method and scoring framework remain frozen and no V6 real-corpus correctness has been exposed. Current work is replacement-holdout metadata/license/structure research, with GAPS the strongest scientific lead but blocked pending audio-rights/provenance and contamination review. No candidate may be exposed to correctness before a new corpus-specific preregistered reference-blind audit and immutable suitable result.
+Continue only on `songsterr-fresh-pipeline-v1` and read this file first. Guitar-TECHS audit is complete and immutable with outcome C; do not score or rescue it. V6 method and scoring framework remain frozen and no V6 real-corpus correctness has been exposed. Current work is replacement-holdout metadata/license/structure research. GAPS remains the strongest scientific lead but is still blocked on explicit audio-rights/provenance and a branch-specific contamination audit. GIHME's surfaced Zenodo item is only the paper, not the dataset. No candidate may be exposed to correctness before a new corpus-specific preregistered reference-blind audit and immutable suitable result.
