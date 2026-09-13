@@ -158,6 +158,8 @@ Observed job state at this checkpoint:
 
 The run has therefore crossed all pre-scoring identity/runtime/holdout gates successfully and is currently inside the frozen two-phase runner. The connector does not expose a live job log while the job is in progress, so no partial track-by-track output is being used or interpreted. No downstream result-verification or artifact-upload step has started at this checkpoint.
 
+Fresh-chat continuation reinspection on 2026-09-13 confirmed the same fail-closed state: run `34748789583` remains `in_progress`, job `103701492462` remains inside step 10, steps 11–12 have not started, and no `flgd-v5-official-correctness-result` artifact is present. No partial correctness output was inspected or interpreted and no rerun/dispatch was initiated.
+
 Do not dispatch or trigger another copy while run `34748789583` exists. If this run reaches correctness, no result-seeking rerun is permitted. If it fails before correctness exposure, diagnose and checkpoint that infrastructure failure fail-closed before any technical retry decision.
 
 ## NEXT ALLOWED ACTION
