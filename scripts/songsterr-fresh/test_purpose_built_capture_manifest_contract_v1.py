@@ -250,7 +250,7 @@ def test_noncontiguous_attempt_numbers_fail_contract() -> None:
     manifest["attempts"][1]["attemptNumber"] = 3
     result = module.validate_manifest(manifest)
     assert result["contractValid"] is False, result
-    assert "NONCONTIGUOUS_ATTEMPT_NUMBERS_IN_SLOT:slot-1:1,3" in result["errors"], result
+    assert "NONCONTIGUOUS_ATTEMPT_NUMBERS_IN_SLOT:slot-1:[1, 3]!=[1, 2]" in result["errors"], result
 
 
 def test_reversed_attempt_timestamps_fail_contract() -> None:
