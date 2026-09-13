@@ -81,6 +81,7 @@ Before any selected corpus media access, freeze a corpus-specific reference-blin
 - `docs/checkpoints/SONGSTERR_FRESH_V6_REPLACEMENT_HOLDOUT_METADATA_SEARCH.md` — `64d9516d0efbba380769bd6cc52f93572393180a`.
 - `docs/checkpoints/SONGSTERR_FRESH_V6_REPLACEMENT_HOLDOUT_SEARCH_UPDATE_2026-09-13.md` — `e8d8080c6944038a48150c9c42711a16cf92da6b`.
 - `docs/checkpoints/SONGSTERR_FRESH_AGPTSET_RIGHTS_REVIEW_2026-09-13.md` — `5f4b9c6042eba77225eb5f146fdd5c73c3bee5b3`.
+- `docs/checkpoints/SONGSTERR_FRESH_AGPTSET_REFERENCE_PROVENANCE_REVIEW_2026-09-13.md` — `8cb52041dec0782d5791b8bf5108596c407fc6b2`.
 - `docs/checkpoints/SONGSTERR_FRESH_MULTIMODAL_ELECTRIC_GUITAR_METADATA_REVIEW_2026-09-13.md` — `1f64818fa63327ca17c23586cc79017c74b83446`.
 - `docs/checkpoints/SONGSTERR_FRESH_GIHME_METADATA_RELEASE_REVIEW_2026-09-13.md` — `1c440f0e9a4e8281c49cf90877e786b5c2c9d9cd`.
 - `docs/checkpoints/SONGSTERR_FRESH_MMIP_METADATA_RIGHTS_REVIEW_2026-09-13.md` — `dd44674afa5b1d394cf760a192bbb1a2cae67b83`.
@@ -93,11 +94,25 @@ Before any selected corpus media access, freeze a corpus-specific reference-blin
 - `docs/checkpoints/SONGSTERR_FRESH_V6_RIGHTS_MIRROR_FRONTIER_RECHECK_2026-09-13.md` — `23d55751561b7102e6e726a6adc8a419511e67dd`.
 - `docs/checkpoints/SONGSTERR_FRESH_V6_PURPOSE_BUILT_EXTERNAL_HOLDOUT_OPTION_2026-09-13.md` — latest `dde8aa9cc97d8cbd9efbd06cc4d8c8b00d45fda4`.
 - `docs/checkpoints/SONGSTERR_FRESH_V6_2026_LITERATURE_FRONTIER_SWEEP_2026-09-13.md` — `ac6ac23f25c8f6f6c225464abc92b0988d064dd8`.
+- `docs/checkpoints/SONGSTERR_FRESH_V6_INSTITUTIONAL_TECHNIQUE_FRONTIER_2026-09-13.md` — `95eec317ead304b9e03a2139b72e15a9a4efeff8`.
 
 ## CANDIDATE / FRONTIER STATUS
 
-### AG-PT-set — strongest scientific lead, RIGHTS BLOCKED
-Zenodo `10159492`, ~6.7 GB / 15 h 55 m real acoustic guitar, 32,592 musician-annotated millisecond onset events plus released pitch metadata. Primary Zenodo data record still does not surface an explicit permissive dataset-file license. Paper CC BY licensing is not treated as a license to the performance archive. Do not download/audit until authoritative data-file rights or explicit rights-holder permission clear this use. If rights clear, run untouched-history screening before media access.
+### AG-PT-set — REJECTED: AUDIO-DERIVED REFERENCE + RIGHTS UNRESOLVED
+
+Latest immutable reference review:
+`docs/checkpoints/SONGSTERR_FRESH_AGPTSET_REFERENCE_PROVENANCE_REVIEW_2026-09-13.md`
+commit `8cb52041dec0782d5791b8bf5108596c407fc6b2`.
+
+AG-PT-set remains scientifically substantial (~15 h 55 m total; ~10 h 04 m labeled; 32,592 labeled note events), but its Audio Mostly 2024 methodology establishes that the released onset reference is **constructed from the recorded audio**:
+- candidate labels were seeded with `aubioonset`;
+- five musician annotators inspected the waveform + high-resolution Mel spectrogram in Audacity;
+- they added missed onsets, removed false positives and visually aligned labels to audio onsets at millisecond zoom;
+- known note number/pitch/sequence plus a pitch detector were used to identify/correct annotation mistakes.
+
+That can produce excellent MIR annotations, but it violates the frozen V6 requirement for a separately captured independent performed note-level onset+pitch stream. The primary Zenodo archive also still lacks an explicit permissive dataset-file license for this product-validation use.
+
+Disposition: reject before media access. Even future rights clearance alone cannot make AG-PT-set eligible. Reconsider only if an authoritative separately captured contemporaneous performed note-level onset+pitch stream exists; a better audio-derived/manual annotation does not cure provenance.
 
 ### GAPS — RIGHTS BLOCKED
 ~14 h, 300 performances, >200 performers, high-resolution MIDI. Official project terms restrict to non-commercial research and impose distribution/permission limits. A Hugging Face mirror tagged `MIT` does not override authoritative corpus terms. Do not use absent written permission clearing product-validation use.
@@ -138,28 +153,28 @@ Real clean DI from 240 performed tablatures, but authoritative dataset-audio rig
 - NSynth / Slakh2100: sampler/VST rendered, not real performed guitar.
 - URMP: no guitar population.
 - GuitarJam: clean CC0 DI but no note truth.
-- `guitar-fretboard-notes`: 390 nominal notes only, no independent performed onset timestamps and below any plausible >=1,000-positive capacity.
+- `guitar-fretboard-notes`: 390 nominal notes only, no independent performed onset timestamps and below plausible >=1,000-positive capacity.
 - Semantic Timbre Dataset: effect expansion of the same ~690 EGFxSet performances, not new evidence.
 - `guitar-chord-mix`: derivative mixture of exposed/ineligible corpora plus synthetic/noise material.
 - MedleyDB / MUSDB18 / MoisesDB: rights and/or guitar note-reference semantics fail.
 - UT Austin/Kaggle guitar transcription set: CC BY-NC-SA; frame/fret labels rather than independent performed note-level onset+pitch truth.
+- MagCIL `guitar_style_dataset`: 549 real technique recordings plus MuseScore exercises, but technique/exercise labels are not independent performed note truth; repository MIT license explicitly applies to software and does not establish permissive media rights.
+- University of Manchester/NOVARS AI Guitar Assistant: 61.93 GB multimodal data from 21 guitarists, but published capture design is audio/video/Myo biometrics rather than a contemporaneous independent note-level MIDI/onset stream; performance data also remain outside the published analysis/release.
+- Mendeley/Figshare fret-note/instrument-class collections reviewed are too small/narrow and/or lack independent performed onset truth; Portuguese field-recording instrument corpus is CC BY-NC-SA and class-level only.
 
 ### Geoff Bremner Multimodal Music Corpus — PRIVATE-LICENSE LEAD ONLY
 Cleaner single-rights-holder story and advertised commercial licensing, but public material has not established guitar-specific contemporaneous performed-MIDI/onset provenance, full-corpus evidence volume, stable full-corpus identities, or exact rights for this experiment. Do not acquire media yet.
 
-## 2026 LITERATURE FRONTIER — NO NEW QUALIFYING PUBLIC CORPUS
-
-Immutable sweep:
-`docs/checkpoints/SONGSTERR_FRESH_V6_2026_LITERATURE_FRONTIER_SWEEP_2026-09-13.md`
-commit `ac6ac23f25c8f6f6c225464abc92b0988d064dd8`.
+## 2026 LITERATURE / INSTITUTIONAL FRONTIER
 
 Newest reviewed work still reuses known/closed sources or synthetic derivatives:
-- TART (2026-09-10) evaluates GuitarSet, EGDB and noisy derivatives; no new independent real-performance holdout.
+- TART (2026-09-10) evaluates GuitarSet, EGDB and noisy derivatives; no new independent holdout.
 - Playability-Aware / Noise2Fret (2026-08-31) uses GuitarSet plus GOAT. **GOAT/reference scoring remains archived and is not reopened by this observation.**
-- EG-VAE (2026-08-06) does not establish a new real-guitar corpus with independent performed note-level onset+pitch truth for this experiment.
-- current alternate-tuning work reviewed uses large synthetic/VST-rendered material rather than a qualifying real-performance corpus.
+- EG-VAE (2026-08-06) does not establish a new real-guitar corpus with independent performed note-level onset+pitch truth.
+- current alternate-tuning work reviewed uses synthetic/VST-rendered material.
+- targeted institutional / Mendeley / Figshare searches have not surfaced a qualifying independently note-referenced real-guitar corpus.
 
-Generic public repositories plus the current 2026 transcription literature are therefore close to exhausted under the frozen gates. This is an evidence-bounded search result, not proof that no corpus exists.
+Generic public repositories, current transcription literature and targeted institutional technique datasets are now close to exhausted under the frozen gates. This is an evidence-bounded result, not proof that no qualifying corpus exists.
 
 ## PURPOSE-BUILT UNTOUCHED HOLDOUT — DESIGN OPTION ONLY
 
@@ -167,7 +182,7 @@ Latest immutable design checkpoint:
 `docs/checkpoints/SONGSTERR_FRESH_V6_PURPOSE_BUILT_EXTERNAL_HOLDOUT_OPTION_2026-09-13.md`
 commit `dde8aa9cc97d8cbd9efbd06cc4d8c8b00d45fda4`.
 
-A purpose-built corpus is a scientifically plausible fallback if public/private licensing cannot produce a clean holdout. It is **not selected and no acquisition is authorized**.
+A purpose-built corpus is now a materially stronger fallback because even AG-PT-set's precise labels fail independence. It is **not selected and no acquisition is authorized**.
 
 Preferred architecture if ever chosen:
 - real guitar;
@@ -175,9 +190,9 @@ Preferred architecture if ever chosen:
 - reference = simultaneous independent physical fret-position + trigger/dynamics sensor path;
 - current feasibility example only: Industrial Radio Fretsense/Solange 6.
 
-Important caveat: physical fret sensing strengthens pitch identity, but onset timing is still sensor/algorithm derived through piezo-trigger logic with configurable trigger/filter/decay behavior. It is not presumed perfect ground truth. A future capture preregistration would require a separate non-holdout calibration phase, then frozen/hashed hardware, firmware, trigger/filter/decay settings and geometry before admitted takes. Raw MIDI must survive the same fail-closed structural audit (zero orphan note-ons, zero orphan note-offs, zero same-key overlaps under frozen semantics). Piezo channels may be diagnostics only if preregistered; never alternate scoring audio or a rescue path.
+Important caveat: physical fret sensing strengthens pitch identity, but onset timing remains sensor/algorithm derived through piezo-trigger logic with configurable trigger/filter/decay behavior. It is not presumed perfect truth. A future capture preregistration would require a separate non-holdout calibration phase, then frozen/hashed hardware, firmware, trigger/filter/decay settings and geometry before admitted takes. Raw MIDI must pass a fail-closed structural audit with zero orphan note-ons, zero orphan note-offs and zero same-key overlaps under frozen semantics. Piezo channels may be diagnostics only if preregistered; never alternate scoring audio or a rescue path.
 
-Jamstik-style six-channel hexaphonic MIDI + separate audio is a weaker fallback because current vendor documentation acknowledges extra/missed MIDI notes and channel-preservation pitfalls.
+Jamstik-style six-channel hexaphonic MIDI + separate audio is a weaker fallback because vendor documentation acknowledges extra/missed MIDI notes and channel-preservation pitfalls.
 
 The purpose-built design requires original/public-domain/rightscleared material, explicit product-validation rights, zero model access during collection, no model-informed retakes, raw reference preservation, frozen capture-QA rules and the same five scoring categories. A provisional >=20,000 raw-reference-note / multi-player collection preference is planning only and does **not** change the frozen >=1,000 V6-positive gate.
 
@@ -185,8 +200,8 @@ No purchase, deposit, vendor/performer contact, hiring, recording or purpose-bui
 
 ## NEXT ALLOWED ACTION
 
-1. Continue metadata-only search outside generic guitar indexes, emphasizing primary institutional releases and rights-holder-owned/private corpora.
-2. Recheck AG-PT-set only for authoritative data-file rights changes/permission pathways; do not download it under current evidence.
+1. Continue metadata-only search only where it can add new information: rights-holder/private corpora, future institutional releases with independent note sensing, or purpose-built protocol/hardware feasibility.
+2. Do not pursue AG-PT-set as a V6 holdout under its current audio-derived reference; rights clarification alone is no longer sufficient.
 3. Keep Geoff Bremner only as a private-license metadata lead pending reference semantics, volume, identities and exact rights.
 4. Keep Multimodal Electric Guitar Data and EGFxSet as non-audit-ready backups under their existing reference limitations.
 5. Continue purpose-built **protocol/hardware metadata** research if useful, but no procurement/contact/capture without explicit user authorization.
@@ -197,12 +212,12 @@ No purchase, deposit, vendor/performer contact, hiring, recording or purpose-bui
 ## STILL FORBIDDEN
 
 - any Guitar-TECHS V6 correctness, anomaly repair/exclusion or rescue binding;
-- downloading/auditing AG-PT-set under current unestablished data-file rights;
+- AG-PT-set V6 acquisition/audit/scoring under its current audio-derived onset reference, even if rights alone later clear;
 - GAPS use absent written permission clearing official restrictions; mirror tags do not supersede source terms;
 - EGSet12 scoring/binding/history rewriting;
 - IDMT-SMT-Audio-Effects / GUITAR-FX-DIST use under current NC/ND terms;
 - EG-Solo or G&N/TENT use under current recording-rights evidence;
-- EG-IPT, EGDB/EGDB-PG, GuitarDuets, MMIP or GIHME rescue through evaluated-audio-derived/reconstructed truth;
+- EG-IPT, EGDB/EGDB-PG, GuitarDuets, MMIP, GIHME or MagCIL rescue through evaluated-audio-derived/reconstructed truth;
 - counting synthetic renders, effect variants, duplicates or derivative mixtures as independent real performances;
 - reopening GOAT/reference scoring merely because current papers use GOAT;
 - V5 FLGD rerun/post-result tuning or using revealed FLGD/IDMT/GuitarSet/protected-song correctness to tune V6;
@@ -219,4 +234,4 @@ No purchase, deposit, vendor/performer contact, hiring, recording or purpose-bui
 
 ## FRESH-CHAT HANDOFF
 
-Continue only on `songsterr-fresh-pipeline-v1` and read this file first. V6 method/scoring remain frozen and no replacement-holdout V6 correctness has been exposed. Guitar-TECHS is closed outcome C before correctness. Active work is metadata-only replacement-holdout discovery, now focused beyond generic public indexes because current 2026 literature also reuses known/closed or synthetic corpora. AG-PT-set remains scientifically strongest but rights-blocked; GAPS remains officially restricted despite a permissive mirror tag; Geoff Bremner is only a private-license lead; Multimodal Electric Guitar Data and EGFxSet remain reference-insufficient backups. A purpose-built untouched holdout is documented as a design-only fallback, with physical fret/trigger sensing + separate DI preferred, but sensor-derived onset MIDI still requires calibration frozen before holdout collection and a zero-anomaly reference-blind audit. No purchase, hiring, contact, recording or acquisition is authorized. Do not reopen archived V143/Gomyway or GOAT/reference scoring unless the user explicitly asks.
+Continue only on `songsterr-fresh-pipeline-v1` and read this file first. V6 method/scoring remain frozen and no replacement-holdout V6 correctness has been exposed. Guitar-TECHS is closed outcome C before correctness. **AG-PT-set is now also rejected before media access, not merely rights-blocked:** its paper explicitly constructs precise onset labels from the recordings using `aubioonset` plus Audacity waveform/spectrogram inspection and human correction, so it fails the frozen independent-reference gate; rights clearance alone cannot cure that. GAPS remains officially restricted despite a permissive mirror tag; Geoff Bremner is only a private-license lead; Multimodal Electric Guitar Data and EGFxSet remain reference-insufficient backups. Public repositories, 2026 literature and institutional technique datasets are close to exhausted. A purpose-built untouched holdout is documented as a design-only fallback, with physical fret/trigger sensing + separate DI preferred, but sensor-derived onset MIDI still requires calibration frozen before holdout collection and a zero-anomaly reference-blind audit. No purchase, hiring, contact, recording or acquisition is authorized. Do not reopen archived V143/Gomyway or GOAT/reference scoring unless the user explicitly asks.
