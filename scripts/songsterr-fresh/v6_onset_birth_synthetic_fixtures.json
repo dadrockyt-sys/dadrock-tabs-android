@@ -1,0 +1,28 @@
+{
+  "contract": "songsterr-fresh-v6-onset-birth-synthetic-fixtures-v1",
+  "fixtures": [
+    {"id":"clean_low_m40","durationSeconds":1.0,"onsetSeconds":0.4,"selectedMidi":40,"events":[{"midi":40,"onsetSeconds":0.4}],"expectedClassification":"onset-birth-corroborated-candidate"},
+    {"id":"clean_mid_m64","durationSeconds":1.0,"onsetSeconds":0.4,"selectedMidi":64,"events":[{"midi":64,"onsetSeconds":0.4}],"expectedClassification":"onset-birth-corroborated-candidate"},
+    {"id":"clean_high_m88","durationSeconds":1.0,"onsetSeconds":0.4,"selectedMidi":88,"events":[{"midi":88,"onsetSeconds":0.4}],"expectedClassification":"onset-birth-corroborated-candidate"},
+    {"id":"detune_plus25_m64","durationSeconds":1.0,"onsetSeconds":0.4,"selectedMidi":64,"events":[{"midi":64,"cents":25,"onsetSeconds":0.4}],"expectedClassification":"onset-birth-corroborated-candidate"},
+    {"id":"detune_minus25_m64","durationSeconds":1.0,"onsetSeconds":0.4,"selectedMidi":64,"events":[{"midi":64,"cents":-25,"onsetSeconds":0.4}],"expectedClassification":"onset-birth-corroborated-candidate"},
+    {"id":"attack_noise_true_m64","durationSeconds":1.0,"onsetSeconds":0.4,"selectedMidi":64,"seed":404,"events":[{"midi":64,"onsetSeconds":0.4}],"transient":{"onsetSeconds":0.4,"amplitude":0.35,"durationSeconds":0.025},"expectedClassification":"onset-birth-corroborated-candidate"},
+    {"id":"already_sounding_m64","durationSeconds":1.0,"onsetSeconds":0.4,"selectedMidi":64,"events":[{"midi":64,"onsetSeconds":0.1}],"expectedClassification":"not-onset-birth-corroborated"},
+    {"id":"octave_alias_sel72_actual60","durationSeconds":1.0,"onsetSeconds":0.4,"selectedMidi":72,"events":[{"midi":60,"onsetSeconds":0.4}],"expectedClassification":"not-onset-birth-corroborated"},
+    {"id":"octave_alias_sel79_actual67","durationSeconds":1.0,"onsetSeconds":0.4,"selectedMidi":79,"events":[{"midi":67,"onsetSeconds":0.4}],"expectedClassification":"not-onset-birth-corroborated"},
+    {"id":"selected64_enters_over_existing60","durationSeconds":1.0,"onsetSeconds":0.4,"selectedMidi":64,"events":[{"midi":60,"onsetSeconds":0.1},{"midi":64,"onsetSeconds":0.4}],"expectedClassification":"onset-birth-corroborated-candidate"},
+    {"id":"simultaneous_dyad_sel60","durationSeconds":1.0,"onsetSeconds":0.4,"selectedMidi":60,"events":[{"midi":60,"onsetSeconds":0.4},{"midi":64,"onsetSeconds":0.4}],"expectedClassification":"not-onset-birth-corroborated"},
+    {"id":"simultaneous_dyad_sel64","durationSeconds":1.0,"onsetSeconds":0.4,"selectedMidi":64,"events":[{"midi":60,"onsetSeconds":0.4},{"midi":64,"onsetSeconds":0.4}],"expectedClassification":"onset-birth-corroborated-candidate"},
+    {"id":"simultaneous_triad_sel60","durationSeconds":1.0,"onsetSeconds":0.4,"selectedMidi":60,"events":[{"midi":60,"onsetSeconds":0.4},{"midi":64,"onsetSeconds":0.4},{"midi":67,"onsetSeconds":0.4}],"expectedClassification":"onset-birth-corroborated-candidate"},
+    {"id":"simultaneous_triad_sel64","durationSeconds":1.0,"onsetSeconds":0.4,"selectedMidi":64,"events":[{"midi":60,"onsetSeconds":0.4},{"midi":64,"onsetSeconds":0.4},{"midi":67,"onsetSeconds":0.4}],"expectedClassification":"onset-birth-corroborated-candidate"},
+    {"id":"simultaneous_triad_sel67","durationSeconds":1.0,"onsetSeconds":0.4,"selectedMidi":67,"events":[{"midi":60,"onsetSeconds":0.4},{"midi":64,"onsetSeconds":0.4},{"midi":67,"onsetSeconds":0.4}],"expectedClassification":"onset-birth-corroborated-candidate"},
+    {"id":"neighbor_sel60_actual61","durationSeconds":1.0,"onsetSeconds":0.4,"selectedMidi":60,"events":[{"midi":61,"onsetSeconds":0.4}],"expectedClassification":"not-onset-birth-corroborated"},
+    {"id":"reattack_m64","durationSeconds":1.0,"onsetSeconds":0.4,"selectedMidi":64,"events":[{"midi":64,"onsetSeconds":0.1,"amplitude":0.6},{"midi":64,"onsetSeconds":0.4,"amplitude":0.6}],"expectedClassification":"onset-birth-corroborated-candidate"},
+    {"id":"unrelated_transient_only_sel64","durationSeconds":1.0,"onsetSeconds":0.4,"selectedMidi":64,"seed":808,"events":[],"transient":{"onsetSeconds":0.4,"amplitude":0.8,"durationSeconds":0.03},"expectedClassification":"not-onset-birth-corroborated"},
+    {"id":"weak_selected64_under60","durationSeconds":1.0,"onsetSeconds":0.4,"selectedMidi":64,"events":[{"midi":60,"onsetSeconds":0.4,"amplitude":1.0},{"midi":64,"onsetSeconds":0.4,"amplitude":0.15}],"expectedClassification":"not-onset-birth-corroborated"},
+    {"id":"silence","durationSeconds":1.0,"onsetSeconds":0.4,"selectedMidi":64,"events":[],"expectedClassification":"insufficient-evidence"},
+    {"id":"low_noise","durationSeconds":1.0,"onsetSeconds":0.4,"selectedMidi":64,"seed":909,"events":[],"noiseAmplitude":1e-7,"expectedClassification":"insufficient-evidence"},
+    {"id":"truncated_pre_context","durationSeconds":0.4,"onsetSeconds":0.02,"selectedMidi":64,"events":[{"midi":64,"onsetSeconds":0.02}],"expectedClassification":"insufficient-evidence"},
+    {"id":"truncated_post_context","durationSeconds":0.43,"onsetSeconds":0.42,"selectedMidi":64,"events":[{"midi":64,"onsetSeconds":0.42}],"expectedClassification":"insufficient-evidence"}
+  ]
+}
