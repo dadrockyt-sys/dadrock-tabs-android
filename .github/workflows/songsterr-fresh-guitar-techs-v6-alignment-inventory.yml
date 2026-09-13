@@ -1,0 +1,192 @@
+name: Songsterr Fresh Guitar-TECHS V6 Alignment Inventory
+
+on:
+  push:
+    branches:
+      - songsterr-fresh-pipeline-v1
+    paths:
+      - '.github/workflows/songsterr-fresh-guitar-techs-v6-alignment-inventory.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+env:
+  AUDIT_SOURCE_SHA: 77510e2e797915166a5737750769824e44c49e89
+  ZENODO_RECORD: '14963133'
+
+jobs:
+  alignment-inventory:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 300
+    env:
+      CUDA_VISIBLE_DEVICES: ''
+    steps:
+      - name: Checkout execution-infrastructure branch
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Bind repository to frozen audit source
+        shell: bash
+        run: |
+          set -euo pipefail
+          git fetch --no-tags origin "$AUDIT_SOURCE_SHA"
+          git checkout --detach "$AUDIT_SOURCE_SHA"
+          test "$(git rev-parse HEAD)" = "$AUDIT_SOURCE_SHA"
+          test -z "$(git status --porcelain)"
+          echo "GUITAR_TECHS_AUDIT_SOURCE_BOUND=$AUDIT_SOURCE_SHA"
+
+      - name: Set up Python 3.10
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.10'
+
+      - name: Install pinned CPU audit runtime
+        shell: bash
+        run: |
+          set -euo pipefail
+          python -m pip install --upgrade pip
+          python -m pip install \
+            'numpy==1.26.4' \
+            'scipy==1.15.3' \
+            'soundfile==0.13.1' \
+            'mido==1.3.3'
+          python - <<'PY'
+          import platform
+          from importlib.metadata import version
+          assert platform.python_version_tuple()[:2] == ('3', '10')
+          assert version('numpy') == '1.26.4'
+          assert version('scipy') == '1.15.3'
+          assert version('soundfile') == '0.13.1'
+          assert version('mido') == '1.3.3'
+          print('GUITAR_TECHS_AUDIT_PINNED_RUNTIME_OK')
+          PY
+
+      - name: Re-run controlled alignment audit tests
+        shell: bash
+        run: |
+          set -euo pipefail
+          python scripts/songsterr-fresh/test_external_guitar_techs_v6_alignment_inventory.py
+
+      - name: Verify reference-blind audit boundary
+        shell: bash
+        run: |
+          set -euo pipefail
+          python - <<'PY'
+          from pathlib import Path
+          files = [
+              Path('scripts/songsterr-fresh/external_guitar_techs_v6_alignment_inventory.py'),
+              Path('scripts/songsterr-fresh/merge_guitar_techs_v6_alignment_inventory.py'),
+          ]
+          forbidden_import_fragments = (
+              'basic_pitch',
+              'onset_birth_corroboration_v6',
+              'independent_pitch_corroboration',
+          )
+          for path in files:
+              text = path.read_text(encoding='utf-8').lower()
+              for fragment in forbidden_import_fragments:
+                  assert f'import {fragment}' not in text
+                  assert f'from {fragment}' not in text
+          print('GUITAR_TECHS_REFERENCE_BLIND_AUDIT_BOUNDARY_OK')
+          PY
+
+      - name: Download and audit exact Guitar-TECHS v1 packages sequentially
+        shell: bash
+        run: |
+          set -euo pipefail
+          RESULTS="$RUNNER_TEMP/guitar-techs-v6-audit-results"
+          mkdir -p "$RESULTS"
+
+          packages=(
+            P1_chords.zip
+            P1_scales.zip
+            P1_singlenotes.zip
+            P1_techniques.zip
+            P2_chords.zip
+            P2_scales.zip
+            P2_singlenotes.zip
+            P2_techniques.zip
+            P3_music.zip
+          )
+          md5s=(
+            be9ef8bbdceb1912d565254e607a6d94
+            9c0b98e8fb42a522df727ea8bf545e4f
+            ca0c4674dde3805574685a313f7c39eb
+            18634a41a6db5a8de10d07eb3122a872
+            eb6f74dd19162237189281688ad7ad2e
+            96664853872f51e5f8aa4447313b7cf5
+            40fbf03d8b04bb2cf42df20f36dc2254
+            f4189251ce50be25f06a173b2c2bba00
+            071ba80aecf00f4a31fbd167b3f22198
+          )
+
+          for i in "${!packages[@]}"; do
+            name="${packages[$i]}"
+            expected="${md5s[$i]}"
+            archive="$RUNNER_TEMP/$name"
+            output="$RESULTS/${name%.zip}.json"
+            url="https://zenodo.org/records/$ZENODO_RECORD/files/$name?download=1"
+            echo "GUITAR_TECHS_PACKAGE_START $((i+1))/${#packages[@]} $name"
+            curl --location --fail --silent --show-error \
+              --retry 5 --retry-delay 5 --retry-all-errors \
+              --output "$archive" "$url"
+            printf '%s  %s\n' "$expected" "$archive" | md5sum --check --status
+            python scripts/songsterr-fresh/external_guitar_techs_v6_alignment_inventory.py \
+              --archive "$archive" \
+              --package-name "$name" \
+              --expected-md5 "$expected" \
+              --output "$output"
+            rm -f "$archive"
+            echo "GUITAR_TECHS_PACKAGE_COMPLETE $((i+1))/${#packages[@]} $name"
+            df -h "$RUNNER_TEMP"
+          done
+
+          echo "GUITAR_TECHS_RESULTS_DIR=$RESULTS" >> "$GITHUB_ENV"
+
+      - name: Merge frozen inventory and alignment result
+        shell: bash
+        run: |
+          set -euo pipefail
+          MERGED="$RUNNER_TEMP/guitar-techs-v6-alignment-inventory.json"
+          python scripts/songsterr-fresh/merge_guitar_techs_v6_alignment_inventory.py \
+            --input-dir "$GUITAR_TECHS_RESULTS_DIR" \
+            --output "$MERGED"
+          echo "GUITAR_TECHS_MERGED_RESULT=$MERGED" >> "$GITHUB_ENV"
+
+      - name: Verify fail-closed audit result boundary
+        shell: bash
+        run: |
+          set -euo pipefail
+          python - "$GUITAR_TECHS_MERGED_RESULT" <<'PY'
+          import hashlib, json, pathlib, sys
+          path = pathlib.Path(sys.argv[1])
+          payload = json.loads(path.read_text(encoding='utf-8'))
+          assert payload['zenodoRecord'] == '14963133'
+          assert payload['zenodoVersion'] == 'v1'
+          assert payload['packageCount'] == 9
+          policy = payload['policyBoundary']
+          assert policy['basicPitchInvoked'] is False
+          assert policy['v6Invoked'] is False
+          assert policy['correctnessComputed'] is False
+          assert policy['protectedSongUsed'] is False
+          assert policy['modelValidationComplete'] is False
+          assert policy['customerEligibleEvents'] == 0
+          assert policy['mayAdvanceDelivery'] is False
+          assert policy['durationAuthorityChanged'] is False
+          digest = hashlib.sha256(path.read_bytes()).hexdigest()
+          print(f'GUITAR_TECHS_MERGED_RESULT_SHA256={digest}')
+          print(f"GUITAR_TECHS_ALIGNMENT_DECISION={payload['alignmentDecision']}")
+          print('GUITAR_TECHS_FAIL_CLOSED_AUDIT_BOUNDARY_OK')
+          PY
+
+      - name: Upload immutable audit outputs
+        uses: actions/upload-artifact@v4
+        with:
+          name: guitar-techs-v6-alignment-inventory
+          path: |
+            ${{ env.GUITAR_TECHS_RESULTS_DIR }}/*.json
+            ${{ env.GUITAR_TECHS_MERGED_RESULT }}
+          if-no-files-found: error
+          retention-days: 90
