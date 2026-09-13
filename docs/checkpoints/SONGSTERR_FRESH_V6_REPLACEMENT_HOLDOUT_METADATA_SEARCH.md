@@ -41,7 +41,19 @@ Current concerns / unresolved gates:
 - acoustic/classical guitar differs from the desired electric-guitar/DI domain, though V6 itself is guitar-domain rather than electric-only.
 - current branch has prior inspection of Xavier Riley's separate monophonic transcription model (`xavriley/hf_midi_transcription`), but no known GAPS correctness exposure. A branch-wide contamination audit must still be frozen and performed before use.
 
-Current disposition: **scientifically strongest replacement lead, but licensing/audio-provenance review required before any corpus audit.**
+### 2026-09-13 metadata refinement
+
+Fresh public-source review confirms:
+- the current Hugging Face repository explicitly advertises `license: mit` in its dataset-card metadata;
+- the same repository states that v1.1 added the audio and currently exposes `audio/`, `match/`, `midi/`, `musicxml/`, scripts and metadata, with a total repository size of about 16.4 GB;
+- surfaced Hugging Face history shows the v1.1 upload/README update on 2025-09-18, including commit `b4c89a3...` for the README state surfaced by public indexing;
+- the older Zenodo release explicitly says it distributed aligned MIDI/scores/downbeats while providing YouTube URLs for audio/video, and recommends the newer Hugging Face version that includes audio.
+
+This does **not** resolve the rights gate. No separate license notice or provenance statement was surfaced that explicitly says the dataset authors own or obtained redistribution/relicensing rights for every underlying third-party performance recording. Therefore the Hugging Face MIT label must not be interpreted as proven clearance of each audio recording without stronger evidence.
+
+Contamination search note: repository code search for the exact corpus name `Guitar-Aligned Performance Scores` returned no result in the searchable repository index. Generic `GAPS` hits were unrelated variable names in archived analyzer files. This is weak supporting evidence only because GitHub code search is indexed against the repository default branch rather than a guaranteed exhaustive history of `songsterr-fresh-pipeline-v1`; do not treat it as the final contamination audit.
+
+Current disposition: **scientifically strongest replacement lead, but still blocked on audio-rights/provenance and a branch-specific contamination audit. Do not download/audit GAPS audio yet.**
 
 ## Candidate 2 — EGFxSet
 
@@ -74,14 +86,23 @@ Current disposition: **useful cleanly licensed structural backup, but likely too
 
 ## Candidate 3 — GIHME
 
-Public source discovered:
-- https://zenodo.org/records/6798338 (paper record)
+Public sources surfaced:
+- conference-paper Zenodo record: https://zenodo.org/records/6798338
+- University of Mons announcement describing the dataset/paper.
 
-Public metadata describes roughly ten hours of richly annotated real hexaphonic-guitar improvisations with note, playing-technique, tuning and effect-configuration annotations.
+Public metadata describes roughly ten hours of richly annotated real hexaphonic-guitar improvisations with note, playing-technique, tuning and effect-configuration annotations, plus roughly five hours of interviews.
 
-Current blocker: the surfaced Zenodo record is the conference-paper artifact rather than an obvious stable downloadable dataset package. Dataset location, license, exact annotation format and audio/reference identities remain unresolved.
+### 2026-09-13 metadata refinement
 
-Current disposition: **promising metadata lead but not audit-ready.**
+The current surfaced Zenodo record `6798338` is definitively a **conference paper** artifact containing only `79.pdf` (~680.6 kB), not the underlying multi-hour dataset. The University of Mons page likewise points to the paper and describes the dataset, but does not expose a stable dataset archive or license in the surfaced metadata.
+
+Current blockers:
+- actual downloadable dataset package location unresolved;
+- dataset license unresolved;
+- exact note annotation representation/timing resolution unresolved;
+- immutable audio/reference file identities unresolved.
+
+Current disposition: **promising scientific metadata lead but not audit-ready; do not infer a dataset package or license from the paper record.**
 
 ## Explicit exclusions
 
@@ -93,9 +114,9 @@ Current disposition: **promising metadata lead but not audit-ready.**
 
 ## Next metadata-only work
 
-1. Resolve GAPS audio rights/provenance and exact v1.1 file identities without inspecting model correctness.
-2. Search the current research branch/checkpoints for any prior GAPS corpus use or correctness exposure; model-code inspection alone is not automatically corpus contamination, but any GAPS truth/result use would disqualify it.
-3. Resolve GIHME's actual dataset download location/license/annotation representation.
+1. Continue GAPS rights/provenance research, seeking an explicit statement covering redistribution/reuse of the included audio rather than relying solely on repository-level MIT metadata.
+2. Perform a branch-specific contamination audit of `songsterr-fresh-pipeline-v1` for any prior GAPS corpus truth/correctness use before selection.
+3. Resolve GIHME's actual dataset download location/license/annotation representation; the paper record is not sufficient.
 4. Keep EGFxSet as a narrow backup; determine whether a fixed/preregisterable note onset exists in metadata or recording protocol before considering an audit.
 5. Select one candidate only after license/provenance/untouched status are defensible.
 6. Freeze a new corpus-specific reference-blind inventory/alignment preregistration before downloading/auditing real audio-reference pairs.
