@@ -27,21 +27,43 @@ Policy rejection: `docs/checkpoints/SONGSTERR_FRESH_FLGD_V5_POST_RESULT_POLICY_R
 
 FLGD is revealed. Do not rerun/tune V5 on FLGD or use FLGD/IDMT/GuitarSet/protected-song correctness to choose V6 constants.
 
-## V6 — ACTIVE / SYNTHETIC GREEN / NO REAL CORRECTNESS
+## V6 — METHOD + SCORING RULES FROZEN / NO REAL CORRECTNESS
 
-Charter: `docs/checkpoints/SONGSTERR_FRESH_SUCCESSOR_RESEARCH_CHARTER_V6.md`, commit `2b96fba0e3df955e62386691023cb31eeb2d11f6`.
+Successor charter: `docs/checkpoints/SONGSTERR_FRESH_SUCCESSOR_RESEARCH_CHARTER_V6.md`, commit `2b96fba0e3df955e62386691023cb31eeb2d11f6`.
 
-V6 asks whether the selected Basic Pitch MIDI has an **onset-synchronous acoustic birth signature** relative to immediately preceding audio. This is distinct from prior steady-state/post-onset evidence families.
+V6 asks whether the selected Basic Pitch MIDI has an **onset-synchronous acoustic birth signature** relative to immediately preceding audio, distinct from prior steady-state/post-onset evidence.
 
-Leading implementation: `scripts/songsterr-fresh/onset_birth_corroboration_v6.py`, commit `3a6cbb144fec5613ab6350deb6539297d713df28`.
-Frozen synthetic fixtures: `scripts/songsterr-fresh/v6_onset_birth_synthetic_fixtures.json`, commit `ca71eb218ce701686e4a4806813ac84580defa78`.
+Implementation: `scripts/songsterr-fresh/onset_birth_corroboration_v6.py`, implementation commit `3a6cbb144fec5613ab6350deb6539297d713df28`, blob `2b18ef0ee710a6ad5ecb27253b977495db7d6534`.
+Frozen synthetic fixtures commit `ca71eb218ce701686e4a4806813ac84580defa78`.
 
-Controlled CPU synthetic run `34754079541`, job `103715385229`: SUCCESS. 23/23 frozen fixtures matched expected behavior (12 corroborated / 7 not / 4 insufficient). Artifact ID `10316469276`, ZIP SHA-256 `23e3951dc8796206167642bd980aefb4ad030902f8e4b13fc012a458187cb465`, result JSON SHA-256 `4991aaec34f71fbb603865e2fcef47c59a551bf1f675b19d9db8318affa0e01a`.
+Controlled CPU synthetic run `34754079541`, job `103715385229`: SUCCESS; 23/23 fixtures matched expected behavior (12 corroborated / 7 not / 4 insufficient). Immutable result `docs/checkpoints/SONGSTERR_FRESH_V6_SYNTHETIC_RESULT.md`, commit `ed0b597d7e86f1756395445952db1f40b62e9b13`. Synthetic success is not admission evidence.
 
-Immutable V6 synthetic result: `docs/checkpoints/SONGSTERR_FRESH_V6_SYNTHETIC_RESULT.md`, commit `ed0b597d7e86f1756395445952db1f40b62e9b13`.
-Synthetic success is not admission evidence.
+### Final V6 method freeze
 
-Independent public guitar-model path was inspected but not promoted: `xavriley/hf_midi_transcription` commit `96f6797881e9497cbfc8f8e5deccea9c1f2f7adc` documents monophonic optimization/chord limitations. No independent-model inference was run.
+`docs/checkpoints/SONGSTERR_FRESH_V6_FINAL_METHOD_PREREGISTRATION.md`
+Commit `f72be7635fbcadfa6e5a8ec7e193a7b9d47c7f75`.
+
+This freezes the exact V6 implementation/constants before any V6 real-corpus correctness. Any later method amendment is a new successor requiring a new untouched holdout.
+
+### External scoring framework freeze
+
+`docs/checkpoints/SONGSTERR_FRESH_V6_EXTERNAL_SCORING_FRAMEWORK_PREREGISTRATION.md`
+Commit `d46e4c5dbc35b907b71c0608a602c7c4db0d6abc`.
+
+Frozen before the Guitar-TECHS alignment A/B/C outcome:
+- DI-only future scoring path if the audit approves Guitar-TECHS;
+- canonical mono 44.1-kHz audio path;
+- unchanged Basic Pitch 0.4.0 CPU settings: MIDI 40..88, onset 0.5, frame 0.3, min note length 127.7 ms, no multiple pitch bends, melodia trick true;
+- every Basic Pitch event preserved/classified exactly once;
+- only `onset-birth-corroborated-candidate` is positive;
+- deterministic per-performance maximum-cardinality matching, onset <=50 ms inclusive, pitch <=50 cents inclusive, durations ignored;
+- one-sided 95% Wilson LB with z `1.6448536269514722`;
+- pooled positives >=1000 and Wilson LB >=0.9900;
+- player/category strata with >=100 positives require point precision >=0.9500;
+- full-population reference-blind Phase 1 before Phase-2 correctness reveal;
+- one official holdout run, immutable result before interpretation, separate policy review.
+
+The active alignment audit may now bind only immutable population/lag identities; it cannot change V6, Basic Pitch settings, audio path, matcher, tolerances, uncertainty or gates.
 
 ## GUITAR-TECHS V6 HOLDOUT PREPARATION
 
@@ -49,42 +71,34 @@ Leading candidate: Guitar-TECHS Zenodo record `14963133`, version `v1`. Public m
 
 Frozen reference-blind audit preregistration: `docs/checkpoints/SONGSTERR_FRESH_GUITAR_TECHS_V6_ALIGNMENT_INVENTORY_PREREGISTRATION.md`, commit `29818b9bfcb11b0da2b3e9efb57c5f2cd51193ae`.
 
-The audit freezes **DI (`audio/directinput`)** as the only candidate future scoring audio path. It may inspect archive identity, structure, WAV/MIDI structure and DI↔MIDI alignment only. It MUST NOT invoke Basic Pitch or V6 or compute correctness.
+The audit freezes **DI (`audio/directinput`)** as the only candidate future scoring path and forbids Basic Pitch/V6/correctness.
 
-Audit implementation: `scripts/songsterr-fresh/external_guitar_techs_v6_alignment_inventory.py`, implementation commit `0d7d57675694946e8a156b5c8e53fc2ae0347341`.
-Merger: `scripts/songsterr-fresh/merge_guitar_techs_v6_alignment_inventory.py`, commit `5b2b7871844d7b7ccac6d50f56f0b0eaf09065a2`.
+Audit implementation commit `0d7d57675694946e8a156b5c8e53fc2ae0347341`; merger commit `5b2b7871844d7b7ccac6d50f56f0b0eaf09065a2`.
 
 Controlled audit CI:
-- initial run `34754383492` failed before real-data access because the synthetic known-lag assertion allowed exactly one hop while a -40 ms fixture recovered as -46.44 ms (~1.11 hops);
-- only the synthetic assertion tolerance was amended to 1.25 hops; the actual lag estimator was unchanged;
-- amendment commit `77510e2e797915166a5737750769824e44c49e89`;
-- corrected controlled run `34754452415`, job `103716353507`: SUCCESS, including no-scorer-import guard.
+- run `34754383492` failed before real-data access only because a synthetic known-lag assertion allowed exactly one hop while a -40 ms fixture recovered as -46.44 ms (~1.11 hops);
+- only the synthetic assertion tolerance changed to 1.25 hops; the actual lag estimator was unchanged, commit `77510e2e797915166a5737750769824e44c49e89`;
+- corrected run `34754452415`, job `103716353507`: SUCCESS, including no-scorer-import guard.
 
-No Guitar-TECHS archive was accessed before the corrected controlled run passed.
+No Guitar-TECHS archive was accessed before controlled CI was green.
 
 ### Official alignment/inventory run — ACTIVE
 
-Workflow: `.github/workflows/songsterr-fresh-guitar-techs-v6-alignment-inventory.yml`
-Wrapper creation commit: `f3c9d4a88740146918c34a3538c565f21079f3bf`
-Run ID: `34754519541`
-Workflow run number: `1`
-Frozen audit source: `77510e2e797915166a5737750769824e44c49e89`
-Compute: GitHub-hosted Ubuntu CPU only; no Modal/Vercel-heavy-GPU/L4.
+Workflow `.github/workflows/songsterr-fresh-guitar-techs-v6-alignment-inventory.yml`
+Wrapper commit `f3c9d4a88740146918c34a3538c565f21079f3bf`
+Run `34754519541`, job `103716527380`
+Frozen audit source `77510e2e797915166a5737750769824e44c49e89`
+GitHub-hosted CPU only; no Modal/Vercel-heavy-GPU/L4.
 
-The workflow processes all nine exact Zenodo v1 archives sequentially, verifies each preregistered MD5, extracts/audits only DI WAV + MIDI, computes the frozen reference-blind alignment lags, merges the result, verifies fail-closed policy fields, then uploads one audit artifact.
+Pre-package gates are green: exact source binding, pinned CPU runtime, controlled synthetic alignment tests and reference-blind audit guard. The run is currently in the sequential nine-package Zenodo download/DI-MIDI audit step. Merge, fail-closed result verification and artifact upload are pending.
 
-Frozen alignment decision remains one of:
-- A: raw MIDI timestamps authoritative only if every absolute lag <= one hop;
-- B: deterministic per-file constant MIDI offset correction with immutable lag manifest if all structural/alignment guards pass but larger offsets exist;
-- C: dataset unsuitable if the reference-blind alignment/population cannot be resolved defensibly.
-
-No future Basic Pitch/V6 correctness may alter the A/B/C decision or any lag.
+The frozen alignment decision is A raw timestamps / B immutable per-file constant offsets / C dataset unsuitable. Future model correctness cannot change that decision or any lag.
 
 ## NEXT ALLOWED ACTION
 
-Inspect run `34754519541` until it completes. If successful, retrieve and integrity-check the audit artifact, write an immutable Guitar-TECHS alignment/inventory result checkpoint, and update this file **before** freezing any V6 external-scoring protocol.
+Inspect only run `34754519541` until the alignment/inventory audit finishes; do not start a duplicate.
 
-If the audit yields a structurally suitable A/B population, freeze the final V6 method/runtime and a separate external-scoring preregistration before any real correctness run. If C, reject Guitar-TECHS as the V6 holdout and search for another untouched corpus without scoring it.
+On success: integrity-check the audit artifact, write an immutable Guitar-TECHS alignment/inventory result checkpoint and update this file. If A/B, create a final binding checkpoint that fills only immutable audit/population/alignment identities into the already-frozen scoring framework, then build controlled scoring harness CI with **no real correctness** before one official external run. If C, do not score Guitar-TECHS; reject it and search metadata-only for another untouched holdout.
 
 Ask the user only if a Modal, Vercel heavy-GPU or L4 run becomes necessary.
 
@@ -92,8 +106,8 @@ Ask the user only if a Modal, Vercel heavy-GPU or L4 run becomes necessary.
 
 - V5 FLGD rerun/post-result tuning
 - using FLGD/IDMT/GuitarSet/protected-song correctness to tune V6
-- Guitar-TECHS Basic Pitch/V6 correctness before immutable audit result + final V6/scoring preregistration
-- changing Guitar-TECHS alignment from future model correctness
+- changing frozen V6/scoring rules from Guitar-TECHS observations
+- Guitar-TECHS Basic Pitch/V6 correctness before immutable audit result + final binding/harness controls
 - protected-song execution
 - duration research
 - archived V143/Gomyway / GOAT/reference scoring
@@ -104,4 +118,4 @@ Ask the user only if a Modal, Vercel heavy-GPU or L4 run becomes necessary.
 
 ## FRESH-CHAT HANDOFF
 
-Continue only on `songsterr-fresh-pipeline-v1`. V5 is closed/rejected. V6 synthetic evidence is green but not admission evidence. Guitar-TECHS reference-blind audit run `34754519541` is the current active work; inspect it first. Do not resume V143/Gomyway and do not run Guitar-TECHS correctness yet.
+Continue only on `songsterr-fresh-pipeline-v1`. V5 is closed/rejected. V6 method and scoring framework are frozen before real correctness. Guitar-TECHS reference-blind audit run `34754519541` / job `103716527380` is the current active work; inspect it first. Do not resume V143/Gomyway and do not run Guitar-TECHS correctness until the audit/binding/harness prerequisites are satisfied.
