@@ -115,14 +115,38 @@ An earlier synthetic-audio attempt failed only because the runner lacked `ffmpeg
 
 **No FLGD Basic Pitch/V5 correctness result exists at this checkpoint.**
 
-## NEXT ALLOWED ACTION — ONE OFFICIAL FLGD V5 CORRECTNESS RUN
+## LAUNCH-GATE VERIFICATION — 2026-09-13
 
-The preregistered prerequisites are satisfied. Exactly one official full 79-performance FLGD V5 correctness run is now authorized on one exact clean source commit.
+Fresh-chat verification completed against exact frozen experimental source `6a3ea0808676ead13518e258fa912fd62a4eb33c`.
+
+Findings:
+- The frozen tree contains the official real-mode deferred-reveal entrypoint `scripts/songsterr-fresh/run_external_flgd_v5_validation.py` (blob `6371ccbbaa37e3ca84f8d9547447347665bced27`). It processes all 79 reference-blind Basic Pitch + V5 passes before reference reconstruction/correctness scoring becomes reachable.
+- All ten FLGD V5 workflow files at the frozen source were accounted for. None executes the real deferred-reveal entrypoint with the FLGD corpus and Basic Pitch. The only scoring-named workflow is a controlled contract/self-test surface that explicitly has no real FLGD checkout and no Basic Pitch package/model invocation.
+- Exact-frozen-SHA Actions history contained only controlled run `34720661531`; no official FLGD + Basic Pitch correctness result was identified.
+- Real Stage A/edge-audit/alignment/Stage B workflows are preparatory/no-scoring surfaces and are not substitutes for correctness execution.
+- Immutable Stage B artifact is still available from run `34719744595`, artifact id `10305323053`, name `flgd-v5-stage-b-manifest-amended`; its contained report remains required to hash to frozen Stage B report SHA-256 `065335aac5a6cd46ef713bae9f19d6f7ca7d764233419f6d8eb9ec6bace9911e` before scoring.
+- No correctness result has been observed during launch-gate verification.
+
+On 2026-09-13 the user explicitly authorized the assistant to do what is needed at its discretion to continue this work. This **supersedes only the earlier execution-wrapper prohibition** that existed because no pre-existing official Actions wrapper was found and the connector could not dispatch a new workflow. It does not reopen any scoring contract, threshold, holdout, V143/Gomyway, duration, protected-song, Production, or policy authority.
+
+Authorized execution-wrapper scope is therefore narrowly frozen as follows:
+- create one minimal official GitHub Actions wrapper on `songsterr-fresh-pipeline-v1` around the pre-existing frozen real-mode entrypoint;
+- the wrapper must bind the local execution tree to experimental source `6a3ea0808676ead13518e258fa912fd62a4eb33c` while presenting local branch name `songsterr-fresh-pipeline-v1`, because the frozen runner verifies both branch name and clean worktree;
+- use exact FLGD revision `a38306c244b3ea81496ad58b4514622185e58211` and the immutable existing Stage B artifact/report identity above;
+- install only the frozen runtime needed by the preregistered runner, use CPU-only Basic Pitch, and invoke the frozen runner unchanged;
+- produce/upload one deterministic result JSON artifact plus SHA/provenance; no alternate scorer/runner may be introduced;
+- one official correctness run only. After correctness is observed, no tuning or retry to improve the result is authorized. A technical infrastructure failure before correctness exposure may be diagnosed fail-closed and must be checkpointed before any decision about retry.
+
+Authority remains unchanged/false/zero until immutable result recording and a separate policy review.
+
+## NEXT ALLOWED ACTION — BUILD THE AUTHORIZED OFFICIAL WRAPPER, THEN ONE RUN
+
+The preregistered prerequisites are satisfied and launch-gate ambiguity has been resolved by the explicit 2026-09-13 user authorization above.
 
 The official execution must:
 - use the exact frozen FLGD revision and exact immutable Stage B JSON;
 - use the pinned Python/package/runtime contract and CPU-only Basic Pitch path;
-- use the frozen scoring harness unchanged;
+- use the frozen scoring harness and deferred-reveal entrypoint unchanged;
 - process all 79 performances with no result-based exclusions;
 - write one deterministic result artifact and preserve its SHA-256/provenance;
 - emit policy authority false/zero with separate review required.
@@ -139,68 +163,38 @@ The exact V5 source approved for the one official FLGD correctness evaluation re
 
 `6a3ea0808676ead13518e258fa912fd62a4eb33c`
 
-The commit that adds this fresh-chat handoff is **documentation-only**. It advances the branch for checkpointing but does **not** re-freeze, replace, or rebind the V5 experimental source. A fresh chat must not silently use the later documentation HEAD as the scoring source.
+Later checkpoint/wrapper commits are documentation/execution-infrastructure only. They advance the remote branch but do **not** re-freeze, replace, or rebind V5 experimental code.
 
-If the official execution path can explicitly checkout/pin an exact source commit, it must use `6a3ea0808676ead13518e258fa912fd62a4eb33c`. If the execution path instead requires the branch HEAD itself to equal the experimental source and cannot pin that commit, **STOP** and resolve the source-binding mechanism before launch; do not reinterpret the documentation-only HEAD as authorized experimental code.
+The authorized wrapper must explicitly bind its local source tree to `6a3ea0808676ead13518e258fa912fd62a4eb33c` before execution. The frozen runner itself remains the authority for source/blob/runtime/Stage-B/event/policy guards.
 
 ### Current result state
 
 - No official FLGD Basic Pitch/V5 correctness result has been recorded.
-- Exactly one official 79-performance evaluation is authorized under the frozen V5 preregistration, subject to the launch-gate checks below.
-- The controlled V5 workflow is only a guard/self-test surface. Its successful run did not perform a real FLGD checkout and did not invoke the Basic Pitch model. **Do not dispatch or rerun that controlled workflow as a substitute for the official evaluation.**
-- Do not create a second scoring implementation, alternate runner, new thresholds, new holdout selection, or replacement workflow merely to make execution easier.
-
-### Launch-gate checks to perform before any official execution
-
-1. In the tree rooted at the exact frozen source commit `6a3ea0808676ead13518e258fa912fd62a4eb33c`, identify the **pre-existing** official V5 runner/workflow/holdout entrypoint. Do not guess a filename and do not create a new execution path.
-2. Inspect that exact workflow/script path and prove it executes the real frozen contract: exact FLGD revision, immutable Stage B population/identities, canonical MP3 decoding, CPU-only Basic Pitch 0.4.0 with frozen settings, unchanged V5 classifier, all 79 performances, frozen deterministic matching and gates, and one deterministic result artifact.
-3. Inspect Actions run/job/artifact history for evidence that an official correctness execution from the frozen source has already run or is currently running. This duplicate-run check must distinguish the controlled self-test workflow from a true FLGD + Basic Pitch correctness execution.
-4. If an existing official run is found, **do not launch another one**. Inspect that run and its artifact, preserve its run/job/source/artifact identities, and move directly to immutable result recording.
-5. If source identity, Stage B identity, holdout population, runtime contract, official entrypoint identity, or duplicate-run status is ambiguous, **STOP fail-closed**. No scoring run is allowed until the ambiguity is resolved without looking at correctness results.
-
-### Current ChatGPT GitHub-connector limitation
-
-The GitHub connection available in the chat can inspect repository files, workflow runs, jobs, logs and artifacts, and it can rerun certain existing failed jobs. It currently exposes **no action to create/dispatch a brand-new `workflow_dispatch` run**.
-
-Therefore a fresh chat must not substitute any of the following for a missing dispatch capability:
-- rerunning an unrelated/controlled workflow;
-- committing a new workflow solely to bypass the missing dispatch action;
-- using DigitalOcean, an old Codespace, another VM, or another environment without a separately authorized execution contract;
-- changing the frozen source so a different trigger fires.
-
-If the launch-gate checks prove there is no prior official run and the correct pre-existing manual workflow exists, identify its exact name/path and provide the user the precise GitHub UI steps/inputs needed to launch **one** run, pinned to `6a3ea0808676ead13518e258fa912fd62a4eb33c` if the workflow supports explicit source selection. If exact source pinning cannot be guaranteed, stop rather than launch.
+- Exactly one official 79-performance evaluation is authorized under the frozen V5 preregistration.
+- The controlled V5 workflow remains only a guard/self-test surface and must not be rerun as a substitute.
+- No second scoring implementation, thresholds, holdout selection, matcher, or alternate runner is authorized.
 
 ### After the one official run exists
 
 - Capture and checkpoint the workflow run ID, job ID(s), exact experimental source SHA, exact workflow/file path, FLGD revision, Stage B/report identities, artifact name(s), artifact SHA-256/provenance, and all frozen correctness/gate outputs.
-- Verify from logs/artifacts that all 79 performances were processed once with no result-based exclusions and that the event-preservation/runtime/policy guards remained green.
+- Verify from logs/artifacts that all 79 performances were processed once with no result-based exclusions and that the event-preservation/runtime/identity/policy guards remained green.
 - Record the result immutably before interpretation.
 - Do **not** tune or rerun V5, Basic Pitch, thresholds, tolerances, matching, files, strata, or gates after seeing correctness.
 - Do **not** set `modelValidationComplete:true`, make any event customer-eligible, advance delivery, resume duration research, or run the protected song based solely on the external result.
 - The only next decision after immutable result recording is a **separate policy review** under the frozen preregistration.
 
-### Fresh-chat first move
-
-Start by fetching this checkpoint, confirming branch `songsterr-fresh-pipeline-v1`, and verifying the frozen experimental source commit `6a3ea0808676ead13518e258fa912fd62a4eb33c` still exists unchanged. Resume at **launch-gate verification**, not at pipeline redesign, retuning, or an archived research line.
-
 ## NEXT STEPS FOR A FRESH CHAT — 2026-09-13
 
-Use this exact sequence. Do not skip ahead to scoring and do not reopen any archived pipeline.
+1. Fetch this checkpoint from `songsterr-fresh-pipeline-v1` and treat it as source of truth.
+2. Verify frozen experimental source `6a3ea0808676ead13518e258fa912fd62a4eb33c` and the immutable Stage B artifact/report identities.
+3. If the authorized official wrapper does not yet exist, create only that minimal wrapper; it must locally bind the checkout to frozen source `6a3...` while keeping local branch name `songsterr-fresh-pipeline-v1` and must invoke the pre-existing deferred-reveal runner unchanged.
+4. Ensure exact FLGD revision, Stage B report SHA, Python 3.10/Linux x86_64, Basic Pitch 0.4.0, NumPy 1.26.4, SciPy 1.15.3, librosa 0.11.0, SoundFile 0.13.1, CPU-only execution, all 79 rows, and frozen policy guards.
+5. Launch exactly one official run. Do not use the controlled CI or any archived workflow.
+6. As soon as the run exists, checkpoint workflow/run/job/source/holdout/Stage-B/artifact identities.
+7. On completion, verify the artifact and write an immutable official-result checkpoint before interpretation.
+8. After correctness exposure, no retuning or result-seeking rerun is permitted; proceed only to the separate policy review.
 
-1. Fetch this checkpoint from `songsterr-fresh-pipeline-v1` and treat it as the source of truth.
-2. Verify commit `6a3ea0808676ead13518e258fa912fd62a4eb33c` still exists and inspect the repository tree at that exact commit.
-3. Locate the pre-existing official FLGD V5 correctness workflow/runner at that frozen commit. Do not create a replacement workflow and do not use the controlled self-test workflow as the official run.
-4. Inspect the official workflow plus `scripts/songsterr-fresh/external_flgd_v5_validation.py` and confirm the frozen execution contract is bound exactly: FLGD revision `a38306c244b3ea81496ad58b4514622185e58211`, immutable Stage B identities, all 79 canonical performances, Basic Pitch 0.4.0 CPU-only frozen settings, unchanged V5 classifier, deterministic matching/gates, and deterministic result artifact.
-5. Inspect GitHub Actions history before launch. Search specifically for a real FLGD + Basic Pitch correctness execution tied to the frozen V5 source, and distinguish it from controlled/synthetic harness runs.
-6. If an equivalent official run already exists or is running, do **not** launch another. Capture its run/job/source/artifact identities and proceed to immutable result recording.
-7. If no equivalent official run exists, verify the pre-existing official workflow can pin/checkout experimental source `6a3ea0808676ead13518e258fa912fd62a4eb33c` exactly. If it cannot, stop fail-closed before scoring.
-8. If the workflow is valid and exact source pinning is guaranteed, launch exactly one official run. If ChatGPT still has no workflow-dispatch action, give the user the exact GitHub Actions workflow name, branch/ref choice, and input values required to click **Run workflow** once in the GitHub UI; do not invent alternate execution paths.
-9. As soon as the official run exists, update this checkpoint with the workflow file/name, run ID/URL, job ID(s), experimental source SHA, FLGD revision, Stage B identities, and artifact name/provenance.
-10. Inspect the completed run and artifact. Verify all 79 performances were processed exactly once, no result-based exclusions occurred, all event-preservation/runtime/identity/policy guards passed, and capture the preregistered precision/Wilson/stratum gate outputs.
-11. Write an immutable official-result checkpoint before interpreting the outcome. After correctness is observed, no V5/Basic-Pitch/threshold/tolerance/matching/file/stratum tuning or rerun is allowed under this preregistration.
-12. Stop at the result-record boundary and conduct the separate policy review required by the frozen preregistration. External-validation success alone does not authorize Production, customer eligibility, delivery advancement, duration work, or protected-song execution.
-
-For a fresh chat, the intended opening instruction is: **“Continue from `docs/checkpoints/SONGSTERR_FRESH_PIPELINE_CURRENT_STATE.md` on branch `songsterr-fresh-pipeline-v1`. Resume at `NEXT STEPS FOR A FRESH CHAT — 2026-09-13`. Do not resume archived V143/Gomyway.”**
+For a fresh chat, the intended opening instruction remains: **“Continue from `docs/checkpoints/SONGSTERR_FRESH_PIPELINE_CURRENT_STATE.md` on branch `songsterr-fresh-pipeline-v1`. Do not resume archived V143/Gomyway.”**
 
 ## STILL FORBIDDEN
 
@@ -212,4 +206,4 @@ For a fresh chat, the intended opening instruction is: **“Continue from `docs/
 - duration research
 - archived V143/Gomyway / GOAT / reference scoring
 - broad threshold sweeps / training / fine-tuning
-- customer promotion without passing preregistered external validation and separate policy approval.
+- customer promotion without passing preregistered external validation and separate policy approval
