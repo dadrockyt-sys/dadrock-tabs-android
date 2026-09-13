@@ -113,7 +113,7 @@ Green controlled checks include compile, frozen identities/constants, exact 50-m
 
 An earlier synthetic-audio attempt failed only because the runner lacked `ffmpeg`; the final workflow explicitly installed it. This changed CI fixture infrastructure only, not the scoring contract.
 
-**No FLGD Basic Pitch/V5 correctness result exists at this checkpoint.**
+**No FLGD Basic Pitch/V5 correctness result existed before the official run launched below.**
 
 ## LAUNCH-GATE VERIFICATION — 2026-09-13
 
@@ -125,76 +125,58 @@ Findings:
 - Exact-frozen-SHA Actions history contained only controlled run `34720661531`; no official FLGD + Basic Pitch correctness result was identified.
 - Real Stage A/edge-audit/alignment/Stage B workflows are preparatory/no-scoring surfaces and are not substitutes for correctness execution.
 - Immutable Stage B artifact is still available from run `34719744595`, artifact id `10305323053`, name `flgd-v5-stage-b-manifest-amended`; its contained report remains required to hash to frozen Stage B report SHA-256 `065335aac5a6cd46ef713bae9f19d6f7ca7d764233419f6d8eb9ec6bace9911e` before scoring.
-- No correctness result has been observed during launch-gate verification.
+- No correctness result was observed during launch-gate verification.
 
-On 2026-09-13 the user explicitly authorized the assistant to do what is needed at its discretion to continue this work. This **supersedes only the earlier execution-wrapper prohibition** that existed because no pre-existing official Actions wrapper was found and the connector could not dispatch a new workflow. It does not reopen any scoring contract, threshold, holdout, V143/Gomyway, duration, protected-song, Production, or policy authority.
+On 2026-09-13 the user explicitly authorized the assistant to do what is needed at its discretion to continue this work. This superseded only the earlier execution-wrapper prohibition created by the lack of a pre-existing real Actions wrapper. It did not reopen any scoring contract, threshold, holdout, V143/Gomyway, duration, protected-song, Production, or policy authority.
 
-Authorized execution-wrapper scope is therefore narrowly frozen as follows:
-- create one minimal official GitHub Actions wrapper on `songsterr-fresh-pipeline-v1` around the pre-existing frozen real-mode entrypoint;
-- the wrapper must bind the local execution tree to experimental source `6a3ea0808676ead13518e258fa912fd62a4eb33c` while presenting local branch name `songsterr-fresh-pipeline-v1`, because the frozen runner verifies both branch name and clean worktree;
-- use exact FLGD revision `a38306c244b3ea81496ad58b4514622185e58211` and the immutable existing Stage B artifact/report identity above;
-- install only the frozen runtime needed by the preregistered runner, use CPU-only Basic Pitch, and invoke the frozen runner unchanged;
-- produce/upload one deterministic result JSON artifact plus SHA/provenance; no alternate scorer/runner may be introduced;
-- one official correctness run only. After correctness is observed, no tuning or retry to improve the result is authorized. A technical infrastructure failure before correctness exposure may be diagnosed fail-closed and must be checkpointed before any decision about retry.
+## AUTHORIZED OFFICIAL WRAPPER — CREATED
 
-Authority remains unchanged/false/zero until immutable result recording and a separate policy review.
+Minimal wrapper: `.github/workflows/songsterr-fresh-flgd-v5-official-correctness.yml`.
+Wrapper creation commit: `66e93b11ae6d087a9c02d801f159e7bc5342e1ba`.
 
-## NEXT ALLOWED ACTION — BUILD THE AUTHORIZED OFFICIAL WRAPPER, THEN ONE RUN
+The wrapper:
+- locally rebinds the repository to frozen experimental source `6a3ea0808676ead13518e258fa912fd62a4eb33c` while retaining local branch name `songsterr-fresh-pipeline-v1`;
+- installs Python 3.10/Linux x86_64 runtime with Basic Pitch 0.4.0, NumPy 1.26.4, SciPy 1.15.3, librosa 0.11.0, SoundFile 0.13.1 and CPU-only `CUDA_VISIBLE_DEVICES=''`;
+- clones exact FLGD revision `a38306c244b3ea81496ad58b4514622185e58211` with Git LFS;
+- downloads immutable Stage B artifact `flgd-v5-stage-b-manifest-amended` from official Stage B run `34719744595` and verifies report SHA-256 `065335aac5a6cd46ef713bae9f19d6f7ca7d764233419f6d8eb9ec6bace9911e` before execution;
+- invokes only the pre-existing frozen `run_external_flgd_v5_validation.py` real-mode entrypoint;
+- verifies 79-file completion plus source/dataset/Stage-B/policy guards; and
+- uploads one result artifact named `flgd-v5-official-correctness-result`.
 
-The preregistered prerequisites are satisfied and launch-gate ambiguity has been resolved by the explicit 2026-09-13 user authorization above.
+No alternate scorer, matcher, threshold, holdout selection, model setting, or archived pipeline is introduced by the wrapper.
 
-The official execution must:
-- use the exact frozen FLGD revision and exact immutable Stage B JSON;
-- use the pinned Python/package/runtime contract and CPU-only Basic Pitch path;
-- use the frozen scoring harness and deferred-reveal entrypoint unchanged;
-- process all 79 performances with no result-based exclusions;
-- write one deterministic result artifact and preserve its SHA-256/provenance;
-- emit policy authority false/zero with separate review required.
+## OFFICIAL V5 CORRECTNESS RUN — LAUNCHED / CORRECTNESS NOT YET OBSERVED
+
+Exactly one official wrapper run was created automatically by the wrapper-creation push:
+- workflow: `Songsterr Fresh FLGD V5 Official Correctness`
+- workflow path: `.github/workflows/songsterr-fresh-flgd-v5-official-correctness.yml`
+- workflow id: `357002378`
+- run id: `34748789583`
+- run number: `1`
+- trigger: `push`
+- wrapper/head commit: `66e93b11ae6d087a9c02d801f159e7bc5342e1ba`
+- frozen experimental source the job must locally bind: `6a3ea0808676ead13518e258fa912fd62a4eb33c`
+- state at this checkpoint: `queued`; GitHub had allocated no job yet.
+
+Because no job had started, no runtime install, FLGD checkout, Basic Pitch inference, V5 classification, reference reconstruction, or correctness scoring had occurred at this checkpoint. No correctness result has been observed.
+
+Do not manually dispatch a second copy while run `34748789583` exists. If this run reaches correctness, no result-seeking rerun is permitted. If it fails before any correctness exposure, diagnose and checkpoint the infrastructure failure fail-closed before deciding whether a technical retry is justified.
+
+## NEXT ALLOWED ACTION
+
+Monitor only run `34748789583` until it starts/completes. As soon as a job exists, record its job ID and verify source binding/runtime/holdout/Stage-B guards. On completion, inspect/uploaded artifact, verify all 79 performances and frozen gates, and write an immutable official-result checkpoint before interpreting the outcome.
 
 After any correctness result is observed: do not tune V5, Basic Pitch settings, matching/tolerances/gates, files or strata; do not rerun FLGD under this preregistration to seek a better result. Next steps become immutable result record → separate policy review only.
 
-## FRESH-CHAT HANDOFF — V5 OFFICIAL-RUN LAUNCH GATE
+## FRESH-CHAT HANDOFF — V5 OFFICIAL RUN ACTIVE
 
-This section is the canonical resume point for a new chat. Read this file first and continue only on `songsterr-fresh-pipeline-v1`. Do not reopen archived V143/Gomyway, V1/V2, GuitarSet/V3, IDMT/V4, GOAT, duration research, broad optimizer work, or protected-song execution.
+Continue only on `songsterr-fresh-pipeline-v1`. Do not reopen archived V143/Gomyway, V1/V2, GuitarSet/V3, IDMT/V4, GOAT, duration research, broad optimizer work, or protected-song execution.
 
-### Exact frozen experimental source
+The exact experimental source remains `6a3ea0808676ead13518e258fa912fd62a4eb33c`; wrapper/checkpoint commits are infrastructure/documentation only and do not re-freeze V5.
 
-The exact V5 source approved for the one official FLGD correctness evaluation remains:
+Run `34748789583` is the single authorized official correctness run. Do not launch another while it exists. Inspect this run first, then checkpoint its job/artifact/result identities.
 
-`6a3ea0808676ead13518e258fa912fd62a4eb33c`
-
-Later checkpoint/wrapper commits are documentation/execution-infrastructure only. They advance the remote branch but do **not** re-freeze, replace, or rebind V5 experimental code.
-
-The authorized wrapper must explicitly bind its local source tree to `6a3ea0808676ead13518e258fa912fd62a4eb33c` before execution. The frozen runner itself remains the authority for source/blob/runtime/Stage-B/event/policy guards.
-
-### Current result state
-
-- No official FLGD Basic Pitch/V5 correctness result has been recorded.
-- Exactly one official 79-performance evaluation is authorized under the frozen V5 preregistration.
-- The controlled V5 workflow remains only a guard/self-test surface and must not be rerun as a substitute.
-- No second scoring implementation, thresholds, holdout selection, matcher, or alternate runner is authorized.
-
-### After the one official run exists
-
-- Capture and checkpoint the workflow run ID, job ID(s), exact experimental source SHA, exact workflow/file path, FLGD revision, Stage B/report identities, artifact name(s), artifact SHA-256/provenance, and all frozen correctness/gate outputs.
-- Verify from logs/artifacts that all 79 performances were processed once with no result-based exclusions and that the event-preservation/runtime/identity/policy guards remained green.
-- Record the result immutably before interpretation.
-- Do **not** tune or rerun V5, Basic Pitch, thresholds, tolerances, matching, files, strata, or gates after seeing correctness.
-- Do **not** set `modelValidationComplete:true`, make any event customer-eligible, advance delivery, resume duration research, or run the protected song based solely on the external result.
-- The only next decision after immutable result recording is a **separate policy review** under the frozen preregistration.
-
-## NEXT STEPS FOR A FRESH CHAT — 2026-09-13
-
-1. Fetch this checkpoint from `songsterr-fresh-pipeline-v1` and treat it as source of truth.
-2. Verify frozen experimental source `6a3ea0808676ead13518e258fa912fd62a4eb33c` and the immutable Stage B artifact/report identities.
-3. If the authorized official wrapper does not yet exist, create only that minimal wrapper; it must locally bind the checkout to frozen source `6a3...` while keeping local branch name `songsterr-fresh-pipeline-v1` and must invoke the pre-existing deferred-reveal runner unchanged.
-4. Ensure exact FLGD revision, Stage B report SHA, Python 3.10/Linux x86_64, Basic Pitch 0.4.0, NumPy 1.26.4, SciPy 1.15.3, librosa 0.11.0, SoundFile 0.13.1, CPU-only execution, all 79 rows, and frozen policy guards.
-5. Launch exactly one official run. Do not use the controlled CI or any archived workflow.
-6. As soon as the run exists, checkpoint workflow/run/job/source/holdout/Stage-B/artifact identities.
-7. On completion, verify the artifact and write an immutable official-result checkpoint before interpretation.
-8. After correctness exposure, no retuning or result-seeking rerun is permitted; proceed only to the separate policy review.
-
-For a fresh chat, the intended opening instruction remains: **“Continue from `docs/checkpoints/SONGSTERR_FRESH_PIPELINE_CURRENT_STATE.md` on branch `songsterr-fresh-pipeline-v1`. Do not resume archived V143/Gomyway.”**
+Authority remains false/zero until immutable result recording and a separate policy review.
 
 ## STILL FORBIDDEN
 
