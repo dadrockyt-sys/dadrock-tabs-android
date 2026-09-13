@@ -79,6 +79,7 @@ Metadata/license/structure research checkpoints:
 - `docs/checkpoints/SONGSTERR_FRESH_AGPTSET_RIGHTS_REVIEW_2026-09-13.md`, authoritative rights review commit `5f4b9c6042eba77225eb5f146fdd5c73c3bee5b3`.
 - `docs/checkpoints/SONGSTERR_FRESH_MULTIMODAL_ELECTRIC_GUITAR_METADATA_REVIEW_2026-09-13.md`, metadata/reference review commit `1f64818fa63327ca17c23586cc79017c74b83446`.
 - `docs/checkpoints/SONGSTERR_FRESH_GIHME_METADATA_RELEASE_REVIEW_2026-09-13.md`, release/reference review commit `1c440f0e9a4e8281c49cf90877e786b5c2c9d9cd`.
+- `docs/checkpoints/SONGSTERR_FRESH_MMIP_METADATA_RIGHTS_REVIEW_2026-09-13.md`, MMIP rights/reference rejection commit `dd44674afa5b1d394cf760a192bbb1a2cae67b83`.
 
 No V6 correctness has been run on any replacement candidate.
 
@@ -151,6 +152,18 @@ However the public dataset description and associated research paper define acti
 
 Disposition: **not audit-ready; do not download for V6 admission.** Motion/EMG timestamps, action labels, task boundaries or derived audio detectors cannot substitute for the frozen matcher’s performed note onset+pitch reference. Advance only if an authoritative source establishes such a released reference stream, then verify license and untouched status before media access.
 
+### MMIP — REJECTED ON RIGHTS AND GUITAR-REFERENCE PROVENANCE
+
+The 2025 Multi-Modal Instrument Performances (MMIP) database contains synchronized real performance audio/video/motion/MIDI across guitar, piano and drums and initially appeared attractive because its paper describes MIDI as performance ground truth.
+
+Two independent gates fail before media access:
+- the authoritative MMIP license page releases repository content under **CC BY-NC-SA 4.0** and directs commercial users to request separate permission;
+- the paper explicitly states that guitar MIDI is not directly captured from a digital instrument but is produced after recording with **Ableton audio-to-MIDI conversion software**.
+
+The guitar MIDI is therefore detector-derived from the same audio rather than an independent immutable performed onset+pitch reference stream. The frozen V6 matcher does not permit manufacturing truth from audio transcription output.
+
+Disposition: **do not download/audit/score MMIP for V6 admission.** Reconsideration would require both commercially permissive rights/permission and a separately authoritative independent guitar note-onset+pitch reference not derived from evaluated audio, followed by untouched-history screening.
+
 ### Backup: EGFxSet
 
 Real electric-guitar hardware recordings, stable Zenodo release, CC BY 4.0/open-access description, 8,970 five-second files. Only 690 unique clean performances exist; most material is derived effects variants, and public metadata does not establish high-resolution note-onset timing. It remains a narrow structural backup rather than an audit-ready holdout.
@@ -163,12 +176,12 @@ The official repository currently contains only one tiny README saying that data
 
 Disposition: **not audit-ready; do not download/reconstruct/score GIHME.** The conference-paper license does not license an absent corpus. Reconsider only if an authoritative completed release appears with explicit data-file rights, immutable identities/checksums, and performed onset+pitch truth; then run untouched-history screening before media access.
 
-Explicit exclusions now include GuitarSet, IDMT-SMT-Guitar, Guitar-TECHS, GAPS, EGSet12, GUITAR-FX-DIST / IDMT-SMT-Audio-Effects, EG-Solo, G&N/TENT, Slakh/SynthTab and GuitarJam. GIHME is not a usable released corpus under current evidence. Multimodal Electric Guitar Data is not excluded on rights but is not audit-ready because the required note-level reference semantics are not established.
+Explicit exclusions now include GuitarSet, IDMT-SMT-Guitar, Guitar-TECHS, GAPS, EGSet12, GUITAR-FX-DIST / IDMT-SMT-Audio-Effects, EG-Solo, G&N/TENT, MMIP, Slakh/SynthTab and GuitarJam. GIHME is not a usable released corpus under current evidence. Multimodal Electric Guitar Data is not excluded on rights but is not audit-ready because the required note-level reference semantics are not established.
 
 ## NEXT ALLOWED ACTION
 
 1. Continue metadata-only search for a replacement corpus with explicit permissive dataset-audio rights, real guitar, immutable performed note-level pitch/onset truth, sufficient independent event volume and defensible untouched status.
-2. Continue resolving EG-IPT dataset-audio license/reference semantics at metadata level; GIHME is now resolved as unreleased/not audit-ready rather than an active unresolved lead.
+2. Continue resolving EG-IPT dataset-audio license/reference semantics at metadata level; GIHME is resolved as unreleased/not audit-ready and MMIP is rejected on both rights and detector-derived guitar-reference provenance.
 3. AG-PT-set may advance only if an authoritative permissive data-file license or explicit rights-holder permission is established; do not download it under current evidence.
 4. Multimodal Electric Guitar Data may advance only if an authoritative released note-level onset+pitch reference stream is established; do not download it merely because its rights are cleaner.
 5. Keep EGFxSet as a narrow backup; effect duplicates may not be counted as independent evidence merely to satisfy the volume gate.
@@ -187,6 +200,7 @@ Explicit exclusions now include GuitarSet, IDMT-SMT-Guitar, Guitar-TECHS, GAPS, 
 - GUITAR-FX-DIST / IDMT-SMT-Audio-Effects V6 admission use under CC BY-NC-ND terms
 - EG-Solo V6 admission use from third-party YouTube/professional-song recordings
 - G&N/TENT V6 admission use from commercial textbook-CD recordings
+- MMIP V6 admission use under CC BY-NC-SA terms or using its Ableton-derived guitar MIDI as reference truth
 - reconstructing or scoring GIHME from paper-linked demos/videos/detector output in lieu of an authoritative released corpus
 - V5 FLGD rerun/post-result tuning
 - using FLGD/IDMT/GuitarSet/protected-song correctness to tune V6
@@ -201,4 +215,4 @@ Explicit exclusions now include GuitarSet, IDMT-SMT-Guitar, Guitar-TECHS, GAPS, 
 
 ## FRESH-CHAT HANDOFF
 
-Continue only on `songsterr-fresh-pipeline-v1` and read this file first. Guitar-TECHS is closed with outcome C and no V6 correctness. AG-PT-set remains scientifically attractive but blocked because its actual dataset/audio archive has no authoritative permissive data-file license. GAPS, GUITAR-FX-DIST/IDMT-SMT-Audio-Effects, EG-Solo and G&N/TENT are rejected on rights/provenance; EGSet12 is rejected as contaminated. GIHME is now resolved as an unreleased/not-audit-ready lead: its official `numediart/GIHME` repository is only a 2022 placeholder and the paper says objective annotation acquisition was unfinished. EG-IPT remains metadata-only unresolved; EGFxSet remains a narrow backup. Multimodal Electric Guitar Data has a useful CC BY 4.0 rights signal and strong player diversity but currently lacks an established immutable note-level onset+pitch reference. Continue metadata-only replacement search. V6 method/scoring framework remain frozen and no replacement-holdout V6 correctness has been exposed.
+Continue only on `songsterr-fresh-pipeline-v1` and read this file first. Guitar-TECHS is closed with outcome C and no V6 correctness. AG-PT-set remains scientifically attractive but blocked because its actual dataset/audio archive has no authoritative permissive data-file license. GAPS, GUITAR-FX-DIST/IDMT-SMT-Audio-Effects, EG-Solo, G&N/TENT and MMIP are rejected on rights/provenance; MMIP additionally fails because its guitar MIDI is Ableton audio-to-MIDI derived rather than independent truth. EGSet12 is rejected as contaminated. GIHME is resolved as unreleased/not-audit-ready. EG-IPT remains metadata-only unresolved; EGFxSet remains a narrow backup. Multimodal Electric Guitar Data has a useful CC BY 4.0 rights signal and strong player diversity but currently lacks an established immutable note-level onset+pitch reference. Continue metadata-only replacement search. V6 method/scoring framework remain frozen and no replacement-holdout V6 correctness has been exposed.
