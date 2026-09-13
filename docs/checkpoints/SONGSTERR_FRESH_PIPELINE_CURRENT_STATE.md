@@ -83,6 +83,7 @@ No V6 correctness has been run on any replacement candidate.
 - `docs/checkpoints/SONGSTERR_FRESH_EGIPT_METADATA_REFERENCE_RIGHTS_REVIEW_2026-09-13.md`, commit `40312c628c55dc5d7e635f718ce99921b984430e`.
 - `docs/checkpoints/SONGSTERR_FRESH_V6_GENERAL_CORPUS_METADATA_SWEEP_2026-09-13.md`, commit `c962d14c94aac08858226166c712ad93ea651993`.
 - `docs/checkpoints/SONGSTERR_FRESH_V6_RECENT_REPOSITORY_SWEEP_2026-09-13.md`, commit `f5961fe28bda99721721f7fdcb5c0481c5ab80fb`.
+- `docs/checkpoints/SONGSTERR_FRESH_V6_MULTITRACK_BENCHMARK_SWEEP_2026-09-13.md`, commit `fb3469695768ce572c2c8fce2d7bdc6c5711a9fb`.
 
 ### AG-PT-set — SCIENTIFICALLY STRONG / RIGHTS BLOCKED
 
@@ -214,6 +215,20 @@ Metadata-only screening added the following:
 
 Disposition: none advances to media access, contamination audit, structural audit, binding or correctness. Public 2025–2026 repository/index search has not yet surfaced a qualifying new independent corpus.
 
+### Multitrack benchmark sweep — NO AUDIT-READY CANDIDATE
+
+Immutable review:
+`docs/checkpoints/SONGSTERR_FRESH_V6_MULTITRACK_BENCHMARK_SWEEP_2026-09-13.md`
+commit `fb3469695768ce572c2c8fce2d7bdc6c5711a9fb`.
+
+Metadata-only screening added four exclusions without media access:
+- MedleyDB: real guitar stems exist, but official use is non-commercial research / CC BY-NC-SA 4.0 and annotations do not provide an immutable independent discrete performed guitar onset+pitch/MIDI stream.
+- MUSDB18/MUSDB18-HQ: academic/educational-only and mixed source-specific rights; only drums/bass/vocals/`other` stems, with no canonical guitar note-event truth.
+- MoisesDB: CC BY-NC-SA 4.0 and source-separation stem/activity metadata rather than independent performed guitar onset+pitch truth.
+- Slakh2100: permissive CC BY 4.0 with aligned MIDI, but guitar audio is sample/VST-rendered from MIDI and therefore not real performed guitar.
+
+Disposition: none advances to media access, contamination audit, structural audit, binding or correctness.
+
 ## NEXT ALLOWED ACTION
 
 1. Continue metadata-only search for a replacement corpus satisfying all rights/reference/volume/untouched gates.
@@ -248,6 +263,8 @@ Disposition: none advances to media access, contamination audit, structural audi
 - `guitar-fretboard-notes` use to bypass the >=1,000-positive gate or derive performed onset truth from evaluated audio
 - Semantic Timbre Dataset effect renders counted as independent performances beyond their EGFxSet source recordings
 - `guitar-chord-mix` used as an untouched external holdout despite its exposed/derived source corpora
+- MedleyDB, MUSDB18/MUSDB18-HQ, or MoisesDB use under their current non-commercial/academic rights terms or by deriving guitar note truth from stems/f0/activity labels
+- Slakh2100 substitution for the required real performed-guitar external holdout
 - V5 FLGD rerun/post-result tuning
 - using FLGD/IDMT/GuitarSet/protected-song correctness to tune V6
 - changing frozen V6/scoring rules from any holdout observation
@@ -261,4 +278,4 @@ Disposition: none advances to media access, contamination audit, structural audi
 
 ## FRESH-CHAT HANDOFF
 
-Continue only on `songsterr-fresh-pipeline-v1` and read this file first. Guitar-TECHS is closed with outcome C and no V6 correctness. The active task is metadata-only replacement holdout search. AG-PT-set is scientifically strong but blocked on data-file rights; EG-IPT is rejected/not audit-ready because both independent performed onset+pitch truth and explicit permissive dataset-media rights are not established; Multimodal Electric Guitar Data has cleaner rights but lacks established note-level performed truth; EGFxSet is only a narrow backup. GAPS, EGSet12, GUITAR-FX-DIST/IDMT-SMT-Audio-Effects, EG-Solo, G&N/TENT, MMIP, GIHME, EGDB/EGDB-PG and GuitarDuets are not usable under current evidence. General/recent sweeps also reject GPT (unavailable/unverifiable release), the robot chord corpus and isolated chord releases (chord labels only), NSynth (sampler-generated, not real performed holdout), URMP (no guitar), GuitarJam (clean DI but no note truth), `guitar-fretboard-notes` (390 events and no performed onset truth), Semantic Timbre Dataset (EGFxSet-derived effect expansion), and `guitar-chord-mix` (derived mixture of exposed/ineligible sources). Do not download a candidate until rights/reference/untouched/volume gates are defensible and a corpus-specific reference-blind audit preregistration is frozen. V6 method/scoring framework remain frozen and no replacement-holdout V6 correctness has been exposed.
+Continue only on `songsterr-fresh-pipeline-v1` and read this file first. Guitar-TECHS is closed with outcome C and no V6 correctness. The active task is metadata-only replacement holdout search. AG-PT-set is scientifically strong but blocked on data-file rights; EG-IPT is rejected/not audit-ready because both independent performed onset+pitch truth and explicit permissive dataset-media rights are not established; Multimodal Electric Guitar Data has cleaner rights but lacks established note-level performed truth; EGFxSet is only a narrow backup. GAPS, EGSet12, GUITAR-FX-DIST/IDMT-SMT-Audio-Effects, EG-Solo, G&N/TENT, MMIP, GIHME, EGDB/EGDB-PG and GuitarDuets are not usable under current evidence. General/recent/multitrack sweeps also reject GPT (unavailable/unverifiable release), the robot chord corpus and isolated chord releases (chord labels only), NSynth and Slakh2100 (synthetic/rendered, not real performed holdouts), URMP (no guitar), GuitarJam (clean DI but no note truth), `guitar-fretboard-notes` (390 events and no performed onset truth), Semantic Timbre Dataset (EGFxSet-derived effect expansion), `guitar-chord-mix` (derived mixture of exposed/ineligible sources), MedleyDB/MUSDB18/MoisesDB (rights and/or reference failures). Do not download a candidate until rights/reference/untouched/volume gates are defensible and a corpus-specific reference-blind audit preregistration is frozen. V6 method/scoring framework remain frozen and no replacement-holdout V6 correctness has been exposed.
