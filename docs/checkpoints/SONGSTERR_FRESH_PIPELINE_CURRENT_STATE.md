@@ -39,77 +39,72 @@ Do not change V6 constants, Basic Pitch settings, DI-only canonical audio path, 
 
 ## GUITAR-TECHS V6 AUDIT — COMPLETE / REJECTED BEFORE CORRECTNESS
 
-Frozen audit preregistration:
-`docs/checkpoints/SONGSTERR_FRESH_GUITAR_TECHS_V6_ALIGNMENT_INVENTORY_PREREGISTRATION.md`
-commit `29818b9bfcb11b0da2b3e9efb57c5f2cd51193ae`.
-
 Official audit run `34754519541`, job `103716527380`: **SUCCESS**.
-All workflow steps completed successfully, including all nine exact package audits, merge, fail-closed verification and artifact upload.
+All nine exact package audits, merged-result generation, fail-closed verification and artifact upload completed successfully.
 
 Immutable result checkpoint:
 `docs/checkpoints/SONGSTERR_FRESH_GUITAR_TECHS_V6_ALIGNMENT_INVENTORY_RESULT.md`
 commit `9ec1dcf396341f5e95d76a32d90183cb7f70b725`.
 
 Artifact:
-- name `guitar-techs-v6-alignment-inventory`
 - ID `10317695640`
-- GitHub archive digest / downloaded ZIP SHA-256 `d6e4395f815ce51e1ae83ebdd5c770ca6cd485bb7e90e150dc0e7f7944bf4125`
+- archive digest / downloaded ZIP SHA-256 `d6e4395f815ce51e1ae83ebdd5c770ca6cd485bb7e90e150dc0e7f7944bf4125`
 - merged JSON SHA-256 `ffd7e44d0e65c53dbdafc948e51f8f15810dbbd628100e3226eec4a2fc3a04ab`
 
-Audit population facts:
+Audit facts:
 - 9 verified packages
 - 104 paired DI/MIDI performances
 - 18,934 paired reference events
 - 0 unpaired DI / 0 unpaired MIDI
 - all 104 alignment statuses `OK`
-- WAV: 102 at 48 kHz, 2 at 44.1 kHz; 44 mono, 60 stereo; all PCM_24
-- MIDI: all format 1, all PPQ 960
 - pairing identity manifest `24ff1b4eef07f28eb678f38fbec80f8cc26668329812868a89992e20eb73efa7`
 - alignment lag manifest `95b244d78014e20ea0f468ecf88aacf90e8442f4aef675b246845202d98fcc84`
 - proposed-population manifest `bd239d63ba39a370f7c9e09df544b3b207596acf523b09e2be57bbc49cf0b765`
 - lag range -8..+10 hops, median -5 hops; all-within-one-hop false
+- MIDI anomalies: 5 same-key overlaps, 7 unmatched note-ons, 0 unmatched note-offs
 
-Reference-blind MIDI anomalies:
-- 5 same-key overlaps
-- 7 unmatched note-ons
-- 0 unmatched note-offs
-
-The preregistered structural gate requires zero MIDI anomalies. Therefore the official frozen decision is:
+The preregistered structural gate requires zero MIDI anomalies. Official decision:
 
 `C_DATASET_UNSUITABLE_FOR_V6_ADMISSION`
 
 `datasetStructurallySuitable:false`.
 
-This is a structural/reference-blind rejection, not a model-correctness result. Basic Pitch was not invoked, V6 was not invoked, and correctness was not computed.
-
-### Consequence
-
-Guitar-TECHS is closed as the V6 external holdout. Do **not** score it, repair/drop anomalous events to rescue it, create an A/B scoring binding, or rerun it for correctness. Its lag/population identities remain reproducibility records only.
+Basic Pitch was not invoked, V6 was not invoked, correctness was not computed. Guitar-TECHS is closed as the V6 external holdout: do not score, repair/drop events to rescue, or create an A/B binding.
 
 ## CURRENT ACTIVE WORK — REPLACEMENT UNTOUCHED HOLDOUT SEARCH
 
-Search only metadata, license, downloadable structure and pre-correctness alignment feasibility for a new untouched real-guitar corpus.
+Metadata/license/structure research checkpoint:
+`docs/checkpoints/SONGSTERR_FRESH_V6_REPLACEMENT_HOLDOUT_METADATA_SEARCH.md`
+commit `21443972af16e88fcc4284ae741e5e34bb5a1090`.
 
-A candidate must be defensibly usable for V6 admission validation, ideally with:
-- real isolated guitar audio (prefer clean DI or equivalent);
-- note-level MIDI or equivalent pitch/onset reference;
-- enough material for >=1,000 potential V6-positive events to be plausible;
-- clear redistribution/research license and stable public artifact identity;
-- no prior use in V3/V4/V5 or protected-song work;
-- no model correctness inspection before a new corpus-specific audit preregistration;
-- reference/audio alignment that can be audited reference-blind before scoring.
+No correctness has been run on any replacement candidate.
 
-Metadata/license/structure investigation is allowed. Do not run Basic Pitch/V6 correctness on any replacement corpus before a corpus-specific audit preregistration, immutable inventory/alignment result, and frozen population identities.
+### Leading candidate: GAPS
+
+Public metadata describes GAPS (Guitar-Aligned Performance Scores) as ~14 hours / 300 real solo classical-guitar performances from >200 performers with high-resolution note-level MIDI/MusicXML alignment. Hugging Face v1.1 includes audio and declares MIT license. Scientifically this is the strongest current lead because it is real, polyphonic and large enough for the frozen evidence-volume requirement to be plausible.
+
+Unresolved pre-audit gate: the original audio provenance is public performance audio linked to YouTube. The dataset-level MIT declaration may not necessarily grant independent rights to every underlying performance recording. Resolve rights/provenance before choosing GAPS. Also perform a branch/checkpoint contamination audit for any prior GAPS truth/correctness use; prior inspection of Xavier Riley's separate monophonic model does not itself establish corpus contamination.
+
+### Backup: EGFxSet
+
+Real electric-guitar hardware recordings, stable Zenodo release, CC BY 4.0/open-access description, 8,970 five-second files. However only 690 unique clean tones exist and public metadata does not establish high-resolution onset times. It is probably too narrow/duplicative for the official admission holdout unless those issues can be resolved pre-correctness.
+
+### Metadata lead: GIHME
+
+Public paper metadata describes ~10 hours of richly annotated real hexaphonic-guitar improvisations with note/technique/tuning/effect annotations. Actual dataset package location, license and exact annotation format remain unresolved.
+
+Explicit exclusions: GuitarSet (V3 revealed), IDMT (V4 revealed), Guitar-TECHS (outcome C), Slakh/SynthTab (synthetic), GuitarJam (no surfaced note-level truth).
 
 ## NEXT ALLOWED ACTION
 
-1. Search public metadata/licensing for candidate untouched real-guitar datasets.
-2. Shortlist candidates without correctness testing.
-3. For the strongest candidate, document source/version/license/files/reference type and contamination check.
-4. Before downloading/auditing real audio/reference pairs, freeze a corpus-specific reference-blind inventory/alignment preregistration analogous to the Guitar-TECHS process.
-5. Run only that structural/alignment audit first.
-6. If unsuitable, reject without correctness and continue search. If suitable, bind immutable identities into the already-frozen V6 scoring framework, build controlled no-real-correctness harness CI, then launch one official CPU correctness run only after all prerequisites are green.
-7. Ask the user only if Modal, Vercel heavy-GPU or L4 execution becomes necessary.
+1. Resolve GAPS audio rights/provenance and exact current v1.1 artifact/file identities without correctness.
+2. Audit current branch/checkpoints for prior GAPS corpus truth/correctness use.
+3. Resolve GIHME dataset location/license/annotation representation.
+4. Keep EGFxSet as a narrow backup and determine whether a fixed/preregisterable note onset exists.
+5. Select one replacement only after rights/provenance/untouched status are defensible.
+6. Freeze a corpus-specific reference-blind inventory/alignment preregistration before downloading/auditing real audio/reference pairs.
+7. Run only structural/alignment audit first. If unsuitable, reject without correctness. If suitable, bind immutable identities into the already-frozen V6 scoring framework, build controlled no-real-correctness harness CI, then launch exactly one ordinary-GitHub-CPU official correctness run after prerequisites are green.
+8. Ask the user only if Modal, Vercel heavy-GPU or L4 execution becomes necessary.
 
 ## STILL FORBIDDEN
 
@@ -128,4 +123,4 @@ Metadata/license/structure investigation is allowed. Do not run Basic Pitch/V6 c
 
 ## FRESH-CHAT HANDOFF
 
-Continue only on `songsterr-fresh-pipeline-v1` and read this file first. Guitar-TECHS audit is complete and immutable with outcome C; do not score or rescue it. V6 method and scoring framework remain frozen and no V6 real-corpus correctness has been exposed. Current work is metadata/license/structure search for a new untouched real-guitar holdout, followed by a newly preregistered reference-blind structural/alignment audit before any correctness.
+Continue only on `songsterr-fresh-pipeline-v1` and read this file first. Guitar-TECHS audit is complete and immutable with outcome C; do not score or rescue it. V6 method and scoring framework remain frozen and no V6 real-corpus correctness has been exposed. Current work is replacement-holdout metadata/license/structure research, with GAPS the strongest scientific lead but blocked pending audio-rights/provenance and contamination review. No candidate may be exposed to correctness before a new corpus-specific preregistered reference-blind audit and immutable suitable result.
