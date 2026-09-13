@@ -76,6 +76,10 @@ Then freeze corpus-specific reference-blind inventory/alignment preregistration 
 - reference hardware landscape `84b61b31dc0f4a23c7c182580632ab417879bb69`
 - Geoff Bremner provenance `4e5e884da729ba7f6227f2d644544232ed312853`
 - commercial guitar data frontier `764061d755d06d1a54b749a99016ce3207baf30e`
+- purpose-built manifest chronology hardening `f7df06a0746bf78cf126c05d5c281375e8f2258d`
+- chronology regression expansion `2e3199fa28b22debea95eb6a0c2cafcc6c1e7665`
+- purpose-built synthetic CI harness `b9db9c5e50f181f53a812d0bc27a2ac4425a7701`
+- corrected chronology regression expectation `7da490bc07314c5a831d819212184d97b3e3512d`
 
 ## CURRENT CANDIDATE STATUS
 
@@ -180,13 +184,25 @@ Purpose-built material must be original/public-domain/rightscleared, explicitly 
 
 No purchase, deposit, contact, hiring, recording or data acquisition without explicit user authorization.
 
+### Purpose-built capture manifest contract — SYNTHETIC CI PASS
+
+Reference-blind manifest validator: `scripts/songsterr-fresh/purpose_built_capture_manifest_contract_v1.py`.
+Synthetic tests: `scripts/songsterr-fresh/test_purpose_built_capture_manifest_contract_v1.py`.
+Branch-scoped CI: `.github/workflows/songsterr-purpose-built-contract-tests.yml`.
+
+Chronology hardening commit `f7df06a0746bf78cf126c05d5c281375e8f2258d` requires timezone-aware UTC timestamps, contiguous attempt numbers beginning at 1 within each slot, and strictly increasing capture times consistent with attempt-number order. Regression commit `2e3199fa28b22debea95eb6a0c2cafcc6c1e7665` adds explicit synthetic cases for non-UTC offsets, naive timestamps, accepted `+00:00`, numbering gaps, reversed chronology and equal timestamps.
+
+CI run `34791117386` correctly failed on an overly specific test expectation for the numbering-gap error string; the validator itself returned the intended fail-closed error. Test-only correction commit `7da490bc07314c5a831d819212184d97b3e3512d` was then exercised by CI run `34791164882`, job `103815530838`, which completed `success` and emitted `PURPOSE_BUILT_CAPTURE_MANIFEST_CONTRACT_V1_SYNTHETIC_TESTS_OK`.
+
+This synthetic contract PASS establishes only that the manifest validator's declared invariants and regressions execute as intended. It does **not** establish real-corpus structural suitability, source truth, model validity or correctness, and it does not authorize Basic Pitch or V6. No real holdout audio/reference bytes were accessed and no correctness was computed.
+
 ## NEXT ALLOWED ACTION
 
 1. Metadata-only research where genuinely new information may still exist: private/rightsholder corpora, future institutional independent-sensor releases, or purpose-built protocol/hardware design.
 2. Do not pursue AG-PT-set under current audio-derived reference.
 3. Keep Geoff Bremner metadata-only unless authoritative documentation resolves performed MIDI provenance; do not contact/acquire yet.
 4. Keep Multimodal Electric Guitar Data and EGFxSet as reference-insufficient backups.
-5. Purpose-built protocol/preregistration design may continue on paper; no procurement/contact/capture without explicit user authorization.
+5. Purpose-built protocol/preregistration and synthetic contract tooling may continue on paper/ordinary GitHub CPU; no procurement/contact/capture without explicit user authorization.
 6. Any selected existing corpus must pass all gates before media access and receive corpus-specific reference-blind preregistration first.
 7. If structural audit eventually passes, bind identities, run no-real-correctness harness CI, then exactly one ordinary-GitHub-CPU correctness run.
 8. Ask the user before Modal/Vercel heavy-GPU/L4 or any purpose-built spending/contact/acquisition.
@@ -215,4 +231,4 @@ No purchase, deposit, contact, hiring, recording or data acquisition without exp
 
 ## FRESH-CHAT HANDOFF
 
-Continue only on `songsterr-fresh-pipeline-v1`; read this file first. V6 method/scoring remain frozen and no replacement-holdout correctness has been exposed. Guitar-TECHS is closed outcome C before correctness. AG-PT-set is rejected because its precise onset reference is constructed from its audio; rights clearance alone cannot cure it. GAPS is rights-blocked. Geoff Bremner remains only a private-license metadata lead; public metadata does not establish performed guitar MIDI provenance. GRAUX commercial live-guitar packs are rejected because their MIDI is companion bass/chord material and license scope is music-production oriented. Public, institutional, literature and commercial searches are close to exhausted. Purpose-built independent-sensor capture is the strongest remaining design route, with Fretsense-style fret/trigger sensing + separate magnetic DI currently the best surfaced architecture, but it remains design-only and requires frozen calibration/audit plus explicit user authorization before any contact/spending/recording. Do not reopen archived V143/Gomyway or GOAT/reference scoring unless explicitly asked.
+Continue only on `songsterr-fresh-pipeline-v1`; read this file first. V6 method/scoring remain frozen and no replacement-holdout correctness has been exposed. Guitar-TECHS is closed outcome C before correctness. AG-PT-set is rejected because its precise onset reference is constructed from its audio; rights clearance alone cannot cure it. GAPS is rights-blocked. Geoff Bremner remains only a private-license metadata lead; public metadata does not establish performed guitar MIDI provenance. GRAUX commercial live-guitar packs are rejected because their MIDI is companion bass/chord material and license scope is music-production oriented. Public, institutional, literature and commercial searches are close to exhausted. Purpose-built independent-sensor capture is the strongest remaining design route, with Fretsense-style fret/trigger sensing + separate magnetic DI currently the best surfaced architecture, but it remains design-only and requires frozen calibration/audit plus explicit user authorization before any contact/spending/recording. The purpose-built manifest contract now has branch-scoped synthetic CI with chronology regressions passing on run `34791164882`; this does not authorize model/correctness or real-media access. Do not reopen archived V143/Gomyway or GOAT/reference scoring unless explicitly asked.
