@@ -222,6 +222,61 @@ def test_population_manifest_hash_is_order_independent() -> None:
     assert result_a["admittedPopulationManifestSha256"] == result_b["admittedPopulationManifestSha256"]
 
 
+def test_non_utc_offset_timestamp_fails_contract() -> None:
+    manifest = valid_manifest()
+    manifest["attempts"][0]["capturedAtUtc"] = "2026-09-13T21:00:00+01:00"
+    result = module.validate_manifest(manifest)
+    assert result["contractValid"] is False, result
+    assert any("CAPTURED_AT_UTC_INVALID" in error for error in result["errors"]), result
+
+
+def test_naive_timestamp_fails_contract() -> None:
+    manifest = valid_manifest()
+    manifest["attempts"][0]["capturedAtUtc"] = "2026-09-13T20:00:00"
+    result = module.validate_manifest(manifest)
+    assert result["contractValid"] is False, result
+    assert any("CAPTURED_AT_UTC_INVALID" in error for error in result["errors"]), result
+
+
+def test_explicit_zero_offset_timestamp_is_accepted() -> None:
+    manifest = valid_manifest()
+    manifest["attempts"][0]["capturedAtUtc"] = "2026-09-13T20:00:00+00:00"
+    result = module.validate_manifest(manifest)
+    assert result["contractValid"] is True, result
+
+
+def test_noncontiguous_attempt_numbers_fail_contract() -> None:
+    manifest = valid_manifest()
+    manifest["attempts"][1]["attemptNumber"] = 3
+    result = module.validate_manifest(manifest)
+    assert result["contractValid"] is False, result
+    assert "NONCONTIGUOUS_ATTEMPT_NUMBERS_IN_SLOT:slot-1:1,3" in result["errors"], result
+
+
+def test_reversed_attempt_timestamps_fail_contract() -> None:
+    manifest = valid_manifest()
+    manifest["attempts"][0]["capturedAtUtc"] = "2026-09-13T20:03:00Z"
+    manifest["attempts"][1]["capturedAtUtc"] = "2026-09-13T20:02:00Z"
+    result = module.validate_manifest(manifest)
+    assert result["contractValid"] is False, result
+    assert (
+        "ATTEMPT_TIMESTAMPS_NOT_STRICTLY_INCREASING:slot-1:"
+        "slot-1-attempt-1->slot-1-attempt-2"
+    ) in result["errors"], result
+
+
+def test_equal_attempt_timestamps_fail_contract() -> None:
+    manifest = valid_manifest()
+    manifest["attempts"][0]["capturedAtUtc"] = "2026-09-13T20:02:00Z"
+    manifest["attempts"][1]["capturedAtUtc"] = "2026-09-13T20:02:00Z"
+    result = module.validate_manifest(manifest)
+    assert result["contractValid"] is False, result
+    assert (
+        "ATTEMPT_TIMESTAMPS_NOT_STRICTLY_INCREASING:slot-1:"
+        "slot-1-attempt-1->slot-1-attempt-2"
+    ) in result["errors"], result
+
+
 def main() -> int:
     test_valid_manifest_is_reference_blind_and_not_correctness_authorized()
     test_first_transport_valid_attempt_cannot_be_replaced()
@@ -232,6 +287,12 @@ def main() -> int:
     test_hardware_configuration_identity_is_frozen()
     test_policy_boundary_cannot_be_promoted()
     test_population_manifest_hash_is_order_independent()
+    test_non_utc_offset_timestamp_fails_contract()
+    test_naive_timestamp_fails_contract()
+    test_explicit_zero_offset_timestamp_is_accepted()
+    test_noncontiguous_attempt_numbers_fail_contract()
+    test_reversed_attempt_timestamps_fail_contract()
+    test_equal_attempt_timestamps_fail_contract()
     print("PURPOSE_BUILT_CAPTURE_MANIFEST_CONTRACT_V1_SYNTHETIC_TESTS_OK")
     return 0
 
