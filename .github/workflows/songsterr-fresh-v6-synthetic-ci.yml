@@ -1,0 +1,84 @@
+name: Songsterr Fresh V6 Synthetic CI
+
+on:
+  push:
+    branches:
+      - songsterr-fresh-pipeline-v1
+    paths:
+      - 'scripts/songsterr-fresh/onset_birth_corroboration_v6.py'
+      - 'scripts/songsterr-fresh/v6_onset_birth_synthetic_fixtures.json'
+      - '.github/workflows/songsterr-fresh-v6-synthetic-ci.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  synthetic-contract:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 15
+    env:
+      CUDA_VISIBLE_DEVICES: ''
+    steps:
+      - name: Checkout V6 branch
+        uses: actions/checkout@v4
+        with:
+          ref: songsterr-fresh-pipeline-v1
+          fetch-depth: 1
+
+      - name: Set up Python 3.10
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.10'
+
+      - name: Install pinned CPU runtime
+        shell: bash
+        run: |
+          set -euo pipefail
+          python -m pip install --upgrade pip
+          python -m pip install 'numpy==1.26.4' 'scipy==1.15.3'
+          python - <<'PY'
+          import platform
+          from importlib.metadata import version
+          assert platform.python_version_tuple()[:2] == ('3', '10')
+          assert version('numpy') == '1.26.4'
+          assert version('scipy') == '1.15.3'
+          print('PINNED_CPU_RUNTIME_OK')
+          PY
+
+      - name: Run frozen V6 synthetic contract
+        shell: bash
+        run: |
+          set -euo pipefail
+          python scripts/songsterr-fresh/onset_birth_corroboration_v6.py \
+            --self-test \
+            --fixture-manifest scripts/songsterr-fresh/v6_onset_birth_synthetic_fixtures.json \
+            | tee "$RUNNER_TEMP/v6-synthetic-result.json"
+
+      - name: Verify fail-closed synthetic boundary
+        shell: bash
+        run: |
+          set -euo pipefail
+          python - "$RUNNER_TEMP/v6-synthetic-result.json" <<'PY'
+          import json, pathlib, sys
+          path = pathlib.Path(sys.argv[1])
+          payload = json.loads(path.read_text(encoding='utf-8'))
+          assert payload['fixtureCount'] == 23
+          policy = payload['policyBoundary']
+          assert policy['realCorpusEvaluated'] is False
+          assert policy['protectedSongUsed'] is False
+          assert policy['modelInferenceInvoked'] is False
+          assert policy['modelValidationComplete'] is False
+          assert policy['customerEligibleEvents'] == 0
+          assert policy['mayAdvanceDelivery'] is False
+          assert policy['durationAuthorityChanged'] is False
+          print('V6_SYNTHETIC_FAIL_CLOSED_BOUNDARY_OK')
+          PY
+
+      - name: Upload synthetic result
+        uses: actions/upload-artifact@v4
+        with:
+          name: songsterr-fresh-v6-synthetic-result
+          path: ${{ runner.temp }}/v6-synthetic-result.json
+          if-no-files-found: error
+          retention-days: 30
