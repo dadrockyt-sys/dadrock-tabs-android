@@ -85,6 +85,7 @@ No V6 correctness has been run on any replacement candidate.
 - `docs/checkpoints/SONGSTERR_FRESH_V6_RECENT_REPOSITORY_SWEEP_2026-09-13.md`, commit `f5961fe28bda99721721f7fdcb5c0481c5ab80fb`.
 - `docs/checkpoints/SONGSTERR_FRESH_V6_MULTITRACK_BENCHMARK_SWEEP_2026-09-13.md`, commit `fb3469695768ce572c2c8fce2d7bdc6c5711a9fb`.
 - `docs/checkpoints/SONGSTERR_FRESH_V6_RIGHTS_MIRROR_FRONTIER_RECHECK_2026-09-13.md`, commit `23d55751561b7102e6e726a6adc8a419511e67dd`.
+- `docs/checkpoints/SONGSTERR_FRESH_V6_PURPOSE_BUILT_EXTERNAL_HOLDOUT_OPTION_2026-09-13.md`, commit `bbda7f221750d162885df5324f78f306a71576f4`.
 
 ### AG-PT-set — SCIENTIFICALLY STRONG / RIGHTS BLOCKED
 
@@ -249,6 +250,22 @@ New metadata-only findings:
 
 Disposition: none advances to media access, contamination audit, structural audit, binding or correctness.
 
+### Purpose-built external holdout — DESIGN OPTION ONLY / NO ACQUISITION
+
+Immutable design checkpoint:
+`docs/checkpoints/SONGSTERR_FRESH_V6_PURPOSE_BUILT_EXTERNAL_HOLDOUT_OPTION_2026-09-13.md`
+commit `bbda7f221750d162885df5324f78f306a71576f4`.
+
+Because the public corpus frontier is sparse, a cleaner fallback is to capture/commission a genuinely new untouched real-guitar external holdout after V6 was frozen rather than weaken the experiment to fit a compromised dataset.
+
+The strongest technical reference architecture found so far is a real guitar with **physical fret-position + independent trigger/dynamics sensing** and a separate conventional magnetic DI evaluation path. Industrial Radio's current Fretsense/Solange 6 documentation describes wired-fret note-position sensing plus bridge/piezo trigger/dynamics sensors, with separate magnetic audio and MIDI outputs. This is a stronger independence story than post-hoc audio transcription or ordinary pitch-to-MIDI, but vendor claims are feasibility evidence only and any exact hardware/firmware/settings would still require a frozen reference-blind structural audit.
+
+Jamstik-style six-channel hexaphonic MIDI plus separate 1/4-inch audio is a weaker fallback: its separate paths are technically feasible, but current support documentation explicitly acknowledges extra/missed MIDI notes and DAW cases that fail to preserve per-string channel identity. It cannot be assumed correct without strict preregistered structural checks.
+
+The design preserves the frozen five categories, prohibits protected-song material and model-informed retakes/cleanup, requires explicit commercial/product-validation data rights, preserves raw reference events, and retains the Guitar-TECHS-style fail-closed rule for MIDI anomalies. A provisional >=20,000 raw-reference-note planning target and multi-player preference are capacity planning only; they do **not** alter the frozen >=1,000 V6-positive mandatory gate.
+
+Disposition: scientifically plausible fallback only. No purchase, deposit, hiring, performer/vendor contact, recording, data acquisition, model run, or correctness run is authorized. User selection/authorization would be required before any spending/procurement or capture project begins.
+
 ## NEXT ALLOWED ACTION
 
 1. Continue metadata-only search for a replacement corpus satisfying all rights/reference/volume/untouched gates.
@@ -256,10 +273,11 @@ Disposition: none advances to media access, contamination audit, structural audi
 3. Multimodal Electric Guitar Data may advance only if a released performed note-level onset+pitch reference is established.
 4. Keep EGFxSet as a narrow backup; do not count effect variants as independent evidence.
 5. Keep the Geoff Bremner corpus only as a potential private-license lead pending authoritative guitar-MIDI provenance, evidence volume, stable identities and exact rights.
-6. Select a replacement only after rights, provenance, untouched status, reference semantics and plausible evidence volume are defensible without duplication or rescue rules.
-7. Before any selected corpus media access, freeze a corpus-specific reference-blind inventory/alignment preregistration.
-8. Run structural/alignment audit first. If unsuitable, reject without correctness. If suitable, bind immutable identities into the already-frozen V6 scoring framework, build controlled no-real-correctness harness CI, and only then launch exactly one ordinary-GitHub-CPU official correctness run.
-9. Ask the user only if Modal, Vercel heavy-GPU or L4 execution becomes necessary.
+6. Keep the purpose-built external-holdout route as a design-only fallback; metadata/protocol research may continue, but spending/procurement/hiring/capture requires explicit user selection and authorization.
+7. Select a replacement only after rights, provenance, untouched status, reference semantics and plausible evidence volume are defensible without duplication or rescue rules.
+8. Before any selected corpus media access, freeze a corpus-specific reference-blind inventory/alignment preregistration.
+9. Run structural/alignment audit first. If unsuitable, reject without correctness. If suitable, bind immutable identities into the already-frozen V6 scoring framework, build controlled no-real-correctness harness CI, and only then launch exactly one ordinary-GitHub-CPU official correctness run.
+10. Ask the user only if Modal, Vercel heavy-GPU or L4 execution becomes necessary.
 
 ## STILL FORBIDDEN
 
@@ -288,6 +306,8 @@ Disposition: none advances to media access, contamination audit, structural audi
 - Slakh2100 substitution for the required real performed-guitar external holdout
 - UT Austin/Kaggle Guitar Transcription Dataset use under CC BY-NC-SA terms or by deriving note truth from frame/fret labels
 - Geoff Bremner sample/full corpus media acquisition for V6 before authoritative guitar-specific performed-reference semantics, volume, stable identities and explicit usable rights are established
+- purpose-built holdout purchase/deposit/hiring/vendor or performer contact/recording/data acquisition without explicit user selection and authorization
+- purpose-built reference repair/cleanup from evaluated DI audio, model-informed retakes, or V6-informed population selection
 - V5 FLGD rerun/post-result tuning
 - using FLGD/IDMT/GuitarSet/protected-song correctness to tune V6
 - changing frozen V6/scoring rules from any holdout observation
@@ -301,4 +321,4 @@ Disposition: none advances to media access, contamination audit, structural audi
 
 ## FRESH-CHAT HANDOFF
 
-Continue only on `songsterr-fresh-pipeline-v1` and read this file first. Guitar-TECHS is closed with outcome C and no V6 correctness. The active task is metadata-only replacement holdout search. AG-PT-set remains scientifically strongest but is blocked because its primary dataset-file rights are still not authoritatively permissive; GAPS remains blocked by official non-commercial/restricted terms despite a permissive-looking Hugging Face mirror tag; EG-IPT is rejected/not audit-ready because both independent performed onset+pitch truth and explicit permissive dataset-media rights are not established; Multimodal Electric Guitar Data has cleaner rights but lacks established note-level performed truth; EGFxSet is only a narrow backup. The Geoff Bremner corpus is only a potential private-license lead until guitar-specific performed-MIDI provenance, evidence volume, stable identities and exact rights are established. GAPS, EGSet12, GUITAR-FX-DIST/IDMT-SMT-Audio-Effects, EG-Solo, G&N/TENT, MMIP, GIHME, EGDB/EGDB-PG and GuitarDuets are not usable under current evidence. General/recent/multitrack/rights sweeps also reject GPT, the robot chord corpus and isolated chord releases, NSynth/Slakh2100, URMP, GuitarJam, `guitar-fretboard-notes`, Semantic Timbre Dataset, `guitar-chord-mix`, MedleyDB/MUSDB18/MoisesDB, and the UT Austin/Kaggle frame-label dataset. Do not download a candidate until rights/reference/untouched/volume gates are defensible and a corpus-specific reference-blind audit preregistration is frozen. V6 method/scoring framework remain frozen and no replacement-holdout V6 correctness has been exposed.
+Continue only on `songsterr-fresh-pipeline-v1` and read this file first. Guitar-TECHS is closed with outcome C and no V6 correctness. The active task is metadata-only replacement holdout search. AG-PT-set remains scientifically strongest but is blocked because its primary dataset-file rights are still not authoritatively permissive; GAPS remains blocked by official non-commercial/restricted terms despite a permissive-looking Hugging Face mirror tag; EG-IPT is rejected/not audit-ready because both independent performed onset+pitch truth and explicit permissive dataset-media rights are not established; Multimodal Electric Guitar Data has cleaner rights but lacks established note-level performed truth; EGFxSet is only a narrow backup. The Geoff Bremner corpus is only a potential private-license lead until guitar-specific performed-MIDI provenance, evidence volume, stable identities and exact rights are established. A purpose-built untouched external holdout is now documented as a design-only fallback: prefer physical fret/trigger sensing plus separate magnetic DI; no procurement, hiring, recording or data acquisition is authorized without explicit user selection. GAPS, EGSet12, GUITAR-FX-DIST/IDMT-SMT-Audio-Effects, EG-Solo, G&N/TENT, MMIP, GIHME, EGDB/EGDB-PG and GuitarDuets are not usable under current evidence. General/recent/multitrack/rights sweeps also reject GPT, the robot chord corpus and isolated chord releases, NSynth/Slakh2100, URMP, GuitarJam, `guitar-fretboard-notes`, Semantic Timbre Dataset, `guitar-chord-mix`, MedleyDB/MUSDB18/MoisesDB, and the UT Austin/Kaggle frame-label dataset. Do not download/capture a candidate until rights/reference/untouched/volume gates are defensible and a corpus-specific reference-blind audit preregistration is frozen. V6 method/scoring framework remain frozen and no replacement-holdout V6 correctness has been exposed.
