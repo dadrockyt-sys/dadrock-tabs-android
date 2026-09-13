@@ -40,168 +40,155 @@ Do not change V6 constants, Basic Pitch settings, DI-only canonical audio path, 
 ## GUITAR-TECHS V6 AUDIT — COMPLETE / REJECTED BEFORE CORRECTNESS
 
 Official audit run `34754519541`, job `103716527380`: **SUCCESS**.
-All nine exact package audits, merged-result generation, fail-closed verification and artifact upload completed successfully.
 
 Immutable result checkpoint:
 `docs/checkpoints/SONGSTERR_FRESH_GUITAR_TECHS_V6_ALIGNMENT_INVENTORY_RESULT.md`
 commit `9ec1dcf396341f5e95d76a32d90183cb7f70b725`.
 
-Artifact:
-- ID `10317695640`
-- archive digest / downloaded ZIP SHA-256 `d6e4395f815ce51e1ae83ebdd5c770ca6cd485bb7e90e150dc0e7f7944bf4125`
+Artifact facts:
+- artifact ID `10317695640`
+- ZIP SHA-256 `d6e4395f815ce51e1ae83ebdd5c770ca6cd485bb7e90e150dc0e7f7944bf4125`
 - merged JSON SHA-256 `ffd7e44d0e65c53dbdafc948e51f8f15810dbbd628100e3226eec4a2fc3a04ab`
-
-Audit facts:
 - 9 verified packages
 - 104 paired DI/MIDI performances
 - 18,934 paired reference events
 - 0 unpaired DI / 0 unpaired MIDI
 - all 104 alignment statuses `OK`
-- pairing identity manifest `24ff1b4eef07f28eb678f38fbec80f8cc26668329812868a89992e20eb73efa7`
-- alignment lag manifest `95b244d78014e20ea0f468ecf88aacf90e8442f4aef675b246845202d98fcc84`
-- proposed-population manifest `bd239d63ba39a370f7c9e09df544b3b207596acf523b09e2be57bbc49cf0b765`
-- lag range -8..+10 hops, median -5 hops; all-within-one-hop false
+- pairing manifest `24ff1b4eef07f28eb678f38fbec80f8cc26668329812868a89992e20eb73efa7`
+- lag manifest `95b244d78014e20ea0f468ecf88aacf90e8442f4aef675b246845202d98fcc84`
+- proposed population `bd239d63ba39a370f7c9e09df544b3b207596acf523b09e2be57bbc49cf0b765`
+- lag range -8..+10 hops, median -5 hops
 - MIDI anomalies: 5 same-key overlaps, 7 unmatched note-ons, 0 unmatched note-offs
 
-The preregistered structural gate requires zero MIDI anomalies. Official decision:
+Frozen decision: `C_DATASET_UNSUITABLE_FOR_V6_ADMISSION`; `datasetStructurallySuitable:false`.
 
-`C_DATASET_UNSUITABLE_FOR_V6_ADMISSION`
-
-`datasetStructurallySuitable:false`.
-
-Basic Pitch was not invoked, V6 was not invoked, correctness was not computed. Guitar-TECHS is closed as the V6 external holdout: do not score, repair/drop events to rescue, or create an A/B binding.
+Basic Pitch was not invoked, V6 was not invoked, correctness was not computed. Guitar-TECHS is closed as the V6 external holdout. Do not score it, repair/drop events to rescue it, or create an A/B binding.
 
 ## CURRENT ACTIVE WORK — REPLACEMENT UNTOUCHED HOLDOUT SEARCH
 
-Metadata/license/structure research checkpoints:
-- `docs/checkpoints/SONGSTERR_FRESH_V6_REPLACEMENT_HOLDOUT_METADATA_SEARCH.md`, latest substantive update commit `64d9516d0efbba380769bd6cc52f93572393180a`.
-- `docs/checkpoints/SONGSTERR_FRESH_V6_REPLACEMENT_HOLDOUT_SEARCH_UPDATE_2026-09-13.md`, latest update commit `e8d8080c6944038a48150c9c42711a16cf92da6b`.
-- `docs/checkpoints/SONGSTERR_FRESH_AGPTSET_RIGHTS_REVIEW_2026-09-13.md`, authoritative rights review commit `5f4b9c6042eba77225eb5f146fdd5c73c3bee5b3`.
-- `docs/checkpoints/SONGSTERR_FRESH_MULTIMODAL_ELECTRIC_GUITAR_METADATA_REVIEW_2026-09-13.md`, metadata/reference review commit `1f64818fa63327ca17c23586cc79017c74b83446`.
-- `docs/checkpoints/SONGSTERR_FRESH_GIHME_METADATA_RELEASE_REVIEW_2026-09-13.md`, release/reference review commit `1c440f0e9a4e8281c49cf90877e786b5c2c9d9cd`.
-- `docs/checkpoints/SONGSTERR_FRESH_MMIP_METADATA_RIGHTS_REVIEW_2026-09-13.md`, MMIP rights/reference rejection commit `dd44674afa5b1d394cf760a192bbb1a2cae67b83`.
+Continue metadata/license/reference-semantic research only until one corpus has explicit permissive dataset-audio rights, real guitar, immutable performed note-level onset+pitch truth independent of evaluated audio, plausible >=1,000-positive evidence volume, and defensible untouched status.
 
 No V6 correctness has been run on any replacement candidate.
 
-### AG-PT-set — SCIENTIFICALLY STRONG / RIGHTS GATE FAILED TO CLEAR
+### Active research checkpoints
 
-Zenodo record `10159492`, DOI `10.5281/zenodo.10159492`, version `v1`; archive `aGPTset_z.zip`, ~6.7 GB, MD5 `1dff8103f9ad6e1a86cee2e5e39cbe87`.
+- `docs/checkpoints/SONGSTERR_FRESH_V6_REPLACEMENT_HOLDOUT_METADATA_SEARCH.md`, commit `64d9516d0efbba380769bd6cc52f93572393180a`.
+- `docs/checkpoints/SONGSTERR_FRESH_V6_REPLACEMENT_HOLDOUT_SEARCH_UPDATE_2026-09-13.md`, commit `e8d8080c6944038a48150c9c42711a16cf92da6b`.
+- `docs/checkpoints/SONGSTERR_FRESH_AGPTSET_RIGHTS_REVIEW_2026-09-13.md`, commit `5f4b9c6042eba77225eb5f146fdd5c73c3bee5b3`.
+- `docs/checkpoints/SONGSTERR_FRESH_MULTIMODAL_ELECTRIC_GUITAR_METADATA_REVIEW_2026-09-13.md`, commit `1f64818fa63327ca17c23586cc79017c74b83446`.
+- `docs/checkpoints/SONGSTERR_FRESH_GIHME_METADATA_RELEASE_REVIEW_2026-09-13.md`, commit `1c440f0e9a4e8281c49cf90877e786b5c2c9d9cd`.
+- `docs/checkpoints/SONGSTERR_FRESH_MMIP_METADATA_RIGHTS_REVIEW_2026-09-13.md`, commit `dd44674afa5b1d394cf760a192bbb1a2cae67b83`.
+- `docs/checkpoints/SONGSTERR_FRESH_EGDB_METADATA_RIGHTS_REFERENCE_REVIEW_2026-09-13.md`, commit `a15aef9df3f90d7076cc71d5ae470c9fb1fc7db0`.
 
-Public metadata/paper establish:
-- real monophonic acoustic steel-string guitar recordings from internal transducers;
-- 15 h 55 m total audio;
-- 10 h 04 m / 32,592 events with musician-annotated millisecond-level onsets;
-- the released metadata explicitly includes onset and pitch annotations;
-- multiple players/guitars;
-- four labeled pitched classes with large event volume: Natural Harmonics 2,092; Palm Mute 7,588; Pick Near Bridge 7,227; Pick Over the Soundhole 7,657;
-- four other labeled classes are percussive and must not be treated as pitched V6 reference events.
+### AG-PT-set — SCIENTIFICALLY STRONG / RIGHTS BLOCKED
 
-Authoritative rights review did **not** establish a permissive data-file license. The Zenodo record is Open but exposes no explicit Rights/License entry for the 6.7-GB dataset/audio archive. Zenodo's own documentation distinguishes CC0 repository metadata from data files, which are governed by the license stated in the record metadata. Therefore Open access, the paper's CC BY 4.0 license, and the classifier repository's GPL-3.0 license do not license `aGPTset_z.zip`.
+Zenodo record `10159492`, ~6.7 GB, ~15 h 55 m audio, with 32,592 musician-annotated millisecond-level onset events and released pitch metadata. Scientifically strong, but the actual data/audio archive has no authoritative permissive data-file license in the surfaced Zenodo rights metadata.
 
-Disposition: **do not download/audit AG-PT-set under current evidence.** Treat it as blocked unless the Zenodo record gains a clear permissive data-file license or an authoritative rights holder supplies explicit permission. If rights later clear, branch-specific contamination/history audit is still required before selection and before any real media/reference access.
+Disposition: do not download/audit unless an authoritative permissive data-file license or explicit rights-holder permission is established. If rights later clear, run branch-specific contamination/history audit before media access.
 
 ### GAPS — REJECTED ON EXPLICIT RIGHTS TERMS
 
-GAPS is scientifically attractive (~14 h, 300 performances, >200 performers, high-resolution note-level MIDI), and the current Hugging Face repository advertises MIT metadata. However the official GAPS companion site explicitly states that the dataset contains copyright material, is limited to non-commercial research, is permission-bound to the signing researcher/organisation, and may not be sold/leased/published/distributed to third parties without written permission.
+Scientifically attractive (~14 h, 300 performances, >200 performers, note-level MIDI), but official terms limit use to non-commercial research and impose permission/distribution restrictions.
 
-Disposition: **do not use/download/audit GAPS for this V6 admission path unless explicit written permission is later obtained from the GAPS administrator.**
+Disposition: do not use/download/audit absent explicit written permission that clears this product-validation use.
 
 ### EGSet12 — REJECTED AS NOT UNTOUCHED
 
-A controlled full-history audit found pre-search corpus/project exposure in 21 distinct reachable commits.
+Controlled full-history audit found 21 distinct pre-search matching commits among 7,662 reachable commits.
 
-Immutable result checkpoint:
-`docs/checkpoints/SONGSTERR_FRESH_EGSET12_CONTAMINATION_AUDIT_RESULT.md`
-commit `a4fc980a51a151332625acd7e8a69154589d6a2a`.
+Immutable result: `docs/checkpoints/SONGSTERR_FRESH_EGSET12_CONTAMINATION_AUDIT_RESULT.md`, commit `a4fc980a51a151332625acd7e8a69154589d6a2a`.
 
-Controlled audit run `34760898067`, job `103733427004`; reachable commits `7662`; match lines `42`; unique matching pre-search commits `21`; artifact ID `10318981287`; artifact ZIP SHA-256 `858da60e05998cacbee0a78cb566533403859c9fa632789240b190f50bf31301`.
-
-Disposition: **do not download/score EGSet12 for V6 admission, do not rewrite history to restore untouched status, and do not create a V6 binding for it.**
+Disposition: do not download/score/bind and do not rewrite history to restore untouched status.
 
 ### GUITAR-FX-DIST / IDMT-SMT-Audio-Effects — REJECTED ON RIGHTS
 
-GUITAR-FX-DIST derives its source recordings from IDMT-SMT-Audio-Effects. Fraunhofer's official dataset terms provide that corpus for evaluation under **CC BY-NC-ND 4.0**. That is not a defensible permissive basis for the V6 product-validation holdout.
+Source corpus terms are CC BY-NC-ND 4.0.
 
-Disposition: **do not download/audit/score GUITAR-FX-DIST or IDMT-SMT-Audio-Effects for V6 admission.**
+Disposition: do not download/audit/score for V6 admission.
 
 ### EG-Solo — REJECTED ON RECORDING PROVENANCE
 
-Public metadata describes 76 clips / 6,833 annotated notes, but the audio comes from professional electric-guitar demonstration videos on YouTube, including popular-song solos with backing tracks. Note annotations do not grant rights to the underlying third-party recordings.
+Annotations are tied to professional YouTube guitar-demo/popular-song audio whose underlying recording rights are not cleared by annotation metadata.
 
-Disposition: **do not download/audit/score EG-Solo for V6 admission.**
+Disposition: do not download/audit/score for V6 admission.
 
 ### G&N / TENT — REJECTED ON SOURCE-RECORDING RIGHTS
 
-The TENT paper describes 42 manually annotated monophonic electric-guitar tracks with 1,113 note events, but the audio was sourced from the CD accompanying a commercial guitar textbook. Publication/code licensing does not grant rights to that source recording.
+Audio comes from a commercial guitar-textbook CD.
 
-Disposition: **do not acquire/audit/score the G&N/TENT audio for V6 admission.**
+Disposition: do not acquire/audit/score for V6 admission.
 
-### EG-IPT — METADATA-ONLY LEAD, NOT AUDIT-READY
+### EG-IPT — METADATA-ONLY / NOT AUDIT-READY
 
-Zenodo record `15205644` describes 52,320 monophonic real electric-guitar files totaling 28 h 22 m 56 s, 96 kHz/24-bit, across 19 playing techniques, with six simultaneous capture paths including DI and three pickup configurations. Archive metadata reports `EG-IPT.zip`, ~23.8 GB, MD5 `48a5135adfd090515ff0af7dc5c3c32f`.
+Zenodo record `15205644`: 52,320 real electric-guitar files, ~28 h 23 m, six simultaneous capture paths including DI. Surfaced materials establish technique labels and silence trimming, not an independent immutable performed onset+pitch stream. Dataset-audio license also remains unresolved.
 
-The accompanying public code repository `nbrochec/nime2025` builds technique-class CSVs from file paths/directories and trims silence for classification. Surfaced metadata/code does **not** establish a separate immutable performed note-level pitch/onset reference stream suitable for the frozen V6 matcher. The code repository is GPL-3.0, but that does not establish the audio archive's license.
+Disposition: metadata-only; do not download/audit. Never manufacture onset truth by trimming or onset detection.
 
-Disposition: **keep metadata-only; do not download/audit yet.** First resolve dataset-audio license/provenance and whether immutable pitch/onset truth exists independently of model/detector output. Never manufacture onset truth by trimming or onset detection.
+### Multimodal Electric Guitar Data — RIGHTS CLEANER / REFERENCE INSUFFICIENT
 
-### Multimodal Electric Guitar Data — RIGHTS CLEANER / REFERENCE SEMANTICS INSUFFICIENT
+Zenodo family `6470235` / `6470236`, ~32.5 GB, 36 real guitarists, current indexed metadata indicates CC BY 4.0. Public materials establish action classes and multimodal signals, not immutable note-level onset+pitch truth.
 
-Zenodo record family `6470235` / `6470236` contains about 32.5 GB of real electric-guitar multimodal recordings from 36 student/semi-professional guitarists, including audio, video, EMG and motion capture. Current indexed Zenodo metadata exposes CC BY 4.0.
+Disposition: do not download for V6 admission unless an authoritative released note-level performed onset+pitch reference is established.
 
-However the public dataset description and associated research paper define action classes (`impulsive`, `sustained`, `iterative`) and free improvisations for modeling motion/EMG relationships to audio energy. Surfaced public materials do **not** establish an immutable performed note-level stream containing both onset and pitch/MIDI identity. No synchronized MIDI pickup, JAMS note stream, score-performance note alignment or equivalent note truth is documented.
+### MMIP — REJECTED ON RIGHTS + REFERENCE PROVENANCE
 
-Disposition: **not audit-ready; do not download for V6 admission.** Motion/EMG timestamps, action labels, task boundaries or derived audio detectors cannot substitute for the frozen matcher’s performed note onset+pitch reference. Advance only if an authoritative source establishes such a released reference stream, then verify license and untouched status before media access.
+Authoritative license is CC BY-NC-SA 4.0, and guitar MIDI is produced after recording using Ableton audio-to-MIDI conversion rather than independently captured performed truth.
 
-### MMIP — REJECTED ON RIGHTS AND GUITAR-REFERENCE PROVENANCE
+Disposition: do not download/audit/score for V6 admission.
 
-The 2025 Multi-Modal Instrument Performances (MMIP) database contains synchronized real performance audio/video/motion/MIDI across guitar, piano and drums and initially appeared attractive because its paper describes MIDI as performance ground truth.
+### GIHME — NOT AUDIT-READY / RELEASE NEVER MATERIALIZED
 
-Two independent gates fail before media access:
-- the authoritative MMIP license page releases repository content under **CC BY-NC-SA 4.0** and directs commercial users to request separate permission;
-- the paper explicitly states that guitar MIDI is not directly captured from a digital instrument but is produced after recording with **Ableton audio-to-MIDI conversion software**.
+Paper describes ~10 h of hexaphonic guitar improvisations and annotations, but the official repository remains a two-commit placeholder with no completed corpus, annotation package, checksums, or dataset license.
 
-The guitar MIDI is therefore detector-derived from the same audio rather than an independent immutable performed onset+pitch reference stream. The frozen V6 matcher does not permit manufacturing truth from audio transcription output.
+Disposition: do not reconstruct or score from demos/videos/detector output. Reconsider only if an authoritative completed release appears.
 
-Disposition: **do not download/audit/score MMIP for V6 admission.** Reconsideration would require both commercially permissive rights/permission and a separately authoritative independent guitar note-onset+pitch reference not derived from evaluated audio, followed by untouched-history screening.
+### EGFxSet — NARROW BACKUP ONLY
 
-### Backup: EGFxSet
+Real electric-guitar hardware recordings with CC BY 4.0 signal, but only ~690 unique clean performances under the effect-expanded set and no established high-resolution performed onset reference.
 
-Real electric-guitar hardware recordings, stable Zenodo release, CC BY 4.0/open-access description, 8,970 five-second files. Only 690 unique clean performances exist; most material is derived effects variants, and public metadata does not establish high-resolution note-onset timing. It remains a narrow structural backup rather than an audit-ready holdout.
+Disposition: not audit-ready; effect duplicates cannot be counted as independent evidence merely to meet volume.
 
-### GIHME — SCIENTIFICALLY PLAUSIBLE / OFFICIAL RELEASE NEVER MATERIALIZED
+### EGDB / EGDB-PG — REJECTED / NOT AUDIT-READY BEFORE MEDIA ACCESS
 
-The 2022 GIHME paper describes ~10 hours of real hexaphonic-guitar improvisations from five guitarists, clean/dry and wet six-channel audio, 44.1-kHz/16-bit capture, and note/technique/tuning/effect annotations. Played notes were derived from six parallel pitch extractions on clean string signals and then manually verified. The paper explicitly points to `numediart/GIHME` as the dataset repository.
+Immutable review:
+`docs/checkpoints/SONGSTERR_FRESH_EGDB_METADATA_RIGHTS_REFERENCE_REVIEW_2026-09-13.md`
+commit `a15aef9df3f90d7076cc71d5ae470c9fb1fc7db0`.
 
-The official repository currently contains only one tiny README saying that dataset information “will be uploaded soon.” Its entire history is two commits from 2022-02-08 (`0e522fe...` and `60f7b4b...`); there are no corpus files, completed annotation manifests, checksums, or dataset license. The paper also states that objective annotation acquisition was unfinished at submission.
+Scientific facts from the original EGDB paper:
+- real Stratocaster-type electric guitar with hexaphonic pickup;
+- clean DI captured while a professional guitarist performed 240 tablatures against click tracks;
+- 118 minutes of unique real DI performance, subsequently re-rendered through multiple amplifier/timbre paths.
 
-Disposition: **not audit-ready; do not download/reconstruct/score GIHME.** The conference-paper license does not license an absent corpus. Reconsider only if an authoritative completed release appears with explicit data-file rights, immutable identities/checksums, and performed onset+pitch truth; then run untouched-history screening before media access.
+Two independent gates fail:
+1. authoritative permissive dataset-audio rights are not established. The original project publicly links data but surfaces no dataset license; the newer EGDB-PG Zenodo record family also exposes a blank Rights/License field.
+2. reference onset timing is not independently captured performed truth. The paper says expected onsets come from tabs/BPM, an onset detector is run on each recorded DI string signal to estimate actual onsets, pitches are assigned from the closest expected tab onset, and the resulting annotations are manually checked/corrected. Thus onset truth is materially derived from the evaluated audio family rather than a contemporaneous independent MIDI/note-capture stream.
 
-Explicit exclusions now include GuitarSet, IDMT-SMT-Guitar, Guitar-TECHS, GAPS, EGSet12, GUITAR-FX-DIST / IDMT-SMT-Audio-Effects, EG-Solo, G&N/TENT, MMIP, Slakh/SynthTab and GuitarJam. GIHME is not a usable released corpus under current evidence. Multimodal Electric Guitar Data is not excluded on rights but is not audit-ready because the required note-level reference semantics are not established.
+Disposition: do not download/audit/bind/score EGDB or EGDB-PG for V6 admission. Author permission could resolve rights but would not alone resolve reference provenance. Reconsider only if an authoritative independently captured performed onset+pitch reference exists, then run untouched-history screening before media access.
 
 ## NEXT ALLOWED ACTION
 
-1. Continue metadata-only search for a replacement corpus with explicit permissive dataset-audio rights, real guitar, immutable performed note-level pitch/onset truth, sufficient independent event volume and defensible untouched status.
-2. Continue resolving EG-IPT dataset-audio license/reference semantics at metadata level; GIHME is resolved as unreleased/not audit-ready and MMIP is rejected on both rights and detector-derived guitar-reference provenance.
-3. AG-PT-set may advance only if an authoritative permissive data-file license or explicit rights-holder permission is established; do not download it under current evidence.
-4. Multimodal Electric Guitar Data may advance only if an authoritative released note-level onset+pitch reference stream is established; do not download it merely because its rights are cleaner.
-5. Keep EGFxSet as a narrow backup; effect duplicates may not be counted as independent evidence merely to satisfy the volume gate.
-6. Select one replacement only after rights/provenance/untouched status, reference semantics and plausible evidence volume are defensible without duplication/rescue rules.
-7. Freeze a corpus-specific reference-blind inventory/alignment preregistration before downloading/auditing real audio/reference pairs.
-8. Run only structural/alignment audit first. If unsuitable, reject without correctness. If suitable, bind immutable identities into the already-frozen V6 scoring framework, build controlled no-real-correctness harness CI, then launch exactly one ordinary-GitHub-CPU official correctness run after prerequisites are green.
+1. Continue metadata-only search for a replacement corpus satisfying all rights/reference/volume/untouched gates.
+2. Continue resolving EG-IPT only at metadata/license/reference level.
+3. AG-PT-set may advance only if its data-file rights become authoritative and permissive.
+4. Multimodal Electric Guitar Data may advance only if a released performed note-level onset+pitch reference is established.
+5. Keep EGFxSet as a narrow backup; do not count effect variants as independent evidence.
+6. Select a replacement only after rights, provenance, untouched status, reference semantics and plausible evidence volume are defensible without duplication or rescue rules.
+7. Before any selected corpus media access, freeze a corpus-specific reference-blind inventory/alignment preregistration.
+8. Run structural/alignment audit first. If unsuitable, reject without correctness. If suitable, bind immutable identities into the already-frozen V6 scoring framework, build controlled no-real-correctness harness CI, and only then launch exactly one ordinary-GitHub-CPU official correctness run.
 9. Ask the user only if Modal, Vercel heavy-GPU or L4 execution becomes necessary.
 
 ## STILL FORBIDDEN
 
-- any Guitar-TECHS V6 correctness
-- post-hoc repair/exclusion of Guitar-TECHS anomalies to rescue the holdout
-- downloading/auditing AG-PT-set without an authoritative permissive data-file license or explicit rights-holder permission
-- any GAPS audit/correctness under current explicit non-commercial/copyright-material terms absent written permission
-- EGSet12 V6 admission scoring/binding or history rewriting to restore untouched status
-- GUITAR-FX-DIST / IDMT-SMT-Audio-Effects V6 admission use under CC BY-NC-ND terms
-- EG-Solo V6 admission use from third-party YouTube/professional-song recordings
-- G&N/TENT V6 admission use from commercial textbook-CD recordings
-- MMIP V6 admission use under CC BY-NC-SA terms or using its Ableton-derived guitar MIDI as reference truth
-- reconstructing or scoring GIHME from paper-linked demos/videos/detector output in lieu of an authoritative released corpus
+- any Guitar-TECHS V6 correctness or post-hoc anomaly repair/exclusion
+- downloading/auditing AG-PT-set without authoritative permissive data-file rights
+- GAPS V6 use absent written permission clearing current restrictions
+- EGSet12 V6 scoring/binding/history rewriting
+- GUITAR-FX-DIST / IDMT-SMT-Audio-Effects use under current CC BY-NC-ND terms
+- EG-Solo use from third-party YouTube/professional-song recordings
+- G&N/TENT use from commercial textbook-CD recordings
+- MMIP use under CC BY-NC-SA terms or with Ableton-derived guitar MIDI as truth
+- reconstructing/scoring GIHME from demos/videos/detector output
+- EGDB/EGDB-PG media access or V6 use under current missing-rights and audio-derived-onset-reference evidence
 - V5 FLGD rerun/post-result tuning
 - using FLGD/IDMT/GuitarSet/protected-song correctness to tune V6
 - changing frozen V6/scoring rules from any holdout observation
@@ -215,4 +202,4 @@ Explicit exclusions now include GuitarSet, IDMT-SMT-Guitar, Guitar-TECHS, GAPS, 
 
 ## FRESH-CHAT HANDOFF
 
-Continue only on `songsterr-fresh-pipeline-v1` and read this file first. Guitar-TECHS is closed with outcome C and no V6 correctness. AG-PT-set remains scientifically attractive but blocked because its actual dataset/audio archive has no authoritative permissive data-file license. GAPS, GUITAR-FX-DIST/IDMT-SMT-Audio-Effects, EG-Solo, G&N/TENT and MMIP are rejected on rights/provenance; MMIP additionally fails because its guitar MIDI is Ableton audio-to-MIDI derived rather than independent truth. EGSet12 is rejected as contaminated. GIHME is resolved as unreleased/not-audit-ready. EG-IPT remains metadata-only unresolved; EGFxSet remains a narrow backup. Multimodal Electric Guitar Data has a useful CC BY 4.0 rights signal and strong player diversity but currently lacks an established immutable note-level onset+pitch reference. Continue metadata-only replacement search. V6 method/scoring framework remain frozen and no replacement-holdout V6 correctness has been exposed.
+Continue only on `songsterr-fresh-pipeline-v1` and read this file first. Guitar-TECHS is closed with outcome C and no V6 correctness. The active task is metadata-only replacement holdout search. AG-PT-set is scientifically strong but blocked on data-file rights; EG-IPT remains unresolved metadata-only; Multimodal Electric Guitar Data has cleaner rights but lacks established note-level performed truth; EGFxSet is only a narrow backup. GAPS, EGSet12, GUITAR-FX-DIST/IDMT-SMT-Audio-Effects, EG-Solo, G&N/TENT, MMIP, GIHME and EGDB/EGDB-PG are not usable under current evidence. Do not download a candidate until rights/reference/untouched/volume gates are defensible and a corpus-specific reference-blind audit preregistration is frozen. V6 method/scoring framework remain frozen and no replacement-holdout V6 correctness has been exposed.
