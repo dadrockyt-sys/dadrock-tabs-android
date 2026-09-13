@@ -1,0 +1,87 @@
+name: Songsterr Fresh EGSet12 Contamination Audit
+
+on:
+  push:
+    branches:
+      - songsterr-fresh-pipeline-v1
+    paths:
+      - '.github/workflows/songsterr-fresh-egset12-contamination-audit.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  history-audit:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 20
+    steps:
+      - name: Checkout full branch history
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Bind expected branch
+        shell: bash
+        run: |
+          set -euo pipefail
+          test "$GITHUB_REF_NAME" = "songsterr-fresh-pipeline-v1"
+          test -z "$(git status --porcelain)"
+          echo "EGSET12_CONTAMINATION_BRANCH_OK=$GITHUB_REF_NAME"
+
+      - name: Audit reachable branch history for pre-search EGSet12 exposure
+        shell: bash
+        run: |
+          set -euo pipefail
+          OUT="$RUNNER_TEMP/egset12-contamination-audit.txt"
+          EXCLUDES=(
+            ':(exclude)docs/checkpoints/SONGSTERR_FRESH_V6_REPLACEMENT_HOLDOUT_METADATA_SEARCH.md'
+            ':(exclude)docs/checkpoints/SONGSTERR_FRESH_PIPELINE_CURRENT_STATE.md'
+            ':(exclude).github/workflows/songsterr-fresh-egset12-contamination-audit.yml'
+          )
+
+          {
+            echo 'contract=songsterr-fresh-egset12-contamination-history-v1'
+            echo "head=$(git rev-parse HEAD)"
+            echo "reachableCommitCount=$(git rev-list --count HEAD)"
+            echo 'identifiers=EGSet12|egset12|11406378|robust-guitar-tabs'
+            echo 'excludedPaths=canonical-state,replacement-holdout-search,this-workflow'
+            echo
+            echo '=== pickaxe -S EGSet12 ==='
+            git log HEAD --format='%H %cI %s' -S'EGSet12' -- . "${EXCLUDES[@]}" || true
+            echo '=== pickaxe -S egset12 ==='
+            git log HEAD --format='%H %cI %s' -S'egset12' -- . "${EXCLUDES[@]}" || true
+            echo '=== pickaxe -S 11406378 ==='
+            git log HEAD --format='%H %cI %s' -S'11406378' -- . "${EXCLUDES[@]}" || true
+            echo '=== pickaxe -S robust-guitar-tabs ==='
+            git log HEAD --format='%H %cI %s' -S'robust-guitar-tabs' -- . "${EXCLUDES[@]}" || true
+            echo '=== regex -G identifiers ==='
+            git log HEAD --format='%H %cI %s' -G'(EGSet12|egset12|11406378|robust-guitar-tabs)' -- . "${EXCLUDES[@]}" || true
+          } | tee "$OUT"
+
+          python - "$OUT" <<'PY'
+          from pathlib import Path
+          import hashlib, re, sys
+          p = Path(sys.argv[1])
+          text = p.read_text(encoding='utf-8')
+          commit_lines = [line for line in text.splitlines() if re.match(r'^[0-9a-f]{40} ', line)]
+          unique = sorted(set(commit_lines))
+          print(f'EGSET12_CONTAMINATION_MATCH_LINE_COUNT={len(commit_lines)}')
+          print(f'EGSET12_CONTAMINATION_UNIQUE_MATCHES={len(unique)}')
+          for line in unique:
+              print('EGSET12_CONTAMINATION_MATCH=' + line)
+          digest = hashlib.sha256(p.read_bytes()).hexdigest()
+          print('EGSET12_CONTAMINATION_AUDIT_SHA256=' + digest)
+          if unique:
+              raise SystemExit('EGSET12_PREEXISTING_HISTORY_EXPOSURE_FOUND')
+          print('EGSET12_NO_PREEXISTING_HISTORY_EXPOSURE_FOUND')
+          PY
+
+      - name: Upload audit record
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: egset12-contamination-history-audit
+          path: ${{ runner.temp }}/egset12-contamination-audit.txt
+          if-no-files-found: error
+          retention-days: 90
