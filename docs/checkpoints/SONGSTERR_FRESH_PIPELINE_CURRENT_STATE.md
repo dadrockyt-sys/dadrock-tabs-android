@@ -1,6 +1,6 @@
 # CURRENT STATE — Songsterr Fresh Pipeline V1
 
-Updated: 2026-09-12 America/Toronto
+Updated: 2026-09-13 America/Toronto
 Canonical branch: `songsterr-fresh-pipeline-v1`
 Canonical checkpoint: `docs/checkpoints/SONGSTERR_FRESH_PIPELINE_CURRENT_STATE.md`
 
@@ -182,6 +182,25 @@ If the launch-gate checks prove there is no prior official run and the correct p
 ### Fresh-chat first move
 
 Start by fetching this checkpoint, confirming branch `songsterr-fresh-pipeline-v1`, and verifying the frozen experimental source commit `6a3ea0808676ead13518e258fa912fd62a4eb33c` still exists unchanged. Resume at **launch-gate verification**, not at pipeline redesign, retuning, or an archived research line.
+
+## NEXT STEPS FOR A FRESH CHAT — 2026-09-13
+
+Use this exact sequence. Do not skip ahead to scoring and do not reopen any archived pipeline.
+
+1. Fetch this checkpoint from `songsterr-fresh-pipeline-v1` and treat it as the source of truth.
+2. Verify commit `6a3ea0808676ead13518e258fa912fd62a4eb33c` still exists and inspect the repository tree at that exact commit.
+3. Locate the pre-existing official FLGD V5 correctness workflow/runner at that frozen commit. Do not create a replacement workflow and do not use the controlled self-test workflow as the official run.
+4. Inspect the official workflow plus `scripts/songsterr-fresh/external_flgd_v5_validation.py` and confirm the frozen execution contract is bound exactly: FLGD revision `a38306c244b3ea81496ad58b4514622185e58211`, immutable Stage B identities, all 79 canonical performances, Basic Pitch 0.4.0 CPU-only frozen settings, unchanged V5 classifier, deterministic matching/gates, and deterministic result artifact.
+5. Inspect GitHub Actions history before launch. Search specifically for a real FLGD + Basic Pitch correctness execution tied to the frozen V5 source, and distinguish it from controlled/synthetic harness runs.
+6. If an equivalent official run already exists or is running, do **not** launch another. Capture its run/job/source/artifact identities and proceed to immutable result recording.
+7. If no equivalent official run exists, verify the pre-existing official workflow can pin/checkout experimental source `6a3ea0808676ead13518e258fa912fd62a4eb33c` exactly. If it cannot, stop fail-closed before scoring.
+8. If the workflow is valid and exact source pinning is guaranteed, launch exactly one official run. If ChatGPT still has no workflow-dispatch action, give the user the exact GitHub Actions workflow name, branch/ref choice, and input values required to click **Run workflow** once in the GitHub UI; do not invent alternate execution paths.
+9. As soon as the official run exists, update this checkpoint with the workflow file/name, run ID/URL, job ID(s), experimental source SHA, FLGD revision, Stage B identities, and artifact name/provenance.
+10. Inspect the completed run and artifact. Verify all 79 performances were processed exactly once, no result-based exclusions occurred, all event-preservation/runtime/identity/policy guards passed, and capture the preregistered precision/Wilson/stratum gate outputs.
+11. Write an immutable official-result checkpoint before interpreting the outcome. After correctness is observed, no V5/Basic-Pitch/threshold/tolerance/matching/file/stratum tuning or rerun is allowed under this preregistration.
+12. Stop at the result-record boundary and conduct the separate policy review required by the frozen preregistration. External-validation success alone does not authorize Production, customer eligibility, delivery advancement, duration work, or protected-song execution.
+
+For a fresh chat, the intended opening instruction is: **“Continue from `docs/checkpoints/SONGSTERR_FRESH_PIPELINE_CURRENT_STATE.md` on branch `songsterr-fresh-pipeline-v1`. Resume at `NEXT STEPS FOR A FRESH CHAT — 2026-09-13`. Do not resume archived V143/Gomyway.”**
 
 ## STILL FORBIDDEN
 
