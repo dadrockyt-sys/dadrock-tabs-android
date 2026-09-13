@@ -51,6 +51,7 @@ Primary vendor pages reviewed:
 - https://industrialradio.com.au/products/fretsense/
 - https://industrialradio.com.au/products/solange-6-midi-guitar/
 - https://industrialradio.com.au/products/fsi-1-fretsense-interface/
+- https://industrialradio.com.au/documents/ir-bass-editor-4.18.1_4.pdf
 
 The manufacturer states that Fretsense:
 - uses a wired fretboard to detect held fret/note position by string/fret conductivity rather than relying solely on pitch-to-voltage conversion;
@@ -61,9 +62,19 @@ The manufacturer states that Fretsense:
 
 This is **feasibility evidence only**, not proof that the resulting MIDI is error-free or automatically acceptable as V6 truth. Any exact hardware/firmware/settings would have to be frozen before capture and then survive a reference-blind structural audit.
 
+### Onset-reference caveat — still sensor/algorithm derived
+
+Physical fret sensing materially strengthens **pitch identity**, but it does not make onset timing a perfect mechanical oracle. Industrial Radio's currently surfaced editor documentation shows that piezo saddle signals feed a trigger algorithm with configurable per-string trigger gain and filtering, and separate decay parameters influence Note Off detection. The exact current Solange guitar firmware/settings would have to be confirmed rather than inferred from a bass-editor manual, but the architecture is clearly not equivalent to a literal switch closure that directly defines every note onset.
+
+Therefore a Fretsense-style reference must be described conservatively as an **independent contemporaneous sensor-derived reference path**, not infallible ground truth. Its raw MIDI can still contain false/missed/retriggered events and must pass the frozen zero-anomaly structural rules before correctness.
+
+If player-specific hardware calibration is required, a future capture preregistration must define a separate **pre-holdout calibration phase** using material that is never admitted to the holdout and never sees Basic Pitch/V6 output. After calibration, exact firmware, trigger/filter/decay settings and pickup/sensor geometry must be frozen and hashed before that player's admitted holdout takes begin. Settings may not be changed in response to holdout/model behavior.
+
+The FSI-1 also exposes individual piezo signals. Those may be retained as reference-hardware diagnostics only if preregistered. They must not become an alternate V6 scoring-audio path or a post-result rescue source.
+
 ### Why this is preferable to ordinary pitch-to-MIDI
 
-The candidate reference note identity is not inferred from the same evaluated magnetic DI waveform. Fret position and trigger state are sensed through distinct instrument sensors. That creates a materially stronger independence story than post-hoc audio transcription or an onset detector run on the candidate DI.
+The candidate reference pitch identity is not inferred from the same evaluated magnetic DI waveform. Fret position and trigger state are sensed through distinct instrument sensors. That creates a materially stronger independence story than post-hoc audio transcription or an onset detector run on the candidate DI.
 
 However, independence is not enough by itself. The system can still emit bad/missing/overlapping MIDI, so strict pre-correctness structural rejection remains mandatory.
 
@@ -199,14 +210,15 @@ Likewise, a provisional planning preference is >=5 players and broad category co
 1. explicit user decision to pursue a purpose-built holdout and any spending/procurement;
 2. choose/reference hardware only after confirming real signal/reference semantics;
 3. freeze exact rights contract + capture protocol + hardware/firmware/settings + QA rules + population design in Git before capture;
-4. collect original/public-domain real-guitar data with zero model access;
-5. hash raw source bytes and freeze full inventory;
-6. run a reference-blind structural/alignment audit only;
-7. if audit outcome is unsuitable, reject without correctness and do not repair it into eligibility;
-8. if suitable, bind immutable identities into the already-frozen V6 external scoring framework;
-9. build/run controlled synthetic/contract-only harness CI with no real-holdout correctness;
-10. launch exactly one ordinary-GitHub-CPU official correctness run under the frozen single-run rule;
-11. write immutable result before interpretation and retain fail-closed policy state pending separate review.
+4. complete any preregistered non-holdout hardware/player calibration and freeze settings;
+5. collect original/public-domain real-guitar holdout data with zero model access;
+6. hash raw source bytes and freeze full inventory;
+7. run a reference-blind structural/alignment audit only;
+8. if audit outcome is unsuitable, reject without correctness and do not repair it into eligibility;
+9. if suitable, bind immutable identities into the already-frozen V6 external scoring framework;
+10. build/run controlled synthetic/contract-only harness CI with no real-holdout correctness;
+11. launch exactly one ordinary-GitHub-CPU official correctness run under the frozen single-run rule;
+12. write immutable result before interpretation and retain fail-closed policy state pending separate review.
 
 ## What is NOT authorized now
 
@@ -224,6 +236,6 @@ Likewise, a provisional planning preference is >=5 players and broad category co
 
 **Purpose-built external holdout: scientifically plausible fallback, not selected and not acquisition-authorized.**
 
-The preferred technical direction, if ever chosen, is a real guitar with a physical fret/trigger sensing reference path plus separate clean magnetic DI, because it best preserves independence between evaluated audio and note identity. Ordinary hexaphonic pitch-to-MIDI remains a weaker fallback that would need stricter structural verification.
+The preferred technical direction, if ever chosen, is a real guitar with a physical fret/trigger sensing reference path plus separate clean magnetic DI, because it best preserves independence between evaluated audio and note identity. Its onset reference remains sensor/algorithm derived and must be validated structurally; it is not presumed infallible. Ordinary hexaphonic pitch-to-MIDI remains a weaker fallback that would need even stricter structural verification.
 
 Continue metadata-only public/private corpus search in parallel. Do not lower the V6 gates merely because the public corpus frontier is sparse.
