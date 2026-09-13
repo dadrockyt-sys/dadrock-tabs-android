@@ -93,38 +93,46 @@ Frozen fixture outcome: 23/23 matched expected behavior:
 - insufficient `4`.
 
 Policy boundary stayed false/zero and `realCorpusEvaluated:false`.
-
 Synthetic success is **not** admission evidence.
 
 ### Candidate family B — not promoted
 
 The public `xavriley/hf_midi_transcription` wrapper was inspected at code commit `96f6797881e9497cbfc8f8e5deccea9c1f2f7adc`. Its documentation describes the available models as optimized for monophonic performance and lists chords as a limitation. Therefore it is not currently promoted into V6's core polyphonic admission method. No model inference was run.
 
-## EXTERNAL HOLDOUT SEARCH — METADATA ONLY
+## GUITAR-TECHS V6 HOLDOUT PREPARATION — AUDIT PREREGISTERED / NO SCORING
 
-No V6 real correctness holdout is frozen yet.
+Guitar-TECHS remains the leading untouched external-holdout candidate.
 
-### Guitar-TECHS — leading candidate
+Frozen alignment/inventory audit preregistration:
+`docs/checkpoints/SONGSTERR_FRESH_GUITAR_TECHS_V6_ALIGNMENT_INVENTORY_PREREGISTRATION.md`
 
-Public materials describe real electric-guitar performances, three professional players, varied gear/rooms, DI + amp-mic + ego/exo signals, per-string Fishman Triple Play MIDI, and CC BY 4.0 licensing.
+Preregistration commit:
+`29818b9bfcb11b0da2b3e9efb57c5f2cd51193ae`
 
-Blocking issue: published materials warn some signal paths may exhibit up to 100 ms temporal misalignment. Therefore **no scoring is allowed yet**.
+Public source boundary:
+- Zenodo record `14963133`, version `v1`, published 2025-04-06;
+- project site states CC BY 4.0;
+- real electric-guitar DI/amp/ego/exo signals plus Fishman Triple Play per-string MIDI;
+- published warning that some signal paths may be offset by up to 100 ms.
 
-Before correctness, run a separate reference-blind inventory/alignment audit that freezes:
-- exact dataset/version/file identities;
-- authoritative audio path;
-- MIDI structure/event semantics;
-- deterministic audio/MIDI alignment semantics/correction without using Basic Pitch/V6 correctness;
-- population and strata definitions;
-- license/attribution requirements.
+The audit freezes **direct input (`audio/directinput`)** as the only candidate future scoring audio path before correctness.
 
-GuitarDuets is not preferred because note-level MIDI is described for its synthesized subset. GAPS is not adopted because public licensing statements conflict across distribution surfaces and it is unsuitable if the GAPS model were used.
+The audit may inspect only metadata, file structure, WAV/MIDI structure and reference-blind DI↔MIDI alignment. It MUST NOT invoke Basic Pitch or V6, compute estimate/reference matches, or expose correctness.
+
+Frozen alignment method:
+- 2,048-sample Hann frames, 256-sample hop, positive spectral flux on native-rate DI;
+- distinct reference MIDI onsets converted by standard SMF tempo semantics, impulse-grid + 10 ms Gaussian smoothing;
+- normalized dot-product lag search from -150 ms through +150 ms at integer 256-sample hops;
+- unique maximum required; exact ties fail per-file alignment;
+- alignment outcome must be frozen as raw timestamps, deterministic per-file offset correction with immutable lag manifest, or dataset unsuitable **before** correctness.
+
+Top-level v1 archive MD5 values are frozen in the preregistration and must be verified before package contents are accepted.
 
 ## NEXT ALLOWED ACTION
 
-Proceed now with a **Guitar-TECHS metadata/reference-blind alignment-semantics audit preregistration and inventory**. Do not score Basic Pitch or V6 correctness.
+Implement the frozen Guitar-TECHS inventory/alignment audit tool, then execute it package-by-package on normal GitHub CPU to bound disk usage. No Basic Pitch/V6 correctness scoring is permitted.
 
-After that, if Guitar-TECHS is structurally suitable, freeze one final V6 method/runtime and a separate external scoring protocol before any correctness run.
+If the audit establishes a defensible immutable population/alignment, freeze the final V6 method/runtime and a separate external-scoring preregistration before any correctness run.
 
 Ask the user before any Modal, Vercel heavy-GPU or L4 run.
 
@@ -132,7 +140,8 @@ Ask the user before any Modal, Vercel heavy-GPU or L4 run.
 
 - V5 FLGD rerun/post-result tuning
 - using FLGD/IDMT/GuitarSet correctness to tune V6
-- Guitar-TECHS correctness scoring before frozen alignment/inventory + scoring preregistration
+- Guitar-TECHS Basic Pitch/V6 correctness scoring before immutable alignment/inventory result + final scoring preregistration
+- changing Guitar-TECHS alignment based on future model correctness
 - protected-song execution
 - duration research
 - archived V143/Gomyway / GOAT/reference scoring
@@ -145,6 +154,6 @@ Ask the user before any Modal, Vercel heavy-GPU or L4 run.
 
 Continue from this file on `songsterr-fresh-pipeline-v1`.
 
-V5 is closed/rejected. V6 onset-birth synthetic contract is green and immutable at `ed0b597d7e86f1756395445952db1f40b62e9b13`; no real correctness has been run.
+V5 is closed/rejected. V6 onset-birth synthetic contract is green and immutable at `ed0b597d7e86f1756395445952db1f40b62e9b13`; no real correctness has been run. Guitar-TECHS alignment/inventory rules are frozen at `29818b9bfcb11b0da2b3e9efb57c5f2cd51193ae`.
 
-Next: preregister and execute a metadata/reference-blind Guitar-TECHS inventory/alignment audit only. Keep FLGD/IDMT/GuitarSet correctness closed; do not resume V143/Gomyway; ask only before Modal/Vercel-heavy-GPU/L4 runs.
+Next: implement and run the Guitar-TECHS metadata/reference-blind inventory/alignment audit only. Keep FLGD/IDMT/GuitarSet correctness closed; do not resume V143/Gomyway; ask only before Modal/Vercel-heavy-GPU/L4 runs.
