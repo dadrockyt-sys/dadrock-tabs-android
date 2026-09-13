@@ -15,6 +15,7 @@ import hashlib
 import json
 import re
 from collections import defaultdict
+from datetime import datetime, timedelta, timezone
 from pathlib import Path
 from typing import Any
 
@@ -83,6 +84,21 @@ def _is_sha256(value: Any) -> bool:
 
 def _is_commit(value: Any) -> bool:
     return isinstance(value, str) and COMMIT_RE.fullmatch(value) is not None
+
+
+def _parse_utc_timestamp(value: Any) -> datetime | None:
+    """Parse a timezone-aware ISO-8601 UTC timestamp, rejecting local/offset time."""
+    if not _is_nonempty_string(value):
+        return None
+    text = value.strip()
+    normalized = text[:-1] + "+00:00" if text.endswith("Z") else text
+    try:
+        parsed = datetime.fromisoformat(normalized)
+    except ValueError:
+        return None
+    if parsed.tzinfo is None or parsed.utcoffset() != timedelta(0):
+        return None
+    return parsed.astimezone(timezone.utc)
 
 
 def _normalize_key(value: str) -> str:
@@ -268,8 +284,8 @@ def _validate_attempts(
             errors.append(f"{prefix}_CATEGORY_INVALID:{category!r}")
         if not isinstance(attempt_number, int) or isinstance(attempt_number, bool) or attempt_number <= 0:
             errors.append(f"{prefix}_ATTEMPT_NUMBER_INVALID:{attempt_number!r}")
-        if not _is_nonempty_string(timestamp):
-            errors.append(f"{prefix}_CAPTURED_AT_UTC_REQUIRED")
+        if _parse_utc_timestamp(timestamp) is None:
+            errors.append(f"{prefix}_CAPTURED_AT_UTC_INVALID:{timestamp!r}")
 
         qa = attempt.get("acquisitionQa")
         if not isinstance(qa, dict):
@@ -322,10 +338,22 @@ def _validate_attempts(
 
     admitted_rows: list[dict[str, Any]] = []
     for slot_id, rows in sorted(by_slot.items()):
-        numbers = [row.get("attemptNumber") for row in rows]
-        valid_numbers = [value for value in numbers if isinstance(value, int) and not isinstance(value, bool) and value > 0]
+        valid_numbers = [
+            row.get("attemptNumber")
+            for row in rows
+            if isinstance(row.get("attemptNumber"), int)
+            and not isinstance(row.get("attemptNumber"), bool)
+            and row.get("attemptNumber") > 0
+        ]
         if len(valid_numbers) != len(set(valid_numbers)):
             errors.append(f"DUPLICATE_ATTEMPT_NUMBER_IN_SLOT:{slot_id}")
+        if len(valid_numbers) == len(rows):
+            expected = list(range(1, len(rows) + 1))
+            if sorted(valid_numbers) != expected:
+                errors.append(
+                    f"NONCONTIGUOUS_ATTEMPT_NUMBERS_IN_SLOT:{slot_id}:"
+                    f"{sorted(valid_numbers)!r}!={expected!r}"
+                )
 
         sorted_rows = sorted(
             rows,
@@ -334,7 +362,29 @@ def _validate_attempts(
                 str(row.get("attemptId", "")),
             ),
         )
-        pass_rows = [row for row in sorted_rows if isinstance(row.get("acquisitionQa"), dict) and row["acquisitionQa"].get("status") == "PASS"]
+
+        # attemptNumber is the frozen within-slot chronology index. Require its
+        # order to agree strictly with the actual UTC capture timestamps.
+        previous_row: dict[str, Any] | None = None
+        previous_timestamp: datetime | None = None
+        for row in sorted_rows:
+            current_timestamp = _parse_utc_timestamp(row.get("capturedAtUtc"))
+            if current_timestamp is None:
+                continue
+            if previous_timestamp is not None and current_timestamp <= previous_timestamp:
+                errors.append(
+                    "ATTEMPT_TIMESTAMPS_NOT_STRICTLY_INCREASING:"
+                    f"{slot_id}:{previous_row.get('attemptId')}->{row.get('attemptId')}"
+                )
+            previous_row = row
+            previous_timestamp = current_timestamp
+
+        pass_rows = [
+            row
+            for row in sorted_rows
+            if isinstance(row.get("acquisitionQa"), dict)
+            and row["acquisitionQa"].get("status") == "PASS"
+        ]
         admitted = [row for row in sorted_rows if row.get("admitted") is True]
 
         if pass_rows:
@@ -346,8 +396,10 @@ def _validate_attempts(
             first_pass_number = first_pass.get("attemptNumber")
             if isinstance(first_pass_number, int):
                 later = [
-                    row for row in sorted_rows
-                    if isinstance(row.get("attemptNumber"), int) and row["attemptNumber"] > first_pass_number
+                    row
+                    for row in sorted_rows
+                    if isinstance(row.get("attemptNumber"), int)
+                    and row["attemptNumber"] > first_pass_number
                 ]
                 if later:
                     errors.append(f"ATTEMPTS_EXIST_AFTER_FIRST_ADMITTED_PASS:{slot_id}")
@@ -390,7 +442,13 @@ def _population_identity_rows(admitted_rows: list[dict[str, Any]]) -> list[dict[
             "referenceConfigurationSha256": reference.get("configurationSha256"),
             "calibrationId": reference.get("calibrationId"),
         })
-    rows.sort(key=lambda row: (str(row["slotId"]), int(row["attemptNumber"] or 0), str(row["attemptId"])))
+    rows.sort(
+        key=lambda row: (
+            str(row["slotId"]),
+            int(row["attemptNumber"] or 0),
+            str(row["attemptId"]),
+        )
+    )
     return rows
 
 
@@ -422,14 +480,19 @@ def validate_manifest(manifest: Any) -> dict[str, Any]:
         errors,
     )
 
-    hardware = manifest.get("corpus", {}).get("hardware", {}) if isinstance(manifest.get("corpus"), dict) else {}
+    hardware = (
+        manifest.get("corpus", {}).get("hardware", {})
+        if isinstance(manifest.get("corpus"), dict)
+        else {}
+    )
     hardware_config_sha = hardware.get("configurationSha256") if isinstance(hardware, dict) else None
     for attempt in admitted_rows:
         reference = attempt.get("reference")
         if isinstance(reference, dict) and _is_sha256(hardware_config_sha):
             if reference.get("configurationSha256") != hardware_config_sha:
                 errors.append(
-                    f"REFERENCE_CONFIGURATION_MISMATCH:{attempt.get('attemptId')}:{reference.get('configurationSha256')}!={hardware_config_sha}"
+                    f"REFERENCE_CONFIGURATION_MISMATCH:{attempt.get('attemptId')}:"
+                    f"{reference.get('configurationSha256')}!={hardware_config_sha}"
                 )
 
     population_rows = _population_identity_rows(admitted_rows)
@@ -454,7 +517,9 @@ def validate_manifest(manifest: Any) -> dict[str, Any]:
     contract_valid = not errors
     # Even a clean declaration merely allows a future raw-byte structural audit.
     # It cannot establish source truth or authorize model execution.
-    may_advance_to_structural_audit = contract_valid and not declared_blockers and bool(admitted_rows)
+    may_advance_to_structural_audit = (
+        contract_valid and not declared_blockers and bool(admitted_rows)
+    )
 
     return {
         "contract": CONTRACT,
