@@ -192,3 +192,24 @@ Authority remains false/zero until immutable result recording and a separate pol
 - archived V143/Gomyway / GOAT / reference scoring
 - broad threshold sweeps / training / fine-tuning
 - customer promotion without passing preregistered external validation and separate policy approval
+
+## FRESH-CHAT NEXT STEPS — 2026-09-13
+
+Use this sequence exactly unless a later immutable checkpoint supersedes it:
+
+1. Fetch this file from branch `songsterr-fresh-pipeline-v1` and treat it as the canonical state.
+2. Inspect GitHub Actions run `34748789583` and job `103701492462` first. It is the single authorized official FLGD V5 correctness execution. **Do not launch, dispatch, rerun, or trigger another copy while this run exists.**
+3. Confirm the run still binds the experiment to frozen source `6a3ea0808676ead13518e258fa912fd62a4eb33c`, FLGD revision `a38306c244b3ea81496ad58b4514622185e58211`, immutable Stage B report SHA-256 `065335aac5a6cd46ef713bae9f19d6f7ca7d764233419f6d8eb9ec6bace9911e`, and workflow `.github/workflows/songsterr-fresh-flgd-v5-official-correctness.yml`.
+4. If the run is still in progress, inspect status/step state only. Do not use or interpret partial track-by-track output, partial classification counts, or any partial correctness information.
+5. If the run completes successfully, inspect the job steps/logs and the artifact `flgd-v5-official-correctness-result`. Verify the result-identity guard, all 79 performances, event preservation, frozen runtime/source/dataset/Stage-B identities, and fail-closed policy boundary before interpreting metrics.
+6. Capture and checkpoint the workflow run ID, job ID, artifact ID, artifact archive digest, result JSON SHA-256, exact source identities, aggregate decoded/classified/positive/correct counts, pooled precision, one-sided Wilson lower bound, split strata, guitar-type strata, mandatory gates, and `externalValidationPassed`.
+7. Write a dedicated immutable official-result checkpoint **before** interpreting pass/fail or making any policy decision. Update this canonical current-state checkpoint to point to that immutable result record.
+8. If the run fails, first determine whether correctness was ever exposed. If failure occurred before correctness exposure, record the infrastructure failure fail-closed and decide explicitly whether any retry is compatible with the one-off preregistration. Do not retry automatically. If correctness was exposed before failure, treat the holdout as revealed and do not rerun to seek a better result.
+9. After correctness is exposed by any path, do not tune or change V5, Basic Pitch settings, thresholds, tolerances, matcher, files, strata, gates, or holdout selection under this preregistration.
+10. After immutable result recording, proceed only to the separate policy review required by the frozen preregistration. External-validation success alone does not authorize Production, customer eligibility, delivery advancement, duration work, protected-song execution, or reopening archived research.
+11. Keep `modelValidationComplete:false`, customer-eligible events `0`, `mayAdvanceDelivery:false`, duration authority unchanged/paused, and Policy C `UNENROLLED` unless a later explicit policy checkpoint changes them.
+12. Do not resume archived V143/Gomyway, GOAT/reference scoring, GuitarSet/IDMT, duration research, broad optimizer work, or protected-song execution unless the user explicitly reopens that scope.
+
+Fresh-chat opening instruction:
+
+**“Continue from `docs/checkpoints/SONGSTERR_FRESH_PIPELINE_CURRENT_STATE.md` on branch `songsterr-fresh-pipeline-v1`. Inspect official run `34748789583` / job `103701492462` first. Do not launch a second FLGD V5 correctness run and do not resume archived V143/Gomyway.”**
