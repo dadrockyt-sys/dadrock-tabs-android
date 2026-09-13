@@ -75,37 +75,53 @@ Basic Pitch was not invoked, V6 was not invoked, correctness was not computed. G
 
 Metadata/license/structure research checkpoint:
 `docs/checkpoints/SONGSTERR_FRESH_V6_REPLACEMENT_HOLDOUT_METADATA_SEARCH.md`
-latest refinement commit `f91c25c5b3a781a87ea024e296af1e9231df14af`.
+latest substantive update commit `aff8559d7e0d91338741d83526dfcb3c82ddd024`.
 
 No correctness has been run on any replacement candidate.
 
-### Leading candidate: GAPS — STILL BLOCKED
+### GAPS — REJECTED ON EXPLICIT RIGHTS TERMS
 
-Public metadata describes GAPS (Guitar-Aligned Performance Scores) as ~14 hours / 300 real solo classical-guitar performances from >200 performers with high-resolution note-level MIDI/MusicXML alignment. Hugging Face v1.1 includes audio, exposes audio/match/midi/musicxml resources, is ~16.4 GB, and its dataset-card metadata declares MIT.
+GAPS is scientifically attractive (~14 h, 300 performances, >200 performers, high-resolution note-level MIDI), and the current Hugging Face repository advertises MIT metadata. However the **official GAPS companion site** explicitly states that the dataset contains copyright material, is limited to non-commercial research, is permission-bound to the signing researcher/organisation, and may not be sold/leased/published/distributed to third parties without written permission.
 
-Fresh review also confirms the older Zenodo release distributed aligned MIDI/scores/downbeats while pointing to YouTube URLs for audio/video and recommends the later Hugging Face release that includes audio.
+The older Zenodo release also provided YouTube URLs rather than audio, reinforcing that underlying recording rights are distinct from repository metadata.
 
-This does **not** resolve the pre-audit rights gate: no separate surfaced statement explicitly grants redistribution/relicensing rights for every underlying third-party performance recording. Do not assume repository-level MIT metadata clears independent audio copyright/provenance. Do not download/audit GAPS audio yet.
+Disposition: **do not use/download/audit GAPS for this V6 admission path unless explicit written permission is later obtained from the GAPS administrator.** Because this rights gate is terminal, a branch-specific GAPS contamination audit is no longer necessary for selection.
 
-Contamination review remains incomplete: exact-corpus-name GitHub code search returned no indexed hit and generic `GAPS` hits were unrelated analyzer variables, but repository search is not a guaranteed branch-history audit of `songsterr-fresh-pipeline-v1`. A branch-specific contamination check is still required before selection.
+### New leading open-license lead: EGSet12 — NOT YET SELECTED
+
+Zenodo record `11406378` contains twelve original real solo electric-guitar performances, 379.8 s total, with WAV/JAMS/GP triplets and stable per-file MD5s. Public metadata describes diverse polyphonic musical material recorded from a professional guitarist through a real amp/mic setup. Independently surfaced Zenodo API metadata reports `cc-by-4.0`, `access_right: open`; unlike GAPS, the performances were made for this project rather than sourced from third-party public videos.
+
+Why it is promising:
+- original real electric-guitar performances;
+- permissive CC BY 4.0 deposit-level license;
+- public JAMS ground truth and stable identities;
+- compact corpus suitable for a strict reference-blind structural audit.
+
+Why it is not selected yet:
+- branch-specific contamination/history audit for prior EGSet12 truth/correctness use is still required;
+- only 12 tracks / 379.8 s, so the frozen >=1,000 V6-positive evidence-volume gate may be difficult to satisfy; do not inspect truth just to optimize candidate choice before preregistration;
+- exact performed-note timing semantics of the JAMS references must be validated reference-blind against audio under a corpus-specific preregistration;
+- only one performer, so external-diversity evidence would be materially weaker than Guitar-TECHS/GAPS.
+
+Do **not** download/audit EGSet12 real WAV/JAMS pairs until untouched status is defensible and a corpus-specific reference-blind inventory/alignment preregistration is frozen.
 
 ### Backup: EGFxSet
 
-Real electric-guitar hardware recordings, stable Zenodo release, CC BY 4.0/open-access description, 8,970 five-second files. However only 690 unique clean tones exist and public metadata does not establish high-resolution onset times. It is probably too narrow/duplicative for the official admission holdout unless those issues can be resolved pre-correctness.
+Real electric-guitar hardware recordings, stable Zenodo release, CC BY 4.0/open-access description, 8,970 five-second files. However only 690 unique clean performances exist, most material is derived effects variants, and public metadata does not establish high-resolution note-onset timing. It remains a narrow structural backup rather than the leading holdout.
 
-### Metadata lead: GIHME — PAPER FOUND, DATASET STILL UNRESOLVED
+### Metadata lead: GIHME — DATASET STILL UNRESOLVED
 
 Public metadata describes ~10 hours of richly annotated real hexaphonic-guitar improvisations with note/technique/tuning/effect annotations. The surfaced Zenodo record `6798338` is definitively the conference paper only (`79.pdf`, ~680.6 kB), not the underlying dataset. Dataset package location, license, exact annotation timing representation and immutable audio/reference identities remain unresolved.
 
-Explicit exclusions: GuitarSet (V3 revealed), IDMT (V4 revealed), Guitar-TECHS (outcome C), Slakh/SynthTab (synthetic), GuitarJam (no surfaced note-level truth).
+Explicit exclusions: GuitarSet (V3 revealed), IDMT (V4 revealed), Guitar-TECHS (outcome C), GAPS (rights gate), Slakh/SynthTab (synthetic), GuitarJam (no surfaced note-level truth).
 
 ## NEXT ALLOWED ACTION
 
-1. Continue GAPS rights/provenance research, seeking explicit audio redistribution/reuse authority rather than relying solely on repository-level MIT metadata.
-2. Perform a branch-specific contamination audit of `songsterr-fresh-pipeline-v1` for prior GAPS corpus truth/correctness use.
+1. Perform a branch-specific contamination/history audit for **EGSet12** on `songsterr-fresh-pipeline-v1`; do not rely on default-branch code search.
+2. Continue metadata/license search for a permissively licensed real-guitar corpus with note-level performed timing and more diversity/volume than EGSet12.
 3. Resolve GIHME dataset location/license/annotation representation; do not treat the paper record as the dataset.
 4. Keep EGFxSet as a narrow backup and determine whether a fixed/preregisterable note onset exists.
-5. Select one replacement only after rights/provenance/untouched status are defensible.
+5. Select one replacement only after rights/provenance/untouched status are defensible and the frozen evidence-volume gate is plausibly satisfiable without duplication/rescue rules.
 6. Freeze a corpus-specific reference-blind inventory/alignment preregistration before downloading/auditing real audio/reference pairs.
 7. Run only structural/alignment audit first. If unsuitable, reject without correctness. If suitable, bind immutable identities into the already-frozen V6 scoring framework, build controlled no-real-correctness harness CI, then launch exactly one ordinary-GitHub-CPU official correctness run after prerequisites are green.
 8. Ask the user only if Modal, Vercel heavy-GPU or L4 execution becomes necessary.
@@ -114,6 +130,7 @@ Explicit exclusions: GuitarSet (V3 revealed), IDMT (V4 revealed), Guitar-TECHS (
 
 - any Guitar-TECHS V6 correctness
 - post-hoc repair/exclusion of Guitar-TECHS anomalies to rescue the holdout
+- any GAPS audit/correctness under the current explicit non-commercial/copyright-material terms absent written permission
 - V5 FLGD rerun/post-result tuning
 - using FLGD/IDMT/GuitarSet/protected-song correctness to tune V6
 - changing frozen V6/scoring rules from any holdout observation
@@ -127,4 +144,4 @@ Explicit exclusions: GuitarSet (V3 revealed), IDMT (V4 revealed), Guitar-TECHS (
 
 ## FRESH-CHAT HANDOFF
 
-Continue only on `songsterr-fresh-pipeline-v1` and read this file first. Guitar-TECHS audit is complete and immutable with outcome C; do not score or rescue it. V6 method and scoring framework remain frozen and no V6 real-corpus correctness has been exposed. Current work is replacement-holdout metadata/license/structure research. GAPS remains the strongest scientific lead but is still blocked on explicit audio-rights/provenance and a branch-specific contamination audit. GIHME's surfaced Zenodo item is only the paper, not the dataset. No candidate may be exposed to correctness before a new corpus-specific preregistered reference-blind audit and immutable suitable result.
+Continue only on `songsterr-fresh-pipeline-v1` and read this file first. Guitar-TECHS audit is complete and immutable with outcome C; do not score or rescue it. GAPS is now rejected on the explicit official non-commercial/copyright-material rights terms despite Hugging Face MIT metadata. V6 method and scoring framework remain frozen and no V6 real-corpus correctness has been exposed. EGSet12 is the current strongest open-license replacement lead, but is not selected: first establish branch-specific untouched status and keep searching for a larger/diverse permissively licensed real-guitar corpus. No candidate may be exposed to correctness before a new corpus-specific preregistered reference-blind audit and immutable suitable result.
