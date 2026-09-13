@@ -7,21 +7,21 @@ Canonical checkpoint: `docs/checkpoints/SONGSTERR_FRESH_PIPELINE_CURRENT_STATE.m
 ## HARD SCOPE / AUTHORITY
 
 - Work only on `songsterr-fresh-pipeline-v1`; do not change `main` or Production.
-- Archived V143/Gomyway, GOAT, reference/pro scoring, duration research, broad threshold/optimizer sweeps, training/fine-tuning remain closed unless explicitly reopened.
+- Archived V143/Gomyway, GOAT/reference scoring, GuitarSet/V3, IDMT/V4, duration research, broad threshold/optimizer sweeps, training/fine-tuning and protected-song execution remain closed unless explicitly reopened.
 - Never silently alter/drop MIDI or event identity. Preserve `/ai-tab` UX.
 - `songsterr_pipeline/` stays deterministic/model-free/process-free/network-free; model/DSP work stays under `scripts/songsterr-fresh/`.
-- Authority remains fail-closed: `modelValidationComplete:false`, customer-eligible events `0`, `mayAdvanceDelivery:false`, duration authority unchanged/paused, persistent Policy C `UNENROLLED`.
-- Protected song remains embargoed until V5 passes external validation and a separate policy review explicitly approves it.
+- Authority is fail-closed: `modelValidationComplete:false`, customer-eligible events `0`, `mayAdvanceDelivery:false`, duration authority unchanged/paused, persistent Policy C `UNENROLLED`.
+- No customer promotion, Production change, duration work or protected-song execution is authorized by the FLGD result alone.
 
 ## HISTORICAL CLOSED LINES
 
-V1/V2 are rejected research diagnostics. V3/GuitarSet and V4/IDMT are closed and contaminated for future untouched-holdout use. Do not rerun/tune them.
+V1/V2 are rejected research diagnostics. GuitarSet/V3 and IDMT/V4 are closed and contaminated for future untouched-holdout use. Do not rerun/tune them.
 
 V4 final: 568/568 files, 7,619 decoded, 1,644 positive, 1,292 correct, precision `0.7858880778588808`, one-sided 95% Wilson LB `0.7687844934184139` vs required `0.9900` → FAIL. Artifact SHA-256 `d97ea2c7f004876fc43f6c3d2e28e4838df86a4a4c4a8bc8f8a2a98ab5e37d2c`; result commit `303e048f07d58370ab3256cdc226cdfd3628cf8a`; policy rejection `01a276045d32b643aa17013b959e89e41b0f305e`.
 
-## V5 — ACTIVE / SYNTHETIC CONTRACT GREEN
+## V5 — FROZEN METHOD / SYNTHETIC CONTRACT GREEN
 
-User explicitly authorized V5 on 2026-09-12.
+User authorized V5 on 2026-09-12.
 
 Preregistration: `docs/checkpoints/SONGSTERR_FRESH_MODEL_EVIDENCE_ADMISSION_PREREGISTRATION_V5.md`, commit `beb80f32311bd0b713b78d81049d68dbeec7afe3`.
 Contract: `songsterr-fresh-polyphonic-harmonic-necessity-corroboration-research-v5`.
@@ -29,189 +29,139 @@ Implementation: `scripts/songsterr-fresh/independent_pitch_corroboration_v5.py`,
 
 Frozen V5 constants: mono 44.1 kHz; MIDI 40..88; 8192-sample windows at offsets 2048/8192/14336; FFT 32768; 8 harmonics; NNLS; RMS min `1e-4`; necessity fraction min `0.01`; fundamental/max-harmonic ratio min `0.05`; all 3 views required; NumPy 1.26.4; SciPy 1.15.3. No duration/end, confidence/activation, reference truth, performer/style/dataset identity or event rewriting.
 
-20-case synthetic contract is green (`13 corroborated / 4 not / 3 insufficient`). Synthetic success is not admission evidence.
+Synthetic contract: 20 cases green (`13 corroborated / 4 not / 3 insufficient`). Synthetic success was never admission evidence.
 
 ## FLGD HOLDOUT — FROZEN SOURCE
 
 François Leduc Guitar Dataset:
 - HF `xavriley/FrancoisLeducGuitarDataset`
-- canonical origin `https://huggingface.co/datasets/xavriley/FrancoisLeducGuitarDataset`
+- origin `https://huggingface.co/datasets/xavriley/FrancoisLeducGuitarDataset`
 - exact revision `a38306c244b3ea81496ad58b4514622185e58211`
 - selected release declares MIT
-- media stays outside app repo / must not be redistributed.
+- media remains outside app repo / must not be redistributed.
 
 ### Stage A — COMPLETE / NO SCORING
 
-Real inventory run `34719034991`, job `103621353045`: SUCCESS.
-Immutable record `docs/checkpoints/SONGSTERR_FRESH_FLGD_V5_EXTERNAL_VALIDATION_STAGE_A_RESULT.md`, commit `b536f5c5eb479689fdd0d4d949b2715175d712aa`.
-Report SHA-256 `f03d6e3b9549a13dbcc9557ec6f13516fb52ac9d4fbf64138a0bb008b7a891b3`.
-
-Observed: 79 canonical `audio/` MP3 + 79 canonical `midi/`, 79 exact pairs, zero ambiguous/unpaired. `metadata.csv` SHA `05047b224d65dcf37b6f2e85e3c1457e9a3f26a50d4a9a87526b7ea4bde8048b`, 79 rows. `test_set/` duplicates/model outputs are forbidden as reference truth.
+Run `34719034991`, job `103621353045`: SUCCESS.
+Immutable record: `docs/checkpoints/SONGSTERR_FRESH_FLGD_V5_EXTERNAL_VALIDATION_STAGE_A_RESULT.md`, commit `b536f5c5eb479689fdd0d4d949b2715175d712aa`.
+Report SHA-256: `f03d6e3b9549a13dbcc9557ec6f13516fb52ac9d4fbf64138a0bb008b7a891b3`.
+Observed 79 canonical audio + 79 canonical MIDI, 79 exact pairs, zero ambiguous/unpaired. `test_set/` model outputs are forbidden as reference truth.
 
 ### Stage B — COMPLETE / IMMUTABLE / NO SCORING
 
-Initial Stage B failed closed on a structural duplicate note-off before producing a report. A preregistered structural audit then found across all 79 canonical MIDIs: 76,392 valid FIFO note pairs, 24 extra note-offs in 7 files, zero unmatched note-ons, zero same-key overlaps. Every extra off followed an earlier completed pair for that same `(channel,MIDI)`.
-
-Audit report SHA `111661c52b3cc5c5bd647d84bdd74af8fcef38799ff829e6edf23b2bd2f8fd24`; edge identity SHA `375029c7a0e2d80f25083743aa2d65c24c0de061f0e476db68987f218fcedef6`.
-
-Frozen pairing amendment: an off with no active onset may be ignored only if the same key already completed >=1 valid pair earlier in the file; leading orphan offs and unmatched ons still fail. Exactly 24 ignored duplicate releases are required for this exact release.
-
-Official Stage B run `34719744595`, job `103623274603`: SUCCESS at source `ac57c6c5379f00ad97c292415efec90c9ed32860`.
-Immutable record `docs/checkpoints/SONGSTERR_FRESH_FLGD_V5_STAGE_B_RESULT.md`, commit `0bc647b112745953464f24eb0980e49ff348ebb2`.
+Official Stage B run `34719744595`, job `103623274603`: SUCCESS.
+Immutable record: `docs/checkpoints/SONGSTERR_FRESH_FLGD_V5_STAGE_B_RESULT.md`, commit `0bc647b112745953464f24eb0980e49ff348ebb2`.
 
 Frozen Stage B identities:
 - report SHA-256 `065335aac5a6cd46ef713bae9f19d6f7ca7d764233419f6d8eb9ec6bace9911e`
 - included-population SHA-256 `def77a45baf1b453e3f8ec0feed82e1cd3964bd85d50fb30f4912c0564425b02`
 - reference-event identity SHA-256 `e34b360515d35dc77a6f423eb8a36e860e46f9469c16a499243186aea1f6223a`
 - ignored-duplicate-release identity SHA-256 `8751a5425e3348b4e7005b09121bd43425c23a9f296b8f2e58c8da1c245fcfd3`
-- all 79 rows included; split train 62 / validate 8 / test 9
+- 79 rows; split train 62 / validate 8 / test 9
 - guitar types nylon 40 / electric 35 / acoustic 3 / electric-band 1
-- reference note events 76,392
-- MIDI range 38..88
-- all canonical MIDI format 1 / 2 tracks / PPQ 220 / tempo 500000 us/qn / channel 0.
+- 76,392 reference note events.
 
-All Stage B model/correctness/authority fields remained false/zero. FLGD correctness was still unseen.
+### Alignment semantics — FROZEN
 
-### Alignment semantics — FROZEN / NO SCORING
+Audit result: `docs/checkpoints/SONGSTERR_FRESH_FLGD_V5_ALIGNMENT_SEMANTICS_RESULT.md`, commit `e62de24d49aa83d3f099da9a8ce723111961c27c`.
+Canonical metadata-named MIDI note times under standard SMF/PrettyMIDI tempo semantics are authoritative audio-aligned reference times. Syncpoints do not warp note onset/offset correctness scoring.
 
-Audit preregistration `docs/checkpoints/SONGSTERR_FRESH_FLGD_V5_ALIGNMENT_SEMANTICS_AUDIT.md`, commit `9ae2ffea5207373425f721fa8497124bd758ca6d`.
-Audit workflow run `34719868249`, job `103623610804`: SUCCESS.
-Result `docs/checkpoints/SONGSTERR_FRESH_FLGD_V5_ALIGNMENT_SEMANTICS_RESULT.md`, commit `e62de24d49aa83d3f099da9a8ce723111961c27c`.
+### Final scoring contract — FROZEN
 
-Frozen decision: canonical metadata-named MIDI note times under standard SMF/PrettyMIDI tempo semantics are the authoritative audio-aligned reference times. Syncpoints are auxiliary score/downbeat metadata and are not used to warp note onsets/offsets for correctness scoring.
+Preregistration: `docs/checkpoints/SONGSTERR_FRESH_FLGD_V5_FINAL_SCORING_PREREGISTRATION.md`, commit `846cdedad46c10553569011a28ae01c72a9f6504`.
+Numerical amendment: `docs/checkpoints/SONGSTERR_FRESH_FLGD_V5_SCORING_NUMERICAL_AMENDMENT.md`, commit `2d547c6d034defebf8369db7f48fafcf15a02cec`.
 
-### Final V5 scoring preregistration — FROZEN
+Frozen scoring requirements:
+- all 79 performances; no result-based exclusions;
+- Basic Pitch 0.4.0 CPU, MIDI 40..88, onset 0.5, frame 0.3, minimum note length 127.7 ms, no pitch bends, melodia trick on;
+- every decoded event preserved and V5-classified exactly once;
+- only `independently-corroborated-candidate` is positive;
+- deterministic maximum-cardinality matching, onset <=50 ms inclusive, pitch <=50 cents inclusive; offsets/durations ignored;
+- pooled positives >=1000 and one-sided 95% Wilson LB >=0.9900;
+- every split/guitar-type stratum with >=100 positives requires point precision >=0.9500;
+- runtime/identity/event-preservation/policy guards must pass;
+- a passing execution still requires separate policy review.
 
-Final contract: `docs/checkpoints/SONGSTERR_FRESH_FLGD_V5_FINAL_SCORING_PREREGISTRATION.md`, commit `846cdedad46c10553569011a28ae01c72a9f6504`.
-Numerical inclusive-boundary amendment: `docs/checkpoints/SONGSTERR_FRESH_FLGD_V5_SCORING_NUMERICAL_AMENDMENT.md`, commit `2d547c6d034defebf8369db7f48fafcf15a02cec`.
+Harness record: `docs/checkpoints/SONGSTERR_FRESH_FLGD_V5_SCORING_HARNESS.md`, commit `2509ccfe24ded590148110d8485f1b2e0ff6173d`.
+Frozen experimental source: `6a3ea0808676ead13518e258fa912fd62a4eb33c`.
 
-Frozen scoring path:
-- all 79 Stage B performances; no result-based exclusions;
-- no Demucs; canonical MP3 decoded mono at 44.1 kHz with librosa 0.11.0, written/read as SoundFile 0.13.1 FLOAT WAV;
-- Basic Pitch 0.4.0, CPU only, MIDI 40..88, onset threshold 0.5, frame threshold 0.3, minimum note length 127.7 ms, `multiple_pitch_bends=False`, `melodia_trick=True`;
-- every decoded event preserved and classified by V5 exactly once;
-- only `independently-corroborated-candidate` is V5-positive;
-- matching per performance, deterministic maximum-cardinality, onset <=50 ms inclusive and pitch <=50 cents inclusive; offsets/durations ignored;
-- numerical boundary uses only `delta < limit OR math.isclose(delta,limit,rel_tol=0,abs_tol=1e-12)`;
-- primary metric V5-positive precision; one-sided 95% Wilson LB z `1.6448536269514722`;
-- pooled positives >=1000 and pooled Wilson LB >=0.9900;
-- each split/guitar-type stratum with >=100 positives requires point precision >=0.9500;
-- all runtime/identity/event-preservation/policy guards must pass;
-- a passing execution still cannot promote without separate policy review.
+## OFFICIAL V5 CORRECTNESS EXECUTION — COMPLETE
 
-### Scoring harness — FROZEN CONTROLLED GREEN
+Authorized wrapper: `.github/workflows/songsterr-fresh-flgd-v5-official-correctness.yml`, creation commit `66e93b11ae6d087a9c02d801f159e7bc5342e1ba`.
 
-Harness: `scripts/songsterr-fresh/external_flgd_v5_validation.py`.
-Official deferred-reveal entrypoint: `scripts/songsterr-fresh/run_external_flgd_v5_validation.py`, frozen blob `6371ccbbaa37e3ca84f8d9547447347665bced27`.
-Controlled test: `scripts/songsterr-fresh/test_external_flgd_v5_validation.py`.
-Method record: `docs/checkpoints/SONGSTERR_FRESH_FLGD_V5_SCORING_HARNESS.md`, commit `2509ccfe24ded590148110d8485f1b2e0ff6173d`.
+Single official run:
+- workflow run `34748789583`
+- job `103701492462`
+- wrapper/head `66e93b11ae6d087a9c02d801f159e7bc5342e1ba`
+- frozen source `6a3ea0808676ead13518e258fa912fd62a4eb33c`
+- FLGD revision `a38306c244b3ea81496ad58b4514622185e58211`
+- Stage B report SHA-256 `065335aac5a6cd46ef713bae9f19d6f7ca7d764233419f6d8eb9ec6bace9911e`
 
-Final controlled workflow source `2ae9b6b797449b5b11de370b2e5836c4707fd5c9`.
-Controlled run `34720390259`, job `103625060255`: SUCCESS. It had no real FLGD checkout and no Basic Pitch model invocation.
+All execution steps, including official scoring, result-identity verification, fail-closed policy verification and artifact upload, completed `success`.
 
-## LAUNCH-GATE VERIFICATION — 2026-09-13
+Deferred-reveal safety remained valid: all 79 reference-blind phase-1 files completed before phase-2 scoring; no partial correctness progress was emitted.
 
-Fresh-chat verification completed against exact frozen experimental source `6a3ea0808676ead13518e258fa912fd62a4eb33c`.
+## IMMUTABLE OFFICIAL RESULT — RECORDED / POLICY REVIEW PENDING
 
-- All ten FLGD V5 workflow files at the frozen source were accounted for; none executed the real deferred-reveal entrypoint with FLGD + Basic Pitch.
-- Exact-frozen-SHA Actions history contained only controlled run `34720661531`; no prior official correctness run was identified.
-- Immutable Stage B artifact remained available from run `34719744595`, artifact id `10305323053`, name `flgd-v5-stage-b-manifest-amended`.
-- User explicitly authorized creation of the minimum official execution wrapper on 2026-09-13. This authorization did not reopen thresholds, matching, holdout selection, V143/Gomyway, duration, protected-song, Production, or policy authority.
+Immutable factual result checkpoint:
+`docs/checkpoints/SONGSTERR_FRESH_FLGD_V5_OFFICIAL_CORRECTNESS_RESULT.md`
 
-## AUTHORIZED OFFICIAL WRAPPER — CREATED
+Result checkpoint commit:
+`df6a306a055303a6f37b229bfc9e538803f25337`
 
-Workflow: `.github/workflows/songsterr-fresh-flgd-v5-official-correctness.yml`.
-Creation commit: `66e93b11ae6d087a9c02d801f159e7bc5342e1ba`.
+Official artifact:
+- name `flgd-v5-official-correctness-result`
+- artifact ID `10316047064`
+- archive SHA-256 `04bf94764c38346298f78d04ee8419f1f663091cc8abe31ee827f4c54df42fb7`
+- result JSON SHA-256 `a79a09a695142ccd8c68d7d04089bb0d3ec675c11c6a39167f1e1cd0740b9c04`
 
-The wrapper locally rebinds to frozen experimental source `6a3ea0808676ead13518e258fa912fd62a4eb33c` under local branch name `songsterr-fresh-pipeline-v1`, installs the frozen CPU runtime, clones exact FLGD revision, downloads/verifies the immutable Stage B report, invokes only the pre-existing frozen deferred-reveal runner, verifies fail-closed result guards, and uploads one result JSON artifact `flgd-v5-official-correctness-result`.
+Recorded result fields, without policy interpretation in this checkpoint update:
+- completed files `79 / 79`
+- decoded/classified events `84,577 / 84,577`
+- positive events `43,349`
+- positive correct `27,850`
+- positive precision `0.642460033680131`
+- one-sided 95% Wilson LB `0.6386648804090969`
+- event preservation `true`
+- population completeness `true`
+- identity/runtime guards `true`
+- policy-boundary guard `true`
+- minimum-positive gate `true`
+- overall-Wilson gate `false`
+- split robustness: train `false`, validate `false`, test `false`
+- guitar-type robustness: nylon `false`, electric `false`, acoustic `false`, electric-band `false`
+- `allMandatoryGatesPassed:false`
+- `externalValidationPassed:false`
 
-No alternate scorer, matcher, threshold, holdout selection, model setting, or archived pipeline is introduced.
+Result policy fields remain fail-closed:
+- `admissionDecisionMade:false`
+- `modelValidationComplete:false`
+- customer-eligible events `0`
+- `mayAdvanceDelivery:false`
+- duration authority unchanged
+- protected song unused/embargoed
+- separate policy review required.
 
-## OFFICIAL V5 CORRECTNESS RUN — ACTIVE
-
-Single authorized run:
-- workflow: `Songsterr Fresh FLGD V5 Official Correctness`
-- workflow id: `357002378`
-- workflow path: `.github/workflows/songsterr-fresh-flgd-v5-official-correctness.yml`
-- run id: `34748789583`
-- run number: `1`
-- trigger: `push`
-- wrapper/head commit: `66e93b11ae6d087a9c02d801f159e7bc5342e1ba`
-- official job id: `103701492462`
-- frozen experimental source: `6a3ea0808676ead13518e258fa912fd62a4eb33c`
-- exact FLGD revision: `a38306c244b3ea81496ad58b4514622185e58211`
-- exact Stage B report SHA-256: `065335aac5a6cd46ef713bae9f19d6f7ca7d764233419f6d8eb9ec6bace9911e`
-
-Observed job state at this checkpoint:
-1. Set up job — SUCCESS
-2. Checkout execution-infrastructure branch — SUCCESS
-3. Bind local repository to exact frozen experimental source — SUCCESS
-4. Set up Python 3.10 — SUCCESS
-5. Install system prerequisites — SUCCESS
-6. Install frozen model runtime — SUCCESS
-7. Clone exact FLGD holdout revision — SUCCESS
-8. Download immutable Stage B artifact — SUCCESS
-9. Verify immutable Stage B report — SUCCESS
-10. Execute one official frozen FLGD V5 correctness evaluation — **IN PROGRESS**
-11. Verify result identity and fail-closed policy boundary — pending
-12. Upload official result only — pending
-
-The run has therefore crossed all pre-scoring identity/runtime/holdout gates successfully and is currently inside the frozen two-phase runner. The connector does not expose a live job log while the job is in progress, so no partial track-by-track output is being used or interpreted. No downstream result-verification or artifact-upload step has started at this checkpoint.
-
-Fresh-chat continuation reinspection on 2026-09-13 confirmed the same fail-closed state: run `34748789583` remains `in_progress`, job `103701492462` remains inside step 10, steps 11–12 have not started, and no `flgd-v5-official-correctness-result` artifact is present. No partial correctness output was inspected or interpreted and no rerun/dispatch was initiated.
-
-Do not dispatch or trigger another copy while run `34748789583` exists. If this run reaches correctness, no result-seeking rerun is permitted. If it fails before correctness exposure, diagnose and checkpoint that infrastructure failure fail-closed before any technical retry decision.
+The FLGD holdout is now revealed. Do not rerun this holdout under the V5 preregistration and do not tune V5, Basic Pitch settings, thresholds, tolerances, matcher, files, strata, gates or holdout selection against this result.
 
 ## NEXT ALLOWED ACTION
 
-Inspect only run `34748789583` / job `103701492462` until step 10 completes. Then:
-- verify step 11 passes the source/dataset/Stage-B/79-file/fail-closed policy guards;
-- inspect the uploaded `flgd-v5-official-correctness-result` artifact;
-- capture artifact ID, archive digest, result JSON SHA-256 and all frozen aggregate/stratum gates;
-- write an immutable official-result checkpoint before interpretation;
-- conduct the separate policy review only after immutable result recording.
+Conduct the separate V5 policy review from the immutable result checkpoint. The policy review must not change the revealed experimental result and must preserve the no-rerun/no-post-hoc-tuning boundary.
 
-After any correctness result is observed: do not tune V5, Basic Pitch settings, matching/tolerances/gates, files or strata; do not rerun FLGD under this preregistration to seek a better result.
-
-## FRESH-CHAT HANDOFF — V5 OFFICIAL RUN ACTIVE
-
-Continue only on `songsterr-fresh-pipeline-v1`. Do not reopen archived V143/Gomyway, V1/V2, GuitarSet/V3, IDMT/V4, GOAT, duration research, broad optimizer work, or protected-song execution.
-
-Run `34748789583`, job `103701492462` is the single authorized official correctness run. Steps 1–9 are green and step 10 was in progress at the latest checkpoint. Inspect this run first; never launch another copy while it exists.
-
-The exact experimental source remains `6a3ea0808676ead13518e258fa912fd62a4eb33c`; wrapper/checkpoint commits are infrastructure/documentation only and do not re-freeze V5.
-
-Authority remains false/zero until immutable result recording and a separate policy review.
+Until that review is committed, keep `modelValidationComplete:false`, customer-eligible events `0`, `mayAdvanceDelivery:false`, duration authority paused, protected song embargoed and Policy C `UNENROLLED`.
 
 ## STILL FORBIDDEN
 
-- any post-result tuning/rerun under this preregistration
+- any V5 result-seeking rerun or post-result tuning under this preregistration
 - post-hoc FLGD row/stratum selection
-- `test_set/` model outputs as truth
+- use of `test_set/` model outputs as truth
 - GuitarSet/IDMT rerun/tuning
-- protected-song execution before V5 passes external validation + policy approval
+- protected-song execution
 - duration research
 - archived V143/Gomyway / GOAT / reference scoring
 - broad threshold sweeps / training / fine-tuning
-- customer promotion without passing preregistered external validation and separate policy approval
+- Production/customer promotion without a valid later policy authorization
 
-## FRESH-CHAT NEXT STEPS — 2026-09-13
+## FRESH-CHAT HANDOFF
 
-Use this sequence exactly unless a later immutable checkpoint supersedes it:
-
-1. Fetch this file from branch `songsterr-fresh-pipeline-v1` and treat it as the canonical state.
-2. Inspect GitHub Actions run `34748789583` and job `103701492462` first. It is the single authorized official FLGD V5 correctness execution. **Do not launch, dispatch, rerun, or trigger another copy while this run exists.**
-3. Confirm the run still binds the experiment to frozen source `6a3ea0808676ead13518e258fa912fd62a4eb33c`, FLGD revision `a38306c244b3ea81496ad58b4514622185e58211`, immutable Stage B report SHA-256 `065335aac5a6cd46ef713bae9f19d6f7ca7d764233419f6d8eb9ec6bace9911e`, and workflow `.github/workflows/songsterr-fresh-flgd-v5-official-correctness.yml`.
-4. If the run is still in progress, inspect status/step state only. Do not use or interpret partial track-by-track output, partial classification counts, or any partial correctness information.
-5. If the run completes successfully, inspect the job steps/logs and the artifact `flgd-v5-official-correctness-result`. Verify the result-identity guard, all 79 performances, event preservation, frozen runtime/source/dataset/Stage-B identities, and fail-closed policy boundary before interpreting metrics.
-6. Capture and checkpoint the workflow run ID, job ID, artifact ID, artifact archive digest, result JSON SHA-256, exact source identities, aggregate decoded/classified/positive/correct counts, pooled precision, one-sided Wilson lower bound, split strata, guitar-type strata, mandatory gates, and `externalValidationPassed`.
-7. Write a dedicated immutable official-result checkpoint **before** interpreting pass/fail or making any policy decision. Update this canonical current-state checkpoint to point to that immutable result record.
-8. If the run fails, first determine whether correctness was ever exposed. If failure occurred before correctness exposure, record the infrastructure failure fail-closed and decide explicitly whether any retry is compatible with the one-off preregistration. Do not retry automatically. If correctness was exposed before failure, treat the holdout as revealed and do not rerun to seek a better result.
-9. After correctness is exposed by any path, do not tune or change V5, Basic Pitch settings, thresholds, tolerances, matcher, files, strata, gates, or holdout selection under this preregistration.
-10. After immutable result recording, proceed only to the separate policy review required by the frozen preregistration. External-validation success alone does not authorize Production, customer eligibility, delivery advancement, duration work, protected-song execution, or reopening archived research.
-11. Keep `modelValidationComplete:false`, customer-eligible events `0`, `mayAdvanceDelivery:false`, duration authority unchanged/paused, and Policy C `UNENROLLED` unless a later explicit policy checkpoint changes them.
-12. Do not resume archived V143/Gomyway, GOAT/reference scoring, GuitarSet/IDMT, duration research, broad optimizer work, or protected-song execution unless the user explicitly reopens that scope.
-
-Fresh-chat opening instruction:
-
-**“Continue from `docs/checkpoints/SONGSTERR_FRESH_PIPELINE_CURRENT_STATE.md` on branch `songsterr-fresh-pipeline-v1`. Inspect official run `34748789583` / job `103701492462` first. Do not launch a second FLGD V5 correctness run and do not resume archived V143/Gomyway.”**
+Continue from this file on `songsterr-fresh-pipeline-v1`. The official FLGD V5 result has been immutably recorded at commit `df6a306a055303a6f37b229bfc9e538803f25337`; the next action is the separate V5 policy review. Do not rerun FLGD V5 and do not resume archived V143/Gomyway unless the user explicitly reopens that scope.
