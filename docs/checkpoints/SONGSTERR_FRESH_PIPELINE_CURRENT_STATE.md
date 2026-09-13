@@ -90,17 +90,42 @@ Run `34754519541`, job `103716527380`
 Frozen audit source `77510e2e797915166a5737750769824e44c49e89`
 GitHub-hosted CPU only; no Modal/Vercel-heavy-GPU/L4.
 
-Pre-package gates are green: exact source binding, pinned CPU runtime, controlled synthetic alignment tests and reference-blind audit guard. The run is currently in the sequential nine-package Zenodo download/DI-MIDI audit step. Merge, fail-closed result verification and artifact upload are pending.
+Pre-package gates are green: exact source binding, pinned CPU runtime, controlled synthetic alignment tests and reference-blind audit guard.
+
+Fresh-chat status checkpoint: steps 1–7 are `success`; step 8 `Download and audit exact Guitar-TECHS v1 packages sequentially` is `in_progress`; steps 9 `Merge frozen inventory and alignment result`, 10 `Verify fail-closed audit result boundary`, and 11 `Upload immutable audit outputs` are pending. Do not inspect/interpret partial per-package alignment output and do not launch a duplicate.
 
 The frozen alignment decision is A raw timestamps / B immutable per-file constant offsets / C dataset unsuitable. Future model correctness cannot change that decision or any lag.
 
 ## NEXT ALLOWED ACTION
 
-Inspect only run `34754519541` until the alignment/inventory audit finishes; do not start a duplicate.
+Inspect only run `34754519541` / job `103716527380` until the alignment/inventory audit finishes; do not start a duplicate.
 
 On success: integrity-check the audit artifact, write an immutable Guitar-TECHS alignment/inventory result checkpoint and update this file. If A/B, create a final binding checkpoint that fills only immutable audit/population/alignment identities into the already-frozen scoring framework, then build controlled scoring harness CI with **no real correctness** before one official external run. If C, do not score Guitar-TECHS; reject it and search metadata-only for another untouched holdout.
 
 Ask the user only if a Modal, Vercel heavy-GPU or L4 run becomes necessary.
+
+## FRESH-CHAT NEXT STEPS — EXECUTE IN THIS ORDER
+
+1. Fetch this canonical file from `songsterr-fresh-pipeline-v1` and treat it as source of truth. Do not infer state from older chat text if this file has moved.
+2. Inspect GitHub Actions run `34754519541`, job `103716527380` first. Do not dispatch, rerun or trigger another copy.
+3. If step 8 is still active, inspect only status/step state. Do not interpret partial package alignment values, do not run Basic Pitch, and do not run V6 correctness.
+4. If the audit completes successfully, verify steps 9–11 are successful and fetch artifact `guitar-techs-v6-alignment-inventory`.
+5. Capture and verify: run/job IDs, artifact ID, GitHub artifact archive digest, downloaded ZIP SHA-256, merged-result JSON SHA-256, all nine archive MD5 identities, package count, DI/MIDI pair count, reference-event count, pitch range, unpaired DI/MIDI counts, MIDI anomaly totals, sample-rate/channel/subtype/MIDI-format/PPQ counts, alignment status counts, lag summary, pairing identity manifest SHA-256, alignment lag manifest SHA-256, proposed scoring population SHA-256, policy-boundary fields, `datasetStructurallySuitable`, and frozen alignment decision A/B/C.
+6. Write a dedicated immutable Guitar-TECHS audit-result checkpoint **before** using the result to advance execution. The checkpoint should record facts/identities and the frozen A/B/C outcome, not modify V6/scoring rules.
+7. Update this canonical current-state file to point to that immutable audit result.
+8. If outcome **C**, fail closed: do not score Guitar-TECHS. Record rejection and search only metadata/licensing/structure for a new untouched holdout. Do not expose another corpus to correctness until preregistered.
+9. If outcome **A or B**, create a binding checkpoint that fills only the pending immutable holdout identities into `SONGSTERR_FRESH_V6_EXTERNAL_SCORING_FRAMEWORK_PREREGISTRATION.md`'s already-frozen framework. For B, bind the exact per-pair lag manifest; for A, bind raw-MIDI timing authority. Do not change V6 constants, Basic Pitch settings, canonical audio preparation, matching tolerances, Wilson statistic, gates, player/category strata rules, or deferred-reveal policy.
+10. Build the external scoring harness and wrapper against the frozen V6 implementation and bound Guitar-TECHS population. Preserve every Basic Pitch event and selected MIDI exactly; classify every decoded event exactly once; use DI-only canonical audio; no Demucs; no duration authority.
+11. Run controlled synthetic/contract-only CI for the scoring harness. It must not invoke real Guitar-TECHS correctness. Verify source/runtime/population binding, event preservation, matcher boundary behavior, Wilson math, strata accounting, policy guards, and two-phase deferred reveal.
+12. Checkpoint the controlled harness green state before any official correctness run.
+13. Then launch exactly one official Guitar-TECHS V6 external correctness execution on the frozen source/population using ordinary GitHub CPU unless a different compute path becomes necessary. If Modal, Vercel heavy-GPU or L4 would be used, stop and ask the user for explicit authorization first.
+14. During official Phase 1, do not inspect or interpret partial correctness. Require every immutable pair to finish reference-blind Basic Pitch decoding + V6 classification before Phase 2 begins.
+15. After Phase 2 completes, retrieve the one final result artifact and verify all source/runtime/population/alignment/event-preservation/policy identities before interpreting metrics.
+16. Record the immutable official V6 correctness result **before** pass/fail interpretation. Capture pooled decoded/classified/positive/correct counts, V6-positive precision, one-sided Wilson LB, player/category strata, all mandatory gate booleans, and `externalValidationPassed`.
+17. After any correctness result is exposed, do not tune V6, Basic Pitch, audio preparation, matching/tolerances, uncertainty, gates, population, alignment or strata, and do not rerun Guitar-TECHS to seek a better result.
+18. Only after the immutable result record exists, perform a separate policy review. A technical pass alone does not authorize customer/Production promotion, duration work, protected-song execution, or reopening archived V143/Gomyway.
+19. Keep authority fail-closed unless a later explicit policy checkpoint legitimately changes it: `modelValidationComplete:false`, customer-eligible events `0`, `mayAdvanceDelivery:false`, duration authority paused, Policy C `UNENROLLED`, protected song embargoed.
+20. Continue updating this canonical file frequently at meaningful state transitions. Check workflow path filters before documentation pushes when an active push-triggered experiment exists, and verify no duplicate experiment was spawned after any potentially relevant workflow-file change.
 
 ## STILL FORBIDDEN
 
@@ -108,6 +133,7 @@ Ask the user only if a Modal, Vercel heavy-GPU or L4 run becomes necessary.
 - using FLGD/IDMT/GuitarSet/protected-song correctness to tune V6
 - changing frozen V6/scoring rules from Guitar-TECHS observations
 - Guitar-TECHS Basic Pitch/V6 correctness before immutable audit result + final binding/harness controls
+- changing Guitar-TECHS alignment from future correctness
 - protected-song execution
 - duration research
 - archived V143/Gomyway / GOAT/reference scoring
@@ -118,4 +144,6 @@ Ask the user only if a Modal, Vercel heavy-GPU or L4 run becomes necessary.
 
 ## FRESH-CHAT HANDOFF
 
-Continue only on `songsterr-fresh-pipeline-v1`. V5 is closed/rejected. V6 method and scoring framework are frozen before real correctness. Guitar-TECHS reference-blind audit run `34754519541` / job `103716527380` is the current active work; inspect it first. Do not resume V143/Gomyway and do not run Guitar-TECHS correctness until the audit/binding/harness prerequisites are satisfied.
+Continue only on `songsterr-fresh-pipeline-v1` and read this file first. V5 is closed/rejected. V6 method and external scoring framework are frozen before real correctness. Guitar-TECHS reference-blind audit run `34754519541` / job `103716527380` is the current active work and was still in step 8 at the latest checkpoint; inspect that run first.
+
+Do not resume V143/Gomyway. Do not run Guitar-TECHS correctness until the audit result is immutable, A/B binding is frozen, and controlled scoring-harness CI is green. Ask the user only before Modal, Vercel heavy-GPU or L4 execution; everything else within these scientific/policy boundaries may proceed at assistant discretion.
