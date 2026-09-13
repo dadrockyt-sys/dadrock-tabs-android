@@ -1,0 +1,184 @@
+name: Songsterr Fresh FLGD V5 Official Correctness
+
+on:
+  workflow_dispatch:
+  push:
+    branches: [songsterr-fresh-pipeline-v1]
+    paths:
+      - '.github/workflows/songsterr-fresh-flgd-v5-official-correctness.yml'
+
+permissions:
+  contents: read
+  actions: read
+
+concurrency:
+  group: songsterr-fresh-flgd-v5-official-correctness-once
+  cancel-in-progress: false
+
+env:
+  FROZEN_SOURCE_SHA: 6a3ea0808676ead13518e258fa912fd62a4eb33c
+  FLGD_REVISION: a38306c244b3ea81496ad58b4514622185e58211
+  STAGE_B_RUN_ID: '34719744595'
+  STAGE_B_ARTIFACT_NAME: flgd-v5-stage-b-manifest-amended
+  STAGE_B_REPORT_SHA256: 065335aac5a6cd46ef713bae9f19d6f7ca7d764233419f6d8eb9ec6bace9911e
+
+jobs:
+  official-correctness:
+    runs-on: ubuntu-latest
+    timeout-minutes: 360
+    steps:
+      - name: Checkout execution-infrastructure branch
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Bind local repository to exact frozen experimental source
+        shell: bash
+        run: |
+          set -euo pipefail
+          git fetch --no-tags origin "$FROZEN_SOURCE_SHA"
+          git checkout -B songsterr-fresh-pipeline-v1 "$FROZEN_SOURCE_SHA"
+          test "$(git rev-parse HEAD)" = "$FROZEN_SOURCE_SHA"
+          test "$(git rev-parse --abbrev-ref HEAD)" = 'songsterr-fresh-pipeline-v1'
+          test -z "$(git status --porcelain)"
+          echo "FROZEN_SOURCE_BOUND=$FROZEN_SOURCE_SHA"
+
+      - name: Set up Python 3.10
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.10'
+
+      - name: Install system prerequisites
+        shell: bash
+        run: |
+          set -euo pipefail
+          sudo apt-get update
+          sudo apt-get install -y ffmpeg git-lfs unzip
+          git lfs version
+          ffmpeg -version | head -n 1
+
+      - name: Install frozen model runtime
+        shell: bash
+        env:
+          CUDA_VISIBLE_DEVICES: ''
+        run: |
+          set -euo pipefail
+          python -m pip install --upgrade pip
+          python -m pip install \
+            'basic-pitch==0.4.0' \
+            'numpy==1.26.4' \
+            'scipy==1.15.3' \
+            'librosa==0.11.0' \
+            'soundfile==0.13.1'
+          python - <<'PY'
+          import platform, sys
+          from importlib.metadata import version
+          expected = {
+              'basic-pitch': '0.4.0',
+              'numpy': '1.26.4',
+              'scipy': '1.15.3',
+              'librosa': '0.11.0',
+              'soundfile': '0.13.1',
+          }
+          assert sys.version_info[:2] == (3, 10), platform.python_version()
+          assert platform.system() == 'Linux', platform.system()
+          assert platform.machine().lower() in {'x86_64', 'amd64'}, platform.machine()
+          for package, wanted in expected.items():
+              actual = version(package)
+              assert actual == wanted, (package, actual, wanted)
+              print(f'RUNTIME_PIN {package}={actual}')
+          PY
+
+      - name: Clone exact FLGD holdout revision
+        shell: bash
+        run: |
+          set -euo pipefail
+          DATASET="$RUNNER_TEMP/flgd-v5-official"
+          export GIT_LFS_SKIP_SMUDGE=1
+          git clone --no-checkout https://huggingface.co/datasets/xavriley/FrancoisLeducGuitarDataset "$DATASET"
+          git -C "$DATASET" checkout --detach "$FLGD_REVISION"
+          git -C "$DATASET" lfs install --local
+          git -C "$DATASET" lfs pull
+          test "$(git -C "$DATASET" rev-parse HEAD)" = "$FLGD_REVISION"
+          test -z "$(git -C "$DATASET" status --porcelain)"
+          test "$(git -C "$DATASET" remote get-url origin | sed 's#\.git$##; s#/$##')" = 'https://huggingface.co/datasets/xavriley/FrancoisLeducGuitarDataset'
+          echo "DATASET_ROOT=$DATASET" >> "$GITHUB_ENV"
+          echo "FLGD_REVISION_BOUND=$FLGD_REVISION"
+
+      - name: Download immutable Stage B artifact
+        uses: actions/download-artifact@v4
+        with:
+          name: ${{ env.STAGE_B_ARTIFACT_NAME }}
+          path: ${{ runner.temp }}/stage-b
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          repository: dadrockyt-sys/dadrock-tabs-android
+          run-id: ${{ env.STAGE_B_RUN_ID }}
+
+      - name: Verify immutable Stage B report
+        shell: bash
+        run: |
+          set -euo pipefail
+          REPORT="$RUNNER_TEMP/stage-b/flgd-v5-stage-b-manifest-amended.json"
+          test -f "$REPORT"
+          ACTUAL="$(sha256sum "$REPORT" | awk '{print $1}')"
+          test "$ACTUAL" = "$STAGE_B_REPORT_SHA256"
+          echo "STAGE_B_RESULT=$REPORT" >> "$GITHUB_ENV"
+          echo "STAGE_B_REPORT_SHA256_VERIFIED=$ACTUAL"
+
+      - name: Execute one official frozen FLGD V5 correctness evaluation
+        shell: bash
+        env:
+          CUDA_VISIBLE_DEVICES: ''
+        run: |
+          set -euo pipefail
+          WORK="$RUNNER_TEMP/flgd-v5-official-work"
+          RESULT="$RUNNER_TEMP/flgd-v5-official-result.json"
+          test ! -e "$WORK"
+          test ! -e "$RESULT"
+          python scripts/songsterr-fresh/run_external_flgd_v5_validation.py \
+            --repo-root "$GITHUB_WORKSPACE" \
+            --dataset-root "$DATASET_ROOT" \
+            --stage-b-result "$STAGE_B_RESULT" \
+            --work-dir "$WORK" \
+            --output "$RESULT"
+          test -f "$RESULT"
+          echo "OFFICIAL_RESULT=$RESULT" >> "$GITHUB_ENV"
+
+      - name: Verify result identity and fail-closed policy boundary
+        shell: bash
+        run: |
+          set -euo pipefail
+          python - "$OFFICIAL_RESULT" "$FROZEN_SOURCE_SHA" "$FLGD_REVISION" "$STAGE_B_REPORT_SHA256" <<'PY'
+          import hashlib, json, pathlib, sys
+          path = pathlib.Path(sys.argv[1])
+          frozen, flgd, stage_b_sha = sys.argv[2:]
+          payload = json.loads(path.read_text(encoding='utf-8'))
+          assert payload['source']['commitSha'] == frozen
+          assert payload['source']['branch'] == 'songsterr-fresh-pipeline-v1'
+          assert payload['source']['worktreeClean'] is True
+          assert payload['dataset']['headSha'] == flgd
+          assert payload['inputs']['stageBReportSha256'] == stage_b_sha
+          assert payload['aggregate']['completedFileCount'] == 79
+          safety = payload['executionSafety']
+          assert safety['referenceBlindPhase1RequiredForAllFiles'] is True
+          assert safety['phase1CompletedFileCountBeforeScoring'] == 79
+          assert safety['partialCorrectnessProgressEmitted'] is False
+          policy = payload['policyBoundary']
+          assert policy['modelValidationComplete'] is False
+          assert policy['customerEligibleEvents'] == 0
+          assert policy['mayAdvanceDelivery'] is False
+          assert policy['durationAuthorityChanged'] is False
+          assert policy['protectedSongUsed'] is False
+          assert policy['separatePolicyReviewRequired'] is True
+          digest = hashlib.sha256(path.read_bytes()).hexdigest()
+          print(f'OFFICIAL_RESULT_SHA256={digest}')
+          print('OFFICIAL_RESULT_GUARDS_VERIFIED')
+          PY
+
+      - name: Upload official result only
+        uses: actions/upload-artifact@v4
+        with:
+          name: flgd-v5-official-correctness-result
+          path: ${{ env.OFFICIAL_RESULT }}
+          if-no-files-found: error
+          retention-days: 90
