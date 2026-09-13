@@ -84,16 +84,21 @@ No V6 correctness has been run on any replacement candidate.
 - `docs/checkpoints/SONGSTERR_FRESH_V6_GENERAL_CORPUS_METADATA_SWEEP_2026-09-13.md`, commit `c962d14c94aac08858226166c712ad93ea651993`.
 - `docs/checkpoints/SONGSTERR_FRESH_V6_RECENT_REPOSITORY_SWEEP_2026-09-13.md`, commit `f5961fe28bda99721721f7fdcb5c0481c5ab80fb`.
 - `docs/checkpoints/SONGSTERR_FRESH_V6_MULTITRACK_BENCHMARK_SWEEP_2026-09-13.md`, commit `fb3469695768ce572c2c8fce2d7bdc6c5711a9fb`.
+- `docs/checkpoints/SONGSTERR_FRESH_V6_RIGHTS_MIRROR_FRONTIER_RECHECK_2026-09-13.md`, commit `23d55751561b7102e6e726a6adc8a419511e67dd`.
 
 ### AG-PT-set — SCIENTIFICALLY STRONG / RIGHTS BLOCKED
 
 Zenodo record `10159492`, ~6.7 GB, ~15 h 55 m audio, with 32,592 musician-annotated millisecond-level onset events and released pitch metadata. Scientifically strong, but the actual data/audio archive has no authoritative permissive data-file license in the surfaced Zenodo rights metadata.
 
+Latest primary-rights recheck confirms the Zenodo dataset record still exposes the archive and scientific metadata without surfacing an explicit dataset-file license. The associated paper's CC BY 4.0 license is not treated as a license to the 6.7 GB performance archive.
+
 Disposition: do not download/audit unless an authoritative permissive data-file license or explicit rights-holder permission is established. If rights later clear, run branch-specific contamination/history audit before media access.
 
-### GAPS — REJECTED ON EXPLICIT RIGHTS TERMS
+### GAPS — REJECTED ON EXPLICIT RIGHTS TERMS / MIRROR TAG DOES NOT OVERRIDE
 
-Scientifically attractive (~14 h, 300 performances, >200 performers, note-level MIDI), but official terms limit use to non-commercial research and impose permission/distribution restrictions.
+Scientifically attractive (~14 h, 300 performances, >200 performers, note-level MIDI), but the official GAPS project terms limit use to non-commercial research and impose permission/distribution restrictions.
+
+A current Hugging Face mirror advertises `license: mit` and includes audio. That mirror metadata does not supersede the official corpus terms. When rights signals conflict, fail closed until the actual data rights are authoritatively clarified.
 
 Disposition: do not use/download/audit absent explicit written permission that clears this product-validation use.
 
@@ -229,22 +234,38 @@ Metadata-only screening added four exclusions without media access:
 
 Disposition: none advances to media access, contamination audit, structural audit, binding or correctness.
 
+### Rights/mirror frontier recheck — NO AUDIT-READY CANDIDATE
+
+Immutable review:
+`docs/checkpoints/SONGSTERR_FRESH_V6_RIGHTS_MIRROR_FRONTIER_RECHECK_2026-09-13.md`
+commit `23d55751561b7102e6e726a6adc8a419511e67dd`.
+
+New metadata-only findings:
+- AG-PT-set remains scientifically strong but its primary Zenodo dataset record still does not surface an explicit dataset-file license; paper licensing does not clear archive rights.
+- GAPS has a Hugging Face mirror tagged `MIT`, but the official project terms remain explicitly non-commercial/restricted; authoritative corpus terms control and the mirror tag does not reopen it.
+- Fraunhofer's current IDMT page still states evaluation use under CC BY-NC-ND 4.0; the rights block is unchanged.
+- the UT Austin/Kaggle Guitar Transcription Dataset is CC BY-NC-SA 4.0 and provides frame/fretboard labels rather than immutable independent performed note-level onset+pitch truth.
+- the Geoff Bremner Multimodal Music Corpus sample has a cleaner single-rights-holder story and advertises separate commercial licensing, but public metadata does not establish guitar-specific contemporaneous performed MIDI/onset semantics, full-corpus evidence volume, stable full-corpus identities, or the exact usable license grant. Keep only as a potential private-license lead, not audit-ready.
+
+Disposition: none advances to media access, contamination audit, structural audit, binding or correctness.
+
 ## NEXT ALLOWED ACTION
 
 1. Continue metadata-only search for a replacement corpus satisfying all rights/reference/volume/untouched gates.
 2. AG-PT-set may advance only if its data-file rights become authoritative and permissive.
 3. Multimodal Electric Guitar Data may advance only if a released performed note-level onset+pitch reference is established.
 4. Keep EGFxSet as a narrow backup; do not count effect variants as independent evidence.
-5. Select a replacement only after rights, provenance, untouched status, reference semantics and plausible evidence volume are defensible without duplication or rescue rules.
-6. Before any selected corpus media access, freeze a corpus-specific reference-blind inventory/alignment preregistration.
-7. Run structural/alignment audit first. If unsuitable, reject without correctness. If suitable, bind immutable identities into the already-frozen V6 scoring framework, build controlled no-real-correctness harness CI, and only then launch exactly one ordinary-GitHub-CPU official correctness run.
-8. Ask the user only if Modal, Vercel heavy-GPU or L4 execution becomes necessary.
+5. Keep the Geoff Bremner corpus only as a potential private-license lead pending authoritative guitar-MIDI provenance, evidence volume, stable identities and exact rights.
+6. Select a replacement only after rights, provenance, untouched status, reference semantics and plausible evidence volume are defensible without duplication or rescue rules.
+7. Before any selected corpus media access, freeze a corpus-specific reference-blind inventory/alignment preregistration.
+8. Run structural/alignment audit first. If unsuitable, reject without correctness. If suitable, bind immutable identities into the already-frozen V6 scoring framework, build controlled no-real-correctness harness CI, and only then launch exactly one ordinary-GitHub-CPU official correctness run.
+9. Ask the user only if Modal, Vercel heavy-GPU or L4 execution becomes necessary.
 
 ## STILL FORBIDDEN
 
 - any Guitar-TECHS V6 correctness or post-hoc anomaly repair/exclusion
 - downloading/auditing AG-PT-set without authoritative permissive data-file rights
-- GAPS V6 use absent written permission clearing current restrictions
+- GAPS V6 use absent written permission clearing current restrictions; permissive mirror metadata does not override official corpus terms
 - EGSet12 V6 scoring/binding/history rewriting
 - GUITAR-FX-DIST / IDMT-SMT-Audio-Effects use under current CC BY-NC-ND terms
 - EG-Solo use from third-party YouTube/professional-song recordings
@@ -265,6 +286,8 @@ Disposition: none advances to media access, contamination audit, structural audi
 - `guitar-chord-mix` used as an untouched external holdout despite its exposed/derived source corpora
 - MedleyDB, MUSDB18/MUSDB18-HQ, or MoisesDB use under their current non-commercial/academic rights terms or by deriving guitar note truth from stems/f0/activity labels
 - Slakh2100 substitution for the required real performed-guitar external holdout
+- UT Austin/Kaggle Guitar Transcription Dataset use under CC BY-NC-SA terms or by deriving note truth from frame/fret labels
+- Geoff Bremner sample/full corpus media acquisition for V6 before authoritative guitar-specific performed-reference semantics, volume, stable identities and explicit usable rights are established
 - V5 FLGD rerun/post-result tuning
 - using FLGD/IDMT/GuitarSet/protected-song correctness to tune V6
 - changing frozen V6/scoring rules from any holdout observation
@@ -278,4 +301,4 @@ Disposition: none advances to media access, contamination audit, structural audi
 
 ## FRESH-CHAT HANDOFF
 
-Continue only on `songsterr-fresh-pipeline-v1` and read this file first. Guitar-TECHS is closed with outcome C and no V6 correctness. The active task is metadata-only replacement holdout search. AG-PT-set is scientifically strong but blocked on data-file rights; EG-IPT is rejected/not audit-ready because both independent performed onset+pitch truth and explicit permissive dataset-media rights are not established; Multimodal Electric Guitar Data has cleaner rights but lacks established note-level performed truth; EGFxSet is only a narrow backup. GAPS, EGSet12, GUITAR-FX-DIST/IDMT-SMT-Audio-Effects, EG-Solo, G&N/TENT, MMIP, GIHME, EGDB/EGDB-PG and GuitarDuets are not usable under current evidence. General/recent/multitrack sweeps also reject GPT (unavailable/unverifiable release), the robot chord corpus and isolated chord releases (chord labels only), NSynth and Slakh2100 (synthetic/rendered, not real performed holdouts), URMP (no guitar), GuitarJam (clean DI but no note truth), `guitar-fretboard-notes` (390 events and no performed onset truth), Semantic Timbre Dataset (EGFxSet-derived effect expansion), `guitar-chord-mix` (derived mixture of exposed/ineligible sources), MedleyDB/MUSDB18/MoisesDB (rights and/or reference failures). Do not download a candidate until rights/reference/untouched/volume gates are defensible and a corpus-specific reference-blind audit preregistration is frozen. V6 method/scoring framework remain frozen and no replacement-holdout V6 correctness has been exposed.
+Continue only on `songsterr-fresh-pipeline-v1` and read this file first. Guitar-TECHS is closed with outcome C and no V6 correctness. The active task is metadata-only replacement holdout search. AG-PT-set remains scientifically strongest but is blocked because its primary dataset-file rights are still not authoritatively permissive; GAPS remains blocked by official non-commercial/restricted terms despite a permissive-looking Hugging Face mirror tag; EG-IPT is rejected/not audit-ready because both independent performed onset+pitch truth and explicit permissive dataset-media rights are not established; Multimodal Electric Guitar Data has cleaner rights but lacks established note-level performed truth; EGFxSet is only a narrow backup. The Geoff Bremner corpus is only a potential private-license lead until guitar-specific performed-MIDI provenance, evidence volume, stable identities and exact rights are established. GAPS, EGSet12, GUITAR-FX-DIST/IDMT-SMT-Audio-Effects, EG-Solo, G&N/TENT, MMIP, GIHME, EGDB/EGDB-PG and GuitarDuets are not usable under current evidence. General/recent/multitrack/rights sweeps also reject GPT, the robot chord corpus and isolated chord releases, NSynth/Slakh2100, URMP, GuitarJam, `guitar-fretboard-notes`, Semantic Timbre Dataset, `guitar-chord-mix`, MedleyDB/MUSDB18/MoisesDB, and the UT Austin/Kaggle frame-label dataset. Do not download a candidate until rights/reference/untouched/volume gates are defensible and a corpus-specific reference-blind audit preregistration is frozen. V6 method/scoring framework remain frozen and no replacement-holdout V6 correctness has been exposed.
