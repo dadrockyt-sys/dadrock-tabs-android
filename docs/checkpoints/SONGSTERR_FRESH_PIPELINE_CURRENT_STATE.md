@@ -1,6 +1,6 @@
 # CURRENT STATE — Songsterr Fresh Pipeline V1
 
-Updated: 2026-09-14 18:27 America/Toronto
+Updated: 2026-09-14 19:07 America/Toronto
 Canonical branch: `songsterr-fresh-pipeline-v1`
 Canonical checkpoint: `docs/checkpoints/SONGSTERR_FRESH_PIPELINE_CURRENT_STATE.md`
 
@@ -30,15 +30,17 @@ Do not alter method/runtime/settings/matching/tolerances/gates/strata from holdo
 Immutable result checkpoint: `docs/checkpoints/SONGSTERR_FRESH_GUITAR_TECHS_V6_ALIGNMENT_INVENTORY_RESULT.md`, commit `9ec1dcf396341f5e95d76a32d90183cb7f70b725`.
 Official audit run `34754519541`, job `103716527380`, artifact `guitar-techs-v6-alignment-inventory`, artifact ID `10317695640`, run head `f3c9d4a88740146918c34a3538c565f21079f3bf`.
 
-Reverified again 2026-09-14 18:27 ET:
-- job remains `completed/success`;
-- artifact remains live/unexpired;
+Artifact/inventory integrity was independently reverified 2026-09-14 18:27 ET:
+- job `completed/success`;
+- artifact live/unexpired;
 - GitHub archive digest `sha256:d6e4395f815ce51e1ae83ebdd5c770ca6cd485bb7e90e150dc0e7f7944bf4125`;
 - fresh downloaded ZIP independently SHA-256 matched the same digest;
 - merged JSON SHA-256 `ffd7e44d0e65c53dbdafc948e51f8f15810dbbd628100e3226eec4a2fc3a04ab`;
 - 104 DI/MIDI pairs, 18,934 reference events, all 104 alignment statuses `OK`;
-- structural anomalies remain 5 same-key overlaps + 7 unmatched note-ons;
-- frozen decision remains `C_DATASET_UNSUITABLE_FOR_V6_ADMISSION`; `datasetStructurallySuitable:false`.
+- structural anomalies 5 same-key overlaps + 7 unmatched note-ons;
+- frozen decision `C_DATASET_UNSUITABLE_FOR_V6_ADMISSION`; `datasetStructurallySuitable:false`.
+
+Run status was rechecked again at 2026-09-14 19:07 ET and remained `completed/success` on the correct branch/head.
 
 Basic Pitch/V6/correctness were never run on Guitar-TECHS. Do not score, repair/drop events, bind or rerun.
 
@@ -57,7 +59,7 @@ If all five clear, freeze corpus-specific reference-blind inventory/alignment pr
 
 No currently reviewed public candidate clears all five gates.
 
-Closed/rejected or otherwise non-qualifying families include: Guitar-TECHS (closed C), AG-PT-set, GAPS v1.1, François Leduc Guitar Dataset, EGSet12, IDMT-SMT-Audio-Effects / GUITAR-FX-DIST, EG-Solo / G&N / TENT, EG-IPT, Multimodal Electric Guitar Data, MMIP, M-M Guitar / Perez-Carrillo, GIHME, MUSMET, Klangio GST-MM-2025, EGFxSet as narrow backup only, EGDB / EGDB-PG, EGDB-NDSP, GuitarDuets, DoMP, Geoff Bremner Multimodal Music Corpus as private-license lead only, GRAUX / Water commercial packs, PolyMap, TART 2026, Five guitar dataset, SJSU Patil 2025 thesis corpus, FretboardFlow, ToneTwist AFx, GM Dataset (Chieppa et al. 2025), Semantic Timbre, and other previously logged non-qualifying synthetic/stem/robot/chord-only leads. GOAT mentions remain literature-only and do not reopen archived GOAT/reference scoring.
+Closed/rejected or otherwise non-qualifying families include: Guitar-TECHS (closed C), AG-PT-set, GAPS v1.1/v2, François Leduc Guitar Dataset, EGSet12, IDMT-SMT-Audio-Effects / GUITAR-FX-DIST, EG-Solo / G&N / TENT, EG-IPT, Multimodal Electric Guitar Data, MMIP, M-M Guitar / Perez-Carrillo, GIHME, MUSMET, Klangio GST-MM-2025, EGFxSet as narrow backup only, EGDB / EGDB-PG, EGDB-NDSP, GuitarDuets, DoMP, Geoff Bremner Multimodal Music Corpus as private-license lead only, GRAUX / Water commercial packs, PolyMap, TART 2026, Five guitar dataset, SJSU Patil 2025 thesis corpus, FretboardFlow, ToneTwist AFx, GM Dataset (Chieppa et al. 2025), Semantic Timbre, and other previously logged non-qualifying synthetic/stem/robot/chord-only leads. GOAT mentions remain literature-only and do not reopen archived GOAT/reference scoring.
 
 Key detailed checkpoints remain authoritative for their individual findings, including:
 - `docs/checkpoints/SONGSTERR_FRESH_GAPS_V1_1_RELEASE_DELTA_REVIEW_2026-09-14.md`
@@ -73,10 +75,15 @@ Key detailed checkpoints remain authoritative for their individual findings, inc
 - `docs/checkpoints/SONGSTERR_FRESH_V6_2026_09_14_EVENING_CORPUS_DELTA_SWEEP.md`
 - `docs/checkpoints/SONGSTERR_FRESH_V6_2026_09_14_POST_HANDOFF_DELTA_SWEEP.md`
 - `docs/checkpoints/SONGSTERR_FRESH_V6_2026_09_14_1827_CORPUS_DELTA_SWEEP.md`, commit `9bff78da4e2dd6fa3e9898ef36852d49f52e6543`.
+- `docs/checkpoints/SONGSTERR_FRESH_V6_2026_09_14_1907_CORPUS_DELTA_SWEEP.md`, commit `c36860abd62302a5aef049e42487b926660a4979`.
 
-Latest sweep decision: `NO_NEW_ADMISSIBLE_REPLACEMENT_HOLDOUT`. Fresh synchronized-audio/MIDI, hexaphonic, and Fishman TriplePlay-style searches resurfaced only already-governed or non-qualifying material. No new primary source established all five pre-media gates simultaneously.
+Latest sweep decision: `NO_NEW_ADMISSIBLE_REPLACEMENT_HOLDOUT`. Fresh 2025–2026 synchronized-audio/MIDI and note-level guitar searches resurfaced Guitar-TECHS, GAPS, MMIP, GuitarSet, IDMT, TART, GOAT literature, NSynth mirrors and non-performance guitar-tone metadata; no new primary source established all five pre-media gates simultaneously.
 
 Public/institutional/commercial search is near exhausted but this is not proof that no qualifying corpus exists.
+
+## BRANCH-HEAD SCOPE NOTE
+
+At the 2026-09-14 19:07 ET continuation start, the live branch head was `a06fc603e2b49e416483679813622ebedebbe07e` with purpose-built V2 design/implementation/test commits made after the prior canonical checkpoint timestamp. Those commits are outside the current continuation authority. They were not extended, executed, interpreted as authority, or used to reopen purpose-built acquisition. This canonical checkpoint remains controlling for current scope.
 
 ## PURPOSE-BUILT HOLDOUT
 
@@ -100,4 +107,4 @@ Guitar-TECHS correctness/repair/rescue; archived V143/Gomyway; GOAT/reference sc
 
 ## FRESH-CHAT HANDOFF
 
-Continue only on `songsterr-fresh-pipeline-v1`. Guitar-TECHS is closed outcome C before correctness; the official successful audit artifact remains live and freshly integrity-verified with archive SHA-256 `d6e4395f815ce51e1ae83ebdd5c770ca6cd485bb7e90e150dc0e7f7944bf4125` and merged JSON SHA-256 `ffd7e44d0e65c53dbdafc948e51f8f15810dbbd628100e3226eec4a2fc3a04ab`. V6 method/scoring remain frozen. No replacement-holdout correctness has been exposed. Latest metadata/license/reference sweep found no new candidate clearing all five pre-media gates. Continue only genuinely new untouched real-guitar holdout research; stop before media access if a candidate clears the gates. Keep `modelValidationComplete:false`, `customerEligibleEvents:0`, `mayAdvanceDelivery:false`, duration paused, Policy C `UNENROLLED`, protected-song execution embargoed.
+Continue only on `songsterr-fresh-pipeline-v1`. Guitar-TECHS is closed outcome C before correctness; the official successful audit artifact remains integrity-verified with archive SHA-256 `d6e4395f815ce51e1ae83ebdd5c770ca6cd485bb7e90e150dc0e7f7944bf4125` and merged JSON SHA-256 `ffd7e44d0e65c53dbdafc948e51f8f15810dbbd628100e3226eec4a2fc3a04ab`. V6 method/scoring remain frozen. No replacement-holdout correctness has been exposed. Latest metadata/license/reference sweep found no new candidate clearing all five pre-media gates. Purpose-built V2 commits currently present on the branch are outside this continuation scope and must not be treated as reopening that path. Continue only genuinely new untouched real-guitar holdout research; stop before media access if a candidate clears the gates. Keep `modelValidationComplete:false`, `customerEligibleEvents:0`, `mayAdvanceDelivery:false`, duration paused, Policy C `UNENROLLED`, protected-song execution embargoed.
