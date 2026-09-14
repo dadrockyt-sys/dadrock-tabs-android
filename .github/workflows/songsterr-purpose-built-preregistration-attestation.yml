@@ -1,0 +1,81 @@
+name: Songsterr Purpose-Built Preregistration Attestation
+
+on:
+  push:
+    branches:
+      - songsterr-fresh-pipeline-v1
+    paths:
+      - "scripts/songsterr-fresh/purpose_built_capture_preregistration_attestation_v1.py"
+      - "scripts/songsterr-fresh/test_purpose_built_capture_preregistration_attestation_v1.py"
+      - "scripts/songsterr-fresh/fixtures/purpose_built_synthetic_capture_plan_v1.json"
+      - "scripts/songsterr-fresh/fixtures/purpose_built_synthetic_preregistration_evidence_v1.json"
+      - ".github/workflows/songsterr-purpose-built-preregistration-attestation.yml"
+  workflow_dispatch:
+    inputs:
+      capture_plan_path:
+        description: "Repository-relative path to the frozen content-only capture-plan JSON"
+        required: true
+        default: "scripts/songsterr-fresh/fixtures/purpose_built_synthetic_capture_plan_v1.json"
+        type: string
+      preregistration_evidence_path:
+        description: "Repository-relative path to the machine-readable preregistration-evidence JSON"
+        required: true
+        default: "scripts/songsterr-fresh/fixtures/purpose_built_synthetic_preregistration_evidence_v1.json"
+        type: string
+
+permissions:
+  contents: read
+
+jobs:
+  attest:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - name: Checkout exact run commit
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Run synthetic attestation tests
+        run: python3 scripts/songsterr-fresh/test_purpose_built_capture_preregistration_attestation_v1.py
+
+      - name: Select attestation inputs
+        id: paths
+        shell: bash
+        env:
+          DISPATCH_PLAN: ${{ inputs.capture_plan_path }}
+          DISPATCH_EVIDENCE: ${{ inputs.preregistration_evidence_path }}
+        run: |
+          if [[ "${{ github.event_name }}" == "workflow_dispatch" ]]; then
+            printf 'plan=%s\n' "$DISPATCH_PLAN" >> "$GITHUB_OUTPUT"
+            printf 'evidence=%s\n' "$DISPATCH_EVIDENCE" >> "$GITHUB_OUTPUT"
+            printf 'mode=workflow_dispatch\n' >> "$GITHUB_OUTPUT"
+          else
+            printf 'plan=%s\n' 'scripts/songsterr-fresh/fixtures/purpose_built_synthetic_capture_plan_v1.json' >> "$GITHUB_OUTPUT"
+            printf 'evidence=%s\n' 'scripts/songsterr-fresh/fixtures/purpose_built_synthetic_preregistration_evidence_v1.json' >> "$GITHUB_OUTPUT"
+            printf 'mode=synthetic_push_ci\n' >> "$GITHUB_OUTPUT"
+          fi
+
+      - name: Generate reference-blind preregistration attestation
+        shell: bash
+        run: |
+          mkdir -p preregistration-attestation
+          python3 scripts/songsterr-fresh/purpose_built_capture_preregistration_attestation_v1.py \
+            --capture-plan "${{ steps.paths.outputs.plan }}" \
+            --capture-plan-repo-path "${{ steps.paths.outputs.plan }}" \
+            --preregistration-evidence "${{ steps.paths.outputs.evidence }}" \
+            --output preregistration-attestation/attestation.json
+          printf '%s\n' '${{ steps.paths.outputs.mode }}' > preregistration-attestation/run-mode.txt
+
+      - name: Upload attestation artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: purpose-built-preregistration-attestation-${{ github.run_id }}
+          path: preregistration-attestation/
+          if-no-files-found: error
+          retention-days: 90
