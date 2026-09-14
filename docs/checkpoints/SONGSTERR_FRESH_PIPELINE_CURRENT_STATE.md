@@ -70,6 +70,7 @@ Then freeze corpus-specific reference-blind inventory/alignment preregistration 
 - recent repository sweep `f5961fe28bda99721721f7fdcb5c0481c5ab80fb`
 - multitrack sweep `fb3469695768ce572c2c8fce2d7bdc6c5711a9fb`
 - rights/mirror frontier `23d55751561b7102e6e726a6adc8a419511e67dd`
+- GAPS 2026 release reassessment `957b41b38c62baeab6e01b9d68487d97f44b5199`
 - purpose-built option latest `dde8aa9cc97d8cbd9efbd06cc4d8c8b00d45fda4`
 - 2026 literature frontier `ac6ac23f25c8f6f6c225464abc92b0988d064dd8`
 - institutional/technique frontier `95eec317ead304b9e03a2139b72e15a9a4efeff8`
@@ -90,9 +91,9 @@ Then freeze corpus-specific reference-blind inventory/alignment preregistration 
 
 Its precise onset reference is constructed from recorded audio: `aubioonset` candidate labels followed by musician inspection/correction/alignment using Audacity waveform + high-resolution Mel spectrogram; known note sequence/pitch and a pitch detector assist error correction. Excellent MIR annotation can still fail the frozen independence gate. Zenodo data-file rights are also unresolved for this use. Do not acquire/audit/score. Rights clearance alone cannot cure reference provenance.
 
-### GAPS — RIGHTS BLOCKED
+### GAPS — REJECTED: AUDIO-DERIVED REFERENCE
 
-~14 h / 300 performances / >200 performers / high-resolution MIDI, but official terms restrict non-commercial research/distribution. A permissive mirror tag does not override authoritative terms. Do not use absent written permission.
+Official 2026 Hugging Face v1.1 now includes audio and advertises an MIT dataset-card license, superseding the earlier narrow claim that no permissive-looking official distribution exists. However, the published GAPS construction method aligns GuitarPro scores to third-party YouTube performances using DTW and then fine-aligns note/chord timing to activations from an existing transcription model before manual verification/re-alignment/filtering. The emitted performance MIDI onset timing is therefore materially reconstructed from the evaluated audio, not an independent performed reference stream. Dedicated reassessment `957b41b38c62baeab6e01b9d68487d97f44b5199`. Third-party recording rights are also not established to the frozen product-validation standard by the repository-level MIT tag alone. Reject; do not acquire/audit/score. Licensing clarification cannot cure the reference-provenance failure.
 
 ### EGSet12 — NOT UNTOUCHED
 
@@ -220,7 +221,7 @@ A future purpose-built manifest must pass **both** the base validator and the se
 
 - Guitar-TECHS correctness/repair/rescue;
 - AG-PT-set V6 acquisition/audit/scoring under current audio-derived reference;
-- GAPS use absent written permission;
+- GAPS V6 acquisition/audit/scoring under current audio-derived reference;
 - EGSet12 history rewriting/scoring;
 - NC/ND or otherwise restricted corpus use outside rights;
 - rescue via evaluated-audio-derived/reconstructed truth;
@@ -237,7 +238,3 @@ A future purpose-built manifest must pass **both** the base validator and the se
 - purpose-built procurement/contact/hiring/recording/acquisition without explicit authorization;
 - Production/customer promotion without untouched external validation + separate policy review;
 - Modal/Vercel heavy-GPU/L4 without explicit user authorization.
-
-## FRESH-CHAT HANDOFF
-
-Continue only on `songsterr-fresh-pipeline-v1`; read this file first. V6 method/scoring remain frozen and no replacement-holdout correctness has been exposed. Guitar-TECHS is closed outcome C before correctness. AG-PT-set is rejected because its precise onset reference is constructed from its audio; rights clearance alone cannot cure it. GAPS is rights-blocked. Geoff Bremner remains only a private-license metadata lead; public metadata does not establish performed guitar MIDI provenance. GRAUX commercial live-guitar packs are rejected because their MIDI is companion bass/chord material and license scope is music-production oriented. Public, institutional, literature and commercial searches are close to exhausted. Purpose-built independent-sensor capture is the strongest remaining design route, with Fretsense-style fret/trigger sensing + separate magnetic DI currently the best surfaced architecture, but it remains design-only and requires frozen calibration/audit plus explicit user authorization before any contact/spending/recording. Purpose-built manifest admission now requires both the base reference-blind validator and mandatory semantic guard; combined synthetic CI run `34791310019` passed both suites. This still does not authorize model/correctness or real-media access. Do not reopen archived V143/Gomyway or GOAT/reference scoring unless explicitly asked.
