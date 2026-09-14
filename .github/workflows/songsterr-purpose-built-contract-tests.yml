@@ -9,6 +9,8 @@ on:
       - "scripts/songsterr-fresh/test_purpose_built_capture_manifest_contract_v1.py"
       - "scripts/songsterr-fresh/purpose_built_capture_manifest_semantic_guard_v1.py"
       - "scripts/songsterr-fresh/test_purpose_built_capture_manifest_semantic_guard_v1.py"
+      - "scripts/songsterr-fresh/purpose_built_capture_preregistration_binding_v1.py"
+      - "scripts/songsterr-fresh/test_purpose_built_capture_preregistration_binding_v1.py"
       - ".github/workflows/songsterr-purpose-built-contract-tests.yml"
   workflow_dispatch:
 
@@ -33,3 +35,6 @@ jobs:
 
       - name: Run synthetic semantic-guard tests
         run: python3 scripts/songsterr-fresh/test_purpose_built_capture_manifest_semantic_guard_v1.py
+
+      - name: Run synthetic preregistration-binding tests
+        run: python3 scripts/songsterr-fresh/test_purpose_built_capture_preregistration_binding_v1.py
