@@ -31,6 +31,8 @@ base = binding.base
 
 ATTESTATION_CONTRACT = "songsterr-fresh-purpose-built-preregistration-attestation-v1"
 EVIDENCE_CONTRACT = "songsterr-fresh-purpose-built-preregistration-evidence-v1"
+ATTESTATION_MODES = {"synthetic_ci", "real_preregistration"}
+SYNTHETIC_FIXTURE_PREFIX = "scripts/songsterr-fresh/fixtures/"
 
 
 def build_attestation(
@@ -43,6 +45,7 @@ def build_attestation(
     run_id: str,
     run_attempt: str,
     workflow_ref: str,
+    mode: str,
 ) -> dict[str, Any]:
     errors: list[str] = []
     plan_errors, planned_slots, reasons, criteria_bound = binding._validate_plan(plan)
@@ -51,6 +54,14 @@ def build_attestation(
     plan_sha = None
     if isinstance(plan, dict):
         plan_sha = base.sha256_bytes(base.canonical_json(plan).encode("utf-8"))
+
+    if mode not in ATTESTATION_MODES:
+        errors.append(f"ATTESTATION_MODE_INVALID:{mode!r}")
+    if mode == "real_preregistration":
+        if plan_repo_path.startswith(SYNTHETIC_FIXTURE_PREFIX):
+            errors.append("REAL_PREREGISTRATION_CANNOT_USE_SYNTHETIC_PLAN_FIXTURE")
+        if isinstance(plan, dict) and str(plan.get("planId", "")).lower().startswith("synthetic"):
+            errors.append("REAL_PREREGISTRATION_CANNOT_USE_SYNTHETIC_PLAN_ID")
 
     if not isinstance(evidence, dict):
         errors.append("PREREGISTRATION_EVIDENCE_OBJECT_REQUIRED")
@@ -64,6 +75,10 @@ def build_attestation(
             errors.append("PREREGISTRATION_EVIDENCE_PLAN_PATH_MISMATCH")
         if evidence.get("capturePlanSha256") != plan_sha:
             errors.append("PREREGISTRATION_EVIDENCE_PLAN_SHA256_MISMATCH")
+        evidence_plan_path = evidence.get("capturePlanPath")
+        if mode == "real_preregistration" and isinstance(evidence_plan_path, str):
+            if evidence_plan_path.startswith(SYNTHETIC_FIXTURE_PREFIX):
+                errors.append("REAL_PREREGISTRATION_CANNOT_USE_SYNTHETIC_EVIDENCE_BINDING")
 
     if not isinstance(repository, str) or "/" not in repository:
         errors.append("GITHUB_REPOSITORY_INVALID")
@@ -81,6 +96,7 @@ def build_attestation(
         "contract": ATTESTATION_CONTRACT,
         "attestationValid": valid,
         "errors": sorted(set(errors)),
+        "mode": mode,
         "repository": repository,
         "headSha": head_sha,
         "runId": run_id,
@@ -104,6 +120,7 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument("--capture-plan", required=True)
     parser.add_argument("--capture-plan-repo-path", required=True)
     parser.add_argument("--preregistration-evidence", required=True)
+    parser.add_argument("--mode", required=True, choices=sorted(ATTESTATION_MODES))
     parser.add_argument("--output", required=True)
     return parser.parse_args()
 
@@ -121,6 +138,7 @@ def main() -> int:
         run_id=os.environ.get("GITHUB_RUN_ID", ""),
         run_attempt=os.environ.get("GITHUB_RUN_ATTEMPT", ""),
         workflow_ref=os.environ.get("GITHUB_WORKFLOW_REF", ""),
+        mode=args.mode,
     )
     output = Path(args.output)
     output.parent.mkdir(parents=True, exist_ok=True)
