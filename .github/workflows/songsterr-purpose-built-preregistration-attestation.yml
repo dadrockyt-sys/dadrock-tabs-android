@@ -13,14 +13,12 @@ on:
   workflow_dispatch:
     inputs:
       capture_plan_path:
-        description: "Repository-relative path to the frozen content-only capture-plan JSON"
+        description: "Repository-relative path to the frozen real capture-plan JSON (synthetic fixtures are rejected)"
         required: true
-        default: "scripts/songsterr-fresh/fixtures/purpose_built_synthetic_capture_plan_v1.json"
         type: string
       preregistration_evidence_path:
-        description: "Repository-relative path to the machine-readable preregistration-evidence JSON"
+        description: "Repository-relative path to the real machine-readable preregistration-evidence JSON"
         required: true
-        default: "scripts/songsterr-fresh/fixtures/purpose_built_synthetic_preregistration_evidence_v1.json"
         type: string
 
 permissions:
@@ -54,11 +52,11 @@ jobs:
           if [[ "${{ github.event_name }}" == "workflow_dispatch" ]]; then
             printf 'plan=%s\n' "$DISPATCH_PLAN" >> "$GITHUB_OUTPUT"
             printf 'evidence=%s\n' "$DISPATCH_EVIDENCE" >> "$GITHUB_OUTPUT"
-            printf 'mode=workflow_dispatch\n' >> "$GITHUB_OUTPUT"
+            printf 'mode=real_preregistration\n' >> "$GITHUB_OUTPUT"
           else
             printf 'plan=%s\n' 'scripts/songsterr-fresh/fixtures/purpose_built_synthetic_capture_plan_v1.json' >> "$GITHUB_OUTPUT"
             printf 'evidence=%s\n' 'scripts/songsterr-fresh/fixtures/purpose_built_synthetic_preregistration_evidence_v1.json' >> "$GITHUB_OUTPUT"
-            printf 'mode=synthetic_push_ci\n' >> "$GITHUB_OUTPUT"
+            printf 'mode=synthetic_ci\n' >> "$GITHUB_OUTPUT"
           fi
 
       - name: Generate reference-blind preregistration attestation
@@ -69,6 +67,7 @@ jobs:
             --capture-plan "${{ steps.paths.outputs.plan }}" \
             --capture-plan-repo-path "${{ steps.paths.outputs.plan }}" \
             --preregistration-evidence "${{ steps.paths.outputs.evidence }}" \
+            --mode "${{ steps.paths.outputs.mode }}" \
             --output preregistration-attestation/attestation.json
           printf '%s\n' '${{ steps.paths.outputs.mode }}' > preregistration-attestation/run-mode.txt
 
