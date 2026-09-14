@@ -1,0 +1,6 @@
+{
+  "contract": "songsterr-fresh-purpose-built-preregistration-evidence-v1",
+  "capturePlanPath": "scripts/songsterr-fresh/fixtures/purpose_built_synthetic_capture_plan_v1.json",
+  "capturePlanSha256": "695e2c8ff1e383ed8d7d5fee8c4549a507b2b8f14058353ae6d6f00155532d35",
+  "purpose": "Synthetic-only fixture proving that a content-only capture plan can be frozen in Git without a self-referential commit hash."
+}
