@@ -1,6 +1,6 @@
 # CURRENT STATE — Songsterr Fresh Pipeline V1
 
-Updated: 2026-09-14 America/Toronto
+Updated: 2026-09-14 18:27 America/Toronto
 Canonical branch: `songsterr-fresh-pipeline-v1`
 Canonical checkpoint: `docs/checkpoints/SONGSTERR_FRESH_PIPELINE_CURRENT_STATE.md`
 
@@ -27,12 +27,20 @@ Do not alter method/runtime/settings/matching/tolerances/gates/strata from holdo
 
 ## GUITAR-TECHS — CLOSED OUTCOME C BEFORE CORRECTNESS
 
-Result checkpoint `docs/checkpoints/SONGSTERR_FRESH_GUITAR_TECHS_V6_ALIGNMENT_INVENTORY_RESULT.md`, commit `9ec1dcf396341f5e95d76a32d90183cb7f70b725`.
-Official audit run `34754519541`, job `103716527380`, exact artifact `guitar-techs-v6-alignment-inventory`, artifact ID `10317695640`.
-Reverified 2026-09-14: job remains completed/successful; artifact remains live/unexpired; GitHub-reported archive digest `sha256:d6e4395f815ce51e1ae83ebdd5c770ca6cd485bb7e90e150dc0e7f7944bf4125`; run head `f3c9d4a88740146918c34a3538c565f21079f3bf`. Artifact ZIP was downloaded again and independently SHA-256 checked to the same digest; merged JSON SHA-256 remains `ffd7e44d0e65c53dbdafc948e51f8f15810dbbd628100e3226eec4a2fc3a04ab`.
-104 DI/MIDI pairs, 18,934 reference events, all alignments `OK`, but 5 same-key overlaps + 7 unmatched note-ons violate the preregistered zero-anomaly structural gate.
-Frozen result: `C_DATASET_UNSUITABLE_FOR_V6_ADMISSION`; `datasetStructurallySuitable:false`.
-Basic Pitch/V6/correctness were never run. Do not score, repair/drop events, bind or rerun.
+Immutable result checkpoint: `docs/checkpoints/SONGSTERR_FRESH_GUITAR_TECHS_V6_ALIGNMENT_INVENTORY_RESULT.md`, commit `9ec1dcf396341f5e95d76a32d90183cb7f70b725`.
+Official audit run `34754519541`, job `103716527380`, artifact `guitar-techs-v6-alignment-inventory`, artifact ID `10317695640`, run head `f3c9d4a88740146918c34a3538c565f21079f3bf`.
+
+Reverified again 2026-09-14 18:27 ET:
+- job remains `completed/success`;
+- artifact remains live/unexpired;
+- GitHub archive digest `sha256:d6e4395f815ce51e1ae83ebdd5c770ca6cd485bb7e90e150dc0e7f7944bf4125`;
+- fresh downloaded ZIP independently SHA-256 matched the same digest;
+- merged JSON SHA-256 `ffd7e44d0e65c53dbdafc948e51f8f15810dbbd628100e3226eec4a2fc3a04ab`;
+- 104 DI/MIDI pairs, 18,934 reference events, all 104 alignment statuses `OK`;
+- structural anomalies remain 5 same-key overlaps + 7 unmatched note-ons;
+- frozen decision remains `C_DATASET_UNSUITABLE_FOR_V6_ADMISSION`; `datasetStructurallySuitable:false`.
+
+Basic Pitch/V6/correctness were never run on Guitar-TECHS. Do not score, repair/drop events, bind or rerun.
 
 ## REPLACEMENT HOLDOUT GATES
 
@@ -47,77 +55,49 @@ If all five clear, freeze corpus-specific reference-blind inventory/alignment pr
 
 ## REPLACEMENT CORPUS STATUS
 
-- **Guitar-TECHS — CLOSED C.** Structural zero-anomaly gate failed before correctness.
-- **AG-PT-set — REJECTED.** Precise onset reference is audio-derived (`aubioonset` + waveform/spectrogram correction/alignment); rights unresolved.
-- **GAPS — REJECTED; v1.1 DELTA REVIEWED.** The newer Hugging Face v1.1 release now includes audio and declares `license: mit`, but the paper still constructs performed timing from evaluated audio using DTW plus closest transcription-model activations, manual downbeat intervention, re-alignment, and model-agreement filtering. The recordings originate from 205 YouTube performers and the reviewed public materials do not establish a track-by-track product-validation rights chain. The release delta therefore does not cure the decisive independent-reference failure. Checkpoint `docs/checkpoints/SONGSTERR_FRESH_GAPS_V1_1_RELEASE_DELTA_REVIEW_2026-09-14.md`, commit `7a6ebe309cfe17067990433ed88e58f5ef68ba48`.
-- **François Leduc Guitar Dataset (FLGD) — REJECTED.** Performance timing aligned/fine-aligned using transcription-model activations from evaluated audio. Checkpoint `docs/checkpoints/SONGSTERR_FRESH_FRANCOIS_LEDUC_DATASET_METADATA_REFERENCE_REVIEW_2026-09-14.md`, commit `fa99798f4c2b08842f534533ea51d84ae9b2a967`.
-- **EGSet12 — NOT UNTOUCHED.** Reject; do not rewrite history.
-- **IDMT-SMT-Audio-Effects / GUITAR-FX-DIST — RIGHTS BLOCKED.** CC BY-NC-ND 4.0.
-- **EG-Solo / G&N / TENT — RECORDING RIGHTS BLOCKED.** Third-party/professional copyrighted sources.
-- **EG-IPT — REFERENCE + RIGHTS FAIL.** Large real-guitar DI corpus, but no released independent performed note stream and no explicit permissive media rights. Rechecked in the 2026-09-14 post-handoff release-only pass: current Zenodo metadata still exposes no explicit license value and no new independent performed note-event truth.
-- **Multimodal Electric Guitar Data — REFERENCE INSUFFICIENT.** Real guitar / CC BY 4.0, but actions/EMG/MoCap/audio do not establish immutable performed note-level onset+pitch truth.
-- **MMIP — RIGHTS + REFERENCE FAIL.** CC BY-NC-SA; guitar MIDI produced post-recording via Ableton audio-to-MIDI.
-- **M-M Guitar / Perez-Carrillo — REJECTED.** Onsets derived from recorded audio; pitch from score; too small and public availability/rights unresolved. Checkpoint `c338d05c6c321a2aebe7ca72d1f8b803bcfb36e1`.
-- **GIHME — PUBLIC CORPUS NOT MATERIALIZED.** Zenodo `6798338` still exposes only conference paper `79.pdf`, not the advertised audio/annotation package. Checkpoint `6dcdeeba53e2a6b0433f77c3a36a0a9d6c446eb8`.
-- **MUSMET — RIGHTS + REFERENCE FAIL.** Real electric-guitar ensemble audio + EEG, but no independent note-event reference; no explicit permissive performance-audio license. Rechecked in the 2026-09-14 post-handoff release-only pass: the public dataset index still separates a drum MIDI dataset from the multimodal band release and does not establish independent performed guitar note-event truth.
-- **Klangio GST-MM-2025 — REJECTED.** Strum/chord supervision, spectral-flux audio-derived onset component, and performance-audio rights not clearly established. Checkpoint `b77bf09259aaf122b60f778921abca110633f4a8`.
-- **EGFxSet — NARROW BACKUP ONLY.** ~690 unique clean performances, CC BY 4.0, but no established high-resolution independent performed onset reference; effects cannot inflate evidence.
-- **EGDB / EGDB-PG — REJECTED AS V6 REPLACEMENT HOLDOUT.** Current EGDB-PG v2 is an amplifier-rendered derivative of the already-governed EGDB performance population, not a new independent real-performance corpus. The 256 presets cannot inflate population evidence; no new independent performed onset+pitch reference is established, untouched status fails, and the current Zenodo v2 Rights section exposes no explicit license value. Dedicated checkpoint `docs/checkpoints/SONGSTERR_FRESH_EGDB_PG_V2_DERIVATIVE_HOLDOUT_REVIEW_2026-09-14.md`, commit `4462eabf17d5adcf0d05234d6e85eb5f6e2fcf68`.
-- **EGDB-NDSP — REJECTED AS DERIVATIVE HOLDOUT.** Current public project material identifies EGDB-NDSP as the six unseen Neural DSP amplifier-preset evaluation set packaged alongside EGDB-PG. It is an amplifier-rendered view of the already-governed EGDB performance population, not a new independently performed corpus; its six tone presets cannot inflate independent evidence, no new independent performed onset+pitch truth is established, untouched status fails, and the current Zenodo v2 Rights section exposes no explicit license value. Dedicated checkpoint `docs/checkpoints/SONGSTERR_FRESH_EGDB_NDSP_DERIVATIVE_HOLDOUT_REVIEW_2026-09-14.md`, commit `257b1625a891a0e117aedf81ce3da89d105b0912`.
-- **GuitarDuets — REAL SUBSET LACKS NOTE TRUTH.** Note-level MIDI applies to synthesized material, not immutable performed truth for real duets.
-- **DoMP — REJECTED.** Paper describes live electric guitar + Fishman TriplePlay MIDI, but authoritative Zenodo `10818617` release exposes only the MIDI archive and no evaluated audio. Checkpoint `4ed022234695996d2b491863918ee1f6909ae1a7`.
-- **Geoff Bremner Multimodal Music Corpus — PRIVATE-LICENSE LEAD ONLY.** Public material does not establish simultaneously captured performed guitar MIDI/onset semantics/full-corpus population; no contact/acquisition.
-- **GRAUX / Water commercial packs — REJECTED BEFORE PURCHASE.** Companion MIDI is not independent performed per-note guitar truth; licensing is production-oriented.
-- **PolyMap — METADATA-ONLY / NOT ADMISSIBLE ON CURRENT PUBLIC EVIDENCE.** 64-channel real-guitar capture prototype, but no released qualifying corpus/reference/rights/population identities. Checkpoint `bd5379d5384e565abb89f81b1bd8288be41a13e0`.
-- **TART 2026 — NO NEW HOLDOUT.** Uses already-governed GuitarSet/EGDB and noisy derivatives. Checkpoint `4a6d8e9b9860d2693e72fc0b4bb0af0404692959`.
-- **Five guitar dataset — REJECTED BEFORE MEDIA ACCESS.** Zenodo `4988354` contains 30 underlying real-guitar performances recorded simultaneously through DI/mobile/computer setups (90 WAV views), but no independent performed note-level onset+pitch reference. Checkpoint `docs/checkpoints/SONGSTERR_FRESH_FIVE_GUITAR_DATASET_METADATA_REVIEW_2026-09-14.md`, commit `b4911312dd3a38d8578b0b97ef47b48b26b85e61`.
-- **SJSU Patil 2025 thesis corpus — REJECTED AS CURRENT V6 HOLDOUT / METADATA-ONLY LEAD.** Institutional abstract reports 75,579 songs / 5,134+ hours, but no authoritative public corpus package with explicit permissive performance-audio rights, no established independent performed onset+pitch reference provenance, no frozen qualifying real-guitar/isolation population, and no defensible untouched external split were established. Dedicated checkpoint `docs/checkpoints/SONGSTERR_FRESH_SJSU_PATIL_2025_CORPUS_METADATA_REVIEW_2026-09-14.md`, commit `0e0c96a745edf484020aa8742ce1e3cd0212ecdd`.
-- **FretboardFlow — REJECTED BEFORE MEDIA ACCESS.** Public ISMIR/GitHub evidence confirms real expert-performed hexaphonic guitar recordings, but the project README explicitly states the MIDI is quantized to four chords per bar and is not millisecond-accurate; the ISMIR description uses the GuitarSet/KAMIR automated hexaphonic-transcription pipeline. Current public repo also lacks a declared license and says audio will be uploaded. This fails the frozen independent high-resolution onset-reference gate before media access. Dedicated checkpoint `docs/checkpoints/SONGSTERR_FRESH_FRETBOARDFLOW_METADATA_REFERENCE_REVIEW_2026-09-14.md`, commit `f64f0dc851219142687b53d46cbc80ba86b94d84`.
-- **ToneTwist AFx — REJECTED AS DERIVATIVE HOLDOUT FAMILY.** New 2026 Zenodo effect-render releases reuse a heterogeneous dry pool (including IDMT-SMT-GUITAR, NAM/private/YouTube-derived sources). Wet/effect variants are derivative views, not new performances; no independent performed note-level onset+pitch truth is established; effect multiplication cannot inflate V6 population evidence; the full underlying performance-audio rights chain is not established; and reused IDMT material defeats untouched status. Dedicated checkpoint `docs/checkpoints/SONGSTERR_FRESH_TONETWIST_AFX_DERIVATIVE_HOLDOUT_REVIEW_2026-09-14.md`, commit `13d70c67ddae4f16b141108da9b2945e77f81018`.
-- **GM Dataset (Chieppa et al. 2025) — REJECTED BEFORE MEDIA ACCESS.** Eighteen real acoustic/clean-electric recordings (~25.5 min) were made by following pre-existing Ultimate Guitar tablature/MIDI, then the score MIDI was imported into a DAW and aligned to the recordings before being split by string. This is score-following/aligned annotation, not an independent performed-event onset+pitch stream. The article's CC BY-NC-ND license is not a permissive corpus performance-audio grant, copyrighted repertoire/transcriptions are involved, and the population is too small for a defensible frozen V6 admission path. Dedicated checkpoint `docs/checkpoints/SONGSTERR_FRESH_GM_DATASET_METADATA_REFERENCE_REVIEW_2026-09-14.md`, commit `5585e2f14c35809ab19c194a2ff21e05a5f3049e`.
-- **Late-summer 2026 paper delta — NO NEW HOLDOUT.** Noise2Fret (arXiv:2608.30854, 2026-08-31) evaluates GuitarSet and GOAT only; Explicit Note-Event Tokenization (arXiv:2607.26440, 2026-07-29) evaluates DadaGP and already-closed François Leduc. Neither introduces a new independently captured real-guitar corpus, new independent performed onset+pitch truth, new rights chain, or untouched population. GOAT mention is literature-only and does not reopen archived GOAT/reference scoring. Dedicated checkpoint `docs/checkpoints/SONGSTERR_FRESH_LATE_SUMMER_2026_CORPUS_DELTA_REVIEW_2026-09-14.md`, commit `55088c38f1f957f510b21531783308cd336f7eaa`.
-- **2026-09-14 evening corpus delta sweep — NO NEW HOLDOUT.** A fresh targeted search across newly surfaced 2026 guitar-transcription/data literature found only already-governed or non-qualifying families (TART/GuitarSet/EGDB/GAPS/Guitar-TECHS/GuitarDuets/SynthTab/IDMT/GOAT mentions). No new primary source established all five frozen pre-media gates simultaneously. Dedicated checkpoint `docs/checkpoints/SONGSTERR_FRESH_V6_2026_09_14_EVENING_CORPUS_DELTA_SWEEP.md`, commit `73ab868ddd14d8952f6d866f38888c28ded4dab2`.
-- **2026-09-14 post-handoff corpus delta sweep — NO NEW HOLDOUT.** Continuation search rechecked September 2026/ISMIR 2026 guitar-transcription results, synchronized MIDI/audio leads, hexaphonic/Fishman-style corpus leads, current EGDB-PG/NDSP material, and a release-only follow-up recheck of EG-IPT and MUSMET. Surfaced evidence remained already-governed or derivative/non-qualifying; no new primary source established all five frozen pre-media gates. GOAT mentions remained literature-only and did not reopen archived GOAT/reference scoring. Dedicated checkpoint `docs/checkpoints/SONGSTERR_FRESH_V6_2026_09_14_POST_HANDOFF_DELTA_SWEEP.md`, latest commit `c3fde7ae6bd7d1102040083829518ceb90a554f9`.
-- **2025–2026 recent primary-source delta sweep — NO ADMISSIBLE CANDIDATE FOUND.** Checkpoint `393e2769d007ed88f1dca61a8403cd54ee4e8001`.
-- Other non-qualifying leads remain closed unless genuinely new primary evidence materially changes a hard gate: GPT/Su 2014, robot/isolated chord sets, NSynth, Slakh2100, URMP, GuitarJam, `guitar-fretboard-notes`, Semantic Timbre, `guitar-chord-mix`, MedleyDB, MUSDB18, MoisesDB, UT Austin/Kaggle, MagCIL guitar_style_dataset, Manchester/NOVARS, Mendeley/Figshare leads, Selekt stems.
+No currently reviewed public candidate clears all five gates.
+
+Closed/rejected or otherwise non-qualifying families include: Guitar-TECHS (closed C), AG-PT-set, GAPS v1.1, François Leduc Guitar Dataset, EGSet12, IDMT-SMT-Audio-Effects / GUITAR-FX-DIST, EG-Solo / G&N / TENT, EG-IPT, Multimodal Electric Guitar Data, MMIP, M-M Guitar / Perez-Carrillo, GIHME, MUSMET, Klangio GST-MM-2025, EGFxSet as narrow backup only, EGDB / EGDB-PG, EGDB-NDSP, GuitarDuets, DoMP, Geoff Bremner Multimodal Music Corpus as private-license lead only, GRAUX / Water commercial packs, PolyMap, TART 2026, Five guitar dataset, SJSU Patil 2025 thesis corpus, FretboardFlow, ToneTwist AFx, GM Dataset (Chieppa et al. 2025), Semantic Timbre, and other previously logged non-qualifying synthetic/stem/robot/chord-only leads. GOAT mentions remain literature-only and do not reopen archived GOAT/reference scoring.
+
+Key detailed checkpoints remain authoritative for their individual findings, including:
+- `docs/checkpoints/SONGSTERR_FRESH_GAPS_V1_1_RELEASE_DELTA_REVIEW_2026-09-14.md`
+- `docs/checkpoints/SONGSTERR_FRESH_FRANCOIS_LEDUC_DATASET_METADATA_REFERENCE_REVIEW_2026-09-14.md`
+- `docs/checkpoints/SONGSTERR_FRESH_EGDB_PG_V2_DERIVATIVE_HOLDOUT_REVIEW_2026-09-14.md`
+- `docs/checkpoints/SONGSTERR_FRESH_EGDB_NDSP_DERIVATIVE_HOLDOUT_REVIEW_2026-09-14.md`
+- `docs/checkpoints/SONGSTERR_FRESH_FIVE_GUITAR_DATASET_METADATA_REVIEW_2026-09-14.md`
+- `docs/checkpoints/SONGSTERR_FRESH_SJSU_PATIL_2025_CORPUS_METADATA_REVIEW_2026-09-14.md`
+- `docs/checkpoints/SONGSTERR_FRESH_FRETBOARDFLOW_METADATA_REFERENCE_REVIEW_2026-09-14.md`
+- `docs/checkpoints/SONGSTERR_FRESH_TONETWIST_AFX_DERIVATIVE_HOLDOUT_REVIEW_2026-09-14.md`
+- `docs/checkpoints/SONGSTERR_FRESH_GM_DATASET_METADATA_REFERENCE_REVIEW_2026-09-14.md`
+- `docs/checkpoints/SONGSTERR_FRESH_LATE_SUMMER_2026_CORPUS_DELTA_REVIEW_2026-09-14.md`
+- `docs/checkpoints/SONGSTERR_FRESH_V6_2026_09_14_EVENING_CORPUS_DELTA_SWEEP.md`
+- `docs/checkpoints/SONGSTERR_FRESH_V6_2026_09_14_POST_HANDOFF_DELTA_SWEEP.md`
+- `docs/checkpoints/SONGSTERR_FRESH_V6_2026_09_14_1827_CORPUS_DELTA_SWEEP.md`, commit `9bff78da4e2dd6fa3e9898ef36852d49f52e6543`.
+
+Latest sweep decision: `NO_NEW_ADMISSIBLE_REPLACEMENT_HOLDOUT`. Fresh synchronized-audio/MIDI, hexaphonic, and Fishman TriplePlay-style searches resurfaced only already-governed or non-qualifying material. No new primary source established all five pre-media gates simultaneously.
 
 Public/institutional/commercial search is near exhausted but this is not proof that no qualifying corpus exists.
 
-## PURPOSE-BUILT UNTOUCHED HOLDOUT — DESIGN ONLY
+## PURPOSE-BUILT HOLDOUT
 
-Strongest architecture remains real guitar + conventional clean magnetic DI as the evaluated signal + an independent physical string/fret reference for nominal pitch identity + a separate independent excitation/event-birth reference. Timing must come from a common hardware timebase or immutable hardware sync markers; evaluated-audio/model alignment is forbidden.
+Purpose-built independent-sensor capture remains design-only background and is not an active execution path under the current user instruction to continue only replacement-holdout metadata/license/alignment search after Guitar-TECHS outcome C. No purchase, contact, hiring, calibration recording, holdout recording, or data acquisition without explicit user authorization.
 
-Expanded design checkpoint: `docs/checkpoints/SONGSTERR_FRESH_PURPOSE_BUILT_HOLDOUT_EXPANDED_DESIGN_2026-09-14.md`, commit `e37d2b4662db949157d2cf4797370f05648b6940`. It defines the three evidence planes, hardware-only synchronization, non-holdout calibration boundary, rights/provenance, anti-cherry-picking rules, population/diversity design, manifest expansion, structural gates, role blinding, one-way fail-closed state machine, and the pre-authorization paper package.
-
-Physical reference semantics checkpoint: `docs/checkpoints/SONGSTERR_FRESH_PURPOSE_BUILT_PHYSICAL_REFERENCE_SEMANTICS_V1_2026-09-14.md`, commit `ea5f50212cd1cd3794c65cb648a4d781e49e4082`. It freezes the semantic direction for repeated same-pitch attacks, open-string reattacks, picked changes, hammer-ons, pull-offs, taps, slides, bends/vibrato, chords, muting, natural decay, ambiguous states, raw-truth preservation, hardware-clock timing, deterministic V6 projection, and no manual/audio/model repair. Exact sensor hardware and numeric calibration thresholds remain deliberately unresolved until prospective non-holdout calibration planning.
-
-Purpose-built material must be original/public-domain/rights-cleared, explicitly licensed for product validation, collected with zero model access/no model-informed retakes, raw reference preservation, frozen objective QA, and preregistered non-holdout calibration. Provisional >=20,000 raw-reference notes / multi-player collection remains planning only; frozen >=1,000 V6-positive gate remains authoritative. No purchase, contact, hiring, calibration recording, holdout recording or data acquisition without explicit user authorization.
-
-Current purpose-built state remains `DESIGN_ONLY`. The existing v1 acquisition-failure vocabulary is not silently expanded. Clock/sync/sensor-specific retake codes require a future versioned pre-capture contract/plan update plus synthetic tests after their semantics and objective criteria are frozen; they may never be invented post-capture.
-
-## PURPOSE-BUILT GOVERNANCE — EIGHT-STAGE SYNTHETIC CI PASS
-
-Existing governance layers remain binding: base manifest contract; semantic guard; content-only capture-plan binding; ancestral Git-history proof; deliberate GitHub-hosted `workflow_dispatch` attestation; GitHub server proof; exact hardened workflow/generator blob integrity; exact hosted attestation-artifact binding.
-
-Latest eight-stage synthetic CI run `34793985984`, job `103823432519`, is green. Hosted artifact-proof production trust-boundary audit checkpoint `docs/checkpoints/SONGSTERR_FRESH_PURPOSE_BUILT_ARTIFACT_PROOF_TRUST_BOUNDARY_AUDIT_2026-09-13.md`, commit `2456945a1c270842594010b7c3ffde423f68adb7`, is PASS: production obtains exact cited-run metadata/artifact listing and downloads exact artifact bytes from GitHub before validation; caller-supplied artifact objects are confined to helper/test boundaries.
-
-Successful purpose-built governance can establish only `mayAdvanceToReferenceBlindStructuralAudit:true`; it does not establish source truth, structural suitability, Basic Pitch/V6/correctness authorization, model validation, customer eligibility or delivery advancement.
+Existing design checkpoints remain frozen historical authority and are not being advanced in this scope:
+- `docs/checkpoints/SONGSTERR_FRESH_PURPOSE_BUILT_HOLDOUT_EXPANDED_DESIGN_2026-09-14.md`, commit `e37d2b4662db949157d2cf4797370f05648b6940`;
+- `docs/checkpoints/SONGSTERR_FRESH_PURPOSE_BUILT_PHYSICAL_REFERENCE_SEMANTICS_V1_2026-09-14.md`, commit `ea5f50212cd1cd3794c65cb648a4d781e49e4082`.
 
 ## NEXT ALLOWED ACTION
 
 1. Verify live branch head and this checkpoint before each continuation.
-2. Do not reopen the artifact-proof trust boundary absent concrete new evidence of a loophole.
-3. Continue metadata-only replacement-corpus research only for genuinely new primary evidence, authoritative rights changes, or a newly established independent performed onset+pitch reference.
-4. If a candidate clears all five pre-media gates, stop before media access and freeze a candidate-specific reference-blind inventory/alignment preregistration.
-5. Continue purpose-built work on paper by freezing `Capture QA + Structural Gate Matrix V1`, separating pre-capture blockers, objective retake-eligible acquisition failures, non-rescuable structural failures, and correctness-stage outcomes. Keep exact numeric sensor/sync thresholds prospective/TBD until non-holdout calibration planning; never choose them from holdout observations.
-6. Only after those paper semantics are fixed may a versioned future contract/plan layer and synthetic tests be designed for any new clock/sync/sensor acquisition-QA codes. Existing v1 governance remains intact until then.
-7. After a future real structural audit passes, bind immutable identities, run no-real-correctness harness CI, then exactly one ordinary-GitHub-CPU correctness run under the frozen V6/scoring framework.
-8. Ask before Modal, Vercel heavy-GPU, L4 GPU, or purpose-built spending/contact/acquisition. No question is needed for ordinary metadata research, paper design, coding, synthetic tests, GitHub CPU CI, or checkpoint maintenance.
+2. Continue metadata/license/alignment search only for genuinely new untouched real-guitar holdout evidence, authoritative rights changes, or a newly established independent performed onset+pitch reference.
+3. If a candidate clears all five pre-media gates, stop before media access and freeze a candidate-specific reference-blind inventory/alignment preregistration.
+4. Do not perform correctness, tune V6, or alter frozen alignment/scoring rules from any holdout observation.
+5. Ask before Modal, Vercel heavy-GPU, L4 GPU, purpose-built spending/contact/acquisition, or other explicitly gated compute/acquisition work.
 
 ## STILL FORBIDDEN
 
-Guitar-TECHS correctness/repair/rescue; AG-PT-set/GAPS acquisition or scoring under current references; EGSet12 history rewriting/scoring; NC/ND or otherwise restricted corpus use outside rights; rescue via evaluated-audio-derived truth; counting synthetic/effect/duplicate/simultaneous-view derivatives as independent real evidence; reopening GOAT/reference scoring from literature mentions; V5/FLGD rerun/tuning; protected-song execution; duration research; changing frozen V6/scoring rules from holdout observations; real-corpus optimizer/threshold sweeps or fine-tuning; treating vendor MIDI as infallible truth; purpose-built calibration on admitted holdout/model outcomes; purpose-built procurement/contact/hiring/calibration recording/holdout recording without explicit authorization; Production/customer promotion without untouched external validation + separate policy review; Modal/Vercel heavy-GPU/L4 without explicit authorization.
+Guitar-TECHS correctness/repair/rescue; archived V143/Gomyway; GOAT/reference scoring; GuitarSet/V3; IDMT/V4; V5/FLGD; duration research; protected-song execution; NC/ND or otherwise restricted corpus use outside rights; rescue via evaluated-audio-derived truth; counting synthetic/effect/duplicate/simultaneous-view derivatives as independent real evidence; changing frozen V6/scoring rules from holdout observations; real-corpus optimizer/threshold sweeps or fine-tuning; treating vendor MIDI as infallible truth; Production/customer promotion without untouched external validation + separate policy review; Modal/Vercel heavy-GPU/L4 without explicit authorization.
 
 ## FRESH-CHAT HANDOFF
 
-Continue only on `songsterr-fresh-pipeline-v1`. Archived V143/Gomyway remains closed. Guitar-TECHS is closed outcome C before correctness; its official successful audit artifact remains live/unexpired with GitHub digest `sha256:d6e4395f815ce51e1ae83ebdd5c770ca6cd485bb7e90e150dc0e7f7944bf4125`, and the previously independently verified archive digest and merged JSON SHA remain unchanged. V6 method/scoring remain frozen and no replacement-holdout correctness has been exposed. Latest public-corpus research still found no candidate clearing all five pre-media gates. Purpose-built independent-sensor capture is therefore the strongest current route, but it remains `DESIGN_ONLY`: expanded architecture is frozen in `docs/checkpoints/SONGSTERR_FRESH_PURPOSE_BUILT_HOLDOUT_EXPANDED_DESIGN_2026-09-14.md` at `e37d2b4662db949157d2cf4797370f05648b6940`, and physical reference semantics are documented in `docs/checkpoints/SONGSTERR_FRESH_PURPOSE_BUILT_PHYSICAL_REFERENCE_SEMANTICS_V1_2026-09-14.md` at `ea5f50212cd1cd3794c65cb648a4d781e49e4082`. The next paper-only deliverable is `Capture QA + Structural Gate Matrix V1`; no new sensor/sync failure code becomes active until prospectively versioned and synthetic-tested. No real candidate media, Basic Pitch/V6 correctness, purpose-built spending/contact/recording, Modal, Vercel heavy-GPU or L4 work is authorized by this checkpoint.
+Continue only on `songsterr-fresh-pipeline-v1`. Guitar-TECHS is closed outcome C before correctness; the official successful audit artifact remains live and freshly integrity-verified with archive SHA-256 `d6e4395f815ce51e1ae83ebdd5c770ca6cd485bb7e90e150dc0e7f7944bf4125` and merged JSON SHA-256 `ffd7e44d0e65c53dbdafc948e51f8f15810dbbd628100e3226eec4a2fc3a04ab`. V6 method/scoring remain frozen. No replacement-holdout correctness has been exposed. Latest metadata/license/reference sweep found no new candidate clearing all five pre-media gates. Continue only genuinely new untouched real-guitar holdout research; stop before media access if a candidate clears the gates. Keep `modelValidationComplete:false`, `customerEligibleEvents:0`, `mayAdvanceDelivery:false`, duration paused, Policy C `UNENROLLED`, protected-song execution embargoed.
