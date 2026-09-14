@@ -1,6 +1,6 @@
 # CURRENT STATE — Songsterr Fresh Pipeline V1
 
-Updated: 2026-09-14 19:18 America/Toronto
+Updated: 2026-09-14 19:28 America/Toronto
 Canonical branch: `songsterr-fresh-pipeline-v1`
 Canonical checkpoint: `docs/checkpoints/SONGSTERR_FRESH_PIPELINE_CURRENT_STATE.md`
 
@@ -61,53 +61,53 @@ No currently reviewed public candidate clears all five gates.
 
 Closed/rejected or otherwise non-qualifying families include: Guitar-TECHS (closed C), AG-PT-set, GAPS v1.1/v2, François Leduc Guitar Dataset, EGSet12, IDMT-SMT-Audio-Effects / GUITAR-FX-DIST, EG-Solo / G&N / TENT, EG-IPT, Multimodal Electric Guitar Data, MMIP, M-M Guitar / Perez-Carrillo, GIHME, MUSMET, Klangio GST-MM-2025, EGFxSet as narrow backup only, EGDB / EGDB-PG, EGDB-NDSP, GuitarDuets, DoMP, Geoff Bremner Multimodal Music Corpus as private-license lead only, GRAUX / Water commercial packs, PolyMap, TART 2026, Five guitar dataset, SJSU Patil 2025 thesis corpus, FretboardFlow, ToneTwist AFx, GM Dataset (Chieppa et al. 2025), Semantic Timbre, and other previously logged non-qualifying synthetic/stem/robot/chord-only leads. GOAT mentions remain literature-only and do not reopen archived GOAT/reference scoring.
 
-Key detailed checkpoints remain authoritative for their individual findings, including:
-- `docs/checkpoints/SONGSTERR_FRESH_GAPS_V1_1_RELEASE_DELTA_REVIEW_2026-09-14.md`
-- `docs/checkpoints/SONGSTERR_FRESH_FRANCOIS_LEDUC_DATASET_METADATA_REFERENCE_REVIEW_2026-09-14.md`
-- `docs/checkpoints/SONGSTERR_FRESH_EGDB_PG_V2_DERIVATIVE_HOLDOUT_REVIEW_2026-09-14.md`
-- `docs/checkpoints/SONGSTERR_FRESH_EGDB_NDSP_DERIVATIVE_HOLDOUT_REVIEW_2026-09-14.md`
-- `docs/checkpoints/SONGSTERR_FRESH_FIVE_GUITAR_DATASET_METADATA_REVIEW_2026-09-14.md`
-- `docs/checkpoints/SONGSTERR_FRESH_SJSU_PATIL_2025_CORPUS_METADATA_REVIEW_2026-09-14.md`
-- `docs/checkpoints/SONGSTERR_FRESH_FRETBOARDFLOW_METADATA_REFERENCE_REVIEW_2026-09-14.md`
-- `docs/checkpoints/SONGSTERR_FRESH_TONETWIST_AFX_DERIVATIVE_HOLDOUT_REVIEW_2026-09-14.md`
-- `docs/checkpoints/SONGSTERR_FRESH_GM_DATASET_METADATA_REFERENCE_REVIEW_2026-09-14.md`
-- `docs/checkpoints/SONGSTERR_FRESH_LATE_SUMMER_2026_CORPUS_DELTA_REVIEW_2026-09-14.md`
-- `docs/checkpoints/SONGSTERR_FRESH_V6_2026_09_14_EVENING_CORPUS_DELTA_SWEEP.md`
-- `docs/checkpoints/SONGSTERR_FRESH_V6_2026_09_14_POST_HANDOFF_DELTA_SWEEP.md`
-- `docs/checkpoints/SONGSTERR_FRESH_V6_2026_09_14_1827_CORPUS_DELTA_SWEEP.md`, commit `9bff78da4e2dd6fa3e9898ef36852d49f52e6543`.
-- `docs/checkpoints/SONGSTERR_FRESH_V6_2026_09_14_1907_CORPUS_DELTA_SWEEP.md`, commit `c36860abd62302a5aef049e42487b926660a4979`.
+Latest sweep decision remains `NO_NEW_ADMISSIBLE_REPLACEMENT_HOLDOUT`. Public/institutional/commercial search is near exhausted but this is not proof that no qualifying corpus exists.
 
-Latest sweep decision: `NO_NEW_ADMISSIBLE_REPLACEMENT_HOLDOUT`. Fresh 2025–2026 synchronized-audio/MIDI and note-level guitar searches resurfaced Guitar-TECHS, GAPS, MMIP, GuitarSet, IDMT, TART, GOAT literature, NSynth mirrors and non-performance guitar-tone metadata; no new primary source established all five pre-media gates simultaneously.
+## PURPOSE-BUILT HOLDOUT — ACTIVE UNDER EXPLICIT AUTHORIZATION
 
-Public/institutional/commercial search is near exhausted but this is not proof that no qualifying corpus exists.
-
-## PURPOSE-BUILT HOLDOUT — REOPENED UNDER EXPLICIT AUTHORIZATION
-
-The purpose-built independent-sensor route is active again under the user's explicit 2026-09-14 19:18 ET authorization. The conservative order is binding: reconcile/freeze semantics and contract code -> synthetic-only tests/CPU CI -> reference-blind structural-audit tooling -> only then objectively necessary procurement/contact/calibration/data acquisition. Real holdout correctness remains forbidden until all frozen gates clear.
+The purpose-built independent-sensor route is active under the user's explicit 2026-09-14 19:18 ET authorization. Conservative order remains binding: semantics/contract -> synthetic-only CI -> reference-blind structural-audit tooling -> only then objectively necessary procurement/contact/calibration/data acquisition. Real holdout correctness remains forbidden until all frozen gates clear.
 
 Design authority:
 - `docs/checkpoints/SONGSTERR_FRESH_PURPOSE_BUILT_HOLDOUT_EXPANDED_DESIGN_2026-09-14.md`, commit `e37d2b4662db949157d2cf4797370f05648b6940`;
 - `docs/checkpoints/SONGSTERR_FRESH_PURPOSE_BUILT_PHYSICAL_REFERENCE_SEMANTICS_V1_2026-09-14.md`, commit `ea5f50212cd1cd3794c65cb648a4d781e49e4082`;
 - `docs/checkpoints/SONGSTERR_FRESH_PURPOSE_BUILT_CAPTURE_QA_STRUCTURAL_GATE_MATRIX_V1_2026-09-14.md`, commit `2b191b39f2f1c19564f1353381779acbc96fbeda`.
 
-Current implementation baseline includes `scripts/songsterr-fresh/purpose_built_capture_manifest_contract_v2.py` and `scripts/songsterr-fresh/test_purpose_built_capture_manifest_contract_v2.py`. V2 adds separate evaluated-audio/pitch/birth paths, non-holdout/no-model calibration, independent clock/sync proof, machine-verifiable acquisition-failure evidence, and underlying-performance identity while remaining fail-closed for Basic Pitch/V6/correctness. A live review on reopening found one identity-rule inconsistency to resolve before treating V2 as CI-ready: retries intentionally reuse one `underlyingPerformanceId` within a slot, but the current global-duplicate check can reject that same-slot continuity. Required semantics: same-slot retries must retain the same underlying identity; the same underlying identity must be rejected across distinct slots/population units.
+### Capture-manifest V2.1 — SYNTHETIC CI PASS
 
-Existing eight-stage preregistration/artifact-proof governance remains historical PASS and should not be reopened absent a concrete new loophole. Successful declaration/governance may authorize only `mayAdvanceToReferenceBlindStructuralAudit:true`; it never establishes source truth, structural suitability, Basic Pitch/V6/correctness authorization, model validation, customer eligibility or delivery advancement.
+V2 historical implementation remains inherited history. It contained one demonstrated internal contradiction: a nominal valid failed-attempt -> admitted-retry fixture reused one `underlyingPerformanceId` within the same frozen slot, while V2 globally rejected any repeated underlying ID across attempts.
+
+V2.1 fixes only that identity semantics defect while preserving all V1/V2 fail-closed boundaries:
+- same-slot retries must retain the same `underlyingPerformanceId`;
+- changing the underlying identity within a slot fails;
+- reuse of one underlying identity across distinct slots/population units fails;
+- first-transport-valid-take chronology remains inherited from V1.
+
+Implementation: `scripts/songsterr-fresh/purpose_built_capture_manifest_contract_v2_1.py`, commit `72e8861f50680f45e586eb1e1352db59bda1f0ae`.
+Synthetic tests: `scripts/songsterr-fresh/test_purpose_built_capture_manifest_contract_v2_1.py`, commit `ff5717a4aeb9b74e971694703f6d6cb785389845`.
+Workflow head: `3d7f1770a3b8df0018008a49defe189db306de39`.
+Successful GitHub-hosted CPU run: `34908936464`, job `104191861049`, conclusion `success`.
+Detailed checkpoint: `docs/checkpoints/SONGSTERR_FRESH_PURPOSE_BUILT_CAPTURE_MANIFEST_V2_1_SYNTHETIC_CI_2026-09-14.md`, commit `9d3b17b392bd486753cb657318c048a7ae2460a7`.
+
+The successful run explicitly reasserted that a nominal declaration may reach only `mayAdvanceToReferenceBlindStructuralAudit:true`; all of `authoritativeStructuralSuitabilityEstablished`, `basicPitchAuthorized`, `v6Authorized`, and `correctnessAuthorized` remain false.
+
+Initial run `34908849001` failed because the first workflow version also required the superseded contradictory V2 test suite to pass. That demonstrated the known V2 contradiction rather than a V2.1 safety failure. The final authoritative gate runs V1 + V2.1; V2 remains inherited implementation history.
+
+Existing eight-stage preregistration/artifact-proof governance remains historical PASS and should not be reopened absent a concrete new loophole. Successful declaration/governance never establishes source truth, structural suitability, Basic Pitch/V6/correctness authorization, model validation, customer eligibility or delivery advancement.
 
 ## NEXT ALLOWED ACTION
 
 1. Verify live branch head and this checkpoint before each continuation/mutation.
-2. Repair and test the V2 same-slot-retry vs cross-slot-duplication identity semantics without weakening V1 first-valid-take chronology.
-3. Complete synthetic-only V2 contract tests and ordinary GitHub CPU CI; keep all outputs fail-closed for correctness.
-4. Freeze/reference the physical-reference structural-audit contract before any real calibration or holdout media are used.
-5. Use procurement/contact/calibration/data acquisition only when the preceding paper/code/CI gates demonstrate they are necessary; record every such decision in this checkpoint before acting where practicable.
+2. Freeze and implement the purpose-built **reference-blind physical-reference structural audit** using only independent pitch/birth reference streams, configuration/calibration, hashes and clock/sync evidence; evaluated DI/model outputs are forbidden inputs.
+3. Synthetic-test and ordinary-GitHub-CPU-CI that structural-audit contract before any real calibration/holdout data is used.
+4. Structural audit must fail closed on ambiguous pitch state at birth, unmatched events, nonmonotonic timestamps, impossible transitions, same-key overlaps, sensor/configuration/hash mismatch, and clock/sync failure outside frozen non-holdout-calibrated limits.
+5. Use procurement/contact/calibration/data acquisition only when the structural-audit paper/code/CI gate demonstrates those steps are actually necessary; record the decision before acting where practicable.
 6. Do not perform real holdout correctness, tune V6, or alter frozen alignment/scoring rules from any holdout observation. Exactly one ordinary-GitHub-CPU correctness run remains the eventual maximum after all gates pass.
 7. Archived V143/Gomyway, GOAT/reference scoring, Guitar-TECHS rescue, protected-song execution and the other explicitly closed lines remain closed despite this broader purpose-built authorization.
 
 ## STILL FORBIDDEN
 
-Guitar-TECHS correctness/repair/rescue; archived V143/Gomyway; GOAT/reference scoring; GuitarSet/V3; IDMT/V4; V5/FLGD; duration research; protected-song execution; NC/ND or otherwise restricted corpus use outside rights; rescue via evaluated-audio-derived truth; counting synthetic/effect/duplicate/simultaneous-view derivatives as independent real evidence; changing frozen V6/scoring rules from holdout observations; real-corpus optimizer/threshold sweeps or fine-tuning; treating vendor MIDI as infallible truth; purpose-built calibration/model decisions informed by admitted holdout correctness; Production/customer promotion without untouched external validation + separate policy review. Heavy GPU remains disfavored and should be used only if genuinely necessary; it is not necessary for current V2 contract/CI work.
+Guitar-TECHS correctness/repair/rescue; archived V143/Gomyway; GOAT/reference scoring; GuitarSet/V3; IDMT/V4; V5/FLGD; duration research; protected-song execution; NC/ND or otherwise restricted corpus use outside rights; rescue via evaluated-audio-derived truth; counting synthetic/effect/duplicate/simultaneous-view derivatives as independent real evidence; changing frozen V6/scoring rules from holdout observations; real-corpus optimizer/threshold sweeps or fine-tuning; treating vendor MIDI as infallible truth; purpose-built calibration/model decisions informed by admitted holdout correctness; Production/customer promotion without untouched external validation + separate policy review. Heavy GPU remains unnecessary for the current structural-audit contract/CI stage.
 
 ## FRESH-CHAT HANDOFF
 
-Continue only on `songsterr-fresh-pipeline-v1`. Guitar-TECHS remains closed outcome C before correctness; V6 method/scoring remain frozen; no replacement-holdout correctness has been exposed. Public replacement-corpus search remains near exhausted with no current candidate clearing all five gates. On 2026-09-14 19:18 ET the user explicitly authorized actions deemed necessary, so the purpose-built route is reopened, but proceed conservatively: code/design/synthetic CPU CI before external spend/contact/acquisition. Current immediate issue is the V2 `underlyingPerformanceId` semantics: same-slot retries must preserve one identity while cross-slot reuse must fail. Preserve all fail-closed boundaries (`modelValidationComplete:false`, `customerEligibleEvents:0`, `mayAdvanceDelivery:false`, duration paused, Policy C `UNENROLLED`, protected-song execution embargoed). Do not reopen V143/Gomyway or GOAT/reference scoring unless separately explicit.
+Continue only on `songsterr-fresh-pipeline-v1`. Guitar-TECHS remains closed outcome C before correctness; V6 method/scoring remain frozen; no replacement-holdout correctness has been exposed. Public replacement-corpus search remains near exhausted with no current candidate clearing all five gates. User authorization at 2026-09-14 19:18 ET keeps the purpose-built route active, but proceed conservatively. Capture-manifest V2.1 has now passed synthetic GitHub CPU CI at run `34908936464`, job `104191861049`; it authorizes only the next reference-blind structural-audit tooling stage. Current immediate action is to implement/freeze/synthetic-test that physical-reference structural audit without evaluated DI or model inputs. Preserve all fail-closed boundaries (`modelValidationComplete:false`, `customerEligibleEvents:0`, `mayAdvanceDelivery:false`, duration paused, Policy C `UNENROLLED`, protected-song execution embargoed). Do not reopen V143/Gomyway or GOAT/reference scoring unless separately explicit.
