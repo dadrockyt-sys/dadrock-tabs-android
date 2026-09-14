@@ -17,6 +17,8 @@ on:
       - "scripts/songsterr-fresh/test_purpose_built_capture_preregistration_attestation_v1.py"
       - "scripts/songsterr-fresh/purpose_built_capture_preregistration_server_proof_v1.py"
       - "scripts/songsterr-fresh/test_purpose_built_capture_preregistration_server_proof_v1.py"
+      - "scripts/songsterr-fresh/purpose_built_capture_preregistration_server_integrity_guard_v1.py"
+      - "scripts/songsterr-fresh/test_purpose_built_capture_preregistration_server_integrity_guard_v1.py"
       - "scripts/songsterr-fresh/fixtures/purpose_built_synthetic_capture_plan_v1.json"
       - "scripts/songsterr-fresh/fixtures/purpose_built_synthetic_preregistration_evidence_v1.json"
       - ".github/workflows/songsterr-purpose-built-preregistration-attestation.yml"
@@ -58,3 +60,6 @@ jobs:
 
       - name: Run synthetic GitHub server-proof tests
         run: python3 scripts/songsterr-fresh/test_purpose_built_capture_preregistration_server_proof_v1.py
+
+      - name: Run synthetic GitHub server-integrity tests
+        run: python3 scripts/songsterr-fresh/test_purpose_built_capture_preregistration_server_integrity_guard_v1.py
