@@ -80,6 +80,9 @@ Then freeze corpus-specific reference-blind inventory/alignment preregistration 
 - chronology regression expansion `2e3199fa28b22debea95eb6a0c2cafcc6c1e7665`
 - purpose-built synthetic CI harness `b9db9c5e50f181f53a812d0bc27a2ac4425a7701`
 - corrected chronology regression expectation `7da490bc07314c5a831d819212184d97b3e3512d`
+- purpose-built semantic guard `d08824ceba7dc8498a581d2387512bf612b22ea8`
+- semantic guard synthetic tests `f7a3ea335aebd6a78c2cd5c2af7c775660728e16`
+- combined base + semantic CI gate `20b4263dc37ab8556e6cd4f6b2f03e812c64cdf7`
 
 ## CURRENT CANDIDATE STATUS
 
@@ -186,15 +189,21 @@ No purchase, deposit, contact, hiring, recording or data acquisition without exp
 
 ### Purpose-built capture manifest contract — SYNTHETIC CI PASS
 
-Reference-blind manifest validator: `scripts/songsterr-fresh/purpose_built_capture_manifest_contract_v1.py`.
-Synthetic tests: `scripts/songsterr-fresh/test_purpose_built_capture_manifest_contract_v1.py`.
+Base reference-blind manifest validator: `scripts/songsterr-fresh/purpose_built_capture_manifest_contract_v1.py`.
+Mandatory semantic guard: `scripts/songsterr-fresh/purpose_built_capture_manifest_semantic_guard_v1.py`.
+Base synthetic tests: `scripts/songsterr-fresh/test_purpose_built_capture_manifest_contract_v1.py`.
+Semantic synthetic tests: `scripts/songsterr-fresh/test_purpose_built_capture_manifest_semantic_guard_v1.py`.
 Branch-scoped CI: `.github/workflows/songsterr-purpose-built-contract-tests.yml`.
 
 Chronology hardening commit `f7df06a0746bf78cf126c05d5c281375e8f2258d` requires timezone-aware UTC timestamps, contiguous attempt numbers beginning at 1 within each slot, and strictly increasing capture times consistent with attempt-number order. Regression commit `2e3199fa28b22debea95eb6a0c2cafcc6c1e7665` adds explicit synthetic cases for non-UTC offsets, naive timestamps, accepted `+00:00`, numbering gaps, reversed chronology and equal timestamps.
 
 CI run `34791117386` correctly failed on an overly specific test expectation for the numbering-gap error string; the validator itself returned the intended fail-closed error. Test-only correction commit `7da490bc07314c5a831d819212184d97b3e3512d` was then exercised by CI run `34791164882`, job `103815530838`, which completed `success` and emitted `PURPOSE_BUILT_CAPTURE_MANIFEST_CONTRACT_V1_SYNTHETIC_TESTS_OK`.
 
-This synthetic contract PASS establishes only that the manifest validator's declared invariants and regressions execute as intended. It does **not** establish real-corpus structural suitability, source truth, model validity or correctness, and it does not authorize Basic Pitch or V6. No real holdout audio/reference bytes were accessed and no correctness was computed.
+Adversarial review then found two semantic loopholes in the otherwise-green base declaration layer: a retry could change `playerId`/`exerciseId`/`category` within the same `slotId`, and the declared evaluated/reference hardware path IDs could be identical while the independence Boolean was still true. The mandatory semantic guard commit `d08824ceba7dc8498a581d2387512bf612b22ea8` closes both without rewriting the already-green base validator. Synthetic tests commit `f7a3ea335aebd6a78c2cd5c2af7c775660728e16` covers identical hardware path IDs and each frozen slot-identity field.
+
+Combined CI commit `20b4263dc37ab8556e6cd4f6b2f03e812c64cdf7` makes both suites mandatory. Run `34791310019`, job `103815933282`, completed `success` and emitted both `PURPOSE_BUILT_CAPTURE_MANIFEST_CONTRACT_V1_SYNTHETIC_TESTS_OK` and `PURPOSE_BUILT_CAPTURE_MANIFEST_SEMANTIC_GUARD_V1_SYNTHETIC_TESTS_OK`.
+
+A future purpose-built manifest must pass **both** the base validator and the semantic guard before any raw-byte structural audit. This synthetic contract PASS establishes only that the manifest invariants and adversarial guards execute as intended. It does **not** establish real-corpus structural suitability, source truth, model validity or correctness, and it does not authorize Basic Pitch or V6. No real holdout audio/reference bytes were accessed and no correctness was computed.
 
 ## NEXT ALLOWED ACTION
 
@@ -231,4 +240,4 @@ This synthetic contract PASS establishes only that the manifest validator's decl
 
 ## FRESH-CHAT HANDOFF
 
-Continue only on `songsterr-fresh-pipeline-v1`; read this file first. V6 method/scoring remain frozen and no replacement-holdout correctness has been exposed. Guitar-TECHS is closed outcome C before correctness. AG-PT-set is rejected because its precise onset reference is constructed from its audio; rights clearance alone cannot cure it. GAPS is rights-blocked. Geoff Bremner remains only a private-license metadata lead; public metadata does not establish performed guitar MIDI provenance. GRAUX commercial live-guitar packs are rejected because their MIDI is companion bass/chord material and license scope is music-production oriented. Public, institutional, literature and commercial searches are close to exhausted. Purpose-built independent-sensor capture is the strongest remaining design route, with Fretsense-style fret/trigger sensing + separate magnetic DI currently the best surfaced architecture, but it remains design-only and requires frozen calibration/audit plus explicit user authorization before any contact/spending/recording. The purpose-built manifest contract now has branch-scoped synthetic CI with chronology regressions passing on run `34791164882`; this does not authorize model/correctness or real-media access. Do not reopen archived V143/Gomyway or GOAT/reference scoring unless explicitly asked.
+Continue only on `songsterr-fresh-pipeline-v1`; read this file first. V6 method/scoring remain frozen and no replacement-holdout correctness has been exposed. Guitar-TECHS is closed outcome C before correctness. AG-PT-set is rejected because its precise onset reference is constructed from its audio; rights clearance alone cannot cure it. GAPS is rights-blocked. Geoff Bremner remains only a private-license metadata lead; public metadata does not establish performed guitar MIDI provenance. GRAUX commercial live-guitar packs are rejected because their MIDI is companion bass/chord material and license scope is music-production oriented. Public, institutional, literature and commercial searches are close to exhausted. Purpose-built independent-sensor capture is the strongest remaining design route, with Fretsense-style fret/trigger sensing + separate magnetic DI currently the best surfaced architecture, but it remains design-only and requires frozen calibration/audit plus explicit user authorization before any contact/spending/recording. Purpose-built manifest admission now requires both the base reference-blind validator and mandatory semantic guard; combined synthetic CI run `34791310019` passed both suites. This still does not authorize model/correctness or real-media access. Do not reopen archived V143/Gomyway or GOAT/reference scoring unless explicitly asked.
