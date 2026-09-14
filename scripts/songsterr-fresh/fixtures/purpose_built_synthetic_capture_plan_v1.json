@@ -1,0 +1,26 @@
+{
+  "contract": "songsterr-fresh-purpose-built-capture-plan-v1",
+  "planId": "synthetic-purpose-built-capture-plan-v1",
+  "allowedAcquisitionFailureReasons": [
+    "DEVICE_DISCONNECT",
+    "MISSING_OR_CORRUPT_FILE"
+  ],
+  "acquisitionFailureCriteria": {
+    "DEVICE_DISCONNECT": "The declared capture or reference device reports a transport disconnect during the attempt.",
+    "MISSING_OR_CORRUPT_FILE": "A required source file is absent, unreadable, or fails its frozen container/parser check."
+  },
+  "plannedSlots": [
+    {
+      "slotId": "slot-1",
+      "playerId": "P01",
+      "exerciseId": "EX01",
+      "category": "singlenotes"
+    },
+    {
+      "slotId": "slot-2",
+      "playerId": "P02",
+      "exerciseId": "EX02",
+      "category": "chords"
+    }
+  ]
+}
