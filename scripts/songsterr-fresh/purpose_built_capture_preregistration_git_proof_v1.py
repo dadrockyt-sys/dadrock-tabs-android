@@ -22,6 +22,7 @@ import argparse
 import importlib.util
 import json
 import subprocess
+from datetime import datetime, timezone
 from pathlib import Path
 from typing import Any
 
@@ -46,6 +47,21 @@ def _git(repo_root: Path, *args: str) -> subprocess.CompletedProcess[str]:
         stdout=subprocess.PIPE,
         stderr=subprocess.PIPE,
     )
+
+
+def _parse_git_timestamp(value: Any) -> datetime | None:
+    """Parse any timezone-aware Git ISO-8601 timestamp and normalize to UTC."""
+    if not isinstance(value, str) or not value.strip():
+        return None
+    text = value.strip()
+    normalized = text[:-1] + "+00:00" if text.endswith("Z") else text
+    try:
+        parsed = datetime.fromisoformat(normalized)
+    except ValueError:
+        return None
+    if parsed.tzinfo is None or parsed.utcoffset() is None:
+        return None
+    return parsed.astimezone(timezone.utc)
 
 
 def _load_historical_json(
@@ -107,10 +123,10 @@ def validate_git_proof(manifest: Any, plan: Any, repo_root: str | Path = ".") ->
             if timestamp_result.returncode != 0:
                 errors.append("GIT_PREREGISTRATION_COMMIT_TIMESTAMP_UNAVAILABLE")
             else:
-                commit_timestamp = base._parse_utc_timestamp(timestamp_result.stdout.strip())
+                commit_timestamp = _parse_git_timestamp(timestamp_result.stdout.strip())
                 if commit_timestamp is None:
                     errors.append(
-                        "GIT_PREREGISTRATION_COMMIT_TIMESTAMP_NOT_UTC:"
+                        "GIT_PREREGISTRATION_COMMIT_TIMESTAMP_INVALID_OR_NAIVE:"
                         f"{timestamp_result.stdout.strip()!r}"
                     )
 
