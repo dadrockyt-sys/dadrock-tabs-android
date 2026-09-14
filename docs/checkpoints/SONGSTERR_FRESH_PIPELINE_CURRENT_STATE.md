@@ -1,6 +1,6 @@
 # CURRENT STATE — Songsterr Fresh Pipeline V1
 
-Updated: 2026-09-14 America/Toronto — fresh-chat handoff
+Updated: 2026-09-14 America/Toronto — structural-audit implementation active
 Canonical branch: `songsterr-fresh-pipeline-v1`
 Canonical checkpoint: `docs/checkpoints/SONGSTERR_FRESH_PIPELINE_CURRENT_STATE.md`
 
@@ -101,6 +101,13 @@ Frozen preregistration: `docs/checkpoints/SONGSTERR_FRESH_PURPOSE_BUILT_REFERENC
 This preregistration was frozen before real purpose-built calibration or holdout media. It consumes only independent hardware/reference configuration, birth/dynamics stream, pitch-latch stream, and clock/sync proof plus expected SHA-256 identities. Evaluated DI/audio, Basic Pitch, V6 outputs, correctness matches and model-score data are forbidden inputs. The frozen independent-reference timing bound is `0.025 s`.
 
 A PASS may establish only `authoritativeStructuralSuitabilityEstablished:true` for the audited reference population. Even on PASS it must leave `basicPitchAuthorized:false`, `v6Authorized:false`, `correctnessAuthorized:false`, `modelValidationComplete:false`, `customerEligibleEvents:0`, and `mayAdvanceDelivery:false` until a later separate population-binding/governance gate explicitly authorizes the one official correctness path.
+
+### Reference-blind structural audit V1 — IMPLEMENTATION ACTIVE
+
+- 2026-09-14: fresh-chat continuation verified the live branch head at `d6a102d954299667b4e3961ef195b5d5f45c7256` before mutation and reread this canonical checkpoint.
+- Frozen authority `SONGSTERR_FRESH_PURPOSE_BUILT_REFERENCE_BLIND_STRUCTURAL_AUDIT_PREREGISTRATION_V1_2026-09-14.md` was reread unchanged. Implementation will preserve exact SHA-256-before-JSON ordering, four independent reference-only inputs, deterministic derived MIDI, the frozen `0.025 s` bound, and every zero-anomaly blocker.
+- Current milestone: implement `scripts/songsterr-fresh/purpose_built_reference_blind_structural_audit_v1.py`, add synthetic-only tests, then wire ordinary GitHub CPU CI. No real calibration/holdout media, evaluated audio, model output or correctness data is being accessed at this stage.
+- Archived V143/Gomyway remains untouched and closed.
 
 ## NEXT ALLOWED ACTION — START HERE IN A FRESH CHAT
 
