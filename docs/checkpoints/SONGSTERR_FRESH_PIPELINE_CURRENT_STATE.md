@@ -84,6 +84,14 @@ Then freeze corpus-specific reference-blind inventory/alignment preregistration 
 - purpose-built semantic guard `d08824ceba7dc8498a581d2387512bf612b22ea8`
 - semantic guard synthetic tests `f7a3ea335aebd6a78c2cd5c2af7c775660728e16`
 - combined base + semantic CI gate `20b4263dc37ab8556e6cd4f6b2f03e812c64cdf7`
+- hardened purpose-built capture-plan binding `98619b94f0f0c2361fdf84583dcf398f9eaee1bc`
+- capture-plan binding regression suite `73e19a312af066701130ff759718a739f4fb2936`
+- synthetic frozen capture-plan fixture `31178d7eeb3908eb5b40782944ba3c0d383141c7`
+- synthetic preregistration-evidence fixture `617706bc6a70c2b95d4ee6bd751cdc23bd76cfda`
+- preregistration Git-proof validator `bba24857c78e6541961988e29712b68cdfcb7ce0`
+- preregistration Git-proof regression suite `513113bdff971365038ed720d65ddd0c94fcabff`
+- four-stage purpose-built CI gate `68dbea3dd97a53fb46e0d92aeab210f77f0b6231`
+- Git preregistration timestamp normalization `10e3c4a3d5f5d9cad8f0683b6027342d002521e0`
 
 ## CURRENT CANDIDATE STATUS
 
@@ -188,23 +196,35 @@ Purpose-built material must be original/public-domain/rightscleared, explicitly 
 
 No purchase, deposit, contact, hiring, recording or data acquisition without explicit user authorization.
 
-### Purpose-built capture manifest contract — SYNTHETIC CI PASS
+### Purpose-built capture declaration + preregistration contract — FOUR-STAGE SYNTHETIC CI PASS
 
-Base reference-blind manifest validator: `scripts/songsterr-fresh/purpose_built_capture_manifest_contract_v1.py`.
-Mandatory semantic guard: `scripts/songsterr-fresh/purpose_built_capture_manifest_semantic_guard_v1.py`.
-Base synthetic tests: `scripts/songsterr-fresh/test_purpose_built_capture_manifest_contract_v1.py`.
-Semantic synthetic tests: `scripts/songsterr-fresh/test_purpose_built_capture_manifest_semantic_guard_v1.py`.
-Branch-scoped CI: `.github/workflows/songsterr-purpose-built-contract-tests.yml`.
+Mandatory declaration layers:
+1. base reference-blind manifest validator `scripts/songsterr-fresh/purpose_built_capture_manifest_contract_v1.py`;
+2. semantic guard `scripts/songsterr-fresh/purpose_built_capture_manifest_semantic_guard_v1.py`;
+3. content-only capture-plan binding `scripts/songsterr-fresh/purpose_built_capture_preregistration_binding_v1.py`;
+4. Git-history preregistration proof `scripts/songsterr-fresh/purpose_built_capture_preregistration_git_proof_v1.py`.
 
-Chronology hardening commit `f7df06a0746bf78cf126c05d5c281375e8f2258d` requires timezone-aware UTC timestamps, contiguous attempt numbers beginning at 1 within each slot, and strictly increasing capture times consistent with attempt-number order. Regression commit `2e3199fa28b22debea95eb6a0c2cafcc6c1e7665` adds explicit synthetic cases for non-UTC offsets, naive timestamps, accepted `+00:00`, numbering gaps, reversed chronology and equal timestamps.
+Their synthetic suites are `test_purpose_built_capture_manifest_contract_v1.py`, `test_purpose_built_capture_manifest_semantic_guard_v1.py`, `test_purpose_built_capture_preregistration_binding_v1.py`, and `test_purpose_built_capture_preregistration_git_proof_v1.py`. Branch-scoped CI is `.github/workflows/songsterr-purpose-built-contract-tests.yml` with full history checkout for the Git proof.
 
-CI run `34791117386` correctly failed on an overly specific test expectation for the numbering-gap error string; the validator itself returned the intended fail-closed error. Test-only correction commit `7da490bc07314c5a831d819212184d97b3e3512d` was then exercised by CI run `34791164882`, job `103815530838`, which completed `success` and emitted `PURPOSE_BUILT_CAPTURE_MANIFEST_CONTRACT_V1_SYNTHETIC_TESTS_OK`.
+Chronology hardening commit `f7df06a0746bf78cf126c05d5c281375e8f2258d` requires timezone-aware UTC capture timestamps, contiguous attempt numbers beginning at 1 within each slot, and strictly increasing capture times consistent with attempt-number order. Regression commit `2e3199fa28b22debea95eb6a0c2cafcc6c1e7665` covers non-UTC offsets, naive timestamps, accepted `+00:00`, numbering gaps, reversed chronology and equal timestamps. CI run `34791117386` failed only because a regression expected a different error-string rendering; correction commit `7da490bc07314c5a831d819212184d97b3e3512d` then passed run `34791164882`, job `103815530838` with `PURPOSE_BUILT_CAPTURE_MANIFEST_CONTRACT_V1_SYNTHETIC_TESTS_OK`.
 
-Adversarial review then found two semantic loopholes in the otherwise-green base declaration layer: a retry could change `playerId`/`exerciseId`/`category` within the same `slotId`, and the declared evaluated/reference hardware path IDs could be identical while the independence Boolean was still true. The mandatory semantic guard commit `d08824ceba7dc8498a581d2387512bf612b22ea8` closes both without rewriting the already-green base validator. Synthetic tests commit `f7a3ea335aebd6a78c2cd5c2af7c775660728e16` covers identical hardware path IDs and each frozen slot-identity field.
+Adversarial review found two semantic declaration loopholes: a retry could change `playerId`/`exerciseId`/`category` within one `slotId`, and evaluated/reference hardware path IDs could be identical while an independence Boolean remained true. Semantic guard commit `d08824ceba7dc8498a581d2387512bf612b22ea8` closes both; tests commit `f7a3ea335aebd6a78c2cd5c2af7c775660728e16`. Combined run `34791310019`, job `103815933282`, passed both base and semantic markers.
 
-Combined CI commit `20b4263dc37ab8556e6cd4f6b2f03e812c64cdf7` makes both suites mandatory. Run `34791310019`, job `103815933282`, completed `success` and emitted both `PURPOSE_BUILT_CAPTURE_MANIFEST_CONTRACT_V1_SYNTHETIC_TESTS_OK` and `PURPOSE_BUILT_CAPTURE_MANIFEST_SEMANTIC_GUARD_V1_SYNTHETIC_TESTS_OK`.
+A further adversarial review found that a self-declared manifest failure vocabulary and unbound slot roster could permit post-hoc population reshaping. The capture-plan layer now requires an exact frozen slot roster, exact failure-reason vocabulary, frozen criteria for every selected failure class, no omitted or added slots, and exactly one admitted transport-valid take for every planned slot. Hardened binding commit `98619b94f0f0c2361fdf84583dcf398f9eaee1bc` limits selectable acquisition failures to the objective design classes `ABSENT_REFERENCE_CHANNEL`, `CLIPPING_LIMIT_EXCEEDED`, `DEVICE_DISCONNECT`, `MALFORMED_MIDI_STREAM`, `MISSING_OR_CORRUPT_FILE`, `TRANSPORT_FAILURE`, and `WRONG_SAMPLE_RATE_OR_FORMAT`. Subjective/model-informed retake reasons are invalid. Regression update `73e19a312af066701130ff759718a739f4fb2936` passed CI run `34792351488`, job `103818805869`.
 
-A future purpose-built manifest must pass **both** the base validator and the semantic guard before any raw-byte structural audit. This synthetic contract PASS establishes only that the manifest invariants and adversarial guards execute as intended. It does **not** establish real-corpus structural suitability, source truth, model validity or correctness, and it does not authorize Basic Pitch or V6. No real holdout audio/reference bytes were accessed and no correctness was computed.
+The first plan-binding design attempted to include the future Git preregistration commit inside the plan whose own hash would help define that commit; that is circular and was superseded before being checkpointed as authoritative. The corrected scheme makes the capture plan content-only. Synthetic plan fixture commit `31178d7eeb3908eb5b40782944ba3c0d383141c7` has canonical JSON SHA256 `695e2c8ff1e383ed8d7d5fee8c4549a507b2b8f14058353ae6d6f00155532d35`. A separate machine-readable preregistration-evidence file was then committed at `617706bc6a70c2b95d4ee6bd751cdc23bd76cfda`, binding that plan path + SHA without self-reference.
+
+Git-proof commit `bba24857c78e6541961988e29712b68cdfcb7ce0` proves, using only local Git history, that the declared preregistration commit exists, is an ancestor of the checked-out history, contains the exact capture-plan JSON with the declared canonical SHA, contains matching preregistration evidence, and predates every declared UTC capture timestamp. Git commit time is governance evidence, not an external trusted timestamp authority, and does not establish source/media truth.
+
+The first four-stage CI run `34792462528`, job `103819128558`, correctly left the proof fail-closed because the implementation reused the manifest's strict UTC-only parser on Git's valid timezone-offset committer timestamp (`2026-09-13T20:20:25-04:00`). Base, semantic and plan-binding suites passed. This was a proof-script timestamp-normalization defect, not a scientific/corpus result. Commit `10e3c4a3d5f5d9cad8f0683b6027342d002521e0` now accepts any timezone-aware Git ISO timestamp and normalizes it to UTC while keeping capture-manifest timestamps strict UTC.
+
+Final four-stage CI run `34792551012`, job `103819374190`, completed `success` and emitted all four markers:
+- `PURPOSE_BUILT_CAPTURE_MANIFEST_CONTRACT_V1_SYNTHETIC_TESTS_OK`
+- `PURPOSE_BUILT_CAPTURE_MANIFEST_SEMANTIC_GUARD_V1_SYNTHETIC_TESTS_OK`
+- `PURPOSE_BUILT_CAPTURE_PREREGISTRATION_BINDING_V1_SYNTHETIC_TESTS_OK`
+- `PURPOSE_BUILT_CAPTURE_PREREGISTRATION_GIT_PROOF_V1_SYNTHETIC_TESTS_OK`
+
+A future purpose-built population must pass **all four** declaration/preregistration layers before any raw-byte reference-blind structural audit. Only the Git-proof layer may set `mayAdvanceToReferenceBlindStructuralAudit:true`, and only after the historical freeze is proven. Even that state still leaves `authoritativeStructuralSuitabilityEstablished:false`, `basicPitchAuthorized:false`, `v6Authorized:false`, and `correctnessAuthorized:false`. The synthetic PASS proves tooling/governance behavior only; it does not establish real-corpus structural suitability, reference truth, model validity, correctness, or delivery eligibility. No real holdout audio/reference bytes were accessed and no correctness was computed.
 
 ## NEXT ALLOWED ACTION
 
@@ -214,8 +234,9 @@ A future purpose-built manifest must pass **both** the base validator and the se
 4. Keep Multimodal Electric Guitar Data and EGFxSet as reference-insufficient backups.
 5. Purpose-built protocol/preregistration and synthetic contract tooling may continue on paper/ordinary GitHub CPU; no procurement/contact/capture without explicit user authorization.
 6. Any selected existing corpus must pass all gates before media access and receive corpus-specific reference-blind preregistration first.
-7. If structural audit eventually passes, bind identities, run no-real-correctness harness CI, then exactly one ordinary-GitHub-CPU correctness run.
-8. Ask the user before Modal/Vercel heavy-GPU/L4 or any purpose-built spending/contact/acquisition.
+7. Any future purpose-built capture must freeze the exact content-only capture plan + separate Git evidence before recording, then pass the four declaration/preregistration layers before raw-byte structural audit.
+8. If a structural audit eventually passes, bind identities, run no-real-correctness harness CI, then exactly one ordinary-GitHub-CPU correctness run.
+9. Ask the user before Modal/Vercel heavy-GPU/L4 or any purpose-built spending/contact/acquisition.
 
 ## STILL FORBIDDEN
 
@@ -238,3 +259,7 @@ A future purpose-built manifest must pass **both** the base validator and the se
 - purpose-built procurement/contact/hiring/recording/acquisition without explicit authorization;
 - Production/customer promotion without untouched external validation + separate policy review;
 - Modal/Vercel heavy-GPU/L4 without explicit user authorization.
+
+## FRESH-CHAT HANDOFF
+
+Continue only on `songsterr-fresh-pipeline-v1`; read this file first. V6 method/scoring remain frozen and no replacement-holdout correctness has been exposed. Guitar-TECHS is closed outcome C before correctness. AG-PT-set and GAPS are rejected because their precise performance timing is materially reconstructed from evaluated audio; licensing changes cannot cure reference provenance. Public/institutional/commercial corpus searches remain near exhausted. Purpose-built independent-sensor capture is the strongest remaining design route, but remains design-only and requires explicit user authorization before contact/spending/recording. The purpose-built declaration tooling now has four mandatory synthetic/reference-blind layers: base manifest contract, semantic guard, content-only capture-plan binding, and Git-history preregistration proof. Final four-stage CI run `34792551012` / job `103819374190` is green. Do not treat that synthetic PASS as real-corpus suitability or model validation. Do not reopen archived V143/Gomyway or GOAT/reference scoring unless explicitly asked.
