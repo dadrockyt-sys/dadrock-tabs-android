@@ -3,7 +3,6 @@
 
 from __future__ import annotations
 
-import copy
 import importlib.util
 from pathlib import Path
 
@@ -28,7 +27,8 @@ fixture_spec.loader.exec_module(fixture)
 
 REPOSITORY = "dadrockyt-sys/dadrock-tabs-android"
 RUN_ID = "999999001"
-ATTESTATION_HEAD = "933b20b1bd70761717645ab3c7c6b15b1721a7eb"
+ATTESTATION_HEAD = server.HARDENED_ATTESTATION_MIN_COMMIT
+PRE_HARDENING_ATTESTATION_HEAD = "933b20b1bd70761717645ab3c7c6b15b1721a7eb"
 
 
 def valid_run_metadata() -> dict:
@@ -41,14 +41,16 @@ def valid_run_metadata() -> dict:
         "event": "workflow_dispatch",
         "status": "completed",
         "conclusion": "success",
-        "created_at": "2026-09-14T00:26:49Z",
-        "run_started_at": "2026-09-14T00:26:50Z",
-        "updated_at": "2026-09-14T00:27:03Z",
+        "created_at": "2027-01-01T00:00:00Z",
+        "run_started_at": "2027-01-01T00:00:01Z",
+        "updated_at": "2027-01-01T00:00:10Z",
         "repository": {"full_name": REPOSITORY},
     }
 
 
 def validate(manifest: dict, plan: dict, metadata: dict) -> dict:
+    # Unit tests use the committed synthetic fixtures to exercise all non-fixture
+    # server-proof semantics. Production/CLI behavior never exposes this bypass.
     return server.validate_server_proof(
         manifest,
         plan,
@@ -56,6 +58,7 @@ def validate(manifest: dict, plan: dict, metadata: dict) -> dict:
         repo_root=REPO_ROOT,
         expected_repository=REPOSITORY,
         expected_run_id=RUN_ID,
+        allow_synthetic_fixture_for_tests=True,
     )
 
 
@@ -67,6 +70,8 @@ def test_valid_dispatched_server_attestation_allows_only_structural_audit() -> N
     assert result["localGitProofValid"] is True
     assert result["githubRunEventWorkflowDispatch"] is True
     assert result["githubRunCompletedSuccessfully"] is True
+    assert result["syntheticFixtureRejected"] is False
+    assert result["hardenedAttestationWorkflowBound"] is True
     assert result["preregistrationCommitIsAncestorOfAttestationHead"] is True
     assert result["attestationHeadIsAncestorOfCurrentHead"] is True
     assert result["attestationHeadPlanMatches"] is True
@@ -81,6 +86,23 @@ def test_valid_dispatched_server_attestation_allows_only_structural_audit() -> N
     assert result["correctnessAuthorized"] is False
 
 
+def test_production_default_rejects_synthetic_fixture_plan() -> None:
+    manifest, plan = fixture.valid_git_bound_inputs()
+    result = server.validate_server_proof(
+        manifest,
+        plan,
+        valid_run_metadata(),
+        repo_root=REPO_ROOT,
+        expected_repository=REPOSITORY,
+        expected_run_id=RUN_ID,
+    )
+    assert result["serverProofValid"] is False, result
+    assert result["syntheticFixtureRejected"] is True
+    assert "SERVER_PROOF_REJECTS_SYNTHETIC_PLAN_FIXTURE" in result["errors"], result
+    assert "SERVER_PROOF_REJECTS_SYNTHETIC_PREREGISTRATION_EVIDENCE_FIXTURE" in result["errors"], result
+    assert "SERVER_PROOF_REJECTS_SYNTHETIC_PLAN_ID" in result["errors"], result
+
+
 def test_push_run_is_never_real_preregistration() -> None:
     manifest, plan = fixture.valid_git_bound_inputs()
     metadata = valid_run_metadata()
@@ -88,6 +110,16 @@ def test_push_run_is_never_real_preregistration() -> None:
     result = validate(manifest, plan, metadata)
     assert result["serverProofValid"] is False, result
     assert "GITHUB_RUN_EVENT_NOT_WORKFLOW_DISPATCH:'push'" in result["errors"], result
+
+
+def test_pre_hardened_attestation_head_is_rejected() -> None:
+    manifest, plan = fixture.valid_git_bound_inputs()
+    metadata = valid_run_metadata()
+    metadata["head_sha"] = PRE_HARDENING_ATTESTATION_HEAD
+    result = validate(manifest, plan, metadata)
+    assert result["serverProofValid"] is False, result
+    assert "ATTESTATION_RUN_HEAD_PREDATES_HARDENED_REAL_MODE_WORKFLOW" in result["errors"], result
+    assert result["hardenedAttestationWorkflowBound"] is False
 
 
 def test_failed_or_incomplete_run_is_rejected() -> None:
@@ -152,7 +184,9 @@ def test_run_id_must_match_cited_run() -> None:
 
 def main() -> int:
     test_valid_dispatched_server_attestation_allows_only_structural_audit()
+    test_production_default_rejects_synthetic_fixture_plan()
     test_push_run_is_never_real_preregistration()
+    test_pre_hardened_attestation_head_is_rejected()
     test_failed_or_incomplete_run_is_rejected()
     test_wrong_repository_is_rejected()
     test_wrong_workflow_path_is_rejected()
