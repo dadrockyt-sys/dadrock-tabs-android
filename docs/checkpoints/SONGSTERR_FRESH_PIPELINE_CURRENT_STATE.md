@@ -39,6 +39,7 @@ Do not alter method/runtime/settings/matching/tolerances/gates/strata from holdo
 
 Result checkpoint `docs/checkpoints/SONGSTERR_FRESH_GUITAR_TECHS_V6_ALIGNMENT_INVENTORY_RESULT.md`, commit `9ec1dcf396341f5e95d76a32d90183cb7f70b725`.
 Official audit run `34754519541`, job `103716527380`, artifact `10317695640`.
+Artifact remains live/unexpired as of 2026-09-13; GitHub-reported archive digest `sha256:d6e4395f815ce51e1ae83ebdd5c770ca6cd485bb7e90e150dc0e7f7944bf4125`, run head `f3c9d4a88740146918c34a3538c565f21079f3bf`.
 104 DI/MIDI pairs, 18,934 reference events, all alignments `OK`, but 5 same-key overlaps + 7 unmatched note-ons violate the preregistered zero-anomaly structural gate.
 Frozen result: `C_DATASET_UNSUITABLE_FOR_V6_ADMISSION`; `datasetStructurallySuitable:false`.
 Basic Pitch/V6/correctness were never run. Do not score, repair/drop events, bind or rerun.
@@ -65,6 +66,7 @@ Then freeze corpus-specific reference-blind inventory/alignment preregistration 
 - **Multimodal Electric Guitar Data — RIGHTS CLEANER, REFERENCE INSUFFICIENT.** Zenodo `6470235/6470236`, ~32.5 GB, 36 real guitarists, CC BY 4.0; actions/EMG/MoCap/audio, not immutable performed note-level onset+pitch truth.
 - **MMIP — RIGHTS + REFERENCE FAIL.** CC BY-NC-SA; guitar MIDI produced post-recording via Ableton audio-to-MIDI.
 - **GIHME — RELEASE NEVER MATERIALIZED.** Public release remains placeholder without complete corpus/checksums/license.
+- **MUSMET — RIGHTS + REFERENCE FAIL.** 2025 Horizon-Europe release has real electric-guitar ensemble audio synchronized with EEG, but the authoritative release describes audio+EEG rather than an independent performed guitar note-event stream, and its Rights field exposes consortium copyright without an explicit permissive performance-audio license. Dedicated review `dea3b9682cad4661eedad96a5e7ee3599dd89af9`.
 - **EGFxSet — NARROW BACKUP ONLY.** ~690 unique clean real electric-guitar performances, CC BY 4.0, but no established high-resolution independent performed onset reference. Effects cannot inflate evidence.
 - **EGDB / EGDB-PG — RIGHTS + AUDIO-DERIVED ONSET FAIL.** Real DI, but rights unestablished and onset reference materially derived from recorded DI/expected score timing.
 - **GuitarDuets — REAL SUBSET LACKS NOTE TRUTH.** Note-level MIDI applies to synthesized duets, not an immutable performed reference for real duets.
