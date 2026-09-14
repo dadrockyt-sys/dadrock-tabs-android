@@ -1,0 +1,84 @@
+name: Songsterr Fresh Purpose-Built V2.1 Synthetic
+
+on:
+  workflow_dispatch:
+  push:
+    branches:
+      - songsterr-fresh-pipeline-v1
+    paths:
+      - '.github/workflows/songsterr-fresh-purpose-built-v2-1-synthetic.yml'
+      - 'scripts/songsterr-fresh/purpose_built_capture_manifest_contract_v1.py'
+      - 'scripts/songsterr-fresh/purpose_built_capture_manifest_contract_v2.py'
+      - 'scripts/songsterr-fresh/purpose_built_capture_manifest_contract_v2_1.py'
+      - 'scripts/songsterr-fresh/test_purpose_built_capture_manifest_contract_v1.py'
+      - 'scripts/songsterr-fresh/test_purpose_built_capture_manifest_contract_v2.py'
+      - 'scripts/songsterr-fresh/test_purpose_built_capture_manifest_contract_v2_1.py'
+
+concurrency:
+  group: songsterr-fresh-purpose-built-v2-1-synthetic-${{ github.ref }}
+  cancel-in-progress: true
+
+permissions:
+  contents: read
+
+jobs:
+  synthetic-contract:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+
+    steps:
+      - name: Checkout purpose-built branch
+        uses: actions/checkout@v4
+        with:
+          ref: songsterr-fresh-pipeline-v1
+
+      - name: Set up Python 3.11
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Install synthetic-test dependency
+        run: python -m pip install --disable-pip-version-check pytest
+
+      - name: Run purpose-built V1/V2/V2.1 synthetic contract tests
+        run: >-
+          python -m pytest -q
+          scripts/songsterr-fresh/test_purpose_built_capture_manifest_contract_v1.py
+          scripts/songsterr-fresh/test_purpose_built_capture_manifest_contract_v2.py
+          scripts/songsterr-fresh/test_purpose_built_capture_manifest_contract_v2_1.py
+
+      - name: Reassert fail-closed authority boundary
+        run: |
+          python - <<'PY'
+          import importlib.util
+          from pathlib import Path
+
+          root = Path('scripts/songsterr-fresh')
+          module_path = root / 'purpose_built_capture_manifest_contract_v2_1.py'
+          fixture_path = root / 'test_purpose_built_capture_manifest_contract_v2_1.py'
+
+          spec = importlib.util.spec_from_file_location('v21', module_path)
+          assert spec and spec.loader
+          module = importlib.util.module_from_spec(spec)
+          spec.loader.exec_module(module)
+
+          fixture_spec = importlib.util.spec_from_file_location('fixture', fixture_path)
+          assert fixture_spec and fixture_spec.loader
+          fixture = importlib.util.module_from_spec(fixture_spec)
+          fixture_spec.loader.exec_module(fixture)
+
+          result = module.validate_manifest(fixture.valid_manifest())
+          if result.get('contractValid') is not True:
+              raise SystemExit(f'V2.1 valid synthetic fixture failed: {result}')
+          if result.get('mayAdvanceToReferenceBlindStructuralAudit') is not True:
+              raise SystemExit('V2.1 declaration did not reach the structural-audit boundary')
+          for key in (
+              'authoritativeStructuralSuitabilityEstablished',
+              'basicPitchAuthorized',
+              'v6Authorized',
+              'correctnessAuthorized',
+          ):
+              if result.get(key) is not False:
+                  raise SystemExit(f'Fail-closed authority changed: {key}={result.get(key)!r}')
+          print('V2.1 synthetic declaration gate PASS; correctness remains unauthorized.')
+          PY
