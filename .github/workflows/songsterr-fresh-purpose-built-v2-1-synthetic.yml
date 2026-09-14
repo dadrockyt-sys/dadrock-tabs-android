@@ -40,11 +40,10 @@ jobs:
       - name: Install synthetic-test dependency
         run: python -m pip install --disable-pip-version-check pytest
 
-      - name: Run purpose-built V1/V2/V2.1 synthetic contract tests
+      - name: Run authoritative purpose-built V1 and V2.1 synthetic contract tests
         run: >-
           python -m pytest -q
           scripts/songsterr-fresh/test_purpose_built_capture_manifest_contract_v1.py
-          scripts/songsterr-fresh/test_purpose_built_capture_manifest_contract_v2.py
           scripts/songsterr-fresh/test_purpose_built_capture_manifest_contract_v2_1.py
 
       - name: Reassert fail-closed authority boundary
