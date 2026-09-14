@@ -55,6 +55,7 @@ def build(plan: dict | None = None, evidence: dict | None = None) -> dict:
             ".github/workflows/songsterr-purpose-built-preregistration-attestation.yml@refs/heads/"
             "songsterr-fresh-pipeline-v1"
         ),
+        mode="synthetic_ci",
     )
 
 
@@ -62,12 +63,33 @@ def test_valid_attestation_payload_is_fail_closed_for_model_work() -> None:
     result = build()
     assert result["attestationValid"] is True, result
     assert result["errors"] == [], result
+    assert result["mode"] == "synthetic_ci"
     assert result["plannedSlotCount"] == 2
     assert result["failureCriteriaBound"] is True
     assert result["authoritativeStructuralSuitabilityEstablished"] is False
     assert result["basicPitchAuthorized"] is False
     assert result["v6Authorized"] is False
     assert result["correctnessAuthorized"] is False
+
+
+def test_real_mode_rejects_synthetic_fixture_plan() -> None:
+    plan = fixture.valid_plan()
+    evidence = valid_evidence(plan)
+    result = attest.build_attestation(
+        plan,
+        evidence,
+        plan_repo_path=PLAN_PATH,
+        repository="dadrockyt-sys/dadrock-tabs-android",
+        head_sha="1" * 40,
+        run_id="123456789",
+        run_attempt="1",
+        workflow_ref="workflow-ref",
+        mode="real_preregistration",
+    )
+    assert result["attestationValid"] is False, result
+    assert "REAL_PREREGISTRATION_CANNOT_USE_SYNTHETIC_PLAN_FIXTURE" in result["errors"], result
+    assert "REAL_PREREGISTRATION_CANNOT_USE_SYNTHETIC_PLAN_ID" in result["errors"], result
+    assert "REAL_PREREGISTRATION_CANNOT_USE_SYNTHETIC_EVIDENCE_BINDING" in result["errors"], result
 
 
 def test_evidence_plan_hash_mismatch_fails() -> None:
@@ -110,6 +132,7 @@ def test_invalid_actions_identity_fails() -> None:
         run_id="not-a-number",
         run_attempt="x",
         workflow_ref="",
+        mode="synthetic_ci",
     )
     assert result["attestationValid"] is False, result
     for expected in (
@@ -122,12 +145,32 @@ def test_invalid_actions_identity_fails() -> None:
         assert expected in result["errors"], result
 
 
+def test_unknown_attestation_mode_fails() -> None:
+    plan = fixture.valid_plan()
+    evidence = valid_evidence(plan)
+    result = attest.build_attestation(
+        plan,
+        evidence,
+        plan_repo_path=PLAN_PATH,
+        repository="dadrockyt-sys/dadrock-tabs-android",
+        head_sha="1" * 40,
+        run_id="123456789",
+        run_attempt="1",
+        workflow_ref="workflow-ref",
+        mode="unknown",
+    )
+    assert result["attestationValid"] is False, result
+    assert "ATTESTATION_MODE_INVALID:'unknown'" in result["errors"], result
+
+
 def main() -> int:
     test_valid_attestation_payload_is_fail_closed_for_model_work()
+    test_real_mode_rejects_synthetic_fixture_plan()
     test_evidence_plan_hash_mismatch_fails()
     test_evidence_plan_path_mismatch_fails()
     test_subjective_failure_class_fails_attestation()
     test_invalid_actions_identity_fails()
+    test_unknown_attestation_mode_fails()
     print("PURPOSE_BUILT_PREREGISTRATION_ATTESTATION_V1_SYNTHETIC_TESTS_OK")
     return 0
 
