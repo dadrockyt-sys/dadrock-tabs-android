@@ -117,14 +117,17 @@ Earlier synthetic hosted attestation run `34792723781` / job `103819867260` was 
 
 For a future real population, successful eight-stage governance can only establish `mayAdvanceToReferenceBlindStructuralAudit:true`. It does **not** establish source truth, structural suitability, Basic Pitch authorization, V6 authorization, correctness authorization, model validation, customer eligibility or delivery advancement.
 
-## NEXT ALLOWED ACTION
+## NEXT ALLOWED ACTION — FRESH CHAT ORDER
 
-1. Continue metadata-only research only where genuinely new corpus/rightsholder/independent-sensor information may exist.
-2. Continue purpose-built protocol/preregistration and synthetic contract tooling on paper/ordinary GitHub CPU.
-3. Before any future real capture: freeze exact plan + evidence, ensure the hardened workflow/generator blobs are still exact, deliberately dispatch the real preregistration workflow, preserve/download its attestation artifact, and complete all server/integrity/artifact proofs **before recording**.
-4. Only after those gates may raw-byte reference-blind structural audit occur.
-5. If a structural audit eventually passes, bind identities, run no-real-correctness harness CI, then exactly one ordinary-GitHub-CPU correctness run under the frozen V6/scoring framework.
-6. Ask the user before Modal/Vercel heavy-GPU/L4 or any purpose-built spending/contact/acquisition.
+1. **Start by verifying the branch head and reading this checkpoint in full.** Work only on `songsterr-fresh-pipeline-v1`; if the branch advanced, merge/continue from the newer state rather than overwriting it.
+2. **Audit the newest hosted-artifact proof as a trust boundary before adding more governance layers.** Confirm whether the production path itself obtains artifact metadata/content from the cited GitHub Actions run, rather than trusting caller-supplied artifact JSON. If a concrete gap exists, close it with a small fail-closed wrapper/guard plus synthetic-only regression tests. Do not add complexity without a demonstrated loophole.
+3. **High-value artifact checks, if not already enforced:** exact artifact name/run association, non-expired artifact, single unambiguous `attestation.json`, single `run-mode.txt`, `real_preregistration` mode, exact plan path/SHA, run ID/attempt, head SHA, repository and workflow ref. Require all of them before `mayAdvanceToReferenceBlindStructuralAudit:true`.
+4. **Keep CI synthetic-only.** Ordinary GitHub CPU is allowed. Do not deliberately create a real preregistration `workflow_dispatch` for a hypothetical population; a real dispatch belongs only to a future authorized capture with a frozen real plan/evidence.
+5. **Continue metadata-only replacement-corpus research only when there is genuinely new evidence** (new primary release, authoritative rights change, or independent performed onset+pitch reference). Do not re-screen closed candidates from mirrors or derivative releases unless a hard gate materially changes.
+6. **If a new existing corpus clears all five pre-media gates**, stop before media access and first freeze a corpus-specific reference-blind inventory/alignment preregistration. Structural audit comes before Basic Pitch/V6/correctness.
+7. **If purpose-built capture remains the only viable route**, keep hardware/protocol/calibration design on paper. Do not contact vendors/performers, spend money, procure hardware, hire, or record until the user explicitly authorizes it. After authorization, freeze exact real plan + evidence, verify hardened blobs, deliberately run the real hosted preregistration, preserve its exact artifact, pass server/integrity/artifact proof, and only then record.
+8. **After any future structural audit passes**, bind immutable population identities, run no-real-correctness harness CI, then perform exactly one ordinary-GitHub-CPU correctness run under the frozen V6/scoring framework. Never tune from that result.
+9. Ask the user before Modal, Vercel heavy-GPU, L4 GPU, or any purpose-built spending/contact/acquisition. No question is needed for ordinary metadata research, coding, synthetic tests, GitHub CPU CI, or checkpoint maintenance.
 
 ## STILL FORBIDDEN
 
@@ -149,6 +152,10 @@ For a future real population, successful eight-stage governance can only establi
 
 ## FRESH-CHAT HANDOFF
 
-Continue only on `songsterr-fresh-pipeline-v1`; read this file first. V6 method/scoring remain frozen and no replacement-holdout correctness has been exposed. Guitar-TECHS is closed outcome C before correctness. AG-PT-set and GAPS are rejected because precise performance timing is materially reconstructed from evaluated audio; licensing changes cannot cure reference provenance. Public/institutional/commercial corpus searches remain near exhausted. Purpose-built independent-sensor capture is the strongest remaining design route, but remains design-only and requires explicit user authorization before contact/spending/recording.
+Continue only on `songsterr-fresh-pipeline-v1`; **first verify the live branch head, then read this file before doing anything else**. At the time this handoff was prepared, the prior working head was `68799b982243ba65f4f6547f5026fac394650b88`; this checkpoint update itself advances the branch, so do not assume that prior SHA is still HEAD.
 
-Purpose-built governance now requires eight layers: base manifest, semantic guard, content-only plan binding, local Git-history proof, deliberate GitHub-hosted `workflow_dispatch` attestation, GitHub server proof, exact hardened workflow/generator blob integrity, and exact hosted attestation-artifact binding to the plan. Latest eight-stage synthetic run `34793985984` / job `103823432519` is green. Do not treat synthetic CI or hosted metadata as real-corpus suitability or model validation. Do not reopen archived V143/Gomyway or GOAT/reference scoring unless explicitly asked.
+V6 method/scoring remain frozen and no replacement-holdout correctness has been exposed. Guitar-TECHS is closed outcome C before correctness. AG-PT-set and GAPS are rejected because precise performance timing is materially reconstructed from evaluated audio; licensing changes cannot cure reference provenance. Public/institutional/commercial corpus searches remain near exhausted. Purpose-built independent-sensor capture is the strongest remaining design route, but remains design-only and requires explicit user authorization before contact/spending/recording.
+
+Purpose-built governance currently requires eight layers: base manifest, semantic guard, content-only plan binding, local Git-history proof, deliberate GitHub-hosted `workflow_dispatch` attestation, GitHub server proof, exact hardened workflow/generator blob integrity, and exact hosted attestation-artifact binding to the plan. Latest eight-stage synthetic run `34793985984` / job `103823432519` is green. **The next engineering priority is to verify that production artifact proof is anchored to artifact bytes/metadata actually fetched from that cited GitHub run, and to close that boundary only if a concrete trust gap exists.** Keep all such work synthetic/reference-blind.
+
+Do not treat synthetic CI, GitHub timestamps, or hosted artifacts as real-corpus suitability or model validation. No real media, Basic Pitch, V6, or correctness may be touched until the separate gates say so. Do not reopen archived V143/Gomyway or GOAT/reference scoring unless explicitly asked.
