@@ -1,12 +1,12 @@
 #!/usr/bin/env python3
 """GitHub-server preregistration proof for a future purpose-built V6 holdout.
 
-This optional-turned-mandatory governance layer strengthens the local Git proof
-with GitHub-hosted Actions metadata. A real capture preregistration must cite a
-successful workflow_dispatch run of the dedicated read-only attestation workflow.
-The platform-reported run completion time must be strictly earlier than every
-capture timestamp, and the run head commit must contain the same frozen plan and
-preregistration evidence.
+This mandatory governance layer strengthens the local Git proof with GitHub-hosted
+Actions metadata. A real capture preregistration must cite a successful
+workflow_dispatch run of the dedicated read-only attestation workflow. The
+platform-reported run completion time must be strictly earlier than every capture
+timestamp, and the run head must contain the same frozen plan/evidence plus the
+hardened real-vs-synthetic attestation workflow semantics.
 
 The GitHub timestamp is stronger evidence than self-authored Git commit dates but
 is still governance evidence, not proof of physical capture time or source truth.
@@ -39,6 +39,10 @@ base = git_proof.base
 SERVER_PROOF_CONTRACT = "songsterr-fresh-purpose-built-preregistration-server-proof-v1"
 ATTESTATION_WORKFLOW_PATH = ".github/workflows/songsterr-purpose-built-preregistration-attestation.yml"
 CANONICAL_BRANCH = "songsterr-fresh-pipeline-v1"
+SYNTHETIC_FIXTURE_PREFIX = "scripts/songsterr-fresh/fixtures/"
+# First commit whose workflow_dispatch path has no synthetic defaults, emits
+# mode=real_preregistration, and passes that mode to the generator.
+HARDENED_ATTESTATION_MIN_COMMIT = "e3d90f275dc92e1d705bf7db78f0b4d6622a324a"
 
 
 def _git(repo_root: Path, *args: str) -> subprocess.CompletedProcess[str]:
@@ -107,10 +111,34 @@ def validate_server_proof(
     repo_root: str | Path = ".",
     expected_repository: str,
     expected_run_id: str,
+    allow_synthetic_fixture_for_tests: bool = False,
 ) -> dict[str, Any]:
     root = Path(repo_root).resolve()
     local_git_result = git_proof.validate_git_proof(manifest, plan, root)
     errors = list(local_git_result.get("errors", []))
+
+    prereg_commit = None
+    plan_path = None
+    plan_sha = None
+    prereg_path = None
+    if isinstance(manifest, dict) and isinstance(manifest.get("corpus"), dict):
+        corpus = manifest["corpus"]
+        prereg_commit = corpus.get("capturePreregistrationCommit")
+        plan_path = corpus.get("capturePlanPath")
+        plan_sha = corpus.get("capturePlanSha256")
+        prereg_path = corpus.get("capturePreregistrationPath")
+
+    synthetic_fixture_rejected = False
+    if not allow_synthetic_fixture_for_tests:
+        if isinstance(plan_path, str) and plan_path.startswith(SYNTHETIC_FIXTURE_PREFIX):
+            errors.append("SERVER_PROOF_REJECTS_SYNTHETIC_PLAN_FIXTURE")
+            synthetic_fixture_rejected = True
+        if isinstance(prereg_path, str) and prereg_path.startswith(SYNTHETIC_FIXTURE_PREFIX):
+            errors.append("SERVER_PROOF_REJECTS_SYNTHETIC_PREREGISTRATION_EVIDENCE_FIXTURE")
+            synthetic_fixture_rejected = True
+        if isinstance(plan, dict) and str(plan.get("planId", "")).lower().startswith("synthetic"):
+            errors.append("SERVER_PROOF_REJECTS_SYNTHETIC_PLAN_ID")
+            synthetic_fixture_rejected = True
 
     if not isinstance(run_metadata, dict):
         errors.append("GITHUB_RUN_METADATA_OBJECT_REQUIRED")
@@ -142,18 +170,8 @@ def validate_server_proof(
     if not base._is_commit(head_sha):
         errors.append(f"GITHUB_RUN_HEAD_SHA_INVALID:{head_sha!r}")
 
-    prereg_commit = None
-    plan_path = None
-    plan_sha = None
-    prereg_path = None
-    if isinstance(manifest, dict) and isinstance(manifest.get("corpus"), dict):
-        corpus = manifest["corpus"]
-        prereg_commit = corpus.get("capturePreregistrationCommit")
-        plan_path = corpus.get("capturePlanPath")
-        plan_sha = corpus.get("capturePlanSha256")
-        prereg_path = corpus.get("capturePreregistrationPath")
-
     head_exists = False
+    hardened_attestation_workflow_bound = False
     prereg_is_ancestor_of_head = False
     head_is_ancestor_of_current = False
     historical_plan_matches = False
@@ -165,6 +183,19 @@ def validate_server_proof(
         if not head_exists:
             errors.append(f"GITHUB_RUN_HEAD_SHA_NOT_IN_LOCAL_HISTORY:{head_sha}")
         else:
+            hardened_attestation_workflow_bound = (
+                _git(
+                    root,
+                    "merge-base",
+                    "--is-ancestor",
+                    HARDENED_ATTESTATION_MIN_COMMIT,
+                    head_sha,
+                ).returncode
+                == 0
+            )
+            if not hardened_attestation_workflow_bound:
+                errors.append("ATTESTATION_RUN_HEAD_PREDATES_HARDENED_REAL_MODE_WORKFLOW")
+
             if base._is_commit(prereg_commit):
                 prereg_is_ancestor_of_head = (
                     _git(root, "merge-base", "--is-ancestor", prereg_commit, head_sha).returncode == 0
@@ -236,6 +267,7 @@ def validate_server_proof(
         not merged_errors
         and local_git_result.get("gitProofValid") is True
         and head_exists
+        and hardened_attestation_workflow_bound
         and prereg_is_ancestor_of_head
         and head_is_ancestor_of_current
         and historical_plan_matches
@@ -255,6 +287,8 @@ def validate_server_proof(
         "githubRunCompletedSuccessfully": (
             run_metadata.get("status") == "completed" and run_metadata.get("conclusion") == "success"
         ),
+        "syntheticFixtureRejected": synthetic_fixture_rejected,
+        "hardenedAttestationWorkflowBound": hardened_attestation_workflow_bound,
         "preregistrationCommitIsAncestorOfAttestationHead": prereg_is_ancestor_of_head,
         "attestationHeadIsAncestorOfCurrentHead": head_is_ancestor_of_current,
         "attestationHeadPlanMatches": historical_plan_matches,
