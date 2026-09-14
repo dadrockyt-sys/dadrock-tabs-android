@@ -68,25 +68,41 @@ def _nonempty(value: Any) -> bool:
 
 
 def _finite_nonnegative_number(value: Any) -> bool:
-    return isinstance(value, (int, float)) and not isinstance(value, bool) and value >= 0 and value == value and value not in (float("inf"), float("-inf"))
+    return (
+        isinstance(value, (int, float))
+        and not isinstance(value, bool)
+        and value >= 0
+        and value == value
+        and value not in (float("inf"), float("-inf"))
+    )
 
 
 def _normalize_token(value: str) -> str:
     return "".join(ch.lower() for ch in value if ch.isalnum())
 
 
-def _scan_values_for_forbidden_tokens(value: Any, path: tuple[str, ...] = ()) -> list[str]:
+def _scan_values_for_forbidden_tokens(
+    value: Any,
+    path: tuple[str, ...] = (),
+) -> list[str]:
+    """Scan declaration string values, never schema key names.
+
+    Keys such as ``usedModelOutputs`` are required fail-closed declarations and
+    must not trigger the semantic scanner merely by existing. Free-text/string
+    values are still checked so a failure record cannot smuggle model or
+    correctness observations into acquisition QA.
+    """
     findings: list[str] = []
     if isinstance(value, dict):
         for key, child in value.items():
-            key_text = str(key)
-            normalized = _normalize_token(key_text)
-            if any(token in normalized for token in FORBIDDEN_FAILURE_EVIDENCE_TOKENS):
-                findings.append(".".join(path + (key_text,)))
-            findings.extend(_scan_values_for_forbidden_tokens(child, path + (key_text,)))
+            findings.extend(
+                _scan_values_for_forbidden_tokens(child, path + (str(key),))
+            )
     elif isinstance(value, list):
         for index, child in enumerate(value):
-            findings.extend(_scan_values_for_forbidden_tokens(child, path + (str(index),)))
+            findings.extend(
+                _scan_values_for_forbidden_tokens(child, path + (str(index),))
+            )
     elif isinstance(value, str):
         normalized = _normalize_token(value)
         if any(token in normalized for token in FORBIDDEN_FAILURE_EVIDENCE_TOKENS):
@@ -94,7 +110,13 @@ def _scan_values_for_forbidden_tokens(value: Any, path: tuple[str, ...] = ()) ->
     return findings
 
 
-def _validate_source(source: Any, prefix: str, errors: list[str], *, require_not_audio_derived: bool = False) -> None:
+def _validate_source(
+    source: Any,
+    prefix: str,
+    errors: list[str],
+    *,
+    require_not_audio_derived: bool = False,
+) -> None:
     if not isinstance(source, dict):
         errors.append(f"{prefix}_OBJECT_REQUIRED")
         return
@@ -102,11 +124,17 @@ def _validate_source(source: Any, prefix: str, errors: list[str], *, require_not
         errors.append(f"{prefix}_PATH_REQUIRED")
     if not v1._is_sha256(source.get("sha256")):
         errors.append(f"{prefix}_SHA256_INVALID")
-    if require_not_audio_derived and source.get("derivedFromEvaluatedAudio") is not False:
+    if (
+        require_not_audio_derived
+        and source.get("derivedFromEvaluatedAudio") is not False
+    ):
         errors.append(f"{prefix}_MUST_DECLARE_NOT_DERIVED_FROM_EVALUATED_AUDIO")
 
 
-def _validate_hardware(corpus: dict[str, Any], errors: list[str]) -> tuple[str | None, str | None]:
+def _validate_hardware(
+    corpus: dict[str, Any],
+    errors: list[str],
+) -> tuple[str | None, str | None]:
     hardware = corpus.get("hardware")
     if not isinstance(hardware, dict):
         errors.append("CORPUS_HARDWARE_OBJECT_REQUIRED")
@@ -118,7 +146,9 @@ def _validate_hardware(corpus: dict[str, Any], errors: list[str]) -> tuple[str |
         return None, None
 
     if config.get("contract") != HARDWARE_CONTRACT:
-        errors.append(f"HARDWARE_CONFIGURATION_CONTRACT_MISMATCH:{config.get('contract')!r}")
+        errors.append(
+            f"HARDWARE_CONFIGURATION_CONTRACT_MISMATCH:{config.get('contract')!r}"
+        )
     for key in ("configurationId", "path", "firmwareVersion"):
         if not _nonempty(config.get(key)):
             errors.append(f"HARDWARE_CONFIGURATION_{key.upper()}_REQUIRED")
@@ -151,22 +181,33 @@ def _validate_hardware(corpus: dict[str, Any], errors: list[str]) -> tuple[str |
         if not v1._is_sha256(setup.get("setupSha256")):
             errors.append("HARDWARE_INSTRUMENT_SETUP_SHA256_INVALID")
         tuning = setup.get("openStringMidi")
-        if not isinstance(tuning, list) or len(tuning) != 6 or any(
-            not isinstance(note, int) or isinstance(note, bool) or not 0 <= note <= 127
-            for note in (tuning if isinstance(tuning, list) else [])
+        if (
+            not isinstance(tuning, list)
+            or len(tuning) != 6
+            or any(
+                not isinstance(note, int)
+                or isinstance(note, bool)
+                or not 0 <= note <= 127
+                for note in (tuning if isinstance(tuning, list) else [])
+            )
         ):
             errors.append("HARDWARE_INSTRUMENT_SETUP_OPEN_STRING_MIDI_INVALID")
 
-    return config_sha, config.get("firmwareVersion") if isinstance(config, dict) else None
+    return config_sha, config.get("firmwareVersion")
 
 
-def _validate_calibration(corpus: dict[str, Any], errors: list[str]) -> tuple[str | None, str | None]:
+def _validate_calibration(
+    corpus: dict[str, Any],
+    errors: list[str],
+) -> tuple[str | None, str | None]:
     calibration = corpus.get("referenceCalibration")
     if not isinstance(calibration, dict):
         errors.append("REFERENCE_CALIBRATION_OBJECT_REQUIRED")
         return None, None
     if calibration.get("contract") != CALIBRATION_CONTRACT:
-        errors.append(f"REFERENCE_CALIBRATION_CONTRACT_MISMATCH:{calibration.get('contract')!r}")
+        errors.append(
+            f"REFERENCE_CALIBRATION_CONTRACT_MISMATCH:{calibration.get('contract')!r}"
+        )
     calibration_id = calibration.get("calibrationId")
     if not _nonempty(calibration_id):
         errors.append("REFERENCE_CALIBRATION_ID_REQUIRED")
@@ -219,7 +260,12 @@ def _validate_clock_sync(corpus: dict[str, Any], errors: list[str]) -> str | Non
     return sync.get("syncId") if _nonempty(sync.get("syncId")) else None
 
 
-def _validate_failure_evidence(attempt: dict[str, Any], prefix: str, allowed_reasons: set[str], errors: list[str]) -> None:
+def _validate_failure_evidence(
+    attempt: dict[str, Any],
+    prefix: str,
+    allowed_reasons: set[str],
+    errors: list[str],
+) -> None:
     qa = attempt.get("acquisitionQa")
     if not isinstance(qa, dict):
         return
@@ -247,7 +293,9 @@ def _validate_failure_evidence(attempt: dict[str, Any], prefix: str, allowed_rea
     if not v1._is_sha256(evidence.get("sha256")):
         errors.append(f"{prefix}_FAILURE_EVIDENCE_SHA256_INVALID")
     if evidence.get("derivedFromEvaluatedAudioCorrectness") is not False:
-        errors.append(f"{prefix}_FAILURE_EVIDENCE_MUST_NOT_USE_EVALUATED_AUDIO_CORRECTNESS")
+        errors.append(
+            f"{prefix}_FAILURE_EVIDENCE_MUST_NOT_USE_EVALUATED_AUDIO_CORRECTNESS"
+        )
     if evidence.get("usedModelOutputs") is not False:
         errors.append(f"{prefix}_FAILURE_EVIDENCE_MUST_NOT_USE_MODEL_OUTPUTS")
     for finding in _scan_values_for_forbidden_tokens(evidence):
@@ -275,8 +323,8 @@ def _validate_attempt_extensions(
         errors.append(f"ACQUISITION_FAILURE_REASON_NOT_OBJECTIVE_V2:{reason}")
 
     admitted: list[dict[str, Any]] = []
-    underlying_ids: set[str] = set()
-    by_slot_underlying: dict[str, str] = {}
+    all_underlying_ids: set[str] = set()
+    admitted_underlying_ids: set[str] = set()
 
     for index, attempt in enumerate(attempts):
         if not isinstance(attempt, dict):
@@ -285,27 +333,29 @@ def _validate_attempt_extensions(
         _validate_failure_evidence(attempt, prefix, allowed_reasons, errors)
 
         underlying_id = attempt.get("underlyingPerformanceId")
+        underlying_key: str | None = None
         if not _nonempty(underlying_id):
             errors.append(f"{prefix}_UNDERLYING_PERFORMANCE_ID_REQUIRED")
         else:
-            slot_id = attempt.get("slotId")
-            if _nonempty(slot_id):
-                previous = by_slot_underlying.get(slot_id)
-                if previous is None:
-                    by_slot_underlying[slot_id] = underlying_id.strip()
-                elif previous != underlying_id.strip():
-                    errors.append(f"{prefix}_UNDERLYING_PERFORMANCE_ID_CHANGED_WITHIN_SLOT")
+            underlying_key = underlying_id.strip()
+            if underlying_key in all_underlying_ids:
+                errors.append(
+                    "DUPLICATE_UNDERLYING_PERFORMANCE_ID_ACROSS_ATTEMPTS:"
+                    f"{underlying_key}"
+                )
+            all_underlying_ids.add(underlying_key)
 
         if attempt.get("admitted") is not True:
             continue
         admitted.append(attempt)
-        if _nonempty(underlying_id):
-            key = underlying_id.strip()
-            if key in underlying_ids:
-                errors.append(f"DUPLICATE_UNDERLYING_PERFORMANCE_ID:{key}")
-            underlying_ids.add(key)
+        if underlying_key is not None:
+            admitted_underlying_ids.add(underlying_key)
 
-        _validate_source(attempt.get("evaluatedAudio"), f"{prefix}_EVALUATED_AUDIO", errors)
+        _validate_source(
+            attempt.get("evaluatedAudio"),
+            f"{prefix}_EVALUATED_AUDIO",
+            errors,
+        )
         _validate_source(
             attempt.get("pitchEvidence"),
             f"{prefix}_PITCH_EVIDENCE",
@@ -319,26 +369,50 @@ def _validate_attempt_extensions(
             require_not_audio_derived=True,
         )
 
-        pitch = attempt.get("pitchEvidence") if isinstance(attempt.get("pitchEvidence"), dict) else {}
-        birth = attempt.get("birthEvidence") if isinstance(attempt.get("birthEvidence"), dict) else {}
-        audio = attempt.get("evaluatedAudio") if isinstance(attempt.get("evaluatedAudio"), dict) else {}
+        pitch = (
+            attempt.get("pitchEvidence")
+            if isinstance(attempt.get("pitchEvidence"), dict)
+            else {}
+        )
+        birth = (
+            attempt.get("birthEvidence")
+            if isinstance(attempt.get("birthEvidence"), dict)
+            else {}
+        )
+        audio = (
+            attempt.get("evaluatedAudio")
+            if isinstance(attempt.get("evaluatedAudio"), dict)
+            else {}
+        )
         source_paths = [audio.get("path"), pitch.get("path"), birth.get("path")]
         nonempty_paths = [path.strip() for path in source_paths if _nonempty(path)]
         if len(nonempty_paths) != len(set(nonempty_paths)):
-            errors.append(f"{prefix}_AUDIO_PITCH_BIRTH_SOURCE_PATHS_MUST_BE_DISTINCT")
-        source_hashes = [audio.get("sha256"), pitch.get("sha256"), birth.get("sha256")]
+            errors.append(
+                f"{prefix}_AUDIO_PITCH_BIRTH_SOURCE_PATHS_MUST_BE_DISTINCT"
+            )
+        source_hashes = [
+            audio.get("sha256"),
+            pitch.get("sha256"),
+            birth.get("sha256"),
+        ]
         valid_hashes = [value for value in source_hashes if v1._is_sha256(value)]
         if len(valid_hashes) != len(set(valid_hashes)):
-            errors.append(f"{prefix}_AUDIO_PITCH_BIRTH_SOURCE_HASHES_MUST_BE_DISTINCT")
+            errors.append(
+                f"{prefix}_AUDIO_PITCH_BIRTH_SOURCE_HASHES_MUST_BE_DISTINCT"
+            )
 
         reference = attempt.get("reference")
         if not isinstance(reference, dict):
             errors.append(f"{prefix}_REFERENCE_OBJECT_REQUIRED")
             continue
         if reference.get("pitchDerivedFromEvaluatedAudio") is not False:
-            errors.append(f"{prefix}_REFERENCE_PITCH_MUST_NOT_BE_DERIVED_FROM_EVALUATED_AUDIO")
+            errors.append(
+                f"{prefix}_REFERENCE_PITCH_MUST_NOT_BE_DERIVED_FROM_EVALUATED_AUDIO"
+            )
         if reference.get("birthDerivedFromEvaluatedAudio") is not False:
-            errors.append(f"{prefix}_REFERENCE_BIRTH_MUST_NOT_BE_DERIVED_FROM_EVALUATED_AUDIO")
+            errors.append(
+                f"{prefix}_REFERENCE_BIRTH_MUST_NOT_BE_DERIVED_FROM_EVALUATED_AUDIO"
+            )
         if reference.get("usedModelOutputs") is not False:
             errors.append(f"{prefix}_REFERENCE_MUST_NOT_USE_MODEL_OUTPUTS")
         if config_sha is not None and reference.get("configurationSha256") != config_sha:
@@ -352,11 +426,13 @@ def _validate_attempt_extensions(
         if reference.get("birthEvidenceSha256") != birth.get("sha256"):
             errors.append(f"{prefix}_REFERENCE_BIRTH_EVIDENCE_HASH_MISMATCH")
         if not v1._is_sha256(reference.get("derivationConfigurationSha256")):
-            errors.append(f"{prefix}_REFERENCE_DERIVATION_CONFIGURATION_SHA256_INVALID")
+            errors.append(
+                f"{prefix}_REFERENCE_DERIVATION_CONFIGURATION_SHA256_INVALID"
+            )
         if not _nonempty(reference.get("eventSemanticsVersion")):
             errors.append(f"{prefix}_REFERENCE_EVENT_SEMANTICS_VERSION_REQUIRED")
 
-    return admitted, underlying_ids
+    return admitted, admitted_underlying_ids
 
 
 def _v1_projection(manifest: Any) -> Any:
@@ -374,7 +450,8 @@ def _v1_projection(manifest: Any) -> Any:
                 hardware["configurationSha256"] = config.get("sha256")
                 hardware["firmwareVersion"] = config.get("firmwareVersion")
             hardware["independentReferencePathId"] = (
-                f"{hardware.get('pitchEvidencePathId', '')}+{hardware.get('birthEvidencePathId', '')}"
+                f"{hardware.get('pitchEvidencePathId', '')}+"
+                f"{hardware.get('birthEvidencePathId', '')}"
             )
             hardware["evaluatedAudioIndependentFromReference"] = (
                 hardware.get("evaluatedAudioIndependentFromPitchEvidence") is True
@@ -424,31 +501,38 @@ def validate_manifest(manifest: Any) -> dict[str, Any]:
     declared_blockers = base_result.get("declaredStructuralBlockers", [])
     may_advance = contract_valid and bool(admitted) and not declared_blockers
 
-    # Rebuild the V2 population identity to bind all independent-source hashes.
     population_rows: list[dict[str, Any]] = []
     for attempt in admitted:
         audio = attempt.get("evaluatedAudio") or {}
         pitch = attempt.get("pitchEvidence") or {}
         birth = attempt.get("birthEvidence") or {}
         reference = attempt.get("reference") or {}
-        population_rows.append({
-            "attemptId": attempt.get("attemptId"),
-            "slotId": attempt.get("slotId"),
-            "underlyingPerformanceId": attempt.get("underlyingPerformanceId"),
-            "playerId": attempt.get("playerId"),
-            "exerciseId": attempt.get("exerciseId"),
-            "category": attempt.get("category"),
-            "evaluatedAudioSha256": audio.get("sha256"),
-            "pitchEvidenceSha256": pitch.get("sha256"),
-            "birthEvidenceSha256": birth.get("sha256"),
-            "referenceSha256": reference.get("sha256"),
-            "derivationConfigurationSha256": reference.get("derivationConfigurationSha256"),
-            "hardwareConfigurationSha256": config_sha,
-            "calibrationSha256": calibration_sha,
-            "clockSyncId": sync_id,
-        })
-    population_rows.sort(key=lambda row: (str(row["slotId"]), str(row["attemptId"])))
-    population_sha = v1.sha256_bytes(v1.canonical_json(population_rows).encode("utf-8"))
+        population_rows.append(
+            {
+                "attemptId": attempt.get("attemptId"),
+                "slotId": attempt.get("slotId"),
+                "underlyingPerformanceId": attempt.get("underlyingPerformanceId"),
+                "playerId": attempt.get("playerId"),
+                "exerciseId": attempt.get("exerciseId"),
+                "category": attempt.get("category"),
+                "evaluatedAudioSha256": audio.get("sha256"),
+                "pitchEvidenceSha256": pitch.get("sha256"),
+                "birthEvidenceSha256": birth.get("sha256"),
+                "referenceSha256": reference.get("sha256"),
+                "derivationConfigurationSha256": reference.get(
+                    "derivationConfigurationSha256"
+                ),
+                "hardwareConfigurationSha256": config_sha,
+                "calibrationSha256": calibration_sha,
+                "clockSyncId": sync_id,
+            }
+        )
+    population_rows.sort(
+        key=lambda row: (str(row["slotId"]), str(row["attemptId"]))
+    )
+    population_sha = v1.sha256_bytes(
+        v1.canonical_json(population_rows).encode("utf-8")
+    )
 
     return {
         **base_result,
@@ -456,7 +540,9 @@ def validate_manifest(manifest: Any) -> dict[str, Any]:
         "contractValid": contract_valid,
         "errors": merged_errors,
         "v2SemanticGuardPassed": contract_valid,
-        "objectiveAcquisitionFailureVocabularyVersion": "purpose-built-v2-objective-acquisition-failures-2026-09-14",
+        "objectiveAcquisitionFailureVocabularyVersion": (
+            "purpose-built-v2-objective-acquisition-failures-2026-09-14"
+        ),
         "maxReferenceTimingErrorSeconds": MAX_REFERENCE_TIMING_ERROR_SECONDS,
         "admittedUnderlyingPerformanceCount": len(underlying_ids),
         "admittedPopulationManifestSha256": population_sha,
@@ -472,7 +558,10 @@ def validate_manifest(manifest: Any) -> dict[str, Any]:
 def parse_args() -> argparse.Namespace:
     parser = argparse.ArgumentParser()
     parser.add_argument("--manifest", required=True, help="Path to V2 capture manifest JSON")
-    parser.add_argument("--output", help="Optional deterministic validation-result JSON path")
+    parser.add_argument(
+        "--output",
+        help="Optional deterministic validation-result JSON path",
+    )
     return parser.parse_args()
 
 
