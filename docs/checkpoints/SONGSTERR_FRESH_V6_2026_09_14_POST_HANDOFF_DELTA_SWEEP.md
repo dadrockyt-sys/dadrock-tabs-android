@@ -52,6 +52,22 @@ The current project page for `Towards Generalizability to Tone and Content Varia
 
 Searches resurfaced GuitarSet, Guitar-TECHS, GAPS, IDMT-SMT-Guitar, GIHME, the Five guitar dataset, and older/non-guitar symbolic or synthetic datasets. Each is already governed by the canonical checkpoint or fails at least one frozen pre-media gate. No newly surfaced primary source established all five gates simultaneously.
 
+## Release-only follow-up pass
+
+A second pass deliberately excluded broad historical discovery and looked only for recent/current release changes that could alter a hard gate.
+
+### EG-IPT current Zenodo state
+
+The current EG-IPT record still describes a substantial real-guitar corpus: 52,320 monophonic files, more than 28 hours, one professional guitarist, and six simultaneously captured signals including direct input. That confirms scale and real-guitar/DI relevance, but does not fix the decisive gates already recorded in the canonical checkpoint: the public record still does not establish a released immutable independent performed note-level onset+pitch stream, and the current Zenodo Rights section exposes a `License` heading without a license value. No media was accessed.
+
+### MUSMET current public state
+
+The current first-version MUSMET release remains a multimodal synchronized audio + EEG dataset of bands that include electric guitar. The public MUSMET dataset index separately lists a drum MIDI dataset, but does not establish an independent performed guitar note-event onset+pitch truth stream for the electric-guitar recordings. The Zenodo first-version record also exposes a Rights/License section without an explicit permissive license value for the performance audio. This leaves the existing rights + reference failure unchanged. No media was accessed.
+
+### New-search noise / non-candidates
+
+Recent search surfaces also included downstream tools, monitoring pages, GuitarSet examples, and already-governed GOAT/GAPS/Guitar-TECHS/EGDB material. None is a new qualifying independent performance population. GOAT remained literature-only and archived reference scoring was not reopened.
+
 ## Outcome
 
 **NO NEW ADMISSIBLE REPLACEMENT HOLDOUT FOUND.**
@@ -70,6 +86,9 @@ No candidate cleared all five frozen pre-media gates. Therefore:
 - TART arXiv: https://arxiv.org/abs/2609.11904
 - EGDB-PG/NDSP project page: https://ss12f32v.github.io/Guitar-Transcription-with-Amplifier/
 - EGDB-PG paper: https://arxiv.org/abs/2504.07406
+- EG-IPT Zenodo: https://zenodo.org/records/7803368
+- MUSMET Zenodo first version: https://zenodo.org/records/15691832
+- MUSMET dataset index: https://musmet.eu/software-and-datasets/
 - Guitar-TECHS Zenodo: https://zenodo.org/records/14963133
 - GuitarSet Zenodo: https://zenodo.org/records/3371780
 - GIHME Zenodo: https://zenodo.org/records/6798338
