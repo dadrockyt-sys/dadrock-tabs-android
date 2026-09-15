@@ -1,0 +1,146 @@
+name: Songsterr Fresh Purpose-Built Reference-Blind Structural Audit V1.2
+
+on:
+  workflow_dispatch:
+  push:
+    branches:
+      - songsterr-fresh-pipeline-v1
+    paths:
+      - "scripts/songsterr-fresh/purpose_built_reference_blind_structural_audit_v1_2.py"
+      - "scripts/songsterr-fresh/test_purpose_built_reference_blind_structural_audit_v1_2.py"
+      - ".github/workflows/songsterr-fresh-purpose-built-reference-blind-structural-audit-v1-2.yml"
+
+jobs:
+  synthetic-reference-blind-structural-audit-v12:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Compile V1.2 validator and tests
+        run: |
+          python -m py_compile \
+            scripts/songsterr-fresh/purpose_built_reference_blind_structural_audit_v1_2.py \
+            scripts/songsterr-fresh/test_purpose_built_reference_blind_structural_audit_v1_2.py
+      - name: Run synthetic contract tests first
+        run: python scripts/songsterr-fresh/test_purpose_built_reference_blind_structural_audit_v1_2.py
+      - name: Generate frozen synthetic end-to-end V1.2 chain
+        run: |
+          python - <<'PY'
+          import importlib.util
+          import json
+          from pathlib import Path
+
+          scripts = Path("scripts/songsterr-fresh")
+          fixture_path = scripts / "test_purpose_built_reference_blind_structural_audit_v1_2.py"
+          spec = importlib.util.spec_from_file_location("fixture_v12", fixture_path)
+          assert spec and spec.loader
+          fixture = importlib.util.module_from_spec(spec)
+          spec.loader.exec_module(fixture)
+
+          chain = fixture.build_valid_chain()
+          paths = {
+              "hardware": Path("synthetic-v12-hardware.json"),
+              "birth": Path("synthetic-v12-birth.json"),
+              "pitchLatch": Path("synthetic-v12-pitch-latch.json"),
+              "clockSync": Path("synthetic-v12-clock-sync.json"),
+          }
+          for name, path in paths.items():
+              path.write_bytes(chain["raw_sources"][name])
+              Path(f"synthetic-v12-{name}.sha256").write_text(chain["expected"][name])
+
+          Path("synthetic-v12-calibration-provenance-result.json").write_bytes(
+              chain["provenance_bytes"]
+          )
+          Path("synthetic-v12-calibration-provenance-result.sha256").write_text(
+              chain["provenance_sha"]
+          )
+          Path("synthetic-v12-package-binding.sha256").write_text(
+              chain["package_binding_sha"]
+          )
+          Path("synthetic-v12-capture-manifest-v23-result.json").write_bytes(
+              chain["v23_bytes"]
+          )
+          Path("synthetic-v12-capture-manifest-v23-result.sha256").write_text(
+              chain["v23_sha"]
+          )
+          Path("synthetic-v12-structural-audit-inputs.json").write_text(
+              json.dumps(chain["binding"], sort_keys=True, separators=(",", ":")),
+              encoding="utf-8",
+          )
+          Path("synthetic-v12-structural-audit-inputs.sha256").write_text(
+              chain["binding_sha"]
+          )
+          Path("synthetic-v12-v23-population.sha256").write_text(
+              chain["v23_population_sha"]
+          )
+          PY
+      - name: Run official frozen synthetic V1.2 validator
+        run: |
+          python scripts/songsterr-fresh/purpose_built_reference_blind_structural_audit_v1_2.py \
+            --hardware synthetic-v12-hardware.json \
+            --hardware-sha256 "$(cat synthetic-v12-hardware.sha256)" \
+            --birth-stream synthetic-v12-birth.json \
+            --birth-stream-sha256 "$(cat synthetic-v12-birth.sha256)" \
+            --pitch-latch-stream synthetic-v12-pitch-latch.json \
+            --pitch-latch-stream-sha256 "$(cat synthetic-v12-pitchLatch.sha256)" \
+            --clock-sync synthetic-v12-clock-sync.json \
+            --clock-sync-sha256 "$(cat synthetic-v12-clockSync.sha256)" \
+            --calibration-provenance-result synthetic-v12-calibration-provenance-result.json \
+            --calibration-provenance-result-sha256 "$(cat synthetic-v12-calibration-provenance-result.sha256)" \
+            --declared-provenance-result-sha256 "$(cat synthetic-v12-calibration-provenance-result.sha256)" \
+            --declared-calibration-package-binding-sha256 "$(cat synthetic-v12-package-binding.sha256)" \
+            --capture-manifest-v23-validation-result synthetic-v12-capture-manifest-v23-result.json \
+            --capture-manifest-v23-validation-result-sha256 "$(cat synthetic-v12-capture-manifest-v23-result.sha256)" \
+            --structural-audit-inputs synthetic-v12-structural-audit-inputs.json \
+            --structural-audit-inputs-sha256 "$(cat synthetic-v12-structural-audit-inputs.sha256)" \
+            --capture-manifest-v23-admitted-population-sha256 "$(cat synthetic-v12-v23-population.sha256)" \
+            --output synthetic-purpose-built-reference-blind-structural-audit-v1-2-result.json
+      - name: Print frozen result summary
+        run: |
+          python - <<'PY'
+          import hashlib
+          import json
+          from pathlib import Path
+
+          path = Path("synthetic-purpose-built-reference-blind-structural-audit-v1-2-result.json")
+          result = json.loads(path.read_text(encoding="utf-8"))
+          print("contract", result["contract"])
+          print("contractValid", result["contractValid"])
+          print("datasetStructurallySuitable", result["datasetStructurallySuitable"])
+          print("authoritativeStructuralSuitabilityEstablished", result["authoritativeStructuralSuitabilityEstablished"])
+          print("capturePopulationBindingViolationCount", result["capturePopulationBindingViolationCount"])
+          print("attemptId", result["attemptId"])
+          print("slotId", result["slotId"])
+          print("underlyingPerformanceId", result["underlyingPerformanceId"])
+          print("structuralAuditInputsSha256", result["structuralAuditInputsSha256"])
+          print("v23ValidationResultSha256", result["captureManifestV23ValidationResultSha256"])
+          print("v23PopulationSha256", result["captureManifestV23AdmittedPopulationSha256"])
+          print("provenanceResultSha256", result["calibrationProvenanceResultSha256"])
+          print("packageBindingSha256", result["calibrationPackageBindingSha256"])
+          print("decoderConfigurationSha256", result["calibrationPackageDecoderConfigurationSha256"])
+          print("inheritedV11PopulationSha256", result["inheritedV11DerivedPopulationSha256"])
+          print("populationIdentityVersion", result["populationIdentityVersion"])
+          print("derivedPopulationSha256", result["derivedPopulationSha256"])
+          print("derivedNoteEventCount", result["derivedNoteEventCount"])
+          print("resultSha256", hashlib.sha256(path.read_bytes()).hexdigest())
+          print(json.dumps({
+              "realCalibrationAuthorized": result["realCalibrationAuthorized"],
+              "realHoldoutCaptureAuthorized": result["realHoldoutCaptureAuthorized"],
+              "basicPitchAuthorized": result["basicPitchAuthorized"],
+              "v6Authorized": result["v6Authorized"],
+              "correctnessAuthorized": result["correctnessAuthorized"],
+              "modelValidationComplete": result["modelValidationComplete"],
+              "customerEligibleEvents": result["customerEligibleEvents"],
+              "mayAdvanceDelivery": result["mayAdvanceDelivery"],
+          }, sort_keys=True))
+          PY
+      - name: Upload canonical V1.2 result
+        uses: actions/upload-artifact@v4
+        with:
+          name: songsterr-fresh-purpose-built-reference-blind-structural-audit-v1-2
+          path: synthetic-purpose-built-reference-blind-structural-audit-v1-2-result.json
+          if-no-files-found: error
+          retention-days: 30
