@@ -17,6 +17,7 @@ Key records:
 - AG-PT-set reference-blind result: `docs/checkpoints/SONGSTERR_FRESH_V6_AG_PT_SET_REFERENCE_BLIND_AUDIT_RESULT.md`
 - GuitarDuets/EG-Solo/Guitar Style/GPT batch: `docs/checkpoints/SONGSTERR_FRESH_V6_PREMEDIA_BATCH_GUITARDUETS_EGSOLO_GUITARSTYLE_GPT.md`
 - 2025–2026 no-new-candidate search: `docs/checkpoints/SONGSTERR_FRESH_V6_PREMEDIA_2025_2026_SEARCH_NO_NEW_CANDIDATE.md`
+- V3 physical-template synthetic PRE: `docs/checkpoints/SONGSTERR_FRESH_V3_PHYSICAL_TEMPLATE_SYNTHETIC_PRE.md`, frozen commit `0292869c1e1e1bc138f2fdff4e839326c0e5d082`
 
 ## HARD SCOPE
 
@@ -95,7 +96,7 @@ Fail any gate -> `REJECT_PREMEDIA`. Public downloadability alone is not a licens
 
 ## AG-PT-SET — PRE-MEDIA PASS, THEN FROZEN STRUCTURAL C
 
-AG-PT-set cleared pre-media ingress because public metadata established real monophonic human guitar, CC BY 4.0, released onset/audio/pitch/string fields and acceptable independent reference provenance.
+AG-PT-set cleared pre-media ingress because public metadata established real human guitar, CC BY 4.0, released onset/audio/pitch/string fields and acceptable independent reference provenance.
 
 Reference-blind PRE: `docs/checkpoints/SONGSTERR_FRESH_V6_AG_PT_SET_REFERENCE_BLIND_AUDIT_PRE.md`, commit `0a84d6be1373d538b251663b1fa7af8f33bbf378`. Only structural/alignment/inventory inspection was authorized; Basic Pitch and V6 correctness were forbidden.
 
@@ -199,7 +200,9 @@ Read-only V2/V6 lineage review:
 - Candidates surviving that physical-template gate enter the shared NNLS dictionary; the separate leave-one-out necessity protection remains `necessityFraction >= 0.01`. V3 research targets the physical-template plausibility stage only; it must preserve the NNLS necessity protection rather than weakening it.
 - Frozen V6 synthetic fixtures already exercise ordinary/detuned notes, octave/harmonic aliases, neighbor mismatch, continuing-plus-new notes, dyad/triad polyphony, unrelated transient/noise, a weak selected note under a stronger owner, silence/low-noise, and pre/post-context fail-closed cases. These protections are inputs to the prospective V3 gates, not post-result tuning targets.
 
-Next authorized action: create and freeze `docs/checkpoints/SONGSTERR_FRESH_V3_PHYSICAL_TEMPLATE_SYNTHETIC_PRE.md` prospectively. Do not create or execute V3 research code until that PRE commit exists.
+Prospective V3 PRE is now frozen at commit `0292869c1e1e1bc138f2fdff4e839326c0e5d082`, created before any V3 research implementation or V3 synthetic execution. Its immutable iteration-1 boundary allows only the isolated V3 module/test, the future V3 synthetic result checkpoint, and state-only updates to this current checkpoint. The frozen V6/V2 implementations and all workflow files remain read-only.
+
+Next authorized action: create the two isolated V3 research files exactly under the PRE boundary, review their diff against the PRE, and only then run the dedicated synthetic test. No Basic Pitch, V6 correctness, real-media/model, workflow, or closed-line execution is authorized.
 
 ## AUTHORITATIVE ROUTE
 
