@@ -31,7 +31,7 @@ class CalibrationPackageProvenanceV1Tests(unittest.TestCase):
         result = self.validate(root, manifest)
         self.assertTrue(result["contractValid"], result["errors"])
         self.assertEqual(result["errors"], [])
-        self.assertEqual(result["verifiedFileCount"], 13)
+        self.assertEqual(result["verifiedFileCount"], 14)
         self.assertEqual(len(result["packageBindingSha256"]), 64)
 
     def test_02_repeated_validation_is_byte_deterministic(self):
