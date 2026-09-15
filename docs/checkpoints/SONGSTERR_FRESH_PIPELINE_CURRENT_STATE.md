@@ -19,6 +19,8 @@ Key records:
 - 2025–2026 no-new-candidate search: `docs/checkpoints/SONGSTERR_FRESH_V6_PREMEDIA_2025_2026_SEARCH_NO_NEW_CANDIDATE.md`
 - V3 physical-template synthetic PRE: `docs/checkpoints/SONGSTERR_FRESH_V3_PHYSICAL_TEMPLATE_SYNTHETIC_PRE.md`, frozen commit `0292869c1e1e1bc138f2fdff4e839326c0e5d082`
 - V3 physical-template synthetic iteration-1 result: `docs/checkpoints/SONGSTERR_FRESH_V3_PHYSICAL_TEMPLATE_SYNTHETIC_RESULT.md`, frozen FAIL commit `6a6965730250f2000cc480ede2ed3d2638b0df44`
+- V3 physical-template synthetic iteration-2 PRE: `docs/checkpoints/SONGSTERR_FRESH_V3_PHYSICAL_TEMPLATE_SYNTHETIC_PRE_ITERATION2.md`, frozen commit `b2821f8690bea49783071ead87e69424fd63c787`
+- V3 physical-template synthetic iteration-2 result: `docs/checkpoints/SONGSTERR_FRESH_V3_PHYSICAL_TEMPLATE_SYNTHETIC_RESULT_ITERATION2.md`, frozen FAIL commit `7153a02ede14b0a43af58609bdc12cd4b792e9b9`
 
 ## HARD SCOPE
 
@@ -216,7 +218,24 @@ Prospective V3 PRE is frozen at commit `0292869c1e1e1bc138f2fdff4e839326c0e5d082
 
 Iteration 1 is permanently `FAIL_SYNTHETIC_ALIAS_PROTECTION`. This does not alter any frozen historical result and does not authorize real evaluation.
 
-Next permitted action: if continuing V3 synthetic research, create a **new prospective iteration-2 PRE** before any revision. A successor may investigate explicit lower-owner/subharmonic explanation while preserving true polyphony and the unchanged necessity concept. Do not patch or rerun iteration 1.
+### Iteration 2 — frozen FAIL
+
+- prospective PRE commit: `b2821f8690bea49783071ead87e69424fd63c787`
+- wrapper commit: `0587daa4cd1055255fb394939af2162e20b80be4`
+- complete first implementation/test pair head: `4d69b7bc20637507c3a9167a5fb9c5ad498773ca`
+- frozen result checkpoint commit: `7153a02ede14b0a43af58609bdc12cd4b792e9b9`
+- exact local execution blobs: iteration-1 base `45b8f3b66df7500824071489205a732dfe05d759`, iteration-2 wrapper `7090e17baff60f91700a760f617e905ff53484ab`, iteration-2 test `eefe00346a94e8f0ed433ac916352a4b2e9331c5`
+- pre-execution PRE→pair compare contained only the two new iteration-2 Python files; no workflow or frozen file changed
+- first committed test execution evaluated 31 fixtures × 3 in-process repetitions and was deterministic
+- result: `FAIL`, 5 mismatches, all unexpected PASS: `two_harmonics_only`, `single_peak_only`, `broadband_noise`, `nonharmonic_impulses`, and `clip_start_insufficient_support`
+- the original octave-alias gate and third-harmonic-owner trap matched FAIL expectations; new `true_octave_polyphony_a3_plus_a4`, `weak_lower_a3_plus_a4`, inherited A3+E5 and A4+B4 polyphony controls matched PASS expectations
+- all other 26 prospective cases matched their frozen expectations
+- no iteration-2 PRE/code/test/fixture/threshold was changed after the result and no second iteration-2 run was used to search for a rescue
+- no workflow, Basic Pitch, V6 correctness, real-media/model, protected-song, closed-line, V143/Gomyway or heavy-compute execution occurred
+
+Iteration 2 is permanently `FAIL_SYNTHETIC_SPURIOUS_SUPPORT`. The owner-aware guard repaired the iteration-1 synthetic alias defect, but the inherited candidate-evidence stage still admits sparse/non-harmonic/noise controls. This does not alter any historical result and does not authorize real evaluation.
+
+Next permitted action: if continuing synthetic research, freeze a **new prospective iteration-3 PRE** before any code revision or execution. A successor may preserve the successful iteration-2 lower-owner guard while adding a separately justified candidate-evidence significance control against spurious detuning-anchor support. It must preserve all 31 iteration-2 fixture expectations and must not be tuned on closed real evidence.
 
 ## AUTHORITATIVE ROUTE
 
