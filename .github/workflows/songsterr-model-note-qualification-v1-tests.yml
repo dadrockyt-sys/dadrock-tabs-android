@@ -1,5 +1,6 @@
 name: Songsterr Model Note Qualification V1 Tests
 
+# Validation revision 2: boundary padding must enable evaluation; it does not force corroboration.
 on:
   push:
     branches:
