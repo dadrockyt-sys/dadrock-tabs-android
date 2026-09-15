@@ -3,6 +3,7 @@ import { snapTimestampToStructureMap } from './structureMap.mjs';
 
 const EPSILON = 1e-9;
 const SLOT_TOLERANCE_SECONDS = 1e-6;
+const CLASSIFICATIONS = new Set(['unambiguous', 'ambiguous', 'no-candidate', 'rejected']);
 
 function finite(value, field) {
   const number = Number(value);
@@ -103,7 +104,7 @@ function normalizeOnset(onset, onsetIndex, structureMap) {
   const second = candidates[1] ?? null;
   const confidenceMargin = top ? top.confidence - (second?.confidence ?? 0) : null;
   const classification = onset?.classification;
-  if (!['unambiguous', 'ambiguous', 'no-candidate'].includes(classification)) {
+  if (!CLASSIFICATIONS.has(classification)) {
     throw new Error(`onsets[${onsetIndex}].classification is invalid.`);
   }
   if (classification === 'no-candidate' && candidates.length !== 0) {
@@ -114,6 +115,9 @@ function normalizeOnset(onset, onsetIndex, structureMap) {
   }
   if (classification === 'unambiguous' && candidates.length > 0 && onset?.selectedMidi !== top.midi) {
     throw new Error(`onsets[${onsetIndex}].selectedMidi must equal its highest-confidence candidate.`);
+  }
+  if (classification !== 'unambiguous' && onset?.selectedMidi !== undefined && onset?.selectedMidi !== null) {
+    throw new Error(`onsets[${onsetIndex}].selectedMidi must be null unless classification is unambiguous.`);
   }
 
   const durationEvidence = normalizeDurationEvidence(onset, onsetIndex, sourceStart, structureMap);
@@ -210,7 +214,11 @@ export function adaptStructureConditionedNoteEvidence(raw = {}, structureMap) {
   const candidateCount = onsets.reduce((sum, onset) => sum + onset.candidates.length, 0);
   const ambiguousOnsetCount = onsets.filter((onset) => onset.classification === 'ambiguous').length;
   const noCandidateOnsetCount = onsets.filter((onset) => onset.classification === 'no-candidate').length;
+  const rejectedOnsetCount = onsets.filter((onset) => onset.classification === 'rejected').length;
   const unambiguousOnsetCount = onsets.filter((onset) => onset.classification === 'unambiguous').length;
+  const rejectedCandidateCount = onsets
+    .filter((onset) => onset.classification === 'rejected')
+    .reduce((sum, onset) => sum + onset.candidates.length, 0);
   const durationResolvedEvidenceCount = onsets.filter((onset) => onset.durationSeconds !== null).length;
   const provenance = raw?.provenance && typeof raw.provenance === 'object' ? { ...raw.provenance } : {};
   const capabilities = normalizeCapabilities(raw);
@@ -231,6 +239,8 @@ export function adaptStructureConditionedNoteEvidence(raw = {}, structureMap) {
       legacyV143ScorerImported: provenance.legacyV143ScorerImported === true,
       modelInvoked: provenance.modelInvoked === true,
       gpuInvoked: provenance.gpuInvoked === true,
+      explicitRejectedProposalState: true,
+      rejectedProposalIsResolvedButNotPromoted: true,
     },
     role: raw.role,
     structureIdentity: expectedIdentity,
@@ -245,9 +255,13 @@ export function adaptStructureConditionedNoteEvidence(raw = {}, structureMap) {
       unambiguousOnsetCount,
       ambiguousOnsetCount,
       noCandidateOnsetCount,
+      rejectedOnsetCount,
+      rejectedCandidateCount,
       promotedEventCount: promotedEvents.length,
+      resolvedProposalCount: unambiguousOnsetCount + rejectedOnsetCount,
       unresolvedOnsetCount: ambiguousOnsetCount + noCandidateOnsetCount,
       unresolvedEvidencePreserved: true,
+      rejectedEvidencePreserved: true,
       durationResolvedEvidenceCount,
       unresolvedDurationEvidenceCount: onsets.length - durationResolvedEvidenceCount,
     },
