@@ -1,6 +1,6 @@
 # CURRENT STATE — Songsterr Fresh Pipeline V1
 
-Updated: 2026-09-14 America/Toronto — GFN train-only V2 result frozen; active $0 line moves to synthetic six-channel crosstalk/debleed harness
+Updated: 2026-09-14 America/Toronto — GFN V2 frozen MIXED; synthetic six-channel debleed V1 preregistration frozen before result execution
 Canonical branch: `songsterr-fresh-pipeline-v1`
 Canonical checkpoint: `docs/checkpoints/SONGSTERR_FRESH_PIPELINE_CURRENT_STATE.md`
 
@@ -54,20 +54,9 @@ Declared license: `CC-BY-SA-4.0`.
 
 This corpus is NON_HOLDOUT feasibility research only. It contains isolated real-guitar notes labeled by exact physical string/fret and is not an admissible Songsterr Fresh correctness holdout.
 
-### Frozen source boundary
-
-Already-exposed `train` only:
-- `ele`: 78 rows;
-- `eqm`: 78 rows;
-- `eqm2`: 78 rows;
-- total: 234 rows.
-
-Reserved and untouched:
-- `test`, source `deb`: 78 rows;
-- `validation`, source `ele_natural`: 78 rows.
-
-Do not load, stream, download, decode, inspect, feature-extract, listen to, score, debug against, tune on, normalize from, or otherwise consume `deb` or `ele_natural` without a later separate preregistration frozen before access.
-
+Already-exposed train sources: `ele`, `eqm`, `eqm2`, 78 rows each, 234 total.
+Reserved untouched sources: `deb` (`test`) and `ele_natural` (`validation`), 78 rows each.
+Do not access either reserved source without a later separately frozen authorization.
 Canonical train parquet SHA-256: `86ac522303251f2a5d77376261c23bf1af09b3c69183ad365b105cd230354add`.
 
 ### Train-only V1 — COMPLETE / NON_HOLDOUT
@@ -75,52 +64,25 @@ Canonical train parquet SHA-256: `86ac522303251f2a5d77376261c23bf1af09b3c69183ad
 Preregistration commit `ff62869274bd509802f5c4b3e565422eb23741f3`.
 Implementation/test/workflow head `7ab93ec73848b9f0fee366cbf19f1dc13b39930f`.
 GitHub CPU run `34914789254`, job `104209961023`, SUCCESS.
-Result checkpoint: `docs/checkpoints/SONGSTERR_FRESH_GUITAR_FRETBOARD_NOTES_TRAIN_ONLY_DISCRIMINABILITY_RESULT_V1_2026-09-14.md`, commit `535e6861bb9895f5c38161ec7877a6534cf6fa4e`.
+Result checkpoint commit `535e6861bb9895f5c38161ec7877a6534cf6fa4e`.
 
-V1 primary result:
-- `eqm` -> `eqm2`: 41/68 = `60.29%`;
-- `eqm2` -> `eqm`: 32/68 = `47.06%`;
-- pooled: 73/136 = `53.68%`;
-- chance `39.71%`;
-- lift `+13.97 pp`;
-- absolute directional gap `13.24 pp`.
-
-Interpretation: repeatable same-pitch physical-position information exists above chance in these isolated-note train recordings, but V1 has material session sensitivity.
+V1 result: `eqm`->`eqm2` 41/68=`60.29%`; reverse 32/68=`47.06%`; pooled 73/136=`53.68%`; chance `39.71%`; lift `+13.97 pp`; directional gap `13.24 pp`.
 
 ### Train-only V2 session-invariance — COMPLETE / FROZEN MIXED RESULT
 
-Preregistration:
-`docs/checkpoints/SONGSTERR_FRESH_GUITAR_FRETBOARD_NOTES_TRAIN_ONLY_SESSION_INVARIANCE_PREREGISTRATION_V2_2026-09-14.md`
-commit `e528ebd1279ec883da0b786d73dd25e03aa47890`.
-
-The method was frozen before any V2 real-audio result execution or observation. It retained the V1 16-D extraction and added deterministic source-wise median / `1.4826*MAD` normalization, exact labeled-MIDI candidate restriction, Euclidean matching, and deterministic `(string,fret)` tie-break. Query-source distribution statistics were explicitly permitted because this remained train-only NON_HOLDOUT feasibility work.
-
+Preregistration commit `e528ebd1279ec883da0b786d73dd25e03aa47890`.
 Implementation blob `6340ef9cfc6c8fc59d6caf83eca6a1db020a2c1b`.
 Test blob `348ff567d7a5c0f88657d306be8c50a32f2682b2`.
 Workflow blob `510946af72f07aedf33e475c8f8ca06ae79d30ae`.
 Workflow head `fb9e391477e77e0e9d3dee42243d0e812a33d581`.
-GitHub Actions run `34915518842`, job `104212166273`, SUCCESS.
-18/18 synthetic contract tests passed before real-audio execution.
-Artifact ID `10375219509`; uploaded ZIP SHA-256 `2ed0080474a57810b7fcd4f1babccd0c33e9db97340aed94fae653f5f6b333cc`.
+GitHub run `34915518842`, job `104212166273`, SUCCESS; 18/18 synthetic contract tests passed before real-audio execution.
+Artifact ID `10375219509`; ZIP SHA-256 `2ed0080474a57810b7fcd4f1babccd0c33e9db97340aed94fae653f5f6b333cc`.
 Canonical result JSON SHA-256 `0a1f39e33a791371e2f7aa6f1ccc7a25d476052be08b8eb80645129bf01869f7`.
-Result checkpoint:
-`docs/checkpoints/SONGSTERR_FRESH_GUITAR_FRETBOARD_NOTES_TRAIN_ONLY_SESSION_INVARIANCE_RESULT_V2_2026-09-14.md`
-commit `4569a2f7970cde7975107146ba9ffb785066864b`.
+Result checkpoint commit `4569a2f7970cde7975107146ba9ffb785066864b`.
 
-V2 primary result:
-- `eqm` -> `eqm2`: 36/68 = `52.94%`;
-- `eqm2` -> `eqm`: 33/68 = `48.53%`;
-- pooled: 69/136 = `50.74%`;
-- chance `39.71%`;
-- lift `+11.03 pp`;
-- absolute directional gap `4.41 pp`.
-
-Frozen comparison to V1:
-- pooled accuracy changed `53.68%` -> `50.74%` (`-2.94 pp`): accuracy-improvement condition false;
-- directional gap changed `13.24 pp` -> `4.41 pp` (`-8.82 pp`): gap-improvement condition true;
-- frozen classification: `MIXED`.
-
-Interpretation: source-wise robust normalization materially reduced session asymmetry but also reduced pooled exact-position discrimination. It is not an overall V1 replacement and no tuning/rerun is authorized from the observed V2 result. Reserved `deb` and `ele_natural` remained untouched.
+V2 result: `eqm`->`eqm2` 36/68=`52.94%`; reverse 33/68=`48.53%`; pooled 69/136=`50.74%`; chance `39.71%`; lift `+11.03 pp`; directional gap `4.41 pp`.
+Frozen comparison: pooled accuracy worsened by `2.94 pp`, directional gap improved by `8.82 pp`; frozen classification `MIXED`.
+No tuning/rerun is authorized from the observed V2 result. Reserved `deb` and `ele_natural` remained untouched.
 
 All downstream authorization remains closed:
 - `basicPitchAuthorized:false`
@@ -132,34 +94,19 @@ All downstream authorization remains closed:
 
 ## PURPOSE-BUILT HOLDOUT — SOFTWARE ACTIVE, PHYSICAL ROUTE BUDGET-PAUSED
 
-The purpose-built independent-sensor route remains the technically authoritative prospective validation design, but under the current budget it may advance only through zero-additional-cost software/documentation/synthetic CI. Real hardware procurement, non-holdout physical calibration and real holdout capture remain paused.
+The purpose-built independent-sensor route remains the prospective technical authority, but under the current budget it may advance only through zero-additional-cost software/documentation/synthetic CI. Real hardware procurement, physical calibration, and real holdout capture remain paused.
 
 Design authority:
 - expanded design `e37d2b4662db949157d2cf4797370f05648b6940`;
 - physical-reference semantics `ea5f50212cd1cd3794c65cb648a4d781e49e4082`;
 - capture QA/gate matrix `2b191b39f2f1c19564f1353381779acbc96fbeda`.
 
-Capture-manifest V2.1:
-- implementation commit `72e8861f50680f45e586eb1e1352db59bda1f0ae`;
-- tests commit `ff5717a4aeb9b74e971694703f6d6cb785389845`;
-- workflow head `3d7f1770a3b8df0018008a49defe189db306de39`;
-- successful GitHub CPU run `34908936464`, job `104191861049`;
-- evidence checkpoint commit `9d3b17b392bd486753cb657318c048a7ae2460a7`.
+Capture-manifest V2.1: run `34908936464`, job `104191861049`, SUCCESS; evidence checkpoint commit `9d3b17b392bd486753cb657318c048a7ae2460a7`.
+Reference-blind structural audit V1: run `34912172056`, job `104201857367`, SUCCESS; evidence checkpoint commit `df7eb9edacb170ab24e2c200b1c0a8028625f87a`.
+Stage-0 contact replay V1: run `34913326360`, job `104205441130`, SUCCESS; evidence checkpoint commit `8ecc0601f84c4f7916ce1a8c08ac021fc425be25`.
+These establish software-contract behavior only, not real physical sensing performance.
 
-Reference-blind structural audit V1:
-- preregistration commit `067875e3aa1538ff5483b74cc9071b00e9e82b07`;
-- implementation/test/workflow head `8f4b41ce2cff075a6e7be25032142a0e8288b7be`;
-- successful GitHub CPU run `34912172056`, job `104201857367`;
-- evidence checkpoint commit `df7eb9edacb170ab24e2c200b1c0a8028625f87a`.
-
-A structural PASS establishes only structural suitability of a real audited reference population; it never authorizes Basic Pitch/V6/correctness by itself.
-
-Hardware/calibration necessity and topology:
-- necessity + bench-gate commit `a0279b8c48c51176678229abfa92576b1d1c0c95`;
-- initial hardware document/API screen commit `39e9e0bb3667874534e6aa8cc4a8522299e0a140`;
-- custom/hybrid topology commit `e45e9b8c32b511d2cd7a89fbeffc8783f2f95fbf`.
-
-Budget checkpoint commit `e7f0146d4f01605b642f8aeaa100962254b5ce58` remains binding:
+Budget checkpoint `e7f0146d4f01605b642f8aeaa100962254b5ce58` remains binding:
 - `HARDWARE_PROCUREMENT_PAUSED:true`
 - `PAID_VENDOR_CONTACT_PAUSED:true`
 - `PAID_PERFORMER_OR_STUDIO_WORK_PAUSED:true`
@@ -167,29 +114,38 @@ Budget checkpoint commit `e7f0146d4f01605b642f8aeaa100962254b5ce58` remains bind
 - `REAL_HOLDOUT_CAPTURE_PAUSED:true`
 - `SOFTWARE_DOCUMENTATION_SYNTHETIC_CI_ALLOWED:true`
 
-Stage-0 contact replay V1:
-- preregistration commit `c5082e8357e674f401bbc37fd42961e91e5d1606`;
-- integration head `fdcad7bcb3f48dd75630b694f7b27d23b037f016`;
-- implementation blob `14cd141aa21301887e1edf2a7d99a8dab0e43d58`;
-- tests blob `956c518eef8e1ea2e1e87a42575e68dde6e636a0`; 16/16 local PASS;
-- workflow blob `fd51102d34be8446eebec36ff65e5aa1a0e4afe7`;
-- successful GitHub CPU run `34913326360`, job `104205441130`;
-- evidence checkpoint commit `8ecc0601f84c4f7916ce1a8c08ac021fc425be25`.
+## SYNTHETIC SIX-CHANNEL CROSSTALK / DEBLEED V1 — PREREGISTRATION FROZEN / IMPLEMENTATION NEXT
 
-This proves only software-contract behavior, not real physical sensing performance.
+Preregistration:
+`docs/checkpoints/SONGSTERR_FRESH_SYNTHETIC_SIX_CHANNEL_CROSSTALK_DEBLEED_PREREGISTRATION_V1_2026-09-14.md`
+commit `54802e0eda32f8cb65da39ea2bce70c443d16eab`.
 
-## ACTIVE NEXT $0 LINE — SYNTHETIC SIX-CHANNEL CROSSTALK / DEBLEED
+Frozen before any official harness result execution.
 
-V2 is recorded, so the previously authorized secondary software-only line is now active.
+Core frozen contract:
+- fully local, network-free, model-free, synthetic-only NumPy CPU harness;
+- exactly six immutable source channels, 8,192 samples each, generated from fixed integer-bin sinusoid tables and RMS-normalized;
+- separate deterministic six-channel perturbation bank generated analytically and RMS-normalized;
+- family A `distance_decay`: row-normalized inverse-distance off-diagonal weights with bleed levels `(0.00,0.02,0.05,0.10,0.20,0.35,0.50)`;
+- family B `paired_conditioning`: symmetric pairs `(0,1)`, `(2,3)`, `(4,5)` with levels `(0.10,0.30,0.50,0.70,0.85,0.95)`;
+- perturbation RMS scales `(0.0,0.0001,0.001,0.01)`;
+- mixing `Y = M @ S + sigma*P`;
+- untreated baseline `Y`;
+- direct recovery `solve(M,Y)`;
+- fixed ridge recovery `solve(M.T@M + 1e-4*I, M.T@Y)`;
+- condition number `cond(M,2)`;
+- per-channel, pooled, and max-channel NRMSE; direct/ridge improvement dB over untreated baseline;
+- source/perturbation/matrix SHA-256 identities;
+- no production PASS threshold.
 
-Immediate order:
-1. freeze a deterministic synthetic six-channel crosstalk/debleed preregistration before observing harness results;
-2. define untouched synthetic source channels, fixed bleed-matrix families/levels, deterministic conditioning metrics, frozen linear/regularized unmixing rule(s), reconstruction metrics, and interpretation boundary;
-3. implement synthetic contract tests first;
-4. run ordinary GitHub CPU CI only after preregistration and tests are committed;
-5. record the result in a dedicated checkpoint and update this file.
+Next mandatory order:
+1. implement the frozen harness without changing the method;
+2. add synthetic contract tests first, including source immutability, exact matrix families/levels, equations, deterministic hashes/results, zero-bleed direct recovery near machine precision, and authorization closure;
+3. commit implementation/tests/workflow;
+4. ordinary GitHub CPU CI must run compile + tests before the official harness-result step;
+5. freeze a dedicated result checkpoint and update this file.
 
-Hard boundary: this harness may test recovery only when six separated source channels and a known synthetic mixing matrix already exist. It must not claim that authoritative per-string channels can be created from ordinary mono/stereo guitar audio, and it must not authorize real hardware, correctness, V6, customer delivery, or protected-song execution.
+Interpretation boundary: this harness can only characterize deterministic linear debleeding when six already-separated channels and a known synthetic mixing matrix exist. It cannot create authoritative six-string truth from mono/stereo audio and cannot establish real sensor calibration, real holdout correctness, or customer readiness.
 
 ## STILL FORBIDDEN
 
@@ -199,4 +155,4 @@ Guitar-TECHS correctness/repair/rescue; archived V143/Gomyway; GOAT/reference sc
 
 Continue only on `songsterr-fresh-pipeline-v1`; re-fetch the live branch head and this file before mutation.
 
-Immediate task: freeze and then implement the deterministic synthetic six-channel crosstalk/debleed harness described above. Keep all correctness/holdout/customer authorization false. Do not access reserved GFN sources. Do not reopen V143/Gomyway or any other closed line unless the user explicitly asks.
+Immediate task: implement the already-frozen synthetic six-channel crosstalk/debleed V1 preregistration at commit `54802e0eda32f8cb65da39ea2bce70c443d16eab`, add contract tests first, then ordinary GitHub CPU CI. Keep all correctness/holdout/customer authorization false. Do not access reserved GFN sources. Do not reopen V143/Gomyway or any other closed line unless explicitly asked.
