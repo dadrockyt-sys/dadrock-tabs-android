@@ -1,0 +1,98 @@
+name: Songsterr Fresh Reference-Blind Structural Audit Population Completeness V1
+
+on:
+  workflow_dispatch:
+  push:
+    branches:
+      - songsterr-fresh-pipeline-v1
+    paths:
+      - "scripts/songsterr-fresh/reference_blind_structural_audit_population_completeness_v1.py"
+      - "scripts/songsterr-fresh/test_reference_blind_structural_audit_population_completeness_v1.py"
+      - ".github/workflows/songsterr-fresh-reference-blind-structural-audit-population-completeness-v1.yml"
+
+jobs:
+  synthetic-population-completeness-v1:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Compile population completeness validator and tests
+        run: |
+          python -m py_compile \
+            scripts/songsterr-fresh/reference_blind_structural_audit_population_completeness_v1.py \
+            scripts/songsterr-fresh/test_reference_blind_structural_audit_population_completeness_v1.py
+      - name: Run synthetic contract tests first
+        run: python scripts/songsterr-fresh/test_reference_blind_structural_audit_population_completeness_v1.py
+      - name: Generate frozen two-attempt V2.3 and V1.2 result streams
+        run: |
+          python - <<'PY'
+          import importlib.util
+          from pathlib import Path
+
+          scripts = Path("scripts/songsterr-fresh")
+          fixture_path = scripts / "test_reference_blind_structural_audit_population_completeness_v1.py"
+          spec = importlib.util.spec_from_file_location("population_fixture", fixture_path)
+          assert spec and spec.loader
+          fixture = importlib.util.module_from_spec(spec)
+          spec.loader.exec_module(fixture)
+
+          pop = fixture.build_population(2)
+          Path("synthetic-population-v23-result.json").write_bytes(pop["v23_raw"])
+          Path("synthetic-population-v23-result.sha256").write_text(pop["v23_sha"])
+          for index, item in enumerate(pop["v12"], start=1):
+              Path(f"synthetic-population-v12-result-{index}.json").write_bytes(item["raw"])
+              Path(f"synthetic-population-v12-result-{index}.sha256").write_text(item["sha"])
+          PY
+      - name: Run official frozen population completeness validator
+        run: |
+          python scripts/songsterr-fresh/reference_blind_structural_audit_population_completeness_v1.py \
+            --capture-manifest-v23-result synthetic-population-v23-result.json \
+            --capture-manifest-v23-result-sha256 "$(cat synthetic-population-v23-result.sha256)" \
+            --v12-result synthetic-population-v12-result-1.json \
+            --v12-result-sha256 "$(cat synthetic-population-v12-result-1.sha256)" \
+            --v12-result synthetic-population-v12-result-2.json \
+            --v12-result-sha256 "$(cat synthetic-population-v12-result-2.sha256)" \
+            --output synthetic-reference-blind-structural-audit-population-completeness-v1-result.json
+      - name: Print frozen result summary
+        run: |
+          python - <<'PY'
+          import hashlib
+          import json
+          from pathlib import Path
+
+          path = Path("synthetic-reference-blind-structural-audit-population-completeness-v1-result.json")
+          result = json.loads(path.read_text(encoding="utf-8"))
+          print("contract", result["contract"])
+          print("contractValid", result["contractValid"])
+          print("admittedBindingCount", result["admittedBindingCount"])
+          print("verifiedV12ResultCount", result["verifiedV12ResultCount"])
+          print("admittedBindingKeys", json.dumps(result["admittedBindingKeys"], sort_keys=True))
+          print("verifiedV12BindingKeys", json.dumps(result["verifiedV12BindingKeys"], sort_keys=True))
+          print("v23ResultSha256", result["captureManifestV23ValidationResultSha256"])
+          print("v23PopulationSha256", result["captureManifestV23AdmittedPopulationSha256"])
+          print("populationIdentityVersion", result["populationIdentityVersion"])
+          print("populationStructuralCompletenessSha256", result["populationStructuralCompletenessSha256"])
+          print("populationStructurallySuitable", result["populationStructurallySuitable"])
+          print("populationStructuralCompletenessEstablished", result["populationStructuralCompletenessEstablished"])
+          print("resultSha256", hashlib.sha256(path.read_bytes()).hexdigest())
+          print(json.dumps({
+              "realCalibrationAuthorized": result["realCalibrationAuthorized"],
+              "realHoldoutCaptureAuthorized": result["realHoldoutCaptureAuthorized"],
+              "basicPitchAuthorized": result["basicPitchAuthorized"],
+              "v6Authorized": result["v6Authorized"],
+              "correctnessAuthorized": result["correctnessAuthorized"],
+              "modelValidationComplete": result["modelValidationComplete"],
+              "customerEligibleEvents": result["customerEligibleEvents"],
+              "mayAdvanceDelivery": result["mayAdvanceDelivery"],
+          }, sort_keys=True))
+          PY
+      - name: Upload canonical population completeness result
+        uses: actions/upload-artifact@v4
+        with:
+          name: songsterr-fresh-reference-blind-structural-audit-population-completeness-v1
+          path: synthetic-reference-blind-structural-audit-population-completeness-v1-result.json
+          if-no-files-found: error
+          retention-days: 30
