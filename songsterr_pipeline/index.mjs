@@ -279,23 +279,31 @@ function shapeTieKey(assignments) {
     .join('|');
 }
 
-export function findPlayableShape(midis, instrumentConfig) {
-  if (!Array.isArray(midis) || midis.length === 0) return null;
-  if (midis.length > instrumentConfig.tuningMidi.length) return null;
+export function findPlayableShapeDetails(midis, instrumentConfig) {
+  if (!Array.isArray(midis) || midis.length === 0) {
+    return { best: null, validShapeCount: 0 };
+  }
+  if (midis.length > instrumentConfig.tuningMidi.length) {
+    return { best: null, validShapeCount: 0 };
+  }
 
   const positionSets = midis.map((midi) => enumeratePlayablePositions(midi, instrumentConfig));
-  if (positionSets.some((positions) => positions.length === 0)) return null;
+  if (positionSets.some((positions) => positions.length === 0)) {
+    return { best: null, validShapeCount: 0 };
+  }
 
   const order = midis
     .map((midi, index) => ({ index, midi, optionCount: positionSets[index].length }))
     .sort((left, right) => left.optionCount - right.optionCount || right.midi - left.midi || left.index - right.index);
 
   let best = null;
+  let validShapeCount = 0;
   const assigned = new Array(midis.length).fill(null);
   const usedStrings = new Set();
 
   function visit(depth) {
     if (depth === order.length) {
+      validShapeCount += 1;
       const candidate = assigned.map((assignment) => ({ ...assignment }));
       const score = shapeScore(candidate, instrumentConfig.role);
       const tieKey = shapeTieKey(candidate);
@@ -317,7 +325,11 @@ export function findPlayableShape(midis, instrumentConfig) {
   }
 
   visit(0);
-  return best;
+  return { best, validShapeCount };
+}
+
+export function findPlayableShape(midis, instrumentConfig) {
+  return findPlayableShapeDetails(midis, instrumentConfig).best;
 }
 
 export function runDeterministicCore({ events, conditioning, onsetToleranceSeconds = 0.01 } = {}) {
@@ -329,10 +341,15 @@ export function runDeterministicCore({ events, conditioning, onsetToleranceSecon
 
   for (const cluster of clusters) {
     const timing = snapOnsetToGrid(cluster.anchorStart, grid);
-    const shape = findPlayableShape(
+    const shapeDetails = findPlayableShapeDetails(
       cluster.events.map((event) => event.midi),
       normalizedConditioning.instrumentConfig,
     );
+    const shape = shapeDetails.best;
+    const physicalShapeResolved = shapeDetails.validShapeCount === 1;
+    const positionSelectionMethod = shapeDetails.validShapeCount === 1
+      ? 'unique-physical-layout'
+      : (shapeDetails.validShapeCount > 1 ? 'heuristic-preferred-layout' : 'unassigned');
 
     cluster.events.forEach((event, clusterEventIndex) => {
       const position = shape?.assignments?.[clusterEventIndex] ?? null;
@@ -351,6 +368,9 @@ export function runDeterministicCore({ events, conditioning, onsetToleranceSecon
         fret: position?.fret ?? null,
         reconstructedMidi: position?.reconstructedMidi ?? null,
         shapeResolved: Boolean(shape),
+        shapeCandidateCount: shapeDetails.validShapeCount,
+        physicalShapeResolved,
+        positionSelectionMethod,
       });
     });
   }
@@ -361,6 +381,9 @@ export function runDeterministicCore({ events, conditioning, onsetToleranceSecon
   let movedOnsetCount = 0;
   let playableAssignedCount = 0;
   let unassignedPlayableCount = 0;
+  let physicalShapeResolvedEventCount = 0;
+  let heuristicPreferredEventCount = 0;
+  let physicallyUnresolvedAssignedEventCount = 0;
 
   for (let index = 0; index < normalizedEvents.length; index += 1) {
     const source = normalizedEvents[index];
@@ -369,6 +392,9 @@ export function runDeterministicCore({ events, conditioning, onsetToleranceSecon
     if (Math.abs(source.start - output.projectedStart) > EPSILON) movedOnsetCount += 1;
     if (output.reconstructedMidi === output.midi) playableAssignedCount += 1;
     else unassignedPlayableCount += 1;
+    if (output.physicalShapeResolved) physicalShapeResolvedEventCount += 1;
+    if (output.positionSelectionMethod === 'heuristic-preferred-layout') heuristicPreferredEventCount += 1;
+    if (output.shapeResolved && !output.physicalShapeResolved) physicallyUnresolvedAssignedEventCount += 1;
   }
 
   return {
@@ -377,6 +403,7 @@ export function runDeterministicCore({ events, conditioning, onsetToleranceSecon
       version: 1,
       referenceBlind: true,
       legacyV143ScorerImported: false,
+      physicalPositionAmbiguityExplicit: true,
     },
     conditioning: normalizedConditioning,
     structureGrid: grid,
@@ -396,6 +423,9 @@ export function runDeterministicCore({ events, conditioning, onsetToleranceSecon
       movedOnsetCount,
       playableAssignedCount,
       unassignedPlayableCount,
+      physicalShapeResolvedEventCount,
+      heuristicPreferredEventCount,
+      physicallyUnresolvedAssignedEventCount,
     },
   };
 }
