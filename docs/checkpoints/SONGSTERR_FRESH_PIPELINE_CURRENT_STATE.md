@@ -1,6 +1,6 @@
 # CURRENT STATE — Songsterr Fresh Pipeline V1
 
-Updated: 2026-09-14 America/Toronto — GFN V2 frozen MIXED; synthetic debleed V1 complete; hardware-marker clock-map V1 preregistration frozen before result execution
+Updated: 2026-09-14 America/Toronto — GFN V2 frozen MIXED; synthetic debleed V1 complete; hardware-marker clock-map V1 complete
 Canonical branch: `songsterr-fresh-pipeline-v1`
 Canonical checkpoint: `docs/checkpoints/SONGSTERR_FRESH_PIPELINE_CURRENT_STATE.md`
 
@@ -81,36 +81,29 @@ Artifact `10376620438`, ZIP SHA `53064b9521177251f7e5bb17f672927d8cf7be173fd4a67
 
 Main finding: exact known-matrix inversion removes synthetic bleed to float64 precision without perturbation; perturbation amplification grows with condition number. Hardest frozen case (paired bleed `0.95`, condition `39.0`, `sigma=0.01`): untreated pooled NRMSE `0.9500526301`, direct `0.1414678382`, fixed ridge `0.1387224500`. Synthetic software evidence only.
 
-## HARDWARE-MARKER CLOCK MAP V1 — PREREGISTRATION FROZEN / IMPLEMENTATION NEXT
+## HARDWARE-MARKER CLOCK MAP V1 — COMPLETE
 
 Preregistration:
 `docs/checkpoints/SONGSTERR_FRESH_SYNTHETIC_HARDWARE_MARKER_CLOCK_MAP_PREREGISTRATION_V1_2026-09-14.md`
 commit `ee861c0ed0c133b824115ffd3f90820d56aad7c8`.
 
-Frozen before any official harness result.
+Implementation commit `1c7e304aab00216f0128f20b6704184f73609943`, blob `9b1992e366a162d92b0c92ce402d11ca815ec5d9`.
+Test commit `a3e6c2c3d0ae17373c1f9a68ee959b7087c57ad4`, blob `39b975f651a8ff2d4a50507d00219e6cd2a345fe`.
+Workflow integration head `9637ef5025f614702534d0ec667c1e114fd8157e`, workflow blob `6df889ce29247b03c9844fd5a81681f9798349f2`.
+Official run `34916421318`, job `104214912711`, SUCCESS; 18/18 contract tests passed first.
+Artifact `10377035271`, size 4,668 bytes, ZIP SHA `3b0f59501fabad7301eb43f6343d0e6c445320eccd02cde178561e6ac8539689`.
+Canonical result JSON SHA `2566b0aad10040189ea1427a9098e864575b36adafd9d529bec2afdd14259e59`.
+Result checkpoint `79293a7632915fc67f5b7ee0ac2242466ec83ea7`.
 
-Purpose: prepare the already-required logger-tick -> audio-interface-time transform using immutable paired hardware markers only. No waveform/audio-content/model alignment is allowed.
+Frozen result summary:
+- `exact_affine`: max truth error `0`, within synthetic 25 ms diagnostic;
+- `positive_100ppm`: max truth error `0.0000010822510834 s`, within;
+- `negative_100ppm`: max truth error `0.0000010822510825 s`, within;
+- `deterministic_marker_jitter_1ms`: max truth error `0.0000432900432898 s`, within;
+- `quadratic_warp_10ms`: max truth error `0.0015833333333344 s`, within;
+- `quadratic_warp_180ms_stress`: max truth error `0.0285000000000011 s`, outside the inherited `0.025 s` synthetic diagnostic bound.
 
-Frozen algorithm:
-- input marker records contain sequential integer `markerId`, strictly increasing nonnegative integer `loggerTick`, strictly increasing nonnegative integer `audioSampleIndex`;
-- require >=4 markers and positive tick/audio spans;
-- convert audio sample indices to seconds using the declared integer sample rate;
-- fit one unweighted centered affine OLS map using **all** markers: `audioSeconds = interceptSeconds + secondsPerLoggerTick*loggerTick`;
-- no weighting, RANSAC, trimming, marker dropping, robust regression, piecewise fit, spline, or adaptive model selection;
-- fail closed on malformed/duplicate/skipped/nonmonotonic/degenerate evidence;
-- report per-marker residuals, max absolute residual, RMS residual, transform coefficients and provenance SHA;
-- map query ticks using the frozen affine equation only.
-
-Synthetic harness is frozen at 48 kHz with 21 markers (`0..10,000,000` every 500,000 ticks), 41 evaluation ticks every 250,000 ticks, deterministic half-away-from-zero sample-index generation, and six preregistered cases: exact affine, +100 ppm, -100 ppm, fixed <=1 ms marker jitter, 10 ms quadratic warp, and 180 ms quadratic stress warp.
-
-Synthetic truth diagnostics report max/RMS mapping error and whether the synthetic truth error is within the already-frozen `0.025 s` structural bound. This boolean is synthetic-only; **no real-hardware drift/jitter/dropout acquisition-QA threshold is created here**.
-
-Next mandatory order:
-1. implement the frozen transform/harness exactly;
-2. add synthetic contract tests first;
-3. commit implementation/tests/workflow;
-4. CI compile + tests must pass before official harness result;
-5. freeze a dedicated result checkpoint and update this file.
+Interpretation is strictly synthetic software feasibility: the fixed all-marker affine OLS transform behaves deterministically, reconstructs affine relationships correctly, and visibly fails the synthetic 25 ms diagnostic when clock behavior is sufficiently nonlinear. No real-hardware drift/jitter/dropout threshold was created; no physical calibration/bench/holdout/correctness/customer authority was gained.
 
 ## STILL FORBIDDEN
 
@@ -119,4 +112,7 @@ Guitar-TECHS correctness/repair/rescue; archived V143/Gomyway; GOAT/reference sc
 ## FRESH-CHAT HANDOFF / IMMEDIATE NEXT ACTION
 
 Continue only on `songsterr-fresh-pipeline-v1`; re-fetch live head + this file before mutation.
-Immediate task: implement the already-frozen synthetic hardware-marker clock-map V1 at preregistration commit `ee861c0ed0c133b824115ffd3f90820d56aad7c8`, add contract tests first, then ordinary GitHub CPU CI. Keep all correctness/holdout/customer authorization false. Do not access reserved GFN sources or reopen V143/Gomyway/other closed lines unless explicitly asked.
+
+Immediate task: review the remaining purpose-built pre-capture blockers and select the next already-implied zero-additional-cost software-only contract. Highest-value candidates are calibration-artifact identity/provenance binding and deterministic reference-decoder/configuration identity plumbing. Do not invent physical thresholds from synthetic data, do not begin real calibration/holdout capture, and keep all correctness/holdout/customer authorization false.
+
+Do not access reserved GFN sources or reopen V143/Gomyway/other closed lines unless explicitly asked.
