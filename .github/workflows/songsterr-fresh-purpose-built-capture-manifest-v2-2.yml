@@ -35,6 +35,9 @@ jobs:
           fixture = importlib.util.module_from_spec(spec)
           spec.loader.exec_module(fixture)
           manifest = fixture.valid_manifest()
+          manifest["corpus"]["referenceCalibrationPackage"]["validationResultSha256"] = (
+              "4fd62e62a855031bd3c189253bc04f004d271d53bf2b636c586c15b93e59e98f"
+          )
           Path("synthetic-purpose-built-capture-manifest-v2-2.json").write_text(
               json.dumps(manifest, sort_keys=True, separators=(",", ":")) + "\n",
               encoding="utf-8",
