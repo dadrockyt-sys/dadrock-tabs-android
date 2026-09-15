@@ -45,12 +45,20 @@ The inherited classifier uses onset-synchronous complex spectral prediction devi
 9. Per-proposal mapping is:
    - V6 `onset-birth-corroborated-candidate` -> qualification `corroborated`;
    - V6 `not-onset-birth-corroborated` -> qualification `rejected`;
-   - V6 `insufficient-evidence` -> qualification `insufficient`.
-10. Every model proposal is preserved one-for-one by exact `noteId`, MIDI and start time.
-11. Output declares `candidateConfidenceUsedForDecision:false` and `independentOfBasicPitchCandidateConfidence:true`.
-12. Reference tabs, Songsterr truth, desired MIDI values and physical string/fret labels are not inputs.
-13. Qualification confidence is diagnostic only and does not own the status decision. The inherited V6 classifier status owns the status mapping.
-14. The first validation of this wrapper is synthetic/code-only. No real EGFxSet audio is processed under this checkpoint.
+   - V6 `insufficient-evidence` normally -> qualification `insufficient`;
+   - **specific no-birth exception:** V6 reason `INSUFFICIENT_LOW_ONSET_INNOVATION` -> qualification `rejected`, because reaching that reason already proves the required pre/post context exists and `analysisRms >= 1e-5`, while onset innovation is below the already-frozen `1e-6` floor. For a proposal explicitly claiming a new note birth, adequate audio plus essentially no onset innovation is negative birth evidence rather than an unknown state.
+10. The no-birth exception changes no numeric threshold and applies identically to every MIDI/event. Missing context, low audio support, missing feature bins, NNLS failure, non-finite fit, or other genuinely incomplete evidence remains `insufficient`.
+11. Every model proposal is preserved one-for-one by exact `noteId`, MIDI and start time.
+12. Output declares `candidateConfidenceUsedForDecision:false` and `independentOfBasicPitchCandidateConfidence:true`.
+13. Reference tabs, Songsterr truth, desired MIDI values and physical string/fret labels are not inputs.
+14. Qualification confidence is diagnostic only and does not own the status decision. The inherited V6 classifier result plus the frozen no-birth mapping owns the status.
+15. The first validation of this wrapper is synthetic/code-only. No real EGFxSet audio is processed under this checkpoint.
+
+## Why `LOW_ONSET_INNOVATION` is resolved negative evidence
+
+The qualifier's question is not "is there enough evidence to estimate a pitch from scratch?" It is narrower: "does this already-proposed MIDI correspond to a new note birth at this time?" The V6 DSP only emits `INSUFFICIENT_LOW_ONSET_INNOVATION` after successfully obtaining finite full pre/post frames and passing the minimum-audio-RMS gate. Under that narrower qualification question, an innovation norm below the frozen minimum is direct evidence that no new spectral birth was detected. Treating it as unresolved would allow sustained-harmonic model proposals to block an otherwise resolved transcription indefinitely.
+
+This semantic mapping is frozen before any real-audio execution and is not conditioned on a MIDI value, model confidence, expected answer, reference tab, or string/fret label.
 
 ## Boundaries
 
