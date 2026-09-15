@@ -1,6 +1,6 @@
 # CURRENT STATE — Songsterr Fresh Pipeline V1
 
-Updated: 2026-09-14 America/Toronto — software-only budget boundary active; train-only real-audio physical-position feasibility signal observed
+Updated: 2026-09-14 America/Toronto — fresh-chat next work order frozen after train-only real-audio physical-position feasibility signal
 Canonical branch: `songsterr-fresh-pipeline-v1`
 Canonical checkpoint: `docs/checkpoints/SONGSTERR_FRESH_PIPELINE_CURRENT_STATE.md`
 
@@ -198,16 +198,17 @@ This proves only software-contract behavior. It is not evidence that real physic
 
 ## NEXT ALLOWED ACTION — START HERE IN A FRESH CHAT
 
-1. Verify branch + this canonical checkpoint before any mutation.
-2. Honor the software-only budget boundary; do not shop, purchase, hire, contact paid vendors/performers, or plan paid capture unless the user changes the constraint.
-3. The highest-value immediate $0 research line is now **continued train-only Guitar Fretboard Notes session-invariance work**. Any V2 method must be preregistered before observing its new results and must continue to use only the already-exposed train sources `ele`, `eqm`, `eqm2`.
-4. Keep `deb` and `ele_natural` completely untouched. They are valuable reserved external sources; do not use them for tuning, feature selection, normalization choices, debugging, threshold sweeps, or exploratory listening.
-5. Sensible train-only V2 targets include deterministic session normalization and more invariant harmonic/envelope descriptors. Do not use a large learned model merely to inflate the train result; the point is to understand whether the physical-position signal generalizes.
-6. A useful secondary $0 line is a deterministic synthetic crosstalk/debleed harness for already-separated per-string channels. It must not be presented as creating authoritative six-string truth from ordinary mono/stereo audio.
-7. Do not redesign the frozen V6/correctness gates because of this feasibility result. The purpose-built structural/capture/hardware contracts remain prospective authority for eventual real validation.
-8. For any eventual real admitted holdout population, structural audit must precede correctness. Any nonzero blocker makes the population structurally unsuitable; do not rescue it from evaluated audio.
-9. Exactly one official correctness run remains the eventual maximum after all rights, reference, calibration, structural, population-binding and governance gates pass. No tuning/rerun after correctness exposure.
-10. Keep all closed lines closed unless the user separately and explicitly reopens them.
+1. **Verify live branch + checkpoint first.** Re-fetch `songsterr-fresh-pipeline-v1` head and reread this file before mutation. Do not assume the head from a prior chat is still current.
+2. **Freeze a train-only V2 preregistration before any new result is observed.** The next primary experiment should target session invariance for same-pitch physical-position discrimination using only already-exposed train sources `ele`, `eqm`, `eqm2`. The preregistration must specify the exact feature/normalization transformations, matching rule, metrics, and interpretation boundary before execution.
+3. **Prefer small deterministic session-invariance changes, not a large learned model.** Good V2 candidates are source/session-level spectral-envelope normalization, robust per-harmonic normalization, log-spectral slope/relative harmonic-shape descriptors, attack/decay ratios, and deterministic per-source centering/scaling. Keep the exact labeled MIDI conditioning so the experiment remains about physical position rather than pitch recognition.
+4. **Use train-only cross-session structure to avoid self-comparison.** The core comparison should remain cross-session (`eqm` <-> `eqm2`), with `ele` usable only as an already-exposed train diagnostic/domain-stress source. Do not redefine success after observing results.
+5. **Keep `deb` and `ele_natural` completely untouched.** Do not load, stream, download, decode, inspect, feature-extract, listen to, score, debug against, tune on, or use either source for normalization/threshold/feature/model choices. They remain valuable reserved external sources for a later separately frozen decision.
+6. **Implement V2 with synthetic contract tests first, then ordinary GitHub CPU CI.** Required tests should enforce train-only source access, pinned dataset revision, deterministic feature bytes/results, fail-closed metadata/integrity gates, exact same-MIDI candidate restriction, and all downstream authorization remaining false.
+7. **Record the V2 train-only result in a dedicated checkpoint and update this canonical file.** Interpret it only as NON_HOLDOUT feasibility. Improvement or failure must not authorize Basic Pitch, V6, correctness, customer delivery, or access to the reserved sources.
+8. **Secondary $0 line after V2:** build a deterministic synthetic six-channel crosstalk/debleed harness for already-separated per-string channels. Inject controlled bleed matrices, recover with frozen linear/regularized unmixing, quantify reconstruction error versus bleed level/conditioning, and preserve untouched raw synthetic channels. Do not claim this creates authoritative six-string truth from ordinary mono/stereo audio.
+9. **Do not redesign the frozen V6/correctness gates because of feasibility results.** The purpose-built structural/capture/hardware contracts remain the prospective authority for eventual real validation.
+10. **For any eventual real admitted holdout population, structural audit must precede correctness.** Any nonzero blocker makes the population structurally unsuitable; do not rescue it from evaluated audio. Exactly one official correctness run remains the eventual maximum after rights, reference, calibration, structural, population-binding and governance gates pass. No tuning/rerun after correctness exposure.
+11. **Keep all closed lines closed unless explicitly reopened by the user.** Do not resume archived V143/Gomyway, GOAT/reference scoring, Guitar-TECHS rescue, GuitarSet/V3, IDMT/V4, V5/FLGD, duration research, or protected-song execution.
 
 ## STILL FORBIDDEN
 
@@ -215,9 +216,9 @@ Guitar-TECHS correctness/repair/rescue; archived V143/Gomyway; GOAT/reference sc
 
 ## FRESH-CHAT HANDOFF
 
-Continue only on `songsterr-fresh-pipeline-v1` and begin by rereading this file. Guitar-TECHS remains closed outcome C before correctness; V6 method/scoring remain frozen; no replacement-holdout correctness has been exposed.
+Continue only on `songsterr-fresh-pipeline-v1` and begin by rereading this file. The immediate task is **not** to touch holdout/correctness or the reserved Guitar Fretboard Notes sources. Start by freezing a train-only V2 session-invariance preregistration, then implement it with synthetic contract tests and ordinary GitHub CPU CI using only `ele`, `eqm`, and `eqm2`.
 
-New $0 evidence: Guitar Fretboard Notes train-only V1 was preregistered before audio access at commit `ff62869274bd509802f5c4b3e565422eb23741f3`; implementation/workflow head `7ab93ec73848b9f0fee366cbf19f1dc13b39930f`; GitHub CPU run `34914789254`, job `104209961023`, SUCCESS; result checkpoint `535e6861bb9895f5c38161ec7877a6534cf6fa4e`. Pooled same-pitch exact physical-position accuracy was `53.68%` versus `39.71%` chance (`+13.97 pp`), with strong session asymmetry (`60.29%` one direction, `47.06%` reverse). Treat this only as NON_HOLDOUT feasibility evidence. Reserved `deb` and `ele_natural` remain untouched.
+Current $0 evidence: Guitar Fretboard Notes train-only V1 was preregistered before audio access at commit `ff62869274bd509802f5c4b3e565422eb23741f3`; implementation/workflow head `7ab93ec73848b9f0fee366cbf19f1dc13b39930f`; GitHub CPU run `34914789254`, job `104209961023`, SUCCESS; result checkpoint `535e6861bb9895f5c38161ec7877a6534cf6fa4e`. Pooled same-pitch exact physical-position accuracy was `53.68%` versus `39.71%` chance (`+13.97 pp`), with strong session asymmetry (`60.29%` one direction, `47.06%` reverse). Treat this only as NON_HOLDOUT feasibility evidence. Reserved `deb` and `ele_natural` remain untouched.
 
 Purpose-built software gates remain: capture-manifest V2.1 CPU PASS run `34908936464`; structural-audit V1 synthetic CPU PASS run `34912172056`; Stage-0 contact replay synthetic CPU PASS run `34913326360`. The physical route remains hardware-paused by budget.
 
