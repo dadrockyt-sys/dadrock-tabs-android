@@ -179,6 +179,28 @@ Fresh-chat handoff saved at the user's request on 2026-09-15. Start here and do 
 
 Perform steps 1–4 only: verify the live branch/checkpoint and audit workflow trigger isolation. Then create/freeze the V3 synthetic PRE described above before writing or executing V3 research code.
 
+## V3 SYNTHETIC RESEARCH — VERIFIED WORKFLOW ISOLATION / READ-ONLY TEMPLATE AUDIT
+
+Verified 2026-09-15 before any V3 implementation or execution.
+
+- Live branch audited: `songsterr-fresh-pipeline-v1`, head `5831ea4e9fb6066d2d5184148f180e7b7beaafe1`, tree `a68dc2692dd9a75908fade10f410444c21157633`.
+- Authoritative `.github/workflows` tree: `fc9fcc316e0173342e6dbf2b73d891bbc0e26a2b`; it contains 61 exact `songsterr-fresh-*.yml` workflow filenames.
+- The automatic-trigger scan identified 30 fresh workflows with automatic events relevant to branch commits. Every detected `push` trigger was path-filtered. `songsterr-fresh-decoder-trace-followup.yml` additionally has a `workflow_run` trigger tied to successful completion of `Songsterr Fresh Model Evidence Cross-Run Measurement Canary`; the upstream measurement canary is itself path-scoped to its enumerated evidence files.
+- No audited automatic workflow uses a catch-all `scripts/songsterr-fresh/**` path. The only broad research wildcard observed in the audited automatic set was `songsterr_pipeline/**`, which is outside the intended V3 research boundary.
+- `songsterr-fresh-independent-pitch-support-structure-trigger.yml` is path-scoped to its own workflow plus `analyze_full_mixture_structure.py` and `build_structure_map.mjs`; the planned V3 files cannot trigger its downstream dispatch.
+- The current checkpoint filename is referenced inside `songsterr-fresh-decoder-trace-followup.yml` and `songsterr-fresh-record-policy-b-research-once.yml`, but neither workflow watches the checkpoint path on `push`; each push filter is scoped to its own workflow YAML. A documentation-only checkpoint/PRE commit therefore does not satisfy those push filters.
+- Proposed isolated V3 paths are frozen for the PRE boundary as `scripts/songsterr-fresh/physical_template_plausibility_v3.py`, `scripts/songsterr-fresh/test_physical_template_plausibility_v3.py`, and `docs/checkpoints/SONGSTERR_FRESH_V3_PHYSICAL_TEMPLATE_SYNTHETIC_PRE.md`. None matches the audited automatic workflow path filters.
+- No workflow, Basic Pitch job, V6 correctness job, real-media job, heavy-compute job, model inference, candidate payload access, or protected-song execution was performed during this audit. Archived V143/Gomyway was not resumed or modified.
+
+Read-only V2/V6 lineage review:
+
+- `scripts/songsterr-fresh/qualify_basic_pitch_note_births_v2.py` leaves normal in-clip classification on frozen V6 unchanged and only routes clip-start proposals lacking genuine left context to the separate one-sided clip-start pitch-presence classifier. V3 must not alter that boundary semantic as part of this research line.
+- In frozen `scripts/songsterr-fresh/onset_birth_corroboration_v6.py`, `_candidate_template()` selects the candidate fundamental bin within the MIDI cell, constructs up to six local harmonic supports weighted `1/h`, and rejects the candidate before NNLS when selected fundamental support is less than `0.20` of the strongest observed harmonic.
+- Candidates surviving that physical-template gate enter the shared NNLS dictionary; the separate leave-one-out necessity protection remains `necessityFraction >= 0.01`. V3 research targets the physical-template plausibility stage only; it must preserve the NNLS necessity protection rather than weakening it.
+- Frozen V6 synthetic fixtures already exercise ordinary/detuned notes, octave/harmonic aliases, neighbor mismatch, continuing-plus-new notes, dyad/triad polyphony, unrelated transient/noise, a weak selected note under a stronger owner, silence/low-noise, and pre/post-context fail-closed cases. These protections are inputs to the prospective V3 gates, not post-result tuning targets.
+
+Next authorized action: create and freeze `docs/checkpoints/SONGSTERR_FRESH_V3_PHYSICAL_TEMPLATE_SYNTHETIC_PRE.md` prospectively. Do not create or execute V3 research code until that PRE commit exists.
+
 ## AUTHORITATIVE ROUTE
 
 The software-lineage no-gap conclusion remains unchanged. Official correctness still requires the frozen physical calibrated route, currently budget-paused. Do not manufacture another synthetic software-lineage gate.
