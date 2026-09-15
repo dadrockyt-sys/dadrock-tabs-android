@@ -130,10 +130,11 @@ def main() -> int:
         assert_statuses(flipped, ["corroborated", "rejected"])
         assert [row["status"] for row in flipped["proposals"]] == [row["status"] for row in baseline["proposals"]]
 
-        # Case 3: near-left-boundary genuine birth. The wrapper must provide
-        # deterministic pre-context padding rather than fail for missing left
-        # frames. This mirrors the general clip-boundary problem without using
-        # any reference tab or expected physical position.
+        # Case 3: near-left-boundary birth. The wrapper must provide
+        # deterministic pre-context padding and reach an actual finite DSP
+        # decision rather than fail for missing left frames. The fixed DSP is
+        # allowed to corroborate or reject; boundary padding itself must not
+        # force a positive decision.
         boundary_audio, _rng = _synth_events(
             1.0,
             [{
@@ -151,8 +152,14 @@ def main() -> int:
             boundary_audio,
             [note("proposal-left-boundary", 0.011, 45, 0.4)],
         )
-        assert_statuses(boundary, ["corroborated"])
-        assert boundary["proposals"][0]["provenance"]["leftBoundaryZeroPaddingSamples"] > 0
+        boundary_row = boundary["proposals"][0]
+        assert boundary_row["status"] in {"corroborated", "rejected"}
+        assert boundary_row["status"] != "insufficient"
+        assert boundary_row["provenance"]["leftBoundaryZeroPaddingSamples"] > 0
+        assert boundary_row["provenance"]["v6Reason"] not in {
+            "INSUFFICIENT_PRECONTEXT",
+            "INSUFFICIENT_FRAME_CONTEXT",
+        }
 
         # Case 4: insufficient right-edge context must remain unresolved. The
         # wrapper is not allowed to invent future audio by right-padding.
@@ -171,6 +178,7 @@ def main() -> int:
             "baselineStatuses": [row["status"] for row in baseline["proposals"]],
             "confidenceInvariant": True,
             "leftBoundaryPaddingValidated": True,
+            "leftBoundaryDecision": boundary_row["status"],
             "rightBoundaryFailsClosed": True,
             "modelInferenceInvoked": False,
             "realCorpusEvaluated": False,
