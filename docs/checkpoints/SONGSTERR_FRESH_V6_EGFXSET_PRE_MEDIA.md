@@ -2,12 +2,12 @@
 
 Date: 2026-09-15 America/Toronto
 Branch: `songsterr-fresh-pipeline-v1`
-Status: `BLOCKED_AUTHORIZATION_PRE_MEDIA`
+Status: `AUTHORIZED_PENDING_EXECUTION`
 Media delta: `0`
 
 ## Scope
 
-This checkpoint records metadata-only research for the optional $0 one-file external audio smoke test authorized by `SONGSTERR_FRESH_PIPELINE_CURRENT_STATE.md`. It is not V6 correctness validation, does not authorize Basic Pitch/V6/correctness, and does not replace the budget-paused physical holdout.
+This checkpoint records metadata-only research for the optional $0 one-file external audio smoke test authorized by `SONGSTERR_FRESH_PIPELINE_CURRENT_STATE.md`. It is not V6 correctness validation, does not authorize Basic Pitch/V6/correctness globally, and does not replace the budget-paused physical holdout.
 
 Archived V143/Gomyway, Guitar-TECHS, GuitarSet/V3, IDMT/V4, V5/FLGD, and reserved Guitar Fretboard Notes `deb` / `ele_natural` remain untouched and closed.
 
@@ -29,7 +29,7 @@ Zenodo exposes `Clean.zip` with MD5 `cdb1b401960f56becc8640387910e78a`. Its serv
 - expected MIDI: `40` (E2)
 - preview-reported member size: about `723.0 kB`
 
-The ISMIR 2022 EGFxSet publication is licensed CC BY 4.0; the project describes the dataset as open access. No audio bytes were downloaded, decoded, listened to, or processed during this review.
+The ISMIR 2022 EGFxSet publication is licensed CC BY 4.0; the project describes the dataset as open access. No audio bytes were downloaded, decoded, listened to, or processed during the pre-authorization review.
 
 ## Plausibly untouched check
 
@@ -48,7 +48,7 @@ The deterministic fresh core is model-free and maps MIDI to playable string/fret
 
 ## Frozen one-file smoke-test procedure
 
-This procedure is now fully frozen prospectively but **must not be executed under the current authorization state**.
+This procedure is fully frozen prospectively.
 
 1. Candidate identity is fixed to Zenodo version 1.0 `Clean.zip`, archive MD5 `cdb1b401960f56becc8640387910e78a`, member `Clean/Bridge/6-0.wav`.
 2. Independent expected label is fixed to string `6`, fret `0`, MIDI `40` under standard EADGBE tuning.
@@ -62,18 +62,21 @@ This procedure is now fully frozen prospectively but **must not be executed unde
 
 No scoring choice remains to be made after observing candidate output.
 
-## Authorization blocker
+## Scoped one-run authorization — GRANTED
 
-The live current-state checkpoint remains:
+On 2026-09-15 America/Toronto, immediately after being presented with the exact required permission for the frozen EGFxSet candidate, the user replied: `I authorize one set 💪💚`.
+
+This is recorded as authorization for **exactly one non-authorizing Basic Pitch smoke run** on `Clean/Bridge/6-0.wav` under the already frozen candidate, defaults, deterministic mapping, and scoring rule above.
+
+This scoped authorization does **not** change the global current-state fields, which remain:
 
 - `basicPitchAuthorized:false`
 - `v6Authorized:false`
 - `correctnessAuthorized:false`
+- `modelValidationComplete:false`
+- `customerEligibleEvents:0`
+- `mayAdvanceDelivery:false`
 
-The required transcription entry directly invokes Basic Pitch. Under the checkpoint rule, execution must therefore stop before media access or inference and document the required explicit authorization rather than silently run it.
+It does not authorize tuning, retries, alternate candidates, candidate shopping, official V6 correctness scoring, physical holdout substitution, customer eligibility, delivery, or reopening any closed/reserved data line. Exactly one Basic Pitch inference invocation is permitted for this frozen smoke test.
 
-Required permission, if the user chooses to grant it later:
-
-> Authorize exactly one non-authorizing Basic Pitch smoke run on the frozen EGFxSet candidate `Clean/Bridge/6-0.wav`, using the existing frozen defaults and deterministic mapper, solely for diagnostic external smoke evidence. This does not authorize V6 correctness, model validation, customer eligibility, delivery, tuning, retries, alternate candidates, or any closed/reserved dataset line.
-
-Until that permission exists, status remains `BLOCKED_AUTHORIZATION_PRE_MEDIA` and `MEDIA_DELTA=0`.
+Status is now `AUTHORIZED_PENDING_EXECUTION`; `MEDIA_DELTA=0` until the frozen candidate is accessed for the authorized run.
