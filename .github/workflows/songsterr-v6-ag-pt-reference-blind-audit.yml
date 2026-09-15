@@ -1,0 +1,171 @@
+name: Songsterr V6 AG-PT-set reference-blind audit
+
+on:
+  workflow_dispatch:
+  push:
+    branches: [songsterr-fresh-pipeline-v1]
+    paths:
+      - '.github/workflows/songsterr-v6-ag-pt-reference-blind-audit.yml'
+
+permissions:
+  contents: read
+
+jobs:
+  audit:
+    runs-on: ubuntu-latest
+    timeout-minutes: 360
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: songsterr-fresh-pipeline-v1
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.10'
+      - name: Verify frozen PRE exists
+        run: |
+          test -f docs/checkpoints/SONGSTERR_FRESH_V6_AG_PT_SET_REFERENCE_BLIND_AUDIT_PRE.md
+          grep -F 'FROZEN BEFORE AG-PT-set MEDIA/ANNOTATION ACCESS' docs/checkpoints/SONGSTERR_FRESH_V6_AG_PT_SET_REFERENCE_BLIND_AUDIT_PRE.md
+      - name: Reference-blind archive inventory
+        env:
+          URL: https://zenodo.org/records/10159492/files/aGPTset_z.zip?download=1
+          EXPECTED_MD5: 1dff8103f9ad6e1a86cee2e5e39cbe87
+        run: |
+          python - <<'PY'
+          import csv, hashlib, io, json, math, os, pathlib, struct, urllib.request, zipfile
+
+          out = pathlib.Path('audit-out'); out.mkdir()
+          archive = pathlib.Path('/tmp/aGPTset_z.zip')
+          url=os.environ['URL']; expected=os.environ['EXPECTED_MD5']
+          md5=hashlib.md5(); sha=hashlib.sha256(); size=0
+          req=urllib.request.Request(url, headers={'User-Agent':'Songsterr-V6-reference-blind-audit/1.0'})
+          with urllib.request.urlopen(req, timeout=120) as r, archive.open('wb') as f:
+              while True:
+                  b=r.read(8*1024*1024)
+                  if not b: break
+                  f.write(b); md5.update(b); sha.update(b); size += len(b)
+          if md5.hexdigest()!=expected:
+              raise SystemExit(f'archive MD5 mismatch {md5.hexdigest()} != {expected}')
+
+          def wav_header(zf, name):
+              with zf.open(name) as fh: b=fh.read(131072)
+              if len(b)<12 or b[:4] not in (b'RIFF',b'RF64') or b[8:12]!=b'WAVE': return {'valid':False}
+              pos=12; fmt=None; data_size=None
+              while pos+8<=len(b):
+                  cid=b[pos:pos+4]; n=struct.unpack_from('<I',b,pos+4)[0]; pos+=8
+                  if cid==b'fmt ' and pos+16<=len(b):
+                      af,ch,sr,br,ba,bps=struct.unpack_from('<HHIIHH',b,pos); fmt=(af,ch,sr,br,ba,bps)
+                  if cid==b'data': data_size=n; break
+                  pos += n + (n&1)
+              if not fmt or data_size is None: return {'valid':False}
+              af,ch,sr,br,ba,bps=fmt
+              frames=data_size//ba if ba else None
+              return {'valid':True,'audioFormat':af,'channels':ch,'sampleRate':sr,'bitsPerSample':bps,'frames':frames,'durationSeconds':frames/sr if frames is not None and sr else None}
+
+          with zipfile.ZipFile(archive) as z:
+              names=z.namelist()
+              csvs=[n for n in names if n.lower().endswith('note_labels.csv')]
+              if len(csvs)!=1:
+                  raise SystemExit(f'expected exactly one note_labels.csv, found {csvs}')
+              ann=csvs[0]; ann_bytes=z.read(ann); ann_sha=hashlib.sha256(ann_bytes).hexdigest()
+              text=io.TextIOWrapper(io.BytesIO(ann_bytes), encoding='utf-8-sig', newline='')
+              rows=list(csv.DictReader(text)); fields=list(rows[0].keys()) if rows else []
+              def field(*opts):
+                  lower={k.lower():k for k in fields}
+                  for x in opts:
+                      if x.lower() in lower:return lower[x.lower()]
+                  return None
+              f_audio=field('audio_file_path','audio_path','file_path')
+              f_sec=field('onset_label_seconds','onset_seconds','onset')
+              f_samp=field('onset_label_samples','onset_samples')
+              f_pitch=field('pitch_midi','midi_pitch','midi')
+              f_string=field('string_number','string')
+              f_tech=field('playing_technique','technique')
+              f_player=field('player','player_id','performer')
+              f_guitar=field('guitar','guitar_id','instrument')
+              required=[f_audio,f_pitch,f_string]
+              if any(x is None for x in required) or (f_sec is None and f_samp is None):
+                  raise SystemExit(f'published-schema fields not found; fields={fields}')
+
+              percussive={'kick','snare-a','snare-b','tom','kick technique','snare-a technique','snare-b technique','tom technique'}
+              admitted=[]; anomalies=[]
+              for i,r in enumerate(rows, start=2):
+                  tech=(r.get(f_tech,'') or '').strip().lower() if f_tech else ''
+                  if tech in percussive: continue
+                  try:
+                      pitch=float(r[f_pitch]); string=float(r[f_string])
+                      sec=float(r[f_sec]) if f_sec and r.get(f_sec,'')!='' else None
+                      samp=float(r[f_samp]) if f_samp and r.get(f_samp,'')!='' else None
+                  except Exception:
+                      continue
+                  if not (math.isfinite(pitch) and pitch.is_integer() and math.isfinite(string) and string.is_integer()): continue
+                  if sec is not None and not math.isfinite(sec): continue
+                  if samp is not None and not math.isfinite(samp): continue
+                  ap=(r[f_audio] or '').replace('\\','/').lstrip('./')
+                  if not ap: continue
+                  admitted.append({'row':i,'audio':ap,'onsetSeconds':sec,'onsetSamples':samp,'pitchMidi':int(pitch),'stringNumber':int(string),'technique':r.get(f_tech) if f_tech else None,'player':r.get(f_player) if f_player else None,'guitar':r.get(f_guitar) if f_guitar else None})
+
+              wav_names=[n for n in names if n.lower().endswith('.wav')]
+              by_suffix={n.replace('\\','/').lstrip('./'):n for n in wav_names}
+              def resolve(ap):
+                  if ap in by_suffix:return by_suffix[ap]
+                  hits=[n for n in wav_names if n.endswith('/'+ap) or n.endswith(ap)]
+                  return hits[0] if len(hits)==1 else None
+              referenced={}
+              for e in admitted:
+                  rn=resolve(e['audio']); e['zipAudio']=rn
+                  if rn is None: anomalies.append({'row':e['row'],'type':'missing_or_ambiguous_audio','audio':e['audio']})
+                  else: referenced[rn]=None
+
+              wav_meta={}; audio_manifest=[]
+              for idx,name in enumerate(sorted(referenced)):
+                  h=wav_header(z,name); hh=hashlib.sha256()
+                  with z.open(name) as fh:
+                      while True:
+                          b=fh.read(4*1024*1024)
+                          if not b: break
+                          hh.update(b)
+                  h['sha256']=hh.hexdigest(); h['zipMember']=name; wav_meta[name]=h
+                  audio_manifest.append({'path':name,'sha256':h['sha256'],'sampleRate':h.get('sampleRate'),'channels':h.get('channels'),'frames':h.get('frames')})
+
+              for e in admitted:
+                  n=e['zipAudio']; h=wav_meta.get(n)
+                  if not h or not h.get('valid'): continue
+                  sr=h['sampleRate']; dur=h['durationSeconds']
+                  if e['onsetSeconds'] is None and e['onsetSamples'] is not None: e['onsetSeconds']=e['onsetSamples']/sr
+                  if e['onsetSamples'] is None and e['onsetSeconds'] is not None: e['onsetSamples']=round(e['onsetSeconds']*sr)
+                  if e['onsetSeconds'] is not None and e['onsetSamples'] is not None:
+                      delta=abs(e['onsetSamples']/sr-e['onsetSeconds'])
+                      if delta > max(1.0/sr,1e-6): anomalies.append({'row':e['row'],'type':'sample_second_mismatch','deltaSeconds':delta})
+                  if e['onsetSeconds'] is None or e['onsetSeconds']<0 or e['onsetSeconds']>dur:
+                      anomalies.append({'row':e['row'],'type':'onset_out_of_range','onsetSeconds':e['onsetSeconds'],'durationSeconds':dur})
+
+              pop=[{'audio':n,'sha256':wav_meta[n]['sha256']} for n in sorted(referenced)]
+              refs=sorted(admitted,key=lambda x:(x.get('zipAudio') or '',x['onsetSeconds'] if x['onsetSeconds'] is not None else -1,x['pitchMidi'],x['row']))
+              def jsha(x):return hashlib.sha256(json.dumps(x,sort_keys=True,separators=(',',':')).encode()).hexdigest()
+              fatal=[a for a in anomalies if a['type'] in ('missing_or_ambiguous_audio','sample_second_mismatch','onset_out_of_range')]
+              decision='A' if not fatal else 'C'
+              reason='released timing/source identities are internally consistent; no correction required' if decision=='A' else 'structural timing/source anomaly requires fail-closed rejection'
+              result={'candidate':'AG-PT-set v1','referenceBlind':True,'basicPitchRuns':0,'v6Runs':0,'archive':{'sizeBytes':size,'md5':md5.hexdigest(),'sha256':sha.hexdigest()},'annotation':{'path':ann,'sha256':ann_sha,'fields':fields,'rowCount':len(rows)},'admittedReferenceEvents':len(admitted),'admittedWavs':len(referenced),'wavStructure':{'sampleRates':sorted(set(h.get('sampleRate') for h in wav_meta.values())),'channels':sorted(set(h.get('channels') for h in wav_meta.values())),'invalidCount':sum(not h.get('valid') for h in wav_meta.values())},'anomalyCount':len(anomalies),'fatalAnomalyCount':len(fatal),'populationManifestSha256':jsha(pop),'referenceEventManifestSha256':jsha(refs),'audioIdentityManifestSha256':jsha(audio_manifest),'alignmentDecision':decision,'alignmentReason':reason}
+              result['alignmentDecisionManifestSha256']=jsha({'decision':decision,'reason':reason,'fatal':fatal})
+              json.dump(result,open(out/'result.json','w'),indent=2,sort_keys=True)
+              json.dump(pop,open(out/'population.json','w'),indent=2,sort_keys=True)
+              json.dump(refs,open(out/'reference-events.json','w'),indent=2,sort_keys=True)
+              json.dump(audio_manifest,open(out/'audio-identities.json','w'),indent=2,sort_keys=True)
+              json.dump(anomalies,open(out/'anomalies.json','w'),indent=2,sort_keys=True)
+              print(json.dumps(result,indent=2,sort_keys=True))
+          PY
+      - name: Verify no correctness exposure
+        run: |
+          python - <<'PY'
+          import json
+          r=json.load(open('audit-out/result.json'))
+          assert r['referenceBlind'] is True
+          assert r['basicPitchRuns']==0 and r['v6Runs']==0
+          assert r['alignmentDecision'] in ('A','B','C')
+          PY
+      - uses: actions/upload-artifact@v4
+        with:
+          name: ag-pt-set-v6-reference-blind-audit
+          path: audit-out/
+          if-no-files-found: error
+          retention-days: 90
