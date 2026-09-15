@@ -26,6 +26,7 @@ export function summarizeNoteEvidence(adapted = {}) {
     unambiguous: 0,
     ambiguous: 0,
     'no-candidate': 0,
+    rejected: 0,
   };
   const candidateCountHistogram = {};
   const topSecondIntervalHistogram = {};
@@ -34,6 +35,7 @@ export function summarizeNoteEvidence(adapted = {}) {
   let harmonicRelationAmbiguousCount = 0;
   let octaveRelationAmbiguousCount = 0;
   let closeIntervalAmbiguousCount = 0;
+  let rejectedCandidateCount = 0;
 
   for (const onset of onsets) {
     if (classificationCounts[onset?.classification] !== undefined) {
@@ -41,6 +43,10 @@ export function summarizeNoteEvidence(adapted = {}) {
     }
     const candidates = Array.isArray(onset?.candidates) ? onset.candidates : [];
     increment(candidateCountHistogram, String(candidates.length));
+
+    if (onset?.classification === 'rejected') {
+      rejectedCandidateCount += candidates.length;
+    }
 
     if (onset?.classification !== 'ambiguous') continue;
     if (candidates.length <= 1) {
@@ -67,13 +73,14 @@ export function summarizeNoteEvidence(adapted = {}) {
   return {
     contract: {
       name: 'songsterr-fresh-note-evidence-diagnostics',
-      version: 2,
+      version: 3,
       descriptiveOnly: true,
       ownsAcceptanceDecision: false,
       compositeScoreDefined: false,
       compositeScore: null,
       referenceBlind: adapted?.adapterContract?.referenceBlind === true,
       structureIdentityVerified: adapted?.adapterContract?.structureIdentityVerified === true,
+      explicitRejectedProposalState: true,
       legacyV143ScorerImported: false,
     },
     counts: {
@@ -82,6 +89,8 @@ export function summarizeNoteEvidence(adapted = {}) {
       promotedWithDurationCount,
       promotedMissingDurationCount,
       unresolvedPitchEvidenceCount,
+      rejectedProposalCount: classificationCounts.rejected,
+      rejectedCandidateCount,
       classificationCounts,
       singleCandidateAmbiguousCount,
       competingCandidateAmbiguousCount,
