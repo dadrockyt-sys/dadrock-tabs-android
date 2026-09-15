@@ -1,6 +1,6 @@
 # CURRENT STATE — Songsterr Fresh Pipeline V1
 
-Updated: 2026-09-15 America/Toronto — purpose-built software lineage complete; optional $0 EGFxSet one-file smoke candidate identified metadata-only; execution blocked before media by Basic Pitch authorization boundary
+Updated: 2026-09-15 America/Toronto — purpose-built software lineage complete; optional $0 EGFxSet one-file smoke candidate and scoring frozen metadata-only; execution blocked before media by Basic Pitch authorization boundary
 Canonical branch: `songsterr-fresh-pipeline-v1`
 Canonical checkpoint: `docs/checkpoints/SONGSTERR_FRESH_PIPELINE_CURRENT_STATE.md`
 
@@ -144,7 +144,7 @@ The next necessary route is physical:
 
 Under budget checkpoint `e7f0146d4f01605b642f8aeaa100962254b5ce58`, physical procurement/calibration/capture remains paused and unauthorized.
 
-## OPTIONAL $0 EXTERNAL AUDIO SMOKE TEST — METADATA CANDIDATE FOUND / EXECUTION BLOCKED
+## OPTIONAL $0 EXTERNAL AUDIO SMOKE TEST — METADATA CANDIDATE + SCORING FROZEN / EXECUTION BLOCKED
 
 The user wants to try a **small, clean guitar audio file with an independently published physical fret-position label** as a one-file blind external smoke test.
 
@@ -162,7 +162,7 @@ Fresh-chat sequence:
 
 ### 2026-09-15 EGFxSet metadata-only research log
 
-Dedicated checkpoint: `docs/checkpoints/SONGSTERR_FRESH_V6_EGFXSET_PRE_MEDIA.md`, first committed at `aa1e3f910b9d019b0cecbb7b479e7314306d6e85`.
+Dedicated checkpoint: `docs/checkpoints/SONGSTERR_FRESH_V6_EGFXSET_PRE_MEDIA.md`, first committed at `aa1e3f910b9d019b0cecbb7b479e7314306d6e85`; scoring freeze refined at `f7ed423141407459660818b3da0f12e92b7e2fb8`.
 
 Current result: `BLOCKED_AUTHORIZATION_PRE_MEDIA`; `MEDIA_DELTA=0`.
 
@@ -176,7 +176,7 @@ Current result: `BLOCKED_AUTHORIZATION_PRE_MEDIA`; `MEDIA_DELTA=0`.
 - Existing `transcribe_isolated_guitar_basic_pitch.py` directly invokes Basic Pitch and emits decoded MIDI note events; it does not itself emit physical string/fret.
 - The unchanged deterministic fresh core uses standard guitar tuning MIDI `[40,45,50,55,59,64]`; MIDI `40` maps uniquely to string `6`, fret `0`, so this candidate avoids physical-position ambiguity if the decoder emits MIDI 40.
 - Missing independent onset truth is not being filled in or fabricated. This optional smoke test is file-level, not official V6 onset-match scoring.
-- The prospective candidate/procedure is frozen in the dedicated checkpoint, but the exact file-level event-selection rule must remain prospective and observation-free before any later execution.
+- Scoring is now fully frozen without event selection: decoded notes must be non-empty and the set of all emitted MIDI values must be exactly `{40}`; repeated MIDI-40 segments are allowed, but any other MIDI or an empty artifact is `FAIL_PITCH`. Every emitted event must map to string `6`, fret `0`, reconstructed MIDI `40` for `PASS_POSITION`. Overall PASS also requires one-shot runtime success. No scoring choice remains after output is seen.
 - **Execution is currently forbidden** because `basicPitchAuthorized:false`. Per the checkpoint rule, stop before media access/inference unless the user explicitly authorizes exactly one non-authorizing Basic Pitch smoke run on this frozen candidate. That permission would not authorize V6/correctness, tuning, retries, alternate candidates, customer eligibility, delivery, or any closed/reserved dataset line.
 
 The authoritative next validation route remains the physical calibrated holdout described above and remains budget-paused.
@@ -185,7 +185,7 @@ The authoritative next validation route remains the physical calibrated holdout 
 
 Re-fetch live branch head + this checkpoint before any mutation.
 
-**Immediate fresh-chat task:** the metadata search succeeded. Do not search for or switch to another candidate. The frozen candidate is EGFxSet `Clean/Bridge/6-0.wav` inside Zenodo version 1.0 `Clean.zip` (MD5 `cdb1b401960f56becc8640387910e78a`), expected string 6 / fret 0 / MIDI 40. No media has been touched. Before any media access or inference, preserve the dedicated pre-media checkpoint and enforce the current authorization blocker.
+**Immediate fresh-chat task:** candidate and scoring are already frozen. Do not search for or switch to another candidate. The frozen candidate is EGFxSet `Clean/Bridge/6-0.wav` inside Zenodo version 1.0 `Clean.zip` (MD5 `cdb1b401960f56becc8640387910e78a`), expected string 6 / fret 0 / MIDI 40. No media has been touched. Before any media access or inference, preserve the dedicated pre-media checkpoint and enforce the current authorization blocker.
 
 The next executable step requires explicit user permission for exactly one **non-authorizing Basic Pitch smoke run** on that frozen candidate under the existing defaults and deterministic mapper. Without that permission, stop with `BLOCKED_AUTHORIZATION_PRE_MEDIA`; do not download/decode/listen/run, do not tune, do not retry, and do not candidate-shop.
 
