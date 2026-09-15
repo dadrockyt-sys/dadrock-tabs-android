@@ -1,0 +1,30 @@
+name: Songsterr Model Note Qualification V1 Tests
+
+on:
+  push:
+    branches:
+      - songsterr-fresh-pipeline-v1
+    paths:
+      - .github/workflows/songsterr-model-note-qualification-v1-tests.yml
+
+permissions:
+  contents: read
+
+jobs:
+  qualification-v1-tests:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - name: Checkout branch
+        uses: actions/checkout@v4
+
+      - name: Set up Node 20
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - name: Verify candidate confidence remains diagnostic-only
+        run: node scripts/songsterr-fresh/test_candidate_confidence_diagnostic_only.mjs
+
+      - name: Verify model note qualification V1
+        run: node scripts/songsterr-fresh/test_model_note_qualification_v1.mjs
