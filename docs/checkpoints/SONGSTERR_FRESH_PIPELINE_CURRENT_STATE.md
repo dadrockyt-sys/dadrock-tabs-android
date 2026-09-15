@@ -1,6 +1,6 @@
 # CURRENT STATE — Songsterr Fresh Pipeline V1
 
-Updated: 2026-09-14 America/Toronto — calibration-package provenance V1 complete; capture-manifest V2.2 calibration-package bridge preregistered before implementation
+Updated: 2026-09-14 America/Toronto — capture-manifest V2.2 calibration-package identity bridge complete; structural-audit provenance-byte bridge review next
 Canonical branch: `songsterr-fresh-pipeline-v1`
 Canonical checkpoint: `docs/checkpoints/SONGSTERR_FRESH_PIPELINE_CURRENT_STATE.md`
 
@@ -113,30 +113,62 @@ Review checkpoint:
 `docs/checkpoints/SONGSTERR_FRESH_CAPTURE_MANIFEST_CALIBRATION_PACKAGE_BRIDGE_REVIEW_V1_2026-09-14.md`
 commit `abfd10ea953e2be313f847f626c405a2f3607dad`.
 
-Finding: a real narrow identity-linkage gap remains. Capture-manifest V2.1 can bind a legacy calibration artifact SHA, hardware configuration SHA, calibration ID and derivation-configuration SHA, while Provenance V1 separately binds the canonical package/decoder/raw/fixture/derived identities. V2.1 has no field requiring admitted references or admitted population identity to cite the canonical `packageBindingSha256`. Thus both contracts can pass while remaining unlinked.
+Finding: V2.1 had no field requiring an admitted reference or admitted population identity to cite the canonical calibration `packageBindingSha256`; a valid capture manifest and valid provenance package could therefore remain unlinked.
 
-Decision: a narrowly scoped prospective capture-manifest V2.2 bridge is required. This is identity plumbing only; it must not change physical thresholds, chronology, retry semantics, acquisition QA, structural blockers, V6/scoring or policy.
+Decision: the narrowly scoped prospective V2.2 identity bridge was required. No physical threshold, chronology, retry semantics, acquisition-QA rule, V6/scoring rule, or policy boundary was changed.
 
-## CAPTURE-MANIFEST V2.2 CALIBRATION-PACKAGE BRIDGE — PREREGISTRATION FROZEN
+## CAPTURE-MANIFEST V2.2 CALIBRATION-PACKAGE BRIDGE — COMPLETE / SYNTHETIC PASS
 
 Preregistration:
 `docs/checkpoints/SONGSTERR_FRESH_PURPOSE_BUILT_CAPTURE_MANIFEST_V2_2_CALIBRATION_PACKAGE_BRIDGE_PREREGISTRATION_2026-09-14.md`
 commit `9596bfc745a5acdbb47b403eb3d39688ceb20ebd`.
 
-Frozen V2.2 essentials:
-- additive wrapper over V2.1; top-level contract `songsterr-fresh-purpose-built-capture-manifest-v2.2`;
-- require `corpus.referenceCalibrationPackage` containing provenance result path/SHA, canonical `packageBindingSha256`, and inline canonical package binding;
-- recompute and verify SHA-256 of canonical inline package binding;
-- cross-check calibration ID, hardware configuration ID/SHA, instrument setup SHA, timing value and firewall declarations against existing capture-manifest declarations;
-- require valid decoder ID/version and decoder code/configuration hashes inside the bound package object, without creating a duplicate standalone decoder contract;
-- every admitted reference must cite `calibrationPackageBindingSha256` equal to the corpus package binding;
-- every admitted reference `derivationConfigurationSha256` must equal the bound package decoder-configuration SHA;
-- augmented admitted-population SHA must include calibration package binding SHA and provenance validation-result SHA;
-- result population identity version `capture-manifest-v2.2-calibration-package-bridge-v1`;
-- tests before official harness; ordinary GitHub CPU only; no network/external data;
-- after V2.2, separately review whether reference-blind structural audit needs a package-result byte-verification bridge; do not assume or implement it before review.
+Accepted implementation after preregistration-conformance correction:
+- implementation commit `e3e3ae05ab0ab4a94a77e6c6e5be2466f618cf46`, blob `ea9635fb9012b2b07783cb4ef35834b0debfcfb1`;
+- tests commit `8feb390fe2bf506c9d5676774b0584eb65b680a6`, blob `1406b07aeacb33c05aa5e03c1cc5aaed1aeb118d`;
+- workflow head `f07b86c2149133714646025aa31e21e0017db17b`, workflow blob `03eea92a66972d5bfa40636a6861bfb600d2c4f9`.
 
-All downstream authorization remains closed.
+Earlier provisional V2.2 implementation/test/workflow commits `5eb956d4710f714a1cffe009859ef85470a1f4ea`, `517aedaaa1164e79d62b3c70037b6201e61d3c45`, and `052a3d4e33d5b93900001c3c35d7efcd22bf5f1c` were corrected before the accepted official result and are implementation history only.
+
+Official clean GitHub CPU run:
+- run `34917541786`;
+- job `104218329349`;
+- head `f07b86c2149133714646025aa31e21e0017db17b`;
+- conclusion `success`;
+- 24/24 frozen synthetic contract tests PASS before the official harness.
+
+Canonical artifact/result:
+- artifact ID `10376813179`, size `1,235` bytes;
+- artifact ZIP SHA-256 `6af8efbb303df43e61154ec605b316a6940eb87072b9393ed99e01e4e76b19df`;
+- result JSON SHA-256 `f315b2000a6c2ef5d270d5340944f325f081b0b2ebc27bc06e8894bfe61165a2`;
+- result checkpoint `7d2d05ec365bbdb1aced574f7caf1865795fbc23`.
+
+Frozen synthetic result:
+- `contractValid:true`;
+- `packageBridgeValid:true`;
+- `errors:[]`;
+- provenance validation-result path `calibration/reference-calibration-package-provenance-v1-result.json`;
+- provenance validation-result SHA `4fd62e62a855031bd3c189253bc04f004d271d53bf2b636c586c15b93e59e98f`;
+- package binding SHA `735d276afc5bac7cd8e0e905ae42f8d4dc4bfae835ae013403ccdc31c4cf857c`;
+- decoder ID `synthetic-decoder-v1`, version `1.0.0-synthetic`;
+- decoder code SHA `56aecaa4ece3411f6833274c0323aafae0ffdbeb52ee2a1ad57903f216573aaf`;
+- decoder configuration SHA `3c9850cdd5085c2dc5230211b18d3362b7f0cef2d23be19b9af3b456df9a2777`;
+- inherited V2.1 population SHA `cb21ea5d6880a6955e12ca224ea2ded795f2a29134b175ec5198e84c22330c3b`;
+- augmented V2.2 population SHA `6806913257deb635fa5dabae3622015ae9ae7ae9246ff499aaf55a1961197b2e`;
+- `populationIdentityVersion:capture-manifest-v2.2-calibration-package-bridge-v1`;
+- `mayAdvanceToReferenceBlindStructuralAudit:true` for the synthetic declaration contract only.
+
+V2.2 now closes the synthetic capture-manifest -> canonical calibration-package identity plumbing gap, including validation-result SHA identity, package binding identity, decoder configuration linkage and augmented admitted-population identity. It does not byte-open the provenance result file and does not establish real physical/calibration/holdout/correctness authority.
+
+All downstream authorization remains closed:
+- `realCalibrationAuthorized:false`
+- `realHoldoutCaptureAuthorized:false`
+- `basicPitchAuthorized:false`
+- `v6Authorized:false`
+- `correctnessAuthorized:false`
+- `modelValidationComplete:false`
+- `customerEligibleEvents:0`
+- `mayAdvanceDelivery:false`
 
 ## STILL FORBIDDEN
 
@@ -146,6 +178,6 @@ Guitar-TECHS correctness/repair/rescue; archived V143/Gomyway; GOAT/reference sc
 
 Continue only on `songsterr-fresh-pipeline-v1`; re-fetch live head + this file before mutation.
 
-Immediate task: implement the already-frozen capture-manifest V2.2 calibration-package bridge at preregistration commit `9596bfc745a5acdbb47b403eb3d39688ceb20ebd`. Implement strictly as an additive wrapper over V2.1, then add the preregistered synthetic tests before official harness execution, add ordinary GitHub CPU workflow with tests first, freeze result identities, and update this checkpoint again.
+Immediate task: perform a narrow review of the existing reference-blind structural-audit V1 contract to determine whether it must add hash-before-parse verification of the V2.2-bound calibration-provenance validation-result bytes. This is a review first, not an implementation assumption. If and only if a real gap is confirmed, freeze a separate additive audit-bridge preregistration before code.
 
 Do not invent physical thresholds, do not begin real calibration/holdout capture, keep all correctness/holdout/customer authorization false, do not access reserved GFN sources, and do not reopen V143/Gomyway/other closed lines unless explicitly asked.
