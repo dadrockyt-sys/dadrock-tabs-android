@@ -1,24 +1,21 @@
 # CURRENT STATE — Songsterr Fresh Pipeline V1
 
-Updated: 2026-09-15 America/Toronto — repaired EGFxSet one-shot completed; runtime fixed; model emitted expected MIDI 40 plus extra MIDI 68; frozen smoke score FAIL
+Updated: 2026-09-15 America/Toronto — pipeline hardening V1 complete and code/synthetic regression green; no new real-media/model execution
 Canonical branch: `songsterr-fresh-pipeline-v1`
 Canonical checkpoint: `docs/checkpoints/SONGSTERR_FRESH_PIPELINE_CURRENT_STATE.md`
+Latest hardening result: `docs/checkpoints/SONGSTERR_FRESH_PIPELINE_HARDENING_V1_RESULT.md`
 
 ## HARD SCOPE / AUTHORITY
 
 - Work only on `songsterr-fresh-pipeline-v1`; do not change `main` or Production.
 - Archived V143/Gomyway and GOAT/reference scoring remain closed unless the user explicitly reopens them.
-- Guitar-TECHS rescue/correctness, GuitarSet/V3, IDMT/V4, V5/FLGD, duration research, protected-song execution and other closed/revealed lines remain closed.
-- Reserved Guitar Fretboard Notes `deb` / `ele_natural` remain untouched unless separately frozen authorization is created later.
-- Never silently alter/drop decoded event identity or selected MIDI. Preserve `/ai-tab` UX.
-- `songsterr_pipeline/` remains deterministic/model-free/process-free/network-free; research/DSP tooling stays under `scripts/songsterr-fresh/`.
-- Budget checkpoint `e7f0146d4f01605b642f8aeaa100962254b5ce58` remains binding: no new hardware/bench/interface/sensor/donor instrument/performer/studio/vendor/rights-package spending; real calibration and real holdout capture remain paused.
-- Synthetic/non-holdout/smoke evidence must never be represented as untouched authoritative correctness validation.
-- Do not create another purpose-built software-lineage gate unless a new, concrete, non-duplicative gap is first identified and documented.
+- Guitar-TECHS, GuitarSet/V3, IDMT/V4, V5/FLGD, protected-song work and other closed lines remain closed.
+- Reserved Guitar Fretboard Notes `deb` / `ele_natural` remain untouched.
+- `songsterr_pipeline/` remains deterministic/model-free/process-free/network-free; model/DSP/research stays under `scripts/songsterr-fresh/`.
+- Budget checkpoint `e7f0146d4f01605b642f8aeaa100962254b5ce58` remains binding; physical calibration/holdout work remains paused.
+- Synthetic/smoke evidence must never be represented as authoritative correctness validation.
 
-## CURRENT GLOBAL AUTHORIZATION BOUNDARY — UNCHANGED
-
-Still exactly:
+## GLOBAL AUTHORIZATION — UNCHANGED
 
 - `realCalibrationAuthorized:false`
 - `realHoldoutCaptureAuthorized:false`
@@ -29,175 +26,127 @@ Still exactly:
 - `customerEligibleEvents:0`
 - `mayAdvanceDelivery:false`
 
-The user's first scoped smoke authorization (`I authorize one set 💪💚`) was consumed by run `34935565328` and ended in a NumPy/TFLite runtime initialization failure before decoded output.
-
-The user's subsequent explicit instruction `Please fix and rerun` authorized exactly one repaired, non-authorizing rerun of the same frozen candidate. That repaired authorization has now also been consumed by run `34936227380` attempt 1. It did not change any global authorization field.
+The user's `Lets fix the weak points of this pipeline and make it work.` authorized the engineering hardening recorded below. It did not authorize another real EGFxSet/Basic Pitch execution and did not change any global field.
 
 ## V6 — FROZEN / UNCHANGED
 
-Authority: preregistration `f72be7635fbcadfa6e5a8ec7e193a7b9d47c7f75`; implementation `3a6cbb144fec5613ab6350deb6539297d713df28`; scoring framework `d46e4c5dbc35b907b71c0608a602c7c4db0d6abc`.
+Authority remains preregistration `f72be7635fbcadfa6e5a8ec7e193a7b9d47c7f75` with implementation/scoring already frozen.
 
-Frozen essentials remain: Basic Pitch `0.4.0`, CPU, MIDI 40..88, onset `0.5`, frame `0.3`, minimum note `127.7 ms`, bends false, melodia true; isolated-guitar DI; one-to-one matching onset <= `0.050 s`, pitch <= `50 cents`; >=1,000 pooled V6-positive estimates; pooled one-sided 95% Wilson LB >=0.9900; strata >=100 positives require point precision >=0.9500; exactly one official correctness run after all upstream real gates. Do not tune from holdout observations.
+Essentials remain Basic Pitch `0.4.0`, CPU, MIDI 40..88, onset `0.5`, frame `0.3`, minimum note `127.7 ms`, bends false, melodia true. Official correctness still requires the frozen real upstream gates and >=1,000 pooled V6-positive estimates with the existing Wilson/stratum criteria. Do not tune from diagnostic observations.
 
-Neither EGFxSet smoke attempt is the official correctness run. EGFxSet provides no independent onset truth for V6 onset-match scoring.
+## HISTORICAL EGFxSET SMOKE — STILL FAIL, NOT REWRITTEN
 
-## CLOSED / RESERVED DATA LINES
+Candidate remains EGFxSet v1.0 `Clean.zip#Clean/Bridge/6-0.wav`, exact member SHA-256 `0256fd3c55c577970a4c2a06d760cf5798591adecffaa5e790addc38d1f0378e`, independent label string 6 / fret 0 / MIDI 40.
 
-- Guitar-TECHS remains frozen `C_DATASET_UNSUITABLE_FOR_V6_ADMISSION`; result checkpoint `9ec1dcf396341f5e95d76a32d90183cb7f70b725`. Never rescue/repair/score/rerun.
-- Guitar Fretboard Notes train-only research remains non-holdout at pinned revision `a33a26243e88e7ccd4893bee30eac3219ec8bef8`. Exposed train sources: `ele`, `eqm`, `eqm2`; reserved untouched: `deb`, `ele_natural`.
-- Do not use archived V143/Gomyway, Guitar-TECHS, GuitarSet/V3, IDMT/V4, V5/FLGD, or reserved GFN splits as a replacement for the EGFxSet smoke result.
+Original run `34935565328` failed at runtime because NumPy 2.2.6 was incompatible with TFLite Runtime 2.14.0.
 
-## PURPOSE-BUILT HOLDOUT — SOFTWARE LINEAGE COMPLETE / PHYSICAL ROUTE BUDGET-PAUSED
-
-Key physical design authority remains:
-
-- expanded design `e37d2b4662db949157d2cf4797370f05648b6940`
-- physical-reference semantics `ea5f50212cd1cd3794c65cb648a4d781e49e4082`
-- QA matrix `2b191b39f2f1c19564f1353381779acbc96fbeda`
-- bench gate `a0279b8c48c51176678229abfa92576b1d1c0c95`
-- topology `e45e9b8c32b511d2cd7a89fbeffc8783f2f95fbf`
-
-Completed software-lineage chain includes:
-
-- Capture Manifest V2.1 `9d3b17b392bd486753cb657318c048a7ae2460a7`
-- Structural Audit V1 `df7eb9edacb170ab24e2c200b1c0a8028625f87a`
-- Stage-0 Contact Replay `8ecc0601f84c4f7916ce1a8c08ac021fc425be25`
-- debleed `f233da0000188977334331c4614b6e541ae2490b`
-- hardware-marker clock map `79293a7632915fc67f5b7ee0ac2242466ec83ea7`
-- Reference Calibration Package Provenance V1 result `c57156fec7c5000563552c8cb128366956b8c95b`
-- Capture Manifest V2.2 result `7d2d05ec365bbdb1aced574f7caf1865795fbc23`
-- Structural Audit V1.1 result `96bb0aec9b02f16cb82ba78f16d3164af78474ec`
-- Capture Manifest V2.3 result `3ba759566258a49c2fd9b198f686bb1d9a6edc5d`
-- Structural Audit V1.2 result `f4c63134f8b49723f342f5ba5f648498af317f73`
-- Structural Audit Population Completeness V1 result `ad2d9405793f41c20c74328f3abddd22256c686b`
-- Reference Evidence Derivation Replay Review `0a50220a089f22733d7066e5772da7e73d71f557`
-- Reference Evidence Derivation Replay Population V1 result `e8f202c1a9ccee32a6f3883c06c79f89c4e77159`
-- Final Software-Lineage No-Gap Review `docs/checkpoints/SONGSTERR_FRESH_FINAL_SOFTWARE_LINEAGE_NO_GAP_REVIEW_2026-09-14.md`, commit `54f25a793f66b4d9fe53f11c041122fdb41d057c`
-
-Frozen conclusion remains:
-
-**NO CONCRETE, NON-DUPLICATIVE SOFTWARE DECLARATION / SUBSTITUTION / POPULATION-COMPLETENESS / FUNCTIONAL-LINEAGE GAP REMAINS IN THE CURRENT PURPOSE-BUILT REFERENCE CONTRACT CHAIN.**
-
-Hardware configuration / calibration / timing / sensor truth remains a physical qualification question, not another identified synthetic software gate.
-
-## AUTHORITATIVE NEXT VALIDATION ROUTE — PHYSICAL, CURRENTLY PAUSED
-
-The next authoritative route remains:
-
-1. procure/assemble the frozen reference hardware/topology if budget authorization later permits;
-2. perform frozen bench/hardware qualification and real calibration;
-3. preserve exact package/raw/derived identities under the completed software contracts;
-4. after legitimate real calibration authority, perform real holdout capture under frozen rules;
-5. only after real structural gates pass may the separately frozen V6/correctness path be considered.
-
-Under budget checkpoint `e7f0146d4f01605b642f8aeaa100962254b5ce58`, physical procurement/calibration/capture remains paused and unauthorized.
-
-## OPTIONAL $0 EGFxSET EXTERNAL SMOKE — FINAL CURRENT RESULT
-
-### Candidate identity
-
-- EGFxSet v1.0, Zenodo DOI `10.5281/zenodo.7044411`
-- archive `Clean.zip`
-- published archive MD5 `cdb1b401960f56becc8640387910e78a`
-- member `Clean/Bridge/6-0.wav`
-- exact member bytes `722976`
-- exact member SHA-256 `0256fd3c55c577970a4c2a06d760cf5798591adecffaa5e790addc38d1f0378e`
-- independent label: standard-tuned string 6, fret 0
-- expected MIDI: `40` (E2)
-
-### Original attempt — runtime failure only
-
-Dedicated historical checkpoint:
-`docs/checkpoints/SONGSTERR_FRESH_V6_EGFXSET_PRE_MEDIA.md`
-
-Original run:
-
-- workflow `.github/workflows/songsterr-egfxset-one-shot.yml`
-- workflow commit `9ee39e3daf462e4b15f9e72564a4a937a3424088`
-- run `34935565328`
-- job `104272581611`
-- attempt `1`
-- result checkpoint commit `e1223ab8a51f6df241840912f4783be71bf6c4b0`
-
-Original failure cause: `basic-pitch==0.4.0` resolved to `numpy==2.2.6` plus `tflite-runtime==2.14.0`; TFLite was compiled against NumPy 1.x and failed at model initialization with `AttributeError: _ARRAY_API not found`. No decoded note output existed, so that attempt provided no pitch/position evidence.
-
-### Repaired attempt — environment fixed prospectively
-
-Pre-run repair freeze:
-`docs/checkpoints/SONGSTERR_FRESH_V6_EGFXSET_REPAIR_RERUN_PRE.md`
-commit `779313c06382bd875fe314d798d149c4208b3141`.
-
-Frozen repaired environment:
-
-- Python `3.10.21`
-- Basic Pitch `0.4.0`
-- TFLite Runtime `2.14.0`
-- NumPy `1.26.4`
-- CPU only
-
-No audio/model threshold or algorithm setting changed.
-
-Repaired workflow:
-`.github/workflows/songsterr-egfxset-repaired-one-shot.yml`
-commit `b37d400b186a926985bb16b91702e2f88e55d785`.
-
-Execution:
+The separately authorized repaired run used the prospectively frozen environment Python 3.10.21 + Basic Pitch 0.4.0 + TFLite Runtime 2.14.0 + NumPy 1.26.4:
 
 - run `34936227380`
 - job `104274605954`
-- attempt `1`
-- artifact `10383413992`, `songsterr-egfxset-repaired-one-shot`
-- artifact ZIP SHA-256 `c380d39bdee5c3ec2827c1ae682e83b71eabe3bc738fa27016d3bb409afe566a`
-- result JSON SHA-256 `5f1f78c7c9bd153d98ad31854c29aa46c6a200a763fbf49292320752a9b239b9`
-- primary Basic Pitch JSON SHA-256 `24bffdb267c580625cb8049bdbe6bc1b74549ae8e048a759f26eb24e49d6dc51`
+- artifact `10383413992`
+- immutable Basic Pitch JSON SHA-256 `24bffdb267c580625cb8049bdbe6bc1b74549ae8e048a759f26eb24e49d6dc51`
+- exactly one successful predict invocation
+- emitted MIDI set `{40,68}`
+- MIDI 40 matched expected E2/string6/fret0
+- MIDI 68 was extra
+- frozen score: `PASS_RUNTIME`, `FAIL_PITCH`, `FAIL_POSITION`, overall `FAIL_NON_AUTHORIZING_SMOKE`
 
-All environment/media/runtime gates passed. `predictInvocationCount` is exactly `1`.
+Dedicated result checkpoint: `docs/checkpoints/SONGSTERR_FRESH_V6_EGFXSET_REPAIR_RERUN_RESULT.md`.
 
-### Observed decoded output
+Do not post-filter that historical result into a PASS.
 
-Exactly two note events were emitted:
+## PIPELINE HARDENING V1 — COMPLETE / GREEN
 
-1. MIDI `40`, confidence `0.7906091809272766`, start `0.011609977324263039 s`, diagnostic end `4.948418140589569 s`. This maps uniquely to string 6 / fret 0 and matches the independent label.
-2. MIDI `68`, confidence `0.3487236797809601`, start `0.3599092970521542 s`, diagnostic end `1.5325170068027212 s`. This is an extra emitted note and does not satisfy the frozen candidate truth.
+Final result checkpoint:
+`docs/checkpoints/SONGSTERR_FRESH_PIPELINE_HARDENING_V1_RESULT.md`
+commit `1cd209f2865da079766025d0802fe3ed56ec48e8`.
 
-MIDI histogram:
+### 1. Raw model events are proposals, not automatic notes
 
-- `40`: 1
-- `68`: 1
+The core evidence adapter now recognizes:
 
-Complete emitted MIDI set: `{40,68}`.
+- `unambiguous`: independently corroborated; promotes;
+- `rejected`: explicitly rejected; preserved but never promotes;
+- `ambiguous`: insufficient qualification; unresolved;
+- `no-candidate`: unresolved.
 
-### Frozen smoke score
+Only `unambiguous` enters `promotedEvents`. Rejected candidates retain MIDI/timing/confidence/provenance and are not silently deleted.
 
-The prospective scoring rule required all emitted MIDI values to equal exactly `{40}` and every event to resolve uniquely to string 6 / fret 0 / reconstructed MIDI 40.
+### 2. Exact qualification identity/population is fail-closed
 
-Result:
+New builder:
+`scripts/songsterr-fresh/build_qualified_isolated_polyphonic_note_evidence.mjs`
 
-- `PASS_RUNTIME`
-- `FAIL_PITCH`
-- `FAIL_POSITION`
-- overall `FAIL_NON_AUTHORIZING_SMOKE`
+It requires exact note-identity binding and exact one-to-one qualification coverage. Missing/extra/duplicate/mismatched rows fail closed. Basic Pitch candidate confidence is explicitly diagnostic-only and cannot own the decision.
 
-Dedicated result checkpoint:
-`docs/checkpoints/SONGSTERR_FRESH_V6_EGFXSET_REPAIR_RERUN_RESULT.md`
-commit `3879231e9331b5771325de6715ed0839090875b8`.
+Bridge into the existing adapter/evaluator path:
+`scripts/songsterr-fresh/adapt_qualified_note_evidence_v1.mjs`.
 
-### Interpretation constraint
+### 3. Independent DSP note-birth qualifier
 
-This repaired result is a genuine one-file diagnostic model-output failure under the predeclared all-events rule. The expected E2/MIDI-40 note was recognized, but an additional MIDI-68 event prevents a PASS.
+Prospective DSP freeze:
+`docs/checkpoints/SONGSTERR_FRESH_MODEL_NOTE_QUALIFIER_DSP_V1_PRE.md`.
 
-Do not drop the MIDI-68 event after observing it. Do not post-filter, tune thresholds, rerun, switch candidate, or claim the MIDI-40 event alone as a PASS under this contract.
+Implementation:
+`scripts/songsterr-fresh/qualify_basic_pitch_note_births_v1.py`.
 
-This remains non-authoritative smoke evidence and is statistically insufficient for correctness claims. It does not alter V6/correctness/customer-delivery authority and does not replace the physical calibrated holdout.
+It invokes no model and ignores Basic Pitch confidence for decisions. It reuses the pre-existing frozen V6 onset-birth/harmonic-necessity DSP constants unchanged. Left-edge pre-context is supplied deterministically with zero padding only when needed; future/right-edge audio is never fabricated.
 
-## IMMEDIATE HANDOFF / NEXT ACTION
+Synthetic result: genuine E2 birth is corroborated while a MIDI-68 fifth-harmonic proposal during the sustained E2 is rejected. Reversing Basic Pitch confidences does not change the decision.
 
-Re-fetch live branch head + this checkpoint before mutation.
+### 4. Playable fingering is no longer presented as physical certainty
 
-The repaired EGFxSet authorization is consumed. There is **no authorized additional smoke inference, retry, threshold tuning, output filtering, or alternate-candidate run**.
+Prospective freeze:
+`docs/checkpoints/SONGSTERR_FRESH_PHYSICAL_POSITION_AMBIGUITY_V1_PRE.md`.
 
-Permitted non-execution work may analyze the extra MIDI-68 event from the already captured immutable artifact, provided it does not silently alter/drop event identity or convert this frozen FAIL into a PASS.
+The deterministic core preserves its existing preferred playable layout but now also reports:
 
-Any new inference experiment requires new explicit prospective user authorization and a frozen procedure before execution.
+- `shapeCandidateCount`
+- `physicalShapeResolved`
+- `positionSelectionMethod`
 
-There is no authorized immediate purpose-built software-lineage implementation task. Do not manufacture another gate. Keep all global authorization fields false/zero, do not begin physical procurement/calibration/capture while budget-paused, and do not reopen V143/Gomyway or any other closed line unless the user explicitly asks.
+`shapeResolved` remains backward-compatible and means a complete playable layout exists. `physicalShapeResolved:true` now requires exactly one valid full layout. Multiple layouts are explicitly marked `heuristic-preferred-layout` rather than physical truth.
+
+Tests verify MIDI 40 is uniquely string6/fret0 under standard tuning while higher notes such as MIDI64 can have multiple playable positions.
+
+## FINAL COMBINED REGRESSION
+
+Workflow: `.github/workflows/songsterr-model-note-qualification-v1-tests.yml`
+Workflow commit: `7027810ff9fc8f21f06ad17141319c54acd8139c`
+Run: `34938422696`
+Job: `104281318739`
+Attempt: `1`
+Conclusion: `success`
+
+All final steps passed:
+
+- candidate confidence diagnostic-only contract;
+- model-note qualification structural/fail-closed tests;
+- physical-position ambiguity tests;
+- frozen Python 3.10.21 environment;
+- NumPy 1.26.4 / SciPy 1.15.3 DSP test environment;
+- independent DSP note-birth qualifier synthetic tests.
+
+No EGFxSet audio, Basic Pitch inference, alternate candidate, reference tab, or real corpus was executed in this hardening run.
+
+An old archived Gomyway workflow was automatically awakened by its pre-existing broad branch trigger during ordinary pushes. Its output was not used or treated as reopened work. Do not resume it.
+
+## PURPOSE-BUILT AUTHORITATIVE ROUTE
+
+The completed software-lineage no-gap conclusion remains unchanged. Authoritative correctness still requires the frozen physical calibrated route, currently budget-paused. Do not manufacture another synthetic software-lineage gate.
+
+## NEXT HIGH-VALUE VALIDATION — NOT YET AUTHORIZED
+
+The next useful diagnostic does **not** need another Basic Pitch inference.
+
+If the user explicitly authorizes a real-audio validation, freeze that execution prospectively and reuse:
+
+1. the exact already-verified EGFxSet WAV identity; and
+2. the immutable repaired-run Basic Pitch JSON SHA-256 `24bffdb267c580625cb8049bdbe6bc1b74549ae8e048a759f26eb24e49d6dc51`.
+
+Run only:
+
+`independent DSP qualifier -> qualified evidence builder -> adapter/evaluator -> deterministic core/exposure`
+
+No threshold/status changes may occur after observing that result. Such a test remains non-authoritative and cannot alter the historical all-events smoke score or global authorization flags.
