@@ -1,6 +1,6 @@
 # CURRENT STATE — Songsterr Fresh Pipeline V1
 
-Updated: 2026-09-14 America/Toronto — GFN V2 frozen MIXED; synthetic debleed V1 complete; hardware-marker clock-map V1 complete; calibration-package provenance V1 complete
+Updated: 2026-09-14 America/Toronto — calibration-package provenance V1 complete; capture-manifest V2.2 calibration-package bridge preregistered before implementation
 Canonical branch: `songsterr-fresh-pipeline-v1`
 Canonical checkpoint: `docs/checkpoints/SONGSTERR_FRESH_PIPELINE_CURRENT_STATE.md`
 
@@ -93,27 +93,50 @@ Frozen result: exact affine error `0`; +/-100 ppm max truth error about `1.08 us
 
 ## REFERENCE CALIBRATION PACKAGE PROVENANCE V1 — COMPLETE
 
-Preregistration:
-`docs/checkpoints/SONGSTERR_FRESH_REFERENCE_CALIBRATION_PACKAGE_PROVENANCE_PREREGISTRATION_V1_2026-09-14.md`
-commit `cbd99714f655d859af2410374c3245a4afe6b056`.
-
+Preregistration `cbd99714f655d859af2410374c3245a4afe6b056`.
 Implementation commit `3dd1140650070342ab9fc4e177870fd39940a4e0`, blob `b6be3c98ce5a7da9ce6c5f5c19d9472549e1029a`.
 Initial test commit `d322915ce7790ed036f709c56b40e0afe866c072`; final test-correction commit `3ff9980cad1d16d2621ae5d3bb9fbc9d9fb5955a`, final test blob `eaf39e7898d112bb4cb78fdb7d8a85c0425c2be8`.
 Workflow integration commit `17c273ff0986c89101d6ff5cf49cb1f2e61eb9ba`, workflow blob `b54fa2f18dc27b202fe724cdc780f909dfd64b67`.
-
-The first workflow run failed before official harness execution because one valid-fixture bookkeeping assertion expected 13 verified files instead of the actual frozen 14. No implementation or preregistered semantic rule changed; only the expected test count was corrected.
-
-Official clean run `34916853723`, job `104216245975`, head `3ff9980cad1d16d2621ae5d3bb9fbc9d9fb5955a`, SUCCESS; 20/20 contract tests PASS before the official harness.
+Official clean run `34916853723`, job `104216245975`, head `3ff9980cad1d16d2621ae5d3bb9fbc9d9fb5955a`, SUCCESS; 20/20 contract tests PASS before official harness.
 Artifact `10376481781`, size 1,919 bytes, ZIP SHA `1a37a529b4c730315268bea21754275cbfb721a2c2238d4ae3fee6f54ad925e6`.
 Canonical result JSON SHA `4fd62e62a855031bd3c189253bc04f004d271d53bf2b636c586c15b93e59e98f`.
 Canonical synthetic package binding SHA `735d276afc5bac7cd8e0e905ae42f8d4dc4bfae835ae013403ccdc31c4cf857c`.
 Result checkpoint `c57156fec7c5000563552c8cb128366956b8c95b`.
 
-Frozen result: `contractValid:true`, `verifiedFileCount:14`, `errors:[]`. The synthetic package bound hardware configuration, wiring topology, fixture, decoder code/configuration, four raw-source artifacts covering physical pitch state/event birth/clock sync/sensor health, and all five required derived calibration artifact roles. File bytes were hash-verified, path escape/duplication and identity/role failures were exercised, and canonical package binding was deterministic and independent of absolute temporary root.
+Frozen result: `contractValid:true`, `verifiedFileCount:14`, `errors:[]`. The synthetic package bound hardware configuration, wiring topology, fixture, decoder code/configuration, four raw-source artifacts covering physical pitch state/event birth/clock sync/sensor health, and all five required derived calibration artifact roles. Interpretation remains software-only; no real calibration/physical/holdout/correctness/customer authority was created.
 
-Interpretation remains software-only. No real calibration package exists or is authorized by this result; no physical accuracy, drift/jitter/dropout, empirical acquisition-QA threshold, bench PASS, holdout capture, correctness, V6, customer or delivery authority was created.
+The package contract closes decoder/configuration identity at package level. Do not create a duplicate standalone decoder-identity contract.
 
-The package contract already closes the previously identified deterministic reference-decoder/configuration identity gap at the package level by requiring verified decoder code and configuration hashes. Do not create a duplicate standalone decoder-identity contract unless a later authority review identifies a distinct unresolved requirement.
+## CAPTURE-MANIFEST / CALIBRATION-PACKAGE BRIDGE — GAP REVIEW COMPLETE
+
+Review checkpoint:
+`docs/checkpoints/SONGSTERR_FRESH_CAPTURE_MANIFEST_CALIBRATION_PACKAGE_BRIDGE_REVIEW_V1_2026-09-14.md`
+commit `abfd10ea953e2be313f847f626c405a2f3607dad`.
+
+Finding: a real narrow identity-linkage gap remains. Capture-manifest V2.1 can bind a legacy calibration artifact SHA, hardware configuration SHA, calibration ID and derivation-configuration SHA, while Provenance V1 separately binds the canonical package/decoder/raw/fixture/derived identities. V2.1 has no field requiring admitted references or admitted population identity to cite the canonical `packageBindingSha256`. Thus both contracts can pass while remaining unlinked.
+
+Decision: a narrowly scoped prospective capture-manifest V2.2 bridge is required. This is identity plumbing only; it must not change physical thresholds, chronology, retry semantics, acquisition QA, structural blockers, V6/scoring or policy.
+
+## CAPTURE-MANIFEST V2.2 CALIBRATION-PACKAGE BRIDGE — PREREGISTRATION FROZEN
+
+Preregistration:
+`docs/checkpoints/SONGSTERR_FRESH_PURPOSE_BUILT_CAPTURE_MANIFEST_V2_2_CALIBRATION_PACKAGE_BRIDGE_PREREGISTRATION_2026-09-14.md`
+commit `9596bfc745a5acdbb47b403eb3d39688ceb20ebd`.
+
+Frozen V2.2 essentials:
+- additive wrapper over V2.1; top-level contract `songsterr-fresh-purpose-built-capture-manifest-v2.2`;
+- require `corpus.referenceCalibrationPackage` containing provenance result path/SHA, canonical `packageBindingSha256`, and inline canonical package binding;
+- recompute and verify SHA-256 of canonical inline package binding;
+- cross-check calibration ID, hardware configuration ID/SHA, instrument setup SHA, timing value and firewall declarations against existing capture-manifest declarations;
+- require valid decoder ID/version and decoder code/configuration hashes inside the bound package object, without creating a duplicate standalone decoder contract;
+- every admitted reference must cite `calibrationPackageBindingSha256` equal to the corpus package binding;
+- every admitted reference `derivationConfigurationSha256` must equal the bound package decoder-configuration SHA;
+- augmented admitted-population SHA must include calibration package binding SHA and provenance validation-result SHA;
+- result population identity version `capture-manifest-v2.2-calibration-package-bridge-v1`;
+- tests before official harness; ordinary GitHub CPU only; no network/external data;
+- after V2.2, separately review whether reference-blind structural audit needs a package-result byte-verification bridge; do not assume or implement it before review.
+
+All downstream authorization remains closed.
 
 ## STILL FORBIDDEN
 
@@ -123,6 +146,6 @@ Guitar-TECHS correctness/repair/rescue; archived V143/Gomyway; GOAT/reference sc
 
 Continue only on `songsterr-fresh-pipeline-v1`; re-fetch live head + this file before mutation.
 
-Immediate task: review whether the existing capture-manifest V2.1 calibration reference (`calibrationId` + calibration artifact SHA + hardware-configuration SHA + derivation-configuration SHA) can directly bind the new canonical calibration package identity, or whether a narrowly scoped prospective capture-manifest bridge/version bump is actually required. Do not implement a bridge unless the existing contracts leave a real identity gap. Keep this as zero-additional-cost software/documentation work only.
+Immediate task: implement the already-frozen capture-manifest V2.2 calibration-package bridge at preregistration commit `9596bfc745a5acdbb47b403eb3d39688ceb20ebd`. Implement strictly as an additive wrapper over V2.1, then add the preregistered synthetic tests before official harness execution, add ordinary GitHub CPU workflow with tests first, freeze result identities, and update this checkpoint again.
 
 Do not invent physical thresholds, do not begin real calibration/holdout capture, keep all correctness/holdout/customer authorization false, do not access reserved GFN sources, and do not reopen V143/Gomyway/other closed lines unless explicitly asked.
