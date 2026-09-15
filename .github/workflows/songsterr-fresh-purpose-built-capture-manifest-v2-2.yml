@@ -27,20 +27,27 @@ jobs:
         run: |
           python - <<'PY'
           import importlib.util
-          import json
           from pathlib import Path
-          path = Path("scripts/songsterr-fresh/test_purpose_built_capture_manifest_contract_v2_2.py")
-          spec = importlib.util.spec_from_file_location("fixture_v22", path)
+
+          scripts = Path("scripts/songsterr-fresh")
+          fixture_path = scripts / "test_purpose_built_capture_manifest_contract_v2_2.py"
+          spec = importlib.util.spec_from_file_location("fixture_v22", fixture_path)
           assert spec and spec.loader
           fixture = importlib.util.module_from_spec(spec)
           spec.loader.exec_module(fixture)
+
+          module_path = scripts / "purpose_built_capture_manifest_contract_v2_2.py"
+          module_spec = importlib.util.spec_from_file_location("capture_v22", module_path)
+          assert module_spec and module_spec.loader
+          module = importlib.util.module_from_spec(module_spec)
+          module_spec.loader.exec_module(module)
+
           manifest = fixture.valid_manifest()
           manifest["corpus"]["referenceCalibrationPackage"]["validationResultSha256"] = (
               "4fd62e62a855031bd3c189253bc04f004d271d53bf2b636c586c15b93e59e98f"
           )
-          Path("synthetic-purpose-built-capture-manifest-v2-2.json").write_text(
-              json.dumps(manifest, sort_keys=True, separators=(",", ":")) + "\n",
-              encoding="utf-8",
+          Path("synthetic-purpose-built-capture-manifest-v2-2.json").write_bytes(
+              module.canonical_json_bytes(manifest) + b"\n"
           )
           PY
       - name: Run official frozen synthetic V2.2 validator
@@ -54,13 +61,22 @@ jobs:
           import hashlib
           import json
           from pathlib import Path
+
           path = Path("synthetic-purpose-built-capture-manifest-v2-2-result.json")
-          result = json.loads(path.read_text())
+          result = json.loads(path.read_text(encoding="utf-8"))
           print("contract", result["contract"])
           print("contractValid", result["contractValid"])
+          print("packageBridgeValid", result["packageBridgeValid"])
           print("bridgeVersion", result["calibrationPackageBridgeVersion"])
-          print("packageBindingSha256", result["calibrationPackageBindingSha256"])
+          print("populationIdentityVersion", result["populationIdentityVersion"])
+          print("validationResultPath", result["calibrationPackageValidationResultPath"])
           print("validationResultSha256", result["calibrationPackageValidationResultSha256"])
+          print("packageBindingSha256", result["calibrationPackageBindingSha256"])
+          print("decoderId", result["calibrationPackageDecoderId"])
+          print("decoderSoftwareVersion", result["calibrationPackageDecoderSoftwareVersion"])
+          print("decoderCodeSha256", result["calibrationPackageDecoderCodeSha256"])
+          print("decoderConfigurationSha256", result["calibrationPackageDecoderConfigurationSha256"])
+          print("inheritedV21PopulationSha256", result["inheritedV21AdmittedPopulationManifestSha256"])
           print("admittedPopulationManifestSha256", result["admittedPopulationManifestSha256"])
           print("mayAdvanceToReferenceBlindStructuralAudit", result["mayAdvanceToReferenceBlindStructuralAudit"])
           print("resultSha256", hashlib.sha256(path.read_bytes()).hexdigest())
