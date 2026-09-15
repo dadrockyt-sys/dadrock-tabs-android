@@ -1,6 +1,6 @@
 # CURRENT STATE — Songsterr Fresh Pipeline V1
 
-Updated: 2026-09-14 America/Toronto — custom reference prototype topology frozen
+Updated: 2026-09-14 America/Toronto — software-only budget boundary active; Stage-0 contact replay synthetic CI PASS
 Canonical branch: `songsterr-fresh-pipeline-v1`
 Canonical checkpoint: `docs/checkpoints/SONGSTERR_FRESH_PIPELINE_CURRENT_STATE.md`
 
@@ -14,6 +14,7 @@ Canonical checkpoint: `docs/checkpoints/SONGSTERR_FRESH_PIPELINE_CURRENT_STATE.m
 - Fail closed: `modelValidationComplete:false`, `customerEligibleEvents:0`, `mayAdvanceDelivery:false`, duration authority unchanged/paused, Policy C `UNENROLLED`, protected-song embargoed.
 - Ordinary metadata research/coding/GitHub/CPU/checkpoint work may proceed.
 - **2026-09-14 19:18 ET user authorization:** the purpose-built route is explicitly reopened and the user authorizes actions reasonably deemed necessary. Apply that authorization conservatively: design/coding/synthetic CPU CI first; procurement/spending, performer/vendor contact or hiring, calibration recording, holdout recording/data acquisition, or gated compute may proceed only when objectively necessary to advance the frozen validation plan. Do not spend/contact/acquire merely because authorization exists. V6/scoring/correctness constraints below remain unchanged.
+- **Current budget override:** the user has now clarified that available budget is effectively limited to existing Vercel/model costs. Therefore no new hardware, bench equipment, audio interface, piezo system, donor instrument, performer/studio/vendor service, rights package, or other paid acquisition should be assumed available. This current budget boundary supersedes earlier language that a low-cost Stage-0 purchase should happen now.
 
 ## V6 — FROZEN
 
@@ -63,9 +64,9 @@ Closed/rejected or otherwise non-qualifying families include: Guitar-TECHS (clos
 
 Latest sweep decision remains `NO_NEW_ADMISSIBLE_REPLACEMENT_HOLDOUT`. Public/institutional/commercial search is near exhausted but this is not proof that no qualifying corpus exists.
 
-## PURPOSE-BUILT HOLDOUT — ACTIVE UNDER EXPLICIT AUTHORIZATION
+## PURPOSE-BUILT HOLDOUT — ACTIVE IN SOFTWARE, PHYSICAL ROUTE PAUSED BY BUDGET
 
-The purpose-built independent-sensor route is active under the user's explicit 2026-09-14 19:18 ET authorization. Conservative order remains binding: semantics/contract -> synthetic-only CI -> reference-blind structural-audit tooling -> only then objectively necessary procurement/contact/calibration/data acquisition. Real holdout correctness remains forbidden until all frozen gates clear.
+The purpose-built independent-sensor route remains the best technically defensible design path, but the user's current budget boundary means it may advance only through zero-additional-cost software/documentation/synthetic CI. Real hardware procurement, non-holdout physical calibration and real holdout capture are paused until equivalent hardware becomes available at no additional cost or the budget constraint changes.
 
 Design authority:
 - `docs/checkpoints/SONGSTERR_FRESH_PURPOSE_BUILT_HOLDOUT_EXPANDED_DESIGN_2026-09-14.md`, commit `e37d2b4662db949157d2cf4797370f05648b6940`;
@@ -115,13 +116,13 @@ A PASS may establish only `authoritativeStructuralSuitabilityEstablished:true` f
 - No real purpose-built calibration/holdout media, evaluated audio, model outputs, correctness matches, or correctness scores were accessed. Archived V143/Gomyway remains untouched and closed.
 - This synthetic CI PASS does **not** establish a real holdout population. Downstream authorization remains closed: `basicPitchAuthorized:false`, `v6Authorized:false`, `correctnessAuthorized:false`, `modelValidationComplete:false`, `customerEligibleEvents:0`, `mayAdvanceDelivery:false`.
 
-### Real reference hardware / calibration necessity — DECISION FROZEN
+### Real reference hardware / calibration necessity — TECHNICALLY REQUIRED, CURRENTLY BUDGET-PAUSED
 
 Necessity + bench-gate commit: `a0279b8c48c51176678229abfa92576b1d1c0c95`.
 
-- `docs/checkpoints/SONGSTERR_FRESH_PURPOSE_BUILT_HARDWARE_CALIBRATION_NECESSITY_DECISION_V1_2026-09-14.md` establishes `REAL_REFERENCE_HARDWARE_REQUIRED:true` and `NON_HOLDOUT_CALIBRATION_REQUIRED:true` because physical string/fret identity, same-pitch rearticulation, real clock/sync behavior, sensor health, technique capability and real calibration identities cannot be proven from synthetic fixtures alone.
-- The same decision explicitly leaves `IMMEDIATE_PURCHASE_REQUIRED:false`, `IMMEDIATE_PERFORMER_OR_VENDOR_CONTACT_REQUIRED:false`, and `REAL_HOLDOUT_RECORDING_AUTHORIZED:false` until a prospective hardware-neutral qualification screen says a specific bench sample/non-public fact is necessary.
+- `docs/checkpoints/SONGSTERR_FRESH_PURPOSE_BUILT_HARDWARE_CALIBRATION_NECESSITY_DECISION_V1_2026-09-14.md` establishes that physical string/fret identity, same-pitch rearticulation, real clock/sync behavior, sensor health, technique capability and real calibration identities cannot be proven from synthetic fixtures alone.
 - `docs/checkpoints/SONGSTERR_FRESH_PURPOSE_BUILT_REFERENCE_HARDWARE_BENCH_QUALIFICATION_PREREGISTRATION_V1_2026-09-14.md` freezes document/API criteria and NON_HOLDOUT bench tests before any device is allowed to determine truth semantics.
+- This remains a technical necessity statement, not a current spending instruction.
 
 ### Initial reference-hardware document/API screen — NO COMPLETE OFF-THE-SHELF QUALIFIER
 
@@ -134,7 +135,7 @@ Checkpoint: `docs/checkpoints/SONGSTERR_FRESH_PURPOSE_BUILT_REFERENCE_HARDWARE_D
 - Public conductive/capacitive fret-sensing work supports feasibility of a custom physical fret/contact plane.
 - Frozen result: `NO_COMPLETE_OFF_THE_SHELF_AUTHORITATIVE_REFERENCE_QUALIFIER_FOUND_IN_INITIAL_SCREEN`; `HYBRID_OR_CUSTOM_REFERENCE_ARCHITECTURE_LIKELY_REQUIRED:true`; do not buy a commercial MIDI guitar merely to treat pitch-derived MIDI as truth.
 
-### Custom/hybrid reference prototype topology V1 — FROZEN FOR NON-HOLDOUT BENCH
+### Custom/hybrid reference prototype topology V1 — FROZEN, PHYSICAL EXECUTION PAUSED
 
 Checkpoint: `docs/checkpoints/SONGSTERR_FRESH_PURPOSE_BUILT_CUSTOM_REFERENCE_PROTOTYPE_TOPOLOGY_V1_2026-09-14.md`, commit `e45e9b8c32b511d2cd7a89fbeffc8783f2f95fbf`.
 
@@ -144,30 +145,62 @@ The frozen prototype separates four planes:
 3. six raw per-string excitation/vibration channels used for births/rearticulation only, never frequency-to-pitch truth;
 4. common hardware audio clock plus immutable conditioned sync markers linking the physical-state logger without content alignment.
 
-A minimum eight-channel common-audio-clock layout is now explicit: 1 magnetic DI + 6 raw per-string excitation channels + 1 hardware sync-marker channel. Current Scarlett 18i20 4th Gen specs are document-compatible with that channel class; Teensy 4.1 specs are document-compatible with the physical-state logger class; Graph Tech-style discrete piezo saddles remain only an excitation component lead. None is yet frozen as a purchase choice.
+A minimum eight-channel common-audio-clock layout is explicit: 1 magnetic DI + 6 raw per-string excitation channels + 1 hardware sync-marker channel. These are architecture requirements only; no component purchase is currently authorized under the budget boundary.
 
-Critically, the topology does not assume one continuous conductive fret can resolve chords. Cross-string electrical coupling/multi-contact ambiguity is a mandatory bench gate. Multiplexed conductive-fret scanning may pass or fail; electrically isolated segmented/capacitive per-string fret sensing is the defined fallback class.
+Critically, the topology does not assume one continuous conductive fret can resolve chords. Cross-string electrical coupling/multi-contact ambiguity remains a mandatory future bench gate. Multiplexed conductive-fret scanning may pass or fail; electrically isolated segmented/capacitive per-string fret sensing is the defined fallback class.
 
-No real holdout exists. No performer/vendor contact, purchase, model output or correctness exposure has occurred.
+### Budget constraint — SOFTWARE-ONLY ROUTE ACTIVE
+
+Budget checkpoint: `docs/checkpoints/SONGSTERR_FRESH_BUDGET_CONSTRAINT_SOFTWARE_ONLY_ROUTE_2026-09-14.md`, commit `e7f0146d4f01605b642f8aeaa100962254b5ce58`.
+
+Current binding boundary:
+- `HARDWARE_PROCUREMENT_PAUSED:true`
+- `PAID_VENDOR_CONTACT_PAUSED:true`
+- `PAID_PERFORMER_OR_STUDIO_WORK_PAUSED:true`
+- `REAL_CALIBRATION_CAPTURE_PAUSED:true`
+- `REAL_HOLDOUT_CAPTURE_PAUSED:true`
+- `SOFTWARE_DOCUMENTATION_SYNTHETIC_CI_ALLOWED:true`
+
+The earlier minimum-BOM checkpoint `9ddb612a7dbf1ad42210514728c4af604599142b` remains useful future planning history, but its statement that Stage-0 hardware was objectively justified **now** is superseded operationally by this newer user budget constraint. Do not purchase anything for the validation route unless the user later changes this constraint or equivalent hardware is available at no additional cost.
+
+Without either a qualifying already-existing external corpus or eventual physical reference hardware, untouched real-world external correctness cannot honestly be established. The correct response is to finish all zero-cost preparation and stop at that evidence boundary, not weaken the validation standard.
+
+### Stage-0 contact replay V1 — SOFTWARE-ONLY SYNTHETIC CI PASS
+
+Preregistration: `docs/checkpoints/SONGSTERR_FRESH_PURPOSE_BUILT_STAGE0_CONTACT_REPLAY_PREREGISTRATION_V1_2026-09-14.md`, commit `c5082e8357e674f401bbc37fd42961e91e5d1606`.
+
+Implementation/test/workflow integration head: `fdcad7bcb3f48dd75630b694f7b27d23b037f016`, tree `c307456ed6e197306b252a3d0738fa9f235ee2d3`.
+
+- Implementation: `scripts/songsterr-fresh/stage0_contact_replay_v1.py`; Git blob `14cd141aa21301887e1edf2a7d99a8dab0e43d58`.
+- Synthetic tests: `scripts/songsterr-fresh/test_stage0_contact_replay_v1.py`; Git blob `956c518eef8e1ea2e1e87a42575e68dde6e636a0`; local result `16/16 PASS`.
+- Workflow: `.github/workflows/songsterr-fresh-stage0-contact-replay-v1.yml`; Git blob `fd51102d34be8446eebec36ff65e5aa1a0e4afe7`.
+- Successful GitHub CPU run: `34913326360`; job `104205441130`; attempt `1`; head `fdcad7bcb3f48dd75630b694f7b27d23b037f016`; status `completed`; conclusion `success`.
+- Evidence checkpoint: `docs/checkpoints/SONGSTERR_FRESH_STAGE0_CONTACT_REPLAY_V1_SYNTHETIC_CI_2026-09-14.md`, commit `8ecc0601f84c4f7916ce1a8c08ac021fc425be25`.
+
+The Stage-0 validator accepts exactly three immutable JSON byte streams (`configuration`, `fixture`, `scanLog`) plus expected hashes; verifies SHA-256 before parsing; has no audio/model/correctness input path; detects missing/extra/crosstalk contacts, sequence/tick/drive-string/health/provenance failures; and preserves all downstream authorizations as false even on PASS.
+
+This PASS proves only software-contract behavior. It is not evidence that any real physical sensing topology works.
 
 ## NEXT ALLOWED ACTION — START HERE IN A FRESH CHAT
 
 1. **Verify branch + canonical state first.** Work only on `songsterr-fresh-pipeline-v1`; confirm the live head and reread this checkpoint before any mutation so concurrent commits are not overwritten.
-2. **Do not redesign the frozen structural-audit or hardware qualification boundaries.** Structural preregistration `067875e3aa1538ff5483b74cc9071b00e9e82b07`, structural CI run `34912172056`, hardware/bench gate `a0279b8c48c51176678229abfa92576b1d1c0c95`, and prototype topology `e45e9b8c32b511d2cd7a89fbeffc8783f2f95fbf` are prospective authority unless a concrete pre-acquisition contradiction is found and explicitly documented.
-3. **Run the minimum-BOM document screen next.** Compare reusable/current 8-channel simultaneous audio interfaces, six-channel raw excitation/piezo paths, physical fret/contact prototype materials/topologies, real-time logger/microcontroller options and safe sync/analog conditioning. Favor the lowest-cost openly documented set that can answer the frozen bench questions; do not buy a commercial MIDI guitar as a substitute for physical truth.
-4. **Record exactly which unresolved criterion makes each physical bench component objectively necessary before procurement.** A component is justified only when document/API evidence cannot establish the required physical behavior. User authorization permits necessary procurement, but not speculative shopping.
-5. **All physical work remains NON_HOLDOUT calibration/engineering.** Do not treat any bench performance as admitted evidence. Basic Pitch/V6/correctness/model feedback must remain inaccessible to calibration decisions.
-6. **Before any real holdout recording, freeze the final calibrated hardware/configuration identities, objective acquisition-QA thresholds, deterministic decoder/config, technique capability/exclusions, reference-only release rule, capture roster/population, rights/provenance and population-binding details.**
+2. **Honor the software-only budget boundary.** Do not shop for, recommend purchasing, contact vendors/performers for paid work, or plan real capture unless the user changes the budget constraint. Existing Vercel/model costs are the practical ceiling.
+3. **Continue only zero-additional-cost preparation that has real future value.** Good targets include remaining deterministic reference/capture schemas, population-binding/governance code, synthetic no-real-correctness harnesses, replay/provenance validation, and GitHub CPU CI within existing available capacity.
+4. **Do not redesign already-frozen gates without a concrete contradiction.** Structural preregistration `067875e3aa1538ff5483b74cc9071b00e9e82b07`, structural CI run `34912172056`, hardware-neutral bench gate `a0279b8c48c51176678229abfa92576b1d1c0c95`, prototype topology `e45e9b8c32b511d2cd7a89fbeffc8783f2f95fbf`, and Stage-0 replay preregistration `c5082e8357e674f401bbc37fd42961e91e5d1606` remain prospective authority.
+5. **Keep synthetic evidence labeled synthetic.** Stage-0 run `34913326360` does not qualify hardware, calibration, a real population or correctness.
+6. **Before any eventual real holdout recording, if budget/hardware later becomes available, freeze the final calibrated hardware/configuration identities, objective acquisition-QA thresholds, deterministic decoder/config, technique capability/exclusions, reference-only release rule, capture roster/population, rights/provenance and population-binding details.**
 7. **For any future real admitted population, structural audit comes before correctness.** Any nonzero blocker makes that population structurally unsuitable; do not listen to DI to rescue it, repair/drop events, replace an admitted take, tune thresholds, or run Basic Pitch/V6/correctness on a failed population.
-8. **Exactly one official correctness run remains the eventual maximum** after all rights, capture-manifest, calibration, structural, population-binding and governance gates pass. No tuning/rerun after correctness exposure.
+8. **Exactly one official correctness run remains the eventual maximum** after all rights, calibration, capture-manifest, structural, population-binding and governance gates pass. No tuning/rerun after correctness exposure.
 9. **Keep closed lines closed.** Do not resume archived V143/Gomyway, GOAT/reference scoring, Guitar-TECHS rescue, GuitarSet/V3, IDMT/V4, V5/FLGD, duration research, protected-song execution, or other explicitly closed/revealed paths unless the user separately and explicitly reopens them.
 
 ## STILL FORBIDDEN
 
-Guitar-TECHS correctness/repair/rescue; archived V143/Gomyway; GOAT/reference scoring; GuitarSet/V3; IDMT/V4; V5/FLGD; duration research; protected-song execution; NC/ND or otherwise restricted corpus use outside rights; rescue via evaluated-audio-derived truth; counting synthetic/effect/duplicate/simultaneous-view derivatives as independent real evidence; changing frozen V6/scoring rules from holdout observations; real-corpus optimizer/threshold sweeps or fine-tuning; treating vendor MIDI as infallible truth; purpose-built calibration/model decisions informed by admitted holdout correctness; Production/customer promotion without untouched external validation + separate policy review. Heavy GPU remains unnecessary for the current purpose-built bench-planning stage.
+Guitar-TECHS correctness/repair/rescue; archived V143/Gomyway; GOAT/reference scoring; GuitarSet/V3; IDMT/V4; V5/FLGD; duration research; protected-song execution; NC/ND or otherwise restricted corpus use outside rights; rescue via evaluated-audio-derived truth; counting synthetic/effect/duplicate/simultaneous-view derivatives as independent real evidence; changing frozen V6/scoring rules from holdout observations; real-corpus optimizer/threshold sweeps or fine-tuning; treating vendor MIDI as infallible truth; purpose-built calibration/model decisions informed by admitted holdout correctness; Production/customer promotion without untouched external validation + separate policy review; **and under the current user budget constraint, all new validation-route hardware/performance/vendor/studio spending is paused.** Heavy GPU remains unnecessary.
 
 ## FRESH-CHAT HANDOFF
 
-Continue only on `songsterr-fresh-pipeline-v1` and begin by rereading this file. Guitar-TECHS remains closed outcome C before correctness; V6 method/scoring remain frozen; no replacement-holdout correctness has been exposed. User authorization at 2026-09-14 19:18 ET keeps the purpose-built route active, but proceed conservatively.
+Continue only on `songsterr-fresh-pipeline-v1` and begin by rereading this file. Guitar-TECHS remains closed outcome C before correctness; V6 method/scoring remain frozen; no replacement-holdout correctness has been exposed.
 
-Capture-manifest V2.1 remains synthetic GitHub CPU PASS at run `34908936464`, job `104191861049`. Reference-blind structural-audit V1 remains synthetic GitHub CPU PASS at integration head `8f4b41ce2cff075a6e7be25032142a0e8288b7be`, run `34912172056`, job `104201857367`. Real reference hardware and NON_HOLDOUT calibration are now prospectively necessary, but the initial commercial screen found no complete authoritative off-the-shelf qualifier. The custom/hybrid NON_HOLDOUT prototype topology is frozen at `e45e9b8c32b511d2cd7a89fbeffc8783f2f95fbf`. The immediate task is the minimum-BOM document screen and procurement-necessity record; no holdout recording, Basic Pitch, V6 or correctness is authorized. Keep `basicPitchAuthorized:false`, `v6Authorized:false`, `correctnessAuthorized:false`, `modelValidationComplete:false`, `customerEligibleEvents:0`, `mayAdvanceDelivery:false`, duration paused, Policy C `UNENROLLED`, and protected-song execution embargoed. Do not reopen V143/Gomyway or GOAT/reference scoring unless separately explicit.
+Capture-manifest V2.1 remains synthetic GitHub CPU PASS at run `34908936464`, job `104191861049`. Reference-blind structural-audit V1 remains synthetic GitHub CPU PASS at integration head `8f4b41ce2cff075a6e7be25032142a0e8288b7be`, run `34912172056`, job `104201857367`. Stage-0 contact replay V1 is now also synthetic GitHub CPU PASS at head `fdcad7bcb3f48dd75630b694f7b27d23b037f016`, run `34913326360`, job `104205441130`, with evidence checkpoint commit `8ecc0601f84c4f7916ce1a8c08ac021fc425be25`.
+
+The user's budget is currently limited to existing Vercel/model costs, so the purpose-built physical route is **software-prepared but hardware-paused**. The immediate task in a fresh chat is to continue only zero-additional-cost software/documentation/synthetic CI that reduces future discretion. Do not buy hardware, recruit performers, run real calibration/holdout capture, Basic Pitch, V6 or correctness. Keep `basicPitchAuthorized:false`, `v6Authorized:false`, `correctnessAuthorized:false`, `modelValidationComplete:false`, `customerEligibleEvents:0`, `mayAdvanceDelivery:false`, duration paused, Policy C `UNENROLLED`, and protected-song execution embargoed. Do not reopen V143/Gomyway or GOAT/reference scoring unless separately explicit.
