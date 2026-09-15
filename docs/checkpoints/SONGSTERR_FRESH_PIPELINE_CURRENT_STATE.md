@@ -1,6 +1,6 @@
 # CURRENT STATE — Songsterr Fresh Pipeline V1
 
-Updated: 2026-09-15 America/Toronto — boundary-aware V2 repair prospectively frozen and implemented; synthetic gate + one real diagnostic authorized but not yet executed
+Updated: 2026-09-15 America/Toronto — boundary-aware V2 repair frozen and implemented; all synthetic gates passed; exactly one authorized real EGFxSet V2 diagnostic is currently IN PROGRESS
 Canonical branch: `songsterr-fresh-pipeline-v1`
 Canonical checkpoint: `docs/checkpoints/SONGSTERR_FRESH_PIPELINE_CURRENT_STATE.md`
 Hardening result: `docs/checkpoints/SONGSTERR_FRESH_PIPELINE_HARDENING_V1_RESULT.md`
@@ -30,7 +30,9 @@ Active V2 PRE: `docs/checkpoints/SONGSTERR_FRESH_BOUNDARY_QUALIFIER_V2_PRE.md`
 
 The user's `Please try the run again` authorization was consumed by run `34938917218`, attempt 1.
 
-The user's subsequent instruction `Lets take what was learned, repair and run again` now authorizes one boundary-repair cycle plus exactly one new non-authoritative EGFxSet V2 diagnostic, but only after the prospectively frozen synthetic gates pass. This new authorization does not change any global field and does not authorize Basic Pitch inference, threshold tuning from the real result, alternate candidates, or repeated real retries.
+The user's subsequent instruction `Lets take what was learned, repair and run again` authorized one boundary-repair cycle plus exactly one new non-authoritative EGFxSet V2 diagnostic, but only after the prospectively frozen synthetic gates passed. Those synthetic gates have now passed and the one real V2 execution has started. Treat this one-run authorization as currently being consumed by run `34940292514`; do NOT start a second run, retry, alternate candidate, threshold variant, or Basic Pitch inference without new explicit user authorization.
+
+This authorization does not change any global field and does not authorize threshold tuning from the real result, alternate candidates, or repeated real retries.
 
 ## HISTORICAL EGFxSET ALL-EVENTS SMOKE — STILL FROZEN FAIL
 
@@ -125,9 +127,42 @@ Implemented, CI-skipped while building the repair:
 - `scripts/songsterr-fresh/test_qualify_basic_pitch_note_births_v2.py`, commit `8842c2cb9b4702de2bbcd25145c864c82447fc7e`
 - `scripts/songsterr-fresh/test_model_note_qualification_v2.mjs`, commit `f7ff6e7b2b1a242a2f513d0b4022d6069cc88eb4`
 
-## NEXT ACTION — AUTHORIZED, NOT YET CONSUMED
+## ACTIVE AUTHORIZED V2 ONE-SHOT — IN PROGRESS
 
-Create one path-triggered successor workflow that first runs the frozen V2 synthetic gates in the exact Python/NumPy/SciPy environment. Only if those gates pass may that same workflow fetch the exact immutable EGFxSet WAV and prior Basic Pitch artifact and execute exactly one V2 real diagnostic.
+Workflow:
+`.github/workflows/songsterr-egfxset-boundary-v2-one-shot.yml`
+
+Workflow creation/execution commit:
+`02414c689b4210771c0f454acc36b86d41e0aafe`
+
+Current run:
+- run `34940292514`
+- job `104287207091`
+- attempt `1`
+- status at this checkpoint write: `in_progress`
+
+Already completed successfully in this run:
+1. checkout frozen V2 branch state;
+2. Node 20 setup;
+3. Python `3.10.21` setup;
+4. frozen DSP deps `numpy==1.26.4`, `scipy==1.15.3`;
+5. V2 structural fail-closed synthetic gate;
+6. V2 boundary DSP synthetic gate;
+7. physical-position ambiguity regression;
+8. immutable prior Basic Pitch artifact fetch + verification.
+
+Therefore the prospective prerequisite gates are GREEN before real-media qualification.
+
+At the time of this checkpoint update, step `Fetch exact frozen EGFxSet member` is in progress. Pending steps in the SAME already-authorized run are:
+1. finish exact EGFxSet archive/member verification;
+2. build carrier structure context from actual WAV duration;
+3. run boundary-aware V2 qualifier exactly once;
+4. build V2 exact-identity qualified evidence exactly once;
+5. adapt/evaluate V2 evidence exactly once;
+6. score the frozen V2 diagnostic rule;
+7. upload immutable V2 diagnostic artifacts.
+
+Basic Pitch MUST NOT be invoked in this run. The immutable prior `[40,68]` proposal artifact is the model input.
 
 Frozen real diagnostic PASS requires:
 - exact inputs;
@@ -139,7 +174,21 @@ Frozen real diagnostic PASS requires:
 - rejected-preserved `[68]`;
 - promoted MIDI 40 maps uniquely to string 6 / fret 0 / reconstructed MIDI 40.
 
-Any other real observation is FAIL and consumes the one real V2 authorization. No same-authorization retry.
+Any other real observation is FAIL and consumes the one real V2 authorization. Do not modify thresholds, boundary rules, candidate identity, or scoring after observing the result.
+
+## FRESH CHAT — EXACT NEXT STEPS
+
+On a fresh chat, start by re-fetching the live `songsterr-fresh-pipeline-v1` branch and this checkpoint. Then:
+
+1. **Do not create or trigger another V2 workflow.** Run `34940292514` is already the user's authorized real V2 execution.
+2. Inspect run `34940292514` / job `104287207091` until it reaches a completed state.
+3. If completed, inspect the exact job steps/logs and fetch the uploaded immutable artifact. Record artifact ID/digest and hashes for result/qualification/evidence outputs.
+4. Read the frozen result exactly as observed. Do not tune, post-filter, retry, switch candidates, rerun Basic Pitch, or reinterpret a FAIL as PASS.
+5. Create a dedicated V2 result checkpoint under `docs/checkpoints/` recording execution identities, exact qualification rows, promotion/rejection outcome, score, artifact hashes, and unchanged global authorization flags.
+6. Update this canonical current-state checkpoint immediately after the result checkpoint, including whether the one real V2 authorization is consumed.
+7. If the run FAILS, perform only non-execution/root-cause analysis unless the user separately authorizes another experiment. Any future rule change must be prospectively frozen and synthetically tested before another real-media run.
+8. If the run PASSES, treat it only as a successful non-authoritative diagnostic. Historical V1/all-events failures remain frozen history, and global `modelValidationComplete/customerEligibleEvents/mayAdvanceDelivery` remain unchanged.
+9. Do not reopen V143/Gomyway, closed datasets, reserved GFN splits, physical procurement/calibration/capture, or official V6/correctness work unless separately authorized.
 
 ## AUTHORITATIVE ROUTE
 
