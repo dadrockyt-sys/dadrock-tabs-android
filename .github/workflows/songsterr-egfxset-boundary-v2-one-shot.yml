@@ -1,0 +1,337 @@
+name: Songsterr EGFxSet Boundary V2 One-Shot
+
+on:
+  push:
+    branches:
+      - songsterr-fresh-pipeline-v1
+    paths:
+      - .github/workflows/songsterr-egfxset-boundary-v2-one-shot.yml
+
+permissions:
+  contents: read
+  actions: read
+
+jobs:
+  egfxset-boundary-v2-one-shot:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+      - name: Checkout prospectively frozen V2 branch state
+        uses: actions/checkout@v4
+
+      - name: Set up Node 20
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - name: Set up frozen Python 3.10.21
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.10.21'
+
+      - name: Install frozen DSP dependencies only
+        id: deps
+        shell: bash
+        run: |
+          set -euo pipefail
+          python -m pip install --disable-pip-version-check 'numpy==1.26.4' 'scipy==1.15.3'
+          python - <<'PY'
+          from importlib.metadata import version
+          expected = {'numpy': '1.26.4', 'scipy': '1.15.3'}
+          for package, wanted in expected.items():
+              actual = version(package)
+              if actual != wanted:
+                  raise SystemExit(f'Unexpected {package} version: {actual}, wanted {wanted}')
+              print(f'{package}={actual}')
+          PY
+
+      - name: Run V2 structural fail-closed synthetic gate
+        id: structural
+        run: node scripts/songsterr-fresh/test_model_note_qualification_v2.mjs
+
+      - name: Run V2 boundary DSP synthetic gate
+        id: synthetic
+        run: python scripts/songsterr-fresh/test_qualify_basic_pitch_note_births_v2.py
+
+      - name: Verify physical position ambiguity regression
+        id: position_regression
+        run: node scripts/songsterr-fresh/test_physical_position_ambiguity_v1.mjs
+
+      - name: Fetch and verify immutable prior Basic Pitch artifact
+        id: model
+        env:
+          GH_TOKEN: ${{ github.token }}
+        shell: bash
+        run: |
+          set -euo pipefail
+          mkdir -p /tmp/egfxset-boundary-v2
+          curl --fail --location --retry 0 \
+            -H "Authorization: Bearer ${GH_TOKEN}" \
+            -H 'Accept: application/vnd.github+json' \
+            -H 'X-GitHub-Api-Version: 2022-11-28' \
+            "https://api.github.com/repos/${GITHUB_REPOSITORY}/actions/artifacts/10383413992/zip" \
+            --output /tmp/egfxset-boundary-v2/prior-artifact.zip
+          echo 'c380d39bdee5c3ec2827c1ae682e83b71eabe3bc738fa27016d3bb409afe566a  /tmp/egfxset-boundary-v2/prior-artifact.zip' | sha256sum --check --strict
+          unzip -p /tmp/egfxset-boundary-v2/prior-artifact.zip basic-pitch.json > /tmp/egfxset-boundary-v2/basic-pitch.json
+          echo '24bffdb267c580625cb8049bdbe6bc1b74549ae8e048a759f26eb24e49d6dc51  /tmp/egfxset-boundary-v2/basic-pitch.json' | sha256sum --check --strict
+          node --input-type=module <<'NODE'
+          import fs from 'node:fs';
+          const p = JSON.parse(fs.readFileSync('/tmp/egfxset-boundary-v2/basic-pitch.json', 'utf8'));
+          if (p?.noteInferenceIdentity?.sha256 !== '2e30685479444a8120dc3490c9c41329a89e57aa16979de42053b89a4bbb0444') {
+            throw new Error('Immutable note identity mismatch');
+          }
+          const mids = (p.notes ?? []).map((n) => n.midi);
+          if (JSON.stringify(mids) !== JSON.stringify([40, 68])) throw new Error(`Unexpected immutable proposals: ${JSON.stringify(mids)}`);
+          if (p?.diagnostics?.predictInvocationCount !== 1) throw new Error('Prior artifact did not record exactly one inference');
+          console.log(JSON.stringify({ priorProposalMidis: mids, noteIdentitySha256: p.noteInferenceIdentity.sha256 }));
+          NODE
+
+      - name: Fetch exact frozen EGFxSet member
+        id: media
+        shell: bash
+        run: |
+          set -euo pipefail
+          curl --fail --location --retry 0 \
+            'https://zenodo.org/records/7044411/files/Clean.zip?download=1' \
+            --output /tmp/egfxset-boundary-v2/Clean.zip
+          echo 'cdb1b401960f56becc8640387910e78a  /tmp/egfxset-boundary-v2/Clean.zip' | md5sum --check --strict
+          unzip -p /tmp/egfxset-boundary-v2/Clean.zip 'Clean/Bridge/6-0.wav' > /tmp/egfxset-boundary-v2/6-0.wav
+          test -s /tmp/egfxset-boundary-v2/6-0.wav
+          echo '0256fd3c55c577970a4c2a06d760cf5798591adecffaa5e790addc38d1f0378e  /tmp/egfxset-boundary-v2/6-0.wav' | sha256sum --check --strict
+          test "$(wc -c < /tmp/egfxset-boundary-v2/6-0.wav)" -eq 722976
+
+      - name: Build frozen carrier structure context from actual WAV duration
+        id: context
+        shell: bash
+        run: |
+          set -euo pipefail
+          python - <<'PY'
+          import json
+          from scipy.io import wavfile
+          sr, audio = wavfile.read('/tmp/egfxset-boundary-v2/6-0.wav')
+          duration = len(audio) / float(sr)
+          with open('/tmp/egfxset-boundary-v2/duration.json', 'w', encoding='utf-8') as f:
+              json.dump({'sampleRate': int(sr), 'sampleCount': int(len(audio)), 'durationSeconds': duration}, f, indent=2)
+              f.write('\n')
+          print(json.dumps({'sampleRate': int(sr), 'sampleCount': int(len(audio)), 'durationSeconds': duration}))
+          PY
+          node --input-type=module <<'NODE'
+          import fs from 'node:fs';
+          import { buildStructureMap } from './songsterr_pipeline/structureMap.mjs';
+          import { buildStructureIdentity } from './songsterr_pipeline/structureIdentity.mjs';
+          const d = JSON.parse(fs.readFileSync('/tmp/egfxset-boundary-v2/duration.json', 'utf8'));
+          const structureMap = buildStructureMap({
+            durationSeconds: d.durationSeconds,
+            tempoSegments: [{ start: 0, end: null, bpm: 120 }],
+            meterSegments: [{ start: 0, end: null, numerator: 4, denominator: 4 }],
+            feelSegments: [{ start: 0, end: null, feel: 'straight' }],
+            confidence: { overall: 1, tempo: 1, meter: 1, downbeats: 1, measures: 1, feel: 1 },
+          });
+          const context = {
+            contract: 'songsterr-fresh-note-evidence-context-v1',
+            version: 1,
+            referenceBlind: true,
+            structureFrozen: true,
+            structureAcceptance: { accepted: true, purpose: 'carrier-only-not-timing-correctness-evidence' },
+            structureIdentity: buildStructureIdentity(structureMap),
+            structureMap,
+            provenance: {
+              purpose: 'carrier-only-for-boundary-v2-note-qualification-smoke',
+              timingCorrectnessEvidence: false,
+              durationDerivedFromExactWav: true,
+              fixedCarrierTempoBpm: 120,
+              fixedCarrierMeter: '4/4',
+              fixedCarrierFeel: 'straight',
+            },
+          };
+          fs.writeFileSync('/tmp/egfxset-boundary-v2/context.json', JSON.stringify(context, null, 2) + '\n');
+          console.log(JSON.stringify({ structureIdentity: context.structureIdentity, durationSeconds: d.durationSeconds }));
+          NODE
+
+      - name: Run boundary-aware V2 qualifier exactly once
+        id: qualify
+        shell: bash
+        run: |
+          set -euo pipefail
+          python scripts/songsterr-fresh/qualify_basic_pitch_note_births_v2.py \
+            --audio /tmp/egfxset-boundary-v2/6-0.wav \
+            --model-notes /tmp/egfxset-boundary-v2/basic-pitch.json \
+            --output /tmp/egfxset-boundary-v2/qualification-v2.json
+
+      - name: Build V2 exact-identity qualified evidence exactly once
+        id: build
+        shell: bash
+        run: |
+          set -euo pipefail
+          node scripts/songsterr-fresh/build_qualified_isolated_polyphonic_note_evidence_v2.mjs \
+            /tmp/egfxset-boundary-v2/context.json \
+            /tmp/egfxset-boundary-v2/basic-pitch.json \
+            /tmp/egfxset-boundary-v2/qualification-v2.json \
+            /tmp/egfxset-boundary-v2/qualified-evidence-v2.json
+
+      - name: Adapt and evaluate V2 evidence exactly once
+        id: adapt
+        shell: bash
+        run: |
+          set -euo pipefail
+          node scripts/songsterr-fresh/adapt_qualified_note_evidence_v2.mjs \
+            /tmp/egfxset-boundary-v2/context.json \
+            /tmp/egfxset-boundary-v2/qualified-evidence-v2.json \
+            /tmp/egfxset-boundary-v2/adapted-evidence-v2.json
+
+      - name: Score frozen V2 diagnostic rule
+        id: score
+        if: always()
+        env:
+          DEPS_OUTCOME: ${{ steps.deps.outcome }}
+          STRUCTURAL_OUTCOME: ${{ steps.structural.outcome }}
+          SYNTHETIC_OUTCOME: ${{ steps.synthetic.outcome }}
+          POSITION_REGRESSION_OUTCOME: ${{ steps.position_regression.outcome }}
+          MODEL_OUTCOME: ${{ steps.model.outcome }}
+          MEDIA_OUTCOME: ${{ steps.media.outcome }}
+          CONTEXT_OUTCOME: ${{ steps.context.outcome }}
+          QUALIFY_OUTCOME: ${{ steps.qualify.outcome }}
+          BUILD_OUTCOME: ${{ steps.build.outcome }}
+          ADAPT_OUTCOME: ${{ steps.adapt.outcome }}
+        shell: bash
+        run: |
+          set -euo pipefail
+          node --input-type=module <<'NODE'
+          import fs from 'node:fs';
+          import crypto from 'node:crypto';
+          import { enumeratePlayablePositions } from './songsterr_pipeline/index.mjs';
+
+          const root = '/tmp/egfxset-boundary-v2';
+          const read = (name) => {
+            const path = `${root}/${name}`;
+            return fs.existsSync(path) ? JSON.parse(fs.readFileSync(path, 'utf8')) : null;
+          };
+          const sha = (name) => {
+            const path = `${root}/${name}`;
+            return fs.existsSync(path) ? crypto.createHash('sha256').update(fs.readFileSync(path)).digest('hex') : null;
+          };
+
+          const model = read('basic-pitch.json');
+          const qualification = read('qualification-v2.json');
+          const raw = read('qualified-evidence-v2.json');
+          const adapted = read('adapted-evidence-v2.json');
+          const rawProposalMidis = (model?.notes ?? []).map((n) => n.midi);
+          const rows = qualification?.proposals ?? [];
+          const statusByMidi = Object.fromEntries(rows.map((row) => [String(row.midi), row.status]));
+          const row40 = rows.find((row) => row.midi === 40) ?? null;
+          const row68 = rows.find((row) => row.midi === 68) ?? null;
+          const insufficientCount = rows.filter((row) => row.status === 'insufficient').length;
+          const promotedMidis = (adapted?.promotedEvents ?? []).map((event) => event.midi);
+          const rejectedPreservedMidis = (raw?.onsets ?? [])
+            .filter((onset) => onset.classification === 'rejected')
+            .flatMap((onset) => (onset.candidates ?? []).map((candidate) => candidate.midi));
+          const unresolvedOnsetCount = adapted?.metrics?.unresolvedOnsetCount ?? null;
+          const config = { role: 'lead', tuningMidi: [40, 45, 50, 55, 59, 64], capoFret: 0 };
+          const promotedPositions = promotedMidis.map((midi) => ({ midi, positions: enumeratePlayablePositions(midi, config) }));
+
+          const stepOutcomes = {
+            deps: process.env.DEPS_OUTCOME ?? 'unknown',
+            structural: process.env.STRUCTURAL_OUTCOME ?? 'unknown',
+            synthetic: process.env.SYNTHETIC_OUTCOME ?? 'unknown',
+            positionRegression: process.env.POSITION_REGRESSION_OUTCOME ?? 'unknown',
+            model: process.env.MODEL_OUTCOME ?? 'unknown',
+            media: process.env.MEDIA_OUTCOME ?? 'unknown',
+            context: process.env.CONTEXT_OUTCOME ?? 'unknown',
+            qualify: process.env.QUALIFY_OUTCOME ?? 'unknown',
+            build: process.env.BUILD_OUTCOME ?? 'unknown',
+            adapt: process.env.ADAPT_OUTCOME ?? 'unknown',
+          };
+          const scriptsPass = Object.values(stepOutcomes).every((value) => value === 'success');
+          const inputsPass = scriptsPass
+            && sha('basic-pitch.json') === '24bffdb267c580625cb8049bdbe6bc1b74549ae8e048a759f26eb24e49d6dc51'
+            && qualification?.provenance?.audioSha256 === '0256fd3c55c577970a4c2a06d760cf5798591adecffaa5e790addc38d1f0378e'
+            && model?.noteInferenceIdentity?.sha256 === '2e30685479444a8120dc3490c9c41329a89e57aa16979de42053b89a4bbb0444'
+            && JSON.stringify(rawProposalMidis) === JSON.stringify([40, 68])
+            && qualification?.contract === 'songsterr-fresh-model-note-qualification-v2'
+            && qualification?.version === 2
+            && qualification?.candidateConfidenceUsedForDecision === false
+            && qualification?.provenance?.syntheticPreContextUsed === false;
+          const qualificationPass = rows.length === 2
+            && statusByMidi['40'] === 'corroborated'
+            && statusByMidi['68'] === 'rejected'
+            && insufficientCount === 0
+            && row40?.provenance?.qualificationMode === 'clip-start-one-sided-pitch-presence'
+            && row40?.provenance?.syntheticPreContextUsed === false
+            && row40?.provenance?.leftBoundaryZeroPaddingSamples === 0
+            && row68?.provenance?.qualificationMode === 'normal-in-clip-onset-birth';
+          const promotionPass = JSON.stringify(promotedMidis) === JSON.stringify([40])
+            && JSON.stringify(rejectedPreservedMidis) === JSON.stringify([68])
+            && unresolvedOnsetCount === 0;
+          const positionPass = promotedPositions.length === 1
+            && promotedPositions[0].midi === 40
+            && promotedPositions[0].positions.length === 1
+            && promotedPositions[0].positions[0].stringNumberHighToLow === 6
+            && promotedPositions[0].positions[0].fret === 0
+            && promotedPositions[0].positions[0].reconstructedMidi === 40;
+          const overallPass = inputsPass && qualificationPass && promotionPass && positionPass;
+
+          const result = {
+            contract: 'songsterr-fresh-egfxset-boundary-v2-one-shot-v1',
+            nonAuthoritative: true,
+            historicalAllEventsSmokeRemains: 'FAIL_NON_AUTHORIZING_SMOKE',
+            historicalHardenedV1Remains: 'FAIL_HARDENED_NON_AUTHORIZING_DIAGNOSTIC',
+            basicPitchInvokedThisRun: false,
+            immutableInput: {
+              priorRun: 34936227380,
+              priorArtifact: 10383413992,
+              priorArtifactSha256: 'c380d39bdee5c3ec2827c1ae682e83b71eabe3bc738fa27016d3bb409afe566a',
+              basicPitchJsonSha256: sha('basic-pitch.json'),
+              noteIdentitySha256: model?.noteInferenceIdentity?.sha256 ?? null,
+              audioSha256: qualification?.provenance?.audioSha256 ?? null,
+              rawProposalMidis,
+            },
+            observed: {
+              qualificationRows: rows,
+              statusByMidi,
+              insufficientCount,
+              promotedMidis,
+              rejectedPreservedMidis,
+              unresolvedOnsetCount,
+              promotedPositions,
+              evaluatorStatus: adapted?.evaluation?.status ?? null,
+              evaluatorFailureReasons: adapted?.evaluation?.failureReasons ?? null,
+            },
+            execution: { stepOutcomes },
+            scoring: {
+              inputs: inputsPass ? 'PASS_INPUTS' : 'FAIL_INPUTS',
+              qualification: qualificationPass ? 'PASS_QUALIFICATION' : 'FAIL_QUALIFICATION',
+              promotion: promotionPass ? 'PASS_PROMOTION' : 'FAIL_PROMOTION',
+              position: positionPass ? 'PASS_POSITION' : 'FAIL_POSITION',
+              overall: overallPass ? 'PASS_BOUNDARY_V2_NON_AUTHORIZING_DIAGNOSTIC' : 'FAIL_BOUNDARY_V2_NON_AUTHORIZING_DIAGNOSTIC',
+            },
+            authorizationEffects: {
+              basicPitchAuthorized: false,
+              v6Authorized: false,
+              correctnessAuthorized: false,
+              modelValidationComplete: false,
+              customerEligibleEvents: 0,
+              mayAdvanceDelivery: false,
+            },
+          };
+
+          fs.mkdirSync(root, { recursive: true });
+          fs.writeFileSync(`${root}/result-v2.json`, JSON.stringify(result, null, 2) + '\n');
+          console.log(JSON.stringify(result, null, 2));
+          if (!overallPass) process.exit(1);
+          NODE
+
+      - name: Upload immutable V2 diagnostic artifacts
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: songsterr-egfxset-boundary-v2-one-shot
+          if-no-files-found: warn
+          retention-days: 30
+          path: |
+            /tmp/egfxset-boundary-v2/result-v2.json
+            /tmp/egfxset-boundary-v2/duration.json
+            /tmp/egfxset-boundary-v2/context.json
+            /tmp/egfxset-boundary-v2/basic-pitch.json
+            /tmp/egfxset-boundary-v2/qualification-v2.json
+            /tmp/egfxset-boundary-v2/qualified-evidence-v2.json
+            /tmp/egfxset-boundary-v2/adapted-evidence-v2.json
