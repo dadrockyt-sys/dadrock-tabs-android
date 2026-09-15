@@ -1,6 +1,6 @@
 name: Songsterr Model Note Qualification V1 Tests
 
-# Validation revision 2: boundary padding must enable evaluation; it does not force corroboration.
+# Validation revision 3: qualification, independent DSP, and physical-position truth boundaries.
 on:
   push:
     branches:
@@ -29,6 +29,9 @@ jobs:
 
       - name: Verify model note qualification V1
         run: node scripts/songsterr-fresh/test_model_note_qualification_v1.mjs
+
+      - name: Verify physical position ambiguity V1
+        run: node scripts/songsterr-fresh/test_physical_position_ambiguity_v1.mjs
 
       - name: Set up Python 3.10.21
         uses: actions/setup-python@v5
