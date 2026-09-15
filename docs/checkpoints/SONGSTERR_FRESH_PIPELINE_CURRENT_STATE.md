@@ -18,6 +18,7 @@ Key records:
 - GuitarDuets/EG-Solo/Guitar Style/GPT batch: `docs/checkpoints/SONGSTERR_FRESH_V6_PREMEDIA_BATCH_GUITARDUETS_EGSOLO_GUITARSTYLE_GPT.md`
 - 2025–2026 no-new-candidate search: `docs/checkpoints/SONGSTERR_FRESH_V6_PREMEDIA_2025_2026_SEARCH_NO_NEW_CANDIDATE.md`
 - V3 physical-template synthetic PRE: `docs/checkpoints/SONGSTERR_FRESH_V3_PHYSICAL_TEMPLATE_SYNTHETIC_PRE.md`, frozen commit `0292869c1e1e1bc138f2fdff4e839326c0e5d082`
+- V3 physical-template synthetic iteration-1 result: `docs/checkpoints/SONGSTERR_FRESH_V3_PHYSICAL_TEMPLATE_SYNTHETIC_RESULT.md`, frozen FAIL commit `6a6965730250f2000cc480ede2ed3d2638b0df44`
 
 ## HARD SCOPE
 
@@ -96,7 +97,7 @@ Fail any gate -> `REJECT_PREMEDIA`. Public downloadability alone is not a licens
 
 ## AG-PT-SET — PRE-MEDIA PASS, THEN FROZEN STRUCTURAL C
 
-AG-PT-set cleared pre-media ingress because public metadata established real human guitar, CC BY 4.0, released onset/audio/pitch/string fields and acceptable independent reference provenance.
+AG-PT-set cleared pre-media ingress because public metadata established real monophonic human guitar, CC BY 4.0, released onset/audio/pitch/string fields and acceptable independent reference provenance.
 
 Reference-blind PRE: `docs/checkpoints/SONGSTERR_FRESH_V6_AG_PT_SET_REFERENCE_BLIND_AUDIT_PRE.md`, commit `0a84d6be1373d538b251663b1fa7af8f33bbf378`. Only structural/alignment/inventory inspection was authorized; Basic Pitch and V6 correctness were forbidden.
 
@@ -200,9 +201,22 @@ Read-only V2/V6 lineage review:
 - Candidates surviving that physical-template gate enter the shared NNLS dictionary; the separate leave-one-out necessity protection remains `necessityFraction >= 0.01`. V3 research targets the physical-template plausibility stage only; it must preserve the NNLS necessity protection rather than weakening it.
 - Frozen V6 synthetic fixtures already exercise ordinary/detuned notes, octave/harmonic aliases, neighbor mismatch, continuing-plus-new notes, dyad/triad polyphony, unrelated transient/noise, a weak selected note under a stronger owner, silence/low-noise, and pre/post-context fail-closed cases. These protections are inputs to the prospective V3 gates, not post-result tuning targets.
 
-Prospective V3 PRE is now frozen at commit `0292869c1e1e1bc138f2fdff4e839326c0e5d082`, created before any V3 research implementation or V3 synthetic execution. Its immutable iteration-1 boundary allows only the isolated V3 module/test, the future V3 synthetic result checkpoint, and state-only updates to this current checkpoint. The frozen V6/V2 implementations and all workflow files remain read-only.
+Prospective V3 PRE is frozen at commit `0292869c1e1e1bc138f2fdff4e839326c0e5d082`, created before any V3 research implementation or V3 synthetic execution. Its immutable iteration-1 boundary allowed only the isolated V3 module/test, the V3 synthetic result checkpoint, and state-only updates to this current checkpoint. The frozen V6/V2 implementations and all workflow files remained read-only.
 
-Next authorized action: create the two isolated V3 research files exactly under the PRE boundary, review their diff against the PRE, and only then run the dedicated synthetic test. No Basic Pitch, V6 correctness, real-media/model, workflow, or closed-line execution is authorized.
+### Iteration 1 — frozen FAIL
+
+- first module commit: `3f679a0f701d23e6ad15dc567e2728e89a4abd87`
+- complete first implementation/test pair head: `f34f256ec9747d65eee6381b00b1324336e433c4`
+- frozen result checkpoint commit: `6a6965730250f2000cc480ede2ed3d2638b0df44`
+- local execution files were verified byte-for-byte against Git blobs `45b8f3b66df7500824071489205a732dfe05d759` (module) and `71289b9ed6654199e40936a1e9ccbde5dbf0054c` (test)
+- the first synthetic run was fail-fast and stopped at `octave_alias_lower_a3_selected_a4`: frozen expected composite FAIL, observed composite PASS
+- all prospective PASS cases reached before that point had passed, including weak/zero-fundamental support, clip-start-post-only support, true-polyphony cases and the nine-case timbre/detuning matrix
+- no iteration-1 algorithm, constant, fixture, expected decision, PRE, module or test was changed after observing the failure; no second iteration-1 run was used to search for a rescue
+- no workflow, Basic Pitch, V6 correctness, real-media/model, protected-song, closed-line, V143/Gomyway or heavy-compute execution occurred
+
+Iteration 1 is permanently `FAIL_SYNTHETIC_ALIAS_PROTECTION`. This does not alter any frozen historical result and does not authorize real evaluation.
+
+Next permitted action: if continuing V3 synthetic research, create a **new prospective iteration-2 PRE** before any revision. A successor may investigate explicit lower-owner/subharmonic explanation while preserving true polyphony and the unchanged necessity concept. Do not patch or rerun iteration 1.
 
 ## AUTHORITATIVE ROUTE
 
