@@ -1,0 +1,129 @@
+name: Songsterr Fresh Reference Evidence Derivation Replay Population V1
+
+on:
+  workflow_dispatch:
+  push:
+    branches:
+      - songsterr-fresh-pipeline-v1
+    paths:
+      - "scripts/songsterr-fresh/reference_evidence_derivation_replay_population_v1.py"
+      - "scripts/songsterr-fresh/test_reference_evidence_derivation_replay_population_v1.py"
+      - ".github/workflows/songsterr-fresh-reference-evidence-derivation-replay-population-v1.yml"
+
+jobs:
+  synthetic-derivation-replay-population-v1:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Compile replay validator and tests
+        run: |
+          python -m py_compile \
+            scripts/songsterr-fresh/reference_evidence_derivation_replay_population_v1.py \
+            scripts/songsterr-fresh/test_reference_evidence_derivation_replay_population_v1.py
+      - name: Run synthetic contract tests first
+        run: python scripts/songsterr-fresh/test_reference_evidence_derivation_replay_population_v1.py
+      - name: Generate frozen executable-package two-attempt chain
+        run: |
+          python - <<'PY'
+          import importlib.util
+          import json
+          from pathlib import Path
+
+          scripts = Path("scripts/songsterr-fresh")
+          fixture_path = scripts / "test_reference_evidence_derivation_replay_population_v1.py"
+          spec = importlib.util.spec_from_file_location("replay_fixture", fixture_path)
+          assert spec and spec.loader
+          fixture = importlib.util.module_from_spec(spec)
+          spec.loader.exec_module(fixture)
+
+          chain = fixture.build_chain(2)
+          Path("synthetic-replay-v23-result.json").write_bytes(chain["v23_raw"])
+          Path("synthetic-replay-v23-result.sha256").write_text(chain["v23_sha"])
+          Path("synthetic-replay-completeness-result.json").write_bytes(chain["completeness_raw"])
+          Path("synthetic-replay-completeness-result.sha256").write_text(chain["completeness_sha"])
+          Path("synthetic-replay-provenance-result.json").write_bytes(chain["provenance_raw"])
+          Path("synthetic-replay-provenance-result.sha256").write_text(chain["provenance_sha"])
+          Path("synthetic-replay-decoder.py").write_bytes(chain["decoder_code"])
+          Path("synthetic-replay-decoder-config.bin").write_bytes(chain["decoder_config"])
+
+          for index, attempt in enumerate(chain["replay_attempts"], start=1):
+              binding_name = f"synthetic-replay-binding-{index}.json"
+              pitch_name = f"synthetic-replay-pitch-{index}.bin"
+              birth_name = f"synthetic-replay-birth-{index}.bin"
+              spec_name = f"synthetic-replay-attempt-{index}.json"
+              Path(binding_name).write_bytes(fixture._render(attempt["structuralAuditInputs"]))
+              Path(pitch_name).write_bytes(attempt["pitchEvidence"])
+              Path(birth_name).write_bytes(attempt["birthEvidence"])
+              Path(spec_name).write_text(json.dumps({
+                  "structuralAuditInputsPath": binding_name,
+                  "structuralAuditInputsSha256": attempt["expectedStructuralAuditInputsSha256"],
+                  "pitchEvidencePath": pitch_name,
+                  "birthEvidencePath": birth_name,
+              }, sort_keys=True, separators=(",", ":")), encoding="utf-8")
+          PY
+      - name: Run official frozen derivation replay validator
+        run: |
+          python scripts/songsterr-fresh/reference_evidence_derivation_replay_population_v1.py \
+            --v23-result synthetic-replay-v23-result.json \
+            --v23-result-sha256 "$(cat synthetic-replay-v23-result.sha256)" \
+            --population-completeness-result synthetic-replay-completeness-result.json \
+            --population-completeness-result-sha256 "$(cat synthetic-replay-completeness-result.sha256)" \
+            --provenance-result synthetic-replay-provenance-result.json \
+            --provenance-result-sha256 "$(cat synthetic-replay-provenance-result.sha256)" \
+            --decoder-code synthetic-replay-decoder.py \
+            --decoder-configuration synthetic-replay-decoder-config.bin \
+            --attempt-spec synthetic-replay-attempt-1.json \
+            --attempt-spec synthetic-replay-attempt-2.json \
+            --output synthetic-reference-evidence-derivation-replay-population-v1-result.json
+      - name: Print frozen result summary
+        run: |
+          python - <<'PY'
+          import hashlib
+          import json
+          from pathlib import Path
+
+          path = Path("synthetic-reference-evidence-derivation-replay-population-v1-result.json")
+          result = json.loads(path.read_text(encoding="utf-8"))
+          print("contract", result["contract"])
+          print("contractValid", result["contractValid"])
+          print("pythonRuntimeVersion", result["pythonRuntimeVersion"])
+          print("admittedBindingCount", result["admittedBindingCount"])
+          print("submittedReplayCount", result["submittedReplayCount"])
+          print("verifiedReplayCount", result["verifiedReplayCount"])
+          print("v23ResultSha256", result["captureManifestV23ValidationResultSha256"])
+          print("v23PopulationSha256", result["captureManifestV23AdmittedPopulationSha256"])
+          print("completenessResultSha256", result["structuralPopulationCompletenessResultSha256"])
+          print("completenessSha256", result["structuralPopulationCompletenessSha256"])
+          print("provenanceResultSha256", result["calibrationProvenanceResultSha256"])
+          print("packageBindingSha256", result["calibrationPackageBindingSha256"])
+          print("decoderId", result["decoderId"])
+          print("decoderSoftwareVersion", result["decoderSoftwareVersion"])
+          print("decoderCodeSha256", result["decoderCodeSha256"])
+          print("decoderConfigurationSha256", result["decoderConfigurationSha256"])
+          print("attemptReplays", json.dumps(result["attemptReplays"], sort_keys=True))
+          print("populationIdentityVersion", result["populationIdentityVersion"])
+          print("populationDerivationReplaySha256", result["populationDerivationReplaySha256"])
+          print("populationDerivationReplayEstablished", result["populationDerivationReplayEstablished"])
+          print("resultSha256", hashlib.sha256(path.read_bytes()).hexdigest())
+          print(json.dumps({
+              "realCalibrationAuthorized": result["realCalibrationAuthorized"],
+              "realHoldoutCaptureAuthorized": result["realHoldoutCaptureAuthorized"],
+              "basicPitchAuthorized": result["basicPitchAuthorized"],
+              "v6Authorized": result["v6Authorized"],
+              "correctnessAuthorized": result["correctnessAuthorized"],
+              "modelValidationComplete": result["modelValidationComplete"],
+              "customerEligibleEvents": result["customerEligibleEvents"],
+              "mayAdvanceDelivery": result["mayAdvanceDelivery"],
+          }, sort_keys=True))
+          PY
+      - name: Upload canonical derivation replay result
+        uses: actions/upload-artifact@v4
+        with:
+          name: songsterr-fresh-reference-evidence-derivation-replay-population-v1
+          path: synthetic-reference-evidence-derivation-replay-population-v1-result.json
+          if-no-files-found: error
+          retention-days: 30
