@@ -1,10 +1,11 @@
 # CURRENT STATE — Songsterr Fresh Pipeline V1
 
-Updated: 2026-09-15 America/Toronto — hardened EGFxSet one-shot executed; inputs and all processing stages passed, but genuine near-start MIDI 40 was rejected by the left-boundary DSP policy
+Updated: 2026-09-15 America/Toronto — boundary-aware V2 repair prospectively frozen and implemented; synthetic gate + one real diagnostic authorized but not yet executed
 Canonical branch: `songsterr-fresh-pipeline-v1`
 Canonical checkpoint: `docs/checkpoints/SONGSTERR_FRESH_PIPELINE_CURRENT_STATE.md`
 Hardening result: `docs/checkpoints/SONGSTERR_FRESH_PIPELINE_HARDENING_V1_RESULT.md`
-Latest real-audio diagnostic: `docs/checkpoints/SONGSTERR_FRESH_EGFXSET_HARDENED_ONE_SHOT_RESULT.md`
+Latest completed real-audio diagnostic: `docs/checkpoints/SONGSTERR_FRESH_EGFXSET_HARDENED_ONE_SHOT_RESULT.md`
+Active V2 PRE: `docs/checkpoints/SONGSTERR_FRESH_BOUNDARY_QUALIFIER_V2_PRE.md`
 
 ## HARD SCOPE
 
@@ -27,7 +28,9 @@ Latest real-audio diagnostic: `docs/checkpoints/SONGSTERR_FRESH_EGFXSET_HARDENED
 - `customerEligibleEvents:0`
 - `mayAdvanceDelivery:false`
 
-The user's `Please try the run again` authorization was consumed by run `34938917218`, attempt 1. No retry is authorized.
+The user's `Please try the run again` authorization was consumed by run `34938917218`, attempt 1.
+
+The user's subsequent instruction `Lets take what was learned, repair and run again` now authorizes one boundary-repair cycle plus exactly one new non-authoritative EGFxSet V2 diagnostic, but only after the prospectively frozen synthetic gates pass. This new authorization does not change any global field and does not authorize Basic Pitch inference, threshold tuning from the real result, alternate candidates, or repeated real retries.
 
 ## HISTORICAL EGFxSET ALL-EVENTS SMOKE — STILL FROZEN FAIL
 
@@ -53,7 +56,7 @@ Core design remains:
 - `insufficient` remains unresolved/fail-closed;
 - Basic Pitch confidence is diagnostic-only.
 
-## LATEST HARDENED REAL-AUDIO DIAGNOSTIC — FAIL AT LEFT BOUNDARY
+## LATEST COMPLETED HARDENED REAL-AUDIO DIAGNOSTIC — FROZEN FAIL AT LEFT BOUNDARY
 
 PRE: `docs/checkpoints/SONGSTERR_FRESH_EGFXSET_HARDENED_ONE_SHOT_PRE.md`, commit `8b741a8b25b61966c832860f4d91f42a018f898e`.
 
@@ -72,35 +75,71 @@ Execution:
 
 All infrastructure and pipeline stages completed successfully. No Basic Pitch inference occurred; the prior immutable `[40,68]` artifact was reused.
 
-Observed qualifier result:
+Observed V1 qualifier result:
 - MIDI 40 at `0.011609977324263039 s`: `rejected`, reason `OK_SELECTED_TEMPLATE_NOT_PHYSICALLY_PLAUSIBLE`, left zero-padding `3072` samples, necessity fraction `0.0`;
-- MIDI 68 at `0.3599092970521542 s`: `rejected`, reason `OK`, zero left-padding, necessity fraction `0.000513675778819313`;
-- candidate confidence not used for either decision.
+- MIDI 68 at `0.3599092970521542 s`: `rejected`, reason `OK`, zero left-padding, necessity fraction `0.000513675778819313`.
 
-Frozen score:
+Frozen V1 hardened score:
 - `PASS_INPUTS`
 - `FAIL_QUALIFICATION`
 - `FAIL_PROMOTION`
 - `FAIL_POSITION`
 - overall `FAIL_HARDENED_NON_AUTHORIZING_DIAGNOSTIC`
 
-Raw proposals `[40,68]` were preserved. Rejected evidence preserved both. No events promoted.
+Raw proposals `[40,68]` were preserved. Rejected evidence preserved both. No events promoted. Never reinterpret this historical V1 result.
 
-### Key finding
+## ACTIVE BOUNDARY QUALIFIER V2 REPAIR — FROZEN BEFORE REAL EXECUTION
 
-The original extra-note weakness is partly solved: MIDI 68 no longer auto-promotes and is independently rejected.
+PRE checkpoint:
+`docs/checkpoints/SONGSTERR_FRESH_BOUNDARY_QUALIFIER_V2_PRE.md`
+commit `819d7a9a855d6f067aa40a007fdd0570d231d782`.
 
-The new concrete weak point is the left clip boundary. The genuine MIDI 40 proposal occurs only about 11.6 ms after clip start. The inherited V6 onset-birth classifier requires about 81.3 ms of left context at 44.1 kHz. The wrapper inserted 3072 synthetic zero samples to make the classifier evaluable, then allowed the resulting analysis to produce a hard negative. This is not safe: fabricated pre-context is not genuine physical pre-onset evidence.
+The concrete repair removes synthetic pre-context ownership from clip-start decisions.
 
-Do not lower thresholds, hand-promote MIDI 40, or retroactively change this result.
+### Normal in-clip path
 
-## NEXT ENGINEERING DIRECTION — NO REAL RUN AUTHORIZED
+When genuine required left context exists, use the existing frozen V6 complex-harmonic onset-birth classifier unchanged.
 
-Before another real-media run, prospectively design a boundary-aware qualification policy using synthetic/non-EGFxSet fixtures only.
+### Clip-start path
 
-Minimum semantic correction: when genuine required left context is absent, synthetic zero padding must not by itself be sufficient to support a hard rejection. Boundary cases should remain fail-closed unless a separately specified boundary-safe positive/negative classifier has adequate real evidence.
+When onset is earlier than the inherited `3584`-sample left-context requirement:
 
-Any boundary classifier or policy change must be frozen and synthetically tested before another EGFxSet execution. Any subsequent real-media run requires new explicit user authorization.
+- never zero-pad or fabricate pre-audio;
+- use exactly `8192` genuine post-onset samples at 44.1 kHz;
+- demean + Hann + 8192-point real FFT magnitude;
+- inherit unchanged playable MIDI `40..88`, six-harmonic dictionary, RMS/feature-energy floors, physical-template fundamental ratio `0.20`, and necessity minimum `0.01`;
+- use full-vs-selected-removed NNLS necessity;
+- detect lower-fundamental harmonic owners for harmonics 2..6 within ±50 cents;
+- a lower owner dominates only when it has positive coefficient, necessity >=0.01, and necessity >= selected-candidate necessity;
+- corroborate only if the selected template is physically valid, selected coefficient >0, selected necessity >=0.01, and no dominant lower harmonic owner exists;
+- missing genuine post-context or numerical/support failure remains `insufficient`.
+
+No special-case MIDI values, EGFxSet labels, candidate confidences, or observed real-audio DSP measurements are embedded in the rule.
+
+Implemented, CI-skipped while building the repair:
+
+- `scripts/songsterr-fresh/clip_start_pitch_presence_v1.py`, commit `e24aea935058281c5d75b3a700759e055607e735`
+- `scripts/songsterr-fresh/qualify_basic_pitch_note_births_v2.py`, commit `eeed1e8b11a53bfc4e69967de0ad49d0655867ed`
+- `scripts/songsterr-fresh/build_qualified_isolated_polyphonic_note_evidence_v2.mjs`, commit `5ff87dbf962acc3dad1d474da013299019bb6f03`
+- `scripts/songsterr-fresh/adapt_qualified_note_evidence_v2.mjs`, commit `ead4f6c88c4a0337621cb7cfa0072ab540031fe3`
+- `scripts/songsterr-fresh/test_qualify_basic_pitch_note_births_v2.py`, commit `8842c2cb9b4702de2bbcd25145c864c82447fc7e`
+- `scripts/songsterr-fresh/test_model_note_qualification_v2.mjs`, commit `f7ff6e7b2b1a242a2f513d0b4022d6069cc88eb4`
+
+## NEXT ACTION — AUTHORIZED, NOT YET CONSUMED
+
+Create one path-triggered successor workflow that first runs the frozen V2 synthetic gates in the exact Python/NumPy/SciPy environment. Only if those gates pass may that same workflow fetch the exact immutable EGFxSet WAV and prior Basic Pitch artifact and execute exactly one V2 real diagnostic.
+
+Frozen real diagnostic PASS requires:
+- exact inputs;
+- raw proposals `[40,68]`;
+- MIDI 40 `corroborated`;
+- MIDI 68 `rejected`;
+- zero insufficient proposals;
+- promoted `[40]`;
+- rejected-preserved `[68]`;
+- promoted MIDI 40 maps uniquely to string 6 / fret 0 / reconstructed MIDI 40.
+
+Any other real observation is FAIL and consumes the one real V2 authorization. No same-authorization retry.
 
 ## AUTHORITATIVE ROUTE
 
