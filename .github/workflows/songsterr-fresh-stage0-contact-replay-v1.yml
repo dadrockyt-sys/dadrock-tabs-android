@@ -1,0 +1,24 @@
+name: Songsterr Fresh Stage-0 Contact Replay V1
+
+on:
+  workflow_dispatch:
+  push:
+    branches:
+      - songsterr-fresh-pipeline-v1
+    paths:
+      - "scripts/songsterr-fresh/stage0_contact_replay_v1.py"
+      - "scripts/songsterr-fresh/test_stage0_contact_replay_v1.py"
+      - ".github/workflows/songsterr-fresh-stage0-contact-replay-v1.yml"
+
+jobs:
+  synthetic-contact-replay:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Compile validator
+        run: python -m py_compile scripts/songsterr-fresh/stage0_contact_replay_v1.py scripts/songsterr-fresh/test_stage0_contact_replay_v1.py
+      - name: Run synthetic contract tests
+        run: python scripts/songsterr-fresh/test_stage0_contact_replay_v1.py
