@@ -1,21 +1,26 @@
 # CURRENT STATE — Songsterr Fresh Pipeline V1
 
-Updated: 2026-09-15 America/Toronto — boundary-aware V2 repair completed; all synthetic gates passed; one authorized real EGFxSet V2 diagnostic executed and froze as FAIL because real MIDI-40 E2 failed the inherited physical-template plausibility gate; user-directed V6 replacement-holdout search rejected GuitarJam, URMP, GAPS, and EGDB pre-media, while AG-PT-set is the first candidate to clear every frozen pre-media metadata/license/alignment/provenance gate; AG-PT-set media remains untouched pending a frozen one-shot PRE and explicit real-media/model authorization
+Updated: 2026-09-15 America/Toronto — boundary-aware V2 remains frozen FAIL on the authorized EGFxSet diagnostic; replacement-holdout search rejected GuitarJam, URMP, GAPS, and EGDB pre-media; AG-PT-set cleared pre-media gates but its frozen reference-blind structural audit closed as decision C because the released annotation `audio_file_path` values did not bind to unique archive WAV members under the prospectively frozen resolver. No Basic Pitch or V6 correctness was executed on AG-PT-set.
+
 Canonical branch: `songsterr-fresh-pipeline-v1`
 Canonical checkpoint: `docs/checkpoints/SONGSTERR_FRESH_PIPELINE_CURRENT_STATE.md`
 Hardening result: `docs/checkpoints/SONGSTERR_FRESH_PIPELINE_HARDENING_V1_RESULT.md`
-V2 PRE: `docs/checkpoints/SONGSTERR_FRESH_BOUNDARY_QUALIFIER_V2_PRE.md`
-Latest real-audio result: `docs/checkpoints/SONGSTERR_FRESH_BOUNDARY_QUALIFIER_V2_RESULT.md`
+Boundary V2 PRE: `docs/checkpoints/SONGSTERR_FRESH_BOUNDARY_QUALIFIER_V2_PRE.md`
+Boundary V2 result: `docs/checkpoints/SONGSTERR_FRESH_BOUNDARY_QUALIFIER_V2_RESULT.md`
+AG-PT-set pre-media clearance: `docs/checkpoints/SONGSTERR_FRESH_V6_AG_PT_SET_PREMEDIA_CLEARANCE.md`
+AG-PT-set reference-blind PRE: `docs/checkpoints/SONGSTERR_FRESH_V6_AG_PT_SET_REFERENCE_BLIND_AUDIT_PRE.md`
+AG-PT-set reference-blind result: `docs/checkpoints/SONGSTERR_FRESH_V6_AG_PT_SET_REFERENCE_BLIND_AUDIT_RESULT.md`
 
 ## HARD SCOPE
 
 - Work only on `songsterr-fresh-pipeline-v1`; do not change `main` or Production.
-- Archived V143/Gomyway and GOAT/reference scoring remain closed unless explicitly reopened.
+- Archived V143/Gomyway and GOAT/reference scoring remain closed unless the user explicitly reopens them.
 - Guitar-TECHS, GuitarSet/V3, IDMT/V4, V5/FLGD, protected-song work and other closed lines remain closed.
 - Reserved Guitar Fretboard Notes `deb` / `ele_natural` remain untouched.
 - `songsterr_pipeline/` remains deterministic/model-free/process-free/network-free; model/DSP/research stays under `scripts/songsterr-fresh/`.
 - Budget checkpoint `e7f0146d4f01605b642f8aeaa100962254b5ce58` remains binding; physical calibration/holdout work remains paused.
 - Synthetic/smoke diagnostics are never authoritative correctness validation.
+- Do not rewrite or soften any frozen historical FAIL/C result.
 
 ## GLOBAL AUTHORIZATION — UNCHANGED
 
@@ -28,188 +33,47 @@ Latest real-audio result: `docs/checkpoints/SONGSTERR_FRESH_BOUNDARY_QUALIFIER_V
 - `customerEligibleEvents:0`
 - `mayAdvanceDelivery:false`
 
-The user's `Please try the run again` authorization was consumed by run `34938917218`, attempt 1.
+The user's `Please try the run again` authorization was consumed by EGFxSet hardened-V1 run `34938917218`, attempt 1.
 
-The user's subsequent instruction `Lets take what was learned, repair and run again` authorized one boundary-repair cycle plus exactly one new non-authoritative EGFxSet V2 diagnostic after prospectively frozen synthetic gates. The repair was completed, the synthetic gates passed, and the real authorization is now fully consumed by run `34940292514`, attempt 1.
+The user's later instruction `Lets take what was learned, repair and run again` authorized one boundary-repair cycle plus exactly one new non-authoritative EGFxSet V2 diagnostic after prospectively frozen synthetic gates. That authorization was consumed by run `34940292514`, attempt 1.
 
-There is **no authorized retry, threshold variation, alternate candidate, Basic Pitch rerun, or modified-real-rule execution** under that instruction.
+There is no remaining authorization for another EGFxSet run, Basic Pitch rerun, V6 correctness run, threshold variation, modified real rule, or candidate substitution under those instructions.
 
-## HISTORICAL EGFxSET ALL-EVENTS SMOKE — STILL FROZEN FAIL
+## HISTORICAL EGFxSET ALL-EVENTS SMOKE — FROZEN FAIL
 
-Candidate: EGFxSet v1.0 `Clean.zip#Clean/Bridge/6-0.wav`, member SHA-256 `0256fd3c55c577970a4c2a06d760cf5798591adecffaa5e790addc38d1f0378e`, truth string 6 / fret 0 / MIDI 40.
+Candidate: EGFxSet v1.0 `Clean.zip#Clean/Bridge/6-0.wav`, truth string 6 / fret 0 / MIDI 40.
 
-Repaired Basic Pitch run `34936227380` emitted immutable proposals `[40,68]`; `basic-pitch.json` SHA-256 is `24bffdb267c580625cb8049bdbe6bc1b74549ae8e048a759f26eb24e49d6dc51`; note identity SHA-256 is `2e30685479444a8120dc3490c9c41329a89e57aa16979de42053b89a4bbb0444`.
+Repaired Basic Pitch run `34936227380` emitted immutable proposals `[40,68]`.
 
-Historical score remains `PASS_RUNTIME`, `FAIL_PITCH`, `FAIL_POSITION`, overall `FAIL_NON_AUTHORIZING_SMOKE`. Never rewrite it into a PASS.
+Historical score remains:
+
+- `PASS_RUNTIME`
+- `FAIL_PITCH`
+- `FAIL_POSITION`
+- overall `FAIL_NON_AUTHORIZING_SMOKE`
+
+Never rewrite this as a PASS.
 
 ## PIPELINE HARDENING V1 — CODE/SYNTHETIC GREEN
 
-Combined regression run `34938422696`, job `104281318739`, passed:
-- confidence-independent qualification;
-- exact identity/population fail-closed behavior;
-- explicit rejected-proposal preservation;
-- physical-position ambiguity reporting;
-- synthetic DSP note-birth tests.
+Combined regression run `34938422696`, job `104281318739`, passed the hardened proposal/qualification regressions.
 
-Core design remains:
+Frozen core design:
+
 - Basic Pitch events are proposals only;
 - only independently `corroborated` proposals promote;
-- `rejected` proposals remain preserved but do not promote;
+- `rejected` proposals are preserved but do not promote;
 - `insufficient` remains unresolved/fail-closed;
-- Basic Pitch confidence is diagnostic-only.
+- Basic Pitch confidence is diagnostic-only;
+- physical-position ambiguity remains explicit.
 
-## HARDENED V1 REAL-AUDIO DIAGNOSTIC — FROZEN FAIL AT LEFT BOUNDARY
+## HARDENED V1 REAL-AUDIO DIAGNOSTIC — FROZEN FAIL
 
-PRE: `docs/checkpoints/SONGSTERR_FRESH_EGFXSET_HARDENED_ONE_SHOT_PRE.md`, commit `8b741a8b25b61966c832860f4d91f42a018f898e`.
+PRE: `docs/checkpoints/SONGSTERR_FRESH_EGFXSET_HARDENED_ONE_SHOT_PRE.md`
+Result: `docs/checkpoints/SONGSTERR_FRESH_EGFXSET_HARDENED_ONE_SHOT_RESULT.md`
+Run: `34938917218`
 
-Result: `docs/checkpoints/SONGSTERR_FRESH_EGFXSET_HARDENED_ONE_SHOT_RESULT.md`, commit `e2935b5f9c3ecb14baf770e492d03ea9d8fcfc3b`.
-
-Run `34938917218`, job `104282855445`, artifact `10384459031` reused the immutable `[40,68]` Basic Pitch artifact and invoked no Basic Pitch inference.
-
-V1 rejected both:
-- MIDI 40 near clip start after inserting 3072 zero-padding samples, reason `OK_SELECTED_TEMPLATE_NOT_PHYSICALLY_PLAUSIBLE`;
-- MIDI 68 normally, necessity fraction `0.000513675778819313`.
-
-Frozen V1 score:
-- `PASS_INPUTS`
-- `FAIL_QUALIFICATION`
-- `FAIL_PROMOTION`
-- `FAIL_POSITION`
-- overall `FAIL_HARDENED_NON_AUTHORIZING_DIAGNOSTIC`.
-
-That V1 result identified the unsafe synthetic-precontext boundary policy and remains immutable history.
-
-## BOUNDARY QUALIFIER V2 — REPAIR COMPLETE
-
-PRE checkpoint:
-`docs/checkpoints/SONGSTERR_FRESH_BOUNDARY_QUALIFIER_V2_PRE.md`
-commit `819d7a9a855d6f067aa40a007fdd0570d231d782`.
-
-The V2 repair prospectively removed synthetic pre-context ownership from clip-start decisions.
-
-### Normal in-clip path
-
-When genuine required left context exists, the existing frozen V6 complex-harmonic onset-birth classifier remains unchanged.
-
-### Clip-start path
-
-When onset is earlier than the inherited `3584`-sample left-context requirement:
-
-- never zero-pad or fabricate pre-audio;
-- use exactly `8192` genuine post-onset samples at 44.1 kHz;
-- demean + Hann + 8192-point real FFT magnitude;
-- inherit playable MIDI `40..88`, six-harmonic dictionary, RMS/feature-energy floors, physical-template fundamental ratio `0.20`, and necessity minimum `0.01`;
-- use full-vs-selected-removed NNLS necessity;
-- detect lower-fundamental harmonic owners for harmonics 2..6 within ±50 cents;
-- corroborate only if selected template is physically valid, selected coefficient >0, selected necessity >=0.01, and no dominant lower harmonic owner exists;
-- missing genuine post-context or numerical/support failure remains `insufficient`.
-
-No special-case MIDI values, EGFxSet labels, candidate confidences, or real-result measurements were embedded in the rule.
-
-Implemented:
-
-- `scripts/songsterr-fresh/clip_start_pitch_presence_v1.py`, commit `e24aea935058281c5d75b3a700759e055607e735`
-- `scripts/songsterr-fresh/qualify_basic_pitch_note_births_v2.py`, commit `eeed1e8b11a53bfc4e69967de0ad49d0655867ed`
-- `scripts/songsterr-fresh/build_qualified_isolated_polyphonic_note_evidence_v2.mjs`, commit `5ff87dbf962acc3dad1d474da013299019bb6f03`
-- `scripts/songsterr-fresh/adapt_qualified_note_evidence_v2.mjs`, commit `ead4f6c88c4a0337621cb7cfa0072ab540031fe3`
-- `scripts/songsterr-fresh/test_qualify_basic_pitch_note_births_v2.py`, commit `8842c2cb9b4702de2bbcd25145c864c82447fc7e`
-- `scripts/songsterr-fresh/test_model_note_qualification_v2.mjs`, commit `f7ff6e7b2b1a242a2f513d0b4022d6069cc88eb4`.
-
-## V2 SYNTHETIC PREREQUISITE GATES — ALL PASS
-
-Workflow `.github/workflows/songsterr-egfxset-boundary-v2-one-shot.yml`, commit `02414c689b4210771c0f454acc36b86d41e0aafe`, ran the synthetic gates before fetching real EGFxSet media.
-
-Passed under Python `3.10.21`, NumPy `1.26.4`, SciPy `1.15.3`, Node 20:
-
-- V2 structural/fail-closed builder: 4 cases PASS;
-- V2 boundary DSP suite: 8 cases PASS;
-- ordinary in-clip E2 birth / later harmonic => `[corroborated,rejected]`;
-- confidence inversion invariant;
-- true clip-start MIDI 40, 45, 52, 68 each corroborated;
-- clip-start E2-only aliases `[40,52,68]` => `[corroborated,rejected,rejected]`;
-- genuine clip-start E2 + G#4 polyphony => `[corroborated,corroborated]`;
-- noise did not corroborate;
-- missing post-context remained insufficient;
-- synthetic pre-context was never used;
-- physical-position ambiguity regression PASS.
-
-Only after all these gates passed did the one real V2 diagnostic proceed.
-
-## LATEST REAL-AUDIO DIAGNOSTIC — BOUNDARY V2 FROZEN FAIL
-
-Dedicated result:
-`docs/checkpoints/SONGSTERR_FRESH_BOUNDARY_QUALIFIER_V2_RESULT.md`
-result checkpoint commit `42b8fc30de468b123d6c5f5d7df6d5a43db86c81`.
-
-Execution:
-
-- workflow `.github/workflows/songsterr-egfxset-boundary-v2-one-shot.yml`
-- workflow execution commit `02414c689b4210771c0f454acc36b86d41e0aafe`
-- run `34940292514`
-- job `104287207091`
-- attempt `1`
-- artifact `10385620104`
-- artifact ZIP SHA-256 `f7a48267c299eaf3bba564c05913c95d41d07026ebf4245e9b40762274202948`
-- artifact size `11816` bytes.
-
-Captured hashes:
-
-- `result-v2.json`: `1416df0edbc9d1b534ac2c4727526ebcf52227327caace10d744ada64236a6cf`
-- `qualification-v2.json`: `7d9354196d6bcb12c48f22e003f7d0f7ff9e46d429245319a016722ef3257eda`
-- `qualified-evidence-v2.json`: `83fc1f197842c97794a34fcb3fd2ab4985a5b4849271d6f4b1654b307af347d8`
-- `adapted-evidence-v2.json`: `e1de6cd744d1b66208931601d63df4d723c819465c52f902b5743b19d71f0c80`
-- `context.json`: `a9ef99bb7e580abda9006dbe4ff2fdf31510773498dc5e449c6d6839a7b1768f`
-- `duration.json`: `bef1b4c35c25acaf3dcdd77dafa41fd9298b758d37268bbbffce853e52b6b180`
-- immutable `basic-pitch.json`: `24bffdb267c580625cb8049bdbe6bc1b74549ae8e048a759f26eb24e49d6dc51`.
-
-All infrastructure and processing steps before final scoring succeeded. Basic Pitch was not invoked.
-
-### Observed MIDI 40
-
-- note `basic-pitch-note-000000`
-- start `0.011609977324263039 s`
-- V2 mode `clip-start-one-sided-pitch-presence`
-- method `clip-start-post-spectrum-harmonic-necessity-v1`
-- status `rejected`
-- reason `BOUNDARY_SELECTED_TEMPLATE_NOT_PHYSICALLY_PLAUSIBLE`
-- original onset sample `512`
-- clip-start window `8192` real samples
-- left zero padding `0`
-- `syntheticPreContextUsed:false`
-- analysis RMS `0.2769195787794421`
-- selected coefficient `0.0`
-- necessity fraction `0.0`
-- no dominant lower harmonic owner implicated
-- Basic Pitch candidate confidence not used.
-
-The selected MIDI-40 template failed the inherited physical-template plausibility gate before NNLS feature/necessity analysis. The wrapper did not persist the internal template-ratio value, so do not invent that number after the fact.
-
-### Observed MIDI 68
-
-- note `basic-pitch-note-000001`
-- start `0.3599092970521542 s`
-- normal in-clip unchanged V6 path
-- status `rejected`
-- reason `OK`
-- analysis RMS `0.22146136772942196`
-- innovation energy `3.007380617012349`
-- feature energy `2.4146259263190646`
-- selected coefficient `0.06436904984371984`
-- necessity fraction `0.000513675778819313` (< frozen `0.01`).
-
-Thus MIDI 68 remains correctly suppressed and never promotes.
-
-### V2 promotion / score
-
-Observed:
-
-- raw proposals `[40,68]`
-- statuses `{40: rejected, 68: rejected}`
-- insufficient count `0`
-- promoted MIDI list `[]`
-- rejected-preserved list `[40,68]`
-- unresolved onset count `0`
-- promoted positions `[]`.
+V1 rejected both immutable proposals. MIDI 40 was analyzed with synthetic left zero-padding and failed the physical-template plausibility gate; MIDI 68 failed frozen necessity.
 
 Frozen score:
 
@@ -217,85 +81,202 @@ Frozen score:
 - `FAIL_QUALIFICATION`
 - `FAIL_PROMOTION`
 - `FAIL_POSITION`
-- overall `FAIL_BOUNDARY_V2_NON_AUTHORIZING_DIAGNOSTIC`.
+- overall `FAIL_HARDENED_NON_AUTHORIZING_DIAGNOSTIC`
 
-The user's one real V2 authorization is consumed. Do not retry this run or alter its score.
+That result identified the unsafe synthetic-precontext boundary policy. It remains immutable history.
 
-## KEY LEARNING / CURRENT CONCRETE WEAK POINT
+## BOUNDARY QUALIFIER V2 — REPAIR COMPLETE, REAL RESULT FROZEN FAIL
 
-The zero-padding boundary defect is fixed: V2 used no fabricated pre-context and passed broad prospective boundary tests.
+PRE: `docs/checkpoints/SONGSTERR_FRESH_BOUNDARY_QUALIFIER_V2_PRE.md`
+PRE commit: `819d7a9a855d6f067aa40a007fdd0570d231d782`
 
-The remaining concrete weakness is now the **physical harmonic-template plausibility model**. The inherited single fundamental-to-strongest-harmonic physical gate generalizes poorly to this real electric-guitar E2 timbre in the clip-start post spectrum, rejecting the expected fundamental before the NNLS necessity stage. This is a timbre/template-model generalization problem, not another missing-context problem.
+V2 prospectively removed fabricated left context from clip-start decisions. Its synthetic prerequisite suite passed ordinary in-clip onset-birth, confidence inversion, true clip-start fundamentals, alias suppression, real polyphony, noise rejection, missing-context fail-closed behavior, and physical-position ambiguity regression.
 
-Do **not** lower the frozen `0.20` ratio, remove that gate, special-case MIDI 40, or tune from this EGFxSet observation under the consumed authorization.
+Dedicated real result: `docs/checkpoints/SONGSTERR_FRESH_BOUNDARY_QUALIFIER_V2_RESULT.md`
+Result commit: `42b8fc30de468b123d6c5f5d7df6d5a43db86c81`
+Run: `34940292514`
+Job: `104287207091`
+Artifact: `10385620104`
 
-## NEXT SAFE ENGINEERING DIRECTION — NO REAL RUN AUTHORIZED
+Observed immutable proposals remained `[40,68]`.
 
-Permitted without a new real-media authorization:
+- MIDI 40 used the genuine one-sided clip-start path with zero fabricated pre-context and was rejected as `BOUNDARY_SELECTED_TEMPLATE_NOT_PHYSICALLY_PLAUSIBLE` before NNLS necessity.
+- MIDI 68 used the unchanged normal in-clip path and remained rejected with necessity fraction `0.000513675778819313` below frozen minimum `0.01`.
 
-- inspect frozen code and captured metadata;
-- design a prospective V3 physical-template criterion against broad synthetic/non-EGFxSet timbre variation;
-- test candidate V3 rules only on independent synthetic/non-EGFxSet fixtures;
-- preserve harmonic-alias rejection, genuine polyphony recovery, confidence independence, exact identity, and fail-closed behavior.
+Frozen V2 score:
 
-A plausible V3 research direction is replacing the single fundamental-to-maximum-harmonic plausibility test with a timbre-robust multi-harmonic/support criterion, but the exact rule must be established independently of this EGFxSet result and frozen before any further real-media execution.
+- `PASS_INPUTS`
+- `FAIL_QUALIFICATION`
+- `FAIL_PROMOTION`
+- `FAIL_POSITION`
+- overall `FAIL_BOUNDARY_V2_NON_AUTHORIZING_DIAGNOSTIC`
 
-Any further EGFxSet/model/media experiment requires **new explicit prospective user authorization**. Do not rerun Basic Pitch, the V2 workflow, or a modified real rule without that authorization.
+The zero-padding boundary defect is fixed. The remaining concrete EGFxSet weakness is the inherited physical harmonic-template plausibility model. Do not lower the frozen `0.20` ratio, remove that gate, special-case MIDI 40, or tune from the EGFxSet observation.
 
-## USER-DIRECTED V6 REPLACEMENT-HOLDOUT SEARCH — GUITARJAM REJECTED PRE-MEDIA
+Any future EGFxSet/model/media experiment requires a new explicit prospective authorization.
 
-The separate user-directed V6 audit instruction permits metadata/license/alignment search after Guitar-TECHS decision C, but does not alter the global real-media/correctness authorization fields above.
+## V6 REPLACEMENT-HOLDOUT SEARCH — CLOSED CANDIDATES
 
-Checkpoint: `docs/checkpoints/SONGSTERR_FRESH_V6_GUITARJAM_PREMEDIA_REJECTION.md`, commit `ff9e82791df33ca48e355df555a25190104b2454`.
+### GuitarJam — REJECT_PREMEDIA
 
-GuitarJam public metadata establishes approximately 2.5 hours / 580 clips of clean monophonic electric-guitar DI, WAV 44.1 kHz 16-bit, with repository metadata declaring CC0-1.0. Its public dataset description/repository does not establish synchronized pre-existing note-event ground truth aligned to those performances. Frozen V6 scoring cannot manufacture or infer the holdout reference.
+Checkpoint: `docs/checkpoints/SONGSTERR_FRESH_V6_GUITARJAM_PREMEDIA_REJECTION.md`
 
-Decision: **REJECT BEFORE MEDIA ACCESS**. No GuitarJam WAV/reference was downloaded or opened; no Basic Pitch/V6 correctness ran; no frozen method/scoring rule changed; no Modal, Vercel heavy-GPU, or L4 work occurred.
+Real monophonic guitar and usable licensing were established, but public evidence did not establish synchronized pre-existing note-event ground truth aligned to the exact performances. No media/model run occurred.
 
-Guitar-TECHS run `34754519541`, job `103716527380` was rechecked live on 2026-09-15 and remains `completed/success`; its frozen decision C remains closed and must not be scored.
+### URMP / GAPS / EGDB — REJECT_PREMEDIA
 
-## USER-DIRECTED V6 REPLACEMENT-HOLDOUT SEARCH — PRE-MEDIA BATCH 2
+Checkpoint: `docs/checkpoints/SONGSTERR_FRESH_V6_PREMEDIA_BATCH_URMP_GAPS_EGDB.md`
 
-Checkpoint: `docs/checkpoints/SONGSTERR_FRESH_V6_PREMEDIA_BATCH_URMP_GAPS_EGDB.md`, commit `9a20dcde71f954d4a1704dfca2985e91366f8cc6`.
+- URMP: no guitar in the corpus instrumentation.
+- GAPS: licensing/use restrictions and model-assisted alignment provenance fail the frozen ingress rule.
+- EGDB: no usable public dataset license established.
 
-The frozen ingress rule remains: before any candidate media access, public evidence must establish a real guitar performance, usable public licensing, synchronized note events aligned to the exact performance, and sufficiently independent reference provenance for frozen V6 scoring.
+No candidate payload was opened and no V6 correctness ran for these pre-media rejections.
 
-Metadata-only dispositions:
+## AG-PT-SET — PRE-MEDIA PASS, THEN REFERENCE-BLIND DECISION C
 
-- **URMP — REJECT_PREMEDIA:** official corpus instrumentation contains strings, woodwinds, and brass but no guitar; therefore it fails the real-guitar domain gate despite strong note-level ground truth.
-- **GAPS — REJECT_PREMEDIA:** real guitar and aligned MIDI are established, but the official terms restrict use to non-commercial research by the named individual/group and prohibit transfer/distribution without permission. Its high-resolution alignment also uses DTW plus fine alignment to activations from an existing transcription model, so it does not satisfy the frozen independent-reference requirement.
-- **EGDB — REJECT_PREMEDIA:** public metadata establishes real electric-guitar performances and aligned note annotations, but the public project page/repository does not establish a usable dataset license. Public downloadability is not a license grant. Because licensing already fails, alignment independence was not adjudicated.
+### Pre-media clearance
 
-For all three candidates: no audio/video/reference payload was downloaded or opened; no Basic Pitch ran; no V6 correctness ran; no frozen method/scoring rule changed; no EGFxSet execution occurred; no V143/Gomyway activity occurred.
+Checkpoint: `docs/checkpoints/SONGSTERR_FRESH_V6_AG_PT_SET_PREMEDIA_CLEARANCE.md`
+Clearance checkpoint lineage includes commit `636403d0d168700cb77e36462d8f71caf9bc2809`.
 
-## USER-DIRECTED V6 REPLACEMENT-HOLDOUT SEARCH — AG-PT-SET CLEARS PRE-MEDIA GATES
+AG-PT-set was the first current replacement candidate to clear all frozen pre-media gates:
 
-Checkpoint: `docs/checkpoints/SONGSTERR_FRESH_V6_AG_PT_SET_PREMEDIA_CLEARANCE.md`, commit `636403d0d168700cb77e36462d8f71caf9bc2809`.
+- real monophonic acoustic/electro-acoustic human guitar performances;
+- Zenodo record `10.5281/zenodo.10159492` under CC BY 4.0;
+- released note-level onset/audio/pitch/string references;
+- reference provenance independent of Basic Pitch/V6 for ingress purposes.
 
-AG-PT-set is the first candidate in the current replacement search to clear all frozen pre-media gates:
+That clearance was only admission to prospective structural planning.
 
-- **real guitar — PASS:** real monophonic acoustic/electro-acoustic guitar performances by multiple human players on multiple physical guitars;
-- **usable public license — PASS:** Zenodo record `10.5281/zenodo.10159492` was directly inspected on 2026-09-15 and reports Open Access under Creative Commons Attribution 4.0 International (`CC BY 4.0` / `CC-BY-4.0`);
-- **exact synchronized note reference — PASS:** released `note_labels.csv` ties each onset to the exact WAV and includes onset seconds/samples, ground-truth MIDI pitch, string number, playing technique and intensity; per-file onset/pitch label files are also described;
-- **independent provenance — PASS for ingress:** pitched content was prospectively prescribed by string/fret/note sequence; five musician annotators manually corrected and millisecond-aligned onset labels to the actual recordings. `aubioonset` only seeded candidate onset marks, and known note number/pitch/sequence plus a pitch detector were used to find annotation mistakes. The final scoring reference is pre-existing and independent of Basic Pitch/V6.
+### Frozen reference-blind PRE
 
-Decision: **PASS_PREMEDIA**. This is admission to prospective planning only, not permission to touch the data or run the model.
+`docs/checkpoints/SONGSTERR_FRESH_V6_AG_PT_SET_REFERENCE_BLIND_AUDIT_PRE.md`
+PRE commit: `0a84d6be1373d538b251663b1fa7af8f33bbf378`
 
-AG-PT-set archive/media/annotation payloads remain untouched: no 6.7-GB ZIP click/download, no WAV opened, no label payload opened, no Basic Pitch, no V6 correctness, no EGFxSet run, and no frozen scoring change.
+The PRE allowed only a reference-blind structural/alignment/inventory audit. Basic Pitch and V6 correctness were explicitly forbidden.
 
-Before any AG-PT-set media access, freeze a dedicated one-shot PRE that defines candidate selection from metadata, exact reference fields, sample-rate handling, immutable scoring, and no rerun/tuning/candidate substitution after access; then obtain explicit user authorization for the real-media/model action.
+Frozen archive identity:
+
+- `aGPTset_z.zip`
+- expected MD5 `1dff8103f9ad6e1a86cee2e5e39cbe87`
+- CC BY 4.0
+
+Frozen A/B/C rule:
+
+- A: released timing/source pairing structurally synchronized as-is;
+- B: only a deterministic metadata-implied conversion is required;
+- C: pairing/timing is ambiguous or would require learned/post-hoc correction; reject and do not score.
+
+### Execution history
+
+The audit workflow was added in commit `1d37950d03e26af6fcdf3a905aa08e2f863ee878` with a path-scoped `push` trigger. That commit automatically started the first audit.
+
+Authoritative first-started audit:
+
+- run `35020989444`
+- job `104556302921`
+- head `1d37950d03e26af6fcdf3a905aa08e2f863ee878`
+- artifact `10418038649`
+- artifact ZIP SHA-256 `eefea849f7431ffa20262ce5e1b893dd96ae93f2df0d695b59b056c257f495e4`
+- conclusion `success`
+
+A later trigger commit `6125e000a16a0bb44dfa69721f2120d75e8cfc63` started a duplicate execution while the first was still running:
+
+- run `35021035914`
+- job `104556457264`
+- artifact `10417543492`
+- artifact ZIP SHA-256 `4d55de96b83db084a08862125c8f8444bd2d3a641d4b93552c741757c692e549`
+- conclusion `success`
+
+The two ZIP containers differ, but every inner result file is byte-identical. The second run is duplicate history only and must not be counted as an independent validation replicate.
+
+### Frozen observed identities
+
+Archive:
+
+- size `6749621615` bytes
+- MD5 `1dff8103f9ad6e1a86cee2e5e39cbe87` — exact PRE match
+- SHA-256 `6d03ee80f53e64e703b64f58526b6465264032fcc195aea9ad1058a7ebefba64`
+
+Annotation table:
+
+- `aGPTset/metadata/note_labels.csv`
+- SHA-256 `75502d20e5149641eb4d3449240413673ace6885a5c822df38760df422e98fa1`
+- `32592` rows
+
+Frozen row filter admitted `24180` pitched/onset-labeled reference rows.
+
+### Frozen structural result
+
+The prospective exact/suffix resolver could not bind any admitted released `audio_file_path` value to exactly one archive `.wav` member.
+
+Observed:
+
+- admitted reference rows: `24180`
+- admitted WAVs: `0`
+- anomalies: `24180`
+- fatal anomalies: `24180`
+- fatal type: `missing_or_ambiguous_audio`
+- source WAVs structurally inspected: `0`
+- Basic Pitch runs: `0`
+- V6 correctness runs: `0`
+
+Representative released path value:
+
+`acoustic_guitar_pitched_allstring1_naturalharmonics_mf_DavRos_20200820.wav`
+
+Because no WAV identity could be bound, the audit did not reach sample-rate/timing or signal/onset alignment checks. This is a source-pairing structural C, not a V6 correctness failure and not a claim that the underlying dataset audio itself is unsynchronized.
+
+The frozen artifact also contains some integer `pitch_midi` values outside conventional MIDI `0..127`. No post-access reinterpretation is permitted under the frozen PRE.
+
+### Frozen AG-PT-set decision
+
+Result checkpoint: `docs/checkpoints/SONGSTERR_FRESH_V6_AG_PT_SET_REFERENCE_BLIND_AUDIT_RESULT.md`
+Result commit: `89ad50b10c37cece15fbcd03db50672bfad8ea92`
+
+Decision: **C**
+
+Frozen reason:
+
+`structural timing/source anomaly requires fail-closed rejection`
+
+AG-PT-set therefore does not advance to V6 scoring in this audit attempt.
+
+Do not repair the resolver and rerun this audit as though the C result never happened. A new AG-PT-set structural-binding experiment would require a new prospective PRE and explicit authorization appropriate to new data access.
+
+## CURRENT SAFE ENGINEERING DIRECTION
+
+Permitted without new real-model authorization:
+
+- inspect frozen code and already-captured metadata/artifacts;
+- continue metadata/license/alignment/provenance search for another untouched real-guitar holdout under the existing frozen ingress requirements;
+- design synthetic/non-EGFxSet V3 physical-template research without touching closed real media;
+- improve documentation/checkpointing and prevent accidental duplicate workflow execution, provided no closed real run is triggered.
+
+Not permitted without new explicit authorization:
+
+- any Basic Pitch run on AG-PT-set or EGFxSet;
+- any V6 correctness run;
+- any AG-PT-set structural re-audit or resolver-repair execution against the real archive;
+- any EGFxSet retry or modified real rule;
+- Modal, Vercel heavy-GPU, L4 or other external heavy compute for closed real-media correctness;
+- physical procurement/calibration/capture;
+- protected-song execution.
 
 ## FRESH CHAT — EXACT NEXT STEPS
 
 On a fresh chat:
 
 1. re-fetch live `songsterr-fresh-pipeline-v1` and this checkpoint;
-2. treat V2 run `34940292514` and result checkpoint as frozen completed evidence;
-3. do not trigger another EGFxSet or Basic Pitch run without new explicit authorization;
-4. Guitar-TECHS remains decision C; GuitarJam, URMP, GAPS, and EGDB remain closed pre-media rejections; AG-PT-set is **PASS_PREMEDIA** and is the current prospective V6 replacement-holdout candidate;
-5. do not access AG-PT-set media/reference payloads or run V6 yet; first create and commit a prospective one-shot AG-PT-set PRE that freezes candidate-selection rule, exact reference fields, preprocessing/sample-rate treatment, scoring, fail-closed behavior, and no post-access tuning/substitution; then require explicit user authorization for the real-media/model execution;
-6. keep historical all-events, hardened-V1, V2, and all V6 rejection/clearance records unchanged;
-7. do not reopen V143/Gomyway, GOAT/reference scoring, GuitarSet/V3, IDMT/V4, V5/FLGD, duration research, protected-song execution, `main`, Production, reserved GFN splits, or physical procurement/calibration/capture unless separately authorized.
+2. treat EGFxSet V2 run `34940292514` and its result as frozen completed FAIL evidence;
+3. treat Guitar-TECHS as decision C; GuitarJam, URMP, GAPS, EGDB as closed pre-media rejections;
+4. treat AG-PT-set as pre-media PASS followed by frozen reference-blind structural decision C; do not score it with V6 under the current attempt;
+5. preserve authoritative AG-PT-set audit run `35020989444`; preserve run `35021035914` only as an accidental duplicate with byte-identical inner outputs;
+6. do not rerun the AG-PT-set audit, Basic Pitch, V6, EGFxSet, or any closed real-media line without new prospective authorization;
+7. next default work is metadata-only search for another untouched holdout and/or synthetic V3 physical-template research;
+8. keep all historical all-events, hardened-V1, V2, pre-media rejection, clearance, PRE, and result records unchanged;
+9. do not reopen V143/Gomyway, GOAT/reference scoring, GuitarSet/V3, IDMT/V4, V5/FLGD, duration research, protected-song execution, `main`, Production, reserved GFN splits, or physical procurement/calibration/capture unless separately authorized.
 
 ## AUTHORITATIVE ROUTE
 
