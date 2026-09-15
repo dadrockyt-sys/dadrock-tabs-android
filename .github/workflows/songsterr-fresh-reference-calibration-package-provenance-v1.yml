@@ -1,0 +1,64 @@
+name: Songsterr Fresh Reference Calibration Package Provenance V1
+
+on:
+  workflow_dispatch:
+  push:
+    branches:
+      - songsterr-fresh-pipeline-v1
+    paths:
+      - "scripts/songsterr-fresh/reference_calibration_package_provenance_v1.py"
+      - "scripts/songsterr-fresh/test_reference_calibration_package_provenance_v1.py"
+      - ".github/workflows/songsterr-fresh-reference-calibration-package-provenance-v1.yml"
+
+jobs:
+  synthetic-calibration-package:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Compile validator and tests
+        run: python -m py_compile scripts/songsterr-fresh/reference_calibration_package_provenance_v1.py scripts/songsterr-fresh/test_reference_calibration_package_provenance_v1.py
+      - name: Run synthetic contract tests first
+        run: python scripts/songsterr-fresh/test_reference_calibration_package_provenance_v1.py
+      - name: Run official frozen synthetic package validation
+        run: |
+          rm -rf synthetic-calibration-package-v1
+          mkdir -p synthetic-calibration-package-v1
+          python scripts/songsterr-fresh/reference_calibration_package_provenance_v1.py \
+            --package-root synthetic-calibration-package-v1 \
+            --generate-synthetic-fixture \
+            --output synthetic-calibration-package-provenance-v1-result.json
+      - name: Print frozen result summary
+        run: |
+          python - <<'PY'
+          import hashlib
+          import json
+          from pathlib import Path
+          path = Path("synthetic-calibration-package-provenance-v1-result.json")
+          result = json.loads(path.read_text())
+          print("contract", result["contract"])
+          print("contractValid", result["contractValid"])
+          print("verifiedFileCount", result["verifiedFileCount"])
+          print("packageBindingSha256", result["packageBindingSha256"])
+          print("resultSha256", hashlib.sha256(path.read_bytes()).hexdigest())
+          print(json.dumps({
+              "realCalibrationAuthorized": result["realCalibrationAuthorized"],
+              "realHoldoutCaptureAuthorized": result["realHoldoutCaptureAuthorized"],
+              "basicPitchAuthorized": result["basicPitchAuthorized"],
+              "v6Authorized": result["v6Authorized"],
+              "correctnessAuthorized": result["correctnessAuthorized"],
+              "modelValidationComplete": result["modelValidationComplete"],
+              "customerEligibleEvents": result["customerEligibleEvents"],
+              "mayAdvanceDelivery": result["mayAdvanceDelivery"],
+          }, sort_keys=True))
+          PY
+      - name: Upload canonical synthetic result
+        uses: actions/upload-artifact@v4
+        with:
+          name: songsterr-fresh-reference-calibration-package-provenance-v1
+          path: synthetic-calibration-package-provenance-v1-result.json
+          if-no-files-found: error
+          retention-days: 30
