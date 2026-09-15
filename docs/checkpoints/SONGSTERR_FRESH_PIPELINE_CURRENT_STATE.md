@@ -237,6 +237,28 @@ Iteration 2 is permanently `FAIL_SYNTHETIC_SPURIOUS_SUPPORT`. The owner-aware gu
 
 Next permitted action: if continuing synthetic research, freeze a **new prospective iteration-3 PRE** before any code revision or execution. A successor may preserve the successful iteration-2 lower-owner guard while adding a separately justified candidate-evidence significance control against spurious detuning-anchor support. It must preserve all 31 iteration-2 fixture expectations and must not be tuned on closed real evidence.
 
+## FRESH CHAT HANDOFF — CURRENT AFTER ITERATION 2
+
+Saved 2026-09-15 at the user's request for a new chat. This section supersedes the earlier pre-V3 "FRESH CHAT — EXACT NEXT STEPS" section above. The live branch immediately before this handoff commit was `0c830e82f5f8e0c9458ac570caf0ef0210f12ec1` (`docs: record V3 synthetic iteration 2 FAIL`). A new chat must still re-fetch the live branch before writing because this handoff commit itself advances HEAD and later concurrent changes may exist.
+
+1. Work only on `songsterr-fresh-pipeline-v1`. Re-fetch live HEAD and this checkpoint first; do not rely on the pre-handoff SHA as current.
+2. Read the frozen iteration-2 PRE and result before designing anything: `docs/checkpoints/SONGSTERR_FRESH_V3_PHYSICAL_TEMPLATE_SYNTHETIC_PRE_ITERATION2.md` and `docs/checkpoints/SONGSTERR_FRESH_V3_PHYSICAL_TEMPLATE_SYNTHETIC_RESULT_ITERATION2.md`. Preserve iteration 1 and iteration 2 as permanent FAIL records; do not edit, reinterpret, or rerun them as rescue attempts.
+3. Treat workflow-trigger isolation as already verified for the previously frozen isolated V3 paths. If iteration 3 uses any new filename or path, re-audit that exact path against `.github/workflows/` before committing executable code. Do not launch or dispatch any workflow during the audit.
+4. The next permitted engineering action is documentation-only: create and commit a **new prospective iteration-3 PRE** before changing or executing V3 research code. Prefer `docs/checkpoints/SONGSTERR_FRESH_V3_PHYSICAL_TEMPLATE_SYNTHETIC_PRE_ITERATION3.md`. The PRE must freeze the hypothesis, exact allowed files, immutable fixtures/expected outcomes, constants/gates, execution command, fail-fast/result-recording policy, and explicit prohibition on real/model/closed-line access.
+5. Iteration-3 motivation is the frozen iteration-2 result only: five unexpected PASS cases (`two_harmonics_only`, `single_peak_only`, `broadband_noise`, `nonharmonic_impulses`, `clip_start_insufficient_support`) show insufficient candidate-evidence significance. The successful iteration-2 lower-owner/alias guard should remain protected. Do not use EGFxSet or any other closed real observation to choose thresholds or special cases.
+6. Prospectively preserve all 31 iteration-2 fixture expectations as regression gates. Any additional adversarial synthetic fixtures must be specified in the iteration-3 PRE **before** the first iteration-3 execution. Do not add rescue fixtures or tune expectations after seeing results.
+7. Keep frozen V2/V6 implementations read-only. Do not edit `scripts/songsterr-fresh/onset_birth_corroboration_v6.py` or `scripts/songsterr-fresh/qualify_basic_pitch_note_births_v2.py` during the isolated iteration-3 research line. Implement iteration 3 in new isolated research/test files named and frozen by the PRE.
+8. Preserve NNLS necessity (`necessityFraction >= 0.01`), lower-harmonic-owner/alias protection, genuine polyphony recovery, confidence independence, exact proposal identity, clip-start/ordinary-in-clip boundary semantics, and fail-closed behavior. Do not lower the historical `0.20` V6 ratio or special-case MIDI 40.
+9. After the iteration-3 PRE is committed and its commit SHA is recorded, verify the PRE→implementation diff contains only the prospectively allowed files. Only then may the single prospectively defined **synthetic/local** test execution occur. No Basic Pitch, Demucs/model inference, V6 correctness, real-media, candidate-payload, protected-song, workflow, GPU/heavy-compute, physical calibration/capture, or network-dependent research execution is authorized.
+10. Freeze the first iteration-3 result exactly as observed. PASS or FAIL, write a dedicated result checkpoint and update this current-state file. If it fails, do not modify that iteration's code/test/PRE and rerun to search for a rescue; any successor requires a new prospective iteration PRE.
+11. **Do not resume archived V143/Gomyway.** Do not reopen GOAT/reference scoring, GuitarSet/V3 validation, IDMT/V4, V5/FLGD, Guitar-TECHS, duration, EGFxSet, AG-PT-set, rejected holdouts, `main`, Production, reserved GFN splits, physical calibration/capture, or protected-song work.
+12. A real-media V3/V6 evaluation remains unauthorized. It would require a separate prospectively frozen real-evaluation PRE plus new explicit user authorization after a synthetic line is complete.
+13. Keep `docs/checkpoints/SONGSTERR_FRESH_PIPELINE_CURRENT_STATE.md` updated at every meaningful state transition so a later fresh chat can resume without reconstructing history.
+
+### Immediate first task for the next chat
+
+Re-fetch the live branch and current checkpoint; verify no concurrent change invalidates the isolation assumptions; then create/freeze **iteration-3 PRE only**. Do not revise or execute iteration-3 research code until that PRE commit exists.
+
 ## AUTHORITATIVE ROUTE
 
 The software-lineage no-gap conclusion remains unchanged. Official correctness still requires the frozen physical calibrated route, currently budget-paused. Do not manufacture another synthetic software-lineage gate.
