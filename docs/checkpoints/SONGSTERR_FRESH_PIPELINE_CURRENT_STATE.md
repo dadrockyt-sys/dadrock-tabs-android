@@ -1,6 +1,6 @@
 # CURRENT STATE — Songsterr Fresh Pipeline V1
 
-Updated: 2026-09-14 America/Toronto — Structural Audit V1.2 complete; software identity chain closed pending completeness/governance review
+Updated: 2026-09-14 America/Toronto — V1.2 per-attempt chain complete; multi-attempt population completeness gap confirmed
 Canonical branch: `songsterr-fresh-pipeline-v1`
 Canonical checkpoint: `docs/checkpoints/SONGSTERR_FRESH_PIPELINE_CURRENT_STATE.md`
 
@@ -27,7 +27,7 @@ Guitar-TECHS remains frozen `C_DATASET_UNSUITABLE_FOR_V6_ADMISSION`; result chec
 
 Guitar Fretboard Notes train-only research remains non-holdout. Pinned revision `a33a26243e88e7ccd4893bee30eac3219ec8bef8`; exposed train sources `ele`, `eqm`, `eqm2`; reserved untouched `deb` and `ele_natural`. V1 result checkpoint `535e6861bb9895f5c38161ec7877a6534cf6fa4e`; V2 session-invariance checkpoint `4569a2f7970cde7975107146ba9ffb785066864b`, frozen classification `MIXED`. Never access reserved sources without separately frozen authorization.
 
-## PURPOSE-BUILT HOLDOUT — SOFTWARE CHAIN QUALIFIED / PHYSICAL ROUTE BUDGET-PAUSED
+## PURPOSE-BUILT HOLDOUT — SOFTWARE CHAIN QUALIFIED PER ATTEMPT / PHYSICAL ROUTE BUDGET-PAUSED
 
 Prospective authority includes expanded design `e37d2b4662db949157d2cf4797370f05648b6940`, physical-reference semantics `ea5f50212cd1cd3794c65cb648a4d781e49e4082`, QA matrix `2b191b39f2f1c19564f1353381779acbc96fbeda`, bench gate `a0279b8c48c51176678229abfa92576b1d1c0c95`, and topology `e45e9b8c32b511d2cd7a89fbeffc8783f2f95fbf`.
 
@@ -38,45 +38,32 @@ Earlier synthetic software gates remain complete: Capture Manifest V2.1 checkpoi
 ## REFERENCE CALIBRATION PACKAGE PROVENANCE V1 — COMPLETE
 
 Preregistration `cbd99714f655d859af2410374c3245a4afe6b056`; implementation `3dd1140650070342ab9fc4e177870fd39940a4e0`; clean run `34916853723`, job `104216245975`, 20/20 tests PASS.
-
 Result checkpoint `c57156fec7c5000563552c8cb128366956b8c95b`; result SHA `4fd62e62a855031bd3c189253bc04f004d271d53bf2b636c586c15b93e59e98f`; package binding SHA `735d276afc5bac7cd8e0e905ae42f8d4dc4bfae835ae013403ccdc31c4cf857c`; decoder configuration SHA `3c9850cdd5085c2dc5230211b18d3362b7f0cef2d23be19b9af3b456df9a2777`.
 
 ## CAPTURE MANIFEST V2.2 — COMPLETE / SYNTHETIC PASS
 
 Review `abfd10ea953e2be313f847f626c405a2f3607dad`; preregistration `9596bfc745a5acdbb47b403eb3d39688ceb20ebd`; implementation `e3e3ae05ab0ab4a94a77e6c6e5be2466f618cf46`; run `34917541786`, job `104218329349`, 24/24 tests PASS; result checkpoint `7d2d05ec365bbdb1aced574f7caf1865795fbc23`.
 
-V2.2 links admitted references/population identity to canonical package/provenance/decoder identity.
-
 ## STRUCTURAL AUDIT V1.1 — COMPLETE / SYNTHETIC PASS
 
 Review `66b1d3d19913e5218c3f1a71a88b399241ea5350`; preregistration `d69defc153d06afe69ad6d1a9eb681f2ba1ff24a`; correction `3839d43dae9881fb2c98a5cac7c6f0b634eb944c`; implementation `5bf98194cdc2045c99903d3f9229443061deec2d`; run `34918145384`, job `104220137547`, 27/27 tests PASS; result checkpoint `96bb0aec9b02f16cb82ba78f16d3164af78474ec`.
-
-V1.1 hash-verifies the Provenance V1 result before parse and binds package identity into structural population identity while preserving all V1 structural rules. V1.1 structural population SHA `603f69c1fa716784e23767255b4305b82eb6bde6187859db645a883694ff08b6`.
-
-## END-TO-END IDENTITY REVIEW — COMPLETE
-
-Review checkpoint `e3e1759b576831128ff0b95ee237b6d131a2fe51` found the decisive remaining gap at that stage: V1.1's exact four structural streams were not yet tied to the same admitted capture performance/population. This led to V2.3 first, then V1.2.
+V1.1 structural population SHA `603f69c1fa716784e23767255b4305b82eb6bde6187859db645a883694ff08b6`.
 
 ## CAPTURE MANIFEST V2.3 STRUCTURAL-AUDIT INPUT BINDING — COMPLETE / SYNTHETIC PASS
 
 Preregistration `c79fbd1d728a9d3dac86f036998108cb9765628e`; implementation `ae320ced78ebc5ce2cac15cc90a4564a9fa24502`; tests `b0af7344b71a4637087f5b112e4c239d4ac484cd`; workflow head `be814017f0ea4e4c89bb25824be66ff0bd63c6c7`.
-
 Official run `34918802857`, job `104222117869`, SUCCESS; 27/27 tests PASS. Artifact `10376723782`; ZIP SHA `63559ef6c5c7bdca79a33c8a9e5bb754edb699e6d70a6bbfb499d3ad58d1b211`; result SHA `0d0372f1123468a9ae1fd90b9c830f233c33d2104e3dc76656fcb5d8147cdb08`; result checkpoint `3ba759566258a49c2fd9b198f686bb1d9a6edc5d`.
 
-V2.3 commits each admitted capture/population to canonical future structural source hashes plus admitted-performance/configuration/calibration/setup/clock/evidence/package/decoder lineage. It does not itself verify those future structural bytes.
-
-## STRUCTURAL AUDIT V1.2 CAPTURE-POPULATION BINDING — COMPLETE / SYNTHETIC PASS
+## STRUCTURAL AUDIT V1.2 CAPTURE-POPULATION BINDING — COMPLETE / SYNTHETIC PASS PER ATTEMPT
 
 Result-byte review `866c673bc7728a8e0943eb45b0109910c28a36f6`; preregistration `617cdc71be4fea6ccdafec1aadf47c13d66726cb`.
-
 Implementation `eacbb06adcbb9c2e4f7a2c5ed697c50a87c5c6ac`, blob `4a52046103ea328259c891c327ab9a12d72f23ee`.
 Tests `09aaccb6acac67c96e136ff57a298a39ce8107e8`, blob `fa16515c9a9772e59990f8112814b08b83f8d3b2`.
 Workflow head `a3ecef8cf9a827149f99e7af383b0d94957decb1`, blob `cdd295d8b6b40c7500e5a7280c5e6754c273a5d3`.
-
 Official run `34919179891`, job `104223229264`, SUCCESS; 35/35 tests PASS first.
 Artifact `10377581430`, size `1,848` bytes; ZIP SHA `1cb3fc511735d709603e3b336af6ec63bcb41e1e634297145cbc955838c0cb09`; result SHA `b9aece4790ce4fb9820b21187d551a4374636c341718f7ed75e10456c38a8145`; result checkpoint `f4c63134f8b49723f342f5ba5f648498af317f73`.
 
-Frozen official synthetic chain:
+Frozen official synthetic attempt chain:
 - admitted attempt `slot-1-attempt-2`, slot `slot-1`, underlying performance `performance-1`;
 - structural binding SHA `f590833680769034a7c5e9fc6efb5b0f21e67249c6c77c4ad2ee7b6eae1c5fff`;
 - V2.3 validation-result SHA `6b57317d28098fbc2c8f26c30ba9ccdc8f2173b67940d3696557a7861acf8126`;
@@ -85,14 +72,20 @@ Frozen official synthetic chain:
 - package binding SHA `735d276afc5bac7cd8e0e905ae42f8d4dc4bfae835ae013403ccdc31c4cf857c`;
 - decoder configuration SHA `3c9850cdd5085c2dc5230211b18d3362b7f0cef2d23be19b9af3b456df9a2777`;
 - inherited V1.1 structural population SHA `603f69c1fa716784e23767255b4305b82eb6bde6187859db645a883694ff08b6`;
-- final V1.2 population identity version `reference-blind-structural-audit-v1.2-capture-population-binding-v1`;
-- final V1.2 structural population SHA `43cba53b0ae925b39576081a30ed83a44146f56fd0a60cd30691121afbbae703`;
-- `capturePopulationBindingViolationCount:0`;
-- `contractValid:true` and synthetic `datasetStructurallySuitable:true` / `authoritativeStructuralSuitabilityEstablished:true` only for the generated fixture.
+- final V1.2 per-attempt population SHA `43cba53b0ae925b39576081a30ed83a44146f56fd0a60cd30691121afbbae703`;
+- `capturePopulationBindingViolationCount:0`.
 
-V1.2 closes the software declaration/substitution chain from admitted capture population -> exact per-admitted structural binding -> exact structural source bytes -> V1.1 structural PASS -> Provenance V1 result bytes -> canonical calibration package/decoder identity -> final immutable structural population identity, without opening evaluated audio or correctness data.
+V1.2 closes the per-attempt software declaration/substitution chain. It does not by itself prove that every admitted attempt in a multi-attempt V2.3 population has exactly one successful V1.2 audit.
 
-No real physical/calibration/holdout/correctness authority was created.
+## POPULATION COMPLETENESS REVIEW — COMPLETE / GAP CONFIRMED
+
+Review checkpoint `9c85176001a62031299a036594f6d3273fb7b759`.
+
+Finding: V2.3 defines a population-wide admitted binding set, but V1.2 deliberately validates one admitted attempt at a time and allows other binding-map entries. Therefore one V1.2 PASS cannot establish population-wide completeness when more than one attempt is admitted.
+
+Required final software gate: a separate **Reference-Blind Structural Audit Population Completeness V1** aggregator that hash-before-parse verifies the V2.3 result and every included V1.2 result, proves exact set equality between all V2.3 admitted `(attemptId, structuralAuditInputsSha256)` rows and all V1.2 results, rejects duplicates/missing/extra attempts, requires every per-attempt structural result to PASS with all authorization closed, and computes one immutable population-wide completeness SHA.
+
+Do not mutate V1.2 semantics to perform aggregation.
 
 ## CURRENT AUTHORIZATION BOUNDARY
 
@@ -110,6 +103,4 @@ Reserved GFN `deb` / `ele_natural` remain untouched. Archived V143/Gomyway remai
 
 ## IMMEDIATE NEXT ACTION
 
-Perform one narrow completeness/governance review of the full software identity chain through V1.2. Do not assume another software bridge is needed. If no remaining declaration/substitution gap exists, freeze that no-gap conclusion and record that the next objectively necessary purpose-built route is physical hardware/procurement/calibration execution, which remains budget-paused and unauthorized under checkpoint `e7f0146d4f01605b642f8aeaa100962254b5ce58`.
-
-Do not begin real calibration/holdout capture, do not alter frozen physical/V6/correctness thresholds, do not access reserved GFN sources, and do not reopen archived V143/Gomyway or other closed lines unless explicitly asked.
+Freeze Reference-Blind Structural Audit Population Completeness V1 preregistration before code. Then implement/tests-first synthetic CI using a multi-admitted-attempt fixture (at least two admitted attempts), freeze result identities, update this checkpoint, and perform one final no-gap completeness review. If no further software declaration/completeness gap remains after the aggregator, stop creating software gates: the next objectively necessary purpose-built step is physical procurement/calibration/capture, which remains budget-paused and unauthorized under `e7f0146d4f01605b642f8aeaa100962254b5ce58`.
