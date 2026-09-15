@@ -1,6 +1,6 @@
 # CURRENT STATE — Songsterr Fresh Pipeline V1
 
-Updated: 2026-09-15 America/Toronto — boundary-aware V2 repair completed; all synthetic gates passed; one authorized real EGFxSet V2 diagnostic executed and froze as FAIL because real MIDI-40 E2 failed the inherited physical-template plausibility gate
+Updated: 2026-09-15 America/Toronto — boundary-aware V2 repair completed; all synthetic gates passed; one authorized real EGFxSet V2 diagnostic executed and froze as FAIL because real MIDI-40 E2 failed the inherited physical-template plausibility gate; separate user-directed V6 replacement-holdout metadata search rejected GuitarJam before media access for lack of established synchronized note-event ground truth
 Canonical branch: `songsterr-fresh-pipeline-v1`
 Canonical checkpoint: `docs/checkpoints/SONGSTERR_FRESH_PIPELINE_CURRENT_STATE.md`
 Hardening result: `docs/checkpoints/SONGSTERR_FRESH_PIPELINE_HARDENING_V1_RESULT.md`
@@ -242,6 +242,18 @@ A plausible V3 research direction is replacing the single fundamental-to-maximum
 
 Any further EGFxSet/model/media experiment requires **new explicit prospective user authorization**. Do not rerun Basic Pitch, the V2 workflow, or a modified real rule without that authorization.
 
+## USER-DIRECTED V6 REPLACEMENT-HOLDOUT SEARCH — GUITARJAM REJECTED PRE-MEDIA
+
+The separate user-directed V6 audit instruction permits metadata/license/alignment search after Guitar-TECHS decision C, but does not alter the global real-media/correctness authorization fields above.
+
+Checkpoint: `docs/checkpoints/SONGSTERR_FRESH_V6_GUITARJAM_PREMEDIA_REJECTION.md`, commit `ff9e82791df33ca48e355df555a25190104b2454`.
+
+GuitarJam public metadata establishes approximately 2.5 hours / 580 clips of clean monophonic electric-guitar DI, WAV 44.1 kHz 16-bit, with repository metadata declaring CC0-1.0. Its public dataset description/repository does not establish synchronized pre-existing note-event ground truth aligned to those performances. Frozen V6 scoring cannot manufacture or infer the holdout reference.
+
+Decision: **REJECT BEFORE MEDIA ACCESS**. No GuitarJam WAV/reference was downloaded or opened; no Basic Pitch/V6 correctness ran; no frozen method/scoring rule changed; no Modal, Vercel heavy-GPU, or L4 work occurred.
+
+Guitar-TECHS run `34754519541`, job `103716527380` was rechecked live on 2026-09-15 and remains `completed/success`; its frozen decision C remains closed and must not be scored.
+
 ## FRESH CHAT — EXACT NEXT STEPS
 
 On a fresh chat:
@@ -249,9 +261,9 @@ On a fresh chat:
 1. re-fetch live `songsterr-fresh-pipeline-v1` and this checkpoint;
 2. treat V2 run `34940292514` and result checkpoint as frozen completed evidence;
 3. do not trigger another EGFxSet or Basic Pitch run without new explicit authorization;
-4. if asked to continue engineering, begin with non-real V3 timbre/template analysis and prospectively freeze any new criterion before execution;
-5. keep historical all-events, hardened-V1, and V2 results unchanged;
-6. do not reopen V143/Gomyway, closed datasets, reserved GFN splits, physical procurement/calibration/capture, or official correctness work unless separately authorized.
+4. under the user's separate V6 audit instruction, Guitar-TECHS remains decision C and only metadata/license/alignment search for a new untouched real-guitar holdout may continue unless a candidate clears the frozen pre-media gates;
+5. keep historical all-events, hardened-V1, V2, and all V6 rejection records unchanged;
+6. do not reopen V143/Gomyway, GOAT/reference scoring, GuitarSet/V3, IDMT/V4, duration research, protected-song execution, `main`, Production, reserved GFN splits, or physical procurement/calibration/capture unless separately authorized.
 
 ## AUTHORITATIVE ROUTE
 
