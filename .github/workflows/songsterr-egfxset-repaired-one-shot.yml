@@ -1,0 +1,244 @@
+name: Songsterr EGFxSet Repaired One-Shot Smoke
+
+on:
+  push:
+    branches:
+      - songsterr-fresh-pipeline-v1
+    paths:
+      - .github/workflows/songsterr-egfxset-repaired-one-shot.yml
+
+permissions:
+  contents: read
+
+jobs:
+  egfxset-repaired-one-shot:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+      - name: Checkout frozen branch state
+        uses: actions/checkout@v4
+
+      - name: Set up frozen Python 3.10.21
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.10.21'
+
+      - name: Install and verify repaired frozen Basic Pitch runtime
+        id: deps
+        continue-on-error: true
+        shell: bash
+        run: |
+          set -euo pipefail
+          python -m pip install --disable-pip-version-check \
+            'numpy==1.26.4' \
+            'tflite-runtime==2.14.0' \
+            'basic-pitch==0.4.0'
+          python - <<'PY'
+          from importlib.metadata import version
+          expected = {
+              'numpy': '1.26.4',
+              'tflite-runtime': '2.14.0',
+              'basic-pitch': '0.4.0',
+          }
+          for package, wanted in expected.items():
+              actual = version(package)
+              if actual != wanted:
+                  raise SystemExit(f'Unexpected {package} version: {actual}, wanted {wanted}')
+              print(f'{package}={actual}')
+          PY
+
+      - name: Fetch exact frozen EGFxSet member
+        id: media
+        if: steps.deps.outcome == 'success'
+        continue-on-error: true
+        shell: bash
+        run: |
+          set -euo pipefail
+          mkdir -p /tmp/egfxset-repaired-smoke
+          curl --fail --location --retry 0 \
+            'https://zenodo.org/records/7044411/files/Clean.zip?download=1' \
+            --output /tmp/egfxset-repaired-smoke/Clean.zip
+          echo 'cdb1b401960f56becc8640387910e78a  /tmp/egfxset-repaired-smoke/Clean.zip' | md5sum --check --strict
+          unzip -p /tmp/egfxset-repaired-smoke/Clean.zip 'Clean/Bridge/6-0.wav' > /tmp/egfxset-repaired-smoke/6-0.wav
+          test -s /tmp/egfxset-repaired-smoke/6-0.wav
+          echo '0256fd3c55c577970a4c2a06d760cf5798591adecffaa5e790addc38d1f0378e  /tmp/egfxset-repaired-smoke/6-0.wav' | sha256sum --check --strict
+          test "$(wc -c < /tmp/egfxset-repaired-smoke/6-0.wav)" -eq 722976
+          python - <<'PY'
+          import hashlib, json
+          from pathlib import Path
+          p = Path('/tmp/egfxset-repaired-smoke/6-0.wav')
+          payload = {
+              'dataset': 'EGFxSet',
+              'record': '10.5281/zenodo.7044411',
+              'archive': 'Clean.zip',
+              'archivePublishedMd5': 'cdb1b401960f56becc8640387910e78a',
+              'member': 'Clean/Bridge/6-0.wav',
+              'memberBytes': p.stat().st_size,
+              'memberSha256': hashlib.sha256(p.read_bytes()).hexdigest(),
+              'expectedStringHighToLow': 6,
+              'expectedFret': 0,
+              'expectedMidi': 40,
+          }
+          Path('/tmp/egfxset-repaired-smoke/media.json').write_text(json.dumps(payload, indent=2) + '\n')
+          print(json.dumps(payload, indent=2))
+          PY
+
+      - name: Run Basic Pitch exactly once
+        id: inference
+        if: steps.deps.outcome == 'success' && steps.media.outcome == 'success'
+        continue-on-error: true
+        shell: bash
+        run: |
+          set -euo pipefail
+          python scripts/songsterr-fresh/transcribe_isolated_guitar_basic_pitch.py \
+            --input /tmp/egfxset-repaired-smoke/6-0.wav \
+            --output /tmp/egfxset-repaired-smoke/basic-pitch.json \
+            --audio-source 'EGFxSet 10.5281/zenodo.7044411 Clean.zip#Clean/Bridge/6-0.wav' \
+            --separation-source 'none-clean-isolated-source'
+
+      - name: Score unchanged frozen smoke rule
+        if: always()
+        env:
+          DEPS_OUTCOME: ${{ steps.deps.outcome }}
+          MEDIA_OUTCOME: ${{ steps.media.outcome }}
+          INFERENCE_OUTCOME: ${{ steps.inference.outcome }}
+        shell: bash
+        run: |
+          set -euo pipefail
+          mkdir -p /tmp/egfxset-repaired-smoke
+          node --input-type=module <<'NODE'
+          import fs from 'node:fs';
+          import crypto from 'node:crypto';
+          import { enumeratePlayablePositions } from './songsterr_pipeline/index.mjs';
+
+          const outputPath = '/tmp/egfxset-repaired-smoke/basic-pitch.json';
+          const mediaPath = '/tmp/egfxset-repaired-smoke/media.json';
+          const depsOutcome = process.env.DEPS_OUTCOME ?? 'unknown';
+          const mediaOutcome = process.env.MEDIA_OUTCOME ?? 'unknown';
+          const inferenceOutcome = process.env.INFERENCE_OUTCOME ?? 'skipped';
+
+          let payload = null;
+          let parseError = null;
+          if (fs.existsSync(outputPath)) {
+            try {
+              payload = JSON.parse(fs.readFileSync(outputPath, 'utf8'));
+            } catch (error) {
+              parseError = String(error?.message ?? error);
+            }
+          }
+
+          const notes = Array.isArray(payload?.notes) ? payload.notes : [];
+          const midis = notes.map((note) => note?.midi).filter((midi) => Number.isInteger(midi));
+          const uniqueMidis = [...new Set(midis)].sort((a, b) => a - b);
+          const histogram = {};
+          for (const midi of midis) histogram[String(midi)] = (histogram[String(midi)] ?? 0) + 1;
+
+          const instrumentConfig = {
+            role: 'lead',
+            tuningMidi: [40, 45, 50, 55, 59, 64],
+            capoFret: 0,
+          };
+          const mappings = midis.map((midi) => ({
+            midi,
+            positions: enumeratePlayablePositions(midi, instrumentConfig),
+          }));
+
+          const pitchPass = notes.length > 0
+            && midis.length === notes.length
+            && uniqueMidis.length === 1
+            && uniqueMidis[0] === 40;
+          const positionPass = notes.length > 0 && mappings.every(({ positions }) =>
+            positions.length === 1
+            && positions[0].stringNumberHighToLow === 6
+            && positions[0].fret === 0
+            && positions[0].reconstructedMidi === 40
+          );
+          const runtimePass = depsOutcome === 'success'
+            && mediaOutcome === 'success'
+            && inferenceOutcome === 'success'
+            && payload !== null
+            && parseError === null;
+          const overallPass = runtimePass && pitchPass && positionPass;
+
+          let media = null;
+          if (fs.existsSync(mediaPath)) {
+            try { media = JSON.parse(fs.readFileSync(mediaPath, 'utf8')); } catch {}
+          }
+          const primaryOutputSha256 = fs.existsSync(outputPath)
+            ? crypto.createHash('sha256').update(fs.readFileSync(outputPath)).digest('hex')
+            : null;
+
+          const result = {
+            contract: 'songsterr-fresh-egfxset-repaired-one-shot-smoke-v2',
+            nonAuthorizing: true,
+            repair: {
+              python: '3.10.21',
+              basicPitch: '0.4.0',
+              tfliteRuntime: '2.14.0',
+              numpy: '1.26.4',
+              onlyChangeClass: 'dependency-compatibility',
+            },
+            candidate: {
+              dataset: 'EGFxSet',
+              record: '10.5281/zenodo.7044411',
+              archive: 'Clean.zip',
+              archivePublishedMd5: 'cdb1b401960f56becc8640387910e78a',
+              member: 'Clean/Bridge/6-0.wav',
+              expected: { stringNumberHighToLow: 6, fret: 0, midi: 40 },
+              media,
+            },
+            frozenRuntime: {
+              basicPitchVersion: payload?.model?.packageVersion ?? null,
+              minimumMidi: payload?.model?.minimumMidi ?? 40,
+              maximumMidi: payload?.model?.maximumMidi ?? 88,
+              onsetThreshold: payload?.model?.onsetThreshold ?? 0.5,
+              frameThreshold: payload?.model?.frameThreshold ?? 0.3,
+              minimumNoteLengthMs: payload?.model?.minimumNoteLengthMs ?? 127.7,
+              gpuInvoked: payload?.provenance?.gpuInvoked ?? false,
+              inferenceInvocationLimit: 1,
+            },
+            execution: {
+              depsOutcome,
+              mediaOutcome,
+              inferenceOutcome,
+              parseError,
+              primaryOutputPresent: fs.existsSync(outputPath),
+              primaryOutputSha256,
+            },
+            observed: {
+              noteCount: notes.length,
+              uniqueMidis,
+              midiHistogram: histogram,
+              mappings,
+            },
+            scoring: {
+              runtime: runtimePass ? 'PASS_RUNTIME' : 'FAIL_RUNTIME',
+              pitch: pitchPass ? 'PASS_PITCH' : 'FAIL_PITCH',
+              position: positionPass ? 'PASS_POSITION' : 'FAIL_POSITION',
+              overall: overallPass ? 'PASS_NON_AUTHORIZING_SMOKE' : 'FAIL_NON_AUTHORIZING_SMOKE',
+            },
+            authorizationEffects: {
+              basicPitchAuthorized: false,
+              v6Authorized: false,
+              correctnessAuthorized: false,
+              modelValidationComplete: false,
+              customerEligibleEvents: 0,
+              mayAdvanceDelivery: false,
+            },
+          };
+
+          fs.writeFileSync('/tmp/egfxset-repaired-smoke/result.json', JSON.stringify(result, null, 2) + '\n');
+          console.log(JSON.stringify(result, null, 2));
+          NODE
+
+      - name: Upload immutable repaired diagnostic result
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: songsterr-egfxset-repaired-one-shot
+          if-no-files-found: error
+          retention-days: 30
+          path: |
+            /tmp/egfxset-repaired-smoke/result.json
+            /tmp/egfxset-repaired-smoke/media.json
+            /tmp/egfxset-repaired-smoke/basic-pitch.json
