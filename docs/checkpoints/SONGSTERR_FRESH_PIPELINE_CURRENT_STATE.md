@@ -1,6 +1,6 @@
 # CURRENT STATE — Songsterr Fresh Pipeline V1
 
-Updated: 2026-09-15 America/Toronto — boundary-aware V2 repair completed; all synthetic gates passed; one authorized real EGFxSet V2 diagnostic executed and froze as FAIL because real MIDI-40 E2 failed the inherited physical-template plausibility gate; separate user-directed V6 replacement-holdout metadata search has now rejected GuitarJam, URMP, GAPS, and EGDB before media access
+Updated: 2026-09-15 America/Toronto — boundary-aware V2 repair completed; all synthetic gates passed; one authorized real EGFxSet V2 diagnostic executed and froze as FAIL because real MIDI-40 E2 failed the inherited physical-template plausibility gate; user-directed V6 replacement-holdout search rejected GuitarJam, URMP, GAPS, and EGDB pre-media, while AG-PT-set is the first candidate to clear every frozen pre-media metadata/license/alignment/provenance gate; AG-PT-set media remains untouched pending a frozen one-shot PRE and explicit real-media/model authorization
 Canonical branch: `songsterr-fresh-pipeline-v1`
 Canonical checkpoint: `docs/checkpoints/SONGSTERR_FRESH_PIPELINE_CURRENT_STATE.md`
 Hardening result: `docs/checkpoints/SONGSTERR_FRESH_PIPELINE_HARDENING_V1_RESULT.md`
@@ -268,6 +268,23 @@ Metadata-only dispositions:
 
 For all three candidates: no audio/video/reference payload was downloaded or opened; no Basic Pitch ran; no V6 correctness ran; no frozen method/scoring rule changed; no EGFxSet execution occurred; no V143/Gomyway activity occurred.
 
+## USER-DIRECTED V6 REPLACEMENT-HOLDOUT SEARCH — AG-PT-SET CLEARS PRE-MEDIA GATES
+
+Checkpoint: `docs/checkpoints/SONGSTERR_FRESH_V6_AG_PT_SET_PREMEDIA_CLEARANCE.md`, commit `636403d0d168700cb77e36462d8f71caf9bc2809`.
+
+AG-PT-set is the first candidate in the current replacement search to clear all frozen pre-media gates:
+
+- **real guitar — PASS:** real monophonic acoustic/electro-acoustic guitar performances by multiple human players on multiple physical guitars;
+- **usable public license — PASS:** Zenodo record `10.5281/zenodo.10159492` was directly inspected on 2026-09-15 and reports Open Access under Creative Commons Attribution 4.0 International (`CC BY 4.0` / `CC-BY-4.0`);
+- **exact synchronized note reference — PASS:** released `note_labels.csv` ties each onset to the exact WAV and includes onset seconds/samples, ground-truth MIDI pitch, string number, playing technique and intensity; per-file onset/pitch label files are also described;
+- **independent provenance — PASS for ingress:** pitched content was prospectively prescribed by string/fret/note sequence; five musician annotators manually corrected and millisecond-aligned onset labels to the actual recordings. `aubioonset` only seeded candidate onset marks, and known note number/pitch/sequence plus a pitch detector were used to find annotation mistakes. The final scoring reference is pre-existing and independent of Basic Pitch/V6.
+
+Decision: **PASS_PREMEDIA**. This is admission to prospective planning only, not permission to touch the data or run the model.
+
+AG-PT-set archive/media/annotation payloads remain untouched: no 6.7-GB ZIP click/download, no WAV opened, no label payload opened, no Basic Pitch, no V6 correctness, no EGFxSet run, and no frozen scoring change.
+
+Before any AG-PT-set media access, freeze a dedicated one-shot PRE that defines candidate selection from metadata, exact reference fields, sample-rate handling, immutable scoring, and no rerun/tuning/candidate substitution after access; then obtain explicit user authorization for the real-media/model action.
+
 ## FRESH CHAT — EXACT NEXT STEPS
 
 On a fresh chat:
@@ -275,9 +292,10 @@ On a fresh chat:
 1. re-fetch live `songsterr-fresh-pipeline-v1` and this checkpoint;
 2. treat V2 run `34940292514` and result checkpoint as frozen completed evidence;
 3. do not trigger another EGFxSet or Basic Pitch run without new explicit authorization;
-4. under the user's separate V6 audit instruction, Guitar-TECHS remains decision C; GuitarJam, URMP, GAPS, and EGDB are closed pre-media rejections; continue only metadata/license/alignment search for a new untouched real-guitar holdout unless a candidate clears every frozen pre-media gate;
-5. keep historical all-events, hardened-V1, V2, and all V6 rejection records unchanged;
-6. do not reopen V143/Gomyway, GOAT/reference scoring, GuitarSet/V3, IDMT/V4, V5/FLGD, duration research, protected-song execution, `main`, Production, reserved GFN splits, or physical procurement/calibration/capture unless separately authorized.
+4. Guitar-TECHS remains decision C; GuitarJam, URMP, GAPS, and EGDB remain closed pre-media rejections; AG-PT-set is **PASS_PREMEDIA** and is the current prospective V6 replacement-holdout candidate;
+5. do not access AG-PT-set media/reference payloads or run V6 yet; first create and commit a prospective one-shot AG-PT-set PRE that freezes candidate-selection rule, exact reference fields, preprocessing/sample-rate treatment, scoring, fail-closed behavior, and no post-access tuning/substitution; then require explicit user authorization for the real-media/model execution;
+6. keep historical all-events, hardened-V1, V2, and all V6 rejection/clearance records unchanged;
+7. do not reopen V143/Gomyway, GOAT/reference scoring, GuitarSet/V3, IDMT/V4, V5/FLGD, duration research, protected-song execution, `main`, Production, reserved GFN splits, or physical procurement/calibration/capture unless separately authorized.
 
 ## AUTHORITATIVE ROUTE
 
