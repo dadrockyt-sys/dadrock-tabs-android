@@ -157,14 +157,27 @@ Not permitted without new explicit prospective authorization: Basic Pitch on rea
 
 ## FRESH CHAT — EXACT NEXT STEPS
 
-1. Re-fetch live `songsterr-fresh-pipeline-v1` and this checkpoint.
-2. Preserve EGFxSet V2 run `34940292514` as frozen FAIL evidence.
-3. Preserve AG-PT-set pre-media PASS followed by frozen structural C; never count duplicate run `35021035914` as independent evidence.
-4. Preserve every listed pre-media rejection and closed line; do not reopen from newer mirrors/wrappers.
-5. Treat the 2025–2026 search pass as `NO_NEW_ADMISSIBLE_CANDIDATE_FOUND`; EGDB-PG does not reopen EGDB.
-6. Default next work: synthetic/non-EGFxSet V3 physical-template research only, unless a genuinely independent untouched holdout appears from metadata search.
-7. If a future new candidate clears all four ingress gates, freeze a candidate-specific PRE before any payload access and require the appropriate explicit authorization before execution.
-8. Keep this checkpoint updated after every meaningful state transition.
+Fresh-chat handoff saved at the user's request on 2026-09-15. Start here and do not infer authorization beyond these steps.
+
+1. Re-fetch live `songsterr-fresh-pipeline-v1` and read this checkpoint before making changes. Verify the branch head rather than relying on an older chat summary.
+2. Preserve all frozen evidence exactly as recorded: EGFxSet V2 run `34940292514` remains FAIL; AG-PT-set remains pre-media PASS followed by structural decision C; duplicate AG-PT run `35021035914` is not independent evidence; all listed pre-media rejections remain closed.
+3. **Do not resume V143/Gomyway.** Also do not reopen GOAT/reference scoring, GuitarSet/V3, IDMT/V4, V5/FLGD, Guitar-TECHS, duration, protected-song work, `main`, Production, reserved GFN splits, physical calibration/capture, or any rejected replacement candidate.
+4. Before adding V3 research code, inspect `.github/workflows/` and relevant path filters/triggers. Confirm that edits under the intended V3 synthetic research paths cannot automatically launch any closed real-media, Basic Pitch, V6 correctness, EGFxSet, AG-PT-set, protected-song, or heavy-compute workflow. If trigger isolation is not provable, harden the workflow boundary first without executing the closed job.
+5. Inspect the frozen V2/V6 physical-template implementation, especially `_candidate_template()` in `scripts/songsterr-fresh/onset_birth_corroboration_v6.py`. The research target is the inherited single-bin plausibility rule that rejects a candidate when its fundamental support is below `0.20` of its strongest observed harmonic. Treat the `0.20` value and the EGFxSet observation as frozen historical evidence: do **not** lower/tune that threshold or special-case MIDI 40.
+6. Freeze a new prospective documentation checkpoint before implementation, preferably `docs/checkpoints/SONGSTERR_FRESH_V3_PHYSICAL_TEMPLATE_SYNTHETIC_PRE.md`. The PRE must define the V3 hypothesis, synthetic fixtures, immutable pass/fail gates, exact files allowed to change, and explicit prohibition on real-media/model execution.
+7. V3 hypothesis direction: replace the fragile single-fundamental-bin plausibility concept with a timbre-robust **multi-harmonic/support** criterion that can tolerate a weak fundamental while still requiring physically coherent harmonic evidence. Design it independently of the EGFxSet measurement.
+8. Preserve the protections that are already doing useful work: NNLS necessity, lower-harmonic-owner/alias protection, genuine polyphony recovery, confidence independence, exact proposal identity, boundary fail-closed behavior, and no promotion from Basic Pitch confidence alone. V3 must not weaken these merely to make a synthetic fixture pass.
+9. Create only synthetic/non-EGFxSet fixtures for V3. Include at minimum: weak-fundamental/strong-overtones valid guitar-like tone; ordinary strong-fundamental tone; octave/harmonic alias trap; lower-note-owner trap; true two-note polyphony; broadband/noise rejection; missing/insufficient support fail-closed case; clip-start and ordinary in-clip cases. Add adversarial timbre variation prospectively rather than after seeing failures.
+10. Keep V3 research isolated from frozen V6 until its synthetic gates are prospectively defined and pass. Prefer a new research module/test file under `scripts/songsterr-fresh/` rather than silently changing the frozen V6 implementation in place.
+11. Run only synthetic/local code-level tests that cannot access real candidate media or invoke Basic Pitch/V6 correctness. Do not download/open EGFxSet, AG-PT-set, rejected holdouts, protected songs, or any new candidate payload as part of V3 synthetic research.
+12. Record every meaningful V3 state transition in this checkpoint and in the V3 PRE/result checkpoint. If synthetic V3 fails, freeze the failure and revise only through a new prospective iteration; do not tune against closed real evidence.
+13. A future real-media V3/V6 evaluation is **not authorized by this handoff**. It requires a separately frozen real-evaluation PRE plus new explicit user authorization after the synthetic line is complete.
+14. Metadata-only holdout search may continue in parallel only for a genuinely independent untouched candidate. It must clear all four frozen ingress gates before payload access. Do not use a newer mirror/derivative to reopen a closed dataset.
+15. Keep `docs/checkpoints/SONGSTERR_FRESH_PIPELINE_CURRENT_STATE.md` updated often so another fresh chat can resume without reconstructing state from conversation history.
+
+### Immediate first task for the next chat
+
+Perform steps 1–4 only: verify the live branch/checkpoint and audit workflow trigger isolation. Then create/freeze the V3 synthetic PRE described above before writing or executing V3 research code.
 
 ## AUTHORITATIVE ROUTE
 
