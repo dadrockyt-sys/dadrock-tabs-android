@@ -1,6 +1,6 @@
 # CURRENT STATE — Songsterr Fresh Pipeline V1
 
-Updated: 2026-09-14 America/Toronto — purpose-built software lineage complete; final no-gap review frozen; physical route next but budget-paused
+Updated: 2026-09-14 America/Toronto — purpose-built software lineage complete; final no-gap review frozen; optional $0 one-file external audio smoke-test research is next while authoritative physical route remains budget-paused
 Canonical branch: `songsterr-fresh-pipeline-v1`
 Canonical checkpoint: `docs/checkpoints/SONGSTERR_FRESH_PIPELINE_CURRENT_STATE.md`
 
@@ -144,10 +144,30 @@ The next necessary route is physical:
 
 Under budget checkpoint `e7f0146d4f01605b642f8aeaa100962254b5ce58`, physical procurement/calibration/capture remains paused and unauthorized.
 
+## OPTIONAL $0 EXTERNAL AUDIO SMOKE TEST — NEXT RESEARCH TASK, NON-AUTHORITATIVE
+
+The user wants to try a **small, clean guitar audio file with an independently published physical fret-position label** as a one-file blind external smoke test.
+
+This is allowed only as non-authorizing $0 research. It is **not** the authoritative purpose-built holdout and cannot set `correctnessAuthorized`, `modelValidationComplete`, customer eligibility, or delivery authority.
+
+Fresh-chat sequence:
+1. Re-fetch the live branch head and this checkpoint before mutation.
+2. Search public/academic sources for a very small clean isolated-guitar WAV/FLAC with an independent metadata label giving exact physical `string + fret` (and preferably MIDI/pitch), a usable validation/research license, and a direct immutable file/repository identity.
+3. **Do not use or inspect reserved Guitar Fretboard Notes `deb` or `ele_natural`.** Do not use Guitar-TECHS, archived V143/Gomyway, or any corpus/file already exposed for tuning of the fresh method.
+4. Prefer a corpus/file never previously accessed in this project. Before decoding/listening/processing the audio bytes, record the candidate dataset/repository, revision if available, exact path/file identity, license, published physical label, and why it is plausibly untouched.
+5. If a suitable candidate exists, freeze a tiny dedicated **ONE-FILE EXTERNAL AUDIO SMOKE TEST** procedure before executing it. Freeze the candidate identity, expected label from independent metadata, exact pipeline entry point/settings, and scoring rule. No tuning, threshold changes, retries with alternate files, or candidate shopping after observing the output.
+6. Keep the interpretation narrow: report whether the one file ran successfully and what physical position/pitch the current pipeline produced versus the independently published label. A PASS is encouraging smoke-test evidence only; a FAIL is diagnostic. Neither outcome authorizes V6/correctness or replaces physical validation.
+7. Before execution, confirm the chosen entry point does not violate the frozen authorization boundary. If it requires Basic Pitch/V6/correctness execution that is presently unauthorized, stop and document the required explicit non-authorizing test authorization instead of silently running it.
+8. If no eligible $0 candidate with true independent string/fret truth can be found, stop and report that result. Do not consume a reserved split merely to obtain a convenient test file.
+
+The authoritative next validation route remains the physical calibrated holdout described above and remains budget-paused.
+
 ## FRESH-CHAT HANDOFF / IMMEDIATE ACTION
 
 Re-fetch live branch head + this checkpoint before any mutation.
 
-There is **no authorized immediate software-lineage implementation task**. Do not manufacture another gate. While the physical route remains budget-paused, only non-authorizing maintenance/documentation or separately authorized $0 research may proceed, and it must not be represented as real physical validation progress.
+**Immediate fresh-chat task:** continue the user's request to find one small, clean, zero-cost external guitar audio file with independently published exact string/fret truth for a blind, non-authoritative smoke test. Research candidate metadata first; do not decode/listen to the candidate audio until the file/label/license identity is selected and recorded. Keep reserved GFN `deb` / `ele_natural` untouched.
 
-Keep all authorization fields false/zero, do not access reserved GFN sources, and do not reopen V143/Gomyway or other closed lines unless the user explicitly asks.
+If an eligible candidate is found, freeze the one-file smoke-test procedure before running it. Do not tune from the result, do not substitute another file after seeing the result, and do not represent the outcome as the real correctness holdout.
+
+There is **no authorized immediate purpose-built software-lineage implementation task**. Do not manufacture another gate. Keep all authorization fields false/zero, do not begin physical procurement/calibration/capture while budget-paused, and do not reopen V143/Gomyway or other closed lines unless the user explicitly asks.
