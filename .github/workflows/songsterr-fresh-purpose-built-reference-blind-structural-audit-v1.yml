@@ -1,0 +1,29 @@
+name: Songsterr Fresh Purpose-Built Reference-Blind Structural Audit V1
+
+on:
+  workflow_dispatch:
+  push:
+    branches:
+      - songsterr-fresh-pipeline-v1
+    paths:
+      - "scripts/songsterr-fresh/purpose_built_reference_blind_structural_audit_v1.py"
+      - "scripts/songsterr-fresh/test_purpose_built_reference_blind_structural_audit_v1.py"
+      - ".github/workflows/songsterr-fresh-purpose-built-reference-blind-structural-audit-v1.yml"
+
+jobs:
+  synthetic-reference-blind-structural-audit:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out frozen branch content
+        uses: actions/checkout@v4
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Compile frozen structural auditor
+        run: |
+          python -m py_compile \
+            scripts/songsterr-fresh/purpose_built_reference_blind_structural_audit_v1.py \
+            scripts/songsterr-fresh/test_purpose_built_reference_blind_structural_audit_v1.py
+      - name: Run synthetic structural-audit contract tests
+        run: python scripts/songsterr-fresh/test_purpose_built_reference_blind_structural_audit_v1.py
