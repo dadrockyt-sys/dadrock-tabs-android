@@ -46,22 +46,21 @@ Its primary output contains decoded note events with `startSeconds`, diagnostic 
 
 The deterministic fresh core is model-free and maps MIDI to playable string/fret positions using standard guitar tuning MIDI `[40,45,50,55,59,64]`. For MIDI `40`, `enumeratePlayablePositions()` yields only the low-E open string: string `6`, fret `0`. Therefore this candidate avoids fretboard ambiguity if Basic Pitch emits MIDI 40.
 
-## Frozen proposed one-file smoke-test procedure
+## Frozen one-file smoke-test procedure
 
-This procedure is frozen prospectively but **must not be executed under the current authorization state**.
+This procedure is now fully frozen prospectively but **must not be executed under the current authorization state**.
 
 1. Candidate identity is fixed to Zenodo version 1.0 `Clean.zip`, archive MD5 `cdb1b401960f56becc8640387910e78a`, member `Clean/Bridge/6-0.wav`.
 2. Independent expected label is fixed to string `6`, fret `0`, MIDI `40` under standard EADGBE tuning.
 3. No listening, waveform inspection, trimming, onset hand-labeling, denoising, EQ, gain tuning, threshold changes, retries, or alternate-candidate substitution is permitted after execution begins.
-4. Run the existing `transcribe_isolated_guitar_basic_pitch.py` once with its frozen V6 defaults on CPU and no optional diagnostic sidecars required for this smoke test.
-5. File-level pitch rule: inspect the emitted decoded-note artifact only. PASS-pitch requires at least one emitted note and every emitted note used for the file-level decision to be determined by a prospectively fixed rule before authorization. Because no independent onset label is published, V6 onset-match scoring is not used and no onset truth is invented.
-6. Physical-position rule: pass the selected MIDI event into the unchanged deterministic standard-guitar mapping. PASS-position requires the resolved position to be exactly string `6`, fret `0` with reconstructed MIDI `40`.
-7. Report runtime success/failure, emitted MIDI result, mapped string/fret result, and comparison with the independent metadata label. A PASS is encouraging smoke evidence only; a FAIL is diagnostic only.
-8. Do not authorize V6, correctness, model validation, customer eligibility, or delivery from this result.
+4. Run the existing `transcribe_isolated_guitar_basic_pitch.py` exactly once with its frozen V6 defaults on CPU and no optional diagnostic sidecars required for this smoke test.
+5. File-level pitch rule is fixed without onset truth and without event selection: the primary decoded-note artifact must be non-empty and the set of MIDI values across **all emitted notes** must equal exactly `{40}`. Repeated/segmented MIDI-40 events are allowed. An empty artifact or any emitted MIDI other than 40 is `FAIL_PITCH`. V6 onset-match scoring is not used and no onset truth is invented.
+6. Physical-position rule: map every emitted MIDI event through the unchanged deterministic standard-guitar mapping. `PASS_POSITION` requires every emitted event to resolve exactly to string `6`, fret `0`, reconstructed MIDI `40`. Any unresolved/different position is `FAIL_POSITION`.
+7. Runtime rule: `PASS_RUNTIME` requires the one Basic Pitch invocation and deterministic mapping to complete and produce the expected parseable artifacts without retry. Any execution/parsing failure is `FAIL_RUNTIME`.
+8. Overall smoke PASS requires `PASS_RUNTIME`, `PASS_PITCH`, and `PASS_POSITION`. Report note count and emitted MIDI histogram for diagnostics. A PASS is encouraging smoke evidence only; a FAIL is diagnostic only.
+9. Do not authorize V6, correctness, model validation, customer eligibility, or delivery from this result.
 
-### Remaining freeze detail before any authorized execution
-
-The file-level decoded-note selection rule still needs one final prospective choice that does not use audio observations. The safest candidate-specific rule is to require the artifact to contain exactly one decoded pitch class/event cluster corresponding to MIDI 40; however this must be finalized without looking at the candidate output. If the existing smoke-test harness already defines a stronger reusable rule, use that unchanged instead of inventing a candidate-specific post-result rule.
+No scoring choice remains to be made after observing candidate output.
 
 ## Authorization blocker
 
