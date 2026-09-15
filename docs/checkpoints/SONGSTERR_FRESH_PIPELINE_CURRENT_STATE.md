@@ -1,6 +1,6 @@
 # CURRENT STATE — Songsterr Fresh Pipeline V1
 
-Updated: 2026-09-14 America/Toronto — GFN V2 frozen MIXED; synthetic six-channel debleed V1 complete; next step is review of existing purpose-built calibration/reference authority for the next $0 software contract
+Updated: 2026-09-14 America/Toronto — GFN V2 frozen MIXED; synthetic six-channel debleed V1 complete; next $0 contract selected: deterministic hardware-marker clock map
 Canonical branch: `songsterr-fresh-pipeline-v1`
 Canonical checkpoint: `docs/checkpoints/SONGSTERR_FRESH_PIPELINE_CURRENT_STATE.md`
 
@@ -81,7 +81,9 @@ The purpose-built independent-sensor route remains the prospective technical aut
 Design authority:
 - expanded design `e37d2b4662db949157d2cf4797370f05648b6940`;
 - physical-reference semantics `ea5f50212cd1cd3794c65cb648a4d781e49e4082`;
-- capture QA/gate matrix `2b191b39f2f1c19564f1353381779acbc96fbeda`.
+- capture QA/gate matrix `2b191b39f2f1c19564f1353381779acbc96fbeda`;
+- hardware/calibration necessity + bench qualification `a0279b8c48c51176678229abfa92576b1d1c0c95`;
+- custom/hybrid topology `e45e9b8c32b511d2cd7a89fbeffc8783f2f95fbf`.
 
 Capture-manifest V2.1: run `34908936464`, job `104191861049`, SUCCESS; evidence checkpoint commit `9d3b17b392bd486753cb657318c048a7ae2460a7`.
 Reference-blind structural audit V1: run `34912172056`, job `104201857367`, SUCCESS; evidence checkpoint commit `df7eb9edacb170ab24e2c200b1c0a8028625f87a`.
@@ -105,24 +107,31 @@ Workflow blob `404c53970806eda15a3757192ae5712ae68c6deb`, workflow head `39f5b2c
 Run `34915944228`, job `104213442029`, SUCCESS; 16/16 contract tests passed before official harness execution.
 Artifact ID `10376620438`; ZIP SHA-256 `53064b9521177251f7e5bb17f672927d8cf7be173fd4a67effa5dd81f7f39b6b`.
 Result JSON SHA-256 `ece7a4525be33329b4f26d05b145f478179d22b1d0472865fd77bc44c05a5a0c`.
-Result checkpoint:
-`docs/checkpoints/SONGSTERR_FRESH_SYNTHETIC_SIX_CHANNEL_CROSSTALK_DEBLEED_RESULT_V1_2026-09-14.md`
-commit `f233da0000188977334331c4614b6e541ae2490b`.
+Result checkpoint `docs/checkpoints/SONGSTERR_FRESH_SYNTHETIC_SIX_CHANNEL_CROSSTALK_DEBLEED_RESULT_V1_2026-09-14.md`, commit `f233da0000188977334331c4614b6e541ae2490b`.
 
-Frozen synthetic identities:
-- source SHA-256 `8bceb544b681a5b8a507bb7c70aa0f2f379ceec42f2b7b5bf08643e089f2196c`;
-- perturbation SHA-256 `9f6e18edb69aeb8d0d68dcc8c2040f4725339f94ef3f73d1c86aa6cda777da51`;
-- 13 matrix cases, 52 matrix/perturbation runs, all finite.
+Main finding: exact known-matrix inversion removes synthetic bleed to float64 precision without perturbation, while perturbation amplification grows with matrix conditioning. At the hardest frozen case (paired bleed `0.95`, condition `39.0`, `sigma=0.01`), untreated pooled NRMSE was `0.9500526301`, direct solve `0.1414678382`, and fixed ridge `0.1387224500`. This is synthetic software evidence only.
 
-Main finding: with an exact known invertible synthetic matrix and `sigma=0`, direct inversion recovered the six untouched source channels to float64 numerical precision even at condition number `39.0`. With perturbation, error rose strongly with conditioning. At the hardest frozen case (paired bleed `0.95`, condition `39.0`, `sigma=0.01`), untreated pooled NRMSE was `0.9500526301`, direct solve `0.1414678382`, and fixed ridge `0.1387224500`. The fixed ridge rule showed clean-case bias but slightly better robustness in that hardest noisy case.
+## ACTIVE NEXT $0 CONTRACT — HARDWARE-MARKER CLOCK MAP V1
 
-Interpretation remains prospective software-only: if real six-channel hardware becomes available, matrix conditioning and calibration error must be measured explicitly. This result does not show that real crosstalk is linear/stable/known, does not create authoritative per-string channels from mono/stereo audio, and does not authorize any real capture or correctness work.
+Authority review is complete. The existing purpose-built documents already require a deterministic logger-tick -> audio-time transform derived only from immutable hardware sync markers, frozen before real capture. The custom topology specifically places the fret/contact logger on its own monotonic tick clock and records a conditioned copy of its marker sequence on the common audio-interface clock.
 
-## ACTIVE NEXT ACTION — REVIEW EXISTING CALIBRATION / REFERENCE AUTHORITY
+No dedicated marker-clock transform implementation was found in the branch/repository search. Therefore the next narrow zero-cost contract is to freeze and test that transform prospectively.
 
-Before starting another experiment, re-read the existing purpose-built design, physical-reference semantics, capture QA/gate matrix, hardware/calibration necessity document, and custom/hybrid topology on this branch. Identify the next zero-additional-cost software/documentation/synthetic contract that is already implied by those authorities.
+Hard boundaries for this contract:
+- synthetic software only; no real calibration, capture, corpus, customer, protected-song, Basic Pitch, V6, or evaluated-audio content;
+- marker identity/ticks and audio sample indices only; no waveform/spectrogram/onset/DTW/model alignment;
+- no empirical real-hardware drift/jitter/dropout threshold may be invented from synthetic results;
+- the already-frozen structural timing bound `0.025 s` may be inherited unchanged for synthetic truth diagnostics only;
+- no marker may be dropped or relabeled adaptively to improve the fit;
+- malformed/duplicate/nonmonotonic/insufficient marker evidence must fail closed.
 
-Do not create a new validation route merely because the synthetic debleed harness succeeded. Prefer a narrow contract that prepares eventual real calibration or reference integrity while preserving all current budget and correctness gates. Freeze any new method before executing its result.
+Immediate order:
+1. freeze the exact affine clock-map algorithm, marker schema, deterministic synthetic cases, diagnostics, and interpretation boundary before observing the harness result;
+2. implement contract tests first;
+3. run ordinary GitHub CPU CI only after preregistration + tests are committed;
+4. freeze a dedicated synthetic result checkpoint and update this file.
+
+This prepares the existing future hardware-marker timing path only. It does not authorize hardware or real calibration and does not change the frozen `0.025 s` structural bound.
 
 ## STILL FORBIDDEN
 
@@ -132,4 +141,4 @@ Guitar-TECHS correctness/repair/rescue; archived V143/Gomyway; GOAT/reference sc
 
 Continue only on `songsterr-fresh-pipeline-v1`; re-fetch the live branch head and this file before mutation.
 
-Immediate task: review existing purpose-built calibration/reference authority and select the next already-implied $0 software-only contract. Keep all correctness/holdout/customer authorization false. Do not access reserved GFN sources. Do not reopen V143/Gomyway or any other closed line unless explicitly asked.
+Immediate task: freeze and implement the synthetic hardware-marker clock-map V1 contract described above. Keep all correctness/holdout/customer authorization false. Do not access reserved GFN sources. Do not reopen V143/Gomyway or any other closed line unless explicitly asked.
