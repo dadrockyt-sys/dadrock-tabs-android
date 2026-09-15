@@ -1,6 +1,6 @@
 # CURRENT STATE — Songsterr Fresh Pipeline V1
 
-Updated: 2026-09-14 America/Toronto — GFN V2 frozen MIXED; synthetic debleed V1 complete; hardware-marker clock-map V1 complete; calibration-package provenance V1 frozen
+Updated: 2026-09-14 America/Toronto — GFN V2 frozen MIXED; synthetic debleed V1 complete; hardware-marker clock-map V1 complete; calibration-package provenance V1 complete
 Canonical branch: `songsterr-fresh-pipeline-v1`
 Canonical checkpoint: `docs/checkpoints/SONGSTERR_FRESH_PIPELINE_CURRENT_STATE.md`
 
@@ -78,61 +78,42 @@ Budget checkpoint `e7f0146d4f01605b642f8aeaa100962254b5ce58` remains binding: ha
 
 Preregistration `54802e0eda32f8cb65da39ea2bce70c443d16eab`; implementation blob `a41dbe3131167f09e748a15843143ecfe1e57d8c`, commit `a3d26f1bd399c915466f39ed86529810dabd613d`; tests blob `55f61041e97c42738865b47d6b614ba829f7455c`, commit `a9626d0e409fca43110516ad9fdc695f1badc64c`; workflow blob `404c53970806eda15a3757192ae5712ae68c6deb`, head `39f5b2cef2141f7df5377d4ce24ecabebe617011`; run `34915944228`, job `104213442029`, SUCCESS; 16/16 tests passed first.
 Artifact `10376620438`, ZIP SHA `53064b9521177251f7e5bb17f672927d8cf7be173fd4a67effa5dd81f7f39b6b`; result JSON SHA `ece7a4525be33329b4f26d05b145f478179d22b1d0472865fd77bc44c05a5a0c`; result checkpoint `f233da0000188977334331c4614b6e541ae2490b`.
-
 Main finding: exact known-matrix inversion removes synthetic bleed to float64 precision without perturbation; perturbation amplification grows with condition number. Hardest frozen case (paired bleed `0.95`, condition `39.0`, `sigma=0.01`): untreated pooled NRMSE `0.9500526301`, direct `0.1414678382`, fixed ridge `0.1387224500`. Synthetic software evidence only.
 
 ## HARDWARE-MARKER CLOCK MAP V1 — COMPLETE
 
-Preregistration:
-`docs/checkpoints/SONGSTERR_FRESH_SYNTHETIC_HARDWARE_MARKER_CLOCK_MAP_PREREGISTRATION_V1_2026-09-14.md`
-commit `ee861c0ed0c133b824115ffd3f90820d56aad7c8`.
-
+Preregistration `ee861c0ed0c133b824115ffd3f90820d56aad7c8`.
 Implementation commit `1c7e304aab00216f0128f20b6704184f73609943`, blob `9b1992e366a162d92b0c92ce402d11ca815ec5d9`.
 Test commit `a3e6c2c3d0ae17373c1f9a68ee959b7087c57ad4`, blob `39b975f651a8ff2d4a50507d00219e6cd2a345fe`.
-Workflow integration head `9637ef5025f614702534d0ec667c1e114fd8157e`, workflow blob `6df889ce29247b03c9844fd5a81681f9798349f2`.
-Official run `34916421318`, job `104214912711`, SUCCESS; 18/18 contract tests passed first.
-Artifact `10377035271`, size 4,668 bytes, ZIP SHA `3b0f59501fabad7301eb43f6343d0e6c445320eccd02cde178561e6ac8539689`.
-Canonical result JSON SHA `2566b0aad10040189ea1427a9098e864575b36adafd9d529bec2afdd14259e59`.
-Result checkpoint `79293a7632915fc67f5b7ee0ac2242466ec83ea7`.
+Workflow head `9637ef5025f614702534d0ec667c1e114fd8157e`, blob `6df889ce29247b03c9844fd5a81681f9798349f2`.
+Official run `34916421318`, job `104214912711`, SUCCESS; 18/18 tests passed first.
+Artifact `10377035271`, ZIP SHA `3b0f59501fabad7301eb43f6343d0e6c445320eccd02cde178561e6ac8539689`; result JSON SHA `2566b0aad10040189ea1427a9098e864575b36adafd9d529bec2afdd14259e59`; result checkpoint `79293a7632915fc67f5b7ee0ac2242466ec83ea7`.
 
-Frozen result summary:
-- `exact_affine`: max truth error `0`, within synthetic 25 ms diagnostic;
-- `positive_100ppm`: max truth error `0.0000010822510834 s`, within;
-- `negative_100ppm`: max truth error `0.0000010822510825 s`, within;
-- `deterministic_marker_jitter_1ms`: max truth error `0.0000432900432898 s`, within;
-- `quadratic_warp_10ms`: max truth error `0.0015833333333344 s`, within;
-- `quadratic_warp_180ms_stress`: max truth error `0.0285000000000011 s`, outside the inherited `0.025 s` synthetic diagnostic bound.
+Frozen result: exact affine error `0`; +/-100 ppm max truth error about `1.08 us`; deterministic <=1 ms marker jitter max truth error about `43.29 us`; 10 ms quadratic warp max truth error `1.583 ms`; deliberate 180 ms nonlinear stress max truth error `28.5 ms`, outside the inherited `25 ms` synthetic diagnostic. Synthetic software feasibility only; no real-hardware threshold or authority gained.
 
-Interpretation is strictly synthetic software feasibility: the fixed all-marker affine OLS transform behaves deterministically, reconstructs affine relationships correctly, and visibly fails the synthetic 25 ms diagnostic when clock behavior is sufficiently nonlinear. No real-hardware drift/jitter/dropout threshold was created; no physical calibration/bench/holdout/correctness/customer authority was gained.
-
-## REFERENCE CALIBRATION PACKAGE PROVENANCE V1 — PREREGISTRATION FROZEN
+## REFERENCE CALIBRATION PACKAGE PROVENANCE V1 — COMPLETE
 
 Preregistration:
 `docs/checkpoints/SONGSTERR_FRESH_REFERENCE_CALIBRATION_PACKAGE_PROVENANCE_PREREGISTRATION_V1_2026-09-14.md`
 commit `cbd99714f655d859af2410374c3245a4afe6b056`.
 
-This contract is package-level identity/provenance plumbing only. It closes the gap between the existing capture-manifest references (`calibrationId`, hardware/configuration SHA, sync ID, derivation-config SHA, evidence hashes) and the bench-gate requirement that a future NON_HOLDOUT calibration package immutably bind hardware identities, wiring/configuration, fixture identity, raw calibration sources, decoder code/configuration, derived calibration outputs, and the information-firewall declarations.
+Implementation commit `3dd1140650070342ab9fc4e177870fd39940a4e0`, blob `b6be3c98ce5a7da9ce6c5f5c19d9472549e1029a`.
+Initial test commit `d322915ce7790ed036f709c56b40e0afe866c072`; final test-correction commit `3ff9980cad1d16d2621ae5d3bb9fbc9d9fb5955a`, final test blob `eaf39e7898d112bb4cb78fdb7d8a85c0425c2be8`.
+Workflow integration commit `17c273ff0986c89101d6ff5cf49cb1f2e61eb9ba`, workflow blob `b54fa2f18dc27b202fe724cdc780f909dfd64b67`.
 
-Frozen requirements include:
-- `usedHoldoutData:false`, `usedModelOutputs:false`, `derivedFromEvaluatedAudio:false`;
-- inherited `maxAbsoluteOnsetErrorSeconds <= 0.025` only; no new physical threshold;
-- hardware configuration + instrument setup + hardware identity + wiring topology binding;
-- calibration fixture binding;
-- deterministic decoder code/configuration hashes;
-- raw-source role coverage for physical pitch state, event birth and clock sync, with optional sensor-health role;
-- derived-output identities for physical string/fret mapping, event-birth calibration, hardware timing proof, technique capability matrix, and acquisition-QA configuration;
-- safe package-relative paths and verified file SHA-256 values;
-- deterministic canonical `packageBindingSha256` independent of absolute local package-root path;
-- all downstream authorization remains false/zero.
+The first workflow run failed before official harness execution because one valid-fixture bookkeeping assertion expected 13 verified files instead of the actual frozen 14. No implementation or preregistered semantic rule changed; only the expected test count was corrected.
 
-Current execution order:
-1. implement the frozen validator without changing semantics;
-2. add synthetic package fixtures/tests before official harness execution;
-3. add ordinary GitHub CPU workflow with tests first;
-4. freeze run/job/artifact/result identities in a dedicated result checkpoint;
-5. update this canonical checkpoint again.
+Official clean run `34916853723`, job `104216245975`, head `3ff9980cad1d16d2621ae5d3bb9fbc9d9fb5955a`, SUCCESS; 20/20 contract tests PASS before the official harness.
+Artifact `10376481781`, size 1,919 bytes, ZIP SHA `1a37a529b4c730315268bea21754275cbfb721a2c2238d4ae3fee6f54ad925e6`.
+Canonical result JSON SHA `4fd62e62a855031bd3c189253bc04f004d271d53bf2b636c586c15b93e59e98f`.
+Canonical synthetic package binding SHA `735d276afc5bac7cd8e0e905ae42f8d4dc4bfae835ae013403ccdc31c4cf857c`.
+Result checkpoint `c57156fec7c5000563552c8cb128366956b8c95b`.
 
-Real calibration and real holdout capture remain budget-paused.
+Frozen result: `contractValid:true`, `verifiedFileCount:14`, `errors:[]`. The synthetic package bound hardware configuration, wiring topology, fixture, decoder code/configuration, four raw-source artifacts covering physical pitch state/event birth/clock sync/sensor health, and all five required derived calibration artifact roles. File bytes were hash-verified, path escape/duplication and identity/role failures were exercised, and canonical package binding was deterministic and independent of absolute temporary root.
+
+Interpretation remains software-only. No real calibration package exists or is authorized by this result; no physical accuracy, drift/jitter/dropout, empirical acquisition-QA threshold, bench PASS, holdout capture, correctness, V6, customer or delivery authority was created.
+
+The package contract already closes the previously identified deterministic reference-decoder/configuration identity gap at the package level by requiring verified decoder code and configuration hashes. Do not create a duplicate standalone decoder-identity contract unless a later authority review identifies a distinct unresolved requirement.
 
 ## STILL FORBIDDEN
 
@@ -142,8 +123,6 @@ Guitar-TECHS correctness/repair/rescue; archived V143/Gomyway; GOAT/reference sc
 
 Continue only on `songsterr-fresh-pipeline-v1`; re-fetch live head + this file before mutation.
 
-Immediate task: implement the already-frozen Reference Calibration Package Provenance V1 contract at preregistration commit `cbd99714f655d859af2410374c3245a4afe6b056`. Use generated synthetic package files only. Tests must run before the official synthetic harness. Do not invent physical thresholds, do not begin real calibration/holdout capture, and keep all correctness/holdout/customer authorization false.
+Immediate task: review whether the existing capture-manifest V2.1 calibration reference (`calibrationId` + calibration artifact SHA + hardware-configuration SHA + derivation-configuration SHA) can directly bind the new canonical calibration package identity, or whether a narrowly scoped prospective capture-manifest bridge/version bump is actually required. Do not implement a bridge unless the existing contracts leave a real identity gap. Keep this as zero-additional-cost software/documentation work only.
 
-After this contract is complete, re-review whether any remaining deterministic reference-decoder/configuration identity gap exists; do not duplicate it if the package contract already closes it.
-
-Do not access reserved GFN sources or reopen V143/Gomyway/other closed lines unless explicitly asked.
+Do not invent physical thresholds, do not begin real calibration/holdout capture, keep all correctness/holdout/customer authorization false, do not access reserved GFN sources, and do not reopen V143/Gomyway/other closed lines unless explicitly asked.
