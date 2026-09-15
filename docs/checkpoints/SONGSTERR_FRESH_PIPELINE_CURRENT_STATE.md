@@ -1,6 +1,6 @@
 # CURRENT STATE — Songsterr Fresh Pipeline V1
 
-Updated: 2026-09-14 America/Toronto — GFN V2 frozen MIXED; synthetic debleed V1 complete; hardware-marker clock-map V1 complete
+Updated: 2026-09-14 America/Toronto — GFN V2 frozen MIXED; synthetic debleed V1 complete; hardware-marker clock-map V1 complete; calibration-package provenance V1 frozen
 Canonical branch: `songsterr-fresh-pipeline-v1`
 Canonical checkpoint: `docs/checkpoints/SONGSTERR_FRESH_PIPELINE_CURRENT_STATE.md`
 
@@ -105,6 +105,35 @@ Frozen result summary:
 
 Interpretation is strictly synthetic software feasibility: the fixed all-marker affine OLS transform behaves deterministically, reconstructs affine relationships correctly, and visibly fails the synthetic 25 ms diagnostic when clock behavior is sufficiently nonlinear. No real-hardware drift/jitter/dropout threshold was created; no physical calibration/bench/holdout/correctness/customer authority was gained.
 
+## REFERENCE CALIBRATION PACKAGE PROVENANCE V1 — PREREGISTRATION FROZEN
+
+Preregistration:
+`docs/checkpoints/SONGSTERR_FRESH_REFERENCE_CALIBRATION_PACKAGE_PROVENANCE_PREREGISTRATION_V1_2026-09-14.md`
+commit `cbd99714f655d859af2410374c3245a4afe6b056`.
+
+This contract is package-level identity/provenance plumbing only. It closes the gap between the existing capture-manifest references (`calibrationId`, hardware/configuration SHA, sync ID, derivation-config SHA, evidence hashes) and the bench-gate requirement that a future NON_HOLDOUT calibration package immutably bind hardware identities, wiring/configuration, fixture identity, raw calibration sources, decoder code/configuration, derived calibration outputs, and the information-firewall declarations.
+
+Frozen requirements include:
+- `usedHoldoutData:false`, `usedModelOutputs:false`, `derivedFromEvaluatedAudio:false`;
+- inherited `maxAbsoluteOnsetErrorSeconds <= 0.025` only; no new physical threshold;
+- hardware configuration + instrument setup + hardware identity + wiring topology binding;
+- calibration fixture binding;
+- deterministic decoder code/configuration hashes;
+- raw-source role coverage for physical pitch state, event birth and clock sync, with optional sensor-health role;
+- derived-output identities for physical string/fret mapping, event-birth calibration, hardware timing proof, technique capability matrix, and acquisition-QA configuration;
+- safe package-relative paths and verified file SHA-256 values;
+- deterministic canonical `packageBindingSha256` independent of absolute local package-root path;
+- all downstream authorization remains false/zero.
+
+Current execution order:
+1. implement the frozen validator without changing semantics;
+2. add synthetic package fixtures/tests before official harness execution;
+3. add ordinary GitHub CPU workflow with tests first;
+4. freeze run/job/artifact/result identities in a dedicated result checkpoint;
+5. update this canonical checkpoint again.
+
+Real calibration and real holdout capture remain budget-paused.
+
 ## STILL FORBIDDEN
 
 Guitar-TECHS correctness/repair/rescue; archived V143/Gomyway; GOAT/reference scoring; GuitarSet/V3; IDMT/V4; V5/FLGD; duration research; protected-song execution; restricted corpus use outside rights; rescue via evaluated-audio-derived truth; counting synthetic/effect/duplicate derivatives as independent real evidence; changing frozen V6/scoring rules from holdout observations; real-holdout optimizer/threshold sweeps or fine-tuning; treating vendor MIDI as infallible truth; Production/customer promotion without untouched external validation plus separate policy review; new validation-route hardware/performance/vendor/studio spending under the current budget; and any access to reserved GFN `deb` or `ele_natural` before a separately frozen authorization.
@@ -113,6 +142,8 @@ Guitar-TECHS correctness/repair/rescue; archived V143/Gomyway; GOAT/reference sc
 
 Continue only on `songsterr-fresh-pipeline-v1`; re-fetch live head + this file before mutation.
 
-Immediate task: review the remaining purpose-built pre-capture blockers and select the next already-implied zero-additional-cost software-only contract. Highest-value candidates are calibration-artifact identity/provenance binding and deterministic reference-decoder/configuration identity plumbing. Do not invent physical thresholds from synthetic data, do not begin real calibration/holdout capture, and keep all correctness/holdout/customer authorization false.
+Immediate task: implement the already-frozen Reference Calibration Package Provenance V1 contract at preregistration commit `cbd99714f655d859af2410374c3245a4afe6b056`. Use generated synthetic package files only. Tests must run before the official synthetic harness. Do not invent physical thresholds, do not begin real calibration/holdout capture, and keep all correctness/holdout/customer authorization false.
+
+After this contract is complete, re-review whether any remaining deterministic reference-decoder/configuration identity gap exists; do not duplicate it if the package contract already closes it.
 
 Do not access reserved GFN sources or reopen V143/Gomyway/other closed lines unless explicitly asked.
