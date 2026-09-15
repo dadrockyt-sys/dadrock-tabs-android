@@ -1,0 +1,140 @@
+name: Songsterr Fresh Purpose-Built Reference-Blind Structural Audit V1.1
+
+on:
+  workflow_dispatch:
+  push:
+    branches:
+      - songsterr-fresh-pipeline-v1
+    paths:
+      - "scripts/songsterr-fresh/purpose_built_reference_blind_structural_audit_v1_1.py"
+      - "scripts/songsterr-fresh/test_purpose_built_reference_blind_structural_audit_v1_1.py"
+      - ".github/workflows/songsterr-fresh-purpose-built-reference-blind-structural-audit-v1-1.yml"
+
+jobs:
+  synthetic-reference-blind-structural-audit-v11:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Compile V1.1 validator and tests
+        run: |
+          python -m py_compile \
+            scripts/songsterr-fresh/purpose_built_reference_blind_structural_audit_v1_1.py \
+            scripts/songsterr-fresh/test_purpose_built_reference_blind_structural_audit_v1_1.py
+      - name: Run synthetic contract tests first
+        run: python scripts/songsterr-fresh/test_purpose_built_reference_blind_structural_audit_v1_1.py
+      - name: Generate frozen synthetic V1 reference streams and provenance result
+        run: |
+          python - <<'PY'
+          import hashlib
+          import importlib.util
+          from pathlib import Path
+          import tempfile
+
+          scripts = Path("scripts/songsterr-fresh")
+
+          def load(name, filename):
+              spec = importlib.util.spec_from_file_location(name, scripts / filename)
+              assert spec and spec.loader
+              mod = importlib.util.module_from_spec(spec)
+              spec.loader.exec_module(mod)
+              return mod
+
+          bridge = load("bridge", "purpose_built_reference_blind_structural_audit_v1_1.py")
+          v1_fixture = load("v1_fixture", "test_purpose_built_reference_blind_structural_audit_v1.py")
+          provenance = load("provenance", "reference_calibration_package_provenance_v1.py")
+
+          hardware, births, latches, clock = v1_fixture.base_documents()
+          docs = {
+              "hardware": v1_fixture.render(hardware),
+              "birth": v1_fixture.render(births),
+              "pitchLatch": v1_fixture.render(latches),
+              "clockSync": v1_fixture.render(clock),
+          }
+          paths = {
+              "hardware": Path("synthetic-v11-hardware.json"),
+              "birth": Path("synthetic-v11-birth.json"),
+              "pitchLatch": Path("synthetic-v11-pitch-latch.json"),
+              "clockSync": Path("synthetic-v11-clock-sync.json"),
+          }
+          for name, data in docs.items():
+              paths[name].write_bytes(data)
+              Path(f"synthetic-v11-{name}.sha256").write_text(hashlib.sha256(data).hexdigest())
+
+          with tempfile.TemporaryDirectory() as td:
+              root = Path(td) / "package"
+              package_manifest = provenance.build_synthetic_fixture(root)
+              provenance_result = provenance.validate_package(package_manifest, root)
+          assert provenance_result["contractValid"] is True, provenance_result
+          provenance_bytes = bridge.canonical_json_bytes(provenance_result)
+          Path("synthetic-v11-calibration-provenance-result.json").write_bytes(provenance_bytes)
+          Path("synthetic-v11-calibration-provenance-result.sha256").write_text(
+              hashlib.sha256(provenance_bytes).hexdigest()
+          )
+          Path("synthetic-v11-package-binding.sha256").write_text(
+              provenance_result["packageBindingSha256"]
+          )
+          PY
+      - name: Run official frozen synthetic V1.1 validator
+        run: |
+          python scripts/songsterr-fresh/purpose_built_reference_blind_structural_audit_v1_1.py \
+            --hardware synthetic-v11-hardware.json \
+            --hardware-sha256 "$(cat synthetic-v11-hardware.sha256)" \
+            --birth-stream synthetic-v11-birth.json \
+            --birth-stream-sha256 "$(cat synthetic-v11-birth.sha256)" \
+            --pitch-latch-stream synthetic-v11-pitch-latch.json \
+            --pitch-latch-stream-sha256 "$(cat synthetic-v11-pitchLatch.sha256)" \
+            --clock-sync synthetic-v11-clock-sync.json \
+            --clock-sync-sha256 "$(cat synthetic-v11-clockSync.sha256)" \
+            --calibration-provenance-result synthetic-v11-calibration-provenance-result.json \
+            --calibration-provenance-result-sha256 "$(cat synthetic-v11-calibration-provenance-result.sha256)" \
+            --declared-provenance-result-sha256 "$(cat synthetic-v11-calibration-provenance-result.sha256)" \
+            --declared-calibration-package-binding-sha256 "$(cat synthetic-v11-package-binding.sha256)" \
+            --output synthetic-purpose-built-reference-blind-structural-audit-v1-1-result.json
+      - name: Print frozen result summary
+        run: |
+          python - <<'PY'
+          import hashlib
+          import json
+          from pathlib import Path
+
+          path = Path("synthetic-purpose-built-reference-blind-structural-audit-v1-1-result.json")
+          result = json.loads(path.read_text(encoding="utf-8"))
+          print("contract", result["contract"])
+          print("contractValid", result["contractValid"])
+          print("datasetStructurallySuitable", result["datasetStructurallySuitable"])
+          print("authoritativeStructuralSuitabilityEstablished", result["authoritativeStructuralSuitabilityEstablished"])
+          print("bridgeViolationCount", result["calibrationProvenanceBridgeViolationCount"])
+          print("provenanceResultContract", result["calibrationProvenanceResultContract"])
+          print("provenanceResultSha256", result["calibrationProvenanceResultSha256"])
+          print("packageBindingSha256", result["calibrationPackageBindingSha256"])
+          print("decoderId", result["calibrationPackageDecoderId"])
+          print("decoderSoftwareVersion", result["calibrationPackageDecoderSoftwareVersion"])
+          print("decoderCodeSha256", result["calibrationPackageDecoderCodeSha256"])
+          print("decoderConfigurationSha256", result["calibrationPackageDecoderConfigurationSha256"])
+          print("inheritedV1PopulationSha256", result["inheritedV1DerivedPopulationSha256"])
+          print("populationIdentityVersion", result["populationIdentityVersion"])
+          print("derivedPopulationSha256", result["derivedPopulationSha256"])
+          print("derivedNoteEventCount", result["derivedNoteEventCount"])
+          print("resultSha256", hashlib.sha256(path.read_bytes()).hexdigest())
+          print(json.dumps({
+              "realCalibrationAuthorized": result["realCalibrationAuthorized"],
+              "realHoldoutCaptureAuthorized": result["realHoldoutCaptureAuthorized"],
+              "basicPitchAuthorized": result["basicPitchAuthorized"],
+              "v6Authorized": result["v6Authorized"],
+              "correctnessAuthorized": result["correctnessAuthorized"],
+              "modelValidationComplete": result["modelValidationComplete"],
+              "customerEligibleEvents": result["customerEligibleEvents"],
+              "mayAdvanceDelivery": result["mayAdvanceDelivery"],
+          }, sort_keys=True))
+          PY
+      - name: Upload canonical V1.1 result
+        uses: actions/upload-artifact@v4
+        with:
+          name: songsterr-fresh-purpose-built-reference-blind-structural-audit-v1-1
+          path: synthetic-purpose-built-reference-blind-structural-audit-v1-1-result.json
+          if-no-files-found: error
+          retention-days: 30
