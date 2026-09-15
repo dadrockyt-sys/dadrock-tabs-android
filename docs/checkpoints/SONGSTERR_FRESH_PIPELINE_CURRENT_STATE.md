@@ -1,6 +1,6 @@
 # CURRENT STATE — Songsterr Fresh Pipeline V1
 
-Updated: 2026-09-15 America/Toronto — boundary-aware V2 repair completed; all synthetic gates passed; one authorized real EGFxSet V2 diagnostic executed and froze as FAIL because real MIDI-40 E2 failed the inherited physical-template plausibility gate; separate user-directed V6 replacement-holdout metadata search rejected GuitarJam before media access for lack of established synchronized note-event ground truth
+Updated: 2026-09-15 America/Toronto — boundary-aware V2 repair completed; all synthetic gates passed; one authorized real EGFxSet V2 diagnostic executed and froze as FAIL because real MIDI-40 E2 failed the inherited physical-template plausibility gate; separate user-directed V6 replacement-holdout metadata search has now rejected GuitarJam, URMP, GAPS, and EGDB before media access
 Canonical branch: `songsterr-fresh-pipeline-v1`
 Canonical checkpoint: `docs/checkpoints/SONGSTERR_FRESH_PIPELINE_CURRENT_STATE.md`
 Hardening result: `docs/checkpoints/SONGSTERR_FRESH_PIPELINE_HARDENING_V1_RESULT.md`
@@ -254,6 +254,20 @@ Decision: **REJECT BEFORE MEDIA ACCESS**. No GuitarJam WAV/reference was downloa
 
 Guitar-TECHS run `34754519541`, job `103716527380` was rechecked live on 2026-09-15 and remains `completed/success`; its frozen decision C remains closed and must not be scored.
 
+## USER-DIRECTED V6 REPLACEMENT-HOLDOUT SEARCH — PRE-MEDIA BATCH 2
+
+Checkpoint: `docs/checkpoints/SONGSTERR_FRESH_V6_PREMEDIA_BATCH_URMP_GAPS_EGDB.md`, commit `9a20dcde71f954d4a1704dfca2985e91366f8cc6`.
+
+The frozen ingress rule remains: before any candidate media access, public evidence must establish a real guitar performance, usable public licensing, synchronized note events aligned to the exact performance, and sufficiently independent reference provenance for frozen V6 scoring.
+
+Metadata-only dispositions:
+
+- **URMP — REJECT_PREMEDIA:** official corpus instrumentation contains strings, woodwinds, and brass but no guitar; therefore it fails the real-guitar domain gate despite strong note-level ground truth.
+- **GAPS — REJECT_PREMEDIA:** real guitar and aligned MIDI are established, but the official terms restrict use to non-commercial research by the named individual/group and prohibit transfer/distribution without permission. Its high-resolution alignment also uses DTW plus fine alignment to activations from an existing transcription model, so it does not satisfy the frozen independent-reference requirement.
+- **EGDB — REJECT_PREMEDIA:** public metadata establishes real electric-guitar performances and aligned note annotations, but the public project page/repository does not establish a usable dataset license. Public downloadability is not a license grant. Because licensing already fails, alignment independence was not adjudicated.
+
+For all three candidates: no audio/video/reference payload was downloaded or opened; no Basic Pitch ran; no V6 correctness ran; no frozen method/scoring rule changed; no EGFxSet execution occurred; no V143/Gomyway activity occurred.
+
 ## FRESH CHAT — EXACT NEXT STEPS
 
 On a fresh chat:
@@ -261,9 +275,9 @@ On a fresh chat:
 1. re-fetch live `songsterr-fresh-pipeline-v1` and this checkpoint;
 2. treat V2 run `34940292514` and result checkpoint as frozen completed evidence;
 3. do not trigger another EGFxSet or Basic Pitch run without new explicit authorization;
-4. under the user's separate V6 audit instruction, Guitar-TECHS remains decision C and only metadata/license/alignment search for a new untouched real-guitar holdout may continue unless a candidate clears the frozen pre-media gates;
+4. under the user's separate V6 audit instruction, Guitar-TECHS remains decision C; GuitarJam, URMP, GAPS, and EGDB are closed pre-media rejections; continue only metadata/license/alignment search for a new untouched real-guitar holdout unless a candidate clears every frozen pre-media gate;
 5. keep historical all-events, hardened-V1, V2, and all V6 rejection records unchanged;
-6. do not reopen V143/Gomyway, GOAT/reference scoring, GuitarSet/V3, IDMT/V4, duration research, protected-song execution, `main`, Production, reserved GFN splits, or physical procurement/calibration/capture unless separately authorized.
+6. do not reopen V143/Gomyway, GOAT/reference scoring, GuitarSet/V3, IDMT/V4, V5/FLGD, duration research, protected-song execution, `main`, Production, reserved GFN splits, or physical procurement/calibration/capture unless separately authorized.
 
 ## AUTHORITATIVE ROUTE
 
