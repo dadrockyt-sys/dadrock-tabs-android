@@ -1,0 +1,96 @@
+name: Songsterr Fresh Purpose-Built Capture Manifest V2.3
+
+on:
+  workflow_dispatch:
+  push:
+    branches:
+      - songsterr-fresh-pipeline-v1
+    paths:
+      - "scripts/songsterr-fresh/purpose_built_capture_manifest_contract_v2_3.py"
+      - "scripts/songsterr-fresh/test_purpose_built_capture_manifest_contract_v2_3.py"
+      - ".github/workflows/songsterr-fresh-purpose-built-capture-manifest-v2-3.yml"
+
+jobs:
+  synthetic-capture-manifest-v23:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Compile V2.3 validator and tests
+        run: |
+          python -m py_compile \
+            scripts/songsterr-fresh/purpose_built_capture_manifest_contract_v2_3.py \
+            scripts/songsterr-fresh/test_purpose_built_capture_manifest_contract_v2_3.py
+      - name: Run synthetic contract tests first
+        run: python scripts/songsterr-fresh/test_purpose_built_capture_manifest_contract_v2_3.py
+      - name: Generate official frozen synthetic V2.3 declaration
+        run: |
+          python - <<'PY'
+          import importlib.util
+          from pathlib import Path
+
+          scripts = Path("scripts/songsterr-fresh")
+
+          def load(name, filename):
+              spec = importlib.util.spec_from_file_location(name, scripts / filename)
+              assert spec and spec.loader
+              mod = importlib.util.module_from_spec(spec)
+              spec.loader.exec_module(mod)
+              return mod
+
+          module = load("capture_v23", "purpose_built_capture_manifest_contract_v2_3.py")
+          fixture = load("fixture_v23", "test_purpose_built_capture_manifest_contract_v2_3.py")
+
+          manifest = fixture.valid_manifest()
+          Path("synthetic-purpose-built-capture-manifest-v2-3.json").write_bytes(
+              module.canonical_json_bytes(manifest) + b"\n"
+          )
+          PY
+      - name: Run official frozen synthetic V2.3 validator
+        run: |
+          python scripts/songsterr-fresh/purpose_built_capture_manifest_contract_v2_3.py \
+            --manifest synthetic-purpose-built-capture-manifest-v2-3.json \
+            --output synthetic-purpose-built-capture-manifest-v2-3-result.json
+      - name: Print frozen result summary
+        run: |
+          python - <<'PY'
+          import hashlib
+          import json
+          from pathlib import Path
+
+          path = Path("synthetic-purpose-built-capture-manifest-v2-3-result.json")
+          result = json.loads(path.read_text(encoding="utf-8"))
+          print("contract", result["contract"])
+          print("contractValid", result["contractValid"])
+          print("bindingContract", result["structuralAuditInputBindingContract"])
+          print("bindingCount", result["structuralAuditInputBindingCount"])
+          print("bindingMap", json.dumps(result["structuralAuditInputBindings"], sort_keys=True))
+          print("populationIdentityVersion", result["populationIdentityVersion"])
+          print("inheritedV22PopulationSha256", result["inheritedV22AdmittedPopulationManifestSha256"])
+          print("admittedPopulationManifestSha256", result["admittedPopulationManifestSha256"])
+          print("provenanceResultSha256", result["calibrationPackageValidationResultSha256"])
+          print("packageBindingSha256", result["calibrationPackageBindingSha256"])
+          print("decoderConfigurationSha256", result["calibrationPackageDecoderConfigurationSha256"])
+          print("mayAdvanceToReferenceBlindStructuralAudit", result["mayAdvanceToReferenceBlindStructuralAudit"])
+          print("resultSha256", hashlib.sha256(path.read_bytes()).hexdigest())
+          print(json.dumps({
+              "realCalibrationAuthorized": result["realCalibrationAuthorized"],
+              "realHoldoutCaptureAuthorized": result["realHoldoutCaptureAuthorized"],
+              "basicPitchAuthorized": result["basicPitchAuthorized"],
+              "v6Authorized": result["v6Authorized"],
+              "correctnessAuthorized": result["correctnessAuthorized"],
+              "modelValidationComplete": result["modelValidationComplete"],
+              "customerEligibleEvents": result["customerEligibleEvents"],
+              "mayAdvanceDelivery": result["mayAdvanceDelivery"],
+          }, sort_keys=True))
+          PY
+      - name: Upload canonical V2.3 result
+        uses: actions/upload-artifact@v4
+        with:
+          name: songsterr-fresh-purpose-built-capture-manifest-v2-3
+          path: synthetic-purpose-built-capture-manifest-v2-3-result.json
+          if-no-files-found: error
+          retention-days: 30
