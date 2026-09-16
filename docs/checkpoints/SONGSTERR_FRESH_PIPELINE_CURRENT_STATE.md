@@ -1,6 +1,6 @@
 # CURRENT STATE — Songsterr Fresh Pipeline V1
 
-Updated: 2026-09-16 America/Toronto — KKT raw strict-necessity attempt 1 is complete and frozen. Broad all-49 fixed-feature raw contribution now has a prospectively justified, cutoff-free strict-necessity certificate derived from NNLS KKT geometry plus self-calibrating numerical error/stationarity bounds. The certificate is **not sufficient** for a final note-birth decision and cannot bypass support, lower-owner, evidence-significance, or unresolved reattack temporal/support semantics. Historical `0.01` remains non-portable; rank/top-K remains unauthorized.
+Updated: 2026-09-16 America/Toronto — KKT raw strict-necessity attempt 1 is complete and frozen. Broad all-49 fixed-feature raw contribution now has a prospectively justified, cutoff-free strict-necessity certificate derived from NNLS KKT geometry plus self-calibrating numerical error/stationarity bounds. The certificate is **not sufficient** for a final note-birth decision and cannot bypass support, lower-owner, evidence-significance, or unresolved reattack temporal/support semantics. Historical `0.01` remains non-portable; rank/top-K remains unauthorized. A post-KKT read-only recovery recheck confirmed that the original temporal job still exists and succeeded, but its console measurement payload remains inaccessible and the run has zero artifacts.
 
 Canonical branch: `songsterr-fresh-pipeline-v1`
 Canonical checkpoint: `docs/checkpoints/SONGSTERR_FRESH_PIPELINE_CURRENT_STATE.md`
@@ -68,6 +68,13 @@ All prior real-run authorizations remain consumed. There is currently **no autho
 - result `86549fcf3f15898aa551064b522ce42ca32b1b86`.
 - status `COMPLETE_MECHANICAL_EXECUTION / BLOCKED_STORED_LOG_ACCESS / NO_MEASUREMENT_DECISION`.
 - Original attempt-1 measurement payload remains inaccessible and no artifact exists.
+- Post-KKT read-only recovery recheck on 2026-09-16 confirmed:
+  - the run still lists exact job `104658560061` as `completed/success`;
+  - the diagnostic execution step itself is still recorded `completed/success`;
+  - job-log retrieval still returns GitHub `404` / not visible to the current connection;
+  - the jobs API exposes `logs_url:null` through this connector;
+  - the run artifact inventory is still empty (`[]`).
+- Therefore the blockage is specifically **stored measurement access**, not missing execution or a failed diagnostic.
 - **Do not rerun, locally reproduce, reconstruct or approximate this diagnostic.**
 - No temporal repair or reattack fallback is authorized.
 
@@ -196,6 +203,8 @@ The important advance is that broad raw contribution no longer needs a transport
 
 The KKT result also proves why no single raw rule is sufficient: alias and support-ineligible controls can be raw-certified. Owner/support/evidence protections remain independently active.
 
+The post-KKT read-only recovery recheck closes one remaining ambiguity about the temporal blocker: the original attempt definitely executed successfully, but the measurement rows are not recoverable through the present GitHub connection and were never persisted as artifacts. This does not authorize reproduction.
+
 ## NEXT ENGINEERING BOUNDARY
 
 Do not promote the KKT certificate into a final classifier merely because attempt 1 passed.
@@ -211,7 +220,7 @@ If no ex-ante composition/sufficiency principle can be established, keep final c
 1. Reconcile branch head before writing.
 2. KKT result authority: `docs/checkpoints/SONGSTERR_FRESH_V7_KKT_RAW_NECESSITY_DIAGNOSTIC_RESULT.md`, result commit `cfe72ac6fb2459166a25cdd0789a59d257c846d1`, artifact `10456247666`.
 3. KKT attempt 1 was run `35119500201`, job `104873352558`, success. **Do not rerun it.**
-4. Temporal line remains blocked/no-decision at `86549fcf3f15898aa551064b522ce42ca32b1b86`; do not reconstruct it.
+4. Temporal line remains blocked/no-decision at `86549fcf3f15898aa551064b522ce42ca32b1b86`; the post-KKT read-only recheck reconfirmed job `104658560061` exists/succeeded, logs remain inaccessible (`404` / `logs_url:null`), and artifacts remain empty. Do not reconstruct it.
 5. Do not rerun temporal `35053450282`, candidate-breadth `35057264267`, gate-free `35057812575`, fixed-feature `35058404820`, protection-fit `35059307767`, landscape `35060032406`, or KKT `35119500201`.
 6. No final classifier, raw-magnitude threshold, rank/top-K rule, candidate subset, composite score or reattack fallback is authorized.
 7. Historical `0.01` MUST NOT be transferred to broad fixed raw fit.
