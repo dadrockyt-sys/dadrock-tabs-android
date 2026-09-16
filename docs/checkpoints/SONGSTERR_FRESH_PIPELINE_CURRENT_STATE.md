@@ -1,6 +1,6 @@
 # CURRENT STATE — Songsterr Fresh Pipeline V1
 
-Updated: 2026-09-16 America/Toronto — support-conditioned raw necessity landscape attempt 1 is complete and frozen from artifact. The landscape improves threshold-free measurement but does not justify a raw-necessity threshold, rank/top-K cutoff, or maximum-only classifier. Temporal/support attempt-1 measurement access remains blocked/no-decision.
+Updated: 2026-09-16 America/Toronto — read-only composition-principle theory review is complete. Frozen support eligibility, lower-owner protection and the existing V3 `0.10` evidence-significance protection have defensible ex-ante provenance, but historical NNLS necessity `0.01` is representation-bound and MUST NOT be transferred to the new all-49 fixed-feature raw fit. No ex-ante raw acceptance threshold, rank/top-K rule or reattack fallback exists in the frozen lineage. **Synthetic final composition is paused.** Temporal/support attempt-1 measurement access remains blocked/no-decision.
 
 Canonical branch: `songsterr-fresh-pipeline-v1`
 Canonical checkpoint: `docs/checkpoints/SONGSTERR_FRESH_PIPELINE_CURRENT_STATE.md`
@@ -39,7 +39,8 @@ All prior real-run authorizations remain consumed. There is currently **no autho
 - Iteration 3: permanent `PASS_SYNTHETIC_EVIDENCE_SIGNIFICANCE`.
 - Iteration-3 PRE `26ac58fe54c179744ef036a9dc4f4a7d69598038`; result `e97ab67c9c2794f4a50c5170102d1380484f5fb1`.
 - Frozen regression: 34 fixtures ×3, deterministic, mismatch `0`, PASS.
-- Frozen V3 support-space necessity minimum `0.01` and candidate-evidence minimum `0.10` remain read-only historical/protection semantics.
+- Frozen V3 support-space necessity minimum `0.01` remains read-only historical semantics and is **not portable** to the later broad fixed raw fit.
+- Frozen candidate-evidence minimum `0.10` remains read-only independent protection semantics; its iteration-3 PRE contains a prospective geometry-based rationale independent of real correctness data.
 
 ### Historical V7 mechanical integration
 
@@ -72,13 +73,23 @@ All prior real-run authorizations remain consumed. There is currently **no autho
 
 ### Candidate-population breadth diagnostic — COMPLETE
 
-- run `35057264267`, artifact `10430643432`, result `4750332a347b03795d089690e8f7c4249319cd71`.
+- PRE `ea17df201a58d0c6ba841350f2646826da6fe945`.
+- pair head `da4a3624d66c4138390969cb986317b0cd791c05`.
+- workflow/head `3ae25dbb0cb4cb0e2e65cbc2a8aa6184c0d9026b`.
+- run `35057264267`, job `104669939122`, attempt 1: success.
+- artifact `10430643432`, digest `sha256:199af452612c0a224b6bb2b214148026e2501e378d2bed1f510d767380722c9a`.
+- result `4750332a347b03795d089690e8f7c4249319cd71`.
 - label `COMPLETE_SYNTHETIC_CANDIDATE_COMPETITION_BREADTH_DIAGNOSTIC_NO_DECISION`.
 - Candidate breadth materially changes selected necessity; no candidate-count or MIDI rule is authorized.
 
 ### Gate-free all-playable competition diagnostic — COMPLETE
 
-- run `35057812575`, artifact `10431411768`, result `2b115a380cc49a34fc9d42fe0590073e1d1c6d46`.
+- PRE `195d219c0d9a031f2d99b1822176377bac9fbb8c`.
+- pair head `539c4b917a8d2b5bb97b5e1a929a8e506482a191`.
+- workflow/head `b518b0e9b344eb0f6d4b2d42cc4a0fa5bfa40323`.
+- run `35057812575`, job `104671550898`, attempt 1: success.
+- artifact `10431411768`, digest `sha256:d076d15560677a8f55b5a70787101b9c592bf54c3774f8d304222c79781b45a8`.
+- result `2b115a380cc49a34fc9d42fe0590073e1d1c6d46`.
 - label `COMPLETE_SYNTHETIC_GATE_FREE_COMPETITION_DIAGNOSTIC_NO_DECISION`.
 - All 19 onset-available fixtures structurally construct all 49 playable competition columns without adopting historical V6 `0.20` as competition admission.
 - Candidate expansion also changes the feature-bin universe; this is not an all-49 production rule.
@@ -158,9 +169,26 @@ Frozen measurement conclusions:
 7. `reattack_m64` has zero support-valid candidates in this landscape. The diagnostic does not repair, rank or promote it and does not recover the inaccessible temporal/support loss mechanism.
 8. No final successor classifier, raw threshold, rank/top-K cutoff, maximum-only rule or aggregation semantics are defined.
 
+### V7 composition-principle theory review — COMPLETE / COMPOSITION PAUSED
+
+- review file `docs/checkpoints/SONGSTERR_FRESH_V7_COMPOSITION_PRINCIPLE_THEORY_REVIEW.md`;
+- review commit `94b7d7211de312edc649734786a076779704170f`;
+- status `COMPLETE_READ_ONLY_THEORY_REVIEW / SYNTHETIC_FINAL_COMPOSITION_PAUSED`;
+- no executable code, workflow or diagnostic run was created by the review.
+
+Frozen provenance conclusions:
+
+1. V3 support/local-background eligibility is a prospectively frozen physical/structural principle and remains an independent protection dimension.
+2. V3 iteration-2 lower-owner veto is a prospectively frozen structural/harmonic-geometry principle and remains an independent protection dimension.
+3. V3 iteration-3 candidate-evidence fraction `0.10` has an explicit prospective geometric rationale (`sqrt(6/4097) ~= 0.038` diffuse reference before peak-selection inflation) and remains an already-frozen independent protection; this review does not retune or newly derive it.
+4. Historical NNLS necessity `0.01` was prospectively frozen in V5/V6 and inherited by V3, but the reviewed frozen documents provide no representation-independent mathematical derivation for it. Because the later broad fixed raw fit changes candidate/feature semantics, **do not transfer `0.01` to that measurement**.
+5. No frozen prospective source defines a raw-necessity rank, top-K, maximum-only rule, candidate subset, composite score or numeric broad-raw acceptance threshold.
+6. No frozen theory authorizes a reattack temporal/support fallback or permits broad raw evidence to bypass the blocked support/temporal representation.
+7. Therefore no honest executable final-composition PRE can be opened from the current evidence alone. The synthetic final-composition line is paused rather than post-result tuned.
+
 ## CURRENT TECHNICAL CONCLUSION
 
-The successor seam now has mechanically separated measurement roles:
+The successor seam now has mechanically separated measurement/protection roles:
 
 1. leakage-cleaned support/local-background eligibility;
 2. independent frozen lower-owner protection;
@@ -171,31 +199,46 @@ The successor seam now has mechanically separated measurement roles:
 7. candidate-relative raw contribution landscape;
 8. reattack temporal/support representation.
 
-The latest landscape closes off several retrospective shortcuts: neither a simple absolute raw cutoff nor a simple relative rank/top-K rule is justified by the prospectively frozen synthetic measurements. Owner/evidence protections remain distinct and materially active.
+The frozen theory review resolves the provenance question but not the composition decision:
 
-The unresolved engineering problem is now a **composition-principle problem**, not merely a missing measurement: any final synthetic successor rule would need prospectively justified semantics for combining support eligibility, frozen owner/evidence protections, and broad raw contribution without selecting a cutoff or rank rule from the already-observed fixture values.
+- support eligibility is a defensible ex-ante structural gate/protection;
+- lower-owner protection is a defensible ex-ante structural veto;
+- the already-frozen `0.10` candidate-evidence protection has an explicit ex-ante geometric rationale;
+- historical `0.01` raw/support-space necessity does **not** have a representation-independent derivation and is not transferable to the all-49 fixed-feature raw fit;
+- the observed landscape does not justify a rank/top-K/maximum-only substitute;
+- no final aggregation semantics are currently authorized.
 
-The reattack temporal/support dimension also remains independently unresolved and cannot be bypassed by any raw-fit or landscape result.
+Accordingly, **synthetic final composition is PAUSED**. This is a research-integrity stop, not a failure of the existing measurements: the measurements are separated and reproducible, but the currently frozen theory does not supply a non-post-hoc final raw-contribution decision boundary.
+
+The reattack temporal/support dimension remains independently unresolved and cannot be bypassed by any raw-fit or landscape result.
 
 ## NEXT ENGINEERING BOUNDARY
 
-No executable final composition is authorized by the landscape result itself.
+Do **not** open an executable final-composition PRE from the current evidence alone.
 
-Before any new executable line, write a new prospective PRE. A defensible next line must introduce a genuinely ex-ante composition principle or an independent calibration source; it may not tune a numeric raw threshold, rank cutoff, top-K, candidate subset or composite score from the frozen 23-fixture outcomes.
+The synthetic final-composition line may resume only if one of these appears prospectively:
 
-If no such non-post-result composition principle can be justified from existing frozen theory/geometry, the synthetic composition line should remain paused rather than inventing one.
+1. a genuinely new mathematical/signal-processing composition principle derived independently of the already-observed 23-fixture outcomes, then frozen in a new PRE before executable code/output; or
+2. an independent calibration source with a prospectively frozen use/scoring contract.
 
-Any future real/media/model evaluation still requires a new real-evaluation PRE plus fresh explicit user authorization.
+Any real/media/model calibration or evaluation route still requires a new real-evaluation PRE plus fresh explicit user authorization before access/execution.
+
+The blocked reattack line may resume only through legitimate access to the original authoritative attempt-1 measurement evidence if such access becomes available. Do not rerun, locally reproduce, reconstruct or approximate it.
+
+Until one of those conditions is met, keep final composition paused rather than manufacturing a threshold, rank rule, candidate subset or composite score.
 
 ## FRESH CHAT RESUME POINT
 
 1. Read this checkpoint and reconcile newer branch commits before writing.
-2. Do not rerun temporal `35053450282`, candidate-breadth `35057264267`, gate-free `35057812575`, fixed-feature `35058404820`, protection-fit `35059307767`, or landscape `35060032406`.
+2. Composition-theory authority: `docs/checkpoints/SONGSTERR_FRESH_V7_COMPOSITION_PRINCIPLE_THEORY_REVIEW.md`, commit `94b7d7211de312edc649734786a076779704170f`.
 3. Landscape authority: result commit `4cea2e55e7146b93ca284c73a7deb7d5c6efb259`, artifact `10431639851`.
 4. Protection-fit authority: result `e5b43f9a956310e55186600fc87931fab1b0eb20`, artifact `10431851835`.
 5. Temporal line remains blocked/no-decision at `86549fcf3f15898aa551064b522ce42ca32b1b86`; do not reconstruct it.
-6. No final classifier, raw threshold, rank/top-K rule, maximum-only rule or reattack fallback is authorized.
-7. Any new executable synthetic line requires a prospective PRE first and must avoid retrospective threshold/rank/candidate selection. Any real/media/model line requires a new real-evaluation PRE plus fresh explicit user authorization.
+6. Do not rerun temporal `35053450282`, candidate-breadth `35057264267`, gate-free `35057812575`, fixed-feature `35058404820`, protection-fit `35059307767`, or landscape `35060032406`.
+7. No final classifier, broad-raw threshold, rank/top-K rule, maximum-only rule, candidate subset, composite score or reattack fallback is authorized.
+8. Historical `0.01` MUST NOT be transferred to broad fixed raw fit. Frozen V3 `0.10` remains only its already-defined independent candidate-evidence protection; do not reinterpret it as a raw-fit threshold.
+9. Do not open executable final-composition code until a genuinely new ex-ante principle has a prospective PRE.
+10. Any real/media/model line requires a new real-evaluation PRE plus fresh explicit user authorization.
 
 ## DO NOT DO
 
@@ -204,9 +247,11 @@ Any future real/media/model evaluation still requires a new real-evaluation PRE 
 - Do not tune from post-result fixture values.
 - Do not adopt/change V3 or historical V6 thresholds.
 - Do not transfer historical `0.01` to broad fixed raw fit.
+- Do not reinterpret frozen V3 evidence `0.10` as a raw-fit threshold.
 - Do not introduce rank/top-K or maximum-only rules after observing the landscape.
 - Do not add per-MIDI exceptions, fixture branches, learned parameters, candidate subset searches or real-corpus rules.
 - Do not edit frozen V6/V3/V7 implementations or frozen result checkpoints.
+- Do not rerun/reconstruct the blocked temporal diagnostic.
 - Do not switch Production or `main`.
 - Do not use real media/model access without a new prospective real-evaluation PRE and explicit user authorization.
 
