@@ -1,20 +1,15 @@
 # CURRENT STATE — Songsterr Fresh Pipeline V1
 
-Updated: 2026-09-16 America/Toronto — candidate-breadth and gate-free all-playable competition diagnostics are frozen. A new fixed-feature competition PRE is frozen and its diagnostic module is committed; the test gate/workflow have not yet executed. Temporal/support attempt-1 measurement access remains blocked/no-decision.
+Updated: 2026-09-16 America/Toronto — candidate-breadth and gate-free all-playable competition diagnostics are frozen. The fixed-feature competition PRE/module/test pair is now frozen and has not executed; the next permitted write is its self-scoped one-shot workflow. Temporal/support attempt-1 measurement access remains blocked/no-decision.
 
 Canonical branch: `songsterr-fresh-pipeline-v1`
 Canonical checkpoint: `docs/checkpoints/SONGSTERR_FRESH_PIPELINE_CURRENT_STATE.md`
 
 ## LATEST CONTINUATION OVERRIDE — AUTHORITATIVE WHERE OLDER TEXT CONFLICTS
 
-Live branch reconciliation at continuation start:
+Live branch reconciliation at continuation start found head `949523ca753c2f7f0a5b87af195770210143d8cb`, directly descending from fixed-feature PRE `89f7f0d7b24b30fe2296fd9f76bb44ab50751e0c`, with no intervening/concurrent work.
 
-- branch head: `949523ca753c2f7f0a5b87af195770210143d8cb`;
-- head message: `research: add V7 fixed-feature competition diagnostic`;
-- parent: fixed-feature PRE commit `89f7f0d7b24b30fe2296fd9f76bb44ab50751e0c`;
-- no intervening/concurrent commits were present.
-
-### Fixed-feature competition diagnostic — PRE + MODULE FROZEN, NOT EXECUTED
+### Fixed-feature competition diagnostic — PRE + PAIR FROZEN, NOT EXECUTED
 
 Prospective PRE:
 
@@ -22,23 +17,55 @@ Prospective PRE:
 - PRE commit: `89f7f0d7b24b30fe2296fd9f76bb44ab50751e0c`;
 - PRE blob: `29e0b297d7b780c8cabc121d6c561cdfa806471f`.
 
-Diagnostic module:
+Frozen diagnostic pair:
 
-- file: `scripts/songsterr-fresh/v7_fixed_feature_competition_diagnostics_v1.py`;
-- module commit/head before this state update: `949523ca753c2f7f0a5b87af195770210143d8cb`;
-- module blob: `d69382ae14b1fb8f7f570919240dce372db1e424`.
+- module: `scripts/songsterr-fresh/v7_fixed_feature_competition_diagnostics_v1.py`;
+- module commit: `949523ca753c2f7f0a5b87af195770210143d8cb`;
+- module blob: `d69382ae14b1fb8f7f570919240dce372db1e424`;
+- test: `scripts/songsterr-fresh/test_v7_fixed_feature_competition_diagnostics_v1.py`;
+- test/pair head: `ab8b0d2501aab46a313e1dfb1adfad6a3405bd5c`;
+- test blob: `d658a9f7baee2f13df35956daa7a3c77d24e9eec`.
 
-The module implements the prospectively frozen decomposition only:
+PRE-to-pair compare (`89f7f0d7...ab8b0d25`) contains exactly:
 
-1. construct all gate-free competition templates for playable MIDI `40..88`;
-2. define one fixed feature universe from the full gate-free template-bin union;
-3. sample untouched raw V6 innovation once on that universe;
-4. fit three column populations against the identical fixed observation rows: gate-free all-playable, historical raw-valid, and raw/support intersection;
-5. carry variable-feature fits only in a separate reference namespace;
-6. report descriptive column-breadth and feature-universe deltas;
-7. define no classifier, threshold decision, candidate search, selected-note eligibility change, reattack repair or production rule.
+- the new fixed-feature diagnostic module;
+- the new fixed-feature test gate;
+- state-only edits to this checkpoint.
 
-No fixed-feature diagnostic execution has occurred yet. The next permitted work is to commit the prospectively constrained test gate, verify the PRE-to-pair diff, then add the self-scoped one-shot workflow. The workflow-file push must be the sole first execution trigger and must preserve attempt-1 JSON plus untouched V3 regression as an artifact.
+No other path changed.
+
+The prospectively frozen decomposition is measurement-only:
+
+1. all gate-free competition templates for playable MIDI `40..88` define one fixed feature-bin universe;
+2. untouched raw V6 innovation is sampled once on those fixed rows;
+3. three column populations are fitted against the identical observation rows: gate-free all-playable, historical raw-valid, and raw/support intersection;
+4. variable-feature fits are carried separately as reference measurements;
+5. descriptive deltas separate column-breadth effects from feature-universe effects;
+6. no classifier, threshold decision, candidate search, selected-note eligibility change, reattack repair or production rule exists.
+
+The frozen test gate additionally enforces:
+
+- exactly 23 fixtures ×3 deterministic repetitions;
+- reference expected labels unused for computation;
+- all onset-available rows mechanically reconstruct all 49 gate-free candidate columns;
+- sorted/unique/in-range candidate sets and fixed feature bins;
+- identical fixed feature bins/energy across all compared fixed-feature fits;
+- gate-free/V6 historical-valid template geometry equivalence to `1e-12`;
+- gate-free fixed fit reproduces the corresponding all-gate-free variable-feature fit to `1e-12`;
+- historical variable-feature fit reproduces frozen V6 fit where mechanically available;
+- no verdict fields or threshold adoption.
+
+**No fixed-feature diagnostic execution has occurred yet.**
+
+Next permitted action:
+
+1. create only `.github/workflows/songsterr-v7-fixed-feature-competition-diagnostic-one-shot.yml` under the PRE write boundary;
+2. self-scope it to its own YAML path;
+3. pin/verify PRE, frozen dependencies, module and test blobs;
+4. compile/static-guard the packet;
+5. execute the diagnostic and untouched V3 iteration-3 regression exactly once;
+6. persist `fixed-feature-competition-diagnostic.json` and `v3-regression.txt` as artifact `songsterr-fresh-v7-fixed-feature-competition-diagnostic` using `actions/upload-artifact@v4` and `if: always()`;
+7. freeze attempt 1 from that artifact before any successor composition PRE.
 
 Do not rerun any prior one-shot. Archived V143/Gomyway remains untouched.
 
@@ -90,47 +117,36 @@ All prior real-run authorizations remain consumed. There is no authorization for
 
 - PRE `77db77632d68f02d52f5d26df87f6fe562cba9e3`.
 - Run `35053450282`, job `104658560061`, attempt 1, head `58018849dc5d2c8ebda4378a6b72b6a1f5ef116d`: success.
-- Result `docs/checkpoints/SONGSTERR_FRESH_V7_REATTACK_TEMPORAL_SUPPORT_DIAGNOSTIC_RESULT.md`, commit `86549fcf3f15898aa551064b522ce42ca32b1b86`.
+- Result commit `86549fcf3f15898aa551064b522ce42ca32b1b86`.
 - Status `COMPLETE_MECHANICAL_EXECUTION / BLOCKED_STORED_LOG_ACCESS / NO_MEASUREMENT_DECISION`.
-- Original console payload is inaccessible through current read-only paths; run had no artifact.
 - **Do not rerun or locally reproduce.** No exact reattack support-loss stage is frozen and no temporal repair is authorized.
 
 ### Candidate-population breadth diagnostic — COMPLETE
 
-- PRE `ea17df201a58d0c6ba841350f2646826da6fe945`.
-- Pair head `da4a3624d66c4138390969cb986317b0cd791c05`.
-- Workflow/head `3ae25dbb0cb4cb0e2e65cbc2a8aa6184c0d9026b`.
+- PRE `ea17df201a58d0c6ba841350f2646826da6fe945`; pair head `da4a3624d66c4138390969cb986317b0cd791c05`.
 - Run `35057264267`, job `104669939122`, attempt 1: success.
 - Artifact `10430643432`, digest `sha256:199af452612c0a224b6bb2b214148026e2501e378d2bed1f510d767380722c9a`.
-- Result `docs/checkpoints/SONGSTERR_FRESH_V7_CANDIDATE_COMPETITION_DIAGNOSTIC_RESULT.md`, commit `4750332a347b03795d089690e8f7c4249319cd71`.
+- Result commit `4750332a347b03795d089690e8f7c4249319cd71`.
 - Label `COMPLETE_SYNTHETIC_CANDIDATE_COMPETITION_BREADTH_DIAGNOSTIC_NO_DECISION`.
-- 23 fixtures ×3 deterministic; untouched V3 34×3 PASS.
-- All 13 numerically comparable fixtures have larger selected necessity under narrow raw/support-intersection competition than broad raw-valid competition.
-- `simultaneous_dyad_sel60`: full 49 necessity `0.0041216775902363015`; restricted 7 necessity `0.17554666733325255`.
-- Same-audio `simultaneous_dyad_sel64`: full `0.05178270149633484`; restricted `0.16256312708394405`.
-- `selected64_enters_over_existing60`: full 40 `0.019916868330096094`; restricted 5 `0.30343914432503055`.
-- Prospectively enumerated attribution is interacting/non-monotonic; no MIDI59/MIDI63/other post-result candidate rule is authorized.
-- Result supports broad competing explanations but does not define a successor population.
+- `simultaneous_dyad_sel60`: broad 49 necessity `0.0041216775902363015`; restricted 7 necessity `0.17554666733325255`.
+- Same-audio MIDI64: broad `0.05178270149633484`; restricted `0.16256312708394405`.
+- Broad competing explanations are required for this synthetic seam, but no successor population is defined.
 
 ### Gate-free all-playable competition dictionary diagnostic — COMPLETE
 
-- PRE `docs/checkpoints/SONGSTERR_FRESH_V7_GATE_FREE_COMPETITION_DIAGNOSTIC_PRE.md`, commit `195d219c0d9a031f2d99b1822176377bac9fbb8c`, blob `316224fce582cf86135613db08b548fb849b4716`.
-- module commit `3eb799075c9cc8720ed9d827f5b7aecff126d42e`, blob `08eb9e945bf2cdf33e640cf7b3349ae075002846`.
-- test/pair head `539c4b917a8d2b5bb97b5e1a929a8e506482a191`, blob `f92df723af79a37f12996e896b881593d70d7bc6`.
-- workflow/head `b518b0e9b344eb0f6d4b2d42cc4a0fa5bfa40323`, workflow blob `c6403609d9441d3f32157f125ae1df583abeb9c3`.
-- run `35057812575`, job `104671550898`, attempt 1: success.
-- artifact `10431411768`, digest `sha256:d076d15560677a8f55b5a70787101b9c592bf54c3774f8d304222c79781b45a8`.
-- result `docs/checkpoints/SONGSTERR_FRESH_V7_GATE_FREE_COMPETITION_DIAGNOSTIC_RESULT.md`, commit `2b115a380cc49a34fc9d42fe0590073e1d1c6d46`.
-- label `COMPLETE_SYNTHETIC_GATE_FREE_COMPETITION_DIAGNOSTIC_NO_DECISION`.
-- 23 fixtures ×3 deterministic; onset available 19; all 19 construct all 49 playable competition templates; untouched V3 34×3 PASS.
-- Eight fixtures already had 49 historical V6-valid candidates and reproduce frozen V6 fit exactly.
+- PRE commit `195d219c0d9a031f2d99b1822176377bac9fbb8c`; pair head `539c4b917a8d2b5bb97b5e1a929a8e506482a191`.
+- Run `35057812575`, job `104671550898`, attempt 1: success.
+- Artifact `10431411768`, digest `sha256:d076d15560677a8f55b5a70787101b9c592bf54c3774f8d304222c79781b45a8`.
+- Result commit `2b115a380cc49a34fc9d42fe0590073e1d1c6d46`.
+- Label `COMPLETE_SYNTHETIC_GATE_FREE_COMPETITION_DIAGNOSTIC_NO_DECISION`.
+- 19 onset-available fixtures all construct 49 playable competition templates; untouched V3 34×3 PASS.
 - `simultaneous_dyad_sel60` remains `0.0041216775902363015`; MIDI64 remains `0.05178270149633484`.
-- Gate-free expansion can compress positive-control necessity materially: e.g. `clean_high_m88` `0.5125878896768 -> 0.1751822283493485`.
-- The result confounds added candidate columns with expansion of the feature-bin union; it therefore does not isolate pure column competition.
+- Gate-free expansion can compress positive-control necessity materially, e.g. `clean_high_m88` `0.5125878896768 -> 0.1751822283493485`.
+- This result confounds added columns with feature-bin-union expansion, motivating the now-frozen fixed-feature diagnostic.
 
 ## CURRENT TECHNICAL CONCLUSION
 
-The successor seam now has five separated questions:
+The successor seam has five separated questions:
 
 1. support/local-background eligibility;
 2. raw observed NNLS fit evidence;
@@ -138,19 +154,18 @@ The successor seam now has five separated questions:
 4. feature-bin universe used by the competition fit;
 5. reattack temporal/support representation.
 
-Broad competition is necessary to avoid the narrow-dictionary dyad failure, and an all-49 competition dictionary can be constructed without adopting historical V6 `0.20`. However, gate-free population expansion also expands the fit feature universe and can materially compress positive-control necessity. The fixed-feature diagnostic is now prospectively staged specifically to separate those effects; it has not executed.
+Broad competition is necessary to avoid the narrow-dictionary dyad failure, and all-playable competition can be constructed without adopting historical V6 `0.20`; however prior gate-free measurement changed both columns and feature rows. The fixed-feature pair is now prospectively frozen to isolate those effects and has not executed.
 
 Do not convert these results into a V6-threshold transplant, all-49 production rule, MIDI exception, fixture branch, threshold search, candidate-subset search, or reattack fallback.
 
 ## FRESH CHAT RESUME POINT
 
 1. Read this checkpoint first and reconcile newer branch commits.
-2. Do not rerun temporal run `35053450282`, candidate-breadth run `35057264267`, or gate-free run `35057812575`.
-3. Temporal line remains blocked/no-decision at result commit `86549fcf3f15898aa551064b522ce42ca32b1b86`.
-4. Fixed-feature PRE is frozen at `89f7f0d7b24b30fe2296fd9f76bb44ab50751e0c`; diagnostic module is frozen at `949523ca753c2f7f0a5b87af195770210143d8cb`, blob `d69382ae14b1fb8f7f570919240dce372db1e424`.
-5. Next: commit the fixed-feature test gate, verify the PRE-to-pair diff, update this checkpoint, then create the one-shot artifact-preserving workflow. The workflow push is the only allowed first execution trigger.
-6. Freeze attempt 1 from its artifact before any successor composition PRE.
-7. Any future real/media/model evaluation requires a new real-evaluation PRE plus fresh explicit user authorization.
+2. Do not rerun temporal `35053450282`, candidate-breadth `35057264267`, or gate-free `35057812575`.
+3. Fixed-feature PRE: `89f7f0d7b24b30fe2296fd9f76bb44ab50751e0c`; module `949523ca753c2f7f0a5b87af195770210143d8cb` / blob `d69382ae14b1fb8f7f570919240dce372db1e424`; test/pair `ab8b0d2501aab46a313e1dfb1adfad6a3405bd5c` / blob `d658a9f7baee2f13df35956daa7a3c77d24e9eec`.
+4. No fixed-feature execution has occurred. Next permitted write is the self-scoped workflow only.
+5. Freeze attempt 1 from its artifact before any successor composition PRE.
+6. Any future real/media/model evaluation requires a new real-evaluation PRE plus fresh explicit user authorization.
 
 ## DO NOT DO
 
