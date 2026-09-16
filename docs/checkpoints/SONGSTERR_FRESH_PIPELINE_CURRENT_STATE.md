@@ -300,3 +300,17 @@ Iteration 3 is permanently `PASS_SYNTHETIC_EVIDENCE_SIGNIFICANCE`. This is synth
 ### Current authorization boundary after iteration 3
 
 No real/model correctness evaluation or frozen V6/V2 integration is authorized by this PASS. Before any successor integration or real-media evaluation, freeze a new prospective PRE defining the exact integration/evaluation boundary, files, immutable gates, and prohibitions. Any real-media/model execution also requires new explicit user authorization. Do not infer authorization from the synthetic PASS itself.
+
+## V3 SUCCESSOR INTEGRATION — PRE FROZEN
+
+Recorded 2026-09-15 America/Toronto after re-fetching live branch state and confirming no `.github/workflows` file changed since the prior trigger audit.
+
+- live branch before PRE: `00be878018b1e7c36a3284083fd4701902c985f4` (`docs: record V3 iteration 3 frozen PASS`)
+- prospective successor PRE: `docs/checkpoints/SONGSTERR_FRESH_V3_PHYSICAL_TEMPLATE_INTEGRATION_PRE.md`
+- frozen PRE commit: `638b045aea5a9fc66cee30c78772e792b38b8c79`
+- the PRE defines a mechanical successor integration boundary only; it is not a new correctness gate and does not advance delivery
+- frozen V6/V2/V3 implementation files remain read-only; the successor path is new-file-only (`onset_birth_corroboration_v7.py` plus its isolated integration regression file)
+- no workflow, Basic Pitch, V6/V7 correctness run, model/Demucs inference, real media, candidate payload, protected-song, physical calibration/capture, heavy compute, `main`, Production, or closed-line execution occurred
+- archived V143/Gomyway remains untouched
+
+Next permitted engineering step under the frozen PRE is exact-path workflow-filter re-audit for the two proposed V7 files before any executable successor code is committed. Real/model evaluation remains unauthorized and would require a separate real-evaluation PRE plus explicit user authorization.
