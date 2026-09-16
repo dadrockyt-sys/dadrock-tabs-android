@@ -1,6 +1,6 @@
 # CURRENT STATE — Songsterr Fresh Pipeline V1
 
-Updated: 2026-09-16 America/Toronto — attempt-1 V7 temporal/support run remains authoritative; stored console payload is not accessible through the currently available authenticated/read-only interfaces, so a no-decision evidence-access result has been frozen.
+Updated: 2026-09-16 America/Toronto — temporal/support attempt-1 evidence access is safely blocked/no-decision; independent candidate-population diagnostic PRE and module/test pair are now prospectively frozen but have not yet executed.
 
 Canonical branch: `songsterr-fresh-pipeline-v1`
 Canonical checkpoint: `docs/checkpoints/SONGSTERR_FRESH_PIPELINE_CURRENT_STATE.md`
@@ -9,7 +9,7 @@ Canonical checkpoint: `docs/checkpoints/SONGSTERR_FRESH_PIPELINE_CURRENT_STATE.m
 
 Continuation branch head before writes was `bd3ddef0152e68fe188ee7661f035b2548a041e8`, descending from `1ed5c507dad1b3311e9da6d2625b5c6a9fa74f47` and the one-shot execution head `58018849dc5d2c8ebda4378a6b72b6a1f5ef116d`.
 
-The original first-run-only diagnostic remains run `35053450282`, job `104658560061`, attempt 1, head `58018849dc5d2c8ebda4378a6b72b6a1f5ef116d`, `completed/success`. It was **not rerun** in this continuation.
+The original first-run-only temporal/support diagnostic remains run `35053450282`, job `104658560061`, attempt 1, head `58018849dc5d2c8ebda4378a6b72b6a1f5ef116d`, `completed/success`. It was **not rerun** in this continuation.
 
 Read-only evidence recovery established:
 
@@ -26,11 +26,46 @@ Result frozen in this continuation:
 - result commit: `86549fcf3f15898aa551064b522ce42ca32b1b86`;
 - frozen status: `COMPLETE_MECHANICAL_EXECUTION / BLOCKED_STORED_LOG_ACCESS / NO_MEASUREMENT_DECISION`.
 
-The successful attempt establishes that the prospectively frozen mechanical diagnostic and untouched V3 regression commands returned zero and that the diagnostic's enforced mechanical invariants passed. However, the exact attempt-1 per-fixture measurement JSON is unavailable in the current continuation. Therefore **no exact reattack support-loss stage is frozen** and no temporal/support repair, classifier, threshold, fallback, bridge/V3/V6/V7 mutation, or repair PRE is justified from this result.
+The successful attempt establishes that the prospectively frozen mechanical diagnostic and untouched V3 regression commands returned zero and that the diagnostic's enforced mechanical invariants passed. However, the exact attempt-1 per-fixture measurement JSON is unavailable in the current continuation. Therefore **no exact reattack support-loss stage is frozen** and no temporal/support repair, classifier, threshold, fallback, bridge/V3/V6/V7 mutation, or temporal repair PRE is justified from this result.
 
-Do not regenerate or locally rerun the diagnostic to replace the missing attempt-1 payload. If the original attempt-1 console payload later becomes accessible through an authenticated read-only path, freeze a measurement-bearing successor result from that stored payload before any executable repair work. Until then this diagnostic line is blocked.
+Do not regenerate or locally rerun the temporal diagnostic to replace the missing attempt-1 payload. If the original attempt-1 console payload later becomes accessible through an authenticated read-only path, freeze a measurement-bearing successor result from that stored payload before any executable temporal/support repair work. Until then this diagnostic line is blocked.
 
-No detector/analyzer/postprocess implementation was changed in this continuation. Archived V143/Gomyway remains untouched.
+No detector/analyzer/postprocess implementation was changed by the blocked temporal result. Archived V143/Gomyway remains untouched.
+
+## INDEPENDENT CANDIDATE-POPULATION / COMPETITION DIAGNOSTIC — PRE + PAIR FROZEN, NOT YET EXECUTED
+
+This is a separate synthetic measurement line justified by the already-frozen semantic-delta result, not by the unavailable temporal/support payload.
+
+Prospective PRE:
+
+- file: `docs/checkpoints/SONGSTERR_FRESH_V7_CANDIDATE_COMPETITION_DIAGNOSTIC_PRE.md`;
+- PRE commit: `ea17df201a58d0c6ba841350f2646826da6fe945`.
+
+Frozen diagnostic pair:
+
+- module: `scripts/songsterr-fresh/v7_candidate_competition_diagnostics_v1.py`;
+- module commit: `b7abd17a37680a720b0e0fa6c7831fa0e0c94402`;
+- module blob: `194507cbd23b4f67be20c2d7a6a28b454bb146ca`;
+- test: `scripts/songsterr-fresh/test_v7_candidate_competition_diagnostics_v1.py`;
+- pair head/test commit: `da4a3624d66c4138390969cb986317b0cd791c05`;
+- test blob: `080040b9269fa80b14508f5c654d4b5054afab3d`.
+
+The PRE-to-pair compare is exactly two added Python files and no other changes.
+
+The diagnostic is measurement-only. It holds untouched raw V6 observation and raw V6 template semantics fixed while comparing full raw-valid candidate breadth against the raw/support-valid MIDI intersection, and prospectively enumerates every raw-only excluded candidate with add-one and full leave-one-out attribution. It carries the existing dual-view payload only as a namespaced template-basis reference. `reattack_m64` remains outside candidate-competition inference when selected support eligibility is absent.
+
+No classifier, threshold, candidate-admission rule, playable-MIDI search, production repair, or real/model implication is defined.
+
+Immediate next step for this independent line:
+
+1. create only `.github/workflows/songsterr-v7-candidate-competition-diagnostic-one-shot.yml` under the PRE's write boundary;
+2. self-scope it to a push of its own YAML path;
+3. pin/verify all frozen dependency blobs plus the new module/test blobs before execution;
+4. run the frozen diagnostic and untouched V3 regression exactly once;
+5. persist attempt-1 stdout as artifact `songsterr-fresh-v7-candidate-competition-diagnostic` with `candidate-competition-diagnostic.json` and `v3-regression.txt` using `actions/upload-artifact@v4` and `if: always()`;
+6. freeze a result from that artifact before any composition-rule PRE.
+
+No candidate-competition run has occurred yet.
 
 ## HARD SCOPE
 
@@ -149,9 +184,9 @@ The representation seam is separated into distinct roles:
 
 Do not combine these observations into a post-result threshold, V6-0.20 transplant, MIDI exception, fixture branch, peak-width search or one-off fallback.
 
-## REATTACK TEMPORAL/SUPPORT DIAGNOSTIC — FIRST RUN COMPLETE, RESULT NOT YET FROZEN
+## REATTACK TEMPORAL/SUPPORT DIAGNOSTIC — FIRST RUN COMPLETE, RESULT FROZEN AS BLOCKED/NO-DECISION
 
-This section is historical handoff text and is superseded by `LATEST CONTINUATION OVERRIDE` above where it conflicts.
+This section is historical handoff context and is superseded by `LATEST CONTINUATION OVERRIDE` above where it conflicts.
 
 Prospective PRE:
 
@@ -181,36 +216,33 @@ The job's dependency/blob verification completed successfully and the step `Run 
 
 **Do not rerun this diagnostic.** Attempt 1 is the only authoritative execution. Workflow success means the frozen measurement/test invariants completed; it does not by itself define a classifier or a repair.
 
-A result checkpoint is now frozen at `docs/checkpoints/SONGSTERR_FRESH_V7_REATTACK_TEMPORAL_SUPPORT_DIAGNOSTIC_RESULT.md`, commit `86549fcf3f15898aa551064b522ce42ca32b1b86`. Its status is `COMPLETE_MECHANICAL_EXECUTION / BLOCKED_STORED_LOG_ACCESS / NO_MEASUREMENT_DECISION` because the exact attempt-1 console payload is not accessible through the current read-only interfaces.
+Result checkpoint: `docs/checkpoints/SONGSTERR_FRESH_V7_REATTACK_TEMPORAL_SUPPORT_DIAGNOSTIC_RESULT.md`, commit `86549fcf3f15898aa551064b522ce42ca32b1b86`, status `COMPLETE_MECHANICAL_EXECUTION / BLOCKED_STORED_LOG_ACCESS / NO_MEASUREMENT_DECISION`.
 
-## FRESH-CHAT NEXT STEPS — HISTORICAL; LATEST OVERRIDE CONTROLS
+## FRESH-CHAT NEXT STEPS — LATEST OVERRIDE CONTROLS
 
-The older sequence below described the intended path before log-access exhaustion was established. Do not use it to justify a rerun, reconstruction, or implementation mutation.
-
-1. **Re-fetch this branch and this checkpoint first.** Confirm the live branch descends from `58018849dc5d2c8ebda4378a6b72b6a1f5ef116d`; if it has advanced, reconcile the newer commits before writing anything.
-2. **Do not rerun run `35053450282`.** The original stored attempt-1 console payload is the only acceptable source for its measured rows.
-3. The exact reattack support-loss mechanism remains unfrozen because those rows are unavailable in the current continuation.
-4. The result checkpoint now records this blocked evidence-access state; do not replace it with inferred or reproduced measurements.
-5. **Do not open a temporal/support repair PRE until the original attempt-1 payload is accessible and a measurement-bearing successor result has been frozen.**
-6. The other still-open synthetic dimension is **candidate-population/competition composition** for `simultaneous_dyad_sel60`, but do not use the blocked temporal result to merge or shortcut these dimensions.
-7. **Any future real/media/model V7 evaluation requires a new real-evaluation PRE plus fresh explicit user authorization.** The prior authorization is consumed. Do not fetch EGFxSet media, run Basic Pitch, run a V6/V7 real qualifier, or infer real correctness from synthetic diagnostics without that authorization.
+1. **Re-fetch this branch and this checkpoint first.** Reconcile any newer commits before writing.
+2. **Do not rerun temporal/support run `35053450282`.** The original stored attempt-1 console payload is the only acceptable source for its measured rows.
+3. If the original temporal payload remains inaccessible, keep that line blocked rather than reconstructing it.
+4. For the independent candidate-population line, continue only from `SONGSTERR_FRESH_V7_CANDIDATE_COMPETITION_DIAGNOSTIC_PRE.md` and the frozen module/test pair recorded above. The next permitted executable addition is the one-shot workflow described in that PRE.
+5. Freeze candidate-population attempt 1 from its required artifact before defining any composition rule.
+6. **Any future real/media/model V7 evaluation requires a new real-evaluation PRE plus fresh explicit user authorization.** The prior authorization is consumed.
 
 ## FRESH CHAT RESUME POINT — IMMEDIATE TASK
 
-The previous measurement-extraction gate has now been exhausted without access to the attempt-1 console payload. No detector code was changed and no temporal diagnostic rerun was performed.
-
 A new chat should begin with this exact sequence:
 
-1. Read this checkpoint, the temporal/support PRE, and `docs/checkpoints/SONGSTERR_FRESH_V7_REATTACK_TEMPORAL_SUPPORT_DIAGNOSTIC_RESULT.md` from branch `songsterr-fresh-pipeline-v1`.
-2. Confirm run `35053450282`, job `104658560061`, attempt 1 remains the sole authoritative execution. Do not dispatch or rerun it.
-3. If and only if an authenticated read-only path can expose the **original** attempt-1 console payload, extract the prospectively declared rows and freeze a measurement-bearing successor result from that stored payload.
-4. If the original payload is still inaccessible, keep the temporal/support diagnostic line blocked. Do not reproduce it locally to manufacture a replacement result.
-5. Do not touch detector implementation, bridge/V3/V6/V7 logic, real/model evaluation, `main`, Production, or archived V143/Gomyway from this blocked result.
+1. Read this checkpoint, the blocked temporal result, and `docs/checkpoints/SONGSTERR_FRESH_V7_CANDIDATE_COMPETITION_DIAGNOSTIC_PRE.md` from branch `songsterr-fresh-pipeline-v1`.
+2. Confirm the candidate PRE commit `ea17df201a58d0c6ba841350f2646826da6fe945` and pair head `da4a3624d66c4138390969cb986317b0cd791c05` are still ancestors of the live branch.
+3. Confirm module blob `194507cbd23b4f67be20c2d7a6a28b454bb146ca` and test blob `080040b9269fa80b14508f5c654d4b5054afab3d`.
+4. Add only the prospectively allowed self-scoped candidate-competition one-shot workflow, including artifact preservation, and allow its push to be the sole first execution.
+5. Read the persisted attempt-1 artifact, freeze `docs/checkpoints/SONGSTERR_FRESH_V7_CANDIDATE_COMPETITION_DIAGNOSTIC_RESULT.md`, and update this checkpoint before any new executable composition work.
+6. Do not touch detector implementation, temporal/support repair logic, real/model evaluation, `main`, Production, or archived V143/Gomyway from either diagnostic result.
 
 ## DO NOT DO IN A FRESH CHAT
 
 - Do not resume V143/Gomyway.
 - Do not rerun temporal/support run `35053450282` or any frozen bridge/diagnostic run.
+- Do not run the candidate-competition diagnostic before the self-scoped workflow is prospectively committed with artifact preservation.
 - Do not tune from frozen post-result mismatches.
 - Do not lower V3 thresholds or historical V6 thresholds.
 - Do not add per-MIDI exceptions, EGFxSet-specific rules, fixture branches, confidence-based promotion, learned parameters, or post-result threshold searches.
