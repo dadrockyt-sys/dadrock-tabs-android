@@ -1,11 +1,32 @@
 # CURRENT STATE — Songsterr Fresh Pipeline V1
 
-Updated: 2026-09-16 America/Toronto — fixed-feature candidate competition diagnostic attempt 1 is complete and frozen from artifact. Candidate-column breadth and feature-universe effects are separated at measurement level. Frozen V7 wiring has been reviewed. Temporal/support attempt-1 measurement access remains blocked/no-decision after another read-only log-recovery attempt.
+Updated: 2026-09-16 America/Toronto — fixed-feature candidate competition diagnostic attempt 1 is complete and frozen from artifact. Candidate-column breadth and feature-universe effects are separated at measurement level. Frozen V7 wiring has been reviewed. A new measurement-only protection/raw-fit seam PRE is frozen before code. Temporal/support attempt-1 measurement access remains blocked/no-decision.
 
 Canonical branch: `songsterr-fresh-pipeline-v1`
 Canonical checkpoint: `docs/checkpoints/SONGSTERR_FRESH_PIPELINE_CURRENT_STATE.md`
 
 ## LATEST CONTINUATION OVERRIDE — AUTHORITATIVE WHERE OLDER TEXT CONFLICTS
+
+### Protection / raw-fit seam diagnostic — PRE FROZEN / NOT EXECUTED
+
+A genuinely new measurement-only line has been opened after the frozen V7 wiring review, without reconstructing the blocked temporal diagnostic.
+
+- PRE: `docs/checkpoints/SONGSTERR_FRESH_V7_PROTECTION_FIT_SEAM_DIAGNOSTIC_PRE.md`;
+- PRE commit: `727dd82fe51f7ba64a6434c867fdec57958405d9`;
+- pre-code parent/head: `e01969f6fbf6abc464079eae951c279d80c82974`.
+
+Prospectively frozen purpose:
+
+- keep untouched raw V6 onset innovation separate from leakage-cleaned bridge-V2 support;
+- measure frozen V3 selected-template eligibility on support;
+- reproduce the already-frozen independent lower-owner and candidate-evidence diagnostics from the dual-view line without requiring support-space NNLS acceptance;
+- place those support-side measurements beside the already-frozen all-gate-free fixed-feature raw NNLS fit;
+- carry historical frozen V7 raw-to-V3 output only under a reference namespace;
+- define **no final decision, no raw-necessity threshold, no transported `0.01` gate, and no temporal repair**.
+
+The PRE-to-code boundary allows only a new diagnostic module, test, self-scoped one-shot workflow, result checkpoint, and state-only updates. Existing V6/V3/V7 implementations and frozen results remain read-only.
+
+No protection-fit seam executable code has been committed or executed yet. The next permitted step is to commit the prospectively defined module/test pair, verify the PRE-to-pair diff, update this checkpoint, then add the self-scoped one-shot runner. Attempt 1 must persist an artifact before any further executable composition work.
 
 ### Fixed-feature competition diagnostic — COMPLETE / FROZEN / NO DECISION
 
@@ -83,7 +104,7 @@ Current successor research therefore must not silently reuse the old raw-V6-to-V
 4. fit feature-bin universe / observation support;
 5. temporal/reattack support representation.
 
-No complete executable successor composition PRE has been opened from the fixed-feature result. Doing so now would require prospectively defining unresolved population/feature/acceptance semantics and would risk post-result metric or threshold selection while the temporal/support dimension is still blocked.
+The protection/raw-fit seam PRE above is measurement-only and does not define a complete successor composition.
 
 ### Temporal attempt-1 evidence recovery — STILL BLOCKED
 
@@ -109,7 +130,7 @@ The competition/feature-universe seam is measurement-separated, but the full suc
 - feature-bin universe materially affects necessity normalization/residual geometry independently;
 - temporal/reattack support remains separately unresolved and its first-run trace is inaccessible.
 
-Before any executable successor composition, inspect only already-frozen evidence or create a genuinely prospective measurement PRE that does not reconstruct the blocked temporal attempt. No composition rule is authorized merely by the fixed-feature result.
+The active permitted research line is now the protection/raw-fit seam PRE above. It must remain measurement-only and freeze attempt 1 before any further executable composition work.
 
 Do not rerun fixed-feature run `35058404820` or any earlier one-shot.
 
@@ -188,6 +209,8 @@ The successor seam has five explicitly separated semantic roles/questions:
 
 The fixed-feature result establishes that both competition breadth and feature-universe breadth independently matter. It does **not** define the final population, feature universe or acceptance rule. Frozen V7's historical raw-to-V3 wiring is not automatically a valid composition of these newly separated roles.
 
+The new protection/raw-fit seam PRE is authorized only to verify that the frozen support protections and frozen broad raw-fit measurement can be observed together without reusing the old support-space necessity coupling. It does not define a successor rule.
+
 ## FRESH CHAT RESUME POINT
 
 1. Read this checkpoint first and reconcile newer branch commits.
@@ -195,7 +218,7 @@ The fixed-feature result establishes that both competition breadth and feature-u
 3. Fixed-feature authority: result commit `7230d915cb1e07a0c97b09cdd767f98ba4755c6f`, artifact `10431099242`.
 4. Temporal line remains blocked/no-decision at `86549fcf3f15898aa551064b522ce42ca32b1b86`; the latest read-only job-log retry also failed.
 5. Frozen V7 composition review is complete: it directly feeds raw V6 innovation into frozen V3 iteration-3 composite and defines no new V7 threshold. Do not treat that historical mechanical wiring as the new successor architecture.
-6. Before any new executable composition, first exhaust already-committed evidence for a non-reconstructive temporal/support clue or write a new prospective measurement-only PRE that is genuinely distinct from the blocked first-run diagnostic. No executable repair comes first.
+6. Active PRE: `SONGSTERR_FRESH_V7_PROTECTION_FIT_SEAM_DIAGNOSTIC_PRE.md`, commit `727dd82fe51f7ba64a6434c867fdec57958405d9`. Continue only inside its write boundary; module/test pair comes before any output.
 7. Any future real/media/model evaluation requires a new real-evaluation PRE plus fresh explicit user authorization.
 
 ## DO NOT DO
