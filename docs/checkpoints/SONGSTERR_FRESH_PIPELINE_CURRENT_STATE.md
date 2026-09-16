@@ -262,3 +262,17 @@ Re-fetch the live branch and current checkpoint; verify no concurrent change inv
 ## AUTHORITATIVE ROUTE
 
 The software-lineage no-gap conclusion remains unchanged. Official correctness still requires the frozen physical calibrated route, currently budget-paused. Do not manufacture another synthetic software-lineage gate.
+
+## V3 SYNTHETIC RESEARCH — ITERATION 3 PRE-EXECUTION STATE
+
+Recorded 2026-09-15 America/Toronto before the first iteration-3 synthetic execution.
+
+- Prospective iteration-3 PRE: `docs/checkpoints/SONGSTERR_FRESH_V3_PHYSICAL_TEMPLATE_SYNTHETIC_PRE_ITERATION3.md`, frozen commit `26ac58fe54c179744ef036a9dc4f4a7d69598038`, parent `eca05f1c46208f0df4273a2948e98de7db611563`.
+- Iteration-3 research module commit: `e4db75be46a49b1035b5ec11d29f9ade1fa8658a`; Git blob `39629250c6d141d5cda9e9d7f570580ec725ae42`.
+- Complete first implementation/test pair head: `6f2041679f0ee4540b63d74a61b113e5267f8e8b`; test Git blob `76455337bd17a952dd36c1dabd03ce741e806b07`.
+- PRE→pair compare `26ac58fe54c179744ef036a9dc4f4a7d69598038..6f2041679f0ee4540b63d74a61b113e5267f8e8b` contains exactly the two prospectively allowed new iteration-3 Python files and no other changes.
+- Exact isolated local materialization has been verified against Git blobs for the frozen iteration-1 base `45b8f3b66df7500824071489205a732dfe05d759`, frozen iteration-2 wrapper `7090e17baff60f91700a760f617e905ff53484ab`, frozen iteration-2 test `eefe00346a94e8f0ed433ac916352a4b2e9331c5`, iteration-3 module `39629250c6d141d5cda9e9d7f570580ec725ae42`, and iteration-3 test `76455337bd17a952dd36c1dabd03ce741e806b07`.
+- No iteration-3 synthetic test has been executed yet at this state transition.
+- No workflow, Basic Pitch, V6 correctness, model/Demucs, real-media, candidate-payload, protected-song, physical capture/calibration, or heavy-compute execution has occurred. Archived V143/Gomyway remains untouched.
+
+Next permitted action under the frozen PRE: perform the final forbidden import/I/O scan on the exact committed pair, then execute only `python3 test_physical_template_plausibility_v3_iteration3.py` once if the scan is clean. Freeze that first result exactly as observed; do not tune or rescue-rerun iteration 3.
