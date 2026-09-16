@@ -168,6 +168,22 @@ No result checkpoint for this temporal/support diagnostic has been frozen yet. T
 8. **Only after both unresolved synthetic dimensions are prospectively resolved** should a complete successor composition rule be frozen and tested against all 23 frozen V6 audio expectations plus the untouched 34-fixture V3 regression.
 9. **Any future real/media/model V7 evaluation requires a new real-evaluation PRE plus fresh explicit user authorization.** The prior authorization is consumed. Do not fetch EGFxSet media, run Basic Pitch, run a V6/V7 real qualifier, or infer real correctness from synthetic diagnostics without that authorization.
 
+## FRESH CHAT RESUME POINT — IMMEDIATE TASK
+
+The previous chat stopped at the measurement-extraction gate. No detector code was changed, no temporal diagnostic rerun was performed, and no temporal result checkpoint was created.
+
+A new chat should begin with this exact sequence:
+
+1. Read this checkpoint and `docs/checkpoints/SONGSTERR_FRESH_V7_REATTACK_TEMPORAL_SUPPORT_DIAGNOSTIC_PRE.md` from branch `songsterr-fresh-pipeline-v1`.
+2. Fetch the **stored** GitHub Actions log for run `35053450282`, job `104658560061`, attempt 1. Do not dispatch or rerun the workflow.
+3. Use the PRE and the frozen diagnostic test/module to identify the exact emitted markers/row names, then extract all prospectively declared comparison rows and the untouched V3 regression result from the stored log. The diagnostic covers 23 frozen fixtures with three deterministic repetitions; the V3 regression remains 34 fixtures ×3.
+4. Record the factual values for all named comparison classes, including `reattack_m64`, and locate the first instrumented stage where its temporal/support evidence diverges from the valid-onset controls. Do not infer values that are absent from the stored log and do not invent a threshold.
+5. Compare the measurements only against criteria prospectively frozen in the PRE. If the PRE does not authorize a numeric decision boundary, freeze a neutral/no-decision measurement result rather than creating one after seeing the data.
+6. Before touching detector implementation, create and commit `docs/checkpoints/SONGSTERR_FRESH_V7_REATTACK_TEMPORAL_SUPPORT_DIAGNOSTIC_RESULT.md`; then update this current-state checkpoint with the result commit, exact support-loss stage, regression status and authorized next experiment.
+7. Only if that frozen result prospectively justifies a narrow next experiment should a new PRE be written. No detector change comes first.
+
+Current branch head before this handoff update was `1ed5c507dad1b3311e9da6d2625b5c6a9fa74f47`, whose parent is the one-shot workflow/head commit `58018849dc5d2c8ebda4378a6b72b6a1f5ef116d`.
+
 ## DO NOT DO IN A FRESH CHAT
 
 - Do not resume V143/Gomyway.
