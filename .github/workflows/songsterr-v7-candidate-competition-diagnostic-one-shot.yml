@@ -1,0 +1,128 @@
+name: Songsterr V7 Candidate Competition Diagnostic One-Shot
+
+on:
+  push:
+    branches:
+      - songsterr-fresh-pipeline-v1
+    paths:
+      - .github/workflows/songsterr-v7-candidate-competition-diagnostic-one-shot.yml
+
+permissions:
+  contents: read
+
+jobs:
+  candidate-competition-diagnostic-one-shot:
+    runs-on: ubuntu-latest
+    timeout-minutes: 25
+    steps:
+      - name: Checkout prospectively frozen candidate-competition state
+        uses: actions/checkout@v4
+
+      - name: Set up frozen Python 3.10.21
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.10.21'
+
+      - name: Install frozen synthetic DSP dependencies
+        shell: bash
+        run: |
+          set -euo pipefail
+          python -m pip install --disable-pip-version-check 'numpy==1.26.4' 'scipy==1.15.3'
+          python - <<'PY'
+          from importlib.metadata import version
+          expected = {'numpy': '1.26.4', 'scipy': '1.15.3'}
+          for package, wanted in expected.items():
+              actual = version(package)
+              if actual != wanted:
+                  raise SystemExit(f'Unexpected {package} version: {actual}, wanted {wanted}')
+              print(f'{package}={actual}')
+          PY
+
+      - name: Verify frozen dependency and diagnostic Git blobs
+        shell: bash
+        run: |
+          set -euo pipefail
+          check_blob() {
+            local expected="$1"
+            local path="$2"
+            local actual
+            actual="$(git hash-object "$path")"
+            if [ "$actual" != "$expected" ]; then
+              echo "Blob mismatch for $path: $actual != $expected" >&2
+              exit 1
+            fi
+            echo "$path=$actual"
+          }
+          check_blob 0e966271403ee9eaaea6b52f5e3739b77d02c5c6 docs/checkpoints/SONGSTERR_FRESH_V7_CANDIDATE_COMPETITION_DIAGNOSTIC_PRE.md
+          check_blob 2b18ef0ee710a6ad5ecb27253b977495db7d6534 scripts/songsterr-fresh/onset_birth_corroboration_v6.py
+          check_blob a6c3d99d47c529db3c3c5e4af544d13f21b179aa scripts/songsterr-fresh/v6_onset_birth_synthetic_fixtures.json
+          check_blob 45b8f3b66df7500824071489205a732dfe05d759 scripts/songsterr-fresh/physical_template_plausibility_v3.py
+          check_blob 7090e17baff60f91700a760f617e905ff53484ab scripts/songsterr-fresh/physical_template_plausibility_v3_iteration2.py
+          check_blob 39629250c6d141d5cda9e9d7f570580ec725ae42 scripts/songsterr-fresh/physical_template_plausibility_v3_iteration3.py
+          check_blob 76455337bd17a952dd36c1dabd03ce741e806b07 scripts/songsterr-fresh/test_physical_template_plausibility_v3_iteration3.py
+          check_blob 402aa23f3f1821c4e5c45ccf7f170b542d76a453 scripts/songsterr-fresh/v6_innovation_peak_band_bridge_v2.py
+          check_blob e9e84ed663aab732408d1d618bd9486ffb660628 scripts/songsterr-fresh/v7_dual_view_diagnostics_v1.py
+          check_blob f3e63be1dba7c862c5ec654750cc5ec2e27e19b8 scripts/songsterr-fresh/v7_v6_semantic_delta_diagnostics_v1.py
+          check_blob 194507cbd23b4f67be20c2d7a6a28b454bb146ca scripts/songsterr-fresh/v7_candidate_competition_diagnostics_v1.py
+          check_blob 080040b9269fa80b14508f5c654d4b5054afab3d scripts/songsterr-fresh/test_v7_candidate_competition_diagnostics_v1.py
+
+      - name: Compile and statically guard the diagnostic packet
+        shell: bash
+        run: |
+          set -euo pipefail
+          python -m py_compile \
+            scripts/songsterr-fresh/v7_candidate_competition_diagnostics_v1.py \
+            scripts/songsterr-fresh/test_v7_candidate_competition_diagnostics_v1.py
+          python - <<'PY'
+          import ast
+          from pathlib import Path
+
+          paths = [
+              Path('scripts/songsterr-fresh/v7_candidate_competition_diagnostics_v1.py'),
+              Path('scripts/songsterr-fresh/test_v7_candidate_competition_diagnostics_v1.py'),
+          ]
+          forbidden_roots = {
+              'subprocess', 'socket', 'requests', 'urllib', 'http', 'ftplib',
+              'paramiko', 'torch', 'tensorflow', 'basic_pitch', 'demucs',
+          }
+          for path in paths:
+              tree = ast.parse(path.read_text(encoding='utf-8'), filename=str(path))
+              imported_roots = set()
+              for node in ast.walk(tree):
+                  if isinstance(node, ast.Import):
+                      imported_roots.update(alias.name.split('.')[0] for alias in node.names)
+                  elif isinstance(node, ast.ImportFrom) and node.module:
+                      imported_roots.add(node.module.split('.')[0])
+              forbidden = sorted(imported_roots.intersection(forbidden_roots))
+              if forbidden:
+                  raise SystemExit(f'Forbidden import(s) in {path}: {forbidden}')
+              text = path.read_text(encoding='utf-8')
+              for token in ('os.system(', 'Path.write_text(', 'Path.write_bytes('):
+                  if token in text:
+                      raise SystemExit(f'Forbidden mutation token in {path}: {token}')
+              print(f'static_guard_ok={path}')
+          PY
+
+      - name: Run frozen candidate-competition diagnostic and untouched V3 regression exactly once
+        shell: bash
+        run: |
+          set +e
+          python scripts/songsterr-fresh/test_v7_candidate_competition_diagnostics_v1.py | tee candidate-competition-diagnostic.json
+          diagnostic_status=${PIPESTATUS[0]}
+          python scripts/songsterr-fresh/test_physical_template_plausibility_v3_iteration3.py | tee v3-regression.txt
+          v3_status=${PIPESTATUS[0]}
+          echo "diagnostic_status=${diagnostic_status}"
+          echo "v3_status=${v3_status}"
+          if [ "${diagnostic_status}" -ne 0 ] || [ "${v3_status}" -ne 0 ]; then
+            exit 1
+          fi
+
+      - name: Preserve authoritative attempt-1 diagnostic evidence
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: songsterr-fresh-v7-candidate-competition-diagnostic
+          path: |
+            candidate-competition-diagnostic.json
+            v3-regression.txt
+          if-no-files-found: warn
