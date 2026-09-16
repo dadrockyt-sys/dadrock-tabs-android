@@ -1,38 +1,21 @@
 # CURRENT STATE — Songsterr Fresh Pipeline V1
 
-Updated: 2026-09-15 America/Toronto — EGFxSet boundary-aware V2 remains a frozen non-authorizing FAIL; AG-PT-set cleared pre-media ingress but its frozen reference-blind audit closed as structural decision C before any WAV/model correctness exposure; later metadata-only searches rejected GuitarDuets, EG-Solo, Guitar Style Dataset and historical GPT, and a focused 2025–2026 pass found no new admissible independent holdout. EGDB-PG was discovered but is an EGDB-derived re-rendering with no explicit license value on the current Zenodo records, so the closed EGDB line was not reopened. No Basic Pitch or V6 correctness run is currently authorized.
+Updated: 2026-09-15 America/Toronto — V3 iteration 3 and the V7 mechanical successor integration remain frozen synthetic PASSes. The first prospectively authorized V7 real-evaluation attempt was blocked by its synthetic prerequisite before any prior Basic Pitch artifact or EGFxSet media was fetched. Two subsequent synthetic-only representation-bridge iterations improved the V6-audio→V3 seam from the original failure to 18/23 and then 20/23 frozen V6 audio expectations, but both are frozen FAILs. No real/model evaluation is currently authorized.
 
 Canonical branch: `songsterr-fresh-pipeline-v1`
 Canonical checkpoint: `docs/checkpoints/SONGSTERR_FRESH_PIPELINE_CURRENT_STATE.md`
-
-Key records:
-
-- hardening result: `docs/checkpoints/SONGSTERR_FRESH_PIPELINE_HARDENING_V1_RESULT.md`
-- boundary V2 PRE: `docs/checkpoints/SONGSTERR_FRESH_BOUNDARY_QUALIFIER_V2_PRE.md`
-- boundary V2 real result: `docs/checkpoints/SONGSTERR_FRESH_BOUNDARY_QUALIFIER_V2_RESULT.md`
-- GuitarJam rejection: `docs/checkpoints/SONGSTERR_FRESH_V6_GUITARJAM_PREMEDIA_REJECTION.md`
-- URMP/GAPS/EGDB batch: `docs/checkpoints/SONGSTERR_FRESH_V6_PREMEDIA_BATCH_URMP_GAPS_EGDB.md`
-- AG-PT-set pre-media clearance: `docs/checkpoints/SONGSTERR_FRESH_V6_AG_PT_SET_PREMEDIA_CLEARANCE.md`
-- AG-PT-set reference-blind PRE: `docs/checkpoints/SONGSTERR_FRESH_V6_AG_PT_SET_REFERENCE_BLIND_AUDIT_PRE.md`
-- AG-PT-set reference-blind result: `docs/checkpoints/SONGSTERR_FRESH_V6_AG_PT_SET_REFERENCE_BLIND_AUDIT_RESULT.md`
-- GuitarDuets/EG-Solo/Guitar Style/GPT batch: `docs/checkpoints/SONGSTERR_FRESH_V6_PREMEDIA_BATCH_GUITARDUETS_EGSOLO_GUITARSTYLE_GPT.md`
-- 2025–2026 no-new-candidate search: `docs/checkpoints/SONGSTERR_FRESH_V6_PREMEDIA_2025_2026_SEARCH_NO_NEW_CANDIDATE.md`
-- V3 physical-template synthetic PRE: `docs/checkpoints/SONGSTERR_FRESH_V3_PHYSICAL_TEMPLATE_SYNTHETIC_PRE.md`, frozen commit `0292869c1e1e1bc138f2fdff4e839326c0e5d082`
-- V3 physical-template synthetic iteration-1 result: `docs/checkpoints/SONGSTERR_FRESH_V3_PHYSICAL_TEMPLATE_SYNTHETIC_RESULT.md`, frozen FAIL commit `6a6965730250f2000cc480ede2ed3d2638b0df44`
-- V3 physical-template synthetic iteration-2 PRE: `docs/checkpoints/SONGSTERR_FRESH_V3_PHYSICAL_TEMPLATE_SYNTHETIC_PRE_ITERATION2.md`, frozen commit `b2821f8690bea49783071ead87e69424fd63c787`
-- V3 physical-template synthetic iteration-2 result: `docs/checkpoints/SONGSTERR_FRESH_V3_PHYSICAL_TEMPLATE_SYNTHETIC_RESULT_ITERATION2.md`, frozen FAIL commit `7153a02ede14b0a43af58609bdc12cd4b792e9b9`
 
 ## HARD SCOPE
 
 - Work only on `songsterr-fresh-pipeline-v1`; do not change `main` or Production.
 - **Do not resume archived V143/Gomyway unless the user explicitly asks.**
 - GOAT/reference scoring remains closed unless explicitly reopened.
-- Guitar-TECHS, GuitarSet/V3, IDMT/V4, V5/FLGD, duration research, protected-song work and other closed lines remain closed.
+- Guitar-TECHS, GuitarSet/V3 validation, IDMT/V4, V5/FLGD, duration research, protected-song work and other closed lines remain closed.
 - Reserved Guitar Fretboard Notes `deb` / `ele_natural` remain untouched.
-- `songsterr_pipeline/` remains deterministic/model-free/process-free/network-free; model/DSP/research stays under `scripts/songsterr-fresh/`.
+- `songsterr_pipeline/**` remains deterministic/model-free/process-free/network-free and read-only for this research line.
 - Budget checkpoint `e7f0146d4f01605b642f8aeaa100962254b5ce58` remains binding; physical calibration/holdout work remains paused.
 - Synthetic/smoke diagnostics are never authoritative correctness validation.
-- Never rewrite or soften any frozen historical FAIL/C result.
+- Never rewrite or soften any frozen historical FAIL/C/PASS result.
 
 ## GLOBAL AUTHORIZATION — UNCHANGED
 
@@ -48,310 +31,271 @@ Key records:
 Consumed real-run authorizations:
 
 - `Please try the run again` -> hardened-V1 EGFxSet run `34938917218`, attempt 1.
-- `Lets take what was learned, repair and run again` -> one V2 repair cycle plus one new EGFxSet V2 diagnostic, consumed by run `34940292514`, attempt 1.
+- `Lets take what was learned, repair and run again` -> boundary-aware V2 repair plus EGFxSet V2 run `34940292514`, attempt 1.
+- `I authorize please continue` -> V7 real-evaluation attempt run `35051186125`, attempt 1; synthetic prerequisite failed and therefore the prior Basic Pitch artifact, EGFxSet media and V7 real qualifier were all skipped. That authorization is consumed; there is no retry under it.
 
-There is no remaining authorization for another EGFxSet run, Basic Pitch rerun, V6 correctness run, threshold variation, modified-real-rule execution, AG-PT-set structural re-audit, or candidate-media experiment.
+There is currently **no authorization** for another EGFxSet run, Basic Pitch rerun, V6/V7 real correctness run, threshold variation, modified-real-rule execution, AG-PT-set structural re-audit, rejected-candidate payload access, physical capture/calibration, or protected-song execution.
 
-## EGFxSET HISTORY — ALL FROZEN
+## KEY FROZEN RECORDS
 
-Historical all-events smoke: EGFxSet `Clean.zip#Clean/Bridge/6-0.wav`, truth string 6 / fret 0 / MIDI 40. Repaired Basic Pitch run `34936227380` emitted immutable proposals `[40,68]`; overall remains `FAIL_NON_AUTHORIZING_SMOKE`.
+Historical / holdout:
 
-Hardened V1 real diagnostic run `34938917218` rejected both proposals. MIDI 40 was analyzed with synthetic left zero-padding and failed physical-template plausibility; MIDI 68 failed frozen necessity. Overall remains `FAIL_HARDENED_NON_AUTHORIZING_DIAGNOSTIC`.
+- hardening result: `docs/checkpoints/SONGSTERR_FRESH_PIPELINE_HARDENING_V1_RESULT.md`
+- boundary V2 PRE: `docs/checkpoints/SONGSTERR_FRESH_BOUNDARY_QUALIFIER_V2_PRE.md`
+- boundary V2 real result: `docs/checkpoints/SONGSTERR_FRESH_BOUNDARY_QUALIFIER_V2_RESULT.md`
+- AG-PT-set reference-blind PRE/result: `docs/checkpoints/SONGSTERR_FRESH_V6_AG_PT_SET_REFERENCE_BLIND_AUDIT_PRE.md`, `docs/checkpoints/SONGSTERR_FRESH_V6_AG_PT_SET_REFERENCE_BLIND_AUDIT_RESULT.md`
+- 2025–2026 no-new-candidate search: `docs/checkpoints/SONGSTERR_FRESH_V6_PREMEDIA_2025_2026_SEARCH_NO_NEW_CANDIDATE.md`
 
-Boundary V2 PRE commit `819d7a9a855d6f067aa40a007fdd0570d231d782` prospectively removed fabricated left context. Synthetic gates passed ordinary in-clip birth, confidence inversion, clip-start fundamentals, alias rejection, true polyphony, noise rejection, missing-context fail-closed behavior, and physical-position ambiguity.
+V3 / V7:
 
-Boundary V2 real run:
+- V3 iteration-3 PRE: `docs/checkpoints/SONGSTERR_FRESH_V3_PHYSICAL_TEMPLATE_SYNTHETIC_PRE_ITERATION3.md`, commit `26ac58fe54c179744ef036a9dc4f4a7d69598038`
+- V3 iteration-3 result: `docs/checkpoints/SONGSTERR_FRESH_V3_PHYSICAL_TEMPLATE_SYNTHETIC_RESULT_ITERATION3.md`, commit `e97ab67c9c2794f4a50c5170102d1380484f5fb1`
+- V7 successor integration PRE: `docs/checkpoints/SONGSTERR_FRESH_V3_PHYSICAL_TEMPLATE_INTEGRATION_PRE.md`, commit `638b045aea5a9fc66cee30c78772e792b38b8c79`
+- V7 successor integration result: `docs/checkpoints/SONGSTERR_FRESH_V3_PHYSICAL_TEMPLATE_INTEGRATION_RESULT.md`, commit `9f6345e971f36a0def367a70564ba9b86c948e23`
+- V7 real-evaluation PRE: `docs/checkpoints/SONGSTERR_FRESH_V7_REAL_EVALUATION_PRE.md`, commit `b7f5f681d6ef39669bcec44ba8116a4ae177e680`
+- V7 blocked real-evaluation result: `docs/checkpoints/SONGSTERR_FRESH_V7_REAL_EVALUATION_RESULT.md`, commit `089d6a152f9ce2bce499775b74b6e9cb4e7cdfc4`
+- representation bridge iteration-1 PRE/result: `docs/checkpoints/SONGSTERR_FRESH_V7_REPRESENTATION_BRIDGE_SYNTHETIC_PRE.md`, commit `6502f00670efe9987ff5a76707d9cf32476ac4fe`; `docs/checkpoints/SONGSTERR_FRESH_V7_REPRESENTATION_BRIDGE_SYNTHETIC_RESULT.md`, commit `d2eb412bec5bcf920a397b2d7e69642464497320`
+- representation bridge iteration-2 PRE/result: `docs/checkpoints/SONGSTERR_FRESH_V7_REPRESENTATION_BRIDGE_SYNTHETIC_PRE_ITERATION2.md`, commit `7cc8fc88a9b3d12596dfdce553bb717bc77fb05b`; `docs/checkpoints/SONGSTERR_FRESH_V7_REPRESENTATION_BRIDGE_SYNTHETIC_RESULT_ITERATION2.md`, commit `dfa51a1a6da521a36feb3733d199dfbbeea99de8`
 
-- run `34940292514`
-- job `104287207091`
-- artifact `10385620104`
-- immutable proposals `[40,68]`
-- MIDI 40: `rejected`, `BOUNDARY_SELECTED_TEMPLATE_NOT_PHYSICALLY_PLAUSIBLE`, no synthetic pre-context
-- MIDI 68: `rejected`, frozen necessity `0.000513675778819313 < 0.01`
-- promoted MIDI `[]`
-- overall `FAIL_BOUNDARY_V2_NON_AUTHORIZING_DIAGNOSTIC`
+## EGFxSET HISTORY — FROZEN
 
-The zero-padding boundary defect is fixed. The remaining concrete EGFxSet weakness is the inherited physical harmonic-template plausibility model. Do not lower frozen ratio `0.20`, remove the gate, special-case MIDI 40, or tune from this real observation.
+Immutable real member remains EGFxSet v1.0 `Clean.zip#Clean/Bridge/6-0.wav`:
 
-## FROZEN V6 REPLACEMENT-HOLDOUT INGRESS RULE
+- archive MD5 `cdb1b401960f56becc8640387910e78a`
+- member SHA-256 `0256fd3c55c577970a4c2a06d760cf5798591adecffaa5e790addc38d1f0378e`
+- member bytes `722976`.
 
-Before any untouched candidate media/reference payload access, public metadata must establish all four:
+Immutable repaired Basic Pitch proposal artifact remains:
 
-1. real human guitar performance suitable for the intended holdout;
-2. usable public rights/license for the exact scoring media;
-3. synchronized note-event ground truth aligned to the exact performance;
-4. reference provenance sufficiently independent of Basic Pitch/V6.
+- source run `34936227380`
+- artifact `10383413992`
+- artifact ZIP SHA-256 `c380d39bdee5c3ec2827c1ae682e83b71eabe3bc738fa27016d3bb409afe566a`
+- `basic-pitch.json` SHA-256 `24bffdb267c580625cb8049bdbe6bc1b74549ae8e048a759f26eb24e49d6dc51`
+- note identity SHA-256 `2e30685479444a8120dc3490c9c41329a89e57aa16979de42053b89a4bbb0444`
+- raw proposals exactly `[40,68]`.
 
-Fail any gate -> `REJECT_PREMEDIA`. Public downloadability alone is not a license grant. A score/source sequence alone is not a timestamped performance reference. No post-access rescue or candidate substitution is allowed.
+Frozen historical outcomes:
 
-## CLOSED REPLACEMENT CANDIDATES / LINES
+- all-events smoke remains `FAIL_NON_AUTHORIZING_SMOKE`.
+- hardened V1 run `34938917218` remains `FAIL_HARDENED_NON_AUTHORIZING_DIAGNOSTIC`; MIDI40 used fabricated left zero-padding and failed physical-template plausibility, MIDI68 failed necessity.
+- boundary V2 run `34940292514` remains `FAIL_BOUNDARY_V2_NON_AUTHORIZING_DIAGNOSTIC`; zero-padding was removed, MIDI40 still failed the inherited physical-template plausibility gate, MIDI68 remained rejected at necessity `0.000513675778819313 < 0.01`.
 
-- GuitarJam — `REJECT_PREMEDIA`: no synchronized pre-existing note-event truth for exact performances.
-- URMP — `REJECT_PREMEDIA`: no guitar in corpus instrumentation.
-- GAPS — `REJECT_PREMEDIA`: frozen licensing/use restrictions and model-assisted alignment provenance fail ingress; do not reopen from later mirrors.
-- EGDB — `REJECT_PREMEDIA`: no usable public dataset license established in the frozen search.
-- Guitar-TECHS — decision C; closed.
-- GuitarSet/V3, IDMT/V4, V5/FLGD, GOAT/reference scoring — closed by scope.
-- GuitarDuets — `REJECT_PREMEDIA`: note-level MIDI described for synthesized duets, not exact real performances.
-- EG-Solo — `REJECT_PREMEDIA`: exact performance media are third-party popular-rock YouTube videos without established reusable dataset rights.
-- Guitar Style Dataset — `REJECT_PREMEDIA`: MuseScore exercises are not released per-take timestamped note-event truth.
-- historical GPT dataset — `REJECT_PREMEDIA`: public payload identity/access unavailable; later survey reports broken link and unsuccessful author contact.
+Do not lower the historical V6 `0.20` physical-template ratio, remove historical gates, special-case MIDI40, or tune from any frozen EGFxSet observation.
 
-## AG-PT-SET — PRE-MEDIA PASS, THEN FROZEN STRUCTURAL C
+## REPLACEMENT-HOLDOUT / CLOSED-LINE STATE
 
-AG-PT-set cleared pre-media ingress because public metadata established real monophonic human guitar, CC BY 4.0, released onset/audio/pitch/string fields and acceptable independent reference provenance.
+Frozen ingress rule still requires, before payload access, public metadata establishing all four: real human guitar performance; usable public rights for the exact scoring media; synchronized note-event ground truth for that exact performance; and reference provenance sufficiently independent of Basic Pitch/V6.
 
-Reference-blind PRE: `docs/checkpoints/SONGSTERR_FRESH_V6_AG_PT_SET_REFERENCE_BLIND_AUDIT_PRE.md`, commit `0a84d6be1373d538b251663b1fa7af8f33bbf378`. Only structural/alignment/inventory inspection was authorized; Basic Pitch and V6 correctness were forbidden.
+Closed/rejected lines remain closed, including GuitarJam, URMP, GAPS, EGDB/EGDB-PG, GuitarDuets, EG-Solo, Guitar Style Dataset, historical GPT, Guitar-TECHS, GuitarSet/V3, IDMT/V4, V5/FLGD and GOAT/reference scoring.
 
-Authoritative first-started audit:
+AG-PT-set remains pre-media PASS followed by frozen structural decision C:
 
-- run `35020989444`
-- job `104556302921`
-- head `1d37950d03e26af6fcdf3a905aa08e2f863ee878`
-- artifact `10418038649`
-- artifact ZIP SHA-256 `eefea849f7431ffa20262ce5e1b893dd96ae93f2df0d695b59b056c257f495e4`
-
-Accidental duplicate run `35021035914` / job `104556457264` has byte-identical inner outputs and is preserved only as duplicate history, not independent evidence.
-
-Frozen observed result:
-
-- archive `aGPTset_z.zip`, size `6749621615` bytes
-- MD5 exact PRE match `1dff8103f9ad6e1a86cee2e5e39cbe87`
-- archive SHA-256 `6d03ee80f53e64e703b64f58526b6465264032fcc195aea9ad1058a7ebefba64`
-- annotation `aGPTset/metadata/note_labels.csv`, SHA-256 `75502d20e5149641eb4d3449240413673ace6885a5c822df38760df422e98fa1`
-- annotation rows `32592`
-- admitted pitched/onset rows `24180`
+- authoritative audit run `35020989444`, job `104556302921`
+- duplicate `35021035914` is not independent evidence
+- archive admitted, annotation rows `32592`, pitched/onset rows `24180`
 - admitted WAVs `0`
 - fatal anomalies `24180`, all `missing_or_ambiguous_audio`
-- Basic Pitch runs `0`
-- V6 correctness runs `0`
+- Basic Pitch runs `0`, V6 correctness runs `0`
+- result checkpoint commit `89ad50b10c37cece15fbcd03db50672bfad8ea92`.
 
-The prospectively frozen exact/suffix resolver could not bind released `audio_file_path` values to unique archive WAV members, so the audit never reached WAV timing/signal alignment. This is a source-pairing structural C, not a V6 correctness failure and not a claim that the underlying dataset audio is intrinsically unsynchronized.
+Do not repair/re-run AG-PT-set without a new prospective PRE plus explicit authorization.
 
-Frozen decision: **C** — `structural timing/source anomaly requires fail-closed rejection`.
+## V3 SYNTHETIC PHYSICAL-TEMPLATE LINE — FROZEN
 
-Result checkpoint commit: `89ad50b10c37cece15fbcd03db50672bfad8ea92`.
+Iteration 1 remains `FAIL_SYNTHETIC_ALIAS_PROTECTION`.
 
-Do not repair the resolver and rerun this closed attempt. A new AG-PT-set structural-binding experiment would require a new prospective PRE plus explicit authorization.
+Iteration 2 remains `FAIL_SYNTHETIC_SPURIOUS_SUPPORT` with five unexpected PASS controls: `two_harmonics_only`, `single_peak_only`, `broadband_noise`, `nonharmonic_impulses`, `clip_start_insufficient_support`.
 
-## 2025–2026 METADATA-ONLY SEARCH — NO NEW ADMISSIBLE CANDIDATE
+Iteration 3 remains permanently `PASS_SYNTHETIC_EVIDENCE_SIGNIFICANCE`:
 
-Checkpoint: `docs/checkpoints/SONGSTERR_FRESH_V6_PREMEDIA_2025_2026_SEARCH_NO_NEW_CANDIDATE.md`
-Checkpoint commit: `0e8c552cd52bb8a816035cb16ae46467e047523b`
+- module blob `39629250c6d141d5cda9e9d7f570580ec725ae42`
+- test blob `76455337bd17a952dd36c1dabd03ce741e806b07`
+- 34 fixtures × 3 repetitions
+- deterministic `true`
+- mismatch count `0`
+- frozen `MIN_CANDIDATE_EVIDENCE_FRACTION = 0.10`
+- NNLS necessity minimum remains `0.01`
+- no rescue rerun/tuning.
 
-A focused recent search mainly returned already-closed GAPS, Guitar-TECHS, GuitarSet, GOAT/reference, François Leduc/V5 and EGDB-derived work. Those were not reopened.
+Frozen V3 base geometry/threshold semantics remain read-only. The synthetic PASS is not real/model correctness evidence.
 
-EGDB-PG was the only materially new guitar-transcription release found. Public paper metadata describes it as a re-rendering/expansion of EGDB using many amplifier/cabinet presets. The current Zenodo records (`10.5281/zenodo.19542613` and `10.5281/zenodo.19789500`) display a Rights/License heading without an actual license value; the full original WAV form is request-only. Therefore EGDB-PG is recorded as `NOT_ADMITTED_NEW_CANDIDATE / DO_NOT_REOPEN_EGDB`, not as a new independent holdout and not as a revision of the frozen EGDB decision.
+## V7 SUCCESSOR MECHANICAL INTEGRATION — FROZEN PASS
 
-No dataset file was previewed, downloaded or opened in this search pass. Basic Pitch runs `0`; V6 correctness runs `0`.
+Frozen V7 module:
 
-## CURRENT SAFE ENGINEERING DIRECTION
+- `scripts/songsterr-fresh/onset_birth_corroboration_v7.py`
+- commit `a2d312aa1dfd86be617fba35724de8aa1fba40d6`
+- Git blob `6dfadda70db6b902f1dcc4d804f2d66da547314d`.
 
-The public metadata-only holdout search is now yielding predominantly already-closed datasets or derivatives. Continue it only if a genuinely independent candidate is identified without reopening frozen lines.
+Frozen V7 integration test blob: `a5443cae88f4ba49e5a9712822a5c371b67a1c30`.
 
-The productive default safe direction is now **independent synthetic/non-EGFxSet V3 physical-template plausibility research**:
+First mechanical integration result:
 
-- inspect frozen V2/V6 template code;
-- formulate a prospective timbre-robust multi-harmonic/support criterion independent of the EGFxSet real measurement;
-- test only on synthetic/non-EGFxSet fixtures;
-- preserve harmonic-alias rejection, genuine polyphony recovery, confidence independence, exact identity and fail-closed behavior;
-- do not execute any real candidate/model workflow.
+- 34 frozen fixtures represented as 33 selected-proposal composite fixtures plus one direct-template structural control
+- 3 repetitions
+- deterministic `true`
+- mismatch count `0`
+- octave-alias lower-owner case stayed FAIL through `LOWER_OWNER_EXPLAINS_SELECTED`, with MIDI57 among vetoing owners
+- every V7 PASS preserved finite `necessityFraction >= 0.01` and `candidateEvidenceFraction >= 0.10`
+- result `PASS_SYNTHETIC_MECHANICAL_INTEGRATION`.
 
-Not permitted without new explicit prospective authorization: Basic Pitch on real candidates, any V6 correctness run, AG-PT-set re-audit/repair against real archive, EGFxSet retry/modified real rule, candidate payload opening after pre-media rejection, heavy-GPU correctness work, physical calibration/capture, protected-song execution, V143/Gomyway or GOAT/reference work.
+This PASS established wrapper consistency only. It did **not** establish that frozen V6 audio-derived onset innovation has the same representation geometry as the direct synthetic spectra used by V3.
 
-## FRESH CHAT — EXACT NEXT STEPS
+## V7 REAL-EVALUATION ATTEMPT — BLOCKED BEFORE REAL ACCESS
 
-Fresh-chat handoff saved at the user's request on 2026-09-15. Start here and do not infer authorization beyond these steps.
+Prospective real PRE commit: `b7f5f681d6ef39669bcec44ba8116a4ae177e680`.
 
-1. Re-fetch live `songsterr-fresh-pipeline-v1` and read this checkpoint before making changes. Verify the branch head rather than relying on an older chat summary.
-2. Preserve all frozen evidence exactly as recorded: EGFxSet V2 run `34940292514` remains FAIL; AG-PT-set remains pre-media PASS followed by structural decision C; duplicate AG-PT run `35021035914` is not independent evidence; all listed pre-media rejections remain closed.
-3. **Do not resume V143/Gomyway.** Also do not reopen GOAT/reference scoring, GuitarSet/V3, IDMT/V4, V5/FLGD, Guitar-TECHS, duration, protected-song work, `main`, Production, reserved GFN splits, physical calibration/capture, or any rejected replacement candidate.
-4. Before adding V3 research code, inspect `.github/workflows/` and relevant path filters/triggers. Confirm that edits under the intended V3 synthetic research paths cannot automatically launch any closed real-media, Basic Pitch, V6 correctness, EGFxSet, AG-PT-set, protected-song, or heavy-compute workflow. If trigger isolation is not provable, harden the workflow boundary first without executing the closed job.
-5. Inspect the frozen V2/V6 physical-template implementation, especially `_candidate_template()` in `scripts/songsterr-fresh/onset_birth_corroboration_v6.py`. The research target is the inherited single-bin plausibility rule that rejects a candidate when its fundamental support is below `0.20` of its strongest observed harmonic. Treat the `0.20` value and the EGFxSet observation as frozen historical evidence: do **not** lower/tune that threshold or special-case MIDI 40.
-6. Freeze a new prospective documentation checkpoint before implementation, preferably `docs/checkpoints/SONGSTERR_FRESH_V3_PHYSICAL_TEMPLATE_SYNTHETIC_PRE.md`. The PRE must define the V3 hypothesis, synthetic fixtures, immutable pass/fail gates, exact files allowed to change, and explicit prohibition on real-media/model execution.
-7. V3 hypothesis direction: replace the fragile single-fundamental-bin plausibility concept with a timbre-robust **multi-harmonic/support** criterion that can tolerate a weak fundamental while still requiring physically coherent harmonic evidence. Design it independently of the EGFxSet measurement.
-8. Preserve the protections that are already doing useful work: NNLS necessity, lower-harmonic-owner/alias protection, genuine polyphony recovery, confidence independence, exact proposal identity, boundary fail-closed behavior, and no promotion from Basic Pitch confidence alone. V3 must not weaken these merely to make a synthetic fixture pass.
-9. Create only synthetic/non-EGFxSet fixtures for V3. Include at minimum: weak-fundamental/strong-overtones valid guitar-like tone; ordinary strong-fundamental tone; octave/harmonic alias trap; lower-note-owner trap; true two-note polyphony; broadband/noise rejection; missing/insufficient support fail-closed case; clip-start and ordinary in-clip cases. Add adversarial timbre variation prospectively rather than after seeing failures.
-10. Keep V3 research isolated from frozen V6 until its synthetic gates are prospectively defined and pass. Prefer a new research module/test file under `scripts/songsterr-fresh/` rather than silently changing the frozen V6 implementation in place.
-11. Run only synthetic/local code-level tests that cannot access real candidate media or invoke Basic Pitch/V6 correctness. Do not download/open EGFxSet, AG-PT-set, rejected holdouts, protected songs, or any new candidate payload as part of V3 synthetic research.
-12. Record every meaningful V3 state transition in this checkpoint and in the V3 PRE/result checkpoint. If synthetic V3 fails, freeze the failure and revise only through a new prospective iteration; do not tune against closed real evidence.
-13. A future real-media V3/V6 evaluation is **not authorized by this handoff**. It requires a separately frozen real-evaluation PRE plus new explicit user authorization after the synthetic line is complete.
-14. Metadata-only holdout search may continue in parallel only for a genuinely independent untouched candidate. It must clear all four frozen ingress gates before payload access. Do not use a newer mirror/derivative to reopen a closed dataset.
-15. Keep `docs/checkpoints/SONGSTERR_FRESH_PIPELINE_CURRENT_STATE.md` updated often so another fresh chat can resume without reconstructing state from conversation history.
+Authoritative attempt:
 
-### Immediate first task for the next chat
+- workflow `.github/workflows/songsterr-egfxset-v7-real-evaluation-one-shot.yml`
+- run head `1fa782b7165ab91995179ac0dd52a79459a43cb8`
+- run `35051186125`
+- job `104651706632`
+- attempt `1`
+- failure artifact `10428433425`, ZIP SHA-256 `12c3df736082f3ce479364cb54940bd31ee63c683a578750c62b48ee81d1b1f2`.
 
-Perform steps 1–4 only: verify the live branch/checkpoint and audit workflow trigger isolation. Then create/freeze the V3 synthetic PRE described above before writing or executing V3 research code.
+The prospectively frozen first synthetic prerequisite failed immediately on the ordinary in-clip E2 control:
 
-## V3 SYNTHETIC RESEARCH — VERIFIED WORKFLOW ISOLATION / READ-ONLY TEMPLATE AUDIT
+- expected MIDI40 `corroborated`
+- observed `SELECTED_TEMPLATE_INELIGIBLE`
+- selected template `NO_ELIGIBLE_DETUNING_ANCHOR`
+- all 17 V3 anchors `INSUFFICIENT_MULTI_HARMONIC_SUPPORT`
+- analysis RMS `0.4252074715940777`
+- innovation energy `306.85426206148344`.
 
-Verified 2026-09-15 before any V3 implementation or execution.
+The same fixture's later MIDI68 remained rejected through `FAIL_NECESSITY`, necessity `7.773057600779459e-06 < 0.01`.
 
-- Live branch audited: `songsterr-fresh-pipeline-v1`, head `5831ea4e9fb6066d2d5184148f180e7b7beaafe1`, tree `a68dc2692dd9a75908fade10f410444c21157633`.
-- Authoritative `.github/workflows` tree: `fc9fcc316e0173342e6dbf2b73d891bbc0e26a2b`; it contains 61 exact `songsterr-fresh-*.yml` workflow filenames.
-- The automatic-trigger scan identified 30 fresh workflows with automatic events relevant to branch commits. Every detected `push` trigger was path-filtered. `songsterr-fresh-decoder-trace-followup.yml` additionally has a `workflow_run` trigger tied to successful completion of `Songsterr Fresh Model Evidence Cross-Run Measurement Canary`; the upstream measurement canary is itself path-scoped to its enumerated evidence files.
-- No audited automatic workflow uses a catch-all `scripts/songsterr-fresh/**` path. The only broad research wildcard observed in the audited automatic set was `songsterr_pipeline/**`, which is outside the intended V3 research boundary.
-- `songsterr-fresh-independent-pitch-support-structure-trigger.yml` is path-scoped to its own workflow plus `analyze_full_mixture_structure.py` and `build_structure_map.mjs`; the planned V3 files cannot trigger its downstream dispatch.
-- The current checkpoint filename is referenced inside `songsterr-fresh-decoder-trace-followup.yml` and `songsterr-fresh-record-policy-b-research-once.yml`, but neither workflow watches the checkpoint path on `push`; each push filter is scoped to its own workflow YAML. A documentation-only checkpoint/PRE commit therefore does not satisfy those push filters.
-- Proposed isolated V3 paths are frozen for the PRE boundary as `scripts/songsterr-fresh/physical_template_plausibility_v3.py`, `scripts/songsterr-fresh/test_physical_template_plausibility_v3.py`, and `docs/checkpoints/SONGSTERR_FRESH_V3_PHYSICAL_TEMPLATE_SYNTHETIC_PRE.md`. None matches the audited automatic workflow path filters.
-- No workflow, Basic Pitch job, V6 correctness job, real-media job, heavy-compute job, model inference, candidate payload access, or protected-song execution was performed during this audit. Archived V143/Gomyway was not resumed or modified.
+Because the prerequisite failed:
 
-Read-only V2/V6 lineage review:
+- prior Basic Pitch artifact fetch: `skipped`
+- EGFxSet media fetch: `skipped`
+- V7 real qualifier: `skipped`
+- Basic Pitch invoked: `false`
+- real media fetched: `false`.
 
-- `scripts/songsterr-fresh/qualify_basic_pitch_note_births_v2.py` leaves normal in-clip classification on frozen V6 unchanged and only routes clip-start proposals lacking genuine left context to the separate one-sided clip-start pitch-presence classifier. V3 must not alter that boundary semantic as part of this research line.
-- In frozen `scripts/songsterr-fresh/onset_birth_corroboration_v6.py`, `_candidate_template()` selects the candidate fundamental bin within the MIDI cell, constructs up to six local harmonic supports weighted `1/h`, and rejects the candidate before NNLS when selected fundamental support is less than `0.20` of the strongest observed harmonic.
-- Candidates surviving that physical-template gate enter the shared NNLS dictionary; the separate leave-one-out necessity protection remains `necessityFraction >= 0.01`. V3 research targets the physical-template plausibility stage only; it must preserve the NNLS necessity protection rather than weakening it.
-- Frozen V6 synthetic fixtures already exercise ordinary/detuned notes, octave/harmonic aliases, neighbor mismatch, continuing-plus-new notes, dyad/triad polyphony, unrelated transient/noise, a weak selected note under a stronger owner, silence/low-noise, and pre/post-context fail-closed cases. These protections are inputs to the prospective V3 gates, not post-result tuning targets.
+Frozen interpretation: `FAIL_V7_BOUNDARY_SYNTHETIC_PREREQUISITE / REAL_EVALUATION_NOT_EXECUTED`. No EGFxSet conclusion may be inferred from that attempt, and there is no same-authorization retry.
 
-Prospective V3 PRE is frozen at commit `0292869c1e1e1bc138f2fdff4e839326c0e5d082`, created before any V3 research implementation or V3 synthetic execution. Its immutable iteration-1 boundary allowed only the isolated V3 module/test, the V3 synthetic result checkpoint, and state-only updates to this current checkpoint. The frozen V6/V2 implementations and all workflow files remained read-only.
+## REPRESENTATION-SEAM ROOT CAUSE
 
-### Iteration 1 — frozen FAIL
+Frozen V6 audio analysis uses:
 
-- first module commit: `3f679a0f701d23e6ad15dc567e2728e89a4abd87`
-- complete first implementation/test pair head: `f34f256ec9747d65eee6381b00b1324336e433c4`
-- frozen result checkpoint commit: `6a6965730250f2000cc480ede2ed3d2638b0df44`
-- local execution files were verified byte-for-byte against Git blobs `45b8f3b66df7500824071489205a732dfe05d759` (module) and `71289b9ed6654199e40936a1e9ccbde5dbf0054c` (test)
-- the first synthetic run was fail-fast and stopped at `octave_alias_lower_a3_selected_a4`: frozen expected composite FAIL, observed composite PASS
-- all prospective PASS cases reached before that point had passed, including weak/zero-fundamental support, clip-start-post-only support, true-polyphony cases and the nine-case timbre/detuning matrix
-- no iteration-1 algorithm, constant, fixture, expected decision, PRE, module or test was changed after observing the failure; no second iteration-1 run was used to search for a rescue
-- no workflow, Basic Pitch, V6 correctness, real-media/model, protected-song, closed-line, V143/Gomyway or heavy-compute execution occurred
+- Hann analysis frame `2048` samples
+- zero-padded FFT `8192`
+- zero-padding factor `4`
+- nonnegative pre/post magnitude innovation on the 8192-point real-FFT grid.
 
-Iteration 1 is permanently `FAIL_SYNTHETIC_ALIAS_PROTECTION`. This does not alter any frozen historical result and does not authorize real evaluation.
+A Hann-windowed sinusoid's first null is approximately two native frame-DFT bins from its center. Under the frozen 4× zero-padding this main-lobe half-width occupies about 8 bins on the frozen grid.
 
-### Iteration 2 — frozen FAIL
+Frozen V3 direct-spectrum fixtures use narrow local line peaks. V3 local-background logic samples nearby bins within radius 6. When raw V6 Hann-windowed innovation is supplied directly, those background bins can lie inside the physical harmonic's own deterministic Hann main lobe, causing the harmonic's leakage to be treated as local background. This explains the original all-17-anchor support failure despite high total innovation energy.
 
-- prospective PRE commit: `b2821f8690bea49783071ead87e69424fd63c787`
-- wrapper commit: `0587daa4cd1055255fb394939af2162e20b80be4`
-- complete first implementation/test pair head: `4d69b7bc20637507c3a9167a5fb9c5ad498773ca`
-- frozen result checkpoint commit: `7153a02ede14b0a43af58609bdc12cd4b792e9b9`
-- exact local execution blobs: iteration-1 base `45b8f3b66df7500824071489205a732dfe05d759`, iteration-2 wrapper `7090e17baff60f91700a760f617e905ff53484ab`, iteration-2 test `eefe00346a94e8f0ed433ac916352a4b2e9331c5`
-- pre-execution PRE→pair compare contained only the two new iteration-2 Python files; no workflow or frozen file changed
-- first committed test execution evaluated 31 fixtures × 3 in-process repetitions and was deterministic
-- result: `FAIL`, 5 mismatches, all unexpected PASS: `two_harmonics_only`, `single_peak_only`, `broadband_noise`, `nonharmonic_impulses`, and `clip_start_insufficient_support`
-- the original octave-alias gate and third-harmonic-owner trap matched FAIL expectations; new `true_octave_polyphony_a3_plus_a4`, `weak_lower_a3_plus_a4`, inherited A3+E5 and A4+B4 polyphony controls matched PASS expectations
-- all other 26 prospective cases matched their frozen expectations
-- no iteration-2 PRE/code/test/fixture/threshold was changed after the result and no second iteration-2 run was used to search for a rescue
-- no workflow, Basic Pitch, V6 correctness, real-media/model, protected-song, closed-line, V143/Gomyway or heavy-compute execution occurred
+The bridge research therefore targets representation geometry only; it does not relax V3/V6 decision thresholds.
 
-Iteration 2 is permanently `FAIL_SYNTHETIC_SPURIOUS_SUPPORT`. The owner-aware guard repaired the iteration-1 synthetic alias defect, but the inherited candidate-evidence stage still admits sparse/non-harmonic/noise controls. This does not alter any historical result and does not authorize real evaluation.
+## REPRESENTATION BRIDGE ITERATION 1 — FROZEN FAIL
 
-Next permitted action: if continuing synthetic research, freeze a **new prospective iteration-3 PRE** before any code revision or execution. A successor may preserve the successful iteration-2 lower-owner guard while adding a separately justified candidate-evidence significance control against spurious detuning-anchor support. It must preserve all 31 iteration-2 fixture expectations and must not be tuned on closed real evidence.
+PRE commit: `6502f00670efe9987ff5a76707d9cf32476ac4fe`.
 
-## FRESH CHAT HANDOFF — CURRENT AFTER ITERATION 2
+Frozen bridge pair:
 
-Saved 2026-09-15 at the user's request for a new chat. This section supersedes the earlier pre-V3 "FRESH CHAT — EXACT NEXT STEPS" section above. The live branch immediately before this handoff commit was `0c830e82f5f8e0c9458ac570caf0ef0210f12ec1` (`docs: record V3 synthetic iteration 2 FAIL`). A new chat must still re-fetch the live branch before writing because this handoff commit itself advances HEAD and later concurrent changes may exist.
+- `v6_innovation_line_bridge_v1.py` blob `a63d62371e3ad97cb2ce085ccb1c2950a5cd23a1`
+- test blob `a8a4bd8399763a2581209ae594349d39b38d6e7c`
+- pair head `73652d19f6dc71964e788330e3a94b163a6fb4af`.
 
-1. Work only on `songsterr-fresh-pipeline-v1`. Re-fetch live HEAD and this checkpoint first; do not rely on the pre-handoff SHA as current.
-2. Read the frozen iteration-2 PRE and result before designing anything: `docs/checkpoints/SONGSTERR_FRESH_V3_PHYSICAL_TEMPLATE_SYNTHETIC_PRE_ITERATION2.md` and `docs/checkpoints/SONGSTERR_FRESH_V3_PHYSICAL_TEMPLATE_SYNTHETIC_RESULT_ITERATION2.md`. Preserve iteration 1 and iteration 2 as permanent FAIL records; do not edit, reinterpret, or rerun them as rescue attempts.
-3. Treat workflow-trigger isolation as already verified for the previously frozen isolated V3 paths. If iteration 3 uses any new filename or path, re-audit that exact path against `.github/workflows/` before committing executable code. Do not launch or dispatch any workflow during the audit.
-4. The next permitted engineering action is documentation-only: create and commit a **new prospective iteration-3 PRE** before changing or executing V3 research code. Prefer `docs/checkpoints/SONGSTERR_FRESH_V3_PHYSICAL_TEMPLATE_SYNTHETIC_PRE_ITERATION3.md`. The PRE must freeze the hypothesis, exact allowed files, immutable fixtures/expected outcomes, constants/gates, execution command, fail-fast/result-recording policy, and explicit prohibition on real/model/closed-line access.
-5. Iteration-3 motivation is the frozen iteration-2 result only: five unexpected PASS cases (`two_harmonics_only`, `single_peak_only`, `broadband_noise`, `nonharmonic_impulses`, `clip_start_insufficient_support`) show insufficient candidate-evidence significance. The successful iteration-2 lower-owner/alias guard should remain protected. Do not use EGFxSet or any other closed real observation to choose thresholds or special cases.
-6. Prospectively preserve all 31 iteration-2 fixture expectations as regression gates. Any additional adversarial synthetic fixtures must be specified in the iteration-3 PRE **before** the first iteration-3 execution. Do not add rescue fixtures or tune expectations after seeing results.
-7. Keep frozen V2/V6 implementations read-only. Do not edit `scripts/songsterr-fresh/onset_birth_corroboration_v6.py` or `scripts/songsterr-fresh/qualify_basic_pitch_note_births_v2.py` during the isolated iteration-3 research line. Implement iteration 3 in new isolated research/test files named and frozen by the PRE.
-8. Preserve NNLS necessity (`necessityFraction >= 0.01`), lower-harmonic-owner/alias protection, genuine polyphony recovery, confidence independence, exact proposal identity, clip-start/ordinary-in-clip boundary semantics, and fail-closed behavior. Do not lower the historical `0.20` V6 ratio or special-case MIDI 40.
-9. After the iteration-3 PRE is committed and its commit SHA is recorded, verify the PRE→implementation diff contains only the prospectively allowed files. Only then may the single prospectively defined **synthetic/local** test execution occur. No Basic Pitch, Demucs/model inference, V6 correctness, real-media, candidate-payload, protected-song, workflow, GPU/heavy-compute, physical calibration/capture, or network-dependent research execution is authorized.
-10. Freeze the first iteration-3 result exactly as observed. PASS or FAIL, write a dedicated result checkpoint and update this current-state file. If it fails, do not modify that iteration's code/test/PRE and rerun to search for a rescue; any successor requires a new prospective iteration PRE.
-11. **Do not resume archived V143/Gomyway.** Do not reopen GOAT/reference scoring, GuitarSet/V3 validation, IDMT/V4, V5/FLGD, Guitar-TECHS, duration, EGFxSet, AG-PT-set, rejected holdouts, `main`, Production, reserved GFN splits, physical calibration/capture, or protected-song work.
-12. A real-media V3/V6 evaluation remains unauthorized. It would require a separate prospectively frozen real-evaluation PRE plus new explicit user authorization after a synthetic line is complete.
-13. Keep `docs/checkpoints/SONGSTERR_FRESH_PIPELINE_CURRENT_STATE.md` updated at every meaningful state transition so a later fresh chat can resume without reconstructing history.
+Execution:
 
-### Immediate first task for the next chat
+- workflow head `59a1bdb84a00e34c42906f2425d2d556572a5f78`
+- run `35051843902`
+- job `104653711197`
+- attempt `1`.
 
-Re-fetch the live branch and current checkpoint; verify no concurrent change invalidates the isolation assumptions; then create/freeze **iteration-3 PRE only**. Do not revise or execute iteration-3 research code until that PRE commit exists.
+Hypothesis: identify local maxima with geometry-derived ±8-bin Hann-lobe suppression and retain only each center's exact original amplitude.
 
-## AUTHORITATIVE ROUTE
+Result:
 
-The software-lineage no-gap conclusion remains unchanged. Official correctness still requires the frozen physical calibrated route, currently budget-paused. Do not manufacture another synthetic software-lineage gate.
+- 23 frozen V6 audio fixtures × 3
+- deterministic `true`
+- 18/23 matched, 5 mismatches
+- structural bridge checks passed
+- untouched V3 direct-spectrum regression stayed 34/34 PASS.
 
-## V3 SYNTHETIC RESEARCH — ITERATION 3 PRE-EXECUTION STATE
+Five mismatches were `clean_low_m40` (`REDUCED_DICTIONARY_EMPTY`), `selected64_enters_over_existing60` (`FAIL_NECESSITY`), unexpected PASS `simultaneous_dyad_sel60`, `simultaneous_triad_sel60` (`FAIL_NECESSITY`), and `reattack_m64` (`SELECTED_TEMPLATE_INELIGIBLE`).
 
-Recorded 2026-09-15 America/Toronto before the first iteration-3 synthetic execution.
+Frozen result: `FAIL_SYNTHETIC_REPRESENTATION_BRIDGE_SINGLE_BIN_SPARSIFICATION`. No iteration-1 rerun or repair.
 
-- Prospective iteration-3 PRE: `docs/checkpoints/SONGSTERR_FRESH_V3_PHYSICAL_TEMPLATE_SYNTHETIC_PRE_ITERATION3.md`, frozen commit `26ac58fe54c179744ef036a9dc4f4a7d69598038`, parent `eca05f1c46208f0df4273a2948e98de7db611563`.
-- Iteration-3 research module commit: `e4db75be46a49b1035b5ec11d29f9ade1fa8658a`; Git blob `39629250c6d141d5cda9e9d7f570580ec725ae42`.
-- Complete first implementation/test pair head: `6f2041679f0ee4540b63d74a61b113e5267f8e8b`; test Git blob `76455337bd17a952dd36c1dabd03ce741e806b07`.
-- PRE→pair compare `26ac58fe54c179744ef036a9dc4f4a7d69598038..6f2041679f0ee4540b63d74a61b113e5267f8e8b` contains exactly the two prospectively allowed new iteration-3 Python files and no other changes.
-- Exact isolated local materialization has been verified against Git blobs for the frozen iteration-1 base `45b8f3b66df7500824071489205a732dfe05d759`, frozen iteration-2 wrapper `7090e17baff60f91700a760f617e905ff53484ab`, frozen iteration-2 test `eefe00346a94e8f0ed433ac916352a4b2e9331c5`, iteration-3 module `39629250c6d141d5cda9e9d7f570580ec725ae42`, and iteration-3 test `76455337bd17a952dd36c1dabd03ce741e806b07`.
-- No iteration-3 synthetic test has been executed yet at this state transition.
-- No workflow, Basic Pitch, V6 correctness, model/Demucs, real-media, candidate-payload, protected-song, physical capture/calibration, or heavy-compute execution has occurred. Archived V143/Gomyway remains untouched.
+## REPRESENTATION BRIDGE ITERATION 2 — FROZEN FAIL, 20/23
 
-Next permitted action under the frozen PRE: perform the final forbidden import/I/O scan on the exact committed pair, then execute only `python3 test_physical_template_plausibility_v3_iteration3.py` once if the scan is clean. Freeze that first result exactly as observed; do not tune or rescue-rerun iteration 3.
+PRE commit: `7cc8fc88a9b3d12596dfdce553bb717bc77fb05b`.
 
-## V3 SYNTHETIC RESEARCH — ITERATION 3 FROZEN PASS
+Frozen bridge pair:
 
-Frozen 2026-09-15 America/Toronto after the first and only prospectively authorized iteration-3 synthetic execution.
+- `v6_innovation_peak_band_bridge_v2.py` commit `56baaf07552fea521073d976c81a26658e2d5b6b`, blob `402aa23f3f1821c4e5c45ccf7f170b542d76a453`
+- test pair head `46f4b71405946e0da68ff80e23b006f4393172c4`, test blob `167fe534cf99ac825c8127efa7828237551a5759`.
 
-- prospective PRE commit: `26ac58fe54c179744ef036a9dc4f4a7d69598038`
-- module commit: `e4db75be46a49b1035b5ec11d29f9ade1fa8658a`
-- complete implementation/test pair head: `6f2041679f0ee4540b63d74a61b113e5267f8e8b`
-- pre-execution state checkpoint commit: `bc947f71cf3a92a079c55c76f80e79d130be58d1`
-- frozen result checkpoint: `docs/checkpoints/SONGSTERR_FRESH_V3_PHYSICAL_TEMPLATE_SYNTHETIC_RESULT_ITERATION3.md`, commit `e97ab67c9c2794f4a50c5170102d1380484f5fb1`
-- exact execution blobs: iteration-1 base `45b8f3b66df7500824071489205a732dfe05d759`, iteration-2 wrapper `7090e17baff60f91700a760f617e905ff53484ab`, iteration-2 test `eefe00346a94e8f0ed433ac916352a4b2e9331c5`, iteration-3 module `39629250c6d141d5cda9e9d7f570580ec725ae42`, iteration-3 test `76455337bd17a952dd36c1dabd03ce741e806b07`
-- final import/I/O isolation scan: clean; no forbidden file/network/process/model/workflow access in the execution dependency chain
-- only prospectively defined local synthetic test command executed once: `python3 test_physical_template_plausibility_v3_iteration3.py`
-- canonical first-run summary: `fixtureCount=34`, `repetitions=3`, `deterministic=true`, `mismatchCount=0`, `result=PASS`, process exit `0`
-- all 31 frozen iteration-2 fixture expectations were preserved; the five iteration-2 spurious PASS controls are now rejected under the frozen iteration-3 evidence-significance guard
-- all three prospective iteration-3 scale controls matched their expected outcomes, including the low-scale coherent harmonic PASS and low/high-scale broadband-noise FAIL controls
-- frozen `MIN_CANDIDATE_EVIDENCE_FRACTION=0.10` was not changed after observation; no rescue rerun or post-result tuning occurred
-- no workflow, Basic Pitch, V6 correctness, model/Demucs, real-media, candidate-payload, protected-song, physical calibration/capture, heavy-compute, main/Production, or closed-line execution occurred; archived V143/Gomyway remains untouched
+Execution:
 
-Iteration 3 is permanently `PASS_SYNTHETIC_EVIDENCE_SIGNIFICANCE`. This is synthetic-only evidence and does not revise the frozen EGFxSet V2 FAIL or AG-PT structural C.
+- workflow head `b176a8665bef71ae99ff73733005ac083165c581`
+- run `35052132987`
+- job `104654595776`
+- attempt `1`.
 
-### Current authorization boundary after iteration 3
+Hypothesis: keep the same geometry-derived ±8-bin local-max separation but preserve exact original amplitudes at each local maximum's `[-1,0,+1]` band, inherited from frozen V3 `PEAK_BIN_RADIUS=1`.
 
-No real/model correctness evaluation or frozen V6/V2 integration is authorized by this PASS. Before any successor integration or real-media evaluation, freeze a new prospective PRE defining the exact integration/evaluation boundary, files, immutable gates, and prohibitions. Any real-media/model execution also requires new explicit user authorization. Do not infer authorization from the synthetic PASS itself.
+Result:
 
-## V3 SUCCESSOR INTEGRATION — PRE FROZEN
+- 23 V6 audio fixtures × 3
+- deterministic `true`
+- 20/23 matched, 3 mismatches
+- structural bridge checks all passed
+- untouched V3 direct-spectrum suite remained 34/34 PASS.
 
-Recorded 2026-09-15 America/Toronto after re-fetching live branch state and confirming no `.github/workflows` file changed since the prior trigger audit.
+Concrete repaired iteration-1 cases:
 
-- live branch before PRE: `00be878018b1e7c36a3284083fd4701902c985f4` (`docs: record V3 iteration 3 frozen PASS`)
-- prospective successor PRE: `docs/checkpoints/SONGSTERR_FRESH_V3_PHYSICAL_TEMPLATE_INTEGRATION_PRE.md`
-- frozen PRE commit: `638b045aea5a9fc66cee30c78772e792b38b8c79`
-- the PRE defines a mechanical successor integration boundary only; it is not a new correctness gate and does not advance delivery
-- frozen V6/V2/V3 implementation files remain read-only; the successor path is new-file-only (`onset_birth_corroboration_v7.py` plus its isolated integration regression file)
-- no workflow, Basic Pitch, V6/V7 correctness run, model/Demucs inference, real media, candidate payload, protected-song, physical calibration/capture, heavy compute, `main`, Production, or closed-line execution occurred
-- archived V143/Gomyway remains untouched
+- `clean_low_m40` now PASS, necessity `0.12936434618438644`, candidate evidence `0.38443223142641103`
+- `simultaneous_triad_sel60` now PASS, necessity `0.11027472693544244`, candidate evidence `0.3339493660329132`.
 
-Next permitted engineering step under the frozen PRE is exact-path workflow-filter re-audit for the two proposed V7 files before any executable successor code is committed. Real/model evaluation remains unauthorized and would require a separate real-evaluation PRE plus explicit user authorization.
+Three persistent mismatches:
 
-## V3 SUCCESSOR INTEGRATION — EXACT-PATH WORKFLOW ISOLATION VERIFIED
+1. `selected64_enters_over_existing60`: expected PASS, observed `FAIL_NECESSITY`; RMS `0.336542505699681`, raw innovation energy `217.8264003573765`, 11 retained centers / 33 retained positive bins.
+2. `simultaneous_dyad_sel60`: expected reject, observed PASS; necessity `0.1840904226252075`, candidate evidence `0.34678943650665484`, no lower-owner veto; 12 centers / 36 positive bins.
+3. `reattack_m64`: expected PASS, observed `SELECTED_TEMPLATE_INELIGIBLE`; RMS `0.43590990398881657`, raw innovation energy `248.79801311654884`, 11 centers / 32 positive bins.
 
-Recorded 2026-09-15 America/Toronto before any V7 executable file was created.
+Frozen result checkpoint commit: `dfa51a1a6da521a36feb3733d199dfbbeea99de8`.
 
-- exact proposed paths: `scripts/songsterr-fresh/onset_birth_corroboration_v7.py` and `scripts/songsterr-fresh/test_onset_birth_corroboration_v7_integration.py`
-- compare `cc924c96abf70b23e79bda60010d6c8466a1d301..f39ff2a0981be040fc1b7360698a0009ba655e6e` contains no `.github/workflows/**` change; the workflow set is unchanged from the previously audited automatic-trigger baseline
-- that unchanged audit established that every detected fresh `push` trigger was path-filtered and no audited automatic workflow used a catch-all `scripts/songsterr-fresh/**` path
-- exact workflow/code searches for `onset_birth_corroboration` and `onset_birth_corroboration_v6.py` produced no workflow-path reference; therefore neither new V7 filename is covered by an enumerated onset-birth workflow path
-- no workflow was dispatched or executed during this re-audit
-- no real media, Basic Pitch, Demucs/model inference, V6/V7 correctness run, candidate payload, protected song, physical calibration/capture, heavy compute, `main`, Production, or closed line was accessed or executed
-- archived V143/Gomyway remains untouched
+Frozen result: `FAIL_SYNTHETIC_REPRESENTATION_BRIDGE_THREE_MISMATCHES`. No iteration-2 rerun or repair.
 
-The exact V7 paths are isolated from the unchanged audited automatic workflow triggers. The next permitted step under the frozen integration PRE is to create the first committed V7 module/test pair, then verify the PRE-to-pair diff and exact Git blobs before the single local synthetic/mechanical integration execution.
+## CURRENT TECHNICAL CONCLUSION
 
-## V3 SUCCESSOR INTEGRATION — FROZEN SYNTHETIC/MECHANICAL PASS
+The two bridge iterations establish a strong synthetic-only diagnosis:
 
-Frozen 2026-09-15 America/Toronto after the first and only prospectively authorized local V7 successor integration execution.
+- raw V6 Hann-lobe innovation is not directly compatible with V3's narrow-line local-background assumptions;
+- leakage suppression is necessary and materially improves compatibility;
+- reducing a physical lobe to one bin is too sparse;
+- preserving V3's ±1 support band improves the frozen V6 population to 20/23;
+- the remaining mismatches are not a single support-width problem.
 
-- prospective integration PRE commit: `638b045aea5a9fc66cee30c78772e792b38b8c79`
-- exact-path workflow-isolation state commit: `d45f0ed194ed53a08c0ec17b257c10a262361108`
-- V7 module commit: `a2d312aa1dfd86be617fba35724de8aa1fba40d6`; Git blob `6dfadda70db6b902f1dcc4d804f2d66da547314d`
-- complete first V7 implementation/test pair head: `efca69ff4f045214eec629ad94596434039f02b9`; test Git blob `a5443cae88f4ba49e5a9712822a5c371b67a1c30`
-- frozen result checkpoint: `docs/checkpoints/SONGSTERR_FRESH_V3_PHYSICAL_TEMPLATE_INTEGRATION_RESULT.md`, commit `9f6345e971f36a0def367a70564ba9b86c948e23`
-- exact local dependency blobs were verified before execution: frozen V6 `2b18ef0ee710a6ad5ecb27253b977495db7d6534`, V3 base `45b8f3b66df7500824071489205a732dfe05d759`, iteration-2 wrapper `7090e17baff60f91700a760f617e905ff53484ab`, iteration-3 wrapper `39629250c6d141d5cda9e9d7f570580ec725ae42`, iteration-2 test `eefe00346a94e8f0ed433ac916352a4b2e9331c5`, and iteration-3 test `76455337bd17a952dd36c1dabd03ce741e806b07`
-- executable delta `d45f0ed194ed53a08c0ec17b257c10a262361108..efca69ff4f045214eec629ad94596434039f02b9` contains exactly the two prospectively allowed V7 Python files; no workflow or frozen implementation file changed
-- final new-pair static scan found no file/network/process/model imports or direct file/dynamic-execution calls; the frozen V6 manifest `read_text()` self-test path remained dormant and outside the V7 integration call path
-- only the prospectively defined local command was executed once: `python3 test_onset_birth_corroboration_v7_integration.py`
-- canonical first-run summary: `fixtureCount=34`, `compositeFixtureCount=33`, `directTemplateFixtureCount=1`, `mechanicalCheckCount=4`, `repetitions=3`, `deterministic=true`, `mismatchCount=0`, `result=PASS`, process exit `0`
-- all 33 selected-proposal composite fixtures were routed through V7 and preserved the frozen iteration-3 expectations; the one remaining frozen fixture is the direct-template structural control `input_fewer_than_three_available_harmonics`, which remained unchanged and outside V7 because it directly tests the base helper at MIDI 120 rather than a playable selected proposal
-- the octave-alias lower-owner fixture remained FAIL through `LOWER_OWNER_EXPLAINS_SELECTED`, with MIDI 57 among vetoing owners
-- no frozen V3 failure was promoted; every successor PASS carried finite `necessityFraction >= 0.01` and finite `candidateEvidenceFraction >= 0.10`, and the three iteration-3 scale-control outcomes remained unchanged
-- no rescue rerun, threshold change, fixture change, expectation change, code change, or post-result tuning occurred
-- no workflow, Basic Pitch, V6/V7 real correctness run, Demucs/model inference, real media, candidate payload, protected song, physical calibration/capture, heavy compute, `main`, Production, or closed-line execution occurred
-- archived V143/Gomyway remains untouched
+The persistent cases indicate one transformed spectrum is being asked to serve two distinct semantic roles:
 
-Frozen result: `PASS_SYNTHETIC_MECHANICAL_INTEGRATION`. This establishes only local successor wiring consistency with the frozen V3 synthetic evidence and frozen V6 onset-innovation geometry; it is not real/model correctness, calibration, holdout validation, customer eligibility, or delivery readiness.
+1. **harmonic support / local-background eligibility**, which benefits from a leakage-cleaned support view;
+2. **candidate competition / NNLS necessity**, which may need richer/raw innovation structure.
 
-### Current authorization boundary after V7 integration PASS
+Do **not** continue by searching peak width, suppression radius, thresholds, per-MIDI exceptions or fixture-specific rules. That would be post-result tuning.
 
-No production route has been switched to V7. Frozen V6/V2 remain unchanged. No real-media/model evaluation is authorized by this PASS. Any real-media/model V7 evaluation requires a separately frozen prospective real-evaluation PRE plus new explicit user authorization. Until then, only documentation/design/static/local synthetic work that stays within a newly frozen prospective boundary is permitted. Do not infer real-run authorization from the integration PASS.
+## CURRENT SAFE NEXT ACTION
+
+The next productive action is a **prospectively frozen synthetic-only dual-view diagnostic**, not a new final decision rule.
+
+Before executing anything, create a new PRE that freezes:
+
+- exact diagnostic module/test paths;
+- all 23 frozen V6 audio fixtures as the population;
+- iteration-2 peak-band representation as the support/eligibility view, read-only;
+- raw frozen V6 innovation as the competition/necessity comparison view;
+- exact diagnostics to collect for every fixture, including selected-template eligibility, candidate-support diagnostics, valid candidate population, NNLS necessity, owner diagnostics and candidate-evidence fraction where mechanically definable;
+- no changed classification expectations and no new decision rule in the diagnostic iteration;
+- one first execution only, deterministic repetitions, frozen result afterward;
+- no real/model/media/network access.
+
+The purpose is to determine whether support eligibility and competition/necessity can be separated cleanly without weakening alias, polyphony, transient, insufficiency or identity protections. Only after that diagnostic is frozen should a successor composition rule be designed prospectively.
+
+Any future real-media V7 evaluation requires a **new real-evaluation PRE plus fresh explicit user authorization** after the synthetic line is complete.
+
+Archived V143/Gomyway remains untouched.
