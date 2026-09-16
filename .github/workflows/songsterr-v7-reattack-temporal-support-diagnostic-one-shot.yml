@@ -1,0 +1,78 @@
+name: Songsterr V7 Reattack Temporal Support Diagnostic One-Shot
+
+on:
+  push:
+    branches:
+      - songsterr-fresh-pipeline-v1
+    paths:
+      - .github/workflows/songsterr-v7-reattack-temporal-support-diagnostic-one-shot.yml
+
+permissions:
+  contents: read
+
+jobs:
+  reattack-temporal-support-diagnostic-one-shot:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - name: Checkout prospectively frozen temporal-support state
+        uses: actions/checkout@v4
+
+      - name: Set up frozen Python 3.10.21
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.10.21'
+
+      - name: Install frozen synthetic DSP dependencies
+        shell: bash
+        run: |
+          set -euo pipefail
+          python -m pip install --disable-pip-version-check 'numpy==1.26.4' 'scipy==1.15.3'
+          python - <<'PY'
+          from importlib.metadata import version
+          expected = {'numpy': '1.26.4', 'scipy': '1.15.3'}
+          for package, wanted in expected.items():
+              actual = version(package)
+              if actual != wanted:
+                  raise SystemExit(f'Unexpected {package} version: {actual}, wanted {wanted}')
+              print(f'{package}={actual}')
+          PY
+
+      - name: Verify frozen temporal-support and dependency Git blobs
+        shell: bash
+        run: |
+          set -euo pipefail
+          check_blob() {
+            local expected="$1"
+            local path="$2"
+            local actual
+            actual="$(git hash-object "$path")"
+            if [ "$actual" != "$expected" ]; then
+              echo "Blob mismatch for $path: $actual != $expected" >&2
+              exit 1
+            fi
+            echo "$path=$actual"
+          }
+          check_blob 2b18ef0ee710a6ad5ecb27253b977495db7d6534 scripts/songsterr-fresh/onset_birth_corroboration_v6.py
+          check_blob a6c3d99d47c529db3c3c5e4af544d13f21b179aa scripts/songsterr-fresh/v6_onset_birth_synthetic_fixtures.json
+          check_blob 45b8f3b66df7500824071489205a732dfe05d759 scripts/songsterr-fresh/physical_template_plausibility_v3.py
+          check_blob 7090e17baff60f91700a760f617e905ff53484ab scripts/songsterr-fresh/physical_template_plausibility_v3_iteration2.py
+          check_blob 39629250c6d141d5cda9e9d7f570580ec725ae42 scripts/songsterr-fresh/physical_template_plausibility_v3_iteration3.py
+          check_blob 76455337bd17a952dd36c1dabd03ce741e806b07 scripts/songsterr-fresh/test_physical_template_plausibility_v3_iteration3.py
+          check_blob 402aa23f3f1821c4e5c45ccf7f170b542d76a453 scripts/songsterr-fresh/v6_innovation_peak_band_bridge_v2.py
+          check_blob 3877ddc9fabd92e9ba1d2db891c9e34a6a6c9e0f scripts/songsterr-fresh/v7_reattack_temporal_support_diagnostics_v1.py
+          check_blob 95ffe764bacb449143c0b5d4f06638a46390f8bf scripts/songsterr-fresh/test_v7_reattack_temporal_support_diagnostics_v1.py
+
+      - name: Run frozen temporal-support diagnostic and untouched V3 regression exactly once
+        shell: bash
+        run: |
+          set +e
+          python scripts/songsterr-fresh/test_v7_reattack_temporal_support_diagnostics_v1.py
+          diagnostic_status=$?
+          python scripts/songsterr-fresh/test_physical_template_plausibility_v3_iteration3.py
+          v3_status=$?
+          echo "diagnostic_status=${diagnostic_status}"
+          echo "v3_status=${v3_status}"
+          if [ "${diagnostic_status}" -ne 0 ] || [ "${v3_status}" -ne 0 ]; then
+            exit 1
+          fi
