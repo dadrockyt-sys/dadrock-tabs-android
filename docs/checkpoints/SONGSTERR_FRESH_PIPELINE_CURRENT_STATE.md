@@ -1,19 +1,30 @@
 # CURRENT STATE — Songsterr Fresh Pipeline V1
 
-Updated: 2026-09-16 America/Toronto — fixed-feature candidate competition diagnostic attempt 1 is complete and frozen from artifact. Candidate-column breadth and feature-universe effects are separated at measurement level. Frozen V7 wiring has been reviewed. A new measurement-only protection/raw-fit seam PRE is frozen before code. Temporal/support attempt-1 measurement access remains blocked/no-decision.
+Updated: 2026-09-16 America/Toronto — fixed-feature candidate competition diagnostic attempt 1 is complete and frozen. Frozen V7 wiring has been reviewed. The new measurement-only protection/raw-fit seam PRE and module/test pair are frozen before first execution. Temporal/support attempt-1 measurement access remains blocked/no-decision.
 
 Canonical branch: `songsterr-fresh-pipeline-v1`
 Canonical checkpoint: `docs/checkpoints/SONGSTERR_FRESH_PIPELINE_CURRENT_STATE.md`
 
 ## LATEST CONTINUATION OVERRIDE — AUTHORITATIVE WHERE OLDER TEXT CONFLICTS
 
-### Protection / raw-fit seam diagnostic — PRE FROZEN / NOT EXECUTED
+### Protection / raw-fit seam diagnostic — PRE + PAIR FROZEN / NOT EXECUTED
 
 A genuinely new measurement-only line has been opened after the frozen V7 wiring review, without reconstructing the blocked temporal diagnostic.
 
+Prospective identity:
+
 - PRE: `docs/checkpoints/SONGSTERR_FRESH_V7_PROTECTION_FIT_SEAM_DIAGNOSTIC_PRE.md`;
 - PRE commit: `727dd82fe51f7ba64a6434c867fdec57958405d9`;
-- pre-code parent/head: `e01969f6fbf6abc464079eae951c279d80c82974`.
+- PRE blob: `4dd284fae7e7fa2d3881b0f8dca654f0bcd2ed6d`;
+- pre-code parent/head: `e01969f6fbf6abc464079eae951c279d80c82974`;
+- module: `scripts/songsterr-fresh/v7_protection_fit_seam_diagnostics_v1.py`;
+- module commit: `bed75bf7bb529e5e0b2fd3473c22523dbeacc147`;
+- module blob: `1ca6a0f8579ae73577b34fa6ed2eb0a752f9d781`;
+- test: `scripts/songsterr-fresh/test_v7_protection_fit_seam_diagnostics_v1.py`;
+- test/pair head: `39ff57f21aad90e516d06fdd2b1854d906ac03d7`;
+- test blob: `f384a8c8141e4bdaf9ef9e6a42c5754d3e9ff300`.
+
+The PRE-to-pair compare contains exactly the two allowed new Python files plus the prospectively allowed state-only checkpoint update.
 
 Prospectively frozen purpose:
 
@@ -24,9 +35,9 @@ Prospectively frozen purpose:
 - carry historical frozen V7 raw-to-V3 output only under a reference namespace;
 - define **no final decision, no raw-necessity threshold, no transported `0.01` gate, and no temporal repair**.
 
-The PRE-to-code boundary allows only a new diagnostic module, test, self-scoped one-shot workflow, result checkpoint, and state-only updates. Existing V6/V3/V7 implementations and frozen results remain read-only.
+The committed gate requires exact reproduction of the frozen dual-view support measurements, exact frozen fixed-feature all-49 raw fit, exact historical V7 reference, 23 fixtures ×3 deterministic execution, no top-level verdict fields, no reconstruction of the temporal diagnostic, and the untouched V3 iteration-3 regression.
 
-No protection-fit seam executable code has been committed or executed yet. The next permitted step is to commit the prospectively defined module/test pair, verify the PRE-to-pair diff, update this checkpoint, then add the self-scoped one-shot runner. Attempt 1 must persist an artifact before any further executable composition work.
+No protection-fit seam run has occurred yet. The next permitted executable addition is only the self-scoped one-shot workflow named in the PRE. Its own workflow-file push must be the sole attempt-1 trigger, and attempt-1 output must be preserved as artifact `songsterr-fresh-v7-protection-fit-seam-diagnostic` before any result interpretation or further composition work.
 
 ### Fixed-feature competition diagnostic — COMPLETE / FROZEN / NO DECISION
 
@@ -108,7 +119,7 @@ The protection/raw-fit seam PRE above is measurement-only and does not define a 
 
 ### Temporal attempt-1 evidence recovery — STILL BLOCKED
 
-After the V7 wiring review, the connected GitHub job-log download for original temporal job `104658560061` was attempted again as a **read-only recovery** operation. It again failed to return the stored console payload. No rerun, dispatch, local reproduction or replacement execution occurred.
+The connected GitHub job-log download for original temporal job `104658560061` was attempted again as a **read-only recovery** operation after the V7 wiring review. It again failed to return the stored console payload. No rerun, dispatch, local reproduction or replacement execution occurred.
 
 The temporal authority therefore remains unchanged:
 
@@ -216,9 +227,9 @@ The new protection/raw-fit seam PRE is authorized only to verify that the frozen
 1. Read this checkpoint first and reconcile newer branch commits.
 2. Do not rerun temporal `35053450282`, candidate-breadth `35057264267`, gate-free `35057812575`, or fixed-feature `35058404820`.
 3. Fixed-feature authority: result commit `7230d915cb1e07a0c97b09cdd767f98ba4755c6f`, artifact `10431099242`.
-4. Temporal line remains blocked/no-decision at `86549fcf3f15898aa551064b522ce42ca32b1b86`; the latest read-only job-log retry also failed.
-5. Frozen V7 composition review is complete: it directly feeds raw V6 innovation into frozen V3 iteration-3 composite and defines no new V7 threshold. Do not treat that historical mechanical wiring as the new successor architecture.
-6. Active PRE: `SONGSTERR_FRESH_V7_PROTECTION_FIT_SEAM_DIAGNOSTIC_PRE.md`, commit `727dd82fe51f7ba64a6434c867fdec57958405d9`. Continue only inside its write boundary; module/test pair comes before any output.
+4. Temporal line remains blocked/no-decision at `86549fcf3f15898aa551064b522ce42ca32b1b86`.
+5. Frozen V7 composition review is complete; do not treat historical raw-to-V3 wiring as the new successor architecture.
+6. Active protection-fit seam PRE: commit `727dd82fe51f7ba64a6434c867fdec57958405d9`; frozen pair head `39ff57f21aad90e516d06fdd2b1854d906ac03d7`. No run has occurred. Next allowed addition is only the self-scoped one-shot workflow with pinned blobs and artifact preservation.
 7. Any future real/media/model evaluation requires a new real-evaluation PRE plus fresh explicit user authorization.
 
 ## DO NOT DO
@@ -228,7 +239,7 @@ The new protection/raw-fit seam PRE is authorized only to verify that the frozen
 - Do not tune from post-result attribution.
 - Do not adopt/change V3 or historical V6 thresholds.
 - Do not add per-MIDI exceptions, fixture branches, learned parameters, candidate subset searches or real-corpus rules.
-- Do not edit frozen V6/V3 implementations or frozen result checkpoints.
+- Do not edit frozen V6/V3/V7 implementations or frozen result checkpoints.
 - Do not switch Production or `main`.
 - Do not use real media/model access without a new prospective real-evaluation PRE and explicit user authorization.
 
