@@ -328,3 +328,30 @@ Recorded 2026-09-15 America/Toronto before any V7 executable file was created.
 - archived V143/Gomyway remains untouched
 
 The exact V7 paths are isolated from the unchanged audited automatic workflow triggers. The next permitted step under the frozen integration PRE is to create the first committed V7 module/test pair, then verify the PRE-to-pair diff and exact Git blobs before the single local synthetic/mechanical integration execution.
+
+## V3 SUCCESSOR INTEGRATION — FROZEN SYNTHETIC/MECHANICAL PASS
+
+Frozen 2026-09-15 America/Toronto after the first and only prospectively authorized local V7 successor integration execution.
+
+- prospective integration PRE commit: `638b045aea5a9fc66cee30c78772e792b38b8c79`
+- exact-path workflow-isolation state commit: `d45f0ed194ed53a08c0ec17b257c10a262361108`
+- V7 module commit: `a2d312aa1dfd86be617fba35724de8aa1fba40d6`; Git blob `6dfadda70db6b902f1dcc4d804f2d66da547314d`
+- complete first V7 implementation/test pair head: `efca69ff4f045214eec629ad94596434039f02b9`; test Git blob `a5443cae88f4ba49e5a9712822a5c371b67a1c30`
+- frozen result checkpoint: `docs/checkpoints/SONGSTERR_FRESH_V3_PHYSICAL_TEMPLATE_INTEGRATION_RESULT.md`, commit `9f6345e971f36a0def367a70564ba9b86c948e23`
+- exact local dependency blobs were verified before execution: frozen V6 `2b18ef0ee710a6ad5ecb27253b977495db7d6534`, V3 base `45b8f3b66df7500824071489205a732dfe05d759`, iteration-2 wrapper `7090e17baff60f91700a760f617e905ff53484ab`, iteration-3 wrapper `39629250c6d141d5cda9e9d7f570580ec725ae42`, iteration-2 test `eefe00346a94e8f0ed433ac916352a4b2e9331c5`, and iteration-3 test `76455337bd17a952dd36c1dabd03ce741e806b07`
+- executable delta `d45f0ed194ed53a08c0ec17b257c10a262361108..efca69ff4f045214eec629ad94596434039f02b9` contains exactly the two prospectively allowed V7 Python files; no workflow or frozen implementation file changed
+- final new-pair static scan found no file/network/process/model imports or direct file/dynamic-execution calls; the frozen V6 manifest `read_text()` self-test path remained dormant and outside the V7 integration call path
+- only the prospectively defined local command was executed once: `python3 test_onset_birth_corroboration_v7_integration.py`
+- canonical first-run summary: `fixtureCount=34`, `compositeFixtureCount=33`, `directTemplateFixtureCount=1`, `mechanicalCheckCount=4`, `repetitions=3`, `deterministic=true`, `mismatchCount=0`, `result=PASS`, process exit `0`
+- all 33 selected-proposal composite fixtures were routed through V7 and preserved the frozen iteration-3 expectations; the one remaining frozen fixture is the direct-template structural control `input_fewer_than_three_available_harmonics`, which remained unchanged and outside V7 because it directly tests the base helper at MIDI 120 rather than a playable selected proposal
+- the octave-alias lower-owner fixture remained FAIL through `LOWER_OWNER_EXPLAINS_SELECTED`, with MIDI 57 among vetoing owners
+- no frozen V3 failure was promoted; every successor PASS carried finite `necessityFraction >= 0.01` and finite `candidateEvidenceFraction >= 0.10`, and the three iteration-3 scale-control outcomes remained unchanged
+- no rescue rerun, threshold change, fixture change, expectation change, code change, or post-result tuning occurred
+- no workflow, Basic Pitch, V6/V7 real correctness run, Demucs/model inference, real media, candidate payload, protected song, physical calibration/capture, heavy compute, `main`, Production, or closed-line execution occurred
+- archived V143/Gomyway remains untouched
+
+Frozen result: `PASS_SYNTHETIC_MECHANICAL_INTEGRATION`. This establishes only local successor wiring consistency with the frozen V3 synthetic evidence and frozen V6 onset-innovation geometry; it is not real/model correctness, calibration, holdout validation, customer eligibility, or delivery readiness.
+
+### Current authorization boundary after V7 integration PASS
+
+No production route has been switched to V7. Frozen V6/V2 remain unchanged. No real-media/model evaluation is authorized by this PASS. Any real-media/model V7 evaluation requires a separately frozen prospective real-evaluation PRE plus new explicit user authorization. Until then, only documentation/design/static/local synthetic work that stays within a newly frozen prospective boundary is permitted. Do not infer real-run authorization from the integration PASS.
