@@ -314,3 +314,17 @@ Recorded 2026-09-15 America/Toronto after re-fetching live branch state and conf
 - archived V143/Gomyway remains untouched
 
 Next permitted engineering step under the frozen PRE is exact-path workflow-filter re-audit for the two proposed V7 files before any executable successor code is committed. Real/model evaluation remains unauthorized and would require a separate real-evaluation PRE plus explicit user authorization.
+
+## V3 SUCCESSOR INTEGRATION — EXACT-PATH WORKFLOW ISOLATION VERIFIED
+
+Recorded 2026-09-15 America/Toronto before any V7 executable file was created.
+
+- exact proposed paths: `scripts/songsterr-fresh/onset_birth_corroboration_v7.py` and `scripts/songsterr-fresh/test_onset_birth_corroboration_v7_integration.py`
+- compare `cc924c96abf70b23e79bda60010d6c8466a1d301..f39ff2a0981be040fc1b7360698a0009ba655e6e` contains no `.github/workflows/**` change; the workflow set is unchanged from the previously audited automatic-trigger baseline
+- that unchanged audit established that every detected fresh `push` trigger was path-filtered and no audited automatic workflow used a catch-all `scripts/songsterr-fresh/**` path
+- exact workflow/code searches for `onset_birth_corroboration` and `onset_birth_corroboration_v6.py` produced no workflow-path reference; therefore neither new V7 filename is covered by an enumerated onset-birth workflow path
+- no workflow was dispatched or executed during this re-audit
+- no real media, Basic Pitch, Demucs/model inference, V6/V7 correctness run, candidate payload, protected song, physical calibration/capture, heavy compute, `main`, Production, or closed line was accessed or executed
+- archived V143/Gomyway remains untouched
+
+The exact V7 paths are isolated from the unchanged audited automatic workflow triggers. The next permitted step under the frozen integration PRE is to create the first committed V7 module/test pair, then verify the PRE-to-pair diff and exact Git blobs before the single local synthetic/mechanical integration execution.
