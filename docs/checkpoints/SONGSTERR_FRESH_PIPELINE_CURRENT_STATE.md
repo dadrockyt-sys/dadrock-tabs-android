@@ -1,6 +1,6 @@
 # CURRENT STATE — Songsterr Fresh Pipeline V1
 
-Updated: 2026-09-16 America/Toronto — a new ex-ante mathematical principle has been prospectively frozen for **measurement only**: KKT-certified strict necessity in the broad all-49 fixed-feature raw NNLS problem. PRE and first module/test pair are committed and unexecuted. No final successor classifier is defined. Historical `0.01` remains non-portable, rank/top-K remains unauthorized, and reattack temporal/support remains blocked/no-decision.
+Updated: 2026-09-16 America/Toronto — KKT raw strict-necessity attempt 1 is complete and frozen. Broad all-49 fixed-feature raw contribution now has a prospectively justified, cutoff-free strict-necessity certificate derived from NNLS KKT geometry plus self-calibrating numerical error/stationarity bounds. The certificate is **not sufficient** for a final note-birth decision and cannot bypass support, lower-owner, evidence-significance, or unresolved reattack temporal/support semantics. Historical `0.01` remains non-portable; rank/top-K remains unauthorized.
 
 Canonical branch: `songsterr-fresh-pipeline-v1`
 Canonical checkpoint: `docs/checkpoints/SONGSTERR_FRESH_PIPELINE_CURRENT_STATE.md`
@@ -126,74 +126,98 @@ All prior real-run authorizations remain consumed. There is currently **no autho
 - file `docs/checkpoints/SONGSTERR_FRESH_V7_COMPOSITION_PRINCIPLE_THEORY_REVIEW.md`.
 - commit `94b7d7211de312edc649734786a076779704170f`.
 - status `COMPLETE_READ_ONLY_THEORY_REVIEW / SYNTHETIC_FINAL_COMPOSITION_PAUSED`.
-- Provenance finding: support eligibility, lower-owner protection and frozen evidence-significance `0.10` have defensible ex-ante structural/geometric provenance.
-- Historical NNLS necessity `0.01` is prospective history but representation-bound; **do not transfer it to broad all-49 fixed raw fit**.
-- No frozen theory supplies a broad-raw magnitude cutoff, rank/top-K rule, candidate subset, composite score or reattack fallback.
+- support eligibility, lower-owner protection and frozen evidence-significance `0.10` have defensible ex-ante structural/geometric provenance.
+- historical NNLS necessity `0.01` is prospective history but representation-bound; **do not transfer it to broad all-49 fixed raw fit**.
+- no frozen theory supplies a broad-raw magnitude cutoff, rank/top-K rule, candidate subset, composite score or reattack fallback.
 
-### KKT raw strict-necessity diagnostic — PROSPECTIVE / PAIR FROZEN / UNEXECUTED
+### KKT raw strict-necessity diagnostic — COMPLETE / NO FINAL DECISION
 
-A new mathematical principle has now been frozen independently of the observed 23-fixture values:
+Prospective identity:
 
-- PRE file `docs/checkpoints/SONGSTERR_FRESH_V7_KKT_RAW_NECESSITY_DIAGNOSTIC_PRE.md`;
-- PRE commit `4ea9c075ea02231206a7602457e028b65c2e7a9e`;
-- module `scripts/songsterr-fresh/v7_kkt_raw_necessity_diagnostics_v1.py`;
-- module commit `7020dc21d1cbcc89597f24511bd40bd37b4c9f60`;
-- module blob `2daa9f7f6983a3ec894fc08a86e9bced7b1f96c4`;
-- test `scripts/songsterr-fresh/test_v7_kkt_raw_necessity_diagnostics_v1.py`;
-- pair head `788eec22bad9f0fe13e8854fe99fa15a42a24679`;
-- test blob `a52d1316bfdd54f88656c34df676ecff3e2530bf`;
-- PRE→pair compare contains exactly the two allowed added Python files;
-- **no diagnostic output has been observed yet**.
+- PRE `4ea9c075ea02231206a7602457e028b65c2e7a9e`, blob `7ac28d2afb3952838825ddad77f65296817686fa`;
+- module commit `7020dc21d1cbcc89597f24511bd40bd37b4c9f60`, blob `2daa9f7f6983a3ec894fc08a86e9bced7b1f96c4`;
+- test/pair head `788eec22bad9f0fe13e8854fe99fa15a42a24679`, test blob `a52d1316bfdd54f88656c34df676ecff3e2530bf`;
+- PRE→pair compare contained exactly the two allowed added Python files before any output.
 
-Frozen principle:
+Attempt 1:
 
-1. fit the selected-omitted 48-column NNLS problem on the same all-49 fixed feature universe;
-2. use residual correlations and KKT conditions to ask whether the omitted selected column is a strict positive descent direction;
-3. use IEEE-754 float64 forward-error bounds plus the reduced fit's own worst normalized KKT stationarity defect as a self-calibrating numerical floor;
-4. certify strict raw necessity only when the selected correlation lower bound exceeds that floor;
-5. apply **no historical `0.01`, no new raw magnitude threshold, no rank/top-K and no per-MIDI rule**;
-6. define no final successor verdict and no reattack fallback.
+- workflow/head `282062c7ec9508048013c16b1f91ce1f0cf209ae`, workflow blob `f9a082bd15fda08e5a91b20e98a5596d98e7865c`;
+- run `35119500201`;
+- job `104873352558`;
+- attempt `1`;
+- conclusion `success`;
+- artifact `songsterr-fresh-v7-kkt-raw-necessity-diagnostic`;
+- artifact ID `10456247666`;
+- artifact digest `sha256:0a3b8af8c62855d60665dedeee938f2c9bfb24c06452544520806e6ec9b06bae`;
+- files `kkt-raw-necessity-diagnostic.json`, `v3-regression.txt`;
+- result file `docs/checkpoints/SONGSTERR_FRESH_V7_KKT_RAW_NECESSITY_DIAGNOSTIC_RESULT.md`;
+- result commit `cfe72ac6fb2459166a25cdd0789a59d257c846d1`;
+- label `COMPLETE_SYNTHETIC_KKT_RAW_NECESSITY_DIAGNOSTIC_NO_FINAL_DECISION`.
 
-The frozen PRE includes six new matrix-level geometry controls and a measurement-only pass over the exact 23 frozen audio fixtures. Attempt 1 must also run untouched V3 iteration-3 regression.
+Mechanical result:
+
+- 6 prospective matrix controls ×3 deterministic: all expected certificates matched;
+- `weak_unique_selected_direction` at selected amplitude `1e-8` remained KKT-certified, demonstrating no scientific raw-magnitude cutoff;
+- 23 audio fixtures ×3 deterministic;
+- 19 onset-available rows;
+- 17/19 selected raw columns KKT-certified;
+- untouched V3 regression 34×3 deterministic PASS;
+- `finalDecisionDefined:false`;
+- `rawMagnitudeThresholdDefined:false`;
+- `rankCutoffDefined:false`;
+- `historicalNecessityThresholdApplied:false`;
+- `reattackFallbackDefined:false`;
+- `temporalDiagnosticReconstructed:false`.
+
+Frozen interpretation:
+
+1. **Broad raw strict contribution now has an ex-ante, cutoff-free semantic.** The certificate asks whether the omitted selected column is a robust positive descent direction beyond the reduced solve's own KKT/numerical defect floor.
+2. **Historical `0.01` is directly non-portable.** `detune_minus25_m64` has descriptive broad-raw necessity `0.009315541348354626` but is strongly KKT-certified (selected normalized lower bound `14.47532464745636` vs reduced defect floor `1.264323098913188e-12`).
+3. **KKT cannot replace lower-owner protection.** `octave_alias_sel72_actual60` is KKT-certified but frozen owner diagnostics veto it through owner MIDI60. `octave_alias_sel79_actual67` is both owner-vetoed and not KKT-certified.
+4. **KKT cannot bypass support.** `neighbor_sel60_actual61`, `reattack_m64`, `unrelated_transient_only_sel64`, and `weak_selected64_under60` are support-ineligible but KKT-certified. `already_sounding_m64` is support-ineligible and not KKT-certified.
+5. **Reattack remains unresolved.** `reattack_m64` being raw-certified does not authorize a fallback; the blocked temporal/support evidence remains authoritative/no-decision.
+6. KKT strict necessity says a raw template contributes uniquely to the frozen broad fit; it does not say the contribution is large or sufficient for a true note birth.
+7. No final composition/aggregation rule is defined.
 
 ## CURRENT TECHNICAL CONCLUSION
 
-The raw-contribution problem now has a prospectively justified candidate semantics to test: **KKT-certified strict necessity**, whose mathematical boundary is zero and whose numerical floor is derived from solver stationarity/error rather than fixture labels.
+The successor seam now has four prospectively defensible but semantically distinct measurement/protection roles:
 
-This is not yet a final composition rule. The pending one-shot attempt may establish only whether that certificate is mechanically coherent and deterministic under the frozen all-49 fixed raw representation.
+1. leakage-cleaned support/local-background eligibility;
+2. frozen lower-owner explanation protection;
+3. frozen candidate-evidence significance (`0.10` in its original support semantics only);
+4. broad all-49 fixed-feature raw **KKT strict-necessity** contribution.
 
-The broader protection roles remain distinct:
+A fifth dimension remains unresolved:
 
-1. support/local-background eligibility;
-2. lower-owner protection;
-3. candidate-evidence significance;
-4. KKT/broad raw strict contribution (pending execution);
-5. reattack temporal/support representation (still independently blocked).
+5. reattack temporal/support representation.
 
-Historical `0.01` remains forbidden on broad raw fit. Rank/top-K remains forbidden. The blocked reattack line is unchanged.
+The important advance is that broad raw contribution no longer needs a transported `0.01` or a retrospective rank/magnitude rule. The remaining problem is **composition/sufficiency**, not raw-threshold selection.
+
+The KKT result also proves why no single raw rule is sufficient: alias and support-ineligible controls can be raw-certified. Owner/support/evidence protections remain independently active.
 
 ## NEXT ENGINEERING BOUNDARY
 
-The immediate authorized synthetic step is exactly the frozen KKT diagnostic attempt 1:
+Do not promote the KKT certificate into a final classifier merely because attempt 1 passed.
 
-1. create only `.github/workflows/songsterr-v7-kkt-raw-necessity-diagnostic-one-shot.yml`;
-2. pin the PRE/module/test/dependency blobs;
-3. run the new diagnostic once and untouched V3 regression once under Python `3.10.21`, NumPy `1.26.4`, SciPy `1.15.3`;
-4. upload `songsterr-fresh-v7-kkt-raw-necessity-diagnostic` with `kkt-raw-necessity-diagnostic.json` and `v3-regression.txt`;
-5. freeze the first result exactly as observed; no rescue rerun or post-output criterion adjustment.
+A later executable final-composition line requires a new prospective PRE that justifies aggregation independently of the already-observed fixture outcomes. It must explain why the chosen logical relationship among support eligibility, candidate-evidence significance, owner protection and KKT strict contribution is scientifically necessary/sufficient rather than selected because it fits these 23 fixtures.
 
-Even a successful KKT diagnostic does not authorize a final classifier or any real/media/model work. Any later final composition requires another prospective PRE. Any real/media/model path requires a new real-evaluation PRE plus fresh explicit user authorization.
+The reattack temporal/support dimension remains independently unresolved and cannot be bypassed by KKT raw certification.
+
+If no ex-ante composition/sufficiency principle can be established, keep final composition paused. Any real/media/model calibration/evaluation route requires a new real-evaluation PRE plus fresh explicit user authorization.
 
 ## FRESH CHAT RESUME POINT
 
 1. Reconcile branch head before writing.
-2. KKT PRE `4ea9c075ea02231206a7602457e028b65c2e7a9e`; pair head `788eec22bad9f0fe13e8854fe99fa15a42a24679`; module blob `2daa9f7f6983a3ec894fc08a86e9bced7b1f96c4`; test blob `a52d1316bfdd54f88656c34df676ecff3e2530bf`.
-3. KKT pair is unexecuted at this checkpoint. Do not modify it after first output; any repair after output requires a new PRE.
-4. Do not rerun temporal `35053450282`, candidate-breadth `35057264267`, gate-free `35057812575`, fixed-feature `35058404820`, protection-fit `35059307767`, or landscape `35060032406`.
-5. Temporal line remains blocked/no-decision at `86549fcf3f15898aa551064b522ce42ca32b1b86`; do not reconstruct it.
-6. No final classifier, broad-raw magnitude threshold, rank/top-K rule, candidate subset, composite score or reattack fallback is authorized.
+2. KKT result authority: `docs/checkpoints/SONGSTERR_FRESH_V7_KKT_RAW_NECESSITY_DIAGNOSTIC_RESULT.md`, result commit `cfe72ac6fb2459166a25cdd0789a59d257c846d1`, artifact `10456247666`.
+3. KKT attempt 1 was run `35119500201`, job `104873352558`, success. **Do not rerun it.**
+4. Temporal line remains blocked/no-decision at `86549fcf3f15898aa551064b522ce42ca32b1b86`; do not reconstruct it.
+5. Do not rerun temporal `35053450282`, candidate-breadth `35057264267`, gate-free `35057812575`, fixed-feature `35058404820`, protection-fit `35059307767`, landscape `35060032406`, or KKT `35119500201`.
+6. No final classifier, raw-magnitude threshold, rank/top-K rule, candidate subset, composite score or reattack fallback is authorized.
 7. Historical `0.01` MUST NOT be transferred to broad fixed raw fit.
-8. Archived V143/Gomyway remains untouched.
+8. Frozen V3 `0.10` remains only its already-defined independent candidate-evidence protection; do not reinterpret it as a raw-fit threshold.
+9. Any new executable composition requires a prospective PRE before code/output. Any real/media/model line requires a new real-evaluation PRE plus fresh explicit user authorization.
+10. Archived V143/Gomyway remains untouched.
 
 ## DO NOT DO
 
@@ -204,6 +228,7 @@ Even a successful KKT diagnostic does not authorize a final classifier or any re
 - Do not transfer historical `0.01` to broad fixed raw fit.
 - Do not reinterpret frozen V3 evidence `0.10` as a raw-fit threshold.
 - Do not introduce rank/top-K or maximum-only rules after observing the landscape.
+- Do not treat KKT raw certification as sufficient by itself.
 - Do not add per-MIDI exceptions, fixture branches, learned parameters, candidate subset searches or real-corpus rules.
 - Do not edit frozen V6/V3/V7 implementations or frozen result checkpoints.
 - Do not rerun/reconstruct the blocked temporal diagnostic.
