@@ -1,6 +1,6 @@
 # CURRENT STATE — Songsterr Fresh Pipeline V1
 
-Updated: 2026-09-16 America/Toronto — fixed-feature candidate competition diagnostic attempt 1 is complete and frozen from artifact. Candidate-column breadth and feature-universe effects are now separated at measurement level. Temporal/support attempt-1 measurement access remains blocked/no-decision.
+Updated: 2026-09-16 America/Toronto — fixed-feature candidate competition diagnostic attempt 1 is complete and frozen from artifact. Candidate-column breadth and feature-universe effects are separated at measurement level. Frozen V7 wiring has been reviewed. Temporal/support attempt-1 measurement access remains blocked/no-decision after another read-only log-recovery attempt.
 
 Canonical branch: `songsterr-fresh-pipeline-v1`
 Canonical checkpoint: `docs/checkpoints/SONGSTERR_FRESH_PIPELINE_CURRENT_STATE.md`
@@ -64,17 +64,52 @@ Frozen measurement conclusions:
 
 Do not turn these measurements into an all-49 production rule, a necessity threshold, a V6 `0.20` transplant, a candidate-count rule, a MIDI exception, a fixture branch or a reattack fallback.
 
+### Frozen V7 composition wiring review — COMPLETE / NO NEW RULE
+
+The already-frozen V7 successor wiring was re-read after the fixed-feature result. Frozen V7 mechanically:
+
+- obtains the untouched raw V6 onset-innovation spectrum;
+- passes that raw innovation directly into the frozen V3 iteration-3 evidence-significance composite;
+- adds no V7-specific threshold or new acceptance gate;
+- therefore inherits frozen V3 support/template, owner, necessity (`0.01`) and candidate-evidence (`0.10`) semantics on the representation it receives.
+
+The historical V7 mechanical-integration PASS remains exactly that: a synthetic/mechanical integration result. It does not resolve the now-separated successor roles exposed by the bridge, dual-view, semantic-delta, candidate-breadth, gate-free and fixed-feature diagnostics.
+
+Current successor research therefore must not silently reuse the old raw-V6-to-V3 composition as if it represented the new architecture. The newer evidence requires the following roles to remain explicit and separate until prospectively recomposed:
+
+1. leakage-cleaned support / local-background eligibility;
+2. untouched raw observed fit evidence;
+3. candidate competition columns;
+4. fit feature-bin universe / observation support;
+5. temporal/reattack support representation.
+
+No complete executable successor composition PRE has been opened from the fixed-feature result. Doing so now would require prospectively defining unresolved population/feature/acceptance semantics and would risk post-result metric or threshold selection while the temporal/support dimension is still blocked.
+
+### Temporal attempt-1 evidence recovery — STILL BLOCKED
+
+After the V7 wiring review, the connected GitHub job-log download for original temporal job `104658560061` was attempted again as a **read-only recovery** operation. It again failed to return the stored console payload. No rerun, dispatch, local reproduction or replacement execution occurred.
+
+The temporal authority therefore remains unchanged:
+
+- run `35053450282`, job `104658560061`, attempt 1: `completed/success` mechanically;
+- result commit `86549fcf3f15898aa551064b522ce42ca32b1b86`;
+- status `COMPLETE_MECHANICAL_EXECUTION / BLOCKED_STORED_LOG_ACCESS / NO_MEASUREMENT_DECISION`;
+- exact reattack temporal/support loss stage remains unknown;
+- no temporal repair, fallback or new temporal classifier is authorized.
+
+Only an authenticated/read-only recovery of the original attempt-1 payload may upgrade that result without a separately justified new prospective research line. **Do not rerun or reconstruct the frozen temporal diagnostic.**
+
 ### Current engineering boundary
 
-The competition/feature-universe seam is now measurement-separated:
+The competition/feature-universe seam is measurement-separated, but the full successor is not ready to compose:
 
 - support/local-background eligibility remains a distinct support role;
 - raw observed fit evidence remains a distinct raw role;
 - broad candidate columns materially affect the fit independently;
 - feature-bin universe materially affects necessity normalization/residual geometry independently;
-- temporal/reattack support remains separately unresolved.
+- temporal/reattack support remains separately unresolved and its first-run trace is inaccessible.
 
-Before any executable successor composition, inspect the already-frozen V7 composition wiring and frozen V3/V7 semantics. Any new executable composition requires a new prospective PRE. No composition rule is authorized merely by this result.
+Before any executable successor composition, inspect only already-frozen evidence or create a genuinely prospective measurement PRE that does not reconstruct the blocked temporal attempt. No composition rule is authorized merely by the fixed-feature result.
 
 Do not rerun fixed-feature run `35058404820` or any earlier one-shot.
 
@@ -143,7 +178,7 @@ All prior real-run authorizations remain consumed. There is no authorization for
 
 ## CURRENT TECHNICAL CONCLUSION
 
-The successor seam now has five explicitly separated semantic roles/questions:
+The successor seam has five explicitly separated semantic roles/questions:
 
 1. support/local-background eligibility;
 2. raw observed NNLS fit evidence;
@@ -151,16 +186,17 @@ The successor seam now has five explicitly separated semantic roles/questions:
 4. feature-bin universe / observed fit support;
 5. reattack temporal/support representation.
 
-The fixed-feature result establishes that both competition breadth and feature-universe breadth independently matter. It does **not** define the final population, feature universe or acceptance rule.
+The fixed-feature result establishes that both competition breadth and feature-universe breadth independently matter. It does **not** define the final population, feature universe or acceptance rule. Frozen V7's historical raw-to-V3 wiring is not automatically a valid composition of these newly separated roles.
 
 ## FRESH CHAT RESUME POINT
 
 1. Read this checkpoint first and reconcile newer branch commits.
 2. Do not rerun temporal `35053450282`, candidate-breadth `35057264267`, gate-free `35057812575`, or fixed-feature `35058404820`.
 3. Fixed-feature authority: result commit `7230d915cb1e07a0c97b09cdd767f98ba4755c6f`, artifact `10431099242`.
-4. Temporal line remains blocked/no-decision at `86549fcf3f15898aa551064b522ce42ca32b1b86`.
-5. Before any new executable composition, inspect the frozen V7 composition wiring and its prior synthetic semantics. If a next experiment is justified, write a new PRE first.
-6. Any future real/media/model evaluation requires a new real-evaluation PRE plus fresh explicit user authorization.
+4. Temporal line remains blocked/no-decision at `86549fcf3f15898aa551064b522ce42ca32b1b86`; the latest read-only job-log retry also failed.
+5. Frozen V7 composition review is complete: it directly feeds raw V6 innovation into frozen V3 iteration-3 composite and defines no new V7 threshold. Do not treat that historical mechanical wiring as the new successor architecture.
+6. Before any new executable composition, first exhaust already-committed evidence for a non-reconstructive temporal/support clue or write a new prospective measurement-only PRE that is genuinely distinct from the blocked first-run diagnostic. No executable repair comes first.
+7. Any future real/media/model evaluation requires a new real-evaluation PRE plus fresh explicit user authorization.
 
 ## DO NOT DO
 
