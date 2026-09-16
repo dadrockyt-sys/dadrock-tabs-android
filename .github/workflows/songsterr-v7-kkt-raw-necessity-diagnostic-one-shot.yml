@@ -1,0 +1,132 @@
+name: Songsterr V7 KKT Raw Necessity Diagnostic One-Shot
+
+on:
+  push:
+    branches:
+      - songsterr-fresh-pipeline-v1
+    paths:
+      - .github/workflows/songsterr-v7-kkt-raw-necessity-diagnostic-one-shot.yml
+
+permissions:
+  contents: read
+
+jobs:
+  kkt-raw-necessity-diagnostic-one-shot:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+      - name: Checkout prospectively frozen KKT diagnostic state
+        uses: actions/checkout@v4
+
+      - name: Set up frozen Python 3.10.21
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.10.21'
+
+      - name: Install frozen synthetic DSP dependencies
+        shell: bash
+        run: |
+          set -euo pipefail
+          python -m pip install --disable-pip-version-check 'numpy==1.26.4' 'scipy==1.15.3'
+          python - <<'PY'
+          from importlib.metadata import version
+          expected = {'numpy': '1.26.4', 'scipy': '1.15.3'}
+          for package, wanted in expected.items():
+              actual = version(package)
+              if actual != wanted:
+                  raise SystemExit(f'Unexpected {package} version: {actual}, wanted {wanted}')
+              print(f'{package}={actual}')
+          PY
+
+      - name: Verify frozen dependency and diagnostic Git blobs
+        shell: bash
+        run: |
+          set -euo pipefail
+          check_blob() {
+            local expected="$1"
+            local path="$2"
+            local actual
+            actual="$(git hash-object "$path")"
+            if [ "$actual" != "$expected" ]; then
+              echo "Blob mismatch for $path: $actual != $expected" >&2
+              exit 1
+            fi
+            echo "$path=$actual"
+          }
+          check_blob 7ac28d2afb3952838825ddad77f65296817686fa docs/checkpoints/SONGSTERR_FRESH_V7_KKT_RAW_NECESSITY_DIAGNOSTIC_PRE.md
+          check_blob 2b18ef0ee710a6ad5ecb27253b977495db7d6534 scripts/songsterr-fresh/onset_birth_corroboration_v6.py
+          check_blob a6c3d99d47c529db3c3c5e4af544d13f21b179aa scripts/songsterr-fresh/v6_onset_birth_synthetic_fixtures.json
+          check_blob 402aa23f3f1821c4e5c45ccf7f170b542d76a453 scripts/songsterr-fresh/v6_innovation_peak_band_bridge_v2.py
+          check_blob 45b8f3b66df7500824071489205a732dfe05d759 scripts/songsterr-fresh/physical_template_plausibility_v3.py
+          check_blob 7090e17baff60f91700a760f617e905ff53484ab scripts/songsterr-fresh/physical_template_plausibility_v3_iteration2.py
+          check_blob eefe00346a94e8f0ed433ac916352a4b2e9331c5 scripts/songsterr-fresh/test_physical_template_plausibility_v3_iteration2.py
+          check_blob 39629250c6d141d5cda9e9d7f570580ec725ae42 scripts/songsterr-fresh/physical_template_plausibility_v3_iteration3.py
+          check_blob 76455337bd17a952dd36c1dabd03ce741e806b07 scripts/songsterr-fresh/test_physical_template_plausibility_v3_iteration3.py
+          check_blob e9e84ed663aab732408d1d618bd9486ffb660628 scripts/songsterr-fresh/v7_dual_view_diagnostics_v1.py
+          check_blob 08eb9e945bf2cdf33e640cf7b3349ae075002846 scripts/songsterr-fresh/v7_gate_free_competition_diagnostics_v1.py
+          check_blob d69382ae14b1fb8f7f570919240dce372db1e424 scripts/songsterr-fresh/v7_fixed_feature_competition_diagnostics_v1.py
+          check_blob 25a8f2c943d97730acf8fdc521c5ad1c3e8f8ea1 scripts/songsterr-fresh/v7_support_conditioned_raw_necessity_landscape_v1.py
+          check_blob 2daa9f7f6983a3ec894fc08a86e9bced7b1f96c4 scripts/songsterr-fresh/v7_kkt_raw_necessity_diagnostics_v1.py
+          check_blob a52d1316bfdd54f88656c34df676ecff3e2530bf scripts/songsterr-fresh/test_v7_kkt_raw_necessity_diagnostics_v1.py
+
+      - name: Compile and statically guard the diagnostic packet
+        shell: bash
+        run: |
+          set -euo pipefail
+          python -m py_compile \
+            scripts/songsterr-fresh/v7_kkt_raw_necessity_diagnostics_v1.py \
+            scripts/songsterr-fresh/test_v7_kkt_raw_necessity_diagnostics_v1.py
+          python - <<'PY'
+          import ast
+          from pathlib import Path
+
+          paths = [
+              Path('scripts/songsterr-fresh/v7_kkt_raw_necessity_diagnostics_v1.py'),
+              Path('scripts/songsterr-fresh/test_v7_kkt_raw_necessity_diagnostics_v1.py'),
+          ]
+          forbidden_roots = {
+              'subprocess', 'socket', 'requests', 'urllib', 'http', 'ftplib',
+              'paramiko', 'torch', 'tensorflow', 'basic_pitch', 'demucs',
+              'librosa', 'soundfile', 'wave',
+          }
+          for path in paths:
+              text = path.read_text(encoding='utf-8')
+              tree = ast.parse(text, filename=str(path))
+              imported_roots = set()
+              for node in ast.walk(tree):
+                  if isinstance(node, ast.Import):
+                      imported_roots.update(alias.name.split('.')[0] for alias in node.names)
+                  elif isinstance(node, ast.ImportFrom) and node.module:
+                      imported_roots.add(node.module.split('.')[0])
+              forbidden = sorted(imported_roots.intersection(forbidden_roots))
+              if forbidden:
+                  raise SystemExit(f'Forbidden import(s) in {path}: {forbidden}')
+              for token in ('os.system(', 'Path.write_text(', 'Path.write_bytes('):
+                  if token in text:
+                      raise SystemExit(f'Forbidden mutation token in {path}: {token}')
+              print(f'static_guard_ok={path}')
+          PY
+
+      - name: Run frozen KKT diagnostic and untouched V3 regression exactly once
+        shell: bash
+        run: |
+          set +e
+          python scripts/songsterr-fresh/test_v7_kkt_raw_necessity_diagnostics_v1.py | tee kkt-raw-necessity-diagnostic.json
+          diagnostic_status=${PIPESTATUS[0]}
+          python scripts/songsterr-fresh/test_physical_template_plausibility_v3_iteration3.py | tee v3-regression.txt
+          v3_status=${PIPESTATUS[0]}
+          echo "diagnostic_status=${diagnostic_status}"
+          echo "v3_status=${v3_status}"
+          if [ "${diagnostic_status}" -ne 0 ] || [ "${v3_status}" -ne 0 ]; then
+            exit 1
+          fi
+
+      - name: Preserve authoritative attempt-1 KKT evidence
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: songsterr-fresh-v7-kkt-raw-necessity-diagnostic
+          path: |
+            kkt-raw-necessity-diagnostic.json
+            v3-regression.txt
+          if-no-files-found: warn
