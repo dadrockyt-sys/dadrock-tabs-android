@@ -276,3 +276,27 @@ Recorded 2026-09-15 America/Toronto before the first iteration-3 synthetic execu
 - No workflow, Basic Pitch, V6 correctness, model/Demucs, real-media, candidate-payload, protected-song, physical capture/calibration, or heavy-compute execution has occurred. Archived V143/Gomyway remains untouched.
 
 Next permitted action under the frozen PRE: perform the final forbidden import/I/O scan on the exact committed pair, then execute only `python3 test_physical_template_plausibility_v3_iteration3.py` once if the scan is clean. Freeze that first result exactly as observed; do not tune or rescue-rerun iteration 3.
+
+## V3 SYNTHETIC RESEARCH — ITERATION 3 FROZEN PASS
+
+Frozen 2026-09-15 America/Toronto after the first and only prospectively authorized iteration-3 synthetic execution.
+
+- prospective PRE commit: `26ac58fe54c179744ef036a9dc4f4a7d69598038`
+- module commit: `e4db75be46a49b1035b5ec11d29f9ade1fa8658a`
+- complete implementation/test pair head: `6f2041679f0ee4540b63d74a61b113e5267f8e8b`
+- pre-execution state checkpoint commit: `bc947f71cf3a92a079c55c76f80e79d130be58d1`
+- frozen result checkpoint: `docs/checkpoints/SONGSTERR_FRESH_V3_PHYSICAL_TEMPLATE_SYNTHETIC_RESULT_ITERATION3.md`, commit `e97ab67c9c2794f4a50c5170102d1380484f5fb1`
+- exact execution blobs: iteration-1 base `45b8f3b66df7500824071489205a732dfe05d759`, iteration-2 wrapper `7090e17baff60f91700a760f617e905ff53484ab`, iteration-2 test `eefe00346a94e8f0ed433ac916352a4b2e9331c5`, iteration-3 module `39629250c6d141d5cda9e9d7f570580ec725ae42`, iteration-3 test `76455337bd17a952dd36c1dabd03ce741e806b07`
+- final import/I/O isolation scan: clean; no forbidden file/network/process/model/workflow access in the execution dependency chain
+- only prospectively defined local synthetic test command executed once: `python3 test_physical_template_plausibility_v3_iteration3.py`
+- canonical first-run summary: `fixtureCount=34`, `repetitions=3`, `deterministic=true`, `mismatchCount=0`, `result=PASS`, process exit `0`
+- all 31 frozen iteration-2 fixture expectations were preserved; the five iteration-2 spurious PASS controls are now rejected under the frozen iteration-3 evidence-significance guard
+- all three prospective iteration-3 scale controls matched their expected outcomes, including the low-scale coherent harmonic PASS and low/high-scale broadband-noise FAIL controls
+- frozen `MIN_CANDIDATE_EVIDENCE_FRACTION=0.10` was not changed after observation; no rescue rerun or post-result tuning occurred
+- no workflow, Basic Pitch, V6 correctness, model/Demucs, real-media, candidate-payload, protected-song, physical calibration/capture, heavy-compute, main/Production, or closed-line execution occurred; archived V143/Gomyway remains untouched
+
+Iteration 3 is permanently `PASS_SYNTHETIC_EVIDENCE_SIGNIFICANCE`. This is synthetic-only evidence and does not revise the frozen EGFxSet V2 FAIL or AG-PT structural C.
+
+### Current authorization boundary after iteration 3
+
+No real/model correctness evaluation or frozen V6/V2 integration is authorized by this PASS. Before any successor integration or real-media evaluation, freeze a new prospective PRE defining the exact integration/evaluation boundary, files, immutable gates, and prohibitions. Any real-media/model execution also requires new explicit user authorization. Do not infer authorization from the synthetic PASS itself.
