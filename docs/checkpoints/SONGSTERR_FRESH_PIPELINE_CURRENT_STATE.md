@@ -1,6 +1,6 @@
 # CURRENT STATE — Songsterr Fresh Pipeline V1
 
-Updated: 2026-09-17 America/Toronto — successor metadata search 17 recorded; RWC public guitar-solo path confirmed scrapeable; Benetos/Dixon 23-second hand-edited GT remains highest-value file hunt.
+Updated: 2026-09-17 America/Toronto — successor metadata search 18 recorded; Benetos/Dixon 23-second hand-edited RWC guitar GT remains highest-value exact-file hunt; scrapeable derivative corpora separated from untouched successor provenance.
 Branch: `songsterr-fresh-pipeline-v1`
 Canonical checkpoint: `docs/checkpoints/SONGSTERR_FRESH_PIPELINE_CURRENT_STATE.md`
 
@@ -82,6 +82,7 @@ Prepared historical Basic Pitch identity remains Python `3.10.21`, NumPy `1.26.4
 15. `...CONTINUED_14_2026-09-17.md` — `ef803893d2482d2719eaa1a22cde98cfa17155f9`.
 16. `...CONTINUED_15_2026-09-17.md` — `24b207a5bae006c21fa306b5a6096840e84149c4`.
 17. `...CONTINUED_16_2026-09-17.md` — `60712d4b11d2a0a198c764505ed15c5ccf64b8b5`.
+18. `...CONTINUED_17_2026-09-17.md` — `399a812732842bb83e215bcca415060aa1bfe1c2`.
 
 ## CURRENT EVALUATION-CANDIDATE STATUSES
 
@@ -114,7 +115,7 @@ No RWC MIDI/audio payload was opened.
 
 Primary transcription literature identifies RWC Jazz No. 6, 7, 8 and 9 as guitar and states that the supplied MIDI had note errors/omissions and unrealistic durations. The authors therefore created aligned ground-truth MIDI for the first 23 seconds of each recording using Sonic Visualiser for spectrogram visualization and MIDI editing. Evaluation used those GT MIDI files at 10 ms resolution.
 
-The surviving public Benetos examples page exposes original and synthesized-transcription audio examples for RWC guitar No. 7 and No. 9, but broad searches have not located the hand-edited GT `.mid` files themselves in a stable public release or mirror.
+Search 18 rechecked QMUL/EECS author pages, City Research Online, QMUL thesis records, MIREX multiple-F0 pages/archives, and broad indexed searches. The surviving public Benetos examples page exposes original and synthesized-transcription audio examples for RWC guitar No. 7 and No. 9, but no hand-edited GT `.mid` files are linked. The exact public GT files remain unlocated.
 
 J007 and J009 are especially valuable because they overlap the strongest current public RWC candidates while offering stronger documented manual ground-truth semantics.
 
@@ -157,19 +158,33 @@ Repository `ejhumphrey/minst-dataset`, inspected at commit `5847ac421522a393df77
 
 Do not open onset CSV contents under the current no-payload boundary.
 
-Other useful-but-nonqualifying auxiliary sources remain Virtuoso Strings, closed/exposed GuitarSet mirrors for schema fixtures only, MedleyDB guitar stems/framewise f0, and TapToTab pitch labels without authoritative performed-onset timestamps.
+### MIREX score-following reference format
+
+The public task specification uses one ground-truth row per score note with performed audio onset, score onset and MIDI note number. Some public MIREX populations use human-generated or extensively manually corrected alignments, so the format itself matches the frozen truth requirement well. Search 18 found no new qualifying guitar population in those documented sets; guitar-specific score-following searches primarily resurfaced closed/exposed GAPS.
+
+**`REFERENCE_FORMAT_TECHNICALLY_IDEAL / NO_NEW_UNTOUCHED_QUALIFYING_GUITAR_POPULATION_FOUND`**.
+
+### Current scrapeable derivative corpora
+
+`ryangowe/guitar-chord-mix` is publicly scrapeable, CC-BY-4.0 and publishes WAV/JAMS packaging with six per-string `note_midi` annotation streams plus a `strum_annotated` timing-quality flag. Its useful real-recording sources include GuitarSet, Guitar-TECHS and EGFxSet, all closed/exposed historical families here; repackaging does not restore untouched provenance.
+
+Its new Isolated Guitar Chords component is public real acoustic guitar under CC BY 4.0 with structured strumming/fingering protocols, but public source metadata supplies chord class/protocol rather than authoritative per-note performed-onset truth. Derived precise timing provenance is not strong enough for successor use.
+
+**`USEFUL_SCRAPEABLE_SCHEMA_AND_AUXILIARY_DATA / NOT_AN_UNTOUCHED_SUCCESSOR / ISOLATED_CHORD_NOTE_ONSET_PROVENANCE_NOT_ESTABLISHED`**.
+
+Other useful-but-nonqualifying auxiliary sources remain Virtuoso Strings, closed/exposed GuitarSet mirrors for schema fixtures only, MedleyDB guitar stems/framewise f0, and TapToTab manual pitch labels without authoritative performed-onset timestamps.
 
 ## REJECTED / CLOSED IMPORTANT LEADS
 
-GIHME, MMIP, DoMP, DoPP, HF `collegefishiesd/guitar-fretboard-notes`, Oslo multimodal guitar, Manchester AI guitar assistant, Fretiq, MAAL, direct-sensing method-only systems, 2019 optical motion-capture guitar, non-guitar MUSERC, and robot chord data remain rejected/non-ready for the documented reasons in prior checkpoints. Closed/exposed GuitarSet, GAPS, IDMT, FLGD/Leduc, Guitar-TECHS, EG-IPT, AG-PT, EGDB, GOAT, EGSet12 and related historical lines remain closed and were not reopened.
+GIHME, MMIP, DoMP, DoPP, HF `collegefishiesd/guitar-fretboard-notes`, Oslo multimodal guitar, Manchester AI guitar assistant, Fretiq, MAAL, direct-sensing method-only systems, 2019 optical motion-capture guitar, non-guitar MUSERC, robot chord data, and pitch-only/clip-label corpora remain rejected/non-ready for the documented reasons in prior checkpoints. Closed/exposed GuitarSet, GAPS, IDMT, FLGD/Leduc, Guitar-TECHS, EG-IPT, AG-PT, EGDB, GOAT, EGSet12 and related historical lines remain closed and were not reopened.
 
 ## CURRENT TECHNICAL CONCLUSION
 
 The frozen candidate still lacks an untouched external real-corpus correctness measurement. **Real correctness remains unknown.**
 
-RWC J007/J009/J010 are the strongest fully public scrapeable guitar candidates because source identity, rights, population and human-transcribed symbolic pitch truth are clear. The remaining correctness blocker is authoritative **individual performed-note onset timing**, plus full-history lineage proof.
+RWC J007/J009/J010 remain the strongest fully public scrapeable guitar candidates because source identity, rights, population and human-transcribed symbolic pitch truth are clear. The remaining correctness blocker is authoritative **individual performed-note onset timing**, plus full-history lineage proof.
 
-The highest-value exact artifact remains the Benetos/Dixon hand-edited 23-second RWC guitar GT, especially J007/J009. Arty remains technically strong but unavailable/licensing-unresolved. RWC-I and MINST are valuable diagnostic resources but not correctness truth yet.
+The highest-value exact artifact remains the Benetos/Dixon hand-edited 23-second RWC guitar GT, especially J007/J009. Arty remains technically strong but unavailable/licensing-unresolved. RWC-I and MINST are valuable diagnostic resources but not correctness truth yet. Scrapeable derivative packages are useful for discovery/schema work but cannot erase prior exposure or unclear annotation provenance.
 
 Across all searches: successor media opened `0`; successor annotation payloads opened `0`; model runs `0`; correctness scores `0`; candidate/threshold changes `0`; V143/Gomyway activity `0`.
 
@@ -177,21 +192,24 @@ Across all searches: successor media opened `0`; successor annotation payloads o
 
 Continue metadata/provenance-only discovery:
 
-1. Hunt legitimate archives, author pages, QMUL/City repositories, old project/code pages and mirrors for the Benetos/Dixon hand-edited 23-second RWC guitar GT MIDI files, prioritizing J007 and J009.
+1. Hunt legitimate archives, author pages, institutional repositories, old project/code pages and mirrors for the Benetos/Dixon hand-edited 23-second RWC guitar GT MIDI files, prioritizing J007 and J009.
 2. Search public RWC issues/PRs/history for affirmative J007/J009/J010 timing-quality evidence.
-3. Search for other public real-guitar corpora with stable rights and manually/directly/symbolically authored per-note onset + integer-MIDI truth independent of AMT.
-4. Keep RWC-I/MINST auxiliary-only unless authoritative event-to-pitch mapping is established without audio pitch estimation.
-5. Continue Arty/GM release/license watch.
-6. Before any candidate payload access, complete a true full-history provenance audit; commit-message/default-branch searches are not enough.
-7. If a candidate clears source/version/file identity, rights, population, exact independent reference and clean provenance, freeze a new exact prospective PRE for unchanged `S AND E AND O AND K`, update this checkpoint to the exact PRE commit, then **STOP for fresh post-freeze user authorization** before opening/downloading media or annotations or running Basic Pitch/qualification/scoring.
+3. Search public score-following/alignment repositories specifically for guitar populations whose reference rows already encode performed audio onset + MIDI note.
+4. Search newly uploaded Hugging Face/Zenodo/OSF/Figshare guitar corpora for real recordings plus manually/directly authored note events, but reject mirrors of closed/exposed families and pitch-only/chord-only labels.
+5. Keep RWC-I/MINST auxiliary-only unless authoritative event-to-pitch mapping is established without audio pitch estimation.
+6. Continue Arty/GM release/license watch.
+7. Before any candidate payload access, complete a true full-history provenance audit; commit-message/default-branch searches are not enough.
+8. If a candidate clears source/version/file identity, rights, population, exact independent reference and clean provenance, freeze a new exact prospective PRE for unchanged `S AND E AND O AND K`, update this checkpoint to the exact PRE commit, then **STOP for fresh post-freeze user authorization** before opening/downloading media or annotations or running Basic Pitch/qualification/scoring.
 
 ## FRESH CHAT RESUME POINT
 
-- Latest search checkpoint: `docs/checkpoints/SONGSTERR_FRESH_SUCCESSOR_CORPUS_METADATA_SEARCH_CONTINUED_16_2026-09-17.md`, commit `60712d4b11d2a0a198c764505ed15c5ccf64b8b5`.
+- Latest search checkpoint: `docs/checkpoints/SONGSTERR_FRESH_SUCCESSOR_CORPUS_METADATA_SEARCH_CONTINUED_17_2026-09-17.md`, commit `399a812732842bb83e215bcca415060aa1bfe1c2`.
 - No successor selected; no successor PRE exists; no successor run is authorized.
-- RWC J007/J009/J010 are the strongest fully public scrapeable candidates; current RWC 2.0 per-note onset authority is still not strong enough for PRE.
+- RWC J007/J009/J010 remain the strongest fully public scrapeable candidates; current RWC 2.0 per-note onset authority is still not strong enough for PRE.
 - Current public MIDI blobs: J007 `fcc51bc1e0eaa6ef1c22be45a15b04e81b31353c`; J009 `c983338f9d95d1bf91b3e8e2389708fa9d50bafd`; J010 `9ea85986d63af889ce2ebcd35fd084b831f410b9`.
-- Benetos/Dixon hand-edited 23-second J007/J009 GT remains the highest-value file hunt; artifact existence is documented but files/rights remain unresolved.
+- Benetos/Dixon hand-edited 23-second J007/J009 GT remains the highest-value exact-file hunt; artifact existence is documented but files/rights remain unresolved.
+- MIREX score-following reference semantics are ideal, but no new untouched qualifying guitar population has been found.
+- `guitar-chord-mix` is useful scrapeable derivative data, not an untouched successor.
 - Arty has strong manual-onset semantics but no public immutable package/license.
 - RWC-I/MINST remain high-value auxiliary scrapeable data, not evaluation truth.
 - No successor payload has been opened.
@@ -210,5 +228,6 @@ Continue metadata/provenance-only discovery:
 - Do not choose an RWC track based on model/correctness results; track exclusions/inclusions must remain prospective from source/QC metadata.
 - Do not equate modern RWC 2.0 re-aligned MIDI with the older Benetos/Dixon manually edited 23-second GT unless file identity/provenance proves equivalence.
 - Do not guess RWC Instrument Sound pitch order from counts or global range.
+- Do not treat derivative repackaging as fresh provenance.
 - Do not open RWC/Arty/MINST successor annotation or audio payloads before a new PRE plus fresh post-freeze authorization.
 - Do not alter frozen V6/V3/V7/KKT/positive-core logic in place.
