@@ -1,6 +1,6 @@
 # CURRENT STATE — Songsterr Fresh Pipeline V1
 
-Updated: 2026-09-16 America/Toronto — the EGSet12 real-evaluation PRE remains consumed by a provenance-blocked first attempt, GAPS has separately failed a full-history untouched-lineage audit, and two successive metadata-only successor-corpus searches have not identified a new corpus that simultaneously provides real guitar audio, deterministic note-onset + MIDI-pitch truth, stable source/rights identity and strict untouched-lineage status. Real correctness remains **unknown**. No successor PRE or model run is currently authorized.
+Updated: 2026-09-16 America/Toronto — the EGSet12 real-evaluation PRE remains consumed by a provenance-blocked first attempt, GAPS separately failed a full-history untouched-lineage audit, and three successive metadata-only successor-corpus searches have still not identified a corpus that simultaneously supplies real guitar audio, independent deterministic note-onset + MIDI-pitch truth, stable source/rights identity and strict untouched-lineage status. The newest search keeps GIHME as a promising but presently unreleased corpus lead and rejects MMIP because its guitar MIDI is generated from the guitar audio through an audio-to-MIDI path involving Basic Pitch, making it circular for this Basic-Pitch-based evaluation. Real correctness remains **unknown**. No successor PRE or model run is currently authorized.
 
 Canonical branch: `songsterr-fresh-pipeline-v1`
 Canonical checkpoint: `docs/checkpoints/SONGSTERR_FRESH_PIPELINE_CURRENT_STATE.md`
@@ -32,7 +32,7 @@ Authorization chronology:
 3. A later `Please continue 💚` was valid post-freeze authorization for that exact EGSet12 PRE/corpus/action.
 4. That authorization was consumed by authoritative run `35176277018`, job `105058572244`, attempt 1.
 5. The run stopped at provenance before media/model/reference/scoring and must not be retried or rescued under that PRE.
-6. Later `Please continue 💚` instructions after the consumed run authorize continuation of the already-permitted metadata/provenance research boundary, not execution on an alternate corpus. Any successor correctness run still requires a new exact PRE and fresh post-freeze authorization.
+6. Later `Please continue 💚` / `Please continue searching 🙏` instructions after the consumed run authorize continuation of the already-permitted metadata/provenance research boundary, not execution on an alternate corpus. Any successor correctness run still requires a new exact PRE and fresh post-freeze authorization.
 
 ## FROZEN CANDIDATE
 
@@ -145,20 +145,31 @@ Initial search checkpoint:
 
 That search rejected or excluded GAPS, GuitarDuets, the Jackson Lightfoot/Dhiren Wijesinghe transcription dataset, EG-IPT, EGDB variants, GuitarSet, IDMT-SMT-Guitar, FLGD, Guitar-TECHS, EGFxSet and GOAT under the current scope/relevance/provenance requirements.
 
-Continued search checkpoint:
+Continued search checkpoint 1:
 - file `docs/checkpoints/SONGSTERR_FRESH_SUCCESSOR_CORPUS_METADATA_SEARCH_CONTINUED_2026-09-16.md`;
 - commit `35e9f786935dddd6e9960b7b98c96497e129112d`;
 - status **NO ELIGIBLE UNTOUCHED REAL-GUITAR NOTE-BIRTH CORPUS SELECTED**.
 
-New findings frozen there:
+Findings frozen there:
 
 1. **GuitarJam (`Julian-br/GuitarJam`)** — real CC0 monophonic electric-guitar DI audio, but public metadata exposes no aligned MIDI/note-event pitch reference. Reject for this correctness boundary.
-2. **AG-PT-set / Zenodo `10159492`** — correction: it *does* provide precise onset labels and ground-truth `pitch_midi`, so its reference semantics are scientifically suitable. However, repository history proves prior AG-PT exposure at `e114eab039e588484d4f91fba153dd56e4a4cbaf`, `225aaf022fc1fe64077d96e635bd57e99626e10e`, and `2c7becc8787202be05770bb9d9153f146880e1aa`. Reject as untouched.
+2. **AG-PT-set / Zenodo `10159492`** — it provides precise onset labels and ground-truth `pitch_midi`, so its reference semantics are scientifically suitable. Repository history proves prior AG-PT exposure at `e114eab039e588484d4f91fba153dd56e4a4cbaf`, `225aaf022fc1fe64077d96e635bd57e99626e10e`, and `2c7becc8787202be05770bb9d9153f146880e1aa`. Reject as untouched.
 3. **EG-Solo** — already exposed in historical AG-PT/EG-Solo triage and blocked there on exact-source rights/use basis. Reject as untouched.
 4. **G&N/TENT electric-guitar solo lead** — already surfaced in historical triage; source-use basis unresolved. Not untouched.
 5. **`magcil/guitar_style_dataset` / Zenodo `10075352`** — real electric-guitar technique recordings and exercise scores, but public metadata does not establish synchronized note-birth onset+pitch truth bound to each performed recording. Reject for this boundary.
 
-No successor media, annotation payload, model output or correctness result was opened in either search checkpoint.
+Continued search checkpoint 2:
+- file `docs/checkpoints/SONGSTERR_FRESH_SUCCESSOR_CORPUS_METADATA_SEARCH_CONTINUED_2_2026-09-16.md`;
+- commit `54e3008a79eeec42093b007595f6b23e28d66cde`;
+- status **NO ELIGIBLE UNTOUCHED REAL-GUITAR NOTE-BIRTH CORPUS SELECTED**.
+
+New findings frozen there:
+
+1. **GIHME / Guitar Improvisations with Hexaphonic Multieffect** — approximately ten hours of real hexaphonic-guitar improvisations with rich note/technique/effect annotations. Initial history searches for `GIHME`, full title and Zenodo identifiers found no prior lineage hit. However, its public GitHub repository still exposes only a placeholder README (`Information on this dataset will be uploaded soon`) and no stable corpus release files/tags; the surfaced Zenodo records are the paper rather than a freezeable corpus archive. Keep as a promising initial-lineage-clean lead, but **not PRE-ready**.
+2. **MMIP / Multi-Modal Instrument Performances** — public 2025 corpus with real electric-guitar audio and MIDI access, CC BY-NC-SA 4.0, and no hit in initial history searches for name/title/DOI/host. Reject for this correctness boundary because the paper states guitar MIDI is generated from the guitar audio by audio-to-MIDI software; it identifies NeuralNote as using Spotify Basic Pitch. That makes the guitar reference circular for evaluation of the frozen Basic-Pitch proposal generator.
+3. **M-M/Perez-Carrillo multimodal guitar corpus** — real monophonic classical-guitar performance data, but note onset/pitch are extracted from the audio algorithmically and later literature says the dataset is not publicly available. Reject for this boundary.
+
+No successor media, annotation payload, model output or correctness result was opened in any search checkpoint.
 
 ## HISTORICAL NO-RERUN / CLOSED LEDGER
 
@@ -180,9 +191,9 @@ Prior EGFxSet/V2/V7 observations remain exposed historical evidence, not untouch
 
 ## CURRENT TECHNICAL CONCLUSION
 
-The candidate remains mechanically frozen but still lacks an untouched external real-corpus correctness measurement. EGSet12 and GAPS failed strict provenance before media; AG-PT would satisfy pitch+onset reference semantics but is also historically exposed; newly found clean-looking audio corpora such as GuitarJam lack the required aligned note reference.
+The candidate remains mechanically frozen but still lacks an untouched external real-corpus correctness measurement. EGSet12 and GAPS failed strict provenance before media; AG-PT is technically suitable but historically exposed; GIHME is initially clean but lacks a stable public corpus release; MMIP is initially clean and accessible but its guitar MIDI is derived from audio through a Basic-Pitch-based transcription path and is therefore not independent ground truth for this evaluation.
 
-Therefore **real correctness remains unknown**. The scientifically valid result is still “no eligible untouched successor selected,” not relaxation of provenance, substitution of weaker labels, reopening a closed corpus by implication, or post-hoc reuse of an exposed dataset.
+Therefore **real correctness remains unknown**. The scientifically valid state remains “no eligible untouched successor selected,” not relaxation of provenance, use of model-generated pseudo-ground-truth, substitution of weaker labels, reopening a closed corpus by implication, or post-hoc reuse of an exposed dataset.
 
 ## NEXT ENGINEERING / RESEARCH BOUNDARY
 
@@ -193,23 +204,26 @@ For any newly promising corpus:
 1. freeze the pre-selection branch base;
 2. search full repository history for corpus name, DOI/record ID, source repository and distinctive identifiers before media access;
 3. reject immediately if prior lineage exposure is found;
-4. verify from metadata that exact performed audio has deterministic onset + integer-MIDI pitch truth and a defensible research-use basis;
-5. only then write a new prospective real-evaluation/scoring PRE for exact `S AND E AND O AND K`;
-6. update this checkpoint to that PRE commit;
-7. stop for fresh post-freeze authorization before any media/model/correctness execution.
+4. verify stable public source/version identities and defensible research-use rights;
+5. verify that exact performed audio has deterministic onset + integer-MIDI pitch truth **independent of Basic Pitch or another AMT model being evaluated**;
+6. only then write a new prospective real-evaluation/scoring PRE for exact `S AND E AND O AND K`;
+7. update this checkpoint to that PRE commit;
+8. stop for fresh post-freeze authorization before any media/model/correctness execution.
 
 Do not silently substitute another corpus under the consumed EGSet12 PRE.
 
 ## FRESH CHAT RESUME POINT
 
 1. Reconcile live branch and read this checkpoint first.
-2. Latest successor-search checkpoint is `docs/checkpoints/SONGSTERR_FRESH_SUCCESSOR_CORPUS_METADATA_SEARCH_CONTINUED_2026-09-16.md`, commit `35e9f786935dddd6e9960b7b98c96497e129112d`.
+2. Latest successor-search checkpoint is `docs/checkpoints/SONGSTERR_FRESH_SUCCESSOR_CORPUS_METADATA_SEARCH_CONTINUED_2_2026-09-16.md`, commit `54e3008a79eeec42093b007595f6b23e28d66cde`.
 3. No successor corpus is selected; no successor PRE exists; no successor run is authorized.
-4. EGSet12 run `35176277018` and GAPS audit `35177384414` remain frozen no-rescue evidence.
-5. Candidate authority remains `99b37c2875a1c2551418fc8422ae4c302bf17eae`; KKT authority remains `cfe72ac6fb2459166a25cdd0789a59d257c846d1`.
-6. Historical raw `0.01`, rank/top-K, weighted score, candidate subset and reattack fallback remain forbidden.
-7. Continue metadata/provenance-only discovery unless the user explicitly changes scope.
-8. Archived V143/Gomyway remains untouched.
+4. GIHME is the strongest still-open lead, but it is not PRE-ready because no stable public corpus release is exposed at the cited repository/Zenodo sources.
+5. MMIP must not be used as independent guitar correctness truth for this Basic-Pitch evaluation because its guitar MIDI is audio-to-MIDI/Basic-Pitch-derived.
+6. EGSet12 run `35176277018` and GAPS audit `35177384414` remain frozen no-rescue evidence.
+7. Candidate authority remains `99b37c2875a1c2551418fc8422ae4c302bf17eae`; KKT authority remains `cfe72ac6fb2459166a25cdd0789a59d257c846d1`.
+8. Historical raw `0.01`, rank/top-K, weighted score, candidate subset and reattack fallback remain forbidden.
+9. Continue metadata/provenance-only discovery unless the user explicitly changes scope.
+10. Archived V143/Gomyway remains untouched.
 
 ## DO NOT DO
 
@@ -219,6 +233,7 @@ Do not silently substitute another corpus under the consumed EGSet12 PRE.
 - Do not rerun GAPS audit with narrower search terms to force a clean result.
 - Do not silently substitute another corpus under PRE `2a2ed0...`.
 - Do not reopen GOAT, Guitar-TECHS, GuitarSet, IDMT, FLGD, EGFxSet, EGDB, EGSet12, GAPS, AG-PT, EG-Solo or G&N as “untouched.”
+- Do not use MMIP guitar MIDI as independent correctness ground truth for this Basic-Pitch evaluation.
 - Do not tune from synthetic or real post-result values.
 - Do not transfer historical raw `0.01` into the positive-core composition.
 - Do not introduce rank/top-K, majority vote, weighted score, maximum-only rescue, per-MIDI exceptions, candidate subset search or reattack fallback.
