@@ -1,6 +1,6 @@
 # CURRENT STATE — Songsterr Fresh Pipeline V1
 
-Updated: 2026-09-17 America/Toronto — successor metadata search 9 recorded.
+Updated: 2026-09-17 America/Toronto — successor metadata search 10 recorded.
 Branch: `songsterr-fresh-pipeline-v1`
 Canonical checkpoint: `docs/checkpoints/SONGSTERR_FRESH_PIPELINE_CURRENT_STATE.md`
 
@@ -107,7 +107,7 @@ GM thesis clarifies the Ultimate Guitar/Guitar Pro transcription was imported in
 - DoPP / DOI `10.5281/zenodo.14497998`: real polyphonic guitar audio/pattern repetitions, but metadata does not establish deterministic exact performed-note onset + integer-MIDI-pitch truth for every note. Status **`REJECT_NO_VERIFIED_EXACT_NOTE_BIRTH_PLUS_MIDI_PITCH_REFERENCE`**. No payload opened.
 - Commit-message searches are not accepted as full-history lineage proof. No payload access was warranted because both leads already fail prospective reference gates.
 
-### Search 9 — latest
+### Search 9
 `docs/checkpoints/SONGSTERR_FRESH_SUCCESSOR_CORPUS_METADATA_SEARCH_CONTINUED_8_2026-09-17.md` — commit `1013fe6e4c6209b716bcb3b5d0e2073b24ebcd57`.
 - Hugging Face `collegefishiesd/guitar-fretboard-notes`: 390 real isolated single-note guitar recordings with acoustic/electric sources and explicit string/fret/MIDI labels, but dataset-card metadata provides no authoritative actual performed onset timestamp. Status **`REJECT_NO_AUTHORITATIVE_PERFORMED_ONSET_TRUTH`**. No payload opened.
 - 2025 Smart-Guitar-Fretboard visual data: fretboard geometry/segmentation only, no qualifying performance-audio note truth.
@@ -116,6 +116,15 @@ GM thesis clarifies the Ultimate Guitar/Guitar Pro transcription was imported in
 - Surfaced hexaphonic guitar proof-of-concept work uses YIN pitch detection to make MIDI, therefore not independent truth.
 - Closed/exposed GuitarSet, AG-PT, GAPS, GOAT and IDMT families were not reopened.
 - GM watch remains negative for an authoritative data package/license.
+
+### Search 10 — latest
+`docs/checkpoints/SONGSTERR_FRESH_SUCCESSOR_CORPUS_METADATA_SEARCH_CONTINUED_9_2026-09-17.md` — commit `fba68582e7ebd7f64dfd2316006d64029682b997`.
+- University of Oslo `Multimodal Electric Guitar Data`, DOI `10.5281/zenodo.6470236`: stable public multimodal electric-guitar dataset with EMG, motion capture, video and audio from 36 guitarists, but no deterministic note-by-note actual-performance onset + integer-MIDI truth is established. Status **`REJECT_NO_NOTE_LEVEL_ONSET_PLUS_MIDI_REFERENCE`**. No payload opened.
+- University of Manchester AI guitar-assistant recordings: synchronized Myo/video/audio exercise capture is described, but there is no immutable public note-event dataset/version/file manifest and no exact note onset+MIDI annotation specification. Status **`REJECT_NO_PUBLIC_STABLE_NOTE_EVENT_DATASET_AND_NO_EXACT_NOTE_REFERENCE`**.
+- Fretiq, arXiv `2607.18303`: targets electric-guitar string classification; held-out free-play has manual string labels, while pitch is detected using an audio pitch method. It does not provide exact note-birth+independent MIDI truth. Status **`REJECT_TASK_REFERENCE_NOT_NOTE_BIRTH_PLUS_INDEPENDENT_MIDI_TRUTH`**.
+- 2026 MAAL annotated co-performance corpus: annotations are binary segment/looping decisions, not performed note events; multi-instrument population. Status **`REJECT_ANNOTATIONS_ARE_LOOPING_DECISIONS_NOT_NOTE_EVENTS`**.
+- FLGD/Leduc, GAPS, IDMT, GuitarSet, GOAT, EG-IPT, AG-PT and EGDB-family records resurfaced but were not reopened from closed/exposed status.
+- GM watch remains negative for an authoritative public data package/license.
 
 Across all successor searches: successor media opened `0`; successor annotation payloads opened `0`; model runs `0`; correctness scores `0`; candidate/threshold changes `0`; V143/Gomyway activity `0`.
 
@@ -130,7 +139,7 @@ The frozen candidate still lacks an untouched external real-corpus correctness m
 
 **Real correctness therefore remains unknown.** This is not permission to relax provenance or reference independence.
 
-GIHME and DoMP are rejected because their prospective guitar note references originate in pitch-estimation/MIDI-tracking systems. DoPP has real guitar audio but no verified exact per-note performed onset+MIDI truth. The isolated single-note Hugging Face lead has explicit pitch identity but no authoritative actual performed onset timestamps.
+GIHME and DoMP are rejected because their prospective guitar note references originate in pitch-estimation/MIDI-tracking systems. DoPP has real guitar audio but no verified exact per-note performed onset+MIDI truth. The isolated single-note Hugging Face lead has explicit pitch identity but no authoritative actual performed onset timestamps. New multimodal EMG/MoCap and guitar-assistant corpora provide synchronized performance signals but not the exact note-event truth required here. Fretiq targets string classification, not independent note-event reference. MAAL co-performance annotations encode loop-selection decisions, not notes.
 
 GM remains the strongest unresolved clean lead: its thesis supports actual-audio synchronization/timing/content correction without an AMT-generated label source, but no authoritative stable public dataset release/version/file manifest and dataset-specific rights basis has been established. It is not PRE-ready.
 
@@ -151,15 +160,19 @@ For any new promising corpus:
 ## FRESH CHAT RESUME POINT
 
 1. Read this checkpoint first on `songsterr-fresh-pipeline-v1`.
-2. Latest search checkpoint is `SONGSTERR_FRESH_SUCCESSOR_CORPUS_METADATA_SEARCH_CONTINUED_8_2026-09-17.md`, commit `1013fe6e4c6209b716bcb3b5d0e2073b24ebcd57`.
+2. Latest search checkpoint is `SONGSTERR_FRESH_SUCCESSOR_CORPUS_METADATA_SEARCH_CONTINUED_9_2026-09-17.md`, commit `fba68582e7ebd7f64dfd2316006d64029682b997`.
 3. No successor selected; no PRE exists; no successor run is authorized.
 4. GIHME: rejected (Aubio/YIN-derived labels + no stable public corpus).
 5. DoMP: rejected (Fishman TriplePlay MIDI/pitch tracker is not independent truth).
 6. DoPP: rejected (no verified exact per-note performed onset+MIDI truth).
 7. `collegefishiesd/guitar-fretboard-notes`: rejected for this boundary (no authoritative performed onset timestamps).
-8. GM: strongest unresolved clean lead, but stable public release/version/file manifest and dataset-specific rights still absent.
-9. Continue metadata/provenance-only discovery unless user explicitly changes scope.
-10. Archived V143/Gomyway remains untouched.
+8. Multimodal Electric Guitar Data: synchronized EMG/MoCap/audio but no exact note onset+MIDI truth.
+9. Manchester AI guitar-assistant recordings: multimodal exercise data but no stable exact note-event corpus/specification.
+10. Fretiq: string-classification labels plus audio pitch detection, not independent note-event truth.
+11. 2026 MAAL co-performance corpus: loop-selection annotations, not note events.
+12. GM: strongest unresolved clean lead, but stable public release/version/file manifest and dataset-specific rights still absent.
+13. Continue metadata/provenance-only discovery unless user explicitly changes scope.
+14. Archived V143/Gomyway remains untouched.
 
 ## DO NOT DO
 
@@ -168,8 +181,8 @@ For any new promising corpus:
 - Do not weaken EGSet12/GAPS provenance outcomes.
 - Do not silently substitute another corpus under PRE `2a2ed0...`.
 - Do not reopen closed/exposed corpus families as “untouched.”
-- Do not use GIHME, MMIP or DoMP pitch-estimator/MIDI-tracker output as authoritative independent correctness truth.
-- Do not treat DoPP pattern labels or isolated-note clip labels as exact performed note-birth truth without authoritative onset timestamps.
+- Do not use GIHME, MMIP, DoMP, Fretiq pitch estimates or other pitch-estimator/MIDI-tracker output as authoritative independent correctness truth.
+- Do not treat DoPP pattern labels, isolated-note clip labels, EMG/MoCap synchronization, or MAAL loop-decision labels as exact performed note-birth truth without authoritative onset+MIDI annotations.
 - Do not treat GM as PRE-ready without authoritative stable public release/version/file identity and dataset-use rights.
 - Do not tune from synthetic or real post-result values.
 - Do not alter frozen V6/V3/V7/KKT/positive-core logic in place.
