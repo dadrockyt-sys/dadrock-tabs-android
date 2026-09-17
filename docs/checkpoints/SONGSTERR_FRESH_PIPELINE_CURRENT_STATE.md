@@ -1,6 +1,6 @@
 # CURRENT STATE — Songsterr Fresh Pipeline V1
 
-Updated: 2026-09-16 America/Toronto — the authorized EGSet12 untouched-lineage evaluation attempt is complete at the mandatory **pre-media provenance gate**. The first authoritative attempt, run `35176277018` / job `105058572244`, failed closed because repository history proves prior Songsterr-fresh EGSet12 exposure at commit `9c0ad09436f74b6168043a2e779b25fb3922199b`. Steps that would download EGSet12 media, install/run Basic Pitch, qualify `S AND E AND O AND K`, parse JAMS, or score correctness were all skipped. Result commit `1d3192adce476110c1bfa12658590e2e179d0a04` is frozen as **`BLOCKED_UNTOUCHED_LINEAGE_PROVENANCE / REAL_EVALUATION_NOT_EXECUTED`**. Real correctness remains unknown.
+Updated: 2026-09-16 America/Toronto — the EGSet12 real-evaluation PRE remains consumed by a provenance-blocked first attempt, GAPS has separately failed a full-history untouched-lineage audit, and two successive metadata-only successor-corpus searches have not identified a new corpus that simultaneously provides real guitar audio, deterministic note-onset + MIDI-pitch truth, stable source/rights identity and strict untouched-lineage status. Real correctness remains **unknown**. No successor PRE or model run is currently authorized.
 
 Canonical branch: `songsterr-fresh-pipeline-v1`
 Canonical checkpoint: `docs/checkpoints/SONGSTERR_FRESH_PIPELINE_CURRENT_STATE.md`
@@ -16,7 +16,7 @@ Canonical checkpoint: `docs/checkpoints/SONGSTERR_FRESH_PIPELINE_CURRENT_STATE.m
 - Budget checkpoint `e7f0146d4f01605b642f8aeaa100962254b5ce58` remains binding; physical calibration/holdout work remains paused.
 - Never rewrite, soften or reinterpret frozen historical FAIL/C/PASS results.
 
-## GLOBAL AUTHORIZATION — EGSET12 ATTEMPT CONSUMED / NO SUCCESSOR RUN AUTHORIZED
+## GLOBAL AUTHORIZATION — NO SUCCESSOR EXECUTION AUTHORIZED
 
 - `realCalibrationAuthorized:false`
 - `realHoldoutCaptureAuthorized:false`
@@ -28,11 +28,11 @@ Canonical checkpoint: `docs/checkpoints/SONGSTERR_FRESH_PIPELINE_CURRENT_STATE.m
 Authorization chronology:
 
 1. `I authorize a model run when your ready` was pre-PRE willingness/intent only.
-2. `Record pre with my authorization` authorized recording PRE `2a2ed0e4b009f8cd96ba0bc18b384441f53ce87a` only.
-3. After that exact PRE/corpus/action was frozen and presented, the user said `Please continue 💚`. This was valid post-freeze authorization for the exact EGSet12 v1 / Zenodo `11406378` one-shot governed by PRE `2a2ed0...`.
-4. That authorization is now **consumed** by first authoritative attempt run `35176277018`, job `105058572244`, attempt 1.
-5. The attempt stopped at provenance before media/model/reference/scoring. It must not be retried or rescued under the same PRE.
-6. No alternate/successor corpus execution is authorized. A genuinely untouched corpus requires a new prospective PRE and a new post-freeze authorization.
+2. `Record pre with my authorization` authorized recording EGSet12 PRE `2a2ed0e4b009f8cd96ba0bc18b384441f53ce87a` only.
+3. A later `Please continue 💚` was valid post-freeze authorization for that exact EGSet12 PRE/corpus/action.
+4. That authorization was consumed by authoritative run `35176277018`, job `105058572244`, attempt 1.
+5. The run stopped at provenance before media/model/reference/scoring and must not be retried or rescued under that PRE.
+6. Later `Please continue 💚` instructions after the consumed run authorize continuation of the already-permitted metadata/provenance research boundary, not execution on an alternate corpus. Any successor correctness run still requires a new exact PRE and fresh post-freeze authorization.
 
 ## FROZEN CANDIDATE
 
@@ -55,112 +55,20 @@ State mapping:
 - `PROTECTION_REJECTED` -> `rejected`;
 - `UNRESOLVED_SUPPORT_OR_CONTEXT` -> `insufficient` / abstention.
 
-No raw `0.01`, rank/top-K, weighted score, maximum-only rule, candidate subset, candidate-confidence rescue or reattack fallback is permitted.
+Forbidden: raw `0.01`, rank/top-K, weighted score, maximum-only rule, candidate subset, candidate-confidence rescue, reattack fallback, threshold sweep, post-hoc rescue or candidate rewrite.
 
-## FROZEN KKT / SUPPORT / AUDIO PREPARATION LINEAGE
+## FROZEN SUPPORT / MODEL PREPARATION LINEAGE
 
 KKT authority:
 
 - PRE `4ea9c075ea02231206a7602457e028b65c2e7a9e`;
 - module commit `7020dc21d1cbcc89597f24511bd40bd37b4c9f60`;
-- module blob `2daa9f7f6983a3ec894fc08a86e9bced7b1f96c4`;
+- blob `2daa9f7f6983a3ec894fc08a86e9bced7b1f96c4`;
 - result `cfe72ac6fb2459166a25cdd0789a59d257c846d1`;
 - run `35119500201`, job `104873352558`, artifact `10456247666`.
 
-V6 DSP dependency:
+Prepared Basic Pitch identity from prior successful Songsterr-fresh proposal lineage:
 
-- `scripts/songsterr-fresh/onset_birth_corroboration_v6.py`;
-- blob `2b18ef0ee710a6ad5ecb27253b977495db7d6534`;
-- `SAMPLE_RATE=44100`, `FFT_SIZE=8192`.
-
-Frozen input preparation present at the EGSet12 PRE parent remains historical/prepared but was not exercised on EGSet12 in the blocked attempt:
-
-- V2 loader/validator blob `f9bef389f848c8f003ffa844b1eb2eea5754002d`;
-- deterministic WAV decode / float64 conversion / stereo mean reduction;
-- `scipy.signal.resample_poly` to `44100 Hz` using reduced integer ratio;
-- V7 qualifier blob `54b1a4be41dcac1fe3f8e70cda1245a76036a4d2` reuses the frozen V2 loader.
-
-## EGSET12 EVALUATION PRE — FROZEN, AUTHORIZED, NOW CONSUMED
-
-- file `docs/checkpoints/SONGSTERR_FRESH_EGSET12_REAL_EVALUATION_PRE.md`;
-- commit `2a2ed0e4b009f8cd96ba0bc18b384441f53ce87a`;
-- parent `08a87028f5ea683b670e96f4b71625ebfdbbb7fb`;
-- corpus EGSet12 v1 / Zenodo `11406378` / exact official `01..12` WAV+JAMS pairs and 24 MD5s frozen in PRE;
-- first score would have been exact MIDI + one-to-one onset match within `<=0.050 s`;
-- no prospective performance pass threshold;
-- all 12 tracks mandatory;
-- no post-hoc exclusions, tolerance sweep, octave forgiveness, pitch-class forgiveness, manual rematching or rescue rerun;
-- PRE explicitly states: if contamination is found, do not run; record the provenance failure and require a new prospective corpus/PRE.
-
-## EGSET12 AUTHORITATIVE RESULT — BLOCKED BEFORE MEDIA
-
-Immutable result:
-
-- file `docs/checkpoints/SONGSTERR_FRESH_EGSET12_REAL_EVALUATION_RESULT.md`;
-- result commit `1d3192adce476110c1bfa12658590e2e179d0a04`;
-- workflow/head `b6cc09f1d1576f5e14586ed640e87691c38d714b`;
-- workflow `.github/workflows/songsterr-egset12-positive-core-one-shot.yml`;
-- run `35176277018`;
-- job `105058572244`;
-- attempt `1`;
-- artifact `songsterr-egset12-positive-core-one-shot-attempt-1`;
-- artifact ID `10478985810`;
-- artifact digest `sha256:da71074013e67c09b7ae85bcafcb914ff2858bf9abb6941a27c769e403c8a53c`;
-- frozen status **`BLOCKED_UNTOUCHED_LINEAGE_PROVENANCE / REAL_EVALUATION_NOT_EXECUTED`**.
-
-Mandatory step ordering observed:
-
-- setup and full-history checkout succeeded;
-- step 3 `Verify PRE ancestry and untouched-lineage provenance before media` failed;
-- Python/runtime/model setup was skipped;
-- implementation/support verification was skipped;
-- synthetic support tests were skipped;
-- all 24 EGSet12 file downloads/hash checks were skipped;
-- Basic Pitch was skipped;
-- positive-core qualification was skipped;
-- prediction sealing was skipped;
-- JAMS parsing/scoring was skipped;
-- execution-manifest generation was skipped;
-- authoritative evidence upload succeeded.
-
-Therefore this attempt produced **no EGSet12 prediction or correctness evidence**.
-
-### Exact provenance reason
-
-The preserved artifact `gates/provenance-hits.txt` identifies prior Songsterr-fresh history including:
-
-- commit `9c0ad09436f74b6168043a2e779b25fb3922199b`;
-- file `docs/checkpoints/SONGSTERR_FRESH_V6_EGSET12_PREMEDIA_REJECTION.md`;
-- explicit EGSet12 / Zenodo `11406378` metadata review on 2026-09-15.
-
-That historical V6 review rejected EGSet12 before media because its amplifier-microphone signal path did not satisfy the then-frozen DI holdout gate, and it states no EGSet12 WAV/JAMS/model/correctness was opened. Even so, the newer EGSet12 PRE's stricter untouched-lineage criterion requires fail-closed treatment of prior lineage exposure that could have influenced candidate/corpus selection. It cannot be waived after the run.
-
-EGSet12 is therefore **ineligible as the untouched-lineage population under PRE `2a2ed0...`**. This is not a model correctness FAIL.
-
-## INTERIM BLOCKER / CORRECTION AUDIT TRAIL
-
-Historical interim blocker:
-
-- file `docs/checkpoints/SONGSTERR_FRESH_EGSET12_EXECUTION_PREMEDIA_BLOCKER.md`;
-- commit `5ccbfab92cf7fe3f714c972847359b6036b63f47`;
-- label `BLOCKED_PRE_MEDIA_AUDIO_PREPARATION_UNFROZEN`.
-
-Correction:
-
-- file `docs/checkpoints/SONGSTERR_FRESH_EGSET12_PREMEDIA_BLOCKER_CORRECTION.md`;
-- commit `d0cb42061c9417ccf8b69d276e77a88accce630b`;
-- established that the V2 loader and V7 caller already froze the needed audio preparation at the PRE parent;
-- superseded that interim audio-preparation blocker without erasing it from history.
-
-That correction does **not** alter the later authoritative provenance failure.
-
-## RECOVERED BASIC PITCH PROPOSAL IDENTITY — PREPARED BUT NOT RUN ON EGSET12
-
-Historical source authority:
-
-- prior successful proposal run `34936227380`, attempt 1;
-- workflow `.github/workflows/songsterr-egfxset-repaired-one-shot.yml`;
-- workflow head `b37d400b186a926985bb16b91702e2f88e55d785`;
 - Python `3.10.21`;
 - NumPy `1.26.4`;
 - `tflite-runtime==2.14.0`;
@@ -174,14 +82,91 @@ Historical source authority:
 - `multiple_pitch_bends=False`;
 - `melodia_trick=True`.
 
-Because provenance failed first, the EGSet12 run never reached runtime installation/model identity freeze or inference.
+Frozen audio preparation:
 
-## HISTORICAL NO-RERUN LEDGER
+- V2 loader/validator blob `f9bef389f848c8f003ffa844b1eb2eea5754002d`;
+- deterministic WAV decode / finite float64 conversion / stereo mean reduction;
+- `scipy.signal.resample_poly` to `44100 Hz`;
+- V6 DSP blob `2b18ef0ee710a6ad5ecb27253b977495db7d6534`, `SAMPLE_RATE=44100`, `FFT_SIZE=8192`.
+
+These identities remain historical/prepared; no successor corpus has been run through them.
+
+## EGSET12 PRE — CONSUMED / NO RERUN
+
+- PRE file `docs/checkpoints/SONGSTERR_FRESH_EGSET12_REAL_EVALUATION_PRE.md`;
+- PRE commit `2a2ed0e4b009f8cd96ba0bc18b384441f53ce87a`;
+- parent `08a87028f5ea683b670e96f4b71625ebfdbbb7fb`;
+- corpus EGSet12 v1 / Zenodo `11406378`;
+- frozen first score exact MIDI + one-to-one onset match within `<=0.050 s`;
+- no prospective performance pass threshold.
+
+Authoritative result:
+
+- result file `docs/checkpoints/SONGSTERR_FRESH_EGSET12_REAL_EVALUATION_RESULT.md`;
+- result commit `1d3192adce476110c1bfa12658590e2e179d0a04`;
+- workflow/head `b6cc09f1d1576f5e14586ed640e87691c38d714b`;
+- run `35176277018`;
+- job `105058572244`;
+- attempt `1`;
+- artifact ID `10478985810`;
+- artifact digest `sha256:da71074013e67c09b7ae85bcafcb914ff2858bf9abb6941a27c769e403c8a53c`;
+- status **`BLOCKED_UNTOUCHED_LINEAGE_PROVENANCE / REAL_EVALUATION_NOT_EXECUTED`**.
+
+Exact provenance hit includes prior EGSet12 metadata review at commit `9c0ad09436f74b6168043a2e779b25fb3922199b`, file `docs/checkpoints/SONGSTERR_FRESH_V6_EGSET12_PREMEDIA_REJECTION.md`.
+
+The authoritative attempt stopped before runtime setup, corpus download, Basic Pitch, qualification, annotation parsing and scoring. It produced no EGSet12 correctness evidence.
+
+## GAPS SUCCESSOR AUDIT — FAILED UNTOUCHED PROVENANCE
+
+Audit workflow/head:
+- `80eeaa05c0a063bb193a315b0c2e1aa81041e093`;
+- run `35177384414`;
+- job `105061966125`;
+- artifact `10479606030`;
+- artifact digest `sha256:b9d54aa6e967db6929c3765e2928022eebc36abb07a090e9e742b6a0e6eb426d`.
+
+Frozen result:
+- file `docs/checkpoints/SONGSTERR_FRESH_GAPS_PROVENANCE_AUDIT_RESULT.md`;
+- commit `e4eb3530e4a13e060135e92adddadfbe812a7f03`;
+- status **`FAIL_PRIOR_LINEAGE_EXPOSURE / NO_CORPUS_MEDIA_OPENED`**.
+
+Material prior-lineage hits include:
+- `9a20dcde71f954d4a1704dfca2985e91366f8cc6` — `SONGSTERR_FRESH_V6_PREMEDIA_BATCH_URMP_GAPS_EGDB.md`;
+- `e110d90c5f8761a4c1fd27af06fc018bc2dec24a` — `SONGSTERR_FRESH_V6_REPLACEMENT_HOLDOUT_GAPS_METADATA_REVIEW_2026-09-14.md`.
+
+Do not rerun GAPS provenance with narrower terms to force a clean result.
+
+## SUCCESSOR-CORPUS METADATA SEARCH
+
+Initial search checkpoint:
+- file `docs/checkpoints/SONGSTERR_FRESH_SUCCESSOR_CORPUS_METADATA_SEARCH_2026-09-16.md`;
+- commit `9e92faee8b650449d67042732f05f00739f0778a`;
+- status **NO ELIGIBLE UNTOUCHED REAL-GUITAR NOTE-BIRTH CORPUS SELECTED**.
+
+That search rejected or excluded GAPS, GuitarDuets, the Jackson Lightfoot/Dhiren Wijesinghe transcription dataset, EG-IPT, EGDB variants, GuitarSet, IDMT-SMT-Guitar, FLGD, Guitar-TECHS, EGFxSet and GOAT under the current scope/relevance/provenance requirements.
+
+Continued search checkpoint:
+- file `docs/checkpoints/SONGSTERR_FRESH_SUCCESSOR_CORPUS_METADATA_SEARCH_CONTINUED_2026-09-16.md`;
+- commit `35e9f786935dddd6e9960b7b98c96497e129112d`;
+- status **NO ELIGIBLE UNTOUCHED REAL-GUITAR NOTE-BIRTH CORPUS SELECTED**.
+
+New findings frozen there:
+
+1. **GuitarJam (`Julian-br/GuitarJam`)** — real CC0 monophonic electric-guitar DI audio, but public metadata exposes no aligned MIDI/note-event pitch reference. Reject for this correctness boundary.
+2. **AG-PT-set / Zenodo `10159492`** — correction: it *does* provide precise onset labels and ground-truth `pitch_midi`, so its reference semantics are scientifically suitable. However, repository history proves prior AG-PT exposure at `e114eab039e588484d4f91fba153dd56e4a4cbaf`, `225aaf022fc1fe64077d96e635bd57e99626e10e`, and `2c7becc8787202be05770bb9d9153f146880e1aa`. Reject as untouched.
+3. **EG-Solo** — already exposed in historical AG-PT/EG-Solo triage and blocked there on exact-source rights/use basis. Reject as untouched.
+4. **G&N/TENT electric-guitar solo lead** — already surfaced in historical triage; source-use basis unresolved. Not untouched.
+5. **`magcil/guitar_style_dataset` / Zenodo `10075352`** — real electric-guitar technique recordings and exercise scores, but public metadata does not establish synchronized note-birth onset+pitch truth bound to each performed recording. Reject for this boundary.
+
+No successor media, annotation payload, model output or correctness result was opened in either search checkpoint.
+
+## HISTORICAL NO-RERUN / CLOSED LEDGER
 
 Do not rerun or reconstruct:
 
-- EGSet12 attempt `35176277018`, job `105058572244` — provenance-blocked; authorization consumed;
-- temporal/support `35053450282`, job `104658560061`, result `86549fcf3f15898aa551064b522ce42ca32b1b86` — stored measurement inaccessible;
+- EGSet12 attempt `35176277018`, job `105058572244`;
+- GAPS provenance audit `35177384414`, job `105061966125`, merely to force a different result;
+- temporal/support `35053450282`, job `104658560061`, result `86549fcf3f15898aa551064b522ce42ca32b1b86`;
 - candidate-breadth `35057264267`;
 - gate-free `35057812575`;
 - fixed-feature `35058404820`;
@@ -189,59 +174,55 @@ Do not rerun or reconstruct:
 - support-conditioned landscape `35060032406`;
 - KKT `35119500201`;
 - positive-core `35121000102`;
-- V7 first real attempt `35051186125` remains `FAIL_V7_BOUNDARY_SYNTHETIC_PREREQUISITE / REAL_EVALUATION_NOT_EXECUTED`.
+- V7 first real attempt `35051186125`.
 
 Prior EGFxSet/V2/V7 observations remain exposed historical evidence, not untouched populations.
 
 ## CURRENT TECHNICAL CONCLUSION
 
-The candidate method remains mechanically frozen and unchanged. EGSet12 did not produce a real correctness measurement because its prospective untouched-lineage provenance gate failed before media access. Real correctness therefore remains **unknown**.
+The candidate remains mechanically frozen but still lacks an untouched external real-corpus correctness measurement. EGSet12 and GAPS failed strict provenance before media; AG-PT would satisfy pitch+onset reference semantics but is also historically exposed; newly found clean-looking audio corpora such as GuitarJam lack the required aligned note reference.
 
-The provenance gate worked as intended: it prevented an already-exposed corpus from being silently treated as untouched. There is no scientific basis to rerun EGSet12 under this PRE or to weaken the gate after observing the failure.
+Therefore **real correctness remains unknown**. The scientifically valid result is still “no eligible untouched successor selected,” not relaxation of provenance, substitution of weaker labels, reopening a closed corpus by implication, or post-hoc reuse of an exposed dataset.
 
 ## NEXT ENGINEERING / RESEARCH BOUNDARY
 
-The next permitted work is **read-only successor-corpus provenance research**, not model execution.
+Without explicit scope change, continue **metadata/provenance-only discovery** for a genuinely new external guitar corpus.
 
-Proceed in this order:
+For any newly promising corpus:
 
-1. identify one or more external real-guitar candidate corpora without opening their correctness/model outputs;
-2. audit repository/history first for exact corpus/name/source identifiers and any prior Songsterr-fresh exposure;
-3. reject any candidate that cannot honestly satisfy the desired untouched-lineage definition;
-4. for a surviving candidate, establish source/version/rights, signal path, annotation structure, population and feasibility using metadata only;
-5. write a new prospective real-evaluation/scoring PRE for that exact corpus and frozen candidate `S AND E AND O AND K`;
-6. update this checkpoint to the new PRE commit;
-7. stop and obtain fresh post-freeze user authorization before any new corpus/model correctness execution.
+1. freeze the pre-selection branch base;
+2. search full repository history for corpus name, DOI/record ID, source repository and distinctive identifiers before media access;
+3. reject immediately if prior lineage exposure is found;
+4. verify from metadata that exact performed audio has deterministic onset + integer-MIDI pitch truth and a defensible research-use basis;
+5. only then write a new prospective real-evaluation/scoring PRE for exact `S AND E AND O AND K`;
+6. update this checkpoint to that PRE commit;
+7. stop for fresh post-freeze authorization before any media/model/correctness execution.
 
-Do **not** silently substitute another corpus under the EGSet12 PRE. Do not reuse the consumed `Please continue 💚` authorization for a different corpus.
+Do not silently substitute another corpus under the consumed EGSet12 PRE.
 
 ## FRESH CHAT RESUME POINT
 
 1. Reconcile live branch and read this checkpoint first.
-2. Governing latest result: `docs/checkpoints/SONGSTERR_FRESH_EGSET12_REAL_EVALUATION_RESULT.md`, commit `1d3192adce476110c1bfa12658590e2e179d0a04`.
-3. EGSet12 run `35176277018` / job `105058572244` is permanently no-rerun under PRE `2a2ed0...`.
-4. Preserve artifact `10478985810`, digest `sha256:da71074013e67c09b7ae85bcafcb914ff2858bf9abb6941a27c769e403c8a53c` as authoritative provenance evidence.
-5. Do not call EGSet12 an untouched-lineage correctness population; no EGSet12 correctness was measured.
-6. Candidate authority remains `99b37c2875a1c2551418fc8422ae4c302bf17eae`; KKT authority remains `cfe72ac6fb2459166a25cdd0789a59d257c846d1`.
-7. Historical raw `0.01`, rank/top-K, weighted score, candidate subset and reattack fallback remain forbidden.
-8. Next work, if continuing without a new user instruction, is metadata/provenance-only search for a genuinely untouched successor corpus and prospective PRE preparation. Do not execute a successor corpus without fresh post-freeze authorization.
-9. Archived V143/Gomyway remains untouched.
+2. Latest successor-search checkpoint is `docs/checkpoints/SONGSTERR_FRESH_SUCCESSOR_CORPUS_METADATA_SEARCH_CONTINUED_2026-09-16.md`, commit `35e9f786935dddd6e9960b7b98c96497e129112d`.
+3. No successor corpus is selected; no successor PRE exists; no successor run is authorized.
+4. EGSet12 run `35176277018` and GAPS audit `35177384414` remain frozen no-rescue evidence.
+5. Candidate authority remains `99b37c2875a1c2551418fc8422ae4c302bf17eae`; KKT authority remains `cfe72ac6fb2459166a25cdd0789a59d257c846d1`.
+6. Historical raw `0.01`, rank/top-K, weighted score, candidate subset and reattack fallback remain forbidden.
+7. Continue metadata/provenance-only discovery unless the user explicitly changes scope.
+8. Archived V143/Gomyway remains untouched.
 
 ## DO NOT DO
 
 - Do not resume V143/Gomyway.
 - Do not switch Production or `main`.
-- Do not rerun EGSet12 attempt `35176277018` or alter its provenance search to force a pass.
+- Do not rerun EGSet12 or weaken its provenance rule.
+- Do not rerun GAPS audit with narrower search terms to force a clean result.
 - Do not silently substitute another corpus under PRE `2a2ed0...`.
-- Do not rerun frozen historical one-shots.
-- Do not reconstruct the blocked temporal diagnostic.
+- Do not reopen GOAT, Guitar-TECHS, GuitarSet, IDMT, FLGD, EGFxSet, EGDB, EGSet12, GAPS, AG-PT, EG-Solo or G&N as “untouched.”
 - Do not tune from synthetic or real post-result values.
-- Do not treat synthetic 12/2/9 routing as correctness evidence.
-- Do not transfer historical `0.01` into broad fixed raw fit or positive-core composition.
+- Do not transfer historical raw `0.01` into the positive-core composition.
 - Do not introduce rank/top-K, majority vote, weighted score, maximum-only rescue, per-MIDI exceptions, candidate subset search or reattack fallback.
-- Do not rescue support/context-unavailable cases.
 - Do not alter frozen V6/V3/V7/KKT/positive-core logic in place.
-- Do not use a historical wrapper verdict instead of final positive-core composition.
-- Do not open any successor corpus correctness/model output before a new prospective PRE plus fresh post-freeze authorization.
+- Do not open successor corpus correctness/model output before a new PRE plus fresh post-freeze authorization.
 
 Archived V143/Gomyway remains untouched.
