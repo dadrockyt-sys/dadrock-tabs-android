@@ -1,6 +1,6 @@
 # CURRENT STATE — Songsterr Fresh Pipeline V1
 
-Updated: 2026-09-16 America/Toronto
+Updated: 2026-09-16 America/Toronto — fresh-chat handoff explicitly refreshed at user request.
 Branch: `songsterr-fresh-pipeline-v1`
 Canonical checkpoint: `docs/checkpoints/SONGSTERR_FRESH_PIPELINE_CURRENT_STATE.md`
 
@@ -190,6 +190,8 @@ Priority follow-up is to search institutional repositories associated with GIHME
 8. Archived V143/Gomyway remains untouched.
 
 ## FRESH CHAT NEXT STEPS — USER-REQUESTED HANDOFF
+
+This handoff was explicitly refreshed on 2026-09-16 America/Toronto at the user's request for a fresh chat.
 
 On a fresh chat, continue from this file on branch `songsterr-fresh-pipeline-v1`. Do not restart the search from scratch and do not resume archived V143/Gomyway.
 
