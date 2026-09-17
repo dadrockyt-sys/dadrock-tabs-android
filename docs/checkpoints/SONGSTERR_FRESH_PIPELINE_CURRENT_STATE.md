@@ -1,6 +1,6 @@
 # CURRENT STATE — Songsterr Fresh Pipeline V1
 
-Updated: 2026-09-17 America/Toronto — successor metadata search 13 recorded; Arty elevated as strongest technically compatible new lead.
+Updated: 2026-09-17 America/Toronto — successor metadata search 15 recorded; RWC J007/J009/J010 are the strongest public scrapeable evaluation candidates; MINST/RWC-I are high-value auxiliary data with unresolved exact pitch-event mapping.
 Branch: `songsterr-fresh-pipeline-v1`
 Canonical checkpoint: `docs/checkpoints/SONGSTERR_FRESH_PIPELINE_CURRENT_STATE.md`
 
@@ -10,11 +10,10 @@ Status: **METADATA/PROVENANCE SEARCH CONTINUES — NO ELIGIBLE UNTOUCHED SUCCESS
 
 - Work only on `songsterr-fresh-pipeline-v1`; do not change `main` or Production.
 - **Do not resume archived V143/Gomyway unless the user explicitly asks.**
-- GOAT/reference scoring remains closed unless explicitly reopened.
-- Guitar-TECHS, GuitarSet/V3 validation, IDMT/V4, V5/FLGD, duration research, protected-song work and other closed lines remain closed.
 - `songsterr_pipeline/**` remains read-only for this research line.
 - Budget checkpoint `e7f0146d4f01605b642f8aeaa100962254b5ce58` remains binding; physical calibration/holdout work remains paused.
 - Never rewrite, soften or reinterpret frozen historical FAIL/C/PASS results.
+- Closed/exposed corpus families remain closed unless explicitly reopened; do not recycle them as “untouched.”
 
 ## GLOBAL AUTHORIZATION
 
@@ -27,7 +26,7 @@ Current successor execution authority is **none**.
 - `customerEligibleEvents:0`
 - `mayAdvanceDelivery:false`
 
-The prior EGSet12 PRE authorization was consumed by authoritative run `35176277018` / job `105058572244`. Later continue/search instructions authorize metadata/provenance research only. Any alternate-corpus correctness execution requires a new exact PRE and fresh post-freeze authorization.
+The prior EGSet12 PRE authorization was consumed by authoritative run `35176277018` / job `105058572244`. Current continue/search instructions authorize metadata/provenance research only. Any alternate-corpus correctness execution requires a new exact PRE and fresh post-freeze authorization.
 
 ## FROZEN CANDIDATE — UNCHANGED
 
@@ -42,7 +41,7 @@ Authority:
 
 State mapping remains fail-closed: all `S,E,O,K` true -> `corroborated`; resolved required predicate rejection -> `rejected`; unresolved/missing/malformed/nonfinite required predicate -> `insufficient` / abstention.
 
-Forbidden: raw `0.01`, rank/top-K, weighted score, maximum-only rule, candidate subset, candidate-confidence rescue, reattack fallback, threshold sweep, post-hoc rescue, predicate substitution or candidate rewrite.
+Forbidden: raw `0.01`, rank/top-K, weighted score, maximum-only rule, candidate subset chosen from results, candidate-confidence rescue, reattack fallback, threshold sweep, post-hoc rescue, predicate substitution/candidate rewrite, majority vote, per-MIDI exceptions.
 
 KKT authority remains PRE `4ea9c075ea02231206a7602457e028b65c2e7a9e`, module commit `7020dc21d1cbcc89597f24511bd40bd37b4c9f60`, blob `2daa9f7f6983a3ec894fc08a86e9bced7b1f96c4`, result `cfe72ac6fb2459166a25cdd0789a59d257c846d1`, run `35119500201`, job `104873352558`, artifact `10456247666`.
 
@@ -54,7 +53,7 @@ Prepared historical Basic Pitch identity remains Python `3.10.21`, NumPy `1.26.4
 - Result commit `1d3192adce476110c1bfa12658590e2e179d0a04`.
 - Run `35176277018`, job `105058572244`, artifact `10478985810`.
 - Status **`BLOCKED_UNTOUCHED_LINEAGE_PROVENANCE / REAL_EVALUATION_NOT_EXECUTED`**.
-- Prior exposure includes commit `9c0ad09436f74b6168043a2e779b25fb3922199b`; no correctness evidence exists and the consumed PRE must not be rerun/rescued.
+- Prior exposure includes `9c0ad09436f74b6168043a2e779b25fb3922199b`; no correctness evidence exists and the consumed PRE must not be rerun/rescued.
 
 ## GAPS — PROVENANCE FAILED / NO RERUN
 
@@ -79,100 +78,141 @@ Prepared historical Basic Pitch identity remains Python `3.10.21`, NumPy `1.26.4
 11. `...CONTINUED_10_2026-09-17.md` — `076d6fe2ece97b9d09aed3ef0d5070fb7efeb37a`.
 12. `...CONTINUED_11_2026-09-17.md` — `8428b57412b089bb1d3f36bbcb290a342abb32c4`.
 13. `...CONTINUED_12_2026-09-17.md` — `1a05c498d353682e9d7e15d302047bdfc5a06677`.
+14. `...CONTINUED_13_2026-09-17.md` — `aca75bc58510de5f8b643cdc9747a26287998b6b`.
+15. `...CONTINUED_14_2026-09-17.md` — `ef803893d2482d2719eaa1a22cde98cfa17155f9`.
 
-## CURRENT CANDIDATE STATUSES
+## CURRENT EVALUATION-CANDIDATE STATUSES
 
-### Arty dataset — strongest technically compatible new lead
+### RWC 2.0 Jazz guitar solos — strongest public scrapeable lead
 
-Sebastian Franjou's 2022 MIT thesis `Arty: Expressive timbre transfer using articulation detection for guitar` documents a direct-to-interface electric-guitar dataset intended as MIR ground truth.
+RWC 2.0 provides public audio and aligned MIDI under CC BY-NC 4.0.
 
-Primary metadata establishes:
+Stable identities:
+- Jazz audio Zenodo `10.5281/zenodo.18656623`, v2, `RWC-J.zip`, MD5 `c5d7d989e1afb8257ec50a3696d90c37`.
+- Annotation repository `rwc-music/rwc-annotations`, CC BY-NC 4.0.
+- Guitar-only Jazz tracks `RWC_J006`–`RWC_J010` are identified in public metadata.
+- Aligned MIDI comes from professional human transcription with subsequent audio alignment/re-alignment and manual control; pitch truth is not generated by guitar AMT/pitch tracking.
 
-- real electric guitar recorded dry/direct at 44.1 kHz;
-- every note annotated with integer MIDI pitch, absolute onset seconds and offset seconds;
-- supported plucking/excitation and expression-style labels;
-- timing annotations hand-authored from the audio in Sonic Visualizer;
-- pitch/technique metadata supplied by MusicXML and combined with the hand timing into final XML/JSON note events;
-- final note events are described as corresponding to the notes in the audio “as annotated by the author.”
+Track-level public QC changes the candidate subset prospectively:
+- `J006`: **exclude** — maintainer issue #258 explicitly says warping improved but onsets are not matching.
+- `J008`: **hold unresolved** — listed for `check` in the public issue.
+- `J007`, `J009`, `J010`: strongest remaining public guitar-only candidates; not listed in the inspected problem table, but that absence is not affirmative perfect-onset proof.
 
-This is materially different from GIHME/MMIP/DoMP: the documented ground-truth event timing is not generated by Basic Pitch, NeuralNote, Aubio/YIN, Fishman TriplePlay or another AMT/pitch-estimation system. The Arty application itself uses automatic pitch processing, but that is separate from the documented reference-annotation pipeline.
+Current status:
+**`RWC_J007/J009/J010 = STRONGEST_PUBLIC_SCRAPEABLE_CANDIDATES / RIGHTS_AND_FILE_IDENTITY_CLEAR / HUMAN_TRANSCRIBED_PITCH_TRUTH / PER_NOTE_ONSET_AUTHORITY_NEEDS_FINAL_GATE / FULL_HISTORY_PROVENANCE_NOT_YET_PROVEN`**.
 
-Prospective technical status:
+No RWC MIDI/audio payload was opened.
 
-**`REFERENCE_INDEPENDENCE_AND_NOTE_EVENT_SEMANTICS_ACCEPTABLE_FROM_PRIMARY_THESIS_METADATA`**
+### Arty
 
-Remaining blockers:
+Primary MIT thesis metadata documents dry/direct electric guitar with note events containing integer MIDI pitch plus absolute onset/offset, where timing was hand-annotated from the audio in Sonic Visualizer and combined with MusicXML pitch/technique metadata. Reference independence and note-event semantics appear technically acceptable.
 
-- no stable public Arty dataset package/release/version/file manifest located;
-- no dataset-specific license or explicit research-use grant located;
-- thesis copyright does not substitute for dataset reuse permission;
-- full repository-history content/diff provenance audit has not yet been run because no actual package/source identifier is available to freeze;
-- current-branch search and commit-message searches for `Arty`, `Franjou`, and distinctive `SF Full Chromatic` identifiers found no hit, but those checks are not sufficient full-history proof.
+Status:
+**`TECHNICALLY_PROMISING_REFERENCE / UNRESOLVED_STABLE_PUBLIC_RELEASE_AND_DATASET_RIGHTS / NOT_PRE_READY`**.
 
-Current Arty status:
+No Arty payload was opened.
 
-**`TECHNICALLY_PROMISING_REFERENCE / UNRESOLVED_STABLE_PUBLIC_RELEASE_AND_DATASET_RIGHTS / NOT_PRE_READY`**
+### Older Benetos/Dixon RWC manual ground truth
 
-No Arty media/annotation payload was opened.
+Reports manually created aligned MIDI for approximately the first 23 seconds of RWC Jazz guitar excerpts using Sonic Visualiser. This is technically strong exact-performance timing, but a stable public copy of the manual GT files has not been located.
+
+Status:
+**`TECHNICALLY_STRONG_SHORT_MANUAL_GT / PUBLIC_FILE_NOT_LOCATED / NOT_PRE_READY`**.
 
 ### GM Dataset
 
-Still the strongest other unresolved clean lead. Thesis supports actual-audio synchronization/timing/content correction and no AMT-generated label source, but no authoritative stable public dataset release/version/file manifest or dataset-specific rights basis. **Not PRE-ready.**
+Actual-audio synchronization/timing/content correction is documented and no AMT label generator is documented, but no authoritative stable public package/version/file manifest or dataset-specific rights basis has been found.
 
-### Rejected / non-ready leads
+Status:
+**`UNRESOLVED_STABLE_PUBLIC_RELEASE_AND_DATASET_RIGHTS / REFERENCE_ALIGNMENT_POTENTIALLY_ACCEPTABLE_FROM_METADATA / NOT_PRE_READY`**.
 
-- **GIHME** — rejected: labels originate in Aubio/YIN pitch extraction before manual verification and no stable public corpus release exists.
-- **MMIP** — rejected: guitar MIDI is audio-to-MIDI output involving NeuralNote/Basic Pitch.
-- **DoMP** — rejected: guitar MIDI comes from Fishman TriplePlay pitch/MIDI tracking.
-- **DoPP** — rejected: no verified exact per-note performed onset + integer-MIDI truth.
-- **HF `collegefishiesd/guitar-fretboard-notes`** — pitch/string/fret identity but no authoritative actual performed onset timestamps.
-- **Oslo Multimodal Electric Guitar Data** — synchronized EMG/MoCap/video/audio but no exact note-event onset+MIDI reference.
-- **Manchester AI guitar-assistant recordings** — no stable public exact note-event dataset/specification.
-- **Fretiq** — string classification/manual string labels; audio pitch detection is not independent note truth.
-- **MAAL co-performance corpus** — segment/looping-decision annotations, not note events.
-- **Let's Frets!** — capacitive physical fret/string sensing is promising as an independent mechanism, but no public synchronized audio + exact note-event corpus established.
-- **NIME 2013 finger-position/plectrum sensing** — direct physical sensing method, no published qualifying synchronized corpus established.
-- **2019 optical motion-capture guitar corpus** — rejected because note pitch/onsets are derived from audio before anchoring motion analysis.
-- **MUSERC** — direct sensing/synchronized media but cello, not guitar.
-- **Guaus 2010 capacitive-fret system** — direct physical sensing and synchronized MIDI/audio method, but no immutable public event corpus.
-- **Pesatori/Norgia 2024 laser system** — direct position/pluck sensing can generate independent MIDI, but no public paired real-guitar audio + timestamped event corpus.
-- **ZulfadhliM / Hjerrild-Christensen experimental data** — no authoritative independent exact performed-onset + MIDI event reference established.
-- **Physically augmented guitar chord dataset** — robot-recorded real guitar and useful independent-acquisition paradigm, but public corpus exposes chord labels rather than exact per-note event truth.
+## SCRAPEABLE AUXILIARY DATA
 
-Closed/exposed GuitarSet, GAPS, IDMT, FLGD/Leduc, Guitar-TECHS, EG-IPT, AG-PT, EGDB, GOAT, EGSet12 and related historical lines remain closed and were not reopened.
+### RWC Instrument Sound 2.0
 
-Across all searches: successor media opened `0`; successor annotation payloads opened `0`; model runs `0`; correctness scores `0`; candidate/threshold changes `0`; V143/Gomyway activity `0`.
+Public 2026 Zenodo release `10.5281/zenodo.17170844`, v1, CC BY-NC 4.0; `RWC-I.zip` MD5 `fb5789335fe68abdc09929618e9f0403`. Includes classical, steel-string acoustic, and electric guitar families. Public documentation says individual sounds are generally recorded in ascending pitch order and stringed-instrument ranges are recorded per string.
+
+Potentially valuable for isolated-note diagnostics. However, the repeated per-string structure means event-to-MIDI mapping must not be guessed from a single global chromatic sequence.
+
+Status:
+**`AUXILIARY_HIGH_VALUE_PUBLIC_REAL_GUITAR_NOTES / EXACT_PER_EVENT_PITCH_ORDER_MAPPING_NOT_YET_PROVEN`**.
+
+### MINST
+
+Repository `ejhumphrey/minst-dataset`, inspected at commit `5847ac421522a393df77ca2a43acdc326f7d64e8`.
+
+- README describes automatic high-recall onset initialization followed by visual human verification/correction; GUI supports add/remove/move onset markers at 10 ms resolution.
+- README reports 5,618 RWC guitar notes.
+- `data/onsets/rwc/` contains committed onset CSVs as immutable Git blobs.
+- Guitar source categories include flamenco, nylon-string and steel-string guitar.
+- Current RWC split code carries onset into the observation but does **not** carry `note_number`/pitch; the generated advertised final annotations table is not committed at its documented path.
+
+Status:
+**`AUXILIARY_HIGH_VALUE_PUBLIC_HUMAN_VERIFIABLE/CORRECTABLE_RWC_ONSETS / PITCH_NOT_CARRIED_IN_CURRENT_RWC_SPLIT_PIPELINE / NOT_EVALUATION_TRUTH_YET`**.
+
+Do not open onset CSV contents under the current no-payload boundary.
+
+### MedleyDB
+
+Public guitar stems and human-verified continuous/framewise f0 are useful for diagnostics; activation boundaries are not authoritative discrete note births.
+
+Status:
+**`AUXILIARY_USEFUL_PUBLIC_GUITAR_F0_STEMS / NOT_EVAL_TRUTH_DUE_NO_DISCRETE_NOTE_BIRTH_INTEGER_MIDI`**.
+
+### TapToTab
+
+Manual pitch labels for isolated guitar recordings but no authoritative actual performed onset timestamps.
+
+Status:
+**`AUXILIARY_PITCH_USEFUL / REJECT_NO_AUTHORITATIVE_ACTUAL_NOTE_BIRTH_TIMESTAMPS_FOR_EVALUATION`**.
+
+## REJECTED / CLOSED IMPORTANT LEADS
+
+- GIHME — Aubio/YIN-derived reference before manual verification; no stable public corpus release.
+- MMIP — guitar MIDI from NeuralNote/Basic Pitch audio-to-MIDI.
+- DoMP — Fishman TriplePlay MIDI tracking.
+- DoPP — no verified exact performed note-birth + integer-MIDI truth.
+- HF `collegefishiesd/guitar-fretboard-notes` — pitch/string/fret labels but no authoritative actual onset timestamps.
+- Oslo multimodal guitar — synchronized signals but no exact onset+MIDI reference.
+- Manchester AI guitar assistant — no stable public exact note-event corpus.
+- Fretiq — string labels; pitch is audio-estimated.
+- MAAL — segment/loop annotations, not note events.
+- Let’s Frets!, NIME physical sensing, Guaus capacitive, Pesatori/Norgia laser — promising direct-sensing mechanisms but no qualifying public synchronized corpus.
+- 2019 optical motion-capture guitar — note pitch/onsets derived from audio.
+- MUSERC — non-guitar.
+- Physically augmented robot guitar chord dataset — chord labels, not exact per-note events.
+- Closed/exposed GuitarSet, GAPS, IDMT, FLGD/Leduc, Guitar-TECHS, EG-IPT, AG-PT, EGDB, GOAT, EGSet12 and related historical lines remain closed and were not reopened.
 
 ## CURRENT TECHNICAL CONCLUSION
 
 The frozen candidate still lacks an untouched external real-corpus correctness measurement. **Real correctness remains unknown.**
 
-Search 13 changes the practical priority: Arty is the first newly surfaced corpus in this line whose primary metadata appears to satisfy the exact onset+integer-MIDI reference semantics **and** the independent-reference requirement. Its blockers are access/release/rights/provenance rather than reference-generation quality.
+The most actionable public path is now RWC J007/J009/J010 because source identity, rights, guitar-only population, and human-transcribed pitch truth are public and scrapeable. The remaining technical gate is whether the current aligned-MIDI timing can defensibly count as deterministic actual-performance note onset truth under the frozen requirement. Full repository-history clean provenance is also still required.
 
-Therefore do not spend the next pass primarily broadening across weak technique/chord/gesture datasets. Prioritize resolving Arty access/rights first, with GM as the secondary watch lead.
+Arty remains stronger in documented manual-onset semantics but weaker in public availability/rights. MINST/RWC-I add useful scrapeable diagnostic data, but current public code does not yet provide a proven onset-to-integer-MIDI mapping suitable for evaluation.
 
-This is not permission to weaken provenance, rights, population suitability or exact onset semantics.
+Across all searches: successor media opened `0`; successor annotation payloads opened `0`; model runs `0`; correctness scores `0`; candidate/threshold changes `0`; V143/Gomyway activity `0`.
 
 ## NEXT RESEARCH BOUNDARY
 
-Continue **metadata/provenance-only discovery**, in this order:
+Continue **metadata/provenance-only discovery**:
 
-1. **Arty release hunt:** locate an institutional/archive record, historical author/project link, immutable package, source repository, file manifest or other authoritative public data-access record for the Arty dataset.
-2. **Arty rights:** locate an explicit dataset license or research-use statement. Do not infer permission from the thesis/publication copyright.
-3. **Direct-author route if public release remains absent:** an author-provided immutable package plus explicit written research-use permission could resolve both access and rights prospectively. Do not obtain/open such payload until provenance procedure is ready.
-4. **Provenance before content:** once a concrete Arty source identifier/package is available, search full repository history for `Arty`, `Sebastian Franjou`, source URL/record ID, and distinctive filenames before any media/annotation access.
-5. **Population/signal-path gate:** verify the exact raw subset intended for evaluation (real dry/direct guitar; no augmented Guitar Match derivatives unless explicitly excluded in PRE).
-6. If Arty clears release, rights, population and provenance gates, freeze a new prospective real-evaluation PRE for unchanged `S AND E AND O AND K`, update this checkpoint to the PRE commit, then **STOP for fresh post-freeze user authorization**.
-7. If Arty cannot be obtained/licensed, continue GM release/license watch and then return to other independently annotated/manual/direct-sensing corpora.
+1. Search for another public real-guitar corpus with stable rights and human/direct/symbolic per-note onset + integer-MIDI truth, independent of AMT.
+2. Search RWC public alignment/QC metadata for affirmative track-level evidence about J007/J009/J010 without opening MIDI/audio payloads.
+3. Investigate whether RWC Instrument Sound exposes an authoritative per-file/per-string event-order/pitch manifest that can pair MINST corrected onsets with integer MIDI without audio pitch estimation.
+4. Continue Arty/GM public-release watch.
+5. Before any real candidate payload access, complete a true full-history provenance audit; default-branch/commit-message searches are not enough.
+6. If a candidate clears source/version/file identity, rights, population, exact independent reference and clean provenance gates, freeze a new exact prospective PRE for unchanged `S AND E AND O AND K`, update this checkpoint to the exact PRE commit, then **STOP for fresh post-freeze user authorization** before opening/downloading media or annotations or running Basic Pitch/qualification/scoring.
 
 ## FRESH CHAT RESUME POINT
 
-- Latest search checkpoint: `docs/checkpoints/SONGSTERR_FRESH_SUCCESSOR_CORPUS_METADATA_SEARCH_CONTINUED_12_2026-09-17.md`, commit `1a05c498d353682e9d7e15d302047bdfc5a06677`.
+- Latest search checkpoint: `docs/checkpoints/SONGSTERR_FRESH_SUCCESSOR_CORPUS_METADATA_SEARCH_CONTINUED_14_2026-09-17.md`, commit `ef803893d2482d2719eaa1a22cde98cfa17155f9`.
 - No successor selected; no successor PRE exists; no successor run is authorized.
-- **Arty is now the highest-priority actionable lead:** technically compatible reference semantics from primary metadata, but no stable public data package/license yet.
-- GM remains secondary unresolved lead.
-- Continue metadata/provenance only.
-- No successor payloads have been opened.
+- RWC J007/J009/J010 are the strongest current **public scrapeable** evaluation candidates.
+- J006 is prospectively excluded by published onset-mismatch QC; J008 remains unresolved.
+- Arty has stronger manual-onset semantics but no public immutable package/license.
+- MINST/RWC-I are high-value auxiliary scrapeable data; exact pitch-event mapping remains unresolved.
+- No successor payload has been opened.
 - Archived V143/Gomyway remains untouched.
 
 ## DO NOT DO
@@ -181,14 +221,12 @@ Continue **metadata/provenance-only discovery**, in this order:
 - Do not switch Production or `main`.
 - Do not weaken EGSet12/GAPS provenance outcomes.
 - Do not silently substitute another corpus under PRE `2a2ed0...`.
-- Do not reopen closed/exposed corpus families as “untouched.”
+- Do not reopen closed/exposed corpus families as untouched.
 - Do not use AMT/pitch-tracker output as authoritative independent correctness truth.
-- Do not treat clip labels, pattern labels, string classes, chord labels, downbeats or gesture streams as exact note-birth truth unless authoritative event semantics are established.
-- Do not open Arty or any successor media/annotations merely because metadata is promising.
-- Do not treat Arty as PRE-ready until stable source/version/file identity, research-use rights, population suitability and clean full-history provenance are established.
-- Do not treat GM as PRE-ready without authoritative stable public release/version/file identity and dataset-use rights.
-- Do not tune from synthetic or real post-result values.
+- Do not convert clip labels, pattern labels, chord labels, string classes, downbeats, framewise f0, or gesture streams into exact note-birth truth without authoritative event semantics.
+- Do not choose an RWC track based on model/correctness results; all track exclusions/inclusions must remain prospective from source/QC metadata.
+- Do not guess RWC Instrument Sound pitch order from counts or global range.
+- Do not open RWC/Arty/MINST successor annotation or audio payloads before a new PRE plus fresh post-freeze authorization.
 - Do not alter frozen V6/V3/V7/KKT/positive-core logic in place.
-- Do not open successor corpus media/model/correctness output before a new PRE plus fresh post-freeze authorization.
 
 Archived V143/Gomyway remains untouched.
