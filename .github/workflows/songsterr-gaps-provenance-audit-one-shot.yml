@@ -1,0 +1,133 @@
+name: Songsterr GAPS Provenance Audit One-Shot
+
+on:
+  push:
+    branches:
+      - songsterr-fresh-pipeline-v1
+    paths:
+      - .github/workflows/songsterr-gaps-provenance-audit-one-shot.yml
+
+permissions:
+  contents: read
+
+env:
+  AUDIT_BASE: f8a9e4345bd6d42c3679d6e784a7a6b4aac0973b
+  WORKDIR: /tmp/songsterr-gaps-provenance-audit
+
+jobs:
+  gaps-provenance-audit:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - name: Checkout authoritative branch with full history
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Audit full ancestry at frozen pre-selection base
+        id: audit
+        shell: bash
+        run: |
+          set -euo pipefail
+          mkdir -p "$WORKDIR"
+          git cat-file -e "${AUDIT_BASE}^{commit}"
+          test "$(git merge-base "$AUDIT_BASE" HEAD)" = "$AUDIT_BASE"
+
+          hits="$WORKDIR/provenance-hits.txt"
+          : > "$hits"
+
+          patterns=(
+            'Guitar-Aligned Performance Scores'
+            'xavriley/GAPS'
+            '2408\.08653'
+            'guitar-aligned-performance-scores-dataset'
+            'aim-qmul/GAPS'
+            'gaps_metadata_with_splits'
+            'francois_audio'
+            'francois_midi'
+            'GAPS Dataset'
+          )
+
+          for pattern in "${patterns[@]}"; do
+            {
+              echo "===== PATTERN: $pattern ====="
+              git grep -n -I -E "$pattern" "$AUDIT_BASE" -- . || true
+              git log "$AUDIT_BASE" -G"$pattern" \
+                --format='commit %H %cs %s' -p -- . || true
+              echo
+            } >> "$hits"
+          done
+
+          # Remove section headers/blank lines so a clean audit is truly empty.
+          grep -v '^===== PATTERN:' "$hits" | sed '/^[[:space:]]*$/d' > "$WORKDIR/nonheader-hits.txt" || true
+
+          if [ -s "$WORKDIR/nonheader-hits.txt" ]; then
+            status='FAIL_PRIOR_LINEAGE_EXPOSURE'
+            clean=false
+          else
+            status='PASS_NO_PRIOR_GAPS_LINEAGE_EXPOSURE_FOUND'
+            clean=true
+          fi
+
+          python - <<'PY'
+          import json, os
+          from pathlib import Path
+          root = Path(os.environ['WORKDIR'])
+          nonheader = root.joinpath('nonheader-hits.txt')
+          clean = not nonheader.exists() or nonheader.stat().st_size == 0
+          payload = {
+              'contract': 'songsterr-fresh-successor-corpus-provenance-audit-v1',
+              'candidateCorpus': 'GAPS / Guitar-Aligned Performance Scores',
+              'auditBase': os.environ['AUDIT_BASE'],
+              'historyScope': 'full ancestry reachable from auditBase plus auditBase snapshot',
+              'status': 'PASS_NO_PRIOR_GAPS_LINEAGE_EXPOSURE_FOUND' if clean else 'FAIL_PRIOR_LINEAGE_EXPOSURE',
+              'clean': clean,
+              'identifiers': [
+                  'Guitar-Aligned Performance Scores',
+                  'xavriley/GAPS',
+                  '2408.08653',
+                  'guitar-aligned-performance-scores-dataset',
+                  'aim-qmul/GAPS',
+                  'gaps_metadata_with_splits',
+                  'francois_audio',
+                  'francois_midi',
+                  'GAPS Dataset',
+              ],
+              'corpusMediaOpened': False,
+              'annotationContentsOpened': False,
+              'modelInvoked': False,
+              'correctnessOrBenchmarkResultsInspected': False,
+          }
+          root.joinpath('provenance-audit.json').write_text(json.dumps(payload, indent=2, sort_keys=True) + '\n')
+          print(json.dumps(payload, sort_keys=True))
+          PY
+
+          echo "status=$status" >> "$GITHUB_OUTPUT"
+          echo "clean=$clean" >> "$GITHUB_OUTPUT"
+
+      - name: Upload immutable provenance evidence
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: songsterr-gaps-provenance-audit
+          path: |
+            /tmp/songsterr-gaps-provenance-audit/provenance-audit.json
+            /tmp/songsterr-gaps-provenance-audit/provenance-hits.txt
+            /tmp/songsterr-gaps-provenance-audit/nonheader-hits.txt
+          if-no-files-found: error
+          retention-days: 30
+
+      - name: Enforce fail-closed provenance result
+        if: always()
+        shell: bash
+        run: |
+          set -euo pipefail
+          test -f "$WORKDIR/provenance-audit.json"
+          python - <<'PY'
+          import json, os
+          from pathlib import Path
+          payload = json.loads(Path(os.environ['WORKDIR'], 'provenance-audit.json').read_text())
+          if not payload['clean']:
+              raise SystemExit('FAIL_PRIOR_LINEAGE_EXPOSURE')
+          print('PASS_NO_PRIOR_GAPS_LINEAGE_EXPOSURE_FOUND')
+          PY
