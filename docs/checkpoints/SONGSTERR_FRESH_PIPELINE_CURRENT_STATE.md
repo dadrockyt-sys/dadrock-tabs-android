@@ -1,6 +1,6 @@
 # CURRENT STATE — Songsterr Fresh Pipeline V1
 
-Updated: 2026-09-16 America/Toronto — fresh-chat handoff explicitly refreshed at user request.
+Updated: 2026-09-17 America/Toronto — GIHME metadata/release/reference-independence follow-up recorded.
 Branch: `songsterr-fresh-pipeline-v1`
 Canonical checkpoint: `docs/checkpoints/SONGSTERR_FRESH_PIPELINE_CURRENT_STATE.md`
 
@@ -126,15 +126,24 @@ File `docs/checkpoints/SONGSTERR_FRESH_SUCCESSOR_CORPUS_METADATA_SEARCH_CONTINUE
 - GOOD-SOUNDS — strong isolated-note onset/pitch metadata, but published instrument inventory has no guitar. Reject.
 - GM Dataset from Chieppa/Brutti/Paiva 2025, DOI `10.1109/ACCESS.2025.3583646` — initial repo-history search clean, includes real acoustic/electric guitar recordings, but reference MIDI/tab originates from Ultimate Guitar/Guitar Pro scores and is manually aligned to cover recordings. No authoritative public dataset release/version/license was established. **Initial-lineage-clean but not PRE-ready; reject for present boundary.**
 
-### Search 5 — latest
+### Search 5
 
 File `docs/checkpoints/SONGSTERR_FRESH_SUCCESSOR_CORPUS_METADATA_SEARCH_CONTINUED_4_2026-09-16.md`, commit `9ad31c9aec5359d9d1163e6c99c1efbb5427c02c`.
 
-- GIHME — repo-history searches for `Gihme` and its full corpus name remain clean. Public metadata supports real hexaphonic-guitar improvisations with note/technique/tuning/effect annotations, but the surfaced Zenodo record `6798338` is the conference paper rather than a stable corpus release. No immutable corpus file manifest or directly inspectable annotation schema has been established. **Strongest open lead, still not PRE-ready.**
+- GIHME — repo-history searches for `Gihme` and its full corpus name remain clean. Public metadata supports real hexaphonic-guitar improvisations with note/technique/tuning/effect annotations, but the surfaced Zenodo record `6798338` is the conference paper rather than a stable corpus release. No immutable corpus file manifest or directly inspectable annotation schema has been established. **Strongest open lead, still not PRE-ready at that checkpoint.**
 - GM Dataset — repo-history search for `Chieppa` remains clean and paper metadata confirms real guitar recordings with per-string MIDI/tab labels, but no authoritative public dataset repository, immutable version/file identity, or dataset license was found. **Secondary unresolved lead, not PRE-ready.**
 - Five guitar dataset / Zenodo `4988354` — 30 real performances / 90 multi-device recordings, but no synchronized note-onset + MIDI-pitch ground truth established. Reject for this boundary.
 - HF1 — onset/offset/pitch annotated, but it is a Hardanger fiddle corpus rather than guitar. Reject.
 - Recent 2025–2026 searches predominantly return already-known/exposed/closed corpus families rather than a new eligible population.
+
+### Search 6 — latest
+
+File `docs/checkpoints/SONGSTERR_FRESH_SUCCESSOR_CORPUS_METADATA_SEARCH_CONTINUED_5_2026-09-17.md`, commit `55dd29a3ccc3b1528a5eef6a7485e60cfe01ebd1`.
+
+- GIHME official SMC/UMONS paper explicitly identifies `numediart/GIHME` as the dataset repository and documents played-note labels as six automatic Aubio YIN-FFT pitch extractions on clean hexaphonic strings followed by manual verification/consolidation. Under the frozen gate requiring authoritative note births independent of Basic Pitch **or other AMT/pitch-estimation output**, this is not an independent direct-performance reference.
+- The public `numediart/GIHME` repo remains effectively a placeholder: created/pushed 2022-02-08, size `1`, main contains only a 143-byte README saying information will be uploaded soon, history contains only two 2022 commits, releases are empty, and the sole availability issue remains open after a 2022 author reply projecting an early-2023 release.
+- GIHME status is now **`REJECT_REFERENCE_NOT_INDEPENDENT_AND_NO_STABLE_PUBLIC_CORPUS_RELEASE`** for this correctness boundary. Do not rescue it by weakening the reference-independence rule or treating manual verification of algorithm-generated pitch labels as direct sensor truth.
+- GM Dataset becomes the strongest unresolved clean lead from the existing ledger, still requiring authoritative public release/version/license identity and exact performed-audio/reference alignment evidence.
 
 Across all successor searches: successor media opened `0`; successor annotation payloads opened `0`; model runs `0`; correctness scores `0`; candidate/threshold changes `0`; V143/Gomyway activity `0`.
 
@@ -156,59 +165,52 @@ Do not rerun/reconstruct merely to change historical outcomes:
 
 ## CURRENT TECHNICAL CONCLUSION
 
-The frozen candidate still lacks an untouched external real-corpus correctness measurement. Every technically plausible corpus found so far fails at least one prospective requirement: prior lineage exposure, missing independent note-birth truth, no stable public release, rights/access uncertainty, non-guitar population, closed scope, or circular model-derived reference.
+The frozen candidate still lacks an untouched external real-corpus correctness measurement. Every technically plausible corpus found so far fails at least one prospective requirement: prior lineage exposure, missing independent note-birth truth, no stable public release, rights/access uncertainty, non-guitar population, closed scope, or circular/model-derived reference.
 
 **Real correctness therefore remains unknown.** This is not permission to relax provenance or reference independence.
 
-GIHME is currently the strongest unresolved successor lead, but it cannot support a prospective PRE until an authoritative stable corpus release, immutable identity, and deterministic note-birth annotation semantics are established. GM is secondary and remains blocked on public release/version/license identity.
+GIHME is now rejected for the present correctness boundary because its played-note reference originates in automatic YIN-FFT pitch extraction before manual verification, and because no stable authoritative public corpus release has been established. GM is the strongest unresolved clean lead, but remains blocked on public release/version/license identity and on proving that its score-derived per-string MIDI/tab reference represents deterministic performed-note births rather than only a manually aligned score.
 
 ## NEXT RESEARCH BOUNDARY
 
-Continue **metadata/provenance-only discovery**. Prioritize lesser-known institutional repositories, HCI/performance-analysis projects, hexaphonic/MIDI-pickup studies and 2025–2026 research-data supplements rather than only mainstream AMT benchmarks.
+Continue **metadata/provenance-only discovery**. Prioritize the GM Dataset publication ecosystem next, then lesser-known institutional repositories, HCI/performance-analysis projects, hexaphonic/MIDI-pickup studies and 2025–2026 research-data supplements rather than only mainstream AMT benchmarks.
 
 For any new promising corpus:
 
 1. search full repository history for corpus name, DOI/record ID, source repository and distinctive identifiers before media access;
 2. reject immediately if prior lineage exposure is found;
 3. verify stable public source/version/file identities and defensible research-use rights;
-4. verify that exact performed audio has deterministic onset + integer-MIDI pitch truth tied to the actual performance and **independent of Basic Pitch/other AMT output**;
+4. verify that exact performed audio has deterministic onset + integer-MIDI pitch truth tied to the actual performance and **independent of Basic Pitch/other AMT or pitch-estimation output**;
 5. only then freeze a new prospective real-evaluation PRE for exact `S AND E AND O AND K`;
 6. update this checkpoint to that PRE commit;
 7. stop for fresh post-freeze authorization before any media/model/correctness execution.
 
-Priority follow-up is to search institutional repositories associated with GIHME / UMONS / PRISM for a corpus release distinct from the paper record, and to watch for a stable public GM Dataset release or supplement.
+Priority follow-up is to search the 2025 Chieppa / Brutti / Paiva publication ecosystem, author pages, institutional repositories, supplementary material and data archives for a stable public GM Dataset release or supplement. If its Ultimate Guitar/Guitar Pro reference is only manually aligned score material rather than authoritative performed-note births, reject it without weakening the gate.
 
 ## FRESH CHAT RESUME POINT
 
 1. Reconcile live branch and read this checkpoint first.
-2. Latest successor-search checkpoint: `SONGSTERR_FRESH_SUCCESSOR_CORPUS_METADATA_SEARCH_CONTINUED_4_2026-09-16.md`, commit `9ad31c9aec5359d9d1163e6c99c1efbb5427c02c`.
+2. Latest successor-search checkpoint: `SONGSTERR_FRESH_SUCCESSOR_CORPUS_METADATA_SEARCH_CONTINUED_5_2026-09-17.md`, commit `55dd29a3ccc3b1528a5eef6a7485e60cfe01ebd1`.
 3. No successor corpus selected; no successor PRE exists; no successor run authorized.
-4. GIHME is the strongest still-open lead, but no stable authoritative public corpus release/file manifest/annotation schema has been established.
-5. GM Dataset is a secondary clean lead but lacks an authoritative public release/version/license identity.
+4. GIHME is rejected for this correctness boundary: its note labels originate in automatic Aubio YIN-FFT pitch extraction before manual verification, and no stable public corpus release exists.
+5. GM Dataset is now the strongest unresolved clean lead but lacks authoritative public release/version/license identity and still requires proof of deterministic performed-note-birth alignment.
 6. MMIP guitar MIDI must not be used as independent correctness truth for this Basic-Pitch evaluation.
 7. Continue metadata/provenance-only discovery unless user explicitly changes scope.
 8. Archived V143/Gomyway remains untouched.
 
 ## FRESH CHAT NEXT STEPS — USER-REQUESTED HANDOFF
 
-This handoff was explicitly refreshed on 2026-09-16 America/Toronto at the user's request for a fresh chat.
-
-On a fresh chat, continue from this file on branch `songsterr-fresh-pipeline-v1`. Do not restart the search from scratch and do not resume archived V143/Gomyway.
+Continue from this file on branch `songsterr-fresh-pipeline-v1`. Do not restart the search from scratch and do not resume archived V143/Gomyway.
 
 Execute the next research pass in this order:
 
-1. **GIHME first:** search UMONS / Numédiart / PRISM / institutional repositories, data portals, paper supplements and author/project pages for a corpus release distinct from the Zenodo paper record `6798338`. The required evidence is an authoritative stable release with immutable version/file identities plus a directly documented annotation schema that yields exact performed-note onset and integer MIDI pitch independently of AMT inference.
-2. **GM Dataset second:** search the 2025 Chieppa / Brutti / Paiva publication ecosystem, author pages, university repositories, supplementary material and data archives for an authoritative public dataset release. Require a stable version/file manifest, explicit dataset-use/license basis and enough metadata to establish how per-string MIDI/tab references are tied to the exact performed audio.
-3. **Broaden discovery:** prioritize 2025–2026 institutional research-data releases involving hexaphonic guitar, MIDI-pickup capture, synchronized performance analysis, guitar HCI, score-following datasets, per-string sensing and instrument-performance corpora. Do not limit discovery to mainstream AMT benchmark names already exhausted above.
-4. **Provenance before content:** for every genuinely new candidate, freeze/search its exact corpus name, DOI/record ID, repository/source identifier and distinctive filenames across the full Songsterr-fresh repository history **before** opening corpus media, annotation payloads, benchmark scores or model outputs. Reject immediately on meaningful prior lineage exposure.
-5. **Reference-independence gate:** require deterministic note-birth truth tied to the actual recorded performance. Reject references generated by Basic Pitch, NeuralNote or other AMT systems, score-only references that are not demonstrably aligned to the performed notes, and labels that only describe technique/fret state without authoritative note births.
-6. **PRE readiness gate:** do not write a new correctness PRE merely because a dataset looks promising. A candidate becomes PRE-ready only after stable source/version/file identity, research-use rights, population/signal-path suitability, deterministic onset+MIDI annotation semantics and clean lineage provenance are all established from metadata/provenance inspection.
-7. **If one candidate clears all gates:** record the corpus-selection evidence, freeze a new prospective real-evaluation PRE using the unchanged `S AND E AND O AND K` candidate and the same no-rescue scientific discipline, update this canonical checkpoint to the exact PRE commit, then **STOP for fresh post-freeze user authorization** before downloading/opening evaluation media or running Basic Pitch/qualification/scoring.
-8. **If none clears:** write the next metadata-search checkpoint with exact candidates, sources and rejection reasons; update this canonical checkpoint; continue discovery without weakening provenance, reference independence or closed-scope restrictions.
-
-Suggested fresh-chat instruction:
-
-`Please continue from docs/checkpoints/SONGSTERR_FRESH_PIPELINE_CURRENT_STATE.md on branch songsterr-fresh-pipeline-v1. Continue the metadata/provenance-only successor-corpus search from the saved Fresh Chat Next Steps. Keep the checkpoint updated often. Do not resume archived V143/Gomyway unless I explicitly ask.`
+1. **GM Dataset first:** search the 2025 Chieppa / Brutti / Paiva publication ecosystem, author pages, university repositories, supplementary material and data archives for an authoritative public dataset release. Require a stable version/file manifest, explicit dataset-use/license basis and enough metadata to establish how per-string MIDI/tab references are tied to the exact performed audio. If the Guitar Pro/Ultimate Guitar source is only score material manually aligned to covers, reject it as non-authoritative performed-note truth.
+2. **Broaden discovery:** prioritize 2025–2026 institutional research-data releases involving MIDI-pickup capture, synchronized performance analysis, guitar HCI, score-following datasets, per-string sensing and instrument-performance corpora. Do not limit discovery to mainstream AMT benchmark names already exhausted above.
+3. **Provenance before content:** for every genuinely new candidate, freeze/search its exact corpus name, DOI/record ID, repository/source identifier and distinctive filenames across the full Songsterr-fresh repository history **before** opening corpus media, annotation payloads, benchmark scores or model outputs. Reject immediately on meaningful prior lineage exposure.
+4. **Reference-independence gate:** require deterministic note-birth truth tied to the actual recorded performance. Reject references generated by Basic Pitch, NeuralNote, Aubio/YIN or other AMT/pitch-estimation systems, score-only references that are not demonstrably authoritative for the performed notes, and labels that only describe technique/fret state without authoritative note births.
+5. **PRE readiness gate:** do not write a new correctness PRE merely because a dataset looks promising. A candidate becomes PRE-ready only after stable source/version/file identity, research-use rights, population/signal-path suitability, deterministic onset+MIDI annotation semantics and clean lineage provenance are all established from metadata/provenance inspection.
+6. **If one candidate clears all gates:** record the corpus-selection evidence, freeze a new prospective real-evaluation PRE using the unchanged `S AND E AND O AND K` candidate and the same no-rescue scientific discipline, update this canonical checkpoint to the exact PRE commit, then **STOP for fresh post-freeze user authorization** before downloading/opening evaluation media or running Basic Pitch/qualification/scoring.
+7. **If none clears:** write the next metadata-search checkpoint with exact candidates, sources and rejection reasons; update this canonical checkpoint; continue discovery without weakening provenance, reference independence or closed-scope restrictions.
 
 ## DO NOT DO
 
@@ -217,6 +219,7 @@ Suggested fresh-chat instruction:
 - Do not weaken the EGSet12/GAPS provenance outcomes.
 - Do not silently substitute another corpus under PRE `2a2ed0...`.
 - Do not reopen GOAT, Guitar-TECHS, GuitarSet, IDMT, FLGD, EGFxSet, EGDB, EGSet12, GAPS, AG-PT, EG-Solo or G&N as “untouched.”
+- Do not reopen GIHME as an independent correctness corpus unless the frozen reference-independence requirement is explicitly changed; its documented note labels are pitch-estimation-derived before manual verification.
 - Do not use MMIP guitar MIDI or other AMT-derived pseudo-ground-truth as authoritative correctness truth.
 - Do not tune from synthetic or real post-result values.
 - Do not transfer historical raw `0.01` into positive-core composition.
