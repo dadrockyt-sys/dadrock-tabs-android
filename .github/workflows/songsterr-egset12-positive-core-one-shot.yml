@@ -1,0 +1,429 @@
+name: Songsterr EGSet12 Positive-Core One-Shot
+
+on:
+  push:
+    branches:
+      - songsterr-fresh-pipeline-v1
+    paths:
+      - .github/workflows/songsterr-egset12-positive-core-one-shot.yml
+
+permissions:
+  contents: read
+
+env:
+  PRE_COMMIT: 2a2ed0e4b009f8cd96ba0bc18b384441f53ce87a
+  PRE_PARENT: 08a87028f5ea683b670e96f4b71625ebfdbbb7fb
+  ZENODO_RECORD: '11406378'
+  WORKDIR: /tmp/songsterr-egset12-one-shot
+
+jobs:
+  egset12-positive-core-one-shot:
+    runs-on: ubuntu-latest
+    timeout-minutes: 120
+    steps:
+      - name: Checkout authoritative branch with full history
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Verify PRE ancestry and untouched-lineage provenance before media
+        shell: bash
+        run: |
+          set -euo pipefail
+          mkdir -p "$WORKDIR/gates"
+          git cat-file -e "${PRE_COMMIT}^{commit}"
+          git cat-file -e "${PRE_PARENT}^{commit}"
+          git merge-base --is-ancestor "$PRE_COMMIT" HEAD
+          test "$(git rev-parse "${PRE_COMMIT}^")" = "$PRE_PARENT"
+
+          : > "$WORKDIR/gates/provenance-hits.txt"
+          git log "$PRE_PARENT" \
+            -G'EGSet12|11406378' \
+            --format='commit %H' -p -- \
+            docs/checkpoints scripts/songsterr-fresh .github/workflows \
+            >> "$WORKDIR/gates/provenance-hits.txt" || true
+          git log "$PRE_PARENT" \
+            -G'(^|[^0-9])(0[1-9]|1[0-2])\.(wav|jams)([^A-Za-z0-9]|$)' \
+            --format='commit %H' -p -- \
+            docs/checkpoints scripts/songsterr-fresh .github/workflows \
+            >> "$WORKDIR/gates/provenance-hits.txt" || true
+
+          if [ -s "$WORKDIR/gates/provenance-hits.txt" ]; then
+            echo 'FAIL_UNTOUCHED_LINEAGE_PROVENANCE' >&2
+            cat "$WORKDIR/gates/provenance-hits.txt" >&2
+            exit 1
+          fi
+
+          python - <<'PY'
+          import json, os
+          from pathlib import Path
+          payload = {
+              'contract': 'songsterr-fresh-egset12-provenance-preflight-v1',
+              'status': 'PASS_UNTOUCHED_RELATIVE_TO_LINEAGE_PREFLIGHT',
+              'preCommit': os.environ['PRE_COMMIT'],
+              'preParent': os.environ['PRE_PARENT'],
+              'historyScope': 'ancestors-of-pre-parent',
+              'paths': ['docs/checkpoints', 'scripts/songsterr-fresh', '.github/workflows'],
+              'searches': [
+                  'EGSet12', '11406378',
+                  '01.wav..12.wav identities in Songsterr-fresh evaluation/result material',
+                  '01.jams..12.jams identities in Songsterr-fresh evaluation/result material',
+              ],
+              'mediaOpened': False,
+              'annotationsOpened': False,
+              'modelOutputOpened': False,
+          }
+          Path(os.environ['WORKDIR'], 'gates', 'provenance.json').write_text(json.dumps(payload, indent=2) + '\n')
+          PY
+
+      - name: Set up frozen Python 3.10.21
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.10.21'
+
+      - name: Install and freeze exact model and DSP runtime before media
+        shell: bash
+        run: |
+          set -euo pipefail
+          python -m pip install --disable-pip-version-check \
+            'numpy==1.26.4' \
+            'scipy==1.15.3' \
+            'tflite-runtime==2.14.0' \
+            'basic-pitch==0.4.0'
+          python - <<'PY'
+          import hashlib
+          import inspect
+          import json
+          import os
+          import platform
+          from importlib.metadata import version
+          from pathlib import Path
+          import basic_pitch
+          import basic_pitch.inference as inference
+
+          expected = {
+              'numpy': '1.26.4',
+              'scipy': '1.15.3',
+              'tflite-runtime': '2.14.0',
+              'basic-pitch': '0.4.0',
+          }
+          actual = {name: version(name) for name in expected}
+          if actual != expected:
+              raise SystemExit(f'PACKAGE_VERSION_MISMATCH:{actual!r}')
+          if platform.python_version() != '3.10.21':
+              raise SystemExit(f'PYTHON_VERSION_MISMATCH:{platform.python_version()}')
+
+          signature = inspect.signature(inference.predict)
+          parameter = signature.parameters.get('model_or_model_path')
+          candidates = []
+          if parameter is not None and parameter.default is not inspect.Parameter.empty:
+              candidates.append(parameter.default)
+          for owner in (inference, basic_pitch):
+              for name in ('ICASSP_2022_MODEL_PATH', 'DEFAULT_MODEL_PATH', 'MODEL_PATH'):
+                  value = getattr(owner, name, None)
+                  if value is not None:
+                      candidates.append(value)
+
+          model_path = None
+          for value in candidates:
+              try:
+                  candidate = Path(os.fspath(value)).resolve()
+              except (TypeError, ValueError):
+                  continue
+              if candidate.exists():
+                  model_path = candidate
+                  break
+          if model_path is None:
+              raise SystemExit('BASIC_PITCH_DEFAULT_MODEL_PATH_UNRESOLVED_BEFORE_INFERENCE')
+
+          def sha256_file(path: Path) -> str:
+              digest = hashlib.sha256()
+              with path.open('rb') as handle:
+                  for chunk in iter(lambda: handle.read(1024 * 1024), b''):
+                      digest.update(chunk)
+              return digest.hexdigest()
+
+          if model_path.is_file():
+              model_identity = {
+                  'kind': 'file',
+                  'pathName': model_path.name,
+                  'bytes': model_path.stat().st_size,
+                  'sha256': sha256_file(model_path),
+              }
+          elif model_path.is_dir():
+              rows = []
+              for path in sorted(p for p in model_path.rglob('*') if p.is_file()):
+                  rows.append({
+                      'path': path.relative_to(model_path).as_posix(),
+                      'bytes': path.stat().st_size,
+                      'sha256': sha256_file(path),
+                  })
+              if not rows:
+                  raise SystemExit('BASIC_PITCH_DEFAULT_MODEL_DIRECTORY_EMPTY')
+              canonical = json.dumps(rows, sort_keys=True, separators=(',', ':')).encode()
+              model_identity = {
+                  'kind': 'directory',
+                  'pathName': model_path.name,
+                  'fileCount': len(rows),
+                  'manifestSha256': hashlib.sha256(canonical).hexdigest(),
+                  'files': rows,
+              }
+          else:
+              raise SystemExit('BASIC_PITCH_DEFAULT_MODEL_PATH_NOT_FILE_OR_DIRECTORY')
+
+          payload = {
+              'contract': 'songsterr-fresh-egset12-runtime-identity-v1',
+              'python': platform.python_version(),
+              'packages': actual,
+              'basicPitchPredictSignature': str(signature),
+              'defaultModelIdentity': model_identity,
+              'inference': {
+                  'entryPoint': 'basic_pitch.inference.predict',
+                  'minimumMidi': 40,
+                  'maximumMidi': 88,
+                  'onsetThreshold': 0.5,
+                  'frameThreshold': 0.3,
+                  'minimumNoteLengthMs': 127.7,
+                  'multiplePitchBends': False,
+                  'melodiaTrick': True,
+                  'predictInvocationsPerTrack': 1,
+              },
+              'mediaOpened': False,
+              'annotationsOpened': False,
+              'predictionRevealed': False,
+          }
+          out = Path(os.environ['WORKDIR'], 'gates', 'environment-identity.json')
+          out.write_text(json.dumps(payload, indent=2, sort_keys=True) + '\n')
+          print(json.dumps({'runtimeIdentityRecorded': True, 'python': payload['python'], 'packages': actual, 'modelIdentity': model_identity}, sort_keys=True))
+          PY
+
+      - name: Verify frozen implementation blobs and new support blobs
+        shell: bash
+        run: |
+          set -euo pipefail
+          check_blob() {
+            local expected="$1"
+            local path="$2"
+            local actual
+            actual="$(git hash-object "$path")"
+            if [ "$actual" != "$expected" ]; then
+              echo "Blob mismatch for $path: $actual != $expected" >&2
+              exit 1
+            fi
+            echo "$path=$actual"
+          }
+          check_blob f8719a0b3be26372593c384cc2eb039c40e1cbaa docs/checkpoints/SONGSTERR_FRESH_EGSET12_REAL_EVALUATION_PRE.md
+          check_blob e9137496363f14cbe6194e32304c8b17b0b6569c scripts/songsterr-fresh/transcribe_isolated_guitar_basic_pitch.py
+          check_blob caf5483dadf826fe333d40b71e02864318751a00 scripts/songsterr-fresh/basic_pitch_activation_evidence.py
+          check_blob 5f43f7632bb47649157e2db3ecd56f4689a22711 scripts/songsterr-fresh/basic_pitch_decision_surface_diagnostic.py
+          check_blob f9bef389f848c8f003ffa844b1eb2eea5754002d scripts/songsterr-fresh/qualify_basic_pitch_note_births_v2.py
+          check_blob df57fcb808a654856826d2825e39854c9e3acb54 scripts/songsterr-fresh/clip_start_pitch_presence_v1.py
+          check_blob 2b18ef0ee710a6ad5ecb27253b977495db7d6534 scripts/songsterr-fresh/onset_birth_corroboration_v6.py
+          check_blob 45b8f3b66df7500824071489205a732dfe05d759 scripts/songsterr-fresh/physical_template_plausibility_v3.py
+          check_blob 7090e17baff60f91700a760f617e905ff53484ab scripts/songsterr-fresh/physical_template_plausibility_v3_iteration2.py
+          check_blob 39629250c6d141d5cda9e9d7f570580ec725ae42 scripts/songsterr-fresh/physical_template_plausibility_v3_iteration3.py
+          check_blob 402aa23f3f1821c4e5c45ccf7f170b542d76a453 scripts/songsterr-fresh/v6_innovation_peak_band_bridge_v2.py
+          check_blob e9e84ed663aab732408d1d618bd9486ffb660628 scripts/songsterr-fresh/v7_dual_view_diagnostics_v1.py
+          check_blob 08eb9e945bf2cdf33e640cf7b3349ae075002846 scripts/songsterr-fresh/v7_gate_free_competition_diagnostics_v1.py
+          check_blob d69382ae14b1fb8f7f570919240dce372db1e424 scripts/songsterr-fresh/v7_fixed_feature_competition_diagnostics_v1.py
+          check_blob 25a8f2c943d97730acf8fdc521c5ad1c3e8f8ea1 scripts/songsterr-fresh/v7_support_conditioned_raw_necessity_landscape_v1.py
+          check_blob 2daa9f7f6983a3ec894fc08a86e9bced7b1f96c4 scripts/songsterr-fresh/v7_kkt_raw_necessity_diagnostics_v1.py
+          check_blob 6174a95c14a58ddd4dca47f021e591ebee8ee736 scripts/songsterr-fresh/v7_fail_closed_positive_core_v1.py
+          check_blob 4b46093c17735e50671f1b35530f25784b57a39f scripts/songsterr-fresh/egset12_positive_core_adapter_v1.py
+          check_blob eb7c1b6c339953177f04623fc78c57a4d9311d9a scripts/songsterr-fresh/egset12_note_birth_scorer_v1.py
+          check_blob deb1223382a78fafce1c7ad5e2fc251e6e132bc8 scripts/songsterr-fresh/test_egset12_evaluation_support_v1.py
+
+      - name: Compile and run synthetic-only support tests before media
+        shell: bash
+        run: |
+          set -euo pipefail
+          python -m py_compile \
+            scripts/songsterr-fresh/egset12_positive_core_adapter_v1.py \
+            scripts/songsterr-fresh/egset12_note_birth_scorer_v1.py \
+            scripts/songsterr-fresh/test_egset12_evaluation_support_v1.py
+          PYTHONPATH=scripts/songsterr-fresh \
+            python scripts/songsterr-fresh/test_egset12_evaluation_support_v1.py \
+            > "$WORKDIR/gates/synthetic-support-test.json"
+
+      - name: Fetch and hash-verify all 24 frozen EGSet12 files without parsing annotations
+        shell: bash
+        run: |
+          set -euo pipefail
+          mkdir -p "$WORKDIR/corpus"
+          for track in $(seq -w 1 12); do
+            curl --fail --location --silent --show-error --retry 0 \
+              "https://zenodo.org/records/${ZENODO_RECORD}/files/${track}.wav?download=1" \
+              --output "$WORKDIR/corpus/${track}.wav"
+            curl --fail --location --silent --show-error --retry 0 \
+              "https://zenodo.org/records/${ZENODO_RECORD}/files/${track}.jams?download=1" \
+              --output "$WORKDIR/corpus/${track}.jams"
+          done
+          cat > "$WORKDIR/gates/expected-md5.txt" <<'EOF'
+          2eb739c5fb73e6327bb47267afe3eddf  /tmp/songsterr-egset12-one-shot/corpus/01.wav
+          083c7dae8e6556c20b9a2d762e2c977f  /tmp/songsterr-egset12-one-shot/corpus/01.jams
+          69b8701ea9a81428a6346e0d3d4b9b85  /tmp/songsterr-egset12-one-shot/corpus/02.wav
+          848f984b17b261a65585e25fba977a33  /tmp/songsterr-egset12-one-shot/corpus/02.jams
+          28141f17e46399553c52f5ed27bc10e2  /tmp/songsterr-egset12-one-shot/corpus/03.wav
+          721ec50f570892f9cfa88fb1e22a6113  /tmp/songsterr-egset12-one-shot/corpus/03.jams
+          6fe2f6f915953e8ae28b8a84a7677d0f  /tmp/songsterr-egset12-one-shot/corpus/04.wav
+          87426719ac4353d73e1af09970c31eb1  /tmp/songsterr-egset12-one-shot/corpus/04.jams
+          3435348c2b6702524dade471be70e4eb  /tmp/songsterr-egset12-one-shot/corpus/05.wav
+          c5c2fd376031177e87a3eb4ad12d220c  /tmp/songsterr-egset12-one-shot/corpus/05.jams
+          9f7ead382f373259b466ccd1884ed173  /tmp/songsterr-egset12-one-shot/corpus/06.wav
+          5ababdcf7741400dc93768334f6c899d  /tmp/songsterr-egset12-one-shot/corpus/06.jams
+          77f752ab3e7a5c606a21ac7b0df4fa1c  /tmp/songsterr-egset12-one-shot/corpus/07.wav
+          e693844f4b46fd3831c7c4ee0a2c3aa8  /tmp/songsterr-egset12-one-shot/corpus/07.jams
+          a59f373c00b8a327b37ce28f6601404c  /tmp/songsterr-egset12-one-shot/corpus/08.wav
+          513e00c522d53adac0ed9966a5b4c8cd  /tmp/songsterr-egset12-one-shot/corpus/08.jams
+          593aec1394a905a0c8b255a847f54139  /tmp/songsterr-egset12-one-shot/corpus/09.wav
+          9f08cae003c6c3d9dc745c2e319496d4  /tmp/songsterr-egset12-one-shot/corpus/09.jams
+          123818ef1020102252192d9e7a231e07  /tmp/songsterr-egset12-one-shot/corpus/10.wav
+          8cbf70e1b086f4a8fe5cac79572635ae  /tmp/songsterr-egset12-one-shot/corpus/10.jams
+          4bbaecaaa3e58bef6bb15a6cd0979fe2  /tmp/songsterr-egset12-one-shot/corpus/11.wav
+          f392b5bba5f3b99866bba91cb4d35a9a  /tmp/songsterr-egset12-one-shot/corpus/11.jams
+          e1ee73508f37d5c28c69877a588665d2  /tmp/songsterr-egset12-one-shot/corpus/12.wav
+          21217bda094eb8f29edfd1ed2f23ba45  /tmp/songsterr-egset12-one-shot/corpus/12.jams
+          EOF
+          sed -i 's/^          //' "$WORKDIR/gates/expected-md5.txt"
+          md5sum --check --strict "$WORKDIR/gates/expected-md5.txt" > "$WORKDIR/gates/md5-verification.txt"
+          python - <<'PY'
+          import hashlib, json, os
+          from pathlib import Path
+          root = Path(os.environ['WORKDIR'], 'corpus')
+          rows = []
+          for track in [f'{i:02d}' for i in range(1, 13)]:
+              for suffix in ('wav', 'jams'):
+                  path = root / f'{track}.{suffix}'
+                  digest = hashlib.sha256(path.read_bytes()).hexdigest()
+                  rows.append({'track': track, 'suffix': suffix, 'bytes': path.stat().st_size, 'sha256': digest})
+          Path(os.environ['WORKDIR'], 'gates', 'corpus-sha256-manifest.json').write_text(json.dumps(rows, indent=2) + '\n')
+          PY
+
+      - name: Run frozen Basic Pitch exactly once per WAV with stdout sealed
+        shell: bash
+        run: |
+          set -euo pipefail
+          mkdir -p "$WORKDIR/predictions" "$WORKDIR/sealed-logs"
+          for track in $(seq -w 1 12); do
+            PYTHONPATH=scripts/songsterr-fresh \
+              python scripts/songsterr-fresh/transcribe_isolated_guitar_basic_pitch.py \
+              --input "$WORKDIR/corpus/${track}.wav" \
+              --output "$WORKDIR/predictions/${track}.json" \
+              --audio-source "EGSet12 v1 Zenodo 11406378/${track}.wav" \
+              --separation-source 'none-direct-official-wav' \
+              > "$WORKDIR/sealed-logs/basic-pitch-${track}.json"
+          done
+
+      - name: Qualify frozen proposals exactly once with final positive core and stdout sealed
+        shell: bash
+        run: |
+          set -euo pipefail
+          mkdir -p "$WORKDIR/qualifications"
+          for track in $(seq -w 1 12); do
+            PYTHONPATH=scripts/songsterr-fresh \
+              python scripts/songsterr-fresh/egset12_positive_core_adapter_v1.py \
+              --audio "$WORKDIR/corpus/${track}.wav" \
+              --model-notes "$WORKDIR/predictions/${track}.json" \
+              --output "$WORKDIR/qualifications/${track}.json" \
+              > "$WORKDIR/sealed-logs/qualification-${track}.json"
+          done
+
+      - name: Seal prediction and qualification artifacts before reference parsing
+        shell: bash
+        run: |
+          set -euo pipefail
+          python - <<'PY'
+          import hashlib, json, os
+          from pathlib import Path
+          root = Path(os.environ['WORKDIR'])
+          rows = []
+          for category in ('predictions', 'qualifications'):
+              for path in sorted((root / category).glob('*.json')):
+                  rows.append({
+                      'category': category,
+                      'path': path.name,
+                      'bytes': path.stat().st_size,
+                      'sha256': hashlib.sha256(path.read_bytes()).hexdigest(),
+                  })
+          if len([row for row in rows if row['category'] == 'predictions']) != 12:
+              raise SystemExit('PREDICTION_ARTIFACT_COUNT_MISMATCH')
+          if len([row for row in rows if row['category'] == 'qualifications']) != 12:
+              raise SystemExit('QUALIFICATION_ARTIFACT_COUNT_MISMATCH')
+          canonical = json.dumps(rows, sort_keys=True, separators=(',', ':')).encode()
+          payload = {
+              'contract': 'songsterr-fresh-egset12-sealed-prediction-bundle-v1',
+              'sealedBeforeReferenceParsing': True,
+              'files': rows,
+              'manifestSha256': hashlib.sha256(canonical).hexdigest(),
+          }
+          (root / 'sealed-prediction-qualification-manifest.json').write_text(json.dumps(payload, indent=2) + '\n')
+          PY
+          test -s "$WORKDIR/sealed-prediction-qualification-manifest.json"
+
+      - name: Parse frozen JAMS references and score exactly once after sealing
+        shell: bash
+        run: |
+          set -euo pipefail
+          PYTHONPATH=scripts/songsterr-fresh \
+            python scripts/songsterr-fresh/egset12_note_birth_scorer_v1.py \
+            --predictions-dir "$WORKDIR/predictions" \
+            --qualifications-dir "$WORKDIR/qualifications" \
+            --references-dir "$WORKDIR/corpus" \
+            --output "$WORKDIR/score.json" \
+            | tee "$WORKDIR/score-stdout-after-artifact.json"
+
+      - name: Freeze complete first-result execution manifest
+        if: success()
+        shell: bash
+        run: |
+          set -euo pipefail
+          python - <<'PY'
+          import hashlib, json, os
+          from pathlib import Path
+          root = Path(os.environ['WORKDIR'])
+          paths = [
+              root / 'gates' / 'provenance.json',
+              root / 'gates' / 'environment-identity.json',
+              root / 'gates' / 'corpus-sha256-manifest.json',
+              root / 'sealed-prediction-qualification-manifest.json',
+              root / 'score.json',
+          ]
+          rows = []
+          for path in paths:
+              rows.append({
+                  'path': path.relative_to(root).as_posix(),
+                  'bytes': path.stat().st_size,
+                  'sha256': hashlib.sha256(path.read_bytes()).hexdigest(),
+              })
+          payload = {
+              'contract': 'songsterr-fresh-egset12-authoritative-first-result-manifest-v1',
+              'preCommit': os.environ['PRE_COMMIT'],
+              'preParent': os.environ['PRE_PARENT'],
+              'workflowRunId': os.environ.get('GITHUB_RUN_ID'),
+              'workflowRunAttempt': os.environ.get('GITHUB_RUN_ATTEMPT'),
+              'workflowSha': os.environ.get('GITHUB_SHA'),
+              'postFreezeAuthorization': 'Please continue 💚',
+              'files': rows,
+              'rescueRerunOccurred': False,
+              'postRevealTuningOccurred': False,
+              'productionAuthorityChanged': False,
+          }
+          (root / 'first-result-manifest.json').write_text(json.dumps(payload, indent=2, ensure_ascii=False) + '\n')
+          PY
+
+      - name: Upload authoritative attempt evidence
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: songsterr-egset12-positive-core-one-shot-attempt-1
+          if-no-files-found: warn
+          retention-days: 30
+          path: |
+            /tmp/songsterr-egset12-one-shot/gates/**
+            /tmp/songsterr-egset12-one-shot/predictions/**
+            /tmp/songsterr-egset12-one-shot/qualifications/**
+            /tmp/songsterr-egset12-one-shot/sealed-logs/**
+            /tmp/songsterr-egset12-one-shot/sealed-prediction-qualification-manifest.json
+            /tmp/songsterr-egset12-one-shot/score.json
+            /tmp/songsterr-egset12-one-shot/score-stdout-after-artifact.json
+            /tmp/songsterr-egset12-one-shot/first-result-manifest.json
