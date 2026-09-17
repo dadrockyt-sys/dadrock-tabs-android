@@ -119,12 +119,22 @@ File `docs/checkpoints/SONGSTERR_FRESH_SUCCESSOR_CORPUS_METADATA_SEARCH_CONTINUE
 - MMIP — real electric-guitar audio and MIDI access; initial history searches clean, but paper states guitar MIDI is generated from audio through audio-to-MIDI software involving NeuralNote/Basic Pitch. **Reject as circular pseudo-ground-truth for this Basic-Pitch proposal evaluation.**
 - M-M/Perez-Carrillo — real classical-guitar performance data, but note onset/pitch are audio-derived and later literature reports the dataset unavailable. Reject.
 
-### Search 4 — latest
+### Search 4
 
 File `docs/checkpoints/SONGSTERR_FRESH_SUCCESSOR_CORPUS_METADATA_SEARCH_CONTINUED_3_2026-09-16.md`, commit `eb82c2e519da2215b10dbc000ed33def70f76920`.
 
 - GOOD-SOUNDS — strong isolated-note onset/pitch metadata, but published instrument inventory has no guitar. Reject.
 - GM Dataset from Chieppa/Brutti/Paiva 2025, DOI `10.1109/ACCESS.2025.3583646` — initial repo-history search clean, includes real acoustic/electric guitar recordings, but reference MIDI/tab originates from Ultimate Guitar/Guitar Pro scores and is manually aligned to cover recordings. No authoritative public dataset release/version/license was established. **Initial-lineage-clean but not PRE-ready; reject for present boundary.**
+
+### Search 5 — latest
+
+File `docs/checkpoints/SONGSTERR_FRESH_SUCCESSOR_CORPUS_METADATA_SEARCH_CONTINUED_4_2026-09-16.md`, commit `9ad31c9aec5359d9d1163e6c99c1efbb5427c02c`.
+
+- GIHME — repo-history searches for `Gihme` and its full corpus name remain clean. Public metadata supports real hexaphonic-guitar improvisations with note/technique/tuning/effect annotations, but the surfaced Zenodo record `6798338` is the conference paper rather than a stable corpus release. No immutable corpus file manifest or directly inspectable annotation schema has been established. **Strongest open lead, still not PRE-ready.**
+- GM Dataset — repo-history search for `Chieppa` remains clean and paper metadata confirms real guitar recordings with per-string MIDI/tab labels, but no authoritative public dataset repository, immutable version/file identity, or dataset license was found. **Secondary unresolved lead, not PRE-ready.**
+- Five guitar dataset / Zenodo `4988354` — 30 real performances / 90 multi-device recordings, but no synchronized note-onset + MIDI-pitch ground truth established. Reject for this boundary.
+- HF1 — onset/offset/pitch annotated, but it is a Hardanger fiddle corpus rather than guitar. Reject.
+- Recent 2025–2026 searches predominantly return already-known/exposed/closed corpus families rather than a new eligible population.
 
 Across all successor searches: successor media opened `0`; successor annotation payloads opened `0`; model runs `0`; correctness scores `0`; candidate/threshold changes `0`; V143/Gomyway activity `0`.
 
@@ -150,6 +160,8 @@ The frozen candidate still lacks an untouched external real-corpus correctness m
 
 **Real correctness therefore remains unknown.** This is not permission to relax provenance or reference independence.
 
+GIHME is currently the strongest unresolved successor lead, but it cannot support a prospective PRE until an authoritative stable corpus release, immutable identity, and deterministic note-birth annotation semantics are established. GM is secondary and remains blocked on public release/version/license identity.
+
 ## NEXT RESEARCH BOUNDARY
 
 Continue **metadata/provenance-only discovery**. Prioritize lesser-known institutional repositories, HCI/performance-analysis projects, hexaphonic/MIDI-pickup studies and 2025–2026 research-data supplements rather than only mainstream AMT benchmarks.
@@ -164,15 +176,18 @@ For any new promising corpus:
 6. update this checkpoint to that PRE commit;
 7. stop for fresh post-freeze authorization before any media/model/correctness execution.
 
+Priority follow-up is to search institutional repositories associated with GIHME / UMONS / PRISM for a corpus release distinct from the paper record, and to watch for a stable public GM Dataset release or supplement.
+
 ## FRESH CHAT RESUME POINT
 
 1. Reconcile live branch and read this checkpoint first.
-2. Latest successor-search checkpoint: `SONGSTERR_FRESH_SUCCESSOR_CORPUS_METADATA_SEARCH_CONTINUED_3_2026-09-16.md`, commit `eb82c2e519da2215b10dbc000ed33def70f76920`.
+2. Latest successor-search checkpoint: `SONGSTERR_FRESH_SUCCESSOR_CORPUS_METADATA_SEARCH_CONTINUED_4_2026-09-16.md`, commit `9ad31c9aec5359d9d1163e6c99c1efbb5427c02c`.
 3. No successor corpus selected; no successor PRE exists; no successor run authorized.
-4. GIHME is the strongest still-open lead, but no stable authoritative public corpus release has been established.
-5. MMIP guitar MIDI must not be used as independent correctness truth for this Basic-Pitch evaluation.
-6. Continue metadata/provenance-only discovery unless user explicitly changes scope.
-7. Archived V143/Gomyway remains untouched.
+4. GIHME is the strongest still-open lead, but no stable authoritative public corpus release/file manifest/annotation schema has been established.
+5. GM Dataset is a secondary clean lead but lacks an authoritative public release/version/license identity.
+6. MMIP guitar MIDI must not be used as independent correctness truth for this Basic-Pitch evaluation.
+7. Continue metadata/provenance-only discovery unless user explicitly changes scope.
+8. Archived V143/Gomyway remains untouched.
 
 ## DO NOT DO
 
