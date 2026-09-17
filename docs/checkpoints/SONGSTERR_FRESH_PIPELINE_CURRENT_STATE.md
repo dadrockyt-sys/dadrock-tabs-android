@@ -250,6 +250,23 @@ The blocked historical temporal run remains untouched and must not be rerun/reco
 8. No real/media/model evaluation is authorized. Any such line requires a prospective PRE plus fresh explicit user authorization.
 9. Archived V143/Gomyway remains untouched.
 
+## NEXT STEPS FOR A FRESH CHAT
+
+A fresh chat should continue in this exact order unless the user explicitly changes scope:
+
+1. Read this checkpoint first and reconcile the live head of `songsterr-fresh-pipeline-v1`. Treat this file plus the immutable result checkpoints above as the authority; do not infer state from older chat summaries if they conflict with GitHub.
+2. Keep `main`, Production, `songsterr_pipeline/**`, archived V143/Gomyway, all closed historical validation lines, and the blocked temporal attempt untouched.
+3. Do **not** perform more tuning, threshold search, candidate-subset search, rank/top-K experiments, weighted-score experiments, per-MIDI exceptions, or correctness mining on the exposed 23 synthetic fixtures. Their role is exhausted for composition design.
+4. The next research artifact, if work continues, should be a **prospective untouched real-evaluation/scoring PRE only**. Writing and reviewing that PRE is allowed without real-data authorization as long as it does not access, inspect, execute, score, or derive rules from real/model media.
+5. That PRE must freeze before any real/model output: corpus/source/version and rights/provenance; exact event population and exclusions; canonical audio/model/runtime preparation; reference/alignment semantics; event matching; treatment of `UNRESOLVED_SUPPORT_OR_CONTEXT`; metrics; uncertainty/statistical policy; pass/fail gates; one-shot provenance; artifact preservation; and a no-post-hoc-tuning rule.
+6. The frozen candidate method under evaluation must remain exactly the mechanically authorized positive core: `S AND E AND O AND K`, with support/context failures unresolved, owner veto non-bypassable, candidate-evidence `0.10` only in its frozen support semantics, KKT strict necessity cutoff-free, and historical broad/raw `0.01` not applied.
+7. After the real-evaluation PRE is frozen, **stop**. Do not access or run EGFxSet, Basic Pitch, V6/V7 real qualifier, AG-PT/rejected holdouts, protected songs, physical captures, or any other real/model correctness source until the user gives fresh explicit authorization in that chat.
+8. When asking for authorization, identify exactly what frozen PRE/corpus/action would be run. A generic earlier authorization must not be reused; all prior real-run authorizations are consumed.
+9. If fresh authorization is granted, follow the PRE exactly, use the first authoritative attempt, preserve outputs as artifacts, do not silently rerun or repair after seeing results, and update this checkpoint immediately with run/job/artifact/result identities.
+10. If authorization is not granted, the correct stopping state is: **candidate method mechanically frozen; real correctness unknown; delivery not authorized**.
+
+Suggested opening instruction for a fresh chat: `Continue from docs/checkpoints/SONGSTERR_FRESH_PIPELINE_CURRENT_STATE.md on branch songsterr-fresh-pipeline-v1. Follow the FRESH CHAT RESUME POINT and NEXT STEPS FOR A FRESH CHAT exactly. Do not resume V143/Gomyway.`
+
 ## DO NOT DO
 
 - Do not resume V143/Gomyway.
