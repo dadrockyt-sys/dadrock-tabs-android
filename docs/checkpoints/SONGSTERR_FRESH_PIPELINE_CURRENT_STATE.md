@@ -1,6 +1,6 @@
 # CURRENT STATE — Songsterr Fresh Pipeline V1
 
-Updated: 2026-09-17 America/Toronto — successor metadata search 21 recorded; RWC-I classical-guitar + human-reviewed onset route is now the highest-value qualification path.
+Updated: 2026-09-17 America/Toronto — successor metadata search 21 recorded; fresh-chat next steps saved for scrapeable/useful data qualification.
 Branch: `songsterr-fresh-pipeline-v1`
 Canonical checkpoint: `docs/checkpoints/SONGSTERR_FRESH_PIPELINE_CURRENT_STATE.md`
 
@@ -223,17 +223,79 @@ Continue metadata/provenance-only qualification of the RWC-I route:
 6. If exact pitch mapping, onset authority, rights, source identity and full-history provenance all clear, freeze a new exact PRE for unchanged `S AND E AND O AND K`, update this canonical checkpoint to that exact PRE commit, then **STOP for fresh post-freeze user authorization**.
 7. Only after that fresh authorization may candidate audio/onset payloads be opened or Basic Pitch/qualification/scoring run.
 
+## NEXT STEPS FOR FRESH CHAT — SCRAPEABLE USEFUL DATA
+
+The user explicitly wants the search to continue for **scrapeable, useful data**. Start the fresh chat from this section and the RWC-I state above; do not restart broad discovery from scratch.
+
+### Priority A — finish RWC-I qualification first
+
+1. Search source-lineage material for an explicit No. 09 classical-guitar tuning / exact pitch-sequence statement that does **not** expose onset payloads. Preferred sources: original AIST/RWC documentation, instrument tables, archived official pages, papers describing No. 09 acquisition, README/manifests in official re-releases.
+2. Perform a stronger repository-lineage audit for each remaining candidate identifier: `091CGAFM`, `091CGAFF`, `092CGAFP`, `092CGAFM`, `092CGAFF`, `093CGAFP`, `093CGAFM`, `093CGAFF`. Search historical commits/diffs/PRs/issues/files and distinctive RWC identifiers. Treat commit-message/default-branch searches as insufficient by themselves.
+3. Search for **metadata-only** descriptions of MINST/Szczupak onset files, schema, provenance and licensing. Do not open candidate onset CSV values yet.
+4. Determine whether a minimal untouched subset can be frozen prospectively from provenance alone. Prefer multiple guitars/dynamics if untouched, but do not optimize subset composition from model results.
+
+### Priority B — parallel search for scrapeable alternatives that could outrank RWC-I
+
+Search public/indexable repositories and dataset catalogs for guitar data with all of these properties:
+
+- real guitar audio;
+- exact or reconstructable integer MIDI pitch per note;
+- exact actual-performance onset timestamps;
+- reference independent of Basic Pitch/AMT/pitch-tracker output, or manually reviewed/corrected to authoritative actual-audio truth;
+- stable source/version/file identity;
+- explicit license or defensible research-use rights;
+- scrapeable metadata/manifests/annotation schemas without needing to open evaluation audio first.
+
+Prioritize Zenodo, Figshare, OSF, institutional repositories, Hugging Face dataset cards/manifests, public GitHub repositories/releases, MIREX/ISMIR supplementary archives, old university MIR pages, thesis attachments and archived project pages.
+
+High-value unresolved targets to keep checking:
+
+- **Benetos/Dixon RWC guitar GT** — locate exact public ground-truth MIDI/annotation files and derived-data rights; hand-edited onset/pitch semantics are promising.
+- **Arty** — look for legitimate mirrors, thesis attachments, old project archives or institutional deposits exposing the dataset under stable terms.
+- **GM Dataset** — watch for any public package, manifest or explicit dataset-use license.
+- **Robot / instrumented guitar datasets** — only useful if they publish command/event logs synchronized to real recorded guitar audio; chord/clip labels alone are insufficient.
+- **Direct fret/string sensing datasets** — useful only when synchronized event logs + real audio are actually released.
+
+### Priority C — useful scrapeable auxiliary data even if not final correctness truth
+
+If a source cannot serve as final correctness truth, it can still be catalogued as auxiliary if it is legitimately public and useful for engineering or sanity checks. Record it separately and do not confuse it with the untouched correctness set. Useful auxiliary forms include:
+
+- fret/string/MIDI labels for isolated notes;
+- chord labels with known voicings;
+- technique labels;
+- onset-only human annotations;
+- score/alignment schemas;
+- robot command/event logs without enough timing authority;
+- metadata that can help construct deterministic pitch maps.
+
+Do not promote clip labels, chord class, string class, downbeats, gestures, or AMT-generated MIDI into exact note-birth truth.
+
+### Scraping boundary
+
+Metadata pages, READMEs, manifests, file listings, schemas, licenses, papers and public annotation descriptions may be scraped/read during discovery. For a prospective untouched correctness candidate, do **not** open/download its evaluation audio or candidate-specific onset annotation payload values until:
+
+1. source/version/file identity and rights are confirmed;
+2. exact pitch/onset semantics are confirmed;
+3. full-history lineage is acceptably clean;
+4. a new exact PRE is committed for unchanged `S AND E AND O AND K`;
+5. this checkpoint is updated to that PRE;
+6. the assistant stops and obtains fresh user authorization.
+
+If metadata itself exposes exact candidate onset values, mark that file exposed and exclude it prospectively rather than pretending it remains untouched.
+
 ## FRESH CHAT RESUME POINT
 
+- Read this canonical checkpoint first on branch `songsterr-fresh-pipeline-v1`.
 - Latest search checkpoint: `docs/checkpoints/SONGSTERR_FRESH_SUCCESSOR_CORPUS_METADATA_SEARCH_CONTINUED_20_2026-09-17.md`, commit `22a0480fb99950f2acd58b481bfe6bf7a6eb9af5`.
 - No successor selected; no successor PRE exists; no successor run is authorized.
 - Highest-value route is RWC-I No. 09 classical guitar + human-reviewed onset annotations.
 - `091CGAFP` is excluded as pre-PRE annotation-exposed.
-- Remaining candidate files are `091CGAFM`, `091CGAFF`, all `092CGAF*`, all `093CGAF*`, pending provenance.
+- Remaining candidate files are `091CGAFM`, `091CGAFF`, all `092CGAF*`, all `093CGAF*`, pending full-history provenance.
 - RWC-I current release: Zenodo `10.5281/zenodo.17170844`, v1, `RWC-I.zip`, MD5 `fb5789335fe68abdc09929618e9f0403`, CC BY-NC 4.0.
 - Pitch order is strongly established from primary ascending-pitch semantics + 6×13 protocol; final tuning lineage documentation still desirable.
 - Human-reviewed/corrected actual-recording onset reference exists; MINST onset payloads remain unopened.
 - Full-history provenance remains unresolved.
+- Search for scrapeable useful data in parallel, but do not weaken the frozen truth/provenance gates.
 - Archived V143/Gomyway remains untouched.
 
 ## DO NOT DO
