@@ -1,6 +1,6 @@
 # CURRENT STATE — Songsterr Fresh Pipeline V1
 
-Updated: 2026-09-16 America/Toronto — fail-closed positive-core mechanical composition attempt 1 is complete and frozen. A candidate research method is now mechanically defined without a transported raw threshold, rank/top-K, weighted score, or rescue rule: `base support AND candidate-evidence significance AND no lower-owner veto AND KKT strict raw necessity`. The 23 exposed fixtures were used only for deterministic routing, not correctness acceptance. **No real correctness is established or authorized.**
+Updated: 2026-09-16 America/Toronto — fail-closed positive-core mechanical composition attempt 1 is complete and frozen. A candidate research method is now mechanically defined without a transported raw threshold, rank/top-K, weighted score, or rescue rule: `base support AND candidate-evidence significance AND no lower-owner veto AND KKT strict raw necessity`. The 23 exposed fixtures were used only for deterministic routing, not correctness acceptance. **No real correctness is established. The user has expressed explicit willingness for a future model run, but the frozen post-PRE confirmation gate below remains binding.**
 
 Canonical branch: `songsterr-fresh-pipeline-v1`
 Canonical checkpoint: `docs/checkpoints/SONGSTERR_FRESH_PIPELINE_CURRENT_STATE.md`
@@ -17,7 +17,7 @@ Canonical checkpoint: `docs/checkpoints/SONGSTERR_FRESH_PIPELINE_CURRENT_STATE.m
 - Synthetic diagnostics are never authoritative real/model correctness validation.
 - Never rewrite, soften or reinterpret frozen historical FAIL/C/PASS results.
 
-## GLOBAL AUTHORIZATION — UNCHANGED
+## GLOBAL AUTHORIZATION — RUN GATE UNCHANGED; USER INTENT RECORDED
 
 - `realCalibrationAuthorized:false`
 - `realHoldoutCaptureAuthorized:false`
@@ -28,7 +28,9 @@ Canonical checkpoint: `docs/checkpoints/SONGSTERR_FRESH_PIPELINE_CURRENT_STATE.m
 - `customerEligibleEvents:0`
 - `mayAdvanceDelivery:false`
 
-All prior real-run authorizations remain consumed. There is currently **no authorization** for another EGFxSet run, Basic Pitch rerun, V6/V7 real qualifier, modified-real-rule execution, AG-PT/rejected holdout access, physical capture/calibration, protected-song execution or other real/model successor evaluation.
+On 2026-09-16 the user explicitly stated: `I authorize a model run when your ready` and then asked that the next steps be saved here for a fresh chat. Record this as clear willingness to authorize the upcoming model-evaluation step once it is scientifically ready. However, the exact prospective untouched real-evaluation/scoring PRE has not yet been written or frozen. Therefore this statement is **intent, not executable post-PRE authorization**, and it does not override the frozen sequencing rule that the exact PRE/corpus/action must first be identified and frozen and then receive post-freeze confirmation before any real/model/media output is opened.
+
+All prior executable real-run authorizations remain consumed. There is currently **no executable authorization** for another EGFxSet run, Basic Pitch rerun, V6/V7 real qualifier, modified-real-rule execution, AG-PT/rejected holdout access, physical capture/calibration, protected-song execution or other real/model successor evaluation until that post-PRE confirmation is recorded.
 
 ## FROZEN STATUS LEDGER
 
@@ -232,9 +234,9 @@ The next substantive correctness step would be an untouched external real-data e
 5. freeze reference/alignment and event matching semantics;
 6. freeze treatment of `UNRESOLVED_SUPPORT_OR_CONTEXT` in scoring;
 7. freeze uncertainty/statistical and pass/fail policy gates;
-8. obtain **fresh explicit user authorization** before accessing/running real media/model correctness.
+8. after PRE freeze, identify the exact frozen PRE/corpus/action and obtain/record the user's confirmation for that exact model run before accessing/running real media/model correctness.
 
-No real/media/model evaluation is currently authorized, so stop before that boundary unless the user explicitly authorizes it.
+The user has already expressed willingness for the model run once ready, but because that statement preceded the exact PRE freeze it is not executable authorization under this checkpoint's one-shot sequencing rule. Stop at the frozen PRE boundary and obtain post-freeze confirmation for the exact run.
 
 The blocked historical temporal run remains untouched and must not be rerun/reconstructed.
 
@@ -247,7 +249,7 @@ The blocked historical temporal run remains untouched and must not be rerun/reco
 5. Temporal line remains blocked/no-decision at `86549fcf3f15898aa551064b522ce42ca32b1b86`; job exists/succeeded but logs remain inaccessible and artifacts empty. Do not reconstruct it.
 6. Do not rerun temporal `35053450282`, candidate-breadth `35057264267`, gate-free `35057812575`, fixed-feature `35058404820`, protection-fit `35059307767`, landscape `35060032406`, KKT `35119500201`, or positive-core `35121000102`.
 7. Historical `0.01`, rank/top-K, weighted score, candidate subset and reattack fallback remain forbidden.
-8. No real/media/model evaluation is authorized. Any such line requires a prospective PRE plus fresh explicit user authorization.
+8. User authorization context: on 2026-09-16 the user said `I authorize a model run when your ready`. Treat this as strong intent/willingness, but **not** as executable post-PRE authorization because the exact real-evaluation PRE/corpus/action was not yet frozen when it was given. After PRE freeze, identify the exact run and obtain confirmation before execution.
 9. Archived V143/Gomyway remains untouched.
 
 ## NEXT STEPS FOR A FRESH CHAT
@@ -260,10 +262,10 @@ A fresh chat should continue in this exact order unless the user explicitly chan
 4. The next research artifact, if work continues, should be a **prospective untouched real-evaluation/scoring PRE only**. Writing and reviewing that PRE is allowed without real-data authorization as long as it does not access, inspect, execute, score, or derive rules from real/model media.
 5. That PRE must freeze before any real/model output: corpus/source/version and rights/provenance; exact event population and exclusions; canonical audio/model/runtime preparation; reference/alignment semantics; event matching; treatment of `UNRESOLVED_SUPPORT_OR_CONTEXT`; metrics; uncertainty/statistical policy; pass/fail gates; one-shot provenance; artifact preservation; and a no-post-hoc-tuning rule.
 6. The frozen candidate method under evaluation must remain exactly the mechanically authorized positive core: `S AND E AND O AND K`, with support/context failures unresolved, owner veto non-bypassable, candidate-evidence `0.10` only in its frozen support semantics, KKT strict necessity cutoff-free, and historical broad/raw `0.01` not applied.
-7. After the real-evaluation PRE is frozen, **stop**. Do not access or run EGFxSet, Basic Pitch, V6/V7 real qualifier, AG-PT/rejected holdouts, protected songs, physical captures, or any other real/model correctness source until the user gives fresh explicit authorization in that chat.
-8. When asking for authorization, identify exactly what frozen PRE/corpus/action would be run. A generic earlier authorization must not be reused; all prior real-run authorizations are consumed.
-9. If fresh authorization is granted, follow the PRE exactly, use the first authoritative attempt, preserve outputs as artifacts, do not silently rerun or repair after seeing results, and update this checkpoint immediately with run/job/artifact/result identities.
-10. If authorization is not granted, the correct stopping state is: **candidate method mechanically frozen; real correctness unknown; delivery not authorized**.
+7. After the real-evaluation PRE is frozen, **stop before opening real/model output**. Identify the exact frozen PRE, corpus/source/version and one-shot action to the user, then obtain/record post-freeze confirmation for that exact run. The user's 2026-09-16 `I authorize a model run when your ready` statement should be carried forward as intent, not silently converted into executable authorization.
+8. Once that exact post-freeze confirmation is recorded, execute the PRE exactly once using the first authoritative attempt. Preserve run/job/artifact/result identities and raw outputs; do not silently rerun, repair, retune, cherry-pick, change exclusions, or alter scoring after seeing results.
+9. Update this checkpoint immediately after the authorized run with the frozen PRE identity, authorization context, run/job/artifact/result identities, scoring outcome, and the next scientifically permitted boundary. If the run is blocked before authoritative output, record the blocker and stop rather than reconstructing or substituting a new run unless the PRE explicitly allows it.
+10. If exact post-freeze confirmation is not obtained, the correct stopping state is: **candidate method mechanically frozen; real correctness unknown; delivery not authorized**.
 
 Suggested opening instruction for a fresh chat: `Continue from docs/checkpoints/SONGSTERR_FRESH_PIPELINE_CURRENT_STATE.md on branch songsterr-fresh-pipeline-v1. Follow the FRESH CHAT RESUME POINT and NEXT STEPS FOR A FRESH CHAT exactly. Do not resume V143/Gomyway.`
 
@@ -283,6 +285,6 @@ Suggested opening instruction for a fresh chat: `Continue from docs/checkpoints/
 - Do not edit frozen V6/V3/V7 implementations or frozen result checkpoints.
 - Do not rerun/reconstruct the blocked temporal diagnostic.
 - Do not switch Production or `main`.
-- Do not access or run real media/model correctness without a new prospective real-evaluation PRE and fresh explicit user authorization.
+- Do not access or run real media/model correctness without a new prospective real-evaluation PRE plus exact post-freeze confirmation for that PRE/corpus/action.
 
 Archived V143/Gomyway remains untouched.
