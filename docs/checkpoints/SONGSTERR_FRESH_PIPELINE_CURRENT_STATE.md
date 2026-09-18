@@ -1,6 +1,6 @@
 # CURRENT STATE — Songsterr Fresh Pipeline V1
 
-Updated: 2026-09-17 America/Toronto — successor metadata search 21 recorded; fresh-chat next steps saved for scrapeable/useful data qualification.
+Updated: 2026-09-18 UTC — Search 22 recorded: exact MINST annotation identities; bounded historical-content audit; annotation timing/rights questions explicit.
 Branch: `songsterr-fresh-pipeline-v1`
 Canonical checkpoint: `docs/checkpoints/SONGSTERR_FRESH_PIPELINE_CURRENT_STATE.md`
 
@@ -86,6 +86,7 @@ Prepared historical Basic Pitch identity remains Python `3.10.21`, NumPy `1.26.4
 19. `...CONTINUED_18_2026-09-17.md` — Search 19; Benetos/Dixon legacy filename hunt, exact GT still unlocated.
 20. `...CONTINUED_19_2026-09-17.md` — Search 20; RWC-I + MINST classical-guitar route materially strengthened.
 21. `...CONTINUED_20_2026-09-17.md` — commit `22a0480fb99950f2acd58b481bfe6bf7a6eb9af5`; primary RWC ascending-pitch file semantics establish near-deterministic event-to-MIDI mapping.
+22. `...CONTINUED_21_2026-09-18.md` — exact MINST CSV identities without payload access; 8,808-commit inventory and partial source-content audit; timing authority and annotation rights remain unresolved.
 
 ## CURRENT HIGHEST-VALUE ROUTE — RWC-I CLASSICAL GUITAR + HUMAN-REVIEWED ONSETS
 
@@ -207,7 +208,8 @@ The remaining gates are strict and prospective:
 
 - one more source-lineage confirmation of exact tuning/note sequence is desirable before PRE;
 - a true full-history project-lineage audit must establish an untouched candidate subset;
-- `091CGAFP` is excluded due to pre-PRE annotation exposure.
+- `091CGAFP` is excluded due to pre-PRE annotation exposure;
+- the exact annotation layer still needs file-specific timing authority and usage-rights qualification (Search 22); MINST and Szczupak references must not be conflated.
 
 Across all successor work: evaluation media opened `0`; candidate annotation payloads opened `0`; model runs `0`; correctness scores `0`; candidate/threshold changes `0`; V143/Gomyway activity `0`.
 
@@ -286,7 +288,10 @@ If metadata itself exposes exact candidate onset values, mark that file exposed 
 ## FRESH CHAT RESUME POINT
 
 - Read this canonical checkpoint first on branch `songsterr-fresh-pipeline-v1`.
-- Latest search checkpoint: `docs/checkpoints/SONGSTERR_FRESH_SUCCESSOR_CORPUS_METADATA_SEARCH_CONTINUED_20_2026-09-17.md`, commit `22a0480fb99950f2acd58b481bfe6bf7a6eb9af5`.
+- Latest search checkpoint: `docs/checkpoints/SONGSTERR_FRESH_SUCCESSOR_CORPUS_METADATA_SEARCH_CONTINUED_21_2026-09-18.md` (Search 22, committed with this checkpoint update).
+- Exact MINST annotation paths/blob identities are now recorded there; no CSV values were opened.
+- Historical audit: 8,808 commits inventoried; 818 of 6,705 selected source/document blobs scanned; 5,887 unavailable. No clean lineage claim.
+- MINST timing semantics and annotation-data rights require explicit qualification; do not equate MINST marks with Szczupak marks.
 - No successor selected; no successor PRE exists; no successor run is authorized.
 - Highest-value route is RWC-I No. 09 classical guitar + human-reviewed onset annotations.
 - `091CGAFP` is excluded as pre-PRE annotation-exposed.
@@ -310,3 +315,25 @@ If metadata itself exposes exact candidate onset values, mark that file exposed 
 - Do not infer untouched provenance from commit-message/default-branch searches alone.
 - Do not open remaining RWC-I candidate audio or onset CSV payloads before a new PRE plus fresh post-freeze authorization.
 - Do not alter frozen V6/V3/V7/KKT/positive-core logic in place.
+
+## 2026-09-18 HANDOFF / SEARCH 22 AUDIT TRAIL
+
+- Resumed from branch head `42e5ed3ef375690806f4807c7edbb8caa8d00d67`; read Search 21 and budget checkpoint.
+- Obtained a non-shallow, blob-filtered Git clone; fresh-branch ancestry contains 8,174 commits. Historical branch/PR reference discovery is in progress for a stronger content audit.
+- Sparse working tree contains checkpoint documentation only. No pipeline code is executed or modified.
+- Reopened official AIST acquisition metadata; final candidate-specific tuning confirmation remains unresolved.
+- No PRE, candidate media/annotation access, model execution, or correctness claim is authorized or performed.
+
+### Search 22 findings
+
+- MINST source code plus its recursive tree at `5847ac421522a393df77ca2a43acdc326f7d64e8` resolves all nine classical-guitar filenames to existing hashed onset CSV paths; candidate CSV bodies remain unopened. Exact identities will be recorded in Search 22.
+- MINST describes roughly splitting at note onsets / good cut-points. Its human-correction workflow does not by itself establish exact note-birth timing for every saved candidate file. The Szczupak reviewed marks and MINST marks are separate sources; their identity has not been established.
+- MINST LICENSE blob `ddd9b9cc73d0a463419796ebc5050775ebe6d5ed` grants software permissions; explicit application to annotation data remains to be established. Do not transfer the audio release license to independent annotations by assumption.
+- Public MINST tree includes `data/notes/091CGAFM_11.flac`; listing only, no media opened. Audit this derivative identity as well as the original basename; presence in an upstream test fixture alone does not prove project exposure.
+- Repository-history inventory reached 8,808 commits across advertised branch/PR refs. Some historical blob fetches failed; no clean full-history conclusion is permitted.
+
+### Search 22 closeout
+
+- Full findings and exact annotation identities: `SONGSTERR_FRESH_SUCCESSOR_CORPUS_METADATA_SEARCH_CONTINUED_21_2026-09-18.md`.
+- All advertised branch/PR histories were inventoried (41 branches, 29 PR heads); historical-content access remains incomplete: 818 selected blobs scanned, 5,887 unavailable. Matches were confined to five previously known research/checkpoint blobs in the scanned set. This is not proof of no earlier exposure.
+- No successor chosen, no PRE, no new execution authority. Continue metadata research from Search 22; preserve all frozen outcomes and candidate logic.
