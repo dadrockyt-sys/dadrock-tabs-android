@@ -1,3 +1,6 @@
+> **ARCHIVED — 2026-09-18, by user decision.**
+> Active development is **New Astra Work** on branch `astra-work`. Read `docs/checkpoints/CURRENT_STATE.md` there. Do not resume this historical task queue by default. Original checkpoint content follows unchanged; frozen evidence and outcomes remain historical facts.
+
 # CURRENT STATE — DadRock `/ai-tab` V143
 
 Updated: 2026-09-07 America/Toronto
