@@ -6,6 +6,29 @@ Canonical checkpoint: `docs/checkpoints/SONGSTERR_FRESH_PIPELINE_CURRENT_STATE.m
 
 Status: **METADATA/PROVENANCE QUALIFICATION CONTINUES — NO ELIGIBLE UNTOUCHED SUCCESSOR CORPUS SELECTED; NO SUCCESSOR PRE OR RUN AUTHORIZED; REAL CORRECTNESS UNKNOWN**
 
+## PRODUCT GOAL — USER RECONFIRMED 2026-09-18
+
+Jimmy PAIge is the audio-to-tablature engine for `dadrocktabs.com/ai-tab`. The intended customer journey is: upload audio, choose bass / rhythm guitar / lead guitar, receive a useful watermarked tab preview, then optionally purchase the complete professional-quality PDF. The user regards the frontend as complete; backend musical quality is the current priority.
+
+Read-only inspection of `main` at `bb992d901e78ab19645f8edc8e330d5a142ebd8e` confirmed:
+
+- `app/ai-tab/page.js` implements these three instrument roles, upload, calls to `/api/analyze-audio-tab`, a four-system watermarked PDF preview, PayPal/free-token unlock and full-PDF request.
+- The frontend expects `generatedTab`, with optional structured `renderEvents`, techniques, tuning, tempo, time signature and key metadata passed to preview/full-PDF rendering. Defaults in the client are not evidence those musical properties were inferred correctly.
+- `app/api/analyze-audio-tab/route.js` chooses analyzer endpoints from environment configuration. Its source still contains a conditional V143 rhythm route; this read-only inspection did not inspect live environment values, invoke any analyzer, or resume archived work.
+- This was a source inspection, not a live upload/payment/email or transcription-quality test.
+
+Product success must eventually cover all of:
+
+1. Recover the requested instrument/part from uploaded audio, including mixed recordings; establish lead-versus-rhythm assignment when both guitars overlap.
+2. Recover accurate pitches, note attacks, releases/durations, simultaneous notes and relevant playing techniques.
+3. Recover musical structure and spell useful rhythms, rests, ties and measures without inventing correctness from formatting defaults.
+4. Assign playable strings/frets and coherent positions for the selected instrument/tuning.
+5. Render a readable preview and matching full PDF that are musically useful enough to purchase.
+
+Current RWC-I qualification concerns a narrow isolated-guitar note-reference route. Even a future valid result there would not by itself validate mixed-audio separation, bass, lead/rhythm disambiguation, expressive techniques, duration/rhythm accuracy or complete-song professional tablature. Dataset discovery and mechanical/synthetic passes are supporting work, not the product outcome.
+
+The fresh core's deterministic pitch-preservation guarantees do not certify the input notes: a faithfully rendered wrong note remains wrong. Preserve the frozen candidate/history while making the remaining product-level evidence gaps explicit. This product clarification does not authorize model runs, threshold changes, a new architecture implementation, production integration or reopening V143/Gomyway. Continue within the current metadata/provenance boundary until separately authorized.
+
 ## HARD SCOPE
 
 - Work only on `songsterr-fresh-pipeline-v1`; do not change `main` or Production.
