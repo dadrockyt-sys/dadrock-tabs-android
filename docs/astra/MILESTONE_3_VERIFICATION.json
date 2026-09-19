@@ -1,0 +1,34 @@
+{
+  "milestone": 3,
+  "dateUtc": "2026-09-19",
+  "parentCommit": "21f20cc6545155b7b7ccf9c18c2394ab7f183925",
+  "implementation": [
+    "astra_backend/analysisContractAdapter.mjs",
+    "astra_backend/tests/analysisContractAdapter.test.mjs",
+    "astra_backend/index.mjs"
+  ],
+  "node": "v24.19.0",
+  "command": "npm --prefix astra_backend test",
+  "tests": 112,
+  "passed": 112,
+  "failed": 0,
+  "skipped": 0,
+  "cancelled": 0,
+  "testOutputSha256": "828068895c21bad7366b8ed569a54257e6c053b3aab2d5b3f0636fb4590b65bf",
+  "rolesCovered": [
+    "lead",
+    "rhythm",
+    "bass"
+  ],
+  "statesCovered": [
+    "complete",
+    "partial",
+    "abstained",
+    "failed"
+  ],
+  "realAudioProcessed": false,
+  "modelInvoked": false,
+  "networkAnalyzerInvoked": false,
+  "productionChanged": false,
+  "interpretation": "Offline contract and delivery-gating verification only; synthetic delivery identity grants no customer or production authority."
+}

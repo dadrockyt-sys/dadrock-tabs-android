@@ -6,7 +6,7 @@ This is an independently editable, self-contained copy of the Fresh deterministi
 
 ## Included
 
-Musical structure mapping; simultaneous playable shapes; rhythm spelling including rests/ties; phrase-level fretboard paths; product payload adaptation; note-evidence diagnostics and conservative delivery gates. Source identities: `../docs/astra/BACKEND_ADOPTION_MANIFEST.json`.
+Musical structure mapping; simultaneous playable shapes; rhythm spelling including rests/ties; phrase-level fretboard paths; product payload adaptation; note-evidence diagnostics and conservative delivery gates. The offline `analysisContractAdapter.mjs` implements the Astra V1 request/result state machine without audio inference or network access. Source identities for the adopted Fresh snapshot: `../docs/astra/BACKEND_ADOPTION_MANIFEST.json`.
 
 ## Not yet included
 
@@ -14,7 +14,7 @@ Astra audio separation, role-aware audio transcription, automatic musical-struct
 
 ## Verify
 
-From this directory run `npm test` (Node built-in test runner, no third-party installation). Existing evidence/quality gates remain intact. Test failures must be fixed or recorded; never reinterpret them as real-audio validation.
+From this directory run `npm test` (Node built-in test runner, no third-party installation). Existing evidence/quality gates remain intact. Astra fixtures cover all roles and the complete/partial/abstained/failed result states. Test failures must be fixed or recorded; never reinterpret them as real-audio validation.
 
 ## Reuse boundary
 

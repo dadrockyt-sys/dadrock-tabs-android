@@ -429,3 +429,8 @@ export function runDeterministicCore({ events, conditioning, onsetToleranceSecon
     },
   };
 }
+
+export {
+  buildAstraAnalyzerResult,
+  normalizeAstraAnalyzerRequest,
+} from './analysisContractAdapter.mjs';
