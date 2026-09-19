@@ -1,0 +1,82 @@
+{
+  "contract": {
+    "name": "jimmy-paige-astra-engine-execution-manifest",
+    "version": 1
+  },
+  "candidateId": "htdemucs6s-basic-pitch",
+  "intendedUse": "development-comparison-only",
+  "execution": {
+    "device": "cpu",
+    "audioSeparator": {
+      "packageVersion": "0.30.2",
+      "upstreamTag": "v0.30.2",
+      "upstreamCommit": "99840eea955a19305413639c21ee58e320a1fd14"
+    },
+    "demucs": {
+      "packageVersion": "4.0.1",
+      "upstreamTag": "v4.0.1",
+      "upstreamCommit": "ef66d254cd6d558e207eeff2c4b8d053db2e77dd",
+      "modelName": "htdemucs_6s",
+      "configPath": "demucs/remote/htdemucs_6s.yaml",
+      "configGitBlob": "651a0fa536038a3e6d650f7b2bcc0b50ff7a4be9",
+      "weightFilename": "5c90dfd2-34c22ccb.th",
+      "historicalWeightSha256": "d2a1745f0744721f6b8ca5bf469b67c651ea5ed1b52998cab033b2158609d411",
+      "shifts": 0,
+      "overlap": 0.25,
+      "segmentSeconds": 7
+    },
+    "basicPitch": {
+      "packageVersion": "0.4.0",
+      "upstreamTag": "v0.4.0",
+      "upstreamCommit": "9991303bba609a3b93089d13ec80d1d495083596",
+      "runtime": "tflite",
+      "modelPath": "basic_pitch/saved_models/icassp_2022/nmp.tflite",
+      "modelGitBlob": "85a41befdd036e9b365a052b7c704c6810288b95",
+      "modelBytes": 204448,
+      "minimumMidi": 40,
+      "maximumMidi": 88,
+      "onsetThreshold": 0.5,
+      "frameThreshold": 0.3,
+      "minimumNoteLengthMs": 127.7
+    }
+  },
+  "capabilities": {
+    "bassStem": true,
+    "genericGuitarStem": true,
+    "leadRhythmDistinction": false
+  },
+  "rights": {
+    "audioSeparatorSoftware": {
+      "spdx": "MIT",
+      "evidence": "https://github.com/nomadkaraoke/python-audio-separator/blob/v0.30.2/LICENSE"
+    },
+    "demucsSoftware": {
+      "spdx": "MIT",
+      "evidence": "https://github.com/facebookresearch/demucs/blob/v4.0.1/LICENSE"
+    },
+    "basicPitchSoftware": {
+      "spdx": "Apache-2.0",
+      "evidence": "https://github.com/spotify/basic-pitch/blob/v0.4.0/LICENSE"
+    },
+    "demucsWeight": {
+      "status": "unresolved",
+      "licenseExpression": null,
+      "commercialUseReviewed": false
+    },
+    "basicPitchModel": {
+      "status": "repository-license-evidence-only",
+      "licenseExpression": "Apache-2.0",
+      "commercialUseReviewed": false
+    }
+  },
+  "evidence": {
+    "packageLockSha256": null,
+    "modelArtifactsVerifiedOnAstra": false,
+    "runtimeWithin1200Seconds": false,
+    "developmentMaterialAuthorized": false
+  },
+  "policy": {
+    "customerDeliveryAllowed": false,
+    "productionIntegrationAllowed": false
+  }
+}

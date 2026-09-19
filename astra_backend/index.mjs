@@ -439,3 +439,8 @@ export {
   listAstraAudioEngineCandidates,
   planAstraAudioEngine,
 } from './audioEngineRegistry.mjs';
+
+export {
+  getFrozenAstraEngineIdentity,
+  validateAstraEngineExecutionManifest,
+} from './engineExecutionManifest.mjs';

@@ -1,0 +1,37 @@
+{
+  "milestone": "6A",
+  "dateUtc": "2026-09-19",
+  "parentCommit": "f5aada10e897377f211fa122fda3353e634301f1",
+  "implementation": [
+    "astra_backend/engineExecutionManifest.mjs",
+    "astra_backend/tests/engineExecutionManifest.test.mjs",
+    "astra_backend/index.mjs",
+    "docs/astra/ASTRA_ENGINE_EXECUTION_MANIFEST_V1.json",
+    "docs/astra/ENGINE_IDENTITY_REVIEW_V1.md"
+  ],
+  "node": "v24.19.0",
+  "command": "npm --prefix astra_backend test",
+  "tests": 128,
+  "passed": 128,
+  "failed": 0,
+  "skipped": 0,
+  "cancelled": 0,
+  "testOutputSha256": "4cc2bf49b6f51094ceb26a190dd883a1b998e9098163a54d6c36894105cf17c7",
+  "knownIdentityChecks": {
+    "audioSeparatorTagAndCommit": true,
+    "demucsOfficialTagCommitAndConfigBlob": true,
+    "demucsHistoricalWeightShaPreservedNotPromoted": true,
+    "basicPitchTagCommitAndTfliteBlob": true,
+    "completeInstallLock": false,
+    "demucsWeightTermsResolved": false
+  },
+  "developmentExecutionReady": false,
+  "customerDeliveryEligible": false,
+  "realAudioProcessed": false,
+  "modelInvoked": false,
+  "packageInstallerInvoked": false,
+  "networkAnalyzerInvoked": false,
+  "paidServiceInvoked": false,
+  "productionChanged": false,
+  "interpretation": "Offline identity and execution-manifest verification only; unresolved install lock, model rights, runtime and development evidence remain blockers."
+}
