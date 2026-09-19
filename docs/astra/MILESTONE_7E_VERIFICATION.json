@@ -1,0 +1,41 @@
+{
+  "milestone": "7E",
+  "dateUtc": "2026-09-19",
+  "parentCommit": "bbeaa9964b130cd7bb26025c2711728a830a778d",
+  "runtime": {
+    "node": "v24.19.0",
+    "platform": "Linux x86_64"
+  },
+  "testCommand": "npm --prefix astra_backend test",
+  "tests": 160,
+  "passed": 160,
+  "failed": 0,
+  "skipped": 0,
+  "cancelled": 0,
+  "testOutputSha256": "3b1a0e445fbf64ac0a4cd7d9fe5cef5ec0fc5be37ad6a6effbcd87206694f979",
+  "newTests": 6,
+  "syntheticCoverageCombinations": 2280,
+  "implementedModule": "astra_backend/sampleChunkPlan.mjs",
+  "clapPublisherArtifactCommit": "4226474e38defca6fc9272a7848bb7b0355ccd7a",
+  "clapPublisherLicenseCommit": "d57333f4fd55123da1ee2e89c3e46fa7cebad415",
+  "clapDeclaredArtifactLicense": "CC0-1.0",
+  "clapPublishedDigestMatchesAudioSep": true,
+  "clapArtifactBytesVerifiedLocally": false,
+  "audioSepPeakMemoryMeasured": false,
+  "developmentExecutionReady": false,
+  "customerDeliveryEligible": false,
+  "runtimeCodeChanged": true,
+  "retrievalFailures": [
+    "Pinned CLAP model README/artifact URLs at observed head inaccessible; immutable license and artifact commit pages successfully retrieved instead"
+  ],
+  "modelWeightDownloaded": false,
+  "realAudioProcessed": false,
+  "modelImported": false,
+  "modelInvoked": false,
+  "packageInstallerInvoked": false,
+  "paidServiceInvoked": false,
+  "productionChanged": false,
+  "mainModified": false,
+  "archivedImplementationModified": false,
+  "evidenceResearchNetworkAccess": true
+}

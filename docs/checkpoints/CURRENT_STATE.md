@@ -3,7 +3,7 @@
 Updated: 2026-09-19 UTC
 Active branch: `astra-work`
 Canonical handoff: `docs/checkpoints/CURRENT_STATE.md`
-Status: **MILESTONE 7D COMPLETE — STANDARD SAM-AUDIO DEFERRED FOR RESOURCES; AUDIOSEP RIGHTS/MEMORY AND CHUNK COVERAGE NEXT; 154 TESTS PASS**
+Status: **MILESTONE 7E COMPLETE — SAMPLE CHUNK PLANNER IMPLEMENTED; CLAP PUBLISHER RIGHTS LINK ESTABLISHED; RESOURCE/INTEGRATION WORK NEXT; 160 TESTS PASS**
 
 ## Product outcome
 
@@ -202,16 +202,26 @@ At chat handoff: inspect branch/HEAD/status, read this file and AGENTS.md, then 
 - `npm --prefix astra_backend test`: **154 passed, 0 failed, 0 skipped/cancelled**. `docs/astra/MILESTONE_7D_VERIFICATION.json` records runtime and output digest. Runtime gates unchanged; documentation-only milestone.
 - No weights, real audio, protected reference data, model runtime, package installer, paid service, main or Production action. Git command-line writes lack authentication in this workspace; milestone saving uses the connected GitHub API, with exact local/remote tree comparison and ref verification.
 
-## Exact next step — Milestone 7E
+## Milestone 7E evidence / handoff
 
-1. Read `docs/astra/SAM_AUDIO_RESOURCE_REVIEW_V1.md`. Keep standard SAM-Audio deferred, Banquet/Demucs blocked, and all execution/customer gates false.
-2. Follow the pinned AudioSep CLAP wrapper to the exact `music_speech_audioset_epoch_15_esc_89.98.pt` publisher release and applicable terms. Preserve the Space MIT evidence without inferring permission for unrelated third-party components. Freeze authoritative revisions and scope; do not download weights or audio.
-3. Inspect AudioSep/CLAP initialization and loading from canonical source to estimate resident weights and startup duplication. Distinguish full CLAP from its text-only branch and identify whether removing unused components would require a new adapter. Keep **4096 MB / 1200 seconds / zero-new-spend** unchanged; no installation/inference or budget expansion.
-4. Make concrete offline backend progress on the discovered coverage risk: implement a model-independent integer-sample chunk planner in astra_backend with explicit input/context/output slices. Every nonempty input, including <=5 seconds, exact boundaries and short tails, must receive complete ordered output coverage without duplicate ownership. Validate invalid lengths/options and test bounded windows and context cropping using synthetic sample IDs or an identity callback. Do not copy/import archived or AudioSep model code, load audio, or grant readiness. Export/document the helper only after meaningful tests pass.
-5. Report AudioSep as blocked/deferred if rights or resources remain unresolved. Do not label text prompts as proof of bass/guitar accuracy or independent lead/rhythm separation.
-6. Run `npm --prefix astra_backend test`; save code/tests, research evidence, verification JSON and CURRENT_STATE together; commit to astra-work through GitHub if CLI authentication remains unavailable, verify exact tree/ref correspondence and leave the local branch clean. Preserve main/Production.
+- Parent: `bbeaa9964b130cd7bb26025c2711728a830a778d`; local, origin and remote matched before implementation.
+- `astra_backend/sampleChunkPlan.mjs`, exported via `index.mjs`, implements immutable lazy sample-index chunk planning with explicit input/output/context/crop intervals. Handles short clips, exact boundaries and tails without omissions or duplicate output ownership; no model or file access.
+- Six meaningful tests in `tests/sampleChunkPlan.test.mjs` include synthetic sample-ID reconstruction, 2,280 length/context combinations, 32-kHz boundary cases, invalid options/overflow, lazy huge plans, repeatability and mutation isolation. Public export tested. README documents alignment and edge limitations.
+- `docs/astra/AUDIOSEP_CLAP_REVIEW_V1.md` establishes the upstream CLAP publisher link: official LAION README names the exact file; published SHA-256 and byte size match AudioSep's Space copy; the upstream model repository declares CC0. Immutable artifact commit `4226474e38defca6fc9272a7848bb7b0355ccd7a` and license commit `d57333f4fd55123da1ee2e89c3e46fa7cebad415` recorded. Do not restart this resolved publisher-link search or pretend all rights evidence is absent.
+- AudioSep remains resource-unverified: full CLAP audio/text construction, separate RoBERTa initialization, CPU checkpoint copies and non-strict separator loading need an exact adapter. Text-only CLAP could reduce footprint but has not been implemented or validated. Disk bytes are not resident/peak memory.
+- `npm --prefix astra_backend test`: **160 passed, 0 failed, 0 skipped/cancelled**. `docs/astra/MILESTONE_7E_VERIFICATION.json` records runtime and output digest.
+- No models/weights/audio/installer/paid service/main/Production actions. CPU synthetic tests only. Existing engine readiness/customer gates remain unchanged.
 
-**7E outcome:** a tested reusable chunk-coverage component plus an evidence-backed AudioSep feasibility/rights decision; no model execution or real-audio quality claim.
+## Exact next step — Milestone 7F
+
+1. Read `docs/astra/AUDIOSEP_CLAP_REVIEW_V1.md` and the planner/README. Preserve existing gates, archived outcomes, standard SAM-Audio deferment and Banquet/Demucs blocks.
+2. Implement an offline chunk-processing adapter around `createSampleChunkPlan` using injected reader/processor/writer callbacks. Process one window at a time with explicit global/local coordinates, validate reader and processor lengths and finite numeric samples, crop context, and await writes before advancing. No file/network/model dependencies. Define callback buffer ownership clearly.
+3. Fail explicitly on missing/truncated/nonfinite outputs, reader/processor/writer errors and cancellation; never fill gaps with silent zeros or report completion after partial failure. Surface how much output was successfully written so callers cannot mistake partial results for complete. Test with synthetic identity/transform callbacks, short clips/tails, invalid output, asynchronous sequencing, failures and cancellation; no real audio or inference.
+4. Freeze a text-only CLAP loading design from the pinned AudioSep source: exact fine-tuned text keys/projection/normalization/tokenizer configuration, avoid full HTSAT and redundant pretrained RoBERTa construction, identify how strict key checks would work. Use public config/source metadata only. Document unknown tensor shapes and dependency identities; do not download weights/install/import models or generate embeddings.
+5. The exact CLAP artifact's CC0 publisher declaration and AudioSep Space MIT evidence are already recorded. Preserve their scope; remaining engine resource/dependency/equivalence prerequisites must be explicit. Keep 4096 MB / 1200 seconds / zero-new-spend unchanged; do not claim fit from disk sizes or prompt support as lead/rhythm truth.
+6. Run `npm --prefix astra_backend test`; save code/tests/docs/verification/CURRENT_STATE together on astra-work, verify remote tree/ref and leave a clean local branch. Use the connected GitHub API if CLI writes lack credentials. No main/Production change.
+
+**7F outcome:** a tested synthetic chunk-processing boundary and concrete text-only loading design, not permission to execute models or a real-audio quality claim.
 
 ## Copy-paste handoff
 

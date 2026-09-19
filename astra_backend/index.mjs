@@ -462,3 +462,5 @@ export {
   evaluateBanquetIndependentCandidate,
   getBanquetIndependentCandidateReview,
 } from './independentSeparationCandidateReview.mjs';
+
+export { createSampleChunkPlan } from './sampleChunkPlan.mjs';
