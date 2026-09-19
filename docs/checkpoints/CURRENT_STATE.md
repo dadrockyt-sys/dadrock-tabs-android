@@ -180,7 +180,25 @@ For every major milestone, save code, meaningful tests, provenance and this chec
 
 At chat handoff: inspect branch/HEAD/status, read this file and AGENTS.md, then continue only the current milestone. If a tool or test fails, record it and the recovery step. Git history plus immutable snapshots is the durable record; chat memory is supplementary.
 
-The active milestone is 7C. Resolve the authoritative rights/license metadata for Banquet Zenodo record `13694558` without downloading checkpoint bytes, and review whether a lawfully sourced frozen query-embedding approach can satisfy Astra's reference-blind product boundary without protected/song-specific reference audio. If either checkpoint commercial permission or query provenance cannot be established, keep Banquet blocked and continue the independent-model search. Do not download or execute Banquet until all admission blockers required for development evaluation are explicitly cleared. Lead/rhythm remains blocked until independent role evidence exists.
+## Exact next step — Milestone 7C
+
+Complete these steps in order:
+
+1. **Do not download or execute Banquet yet.** Keep `developmentExecutionReady:false` and `customerDeliveryEligible:false`.
+2. **Resolve the authoritative checkpoint rights first.** Review the authoritative metadata/terms for Zenodo record `13694558`, specifically the recommended `ev-pre-aug.ckpt`. Record the exact record/revision, file identity already published by the source, the applicable license or permission, and whether it explicitly permits both:
+   - development-quality evaluation; and
+   - commercial customer inference for paid tablature.
+3. **Fail closed if the checkpoint terms are incomplete or ambiguous.** Do not infer checkpoint rights from the MIT source-code license. If commercial permission cannot be established from authoritative evidence, leave Banquet blocked and record the exact missing evidence.
+4. **Resolve the query-conditioning boundary without protected reference audio.** Inspect only the canonical Banquet/query-bandit source and authoritative documentation to determine whether Astra can lawfully use either:
+   - a label-only conditioning path; or
+   - a frozen/precomputed query embedding with a clean, documented source and explicit product-use rights.
+   Do not reuse archived song-specific stems, exposed benchmark audio, customer audio, or unverifiable legacy reference material as query conditioning.
+5. **Preserve role honesty.** Bass and generic guitar capability may be investigated; lead and rhythm must continue to return `LEAD_RHYTHM_DISTINCTION_UNAVAILABLE` until independent role evidence exists. Do not substitute pitch/register filtering for role evidence.
+6. **Update Astra only from recorded evidence.** If the checkpoint-rights and query-provenance blockers are genuinely resolved, update the Banquet review/admission code and tests with immutable identities and fail-closed substitution checks. Otherwise, record the unresolved blocker and continue the independent separator search.
+7. **Do not process real audio during 7C.** Do not download model weights, invoke Banquet/Basic Pitch, call paid services, modify `main`, deploy, or touch Production.
+8. **Verify and save the milestone.** Run `npm --prefix astra_backend test`, create the milestone verification JSON with parent commit/runtime/command/test totals/output digest and explicit no-audio/no-model/no-installer/no-paid-service/no-production statements, update this checkpoint, commit and push to `astra-work`, verify the remote commit, and leave the branch clean.
+
+**7C success condition:** authoritative evidence establishes commercial/development permission for the exact Banquet checkpoint **and** a clean query-conditioning path can be frozen without protected/song-specific reference audio. If either condition fails, Banquet remains blocked; that is a valid Milestone 7C result.
 
 ## Copy-paste handoff
 
