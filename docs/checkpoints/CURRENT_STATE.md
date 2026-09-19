@@ -3,7 +3,7 @@
 Updated: 2026-09-19 UTC
 Active branch: `astra-work`
 Canonical handoff: `docs/checkpoints/CURRENT_STATE.md`
-Status: **MILESTONE 6C COMPLETE — HASHED CPU ENVIRONMENT INSTALLED; DEMUCS WEIGHT/RIGHTS STILL BLOCK EXECUTION; NO REAL-AUDIO QUALITY CLAIM**
+Status: **MILESTONE 6D COMPLETE — DEMUCS ARTIFACT GATE FAILS CLOSED; EXPLICITLY LICENSED ALTERNATIVE SEARCH NEXT; NO REAL-AUDIO QUALITY CLAIM**
 
 ## Product outcome
 
@@ -40,7 +40,7 @@ Active implementation and CPU synthetic verification may proceed in the new back
 3. Build an offline adapter and representative synthetic end-to-end fixtures against that contract. COMPLETE: `f1fbb5594df709080b706d07d625579dbf65bf83`; **112 passed, 0 failed**.
 4. Inventory lawful affordable real-audio candidates without executing them. COMPLETE: `3f16308e6aa9969a3e1c03f9bab91d7af6f6bf99`.
 5. Encode candidate capabilities and blockers in an offline fail-closed preflight planner. COMPLETE in the commit containing this checkpoint; **120 passed, 0 failed**.
-6. Freeze engine identities and gate execution. PART A COMPLETE: exact verifiable upstream tag/blob identities plus offline manifest validator; **128 passed, 0 failed**. PART B COMPLETE: direct official Demucs runtime selected, deterministic 57-package CPU lock frozen, unsafe ABI resolutions rejected; **131 passed, 0 failed**. PART C COMPLETE in the commit containing this checkpoint: exact hashed environment installed under Python 3.10.21, 57 installed distributions match the lock, compatibility check passed and packaged Basic Pitch model bytes were verified; **134 passed, 0 failed**. **NEXT ACTIVE TASK:** create a fail-closed local artifact-admission contract for the Demucs weight and record the exact external rights decision needed before any download/import/inference. Weight-specific terms remain unresolved and block execution/commercial use.
+6. Freeze engine identities and gate execution. PART A COMPLETE: exact verifiable upstream tag/blob identities plus offline manifest validator; **128 passed, 0 failed**. PART B COMPLETE: direct official Demucs runtime selected, deterministic 57-package CPU lock frozen, unsafe ABI resolutions rejected; **131 passed, 0 failed**. PART C COMPLETE: exact hashed environment installed under Python 3.10.21, 57 installed distributions match the lock, compatibility check passed and packaged Basic Pitch model bytes were verified; **134 passed, 0 failed**. PART D COMPLETE in the commit containing this checkpoint: exact Demucs artifact identity and external rights-decision requirements frozen in an offline admission gate; **140 passed, 0 failed**. **NEXT ACTIVE TASK:** inventory separation candidates with explicit model-artifact commercial terms and equivalent bass/guitar capability. Do not download weights or process audio during the inventory.
 
 Do not assume training a new neural model from scratch is necessary or affordable. Compare component options against measured product failures before selecting the audio engine.
 
@@ -130,6 +130,15 @@ Do not assume training a new neural model from scratch is necessary or affordabl
 - Verification: `npm --prefix astra_backend test` -> **134 tests, 134 passed, 0 failed, 0 skipped/cancelled**.
 - No model runtime was imported, no Demucs weight was downloaded, no audio was opened, no inference was run, and no paid service or production route was invoked.
 
+## Milestone 6D evidence / handoff
+
+- `astra_backend/demucsArtifactAdmission.mjs`: deterministic offline gate for the exact `htdemucs_6s` filename, official source URL and historical SHA-256. Any candidate/model/file/source/digest substitution throws.
+- The gate cannot self-clear. Exact bytes still leave `DEMUCS_WEIGHT_RIGHTS_DECISION_NOT_FROZEN` until an owner-approved review record is committed and its digest is pinned in code.
+- `docs/astra/DEMUCS_ARTIFACT_ADMISSION_V1.md`: defines the external record required for development evaluation and commercial paid-tab inference, including authoritative evidence, reviewer, date and restrictions.
+- A software repository's MIT label is not automatically promoted into a weight-specific commercial-use conclusion. If that conclusion cannot be established, Astra will seek a model with explicit artifact terms or a separately licensed/trained replacement.
+- Verification: `npm --prefix astra_backend test` -> **140 tests, 140 passed, 0 failed, 0 skipped/cancelled**.
+- The new contract downloads nothing, reads no weight, imports no model, opens no audio and cannot authorize customer delivery.
+
 ## Current evidence and limitations
 
 - No Astra model has been trained, no real audio processed, and no customer-quality score exists.
@@ -143,7 +152,7 @@ For every major milestone, save code, meaningful tests, provenance and this chec
 
 At chat handoff: inspect branch/HEAD/status, read this file and AGENTS.md, then continue only the current milestone. If a tool or test fails, record it and the recovery step. Git history plus immutable snapshots is the durable record; chat memory is supplementary.
 
-The active milestone is 6D. Build a deterministic, offline Demucs artifact-admission contract that accepts only the frozen `htdemucs_6s` filename and exact SHA-256, requires explicit rights clearance, and cannot download, import or execute the model. Record the precise external rights evidence/decision still required. Do not fetch the weight or process audio until that gate is satisfied.
+The active milestone is 7A. Inventory current source-separation candidates that expose at least bass and guitar stems, can plausibly run within the CPU/cost target, and publish explicit model-artifact terms permitting development evaluation and commercial inference. Record exact upstream revisions, artifact identities, role limits and deployment requirements. Do not download model weights or process audio. Keep the frozen Demucs candidate as blocked rather than weakening its admission gate.
 
 ## Copy-paste handoff
 

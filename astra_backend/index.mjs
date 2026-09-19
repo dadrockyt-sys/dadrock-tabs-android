@@ -446,3 +446,8 @@ export {
   verifyAstraEngineDependencyLock,
   verifyAstraInstalledDistributionSnapshot,
 } from './engineExecutionManifest.mjs';
+
+export {
+  evaluateDemucsArtifactAdmission,
+  getFrozenDemucsArtifactAdmissionContract,
+} from './demucsArtifactAdmission.mjs';

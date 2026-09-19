@@ -1,0 +1,38 @@
+{
+  "milestone": "6D",
+  "dateUtc": "2026-09-19",
+  "parentCommit": "7c556e5527ebab475841dbc940d110327d2e04a9",
+  "artifactAdmissionContract": {
+    "name": "jimmy-paige-astra-demucs-artifact-admission",
+    "version": 1,
+    "candidateId": "htdemucs6s-basic-pitch",
+    "modelName": "htdemucs_6s",
+    "fileName": "5c90dfd2-34c22ccb.th",
+    "sourceUrl": "https://dl.fbaipublicfiles.com/demucs/hybrid_transformer/5c90dfd2-34c22ccb.th",
+    "expectedSha256": "d2a1745f0744721f6b8ca5bf469b67c651ea5ed1b52998cab033b2158609d411",
+    "artifactBytesObservedOnAstra": false,
+    "rightsDecisionFrozen": false,
+    "admittedForDevelopmentExecution": false
+  },
+  "requiredRightsUses": [
+    "development-quality-evaluation",
+    "commercial-customer-inference"
+  ],
+  "node": "v24.19.0",
+  "testCommand": "npm --prefix astra_backend test",
+  "tests": 140,
+  "passed": 140,
+  "failed": 0,
+  "skipped": 0,
+  "cancelled": 0,
+  "testOutputSha256": "192ccd8355c7ee38f9bab5bdc7e0021d1c0eee69f0d574f7da7469485221d7f5",
+  "modelWeightDownloaded": false,
+  "realAudioProcessed": false,
+  "modelImported": false,
+  "modelInvoked": false,
+  "networkAccessByContract": false,
+  "paidServiceInvoked": false,
+  "productionChanged": false,
+  "demucsWeightTermsResolved": false,
+  "interpretation": "The exact Demucs artifact is now guarded by a deterministic offline identity and rights gate. The gate does not establish weight ownership, permission, runtime behavior or musical quality."
+}
