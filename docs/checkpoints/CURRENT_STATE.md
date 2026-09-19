@@ -139,6 +139,12 @@ Do not assume training a new neural model from scratch is necessary or affordabl
 - Verification: `npm --prefix astra_backend test` -> **140 tests, 140 passed, 0 failed, 0 skipped/cancelled**.
 - The new contract downloads nothing, reads no weight, imports no model, opens no audio and cannot authorize customer delivery.
 
+## Branch-only verification runner
+
+- `.github/workflows/astra-backend-tests.yml` runs only `npm --prefix astra_backend test` on `astra-work` / manual dispatch, records the exact test-output SHA-256, and has read-only repository permissions.
+- It installs no model/runtime packages, downloads no model weights, opens no audio, invokes no paid service and performs no deployment or Production action.
+- This runner exists because the active assistant execution container cannot resolve GitHub directly; GitHub Actions provides branch-attached reproducible Node verification without weakening any Astra model gate.
+
 ## Current evidence and limitations
 
 - No Astra model has been trained, no real audio processed, and no customer-quality score exists.

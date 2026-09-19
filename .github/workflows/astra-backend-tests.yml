@@ -1,0 +1,35 @@
+name: Astra backend tests
+
+on:
+  push:
+    branches:
+      - astra-work
+    paths:
+      - 'astra_backend/**'
+      - 'docs/astra/**'
+      - 'docs/checkpoints/CURRENT_STATE.md'
+      - '.github/workflows/astra-backend-tests.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - name: Checkout branch commit
+        uses: actions/checkout@v4
+      - name: Use Node 24
+        uses: actions/setup-node@v4
+        with:
+          node-version: '24'
+      - name: Record runtime
+        run: node --version
+      - name: Run complete Astra backend suite
+        shell: bash
+        run: |
+          set -o pipefail
+          npm --prefix astra_backend test 2>&1 | tee /tmp/astra-test-output.txt
+          echo "ASTRA_TEST_OUTPUT_SHA256=$(sha256sum /tmp/astra-test-output.txt | awk '{print $1}')"
