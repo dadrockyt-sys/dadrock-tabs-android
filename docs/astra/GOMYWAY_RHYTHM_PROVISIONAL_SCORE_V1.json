@@ -1,0 +1,19 @@
+{
+  "predictions": 87,
+  "targets": 104,
+  "tp": 5,
+  "fp": 82,
+  "fn": 99,
+  "precision": 0.05747126436781609,
+  "recall": 0.04807692307692308,
+  "f1": 0.05235602094240838,
+  "meanAbsoluteOnsetErrorSeconds": 0.027802356167272356,
+  "status": "provisional-fixed-grid-rhythm-fixture-comparison",
+  "independentAlignmentVerified": false,
+  "overallModelAccuracy": null,
+  "predictionSha256": "6ee8495a7fa54e7c9a76079792a53908724dbe6adb5e517f761b47b1dec21659",
+  "specSha256": "54f569a740f04244eb4c165e9ee52ce1865c1bb725955a20d1c4fc5cdd672b74",
+  "interpretation": "Conditional comparison to historical rhythm fixture at assumed zero-offset 129-BPM grid. FP means unmatched to this fixture only. Not three-role or full-song accuracy.",
+  "predictionChanged": false,
+  "modelRerun": false
+}

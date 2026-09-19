@@ -1,0 +1,23 @@
+{
+  "status": "provisional-fixed-grid-rhythm-fixture-comparison",
+  "predictionFile": "docs/astra/evaluations/GOMYWAY_FIRST30_BASIC_PITCH_V1.json",
+  "referenceGitBlob": "0ca4791471dc7834465fe746af8df185672d9c62",
+  "measures": [
+    1,
+    16
+  ],
+  "tempoBpm": 129,
+  "assumedFirstMeasureSeconds": 0,
+  "independentAlignmentVerified": false,
+  "windowSeconds": [
+    0,
+    29.767441860465116
+  ],
+  "onsetToleranceSeconds": 0.05,
+  "pitchRule": "exact fretted MIDI; bends not converted to sounding pitch",
+  "matching": "one-to-one maximum count then minimum total absolute onset error per pitch",
+  "boundary": "Both predicted and target onsets inside half-open window; no outside-window matches",
+  "exclusions": "No duration, bend, fingering, role or full-song accuracy claim. Whole-mix unmatched events are only unmatched to this rhythm fixture, not proven false musical notes.",
+  "referenceQuality": "Historical repeated two-bar fixture, not a fresh note-by-note audit of the complete sheet",
+  "selection": "One fixed grid and tolerance; no offset/tempo search; no prediction tuning"
+}

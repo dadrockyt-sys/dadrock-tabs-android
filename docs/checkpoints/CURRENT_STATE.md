@@ -3,7 +3,7 @@
 Updated: 2026-09-19 UTC
 Active branch: `astra-work`
 Canonical handoff: `docs/checkpoints/CURRENT_STATE.md`
-Status: **ALL THREE SCORING REFERENCES AVAILABLE — BASS/LEAD PDF IDENTITIES VERIFIED; FROZEN 87-EVENT BASELINE READY FOR LABEL/ALIGNMENT WORK**
+Status: **ONSET SCORER IMPLEMENTED; PROVISIONAL RHYTHM COUNTS SAVED; INDEPENDENT TIMING ALIGNMENT STILL REQUIRED**
 
 ## Product outcome
 
@@ -271,13 +271,23 @@ User supplied the new public PDF locations. Exact main commit `6121b79769cba8919
 
 All-page overviews and full opening/ending pages were visually inspected. These are image-only PDFs with no extractable text layer. Visible coverage reaches 113, including collapsed rests (bass opening six measures, lead opening four; lead ending three measures from 111). Meter changes at 104/105 must not be flattened into uniform 4/4. This is a coverage review, not completed note-level normalization or proof of byte equivalence to old screenshots. Existing uncertainty annotations remain applicable. No predictions changed, no new model run or score. The missing-reference-file blocker is now cleared: do not ask the user to reattach the old screenshots.
 
-## Exact next step — Score the frozen real-audio candidate
+## Scorer and provisional fixed-grid comparison
 
-1. Keep the 87-event candidate and settings frozen. Use the recovered PDF identities above for bass/lead scoring labels; do not search for old uploads again. Normalize only the scored excerpt first, preserving multi-measure rests, ties/bends and uncertainty. Keep derived note-level scoring labels outside public Git.
-2. Resolve audio-to-measure alignment independently of prediction matches using existing provenance/audio landmarks. Inspect recovered intro scoring fixture semantics; freeze reference pitch/bend representation, timestamp mapping and matching rules before computing a score. Rhythm-only comparison must be labeled an incomplete comparison of unseparated whole-mix events, not three-part model accuracy.
-3. Score frozen predictions with one-to-one pitch/onset matching and explicit clip-boundary policy; report raw TP/FP/FN and timing errors. All three reference sources are now available, but the whole-mix candidate has no role assignments: do not claim three-role accuracy. Keep private screenshots/normalized reference notes out of public Git.
-4. Continue a real separator/event pipeline only after its actual prerequisites; short Basic Pitch runtime success does not clear AudioSep memory/loader/equivalence or Demucs weight gates. Preserve 4096 MB / 1200 seconds / zero-new-spend and blocked customer delivery.
-5. Save actual outputs, scores or blockers and CURRENT_STATE together on astra-work; verify remote/tree and clean local status. Do not resume archived optimization queues or change main/Production.
+User requests lower overhead: batch focused reads/checks, concise updates, no unnecessary model/full-suite reruns. Chat quota/model settings are not controlled by repository code.
+
+- `astra_backend/evaluation/score_note_onsets.py` performs exact-MIDI one-to-one onset matching, maximizing count then minimizing total absolute error per pitch. Validates identities/pitches/onsets and uses a half-open scoring window. Seven focused unittest cases passed (duplicates, greedy-loss case, minimum error, pitch/window boundaries, empty input, invalid values, order invariance).
+- `score_rhythm_fixture.py` replays the comparison from an external reference file and validates its Git blob. No normalized reference notes added to public Git. Replay output is byte-identical to the saved aggregate result.
+- Old global/local alignment scripts use prediction-match maximization; they were inspected but not run or accepted as independent alignment. Their blobs are 28619a9af7a357d5637d494cfec39d44abf79bd6 and 2456cc17ca1065124e11697df63966307d0429e0.
+- `GOMYWAY_RHYTHM_SCORING_SPEC_V1.json` declares a single provisional grid: 129 BPM, assumed measure-1 offset 0, measures1–16 window [0,29.767441860465116), exact fretted MIDI (no bend adjustment), 50-ms onset tolerance. No offset search or retuning.
+- `GOMYWAY_RHYTHM_PROVISIONAL_SCORE_V1.json`: 87 predictions, 104 rhythm-fixture targets, 5 matched, 82 unmatched predictions, 99 unmatched targets, matched mean absolute onset error27.8ms. Conditional P5.75% / R4.81% / F1 5.24%. These are NOT overall model accuracy: independent alignment and fresh label validation are absent; unmatched whole-mix events may belong to other instruments. Do not report 5.24% as validated transcription accuracy.
+- Predictions remain hash 6ee8495a7fa54e7c9a76079792a53908724dbe6adb5e517f761b47b1dec21659. No inference rerun, settings change, new packages, main/Production change. Existing 189-test backend result retained; only seven relevant scorer tests and exact replay run this step.
+
+## Exact next step — Independently align and validate scoring labels
+
+1. Keep the 87-event candidate frozen. Resolve the first-measure audio time and tempo map from recording/provenance, independently of candidate matching. Do not reuse the archived match-maximizing calibration as ground truth. If alignment remains uncertain, report it and withhold a validated score.
+2. Visually check the scored excerpt against the recovered rhythm image and bass/lead PDFs, preserving rests, ties/bends and uncertainty. The historical rhythm fixture repeats a two-bar template; verify its onset and pitch semantics before adopting it as definitive labels. Store normalized labels privately, outside public Git.
+3. Freeze the verified scoring map and pitch/bend rules, then use the tested scorer once on the frozen candidate. Report TP/FP/FN and timing separately from role accuracy. The whole-mix baseline has no role labels and cannot demonstrate three-role separation.
+4. Preserve existing CPU/model/resource gates. Save actual results or unresolved blockers with this checkpoint on astra-work, verify remote/tree and clean local status. Avoid unnecessary full-suite/model reruns and do not alter main/Production.
 
 ## Copy-paste handoff
 
