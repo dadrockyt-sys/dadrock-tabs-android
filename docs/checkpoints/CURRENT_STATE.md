@@ -3,7 +3,7 @@
 Updated: 2026-09-19 UTC
 Active branch: `astra-work`
 Canonical handoff: `docs/checkpoints/CURRENT_STATE.md`
-Status: **MILESTONE 7I COMPLETE — SUPPLIED SYNTHETIC EVENTS CONNECTED TO DIAGNOSTIC TAB PIPELINE; 189 TESTS PASS**
+Status: **REAL-AUDIO DEVELOPMENT EVALUATION REQUESTED — GOMYWAY AUDIO VERIFIED/DECODED; EXACT REFERENCE AND MODEL RUNTIME UNRESOLVED**
 
 ## Product outcome
 
@@ -249,13 +249,18 @@ At chat handoff: inspect branch/HEAD/status, read this file and AGENTS.md, then 
 - Six new tests cover all three roles, identity/timing preservation, missing duration and empty events, invalid/out-of-range data, exact tail offsets, conflicting durations, structure mismatch, failed/cancelled chunks and mutation isolation. Full suite: **189 passed, 0 failed, 0 skipped/cancelled**. Output digest in `MILESTONE_7I_VERIFICATION.json`.
 - README clarifies future canonical sink byte/count/rate verification, incomplete-write handling and safe checkpoint extraction. No measured sink digest, weights, models, real audio, installs, paid services, main or Production actions. Existing readiness/customer gates and resource constraints unchanged.
 
-## Exact next step — Milestone 7J
+## Real-audio evaluation steering / intake
 
-1. Read syntheticEventPipeline and sampleChunkProcessor. Preserve blocked delivery and all model/resource gates.
-2. Implement a bounded synthetic sink verifier with a specified canonical mono sample representation and incremental digest. Bind the final receipt to sample count/rate and complete sequential output ranges; reject gaps, duplicates, nonfinite samples and incomplete finalization. No real audio or model I/O.
-3. Connect the verified synthetic receipt to extraction provenance without treating it as musical evidence. Test complete, tail, failed/uncertain writes and mismatch cases; preserve event diagnostics and blocked delivery.
-4. Record concrete remaining real-model prerequisites: safe checkpoint loader/dependency identities, numerical equivalence, resource measurements and audio quality. Do not infer those from sample hashes or synthetic tabs.
-5. Run the full backend suite; update verification/CURRENT_STATE with exact results and next task, commit all code/tests/docs on astra-work and verify remote tree/ref with clean local status. No main/Production action.
+The user explicitly requested real-audio evaluation, then identified Gomyway midterm and professional 113 on main/public for this purpose. This supersedes the next synthetic-only sink task. Authorization to use these named materials for development evaluation is recorded; historical exposure and archived outcomes remain intact. Do not ask for an audio upload again.
+
+`docs/astra/GOMYWAY_REAL_AUDIO_INTAKE_V1.json` pins the audio and candidate reference identities at main commit bb992d901e78ab19645f8edc8e330d5a142ebd8e. Both downloaded bytes match Git blob identities. The 210.674649-second stereo 44100-Hz AAC midterm recording fully decoded with ffmpeg (exit 0). Professionalexample.jpg was visually inspected and shows the song's guitar tablature, but its identity as “professional 113” is unconfirmed. No transcription/model execution or accuracy score occurred. Prior /tmp/astra-engine-smoke-W0bAmw/venv runtime is absent. No runtime gates, main or Production changed.
+
+## Exact next step — Real-audio development evaluation
+
+1. Resolve the user's exact “professional 113” reference; the public listing currently contains Professionalexample.jpg and no explicitly 113-named file. Preserve reference/audio hashes and previous exposure. Do not silently substitute a screenshot for an event-level reference.
+2. Restore/verify the chosen runtime and resolve the concrete model prerequisites before inference; existing AudioSep loader, dependency, safe deserialization, resource and equivalence gaps are not cleared by audio authorization. A whole-mix transcription baseline must be labeled separately from role separation.
+3. Freeze a bounded development excerpt, role, alignment and scoring rules before producing predictions. Keep reference labels out of inference. Report raw matched/missed/extra notes and timing errors; do not invent a score from decode success.
+4. Run within the existing 4096 MB / 1200 seconds / zero-new-spend constraints when executable. Save measured outputs, actual blockers and this checkpoint on astra-work; verify remote. Do not resume archived optimization queues or change main/Production.
 
 ## Copy-paste handoff
 

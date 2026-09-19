@@ -1,0 +1,32 @@
+{
+  "status": "real-audio-intake-verified-transcription-not-run",
+  "sourceCommit": "bb992d901e78ab19645f8edc8e330d5a142ebd8e",
+  "authorization": "User explicitly requested real audio evaluations and identified Gomyway midterm and professional 113 on main/public for this purpose. Development reuse; historical exposure remains.",
+  "audio": {
+    "path": "public/jimmy-paige-midterm-v1/gomyway-midterm-source.m4a",
+    "gitBlob": "4dd709e3fa177b4daeed71ca97f0199757729d4b",
+    "sha256": "c187bead44529d38544b8452f57328aaf17ce606f08217b78e3157c648392481",
+    "bytes": 3464988,
+    "durationSeconds": 210.674649,
+    "sampleRate": 44100,
+    "channels": 2,
+    "codec": "aac",
+    "fullDecodePassed": true
+  },
+  "referenceCandidate": {
+    "path": "public/Professionalexample.jpg",
+    "gitBlob": "16106197cc1269cca0b3c443908d5ef75e8b4d3e",
+    "sha256": "aca2da3e8d551b2fd82b4ab3ecafa0c8932d6c0a27b54b6213ffc990ca08a9a9",
+    "bytes": 979815,
+    "visualInspection": "Guitar tablature for Are You Gonna Go My Way; not yet confirmed as user professional 113 reference."
+  },
+  "blockers": [
+    "Exact professional 113 reference identity unresolved",
+    "Prior temporary model environment no longer present",
+    "AudioSep loader/resource/equivalence prerequisites unresolved"
+  ],
+  "modelInvoked": false,
+  "accuracyScore": null,
+  "mainModified": false,
+  "productionChanged": false
+}
