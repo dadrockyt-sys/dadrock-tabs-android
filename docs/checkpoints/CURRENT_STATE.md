@@ -3,7 +3,7 @@
 Updated: 2026-09-19 UTC
 Active branch: `astra-work`
 Canonical handoff: `docs/checkpoints/CURRENT_STATE.md`
-Status: **MILESTONE 7B IMPLEMENTED — BANQUET TECHNICALLY PROMISING BUT RIGHTS/QUERY PATH BLOCKED; VERIFICATION PENDING**
+Status: **MILESTONE 7B COMPLETE — BANQUET TECHNICALLY PROMISING BUT RIGHTS/QUERY PATH BLOCKED; 154 TESTS PASS**
 
 ## Product outcome
 
@@ -163,7 +163,8 @@ Do not assume training a new neural model from scratch is necessary or affordabl
 - Banquet is independent of the frozen Demucs weight and is technically promising for bass plus generic guitar. Its BYOQ inference supports CPU via `use_cuda=false` but requires a separate ten-second query clip. The reviewed `PasstFiLMConditionedBandit` query encoder derives conditioning from query audio; no label-only product path was identified in the canonical source inspected.
 - Source code is MIT. The exact Zenodo checkpoint license/commercial rights were not established by the evidence available to this review, so model use remains blocked. MoisesDB training/data commercial-rights lineage is also not yet cleared.
 - Lead/rhythm remains blocked; instrument-class targets do not establish musical role.
-- Verification of initial 7B implementation commit `4b531ede14c1dcc28c41011c0a2aca32ff5cc024`: **154 tests, 154 passed, 0 failed, 0 skipped/cancelled** on Node `v24.20.0`; output SHA-256 `c12bc6f6a25ba94c1e58cfb7e8bf8e11cbf68b425e346618606d21f518f325f9`. A second suite run is required after freezing the query-encoder source identities.
+- Initial implementation verification at `4b531ede14c1dcc28c41011c0a2aca32ff5cc024`: **154/154**; output SHA-256 `c12bc6f6a25ba94c1e58cfb7e8bf8e11cbf68b425e346618606d21f518f325f9`.
+- Final provenance-frozen implementation verification at `ad5634f942b39fe0f3eb98f720ff6cee802da528`: **154 tests, 154 passed, 0 failed, 0 skipped/cancelled** on Node `v24.20.0`; output SHA-256 `f59c0438acb245c35a31cf3177638f2c4d2ca4381f0703f169afa9aa9c293360`.
 - No checkpoint was downloaded; no model/audio/installer/paid service/production route was invoked.
 
 ## Current evidence and limitations
@@ -179,7 +180,7 @@ For every major milestone, save code, meaningful tests, provenance and this chec
 
 At chat handoff: inspect branch/HEAD/status, read this file and AGENTS.md, then continue only the current milestone. If a tool or test fails, record it and the recovery step. Git history plus immutable snapshots is the durable record; chat memory is supplementary.
 
-The active milestone is 7B verification. Run the complete backend suite on the saved Banquet review and freeze exact totals/runtime/output digest. If clean, next resolve the authoritative Zenodo checkpoint license/rights metadata and determine whether Banquet offers a label-only or precomputed-query-embedding path that can satisfy Astra's reference-blind product boundary. Do not download the checkpoint until rights are resolved. Lead/rhythm remains blocked until independent role evidence exists.
+The active milestone is 7C. Resolve the authoritative rights/license metadata for Banquet Zenodo record `13694558` without downloading checkpoint bytes, and review whether a lawfully sourced frozen query-embedding approach can satisfy Astra's reference-blind product boundary without protected/song-specific reference audio. If either checkpoint commercial permission or query provenance cannot be established, keep Banquet blocked and continue the independent-model search. Do not download or execute Banquet until all admission blockers required for development evaluation are explicitly cleared. Lead/rhythm remains blocked until independent role evidence exists.
 
 ## Copy-paste handoff
 
