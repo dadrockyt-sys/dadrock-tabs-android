@@ -1,0 +1,99 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://dadrocktabs.com/contracts/jimmy-paige-astra/analyzer-result-v1.schema.json",
+  "title": "Jimmy PAIge Astra Analyzer Result V1",
+  "type": "object",
+  "additionalProperties": true,
+  "required": [
+    "generatedTab",
+    "transcriptionType",
+    "tuning",
+    "tempo",
+    "timeSignature",
+    "techniques",
+    "analysisEngine",
+    "events",
+    "renderEvents",
+    "astra"
+  ],
+  "properties": {
+    "generatedTab": { "type": "string" },
+    "transcriptionType": { "enum": ["lead", "rhythm", "bass"] },
+    "tuning": { "type": ["string", "null"] },
+    "tempo": { "type": ["number", "null"] },
+    "timeSignature": { "type": ["string", "null"] },
+    "keySignature": { "type": ["string", "null"] },
+    "techniques": { "type": "array", "items": { "type": "string" } },
+    "analysisEngine": { "type": "string", "minLength": 1 },
+    "events": { "type": "array", "items": { "$ref": "#/$defs/event" } },
+    "renderEvents": { "type": "array", "items": { "type": "object" } },
+    "astra": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["contractName", "contractVersion", "requestId", "overallStatus", "stages", "delivery", "lineage"],
+      "properties": {
+        "contractName": { "const": "jimmy-paige-astra-analyzer-result" },
+        "contractVersion": { "const": 1 },
+        "requestId": { "type": "string", "minLength": 1 },
+        "overallStatus": { "enum": ["complete", "partial", "abstained", "failed"] },
+        "stages": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["input", "extraction", "events", "structure", "tablature"],
+          "properties": {
+            "input": { "$ref": "#/$defs/stage" },
+            "extraction": { "$ref": "#/$defs/stage" },
+            "events": { "$ref": "#/$defs/stage" },
+            "structure": { "$ref": "#/$defs/stage" },
+            "tablature": { "$ref": "#/$defs/stage" }
+          }
+        },
+        "delivery": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["deliveryReady", "blockers", "policyVersion"],
+          "properties": {
+            "deliveryReady": { "type": "boolean" },
+            "blockers": { "type": "array", "items": { "type": "string", "minLength": 1 }, "uniqueItems": true },
+            "policyVersion": { "type": ["string", "null"] }
+          }
+        },
+        "lineage": {
+          "type": "object",
+          "additionalProperties": true,
+          "required": ["separator", "eventInference", "structure", "tablature"],
+          "properties": {
+            "separator": { "type": ["string", "null"] },
+            "eventInference": { "type": ["string", "null"] },
+            "structure": { "type": ["string", "null"] },
+            "tablature": { "type": "string", "minLength": 1 }
+          }
+        }
+      }
+    }
+  },
+  "$defs": {
+    "stage": {
+      "type": "object",
+      "additionalProperties": true,
+      "required": ["status", "blockers"],
+      "properties": {
+        "status": { "enum": ["complete", "partial", "abstained", "failed", "not-run"] },
+        "blockers": { "type": "array", "items": { "type": "string", "minLength": 1 }, "uniqueItems": true }
+      }
+    },
+    "event": {
+      "type": "object",
+      "additionalProperties": true,
+      "required": ["eventId", "midi", "onsetSeconds", "durationStatus", "sourceIdentity"],
+      "properties": {
+        "eventId": { "type": "string", "minLength": 1 },
+        "midi": { "type": "integer", "minimum": 0, "maximum": 127 },
+        "onsetSeconds": { "type": "number", "minimum": 0 },
+        "offsetSeconds": { "type": ["number", "null"], "minimum": 0 },
+        "durationStatus": { "enum": ["resolved", "unresolved"] },
+        "sourceIdentity": { "type": "string", "minLength": 1 }
+      }
+    }
+  }
+}

@@ -1,9 +1,9 @@
 # New Astra Work — CURRENT STATE
 
-Updated: 2026-09-18 UTC
+Updated: 2026-09-19 UTC
 Active branch: `astra-work`
 Canonical handoff: `docs/checkpoints/CURRENT_STATE.md`
-Status: **MILESTONE 1 COMPLETE — ISOLATED BACKEND SAVED AND SYNTHETICALLY VERIFIED; NO REAL-AUDIO QUALITY CLAIM**
+Status: **MILESTONE 2 COMPLETE — FULL-CHAIN CONTRACT AND BOUNDED BENCHMARK PLAN FROZEN; NO REAL-AUDIO QUALITY CLAIM**
 
 ## Product outcome
 
@@ -35,9 +35,9 @@ Active implementation and CPU synthetic verification may proceed in the new back
 ## Milestones
 
 0. Establish durable checkpoint, archival source identities and repository instructions. COMPLETE: `8414a74fa18a542ecd6e99fca243a2403e38b29d`.
-1. Copy the isolated deterministic backend to `astra_backend/`, retain original file hashes, run existing CPU synthetic suite, save the result. COMPLETE in the commit containing this checkpoint: **104 passed, 0 failed**.
-2. Specify the full-chain input/output and benchmark contracts: separate development/final evaluation, bass/lead/rhythm coverage, source-separation versus transcription versus rendering errors, completeness as well as precision, cost/latency budget and stop conditions. **NEXT ACTIVE TASK:** write the versioned contract and bounded benchmark plan in `docs/astra/`; identify what is available versus unproven before any real-audio access.
-3. Build an offline adapter and representative synthetic end-to-end fixtures against that contract. No live deployment.
+1. Copy the isolated deterministic backend to `astra_backend/`, retain original file hashes, run existing CPU synthetic suite, save the result. COMPLETE: `27c1bb6f80341244ce666f94e6b9da43a814baf4`; **104 passed, 0 failed**.
+2. Specify the full-chain input/output and benchmark contracts: separate development/final evaluation, bass/lead/rhythm coverage, source-separation versus transcription versus rendering errors, completeness as well as precision, cost/latency budget and stop conditions. COMPLETE in the commit containing this checkpoint.
+3. Build an offline adapter and representative synthetic end-to-end fixtures against that contract. **NEXT ACTIVE TASK:** implement contract normalization and delivery gating inside `astra_backend/`; fixtures must cover all three roles plus complete, partial, abstained and failed outcomes. No live deployment or audio model.
 4. Select a lawful affordable real-audio development/evaluation plan, then execute only within the applicable authorization. Not authorized by this checkpoint alone.
 
 Do not assume training a new neural model from scratch is necessary or affordable. Compare component options against measured product failures before selecting the audio engine.
@@ -52,6 +52,17 @@ Do not assume training a new neural model from scratch is necessary or affordabl
 - No archive branches or historical code were deleted; archive notices are documentation-only. Main/Production were not modified.
 - No background training, model execution or automated save daemon is running. Milestone saves are performed by the working assistant; abrupt interruption can still lose uncommitted work.
 
+## Milestone 2 evidence / handoff
+
+- `docs/astra/FULL_CHAIN_CONTRACT_V1.md`: defines request, stage, event, structure, tablature, delivery, privacy and async boundaries around the actual `/ai-tab` product flow.
+- `docs/astra/BENCHMARK_PLAN_V1.md`: separates reusable contract fixtures, development material and a future locked evaluation; requires bass/lead/rhythm coverage, raw precision and recall/completeness, stage-level error attribution, zero-new-spend operation and explicit stop conditions.
+- `docs/astra/analyzer-request-v1.schema.json`: machine-readable request contract aligned with the existing upload/role boundary.
+- `docs/astra/analyzer-result-v1.schema.json`: frontend-compatible result plus explicit `complete`, `partial`, `abstained` and `failed` states and a separate delivery decision.
+- Schema JSON parsing: PASS. No external JSON Schema validator was installed, so meta-schema validation was not claimed.
+- Backend regression verification after the documentation/schema changes: **104 passed, 0 failed**.
+- The full-chain contract does not select an audio engine, dataset or quality threshold. Final customer-admission thresholds remain to be frozen before an authorized locked evaluation, after development evidence establishes defensible semantics and attainable performance.
+- No real audio, model, network analyzer, payment path or production route was invoked.
+
 ## Current evidence and limitations
 
 - No Astra model has been trained, no real audio processed, and no customer-quality score exists.
@@ -64,6 +75,8 @@ Do not assume training a new neural model from scratch is necessary or affordabl
 For every major milestone, save code, meaningful tests, provenance and this checkpoint in the same commit. Record verified results, blockers, active files, exact next action and parent/source commit IDs. Verify the commit exists on remote `astra-work`. Use the commit containing this checkpoint as its identity; do not create self-referential commit-hash edits.
 
 At chat handoff: inspect branch/HEAD/status, read this file and AGENTS.md, then continue only the current milestone. If a tool or test fails, record it and the recovery step. Git history plus immutable snapshots is the durable record; chat memory is supplementary.
+
+The active implementation surface for Milestone 3 is `astra_backend/`. Treat `docs/astra/analyzer-request-v1.schema.json`, `docs/astra/analyzer-result-v1.schema.json` and `docs/astra/FULL_CHAIN_CONTRACT_V1.md` as the contract. The adapter must be offline, deterministic and fail closed; it must not import archived code or call models/network services.
 
 ## Copy-paste handoff
 

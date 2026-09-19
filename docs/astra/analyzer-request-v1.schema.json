@@ -1,0 +1,79 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://dadrocktabs.com/contracts/jimmy-paige-astra/analyzer-request-v1.schema.json",
+  "title": "Jimmy PAIge Astra Analyzer Request V1",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "contractName",
+    "contractVersion",
+    "requestId",
+    "audioUrl",
+    "pathname",
+    "song",
+    "artist",
+    "transcriptionType",
+    "conditioning"
+  ],
+  "properties": {
+    "contractName": { "const": "jimmy-paige-astra-analyzer-request" },
+    "contractVersion": { "const": 1 },
+    "requestId": { "type": "string", "minLength": 1, "maxLength": 200 },
+    "audioUrl": { "type": "string", "minLength": 1, "maxLength": 2000 },
+    "pathname": { "type": "string", "minLength": 1, "maxLength": 1000 },
+    "song": { "type": "string", "minLength": 1, "maxLength": 120 },
+    "artist": { "type": "string", "minLength": 1, "maxLength": 120 },
+    "transcriptionType": { "enum": ["lead", "rhythm", "bass"] },
+    "conditioning": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["structurePrior", "instrumentConfig"],
+      "properties": {
+        "structurePrior": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["tempoBpm", "timeSignature", "pickupBeats", "feel"],
+          "properties": {
+            "tempoBpm": { "oneOf": [{ "const": "auto" }, { "type": "number", "minimum": 20, "maximum": 400 }] },
+            "timeSignature": {
+              "oneOf": [
+                { "const": "auto" },
+                {
+                  "type": "object",
+                  "additionalProperties": false,
+                  "required": ["numerator", "denominator"],
+                  "properties": {
+                    "numerator": { "type": "integer", "minimum": 1, "maximum": 32 },
+                    "denominator": { "enum": [1, 2, 4, 8, 16, 32] }
+                  }
+                }
+              ]
+            },
+            "pickupBeats": { "oneOf": [{ "const": "auto" }, { "type": "number", "minimum": 0, "maximum": 32 }] },
+            "feel": { "enum": ["auto", "straight", "triplet"] }
+          }
+        },
+        "instrumentConfig": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["role", "tuningMidi", "capoFret"],
+          "properties": {
+            "role": { "enum": ["lead", "rhythm", "bass"] },
+            "tuningMidi": {
+              "oneOf": [
+                { "const": "auto" },
+                {
+                  "type": "array",
+                  "minItems": 4,
+                  "maxItems": 8,
+                  "items": { "type": "integer", "minimum": 0, "maximum": 127 }
+                }
+              ]
+            },
+            "capoFret": { "oneOf": [{ "const": "auto" }, { "type": "integer", "minimum": 0, "maximum": 24 }] }
+          }
+        }
+      }
+    }
+  }
+}
