@@ -1,0 +1,57 @@
+{
+  "milestone": "6B",
+  "dateUtc": "2026-09-19",
+  "parentCommit": "cbc211b4580a9fd058332341e032d58e2b8e28f2",
+  "decision": "Use official demucs==4.0.1 directly; remove audio-separator from the Astra candidate runtime.",
+  "target": {
+    "python": "3.10",
+    "platform": "x86_64-manylinux_2_28",
+    "device": "cpu",
+    "resolverCutoffUtc": "2026-09-19T00:00:00Z"
+  },
+  "lock": {
+    "path": "astra_backend/engine/requirements.lock",
+    "sha256": "a5614dbfad0be96aadc0d76297b6a59abe4e09c80bf2d6a484e53a14a58d38a7",
+    "packageCount": 57,
+    "consecutiveResolutionDigestsMatched": true,
+    "allPackagesDeclareArtifactHashes": true
+  },
+  "criticalPackages": {
+    "demucs": "4.0.1",
+    "basic-pitch": "0.4.0",
+    "numpy": "1.26.4",
+    "tflite-runtime": "2.14.0",
+    "torch": "2.11.0+cpu",
+    "torchaudio": "2.11.0+cpu"
+  },
+  "failedPreflights": [
+    {
+      "attempt": "binary-only resolution",
+      "result": "failed",
+      "reason": "demucs==4.0.1 has no usable wheel for the target; its source distribution must be built or replaced by a separately verified internal wheel"
+    },
+    {
+      "attempt": "unconstrained resolution",
+      "result": "rejected",
+      "reason": "selected torch 2.14.0+cpu with torchaudio 2.11.0+cpu and numpy 2.2.6 with tflite-runtime 2.14.0"
+    }
+  ],
+  "node": "v24.19.0",
+  "testCommand": "npm --prefix astra_backend test",
+  "tests": 131,
+  "passed": 131,
+  "failed": 0,
+  "skipped": 0,
+  "cancelled": 0,
+  "testOutputSha256": "38af7cf672acaec1dc76dfcd5318256557659e93ed4cb96f40e1b8d26979f454",
+  "dependencyMetadataNetworkAccess": true,
+  "packageInstallerInvoked": false,
+  "modelWeightDownloaded": false,
+  "realAudioProcessed": false,
+  "modelImported": false,
+  "modelInvoked": false,
+  "paidServiceInvoked": false,
+  "productionChanged": false,
+  "demucsWeightTermsResolved": false,
+  "interpretation": "A deterministic dependency resolution, not an installed runtime, model execution, quality result or commercial-rights clearance."
+}

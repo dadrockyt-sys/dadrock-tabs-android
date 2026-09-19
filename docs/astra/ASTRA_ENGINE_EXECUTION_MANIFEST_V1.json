@@ -7,11 +7,9 @@
   "intendedUse": "development-comparison-only",
   "execution": {
     "device": "cpu",
-    "audioSeparator": {
-      "packageVersion": "0.30.2",
-      "upstreamTag": "v0.30.2",
-      "upstreamCommit": "99840eea955a19305413639c21ee58e320a1fd14"
-    },
+    "pythonVersion": "3.10",
+    "platform": "x86_64-manylinux_2_28",
+    "separatorEntryPoint": "demucs-cli-direct",
     "demucs": {
       "packageVersion": "4.0.1",
       "upstreamTag": "v4.0.1",
@@ -46,10 +44,6 @@
     "leadRhythmDistinction": false
   },
   "rights": {
-    "audioSeparatorSoftware": {
-      "spdx": "MIT",
-      "evidence": "https://github.com/nomadkaraoke/python-audio-separator/blob/v0.30.2/LICENSE"
-    },
     "demucsSoftware": {
       "spdx": "MIT",
       "evidence": "https://github.com/facebookresearch/demucs/blob/v4.0.1/LICENSE"
@@ -70,7 +64,17 @@
     }
   },
   "evidence": {
-    "packageLockSha256": null,
+    "packageLock": {
+      "path": "astra_backend/engine/requirements.lock",
+      "sha256": "a5614dbfad0be96aadc0d76297b6a59abe4e09c80bf2d6a484e53a14a58d38a7",
+      "packageCount": 57,
+      "resolutionVerified": true,
+      "resolver": "uv pip compile",
+      "pythonVersion": "3.10",
+      "platform": "x86_64-manylinux_2_28",
+      "excludeNewerUtc": "2026-09-19T00:00:00Z"
+    },
+    "packageInstallationVerified": false,
     "modelArtifactsVerifiedOnAstra": false,
     "runtimeWithin1200Seconds": false,
     "developmentMaterialAuthorized": false

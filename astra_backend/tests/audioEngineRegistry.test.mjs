@@ -32,7 +32,7 @@ test('bass plan identifies the direct stem candidate while retaining every execu
   assert.equal(plan.capabilities.bassStem, true);
   assert.equal(plan.developmentExecutionReady, false);
   assert.equal(plan.customerDeliveryEligible, false);
-  assert.ok(plan.blockers.includes('DEMUCS_WEIGHT_IDENTITY_AND_TERMS_UNRESOLVED'));
+  assert.ok(plan.blockers.includes('DEMUCS_WEIGHT_TERMS_UNRESOLVED'));
   assert.ok(plan.blockers.includes('CPU_RUNTIME_TARGET_UNPROVEN_3300_SECOND_LEGACY_ALLOWANCE'));
 });
 
@@ -104,4 +104,3 @@ test('unknown candidates and unsupported roles fail before any execution plan is
     /role must/,
   );
 });
-

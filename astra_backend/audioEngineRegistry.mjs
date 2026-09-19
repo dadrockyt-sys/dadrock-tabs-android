@@ -26,8 +26,8 @@ const CANDIDATES = Object.freeze({
   'htdemucs6s-basic-pitch': Object.freeze({
     candidateId: 'htdemucs6s-basic-pitch',
     status: 'preferred-development-candidate',
-    separation: 'htdemucs_6s-via-audio-separator-0.30.2',
-    eventInference: 'basic-pitch-unpinned-main-baseline',
+    separation: 'demucs-4.0.1-htdemucs_6s-direct-cli-cpu',
+    eventInference: 'basic-pitch-0.4.0-tflite-pinned',
     structureInference: 'none',
     archivedImplementationImported: false,
     capabilities: Object.freeze({
@@ -38,8 +38,7 @@ const CANDIDATES = Object.freeze({
       pitchBends: true,
     }),
     fixedBlockers: Object.freeze([
-      'BASIC_PITCH_IDENTITY_UNPINNED',
-      'DEMUCS_WEIGHT_IDENTITY_AND_TERMS_UNRESOLVED',
+      'DEMUCS_WEIGHT_TERMS_UNRESOLVED',
       'CPU_RUNTIME_TARGET_UNPROVEN_3300_SECOND_LEGACY_ALLOWANCE',
       'STRUCTURE_INFERENCE_UNAVAILABLE',
       'REAL_DEVELOPMENT_EVIDENCE_MISSING',
@@ -154,4 +153,3 @@ export function planAstraAudioEngine({ candidateId, role, sourceContext = 'mixtu
       : 'STATIC_PREFLIGHT_COMPLETE',
   };
 }
-

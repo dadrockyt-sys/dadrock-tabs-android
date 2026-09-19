@@ -1,0 +1,6 @@
+# TFLite 2.14 is not compatible with the NumPy 2.x ABI used by the failed archived run.
+numpy==1.26.4
+
+# Torch and Torchaudio are one matched CPU runtime pair.
+torch==2.11.0+cpu
+torchaudio==2.11.0+cpu

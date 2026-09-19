@@ -6,7 +6,7 @@ This is an independently editable, self-contained copy of the Fresh deterministi
 
 ## Included
 
-Musical structure mapping; simultaneous playable shapes; rhythm spelling including rests/ties; phrase-level fretboard paths; product payload adaptation; note-evidence diagnostics and conservative delivery gates. The offline `analysisContractAdapter.mjs` implements the Astra V1 request/result state machine without audio inference or network access. The static `audioEngineRegistry.mjs` records candidate capabilities and blockers. `engineExecutionManifest.mjs` verifies the candidate's known upstream identities and refuses substitutions or customer authorization. Neither module opens audio, loads models or performs network access. Source identities for the adopted Fresh snapshot: `../docs/astra/BACKEND_ADOPTION_MANIFEST.json`.
+Musical structure mapping; simultaneous playable shapes; rhythm spelling including rests/ties; phrase-level fretboard paths; product payload adaptation; note-evidence diagnostics and conservative delivery gates. The offline `analysisContractAdapter.mjs` implements the Astra V1 request/result state machine without audio inference or network access. The static `audioEngineRegistry.mjs` records candidate capabilities and blockers. `engineExecutionManifest.mjs` verifies the candidate's known upstream identities and its hashed direct-Demucs CPU dependency lock, and refuses substitutions or customer authorization. Neither module opens audio, loads models or performs network access. Source identities for the adopted Fresh snapshot: `../docs/astra/BACKEND_ADOPTION_MANIFEST.json`.
 
 ## Not yet included
 

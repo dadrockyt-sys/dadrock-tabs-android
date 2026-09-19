@@ -443,4 +443,5 @@ export {
 export {
   getFrozenAstraEngineIdentity,
   validateAstraEngineExecutionManifest,
+  verifyAstraEngineDependencyLock,
 } from './engineExecutionManifest.mjs';

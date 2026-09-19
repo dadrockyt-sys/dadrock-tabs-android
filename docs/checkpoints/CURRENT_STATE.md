@@ -3,7 +3,7 @@
 Updated: 2026-09-19 UTC
 Active branch: `astra-work`
 Canonical handoff: `docs/checkpoints/CURRENT_STATE.md`
-Status: **MILESTONE 6A COMPLETE — KNOWN ENGINE IDENTITIES FROZEN; INSTALL LOCK/WEIGHT RIGHTS STILL BLOCKED; NO REAL-AUDIO QUALITY CLAIM**
+Status: **MILESTONE 6B COMPLETE — DIRECT DEMUCS CPU LOCK FROZEN; INSTALL/WEIGHT RIGHTS STILL BLOCKED; NO REAL-AUDIO QUALITY CLAIM**
 
 ## Product outcome
 
@@ -40,7 +40,7 @@ Active implementation and CPU synthetic verification may proceed in the new back
 3. Build an offline adapter and representative synthetic end-to-end fixtures against that contract. COMPLETE: `f1fbb5594df709080b706d07d625579dbf65bf83`; **112 passed, 0 failed**.
 4. Inventory lawful affordable real-audio candidates without executing them. COMPLETE: `3f16308e6aa9969a3e1c03f9bab91d7af6f6bf99`.
 5. Encode candidate capabilities and blockers in an offline fail-closed preflight planner. COMPLETE in the commit containing this checkpoint; **120 passed, 0 failed**.
-6. Freeze engine identities and gate execution. PART A COMPLETE in the commit containing this checkpoint: exact verifiable upstream tag/blob identities plus offline manifest validator; **128 passed, 0 failed**. **NEXT ACTIVE TASK:** produce a complete install lock on an intended CPU execution surface and resolve/capture the separately downloaded Demucs weight's applicable terms before any model/audio run. Do not process audio or claim product selection while these blockers remain.
+6. Freeze engine identities and gate execution. PART A COMPLETE: exact verifiable upstream tag/blob identities plus offline manifest validator; **128 passed, 0 failed**. PART B COMPLETE in the commit containing this checkpoint: direct official Demucs runtime selected, deterministic 57-package CPU lock frozen, unsafe ABI resolutions rejected; **131 passed, 0 failed**. **NEXT ACTIVE TASK:** install the frozen lock in an isolated temporary Python 3.10 CPU environment without downloading model weights or processing audio; verify package identities/import boundaries, then save again. Exact Demucs weight terms remain unresolved and block model execution/commercial use.
 
 Do not assume training a new neural model from scratch is necessary or affordable. Compare component options against measured product failures before selecting the audio engine.
 
@@ -107,6 +107,18 @@ Do not assume training a new neural model from scratch is necessary or affordabl
 - `docs/astra/MILESTONE_6A_VERIFICATION.json` records the runtime, command and test-output digest.
 - No real audio was opened; no model, package installer, network analyzer, paid service or production route was invoked.
 
+## Milestone 6B evidence / handoff
+
+- `docs/astra/ENGINE_RUNTIME_LOCK_V1.md`: replaces the `audio-separator` wrapper candidate with the official `demucs==4.0.1` CLI. The wrapper did not depend on the official Demucs package and carried an unnecessary broad ONNX runtime surface.
+- `astra_backend/engine/requirements.in`, `constraints.txt` and `requirements.lock`: Python 3.10, x86_64 manylinux 2.28, CPU-only graph with 57 packages and artifact hashes. Lock SHA-256: `a5614dbfad0be96aadc0d76297b6a59abe4e09c80bf2d6a484e53a14a58d38a7`.
+- Critical pins: NumPy `1.26.4`, TFLite Runtime `2.14.0`, and matched Torch/Torchaudio `2.11.0+cpu`.
+- Two consecutive resolutions were byte-identical. The first binary-only attempt failed because Demucs 4.0.1 has no usable target wheel; source build support is required. The first unconstrained graph was rejected because it paired Torch 2.14 with Torchaudio 2.11 and selected the known-risk NumPy 2.x/TFLite combination.
+- `astra_backend/engineExecutionManifest.mjs` now verifies the complete hashed lock, refuses ABI drift, TensorFlow substitution and wrapper reintroduction, and reports installation as unverified.
+- The official Demucs source connects `htdemucs_6s` to the exact Meta-hosted weight and verifies its checksum prefix. No separate weight-specific license statement was found in the reviewed source, so rights remain unresolved.
+- Verification: `npm --prefix astra_backend test` -> **131 tests, 131 passed, 0 failed, 0 skipped/cancelled**.
+- `docs/astra/MILESTONE_6B_VERIFICATION.json` records the commands, failures, lock identity and test-output digest.
+- Dependency metadata was resolved over the network. No packages were installed, no model weight was downloaded, no audio was opened, no model was imported/executed, and no paid service or production route was invoked.
+
 ## Current evidence and limitations
 
 - No Astra model has been trained, no real audio processed, and no customer-quality score exists.
@@ -120,7 +132,7 @@ For every major milestone, save code, meaningful tests, provenance and this chec
 
 At chat handoff: inspect branch/HEAD/status, read this file and AGENTS.md, then continue only the current milestone. If a tool or test fails, record it and the recovery step. Git history plus immutable snapshots is the durable record; chat memory is supplementary.
 
-The active milestone is 6B. Produce a complete reproducible install lock for the manifest's intended CPU environment and capture authoritative terms for the exact Demucs weight source. Update the manifest only from recorded evidence. Keep `developmentExecutionReady:false` until the lock, model-artifact verification, rights review, authorized development material and runtime budget are all satisfied. Do not process audio or expose a customer route during this milestone.
+The active milestone is 6C. Install `astra_backend/engine/requirements.lock` into an isolated temporary Python 3.10 x86_64 CPU environment using hashes and the CPU Torch index. Verify installed distribution versions and import boundaries without loading weights, invoking inference or opening audio. If installation succeeds, record the installed distribution identity; if it fails, preserve the exact failure and correct the lock rather than weakening pins. Weight-specific terms must still be resolved before downloading or executing `htdemucs_6s`.
 
 ## Copy-paste handoff
 
