@@ -81,6 +81,36 @@ is accepted by this boundary, so generatedTab, events and renderEvents remain em
 It neither opens the request audio URL nor invokes inference. Injected callbacks own
 any external side effects and retain the processor's cooperative cancellation limits.
 
+## Synthetic extraction handoff and CLAP metadata
+
+`runAstraSyntheticExtraction({ request, chunks, evidence, downstream })` validates
+synthetic-extraction-v1 evidence before reads: matching requestId/role/sampleCount,
+a positive integer sampleRate (up to 384000), sampleIdentity, provenance source and
+processor identities, and quality explicitly unresolved. Evidence is copied/frozen.
+These are declarations, not proof that a sink contains those samples. Nonempty,
+complete processing is required before the awaited downstream callback; failures or
+cancellation skip it. The result keeps blocked `analysis`, `evidence` and diagnostic
+`downstream` status separate. Callback return values are discarded. Downstream
+errors/cancellation stay diagnostic and cannot authorize delivery. Cancellation is
+cooperative; callback side effects cannot be rolled back.
+
+`validateClapTextMetadata(entries)` checks an array of `{ key, shape, dtype }` against
+203 expected text parameters and the reference persistent position_ids buffer.
+Uniform optional module. prefixes are accepted; mixed prefixes, duplicates,
+normalized collisions, extra/missing keys and wrong shapes/dtypes reject. The
+reference profile requires float32 parameters and int64 position_ids. This is a
+proposed strict profile, not observed checkpoint dtypes. Whole CLAP metadata must
+first undergo a separately reviewed extraction; this validator accepts text only.
+The backend-local `clapTextSchema.json` preserves namespace isolation;
+tests exercise it against the documented source inventory. Passing cannot establish
+tensor values, safe deserialization, actual checkpoint identity or execution readiness.
+
+Remaining loader prerequisites: freeze tokenizer special-token/default behavior and
+compatible runtime packages; inspect authorized checkpoint container/buffer/dtype
+inventory with a safe loader; reject unknown pickle globals without fallback; verify
+actual artifact hashes and numerical equivalence; measure peak memory and CPU time.
+No such model work occurs in these synthetic helpers.
+
 ## Not yet included
 
 Astra audio separation, role-aware audio transcription, automatic musical-structure inference, a trained model, validated real-audio accuracy, HTTP job orchestration or production integration. Preserving supplied notes and passing synthetic tests is not a correctness claim about those notes.

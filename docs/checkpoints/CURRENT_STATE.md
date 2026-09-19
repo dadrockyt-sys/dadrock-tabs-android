@@ -3,7 +3,7 @@
 Updated: 2026-09-19 UTC
 Active branch: `astra-work`
 Canonical handoff: `docs/checkpoints/CURRENT_STATE.md`
-Status: **MILESTONE 7G COMPLETE — OFFLINE CHUNK ANALYSIS CONNECTED; TOKENIZER IDENTITIES AND EXPECTED TEXT KEYS FROZEN; 176 TESTS PASS**
+Status: **MILESTONE 7H COMPLETE — SYNTHETIC EXTRACTION HANDOFF AND STRICT CLAP METADATA VALIDATION; 183 TESTS PASS**
 
 ## Product outcome
 
@@ -232,13 +232,22 @@ At chat handoff: inspect branch/HEAD/status, read this file and AGENTS.md, then 
 - Web-tool metadata/source retrieval failed; direct public HTTPS retrieval succeeded. An exploratory offline filename glob had no matches; the existing analysisContractAdapter was used. Details and output digest are in `MILESTONE_7G_VERIFICATION.json`.
 - No weights, model imports/inference, real audio, package installations, paid services, main or Production changes. 4096 MB / 1200 seconds / zero-new-spend and existing readiness gates remain intact.
 
-## Exact next step — Milestone 7H
+## Milestone 7H evidence / handoff
 
-1. Read chunkedAnalysisAdapter, analysisContractAdapter and the 7G loader metadata files. Preserve archived outcomes and all existing execution/customer gates.
-2. Define a validated extraction-evidence handoff separate from sample completion: requested role, sample identity/rate/count, source provenance and explicit unresolved quality. Add a synthetic-only downstream callback path that runs only after complete chunks and explicitly validated evidence; failure/cancellation must never invoke it. Do not make synthetic evidence an engine authorization.
-3. Implement a pure metadata validator for the expected CLAP text-key inventory: reject missing/extra keys, wrong shapes/dtypes, mixed module prefixes and collisions using synthetic dictionaries. Explicitly distinguish reference buffers from actual uninspected checkpoint tensors. No Torch import or weights required.
-4. Document remaining tokenizer defaults/runtime dependency and safe-deserialization prerequisites. Do not claim numerical equivalence or memory fit; no model execution, package installs or real audio.
-5. Run the full backend suite, update verification/CURRENT_STATE with exact results and next step, commit all code/tests/docs on astra-work and verify remote tree/ref with clean local status. No main/Production action.
+- Parent: `72fed47b22e180e07de26b1409940fc60425beac`; local, origin and remote matched at start.
+- `syntheticExtractionHandoff.mjs` validates request/role/sample count/rate/identity/provenance and explicit unresolved quality. Immutable synthetic declarations are passed downstream only after all chunk writes complete. Failure/cancellation skips downstream; downstream errors stay explicit diagnostics. Callback return values never populate the analyzer or delivery payload. Identity is declared, not independently verified against sink bytes.
+- `clapTextMetadata.mjs` checks 203 source-derived parameter keys plus reference position_ids metadata. Missing/extra keys, bad shapes/dtypes, mixed prefixes and normalized duplicates fail. Backend-local inventory preserves runtime namespace isolation. Float32 parameters/int64 buffer are a reference acceptance profile, not observed checkpoint dtypes. No tensor contents are validated.
+- Seven new tests cover synthetic downstream sequencing, evidence mutation isolation, preflight errors, failed/cancelled chunks, downstream failures, and metadata corruption/prefix cases. Full suite: **183 passed, 0 failed, 0 skipped/cancelled**.
+- Initial full suite caught the metadata module importing the documentation inventory outside the backend namespace. Fixed by adding a backend-local reference inventory; the boundary guard was preserved and full suite rerun. Verification records the output digest.
+- README records remaining tokenizer defaults, runtime pins, safe deserialization, artifact/buffer verification, equivalence and resource prerequisites. No weights, models, real audio, package installation, paid services, main or Production actions. Existing engine/customer gates and 4096 MB / 1200 seconds / zero-new-spend unchanged.
+
+## Exact next step — Milestone 7I
+
+1. Read the synthetic extraction handoff and existing deterministic event/structure pipeline. Preserve model and delivery gates; synthetic metadata is never actual audio evidence.
+2. Implement a concrete synthetic downstream diagnostic adapter that accepts supplied events and structure, runs the existing deterministic pipeline, and returns diagnostic results separately from the blocked analyzer payload. Verify no downstream call occurs for chunk failure/cancellation and no synthetic result can authorize customer delivery.
+3. Bind supplied event timing to the declared sample rate/count: reject out-of-range or invalid onset/duration, preserve event identities, and explicitly report unresolved duration rather than inventing notes. Use only synthetic fixtures.
+4. Clarify the future sink identity verification and safe text-checkpoint extraction contracts without downloading weights, installing/importing models or asserting fit/equivalence. Keep reference metadata distinct from actual checkpoint observations.
+5. Run the full backend suite, update verification/CURRENT_STATE with exact results and next task, commit all code/tests/docs on astra-work and verify remote tree/ref with clean local status. No main/Production action.
 
 ## Copy-paste handoff
 

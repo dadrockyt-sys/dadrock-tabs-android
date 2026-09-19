@@ -468,3 +468,6 @@ export { createSampleChunkPlan } from './sampleChunkPlan.mjs';
 export { processSampleChunks, SampleChunkProcessingError } from './sampleChunkProcessor.mjs';
 
 export { runAstraChunkedAnalysis } from './chunkedAnalysisAdapter.mjs';
+
+export { validateSyntheticExtractionEvidence, runAstraSyntheticExtraction } from './syntheticExtractionHandoff.mjs';
+export { validateClapTextMetadata } from './clapTextMetadata.mjs';
