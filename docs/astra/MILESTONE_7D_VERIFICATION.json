@@ -1,0 +1,42 @@
+{
+  "milestone": "7D",
+  "dateUtc": "2026-09-19",
+  "parentCommit": "8d0a38e55ab7e239cd6118845641b7285a49c49c",
+  "runtime": {
+    "node": "v24.19.0",
+    "platform": "Linux x86_64"
+  },
+  "testCommand": "npm --prefix astra_backend test",
+  "tests": 154,
+  "passed": 154,
+  "failed": 0,
+  "skipped": 0,
+  "cancelled": 0,
+  "testOutputSha256": "943eac5081a77359a73f7b81544f9bc23c5605aa700bb40ff6c804ba0823fff1",
+  "samAudioDecision": "standard-loader-deferred-resource-feasibility-not-established",
+  "samAudioSourceRevision": "bb4c6999d2677c7402360e426afc01ddfad6dce0",
+  "samAudioPublishedCheckpointSizeGbRounded": 5.1,
+  "samAudioPeakRamMeasured": false,
+  "audioSepSourceRevision": "944583f18b84589dc965de3ad77525c945334252",
+  "audioSepArtifactRevision": "5638854dccfaea5c5fa4f634c00fe74fbb119244",
+  "audioSepPublishedCombinedArtifactBytes": 3617315079,
+  "audioSepCompleteRightsChainReviewed": false,
+  "audioSepPeakRamMeasured": false,
+  "developmentExecutionReady": false,
+  "customerDeliveryEligible": false,
+  "runtimeCodeChanged": false,
+  "retrievalFailures": [
+    "SAM-Audio metadata API inaccessible",
+    "SAM-Audio small config/checkpoint detail pages returned 401; access not requested"
+  ],
+  "modelWeightDownloaded": false,
+  "realAudioProcessed": false,
+  "modelImported": false,
+  "modelInvoked": false,
+  "packageInstallerInvoked": false,
+  "paidServiceInvoked": false,
+  "productionChanged": false,
+  "mainModified": false,
+  "archivedImplementationModified": false,
+  "evidenceResearchNetworkAccess": true
+}

@@ -3,7 +3,7 @@
 Updated: 2026-09-19 UTC
 Active branch: `astra-work`
 Canonical handoff: `docs/checkpoints/CURRENT_STATE.md`
-Status: **MILESTONE 7C REVIEW COMPLETE — BANQUET REMAINS BLOCKED; SAM-AUDIO METADATA/RESOURCE REVIEW NEXT; 154 TESTS PASS**
+Status: **MILESTONE 7D COMPLETE — STANDARD SAM-AUDIO DEFERRED FOR RESOURCES; AUDIOSEP RIGHTS/MEMORY AND CHUNK COVERAGE NEXT; 154 TESTS PASS**
 
 ## Product outcome
 
@@ -190,17 +190,28 @@ At chat handoff: inspect branch/HEAD/status, read this file and AGENTS.md, then 
 - Verification: `npm --prefix astra_backend test` -> **154 tests, 154 passed, 0 failed, 0 skipped/cancelled**. Runtime, output digest, retrieval failures and no-execution boundaries are in `docs/astra/MILESTONE_7C_VERIFICATION.json`.
 - No model weight, query recording or audio was downloaded/opened; no inference, package installation, paid service, main change or production deployment occurred.
 
-## Exact next step — Milestone 7D
+## Milestone 7D evidence / handoff
 
-1. Read `docs/astra/BANQUET_RIGHTS_QUERY_REVIEW_V1.md`. Keep Banquet and Demucs blocked; do not repeat failed Zenodo requests without a materially new retrieval route or new authoritative evidence.
-2. Review only public canonical documentation and metadata for `facebook/sam-audio-small` plus its mandatory dependencies, starting from SAM-Audio source revision `bb4c6999d2677c7402360e426afc01ddfad6dce0`. Do not download weights, accept gated model terms, request access, install packages or execute models.
-3. Establish the mandatory model inventory and published sizes/parameter counts, whether CPU execution is documented, and whether the full set could plausibly fit the existing **4096-MB memory / 1200-second analyzer / zero-new-spend** target. Distinguish measured evidence from estimates and unknowns. GPU recommendation alone is not proof that CPU cannot work; lack of measurements is not proof it can.
-4. If resources are plausibly compatible, freeze available model-repository revisions, artifact filenames/published hashes, license scope and required dependency terms. Record unavailable metadata explicitly. No runtime migration from Astra's frozen Python 3.10 graph is implied.
-5. Treat text prompts as requested targets, never proof of accurate bass/guitar or independent lead/rhythm separation. Keep customer delivery and development execution false.
-6. If resource/rights evidence fails or remains unavailable, record rejection/deferment and continue a bounded independent separator search. Do not provision hardware, expand budgets, contact maintainers or weaken existing gates.
-7. Run `npm --prefix astra_backend test`; save findings, actual verification, gaps and an exact next action together in CURRENT_STATE and a milestone commit on `astra-work`. Push and verify the remote ref; preserve a clean working tree. No main/Production action.
+- Parent: `8d0a38e55ab7e239cd6118845641b7285a49c49c`; local HEAD, origin/astra-work and the remote matched before work.
+- `docs/astra/SAM_AUDIO_RESOURCE_REVIEW_V1.md` records source identities, mandatory/config-dependent components, resource evidence and exact access failures.
+- Standard SAM-Audio small is **deferred under the existing 4096-MB CPU target**: the public checkpoint listing is 5.1 GB; the loader additionally initializes T5, vision and configured auxiliary models. Disk size is not measured RAM, but no plausible standard-loader fit was established. No claim that every optimized implementation is impossible.
+- Small-model config/checkpoint detail pages returned 401; no gate was bypassed, access requested or terms accepted. The public model card has a CPU fallback example, but no measured small-model CPU result. Published A100 latency cannot establish Astra CPU latency.
+- Bounded independent search identified AudioSep's real text-query/CPU path. Pinned GitHub revision `944583f18b84589dc965de3ad77525c945334252`; official Space artifact revision `5638854dccfaea5c5fa4f634c00fe74fbb119244`; two published SHA-256 identities are recorded. Combined artifacts are 3,617,315,079 bytes, not a peak-RAM measurement.
+- The artifact-hosting Space declares MIT at the pinned revision. This is meaningful publisher evidence, but CLAP upstream artifact rights and complete initialization memory remain unreviewed. AudioSep is not execution-ready or customer-eligible.
+- Static inspection found AudioSep's chunk path returns all-zero output for inputs <=160,000 samples (five seconds at 32 kHz), and a README/function-name mismatch. No model was run. These are concrete integration risks for the next work, not Astra quality measurements.
+- `npm --prefix astra_backend test`: **154 passed, 0 failed, 0 skipped/cancelled**. `docs/astra/MILESTONE_7D_VERIFICATION.json` records runtime and output digest. Runtime gates unchanged; documentation-only milestone.
+- No weights, real audio, protected reference data, model runtime, package installer, paid service, main or Production action. Git command-line writes lack authentication in this workspace; milestone saving uses the connected GitHub API, with exact local/remote tree comparison and ref verification.
 
-**7D outcome:** a documented resource/rights feasibility decision, not audio-quality evidence or execution authorization.
+## Exact next step — Milestone 7E
+
+1. Read `docs/astra/SAM_AUDIO_RESOURCE_REVIEW_V1.md`. Keep standard SAM-Audio deferred, Banquet/Demucs blocked, and all execution/customer gates false.
+2. Follow the pinned AudioSep CLAP wrapper to the exact `music_speech_audioset_epoch_15_esc_89.98.pt` publisher release and applicable terms. Preserve the Space MIT evidence without inferring permission for unrelated third-party components. Freeze authoritative revisions and scope; do not download weights or audio.
+3. Inspect AudioSep/CLAP initialization and loading from canonical source to estimate resident weights and startup duplication. Distinguish full CLAP from its text-only branch and identify whether removing unused components would require a new adapter. Keep **4096 MB / 1200 seconds / zero-new-spend** unchanged; no installation/inference or budget expansion.
+4. Make concrete offline backend progress on the discovered coverage risk: implement a model-independent integer-sample chunk planner in astra_backend with explicit input/context/output slices. Every nonempty input, including <=5 seconds, exact boundaries and short tails, must receive complete ordered output coverage without duplicate ownership. Validate invalid lengths/options and test bounded windows and context cropping using synthetic sample IDs or an identity callback. Do not copy/import archived or AudioSep model code, load audio, or grant readiness. Export/document the helper only after meaningful tests pass.
+5. Report AudioSep as blocked/deferred if rights or resources remain unresolved. Do not label text prompts as proof of bass/guitar accuracy or independent lead/rhythm separation.
+6. Run `npm --prefix astra_backend test`; save code/tests, research evidence, verification JSON and CURRENT_STATE together; commit to astra-work through GitHub if CLI authentication remains unavailable, verify exact tree/ref correspondence and leave the local branch clean. Preserve main/Production.
+
+**7E outcome:** a tested reusable chunk-coverage component plus an evidence-backed AudioSep feasibility/rights decision; no model execution or real-audio quality claim.
 
 ## Copy-paste handoff
 
