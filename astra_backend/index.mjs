@@ -464,3 +464,5 @@ export {
 } from './independentSeparationCandidateReview.mjs';
 
 export { createSampleChunkPlan } from './sampleChunkPlan.mjs';
+
+export { processSampleChunks, SampleChunkProcessingError } from './sampleChunkProcessor.mjs';

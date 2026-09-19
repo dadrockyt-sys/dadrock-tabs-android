@@ -32,6 +32,37 @@ for (const { input, crop, output } of plan) {
 Integration must verify output length/alignment, model stride, edge-padding needs and seam
 quality. Coverage tests do not prove musical accuracy or that an actual model preserves samples.
 
+## Sequential chunk processing
+
+`processSampleChunks({ totalSamples, chunkOptions, read, process, write, signal })`
+builds a sample plan and awaits each read/process/write in order. Callbacks receive
+`{ chunk, signal }`; processor and writer also receive `samples`. Read and process
+must return a dense finite-number Array, Float32Array or Float64Array of exactly
+the input-window length. The writer receives only the cropped output and must
+resolve `{ writtenSamples: chunk.output.end - chunk.output.start }` after the
+whole range has been accepted. A success result has `status: 'complete'` and
+confirmed `writtenSamples`/`writtenChunks` counts.
+
+The adapter copies and validates buffers: processing may mutate its input without
+changing the reader's source, and the writer owns a separate Float64Array. Callback
+implementations must not mutate returned buffers after resolving or grow/retain
+unbounded buffers if they need bounded memory. There is no whole-result allocation
+or concurrency in the adapter; real model memory is a separate concern.
+
+Configuration errors reject before callbacks run. Operational failures throw
+`SampleChunkProcessingError` with the original `cause` and immutable `progress`:
+status (`failed`/`cancelled`), stage, chunk index, confirmed prefix counts, and
+`uncertainOutput`. A write error or invalid acknowledgement leaves its attempted
+range uncertain because external partial side effects cannot be undone. Confirmed
+counts exclude that range. Acknowledgements are a sink contract, not independent
+verification of durable storage; retries/rollback/publication belong to the caller.
+
+Cancellation is cooperative between awaited calls, with the AbortSignal passed
+to every callback. A pending callback must settle before progress can be reported;
+the adapter does not race an outstanding write or kill a hung processor. Cancellation
+after a successful write records that acknowledgement but still returns no success.
+No timeout, production I/O, inference, or delivery authorization is supplied here.
+
 ## Not yet included
 
 Astra audio separation, role-aware audio transcription, automatic musical-structure inference, a trained model, validated real-audio accuracy, HTTP job orchestration or production integration. Preserving supplied notes and passing synthetic tests is not a correctness claim about those notes.

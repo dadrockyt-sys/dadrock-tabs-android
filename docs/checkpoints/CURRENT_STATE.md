@@ -3,7 +3,7 @@
 Updated: 2026-09-19 UTC
 Active branch: `astra-work`
 Canonical handoff: `docs/checkpoints/CURRENT_STATE.md`
-Status: **MILESTONE 7E COMPLETE — SAMPLE CHUNK PLANNER IMPLEMENTED; CLAP PUBLISHER RIGHTS LINK ESTABLISHED; RESOURCE/INTEGRATION WORK NEXT; 160 TESTS PASS**
+Status: **MILESTONE 7F COMPLETE — SEQUENTIAL CHUNK PROCESSOR IMPLEMENTED; TEXT-ONLY CLAP DESIGN FROZEN; OFFLINE STAGE INTEGRATION NEXT; 170 TESTS PASS**
 
 ## Product outcome
 
@@ -212,16 +212,25 @@ At chat handoff: inspect branch/HEAD/status, read this file and AGENTS.md, then 
 - `npm --prefix astra_backend test`: **160 passed, 0 failed, 0 skipped/cancelled**. `docs/astra/MILESTONE_7E_VERIFICATION.json` records runtime and output digest.
 - No models/weights/audio/installer/paid service/main/Production actions. CPU synthetic tests only. Existing engine readiness/customer gates remain unchanged.
 
-## Exact next step — Milestone 7F
+## Milestone 7F evidence / handoff
 
-1. Read `docs/astra/AUDIOSEP_CLAP_REVIEW_V1.md` and the planner/README. Preserve existing gates, archived outcomes, standard SAM-Audio deferment and Banquet/Demucs blocks.
-2. Implement an offline chunk-processing adapter around `createSampleChunkPlan` using injected reader/processor/writer callbacks. Process one window at a time with explicit global/local coordinates, validate reader and processor lengths and finite numeric samples, crop context, and await writes before advancing. No file/network/model dependencies. Define callback buffer ownership clearly.
-3. Fail explicitly on missing/truncated/nonfinite outputs, reader/processor/writer errors and cancellation; never fill gaps with silent zeros or report completion after partial failure. Surface how much output was successfully written so callers cannot mistake partial results for complete. Test with synthetic identity/transform callbacks, short clips/tails, invalid output, asynchronous sequencing, failures and cancellation; no real audio or inference.
-4. Freeze a text-only CLAP loading design from the pinned AudioSep source: exact fine-tuned text keys/projection/normalization/tokenizer configuration, avoid full HTSAT and redundant pretrained RoBERTa construction, identify how strict key checks would work. Use public config/source metadata only. Document unknown tensor shapes and dependency identities; do not download weights/install/import models or generate embeddings.
-5. The exact CLAP artifact's CC0 publisher declaration and AudioSep Space MIT evidence are already recorded. Preserve their scope; remaining engine resource/dependency/equivalence prerequisites must be explicit. Keep 4096 MB / 1200 seconds / zero-new-spend unchanged; do not claim fit from disk sizes or prompt support as lead/rhythm truth.
-6. Run `npm --prefix astra_backend test`; save code/tests/docs/verification/CURRENT_STATE together on astra-work, verify remote tree/ref and leave a clean local branch. Use the connected GitHub API if CLI writes lack credentials. No main/Production change.
+- Parent: `bdf2636bec5650b9312865693b416629dd166314`; local, origin and remote matched before implementation.
+- `astra_backend/sampleChunkProcessor.mjs`, exported through `index.mjs`, adds sequential injected read/process/write callbacks around the sample planner. It validates exact lengths and finite numeric samples, copies callback buffers, crops context and awaits each write acknowledgement before advancing.
+- Failures and cooperative cancellation expose confirmed sample/chunk counts and any uncertain write range. A partial/failed write cannot report completion. Cancellation waits for in-flight callbacks; this is not a timeout or process-kill mechanism. Callbacks remain responsible for truthful acknowledgements and external I/O.
+- Ten new synthetic tests cover reconstruction including short/exact/tail cases, asynchronous ordering, malformed outputs, callback failures, partial writes, cancellation, buffer ownership/detachment and configuration validation. README documents the callback contract.
+- `docs/astra/CLAP_TEXT_ONLY_LOADING_DESIGN_V1.md` freezes the pinned source text path: RoBERTa pooler output, fine-tuned projection and normalization; strict text-key selection; local tokenizer/config requirements; no HTSAT or redundant pretrained text initialization. Actual checkpoint keys/shapes, tokenizer artifact hashes, package pins, equivalence and peak memory remain unverified. This is a design, not an implemented model loader.
+- `npm --prefix astra_backend test`: **170 passed, 0 failed, 0 skipped/cancelled**. Runtime/output digest and execution boundaries are recorded in `docs/astra/MILESTONE_7F_VERIFICATION.json`.
+- Public source/config metadata only; no weights, model imports/inference, real audio, installers, paid services, main or Production changes. Existing readiness/customer gates and 4096 MB / 1200 seconds / zero-new-spend constraints remain unchanged.
 
-**7F outcome:** a tested synthetic chunk-processing boundary and concrete text-only loading design, not permission to execute models or a real-audio quality claim.
+## Exact next step — Milestone 7G
+
+1. Read the sequential processor contract in `astra_backend/README.md`, `sampleChunkProcessor.mjs`, the existing offline analysis-stage adapter and `docs/astra/CLAP_TEXT_ONLY_LOADING_DESIGN_V1.md`. Preserve archived outcomes and existing engine/customer gates.
+2. Connect chunk complete/failed/cancelled outcomes to the existing offline analysis-stage contract using injected synthetic callbacks. Preserve confirmed and uncertain progress; partial, failed or cancelled output must never enter render/delivery paths. Complete sample processing alone cannot establish musical quality or customer eligibility.
+3. Add meaningful synthetic integration tests for complete processing, mid-stream failure, uncertain writes and cancellation through the analysis boundary. No real audio, model runtime, package installation or weight downloads.
+4. Continue the text-only design prerequisites with public metadata: freeze local tokenizer/config identities and a source-derived exact text-key inventory. Explicitly distinguish source expectations from uninspected checkpoint tensors; do not infer memory fit or embedding equivalence.
+5. Run the full backend suite; update verification and this checkpoint with actual results and remaining blockers. Commit code/tests/docs together on astra-work, verify remote tree/ref and leave the local branch clean. Use the connected GitHub API if CLI writes lack credentials. No main/Production action.
+
+**7G outcome:** tested offline analysis integration with fail-closed partial-output handling and more precise loader prerequisites; no model execution or real-audio quality claim.
 
 ## Copy-paste handoff
 
