@@ -3,7 +3,7 @@
 Updated: 2026-09-19 UTC
 Active branch: `astra-work`
 Canonical handoff: `docs/checkpoints/CURRENT_STATE.md`
-Status: **MILESTONE 3 COMPLETE — OFFLINE FULL-CHAIN ADAPTER FAILS CLOSED; AUDIO ENGINE SELECTION NEXT; NO REAL-AUDIO QUALITY CLAIM**
+Status: **MILESTONE 4 COMPLETE — ZERO-NEW-SPEND ENGINE INVENTORY RECORDED; STATIC PREFLIGHT NEXT; NO REAL-AUDIO QUALITY CLAIM**
 
 ## Product outcome
 
@@ -37,8 +37,8 @@ Active implementation and CPU synthetic verification may proceed in the new back
 0. Establish durable checkpoint, archival source identities and repository instructions. COMPLETE: `8414a74fa18a542ecd6e99fca243a2403e38b29d`.
 1. Copy the isolated deterministic backend to `astra_backend/`, retain original file hashes, run existing CPU synthetic suite, save the result. COMPLETE: `27c1bb6f80341244ce666f94e6b9da43a814baf4`; **104 passed, 0 failed**.
 2. Specify the full-chain input/output and benchmark contracts: separate development/final evaluation, bass/lead/rhythm coverage, source-separation versus transcription versus rendering errors, completeness as well as precision, cost/latency budget and stop conditions. COMPLETE: `21f20cc6545155b7b7ccf9c18c2394ab7f183925`.
-3. Build an offline adapter and representative synthetic end-to-end fixtures against that contract. COMPLETE in the commit containing this checkpoint: **112 passed, 0 failed**.
-4. Select a lawful affordable real-audio development/evaluation plan, then execute only within the applicable authorization. **NEXT ACTIVE TASK:** inventory viable zero-new-spend audio separation/event-inference options already present or legally obtainable; map each option to lead/rhythm/bass coverage, resource needs and missing evidence. Do not run real audio, models or paid services during the inventory.
+3. Build an offline adapter and representative synthetic end-to-end fixtures against that contract. COMPLETE: `f1fbb5594df709080b706d07d625579dbf65bf83`; **112 passed, 0 failed**.
+4. Select a lawful affordable real-audio development/evaluation plan, then execute only within the applicable authorization. PART A COMPLETE in the commit containing this checkpoint: static inventory and staged candidate recommendation. **NEXT ACTIVE TASK:** implement the offline candidate capability registry and preflight planner described in `docs/astra/AUDIO_ENGINE_INVENTORY_V1.md`; do not import/run Python models or use audio.
 
 Do not assume training a new neural model from scratch is necessary or affordable. Compare component options against measured product failures before selecting the audio engine.
 
@@ -74,6 +74,16 @@ Do not assume training a new neural model from scratch is necessary or affordabl
 - A synthetic delivery-policy identity exercises the complete state in tests. It grants no production/customer authority.
 - No real audio, separator, event-inference model, network service, payment path or production route was invoked.
 
+## Milestone 4 evidence / handoff
+
+- `docs/astra/AUDIO_ENGINE_INVENTORY_V1.md`: source-identity-pinned inventory of the current whole-mix Basic Pitch analyzer, six-stem CPU separator, historical register gate and historical structure estimate.
+- Best bounded candidate for later authorized development comparison: `htdemucs_6s` bass/generic-guitar stem -> pinned Basic Pitch -> Astra. It is not selected for product use and has not been executed.
+- Critical gap: no repository component cleanly separates lead from rhythm guitar. The historical “three-way separation” is fixed MIDI-register filtering and is rejected as role truth.
+- Basic Pitch software is Apache-2.0; audio-separator and upstream Demucs software are MIT based on recorded upstream LICENSE blobs. Exact downloadable model-weight identity/terms still require review before real/commercial use.
+- Current CPU separator allows 3300 seconds, outside Astra's intended 1200-second analyzer ceiling. Cost, memory, latency and downstream accuracy remain unmeasured.
+- Main's Basic Pitch install is unpinned and uses identical upstream inference for all three role selections; role changes only post-inference fingering/tuning behavior.
+- No real audio, separator, Basic Pitch inference, network analyzer, paid service or production route was invoked.
+
 ## Current evidence and limitations
 
 - No Astra model has been trained, no real audio processed, and no customer-quality score exists.
@@ -87,7 +97,7 @@ For every major milestone, save code, meaningful tests, provenance and this chec
 
 At chat handoff: inspect branch/HEAD/status, read this file and AGENTS.md, then continue only the current milestone. If a tool or test fails, record it and the recovery step. Git history plus immutable snapshots is the durable record; chat memory is supplementary.
 
-The active research surface for Milestone 4 is `docs/astra/`. Inventory candidate audio engines and already-available code/read-only history. Keep the `astra_backend/` interface frozen during the inventory. Do not run models or open governed real-audio data merely to fill the comparison.
+The active implementation surface is `astra_backend/`: add an offline static capability registry/preflight planner. It must express bass versus generic-guitar capability honestly, reject register-as-role claims and expose rights/runtime/evidence blockers. It must not import or execute audio/model dependencies.
 
 ## Copy-paste handoff
 

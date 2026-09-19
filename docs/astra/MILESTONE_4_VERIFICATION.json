@@ -1,0 +1,29 @@
+{
+  "milestone": 4,
+  "dateUtc": "2026-09-19",
+  "parentCommit": "f1fbb5594df709080b706d07d625579dbf65bf83",
+  "artifact": "docs/astra/AUDIO_ENGINE_INVENTORY_V1.md",
+  "repositoryBaseline": "bb992d901e78ab19645f8edc8e330d5a142ebd8e",
+  "repositorySourceBlobs": {
+    "wholeMixBasicPitchAnalyzer": "c9e407abf1ee12fc986837e55ab9e6561809de4e",
+    "sixStemSeparator": "b5529f5651205ebfee67d30c148df0e8d2391cda",
+    "separatorRequirements": "5c14da92a617e104a92a8cbb64f0c0d34be89409",
+    "historicalRegisterGate": "b411bb1c19aa079b03a0ecc20e547583a63603e8",
+    "historicalStructureEstimate": "7cca1fb920057f2b181045b2f69c8cb21a40b43e"
+  },
+  "upstreamEvidenceBlobs": {
+    "basicPitchLicense": "dc22a7345838b69ab77a02ff021584383b52d0e8",
+    "basicPitchReadme": "97f122a9a1d27417553f7c25c6dd4683b0172e30",
+    "audioSeparatorLicense": "47f04d39e8804def1c9afe7ae594eebec92d3e05",
+    "audioSeparatorReadme": "8b6c73d3168243179b14c0f4980940da9d0e9546",
+    "demucsLicense": "a45a376fb0fcd4a3de06b6c096e62028929a2dcb",
+    "demucsReadme": "fe7e77b992b7918eba9491119d313abf5bc3eff1"
+  },
+  "modelWeightTermsResolved": false,
+  "realAudioProcessed": false,
+  "modelInvoked": false,
+  "networkAnalyzerInvoked": false,
+  "paidServiceInvoked": false,
+  "productionChanged": false,
+  "interpretation": "Read-only static candidate inventory; no engine selection, accuracy, runtime, cost or customer-readiness claim."
+}
