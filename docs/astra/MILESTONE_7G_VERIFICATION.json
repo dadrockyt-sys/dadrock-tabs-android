@@ -1,0 +1,35 @@
+{
+  "milestone": "7G",
+  "dateUtc": "2026-09-19",
+  "parentCommit": "90df21ab43255e11d5b1fa01e2d9cea217c84b0f",
+  "runtime": {
+    "node": "v24.19.0",
+    "platform": "Linux x86_64"
+  },
+  "testCommand": "npm --prefix astra_backend test",
+  "tests": 176,
+  "passed": 176,
+  "failed": 0,
+  "skipped": 0,
+  "cancelled": 0,
+  "newTests": 6,
+  "testOutputSha256": "2aaaa53f7bf67e97707b7cdd2f6cb6e72c4c3dc24035b8a25733bc6057b59b36",
+  "recoveries": [
+    "Initial targeted fixture errors: incorrect planner option names; corrected; targeted 6/6 then full 176/176.",
+    "Web metadata/source retrieval unavailable; direct public HTTPS succeeded.",
+    "Exploratory offline filename glob unmatched; read existing analysisContractAdapter instead."
+  ],
+  "runtimeCodeChanged": true,
+  "publicNonWeightFilesHashed": true,
+  "modelWeightDownloaded": false,
+  "modelImported": false,
+  "modelInvoked": false,
+  "realAudioProcessed": false,
+  "packageInstallerInvoked": false,
+  "paidServiceInvoked": false,
+  "mainModified": false,
+  "productionChanged": false,
+  "customerDeliveryEligible": false,
+  "developmentExecutionReady": false,
+  "peakMemoryMeasured": false
+}

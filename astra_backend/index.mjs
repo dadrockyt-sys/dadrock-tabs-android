@@ -466,3 +466,5 @@ export {
 export { createSampleChunkPlan } from './sampleChunkPlan.mjs';
 
 export { processSampleChunks, SampleChunkProcessingError } from './sampleChunkProcessor.mjs';
+
+export { runAstraChunkedAnalysis } from './chunkedAnalysisAdapter.mjs';

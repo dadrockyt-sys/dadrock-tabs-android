@@ -66,3 +66,25 @@ This is a reusable integration boundary, not a model or file adapter. It assumes
 ## Next implementation
 
 Connect complete/failed/cancelled chunk outcomes to Astra's existing offline analysis-stage contract using synthetic callbacks, ensuring partial/uncertain output cannot reach customer rendering. Then freeze local tokenizer/config identities and the exact text-key inventory contract from metadata, without weights or inference. Keep resource and numerical-equivalence prerequisites visible rather than reopening the resolved CLAP publisher-rights search.
+
+## Milestone 7G refinement
+
+`CLAP_TOKENIZER_FILES_V1.json` freezes four proposed local bundle files at the
+immutable RoBERTa revision e2da8e2f811d1448a5b465c236feacd80ffbac7b: config,
+tokenizer config, vocabulary and merges. Public non-weight bytes were fetched and
+SHA-256 hashed; computed Git blob identities match the repository tree metadata.
+No tokenizer was instantiated. Historical training-time alias resolution, complete
+special-token/default behavior and dependency compatibility remain unverified.
+
+`CLAP_TEXT_KEY_INVENTORY_V1.json` enumerates 203 expected parameter names/shapes
+from the pinned CLAP path plus RoBERTa configuration and the linked Transformers
+4.30.2 source reference. That source has a persistent position_ids buffer and a
+nonpersistent token_type_ids buffer. This reference is not a chosen runtime lock or
+proof of the checkpoint inventory. Reconcile the actual runtime and checkpoint
+buffers explicitly; do not silently discard them or use strict=False. No model was
+imported and no checkpoint tensor was inspected.
+
+The offline chunk adapter now records outcomes in extraction.chunkProgress while
+leaving events/structure/tablature unrun. Sample completion alone supplies no role
+or quality evidence. Next work should define the missing validated extraction and
+synthetic downstream handoff, alongside a strict metadata inventory validator.

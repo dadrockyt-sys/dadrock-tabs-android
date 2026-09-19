@@ -63,6 +63,24 @@ the adapter does not race an outstanding write or kill a hung processor. Cancell
 after a successful write records that acknowledgement but still returns no success.
 No timeout, production I/O, inference, or delivery authorization is supplied here.
 
+## Offline chunk analysis integration
+
+`runAstraChunkedAnalysis({ request, chunks })` validates the existing analyzer
+request before invoking `processSampleChunks(chunks)`. Operational outcomes appear
+in `astra.stages.extraction.chunkProgress`, including confirmed counts and uncertain
+write ranges. Configuration errors reject before callbacks. Original callback error
+objects are not serialized into the result.
+
+Complete sample processing maps to partial extraction with missing musical evidence;
+cancellation maps to abstained extraction; failures map to failed extraction. The
+existing overall status is abstained while role presence remains uncertain (or failed
+on processing failure). Inspect chunkProgress.status for the mechanical outcome.
+Input completion covers request and plan validation only, not decoding every sample.
+Events, structure and tablature remain not-run. No pipeline payload or delivery policy
+is accepted by this boundary, so generatedTab, events and renderEvents remain empty.
+It neither opens the request audio URL nor invokes inference. Injected callbacks own
+any external side effects and retain the processor's cooperative cancellation limits.
+
 ## Not yet included
 
 Astra audio separation, role-aware audio transcription, automatic musical-structure inference, a trained model, validated real-audio accuracy, HTTP job orchestration or production integration. Preserving supplied notes and passing synthetic tests is not a correctness claim about those notes.

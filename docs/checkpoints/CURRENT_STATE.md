@@ -3,7 +3,7 @@
 Updated: 2026-09-19 UTC
 Active branch: `astra-work`
 Canonical handoff: `docs/checkpoints/CURRENT_STATE.md`
-Status: **MILESTONE 7F COMPLETE — SEQUENTIAL CHUNK PROCESSOR IMPLEMENTED; TEXT-ONLY CLAP DESIGN FROZEN; OFFLINE STAGE INTEGRATION NEXT; 170 TESTS PASS**
+Status: **MILESTONE 7G COMPLETE — OFFLINE CHUNK ANALYSIS CONNECTED; TOKENIZER IDENTITIES AND EXPECTED TEXT KEYS FROZEN; 176 TESTS PASS**
 
 ## Product outcome
 
@@ -222,15 +222,23 @@ At chat handoff: inspect branch/HEAD/status, read this file and AGENTS.md, then 
 - `npm --prefix astra_backend test`: **170 passed, 0 failed, 0 skipped/cancelled**. Runtime/output digest and execution boundaries are recorded in `docs/astra/MILESTONE_7F_VERIFICATION.json`.
 - Public source/config metadata only; no weights, model imports/inference, real audio, installers, paid services, main or Production changes. Existing readiness/customer gates and 4096 MB / 1200 seconds / zero-new-spend constraints remain unchanged.
 
-## Exact next step — Milestone 7G
+## Milestone 7G evidence / handoff
 
-1. Read the sequential processor contract in `astra_backend/README.md`, `sampleChunkProcessor.mjs`, the existing offline analysis-stage adapter and `docs/astra/CLAP_TEXT_ONLY_LOADING_DESIGN_V1.md`. Preserve archived outcomes and existing engine/customer gates.
-2. Connect chunk complete/failed/cancelled outcomes to the existing offline analysis-stage contract using injected synthetic callbacks. Preserve confirmed and uncertain progress; partial, failed or cancelled output must never enter render/delivery paths. Complete sample processing alone cannot establish musical quality or customer eligibility.
-3. Add meaningful synthetic integration tests for complete processing, mid-stream failure, uncertain writes and cancellation through the analysis boundary. No real audio, model runtime, package installation or weight downloads.
-4. Continue the text-only design prerequisites with public metadata: freeze local tokenizer/config identities and a source-derived exact text-key inventory. Explicitly distinguish source expectations from uninspected checkpoint tensors; do not infer memory fit or embedding equivalence.
-5. Run the full backend suite; update verification and this checkpoint with actual results and remaining blockers. Commit code/tests/docs together on astra-work, verify remote tree/ref and leave the local branch clean. Use the connected GitHub API if CLI writes lack credentials. No main/Production action.
+- Parent: `90df21ab43255e11d5b1fa01e2d9cea217c84b0f`; local, origin and remote matched before implementation.
+- `astra_backend/chunkedAnalysisAdapter.mjs` exports `runAstraChunkedAnalysis`: validates requests before callbacks, connects processor outcomes to the analyzer extraction stage and preserves confirmed/uncertain progress. Cancellation maps to abstention; failures map to failed. Complete samples remain partial extraction with uncertain role. Events/structure/tablature do not run; no tab, render events or delivery eligibility is emitted.
+- Six new synthetic integration tests cover successful reconstruction without delivery, read/process failures, uncertain sink receipts and JSON preservation, cancellation, empty input and preflight rejection. Full suite: **176 passed, 0 failed, 0 skipped/cancelled**. Initial fixtures used incorrect chunk-option names; corrected to the existing planner contract, then targeted and full suites passed.
+- `docs/astra/CLAP_TOKENIZER_FILES_V1.json` freezes SHA-256, Git blob identities and sizes of config/tokenizer config/vocabulary/merges at an immutable public revision. Non-weight bytes were fetched and hashed; all four blob hashes match tree metadata.
+- `docs/astra/CLAP_TEXT_KEY_INVENTORY_V1.json` enumerates 203 source-derived parameter names/shapes and reference buffer behavior. Transformers 4.30.2 is a source reference, not an approved runtime pin. Actual checkpoint tensors/buffers, tokenizer execution, dependency lock, numerical equivalence and resource fit remain unverified.
+- Web-tool metadata/source retrieval failed; direct public HTTPS retrieval succeeded. An exploratory offline filename glob had no matches; the existing analysisContractAdapter was used. Details and output digest are in `MILESTONE_7G_VERIFICATION.json`.
+- No weights, model imports/inference, real audio, package installations, paid services, main or Production changes. 4096 MB / 1200 seconds / zero-new-spend and existing readiness gates remain intact.
 
-**7G outcome:** tested offline analysis integration with fail-closed partial-output handling and more precise loader prerequisites; no model execution or real-audio quality claim.
+## Exact next step — Milestone 7H
+
+1. Read chunkedAnalysisAdapter, analysisContractAdapter and the 7G loader metadata files. Preserve archived outcomes and all existing execution/customer gates.
+2. Define a validated extraction-evidence handoff separate from sample completion: requested role, sample identity/rate/count, source provenance and explicit unresolved quality. Add a synthetic-only downstream callback path that runs only after complete chunks and explicitly validated evidence; failure/cancellation must never invoke it. Do not make synthetic evidence an engine authorization.
+3. Implement a pure metadata validator for the expected CLAP text-key inventory: reject missing/extra keys, wrong shapes/dtypes, mixed module prefixes and collisions using synthetic dictionaries. Explicitly distinguish reference buffers from actual uninspected checkpoint tensors. No Torch import or weights required.
+4. Document remaining tokenizer defaults/runtime dependency and safe-deserialization prerequisites. Do not claim numerical equivalence or memory fit; no model execution, package installs or real audio.
+5. Run the full backend suite, update verification/CURRENT_STATE with exact results and next step, commit all code/tests/docs on astra-work and verify remote tree/ref with clean local status. No main/Production action.
 
 ## Copy-paste handoff
 
