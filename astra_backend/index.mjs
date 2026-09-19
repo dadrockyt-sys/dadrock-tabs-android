@@ -457,3 +457,8 @@ export {
   evaluateAstraSeparationRightsCandidate,
   listAstraSeparationRightsCandidates,
 } from './separationCandidateRightsRegistry.mjs';
+
+export {
+  evaluateBanquetIndependentCandidate,
+  getBanquetIndependentCandidateReview,
+} from './independentSeparationCandidateReview.mjs';

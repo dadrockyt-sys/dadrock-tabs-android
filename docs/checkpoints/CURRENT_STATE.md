@@ -3,7 +3,7 @@
 Updated: 2026-09-19 UTC
 Active branch: `astra-work`
 Canonical handoff: `docs/checkpoints/CURRENT_STATE.md`
-Status: **MILESTONE 7A COMPLETE — ZERO RIGHTS+CAPABILITY CANDIDATES FOUND; 148 TESTS PASS; NO REAL-AUDIO QUALITY CLAIM**
+Status: **MILESTONE 7B IMPLEMENTED — BANQUET TECHNICALLY PROMISING BUT RIGHTS/QUERY PATH BLOCKED; VERIFICATION PENDING**
 
 ## Product outcome
 
@@ -156,6 +156,16 @@ Do not assume training a new neural model from scratch is necessary or affordabl
 - Verification on implementation commit `46fe9f2fb9f90e167714d1222b40d60d92f299cc`: `npm --prefix astra_backend test` -> **148 tests, 148 passed, 0 failed, 0 skipped/cancelled** on Node `v24.20.0`; output SHA-256 `18e27897e9862144d5cec2776233a3a2f6edc670368ca34f0321e3a8b73fbaa1`.
 - No weight was downloaded; no audio/model/installer/paid service/production route was invoked.
 
+## Milestone 7B evidence / handoff
+
+- `docs/astra/INDEPENDENT_SEPARATOR_REVIEW_V1.md`: no-download Banquet review pinned to source revision `79ed5bb75e5c3a40cd319d9d990cee913fc65c26` and Zenodo record `13694558`.
+- `astra_backend/independentSeparationCandidateReview.mjs`: static fail-closed review for Banquet. It records explicit bass/guitar target classes, CPU control, checkpoint metadata and unresolved rights/query blockers; it cannot download/import/invoke a model or open audio.
+- Banquet is independent of the frozen Demucs weight and is technically promising for bass plus generic guitar. Its BYOQ inference supports CPU via `use_cuda=false` but requires a separate ten-second query clip.
+- Source code is MIT. The exact Zenodo checkpoint license/commercial rights were not established by the evidence available to this review, so model use remains blocked. MoisesDB training/data commercial-rights lineage is also not yet cleared.
+- Lead/rhythm remains blocked; instrument-class targets do not establish musical role.
+- Verification: pending complete backend suite after this save.
+- No checkpoint was downloaded; no model/audio/installer/paid service/production route was invoked.
+
 ## Current evidence and limitations
 
 - No Astra model has been trained, no real audio processed, and no customer-quality score exists.
@@ -169,7 +179,7 @@ For every major milestone, save code, meaningful tests, provenance and this chec
 
 At chat handoff: inspect branch/HEAD/status, read this file and AGENTS.md, then continue only the current milestone. If a tool or test fails, record it and the recovery step. Git history plus immutable snapshots is the durable record; chat memory is supplementary.
 
-The active milestone is 7B. Continue a no-download search for an **independently trained** separator that exposes both bass and guitar, has a plausible CPU/cost path, and whose exact model-artifact terms explicitly permit development evaluation and commercial paid-tab inference. Record immutable artifact identity and full rights lineage before any download. If no such candidate is found, prepare the decision record between obtaining explicit clearance for the frozen Demucs weight and scoping a separately licensed/trained replacement. Lead/rhythm remains blocked until independent role evidence exists.
+The active milestone is 7B verification. Run the complete backend suite on the saved Banquet review and freeze exact totals/runtime/output digest. If clean, next resolve the authoritative Zenodo checkpoint license/rights metadata and determine whether Banquet offers a label-only or precomputed-query-embedding path that can satisfy Astra's reference-blind product boundary. Do not download the checkpoint until rights are resolved. Lead/rhythm remains blocked until independent role evidence exists.
 
 ## Copy-paste handoff
 
