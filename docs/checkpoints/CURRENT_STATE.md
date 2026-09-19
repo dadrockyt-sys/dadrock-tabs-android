@@ -3,7 +3,7 @@
 Updated: 2026-09-19 UTC
 Active branch: `astra-work`
 Canonical handoff: `docs/checkpoints/CURRENT_STATE.md`
-Status: **MILESTONE 7B COMPLETE — BANQUET TECHNICALLY PROMISING BUT RIGHTS/QUERY PATH BLOCKED; 154 TESTS PASS**
+Status: **MILESTONE 7C REVIEW COMPLETE — BANQUET REMAINS BLOCKED; SAM-AUDIO METADATA/RESOURCE REVIEW NEXT; 154 TESTS PASS**
 
 ## Product outcome
 
@@ -180,25 +180,27 @@ For every major milestone, save code, meaningful tests, provenance and this chec
 
 At chat handoff: inspect branch/HEAD/status, read this file and AGENTS.md, then continue only the current milestone. If a tool or test fails, record it and the recovery step. Git history plus immutable snapshots is the durable record; chat memory is supplementary.
 
-## Exact next step — Milestone 7C
+## Milestone 7C evidence / handoff
 
-Complete these steps in order:
+- Parent/source branch commit: `115b668fc625d8468a5c7b408f277b6de3b87602`. Local HEAD and origin/astra-work were brought to this verified remote identity before work. The older divergent local milestone-6D commit was preserved as `astra-work-local-preserved-f3693e25`; it was not merged or discarded. The remote has progressed beyond the historical 128-test handoff.
+- `docs/astra/BANQUET_RIGHTS_QUERY_REVIEW_V1.md`: authoritative Zenodo retrieval attempts failed/time out; no new license/record revision could be established. This is unavailable evidence, not proof of prohibited use. The checkpoint rights remain unresolved.
+- Canonical Banquet model source confirms an audio-derived 768-dimensional PaSST-to-FiLM boundary. A cached embedding adapter is technically conceivable, but no upstream label-only/precomputed-vector input or authorized query source was established. The actual model uses `Passt`, not `PasstWrapper`; its OpenMIC PaSST dependency also needs exact artifact/rights review before execution.
+- Banquet's 7C admission success conditions were NOT met. Existing code gates remain unchanged and blocked. No new documentation-mirroring tests were added.
+- Independent search continued to SAM-Audio, pinned to `bb4c6999d2677c7402360e426afc01ddfad6dce0`. Its README documents text prompting, and its SAM License expressly covers trained weights. It is a research lead only: gated checkpoint access, exact artifact/dependency rights and CPU/memory/latency feasibility remain unreviewed.
+- Verification: `npm --prefix astra_backend test` -> **154 tests, 154 passed, 0 failed, 0 skipped/cancelled**. Runtime, output digest, retrieval failures and no-execution boundaries are in `docs/astra/MILESTONE_7C_VERIFICATION.json`.
+- No model weight, query recording or audio was downloaded/opened; no inference, package installation, paid service, main change or production deployment occurred.
 
-1. **Do not download or execute Banquet yet.** Keep `developmentExecutionReady:false` and `customerDeliveryEligible:false`.
-2. **Resolve the authoritative checkpoint rights first.** Review the authoritative metadata/terms for Zenodo record `13694558`, specifically the recommended `ev-pre-aug.ckpt`. Record the exact record/revision, file identity already published by the source, the applicable license or permission, and whether it explicitly permits both:
-   - development-quality evaluation; and
-   - commercial customer inference for paid tablature.
-3. **Fail closed if the checkpoint terms are incomplete or ambiguous.** Do not infer checkpoint rights from the MIT source-code license. If commercial permission cannot be established from authoritative evidence, leave Banquet blocked and record the exact missing evidence.
-4. **Resolve the query-conditioning boundary without protected reference audio.** Inspect only the canonical Banquet/query-bandit source and authoritative documentation to determine whether Astra can lawfully use either:
-   - a label-only conditioning path; or
-   - a frozen/precomputed query embedding with a clean, documented source and explicit product-use rights.
-   Do not reuse archived song-specific stems, exposed benchmark audio, customer audio, or unverifiable legacy reference material as query conditioning.
-5. **Preserve role honesty.** Bass and generic guitar capability may be investigated; lead and rhythm must continue to return `LEAD_RHYTHM_DISTINCTION_UNAVAILABLE` until independent role evidence exists. Do not substitute pitch/register filtering for role evidence.
-6. **Update Astra only from recorded evidence.** If the checkpoint-rights and query-provenance blockers are genuinely resolved, update the Banquet review/admission code and tests with immutable identities and fail-closed substitution checks. Otherwise, record the unresolved blocker and continue the independent separator search.
-7. **Do not process real audio during 7C.** Do not download model weights, invoke Banquet/Basic Pitch, call paid services, modify `main`, deploy, or touch Production.
-8. **Verify and save the milestone.** Run `npm --prefix astra_backend test`, create the milestone verification JSON with parent commit/runtime/command/test totals/output digest and explicit no-audio/no-model/no-installer/no-paid-service/no-production statements, update this checkpoint, commit and push to `astra-work`, verify the remote commit, and leave the branch clean.
+## Exact next step — Milestone 7D
 
-**7C success condition:** authoritative evidence establishes commercial/development permission for the exact Banquet checkpoint **and** a clean query-conditioning path can be frozen without protected/song-specific reference audio. If either condition fails, Banquet remains blocked; that is a valid Milestone 7C result.
+1. Read `docs/astra/BANQUET_RIGHTS_QUERY_REVIEW_V1.md`. Keep Banquet and Demucs blocked; do not repeat failed Zenodo requests without a materially new retrieval route or new authoritative evidence.
+2. Review only public canonical documentation and metadata for `facebook/sam-audio-small` plus its mandatory dependencies, starting from SAM-Audio source revision `bb4c6999d2677c7402360e426afc01ddfad6dce0`. Do not download weights, accept gated model terms, request access, install packages or execute models.
+3. Establish the mandatory model inventory and published sizes/parameter counts, whether CPU execution is documented, and whether the full set could plausibly fit the existing **4096-MB memory / 1200-second analyzer / zero-new-spend** target. Distinguish measured evidence from estimates and unknowns. GPU recommendation alone is not proof that CPU cannot work; lack of measurements is not proof it can.
+4. If resources are plausibly compatible, freeze available model-repository revisions, artifact filenames/published hashes, license scope and required dependency terms. Record unavailable metadata explicitly. No runtime migration from Astra's frozen Python 3.10 graph is implied.
+5. Treat text prompts as requested targets, never proof of accurate bass/guitar or independent lead/rhythm separation. Keep customer delivery and development execution false.
+6. If resource/rights evidence fails or remains unavailable, record rejection/deferment and continue a bounded independent separator search. Do not provision hardware, expand budgets, contact maintainers or weaken existing gates.
+7. Run `npm --prefix astra_backend test`; save findings, actual verification, gaps and an exact next action together in CURRENT_STATE and a milestone commit on `astra-work`. Push and verify the remote ref; preserve a clean working tree. No main/Production action.
+
+**7D outcome:** a documented resource/rights feasibility decision, not audio-quality evidence or execution authorization.
 
 ## Copy-paste handoff
 

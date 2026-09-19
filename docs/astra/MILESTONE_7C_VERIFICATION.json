@@ -1,0 +1,39 @@
+{
+  "milestone": "7C",
+  "dateUtc": "2026-09-19",
+  "parentCommit": "115b668fc625d8468a5c7b408f277b6de3b87602",
+  "runtime": {
+    "node": "v24.19.0",
+    "platform": "Linux x86_64"
+  },
+  "testCommand": "npm --prefix astra_backend test",
+  "tests": 154,
+  "passed": 154,
+  "failed": 0,
+  "skipped": 0,
+  "cancelled": 0,
+  "testOutputSha256": "d5bbce1f220d7d488c4535031b0e0183298ba5a99f7928ae552463c585746cf0",
+  "result": "review-complete-admission-conditions-not-met",
+  "checkpointRightsResolved": false,
+  "cleanQueryConditioningFrozen": false,
+  "developmentExecutionReady": false,
+  "customerDeliveryEligible": false,
+  "retrievalFailures": [
+    "Zenodo page/API timeout; export JSON inaccessible",
+    "Hugging Face small model raw README/LICENSE inaccessible"
+  ],
+  "banquetSourceRevision": "79ed5bb75e5c3a40cd319d9d990cee913fc65c26",
+  "banquetModelSourceBlob": "4b2575d64a6db6a7dd160176e313f019e3c1cd1f",
+  "samAudioResearchRevision": "bb4c6999d2677c7402360e426afc01ddfad6dce0",
+  "modelWeightDownloaded": false,
+  "realAudioProcessed": false,
+  "modelImported": false,
+  "modelInvoked": false,
+  "packageInstallerInvoked": false,
+  "paidServiceInvoked": false,
+  "productionChanged": false,
+  "mainModified": false,
+  "archivedImplementationModified": false,
+  "evidenceResearchNetworkAccess": true,
+  "runtimeCodeChanged": false
+}
