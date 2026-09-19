@@ -4,13 +4,15 @@
     "commit": "99e05eacbc3d8a38208ed41edadeee5b2f823c7b",
     "path": "docs/checkpoints/CURRENT_STATE.md",
     "blob": "5cd9171a3525f201b183af622954f6a343a2ffca",
-    "snapshot": "docs/checkpoints/archive/V143_CURRENT_STATE_2026-09-18.md"
+    "snapshot": "docs/checkpoints/archive/V143_CURRENT_STATE_2026-09-18.md",
+    "archival_notice_commit": "0710ce97c106e40eb8ad59975d6cffff5803d9a0"
   },
   {
     "branch": "songsterr-fresh-pipeline-v1",
     "commit": "7be69898cf3eb7ae32cbe8963714895ad99c5853",
     "path": "docs/checkpoints/SONGSTERR_FRESH_PIPELINE_CURRENT_STATE.md",
     "blob": "9a491de575023159709605c8fb06fa809f2dcb82",
-    "snapshot": "docs/checkpoints/archive/SONGSTERR_FRESH_CURRENT_STATE_2026-09-18.md"
+    "snapshot": "docs/checkpoints/archive/SONGSTERR_FRESH_CURRENT_STATE_2026-09-18.md",
+    "archival_notice_commit": "25e41dcac88f6067835c4d1d9e250c4d7e7542ac"
   }
 ]

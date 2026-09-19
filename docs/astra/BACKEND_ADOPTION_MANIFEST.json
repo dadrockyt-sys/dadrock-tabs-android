@@ -1,0 +1,292 @@
+{
+  "source_commit": "7be69898cf3eb7ae32cbe8963714895ad99c5853",
+  "files": [
+    {
+      "source_path": "songsterr_pipeline/README.md",
+      "astra_path": "astra_backend/README.md",
+      "source_git_blob": "bd2ba269c96f8338018a967a9c2ece2776a9a225",
+      "source_sha256": "52db33fa449c46a75e748ce647e99711179768aca5c1b7b96ca59a2f5edb365e",
+      "adoption": "documentation/package identity updated"
+    },
+    {
+      "source_path": "songsterr_pipeline/audioStructureAdapter.mjs",
+      "astra_path": "astra_backend/audioStructureAdapter.mjs",
+      "source_git_blob": "1848dc77f2578232e4165bffda74b842bc6dcd3f",
+      "source_sha256": "86105cf01ce3655ffd08b36b35e6de34f284ff5fae343daa41cf7f259fbddc20",
+      "adoption": "byte-identical source/test snapshot"
+    },
+    {
+      "source_path": "songsterr_pipeline/contextualRhythmSpelling.mjs",
+      "astra_path": "astra_backend/contextualRhythmSpelling.mjs",
+      "source_git_blob": "c617d0fbe29c06adeba5dbb2325e8b56cddfac9b",
+      "source_sha256": "539336b28b85d12b19fa7139defb66da5991ad40767652e7c5d5f0228fe2b651",
+      "adoption": "byte-identical source/test snapshot"
+    },
+    {
+      "source_path": "songsterr_pipeline/deterministicPipeline.mjs",
+      "astra_path": "astra_backend/deterministicPipeline.mjs",
+      "source_git_blob": "281057f86690cf9e9a14dd91e066814d4884ed51",
+      "source_sha256": "e029e87b9f35ddded49a878cc8748691b9ab0dfa5a9de3ad5ea3b6aac87ebca4",
+      "adoption": "byte-identical source/test snapshot"
+    },
+    {
+      "source_path": "songsterr_pipeline/freshEvaluator.mjs",
+      "astra_path": "astra_backend/freshEvaluator.mjs",
+      "source_git_blob": "9a17ee1616a36a4d6805ca04a88e41e4b5f93317",
+      "source_sha256": "83282b1e33e696b68f890ed21a30247132d37ada9038e04a5ee824491baa868d",
+      "adoption": "byte-identical source/test snapshot"
+    },
+    {
+      "source_path": "songsterr_pipeline/fretboardPathOptimizer.mjs",
+      "astra_path": "astra_backend/fretboardPathOptimizer.mjs",
+      "source_git_blob": "fb3468682ff07933b652ae54e824c47c3fdc691f",
+      "source_sha256": "80156820ef638eff394c9a827a27a219a8ece285b99b0a7d1fb7cbcc4976fedf",
+      "adoption": "byte-identical source/test snapshot"
+    },
+    {
+      "source_path": "songsterr_pipeline/index.mjs",
+      "astra_path": "astra_backend/index.mjs",
+      "source_git_blob": "18ef7286e7eb81d31dd6b2cacc859b3d71511a01",
+      "source_sha256": "c7d5469850e678ab785ba7629f59c2622a364364de3169d24adfc73021b4ef8f",
+      "adoption": "byte-identical source/test snapshot"
+    },
+    {
+      "source_path": "songsterr_pipeline/modelValidationContractScaffold.mjs",
+      "astra_path": "astra_backend/modelValidationContractScaffold.mjs",
+      "source_git_blob": "2570c5063b645a59cea53f5f8ca848662489094a",
+      "source_sha256": "8fad3404ace8f094f21e9030fa8b39875c574142958b29b551765d7b7ef84f2a",
+      "adoption": "byte-identical source/test snapshot"
+    },
+    {
+      "source_path": "songsterr_pipeline/noteEventExposure.mjs",
+      "astra_path": "astra_backend/noteEventExposure.mjs",
+      "source_git_blob": "64cdeb1a3fadba78c8d8aa1da92217a5d94711f1",
+      "source_sha256": "db45087fa07aca08081ea61a538e3d3a6e0beff1290a0dca688506982daf22dc",
+      "adoption": "byte-identical source/test snapshot"
+    },
+    {
+      "source_path": "songsterr_pipeline/noteEvidenceAdapter.mjs",
+      "astra_path": "astra_backend/noteEvidenceAdapter.mjs",
+      "source_git_blob": "5686b249d71d96487f96599447a14f84914b405d",
+      "source_sha256": "f0d799f9eccf9982ab99337e3e72d75d6745cf7cb430c00fbd4fe43b3f21f294",
+      "adoption": "byte-identical source/test snapshot"
+    },
+    {
+      "source_path": "songsterr_pipeline/noteEvidenceDiagnostics.mjs",
+      "astra_path": "astra_backend/noteEvidenceDiagnostics.mjs",
+      "source_git_blob": "ace5a910b07ceea651a47014af1d801de8d75e5e",
+      "source_sha256": "28b79de986d3756fa9345982ae284084002f5c232c10a6d1c199398a6c8c20ac",
+      "adoption": "byte-identical source/test snapshot"
+    },
+    {
+      "source_path": "songsterr_pipeline/noteEvidenceEvaluator.mjs",
+      "astra_path": "astra_backend/noteEvidenceEvaluator.mjs",
+      "source_git_blob": "4ff84197beb2a9284bedacc9ffb9b913b876c706",
+      "source_sha256": "b5404e37231fe38f58f7cb7d307191ea5fb169194364f372991ce7b4ecc4a5cd",
+      "adoption": "byte-identical source/test snapshot"
+    },
+    {
+      "source_path": "songsterr_pipeline/package.json",
+      "astra_path": "astra_backend/package.json",
+      "source_git_blob": "7e531215bbd2d9ae654625dcc64e706c18e88eb7",
+      "source_sha256": "23d981f0cffd4e212310bdd50b2ef11dc49db463fd9908c8c02a96117e018f53",
+      "adoption": "documentation/package identity updated"
+    },
+    {
+      "source_path": "songsterr_pipeline/playableShapeDecoder.mjs",
+      "astra_path": "astra_backend/playableShapeDecoder.mjs",
+      "source_git_blob": "adce5e9cc129caae23775cda0ca809fdc5bb0224",
+      "source_sha256": "bb730c3b5ca0fe7c46bc0fc9f6658d8de03694f648ed42c5d77cfcc8501be108",
+      "adoption": "byte-identical source/test snapshot"
+    },
+    {
+      "source_path": "songsterr_pipeline/productShellAdapter.mjs",
+      "astra_path": "astra_backend/productShellAdapter.mjs",
+      "source_git_blob": "c99b1dbe7c65f6336ac785600509cca2bd15d3fe",
+      "source_sha256": "38312d34a789db3dfbfb30de1840eca1b1480dde0fecbd669c1dcb74197dee0f",
+      "adoption": "byte-identical source/test snapshot"
+    },
+    {
+      "source_path": "songsterr_pipeline/rhythmNotation.mjs",
+      "astra_path": "astra_backend/rhythmNotation.mjs",
+      "source_git_blob": "6c152b19b4803ce1d86b85b6758e03dfc3bff38f",
+      "source_sha256": "89b9fe45b1c3af193d2877f9d522c1face54d864d80b03e9911bc90ba38117e5",
+      "adoption": "byte-identical source/test snapshot"
+    },
+    {
+      "source_path": "songsterr_pipeline/structureFretboardPath.mjs",
+      "astra_path": "astra_backend/structureFretboardPath.mjs",
+      "source_git_blob": "18a1e53aa081453d479bd7fe5eb9d625441f2bf1",
+      "source_sha256": "afc4e756ff5f987f37e2b0aee34294f5e0f4f0a83311468416b00890fe7d72d4",
+      "adoption": "byte-identical source/test snapshot"
+    },
+    {
+      "source_path": "songsterr_pipeline/structureIdentity.mjs",
+      "astra_path": "astra_backend/structureIdentity.mjs",
+      "source_git_blob": "502c0ef5174af20081335ea1ec65b22a3702324b",
+      "source_sha256": "54344728f9c7cb07e3791b63a523a98c4aa18df1110d58a7c4ce14251f2d0b0c",
+      "adoption": "byte-identical source/test snapshot"
+    },
+    {
+      "source_path": "songsterr_pipeline/structureMap.mjs",
+      "astra_path": "astra_backend/structureMap.mjs",
+      "source_git_blob": "4f6a66894ea289051bc6bf248ae892fde7486d76",
+      "source_sha256": "da1b2a642b93b1fad3c6e9db5a6382a158e7d3cd5fb7bd7273c9261ff41dec00",
+      "adoption": "byte-identical source/test snapshot"
+    },
+    {
+      "source_path": "songsterr_pipeline/structureRhythmNotation.mjs",
+      "astra_path": "astra_backend/structureRhythmNotation.mjs",
+      "source_git_blob": "041314288b03a8f6daa9996237a4d98c78cffe3c",
+      "source_sha256": "14d4191f6eea478f17ac9f4a72d7d32ed1cc32d8a93ddfe3599e53205327c65c",
+      "adoption": "byte-identical source/test snapshot"
+    },
+    {
+      "source_path": "songsterr_pipeline/tests/audioStructureAdapter.test.mjs",
+      "astra_path": "astra_backend/tests/audioStructureAdapter.test.mjs",
+      "source_git_blob": "4293644409eb9921118eaf8efa815ddf9d6bc368",
+      "source_sha256": "3e4a0a2452132514c4fe0821194f1a0836446c15a87c1ca1da5a12b6e39f8acf",
+      "adoption": "byte-identical source/test snapshot"
+    },
+    {
+      "source_path": "songsterr_pipeline/tests/boundaryGuard.test.mjs",
+      "astra_path": "astra_backend/tests/boundaryGuard.test.mjs",
+      "source_git_blob": "5d962af29609a431c566dafdbbc47029c5848568",
+      "source_sha256": "963c8a2ab481d7ff22286109f6487a359922fff625665b7ebfab33bab343e9fc",
+      "adoption": "byte-identical source/test snapshot"
+    },
+    {
+      "source_path": "songsterr_pipeline/tests/contextualRhythmSpelling.test.mjs",
+      "astra_path": "astra_backend/tests/contextualRhythmSpelling.test.mjs",
+      "source_git_blob": "8df48a576da227997e301669301f17dae54c7a6b",
+      "source_sha256": "c2d375bab2a815d460ec82f8b001e56141bf6a91f6f4a8cadeb3b1dcf6921c6a",
+      "adoption": "byte-identical source/test snapshot"
+    },
+    {
+      "source_path": "songsterr_pipeline/tests/deterministicPipeline.test.mjs",
+      "astra_path": "astra_backend/tests/deterministicPipeline.test.mjs",
+      "source_git_blob": "dfff47a548cb83bdda194ec5df7170d1761d827e",
+      "source_sha256": "add6e7a42c9c1354264ab466edb3de7bcac14200fcfcccbe590887f553b190d1",
+      "adoption": "byte-identical source/test snapshot"
+    },
+    {
+      "source_path": "songsterr_pipeline/tests/freshEvaluator.test.mjs",
+      "astra_path": "astra_backend/tests/freshEvaluator.test.mjs",
+      "source_git_blob": "35741dede3c0bed0223dabf78156b763e5004bca",
+      "source_sha256": "2f6f6c31fba211512af1a51a5b533f8171404a21638361345e9c39609379a7bd",
+      "adoption": "byte-identical source/test snapshot"
+    },
+    {
+      "source_path": "songsterr_pipeline/tests/fretboardPathOptimizer.test.mjs",
+      "astra_path": "astra_backend/tests/fretboardPathOptimizer.test.mjs",
+      "source_git_blob": "bb6ebf811cbe6427fd904807183caf94fecffc60",
+      "source_sha256": "a7c6ed1a0d51114ebf6fdf029332fab4d32eb70b1252a8bf2a4bcf4f3d77fd83",
+      "adoption": "byte-identical source/test snapshot"
+    },
+    {
+      "source_path": "songsterr_pipeline/tests/modelValidationContractScaffold.test.mjs",
+      "astra_path": "astra_backend/tests/modelValidationContractScaffold.test.mjs",
+      "source_git_blob": "a91a651a538793ec21f1cf711f734d748e7ff55e",
+      "source_sha256": "ab73e204259948d7be5caa6413aecb191d2c08e622c09ca01e25390252d68b3d",
+      "adoption": "byte-identical source/test snapshot"
+    },
+    {
+      "source_path": "songsterr_pipeline/tests/noteEventExposure.test.mjs",
+      "astra_path": "astra_backend/tests/noteEventExposure.test.mjs",
+      "source_git_blob": "b1aecea110e72263b3caa77b9bfed56a778043ee",
+      "source_sha256": "6ac480af728963edcc43e3f4de8a99e02e4f4a32c3d97bf6dd05f9f96b81a9ea",
+      "adoption": "byte-identical source/test snapshot"
+    },
+    {
+      "source_path": "songsterr_pipeline/tests/noteEvidenceAdapter.test.mjs",
+      "astra_path": "astra_backend/tests/noteEvidenceAdapter.test.mjs",
+      "source_git_blob": "5899a94198cb50e3ae0235bf001c394b897acd3f",
+      "source_sha256": "300504de47bccfdd5f53c644059cca0670c8c3c12dd57da309f84f0783ace75c",
+      "adoption": "byte-identical source/test snapshot"
+    },
+    {
+      "source_path": "songsterr_pipeline/tests/noteEvidenceCapabilityNormalization.test.mjs",
+      "astra_path": "astra_backend/tests/noteEvidenceCapabilityNormalization.test.mjs",
+      "source_git_blob": "af87098d1e5f7a06b6c02684fd32c94e30137883",
+      "source_sha256": "7e20def88a9c44454d525b2ac7e53f5061c64ff3263a95e36595b305dd90be59",
+      "adoption": "byte-identical source/test snapshot"
+    },
+    {
+      "source_path": "songsterr_pipeline/tests/noteEvidenceDiagnostics.test.mjs",
+      "astra_path": "astra_backend/tests/noteEvidenceDiagnostics.test.mjs",
+      "source_git_blob": "f1633d0ac64eae2df674fb21a65f4f2f429d5e98",
+      "source_sha256": "28e81933825f059983e8327426eb755eb780fdbbddff86885bee5ab4a03305bf",
+      "adoption": "byte-identical source/test snapshot"
+    },
+    {
+      "source_path": "songsterr_pipeline/tests/noteEvidenceEvaluator.test.mjs",
+      "astra_path": "astra_backend/tests/noteEvidenceEvaluator.test.mjs",
+      "source_git_blob": "83f218b3b2edffc6c7c14a40c995e1d5c00b70e7",
+      "source_sha256": "13ebcd54a349866fb4baae337509969a2d5d8558c44fe0f1c5c9582eece73fd0",
+      "adoption": "byte-identical source/test snapshot"
+    },
+    {
+      "source_path": "songsterr_pipeline/tests/pipeline.test.mjs",
+      "astra_path": "astra_backend/tests/pipeline.test.mjs",
+      "source_git_blob": "0b9396dd79e839fd939b92c8b4ea9b851074c186",
+      "source_sha256": "49d1358fdabafef0e4a4af6cbd587ca508229ec02315be865efe5274b2e66b85",
+      "adoption": "byte-identical source/test snapshot"
+    },
+    {
+      "source_path": "songsterr_pipeline/tests/playableShapeDecoder.test.mjs",
+      "astra_path": "astra_backend/tests/playableShapeDecoder.test.mjs",
+      "source_git_blob": "f4febcf1d2a2f25c6f765cabc46e9271eb75ccd1",
+      "source_sha256": "5e1a360e7927445b6e2b3a307d57960b0f7ddbb355738f48cc74647f32472776",
+      "adoption": "byte-identical source/test snapshot"
+    },
+    {
+      "source_path": "songsterr_pipeline/tests/productShellAdapter.test.mjs",
+      "astra_path": "astra_backend/tests/productShellAdapter.test.mjs",
+      "source_git_blob": "bd415d4a68836c10d183d3908b224378a538325c",
+      "source_sha256": "c65464b04a246ff1b5e1046d24196548f2e739e53d59dde7c98b6d8c5dc53ec3",
+      "adoption": "byte-identical source/test snapshot"
+    },
+    {
+      "source_path": "songsterr_pipeline/tests/productShellUpstreamGate.test.mjs",
+      "astra_path": "astra_backend/tests/productShellUpstreamGate.test.mjs",
+      "source_git_blob": "8a4e233e0bcd218f19bd1ea6c3bba7be0f31bfe2",
+      "source_sha256": "db11a8722fb9e22ea0eab2df4936d92c40b59834500dc7d8b527f102d1d60c31",
+      "adoption": "byte-identical source/test snapshot"
+    },
+    {
+      "source_path": "songsterr_pipeline/tests/rhythmBoundaryEpsilon.test.mjs",
+      "astra_path": "astra_backend/tests/rhythmBoundaryEpsilon.test.mjs",
+      "source_git_blob": "ecab9eb2eaafcc44396fa87fa10f427e974d3f11",
+      "source_sha256": "ba92fc208c1a3e5e228ae9c6613ff70cdbab43a2b5bd7833a3170502e285bd87",
+      "adoption": "byte-identical source/test snapshot"
+    },
+    {
+      "source_path": "songsterr_pipeline/tests/rhythmNotation.test.mjs",
+      "astra_path": "astra_backend/tests/rhythmNotation.test.mjs",
+      "source_git_blob": "12cf7857283979b7997a16e18d39a250c3f54988",
+      "source_sha256": "12ae147354f7d6e12530ac741ec4163eb9be2b5a88620b41debd58b24011f586",
+      "adoption": "byte-identical source/test snapshot"
+    },
+    {
+      "source_path": "songsterr_pipeline/tests/structureFretboardPath.test.mjs",
+      "astra_path": "astra_backend/tests/structureFretboardPath.test.mjs",
+      "source_git_blob": "8d92b36670af34d7d2dd661e58629455010086b2",
+      "source_sha256": "fbc3f5b9162c5ab7361466ecd13fd27941d8aa32e99c442cdac7a08521f3bb7a",
+      "adoption": "byte-identical source/test snapshot"
+    },
+    {
+      "source_path": "songsterr_pipeline/tests/structureMap.test.mjs",
+      "astra_path": "astra_backend/tests/structureMap.test.mjs",
+      "source_git_blob": "b2ae8c981517a46407a7c721779cd835c40d84c1",
+      "source_sha256": "1dfe6d411acf0be2a8c4382f4183a09882ba2a26950554dd49b39c751013965f",
+      "adoption": "byte-identical source/test snapshot"
+    },
+    {
+      "source_path": "songsterr_pipeline/tests/structureRhythmNotation.test.mjs",
+      "astra_path": "astra_backend/tests/structureRhythmNotation.test.mjs",
+      "source_git_blob": "8f9849acc937dc403338470bafe0fe4f915f8ad9",
+      "source_sha256": "a190d7cebcfb59ac5e431de87924ecbc61d039bab9bc1b7da2f2e79695be70f2",
+      "adoption": "byte-identical source/test snapshot"
+    }
+  ]
+}

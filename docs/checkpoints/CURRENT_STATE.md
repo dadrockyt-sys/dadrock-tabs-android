@@ -3,7 +3,7 @@
 Updated: 2026-09-18 UTC
 Active branch: `astra-work`
 Canonical handoff: `docs/checkpoints/CURRENT_STATE.md`
-Status: **MILESTONE 0 — NEW LINE ESTABLISHED; BACKEND SNAPSHOT NEXT; NO REAL-AUDIO QUALITY CLAIM**
+Status: **MILESTONE 1 COMPLETE — ISOLATED BACKEND SAVED AND SYNTHETICALLY VERIFIED; NO REAL-AUDIO QUALITY CLAIM**
 
 ## Product outcome
 
@@ -34,13 +34,23 @@ Active implementation and CPU synthetic verification may proceed in the new back
 
 ## Milestones
 
-0. Establish durable checkpoint, archival source identities and repository instructions. COMPLETE with this commit.
-1. Copy the isolated deterministic backend to `astra_backend/`, retain original file hashes, run existing CPU synthetic suite, save the result. NEXT.
-2. Specify the full-chain input/output and benchmark contracts: separate development/final evaluation, bass/lead/rhythm coverage, source-separation versus transcription versus rendering errors, completeness as well as precision, cost/latency budget and stop conditions. Not yet implemented.
+0. Establish durable checkpoint, archival source identities and repository instructions. COMPLETE: `8414a74fa18a542ecd6e99fca243a2403e38b29d`.
+1. Copy the isolated deterministic backend to `astra_backend/`, retain original file hashes, run existing CPU synthetic suite, save the result. COMPLETE in the commit containing this checkpoint: **104 passed, 0 failed**.
+2. Specify the full-chain input/output and benchmark contracts: separate development/final evaluation, bass/lead/rhythm coverage, source-separation versus transcription versus rendering errors, completeness as well as precision, cost/latency budget and stop conditions. **NEXT ACTIVE TASK:** write the versioned contract and bounded benchmark plan in `docs/astra/`; identify what is available versus unproven before any real-audio access.
 3. Build an offline adapter and representative synthetic end-to-end fixtures against that contract. No live deployment.
 4. Select a lawful affordable real-audio development/evaluation plan, then execute only within the applicable authorization. Not authorized by this checkpoint alone.
 
 Do not assume training a new neural model from scratch is necessary or affordable. Compare component options against measured product failures before selecting the audio engine.
+
+## Milestone 1 evidence / handoff
+
+- `astra_backend/`: self-contained source/test snapshot. Runtime `.mjs` files and test files are byte-identical to the pinned Fresh source; README and package name are Astra-specific. Existing internal contract identifiers are intentionally preserved.
+- `docs/astra/BACKEND_ADOPTION_MANIFEST.json`: original Git blob + SHA-256 for each copied file.
+- `docs/astra/MILESTONE_1_VERIFICATION.json`: Node version, exact test command, counts and test-output digest.
+- Verification: `npm --prefix astra_backend test` -> 104 tests, all passed; no skipped/cancelled tests. These are CPU synthetic/contract tests only.
+- Both former branch checkpoints now contain explicit archive notices and point here. V143 notice commit `0710ce97c106e40eb8ad59975d6cffff5803d9a0`; Fresh notice commit `25e41dcac88f6067835c4d1d9e250c4d7e7542ac`.
+- No archive branches or historical code were deleted; archive notices are documentation-only. Main/Production were not modified.
+- No background training, model execution or automated save daemon is running. Milestone saves are performed by the working assistant; abrupt interruption can still lose uncommitted work.
 
 ## Current evidence and limitations
 
