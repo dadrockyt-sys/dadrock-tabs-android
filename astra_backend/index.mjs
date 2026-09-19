@@ -434,3 +434,8 @@ export {
   buildAstraAnalyzerResult,
   normalizeAstraAnalyzerRequest,
 } from './analysisContractAdapter.mjs';
+
+export {
+  listAstraAudioEngineCandidates,
+  planAstraAudioEngine,
+} from './audioEngineRegistry.mjs';
