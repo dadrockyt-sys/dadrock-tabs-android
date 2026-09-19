@@ -30,6 +30,7 @@
       "runtime": "tflite",
       "modelPath": "basic_pitch/saved_models/icassp_2022/nmp.tflite",
       "modelGitBlob": "85a41befdd036e9b365a052b7c704c6810288b95",
+      "modelSha256": "3db297d54af8e01c6e5618245c956b1d71b6a2b978cb2dedb527173186552676",
       "modelBytes": 204448,
       "minimumMidi": 40,
       "maximumMidi": 88,
@@ -74,8 +75,21 @@
       "platform": "x86_64-manylinux_2_28",
       "excludeNewerUtc": "2026-09-19T00:00:00Z"
     },
-    "packageInstallationVerified": false,
-    "modelArtifactsVerifiedOnAstra": false,
+    "packageInstallation": {
+      "verified": true,
+      "pythonVersion": "3.10.21",
+      "distributionSnapshotPath": "astra_backend/engine/installed-distributions.json",
+      "distributionSnapshotSha256": "a286ef69bdc34636cf96bd6ee952c517c44ffebe22b73329f0390e6e987ab846",
+      "distributionCount": 57,
+      "pipCheckPassed": true
+    },
+    "basicPitchModelArtifact": {
+      "verified": true,
+      "gitBlob": "85a41befdd036e9b365a052b7c704c6810288b95",
+      "sha256": "3db297d54af8e01c6e5618245c956b1d71b6a2b978cb2dedb527173186552676",
+      "bytes": 204448
+    },
+    "demucsWeightVerifiedOnAstra": false,
     "runtimeWithin1200Seconds": false,
     "developmentMaterialAuthorized": false
   },

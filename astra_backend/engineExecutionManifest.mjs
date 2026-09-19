@@ -13,6 +13,9 @@ const EXPECTED = Object.freeze({
     packageLockPath: 'astra_backend/engine/requirements.lock',
     packageLockSha256: 'a5614dbfad0be96aadc0d76297b6a59abe4e09c80bf2d6a484e53a14a58d38a7',
     packageCount: 57,
+    exactPythonVersion: '3.10.21',
+    installedDistributionsPath: 'astra_backend/engine/installed-distributions.json',
+    installedDistributionsSha256: 'a286ef69bdc34636cf96bd6ee952c517c44ffebe22b73329f0390e6e987ab846',
   }),
   demucs: Object.freeze({
     packageVersion: '4.0.1',
@@ -27,6 +30,7 @@ const EXPECTED = Object.freeze({
     upstreamCommit: '9991303bba609a3b93089d13ec80d1d495083596',
     modelPath: 'basic_pitch/saved_models/icassp_2022/nmp.tflite',
     modelGitBlob: '85a41befdd036e9b365a052b7c704c6810288b95',
+    modelSha256: '3db297d54af8e01c6e5618245c956b1d71b6a2b978cb2dedb527173186552676',
     modelBytes: 204448,
   }),
 });
@@ -101,6 +105,52 @@ export function verifyAstraEngineDependencyLock(lockText) {
     audioSeparatorPresent: false,
     tensorflowPresent: false,
     allPackagesDeclareArtifactHashes: true,
+    packages: clone(packages),
+  };
+}
+
+export function verifyAstraInstalledDistributionSnapshot(snapshotText) {
+  if (typeof snapshotText !== 'string' || !snapshotText.trim()) {
+    throw new Error('Installed distribution snapshot text is required.');
+  }
+
+  let snapshot;
+  try {
+    snapshot = JSON.parse(snapshotText);
+  } catch {
+    throw new Error('Installed distribution snapshot must be valid JSON.');
+  }
+  if (!Array.isArray(snapshot)) throw new Error('Installed distribution snapshot must be an array.');
+
+  const packages = {};
+  for (const [index, distribution] of snapshot.entries()) {
+    requireObject(distribution, `installed distribution ${index}`);
+    if (typeof distribution.name !== 'string' || !distribution.name.trim()) {
+      throw new Error(`installed distribution ${index}.name is required.`);
+    }
+    if (typeof distribution.version !== 'string' || !distribution.version.trim()) {
+      throw new Error(`installed distribution ${index}.version is required.`);
+    }
+    const name = distribution.name.toLowerCase().replaceAll('_', '-');
+    if (packages[name]) throw new Error(`Installed distribution snapshot contains duplicate package: ${name}.`);
+    packages[name] = distribution.version;
+  }
+
+  requireExact(Object.keys(packages).length, EXPECTED.runtime.packageCount, 'installed distribution count');
+  for (const [name, version] of Object.entries(LOCKED_CRITICAL_PACKAGES)) {
+    requireExact(packages[name], version, `installed distribution ${name}`);
+  }
+  if (packages['audio-separator']) throw new Error('audio-separator must not re-enter the installed runtime.');
+  if (packages.tensorflow) throw new Error('TensorFlow must not replace the installed TFLite runtime.');
+
+  return {
+    snapshotContract: { name: 'jimmy-paige-astra-installed-distributions', version: 1 },
+    packageCount: Object.keys(packages).length,
+    criticalPackages: clone(LOCKED_CRITICAL_PACKAGES),
+    packages: clone(packages),
+    directDemucsRuntime: true,
+    audioSeparatorPresent: false,
+    tensorflowPresent: false,
   };
 }
 
@@ -138,6 +188,8 @@ export function validateAstraEngineExecutionManifest(manifest, { role } = {}) {
   requireExact(basicPitch.upstreamCommit, EXPECTED.basicPitch.upstreamCommit, 'basicPitch.upstreamCommit');
   requireExact(basicPitch.modelPath, EXPECTED.basicPitch.modelPath, 'basicPitch.modelPath');
   requireExact(basicPitch.modelGitBlob, EXPECTED.basicPitch.modelGitBlob, 'basicPitch.modelGitBlob');
+  requireDigest(basicPitch.modelSha256, SHA256, 'basicPitch.modelSha256');
+  requireExact(basicPitch.modelSha256, EXPECTED.basicPitch.modelSha256, 'basicPitch.modelSha256');
   requireExact(basicPitch.modelBytes, EXPECTED.basicPitch.modelBytes, 'basicPitch.modelBytes');
 
   const capabilities = requireObject(root.capabilities, 'capabilities');
@@ -157,9 +209,43 @@ export function validateAstraEngineExecutionManifest(manifest, { role } = {}) {
   requireExact(packageLock.packageCount, EXPECTED.runtime.packageCount, 'evidence.packageLock.packageCount');
   requireExact(packageLock.resolutionVerified, true, 'evidence.packageLock.resolutionVerified');
 
+  const packageInstallation = requireObject(evidence.packageInstallation, 'evidence.packageInstallation');
+  requireExact(packageInstallation.verified, true, 'evidence.packageInstallation.verified');
+  requireExact(
+    packageInstallation.pythonVersion,
+    EXPECTED.runtime.exactPythonVersion,
+    'evidence.packageInstallation.pythonVersion',
+  );
+  requireExact(
+    packageInstallation.distributionSnapshotPath,
+    EXPECTED.runtime.installedDistributionsPath,
+    'evidence.packageInstallation.distributionSnapshotPath',
+  );
+  requireDigest(packageInstallation.distributionSnapshotSha256, SHA256, 'evidence.packageInstallation.distributionSnapshotSha256');
+  requireExact(
+    packageInstallation.distributionSnapshotSha256,
+    EXPECTED.runtime.installedDistributionsSha256,
+    'evidence.packageInstallation.distributionSnapshotSha256',
+  );
+  requireExact(packageInstallation.distributionCount, EXPECTED.runtime.packageCount, 'evidence.packageInstallation.distributionCount');
+  requireExact(packageInstallation.pipCheckPassed, true, 'evidence.packageInstallation.pipCheckPassed');
+
+  const basicPitchModelArtifact = requireObject(
+    evidence.basicPitchModelArtifact,
+    'evidence.basicPitchModelArtifact',
+  );
+  requireExact(basicPitchModelArtifact.verified, true, 'evidence.basicPitchModelArtifact.verified');
+  requireExact(
+    basicPitchModelArtifact.gitBlob,
+    EXPECTED.basicPitch.modelGitBlob,
+    'evidence.basicPitchModelArtifact.gitBlob',
+  );
+  requireDigest(basicPitchModelArtifact.sha256, SHA256, 'evidence.basicPitchModelArtifact.sha256');
+  requireExact(basicPitchModelArtifact.sha256, EXPECTED.basicPitch.modelSha256, 'evidence.basicPitchModelArtifact.sha256');
+  requireExact(basicPitchModelArtifact.bytes, EXPECTED.basicPitch.modelBytes, 'evidence.basicPitchModelArtifact.bytes');
+
   const blockers = [];
-  if (evidence.packageInstallationVerified !== true) blockers.push('PACKAGE_INSTALLATION_UNVERIFIED');
-  if (evidence.modelArtifactsVerifiedOnAstra !== true) blockers.push('MODEL_ARTIFACTS_NOT_VERIFIED_ON_ASTRA');
+  if (evidence.demucsWeightVerifiedOnAstra !== true) blockers.push('DEMUCS_WEIGHT_NOT_VERIFIED_ON_ASTRA');
   if (evidence.runtimeWithin1200Seconds !== true) blockers.push('RUNTIME_BUDGET_UNPROVEN');
   if (evidence.developmentMaterialAuthorized !== true) blockers.push('DEVELOPMENT_MATERIAL_AUTHORIZATION_MISSING');
   if (demucsWeightRights.status !== 'reviewed-cleared' || demucsWeightRights.commercialUseReviewed !== true) {
