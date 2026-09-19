@@ -15,6 +15,8 @@ test('Banquet review freezes the independently trained upstream identity', () =>
   assert.equal(review.artifact.recommendedFile, 'ev-pre-aug.ckpt');
   assert.equal(review.artifact.publishedMd5, '4dfb91d6d27c2dfd4992a15070915541');
   assert.equal(review.artifact.downloadedByAstra, false);
+  assert.equal(review.source.modelConfigBlob, '0b157abc2f64b334803b6d89fd7b6ae28a0d5b31');
+  assert.equal(review.source.queryEncoderBlob, 'a213f7854800d25349ceb584073ae7d748d9877c');
 });
 
 test('Banquet exposes bass and guitar classes and an explicit CPU control', () => {
@@ -23,6 +25,8 @@ test('Banquet exposes bass and guitar classes and an explicit CPU control', () =
   assert.ok(review.capabilities.guitarClasses.includes('clean_electric_guitar'));
   assert.equal(review.runtime.explicitCpuPathInSource, true);
   assert.equal(review.runtime.cpuControl, 'use_cuda=false');
+  assert.equal(review.queryDependency.labelOnlyPathIdentifiedInReviewedSource, false);
+  assert.equal(review.queryDependency.precomputedEmbeddingProductPathFrozen, false);
 });
 
 test('Banquet fails closed on unresolved checkpoint rights and required query audio', () => {

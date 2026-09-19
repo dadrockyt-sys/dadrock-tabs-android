@@ -9,6 +9,8 @@ const REVIEW = Object.freeze({
     readmeBlob: 'd7287cebeeb4abbecad6bf7174a2430f8c720298',
     inferenceSourceBlob: '9b4d19e75817187a70231ca0a7552d5633c0a7d8',
     trainingConfigBlob: '21b67e06ba8487218bfef1c4780adf17ce2ecc95',
+    modelConfigBlob: '0b157abc2f64b334803b6d89fd7b6ae28a0d5b31',
+    queryEncoderBlob: 'a213f7854800d25349ceb584073ae7d748d9877c',
   }),
   artifact: Object.freeze({
     repository: 'Zenodo',
@@ -43,6 +45,8 @@ const REVIEW = Object.freeze({
     separateQueryAudioRequired: true,
     authorizedReferenceQueryLibraryDefined: false,
     referenceBlindProductPathSatisfied: false,
+    labelOnlyPathIdentifiedInReviewedSource: false,
+    precomputedEmbeddingProductPathFrozen: false,
   }),
   rights: Object.freeze({
     repositorySoftwareCommercialUsePermitted: true,

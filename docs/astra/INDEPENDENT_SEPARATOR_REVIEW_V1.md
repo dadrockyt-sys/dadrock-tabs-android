@@ -16,6 +16,8 @@ Frozen source evidence:
 - README Git blob: `d7287cebeeb4abbecad6bf7174a2430f8c720298`
 - inference source Git blob: `9b4d19e75817187a70231ca0a7552d5633c0a7d8`
 - MoisesDB setup-C config Git blob: `21b67e06ba8487218bfef1c4780adf17ce2ecc95`
+- PaSST-conditioned model config Git blob: `0b157abc2f64b334803b6d89fd7b6ae28a0d5b31`
+- PaSST query encoder Git blob: `a213f7854800d25349ceb584073ae7d748d9877c`
 
 The official README describes Banquet as a 24.9M-trainable-parameter query-based system trained/evaluated on MoisesDB and reports guitar/piano performance relative to HTDemucs. Those upstream quality claims are not Astra quality evidence.
 
@@ -56,6 +58,8 @@ The training configuration also establishes MoisesDB lineage. Astra has not comp
 ## Product integration blocker: query audio
 
 The official `inference_byoq` path requires a separate ten-second query-audio file. Jimmy PAIge's customer flow supplies a song upload plus requested role; it does not presently supply or authorize a reference query clip.
+
+The reviewed model config uses `PasstFiLMConditionedBandit`, and the reviewed PaSST wrapper's forward path accepts query audio and derives the conditioning embedding from that audio. No label-only inference path was identified in the canonical inference/model/query-encoder source inspected, and Astra has not frozen a safe precomputed-embedding interface.
 
 An acceptable future integration would need one of:
 
