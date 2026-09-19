@@ -1,0 +1,35 @@
+{
+  "milestone": "7A",
+  "dateUtc": "2026-09-19",
+  "parentCommit": "3b6562709b4e99bba98d88f576b8f93bab602a5b",
+  "implementationCommit": "46fe9f2fb9f90e167714d1222b40d60d92f299cc",
+  "verificationWorkflowRunId": 35430567158,
+  "runtime": {
+    "node": "v24.20.0",
+    "runner": "ubuntu-24.04"
+  },
+  "testCommand": "npm --prefix astra_backend test",
+  "tests": 148,
+  "passed": 148,
+  "failed": 0,
+  "skipped": 0,
+  "cancelled": 0,
+  "testOutputSha256": "18e27897e9862144d5cec2776233a3a2f6edc670368ca34f0321e3a8b73fbaa1",
+  "inventoryResult": {
+    "reviewedCandidates": 4,
+    "inventoryQualifiedCandidates": 0,
+    "leadRhythmIndependentRoleCandidates": 0
+  },
+  "modelWeightDownloaded": false,
+  "realAudioProcessed": false,
+  "modelImported": false,
+  "modelInvoked": false,
+  "packageInstallerInvoked": false,
+  "paidServiceInvoked": false,
+  "productionChanged": false,
+  "mainModified": false,
+  "archivedImplementationModified": false,
+  "evidenceResearchNetworkAccess": true,
+  "runtimeContractNetworkAccess": false,
+  "interpretation": "Milestone 7A is a no-download rights/capability screen. Spleeter and Open-Unmix lack a guitar stem; reviewed bass+guitar alternatives derive from htdemucs_6s and cannot clear Astra's unresolved base-weight rights. A generic guitar stem still does not distinguish lead from rhythm."
+}

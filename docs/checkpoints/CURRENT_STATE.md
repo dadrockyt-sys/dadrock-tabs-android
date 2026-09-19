@@ -3,7 +3,7 @@
 Updated: 2026-09-19 UTC
 Active branch: `astra-work`
 Canonical handoff: `docs/checkpoints/CURRENT_STATE.md`
-Status: **MILESTONE 7A IMPLEMENTED — ZERO RIGHTS+CAPABILITY CANDIDATES FOUND; VERIFICATION PENDING; NO REAL-AUDIO QUALITY CLAIM**
+Status: **MILESTONE 7A COMPLETE — ZERO RIGHTS+CAPABILITY CANDIDATES FOUND; 148 TESTS PASS; NO REAL-AUDIO QUALITY CLAIM**
 
 ## Product outcome
 
@@ -40,7 +40,7 @@ Active implementation and CPU synthetic verification may proceed in the new back
 3. Build an offline adapter and representative synthetic end-to-end fixtures against that contract. COMPLETE: `f1fbb5594df709080b706d07d625579dbf65bf83`; **112 passed, 0 failed**.
 4. Inventory lawful affordable real-audio candidates without executing them. COMPLETE: `3f16308e6aa9969a3e1c03f9bab91d7af6f6bf99`.
 5. Encode candidate capabilities and blockers in an offline fail-closed preflight planner. COMPLETE in the commit containing this checkpoint; **120 passed, 0 failed**.
-6. Freeze engine identities and gate execution. PART A COMPLETE: exact verifiable upstream tag/blob identities plus offline manifest validator; **128 passed, 0 failed**. PART B COMPLETE: direct official Demucs runtime selected, deterministic 57-package CPU lock frozen, unsafe ABI resolutions rejected; **131 passed, 0 failed**. PART C COMPLETE: exact hashed environment installed under Python 3.10.21, 57 installed distributions match the lock, compatibility check passed and packaged Basic Pitch model bytes were verified; **134 passed, 0 failed**. PART D COMPLETE: exact Demucs artifact identity and external rights-decision requirements frozen in an offline admission gate; **140 passed, 0 failed**. 7A IMPLEMENTED in the commit containing this checkpoint: no reviewed candidate currently combines bass+guitar capability, a plausible CPU path and a resolved commercial artifact-rights chain. Verification is pending on the branch-only runner.
+6. Freeze engine identities and gate execution. PART A COMPLETE: exact verifiable upstream tag/blob identities plus offline manifest validator; **128 passed, 0 failed**. PART B COMPLETE: direct official Demucs runtime selected, deterministic 57-package CPU lock frozen, unsafe ABI resolutions rejected; **131 passed, 0 failed**. PART C COMPLETE: exact hashed environment installed under Python 3.10.21, 57 installed distributions match the lock, compatibility check passed and packaged Basic Pitch model bytes were verified; **134 passed, 0 failed**. PART D COMPLETE: exact Demucs artifact identity and external rights-decision requirements frozen in an offline admission gate; **140 passed, 0 failed**. 7A COMPLETE: no reviewed candidate currently combines bass+guitar capability, a plausible CPU path and a resolved commercial artifact-rights chain; **148 passed, 0 failed**.
 
 Do not assume training a new neural model from scratch is necessary or affordable. Compare component options against measured product failures before selecting the audio engine.
 
@@ -153,7 +153,7 @@ Do not assume training a new neural model from scratch is necessary or affordabl
 - StemSplit's `htdemucs_6s.onnx` and the reviewed guitar fine-tune expose bass + generic guitar, but both derive from `htdemucs_6s`; their downstream license labels do not clear Astra's unresolved base-weight rights chain.
 - The guitar fine-tune explicitly combines overlapping guitar layers into one guitar stem; no candidate supplies independent lead/rhythm evidence.
 - **Zero candidates are 7A inventory-qualified.** No execution/customer/production authorization is granted.
-- Verification: pending branch-only `npm --prefix astra_backend test` run after this save.
+- Verification on implementation commit `46fe9f2fb9f90e167714d1222b40d60d92f299cc`: `npm --prefix astra_backend test` -> **148 tests, 148 passed, 0 failed, 0 skipped/cancelled** on Node `v24.20.0`; output SHA-256 `18e27897e9862144d5cec2776233a3a2f6edc670368ca34f0321e3a8b73fbaa1`.
 - No weight was downloaded; no audio/model/installer/paid service/production route was invoked.
 
 ## Current evidence and limitations
@@ -169,7 +169,7 @@ For every major milestone, save code, meaningful tests, provenance and this chec
 
 At chat handoff: inspect branch/HEAD/status, read this file and AGENTS.md, then continue only the current milestone. If a tool or test fails, record it and the recovery step. Git history plus immutable snapshots is the durable record; chat memory is supplementary.
 
-The active milestone is 7A verification. Run the complete backend suite on the saved 7A implementation, record exact totals/output digest/runtime in a milestone verification JSON, then finalize this checkpoint. If clean, advance to 7B: continue a no-download search for an independently trained bass+guitar separator whose model-artifact terms explicitly permit commercial inference. Do not weaken the frozen Demucs admission gate.
+The active milestone is 7B. Continue a no-download search for an **independently trained** separator that exposes both bass and guitar, has a plausible CPU/cost path, and whose exact model-artifact terms explicitly permit development evaluation and commercial paid-tab inference. Record immutable artifact identity and full rights lineage before any download. If no such candidate is found, prepare the decision record between obtaining explicit clearance for the frozen Demucs weight and scoping a separately licensed/trained replacement. Lead/rhythm remains blocked until independent role evidence exists.
 
 ## Copy-paste handoff
 
