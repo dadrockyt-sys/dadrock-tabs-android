@@ -451,3 +451,9 @@ export {
   evaluateDemucsArtifactAdmission,
   getFrozenDemucsArtifactAdmissionContract,
 } from './demucsArtifactAdmission.mjs';
+
+
+export {
+  evaluateAstraSeparationRightsCandidate,
+  listAstraSeparationRightsCandidates,
+} from './separationCandidateRightsRegistry.mjs';

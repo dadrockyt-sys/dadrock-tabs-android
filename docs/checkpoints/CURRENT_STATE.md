@@ -3,7 +3,7 @@
 Updated: 2026-09-19 UTC
 Active branch: `astra-work`
 Canonical handoff: `docs/checkpoints/CURRENT_STATE.md`
-Status: **MILESTONE 6D COMPLETE — DEMUCS ARTIFACT GATE FAILS CLOSED; EXPLICITLY LICENSED ALTERNATIVE SEARCH NEXT; NO REAL-AUDIO QUALITY CLAIM**
+Status: **MILESTONE 7A IMPLEMENTED — ZERO RIGHTS+CAPABILITY CANDIDATES FOUND; VERIFICATION PENDING; NO REAL-AUDIO QUALITY CLAIM**
 
 ## Product outcome
 
@@ -40,7 +40,7 @@ Active implementation and CPU synthetic verification may proceed in the new back
 3. Build an offline adapter and representative synthetic end-to-end fixtures against that contract. COMPLETE: `f1fbb5594df709080b706d07d625579dbf65bf83`; **112 passed, 0 failed**.
 4. Inventory lawful affordable real-audio candidates without executing them. COMPLETE: `3f16308e6aa9969a3e1c03f9bab91d7af6f6bf99`.
 5. Encode candidate capabilities and blockers in an offline fail-closed preflight planner. COMPLETE in the commit containing this checkpoint; **120 passed, 0 failed**.
-6. Freeze engine identities and gate execution. PART A COMPLETE: exact verifiable upstream tag/blob identities plus offline manifest validator; **128 passed, 0 failed**. PART B COMPLETE: direct official Demucs runtime selected, deterministic 57-package CPU lock frozen, unsafe ABI resolutions rejected; **131 passed, 0 failed**. PART C COMPLETE: exact hashed environment installed under Python 3.10.21, 57 installed distributions match the lock, compatibility check passed and packaged Basic Pitch model bytes were verified; **134 passed, 0 failed**. PART D COMPLETE in the commit containing this checkpoint: exact Demucs artifact identity and external rights-decision requirements frozen in an offline admission gate; **140 passed, 0 failed**. **NEXT ACTIVE TASK:** inventory separation candidates with explicit model-artifact commercial terms and equivalent bass/guitar capability. Do not download weights or process audio during the inventory.
+6. Freeze engine identities and gate execution. PART A COMPLETE: exact verifiable upstream tag/blob identities plus offline manifest validator; **128 passed, 0 failed**. PART B COMPLETE: direct official Demucs runtime selected, deterministic 57-package CPU lock frozen, unsafe ABI resolutions rejected; **131 passed, 0 failed**. PART C COMPLETE: exact hashed environment installed under Python 3.10.21, 57 installed distributions match the lock, compatibility check passed and packaged Basic Pitch model bytes were verified; **134 passed, 0 failed**. PART D COMPLETE: exact Demucs artifact identity and external rights-decision requirements frozen in an offline admission gate; **140 passed, 0 failed**. 7A IMPLEMENTED in the commit containing this checkpoint: no reviewed candidate currently combines bass+guitar capability, a plausible CPU path and a resolved commercial artifact-rights chain. Verification is pending on the branch-only runner.
 
 Do not assume training a new neural model from scratch is necessary or affordable. Compare component options against measured product failures before selecting the audio engine.
 
@@ -145,6 +145,17 @@ Do not assume training a new neural model from scratch is necessary or affordabl
 - It installs no model/runtime packages, downloads no model weights, opens no audio, invokes no paid service and performs no deployment or Production action.
 - This runner exists because the active assistant execution container cannot resolve GitHub directly; GitHub Actions provides branch-attached reproducible Node verification without weakening any Astra model gate.
 
+## Milestone 7A evidence / handoff
+
+- `docs/astra/SEPARATION_ARTIFACT_RIGHTS_INVENTORY_V1.md`: no-download source/rights inventory with exact artifact identities where authoritative upstream digests were exposed.
+- `astra_backend/separationCandidateRightsRegistry.mjs`: deterministic static fail-closed registry. It cannot download/import/invoke a model or open audio.
+- Spleeter 5-stem has explicit MIT pretrained-model terms but no guitar stem. Open-Unmix `umxhq` also has bass + `other`, not guitar.
+- StemSplit's `htdemucs_6s.onnx` and the reviewed guitar fine-tune expose bass + generic guitar, but both derive from `htdemucs_6s`; their downstream license labels do not clear Astra's unresolved base-weight rights chain.
+- The guitar fine-tune explicitly combines overlapping guitar layers into one guitar stem; no candidate supplies independent lead/rhythm evidence.
+- **Zero candidates are 7A inventory-qualified.** No execution/customer/production authorization is granted.
+- Verification: pending branch-only `npm --prefix astra_backend test` run after this save.
+- No weight was downloaded; no audio/model/installer/paid service/production route was invoked.
+
 ## Current evidence and limitations
 
 - No Astra model has been trained, no real audio processed, and no customer-quality score exists.
@@ -158,7 +169,7 @@ For every major milestone, save code, meaningful tests, provenance and this chec
 
 At chat handoff: inspect branch/HEAD/status, read this file and AGENTS.md, then continue only the current milestone. If a tool or test fails, record it and the recovery step. Git history plus immutable snapshots is the durable record; chat memory is supplementary.
 
-The active milestone is 7A. Inventory current source-separation candidates that expose at least bass and guitar stems, can plausibly run within the CPU/cost target, and publish explicit model-artifact terms permitting development evaluation and commercial inference. Record exact upstream revisions, artifact identities, role limits and deployment requirements. Do not download model weights or process audio. Keep the frozen Demucs candidate as blocked rather than weakening its admission gate.
+The active milestone is 7A verification. Run the complete backend suite on the saved 7A implementation, record exact totals/output digest/runtime in a milestone verification JSON, then finalize this checkpoint. If clean, advance to 7B: continue a no-download search for an independently trained bass+guitar separator whose model-artifact terms explicitly permit commercial inference. Do not weaken the frozen Demucs admission gate.
 
 ## Copy-paste handoff
 
