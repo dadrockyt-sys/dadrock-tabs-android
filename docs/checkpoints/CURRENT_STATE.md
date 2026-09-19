@@ -3,7 +3,7 @@
 Updated: 2026-09-19 UTC
 Active branch: `astra-work`
 Canonical handoff: `docs/checkpoints/CURRENT_STATE.md`
-Status: **MILESTONE 7H COMPLETE — SYNTHETIC EXTRACTION HANDOFF AND STRICT CLAP METADATA VALIDATION; 183 TESTS PASS**
+Status: **MILESTONE 7I COMPLETE — SUPPLIED SYNTHETIC EVENTS CONNECTED TO DIAGNOSTIC TAB PIPELINE; 189 TESTS PASS**
 
 ## Product outcome
 
@@ -241,13 +241,21 @@ At chat handoff: inspect branch/HEAD/status, read this file and AGENTS.md, then 
 - Initial full suite caught the metadata module importing the documentation inventory outside the backend namespace. Fixed by adding a backend-local reference inventory; the boundary guard was preserved and full suite rerun. Verification records the output digest.
 - README records remaining tokenizer defaults, runtime pins, safe deserialization, artifact/buffer verification, equivalence and resource prerequisites. No weights, models, real audio, package installation, paid services, main or Production actions. Existing engine/customer gates and 4096 MB / 1200 seconds / zero-new-spend unchanged.
 
-## Exact next step — Milestone 7I
+## Milestone 7I evidence / handoff
 
-1. Read the synthetic extraction handoff and existing deterministic event/structure pipeline. Preserve model and delivery gates; synthetic metadata is never actual audio evidence.
-2. Implement a concrete synthetic downstream diagnostic adapter that accepts supplied events and structure, runs the existing deterministic pipeline, and returns diagnostic results separately from the blocked analyzer payload. Verify no downstream call occurs for chunk failure/cancellation and no synthetic result can authorize customer delivery.
-3. Bind supplied event timing to the declared sample rate/count: reject out-of-range or invalid onset/duration, preserve event identities, and explicitly report unresolved duration rather than inventing notes. Use only synthetic fixtures.
-4. Clarify the future sink identity verification and safe text-checkpoint extraction contracts without downloading weights, installing/importing models or asserting fit/equivalence. Keep reference metadata distinct from actual checkpoint observations.
-5. Run the full backend suite, update verification/CURRENT_STATE with exact results and next task, commit all code/tests/docs on astra-work and verify remote tree/ref with clean local status. No main/Production action.
+- Parent: `ae16b315fa733673b2e1440451de02e3e4978739`; local, origin and remote matched at start.
+- `syntheticEventPipeline.mjs` connects supplied synthetic events/structure to the existing deterministic rhythm, fingering and tab pipeline after complete chunks. Diagnostic text/events remain separate from the blocked analyzer payload; product-shell upstream readiness is forced false.
+- Validates unique event IDs, numeric MIDI/onsets, positive durations/offsets, consistent end+duration, clip bounds from sample count/rate, matching structure duration and explicit tuning/capo before reads. Missing duration stays unresolved; source event IDs survive pipeline indexing. Inputs are snapshotted before callbacks.
+- Six new tests cover all three roles, identity/timing preservation, missing duration and empty events, invalid/out-of-range data, exact tail offsets, conflicting durations, structure mismatch, failed/cancelled chunks and mutation isolation. Full suite: **189 passed, 0 failed, 0 skipped/cancelled**. Output digest in `MILESTONE_7I_VERIFICATION.json`.
+- README clarifies future canonical sink byte/count/rate verification, incomplete-write handling and safe checkpoint extraction. No measured sink digest, weights, models, real audio, installs, paid services, main or Production actions. Existing readiness/customer gates and resource constraints unchanged.
+
+## Exact next step — Milestone 7J
+
+1. Read syntheticEventPipeline and sampleChunkProcessor. Preserve blocked delivery and all model/resource gates.
+2. Implement a bounded synthetic sink verifier with a specified canonical mono sample representation and incremental digest. Bind the final receipt to sample count/rate and complete sequential output ranges; reject gaps, duplicates, nonfinite samples and incomplete finalization. No real audio or model I/O.
+3. Connect the verified synthetic receipt to extraction provenance without treating it as musical evidence. Test complete, tail, failed/uncertain writes and mismatch cases; preserve event diagnostics and blocked delivery.
+4. Record concrete remaining real-model prerequisites: safe checkpoint loader/dependency identities, numerical equivalence, resource measurements and audio quality. Do not infer those from sample hashes or synthetic tabs.
+5. Run the full backend suite; update verification/CURRENT_STATE with exact results and next task, commit all code/tests/docs on astra-work and verify remote tree/ref with clean local status. No main/Production action.
 
 ## Copy-paste handoff
 

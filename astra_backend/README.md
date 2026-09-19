@@ -111,6 +111,34 @@ inventory with a safe loader; reject unknown pickle globals without fallback; ve
 actual artifact hashes and numerical equivalence; measure peak memory and CPU time.
 No such model work occurs in these synthetic helpers.
 
+## Supplied events to diagnostic tablature
+
+`runAstraSyntheticEventPipeline({ request, chunks, evidence, events, structureMap })`
+connects complete synthetic chunks to the existing deterministic rhythm/fingering/tab
+pipeline. Events require unique eventId, finite start and integer MIDI; optional end
+or duration must be positive, consistent, and inside sampleCount/sampleRate. Onsets
+must be before the clip end; note offsets may equal it. Missing end/duration remains
+unresolved. Structure duration must match the clip (1e-9 seconds tolerance); tuning
+and capo must be explicit. No resampling, inferred duration or invented notes occurs.
+
+Inputs are copied before sample callbacks. Diagnostics preserve eventId via the
+pipeline sourceEventIndex and expose events, rests, rhythm/fingering results and
+text tab separately from the blocked analysis payload. Product-shell upstream
+readiness is forced false; customerDeliveryEligible and deliveryReady remain false.
+Failure/cancellation produces no diagnostics. Deterministic pipeline errors become
+downstream failure, following the existing synthetic handoff contract.
+
+Future sink verification must bind sampleIdentity to measured canonical sample bytes,
+count, rate and completed writes; a caller-supplied label or receipt is insufficient.
+Specify byte order/precision/channel layout, reject nonfinite samples, hash while
+writing, and finalize only after every acknowledged write. Failed/uncertain ranges
+must prevent publication; retries need sink-specific rollback/idempotency semantics.
+For future CLAP extraction, validate artifact digest before safe deserialization,
+allow only reviewed container forms and namespaces, reject unknown globals without
+pickle fallback, reconcile actual tensor/buffer inventory, and record a derived
+text-only artifact digest and parent identity. Metadata checks alone do not perform
+these steps or authorize model execution.
+
 ## Not yet included
 
 Astra audio separation, role-aware audio transcription, automatic musical-structure inference, a trained model, validated real-audio accuracy, HTTP job orchestration or production integration. Preserving supplied notes and passing synthetic tests is not a correctness claim about those notes.

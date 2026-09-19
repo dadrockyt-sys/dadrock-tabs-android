@@ -471,3 +471,5 @@ export { runAstraChunkedAnalysis } from './chunkedAnalysisAdapter.mjs';
 
 export { validateSyntheticExtractionEvidence, runAstraSyntheticExtraction } from './syntheticExtractionHandoff.mjs';
 export { validateClapTextMetadata } from './clapTextMetadata.mjs';
+
+export { runAstraSyntheticEventPipeline } from './syntheticEventPipeline.mjs';
