@@ -1,0 +1,45 @@
+{
+  "status": "both-reference-pdfs-retrieved-and-visually-reviewed",
+  "mainCommit": "6121b79769cba891952fb1c1624b0bac76c6dac7",
+  "files": [
+    {
+      "role": "bass",
+      "path": "public/Gomywaybassreference.pdf",
+      "gitBlob": "9b39fec0e55d60d5ee509863dfc55c1d6bc1f4f4",
+      "sha256": "18e6822394980d22a960a1bd4d923aaddf677f3341b8cc1a2dbb29ea1e8771d0",
+      "bytes": 1299542,
+      "pages": 6,
+      "textLayerCharacters": 0,
+      "visualReview": "All-page overview plus full opening/ending page renders; starts at measure 1 and reaches 113, including multi-measure rests. Not a note-by-note annotation audit.",
+      "oldScreenshotByteEquivalenceVerified": false
+    },
+    {
+      "role": "lead",
+      "path": "public/Gomywayleadreference.pdf",
+      "gitBlob": "3e5822be398f64b72d806970b27c22503d4e494c",
+      "sha256": "a11a2c04fdda73e667df16df99aedf9ae0a3ed7af85f62f3c1773b7784a97f56",
+      "bytes": 1729021,
+      "pages": 7,
+      "textLayerCharacters": 0,
+      "visualReview": "All-page overview plus full opening/ending page renders; starts at measure 1 and reaches 113, including multi-measure rests. Not a note-by-note annotation audit.",
+      "oldScreenshotByteEquivalenceVerified": false
+    }
+  ],
+  "referenceUse": "scoring only; frozen 87-event prediction unchanged",
+  "notationObservations": [
+    "Bass begins with six-measure rest; lead with four-measure rest.",
+    "Lead ends with three-measure rest starting at measure 111; preserve through measure 113.",
+    "Time signature changes to 2/4 at measure 104, then 4/4 at 105.",
+    "Preserve historical uncertainty annotations near bass 88 and lead 39-40."
+  ],
+  "recovery": [
+    "User bass filename Gomywaybassreferenc3.pdf returned 404; exact public listing resolved Gomywaybassreference.pdf.",
+    "GitHub text-fetch tool refused PDF binary; downloaded immutable raw bytes and verified Git blob identities."
+  ],
+  "remaining": [
+    "Normalize timing/pitch/bend/tie/rest labels for scored excerpt",
+    "Freeze independent audio alignment and scorer matching semantics"
+  ],
+  "newModelRun": false,
+  "accuracyScore": null
+}

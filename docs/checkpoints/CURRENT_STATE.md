@@ -3,7 +3,7 @@
 Updated: 2026-09-19 UTC
 Active branch: `astra-work`
 Canonical handoff: `docs/checkpoints/CURRENT_STATE.md`
-Status: **FIRST REAL-AUDIO BASIC PITCH BASELINE COMPLETE — 87 EVENTS / 30 SECONDS; THREE-PART REFERENCE SCORING PENDING**
+Status: **ALL THREE SCORING REFERENCES AVAILABLE — BASS/LEAD PDF IDENTITIES VERIFIED; FROZEN 87-EVENT BASELINE READY FOR LABEL/ALIGNMENT WORK**
 
 ## Product outcome
 
@@ -265,11 +265,17 @@ The user explicitly requested real-audio evaluation, then identified Gomyway mid
 - Successful real inference: **87 events, 12.6276 seconds, peak RSS395408 KiB (~386 MiB)**. Full candidate events saved in `docs/astra/evaluations/GOMYWAY_FIRST30_BASIC_PITCH_V1.json`; provenance/hash/recovery details in `GOMYWAY_BASELINE_RESULT_V1.json`. This measures a short whole-mix TFLite baseline, not AudioSep separation, full-song fit, role accuracy or customer readiness.
 - Initial attempt found prior /tmp audio absent; source was restored from pinned commit and hash verified. Runner now rejects missing input before model loading. Intended TFLite backend succeeded despite optional-backend/deprecation warnings. Full backend suite **189/189 passed**. No paid service, Demucs/AudioSep separation, main or Production action.
 
+## Bass / lead PDF recovery update
+
+User supplied the new public PDF locations. Exact main commit `6121b79769cba891952fb1c1624b0bac76c6dac7` contains `public/Gomywaybassreference.pdf` (corrected from supplied referenc3 spelling) and `public/Gomywayleadreference.pdf`. Both were downloaded and matched to published Git blob identities. Bass: 6 pages; lead: 7 pages. Details/hashes in `GOMYWAY_REFERENCE_PDF_INTAKE_V1.json`.
+
+All-page overviews and full opening/ending pages were visually inspected. These are image-only PDFs with no extractable text layer. Visible coverage reaches 113, including collapsed rests (bass opening six measures, lead opening four; lead ending three measures from 111). Meter changes at 104/105 must not be flattened into uniform 4/4. This is a coverage review, not completed note-level normalization or proof of byte equivalence to old screenshots. Existing uncertainty annotations remain applicable. No predictions changed, no new model run or score. The missing-reference-file blocker is now cleared: do not ask the user to reattach the old screenshots.
+
 ## Exact next step — Score the frozen real-audio candidate
 
-1. Keep the 87-event candidate and settings frozen. Do not regenerate/tune it from the reference. Recover bass pages 1000120296.jpg through 1000120330.jpg (17 pages per receipt) and lead pages 1000120332.jpg through 1000120374.jpg (22 pages) privately from the user if still inaccessible; validate receipt identities and preserve uncertainty flags.
+1. Keep the 87-event candidate and settings frozen. Use the recovered PDF identities above for bass/lead scoring labels; do not search for old uploads again. Normalize only the scored excerpt first, preserving multi-measure rests, ties/bends and uncertainty. Keep derived note-level scoring labels outside public Git.
 2. Resolve audio-to-measure alignment independently of prediction matches using existing provenance/audio landmarks. Inspect recovered intro scoring fixture semantics; freeze reference pitch/bend representation, timestamp mapping and matching rules before computing a score. Rhythm-only comparison must be labeled an incomplete comparison of unseparated whole-mix events, not three-part model accuracy.
-3. Score frozen predictions with one-to-one pitch/onset matching and explicit clip-boundary policy; report raw TP/FP/FN and timing errors. Missing bass/lead references mean no combined-guitar or complete three-role score. Keep private screenshots/normalized reference notes out of public Git.
+3. Score frozen predictions with one-to-one pitch/onset matching and explicit clip-boundary policy; report raw TP/FP/FN and timing errors. All three reference sources are now available, but the whole-mix candidate has no role assignments: do not claim three-role accuracy. Keep private screenshots/normalized reference notes out of public Git.
 4. Continue a real separator/event pipeline only after its actual prerequisites; short Basic Pitch runtime success does not clear AudioSep memory/loader/equivalence or Demucs weight gates. Preserve 4096 MB / 1200 seconds / zero-new-spend and blocked customer delivery.
 5. Save actual outputs, scores or blockers and CURRENT_STATE together on astra-work; verify remote/tree and clean local status. Do not resume archived optimization queues or change main/Production.
 

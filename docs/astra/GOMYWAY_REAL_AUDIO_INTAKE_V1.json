@@ -27,7 +27,6 @@
     ]
   },
   "blockers": [
-    "Private bass and lead screenshot bytes not recovered; Git contains identity receipts",
     "Role-compatible reference alignment and scoring not frozen",
     "AudioSep loader/resource/equivalence prerequisites unresolved"
   ],
@@ -35,5 +34,6 @@
   "accuracyScore": null,
   "mainModified": false,
   "productionChanged": false,
-  "baselineResult": "docs/astra/evaluations/GOMYWAY_FIRST30_BASIC_PITCH_V1.json"
+  "baselineResult": "docs/astra/evaluations/GOMYWAY_FIRST30_BASIC_PITCH_V1.json",
+  "pdfUpdate": "Bass and lead PDFs now recovered; see GOMYWAY_REFERENCE_PDF_INTAKE_V1.json. Historical screenshot-search results remain historical, not current blockers."
 }

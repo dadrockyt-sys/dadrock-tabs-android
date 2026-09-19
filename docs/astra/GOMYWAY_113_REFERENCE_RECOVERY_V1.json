@@ -40,5 +40,6 @@
   "librarySearch": "No matches for song/role queries or exact first/last page filenames. This does not prove deletion.",
   "referenceExposure": "Metadata reviewed; first 65 lines of rhythm 17-113 JSON were retrieved during schema discovery, including partial measure 17 labels. Do not call this an untouched blind evaluation. No predictions or tuning occurred.",
   "scoringBoundary": "Freeze predictions before opening normalized references for scoring. No bass/lead private image bytes or note-by-note labels in public Git.",
-  "accuracyScore": null
+  "accuracyScore": null,
+  "pdfUpdate": "Bass and lead PDFs now recovered; see GOMYWAY_REFERENCE_PDF_INTAKE_V1.json. Historical screenshot-search results remain historical, not current blockers."
 }
