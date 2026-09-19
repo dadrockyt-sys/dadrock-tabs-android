@@ -1,0 +1,44 @@
+{
+  "status": "reference-identities-recovered-private-pages-unavailable",
+  "previouslyExposedDevelopmentMaterial": true,
+  "sourceBranches": {
+    "v143-contextual-prune-lobo": "99e05eacbc3d8a38208ed41edadeee5b2f823c7b",
+    "songsterr-fresh-pipeline-v1": "7be69898cf3eb7ae32cbe8963714895ad99c5853"
+  },
+  "identicalAcrossBothBranches": true,
+  "rhythm": {
+    "imageGitBlob": "16106197cc1269cca0b3c443908d5ef75e8b4d3e",
+    "introFixturePath": "analyzer/fixtures/gomyway_professional_intro_reference_v1.json",
+    "introFixtureGitBlob": "0ca4791471dc7834465fe746af8df185672d9c62",
+    "measures17to113Path": "public/gomyway-professional-rhythm-reference-17-113.json",
+    "measures17to113GitBlob": "5d7aac488eedd35ff144dbf1590c24d32fa0cf66"
+  },
+  "bass": {
+    "receiptGitBlob": "0cd7a2e451ae4ea17b4ba15e6c2e2508f27518fd",
+    "pageCount": 17,
+    "coverage": [
+      1,
+      113
+    ],
+    "setSha256": "abd1748066966ceb93fe40bf8c8df3168f6c871ba006e44d28f8840184e3cde3",
+    "firstFilename": "1000120296.jpg",
+    "lastFilename": "1000120330.jpg",
+    "uncertainty": "Timing mishap annotation near measure 88"
+  },
+  "lead": {
+    "receiptGitBlob": "e4cfa0a3c1f9c53bcdcb5b6ae8d73f9def5f7937",
+    "pageCount": 22,
+    "coverage": [
+      1,
+      113
+    ],
+    "setSha256": "de2f20c330e52aca6125e29ca2cf5c4b719406fc267a98d43d98f3ab1453ff3c",
+    "firstFilename": "1000120332.jpg",
+    "lastFilename": "1000120374.jpg",
+    "uncertainty": "Possible mistake annotation near measures 39-40"
+  },
+  "librarySearch": "No matches for song/role queries or exact first/last page filenames. This does not prove deletion.",
+  "referenceExposure": "Metadata reviewed; first 65 lines of rhythm 17-113 JSON were retrieved during schema discovery, including partial measure 17 labels. Do not call this an untouched blind evaluation. No predictions or tuning occurred.",
+  "scoringBoundary": "Freeze predictions before opening normalized references for scoring. No bass/lead private image bytes or note-by-note labels in public Git.",
+  "accuracyScore": null
+}

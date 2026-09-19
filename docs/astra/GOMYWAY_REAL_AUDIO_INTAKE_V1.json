@@ -1,5 +1,5 @@
 {
-  "status": "real-audio-intake-verified-transcription-not-run",
+  "status": "real-audio-whole-mix-baseline-completed-not-scored",
   "sourceCommit": "bb992d901e78ab19645f8edc8e330d5a142ebd8e",
   "authorization": "User explicitly requested real audio evaluations and identified Gomyway midterm and professional 113 on main/public for this purpose. Development reuse; historical exposure remains.",
   "audio": {
@@ -18,15 +18,22 @@
     "gitBlob": "16106197cc1269cca0b3c443908d5ef75e8b4d3e",
     "sha256": "aca2da3e8d551b2fd82b4ab3ecafa0c8932d6c0a27b54b6213ffc990ca08a9a9",
     "bytes": 979815,
-    "visualInspection": "Guitar tablature for Are You Gonna Go My Way; not yet confirmed as user professional 113 reference."
+    "visualInspection": "Guitar tablature for Are You Gonna Go My Way; not yet confirmed as user professional 113 reference.",
+    "confirmedByUser": true,
+    "role": "rhythm",
+    "measureCoverage": [
+      1,
+      113
+    ]
   },
   "blockers": [
-    "Exact professional 113 reference identity unresolved",
-    "Prior temporary model environment no longer present",
+    "Private bass and lead screenshot bytes not recovered; Git contains identity receipts",
+    "Role-compatible reference alignment and scoring not frozen",
     "AudioSep loader/resource/equivalence prerequisites unresolved"
   ],
-  "modelInvoked": false,
+  "modelInvoked": true,
   "accuracyScore": null,
   "mainModified": false,
-  "productionChanged": false
+  "productionChanged": false,
+  "baselineResult": "docs/astra/evaluations/GOMYWAY_FIRST30_BASIC_PITCH_V1.json"
 }

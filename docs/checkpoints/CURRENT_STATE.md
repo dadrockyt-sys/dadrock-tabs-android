@@ -3,7 +3,7 @@
 Updated: 2026-09-19 UTC
 Active branch: `astra-work`
 Canonical handoff: `docs/checkpoints/CURRENT_STATE.md`
-Status: **REAL-AUDIO DEVELOPMENT EVALUATION REQUESTED — GOMYWAY AUDIO VERIFIED/DECODED; EXACT REFERENCE AND MODEL RUNTIME UNRESOLVED**
+Status: **FIRST REAL-AUDIO BASIC PITCH BASELINE COMPLETE — 87 EVENTS / 30 SECONDS; THREE-PART REFERENCE SCORING PENDING**
 
 ## Product outcome
 
@@ -253,14 +253,25 @@ At chat handoff: inspect branch/HEAD/status, read this file and AGENTS.md, then 
 
 The user explicitly requested real-audio evaluation, then identified Gomyway midterm and professional 113 on main/public for this purpose. This supersedes the next synthetic-only sink task. Authorization to use these named materials for development evaluation is recorded; historical exposure and archived outcomes remain intact. Do not ask for an audio upload again.
 
-`docs/astra/GOMYWAY_REAL_AUDIO_INTAKE_V1.json` pins the audio and candidate reference identities at main commit bb992d901e78ab19645f8edc8e330d5a142ebd8e. Both downloaded bytes match Git blob identities. The 210.674649-second stereo 44100-Hz AAC midterm recording fully decoded with ffmpeg (exit 0). Professionalexample.jpg was visually inspected and shows the song's guitar tablature, but its identity as “professional 113” is unconfirmed. No transcription/model execution or accuracy score occurred. Prior /tmp/astra-engine-smoke-W0bAmw/venv runtime is absent. No runtime gates, main or Production changed.
+`docs/astra/GOMYWAY_REAL_AUDIO_INTAKE_V1.json` pins the audio and candidate reference identities at main commit bb992d901e78ab19645f8edc8e330d5a142ebd8e. Both downloaded bytes match Git blob identities. The 210.674649-second stereo 44100-Hz AAC midterm recording fully decoded with ffmpeg (exit 0). Professionalexample.jpg was visually inspected and shows the song's guitar tablature, and the user subsequently confirmed it as the 113-measure rhythm scorer. No transcription/model execution or accuracy score occurred. Prior /tmp/astra-engine-smoke-W0bAmw/venv runtime is absent. No runtime gates, main or Production changed.
 
-## Exact next step — Real-audio development evaluation
+## First real-audio baseline / reference recovery
 
-1. Resolve the user's exact “professional 113” reference; the public listing currently contains Professionalexample.jpg and no explicitly 113-named file. Preserve reference/audio hashes and previous exposure. Do not silently substitute a screenshot for an event-level reference.
-2. Restore/verify the chosen runtime and resolve the concrete model prerequisites before inference; existing AudioSep loader, dependency, safe deserialization, resource and equivalence gaps are not cleared by audio authorization. A whole-mix transcription baseline must be labeled separately from role separation.
-3. Freeze a bounded development excerpt, role, alignment and scoring rules before producing predictions. Keep reference labels out of inference. Report raw matched/missed/extra notes and timing errors; do not invent a score from decode success.
-4. Run within the existing 4096 MB / 1200 seconds / zero-new-spend constraints when executable. Save measured outputs, actual blockers and this checkpoint on astra-work; verify remote. Do not resume archived optimization queues or change main/Production.
+- User clarified Professionalexample.jpg is the professional 113-measure rhythm reference; bass and lead references also exist in the archived pipelines and are scoring-only. Do not ask this identity question again.
+- Both archived branches have identical reference receipt blobs. `GOMYWAY_113_REFERENCE_RECOVERY_V1.json` records identities, 17 bass pages, 22 lead pages, uncertainty annotations and unavailable private screenshot bytes. Library content and exact-filename searches found no matches. Git receipts explicitly exclude private screenshot bytes/normalized note labels from the public repository.
+- Rhythm scoring sources recovered by identity: intro fixture blob `0ca4791471dc7834465fe746af8df185672d9c62`, approved measures 17–113 blob `5d7aac488eedd35ff144dbf1590c24d32fa0cf66`. Header/schema inspection incidentally exposed part of measure 17; this remains exposed development material, never blind holdout evidence.
+- Restored exact Python 3.10.21 / 57-package locked CPU environment at `/tmp/astra-real-evaluation-venv`; snapshot matches and pip check pass. Verified Basic Pitch packaged TFLite SHA256 before loading.
+- Predeclared first-30-second whole-mix Basic Pitch baseline in `GOMYWAY_BASELINE_PREREG_V1.json`. Runner reads audio/model only, no references. Fixed MIDI40–88, onset .5, frame .3, minimum duration127.7ms; no post-output tuning.
+- Successful real inference: **87 events, 12.6276 seconds, peak RSS395408 KiB (~386 MiB)**. Full candidate events saved in `docs/astra/evaluations/GOMYWAY_FIRST30_BASIC_PITCH_V1.json`; provenance/hash/recovery details in `GOMYWAY_BASELINE_RESULT_V1.json`. This measures a short whole-mix TFLite baseline, not AudioSep separation, full-song fit, role accuracy or customer readiness.
+- Initial attempt found prior /tmp audio absent; source was restored from pinned commit and hash verified. Runner now rejects missing input before model loading. Intended TFLite backend succeeded despite optional-backend/deprecation warnings. Full backend suite **189/189 passed**. No paid service, Demucs/AudioSep separation, main or Production action.
+
+## Exact next step — Score the frozen real-audio candidate
+
+1. Keep the 87-event candidate and settings frozen. Do not regenerate/tune it from the reference. Recover bass pages 1000120296.jpg through 1000120330.jpg (17 pages per receipt) and lead pages 1000120332.jpg through 1000120374.jpg (22 pages) privately from the user if still inaccessible; validate receipt identities and preserve uncertainty flags.
+2. Resolve audio-to-measure alignment independently of prediction matches using existing provenance/audio landmarks. Inspect recovered intro scoring fixture semantics; freeze reference pitch/bend representation, timestamp mapping and matching rules before computing a score. Rhythm-only comparison must be labeled an incomplete comparison of unseparated whole-mix events, not three-part model accuracy.
+3. Score frozen predictions with one-to-one pitch/onset matching and explicit clip-boundary policy; report raw TP/FP/FN and timing errors. Missing bass/lead references mean no combined-guitar or complete three-role score. Keep private screenshots/normalized reference notes out of public Git.
+4. Continue a real separator/event pipeline only after its actual prerequisites; short Basic Pitch runtime success does not clear AudioSep memory/loader/equivalence or Demucs weight gates. Preserve 4096 MB / 1200 seconds / zero-new-spend and blocked customer delivery.
+5. Save actual outputs, scores or blockers and CURRENT_STATE together on astra-work; verify remote/tree and clean local status. Do not resume archived optimization queues or change main/Production.
 
 ## Copy-paste handoff
 

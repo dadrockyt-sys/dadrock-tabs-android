@@ -1,0 +1,34 @@
+{
+  "kind": "whole-mix-basic-pitch-development-only",
+  "roleAssignment": null,
+  "customerDeliveryEligible": false,
+  "accuracyScore": null,
+  "audioSha256": "60ed11dcdea26a3773d1867671001e30d11e28e0bc9429cdb94a6575c87792cb",
+  "wallSeconds": 12.627575687000046,
+  "peakRssKiB": 395408,
+  "eventCount": 87,
+  "parentCommit": "4c45136fccb50c8050e4b640661351486207d1b4",
+  "environment": "/tmp/astra-real-evaluation-venv",
+  "packageSnapshotMatch": 57,
+  "pipCheckPassed": true,
+  "python": "3.10.21",
+  "preregistration": "GOMYWAY_BASELINE_PREREG_V1.json",
+  "predictionSha256": "6ee8495a7fa54e7c9a76079792a53908724dbe6adb5e517f761b47b1dec21659",
+  "runnerSha256": "f3d29e1b260c2cef4594714545e1efae26adc1c736389d215cefc84fc2241e0f",
+  "modelArtifactSha256": "3db297d54af8e01c6e5618245c956b1d71b6a2b978cb2dedb527173186552676",
+  "tests": 189,
+  "passed": 189,
+  "testOutputSha256": "ca93c53c227769ba3e9c0e8f1e5d2ac5ad4bcca7a1183bfe9a588e4e65942847",
+  "recoveries": [
+    "Prior temporary audio absent: initial ffmpeg decode failed and first runner invocation failed opening missing excerpt. Restored source from pinned GitHub commit, verified SHA256, added pre-import input existence check, decoded and reran unchanged inference settings."
+  ],
+  "warnings": [
+    "Missing optional CoreML/ONNX/TensorFlow backends; intended TFLite backend ran successfully.",
+    "resampy pkg_resources deprecation warning."
+  ],
+  "paidServiceInvoked": false,
+  "productionChanged": false,
+  "mainModified": false,
+  "separatorInvoked": false,
+  "referenceReadByRunner": false
+}
