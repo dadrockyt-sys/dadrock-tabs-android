@@ -39,6 +39,10 @@ jobs:
             --torch-backend cpu \
             --require-hashes
           uv pip check --python "$PY"
+          # setup-python seeds pip into the toolcache prefix; the historical uv-created
+          # Astra environment did not contain pip. Remove only this runner seed so the
+          # installed-distribution snapshot is exactly the frozen 57-package graph.
+          uv pip uninstall pip --python "$PY"
 
       - name: Verify frozen distribution and model identities
         shell: bash

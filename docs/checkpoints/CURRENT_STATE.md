@@ -3,7 +3,7 @@
 Updated: 2026-09-20 UTC
 Active branch: `astra-work`
 Canonical handoff: `docs/checkpoints/CURRENT_STATE.md`
-Status: **ORACLE TRANSCRIPTION PREREGISTERED — EXACT PYTHON 3.10.21 RUNTIME EXPORT BUILD TRIGGERED ON ASTRA-WORK**
+Status: **ORACLE TRANSCRIPTION PREREGISTERED — EXACT RUNTIME INSTALL PASSED; EXPORT RETRY REMOVES ONLY RUNNER-SEEDED PIP**
 
 ## Product outcome
 
@@ -395,6 +395,12 @@ Focused evaluation suite: **15 tests passed** (7 existing onset tests, 8 new int
 - Added a branch-only GitHub Actions runtime exporter. It receives **no audio, labels, predictions or credentials**. Its sole job is to reproduce the previously verified Python3.10.21 + 57-package hashed environment from `astra_backend/engine/requirements.lock`, compare installed name/version metadata byte-for-byte in meaning with `installed-distributions.json`, verify the packaged Basic Pitch model SHA256 and archive the resulting Python prefix as a workflow artifact.
 - The workflow is triggered only when its own file changes on `astra-work`. It has read-only repository permissions and performs no deployment, production action, Demucs weight download, audio access or model inference.
 - This is an execution-recovery step for the private oracle test. Success would let the exact runtime be transferred back to the active workspace without placing private development audio in GitHub. Failure must be recorded as a blocker rather than weakening the preregistered runtime identity.
+
+## Frozen runtime export first-attempt result — 2026-09-20
+
+- GitHub Actions supplied exact Python3.10.21 and `uv==0.10.0`. `uv pip sync --require-hashes --torch-backend cpu` resolved57 packages, built pinned Demucs4.0.1, installed Basic Pitch0.4.0/TFLite2.14.0/Torch+Torchaudio2.11.0+cpu and `uv pip check` passed.
+- Identity verification found **zero missing frozen distributions**. The only extra distribution was `pip==26.2.1`, pre-seeded by `actions/setup-python`; it is not present in the historical uv-created 57-package snapshot. The archive step therefore correctly failed closed and no runtime artifact was emitted.
+- The retry removes only that runner-seeded pip distribution *after* hash-locked sync/check, using external `uv`, then repeats the exact 57-distribution + Basic Pitch model-byte verification. No locked package version, preregistered inference setting or model identity changes.
 
 ## Exact next step — Measure the oracle transcription lift, then select the isolation path
 
