@@ -3,7 +3,7 @@
 Updated: 2026-09-20 UTC
 Active branch: `astra-work`
 Canonical handoff: `docs/checkpoints/CURRENT_STATE.md`
-Status: **REVIEWED BOUNDED M1–15 WHOLE-MIX→RHYTHM SCORE COMPLETE — SOURCE ISOLATION / EVENT INFERENCE IS THE NEXT BOTTLENECK**
+Status: **REVIEWED M1–15 SCORE + GUITAR-ISOLATION ORACLE COMPLETE — ISOLATION IS HIGH-VALUE; LOCKED TRANSCRIPTION-ON-ORACLE RUN STILL NEEDED**
 
 ## Product outcome
 
@@ -372,12 +372,21 @@ Focused evaluation suite: **15 tests passed** (7 existing onset tests, 8 new int
 - Concrete failure signature: all15 reviewed MIDI50 targets and all14 reviewed MIDI57 targets have zero exact matches in this window. The candidate mostly detects MIDI40/52 material. This shows source/event inference is the dominant current failure; renderer/fingering tuning cannot repair the missing acoustic evidence.
 - Private spec/result were also saved to Library. `GOMYWAY_SCORING_BUNDLE_STATUS_V1.json` is updated from blocked to reviewed-bounded-score-complete-m1-15. Customer delivery remains false; roleAccuracy remains null; no main/Production change.
 
-## Exact next step — Isolate separation versus transcription failure
+## Guitar-isolation oracle salience diagnostic — 2026-09-20
 
-1. Keep the reviewed M1–15 bundle, revision6 labels and frozen87-event whole-mix candidate immutable. Do not tune against the score by changing labels, alignment or tolerance.
-2. Run the same locked Basic Pitch settings on an already-available, independently sourced guitar-only development audio only if its identity/provenance is verified. Compare against the SAME private M1–15 rhythm bundle without moving anchors. This is a separation-vs-transcription diagnostic: a large recall lift would implicate whole-mix isolation; little lift would implicate Basic Pitch/event inference itself.
-3. Report raw TP/FP/FN and onset/pitch failure signatures. Do not treat generic guitar audio as rhythm-role truth and do not claim three-role separation. Do not use renderer/fretboard changes to mask missing acoustic events.
-4. Preserve model-rights, CPU/resource and customer-delivery gates. Save each actual result or blocker to this checkpoint on astra-work; do not modify main/Production.
+- Recovered the existing user-provided guitar-only development asset from Library. Its two stored copies are byte-identical M4A SHA256 `6601b8d01cbbbe6b6e70d9ec0ca3c15d17873c78e62ae4acdc258c96f168e3c9`; duration217.060136s. Decoded first30 mono PCM16/22050 WAV SHA256 `e294d78c8c0f853861ab5bb1effed2dd54799bfb308ef48e036c144dfaec71d6`.
+- The isolated file is a different derived/mastered asset, so source timestamps were NOT reused directly. Audio-only chroma-DTW correspondences over measure starts2–15 fit `isolated = 0.5229997584 + 1.0107587634 * source` with RMS residual7.32ms and max15.28ms. Its first clear guitar attack at0.621134s agrees with the affine prediction0.622746s.
+- Added `astra_backend/evaluation/compare_isolation_salience.py` and three focused NumPy tests (positive-gain synthetic, hash mismatch fail-closed, draft-label fail-closed): **3 passed** locally. The diagnostic reads private reviewed labels only to ask whether the known target pitch is acoustically more exposed; it never reads candidate predictions.
+- Across126 reviewed M1–15 attacks, the guitar-only oracle improves harmonic contrast on104 targets; median gain **+2.73dB**. The classes with zero exact matches in the whole-mix score improve materially: MIDI50 median **+4.09dB** (14/15 positive) and MIDI57 **+2.41dB** (9/14 positive). MIDI62 and67 each gain about+4.3dB on all14 targets.
+- Public aggregate: `docs/astra/GOMYWAY_ISOLATION_SALIENCE_V1.json`. This is NOT transcription accuracy and does not imply an approved separator can reproduce the oracle. It is concrete evidence that source isolation is a high-value next component rather than a renderer/fingering problem.
+- The exact locked Basic Pitch/TFLite runtime is absent from the active container. No unpinned replacement was installed and no isolated-audio model inference was claimed. Existing model/runtime identity gates remain intact.
+
+## Exact next step — Measure the oracle transcription lift, then select the isolation path
+
+1. Keep the reviewed M1–15 bundle, revision6 labels, timing map and frozen87-event whole-mix candidate immutable. Do not tune labels/alignment/tolerance against any future run.
+2. Restore the exact frozen Basic Pitch runtime in a stable workspace cache using the committed hashed lock and verified packaged model identity. Do not use an unpinned substitute. Then run the SAME preregistered first30 settings on the verified guitar-only oracle and project its events onto the oracle's independently established affine timing relation.
+3. Score that oracle transcription against the SAME private M1–15 rhythm labels. Report TP/FP/FN and compare with the whole-mix baseline. A material recall lift isolates separation as the dominant failure; little lift means Basic Pitch/event inference remains inadequate even with cleaner guitar signal.
+4. Generic guitar isolation is not rhythm/lead separation. In parallel, preserve the existing model-rights gate: only pursue a product separator whose artifact rights and CPU/runtime constraints are actually cleared. Do not modify main/Production.
 
 ## Copy-paste handoff
 
