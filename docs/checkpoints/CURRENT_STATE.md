@@ -3,7 +3,7 @@
 Updated: 2026-09-20 UTC
 Active branch: `astra-work`
 Canonical handoff: `docs/checkpoints/CURRENT_STATE.md`
-Status: **ORACLE TRANSCRIPTION SCORED — ISOLATION LIFTS RECALL, BUT OCTAVE + BEND-AWARE PITCH INFERENCE ARE NOW THE PRIMARY BOTTLENECKS**
+Status: **CONTEXTUAL OCTAVE REPAIR LIFTS ORACLE F1 TO 32.49% WITH ZERO MATCH REGRESSIONS — BEND-START DECODER IS NEXT**
 
 ## Product outcome
 
@@ -413,12 +413,29 @@ Focused evaluation suite: **15 tests passed** (7 existing onset tests, 8 new int
 - The two prior zero-match classes remain zero exact matches after isolation. MIDI50/D3 has **11/15 targets with an onset-aligned MIDI62/D4 prediction** within50ms: a systematic +12-semitone octave error. MIDI57/A3 bend-start has only **1/14 targets with any prediction at all within50ms**; the bend attack is mostly absent, not merely octave-shifted.
 - Public aggregate is `docs/astra/GOMYWAY_ORACLE_REVIEWED_M1_15_SCORE_V1.json`. This development oracle is not a production separator and generic guitar does not establish rhythm/lead role truth. Customer delivery remains false; main/Production unchanged.
 
-## Exact next step — Fix octave evidence and bend-start inference without song-specific rules
+## Raw Basic Pitch activation diagnostic — 2026-09-20
 
-1. Keep the reviewed M1–15 labels/alignment, preregistered oracle run, native prediction and source-clock projection immutable as the development baseline. Do not retune the50ms scorer or affine mapping.
-2. Build a reference-blind octave-evidence diagnostic on isolated audio around each predicted note. Test whether a candidate one-octave-lower fundamental has stronger harmonic consistency than the Basic Pitch pitch; do not hard-code MIDI50/62 or this song's measures.
-3. Separately inspect bend/glide attacks using audio-only onset + pitch-contour evidence. The objective is a general event type that can represent an attacked note followed by continuous pitch movement, not a Gomyway-specific insertion.
-4. Evaluate each general rule on the frozen development bundle with raw TP/FP/FN and explicit regression counts. If a rule only improves this song through pitch-class/measure knowledge, reject it. Preserve role-separation/model-rights/customer-delivery gates and do not modify main/Production.
+- Captured the exact Basic Pitch0.4.0 raw model outputs on the frozen guitar-only oracle using Python3.10.21/model SHA256 `3db297d54af8e01c6e5618245c956b1d71b6a2b978cb2dedb527173186552676`. Capture was reference-blind. Private tensor archive `GOMYWAY_ORACLE_BASIC_PITCH_RAW_ACTIVATIONS_V1.npz` SHA256 `0cd4d4365763d249bef32236bee188b038b11275852d620995a6029fe7d9d2a6`; metadata SHA256 `01440b6ed664a28992e2b9a6fc56a7fb111bc5f6f16753f93c60fb47e2f65012`. Both are durably stored in Library, not public Git.
+- Shapes are note2580x88, onset2580x88 and contour2580x264. The standard MIDI-note bins are MIDI21–108 and contour resolution is3 bins/semitone.
+- Post-capture reviewed diagnostics separate the two failures. For the15 reviewed D3/MIDI50 targets, the neural activation itself favors D4/MIDI62: median target onset max ~0.3205 vs octave-up ~0.7715; median target frame max ~0.1186 vs octave-up ~0.5624. D3 frame evidence never reaches the standard0.3 note threshold, so merely lowering postprocessing thresholds is not a credible octave fix.
+- For the14 reviewed A3/MIDI57 bend-start attacks, the onset head often fires while the sustained-note head remains weak: median onset max ~0.4190, frame max ~0.1442. Raw contour median moves from ~57.7 MIDI around46–69ms through ~58.0/58.3/59.0 to ~59.3 by161–230ms. The model retains attacked upward-glide evidence that the standard note decoder discards.
+- Public aggregate receipt: `docs/astra/GOMYWAY_RAW_ACTIVATION_DIAGNOSTIC_V1.json`. Raw tensors/private labels are not published. Customer delivery remains false.
+
+## Reference-blind contextual octave repair — 2026-09-20
+
+- Added `astra_backend/evaluation/repair_contextual_octaves.py`. It does not read reference labels, audio or raw tensors. It only considers singleton onset groups and may move one event down exactly12 semitones when both immediate neighboring onset groups support that lower voice within a0.75s horizon and local voice-leading cost improves by at least8 semitones. Chord groups, timestamps and event count are immutable.
+- Seven synthetic tests pass locally: supported octave repair, chord preservation, two-sided-evidence requirement, context-horizon guard, count/timing immutability, input/delivery immutability and invalid-event rejection. Branch CI now includes the suite.
+- On the frozen source-clock oracle projection, the rule proposes exactly7 repairs. Private repaired projection SHA256 `bf7b5ed4f03614095b4ef7fa494335b110d7a009e2c559215a8b46c28a079763`, private score spec SHA256 `c7f91a492e2ea473635bcf0f4e80dab1e0426d0cbe580b6e887768244c9a400b`, score SHA256 `7a947236019e9eb366f0fcd471a3f494ea80b656cadc68ad68037cf4b37b2a8f`; all are durably stored outside public Git.
+- Reviewed M1–15 score improves from40 TP/111 FP/86 FN to **45 TP/106 FP/81 FN; precision29.80%, recall35.71%, F1 32.49%**, with the same151 in-window predictions and onset MAE21.38ms. Five previously missed targets become exact matches and **zero previously matched targets are lost**.
+- Recovery audit: four D3/MIDI50 targets are corrected (0/15 ->4/15 exact matches) plus one G3/MIDI55 target. MIDI57 bend-start remains0/14. This confirms local octave ambiguity and attacked-bend omission are separable backend failures.
+- Public aggregate: `docs/astra/GOMYWAY_CONTEXTUAL_OCTAVE_SCORE_V1.json`. This rule was evaluated on development material and requires prospective cross-song validation before product use; it is not a fixed-register gate and does not establish rhythm/lead role truth.
+
+## Exact next step — Freeze a general raw-activation bend-start decoder
+
+1. Keep the reviewed bundle, native oracle prediction, source-clock projection and contextual-octave output immutable. Do not retune the50ms scorer or the octave rule against further results.
+2. Implement a prediction-blind bend-start candidate extractor from raw Basic Pitch onset+contour tensors. Freeze thresholds from model semantics before scoring: onset evidence, early contour agreement, sustained upward contour movement and no already-decoded onset at the same attack. Do not hard-code Gomyway MIDI values, measure numbers or timestamps.
+3. Emit bend candidates as a separate diagnostic layer first. Evaluate candidate precision/recall against reviewed attacks only after the detector output is hashed. If generic-guitar lead bends create role false positives, record that as role-separation evidence instead of tuning them away with rhythm labels.
+4. Only if the frozen detector shows useful general recovery, test a merged development prediction and report TP/FP/FN/regressions. Preserve model-rights, CPU/resource, role-separation and customer-delivery gates; do not modify main/Production.
 
 ## Copy-paste handoff
 
