@@ -1,0 +1,22 @@
+{
+  "status": "blocked-pending-reviewed-labels-and-independent-alignment",
+  "predictionPath": "docs/astra/evaluations/GOMYWAY_FIRST30_BASIC_PITCH_V1.json",
+  "predictionSha256": "6ee8495a7fa54e7c9a76079792a53908724dbe6adb5e517f761b47b1dec21659",
+  "audioSha256": "60ed11dcdea26a3773d1867671001e30d11e28e0bc9429cdb94a6575c87792cb",
+  "labelsSha256": null,
+  "alignmentSha256": null,
+  "sourceSha256ByRole": {
+    "rhythm": "aca2da3e8d551b2fd82b4ab3ecafa0c8932d6c0a27b54b6213ffc990ca08a9a9",
+    "bass": "18e6822394980d22a960a1bd4d923aaddf677f3341b8cc1a2dbb29ea1e8771d0",
+    "lead": "a11a2c04fdda73e667df16df99aedf9ae0a3ed7af85f62f3c1773b7784a97f56"
+  },
+  "score": null,
+  "modelRerun": false,
+  "customerDeliveryEligible": false,
+  "focusedTests": {
+    "command": "python -m unittest discover -s astra_backend/evaluation -p 'test_score*.py'",
+    "passed": 15,
+    "failed": 0,
+    "outputSha256": "138be6c28b7ac345ad5e358601bf14e9f604f3d3e1091145731fdfedb4eb64d4"
+  }
+}

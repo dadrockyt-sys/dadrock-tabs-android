@@ -3,7 +3,7 @@
 Updated: 2026-09-20 UTC
 Active branch: `astra-work`
 Canonical handoff: `docs/checkpoints/CURRENT_STATE.md`
-Status: **HISTORICAL RHYTHM FIXTURE FAILS IMAGE AUDIT — REBUILD SCORING LABELS BEFORE ACCURACY CLAIMS; PREDICTIONS FROZEN**
+Status: **REVIEWED SCORING RUNNER WIRED AND TESTED — PRIVATE LABELS / INDEPENDENT ALIGNMENT STILL REQUIRED; NO NEW REAL SCORE**
 
 ## Product outcome
 
@@ -298,11 +298,19 @@ User requests lower overhead: batch focused reads/checks, concise updates, no un
 - Therefore the historical104-target/5-match result must not be rehabilitated solely by tempo/offset correction. Keep it historical and conditional; the fixture is not qualified for validated scoring. No predictions or scores were regenerated.
 - An exploratory short-time Fourier peak inspection of the opening audio produced multiple peaks per frame; those peaks are not reliable note identities or a verified first-measure anchor. No spectral peak was promoted to scoring ground truth. Source first16s decode succeeded; no model was run.
 
+## Reviewed scoring integration
+
+`astra_backend/evaluation/score_reviewed_bundle.py` now connects hashed predictions, private labels and an independent piecewise timing map to the tested onset scorer. It validates exact audio/professional source identities, reviewed label state, empty unresolved-items list, reviewed coverage, scoped role set and timing continuity/coverage. Rests/tie/bend continuations cannot create attacks; combined-role identical coincident pitches merge once. Validation failure writes no report; existing reports cannot be overwritten. Outputs omit private reference IDs, preserve input/spec hashes and keep customer delivery false/role accuracy null.
+
+`docs/astra/REVIEWED_SCORING_BUNDLE_V1.md` documents the CLI and full contract, including the limitation that review assertions/hashes cannot independently prove musical truth or prospective freezing. `GOMYWAY_SCORING_BUNDLE_STATUS_V1.json` binds current source/prediction identities but leaves label/alignment hashes null, explicitly blocked. No reviewer approvals or scoring targets invented.
+
+Focused evaluation suite: **15 tests passed** (7 existing onset tests, 8 new integration tests covering tampering, scope/source identity, unresolved evidence, gaps, non-attacks, coincident roles, CLI failure/no output and piecewise timing). No model/full-backend rerun or installation. Previous189-test backend result remains historical, not a new run. No actual replacement Gomyway score, archived changes, main or Production changes.
+
 ## Exact next step — Independently align and validate scoring labels
 
 1. Keep the 87-event candidate frozen. Use the preserved audio-only pulse evidence above; do not repeat the initial broad tempo discovery. Resolve the first-measure audio time and tempo map from recording/provenance, independently of candidate matching. Do not reuse the archived match-maximizing calibration as ground truth. If alignment remains uncertain, report it and withhold a validated score.
 2. Rebuild the opening two-measure scoring table directly from the original-resolution professional image, preserving attack versus bend/release, string lines, rhythmic stems and repeated double stops. The old fixture failed audit; do not use it or blindly repeat it. Verify measures3-16 individually for variations and store normalized labels privately, outside public Git.
-3. Freeze the verified scoring map and pitch/bend rules, then use the tested scorer once on the frozen candidate. Report TP/FP/FN and timing separately from role accuracy. The whole-mix baseline has no role labels and cannot demonstrate three-role separation.
+3. Freeze the verified scoring map and pitch/bend rules, populate the reviewed-bundle spec with exact private file hashes, then use score_reviewed_bundle.py once on the frozen candidate. Report TP/FP/FN and timing separately from role accuracy. The whole-mix baseline has no role labels and cannot demonstrate three-role separation.
 4. Preserve existing CPU/model/resource gates. Save actual results or unresolved blockers with this checkpoint on astra-work, verify remote/tree and clean local status. Avoid unnecessary full-suite/model reruns and do not alter main/Production.
 
 ## Copy-paste handoff
