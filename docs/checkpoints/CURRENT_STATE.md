@@ -3,7 +3,7 @@
 Updated: 2026-09-20 UTC
 Active branch: `astra-work`
 Canonical handoff: `docs/checkpoints/CURRENT_STATE.md`
-Status: **AUDIO-ONLY ALIGNMENT REVIEW PAGE BUILT — MUSICAL ANCHOR / LABEL REVIEW STILL REQUIRED; NO NEW REAL SCORE**
+Status: **FRESH MEASURES 1–16 PRIVATE REFERENCE DRAFT SAVED — MUSICAL REVIEW / AUDIO ANCHOR STILL REQUIRED**
 
 ## Product outcome
 
@@ -313,10 +313,17 @@ Focused evaluation suite: **15 tests passed** (7 existing onset tests, 8 new int
 - 19 focused Python tests pass (15 scoring + 4 builder). Actual JavaScript syntax/export logic checks pass, including invalid anchor rejection. Browser end-to-end attempt failed before navigation: Playwright Chromium executable absent; agent-browser CLI also absent. Playback, layout and browser download still need a real browser check. No browser download was attempted.
 - Contract/reproduction and limitations: `docs/astra/AUDIO_ALIGNMENT_REVIEW_V1.md`. Continue by using the review page to identify independent musical anchors and auditing the first two measures directly. Do not spend another turn rediscovering broad tempo or rebuilding this helper. Preserve draft status until musical evidence is actually verified.
 
+## Fresh visual reference draft — 2026-09-20
+
+- Individually inspected measures1-16 using enlarged crops of the exact2160×3840 professional image. Enlargement was for inspection only; no image generation or inferred extra detail. The second screenshot begins with13-14 (unobscured duplicate of the first screenshot's player-covered bottom row), then15-16. Do not count screenshot starts as new measure ranges.
+- Saved private `Gomyway-Reference-Draft-M1-16.json`, SHA256 `482e18ec5d06087912bc4f172db7f2ea9a4d85d93e9b4db06a23223eb29f72ca`. Contains source bounds per measure, fresh string/fret observations, provisional quarter-note positions,136 candidate pitched entries and16 continuation entries. This is draft notation evidence, not136 approved scoring targets. No sounding MIDI or audio alignment has been assigned.
+- All16 measures remain draft: confirm tuning/capo, full-bend attack/continuation semantics, slurred open-note onset policy, and rhythmic subdivisions. First-measure audio anchor remains unverified. No candidate score/prediction changes, model run or new test-suite run. JSON/unique IDs/position bounds/source hash checked. Prior test results retained.
+- Public receipt `GOMYWAY_FRESH_REFERENCE_DRAFT_V1.json` records the artifact hash and aggregate findings without publishing the note table. Retrieve the private filename and verify its hash if the workspace copy disappears. Continue reviewing this draft; do not recreate the old incomplete template or restart initial image recovery.
+
 ## Exact next step — Independently align and validate scoring labels
 
 1. Keep the 87-event candidate frozen. Use the preserved audio-only pulse evidence above; do not repeat the initial broad tempo discovery. Resolve the first-measure audio time and tempo map from recording/provenance, independently of candidate matching. Do not reuse the archived match-maximizing calibration as ground truth. If alignment remains uncertain, report it and withhold a validated score.
-2. Rebuild the opening two-measure scoring table directly from the original-resolution professional image, preserving attack versus bend/release, string lines, rhythmic stems and repeated double stops. The old fixture failed audit; do not use it or blindly repeat it. Verify measures3-16 individually for variations and store normalized labels privately, outside public Git.
+2. Continue the saved private Gomyway-Reference-Draft-M1-16.json (hash above), already freshly read from each measure. Resolve its explicit tuning, bend/continuation, slurred-onset and rhythmic-subdivision uncertainties directly against source and audio. Convert to reviewed sounding MIDI only after those are resolved. Do not restart the draft or use the failed historical fixture. Keep normalized labels outside public Git.
 3. Freeze the verified scoring map and pitch/bend rules, populate the reviewed-bundle spec with exact private file hashes, then use score_reviewed_bundle.py once on the frozen candidate. Report TP/FP/FN and timing separately from role accuracy. The whole-mix baseline has no role labels and cannot demonstrate three-role separation.
 4. Preserve existing CPU/model/resource gates. Save actual results or unresolved blockers with this checkpoint on astra-work, verify remote/tree and clean local status. Avoid unnecessary full-suite/model reruns and do not alter main/Production.
 
