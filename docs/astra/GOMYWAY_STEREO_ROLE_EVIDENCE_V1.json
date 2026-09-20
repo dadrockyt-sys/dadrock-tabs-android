@@ -1,0 +1,133 @@
+{
+  "kind": "gomyway-stereo-role-evidence-development",
+  "version": 1,
+  "sourceM4aSha256": "6601b8d01cbbbe6b6e70d9ec0ca3c15d17873c78e62ae4acdc258c96f168e3c9",
+  "stereoFirst30WavSha256": "b5e18d67397463c5de1bdb0644cc50ba4ac90c9357936c77e81bb563fbefe2c6",
+  "leftFirst30WavSha256": "2bb45aabaa9d09ed8a8a044480d9d2fc4398b0c10dfb5abcfd2ba9d53b262f65",
+  "rightFirst30WavSha256": "e98ba1290c53010f65537fac232170ea4715cbdb25393bf4667e8a0ef2034fae",
+  "preregistrationSha256": "dce9a009789cb96bb40c0495cb91456f6852ff7abd9fae4cba9635dcf8ef2a09",
+  "leftNativePredictionSha256": "d701c904c263e6402e7cced7b8206bf51bb81864dcf8bea5314ed806f5e28f6a",
+  "rightNativePredictionSha256": "28ab54e0caacf98765daba3befb0c01efdbad19df9cf45b596efe07167207dd2",
+  "leftSourceClockProjectionSha256": "d088bba8e27eafcd13735ec395c92a9a46269dc0df901923e590bdc5ab8471f8",
+  "rightSourceClockProjectionSha256": "a12fab848121db1063cabe1bb59245ad166af3930d0e867030df24811e713e6a",
+  "privateRoleEvidenceSha256": "544398724e736243e469180e38df851cafcadbb70ac3f0998564a23306fd2bf3",
+  "privateScoreSha256": "d792ca993767f296aa870ccead7a94e140281b9f6ebba48ce0c689756a3a6185",
+  "channelCorrelation": 0.05325262840992681,
+  "exactRuntime": {
+    "pythonVersion": "3.10.21",
+    "basicPitchVersion": "0.4.0",
+    "modelSha256": "3db297d54af8e01c6e5618245c956b1d71b6a2b978cb2dedb527173186552676",
+    "runnerGitBlob": "95950c50e00777ba3c0398b917f95dcece70065c"
+  },
+  "inference": {
+    "left": {
+      "events": 166,
+      "wallSeconds": 2.0269429859999946,
+      "peakRssKiB": 261088
+    },
+    "right": {
+      "events": 128,
+      "wallSeconds": 1.9969469549996575,
+      "peakRssKiB": 260532
+    }
+  },
+  "referenceBlindChannelClassification": {
+    "status": "complete",
+    "mapping": {
+      "rhythm": "left",
+      "lead": "right"
+    },
+    "left": {
+      "eventCount": 166,
+      "onsetGroupCount": 126,
+      "chordLikeGroupCount": 15,
+      "chordLikeRate": 0.11904761904761904,
+      "medianMidi": 52
+    },
+    "right": {
+      "eventCount": 128,
+      "onsetGroupCount": 109,
+      "chordLikeGroupCount": 1,
+      "chordLikeRate": 0.009174311926605505,
+      "medianMidi": 63
+    },
+    "chordLikeRateRatio": 12.976190476190474,
+    "relativeMedianPitchGapSemitones": 11,
+    "policy": "abstain unless channels are decorrelated and relative chordality/register evidence strongly agrees; no fixed absolute MIDI role gate"
+  },
+  "deduplicatedStereoRoleScore": {
+    "aggregate": {
+      "tp": 84,
+      "fp": 161,
+      "fn": 119,
+      "precision": 0.34285714285714286,
+      "recall": 0.41379310344827586,
+      "f1": 0.375
+    },
+    "rhythm": {
+      "predictions": 139,
+      "targets": 126,
+      "tp": 43,
+      "fp": 96,
+      "fn": 83,
+      "precision": 0.30935251798561153,
+      "recall": 0.3412698412698413,
+      "f1": 0.32452830188679244
+    },
+    "lead": {
+      "predictions": 106,
+      "targets": 77,
+      "tp": 41,
+      "fp": 65,
+      "fn": 36,
+      "precision": 0.3867924528301887,
+      "recall": 0.5324675324675324,
+      "f1": 0.44808743169398907
+    }
+  },
+  "conservativeMonoWithStereoRoleLabels": {
+    "aggregate": {
+      "tp": 55,
+      "fp": 57,
+      "fn": 148,
+      "precision": 0.49107142857142855,
+      "recall": 0.270935960591133,
+      "f1": 0.3492063492063492
+    },
+    "rhythm": {
+      "predictions": 57,
+      "targets": 126,
+      "tp": 26,
+      "fp": 31,
+      "fn": 100,
+      "precision": 0.45614035087719296,
+      "recall": 0.20634920634920634,
+      "f1": 0.28415300546448086
+    },
+    "lead": {
+      "predictions": 55,
+      "targets": 77,
+      "tp": 29,
+      "fp": 26,
+      "fn": 48,
+      "precision": 0.5272727272727272,
+      "recall": 0.37662337662337664,
+      "f1": 0.4393939393939394
+    },
+    "ambiguousInWindow": 11,
+    "unassignedInWindow": 28
+  },
+  "comparison": {
+    "monoGenericJointTp": 75,
+    "stereoDeduplicatedCorrectRoleTp": 84,
+    "note": "The mono joint score does not assign roles; the stereo figure counts role-specific streams. The comparison demonstrates additional role-resolved signal, not a final customer-quality score."
+  },
+  "interpretation": "Stereo spatial evidence is a viable low-cost requested-role signal on this development asset. Left is strongly more chordal/lower and right more monophonic/higher, allowing a reference-blind L->rhythm, R->lead mapping with explicit abstention gates. Precision remains insufficient for customer delivery, but stereo should be preserved before any mono fold-down.",
+  "customerDeliveryEligible": false,
+  "limitations": [
+    "This policy was developed on exposed development material and requires prospective cross-song stereo validation.",
+    "User uploads may be mono, center-panned, phase-correlated or use different panning conventions; the classifier must abstain when evidence is weak.",
+    "Stereo separation does not replace a general separator for mono or overlapping center-panned guitar parts.",
+    "No main or Production path uses this evidence yet."
+  ]
+}
