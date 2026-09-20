@@ -1,0 +1,61 @@
+{
+  "kind": "reviewed-development-score-whole-mix-to-rhythm",
+  "version": 1,
+  "scope": "measures1-15-bounded-no-extrapolation",
+  "windowSeconds": [
+    0.09868480725623582,
+    28.299319727891156
+  ],
+  "beatWindow": [
+    0,
+    60
+  ],
+  "onsetToleranceSeconds": 0.05,
+  "sourcePredictionPath": "docs/astra/evaluations/GOMYWAY_FIRST30_BASIC_PITCH_V1.json",
+  "sourcePredictionSha256": "6ee8495a7fa54e7c9a76079792a53908724dbe6adb5e517f761b47b1dec21659",
+  "scoringProjectionPath": "docs/astra/evaluations/GOMYWAY_FIRST30_SCORING_PROJECTION_V1.json",
+  "scoringProjectionSha256": "1f3298efa446b36e7679a0eb3753d1aa03675732cbfd119a236c7c3b78bd13d7",
+  "projectionPolicy": "exact start+midi projection; scorer ignores source end/amplitude fields",
+  "labelsSha256": "a696af9dcbc6f69eeec11600aa21d19fcb44a386a231e4041730a74e2f517e15",
+  "alignmentSha256": "31947a9c73b025e565a048d69da54ffb94464f6ea5acf73f526c89d823c063ae",
+  "privateRevision6Sha256": "5f040af4d7daa2eb6b74445bfe46e72f5847e2410ec21d3f01d603630edcd977",
+  "audioSha256": "60ed11dcdea26a3773d1867671001e30d11e28e0bc9429cdb94a6575c87792cb",
+  "professionalRhythmSourceSha256": "aca2da3e8d551b2fd82b4ab3ecafa0c8932d6c0a27b54b6213ffc990ca08a9a9",
+  "metrics": {
+    "predictions": 83,
+    "targets": 126,
+    "tp": 26,
+    "fp": 57,
+    "fn": 100,
+    "precision": 0.3132530120481928,
+    "recall": 0.20634920634920634,
+    "f1": 0.24880382775119617,
+    "meanAbsoluteOnsetErrorSeconds": 0.022989586603872497
+  },
+  "onsetOnlyOneToOneUpperBound": {
+    "tp": 46,
+    "predictions": 83,
+    "targets": 126,
+    "precision": 0.5542168674698795,
+    "recall": 0.36507936507936506,
+    "f1": 0.44019138755980863,
+    "meanAbsoluteOnsetErrorSeconds": 0.01818160307601343,
+    "note": "Ignores MIDI identity; diagnostic upper bound only, not an accuracy score."
+  },
+  "failureDiagnostics": {
+    "midi50Targets": 15,
+    "midi50ExactMatches": 0,
+    "midi57Targets": 14,
+    "midi57ExactMatches": 0,
+    "interpretation": "Whole-mix baseline misses both event onsets and important pitch classes; renderer/fingering is not the dominant failure at this stage."
+  },
+  "roleAccuracy": null,
+  "customerDeliveryEligible": false,
+  "measure16Excluded": true,
+  "limitations": [
+    "This is a development comparison of a whole-mix Basic Pitch baseline against reviewed rhythm labels, not requested-role separation accuracy.",
+    "Unmatched whole-mix events may belong to other instruments.",
+    "No duration, technique, fingering or PDF-render quality is scored.",
+    "Measure16 is excluded because its closing boundary was not independently observed; no extrapolated timing is used."
+  ]
+}
